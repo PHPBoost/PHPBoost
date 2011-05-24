@@ -52,7 +52,7 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 		global $LANG;
 
 		//Module de connexion
-		$login = AppContext::get_request()->get_poststring('login', '');
+		$login = TextHelper::strprotect(AppContext::get_request()->get_poststring('login', ''));
 		$password = trim(AppContext::get_request()->get_poststring('password', ''));
 		$autoconnexion = AppContext::get_request()->get_postbool('auto', false);
 		$unlock = strhash(trim(AppContext::get_request()->get_poststring('unlock', '')));

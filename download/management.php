@@ -45,11 +45,11 @@ if ($delete_file || ($submit && ($add_file || $edit_file_id > 0)))
 $Session->csrf_get_protect();
 
 //Form variables
-$file_title = AppContext::get_request()->get_poststring('title', '');
-$file_image = AppContext::get_request()->get_poststring('image', '');
-$file_contents = AppContext::get_request()->get_poststring('contents', '');
-$file_short_contents = AppContext::get_request()->get_poststring('short_contents', '');
-$file_url = AppContext::get_request()->get_poststring('url', '');
+$file_title = TextHelper::strprotect(AppContext::get_request()->get_poststring('title', ''));
+$file_image = TextHelper::strprotect(AppContext::get_request()->get_poststring('image', ''));
+$file_contents = TextHelper::strprotect(AppContext::get_request()->get_poststring('contents', ''));
+$file_short_contents = TextHelper::strprotect(AppContext::get_request()->get_poststring('short_contents', ''));
+$file_url = TextHelper::strprotect(AppContext::get_request()->get_poststring('url', '');
 $file_timestamp = AppContext::get_request()->get_postint('timestamp', 0);
 $file_size = retrieve(POST, 'size', 0.0, TUNSIGNED_FLOAT);
 $file_hits = retrieve(POST, 'count', 0, TUNSIGNED_INT);
@@ -57,7 +57,7 @@ $file_cat_id = AppContext::get_request()->get_int('idcat', 0);
 $file_visibility = AppContext::get_request()->get_postint('visibility', 0);
 $file_approved = AppContext::get_request()->get_postbool('approved', false);
 $ignore_release_date = AppContext::get_request()->get_postbool('ignore_release_date', false);
-$file_download_method = TextHelper::strprotect(AppContext::get_request()->get_poststring('download_method', 'redirect'));
+$file_download_method = TextHelper::strprotect(TextHelper::strprotect(AppContext::get_request()->get_poststring('download_method', 'redirect')));
 
 //Instanciations of objects required
 $file_creation_date = MiniCalendar::retrieve_date('creation');
@@ -443,7 +443,7 @@ if ($edit_file_id > 0)
 //Adding a file
 else
 {
-	$contribution_counterpart = FormatingHelper::strparse(AppContext::get_request()->get_poststring('counterpart', ''));
+	$contribution_counterpart = FormatingHelper::strparse(TextHelper::strprotect(AppContext::get_request()->get_poststring('counterpart', '')));
 
 	//If we can't write, the file cannot be approved
 	$file_approved = $auth_write;

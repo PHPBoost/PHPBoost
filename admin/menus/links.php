@@ -76,7 +76,7 @@ function build_menu_from_form($elements_ids, $level = 0)
 
 // We build the array representing the tree
 $result = array();
-parse_str('tree=' . AppContext::get_request()->get_poststring('menu_tree', ''), $result);
+parse_str('tree=' . TextHelper::strprotect(AppContext::get_request()->get_poststring('menu_tree', '')), $result);
 
 // We build the tree
 // The parsed tree is not absolutely regular, we correct it

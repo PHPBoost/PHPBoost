@@ -34,8 +34,8 @@ require_once(PATH_TO_ROOT . '/admin/admin_header.php');
 $id = AppContext::get_request()->get_int('id', 0);
 $id_post = AppContext::get_request()->get_postint('id', 0);
 
-$action = AppContext::get_request()->get_string('action', '');
-$action_post = AppContext::get_request()->get_poststring('action', '');
+$action = TextHelper::strprotect(AppContext::get_request()->get_string('action', ''));
+$action_post = TextHelper::strprotect(AppContext::get_request()->get_poststring('action', ''));
 
 if ($action_post == 'save')
 {
@@ -59,10 +59,10 @@ if ($action_post == 'save')
 		AppContext::get_response()->redirect('menus.php');
 	}
 
-	$menu->enabled(AppContext::get_request()->get_postvalue('activ', Menu::MENU_NOT_ENABLED));
+	$menu->enabled(TextHelper::strprotect(AppContext::get_request()->get_postvalue('activ', Menu::MENU_NOT_ENABLED)));
 	if ($menu->is_enabled())
 	{
-		$menu->set_block(AppContext::get_request()->get_postvalue('location', Menu::BLOCK_POSITION__NOT_ENABLED));
+		$menu->set_block(TextHelper::strprotect(AppContext::get_request()->get_postvalue('location', Menu::BLOCK_POSITION__NOT_ENABLED)));
 	}
 	$menu->set_auth(Authorizations::build_auth_array_from_form(AUTH_MENUS));
 	$menu->set_display_title(AppContext::get_request()->get_postbool('display_title', false));

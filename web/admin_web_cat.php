@@ -112,10 +112,10 @@ elseif ((!empty($top) || !empty($bottom)) && !empty($id)) //Monter/descendre.
 //On ajoute la nouvelle catégorie
 elseif (!empty($_POST['add'])) //Ajout du lien.
 {
-	$cat = AppContext::get_request()->get_poststring('cat', '');
-	$contents = AppContext::get_request()->get_poststring('contents', '');
-	$icon = AppContext::get_request()->get_poststring('icon', ''); 
-	$icon_path = AppContext::get_request()->get_poststring('icon_path', ''); 
+	$cat = TextHelper::strprotect(AppContext::get_request()->get_poststring('cat', ''));
+	$contents = TextHelper::strprotect(AppContext::get_request()->get_poststring('contents', ''));
+	$icon = TextHelper::strprotect(AppContext::get_request()->get_poststring('icon', '')); 
+	$icon_path = TextHelper::strprotect(AppContext::get_request()->get_poststring('icon_path', '')); 
 	$aprob = AppContext::get_request()->get_postint('aprob', 0);
 	$secure = AppContext::get_request()->get_postint('secure', -1);
 		

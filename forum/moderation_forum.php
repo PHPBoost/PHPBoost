@@ -29,10 +29,10 @@ require_once('../kernel/begin.php');
 require_once('../forum/forum_begin.php');
 require_once('../forum/forum_tools.php');
 
-$action = AppContext::get_request()->get_getstring('action', '');
+$action = TextHelper::strprotect(AppContext::get_request()->get_getstring('action', ''));
 $id_get = AppContext::get_request()->get_getint('id', 0);
-$new_status = AppContext::get_request()->get_getstring('new_status', '');
-$get_del = AppContext::get_request()->get_getstring('del', '');
+$new_status = TextHelper::strprotect(AppContext::get_request()->get_getstring('new_status', ''));
+$get_del = TextHelper::strprotect(AppContext::get_request()->get_getstring('del', ''));
 
 $Bread_crumb->add($CONFIG_FORUM['forum_name'], 'index.php' . SID);
 if ($action == 'alert')
@@ -82,7 +82,7 @@ $Template->put_all(array(
 ));
 
 //Redirection changement de catégorie.
-$id_topic_get = AppContext::get_request()->get_poststring('change_cat', '');
+$id_topic_get = TextHelper::strprotect(AppContext::get_request()->get_poststring('change_cat', ''));
 if (!empty($id_topic_get))
 {
 	//On va chercher les infos sur le topic
@@ -319,7 +319,7 @@ elseif ($action == 'punish') //Gestion des utilisateurs
 	{
 		if (AppContext::get_request()->get_postbool('search_member', false))
 		{
-			$login = AppContext::get_request()->get_poststring('login_mbr', '');
+			$login = TextHelper::strprotect(AppContext::get_request()->get_poststring('login_mbr', ''));
 			$user_id = $Sql->query("SELECT user_id FROM " . DB_TABLE_MEMBER . " WHERE login LIKE '%" . $login . "%'", __LINE__, __FILE__);
 			if (!empty($user_id) && !empty($login))
 				AppContext::get_response()->redirect('/forum/moderation_forum' . url('.php?action=punish&id=' . $user_id, '', '&'));
@@ -500,7 +500,7 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 	{
 		if (AppContext::get_request()->get_postbool('search_member', false))
 		{
-			$login = AppContext::get_request()->get_poststring('login_member', '');
+			$login = TextHelper::strprotect(AppContext::get_request()->get_poststring('login_member', ''));
 			$user_id = $Sql->query("SELECT user_id FROM " . DB_TABLE_MEMBER . " WHERE login LIKE '%" . $login . "%'", __LINE__, __FILE__);
 			if (!empty($user_id) && !empty($login))
 				AppContext::get_response()->redirect('/forum/moderation_forum' . url('.php?action=warning&id=' . $user_id, '', '&'));

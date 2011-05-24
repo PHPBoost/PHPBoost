@@ -60,12 +60,13 @@ elseif (retrieve(POST,'preview',false))
 		'id' => AppContext::get_request()->get_postint('id', 0),
 		'idcat' => AppContext::get_request()->get_postint('idcat', 0),
 		'title' => utf8_decode(TextHelper::strprotect(AppContext::get_request()->get_poststring('title', ''))),
-		'contents' => FormatingHelper::strparse(AppContext::get_request()->get_poststring('contents', '')),
+		'contents' => FormatingHelper::strparse(TextHelper::strprotect(AppContext::get_request()->get_poststring('contents', ''))),
 		'user_id' => AppContext::get_request()->get_postint('user_id', 0),
 		'date' => retrieve(POST, 'date', 0, TSTRING_UNCHANGE),
 		'hour' => AppContext::get_request()->get_postint('hour', 0),
 		'min' => AppContext::get_request()->get_postint('min', 0),
-		'description' => FormatingHelper::strparse(AppContext::get_request()->get_poststring('description', '')),	);
+		'description' => FormatingHelper::strparse(TextHelper::strprotect(AppContext::get_request()->get_poststring('description', ''))),	
+	);
 
 	$user = $Sql->query_array(DB_TABLE_MEMBER, 'level', 'login', "WHERE user_id = '" . $articles['user_id'] . "'", __LINE__, __FILE__);
 

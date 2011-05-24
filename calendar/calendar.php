@@ -321,8 +321,8 @@ elseif (!empty($id))
 
 		if (!empty($_POST['valid']))
 		{
-			$contents = FormatingHelper::strparse(AppContext::get_request()->get_poststring('contents', ''));
-			$title = AppContext::get_request()->get_poststring('title', '');
+			$contents = FormatingHelper::strparse(TextHelper::strprotect(AppContext::get_request()->get_poststring('contents', '')));
+			$title = TextHelper::strprotect(AppContext::get_request()->get_poststring('title', ''));
 				
 			//Cacul du timestamp à partir de la date envoyé.
 			$date = trim(AppContext::get_request()->get_poststring('date', ''));
@@ -416,8 +416,8 @@ elseif ($add) //Ajout d'un évenement
 
 	if (!empty($_POST['valid'])) //Enregistrement
 	{
-		$contents = FormatingHelper::strparse(AppContext::get_request()->get_poststring('contents', ''));
-		$title = AppContext::get_request()->get_poststring('title', '');
+		$contents = FormatingHelper::strparse(TextHelper::strprotect(AppContext::get_request()->get_poststring('contents', '')));
+		$title = TextHelper::strprotect(AppContext::get_request()->get_poststring('title', ''));
 
 		//Cacul du timestamp à partir de la date envoyé.
 		$date = trim(AppContext::get_request()->get_poststring('date', ''));

@@ -48,7 +48,7 @@ if ($add && empty($shout_id)) //Insertion
 	}
 	
 	$shout_pseudo = $User->check_level(MEMBER_LEVEL) ? $User->get_attribute('login') : substr(retrieve(POST, 'shoutboxForm_shoutbox_pseudo', $LANG['guest']), 0, 25);  //Pseudo posté.
-	$shout_contents = FormatingHelper::strparse(AppContext::get_request()->get_poststring('shoutboxForm_shoutbox_contents', ''));
+	$shout_contents = FormatingHelper::strparse(TextHelper::strprotect(AppContext::get_request()->get_poststring('shoutboxForm_shoutbox_contents', '')));
 	
 	if (!empty($shout_pseudo) && !empty($shout_contents))
 	{

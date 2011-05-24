@@ -33,10 +33,10 @@ require_once('../admin/admin_header.php');
 //Ajout du rang.
 if (!empty($_POST['add']))
 {
-	$name = AppContext::get_request()->get_poststring('name', '');
+	$name = TextHelper::strprotect(AppContext::get_request()->get_poststring('name', ''));
 	$msg = AppContext::get_request()->get_postint('msg', 0);
-	$icon = AppContext::get_request()->get_poststring('icon', '');
-	$icon = AppContext::get_request()->get_poststring('icon', '');
+	$icon = TextHelper::strprotect(AppContext::get_request()->get_poststring('icon', ''));
+	$icon = TextHelper::strprotect(AppContext::get_request()->get_poststring('icon', ''));
 
 	if (!empty($name) && $msg >= 0)
 	{

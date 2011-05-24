@@ -91,19 +91,19 @@ if (!empty($_POST['valid']) && !empty($id_post))
 				
 			//Informations.
 			$user_show_mail = !empty($_POST['user_show_mail']) ? 0 : 1;
-			$user_lang = AppContext::get_request()->get_poststring('user_lang', '');
-			$user_theme = AppContext::get_request()->get_poststring('user_theme', '');
-			$user_editor = AppContext::get_request()->get_poststring('user_editor', '');
+			$user_lang = TextHelper::strprotect(AppContext::get_request()->get_poststring('user_lang', ''));
+			$user_theme = TextHelper::strprotect(AppContext::get_request()->get_poststring('user_theme', ''));
+			$user_editor = TextHelper::strprotect(AppContext::get_request()->get_poststring('user_editor', ''));
 			$user_timezone = AppContext::get_request()->get_postint('user_timezone', 0);
 				
-			$user_local = AppContext::get_request()->get_poststring('user_local', '');
-			$user_occupation = AppContext::get_request()->get_poststring('user_occupation', '');
-			$user_hobbies = AppContext::get_request()->get_poststring('user_hobbies', '');
-			$user_desc = FormatingHelper::strparse(AppContext::get_request()->get_poststring('user_desc', ''));
+			$user_local = TextHelper::strprotect(AppContext::get_request()->get_poststring('user_local', ''));
+			$user_occupation = TextHelper::strprotect(AppContext::get_request()->get_poststring('user_occupation', ''));
+			$user_hobbies = TextHelper::strprotect(AppContext::get_request()->get_poststring('user_hobbies', ''));
+			$user_desc = FormatingHelper::strparse(TextHelper::strprotect(AppContext::get_request()->get_poststring('user_desc', '')));
 			$user_sex = AppContext::get_request()->get_postint('user_sex', 0);
-			$user_sign = FormatingHelper::strparse(AppContext::get_request()->get_poststring('user_sign', ''));
-			$user_msn = AppContext::get_request()->get_poststring('user_msn', '');
-			$user_yahoo= AppContext::get_request()->get_poststring('user_yahoo', '');
+			$user_sign = FormatingHelper::strparse(TextHelper::strprotect(AppContext::get_request()->get_poststring('user_sign', '')));
+			$user_msn = TextHelper::strprotect(AppContext::get_request()->get_poststring('user_msn', ''));
+			$user_yahoo= TextHelper::strprotect(AppContext::get_request()->get_poststring('user_yahoo', ''));
 				
 			$user_warning = AppContext::get_request()->get_postint('user_warning', 0);
 			$user_readonly = AppContext::get_request()->get_postint('user_readonly', 0);
@@ -111,7 +111,7 @@ if (!empty($_POST['valid']) && !empty($id_post))
 			$user_ban = AppContext::get_request()->get_postint('user_ban', 0);
 			$user_ban = ($user_ban > 0) ? (time() + $user_ban) : 0; //Bannissement!
 				
-			$user_web = AppContext::get_request()->get_poststring('user_web', '');
+			$user_web = TextHelper::strprotect(AppContext::get_request()->get_poststring('user_web', ''));
 			if (!empty($user_web) && substr($user_web, 0, 7) != 'http://' && substr($user_web, 0, 6) != 'ftp://' && substr($user_web, 0, 8) != 'https://')
 			$user_web = 'http://' . $user_web;
 				
@@ -243,7 +243,7 @@ elseif ($add && !empty($_POST['add'])) //Ajout du membre.
 	$password_bis = trim(AppContext::get_request()->get_poststring('password2_bis', ''));
 	$password_hash = !empty($password) ? strhash($password) : '';
 	$level = AppContext::get_request()->get_postint('level2', 0);
-	$mail = strtolower(AppContext::get_request()->get_poststring('mail2', ''));
+	$mail = strtolower(TextHelper::strprotect(AppContext::get_request()->get_poststring('mail2', '')));
 
 	if (AppContext::get_mail_service()->is_mail_valid($mail))
 	{
@@ -680,7 +680,7 @@ else
 		'C_DISPLAY_SEARCH_RESULT' => false
 	));
 
-	$search = AppContext::get_request()->get_poststring('login_mbr', '');
+	$search = TextHelper::strprotect(AppContext::get_request()->get_poststring('login_mbr', ''));
 	if (!empty($search)) //Moteur de recherche des members
 	{
 		$search = str_replace('*', '%', $search);

@@ -53,7 +53,7 @@ elseif ($uninstall) //Désinstallation du module
 {
 	if (!empty($_POST['valid_del']))
 	{
-		$idmodule = AppContext::get_request()->get_string('idmodule', '');
+		$idmodule = TextHelper::strprotect(AppContext::get_request()->get_string('idmodule', ''));
 		$drop_files = AppContext::get_request()->get_postbool('drop_files', false);
 
 		switch (ModulesManager::uninstall_module($idmodule, $drop_files))

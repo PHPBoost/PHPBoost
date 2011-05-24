@@ -40,9 +40,9 @@ $server_configuration = new ServerConfiguration();
 if (!empty($_POST['valid']) && empty($_POST['cache']))
 {
 	$general_config = GeneralConfig::load();
-	$general_config->set_site_name(stripslashes(AppContext::get_request()->get_poststring('site_name', '')));
-	$general_config->set_site_description(stripslashes(AppContext::get_request()->get_poststring('site_desc', '')));
-	$general_config->set_site_keywords(stripslashes(AppContext::get_request()->get_poststring('site_keyword', '')));
+	$general_config->set_site_name(stripslashes(TextHelper::strprotect(AppContext::get_request()->get_poststring('site_name', ''))));
+	$general_config->set_site_description(stripslashes(TextHelper::strprotect(AppContext::get_request()->get_poststring('site_desc', ''))));
+	$general_config->set_site_keywords(stripslashes(TextHelper::strprotect(AppContext::get_request()->get_poststring('site_keyword', ''))));
 	$start_page = !empty($_POST['start_page2']) ? TextHelper::strprotect($_POST['start_page2'], TextHelper::HTML_NO_PROTECT) : (!empty($_POST['start_page']) ? TextHelper::strprotect($_POST['start_page'], TextHelper::HTML_NO_PROTECT) : DispatchManager::get_url('/member', '/member')->absolute());
 	$general_config->set_home_page(stripslashes($start_page));
 	GeneralConfig::save();
@@ -55,8 +55,8 @@ if (!empty($_POST['valid']) && empty($_POST['cache']))
 
 	$user_accounts_config = UserAccountsConfig::load();
 	// TODO change read authorization theme and lang for the guest
-	$user_accounts_config->set_default_lang(stripslashes(AppContext::get_request()->get_poststring('lang', '')));
-	$user_accounts_config->set_default_theme(stripslashes(AppContext::get_request()->get_poststring('theme', '')));
+	$user_accounts_config->set_default_lang(TextHelper::strprotect(AppContext::get_request()->get_poststring('lang', '')));
+	$user_accounts_config->set_default_theme(TextHelper::strprotect(AppContext::get_request()->get_poststring('theme', '')));
 	UserAccountsConfig::save();
 
 	AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);

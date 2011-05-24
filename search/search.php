@@ -37,9 +37,9 @@ $Template->set_filenames(array(
 
 //--------------------------------------------------------------------- Params
 // A protéger impérativement;
-$search = AppContext::get_request()->get_string('q', '');
+$search = TextHelper::strprotect(AppContext::get_request()->get_string('q', ''));
 $unsecure_search = stripslashes(AppContext::get_request()->get_string('q', ''));
-$search_in = AppContext::get_request()->get_poststring('search_in', 'all');
+$search_in = TextHelper::strprotect(AppContext::get_request()->get_poststring('search_in', 'all'));
 $selected_modules = retrieve(POST, 'searched_modules', array());
 $query_mode = AppContext::get_request()->get_postbool('query_mode', true);
 //--------------------------------------------------------------------- Header

@@ -195,9 +195,9 @@ elseif (!empty($_POST['previs']) && !empty($id_post))
 }				
 elseif (!empty($_POST['valid']) && !empty($id_post)) //inject
 {
-	$title = AppContext::get_request()->get_poststring('name', '');
-	$contents = FormatingHelper::strparse(AppContext::get_request()->get_poststring('contents', ''));
-	$url = AppContext::get_request()->get_poststring('url', '');
+	$title = TextHelper::strprotect(AppContext::get_request()->get_poststring('name', ''));
+	$contents = FormatingHelper::strparse(TextHelper::strprotect(AppContext::get_request()->get_poststring('contents', '')));
+	$url = TextHelper::strprotect(AppContext::get_request()->get_poststring('url', ''));
 	$idcat = AppContext::get_request()->get_postint('idcat', 0);
 	$compt = AppContext::get_request()->get_postint('compt', 0);
 	$aprob = AppContext::get_request()->get_postint('aprob', 0);

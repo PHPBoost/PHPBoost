@@ -164,7 +164,7 @@ elseif (!empty($table) && $action == 'update') //Mise à jour.
 
 	$value = TextHelper::strprotect(AppContext::get_request()->get_getstring('value', ''));
 	$field = TextHelper::strprotect(AppContext::get_request()->get_getstring('field', ''));
-	$submit = AppContext::get_request()->get_poststring('submit', '');
+	$submit = TextHelper::strprotect(AppContext::get_request()->get_poststring('submit', ''));
 	if (!empty($submit)) //On exécute une requête
 	{
 		$request = '';
@@ -210,7 +210,7 @@ elseif (!empty($table) && $action == 'insert') //Mise à jour.
 {
 	$table_structure = $backup->extract_table_structure(array($table)); //Extraction de la structure de la table.
 
-	$submit = AppContext::get_request()->get_poststring('submit', '');
+	$submit = TextHelper::strprotect(AppContext::get_request()->get_poststring('submit', ''));
 	if (!empty($submit)) //On exécute une requête
 	{
 		$Session->csrf_get_protect(); //Protection csrf

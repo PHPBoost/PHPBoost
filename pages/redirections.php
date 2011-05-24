@@ -36,9 +36,9 @@ $id_new = AppContext::get_request()->get_getint('new', 0);
 $id_new_post = AppContext::get_request()->get_postint('id_new', 0);
 $del_redirection = AppContext::get_request()->get_getint('del', 0);
 $id_page = $id_redirection > 0 ? $id_redirection : ($id_new > 0 ? $id_new : $id_rename);
-$new_title = AppContext::get_request()->get_poststring('new_title', '');
-$redirection_name = AppContext::get_request()->get_poststring('redirection_name', '');
-$error = AppContext::get_request()->get_getstring('error', '');
+$new_title = TextHelper::strprotect(AppContext::get_request()->get_poststring('new_title', ''));
+$redirection_name = TextHelper::strprotect(AppContext::get_request()->get_poststring('redirection_name', ''));
+$error = TextHelper::strprotect(AppContext::get_request()->get_getstring('error', ''));
 
 if (!empty($new_title) && $id_rename_post > 0)
 {

@@ -36,8 +36,8 @@ $del = !empty($_GET['del']) ? true : false;
 
 if (!empty($_POST['valid']) && !empty($id_post)) //Mise à jour.
 {
-	$url_smiley = AppContext::get_request()->get_poststring('url_smiley', '');
-	$code_smiley = AppContext::get_request()->get_poststring('code_smiley', '');
+	$url_smiley = TextHelper::strprotect(AppContext::get_request()->get_poststring('url_smiley', ''));
+	$code_smiley = TextHelper::strprotect(AppContext::get_request()->get_poststring('code_smiley', ''));
 
 	//On met à jour
 	if (!empty($url_smiley) && !empty($code_smiley))

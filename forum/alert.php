@@ -109,8 +109,8 @@ if (!empty($alert_post))
 	$nbr_alert = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "forum_alerts WHERE idtopic = '" . $alert_post ."' AND status = 0", __LINE__, __FILE__);
 	if (empty($nbr_alert)) //On enregistre
 	{
-		$alert_title = AppContext::get_request()->get_poststring('title', '');
-		$alert_contents = FormatingHelper::strparse(AppContext::get_request()->get_poststring('contents', ''));
+		$alert_title = TextHelper::strprotect(AppContext::get_request()->get_poststring('title', ''));
+		$alert_contents = FormatingHelper::strparse(TextHelper::strprotect(AppContext::get_request()->get_poststring('contents', '')));
 
 		//Instanciation de la class du forum.
 		$Forumfct = new Forum;

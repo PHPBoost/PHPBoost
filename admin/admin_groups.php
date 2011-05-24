@@ -40,11 +40,11 @@ $user_id = AppContext::get_request()->get_getint('user_id', 0);
 
 if (!empty($_POST['valid']) && !empty($idgroup_post)) //Modification du groupe.
 {
-	$name = AppContext::get_request()->get_poststring('name', '');
-	$img = AppContext::get_request()->get_poststring('img', '');
+	$name = TextHelper::strprotect(AppContext::get_request()->get_poststring('name', ''));
+	$img = TextHelper::strprotect(AppContext::get_request()->get_poststring('img', ''));
 	$auth_flood = AppContext::get_request()->get_postint('auth_flood', 1);
 	$pm_group_limit = AppContext::get_request()->get_postint('pm_group_limit', 75);
-	$color_group = AppContext::get_request()->get_poststring('color_group', '');
+	$color_group = TextHelper::strprotect(AppContext::get_request()->get_poststring('color_group', ''));
 	$data_group_limit = isset($_POST['data_group_limit']) ? NumberHelper::numeric($_POST['data_group_limit'], 'float') * 1024 : '5120';
 
 	$group_auth = array('auth_flood' => $auth_flood, 'pm_group_limit' => $pm_group_limit, 'data_group_limit' => $data_group_limit);
@@ -56,11 +56,11 @@ if (!empty($_POST['valid']) && !empty($idgroup_post)) //Modification du groupe.
 }
 elseif (!empty($_POST['valid']) && $add_post) //ajout  du groupe.
 {
-	$name = AppContext::get_request()->get_poststring('name', '');
-	$img = AppContext::get_request()->get_poststring('img', '');
+	$name = TextHelper::strprotect(AppContext::get_request()->get_poststring('name', ''));
+	$img = TextHelper::strprotect(AppContext::get_request()->get_poststring('img', ''));
 	$auth_flood = AppContext::get_request()->get_postint('auth_flood', 1);
 	$pm_group_limit = AppContext::get_request()->get_postint('pm_group_limit', 75);
-	$color_group = AppContext::get_request()->get_poststring('color_group', '');
+	$color_group = TextHelper::strprotect(AppContext::get_request()->get_poststring('color_group', ''));
 	$data_group_limit = isset($_POST['data_group_limit']) ? NumberHelper::numeric($_POST['data_group_limit'], 'float') * 1024 : '5120';
 
 	if (!empty($name))
@@ -96,7 +96,7 @@ elseif (!empty($idgroup) && $add_mbr) //Ajout du membre au groupe.
 {
 	$Session->csrf_get_protect(); //Protection csrf
 
-	$login = AppContext::get_request()->get_poststring('login_mbr', '');
+	$login = TextHelper::strprotect(AppContext::get_request()->get_poststring('login_mbr', '');
 	$user_id = $Sql->query("SELECT user_id FROM " . DB_TABLE_MEMBER . " WHERE login = '" . $login . "'", __LINE__, __FILE__);
 	if (!empty($user_id))
 	{

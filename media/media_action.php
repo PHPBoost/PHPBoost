@@ -237,7 +237,7 @@ elseif (!empty($_POST['submit']))
 		'contents' => trim(AppContext::get_request()->get_poststring('contents', '')),
 		'approved' => retrieve(POST, 'approved', 0, TBOOL),
 		'contrib' => retrieve(POST, 'contrib', 0, TBOOL),
-		'counterpart' => FormatingHelper::strparse(AppContext::get_request()->get_poststring('counterpart', ''))
+		'counterpart' => FormatingHelper::strparse(TextHelper::strprotect(AppContext::get_request()->get_poststring('counterpart', '')))
 	);
 
 	$auth_cat = !empty($MEDIA_CATS[$media['idcat']]['auth']) ? $MEDIA_CATS[$media['idcat']]['auth'] : $MEDIA_CATS[0]['auth'];

@@ -57,12 +57,12 @@ $Bread_crumb->add($LANG['title_post'], '');
 define('TITLE', $LANG['title_forum']);
 require_once('../kernel/header.php');
 
-$new_get = AppContext::get_request()->get_getstring('new', '');
-$idt_get = AppContext::get_request()->get_getstring('idt', '');
-$error_get = AppContext::get_request()->get_getstring('error', '');
+$new_get = TextHelper::strprotect(AppContext::get_request()->get_getstring('new', ''));
+$idt_get = TextHelper::strprotect(AppContext::get_request()->get_getstring('idt', ''));
+$error_get = TextHelper::strprotect(AppContext::get_request()->get_getstring('error', ''));
 $previs = AppContext::get_request()->get_postbool('prw', false); //Prévisualisation des messages.
 $post_topic = AppContext::get_request()->get_postbool('post_topic', false);
-$preview_topic = AppContext::get_request()->get_poststring('prw_t', '');
+$preview_topic = TextHelper::strprotect(AppContext::get_request()->get_poststring('prw_t', ''));
 
 //Niveau d'autorisation de la catégorie
 if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
@@ -105,7 +105,7 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 			'forum_bottom'=> 'forum/forum_bottom.tpl'
 		));
 
-		$contents = AppContext::get_request()->get_poststring('contents', '');
+		$contents = TextHelper::strprotect(AppContext::get_request()->get_poststring('contents', ''));
 		$post_update = trim(AppContext::get_request()->get_poststring('p_update', ''));
 
 		$update = !empty($post_update) ? $post_update : url('?new=n_msg&amp;idt=' . $idt_get . '&amp;id=' . $id_get . '&amp;token=' . $Session->get_token());
@@ -158,9 +158,9 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 			if ($is_modo)
 				$check_status = 1;
 
-			$contents = AppContext::get_request()->get_poststring('contents', '');
-			$title = AppContext::get_request()->get_poststring('title', '');
-			$subtitle = AppContext::get_request()->get_poststring('desc', '');
+			$contents = TextHelper::strprotect(AppContext::get_request()->get_poststring('contents', ''));
+			$title = TextHelper::strprotect(AppContext::get_request()->get_poststring('title', ''));
+			$subtitle = TextHelper::strprotect(AppContext::get_request()->get_poststring('desc', ''));
 
 			//Mod anti Flood
 			if ($check_time !== false && $check_status != 0)
@@ -180,7 +180,7 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 					list($last_topic_id, $last_msg_id) = $Forumfct->Add_topic($id_get, $title, $subtitle, $contents, $type); //Insertion nouveau topic.
 
 					//Ajout d'un sondage en plus du topic.
-					$question = AppContext::get_request()->get_poststring('question', '');
+					$question = TextHelper::strprotect(AppContext::get_request()->get_poststring('question', ''));
 					if (!empty($question))
 					{
 						$poll_type = AppContext::get_request()->get_postint('poll_type', 0);
@@ -221,7 +221,7 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 
 			$title = trim(AppContext::get_request()->get_poststring('title', ''));
 			$subtitle = trim(AppContext::get_request()->get_poststring('desc', ''));
-			$contents = AppContext::get_request()->get_poststring('contents', '');
+			$contents = TextHelper::strprotect(AppContext::get_request()->get_poststring('contents', ''));
 			$question = trim(AppContext::get_request()->get_poststring('question', ''));
 
 			$is_modo = $User->check_auth($CAT_FORUM[$id_get]['auth'], EDIT_CAT_FORUM);
@@ -419,7 +419,7 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 				AppContext::get_response()->redirect( url(HOST . SCRIPT . '?error=flood&id=' . $id_get . '&idt=' . $idt_get, '', '&') . '#message_helper');
 		}
 
-		$contents = AppContext::get_request()->get_poststring('contents', '');
+		$contents = TextHelper::strprotect(AppContext::get_request()->get_poststring('contents', ''));
 
 		//Si le topic n'est pas vérrouilé on ajoute le message.
 		if ($topic['status'] != 0 || $is_modo)
@@ -479,9 +479,9 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 
 			if ($update && $post_topic)
 			{
-				$title = AppContext::get_request()->get_poststring('title', '');
-				$subtitle = AppContext::get_request()->get_poststring('desc', '');
-				$contents = AppContext::get_request()->get_poststring('contents', '');
+				$title = TextHelper::strprotect(AppContext::get_request()->get_poststring('title', ''));
+				$subtitle = TextHelper::strprotect(AppContext::get_request()->get_poststring('desc', ''));
+				$contents = TextHelper::strprotect(AppContext::get_request()->get_poststring('contents', ''));
 				$type = $is_modo ? AppContext::get_request()->get_postint('type', 0) : 0;
 
 				if (!empty($title) && !empty($contents))
@@ -490,7 +490,7 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 
 					//Mise à jour du sondage en plus du topic.
 					$del_poll = AppContext::get_request()->get_postbool('del_poll', false);
-					$question = AppContext::get_request()->get_poststring('question', '');
+					$question = TextHelper::strprotect(AppContext::get_request()->get_poststring('question', ''));
 					if (!empty($question) && !$del_poll) //Enregistrement du sondage.
 					{
 						//Mise à jour si le sondage existe, sinon création.
@@ -535,7 +535,7 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 
 				$title = trim(AppContext::get_request()->get_poststring('title', ''));
 				$subtitle = trim(AppContext::get_request()->get_poststring('desc', ''));
-				$contents = AppContext::get_request()->get_poststring('contents', '');
+				$contents = TextHelper::strprotect(AppContext::get_request()->get_poststring('contents', ''));
 				$question = trim(AppContext::get_request()->get_poststring('question', ''));
 
 				$type = AppContext::get_request()->get_postint('type', 0);
@@ -640,7 +640,7 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 				$contents = $Sql->query("SELECT contents FROM " . PREFIX . "forum_msg WHERE id = '" . $id_first . "'", __LINE__, __FILE__);
 
 				//Gestion des erreurs à l'édition.
-				$get_error_e = AppContext::get_request()->get_getstring('errore', '');
+				$get_error_e = TextHelper::strprotect(AppContext::get_request()->get_getstring('errore', ''));
 				if ($get_error_e == 'incomplete_t')
 					$Template->put('message_helper', MessageHelper::display($LANG['e_incomplete'], E_USER_NOTICE));
 
@@ -782,7 +782,7 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 
 			if ($update && AppContext::get_request()->get_postbool('edit_msg', false))
 			{
-				$contents = AppContext::get_request()->get_poststring('contents', '');
+				$contents = TextHelper::strprotect(AppContext::get_request()->get_poststring('contents', ''));
 				if (!empty($contents))
 				{
 					$nbr_msg_before = $Forumfct->Update_msg($idt_get, $id_m, $contents, $user_id_msg);
@@ -808,7 +808,7 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 
 				$contents = $Sql->query("SELECT contents FROM " . PREFIX . "forum_msg WHERE id = '" . $id_m . "'", __LINE__, __FILE__);
 				//Gestion des erreurs à l'édition.
-				$get_error_e = AppContext::get_request()->get_getstring('errore', '');
+				$get_error_e = TextHelper::strprotect(AppContext::get_request()->get_getstring('errore', ''));
 				if ($get_error_e == 'incomplete')
 					$Template->put('message_helper', MessageHelper::display($LANG['e_incomplete'], E_USER_NOTICE));
 

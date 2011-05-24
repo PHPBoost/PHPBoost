@@ -28,7 +28,7 @@
 function search_mini($position, $block)
 {
     $lang = LangLoader::get('main', 'search');
-    $search = AppContext::get_request()->get_string('q', '');
+    $search = TextHelper::strprotect(AppContext::get_request()->get_string('q', ''));
 
     $tpl = new FileTemplate('search/search_mini.tpl');
 

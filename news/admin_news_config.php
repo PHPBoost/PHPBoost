@@ -47,8 +47,8 @@ if (!empty($_POST['submit']))
 		'nbr_column' => AppContext::get_request()->get_postint('nbr_column', 1),
 		'nbr_news' => $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_NEWS . " WHERE visible = 1", __LINE__, __FILE__),
 		'global_auth' => Authorizations::build_auth_array_from_form(AUTH_NEWS_READ, AUTH_NEWS_CONTRIBUTE, AUTH_NEWS_WRITE, AUTH_NEWS_MODERATE),
-		'edito_title' => stripslashes(AppContext::get_request()->get_poststring('edito_title', '')),
-		'edito' => stripslashes(FormatingHelper::strparse(AppContext::get_request()->get_poststring('edito', '')))
+		'edito_title' => stripslashes(TextHelper::strprotect(AppContext::get_request()->get_poststring('edito_title', ''))),
+		'edito' => stripslashes(FormatingHelper::strparse(TextHelper::strprotect(AppContext::get_request()->get_poststring('edito', ''))))
 	);
 
 	$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($config_news)) . "' WHERE name = 'news'", __LINE__, __FILE__);

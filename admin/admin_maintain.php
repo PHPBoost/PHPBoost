@@ -69,7 +69,7 @@ if (!empty($_POST['valid']))
 	}
 
 	$maintenance_config->set_auth(Authorizations::build_auth_array_from_form(1));
-	$maintenance_config->set_message(stripslashes(FormatingHelper::strparse(AppContext::get_request()->get_poststring('contents', ''))));
+	$maintenance_config->set_message(stripslashes(FormatingHelper::strparse(TextHelper::strprotect(AppContext::get_request()->get_poststring('contents', '')))));
 	$maintenance_config->set_display_duration((boolean)AppContext::get_request()->get_postint('display_delay', 0));
 	$maintenance_config->set_display_duration_for_admin((boolean)AppContext::get_request()->get_postint('maintain_display_admin', 0));
 

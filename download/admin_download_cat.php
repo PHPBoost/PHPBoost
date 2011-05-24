@@ -86,7 +86,7 @@ elseif (AppContext::get_request()->get_postbool('submit', false))
 	//Deleting a category
 	if ($cat_to_del_post > 0)
 	{
-		$action = AppContext::get_request()->get_poststring('action', '');
+		$action = TextHelper::strprotect(AppContext::get_request()->get_poststring('action', '');
 		$delete_content = $action != 'move';
 		$id_parent = AppContext::get_request()->get_postint('id_parent', 0);
 
@@ -107,10 +107,10 @@ elseif (AppContext::get_request()->get_postbool('submit', false))
 	{
 		$id_cat = AppContext::get_request()->get_postint('idcat', 0);
 		$id_parent = AppContext::get_request()->get_postint('id_parent', 0);
-		$name = AppContext::get_request()->get_poststring('name', '');
+		$name = TextHelper::strprotect(AppContext::get_request()->get_poststring('name', ''));
 		$description = FormatingHelper::strparse(AppContext::get_request()->get_poststring('description', ''));
-		$icon = AppContext::get_request()->get_poststring('image', '');
-		$icon_path = AppContext::get_request()->get_poststring('alt_image', '');
+		$icon = TextHelper::strprotect(AppContext::get_request()->get_poststring('image', ''));
+		$icon_path = TextHelper::strprotect(AppContext::get_request()->get_poststring('alt_image', ''));
 		$visible = AppContext::get_request()->get_postbool('visible_cat', false);
 		$secure = AppContext::get_request()->get_postint('secure', -1);
 
