@@ -37,7 +37,7 @@ $id_get = AppContext::get_request()->get_getint('id', 0); //Id du topic à déplac
 $id_post = AppContext::get_request()->get_postint('id', 0); //Id du topic à déplacer.
 $id_get_msg = AppContext::get_request()->get_getint('idm', 0); //Id du message à partir duquel il faut scinder le topic.
 $id_post_msg = AppContext::get_request()->get_postint('idm', 0); //Id du message à partir duquel il faut scinder le topic.
-$error_get = AppContext::get_request()->get_getstring('error', ''); //Gestion des erreurs.
+$error_get = TextHelper::strprotect(AppContext::get_request()->get_getstring('error', '')); //Gestion des erreurs.
 $post_topic = AppContext::get_request()->get_poststring('post_topic', ''); //Création du topic scindé.
 $preview_topic = AppContext::get_request()->get_poststring('prw_t', ''); //Prévisualisation du topic scindé.
 

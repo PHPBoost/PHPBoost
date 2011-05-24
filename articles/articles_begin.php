@@ -36,7 +36,7 @@ $Cache->load('articles');
 if (empty($idartcat))//Racine.
 {
 	$default_model = $Sql->query_array(DB_TABLE_ARTICLES_MODEL, '*', "WHERE model_default = 1 ", __LINE__, __FILE__);
-	
+
 	$ARTICLES_CAT[0]['auth'] = $CONFIG_ARTICLES['global_auth'];
 	$ARTICLES_CAT[0]['visible'] = 1;
 	$ARTICLES_CAT[0]['name'] = $LANG['root'];
@@ -69,13 +69,13 @@ if (isset($ARTICLES_CAT[$idartcat]) )
 			
 	}
 	else
-		define('TITLE', $ARTICLES_LANG['title_articles'] . ' - ' . addslashes($ARTICLES_CAT[$idartcat]['name']));
+	define('TITLE', $ARTICLES_LANG['title_articles'] . ' - ' . addslashes($ARTICLES_CAT[$idartcat]['name']));
 }
 else
 {
 	$Bread_crumb->add($ARTICLES_LANG['title_articles'], 'articles.php');
 	if (!defined('TITLE'))
-		define('TITLE', $ARTICLES_LANG['title_articles']);
+	define('TITLE', $ARTICLES_LANG['title_articles']);
 }
 
 ?>

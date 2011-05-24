@@ -56,10 +56,10 @@ class CLIDumpCommand implements CLICommand
 		{
 			$tables[] = $arg;
 		}
-		
+
 		$this->dump($file_name, $tables);
 	}
-	
+
 	private function dump($file_path, $tables)
 	{
 		Environment::try_to_increase_max_execution_time();

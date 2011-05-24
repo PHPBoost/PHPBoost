@@ -6,14 +6,14 @@
  *   copyright            : (C) 2008 Sautel Benoit
  *   email                : ben.popeye@phpboost.com
  *
- *   
+ *
  ###################################################
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -36,11 +36,11 @@ define('NUM_ALERTS_PER_PAGE', 20);
 $pagination = new DeprecatedPagination();
 
 //Gestion des critères de tri
-$criteria = AppContext::get_request()->get_getstring('criteria', 'current_status');
-$order = AppContext::get_request()->get_getstring('order', 'asc');
+$criteria = TextHelper::strprotect(AppContext::get_request()->get_getstring('criteria', 'current_status'));
+$order = TextHelper::strprotect(AppContext::get_request()->get_getstring('order', 'asc'));
 
 if (!in_array($criteria, array('entitled', 'current_status', 'creation_date', 'priority')))
-	$criteria = 'current_status';
+$criteria = 'current_status';
 $order = $order == 'desc' ? 'desc' : 'asc';
 
 //On va chercher la liste des alertes
@@ -48,7 +48,7 @@ $alerts_list = AdministratorAlertService::get_all_alerts($criteria, $order, ($pa
 foreach ($alerts_list as $alert)
 {
 	$img_type = '';
-	
+
 	switch ($alert->get_priority())
 	{
 		case AdministratorAlert::ADMIN_ALERT_VERY_LOW_PRIORITY:
@@ -69,11 +69,11 @@ foreach ($alerts_list as $alert)
 			$color = 'F3A29B';
 			break;
 		default:
-		$color = 'FFFFFF';
+			$color = 'FFFFFF';
 	}
-	
+
 	$creation_date = $alert->get_creation_date();
-	
+
 	$template->assign_block_vars('alerts', array(
 		'C_PROCESSED' => $alert->get_status() == AdministratorAlert::ADMIN_ALERT_STATUS_PROCESSED,
 		'FIXING_URL' => url(PATH_TO_ROOT . '/' . $alert->get_fixing_url()),
@@ -120,7 +120,7 @@ $template->put_all(array(
 	'U_ORDER_STATUS_DESC' => url('admin_alerts.php?p=' . $pagination->get_var_page('p') . '&amp;criteria=current_status&amp;order=desc')
 
 ));
-	
+
 $template->display();
 
 require_once('../admin/admin_footer.php');

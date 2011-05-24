@@ -13,7 +13,7 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -25,9 +25,9 @@
  *
  ###################################################*/
 
-if (defined('PHPBOOST') !== true)	
-	exit;
-	
+if (defined('PHPBOOST') !== true)
+exit;
+
 load_module_lang('calendar'); //Chargement de la langue du module.
 define('TITLE', $LANG['title_calendar']);
 $calendar_config = CalendarConfig::load();

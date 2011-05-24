@@ -94,7 +94,7 @@ if (!empty($id) && !$del)
 	$Sql->query_close($result);
 	
 	//Gestion erreur.
-	$get_error = AppContext::get_request()->get_getstring('error', '');
+	$get_error = TextHelper::strprotect(AppContext::get_request()->get_getstring('error', ''));
 	if ($get_error == 'incomplete')
 		$Template->put('message_helper', MessageHelper::display($LANG['e_incomplete'], E_USER_NOTICE));
 	elseif ($i == 0) //Aucune catégorie => alerte.	 

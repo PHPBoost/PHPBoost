@@ -36,11 +36,11 @@ $bread_crumb_key = 'wiki_post';
 require_once('../wiki/wiki_bread_crumb.php');
 
 $is_cat = AppContext::get_request()->get_postbool('is_cat', false) ? 1 : 0;
-$is_cat_get = (AppContext::get_request()->get_getstring('type', '') == 'cat') ? 1 : 0;
+$is_cat_get = (TextHelper::strprotect(AppContext::get_request()->get_getstring('type', '')) == 'cat') ? 1 : 0;
 $is_cat = $is_cat > 0 ? $is_cat : $is_cat_get;
 $id_edit = AppContext::get_request()->get_postint('id_edit', 0);
 $title = AppContext::get_request()->get_poststring('title', '');
-$encoded_title = AppContext::get_request()->get_getstring('title', '');
+$encoded_title = TextHelper::strprotect(AppContext::get_request()->get_getstring('title', ''));
 $contents = wiki_parse(AppContext::get_request()->get_poststring('contents', ''));
 $contents_preview = htmlspecialchars(trim(AppContext::get_request()->get_poststring('contents', '')));
 $id_cat = AppContext::get_request()->get_getint('id_parent', 0);

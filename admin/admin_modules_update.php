@@ -36,8 +36,8 @@ if ($update) //Mise à jour du module
 	//Récupération de l'identifiant du module
 	$module_name = '';
 	foreach ($_POST as $key => $value)
-		if ($value == $LANG['update_module'])
-			$module_name = $key;
+	if ($value == $LANG['update_module'])
+	$module_name = $key;
 
 	$activ_module = retrieve(POST, $module_name . 'activ', 0);
 
@@ -76,7 +76,7 @@ if ($update) //Mise à jour du module
 			{
 				$array_info = explode('_', $file);
 				if (isset($array_info[1]) && version_compare($info_module['version'], $array_info[1], '>=') && version_compare($previous_version, $array_info[1], '<'))
-					$filesupdate[$array_info[1]] = $file;
+				$filesupdate[$array_info[1]] = $file;
 			}
 		}
 
@@ -109,7 +109,7 @@ if ($update) //Mise à jour du module
 		$Cache->Generate_file('modules');
 		$Cache->Generate_file('menus');
 
-    	ModulesCssFilesCache::invalidate();
+		ModulesCssFilesCache::invalidate();
 
 		//Mise à jour du .htaccess pour le mod rewrite, si il est actif et que le module le supporte
 		if (!empty($info_module['url_rewrite']) && ServerEnvironmentConfig::load()->is_url_rewriting_enabled())
@@ -120,7 +120,7 @@ if ($update) //Mise à jour du module
 		AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);
 	}
 	else
-		AppContext::get_response()->redirect('/admin/admin_modules_update.php?error=incomplete#message_helper');
+	AppContext::get_response()->redirect('/admin/admin_modules_update.php?error=incomplete#message_helper');
 }
 elseif (!empty($_FILES['upload_module']['name'])) //Upload et décompression de l'archive Zip/Tar
 {
@@ -131,9 +131,9 @@ elseif (!empty($_FILES['upload_module']['name'])) //Upload et décompression de l
 	@clearstatcache();
 	$dir = PATH_TO_ROOT .'/';
 	if (!is_writable($dir))
-		@chmod($dir, 0755);
+	@chmod($dir, 0755);
 	if (!is_writable($dir . $module_name))
-		@chmod($dir . $module_name, 0755);
+	@chmod($dir . $module_name, 0755);
 
 	@clearstatcache();
 	$error = '';
@@ -151,30 +151,30 @@ elseif (!empty($_FILES['upload_module']['name'])) //Upload et décompression de l
 				{
 					import('/kernel/lib/php/pcl/pcltar', LIB_IMPORT);
 					if (!$zip_files = PclTarExtract($Upload->get_filename(), PATH_TO_ROOT .'/'))
-						$error = $Upload->get_error();
+					$error = $Upload->get_error();
 				}
 				elseif ($Upload->get_extension() == 'zip')
 				{
 					import('/kernel/lib/php/pcl/pclzip', LIB_IMPORT);
 					$Zip = new PclZip($archive_path);
 					if (!$zip_files = $Zip->extract(PCLZIP_OPT_PATH, PATH_TO_ROOT .'/', PCLZIP_OPT_SET_CHMOD, 0666))
-						$error = $Upload->get_error();
+					$error = $Upload->get_error();
 				}
 				else
-					$error = 'e_upload_invalid_format';
+				$error = 'e_upload_invalid_format';
 
 				//Suppression de l'archive désormais inutile.
 				if (!@unlink($archive_path))
-					$error = 'e_unlink_disabled';
+				$error = 'e_unlink_disabled';
 			}
 			else
-				$error = 'e_upload_error';
+			$error = 'e_upload_error';
 		}
 		else
-			$error = 'e_upload_already_exist';
+		$error = 'e_upload_already_exist';
 	}
 	else
-		$error = 'e_upload_failed_unwritable';
+	$error = 'e_upload_failed_unwritable';
 
 	$error = !empty($error) ? '?error=' . $error : '';
 	AppContext::get_response()->redirect(HOST . SCRIPT . $error);
@@ -183,7 +183,7 @@ else
 {
 	$template = new FileTemplate('admin/admin_modules_update.tpl');
 
-    // Intégration du système d'updates des modules avec celui du site
+	// Intégration du système d'updates des modules avec celui du site
 
 	$updates_availables = 0;
 
@@ -201,7 +201,7 @@ else
 			// Builds the asked updates (kernel updates, module updates, theme updates or all of them)
 			$update = unserialize($update_alert->get_properties());
 			if ($update_type == '' || $update->get_type() == $update_type)
-				$updates[] = $update;
+			$updates[] = $update;
 		}
 
 		foreach ($updates as $update)
@@ -258,7 +258,7 @@ else
 				'L_UPDATE_PACK' => $LANG['app_update__update_pack'],
 				'L_DOWNLOAD_THE_UPDATE_PACK' => $LANG['download_the_update_pack'],
 				'C_ALL' => $update_type == ''
-			));
+				));
 
 		}
 		else
@@ -283,12 +283,12 @@ else
 	));
 
 	//Gestion erreur.
-	$get_error = AppContext::get_request()->get_getstring('error', '');
+	$get_error = TextHelper::strprotect(AppContext::get_request()->get_getstring('error', ''));
 	$array_error = array('e_upload_invalid_format', 'e_upload_max_weight', 'e_upload_error', 'e_upload_php_code', 'e_upload_failed_unwritable', 'e_upload_already_exist', 'e_unlink_disabled');
 	if (in_array($get_error, $array_error))
-		$template->put('message_helper', MessageHelper::display($LANG[$get_error], E_USER_WARNING));
+	$template->put('message_helper', MessageHelper::display($LANG[$get_error], E_USER_WARNING));
 	if ($get_error == 'incomplete')
-		$template->put('message_helper', MessageHelper::display($LANG['e_incomplete'], E_USER_NOTICE));
+	$template->put('message_helper', MessageHelper::display($LANG['e_incomplete'], E_USER_NOTICE));
 
 	$template->put_all(array(
 		'L_MODULES_MANAGEMENT' => $LANG['modules_management'],

@@ -13,7 +13,7 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -40,19 +40,19 @@ if ($file_id > 0) //Contenu
 {
 	$notation->set_id_in_module($file_id);
 	$comments->set_id_in_module($file_id);
-	
+
 	$Template->set_filenames(array('download'=> 'download/download.tpl'));
-	
+
 	if ($download_info['size'] > 1)
-		$size_tpl = $download_info['size'] . ' ' . $LANG['unit_megabytes'];
+	$size_tpl = $download_info['size'] . ' ' . $LANG['unit_megabytes'];
 	elseif ($download_info['size'] > 0)
-		$size_tpl = ($download_info['size'] * 1024) . ' ' . $LANG['unit_kilobytes'];
+	$size_tpl = ($download_info['size'] * 1024) . ' ' . $LANG['unit_kilobytes'];
 	else
-		$size_tpl = $DOWNLOAD_LANG['unknown_size'];
-	
- 	$creation_date = new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $download_info['timestamp']);
- 	$release_date = new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $download_info['release_timestamp']);
-	
+	$size_tpl = $DOWNLOAD_LANG['unknown_size'];
+
+	$creation_date = new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $download_info['timestamp']);
+	$release_date = new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $download_info['release_timestamp']);
+
 	$Template->put_all(array(
 		'C_DISPLAY_DOWNLOAD' => true,
 		'C_IMG' => !empty($download_info['image']),
@@ -89,7 +89,7 @@ if ($file_id > 0) //Contenu
 		'U_DOWNLOAD_FILE' => url('count.php?id=' . $file_id, 'file-' . $file_id . '+' . Url::encode_rewrite($download_info['title']) . '.php'),
 		'U_DEADLINK' => url('download.php?id=' . $file_id . '&deadlink=1')
 	));
-	
+
 	//Affichage commentaires.
 	if (isset($_GET['com']))
 	{
@@ -97,12 +97,12 @@ if ($file_id > 0) //Contenu
 			'COMMENTS' => CommentsService::display($comments)->render()
 		));
 	}
-	
+
 	// Gestion des liens morts
 	if ($deadlink > 0)
 	{
 		$nbr_alert = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "events WHERE id_in_module = '" . $file_id . "' AND module='download' AND current_status = 0", __LINE__, __FILE__);
-		if (empty($nbr_alert)) 
+		if (empty($nbr_alert))
 		{
 			$contribution = new Contribution();
 			$contribution->set_id_in_module($file_id);
@@ -113,11 +113,11 @@ if ($file_id > 0) //Contenu
 			$contribution->set_module('download');
 			$contribution->set_type('alert');
 			$contribution->set_auth(
-				Authorizations::capture_and_shift_bit_auth(
-					$DOWNLOAD_CATS[$category_id]['auth'],
-					DOWNLOAD_WRITE_CAT_AUTH_BIT, 
-					DOWNLOAD_CONTRIBUTION_CAT_AUTH_BIT
-				)
+			Authorizations::capture_and_shift_bit_auth(
+			$DOWNLOAD_CATS[$category_id]['auth'],
+			DOWNLOAD_WRITE_CAT_AUTH_BIT,
+			DOWNLOAD_CONTRIBUTION_CAT_AUTH_BIT
+			)
 			);
 
 			if (!$User->check_level(MEMBER_LEVEL))
@@ -133,13 +133,13 @@ if ($file_id > 0) //Contenu
 			AppContext::get_response()->redirect('/download/contribution.php');
 		}
 	}
-	
+
 	$Template->pparse('download');
 }
 else
 {
 	$Template->set_filenames(array('download'=> 'download/download.tpl'));
-	
+
 	$Template->put_all(array(
 		'C_ADMIN' => $auth_write,
 		'C_DOWNLOAD_CAT' => true,
@@ -152,13 +152,13 @@ else
 		'U_ADMIN_CAT' => $category_id > 0 ? url('admin_download_cat.php?edit=' . $category_id) : url('admin_download_cat.php'),
 		'U_ADD_FILE' => url('management.php?new=1&amp;idcat=' . $category_id)
 	));
-	
+
 	//let's check if there are some subcategories
 	$num_subcats = 0;
 	foreach ($DOWNLOAD_CATS as $id => $value)
 	{
 		if ($id != 0 && $value['id_parent'] == $category_id)
-			$num_subcats ++;
+		$num_subcats ++;
 	}
 
 	//listing of subcategories
@@ -166,17 +166,17 @@ else
 	{
 		$Template->put_all(array(
 			'C_SUB_CATS' => true
-		));	
-		
+		));
+
 		$i = 1;
-		
+
 		foreach ($DOWNLOAD_CATS as $id => $value)
 		{
 			//List of children categories
 			if ($id != 0 && $value['visible'] && $value['id_parent'] == $category_id && (empty($value['auth']) || $User->check_auth($value['auth'], DOWNLOAD_READ_CAT_AUTH_BIT)))
 			{
 				if ( $i % $CONFIG_DOWNLOAD['nbr_column'] == 1 )
-					$Template->assign_block_vars('row', array());
+				$Template->assign_block_vars('row', array());
 				$Template->assign_block_vars('row.list_cats', array(
 					'ID' => $id,
 					'NAME' => $value['name'],
@@ -193,13 +193,13 @@ else
 			}
 		}
 	}
-	
-	//Contenu de la catégorie	
+
+	//Contenu de la catégorie
 	$nbr_files = (int)$Sql->query("SELECT COUNT(*) FROM " . PREFIX . "download WHERE visible = 1 AND approved = 1 AND idcat = '" . $category_id . "'", __LINE__, __FILE__);
 	if ($nbr_files > 0)
 	{
-		$get_sort = AppContext::get_request()->get_getstring('sort', '');	
-		$get_mode = AppContext::get_request()->get_getstring('mode', '');
+		$get_sort = TextHelper::strprotect(AppContext::get_request()->get_getstring('sort', ''));
+		$get_mode = TextHelper::strprotect(AppContext::get_request()->get_getstring('mode', ''));
 		$selected_fields = array(
 			'alpha' => '',
 			'size' => '',
@@ -209,43 +209,43 @@ else
 			'asc' => '',
 			'desc' => ''
 			);
-		
-		switch ($get_sort)
-		{
-			case 'alpha' : 
-			$sort = 'title';
-			$selected_fields['alpha'] = ' selected="selected"';
-			break;	
-			case 'size' : 
-			$sort = 'size';
-			$selected_fields['size'] = ' selected="selected"';
-			break;			
-			case 'date' : 
-			$sort = 'timestamp';
-			$selected_fields['date'] = ' selected="selected"';
-			break;		
-			case 'hits' : 
-			$sort = 'count';
-			$selected_fields['hits'] = ' selected="selected"';
-			break;		
-			case 'note' :
-			$sort = 'average_notes';
-			$selected_fields['note'] = ' selected="selected"';
-			break;
-			default :
-			$sort = 'timestamp';
-			$selected_fields['date'] = ' selected="selected"';
-		}
-		
-		$mode = ($get_mode == 'asc') ? 'ASC' : 'DESC';
-		if ($mode == 'ASC')
+
+			switch ($get_sort)
+			{
+				case 'alpha' :
+					$sort = 'title';
+					$selected_fields['alpha'] = ' selected="selected"';
+					break;
+				case 'size' :
+					$sort = 'size';
+					$selected_fields['size'] = ' selected="selected"';
+					break;
+				case 'date' :
+					$sort = 'timestamp';
+					$selected_fields['date'] = ' selected="selected"';
+					break;
+				case 'hits' :
+					$sort = 'count';
+					$selected_fields['hits'] = ' selected="selected"';
+					break;
+				case 'note' :
+					$sort = 'average_notes';
+					$selected_fields['note'] = ' selected="selected"';
+					break;
+				default :
+					$sort = 'timestamp';
+					$selected_fields['date'] = ' selected="selected"';
+			}
+
+			$mode = ($get_mode == 'asc') ? 'ASC' : 'DESC';
+			if ($mode == 'ASC')
 			$selected_fields['asc'] = ' selected="selected"';
-		else
+			else
 			$selected_fields['desc'] = ' selected="selected"';
-		
-		$unget = (!empty($get_sort) && !empty($mode)) ? '?sort=' . $get_sort . '&amp;mode=' . $get_mode : '';
-		
-		$Template->put_all(array(
+
+			$unget = (!empty($get_sort) && !empty($mode)) ? '?sort=' . $get_sort . '&amp;mode=' . $get_mode : '';
+
+			$Template->put_all(array(
 			'L_FILE' => $DOWNLOAD_LANG['file'],
 			'L_ALPHA' => $DOWNLOAD_LANG['sort_alpha'],
 			'L_SIZE' => $LANG['size'],
@@ -264,29 +264,29 @@ else
 			'SELECTED_NOTE' => $selected_fields['note'],
 			'SELECTED_ASC' => $selected_fields['asc'],
 			'SELECTED_DESC' => $selected_fields['desc']
-		));
-			
-		//On crée une pagination si le nombre de fichiers est trop important.
-		$Pagination = new DeprecatedPagination();
-		
-		$Template->put_all(array(
+			));
+				
+			//On crée une pagination si le nombre de fichiers est trop important.
+			$Pagination = new DeprecatedPagination();
+
+			$Template->put_all(array(
 			'PAGINATION' => $Pagination->display(url('download.php' . (!empty($unget) ? $unget . '&amp;' : '?') . 'cat=' . $category_id . '&amp;p=%d', 'category-' . $category_id . '-%d.php' . $unget), $nbr_files, 'p', $CONFIG_DOWNLOAD['nbr_file_max'], 3),
 			'C_FILES' => true,
 			'TARGET_ON_CHANGE_ORDER' => ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? 'category-' . $category_id . '.php?' : 'download.php?cat=' . $category_id . '&'
-		));
+			));
 
-		$result = $Sql->query_while("SELECT d.id, d.title, d.timestamp, d.size, d.count, d.image, d.short_contents
+			$result = $Sql->query_while("SELECT d.id, d.title, d.timestamp, d.size, d.count, d.image, d.short_contents
 		FROM " . PREFIX . "download d
 		LEFT JOIN " . DB_TABLE_AVERAGE_NOTES . " notes ON d.id = notes.id_in_module
 		WHERE visible = 1 AND approved = 1 AND idcat = '" . $category_id . "'
 		ORDER BY " . $sort . " " . $mode . 
-		$Sql->limit($Pagination->get_first_msg($CONFIG_DOWNLOAD['nbr_file_max'], 'p'), $CONFIG_DOWNLOAD['nbr_file_max']), __LINE__, __FILE__);
-		while ($row = $Sql->fetch_assoc($result))
-		{
-			$notation->set_id_in_module($row['id']);
-			$comments->set_id_in_module($row['id']);
-			
-			$Template->assign_block_vars('file', array(			
+			$Sql->limit($Pagination->get_first_msg($CONFIG_DOWNLOAD['nbr_file_max'], 'p'), $CONFIG_DOWNLOAD['nbr_file_max']), __LINE__, __FILE__);
+			while ($row = $Sql->fetch_assoc($result))
+			{
+				$notation->set_id_in_module($row['id']);
+				$comments->set_id_in_module($row['id']);
+					
+				$Template->assign_block_vars('file', array(
 				'NAME' => $row['title'],
 				'IMG_NAME' => str_replace('"', '\"', $row['title']),
 				'C_DESCRIPTION' => !empty($row['short_contents']),
@@ -301,9 +301,9 @@ else
 				'U_ADMIN_EDIT_FILE' => url('management.php?edit=' . $row['id']),
 				'U_ADMIN_DELETE_FILE' => url('management.php?del=' . $row['id'] . '&amp;token=' . $Session->get_token()),
 				'U_COM_LINK' => '<a href="'. PATH_TO_ROOT .'/download/download' . url('.php?id=' . $row['id'] . '&amp;com=0', '-' . $row['id'] . '+' . Url::encode_rewrite($row['title']) . '.php?com=0') .'">'. CommentsService::get_number_and_lang_comments($comments) . '</a>'
-			));
-		}
-		$Sql->query_close($result);
+				));
+			}
+			$Sql->query_close($result);
 	}
 	else
 	{
@@ -312,10 +312,10 @@ else
 			'C_NO_FILE' => true
 		));
 	}
-		
+
 	$Template->pparse('download');
 }
-	
-require_once('../kernel/footer.php'); 
+
+require_once('../kernel/footer.php');
 
 ?>

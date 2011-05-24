@@ -13,7 +13,7 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -25,8 +25,8 @@
  *
  ###################################################*/
 
-if (defined('PHPBOOST') !== true)	
-	exit;
+if (defined('PHPBOOST') !== true)
+exit;
 
 load_module_lang('download'); //Chargement de la langue du module.
 $Cache->load('download');
@@ -45,9 +45,9 @@ if (!empty($file_id))
 
 	if (empty($download_info['id']))
 	{
-		$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
-            $LANG['e_unexist_file_download']);
-        DispatchManager::redirect($controller);
+		$controller = new UserErrorController(LangLoader::get_message('error', 'errors'),
+		$LANG['e_unexist_file_download']);
+		DispatchManager::redirect($controller);
 	}
 	$Bread_crumb->add($download_info['title'], url('download.php?id=' . $file_id, 'download-' . $file_id . '+' . Url::encode_rewrite($download_info['title']) . '.php'));
 	$id_cat_for_download = $download_info['idcat'];
@@ -57,17 +57,17 @@ elseif (!empty($category_id))
 {
 	if (!array_key_exists($category_id, $DOWNLOAD_CATS))
 	{
-		$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
-            $LANG['e_unexist_category_download']);
-        DispatchManager::redirect($controller);
+		$controller = new UserErrorController(LangLoader::get_message('error', 'errors'),
+		$LANG['e_unexist_category_download']);
+		DispatchManager::redirect($controller);
 	}
-	
+
 	$Bread_crumb->add($DOWNLOAD_LANG['title_download'] . ' - ' . $DOWNLOAD_CATS[$category_id]['name']);
 	$id_cat_for_download = $category_id;
 	define('TITLE', $DOWNLOAD_LANG['title_download'] . ' - ' . $DOWNLOAD_CATS[$category_id]['name']);
 }
 else
-	define('TITLE', $DOWNLOAD_LANG['title_download']);
+define('TITLE', $DOWNLOAD_LANG['title_download']);
 
 $l_com_note = !empty($idurl) ? (!empty($get_note) ? $LANG['note'] : (!empty($_GET['i']) ? $LANG['com'] : '') ) : '';
 

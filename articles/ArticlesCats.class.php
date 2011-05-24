@@ -116,7 +116,7 @@ class ArticlesCats extends CategoriesManager
 			}
 			$Sql->query_inject("UPDATE " . DB_TABLE_ARTICLES_CAT . " SET name = '" . $name . "', image = '" . $image . "', description = '" . $description . "', auth = '" . $auth . "',id_models='".$models."',tpl_cat='".$tpl_cat."' WHERE id = '" . $id_cat . "'", __LINE__, __FILE__);
 			$Cache->Generate_module_file('articles');
-				
+
 			return 'e_success';
 		}
 		else

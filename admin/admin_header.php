@@ -27,7 +27,7 @@
  ###################################################*/
 
 if (defined('PHPBOOST') !== true)
-	exit;
+exit;
 
 
 $env = new AdminDisplayGraphicalEnvironment();
@@ -41,8 +41,8 @@ if (!defined('TITLE'))
 
 
 if (!defined('TITLE'))
-	define('TITLE', $LANG['unknow']);
-	
+define('TITLE', $LANG['unknow']);
+
 //DEPRECATED PROCESSUS
 if (defined('ALTERNATIVE_CSS'))
 {

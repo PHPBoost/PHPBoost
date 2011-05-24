@@ -183,7 +183,7 @@ else //Affichage.
 		));
 		  	
 	//Gestion erreur.
-	$get_error = AppContext::get_request()->get_getstring('error', '');
+	$get_error = TextHelper::strprotect(AppContext::get_request()->get_getstring('error', ''));
 	switch ($get_error)
 	{
 		case 'auth':

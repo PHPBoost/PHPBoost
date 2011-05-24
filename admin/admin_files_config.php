@@ -6,7 +6,7 @@
  *   copyright            : (C) 2007 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
- *  
+ *
  *
  ###################################################
  *
@@ -14,7 +14,7 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -40,44 +40,44 @@ if (!empty($_POST['valid']) )
 
 	$auth_extensions = isset($_POST['auth_extensions']) ? $_POST['auth_extensions'] : array();
 	$additional_extension = !empty($_POST['auth_extensions_sup']) ? preg_split('`, ?`', trim($_POST['auth_extensions_sup'])) : '';
-	
+
 	if (is_array($additional_extension))
-	{	
+	{
 		foreach ($additional_extension as $extension)
 		{
-		    //Suppression de tous les caractères interdits dans les extensions
-		    $extension = str_replace('-', '', Url::encode_rewrite($extension));
-		    
-			if ($extension != '' && !isset($auth_extensions[$extension]) && $extension != 'php') 
+			//Suppression de tous les caractères interdits dans les extensions
+			$extension = str_replace('-', '', Url::encode_rewrite($extension));
+
+			if ($extension != '' && !isset($auth_extensions[$extension]) && $extension != 'php')
 			{
 				array_push($auth_extensions, $extension);
 			}
 		}
 	}
-	
+
 	$file_upload_config->set_authorized_extensions($auth_extensions);
 	FileUploadConfig::save();
-	
+
 	//Régénération du htaccess.
 	HtaccessFileCache::regenerate();
-	
-	AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);	
+
+	AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);
 }
 //Sinon on rempli le formulaire
-else	
-{		
+else
+{
 	$template = new FileTemplate('admin/admin_files_config.tpl');
-	
+
 	$file_upload_config = FileUploadConfig::load();
-	
+
 	$array_ext_sup = $file_upload_config->get_authorized_extensions();
 	$array_extensions_type = array(
-		$LANG['files_image'] => array('jpg', 'jpeg', 'bmp', 'gif', 'png', 'tif', 'svg', 'ico'),
-		$LANG['files_archives'] => array('rar', 'zip', 'gz'), 
-		$LANG['files_text'] => array('txt', 'doc', 'docx', 'pdf', 'ppt', 'xls', 'odt', 'odp', 'ods', 'odg', 'odc', 'odf', 'odb', 'xcf'),
-		$LANG['files_media'] => array('flv', 'mp3', 'ogg', 'mpg', 'mov', 'swf', 'wav', 'wmv', 'midi', 'mng', 'qt'), 
-		$LANG['files_prog'] => array('c', 'h', 'cpp', 'java', 'py', 'css', 'html'),
-		$LANG['files_misc'] => array('ttf', 'tex', 'rtf', 'psd')
+	$LANG['files_image'] => array('jpg', 'jpeg', 'bmp', 'gif', 'png', 'tif', 'svg', 'ico'),
+	$LANG['files_archives'] => array('rar', 'zip', 'gz'),
+	$LANG['files_text'] => array('txt', 'doc', 'docx', 'pdf', 'ppt', 'xls', 'odt', 'odp', 'ods', 'odg', 'odc', 'odf', 'odb', 'xcf'),
+	$LANG['files_media'] => array('flv', 'mp3', 'ogg', 'mpg', 'mov', 'swf', 'wav', 'wmv', 'midi', 'mng', 'qt'),
+	$LANG['files_prog'] => array('c', 'h', 'cpp', 'java', 'py', 'css', 'html'),
+	$LANG['files_misc'] => array('ttf', 'tex', 'rtf', 'psd')
 	);
 
 	$i = 0;
@@ -91,7 +91,7 @@ else
 			$selected = ($extension_key !== false) ? ' selected="selected"' : '';
 			$auth_extensions .= '<option value="' . $extension . '" id="ext' . $i . '"' . $selected . '>' . $extension . '</option>';
 			if (isset($array_ext_sup[$extension_key]))
-				unset($array_ext_sup[$extension_key]);
+			unset($array_ext_sup[$extension_key]);
 			$i++;
 		}
 		$auth_extensions .= '</optgroup>';
@@ -123,8 +123,8 @@ else
 		'L_UPDATE' => $LANG['update'],
 		'L_RESET' => $LANG['reset']
 	));
-	
-	$template->display(); // traitement du modele	
+
+	$template->display(); // traitement du modele
 }
 
 require_once('../admin/admin_footer.php');

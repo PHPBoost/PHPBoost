@@ -29,7 +29,7 @@ class AdminThemesInstalledListController extends AdminController
 {
 	private $lang;
 	private $view;
-	
+
 	public function execute(HTTPRequest $request)
 	{
 		$this->init();
@@ -38,7 +38,7 @@ class AdminThemesInstalledListController extends AdminController
 
 		return new AdminThemesDisplayResponse($this->view, $this->lang['themes.installed']);
 	}
-	
+
 	private function build_view()
 	{
 		$installed_themes = ThemeManager::get_installed_themes_map();
@@ -48,7 +48,7 @@ class AdminThemesInstalledListController extends AdminController
 			$authorizations = $theme->get_authorizations();
 			$default_theme = ThemeManager::get_default_theme();
 			$pictures = $configuration->get_pictures();
-			
+				
 			$this->view->assign_block_vars('themes_installed', array(
 				'C_IS_DEFAULT_THEME' => $theme->get_id() == $default_theme,
 				'C_IS_ACTIVATED' => $theme->is_activated(),
@@ -69,7 +69,7 @@ class AdminThemesInstalledListController extends AdminController
 				'MAIN_COLOR' => $configuration->get_main_color() !== '' ? $configuration->get_main_color() : $this->lang['themes.bot_informed'],
 				'WIDTH' => $configuration->get_variable_width() ? $this->lang['themes.variable-width'] : $configuration->get_width()
 			));
-			
+				
 			if (count($pictures) > 0)
 			{
 				unset($pictures[0]);
@@ -81,14 +81,14 @@ class AdminThemesInstalledListController extends AdminController
 				}
 			}
 		}
-		
+
 		$this->view->put_all(array(
 			'L_DELETE' => LangLoader::get_message('delete','main'),
 			'L_RESET' => LangLoader::get_message('reset','main'),
 			'L_UPDATE' => LangLoader::get_message('update','main')
 		));
 	}
-	
+
 	public function save(HTTPRequest $request)
 	{
 		if ($request->get_bool('update', false))
@@ -102,13 +102,13 @@ class AdminThemesInstalledListController extends AdminController
 					$activated = $request->get_bool('activated-' . $id_theme, false);
 					$authorizations = Authorizations::auth_array_simple(Theme::ACCES_THEME, $id_theme);
 					ThemeManager::change_informations($id_theme, $activated, $authorizations);
-					
+						
 					$this->view->put('MSG', MessageHelper::display($this->lang['themes.edit.success'], E_USER_SUCCESS, 4));
 				}
 			}
 		}
 	}
-	
+
 	private function init()
 	{
 		$this->lang = LangLoader::get('admin-themes-common');

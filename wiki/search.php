@@ -41,8 +41,8 @@ if (!$User->check_level(MEMBER_LEVEL))
 	DispatchManager::redirect($error_controller);
 }
 
-$search_string = AppContext::get_request()->get_getstring('search', '');
-$where_search = AppContext::get_request()->get_getstring('where', '');
+$search_string = TextHelper::strprotect(AppContext::get_request()->get_getstring('search', ''));
+$where_search = TextHelper::strprotect(AppContext::get_request()->get_getstring('where', ''));
 $where_search = !(empty($where_search) || ($where_search == 'contents')) ? 'contents' : 'title';
 $page = AppContext::get_request()->get_getint('page', 1);
 $page = $page <= 0 ? 1 : $page;

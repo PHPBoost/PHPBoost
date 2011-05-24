@@ -34,18 +34,18 @@ require_once('../kernel/header_no_display.php');
 $idt_get = AppContext::get_request()->get_getint('id', 0);
 $idm_get = AppContext::get_request()->get_getint('idm', 0);
 $del = AppContext::get_request()->get_getbool('del', false);
-$alert = AppContext::get_request()->get_getstring('a', '');
+$alert = TextHelper::strprotect(AppContext::get_request()->get_getstring('a', ''));
 $read = AppContext::get_request()->get_getbool('read', false);
 $msg_d = AppContext::get_request()->get_getbool('msg_d', false);
-$lock_get = AppContext::get_request()->get_getstring('lock', '');
+$lock_get = TextHelper::strprotect(AppContext::get_request()->get_getstring('lock', ''));
 $page_get = AppContext::get_request()->get_getint('p', 1);
 
-$track = AppContext::get_request()->get_getstring('t', '');
-$untrack = AppContext::get_request()->get_getstring('ut', '');
-$track_pm = AppContext::get_request()->get_getstring('tp', '');
-$untrack_pm = AppContext::get_request()->get_getstring('utp', '');
-$track_mail = AppContext::get_request()->get_getstring('tm', '');
-$untrack_mail = AppContext::get_request()->get_getstring('utm', '');
+$track = TextHelper::strprotect(AppContext::get_request()->get_getstring('t', ''));
+$untrack = TextHelper::strprotect(AppContext::get_request()->get_getstring('ut', ''));
+$track_pm = TextHelper::strprotect(AppContext::get_request()->get_getstring('tp', ''));
+$untrack_pm = TextHelper::strprotect(AppContext::get_request()->get_getstring('utp', ''));
+$track_mail = TextHelper::strprotect(AppContext::get_request()->get_getstring('tm', ''));
+$untrack_mail = TextHelper::strprotect(AppContext::get_request()->get_getstring('utm', ''));
 
 //Variable $_POST
 $poll = AppContext::get_request()->get_postbool('valid_forum_poll', false); //Sondage forum.

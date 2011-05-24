@@ -32,12 +32,12 @@ class AdminThemeDeleteController extends AdminController
 	private $submit_button;
 	private $theme_id;
 	private $tpl;
-	
+
 	public function execute(HTTPRequest $request)
 	{
 		$this->init();
 		$this->theme_id = $request->get_value('id', null);
-		
+
 		if ($this->theme_exist())
 		{
 			$this->build_form();
@@ -48,7 +48,7 @@ class AdminThemeDeleteController extends AdminController
 
 				$this->tpl->put('MSG', MessageHelper::display($this->lang['themes.delete.success'], MessageHelper::SUCCESS, 4));
 			}
-			
+				
 			$this->tpl->put('FORM', $this->form->display());
 
 			return new AdminThemesDisplayResponse($this->tpl, $this->lang['themes.delete']);
@@ -59,41 +59,41 @@ class AdminThemeDeleteController extends AdminController
 			DispatchManager::redirect($error_controller);
 		}
 	}
-	
+
 	private function init()
 	{
 		$this->lang = LangLoader::get('admin-themes-common');
 		$this->tpl = new StringTemplate('# INCLUDE MSG # # INCLUDE FORM #');
 		$this->tpl->add_lang($this->lang);
 	}
-	
+
 	private function build_form()
 	{
 		$form = new HTMLForm('delete_theme');
-		
+
 		$fieldset = new FormFieldsetHTML('delete_theme', $this->lang['themes.delete']);
 		$form->add_fieldset($fieldset);
-	
+
 		$fieldset->add_field(new FormFieldRadioChoice('drop_files', $this->lang['themes.delete.drop_files'], '0',
-			array(
-				new FormFieldRadioChoiceOption($this->lang['themes.yes'], '1'),
-				new FormFieldRadioChoiceOption($this->lang['themes.no'], '0')
-			)
+		array(
+		new FormFieldRadioChoiceOption($this->lang['themes.yes'], '1'),
+		new FormFieldRadioChoiceOption($this->lang['themes.no'], '0')
+		)
 		));
-		
+
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_button($this->submit_button);
 
 		$this->form = $form;
 	}
-	
+
 	private function delete_theme($drop_files)
 	{
 		ThemeManager::uninstall($this->theme_id, $drop_files);
-		
+
 		$this->delete_css_cache();
 	}
-	
+
 	private function theme_exist()
 	{
 		if ($this->theme_id == null)
@@ -102,12 +102,12 @@ class AdminThemeDeleteController extends AdminController
 		}
 		return ThemeManager::get_theme_existed($this->theme_id);
 	}
-	
+
 	private function delete_css_cache()
 	{
 		$modules_cache = PATH_TO_ROOT .'/cache/css/css-cache-modules-'. $this->theme_id .'.css';
 		$theme_cache = PATH_TO_ROOT .'/cache/css/css-cache-theme-'. $this->theme_id .'.css';
-		
+
 		if (file_exists($theme_cache))
 		{
 			$file = new File($theme_cache);

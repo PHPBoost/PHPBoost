@@ -1,28 +1,28 @@
 <?php
 /*##################################################
-*                               management.php
-*                            -------------------
-*   begin                : December 1, 2007
-*   copyright            : (C) 2007 Sautel Benoit
-*   email                : ben.popeye@phpboost.com
-*
-*
+ *                               management.php
+ *                            -------------------
+ *   begin                : December 1, 2007
+ *   copyright            : (C) 2007 Sautel Benoit
+ *   email                : ben.popeye@phpboost.com
+ *
+ *
  ###################################################
-*
-*  This program is free software; you can redistribute it and/or modify
-*  it under the terms of the GNU General Public License as published by
-*  the Free Software Foundation; either version 2 of the License, or
-*  (at your option) any later version.
-*
-* This program is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-* GNU General Public License for more details.
-*
-* You should have received a copy of the GNU General Public License
-* along with this program; if not, write to the Free Software
-* Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
-*
+ *
+ *  This program is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ *
  ###################################################*/
 
 include_once('../kernel/begin.php');
@@ -87,7 +87,7 @@ else
 {
 	$Bread_crumb->add($FAQ_LANG['category_management'], url('management.php' . ($id_faq > 0 ? '?faq=' . $id_faq : '')));
 }
-	
+
 include_once('../kernel/header.php');
 
 $Template->set_filenames(array(
@@ -132,7 +132,7 @@ elseif ($cat_of_new_question >= 0 && $new)
 elseif ($id_move > 0)
 {
 	$faq_cats = new Faqcats();
-	
+
 	$Template->assign_block_vars('move_question', array(
 		'CATEGORIES_TREE' => $faq_cats->build_select_form(0, 'target', 'target', 0, AUTH_WRITE, $FAQ_CONFIG['global_auth'], IGNORE_AND_CONTINUE_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH),
 		'ID_QUESTION' => $id_move
@@ -179,7 +179,7 @@ else
 		'L_REQUIRE_CAT_NAME' => $FAQ_LANG['require_cat_name'],
 		'U_GO_BACK_TO_CAT' => url('faq.php' . ($id_faq > 0 ? '?id=' . $id_faq : ''), $id_faq > 0 ? 'faq-' . $id_faq . '+' . Url::encode_rewrite($FAQ_CATS[$id_faq]['name']) . '.php' : 'faq.php')
 	));
-	
+
 	//Special authorization
 	if (!empty($FAQ_CATS[$id_faq]['auth']))
 	{
@@ -187,7 +187,7 @@ else
 			'GLOBAL_CHECKED' => 'checked="checked"',
 			'DISPLAY_GLOBAL' => 'block',
 			'JS_GLOBAL' => 'true'
-		));
+			));
 	}
 	else
 	{
@@ -195,7 +195,7 @@ else
 			'GLOBAL_CHECKED' => '',
 			'DISPLAY_GLOBAL' => 'none',
 			'JS_GLOBAL' => 'false'
-		));
+			));
 	}
 
 	//Category properties
@@ -205,7 +205,7 @@ else
 		'U_CREATE_BEFORE' => url('management.php?new=1&amp;idcat=' . $id_faq . '&amp;after=0'),
 		'ID_FAQ' => $id_faq
 	));
-	
+
 	if ($id_faq > 0)
 	{
 		$Template->assign_block_vars('category.not_root_name', array(
@@ -215,16 +215,16 @@ else
 			'WRITE_AUTH' => Authorizations::generate_select(AUTH_WRITE, !empty($FAQ_CATS[$id_faq]['auth']) ? $FAQ_CATS[$id_faq]['auth'] : $FAQ_CONFIG['global_auth'])
 		));
 	}
-	
+
 	//Questions management
 	$result = $Sql->query_while("SELECT id, q_order, question, answer
 	FROM " . PREFIX . "faq
 	WHERE idcat = '" . $id_faq . "'
 	ORDER BY q_order",
 	__LINE__, __FILE__);
-	
+
 	$num_rows = $Sql->num_rows($result, "SELECT COUNT(*) FROM " . PREFIX . "faq WHERE idcat = '" . $id_faq . "'", __LINE__, __FILE__);
-	
+
 	if ($num_rows > 0 || $id_faq == 0)
 	{
 		$Template->put_all(array(
@@ -233,7 +233,7 @@ else
 			'L_HIDE_ANSWERS' => addslashes($FAQ_LANG['hide_all_answers']),
 			'L_DISPLAY_ANSWERS' => addslashes($FAQ_LANG['show_all_answers'])
 		));
-		
+
 		while ($row = $Sql->fetch_assoc($result))
 		{
 			$Template->assign_block_vars('category.questions', array(
@@ -248,9 +248,9 @@ else
 				'ANSWER' => $row['answer']
 			));
 			if ($row['q_order'] > 1)
-				$Template->assign_block_vars('category.questions.up', array());
+			$Template->assign_block_vars('category.questions.up', array());
 			if ($row['q_order'] < $num_rows)
-				$Template->assign_block_vars('category.questions.down', array());
+			$Template->assign_block_vars('category.questions.down', array());
 		}
 	}
 }

@@ -31,38 +31,38 @@
  */
 class AdminErrorsUrlBuilder
 {
-    private static $dispatcher = '/admin/errors';
-    
+	private static $dispatcher = '/admin/errors';
+
 	/**
 	 * @return Url
 	 */
-    public static function list_404_errors()
+	public static function list_404_errors()
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/404/list/');
 	}
-    
-    /**
-     * @return Url
-     */
-    public static function clear_404_errors()
-    {
-        return DispatchManager::get_url(self::$dispatcher, '/404/clear/?token=' . AppContext::get_session()->get_token());
-    }
-    
-    /**
-     * @return Url
-     */
-    public static function delete_404_error($id)
-    {
-        return DispatchManager::get_url(self::$dispatcher, '/404/' . $id . '/delete/?token=' . AppContext::get_session()->get_token());
-    }
-    
-    /**
-     * @return Url
-     */
-    public static function logged_errors()
-    {
-        return new Url('/admin/admin_errors.php');
-    }
+
+	/**
+	 * @return Url
+	 */
+	public static function clear_404_errors()
+	{
+		return DispatchManager::get_url(self::$dispatcher, '/404/clear/?token=' . AppContext::get_session()->get_token());
+	}
+
+	/**
+	 * @return Url
+	 */
+	public static function delete_404_error($id)
+	{
+		return DispatchManager::get_url(self::$dispatcher, '/404/' . $id . '/delete/?token=' . AppContext::get_session()->get_token());
+	}
+
+	/**
+	 * @return Url
+	 */
+	public static function logged_errors()
+	{
+		return new Url('/admin/admin_errors.php');
+	}
 }
 ?>

@@ -514,7 +514,7 @@ class Session
 		$this->autoconnect['user_id'] = -1;
 
 		$this->session_mod = 0;
-		$sid = AppContext::get_request()->get_getstring('sid', '');
+		$sid = TextHelper::strprotect(AppContext::get_request()->get_getstring('sid', ''));
 		$suid = AppContext::get_request()->get_getint('suid', 0);
 		$sessions_config = SessionsConfig::load();
 		

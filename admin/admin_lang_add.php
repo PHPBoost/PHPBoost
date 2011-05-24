@@ -13,7 +13,7 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -22,7 +22,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- * 
+ *
  ###################################################*/
 
 require_once('../admin/admin_begin.php');
@@ -32,7 +32,7 @@ require_once('../admin/admin_header.php');
 //On affiche le contenu du repertoire templates, pour lister les thèmes disponibles..
 
 $install = !empty($_GET['install']) ? true : false;
-$error = AppContext::get_request()->get_getstring('error', '');
+$error = TextHelper::strprotect(AppContext::get_request()->get_getstring('error', ''));
 
 //Si c'est confirmé on execute
 if ($install)
@@ -40,24 +40,24 @@ if ($install)
 	//Récupération de l'identifiant du thème.
 	$lang = '';
 	foreach ($_POST as $key => $value)
-		if ($value == $LANG['install'])
-			$lang = TextHelper::strprotect($key);
-			
+	if ($value == $LANG['install'])
+	$lang = TextHelper::strprotect($key);
+		
 	$secure = retrieve(POST, $lang . 'secure', -1);
 	$activ = retrieve(POST, $lang . 'activ', 0);
-		
-	$check_lang = $Sql->query("SELECT lang FROM " . DB_TABLE_LANG . " WHERE lang = '" . $lang . "'", __LINE__, __FILE__);	
+
+	$check_lang = $Sql->query("SELECT lang FROM " . DB_TABLE_LANG . " WHERE lang = '" . $lang . "'", __LINE__, __FILE__);
 	if (empty($check_lang) && !empty($lang))
 	{
 		$Sql->query_inject("INSERT INTO " . DB_TABLE_LANG . " (lang, activ, secure) VALUES('" . $lang . "', '" . $activ . "', '" .  $secure . "')", __LINE__, __FILE__);
-		
+
 		//Régénération du cache.
 		LangsCache::invalidate();
-		
+
 		AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);
 	}
 	else
-		AppContext::get_response()->redirect('/admin/admin_modules_add.php?error=e_lang_already_exist#message_helper');
+	AppContext::get_response()->redirect('/admin/admin_modules_add.php?error=e_lang_already_exist#message_helper');
 }
 elseif (!empty($_FILES['upload_lang']['name'])) //Upload et décompression de l'archive Zip/Tar
 {
@@ -65,8 +65,8 @@ elseif (!empty($_FILES['upload_lang']['name'])) //Upload et décompression de l'a
 	@clearstatcache();
 	$dir = '../lang/';
 	if (!is_writable($dir))
-		$is_writable = (@chmod($dir, 0777)) ? true : false;
-	
+	$is_writable = (@chmod($dir, 0777)) ? true : false;
+
 	@clearstatcache();
 	$error = '';
 	if (is_writable($dir)) //Dossier en écriture, upload possible
@@ -74,48 +74,48 @@ elseif (!empty($_FILES['upload_lang']['name'])) //Upload et décompression de l'a
 		$check_lang = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_LANG . " WHERE lang = '" . TextHelper::strprotect($_FILES['upload_lang']['name']) . "'", __LINE__, __FILE__);
 		if (empty($check_lang))
 		{
-			
+				
 			$Upload = new Upload($dir);
 			if ($Upload->file('upload_lang', '`([a-z0-9()_-])+\.(gzip|zip)+$`i'))
-			{					
+			{
 				$archive_path = PATH_TO_ROOT .'/lang/' . $Upload->get_filename();
 				//Place à la décompression.
 				if ($Upload->get_extension() == 'gzip')
 				{
 					import('/kernel/lib/php/pcl/pcltar', LIB_IMPORT);
 					if (!$zip_files = PclTarExtract($Upload->get_filename(), '../lang/'))
-						$error = $Upload->get_error();
+					$error = $Upload->get_error();
 				}
 				elseif ($Upload->get_extension() == 'zip')
 				{
 					import('/kernel/lib/php/pcl/pclzip', LIB_IMPORT);
 					$Zip = new PclZip($archive_path);
 					if (!$zip_files = $Zip->extract(PCLZIP_OPT_PATH, '../lang/', PCLZIP_OPT_SET_CHMOD, 0666))
-						$error = $Upload->get_error();
+					$error = $Upload->get_error();
 				}
 				else
-					$error = 'e_upload_invalid_format';
-				
+				$error = 'e_upload_invalid_format';
+
 				//Suppression de l'archive désormais inutile.
 				if (!@unlink($archive_path))
-					$error = 'e_unlink_disabled';
+				$error = 'e_unlink_disabled';
 			}
 			else
-				$error = 'e_upload_error';
+			$error = 'e_upload_error';
 		}
 		else
-			$error = 'e_upload_already_exist';
+		$error = 'e_upload_already_exist';
 	}
 	else
-		$error = 'e_upload_failed_unwritable';
-	
+	$error = 'e_upload_failed_unwritable';
+
 	$error = !empty($error) ? '?error=' . $error : '';
-	AppContext::get_response()->redirect(HOST . SCRIPT . $error);	
+	AppContext::get_response()->redirect(HOST . SCRIPT . $error);
 }
 else
 {
 	$template = new FileTemplate('admin/admin_lang_add.tpl');
-	
+
 	$template->put_all(array(
 		'THEME' => get_utheme(),		
 		'LANG' => get_ulang(),
@@ -135,30 +135,30 @@ else
 		'L_NO' => $LANG['no'],
 		'L_INSTALL' => $LANG['install']
 	));
-	
+
 	//Gestion erreur.
-	$get_error = AppContext::get_request()->get_getstring('error', '');
+	$get_error = TextHelper::strprotect(AppContext::get_request()->get_getstring('error', ''));
 	$array_error = array('e_upload_invalid_format', 'e_upload_invalid_format', 'e_upload_max_weight', 'e_upload_error', 'e_upload_php_code', 'e_upload_failed_unwritable', 'e_upload_already_exist', 'e_lang_already_exist', 'e_unlink_disabled');
 	if (in_array($get_error, $array_error))
-		$Template->put('message_helper', MessageHelper::display($LANG[$get_error], E_USER_WARNING));
-		
+	$Template->put('message_helper', MessageHelper::display($LANG[$get_error], E_USER_WARNING));
+
 	//On recupère les dossier des thèmes contenu dans le dossier templates.
 	$dir_array = array();
 	$lang_folder_path = new Folder(PATH_TO_ROOT .'/lang/');
 	foreach ($lang_folder_path->get_folders('`^[a-z0-9_ -]+$`i') as $lang)
-		$dir_array[] = $lang->get_name();
-	
-	$result = $Sql->query_while("SELECT lang 
+	$dir_array[] = $lang->get_name();
+
+	$result = $Sql->query_while("SELECT lang
 	FROM " . PREFIX . "lang", __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))
 	{
 		//On recherche les clées correspondante à celles trouvée dans la bdd.
 		$key = array_search($row['lang'], $dir_array);
 		if ($key !== false)
-			unset($dir_array[$key]); //On supprime ces clées du tableau.
+		unset($dir_array[$key]); //On supprime ces clées du tableau.
 	}
 	$Sql->query_close($result);
-	
+
 	$z = 0;
 	$array_ranks = array(-1 => $LANG['guest'], 0 => $LANG['member'], 1 => $LANG['modo'], 2 => $LANG['admin']);
 	foreach ($dir_array as $lang_array => $value_array) //On effectue la recherche dans le tableau.
@@ -169,7 +169,7 @@ else
 			$selected = ($i == -1) ? 'selected="selected"' : '';
 			$options .= '<option value="' . $i . '" ' . $selected . '>' . $array_ranks[$i] . '</option>';
 		}
-		
+
 		$info_lang = load_ini_file(PATH_TO_ROOT .'/lang/', $value_array);
 		$template->assign_block_vars('list', array(
 			'IDLANG' =>  $value_array,		
@@ -184,15 +184,15 @@ else
 	}
 
 	if ($z != 0)
-		$template->put_all(array(		
+	$template->put_all(array(
 			'C_LANG_PRESENT' => true
-		));
+	));
 	else
-		$template->put_all(array(		
+	$template->put_all(array(
 			'C_NO_LANG_PRESENT' => true
-		));
-	
-	$template->display(); 
+	));
+
+	$template->display();
 }
 
 require_once('../admin/admin_footer.php');

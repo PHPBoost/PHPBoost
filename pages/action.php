@@ -40,7 +40,7 @@ $del_redirection = AppContext::get_request()->get_getint('del', 0);
 $id_page = $id_redirection > 0 ? $id_redirection : ($id_new > 0 ? $id_new : $id_rename);
 $new_title = AppContext::get_request()->get_poststring('new_title', '');
 $redirection_name = AppContext::get_request()->get_poststring('redirection_name', '');
-$error = AppContext::get_request()->get_getstring('error', '');
+$error = TextHelper::strprotect(AppContext::get_request()->get_getstring('error', ''));
 $del_cat = AppContext::get_request()->get_getint('del_cat', 0);
 $id_page = $id_page > 0 ? $id_page : $del_cat;
 $del_cat_post = AppContext::get_request()->get_getint('del_cat', 0);
@@ -281,7 +281,7 @@ if ($del_cat > 0)
 	));
 	
 	//Gestion des erreurs
-	$error = AppContext::get_request()->get_getstring('error', '');
+	$error = TextHelper::strprotect(AppContext::get_request()->get_getstring('error', ''));
 	if ($error == 'e_cat_contains_cat')
 		$errstr = $LANG['pages_cat_contains_cat'];
 	elseif ($error == 'e_not_a_cat')

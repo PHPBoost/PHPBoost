@@ -69,10 +69,10 @@ if ($action_post == 'save')
 		$menu->set_block(AppContext::get_request()->get_postvalue('location', Menu::BLOCK_POSITION__NOT_ENABLED));
 	}
 	$menu->set_auth(Authorizations::build_auth_array_from_form(AUTH_MENUS));
-	
-    //Filters
-    MenuAdminService::set_retrieved_filters($menu);
-	
+
+	//Filters
+	MenuAdminService::set_retrieved_filters($menu);
+
 	MenuService::save($menu);
 	MenuService::generate_cache();
 
@@ -112,14 +112,14 @@ $tpl->put_all(array(
 //Localisation possibles.
 $block = retrieve(GET, 's', Menu::BLOCK_POSITION__HEADER, TINTEGER);
 $array_location = array(
-	Menu::BLOCK_POSITION__HEADER => $LANG['menu_header'],
-	Menu::BLOCK_POSITION__SUB_HEADER => $LANG['menu_subheader'],
-	Menu::BLOCK_POSITION__LEFT => $LANG['menu_left'],
-	Menu::BLOCK_POSITION__TOP_CENTRAL => $LANG['menu_top_central'],
-	Menu::BLOCK_POSITION__BOTTOM_CENTRAL => $LANG['menu_bottom_central'],
-	Menu::BLOCK_POSITION__RIGHT => $LANG['menu_right'],
-	Menu::BLOCK_POSITION__TOP_FOOTER => $LANG['menu_top_footer'],
-	Menu::BLOCK_POSITION__FOOTER => $LANG['menu_footer']
+Menu::BLOCK_POSITION__HEADER => $LANG['menu_header'],
+Menu::BLOCK_POSITION__SUB_HEADER => $LANG['menu_subheader'],
+Menu::BLOCK_POSITION__LEFT => $LANG['menu_left'],
+Menu::BLOCK_POSITION__TOP_CENTRAL => $LANG['menu_top_central'],
+Menu::BLOCK_POSITION__BOTTOM_CENTRAL => $LANG['menu_bottom_central'],
+Menu::BLOCK_POSITION__RIGHT => $LANG['menu_right'],
+Menu::BLOCK_POSITION__TOP_FOOTER => $LANG['menu_top_footer'],
+Menu::BLOCK_POSITION__FOOTER => $LANG['menu_footer']
 );
 
 $feed_url = '';
@@ -148,9 +148,9 @@ else
         'C_ENABLED' => true,
         'AUTH_MENUS' => Authorizations::generate_select(AUTH_MENUS, array(), array(-1 => true, 0 => true, 1 => true, 2 => true))
 	));
-	
-   // Create a new generic menu
-    $menu = new FeedMenu('', '', '');
+
+	// Create a new generic menu
+	$menu = new FeedMenu('', '', '');
 }
 
 function get_feeds($feed_cat, $module_id, $feed_type, $level = 0)
@@ -180,7 +180,7 @@ function get_feeds_children(Array $children, $module_id, $feed_type, $level)
 				'selected' => false
 			);
 		}
-		
+
 		$urls = array_merge($urls, get_feeds_children($feed_cat->get_children(), $module_id, $feed_type, $level +1));
 		return $urls;
 	}
@@ -204,7 +204,7 @@ foreach ($feeds_modules as $module)
 		'NAME' => $module->get_id(), 
 		'URL' => $urls[0]['url']
 	));
-	
+
 	foreach ($urls as $url)
 	{
 		$tpl->assign_block_vars('modules.feeds_urls', array(
@@ -213,7 +213,7 @@ foreach ($feeds_modules as $module)
 			'SPACE' => '--' . str_repeat('--', $url['level']),
 			'FEED_NAME' => $url['feed_name'] != 'master' ? $url['feed_name'] : null,
 			'SELECTED' => $url['selected'] ? ' selected="selected"' : ''
-		));
+			));
 	}
 
 }
@@ -225,7 +225,7 @@ foreach ($array_location as $key => $name)
 }
 
 //Filtres
-MenuAdminService::add_filter_fieldset($menu, $tpl);    
+MenuAdminService::add_filter_fieldset($menu, $tpl);
 
 $tpl->put_all(array('LOCATIONS' => $locations));
 $tpl->display();

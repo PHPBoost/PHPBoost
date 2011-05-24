@@ -13,7 +13,7 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -61,66 +61,66 @@ $tpl->put_all(array(
 if (is_file($file_path) && is_readable($file_path)) //Fichier accessible en lecture
 {
 	$handle = @fopen($file_path, 'r');
-	if ($handle) 
+	if ($handle)
 	{
 		$array_errinfo = array();
 		$i = 1;
-		while (!feof($handle)) 
+		while (!feof($handle))
 		{
 			$buffer = fgets($handle);
 			switch ($i)
 			{
 				case 1:
-				$errinfo['errdate'] = $buffer;
-				break;
+					$errinfo['errdate'] = $buffer;
+					break;
 				case 2:
-				$errinfo['errno'] = $buffer;
-				break;
+					$errinfo['errno'] = $buffer;
+					break;
 				case 3:
-				$errinfo['errmsg'] = $buffer;
-				break;
+					$errinfo['errmsg'] = $buffer;
+					break;
 				case 4:
-				$errinfo['errstacktrace'] = $buffer;
-				$i = 0;	
-				$array_errinfo[] = array(
+					$errinfo['errstacktrace'] = $buffer;
+					$i = 0;
+					$array_errinfo[] = array(
 				'errclass' => ErrorHandler::get_errno_class($errinfo['errno']), 
 				'errmsg' => $errinfo['errmsg'], 
 				'errstacktrace'=> $errinfo['errstacktrace'], 
 				'errdate' => $errinfo['errdate']
-				);
-				break;	
+					);
+					break;
 			}
-			$i++;						
+			$i++;
 		}
 		@fclose($handle);
-		
+
 		$images = array(
 			'error_unknow' => 'question',
 			'error_notice' => 'notice',
 			'error_warning' => 'important',
 			'error_fatal' => 'stop'
-		);
-		
-		//Tri en sens inverse car enregistrement à la suite dans le fichier de log
-		krsort($array_errinfo);
-		$i = 0;
-		foreach ($array_errinfo as $key => $errinfo)
-		{
-			$tpl->assign_block_vars('errors', array(
+			);
+
+			//Tri en sens inverse car enregistrement à la suite dans le fichier de log
+			krsort($array_errinfo);
+			$i = 0;
+			foreach ($array_errinfo as $key => $errinfo)
+			{
+				$tpl->assign_block_vars('errors', array(
 				'IMG' => $images[$errinfo['errclass']],
 				'DATE' => $errinfo['errdate'],
 				'CLASS' => $errinfo['errclass'],
 				'ERROR_TYPE' => LangLoader::get_message(str_replace('error_', 'e_', $errinfo['errclass']), 'errors'),
 				'ERROR_MESSAGE' => strip_tags($errinfo['errmsg'], '<br>'),
 				'ERROR_STACKTRACE' => strip_tags($errinfo['errstacktrace'], '<br>')
-			));
-			$i++;
-			
-			if ($i > 15 && !$all)
-			{
-				break;
+				));
+				$i++;
+					
+				if ($i > 15 && !$all)
+				{
+					break;
+				}
 			}
-		}
 	}
 	else
 	{
@@ -130,7 +130,7 @@ if (is_file($file_path) && is_readable($file_path)) //Fichier accessible en lect
 			'FILE' => '',
 			'LINE' => '',
 			'DATE' => ''
-		));
+			));
 	}
 }
 

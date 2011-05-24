@@ -1,31 +1,31 @@
 <?php
 /*##################################################
-*                               faq.php
-*                            -------------------
-*   begin                : November 10, 2007
-*   copyright            : (C) 2007 Sautel Benoit
-*   email                : ben.popeye@phpboost.com
-*
-*
+ *                               faq.php
+ *                            -------------------
+ *   begin                : November 10, 2007
+ *   copyright            : (C) 2007 Sautel Benoit
+ *   email                : ben.popeye@phpboost.com
+ *
+ *
  ###################################################
-*
-*  This program is free software; you can redistribute it and/or modify
-*  it under the terms of the GNU General Public License as published by
-*  the Free Software Foundation; either version 2 of the License, or
-*  (at your option) any later version.
-* 
-* This program is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-* GNU General Public License for more details.
-*
-* You should have received a copy of the GNU General Public License
-* along with this program; if not, write to the Free Software
-* Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
-*
+ *
+ *  This program is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ *
  ###################################################*/
 
-include_once('../kernel/begin.php'); 
+include_once('../kernel/begin.php');
 include_once('faq_begin.php');
 
 $id_faq = AppContext::get_request()->get_getint('id', 0);
@@ -36,13 +36,13 @@ $id_question = AppContext::get_request()->get_getint('question', 0);
 if (!array_key_exists($id_faq, $FAQ_CATS) || (array_key_exists($id_faq, $FAQ_CATS) && $id_faq > 0 && !$FAQ_CATS[$id_faq]['visible']))
 {
 	$controller = PHPBoostErrors::unexisting_category();
-    DispatchManager::redirect($controller);
+	DispatchManager::redirect($controller);
 }
 
 if ($id_faq > 0)
-	$TITLE = array_key_exists($id_faq, $FAQ_CATS) ? $FAQ_CATS[$id_faq]['name'] : $FAQ_LANG['faq'];
+$TITLE = array_key_exists($id_faq, $FAQ_CATS) ? $FAQ_CATS[$id_faq]['name'] : $FAQ_LANG['faq'];
 else
-	$TITLE = $FAQ_CONFIG['faq_name'];
+$TITLE = $FAQ_CONFIG['faq_name'];
 
 define('TITLE', $FAQ_CONFIG['faq_name'] . ($id_faq > 0 ? ' - ' . $TITLE : ''));
 
@@ -65,28 +65,28 @@ $template->put_all(array(
 ));
 
 if (!empty($FAQ_CATS[$id_faq]['description']))
-	$template->assign_block_vars('description', array(
+$template->assign_block_vars('description', array(
 		'DESCRIPTION' => FormatingHelper::second_parse($FAQ_CATS[$id_faq]['description'])
-	));
+));
 
 if ($auth_write)
-	$template->assign_block_vars('management', array());
+$template->assign_block_vars('management', array());
 
 //let's check if there are some subcategories
 $num_subcats = 0;
 foreach ($FAQ_CATS as $id => $value)
 {
 	if ($id != 0 && $value['id_parent'] == $id_faq)
-		$num_subcats ++;
+	$num_subcats ++;
 }
 
 //listing of subcategories
 if ($num_subcats > 0)
-{	
+{
 	$template->put_all(array(
 		'C_FAQ_CATS' => true
-	));	
-	
+	));
+
 	$i = 1;
 	foreach ($FAQ_CATS as $id => $value)
 	{
@@ -94,7 +94,7 @@ if ($num_subcats > 0)
 		if ($id != 0 && $value['visible'] && $value['id_parent'] == $id_faq && (empty($value['auth']) || $User->check_auth($value['auth'], AUTH_READ)))
 		{
 			if ( $i % $FAQ_CONFIG['num_cols'] == 1 )
-				$template->assign_block_vars('row', array());
+			$template->assign_block_vars('row', array());
 			$template->assign_block_vars('row.list_cats', array(
 				'ID' => $id,
 				'NAME' => $value['name'],
@@ -105,12 +105,12 @@ if ($num_subcats > 0)
 				'U_CAT' => url('faq.php?id=' . $id, 'faq-' . $id . '+' . Url::encode_rewrite($value['name']) . '.php'),
 				'U_ADMIN_CAT' => url('admin_faq_cats.php?edit=' . $id)
 			));
-			
-			if (!empty($value['image']))
-				$template->put_all(array(
-					'C_CAT_IMG' => true
-				));
 				
+			if (!empty($value['image']))
+			$template->put_all(array(
+					'C_CAT_IMG' => true
+			));
+
 			$i++;
 		}
 	}
@@ -129,17 +129,17 @@ if ($num_rows > 0)
 {
 	//Display mode : if this category has a particular display mode we use it, else we use default display mode. If the category is the root we use default mode.
 	$faq_display_block = ($FAQ_CATS[$id_faq]['display_mode'] > 0) ? ($FAQ_CATS[$id_faq]['display_mode'] == 2 ? true : false ) : $FAQ_CONFIG['display_block'];
-	
+
 	//Displaying administration tools
 	$template->put_all(array(
 		'C_ADMIN_TOOLS' => $auth_write
 	));
-	
+
 	if (!$faq_display_block)
-		$template->assign_block_vars('questions', array());
+	$template->assign_block_vars('questions', array());
 	else
-		$template->assign_block_vars('questions_block', array());
-		
+	$template->assign_block_vars('questions_block', array());
+
 	while ($row = $Sql->fetch_assoc($result))
 	{
 		if (!$faq_display_block)
@@ -158,9 +158,9 @@ if ($num_rows > 0)
 				'C_SHOW_ANSWER' => $row['id'] == $id_question
 			));
 			if ($row['q_order'] > 1)
-				$template->assign_block_vars('questions.faq.up', array());
+			$template->assign_block_vars('questions.faq.up', array());
 			if ($row['q_order'] < $num_rows)
-				$template->assign_block_vars('questions.faq.down', array());
+			$template->assign_block_vars('questions.faq.down', array());
 		}
 		else
 		{
@@ -179,11 +179,11 @@ if ($num_rows > 0)
 				'U_MOVE' => url('management.php?move=' . $row['id']),
 				'U_QUESTION' => url('faq.php?id=' . $id_faq . '&amp;question=' . $row['id'], 'faq-' . $id_faq . '+' . Url::encode_rewrite($TITLE) . '.php?question=' . $row['id']) . '#q' . $row['id']
 			));
-			
+				
 			if ($row['q_order'] > 1)
-				$template->assign_block_vars('questions_block.contents.up', array());
+			$template->assign_block_vars('questions_block.contents.up', array());
 			if ($row['q_order'] < $num_rows)
-				$template->assign_block_vars('questions_block.contents.down', array());
+			$template->assign_block_vars('questions_block.contents.down', array());
 		}
 	}
 }
@@ -211,6 +211,6 @@ $template->put_all(array(
 
 $template->display();
 
-include_once('../kernel/footer.php'); 
+include_once('../kernel/footer.php');
 
 ?>

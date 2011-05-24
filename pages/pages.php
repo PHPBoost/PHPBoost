@@ -27,9 +27,9 @@
 
 require_once('../kernel/begin.php'); 
 
-$encoded_title = AppContext::get_request()->get_getstring('title', '');
+$encoded_title = TextHelper::strprotect(AppContext::get_request()->get_getstring('title', ''));
 $id_com = AppContext::get_request()->get_getint('id', 0);
-$error = AppContext::get_request()->get_getstring('error', '');
+$error = TextHelper::strprotect(AppContext::get_request()->get_getstring('error', ''));
 
 include_once('pages_begin.php');
 include_once('pages_functions.php');
