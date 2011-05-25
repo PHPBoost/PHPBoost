@@ -86,7 +86,7 @@ elseif (AppContext::get_request()->get_postbool('submit', false))
 	//Deleting a category
 	if ($cat_to_del_post > 0)
 	{
-		$action = TextHelper::strprotect(AppContext::get_request()->get_poststring('action', '');
+		$action = TextHelper::strprotect(AppContext::get_request()->get_poststring('action', ''));
 		$delete_content = $action != 'move';
 		$id_parent = AppContext::get_request()->get_postint('id_parent', 0);
 

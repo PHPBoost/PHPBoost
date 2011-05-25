@@ -96,7 +96,7 @@ elseif (!empty($idgroup) && $add_mbr) //Ajout du membre au groupe.
 {
 	$Session->csrf_get_protect(); //Protection csrf
 
-	$login = TextHelper::strprotect(AppContext::get_request()->get_poststring('login_mbr', '');
+	$login = TextHelper::strprotect(AppContext::get_request()->get_poststring('login_mbr', ''));
 	$user_id = $Sql->query("SELECT user_id FROM " . DB_TABLE_MEMBER . " WHERE login = '" . $login . "'", __LINE__, __FILE__);
 	if (!empty($user_id))
 	{
