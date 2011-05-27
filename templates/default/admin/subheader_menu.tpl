@@ -35,7 +35,7 @@
 				</ul>
 			</li>
 			<li class="extend" onmouseover="show_menu(22, 1);" onmouseout="hide_menu(1);">
-				<a href="{PATH_TO_ROOT}/admin/admin_themes.php" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/themes_mini.png);">{L_THEME}</a>
+				<a href="{PATH_TO_ROOT}/admin/themes/" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/themes_mini.png);">{L_THEME}</a>
 				<ul id="ssmenu22">
 					<li><a href="{PATH_TO_ROOT}/admin/themes/" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/themes_mini.png);">{L_MANAGEMENT}</a></li>
 					<li><a href="{PATH_TO_ROOT}/admin/themes/?url=/add" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/themes_mini.png);">{L_ADD}</a></li>
