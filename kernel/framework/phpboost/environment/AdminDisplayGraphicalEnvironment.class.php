@@ -52,12 +52,12 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 		global $LANG;
 
 		//Module de connexion
-		$login = TextHelper::strprotect(AppContext::get_request()->get_poststring('login', ''));
-		$password = trim(AppContext::get_request()->get_poststring('password', ''));
-		$autoconnexion = AppContext::get_request()->get_postbool('auto', false);
-		$unlock = strhash(trim(AppContext::get_request()->get_poststring('unlock', '')));
+		$login = retrieve(POST, 'login', '');
+		$password = retrieve(POST, 'password', '', TSTRING_UNCHANGE);
+		$autoconnexion = retrieve(POST, 'auto', false);
+		$unlock = strhash(retrieve(POST, 'unlock', '', TSTRING_UNCHANGE));
 
-		if (AppContext::get_request()->get_getbool('disconnect', false))
+		if (retrieve(GET, 'disconnect', false))
 		{
 			AppContext::get_session()->end();
 			AppContext::get_response()->redirect(Environment::get_home_page());
@@ -66,7 +66,7 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 		$sql = PersistenceContext::get_sql();
 
 		//If the member tried to connect
-		if (AppContext::get_request()->get_postbool('connect', false) && !empty($login) && !empty($password))
+		if (retrieve(POST, 'connect', false) && !empty($login) && !empty($password))
 		{
 			//TODO @Régis clean this code. Why it's not in the session class?
 			$user_id = $sql->query("SELECT user_id FROM " . DB_TABLE_MEMBER . " WHERE login = '" . $login . "' AND level = 2", __LINE__, __FILE__);
@@ -79,6 +79,7 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 				if ($delay_ban >= 0 && $info_connect['user_aprob'] == '1' && $info_connect['user_warning'] < '100') //Utilisateur non (plus) banni.
 				{
 					$session = AppContext::get_session();
+					
 					//Protection de l'administration par connexion brute force.
 					if ($info_connect['test_connect'] < '5' || $unlock === GeneralConfig::load()->get_admin_unlocking_key()) //Si clée de déverouillage bonne aucune vérification.
 					{
@@ -136,7 +137,7 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 			AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);
 		}
 
-		$flood = AppContext::get_request()->get_getint('flood', 0);
+		$flood = retrieve(GET, 'flood', 0);
 		$is_admin = AppContext::get_user()->check_level(ADMIN_LEVEL);
 		if (!$is_admin || $flood)
 		{

@@ -79,8 +79,9 @@ class Contribution extends Event
 	 * @var string Login of the member who has fixed the contribution.
 	 */
 	private $fixer_login = '';
-
+	
 	private $sql_querier;
+
 
 	/**
 	 * @desc Builds a Contribution object.

@@ -42,7 +42,6 @@ class AdministratorAlertService
 	{
 		self::$sql_querier = PersistenceContext::get_sql();
 	}
-	
 	/**
 	 * @desc Builds an alert knowing its id.
 	 * @param int $alert_id Id of the alert.
@@ -130,7 +129,7 @@ class AdministratorAlertService
 	 * @return AdministratorAlert[] The list of the matching alerts.
  	 */
 	public static function find_by_identifier($identifier, $type = '')
-	{
+	{        
         $result = self::$sql_querier->query_while(
             "SELECT id, entitled, fixing_url, current_status, creation_date, id_in_module, priority, identifier, type, description
     		FROM " . DB_TABLE_EVENTS  . "

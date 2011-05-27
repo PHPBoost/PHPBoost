@@ -42,6 +42,7 @@ class Captcha
 	const CAPTCHA_VERY_HARD = 4;
 
 	private $instance = 0; //Instance identifier
+	private $gd_loaded = false; //Is Gd library is loaded
 	private $width = 160; //Image width
 	private $height = 50; //Image height
 	private $code = ''; //Captcha code
@@ -58,10 +59,14 @@ class Captcha
 	 */
 	public function __construct()
 	{
-		$this->sql_querier = PersistenceContext::get_sql();
 		$this->update_instance(); //Mise à jour de l'instance.
+		if (@extension_loaded('gd')) //TODO à remplacer par les fonctions verifs du kernel
+		{
+			$this->gd_loaded = true;
+		}
 		$this->html_id = 'verif_code' . $this->instance;
 		$this->user_id = $this->get_user_id();
+		$this->sql_querier = PersistenceContext::get_sql();
 	}
 
 	/**
@@ -70,8 +75,7 @@ class Captcha
 	 */
 	public function is_available()
 	{
-		$server_configuration = new ServerConfiguration();
-		if ($server_configuration->has_gd_library())
+		if ($this->gd_loaded)
 		{
 			return true;
 		}

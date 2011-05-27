@@ -36,12 +36,14 @@
 class ContributionService
 {
 	const CONTRIBUTION_TYPE = 0;
+	
 	private static $sql_querier;
 	
 	public static function __static()
 	{
 		self::$sql_querier = PersistenceContext::get_sql();
 	}
+	
 	/**
      * @desc Finds a contribution with its identifier.
      * @param int $id_contrib Id of the contribution.
@@ -174,7 +176,7 @@ class ContributionService
      * @param Contribution $contribution The contribution to synchronize with the data base.
 	 */
 	public static function save_contribution($contribution)
-	{
+	{		
 		// If it exists already in the data base
 		if ($contribution->get_id() > 0)
 		{
