@@ -112,8 +112,8 @@ class Feed
 			$tpl = clone $template;
 		}
 
-		global $User, $MODULES;
-		if ($User->check_auth($MODULES[$this->module_id]['auth'], ACCESS_MODULE))
+		global $MODULES;
+		if (AppContext::get_user()->check_auth($MODULES[$this->module_id]['auth'], ACCESS_MODULE))
 		{
 			if (!empty($this->data))
 			{

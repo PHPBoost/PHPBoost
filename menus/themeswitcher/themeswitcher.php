@@ -27,21 +27,20 @@
 
 function menu_themeswitcher_themeswitcher($position, $block)
 {
-	global $User, $LANG, $Session;
-
-	load_menu_lang('themeswitcher');
-
+	$themeswitcher_lang = LangLoader::get('themeswitcher_common', 'menus/themeswitcher');
+	$user = AppContext::get_user();
+	
 	$switchtheme = !empty($_GET['switchtheme']) ? urldecode($_GET['switchtheme']) : '';
     if (!empty($switchtheme))
     {
-        if ($User->check_level(MEMBER_LEVEL))
+        if ($user->check_level(MEMBER_LEVEL))
         {
-            $Session->csrf_get_protect();
+            AppContext::get_session()->csrf_get_protect();
         }
 
     	if (preg_match('`[ a-z0-9_-]{3,20}`i', $switchtheme) && strpos($switchtheme, '\'') === false)
     	{
-    		$User->update_user_theme($switchtheme); //Mise à jour du thème du membre.
+    		$user->update_user_theme($switchtheme); //Mise à jour du thème du membre.
     		if (QUERY_STRING != '')
     		{
 				$query_string = preg_replace('`token=[^&]+`', '', QUERY_STRING);
@@ -59,9 +58,9 @@ function menu_themeswitcher_themeswitcher($position, $block)
 
     foreach (ThemeManager::get_activated_themes_map() as $id => $value)
 	{
-    	if ($User->check_auth($value->get_authorizations(), AUTH_THEME))
+    	if ($user->check_auth($value->get_authorizations(), AUTH_THEME))
     	{
-			$selected = (get_utheme() == $id) ? ' selected="selected"' : '';
+			$selected = ($user->get_theme() == $id) ? ' selected="selected"' : '';
     		$tpl->assign_block_vars('themes', array(
     			'NAME' => $value->get_configuration()->get_name(),
     			'IDNAME' => $id,
@@ -72,9 +71,9 @@ function menu_themeswitcher_themeswitcher($position, $block)
 
     $tpl->put_all(array(
     	'DEFAULT_THEME' => UserAccountsConfig::load()->get_default_theme(),
-    	'L_SWITCH_THEME' => $LANG['switch_theme'],
-    	'L_DEFAULT_THEME' => $LANG['defaut_theme'],
-    	'L_SUBMIT' => $LANG['submit']
+    	'L_SWITCH_THEME' => $themeswitcher_lang['switch_theme'],
+    	'L_DEFAULT_THEME' => $themeswitcher_lang['defaut_theme'],
+    	'L_SUBMIT' => LangLoader::get_message('submit', 'main')
     ));
 
     return $tpl->render();

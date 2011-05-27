@@ -79,6 +79,8 @@ class Contribution extends Event
 	 * @var string Login of the member who has fixed the contribution.
 	 */
 	private $fixer_login = '';
+	
+	private $sql_querier;
 
 
 	/**
@@ -91,6 +93,7 @@ class Contribution extends Event
 		$this->creation_date = new Date();
 		$this->fixing_date = new Date();
 		$this->module = Environment::get_running_module_name();
+		$this->sql_querier = PersistenceContext::get_sql();
 	}
 
 	/**
@@ -162,8 +165,6 @@ class Contribution extends Event
 	 */
 	public function set_status($new_current_status)
 	{
-		global $User;
-
 		if (in_array($new_current_status, array(Event::EVENT_STATUS_UNREAD, Event::EVENT_STATUS_BEING_PROCESSED, Event::EVENT_STATUS_PROCESSED), TRUE))
 		{
 			//If it just comes to be processed, we automatically consider it as processed
@@ -173,7 +174,7 @@ class Contribution extends Event
 				//If the fixer id is not defined, we define it
 				if ($this->fixer_id == 0)
 				{
-					$this->fixer_id = $User->get_attribute('user_id');
+					$this->fixer_id = AppContext::get_user()->get_attribute('user_id');
 				}
 			}
 
@@ -206,13 +207,11 @@ class Contribution extends Event
 	 */
 	public function set_poster_id($poster_id)
 	{
-		global $Sql;
-
 		if ($poster_id  > 0)
 		{
 			$this->poster_id = $poster_id;
 			//Assigning also the associated login
-			$this->poster_login = $Sql->query("SELECT login FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $poster_id . "'", __LINE__, __FILE__);
+			$this->poster_login = $this->sql_querier->query("SELECT login FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $poster_id . "'", __LINE__, __FILE__);
 		}
 	}
 
@@ -222,13 +221,11 @@ class Contribution extends Event
 	 */
 	public function set_fixer_id($fixer_id)
 	{
-		global $Sql;
-
 		if ($fixer_id  > 0)
 		{
 			$this->fixer_id = $fixer_id;
 			//Assigning also the associated login
-			$this->fixer_login = $Sql->query("SELECT login FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $fixer_id . "'", __LINE__, __FILE__);
+			$this->fixer_login = $this->sql_querier->query("SELECT login FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $fixer_id . "'", __LINE__, __FILE__);
 		}
 	}
 
