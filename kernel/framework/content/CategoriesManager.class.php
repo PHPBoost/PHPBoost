@@ -141,6 +141,7 @@ class CategoriesManager
 		$this->cache_file_name = $cache_file_name;
 		// this is a pointer to the cache variable. We always refer to it, even if it's updated we will have always the good values.
 		$this->cache_var =& $cache_var;
+		
 		$this->sql_querier = PersistenceContext::get_sql();
 		$this->user = AppContext::get_user();
 	}

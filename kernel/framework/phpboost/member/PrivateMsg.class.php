@@ -37,8 +37,9 @@ class PrivateMsg
 	const SYSTEM_PM = true; //Message privé envoyé par le système.
 	const DEL_PM_CONVERS = true; //Suppression de la conversation complète.
 	const UPDATE_MBR_PM = false;  //Met à jour le nombre de mp du membre.
-	private static $sql_querier;
 
+	private static $sql_querier;
+	
 	public static function __static()
 	{
 		self::$sql_querier = PersistenceContext::get_sql();
@@ -110,7 +111,7 @@ class PrivateMsg
 	 * @param boolean $check_pm_before_send
 	 */
 	public static function send($pm_to, $pm_idconvers, $pm_contents, $pm_from, $pm_status, $check_pm_before_send = true)
-	{
+	{		
 		//On vérifie qu'un message n'a pas été posté entre temps.
         if ($check_pm_before_send)
         {

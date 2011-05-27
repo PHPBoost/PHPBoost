@@ -33,8 +33,6 @@
  */
 class Backup
 {
-	private $sql_querier;
-	
 	//TODO attributs à mettre en private après remplacement des accès direct dans les fichiers concernés.
 	/**
 	 * @var string[] List of the tables used by PHPBoost.
@@ -45,6 +43,8 @@ class Backup
 	 */
 	public $backup_script = '';
 
+	private $sql_querier;
+	
 	/**
 	 * @desc Builds a Backup object
 	 */
@@ -54,6 +54,7 @@ class Backup
 		//On modifie le temps d'exécution maximal si le serveur le permet
 		//parce que les opérations sont longues
 		@set_time_limit(600);
+		
 		$this->sql_querier = PersistenceContext::get_sql();
 	}
 

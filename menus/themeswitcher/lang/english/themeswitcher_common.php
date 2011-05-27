@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                                 french.php
+ *                                 themeswitcher_common.php
  *                            -------------------
  *   begin                : August 24, 2009
  *   copyright            : (C) 2005 Viarre Régis
@@ -27,10 +27,10 @@
 
 
  ####################################################
-#                     French                                                                              #
+#                     English                       #
  ####################################################
 
-$LANG['switch_theme'] = 'Changer le thème';
-$LANG['defaut_theme'] = 'Thème par défaut';
+$LANG['switch_theme'] = 'Switch theme';
+$LANG['defaut_theme'] = 'Default theme';
 
 ?>

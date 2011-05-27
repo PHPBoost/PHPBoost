@@ -34,13 +34,14 @@ class Uploads
 {
 	const EMPTY_FOLDER = true;
 	const ADMIN_NO_CHECK = true;
+	
 	private static $sql_querier;
 	
 	public static function __static()
 	{
 		self::$sql_querier = PersistenceContext::get_sql();
 	}
-
+	
 	//Ajout d'un dossier virtuel
 	public static function Add_folder($id_parent, $user_id, $name)
 	{
@@ -61,7 +62,10 @@ class Uploads
 		FROM " . DB_TABLE_UPLOAD . " 
 		WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
 		while( $row = self::$sql_querier->fetch_assoc($result) )
-			delete_file(PATH_TO_ROOT . '/upload/' . $row['path']);
+		{
+			$file = new File(PATH_TO_ROOT . '/upload/' . $row['path']);
+			$file->delete();
+		}
 		
 		//Suppression des entrées dans la base de données
 		self::$sql_querier->Query_inject("DELETE FROM " . DB_TABLE_UPLOAD_CAT . " WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);			
@@ -75,8 +79,11 @@ class Uploads
 		$result = self::$sql_querier->query_while("SELECT path
 		FROM " . DB_TABLE_UPLOAD . " 
 		WHERE idcat = '" . $id_folder . "'", __LINE__, __FILE__);
-		while ($row = self::$sql_querier->fetch_assoc($result))
-			delete_file(PATH_TO_ROOT . '/upload/' . $row['path']);
+		while ($row = $Sql->fetch_assoc($result))
+		{
+			$file = new File(PATH_TO_ROOT . '/upload/' . $row['path']);
+			$file->delete();
+		}
 		
 		//Suppression des entrées dans la base de données
 		self::$sql_querier->query_inject("DELETE FROM " . DB_TABLE_UPLOAD_CAT . " WHERE id = '" . $id_folder . "'", __LINE__, __FILE__);
@@ -99,7 +106,10 @@ class Uploads
 		{
 			$name = self::$sql_querier->query("SELECT path FROM " . DB_TABLE_UPLOAD . " WHERE id = '" . $id_file . "'", __LINE__, __FILE__);
 			self::$sql_querier->query_inject("DELETE FROM " . DB_TABLE_UPLOAD . " WHERE id = '" . $id_file . "'", __LINE__, __FILE__);
-			delete_file(PATH_TO_ROOT . '/upload/' . $name);
+			
+			$file = new File(PATH_TO_ROOT . '/upload/' . $name);
+			$file->delete();
+
 			return '';
 		}		
 		else
@@ -110,7 +120,10 @@ class Uploads
 			{
 				$name = self::$sql_querier->query("SELECT path FROM " . DB_TABLE_UPLOAD . " WHERE id = '" . $id_file . "'", __LINE__, __FILE__);
 				self::$sql_querier->query_inject("DELETE FROM " . DB_TABLE_UPLOAD . " WHERE id = '" . $id_file . "'", __LINE__, __FILE__);
-				delete_file(PATH_TO_ROOT . '/upload/' . $name);
+				
+				$file = new File(PATH_TO_ROOT . '/upload/' . $name);
+				$file->delete();
+				
 				return '';
 			}
 			return 'e_auth';
@@ -119,7 +132,7 @@ class Uploads
 	
 	//Renomme un dossier virtuel
 	public static function Rename_folder($id_folder, $name, $previous_name, $user_id, $admin = false)
-	{
+	{		
 		//Vérification de l'unicité du nom du dossier.
 		$info_folder = self::$sql_querier->query_array(PREFIX . "upload_cat", "id_parent", "user_id", "WHERE id = '" . $id_folder . "'", __LINE__, __FILE__);
 		$check_folder = self::$sql_querier->query("SELECT COUNT(*) FROM " . DB_TABLE_UPLOAD_CAT . " WHERE id_parent = '" . $info_folder['id_parent'] . "' AND name = '" . $name . "' AND id <> '" . $id_folder . "' AND user_id = '" . $user_id . "'", __LINE__, __FILE__);
@@ -144,7 +157,7 @@ class Uploads
 	
 	//Renomme un fichier virtuel
 	public static function Rename_file($id_file, $name, $previous_name, $user_id, $admin = false)
-	{
+	{		
 		//Vérification de l'unicité du nom du fichier.
 		$info_cat = self::$sql_querier->query_array(PREFIX . "upload", "idcat", "user_id", "WHERE id = '" . $id_file . "'", __LINE__, __FILE__);
 		$check_file = self::$sql_querier->query("SELECT COUNT(*) FROM " . DB_TABLE_UPLOAD . " WHERE idcat = '" . $info_cat['idcat'] . "' AND name = '" . $name . "' AND id <> '" . $id_file . "' AND user_id = '" . $user_id . "'", __LINE__, __FILE__);
@@ -169,7 +182,7 @@ class Uploads
 		
 	//Déplacement dun dossier.
 	public static function Move_folder($move, $to, $user_id, $admin = false)
-	{		
+	{
 		if ($admin) //Administration, on ne vérifie pas l'appartenance.
 		{
 			//Changement de propriètaire du fichier.
@@ -204,7 +217,7 @@ class Uploads
 	
 	//Déplacement dun fichier.
 	public static function Move_file($move, $to, $user_id, $admin = false)
-	{		
+	{
 		if ($admin) //Administration, on ne vérifie pas l'appartenance.
 		{
 			//Changement de propriètaire du fichier.
