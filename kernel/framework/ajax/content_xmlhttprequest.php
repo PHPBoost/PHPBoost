@@ -31,15 +31,15 @@ define('NO_SESSION_LOCATION', true); //Permet de ne pas mettre jour la page dans
 include_once(PATH_TO_ROOT . '/kernel/begin.php');
 include_once(PATH_TO_ROOT . '/kernel/header_no_display.php');
 
-$page_path_to_root = AppContext::get_request()->get_string('path_to_root', '');
-$page_path = AppContext::get_request()->get_string('page_path', '');
+$page_path_to_root = retrieve(REQUEST, 'path_to_root', '');
+$page_path = retrieve(REQUEST, 'page_path', '');
 
 //Quel éditeur utiliser ? Si ce n'est pas précisé on prend celui par défaut de l'utilisateur
 $editor = retrieve(REQUEST, 'editor', ContentFormattingConfig::load()->get_default_editor());
 
-$contents = utf8_decode(AppContext::get_request()->get_poststring('contents', ''));
+$contents = utf8_decode(retrieve(POST, 'contents', '', TSTRING_AS_RECEIVED));
 
-$ftags = AppContext::get_request()->get_postvalue('ftags', TSTRING_UNCHANGE);
+$ftags = retrieve(POST, 'ftags', TSTRING_UNCHANGE);
 $forbidden_tags = explode(',', $ftags);
 
 $formatting_factory = AppContext::get_content_formatting_service()->create_factory($editor);

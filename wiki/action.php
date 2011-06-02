@@ -32,25 +32,25 @@ load_module_lang('wiki');
 
 require('../wiki/wiki_auth.php');
 
-$id_auth = AppContext::get_request()->get_postint('id_auth', 0);
-$id_status = AppContext::get_request()->get_postint('id_status', 0);
-$type_status = AppContext::get_request()->get_poststring('status', '');
-$id_change_status = AppContext::get_request()->get_postint('id_change_status', 0);
-$contents = wiki_parse(AppContext::get_request()->get_poststring('contents', ''));
-$move = AppContext::get_request()->get_postint('id_to_move', 0);
-$new_cat = AppContext::get_request()->get_postint('new_cat', 0);
-$id_to_rename = AppContext::get_request()->get_postint('id_to_rename', 0);
-$new_title = AppContext::get_request()->get_poststring('new_title', '');
-$create_redirection_while_renaming = AppContext::get_request()->get_postbool('create_redirection_while_renaming', false);
-$create_redirection = AppContext::get_request()->get_postint('create_redirection', 0);
-$redirection_title = AppContext::get_request()->get_poststring('redirection_title', '');
-$del_redirection = AppContext::get_request()->get_getint('del_redirection', 0);
-$restore = AppContext::get_request()->get_getint('restore', 0);
-$del_archive = AppContext::get_request()->get_getint('del_contents', 0);
-$del_article = AppContext::get_request()->get_getint('del_article', 0);
-$del_to_remove = AppContext::get_request()->get_postint('id_to_remove', 0);
-$report_cat = AppContext::get_request()->get_postint('report_cat', 0);
-$remove_action = AppContext::get_request()->get_poststring('action', ''); //Action à faire lors de la suppression
+$id_auth = retrieve(POST, 'id_auth', 0);
+$id_status = retrieve(POST, 'id_status', 0);
+$type_status = retrieve(POST, 'status', '');
+$id_change_status = retrieve(POST, 'id_change_status', 0);
+$contents = wiki_parse(retrieve(POST, 'contents', '', TSTRING_AS_RECEIVED));
+$move = retrieve(POST, 'id_to_move', 0);
+$new_cat = retrieve(POST, 'new_cat', 0);
+$id_to_rename = retrieve(POST, 'id_to_rename', 0);
+$new_title = retrieve(POST, 'new_title', '');
+$create_redirection_while_renaming = retrieve(POST, 'create_redirection_while_renaming', false);
+$create_redirection = retrieve(POST, 'create_redirection', 0);
+$redirection_title = retrieve(POST, 'redirection_title', '');
+$del_redirection = retrieve(GET, 'del_redirection', 0);
+$restore = retrieve(GET, 'restore', 0);
+$del_archive = retrieve(GET, 'del_contents', 0);
+$del_article = retrieve(GET, 'del_article', 0);
+$del_to_remove = retrieve(POST, 'id_to_remove', 0);
+$report_cat = retrieve(POST, 'report_cat', 0);
+$remove_action = retrieve(POST, 'action', ''); //Action à faire lors de la suppression
 
 if ($id_auth > 0)
 {

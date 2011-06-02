@@ -35,12 +35,12 @@ $Bread_crumb->add($LANG['title_search'], '');
 define('TITLE', $LANG['title_forum'] . ' - ' . $LANG['title_search']);
 require_once('../kernel/header.php');
 
-$search = AppContext::get_request()->get_poststring('search', '');
-$idcat = AppContext::get_request()->get_postint('idcat', -1);
-$time = AppContext::get_request()->get_postint('time', 0) * 3600 * 24; //X jour en secondes.
-$where = AppContext::get_request()->get_poststring('where', '');
-$colorate_result = AppContext::get_request()->get_postbool('colorate_result', false);
-$valid_search = AppContext::get_request()->get_poststring('valid_search', '');
+$search = retrieve(POST, 'search', '');
+$idcat = retrieve(POST, 'idcat', -1);
+$time = retrieve(POST, 'time', 0) * 3600 * 24; //X jour en secondes.
+$where = retrieve(POST, 'where', '');
+$colorate_result = retrieve(POST, 'colorate_result', false);
+$valid_search = retrieve(POST, 'valid_search', '');
 
 $Template->set_filenames(array(
 	'search'=> 'forum/forum_search.tpl',

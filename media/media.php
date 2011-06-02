@@ -31,8 +31,8 @@ require_once('media_begin.php');
 
 $Template->set_filenames(array('media' => 'media/media.tpl'));
 
-$id_media = AppContext::get_request()->get_getint('id', 0);
-$id_cat = AppContext::get_request()->get_getint('cat', 0);
+$id_media = retrieve(GET, 'id', 0);
+$id_cat = retrieve(GET, 'cat', 0);
 $level = array('', ' class="modo"', ' class="admin"');
 
 $notation = new Notation();
@@ -101,8 +101,8 @@ if (empty($id_media) && $id_cat >= 0)
 	//Contenu de la catégorie
 	if ($MEDIA_CATS[$id_cat]['num_media'] > 0)
 	{
-		$get_sort = AppContext::get_request()->get_getstring('sort', '');
-		$get_mode = AppContext::get_request()->get_getstring('mode', '');
+		$get_sort = retrieve(GET, 'sort', '');
+		$get_mode = retrieve(GET, 'mode', '');
 		$mode = ($get_mode == 'asc') ? 'ASC' : 'DESC';
 		$unget = (!empty($get_sort) && !empty($mode)) ? '?sort=' . $get_sort . '&amp;mode=' . $get_mode : '';
 		$selected_fields = array('alpha' => '', 'date' => '', 'nbr' => '', 'note' => '', 'com' => '', 'asc' => '', 'desc' => '');

@@ -33,9 +33,9 @@ define('ALTERNATIVE_CSS', 'wiki');
 include('../wiki/wiki_functions.php');
 
 //Titre de l'article
-$encoded_title = AppContext::get_request()->get_getstring('title', '');
+$encoded_title = retrieve(GET, 'title', '');
 //numéro de l'article (utile pour les archives)
-$id_contents = AppContext::get_request()->get_getint('id_contents', 0);
+$id_contents = retrieve(GET, 'id_contents', 0);
 
 $num_rows = 0;
 $parse_redirection = false;

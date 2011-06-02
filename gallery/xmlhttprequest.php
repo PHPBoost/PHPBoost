@@ -34,8 +34,8 @@ require_once('../kernel/header_no_display.php');
 //Notation.
 if (!empty($_GET['increment_view']))
 {
-	$g_idpics = AppContext::get_request()->get_getint('id', 0);
-	$g_idcat = AppContext::get_request()->get_getint('cat', 0);
+	$g_idpics = retrieve(GET, 'id', 0);
+	$g_idcat = retrieve(GET, 'cat', 0);
 	if (empty($g_idpics))
 		exit;
 	elseif (!empty($g_idcat))
@@ -61,7 +61,7 @@ else
 	
 	if (!empty($_GET['rename_pics'])) //Renomme une image.
 	{
-		$id_file = AppContext::get_request()->get_postint('id_file', 0);
+		$id_file = retrieve(POST, 'id_file', 0);
 		$id_cat = $Sql->query("SELECT idcat FROM " . PREFIX . "gallery WHERE id = " .$id_file. " ", __LINE__, __FILE__);
 		
 		if ($User->check_auth($CAT_GALLERY[$id_cat]['auth'], EDIT_CAT_GALLERY)) //Modo
@@ -82,7 +82,7 @@ else
 	}
 	elseif (!empty($_GET['aprob_pics']))
 	{
-		$id_file = AppContext::get_request()->get_postint('id_file', 0);
+		$id_file = retrieve(POST, 'id_file', 0);
 		$id_cat = $Sql->query("SELECT idcat FROM " . PREFIX . "gallery WHERE id = " .$id_file. " ", __LINE__, __FILE__);
 		
 		if ($User->check_auth($CAT_GALLERY[$id_cat]['auth'], EDIT_CAT_GALLERY)) //Modo

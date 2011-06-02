@@ -36,10 +36,10 @@ $Cache->load('web');
 if (!empty($_POST['valid']))
 {
 	$config_web = array();
-	$config_web['nbr_web_max'] = AppContext::get_request()->get_postint('nbr_web_max', 10);
-	$config_web['nbr_cat_max'] = AppContext::get_request()->get_postint('nbr_cat_max', 10);
-	$config_web['nbr_column'] = AppContext::get_request()->get_postint('nbr_column', 2);
-	$config_web['note_max'] = max(1, AppContext::get_request()->get_postint('note_max', 5));
+	$config_web['nbr_web_max'] = retrieve(POST, 'nbr_web_max', 10);
+	$config_web['nbr_cat_max'] = retrieve(POST, 'nbr_cat_max', 10);
+	$config_web['nbr_column'] = retrieve(POST, 'nbr_column', 2);
+	$config_web['note_max'] = max(1, retrieve(POST, 'note_max', 5));
 	
 	$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($config_web)) . "' WHERE name = 'web'", __LINE__, __FILE__);
 	

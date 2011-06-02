@@ -29,7 +29,7 @@ require_once('../kernel/begin.php');
 require_once('../forum/forum_begin.php');
 require_once('../forum/forum_tools.php');
 
-$id_get = AppContext::get_request()->get_getint('id', 0);
+$id_get = retrieve(GET, 'id', 0);
 
 //Vérification de l'existance de la catégorie.
 if (empty($id_get) || !isset($CAT_FORUM[$id_get]) || $CAT_FORUM[$id_get]['aprob'] == 0 || $CAT_FORUM[$id_get]['level'] == 0)
@@ -65,7 +65,7 @@ require_once('../kernel/header.php');
 $rewrited_title = (ServerEnvironmentConfig::load()->is_url_rewriting_enabled() && !empty($CAT_FORUM[$id_get]['name'])) ? '+' . Url::encode_rewrite($CAT_FORUM[$id_get]['name']) : '';
 
 //Redirection changement de catégorie.
-$change_cat = AppContext::get_request()->get_poststring('change_cat', '');
+$change_cat = retrieve(POST, 'change_cat', '');
 if (!empty($change_cat))
 	AppContext::get_response()->redirect('/forum/forum' . url('.php?id=' . $change_cat, '-' . $change_cat . $rewrited_title . '.php', '&'));
 	

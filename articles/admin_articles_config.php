@@ -64,10 +64,10 @@ if (retrieve(POST,'valid',false))
 	}
 	
 	$config_articles = array(
-		'nbr_articles_max' => AppContext::get_request()->get_postint('nbr_articles_max', 10),
-		'nbr_cat_max' => AppContext::get_request()->get_postint('nbr_cat_max', 10),
-		'nbr_column' => AppContext::get_request()->get_postint('nbr_column', 2),
-		'note_max' => max(1, AppContext::get_request()->get_postint('note_max', 5)),
+		'nbr_articles_max' => retrieve(POST, 'nbr_articles_max', 10),
+		'nbr_cat_max' => retrieve(POST, 'nbr_cat_max', 10),
+		'nbr_column' => retrieve(POST, 'nbr_column', 2),
+		'note_max' => max(1, retrieve(POST, 'note_max', 5)),
 		'global_auth' => Authorizations::build_auth_array_from_form(AUTH_ARTICLES_READ, AUTH_ARTICLES_CONTRIBUTE, AUTH_ARTICLES_WRITE, AUTH_ARTICLES_MODERATE),
 		'mini'=>serialize($mini),
 		'tpl_cat'=>$tpl_cat,

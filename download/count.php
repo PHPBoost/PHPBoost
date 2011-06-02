@@ -29,7 +29,7 @@ require_once('../kernel/begin.php');
 
 require_once('download_auth.php');
 
-$idurl = AppContext::get_request()->get_getint('id', 0);
+$idurl = retrieve(GET, 'id', 0);
 
 if (!empty($idurl))
 {

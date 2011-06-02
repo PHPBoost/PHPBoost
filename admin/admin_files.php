@@ -32,19 +32,19 @@ require_once('../admin/admin_header.php');
 //Initialisation  de la class de gestion des fichiers.
 
 
-$folder = AppContext::get_request()->get_getint('f', 0);
-$folder_member = AppContext::get_request()->get_getint('fm', 0);
-$parent_folder = AppContext::get_request()->get_getint('fup', 0);
+$folder = retrieve(GET, 'f', 0);
+$folder_member = retrieve(GET, 'fm', 0);
+$parent_folder = retrieve(GET, 'fup', 0);
 $home_folder = !empty($_GET['root']) ? true : false;
-$del_folder = AppContext::get_request()->get_getint('delf', 0);
-$empty_folder = AppContext::get_request()->get_getint('eptf', 0);
-$del_file = AppContext::get_request()->get_getint('del', 0);
-$get_error = AppContext::get_request()->get_getstring('error', '');
-$get_l_error = AppContext::get_request()->get_getstring('erroru', '');
+$del_folder = retrieve(GET, 'delf', 0);
+$empty_folder = retrieve(GET, 'eptf', 0);
+$del_file = retrieve(GET, 'del', 0);
+$get_error = retrieve(GET, 'error', '');
+$get_l_error = retrieve(GET, 'erroru', '');
 $show_member = !empty($_GET['showm']) ? true : false;
-$move_folder = AppContext::get_request()->get_getint('movefd', 0);
-$move_file = AppContext::get_request()->get_getint('movefi', 0);
-$to = AppContext::get_request()->get_postint('new_cat', -1);
+$move_folder = retrieve(GET, 'movefd', 0);
+$move_file = retrieve(GET, 'movefi', 0);
+$to = retrieve(POST, 'new_cat', -1);
 
 if (isset($_GET['fup'])) //Changement de dossier
 {

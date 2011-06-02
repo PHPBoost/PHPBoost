@@ -28,12 +28,12 @@
 include_once('../kernel/begin.php');
 include_once('faq_begin.php');
 
-$id_faq = AppContext::get_request()->get_getint('faq', 0);
-$edit_question = AppContext::get_request()->get_getint('edit', 0);
-$cat_of_new_question = AppContext::get_request()->get_getint('idcat', 0);
-$new = AppContext::get_request()->get_getbool('new', false);
-$new_after_id = AppContext::get_request()->get_getint('after', 0);
-$id_move = AppContext::get_request()->get_getint('move', 0);
+$id_faq = retrieve(GET, 'faq', 0);
+$edit_question = retrieve(GET, 'edit', 0);
+$cat_of_new_question = retrieve(GET, 'idcat', 0);
+$new = retrieve(GET, 'new', false);
+$new_after_id = retrieve(GET, 'after', 0);
+$id_move = retrieve(GET, 'move', 0);
 
 if ($edit_question > 0)
 {

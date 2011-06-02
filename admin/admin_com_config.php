@@ -36,14 +36,14 @@ if (!empty($_POST['valid']) )
 	$server_configuration = new ServerConfiguration();
 	
 	$comments_config->set_auth_post_comments(Authorizations::build_auth_array_from_form(Comments::POST_COMMENT_AUTH));
-	$comments_config->set_display_comments_in_popup(AppContext::get_request()->get_postbool('com_popup', false));
+	$comments_config->set_display_comments_in_popup(retrieve(POST, 'com_popup', false));
 	$comments_config->set_display_captcha($server_configuration->has_gd_library() ? $_POST['verif_code'] : false);
-	$comments_config->set_captcha_difficulty(AppContext::get_request()->get_postint('verif_code_difficulty', 2));
-	$comments_config->set_number_comments_per_page(AppContext::get_request()->get_postint('com_max', 10));
+	$comments_config->set_captcha_difficulty(retrieve(POST, 'verif_code_difficulty', 2));
+	$comments_config->set_number_comments_per_page(retrieve(POST, 'com_max', 10));
 	if (!empty($_POST['forbidden_tags'])) {
 	   $comments_config->set_forbidden_tags($_POST['forbidden_tags']);
 	}
-	$comments_config->set_max_links_comment(AppContext::get_request()->get_postint('max_link', -1));
+	$comments_config->set_max_links_comment(retrieve(POST, 'max_link', -1));
 	CommentsConfig::save();
 	
 	AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);	

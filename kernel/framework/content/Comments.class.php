@@ -240,17 +240,17 @@ class Comments
 
 		if ($integrated_in_environment)
 		{
-			$idcom_get = AppContext::get_request()->get_getint('com', 0);
-			$idcom_post = AppContext::get_request()->get_postint('idcom', 0);
+			$idcom_get = retrieve(GET, 'com', 0);
+			$idcom_post = retrieve(POST, 'idcom', 0);
 		    $idcom = $idcom_post > 0 ? $idcom_post : $idcom_get;
 
 		    $this->set_arg($idcom); //On met à jour les attributs de l'objet.
 		}
 
 	    $vars_simple = sprintf($this->vars, 0);
-		$delcom = AppContext::get_request()->get_getint('delcom', 0);
-		$editcom = AppContext::get_request()->get_getint('editcom', 0);
-		$updatecom = AppContext::get_request()->get_getbool('updatecom', false);
+		$delcom = retrieve(GET, 'delcom', 0);
+		$editcom = retrieve(GET, 'editcom', 0);
+		$updatecom = retrieve(GET, 'updatecom', false);
 
 		$path_redirect = $this->path . sprintf(str_replace('&amp;', '&', $this->vars), 0) . ((!empty($page_path_to_root) && !$integrated_in_environment) ? '&path_to_root=' . $page_path_to_root : '');
 
@@ -267,7 +267,7 @@ class Comments
 			$captcha->set_difficulty($comments_config->get_captcha_difficulty());
 
 			###########################Insertion##############################
-			if (AppContext::get_request()->get_postbool('comForm', false) && !$updatecom)
+			if (retrieve(POST, 'comForm', false) && !$updatecom)
 			{
 				//Membre en lecture seule?
 				if ($User->get_attribute('user_readonly') > time())
@@ -437,7 +437,7 @@ class Comments
 
 				if ($User->check_level(MODO_LEVEL))
 				{
-					$lock = AppContext::get_request()->get_getint('lock', 0);
+					$lock = retrieve(GET, 'lock', 0);
 					$this->lock($lock);
 				}
 				AppContext::get_response()->redirect($path_redirect . '#anchor_' . $this->script);
@@ -445,7 +445,7 @@ class Comments
 			else
 			{
 				###########################Affichage##############################
-				$get_quote = AppContext::get_request()->get_getint('quote', 0);
+				$get_quote = retrieve(GET, 'quote', 0);
 				$contents = '';
 
 				if ($get_quote > 0)

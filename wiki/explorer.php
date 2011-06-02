@@ -36,7 +36,7 @@ define('ALTERNATIVE_CSS', 'wiki');
 $bread_crumb_key = 'wiki_explorer';
 require_once('../wiki/wiki_bread_crumb.php');
 
-$cat = AppContext::get_request()->get_getint('cat', 0);
+$cat = retrieve(GET, 'cat', 0);
 
 require_once('../kernel/header.php');
 

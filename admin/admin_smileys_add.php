@@ -34,8 +34,8 @@ require_once('../admin/admin_header.php');
 //Si c'est confirmé on execute
 if (!empty($_POST['add']))
 {
-	$code_smiley = AppContext::get_request()->get_poststring('code_smiley', '');
-	$url_smiley = AppContext::get_request()->get_poststring('url_smiley', '');
+	$code_smiley = retrieve(POST, 'code_smiley', '');
+	$url_smiley = retrieve(POST, 'url_smiley', '');
 	
 	if (!empty($code_smiley) && !empty($url_smiley))
 	{
@@ -83,7 +83,7 @@ else
 	$template = new FileTemplate('admin/admin_smileys_add.tpl');
 	
 	//Gestion erreur.
-	$get_error = AppContext::get_request()->get_getstring('error', '');
+	$get_error = retrieve(GET, 'error', '');
 	$array_error = array('e_upload_invalid_format', 'e_upload_max_weight', 'e_upload_error', 'e_upload_php_code', 'e_upload_failed_unwritable', 'e_smiley_already_exist');
 	if (in_array($get_error, $array_error))
 		$template->put('message_helper', MessageHelper::display($LANG[$get_error], E_USER_WARNING));

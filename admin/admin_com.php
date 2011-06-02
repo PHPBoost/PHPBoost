@@ -32,8 +32,8 @@ require_once('../admin/admin_header.php');
 
 $del = !empty($_GET['del']) ? true : false;
 $edit = !empty($_GET['edit']) ? true : false;
-$idcom = AppContext::get_request()->get_getint('id', 0);
-$module = AppContext::get_request()->get_getstring('module', '');
+$idcom = retrieve(GET, 'id', 0);
+$module = retrieve(GET, 'module', '');
 
 $tpl = new FileTemplate('admin/admin_com_management.tpl');
 

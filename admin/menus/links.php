@@ -31,12 +31,12 @@ require_once(PATH_TO_ROOT . '/admin/admin_begin.php');
 define('TITLE', $LANG['administration']);
 require_once(PATH_TO_ROOT . '/admin/admin_header.php');
 
-$menu_id = AppContext::get_request()->get_int('id', 0);
-$action = AppContext::get_request()->get_getstring('action', '');
+$menu_id = retrieve(REQUEST, 'id', 0);
+$action = retrieve(GET, 'action', '');
 
 if ($action == 'save')
 {   // Save a Menu (New / Edit)
-    $menu_uid = AppContext::get_request()->get_postint('menu_uid', 0);
+    $menu_uid = retrieve(POST, 'menu_uid', 0);
     
 	//Properties of the menu we are creating/editing
 	$type = retrieve(POST, 'menu_element_' . $menu_uid . '_type', LinksMenu::VERTICAL_MENU);
@@ -76,7 +76,7 @@ if ($action == 'save')
     
     // We build the array representing the tree
     $result = array();
-    parse_str('tree=' . AppContext::get_request()->get_poststring('menu_tree', ''), $result);
+    parse_str('tree=' . retrieve(POST, 'menu_tree', ''), $result);
     
     // We build the tree
     // The parsed tree is not absolutely regular, we correct it

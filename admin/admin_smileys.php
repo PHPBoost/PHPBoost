@@ -29,15 +29,15 @@ require_once('../admin/admin_begin.php');
 define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
 
-$id_post = AppContext::get_request()->get_postint('idsmiley', 0);
-$id = AppContext::get_request()->get_getint('id', 0);
+$id_post = retrieve(POST, 'idsmiley', 0);
+$id = retrieve(GET, 'id', 0);
 $edit = !empty($_GET['edit']) ? true : false;
 $del = !empty($_GET['del']) ? true : false;
 
 if (!empty($_POST['valid']) && !empty($id_post)) //Mise à jour.
 {
-	$url_smiley = AppContext::get_request()->get_poststring('url_smiley', '');
-	$code_smiley = AppContext::get_request()->get_poststring('code_smiley', '');
+	$url_smiley = retrieve(POST, 'url_smiley', '');
+	$code_smiley = retrieve(POST, 'code_smiley', '');
 
 	//On met à jour
 	if (!empty($url_smiley) && !empty($code_smiley))
@@ -72,7 +72,7 @@ elseif (!empty($id) && $edit) //Edition.
 	$url_smiley = $info_smiley['url_smiley'];
 	
 	//Gestion erreur.
-	$get_error = AppContext::get_request()->get_getstring('error', '');
+	$get_error = retrieve(GET, 'error', '');
 	if ($get_error == 'incomplete')
 		$template->put('message_helper', MessageHelper::display($LANG['e_incomplete'], E_USER_NOTICE));
 		

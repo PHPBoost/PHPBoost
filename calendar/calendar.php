@@ -41,11 +41,11 @@ $day = retrieve(GET, 'd', $array_time[2]);
 $day = empty($day) ? 0 : $day;
 $bissextile = (date("L", mktime(0, 0, 0, 1, 1, $year)) == 1) ? 29 : 28;
 
-$get_event = AppContext::get_request()->get_getstring('e', '');
-$id = AppContext::get_request()->get_getint('id', 0);
-$add = AppContext::get_request()->get_getbool('add', false);
-$delete = AppContext::get_request()->get_getbool('delete', false);
-$edit = AppContext::get_request()->get_getbool('edit', false);
+$get_event = retrieve(GET, 'e', '');
+$id = retrieve(GET, 'id', 0);
+$add = retrieve(GET, 'add', false);
+$delete = retrieve(GET, 'delete', false);
+$edit = retrieve(GET, 'edit', false);
 
 if ($delete)
     $Session->csrf_get_protect();
@@ -109,7 +109,7 @@ if ($checkdate === true && empty($id) && !$add)
 	
 	$Template = new FileTemplate('calendar/calendar.tpl');
 	//Gestion erreur.
-	$get_error = AppContext::get_request()->get_getstring('error', '');
+	$get_error = retrieve(GET, 'error', '');
 	switch ($get_error)
 	{
 		case 'invalid_date':
@@ -321,13 +321,13 @@ elseif (!empty($id))
 		
 		if (!empty($_POST['valid']))
 		{
-			$contents = FormatingHelper::strparse(AppContext::get_request()->get_poststring('contents', ''));
-			$title = AppContext::get_request()->get_poststring('title', '');
+			$contents = retrieve(POST, 'contents', '', TSTRING_PARSE);
+			$title = retrieve(POST, 'title', '');
 			
 			//Cacul du timestamp à partir de la date envoyé.
-			$date = trim(AppContext::get_request()->get_poststring('date', ''));
-			$hour = AppContext::get_request()->get_postint('hour', 0);
-			$min = AppContext::get_request()->get_postint('min', 0);
+			$date = retrieve(POST, 'date', '', TSTRING_UNCHANGE);
+			$hour = retrieve(POST, 'hour', 0);
+			$min = retrieve(POST, 'min', 0);
 			
 			$timestamp = strtotimestamp($date, $LANG['date_format_short']);
 			if ($timestamp > 0)
@@ -385,7 +385,7 @@ elseif (!empty($id))
 			));
 		
 			//Gestion erreur.
-			$get_error = AppContext::get_request()->get_getstring('error', '');
+			$get_error = retrieve(GET, 'error', '');
 			switch ($get_error)
 			{
 				case 'invalid_date':
@@ -416,13 +416,13 @@ elseif ($add) //Ajout d'un évenement
 
 	if (!empty($_POST['valid'])) //Enregistrement
 	{
-		$contents = FormatingHelper::strparse(AppContext::get_request()->get_poststring('contents', ''));
-		$title = AppContext::get_request()->get_poststring('title', '');
+		$contents = retrieve(POST, 'contents', '', TSTRING_PARSE);
+		$title = retrieve(POST, 'title', '');
 		
 		//Cacul du timestamp à partir de la date envoyé.
-		$date = trim(AppContext::get_request()->get_poststring('date', ''));
-		$hour = AppContext::get_request()->get_postint('hour', 0);
-		$min = AppContext::get_request()->get_postint('min', 0);
+		$date = retrieve(POST, 'date', '', TSTRING_UNCHANGE);
+		$hour = retrieve(POST, 'hour', 0);
+		$min = retrieve(POST, 'min', 0);
 		
 		$timestamp = strtotimestamp($date, $LANG['date_format_short']);
 		if ($timestamp > 0)
@@ -487,7 +487,7 @@ elseif ($add) //Ajout d'un évenement
 		));
 		
 		//Gestion erreur.
-		$get_error = AppContext::get_request()->get_getstring('error', '');
+		$get_error = retrieve(GET, 'error', '');
 		switch ($get_error)
 		{
 			case 'invalid_date':

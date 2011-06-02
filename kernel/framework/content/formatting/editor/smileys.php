@@ -45,7 +45,7 @@ $height_max = 50;
 $width_max = 50;
 $smile_by_line = 4;
 
-$field = AppContext::get_request()->get_getstring('field', 'contents');
+$field = retrieve(GET, 'field', 'contents');
 $tpl_smileys->put_all(array(
 	'PATH_TO_ROOT' => TPL_PATH_TO_ROOT,
 	'TITLE' => stripslashes(TITLE),

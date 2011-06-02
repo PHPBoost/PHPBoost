@@ -35,20 +35,20 @@ load_module_lang('news'); //Chargement de la langue du module.
 if (!empty($_POST['submit']))
 {
 	$config_news = array(
-		'type' => AppContext::get_request()->get_postint('type', 0),
-		'activ_com' => AppContext::get_request()->get_postint('activ_com', 0),
-		'activ_icon' => AppContext::get_request()->get_postint('activ_icon', 0),
-		'activ_edito' => AppContext::get_request()->get_postint('activ_edito', 0),
-		'activ_pagin' => AppContext::get_request()->get_postint('activ_pagin', 0),
-		'display_date' => AppContext::get_request()->get_postint('display_date', 0),
-		'display_author' => AppContext::get_request()->get_postint('display_author', 0),
-		'pagination_news' => AppContext::get_request()->get_postint('pagination_news', 6),
-		'pagination_arch' => AppContext::get_request()->get_postint('pagination_arch', 15),
-		'nbr_column' => AppContext::get_request()->get_postint('nbr_column', 1),
+		'type' => retrieve(POST, 'type', 0),
+		'activ_com' => retrieve(POST, 'activ_com', 0),
+		'activ_icon' => retrieve(POST, 'activ_icon', 0),
+		'activ_edito' => retrieve(POST, 'activ_edito', 0),
+		'activ_pagin' => retrieve(POST, 'activ_pagin', 0),
+		'display_date' => retrieve(POST, 'display_date', 0),
+		'display_author' => retrieve(POST, 'display_author', 0),
+		'pagination_news' => retrieve(POST, 'pagination_news', 6),
+		'pagination_arch' => retrieve(POST, 'pagination_arch', 15),
+		'nbr_column' => retrieve(POST, 'nbr_column', 1),
 		'nbr_news' => $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_NEWS . " WHERE visible = 1", __LINE__, __FILE__),
 		'global_auth' => Authorizations::build_auth_array_from_form(AUTH_NEWS_READ, AUTH_NEWS_CONTRIBUTE, AUTH_NEWS_WRITE, AUTH_NEWS_MODERATE),
-		'edito_title' => stripslashes(AppContext::get_request()->get_poststring('edito_title', '')),
-		'edito' => stripslashes(FormatingHelper::strparse(AppContext::get_request()->get_poststring('edito', '')))
+		'edito_title' => stripslashes(retrieve(POST, 'edito_title', '')),
+		'edito' => stripslashes(retrieve(POST, 'edito', '', TSTRING_PARSE))
 	);
 
 	$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($config_news)) . "' WHERE name = 'news'", __LINE__, __FILE__);

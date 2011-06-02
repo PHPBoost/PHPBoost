@@ -34,9 +34,9 @@ require_once('articles_constants.php');
 $id = retrieve(GET, 'id', 0,TINTEGER);
 $model_to_del = retrieve(GET, 'del', 0,TINTEGER);
 $model_to_del_move = retrieve(POST, 'model_to_del', 0,TINTEGER);
-$new_model = AppContext::get_request()->get_getbool('new', false);
+$new_model = retrieve(GET, 'new', false);
 $id_edit = retrieve(GET, 'edit', 0,TINTEGER);
-$error = AppContext::get_request()->get_getstring('error', '');
+$error = retrieve(GET, 'error', '');
 
 $articles_categories = new ArticlesCats();
 
@@ -423,22 +423,22 @@ elseif (retrieve(POST,'submit',false))
 	else
 	{
 		$id_model = retrieve(POST, 'id_model', 0,TINTEGER);
-		$name = AppContext::get_request()->get_poststring('name', '');	
-		$description = FormatingHelper::strparse(AppContext::get_request()->get_poststring('description', ''));
+		$name = retrieve(POST, 'name', '');	
+		$description = retrieve(POST, 'description', '', TSTRING_PARSE);
 		$tpl_articles=retrieve(POST, 'tpl_articles', 'articles.tpl', TSTRING);
 		$tpl_articles = (empty($tpl_articles)) ? 'articles.tpl' : $tpl_articles;
 		$tpl_articles = $tpl_articles != 'articles.tpl' ? "./models/".$tpl_articles : $tpl_articles;
 
 		$options = array (
-			'note'=>AppContext::get_request()->get_postbool('note', true),
-			'com'=>AppContext::get_request()->get_postbool('com', true),
-			'impr'=>AppContext::get_request()->get_postbool('impr', true),
-			'date'=>AppContext::get_request()->get_postbool('date', true),
-			'author'=>AppContext::get_request()->get_postbool('author', true),
-			'mail'=>AppContext::get_request()->get_postbool('mail', true),
+			'note'=>retrieve(POST, 'note', true, TBOOL),
+			'com'=>retrieve(POST, 'com', true, TBOOL),
+			'impr'=>retrieve(POST, 'impr', true, TBOOL),
+			'date'=>retrieve(POST, 'date', true, TBOOL),
+			'author'=>retrieve(POST, 'author', true, TBOOL),
+			'mail'=>retrieve(POST, 'mail', true, TBOOL),
 			);	
-		$pagination_tab=AppContext::get_request()->get_postint('tab', 0);
-		$default_model=AppContext::get_request()->get_postint('default', 1);
+		$pagination_tab=retrieve(POST, 'tab', 0);
+		$default_model=retrieve(POST, 'default', 1);
 			
 		if (empty($name))
 			AppContext::get_response()->redirect(url(HOST . SCRIPT . '?error=e_required_fields_empty#message_helper'), '', '&');

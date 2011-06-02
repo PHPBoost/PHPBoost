@@ -28,9 +28,9 @@
 include_once('../kernel/begin.php'); 
 include_once('faq_begin.php');
 
-$id_faq = AppContext::get_request()->get_getint('id', 0);
+$id_faq = retrieve(GET, 'id', 0);
 //For users who have disabled javascript
-$id_question = AppContext::get_request()->get_getint('question', 0);
+$id_question = retrieve(GET, 'question', 0);
 
 //if the category doesn't exist or is not visible
 if (!array_key_exists($id_faq, $FAQ_CATS) || (array_key_exists($id_faq, $FAQ_CATS) && $id_faq > 0 && !$FAQ_CATS[$id_faq]['visible']))

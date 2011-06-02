@@ -31,8 +31,8 @@ require_once('../kernel/header.php');
 
 $articles_categories = new ArticlesCats();
 $page = retrieve(GET, 'p', 1, TUNSIGNED_INT);
-$cat = AppContext::get_request()->get_getint('cat', 0);
-$idart = AppContext::get_request()->get_getint('id', 0);	
+$cat = retrieve(GET, 'cat', 0);
+$idart = retrieve(GET, 'id', 0);	
 
 if (!empty($idart) && isset($cat) )
 {		

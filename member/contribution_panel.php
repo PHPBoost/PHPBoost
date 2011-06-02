@@ -33,10 +33,10 @@ if (!$User->check_level(MEMBER_LEVEL)) //Si il n'est pas member (les invités n'o
 	DispatchManager::redirect($error_controller);
 } 
 
-$contribution_id = AppContext::get_request()->get_getint('id', 0);
-$id_to_delete = AppContext::get_request()->get_getint('del', 0);
-$id_to_update = AppContext::get_request()->get_postint('idedit', 0);
-$id_update = AppContext::get_request()->get_getint('edit', 0);
+$contribution_id = retrieve(GET, 'id', 0);
+$id_to_delete = retrieve(GET, 'del', 0);
+$id_to_update = retrieve(POST, 'idedit', 0);
+$id_update = retrieve(GET, 'edit', 0);
 
 
 if ($contribution_id > 0)
@@ -89,9 +89,9 @@ elseif ($id_to_update > 0)
     }
 	
 	//Récupération des éléments de la contribution
-	$entitled = trim(AppContext::get_request()->get_poststring('entitled', ''));
-	$description = stripslashes(FormatingHelper::strparse(AppContext::get_request()->get_poststring('contents', '')));	
-	$status = AppContext::get_request()->get_postvalue('status', Event::EVENT_STATUS_UNREAD);
+	$entitled = retrieve(POST, 'entitled', '', TSTRING_UNCHANGE);
+	$description = stripslashes(retrieve(POST, 'contents', '', TSTRING_PARSE));	
+	$status = retrieve(POST, 'status', Event::EVENT_STATUS_UNREAD);
 	
 	//Si le titre n'est pas vide
 	if (!empty($entitled))
@@ -243,8 +243,8 @@ else
 	define('CONTRIBUTIONS_PER_PAGE', 20);
 	
 	//Gestion des critères de tri
-	$criteria = AppContext::get_request()->get_getstring('criteria', 'current_status');
-	$order = AppContext::get_request()->get_getstring('order', 'asc');
+	$criteria = retrieve(GET, 'criteria', 'current_status');
+	$order = retrieve(GET, 'order', 'asc');
 
 	if (!in_array($criteria, array('entitled', 'module', 'status', 'creation_date', 'fixing_date', 'poster_id', 'fixer_id')))
 		$criteria = 'current_status';

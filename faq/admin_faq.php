@@ -31,12 +31,12 @@ include_once('faq_begin.php'); //Chargement de la langue du module.
 define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
 
-$page = AppContext::get_request()->get_getint('p', 0);
+$page = retrieve(GET, 'p', 0);
 
-if (AppContext::get_request()->get_postbool('submit', false))
+if (retrieve(POST, 'submit', false))
 {
 	$FAQ_CONFIG['faq_name'] = stripslashes(retrieve(POST, 'faq_name', $FAQ_LANG['faq']));
-	$FAQ_CONFIG['num_cols'] = AppContext::get_request()->get_postint('num_cols', 3);
+	$FAQ_CONFIG['num_cols'] = retrieve(POST, 'num_cols', 3);
 	$FAQ_CONFIG['display_block'] = (!empty($_POST['display_mode']) && $_POST['display_mode'] == 'inline') ? false : true;
 	// unused auth variables ?
 	$FAQ_CONFIG['global_auth'] = Authorizations::build_auth_array_from_form(AUTH_READ, AUTH_WRITE);

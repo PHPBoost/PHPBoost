@@ -37,9 +37,9 @@ $Template->set_filenames(array(
 ));
 
 $visit = !empty($_GET['visit']) ? true : false;
-$visit_year = AppContext::get_request()->get_getint('year', 0);
+$visit_year = retrieve(GET, 'year', 0);
 $pages = !empty($_GET['pages']) ? true : false;
-$pages_year = AppContext::get_request()->get_getint('pages_year', 0);
+$pages_year = retrieve(GET, 'pages_year', 0);
 $members = !empty($_GET['members']) ? true : false;
 $referer = !empty($_GET['referer']) ? true : false;
 $keyword = !empty($_GET['keyword']) ? true : false;

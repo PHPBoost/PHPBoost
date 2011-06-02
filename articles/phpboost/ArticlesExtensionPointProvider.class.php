@@ -137,8 +137,8 @@ class ArticlesExtensionPointProvider extends ExtensionPointProvider
 
 		$rewrite_title = Url::encode_rewrite($ARTICLES_CAT[$idartcat]['name']);
 
-		$get_sort = AppContext::get_request()->get_getstring('sort', '');
-		$get_mode = AppContext::get_request()->get_getstring('mode', '');
+		$get_sort = retrieve(GET, 'sort', '');
+		$get_mode = retrieve(GET, 'mode', '');
 		$selected_fields = array(
 			'alpha' => '',
 			'view' => '',

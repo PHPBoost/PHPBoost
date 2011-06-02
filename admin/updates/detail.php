@@ -31,7 +31,7 @@ require_once(PATH_TO_ROOT . '/admin/admin_begin.php');
 define('TITLE', $LANG['administration']);
 require_once(PATH_TO_ROOT . '/admin/admin_header.php');
 
-$identifier = AppContext::get_request()->get_getstring('identifier', '');
+$identifier = retrieve(GET, 'identifier', '');
 $tpl = new FileTemplate('admin/updates/detail.tpl');
 
 $tpl->put_all(array(

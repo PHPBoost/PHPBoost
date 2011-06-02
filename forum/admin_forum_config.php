@@ -31,8 +31,8 @@ load_module_lang('forum'); //Chargement de la langue du module.
 define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
 
-$get_id = AppContext::get_request()->get_getint('id', 0);	
-$id_post = AppContext::get_request()->get_postint('idc', 0);  
+$get_id = retrieve(GET, 'id', 0);	
+$id_post = retrieve(POST, 'idc', 0);  
 $update_cached = !empty($_GET['upd']) ? true : false;	
 
 $Cache->load('forum');
@@ -41,19 +41,19 @@ $Cache->load('forum');
 if (!empty($_POST['valid']))
 {
 	$CONFIG_FORUM['forum_name'] = stripslashes(retrieve(POST, 'forum_name', GeneralConfig::load()->get_site_name() . ' forum'));  
-	$CONFIG_FORUM['pagination_topic'] = AppContext::get_request()->get_postint('pagination_topic', 20);  
-	$CONFIG_FORUM['pagination_msg'] = AppContext::get_request()->get_postint('pagination_msg', 15);
-	$CONFIG_FORUM['view_time'] = AppContext::get_request()->get_postint('view_time', 30) * 3600 * 24;
-	$CONFIG_FORUM['topic_track'] = AppContext::get_request()->get_postint('topic_track', 40);
-	$CONFIG_FORUM['edit_mark'] = AppContext::get_request()->get_postint('edit_mark', 0);
-	$CONFIG_FORUM['display_connexion'] = AppContext::get_request()->get_postint('display_connexion', 0);
-	$CONFIG_FORUM['no_left_column'] = AppContext::get_request()->get_postint('no_left_column', 0);
-	$CONFIG_FORUM['no_right_column'] = AppContext::get_request()->get_postint('no_right_column', 0);
-	$CONFIG_FORUM['activ_display_msg']  = AppContext::get_request()->get_postint('activ_display_msg', 0);
-	$CONFIG_FORUM['display_msg'] = stripslashes(AppContext::get_request()->get_poststring('display_msg', ''));
-	$CONFIG_FORUM['explain_display_msg'] = stripslashes(AppContext::get_request()->get_poststring('explain_display_msg', ''));	
-	$CONFIG_FORUM['explain_display_msg_bis'] = stripslashes(AppContext::get_request()->get_poststring('explain_display_msg_bis', ''));
-	$CONFIG_FORUM['icon_activ_display_msg'] = AppContext::get_request()->get_postint('icon_activ_display_msg', 0);
+	$CONFIG_FORUM['pagination_topic'] = retrieve(POST, 'pagination_topic', 20);  
+	$CONFIG_FORUM['pagination_msg'] = retrieve(POST, 'pagination_msg', 15);
+	$CONFIG_FORUM['view_time'] = retrieve(POST, 'view_time', 30) * 3600 * 24;
+	$CONFIG_FORUM['topic_track'] = retrieve(POST, 'topic_track', 40);
+	$CONFIG_FORUM['edit_mark'] = retrieve(POST, 'edit_mark', 0);
+	$CONFIG_FORUM['display_connexion'] = retrieve(POST, 'display_connexion', 0);
+	$CONFIG_FORUM['no_left_column'] = retrieve(POST, 'no_left_column', 0);
+	$CONFIG_FORUM['no_right_column'] = retrieve(POST, 'no_right_column', 0);
+	$CONFIG_FORUM['activ_display_msg']  = retrieve(POST, 'activ_display_msg', 0);
+	$CONFIG_FORUM['display_msg'] = stripslashes(retrieve(POST, 'display_msg', ''));
+	$CONFIG_FORUM['explain_display_msg'] = stripslashes(retrieve(POST, 'explain_display_msg', ''));	
+	$CONFIG_FORUM['explain_display_msg_bis'] = stripslashes(retrieve(POST, 'explain_display_msg_bis', ''));
+	$CONFIG_FORUM['icon_activ_display_msg'] = retrieve(POST, 'icon_activ_display_msg', 0);
 	$CONFIG_FORUM['auth'] = serialize($CONFIG_FORUM['auth']);
 		
 	if (!empty($CONFIG_FORUM['forum_name']) && !empty($CONFIG_FORUM['pagination_topic']) && !empty($CONFIG_FORUM['pagination_msg']) && !empty($CONFIG_FORUM['view_time']))
@@ -102,7 +102,7 @@ else
 	$Cache->load('forum');
 	
 	//Gestion erreur.
-	$get_error = AppContext::get_request()->get_getstring('error', '');
+	$get_error = retrieve(GET, 'error', '');
 	if ($get_error == 'incomplete')
 		$Template->put('message_helper', MessageHelper::display($LANG['e_incomplete'], E_USER_NOTICE));
 	

@@ -32,8 +32,8 @@ define('TITLE', $LANG['administration']);
 require_once(PATH_TO_ROOT . '/admin/admin_header.php');
 
 
-$check_updates = AppContext::get_request()->get_getbool('check', false);
-$update_type = AppContext::get_request()->get_getstring('type', '');
+$check_updates = retrieve(GET, 'check', false);
+$update_type = retrieve(GET, 'type', '');
 if (!in_array($update_type, array('', 'kernel', 'module', 'theme')))
 {    
     $update_type = '';

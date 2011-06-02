@@ -31,7 +31,7 @@ require_once('articles_begin.php');
 $Cache->load('articles');
 
 //Article title to display in print version
-$idart = TextHelper::strprotect(AppContext::get_request()->get_getstring('id', ''));
+$idart = retrieve(GET, 'id', '', TSTRING);
 if ($idart > 0)
 {
 	$articles = $Sql->query_array(DB_TABLE_ARTICLES, '*', "WHERE visible = 1 AND id = '" . $idart . "'", __LINE__, __FILE__);

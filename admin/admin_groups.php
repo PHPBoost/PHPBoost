@@ -29,22 +29,22 @@ require_once('../admin/admin_begin.php');
 define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
 
-$idgroup = AppContext::get_request()->get_getint('id', 0);
-$idgroup_post = AppContext::get_request()->get_postint('id', 0);
-$add = AppContext::get_request()->get_getint('add', 0);
-$add_post = AppContext::get_request()->get_postint('add', 0);
+$idgroup = retrieve(GET, 'id', 0);
+$idgroup_post = retrieve(POST, 'id', 0);
+$add = retrieve(GET, 'add', 0);
+$add_post = retrieve(POST, 'add', 0);
 $del_group = !empty($_GET['del']) ? true : false;
 $add_mbr = !empty($_POST['add_mbr']) ? true : false;
 $del_mbr = !empty($_GET['del_mbr']) ? true : false;
-$user_id = AppContext::get_request()->get_getint('user_id', 0);
+$user_id = retrieve(GET, 'user_id', 0);
 
 if (!empty($_POST['valid']) && !empty($idgroup_post)) //Modification du groupe.
 {
-	$name = AppContext::get_request()->get_poststring('name', '');
-	$img = AppContext::get_request()->get_poststring('img', '');
-	$auth_flood = AppContext::get_request()->get_postint('auth_flood', 1);
-	$pm_group_limit = AppContext::get_request()->get_postint('pm_group_limit', 75);
-	$color_group = AppContext::get_request()->get_poststring('color_group', '');
+	$name = retrieve(POST, 'name', '');
+	$img = retrieve(POST, 'img', '');
+	$auth_flood = retrieve(POST, 'auth_flood', 1);
+	$pm_group_limit = retrieve(POST, 'pm_group_limit', 75);
+	$color_group = retrieve(POST, 'color_group', '');
 	$data_group_limit = isset($_POST['data_group_limit']) ? NumberHelper::numeric($_POST['data_group_limit'], 'float') * 1024 : '5120';
 		
 	$group_auth = array('auth_flood' => $auth_flood, 'pm_group_limit' => $pm_group_limit, 'data_group_limit' => $data_group_limit);
@@ -56,11 +56,11 @@ if (!empty($_POST['valid']) && !empty($idgroup_post)) //Modification du groupe.
 }
 elseif (!empty($_POST['valid']) && $add_post) //ajout  du groupe.
 {
-	$name = AppContext::get_request()->get_poststring('name', '');
-	$img = AppContext::get_request()->get_poststring('img', '');
-	$auth_flood = AppContext::get_request()->get_postint('auth_flood', 1);
-	$pm_group_limit = AppContext::get_request()->get_postint('pm_group_limit', 75);
-	$color_group = AppContext::get_request()->get_poststring('color_group', '');
+	$name = retrieve(POST, 'name', '');
+	$img = retrieve(POST, 'img', '');
+	$auth_flood = retrieve(POST, 'auth_flood', 1);
+	$pm_group_limit = retrieve(POST, 'pm_group_limit', 75);
+	$color_group = retrieve(POST, 'color_group', '');
 	$data_group_limit = isset($_POST['data_group_limit']) ? NumberHelper::numeric($_POST['data_group_limit'], 'float') * 1024 : '5120';
 	
 	if (!empty($name))
@@ -96,7 +96,7 @@ elseif (!empty($idgroup) && $add_mbr) //Ajout du membre au groupe.
 {
 	$Session->csrf_get_protect(); //Protection csrf
 	
-	$login = AppContext::get_request()->get_poststring('login_mbr', '');
+	$login = retrieve(POST, 'login_mbr', '');
 	$user_id = $Sql->query("SELECT user_id FROM " . DB_TABLE_MEMBER . " WHERE login = '" . $login . "'", __LINE__, __FILE__);
 	if (!empty($user_id))
 	{
@@ -159,7 +159,7 @@ elseif (!empty($idgroup)) //Interface d'édition du groupe.
 	if (!empty($group['id']))
 	{
 		//Gestion erreur.
-		$get_error = AppContext::get_request()->get_getstring('error', '');
+		$get_error = retrieve(GET, 'error', '');
 		if ($get_error == 'incomplete')
 		{
 			$template->put('message_helper', MessageHelper::display($LANG['e_incomplete'], E_USER_NOTICE));

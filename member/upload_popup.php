@@ -29,7 +29,7 @@ require_once('../kernel/begin.php');
 define('TITLE', $LANG['files_management']);
 require_once('../kernel/header_no_display.php');
 
-$id = AppContext::get_request()->get_getint('id', 0);
+$id = retrieve(GET, 'id', 0);
 if (!empty($id))
 {
 	$basedir = '../upload/';

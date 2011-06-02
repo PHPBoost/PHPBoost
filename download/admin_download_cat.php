@@ -34,13 +34,13 @@ include_once('download_auth.php');
 $Cache->load('download');
 $download_categories = new DownloadCats();
 
-$id_up = AppContext::get_request()->get_getint('id_up', 0);
-$id_down = AppContext::get_request()->get_getint('id_down', 0);
-$cat_to_del = AppContext::get_request()->get_getint('del', 0);
-$cat_to_del_post = AppContext::get_request()->get_postint('cat_to_del', 0);
-$id_edit = AppContext::get_request()->get_getint('edit', 0);
+$id_up = retrieve(GET, 'id_up', 0);
+$id_down = retrieve(GET, 'id_down', 0);
+$cat_to_del = retrieve(GET, 'del', 0);
+$cat_to_del_post = retrieve(POST, 'cat_to_del', 0);
+$id_edit = retrieve(GET, 'edit', 0);
 $new_cat = !empty($_GET['new']) ? true : false;
-$error = AppContext::get_request()->get_getstring('error', '');
+$error = retrieve(GET, 'error', '');
 
 if ($id_up > 0)
 {
@@ -79,16 +79,16 @@ elseif ($cat_to_del > 0)
 
 	$Template->pparse('admin_download_cat_remove');
 }
-elseif (AppContext::get_request()->get_postbool('submit', false))
+elseif (retrieve(POST, 'submit', false))
 {
 	$error_string = 'e_success';
 
 	//Deleting a category
 	if ($cat_to_del_post > 0)
 	{
-		$action = AppContext::get_request()->get_poststring('action', '');
+		$action = retrieve(POST, 'action', '');
 		$delete_content = $action != 'move';
-		$id_parent = AppContext::get_request()->get_postint('id_parent', 0);
+		$id_parent = retrieve(POST, 'id_parent', 0);
 
 		if ($delete_content)
 		{
@@ -105,14 +105,14 @@ elseif (AppContext::get_request()->get_postbool('submit', false))
 	}
 	else
 	{
-		$id_cat = AppContext::get_request()->get_postint('idcat', 0);
-		$id_parent = AppContext::get_request()->get_postint('id_parent', 0);
-		$name = AppContext::get_request()->get_poststring('name', '');
-		$description = FormatingHelper::strparse(AppContext::get_request()->get_poststring('description', ''));
-		$icon = AppContext::get_request()->get_poststring('image', '');
-		$icon_path = AppContext::get_request()->get_poststring('alt_image', '');
-		$visible = AppContext::get_request()->get_postbool('visible_cat', false);
-		$secure = AppContext::get_request()->get_postint('secure', -1);
+		$id_cat = retrieve(POST, 'idcat', 0);
+		$id_parent = retrieve(POST, 'id_parent', 0);
+		$name = retrieve(POST, 'name', '');
+		$description = retrieve(POST, 'description', '', TSTRING_PARSE);
+		$icon = retrieve(POST, 'image', '');
+		$icon_path = retrieve(POST, 'alt_image', '');
+		$visible = retrieve(POST, 'visible_cat', false);
+		$secure = retrieve(POST, 'secure', -1);
 
 		if (!empty($icon_path))
 		{
@@ -154,7 +154,7 @@ elseif (AppContext::get_request()->get_postbool('submit', false))
 	AppContext::get_response()->redirect(url(HOST . SCRIPT . '?error=' . $error_string  . '#message_helper'), '', '&');
 }
 //Updating the number of subquestions of each category
-elseif (AppContext::get_request()->get_getbool('recount', false))
+elseif (retrieve(GET, 'recount', false))
 {
 	$download_categories->Recount_sub_files();
 	// Feeds Regeneration

@@ -33,8 +33,8 @@ require_once('../admin/admin_header.php');
 
 require_once('../forum/forum_begin.php');
 
-$id = AppContext::get_request()->get_getint('id', 0);
-$del = AppContext::get_request()->get_getint('del', 0);
+$id = retrieve(GET, 'id', 0);
+$del = retrieve(GET, 'del', 0);
 $move = retrieve(GET, 'move', '', TSTRING_UNCHANGE);
 
 //Si c'est confirmé on execute
@@ -42,13 +42,13 @@ if (!empty($_POST['valid']) && !empty($id))
 {
 	$Cache->load('forum');
 
-	$to = AppContext::get_request()->get_postint('category', 0);
-	$name = AppContext::get_request()->get_poststring('name', '');
-	$url = AppContext::get_request()->get_poststring('url', '');
-	$type = AppContext::get_request()->get_poststring('type', '');
-	$subname = trim(AppContext::get_request()->get_poststring('desc', ''));
-	$status = AppContext::get_request()->get_postint('status', 1);
-	$aprob = AppContext::get_request()->get_postint('aprob', 0);
+	$to = retrieve(POST, 'category', 0);
+	$name = retrieve(POST, 'name', '');
+	$url = retrieve(POST, 'url', '');
+	$type = retrieve(POST, 'type', '');
+	$subname = retrieve(POST, 'desc', '', TSTRING_UNCHANGE);
+	$status = retrieve(POST, 'status', 1);
+	$aprob = retrieve(POST, 'aprob', 0);
 
 	$subname = FormatingHelper::strparse($subname, array(
 	    4 => 'title',
@@ -274,7 +274,7 @@ elseif (!empty($id))
 	$Sql->query_close($result);
 
 	//Gestion erreur.
-	$get_error = AppContext::get_request()->get_getstring('error', '');
+	$get_error = retrieve(GET, 'error', '');
 	if ($get_error == 'incomplete')
 		$Template->put('message_helper', MessageHelper::display($LANG['e_incomplete'], E_USER_NOTICE));
 

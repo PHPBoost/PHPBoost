@@ -198,8 +198,8 @@ else
 	$nbr_files = (int)$Sql->query("SELECT COUNT(*) FROM " . PREFIX . "download WHERE visible = 1 AND approved = 1 AND idcat = '" . $category_id . "'", __LINE__, __FILE__);
 	if ($nbr_files > 0)
 	{
-		$get_sort = AppContext::get_request()->get_getstring('sort', '');	
-		$get_mode = AppContext::get_request()->get_getstring('mode', '');
+		$get_sort = retrieve(GET, 'sort', '');	
+		$get_mode = retrieve(GET, 'mode', '');
 		$selected_fields = array(
 			'alpha' => '',
 			'size' => '',

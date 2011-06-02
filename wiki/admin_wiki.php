@@ -35,8 +35,8 @@ include_once('../wiki/wiki_functions.php');
 $Cache->load('wiki');
 
 $wiki_name = TextHelper::strprotect(retrieve(POST, 'wiki_name', $LANG['wiki'], TSTRING_AS_RECEIVED), TextHelper::HTML_PROTECT, TextHelper::ADDSLASHES_NONE);
-$index_text = stripslashes(wiki_parse(AppContext::get_request()->get_poststring('contents', '')));
-$last_articles = AppContext::get_request()->get_postint('last_articles', 0);
+$index_text = stripslashes(wiki_parse(retrieve(POST, 'contents', '', TSTRING_AS_RECEIVED)));
+$last_articles = retrieve(POST, 'last_articles', 0);
 $display_cats = !empty($_POST['display_cats']) ? 1 : 0;
 $count_hits = !empty($_POST['count_hits']) ? 1 : 0;
 

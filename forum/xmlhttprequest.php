@@ -30,15 +30,15 @@ require_once('../kernel/begin.php');
 require_once('../forum/forum_begin.php');
 require_once('../kernel/header_no_display.php');
 
-$track = AppContext::get_request()->get_getstring('t', '');
-$untrack = AppContext::get_request()->get_getstring('ut', '');
-$track_pm = AppContext::get_request()->get_getstring('tp', '');
-$untrack_pm = AppContext::get_request()->get_getstring('utp', '');
-$track_mail = AppContext::get_request()->get_getstring('tm', '');
-$untrack_mail = AppContext::get_request()->get_getstring('utm', '');
-$msg_d = AppContext::get_request()->get_getstring('msg_d', '');
+$track = retrieve(GET, 't', '');
+$untrack = retrieve(GET, 'ut', '');
+$track_pm = retrieve(GET, 'tp', '');
+$untrack_pm = retrieve(GET, 'utp', '');
+$track_mail = retrieve(GET, 'tm', '');
+$untrack_mail = retrieve(GET, 'utm', '');
+$msg_d = retrieve(GET, 'msg_d', '');
 
-if (AppContext::get_request()->get_getbool('refresh_unread', false)) //Affichage des messages non lus
+if (retrieve(GET, 'refresh_unread', false)) //Affichage des messages non lus
 {
 	$is_guest = ($User->get_attribute('user_id') !== -1) ? false : true;
 	$nbr_msg_not_read = 0;
@@ -106,14 +106,14 @@ if (AppContext::get_request()->get_getbool('refresh_unread', false)) //Affichage
 	else
 		echo '';
 }
-elseif (AppContext::get_request()->get_getbool('del', false)) //Suppression d'un message.
+elseif (retrieve(GET, 'del', false)) //Suppression d'un message.
 {
 	$Session->csrf_get_protect(); //Protection csrf
 
 	//Instanciation de la class du forum.
 	$Forumfct = new Forum();
 
-	$idm_get = AppContext::get_request()->get_getstring('idm', '');
+	$idm_get = retrieve(GET, 'idm', '');
 	//Info sur le message.
 	$msg = $Sql->query_array(PREFIX . 'forum_msg', 'user_id', 'idtopic', "WHERE id = '" . $idm_get . "'", __LINE__, __FILE__);
 	//On va chercher les infos sur le topic
@@ -192,7 +192,7 @@ elseif (!empty($msg_d))
 		echo ($topic['display_msg']) ? 2 : 1;
 	}
 }
-elseif (AppContext::get_request()->get_getbool('warning_moderation_panel', false) || AppContext::get_request()->get_getbool('punish_moderation_panel', false)) //Recherche d'un membre
+elseif (retrieve(GET, 'warning_moderation_panel', false) || retrieve(GET, 'punish_moderation_panel', false)) //Recherche d'un membre
 {
 	$login = !empty($_POST['login']) ? TextHelper::strprotect(utf8_decode($_POST['login'])) : '';
 	$login = str_replace('*', '%', $login);
@@ -202,9 +202,9 @@ elseif (AppContext::get_request()->get_getbool('warning_moderation_panel', false
 		$result = $Sql->query_while ("SELECT user_id, login FROM " . DB_TABLE_MEMBER . " WHERE login LIKE '" . $login . "%'", __LINE__, __FILE__);
 		while ($row = $Sql->fetch_assoc($result))
 		{
-			if (AppContext::get_request()->get_getbool('warning_moderation_panel', false))
+			if (retrieve(GET, 'warning_moderation_panel', false))
 				echo '<a href="moderation_forum.php?action=warning&amp;id=' . $row['user_id'] . '">' . $row['login'] . '</a><br />';
-			elseif (AppContext::get_request()->get_getbool('punish_moderation_panel', false))
+			elseif (retrieve(GET, 'punish_moderation_panel', false))
 				echo '<a href="moderation_forum.php?action=punish&amp;id=' . $row['user_id'] . '">' . $row['login'] . '</a><br />';
 
 			$i++;

@@ -33,10 +33,10 @@ require_once('../admin/admin_header.php');
 //Ajout du rang.
 if (!empty($_POST['add']))
 {
-	$name = AppContext::get_request()->get_poststring('name', '');
-	$msg = AppContext::get_request()->get_postint('msg', 0);    
-	$icon = AppContext::get_request()->get_poststring('icon', ''); 
-	$icon = AppContext::get_request()->get_poststring('icon', ''); 
+	$name = retrieve(POST, 'name', '');
+	$msg = retrieve(POST, 'msg', 0);    
+	$icon = retrieve(POST, 'icon', ''); 
+	$icon = retrieve(POST, 'icon', ''); 
 	
 	if (!empty($name) && $msg >= 0)
 	{	
@@ -81,7 +81,7 @@ else //Sinon on rempli le formulaire
 	$template = new FileTemplate('admin/admin_ranks_add.tpl');
 
 	//Gestion erreur.
-	$get_error = AppContext::get_request()->get_getstring('error', '');
+	$get_error = retrieve(GET, 'error', '');
 	$array_error = array('e_upload_invalid_format', 'e_upload_max_weight', 'e_upload_error', 'e_upload_php_code', 'e_upload_failed_unwritable');
 	if (in_array($get_error, $array_error))
 		$template->put('message_helper', MessageHelper::display($LANG[$get_error], E_USER_WARNING));

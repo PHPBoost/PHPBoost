@@ -39,7 +39,7 @@ function shoutbox_mini($position, $block)
     	load_module_lang('shoutbox');
 
     	###########################Insertion##############################
-    	$shoutbox = AppContext::get_request()->get_postbool('shoutbox', false);
+    	$shoutbox = retrieve(POST, 'shoutbox', false);
     	if ($shoutbox)
     	{
     		//Membre en lecture seule?
@@ -50,7 +50,7 @@ function shoutbox_mini($position, $block)
     		}
 
     		$shout_pseudo = substr(retrieve(POST, 'shout_pseudo', $LANG['guest']), 0, 25); //Pseudo posté.
-    		$shout_contents = trim(AppContext::get_request()->get_poststring('shout_contents', ''));
+    		$shout_contents = retrieve(POST, 'shout_contents', '', TSTRING_UNCHANGE);
     		if (!empty($shout_pseudo) && !empty($shout_contents))
     		{
     			//Accès pour poster.

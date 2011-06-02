@@ -30,8 +30,8 @@ load_module_lang('database'); //Chargement de la langue du module.
 define('TITLE', $LANG['database_management']);
 require_once('../admin/admin_header.php');
 
-$table = AppContext::get_request()->get_getstring('table', '');
-$action = AppContext::get_request()->get_getstring('action', '');
+$table = retrieve(GET, 'table', '');
+$action = retrieve(GET, 'action', '');
 
 $Template->set_filenames(array(
 	'admin_database_tools'=> 'database/admin_database_tools.tpl'
@@ -149,8 +149,8 @@ elseif (!empty($table) && $action == 'delete')
 {
 	$Session->csrf_get_protect(); //Protection csrf
 	
-	$field = AppContext::get_request()->get_getstring('field', '');
-	$value = AppContext::get_request()->get_getstring('value', '');
+	$field = retrieve(GET, 'field', '');
+	$value = retrieve(GET, 'value', '');
 	
 	if (!empty($value) && !empty($field))
 		$Sql->query_inject("DELETE FROM ".$table." WHERE " . $field . " = '" . $value . "'", __LINE__, __FILE__);
@@ -162,9 +162,9 @@ elseif (!empty($table) && $action == 'update') //Mise à jour.
 	
 	$table_structure = $backup->extract_table_structure(array($table)); //Extraction de la structure de la table.
 	
-	$value = AppContext::get_request()->get_getstring('value', '');
-	$field = AppContext::get_request()->get_getstring('field', '');
-	$submit = AppContext::get_request()->get_poststring('submit', '');
+	$value = retrieve(GET, 'value', '');
+	$field = retrieve(GET, 'field', '');
+	$submit = retrieve(POST, 'submit', '');
 	if (!empty($submit)) //On exécute une requête
 	{
 		$request = '';
@@ -210,7 +210,7 @@ elseif (!empty($table) && $action == 'insert') //Mise à jour.
 {
 	$table_structure = $backup->extract_table_structure(array($table)); //Extraction de la structure de la table.
 	
-	$submit = AppContext::get_request()->get_poststring('submit', '');
+	$submit = retrieve(POST, 'submit', '');
 	if (!empty($submit)) //On exécute une requête
 	{
 		$Session->csrf_get_protect(); //Protection csrf
@@ -290,7 +290,7 @@ elseif (!empty($table) && $action == 'drop')
 }
 elseif (!empty($table) && $action == 'query')
 {
-	$query = trim(AppContext::get_request()->get_poststring('query', ''));
+	$query = retrieve(POST, 'query', '', TSTRING_UNCHANGE);
 
 	$Template->put_all(array(
 		'C_DATABASE_TABLE_QUERY' => true

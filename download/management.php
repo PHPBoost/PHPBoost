@@ -34,30 +34,30 @@ include_once('download_auth.php');
 
 $download_categories = new DownloadCats();
 
-$edit_file_id = AppContext::get_request()->get_getint('edit', 0);
-$add_file = AppContext::get_request()->get_getbool('new', false);
-$preview = AppContext::get_request()->get_postbool('preview', false);
-$submit = AppContext::get_request()->get_postbool('submit', false);
-$selected_cat = AppContext::get_request()->get_getint('idcat', 0);
-$delete_file = AppContext::get_request()->get_getint('del', 0);
+$edit_file_id = retrieve(GET, 'edit', 0);
+$add_file = retrieve(GET, 'new', false);
+$preview = retrieve(POST, 'preview', false);
+$submit = retrieve(POST, 'submit', false);
+$selected_cat = retrieve(GET, 'idcat', 0);
+$delete_file = retrieve(GET, 'del', 0);
 
 if ($delete_file || ($submit && ($add_file || $edit_file_id > 0)))
     $Session->csrf_get_protect();
 
 //Form variables
-$file_title = AppContext::get_request()->get_poststring('title', '');
-$file_image = AppContext::get_request()->get_poststring('image', '');
-$file_contents = AppContext::get_request()->get_poststring('contents', '');
-$file_short_contents = AppContext::get_request()->get_poststring('short_contents', '');
-$file_url = AppContext::get_request()->get_poststring('url', '');
-$file_timestamp = AppContext::get_request()->get_postint('timestamp', 0);
+$file_title = retrieve(POST, 'title', '');
+$file_image = retrieve(POST, 'image', '');
+$file_contents = retrieve(POST, 'contents', '', TSTRING_AS_RECEIVED);
+$file_short_contents = retrieve(POST, 'short_contents', '', TSTRING_AS_RECEIVED);
+$file_url = retrieve(POST, 'url', '');
+$file_timestamp = retrieve(POST, 'timestamp', 0);
 $file_size = retrieve(POST, 'size', 0.0, TUNSIGNED_FLOAT);
 $file_hits = retrieve(POST, 'count', 0, TUNSIGNED_INT);
-$file_cat_id = AppContext::get_request()->get_int('idcat', 0);
-$file_visibility = AppContext::get_request()->get_postint('visibility', 0);
-$file_approved = AppContext::get_request()->get_postbool('approved', false);
-$ignore_release_date = AppContext::get_request()->get_postbool('ignore_release_date', false);
-$file_download_method = TextHelper::strprotect(AppContext::get_request()->get_poststring('download_method', 'redirect'));
+$file_cat_id = retrieve(REQUEST, 'idcat', 0);
+$file_visibility = retrieve(POST, 'visibility', 0);
+$file_approved = retrieve(POST, 'approved', false);
+$ignore_release_date = retrieve(POST, 'ignore_release_date', false);
+$file_download_method = retrieve(POST, 'download_method', 'redirect', TSTRING);
 
 //Instanciations of objects required
 $file_creation_date = MiniCalendar::retrieve_date('creation');
@@ -443,7 +443,7 @@ if ($edit_file_id > 0)
 //Adding a file
 else
 {
-	$contribution_counterpart = FormatingHelper::strparse(AppContext::get_request()->get_poststring('counterpart', ''));
+	$contribution_counterpart = retrieve(POST, 'counterpart', '', TSTRING_PARSE);
 	
 	//If we can't write, the file cannot be approved
 	$file_approved = $auth_write;
@@ -547,7 +547,7 @@ else
 	//Previewing a file
 	elseif ($preview)
 	{
-		$contribution_counterpart_source = TextHelper::strprotect(AppContext::get_request()->get_poststring('counterpart', ''), TextHelper::HTML_PROTECT, TextHelper::ADDSLASHES_NONE);
+		$contribution_counterpart_source = TextHelper::strprotect(retrieve(POST, 'counterpart', '', TSTRING_AS_RECEIVED), TextHelper::HTML_PROTECT, TextHelper::ADDSLASHES_NONE);
 		
 		$begining_calendar = new MiniCalendar('begining_date');
 		$begining_calendar->set_date($begining_date);

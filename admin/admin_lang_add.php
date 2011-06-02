@@ -32,7 +32,7 @@ require_once('../admin/admin_header.php');
 //On affiche le contenu du repertoire templates, pour lister les thèmes disponibles..
 
 $install = !empty($_GET['install']) ? true : false;
-$error = AppContext::get_request()->get_getstring('error', '');
+$error = retrieve(GET, 'error', '');
 
 //Si c'est confirmé on execute
 if ($install)
@@ -137,7 +137,7 @@ else
 	));
 	
 	//Gestion erreur.
-	$get_error = AppContext::get_request()->get_getstring('error', '');
+	$get_error = retrieve(GET, 'error', '');
 	$array_error = array('e_upload_invalid_format', 'e_upload_invalid_format', 'e_upload_max_weight', 'e_upload_error', 'e_upload_php_code', 'e_upload_failed_unwritable', 'e_upload_already_exist', 'e_lang_already_exist', 'e_unlink_disabled');
 	if (in_array($get_error, $array_error))
 		$Template->put('message_helper', MessageHelper::display($LANG[$get_error], E_USER_WARNING));

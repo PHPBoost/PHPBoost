@@ -31,8 +31,8 @@ require_once(PATH_TO_ROOT . '/admin/admin_begin.php');
 define('TITLE', $LANG['administration']);
 require_once(PATH_TO_ROOT . '/admin/admin_header.php');
 
-$id = AppContext::get_request()->get_int('id', 0);
-$post = AppContext::get_request()->get_postint('id', -1) >= 0 ? true : false;
+$id = retrieve(REQUEST, 'id', 0);
+$post = retrieve(POST, 'id', -1) >= 0 ? true : false;
 
 $menu = MenuService::load($id);
 
@@ -41,7 +41,7 @@ if ($menu == null)
         
 if ($post)
 {   // Edit a Menu authorizations
-    $menu->enabled(AppContext::get_request()->get_postvalue('activ', Menu::MENU_NOT_ENABLED));
+    $menu->enabled(retrieve(POST, 'activ', Menu::MENU_NOT_ENABLED));
     $menu->set_auth(Authorizations::build_auth_array_from_form(AUTH_MENUS));
     
     //Filters

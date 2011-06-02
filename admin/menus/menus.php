@@ -31,13 +31,13 @@ require_once(PATH_TO_ROOT . '/admin/admin_begin.php');
 define('TITLE', $LANG['administration']);
 require_once(PATH_TO_ROOT . '/admin/admin_header.php');
 
-$id = AppContext::get_request()->get_getint('id', 0);
-$switchtheme = AppContext::get_request()->get_getstring('theme', '');
+$id = retrieve(GET, 'id', 0);
+$switchtheme = retrieve(GET, 'theme', '');
 $name_theme = !empty($switchtheme) ? $switchtheme : get_utheme();
-$theme_post = AppContext::get_request()->get_poststring('theme', '');
+$theme_post = retrieve(POST, 'theme', '');
 
-$action = AppContext::get_request()->get_getstring('action', '');
-$move = AppContext::get_request()->get_getstring('move', '');
+$action = retrieve(GET, 'action', '');
+$move = retrieve(GET, 'move', '');
 
 function menu_admin_link($menu, $mode)
 {
@@ -124,7 +124,7 @@ if ($action == 'save') //Save menus positions.
 	// We build the array representing the tree
     $menu_tree = array();
     $reverse_menu_tree = array();
-    preg_match_all('`([a-z_]+)\[\]=([0-9]+)`', TextHelper::strprotect(AppContext::get_request()->get_poststring('menu_tree'), TextHelper::HTML_NO_PROTECT), $matches);
+    preg_match_all('`([a-z_]+)\[\]=([0-9]+)`', retrieve(POST, 'menu_tree', '', TSTRING_HTML), $matches);
     if (is_array($matches[1]))
     {
     	foreach($matches[1] as $key => $container)

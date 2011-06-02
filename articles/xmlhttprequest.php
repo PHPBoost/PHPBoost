@@ -35,8 +35,8 @@ $note=retrieve(GET,'note',0);
 //Notation.
 if (!empty($note) && $User->check_level(MEMBER_LEVEL)) //connected user
 {
-	$id = AppContext::get_request()->get_postint('id', 0);
-	$note = AppContext::get_request()->get_postint('note', 0);
+	$id = retrieve(POST, 'id', 0);
+	$note = retrieve(POST, 'note', 0);
 
 	// intialize management system class
 
@@ -57,15 +57,15 @@ elseif (retrieve(POST,'preview',false))
 	load_module_lang('articles');
 
 	$articles = array(
-		'id' => AppContext::get_request()->get_postint('id', 0),
-		'idcat' => AppContext::get_request()->get_postint('idcat', 0),
-		'title' => utf8_decode(TextHelper::strprotect(AppContext::get_request()->get_poststring('title', ''))),
-		'contents' => FormatingHelper::strparse(AppContext::get_request()->get_poststring('contents', '')),
-		'user_id' => AppContext::get_request()->get_postint('user_id', 0),
+		'id' => retrieve(POST, 'id', 0, TINTEGER),
+		'idcat' => retrieve(POST, 'idcat', 0, TINTEGER),
+		'title' => utf8_decode(retrieve(POST, 'title', '', TSTRING)),
+		'contents' => retrieve(POST, 'contents', '', TSTRING_PARSE),
+		'user_id' => retrieve(POST, 'user_id', 0, TINTEGER),
 		'date' => retrieve(POST, 'date', 0, TSTRING_UNCHANGE),
-		'hour' => AppContext::get_request()->get_postint('hour', 0),
-		'min' => AppContext::get_request()->get_postint('min', 0),
-		'description' => FormatingHelper::strparse(AppContext::get_request()->get_poststring('description', '')),	);
+		'hour' => retrieve(POST, 'hour', 0, TINTEGER),
+		'min' => retrieve(POST, 'min', 0, TINTEGER),
+		'description' => retrieve(POST, 'description', '', TSTRING_PARSE),	);
 
 	$user = $Sql->query_array(DB_TABLE_MEMBER, 'level', 'login', "WHERE user_id = '" . $articles['user_id'] . "'", __LINE__, __FILE__);
 
@@ -98,8 +98,8 @@ elseif (retrieve(POST,'preview',false))
 }
 elseif (retrieve(POST,'model_extend_field',false))
 {
-	$id_model = AppContext::get_request()->get_postint('models', 1);
-	$id_art = AppContext::get_request()->get_postint('id_art', 0);
+	$id_model = retrieve(POST, 'models', 1, TINTEGER);
+	$id_art = retrieve(POST, 'id_art', 0, TINTEGER);
 
 	$tpl_model = new FileTemplate('articles/extend_field.tpl');
 
@@ -144,7 +144,7 @@ elseif (retrieve(POST,'model_extend_field',false))
 }
 elseif (retrieve(POST,'model_desc',false))
 {
-	$id_model = AppContext::get_request()->get_postint('models', 1);
+	$id_model = retrieve(POST, 'models', 1, TINTEGER);
 
 	$tpl_model = new FileTemplate('articles/extend_field.tpl');
 
