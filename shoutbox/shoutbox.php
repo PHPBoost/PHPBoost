@@ -29,8 +29,8 @@ require_once('../kernel/begin.php');
 require_once('../shoutbox/shoutbox_begin.php'); 
 require_once('../kernel/header.php');
 
-$shout_id = AppContext::get_request()->get_getint('id', 0);
-$add = AppContext::get_request()->get_getbool('add', false);
+$shout_id = retrieve(GET, 'id', 0);
+$add = retrieve(GET, 'add', false);
 
 if (!$User->check_auth($config_shoutbox->get_authorization(), ShoutboxConfig::AUTHORIZATION_READ)) //Autorisation de lecture
 {
@@ -48,7 +48,7 @@ if ($add && empty($shout_id)) //Insertion
 	}
 	
 	$shout_pseudo = $User->check_level(MEMBER_LEVEL) ? $User->get_attribute('login') : substr(retrieve(POST, 'shoutboxForm_shoutbox_pseudo', $LANG['guest']), 0, 25);  //Pseudo posté.
-	$shout_contents = FormatingHelper::strparse(TextHelper::strprotect(AppContext::get_request()->get_poststring('shoutboxForm_shoutbox_contents', '')));
+	$shout_contents = retrieve(POST, 'shoutboxForm_shoutbox_contents', '', TSTRING_PARSE);
 	
 	if (!empty($shout_pseudo) && !empty($shout_contents))
 	{
@@ -89,9 +89,9 @@ elseif (!empty($shout_id)) //Edition + suppression!
         DispatchManager::redirect($error_controller);
 	}
 
-	$del_message = AppContext::get_request()->get_getbool('del', false);
-	$edit_message = AppContext::get_request()->get_getbool('edit', false);
-	$update_message = AppContext::get_request()->get_getbool('update', false);
+	$del_message = retrieve(GET, 'del', false);
+	$edit_message = retrieve(GET, 'edit', false);
+	$update_message = retrieve(GET, 'update', false);
 	
 	$row = $Sql->query_array(PREFIX . 'shoutbox', '*', "WHERE id = '" . $shout_id . "'", __LINE__, __LINE__);
 	$row['user_id'] = (int)$row['user_id'];
@@ -138,7 +138,7 @@ elseif (!empty($shout_id)) //Edition + suppression!
 		}
 		elseif ($update_message)
 		{
-			$shout_contents = trim(AppContext::get_request()->get_poststring('shoutboxForm_shoutbox_contents', ''));			
+			$shout_contents = retrieve(POST, 'shoutboxForm_shoutbox_contents', '', TSTRING_UNCHANGE);			
 			$shout_pseudo = retrieve(POST, 'shoutboxForm_shoutbox_pseudo', $LANG['guest']);
 			$shout_pseudo = empty($shout_pseudo) && $User->check_level(MEMBER_LEVEL) ? $User->get_attribute('login') : $shout_pseudo;
 			
@@ -183,7 +183,7 @@ else //Affichage.
 		));
 		  	
 	//Gestion erreur.
-	$get_error = TextHelper::strprotect(AppContext::get_request()->get_getstring('error', ''));
+	$get_error = retrieve(GET, 'error', '');
 	switch ($get_error)
 	{
 		case 'auth':

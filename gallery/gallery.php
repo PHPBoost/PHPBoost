@@ -30,14 +30,14 @@ require_once('../kernel/begin.php');
 require_once('../gallery/gallery_begin.php');
 require_once('../kernel/header.php');
 
-$g_idpics = AppContext::get_request()->get_getint('id', 0);
-$g_del = AppContext::get_request()->get_getint('del', 0);
-$g_move = AppContext::get_request()->get_getint('move', 0);
-$g_add = AppContext::get_request()->get_getbool('add', false);
-$g_page = AppContext::get_request()->get_getint('p', 1);
-$g_views = AppContext::get_request()->get_getbool('views', false);
-$g_notes = AppContext::get_request()->get_getbool('notes', false);
-$g_sort = TextHelper::strprotect(AppContext::get_request()->get_getstring('sort', ''));
+$g_idpics = retrieve(GET, 'id', 0);
+$g_del = retrieve(GET, 'del', 0);
+$g_move = retrieve(GET, 'move', 0);
+$g_add = retrieve(GET, 'add', false);
+$g_page = retrieve(GET, 'p', 1);
+$g_views = retrieve(GET, 'views', false);
+$g_notes = retrieve(GET, 'notes', false);
+$g_sort = retrieve(GET, 'sort', '');
 $g_sort = !empty($g_sort) ? 'sort=' . $g_sort : '';
 
 //Récupération du mode d'ordonnement.
@@ -103,8 +103,8 @@ elseif (isset($_FILES['gallery'])) //Upload
 	$Upload = new Upload($dir);
 
 	$idpic = 0;
-	$idcat_post = TextHelper::strprotect(AppContext::get_request()->get_poststring('cat', ''));
-	$name_post = TextHelper::strprotect(AppContext::get_request()->get_poststring('name', ''));
+	$idcat_post = retrieve(POST, 'cat', '');
+	$name_post = retrieve(POST, 'name', '');
 
 	$Upload->file('gallery', '`([a-z0-9()_-])+\.(jpg|jpeg|gif|png)+$`i', Upload::UNIQ_NAME, $CONFIG_GALLERY['weight_max']);
 	if ($Upload->get_error() != '') //Erreur, on arrête ici
@@ -184,7 +184,7 @@ elseif ($g_add)
 	}
 
 	//Gestion erreur.
-	$get_error = TextHelper::strprotect(AppContext::get_request()->get_getstring('error', ''));
+	$get_error = retrieve(GET, 'error', '');
 	$array_error = array('e_upload_invalid_format', 'e_upload_max_weight', 'e_upload_max_dimension', 'e_upload_error', 'e_upload_php_code', 'e_upload_failed_unwritable', 'e_upload_already_exist', 'e_unlink_disabled', 'e_unsupported_format', 'e_unabled_create_pics', 'e_error_resize', 'e_no_graphic_support', 'e_unabled_incrust_logo', 'delete_thumbnails', 'upload_limit');
 	if (in_array($get_error, $array_error))
 		$Template->put('message_helper', MessageHelper::display($LANG[$get_error], E_USER_WARNING));
@@ -300,7 +300,7 @@ else
 	$total_cat = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "gallery_cats gc " . $clause_cat, __LINE__, __FILE__);
 
 	//Gestion erreur.
-	$get_error = TextHelper::strprotect(AppContext::get_request()->get_getstring('error', ''));
+	$get_error = retrieve(GET, 'error', '');
 	if ($get_error == 'unexist_cat')
 		$Template->put('message_helper', MessageHelper::display($LANG['e_unexist_cat'], E_USER_NOTICE));
 
@@ -661,7 +661,7 @@ else
 
 			$Pagination = new DeprecatedPagination();
 
-			$sort = TextHelper::strprotect(AppContext::get_request()->get_getstring('sort', ''));
+			$sort = retrieve(GET, 'sort', '');
 			$Template->put_all(array(
 				'C_GALLERY_MODO' => $is_modo ? true : false,
 				'PAGINATION_PICS' => $Pagination->display('gallery' . url('.php?pp=%d' . (!empty($sort) ? '&amp;sort=' . $sort : '') . '&amp;cat=' . $g_idcat, '-' . $g_idcat . '+' . $rewrite_title . '.php?pp=%d'), $nbr_pics, 'pp', $CONFIG_GALLERY['nbr_pics_max'], 3),

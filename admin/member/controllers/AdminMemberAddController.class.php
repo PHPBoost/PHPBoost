@@ -65,35 +65,35 @@ class AdminMemberAddController extends AdminController
 	private function build_form()
 	{
 		$form = new HTMLForm('member-add');
-
+		
 		$fieldset = new FormFieldsetHTML('add_member', $this->lang['members.add-member']);
 		$form->add_fieldset($fieldset);
-
+		
 		$fieldset->add_field(new FormFieldTextEditor('login', $this->lang['members.pseudo'], '', array(
 			'class' => 'text', 'maxlength' => 25, 'size' => 25, 'required' => true)
-		));
-
+		));		
+		
 		$fieldset->add_field(new FormFieldTextEditor('mail', $this->lang['members.mail'], '', array(
 			'class' => 'text', 'maxlength' => 255, 'description' => $this->lang['members.valid'], 'required' => true),
 		array(new FormFieldConstraintMailAddress())
 		));
-
+		
 		$fieldset->add_field($password = new FormFieldPasswordEditor('password', $this->lang['members.password'], '', array(
 			'class' => 'text', 'maxlength' => 25, 'required' => true)
 		));
-
+		
 		$fieldset->add_field($password_bis = new FormFieldPasswordEditor('password_bis', $this->lang['members.confirm-password'], '', array(
 			'class' => 'text', 'maxlength' => 25, 'required' => true)
 		));
-
+		
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('rank', $this->lang['members.rank'], '1',
-		array(
-		new FormFieldSelectChoiceOption($this->lang['members.rank.member'], '1'),
-		new FormFieldSelectChoiceOption($this->lang['members.rank.modo'], '2'),
-		new FormFieldSelectChoiceOption($this->lang['members.rank.admin'], '3')
-		)
+			array(
+				new FormFieldSelectChoiceOption($this->lang['members.rank.member'], '1'),
+				new FormFieldSelectChoiceOption($this->lang['members.rank.modo'], '2'),
+				new FormFieldSelectChoiceOption($this->lang['members.rank.admin'], '3')
+			)
 		));
-
+		
 		$form->add_button(new FormButtonReset());
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_constraint(new FormConstraintFieldsEquality($password, $password_bis));
@@ -105,10 +105,10 @@ class AdminMemberAddController extends AdminController
 	private function save()
 	{
 		$this->register_member();
-
+		
 		StatsCache::invalidate();
 	}
-
+	
 	private function register_member()
 	{
 		PersistenceContext::get_querier()->inject(
@@ -121,9 +121,9 @@ class AdminMemberAddController extends AdminController
 				'timestamp' => time(),
 				'last_connect' => '',
 				'user_aprob' => '1'
-				));
+		));
 	}
-
+	
 	private function get_rank_member()
 	{
 		$rank = $this->form->get_value('rank')->get_raw_value();

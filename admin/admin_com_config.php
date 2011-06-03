@@ -6,7 +6,7 @@
  *   copyright            : (C) 2007 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
- *
+ *  
  *
  ###################################################
  *
@@ -14,7 +14,7 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- *
+ * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -34,25 +34,25 @@ if (!empty($_POST['valid']) )
 {
 	$comments_config = CommentsConfig::load();
 	$server_configuration = new ServerConfiguration();
-
+	
 	$comments_config->set_auth_post_comments(Authorizations::build_auth_array_from_form(Comments::POST_COMMENT_AUTH));
-	$comments_config->set_display_comments_in_popup(AppContext::get_request()->get_postbool('com_popup', false));
+	$comments_config->set_display_comments_in_popup(retrieve(POST, 'com_popup', false));
 	$comments_config->set_display_captcha($server_configuration->has_gd_library() ? $_POST['verif_code'] : false);
-	$comments_config->set_captcha_difficulty(AppContext::get_request()->get_postint('verif_code_difficulty', 2));
-	$comments_config->set_number_comments_per_page(AppContext::get_request()->get_postint('com_max', 10));
+	$comments_config->set_captcha_difficulty(retrieve(POST, 'verif_code_difficulty', 2));
+	$comments_config->set_number_comments_per_page(retrieve(POST, 'com_max', 10));
 	if (!empty($_POST['forbidden_tags'])) {
-		$comments_config->set_forbidden_tags($_POST['forbidden_tags']);
+	   $comments_config->set_forbidden_tags($_POST['forbidden_tags']);
 	}
-	$comments_config->set_max_links_comment(AppContext::get_request()->get_postint('max_link', -1));
+	$comments_config->set_max_links_comment(retrieve(POST, 'max_link', -1));
 	CommentsConfig::save();
-
-	AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);
+	
+	AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);	
 }
 //Sinon on rempli le formulaire
-else
-{
+else	
+{		
 	$tpl = new FileTemplate('admin/admin_com_config.tpl');
-
+	
 	$comments_config = CommentsConfig::load();
 
 	for ($i = 0; $i < 5; $i++)
@@ -60,12 +60,12 @@ else
 		$tpl->assign_block_vars('difficulty', array(
 			'VALUE' => $i,
 			'SELECTED' => ($comments_config->get_captcha_difficulty() == $i) ? 'selected="selected"' : ''
-			));
+		));
 	}
-
+	
 	$j = 0;
 	foreach (AppContext::get_content_formatting_service()->get_available_tags() as $identifier => $name)
-	{
+	{	
 		$tpl->assign_block_vars('tag', array(
 			'IDENTIFIER' => $j++,
 			'CODE' => $identifier,
@@ -107,7 +107,7 @@ else
 		'L_MAX_LINK' => $LANG['max_link'],
 		'L_MAX_LINK_EXPLAIN' => $LANG['max_link_explain']
 	));
-
+	
 	$tpl->display();
 }
 

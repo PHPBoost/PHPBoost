@@ -13,7 +13,7 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- *
+ * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -29,21 +29,21 @@ require_once('../admin/admin_begin.php');
 define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
 
-$id = AppContext::get_request()->get_getint('id', 0);
-$id_post = AppContext::get_request()->get_postint('id', 0);
+$id = retrieve(GET, 'id', 0);
+$id_post = retrieve(POST, 'id', 0);
 $delete = !empty($_GET['delete']) ? true : false ;
 $add = !empty($_GET['add']) ? true : false;
-$get_error = TextHelper::strprotect(AppContext::get_request()->get_getstring('error', ''));
-$get_l_error = TextHelper::strprotect(AppContext::get_request()->get_getstring('erroru', ''));
+$get_error = retrieve(GET, 'error', '');
+$get_l_error = retrieve(GET, 'erroru', '');
 
 //Si c'est confirmé on execute
 if (!empty($_POST['valid']) && !empty($id_post))
 {
 	if (!empty($_POST['delete'])) //Suppression du membre.
 	{
-		$Sql->query_inject("DELETE FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $id_post . "'", __LINE__, __FILE__);
-
-
+		$Sql->query_inject("DELETE FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $id_post . "'", __LINE__, __FILE__);	
+		
+		
 		Uploads::Empty_folder_member($id_post); //Suppression de tout les fichiers et dossiers du membre.
 			
 		//On régénère le cache
@@ -55,107 +55,107 @@ if (!empty($_POST['valid']) && !empty($id_post))
 	$login = !empty($_POST['name']) ?  TextHelper::strprotect(substr($_POST['name'], 0, 25)) : '';
 	$user_mail = strtolower($_POST['mail']);
 	if (AppContext::get_mail_service()->is_mail_valid($user_mail))
-	{
+	{	
 		//Vérirication de l'unicité du membre et du mail
 		$check_user = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_MEMBER . " WHERE login = '" . $login . "' AND user_id <> '" . $id_post . "'", __LINE__, __FILE__);
 		$check_mail = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_MEMBER . " WHERE user_id <> '" . $id_post . "' AND user_mail = '" . $user_mail . "'", __LINE__, __FILE__);
-		if ($check_user >= 1)
-		AppContext::get_response()->redirect('/admin/admin_members' . url('.php?id=' .  $id_post . '&error=pseudo_auth') . '#message_helper');
-		elseif ($check_mail >= 1)
-		AppContext::get_response()->redirect('/admin/admin_members' . url('.php?id=' .  $id_post . '&error=auth_mail') . '#message_helper');
+		if ($check_user >= 1) 
+			AppContext::get_response()->redirect('/admin/admin_members' . url('.php?id=' .  $id_post . '&error=pseudo_auth') . '#message_helper');
+		elseif ($check_mail >= 1) 
+			AppContext::get_response()->redirect('/admin/admin_members' . url('.php?id=' .  $id_post . '&error=auth_mail') . '#message_helper');
 		else
 		{
 			//Vérification des password.
-			$password = trim(AppContext::get_request()->get_poststring('pass', ''));
+			$password = retrieve(POST, 'pass', '', TSTRING_UNCHANGE);
 			$password_hash = !empty($password) ? strhash($password) : '';
-			$password_bis = trim(AppContext::get_request()->get_poststring('confirm_pass', ''));
+			$password_bis = retrieve(POST, 'confirm_pass', '', TSTRING_UNCHANGE);
 			$password_bis_hash = !empty($password_bis) ? strhash($password_bis) : '';
-
+            
 			if (!empty($password_hash) && !empty($password_bis_hash))
 			{
 				if ($password_hash === $password_bis_hash)
 				{
 					if (strlen($password) >= 6)
-					{
+                    {
 						$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET password = '" . $password_hash . "' WHERE user_id = '" . $id_post . "'", __LINE__, __FILE__);
-					}
+                    }
 					else //Longueur minimale du password
-					AppContext::get_response()->redirect('/admin/admin_members' . url('.php?id=' .  $id_post . '&error=pass_mini') . '#message_helper');
+						AppContext::get_response()->redirect('/admin/admin_members' . url('.php?id=' .  $id_post . '&error=pass_mini') . '#message_helper');
 				}
 				else
-				AppContext::get_response()->redirect('/admin/admin_members' . url('.php?id=' .  $id_post . '&error=pass_same') . '#message_helper');
+					AppContext::get_response()->redirect('/admin/admin_members' . url('.php?id=' .  $id_post . '&error=pass_same') . '#message_helper');
 			}
-				
-			$MEMBER_LEVEL = AppContext::get_request()->get_postint('level', -1);
-			$user_aprob = AppContext::get_request()->get_postint('user_aprob', 0);
-				
+			
+			$MEMBER_LEVEL = retrieve(POST, 'level', -1);  
+			$user_aprob = retrieve(POST, 'user_aprob', 0);  
+			
 			//Informations.
 			$user_show_mail = !empty($_POST['user_show_mail']) ? 0 : 1;
-			$user_lang = TextHelper::strprotect(AppContext::get_request()->get_poststring('user_lang', ''));
-			$user_theme = TextHelper::strprotect(AppContext::get_request()->get_poststring('user_theme', ''));
-			$user_editor = TextHelper::strprotect(AppContext::get_request()->get_poststring('user_editor', ''));
-			$user_timezone = AppContext::get_request()->get_postint('user_timezone', 0);
-				
-			$user_local = TextHelper::strprotect(AppContext::get_request()->get_poststring('user_local', ''));
-			$user_occupation = TextHelper::strprotect(AppContext::get_request()->get_poststring('user_occupation', ''));
-			$user_hobbies = TextHelper::strprotect(AppContext::get_request()->get_poststring('user_hobbies', ''));
-			$user_desc = FormatingHelper::strparse(TextHelper::strprotect(AppContext::get_request()->get_poststring('user_desc', '')));
-			$user_sex = AppContext::get_request()->get_postint('user_sex', 0);
-			$user_sign = FormatingHelper::strparse(TextHelper::strprotect(AppContext::get_request()->get_poststring('user_sign', '')));
-			$user_msn = TextHelper::strprotect(AppContext::get_request()->get_poststring('user_msn', ''));
-			$user_yahoo= TextHelper::strprotect(AppContext::get_request()->get_poststring('user_yahoo', ''));
-				
-			$user_warning = AppContext::get_request()->get_postint('user_warning', 0);
-			$user_readonly = AppContext::get_request()->get_postint('user_readonly', 0);
+			$user_lang = retrieve(POST, 'user_lang', '');
+			$user_theme = retrieve(POST, 'user_theme', '');
+			$user_editor = retrieve(POST, 'user_editor', '');
+			$user_timezone = retrieve(POST, 'user_timezone', 0);
+			
+			$user_local = retrieve(POST, 'user_local', '');
+			$user_occupation = retrieve(POST, 'user_occupation', '');
+			$user_hobbies = retrieve(POST, 'user_hobbies', '');
+			$user_desc = retrieve(POST, 'user_desc', '', TSTRING_PARSE);
+			$user_sex = retrieve(POST, 'user_sex', 0);
+			$user_sign = retrieve(POST, 'user_sign', '', TSTRING_PARSE);			
+			$user_msn = retrieve(POST, 'user_msn', '');
+			$user_yahoo= retrieve(POST, 'user_yahoo', '');
+			
+			$user_warning = retrieve(POST, 'user_warning', 0);
+			$user_readonly = retrieve(POST, 'user_readonly', 0);
 			$user_readonly = ($user_readonly > 0) ? (time() + $user_readonly) : 0; //Lecture seule!
-			$user_ban = AppContext::get_request()->get_postint('user_ban', 0);
+			$user_ban = retrieve(POST, 'user_ban', 0);
 			$user_ban = ($user_ban > 0) ? (time() + $user_ban) : 0; //Bannissement!
-				
-			$user_web = TextHelper::strprotect(AppContext::get_request()->get_poststring('user_web', ''));
+			
+			$user_web = retrieve(POST, 'user_web', '');
 			if (!empty($user_web) && substr($user_web, 0, 7) != 'http://' && substr($user_web, 0, 6) != 'ftp://' && substr($user_web, 0, 8) != 'https://')
-			$user_web = 'http://' . $user_web;
-				
-			//Gestion des groupes.
+				$user_web = 'http://' . $user_web;
+			
+			//Gestion des groupes.				
 			$array_user_groups = isset($_POST['user_groups']) ? $_POST['user_groups'] : array();
 			GroupsService::edit_member($id_post, $array_user_groups); //Change les groupes du membre, calcul la différence entre les groupes précédent et nouveaux.
-				
+			
 			//Gestion de la date de naissance.
 			$user_born = strtodate($_POST['user_born'], $LANG['date_birth_parse']);
-				
+			
 			//Gestion de la suppression de l'avatar.
 			if (!empty($_POST['delete_avatar']))
 			{
 				$user_avatar_path = $Sql->query("SELECT user_avatar FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $id_post . "'", __LINE__, __FILE__);
-
+				
 				if (!empty($user_avatar_path))
 				{
 					$user_avatar_path = str_replace(PATH_TO_ROOT .'/images/avatars/', '', $user_avatar_path);
 					$user_avatar_path = str_replace('/', '', $user_avatar_path);
 					@unlink(PATH_TO_ROOT .'/images/avatars/' . $user_avatar_path);
 				}
-
+				
 				$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET user_avatar = '' WHERE user_id = '" . $id_post . "'", __LINE__, __FILE__);
 			}
-				
+			
 			$user_accounts_config = UserAccountsConfig::load();
 
-			//Gestion upload d'avatar.
+			//Gestion upload d'avatar.					
 			$user_avatar = '';
 			$dir = PATH_TO_ROOT .'/images/avatars/';
-				
+			
 			$Upload = new Upload($dir);
 			$Upload->disableContentCheck();
 			$Upload->file('avatars', '`([a-z0-9()_-])+\.(jpg|gif|png|bmp)+$`i', Upload::UNIQ_NAME, $user_accounts_config->get_max_avatar_weight() * 1024);
 			if ($Upload->get_size() > 0)
 			{
 				if ($Upload->get_error() != '') //Erreur, on arrête ici
-				AppContext::get_response()->redirect('/admin/admin_members' . url('.php?id=' .  $id_post . '&erroru=' . $Upload->get_error()) . '#message_helper');
+					AppContext::get_response()->redirect('/admin/admin_members' . url('.php?id=' .  $id_post . '&erroru=' . $Upload->get_error()) . '#message_helper');
 				else
 				{
 					$path = $dir . $Upload->get_filename();
 					$error = $Upload->check_img($user_accounts_config->get_max_avatar_width(), $user_accounts_config->get_max_avatar_height(), Upload::DELETE_ON_ERROR);
 					if (!empty($error)) //Erreur, on arrête ici
-					AppContext::get_response()->redirect('/admin/admin_members' . url('.php?id=' .  $id_post . '&erroru=' . $error) . '#message_helper');
+						AppContext::get_response()->redirect('/admin/admin_members' . url('.php?id=' .  $id_post . '&erroru=' . $error) . '#message_helper');
 					else
 					{
 						//Suppression de l'ancien avatar (sur le serveur) si il existe!
@@ -163,43 +163,43 @@ if (!empty($_POST['valid']) && !empty($id_post))
 						if (!empty($user_avatar_path) && preg_match('`\.\./images/avatars/(([a-z0-9()_-])+\.([a-z]){3,4})`i', $user_avatar_path, $match))
 						{
 							if (is_file($user_avatar_path) && isset($match[1]))
-							@unlink(PATH_TO_ROOT .'/images/avatars/' . $match[1]);
-						}
+								@unlink(PATH_TO_ROOT .'/images/avatars/' . $match[1]);
+						}						
 						$user_avatar = $path; //Avatar uploadé et validé.
 					}
 				}
 			}
-				
+			
 			if (!empty($_POST['avatar']))
 			{
 				$path = TextHelper::strprotect($_POST['avatar']);
 				$error = $Upload->check_img($user_accounts_config->get_max_avatar_width(), $user_accounts_config->get_max_avatar_height(), Upload::DELETE_ON_ERROR);
 				if (!empty($error)) //Erreur, on arrête ici
-				AppContext::get_response()->redirect('/admin/admin_members' . url('.php?id=' .  $id_post . '&erroru=' . $error) . '#message_helper');
+					AppContext::get_response()->redirect('/admin/admin_members' . url('.php?id=' .  $id_post . '&erroru=' . $error) . '#message_helper');
 				else
-				$user_avatar = $path; //Avatar posté et validé.
+					$user_avatar = $path; //Avatar posté et validé.
 			}
 
 			$user_avatar = !empty($user_avatar) ? "user_avatar = '" . $user_avatar . "', " : '';
 			if (!empty($login) && !empty($user_mail))
-			{
+			{	
 				//Suppression des images des stats concernant les membres, si l'info à été modifiée.
 				$info_mbr = $Sql->query_array(DB_TABLE_MEMBER, "user_theme", "user_sex", "WHERE user_id = '" . $id_post . "'", __LINE__, __FILE__);
 				if ($info_mbr['user_sex'] != $user_sex)
-				@unlink(PATH_TO_ROOT .'/cache/sex.png');
+					@unlink(PATH_TO_ROOT .'/cache/sex.png');
 				if ($info_mbr['user_theme'] != $user_theme)
-				@unlink(PATH_TO_ROOT .'/cache/theme.png');
-
-				//Si le membre n'était pas approuvé et qu'on l'approuve et qu'il existe une alerte, on la règle automatiquement
-				$member_infos = $Sql->query_array(DB_TABLE_MEMBER, "user_aprob", "level", "WHERE user_id = '" . $id_post . "'", __LINE__, __FILE__);
+					@unlink(PATH_TO_ROOT .'/cache/theme.png');
+				
+                //Si le membre n'était pas approuvé et qu'on l'approuve et qu'il existe une alerte, on la règle automatiquement
+                $member_infos = $Sql->query_array(DB_TABLE_MEMBER, "user_aprob", "level", "WHERE user_id = '" . $id_post . "'", __LINE__, __FILE__);
 				if ($member_infos['user_aprob'] != $user_aprob && $member_infos['user_aprob'] == 0)
 				{
 					//On recherche l'alerte
-						
-						
+					
+					
 					//Recherche de l'alerte correspondante
 					$matching_alerts = AdministratorAlertService::find_by_criteria($id_post, 'member_account_to_approbate');
-						
+					
 					//L'alerte a été trouvée
 					if (count($matching_alerts) == 1)
 					{
@@ -211,117 +211,117 @@ if (!empty($_POST['valid']) && !empty($id_post))
 					//Régénération du cache des stats.
 					StatsCache::invalidate();
 				}
-
-				$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET login = '" . $login . "', level = '" . $MEMBER_LEVEL . "', user_lang = '" . $user_lang . "', user_theme = '" . $user_theme . "', user_mail = '" . $user_mail . "', user_show_mail = " . $user_show_mail . ", user_editor = '" . $user_editor . "', user_timezone = '" . $user_timezone . "', user_local = '" . $user_local . "', " . $user_avatar . "user_msn = '" . $user_msn . "', user_yahoo = '" . $user_yahoo . "', user_web = '" . $user_web . "', user_occupation = '" . $user_occupation . "', user_hobbies = '" . $user_hobbies . "', user_desc = '" . $user_desc . "', user_sex = '" . $user_sex . "', user_born = '" . $user_born . "', user_sign = '" . $user_sign . "', user_warning = '" . $user_warning . "', user_readonly = '" . $user_readonly . "', user_ban = '" . $user_ban . "', user_aprob = '" . $user_aprob . "' WHERE user_id = '" . $id_post . "'", __LINE__, __FILE__);
-
-				//Mise à jour de la session si l'utilisateur change de niveau pour lui donner immédiatement les droits
-				if ($member_infos['level'] != $MEMBER_LEVEL)
-				$Sql->query_inject("UPDATE " . DB_TABLE_SESSIONS . " SET level = '" . $MEMBER_LEVEL . "' WHERE user_id = '" . $id_post . "'", __LINE__, __FILE__);
-
+				
+                $Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET login = '" . $login . "', level = '" . $MEMBER_LEVEL . "', user_lang = '" . $user_lang . "', user_theme = '" . $user_theme . "', user_mail = '" . $user_mail . "', user_show_mail = " . $user_show_mail . ", user_editor = '" . $user_editor . "', user_timezone = '" . $user_timezone . "', user_local = '" . $user_local . "', " . $user_avatar . "user_msn = '" . $user_msn . "', user_yahoo = '" . $user_yahoo . "', user_web = '" . $user_web . "', user_occupation = '" . $user_occupation . "', user_hobbies = '" . $user_hobbies . "', user_desc = '" . $user_desc . "', user_sex = '" . $user_sex . "', user_born = '" . $user_born . "', user_sign = '" . $user_sign . "', user_warning = '" . $user_warning . "', user_readonly = '" . $user_readonly . "', user_ban = '" . $user_ban . "', user_aprob = '" . $user_aprob . "' WHERE user_id = '" . $id_post . "'", __LINE__, __FILE__);
+				
+                //Mise à jour de la session si l'utilisateur change de niveau pour lui donner immédiatement les droits
+                if ($member_infos['level'] != $MEMBER_LEVEL)
+					$Sql->query_inject("UPDATE " . DB_TABLE_SESSIONS . " SET level = '" . $MEMBER_LEVEL . "' WHERE user_id = '" . $id_post . "'", __LINE__, __FILE__);
+				
 				if ($user_ban > 0)	//Suppression de la session si le membre se fait bannir.
-				{
+				{	
 					$Sql->query_inject("DELETE FROM " . DB_TABLE_SESSIONS . " WHERE user_id = '" . $id_post . "'", __LINE__, __FILE__);
-						
+					
 					AppContext::get_mail_service()->send_from_properties($user_mail, addslashes($LANG['ban_title_mail']), sprintf(addslashes($LANG['ban_mail']), HOST, addslashes(MailServiceConfig::load()->get_mail_signature())));
 				}
-
+				
 				MemberExtendedFieldsService::update_fields($id_post);
-
+				
 				AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);
 			}
 			else
-			AppContext::get_response()->redirect('/admin/admin_members' . url('.php?id=' .  $id_post . '&error=incomplete') . '#message_helper');
+				AppContext::get_response()->redirect('/admin/admin_members' . url('.php?id=' .  $id_post . '&error=incomplete') . '#message_helper');
 		}
 	}
 	else
-	AppContext::get_response()->redirect('/admin/admin_members' . url('.php?id=' .  $id_post . '&error=incomplete') . '#message_helper');
+		AppContext::get_response()->redirect('/admin/admin_members' . url('.php?id=' .  $id_post . '&error=incomplete') . '#message_helper');
 }
 elseif ($add && !empty($_POST['add'])) //Ajout du membre.
 {
 	$login = !empty($_POST['login2']) ? TextHelper::strprotect(substr($_POST['login2'], 0, 25)) : '';
-	$password = trim(AppContext::get_request()->get_poststring('password2', ''));
-	$password_bis = trim(AppContext::get_request()->get_poststring('password2_bis', ''));
+	$password = retrieve(POST, 'password2', '', TSTRING_UNCHANGE);
+	$password_bis = retrieve(POST, 'password2_bis', '', TSTRING_UNCHANGE);
 	$password_hash = !empty($password) ? strhash($password) : '';
-	$level = AppContext::get_request()->get_postint('level2', 0);
-	$mail = strtolower(TextHelper::strprotect(AppContext::get_request()->get_poststring('mail2', '')));
-
+	$level = retrieve(POST, 'level2', 0);
+	$mail = strtolower(retrieve(POST, 'mail2', ''));
+	
 	if (AppContext::get_mail_service()->is_mail_valid($mail))
-	{
+	{	
 		//Vérirication de l'unicité du membre et du mail
 		$check_user = $Sql->query("SELECT COUNT(*) as compt FROM " . DB_TABLE_MEMBER . " WHERE login = '" . $login . "'", __LINE__, __FILE__);
 		$check_mail = $Sql->query("SELECT COUNT(*) as compt FROM " . DB_TABLE_MEMBER . " WHERE user_mail = '" . $mail . "'", __LINE__, __FILE__);
-		if ($check_user >= 1)
-		AppContext::get_response()->redirect('/admin/admin_members' . url('.php?error=pseudo_auth&add=1') . '#message_helper');
-		elseif ($check_mail >= 1)
-		AppContext::get_response()->redirect('/admin/admin_members' . url('.php?error=auth_mail&add=1') . '#message_helper');
+		if ($check_user >= 1) 
+			AppContext::get_response()->redirect('/admin/admin_members' . url('.php?error=pseudo_auth&add=1') . '#message_helper');
+		elseif ($check_mail >= 1) 
+			AppContext::get_response()->redirect('/admin/admin_members' . url('.php?error=auth_mail&add=1') . '#message_helper');
 		else
 		{
 			if (strlen($password) >= 6 && strlen($password_bis) >= 6)
 			{
 				if (!empty($login))
-				{
+				{	
 					//On insere le nouveau membre.
-					$Sql->query_inject("INSERT INTO " . DB_TABLE_MEMBER . " (login,password,level,user_groups,user_lang,user_theme,user_mail,user_timezone,user_show_mail,timestamp,user_avatar,user_msg,user_local,user_msn,user_yahoo,user_web,user_occupation,user_hobbies,user_desc,user_sex,user_born,user_sign,user_pm,user_warning,user_readonly,last_connect,test_connect,activ_pass,new_pass,user_ban,user_aprob)
+					$Sql->query_inject("INSERT INTO " . DB_TABLE_MEMBER . " (login,password,level,user_groups,user_lang,user_theme,user_mail,user_timezone,user_show_mail,timestamp,user_avatar,user_msg,user_local,user_msn,user_yahoo,user_web,user_occupation,user_hobbies,user_desc,user_sex,user_born,user_sign,user_pm,user_warning,user_readonly,last_connect,test_connect,activ_pass,new_pass,user_ban,user_aprob) 
 					VALUES('" . $login . "', '" . $password_hash . "', '" . $level . "', '', '" . UserAccountsConfig::load()->get_default_lang() . "', '', '" . $mail . "', '" . GeneralConfig::load()->get_site_timezone() . "', '1', '" . time() . "', '', 0, '', '', '', '', '', '', '', 0, '0000-00-00', '', 0, 0, 0, 0, 0, '', '', 0, 1)", __LINE__, __FILE__);
-						
+					
 					//On régénère le cache
 					StatsCache::invalidate();
-
-					AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);
+						
+					AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT); 	
 				}
 				else
-				AppContext::get_response()->redirect('/member/member' . url('.php?error=incomplete&add=1') . '#message_helper');
+					AppContext::get_response()->redirect('/member/member' . url('.php?error=incomplete&add=1') . '#message_helper');
 			}
 			else //Longueur minimale du password
-			AppContext::get_response()->redirect('/admin/admin_members' . url('.php?id=' .  $id_get . '&error=pass_mini&add=1') . '#message_helper');
+				AppContext::get_response()->redirect('/admin/admin_members' . url('.php?id=' .  $id_get . '&error=pass_mini&add=1') . '#message_helper');
 		}
 	}
 	else
-	AppContext::get_response()->redirect('/admin/admin_members' . url('.php?error=invalid_mail&add=1') . '#message_helper');
+		AppContext::get_response()->redirect('/admin/admin_members' . url('.php?error=invalid_mail&add=1') . '#message_helper');
 }
 elseif (!empty($id) && $delete) //Suppression du membre.
 {
 	$Session->csrf_get_protect(); //Protection csrf
-
+	
 	//On supprime dans la bdd.
 	$Sql->query_inject("DELETE FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $id . "'", __LINE__, __FILE__);
-
-
+	
+	
 	Uploads::Empty_folder_member($id); //Suppression de tout les fichiers et dossiers du membre.
-
+	
 	//On régénère le cache
 	StatsCache::invalidate();
-
+		
 	AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);
 }
 elseif ($add)
 {
 	$template = new FileTemplate('admin/admin_members_management2.tpl');
-
+	
 	//Gestion des erreurs.
 	switch ($get_error)
 	{
 		case 'pass_mini':
-			$errstr = $LANG['e_pass_mini'];
-			break;
+		$errstr = $LANG['e_pass_mini'];
+		break;
 		case 'incomplete':
-			$errstr = $LANG['e_incomplete'];
-			break;
+		$errstr = $LANG['e_incomplete'];
+		break;
 		case 'invalid_mail':
-			$errstr = $LANG['e_mail_invalid'];
-			break;
+		$errstr = $LANG['e_mail_invalid'];
+		break;		
 		case 'pseudo_auth':
-			$errstr = $LANG['e_pseudo_auth'];
-			break;
+		$errstr = $LANG['e_pseudo_auth'];
+		break;
 		case 'auth_mail':
-			$errstr = $LANG['e_mail_auth'];
-			break;
+		$errstr = $LANG['e_mail_auth'];
+		break;
 		default:
-			$errstr = '';
+		$errstr = '';
 	}
 	if (!empty($errstr))
-	$Template->put('message_helper', MessageHelper::display($errstr, E_USER_NOTICE));
-
+		$Template->put('message_helper', MessageHelper::display($errstr, E_USER_NOTICE));  
+		
 	$template->put_all(array(
 		'C_USERS_ADD' => true,
 		'L_USERS_MANAGEMENT' => $LANG['members_management'],
@@ -339,13 +339,13 @@ elseif ($add)
 		'L_RESET' => $LANG['reset'],
 		'L_ADD' => $LANG['add']
 	));
-
-	$template->display();
+	
+	$template->display(); 	
 }
-elseif (!empty($id))
-{
+elseif (!empty($id))	
+{		
 	$template = new FileTemplate('admin/admin_members_management2.tpl');
-
+	
 	$mbr = $Sql->query_array(DB_TABLE_MEMBER, '*', "WHERE user_id = '" . $id . "'", __LINE__, __FILE__);
 
 	$user_born = '';
@@ -354,57 +354,57 @@ elseif (!empty($id))
 	for ($i = 0; $i < 3; $i++)
 	{
 		if ($date_birth[$i] == 'DD')
-		{
+		{	
 			$user_born .= $array_user_born[2 - $i];
 			$born_day = $array_user_born[2 - $i];
 		}
 		elseif ($date_birth[$i] == 'MM')
-		{
+		{	
 			$user_born .= $array_user_born[2 - $i];
 			$born_month = $array_user_born[2 - $i];
 		}
-		elseif ($date_birth[$i] == 'YYYY')
+		elseif ($date_birth[$i] == 'YYYY')	
 		{
-			$user_born .= $array_user_born[2 - $i];
+			$user_born .= $array_user_born[2 - $i];				
 			$born_year = $array_user_born[2 - $i];
 		}
-		$user_born .= ($i != 2) ? '/' : '';
+		$user_born .= ($i != 2) ? '/' : '';	
 	}
-
+	
 	//Gestion des erreurs.
 	switch ($get_error)
 	{
 		case 'pass_mini':
-			$errstr = $LANG['e_pass_mini'];
-			break;
+		$errstr = $LANG['e_pass_mini'];
+		break;
 		case 'pass_same':
-			$errstr = $LANG['e_pass_same'];
-			break;
+		$errstr = $LANG['e_pass_same'];
+		break;
 		case 'incomplete':
-			$errstr = $LANG['e_incomplete'];
-			break;
+		$errstr = $LANG['e_incomplete'];
+		break;
 		case 'invalid_mail':
-			$errstr = $LANG['e_mail_invalid'];
-			break;
+		$errstr = $LANG['e_mail_invalid'];
+		break;		
 		case 'pseudo_auth':
-			$errstr = $LANG['e_pseudo_auth'];
-			break;
+		$errstr = $LANG['e_pseudo_auth'];
+		break;
 		case 'auth_mail':
-			$errstr = $LANG['e_mail_auth'];
-			break;
+		$errstr = $LANG['e_mail_auth'];
+		break;
 		default:
-			$errstr = '';
+		$errstr = '';
 	}
 	if (!empty($errstr))
-	$Template->put('message_helper', MessageHelper::display($errstr, E_USER_NOTICE));
+		$Template->put('message_helper', MessageHelper::display($errstr, E_USER_NOTICE));  
 
 	if (isset($LANG[$get_l_error]))
-	$Template->put('message_helper', MessageHelper::display($errstr, E_USER_WARNING));
+		$Template->put('message_helper', MessageHelper::display($errstr, E_USER_WARNING));   
 
 	$user_sex = '';
 	if (!empty($mbr['user_sex']))
-	$user_sex = ($mbr['user_sex'] == 1) ? '/images/man.png' : '/images/woman.png';
-
+		$user_sex = ($mbr['user_sex'] == 1) ? '/images/man.png' : '/images/woman.png';
+	
 	//Rang d'autorisation.
 	$array_ranks = array(0 => $LANG['member'], 1 => $LANG['modo'], 2 => $LANG['admin']);
 	$ranks_options = '';
@@ -413,17 +413,17 @@ elseif (!empty($id))
 		$selected = ($mbr['level'] == $i) ? 'selected="selected"' : '' ;
 		$ranks_options .= '<option value="' . $i . '" ' . $selected . '>' . $array_ranks[$i] . '</option>';
 	}
-
-	//Groupes.
+	
+	//Groupes.	
 	$i = 0;
 	$groups_options = '';
 	$groupe_cache = GroupsCache::load()->get_groups();
 	foreach ($groupe_cache as $id => $values)
-	{
-		$selected = '';
-		$search_group = array_search($id, explode('|', $mbr['user_groups']));
+	{		
+		$selected = '';		
+		$search_group = array_search($id, explode('|', $mbr['user_groups']));		
 		if (is_numeric($search_group))
-		$selected = 'selected="selected"';
+			$selected = 'selected="selected"';	
 			
 		$groups_options .= '<option value="' . $id . '" id="g' . $i . '" ' . $selected . '>' . $values['name'] . '</option>';
 		$i++;
@@ -431,48 +431,48 @@ elseif (!empty($id))
 
 	//Temps de bannissement.
 	$array_time = array(0, 60, 300, 900, 1800, 3600, 7200, 86400, 172800, 604800, 1209600, 2419200, 326592000);
-	$array_sanction = array($LANG['no'], '1 ' . $LANG['minute'], '5 ' . $LANG['minutes'], '15 ' . $LANG['minutes'], '30 ' . $LANG['minutes'], '1 ' . $LANG['hour'], '2 ' . $LANG['hours'], '1 ' . $LANG['day'], '2 ' . $LANG['days'], '1 ' . $LANG['week'], '2 ' . $LANG['weeks'], '1 ' . $LANG['month'], $LANG['life']);
-	$diff = ($mbr['user_ban'] - time());
+	$array_sanction = array($LANG['no'], '1 ' . $LANG['minute'], '5 ' . $LANG['minutes'], '15 ' . $LANG['minutes'], '30 ' . $LANG['minutes'], '1 ' . $LANG['hour'], '2 ' . $LANG['hours'], '1 ' . $LANG['day'], '2 ' . $LANG['days'], '1 ' . $LANG['week'], '2 ' . $LANG['weeks'], '1 ' . $LANG['month'], $LANG['life']); 
+	$diff = ($mbr['user_ban'] - time());	
 	$key_sanction = 0;
 	if ($diff > 0)
 	{
-		//Retourne la sanction la plus proche correspondant au temp de bannissement.
+		//Retourne la sanction la plus proche correspondant au temp de bannissement. 
 		for ($i = 12; $i > 0; $i--)
-		{
+		{					
 			$avg = ceil(($array_time[$i] + $array_time[$i-1])/2);
-			if (($diff - $array_time[$i]) > $avg)
-			{
+			if (($diff - $array_time[$i]) > $avg)  
+			{	
 				$key_sanction = $i + 1;
 				break;
 			}
 		}
-	}
+	}	
 	//Affichge des sanctions
 	$ban_options = '';
 	foreach ($array_time as $key => $time)
 	{
-		$selected = ( $key_sanction == $key ) ? 'selected="selected"' : '' ;
+		$selected = ( $key_sanction == $key ) ? 'selected="selected"' : '' ;		
 		$ban_options .= '<option value="' . $time . '" ' . $selected . '>' . $array_sanction[$key] . '</option>';
 	}
 
 	//Durée de la sanction.
-	$array_time = array(0, 60, 300, 900, 1800, 3600, 7200, 86400, 172800, 604800, 1209600, 2419200, 326592000);
-	$array_sanction = array($LANG['no'], '1 ' . $LANG['minute'], '5 ' . $LANG['minutes'], '15 ' . $LANG['minutes'], '30 ' . $LANG['minutes'], '1 ' . $LANG['hour'], '2 ' . $LANG['hours'], '1 ' . $LANG['day'], '2 ' . $LANG['days'], '1 ' . $LANG['week'], '2 ' . $LANG['weeks'], '1 ' . $LANG['month'], $LANG['life']);
-	$diff = ($mbr['user_readonly'] - time());
+	$array_time = array(0, 60, 300, 900, 1800, 3600, 7200, 86400, 172800, 604800, 1209600, 2419200, 326592000); 	
+	$array_sanction = array($LANG['no'], '1 ' . $LANG['minute'], '5 ' . $LANG['minutes'], '15 ' . $LANG['minutes'], '30 ' . $LANG['minutes'], '1 ' . $LANG['hour'], '2 ' . $LANG['hours'], '1 ' . $LANG['day'], '2 ' . $LANG['days'], '1 ' . $LANG['week'], '2 ' . $LANG['weeks'], '1 ' . $LANG['month'], $LANG['life']); 
+	$diff = ($mbr['user_readonly'] - time());	
 	$key_sanction = 0;
 	if ($diff > 0)
 	{
-		//Retourne la sanction la plus proche correspondant au temp de bannissement.
+		//Retourne la sanction la plus proche correspondant au temp de bannissement. 
 		for ($i = 12; $i > 0; $i--)
-		{
+		{					
 			$avg = ceil(($array_time[$i] + $array_time[$i-1])/2);
-			if (($diff - $array_time[$i]) > $avg)
-			{
+			if (($diff - $array_time[$i]) > $avg) 
+			{	
 				$key_sanction = $i + 1;
 				break;
 			}
 		}
-	}
+	}	
 	//Affichge des sanctions
 	$readonly_options = '';
 	foreach ($array_time as $key => $time)
@@ -480,7 +480,7 @@ elseif (!empty($id))
 		$selected = ($key_sanction == $key) ? ' selected="selected"' : '' ;
 		$readonly_options .= '<option value="' . $time . '"' . $selected . '>' . $array_sanction[$key] . '</option>';
 	}
-
+		
 	//On crée le formulaire select
 	$warning_options = '';
 	$j = 0;
@@ -489,7 +489,7 @@ elseif (!empty($id))
 		$selected = ((10 * $j) == $mbr['user_warning']) ? ' selected="selected"' : '';
 		$warning_options .= '<option value="' . 10 * $j . '"' . $selected . '>' . 10 * $j . '%</option>';
 	}
-
+	
 	//Gestion LANG par défaut.
 	$array_identifier = '';
 	$lang_identifier = PATH_TO_ROOT .'/images/stats/other.png';
@@ -510,7 +510,7 @@ elseif (!empty($id))
 			'SELECTED' => $selected
 		));
 	}
-
+	
 	//Gestion thème par défaut.
 	foreach(ThemesCache::load()->get_installed_themes() as $theme => $properties)
 	{
@@ -525,7 +525,7 @@ elseif (!empty($id))
 			));
 		}
 	}
-
+	
 	//Editeur texte par défaut.
 	$editors = array('bbcode' => 'BBCode', 'tinymce' => 'Tinymce');
 	$editor_options = '';
@@ -534,7 +534,7 @@ elseif (!empty($id))
 		$selected = ($code == $mbr['user_editor']) ? 'selected="selected"' : '';
 		$editor_options .= '<option value="' . $code . '" ' . $selected . '>' . $name . '</option>';
 	}
-
+	
 	//Gestion fuseau horaire par défaut.
 	$timezone_options = '';
 	for ($i = -12; $i <= 14; $i++)
@@ -543,23 +543,23 @@ elseif (!empty($id))
 		$name = (!empty($i) ? ($i > 0 ? ' + ' . $i : ' - ' . -$i) : '');
 		$timezone_options .= '<option value="' . $i . '" ' . $selected . '> [GMT' . $name . ']</option>';
 	}
-
+		
 	//Sex par défaut
 	$i = 0;
 	$array_sex = array('--', $LANG['male'], $LANG['female'], );
 	$sex_options = '';
 	foreach ($array_sex as $value_sex)
-	{
+	{		
 		$selected = ($i == $mbr['user_sex']) ? 'selected="selected"' : '';
 		$sex_options .= '<option value="' . $i . '" ' . $selected . '>' . $value_sex . '</option>';
 		$i++;
 	}
-
+	
 	//Champs supplémentaires.
-	ExtendFieldMember::display($Template, AppContext::get_request()->get_getint('id', 0));
-
+	ExtendFieldMember::display($Template, retrieve(GET, 'id', 0));
+	
 	$user_accounts_config = UserAccountsConfig::load();
-
+	
 	//On assigne les variables pour le POST en précisant l'user_id.
 	$template->put_all(array(
 		'C_USERS_MANAGEMENT' => true,
@@ -673,14 +673,14 @@ elseif (!empty($id))
 	$template->display();
 }
 else
-{
+{			
 	$template = new FileTemplate('admin/admin_members_management.tpl');
-
+	 
 	$template->put_all(array(
 		'C_DISPLAY_SEARCH_RESULT' => false
 	));
-
-	$search = TextHelper::strprotect(AppContext::get_request()->get_poststring('login_mbr', ''));
+	
+	$search = retrieve(POST, 'login_mbr', ''); 
 	if (!empty($search)) //Moteur de recherche des members
 	{
 		$search = str_replace('*', '%', $search);
@@ -688,16 +688,16 @@ else
 		$nbr_result = $Sql->query("SELECT COUNT(*) as compt FROM " . DB_TABLE_MEMBER . " WHERE login LIKE '%".$search."%'", __LINE__, __FILE__);
 
 		if (!empty($nbr_result))
-		{
+		{			
 			$result = $Sql->query_while ($req, __LINE__, __FILE__);
 			while ($row = $Sql->fetch_assoc($result)) //On execute la requête dans une boucle pour afficher tout les résultats.
-			{
+			{ 
 				$template->assign_block_vars('search', array(
 					'RESULT' => '<a href="'. PATH_TO_ROOT .'/admin/admin_members.php?id=' . $row['user_id'] . '">' . $row['login'] . '</a><br />'
-					));
-					$template->put_all(array(
+				));
+				$template->put_all(array(
 					'C_DISPLAY_SEARCH_RESULT' => true
-					));
+				));
 			}
 			$Sql->query_close($result);
 		}
@@ -709,38 +709,38 @@ else
 			$template->assign_block_vars('search', array(
 				'RESULT' => $LANG['no_result']
 			));
-		}
+		}		
 	}
 
 	$nbr_membre = $Sql->count_table(DB_TABLE_MEMBER, __LINE__, __FILE__);
 	//On crée une pagination si le nombre de membre est trop important.
-
+	 
 	$Pagination = new DeprecatedPagination();
-
-	$get_sort = TextHelper::strprotect(AppContext::get_request()->get_getstring('sort', ''));
+	 
+	$get_sort = retrieve(GET, 'sort', '');	
 	switch ($get_sort)
 	{
-		case 'time' :
-			$sort = 'timestamp';
-			break;
-		case 'last' :
-			$sort = 'last_connect';
-			break;
-		case 'alph' :
-			$sort = 'login';
-			break;
-		case 'rank' :
-			$sort = 'level';
-			break;
-		case 'aprob' :
-			$sort = 'user_aprob';
-			break;
+		case 'time' : 
+		$sort = 'timestamp';
+		break;		
+		case 'last' : 
+		$sort = 'last_connect';
+		break;		
+		case 'alph' : 
+		$sort = 'login';
+		break;	
+		case 'rank' : 
+		$sort = 'level';
+		break;	
+		case 'aprob' : 
+		$sort = 'user_aprob';
+		break;	
 		default :
-			$sort = 'timestamp';
+		$sort = 'timestamp';
 	}
-
-	$get_mode = TextHelper::strprotect(AppContext::get_request()->get_getstring('mode', ''));
-	$mode = ($get_mode == 'asc') ? 'ASC' : 'DESC';
+	
+	$get_mode = retrieve(GET, 'mode', '');	
+	$mode = ($get_mode == 'asc') ? 'ASC' : 'DESC';	
 	$unget = (!empty($get_sort) && !empty($mode)) ? '&amp;sort=' . $get_sort . '&amp;mode=' . $get_mode : '';
 
 	$template->put_all(array(
@@ -777,32 +777,32 @@ else
 		'L_REGISTERED' => $LANG['registered'],
 		'L_DELETE' => $LANG['delete']
 	));
-
+		
 	$result = $Sql->query_while("SELECT login, user_id, user_mail, timestamp, last_connect, level, user_aprob
 	FROM " . DB_TABLE_MEMBER . " 
 	ORDER BY " . $sort . " " . $mode . 
 	$Sql->limit($Pagination->get_first_msg(25, 'p'), 25), __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))
 	{
-		switch ($row['level'])
-		{
+		switch ($row['level']) 
+		{	
 			case 0:
 				$rank = $LANG['member'];
-				break;
-					
-			case 1:
+			break;
+			
+			case 1: 
 				$rank = $LANG['modo'];
-				break;
-
+			break;
+	
 			case 2:
 				$rank = $LANG['admin'];
-				break;
-					
+			break;	
+			
 			default: 0;
-		}
-
+		} 
+		
 		$user_web = !empty($row['user_web']) ? '<a href="' . $row['user_web'] . '"><img src="'. PATH_TO_ROOT .'/templates/' . get_utheme() . '/images/' . get_ulang() . '/user_web.png" alt="' . $row['user_web'] . '" title="' . $row['user_web'] . '" /></a>' : '';
-
+		
 		$template->assign_block_vars('member', array(
 			'IDMBR' => $row['user_id'],
 			'NAME' => $row['login'],
@@ -815,8 +815,8 @@ else
 		));
 	}
 	$Sql->query_close($result);
-
-	$template->display();
+	
+	$template->display(); 
 }
 require_once('../admin/admin_footer.php');
 

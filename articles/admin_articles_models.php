@@ -34,9 +34,9 @@ require_once('articles_constants.php');
 $id = retrieve(GET, 'id', 0,TINTEGER);
 $model_to_del = retrieve(GET, 'del', 0,TINTEGER);
 $model_to_del_move = retrieve(POST, 'model_to_del', 0,TINTEGER);
-$new_model = AppContext::get_request()->get_getbool('new', false);
+$new_model = retrieve(GET, 'new', false);
 $id_edit = retrieve(GET, 'edit', 0,TINTEGER);
-$error = TextHelper::strprotect(AppContext::get_request()->get_getstring('error', ''));
+$error = retrieve(GET, 'error', '');
 
 $articles_categories = new ArticlesCats();
 
@@ -48,29 +48,29 @@ $tpl->put_all(array('ADMIN_MENU' => $admin_menu));
 if ($model_to_del > 0)
 {
 	$Session->csrf_get_protect();
-
+	
 	$model_default = $Sql->query_array(DB_TABLE_ARTICLES_MODEL, '*', "WHERE id = '" . $model_to_del . "' AND model_default = 1", __LINE__, __FILE__);
-
+	
 	if(!empty($model_default['id']))
 	{
 		$error_string = 'e_del_default_model';
 		AppContext::get_response()->redirect(url(HOST . SCRIPT . '?error=' . $error_string  . '#message_helper'), '', '&');
 	}
-
+	
 	$nbr_models_articles = (int)$Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_ARTICLES . " WHERE id_models = '" . $model_to_del . "'", __LINE__, __FILE__);
 	$nbr_models_cats = (int)$Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_ARTICLES_CAT . " WHERE id_models = '" . $model_to_del . "'", __LINE__, __FILE__);
 
 	if($nbr_models_cats == 0 && $nbr_models_articles == 0)
 	{
 		$Sql->query_inject("DELETE FROM " . DB_TABLE_ARTICLES_MODEL . " WHERE id = '" . $model_to_del . "'", __LINE__, __FILE__);
-
+	
 		$error_string = 'e_success';
 		AppContext::get_response()->redirect(url(HOST . SCRIPT . '?error=' . $error_string  . '#message_helper'), '', '&');
 	}
 	else
 	{
 		$nbr_models = (int)$Sql->count_table('articles_models' , __LINE__, __FILE__);
-
+		
 		$tpl->put_all(array(
 			'EMPTY_CATS' => count($ARTICLES_CAT) < 2 ? true : false,
 			'L_REMOVING_MODEL' => $ARTICLES_LANG['removing_model'],
@@ -83,9 +83,9 @@ if ($model_to_del > 0)
 		//extend field lost
 		$lost_field="";
 		$save_field="";
-		$model_default = $Sql->query_array(DB_TABLE_ARTICLES_MODEL, '*', "WHERE model_default = 1", __LINE__, __FILE__);
+		$model_default = $Sql->query_array(DB_TABLE_ARTICLES_MODEL, '*', "WHERE model_default = 1", __LINE__, __FILE__);			
 		$model_default_extend_field=unserialize($model_default['extend_field']);
-
+	
 		$result = $Sql->query_while("SELECT id,id_models,extend_field
 		FROM " . DB_TABLE_ARTICLES . " a
 		WHERE id_models = ".$model_to_del
@@ -100,33 +100,33 @@ if ($model_to_del > 0)
 				{
 					$new_article_extend_field=array();
 					foreach ($article_extend_field as $article_field)
-					{
+					{	
 						foreach ($model_default_extend_field as $model_field)
 						{
 							if($article_field['name'] == $model_field['name'])
-							$save_field.=$article_field['name'] . " - ";
+								$save_field.=$article_field['name'] . " - ";
 							else
-							$lost_field .= $article_field['name'] . " - ";
+								$lost_field .= $article_field['name'] . " - ";
 						}
 					}
 				}
 			}
 			else
-			$lost_field = "on perd tout";
-		}
+				$lost_field = "on perd tout";
+		}	
 		if($nbr_models > 2)
 		{
 			$result = $Sql->query_while("SELECT id, name,description,model_default
 			FROM " . DB_TABLE_ARTICLES_MODEL 
 			, __LINE__, __FILE__);
-				
+			
 			$models="";
 			while ($row = $Sql->fetch_assoc($result))
 			{
 				if($row['id'] != $model_to_del && $row['model_default'] != 1)
-				$models.='<option value="' . $row['id'] . '">' . $row['name']. '</option>';
+					$models.='<option value="' . $row['id'] . '">' . $row['name']. '</option>';	
 			}
-				
+			
 			$tpl->assign_block_vars('removing_interface', array(
 				'ID_MODEL' =>$model_to_del,
 				'MODELS'=>$models,
@@ -145,7 +145,7 @@ if ($model_to_del > 0)
 				'LOST_FIELD' =>$lost_field,
 				'SAVE_FIELD' => $save_field,
 								'C_EXTEND_FIELD'=>true,
-			));
+			));		
 		}
 	}
 }
@@ -185,18 +185,18 @@ elseif ($new_model XOR $id_edit > 0)
 		'L_YES'=>$LANG['yes'],
 		'L_NO'=>$LANG['no'],
 		'L_REQUIRE_TITLE' => $LANG['require_name'],
-
+		
 	));
 	if ($id_edit > 0)
 	{
 		$models = $Sql->query_array(DB_TABLE_ARTICLES_MODEL, '*', "WHERE id = '" . $id_edit . "'", __LINE__, __FILE__);
 
-		$default_model = $Sql->query_array(DB_TABLE_ARTICLES_MODEL, '*', "WHERE model_default = 1", __LINE__, __FILE__);
+		$default_model = $Sql->query_array(DB_TABLE_ARTICLES_MODEL, '*', "WHERE model_default = 1", __LINE__, __FILE__);	
 
 		$options = unserialize($models['options']);
 		$special_options = $options  !== unserialize($default_model['options']) ? true : false;
 		$options  = $special_options ? $options  : unserialize($default_model['options']);
-
+		
 		// articles templates
 		$tpl_articles_list = '<option value="articles.tpl" '.($models['tpl_articles'] == "articles.tpl" ? "selected='selected'" : "").' >articles.tpl</option>';
 		$tpl_folder_path = new Folder('./templates/models');
@@ -205,31 +205,31 @@ elseif ($new_model XOR $id_edit > 0)
 			$tpl_articles = $tpl_articles->get_name();
 			$selected = ($tpl_articles == $models['tpl_articles'] || './models/'.$tpl_articles == $models['tpl_articles'] ) ? ' selected="selected"' : '';
 			$tpl_articles_list .= '<option value="' . $tpl_articles . '"' .  $selected . '>' . $tpl_articles . '</option>';
-		}
+		}	
 		// extend field
 		$extend_field_tab=unserialize($models['extend_field']);
 		$extend_field = !empty($extend_field_tab) ? true : false;
-
+		
 		$i=0;
 		if(	$extend_field )
 		{
 			foreach ($extend_field_tab as $field)
-			{
+			{	
 				$tpl->assign_block_vars('field', array(
 					'I' =>$i,
 					'NAME' => stripslashes($field['name']),
 					'TYPE'=>stripslashes($field['type']),
 				));
 				$i++;
-			}
+			}	
 		}
 		if($i==0)
 		{
-			$tpl->assign_block_vars('field', array(
+				$tpl->assign_block_vars('field', array(
 					'I' =>0,
 					'NAME' => '',
 					'TYPE'=>'',
-			));
+				));
 		}
 
 		$tpl->assign_block_vars('edition_interface', array(
@@ -268,7 +268,7 @@ elseif ($new_model XOR $id_edit > 0)
 	else
 	{
 		$id_edit = 0;
-
+	
 		$tpl_default_name = 'articles.tpl';
 		$tpl_articles_list = '<option value="articles.tpl" selected >articles.tpl</option>';
 		$tpl_folder_path = new Folder('./templates/models');
@@ -277,7 +277,7 @@ elseif ($new_model XOR $id_edit > 0)
 			$tpl_articles = $tpl_articles->get_name();
 			if($tpl_articles != $tpl_default_name)
 			$tpl_articles_list.= '<option value="' . $tpl_articles . '">' . $tpl_articles. '</option>';
-		}
+		}		
 		$tpl->assign_block_vars('edition_interface', array(
 			'NAME' => '',
 			'DESCRIPTION' => '',
@@ -309,41 +309,41 @@ elseif ($new_model XOR $id_edit > 0)
 			'NOT_DEFAULT_MODEL'=> 'checked="checked"',
 			'NB_FIELD'=>1,
 		));
-
+	
 		$tpl->assign_block_vars('field', array(
 				'I'=>0,
 				'NAME'=>'',
 				'TYPE'=>'',
-		));
+			));
 	}
 }
 elseif (retrieve(POST,'submit',false))
 {
 	$error_string = 'e_success';
-
+	
 	if (!empty($model_to_del_move))
 	{
 		$Session->csrf_get_protect();
-
+		
 		$move_default =(retrieve(POST,'action','affect_default') == 'affect_default') ? true : false;
 		$id_models_move = retrieve(POST, 'models', 0,TINTEGER);
 			
 		if ($move_default)
-		{
+		{					
 			$model_default = $Sql->query_array(DB_TABLE_ARTICLES_MODEL, '*', "WHERE model_default = 1", __LINE__, __FILE__);
-				
+			
 			$model_default_extend_field=unserialize($model_default['extend_field']);
-				
+			
 			//Affect default model to category  and recover comon extend field
 			$result = $Sql->query_while("SELECT id,id_models
 			FROM " . DB_TABLE_ARTICLES_CAT . " a
 			WHERE id_models = ".$model_to_del_move
 			, __LINE__, __FILE__);
-
+	
 			while ($row = $Sql->fetch_assoc($result))
 			{
 				$Sql->query_inject("UPDATE "  .DB_TABLE_ARTICLES_CAT. " SET id_models = '".$model_default['id']."' WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
-
+				
 			}
 
 			//Affect default model to articles and recover comon extend field
@@ -360,7 +360,7 @@ elseif (retrieve(POST,'submit',false))
 				{
 
 					foreach ($article_extend_field as $article_field)
-					{
+					{	
 						foreach ($model_default_extend_field as $model_field)
 						{
 							if($article_field['name'] == $model_field['name'])
@@ -372,7 +372,7 @@ elseif (retrieve(POST,'submit',false))
 					}
 				}
 				$Sql->query_inject("UPDATE "  .DB_TABLE_ARTICLES. " SET id_models = '".$model_default['id']."',extend_field = '".addslashes(serialize($new_article_extend_field))."' WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
-			}
+			}			
 		}
 		else
 		{
@@ -382,12 +382,12 @@ elseif (retrieve(POST,'submit',false))
 			, __LINE__, __FILE__);
 
 			while ($row = $Sql->fetch_assoc($result))
-			{
+			{	
 				$Sql->query_inject("UPDATE "  .DB_TABLE_ARTICLES_CAT. " SET id_models = '".$id_models_move."' WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
 			}
-				
+			
 			$model_move = $Sql->query_array(DB_TABLE_ARTICLES_MODEL, '*', "WHERE id = '".$id_models_move."'", __LINE__, __FILE__);
-				
+			
 			$model_move_extend_field=unserialize(stripslashes($model_move['extend_field']));
 
 			$result = $Sql->query_while("SELECT id,id_models,extend_field
@@ -402,7 +402,7 @@ elseif (retrieve(POST,'submit',false))
 				if(!empty($article_extend_field))
 				{
 					foreach ($article_extend_field as $article_field)
-					{
+					{	
 						foreach ($model_move_extend_field as $model_field)
 						{
 							if($article_field['name'] == $model_field['name'])
@@ -412,57 +412,57 @@ elseif (retrieve(POST,'submit',false))
 							}
 						}
 					}
-				}
+				}				
 				$Sql->query_inject("UPDATE "  .DB_TABLE_ARTICLES. " SET id_models = '".$id_models_move."', extend_field = '".addslashes(serialize($new_article_extend_field))."' WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
 			}
 		}
-
+		
 		$Sql->query_inject("DELETE FROM " . DB_TABLE_ARTICLES_MODEL . " WHERE id = '" . $model_to_del_move . "'", __LINE__, __FILE__);
 		$error_string = 'e_success';
 	}
 	else
 	{
 		$id_model = retrieve(POST, 'id_model', 0,TINTEGER);
-		$name = TextHelper::strprotect(AppContext::get_request()->get_poststring('name', ''));
-		$description = FormatingHelper::strparse(TextHelper::strprotect(AppContext::get_request()->get_poststring('description', '')));
+		$name = retrieve(POST, 'name', '');	
+		$description = retrieve(POST, 'description', '', TSTRING_PARSE);
 		$tpl_articles=retrieve(POST, 'tpl_articles', 'articles.tpl', TSTRING);
 		$tpl_articles = (empty($tpl_articles)) ? 'articles.tpl' : $tpl_articles;
 		$tpl_articles = $tpl_articles != 'articles.tpl' ? "./models/".$tpl_articles : $tpl_articles;
 
 		$options = array (
-			'note'=>AppContext::get_request()->get_postbool('note', true),
-			'com'=>AppContext::get_request()->get_postbool('com', true),
-			'impr'=>AppContext::get_request()->get_postbool('impr', true),
-			'date'=>AppContext::get_request()->get_postbool('date', true),
-			'author'=>AppContext::get_request()->get_postbool('author', true),
-			'mail'=>AppContext::get_request()->get_postbool('mail', true),
-		);
-		$pagination_tab=AppContext::get_request()->get_postint('tab', 0);
-		$default_model=AppContext::get_request()->get_postint('default', 1);
+			'note'=>retrieve(POST, 'note', true, TBOOL),
+			'com'=>retrieve(POST, 'com', true, TBOOL),
+			'impr'=>retrieve(POST, 'impr', true, TBOOL),
+			'date'=>retrieve(POST, 'date', true, TBOOL),
+			'author'=>retrieve(POST, 'author', true, TBOOL),
+			'mail'=>retrieve(POST, 'mail', true, TBOOL),
+			);	
+		$pagination_tab=retrieve(POST, 'tab', 0);
+		$default_model=retrieve(POST, 'default', 1);
 			
 		if (empty($name))
-		AppContext::get_response()->redirect(url(HOST . SCRIPT . '?error=e_required_fields_empty#message_helper'), '', '&');
-
+			AppContext::get_response()->redirect(url(HOST . SCRIPT . '?error=e_required_fields_empty#message_helper'), '', '&');
+		
 		if($default_model == 1)
 		{
 			$exist_model_default = $Sql->query_array(DB_TABLE_ARTICLES_MODEL, '*', "WHERE model_default = 1 AND id != '" . $id_model . "'", __LINE__, __FILE__);
 			if(!empty($exist_model_default['id']))
-			$Sql->query_inject("UPDATE "  .DB_TABLE_ARTICLES_MODEL. " SET model_default = 0 WHERE id = '" . $exist_model_default['id'] . "'", __LINE__, __FILE__);
+				$Sql->query_inject("UPDATE "  .DB_TABLE_ARTICLES_MODEL. " SET model_default = 0 WHERE id = '" . $exist_model_default['id'] . "'", __LINE__, __FILE__);
 		}
 
 		$extend_field = array();
 		if(retrieve(POST,'extend_field_checkbox',false))
 		{
 			for ($i = 0;$i < 100; $i++)
-			{
+			{	
 				if (retrieve(POST,'a'.$i,false,TSTRING))
-				{
+				{				
 					$extend_field[$i]['name'] = retrieve(POST, 'a'.$i, '',TSTRING);
 					$extend_field[$i]['type'] = retrieve(POST, 'v'.$i, '',TSTRING_UNCHANGE);
 				}
 			}
 		}
-
+				
 		if ($id_model > 0)
 		{
 			$Sql->query_inject("UPDATE "  .DB_TABLE_ARTICLES_MODEL. " SET name = '".$name."', description = '" . $description . "',model_default = '".$default_model."',tpl_articles='".$tpl_articles."',extend_field='".addslashes(serialize($extend_field))."', options = '".serialize($options)."' , pagination_tab =  '".$pagination_tab."' WHERE id = '" . $id_model . "'", __LINE__, __FILE__);
@@ -474,7 +474,7 @@ elseif (retrieve(POST,'submit',false))
 			$error_string = 'e_success';
 		}
 	}
-
+	
 	$Cache->Generate_module_file('articles');
 	AppContext::get_response()->redirect(url(HOST . SCRIPT . '?error=' . $error_string  . '#message_helper'), '', '&');
 }
@@ -504,11 +504,11 @@ else
 				break;
 		}
 	}
-
+	
 	$nbr_models = $Sql->count_table(PREFIX . 'articles_models' , __LINE__, __FILE__);
 
 	//On crée une pagination si le nombre d'articles est trop important.
-
+	
 	$Pagination = new DeprecatedPagination();
 	$tpl->assign_block_vars('models_management', array(
 			'L_MODELS_MANAGEMENT' => $ARTICLES_LANG['models_management'],
@@ -531,26 +531,26 @@ else
 			'L_DISPLAY'=>$LANG['display'],
 			'L_MODEL_DEFAULT_DEL_EXPLAIN'=>$ARTICLES_LANG['model_default_del_explain'],
 			'PAGINATION' => $Pagination->display('admin_articles_models.php?p=%d', $nbr_models, 'p', 10, 3),
-	));
-
-	$result = $Sql->query_while("SELECT id, name,description ,model_default,extend_field,tpl_articles ,options,pagination_tab,model_default
+		));
+		
+		$result = $Sql->query_while("SELECT id, name,description ,model_default,extend_field,tpl_articles ,options,pagination_tab,model_default
 	FROM " . DB_TABLE_ARTICLES_MODEL . " a
 	ORDER BY model_default DESC".
 	$Sql->limit($Pagination->get_first_msg(10, 'p'), 10), __LINE__, __FILE__);
 
 	while ($row = $Sql->fetch_assoc($result))
-	{
+	{	
 		$extend_field="";
 		$c_extend_field=!empty($row['extend_field']) ? true : false;
 		if($c_extend_field)
 		{
 			$extend_field_tab=unserialize($row['extend_field']);
 			foreach ($extend_field_tab as $field)
-			{
+			{	
 				$extend_field.=$field['name'].' - ';
-			}
+			}	
 		}
-
+		
 		$options=unserialize($row['options']);
 		$tpl->assign_block_vars('models', array(
 			'NAME' => $row['name'],

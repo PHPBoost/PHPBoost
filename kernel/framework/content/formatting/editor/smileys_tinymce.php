@@ -45,12 +45,12 @@ $height_max = 50;
 $width_max = 50;
 $smile_by_line = 4;
 
-$field = AppContext::get_request()->get_getstring('field', 'contents');
+$field = retrieve(GET, 'field', 'contents');
 $tpl_smileys->put_all(array(
 	'PATH_TO_ROOT' => TPL_PATH_TO_ROOT,
 	'TITLE' => stripslashes(TITLE),
 	'THEME' => UserAccountsConfig::load()->get_default_theme(),
-	'FIELD' => $field,
+	'FIELD' => $field ,
 	'COLSPAN' => $smile_by_line + 1,
 	'L_XML_LANGUAGE' => $LANG['xml_lang'],
 	'L_SMILEY' => $LANG['smiley'],

@@ -34,15 +34,15 @@ $media_categories = new MediaCats();
 
 $Template->set_filenames(array('admin_media_cat'=> 'media/admin_media_cats.tpl'));
 
-$id_up = AppContext::get_request()->get_getint('id_up', 0);
-$id_down = AppContext::get_request()->get_getint('id_down', 0);
-$id_show = AppContext::get_request()->get_getint('show', 0);
-$id_hide = AppContext::get_request()->get_getint('hide', 0);
-$cat_to_del = AppContext::get_request()->get_getint('del', 0);
-$cat_to_del_post = AppContext::get_request()->get_postint('cat_to_del', 0);
-$id_edit = AppContext::get_request()->get_getint('edit', 0);
-$new_cat = AppContext::get_request()->get_getbool('new', false);
-$error = TextHelper::strprotect(AppContext::get_request()->get_getstring('error', ''));
+$id_up = retrieve(GET, 'id_up', 0);
+$id_down = retrieve(GET, 'id_down', 0);
+$id_show = retrieve(GET, 'show', 0);
+$id_hide = retrieve(GET, 'hide', 0);
+$cat_to_del = retrieve(GET, 'del', 0);
+$cat_to_del_post = retrieve(POST, 'cat_to_del', 0);
+$id_edit = retrieve(GET, 'edit', 0);
+$new_cat = retrieve(GET, 'new', false);
+$error = retrieve(GET, 'error', '');
 
 if ($id_up > 0)
 {
@@ -86,7 +86,7 @@ elseif (!empty($_POST['submit']))
 	if (!empty( $cat_to_del_post))
 	{
 		$delete_content = (!empty($_POST['action']) && $_POST['action'] == 'move') ? false : true;
-		$id_parent = AppContext::get_request()->get_postint('id_parent', 0);
+		$id_parent = retrieve(POST, 'id_parent', 0);
 
 		if ($delete_content)
 		{
@@ -99,12 +99,12 @@ elseif (!empty($_POST['submit']))
 	}
 	else
 	{
-		$id_cat = AppContext::get_request()->get_postint('idcat', 0);
-		$id_parent = AppContext::get_request()->get_postint('id_parent', 0);
-		$name = TextHelper::strprotect(AppContext::get_request()->get_poststring('name', ''));
-		$image = TextHelper::strprotect(AppContext::get_request()->get_poststring('image', ''));
-		$description = FormatingHelper::strparse(TextHelper::strprotect(AppContext::get_request()->get_poststring('description', '')));
-		$mime_type = AppContext::get_request()->get_postint('mime_type', 0);
+		$id_cat = retrieve(POST, 'idcat', 0);
+		$id_parent = retrieve(POST, 'id_parent', 0);
+		$name = retrieve(POST, 'name', '');
+		$image = retrieve(POST, 'image', '');
+		$description = retrieve(POST, 'description', '', TSTRING_PARSE);
+		$mime_type = retrieve(POST, 'mime_type', 0);
 		$activ_array = retrieve(POST, 'activ', 0, TARRAY);
 		$activ = is_array($activ_array) ? array_sum($activ_array) : 0;
 

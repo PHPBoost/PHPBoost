@@ -29,14 +29,14 @@ class AdminThemesDisplayResponse extends AdminMenuDisplayResponse
 {
 	public function __construct($view, $title_page)
 	{
-		parent::__construct($view);
+        parent::__construct($view);
 
 		$lang = LangLoader::get('admin-themes-common');
 		$picture = '/templates/' . get_utheme() . '/images/admin/themes.png';
 		$this->set_title($lang['themes.management']);
 		$this->add_link($lang['themes.installed'], DispatchManager::get_url('/admin/themes/index.php', '/installed'), $picture);
 		$this->add_link($lang['themes.add'], DispatchManager::get_url('/admin/themes/index.php', '/add'), $picture);
-
+		
 		$env = $this->get_graphical_environment();
 		$env->set_page_title($title_page);
 	}

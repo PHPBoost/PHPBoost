@@ -28,9 +28,9 @@
 class AdminViewAllMembersController extends AdminController
 {
 	private $lang;
-
+	
 	private $view;
-
+	
 	private $nbr_members_per_page = 25;
 
 	public function execute(HTTPRequest $request)
@@ -44,17 +44,17 @@ class AdminViewAllMembersController extends AdminController
 	private function build_form()
 	{
 		$form = new HTMLForm('search_member');
-
+		
 		$fieldset = new FormFieldsetHTML('search_member', $this->lang['members.member-search']);
 		$form->add_fieldset($fieldset);
-
+		
 		$fieldset->add_field(new FormFieldAjaxCompleter('search_member', $this->lang['members.pseudo'], '', array(
 			'file' => 'test', 'name_parameter' => 'pseudo'))
 		);
 
 		return $form;
 	}
-
+	
 	private function build_view($request)
 	{
 		$field = $request->get_value('field', 'timestamp');
@@ -62,28 +62,28 @@ class AdminViewAllMembersController extends AdminController
 		$page = $request->get_int('page', 1);
 
 		$mode = ($sort == 'top') ? 'ASC' : 'DESC';
-
+		
 		switch ($field)
 		{
 			case 'registered' :
 				$field_bdd = 'timestamp';
-				break;
+			break;
 			case 'connect' :
 				$field_bdd = 'last_connect';
-				break;
+			break;
 			case 'level' :
 				$field_bdd = 'level';
-				break;
+			break;
 			case 'login' :
 				$field_bdd = 'login';
-				break;
+			break;
 			case 'approbation' :
 				$field_bdd = 'user_aprob';
-				break;
+			break;
 			default :
 				$field_bdd = 'timestamp';
 		}
-
+		
 		$nbr_member = PersistenceContext::get_sql()->count_table(DB_TABLE_MEMBER, __LINE__, __FILE__);
 		$nb_pages =  ceil($nbr_member / $this->nbr_members_per_page);
 		$pagination = new Pagination($nb_pages, $page);
@@ -105,20 +105,20 @@ class AdminViewAllMembersController extends AdminController
 
 		$limite_page = $page > 0 ? $page : 1;
 		$limite_page = (($limite_page - 1) * $this->nbr_members_per_page);
-
+		
 		$result = PersistenceContext::get_querier()->select("SELECT user_id, login, user_mail, timestamp, last_connect, level, user_aprob
 		FROM " . DB_TABLE_MEMBER . "
 		ORDER BY ". $field_bdd ." ". $mode ."
 		LIMIT ". $this->nbr_members_per_page ." OFFSET :start_limit",
-		array(
+			array(
 				'start_limit' => $limite_page
-		), SelectQueryResult::FETCH_ASSOC
+			), SelectQueryResult::FETCH_ASSOC
 		);
 		while ($row = $result->fetch())
 		{
 			$user_mail = '<a href="mailto:' . $row['user_mail'] . '"><img src="'. PATH_TO_ROOT .'/templates/' . get_utheme() . '/images/' . get_ulang() . '/email.png" alt="' . $row['user_mail'] . '" /></a>';
 			$row['last_connect'] = !empty($row['last_connect']) ? $row['last_connect'] : $row['timestamp'];
-
+		
 			$this->view->assign_block_vars('member_list', array(
 				'DELETE_LINK' => DispatchManager::get_url('/admin/member', '/member/'. $row['user_id'] .'/delete/')->absolute(),
 				'EDIT_LINK' => DispatchManager::get_url('/admin/member', '/member/'. $row['user_id'] .'/edit/')->absolute(),
@@ -132,7 +132,7 @@ class AdminViewAllMembersController extends AdminController
 			));
 		}
 	}
-
+	
 	private function get_lang_level($level)
 	{
 		if ($level == '2')
@@ -143,12 +143,12 @@ class AdminViewAllMembersController extends AdminController
 		{
 			return $this->lang['modo'];
 		}
-		else
+		else 
 		{
 			return $this->lang['member'];
 		}
 	}
-
+	
 	private function init()
 	{
 		$this->lang = LangLoader::get('main');
@@ -166,7 +166,7 @@ class AdminViewAllMembersController extends AdminController
 		$response->add_link($this->lang['members.members-punishment'], DispatchManager::get_url('/admin/member', '/member/punishment'), '/templates/' . get_utheme() . '/images/admin/members.png');
 		$env = $response->get_graphical_environment();
 		$env->set_page_title($this->lang['members.members-management']);
-
+		
 		return $response;
 	}
 }

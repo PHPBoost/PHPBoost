@@ -13,7 +13,7 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- *
+ * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -22,36 +22,36 @@
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
+ * 
  ###################################################*/
 
 require_once('../admin/admin_begin.php');
 define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
-
-$uninstall = AppContext::get_request()->get_getbool('uninstall', false);
-$id = AppContext::get_request()->get_getint('id', 0);
-$error = TextHelper::strprotect(AppContext::get_request()->get_getstring('error', ''));
+	
+$uninstall = retrieve(GET, 'uninstall', false);	
+$id = retrieve(GET, 'id', 0);
+$error = retrieve(GET, 'error', ''); 
 
 $template = new FileTemplate('admin/admin_lang_management.tpl');
-
+		
 if (isset($_GET['activ']) && !empty($id)) //Activation
 {
 	$Sql->query_inject("UPDATE " . DB_TABLE_LANG . " SET activ = '" . NumberHelper::numeric($_GET['activ']) . "' WHERE id = '" . $id . "' AND lang <> '" . UserAccountsConfig::load()->get_default_lang() . "'", __LINE__, __FILE__);
-
+	
 	//Régénération du cache.
 	LangsCache::invalidate();
-
-	AppContext::get_response()->redirect(HOST . SCRIPT . '#t' . $id);
+		
+	AppContext::get_response()->redirect(HOST . SCRIPT . '#t' . $id);	
 }
 if (isset($_GET['secure']) && !empty($id)) //Changement de niveau d'autorisation.
 {
 	$Sql->query_inject("UPDATE " . DB_TABLE_LANG . " SET secure = '" . NumberHelper::numeric($_GET['secure']) . "' WHERE id = '" . $id . "' AND lang <> '" . UserAccountsConfig::load()->get_default_lang() . "'", __LINE__, __FILE__);
-
+	
 	//Régénération du cache.
 	LangsCache::invalidate();
-
-	AppContext::get_response()->redirect(HOST . SCRIPT . '#t' . $id);
+		
+	AppContext::get_response()->redirect(HOST . SCRIPT . '#t' . $id);	
 }
 elseif (isset($_POST['valid'])) //Mise à jour
 {
@@ -63,45 +63,45 @@ elseif (isset($_POST['valid'])) //Mise à jour
 		$activ = retrieve(POST, $row['id'] . 'activ', 0);
 		$secure = retrieve(POST, $row['id'] . 'secure', 0);
 		if ($row['activ'] != $activ || $row['secure'] != $secure)
-		$Sql->query_inject("UPDATE " . DB_TABLE_LANG . " SET activ = '" . $activ . "', secure = '" . $secure . "' WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE " . DB_TABLE_LANG . " SET activ = '" . $activ . "', secure = '" . $secure . "' WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
 	}
-
+	
 	//Régénération du cache.
 	LangsCache::invalidate();
-
-	AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);
+		
+	AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);	
 }
 elseif ($uninstall) //Désinstallation.
 {
 	if (!empty($_POST['valid_del']))
 	{
-		$idlang = AppContext::get_request()->get_postint('idlang', 0);
+		$idlang = retrieve(POST, 'idlang', 0); 
 		$drop_files = !empty($_POST['drop_files']) ? true : false;
-
+		
 		$previous_lang = $Sql->query("SELECT lang FROM " . DB_TABLE_LANG . " WHERE id = '" . $idlang . "'", __LINE__, __FILE__);
 		if ($previous_lang != UserAccountsConfig::load()->get_default_lang() && !empty($idlang) && !empty($previous_lang))
 		{
-			//On met le thème par défaut du site aux membres ayant choisi le thème qui vient d'être supprimé!
+			//On met le thème par défaut du site aux membres ayant choisi le thème qui vient d'être supprimé!		
 			$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET user_lang = '" . UserAccountsConfig::load()->get_default_lang() . "' WHERE user_lang = '" . $previous_lang . "'", __LINE__, __FILE__);
-
+				
 			//On supprime le lang de la bdd.
 			$Sql->query_inject("DELETE FROM " . DB_TABLE_LANG . " WHERE id = '" . $idlang . "'", __LINE__, __FILE__);
 		}
 		else
-		AppContext::get_response()->redirect('/admin/admin_lang.php?error=incomplete#message_helper');
-
+			AppContext::get_response()->redirect('/admin/admin_lang.php?error=incomplete#message_helper');
+		
 		//Suppression des fichiers du module
 		if ($drop_files && !empty($previous_lang))
 		{
-				
+			
 			$folder = new Folder(PATH_TO_ROOT .'/lang/' . $previous_lang);
 			if (!$folder->delete())
-			$error = 'files_del_failed';
+				$error = 'files_del_failed';
 		}
-
+	
 		//Régénération du cache.
 		LangsCache::invalidate();
-
+		
 		$error = !empty($error) ? '?error=' . $error : '';
 		AppContext::get_response()->redirect(HOST . SCRIPT . $error);
 	}
@@ -110,8 +110,8 @@ elseif ($uninstall) //Désinstallation.
 		//Récupération de l'identifiant du thème.
 		$idlang = '';
 		foreach ($_POST as $key => $value)
-		if ($value == $LANG['uninstall'])
-		$idlang = $key;
+			if ($value == $LANG['uninstall'])
+				$idlang = $key;
 
 		$template->put_all(array(
 			'C_DEL_LANG' => true,
@@ -126,7 +126,7 @@ elseif ($uninstall) //Désinstallation.
 			'L_DELETE' => $LANG['delete']
 		));
 	}
-}
+}		
 else
 {
 	$template->put_all(array(
@@ -148,31 +148,31 @@ else
 		'L_GUEST' => $LANG['guest'],
 		'L_UNINSTALL' => $LANG['uninstall']		
 	));
-
+		
 	//Gestion erreur.
-	$get_error = TextHelper::strprotect(AppContext::get_request()->get_getstring('error', ''));
+	$get_error = retrieve(GET, 'error', '');
 	if ($get_error == 'incomplete')
-	$template->put('message_helper', MessageHelper::display($LANG['e_incomplete'], E_USER_NOTICE));
+		$template->put('message_helper', MessageHelper::display($LANG['e_incomplete'], E_USER_NOTICE));
 	elseif (!empty($get_error) && isset($LANG[$get_error]))
-	$template->put('message_helper', MessageHelper::display($LANG[$get_error], E_USER_WARNING));
-
+		$template->put('message_helper', MessageHelper::display($LANG[$get_error], E_USER_WARNING));
+	 
 	//On liste les langues.
 	$z = 0;
 	$array_ranks = array(-1 => $LANG['guest'], 0 => $LANG['member'], 1 => $LANG['modo'], 2 => $LANG['admin']);
-	$result = $Sql->query_while("SELECT id, lang, activ, secure
+	$result = $Sql->query_while("SELECT id, lang, activ, secure 
 	FROM " . PREFIX . "lang", __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))
 	{
-		//On selectionne le lang suivant les valeurs du tableau.
+		//On selectionne le lang suivant les valeurs du tableau. 
 		$info_lang = load_ini_file(PATH_TO_ROOT .'/lang/', $row['lang']);
-
+		
 		$options = '';
 		for ($i = -1 ; $i <= 2 ; $i++) //Rang d'autorisation.
 		{
 			$selected = ($i == $row['secure']) ? 'selected="selected"' : '';
 			$options .= '<option value="' . $i . '" ' . $selected . '>' . $array_ranks[$i] . '</option>';
 		}
-
+		
 		$default_lang = ($row['lang'] == UserAccountsConfig::load()->get_default_lang());
 		$template->assign_block_vars('list', array(
 			'C_LANG_DEFAULT' => $default_lang ? true : false,
@@ -186,19 +186,19 @@ else
 			'OPTIONS' => $options,
 			'LANG_ACTIV' => ($row['activ'] == 1) ? 'checked="checked"' : '',
 			'LANG_UNACTIV' => ($row['activ'] == 0) ? 'checked="checked"' : ''
-			));
-			$z++;
+		));
+		$z++;
 	}
 	$Sql->query_close($result);
-
+	
 	if ($z != 0)
-	$template->put_all(array(
+		$template->put_all(array(		
 			'C_LANG_PRESENT' => true
-	));
+		));
 	else
-	$template->put_all(array(
+		$template->put_all(array(		
 			'C_NO_LANG_PRESENT' => true
-	));
+		));
 }
 
 $template->display();

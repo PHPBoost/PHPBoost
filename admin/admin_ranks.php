@@ -6,7 +6,7 @@
  *   copyright            : (C) 2005 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
- *
+ * 
  *
  ###################################################
  *
@@ -14,7 +14,7 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- *
+ * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -30,12 +30,12 @@ require_once('../admin/admin_begin.php');
 define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
 
-$get_id = AppContext::get_request()->get_getint('id', 0);
+$get_id = retrieve(GET, 'id', 0);	
 
 //Si c'est confirmé on execute
 if (!empty($_POST['valid']))
 {
-	$result = $Sql->query_while("SELECT id, special
+	$result = $Sql->query_while("SELECT id, special 
 	FROM " . PREFIX . "ranks", __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))
 	{
@@ -44,28 +44,28 @@ if (!empty($_POST['valid']))
 		$icon = retrieve(POST, $row['id'] . 'icon', '');
 
 		if (!empty($name) && $row['special'] != 1)
-		$Sql->query_inject("UPDATE " . DB_TABLE_RANKS . " SET name = '" . $name . "', msg = '" . $msg . "', icon = '" . $icon . "' WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE " . DB_TABLE_RANKS . " SET name = '" . $name . "', msg = '" . $msg . "', icon = '" . $icon . "' WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
 		else
-		$Sql->query_inject("UPDATE " . DB_TABLE_RANKS . " SET name = '" . $name . "', icon = '" . $icon . "' WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE " . DB_TABLE_RANKS . " SET name = '" . $name . "', icon = '" . $icon . "' WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
 	}
 	$Sql->query_close($result);
 
 	RanksCache::invalidate();
-
-	AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);
+		
+	AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);	
 }
 elseif (!empty($_GET['del']) && !empty($get_id)) //Suppression du rang.
 {
 	//On supprime dans la bdd.
-	$Sql->query_inject("DELETE FROM " . DB_TABLE_RANKS . " WHERE id = '" . $get_id . "'", __LINE__, __FILE__);
+	$Sql->query_inject("DELETE FROM " . DB_TABLE_RANKS . " WHERE id = '" . $get_id . "'", __LINE__, __FILE__);	
 
 	###### Régénération du cache des rangs #######
 	RanksCache::invalidate();
-
-	AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);
+	
+	AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT); 	
 }
-else //Sinon on rempli le formulaire
-{
+else //Sinon on rempli le formulaire	 
+{	
 	$template = new FileTemplate('admin/admin_ranks.tpl');
 
 	$template->put_all(array(
@@ -85,31 +85,31 @@ else //Sinon on rempli le formulaire
 	));
 
 	//On recupère les images des groupes
-
+	
 	$rank_options_array = array();
 	$image_folder_path = new Folder(PATH_TO_ROOT . '/templates/' . get_utheme()  . '/images/ranks');
 	foreach ($image_folder_path->get_files('`\.(png|jpg|bmp|gif)$`i') as $image)
 	{
 		$file = $image->get_name();
 		$rank_options_array[] = $file;
-	}
-
+	}	
+	
 	$ranks_cache = RanksCache::load()->get_ranks();
-
+	
 	foreach($ranks_cache as $msg => $row)
-	{
+	{				
 		if ($row['special'] == 0)
-		$del = '<a href="admin_ranks.php?del=1&amp;id=' . $row['id'] . '" onclick="javascript:return Confirm();"><img src="'. PATH_TO_ROOT .'/templates/' . get_utheme() . '/images/' . get_ulang() . '/delete.png" alt="" title="" /></a>';
+			$del = '<a href="admin_ranks.php?del=1&amp;id=' . $row['id'] . '" onclick="javascript:return Confirm();"><img src="'. PATH_TO_ROOT .'/templates/' . get_utheme() . '/images/' . get_ulang() . '/delete.png" alt="" title="" /></a>';
 		else
-		$del = $LANG['special_rank'];
+			$del = $LANG['special_rank'];
 
 		$rank_options = '<option value="">--</option>';
 		foreach ($rank_options_array as $icon)
-		{
+		{			
 			$selected = ($icon == $row['icon']) ? ' selected="selected"' : '';
 			$rank_options .= '<option value="' . $icon . '"' . $selected . '>' . $icon . '</option>';
 		}
-
+		
 		$template->assign_block_vars('rank', array(
 			'ID' => $row['id'],
 			'RANK' => $row['name'],
@@ -119,7 +119,7 @@ else //Sinon on rempli le formulaire
 			'DELETE' => $del
 		));
 	}
-
+	
 	$template->display();
 }
 

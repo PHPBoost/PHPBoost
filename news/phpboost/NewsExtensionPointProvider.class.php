@@ -115,8 +115,8 @@ class NewsExtensionPointProvider extends ExtensionPointProvider
 		$news_cat = new NewsCats();
 
 		// Variables d'archive
-		$arch = AppContext::get_request()->get_getbool('arch', false);
-		$cat = AppContext::get_request()->get_getint('cat', 0);
+		$arch = retrieve(GET, 'arch', false);
+		$cat = retrieve(GET, 'cat', 0);
 
 		// Couleurs du login
 		$level = array('', ' modo', ' admin');

@@ -32,8 +32,8 @@ define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
 
 //On recupère les variables.
-$id = AppContext::get_request()->get_getint('id', 0);
-$id_post = AppContext::get_request()->get_postint('id', 0);
+$id = retrieve(GET, 'id', 0);
+$id_post = retrieve(POST, 'id', 0);
 $del = !empty($_GET['delete']) ? true : false;
 
 if (!empty($id) && !$del)
@@ -94,7 +94,7 @@ if (!empty($id) && !$del)
 	$Sql->query_close($result);
 	
 	//Gestion erreur.
-	$get_error = TextHelper::strprotect(AppContext::get_request()->get_getstring('error', ''));
+	$get_error = retrieve(GET, 'error', '');
 	if ($get_error == 'incomplete')
 		$Template->put('message_helper', MessageHelper::display($LANG['e_incomplete'], E_USER_NOTICE));
 	elseif ($i == 0) //Aucune catégorie => alerte.	 
@@ -110,12 +110,12 @@ elseif (!empty($_POST['previs']) && !empty($id_post))
 
 	$row = $Sql->query_array(PREFIX . 'web', '*', "WHERE id = '" . $id . "'", __LINE__, __FILE__);
 	
-	$title = trim(AppContext::get_request()->get_poststring('name', ''));
-	$contents = trim(AppContext::get_request()->get_poststring('contents', ''));
-	$url = trim(AppContext::get_request()->get_poststring('url', ''));
-	$idcat = AppContext::get_request()->get_postint('idcat', 0);
-	$compt = AppContext::get_request()->get_postint('compt', 0);
-	$aprob = AppContext::get_request()->get_postint('aprob', 0);
+	$title = retrieve(POST, 'name', '', TSTRING_UNCHANGE);
+	$contents = retrieve(POST, 'contents', '', TSTRING_UNCHANGE);
+	$url = retrieve(POST, 'url', '', TSTRING_UNCHANGE);
+	$idcat = retrieve(POST, 'idcat', 0);
+	$compt = retrieve(POST, 'compt', 0);
+	$aprob = retrieve(POST, 'aprob', 0);
 	
 	$aprob_enable = ($aprob == 1) ? 'checked="checked"' : '';
 	$aprob_disable = ($aprob == 0) ? 'checked="checked"' : '';
@@ -195,12 +195,12 @@ elseif (!empty($_POST['previs']) && !empty($id_post))
 }				
 elseif (!empty($_POST['valid']) && !empty($id_post)) //inject
 {
-	$title = TextHelper::strprotect(AppContext::get_request()->get_poststring('name', ''));
-	$contents = FormatingHelper::strparse(TextHelper::strprotect(AppContext::get_request()->get_poststring('contents', '')));
-	$url = TextHelper::strprotect(AppContext::get_request()->get_poststring('url', ''));
-	$idcat = AppContext::get_request()->get_postint('idcat', 0);
-	$compt = AppContext::get_request()->get_postint('compt', 0);
-	$aprob = AppContext::get_request()->get_postint('aprob', 0);
+	$title = retrieve(POST, 'name', '');
+	$contents = retrieve(POST, 'contents', '', TSTRING_PARSE);
+	$url = retrieve(POST, 'url', '');
+	$idcat = retrieve(POST, 'idcat', 0);
+	$compt = retrieve(POST, 'compt', 0);
+	$aprob = retrieve(POST, 'aprob', 0);
 
 	if (!empty($title) && !empty($url) && !empty($idcat))
 	{

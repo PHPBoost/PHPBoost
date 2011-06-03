@@ -38,9 +38,9 @@ if (!empty($_POST['valid']) )
 	if (isset($_POST['guestbook_forbidden_tags'])) {
 		$guestbook_config->set_forbidden_tags($_POST['guestbook_forbidden_tags']);
 	}
-	$guestbook_config->set_maximum_links_message(AppContext::get_request()->get_postint('guestbook_max_link', -1));
-	$guestbook_config->set_captcha_difficulty(AppContext::get_request()->get_postint('guestbook_difficulty_verifcode', 2));
-	$guestbook_config->set_display_captcha(AppContext::get_request()->get_postint('guestbook_verifcode', 1));
+	$guestbook_config->set_maximum_links_message(retrieve(POST, 'guestbook_max_link', -1));
+	$guestbook_config->set_captcha_difficulty(retrieve(POST, 'guestbook_difficulty_verifcode', 2));
+	$guestbook_config->set_display_captcha(retrieve(POST, 'guestbook_verifcode', 1));
 
 	GuestbookConfig::save();
 	

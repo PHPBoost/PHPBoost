@@ -92,27 +92,27 @@ class Forum
 			{
 				//Envoi un Mail à ceux dont le last_view_id est le message précedent.
 				if ($row['last_view_id'] == $previous_msg_id && $row['mail'] == '1')
-				{
+				{	
 					AppContext::get_mail_service()->send_from_properties(
-					$row['user_mail'],
-					$LANG['forum_mail_title_new_post'],
-					sprintf($LANG['forum_mail_new_post'], $row['login'], $title_subject, $User->get_attribute('login'), $preview_contents, $next_msg_link, HOST . DIR . '/forum/action.php?ut=' . $idtopic . '&trt=1', 1)
+						$row['user_mail'], 
+						$LANG['forum_mail_title_new_post'], 
+						sprintf($LANG['forum_mail_new_post'], $row['login'], $title_subject, $User->get_attribute('login'), $preview_contents, $next_msg_link, HOST . DIR . '/forum/action.php?ut=' . $idtopic . '&trt=1', 1)
 					);
-				}
-
+				}	
+				
 				//Envoi un MP à ceux dont le last_view_id est le message précedent.
 				if ($row['last_view_id'] == $previous_msg_id && $row['pm'] == '1')
 				{
 					PrivateMsg::start_conversation(
-					$row['user_id'],
-					addslashes($LANG['forum_mail_title_new_post']),
-					sprintf($LANG['forum_mail_new_post'], $row['login'], $title_subject_pm, $User->get_attribute('login'), $preview_contents, '[url]'.$next_msg_link.'[/url]', '[url]' . HOST . DIR . '/forum/action.php?ut=' . $idtopic . '&trt=2[/url]'),
+						$row['user_id'], 
+						addslashes($LANG['forum_mail_title_new_post']), 
+						sprintf($LANG['forum_mail_new_post'], $row['login'], $title_subject_pm, $User->get_attribute('login'), $preview_contents, '[url]'.$next_msg_link.'[/url]', '[url]' . HOST . DIR . '/forum/action.php?ut=' . $idtopic . '&trt=2[/url]'), 
 						'-1', 
-					PrivateMsg::SYSTEM_PM
+						PrivateMsg::SYSTEM_PM
 					);
 				}
 			}
-
+				
 			forum_generate_feeds(); //Regénération du flux rss.
 		}
 
@@ -201,16 +201,16 @@ class Forum
 				//On met maintenant a jour le last_topic_id dans les catégories.
 				$this->Update_last_topic_id($idcat);
 			}
-
+				
 			//On retire un msg au membre.
 			$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET user_msg = user_msg - 1 WHERE user_id = '" . $msg_user_id . "'", __LINE__, __FILE__);
-
+				
 			//Mise à jour du dernier message lu par les membres.
 			$Sql->query_inject("UPDATE " . PREFIX . "forum_view SET last_view_id = '" . $previous_msg_id . "' WHERE last_view_id = '" . $idmsg . "'", __LINE__, __FILE__);
 			//On marque le topic comme lu, si c'est le dernier du message du topic.
 			if ($last_msg_id == $idmsg)
 			mark_topic_as_read($idtopic, $previous_msg_id, $last_timestamp);
-
+				
 			//Insertion de l'action dans l'historique.
 			if ($msg_user_id != $User->get_attribute('user_id'))
 			{
@@ -221,7 +221,7 @@ class Forum
 				forum_history_collector(H_DELETE_MSG, $msg_user_id, 'topic' . url('.php?id=' . $idtopic . $msg_page, '-' . $idtopic .  $msg_page_rewrite . '.php', '&') . '#m' . $previous_msg_id);
 			}
 			forum_generate_feeds(); //Regénération des flux flux
-
+				
 			return array($nbr_msg, $previous_msg_id);
 		}
 
@@ -258,13 +258,13 @@ class Forum
 
 		//On supprime l'alerte.
 		$this->Del_alert_topic($idtopic);
-
+		
 		//Insertion de l'action dans l'historique.
 		if ($topic['user_id'] != $User->get_attribute('user_id'))
-		forum_history_collector(H_DELETE_TOPIC, $topic['user_id'], 'forum' . url('.php?id=' . $topic['idcat'], '-' . $topic['idcat'] . '.php', '&'));
+			forum_history_collector(H_DELETE_TOPIC, $topic['user_id'], 'forum' . url('.php?id=' . $topic['idcat'], '-' . $topic['idcat'] . '.php', '&'));
 
 		if ($generate_rss)
-		forum_generate_feeds(); //Regénération des flux flux
+			forum_generate_feeds(); //Regénération des flux flux
 	}
 
 	//Suivi d'un sujet.
@@ -274,21 +274,21 @@ class Forum
 
 		list($mail, $pm, $track) = array(0, 0, 0);
 		if ($tracking_type == 0) //Suivi par email.
-		$track = '1';
+			$track = '1';
 		elseif ($tracking_type == 1) //Suivi par email.
-		$mail = '1';
+			$mail = '1';
 		elseif ($tracking_type == 2) //Suivi par email.
-		$pm = '1';
+			$pm = '1';
 			
 		$exist = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "forum_track WHERE user_id = '" . $User->get_attribute('user_id') . "' AND idtopic = '" . $idtopic . "'", __LINE__, __FILE__);
 		if ($exist == 0)
-		$Sql->query_inject("INSERT INTO " . PREFIX . "forum_track (idtopic, user_id, track, pm, mail) VALUES('" . $idtopic . "', '" . $User->get_attribute('user_id') . "', '" . $track . "', '" . $pm . "', '" . $mail . "')", __LINE__, __FILE__);
+			$Sql->query_inject("INSERT INTO " . PREFIX . "forum_track (idtopic, user_id, track, pm, mail) VALUES('" . $idtopic . "', '" . $User->get_attribute('user_id') . "', '" . $track . "', '" . $pm . "', '" . $mail . "')", __LINE__, __FILE__);
 		elseif ($tracking_type == 0)
-		$Sql->query_inject("UPDATE " . PREFIX . "forum_track SET track = '1' WHERE idtopic = '" . $idtopic . "' AND user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE " . PREFIX . "forum_track SET track = '1' WHERE idtopic = '" . $idtopic . "' AND user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__);
 		elseif ($tracking_type == 1)
-		$Sql->query_inject("UPDATE " . PREFIX . "forum_track SET mail = '1' WHERE idtopic = '" . $idtopic . "' AND user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE " . PREFIX . "forum_track SET mail = '1' WHERE idtopic = '" . $idtopic . "' AND user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__);
 		elseif ($tracking_type == 2)
-		$Sql->query_inject("UPDATE " . PREFIX . "forum_track SET pm = '1' WHERE idtopic = '" . $idtopic . "' AND user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE " . PREFIX . "forum_track SET pm = '1' WHERE idtopic = '" . $idtopic . "' AND user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__);
 			
 		//Limite de sujets suivis?
 		if (!$User->check_auth($CONFIG_FORUM['auth'], TRACK_TOPIC_FORUM))
@@ -299,7 +299,7 @@ class Forum
 			WHERE user_id = '" . $User->get_attribute('user_id') . "'
 			ORDER BY id DESC
 			" . $Sql->limit(0, $CONFIG_FORUM['topic_track']), __LINE__, __FILE__);
-
+				
 			//Suppression des sujets suivis dépassant le nbr maximum autorisé.
 			$Sql->query_inject("DELETE FROM " . PREFIX . "forum_track WHERE user_id = '" . $User->get_attribute('user_id') . "' AND id < @compt", __LINE__, __FILE__);
 		}
@@ -314,25 +314,25 @@ class Forum
 		{
 			$info = $Sql->query_array(PREFIX . "forum_track", "pm", "track", "WHERE user_id = '" . $User->get_attribute('user_id') . "' AND idtopic = '" . $idtopic . "'", __LINE__, __FILE__);
 			if ($info['track'] == 0 && $info['pm'] == 0)
-			$Sql->query_inject("DELETE FROM " . PREFIX . "forum_track WHERE idtopic = '" . $idtopic . "' AND user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__);
+				$Sql->query_inject("DELETE FROM " . PREFIX . "forum_track WHERE idtopic = '" . $idtopic . "' AND user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__);
 			else
-			$Sql->query_inject("UPDATE " . PREFIX . "forum_track SET mail = '0' WHERE idtopic = '" . $idtopic . "' AND user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__);
+				$Sql->query_inject("UPDATE " . PREFIX . "forum_track SET mail = '0' WHERE idtopic = '" . $idtopic . "' AND user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__);
 		}
 		elseif ($tracking_type == 2) //Par mp
 		{
 			$info = $Sql->query_array(PREFIX . "forum_track", "mail", "track", "WHERE user_id = '" . $User->get_attribute('user_id') . "' AND idtopic = '" . $idtopic . "'", __LINE__, __FILE__);
 			if ($info['mail'] == 0 && $info['track'] == 0)
-			$Sql->query_inject("DELETE FROM " . PREFIX . "forum_track WHERE idtopic = '" . $idtopic . "' AND user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__);
+				$Sql->query_inject("DELETE FROM " . PREFIX . "forum_track WHERE idtopic = '" . $idtopic . "' AND user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__);
 			else
-			$Sql->query_inject("UPDATE " . PREFIX . "forum_track SET pm = '0' WHERE idtopic = '" . $idtopic . "' AND user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__);
+				$Sql->query_inject("UPDATE " . PREFIX . "forum_track SET pm = '0' WHERE idtopic = '" . $idtopic . "' AND user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__);
 		}
 		else //Suivi
 		{
 			$info = $Sql->query_array(PREFIX . "forum_track", "mail", "pm", "WHERE user_id = '" . $User->get_attribute('user_id') . "' AND idtopic = '" . $idtopic . "'", __LINE__, __FILE__);
 			if ($info['mail'] == 0 && $info['pm'] == 0)
-			$Sql->query_inject("DELETE FROM " . PREFIX . "forum_track WHERE idtopic = '" . $idtopic . "' AND user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__);
+				$Sql->query_inject("DELETE FROM " . PREFIX . "forum_track WHERE idtopic = '" . $idtopic . "' AND user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__);
 			else
-			$Sql->query_inject("UPDATE " . PREFIX . "forum_track SET track = '0' WHERE idtopic = '" . $idtopic . "' AND user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__);
+				$Sql->query_inject("UPDATE " . PREFIX . "forum_track SET track = '0' WHERE idtopic = '" . $idtopic . "' AND user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__);
 		}
 	}
 
@@ -451,8 +451,8 @@ class Forum
 		$alert_id = $Sql->insert_id("SELECT MAX(id) FROM " . PREFIX . "forum_alerts");
 
 		//Importing the contribution classes
-
-
+		
+		
 
 		$contribution = new Contribution();
 
@@ -496,9 +496,9 @@ class Forum
 		forum_history_collector(H_SOLVE_ALERT, 0, 'moderation_forum.php?action=alert&id=' . $id_alert, '', '&');
 
 		//Si la contribution associée n'est pas réglée, on la règle
-
-
-			
+		
+		
+		 
 		$corresponding_contributions = ContributionService::find_by_criteria('forum', $id_alert, 'alert');
 		if (count($corresponding_contributions) > 0)
 		{
@@ -528,11 +528,11 @@ class Forum
 		global $Sql;
 
 		$Sql->query_inject("DELETE FROM " . PREFIX . "forum_alerts WHERE id = '" . $id_alert . "'", __LINE__, __FILE__);
-
+		
 		//Si la contribution associée n'est pas réglée, on la règle
-
-
-			
+		
+		
+		 
 		$corresponding_contributions = ContributionService::find_by_criteria('forum', $id_alert, 'alert');
 		if (count($corresponding_contributions) > 0)
 		{
@@ -586,7 +586,7 @@ class Forum
 	{
 		global $LANG, $CAT_FORUM, $Cache;
 		$Cache->load('forum');
-		 
+	  
 		if (!(isset($CAT_FORUM) && is_array($CAT_FORUM)))
 		{
 			$CAT_ARTICLES = array();
@@ -598,7 +598,7 @@ class Forum
 			$cat['id'] = $id;
 			$ordered_cats[NumberHelper::numeric($cat['id_left'])] = array('this' => $cat, 'children' => array());
 		}
-		 
+	  
 		$level = 0;
 		$cats_tree = array(array('this' => array('id' => 0, 'name' => $LANG['root']), 'children' => array()));
 		$parent =& $cats_tree[0]['children'];
@@ -642,10 +642,10 @@ class Forum
 			FROM " . PREFIX . "forum_cats
 			WHERE id_left BETWEEN '" . $CAT_FORUM[$idcat]['id_left'] . "' AND '" . $CAT_FORUM[$idcat]['id_right'] . "'
 			ORDER BY id_left", __LINE__, __FILE__);
-
+				
 			while ($row = $Sql->fetch_assoc($result))
 			$list_cats .= $row['id'] . ', ';
-
+				
 			$Sql->query_close($result);
 			$clause = "idcat IN (" . trim($list_cats, ', ') . ")";
 		}

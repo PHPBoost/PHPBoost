@@ -33,13 +33,13 @@ define('TITLE', $LANG['title_forum']);
 require_once('../kernel/header.php');
 
 //Variables $_GET.
-$id_get = AppContext::get_request()->get_getint('id', 0); //Id du topic à déplacer.
-$id_post = AppContext::get_request()->get_postint('id', 0); //Id du topic à déplacer.
-$id_get_msg = AppContext::get_request()->get_getint('idm', 0); //Id du message à partir duquel il faut scinder le topic.
-$id_post_msg = AppContext::get_request()->get_postint('idm', 0); //Id du message à partir duquel il faut scinder le topic.
-$error_get = TextHelper::strprotect(AppContext::get_request()->get_getstring('error', '')); //Gestion des erreurs.
-$post_topic = TextHelper::strprotect(AppContext::get_request()->get_poststring('post_topic', '')); //Création du topic scindé.
-$preview_topic = TextHelper::strprotect(AppContext::get_request()->get_poststring('prw_t', '')); //Prévisualisation du topic scindé.
+$id_get = retrieve(GET, 'id', 0); //Id du topic à déplacer.
+$id_post = retrieve(POST, 'id', 0); //Id du topic à déplacer.
+$id_get_msg = retrieve(GET, 'idm', 0); //Id du message à partir duquel il faut scinder le topic.
+$id_post_msg = retrieve(POST, 'idm', 0); //Id du message à partir duquel il faut scinder le topic.
+$error_get = retrieve(GET, 'error', ''); //Gestion des erreurs.
+$post_topic = retrieve(POST, 'post_topic', ''); //Création du topic scindé.
+$preview_topic = retrieve(POST, 'prw_t', ''); //Prévisualisation du topic scindé.
 
 if (!empty($id_get)) //Déplacement du sujet.
 {
@@ -266,11 +266,11 @@ elseif ((!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic)) //C
 	}
 	elseif (!empty($preview_topic) && !empty($id_post_msg))
 	{
-		$title = trim(AppContext::get_request()->get_poststring('title', ''));
-		$subtitle = trim(AppContext::get_request()->get_poststring('desc', ''));
-		$contents = trim(AppContext::get_request()->get_poststring('contents', ''));
-		$question = trim(AppContext::get_request()->get_poststring('question', ''));
-		$type = AppContext::get_request()->get_postint('type', 0);
+		$title = retrieve(POST, 'title', '', TSTRING_UNCHANGE);
+		$subtitle = retrieve(POST, 'desc', '', TSTRING_UNCHANGE);
+		$contents = retrieve(POST, 'contents', '', TSTRING_UNCHANGE);
+		$question = retrieve(POST, 'question', '', TSTRING_UNCHANGE);
+		$type = retrieve(POST, 'type', 0);
 
 		$checked_normal = ($type == 0) ? 'checked="ckecked"' : '';
 		$checked_postit = ($type == 1) ? 'checked="ckecked"' : '';
@@ -300,7 +300,7 @@ elseif ((!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic)) //C
 		}
 
 		//Type de réponses du sondage.
-		$poll_type = AppContext::get_request()->get_postint('poll_type', 0);
+		$poll_type = retrieve(POST, 'poll_type', 0);
 
 		$Template->put_all(array(
 			'TITLE' => $title,
@@ -353,7 +353,7 @@ elseif (!empty($id_post_msg) && !empty($post_topic)) //Scindage du topic
 {
 	$msg =  $Sql->query_array(PREFIX . 'forum_msg', 'idtopic', 'user_id', 'timestamp', 'contents', "WHERE id = '" . $id_post_msg . "'", __LINE__, __FILE__);
 	$topic = $Sql->query_array(PREFIX . 'forum_topics', 'idcat', 'title', 'last_user_id', 'last_msg_id', 'last_timestamp', "WHERE id = '" . $msg['idtopic'] . "'", __LINE__, __FILE__);
-	$to = AppContext::get_request()->get_postint('to', 0); //Catégorie cible.
+	$to = retrieve(POST, 'to', 0); //Catégorie cible.
 
 	if (!$User->check_auth($CAT_FORUM[$topic['idcat']]['auth'], EDIT_CAT_FORUM)) //Accès en édition
 	{
@@ -373,10 +373,10 @@ elseif (!empty($id_post_msg) && !empty($post_topic)) //Scindage du topic
 	$level = $Sql->query("SELECT level FROM " . PREFIX . "forum_cats WHERE id = '" . $to . "'", __LINE__, __FILE__);
 	if (!empty($to) && $level > 0)
 	{
-		$title = TextHelper::strprotect(AppContext::get_request()->get_poststring('title', ''));
-		$subtitle = TextHelper::strprotect(AppContext::get_request()->get_poststring('desc', ''));
-		$contents = FormatingHelper::strparse(TextHelper::strprotect(AppContext::get_request()->get_poststring('contents', '')));
-		$type = AppContext::get_request()->get_postint('type', 0);
+		$title = retrieve(POST, 'title', '');
+		$subtitle = retrieve(POST, 'desc', '');
+		$contents = retrieve(POST, 'contents', '', TSTRING_PARSE);
+		$type = retrieve(POST, 'type', 0);
 
 		//Requête de "scindage" du topic.
 		if (!empty($to) && !empty($contents) && !empty($title))
@@ -387,10 +387,10 @@ elseif (!empty($id_post_msg) && !empty($post_topic)) //Scindage du topic
 			$last_topic_id = $Forumfct->Cut_topic($id_post_msg, $msg['idtopic'], $topic['idcat'], $to, $title, $subtitle, $contents, $type, $msg['user_id'], $topic['last_user_id'], $topic['last_msg_id'], $topic['last_timestamp']); //Scindement du topic
 
 			//Ajout d'un sondage en plus du topic.
-			$question = TextHelper::strprotect(AppContext::get_request()->get_poststring('question', ''));
+			$question = retrieve(POST, 'question', '');
 			if (!empty($question))
 			{
-				$poll_type = AppContext::get_request()->get_postint('poll_type', 0);
+				$poll_type = retrieve(POST, 'poll_type', 0);
 				$poll_type = ($poll_type == 0 || $poll_type == 1) ? $poll_type : 0;
 
 				$answers = array();

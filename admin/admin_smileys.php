@@ -22,46 +22,46 @@
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
+ * 
  ###################################################*/
 
 require_once('../admin/admin_begin.php');
 define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
 
-$id_post = AppContext::get_request()->get_postint('idsmiley', 0);
-$id = AppContext::get_request()->get_getint('id', 0);
+$id_post = retrieve(POST, 'idsmiley', 0);
+$id = retrieve(GET, 'id', 0);
 $edit = !empty($_GET['edit']) ? true : false;
 $del = !empty($_GET['del']) ? true : false;
 
 if (!empty($_POST['valid']) && !empty($id_post)) //Mise à jour.
 {
-	$url_smiley = TextHelper::strprotect(AppContext::get_request()->get_poststring('url_smiley', ''));
-	$code_smiley = TextHelper::strprotect(AppContext::get_request()->get_poststring('code_smiley', ''));
+	$url_smiley = retrieve(POST, 'url_smiley', '');
+	$code_smiley = retrieve(POST, 'code_smiley', '');
 
 	//On met à jour
 	if (!empty($url_smiley) && !empty($code_smiley))
 	{
 		$Sql->query_inject("UPDATE " . DB_TABLE_SMILEYS . " SET url_smiley = '" . $url_smiley . "', code_smiley = '" . $code_smiley . "' WHERE idsmiley = '" . $id_post . "'", __LINE__, __FILE__);
-			
+					
 		###### Régénération du cache des smileys #######
 		SmileysCache::invalidate();
-
+		
 		AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);
 	}
 	else
-	AppContext::get_response()->redirect('/admin/admin_smileys.php?id=' . $id_post . '&edit=1&error=incomplete#message_helper');
+		AppContext::get_response()->redirect('/admin/admin_smileys.php?id=' . $id_post . '&edit=1&error=incomplete#message_helper');
 }
 elseif (!empty($id) && $del) //Suppression.
 {
 	$Session->csrf_get_protect(); //Protection csrf
-
+	
 	//On supprime le smiley de la bdd.
 	$Sql->query_inject("DELETE FROM " . DB_TABLE_SMILEYS . " WHERE idsmiley = '" . $id . "'", __LINE__, __FILE__);
-
+	
 	###### Régénération du cache des smileys #######
 	SmileysCache::invalidate();
-
+	
 	AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);
 }
 elseif (!empty($id) && $edit) //Edition.
@@ -70,21 +70,21 @@ elseif (!empty($id) && $edit) //Edition.
 
 	$info_smiley = $Sql->query_array(DB_TABLE_SMILEYS, 'idsmiley', 'code_smiley', 'url_smiley', "WHERE idsmiley = '" . $id . "'", __LINE__, __FILE__);
 	$url_smiley = $info_smiley['url_smiley'];
-
+	
 	//Gestion erreur.
-	$get_error = TextHelper::strprotect(AppContext::get_request()->get_getstring('error', ''));
+	$get_error = retrieve(GET, 'error', '');
 	if ($get_error == 'incomplete')
-	$template->put('message_helper', MessageHelper::display($LANG['e_incomplete'], E_USER_NOTICE));
-
+		$template->put('message_helper', MessageHelper::display($LANG['e_incomplete'], E_USER_NOTICE));
+		
 	$smiley_options = '';
 	$result = $Sql->query_while("SELECT url_smiley
 	FROM " . PREFIX . "smileys", __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))
 	{
 		if ($row['url_smiley'] == $url_smiley)
-		$selected = 'selected="selected"';
+			$selected = 'selected="selected"';
 		else
-		$selected = '';
+			$selected = '';
 		$smiley_options .= '<option value="' . $row['url_smiley'] . '" ' . $selected . '>' . $row['url_smiley'] . '</option>';
 	}
 	$Sql->query_close($result);
@@ -106,7 +106,7 @@ elseif (!empty($id) && $edit) //Edition.
 		'L_UPDATE' => $LANG['update'],
 		'L_RESET' => $LANG['reset'],
 	));
-
+	
 	$template->display();
 }
 else
@@ -124,7 +124,7 @@ else
 		'L_UPDATE' => $LANG['update'],
 		'L_DELETE' => $LANG['delete'],
 	));
-
+	
 	$smileys_cache = SmileysCache::load()->get_smileys();
 	foreach($smileys_cache as $code => $row)
 	{
@@ -134,7 +134,7 @@ else
 			'CODE_SMILEY' => $code
 		));
 	}
-
+	
 	$template->display();
 }
 

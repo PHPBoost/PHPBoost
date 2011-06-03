@@ -29,7 +29,7 @@ require_once('../kernel/begin.php');
 define('TITLE', $LANG['title_error']);
 require_once('../kernel/header.php');
 
-$id_error = AppContext::get_request()->get_getstring('e', '');
+$id_error = retrieve(GET, 'e', '');
 	
 $array_error = array('e_member_ban', 'e_member_ban_w', 'e_unexist_member', 'e_unactiv_member',
 'e_member_flood', 'e_forget_confirm_change');
@@ -93,7 +93,7 @@ if (in_array($id_error, $array_error))
 				$errstr = $LANG['e_forget_confirm_change'];
 			break;
 			case 'e_member_flood':
-				$flood = AppContext::get_request()->get_getint('flood', 0);
+				$flood = retrieve(GET, 'flood', 0);
 				$flood = ($flood > 0 && $flood <= 5) ? $flood : 0;
 				$flood = ($flood > 0) ? sprintf($LANG['e_test_connect'], $flood) : $LANG['e_nomore_test_connect'];
 				$errstr = $flood;

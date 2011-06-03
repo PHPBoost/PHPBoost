@@ -30,10 +30,10 @@ require_once('news_begin.php');
 
 $news_cat = new NewsCats();
 
-$idnews = AppContext::get_request()->get_getint('id', 0);
-$idcat = AppContext::get_request()->get_getint('cat', 0);
-$arch = AppContext::get_request()->get_getbool('arch', false);
-$user = AppContext::get_request()->get_getbool('user', false);
+$idnews = retrieve(GET, 'id', 0);
+$idcat = retrieve(GET, 'cat', 0);
+$arch = retrieve(GET, 'arch', false);
+$user = retrieve(GET, 'user', false, TBOOL);
 $level = array('', ' modo', ' admin');
 $now = new Date(DATE_NOW, TIMEZONE_AUTO);
 

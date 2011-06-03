@@ -6,7 +6,7 @@
  *   copyright            : (C) 2007 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
- *
+ *  
  *
  ###################################################
  *
@@ -14,7 +14,7 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- *
+ * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -35,16 +35,16 @@ require_once('calendar_constants.php');
 if (!empty($_POST['valid']) )
 {
 	$calendar_config = CalendarConfig::load();
-
+	
 	$calendar_config->set_authorization(Authorizations::build_auth_array_from_form(AUTH_CALENDAR_READ, AUTH_CALENDAR_WRITE, AUTH_CALENDAR_MODO));
-
+	
 	CalendarConfig::save();
 
-	AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);
+	AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);	
 }
 //Sinon on rempli le formulaire
-else
-{
+else	
+{		
 	$Template = new FileTemplate('calendar/admin_calendar_config.tpl');
 
 	$calendar_config = CalendarConfig::load();
@@ -61,7 +61,7 @@ else
 		'AUTH_READ' => Authorizations::generate_select(AUTH_CALENDAR_READ,$calendar_config->get_authorization()),
 		'AUTH_WRITE' => Authorizations::generate_select(AUTH_CALENDAR_WRITE,$calendar_config->get_authorization()),
 		'AUTH_MODO' => Authorizations::generate_select(AUTH_CALENDAR_MODO,$calendar_config->get_authorization()),
-	));
+		));
 
 	$Template->display();
 }

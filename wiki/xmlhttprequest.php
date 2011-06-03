@@ -28,11 +28,11 @@ require_once('../kernel/header_no_display.php');
 
 $Template->set_filenames(array('wiki_explorer'=> 'wiki/explorer.tpl'));
 
-$id_cat = AppContext::get_request()->get_postint('id_cat', 0);
+$id_cat = retrieve(POST, 'id_cat', 0);
 $select_cat = !empty($_GET['select_cat']) ? true : false;
-$selected_cat = AppContext::get_request()->get_postint('selected_cat', 0);
+$selected_cat = retrieve(POST, 'selected_cat', 0);
 $display_select_link = !empty($_GET['display_select_link']) ? 1 : 0;
-$open_cat = AppContext::get_request()->get_postint('open_cat', 0);
+$open_cat = retrieve(POST, 'open_cat', 0);
 $root = !empty($_GET['root']) ? 1 : 0;
 
 $Template = new FileTemplate('wiki/index.tpl');

@@ -31,16 +31,16 @@
  */
 class MenuUrlBuilder
 {
-	private static $dispatcher = '/admin/menus/dispatcher.php';
-
+    private static $dispatcher = '/admin/menus/dispatcher.php';
+    
 	/**
 	 * @return Url
 	 */
-	public static function menu_configuration_list()
+    public static function menu_configuration_list()
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/configs/list/');
 	}
-
+    
 	/**
 	 * @return Url
 	 */
@@ -48,7 +48,7 @@ class MenuUrlBuilder
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/configs/create/');
 	}
-
+	
 	/**
 	 * @return Url
 	 */
@@ -57,7 +57,7 @@ class MenuUrlBuilder
 		return DispatchManager::get_url(self::$dispatcher, '/configs/create/valid/?token=' .
 		$Session->get_token());
 	}
-
+	
 	/**
 	 * @return Url
 	 */
@@ -65,7 +65,7 @@ class MenuUrlBuilder
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/configs/' . $id . '/edit/');
 	}
-
+	
 	/**
 	 * @return Url
 	 */
@@ -74,7 +74,7 @@ class MenuUrlBuilder
 		return DispatchManager::get_url(self::$dispatcher, '/configs/' . $id . '/edit/valid/?token=' .
 		$Session->get_token());
 	}
-
+	
 	/**
 	 * @return Url
 	 */
@@ -83,7 +83,7 @@ class MenuUrlBuilder
 		return DispatchManager::get_url(self::$dispatcher, '/configs/' . $id . '/delete/?token=' .
 		$Session->get_token());
 	}
-
+	
 	/**
 	 * @return Url
 	 */
@@ -91,7 +91,7 @@ class MenuUrlBuilder
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/configs/' . $id . '/configure/');
 	}
-
+	
 	/**
 	 * @return Url
 	 */
@@ -99,7 +99,7 @@ class MenuUrlBuilder
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/configs/' . $id . '/configure/valid/');
 	}
-
+	
 	/**
 	 * @return Url
 	 */

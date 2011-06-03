@@ -73,7 +73,7 @@ class AdminError404Service
 		}
 		catch (ObjectNotFoundException $exception)
 		{
-				
+			
 		}
 	}
 }

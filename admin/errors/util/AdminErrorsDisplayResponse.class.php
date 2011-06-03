@@ -33,13 +33,13 @@ class AdminErrorsDisplayResponse extends AdminMenuDisplayResponse
 {
 	public function __construct($view)
 	{
-		parent::__construct($view);
-		$lang = LangLoader::get('admin-errors-Common');
+        parent::__construct($view);
+        $lang = LangLoader::get('admin-errors-Common');
 
-		$img = '/templates/' . get_utheme() . '/images/admin/errors.png';
-		$this->set_title($lang['logged_errors']);
-		$this->add_link($lang['logged_errors'], AdminErrorsUrlBuilder::logged_errors()->relative(), $img);
-		$this->add_link($lang['404_errors'], AdminErrorsUrlBuilder::list_404_errors()->relative(), $img);
+        $img = '/templates/' . get_utheme() . '/images/admin/errors.png';
+        $this->set_title($lang['logged_errors']);
+        $this->add_link($lang['logged_errors'], AdminErrorsUrlBuilder::logged_errors()->relative(), $img);
+        $this->add_link($lang['404_errors'], AdminErrorsUrlBuilder::list_404_errors()->relative(), $img);
 	}
 }
 ?>

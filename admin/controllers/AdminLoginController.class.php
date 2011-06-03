@@ -22,7 +22,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
+ * 
  ###################################################*/
 
 class AdminLoginController extends AbstractController
@@ -33,12 +33,12 @@ class AdminLoginController extends AbstractController
 		$lang = LangLoader::get_class(__CLASS__);
 		$view->add_lang($lang);
 
-		$flood = $request->get_getint('flood', 5);
+		$flood = $request->get_getint('flood', 5); 
 		if ($flood > 0)
 		{
 			$view->put_all(array(
 				'ERROR' => (($flood > 0) ? StringVars::replace_vars($lang['flood_block'],
-			array('remaining_tries' => 5 - $flood)) : $lang['flood_max']),
+				array('remaining_tries' => 5 - $flood)) : $lang['flood_max']),
 				'C_UNLOCK' => $flood == 5
 			));
 		}
