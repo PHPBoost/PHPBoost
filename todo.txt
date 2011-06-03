@@ -3,12 +3,12 @@
 #################################################################################
 
 ------------------------------------- NOYAU ------------------------------------
-- Faire un script qui modifie le path et l'URL du site aprÃ¨s une migration (plus possible de bidouiller le cache)
+- Faire un script qui modifie le path et l'URL du site aprés une migration (plus possible de bidouiller le cache)
 - Changer de format de stockage des fuseaux horaires
 - Gestion des contraintes asynchrone
 
 ------------------------------------ MODULES -----------------------------------
-- [color=red]NouveautÃ©:[/color] Nouveau module de page de dÃ©marrage du site.
+- [color=red]Nouveauté:[/color] Nouveau module de page de démarrage du site.
 
 #################################################################################
 
@@ -19,18 +19,18 @@
 
 ------------------------------------- NOYAU ------------------------------------
 - Balises Youtube, Dailymotion
-- Utilisation des futurs classes de Loic pour gÃ©rer l'inscription d'un membre.
-- CrÃ©ation d'un controlleur pour l'oubli du mot de passe.
-- CrÃ©ation de contrainte pour vÃ©rifier si un pseudo ou un email est dÃ©jÃ  utilisÃ©.
-+ Classe commentaire : GÃ©rer les autorisations, gÃ©rer la notation +1 et -1, gÃ©rer l'affichage des commentaires.
-- Revoir la faÃ§on dont est stockÃ© les inscrits aux groupes (actuellement c'est stockÃ© dans la table member et groups)
-- CrÃ©er des champs spÃ©cifique aux sanctions Ã  ajouter dans l'Ã©dit d'un membre dans l'administration.
+- Utilisation des futurs classes de Loic pour gérer l'inscription d'un membre.
+- Création d'un controlleur pour l'oubli du mot de passe.
+- Création de contrainte pour vérifier si un pseudo ou un email est déjà utilisé.
++ Classe commentaire : Gérer les autorisations, gérer la notation +1 et -1, gérer l'affichage des commentaires.
+- Revoir la façon dont est stocké les inscrits aux groupes (actuellement c'est stocké dans la table member et groups)
+- Créer des champs spécifique aux sanctions à ajouter dans l'édit d'un membre dans l'administration.
 
 ------------------------------------ MODULES -----------------------------------
 
 [b]Newsletter[/b]
-- PossibilitÃ© d'ajouter une newsletter et l'envoyer Ã  une date donnÃ©e
-- IntÃ©gration d'un systÃ¨me AJAX permettant l'envoi de mail par paquet
+- Possibilité d'ajouter une newsletter et l'envoyer à une date donnée
+- Intégration d'un système AJAX permettant l'envoi de mail par paquet
 
 #################################################################################
 
@@ -40,32 +40,32 @@
 #################################################################################
 
 ------------------------------------- NOYAU ------------------------------------
-- Ajouter l'image align=justify dans les thÃ¨mes et corriger bbcode.css (bloc masquables + wikipÃ©dia) (publishing notamment)
-- [color=red]NouveautÃ©:[/color] Nouveau thÃ¨me Base2 pour la distribution complete.
-- [color=red]NouveautÃ©:[/color] Interface de personnalisation graphique du site, modification facile du logo du site.
-- Remplacement des icÃ´nes de bases par le pack famfamfam
+- Ajouter l'image align=justify dans les thèmes et corriger bbcode.css (bloc masquables + wikipédia) (publishing notamment)
+- [color=red]Nouveauté:[/color] Nouveau thème Base2 pour la distribution complete.
+- [color=red]Nouveauté:[/color] Interface de personnalisation graphique du site, modification facile du logo du site.
+- Remplacement des icônes de bases par le pack famfamfam
 - Filtres d'exclusion pour les menus
-+ [color=red]NouveautÃ©:[/color] Gestion des menus avec arborescence repliable
++ [color=red]Nouveauté:[/color] Gestion des menus avec arborescence repliable
 
 ------------------------------------ MODULES -----------------------------------
 
 ##################################################################################
 [b]Galerie:[/b]
-- Voir les images plus vues/mieux notÃ©es, affichage sur l'ensemble de la galerie et non sur une catÃ©gorie.
-- PossibilitÃ© de tÃ©lÃ©charger l'image.
+- Voir les images plus vues/mieux notées, affichage sur l'ensemble de la galerie et non sur une catégorie.
+- Possibilité de télécharger l'image.
 
 [b]Forum[/b]
-? Bug du nombre de sujet/messages lors du dÃ©placement d'un forum (qui devient un sous-forum) dans un autre forum avec dÃ©jÃ  des messages/sujets.
+? Bug du nombre de sujet/messages lors du déplacement d'un forum (qui devient un sous-forum) dans un autre forum avec déjà  des messages/sujets.
 
 #################################################################################
 ##                                    LOIC                                    ##
 #################################################################################
 
 ------------------------------------- NOYAU ------------------------------------
-- Revoir la cohÃ©rence de l'API FormBuilder (nommage des paramÃ¨tres, ordres, ...) ex : dans FormButtonButton, param $label => $html_content ou autre... 
-+ Etudier la possibilitÃ© de joindre les sessions et l'espace membre Ã  un annuaire de type LDAP.
-+ Corriger le bug qui fait que quand on autorise un modÃ©rateur par exemple Ã  naviguer sur le site en maintenance, il ne peut pas se logguer si il l'Ã©tait pas dÃ©jÃ  parce que le lien fonctionne seulement pour les admins.
-- Joindre tous les champs Ã©tendus dans la session utilisateur.
+- Revoir la cohérence de l'API FormBuilder (nommage des paramètres, ordres, ...) ex : dans FormButtonButton, param $label => $html_content ou autre... 
++ Etudier la possibilité de joindre les sessions et l'espace membre à un annuaire de type LDAP.
++ Corriger le bug qui fait que quand on autorise un modérateur par exemple à naviguer sur le site en maintenance, il ne peut pas se logguer si il l'était pas déjà parce que le lien fonctionne seulement pour les admins.
+- Joindre tous les champs étendus dans la session utilisateur.
 
 ------------------------------------ MODULES -----------------------------------
 
@@ -78,66 +78,66 @@
 ###################################### PHPBoost 4.1 ##################################
 
 [b]Structure et fonctionnement:[/b]
-- [color=red]NouveautÃ©:[/color] Refonte des catÃ©gories avec support du Drag'n Drop.
-- [color=red]NouveautÃ©:[/color] GÃ©nÃ©rateur automatique de tableaux avec gestion de la pagination, filtres, tris.
-- [color=red]NouveautÃ©:[/color] PossibilitÃ© d'associer un template Ã  un menu pour pouvoir le personnaliser.
-- [color=red]NouveautÃ©:[/color] Pose de verrous sur les contenus lors de leur Ã©dition afin de faciliter le travail collaboratif.
-- [color=red]NouveautÃ©:[/color] Exportation en pdf (articles, wiki, pages).
-- [color=red]NouveautÃ©:[/color] Editeur d'image avec interface js pour redimensionner, faire des rotations, des mises Ã  l'Ã©chelles, etc.
-- [color=red]NouveautÃ©:[/color] SystÃ¨me de centralisation de mots clÃ©s, gestion de nuages de tags... A intÃ©grer peut-Ãªtre dans le module de recherche.
-- [color=red]NouveautÃ©:[/color] PossibilitÃ© de crÃ©er des formulaires personnalisÃ©s avec contrÃ´les sur les champs.
-- [color=red]NouveautÃ©:[/color] Interface de visualisation des valeurs des champs supplÃ©mentaires saisies par les membres.
-- [color=red]NouveautÃ©:[/color] Compression de la base de donnÃ©es Ã  l'exportation, importation en fichier compressÃ© ou non.
-- PossibilitÃ© d'envoyer des messages privÃ©s Ã  tous les membres d'un groupe ou Ã  tous les membres pour l'administrateur.
-- PossibilitÃ© de demander l'envoi d'un mail lors de l'envoi d'un mp.
-- Outils avancÃ©s de visualisation et gestion du cache.
-- Etudier la possibilitÃ© de mettre les smileys dans une catÃ©gorie et pouvoir en importer par lot facilement.
-- GÃ©rer finement les autorisations des langues
+- [color=red]Nouveauté:[/color] Refonte des catégories avec support du Drag'n Drop.
+- [color=red]Nouveauté:[/color] Générateur automatique de tableaux avec gestion de la pagination, filtres, tris.
+- [color=red]Nouveauté:[/color] Possibilité d'associer un template à un menu pour pouvoir le personnaliser.
+- [color=red]Nouveauté:[/color] Pose de verrous sur les contenus lors de leur édition afin de faciliter le travail collaboratif.
+- [color=red]Nouveauté:[/color] Exportation en pdf (articles, wiki, pages).
+- [color=red]Nouveauté:[/color] Editeur d'image avec interface js pour redimensionner, faire des rotations, des mises à l'échelles, etc.
+- [color=red]Nouveauté:[/color] Système de centralisation de mots clés, gestion de nuages de tags... A intégrer peut-être dans le module de recherche.
+- [color=red]Nouveauté:[/color] Possibilité de créer des formulaires personnalisés avec contrÃ´les sur les champs.
+- [color=red]Nouveauté:[/color] Interface de visualisation des valeurs des champs supplémentaires saisies par les membres.
+- [color=red]Nouveauté:[/color] Compression de la base de données à l'exportation, importation en fichier compressé ou non.
+- Possibilité d'envoyer des messages privés à tous les membres d'un groupe ou à tous les membres pour l'administrateur.
+- Possibilité de demander l'envoi d'un mail lors de l'envoi d'un mp.
+- Outils avancés de visualisation et gestion du cache.
+- Etudier la possibilité de mettre les smileys dans une catégorie et pouvoir en importer par lot facilement.
+- Gérer finement les autorisations des langues
 
 
 [b]Forum[/b]
-- [color=red]NouveautÃ©:[/color] Nouveaux droits globaux aux groupes dans le forum, suppression/Ã©dition des messages/sujets appartenant au membre.
-- [color=red]NouveautÃ©:[/color] PossibilitÃ© de crÃ©er des messages semi-automatiques pour les modÃ©rateurs.
-- [color=red]NouveautÃ©:[/color] PossibilitÃ© de dÃ©lestage automatique des sujets (configuration).
-- [color=red]NouveautÃ©:[/color] PossibilitÃ© de dÃ©finir des mots interdits (remplacÃ©s par des Ã©toiles).
-- PossibilitÃ© de mettre un pseudo lorsque l'on poste en visiteur.
+- [color=red]Nouveauté:[/color] Nouveaux droits globaux aux groupes dans le forum, suppression/édition des messages/sujets appartenant au membre.
+- [color=red]Nouveauté:[/color] Possibilité de créer des messages semi-automatiques pour les modérateurs.
+- [color=red]Nouveauté:[/color] Possibilité de délestage automatique des sujets (configuration).
+- [color=red]Nouveauté:[/color] Possibilité de définir des mots interdits (remplacés par des étoiles).
+- Possibilité de mettre un pseudo lorsque l'on poste en visiteur.
 
 
 [b]Galerie:[/b]
-- [color=red]NouveautÃ©:[/color] Gestion des catÃ©gories infinies, droits de lecture/ecriture sur les catÃ©gories.
-- [color=red]NouveautÃ©:[/color] PossibilitÃ© de redimensionnement automatique des images dans la galerie, avec prÃ©visualisation du rendu.
-- [color=red]NouveautÃ©:[/color] Approbation des photos envoyÃ©es par les membres/invitÃ©s, alerte envoyÃ©e Ã  l'administrateur.
-- [color=red]NouveautÃ©:[/color] Galerie privÃ©e pour les membres.
-- [color=red]NouveautÃ©:[/color] Diaporama sur l'index de la galerie.
-- PossibilitÃ© de dÃ©finir une limite d'upload en fonction des groupes.
+- [color=red]Nouveauté:[/color] Gestion des catégories infinies, droits de lecture/ecriture sur les catégories.
+- [color=red]Nouveauté:[/color] Possibilité de redimensionnement automatique des images dans la galerie, avec prévisualisation du rendu.
+- [color=red]Nouveauté:[/color] Approbation des photos envoyées par les membres/invités, alerte envoyée à l'administrateur.
+- [color=red]Nouveauté:[/color] Galerie privée pour les membres.
+- [color=red]Nouveauté:[/color] Diaporama sur l'index de la galerie.
+- Possibilité de définir une limite d'upload en fonction des groupes.
 
 [b]Liens web[/b]
-- [color=red]NouveautÃ©:[/color] Gestion des catÃ©gories infinies, droits de lecture/ecriture sur les catÃ©gories.
-- [color=red]NouveautÃ©:[/color] PossibilitÃ© aux membres de proposer des liens.
-- PossibilitÃ© de signaler les liens cassÃ©s.
+- [color=red]Nouveauté:[/color] Gestion des catégories infinies, droits de lecture/ecriture sur les catégories.
+- [color=red]Nouveauté:[/color] Possibilité aux membres de proposer des liens.
+- Possibilité de signaler les liens cassés.
 
 [b]Wiki:[/b]
-- [color=red]NouveautÃ©:[/color] SystÃ¨me d'enregistrement des articles par diffÃ©rences, lignes par lignes pour un encombrement rÃ©duit lors des Ã©ditions successives.
+- [color=red]Nouveauté:[/color] Système d'enregistrement des articles par différences, lignes par lignes pour un encombrement réduit lors des éditions successives.
 
 [b]Calendrier:[/b]
-- [color=red]NouveautÃ©:[/color] PossibilitÃ© d'ajouter des Ã©venements sur plusieurs jours.
-- PossibilitÃ© d'afficher les Ã©venements sur une pÃ©riode donnÃ©e. 
+- [color=red]Nouveauté:[/color] Possibilité d'ajouter des évenements sur plusieurs jours.
+- Possibilité d'afficher les évenements sur une période donnée. 
 
 [b]Newsletter:[/b]
-- Refonte des catÃ©gories avec le nouveau systÃ¨me. 
+- Refonte des catégories avec le nouveau système. 
 
 [b]Contact:[/b]
-- PossibilitÃ© de choisir Ã  quel groupe d'utilisateurs envoyer le mail.
+- Possibilité de choisir à quel groupe d'utilisateurs envoyer le mail.
 
 [b]Nouveau module:[/b]
-- [color=red]NouveautÃ©:[/color] Module blogs, proposez Ã  tous vos membres un systÃ¨me de gestion de blog complet.
+- [color=red]Nouveauté:[/color] Module blogs, proposez à tous vos membres un système de gestion de blog complet.
 
 [b]Nouveau module:[/b]
-- [color=red]NouveautÃ©:[/color] Module mini-calendrier, module mini attenant au module du calendrier.
+- [color=red]Nouveauté:[/color] Module mini-calendrier, module mini attenant au module du calendrier.
 
 [b]Nouveau module:[/b]
-- [color=red]NouveautÃ©:[/color] Module banniÃ¨re, BanniÃ¨res alÃ©atoire Ã  afficher sur le site. PossibilitÃ© de crÃ©er des campagnes d'affichage:
-choix du nombre d'affichage de la banniÃ¨re, du nombre de clics sur la banniÃ¨re, etc..
+- [color=red]Nouveauté:[/color] Module bannière, Bannières aléatoire à afficher sur le site. Possibilité de créer des campagnes d'affichage:
+choix du nombre d'affichage de la bannière, du nombre de clics sur la bannière, etc..
 
 [b]Nouveau module:[/b]
-- [color=red]NouveautÃ©:[/color] Module tchat, permet de discuter facilement dans une interface prÃ©vue Ã  cet effet.
+- [color=red]Nouveauté:[/color] Module tchat, permet de discuter facilement dans une interface prévue à cet effet.

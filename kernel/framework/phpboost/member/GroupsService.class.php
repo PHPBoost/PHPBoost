@@ -37,6 +37,13 @@ define('GROUP_DISABLED_ADVANCED_AUTH', true); //Désactivation des autorisations 
  */
 class GroupsService
 {
+	private static $sql_querier;
+	
+	public static function __static()
+	{
+		self::$sql_querier = PersistenceContext::get_sql();
+	}
+	
 	/**
 	 * @desc Adds a member in a group
 	 * @param int $user_id User id
@@ -45,13 +52,11 @@ class GroupsService
 	 */
 	public static function add_member($user_id, $idgroup)
 	{
-		global $Sql;
-
 		//On insère le groupe au champ membre.
-		$user_groups = $Sql->query("SELECT user_groups FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
+		$user_groups = self::$sql_querier->query("SELECT user_groups FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
 		if (strpos($user_groups, $idgroup . '|') === false) //Le membre n'appartient pas déjà au groupe.
 		{
-			$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET user_groups = '" . (!empty($user_groups) ? $user_groups : '') . $idgroup . "|' WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
+			self::$sql_querier->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET user_groups = '" . (!empty($user_groups) ? $user_groups : '') . $idgroup . "|' WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
 		}
 		else
 		{
@@ -59,10 +64,10 @@ class GroupsService
 		}
 
 		//On insère le membre dans le groupe.
-		$group_members = $Sql->query("SELECT members FROM " . DB_TABLE_GROUP . " WHERE id = '" . $idgroup . "'", __LINE__, __FILE__);
+		$group_members = self::$sql_querier->query("SELECT members FROM " . DB_TABLE_GROUP . " WHERE id = '" . $idgroup . "'", __LINE__, __FILE__);
 		if (strpos($group_members, $user_id . '|') === false) //Le membre n'appartient pas déjà au groupe.
 		{
-			$Sql->query_inject("UPDATE " . DB_TABLE_GROUP . " SET members = '" . $group_members . $user_id . "|' WHERE id = '" . $idgroup . "'", __LINE__, __FILE__);
+			self::$sql_querier->query_inject("UPDATE " . DB_TABLE_GROUP . " SET members = '" . $group_members . $user_id . "|' WHERE id = '" . $idgroup . "'", __LINE__, __FILE__);
 		}
 		else
 		{
@@ -80,10 +85,8 @@ class GroupsService
 	 */
 	public static function edit_member($user_id, $array_user_groups)
 	{
-		global $Sql;
-
 		//Récupération des groupes précédent du membre.
-		$user_groups_old = $Sql->query("SELECT user_groups FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
+		$user_groups_old = self::$sql_querier->query("SELECT user_groups FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
 		$array_user_groups_old = explode('|', $user_groups_old);
 
 		//Insertion du différentiel positif des groupes précédent du membre et ceux choisis dans la table des groupes.		
@@ -148,15 +151,13 @@ class GroupsService
 	 */
 	public static function remove_member($user_id, $idgroup)
 	{
-		global $Sql;
-
 		//Suppression dans la table des membres.
-		$user_groups = $Sql->query("SELECT user_groups FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
-		$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET user_groups = '" . str_replace($idgroup . '|', '', $user_groups) . "' WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
+		$user_groups = self::$sql_querier->query("SELECT user_groups FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
+		self::$sql_querier->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET user_groups = '" . str_replace($idgroup . '|', '', $user_groups) . "' WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
 			
 		//Suppression dans la table des groupes.
-		$members_group = $Sql->query("SELECT members FROM " . DB_TABLE_GROUP . " WHERE id = '" . $idgroup . "'", __LINE__, __FILE__);
-		$Sql->query_inject("UPDATE " . DB_TABLE_GROUP . " SET members = '" . str_replace($user_id . '|', '', $members_group) . "' WHERE id = '" . $idgroup . "'", __LINE__, __FILE__);
+		$members_group = self::$sql_querier->query("SELECT members FROM " . DB_TABLE_GROUP . " WHERE id = '" . $idgroup . "'", __LINE__, __FILE__);
+		self::$sql_querier->query_inject("UPDATE " . DB_TABLE_GROUP . " SET members = '" . str_replace($user_id . '|', '', $members_group) . "' WHERE id = '" . $idgroup . "'", __LINE__, __FILE__);
 	}
 }
 
