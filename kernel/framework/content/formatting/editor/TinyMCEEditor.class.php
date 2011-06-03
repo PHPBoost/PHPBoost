@@ -48,7 +48,7 @@ class TinyMCEEditor extends ContentEditor
 	 */
     public function display()
     {
-        global $Sql, $LANG, $User;
+        global $LANG;
 
         $template = $this->get_template();
 
@@ -56,7 +56,7 @@ class TinyMCEEditor extends ContentEditor
         	'PAGE_PATH' => $_SERVER['PHP_SELF'],
 			'C_BBCODE_NORMAL_MODE' => false,
 			'C_BBCODE_TINYMCE_MODE' => true,
-			'C_UPLOAD_MANAGEMENT' => $User->check_auth(FileUploadConfig::load()->get_authorization_enable_interface_files(), AUTH_FILES),
+			'C_UPLOAD_MANAGEMENT' => AppContext::get_user()->check_auth(FileUploadConfig::load()->get_authorization_enable_interface_files(), AUTH_FILES),
         	'C_NOT_JS_INCLUDED' => self::$js_included,
 			'EDITOR_NAME' => 'tinymce',
 			'FIELD' => $this->identifier,

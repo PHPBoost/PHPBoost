@@ -48,8 +48,6 @@ class BBCodeParser extends ContentFormattingParser
 	 */
 	public function parse()
 	{
-		global $User;
-
 		//On supprime d'abord toutes les occurences de balises CODE que nous réinjecterons à la fin pour ne pas y toucher
 		if (!in_array('code', $this->forbidden_tags))
 		{
@@ -57,7 +55,7 @@ class BBCodeParser extends ContentFormattingParser
 		}
 
 		//On prélève tout le code HTML afin de ne pas l'altérer
-		if (!in_array('html', $this->forbidden_tags) && $User->check_auth($this->html_auth, 1))
+		if (!in_array('html', $this->forbidden_tags) && AppContext::get_user()->check_auth($this->html_auth, 1))
 		{
 			$this->pick_up_tag('html');
 		}

@@ -125,6 +125,9 @@ class CategoriesManager
 	 */
 	protected $cache_var = array();
 	
+	private $sql_querier;
+	private $user;
+	
 	
 	/**
      * @desc Builds a CategoriesManager object
@@ -138,6 +141,9 @@ class CategoriesManager
 		$this->cache_file_name = $cache_file_name;
 		// this is a pointer to the cache variable. We always refer to it, even if it's updated we will have always the good values.
 		$this->cache_var =& $cache_var;
+		
+		$this->sql_querier = PersistenceContext::get_sql();
+		$this->user = AppContext::get_user();
 	}
 
 	/**
@@ -151,27 +157,27 @@ class CategoriesManager
 	 */
 	public function add($id_parent, $name, $visible = CAT_VISIBLE, $order = 0)
 	{
-		global $Sql, $Cache;
+		global $Cache;
 		$this->clear_error();
 
 		//We cast this variable to integer
 		if (!is_int($visible))
 			$visible = (int)$visible;
 
-		$max_order = $Sql->query("SELECT MAX(c_order) FROM " . PREFIX . $this->table . " WHERE id_parent = '" . $id_parent . "'", __LINE__, __FILE__);
+		$max_order = $this->sql_querier->query("SELECT MAX(c_order) FROM " . PREFIX . $this->table . " WHERE id_parent = '" . $id_parent . "'", __LINE__, __FILE__);
 		$max_order = NumberHelper::numeric($max_order);
 
 		if ($id_parent == 0 || array_key_exists($id_parent, $this->cache_var))
 		{
 			//Whe add it at the end of the parent category
 			if ($order <= 0 || $order > $max_order)
-				$Sql->query_inject("INSERT INTO " . PREFIX . $this->table . " (name, c_order, id_parent, visible) VALUES ('" . $name . "', '" . ($max_order + 1) . "', '" . $id_parent . "', '" . $visible . "')", __LINE__, __FILE__);
+				$this->sql_querier->query_inject("INSERT INTO " . PREFIX . $this->table . " (name, c_order, id_parent, visible) VALUES ('" . $name . "', '" . ($max_order + 1) . "', '" . $id_parent . "', '" . $visible . "')", __LINE__, __FILE__);
 			else
 			{
-				$Sql->query_inject("UPDATE " . PREFIX . $this->table . " SET c_order = c_order + 1 WHERE id_parent = '" . $id_parent . "' AND c_order >= '" . $order . "'", __LINE__, __FILE__);
-				$Sql->query_inject("INSERT INTO " . PREFIX . $this->table . " (name, c_order, id_parent, visible) VALUES ('" . $name . "', '" . $order . "', '" . $id_parent . "', '" . $visible . "')", __LINE__, __FILE__);
+				$this->sql_querier->query_inject("UPDATE " . PREFIX . $this->table . " SET c_order = c_order + 1 WHERE id_parent = '" . $id_parent . "' AND c_order >= '" . $order . "'", __LINE__, __FILE__);
+				$this->sql_querier->query_inject("INSERT INTO " . PREFIX . $this->table . " (name, c_order, id_parent, visible) VALUES ('" . $name . "', '" . $order . "', '" . $id_parent . "', '" . $visible . "')", __LINE__, __FILE__);
 			}
-			return $Sql->insert_id("SELECT MAX(id) FROM " . PREFIX . $this->table);
+			return $this->sql_querier->insert_id("SELECT MAX(id) FROM " . PREFIX . $this->table);
 		}
 		else
 		{
@@ -195,11 +201,11 @@ class CategoriesManager
 	 */
 	public function move($id, $way)
 	{
-		global $Sql, $Cache;
+		global $Cache;
 		$this->clear_error();
 		if (in_array($way, array(MOVE_CATEGORY_UP, MOVE_CATEGORY_DOWN)))
 		{
-			$cat_info = $Sql->query_array(PREFIX . $this->table, "c_order", "id_parent", "WHERE id = '" . $id . "'", __LINE__, __FILE__);
+			$cat_info = $this->sql_querier->query_array(PREFIX . $this->table, "c_order", "id_parent", "WHERE id = '" . $id . "'", __LINE__, __FILE__);
 
 			//Checking that category exists
 			if (empty($cat_info['c_order']))
@@ -211,14 +217,14 @@ class CategoriesManager
 			if ($way == MOVE_CATEGORY_DOWN)
 			{
 				//Query which allows us to check if we don't want to move down the downest category
-				$max_order = $Sql->query("SELECT MAX(c_order) FROM " . PREFIX . $this->table . " WHERE id_parent = '" . $cat_info['id_parent'] . "'", __LINE__, __FILE__);
+				$max_order = $this->sql_querier->query("SELECT MAX(c_order) FROM " . PREFIX . $this->table . " WHERE id_parent = '" . $cat_info['id_parent'] . "'", __LINE__, __FILE__);
 				if ($cat_info['c_order'] < $max_order)
 				{
 					//Switching category with that which is upper
 					//Updating other category
-					$Sql->query_inject("UPDATE " . PREFIX . $this->table . " SET c_order = c_order - 1 WHERE id_parent = '" . $cat_info['id_parent'] . "' AND c_order = '" . ($cat_info['c_order'] + 1) . "'", __LINE__, __FILE__);
+					$this->sql_querier->query_inject("UPDATE " . PREFIX . $this->table . " SET c_order = c_order - 1 WHERE id_parent = '" . $cat_info['id_parent'] . "' AND c_order = '" . ($cat_info['c_order'] + 1) . "'", __LINE__, __FILE__);
 					//Updating current category
-					$Sql->query_inject("UPDATE " . PREFIX . $this->table . " SET c_order = c_order + 1 WHERE id = '" . $id . "'", __LINE__, __FILE__);
+					$this->sql_querier->query_inject("UPDATE " . PREFIX . $this->table . " SET c_order = c_order + 1 WHERE id = '" . $id . "'", __LINE__, __FILE__);
 					//Regeneration of the cache file of the module
 					$Cache->Generate_module_file($this->cache_file_name);
 
@@ -236,9 +242,9 @@ class CategoriesManager
 				{
 					//Switching category with that which is upper
 					//Updating other category
-					$Sql->query_inject("UPDATE " . PREFIX . $this->table . " SET c_order = c_order + 1 WHERE id_parent = '" . $cat_info['id_parent'] . "' AND c_order = '" . ($cat_info['c_order'] - 1) . "'", __LINE__, __FILE__);
+					$this->sql_querier->query_inject("UPDATE " . PREFIX . $this->table . " SET c_order = c_order + 1 WHERE id_parent = '" . $cat_info['id_parent'] . "' AND c_order = '" . ($cat_info['c_order'] - 1) . "'", __LINE__, __FILE__);
 					//Updating current category
-					$Sql->query_inject("UPDATE " . PREFIX . $this->table . " SET c_order = c_order - 1 WHERE id = '" . $id . "'", __LINE__, __FILE__);
+					$this->sql_querier->query_inject("UPDATE " . PREFIX . $this->table . " SET c_order = c_order - 1 WHERE id = '" . $id . "'", __LINE__, __FILE__);
 					//Regeneration of the cache file of the module
 					$Cache->Generate_module_file($this->cache_file_name);
 					return true;
@@ -272,7 +278,7 @@ class CategoriesManager
 	 */
 	public function move_into_another($id, $new_id_cat, $position = 0)
 	{
-		global $Sql, $Cache;
+		global $Cache;
 		$this->clear_error();
 
 		//Checking that both current category and new category exist and importing necessary information
@@ -283,24 +289,24 @@ class CategoriesManager
 			$this->build_children_id_list($id, $subcats_list);
 			if (!in_array($new_id_cat, $subcats_list))
 			{
-				$max_new_cat_order = $Sql->query("SELECT MAX(c_order) FROM " . PREFIX . $this->table . " WHERE id_parent = '" . $new_id_cat . "'", __LINE__, __FILE__);
+				$max_new_cat_order = $this->sql_querier->query("SELECT MAX(c_order) FROM " . PREFIX . $this->table . " WHERE id_parent = '" . $new_id_cat . "'", __LINE__, __FILE__);
 				//Default : inserting at the end of the list
 				if ($position <= 0 || $position > $max_new_cat_order)
 				{
 					//Moving the category $id
-					$Sql->query_inject("UPDATE " . PREFIX . $this->table . " SET id_parent = '" . $new_id_cat . "', c_order = '" . ($max_new_cat_order + 1). "' WHERE id = '" . $id . "'", __LINE__, __FILE__);
+					$this->sql_querier->query_inject("UPDATE " . PREFIX . $this->table . " SET id_parent = '" . $new_id_cat . "', c_order = '" . ($max_new_cat_order + 1). "' WHERE id = '" . $id . "'", __LINE__, __FILE__);
 					//Updating ex parent category
-					$Sql->query_inject("UPDATE " . PREFIX . $this->table . " SET c_order = c_order - 1 WHERE id_parent = '" . $this->cache_var[$id]['id_parent'] . "' AND c_order > '" . $this->cache_var[$id]['order'] . "'", __LINE__, __FILE__);
+					$this->sql_querier->query_inject("UPDATE " . PREFIX . $this->table . " SET c_order = c_order - 1 WHERE id_parent = '" . $this->cache_var[$id]['id_parent'] . "' AND c_order > '" . $this->cache_var[$id]['order'] . "'", __LINE__, __FILE__);
 				}
 				//Inserting at a precise position
 				else
 				{
 					//Preparing the new parent category to receive a category at this position
-					$Sql->query_inject("UPDATE " . PREFIX . $this->table . " SET c_order = c_order + 1 WHERE id_parent = '" . $new_id_cat . "' AND c_order >= '" . $position . "'", __LINE__, __FILE__);
+					$this->sql_querier->query_inject("UPDATE " . PREFIX . $this->table . " SET c_order = c_order + 1 WHERE id_parent = '" . $new_id_cat . "' AND c_order >= '" . $position . "'", __LINE__, __FILE__);
 					//Moving the category $id
-					$Sql->query_inject("UPDATE " . PREFIX . $this->table . " SET id_parent = '" . $new_id_cat . "', c_order = '" . $position . "' WHERE id = '" . $id . "'", __LINE__, __FILE__);
+					$this->sql_querier->query_inject("UPDATE " . PREFIX . $this->table . " SET id_parent = '" . $new_id_cat . "', c_order = '" . $position . "' WHERE id = '" . $id . "'", __LINE__, __FILE__);
 					//Updating ex category
-					$Sql->query_inject("UPDATE " . PREFIX . $this->table . " SET c_order = c_order - 1 WHERE id_parent = '" . $this->cache_var[$id]['id_parent'] . "' AND c_order > '" . $this->cache_var[$id]['order'] . "'", __LINE__, __FILE__);
+					$this->sql_querier->query_inject("UPDATE " . PREFIX . $this->table . " SET c_order = c_order - 1 WHERE id_parent = '" . $this->cache_var[$id]['id_parent'] . "' AND c_order > '" . $this->cache_var[$id]['order'] . "'", __LINE__, __FILE__);
 				}
 
 				//Regeneration of the cache file of the module
@@ -332,7 +338,7 @@ class CategoriesManager
 	 */
 	public function delete($id)
 	{
-		global $Sql, $Cache;
+		global $Cache;
 		$this->clear_error();
 
 		//Checking that category exists
@@ -345,10 +351,10 @@ class CategoriesManager
 		$cat_infos = $this->cache_var[$id];
 
 		//Deleting the category
-		$Sql->query_inject("DELETE FROM " . PREFIX . $this->table . " WHERE id = '" . $id . "'", __LINE__, __FILE__);
+		$this->sql_querier->query_inject("DELETE FROM " . PREFIX . $this->table . " WHERE id = '" . $id . "'", __LINE__, __FILE__);
 
 		//Decrementing all following categories
-		$Sql->query_inject("UPDATE " . PREFIX . $this->table . " SET c_order = c_order - 1 WHERE id_parent = '". $cat_infos['id_parent'] . "' AND c_order > '" . $cat_infos['order'] . "'", __LINE__, __FILE__);
+		$this->sql_querier->query_inject("UPDATE " . PREFIX . $this->table . " SET c_order = c_order - 1 WHERE id_parent = '". $cat_infos['id_parent'] . "' AND c_order > '" . $cat_infos['order'] . "'", __LINE__, __FILE__);
 
 		//Regeneration of the cache file
 		$Cache->Generate_module_file($this->cache_file_name);
@@ -369,7 +375,7 @@ class CategoriesManager
 	 */
 	public function change_visibility($category_id, $visibility, $generate_cache = LOAD_CACHE)
 	{
-		global $Sql, $Cache;
+		global $Cache;
 
 		//Default value
 		if (!in_array($visibility, array(CAT_VISIBLE, CAT_UNVISIBLE)))
@@ -380,7 +386,7 @@ class CategoriesManager
 
 		if ($category_id > 0 && array_key_exists($category_id, $this->cache_var))
 		{
-			$Sql->query_inject("UPDATE " . PREFIX . $this->table . " SET visible = '" . (int)$visibility . "' WHERE id = '" . $category_id . "'", __LINE__, __FILE__);
+			$this->sql_querier->query_inject("UPDATE " . PREFIX . $this->table . " SET visible = '" . (int)$visibility . "' WHERE id = '" . $category_id . "'", __LINE__, __FILE__);
 
 			//Regeneration of the cache file
 			if ($generate_cache)
@@ -514,7 +520,7 @@ class CategoriesManager
 	 */
 	public function build_select_form($selected_id, $form_id, $form_name, $current_id_cat = 0, $num_auth = 0, $array_auth = array(), $recursion_mode = STOP_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH, $template = NULL)
 	{
-		global $LANG, $User;
+		global $LANG;
 
 		$general_auth = false;
 
@@ -522,7 +528,7 @@ class CategoriesManager
 			$template = new FileTemplate('framework/content/categories_select_form.tpl');
 
 		if ($num_auth != 0)
-			$general_auth = $User->check_auth($array_auth, $num_auth);
+			$general_auth = $this->user->check_auth($array_auth, $num_auth);
 
 		$template->put_all(array(
 			'FORM_ID' =>  $form_id,
@@ -547,11 +553,10 @@ class CategoriesManager
 	 */
 	public function build_children_id_list($category_id, &$list, $recursive_exploration = RECURSIVE_EXPLORATION, $add_this = DO_NOT_ADD_THIS_CATEGORY_IN_LIST, $num_auth = 0)
 	{
-		global $User;
 		//Boolean variable which is true when we can stop the loop : optimization
 		$end_of_category = false;
 
-		if ($add_this && ($category_id == 0 || (empty($this->cache_var[$category_id]['auth'])  || $num_auth == 0 || $num_auth > 0 && $User->check_auth($this->cache_var[$category_id]['auth'], $num_auth))))
+		if ($add_this && ($category_id == 0 || (empty($this->cache_var[$category_id]['auth'])  || $num_auth == 0 || $num_auth > 0 && $this->user->check_auth($this->cache_var[$category_id]['auth'], $num_auth))))
 			$list[] = $category_id;
 
 		$id_categories = array_keys($this->cache_var);
@@ -563,7 +568,7 @@ class CategoriesManager
 			$id = $id_categories[$i];
 			$value =& $this->cache_var[$id];
 			if ($id != 0 && $value['id_parent'] == $category_id &&
-				(empty($this->cache_var[$id]['auth']) || $num_auth == 0 || ($num_auth > 0 && $User->check_auth($this->cache_var[$id]['auth'], $num_auth))))
+				(empty($this->cache_var[$id]['auth']) || $num_auth == 0 || ($num_auth > 0 && $this->user->check_auth($this->cache_var[$id]['auth'], $num_auth))))
 			{
 				$list[] = $id;
 				if ($recursive_exploration)
@@ -669,7 +674,7 @@ class CategoriesManager
 	 */
 	private function create_row_interface($id_cat, $level, $ajax_mode, $reference_template)
 	{
-		global $LANG, $Session;
+		global $LANG;
 
 		$id_categories = array_keys($this->cache_var);
 		$num_cats =	count($id_categories);
@@ -692,6 +697,8 @@ class CategoriesManager
 			//If this category is in the category $id_cat
 			if ($id != 0 && $values['id_parent'] == $id_cat)
 			{
+				$session = AppContext::get_session();
+				
 				$template->assign_block_vars('categories', array(
 					'ID' => $id,
 					'MARGIN_LEFT' => $level * 50,
@@ -711,15 +718,15 @@ class CategoriesManager
 					'NAME' => $values['name'],
 					//If it's not the first of the category we can have it go downer
 					'C_NOT_FIRST_CAT' => $values['order'] > 1,
-					'ACTION_GO_UP' => $ajax_mode ? url($this->display_config['administration_file_name'] . '?id_up=' . $id . '&amp;token=' . $Session->get_token()) : 'javascript:ajax_move_cat(' . $id . ', \'up\');',
+					'ACTION_GO_UP' => $ajax_mode ? url($this->display_config['administration_file_name'] . '?id_up=' . $id . '&amp;token=' . $session->get_token()) : 'javascript:ajax_move_cat(' . $id . ', \'up\');',
 					//If it's not the last we can have it go upper
 					'C_NOT_LAST_CAT' => $i != $num_cats  - 1 && $this->cache_var[$id_categories[$i + 1]]['id_parent'] == $id_cat,
-					'ACTION_GO_DOWN' => $ajax_mode ? url($this->display_config['administration_file_name'] . '?id_down=' . $id . '&amp;token=' . $Session->get_token()) : 'javascript:ajax_move_cat(' . $id . ', \'down\');',
+					'ACTION_GO_DOWN' => $ajax_mode ? url($this->display_config['administration_file_name'] . '?id_down=' . $id . '&amp;token=' . $session->get_token()) : 'javascript:ajax_move_cat(' . $id . ', \'down\');',
 					'C_VISIBLE' => $values['visible'],
-					'ACTION_HIDE' => $ajax_mode ? url($this->display_config['administration_file_name'] . '?hide=' . $id . '&amp;token=' . $Session->get_token()) : 'javascript:ajax_change_cat_visibility(' . $id . ', \'hide\');',
-					'ACTION_SHOW' => $ajax_mode ? url($this->display_config['administration_file_name'] . '?show=' . $id . '&amp;token=' . $Session->get_token()) : 'javascript:ajax_change_cat_visibility(' . $id . ', \'show\');',
-					'ACTION_EDIT' => url($this->display_config['administration_file_name'] . '?edit=' . $id . '&amp;token=' . $Session->get_token()),
-					'ACTION_DELETE' => url($this->display_config['administration_file_name'] . '?del=' . $id . '&amp;token=' . $Session->get_token()),
+					'ACTION_HIDE' => $ajax_mode ? url($this->display_config['administration_file_name'] . '?hide=' . $id . '&amp;token=' . $session->get_token()) : 'javascript:ajax_change_cat_visibility(' . $id . ', \'hide\');',
+					'ACTION_SHOW' => $ajax_mode ? url($this->display_config['administration_file_name'] . '?show=' . $id . '&amp;token=' . $session->get_token()) : 'javascript:ajax_change_cat_visibility(' . $id . ', \'show\');',
+					'ACTION_EDIT' => url($this->display_config['administration_file_name'] . '?edit=' . $id . '&amp;token=' . $session->get_token()),
+					'ACTION_DELETE' => url($this->display_config['administration_file_name'] . '?del=' . $id . '&amp;token=' . $session->get_token()),
 					'CONFIRM_DELETE' => $LANG['cats_management_confirm_delete'],
 					//We call the function for its daughter categories
 					'NEXT_CATEGORY' => $this->create_row_interface($id, $level + 1, $ajax_mode, $reference_template)
@@ -746,7 +753,6 @@ class CategoriesManager
 	 */
 	private function create_select_row($id_cat, $level, $selected_id, $current_id_cat, $recursion_mode, $num_auth, $general_auth, $template)
 	{
-		global $User;
 		//Boolean variable which is true when we can stop the loop
 		$end_of_category = false;
 
@@ -768,7 +774,7 @@ class CategoriesManager
 				//Exploration which reading behaviour : if we can't se a folder, we can't see its children
 				if ($recursion_mode != IGNORE_AND_CONTINUE_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH)
 				{
-					if ($num_auth == 0 || $general_auth || $User->check_auth($value['auth'], $num_auth))
+					if ($num_auth == 0 || $general_auth || $this->user->check_auth($value['auth'], $num_auth))
 					{
 						$template->assign_block_vars('options', array(
 							'ID' => $id,
@@ -795,7 +801,7 @@ class CategoriesManager
 						$this->create_select_row($id, $level + 1, $selected_id, $current_id_cat, $recursion_mode, $num_auth, $general_auth, $template);
 					}
 					//If we must check authorizations and it's good
-					elseif ((empty($value['auth']) && $general_auth) || (!empty($value['auth']) && $User->check_auth($value['auth'], $num_auth)))
+					elseif ((empty($value['auth']) && $general_auth) || (!empty($value['auth']) && $this->user->check_auth($value['auth'], $num_auth)))
 					{
 						$template->assign_block_vars('options', array(
 							'ID' => $id,
@@ -807,7 +813,7 @@ class CategoriesManager
 						$this->create_select_row($id, $level + 1, $selected_id, $current_id_cat, $recursion_mode, $num_auth, true, $template);
 					}
 					//If we must check authorizations and it's not good, we don't display it but we continue browsing
-					elseif ((empty($value['auth']) && !$general_auth) || (!empty($value['auth']) && !$User->check_auth($value['auth'], $num_auth)))
+					elseif ((empty($value['auth']) && !$general_auth) || (!empty($value['auth']) && !$this->user->check_auth($value['auth'], $num_auth)))
 					{
 						$this->create_select_row($id, $level + 1, $selected_id, $current_id_cat, $recursion_mode, $num_auth, false, $template);
 					}
