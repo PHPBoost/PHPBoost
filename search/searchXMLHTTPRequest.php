@@ -32,9 +32,9 @@ load_module_lang('search');
 
 //--------------------------------------------------------------------- Params
 
-$search_txt = TextHelper::strprotect(AppContext::get_request()->get_poststring('q', ''));
-$module_id = strtolower(TextHelper::strprotect(AppContext::get_request()->get_poststring('moduleName', '')));
-$id_search = AppContext::get_request()->get_postint('idSearch', -1);
+$search_txt = retrieve(POST, 'q', '');
+$module_id = strtolower(retrieve(POST, 'moduleName', ''));
+$id_search = retrieve(POST, 'idSearch', -1);
 $selected_modules = retrieve(POST, 'searched_modules', array());
 //------------------------------------------------------------- Other includes
 

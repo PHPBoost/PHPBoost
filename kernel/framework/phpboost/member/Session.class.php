@@ -59,11 +59,11 @@ class Session
 	public function act()
 	{
 		//Module de connexion.
-		$login = TextHelper::strprotect(AppContext::get_request()->get_poststring('login', ''));
-		$password = trim(AppContext::get_request()->get_poststring('password', ''));
-		$autoconnexion = AppContext::get_request()->get_postbool('auto', false);
+		$login = retrieve(POST, 'login', '');
+		$password = retrieve(POST, 'password', '', TSTRING_UNCHANGE);
+		$autoconnexion = retrieve(POST, 'auto', false);
 
-		if (AppContext::get_request()->get_getbool('disconnect', false)) //Déconnexion.
+		if (retrieve(GET, 'disconnect', false)) //Déconnexion.
 		{
 			//vérification de la validité du jeton
 			$this->csrf_get_protect();
@@ -71,7 +71,7 @@ class Session
 			$this->end();
 			AppContext::get_response()->redirect(Environment::get_home_page());
 		}
-		elseif (AppContext::get_request()->get_postbool('connect', false) && !empty($login) && !empty($password)) //Création de la session.
+		elseif (retrieve(POST, 'connect', false) && !empty($login) && !empty($password)) //Création de la session.
 		{
 			$user_id = $this->sql->query("SELECT user_id FROM " . DB_TABLE_MEMBER . " WHERE login = '" . $login . "'", __LINE__, __FILE__);
 			if (!empty($user_id)) //Membre existant.
@@ -514,8 +514,8 @@ class Session
 		$this->autoconnect['user_id'] = -1;
 
 		$this->session_mod = 0;
-		$sid = TextHelper::strprotect(AppContext::get_request()->get_getstring('sid', ''));
-		$suid = AppContext::get_request()->get_getint('suid', 0);
+		$sid = retrieve(GET, 'sid', '');
+		$suid = retrieve(GET, 'suid', 0);
 		$sessions_config = SessionsConfig::load();
 		
 		########Cookie Existe?########
@@ -655,7 +655,7 @@ class Session
 		{
 			//First verification: does the token exist?
 			$token = $this->get_token();
-			if (!empty($token) && TextHelper::strprotect(AppContext::get_request()->get_string('token', '')) === $token)
+			if (!empty($token) && retrieve(REQUEST, 'token', '') === $token)
 			{
 				return true;
 			}
@@ -685,7 +685,7 @@ class Session
 	public function csrf_get_protect($redirect = SEASURF_ATTACK_ERROR_PAGE)
 	{
 		$token = $this->get_token();
-		if (empty($token) || TextHelper::strprotect(AppContext::get_request()->get_string('token', '')) !== $token)
+		if (empty($token) || retrieve(REQUEST, 'token', '') !== $token)
 		{
 			$this->csrf_attack($redirect);
 			return false;
@@ -715,7 +715,7 @@ class Session
 	 */
 	private function csrf_attack($redirect = SEASURF_ATTACK_ERROR_PAGE)
 	{
-		$bad_token = $this->get_printable_token(TextHelper::strprotect(AppContext::get_request()->get_string('token', '')));
+		$bad_token = $this->get_printable_token(retrieve(REQUEST, 'token', ''));
 		$good_token = $this->get_printable_token($this->get_token());
 
 		if ($redirect !== false && !empty($redirect))

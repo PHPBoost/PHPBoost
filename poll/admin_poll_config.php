@@ -33,9 +33,9 @@ require_once('../admin/admin_header.php');
 if (!empty($_POST['valid']))
 {
 	$config_poll = array();
-	$config_poll['poll_auth'] = AppContext::get_request()->get_postint('poll_auth', -1);
+	$config_poll['poll_auth'] = retrieve(POST, 'poll_auth', -1);
 	$config_poll['poll_mini'] = !empty($_POST['poll_mini']) ? $_POST['poll_mini'] : array();	
-	$config_poll['poll_cookie'] = trim(AppContext::get_request()->get_poststring('poll_cookie', 'poll'));	
+	$config_poll['poll_cookie'] = retrieve(POST, 'poll_cookie', 'poll', TSTRING_UNCHANGE);	
 	$config_poll['poll_cookie_lenght'] = !empty($_POST['poll_cookie_lenght']) ? (NumberHelper::numeric($_POST['poll_cookie_lenght']) * 3600 * 24) : 30*24*3600;	
 		
 	$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($config_poll)) . "' WHERE name = 'poll'", __LINE__, __FILE__);

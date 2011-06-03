@@ -73,7 +73,7 @@ $tpl->put_all(array(
 $tpl->assign_block_vars('list', array(
 ));
 
-$get_sort = TextHelper::strprotect(AppContext::get_request()->get_getstring('sort', ''));
+$get_sort = retrieve(GET, 'sort', '');
 switch ($get_sort)
 {
 	case 'alpha' :
@@ -95,7 +95,7 @@ switch ($get_sort)
 		$sort = 'timestamp';
 }
 
-$get_mode = TextHelper::strprotect(AppContext::get_request()->get_getstring('mode', ''));
+$get_mode = retrieve(GET, 'mode', '');
 $mode = ($get_mode == 'asc') ? 'ASC' : 'DESC';
 
 $result = $Sql->query_while("SELECT a.id, a.user_id,a.idcat, a.title, a.timestamp, a.visible, a.start, a.end, ac.name, m.login
@@ -119,12 +119,12 @@ while ($row = $Sql->fetch_assoc($result))
 
 	$visible = '';
 	if ($row['start'] > 0)
-	$visible .= gmdate_format('date_format_short', $row['start']);
-
+		$visible .= gmdate_format('date_format_short', $row['start']);
+		
 	if ($row['end'] > 0 && $row['start'] > 0)
-	$visible .= ' ' . strtolower($LANG['until']) . ' ' . gmdate_format('date_format_short', $row['end']);
+		$visible .= ' ' . strtolower($LANG['until']) . ' ' . gmdate_format('date_format_short', $row['end']);
 	elseif ($row['end'] > 0)
-	$visible .= $LANG['until'] . ' ' . gmdate_format('date_format_short', $row['end']);
+		$visible .= $LANG['until'] . ' ' . gmdate_format('date_format_short', $row['end']);
 
 	$tpl->assign_block_vars('list.articles', array(
 		'TITLE' => $title,

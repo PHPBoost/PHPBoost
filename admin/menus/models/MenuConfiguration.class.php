@@ -30,12 +30,12 @@
  * @desc
  */
 class MenuConfiguration extends BusinessObject
-{
-	private $id;
-	private $name;
-	private $match_regex;
-	private $priority;
-
+{    
+    private $id;
+    private $name;
+    private $match_regex;
+    private $priority;
+    
 	public function __construct()
 	{
 	}

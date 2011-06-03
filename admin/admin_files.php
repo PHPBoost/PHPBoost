@@ -13,7 +13,7 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- *
+ * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -32,81 +32,81 @@ require_once('../admin/admin_header.php');
 //Initialisation  de la class de gestion des fichiers.
 
 
-$folder = AppContext::get_request()->get_getint('f', 0);
-$folder_member = AppContext::get_request()->get_getint('fm', 0);
-$parent_folder = AppContext::get_request()->get_getint('fup', 0);
+$folder = retrieve(GET, 'f', 0);
+$folder_member = retrieve(GET, 'fm', 0);
+$parent_folder = retrieve(GET, 'fup', 0);
 $home_folder = !empty($_GET['root']) ? true : false;
-$del_folder = AppContext::get_request()->get_getint('delf', 0);
-$empty_folder = AppContext::get_request()->get_getint('eptf', 0);
-$del_file = AppContext::get_request()->get_getint('del', 0);
-$get_error = TextHelper::strprotect(AppContext::get_request()->get_getstring('error', ''));
-$get_l_error = TextHelper::strprotect(AppContext::get_request()->get_getstring('erroru', ''));
+$del_folder = retrieve(GET, 'delf', 0);
+$empty_folder = retrieve(GET, 'eptf', 0);
+$del_file = retrieve(GET, 'del', 0);
+$get_error = retrieve(GET, 'error', '');
+$get_l_error = retrieve(GET, 'erroru', '');
 $show_member = !empty($_GET['showm']) ? true : false;
-$move_folder = AppContext::get_request()->get_getint('movefd', 0);
-$move_file = AppContext::get_request()->get_getint('movefi', 0);
-$to = AppContext::get_request()->get_postint('new_cat', -1);
+$move_folder = retrieve(GET, 'movefd', 0);
+$move_file = retrieve(GET, 'movefi', 0);
+$to = retrieve(POST, 'new_cat', -1);
 
 if (isset($_GET['fup'])) //Changement de dossier
 {
 	$parent_folder = $Sql->query_array(PREFIX . "upload_cat", "id_parent", "user_id", "WHERE id = '" . $parent_folder . "'", __LINE__, __FILE__);
-
-	if (!empty($folder_member))
-	AppContext::get_response()->redirect('/admin/admin_files.php?showm=1');
+	
+	if (!empty($folder_member)) 
+		AppContext::get_response()->redirect('/admin/admin_files.php?showm=1');
 	elseif ($parent_folder['user_id'] != -1 && empty($parent_folder['id_parent']))
-	AppContext::get_response()->redirect('/admin/admin_files.php?fm=' . $parent_folder['user_id']);
+		AppContext::get_response()->redirect('/admin/admin_files.php?fm=' . $parent_folder['user_id']);
 	else
-	AppContext::get_response()->redirect('/admin/admin_files.php?f=' . $parent_folder['id_parent']);
+		AppContext::get_response()->redirect('/admin/admin_files.php?f=' . $parent_folder['id_parent']);
 }
 elseif ($home_folder) //Retour à la racine.
-AppContext::get_response()->redirect('/admin/admin_files.php');
+	AppContext::get_response()->redirect('/admin/admin_files.php');
 elseif (!empty($_FILES['upload_file']['name']) && isset($_GET['f'])) //Ajout d'un fichier.
 {
 	//Si le dossier n'est pas en écriture on tente un CHMOD 777
 	@clearstatcache();
 	$dir = PATH_TO_ROOT .'/upload/';
 	if (!is_writable($dir))
-	$is_writable = (@chmod($dir, 0777)) ? true : false;
-
+		$is_writable = (@chmod($dir, 0777)) ? true : false;
+	
 	@clearstatcache();
 	$error = '';
 	if (is_writable($dir)) //Dossier en écriture, upload possible
 	{
 		$Upload = new Upload($dir);
 		$Upload->file('upload_file', '`([a-z0-9()_-])+\.(' . implode('|', array_map('preg_quote', FileUploadConfig::load()->get_authorized_extensions())) . ')+$`i', Upload::UNIQ_NAME);
-
+		
 		if ($Upload->get_error() != '') //Erreur, on arrête ici
-		AppContext::get_response()->redirect('/admin/admin_files.php?f=' . $folder . '&erroru=' . $Upload->get_error() . '#message_helper');
+			AppContext::get_response()->redirect('/admin/admin_files.php?f=' . $folder . '&erroru=' . $Upload->get_error() . '#message_helper');
 		else //Insertion dans la bdd
 		{
 			$check_user_folder = $Sql->query("SELECT user_id FROM " . DB_TABLE_UPLOAD_CAT . " WHERE id = '" . $folder . "'", __LINE__, __FILE__);
 			$user_id = ($check_user_folder <= 0) ? -1 : $User->get_attribute('user_id');
 			$user_id = max($user_id, $folder_member);
-				
+			
 			$Sql->query_inject("INSERT INTO " . DB_TABLE_UPLOAD . " (idcat, name, path, user_id, size, type, timestamp) VALUES ('" . $folder . "', '" . addslashes($Upload->get_original_filename()) . "', '" . addslashes($Upload->get_filename()) . "', '" . $user_id . "', '" . $Upload->get_human_readable_size() . "', '" . $Upload->get_extension() . "', '" . time() . "')", __LINE__, __FILE__);
 		}
 	}
 	else
-	$error = 'e_upload_failed_unwritable';
-
+		$error = 'e_upload_failed_unwritable';
+	
 	$error = !empty($error) ? '&error=' . $error . '#message_helper' : '';
 	AppContext::get_response()->redirect('/admin/admin_files.php?f=' . $folder . ($folder_member > 0 ? '&fm=' . $folder_member : '') . $error);
 }
 elseif (!empty($del_folder)) //Supprime un dossier.
 {
 	$Session->csrf_get_protect(); //Protection csrf
-
-	//Suppression du dossier et de tout le contenu
+	
+	//Suppression du dossier et de tout le contenu	
 	Uploads::Del_folder($del_folder);
-
+	
 	if (!empty($folder_member))
-	AppContext::get_response()->redirect('/admin/admin_files.php?fm=' . $folder_member);
+		AppContext::get_response()->redirect('/admin/admin_files.php?fm=' . $folder_member);
 	else
-	AppContext::get_response()->redirect('/admin/admin_files.php?f=' . $folder);
+		AppContext::get_response()->redirect('/admin/admin_files.php?f=' . $folder);
 }
 elseif (!empty($empty_folder)) //Vide un dossier membre.
 {
 	$Session->csrf_get_protect(); //Protection csrf.
-
+	
 	//Suppression de tout les dossiers enfants.
 	Uploads::Empty_folder_member($empty_folder);
 
@@ -115,10 +115,10 @@ elseif (!empty($empty_folder)) //Vide un dossier membre.
 elseif (!empty($del_file)) //Suppression d'un fichier
 {
 	$Session->csrf_get_protect(); //Protection csrf
-
+	
 	//Suppression d'un fichier.
 	Uploads::Del_file($del_file, -1, Uploads::ADMIN_NO_CHECK);
-
+	
 	AppContext::get_response()->redirect('/admin/admin_files.php?f=' . $folder . ($folder_member > 0 ? '&fm=' . $folder_member : ''));
 }
 elseif (!empty($move_folder) && $to != -1) //Déplacement d'un dossier
@@ -132,33 +132,33 @@ elseif (!empty($move_folder) && $to != -1) //Déplacement d'un dossier
 	WHERE user_id = '" . $user_id . "'
 	ORDER BY id", __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))
-	$move_list_parent[$row['id']] = $row['id_parent'];
-
+		$move_list_parent[$row['id']] = $row['id_parent'];
+	
 	$Sql->query_close($result);
 
 	$array_child_folder = array();
 	Uploads::Find_subfolder($move_list_parent, $move_folder, $array_child_folder);
 	$array_child_folder[] = $move_folder;
 	if (!in_array($to, $array_child_folder)) //Dossier de destination non sous-dossier du dossier source.
-	Uploads::Move_folder($move_folder, $to, $User->get_attribute('user_id'), Uploads::ADMIN_NO_CHECK);
+		Uploads::Move_folder($move_folder, $to, $User->get_attribute('user_id'), Uploads::ADMIN_NO_CHECK);
 	else
-	AppContext::get_response()->redirect('/admin/admin_files.php?movefd=' . $move_folder . '&f=0&error=folder_contains_folder');
-		
+		AppContext::get_response()->redirect('/admin/admin_files.php?movefd=' . $move_folder . '&f=0&error=folder_contains_folder');
+			
 	AppContext::get_response()->redirect('/admin/admin_files.php?f=' . $to);
 }
 elseif (!empty($move_file) && $to != -1) //Déplacement d'un fichier
 {
 	$Session->csrf_get_protect(); //Protection csrf
-
+	
 	Uploads::Move_file($move_file, $to, $User->get_attribute('user_id'), Uploads::ADMIN_NO_CHECK);
-
+	
 	AppContext::get_response()->redirect('/admin/admin_files.php?f=' . $to);
 }
 elseif (!empty($move_folder) || !empty($move_file))
 {
 	$template = new FileTemplate('admin/admin_files_move.tpl');
-
-	$sql_request = !empty($folder_member)
+	
+	$sql_request = !empty($folder_member) 
 	? 	("SELECT uc.user_id, m.login
 		FROM " . DB_TABLE_UPLOAD_CAT . " uc
 		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = uc.user_id
@@ -175,16 +175,16 @@ elseif (!empty($move_folder) || !empty($move_file))
 
 	$result = $Sql->query_while ($sql_request, __LINE__, __FILE__);
 	$folder_info = $Sql->fetch_assoc($result);
-
+	
 	if ($show_member)
-	$url = Uploads::get_admin_url($folder, '/<a href="admin_files.php?showm=1">' . $LANG['member_s'] . '</a>');
+		$url = Uploads::get_admin_url($folder, '/<a href="admin_files.php?showm=1">' . $LANG['member_s'] . '</a>');
 	elseif (!empty($folder_member) || !empty($folder_info['user_id']))
-	$url = Uploads::get_admin_url($folder, '', '<a href="admin_files.php?showm=1">' . $LANG['member_s'] . '</a>/<a href="admin_files.php?fm=' . $folder_info['user_id'] . '">' . $folder_info['login'] . '</a>/');
+		$url = Uploads::get_admin_url($folder, '', '<a href="admin_files.php?showm=1">' . $LANG['member_s'] . '</a>/<a href="admin_files.php?fm=' . $folder_info['user_id'] . '">' . $folder_info['login'] . '</a>/');
 	elseif (empty($folder))
-	$url = '/';
+		$url = '/';	
 	else
-	$url = Uploads::get_admin_url($folder, '');
-
+		$url = Uploads::get_admin_url($folder, '');
+		
 	$template->put_all(array(
 		'FOLDER_ID' => !empty($folder) ? $folder : '0',
 		'URL' => $url,
@@ -196,17 +196,17 @@ elseif (!empty($move_folder) || !empty($move_file))
 		'L_URL' => $LANG['url'],
 		'L_SUBMIT' => $LANG['submit']
 	));
-
+	
 	if ($get_error == 'folder_contains_folder')
-	$template->put('message_helper', MessageHelper::display($LANG['upload_folder_contains_folder'], E_USER_WARNING));
-
+		$template->put('message_helper', MessageHelper::display($LANG['upload_folder_contains_folder'], E_USER_WARNING));
+	
 	//liste des fichiers disponibles
 	include_once(PATH_TO_ROOT .'/member/upload_functions.php');
 	$cats = array();
-
+	
 	if (empty($folder_member))
-	$folder_member = -1;
-
+		$folder_member = -1;
+	
 	$is_folder = !empty($move_folder);
 	//Affichage du dossier/fichier à déplacer
 	if ($is_folder)
@@ -237,18 +237,18 @@ elseif (!empty($move_folder) || !empty($move_file))
 			case 'png':
 			case 'gif':
 			case 'bmp':
-				list($width_source, $height_source) = @getimagesize(PATH_TO_ROOT .'/upload/' . $info_move['path']);
-				$size_img = ' (' . $width_source . 'x' . $height_source . ')';
-					
-				//On affiche l'image réelle si elle n'est pas trop grande.
-				if ($width_source < 350 && $height_source < 350)
-				{
-					$display_real_img = true;
-				}
+			list($width_source, $height_source) = @getimagesize(PATH_TO_ROOT .'/upload/' . $info_move['path']);
+			$size_img = ' (' . $width_source . 'x' . $height_source . ')';
+			
+			//On affiche l'image réelle si elle n'est pas trop grande.
+			if ($width_source < 350 && $height_source < 350) 
+			{
+				$display_real_img = true;
+			}
 		}
-
+		
 		$cat_explorer = display_cat_explorer($info_move['idcat'], $cats, 1, $folder_member);
-
+		
 		$template->assign_block_vars('file', array(
 			'C_DISPLAY_REAL_IMG' => $display_real_img,		
 			'NAME' => $info_move['name'],
@@ -261,19 +261,19 @@ elseif (!empty($move_folder) || !empty($move_file))
 			'TARGET' => url('admin_files.php?movefi=' . $move_file . '&amp;f=0&amp;token=' . $Session->get_token())
 		));
 	}
-
+	
 	$template->put_all(array(
 		'FOLDERS' => $cat_explorer,
 		'ID_FILE' => $move_file
 	));
-
+	
 	$template->display();
 }
 else
 {
 	$template = new FileTemplate('admin/admin_files_management.tpl');
-
-	$sql_request = !empty($folder_member)
+	
+	$sql_request = !empty($folder_member) 
 	? 	("SELECT uc.user_id, m.login
 		FROM " . DB_TABLE_UPLOAD_CAT . " uc
 		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = uc.user_id
@@ -290,26 +290,26 @@ else
 
 	$result = $Sql->query_while ($sql_request, __LINE__, __FILE__);
 	$folder_info = $Sql->fetch_assoc($result);
-
+		
 	//Gestion des erreurs.
 	$array_error = array('e_upload_invalid_format', 'e_upload_max_weight', 'e_upload_error', 'e_upload_failed_unwritable', 'e_unlink_disabled');
 	if (in_array($get_error, $array_error))
-	$template->put('message_helper', MessageHelper::display($LANG[$get_error], E_USER_WARNING));
+		$template->put('message_helper', MessageHelper::display($LANG[$get_error], E_USER_WARNING));
 	if ($get_error == 'incomplete')
-	$template->put('message_helper', MessageHelper::display($LANG['e_incomplete'], E_USER_NOTICE));
+		$template->put('message_helper', MessageHelper::display($LANG['e_incomplete'], E_USER_NOTICE));  
 
 	if (isset($LANG[$get_l_error]))
-	$template->put('message_helper', MessageHelper::display($LANG[$get_l_error], E_USER_WARNING));
+		$template->put('message_helper', MessageHelper::display($LANG[$get_l_error], E_USER_WARNING));  
 
 	if ($show_member)
-	$url = Uploads::get_admin_url($folder, '/<a href="admin_files.php?showm=1">' . $LANG['member_s'] . '</a>');
+		$url = Uploads::get_admin_url($folder, '/<a href="admin_files.php?showm=1">' . $LANG['member_s'] . '</a>');
 	elseif (!empty($folder_member) || !empty($folder_info['user_id']))
-	$url = Uploads::get_admin_url($folder, '', '<a href="admin_files.php?showm=1">' . $LANG['member_s'] . '</a>/<a href="admin_files.php?fm=' . $folder_info['user_id'] . '">' . $folder_info['login'] . '</a>/');
+		$url = Uploads::get_admin_url($folder, '', '<a href="admin_files.php?showm=1">' . $LANG['member_s'] . '</a>/<a href="admin_files.php?fm=' . $folder_info['user_id'] . '">' . $folder_info['login'] . '</a>/');
 	elseif (empty($folder))
-	$url = '/';
+		$url = '/';	
 	else
-	$url = Uploads::get_admin_url($folder, '');
-
+		$url = Uploads::get_admin_url($folder, '');
+		
 	$template->put_all(array(
 		'FOLDER_ID' => !empty($folder) ? $folder : '0',
 		'FOLDERM_ID' => !empty($folder_member) ? '&amp;fm=' . $folder_member : '',
@@ -343,7 +343,7 @@ else
 	));
 
 	if ($folder == 0 && !$show_member && empty($folder_member))
-	{
+	{	
 		$template->assign_block_vars('folder', array(
 			'NAME' => '<a class="com" href="admin_files.php?showm=1">' . $LANG['member_s'] . '</a>',
 			'U_FOLDER' => '?showm=1',
@@ -351,16 +351,16 @@ else
 			'L_TYPE_DEL_FOLDER' => $LANG['empty_member_folder']
 		));
 	}
-
+	
 	$total_folder_size = $total_files = $total_directories = 0;
 
 	$sql_files = "SELECT up.id, up.name, up.path, up.size, up.type, up.timestamp, m.user_id, m.login
 	FROM " . DB_TABLE_UPLOAD . " up
 	LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = up.user_id
 	WHERE idcat = '" . $folder . "'" . ((empty($folder) || $folder_info['user_id'] <= 0) ? ' AND up.user_id = -1' : ' AND up.user_id != -1');
-
+	
 	if ($show_member)
-	$sql_folder = "SELECT uc.user_id as id, uc.user_id, m.login as name, 0 as id_parent
+		$sql_folder = "SELECT uc.user_id as id, uc.user_id, m.login as name, 0 as id_parent
 		FROM " . DB_TABLE_UPLOAD_CAT . " uc
 		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = uc.user_id
 		WHERE uc.id_parent = '" . $folder . "' AND uc.user_id <> -1 
@@ -371,7 +371,7 @@ else
 		WHERE u.user_id <> -1
 		ORDER BY name";
 	elseif (!empty($folder_member) && empty($folder))
-	{
+	{	
 		$sql_folder = "SELECT id, name, id_parent, user_id
 		FROM " . DB_TABLE_UPLOAD_CAT . " 
 		WHERE id_parent = 0 AND user_id = '" . $folder_member . "'
@@ -382,7 +382,7 @@ else
 		WHERE up.idcat = 0 AND up.user_id = '" . $folder_member . "'";
 	}
 	else
-	$sql_folder = "SELECT id, name, id_parent, user_id
+		$sql_folder = "SELECT id, name, id_parent, user_id
 		FROM " . DB_TABLE_UPLOAD_CAT . " 
 		WHERE id_parent = '" . $folder . "'" . ((empty($folder) || $folder_info['user_id'] <= 0) ? ' AND user_id = -1' : ' AND user_id <> -1') . "
 		ORDER BY name";
@@ -391,8 +391,8 @@ else
 	$result = $Sql->query_while ($sql_folder, __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))
 	{
-		$name_cut = (strlen(html_entity_decode($row['name'])) > 22) ? htmlentities(substr(html_entity_decode($row['name']), 0, 22)) . '...' : $row['name'];
-
+		$name_cut = (strlen(html_entity_decode($row['name'])) > 22) ? htmlentities(substr(html_entity_decode($row['name']), 0, 22)) . '...' : $row['name'];	
+		
 		$template->assign_block_vars('folder', array(
 			'ID' => $row['id'],
 			'NAME' => $name_cut,
@@ -409,9 +409,9 @@ else
 			'U_MOVE' => '.php?movefd=' . $row['id'] . '&amp;f=' . $folder . ($row['user_id'] > 0 ? '&amp;fm=' . $row['user_id'] : '')
 		));
 		$total_directories++;
-	}
+	}	
 	$Sql->query_close($result);
-
+		
 	if (!$show_member) //Dossier membres.
 	{
 		//Affichage des fichiers contenu dans le dossier
@@ -419,7 +419,7 @@ else
 		while ($row = $Sql->fetch_assoc($result))
 		{
 			$name_cut = (strlen(html_entity_decode($row['name'])) > 22) ? htmlentities(substr(html_entity_decode($row['name']), 0, 22)) . '...' : $row['name'];
-
+		
 			$get_img_mimetype = Uploads::get_img_mimetype($row['type']);
 			$size_img = '';
 			switch ($row['type'])
@@ -429,28 +429,28 @@ else
 				case 'png':
 				case 'gif':
 				case 'bmp':
-					list($width_source, $height_source) = @getimagesize(PATH_TO_ROOT . '/upload/' . $row['path']);
-					$size_img = ' (' . $width_source . 'x' . $height_source . ')';
-					$width_source = !empty($width_source) ? $width_source + 30 : 0;
-					$height_source = !empty($height_source) ? $height_source + 30 : 0;
-					$bbcode = '[img]/upload/' . $row['path'] . '[/img]';
-					$link = PATH_TO_ROOT . '/upload/' . $row['path'];
-					break;
-					//Image svg
+				list($width_source, $height_source) = @getimagesize(PATH_TO_ROOT . '/upload/' . $row['path']);
+				$size_img = ' (' . $width_source . 'x' . $height_source . ')';
+				$width_source = !empty($width_source) ? $width_source + 30 : 0;
+				$height_source = !empty($height_source) ? $height_source + 30 : 0;
+				$bbcode = '[img]/upload/' . $row['path'] . '[/img]';
+				$link = PATH_TO_ROOT . '/upload/' . $row['path'];
+				break;
+				//Image svg
 				case 'svg':
-					$bbcode = '[img]/upload/' . $row['path'] . '[/img]';
-					$link = 'javascript:popup_upload(\'' . $row['id'] . '\', 0, 0, \'no\')';
-					break;
-					//Sons
+				$bbcode = '[img]/upload/' . $row['path'] . '[/img]';
+				$link = 'javascript:popup_upload(\'' . $row['id'] . '\', 0, 0, \'no\')';
+				break;
+				//Sons
 				case 'mp3':
-					$bbcode = '[sound]/upload/' . $row['path'] . '[/sound]';
-					$link = 'javascript:popup_upload(\'' . $row['id'] . '\', 220, 10, \'no\')';
-					break;
+				$bbcode = '[sound]/upload/' . $row['path'] . '[/sound]';
+				$link = 'javascript:popup_upload(\'' . $row['id'] . '\', 220, 10, \'no\')';
+				break;
 				default:
-					$bbcode = '[url=/upload/' . $row['path'] . ']' . $row['name'] . '[/url]';
-					$link = PATH_TO_ROOT . '/upload/' . $row['path'];
+				$bbcode = '[url=/upload/' . $row['path'] . ']' . $row['name'] . '[/url]';				
+				$link = PATH_TO_ROOT . '/upload/' . $row['path'];
 			}
-				
+			
 			$template->assign_block_vars('files', array(
 				'ID' => $row['id'],
 				'IMG' => $get_img_mimetype['img'],
@@ -462,15 +462,15 @@ else
 				'SIZE' => ($row['size'] > 1024) ? NumberHelper::round($row['size']/1024, 2) . ' ' . $LANG['unit_megabytes'] : NumberHelper::round($row['size'], 0) . ' ' . $LANG['unit_kilobytes'],
 				'LIGHTBOX' => !empty($size_img) ? ' rel="lightbox[1]"' : '',
 				'U_MOVE' => '.php?movefi=' . $row['id'] . '&amp;f=' . $folder . '&amp;fm=' . $row['user_id']
-
-			));
 				
+			));
+			
 			$total_folder_size += $row['size'];
 			$total_files++;
-		}
+		}	
 		$Sql->query_close($result);
 	}
-
+	
 
 	$total_size = $Sql->query("SELECT SUM(size) FROM " . PREFIX . "upload", __LINE__, __FILE__);
 	$template->put_all(array(
@@ -481,14 +481,14 @@ else
 	));
 
 	if ($total_directories == 0 && $total_files == 0 && (!empty($folder) || !empty($show_member)))
-	$template->put_all(array(
+		$template->put_all(array(
 			'C_EMPTY_FOLDER' => true,
 			'L_EMPTY_FOLDER' => $LANG['empty_folder']
-	));
-
+		));
+		
 	$template->display();
 }
-
+	
 require_once('../admin/admin_footer.php');
 
 ?>

@@ -29,59 +29,59 @@ if (defined('PHPBOOST') !== true) exit;
 
 function faq_mini($position, $block)
 {
-	global $Cache, $Template, $FAQ_LANG, $FAQ_CATS, $RANDOM_QUESTIONS;
+    global $Cache, $Template, $FAQ_LANG, $FAQ_CATS, $RANDOM_QUESTIONS;
 
-	load_module_lang('faq');
-	$Cache->load('faq'); //Chargement du cache
+    load_module_lang('faq');
+    $Cache->load('faq'); //Chargement du cache
 
-	include_once(PATH_TO_ROOT . '/faq/faq_begin.php');
+    include_once(PATH_TO_ROOT . '/faq/faq_begin.php');
 
-	$tpl = new FileTemplate('faq/faq_mini.tpl');
+    $tpl = new FileTemplate('faq/faq_mini.tpl');
 
-	MenuService::assign_positions_conditions($tpl, $block);
+    MenuService::assign_positions_conditions($tpl, $block);
 
-	$no_random_question = array(
+    $no_random_question = array(
     	'L_FAQ_RANDOM_QUESTION' => $FAQ_LANG['random_question'],
     	'FAQ_QUESTION' => $FAQ_LANG['no_random_question'],
     	'U_FAQ_QUESTION' => TPL_PATH_TO_ROOT . '/faq/' . url('faq.php')
-	);
+    );
 
-	//Aucune question à afficher
-	if (empty($RANDOM_QUESTIONS))
-	{
-		$tpl->put_all($no_random_question);
-		return $tpl->render();
-	}
+    //Aucune question à afficher
+    if (empty($RANDOM_QUESTIONS))
+    {
+    	$tpl->put_all($no_random_question);
+    	return $tpl->render();
+    }
 
-	$random_question = $RANDOM_QUESTIONS[array_rand($RANDOM_QUESTIONS)];
+    $random_question = $RANDOM_QUESTIONS[array_rand($RANDOM_QUESTIONS)];
 
-	$faq_cats = new FaqCats();
+    $faq_cats = new FaqCats();
 
-	$i = 0;
+    $i = 0;
 
-	//Tant que la question tirée aléatoirement n'est pas lisible par le visiteur, on en choisit une
-	//On met un "timeout" de 5 essais pour ne pas perdre trop de temps
-	while (!$faq_cats->check_auth($random_question['idcat']) && $i < 5)
-	{
-		$random_question = $RANDOM_QUESTIONS[array_rand($RANDOM_QUESTIONS)];
-		$i++;
-	}
+    //Tant que la question tirée aléatoirement n'est pas lisible par le visiteur, on en choisit une
+    //On met un "timeout" de 5 essais pour ne pas perdre trop de temps
+    while (!$faq_cats->check_auth($random_question['idcat']) && $i < 5)
+    {
+    	$random_question = $RANDOM_QUESTIONS[array_rand($RANDOM_QUESTIONS)];
+    	$i++;
+    }
 
-	//Question trouvée avant 5 essais
-	if ($i < 5 && !empty($random_question['question']))
-	{
-		$tpl->put_all(array(
+    //Question trouvée avant 5 essais
+    if ($i < 5 && !empty($random_question['question']))
+    {
+    	$tpl->put_all(array(
     		'L_FAQ_RANDOM_QUESTION' => $FAQ_LANG['random_question'],
     		'FAQ_QUESTION' => $random_question['question'],
     		'U_FAQ_QUESTION' => PATH_TO_ROOT . '/faq/' . ($random_question['idcat'] > 0 ? url('faq.php?id=' . $random_question['idcat'] . '&amp;question=' . $random_question['id'], 'faq-' . $random_question['idcat'] . '+' . Url::encode_rewrite($FAQ_CATS[$random_question['idcat']]['name']) . '.php?question=' . $random_question['id']) . '#q' . $random_question['id'] : url('faq.php?question=' . $random_question['id'], 'faq.php?question=' . $random_question['id']) . '#q' . $random_question['id'])
-		));
-	}
-	//Echec
-	else
-	{
-		$tpl->put_all($no_random_question);
-	}
-	//On retourne le contenu du bloc
-	return $tpl->render();
+    	));
+    }
+    //Echec
+    else
+    {
+    	$tpl->put_all($no_random_question);
+    }
+    //On retourne le contenu du bloc
+    return $tpl->render();
 }
 ?>

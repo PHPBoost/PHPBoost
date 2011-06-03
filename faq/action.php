@@ -1,57 +1,57 @@
 <?php
 /*##################################################
- *                               action.php
- *                            -------------------
- *   begin                : December 1, 2007
- *   copyright            : (C) 2007 Sautel Benoit
- *   email                : ben.popeye@phpboost.com
- *
- *
+*                               action.php
+*                            -------------------
+*   begin                : December 1, 2007
+*   copyright            : (C) 2007 Sautel Benoit
+*   email                : ben.popeye@phpboost.com
+*
+*
  ###################################################
- *
- *  This program is free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 2 of the License, or
- *  (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
+*
+*  This program is free software; you can redistribute it and/or modify
+*  it under the terms of the GNU General Public License as published by
+*  the Free Software Foundation; either version 2 of the License, or
+*  (at your option) any later version.
+* 
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with this program; if not, write to the Free Software
+* Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+*
  ###################################################*/
 
 include_once('../kernel/begin.php');
 include_once('faq_begin.php');
 
 
-$faq_del_id = AppContext::get_request()->get_getint('del', 0);
-$down = AppContext::get_request()->get_getint('down', 0);
-$up = AppContext::get_request()->get_getint('up', 0);
-$id_question = AppContext::get_request()->get_postint('id_question', 0);
-$entitled = TextHelper::strprotect(AppContext::get_request()->get_poststring('entitled', ''));
-$answer = FormatingHelper::strparse(TextHelper::strprotect(AppContext::get_request()->get_poststring('answer', '')));
-$new_id_cat = AppContext::get_request()->get_postint('id_cat', 0);
-$id_after = AppContext::get_request()->get_postint('after', 0);
+$faq_del_id = retrieve(GET, 'del', 0);
+$down = retrieve(GET, 'down', 0);
+$up = retrieve(GET, 'up', 0);
+$id_question = retrieve(POST, 'id_question', 0);
+$entitled = retrieve(POST, 'entitled', '');
+$answer = retrieve(POST, 'answer', '', TSTRING_PARSE);
+$new_id_cat = retrieve(POST, 'id_cat', 0);
+$id_after = retrieve(POST, 'after', 0);
 //Properties of the category
-$cat_properties = AppContext::get_request()->get_getint('cat_properties', 0);
-$id_cat = AppContext::get_request()->get_postint('id_faq', 0);
-$display_mode = AppContext::get_request()->get_postint('display_mode', 0);
+$cat_properties = retrieve(GET, 'cat_properties', 0);
+$id_cat = retrieve(POST, 'id_faq', 0);
+$display_mode = retrieve(POST, 'display_mode', 0);
 $global_auth = retrieve(POST, 'global_auth', array());
-$cat_name = TextHelper::strprotect(AppContext::get_request()->get_poststring('cat_name', ''));
-$description = FormatingHelper::strparse(TextHelper::strprotect(AppContext::get_request()->get_poststring('description', '')));
+$cat_name = retrieve(POST, 'cat_name', '');
+$description = retrieve(POST, 'description', '', TSTRING_PARSE);
 
-$target = AppContext::get_request()->get_postint('target', 0);
-$move_question = AppContext::get_request()->get_postbool('move_question', false);
+$target = retrieve(POST, 'target', 0);
+$move_question = retrieve(POST, 'move_question', false);
 
 if ($faq_del_id > 0)
-{
-	//Vérification de la validité du jeton
-	$Session->csrf_get_protect();
+{    
+    //Vérification de la validité du jeton
+    $Session->csrf_get_protect();
 
 	$faq_infos = $Sql->query_array(PREFIX . 'faq', 'idcat', 'q_order', 'question', "WHERE id = '" . $faq_del_id . "'", __LINE__, __FILE__);
 	$id_cat_for_bread_crumb = $faq_infos['idcat'];
@@ -67,7 +67,7 @@ if ($faq_del_id > 0)
 				$faq_cats = new FaqCats();
 				$Sql->query_inject("UPDATE " . PREFIX . "faq_cats SET num_questions = num_questions - 1 WHERE id IN (" . implode(', ', $faq_cats->build_parents_id_list($faq_infos['idcat'], ADD_THIS_CATEGORY_IN_LIST)) . ")", __LINE__, __FILE__);
 			}
-				
+			
 			$Cache->Generate_module_file('faq');
 			AppContext::get_response()->redirect(HOST . DIR . url('/faq/management.php?faq=' . $faq_infos['idcat'], '', '&'));
 		}
@@ -81,7 +81,7 @@ if ($faq_del_id > 0)
 elseif ($down > 0)
 {
 	$faq_infos = $Sql->query_array(PREFIX . 'faq', 'idcat', 'q_order', 'question', "WHERE id = '" . $down . "'", __LINE__, __FILE__);
-
+	
 	$num_questions = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "faq WHERE idcat = '" . $faq_infos['idcat'] . "'", __LINE__, __FILE__);
 	$id_cat_for_bread_crumb = $faq_infos['idcat'];
 	include('faq_bread_crumb.php');
@@ -129,10 +129,10 @@ elseif (!empty($entitled) && !empty($answer))
 		$id_cat_for_bread_crumb = $faq_infos['idcat'];
 		include('faq_bread_crumb.php');
 		if ($auth_write)//If authorized user
-		{
+		{			
 			$Sql->query_inject("UPDATE " . PREFIX . "faq SET question = '" . $entitled . "', answer = '" . $answer . "' WHERE id = '" . $id_question . "'", __LINE__, __FILE__);
 			AppContext::get_response()->redirect('/faq/' . url('faq.php?id=' . $faq_infos['idcat'] . '&question=' . $id_question, 'faq-' . $faq_infos['idcat'] . '+' . Url::encode_rewrite($FAQ_CATS[$faq_infos['idcat']]['name']) . '.php?question=' . $id_question, '&') . '#q' . $id_question);
-				
+			
 		}
 		else
 		{
@@ -149,21 +149,21 @@ elseif (!empty($entitled) && !empty($answer))
 			//shifting right all questions which will be after this
 			$Sql->query_inject("UPDATE " . PREFIX . "faq SET q_order = q_order + 1 WHERE idcat = '" . $new_id_cat . "' AND q_order > '" . $id_after . "'", __LINE__, __FILE__);
 			$Sql->query_inject("INSERT INTO " . PREFIX . "faq (idcat, q_order, question, answer, user_id, timestamp) VALUES ('" . $new_id_cat . "', '" . ($id_after + 1 ) . "', '" . $entitled . "', '" . $answer . "', '" . $User->get_attribute('user_id') . "', '" . time() . "')", __LINE__, __FILE__);
-				
+			
 			$new_question_id = $Sql->insert_id("SELECT MAX(id) FROM " . PREFIX . "faq");
-				
+			
 			//Updating number of subcategories
 			if ($new_id_cat != 0)
 			{
 				$faq_cats = new FaqCats();
 				$Sql->query_inject("UPDATE " . PREFIX . "faq_cats SET num_questions = num_questions + 1 WHERE id IN (" . implode(', ', $faq_cats->build_parents_id_list($new_id_cat, ADD_THIS_CATEGORY_IN_LIST)) . ")", __LINE__, __FILE__);
 			}
-				
+			
 			$Cache->Generate_module_file('faq');
-				
+			
 			//On recupère les informations.
 			$Cache->load('faq', RELOAD_CACHE);
-
+	
 			AppContext::get_response()->redirect('/faq/' . url('faq.php?id=' . $new_id_cat . '&question=' . $new_question_id, 'faq-' . $new_id_cat . '+' . Url::encode_rewrite($FAQ_CATS[$new_id_cat]['name']) . '.php?question=' . $new_question_id, '&') . '#q' . $new_question_id);
 		}
 		else
@@ -185,7 +185,7 @@ elseif ($cat_properties && (!empty($cat_name) || $id_cat == 0))
 			$new_auth = addslashes(serialize($array_auth_all));
 		}
 		else
-		$new_auth = '';
+			$new_auth = '';
 			
 		$display_mode = ($display_mode <= 2 || $display_mode >= 0) ? $display_mode : 0;
 
@@ -226,7 +226,7 @@ elseif ($id_question > 0 && $move_question && $target >= 0)
 		{
 			$id_cat_for_bread_crumb = (int)$FAQ_CATS[$id_cat_for_bread_crumb]['id_parent'];
 			if (!empty($FAQ_CATS[$id_cat_for_bread_crumb]['auth']))
-			$auth_write = $User->check_auth($FAQ_CATS[$id_cat_for_bread_crumb]['auth'], AUTH_WRITE);
+				$auth_write = $User->check_auth($FAQ_CATS[$id_cat_for_bread_crumb]['auth'], AUTH_WRITE);
 		}
 		if ($auth_write)
 		{
@@ -235,23 +235,23 @@ elseif ($id_question > 0 && $move_question && $target >= 0)
 				$max_order = $Sql->query("SELECT MAX(q_order) FROM " . PREFIX . "faq WHERE idcat = '" . $target . "'", __LINE__, __FILE__);
 				$Sql->query_inject("UPDATE " . PREFIX . "faq SET idcat = '" . $target . "', q_order = '" . ($max_order + 1) . "' WHERE id = '" . $id_question . "'", __LINE__, __FILE__);
 				$Sql->query_inject("UPDATE " . PREFIX . "faq SET q_order = q_order - 1 WHERE idcat = '" . $question_infos['idcat'] . "' AND q_order > '" . $question_infos['q_order'] . "'", __LINE__, __FILE__);
-
+				
 				//Updating number of subcategories of its old parents
 				if ($question_infos['idcat'] != 0)
 				{
 					$faq_cats = new FaqCats();
 					$Sql->query_inject("UPDATE " . PREFIX . "faq_cats SET num_questions = num_questions - 1 WHERE id IN (" . implode(', ', $faq_cats->build_parents_id_list($question_infos['idcat'], ADD_THIS_CATEGORY_IN_LIST)) . ")", __LINE__, __FILE__);
 				}
-
+				
 				//Updating the number of subcategories of its new parents
 				if ($target != 0)
 				{
 					$faq_cats = new FaqCats();
 					$Sql->query_inject("UPDATE " . PREFIX . "faq_cats SET num_questions = num_questions + 1 WHERE id IN (" . implode(', ', $faq_cats->build_parents_id_list($target, ADD_THIS_CATEGORY_IN_LIST)) . ")", __LINE__, __FILE__);
 				}
-
+				
 				if ($question_infos['idcat'] != 0 || $target != 0)
-				$Cache->Generate_module_file('faq');
+					$Cache->Generate_module_file('faq');
 			}
 			AppContext::get_response()->redirect(HOST . DIR . url('/faq/management.php?faq=' . $target, '', '&'));
 		}
@@ -260,6 +260,6 @@ elseif ($id_question > 0 && $move_question && $target >= 0)
 	DispatchManager::redirect($error_controller);
 }
 else
-AppContext::get_response()->redirect(HOST . DIR . url('/faq/faq.php', '', '&'));
+	AppContext::get_response()->redirect(HOST . DIR . url('/faq/faq.php', '', '&'));
 
 ?>

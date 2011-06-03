@@ -58,14 +58,14 @@ class AdminErrorsController404List extends AdminController
 
 	private function load_env()
 	{
-		$lang = LangLoader::get_class(__CLASS__);
-
+        $lang = LangLoader::get_class(__CLASS__);
+        
 		$this->view = new FileTemplate('admin/errors/AdminErrorsController404List.tpl');
-		$this->view->add_lang($lang);
-
+        $this->view->add_lang($lang);
+        
 		$this->response = new AdminErrorsDisplayResponse($this->view);
-
-		$env = $this->response->get_graphical_environment();
+        
+        $env = $this->response->get_graphical_environment();
 		$env->set_page_title($lang['404_list']);
 	}
 }

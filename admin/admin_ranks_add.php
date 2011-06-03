@@ -6,7 +6,7 @@
  *   copyright            : (C) 2005 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
- *
+ * 
  *
  ###################################################
  *
@@ -14,7 +14,7 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- *
+ * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -33,24 +33,24 @@ require_once('../admin/admin_header.php');
 //Ajout du rang.
 if (!empty($_POST['add']))
 {
-	$name = TextHelper::strprotect(AppContext::get_request()->get_poststring('name', ''));
-	$msg = AppContext::get_request()->get_postint('msg', 0);
-	$icon = TextHelper::strprotect(AppContext::get_request()->get_poststring('icon', ''));
-	$icon = TextHelper::strprotect(AppContext::get_request()->get_poststring('icon', ''));
-
+	$name = retrieve(POST, 'name', '');
+	$msg = retrieve(POST, 'msg', 0);    
+	$icon = retrieve(POST, 'icon', ''); 
+	$icon = retrieve(POST, 'icon', ''); 
+	
 	if (!empty($name) && $msg >= 0)
-	{
+	{	
 		//On insere le nouveau lien, tout en précisant qu'il s'agit d'un lien ajouté et donc supprimable
-		$Sql->query_inject("INSERT INTO " . DB_TABLE_RANKS . " (name,msg,icon,special)
+		$Sql->query_inject("INSERT INTO " . DB_TABLE_RANKS . " (name,msg,icon,special) 
 		VALUES('" . $name . "', '" . $msg . "', '" . $icon . "', '0')", __LINE__, __FILE__);	
-
+				
 		###### Régénération du cache des rangs #######
 		RanksCache::invalidate();
-
-		AppContext::get_response()->redirect('/admin/admin_ranks.php');
+		
+		AppContext::get_response()->redirect('/admin/admin_ranks.php');	
 	}
 	else
-	AppContext::get_response()->redirect('/admin/admin_ranks_add.php?error=incomplete#message_helper');
+		AppContext::get_response()->redirect('/admin/admin_ranks_add.php?error=incomplete#message_helper');
 }
 elseif (!empty($_FILES['upload_ranks']['name'])) //Upload
 {
@@ -58,47 +58,47 @@ elseif (!empty($_FILES['upload_ranks']['name'])) //Upload
 	@clearstatcache();
 	$dir = PATH_TO_ROOT . '/templates/' . get_utheme()  . '/images/ranks/';
 	if (!is_writable($dir))
-	$is_writable = (@chmod($dir, 0777)) ? true : false;
-
+		$is_writable = (@chmod($dir, 0777)) ? true : false;
+	
 	@clearstatcache();
 	$error = '';
 	if (is_writable($dir)) //Dossier en écriture, upload possible
 	{
-
+		
 		$Upload = new Upload($dir);
 		$Upload->disableContentCheck();
 		if (!$Upload->file('upload_ranks', '`([a-z0-9_ -])+\.(jpg|gif|png|bmp)+$`i'))
-		$error = $Upload->get_error();
+			$error = $Upload->get_error();
 	}
 	else
-	$error = 'e_upload_failed_unwritable';
-
+		$error = 'e_upload_failed_unwritable';
+	
 	$error = !empty($error) ? '?error=' . $error : '';
-	AppContext::get_response()->redirect(HOST . SCRIPT . $error);
+	AppContext::get_response()->redirect(HOST . SCRIPT . $error);	
 }
-else //Sinon on rempli le formulaire
-{
+else //Sinon on rempli le formulaire	 
+{	
 	$template = new FileTemplate('admin/admin_ranks_add.tpl');
 
 	//Gestion erreur.
-	$get_error = TextHelper::strprotect(AppContext::get_request()->get_getstring('error', ''));
+	$get_error = retrieve(GET, 'error', '');
 	$array_error = array('e_upload_invalid_format', 'e_upload_max_weight', 'e_upload_error', 'e_upload_php_code', 'e_upload_failed_unwritable');
 	if (in_array($get_error, $array_error))
-	$template->put('message_helper', MessageHelper::display($LANG[$get_error], E_USER_WARNING));
+		$template->put('message_helper', MessageHelper::display($LANG[$get_error], E_USER_WARNING));
 	if ($get_error == 'incomplete')
-	$template->put('message_helper', MessageHelper::display($LANG['e_incomplete'], E_USER_NOTICE));
-
+		$template->put('message_helper', MessageHelper::display($LANG['e_incomplete'], E_USER_NOTICE));
+	
 	//On recupère les images des groupes
 	$rank_options = '<option value="">--</option>';
-
-
+	
+	
 	$image_folder_path = new Folder(PATH_TO_ROOT . '/templates/' . get_utheme()  . '/images/ranks');
 	foreach ($image_folder_path->get_files('`\.(png|jpg|bmp|gif)$`i') as $image)
 	{
 		$file = $image->get_name();
 		$rank_options .= '<option value="' . PATH_TO_ROOT . '/templates/' . get_utheme()  . '/images/ranks/' . $file . '">' . $file . '</option>';
 	}
-
+	
 	$template->put_all(array(
 		'RANK_OPTIONS' => $rank_options,
 		'L_REQUIRE_RANK_NAME' => $LANG['require_rank_name'],

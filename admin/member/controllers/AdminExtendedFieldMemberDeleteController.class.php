@@ -30,9 +30,9 @@ class AdminExtendedFieldMemberDeleteController extends AdminController
 	public function execute(HTTPRequest $request)
 	{
 		AppContext::get_session()->csrf_post_protect();
-
+		
 		$id = $request->get_int('id', null);
-
+		
 		if ($id !== null)
 		{
 			$extended_field = new ExtendedField();
@@ -41,7 +41,7 @@ class AdminExtendedFieldMemberDeleteController extends AdminController
 			if ($exist_field)
 			{
 				ExtendedFieldsService::delete_by_id($id);
-
+				
 				return true;
 			}
 			else

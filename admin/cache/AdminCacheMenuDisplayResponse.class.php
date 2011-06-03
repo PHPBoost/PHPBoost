@@ -28,19 +28,19 @@
 class AdminCacheMenuDisplayResponse extends AdminMenuDisplayResponse
 {
 	private $lang;
-
+	
 	public function __construct($view)
 	{
-		global $LANG;
-
-		parent::__construct($view);
-		$cache = LangLoader::get_message('cache', 'admin-cache-common');
-		$this->set_title($cache);
-		$this->add_link($cache, DispatchManager::get_url('/admin/cache/index.php', '/data'), '/templates/' . get_utheme() . '/images/admin/cache.png');
-		$syndication_cache = LangLoader::get_message('syndication_cache', 'admin-cache-common');
-		$this->add_link($syndication_cache, DispatchManager::get_url('/admin/cache/index.php', '/syndication'), '/templates/' . get_utheme() . '/images/admin/rss.png');
-		$cache_configuration = LangLoader::get_message('cache_configuration', 'admin-cache-common');
-		$this->add_link($cache_configuration, DispatchManager::get_url('/admin/cache/index.php', '/config'), '/templates/' . get_utheme() . '/images/admin/configuration.png');
+        global $LANG;
+        
+        parent::__construct($view);
+        $cache = LangLoader::get_message('cache', 'admin-cache-common');
+        $this->set_title($cache);
+        $this->add_link($cache, DispatchManager::get_url('/admin/cache/index.php', '/data'), '/templates/' . get_utheme() . '/images/admin/cache.png');
+        $syndication_cache = LangLoader::get_message('syndication_cache', 'admin-cache-common');
+        $this->add_link($syndication_cache, DispatchManager::get_url('/admin/cache/index.php', '/syndication'), '/templates/' . get_utheme() . '/images/admin/rss.png');
+        $cache_configuration = LangLoader::get_message('cache_configuration', 'admin-cache-common');
+        $this->add_link($cache_configuration, DispatchManager::get_url('/admin/cache/index.php', '/config'), '/templates/' . get_utheme() . '/images/admin/configuration.png');
 	}
 }
 ?>

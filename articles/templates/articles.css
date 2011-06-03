@@ -62,7 +62,8 @@
 #tabs a span {
 	float: left;
 	display: block;
-	background: transparent url('images/tabs_right.gif') no-repeat right top;
+	background: transparent url('images/tabs_right.gif') no-repeat right top
+		;
 	padding: 4px 9px 2px 6px;
 }
 
@@ -85,6 +86,7 @@
 	padding-top: 1px;
 	background-color: #FFF;
 	padding-left: 5px;
+
 }
 
 .carouseljs ol,.carouseljs ul {
@@ -154,24 +156,23 @@
 }
 
 /* extend field */
-.tab_extend_field {
-	margin: 10px;
-	text-align: center;
-	border: 1px solid #CCCCCC;
-	border-spacing: 0;
+.tab_extend_field{
+	margin:10px;
+	text-align:center;
+	border:1px solid #CCCCCC;
+	border-spacing:0;
 }
 
-.extend_field_left {
-	text-align: left;
-	font-weight: bold;
+.extend_field_left{
+	text-align:left;
+	font-weight:bold;
 }
-
-.extend_field_right {
-	text-align: left;
+.extend_field_right{
+	text-align:left;
 }
 
 /* info table */
-.info_row {
-	text-align: left;
-	font-weight: bold;
+.info_row{
+	text-align:left;
+	font-weight:bold;
 }

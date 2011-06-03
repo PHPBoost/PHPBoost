@@ -31,73 +31,73 @@ require_once(PATH_TO_ROOT . '/admin/admin_begin.php');
 define('TITLE', $LANG['administration']);
 require_once(PATH_TO_ROOT . '/admin/admin_header.php');
 
-$id = AppContext::get_request()->get_getint('id', 0);
-$switchtheme = TextHelper::strprotect(AppContext::get_request()->get_getstring('theme', ''));
+$id = retrieve(GET, 'id', 0);
+$switchtheme = retrieve(GET, 'theme', '');
 $name_theme = !empty($switchtheme) ? $switchtheme : get_utheme();
-$theme_post = TextHelper::strprotect(AppContext::get_request()->get_poststring('theme', ''));
+$theme_post = retrieve(POST, 'theme', '');
 
-$action = TextHelper::strprotect(AppContext::get_request()->get_getstring('action', ''));
-$move = TextHelper::strprotect(AppContext::get_request()->get_getstring('move', ''));
+$action = retrieve(GET, 'action', '');
+$move = retrieve(GET, 'move', '');
 
 function menu_admin_link($menu, $mode)
 {
-	$link = '';
-	switch ($mode)
-	{
-		case 'edit':
-			if (($menu instanceof LinksMenu))
-			$link = 'links.php?';
-			elseif (($menu instanceof ContentMenu))
-			$link = 'content.php?';
-			elseif (($menu instanceof FeedMenu))
-			$link = 'feed.php?';
-			else
-			$link = 'auth.php?';
-			break;
-		case 'delete':
-			if (($menu instanceof ContentMenu) || ($menu instanceof LinksMenu) || ($menu instanceof FeedMenu))
-			$link = 'menus.php?action=delete&amp;';
-			else
-			return '';
-			break;
-	}
-	global $Session;
-	return $link . 'id=' . $menu->get_id() . '&amp;token=' . $Session->get_token();
+    $link = '';
+    switch ($mode)
+    {
+        case 'edit':
+            if (($menu instanceof LinksMenu))
+                $link = 'links.php?';
+            elseif (($menu instanceof ContentMenu))
+                $link = 'content.php?';
+            elseif (($menu instanceof FeedMenu))
+                $link = 'feed.php?';
+            else
+                $link = 'auth.php?';
+            break;
+        case 'delete':
+            if (($menu instanceof ContentMenu) || ($menu instanceof LinksMenu) || ($menu instanceof FeedMenu))
+                $link = 'menus.php?action=delete&amp;';
+            else
+            	return '';
+            break;
+    }
+    global $Session;
+    return $link . 'id=' . $menu->get_id() . '&amp;token=' . $Session->get_token();
 }
 
 if (!empty($id))
 {
-	$menu = MenuService::load($id);
-	if ($menu == null)
-	AppContext::get_response()->redirect('menus.php');
+    $menu = MenuService::load($id);
+    if ($menu == null)
+        AppContext::get_response()->redirect('menus.php');
 
-	// In GET mode so we check it
-	$Session->csrf_get_protect();
+    // In GET mode so we check it
+    $Session->csrf_get_protect();
 
-	switch ($action)
-	{
-		case 'enable':
-			MenuService::enable($menu);
-			break;
-		case 'disable':
-			MenuService::disable($menu);
-			break;
-		case 'delete':
-			MenuService::delete($id);
-			break;
-		default:
-			if (!empty($move))
-			{   // Move a Menu
-				MenuService::move($menu, $move);
-			}
-			break;
-	}
+    switch ($action)
+    {
+    	case 'enable':
+            MenuService::enable($menu);
+        	break;
+        case 'disable':
+            MenuService::disable($menu);
+            break;
+        case 'delete':
+            MenuService::delete($id);
+            break;
+        default:
+            if (!empty($move))
+            {   // Move a Menu
+                MenuService::move($menu, $move);
+            }
+            break;
+    }
 
-	MenuService::generate_cache();
+    MenuService::generate_cache();
 
-	ModulesCssFilesCache::invalidate();
+    ModulesCssFilesCache::invalidate();
 
-	AppContext::get_response()->redirect('menus.php#m' . $id);
+    AppContext::get_response()->redirect('menus.php#m' . $id);
 }
 
 // Try to find out new mini-modules and delete old ones
@@ -108,69 +108,69 @@ MenuService::update_mini_menus_list();
 // Retrieves all the menu
 $menus_blocks = MenuService::get_menus_map();
 $blocks = array(
-Menu::BLOCK_POSITION__HEADER => 'mod_header',
-Menu::BLOCK_POSITION__SUB_HEADER => 'mod_subheader',
-Menu::BLOCK_POSITION__TOP_CENTRAL => 'mod_topcentral',
-Menu::BLOCK_POSITION__BOTTOM_CENTRAL => 'mod_bottomcentral',
-Menu::BLOCK_POSITION__TOP_FOOTER => 'mod_topfooter',
-Menu::BLOCK_POSITION__FOOTER => 'mod_footer',
-Menu::BLOCK_POSITION__LEFT => 'mod_left',
-Menu::BLOCK_POSITION__RIGHT => 'mod_right',
-Menu::BLOCK_POSITION__NOT_ENABLED => 'mod_main'
+   Menu::BLOCK_POSITION__HEADER => 'mod_header',
+   Menu::BLOCK_POSITION__SUB_HEADER => 'mod_subheader',
+   Menu::BLOCK_POSITION__TOP_CENTRAL => 'mod_topcentral',
+   Menu::BLOCK_POSITION__BOTTOM_CENTRAL => 'mod_bottomcentral',
+   Menu::BLOCK_POSITION__TOP_FOOTER => 'mod_topfooter',
+   Menu::BLOCK_POSITION__FOOTER => 'mod_footer',
+   Menu::BLOCK_POSITION__LEFT => 'mod_left',
+   Menu::BLOCK_POSITION__RIGHT => 'mod_right',
+   Menu::BLOCK_POSITION__NOT_ENABLED => 'mod_main'
 );
 
 if ($action == 'save') //Save menus positions.
 {
 	// We build the array representing the tree
-	$menu_tree = array();
-	$reverse_menu_tree = array();
-	preg_match_all('`([a-z_]+)\[\]=([0-9]+)`', TextHelper::strprotect(AppContext::get_request()->get_poststring('menu_tree'), TextHelper::HTML_NO_PROTECT), $matches);
-	if (is_array($matches[1]))
-	{
-		foreach($matches[1] as $key => $container)
-		{
-			$menu_tree[$matches[2][$key]] = $container;
-			$reverse_menu_tree[$container][] = $matches[2][$key];
-		}
-	}
-
-	//Update all menus.
-	$menu_list = array();
-	foreach ($menus_blocks as $block_id => $menus)
+    $menu_tree = array();
+    $reverse_menu_tree = array();
+    preg_match_all('`([a-z_]+)\[\]=([0-9]+)`', retrieve(POST, 'menu_tree', '', TSTRING_HTML), $matches);
+    if (is_array($matches[1]))
+    {
+    	foreach($matches[1] as $key => $container)
+	    {
+	    	$menu_tree[$matches[2][$key]] = $container;
+	    	$reverse_menu_tree[$container][] = $matches[2][$key];
+	    }
+    }
+    
+    //Update all menus.
+    $menu_list = array();
+    foreach ($menus_blocks as $block_id => $menus)
 	{
 		// For each block
-		foreach ($menus as $menu)
-		{
+	    foreach ($menus as $menu)
+	    {
 			$menu_list[$menu->get_id()] = $menu;
 			$new_block = $menu_tree[$menu->get_id()];
-			$enabled = $menu->is_enabled();
+       		$enabled = $menu->is_enabled();
 
-			if ($enabled && $new_block == 'mod_central') //Disable menu
-			{
-				MenuService::disable($menu);
-			}
-			elseif(!$enabled && $new_block != 'mod_central') //Enable menu
-			{
-				MenuService::enable($menu);
-			}
+       		if ($enabled && $new_block == 'mod_central') //Disable menu
+       		{
+       			MenuService::disable($menu);
+       		}
+       		elseif(!$enabled && $new_block != 'mod_central') //Enable menu
+       		{
+       			MenuService::enable($menu);
+       		}
 
-			if ($new_block != $blocks[$menu->get_block()]) //Move the menu if enabled
-			{
-				$new_block_id = array_search($new_block, $blocks);
-				if ($new_block_id !== false)
-				{
-					MenuService::move($menu, $new_block_id);
-				}
-			}
-		}
+       		if ($new_block != $blocks[$menu->get_block()]) //Move the menu if enabled
+       		{
+       			$new_block_id = array_search($new_block, $blocks);
+       			if ($new_block_id !== false)
+       			{
+       				MenuService::move($menu, $new_block_id);
+       			}
+       		}
+	    }
 	}
-
+	
 	//Sort the menus according to their new positions
 	$current_block_in_tree = '';
 	foreach ($reverse_menu_tree as $block_in_tree => $menus) //Retrieve position's menu in the sorted tree.
 	{
 		$block_position = 0;
-		foreach ($menus as $menu_id)
+		foreach ($menus as $menu_id) 
 		{
 			MenuService::set_position($menu_list[$menu_id], $block_position);
 			$block_position++;
@@ -187,9 +187,9 @@ if ($action == 'save') //Save menus positions.
 	$columns_disabled->set_disable_left_columns(AppContext::get_request()->get_bool('left_column_enabled', true));
 	$columns_disabled->set_disable_right_columns(AppContext::get_request()->get_bool('right_column_enabled', true));
 	ThemeManager::change_columns_disabled($theme_post, $columns_disabled);
-
+	
 	MenuService::generate_cache();
-
+	
 	AppContext::get_response()->redirect('menus.php');
 }
 
@@ -214,24 +214,24 @@ $menu_template->put_all(array(
 foreach ($menus_blocks as $block_id => $menus)
 {
 	// For each block
-	$i = 0;
-	$max = count($menus);
-	foreach ($menus as $menu)
-	{   // For each Menu in this block
-		$menu_tpl = clone $menu_template;
+    $i = 0;
+    $max = count($menus);
+    foreach ($menus as $menu)
+    {   // For each Menu in this block
+        $menu_tpl = clone $menu_template;
 
-		$id = $menu->get_id();
-		$enabled = $menu->is_enabled();
+        $id = $menu->get_id();
+        $enabled = $menu->is_enabled();
 
-		if (!$enabled)
-		$block_id = Menu::BLOCK_POSITION__NOT_ENABLED;
+        if (!$enabled)
+           $block_id = Menu::BLOCK_POSITION__NOT_ENABLED;
 
-		$edit_link = menu_admin_link($menu, 'edit');
-		$del_link = menu_admin_link($menu, 'delete');
+        $edit_link = menu_admin_link($menu, 'edit');
+        $del_link = menu_admin_link($menu, 'delete');
 
 		$mini = in_array($block_id, array(Menu::BLOCK_POSITION__LEFT, Menu::BLOCK_POSITION__NOT_ENABLED, Menu::BLOCK_POSITION__RIGHT));
 
-		$menu_tpl->put_all(array(
+        $menu_tpl->put_all(array(
             'NAME' => $menu->get_formated_title(),
             'IDMENU' => $id,
             'CONTENTS' => $menu->admin_display(),
@@ -247,7 +247,7 @@ foreach ($menus_blocks as $block_id => $menus)
             'U_UP' => menu_admin_link($menu, 'up'),
             'U_DOWN' => menu_admin_link($menu, 'down'),
             'U_MOVE' => menu_admin_link($menu, 'move'),
-		));
+        ));
 
 		if($enabled)
 		{
@@ -258,10 +258,10 @@ foreach ($menus_blocks as $block_id => $menus)
 				'L_UNACTIVATE' => $LANG['unactivate'],
 
 			));
-		}
-		$tpl->assign_block_vars($blocks[$block_id], array('MENU' => $menu_tpl->render()));
-		$i++;
-	}
+        }
+        $tpl->assign_block_vars($blocks[$block_id], array('MENU' => $menu_tpl->render()));
+        $i++;
+    }
 }
 
 foreach(ThemeManager::get_activated_themes_map() as $theme => $properties)
@@ -274,7 +274,7 @@ foreach(ThemeManager::get_activated_themes_map() as $theme => $properties)
 		'SELECTED' => $selected
 	));
 }
-
+	
 $columns_disable = ThemeManager::get_theme($name_theme)->get_columns_disabled();
 
 $tpl->put_all(array(

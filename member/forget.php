@@ -29,8 +29,8 @@ require_once('../kernel/begin.php');
 define('TITLE', $LANG['forget_pass']);
 require_once('../kernel/header.php'); 
 
-$activ_get = AppContext::get_request()->get_getstring('activ', '');
-$user_get = AppContext::get_request()->get_getint('u', 0);
+$activ_get = retrieve(GET, 'activ', '');
+$user_get = retrieve(GET, 'u', 0);
 
 $tpl = new FileTemplate('member/forget.tpl');
 		

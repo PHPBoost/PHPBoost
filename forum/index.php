@@ -29,7 +29,7 @@ require_once('../kernel/begin.php');
 require_once('../forum/forum_begin.php');
 require_once('../forum/forum_tools.php');
 
-$id_get = AppContext::get_request()->get_getint('id', 0);
+$id_get = retrieve(GET, 'id', 0);
 $cat_name = !empty($CAT_FORUM[$id_get]['name']) ? $CAT_FORUM[$id_get]['name'] : '';
 $Bread_crumb->add($CONFIG_FORUM['forum_name'], 'index.php' . SID);
 $Bread_crumb->add($cat_name, '');

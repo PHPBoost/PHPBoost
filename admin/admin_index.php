@@ -6,14 +6,14 @@
  *   copyright            : (C) 2005 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
- *
+ *   
  ###################################################
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- *
+ * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -33,15 +33,15 @@ require_once('../admin/admin_header.php');
 
 
 //Enregistrement du bloc note
-$writingpad = TextHelper::strprotect(AppContext::get_request()->get_poststring('writingpad', ''));
+$writingpad = retrieve(POST, 'writingpad', '');
 if (!empty($writingpad))
 {
-	$content = trim(AppContext::get_request()->get_poststring('writing_pad_content', ''));
-
+	$content = retrieve(POST, 'writing_pad_content', '', TSTRING_UNCHANGE);
+	
 	$writing_pad_content = WritingPadConfig::load();
 	$writing_pad_content->set_content($content);
 	WritingPadConfig::save();
-
+	
 	AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);
 }
 
@@ -62,13 +62,13 @@ while ($row = $Sql->fetch_assoc($result))
 {
 	$is_guest = empty($row['user_id']);
 	$group_color = User::get_group_color($row['user_groups'], $row['level']);
-
+	
 	//Pseudo.
-	if (!$is_guest)
-	$com_pseudo = '<a href="'.  DispatchManager::get_url('/member', '/profile/'. $row['user_id'] .'/')->absolute() .'" title="' . $row['mlogin'] . '" class="' . $array_class[$row['level']] . '"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . TextHelper::wordwrap_html($row['mlogin'], 13) . '</a>';
+	if (!$is_guest) 
+		$com_pseudo = '<a href="'.  DispatchManager::get_url('/member', '/profile/'. $row['user_id'] .'/')->absolute() .'" title="' . $row['mlogin'] . '" class="' . $array_class[$row['level']] . '"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . TextHelper::wordwrap_html($row['mlogin'], 13) . '</a>';
 	else
-	$com_pseudo = '<span style="font-style:italic;">' . (!empty($row['login']) ? TextHelper::wordwrap_html($row['login'], 13) : $LANG['guest']) . '</span>';
-
+		$com_pseudo = '<span style="font-style:italic;">' . (!empty($row['login']) ? TextHelper::wordwrap_html($row['login'], 13) : $LANG['guest']) . '</span>';
+	
 	$Template->assign_block_vars('com_list', array(
 		'ID' => $row['idcom'],
 		'CONTENTS' => ucfirst(FormatingHelper::second_parse($row['contents'])),
@@ -119,7 +119,7 @@ $Template->put_all(array(
 
 
 //Liste des personnes en lignes.
-$result = $Sql->query_while("SELECT s.user_id, s.level, s.session_ip, s.session_time, s.session_script, s.session_script_get,
+$result = $Sql->query_while("SELECT s.user_id, s.level, s.session_ip, s.session_time, s.session_script, s.session_script_get, 
 s.session_script_title, m.login 
 FROM " . DB_TABLE_SESSIONS . " s
 LEFT JOIN " . DB_TABLE_MEMBER . " m ON s.user_id = m.user_id
@@ -130,28 +130,28 @@ while ($row = $Sql->fetch_assoc($result))
 	//On vérifie que la session ne correspond pas à un robot.
 	$robot = StatsSaver::check_bot($row['session_ip']);
 
-	switch ($row['level']) //Coloration du membre suivant son level d'autorisation.
-	{
+	switch ($row['level']) //Coloration du membre suivant son level d'autorisation. 
+	{ 		
 		case MEMBER_LEVEL:
-			$class = 'member';
-			break;
-
-		case MODERATOR_LEVEL:
-			$class = 'modo';
-			break;
-
-		case ADMIN_LEVEL:
-			$class = 'admin';
-			break;
-	}
-
+		$class = 'member';
+		break;
+		
+		case MODERATOR_LEVEL: 
+		$class = 'modo';
+		break;
+		
+		case ADMIN_LEVEL: 
+		$class = 'admin';
+		break;
+	} 
+		
 	if (!empty($robot))
-	$login = '<span class="robot">' . ($robot == 'unknow_bot' ? $LANG['unknow_bot'] : $robot) . '</span>';
+		$login = '<span class="robot">' . ($robot == 'unknow_bot' ? $LANG['unknow_bot'] : $robot) . '</span>';
 	else
-	$login = !empty($row['login']) ? '<a class="' . $class . '" href="'. DispatchManager::get_url('/member', '/profile/'. $row['user_id'] .'/')->absolute() .'">' . $row['login'] . '</a>' : $LANG['guest'];
-
+		$login = !empty($row['login']) ? '<a class="' . $class . '" href="'. DispatchManager::get_url('/member', '/profile/'. $row['user_id'] .'/')->absolute() .'">' . $row['login'] . '</a>' : $LANG['guest'];
+	
 	$row['session_script_get'] = !empty($row['session_script_get']) ? '?' . $row['session_script_get'] : '';
-
+	
 	$Template->assign_block_vars('user', array(
 		'USER' => !empty($login) ? $login : $LANG['guest'],
 		'USER_IP' => $row['session_ip'],
@@ -160,7 +160,7 @@ while ($row = $Sql->fetch_assoc($result))
 	));
 }
 $Sql->query_close($result);
-
+	
 $Template->pparse('admin_index'); // traitement du modele
 
 require_once('../admin/admin_footer.php');

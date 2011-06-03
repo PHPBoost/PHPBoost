@@ -30,11 +30,11 @@ class AdminExtendedFieldMemberRepositionController extends AdminController
 	public function execute(HTTPRequest $request)
 	{
 		$type = $request->get_getstring('type');
-
+		
 		$extended_field = new ExtendedField();
 		$extended_field->set_id($request->get_getint('id'));
 		$data = ExtendedFieldsDatabaseService::select_data_field_by_id($extended_field);
-
+		
 		if ($type == 'top')
 		{
 			$idbottom = ($data['position'] - 1);
@@ -49,7 +49,7 @@ class AdminExtendedFieldMemberRepositionController extends AdminController
 			PersistenceContext::get_sql()->query_inject("UPDATE " . DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST . " SET position = " . $data['position'] . " WHERE position = '" . $idtop . "'");
 			PersistenceContext::get_sql()->query_inject("UPDATE " . DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST . " SET position = " . $idtop . " WHERE position = 0");
 		}
-
+		
 		ExtendedFieldsCache::invalidate();
 		AppContext::get_response()->redirect('/admin/member/index.php?url=/extended-fields/list');
 	}

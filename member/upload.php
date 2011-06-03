@@ -28,14 +28,14 @@
 require_once('../kernel/begin.php');
 define('TITLE', $LANG['files_management']);
 
-$popup = AppContext::get_request()->get_getstring('popup', '');
-$editor = AppContext::get_request()->get_getstring('edt', '');
-$parse = AppContext::get_request()->get_getstring('parse', '');
+$popup = retrieve(GET, 'popup', '');
+$editor = retrieve(GET, 'edt', '');
+$parse = retrieve(GET, 'parse', '');
 
 if (!empty($popup)) //Popup.
 {
 	require_once('../kernel/header_no_display.php');
-	$field = AppContext::get_request()->get_getstring('fd', '');
+	$field = retrieve(GET, 'fd', '');
 	
 	$header = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="' . $LANG['xml_lang'] . '" >
@@ -97,16 +97,16 @@ if (!$User->check_auth($files_upload_config->get_authorization_enable_interface_
 	DispatchManager::redirect($error_controller);
 }
 
-$folder = AppContext::get_request()->get_getint('f', 0);
-$parent_folder = AppContext::get_request()->get_getint('fup', 0);
-$home_folder = AppContext::get_request()->get_getbool('root', false);
-$del_folder = AppContext::get_request()->get_getint('delf', 0);
-$del_file = AppContext::get_request()->get_getint('del', 0);
-$get_error = AppContext::get_request()->get_getstring('error', '');
-$get_l_error = AppContext::get_request()->get_getstring('erroru', '');
-$move_folder = AppContext::get_request()->get_getint('movefd', 0);
-$move_file = AppContext::get_request()->get_getint('movefi', 0);
-$to = AppContext::get_request()->get_postint('new_cat', -1);
+$folder = retrieve(GET, 'f', 0);
+$parent_folder = retrieve(GET, 'fup', 0);
+$home_folder = retrieve(GET, 'root', false);
+$del_folder = retrieve(GET, 'delf', 0);
+$del_file = retrieve(GET, 'del', 0);
+$get_error = retrieve(GET, 'error', '');
+$get_l_error = retrieve(GET, 'erroru', '');
+$move_folder = retrieve(GET, 'movefd', 0);
+$move_file = retrieve(GET, 'movefi', 0);
+$to = retrieve(POST, 'new_cat', -1);
 
 if (!empty($parent_folder)) //Changement de dossier
 {

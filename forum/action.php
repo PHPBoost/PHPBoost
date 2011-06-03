@@ -31,25 +31,25 @@ $Bread_crumb->add($CONFIG_FORUM['forum_name'], 'index.php' . SID);
 require_once('../kernel/header_no_display.php');
 
 //Variable GET.
-$idt_get = AppContext::get_request()->get_getint('id', 0);
-$idm_get = AppContext::get_request()->get_getint('idm', 0);
-$del = AppContext::get_request()->get_getbool('del', false);
-$alert = TextHelper::strprotect(AppContext::get_request()->get_getstring('a', ''));
-$read = AppContext::get_request()->get_getbool('read', false);
-$msg_d = AppContext::get_request()->get_getbool('msg_d', false);
-$lock_get = TextHelper::strprotect(AppContext::get_request()->get_getstring('lock', ''));
-$page_get = AppContext::get_request()->get_getint('p', 1);
+$idt_get = retrieve(GET, 'id', 0);
+$idm_get = retrieve(GET, 'idm', 0);
+$del = retrieve(GET, 'del', false);
+$alert = retrieve(GET, 'a', '');
+$read = retrieve(GET, 'read', false);
+$msg_d = retrieve(GET, 'msg_d', false);
+$lock_get = retrieve(GET, 'lock', '');
+$page_get = retrieve(GET, 'p', 1);
 
-$track = TextHelper::strprotect(AppContext::get_request()->get_getstring('t', ''));
-$untrack = TextHelper::strprotect(AppContext::get_request()->get_getstring('ut', ''));
-$track_pm = TextHelper::strprotect(AppContext::get_request()->get_getstring('tp', ''));
-$untrack_pm = TextHelper::strprotect(AppContext::get_request()->get_getstring('utp', ''));
-$track_mail = TextHelper::strprotect(AppContext::get_request()->get_getstring('tm', ''));
-$untrack_mail = TextHelper::strprotect(AppContext::get_request()->get_getstring('utm', ''));
+$track = retrieve(GET, 't', '');
+$untrack = retrieve(GET, 'ut', '');
+$track_pm = retrieve(GET, 'tp', '');
+$untrack_pm = retrieve(GET, 'utp', '');
+$track_mail = retrieve(GET, 'tm', '');
+$untrack_mail = retrieve(GET, 'utm', '');
 
 //Variable $_POST
-$poll = AppContext::get_request()->get_postbool('valid_forum_poll', false); //Sondage forum.
-$massive_action_type = TextHelper::strprotect(AppContext::get_request()->get_poststring('action_type', '')); //Opération de masse.
+$poll = retrieve(POST, 'valid_forum_poll', false); //Sondage forum.
+$massive_action_type = retrieve(POST, 'action_type', ''); //Opération de masse.
 
 $Forumfct = new Forum();
 
@@ -155,7 +155,7 @@ elseif (!empty($idt_get))
 
 			if ($info_poll['type'] == 0) //Réponse simple.
 			{
-				$id_answer = AppContext::get_request()->get_postint('forumpoll', 0);
+				$id_answer = retrieve(POST, 'forumpoll', 0);
 				if (isset($array_votes[$id_answer]))
 					$array_votes[$id_answer]++;
 			}
@@ -218,7 +218,7 @@ elseif (!empty($track) && $User->check_level(MEMBER_LEVEL)) //Ajout du sujet aux
 }
 elseif (!empty($untrack) && $User->check_level(MEMBER_LEVEL)) //Retrait du sujet, aux sujets suivis.
 {
-	$tracking_type = AppContext::get_request()->get_getint('trt', 0);
+	$tracking_type = retrieve(GET, 'trt', 0);
 	$Forumfct->Untrack_topic($untrack, $tracking_type); //Retrait du sujet aux sujets suivis.
 
 	AppContext::get_response()->redirect('/forum/topic' . url('.php?id=' . $untrack, '-' . $untrack . '.php', '&') . '#go_bottom');

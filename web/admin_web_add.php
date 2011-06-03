@@ -33,12 +33,12 @@ require_once('../admin/admin_header.php');
 
 if (!empty($_POST['valid']))
 {
-	$title = TextHelper::strprotect(AppContext::get_request()->get_poststring('name', ''));
-	$contents = FormatingHelper::strparse(TextHelper::strprotect(AppContext::get_request()->get_poststring('contents', '')));
-	$url = TextHelper::strprotect(AppContext::get_request()->get_poststring('url', ''));
-	$idcat = AppContext::get_request()->get_postint('idcat', 0);
-	$compt = AppContext::get_request()->get_postint('compt', 0);
-	$aprob = AppContext::get_request()->get_postint('aprob', 0);
+	$title = retrieve(POST, 'name', '');
+	$contents = retrieve(POST, 'contents', '', TSTRING_PARSE);
+	$url = retrieve(POST, 'url', '');
+	$idcat = retrieve(POST, 'idcat', 0);
+	$compt = retrieve(POST, 'compt', 0);
+	$aprob = retrieve(POST, 'aprob', 0);
 
 	if (!empty($title) && !empty($url) && !empty($idcat) && isset($aprob))
 	{	
@@ -55,12 +55,12 @@ elseif (!empty($_POST['previs']))
 		'admin_web_add'=> 'web/admin_web_add.tpl'
 	));
 
-	$title = stripslashes(TextHelper::strprotect(AppContext::get_request()->get_poststring('name', '')));
-	$contents = FormatingHelper::strparse(TextHelper::strprotect(AppContext::get_request()->get_poststring('contents', '')));
-	$url = trim(AppContext::get_request()->get_poststring('url', ''));
-	$idcat = AppContext::get_request()->get_postint('idcat', 0);
-	$compt = AppContext::get_request()->get_postint('compt', 0);
-	$aprob = AppContext::get_request()->get_postint('aprob', 0);
+	$title = stripslashes(retrieve(POST, 'name', ''));
+	$contents = retrieve(POST, 'contents', '', TSTRING_PARSE);
+	$url = retrieve(POST, 'url', '', TSTRING_UNCHANGE);
+	$idcat = retrieve(POST, 'idcat', 0);
+	$compt = retrieve(POST, 'compt', 0);
+	$aprob = retrieve(POST, 'aprob', 0);
 	
 	$aprob_enable = ($aprob == 1) ? 'checked="checked"' : '';
 	$aprob_disable = ($aprob == 0) ? 'checked="checked"' : '';
@@ -87,7 +87,7 @@ elseif (!empty($_POST['previs']))
 		'THEME' => get_utheme(),
 		'LANG' => get_ulang(),
 		'NAME' => $title,
-		'CONTENTS' => trim(AppContext::get_request()->get_poststring('contents', '')),
+		'CONTENTS' => retrieve(POST, 'contents', '', TSTRING_UNCHANGE),
 		'URL' => $url,
 		'IDCAT' => $idcat,
 		'COMPT' => $compt,
@@ -183,7 +183,7 @@ else
 	$Sql->query_close($result);
 	
 	//Gestion erreur.
-	$get_error = TextHelper::strprotect(TextHelper::strprotect(AppContext::get_request()->get_getstring('error', '')));
+	$get_error = retrieve(GET, 'error', '');
 	if ($get_error == 'incomplete')
 		$Template->put('message_helper', MessageHelper::display($LANG['e_incomplete'], E_USER_NOTICE));
 	elseif ($i == 0) //Aucune catégorie => alerte.	 

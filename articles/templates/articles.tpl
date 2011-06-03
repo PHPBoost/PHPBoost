@@ -1,5 +1,5 @@
-# IF C_DISPLAY_ARTICLE #
-<script type="text/javascript">
+# IF C_DISPLAY_ARTICLE #		
+	<script type="text/javascript">
 	<!--
 		function Confirm_del_article() {
 		return confirm("{L_ALERT_DELETE_ARTICLE}");
@@ -80,11 +80,11 @@
 				return true;
 		}
 	-->
-	</script>
-# IF C_TAB # # IF C_CAROUSEL #
-<script
-	type="text/javascript" src="carousel.js"></script>
-<script type="text/javascript">
+	</script>	
+	# IF C_TAB #
+	# IF C_CAROUSEL #
+	<script type="text/javascript" src="carousel.js"></script>
+	<script type="text/javascript">
 		<!--
 			window.onload = function() {
 			new CarouselJs('tab_c', { speed: 50, pauseInterval: 0.1  ,startsegment: Math.floor(parseInt(getParam('p'))/7.1 ) });
@@ -209,211 +209,206 @@
 		
 
 		-->
-	</script>
-<style>
-.module_contents {
-	border-left: 1px #5D7C94 solid;
-	border-right: 1px #5D7C94 solid;
-	border-bottom: 1px #5D7C94 solid;
-	border-top: 1px solid #5D7C94;
-}
-</style>
-# ENDIF # # INCLUDE message_helper #
-
-<div class="module_position">
-	<div class="module_top_l"></div>
-	<div class="module_top_r"></div>
-	<div class="module_top">
-		<div style="float: left">
-			<a href="{PATH_TO_ROOT}/syndication.php?m=articles&amp;cat={IDCAT}"
-				title="Rss"><img style="vertical-align: middle; margin-top: -2px;"
-				src="../templates/{THEME}/images/rss.png" alt="Rss" title="Rss" /> </a>
-			<strong>&nbsp;{NAME}</strong>
-		</div>
-		<div style="float: right">
-			# IF C_COM # {COM} # ENDIF # # IF C_IS_ADMIN # &nbsp;&nbsp;<a
-				href="{U_ARTICLES_EDIT}" title="{L_EDIT}"><img
-				src="../templates/{THEME}/images/{LANG}/edit.png"
-				class="valign_middle" alt="{L_EDIT}" /> </a> &nbsp;&nbsp;<a
-				href="{U_ARTICLES_DEL}" title="{L_DELETE}"
-				onclick="javascript:return Confirm_del_article();"><img
-				src="../templates/{THEME}/images/{LANG}/delete.png"
-				class="valign_middle" alt="{L_DELETE}" /> </a> # ENDIF # # IF
-			C_PRINT # &nbsp;&nbsp;<a href="{U_PRINT_ARTICLE}"
-				title="{L_PRINTABLE_VERSION}"><img
-				src="../templates/{THEME}/images/print_mini.png"
-				alt="{L_PRINTABLE_VERSION}" class="valign_middle" /> </a> # ENDIF #
-			# IF C_MAIL # &nbsp;&nbsp;<a href="javascript:display_mail()"><img
-				src="../templates/{THEME}/images/pm_mini.png" class="valign_middle"
-				alt="{L_LINK_MAIL}" /> </a> # ENDIF #
-		</div>
-	</div>
-	# IF C_TAB #
-	<div id="tabs">
-		<ul>
-			<div
-				style="margin-left: auto; width: 800px; overflow: hidden; height: 24px; position: relative;"
-				class="carouseljs">
-				# IF C_CAROUSEL # <a
-					style="position: absolute; z-index: 2; left: 0px; margin-left: 0px;"
-					class="cjs-left cjs-disabled"
-					title="Double-click to skip to beginning.">previous</a> # ENDIF #
-				<ol style="width: 750px; position: absolute; left: 0px;" id="tab_c">
-					# START tab #
-					<li {tab.STYLE} id="tabHeader{tab.ID_TAB_ACT}"
-						style="display: { tab.DISPLAY_TAB"><a href="javascript:void(0)"
-						class="tab_a"
-						onClick="toggleTab({tab.ID_TAB},{tab.TOTAL_TAB},0,false)"><span>{tab.PAGE_NAME}</span>
-					</a></li> # END tab #
-				</ol>
-				# IF C_CAROUSEL # <a
-					style="position: absolute; z-index: 2; right: 0px;"
-					class="cjs-right cjs-enabled" title="Double-click to skip to end.">next</a>
+	</script>		
+	<style>
+		.module_contents
+		{
+			border-left:1px #5D7C94 solid;
+			border-right:1px #5D7C94 solid;
+			border-bottom:1px #5D7C94 solid;
+					border-top: 1px solid #5D7C94;
+		}
+	</style>
+	# ENDIF #
+	
+	# INCLUDE message_helper #
+	
+	<div class="module_position">					
+		<div class="module_top_l"></div>		
+		<div class="module_top_r"></div>
+		<div class="module_top">
+			<div style="float:left">
+				<a href="{PATH_TO_ROOT}/syndication.php?m=articles&amp;cat={IDCAT}" title="Rss"><img style="vertical-align:middle;margin-top:-2px;" src="../templates/{THEME}/images/rss.png" alt="Rss" title="Rss" /></a>  <strong>&nbsp;{NAME}</strong>	
+			</div>
+			<div style="float:right">
+				# IF C_COM #
+				{COM}
+				# ENDIF #
+				# IF C_IS_ADMIN #
+				&nbsp;&nbsp;<a href="{U_ARTICLES_EDIT}" title="{L_EDIT}"><img src="../templates/{THEME}/images/{LANG}/edit.png" class="valign_middle" alt="{L_EDIT}" /></a>
+				&nbsp;&nbsp;<a href="{U_ARTICLES_DEL}" title="{L_DELETE}" onclick="javascript:return Confirm_del_article();"><img src="../templates/{THEME}/images/{LANG}/delete.png" class="valign_middle" alt="{L_DELETE}" /></a>
+				# ENDIF #
+				# IF C_PRINT #
+				&nbsp;&nbsp;<a href="{U_PRINT_ARTICLE}" title="{L_PRINTABLE_VERSION}"><img src="../templates/{THEME}/images/print_mini.png" alt="{L_PRINTABLE_VERSION}" class="valign_middle" /></a>
+				# ENDIF #
+				# IF C_MAIL #
+				&nbsp;&nbsp;<a href="javascript:display_mail()"><img src="../templates/{THEME}/images/pm_mini.png" class="valign_middle" alt="{L_LINK_MAIL}" /></a>
 				# ENDIF #
 			</div>
-		</ul>
-	</div>
-	<div class="module_contents">
-		<div id="tabcontent">
-			# START tab #
-			<div id="tabContent{tab.ID_TAB}" class="tabContent"
-				style="display: { tab.DISPLAY">
-				<br />
-				<div>{tab.CONTENTS_TAB}</div>
-			</div>
-			# END tab #
 		</div>
-		<script type="text/javascript">
+		# IF C_TAB #
+		<div id="tabs">
+			<ul>
+				 <div style="margin-left:auto;width:800px;overflow: hidden; height: 24px; position: relative;" class="carouseljs">
+				# IF C_CAROUSEL #
+					<a style="position: absolute; z-index: 2; left: 0px;margin-left:0px;" class="cjs-left cjs-disabled" title="Double-click to skip to beginning.">previous</a>
+				# ENDIF #	
+					<ol style="width: 750px; position: absolute; left: 0px;" id="tab_c">
+						# START tab #
+							<li {tab.STYLE} id="tabHeader{tab.ID_TAB_ACT}" style="display:{tab.DISPLAY_TAB}"><a href="javascript:void(0)" class="tab_a"onClick="toggleTab({tab.ID_TAB},{tab.TOTAL_TAB},0,false)"><span>{tab.PAGE_NAME}</span></a></li>
+						# END tab #
+					</ol>
+				# IF C_CAROUSEL #
+					<a style="position: absolute; z-index: 2; right: 0px;" class="cjs-right cjs-enabled" title="Double-click to skip to end.">next</a>
+				# ENDIF #
+				</div>
+			</ul>
+		</div>	
+		<div class="module_contents">
+			<div id="tabcontent">
+				# START tab #
+					<div id="tabContent{tab.ID_TAB}" class="tabContent" style="display:{tab.DISPLAY};">
+						<br /><div>{tab.CONTENTS_TAB}</div>
+					</div>
+				# END tab #
+			</div>					
+			<script type="text/javascript">
 				<!--
 				start_tab(getParam('p'));
 				-->
 			</script>
-		# ENDIF # # IF NOT C_TAB #
+		# ENDIF #
+		# IF NOT C_TAB #
 		<div class="module_contents">
-			# IF PAGINATION_ARTICLES #
-			<div style="float: right; margin-right: 35px; width: 250px;">
-				<form action="" method="post">
-					<p class="row2 text_strong" style="padding: 2px; text-indent: 4px;">{L_SUMMARY}:</p>
-					<p class="row1" style="padding: 2px; padding-bottom: 15px">
-						<select name="page_list"
-							style="display: block; width: 100%; margin: auto; font-size: 12px;"
-							onchange="document.location = {U_ONCHANGE_ARTICLE}"> {PAGES_LIST}
-						</select> <input type="submit" name="valid"
-							id="articles_page_list" value="{L_SUBMIT}" class="submit" />
-						<script type="text/javascript">
+				# IF PAGINATION_ARTICLES #
+				<div style="float:right;margin-right:35px;width:250px;">
+					<form action="" method="post">
+						<p class="row2 text_strong" style="padding:2px;text-indent:4px;">{L_SUMMARY}:</p>
+						<p class="row1" style="padding:2px;padding-bottom:15px">
+							<select name="page_list" style="display:block;width:100%;margin:auto;font-size:12px;" onchange="document.location = {U_ONCHANGE_ARTICLE}">
+								{PAGES_LIST}
+							</select>
+							<input type="submit" name="valid" id="articles_page_list" value="{L_SUBMIT}" class="submit" />
+							<script type="text/javascript">
 							<!--				
 							document.getElementById('articles_page_list').style.display = 'none';
 							-->
 							</script>
-					</p>
-				</form>
-			</div>
-			<div class="spacer">&nbsp;</div>
-			# ENDIF # # IF PAGE_NAME #
-			<h2 class="title" style="text-indent: 35px;">{PAGE_NAME}</h2>
-			# ENDIF # {CONTENTS}
-			<div class="spacer" style="margin-top: 35px;">&nbsp;</div>
-			# IF PAGINATION_ARTICLES #
-			<div style="float: left; width: 33%; text-align: right">&nbsp;{PAGE_PREVIOUS_ARTICLES}</div>
-			<div style="float: left; width: 33%" class="text_center">{PAGINATION_ARTICLES}</div>
-			<div style="float: left; width: 33%;">{PAGE_NEXT_ARTICLES}&nbsp;</div>
-			# ENDIF # # ENDIF #
+						</p>
+					</form>
+				</div>
+				<div class="spacer">&nbsp;</div>
+				# ENDIF #					
+				# IF PAGE_NAME #
+				<h2 class="title" style="text-indent:35px;">{PAGE_NAME}</h2>
+				# ENDIF #	
+				{CONTENTS}
+				<div class="spacer" style="margin-top:35px;">&nbsp;</div>
+				# IF PAGINATION_ARTICLES #
+				<div style="float:left;width:33%;text-align:right">&nbsp;{PAGE_PREVIOUS_ARTICLES}</div>
+				<div style="float:left;width:33%" class="text_center">{PAGINATION_ARTICLES}</div>
+				<div style="float:left;width:33%;">{PAGE_NEXT_ARTICLES}&nbsp;</div>
+				# ENDIF #		
+		# ENDIF #
 			<div class="spacer">&nbsp;</div>
 		</div>
-		<div class="module_bottom_l"></div>
+		<div class="module_bottom_l"></div>		
 		<div class="module_bottom_r"></div>
 		<div class="module_bottom">
 			# IF C_SOURCES #
-			<div>
-				<b> {L_SOURCE} : </b># START sources # <a href="{sources.URL}">
-					{sources.SOURCE}</a>&nbsp;{sources.INDENT} # END sources #
-			</div>
+			<div><b> {L_SOURCE} : </b># START sources # <a href="{sources.URL}"> {sources.SOURCE}</a>&nbsp;{sources.INDENT} # END sources #</div>
 			<div class="spacer">&nbsp;</div>
-			# ENDIF # # IF C_NOTE #
-			<div style="float: left" class="text_small">{KERNEL_NOTATION}</div>
 			# ENDIF #
-			<div style="float: right" class="text_small">
-				# IF C_AUTHOR # {L_WRITTEN}: <a class="small_link"
-					href="../member/member{U_USER_ID}">{PSEUDO}</a> # ENDIF # # IF
-				C_DATE # {L_ON}: {DATE} # ENDIF #
-
+			# IF C_NOTE #
+			<div style="float:left" class="text_small">
+				{KERNEL_NOTATION}
+			</div>
+			# ENDIF #
+			<div style="float:right" class="text_small">
+			# IF C_AUTHOR #
+				{L_WRITTEN}: <a class="small_link" href="../member/member{U_USER_ID}">{PSEUDO}</a>
+			# ENDIF #
+			# IF C_DATE #
+				{L_ON}: {DATE}
+			# ENDIF #
+		
 			</div>
 			<div class="spacer"></div>
 		</div>
 	</div>
-	<br /> <br /> # IF C_COM # {COMMENTS} # ENDIF # # IF C_EXTEND_FIELD #
-	<table class="tab_extend_field">
-		<tr>
-			<th style="text-align: center;">&nbsp;&nbsp;</th>
-			<th style="text-align: center;">&nbsp;&nbsp;</th>
-		</tr>
+	<br /><br />
+	# IF C_COM #
+	{COMMENTS}
+	# ENDIF #
+	# IF C_EXTEND_FIELD #
+		<table class="tab_extend_field">
+			<tr>
+				<th style="text-align:center;">
+					&nbsp;&nbsp;
+				</th>
+				<th style="text-align:center;">
+					&nbsp;&nbsp;
+				</th>
+			</tr>
 		# START extend_field #
-		<tr>
-			<td class="row2 extend_field_left"><span>{extend_field.NAME} : </span>
-			</td>
-			<td class="row2 extend_field_right"><span>{extend_field.CONTENTS}</span>
-			</td>
-		</tr>
+			<tr>
+				<td class="row2 extend_field_left">		
+				
+					<span>{extend_field.NAME} : </span>
+				</td>
+				<td class="row2 extend_field_right">	
+					<span>{extend_field.CONTENTS}</span>
+				</td>
+			</tr>
 		# END extend_field #
-	</table>
-	# ENDIF # # IF C_MAIL #
-	<div id="mail" style="display: none;">
-		<form
-			action="articles.php?cat={IDCAT}&amp;id={IDART}&amp;token={TOKEN}"
-			name="form" method="post" onsubmit="return check_form();"
-			class="fieldset_content" id="form">
+		</table>
+	# ENDIF #
+	# IF C_MAIL #
+	<div id ="mail" style="display:none;">
+		<form action="articles.php?cat={IDCAT}&amp;id={IDART}&amp;token={TOKEN}" name="form" method="post" onsubmit="return check_form();" class="fieldset_content" id="form">
 			<fieldset>
 				<legend>{L_MAIL_ARTICLES}</legend>
 				<dl>
 					<dt>
-						<label for="recipient">{L_MAIL_RECIPIENT} : </label>
+						<label for="recipient">{L_MAIL_RECIPIENT} :  </label>	
 					</dt>
 					<dd>
-						<label><input type="text" size="50" id="mail_recipient"
-							name="mail_recipient" value=""
-							onblur="check_mail(this.value,this.id);" /> </label> &nbsp;<span
-							id="msg_mail_recipient"></span>
-						<div id="msg_div_mail_recipient"></div>
+						<label><input type="text" size="50" id="mail_recipient" name="mail_recipient" value="" onblur="check_mail(this.value,this.id);" /></label> &nbsp;<span id="msg_mail_recipient"></span><div id="msg_div_mail_recipient"></div>
 					</dd>
 				</dl>
 				<dl>
 					<dt>
-						<label for="exp">{L_SENDER} : </label>
+						<label for="exp">{L_SENDER} :  </label>	
 					</dt>
 					<dd>
-						<label><input type="text" size="50" id="exp" name="exp"
-							value="{SENDER}" /> </label>
+						<label><input type="text" size="50" id="exp" name="exp" value="{SENDER}" /></label>
 					</dd>
 				</dl>
 				<dl>
 					<dt>
-						<label for="user_mail">{L_USER_MAIL} : </label>
+						<label for="user_mail">{L_USER_MAIL} :  </label>	
 					</dt>
 					<dd>
-						<label><input type="text" size="50" id="user_mail"
-							name="user_mail" value="{USER_MAIL}"
-							onblur="check_mail(this.value,this.id);" /> </label> &nbsp;<span
-							id="msg_user_mail"></span>
-						<div id="msg_div_user_mail"></div>
+						<label><input type="text" size="50" id="user_mail" name="user_mail" value="{USER_MAIL}"  onblur="check_mail(this.value,this.id);" /></label> &nbsp;<span id="msg_user_mail"></span><div id="msg_div_user_mail"></div>
 					</dd>
 				</dl>
 				<dl>
 					<dt>
-						<label for="subject"> {L_SUBJECT} : </label>
+						<label for="subject"> {L_SUBJECT} :  </label>	
 					</dt>
 					<dd>
-						<label><input type="text" size="50" id="subject" name="subject"
-							value="" /> </label>
+						<label><input type="text" size="50" id="subject" name="subject" value="" /></label>
 					</dd>
-				</dl>
+				</dl>				
 			</fieldset>
-			<fieldset class="fieldset_submit">
+				<fieldset class="fieldset_submit">
 				<legend>{L_SUBMIT}</legend>
-				<input type="hidden" id="link" name="link"
-					value="{PATH_TO_ROOT}/articles/{U_ARTICLES_LINK}" /> <input
-					type="submit" name="submit" value="{L_SUBMIT}" class="submit" /> <input
-					type="reset" value="{L_ERASE}" class="reset" />
-			</fieldset>
+				<input type="hidden" id="link" name="link" value="{PATH_TO_ROOT}/articles/{U_ARTICLES_LINK}" />
+				<input type="submit" name="submit" value="{L_SUBMIT}" class="submit" />
+				<input type="reset" value="{L_ERASE}" class="reset" />				
+			</fieldset>	
 		</form>
 	</div>
-	# ENDIF # # ENDIF #
+	# ENDIF #
+# ENDIF #
+	

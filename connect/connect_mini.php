@@ -30,55 +30,55 @@ if (defined('PHPBOOST') !== true) exit;
 
 function connect_mini($position, $block)
 {
-	global $LANG;
+    global $LANG;
 
-	$tpl = new FileTemplate('connect/connect_mini.tpl');
-	$user = AppContext::get_user();
+    $tpl = new FileTemplate('connect/connect_mini.tpl');
+    $user = AppContext::get_user();
 
-	MenuService::assign_positions_conditions($tpl, $block);
-	if ($user->check_level(MEMBER_LEVEL)) //Connecté.
-	{
-		$unread_contributions = UnreadContributionsCache::load();
+    MenuService::assign_positions_conditions($tpl, $block);
+    if ($user->check_level(MEMBER_LEVEL)) //Connecté.
+    {
+    	$unread_contributions = UnreadContributionsCache::load();
 
-		//Vaut 0 si l'utilisateur n'a aucune contribution. Est > 0 si on connait le nombre de contributions
-		//Vaut -1 si l'utilisateur a au moins une contribution (mais on ne sait pas combien à cause des recoupements entre les groupes)
-		$contribution_number = 0;
+    	//Vaut 0 si l'utilisateur n'a aucune contribution. Est > 0 si on connait le nombre de contributions
+    	//Vaut -1 si l'utilisateur a au moins une contribution (mais on ne sait pas combien à cause des recoupements entre les groupes)
+    	$contribution_number = 0;
 
-		if ($user->check_level(ADMIN_LEVEL))
-		{
-			$contribution_number = $unread_contributions->get_admin_unread_contributions_number();
-		}
-		elseif ($user->check_level(MODERATOR_LEVEL))
-		{
-			if ($unread_contributions->have_moderators_unread_contributions())
-			{
-				$contribution_number = -1;
-			}
-		}
-		else
-		{
-			if ($unread_contributions->have_members_unread_contributions())
-			{
-				$contribution_number = -1;
-			}
-			else if ($unread_contributions->has_user_unread_contributions($user->get_id()))
-			{
-				$contribution_number = -1;
-			}
-			else
-			{
-				foreach ($user->get_groups() as $group_id)
-				{
-					if ($unread_contributions->has_group_unread_contributions($group_id))
-					{
-						$contribution_number = -1;
-						break;
-					}
-				}
-			}
-		}
+    	if ($user->check_level(ADMIN_LEVEL))
+    	{
+    		$contribution_number = $unread_contributions->get_admin_unread_contributions_number();
+    	}
+    	elseif ($user->check_level(MODERATOR_LEVEL))
+    	{
+    		if ($unread_contributions->have_moderators_unread_contributions())
+    		{
+    			$contribution_number = -1;
+    		}
+    	}
+    	else
+    	{
+    		if ($unread_contributions->have_members_unread_contributions())
+    		{
+    			$contribution_number = -1;
+    		}
+    		else if ($unread_contributions->has_user_unread_contributions($user->get_id()))
+    		{
+    			$contribution_number = -1;
+    		}
+    		else
+    		{
+    			foreach ($user->get_groups() as $group_id)
+    			{
+    				if ($unread_contributions->has_group_unread_contributions($group_id))
+    				{
+    					$contribution_number = -1;
+    					break;
+    				}
+    			}
+    		}
+    	}
 
-		$tpl->put_all(array(
+    	$tpl->put_all(array(
     		'C_ADMIN_AUTH' => $user->check_level(ADMIN_LEVEL),
     		'C_MODERATOR_AUTH' => $user->check_level(MODERATOR_LEVEL),
     		'C_UNREAD_CONTRIBUTION' => $contribution_number != 0,
@@ -97,11 +97,11 @@ function connect_mini($position, $block)
     		'L_PRIVATE_PROFIL' => $LANG['my_private_profile'],
     		'L_DISCONNECT' => $LANG['disconnect'],
     		'L_CONTRIBUTION_PANEL' => $LANG['contribution_panel']
-		));
-	}
-	else
-	{
-		$tpl->put_all(array(
+    	));
+    }
+    else
+    {
+    	$tpl->put_all(array(
     		'C_USER_REGISTER' => (bool)UserAccountsConfig::load()->is_registration_enabled(),
     		'L_REQUIRE_PSEUDO' => $LANG['require_pseudo'],
 			'L_REQUIRE_PASSWORD' => $LANG['require_password'],
@@ -113,9 +113,9 @@ function connect_mini($position, $block)
     		'L_REGISTER' => $LANG['register'],
     		'U_CONNECT' => (QUERY_STRING != '') ? '?' . str_replace('&', '&amp;', QUERY_STRING) . '&amp;' : '',
     		'U_REGISTER' => DispatchManager::get_url('/member', '/register')->absolute()
-		));
-	}
+    	));
+    }
 
-	return $tpl->render();
+    return $tpl->render();
 }
 ?>

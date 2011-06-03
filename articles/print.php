@@ -31,7 +31,7 @@ require_once('articles_begin.php');
 $Cache->load('articles');
 
 //Article title to display in print version
-$idart = TextHelper::strprotect(AppContext::get_request()->get_getstring('id', ''));
+$idart = retrieve(GET, 'id', '', TSTRING);
 if ($idart > 0)
 {
 	$articles = $Sql->query_array(DB_TABLE_ARTICLES, '*', "WHERE visible = 1 AND id = '" . $idart . "'", __LINE__, __FILE__);
@@ -47,14 +47,14 @@ if ($idart > 0)
 
 	if (empty($articles['id']))
 	{
-		$controller = new UserErrorController(LangLoader::get_message('error', 'errors'),
-		$LANG['e_unexist_articles']);
-		DispatchManager::redirect($controller);
+		$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
+            $LANG['e_unexist_articles']);
+        DispatchManager::redirect($controller);
 	}
 }
 
 if (empty($articles['title']))
-AppContext::get_response()->redirect(url('articles.php'));
+	AppContext::get_response()->redirect(url('articles.php'));
 
 $array_sources = unserialize($articles['sources']);
 $sources='';
@@ -64,11 +64,11 @@ if(count($array_sources) != 0)
 	$i = 0;
 	$sources = "<br /><br /><hr /><div><b> sources : </b>";
 	foreach ($array_sources as $value)
-	{
+	{	
 		$url=substr($value['url'],0,7) != "http://" ? "http://".$value['url'] : $value['url'];
 		$sources .='<a href="'.$url.'">'.$value['sources'].'</a>&nbsp;'.(($i < (count($array_sources)-1) )? '- ' : ''.'');
 		$i++;
-	}
+	}	
 	$sources .="</div>";
 }
 

@@ -28,7 +28,7 @@
 
 if (defined('PHPBOOST') !== true)
 {
-	exit;
+    exit;
 }
 
 Environment::display_footer();

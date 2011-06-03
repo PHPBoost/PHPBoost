@@ -13,7 +13,7 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- *
+ * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -36,7 +36,7 @@ $template = new FileTemplate('admin/admin_phpinfo.tpl');
 phpinfo();
 $phpinfo = ob_get_contents();
 $phpinfo = preg_replace('`^.*<body>`is', '', $phpinfo);
-$phpinfo = str_replace(array('class="e"', 'class="v"', 'class="h"', '<i>', '</i>', '<hr />', '<img border="0"', '<table border="0" cellpadding="3" width="600">', '</body></html>'),
+$phpinfo = str_replace(array('class="e"', 'class="v"', 'class="h"', '<i>', '</i>', '<hr />', '<img border="0"', '<table border="0" cellpadding="3" width="600">', '</body></html>'), 
 array('class="row1"', 'class="row2"', 'class="row3"', '<em class="em">', '</em>', '', '<img style="float:right;"', '<table class="module_table">', ''), $phpinfo);
 ob_end_clean();
 

@@ -31,26 +31,26 @@ require_once(PATH_TO_ROOT . '/admin/admin_begin.php');
 define('TITLE', $LANG['administration']);
 require_once(PATH_TO_ROOT . '/admin/admin_header.php');
 
-$id = AppContext::get_request()->get_int('id', 0);
-$post = AppContext::get_request()->get_postint('id', -1) >= 0 ? true : false;
+$id = retrieve(REQUEST, 'id', 0);
+$post = retrieve(POST, 'id', -1) >= 0 ? true : false;
 
 $menu = MenuService::load($id);
 
 if ($menu == null)
-AppContext::get_response()->redirect('auth.php');
-
+    AppContext::get_response()->redirect('auth.php');
+        
 if ($post)
 {   // Edit a Menu authorizations
-$menu->enabled(AppContext::get_request()->get_postvalue('activ', Menu::MENU_NOT_ENABLED));
-$menu->set_auth(Authorizations::build_auth_array_from_form(AUTH_MENUS));
-
-//Filters
-MenuAdminService::set_retrieved_filters($menu);
-
-MenuService::save($menu);
-MenuService::generate_cache();
-
-AppContext::get_response()->redirect('menus.php#m' . $id);
+    $menu->enabled(retrieve(POST, 'activ', Menu::MENU_NOT_ENABLED));
+    $menu->set_auth(Authorizations::build_auth_array_from_form(AUTH_MENUS));
+    
+    //Filters
+    MenuAdminService::set_retrieved_filters($menu);
+    
+    MenuService::save($menu);
+    MenuService::generate_cache();
+    
+    AppContext::get_response()->redirect('menus.php#m' . $id);
 }
 
 // Display the Menu dispositions
@@ -89,7 +89,7 @@ $tpl->put_all(array(
 ));
 
 //Filtres
-MenuAdminService::add_filter_fieldset($menu, $tpl);
+MenuAdminService::add_filter_fieldset($menu, $tpl);    
 
 $tpl->display();
 

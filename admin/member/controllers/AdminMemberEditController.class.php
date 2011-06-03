@@ -36,14 +36,14 @@ class AdminMemberEditController extends AdminController
 	 * @var FormButtonDefaultSubmit
 	 */
 	private $submit_button;
-
+	
 	private $user_id;
 
 	public function execute(HTTPRequest $request)
 	{
 		$this->user_id = $request->get_getint('id');
 		$this->init();
-
+		
 		if ($this->user_exist())
 		{
 			$this->build_form();
@@ -76,57 +76,57 @@ class AdminMemberEditController extends AdminController
 	private function build_form()
 	{
 		$form = new HTMLForm('member-edit');
-
+		
 		$fieldset = new FormFieldsetHTML('edit_member', $this->lang['members.edit-member']);
 		$form->add_fieldset($fieldset);
-
+		
 		$row = PersistenceContext::get_sql()->query_array(DB_TABLE_MEMBER, '*', "WHERE user_id = '" . $this->user_id . "'", __LINE__, __FILE__);
-
+		
 		$fieldset->add_field(new FormFieldTextEditor('login', $this->lang['members.pseudo'], $row['login'], array(
 			'class' => 'text', 'maxlength' => 25, 'size' => 25, 'required' => true)
-		));
-
+		));		
+		
 		$fieldset->add_field(new FormFieldTextEditor('mail', $this->lang['members.mail'], $row['user_mail'], array(
 			'class' => 'text', 'maxlength' => 255, 'description' => $this->lang['members.valid'], 'required' => true),
 		array(new FormFieldConstraintMailAddress())
 		));
-
+		
 		$fieldset->add_field($password = new FormFieldPasswordEditor('password', $this->lang['members.password'], '', array(
 			'class' => 'text', 'maxlength' => 25)
 		));
-
+		
 		$fieldset->add_field($password_bis = new FormFieldPasswordEditor('password_bis', $this->lang['members.confirm-password'], '', array(
 			'class' => 'text', 'maxlength' => 25)
 		));
-
+		
 		$fieldset->add_field(new FormFieldCheckbox('user_hide_mail', $this->lang['members.hide-mail'], FormFieldCheckbox::CHECKED));
 
 		$fieldset = new FormFieldsetHTML('member_management', $this->lang['members.member-management']);
 		$form->add_fieldset($fieldset);
-
+		
 		$fieldset->add_field(new FormFieldCheckbox('approbation', $this->lang['members.approbation'], (bool)$row['user_aprob']));
-
+		
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('rank', $this->lang['members.rank'], $row['level'],
-		array(
-		new FormFieldSelectChoiceOption($this->lang['members.rank.member'], '0'),
-		new FormFieldSelectChoiceOption($this->lang['members.rank.modo'], '1'),
-		new FormFieldSelectChoiceOption($this->lang['members.rank.admin'], '2')
-		)
+			array(
+				new FormFieldSelectChoiceOption($this->lang['members.rank.member'], '0'),
+				new FormFieldSelectChoiceOption($this->lang['members.rank.modo'], '1'),
+				new FormFieldSelectChoiceOption($this->lang['members.rank.admin'], '2')
+			)
 		));
-
+		
 		$fieldset->add_field(new FormFieldMultipleSelectChoice('groups', $this->lang['members.groups'], explode('|', $row['user_groups']), $this->get_groups()));
-
+		
 		$fieldset = new FormFieldsetHTML('punishment_management', $this->lang['members.punishment-management']);
 		$form->add_fieldset($fieldset);
-
+		
 		$fieldset->add_field(new FormFieldCheckbox('delete_account', LangLoader::get_message('del_member', 'main'), FormFieldCheckbox::UNCHECKED));
-
+		
 		$member_extended_field = new MemberExtendedField();
 		$member_extended_field->set_template($form);
 		$member_extended_field->set_user_id($this->user_id);
 		$member_extended_field->set_is_admin(true);
 		MemberExtendedFieldsService::display_form_fields($member_extended_field);
-
+		
 		$form->add_button(new FormButtonReset());
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_constraint(new FormConstraintFieldsEquality($password, $password_bis));
@@ -148,14 +148,14 @@ class AdminMemberEditController extends AdminController
 		);
 		$parameters = array('user_id' => $this->user_id);
 		PersistenceContext::get_querier()->update(DB_TABLE_MEMBER, $columns, $condition, $parameters);
-
+		
 		if ($this->form->get_value('delete_account'))
 		{
 			PersistenceContext::get_querier()->delete(DB_TABLE_MEMBER, "WHERE user_id = :user_id", array('user_id' => $this->user_id));
 		}
-
+		
 		MemberExtendedFieldsService::register_fields($this->form, $this->user_id);
-
+		
 		if ($this->form->get_value('password') !== '')
 		{
 			$condition = "WHERE user_id = :user_id";
@@ -163,10 +163,10 @@ class AdminMemberEditController extends AdminController
 			$parameters = array('user_id' => $this->user_id);
 			PersistenceContext::get_querier()->update(DB_TABLE_MEMBER, $columns, $condition, $parameters);
 		}
-
+		
 		StatsCache::invalidate();
 	}
-
+	
 	private function get_rank_member()
 	{
 		$rank = $this->form->get_value('rank')->get_raw_value();
@@ -183,7 +183,7 @@ class AdminMemberEditController extends AdminController
 			return '0';
 		}
 	}
-
+	
 	public function get_groups()
 	{
 		$groups = array();
@@ -193,7 +193,7 @@ class AdminMemberEditController extends AdminController
 		}
 		return $groups;
 	}
-
+	
 	private function user_exist()
 	{
 		return PersistenceContext::get_querier()->count(DB_TABLE_MEMBER, "WHERE user_id = '" . $this->user_id . "'") > 0 ? true : false;

@@ -30,58 +30,58 @@
  * @desc
  */
 class AdminError404 extends BusinessObject
-{
-	private $id;
-	private $requested_url;
-	private $from_url;
-	private $times = 1;
+{    
+    private $id;
+    private $requested_url;
+    private $from_url;
+    private $times = 1;
 
-	public function __construct($requested_url = '', $from_url = '')
-	{
-		$this->requested_url = $requested_url;
-		$this->from_url = $from_url;
-	}
-
-	public function get_id()
-	{
-		return $this->id;
-	}
-
-	public function get_requested_url()
-	{
-		return $this->requested_url;
-	}
-
-	public function get_from_url()
-	{
-		return $this->from_url;
-	}
+    public function __construct($requested_url = '', $from_url = '')
+    {
+        $this->requested_url = $requested_url;
+        $this->from_url = $from_url;
+    }
+    
+    public function get_id()
+    {
+        return $this->id;
+    }
+    
+    public function get_requested_url()
+    {
+        return $this->requested_url;
+    }
+    
+    public function get_from_url()
+    {
+        return $this->from_url;
+    }
 
 	public function get_times()
 	{
 		return $this->times;
 	}
-
-	public function set_id($value)
-	{
-		$this->id = $value;
-	}
-
-	public function set_requested_url($value)
-	{
-		$this->requested_url = $value;
-	}
-
-	public function set_from_url($value)
-	{
-		$this->from_url = $value;
-	}
+    
+    public function set_id($value)
+    {
+        $this->id = $value;
+    }
+    
+    public function set_requested_url($value)
+    {
+        $this->requested_url = $value;
+    }
+    
+    public function set_from_url($value)
+    {
+        $this->from_url = $value;
+    }
 
 	public function set_times($value)
 	{
 		$this->times = $value;
 	}
-
+	
 	public function increment()
 	{
 		$this->times++;

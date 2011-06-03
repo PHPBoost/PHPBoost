@@ -31,17 +31,17 @@ class AdminThemesNotInstalledListController extends AdminController
 	private $view;
 	private $form;
 	private $submit_button;
-
+	
 	public function execute(HTTPRequest $request)
 	{
 		$this->init();
-
+		
 		$this->upload_form();
 		$this->view->put('UPLOAD_FORM', $this->form->display());
-
+		
 		$this->build_view();
 		$this->save($request);
-
+		
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->upload_theme();
@@ -49,7 +49,7 @@ class AdminThemesNotInstalledListController extends AdminController
 
 		return new AdminThemesDisplayResponse($this->view, $this->lang['themes.add']);
 	}
-
+	
 	private function build_view()
 	{
 		$not_installed_themes = $this->get_not_installed_themes();
@@ -58,7 +58,7 @@ class AdminThemesNotInstalledListController extends AdminController
 			$configuration = ThemeConfigurationManager::get($name);
 			$pictures = $configuration->get_pictures();
 			$id_theme = $name;
-				
+			
 			$this->view->assign_block_vars('themes_not_installed', array(
 				'C_WEBSITE' => $configuration->get_author_link() !== '',
 				'C_PICTURES' => count($pictures) > 0,
@@ -77,7 +77,7 @@ class AdminThemesNotInstalledListController extends AdminController
 				'MAIN_COLOR' => $configuration->get_main_color() !== '' ? $configuration->get_main_color() : $this->lang['themes.bot_informed'],
 				'WIDTH' => $configuration->get_variable_width() ? $this->lang['themes.variable-width'] : $configuration->get_width(),
 			));
-				
+			
 			if (count($pictures) > 0)
 			{
 				unset($pictures[0]);
@@ -94,14 +94,14 @@ class AdminThemesNotInstalledListController extends AdminController
 			'L_ADD' => $this->lang['themes.add_theme']
 		));
 	}
-
+	
 	private function init()
 	{
 		$this->lang = LangLoader::get('admin-themes-common');
 		$this->view = new FileTemplate('admin/themes/AdminThemesNotInstalledListController.tpl');
 		$this->view->add_lang($this->lang);
 	}
-
+	
 	private function get_not_installed_themes()
 	{
 		$installed_themes = ThemeManager::get_installed_themes_map();
@@ -118,7 +118,7 @@ class AdminThemesNotInstalledListController extends AdminController
 		sort($themes_not_installed);
 		return $themes_not_installed;
 	}
-
+	
 	private function save(HTTPRequest $request)
 	{
 		if ($request->get_bool('add', false))
@@ -141,27 +141,27 @@ class AdminThemesNotInstalledListController extends AdminController
 			}
 		}
 	}
-
+	
 	private function upload_form()
 	{
 		$form = new HTMLForm('upload_theme');
-
+		
 		$fieldset = new FormFieldsetHTML('upload_theme', $this->lang['themes.upload']);
 		$form->add_fieldset($fieldset);
-
+	
 		$fieldset->add_field(new FormFieldFilePicker('upload_theme', $this->lang['themes.upload.description']));
-
+		
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_button($this->submit_button);
 
 		$this->form = $form;
 	}
-
+	
 	private function upload_theme()
 	{
 		$folder_phpboost_themes = PATH_TO_ROOT . '/templates/';
 
-		if (!is_writable($folder_phpboost_themes))
+        if (!is_writable($folder_phpboost_themes))
 		{
 			$is_writable = @chmod($dir, 0777);
 		}
@@ -169,7 +169,7 @@ class AdminThemesNotInstalledListController extends AdminController
 		{
 			$is_writable = true;
 		}
-
+        
 		if ($is_writable)
 		{
 			$file = $this->form->get_value('upload_theme');
@@ -181,15 +181,15 @@ class AdminThemesNotInstalledListController extends AdminController
 					if ($upload->file('upload_theme_upload_theme', '`([a-z0-9()_-])+\.(gzip|zip)+$`i'))
 					{
 						$archive = $folder_phpboost_themes . $upload->filename['upload_theme_upload_theme'];
-
+						
 						if ($upload->extension['upload_theme_upload_theme'] == 'gzip')
 						{
 							import('lib/pcl/pcltar', LIB_IMPORT);
 							PclTarExtract($upload->filename['upload_theme_upload_theme'], $folder_phpboost_themes);
-								
+							
 							$file = new File($archive);
 							$file->delete();
-								
+							
 							$this->view->put('MSG', MessageHelper::display($this->lang['themes.upload.success'], MessageHelper::SUCCESS, 4));
 						}
 						else if ($upload->extension['upload_theme_upload_theme'] == 'zip')
@@ -197,10 +197,10 @@ class AdminThemesNotInstalledListController extends AdminController
 							import('lib/pcl/pclzip', LIB_IMPORT);
 							$zip = new PclZip($archive);
 							$zip->extract(PCLZIP_OPT_PATH, $folder_phpboost_themes, PCLZIP_OPT_SET_CHMOD, 0755);
-								
+							
 							$file = new File($archive);
 							$file->delete();
-								
+							
 							$this->view->put('MSG', MessageHelper::display($this->lang['themes.upload.success'], MessageHelper::SUCCESS, 4));
 						}
 						else

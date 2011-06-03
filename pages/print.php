@@ -30,7 +30,7 @@ require_once('../kernel/begin.php');
 require_once('pages_defines.php');
 
 //Titre de l'article à afficher en version imprimable
-$encoded_title = TextHelper::strprotect(AppContext::get_request()->get_getstring('title', ''));
+$encoded_title = retrieve(GET, 'title', '', TSTRING);
 
 $Cache->load('pages');
 

@@ -29,48 +29,48 @@ require_once('../admin/admin_begin.php');
 define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
 
-$idgroup = AppContext::get_request()->get_getint('id', 0);
-$idgroup_post = AppContext::get_request()->get_postint('id', 0);
-$add = AppContext::get_request()->get_getint('add', 0);
-$add_post = AppContext::get_request()->get_postint('add', 0);
+$idgroup = retrieve(GET, 'id', 0);
+$idgroup_post = retrieve(POST, 'id', 0);
+$add = retrieve(GET, 'add', 0);
+$add_post = retrieve(POST, 'add', 0);
 $del_group = !empty($_GET['del']) ? true : false;
 $add_mbr = !empty($_POST['add_mbr']) ? true : false;
 $del_mbr = !empty($_GET['del_mbr']) ? true : false;
-$user_id = AppContext::get_request()->get_getint('user_id', 0);
+$user_id = retrieve(GET, 'user_id', 0);
 
 if (!empty($_POST['valid']) && !empty($idgroup_post)) //Modification du groupe.
 {
-	$name = TextHelper::strprotect(AppContext::get_request()->get_poststring('name', ''));
-	$img = TextHelper::strprotect(AppContext::get_request()->get_poststring('img', ''));
-	$auth_flood = AppContext::get_request()->get_postint('auth_flood', 1);
-	$pm_group_limit = AppContext::get_request()->get_postint('pm_group_limit', 75);
-	$color_group = TextHelper::strprotect(AppContext::get_request()->get_poststring('color_group', ''));
+	$name = retrieve(POST, 'name', '');
+	$img = retrieve(POST, 'img', '');
+	$auth_flood = retrieve(POST, 'auth_flood', 1);
+	$pm_group_limit = retrieve(POST, 'pm_group_limit', 75);
+	$color_group = retrieve(POST, 'color_group', '');
 	$data_group_limit = isset($_POST['data_group_limit']) ? NumberHelper::numeric($_POST['data_group_limit'], 'float') * 1024 : '5120';
-
+		
 	$group_auth = array('auth_flood' => $auth_flood, 'pm_group_limit' => $pm_group_limit, 'data_group_limit' => $data_group_limit);
 	$Sql->query_inject("UPDATE " . DB_TABLE_GROUP . " SET name = '" . $name . "', img = '" . $img . "', color = '" . $color_group . "', auth = '" . serialize($group_auth) . "' WHERE id = '" . $idgroup_post . "'", __LINE__, __FILE__);
-
+	
 	GroupsCache::invalidate(); //On régénère le fichier de cache des groupes
-
+	
 	AppContext::get_response()->redirect('/admin/admin_groups.php?id=' . $idgroup_post);
 }
 elseif (!empty($_POST['valid']) && $add_post) //ajout  du groupe.
 {
-	$name = TextHelper::strprotect(AppContext::get_request()->get_poststring('name', ''));
-	$img = TextHelper::strprotect(AppContext::get_request()->get_poststring('img', ''));
-	$auth_flood = AppContext::get_request()->get_postint('auth_flood', 1);
-	$pm_group_limit = AppContext::get_request()->get_postint('pm_group_limit', 75);
-	$color_group = TextHelper::strprotect(AppContext::get_request()->get_poststring('color_group', ''));
+	$name = retrieve(POST, 'name', '');
+	$img = retrieve(POST, 'img', '');
+	$auth_flood = retrieve(POST, 'auth_flood', 1);
+	$pm_group_limit = retrieve(POST, 'pm_group_limit', 75);
+	$color_group = retrieve(POST, 'color_group', '');
 	$data_group_limit = isset($_POST['data_group_limit']) ? NumberHelper::numeric($_POST['data_group_limit'], 'float') * 1024 : '5120';
-
+	
 	if (!empty($name))
 	{
 		//Insertion
 		$group_auth = array('auth_flood' => $auth_flood, 'pm_group_limit' => $pm_group_limit, 'data_group_limit' => $data_group_limit);
 		$Sql->query_inject("INSERT INTO " . DB_TABLE_GROUP . " (name, img, color, auth, members) VALUES ('" . $name . "', '" . $img . "', '" . $color_group . "', '" . serialize($group_auth) . "', '')", __LINE__, __FILE__);
-
+		
 		GroupsCache::invalidate(); //On régénère le fichier de cache des groupes
-
+		
 		AppContext::get_response()->redirect('/admin/admin_groups.php?id=' . $Sql->insert_id("SELECT MAX(id) FROM " . PREFIX . "group"));
 	}
 	else
@@ -79,7 +79,7 @@ elseif (!empty($_POST['valid']) && $add_post) //ajout  du groupe.
 	}
 }
 elseif (!empty($idgroup) && $del_group) //Suppression du groupe.
-{
+{	
 	$array_members = explode('|', $Sql->query("SELECT members FROM " . DB_TABLE_GROUP . " WHERE id = '" . $idgroup . "'", __LINE__, __FILE__));
 	foreach ($array_members as $key => $user_id)
 	{
@@ -87,16 +87,16 @@ elseif (!empty($idgroup) && $del_group) //Suppression du groupe.
 	}
 
 	$Sql->query_inject("DELETE FROM " . DB_TABLE_GROUP . " WHERE id = '" . $idgroup . "'", __LINE__, __FILE__); //On supprime dans la bdd.
-
+		
 	GroupsCache::invalidate(); //On régénère le fichier de cache des groupes
-
+	
 	AppContext::get_response()->redirect(HOST . DIR . '/admin/admin_groups.php');
 }
 elseif (!empty($idgroup) && $add_mbr) //Ajout du membre au groupe.
 {
 	$Session->csrf_get_protect(); //Protection csrf
-
-	$login = TextHelper::strprotect(AppContext::get_request()->get_poststring('login_mbr', ''));
+	
+	$login = retrieve(POST, 'login_mbr', '');
 	$user_id = $Sql->query("SELECT user_id FROM " . DB_TABLE_MEMBER . " WHERE login = '" . $login . "'", __LINE__, __FILE__);
 	if (!empty($user_id))
 	{
@@ -118,7 +118,7 @@ elseif (!empty($idgroup) && $add_mbr) //Ajout du membre au groupe.
 elseif ($del_mbr && !empty($user_id) && !empty($idgroup)) //Suppression du membre du groupe.
 {
 	$Session->csrf_get_protect(); //Protection csrf
-
+	
 	GroupsService::remove_member($user_id, $idgroup);
 	GroupsCache::invalidate();
 	AppContext::get_response()->redirect('/admin/admin_groups.php?id=' . $idgroup . '#add');
@@ -132,12 +132,12 @@ elseif (!empty($_FILES['upload_groups']['name'])) //Upload
 	{
 		$is_writable = (@chmod($dir, 0777)) ? true : false;
 	}
-
+	
 	@clearstatcache();
 	$error = '';
 	if (is_writable($dir)) //Dossier en écriture, upload possible
 	{
-
+		
 		$Upload = new Upload($dir);
 		$Upload->disableContentCheck();
 		if (!$Upload->file('upload_groups', '`([a-z0-9()_-])+\.(jpg|gif|png|bmp)+$`i'))
@@ -146,20 +146,20 @@ elseif (!empty($_FILES['upload_groups']['name'])) //Upload
 		}
 	}
 	else
-	$error = 'e_upload_failed_unwritable';
-
+		$error = 'e_upload_failed_unwritable';
+	
 	$error = !empty($error) ? '&error=' . $error : '';
-	AppContext::get_response()->redirect(HOST . SCRIPT . '?add=1' . $error);
+	AppContext::get_response()->redirect(HOST . SCRIPT . '?add=1' . $error);	
 }
 elseif (!empty($idgroup)) //Interface d'édition du groupe.
 {
 	$template = new FileTemplate('admin/admin_groups_management2.tpl');
-
+	
 	$group = $Sql->query_array(DB_TABLE_GROUP, 'id', 'name', 'img', 'color', 'auth', 'members', "WHERE id = '" . $idgroup . "'", __LINE__, __FILE__);
 	if (!empty($group['id']))
 	{
 		//Gestion erreur.
-		$get_error = TextHelper::strprotect(AppContext::get_request()->get_getstring('error', ''));
+		$get_error = retrieve(GET, 'error', '');
 		if ($get_error == 'incomplete')
 		{
 			$template->put('message_helper', MessageHelper::display($LANG['e_incomplete'], E_USER_NOTICE));
@@ -168,7 +168,7 @@ elseif (!empty($idgroup)) //Interface d'édition du groupe.
 		{
 			$template->put('message_helper', MessageHelper::display($LANG['e_already_group'], E_USER_NOTICE));
 		}
-
+		
 		//On recupère les dossier des images des groupes.
 		$img_groups = '<option value="">--</option>';
 		$image_folder_path = new Folder(PATH_TO_ROOT . '/images/group');
@@ -179,7 +179,7 @@ elseif (!empty($idgroup)) //Interface d'édition du groupe.
 			$img_groups .= '<option value="' . $file . '"' . $selected . '>' . $file . '</option>';
 		}
 		$array_group = unserialize($group['auth']);
-
+	
 		$nbr_member_group = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_MEMBER . " WHERE user_groups = '" . $group['id'] . "'", __LINE__, __FILE__);
 		$Pagination = new DeprecatedPagination();
 		$template->put_all(array(
@@ -224,7 +224,7 @@ elseif (!empty($idgroup)) //Interface d'édition du groupe.
 			'L_DELETE' => $LANG['delete'],
 			'L_ADD_MBR_GROUP' => $LANG['add_mbr_group']
 		));
-
+		
 		//Liste des membres du groupe.
 		$members = $Sql->query("SELECT members FROM " . DB_TABLE_GROUP . " WHERE id = '" . NumberHelper::numeric($group['id']) . "'", __LINE__, __FILE__);
 		$members = explode('|', $members);
@@ -242,14 +242,14 @@ elseif (!empty($idgroup)) //Interface d'édition du groupe.
 		}
 	}
 	else
-	AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);
-
+		AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);
+	
 	$template->display();
 }
 elseif ($add) //Interface d'ajout du groupe.
 {
 	$template = new FileTemplate('admin/admin_groups_management2.tpl');
-
+	
 	//On recupère les dossier des images des groupes contenu dans le dossier /images/group.
 	$img_groups = '<option value="" selected="selected">--</option>';
 
@@ -260,7 +260,7 @@ elseif ($add) //Interface d'ajout du groupe.
 		$file = $image->get_name();
 		$img_groups .= '<option value="' . $file . '">' . $file . '</option>';
 	}
-
+		
 	$template->put_all(array(
 		'THEME' => get_utheme(),
 		'LANG' => get_ulang(),
@@ -296,11 +296,11 @@ elseif ($add) //Interface d'ajout du groupe.
 else //Liste des groupes.
 {
 	$template = new FileTemplate('admin/admin_groups_management.tpl');
-
+	 
 	$group_cache = GroupsCache::load()->get_groups();
-
+	
 	$nbr_group = count($group_cache);
-
+	
 	$Pagination = new DeprecatedPagination();
 	$template->put_all(array(
 		'PAGINATION' => $Pagination->display('admin_groups.php?p=%d', $nbr_group, 'p', 25, 3),
@@ -315,8 +315,8 @@ else //Liste des groupes.
 		'L_UPDATE' => $LANG['update'],
 		'L_DELETE' => $LANG['delete']
 	));
-	 
-
+	  
+  
 	$result = $Sql->query_while("SELECT id, name, img
 	FROM " . DB_TABLE_GROUP . "
 	ORDER BY name
@@ -328,10 +328,10 @@ else //Liste des groupes.
 			'ID' => $row['id'],
 			'NAME' => $row['name'],
 			'IMAGE' => !empty($row['img']) ? '<img src="'. PATH_TO_ROOT .'/images/group/' . $row['img'] . '" alt="" />' : ''
-			));
+		));
 	}
 	$Sql->query_close($result);
-
+	
 	$template->display();
 }
 

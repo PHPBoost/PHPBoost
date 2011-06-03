@@ -6,7 +6,7 @@
  *   copyright            : (C) 2007 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
- *
+ *  
  *
  ###################################################
  *
@@ -14,7 +14,7 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- *
+ * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -32,8 +32,8 @@ require_once('../admin/admin_header.php');
 
 $del = !empty($_GET['del']) ? true : false;
 $edit = !empty($_GET['edit']) ? true : false;
-$idcom = AppContext::get_request()->get_getint('id', 0);
-$module = TextHelper::strprotect(AppContext::get_request()->get_getstring('module', ''));
+$idcom = retrieve(GET, 'id', 0);
+$module = retrieve(GET, 'module', '');
 
 $tpl = new FileTemplate('admin/admin_com_management.tpl');
 
@@ -47,12 +47,12 @@ FROM " . DB_TABLE_COM . "
 GROUP BY script", __LINE__, __FILE__);
 
 while ($row = $Sql->fetch_assoc($result))
-$array_com[$row['script']] = $row['total'];
+	$array_com[$row['script']] = $row['total'];
 
 $Sql->query_close($result);
 
 //On crée une pagination si le nombre de commentaires est trop important.
-
+ 
 $Pagination = new DeprecatedPagination();
 
 $nbr_com = !empty($module) ? (!empty($array_com[$module]) ? $array_com[$module] : 0) : $Sql->count_table(DB_TABLE_COM, __LINE__, __FILE__);
@@ -109,21 +109,21 @@ while ($row = $Sql->fetch_assoc($result))
 	$is_guest = ($row['user_id'] === -1);
 
 	//Pseudo.
-	if (!$is_guest)
-	$com_pseudo = '<a class="msg_link_pseudo" href="../member/member' . url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '" title="' . $row['mlogin'] . '"><span style="font-weight: bold;">' . TextHelper::wordwrap_html($row['mlogin'], 13) . '</span></a>';
+	if (!$is_guest) 
+		$com_pseudo = '<a class="msg_link_pseudo" href="../member/member' . url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '" title="' . $row['mlogin'] . '"><span style="font-weight: bold;">' . TextHelper::wordwrap_html($row['mlogin'], 13) . '</span></a>';
 	else
-	$com_pseudo = '<span style="font-style:italic;">' . (!empty($row['login']) ? TextHelper::wordwrap_html($row['login'], 13) : $LANG['guest']) . '</span>';
-
+		$com_pseudo = '<span style="font-style:italic;">' . (!empty($row['login']) ? TextHelper::wordwrap_html($row['login'], 13) : $LANG['guest']) . '</span>';
+	
 	//Rang de l'utilisateur.
 	$user_rank = ($row['level'] === '0') ? $LANG['member'] : $LANG['guest'];
 	$user_group = $user_rank;
-	if ($row['level'] === '2') //Rang spécial (admins).
+	if ($row['level'] === '2') //Rang spécial (admins).  
 	{
 		$user_rank = $ranks_cache[-2]['name'];
 		$user_group = $user_rank;
 		$user_rank_icon = $ranks_cache[-2]['icon'];
 	}
-	elseif ($row['level'] === '1') //Rang spécial (modos).
+	elseif ($row['level'] === '1') //Rang spécial (modos).  
 	{
 		$user_rank = $ranks_cache[-1]['name'];
 		$user_group = $user_rank;
@@ -134,35 +134,35 @@ while ($row = $Sql->fetch_assoc($result))
 		foreach ($ranks_cache as $msg => $ranks_info)
 		{
 			if ($msg >= 0 && $msg <= $row['user_msg'])
-			{
+			{ 
 				$user_rank = $ranks_info['name'];
 				$user_rank_icon = $ranks_info['icon'];
 				break;
 			}
 		}
 	}
-
+	
 	//Image associée au rang.
 	$user_assoc_img = isset($user_rank_icon) ? '<img src="../templates/' . get_utheme() . '/images/ranks/' . $user_rank_icon . '" alt="" />' : '';
-
-	//Affichage des groupes du membre.
-	if (!empty($row['user_groups']))
-	{
+	
+	//Affichage des groupes du membre.		
+	if (!empty($row['user_groups'])) 
+	{	
 		$user_groups = '';
 		$array_user_groups = explode('|', $row['user_groups']);
 		foreach (GroupsService::get_groups_names() as $idgroup => $array_group_info)
 		{
 			if (is_numeric(array_search($idgroup, $array_user_groups)))
-			$user_groups .= !empty($array_group_info['img']) ? '<img src="../images/group/' . $array_group_info['img'] . '" alt="' . $array_group_info['name'] . '" title="' . $array_group_info['name'] . '"/><br />' : $LANG['group'] . ': ' . $array_group_info['name'];
+				$user_groups .= !empty($array_group_info['img']) ? '<img src="../images/group/' . $array_group_info['img'] . '" alt="' . $array_group_info['name'] . '" title="' . $array_group_info['name'] . '"/><br />' : $LANG['group'] . ': ' . $array_group_info['name'];
 		}
 	}
 	else
-	$user_groups = $LANG['group'] . ': ' . $user_group;
-
+		$user_groups = $LANG['group'] . ': ' . $user_group;
+	
 	//Membre en ligne?
 	$user_online = !empty($row['connect']) ? 'online' : 'offline';
-
-	//Avatar
+	
+	//Avatar			
 	if (empty($row['user_avatar']))
 	{
 		$user_accounts_config = UserAccountsConfig::load();
@@ -180,27 +180,27 @@ while ($row = $Sql->fetch_assoc($result))
 	{
 		$user_avatar = '<img src="' . $row['user_avatar'] . '" alt=""	/>';
 	}
-
-	//Affichage du sexe et du statut (connecté/déconnecté).
+	
+	//Affichage du sexe et du statut (connecté/déconnecté).	
 	$user_sex = '';
-	if ($row['user_sex'] == 1)
-	$user_sex = $LANG['sex'] . ': <img src="../templates/' . get_utheme() . '/images/man.png" alt="" /><br />';
-	elseif ($row['user_sex'] == 2)
-	$user_sex = $LANG['sex'] . ': <img src="../templates/' . get_utheme() . '/images/woman.png" alt="" /><br />';
-		
+	if ($row['user_sex'] == 1)	
+		$user_sex = $LANG['sex'] . ': <img src="../templates/' . get_utheme() . '/images/man.png" alt="" /><br />';	
+	elseif ($row['user_sex'] == 2) 
+		$user_sex = $LANG['sex'] . ': <img src="../templates/' . get_utheme() . '/images/woman.png" alt="" /><br />';
+			
 	//Nombre de message.
 	$user_msg = ($row['user_msg'] > 1) ? $LANG['message_s'] . ': ' . $row['user_msg'] : $LANG['message'] . ': ' . $row['user_msg'];
-
+	
 	//Localisation.
-	if (!empty($row['user_local']))
+	if (!empty($row['user_local'])) 
 	{
 		$user_local = $LANG['place'] . ': ' . $row['user_local'];
-		$user_local = $user_local > 15 ? TextHelper::substr_html($user_local, 0, 15) . '...<br />' : $user_local . '<br />';
+		$user_local = $user_local > 15 ? TextHelper::substr_html($user_local, 0, 15) . '...<br />' : $user_local . '<br />';			
 	}
 	else $user_local = '';
-
+	
 	$row['path'] = preg_replace('`&quote=[0-9]+`', '', $row['path']);
-
+	
 	$tpl->assign_block_vars('com', array(
 		'ID' => $row['idcom'],
 		'CONTENTS' => ucfirst(FormatingHelper::second_parse($row['contents'])),

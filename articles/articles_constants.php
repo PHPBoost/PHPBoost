@@ -37,8 +37,8 @@ define('DB_TABLE_ARTICLES', PREFIX . 'articles');
 define('DB_TABLE_ARTICLES_CAT', PREFIX . 'articles_cats');
 define('DB_TABLE_ARTICLES_MODEL', PREFIX . 'articles_models');
 $idartcat = retrieve(GET, 'cat',0);
-$idart = AppContext::get_request()->get_getint('id', 0);
-$invisible = AppContext::get_request()->get_getbool('invisible', false);
+$idart = retrieve(GET, 'id', 0);
+$invisible = retrieve(GET, 'invisible', false, TBOOL);
 
 defined('ALTERNATIVE_CSS') or define('ALTERNATIVE_CSS', 'articles');
 ?>

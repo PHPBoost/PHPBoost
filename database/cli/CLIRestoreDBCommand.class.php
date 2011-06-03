@@ -62,14 +62,14 @@ class CLIRestoreDBCommand implements CLICommand
 			CLIOutput::writeln('Error: the file you want to import doesn\'t exist or is not readable.');
 		}
 	}
-
+	
 	private function restore_db($file_name)
 	{
 		Environment::try_to_increase_max_execution_time();
 		PersistenceContext::get_dbms_utils()->parse_file(new File($file_name));
 		CLIOutput::writeln('Dump restored from file ' . $file_name);
 	}
-
+	
 	private function optimize_tables()
 	{
 		$db_utils = PersistenceContext::get_dbms_utils();
@@ -78,12 +78,12 @@ class CLIRestoreDBCommand implements CLICommand
 		$db_utils->repair($tables);
 		CLIOutput::writeln('Database optimized');
 	}
-
+	
 	private function clear_caches()
 	{
 		$cache_service = AppContext::get_cache_service();
-		$cache_service->clear_phpboost_cache();
-		$cache_service->clear_syndication_cache();
+        $cache_service->clear_phpboost_cache();
+        $cache_service->clear_syndication_cache();
 		CLIOutput::writeln('Caches cleared');
 	}
 }

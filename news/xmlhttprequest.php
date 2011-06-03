@@ -48,17 +48,17 @@ elseif (isset($_POST['preview']))
 	load_module_lang('news');
 
 	$news = array(
-		'id' => AppContext::get_request()->get_postint('id', 0),
-		'idcat' => AppContext::get_request()->get_postint('idcat', 0),
-		'title' => utf8_decode(TextHelper::strprotect(AppContext::get_request()->get_poststring('title', ''))),
-		'desc' => utf8_decode(FormatingHelper::strparse(AppContext::get_request()->get_poststring('desc', ''))),
-		'extend_desc' => utf8_decode(FormatingHelper::strparse(AppContext::get_request()->get_poststring('extend_desc', ''))),
-		'user_id' => AppContext::get_request()->get_postint('user_id', 0),
+		'id' => retrieve(POST, 'id', 0, TINTEGER),
+		'idcat' => retrieve(POST, 'idcat', 0, TINTEGER),
+		'title' => utf8_decode(retrieve(POST, 'title', '', TSTRING)),
+		'desc' => utf8_decode(retrieve(POST, 'desc', '', TSTRING_PARSE)),
+		'extend_desc' => utf8_decode(retrieve(POST, 'extend_desc', '', TSTRING_PARSE)),
+		'user_id' => retrieve(POST, 'user_id', 0, TINTEGER),
 		'date' => retrieve(POST, 'date', 0, TSTRING_UNCHANGE),
-		'hour' => AppContext::get_request()->get_postint('hour', 0),
-		'min' => AppContext::get_request()->get_postint('min', 0),
-		'img' => TextHelper::strprotect(AppContext::get_request()->get_poststring('img', '')),
-		'alt' => TextHelper::strprotect(AppContext::get_request()->get_poststring('alt', ''))
+		'hour' => retrieve(POST, 'hour', 0, TINTEGER),
+		'min' => retrieve(POST, 'min', 0, TINTEGER),
+		'img' => retrieve(POST, 'img', '', TSTRING),
+		'alt' => retrieve(POST, 'alt', '', TSTRING)
 	);
 
 	$user = $Sql->query_array(DB_TABLE_MEMBER, 'level', 'login', "WHERE user_id = '" . $news['user_id'] . "'", __LINE__, __FILE__);

@@ -34,7 +34,7 @@
 class AdminError404DAO extends SQLDAO
 {
 	private static $instance;
-
+	
 	/**
 	 * @return AdminError404DAO
 	 */
