@@ -87,7 +87,10 @@ elseif (!empty($_POST['valid']) && !empty($nbr_pics_post)) //Ajout massif d'imag
 			$del = !empty($_POST[$i . 'del']) ? NumberHelper::numeric($_POST[$i . 'del']) : 0;
 
 			if ($del)
-				delete_file('pics/' . $uniq);
+			{
+				$file = new File('pics/' . $uniq);
+				$file->delete();
+			}
 			else
 				$Gallery->Add_pics($cat, $name, $uniq, $User->get_attribute('user_id'));
 		}
