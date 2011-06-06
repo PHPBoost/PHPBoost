@@ -391,26 +391,6 @@ function strtodate($str, $date_format)
 
 /**
  * @deprecated
- * @desc Deletes a file
- * @param string $file Path of the file to delete
- * @return bool true if the file could be deleted, false if an error occured.
- */
-function delete_file($filepath)
-{
-	$file = new File($filepath);
-	try
-	{
-		$file->delete();
-		return true;
-	}
-	catch (IOException $exception)
-	{
-		return false;
-	}
-}
-
-/**
- * @deprecated
  * @desc Displays a confirmation message during a defined delay and then redirects the user.
  * @param string $url_error Url at which you want to redirect him.
  * @param string $l_error The message to show him
