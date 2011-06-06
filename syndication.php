@@ -32,11 +32,6 @@ define('NO_SESSION_LOCATION', true);
 require_once PATH_TO_ROOT . '/kernel/begin.php';
 require_once PATH_TO_ROOT . '/kernel/header_no_display.php';
 
-function no_available_feeds()
-{
-	AppContext::get_response()->redirect('member/error.php?e=e_uninstalled_module');
-}
-
 $module_id = retrieve(GET, 'm', '');
 if (!empty($module_id))
 {
@@ -72,7 +67,7 @@ if (!empty($module_id))
 		}
 		else
 		{
-			no_available_feeds();
+			AppContext::get_response()->redirect('member/error.php?e=e_uninstalled_module');
 		}
 	}
 }
