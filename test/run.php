@@ -37,7 +37,7 @@ AppContext::init_session();
 AppContext::get_session()->load();
 AppContext::get_session()->act();
 AppContext::init_user();
-req('/test/PHPUnit/Framework.php');
+require_file('/test/PHPUnit/Framework.php');
 
 if (isset($argv))
 {
@@ -65,7 +65,7 @@ if (!$is_html)
 
 //Debug::dump($_SERVER['argv']);
 
-req('/test/phpunit.php');
+require_file('/test/phpunit.php');
 if (!$is_html)
 {
 	echo '</pre>';

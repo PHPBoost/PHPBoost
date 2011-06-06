@@ -113,7 +113,7 @@ function import($path, $import_type = CLASS_IMPORT)
  * @param bool $once if false use require instead of require_once
  * @throws IOException Wether the file cannot be included because it doesn't exist
  */
-function req($file, $once = true)
+function require_file($file, $once = true)
 {
 	$file = '/' . ltrim($file, '/');
 	if (!file_exists(PATH_TO_ROOT . $file))
@@ -137,7 +137,7 @@ function req($file, $once = true)
  * @param bool $once if false use include instead of include_once
  * @return bool true if the file has been included with success else, false
  */
-function inc($file, $once = true)
+function include_file($file, $once = true)
 {
 	$file = '/' . ltrim($file, '/');
 	if (!file_exists(PATH_TO_ROOT . $file))
