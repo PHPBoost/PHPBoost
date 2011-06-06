@@ -131,7 +131,7 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 	{
 		global $MENUS;
 
-		if (!inc(PATH_TO_ROOT . '/cache/menus.php'))
+		if (!include_file(PATH_TO_ROOT . '/cache/menus.php'))
 		{
 			global $Cache;
 			//En cas d'échec, on régénère le cache
