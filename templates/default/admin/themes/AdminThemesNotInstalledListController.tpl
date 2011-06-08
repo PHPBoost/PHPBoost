@@ -81,9 +81,8 @@
 					<label><input type="radio" name="activated-{themes_not_installed.ID}" value="1" checked="checked" /> {@themes.yes}</label>
 					<label><input type="radio" name="activated-{themes_not_installed.ID}" value="0" /> {@themes.no}</label>
 					<br /><br />
-					<a href="{PATH_TO_ROOT}/admin/themes/index.php?url=/{themes_not_installed.ID}/delete/">
-						<input type="submit" name="add-{themes_not_installed.ID}" value="{L_ADD}" class="submit"/>
-					</a>
+					<input type="submit" name="add-{themes_not_installed.ID}" value="{L_ADD}" class="submit"/>
+					<input type="hidden" name="id_theme" value="{themes_not_installed.ID}" />
 				</td>
 			</tr>						
 		# END themes_not_installed #
@@ -92,6 +91,5 @@
 	<fieldset class="fieldset_submit">
 		<legend>{L_SUBMIT}</legend>
 		<input type="hidden" name="token" value="{TOKEN}" />
-		<input type="hidden" name="add" value="true" />
 	</fieldset>
 </form>
