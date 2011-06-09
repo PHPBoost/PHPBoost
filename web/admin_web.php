@@ -36,6 +36,9 @@ $id = retrieve(GET, 'id', 0);
 $id_post = retrieve(POST, 'id', 0);
 $del = !empty($_GET['delete']) ? true : false;
 
+$editor = AppContext::get_content_formatting_service()->get_default_editor();
+$editor->set_identifier('contents');
+
 if (!empty($id) && !$del)
 {
 	$Template->set_filenames(array(
@@ -54,7 +57,7 @@ if (!empty($id) && !$del)
 		'CONTENTS' => FormatingHelper::unparse($row['contents']),
 		'URL' => $row['url'],
 		'COMPT' => $row['compt'],
-		'KERNEL_EDITOR' => display_editor(),
+		'KERNEL_EDITOR' => $editor->display(),
 		'L_WEB_ADD' => $LANG['web_add'],
 		'L_WEB_MANAGEMENT' => $LANG['web_management'],
 		'L_WEB_CAT' => $LANG['cat_management'],
@@ -143,7 +146,7 @@ elseif (!empty($_POST['previs']) && !empty($id_post))
 		'LANG' => get_ulang(),
 		'IDWEB' => $id_post,
 		'TITLE' => $title,
-		'KERNEL_EDITOR' => display_editor(),		
+		'KERNEL_EDITOR' => $editor->display(),		
 		'NAME' => $title,
 		'CONTENTS' => $contents,
 		'URL' => $url,
@@ -255,7 +258,7 @@ else
 		'PAGINATION' => $Pagination->display('admin_web.php?p=%d', $nbr_web, 'p', 25, 3),	
 		'THEME' => get_utheme(),
 		'LANG' => get_ulang(),
-		'KERNEL_EDITOR' => display_editor(),
+		'KERNEL_EDITOR' => $editor->display(),
 		'L_WEB_ADD' => $LANG['web_add'],
 		'L_WEB_MANAGEMENT' => $LANG['web_management'],
 		'L_WEB_CAT' => $LANG['cat_management'],

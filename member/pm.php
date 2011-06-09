@@ -50,6 +50,9 @@ $pm_edit = retrieve(GET, 'edit', 0);
 $pm_del = retrieve(GET, 'del', 0);
 $read = retrieve(GET, 'read', false);
 
+$editor = AppContext::get_content_formatting_service()->get_default_editor();
+$editor->set_identifier('contents');
+
 //Marque les messages privés comme lus
 if ($read)
 {
@@ -121,7 +124,7 @@ elseif (!empty($post) || (!empty($pm_get) && $pm_get != $User->get_attribute('us
 	$Template->put_all(array(
 		'LANG' => get_ulang(),
 		'THEME' => get_utheme(),
-		'KERNEL_EDITOR' => display_editor(),
+		'KERNEL_EDITOR' => $editor->display(),
 		'L_REQUIRE_RECIPIENT' => $LANG['require_recipient'],
 		'L_REQUIRE_MESSAGE' => $LANG['require_text'],
 		'L_REQUIRE_TITLE' => $LANG['require_title'],
@@ -189,7 +192,7 @@ elseif (!empty($_POST['prw_convers']) && empty($mp_edit)) //Prévisualisation de 
 	$Template->put_all(array(
 		'LANG' => get_ulang(),
 		'THEME' => get_utheme(),
-		'KERNEL_EDITOR' => display_editor(),
+		'KERNEL_EDITOR' => $editor->display(),
 		'L_REQUIRE_MESSAGE' => $LANG['require_text'],
 		'L_REQUIRE_TITLE' => $LANG['require_title'],
 		'L_REQUIRE' => $LANG['require'],
@@ -234,7 +237,7 @@ elseif (!empty($_POST['prw']) && empty($pm_edit) && empty($pm_del)) //Prévisuali
 
 	$Template->put_all(array(
 		'LANG' => get_ulang(),
-		'KERNEL_EDITOR' => display_editor(),
+		'KERNEL_EDITOR' => $editor->display(),
 		'L_REQUIRE_MESSAGE' => $LANG['require_text'],
 		'L_DELETE_MESSAGE' => $LANG['alert_delete_msg'],
 		'L_PRIVATE_MESSAGE' => $LANG['private_message'],
@@ -477,7 +480,7 @@ elseif (!empty($pm_edit)) //Edition du message privé, si le destinataire ne la p
 				$Template->put_all(array(
 					'LANG' => get_ulang(),
 					'THEME' => get_utheme(),
-					'KERNEL_EDITOR' => display_editor(),
+					'KERNEL_EDITOR' => $editor->display(),
 					'L_REQUIRE_MESSAGE' => $LANG['require_text'],
 					'L_REQUIRE' => $LANG['require'],
 					'L_EDIT' => $LANG['edit'],
@@ -747,7 +750,7 @@ elseif (!empty($pm_id_get)) //Messages associés à la conversation.
 	if ($convers['user_id'] > 0 && !$is_guest_in_convers)
 	{
 		$Template->put_all(array(
-			'KERNEL_EDITOR' => display_editor(),
+			'KERNEL_EDITOR' => $editor->display(),
 		));
 		
 		$Template->assign_block_vars('post_pm', array(

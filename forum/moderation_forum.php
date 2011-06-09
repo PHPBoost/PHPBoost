@@ -398,9 +398,13 @@ elseif ($action == 'punish') //Gestion des utilisateurs
 		}
 
 		array_pop($array_sanction);
+		
+		$editor = AppContext::get_content_formatting_service()->get_default_editor();
+		$editor->set_identifier('action_contents');
+
 		$Template->put_all(array(
 			'C_FORUM_USER_INFO' => true,
-			'KERNEL_EDITOR' => display_editor('action_contents'),
+			'KERNEL_EDITOR' => $editor->display(),
 			'ALTERNATIVE_PM' => ($key_sanction > 0) ? str_replace('%date%', $array_sanction[$key_sanction], $LANG['user_readonly_changed']) : str_replace('%date%', '1 ' . $LANG['minute'], $LANG['user_readonly_changed']),
 			'LOGIN' => '<a href="'. DispatchManager::get_url('/member', '/profile/'. $id_get)->absolute() .'">' . $member['login'] . '</a>',
 			'INFO' => $array_sanction[$key_sanction],
@@ -559,9 +563,12 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 				$select .= '<option value="' . 10 * $j . '">' . 10 * $j . '%</option>';
 		}
 
+		$editor = AppContext::get_content_formatting_service()->get_default_editor();
+		$editor->set_identifier('action_contents');
+		
 		$Template->put_all(array(
 			'C_FORUM_USER_INFO' => true,
-			'KERNEL_EDITOR' => display_editor('action_contents'),
+			'KERNEL_EDITOR' => $editor->display(),
 			'ALTERNATIVE_PM' => str_replace('%level%', $member['user_warning'], $LANG['user_warning_level_changed']),
 			'LOGIN' => '<a href="'. DispatchManager::get_url('/member', '/profile/'.$id_get)->absolute() .'">' . $member['login'] . '</a>',
 			'INFO' => $LANG['user_warning_level'] . ': ' . $member['user_warning'] . '%',

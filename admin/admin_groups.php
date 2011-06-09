@@ -301,12 +301,15 @@ else //Liste des groupes.
 	
 	$nbr_group = count($group_cache);
 	
+	$editor = AppContext::get_content_formatting_service()->get_default_editor();
+	$editor->set_identifier('contents');
+	
 	$Pagination = new DeprecatedPagination();
 	$template->put_all(array(
 		'PAGINATION' => $Pagination->display('admin_groups.php?p=%d', $nbr_group, 'p', 25, 3),
 		'THEME' => get_utheme(),
 		'LANG' => get_ulang(),
-		'KERNEL_EDITOR' => display_editor(),
+		'KERNEL_EDITOR' => $editor->display(),
 		'L_CONFIRM_DEL_GROUP' => $LANG['confirm_del_group'],
 		'L_GROUPS_MANAGEMENT' => $LANG['groups_management'],
 		'L_ADD_GROUPS' => $LANG['groups_add'],

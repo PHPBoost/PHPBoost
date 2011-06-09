@@ -60,6 +60,9 @@ if (!$User->check_auth($calendar_config->get_authorization(), AUTH_CALENDAR_READ
 $comments = new Comments();
 $comments->set_module_name('calendar');
 
+$editor = AppContext::get_content_formatting_service()->get_default_editor();
+$editor->set_identifier('contents');
+	
 $checkdate = checkdate($month, $day, $year); //Validité de la date entrée.
 if ($checkdate === true && empty($id) && !$add)
 {
@@ -362,7 +365,7 @@ elseif (!empty($id))
 			
 			$Template->put_all(array(
 				'C_CALENDAR_FORM' => true,
-				'KERNEL_EDITOR' => display_editor(),
+				'KERNEL_EDITOR' => $editor->display(),
 				'UPDATE' => url('?edit=1&amp;id=' . $id . '&amp;token=' . $Session->get_token()),
 				'DATE' => gmdate_format('date_format_short', $row['timestamp']),
 				'DAY_DATE' => !empty($row['timestamp']) ? gmdate_format('d', $row['timestamp']) : '',
@@ -464,7 +467,7 @@ elseif ($add) //Ajout d'un évenement
 		
 		$Template->put_all(array(
 			'C_CALENDAR_FORM' => true,
-			'KERNEL_EDITOR' => display_editor(),
+			'KERNEL_EDITOR' => $editor->display(),
 			'UPDATE' => url('?add=1&amp;token=' . $Session->get_token()),
 			'DATE' => gmdate_format('date_format_short'),
 			'DAY_DATE' => $day,

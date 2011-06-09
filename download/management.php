@@ -164,9 +164,15 @@ $Template->set_filenames(array(
 	'file_management'=> 'download/file_management.tpl'
 ));
 
+$editor = AppContext::get_content_formatting_service()->get_default_editor();
+$editor->set_identifier('contents');
+
+$short_contents_editor = AppContext::get_content_formatting_service()->get_default_editor();
+$short_contents_editor->set_identifier('short_contents');
+
 $Template->put_all(array(
-	'KERNEL_EDITOR' => display_editor(),
-	'KERNEL_EDITOR_SHORT' => display_editor('short_contents'),
+	'KERNEL_EDITOR' => $editor->display(),
+	'KERNEL_EDITOR_SHORT' => $short_contents_editor->display(),
 	'C_PREVIEW' => $preview,
 	'L_PAGE_TITLE' => TITLE,
 	'L_EDIT_FILE' => $DOWNLOAD_LANG['edit_file'],
@@ -685,11 +691,15 @@ else
 			'U_TARGET' => url('management.php?new=1&amp;token=' . $Session->get_token())
 		));
 	}
+	
+	$editor = AppContext::get_content_formatting_service()->get_default_editor();
+	$editor->set_identifier('counterpart');
+
 	$Template->put_all(array(
 		'L_NOTICE_CONTRIBUTION' => $DOWNLOAD_LANG['notice_contribution'],
 		'L_CONTRIBUTION_COUNTERPART' => $DOWNLOAD_LANG['contribution_counterpart'],
 		'L_CONTRIBUTION_COUNTERPART_EXPLAIN' => $DOWNLOAD_LANG['contribution_counterpart_explain'],
-		'CONTRIBUTION_COUNTERPART_EDITOR' => display_editor('counterpart')
+		'CONTRIBUTION_COUNTERPART_EDITOR' => $editor->display()
 	));
 }
 

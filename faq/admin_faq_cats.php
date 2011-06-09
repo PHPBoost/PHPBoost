@@ -137,8 +137,11 @@ elseif (!empty($_GET['recount']))
 }
 elseif ($new_cat XOR $id_edit > 0)
 {
+	$editor = AppContext::get_content_formatting_service()->get_default_editor();
+	$editor->set_identifier('contents');
+	
 	$Template->put_all(array(
-		'KERNEL_EDITOR' => display_editor(),
+		'KERNEL_EDITOR' => $editor->display(),
 		'L_CATEGORY' => $FAQ_LANG['category'],
 		'L_REQUIRED_FIELDS' => $FAQ_LANG['required_fields'],
 		'L_NAME' => $FAQ_LANG['category_name'],

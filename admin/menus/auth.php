@@ -59,8 +59,11 @@ lateral_menu();
 
 $tpl = new FileTemplate('admin/menus/auth.tpl');
 
+$editor = AppContext::get_content_formatting_service()->get_default_editor();
+$editor->set_identifier('contents');
+
 $tpl->put_all(array(
-    'KERNEL_EDITOR' => display_editor(),
+    'KERNEL_EDITOR' => $editor->display(),
     'L_REQUIRE_TITLE' => $LANG['require_title'],
     'L_REQUIRE_TEXT' => $LANG['require_text'],
     'L_NAME' => $LANG['name'],

@@ -48,6 +48,10 @@ $template->put_all(array(
 	
 $action = retrieve(GET, 'action', '');
 $id_get = retrieve(GET, 'id', 0);
+
+$editor = AppContext::get_content_formatting_service()->get_default_editor();
+$editor->set_identifier('action_contents');
+
 if ($action == 'punish') //Gestion des utilisateurs
 {
 	$readonly = retrieve(POST, 'new_info', 0);
@@ -162,7 +166,7 @@ if ($action == 'punish') //Gestion des utilisateurs
 		array_pop($array_sanction);
 		$template->put_all(array(
 			'C_USER_INFO' => true,
-			'KERNEL_EDITOR' => display_editor('action_contents'),
+			'KERNEL_EDITOR' => $editor->display(),
 			'ALTERNATIVE_PM' => ($key_sanction > 0) ? str_replace('%date%', $array_sanction[$key_sanction], $LANG['user_readonly_changed']) : str_replace('%date%', '1 ' . $LANG['minute'], $LANG['user_readonly_changed']),
 			'LOGIN' => '<a href="'. DispatchManager::get_url('/member', '/profile/'. $id_get .'/')->absolute() .'">' . $member['login'] . '</a>',
 			'INFO' => $array_sanction[$key_sanction],
@@ -294,7 +298,7 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 		
 		$template->put_all(array(
 			'C_USER_INFO' => true,
-			'KERNEL_EDITOR' => display_editor('action_contents'),
+			'KERNEL_EDITOR' => $editor->display(),
 			'ALTERNATIVE_PM' => str_replace('%level%', $member['user_warning'], $LANG['user_warning_level_changed']),
 			'LOGIN' => '<a href="'. DispatchManager::get_url('/member', '/profile/'. $id_get .'/')->absolute() .'">' . $member['login'] . '</a>',
 			'INFO' => $LANG['user_warning_level'] . ': ' . $member['user_warning'] . '%',
@@ -422,7 +426,7 @@ elseif ($action == 'ban') //Gestion des utilisateurs
 		
 		$template->put_all(array(
 			'C_USER_BAN' => true,
-			'KERNEL_EDITOR' => display_editor('action_contents'),
+			'KERNEL_EDITOR' => $editor->display(),
 			'BAN_OPTIONS' => $ban_options,
 			'LOGIN' => '<a href="'. DispatchManager::get_url('/member', '/profile/'. $id_get .'/')->absolute() .'">' . $mbr['login'] . '</a>',
 			'U_PM' => url('.php?pm='. $id_get, '-' . $id_get . '.php'),

@@ -118,6 +118,9 @@ elseif ($delete > 0)
 // Formulaire d'ajout ou d'édition.
 elseif ($add >= 0 && empty($_POST['submit']) || $edit > 0)
 {
+	$editor = AppContext::get_content_formatting_service()->get_default_editor();
+	$editor->set_identifier('contents');
+	
 	$Template->put_all(array(
 		'C_ADD_MEDIA' => true,
 		'U_TARGET' => url('media_action.php'),
@@ -127,7 +130,7 @@ elseif ($add >= 0 && empty($_POST['submit']) || $edit > 0)
 		'L_HEIGHT' => $MEDIA_LANG['media_height'],
 		'L_U_MEDIA' => $MEDIA_LANG['media_url'],
 		'L_CONTENTS' => $MEDIA_LANG['media_description'],
-		'KERNEL_EDITOR' => display_editor(),
+		'KERNEL_EDITOR' => $editor->display(),
 		'L_APPROVED' => $MEDIA_LANG['media_approved'],
 		'L_CONTRIBUTION_LEGEND' => $LANG['contribution'],
 		'L_NOTICE_CONTRIBUTION' => $MEDIA_LANG['notice_contribution'],
@@ -185,10 +188,13 @@ elseif ($add >= 0 && empty($_POST['submit']) || $edit > 0)
 	{
 		bread_crumb($add);
 
+		$editor = AppContext::get_content_formatting_service()->get_default_editor();
+		$editor->set_identifier('counterpart');
+	
 		$Template->put_all(array(
 			'L_PAGE_TITLE' => $write ? $MEDIA_LANG['add_media'] : $MEDIA_LANG['contribute_media'],
 			'C_CONTRIBUTION' => !$write,
-			'CONTRIBUTION_COUNTERPART_EDITOR' => display_editor('counterpart'),
+			'CONTRIBUTION_COUNTERPART_EDITOR' => $editor->display(),
 			'IDEDIT' => 0,
 			'NAME' => '',
 			'CATEGORIES_TREE' => $media_categories->build_select_form($add, 'idcat" onchange="hide_width_height ();', 'idcat', 0, ($write ? MEDIA_AUTH_WRITE : MEDIA_AUTH_CONTRIBUTION), $MEDIA_CATS[0]['auth'], IGNORE_AND_CONTINUE_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH),

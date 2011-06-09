@@ -94,6 +94,9 @@ $Template->set_filenames(array(
 	'faq'=> 'faq/management.tpl'
 ));
 
+$editor = AppContext::get_content_formatting_service()->get_default_editor();
+$editor->set_identifier('contents');
+
 if ($edit_question > 0)
 {
 	$Template->assign_block_vars('edit_question', array(
@@ -103,7 +106,7 @@ if ($edit_question > 0)
 		'ID_QUESTION' => $edit_question
 	));
 	$Template->put_all(array(
-		'KERNEL_EDITOR' => display_editor(),
+		'KERNEL_EDITOR' => $editor->display(),
 		'L_QUESTION' => $FAQ_LANG['question'],
 		'L_ENTITLED' => $FAQ_LANG['entitled'],
 		'L_ANSWER' => $FAQ_LANG['answer'],
@@ -121,7 +124,7 @@ elseif ($cat_of_new_question >= 0 && $new)
 		'ID_CAT' => $cat_of_new_question
 	));
 	$Template->put_all(array(
-		'KERNEL_EDITOR' => display_editor(),
+		'KERNEL_EDITOR' => $editor->display(),
 		'L_QUESTION' => $FAQ_LANG['question'],
 		'L_ENTITLED' => $FAQ_LANG['entitled'],
 		'L_ANSWER' => $FAQ_LANG['answer'],
@@ -147,7 +150,7 @@ elseif ($id_move > 0)
 else
 {
 	$Template->put_all(array(
-		'KERNEL_EDITOR' => display_editor(),
+		'KERNEL_EDITOR' => $editor->display(),
 		'TARGET' => url('action.php?idcat=' . $id_faq . '&amp;cat_properties=1&amp;token=' . $Session->get_token()),
 		'AUTO_SELECTED' => $FAQ_CATS[$id_faq]['display_mode'] == 0 ? 'selected="selected"' : '',
 		'INLINE_SELECTED' => $FAQ_CATS[$id_faq]['display_mode'] == 1 ? 'selected="selected"' : '',

@@ -132,8 +132,11 @@ elseif (!empty($_POST['submit']))
 }
 elseif ($new_cat XOR $id_edit > 0)
 {
+	$editor = AppContext::get_content_formatting_service()->get_default_editor();
+	$editor->set_identifier('contents');
+
 	$Template->put_all(array(
-		'KERNEL_EDITOR' => display_editor(),
+		'KERNEL_EDITOR' => $editor->display(),
 		'L_CATEGORY' => $MEDIA_LANG['category'],
 		'L_REQUIRED_FIELDS' => $MEDIA_LANG['required_fields'],
 		'L_CAT_NAME' => $MEDIA_LANG['cat_name'],

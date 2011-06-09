@@ -560,6 +560,12 @@ elseif (!empty($id))
 	
 	$user_accounts_config = UserAccountsConfig::load();
 	
+	$user_sign_editor = AppContext::get_content_formatting_service()->get_default_editor();
+	$user_sign_editor->set_identifier('user_sign');
+	
+	$user_desc_editor = AppContext::get_content_formatting_service()->get_default_editor();
+	$user_desc_editor->set_identifier('user_desc');
+	
 	//On assigne les variables pour le POST en précisant l'user_id.
 	$template->put_all(array(
 		'C_USERS_MANAGEMENT' => true,
@@ -600,8 +606,8 @@ elseif (!empty($id))
 		'WEIGHT_MAX' => $user_accounts_config->get_max_avatar_weight(),
 		'HEIGHT_MAX' => $user_accounts_config->get_max_avatar_height(),
 		'WIDTH_MAX' => $user_accounts_config->get_max_avatar_width(),
-		'USER_SIGN_EDITOR' => display_editor('user_sign'),
-		'USER_DESC_EDITOR' => display_editor('user_desc'),
+		'USER_SIGN_EDITOR' => $user_sign_editor->display(),
+		'USER_DESC_EDITOR' => $user_desc_editor->display(),
 		'L_REQUIRE_MAIL' => $LANG['require_mail'],
 		'L_REQUIRE_RANK' => $LANG['require_rank'],
 		'L_REQUIRE_PSEUDO' => $LANG['require_pseudo'],
@@ -743,11 +749,14 @@ else
 	$mode = ($get_mode == 'asc') ? 'ASC' : 'DESC';	
 	$unget = (!empty($get_sort) && !empty($mode)) ? '&amp;sort=' . $get_sort . '&amp;mode=' . $get_mode : '';
 
+	$editor = AppContext::get_content_formatting_service()->get_default_editor();
+	$editor->set_identifier('contents');
+
 	$template->put_all(array(
 		'PAGINATION' => $Pagination->display('admin_members.php?p=%d' . $unget, $nbr_membre, 'p', 25, 3),	
 		'THEME' => get_utheme(),
 		'LANG' => get_ulang(),
-		'KERNEL_EDITOR' => display_editor(),
+		'KERNEL_EDITOR' => $editor->display(),
 		'L_REQUIRE_MAIL' => $LANG['require_mail'],
 		'L_REQUIRE_PASS' => $LANG['require_pass'],
 		'L_REQUIRE_RANK' => $LANG['require_rank'],
