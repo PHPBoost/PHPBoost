@@ -72,6 +72,9 @@ $moderation_panel_template->put_all(array(
 	'U_BAN' => url('.php?action=ban')
 ));
 
+$editor = AppContext::get_content_formatting_service()->get_default_editor();
+$editor->set_identifier('action_contents');
+	
 switch ($action)
 {
 	case 'punish': //Gestion des utilisateurs
@@ -187,7 +190,7 @@ switch ($action)
 			array_pop($array_sanction);
 			$moderation_panel_template->put_all(array(
 				'C_MODO_PANEL_USER_INFO' => true,
-				'KERNEL_EDITOR' => display_editor('action_contents'),
+				'KERNEL_EDITOR' => $editor->display(),
 				'ALTERNATIVE_PM' => ($key_sanction > 0) ? str_replace('%date%', $array_sanction[$key_sanction], $LANG['user_readonly_changed']) : str_replace('%date%', '1 ' . $LANG['minute'], $LANG['user_readonly_changed']),
 				'LOGIN' => '<a href="'. DispatchManager::get_url('/member', '/profile/'. $id_get)->absolute() .'">' . $member['login'] . '</a>',
 				'INFO' => $array_sanction[$key_sanction],
@@ -304,7 +307,7 @@ switch ($action)
 			$mbr = $Sql->query_array(DB_TABLE_MEMBER, 'login', 'user_ban', 'user_warning', "WHERE user_id = '" . $id_get . "'", __LINE__, __FILE__);
 			$moderation_panel_template->put_all(array(
 				'C_MODO_PANEL_USER_BAN' => true,
-				'KERNEL_EDITOR' => display_editor('action_contents'),
+				'KERNEL_EDITOR' => $editor->display(),
 				'LOGIN' => '<a href="'. DispatchManager::get_url('/member', '/profile/'. $id_get)->absolute() .'">' . $mbr['login'] . '</a>',
 				'U_PM' => url('.php?pm='. $id_get, '-' . $id_get . '.php'),
 				'U_ACTION_INFO' => '.php?action=ban&amp;id=' . $id_get . '&amp;token=' . $Session->get_token(),
@@ -445,7 +448,7 @@ switch ($action)
 			}
 			$moderation_panel_template->put_all(array(
 				'C_MODO_PANEL_USER_INFO' => true,
-				'KERNEL_EDITOR' => display_editor('action_contents'),
+				'KERNEL_EDITOR' => $editor->display(),
 				'ALTERNATIVE_PM' => str_replace('%level%', $member['user_warning'], $LANG['user_warning_level_changed']),
 				'LOGIN' => '<a href="'. DispatchManager::get_url('/member', '/profile/'. $id_get)->absolute() .'">' . $member['login'] . '</a>',
 				'INFO' => $LANG['user_warning_level'] . ': ' . $member['user_warning'] . '%',

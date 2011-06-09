@@ -490,10 +490,14 @@ else
 	$img_track_display = $track ? 'untrack_mini.png' : 'track_mini.png';
 	$img_track_pm_display = $track_pm ? 'untrack_pm_mini.png' : 'track_pm_mini.png';
 	$img_track_mail_display = $track_mail ? 'untrack_mail_mini.png' : 'track_mail_mini.png';
+	
+	$editor = AppContext::get_content_formatting_service()->get_default_editor();
+	$editor->set_identifier('contents');
+	
 	$Template->put_all(array(
 		'C_AUTH_POST' => true,
 		'CONTENTS' => $contents,
-		'KERNEL_EDITOR' => display_editor(),
+		'KERNEL_EDITOR' => $editor->display(),
 		'ICON_TRACK' => '<img src="' . $module_data_path . '/images/' . $img_track_display . '" alt="" class="valign_middle" />',
 		'ICON_TRACK2' => '<img src="' . $module_data_path . '/images/' . $img_track_display . '" alt="" class="valign_middle" id="forum_track_img" />',
 		'ICON_SUSCRIBE_PM' => '<img src="' . $module_data_path . '/images/' . $img_track_pm_display . '" alt="" class="valign_middle" />',

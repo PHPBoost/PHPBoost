@@ -401,6 +401,15 @@ else
 	}
 	require_once('../kernel/header.php');
 
+	$editor = AppContext::get_content_formatting_service()->get_default_editor();
+	$editor->set_identifier('contents');
+	
+	$extend_contents_editor = AppContext::get_content_formatting_service()->get_default_editor();
+	$extend_contents_editor->set_identifier('extend_contents');
+	
+	$counterpart_editor = AppContext::get_content_formatting_service()->get_default_editor();
+	$counterpart_editor->set_identifier('counterpart');
+	
 	$tpl->put_all(array(
 		'NOW_DATE' => $now->format(DATE_FORMAT_SHORT, TIMEZONE_AUTO),
 		'NOW_HOUR' => $now->get_hours(),
@@ -414,9 +423,9 @@ else
 		'L_CATEGORY' => $NEWS_LANG['cat_news'],
 		'L_DESC' => $NEWS_LANG['desc_news'],
 		'L_DESC_EXTEND' => $NEWS_LANG['desc_extend_news'],
-		'KERNEL_EDITOR' => display_editor(),
-		'KERNEL_EDITOR_EXTEND' => display_editor('extend_contents'),
-		'CONTRIBUTION_COUNTERPART_EDITOR' => display_editor('counterpart'),
+		'KERNEL_EDITOR' => $editor->display(),
+		'KERNEL_EDITOR_EXTEND' => $extend_contents_editor->display(),
+		'CONTRIBUTION_COUNTERPART_EDITOR' => $counterpart_editor->display(),
 		'L_TO_DATE' => $LANG['to_date'],
 		'L_FROM_DATE' => $LANG['from_date'],
 		'L_RELEASE_DATE' => $NEWS_LANG['release_date'],

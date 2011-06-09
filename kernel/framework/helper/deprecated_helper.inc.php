@@ -228,7 +228,7 @@ function get_ini_config($dir_path, $require_dir, $ini_name = 'config.ini')
  */
 function check_mail($mail)
 {
-	return AppContext::get_mail_service()->is_mail_valid($mail);
+	throw new Exception('Deprecated, please use AppContext::get_mail_service()->is_mail_valid()');
 }
 
 /**
@@ -443,6 +443,8 @@ function get_ulang()
  */
 function display_editor($field = 'contents', $forbidden_tags = array())
 {
+	throw new Exception('Deprecated, please use AppContext::get_content_formatting_service()->get_default_editor(), set identifier and use display function');
+	/*
 	$editor = AppContext::get_content_formatting_service()->get_default_editor();
 	if (!empty($forbidden_tags) && is_array($forbidden_tags))
 	{
@@ -451,6 +453,7 @@ function display_editor($field = 'contents', $forbidden_tags = array())
 	$editor->set_identifier($field);
 
 	return $editor->display();
+	*/
 }
 
 /**
@@ -465,7 +468,7 @@ function display_editor($field = 'contents', $forbidden_tags = array())
  */
 function display_comments($script, $idprov, $vars, $module_folder = '')
 {
-	throw new Exception('Deprecated, not use');
+	throw new Exception('Deprecated, please use CommentsService class');
 }
 
 /**

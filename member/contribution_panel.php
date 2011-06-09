@@ -206,9 +206,12 @@ if ($contribution_id > 0)
 //Modification d'une contribution
 elseif ($id_update > 0)
 {
+	$editor = AppContext::get_content_formatting_service()->get_default_editor();
+	$editor->set_identifier('contents');
+	
 	$template->put_all(array(
 		'C_EDIT_CONTRIBUTION' => true,
-		'EDITOR' => display_editor(),
+		'EDITOR' => $editor->display(),
 		'ENTITLED' => $contribution->get_entitled(),
 		'DESCRIPTION' => FormatingHelper::unparse($contribution->get_description()),
 		'CONTRIBUTION_ID' => $contribution->get_id(),
