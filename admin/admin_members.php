@@ -67,9 +67,9 @@ if (!empty($_POST['valid']) && !empty($id_post))
 		{
 			//Vérification des password.
 			$password = retrieve(POST, 'pass', '', TSTRING_UNCHANGE);
-			$password_hash = !empty($password) ? strhash($password) : '';
+			$password_hash = !empty($password) ? KeyGenerator::string_hash($password) : '';
 			$password_bis = retrieve(POST, 'confirm_pass', '', TSTRING_UNCHANGE);
-			$password_bis_hash = !empty($password_bis) ? strhash($password_bis) : '';
+			$password_bis_hash = !empty($password_bis) ? KeyGenerator::string_hash($password_bis) : '';
             
 			if (!empty($password_hash) && !empty($password_bis_hash))
 			{
@@ -241,7 +241,7 @@ elseif ($add && !empty($_POST['add'])) //Ajout du membre.
 	$login = !empty($_POST['login2']) ? TextHelper::strprotect(substr($_POST['login2'], 0, 25)) : '';
 	$password = retrieve(POST, 'password2', '', TSTRING_UNCHANGE);
 	$password_bis = retrieve(POST, 'password2_bis', '', TSTRING_UNCHANGE);
-	$password_hash = !empty($password) ? strhash($password) : '';
+	$password_hash = !empty($password) ? KeyGenerator::string_hash($password) : '';
 	$level = retrieve(POST, 'level2', 0);
 	$mail = strtolower(retrieve(POST, 'mail2', ''));
 	
