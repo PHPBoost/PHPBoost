@@ -25,28 +25,6 @@
  *
  ###################################################*/
 
-
-/**
- * @desc Return a SHA256 hash of the $str string [with a salt]
- * @param string $str the string to hash
- * @param mixed $salt If true, add the default salt : md5($str)
- * if a string, use this string as the salt
- * if false, do not use any salt
- * @return string a SHA256 hash of the $str string [with a salt]
- */
-function strhash($str, $salt = true)
-{
-	if ($salt === true)
-	{   // Default salt
-		$str = md5($str) . $str;
-	}
-	elseif ($salt !== false)
-	{   // Specific salt
-		$str = $salt . $str;
-	}
-    return hash('sha256', $str);
-}
-
 /**
  * @desc Emulates the PHP file_get_contents_emulate.
  * @param string $filename File to read.

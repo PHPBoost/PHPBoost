@@ -130,13 +130,13 @@ class MemberEditProfileController extends AbstractController
 	
 	private function change_password($user_id)
 	{
-		$old_password = strhash($this->form->get_value('old_password'));
+		$old_password = KeyGenerator::string_hash($this->form->get_value('old_password'));
 		$new_password = $this->form->get_value('new_password');
 		$old_password_bdd = MemberUpdateProfileHelper::get_old_password($user_id);
 		
 		if (!empty($new_password) && $old_password == $old_password_bdd)
 		{
-			MemberUpdateProfileHelper::change_password(strhash($new_password), $user_id);
+			MemberUpdateProfileHelper::change_password(KeyGenerator::string_hash($new_password), $user_id);
 		}
 	}
 

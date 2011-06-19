@@ -352,8 +352,8 @@ else //Sinon on rempli le formulaire
 //Renvoi du code de déblocage.
 if (!empty($_GET['unlock']))
 {
-	$unlock_admin_clean = substr(strhash(uniqid(mt_rand(), true)), 0, 18); //Génération de la clée d'activation, en cas de verrouillage de l'administration.;
-	$unlock_admin = strhash($unlock_admin_clean);
+	$unlock_admin_clean = KeyGenerator::generate_key(18); //Génération de la clée d'activation, en cas de verrouillage de l'administration.;
+	$unlock_admin = KeyGenerator::string_hash($unlock_admin_clean);
 	
 	$general_config = GeneralConfig::load();
 	$general_config->set_admin_unlocking_key($unlock_admin);
