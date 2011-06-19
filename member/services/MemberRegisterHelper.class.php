@@ -51,7 +51,7 @@
 			"INSERT INTO " . DB_TABLE_MEMBER . " (login,password,level,user_groups,user_mail,user_show_mail,timestamp,user_pm,user_warning,last_connect,test_connect,activ_pass,new_pass,user_ban,user_aprob)
 			VALUES (:login, :password, 0, '', :user_mail, :user_show_mail, :timestamp, 0, 0, :last_connect, 0, :activ_pass, '', 0, :user_aprob)", array(
                 'login' => $form->get_value('login'),
-                'password' => strhash($form->get_value('password')),
+                'password' => KeyGenerator::string_hash($form->get_value('password')),
 				'user_mail' => $form->get_value('mail'),
 				'user_show_mail' => (string)$form->get_value('user_hide_mail'),
 				'timestamp' => time(),
@@ -65,7 +65,7 @@
 	
 	private static function generate_activation_key()
 	{
-		return UserAccountsConfig::load()->get_member_accounts_validation_method() == 1 ? substr(strhash(uniqid(rand(), true)), 0, 15) : '';
+		return UserAccountsConfig::load()->get_member_accounts_validation_method() == 1 ? KeyGenerator::generate_key(15) : '';
 	}
 	
 	private static function send_confirmation($form, $activation_key)
@@ -100,7 +100,7 @@
 				'last_connect' => time(),
 				'user_id' => self::last_user_id_registered()
 		));
-		AppContext::get_session()->start(self::last_user_id_registered(), strhash($form->get_value('password')), 0, SCRIPT, QUERY_STRING, LangLoader::get_message('register', 'main'), 1, true);
+		AppContext::get_session()->start(self::last_user_id_registered(), KeyGenerator::string_hash($form->get_value('password')), 0, SCRIPT, QUERY_STRING, LangLoader::get_message('register', 'main'), 1, true);
 	}
 	
 	private static function send_mail_confirmation($form, $valid)

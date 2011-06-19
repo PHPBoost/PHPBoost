@@ -159,7 +159,7 @@ class Session
 		$pwd = $password;
 		if (!$already_hashed)
 		{
-			$password = strhash($password);
+			$password = KeyGenerator::string_hash($password);
 		}
 			
 		$error = '';
@@ -191,7 +191,7 @@ class Session
 		}
 
 		########Génération d'un ID de session unique########
-		$session_uniq_id = strhash(uniqid(mt_rand(), true)); //On génère un numéro de session aléatoire.
+		$session_uniq_id = KeyGenerator::generate_key(); //On génère un numéro de session aléatoire.
 		$this->data['user_id'] = $user_id;
 		$this->data['session_id'] = $session_uniq_id;
 		$this->data['token'] = self::generate_token();
@@ -633,7 +633,7 @@ class Session
 
 	private static function generate_token()
 	{
-		return substr(strhash(uniqid(mt_rand(), true), false), 0, 16);
+		return KeyGenerator::generate_token();
 	}
 
 	/**

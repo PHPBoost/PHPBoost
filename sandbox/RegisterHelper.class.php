@@ -30,13 +30,13 @@
 	public static function registeration_valid($form)
 	{
 		$user_aprob = UserAccountsConfig::load()->get_member_accounts_validation_method() == 0 ? 1 : 0;
-		$activ_mbr = UserAccountsConfig::load()->get_member_accounts_validation_method() == 1 ? substr(strhash(uniqid(rand(), true)), 0, 15) : ''; //clée d'activation!
+		$activ_mbr = UserAccountsConfig::load()->get_member_accounts_validation_method() == 1 ? KeyGenerator::generate_key(15) : ''; //clée d'activation!
 					
 		PersistenceContext::get_sql()->query_inject("
 		INSERT INTO " . DB_TABLE_MEMBER . " (login,password,level,user_groups,user_lang,user_theme,user_mail,user_show_mail,user_editor,user_timezone,timestamp,user_avatar,user_msg,user_local,user_msn,user_yahoo,user_web,user_occupation,user_hobbies,user_desc,user_sex,user_born,user_sign,user_pm,user_warning,last_connect,test_connect,activ_pass,new_pass,user_ban,user_aprob)
 		VALUES (
 			'" . $form->get_value('login') . "', 
-			'" . strhash($form->get_value('password')) . "', 
+			'" . KeyGenerator::string_hash($form->get_value('password')) . "', 
 			0, 
 			'', 
 			'" . $form->get_value('user_lang')->get_raw_value() . "', 
@@ -89,7 +89,7 @@
 		{
 			// Connect user
 			PersistenceContext::get_sql()->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET last_connect='" . time() . "' WHERE user_id = '" . self::last_user_id_registered() . "'", __LINE__, __FILE__);
-			AppContext::get_session()->start(self::last_user_id_registered(), strhash($form->get_value('password')), 0, REWRITED_SCRIPT, '', LangLoader::get_message('register', 'main'), 1);
+			AppContext::get_session()->start(self::last_user_id_registered(), KeyGenerator::string_hash($form->get_value('password')), 0, REWRITED_SCRIPT, '', LangLoader::get_message('register', 'main'), 1);
 			$valid = '';
 		}
 		

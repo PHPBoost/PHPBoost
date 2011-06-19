@@ -67,7 +67,7 @@ if (!$User->check_level(MEMBER_LEVEL))
 					"WHERE user_id = :user_id AND activ_pass = :activ_pass", array('user_id' => $user_get, 'activ_pass' => $activ_get));
 				
 				//Mise à jour du nouveau password.
-				PersistenceContext::get_querier()->update(DB_TABLE_MEMBER, array('password' => strhash($form->get_value('new_password')), 'activ_pass' => ''), 
+				PersistenceContext::get_querier()->update(DB_TABLE_MEMBER, array('password' => KeyGenerator::string_hash($form->get_value('new_password')), 'activ_pass' => ''), 
 					"WHERE user_id = :user_id", array('user_id' => $member['user_id']));
 				
 				//Affichage de la confirmation.
@@ -105,7 +105,7 @@ if (!$User->check_level(MEMBER_LEVEL))
 				$member = PersistenceContext::get_querier()->select_single_row(DB_TABLE_MEMBER, array('user_id'), 
 					"WHERE user_mail = :mail AND login = :login", array('mail' => $form->get_value('mail'), 'login' => $form->get_value('login')));
 				
-				$activ_pass = substr(strhash(uniqid(rand(), true)), 0, 30); //Génération de la clée d'activation!
+				$activ_pass = KeyGenerator::generate_key(30); //Génération de la clée d'activation!
 				PersistenceContext::get_querier()->update(DB_TABLE_MEMBER, array('activ_pass' => $activ_pass), 
 					"WHERE user_id = :user_id", array('user_id' => $member['user_id'])); //Insertion de la clée d'activation dans la bdd.
 			
