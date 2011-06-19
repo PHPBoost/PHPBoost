@@ -55,7 +55,7 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 		$login = retrieve(POST, 'login', '');
 		$password = retrieve(POST, 'password', '', TSTRING_UNCHANGE);
 		$autoconnexion = retrieve(POST, 'auto', false);
-		$unlock = strhash(retrieve(POST, 'unlock', '', TSTRING_UNCHANGE));
+		$unlock = KeyGenerator::string_hash(retrieve(POST, 'unlock', '', TSTRING_UNCHANGE));
 
 		if (retrieve(GET, 'disconnect', false))
 		{

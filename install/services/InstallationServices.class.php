@@ -493,7 +493,7 @@ class InstallationServices
 	{
 		$columns = array(
             'login' => $login,
-            'password' => strhash($password),
+            'password' => KeyGenerator::string_hash($password),
             'level' => 2,
             'user_mail' => $email,
             'user_lang' => $locale,
@@ -508,7 +508,7 @@ class InstallationServices
 
 	private function generate_admin_unlock_code()
 	{
-		$admin_unlock_code = substr(strhash(uniqid(mt_rand(), true)), 0, 12);
+		$admin_unlock_code = KeyGenerator::generate_key(12);
 		$general_config = GeneralConfig::load();
 		$general_config->set_admin_unlocking_key($admin_unlock_code);
 		GeneralConfig::save();

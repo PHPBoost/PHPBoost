@@ -115,7 +115,7 @@ class AdminMemberAddController extends AdminController
 			"INSERT INTO " . DB_TABLE_MEMBER . " (login,password,level,user_groups,user_mail,user_show_mail,timestamp,user_pm,user_warning,last_connect,test_connect, new_pass,user_ban,user_aprob)
 			VALUES (:login, :password, :level, '', :user_mail, 0, :timestamp, 0, 0, :last_connect, 0, '', 0, :user_aprob)", array(
 				'login' => htmlspecialchars($this->form->get_value('login')),
-				'password' => htmlspecialchars(strhash($this->form->get_value('password'))),
+				'password' => htmlspecialchars(KeyGenerator::string_hash($this->form->get_value('password'))),
 				'level' => $this->get_rank_member(),
 				'user_mail' => htmlspecialchars($this->form->get_value('mail')),
 				'timestamp' => time(),
