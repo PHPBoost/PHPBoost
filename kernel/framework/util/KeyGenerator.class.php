@@ -35,11 +35,11 @@ class KeyGenerator
 	{
 		if ($length == null)
 		{
-			return self::text_hash(uniqid(mt_rand(), true), false);
+			return self::string_hash(uniqid(mt_rand(), true), false);
 		}
 		else
 		{
-			return substr(self::text_hash(uniqid(mt_rand(), true), false), 0, $length);
+			return substr(self::string_hash(uniqid(mt_rand(), true), false), 0, $length);
 		}
 	}
 	
