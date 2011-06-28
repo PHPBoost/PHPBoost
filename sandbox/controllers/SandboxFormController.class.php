@@ -107,8 +107,6 @@ class SandboxFormController extends ModuleController
 			'class' => 'text', 'maxlength' => 25, 'description' => 'Intervalle 10 ? 100'),
 			array(new FormFieldConstraintIntegerRange(10, 100))
 		));
-	   
-		$fieldset->add_element(new FormButtonButton('Envoyer'));
 
 		// PASSWORD
 		$fieldset->add_field($password = new FormFieldPasswordEditor('password', 'Mot de passe', 'aaaaaa', array(
@@ -120,18 +118,30 @@ class SandboxFormController extends ModuleController
 			array(new FormFieldConstraintLengthRange(6, 12))
 		));
 	   
-		$fieldset->add_field(new FormFieldMultipleCheckbox('multiple_check_box', 'J\'aime', array(), array(new FormFieldMultipleCheckboxOption('meet', 'la viande'), new FormFieldMultipleCheckboxOption('fish', 'le poisson'))));
-
+		// SHORT MULTI LINE TEXT
+		$fieldset->add_field(new FormFieldShortMultiLineTextEditor('short_multi_line_text', 'Champ texte multi lignes moyen', 'titi',
+			array('rows' => 7)
+		));
+		
 		// MULTI LINE TEXT
 		$fieldset->add_field(new FormFieldMultiLineTextEditor('multi_line_text', 'Champ texte multi lignes', 'toto',
 				array('rows' => 6, 'cols' => 47, 'description' => 'Description')
 		));
 
 		// RICH TEXT
-		$fieldset->add_field(new FormFieldRichTextEditor('rich_text', 'Champ texte riche', 'toto <strong>tata</strong>'));
+		$fieldset->add_field(new FormFieldRichTextEditor('rich_text', 'Champ texte riche dans éditeur', 'toto <strong>tata</strong>'));
 
-		$fieldset->add_field(new FormFieldRichTextEditor('rich_text_wysiwyg', 'Champ texte riche', 'toto <strong>tata</strong>', array('formatter' => AppContext::get_content_formatting_service()->create_factory(ContentFormattingService::TINYMCE_LANGUAGE))));
+		$fieldset->add_field(new FormFieldRichTextEditor('rich_text_wysiwyg', 'Champ texte riche avec éditeur', 'toto <strong>tata</strong>', array('formatter' => AppContext::get_content_formatting_service()->create_factory(ContentFormattingService::TINYMCE_LANGUAGE))));
 
+		//Checkbox
+		$fieldset->add_field(new FormFieldMultipleCheckbox('multiple_check_box', 'Plusieurs checkbox', 
+		array(), 
+			array(
+				new FormFieldMultipleCheckboxOption('meet', 'la viande'), 
+				new FormFieldMultipleCheckboxOption('fish', 'le poisson')
+			)
+		));
+		
 		// RADIO
 		$default_option = new FormFieldRadioChoiceOption('Choix 1', '1');
 		$fieldset->add_field(new FormFieldRadioChoice('radio', 'Choix ?num?ration', $default_option,
@@ -160,6 +170,10 @@ class SandboxFormController extends ModuleController
 				)
 			)
 		)));
+		
+		$fieldset->add_field(new FormFieldTimezone('timezone', 'TimeZone', 'UTC+0'));
+		
+		$fieldset->add_element(new FormButtonButton('Envoyer'));
 
 		$fieldset2 = new FormFieldsetHTML('fieldset2', 'Fieldset 2');
 		$form->add_fieldset($fieldset2);
