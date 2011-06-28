@@ -7,8 +7,7 @@
 - Changer de format de stockage des fuseaux horaires
 - Gestion des contraintes asynchrone
 
------------------------------------- MODULES -----------------------------------
-- [color=red]Nouveauté:[/color] Nouveau module de page de démarrage du site.
+------------------------------------ MODULES ------------------------------------ [color=red]Nouveauté:[/color] Nouveau module de page de démarrage du site.
 
 #################################################################################
 
