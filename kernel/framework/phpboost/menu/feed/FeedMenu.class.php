@@ -57,7 +57,7 @@ class FeedMenu extends Menu
 	public function cache_export($template = false)
 	{
         return parent::cache_export_begin() .
-            '\';import(\'content/syndication/feed\');$__menu=Feed::get_parsed(' .
+            '\';import(\'content/feed/Feed\');$__menu=Feed::get_parsed(' .
 		    var_export($this->module_id, true) . ',' . var_export($this->name, true) . ',' .
 		    $this->category . ',FeedMenu::get_template(' . var_export($this->get_title(), true) . ', ' . var_export($this->get_block(), true) . '),' . $this->number . ',' . $this->begin_at . ');' .
             '$__menu.=\'' . parent::cache_export_end();
