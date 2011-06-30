@@ -1,0 +1,9 @@
+# INCLUDE KEEP_MESSAGE #
+
+# IF C_DISPLAY_FORM #
+	<div id="comment_form">
+		# INCLUDE COMMENT_FORM #
+	</div>
+# ENDIF #
+
+# INCLUDE COMMENTS_LIST #
