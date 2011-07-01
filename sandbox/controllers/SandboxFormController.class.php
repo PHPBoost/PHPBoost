@@ -195,6 +195,9 @@ class SandboxFormController extends ModuleController
 
 		// FILE PICKER
 		$fieldset2->add_field(new FormFieldFilePicker('file', 'Fichier'));
+		
+		// MULTIPLE FILE PICKER
+		$fieldset2->add_field(new FormFieldMultipleFilePicker('multiple_files', 'Plusieurs Fichiers'));
 
 		// AUTH
 		$fieldset3 = new FormFieldsetHTML('fieldset3', 'Autorisations');

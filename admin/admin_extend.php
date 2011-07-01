@@ -58,6 +58,12 @@ $template->put_all(array(
 	'L_UPDATER' => $LANG['updater'],
 	'L_MODULES' => $LANG['modules'],
 	'L_CACHE' => $LANG['cache'],
+	'L_FILES' => $LANG['files'],
+	'L_CONTENT_CONFIG' => $LANG['content_config'],
+	'L_LANG' => $LANG['lang'],
+	'L_ADMINISTRATOR_ALERTS' => $LANG['administrator_alerts'],
+	'L_SERVER' => $LANG['system_report'],
+	'L_TERMS' => $LANG['terms'],
 	'U_INDEX_SITE' => ((substr($home_page, 0, 1) == '/') ? PATH_TO_ROOT . $home_page : $home_page) ,
     'L_WEBSITE_UPDATES' => $LANG['website_updates']
 ));

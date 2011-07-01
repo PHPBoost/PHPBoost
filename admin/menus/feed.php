@@ -199,7 +199,7 @@ foreach ($feeds_modules as $module)
 	{
 		$urls = get_feeds($object, $module->get_id(), $feed_type);
 	}
-	Debug::Dump($urls);
+
 	$tpl->assign_block_vars('modules', array(
 		'NAME' => $module->get_id(), 
 		'URL' => $urls[0]['url']
