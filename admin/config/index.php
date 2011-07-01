@@ -30,7 +30,9 @@ defined('PATH_TO_ROOT') or define('PATH_TO_ROOT', '../..');
 require_once PATH_TO_ROOT . '/kernel/begin.php';
 
 $url_controller_mappers = array(
-	new UrlControllerMapper('AdminMailConfigController', '`^/mail/?$`')
+	new UrlControllerMapper('AdminMailConfigController', '`^/mail/?$`'),
+	new UrlControllerMapper('AdminGeneralConfigController', '`^/config/?$`'),
+	new UrlControllerMapper('AdminAdvancedConfigController', '`^/config/advanced/?$`')
 );
 DispatchManager::dispatch($url_controller_mappers);
 
