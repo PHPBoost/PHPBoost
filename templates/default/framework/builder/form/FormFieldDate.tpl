@@ -1,6 +1,6 @@
 		<dl class="overflow_visible" id="${escape(ID)}_field" # IF C_DISABLED # style="display:none;" # ENDIF #>
 			<dt>
-				<label for="{ID}">
+				<label for="${escape(ID)}">
 					# IF C_REQUIRED # * # ENDIF #
 					{LABEL}
 				</label>

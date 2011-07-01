@@ -52,7 +52,32 @@ $lang = array(
 	'smtp_secure_protocol_none' => 'Aucun',
 	'smtp_secure_protocol_tls' => 'TLS',
 	'smtp_secure_protocol_ssl' => 'SSL',
-	'mail_config_saved' => 'La configuration a bien été enregistrée'
+	'mail_config_saved' => 'La configuration a bien été enregistrée',
+	
+	//General config
+	'general-config.success' => 'La configuration générale du site a été enregistrée avec succès',
+	'general-config' => 'Configuration générale',
+	'general-config.site_name' => 'Nom du site',
+	'general-config.site_description' => 'Description du site',
+	'general-config.site_description-explain' => '(facultatif) Utile pour le référencement dans les moteurs de recherche',
+	'general-config.site_keywords' => 'Mots clés du site',
+	'general-config.site_keywords-explain' => '(facultatif) A rentrer séparés par des virgules, ils servent au référencement dans les moteurs de recherche',
+	
+	'general-config.visit_counter' => 'Compteur',
+	'general-config.page_bench' => 'Benchmark',
+	'general-config.page_bench-explain' => 'Affiche le temps de rendu de la page et le nombre de requêtes SQL',
+	'general-config.display_theme_author' => 'Info sur le thème',
+	'general-config.display_theme_author-explain' => 'Affiche des informations sur le thème dans le pied de page',
+	
+	//Advanced config
+	'advanced-config.success' => 'La configuration avancée du site a été enregistrée avec succès',
+	'advanced-config' => 'Configuration avancée',
+	'advanced-config.site_url' => 'URL du serveur',
+	'advanced-config.site_url-explain' => 'Ex : http://www.phpboost.com',
+	'advanced-config.site_path' => 'Chemin de PHPBoost',
+	'advanced-config.site_path-explain' => 'Vide par défaut : site à la racine du serveur',
+	'advanced-config.site_timezone' => 'Choix du fuseau horaire',
+	'advanced-config.site_timezone-explain' => 'Permet d\'ajuster l\'heure à votre localisation',	
 );
 
 ?>
