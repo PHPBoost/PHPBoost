@@ -136,7 +136,9 @@ abstract class AbstractFormField implements FormField
 	 */
 	public function get_id()
 	{
-		return $this->id;
+		$id = strtolower($this->id);
+		$id = Url::encode_rewrite($id);
+		return str_replace('-', '_', $id);
 	}
 
 	/**
@@ -428,7 +430,7 @@ abstract class AbstractFormField implements FormField
 
 		$js_tpl->put_all(array(
 			'C_DISABLED' => $this->is_disabled(),
-			'ID' => $this->id,
+			'ID' => $this->get_id(),
 			'HTML_ID' => $this->get_html_id(),
 			'JS_SPECIALIZATION_CODE' => $this->get_js_specialization_code(),
 			'FORM_ID' => $this->form_id,
