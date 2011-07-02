@@ -102,12 +102,9 @@ $lang = array(
 	'miscellaneous.unlock-administration.request' => 'Renvoyer le code de déverrouillage',
 	'miscellaneous.debug-mod' => 'Mode Debug',
 	'miscellaneous.debug-mod.explain' => 'Ce mode est particulièrement utile pour les développeurs car les erreurs sont affichées explicitement. Il est déconseillé d\'utiliser ce mode sur un site en production.',
+	'miscellaneous.debug-mod.type' => 'Séléction du mode debug',
 	'miscellaneous.debug-mod.type.normal' => 'Normal',
 	'miscellaneous.debug-mod.type.strict' => 'Stricte',
-	'miscellaneous.debug-mod.type.disable' => 'Désactiver',
-
-	
-
 );
 
 ?>
