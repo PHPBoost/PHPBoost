@@ -1,4 +1,4 @@
-		<dl # IF C_DISABLED # style="display:none;" # ENDIF #>
+		<dl # IF C_HIDDEN # style="display:none;" # ENDIF #>
 			<p>
 				{LABEL}
 			</p>
