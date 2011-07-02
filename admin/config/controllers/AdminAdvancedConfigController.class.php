@@ -139,13 +139,20 @@ class AdminAdvancedConfigController extends AdminController
 		$miscellaneous_fieldset->add_field(new FormFieldFree('unlock-administration', $this->lang['miscellaneous.unlock-administration'], $this->lang['miscellaneous.unlock-administration.request'], 
 		array('description' => $this->lang['miscellaneous.unlock-administration.explain'])));
 		
+		$miscellaneous_fieldset->add_field(new FormFieldCheckbox('debug-mod', $this->lang['miscellaneous.debug-mod'], Debug::is_debug_mode_enabled(), 
+		array('description' => $this->lang['miscellaneous.debug-mod.explain'], 'events' => array('change' => '
+				if (HTMLForms.getField("debug_mod").getValue()) { 
+					HTMLForms.getField("debug_mod_type").enable(); 
+				} else { 
+					HTMLForms.getField("debug_mod_type").disable(); 
+				}'))));
+		
 		//TODO, change for new function.
-		$miscellaneous_fieldset->add_field(new FormFieldSimpleSelectChoice('debug-mod', $this->lang['miscellaneous.debug-mod'], Debug::is_debug_mode_enabled(),
+		$miscellaneous_fieldset->add_field(new FormFieldSimpleSelectChoice('debug-mod-type', $this->lang['miscellaneous.debug-mod.type'], Debug::is_debug_mode_enabled(),
 			array(
-				new FormFieldSelectChoiceOption($this->lang['miscellaneous.debug-mod.type.disable'], '1'),
 				new FormFieldSelectChoiceOption($this->lang['miscellaneous.debug-mod.type.normal'], '2'),
 				new FormFieldSelectChoiceOption($this->lang['miscellaneous.debug-mod.type.strict'], '3')
-			), array('description' => $this->lang['miscellaneous.debug-mod.explain'])
+			)
 		));
 		
 		$this->submit_button = new FormButtonDefaultSubmit();
