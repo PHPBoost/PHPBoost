@@ -62,6 +62,10 @@ abstract class AbstractFormField implements FormField
 	/**
 	 * @var boolean
 	 */
+	protected $hidden = false;
+	/**
+	 * @var boolean
+	 */
 	protected $readonly = false;
 	/**
 	 * @var string
@@ -370,7 +374,7 @@ abstract class AbstractFormField implements FormField
 					unset($field_options['events']);
 					break;
 				case 'hidden':
-					$this->hidden = $value;
+					$this->set_hidden($value);
 					unset($field_options['hidden']);
 					break;
 				case 'required':
@@ -449,7 +453,8 @@ abstract class AbstractFormField implements FormField
 			'FIELDSET_ID' => $this->fieldset_id,
 			'C_HAS_LABEL' => !empty($description) || $this->get_label() != '',
 			'C_DISABLED' => $this->is_disabled(),
-			'C_READONLY' => $this->is_readonly()
+			'C_READONLY' => $this->is_readonly(),
+			'C_HIDDEN' => $this->is_hidden()
 		));
 	}
 
@@ -518,6 +523,16 @@ abstract class AbstractFormField implements FormField
 	public function set_readonly($readonly)
 	{
 		$this->readonly = $readonly;
+	}
+	
+	public function is_hidden()
+	{
+		return $this->hidden;
+	}
+	
+	public function set_hidden($hidden)
+	{
+		$this->hidden = $hidden;
 	}
 
 	public function set_template(Template $template)
