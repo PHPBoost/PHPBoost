@@ -77,7 +77,37 @@ $lang = array(
 	'advanced-config.site_path' => 'Chemin de PHPBoost',
 	'advanced-config.site_path-explain' => 'Vide par défaut : site à la racine du serveur',
 	'advanced-config.site_timezone' => 'Choix du fuseau horaire',
-	'advanced-config.site_timezone-explain' => 'Permet d\'ajuster l\'heure à votre localisation',	
+	'advanced-config.site_timezone-explain' => 'Permet d\'ajuster l\'heure à votre localisation',
+	
+	'url-rewriting' => 'Activation de la réécriture des urls',
+	'url-rewriting.explain' => 'L\'activation de la réécriture des urls permet d\'obtenir des urls bien plus simples et claires sur votre site. Ces adresses seront donc bien mieux compréhensibles pour vos visiteurs, mais surtout pour les robots d\'indexation. Votre référencement sera grandement optimisé grâce à cette option.<br /><br />Cette option n\'est malheureusement pas disponible chez tous les hébergeurs. Cette page va vous permettre de tester si votre serveur supporte la réécriture des urls. Si après le test vous tombez sur des erreurs serveur, ou pages blanches, c\'est que votre serveur ne le supporte pas. Supprimez alors le fichier <strong>.htaccess</strong> à la racine de votre site via accès FTP à votre serveur, puis revenez sur cette page et désactivez la réécriture.',
+	'url-rewriting.not-available' => '<span style="color:#B22222;font-weight:bold;">Non disponible sur votre serveur</span>',
+	'url-rewriting.available' => '<span style="color:#008000;font-weight:bold;">Disponible sur votre serveur</span>',
+
+	'htaccess-manual-content' => 'Contenu du fichier .htaccess',
+	'htaccess-manual-content.explain' => 'Vous pouvez dans ce champ mettre les instructions que vous souhaitez intégrer au fichier .htaccess qui se trouve à la racine du site, par exemple pour forcer une configuration du serveur web Apache.',
+	
+	'sessions-config' => 'Connexion utilisateurs',
+	'sessions-config.cookie-name' => 'Nom du cookie des sessions',
+	'sessions-config.cookie-duration' => 'Durée de la session',
+	'sessions-config.cookie-duration.explain' => '3600 secondes conseillé',
+	'sessions-config.active-session-duration' => 'Durée utilisateurs actifs',
+	'sessions-config.active-session-duration.explain' => '300 secondes conseillé',
+
+	'miscellaneous' => 'Divers',
+	'miscellaneous.output-gziping-enabled' => 'Activation de la compression des pages, ceci accélère la vitesse d\'affichage',
+	'miscellaneous.output-gziping-enabled.explain' => '<span style="color:#000000;font-weight:bold;">Attention votre serveur doit le supporter</span>',
+	'miscellaneous.unlock-administration' => 'Code de déverrouillage',
+	'miscellaneous.unlock-administration.explain' => 'Ce code permet le déverrouillage de l\'administration en cas de tentative d\'intrusion dans l\'administration par un utilisateur mal intentionné.',
+	'miscellaneous.unlock-administration.request' => 'Renvoyer le code de déverrouillage',
+	'miscellaneous.debug-mod' => 'Mode Debug',
+	'miscellaneous.debug-mod.explain' => 'Ce mode est particulièrement utile pour les développeurs car les erreurs sont affichées explicitement. Il est déconseillé d\'utiliser ce mode sur un site en production.',
+	'miscellaneous.debug-mod.type.normal' => 'Normal',
+	'miscellaneous.debug-mod.type.strict' => 'Stricte',
+	'miscellaneous.debug-mod.type.disable' => 'Désactiver',
+
+	
+
 );
 
 ?>
