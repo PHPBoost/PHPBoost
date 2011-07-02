@@ -1,4 +1,4 @@
-		<dl id="${escape(ID)}_field"# IF C_DISABLED # style="display:none;" # ENDIF # # IF C_HAS_FIELD_CLASS # class="{FIELD_CLASS}" # ENDIF #>
+		<dl id="${escape(ID)}_field"# IF C_HIDDEN # style="display:none;" # ENDIF # # IF C_HAS_FIELD_CLASS # class="{FIELD_CLASS}" # ENDIF #>
 			# IF C_HAS_LABEL #
 			<dt>
 				<label for="${escape(ID)}">
