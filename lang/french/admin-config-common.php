@@ -81,30 +81,38 @@ $lang = array(
 	
 	'url-rewriting' => 'Activation de la réécriture des urls',
 	'url-rewriting.explain' => 'L\'activation de la réécriture des urls permet d\'obtenir des urls bien plus simples et claires sur votre site. Ces adresses seront donc bien mieux compréhensibles pour vos visiteurs, mais surtout pour les robots d\'indexation. Votre référencement sera grandement optimisé grâce à cette option.<br /><br />Cette option n\'est malheureusement pas disponible chez tous les hébergeurs. Cette page va vous permettre de tester si votre serveur supporte la réécriture des urls. Si après le test vous tombez sur des erreurs serveur, ou pages blanches, c\'est que votre serveur ne le supporte pas. Supprimez alors le fichier <strong>.htaccess</strong> à la racine de votre site via accès FTP à votre serveur, puis revenez sur cette page et désactivez la réécriture.',
-	'url-rewriting.not-available' => '<span style="color:#B22222;font-weight:bold;">Non disponible sur votre serveur</span>',
-	'url-rewriting.available' => '<span style="color:#008000;font-weight:bold;">Disponible sur votre serveur</span>',
+	
+	'config.not-available' => '<span style="color:#B22222;font-weight:bold;">Non disponible sur votre serveur</span>',
+	'config.available' => '<span style="color:#008000;font-weight:bold;">Disponible sur votre serveur</span>',
 
 	'htaccess-manual-content' => 'Contenu du fichier .htaccess',
 	'htaccess-manual-content.explain' => 'Vous pouvez dans ce champ mettre les instructions que vous souhaitez intégrer au fichier .htaccess qui se trouve à la racine du site, par exemple pour forcer une configuration du serveur web Apache.',
 	
 	'sessions-config' => 'Connexion utilisateurs',
 	'sessions-config.cookie-name' => 'Nom du cookie des sessions',
+	'sessions-config.cookie-name.style-wrong' => 'Le nom du cookie doit être obligatoirement une suite de lettre et de chiffre',
 	'sessions-config.cookie-duration' => 'Durée de la session',
 	'sessions-config.cookie-duration.explain' => '3600 secondes conseillé',
 	'sessions-config.active-session-duration' => 'Durée utilisateurs actifs',
 	'sessions-config.active-session-duration.explain' => '300 secondes conseillé',
-
+	'sessions-config.integer-required' => 'La valeur doit être un nombre',
+	
 	'miscellaneous' => 'Divers',
 	'miscellaneous.output-gziping-enabled' => 'Activation de la compression des pages, ceci accélère la vitesse d\'affichage',
-	'miscellaneous.output-gziping-enabled.explain' => '<span style="color:#000000;font-weight:bold;">Attention votre serveur doit le supporter</span>',
 	'miscellaneous.unlock-administration' => 'Code de déverrouillage',
 	'miscellaneous.unlock-administration.explain' => 'Ce code permet le déverrouillage de l\'administration en cas de tentative d\'intrusion dans l\'administration par un utilisateur mal intentionné.',
 	'miscellaneous.unlock-administration.request' => 'Renvoyer le code de déverrouillage',
-	'miscellaneous.debug-mod' => 'Mode Debug',
-	'miscellaneous.debug-mod.explain' => 'Ce mode est particulièrement utile pour les développeurs car les erreurs sont affichées explicitement. Il est déconseillé d\'utiliser ce mode sur un site en production.',
-	'miscellaneous.debug-mod.type' => 'Séléction du mode debug',
-	'miscellaneous.debug-mod.type.normal' => 'Normal',
-	'miscellaneous.debug-mod.type.strict' => 'Stricte',
-);
+	'miscellaneous.debug-mode' => 'Mode Debug',
+	'miscellaneous.debug-mode.explain' => 'Ce mode est particulièrement utile pour les développeurs car les erreurs sont affichées explicitement. Il est déconseillé d\'utiliser ce mode sur un site en production.',
+	'miscellaneous.debug-mode.type' => 'Séléction du mode debug',
+	'miscellaneous.debug-mode.type.normal' => 'Normal',
+	'miscellaneous.debug-mode.type.strict' => 'Stricte',
 
+	'unlock-code.title' => 'Mail à conserver',
+	'unlock-code.content' => 'Code à conserver (Il ne vous sera plus délivré) : :unlock_code
+	<br /><br />
+	Ce code permet le déverrouillage de l\'administration en cas de tentative d\'intrusion dans l\'administration par un utilisateur mal intentionné.
+	Il vous sera demandé dans le formulaire de connexion directe à l\'administration (:server_url/admin/admin_index.php)'
+
+);
 ?>

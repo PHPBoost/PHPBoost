@@ -53,6 +53,7 @@ class AdminAdvancedConfigController extends AdminController
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save();
+			$this->clear_cache();
 
 			$tpl->put('MSG', MessageHelper::display($this->lang['advanced-config.success'], E_USER_SUCCESS, 4));
 		}
@@ -82,7 +83,8 @@ class AdminAdvancedConfigController extends AdminController
 		$form->add_fieldset($fieldset);
 		
 		$fieldset->add_field(new FormFieldTextEditor('site_url', $this->lang['advanced-config.site_url'], $this->general_config->get_site_url(), array(
-			'class' => 'text', 'description' => $this->lang['advanced-config.site_url-explain'], 'maxlength' => 25, 'size' => 25, 'required' => true)
+			'class' => 'text', 'description' => $this->lang['advanced-config.site_url-explain'], 'maxlength' => 25, 'size' => 25, 'required' => true),
+			array(new FormFieldConstraintUrl())
 		));
 		
 		$fieldset->add_field(new FormFieldTextEditor('site_path', $this->lang['advanced-config.site_path'], $this->general_config->get_site_path(),
@@ -92,7 +94,7 @@ class AdminAdvancedConfigController extends AdminController
 		$fieldset->add_field(new FormFieldTimezone('site_timezone', $this->lang['advanced-config.site_timezone'], $this->general_config->get_site_timezone(),
 		array('description' => $this->lang['advanced-config.site_timezone-explain'])));
 		
-		$url_rewriting_fieldset = new FormFieldsetHTML('url-rewriting', $this->lang['url-rewriting']);
+		$url_rewriting_fieldset = new FormFieldsetHTML('url_rewriting', $this->lang['url-rewriting']);
 		$form->add_fieldset($url_rewriting_fieldset);
 		
 		$url_rewriting_fieldset->set_description($this->lang['url-rewriting.explain']);
@@ -100,58 +102,68 @@ class AdminAdvancedConfigController extends AdminController
 		$server_configuration = new ServerConfiguration();
 		if ($server_configuration->has_url_rewriting())
 		{
-			$url_rewriting_fieldset->add_field(new FormFieldCheckbox('url-rewriting', $this->lang['url-rewriting'], $this->server_environment_config->is_url_rewriting_enabled(), array('description' => $this->lang['url-rewriting.available'])));
+			$url_rewriting_fieldset->add_field(new FormFieldCheckbox('url_rewriting', $this->lang['url-rewriting'], $this->server_environment_config->is_url_rewriting_enabled(), array('description' => $this->lang['config.available'])));
 		}
 		else
 		{
-			$url_rewriting_fieldset->add_field(new FormFieldCheckbox('url-rewriting', $this->lang['url-rewriting'], FormFieldCheckbox::UNCHECKED, array('disabled' => true, 'description' => $this->lang['url-rewriting.not-available'])));
+			$url_rewriting_fieldset->add_field(new FormFieldCheckbox('url_rewriting', $this->lang['url-rewriting'], FormFieldCheckbox::UNCHECKED, array('disabled' => true, 'description' => $this->lang['config.not-available'])));
 		}
 		
-		$htaccess_manual_content_fieldset = new FormFieldsetHTML('htaccess-manual-content', $this->lang['htaccess-manual-content']);
+		$htaccess_manual_content_fieldset = new FormFieldsetHTML('htaccess_manual_content', $this->lang['htaccess-manual-content']);
 		$form->add_fieldset($htaccess_manual_content_fieldset);
 		
 		$htaccess_manual_content_fieldset->add_field(new FormFieldMultiLineTextEditor('htaccess-manual-content', $this->lang['htaccess-manual-content'], $this->server_environment_config->get_htaccess_manual_content(),
 			array('rows' => 7, 'description' => $this->lang['htaccess-manual-content.explain'])
 		));
 		
-		$sessions_config_fieldset = new FormFieldsetHTML('sessions-config', $this->lang['sessions-config']);
+		$sessions_config_fieldset = new FormFieldsetHTML('sessions_config', $this->lang['sessions-config']);
 		$form->add_fieldset($sessions_config_fieldset);
 		
-		$sessions_config_fieldset->add_field(new FormFieldTextEditor('cookie-name', $this->lang['sessions-config.cookie-name'], $this->sessions_config->get_cookie_name(), array(
-			'class' => 'text','maxlength' => 25, 'size' => 25, 'required' => true)
+		$sessions_config_fieldset->add_field(new FormFieldTextEditor('cookie_name', $this->lang['sessions-config.cookie-name'], $this->sessions_config->get_cookie_name(), array(
+			'class' => 'text','maxlength' => 25, 'size' => 25, 'required' => true),
+			array(new FormFieldConstraintRegex('`^[A-Za-z0-9]+$`i', '', $this->lang['sessions-config.cookie-name.style-wrong']))
 		));
 		
-		$sessions_config_fieldset->add_field(new FormFieldTextEditor('cookie-duration', $this->lang['sessions-config.cookie-duration'], $this->sessions_config->get_session_duration(), array(
-			'class' => 'text','maxlength' => 25, 'description' => $this->lang['sessions-config.cookie-duration.explain'], 'size' => 8, 'required' => true)
+		$sessions_config_fieldset->add_field(new FormFieldTextEditor('session_duration', $this->lang['sessions-config.cookie-duration'], $this->sessions_config->get_session_duration(), array(
+			'class' => 'text','maxlength' => 25, 'description' => $this->lang['sessions-config.cookie-duration.explain'], 'size' => 8, 'required' => true),
+			array(new FormFieldConstraintRegex('`^[0-9]+$`i', '', $this->lang['sessions-config.integer-required']))
 		));
 		
-		$sessions_config_fieldset->add_field(new FormFieldTextEditor('active-session-duration', $this->lang['sessions-config.active-session-duration'], $this->sessions_config->get_active_session_duration(), array(
-			'class' => 'text','maxlength' => 25, 'description' => $this->lang['sessions-config.active-session-duration.explain'], 'size' => 8, 'required' => true)
+		$sessions_config_fieldset->add_field(new FormFieldTextEditor('active_session_duration', $this->lang['sessions-config.active-session-duration'], $this->sessions_config->get_active_session_duration(), array(
+			'class' => 'text','maxlength' => 25, 'description' => $this->lang['sessions-config.active-session-duration.explain'], 'size' => 8, 'required' => true),
+			array(new FormFieldConstraintRegex('`^[0-9]+$`i', '', $this->lang['sessions-config.integer-required']))
 		));
 		
 		$miscellaneous_fieldset = new FormFieldsetHTML('miscellaneous', $this->lang['miscellaneous']);
 		$form->add_fieldset($miscellaneous_fieldset);
 		
-		$miscellaneous_fieldset->add_field(new FormFieldCheckbox('output-gziping-enabled', $this->lang['miscellaneous.output-gziping-enabled'], $this->server_environment_config->is_output_gziping_enabled(), 
-		array('description' => $this->lang['miscellaneous.output-gziping-enabled.explain'])));
+		if (function_exists('ob_gzhandler') && @extension_loaded('zlib'))
+		{
+			$miscellaneous_fieldset->add_field(new FormFieldCheckbox('output_gziping_enabled', $this->lang['miscellaneous.output-gziping-enabled'], $this->server_environment_config->is_output_gziping_enabled(), 
+			array('description' => $this->lang['config.available'])));
+		}
+		else
+		{
+			$miscellaneous_fieldset->add_field(new FormFieldCheckbox('output_gziping_enabled', $this->lang['miscellaneous.output-gziping-enabled'], FormFieldCheckbox::UNCHECKED, 
+			array('description' => $this->lang['config.not-available'], 'disabled' => true)));
+		}
 		
 		//TODO, send mail for unlock administration
-		$miscellaneous_fieldset->add_field(new FormFieldFree('unlock-administration', $this->lang['miscellaneous.unlock-administration'], $this->lang['miscellaneous.unlock-administration.request'], 
+		$miscellaneous_fieldset->add_field(new FormFieldFree('unlock_administration', $this->lang['miscellaneous.unlock-administration'], $this->lang['miscellaneous.unlock-administration.request'], 
 		array('description' => $this->lang['miscellaneous.unlock-administration.explain'])));
 		
-		$miscellaneous_fieldset->add_field(new FormFieldCheckbox('debug-mod', $this->lang['miscellaneous.debug-mod'], Debug::is_debug_mode_enabled(), 
-		array('description' => $this->lang['miscellaneous.debug-mod.explain'], 'events' => array('change' => '
-				if (HTMLForms.getField("debug_mod").getValue()) { 
-					HTMLForms.getField("debug_mod_type").enable(); 
+		$miscellaneous_fieldset->add_field(new FormFieldCheckbox('debug_mode_enabled', $this->lang['miscellaneous.debug-mode'], $this->server_environment_config->is_debug_mode_enabled(), 
+		array('description' => $this->lang['miscellaneous.debug-mode.explain'], 'events' => array('change' => '
+				if (HTMLForms.getField("debug_mode_enabled").getValue()) { 
+					HTMLForms.getField("debug_mode_type").enable(); 
 				} else { 
-					HTMLForms.getField("debug_mod_type").disable(); 
+					HTMLForms.getField("debug_mode_type").disable(); 
 				}'))));
 		
-		//TODO, change for new function.
-		$miscellaneous_fieldset->add_field(new FormFieldSimpleSelectChoice('debug-mod-type', $this->lang['miscellaneous.debug-mod.type'], Debug::is_debug_mode_enabled(),
+		$miscellaneous_fieldset->add_field(new FormFieldSimpleSelectChoice('debug_mode_type', $this->lang['miscellaneous.debug-mode.type'], (int)$this->server_environment_config->is_strict_mode_enabled(),
 			array(
-				new FormFieldSelectChoiceOption($this->lang['miscellaneous.debug-mod.type.normal'], '2'),
-				new FormFieldSelectChoiceOption($this->lang['miscellaneous.debug-mod.type.strict'], '3')
+				new FormFieldSelectChoiceOption($this->lang['miscellaneous.debug-mode.type.normal'], '0'),
+				new FormFieldSelectChoiceOption($this->lang['miscellaneous.debug-mode.type.strict'], '1')
 			)
 		));
 		
@@ -164,7 +176,36 @@ class AdminAdvancedConfigController extends AdminController
 	
 	private function save()
 	{
-		//TODO, save configuration
+		$this->general_config->set_site_url($this->form->get_value('site_url'));
+		$this->general_config->set_site_path($this->form->get_value('site_path'));
+		$this->general_config->set_site_timezone($this->form->get_value('site_timezone')->get_label());
+		GeneralConfig::save();
+		
+		$this->sessions_config->set_cookie_name($this->form->get_value('cookie_name'));
+		$this->sessions_config->set_session_duration($this->form->get_value('session_duration'));
+		$this->sessions_config->set_active_session_duration($this->form->get_value('active_session_duration'));
+		SessionsConfig::save();
+		
+		if (!$this->form->field_is_disabled('url_rewriting_enabled'))
+		{
+			$this->server_environment_config->set_url_rewriting_enabled($this->form->get_value('url_rewriting_enabled'));
+		}
+		
+		$this->server_environment_config->set_htaccess_manual_content($this->form->get_value('htaccess_manual_content'));
+		
+		if (!$this->form->field_is_disabled('output_gziping_enabled'))
+		{
+			$this->server_environment_config->set_output_gziping_enabled($this->form->get_value('output_gziping_enabled'));
+		}
+		
+		$this->server_environment_config->set_strict_mode_enabled((bool)$this->form->get_value('debug_mode_type')->get_label());
+		$this->server_environment_config->set_debug_mode_enabled($this->form->get_value('debug_mode_enabled'));
+		ServerEnvironmentConfig::save();
+	}
+	
+	private function clear_cache()
+	{
+		AppContext::get_cache_service()->clear_cache();	
 	}
 }
 ?>
