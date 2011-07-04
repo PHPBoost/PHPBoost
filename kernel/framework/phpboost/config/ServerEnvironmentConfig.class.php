@@ -34,6 +34,7 @@ class ServerEnvironmentConfig extends AbstractConfigData
 	const HTACCESS_MANUAL_CONTENT = 'htaccess_manual_content';
 	const OUTPUT_GZIPING_ENABLED = 'output_gziping_enabled';
 	const DEBUG_MODE_ENABLED = 'debug_mode_enabled';
+	const STRICT_MODE_ENABLED = 'strict_mode_enabled';
 
 	public function is_url_rewriting_enabled()
 	{
@@ -70,10 +71,24 @@ class ServerEnvironmentConfig extends AbstractConfigData
 		return $this->get_property(self::DEBUG_MODE_ENABLED);
 	}
 
+	public function set_strict_mode_enabled($enabled)
+	{
+		$this->set_property(self::STRICT_MODE_ENABLED, $enabled);
+	}
+	
+	public function is_strict_mode_enabled()
+	{
+		return $this->get_property(self::STRICT_MODE_ENABLED);
+	}
+	
 	public function set_debug_mode_enabled($enabled)
 	{
 		$this->set_property(self::DEBUG_MODE_ENABLED, $enabled);
 		if ($enabled)
+		{
+			Debug::enabled_debug_mode();
+		}
+		elseif ($this->get_property(self::STRICT_MODE_ENABLED))
 		{
 			Debug::enabled_debug_mode(array(Debug::STRICT_MODE => true));
 		}
@@ -86,9 +101,11 @@ class ServerEnvironmentConfig extends AbstractConfigData
 	public function get_default_values()
 	{
 		return array(
-		self::URL_REWRITING_ENABLED => false,
-		self::HTACCESS_MANUAL_CONTENT => '',
-		self::OUTPUT_GZIPING_ENABLED => false
+			self::URL_REWRITING_ENABLED => false,
+			self::HTACCESS_MANUAL_CONTENT => '',
+			self::OUTPUT_GZIPING_ENABLED => false,
+			self::DEBUG_MODE_ENABLED => false,
+			self::STRICT_MODE_ENABLED => true
 		);
 	}
 
