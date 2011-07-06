@@ -31,19 +31,19 @@
  */
 abstract class AbstractShare implements ShareInterface
 {
-	protected $template = null;
+	public $template = null;
 	
-	protected function set_template(View $template)
+	public function set_template(View $template)
 	{
 		$this->template = $template;
 	}
 	
-	protected function get_template()
+	public function get_template()
 	{
 		return $this->template;
 	}
 	
-	protected function assign_vars(){}
+	public function assign_vars(){}
 	
 	public function display()
 	{

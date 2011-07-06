@@ -32,16 +32,15 @@ class TwitterTweeterShare extends AbstractShare
 	private $manual_content_tweet = '';
 	private $manual_url = '';
 	
-	public const VERTICAL_LAYOUT = 'vertical';
-	public const HORIZONTAL_LAYOUT = 'horizontal';
-	public const NO_COUNTER = 'no_counter';
+	const VERTICAL_LAYOUT = 'vertical';
+	const HORIZONTAL_LAYOUT = 'horizontal';
+	const NO_COUNTER = 'none';
 	
 	public function __construct()
 	{
 		$this->set_template(new StringTemplate('
 		<a href="http://twitter.com/share" class="twitter-share-button" # IF C_MANUAL_URL # data-url="{MANUAL_URL}" # ENDIF # 
-		# IF C_MANUAL_CONTENT_TWEET # data-text="{MANUAL_CONTENT_TWEET}" # ENDIF # # IF C_LAYOUT # data-count="{LAYOUT}" # ENDIF #data-lang="{LANG_SHARE}">
-			Tweet
+		# IF C_MANUAL_CONTENT_TWEET # data-text="{MANUAL_CONTENT_TWEET}" # ENDIF # data-count="{LAYOUT}" data-lang="{LANG_SHARE}">
 		</a>
 		<script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script> 
 		'));
@@ -79,7 +78,9 @@ class TwitterTweeterShare extends AbstractShare
 	{
 		switch ($layout) 
 		{
-			case self::VERTICAL_LAYOUT, self::HORIZONTAL_LAYOUT, self::NO_COUNTER:
+			case self::VERTICAL_LAYOUT:
+			case self::HORIZONTAL_LAYOUT:
+			case self::NO_COUNTER:
 				$this->layout = $layout;
 				break;
 			default:
@@ -87,13 +88,12 @@ class TwitterTweeterShare extends AbstractShare
 		}
 	}
 	
-	protected function assign_vars()
+	public function assign_vars()
 	{
-		$this->get_template()->->put_all(array(
+		$this->get_template()->put_all(array(
 			'C_MANUAL_URL' => !empty($this->manual_url),
 			'MANUAL_URL' => $this->manual_url,
 			'LANG_SHARE' => $this->get_lang(),
-			'C_LAYOUT' => $this->layout !== self::NO_COUNTER,
 			'LAYOUT' => $this->layout,
 			'C_MANUAL_CONTENT_TWEET' => !empty($this->manual_content_tweet),
 			'MANUAL_CONTENT_TWEET' => $this->manual_content_tweet
