@@ -31,10 +31,10 @@ class GooglePlusOneShare extends AbstractShare
 	private $size = 'standard';
 	private $manual_url = '';
 	
-	public const SMALL_SIZE = 'small';
-	public const STANDARD_SIZE = 'standard';
-	public const MEDIUM_SIZE = 'medium';
-	public const TALL_SIZE = 'tall';
+	const SMALL_SIZE = 'small';
+	const STANDARD_SIZE = 'standard';
+	const MEDIUM_SIZE = 'medium';
+	const TALL_SIZE = 'tall';
 	
 	public function __construct()
 	{
@@ -73,7 +73,10 @@ class GooglePlusOneShare extends AbstractShare
 	{
 		switch ($size) 
 		{
-			case self::SMALL_SIZE, self::STANDARD_SIZE, self::MEDIUM_SIZE, self::TALL_SIZE:
+			case self::SMALL_SIZE:
+			case self::STANDARD_SIZE:
+			case self::MEDIUM_SIZE: 
+			case self::TALL_SIZE:
 				$this->size = $size;
 				break;
 			default:
@@ -81,9 +84,9 @@ class GooglePlusOneShare extends AbstractShare
 		}
 	}
 	
-	protected function assign_vars()
+	public function assign_vars()
 	{
-		$this->get_template()->->put_all(array(
+		$this->get_template()->put_all(array(
 			'C_MANUAL_URL' => !empty($this->manual_url),
 			'MANUAL_URL' => $this->manual_url,
 			'LANG_SHARE' => $this->get_lang(),
