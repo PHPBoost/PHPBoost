@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                            feeds_cat.class.php
+ *                            FeedsCat.class.php
  *                            -------------------
  *   begin                : Februrary 25, 2009
  *   copyright            : (C) 2009 Loic Rouchon
@@ -24,8 +24,6 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
  ###################################################*/
-
-
 
 /**
  * @author Loic Rouchon <loic.rouchon@phpboost.com>

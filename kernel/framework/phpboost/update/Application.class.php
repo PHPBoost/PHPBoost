@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                           application.class.php
+ *                           Application.class.php
  *                            -------------------
  *   begin                : August 17 2008
  *   copyright            : (C) 2008 Loic Rouchon

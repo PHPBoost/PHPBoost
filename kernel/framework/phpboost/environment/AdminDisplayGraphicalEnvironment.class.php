@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                  admin_display_graphical_environment.class.php
+ *                  AdminDisplayGraphicalEnvironment.class.php
  *                            -------------------
  *   begin                : October 01, 2009
  *   copyright            : (C) 2009 Benoit Sautel
@@ -24,8 +24,6 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
  ###################################################*/
-
-
 
 /**
  * @package {@package}

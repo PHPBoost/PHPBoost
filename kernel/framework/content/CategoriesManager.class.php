@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                        categories_manager.class.php
+ *                        CategoriesManager.class.php
  *                            -------------------
  *   begin                : February 06, 2008
  *   copyright            : (C) 2008 Benoît Sautel

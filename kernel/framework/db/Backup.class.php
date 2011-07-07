@@ -1,9 +1,9 @@
 <?php
 /*##################################################
- *                             backup.class.php
+ *                             Backup.class.php
  *                            -------------------
  *   begin                : July 23, 2006
- *   copyright            : (C) 2005 Benoît Sautel / Régis Viarre
+ *   copyright            : (C) 2005 Benoit Sautel / Régis Viarre
  *   email                : ben.popeye@gmail.com / crowkait@phpboost.com
  *
  *

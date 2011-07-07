@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                             pm.class.php
+ *                             PrivateMsg.class.php
  *                            -------------------
  *   begin                : April 02, 2007
  *   copyright            : (C) 2007 Viarre Régis

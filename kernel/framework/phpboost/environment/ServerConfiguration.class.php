@@ -25,6 +25,11 @@
  *
  ###################################################*/
 
+ /**
+ * @package {@package}
+ * @desc
+ * @author Loic Rouchon <loic.rouchon@phpboost.com>
+ */
 class ServerConfiguration
 {
 	const MIN_PHP_VERSION = '5.1.2';

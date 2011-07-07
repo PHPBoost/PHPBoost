@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                            sessions.class.php
+ *                            Sessions.class.php
  *                            -------------------
  *   begin                : July 04, 2005
  *   copyright            : (C) 2005 Viarre Régis
