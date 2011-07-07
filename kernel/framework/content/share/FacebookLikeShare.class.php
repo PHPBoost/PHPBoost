@@ -53,6 +53,8 @@ class FacebookLikeShare extends AbstractShare
 			<fb:like href="{URL}" send="{SEND_BUTTON}" width="{WIDTH}" show_faces="{SHOW_FACES}" 
 			layout="{LAYOUT}" colorscheme="{COLOR_SCHEME}" action="{ACTION}"></fb:like>
 		'));
+		
+		$this->assign_vars();
 	}
 	
 	public function set_manual_url($manual_url)
@@ -127,7 +129,7 @@ class FacebookLikeShare extends AbstractShare
 		}
 	}
 	
-	public function assign_vars()
+	private function assign_vars()
 	{
 		$this->get_template()->put_all(array(
 			'URL' => $this->get_url(),

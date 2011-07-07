@@ -39,11 +39,13 @@ class GooglePlusOneShare extends AbstractShare
 	public function __construct()
 	{
 		$this->set_template(new StringTemplate('
-		<script type="text/javascript" src="https://apis.google.com/js/plusone.js">
-		  {lang: \'{LANG_SHARE}\'}
-		</script>
-		<g:plusone size="{SIZE}" # IF C_MANUAL_URL # href="{MANUAL_URL}" # ENDIF #></g:plusone> 
+			<script type="text/javascript" src="https://apis.google.com/js/plusone.js">
+			  {lang: \'{LANG_SHARE}\'}
+			</script>
+			<g:plusone size="{SIZE}" # IF C_MANUAL_URL # href="{MANUAL_URL}" # ENDIF #></g:plusone>
 		'));
+		
+		$this->assign_vars();
 	}
 	
 	public function set_manual_lang($lang)
@@ -84,7 +86,7 @@ class GooglePlusOneShare extends AbstractShare
 		}
 	}
 	
-	public function assign_vars()
+	private function assign_vars()
 	{
 		$this->get_template()->put_all(array(
 			'C_MANUAL_URL' => !empty($this->manual_url),

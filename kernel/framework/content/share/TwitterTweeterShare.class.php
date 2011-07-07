@@ -39,11 +39,13 @@ class TwitterTweeterShare extends AbstractShare
 	public function __construct()
 	{
 		$this->set_template(new StringTemplate('
-		<a href="http://twitter.com/share" class="twitter-share-button" # IF C_MANUAL_URL # data-url="{MANUAL_URL}" # ENDIF # 
-		# IF C_MANUAL_CONTENT_TWEET # data-text="{MANUAL_CONTENT_TWEET}" # ENDIF # data-count="{LAYOUT}" data-lang="{LANG_SHARE}">
-		</a>
-		<script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script> 
+			<a href="http://twitter.com/share" class="twitter-share-button" # IF C_MANUAL_URL # data-url="{MANUAL_URL}" # ENDIF # 
+			# IF C_MANUAL_CONTENT_TWEET # data-text="{MANUAL_CONTENT_TWEET}" # ENDIF # data-count="{LAYOUT}" data-lang="{LANG_SHARE}">
+			</a>
+			<script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script> 
 		'));
+		
+		$this->assign_vars();
 	}
 	
 	public function set_manual_lang($lang)
@@ -88,7 +90,7 @@ class TwitterTweeterShare extends AbstractShare
 		}
 	}
 	
-	public function assign_vars()
+	private function assign_vars()
 	{
 		$this->get_template()->put_all(array(
 			'C_MANUAL_URL' => !empty($this->manual_url),
