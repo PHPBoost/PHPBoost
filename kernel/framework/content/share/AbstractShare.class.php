@@ -43,8 +43,6 @@ abstract class AbstractShare implements ShareInterface
 		return $this->template;
 	}
 	
-	public function assign_vars(){}
-	
 	public function display()
 	{
 		if ($this->template !== null)
