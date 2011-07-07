@@ -27,20 +27,17 @@
 
 class ArticlesService
 {
-	public $articles_table = PREFIX .'articles';
-	public $articles_categories_table = PREFIX .'articles_categories';
-	
-    	public function add(Article $article)
+    public static function add(Article $article)
 	{
 	
 	}
 	
-	public function edit(Article $article)
+	public static function edit(Article $article)
 	{
 	
 	}
 	
-	public function delete(Article $article)
+	public static function delete(Article $article)
 	{
 	
 	}

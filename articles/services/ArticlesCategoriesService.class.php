@@ -27,27 +27,27 @@
 
 class ArticlesCategoriesService
 {
-    	public function add(ArticleCategorie $categorie)
+    public static function add(ArticlesCategory $category)
 	{
 	
 	}
 	
-	public function edit(ArticleCategorie $categorie)
+	public static function edit(ArticlesCategory $category)
 	{
 	
 	}
 
-	public function delete(ArticleCategorie $categorie)
+	public static function delete(ArticlesCategory $category)
 	{
 	
 	}
 	
-	public function change_position(ArticleCategorie $categorie)
+	public static function change_position(ArticlesCategory $category)
 	{
 	
 	}
 	
-	public function change_visibility(ArticleCategorie $categorie)
+	public static function change_visibility(ArticlesCategory $category)
 	{
 	
 	}

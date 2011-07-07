@@ -27,7 +27,27 @@
 
 class ArticlesDataBase
 {
-
+	public static $db_querier;
+	
+	public static function __static()
+	{
+		self::$db_querier = PersistenceContext::get_querier();
+	}
+	
+	public static function add(Article $article)
+	{
+	
+	}
+	
+	public static function edit(Article $article)
+	{
+	
+	}
+	
+	public static function delete(Article $article)
+	{
+	
+	}
 }
 
 ?>
