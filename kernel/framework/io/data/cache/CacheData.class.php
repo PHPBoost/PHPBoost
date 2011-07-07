@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                           cache_data.class.php
+ *                           CacheData.class.php
  *                            -------------------
  *   begin                : September 16, 2009
  *   copyright            : (C) 2009 Benoit Sautel

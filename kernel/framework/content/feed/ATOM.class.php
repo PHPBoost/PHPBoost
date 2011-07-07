@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                              atom.class.php
+ *                              Atom.class.php
  *                            -------------------
  *   begin                : April 21, 2008
  *   copyright            : (C) 2008 Loic Rouchon

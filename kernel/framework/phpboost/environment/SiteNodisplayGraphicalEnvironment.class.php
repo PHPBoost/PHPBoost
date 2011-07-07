@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                  site_nodisplay_graphical_environment.class.php
+ *                  SiteNodisplayGraphicalEnvironment.class.php
  *                            -------------------
  *   begin                : October 15, 2009
  *   copyright            : (C) 2009 Benoit Sautel
@@ -24,8 +24,6 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
  ###################################################*/
-
-
 
 /**
  * @package {@package}

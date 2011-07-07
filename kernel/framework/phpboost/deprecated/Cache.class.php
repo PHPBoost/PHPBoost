@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                              cache.class.php
+ *                              Cache.class.php
  *                            -------------------
  *   begin                : August 28, 2006
  *   copyright            : (C) 2006 Benoît Sautel / Régis Viarre

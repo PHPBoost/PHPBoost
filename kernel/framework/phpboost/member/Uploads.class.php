@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                             uploads.class.php
+ *                             Iploads.class.php
  *                            -------------------
  *   begin                : April 18, 2007
  *   copyright            : (C) 2007 Viarre Régis

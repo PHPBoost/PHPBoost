@@ -31,8 +31,7 @@
  * @package {@package}
  */
 class Image
-{	
-
+{
 	private $path;
 
 	function __construct($path)
@@ -109,6 +108,5 @@ class Image
 		$file = new File($this->path);
 		$file->delete();
 	}
-	
 }
 ?>

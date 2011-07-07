@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *              abstract_display_graphical_environment.class.php
+ *              AbstractDisplayGraphicalEnvironment.class.php
  *                            -------------------
  *   begin                : October 06, 2009
  *   copyright            : (C) 2009 Benoit Sautel
@@ -25,7 +25,12 @@
  *
  ###################################################*/
 
-abstract class AbstractDisplayGraphicalEnvironment extends AbstractGraphicalEnvironment
+ /**
+ * @package {@package}
+ * @desc
+ * @author Benoit Sautel <ben.popeye@phpboost.com>
+ */
+ abstract class AbstractDisplayGraphicalEnvironment extends AbstractGraphicalEnvironment
 {
 	private $css_files = array();
 	

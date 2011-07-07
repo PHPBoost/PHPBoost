@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                          autorizations.class.php
+ *                          Autorizations.class.php
  *                            -------------------
  *   begin                : July 26 2008
  *   copyright            : (C) 2008 Viarre Régis / Sautel Benoit

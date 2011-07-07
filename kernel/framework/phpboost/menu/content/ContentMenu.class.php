@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                          content_menu.class.php
+ *                          ContentMenu.class.php
  *                            -------------------
  *   begin                : November 15, 2008
  *   copyright            : (C) 2008 Loic Rouchon

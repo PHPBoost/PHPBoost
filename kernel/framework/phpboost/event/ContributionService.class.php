@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                         contribution_panel.class.php
+ *                         ContributionService.class.php
  *                            -------------------
  *   begin                : July 21, 2008
  *   copyright            : (C) 2008 Benoît Sautel

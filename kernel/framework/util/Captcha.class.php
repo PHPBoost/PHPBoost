@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                               captcha.class.php
+ *                               Captcha.class.php
  *                            -------------------
  *   begin                : Februar, 06 2007
  *   copyright            : (C) 2007 Viarre Régis
@@ -25,8 +25,6 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
  ###################################################*/
-
-
 
 /**
  * @author Régis Viarre <crowkait@phpboost.com>

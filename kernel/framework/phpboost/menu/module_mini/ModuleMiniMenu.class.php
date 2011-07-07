@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                          modules_mini_menu.class.php
+ *                          ModuleMiniMenu.class.php
  *                            -------------------
  *   begin                : November 15, 2008
  *   copyright            : (C) 2008 Loic Rouchon
@@ -24,8 +24,6 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
  ###################################################*/
-
-
 
 /**
  * @author Loic Rouchon <loic.rouchon@phpboost.com>

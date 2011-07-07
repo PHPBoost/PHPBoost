@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                       administrator_alert.class.php
+ *                       AdministratorAlert.class.php
  *                            -------------------
  *   begin                : August 27, 2008
  *   copyright            : (C) 2008 Benoît Sautel

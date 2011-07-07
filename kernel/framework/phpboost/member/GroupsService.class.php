@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                          groups_service.class.php
+ *                          GroupsService.class.php
  *                            -------------------
  *   begin                : May 18, 2007
  *   copyright            : (C) 2007 Viarre Régis

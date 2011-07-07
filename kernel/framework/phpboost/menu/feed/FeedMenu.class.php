@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                          feed_menu.class.php
+ *                          FeedMenu.class.php
  *                            -------------------
  *   begin                : January 14, 2009
  *   copyright            : (C) 2009 Loic Rouchon

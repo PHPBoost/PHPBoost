@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                              rss.class.php
+ *                              Rss.class.php
  *                            -------------------
  *   begin                : March 10, 2005
  *   copyright            : (C) 2005 Régis Viarre, Loic Rouchon

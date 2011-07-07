@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                           links_menu_link.class.php
+ *                           LinksMenuLink.class.php
  *                            -------------------
  *   begin                : July 08, 2008
  *   copyright            : (C) 2008 Régis Viarre; Loic Rouchon

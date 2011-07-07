@@ -2,7 +2,7 @@
 /*##################################################
  *                      	 AdministratorAlertCache.class.php
  *                            -------------------
- *   begin                : August 0, 2010
+ *   begin                : August 10, 2010
  *   copyright            : (C) 2010 Kévin MASSY
  *   email                : soldier.weasel@gmail.com
  *

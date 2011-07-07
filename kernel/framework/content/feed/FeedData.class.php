@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                         feed_data.class.php
+ *                         FeedData.class.php
  *                         -------------------
  *   begin                : June 21, 2008
  *   copyright            : (C) 2005 Loïc Rouchon

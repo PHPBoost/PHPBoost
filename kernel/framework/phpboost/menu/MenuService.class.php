@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                             menu_service.class.php
+ *                             MenuService.class.php
  *                            -------------------
  *   begin                : November 13, 2008
  *   copyright            : (C) 2008 Loic Rouchon

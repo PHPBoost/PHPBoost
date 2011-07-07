@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                      	 themesConfig.class.php
+ *                      	 ThemesConfig.class.php
  *                            -------------------
  *   begin                : April 11, 2011
  *   copyright            : (C) 2011 Kévin MASSY
