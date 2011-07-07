@@ -204,7 +204,6 @@ class Feed
 	 */
 	public static function clear_cache($module_id = false)
 	{
-
 		$folder = new Folder(FEEDS_PATH);
 		$files = null;
 		if ($module_id !== false)
@@ -250,28 +249,20 @@ class Feed
 	 * @return string The exported feed
 	 * @static
 	 */
-	public static function get_parsed($module_id, $name = self::DEFAULT_FEED_NAME, $idcat = 0, $tpl = false, $number = 10, $begin_at = 0)
+	public static function get_parsed($module_id, $name = self::DEFAULT_FEED_NAME, $idcat = 0, $template = false, $number = 10, $begin_at = 0)
 	{
-		if ($tpl instanceof Template)
-		{
-			$template = clone $tpl;
-		}
-		else
+		if (!($template instanceof Template))
 		{
 			$template = new FileTemplate($module_id . '/framework/content/syndication/feed.tpl');
-			if (gettype($tpl) == 'array')
+			if (gettype($template) == 'array')
 			{
-				$template->put_all($tpl);
+				$template->put_all($template);
 			}
 		}
 
 		// Get the cache content or recreate it if not existing
 		$feed_data_cache_file = FEEDS_PATH . $module_id . '_' . $name . '_' . $idcat . '.php';
-		if (file_exists($feed_data_cache_file))
-		{
-			$result = include $feed_data_cache_file;
-		}
-		else
+		if (!file_exists($feed_data_cache_file))
 		{
 			$extension_provider_service = AppContext::get_extension_provider_service();
 			$provider = $extension_provider_service->get_provider($module_id);
@@ -285,16 +276,19 @@ class Feed
 			$data = $feed_provider->get_feed_data_struct($idcat);
 			self::update_cache($module_id, $name, $data, $idcat);
 		}
+		
 		$result = include $feed_data_cache_file;
-		if ( $result === false)
+		if ($result === false)
 		{
 			user_error(sprintf(ERROR_GETTING_CACHE, $module_id, $idcat), E_USER_WARNING);
 			return '';
 		}
-
-		$feed = new Feed($module_id, $name);
-		$feed->load_data($__feed_object);
-		return $feed->export($template, $number, $begin_at);
+		else
+		{
+			$feed = new Feed($module_id, $name);
+			$feed->load_data($__feed_object);
+			return $feed->export($template, $number, $begin_at);
+		}
 	}
 
 	/**
