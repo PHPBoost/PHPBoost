@@ -88,12 +88,17 @@
 - [color=red]Nouveauté:[/color] Possibilité de créer des formulaires personnalisés avec contrÃ´les sur les champs.
 - [color=red]Nouveauté:[/color] Interface de visualisation des valeurs des champs supplémentaires saisies par les membres.
 - [color=red]Nouveauté:[/color] Compression de la base de données à l'exportation, importation en fichier compressé ou non.
-- Possibilité d'envoyer des messages privés à tous les membres d'un groupe ou à tous les membres pour l'administrateur.
-- Possibilité de demander l'envoi d'un mail lors de l'envoi d'un mp.
 - Outils avancés de visualisation et gestion du cache.
 - Etudier la possibilité de mettre les smileys dans une catégorie et pouvoir en importer par lot facilement.
-- Gérer finement les autorisations des langues
 
+[b]Messages privés[/b]
+- Possibilité d'envoyer des messages privés à tous les membres d'un groupe ou à tous les membres pour l'administrateur.
+- Possibilité de demander l'envoi d'un mail lors de l'envoi d'un mp.
+
+[b]Gestion des langues[/b]
+- Gérer finement les autorisations des langues
+- Refonte en MVC
+- Refonte de l'interface
 
 [b]Forum[/b]
 - [color=red]Nouveauté:[/color] Nouveaux droits globaux aux groupes dans le forum, suppression/édition des messages/sujets appartenant au membre.
