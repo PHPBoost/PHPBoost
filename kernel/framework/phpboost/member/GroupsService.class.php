@@ -54,9 +54,11 @@ class GroupsService
 	{
 		//On insère le groupe au champ membre.
 		$user_groups = self::$sql_querier->query("SELECT user_groups FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
-		if (strpos($user_groups, $idgroup . '|') === false) //Le membre n'appartient pas déjà au groupe.
+		$user_groups = explode('|', $user_groups);
+		if (!array_key_exists($idgroup, $user_groups)) //Le membre n'appartient pas déjà au groupe.
 		{
-			self::$sql_querier->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET user_groups = '" . (!empty($user_groups) ? $user_groups : '') . $idgroup . "|' WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
+			array_push($user_groups, $idgroup);
+			self::$sql_querier->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET user_groups = '" . (trim(implode('|', $user_groups), '|')) . "' WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
 		}
 		else
 		{
@@ -65,9 +67,11 @@ class GroupsService
 
 		//On insère le membre dans le groupe.
 		$group_members = self::$sql_querier->query("SELECT members FROM " . DB_TABLE_GROUP . " WHERE id = '" . $idgroup . "'", __LINE__, __FILE__);
-		if (strpos($group_members, $user_id . '|') === false) //Le membre n'appartient pas déjà au groupe.
+		$group_members = explode('|', $group_members);
+		if (!array_key_exists($user_id, $group_members)) //Le membre n'appartient pas déjà au groupe.
 		{
-			self::$sql_querier->query_inject("UPDATE " . DB_TABLE_GROUP . " SET members = '" . $group_members . $user_id . "|' WHERE id = '" . $idgroup . "'", __LINE__, __FILE__);
+			array_push($group_members, $user_id);
+			self::$sql_querier->query_inject("UPDATE " . DB_TABLE_GROUP . " SET members = '" . (trim(implode('|', $group_members), '|')) . "' WHERE id = '" . $idgroup . "'", __LINE__, __FILE__);
 		}
 		else
 		{
@@ -153,12 +157,19 @@ class GroupsService
 	{
 		//Suppression dans la table des membres.
 		$user_groups = self::$sql_querier->query("SELECT user_groups FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
-		self::$sql_querier->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET user_groups = '" . str_replace($idgroup . '|', '', $user_groups) . "' WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
-			
+		$user_groups = explode('|', $user_groups);
+		
+		unset($user_groups[array_search($idgroup, $user_groups)]);
+		
+		self::$sql_querier->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET user_groups = '" . trim(implode('|', $user_groups), '|') . "' WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
+		
 		//Suppression dans la table des groupes.
 		$members_group = self::$sql_querier->query("SELECT members FROM " . DB_TABLE_GROUP . " WHERE id = '" . $idgroup . "'", __LINE__, __FILE__);
-		self::$sql_querier->query_inject("UPDATE " . DB_TABLE_GROUP . " SET members = '" . str_replace($user_id . '|', '', $members_group) . "' WHERE id = '" . $idgroup . "'", __LINE__, __FILE__);
+		$members_group = explode('|', $members_group);
+		
+		unset($members_group[array_search($user_id, $members_group)]);
+		
+		self::$sql_querier->query_inject("UPDATE " . DB_TABLE_GROUP . " SET members = '" . trim(implode('|', $members_group), '|') . "' WHERE id = '" . $idgroup . "'", __LINE__, __FILE__);
 	}
 }
-
 ?>
