@@ -24,7 +24,6 @@
  *
  ###################################################*/
 
-header("Content-Type: application/xml; charset=iso-8859-1");
 class DisplayRssSyndicationController extends AbstractController
 {
 	private $tpl;
