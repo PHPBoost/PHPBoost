@@ -59,7 +59,7 @@ class ForumFeedProvider implements FeedProvider
         $data = new FeedData();
         $data->set_title($LANG['xml_forum_desc']);
         $data->set_date(new Date());
-        $data->set_link(new Url('/syndication.php?m=forum&amp;cat=' . $_idcat));
+        $data->set_link(DispatchManager::get_url('/syndication', '/rss/forum/'. $idcat . '/'));
         $data->set_host(HOST);
         $data->set_desc($LANG['xml_forum_desc']);
         $data->set_lang($LANG['xml_lang']);

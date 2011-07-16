@@ -3,7 +3,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <title>{TITLE}</title>
     <subtitle>{DESC}</subtitle>
-    <link rel="self" type="application/atom+xml" href="{U_LINK}&amp;feed=atom"/>
+    <link rel="self" type="application/atom+xml" href="{U_LINK}"/>
     <updated>{DATE_RFC3339}</updated>
     <author>
         <name>PHPBoost</name>
