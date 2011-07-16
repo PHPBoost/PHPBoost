@@ -34,7 +34,7 @@ class Image
 {
 	private $path;
 
-	function __construct($path)
+	public function __construct($path)
 	{
 		$this->path = $path;		
 	}
@@ -95,7 +95,7 @@ class Image
 	public function get_name()
 	{
 		$explode = explode('.', $this->get_name_and_extension());
-		return $explode[0];
+		return array_shift($explode);
 	}
 	
 	public function get_folder_image()
