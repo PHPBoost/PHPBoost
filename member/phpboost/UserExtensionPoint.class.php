@@ -48,5 +48,4 @@ interface UserExtensionPoint extends ExtensionPoint
 	 */
 	function get_messages_list_link_img();
 }
-
 ?>

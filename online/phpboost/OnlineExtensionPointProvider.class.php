@@ -25,8 +25,6 @@
  *
  ###################################################*/
 
-
-
 class OnlineExtensionPointProvider extends ExtensionPointProvider
 {
 	private $sql_querier;
@@ -51,5 +49,4 @@ class OnlineExtensionPointProvider extends ExtensionPointProvider
 		return $online_config;	
 	}
 }
-
 ?>

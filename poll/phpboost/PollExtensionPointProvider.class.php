@@ -25,8 +25,6 @@
  *
  ###################################################*/
 
-
-
 class PollExtensionPointProvider extends ExtensionPointProvider
 {
 	private $sql_querier;
@@ -81,5 +79,4 @@ class PollExtensionPointProvider extends ExtensionPointProvider
 		return new PollScheduledJobs();
 	}
 }
-
 ?>

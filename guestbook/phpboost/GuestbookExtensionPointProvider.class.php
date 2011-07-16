@@ -37,5 +37,4 @@ class GuestbookExtensionPointProvider extends ExtensionPointProvider
         parent::__construct('guestbook');
     }
 }
-
 ?>

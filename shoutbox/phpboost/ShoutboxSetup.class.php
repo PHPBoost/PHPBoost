@@ -98,5 +98,4 @@ class ShoutboxSetup extends DefaultModuleSetup
 	}
 
 }
-
 ?>

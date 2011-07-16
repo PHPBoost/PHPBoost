@@ -95,5 +95,4 @@ class WikiSitemapExtensionPoint implements SitemapExtensionPoint
 		return $category;
 	}
 }
-
 ?>

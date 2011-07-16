@@ -32,5 +32,4 @@ class CalendarExtensionPointProvider extends ExtensionPointProvider
         parent::__construct('calendar');
     }
 }
-
 ?>

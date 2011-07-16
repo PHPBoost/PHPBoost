@@ -88,5 +88,4 @@ class PagesSearchable extends AbstractSearchable
         return $results;
     }
 }
-
 ?>

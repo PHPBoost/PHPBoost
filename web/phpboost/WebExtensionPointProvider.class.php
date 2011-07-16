@@ -25,8 +25,6 @@
  *
  ###################################################*/
 
-
-
 class WebExtensionPointProvider extends ExtensionPointProvider
 {
     ## Public Methods ##
@@ -60,5 +58,4 @@ class WebExtensionPointProvider extends ExtensionPointProvider
 		return $code;	
 	}
 }
-
 ?>

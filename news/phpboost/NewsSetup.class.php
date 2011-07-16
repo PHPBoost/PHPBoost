@@ -122,5 +122,4 @@ class NewsSetup extends DefaultModuleSetup
 	}
 
 }
-
 ?>

@@ -170,5 +170,4 @@ class FaqExtensionPointProvider extends ExtensionPointProvider
     	return new FaqSitemapExtensionPoint();
     }
 }
-
 ?>

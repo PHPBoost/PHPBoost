@@ -152,5 +152,4 @@ class GallerySetup extends DefaultModuleSetup
 		));
 	}
 }
-
 ?>

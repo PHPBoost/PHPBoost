@@ -396,5 +396,4 @@ class NewsExtensionPointProvider extends ExtensionPointProvider
 		return $category;
 	}
 }
-
 ?>

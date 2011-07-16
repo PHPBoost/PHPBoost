@@ -55,5 +55,4 @@ class MediaSearchable extends AbstractSearchable
         return $request;
     }
 }
-
 ?>

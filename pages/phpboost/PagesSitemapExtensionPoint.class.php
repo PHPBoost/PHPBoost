@@ -118,5 +118,4 @@ class PagesSitemapExtensionPoint implements SitemapExtensionPoint
 		return $category;
 	}
 }
-
 ?>

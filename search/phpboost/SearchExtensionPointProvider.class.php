@@ -32,7 +32,6 @@ class SearchExtensionPointProvider extends ExtensionPointProvider
 		parent::__construct('search');
 	}
 
-
 	public function scheduled_jobs()
 	{
 		return new SearchScheduledJobs();
@@ -43,5 +42,4 @@ class SearchExtensionPointProvider extends ExtensionPointProvider
 		return new UrlMappings(array(new DispatcherUrlMapping('/search/index.php')));
 	}
 }
-
 ?>
