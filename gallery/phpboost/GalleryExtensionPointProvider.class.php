@@ -104,5 +104,4 @@ class GalleryExtensionPointProvider extends ExtensionPointProvider
 		return $gallery_config . "\n" . $cat_gallery . "\n" . $_array_random_pics;
 	}
 }
-
 ?>

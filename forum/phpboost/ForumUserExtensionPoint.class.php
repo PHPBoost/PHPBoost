@@ -54,5 +54,4 @@ class ForumUserExtensionPoint implements UserExtensionPoint
 		return PATH_TO_ROOT . '/forum/forum_mini.png';
 	}
 }
-
 ?>

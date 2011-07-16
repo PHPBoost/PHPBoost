@@ -245,5 +245,4 @@ class DownloadExtensionPointProvider extends ExtensionPointProvider
 		return $data;
 	}
 }
-
 ?>

@@ -32,5 +32,4 @@ class ContactExtensionPointProvider extends ExtensionPointProvider
         parent::__construct('contact');
     }
 }
-
 ?>

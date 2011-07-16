@@ -142,5 +142,4 @@ class WebSetup extends DefaultModuleSetup
 		));
 	}
 }
-
 ?>

@@ -312,5 +312,4 @@ class ForumExtensionPointProvider extends ExtensionPointProvider
 		return new ForumFeedProvider();
 	}
 }
-
 ?>

@@ -140,5 +140,4 @@ class NewsletterSetup extends DefaultModuleSetup
 		ExtendedFieldsService::delete_by_field_name('register_newsletter');
 	}
 }
-
 ?>

@@ -160,3 +160,4 @@ class NewsletterStreamsCache implements CacheData
 		return $list_subscribers;
 	}
 }
+?>

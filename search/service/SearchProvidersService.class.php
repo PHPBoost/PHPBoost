@@ -48,5 +48,4 @@ class SearchProvidersService {
         return $providers;
 	}
 }
-
 ?>

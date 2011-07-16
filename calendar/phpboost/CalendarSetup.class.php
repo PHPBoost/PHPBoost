@@ -67,5 +67,4 @@ class CalendarSetup extends DefaultModuleSetup
 		PersistenceContext::get_dbms_utils()->create_table(self::$calendar_table, $fields, $options);
 	}
 }
-
 ?>

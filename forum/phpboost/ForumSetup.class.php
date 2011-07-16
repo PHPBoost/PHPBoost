@@ -358,5 +358,4 @@ class ForumSetup extends DefaultModuleSetup
 		));
 	}
 }
-
 ?>

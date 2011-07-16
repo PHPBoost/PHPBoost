@@ -25,8 +25,6 @@
  *
  ###################################################*/
 
-
-
 class WikiExtensionPointProvider extends ExtensionPointProvider
 {
 	private $sql_querier;

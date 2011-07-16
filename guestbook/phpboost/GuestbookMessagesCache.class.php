@@ -85,3 +85,4 @@ class GuestbookMessagesCache implements CacheData
 		CacheManager::invalidate('module', 'guestbook-messages');
 	}
 }
+?>

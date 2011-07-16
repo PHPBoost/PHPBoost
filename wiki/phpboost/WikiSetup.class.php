@@ -138,5 +138,4 @@ class WikiSetup extends DefaultModuleSetup
 	}
 
 }
-
 ?>

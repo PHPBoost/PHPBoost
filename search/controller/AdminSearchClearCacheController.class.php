@@ -25,7 +25,8 @@
  *
  ###################################################*/
 
-class AdminSearchClearCacheController extends AdminController {
+class AdminSearchClearCacheController extends AdminController 
+{
 
 	public function execute(HTTPRequest $request)
 	{
@@ -43,5 +44,4 @@ class AdminSearchClearCacheController extends AdminController {
         $querier->truncate(PREFIX . 'search_index');
 	}
 }
-
 ?>

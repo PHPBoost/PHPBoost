@@ -119,5 +119,4 @@ class PollSetup extends DefaultModuleSetup
 		));
 	}
 }
-
 ?>
