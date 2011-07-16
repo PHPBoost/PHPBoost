@@ -46,10 +46,6 @@ catch (IOException $ex)
 	}
 }
 
-/* DEPRECATED VARS */
-$Cache = new Cache();
-/* END DEPRECATED */
-
 Environment::init();
 
 //Sinon, c'est que tout a bien marché, on renvoie sur la page de démarrage
