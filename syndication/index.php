@@ -33,5 +33,6 @@ $url_controller_mappers = array(
 	new UrlControllerMapper('DisplayAtomSyndicationController', '`^/atom(?:/([a-z0-9]+))?/?([0-9]+)?/?([a-z0-9]+)?/?$`', array('module_id', 'module_category_id', 'feed_name')),
 );
 
+header("Content-Type: application/xml; charset=iso-8859-1");
 DispatchManager::dispatch($url_controller_mappers);
 ?>

@@ -24,8 +24,6 @@
  *
  ###################################################*/
 
-header("Content-Type: application/xml; charset=iso-8859-1");
-
 class DisplayAtomSyndicationController extends AbstractController
 {
 	private $tpl;
