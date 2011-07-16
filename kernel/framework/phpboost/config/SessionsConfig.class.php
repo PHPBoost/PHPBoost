@@ -85,7 +85,7 @@ class SessionsConfig extends AbstractConfigData
 	 */
 	public static function load()
 	{
-		return ConfigManager::load(__CLASS__, 'kernel', 'graphical-sessions-config');
+		return ConfigManager::load(__CLASS__, 'kernel', 'sessions-config');
 	}
 
 	/**
@@ -93,7 +93,7 @@ class SessionsConfig extends AbstractConfigData
 	 */
 	public static function save()
 	{
-		ConfigManager::save('kernel', self::load(), 'graphical-sessions-config');
+		ConfigManager::save('kernel', self::load(), 'sessions-config');
 	}
 }
 ?>
