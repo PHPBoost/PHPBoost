@@ -3,7 +3,7 @@
 			<div class="module_top_l"></div>
 			<div class="module_top_r"></div>
 			<div class="module_top">
-				<a href="{PATH_TO_ROOT}/syndication.php?m=media" title="Syndication"><img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/rss.png" alt="Syndication" title="Syndication" /></a>
+				<a href="${relative_url(SyndicationUrlBuilder::rss('media'))}" title="Syndication"><img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/rss.png" alt="Syndication" title="Syndication" /></a>
 				{TITLE}
 				# IF C_ADMIN #
 				<a href="{U_ADMIN_CAT}">

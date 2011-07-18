@@ -1,11 +1,10 @@
 <?php
 /*##################################################
- *                                index.php
+ *                       SyndicationUrlBuilder.class.php
  *                            -------------------
- *   begin                : August 23 2007
- *   copyright            : (C) 2007 Régis Viarre
- *   email                : crowkait@phpboost.com
- *
+ *   begin                : July 18, 2011
+ *   copyright            : (C) 2011 Kévin MASSY
+ *   email                : soldier.weasel@gmail.com
  *
  ###################################################
  *
@@ -24,42 +23,26 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
  ###################################################*/
-
-define('PATH_TO_ROOT', '.');
-
-require_once PATH_TO_ROOT . '/kernel/framework/core/environment/Environment.class.php';
-
-try
+ 
+class SyndicationUrlBuilder
 {
-	Environment::load_imports();
-}
-catch (IOException $ex)
-{
-	if (!file_exists(PATH_TO_ROOT . '/kernel/db/config.php'))
+	const RSS_FEED = 'rss';
+	const ATOM_FEED = 'atom';
+	
+	public static function rss($id_module, $id_category = null)
 	{
-		header('Location:install/index.php');
-		exit;
+		return self::build($id_module, self::RSS_FEED, $id_category);
 	}
-	else
+	
+	public static function atom($id_module, $id_category = null)
 	{
-		Debug::fatal($ex);
+		return self::build($id_module, self::ATOM_FEED, $id_category);
+	}
+	
+	private static function build($id_module, $type = self::RSS_FEED, $id_category = null) 
+	{
+		return DispatchManager::get_url('/syndication', '/' . $type . '/'. $id_module . '/' . 
+			  ($id_category !== null && $id_category !== 0 ? $id_category :  ''));
 	}
 }
-
-$Cache = new Cache();
-
-Environment::init();
-
-//Sinon, c'est que tout a bien marché, on renvoie sur la page de démarrage
-$start_page = Environment::get_home_page();
-
-if ($start_page != HOST . DIR . '/index.php' && $start_page != './index.php') //Empêche une boucle de redirection.
-{
-	AppContext::get_response()->redirect($start_page);
-}
-else
-{
-	AppContext::get_response()->redirect(DispatchManager::get_url('/member', '/member')->absolute());
-}
-
 ?>

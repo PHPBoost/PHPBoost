@@ -3,7 +3,7 @@
 			<div class="module_top_l"></div>		
 			<div class="module_top_r"></div>
 			<div class="module_top">
-				<a href="{PATH_TO_ROOT}/syndication.php?m=download&amp;cat={IDCAT}" title="Rss"><img style="vertical-align:middle;margin-top:-2px;" src="{PATH_TO_ROOT}/templates/{THEME}/images/rss.png" alt="Rss" title="Rss" /></a>  {TITLE}
+				<a href="${relative_url(SyndicationUrlBuilder::rss('download',IDCAT))}" title="Rss"><img style="vertical-align:middle;margin-top:-2px;" src="{PATH_TO_ROOT}/templates/{THEME}/images/rss.png" alt="Rss" title="Rss" /></a>  {TITLE}
 				# IF C_ADMIN #
 				<a href="{U_ADMIN_CAT}">
 					<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="" />

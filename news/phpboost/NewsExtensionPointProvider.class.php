@@ -227,7 +227,7 @@ class NewsExtensionPointProvider extends ExtensionPointProvider
 						$tpl->assign_block_vars('news', array(
 							'ID' => $row['id'],
 							'C_NEWS_ROW' => $new_row,
-							'U_SYNDICATION' => url('../syndication.php?m=news&amp;cat=' . $row['idcat']),
+							'U_SYNDICATION' => SyndicationUrlBuilder::rss('download', $row['idcat']),
 							'U_LINK' => 'news' . url('.php?id=' . $row['id'], '-' . $row['idcat'] . '-' . $row['id'] . '+' . Url::encode_rewrite($row['title']) . '.php'),
 							'TITLE' => $row['title'],
 							'U_COM' => $NEWS_CONFIG['activ_com'] ? '<a href="'. PATH_TO_ROOT .'/news/news' . url('.php?id=' . $row['id'] . '&amp;com=0', '-' . $row['idcat'] . '-' . $row['id'] . '+' . Url::encode_rewrite($row['title']) . '.php?com=0') .'">'. CommentsService::get_number_and_lang_comments($comments) . '</a>' : '',
@@ -300,7 +300,7 @@ class NewsExtensionPointProvider extends ExtensionPointProvider
 		// Var commune
 		$tpl->put_all(array(
 			'L_ALERT_DELETE_NEWS' => $NEWS_LANG['alert_delete_news'],
-			'U_SYNDICATION' => url('../syndication.php?m=news' . ($cat > 0  ? '&amp;cat=' . $cat : '')),
+			'U_SYNDICATION' => SyndicationUrlBuilder::rss('download', $cat),
 			'L_SYNDICATION' => $LANG['syndication'],
 			'C_ADD_OR_WRITER' => $c_add || $c_writer,
 			'C_ADD' => $c_add,
