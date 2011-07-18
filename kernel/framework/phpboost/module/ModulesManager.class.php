@@ -381,6 +381,27 @@ class ModulesManager
 		}
 	}
 	
+	public static function module_is_upgradable($module_identifier)
+	{
+		if (!empty($module_identifier) && is_dir(PATH_TO_ROOT . '/' . $module_identifier))
+		{
+			if (self::is_module_installed($module_identifier))
+			{
+				$module = self::get_module($module_identifier);
+				$configuration = $module->get_configuration();
+				
+				$new_version = $configuration->get_version();
+				$installed_version = $module->get_installed_version();
+				
+				if (version_compare($installed_version, $new_version) == -1)
+				{
+					return true;
+				}
+				return false;
+			}
+		}
+	}
+	
 	public static function update_module_authorizations($module_id, $activated, array $authorizations)
 	{
 		$module = self::get_module($module_id);
