@@ -49,7 +49,6 @@ class HtaccessFileCache implements CacheData
 			$this->enable_rewrite_rules();
 
 			$this->add_core_rules();
-			$this->add_feeds_rules();
 			$this->add_modules_rules();
 
 			$this->add_bandwidth_protection();
@@ -98,19 +97,6 @@ class HtaccessFileCache implements CacheData
 		foreach ($mappings as $mapping_list)
 		{
             $this->add_url_mapping($mapping_list);
-		}
-	}
-
-	private function add_feeds_rules()
-	{
-		$this->add_section('Feeds');
-		foreach (array('rss', 'atom') as $feed_type)
-		{
-	        $this->add_rewrite_rule('^' . $feed_type . '/?$', 'syndication.php?m=news&feed=' . $feed_type);
-	        $this->add_rewrite_rule('^' . $feed_type . '/([a-zA-Z0-9-]+)/?$', 'syndication.php?m=$1&feed=' . $feed_type);
-	        $this->add_rewrite_rule('^' . $feed_type . '/([a-zA-Z0-9-]+)/([0-9]+)/?$', 'syndication.php?m=$1&cat=$2&feed=' . $feed_type);
-			$this->add_rewrite_rule('^' . $feed_type . '/([a-zA-Z0-9-]+)/([0-9]+)/([a-zA-Z0-9-]+)/?$', 'syndication.php?m=$1&cat=$2&name=$3&feed=' . $feed_type);
-			$this->add_rewrite_rule('^' . $feed_type . '/([a-zA-Z0-9-]+)/([a-zA-Z0-9-]+)/([0-9]+)/?$', 'syndication.php?m=$1&cat=$3&name=$2&feed=' . $feed_type);
 		}
 	}
 

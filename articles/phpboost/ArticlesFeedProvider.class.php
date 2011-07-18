@@ -46,7 +46,7 @@ class ArticlesFeedProvider implements FeedProvider
 
 		$data->set_title($ARTICLES_LANG['xml_articles_desc']);
 		$data->set_date(new Date());
-		$data->set_link(DispatchManager::get_url('/syndication', '/rss/articles/'. $idcat . '/'));
+		$data->set_link(SyndicationUrlBuilder::rss('articles', $idcat));
 		$data->set_host(HOST);
 		$data->set_desc($ARTICLES_LANG['xml_articles_desc']);
 		$data->set_lang($LANG['xml_lang']);

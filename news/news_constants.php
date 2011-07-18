@@ -42,6 +42,6 @@ define('NEWS_MASTER_0', PATH_TO_ROOT . '/cache/syndication/news_master_0.php');
 
 // Css alternatif.
 defined('ALTERNATIVE_CSS') or define('ALTERNATIVE_CSS', 'news');
-defined('FEED_URL') or define('FEED_URL', '/syndication.php?m=news');
+defined('FEED_URL') or define('FEED_URL', SyndicationUrlBuilder::rss('news'));
 
 ?>

@@ -59,7 +59,7 @@ class NewsFeedProvider implements FeedProvider
 
 		$data->set_title($NEWS_LANG['xml_news_desc'] . $site_name);
 		$data->set_date(new Date());
-		$data->set_link(DispatchManager::get_url('/syndication', '/rss/news/'. $idcat . '/'));
+		$data->set_link(SyndicationUrlBuilder::rss('news', $idcat));
 		$data->set_host(HOST);
 		$data->set_desc($NEWS_LANG['xml_news_desc'] . $site_name);
 		$data->set_lang($LANG['xml_lang']);
