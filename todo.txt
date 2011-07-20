@@ -3,11 +3,11 @@
 #################################################################################
 
 ------------------------------------- NOYAU ------------------------------------
-- Faire un script qui modifie le path et l'URL du site aprés une migration (plus possible de bidouiller le cache)
-- Changer de format de stockage des fuseaux horaires
-- Gestion des contraintes asynchrone
+- Faire un script qui modifie le path et l'URL du site après une migration (plus possible de bidouiller le cache)
++ Corriger le bug qui fait que quand on autorise un modérateur par exemple à naviguer sur le site en maintenance, il ne peut pas se logguer si il l'était pas déjà parce que le lien fonctionne seulement pour les admins.
 
 ------------------------------------ MODULES ------------------------------------ 
+- Intégration d'un système AJAX permettant l'envoi de mail par paquet
 [color=red]Nouveauté:[/color] Nouveau module de page de démarrage du site.
 
 #################################################################################
@@ -18,19 +18,22 @@
 #################################################################################
 
 ------------------------------------- NOYAU ------------------------------------
-- Balises Youtube, Dailymotion
-- Utilisation des futurs classes de Loic pour gérer l'inscription d'un membre.
-- Création d'un controlleur pour l'oubli du mot de passe.
-- Création de contrainte pour vérifier si un pseudo ou un email est déjà utilisé.
 + Classe commentaire : Gérer les autorisations, gérer la notation +1 et -1, gérer l'affichage des commentaires.
-- Revoir la façon dont est stocké les inscrits aux groupes (actuellement c'est stocké dans la table member et groups)
-- Créer des champs spécifique aux sanctions à ajouter dans l'édit d'un membre dans l'administration.
+- Balises Youtube, Dailymotion
+- Création d'un controlleur pour l'oubli du mot de passe.
+- Création de contrainte pour vérifier si un pseudo ou un email est déjà utilisé (utiliser Field::set_validation_error_message())
+- Créer des champs spécifiques aux sanctions à ajouter dans l'édit d'un membre dans l'administration.
+- Ajouter l'image align=justify dans les thèmes et corriger bbcode.css (bloc masquables + wikipédia) (publishing notamment)
+- [color=red]Nouveauté:[/color] Interface de personnalisation graphique du site, modification facile du logo du site et favicon.
+- Utilisation des futures classes de Loic pour gérer l'inscription d'un membre (seulement si on intègre le nouveaux sytème de sessions)
 
 ------------------------------------ MODULES -----------------------------------
 
+[b]Tous[/b]
+- Réparer la fonctionnalité de période de validité d'une publication (news par exemple), en requêtant directement en fonction de la date courante
+
 [b]Newsletter[/b]
-- Possibilité d'ajouter une newsletter et l'envoyer à une date donnée
-- Intégration d'un système AJAX permettant l'envoi de mail par paquet
+- Possibilité d'ajouter une newsletter et de l'envoyer à une date donnée
 
 #################################################################################
 
@@ -40,19 +43,13 @@
 #################################################################################
 
 ------------------------------------- NOYAU ------------------------------------
-- Ajouter l'image align=justify dans les thèmes et corriger bbcode.css (bloc masquables + wikipédia) (publishing notamment)
 - [color=red]Nouveauté:[/color] Nouveau thème Base2 pour la distribution complete.
-- [color=red]Nouveauté:[/color] Interface de personnalisation graphique du site, modification facile du logo du site.
-- Remplacement des icônes de bases par le pack famfamfam
+- Remplacement des icônes de base par le pack famfamfam
 - Filtres d'exclusion pour les menus
-+ [color=red]Nouveauté:[/color] Gestion des menus avec arborescence repliable
 
 ------------------------------------ MODULES -----------------------------------
 
 ##################################################################################
-[b]Galerie:[/b]
-- Voir les images plus vues/mieux notées, affichage sur l'ensemble de la galerie et non sur une catégorie.
-- Possibilité de télécharger l'image.
 
 [b]Forum[/b]
 ? Bug du nombre de sujet/messages lors du déplacement d'un forum (qui devient un sous-forum) dans un autre forum avec déjà  des messages/sujets.
@@ -62,10 +59,10 @@
 #################################################################################
 
 ------------------------------------- NOYAU ------------------------------------
+- Réparer le moteur de recherche
 - Revoir la cohérence de l'API FormBuilder (nommage des paramètres, ordres, ...) ex : dans FormButtonButton, param $label => $html_content ou autre... 
-+ Etudier la possibilité de joindre les sessions et l'espace membre à un annuaire de type LDAP.
-+ Corriger le bug qui fait que quand on autorise un modérateur par exemple à naviguer sur le site en maintenance, il ne peut pas se logguer si il l'était pas déjà parce que le lien fonctionne seulement pour les admins.
 - Joindre tous les champs étendus dans la session utilisateur.
+- Finir les sessions (ou alors on garde l'ancien système)
 
 ------------------------------------ MODULES -----------------------------------
 
@@ -90,6 +87,11 @@
 - [color=red]Nouveauté:[/color] Compression de la base de données à l'exportation, importation en fichier compressé ou non.
 - Outils avancés de visualisation et gestion du cache.
 - Etudier la possibilité de mettre les smileys dans une catégorie et pouvoir en importer par lot facilement.
+- Gestion des contraintes asynchrones dans le form builder
+- Revoir la façon dont est stocké les inscrits aux groupes (actuellement c'est stocké dans la table member et groups, faire une table de jointure)
+- Changer de format de stockage des fuseaux horaires
++ [color=red]Nouveauté:[/color] Gestion des menus avec arborescence repliable
++ Etudier la possibilité de joindre les sessions et l'espace membre à un annuaire de type LDAP.
 
 [b]Messages privés[/b]
 - Possibilité d'envoyer des messages privés à tous les membres d'un groupe ou à tous les membres pour l'administrateur.
@@ -109,6 +111,8 @@
 
 
 [b]Galerie:[/b]
+- Voir les images plus vues/mieux notées, affichage sur l'ensemble de la galerie et non sur une catégorie.
+- Possibilité de télécharger l'image.
 - [color=red]Nouveauté:[/color] Gestion des catégories infinies, droits de lecture/ecriture sur les catégories.
 - [color=red]Nouveauté:[/color] Possibilité de redimensionnement automatique des images dans la galerie, avec prévisualisation du rendu.
 - [color=red]Nouveauté:[/color] Approbation des photos envoyées par les membres/invités, alerte envoyée à l'administrateur.
