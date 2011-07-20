@@ -156,7 +156,7 @@ if (!empty($idnews)) // On affiche la news correspondant à l'id envoyé.
 			'U_LINK' => 'news' . url('.php?id=' . $news['id'], '-' . $news['idcat'] . '-' . $news['id'] . '+' . Url::encode_rewrite($news['title']) . '.php'),
 			'U_COM' => $NEWS_CONFIG['activ_com'] ? '<a href="'. PATH_TO_ROOT .'/news/news' . url('.php?id=' . $idnews . '&amp;com=0', '-' . $row['idcat'] . '-' . $idnews . '+' . Url::encode_rewrite($news['title']) . '.php?com=0') .'">'. CommentsService::get_number_and_lang_comments($comments) . '</a>' : '',
 			'U_USER_ID' => '../member/member' . url('.php?id=' . $news['user_id'], '-' . $news['user_id'] . '.php'),
-			'U_SYNDICATION' => SyndicationUrlBuilder::rss('download', $news['idcat']),
+			'U_SYNDICATION' => SyndicationUrlBuilder::rss('news', $news['idcat'])->rel(),
 			'U_PREVIOUS_NEWS' => 'news' . url('.php?id=' . $previous_news['id'], '-0-' . $previous_news['id'] . '+' . Url::encode_rewrite($previous_news['title']) . '.php'),
 			'U_NEXT_NEWS' => 'news' . url('.php?id=' . $next_news['id'], '-0-' . $next_news['id'] . '+' . Url::encode_rewrite($next_news['title']) . '.php'),
 			'L_ALERT_DELETE_NEWS' => $NEWS_LANG['alert_delete_news'],
@@ -204,7 +204,7 @@ elseif ($user)
 
 		$tpl->assign_block_vars('news', array(
 			'ID' => $row['id'],
-			'U_SYNDICATION' => SyndicationUrlBuilder::rss('download', $row['idcat']),
+			'U_SYNDICATION' => SyndicationUrlBuilder::rss('news', $row['idcat'])->rel(),
 			'U_LINK' => 'news' . url('.php?id=' . $row['id'], '-' . $row['idcat'] . '-' . $row['id'] . '+' . Url::encode_rewrite($row['title']) . '.php'),
 			'TITLE' => $row['title'],
 			'C_EDIT' => true,
