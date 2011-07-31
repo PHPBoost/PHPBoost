@@ -27,33 +27,11 @@
 
 class MemberActivity
 {
-	private $module_name;
-	private $module_picture;
-	private $user_id;
-	private $title;
-	private $description;
-	private $url;
-	private $date;
-
-	public function set_module_name($module_name)
-	{
-		$this->module_name = $module_name;
-	}
-	
-	public function get_module_name()
-	{
-		return $this->module_name;
-	}
-	
-	public function set_module_picture($module_picture)
-	{
-		$this->module_picture = $module_picture;
-	}
-	
-	public function get_module_picture()
-	{
-		return $this->module_picture;
-	}
+	private $user_id = 0;
+	private $title_activity = '';
+	private $description_activity = '';
+	private $url_activity = '';
+	private $date_activity = '';
 	
 	public function set_user_id($user_id)
 	{
@@ -65,56 +43,54 @@ class MemberActivity
 		return $this->user_id;
 	}
 	
-	public function set_title($title)
+	public function set_title_activity($title_activity)
 	{
-		$this->title = $title;
+		$this->title_activity = $title_activity;
 	}
 	
-	public function get_title()
+	public function get_title_activity()
 	{
-		return $this->title;
+		return $this->title_activity;
 	}
 	
-	public function set_description($description)
+	public function set_description_activity($description_activity)
 	{
-		$this->description = $description;
+		$this->description_activity = $description_activity;
 	}
 	
-	public function get_description()
+	public function get_description_activity()
 	{
-		return $this->description;
+		return $this->description_activity;
 	}
 	
-	public function set_url($url)
+	public function set_url_activity($url_activity)
 	{
-		$this->url = $url;
+		$this->url_activity = $url_activity;
 	}
 	
-	public function get_url()
+	public function get_url_activity()
 	{
-		return $this->url;
+		return $this->url_activity;
 	}
 	
-	public function set_date(Date $date)
+	public function set_date_activity(Date $date_activity)
 	{
-		$this->date = $date;
+		$this->date_activity = $date_activity;
 	}
 	
-	public function get_date()
+	public function get_date_activity()
 	{
-		return $this->date;
+		return $this->date_activity;
 	}
 	
 	public function export()
 	{
 		return array(
-			'module_name' => $this->module_name,
-			'module_picture' => $this->module_picture,
 			'user_id' => $this->user_id,
-			'title' => $this->title,
-			'description' => $this->description,
-			'url' => $this->url,
-			'date' => $this->date,
+			'title_activity' => $this->title_activity,
+			'description_activity' => $this->description_activity,
+			'url_activity' => $this->url_activity,
+			'date_activity' => $this->date_activity,
 		);
 	}
 }
