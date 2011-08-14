@@ -37,13 +37,17 @@ include_once('pages_functions.php');
 //Requêtes préliminaires utiles par la suite
 if (!empty($encoded_title)) //Si on connait son titre
 {
-	$page_infos = $Sql->query_array(PREFIX . "pages", 'id', 'title', 'auth', 'is_cat', 'id_cat', 'hits', 'count_hits', 'activ_com', 'nbr_com', 'redirect', 'contents', 'display_print_link', "WHERE encoded_title = '" . $encoded_title . "'", __LINE__, __FILE__);
+	$page_infos = $Sql->query_array(PREFIX . "pages", 'id', 'title', 'auth', 'is_cat', 'id_cat',
+		'hits', 'count_hits', 'activ_com', 'nbr_com', 'redirect', 'contents', 'display_print_link',
+		"WHERE encoded_title = '" . $encoded_title . "'", __LINE__, __FILE__);
 	$num_rows =!empty($page_infos['title']) ? 1 : 0;
 	if ($page_infos['redirect'] > 0)
 	{
 		$redirect_title = $page_infos['title'];
 		$redirect_id = $page_infos['id'];
-		$page_infos = $Sql->query_array(PREFIX . "pages", 'id', 'title', 'auth', 'is_cat', 'id_cat', 'hits', 'count_hits', 'activ_com', 'nbr_com', 'redirect', 'contents', 'display_print_link', "WHERE id = '" . $page_infos['redirect'] . "'", __LINE__, __FILE__);
+		$page_infos = $Sql->query_array(PREFIX . "pages", 'id', 'title', 'auth', 'is_cat', 'id_cat',
+			'hits', 'count_hits', 'activ_com', 'nbr_com', 'redirect', 'contents', 'display_print_link',
+			"WHERE id = '" . $page_infos['redirect'] . "'", __LINE__, __FILE__);
 	}
 	else
 		$redirect_title = '';
@@ -52,14 +56,15 @@ if (!empty($encoded_title)) //Si on connait son titre
 	
 	//Définition du fil d'Ariane de la page
 	if ($page_infos['is_cat'] == 0)
-		$Bread_crumb->add($page_infos['title'], url('pages.php?title=' . $encoded_title, $encoded_title));
+		$Bread_crumb->add($page_infos['title'], PagesUrlBuilder::get_link_item($encoded_title));
 	
 	$id = $page_infos['id_cat'];
 	while ($id > 0)
 	{
 		//Si on a les droits de lecture sur la catégorie, on l'affiche	
 		if (empty($_PAGES_CATS[$id]['auth']) || $User->check_auth($_PAGES_CATS[$id]['auth'], READ_PAGE))
-			$Bread_crumb->add($_PAGES_CATS[$id]['name'], url('pages.php?title=' . Url::encode_rewrite($_PAGES_CATS[$id]['name']), Url::encode_rewrite($_PAGES_CATS[$id]['name'])));
+			$Bread_crumb->add($_PAGES_CATS[$id]['name'],
+				PagesUrlBuilder::get_link_item(Url::encode_rewrite($_PAGES_CATS[$id]['name'])));
 		$id = (int)$_PAGES_CATS[$id]['id_parent'];
 	}	
 	if ($User->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE))
@@ -69,7 +74,8 @@ if (!empty($encoded_title)) //Si on connait son titre
 }
 elseif ($id_com > 0)
 {
-	$result = $Sql->query_while("SELECT id, title, encoded_title, auth, is_cat, id_cat, hits, count_hits, activ_com, nbr_com, contents
+	$result = $Sql->query_while("SELECT id, title, encoded_title, auth, is_cat, id_cat, hits,
+		count_hits, activ_com, nbr_com, contents
 		FROM " . PREFIX . "pages
 		WHERE id = '" . $id_com . "'"
 	, __LINE__, __FILE__);
@@ -77,12 +83,13 @@ elseif ($id_com > 0)
 	$page_infos = $Sql->fetch_assoc($result);
 	$Sql->query_close($result);
 	define('TITLE', sprintf($LANG['pages_page_com'], $page_infos['title']));
-	$Bread_crumb->add($LANG['pages_com'], url('pages.php?id=' . $id_com . '&amp;com=0'));
-	$Bread_crumb->add($page_infos['title'], url('pages.php?title=' . $page_infos['encoded_title'], $page_infos['encoded_title']));
+	$Bread_crumb->add($LANG['pages_com'], PagesUrlBuilder::get_link_item_com($id_com));
+	$Bread_crumb->add($page_infos['title'], PagesUrlBuilder::get_link_item($page_infos['encoded_title']));
 	$id = $page_infos['id_cat'];
 	while ($id > 0)
 	{
-		$Bread_crumb->add($_PAGES_CATS[$id]['name'], url('pages.php?title=' . Url::encode_rewrite($_PAGES_CATS[$id]['name']), Url::encode_rewrite($_PAGES_CATS[$id]['name'])));
+		$Bread_crumb->add($_PAGES_CATS[$id]['name'],
+			PagesUrlBuilder::get_link_item(Url::encode_rewrite($_PAGES_CATS[$id]['name'])));
 		$id = (int)$_PAGES_CATS[$id]['id_parent'];
 	}
 	if ($User->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE))
@@ -96,7 +103,7 @@ else
 	if ($auth_index)
 		$Bread_crumb->add($LANG['pages'], url('pages.php'));
 	elseif (!$auth_index && empty($error))
-		AppContext::get_response()->redirect(HOST . DIR . url('/pages/pages.php?error=e_auth'));
+		AppContext::get_response()->redirect(PagesUrlBuilder::get_link_error('e_auth'));
 }
 require_once('../kernel/header.php');
 
@@ -111,7 +118,7 @@ if (!empty($encoded_title) && $num_rows == 1)
 
 	//Vérification de l'autorisation de voir la page
 	if (($special_auth && !$User->check_auth($array_auth, READ_PAGE)) || (!$special_auth && !$User->check_auth($_PAGES_CONFIG['auth'], READ_PAGE)))
-		AppContext::get_response()->redirect(HOST . DIR . url('/pages/pages.php?error=e_auth'));
+		AppContext::get_response()->redirect(PagesUrlBuilder::get_link_error('e_auth'));
 	
 	//Génération des liens de la page
 	$links = array();
@@ -157,7 +164,8 @@ if (!empty($encoded_title) && $num_rows == 1)
 	{
 		$Template->assign_block_vars('redirect', array(
 			'REDIRECTED_FROM' => sprintf($LANG['pages_redirected_from'], $redirect_title),
-			'DELETE_REDIRECTION' => (($special_auth && $User->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && $User->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE))) ? '<a href="action.php?del=' . $redirect_id . '&amp;token=' . $Session->get_token() . '" onclick="return confirm(\'' . $LANG['pages_confirm_delete_redirection'] . '\');" title="' . $LANG['pages_delete_redirection'] . '"><img src="' . $Template->get_pictures_data_path() . '/images/delete.png" alt="' . $LANG['pages_delete_redirection'] . '" /></a>' : ''
+			'DELETE_REDIRECTION' => (($special_auth && $User->check_auth($array_auth, EDIT_PAGE)) ||
+				(!$special_auth && $User->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE))) ? '<a href="action.php?del=' . $redirect_id . '&amp;token=' . $Session->get_token() . '" onclick="return confirm(\'' . $LANG['pages_confirm_delete_redirection'] . '\');" title="' . $LANG['pages_delete_redirection'] . '"><img src="' . $Template->get_pictures_data_path() . '/images/delete.png" alt="' . $LANG['pages_delete_redirection'] . '" /></a>' : ''
 		));
 	}
 	
@@ -166,7 +174,7 @@ if (!empty($encoded_title) && $num_rows == 1)
 	{	
 		$Template->put_all(array(
 			'C_ACTIV_COM' => true,
-			'U_COM' => url('pages.php?id=' . $page_infos['id'] . '&amp;com=0'),
+			'U_COM' => PagesUrlBuilder::get_link_item_com($page_infos['id']),
 			'L_COM' => $page_infos['nbr_com'] > 0 ? sprintf($LANG['pages_display_coms'], $page_infos['nbr_com']) : $LANG['pages_post_com']
 		));
 	}
@@ -186,25 +194,25 @@ if (!empty($encoded_title) && $num_rows == 1)
 }
 //Page non trouvée
 elseif ((!empty($encoded_title) || $id_com > 0) && $num_rows == 0)
-	AppContext::get_response()->redirect(HOST . DIR . url('/pages/pages.php?error=e_page_not_found'));
+	AppContext::get_response()->redirect(PagesUrlBuilder::get_link_error('e_page_not_found'));
 //Commentaires
 elseif ($id_com > 0)
 {
 	//Commentaires activés pour cette page ?
 	if ($page_infos['activ_com'] == 0)
-		AppContext::get_response()->redirect('/pages/pages.php?error=e_unactiv_com');
+		AppContext::get_response()->redirect(PagesUrlBuilder::get_link_error('e_unactiv_com'));
 		
 	//Autorisation particulière ?
 	$special_auth = !empty($page_infos['auth']);
 	$array_auth = unserialize($page_infos['auth']);
 	//Vérification de l'autorisation de voir la page
 	if (($special_auth && !$User->check_auth($array_auth, READ_PAGE)) || (!$special_auth && !$User->check_auth($_PAGES_CONFIG['auth'], READ_PAGE)) && ($special_auth && !$User->check_auth($array_auth, READ_COM)) || (!$special_auth && !$User->check_auth($_PAGES_CONFIG['auth'], READ_COM)))
-		AppContext::get_response()->redirect('/pages/pages.php?error=e_auth_com');
+		AppContext::get_response()->redirect(PagesUrlBuilder::get_link_error('e_auth_com'));
 	
 	$Template = new FileTemplate('pages/com.tpl');
 		
 	$Template->put_all(array(
-		'COMMENTS' => display_comments('pages', $id_com, url('pages.php?id=' . $id_com . '&amp;com=%s'))
+		'COMMENTS' => display_comments('pages', $id_com, PagesUrlBuilder::get_link_item_com($id_com,'%s'))
 	));
 	
 	$Template->display();
@@ -247,7 +255,7 @@ elseif (!empty($error))
 			break;
 			
 		default :
-			AppContext::get_response()->redirect(HOST . DIR . url('/pages/pages.php'));
+			AppContext::get_response()->redirect(PagesUrlBuilder::get_link_error());
 	}
 }
 else
@@ -307,7 +315,7 @@ else
 		//Vérification de l'autorisation d'éditer la page
 		if (($special_auth && $User->check_auth($array_auth, READ_PAGE)) || (!$special_auth && $User->check_auth($_PAGES_CONFIG['auth'], READ_PAGE)))
 		{
-			$root .= '<tr><td class="row2"><img src="' . $Template->get_pictures_data_path() . '/images/page.png" alt=""  style="vertical-align:middle" />&nbsp;<a href="' . url('pages.php?title=' . $row['encoded_title'], $row['encoded_title']) . '">' . $row['title'] . '</a></td></tr>';
+			$root .= '<tr><td class="row2"><img src="' . $Template->get_pictures_data_path() . '/images/page.png" alt=""  style="vertical-align:middle" />&nbsp;<a href="' . PagesUrlBuilder::get_link_item($row['encoded_title']) . '">' . $row['title'] . '</a></td></tr>';
 		}
 	}
 	$Sql->query_close($result);
