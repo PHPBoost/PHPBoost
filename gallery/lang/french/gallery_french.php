@@ -189,4 +189,5 @@ $LANG['alert_weight_gallery'] = 'Trop gros fichier';
 $LANG['alert_type_gallery'] = 'Le fichier n\'est pas valide jpg, png, et gif seulement!';
 $LANG['alert_upload_gallery'] = 'Vous avez dépassé le nombre de fichiers que vous pouvez uploader sur le serveur';
 
+$LANG['xml_gallery_desc'] = 'Gallery actualités';
 ?>

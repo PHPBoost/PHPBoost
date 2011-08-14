@@ -72,7 +72,7 @@ class PagesFeedProvider implements FeedProvider
 		{
 			$item = new FeedItem();
 
-			$link = PagesUrlBuilder::get_link_item($row['encoded_title']);
+			$link = new Url(PagesUrlBuilder::get_link_item($row['encoded_title']));
 
 			$item->set_title($row['title']);
 			$item->set_link($link);
