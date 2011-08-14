@@ -134,4 +134,6 @@ $LANG['pages_notice_previewing'] = 'Vous êtes en train de prévisualiser ce que v
 $LANG['pages_config'] = 'Configuration des pages';
 $LANG['pages_management'] = 'Gestion des pages';
 
+$LANG['pages_rss_desc'] = 'Pages actualités';
+
 ?>
