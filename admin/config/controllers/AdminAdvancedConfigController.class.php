@@ -100,11 +100,18 @@ class AdminAdvancedConfigController extends AdminController
 		$url_rewriting_fieldset->set_description($this->lang['url-rewriting.explain']);
 		
 		$server_configuration = new ServerConfiguration();
-		if ($server_configuration->has_url_rewriting())
+		try 
 		{
-			$url_rewriting_fieldset->add_field(new FormFieldCheckbox('url_rewriting', $this->lang['url-rewriting'], $this->server_environment_config->is_url_rewriting_enabled(), array('description' => $this->lang['config.available'])));
-		}
-		else
+			if ($server_configuration->has_url_rewriting())
+			{
+				$url_rewriting_fieldset->add_field(new FormFieldCheckbox('url_rewriting', $this->lang['url-rewriting'], $this->server_environment_config->is_url_rewriting_enabled(), array('description' => $this->lang['config.available'])));
+			}
+			else
+			{
+				$url_rewriting_fieldset->add_field(new FormFieldCheckbox('url_rewriting', $this->lang['url-rewriting'], FormFieldCheckbox::UNCHECKED, array('disabled' => true, 'description' => $this->lang['config.not-available'])));
+			}
+		} 
+		catch (UnsupportedOperationException $ex) 
 		{
 			$url_rewriting_fieldset->add_field(new FormFieldCheckbox('url_rewriting', $this->lang['url-rewriting'], FormFieldCheckbox::UNCHECKED, array('disabled' => true, 'description' => $this->lang['config.not-available'])));
 		}
