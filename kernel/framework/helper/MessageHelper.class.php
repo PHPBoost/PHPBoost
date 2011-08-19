@@ -39,7 +39,7 @@ class MessageHelper
 	
 	public static function display($content, $type, $timeout = 0)
 	{
-		$tpl = new FileTemplate('framework/message.tpl');
+		$tpl = new FileTemplate('framework/helper/message.tpl');
 		
 		switch ($type)
 		{
