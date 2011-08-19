@@ -37,7 +37,7 @@ require_once(PATH_TO_ROOT . '/kernel/begin.php');
 define('TITLE', $LANG['all_smiley']);
 require_once(PATH_TO_ROOT . '/kernel/header_no_display.php');
 
-$tpl_smileys = new template('framework/content/smileys.tpl');
+$tpl_smileys = new template('framework/content/formatting/smileys.tpl');
 
 //Chargement de la configuration.
 $smileys_cache = SmileysCache::load();
