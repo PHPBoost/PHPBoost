@@ -98,7 +98,6 @@ class AjaxRequest implements View
 		$tpl = $this->get_template();
 		$this->assign($tpl);
 		return $tpl->render();
-
 	}
 
 	private function get_template()
