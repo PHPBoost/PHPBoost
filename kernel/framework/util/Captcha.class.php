@@ -129,7 +129,7 @@ class Captcha
 
 		if (!is_object($Template) || !($Template instanceof Template))
 		{
-			$Template = new FileTemplate('framework/captcha.tpl');
+			$Template = new FileTemplate('framework/util/captcha.tpl');
 		}
 
 		if ($this->is_available())
