@@ -107,7 +107,7 @@ class NotationService
 		}
 		else
 		{
-			$template = new FileTemplate('framework/notation/notation.tpl');
+			$template = new FileTemplate('framework/content/notation/notation.tpl');
 			
 			$average_notes = self::get_average_notes($notation);
 
