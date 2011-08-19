@@ -2,7 +2,6 @@
 	<div class="msg_top_l"></div>			
 	<div class="msg_top_r"></div>
 	<div class="msg_top">
-		<div style="float:left;">{PAGINATION}&nbsp;</div>
 		<div style="float:right;text-align: center;">
 			# IF COM_LOCK #
 			<a href="{U_LOCK}">{L_LOCK}</a> <a href="{U_LOCK}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/{IMG}.png" alt="" class="valign_middle" /></a>
@@ -39,5 +38,5 @@
 <div class="msg_position">		
 	<div class="msg_bottom_l"></div>		
 	<div class="msg_bottom_r"></div>
-	<div class="msg_bottom" style="text-align:center;">{PAGINATION}&nbsp;</div>
+	<div class="msg_bottom"></div>
 </div>

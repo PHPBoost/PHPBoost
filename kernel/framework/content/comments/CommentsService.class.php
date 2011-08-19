@@ -272,19 +272,7 @@ class CommentsService
 	public static function display_comments_list(Comments $comments)
 	{
 		$template = new FileTemplate('framework/content/comments/comments_list.tpl');
-		
-		$page = AppContext::get_request()->get_int('page', 1);
-		$nbr_comments = PersistenceContext::get_querier()->get_column_value(DB_TABLE_COMMENTS_TOPIC, 'number_comments', "WHERE module_name = :module_name AND id_in_module = :id_in_module", 
-		array('module_name' =>  $comments->get_module_name(), 'id_in_module' => $comments->get_id_in_module()));
-		$nbr_pages =  ceil($nbr_comments /  $comments->get_number_comments_pagination());
-		$limite_page = $page > 0 ? $page : 1;
-		$limite_page = (($limite_page - 1) *  $comments->get_number_comments_pagination());
 
-		$pagination = new Pagination($nbr_pages, $page);
-		
-		// TODO
-		$pagination->set_url_sprintf_pattern(DispatchManager::get_url('', '/%d')->absolute());
-		
 		$result = PersistenceContext::get_querier()->select("
 			SELECT comments.*, topic.*
 			FROM " . DB_TABLE_COMMENTS . " comments
@@ -293,7 +281,7 @@ class CommentsService
 			LIMIT ".  $comments->get_number_comments_pagination() ." OFFSET :start_limit
 			",
 				array(
-					'start_limit' => $limite_page,
+					'start_limit' => 0,
 					'module_name' =>  $comments->get_module_name(),
 					'id_in_module' =>  $comments->get_id_in_module()
 				), SelectQueryResult::FETCH_ASSOC
@@ -307,7 +295,6 @@ class CommentsService
 		}
 		
 		$template->put_all(array(
-			'PAGINATION' => '&nbsp;<strong>' . self::$lang['page'] . ' :</strong> ' . $pagination->export()->render(),
 			'C_IS_MODERATOR' => $comments->get_authorizations()->is_authorized_moderation()
 		));
 
