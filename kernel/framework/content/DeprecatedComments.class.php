@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                             comments.class.php
+ *                             DeprecatedComments.class.php
  *                            -------------------
  *   begin                : March 08, 2008
  *   copyright            : (C) 2008 Viarre Régis, Sautel Benoit
@@ -37,7 +37,7 @@ define('KERNEL_SCRIPT', true);
  * //news is the name of the modue, $idnews is the id in database for this item.
  * display_comments('news', $idnews, url('news.php?id=' . $idnews . '&amp;com=%s', 'news-0-' . $idnews . '.php?com=%s'))
  */
-class Comments
+class DeprecatedComments
 {
 	const POST_COMMENT_AUTH = 1;
 
