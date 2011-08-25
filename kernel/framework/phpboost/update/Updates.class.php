@@ -65,7 +65,7 @@ class Updates
         {
             if ($checks & CHECK_KERNEL)
             {   // Add the kernel to the check list
-                $this->apps[] = new Application('kernel', get_ulang(), APPLICATION_TYPE__KERNEL, Environment::get_phpboost_version(), Updates::PHPBOOST_OFFICIAL_REPOSITORY);
+                $this->apps[] = new Application('kernel', get_ulang(), Application::MODULE_TYPE, Environment::get_phpboost_version(), Updates::PHPBOOST_OFFICIAL_REPOSITORY);
             }
 
             if ($checks & CHECK_MODULES)
@@ -73,7 +73,7 @@ class Updates
                 foreach (ModulesManager::get_activated_modules_map_sorted_by_localized_name() as $module)
                 {
                     $this->apps[] = new Application($module->get_id(),
-                    get_ulang(), APPLICATION_TYPE__MODULE,
+                    get_ulang(), Application::MODULE_TYPE,
                     $module->get_configuration()->get_version(), $module->get_configuration()->get_repository());
                 }
             }
@@ -86,7 +86,7 @@ class Updates
 					$repository = $value->get_configuration()->get_repository();
 					if (!empty($repository))
 					{
-						$this->apps[] = new Application($id, get_ulang(), APPLICATION_TYPE__TEMPLATE, $value->get_configuration()->get_version(), $repository);
+						$this->apps[] = new Application($id, get_ulang(), Application::TEMPLATE_TYPE, $value->get_configuration()->get_version(), $repository);
 					}
                 }
             }
@@ -140,7 +140,7 @@ class Updates
             $alert = new AdministratorAlert();
             global $LANG;
             require_once(PATH_TO_ROOT . '/lang/' . get_ulang() . '/admin.php');
-            if ($app->get_type() == APPLICATION_TYPE__KERNEL)
+            if ($app->get_type() == Application::MODULE_TYPE)
                 $alert->set_entitled(sprintf($LANG['kernel_update_available'], $app->get_version()));
             else
                 $alert->set_entitled(sprintf($LANG['update_available'], $app->get_type(), $app->get_name(), $app->get_version()));

@@ -25,11 +25,6 @@
  *
  ###################################################*/
 
-define('APPLICATION_TYPE__KERNEL', 'kernel');
-define('APPLICATION_TYPE__MODULE', 'module');
-define('APPLICATION_TYPE__TEMPLATE', 'template');
-
-
 /**
  * @author Loic Rouchon <loic.rouchon@phpboost.com>
  * @desc
@@ -66,6 +61,10 @@ class Application
 	private $warning_level = null;
 	private $warning = null;
 	
+	const KERNEL_TYPE = 'kernel';
+	const MODULE_TYPE = 'module';
+	const TEMPLATE_TYPE = 'template';
+	
 	/**
 	 * @desc constructor of the class
 	 * @param $id
@@ -74,7 +73,7 @@ class Application
 	 * @param $version
 	 * @param $repository
 	 */
-	public function __construct($id, $language, $type = APPLICATION_TYPE__MODULE , $version = 0, $repository = '')
+	public function __construct($id, $language, $type = Application::MODULE_TYPE , $version = 0, $repository = '')
 	{
 		$this->id = $id;
 		$this->name = $id;
@@ -204,10 +203,10 @@ class Application
 		$current_version = '0';
 		switch ($this->type)
 		{
-			case APPLICATION_TYPE__KERNEL:
+			case Application::KERNEL_TYPE:
 				$current_version = Environment::get_phpboost_version();
 				break;
-			case APPLICATION_TYPE__MODULE:
+			case Application::MODULE_TYPE:
 				$kModules = array_keys($MODULES);
 				foreach ($kModules as $module)
 				{
@@ -219,7 +218,7 @@ class Application
 					}
 				}
 				break;
-			case APPLICATION_TYPE__TEMPLATE:
+			case Application::TEMPLATE_TYPE:
 				foreach (ThemeManager::get_activated_themes_map() as $id => $value)
 				{
 					if ($id == $this->name)
@@ -361,9 +360,9 @@ class Application
 	{
 		switch ($this->type)
 		{
-			case APPLICATION_TYPE__KERNEL:
+			case Application::KERNEL_TYPE:
 				return GeneralConfig::load()->get_phpboost_major_version();
-			case APPLICATION_TYPE__MODULE:
+			case Application::MODULE_TYPE:
 				$infos = get_ini_config(PATH_TO_ROOT . '/' . $this->id . '/lang/', get_ulang());
 				return !empty($infos['version']) ? $infos['version'] : '0';
 			case APPLICATION_TYPE__THEME:
