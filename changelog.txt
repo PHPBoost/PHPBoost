@@ -25,7 +25,7 @@
 [*] Refonte du système de communication entres les modules et le noyau.
 [*] Nouvelles classes de gestion des requêtes et réponses HTTP.
 [*] Gestion des cookies à travers les classes HTTP.
-- Amélioration de la génération du formulaire d'autorisation.
+? Amélioration de la génération du formulaire d'autorisation.
 [*] Amélioration de la récupération des erreurs.
 [*] Récupération du chemin complet du fichier dans les logs d'erreurs.
 [*] Ajout de la balise [feed] permettant d'inclure un flux RSS dans une mise en page
@@ -35,6 +35,8 @@
 [*] Refonte du système de notation.
 + Refonte du système de commentaire.
 [*] Refonte de la gestion des thèmes.
++ Refonte de la section membre.
+[*] Ajout de classes permettant d'avoir le suivi d'un ou de plusieurs membres (derniers commentaires, articles postés, etc).
 
 [b]Menus :[/b]
 [*] [color=red]Nouveauté :[/color] Nouveau système de gestion des menus en drag'n drop.
@@ -80,19 +82,19 @@
 [*] Refonte complète du module, collaboration des utilisateurs possible.
 
 [b]Articles :[/b]
-[*] Refonte complète du module, collaboration des utilisateurs possible.
+- Refonte complète du module, collaboration des utilisateurs possible.
 
 [b]ShoutBox :[/b]
-[*] Possibilité des gérer les autorisations d'écriture, de lecture et de modératin
+[*] Possibilité de gérer les autorisations d'écriture, de lecture et de modération
 
 [b]Livre d'or :[/b]
-[*] Possibilité des gérer les autorisations d'écriture, de lecture et de modération (édition et suppression).
+[*] Possibilité de gérer les autorisations d'écriture, de lecture et de modération (édition et suppression).
 
 [b]Pages :[/b]
 [*] Possibilité de cacher le lien d'impression pour chacune des pages.
 
 [b]Calendrier :[/b]
-[*] Possibilité des gérer les autorisations d'écriture, de lecture et de modération (édition et suppression).
+[*] Possibilité de gérer les autorisations d'écriture, de lecture et de modération (édition et suppression).
 
 [b]Forum[/b]
 [*] Suppression d'un sondage impossible
@@ -116,4 +118,3 @@
 [*] Possibilité de gérer les autorisations de lecture et de modération des inscrits, de création d'une newsletteret de modération des archives par newsletter.
 [*] Gestion des archives avec tries sur les types de newsletter.
 [*] Inscription aux newsletters dès l'enregistrement/l'édition d'un membre
-- Possibilité d'ajouter une newsletter et l'envoyer à une date donnée

@@ -278,10 +278,9 @@ class CommentsService
 			FROM " . DB_TABLE_COMMENTS . " comments
 			LEFT JOIN " . DB_TABLE_COMMENTS_TOPIC . " topic ON comments.id_topic = topic.id
 			WHERE topic.module_name = :module_name AND topic.id_in_module = :id_in_module
-			LIMIT ".  $comments->get_number_comments_pagination() ." OFFSET :start_limit
+			LIMIT ".  $comments->get_number_comments_pagination() ."
 			",
 				array(
-					'start_limit' => 0,
 					'module_name' =>  $comments->get_module_name(),
 					'id_in_module' =>  $comments->get_id_in_module()
 				), SelectQueryResult::FETCH_ASSOC

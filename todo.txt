@@ -26,14 +26,12 @@
 - Ajouter l'image align=justify dans les thèmes et corriger bbcode.css (bloc masquables + wikipédia) (publishing notamment)
 - [color=red]Nouveauté:[/color] Interface de personnalisation graphique du site, modification facile du logo du site et favicon.
 - Utilisation des futures classes de Loic pour gérer l'inscription d'un membre (seulement si on intègre le nouveaux sytème de sessions)
+- Gérer la nouvelle fonction d'ugrade d'un module.
 
 ------------------------------------ MODULES -----------------------------------
 
 [b]Tous[/b]
 - Réparer la fonctionnalité de période de validité d'une publication (news par exemple), en requêtant directement en fonction de la date courante
-
-[b]Newsletter[/b]
-- Possibilité d'ajouter une newsletter et de l'envoyer à une date donnée
 
 #################################################################################
 
