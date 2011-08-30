@@ -36,12 +36,12 @@ new UrlControllerMapper('AdminExtendedFieldMemberEditController', '`^/extended-f
 new UrlControllerMapper('AdminExtendedFieldMemberDeleteController', '`^/extended-fields/delete?/?$`'),
 new UrlControllerMapper('AdminExtendedFieldMemberRepositionController', '`^/extended-fields/position/([0-9]+)/([a-z]+)/?$`', array('id', 'type')),
 
-new UrlControllerMapper('AdminMemberRulesController', '`^/members/rules/?$`'),
-new UrlControllerMapper('AdminMemberAddController', '`^/members/add/?$`'),
-new UrlControllerMapper('AdminMemberConfigController', '`^/members/config/?$`'),
-new UrlControllerMapper('AdminMemberEditController', '`^/members/([0-9]+)/edit/?$`', array('id')),
-new UrlControllerMapper('AdminMemberDeleteController', '`^/members/([0-9]+)/delete/?$`', array('id')),
-new UrlControllerMapper('AdminMemberPunishmentController', '`^/members/punishment(?:/([a-z]+)/([0-9]+))?/?$`', array('type', 'user_id')),
+new UrlControllerMapper('AdminMemberRulesController', '`^/rules/?$`'),
+new UrlControllerMapper('AdminMemberAddController', '`^/add/?$`'),
+new UrlControllerMapper('AdminMemberConfigController', '`^/config/?$`'),
+new UrlControllerMapper('AdminMemberEditController', '`^/([0-9]+)/edit/?$`', array('id')),
+new UrlControllerMapper('AdminMemberDeleteController', '`^/([0-9]+)/delete/?$`', array('id')),
+new UrlControllerMapper('AdminMemberPunishmentController', '`^/punishment(?:/([a-z]+)/([0-9]+))?/?$`', array('type', 'user_id')),
 new UrlControllerMapper('AdminViewAllMembersController', '`^/members(?:/([a-z]+))?/?([a-z]+)?/?([0-9]+)?/?$`', array('field', 'sort', 'page')),
 
 );
