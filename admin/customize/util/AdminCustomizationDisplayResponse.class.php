@@ -31,11 +31,19 @@ class AdminCustomizationDisplayResponse extends AdminMenuDisplayResponse
 	{
         parent::__construct($view);
 
-		$lang = LangLoader::get('admin-customization-common');
+		//$lang = LangLoader::get('admin-customization-common');
+		
+		$lang = array(
+			'customization' => 'Personnalisation',
+			'customization.interface' => 'Personnalisation de l\'interface',
+			'customization.favicon' => 'Personnalisation du favicon',
+		);
+		
 		$picture = '/templates/' . get_utheme() . '/images/admin/configuration.png';
 		$this->set_title($lang['customization']);
 		$this->add_link($lang['customization.interface'], DispatchManager::get_url('/admin/customize/index.php', '/interface'), $picture);
-		
+		$this->add_link($lang['customization.favicon'], DispatchManager::get_url('/admin/customize/index.php', '/favicon'), $picture);
+
 		$env = $this->get_graphical_environment();
 		$env->set_page_title($title_page);
 	}

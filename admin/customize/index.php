@@ -30,7 +30,8 @@ defined('PATH_TO_ROOT') or define('PATH_TO_ROOT', '../..');
 require_once PATH_TO_ROOT . '/kernel/begin.php';
 
 $url_controller_mappers = array(
-	new UrlControllerMapper('AdminCustomizeInterfaceController', '`^/interface/?$`'),
+	new UrlControllerMapper('AdminCustomizeInterfaceController', '`^/interface(?:/([a-z0-9]+))?/?$`', array('theme')),
+	new UrlControllerMapper('AdminCustomizeFaviconController', '`^/favicon/?$`'),
 );
 DispatchManager::dispatch($url_controller_mappers);
 
