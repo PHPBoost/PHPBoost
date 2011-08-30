@@ -503,7 +503,7 @@ Si vous n\'avez pas demandé de changement de mot de passe, veuillez l\'ignorer. 
 
 Pour changer de mot de passe, cliquez sur le lien fourni ci-dessous et suivez les indications sur le site.
 
-%s/member/forget.php?u=%d&activ=%s
+%s/member/index.php?url=/forget/%s
 
 Si vous rencontrez des difficultés, veuillez contacter l\'administrateur du site.
 
