@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                           AdminMembersDisplayResponse.class.php
+ *                           AdminCustomizationDisplayResponse.class.php
  *                            -------------------
- *   begin                : April 18, 2011
+ *   begin                : August 29, 2011
  *   copyright            : (C) 2011 Kévin MASSY
  *   email                : soldier.weasel@gmail.com
  *
@@ -25,20 +25,24 @@
  *
  ###################################################*/
 
-class AdminMembersDisplayResponse extends AdminMenuDisplayResponse
+class AdminCustomizationDisplayResponse extends AdminMenuDisplayResponse
 {
 	public function __construct($view, $title_page)
 	{
         parent::__construct($view);
 
-		$lang = LangLoader::get('admin-members-common');
-		$picture = '/templates/' . get_utheme() . '/images/admin/members.png';
-		$this->set_title($lang['members.members-management']);
-		$this->add_link($lang['members.members-management'], PATH_TO_ROOT . '/admin/admin_members.php', $picture);
-		$this->add_link($lang['members.add-member'], DispatchManager::get_url('/admin/member/index.php', '/add'), $picture);
-		$this->add_link($lang['members.config-members'], DispatchManager::get_url('/admin/member/index.php', '/config'), $picture);
-		$this->add_link($lang['members.members-punishment'], PATH_TO_ROOT . '/admin/admin_members_punishment.php', $picture);
-		$this->add_link($lang['members.rules'], DispatchManager::get_url('/admin/member/index.php', '/rules'), '/templates/' . get_utheme() . '/images/admin/terms.png');
+		//$lang = LangLoader::get('admin-customization-common');
+		
+		$lang = array(
+			'customization' => 'Personnalisation',
+			'customization.interface' => 'Personnalisation de l\'interface',
+			'customization.favicon' => 'Personnalisation du favicon',
+		);
+		
+		$picture = '/templates/' . get_utheme() . '/images/admin/configuration.png';
+		$this->set_title($lang['customization']);
+		$this->add_link($lang['customization.interface'], DispatchManager::get_url('/admin/customize/index.php', '/interface'), $picture);
+		$this->add_link($lang['customization.favicon'], DispatchManager::get_url('/admin/customize/index.php', '/favicon'), $picture);
 
 		$env = $this->get_graphical_environment();
 		$env->set_page_title($title_page);

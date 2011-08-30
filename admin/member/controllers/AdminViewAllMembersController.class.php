@@ -87,18 +87,18 @@ class AdminViewAllMembersController extends AdminController
 		$nbr_member = PersistenceContext::get_sql()->count_table(DB_TABLE_MEMBER, __LINE__, __FILE__);
 		$nb_pages =  ceil($nbr_member / $this->nbr_members_per_page);
 		$pagination = new Pagination($nb_pages, $page);
-		$pagination->set_url_sprintf_pattern(DispatchManager::get_url('/member', '/member/'. $field .'/'. $sort .'/%d')->absolute());
+		$pagination->set_url_sprintf_pattern(DispatchManager::get_url('/admin/member', '/members/'. $field .'/'. $sort .'/%d')->absolute());
 		$this->view->put_all(array(
-			'SORT_LOGIN_TOP' => DispatchManager::get_url('/member', '/member/login/top/'. $page)->absolute(),
-			'SORT_LOGIN_BOTTOM' => DispatchManager::get_url('/admin/member', '/member/login/bottom/'. $page)->absolute(),
-			'SORT_REGISTERED_TOP' => DispatchManager::get_url('/admin/member', '/member/registered/top/'. $page)->absolute(),
-			'SORT_REGISTERED_BOTTOM' => DispatchManager::get_url('/admin/member', '/member/registered/bottom/'. $page)->absolute(),
-			'SORT_LEVEL_TOP' => DispatchManager::get_url('/admin/member', '/member/level/top/'. $page)->absolute(),
-			'SORT_LEVEL_BOTTOM' => DispatchManager::get_url('/admin/member', '/member/level/bottom/'. $page)->absolute(),
-			'SORT_APPROBATION_TOP' => DispatchManager::get_url('/admin/member', '/member/approbation/top/'. $page)->absolute(),
-			'SORT_APPROBATION_BOTTOM' => DispatchManager::get_url('/admin/member', '/member/approbation/bottom/'. $page)->absolute(),
-			'SORT_LAST_CONNECT_TOP' => DispatchManager::get_url('/admin/member', '/member/connect/top/'. $page)->absolute(),
-			'SORT_LAST_CONNECT_BOTTOM' => DispatchManager::get_url('/admin/member', '/member/connect/bottom'. $page)->absolute(),
+			'SORT_LOGIN_TOP' => DispatchManager::get_url('/admin/member', '/members/login/top/'. $page)->absolute(),
+			'SORT_LOGIN_BOTTOM' => DispatchManager::get_url('/admin/member', '/members/login/bottom/'. $page)->absolute(),
+			'SORT_REGISTERED_TOP' => DispatchManager::get_url('/admin/member', '/members/registered/top/'. $page)->absolute(),
+			'SORT_REGISTERED_BOTTOM' => DispatchManager::get_url('/admin/member', '/members/registered/bottom/'. $page)->absolute(),
+			'SORT_LEVEL_TOP' => DispatchManager::get_url('/admin/member', '/members/level/top/'. $page)->absolute(),
+			'SORT_LEVEL_BOTTOM' => DispatchManager::get_url('/admin/member', '/members/level/bottom/'. $page)->absolute(),
+			'SORT_APPROBATION_TOP' => DispatchManager::get_url('/admin/member', '/members/approbation/top/'. $page)->absolute(),
+			'SORT_APPROBATION_BOTTOM' => DispatchManager::get_url('/admin/member', '/members/approbation/bottom/'. $page)->absolute(),
+			'SORT_LAST_CONNECT_TOP' => DispatchManager::get_url('/admin/member', '/members/connect/top/'. $page)->absolute(),
+			'SORT_LAST_CONNECT_BOTTOM' => DispatchManager::get_url('/admin/member', '/members/connect/bottom'. $page)->absolute(),
 			'PAGINATION' => '&nbsp;<strong>' . $this->lang['page'] . ' :</strong> ' . $pagination->export()->render(),
 			'FORM' => $this->build_form()->display()
 		));
@@ -120,8 +120,8 @@ class AdminViewAllMembersController extends AdminController
 			$row['last_connect'] = !empty($row['last_connect']) ? $row['last_connect'] : $row['timestamp'];
 		
 			$this->view->assign_block_vars('member_list', array(
-				'DELETE_LINK' => DispatchManager::get_url('/admin/member', '/member/'. $row['user_id'] .'/delete/')->absolute(),
-				'EDIT_LINK' => DispatchManager::get_url('/admin/member', '/member/'. $row['user_id'] .'/edit/')->absolute(),
+				'DELETE_LINK' => DispatchManager::get_url('/admin/member', '/'. $row['user_id'] .'/delete/')->absolute(),
+				'EDIT_LINK' => DispatchManager::get_url('/admin/member', '/'. $row['user_id'] .'/edit/')->absolute(),
 				'PSEUDO' => $row['login'],
 				'LEVEL' => $this->get_lang_level($row['level']),
 				'APPROBATION' => $row['user_aprob'] == 0 ? $this->lang['no'] : $this->lang['yes'],
