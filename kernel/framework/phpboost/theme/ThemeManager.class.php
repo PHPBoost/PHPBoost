@@ -177,6 +177,19 @@ class ThemeManager
 		}
 	}
 	
+	public static function change_customize_interface($theme_id, CustomizeInterface $customize_interface)
+	{
+		if (!empty($theme_id) && self::get_theme_existed($theme_id))
+		{
+			$theme = ThemesConfig::load()->get_theme($theme_id);
+			$theme->set_customize_interface($customize_interface);
+			ThemesConfig::load()->update($theme);
+			ThemesConfig::save();
+			
+			self::regenerate_cache();
+		}
+	}
+	
 	public static function get_error()
 	{
 		return self::$error;

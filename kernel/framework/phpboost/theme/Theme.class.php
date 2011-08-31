@@ -35,6 +35,7 @@ class Theme
     private $theme_id;
     private $activated;
 	private $columns_disabled;
+	private $customize_interface;
     private $authorizations;
 	const ACCES_THEME = 1;
 	
@@ -43,6 +44,7 @@ class Theme
         $this->theme_id = $theme_id;
         $this->activated = $activated;
         $this->authorizations = $authorizations;
+        $this->customize_interface = new CustomizeInterface();
 	}
 
     public function get_id()
@@ -73,6 +75,16 @@ class Theme
 	public function get_columns_disabled()
 	{
 		return $this->columns_disabled;
+	}
+	
+	public function set_customize_interface(CustomizeInterface $customize_interface)
+	{
+		$this->customize_interface = $customize_interface;
+	}
+	
+	public function get_customize_interface()
+	{
+		return $this->customize_interface;
 	}
 
     public function set_authorizations($authorizations)
