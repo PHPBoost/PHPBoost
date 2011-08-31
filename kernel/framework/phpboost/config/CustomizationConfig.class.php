@@ -31,6 +31,7 @@
 class CustomizationConfig extends AbstractConfigData
 {
 	const FAVICON_PATH = 'favicon_path';
+	const HEADER_LOGO_PATH_ALL_THEMES = 'header_logo_path_all_themes';
 	
 	public function get_favicon_path()
 	{
@@ -42,10 +43,21 @@ class CustomizationConfig extends AbstractConfigData
 		$this->set_property(self::FAVICON_PATH, $path);
 	}
 	
+	public function set_header_logo_path_all_themes($path)
+	{
+		$this->set_property(self::HEADER_LOGO_PATH_ALL_THEMES, $path);
+	}
+	
+	public function get_header_logo_path_all_themes()
+	{
+		return $this->get_property(self::HEADER_LOGO_PATH_ALL_THEMES);
+	}
+	
 	public function get_default_values()
 	{
 		return array(
-			self::FAVICON_PATH => null
+			self::FAVICON_PATH => null,
+			self::HEADER_LOGO_PATH_ALL_THEMES => null
 		);
 	}
 
