@@ -1,14 +1,3 @@
-<div class="msg_position">
-	<div class="msg_top_l"></div>			
-	<div class="msg_top_r"></div>
-	<div class="msg_top">
-		<div style="float:right;text-align: center;">
-			# IF COM_LOCK #
-			<a href="{U_LOCK}">{L_LOCK}</a> <a href="{U_LOCK}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/{IMG}.png" alt="" class="valign_middle" /></a>
-			# ENDIF #
-		</div>
-	</div>	
-</div>
 # START comments_list #
 <div class="msg_position">
 	<div class="msg_container">
@@ -35,8 +24,3 @@
 	</div>	
 </div>
 # END comments_list #
-<div class="msg_position">		
-	<div class="msg_bottom_l"></div>		
-	<div class="msg_bottom_r"></div>
-	<div class="msg_bottom"></div>
-</div>

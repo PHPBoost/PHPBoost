@@ -57,7 +57,10 @@ class AdminCustomizeFaviconController extends AdminController
 				$this->save($favicon);
 				$tpl->put('MSG', MessageHelper::display($this->lang['customization.favicon.success'], E_USER_SUCCESS, 4));
 			}
-			$tpl->put('MSG', MessageHelper::display($this->lang['customization.favicon.error'], E_USER_ERROR, 4));
+			else
+			{
+				$tpl->put('MSG', MessageHelper::display($this->lang['customization.favicon.error'], E_USER_ERROR, 4));
+			}
 		}
 
 		$tpl->put('FORM', $this->form->display());
@@ -75,7 +78,7 @@ class AdminCustomizeFaviconController extends AdminController
 			'customization.favicon.current' => 'Favicon actuel',
 			'customization.favicon.current.null' => 'Vous n\'avez pas de favicon actuellement',
 			'customization.favicon.current.change' => 'Changer votre favicon',
-			'customization.favicon.current.erased' => '<span style="color:#B22222;font-weight:bold;">Le favicon que vous avez enregistré est visiblement supprimé de votre serveur, veuillez le remplacer par un autret</span>',
+			'customization.favicon.current.erased' => '<span style="color:#B22222;font-weight:bold;">Le favicon que vous avez enregistré est visiblement supprimé du serveur, veuillez le remplacer par un autre</span>',
 			'customization.favicon.error' => 'Le favicon n\'a pas pû être changé'
 		);
 	}
