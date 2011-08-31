@@ -31,6 +31,7 @@ class MemberLostPasswordController extends AbstractController
 	private $lang;
 	private $error_lang;
 	private $activation_key;
+	private $member;
 	/**
 	 * @var HTMLForm
 	 */
@@ -58,23 +59,20 @@ class MemberLostPasswordController extends AbstractController
 			$this->change_password_build_form();
 			
 			if($this->change_password_submit_button->has_been_submited() && $this->change_password_form->validate())
-			{
-        		//Vérification de l'existence de la clé d'activation
-				$member = PersistenceContext::get_querier()->select_single_row(DB_TABLE_MEMBER, array('user_id'), 
-        			"WHERE activ_pass = :activ_pass", array('activ_pass' => $this->activation_key));
+			{		
+				$this->check_activ_pass_exist();
 				
-				if(!empty($member['user_id']))
+				if(!empty($this->member['user_id']))
         		{
-					//La clé existe ainsi que le membre, on met à jour le mot de passe
-        			$password_changed = $this->change_password($member['user_id']);
+        			$password_changed = $this->change_password();
         			
-        			//Affiche la confirmation
+        			//TODO, connecter l'utilisateur et le redirigé vers la page d'accueil
+        			
 					$this->tpl->put('MSG', MessageHelper::display($this->error_lang['e_forget_confirm_change'], E_USER_SUCCESS));
 					
 					if ($password_changed == true)
 					{
-						//Efface la clé d'activation de la bdd
-						$this->clear_activation_key($member['user_id']);
+						$this->clear_activation_key();
 					}
 					
         		}
@@ -92,24 +90,18 @@ class MemberLostPasswordController extends AbstractController
 			
 			if($this->send_activation_key_submit_button->has_been_submited() && $this->send_activation_key_form->validate())
 			{
-				//Vérification de l'existence du membre
-				$member_exist = (bool)PersistenceContext::get_querier()->count(DB_TABLE_MEMBER, "WHERE user_mail = :mail AND login = :login", 
-					array('mail' => $this->send_activation_key_form->get_value('mail'), 
-        			'login' => $this->send_activation_key_form->get_value('login')));
+				$member_exist = $this->check_member_exist();
         		
         		if($member_exist == true)
         		{
         			//Génération de la clé d'activation
         			$activ_pass = KeyGenerator::generate_key(15); 
 					
-					//Insertion de la clée d'activation dans la bdd
-					PersistenceContext::get_querier()->update(DB_TABLE_MEMBER, array('activ_pass' => $activ_pass), 
-						"WHERE login = :login", array('login' => $this->send_activation_key_form->get_value('login')));
+					$this->save_activ_pass($activ_pass);
         			
         			//Envoi de la clé d'activation par mail
         			$this->send_activation_key_mail($activ_pass);
         			
-        			//Affichage de la confirmation.
 					$this->tpl->put('MSG', MessageHelper::display($this->error_lang['e_forget_mail_send'], E_USER_SUCCESS));
         		}
         		else 
@@ -181,6 +173,32 @@ class MemberLostPasswordController extends AbstractController
 		$this->change_password_form = $form;
 	}
 	
+	private function check_activ_pass_exist()
+	{
+		$activ_pass_exist = (bool)PersistenceContext::get_querier()->count(DB_TABLE_MEMBER, "WHERE activ_pass = :activ_pass", 
+			array('activ_pass' => $this->activation_key));
+		
+		if ($activ_pass_exist == true)
+		{
+			$this->member = PersistenceContext::get_querier()->select_single_row(DB_TABLE_MEMBER, array('user_id'), 
+        		"WHERE activ_pass = :activ_pass", array('activ_pass' => $this->activation_key));
+		}
+	}
+	
+	private function check_member_exist()
+	{
+		return (bool)PersistenceContext::get_querier()->count(DB_TABLE_MEMBER, "WHERE user_mail = :mail AND login = :login", 
+			array('mail' => $this->send_activation_key_form->get_value('mail'), 
+        	'login' => $this->send_activation_key_form->get_value('login')));
+	}
+	
+	private function save_activ_pass($activ_pass)
+	{
+		//Insertion de la clée d'activation dans la bdd
+		PersistenceContext::get_querier()->update(DB_TABLE_MEMBER, array('activ_pass' => $activ_pass), 
+			"WHERE login = :login", array('login' => $this->send_activation_key_form->get_value('login')));
+	}
+	
 	private function send_activation_key_mail($activ_pass)
 	{
 		//Envoi de la clé d'activation par mail
@@ -196,23 +214,23 @@ class MemberLostPasswordController extends AbstractController
         AppContext::get_mail_service()->try_to_send($mail);
 	}
 	
-	private function change_password($user_id) 
+	private function change_password() 
 	{
 		$new_password = $this->change_password_form->get_value('new_password');
 		
 		if (!empty($new_password))
-        {
-        	MemberUpdateProfileHelper::change_password(KeyGenerator::string_hash($new_password), $user_id);
+		{
+        	MemberUpdateProfileHelper::change_password(KeyGenerator::string_hash($new_password), $this->member['user_id']);
         	return $success = true;
-        }
+		}
 	}
 	
-	private function clear_activation_key($user_id)
+	private function clear_activation_key()
 	{
 		PersistenceContext::get_querier()->inject("UPDATE " . DB_TABLE_MEMBER . " SET activ_pass = :activ_pass  WHERE user_id = :user_id",
-			array('activ_pass' => 0, 'user_id' => $user_id 
-		));
+			array('activ_pass' => 0, 'user_id' => $this->member['user_id']));
 	}
+	
 	private function build_response(View $view)
     {
     	$response = new SiteDisplayResponse($view);
