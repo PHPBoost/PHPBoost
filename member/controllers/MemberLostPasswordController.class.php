@@ -74,15 +74,13 @@ class MemberLostPasswordController extends AbstractController
 					{
 						$this->clear_activation_key();
 					}
-					
         		}
         		else 
         		{
         			$this->tpl->put('MSG', MessageHelper::display($this->error_lang['e_forget_echec_change'], E_USER_NOTICE));
         		}
         	}
-        	
-        	$this->tpl->put('FORM', $this->change_password_form->display());
+			$this->tpl->put('FORM', $this->change_password_form->display());
 		}
 		else 
 		{
@@ -97,12 +95,12 @@ class MemberLostPasswordController extends AbstractController
         			//Génération de la clé d'activation
         			$activ_pass = KeyGenerator::generate_key(15); 
 					
-					$this->save_activ_pass($activ_pass);
+        			$this->save_activ_pass($activ_pass);
         			
         			//Envoi de la clé d'activation par mail
         			$this->send_activation_key_mail($activ_pass);
         			
-					$this->tpl->put('MSG', MessageHelper::display($this->error_lang['e_forget_mail_send'], E_USER_SUCCESS));
+        			$this->tpl->put('MSG', MessageHelper::display($this->error_lang['e_forget_mail_send'], E_USER_SUCCESS));
         		}
         		else 
 				{
@@ -207,11 +205,11 @@ class MemberLostPasswordController extends AbstractController
 			'host_dir' => (HOST . DIR), 'key' => $activ_pass, 'signature' => MailServiceConfig::load()->get_mail_signature()));
 		
 		$mail = new Mail();
-        $mail->add_recipient($this->send_activation_key_form->get_value('mail'), $this->send_activation_key_form->get_value('login'));
-        $mail->set_sender(MailServiceConfig::load()->get_default_mail_sender(), GeneralConfig::load()->get_site_name());
-        $mail->set_subject($subject);
-        $mail->set_content($content);
-        AppContext::get_mail_service()->try_to_send($mail);
+		$mail->add_recipient($this->send_activation_key_form->get_value('mail'), $this->send_activation_key_form->get_value('login'));
+		$mail->set_sender(MailServiceConfig::load()->get_default_mail_sender(), GeneralConfig::load()->get_site_name());
+		$mail->set_subject($subject);
+		$mail->set_content($content);
+		AppContext::get_mail_service()->try_to_send($mail);
 	}
 	
 	private function change_password() 
@@ -220,8 +218,8 @@ class MemberLostPasswordController extends AbstractController
 		
 		if (!empty($new_password))
 		{
-        	MemberUpdateProfileHelper::change_password(KeyGenerator::string_hash($new_password), $this->member['user_id']);
-        	return $success = true;
+			MemberUpdateProfileHelper::change_password(KeyGenerator::string_hash($new_password), $this->member['user_id']);
+			return $success = true;
 		}
 	}
 	
@@ -232,12 +230,12 @@ class MemberLostPasswordController extends AbstractController
 	}
 	
 	private function build_response(View $view)
-    {
+	{
     	$response = new SiteDisplayResponse($view);
         $env = $response->get_graphical_environment();
         $env->set_page_title($this->lang['forget_pass']);
         return $response;
-    }
+	}
 }
 
 ?>
