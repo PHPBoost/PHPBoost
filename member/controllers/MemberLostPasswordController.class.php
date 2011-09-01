@@ -62,16 +62,14 @@ class MemberLostPasswordController extends AbstractController
 				if ($this->check_activ_pass_exist())
 				{
 					$user_id = $this->get_user_id();
-						
-					$password_changed = $this->change_password($member);
 					 
 					//TODO, connecter l'utilisateur et le redirigé vers la page d'accueil
 					 
 					$this->tpl->put('MSG', MessageHelper::display($this->error_lang['e_forget_confirm_change'], E_USER_SUCCESS));
 						
-					if ($password_changed == true)
+					if ($this->change_password($user_id))
 					{
-						$this->clear_activation_key($member);
+						$this->clear_activation_key($user_id);
 					}
 				}
 				else
@@ -217,7 +215,11 @@ class MemberLostPasswordController extends AbstractController
 		if (!empty($new_password))
 		{
 			MemberUpdateProfileHelper::change_password(KeyGenerator::string_hash($new_password), $user_id);
-			return $success = true;
+			return true;
+		}
+		else 
+		{
+			return false;
 		}
 	}
 
