@@ -45,19 +45,37 @@ class AdminCustomizeInterfaceController extends AdminController
 		$this->load_config();
 		
 		$theme = $request->get_value('theme', 'all');
+		
+		if ($theme !== 'all' && !ThemeManager::get_theme_existed($theme))
+		{
+			AppContext::get_response()->redirect(DispatchManager::get_url('/admin/customize', '/interface/')->absolute());
+		}
+		
 		$this->build_form($theme);
 
 		$tpl = new StringTemplate('# INCLUDE MSG # # INCLUDE FORM #');
 		$tpl->add_lang($this->lang);
-
+		
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$header_logo = $this->form->get_value('header_logo', null);
 			
 			if($header_logo !== null)
 			{
-				$this->save($header_logo, $theme);
-				$tpl->put('MSG', MessageHelper::display($this->lang['customization.interface.success'], E_USER_SUCCESS, 4));
+				$file_type = new FileType(new File($header_logo->get_name()));
+				if ($file_type->is_picture())
+				{
+					$this->save($header_logo, $theme);
+					$tpl->put('MSG', MessageHelper::display($this->lang['customization.interface.success'], E_USER_SUCCESS, 4));
+				}
+				else
+				{
+					$tpl->put('MSG', MessageHelper::display($this->lang['customization.interface.logo.error'], E_USER_ERROR, 4));
+				}
+			}
+			else
+			{
+				$tpl->put('MSG', MessageHelper::display($this->lang['customization.interface.logo.error'], E_USER_ERROR, 4));
 			}
 		}
 
@@ -68,17 +86,7 @@ class AdminCustomizeInterfaceController extends AdminController
 
 	private function load_lang()
 	{
-		//$this->lang = LangLoader::get('admin-customization-common');
-		$this->lang = array(
-			'customization.interface' => 'Personnalisation de l\'interface',
-			'customization.interface.success' => 'Modification éfféctués avec succès',
-			'customization.interface.all-themes' => 'Tous les thèmes',
-			'customization.interface.select-theme' => 'Séléctionner le thème auquel vous souhaitez attribuer les changements',
-			'customization.interface.theme-choise' => 'Choix du thème',
-			'customization.interface.logo.current.change' => 'Changer le logo',
-			'customization.interface.logo.current' => 'Logo actuel',
-			'customization.interface.logo.current.null' => 'Vous n\'avez aucun logo actuellement'
-		);
+		$this->lang = LangLoader::get('admin-customization-common');
 	}
 	
 	private function load_config()
@@ -95,35 +103,28 @@ class AdminCustomizeInterfaceController extends AdminController
 		
 		$theme_choise_fieldset->add_field(
 			new FormFieldSimpleSelectChoice('select_theme', $this->lang['customization.interface.select-theme'], $theme_selected,
-				$this->list_themes(),
-				array('events' => 
-					array(
-						'change' => 'document.location.href = "' . DispatchManager::get_url('/admin/customize', '/interface/')->absolute() . '" + HTMLForms.getField(\'select_theme\').getValue()'
-					)
-				)
+				$this->list_themes(), 
+				array('events' => array('change' => 'document.location.href = "' . DispatchManager::get_url('/admin/customize', '/interface/')->absolute() . '" + HTMLForms.getField(\'select_theme\').getValue()'))
 			)
 		);
 		
 		$customize_interface_fieldset = new FormFieldsetHTML('customize_interface', $this->lang['customization.interface']);
 		$form->add_fieldset($customize_interface_fieldset);
 		
-		if ($theme_selected == 'all')
+		$header_logo_path = $this->get_header_logo_path($theme_selected);
+		if (!empty($header_logo_path))
 		{
-			$logo = $this->config->get_header_logo_path_all_themes();
-		}
-		else
-		{
-			$theme = ThemeManager::get_theme($theme_selected);
-			$customize_interface = $theme->get_customize_interface();
-			$logo = $customize_interface->get_header_logo_path();
-		}
-		
-		if (!empty($logo))
-		{
-			$picture_link = PATH_TO_ROOT . $logo;
-			
-			$picture = '<img src="' . $picture_link . '">';
-			$customize_interface_fieldset->add_field(new FormFieldFree('current_logo', $this->lang['customization.interface.logo.current'], $picture));
+			$header_logo_file = new File(PATH_TO_ROOT . $header_logo_path);
+
+			if ($header_logo_file->exists())
+			{
+				$picture = '<img src="' . $header_logo_file->get_path() . '">';
+				$customize_interface_fieldset->add_field(new FormFieldFree('current_logo', $this->lang['customization.interface.logo.current'], $picture));
+			}
+			else
+			{
+				$customize_interface_fieldset->add_field(new FormFieldFree('current_logo', $this->lang['customization.interface.logo.current'], $this->lang['customization.interface.logo.current.erased']));
+			}
 		}
 		else 
 		{
@@ -141,15 +142,14 @@ class AdminCustomizeInterfaceController extends AdminController
 
 	private function save($header_logo, $theme_selected)
 	{
-		$header_logo_link = '/images/customization/' . $theme_selected . '_'. $header_logo->get_name();
-		
-		move_uploaded_file($header_logo->get_temporary_filename(), PATH_TO_ROOT . $header_logo_link);
+		$save_destination = new File(PATH_TO_ROOT . '/images/customization/' . $theme_selected . '_'. $header_logo->get_name());
+		$header_logo->save($save_destination);
 		
 		if ($theme_selected !== 'all')
 		{
 			$theme = ThemeManager::get_theme($theme_selected);
 			$customize_interface = $theme->get_customize_interface();
-			$customize_interface->set_header_logo_path($header_logo_link);
+			$customize_interface->set_header_logo_path($save_destination->get_path_from_root());
 			ThemeManager::change_customize_interface($theme_selected, $customize_interface);
 		}
 		else
@@ -157,11 +157,11 @@ class AdminCustomizeInterfaceController extends AdminController
 			foreach (ThemeManager::get_activated_themes_map() as $id => $theme) 
 			{
 				$customize_interface = $theme->get_customize_interface();
-				$customize_interface->set_header_logo_path($header_logo_link);
+				$customize_interface->set_header_logo_path($save_destination->get_path_from_root());
 				ThemeManager::change_customize_interface($theme_selected, $customize_interface);
 			}
 			
-			$this->config->set_header_logo_path_all_themes($header_logo_link);
+			$this->config->set_header_logo_path_all_themes($save_destination->get_path_from_root());
 			CustomizationConfig::save();			
 		}
 	}
@@ -175,6 +175,20 @@ class AdminCustomizeInterfaceController extends AdminController
 			$choices_list[] = new FormFieldSelectChoiceOption($value->get_configuration()->get_name(), $id);
 		}
 		return $choices_list;
+	}
+	
+	private function get_header_logo_path($theme)
+	{
+		if ($theme == 'all')
+		{
+			return $this->config->get_header_logo_path_all_themes();
+		}
+		else
+		{
+			$theme = ThemeManager::get_theme($theme);
+			$customize_interface = $theme->get_customize_interface();
+			return $customize_interface->get_header_logo_path();
+		}
 	}
 }
 ?>

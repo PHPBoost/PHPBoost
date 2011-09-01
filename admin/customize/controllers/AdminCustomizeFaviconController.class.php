@@ -54,8 +54,16 @@ class AdminCustomizeFaviconController extends AdminController
 			
 			if($favicon !== null)
 			{
-				$this->save($favicon);
-				$tpl->put('MSG', MessageHelper::display($this->lang['customization.favicon.success'], E_USER_SUCCESS, 4));
+				$file_type = new FileType(new File($favicon->get_name()));
+				if ($file_type->is_picture())
+				{
+					$this->save($favicon);
+					$tpl->put('MSG', MessageHelper::display($this->lang['customization.favicon.success'], E_USER_SUCCESS, 4));
+				}
+				else
+				{
+					$tpl->put('MSG', MessageHelper::display($this->lang['customization.favicon.error'], E_USER_ERROR, 4));
+				}
 			}
 			else
 			{
@@ -70,17 +78,7 @@ class AdminCustomizeFaviconController extends AdminController
 
 	private function load_lang()
 	{
-		//$this->lang = LangLoader::get('admin-customization-common');
-		$this->lang = array(
-			'customization.interface' => 'Personnalisation de l\'interface',
-			'customization.favicon' => 'Personnalisation du favicon',
-			'customization.favicon.success' => 'Changement du favicon réussit',
-			'customization.favicon.current' => 'Favicon actuel',
-			'customization.favicon.current.null' => 'Vous n\'avez pas de favicon actuellement',
-			'customization.favicon.current.change' => 'Changer votre favicon',
-			'customization.favicon.current.erased' => '<span style="color:#B22222;font-weight:bold;">Le favicon que vous avez enregistré est visiblement supprimé du serveur, veuillez le remplacer par un autre</span>',
-			'customization.favicon.error' => 'Le favicon n\'a pas pû être changé'
-		);
+		$this->lang = LangLoader::get('admin-customization-common');
 	}
 	
 	private function load_config()
@@ -101,10 +99,10 @@ class AdminCustomizeFaviconController extends AdminController
 		}
 		else
 		{
-			$picture_link = PATH_TO_ROOT . $this->config->get_favicon_path();
-			if (file_exists($picture_link))
+			$favicon_file = new File(PATH_TO_ROOT . $this->config->get_favicon_path());
+			if ($favicon_file->exists())
 			{
-				$picture = '<img src="' . $picture_link . '">';
+				$picture = '<img src="' . $favicon_file->get_path() . '">';
 				$fieldset->add_field(new FormFieldFree('current_favicon', $this->lang['customization.favicon.current'], $picture));
 			}
 			else
@@ -124,9 +122,10 @@ class AdminCustomizeFaviconController extends AdminController
 	
 	private function save($favicon)
 	{
-		move_uploaded_file($favicon->get_temporary_filename(), PATH_TO_ROOT . '/' . $favicon->get_name());
+		$save_destination = new File(PATH_TO_ROOT . '/' . $favicon->get_name());
+		$favicon->save($save_destination);
 
-		$this->config->set_favicon_path('/' . $favicon->get_name());
+		$this->config->set_favicon_path($save_destination->get_path_from_root());
 		CustomizationConfig::save();
 	}	
 }
