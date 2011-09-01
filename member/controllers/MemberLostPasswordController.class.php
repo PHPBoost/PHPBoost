@@ -41,90 +41,90 @@ class MemberLostPasswordController extends AbstractController
 	 */
 	private $send_activation_key_submit_button;
 	private $change_password_submit_button;
-	
+
 	public function execute(HTTPRequest $request)
-	{			
-		if (AppContext::get_user()->check_level(MEMBER_LEVEL)) 
+	{
+		if (AppContext::get_user()->check_level(MEMBER_LEVEL))
 		{
 			AppContext::get_response()->redirect(Environment::get_home_page());
 		}
-		
+
 		$this->activation_key = $request->get_getstring('key','');
-		
+
 		$this->init();
-		
+
 		if (!empty($this->activation_key))
 		{
 			$this->change_password_build_form();
-			
-			if($this->change_password_submit_button->has_been_submited() && $this->change_password_form->validate())
-			{		
-				$activ_pass_exist = $this->check_activ_pass_exist();
 				
+			if($this->change_password_submit_button->has_been_submited() && $this->change_password_form->validate())
+			{
+				$activ_pass_exist = $this->check_activ_pass_exist();
+
 				if ($activ_pass_exist == true)
 				{
 					$member = $this->get_user_id();
-					
-        			$password_changed = $this->change_password($member);
-        			
-        			//TODO, connecter l'utilisateur et le redirigé vers la page d'accueil
-        			
+						
+					$password_changed = $this->change_password($member);
+					 
+					//TODO, connecter l'utilisateur et le redirigé vers la page d'accueil
+					 
 					$this->tpl->put('MSG', MessageHelper::display($this->error_lang['e_forget_confirm_change'], E_USER_SUCCESS));
-					
+						
 					if ($password_changed == true)
 					{
 						$this->clear_activation_key($member);
 					}
-        		}
-        		else 
-        		{
-        			$this->tpl->put('MSG', MessageHelper::display($this->error_lang['e_forget_echec_change'], E_USER_NOTICE));
-        		}
-        	}
+				}
+				else
+				{
+					$this->tpl->put('MSG', MessageHelper::display($this->error_lang['e_forget_echec_change'], E_USER_NOTICE));
+				}
+			}
 			$this->tpl->put('FORM', $this->change_password_form->display());
 		}
-		else 
+		else
 		{
 			$this->send_activation_key_build_form();
-			
+				
 			if($this->send_activation_key_submit_button->has_been_submited() && $this->send_activation_key_form->validate())
 			{
 				$member_exist = $this->check_member_exist();
-        		
-        		if($member_exist == true)
-        		{
-        			//Génération de la clé d'activation
-        			$activ_pass = KeyGenerator::generate_key(15); 
-					
-        			$this->save_activ_pass($activ_pass);
-        			
-        			//Envoi de la clé d'activation par mail
-        			$this->send_activation_key_mail($activ_pass);
-        			
-        			$this->tpl->put('MSG', MessageHelper::display($this->error_lang['e_forget_mail_send'], E_USER_SUCCESS));
-        		}
-        		else 
+
+				if($member_exist == true)
+				{
+					//Génération de la clé d'activation
+					$activ_pass = KeyGenerator::generate_key(15);
+						
+					$this->save_activ_pass($activ_pass);
+					 
+					//Envoi de la clé d'activation par mail
+					$this->send_activation_key_mail($activ_pass);
+					 
+					$this->tpl->put('MSG', MessageHelper::display($this->error_lang['e_forget_mail_send'], E_USER_SUCCESS));
+				}
+				else
 				{
 					$this->tpl->put('MSG', MessageHelper::display($this->error_lang['e_mail_forget'], E_USER_NOTICE));
 				}
 			}
-			
+				
 			$this->tpl->put('FORM', $this->send_activation_key_form->display());
 		}
-		
+
 		return $this->build_response($this->tpl);
 	}
-	
+
 	private function init()
 	{
 		$this->tpl = new StringTemplate('# INCLUDE MSG # # INCLUDE FORM #');
-		
+
 		$this->lang = LangLoader::get('main');
 		$this->error_lang = LangLoader::get('errors');
-		
+
 		$this->tpl->add_lang($this->lang);
 	}
-	
+
 	private function send_activation_key_build_form()
 	{
 		//On génère le formulaire dans le cas du mot de passe oublié (donc aucune clé d'activation)
@@ -146,7 +146,7 @@ class MemberLostPasswordController extends AbstractController
 			
 		$this->send_activation_key_form = $form;
 	}
-	
+
 	private function change_password_build_form()
 	{
 		//On génère le formulaire de changement de mot de passe si la clé d'activation existe
@@ -165,47 +165,47 @@ class MemberLostPasswordController extends AbstractController
 			
 		$form->add_fieldset($fieldset);
 			
-		$this->change_password_submit_button = new FormButtonSubmit($this->lang['submit'], 'change_password');	
+		$this->change_password_submit_button = new FormButtonSubmit($this->lang['submit'], 'change_password');
 		$form->add_button($this->change_password_submit_button);
 		$form->add_constraint(new FormConstraintFieldsEquality($password, $password_bis));
 			
 		$this->change_password_form = $form;
 	}
-	
+
 	private function check_activ_pass_exist()
 	{
-		return (bool)PersistenceContext::get_querier()->count(DB_TABLE_MEMBER, "WHERE activ_pass = :activ_pass", 
-			array('activ_pass' => $this->activation_key));
+		return (bool)PersistenceContext::get_querier()->count(DB_TABLE_MEMBER, "WHERE activ_pass = :activ_pass",
+		array('activ_pass' => $this->activation_key));
 	}
-	
+
 	private function check_member_exist()
 	{
-		return (bool)PersistenceContext::get_querier()->count(DB_TABLE_MEMBER, "WHERE user_mail = :mail AND login = :login", 
-			array('mail' => $this->send_activation_key_form->get_value('mail'), 
+		return (bool)PersistenceContext::get_querier()->count(DB_TABLE_MEMBER, "WHERE user_mail = :mail AND login = :login",
+			array('mail' => $this->send_activation_key_form->get_value('mail'),
         	'login' => $this->send_activation_key_form->get_value('login')));
 	}
-	
+
 	private function get_user_id()
 	{
-		$member = PersistenceContext::get_querier()->select_single_row(DB_TABLE_MEMBER, array('user_id'), 
+		$member = PersistenceContext::get_querier()->select_single_row(DB_TABLE_MEMBER, array('user_id'),
         				"WHERE activ_pass = :activ_pass", array('activ_pass' => $this->activation_key));
 		return $member['user_id'];
 	}
-	
+
 	private function save_activ_pass($activ_pass)
 	{
 		//Insertion de la clée d'activation dans la bdd
-		PersistenceContext::get_querier()->update(DB_TABLE_MEMBER, array('activ_pass' => $activ_pass), 
+		PersistenceContext::get_querier()->update(DB_TABLE_MEMBER, array('activ_pass' => $activ_pass),
 			"WHERE login = :login", array('login' => $this->send_activation_key_form->get_value('login')));
 	}
-	
+
 	private function send_activation_key_mail($activ_pass)
 	{
 		//Envoi de la clé d'activation par mail
 		$subject = $this->lang['forget_pass'] . ' - ' . GeneralConfig::load()->get_site_name();
 		$content = StringVars::replace_vars($this->lang['forget_mail_pass'], array('login' => $this->send_activation_key_form->get_value('login'), 'host' => HOST,
 			'host_dir' => (HOST . DIR), 'key' => $activ_pass, 'signature' => MailServiceConfig::load()->get_mail_signature()));
-		
+
 		$mail = new Mail();
 		$mail->add_recipient($this->send_activation_key_form->get_value('mail'), $this->send_activation_key_form->get_value('login'));
 		$mail->set_sender(MailServiceConfig::load()->get_default_mail_sender(), GeneralConfig::load()->get_site_name());
@@ -213,30 +213,30 @@ class MemberLostPasswordController extends AbstractController
 		$mail->set_content($content);
 		AppContext::get_mail_service()->try_to_send($mail);
 	}
-	
-	private function change_password($user_id) 
+
+	private function change_password($user_id)
 	{
 		$new_password = $this->change_password_form->get_value('new_password');
-		
+
 		if (!empty($new_password))
 		{
 			MemberUpdateProfileHelper::change_password(KeyGenerator::string_hash($new_password), $user_id);
 			return $success = true;
 		}
 	}
-	
+
 	private function clear_activation_key($member)
 	{
 		PersistenceContext::get_querier()->inject("UPDATE " . DB_TABLE_MEMBER . " SET activ_pass = :activ_pass  WHERE user_id = :user_id",
-			array('activ_pass' => 0, 'user_id' => $member));
+		array('activ_pass' => 0, 'user_id' => $member));
 	}
-	
+
 	private function build_response(View $view)
 	{
-    	$response = new SiteDisplayResponse($view);
-        $env = $response->get_graphical_environment();
-        $env->set_page_title($this->lang['forget_pass']);
-        return $response;
+		$response = new SiteDisplayResponse($view);
+		$env = $response->get_graphical_environment();
+		$env->set_page_title($this->lang['forget_pass']);
+		return $response;
 	}
 }
 
