@@ -59,11 +59,9 @@ class MemberLostPasswordController extends AbstractController
 				
 			if($this->change_password_submit_button->has_been_submited() && $this->change_password_form->validate())
 			{
-				$activ_pass_exist = $this->check_activ_pass_exist();
-
-				if ($activ_pass_exist == true)
+				if ($this->check_activ_pass_exist())
 				{
-					$member = $this->get_user_id();
+					$user_id = $this->get_user_id();
 						
 					$password_changed = $this->change_password($member);
 					 
@@ -89,9 +87,7 @@ class MemberLostPasswordController extends AbstractController
 				
 			if($this->send_activation_key_submit_button->has_been_submited() && $this->send_activation_key_form->validate())
 			{
-				$member_exist = $this->check_member_exist();
-
-				if($member_exist == true)
+				if($this->check_member_exist())
 				{
 					//Génération de la clé d'activation
 					$activ_pass = KeyGenerator::generate_key(15);
@@ -225,10 +221,10 @@ class MemberLostPasswordController extends AbstractController
 		}
 	}
 
-	private function clear_activation_key($member)
+	private function clear_activation_key($user_id)
 	{
 		PersistenceContext::get_querier()->inject("UPDATE " . DB_TABLE_MEMBER . " SET activ_pass = :activ_pass  WHERE user_id = :user_id",
-		array('activ_pass' => 0, 'user_id' => $member));
+		array('activ_pass' => 0, 'user_id' => $user_id));
 	}
 
 	private function build_response(View $view)
