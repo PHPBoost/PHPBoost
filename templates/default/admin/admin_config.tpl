@@ -2,9 +2,9 @@
 			<ul>
 				<li class="title_menu">{L_CONFIG}</li>
 				<li>
-					<a href="admin_config.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/configuration.png" alt="" /></a>
+					<a href="index.php?url=/general"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/configuration.png" alt="" /></a>
 					<br />
-					<a href="admin_config.php" class="quick_link">{L_CONFIG_MAIN}</a>
+					<a href="index.php?url=/general" class="quick_link">{L_CONFIG_MAIN}</a>
 				</li>
 				<li>
 					<a href="admin_config.php?adv=1"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/configuration.png" alt="" /></a>
