@@ -33,21 +33,30 @@
 class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironment
 {
 	private $theme_properties;
+	private static $lang;
+	private static $lang_admin;
 
 	public function __construct()
 	{
 		parent::__construct();
 
-		global $LANG;
+		//global $LANG;
 
-		require_once PATH_TO_ROOT . '/lang/' . get_ulang() . '/admin.php';
+		//require_once PATH_TO_ROOT . '/lang/' . get_ulang() . '/admin.php';
+		$this->load_lang();
 
 		$this->check_admin_auth();
+	}
+	
+	private function load_lang()
+	{
+		self::$lang = LangLoader::get('main');
+		self::$lang_admin = LangLoader::get('admin');
 	}
 
 	private function check_admin_auth()
 	{
-		global $LANG;
+		//global $LANG;
 
 		//Module de connexion
 		$login = retrieve(POST, 'login', '');
@@ -140,26 +149,27 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 		if (!$is_admin || $flood)
 		{
 			$template = new FileTemplate('admin/AdminLoginController.tpl');
+			$template->add_lang(self::$lang);
 
 			$template->put_all(array(
-				'L_XML_LANGUAGE' => $LANG['xml_lang'],
+				'L_XML_LANGUAGE' => self::$lang['xml_lang'],
 				'SITE_NAME' => GeneralConfig::load()->get_site_name(),
 				'TITLE' => TITLE,
-				'L_REQUIRE_PSEUDO' => $LANG['require_pseudo'],
-				'L_REQUIRE_PASSWORD' => $LANG['require_password'],
-				'L_CONNECT' => $LANG['connect'],
-				'L_ADMIN' => $LANG['admin'],
-				'L_PSEUDO' => $LANG['pseudo'],
-				'L_PASSWORD' => $LANG['password'],
-				'L_AUTOCONNECT'	=> $LANG['autoconnect']
+				'L_REQUIRE_PSEUDO' => self::$lang['require_pseudo'],
+				'L_REQUIRE_PASSWORD' => self::$lang['require_password'],
+				'L_CONNECT' => self::$lang['connect'],
+				'L_ADMIN' => self::$lang['admin'],
+				'L_PSEUDO' => self::$lang['pseudo'],
+				'L_PASSWORD' => self::$lang['password'],
+				'L_AUTOCONNECT'	=> self::$lang['autoconnect']
 			));
 
 			if ($flood)
 			{
 				$template->put_all(array(
 					'TITLE' => TITLE,
-					'ERROR' => (($flood > '0') ? sprintf($LANG['flood_block'], $flood) : $LANG['flood_max']),
-					'L_UNLOCK' => $LANG['unlock_admin_panel'],
+					'ERROR' => (($flood > '0') ? sprintf(self::$lang_admin['flood_block'], $flood) : self::$lang_admin['flood_max']),
+					'L_UNLOCK' => self::$lang_admin['unlock_admin_panel'],
 					'C_UNLOCK' => true
 				));
 			}
@@ -175,23 +185,24 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 	 */
 	public function display_header()
 	{
-		global $LANG;
+		//global $LANG;
 
 		self::set_page_localization($this->get_page_title());
 
 		$header_tpl = new FileTemplate('admin/admin_header.tpl');
+		$header_tpl->add_lang(self::$lang);
 
 		$include_tinymce_js = AppContext::get_user()->get_attribute('user_editor') == 'tinymce';
 
 		$header_tpl->put_all(array(
-			'L_XML_LANGUAGE' => $LANG['xml_lang'],
+			'L_XML_LANGUAGE' => self::$lang['xml_lang'],
 			'SITE_NAME' => GeneralConfig::load()->get_site_name(),
 			'TITLE' => $this->get_page_title(),
 			'PATH_TO_ROOT' => TPL_PATH_TO_ROOT,
 			'THEME_CSS' => $this->get_theme_css_files_html_code(),
 			'MODULES_CSS' => $this->get_modules_css_files_html_code(),
 			'C_BBCODE_TINYMCE_MODE' => $include_tinymce_js,
-			'L_EXTEND_MENU' => $LANG['extend_menu'],
+			'L_EXTEND_MENU' => self::$lang_admin['extend_menu'],
 		));
 
 		$header_tpl->put('subheader_menu', self::get_subheader_tpl());
@@ -201,60 +212,61 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 
 	private static function get_subheader_tpl()
 	{
-		global $LANG;
+		//global $LANG;
 
 		$subheader_tpl = new FileTemplate('admin/subheader_menu.tpl');
+		$subheader_tpl->add_lang(self::$lang);
 
 		$subheader_tpl->put_all(array(
-			'L_ADMINISTRATION' => $LANG['administration'],
-			'L_INDEX' => $LANG['index'],
-			'L_SITE' => $LANG['site'],
-			'L_INDEX_SITE' => $LANG['site'],
-			'L_INDEX_ADMIN' => $LANG['administration'],
-			'L_DISCONNECT' => $LANG['disconnect'],
-			'L_TOOLS' => $LANG['tools'],
-			'L_CONFIGURATION' => $LANG['configuration'],
-			'L_CONFIG_ADVANCED' => $LANG['config_advanced'],
-			'L_MAIL_CONFIG' => $LANG['config_mail'],
-		    'L_ADD' => $LANG['add'],
-		    'L_ADD_CONTENT_MENU' => $LANG['menus_content_add'],
-		    'L_ADD_LINKS_MENU' => $LANG['menus_links_add'],
-		    'L_ADD_FEED_MENU' => $LANG['menus_feed_add'],
-			'L_MANAGEMENT' => $LANG['management'],
-			'L_PUNISHEMENT' => $LANG['punishement'],
-			'L_UPDATE_MODULES' => $LANG['update_module'],
-			'L_SITE_LINK' => $LANG['link_management'],
-			'L_SITE_MENU' => $LANG['menu_management'],
-			'L_MODERATION' => $LANG['moderation'],
-			'L_MAINTAIN' => $LANG['maintain'],
-			'L_USER' => $LANG['member_s'],
-			'L_EXTEND_FIELD' => $LANG['extend_field'],
-			'L_RANKS' => $LANG['ranks'],
-			'L_TERMS' => $LANG['terms'],
-			'L_GROUP' => $LANG['group'],
-			'L_CONTENTS' => $LANG['content'],
-			'L_PAGES' => $LANG['pages'],
-			'L_FILES' => $LANG['files'],
-			'L_THEME' => $LANG['themes'],
-			'L_LANG' => $LANG['languages'],
-			'L_SMILEY' => $LANG['smile'],
-			'L_ADMINISTRATOR_ALERTS' => $LANG['administrator_alerts'],
-			'L_STATS' => $LANG['stats'],
-			'L_ERRORS' => $LANG['errors'],
-			'L_SERVER' => $LANG['server'],
-			'L_PHPINFO' => $LANG['phpinfo'],
-			'L_SYSTEM_REPORT' => $LANG['system_report'],
-			'L_COMMENTS' => $LANG['comments'],
-			'L_UPDATER' => $LANG['updater'],
-			'L_KERNEL' => $LANG['kernel'],
-			'L_MODULES' => $LANG['modules'],
-			'L_THEMES' => $LANG['themes'],
-			'L_CACHE' => $LANG['cache'],
-			'L_SYNDICATION' => $LANG['syndication'],
+			'L_ADMINISTRATION' => self::$lang_admin['administration'],
+			'L_INDEX' => self::$lang_admin['index'],
+			'L_SITE' => self::$lang_admin['site'],
+			'L_INDEX_SITE' => self::$lang_admin['site'],
+			'L_INDEX_ADMIN' => self::$lang_admin['administration'],
+			'L_DISCONNECT' => self::$lang['disconnect'],
+			'L_TOOLS' => self::$lang_admin['tools'],
+			'L_CONFIGURATION' => self::$lang_admin['configuration'],
+			'L_CONFIG_ADVANCED' => self::$lang_admin['config_advanced'],
+			'L_MAIL_CONFIG' => self::$lang_admin['config_mail'],
+		    'L_ADD' => self::$lang_admin['add'],
+		    'L_ADD_CONTENT_MENU' => self::$lang_admin['menus_content_add'],
+		    'L_ADD_LINKS_MENU' => self::$lang_admin['menus_links_add'],
+		    'L_ADD_FEED_MENU' => self::$lang_admin['menus_feed_add'],
+			'L_MANAGEMENT' => self::$lang_admin['management'],
+			'L_PUNISHEMENT' => self::$lang_admin['punishement'],
+			'L_UPDATE_MODULES' => self::$lang_admin['update_module'],
+			'L_SITE_LINK' => self::$lang_admin['link_management'],
+			'L_SITE_MENU' => self::$lang_admin['menu_management'],
+			'L_MODERATION' => self::$lang_admin['moderation'],
+			'L_MAINTAIN' => self::$lang_admin['maintain'],
+			'L_USER' => self::$lang['member_s'],
+			'L_EXTEND_FIELD' => self::$lang_admin['extend_field'],
+			'L_RANKS' => self::$lang_admin['ranks'],
+			'L_TERMS' => self::$lang_admin['terms'],
+			'L_GROUP' => self::$lang_admin['group'],
+			'L_CONTENTS' => self::$lang['content'],
+			'L_PAGES' => self::$lang_admin['pages'],
+			'L_FILES' => self::$lang_admin['files'],
+			'L_THEME' => self::$lang_admin['themes'],
+			'L_LANG' => self::$lang_admin['languages'],
+			'L_SMILEY' => self::$lang_admin['smile'],
+			'L_ADMINISTRATOR_ALERTS' => self::$lang_admin['administrator_alerts'],
+			'L_STATS' => self::$lang_admin['stats'],
+			'L_ERRORS' => self::$lang_admin['errors'],
+			'L_SERVER' => self::$lang_admin['server'],
+			'L_PHPINFO' => self::$lang_admin['phpinfo'],
+			'L_SYSTEM_REPORT' => self::$lang_admin['system_report'],
+			'L_COMMENTS' => self::$lang_admin['comments'],
+			'L_UPDATER' => self::$lang_admin['updater'],
+			'L_KERNEL' => self::$lang_admin['kernel'],
+			'L_MODULES' => self::$lang_admin['modules'],
+			'L_THEMES' => self::$lang_admin['themes'],
+			'L_CACHE' => self::$lang_admin['cache'],
+			'L_SYNDICATION' => self::$lang['syndication'],
 			'L_CACHE_CONFIG' => LangLoader::get_message('cache_configuration', 'admin-cache-common'),
-			'L_CONTENT_CONFIG' => $LANG['content_config'],
+			'L_CONTENT_CONFIG' => self::$lang_admin['content_config'],
 			'U_INDEX_SITE' => Environment::get_home_page(),
-		    'L_WEBSITE_UPDATES' => $LANG['website_updates'],
+		    'L_WEBSITE_UPDATES' => self::$lang_admin['website_updates'],
 			'C_ADMIN_LINKS_1' => false,
 			'C_ADMIN_LINKS_2' => false,
 			'C_ADMIN_LINKS_3' => false,
@@ -352,20 +364,21 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 	 */
 	public function display_footer()
 	{
-		global $LANG;
+		//global $LANG;
 
 		$tpl = new FileTemplate('admin/admin_footer.tpl');
+		$tpl->add_lang(self::$lang);
 
 		$theme = load_ini_file(PATH_TO_ROOT . '/templates/' . get_utheme() . '/config/', get_ulang());
 
 		$tpl->put_all(array(
 			'THEME' => get_utheme(),
 			'C_DISPLAY_AUTHOR_THEME' => GraphicalEnvironmentConfig::load()->get_display_theme_author(),
-			'L_POWERED_BY' => $LANG['powered_by'],
-			'L_PHPBOOST_RIGHT' => $LANG['phpboost_right'],
-			'L_THEME' => $LANG['theme'],
-			'L_THEME_NAME' => $theme['name'],
-			'L_BY' => strtolower($LANG['by']),
+			'L_POWERED_BY' => self::$lang_admin['powered_by'],
+			'L_PHPBOOST_RIGHT' => self::$lang['phpboost_right'],
+			'L_THEME' => self::$lang_admin['theme'],
+			'L_THEME_NAME' => self::$lang_admin['name'],
+			'L_BY' => strtolower(self::$lang['by']),
 			'L_THEME_AUTHOR' => $theme['author'],
 			'U_THEME_AUTHOR_LINK' => $theme['author_link'],
 		    'PHPBOOST_VERSION' => GeneralConfig::load()->get_phpboost_major_version()
@@ -379,9 +392,9 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 				'REQ' => PersistenceContext::get_querier()->get_executed_requests_count() +
 			PersistenceContext::get_sql()->get_executed_requests_number(),
 				'L_UNIT_SECOND' => HOST,
-				'L_REQ' => $LANG['sql_req'],
-				'L_ACHIEVED' => $LANG['achieved'],
-				'L_UNIT_SECOND' => $LANG['unit_seconds_short']
+				'L_REQ' => self::$lang['sql_req'],
+				'L_ACHIEVED' => self::$lang['achieved'],
+				'L_UNIT_SECOND' => self::$lang['unit_seconds_short']
 			));
 		}
 
