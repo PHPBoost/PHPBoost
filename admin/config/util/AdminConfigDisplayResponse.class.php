@@ -31,23 +31,23 @@ class AdminConfigDisplayResponse extends AdminMenuDisplayResponse
 	
 	public function __construct($view)
 	{
-        global $LANG;
+        //global $LANG;
         
         parent::__construct($view);
         
         $this->load_lang();
         
-        $view->add_lang($LANG);
-        $this->set_title($LANG['configuration']);
+        $view->add_lang($this->lang);
+        $this->set_title($this->lang['configuration']);
         $img = '/templates/' . get_utheme() . '/images/admin/configuration.png';
-        $this->add_link($LANG['config_main'], '/admin/admin_config.php', $img);
-        $this->add_link($LANG['config_advanced'], DispatchManager::get_url('/admin/config/index.php', '/advanced'), $img);
-        $this->add_link($this->lang['mail_config'], DispatchManager::get_url('/admin/config/index.php', '/mail'), $img);
+        $this->add_link($this->lang['config_main'], DispatchManager::get_url('/admin/config/index.php', '/general'), $img);
+        $this->add_link($this->lang['config_advanced'], DispatchManager::get_url('/admin/config/index.php', '/advanced'), $img);
+        $this->add_link($this->lang['config_mail'], DispatchManager::get_url('/admin/config/index.php', '/mail'), $img);
 	}
 	
 	private function load_lang()
 	{
-		$this->lang = LangLoader::get('admin-config-common');
+		$this->lang = LangLoader::get('admin');
 	}
 }
 ?>
