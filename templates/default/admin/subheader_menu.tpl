@@ -27,9 +27,9 @@
 		<h5 class="links"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/ranks_mini.png" class="valign_middle" alt="" /> {L_INDEX_ADMIN}</h5>
 		<ul id="smenu2">
 			<li class="extend" onmouseover="show_menu(21, 1);" onmouseout="hide_menu(1);">
-				<a href="{PATH_TO_ROOT}/admin/admin_config.php" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/config_mini.png);">{L_CONFIGURATION}</a>
+				<a href="{PATH_TO_ROOT}/admin/config/index.php?url=/general" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/config_mini.png);">{L_CONFIGURATION}</a>
 				<ul id="ssmenu21">
-					<li><a href="{PATH_TO_ROOT}/admin/admin_config.php" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/config_mini.png);">{L_MANAGEMENT}</a></li>
+					<li><a href="{PATH_TO_ROOT}/admin/config/index.php?url=/general" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/config_mini.png);">{L_MANAGEMENT}</a></li>
 					<li><a href="{PATH_TO_ROOT}/admin/config/index.php?url=/advanced" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/config_mini.png);">{L_CONFIG_ADVANCED}</a></li>
 					<li><a href="{PATH_TO_ROOT}/admin/config/index.php?url=/mail" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/config_mini.png);">{L_MAIL_CONFIG}</a></li>
 				</ul>
