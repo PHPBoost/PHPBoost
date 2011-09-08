@@ -18,20 +18,32 @@
 #################################################################################
 
 ------------------------------------- NOYAU ------------------------------------
-+ Classe commentaire : Gérer les autorisations, gérer la notation +1 et -1, gérer l'affichage des commentaires.
++ Classe commentaire : Gérer les autorisations, gérer la notation +1 et -1, gérer l'affichage des commentaires, possibilité d'avoir une alerte lors d'un nouveau commentaire.
 - Balises Youtube, Dailymotion
-- Création d'un controlleur pour l'oubli du mot de passe.
 - Création de contrainte pour vérifier si un pseudo ou un email est déjà utilisé (utiliser Field::set_validation_error_message())
 - Créer des champs spécifiques aux sanctions à ajouter dans l'édit d'un membre dans l'administration.
-- Ajouter l'image align=justify dans les thèmes et corriger bbcode.css (bloc masquables + wikipédia) (publishing notamment)
-- [color=red]Nouveauté:[/color] Interface de personnalisation graphique du site, modification facile du logo du site et favicon.
+- Corriger bbcode.css (bloc masquables + wikipédia) (publishing notamment)
+- Personnalisation du logo et du favicon : ajouter les modifications dans les templates
 - Utilisation des futures classes de Loic pour gérer l'inscription d'un membre (seulement si on intègre le nouveaux sytème de sessions)
-- Gérer la nouvelle fonction d'ugrade d'un module.
 
 ------------------------------------ MODULES -----------------------------------
 
 [b]Tous[/b]
 - Réparer la fonctionnalité de période de validité d'une publication (news par exemple), en requêtant directement en fonction de la date courante
+
+#################################################################################
+
+
+#################################################################################
+##                                   PATRICK                                   ##
+#################################################################################
+
+------------------------------------- NOYAU ------------------------------------
+- Création d'un controlleur pour l'oubli du mot de passe.
+- Terminer la config du site (envoi du code de vérification, ..)
+- Gérer la nouvelle fonction d'ugrade d'un module (ModuleManager::upgrade($id_module))
+
+------------------------------------ MODULES -----------------------------------
 
 #################################################################################
 
@@ -83,6 +95,7 @@
 - [color=red]Nouveauté:[/color] Possibilité de créer des formulaires personnalisés avec contrÃ´les sur les champs.
 - [color=red]Nouveauté:[/color] Interface de visualisation des valeurs des champs supplémentaires saisies par les membres.
 - [color=red]Nouveauté:[/color] Compression de la base de données à l'exportation, importation en fichier compressé ou non.
+- [color=red]Nouveauté:[/color] Interface de personnalisation graphique du site, modification du titre/sous-titre et des couleurs du site.
 - Outils avancés de visualisation et gestion du cache.
 - Etudier la possibilité de mettre les smileys dans une catégorie et pouvoir en importer par lot facilement.
 - Gestion des contraintes asynchrones dans le form builder
@@ -128,13 +141,14 @@
 
 [b]Calendrier:[/b]
 - [color=red]Nouveauté:[/color] Possibilité d'ajouter des évenements sur plusieurs jours.
-- Possibilité d'afficher les évenements sur une période donnée. 
+- Possibilité d'afficher les évenements sur une période donnée.
 
 [b]Newsletter:[/b]
 - Refonte des catégories avec le nouveau système. 
 
 [b]Contact:[/b]
 - Possibilité de choisir à quel groupe d'utilisateurs envoyer le mail.
+- Possibilité de rajouter des champs dans le formulaire d'envoi.
 
 [b]Nouveau module:[/b]
 - [color=red]Nouveauté:[/color] Module blogs, proposez à tous vos membres un système de gestion de blog complet.
