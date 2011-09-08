@@ -32,11 +32,13 @@
 [*] Nouveau système de champs membres permettant également à un développeur de créer son propre champ personnalisé à partir d'un module.
 [*] Nouveau système de changement de mot de passe en cas d'oubli.
 + Refonte de la classe session (Possibilité de joindre les sessions et l'espace membre à des systèmes d'authentification externes).
-[*] Refonte du système de notation.
-+ Refonte du système de commentaire.
+[*] Refonte du système de notation : suppression des champs BDD sur tout les modules, système autonome.
++ Refonte du système de commentaire : Refonte graphique, gestion de la pagination en AJAX, possibilité de noter un commentaire (+1 ou -1).
 [*] Refonte de la gestion des thèmes.
-+ Refonte de la section membre.
+[*] Refonte de la section membre.
 [*] Ajout de classes permettant d'avoir le suivi d'un ou de plusieurs membres (derniers commentaires, articles postés, etc).
+[*] Possibilité de personnaliser son logo par thème et le favicon du site.
++ Amélioration de la fonction d'upgrade d'un module.
 
 [b]Menus :[/b]
 [*] [color=red]Nouveauté :[/color] Nouveau système de gestion des menus en drag'n drop.
@@ -45,7 +47,6 @@
 - Possibilité de désactiver l'affichage d'un lien dans les menus
 
 [b]Personnalisation graphique :[/b]
-- [color=red]Nouveauté:[/color] Interface de personnalisation graphique du site, modification du titre/sous-titre, logo et couleurs du site.
 - [color=red]Nouveauté:[/color] Interface de personnalisation de la page de démarrage du site.
 [*] [color=red]Nouveauté:[/color] Possibilité de masquer indépendamment tous les conteneurs suivant les thèmes.
 - [color=red]Nouveauté:[/color] Nouveau thème pour la distribution complete.
@@ -77,6 +78,7 @@
 - Voir les images plus vues/mieux notées, affichage sur l'ensemble de la galerie et non sur une catégorie.
 - Possibilité de télécharger l'image.
 [*] Tri des images conservé dans la pagination.
+[*] Gestion des flux RSS et Atom
 
 [b]News :[/b]
 [*] Refonte complète du module, collaboration des utilisateurs possible.
@@ -92,6 +94,7 @@
 
 [b]Pages :[/b]
 [*] Possibilité de cacher le lien d'impression pour chacune des pages.
+[*] Gestion des flux RSS et Atom
 
 [b]Calendrier :[/b]
 [*] Possibilité de gérer les autorisations d'écriture, de lecture et de modération (édition et suppression).
@@ -106,7 +109,7 @@
 [b]Compatibilité des thèmes 3.0 :[/b]
 [*] Ajout d'une variable js THEME dans header.tpl
 - Modification de la classe xmlhttprequest_preview (border-radius en plus).
-- Ajout d'une image images/form/justify.png dans les thèmes 
+[*] Ajout d'une image images/form/justify.png dans les thèmes 
 - Changement mineurs dans bbcode.css (bloc masquables + balise wikipédia)
 
 [b]Newsletter[/b]
