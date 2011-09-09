@@ -43,9 +43,12 @@ class MemberUserThemeExtendedField extends AbstractMemberExtendedField
 		$value = UserAccountsConfig::load()->get_default_theme();
 		$fieldset->add_field(new FormFieldSimpleSelectChoice($member_extended_field->get_field_name(), $member_extended_field->get_name(), $value,
 			$this->list_theme(),
-			array('description' => $member_extended_field->get_description(), 'required' =>(bool)$member_extended_field->get_required(), 'events' => array('change' => 'document.images[\'img_theme\'].src = "'. PATH_TO_ROOT .'/templates/" + HTMLForms.getField("'. $member_extended_field->get_field_name() .'").getValue() + "/theme/images/theme.jpg"'))
+			array('description' => $member_extended_field->get_description(), 'required' =>(bool)$member_extended_field->get_required(), 'events' => array('change' => $this->construct_javascript_picture_theme() . 
+			
+			'var theme_id = HTMLForms.getField("'. $member_extended_field->get_field_name() .'").getValue();
+			document.images[\'img_theme\'].src = theme[theme_id];'))
 		));
-		$fieldset->add_field(new FormFieldFree('preview_theme', $this->lang['preview'], '<img id="img_theme" src="'. PATH_TO_ROOT .'/templates/'. $value .'/theme/images/theme.jpg" alt="" style="vertical-align:top" />'));
+		$fieldset->add_field(new FormFieldFree('preview_theme', $this->lang['preview'], '<img id="img_theme" src="'. $this->get_picture_theme() .'" alt="" style="vertical-align:top; max-height:180px;" />'));
 	}
 	
 	public function display_field_update(MemberExtendedField $member_extended_field)
@@ -56,9 +59,12 @@ class MemberUserThemeExtendedField extends AbstractMemberExtendedField
 		$value = !empty($member_value) ? $member_value : UserAccountsConfig::load()->get_default_theme();
 		$fieldset->add_field(new FormFieldSimpleSelectChoice($member_extended_field->get_field_name(), $member_extended_field->get_name(), $value,
 			$this->list_theme(),
-			array('description' => $member_extended_field->get_description(), 'required' =>(bool)$member_extended_field->get_required(), 'events' => array('change' => 'document.images[\'img_theme\'].src = "'. PATH_TO_ROOT .'/templates/" + HTMLForms.getField("'. $member_extended_field->get_field_name() .'").getValue() + "/theme/images/theme.jpg"'))
+			array('description' => $member_extended_field->get_description(), 'required' =>(bool)$member_extended_field->get_required(), 'events' => array('change' => $this->construct_javascript_picture_theme() . 
+			
+			'var theme_id = HTMLForms.getField("'. $member_extended_field->get_field_name() .'").getValue();
+			document.images[\'img_theme\'].src = theme[theme_id];'))
 		));
-		$fieldset->add_field(new FormFieldFree('preview_theme', $this->lang['preview'], '<img id="img_theme" src="'. PATH_TO_ROOT .'/templates/'. $value .'/theme/images/theme.jpg" alt="" style="vertical-align:top" />'));
+		$fieldset->add_field(new FormFieldFree('preview_theme', $this->lang['preview'], '<img id="img_theme" src="'. $this->get_picture_theme() .'" alt="" style="vertical-align:top; max-height:180px;" />'));
 	}
 	
 	public function display_field_profile(MemberExtendedField $member_extended_field)
@@ -99,6 +105,23 @@ class MemberUserThemeExtendedField extends AbstractMemberExtendedField
 			$choices_list[] = new FormFieldSelectChoiceOption('Base', 'base');
 		}
 		return $choices_list;
+	}
+	
+	private function get_picture_theme($theme_id = null)
+	{
+		$theme_id = $theme_id !== null ? $theme_id : get_utheme();
+		$pictures = ThemeManager::get_theme($theme_id)->get_configuration()->get_pictures();
+		return PATH_TO_ROOT .'/templates/' . $theme_id . '/' . $pictures[0];
+	}
+	
+	private function construct_javascript_picture_theme()
+	{
+		$text = 'var theme = new Array;' . "\n";
+		foreach (ThemeManager::get_activated_themes_map() as $theme)
+		{
+			$text .= 'theme["' . $theme->get_id() . '"] = "' . $this->get_picture_theme($theme->get_id()) . '";' . "\n";
+		}
+		return $text;
 	}
 }
 ?>
