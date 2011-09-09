@@ -1,9 +1,9 @@
 <?php
 /*##################################################
- *                              faqExtensionPointProvider.class.php
- *                            -------------------
+ *   	FaqExtensionPointProvider.class.php
+ *   	-----------------------------------
  *   begin                : April 9, 2008
- *   copyright            : (C) 2008 Loïc Rouchon
+ *   copyright            : (C) 2008 Loic Rouchon
  *   email                : loic.rouchon@phpboost.com
  *
  *
@@ -24,8 +24,6 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
  ###################################################*/
-
-
 
 define('FAQ_MAX_SEARCH_RESULTS', 100);
 
@@ -169,5 +167,11 @@ class FaqExtensionPointProvider extends ExtensionPointProvider
     {
     	return new FaqSitemapExtensionPoint();
     }
+	
+	public function feeds()
+	{
+		return new FaqFeedProvider();
+	}
+
 }
 ?>

@@ -33,5 +33,5 @@ load_module_lang('faq'); //Chargement de la langue du module.
 
 define('AUTH_READ', 0x01);
 define('AUTH_WRITE', 0x02);
-
+	
 ?>
