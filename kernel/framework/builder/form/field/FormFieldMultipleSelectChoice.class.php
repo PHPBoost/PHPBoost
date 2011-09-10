@@ -133,8 +133,12 @@ class FormFieldMultipleSelectChoice extends AbstractFormFieldChoice
 	
 	private function is_selected($option)
     {
-    	return in_array($option, $this->get_value()); 
-		
+    	$value = $this->get_value();
+    	if (is_array($value))
+    	{
+    		return in_array($option, $value); 
+    	}
+    	return false;
     }
 
     protected function get_default_template()
@@ -142,5 +146,4 @@ class FormFieldMultipleSelectChoice extends AbstractFormFieldChoice
         return new FileTemplate('framework/builder/form/FormField.tpl');
     }
 }
-
 ?>
