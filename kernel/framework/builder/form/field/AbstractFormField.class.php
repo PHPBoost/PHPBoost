@@ -567,5 +567,4 @@ abstract class AbstractFormField implements FormField
 		return '';
 	}
 }
-
 ?>

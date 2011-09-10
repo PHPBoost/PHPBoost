@@ -30,32 +30,21 @@
  */
 class CommentsConfig extends AbstractConfigData
 {
-	const AUTH_POST_COMMENTS = 'auth_post_comments';
-	const DISPLAY_COMMENTS_IN_POPUP = 'display_comments_popup';
+	const AUTHORIZATIONS = 'authorizations';
 	const DISPLAY_CAPTCHA = 'display_captcha';
 	const CAPTCHA_DIFFICULTY = 'captcha_difficulty';
-	const NUMBER_COMMENTS_PER_PAGE = 'number_comments_per_page';
+	const NUMBER_COMMENTS_DISPLAY = 'number_comments_per_page';
 	const FORBIDDEN_TAGS = 'forbidden_tags';
 	const MAX_LINKS_COMMENT = 'max_links_comment';
 	
-	public function get_auth_post_comments()
+	public function get_authorizations()
 	{
-		return $this->get_property(self::AUTH_POST_COMMENTS);
+		return $this->get_property(self::AUTHORIZATIONS);
 	}
 	
-	public function set_auth_post_comments(Array $array)
+	public function set_authorizations(Array $array)
 	{
-		$this->set_property(self::AUTH_POST_COMMENTS, $array);
-	}
-	
-	public function get_display_comments_in_popup()
-	{
-		return $this->get_property(self::DISPLAY_COMMENTS_IN_POPUP);
-	}
-	
-	public function set_display_comments_in_popup($display)
-	{
-		$this->set_property(self::DISPLAY_COMMENTS_IN_POPUP, $display);
+		$this->set_property(self::AUTHORIZATIONS, $array);
 	}
 	
 	public function get_display_captcha()
@@ -78,14 +67,14 @@ class CommentsConfig extends AbstractConfigData
 		$this->set_property(self::CAPTCHA_DIFFICULTY, $difficulty);
 	}
 	
-	public function get_number_comments_per_page()
+	public function get_number_comments_display()
 	{
-		return $this->get_property(self::NUMBER_COMMENTS_PER_PAGE);
+		return $this->get_property(self::NUMBER_COMMENTS_DISPLAY);
 	}
 	
-	public function set_number_comments_per_page($number)
+	public function set_number_comments_display($number)
 	{
-		$this->set_property(self::NUMBER_COMMENTS_PER_PAGE, $number);
+		$this->set_property(self::NUMBER_COMMENTS_DISPLAY, $number);
 	}
 	
 	public function get_forbidden_tags()
@@ -113,14 +102,12 @@ class CommentsConfig extends AbstractConfigData
 		$server_configuration = new ServerConfiguration();
 		
 		return array(
-			self::AUTH_POST_COMMENTS => array('r-1' => 1, 'r0' => 1, 'r1' => 1),
-			self::DISPLAY_COMMENTS_IN_POPUP => false,
+			self::AUTHORIZATIONS => array(),
 			self::DISPLAY_CAPTCHA => $server_configuration->has_gd_library() ? true : false,
 			self::CAPTCHA_DIFFICULTY => 2,
-			self::NUMBER_COMMENTS_PER_PAGE => 10,
+			self::NUMBER_COMMENTS_DISPLAY => 10,
 			self::FORBIDDEN_TAGS => array(),
-			self::MAX_LINKS_COMMENT => 2,
-			
+			self::MAX_LINKS_COMMENT => 2
 		);
 	}
 
