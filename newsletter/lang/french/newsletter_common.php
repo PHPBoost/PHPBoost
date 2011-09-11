@@ -95,7 +95,7 @@ $lang['subscribers.delete'] = 'Voulez-vous vraiment supprimer cette personne des
 $lang['subscribers.no_users'] = 'Aucun inscrit';
 
 // Unsubcribe
-$lang['newsletter.delete_all_streams'] = 'Se désinscrire de tout les flux';
+$lang['newsletter.delete_all_streams'] = 'Se désinscrire de tous les flux';
 $lang['unsubscribe.newsletter'] = 'Se désinscrire des newsletters';
 $lang['unsubscribe.newsletter_choice'] = 'Choisissez les newsletters ou vous souhaitez rester abonner';
 
