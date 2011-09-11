@@ -42,7 +42,7 @@ $url_controller_mappers = array(
 	
 	new UrlControllerMapper('NewsletterSubscribersListController', '`^/subscribers(?:/([0-9]+))?/?([a-z]+)?/?([a-z]+)?/?([0-9]+)?/?$`', array('id_stream', 'field', 'sort', 'page')),
 	new UrlControllerMapper('NewsletterSubscribeController', '`^/subscribe/?$`'),
-	new UrlControllerMapper('NewsletterUnSubscribeController', '`^/unsubscribe/?$`'),
+	new UrlControllerMapper('NewsletterUnsubscribeController', '`^/unsubscribe/?$`'),
 	new UrlControllerMapper('NewsletterEditSubscriberController', '`^/subscriber/([0-9]+)/edit/?$`', array('id')),
 	new UrlControllerMapper('NewsletterDeleteSubscriberController', '`^/subscriber/([0-9]+)/delete?/?([0-9]+)/?$`', array('id', 'id_stream')),
 
