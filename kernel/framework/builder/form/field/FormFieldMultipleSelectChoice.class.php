@@ -33,8 +33,10 @@
  * </ul>
  * @package {@package}
  */
-class FormFieldMultipleSelectChoice extends AbstractFormFieldChoice
+class FormFieldMultipleSelectChoice extends AbstractFormField
 {
+	private $available_options;
+	
     /**
      * @desc Constructs a FormFieldMultipleSelectChoice.
      * @param string $id Field id
@@ -46,10 +48,11 @@ class FormFieldMultipleSelectChoice extends AbstractFormFieldChoice
      */
     public function __construct($id, $label, array $selected_options, array $available_options, array $field_options = array(), array $constraints = array())
     {
-        parent::__construct($id, $label, $selected_options, $available_options, $field_options, $constraints);
+        parent::__construct($id, $label, $selected_options, $field_options, $constraints);
+        $this->available_options = $available_options;
 		$this->set_selected_options($selected_options);
     }
-
+    
 	private function set_selected_options(array $selected_options)
     {
     	$value = array();
@@ -57,7 +60,7 @@ class FormFieldMultipleSelectChoice extends AbstractFormFieldChoice
     	{
     		if (is_string($option))
     		{
-    			$value[] = $this->get_option($option);
+    			$value[] = $this->validate_option($option);
     		}
     		else if ($option instanceof FormFieldSelectChoiceOption)
     		{
@@ -70,7 +73,19 @@ class FormFieldMultipleSelectChoice extends AbstractFormFieldChoice
     	}
     	$this->set_value($value);
     }
-	
+    
+    private function validate_option($identifier)
+    {
+    	foreach ($this->available_options as $option)
+    	{
+    		if ($option->get_raw_value() == $identifier || $option->get_label() == $identifier)
+    		{
+    			return $identifier;
+    		}
+    	}
+    	throw new FormBuilderException('option ' . $identifier . ' not found');
+    }
+    
 	public function retrieve_value()
     {
 		$request = AppContext::get_request();
@@ -115,7 +130,7 @@ class FormFieldMultipleSelectChoice extends AbstractFormFieldChoice
 			'L_SELECT_EXPLAIN' => $lang['explain_select_multiple']
         ));
 		
-        foreach ($this->get_options() as $option)
+        foreach ($this->available_options as $option)
         {
 			$select = $this->is_selected($option);
 			if ($select)
@@ -133,12 +148,7 @@ class FormFieldMultipleSelectChoice extends AbstractFormFieldChoice
 	
 	private function is_selected($option)
     {
-    	$value = $this->get_value();
-    	if (is_array($value))
-    	{
-    		return in_array($option, $value); 
-    	}
-    	return false;
+    	return in_array($option->get_raw_value(), $this->get_value()); 
     }
 
     protected function get_default_template()
