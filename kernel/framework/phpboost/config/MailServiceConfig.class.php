@@ -132,7 +132,7 @@ class MailServiceConfig extends AbstractConfigData
 	 */
 	public function get_default_values()
 	{
-		global $LANG;
+		//TODO Add mail signature lang
 		return array(
 			'use_smtp' => false,
 			'smtp_host' => '',
@@ -142,7 +142,7 @@ class MailServiceConfig extends AbstractConfigData
 			'smtp_protocol' => 'none',
 			'default_mail_sender' => '',
 			'administrators_mails' => array(),
-			'mail_signature' => $LANG['site_config_mail_signature']
+			'mail_signature' => ''
 		);
 	}
 	
