@@ -223,7 +223,7 @@ class ForumSetup extends DefaultModuleSetup
 		$options = array(
 			'primary' => array('id'),
 			'idcat' => array('type' => 'key', 'fields' => array('idcat', 'last_user_id', 'last_timestamp', 'type')),
-			'title' => array('type' => 'key', 'fields' => 'title')
+			'title' => array('type' => 'fulltext', 'fields' => 'title')
 		);
 		PersistenceContext::get_dbms_utils()->create_table(self::$forum_topics_table, $fields, $options);
 	}
@@ -279,14 +279,12 @@ class ForumSetup extends DefaultModuleSetup
 
 	private function create_member_extended_field()
 	{
-		// TODO use extended field ? 
-		/*$extended_field = new ExtendedField();
+		$extended_field = new ExtendedField();
 		$extended_field->set_name(self::$member_extended_field_last_view_forum_column);
 		$extended_field->set_field_name(self::$member_extended_field_last_view_forum_column);
 		$extended_field->set_field_type(0);
 		$extended_field->set_is_freeze(true);
 		ExtendedFieldsService::add($extended_field);
-		*/
 	}
 
 	private function insert_forum_cats_data()
