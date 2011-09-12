@@ -40,9 +40,6 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 	{
 		parent::__construct();
 
-		//global $LANG;
-
-		//require_once PATH_TO_ROOT . '/lang/' . get_ulang() . '/admin.php';
 		$this->load_lang();
 
 		$this->check_admin_auth();
@@ -56,8 +53,6 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 
 	private function check_admin_auth()
 	{
-		//global $LANG;
-
 		//Module de connexion
 		$login = retrieve(POST, 'login', '');
 		$password = retrieve(POST, 'password', '', TSTRING_UNCHANGE);
@@ -185,8 +180,6 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 	 */
 	public function display_header()
 	{
-		//global $LANG;
-
 		self::set_page_localization($this->get_page_title());
 
 		$header_tpl = new FileTemplate('admin/admin_header.tpl');
@@ -212,8 +205,6 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 
 	private static function get_subheader_tpl()
 	{
-		//global $LANG;
-
 		$subheader_tpl = new FileTemplate('admin/subheader_menu.tpl');
 		$subheader_tpl->add_lang(self::$lang);
 
@@ -364,8 +355,6 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 	 */
 	public function display_footer()
 	{
-		//global $LANG;
-
 		$tpl = new FileTemplate('admin/admin_footer.tpl');
 		$tpl->add_lang(self::$lang);
 
