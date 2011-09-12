@@ -36,16 +36,13 @@ class Debug
 	private static $enabled = true;
 	private static $options = array();
 	private static $html_output = true;
+	private static $server_environnement_config;
 
 	public static function __static()
     {
-        $file = new File(PATH_TO_ROOT . '/cache/debug.php');
-        if ($file->exists())
-        {
-            include $file->get_path();
-            self::$enabled = $enabled;
-            self::$options = $options;
-        }
+    	self::$server_environnement_config = ServerEnvironmentConfig::load();
+    	self::$enabled = self::$server_environnement_config->is_debug_mode_enabled();
+    	self::$options = array('strict_mode' => self::$server_environnement_config->is_strict_mode_enabled());
     }
 
     /**
@@ -69,9 +66,9 @@ class Debug
 	 */
 	public static function enabled_debug_mode(array $options = array())
 	{
-        self::$enabled = true;
-        self::$options = $options;
-		self::write_debug_file();
+		self::$enabled = true;
+		self::$options = $options;
+		self::save_configuration();
 	}
 
     /**
@@ -79,19 +76,15 @@ class Debug
      */
     public static function disable_debug_mode()
     {
-        self::$enabled = false;
-        self::$options = array();
-        self::write_debug_file();
+    	self::$enabled = false;
+		self::save_configuration();
     }
 
-    private static function write_debug_file()
+    private static function save_configuration()
     {
-        $file = new File(PATH_TO_ROOT . '/cache/debug.php');
-        $file->write('<?php ' . "\n" .
-	        '$enabled = ' . var_export(self::$enabled, true) . ';' . "\n" .
-	        '$options = ' . var_export(self::$options, true) . ';' . "\n" .
-	        ' ?>');
-        $file->close();
+        self::$server_environnement_config->set_strict_mode_enabled(self::$enabled);
+		self::$server_environnement_config->set_debug_mode_enabled(self::$options);
+		ServerEnvironmentConfig::save();
     }
     
     /**

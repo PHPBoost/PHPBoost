@@ -47,13 +47,18 @@ class AdminAdvancedConfigController extends AdminController
 		
 		$this->build_form();
 
-		$tpl = new StringTemplate('# INCLUDE MSG # # INCLUDE FORM #');
+		$debug_mod_js = !$this->server_environment_config->is_debug_mode_enabled() ? 'HTMLForms.getField("debug_mode_type").disable();' : '';
+		
+		$tpl = new StringTemplate('<script type="text/javascript">
+				Event.observe(window, \'load\', function() {
+				'. $debug_mod_js .'});	</script>
+		# INCLUDE MSG # # INCLUDE FORM #');
 		$tpl->add_lang($this->lang);
 
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save();
-			$this->clear_cache();
+			//$this->clear_cache();
 
 			$tpl->put('MSG', MessageHelper::display($this->lang['advanced-config.success'], E_USER_SUCCESS, 4));
 		}
@@ -88,7 +93,7 @@ class AdminAdvancedConfigController extends AdminController
 		));
 		
 		$fieldset->add_field(new FormFieldTextEditor('site_path', $this->lang['advanced-config.site_path'], $this->general_config->get_site_path(),
-			array('class' => 'text', 'required' => true, 'description' => $this->lang['advanced-config.site_path-explain'])
+			array('class' => 'text', 'description' => $this->lang['advanced-config.site_path-explain'])
 		));
 		
 		$fieldset->add_field(new FormFieldTimezone('site_timezone', $this->lang['advanced-config.site_timezone'], $this->general_config->get_site_timezone(),
@@ -167,7 +172,8 @@ class AdminAdvancedConfigController extends AdminController
 					HTMLForms.getField("debug_mode_type").disable(); 
 				}'))));
 		
-		$miscellaneous_fieldset->add_field(new FormFieldSimpleSelectChoice('debug_mode_type', $this->lang['miscellaneous.debug-mode.type'], (int)$this->server_environment_config->is_strict_mode_enabled(),
+		$debug_mode_type = $this->server_environment_config->is_strict_mode_enabled() ? '1' : '0';
+		$miscellaneous_fieldset->add_field(new FormFieldSimpleSelectChoice('debug_mode_type', $this->lang['miscellaneous.debug-mode.type'], $debug_mode_type,
 			array(
 				new FormFieldSelectChoiceOption($this->lang['miscellaneous.debug-mode.type.normal'], '0'),
 				new FormFieldSelectChoiceOption($this->lang['miscellaneous.debug-mode.type.strict'], '1')
@@ -205,7 +211,14 @@ class AdminAdvancedConfigController extends AdminController
 			$this->server_environment_config->set_output_gziping_enabled($this->form->get_value('output_gziping_enabled'));
 		}
 		
-		$this->server_environment_config->set_strict_mode_enabled((bool)$this->form->get_value('debug_mode_type')->get_label());
+		if ($this->form->get_value('debug_mode_type')->get_raw_value() == '1')
+		{
+			$this->server_environment_config->set_strict_mode_enabled(true);
+		}
+		else
+		{
+			$this->server_environment_config->set_strict_mode_enabled(false);
+		}
 		$this->server_environment_config->set_debug_mode_enabled($this->form->get_value('debug_mode_enabled'));
 		ServerEnvironmentConfig::save();
 	}
