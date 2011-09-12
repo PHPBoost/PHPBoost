@@ -63,7 +63,7 @@ class MemberLostPasswordController extends AbstractController
 				{
 					$user_id = $this->get_user_id();
 					 
-					//TODO, connecter l'utilisateur et le redirigé vers la page d'accueil
+					//TODO, connecter l'utilisateur et le rediriger vers la page d'accueil
 					 
 					$this->tpl->put('MSG', MessageHelper::display($this->error_lang['e_forget_confirm_change'], E_USER_SUCCESS));
 						
@@ -87,12 +87,10 @@ class MemberLostPasswordController extends AbstractController
 			{
 				if($this->check_member_exist())
 				{
-					//Génération de la clé d'activation
 					$activ_pass = KeyGenerator::generate_key(15);
 						
 					$this->save_activ_pass($activ_pass);
 					 
-					//Envoi de la clé d'activation par mail
 					$this->send_activation_key_mail($activ_pass);
 					 
 					$this->tpl->put('MSG', MessageHelper::display($this->error_lang['e_forget_mail_send'], E_USER_SUCCESS));
@@ -121,18 +119,39 @@ class MemberLostPasswordController extends AbstractController
 
 	private function send_activation_key_build_form()
 	{
-		//On génère le formulaire dans le cas du mot de passe oublié (donc aucune clé d'activation)
 		$form = new HTMLForm('send_activation_key');
 		$fieldset = new FormFieldsetHTML('fieldset', $this->lang['forget_pass']);
 			
 		$fieldset->add_field(new FormFieldLabel($this->lang['forget_pass_send']));
-		$fieldset->add_field(new FormFieldTextEditor('login', $this->lang['pseudo'], '', array(
-			'class' => 'text', 'description' => '', 'required' => true)
+		
+		$default_select_option = new FormFieldSelectChoiceOption($this->lang['mail'], 1);
+		$fieldset->add_field(new FormFieldSimpleSelectChoice('field_choice', 'Sélectionnez le champ que vous voulez renseigner (mail ou pseudo)',
+			$default_select_option, 
+			array(
+				$default_select_option, 
+				new FormFieldSelectChoiceOption($this->lang['pseudo'], 2)
+				),
+			array('events' => array('change' => 
+					'if (HTMLForms.getField("field_choice").getValue() == 1) { 
+						HTMLForms.getField("mail").enable(); 
+						HTMLForms.getField("user_login").setValue("");
+						HTMLForms.getField("user_login").disable(); 
+					} else { 
+						HTMLForms.getField("user_login").enable(); 
+						HTMLForms.getField("mail").setValue("");
+						HTMLForms.getField("mail").disable(); 
+					}')
+				)
 		));
+		
 		$fieldset->add_field(new FormFieldMailEditor('mail', $this->lang['mail'], '', array(
 			'class' => 'text', 'description' => '', 'required' => true)
 		));
-			
+		
+		$fieldset->add_field(new FormFieldTextEditor('user_login', $this->lang['pseudo'], '', array(
+			'class' => 'text', 'description' => '', 'required' => true, 'hidden' => true, 'disabled' => true)
+		));
+		
 		$form->add_fieldset($fieldset);
 			
 		$this->send_activation_key_submit_button = new FormButtonSubmit($this->lang['submit'], 'forget_password');
@@ -143,7 +162,6 @@ class MemberLostPasswordController extends AbstractController
 
 	private function change_password_build_form()
 	{
-		//On génère le formulaire de changement de mot de passe si la clé d'activation existe
 		$form = new HTMLForm('change_password_form');
 		$fieldset = new FormFieldsetHTML('fieldset', $this->lang['change_password']);
 			
@@ -174,9 +192,23 @@ class MemberLostPasswordController extends AbstractController
 
 	private function check_member_exist()
 	{
-		return (bool)PersistenceContext::get_querier()->count(DB_TABLE_MEMBER, "WHERE user_mail = :mail AND login = :login",
-			array('mail' => $this->send_activation_key_form->get_value('mail'),
-        	'login' => $this->send_activation_key_form->get_value('login')));
+		
+		if($this->send_activation_key_form->get_value('field_choice')->get_raw_value() == 1)
+		{
+			return (bool)PersistenceContext::get_querier()->count(DB_TABLE_MEMBER, "WHERE user_mail = :mail",
+				array('mail' => $this->send_activation_key_form->get_value('mail')
+			));
+		}
+		elseif($this->send_activation_key_form->get_value('field_choice')->get_raw_value() == 2)
+		{
+			return (bool)PersistenceContext::get_querier()->count(DB_TABLE_MEMBER, "WHERE login = :login",
+				array('login' => $this->send_activation_key_form->get_value('user_login')
+			));
+		}
+		else 
+		{
+			return false;
+		}
 	}
 
 	private function get_user_id()
@@ -188,20 +220,41 @@ class MemberLostPasswordController extends AbstractController
 
 	private function save_activ_pass($activ_pass)
 	{
-		//Insertion de la clée d'activation dans la bdd
-		PersistenceContext::get_querier()->update(DB_TABLE_MEMBER, array('activ_pass' => $activ_pass),
-			"WHERE login = :login", array('login' => $this->send_activation_key_form->get_value('login')));
+		if($this->send_activation_key_form->get_value('field_choice')->get_raw_value() == 1)
+		{
+			PersistenceContext::get_querier()->update(DB_TABLE_MEMBER, array('activ_pass' => $activ_pass),
+				"WHERE user_mail = :mail", array('mail' => $this->send_activation_key_form->get_value('mail')));
+		}
+		else 
+		{	
+			PersistenceContext::get_querier()->update(DB_TABLE_MEMBER, array('activ_pass' => $activ_pass),
+				"WHERE login = :login", array('login' => $this->send_activation_key_form->get_value('user_login')));
+		}
 	}
 
 	private function send_activation_key_mail($activ_pass)
 	{
-		//Envoi de la clé d'activation par mail
+		if($this->send_activation_key_form->get_value('field_choice')->get_raw_value() == 1)
+		{
+			$sql_member = PersistenceContext::get_querier()->select_single_row(DB_TABLE_MEMBER, array('login'),
+				"WHERE user_mail = :mail", array('mail' => $this->send_activation_key_form->get_value('mail')));
+			$user_login = $sql_member['login'];
+			$user_mail = $this->send_activation_key_form->get_value('mail');
+		}
+		else 
+		{
+			$sql_member = PersistenceContext::get_querier()->select_single_row(DB_TABLE_MEMBER, array('user_mail'),
+				"WHERE login = :login", array('login' => $this->send_activation_key_form->get_value('user_login')));
+			$user_mail = $sql_member['user_mail'];
+			$user_login = $this->send_activation_key_form->get_value('user_login');
+		}
+		
 		$subject = $this->lang['forget_pass'] . ' - ' . GeneralConfig::load()->get_site_name();
-		$content = StringVars::replace_vars($this->lang['forget_mail_pass'], array('login' => $this->send_activation_key_form->get_value('login'), 'host' => HOST,
+		$content = StringVars::replace_vars($this->lang['forget_mail_pass'], array('login' => $user_login, 'host' => HOST,
 			'host_dir' => (HOST . DIR), 'key' => $activ_pass, 'signature' => MailServiceConfig::load()->get_mail_signature()));
 
 		$mail = new Mail();
-		$mail->add_recipient($this->send_activation_key_form->get_value('mail'), $this->send_activation_key_form->get_value('login'));
+		$mail->add_recipient($user_mail, $user_login);
 		$mail->set_sender(MailServiceConfig::load()->get_default_mail_sender(), GeneralConfig::load()->get_site_name());
 		$mail->set_subject($subject);
 		$mail->set_content($content);
