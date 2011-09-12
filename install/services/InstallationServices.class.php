@@ -168,7 +168,7 @@ class InstallationServices
 		AppContext::set_user($user);
 		$this->save_general_config($server_url, $server_path, $site_name, $site_desc, $site_keyword, $site_timezone);
 		$this->init_graphical_config();
-		$this->init_server_environment_config();
+		$this->init_debug_mode();
 		$this->init_user_accounts_config($locale);
 		$this->install_locale($locale);
 		$this->configure_theme($this->distribution_config['theme'], $locale);
@@ -196,11 +196,9 @@ class InstallationServices
 		GraphicalEnvironmentConfig::save();
 	}
 
-	private function init_server_environment_config()
+	private function init_debug_mode()
 	{
-		$server_environment_config = ServerEnvironmentConfig::load();
-		$server_environment_config->set_debug_mode_enabled($this->distribution_config['debug']);
-		ServerEnvironmentConfig::save();
+		Debug::enabled_debug_mode(array(Debug::STRICT_MODE => true));
 	}
 
 	private function init_user_accounts_config($locale)
