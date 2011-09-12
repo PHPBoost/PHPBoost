@@ -105,7 +105,7 @@ class CommentsConfig extends AbstractConfigData
 			self::AUTHORIZATIONS => array(),
 			self::DISPLAY_CAPTCHA => $server_configuration->has_gd_library() ? true : false,
 			self::CAPTCHA_DIFFICULTY => 2,
-			self::NUMBER_COMMENTS_DISPLAY => 10,
+			self::NUMBER_COMMENTS_DISPLAY => 15,
 			self::FORBIDDEN_TAGS => array(),
 			self::MAX_LINKS_COMMENT => 2
 		);

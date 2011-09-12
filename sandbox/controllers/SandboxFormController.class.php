@@ -171,6 +171,15 @@ class SandboxFormController extends ModuleController
 			)
 		)));
 		
+		// SELECT MULTIPLE
+		$fieldset->add_field(new FormFieldMultipleSelectChoice('multiple_select', 'Liste déroulante multiple', array('1', '2'),
+			array(
+				new FormFieldSelectChoiceOption('Choix 1', '1'),
+				new FormFieldSelectChoiceOption('Choix 2', '2'),
+				new FormFieldSelectChoiceOption('Choix 3', '3')
+			)
+		));
+		
 		$fieldset->add_field(new FormFieldTimezone('timezone', 'TimeZone', 'UTC+0'));
 		
 		$fieldset->add_element(new FormButtonButton('Envoyer'));

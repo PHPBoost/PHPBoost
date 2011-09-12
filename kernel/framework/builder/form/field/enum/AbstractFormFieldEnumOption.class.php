@@ -105,10 +105,7 @@ abstract class AbstractFormFieldEnumOption implements FormFieldEnumOption
 		{
 			return $this->active;
 		}
-		else
-		{
-			return $this->get_field()->get_value() === $this;
-		}
+		return false;
 	}
 	
 	public function set_disable($value = false)

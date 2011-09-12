@@ -122,10 +122,7 @@ class AdminCommentsConfigController extends AdminController
 		$this->configuration->set_display_captcha($this->form->get_value('display_captcha'));
 		$this->configuration->set_captcha_difficulty($this->form->get_value('captcha_difficulty')->get_raw_value());
 		$this->configuration->set_number_comments_display($this->form->get_value('number_comments_display'));
-
-	 	//$this->configuration->set_forbidden_tags($this->form->get_value('forbidden_tags'));
-	 	throw new Exception('Debug a retrieve fonction in field MultipleSelect');
-	 	
+	 	$this->configuration->set_forbidden_tags($this->form->get_value('forbidden_tags'));
 		$this->configuration->set_max_links_comment($this->form->get_value('max_links_comment'));
 		CommentsConfig::save();
 	}

@@ -29,9 +29,9 @@
 			<li class="extend" onmouseover="show_menu(21, 1);" onmouseout="hide_menu(1);">
 				<a href="{PATH_TO_ROOT}/admin/config/index.php?url=/general" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/config_mini.png);">{L_CONFIGURATION}</a>
 				<ul id="ssmenu21">
-					<li><a href="{PATH_TO_ROOT}/admin/config/index.php?url=/general" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/config_mini.png);">{L_MANAGEMENT}</a></li>
-					<li><a href="{PATH_TO_ROOT}/admin/config/index.php?url=/advanced" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/config_mini.png);">{L_CONFIG_ADVANCED}</a></li>
-					<li><a href="{PATH_TO_ROOT}/admin/config/index.php?url=/mail" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/config_mini.png);">{L_MAIL_CONFIG}</a></li>
+					<li><a href="{PATH_TO_ROOT}/admin/config/?url=/general" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/config_mini.png);">{L_MANAGEMENT}</a></li>
+					<li><a href="{PATH_TO_ROOT}/admin/config/?url=/advanced" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/config_mini.png);">{L_CONFIG_ADVANCED}</a></li>
+					<li><a href="{PATH_TO_ROOT}/admin/config/?url=/mail" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/config_mini.png);">{L_MAIL_CONFIG}</a></li>
 				</ul>
 			</li>
 			<li class="extend" onmouseover="show_menu(22, 1);" onmouseout="hide_menu(1);">
@@ -140,8 +140,8 @@
 			<li class="extend" onmouseover="show_menu(43, 1);" onmouseout="hide_menu(1);">
 				<a href="{PATH_TO_ROOT}/admin/member/index.php?url=/extended-fields/list/" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/extendfield_mini.png);">{L_EXTEND_FIELD}</a>
 				<ul id="ssmenu43">
-					<li><a href="{PATH_TO_ROOT}/admin/member/index.php?url=/extended-fields/list/" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/extendfield_mini.png);">{L_MANAGEMENT}</a></li>
-					<li><a href="{PATH_TO_ROOT}/admin/member/index.php?url=/extended-fields/add/" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/extendfield_mini.png);">{L_ADD}</a></li>
+					<li><a href="{PATH_TO_ROOT}/admin/member/?url=/extended-fields/list/" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/extendfield_mini.png);">{L_MANAGEMENT}</a></li>
+					<li><a href="{PATH_TO_ROOT}/admin/member/?url=/extended-fields/add/" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/extendfield_mini.png);">{L_ADD}</a></li>
 				</ul>
 			</li>
 			<li class="extend" onmouseover="show_menu(44, 1);" onmouseout="hide_menu(1);">
@@ -151,7 +151,7 @@
 					<li><a href="{PATH_TO_ROOT}/admin/admin_ranks_add.php" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/ranks_mini.png);">{L_ADD}</a></li>
 				</ul>
 			</li>
-			<li><a href="{PATH_TO_ROOT}/admin/member/index.php?url=/members/rules/" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/terms_mini.png);">{L_TERMS}</a></li>
+			<li><a href="{PATH_TO_ROOT}/admin/member/?url=/rules/" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/terms_mini.png);">{L_TERMS}</a></li>
 			# IF C_ADMIN_LINKS_4 #
 			<li class="separator"></li>
 				# START admin_links_4 #
@@ -193,7 +193,7 @@
 				<a href="{PATH_TO_ROOT}/admin/admin_com.php" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/com_mini.png);">{L_COMMENTS}</a>
 				<ul id="ssmenu53">
 					<li><a href="{PATH_TO_ROOT}/admin/admin_com.php" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/com_mini.png);">{L_MANAGEMENT}</a></li>
-					<li><a href="{PATH_TO_ROOT}/admin/admin_com_config.php" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/com_mini.png);">{L_CONFIGURATION}</a></li>
+					<li><a href="{PATH_TO_ROOT}/admin/contents/?url=/comments/config/" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/com_mini.png);">{L_CONFIGURATION}</a></li>
 				</ul>
 			</li>
 			# IF C_ADMIN_LINKS_5 #
