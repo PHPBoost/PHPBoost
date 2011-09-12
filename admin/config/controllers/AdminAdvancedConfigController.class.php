@@ -47,7 +47,7 @@ class AdminAdvancedConfigController extends AdminController
 		
 		$this->build_form();
 
-		$debug_mod_js = !$this->server_environment_config->is_debug_mode_enabled() ? 'HTMLForms.getField("debug_mode_type").disable();' : '';
+		$debug_mod_js = !Debug::is_debug_mode_enabled() ? 'HTMLForms.getField("debug_mode_type").disable();' : '';
 		
 		$tpl = new StringTemplate('<script type="text/javascript">
 				Event.observe(window, \'load\', function() {
@@ -164,7 +164,7 @@ class AdminAdvancedConfigController extends AdminController
 		$miscellaneous_fieldset->add_field(new FormFieldFree('unlock_administration', $this->lang['miscellaneous.unlock-administration'], $this->lang['miscellaneous.unlock-administration.request'], 
 		array('description' => $this->lang['miscellaneous.unlock-administration.explain'])));
 		
-		$miscellaneous_fieldset->add_field(new FormFieldCheckbox('debug_mode_enabled', $this->lang['miscellaneous.debug-mode'], $this->server_environment_config->is_debug_mode_enabled(), 
+		$miscellaneous_fieldset->add_field(new FormFieldCheckbox('debug_mode_enabled', $this->lang['miscellaneous.debug-mode'], Debug::is_debug_mode_enabled(), 
 		array('description' => $this->lang['miscellaneous.debug-mode.explain'], 'events' => array('change' => '
 				if (HTMLForms.getField("debug_mode_enabled").getValue()) { 
 					HTMLForms.getField("debug_mode_type").enable(); 
@@ -172,7 +172,7 @@ class AdminAdvancedConfigController extends AdminController
 					HTMLForms.getField("debug_mode_type").disable(); 
 				}'))));
 		
-		$debug_mode_type = $this->server_environment_config->is_strict_mode_enabled() ? '1' : '0';
+		$debug_mode_type = Debug::is_strict_mode_enabled() ? '1' : '0';
 		$miscellaneous_fieldset->add_field(new FormFieldSimpleSelectChoice('debug_mode_type', $this->lang['miscellaneous.debug-mode.type'], $debug_mode_type,
 			array(
 				new FormFieldSelectChoiceOption($this->lang['miscellaneous.debug-mode.type.normal'], '0'),
@@ -211,15 +211,19 @@ class AdminAdvancedConfigController extends AdminController
 			$this->server_environment_config->set_output_gziping_enabled($this->form->get_value('output_gziping_enabled'));
 		}
 		
-		if ($this->form->get_value('debug_mode_type')->get_raw_value() == '1')
+		if ($this->form->get_value('debug_mode_enabled') && $this->form->get_value('debug_mode_type')->get_raw_value() == '1')
 		{
-			$this->server_environment_config->set_strict_mode_enabled(true);
+			Debug::enabled_debug_mode(array(Debug::STRICT_MODE => true));
+		}
+		elseif ($this->form->get_value('debug_mode_enabled') && $this->form->get_value('debug_mode_type')->get_raw_value() == '0')
+		{
+			Debug::enabled_debug_mode(array());
 		}
 		else
 		{
-			$this->server_environment_config->set_strict_mode_enabled(false);
+			Debug::disable_debug_mode();
 		}
-		$this->server_environment_config->set_debug_mode_enabled($this->form->get_value('debug_mode_enabled'));
+
 		ServerEnvironmentConfig::save();
 	}
 	
