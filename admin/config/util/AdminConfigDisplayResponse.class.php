@@ -30,24 +30,22 @@ class AdminConfigDisplayResponse extends AdminMenuDisplayResponse
 	private $lang;
 	
 	public function __construct($view)
-	{
-        //global $LANG;
-        
+	{ 
         parent::__construct($view);
         
         $this->load_lang();
         
         $view->add_lang($this->lang);
-        $this->set_title($this->lang['configuration']);
+        $this->set_title($this->lang['general-config']);
         $img = '/templates/' . get_utheme() . '/images/admin/configuration.png';
-        $this->add_link($this->lang['config_main'], DispatchManager::get_url('/admin/config/index.php', '/general'), $img);
-        $this->add_link($this->lang['config_advanced'], DispatchManager::get_url('/admin/config/index.php', '/advanced'), $img);
-        $this->add_link($this->lang['config_mail'], DispatchManager::get_url('/admin/config/index.php', '/mail'), $img);
+        $this->add_link($this->lang['general-config'], DispatchManager::get_url('/admin/config/index.php', '/general'), $img);
+        $this->add_link($this->lang['advanced-config'], DispatchManager::get_url('/admin/config/index.php', '/advanced'), $img);
+        $this->add_link($this->lang['mail-config'], DispatchManager::get_url('/admin/config/index.php', '/mail'), $img);
 	}
 	
 	private function load_lang()
 	{
-		$this->lang = LangLoader::get('admin');
+		$this->lang = LangLoader::get('admin-config-common');
 	}
 }
 ?>
