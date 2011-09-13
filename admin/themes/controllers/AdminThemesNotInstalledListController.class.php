@@ -3,7 +3,7 @@
  *                      AdminThemesNotInstalledListController.class.php
  *                            -------------------
  *   begin                : April 20, 2011
- *   copyright            : (C) 2011 Kévin MASSY
+ *   copyright            : (C) 2011 KÃ©vin MASSY
  *   email                : soldier.weasel@gmail.com
  *
  *
@@ -104,7 +104,6 @@ class AdminThemesNotInstalledListController extends AdminController
 	
 	private function get_not_installed_themes()
 	{
-		$installed_themes = ThemeManager::get_installed_themes_map();
 		$themes_not_installed = array();
 		$folder_containing_phpboost_themes = new Folder(PATH_TO_ROOT .'/templates/');
 		foreach($folder_containing_phpboost_themes->get_folders() as $theme)
