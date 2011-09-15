@@ -86,6 +86,9 @@ $lang['members.rank.modo'] = 'Modérateur';
 $lang['members.rank.admin'] = 'Administrateur';
 $lang['members.approbation'] = 'Approbation';
 $lang['members.groups'] = 'Groupes';
+$lang['members.caution'] = 'Avertissement';
+$lang['members.readonly'] = 'Lecture seule';
+$lang['members.bannish'] = 'Banni';
 
 //Other fieldset add and edit title
 $lang['members.member-management'] = 'Gestion du membre';
