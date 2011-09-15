@@ -31,23 +31,23 @@
  
 $lang = array();
 
-$lang['comments.config.success-saving'] = 'Configuration enregistré avec succès';
+$lang['comments.config.success-saving'] = 'Configuration saved successfully';
 
-$lang['comments'] = 'Commentaires';
-$lang['comments.config'] = 'Configuration des commentaires';
-$lang['comments.management'] = 'Gestion des commentaires';
+$lang['comments'] = 'Comments';
+$lang['comments.config'] = 'Comments configuration';
+$lang['comments.management'] = 'Comments management';
 
-$lang['comments.config.display-captcha'] = 'Code de vérification visuel';
-$lang['comments.config.captcha-difficulty'] = 'Difficulté du code de vérification';
-$lang['comments.config.number-comments-display'] = 'Nombre de commentaires à afficher par défaut';
+$lang['comments.config.display-captcha'] = 'Visual verification code';
+$lang['comments.config.captcha-difficulty'] = 'Difficulty of the verification code';
+$lang['comments.config.number-comments-display'] = 'Number of comments to display by default';
 
-$lang['comments.config.authorization'] = 'Autorisations';
-$lang['comments.config.authorization-read'] = 'Autorisation de voir les commentaires';
-$lang['comments.config.authorization-post'] = 'Autorisation de poster un commentaire';
-$lang['comments.config.authorization-moderation'] = 'Autorisation de gérer les commentaires';
-$lang['comments.config.max-links-comment'] = 'Nombre de liens autorisés dans un commentaire';
-$lang['comments.config.forbidden-tags'] = 'Types de formatage interdits';
+$lang['comments.config.authorization'] = 'Authorizations';
+$lang['comments.config.authorization-read'] = 'Authorization to see the comments';
+$lang['comments.config.authorization-post'] = 'Authorization to post a comment';
+$lang['comments.config.authorization-moderation'] = 'Authorization to management a comments';
+$lang['comments.config.max-links-comment'] = 'Number of links allowed in a comment';
+$lang['comments.config.forbidden-tags'] = 'Types of formatting allowed';
 
-$lang['number-required'] = 'La valeur saisi doit être un nombre';
+$lang['number-required'] = 'The value entered must be a number';
 
 ?>
