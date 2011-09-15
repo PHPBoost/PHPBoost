@@ -83,7 +83,6 @@ class FormFieldMultipleSelectChoice extends AbstractFormField
     			return $identifier;
     		}
     	}
-    	throw new FormBuilderException('option ' . $identifier . ' not found');
     }
     
 	public function retrieve_value()

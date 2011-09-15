@@ -116,10 +116,16 @@ class AdminMemberEditController extends AdminController
 		
 		$fieldset->add_field(new FormFieldMultipleSelectChoice('groups', $this->lang['members.groups'], explode('|', $row['user_groups']), $this->get_groups()));
 		
-		$fieldset = new FormFieldsetHTML('punishment_management', $this->lang['members.punishment-management']);
-		$form->add_fieldset($fieldset);
+		$fieldset_punishment = new FormFieldsetHTML('punishment_management', $this->lang['members.punishment-management']);
+		$form->add_fieldset($fieldset_punishment);
+
+		$fieldset_punishment->add_field(new FormFieldCheckbox('delete_account', LangLoader::get_message('del_member', 'main'), FormFieldCheckbox::UNCHECKED));
 		
-		$fieldset->add_field(new FormFieldCheckbox('delete_account', LangLoader::get_message('del_member', 'main'), FormFieldCheckbox::UNCHECKED));
+		$fieldset_punishment->add_field(new FormFieldMemberCaution('user_warning', $this->lang['members.caution'], $row['user_warning']));
+		
+		$fieldset_punishment->add_field(new FormFieldMemberSanction('user_readonly', $this->lang['members.readonly'], $row['user_readonly']));
+		
+		$fieldset_punishment->add_field(new FormFieldMemberSanction('user_ban', $this->lang['members.bannish'], $row['user_ban']));
 		
 		$member_extended_field = new MemberExtendedField();
 		$member_extended_field->set_template($form);
@@ -162,6 +168,32 @@ class AdminMemberEditController extends AdminController
 			$columns = array('password' => $this->form->get_value('password'));
 			$parameters = array('user_id' => $this->user_id);
 			PersistenceContext::get_querier()->update(DB_TABLE_MEMBER, $columns, $condition, $parameters);
+		}
+		
+		$user_warning = $this->form->get_value('user_warning');
+		if (!empty($user_warning))
+		{
+			MemberSanctionManager::caution($this->user_id, $user_warning);
+		}
+		
+		$user_readonly = $this->form->get_value('user_readonly');
+		if (!empty($user_readonly))
+		{
+			MemberSanctionManager::remove_write_permissions($this->user_id, $user_readonly);
+		}
+		else
+		{
+			MemberSanctionManager::restore_write_permissions($this->user_id);
+		}
+		
+		$user_ban = $this->form->get_value('user_readonly');
+		if (!empty($user_ban))
+		{
+			MemberSanctionManager::banish($this->user_id, $user_ban);
+		}
+		else
+		{
+			MemberSanctionManager::cancel_banishment($this->user_id);
 		}
 		
 		StatsCache::invalidate();

@@ -38,7 +38,7 @@ class FormFieldMemberSanction extends FormFieldSimpleSelectChoice
      * @desc Constructs a FormFieldMemberSanction.
      * @param string $id Field id
      * @param string $label Field label
-     * @param mixed $value Default value (either a FormFieldEnumOption object or a string corresponding to the FormFieldEnumOption's raw value)
+     * @param timestamp $value Default value
      * @param string[] $field_options Map of the field options (this field has no specific option, there are only the inherited ones)
      * @param FormFieldConstraint List of the constraints
      */
@@ -51,7 +51,7 @@ class FormFieldMemberSanction extends FormFieldSimpleSelectChoice
 
     private function generate_options()
 	{
-		$sanctions = $this->get_sanctions();
+		$sanctions = $this->get_sanctions_duration();
 		$options = array();
 		foreach ($sanctions as $duration => $name)
 		{
@@ -101,7 +101,7 @@ class FormFieldMemberSanction extends FormFieldSimpleSelectChoice
 			'1209600' => '2 ' . $this->lang['weeks'], 
 			'2419200' => '1 ' . $this->lang['month'], 
 			'4838400' => '2 ' . $this->lang['month'],
-			'326592000' => $LANG['illimited']
+			'326592000' => $this->lang['illimited']
 		);
 	}
 }
