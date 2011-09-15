@@ -3,7 +3,7 @@
  *                        AbstractNewsletterMail.class.php
  *                            -------------------
  *   begin                : February 1, 2011
- *   copyright            : (C) 2011 Kévin MASSY
+ *   copyright            : (C) 2011 KÃ©vin MASSY
  *   email                : soldier.weasel@gmail.com
  *
  *  
@@ -26,7 +26,7 @@
  ###################################################*/
 
 /**
- * @author Kévin MASSY <soldier.weasel@gmail.com>
+ * @author KÃ©vin MASSY <soldier.weasel@gmail.com>
  */
 abstract class AbstractNewsletterMail implements NewsletterMailType
 {
@@ -62,7 +62,7 @@ abstract class AbstractNewsletterMail implements NewsletterMailType
 	 */
 	public function add_unsubscribe_link()
 	{
-		return '<br /><br /><a href="' . GeneralConfig::load()->set_site_url() . GeneralConfig::load()->get_site_path() . '/newsletter/index.php?url=/unsubscribe/">' . $this->lang['unsubscribe_newsletter'] . '</a><br /><br />';
+		return '<br /><br /><a href="' . GeneralConfig::load()->get_site_url() . GeneralConfig::load()->get_site_path() . '/newsletter/index.php?url=/unsubscribe/">' . $this->lang['unsubscribe_newsletter'] . '</a><br /><br />';
 	}
 }
 
