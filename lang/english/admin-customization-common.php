@@ -32,7 +32,7 @@
 $lang = array();
 $lang['customization'] = 'Customization';
 
-$lang['customization.interface'] = 'Customization interface ';
+$lang['customization.interface'] = 'Customization interface';
 $lang['customization.interface.success'] = 'Modifications to successfully';
 $lang['customization.interface.all-themes'] = 'All themes';
 $lang['customization.interface.select-theme'] = 'Select the theme you want to attribute changes';
