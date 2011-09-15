@@ -148,7 +148,7 @@ class MemberExtendedFieldsFactory
 		{
 			return (string)$field_type;
 		}
-		throw new Exception($name_class);
+		return '';
 	}
 }
 ?>
