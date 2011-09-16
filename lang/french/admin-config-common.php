@@ -116,12 +116,12 @@ $lang = array(
 	'advanced-config.debug-mode.type.strict' => 'Stricte',
 
 	'advanced-config.unlock-code.title' => 'Mail à conserver',
-	'advanced-config.unlock-code.content' => 'Code à conserver (Il ne vous sera plus délivré) : %s
+	'advanced-config.unlock-code.content' => 'Code à conserver (Il ne vous sera plus délivré) : :unlock_code
 		<br /><br />
 		Ce code permet le déverrouillage de l\'administration en cas de tentative d\'intrusion dans l\'administration par un utilisateur mal intentionné.
-		Il vous sera demandé dans le formulaire de connexion directe à l\'administration : %s/admin/admin_index.php
+		Il vous sera demandé dans le formulaire de connexion directe à l\'administration : :host_dir/admin/admin_index.php
 		<br /><br />
-		%s'
+		:signature'
 
 );
 ?>

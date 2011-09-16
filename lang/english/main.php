@@ -497,19 +497,19 @@ $LANG['quote_last_msg'] = 'Repost of the preceding message';
 $LANG['forget_pass'] = 'Forgotten password';
 $LANG['change_password'] = 'Change password';
 $LANG['forget_pass_send'] = 'Fill the form to receive a mail with an activation key to change your password';
-$LANG['forget_mail_pass'] = 'Dear %s,
+$LANG['forget_mail_pass'] = 'Dear :login,
 
-You have received this email because you (or someone who pretends to be you) asked for a new password for your account on %s. 
-If you have not asked for this new password, please ignore this mail. If you receive another message, contact the website administrator.
+You have received this email because you (or someone who pretends to be you) asked for a new password for your account on :host. 
+If you have not requested this new password, please ignore this email. If you receive another message, contact the website administrator.
 
 To change your password, you have to click on the link below and follow the instructions on the website:
 
-%s/member/forget.php?u=%d&activ=%s
+:host_dir/member/index.php?url=/forget/:key
 
 
 If you encounter issues, contact the administrator.
 
-%s';
+:signature';
 
 //Gestion des fichiers
 $LANG['confim_del_file'] = 'Delete this file?';
