@@ -496,18 +496,18 @@ $LANG['quote_last_msg'] = 'Reprise du message précédent';
 $LANG['forget_pass'] = 'Mot de passe oublié';
 $LANG['change_password'] = 'Changement de mot de passe';
 $LANG['forget_pass_send'] = 'Renseignez le formulaire pour recevoir un mail avec une clé d\'activation pour pouvoir changer votre mot de passe';
-$LANG['forget_mail_pass'] = 'Cher(e) %s,
+$LANG['forget_mail_pass'] = 'Cher(e) :login,
 
-Vous recevez cet e-mail parce que vous (ou quelqu\'un qui prétend l\'être) avez demandé à ce qu\'un nouveau mot de passe vous soit envoyé pour votre compte sur %s. 
+Vous recevez cet e-mail parce que vous (ou quelqu\'un qui prétend l\'être) avez demandé à ce qu\'un nouveau mot de passe vous soit envoyé pour votre compte sur :host. 
 Si vous n\'avez pas demandé de changement de mot de passe, veuillez l\'ignorer. Si vous continuez à le recevoir, veuillez contacter l\'administrateur du site.
 
 Pour changer de mot de passe, cliquez sur le lien fourni ci-dessous et suivez les indications sur le site.
 
-%s/member/index.php?url=/forget/%s
+:host_dir/member/index.php?url=/forget/:key
 
 Si vous rencontrez des difficultés, veuillez contacter l\'administrateur du site.
 
-%s';
+:signature';
 
 //Gestion des fichiers
 $LANG['confim_del_file'] = 'Supprimer ce fichier?';

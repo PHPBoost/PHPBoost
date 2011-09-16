@@ -120,12 +120,12 @@ $lang = array(
 	'advanced-config.debug-mode.type.strict' => 'Strict',
 
 	'advanced-config.unlock-code.title' => 'Mail to keep',
-	'advanced-config.unlock-code.content' => 'Keep this code (it will never be redelivered): %s
+	'advanced-config.unlock-code.content' => 'Keep this code (it will never be redelivered): :unlock_code
 		<br /><br />
 		This code can unlock the administration panel in case of intrusion attempt.
-		It will be asked of you in the direct administration connection form : %s/admin/admin_index.php)
+		It will be asked of you in the direct administration connection form : :host_dir/admin/admin_index.php)
 		<br/><br/>
-		%s'
+		:signature'
 );
 
 ?>
