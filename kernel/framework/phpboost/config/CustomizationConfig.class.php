@@ -43,6 +43,28 @@ class CustomizationConfig extends AbstractConfigData
 		$this->set_property(self::FAVICON_PATH, $path);
 	}
 	
+	public function favicon_exists()
+	{
+		$favicon_path = $this->get_favicon_path();
+		if (!empty($favicon_path) || $favicon_path !== null)
+		{
+			$favicon_file = new File(PATH_TO_ROOT . $favicon_path);
+			return $favicon_file->exists();
+		}
+		return false;
+	}
+	
+	public function favicon_type()
+	{
+		$favicon_path = $this->get_favicon_path();
+		if (!empty($favicon_path) || $favicon_path !== null)
+		{
+			$favicon = new Image(PATH_TO_ROOT . $favicon_path);
+			return $favicon->get_mime_type();
+		}
+		return null;
+	}
+	
 	public function set_header_logo_path_all_themes($path)
 	{
 		$this->set_property(self::HEADER_LOGO_PATH_ALL_THEMES, $path);
@@ -56,7 +78,7 @@ class CustomizationConfig extends AbstractConfigData
 	public function get_default_values()
 	{
 		return array(
-			self::FAVICON_PATH => null,
+			self::FAVICON_PATH => '/favicon.ico',
 			self::HEADER_LOGO_PATH_ALL_THEMES => null
 		);
 	}

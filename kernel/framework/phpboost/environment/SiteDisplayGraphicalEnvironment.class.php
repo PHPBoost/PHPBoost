@@ -66,9 +66,17 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 
 		$general_config = GeneralConfig::load();
 
+		$customization_config = CustomizationConfig::load();
+		
 		$template->put_all(array(
-			'SITE_NAME' => $general_config->get_site_name(),
 			'C_BBCODE_TINYMCE_MODE' => AppContext::get_user()->get_attribute('user_editor') == 'tinymce',
+			'SITE_NAME' => $general_config->get_site_name(),
+			'C_MAINTAIN_DELAY' => false,
+			'C_COMPTEUR' => false,
+			'C_MENUS_RIGHT_CONTENT' => false,
+			'C_FAVICON' => $customization_config->favicon_exists(),
+			'FAVICON' => PATH_TO_ROOT . $customization_config->get_favicon_path(),
+			'FAVICON_TYPE' => $customization_config->favicon_type(),
 			'TITLE' => $this->get_page_title(),
 			'SITE_DESCRIPTION' => $general_config->get_site_description(),
 			'SITE_KEYWORD' => $general_config->get_site_keywords(),
@@ -77,9 +85,7 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 			'L_XML_LANGUAGE' => LangLoader::get_message('xml_lang', 'main'),
 			'L_VISIT' => LangLoader::get_message('guest_s', 'main'),
 			'L_TODAY' => LangLoader::get_message('today', 'main'),
-			'C_MAINTAIN_DELAY' => false,
-			'C_COMPTEUR' => false,
-			'C_MENUS_RIGHT_CONTENT' => false
+			
 		));
 
 		$this->display_counter($template);

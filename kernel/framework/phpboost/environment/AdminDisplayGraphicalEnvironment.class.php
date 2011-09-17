@@ -187,14 +187,19 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 
 		$include_tinymce_js = AppContext::get_user()->get_attribute('user_editor') == 'tinymce';
 
+		$customization_config = CustomizationConfig::load();
+		
 		$header_tpl->put_all(array(
-			'L_XML_LANGUAGE' => self::$lang['xml_lang'],
+			'C_BBCODE_TINYMCE_MODE' => $include_tinymce_js,
+			'C_FAVICON' => $customization_config->favicon_exists(),
+			'FAVICON' => PATH_TO_ROOT . $customization_config->get_favicon_path(),
+			'FAVICON_TYPE' => $customization_config->favicon_type(),
 			'SITE_NAME' => GeneralConfig::load()->get_site_name(),
 			'TITLE' => $this->get_page_title(),
 			'PATH_TO_ROOT' => TPL_PATH_TO_ROOT,
 			'THEME_CSS' => $this->get_theme_css_files_html_code(),
 			'MODULES_CSS' => $this->get_modules_css_files_html_code(),
-			'C_BBCODE_TINYMCE_MODE' => $include_tinymce_js,
+			'L_XML_LANGUAGE' => self::$lang['xml_lang'],
 			'L_EXTEND_MENU' => self::$lang_admin['extend_menu'],
 		));
 
