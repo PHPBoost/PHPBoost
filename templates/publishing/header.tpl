@@ -16,7 +16,10 @@
 		<!-- Modules CSS -->
 		{MODULES_CSS}
 
-		<link rel="shortcut icon" href="{PATH_TO_ROOT}/favicon.ico" type="image/x-icon" />
+		# IF C_FAVICON #
+		<link rel="shortcut icon" href="{FAVICON}" type="{FAVICON_TYPE}" />
+		# ENDIF #
+		
 		<link rel="alternate" href="{PATH_TO_ROOT}/syndication.php?m=news" type="application/rss+xml" title="RSS {SITE_NAME}" />
 		
 		<script type="text/javascript">

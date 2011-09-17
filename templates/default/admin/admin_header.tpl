@@ -11,7 +11,9 @@
 		<!-- Theme CSS -->
 		{THEME_CSS}
 		
-		<link rel="shortcut icon" href="{PATH_TO_ROOT}/favicon.ico" type="image/x-icon" />
+		# IF C_FAVICON #
+		<link rel="shortcut icon" href="{FAVICON}" type="{FAVICON_TYPE}" />
+		# ENDIF #
 		
 		<script type="text/javascript">
 		<!--
