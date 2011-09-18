@@ -35,7 +35,7 @@
  */
 class FormFieldMultipleSelectChoice extends AbstractFormField
 {
-	private $available_options;
+	private $selected_options;
 	
     /**
      * @desc Constructs a FormFieldMultipleSelectChoice.
@@ -49,8 +49,13 @@ class FormFieldMultipleSelectChoice extends AbstractFormField
     public function __construct($id, $label, array $selected_options, array $available_options, array $field_options = array(), array $constraints = array())
     {
         parent::__construct($id, $label, $selected_options, $field_options, $constraints);
-        $this->available_options = $available_options;
-		$this->set_selected_options($selected_options);
+		
+    	foreach ($available_options as $option)
+        {
+            $this->add_option($option);
+        }
+        
+        $this->set_selected_options($selected_options);
     }
     
 	private function set_selected_options(array $selected_options)
@@ -60,7 +65,7 @@ class FormFieldMultipleSelectChoice extends AbstractFormField
     	{
     		if (is_string($option))
     		{
-    			$value[] = $this->validate_option($option);
+    			$value[] = $this->get_option($option);
     		}
     		else if ($option instanceof FormFieldSelectChoiceOption)
     		{
@@ -71,20 +76,9 @@ class FormFieldMultipleSelectChoice extends AbstractFormField
     			throw new FormBuilderException('option ' . $option . ' isn\'t recognized');
     		}
     	}
-    	$this->set_value($value);
+    	$this->selected_options = $value;
     }
-    
-    private function validate_option($identifier)
-    {
-    	foreach ($this->available_options as $option)
-    	{
-    		if ($option->get_raw_value() == $identifier || $option->get_label() == $identifier)
-    		{
-    			return $identifier;
-    		}
-    	}
-    }
-    
+	
 	public function retrieve_value()
     {
 		$request = AppContext::get_request();
@@ -128,31 +122,68 @@ class FormFieldMultipleSelectChoice extends AbstractFormField
 			'L_UNSELECT_ALL' => $lang['select_none'],
 			'L_SELECT_EXPLAIN' => $lang['explain_select_multiple']
         ));
-		
-        foreach ($this->available_options as $option)
+        
+        
+        foreach ($this->get_options() as $multiple_select_option)
         {
-			$select = $this->is_selected($option);
-			if ($select)
-			{
-				$option->set_active();
-			}
+        	if ($multiple_select_option instanceof FormFieldSelectChoiceGroupOption)
+        	{
+        		foreach ($multiple_select_option->get_options() as $option)
+        		{
+	        		$select = $this->is_selected($option);
+					if ($select)
+					{
+						$option->set_active();
+					}
+        		}
+        	}
+        	else
+        	{
+				$select = $this->is_selected($multiple_select_option);
+				if ($select)
+				{
+					$multiple_select_option->set_active();
+				}
+        	}
 			
-            $tpl->assign_block_vars('options', array(), array(
-				'OPTION' => $option->display()
+            $tpl->assign_block_vars('options', array(
+				'OPTION' => $multiple_select_option->display()
             ));
         }
-
         return $tpl;
     }
 	
 	private function is_selected($option)
     {
-    	return in_array($option->get_raw_value(), $this->get_value()); 
+    	return in_array($option, $this->selected_options);
     }
 
     protected function get_default_template()
     {
         return new FileTemplate('framework/builder/form/FormField.tpl');
+    }
+    
+	private function add_option(FormFieldEnumOption $option)
+    {
+        $option->set_field($this);
+        $this->options[] = $option;
+    }
+    
+	private function get_options()
+    {
+        return $this->options;
+    }
+    
+	private function get_option($raw_option)
+    {
+        foreach ($this->options as $option)
+        {
+            if ($option->get_raw_value() == $raw_option)
+            {
+                return $option;
+            }
+        }
+        return null;
     }
 }
 ?>
