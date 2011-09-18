@@ -121,7 +121,9 @@ $lang = array(
 		Ce code permet le déverrouillage de l\'administration en cas de tentative d\'intrusion dans l\'administration par un utilisateur mal intentionné.
 		Il vous sera demandé dans le formulaire de connexion directe à l\'administration : :host_dir/admin/admin_index.php
 		<br /><br />
-		:signature'
+		:signature',
+	'advanced-config.code_sent_success' => 'Le code a été envoyé avec succès',
+	'advanced-config.code_sent_fail' => 'Une erreur est survenue dans l\'envoi du code'
 
 );
 ?>

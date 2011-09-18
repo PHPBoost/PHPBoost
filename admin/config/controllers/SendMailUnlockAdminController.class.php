@@ -38,12 +38,12 @@ class SendMailUnlockAdminController extends AdminController
 		
 		if ($this->send_mail() == true)
 		{
-			$controller = new UserErrorController('Code de déverrouillage', 'Le code a été envoyé avec succès', 1);
+			$controller = new UserErrorController($this->lang['advanced-config.unlock-administration'], $this->lang['advanced-config.code_sent_success'], 1);
 			DispatchManager::redirect($controller);
 		}
 		else 
 		{
-			$controller = new UserErrorController('Code de déverrouillage', 'Une erreur est survenue dans l\'envoi du code', 4);
+			$controller = new UserErrorController($this->lang['advanced-config.unlock-administration'], $this->lang['advanced-config.code_sent_fail'], 4);
 			DispatchManager::redirect($controller);
 		}
 	}

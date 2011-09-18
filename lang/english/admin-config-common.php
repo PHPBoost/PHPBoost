@@ -125,7 +125,9 @@ $lang = array(
 		This code can unlock the administration panel in case of intrusion attempt.
 		It will be asked of you in the direct administration connection form : :host_dir/admin/admin_index.php)
 		<br/><br/>
-		:signature'
+		:signature',
+	'advanced-config.code_sent_success' => 'The unlock code has been succesfully sent',
+	'advanced-config.code_sent_fail' => 'The sending of the unlock code failed'
 );
 
 ?>
