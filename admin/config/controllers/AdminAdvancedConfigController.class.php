@@ -31,7 +31,7 @@ class AdminAdvancedConfigController extends AdminController
 	private $general_config;
 	private $server_environment_config;
 	private $sessions_config;
-	private static $dispatcher = '/admin/config/index.php';
+	private $dispatcher = '/admin/config/index.php';
 	private $form;
 	private $submit_button;
 
@@ -224,7 +224,7 @@ class AdminAdvancedConfigController extends AdminController
 		ServerEnvironmentConfig::save();
 	}
 	
-	private static function get_unlock_administration_url()
+	private function get_unlock_administration_url()
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/advanced/unlock/')->absolute();
 	}
