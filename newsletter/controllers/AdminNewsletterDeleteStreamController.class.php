@@ -56,8 +56,7 @@ class AdminNewsletterDeleteStreamController extends AdminController
 	
 	private static function stream_exist($id)
 	{
-		$exist_stream = NewsletterStreamsCache::load()->get_existed_stream($id);
-		return $exist_stream;
+		return NewsletterStreamsCache::load()->get_existed_stream($id);
 	}
 }
 

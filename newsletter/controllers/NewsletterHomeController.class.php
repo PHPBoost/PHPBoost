@@ -50,9 +50,9 @@ class NewsletterHomeController extends AbstractController
 		$this->view->put_all(array(
 			'C_STREAMS' => (float)$nbr_streams,
 			'C_CREATE_AUTH' => NewsletterAuthorizationsService::default_authorizations()->create_newsletters(),
-			'LINK_CREATE' => DispatchManager::get_url('/newsletter', '/add')->absolute(),
-			'LINK_SUBSCRIBE' => DispatchManager::get_url('/newsletter', '/subscribe')->absolute(),
-			'LINK_UNSUBSCRIBE' => DispatchManager::get_url('/newsletter', '/unsubscribe')->absolute(),
+			'LINK_CREATE' => NewsletterUrlBuilder::add_newsletter()->absolute(),
+			'LINK_SUBSCRIBE' => NewsletterUrlBuilder::subscribe()->absolute(),
+			'LINK_UNSUBSCRIBE' => NewsletterUrlBuilder::unsubscribe()->absolute(),
 			'PAGINATION' => $pagination->export()->render()
 		));
 
@@ -77,8 +77,8 @@ class NewsletterHomeController extends AbstractController
 					'PICTURE' => PATH_TO_ROOT . $row['picture'],
 					'NAME' => $row['name'],
 					'DESCRIPTION' => $row['description'],
-					'VIEW_ARCHIVES' => $read_archives_auth ? '<a href="' . DispatchManager::get_url('/newsletter', '/archives/'. $row['id'])->absolute() . '">'. $this->lang['newsletter.view_archives'] .'</a>' : $this->lang['newsletter.not_level'],
-					'VIEW_SUBSCRIBERS' => $read_subscribers_auth ? '<a href="' . DispatchManager::get_url('/newsletter', '/subscribers/'. $row['id'])->absolute() . '">'. $this->lang['newsletter.view_subscribers'] .'</a>' : $this->lang['newsletter.not_level'],
+					'VIEW_ARCHIVES' => $read_archives_auth ? '<a href="' . NewsletterUrlBuilder::archives($row['id'])->absolute() . '">'. $this->lang['newsletter.view_archives'] .'</a>' : $this->lang['newsletter.not_level'],
+					'VIEW_SUBSCRIBERS' => $read_subscribers_auth ? '<a href="' . NewsletterUrlBuilder::subscribers($row['id'])->absolute() . '">'. $this->lang['newsletter.view_subscribers'] .'</a>' : $this->lang['newsletter.not_level'],
 				));
 			}
 		}
@@ -95,8 +95,8 @@ class NewsletterHomeController extends AbstractController
 	{
 		$response = new SiteDisplayResponse($view);
 		$breadcrumb = $response->get_graphical_environment()->get_breadcrumb();
-		$breadcrumb->add($this->lang['newsletter'], PATH_TO_ROOT . '/newsletter/');
-		$breadcrumb->add($this->lang['newsletter.list_newsletters'], DispatchManager::get_url('/newsletter', '')->absolute());
+		$breadcrumb->add($this->lang['newsletter'], NewsletterUrlBuilder::home()->absolute());
+		$breadcrumb->add($this->lang['newsletter.list_newsletters'], NewsletterUrlBuilder::home()->absolute());
 		$response->get_graphical_environment()->set_page_title($this->lang['newsletter.list_newsletters']);
 		return $response;
 	}

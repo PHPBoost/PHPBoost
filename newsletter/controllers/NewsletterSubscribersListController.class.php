@@ -41,7 +41,7 @@ class NewsletterSubscribersListController extends AbstractController
 		
 		if ($this->id_stream == 0)
 		{
-			AppContext::get_response()->redirect(DispatchManager::get_url('/newsletter')->absolute());
+			AppContext::get_response()->redirect(NewsletterUrlBuilder::home()->absolute());
 		}
 		
 		$this->init();
@@ -75,12 +75,12 @@ class NewsletterSubscribersListController extends AbstractController
 		$nbr_pages =  ceil($nbr_subscribers / $this->nbr_subscribers_per_page);
 		$pagination = new Pagination($nbr_pages, $current_page);
 		
-		$pagination->set_url_sprintf_pattern(DispatchManager::get_url('/newsletter', '/subscribers/'. $this->id_stream .'/'. $field .'/'. $sort .'/%d')->absolute());
+		$pagination->set_url_sprintf_pattern(NewsletterUrlBuilder::subscribers($this->id_stream .'/'. $field .'/'. $sort .'/%d')->absolute());
 		$this->view->put_all(array(
 			'C_SUBSCRIBERS' => (float)$nbr_subscribers,
-			'C_SUBSCRIPTION' => DispatchManager::get_url('/newsletter', '/subscribe/')->absolute(),
-			'SORT_PSEUDO_TOP' => DispatchManager::get_url('/newsletter', '/subscribers/'. $this->id_stream .'/pseudo/top/'. $current_page)->absolute(),
-			'SORT_PSEUDO_BOTTOM' => DispatchManager::get_url('/newsletter', '/subscribers/'. $this->id_stream .'/pseudo/bottom/'. $current_page)->absolute(),
+			'C_SUBSCRIPTION' => NewsletterUrlBuilder::subscribe()->absolute(),
+			'SORT_PSEUDO_TOP' => NewsletterUrlBuilder::subscribers($this->id_stream .'/pseudo/top/'. $current_page)->absolute(),
+			'SORT_PSEUDO_BOTTOM' => NewsletterUrlBuilder::subscribers($this->id_stream .'/pseudo/bottom/'. $current_page)->absolute(),
 			'PAGINATION' => $pagination->export()->render()
 		));
 
@@ -105,8 +105,8 @@ class NewsletterSubscribersListController extends AbstractController
 				$pseudo = $row['user_id'] > 0 ? '<a href="'. DispatchManager::get_url('/member', '/profile/'. $row['user_id'] . '/')->absolute() .'">'. $row['login'] .'</a>' : $this->lang['newsletter.visitor'];
 				$this->view->assign_block_vars('subscribers_list', array(
 					'C_AUTH_MODO' => $moderation_auth && $row['user_id'] > 0,
-					'EDIT_LINK' => empty($row['user_id']) ? DispatchManager::get_url('/newsletter', '/subscriber/'. $row['id'] .'/edit/')->absolute() : '',
-					'DELETE_LINK' => DispatchManager::get_url('/newsletter', '/subscriber/'. $row['id'] .'/delete/'. $this->id_stream)->absolute(),
+					'EDIT_LINK' => empty($row['user_id']) ? NewsletterUrlBuilder::edit_subscriber($row['id'])->absolute() : '',
+					'DELETE_LINK' => NewsletterUrlBuilder::delete_subscribe($row['id'])->absolute(),
 					'PSEUDO' => $pseudo,
 					'MAIL' => $row['user_id'] > 0 ? $row['user_mail'] : $row['mail']
 				));
@@ -127,9 +127,9 @@ class NewsletterSubscribersListController extends AbstractController
 	{
 		$response = new SiteDisplayResponse($view);
 		$breadcrumb = $response->get_graphical_environment()->get_breadcrumb();
-		$breadcrumb->add($this->lang['newsletter'], PATH_TO_ROOT . '/newsletter/');
+		$breadcrumb->add($this->lang['newsletter'], NewsletterUrlBuilder::home()->absolute());
 		$name_page = $this->lang['newsletter.subscribers'] . ' : ' . $this->stream_cache['name'];
-		$breadcrumb->add($name_page, DispatchManager::get_url('/newsletter', '/subscribers/'. $this->id_stream)->absolute());
+		$breadcrumb->add($name_page, NewsletterUrlBuilder::subscribers($this->id_stream)->absolute());
 		$response->get_graphical_environment()->set_page_title($name_page);
 		return $response;
 	}

@@ -91,8 +91,8 @@ class NewslettersubscribeController extends ModuleController
 	{
 		$response = new SiteDisplayResponse($view);
 		$breadcrumb = $response->get_graphical_environment()->get_breadcrumb();
-		$breadcrumb->add($this->lang['newsletter'], PATH_TO_ROOT . '/newsletter/');
-		$breadcrumb->add($this->lang['subscribe.newsletter'], DispatchManager::get_url('/newsletter', '/subscribe/')->absolute());
+		$breadcrumb->add($this->lang['newsletter'], NewsletterUrlBuilder::home()->absolute());
+		$breadcrumb->add($this->lang['subscribe.newsletter'], NewsletterUrlBuilder::subscribe()->absolute());
 		$response->get_graphical_environment()->set_page_title($this->lang['subscribe.newsletter']);
 		
 		return $response;

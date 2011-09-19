@@ -34,11 +34,11 @@ class AdminNewsletterDisplayResponse extends AdminMenuDisplayResponse
 		$lang = LangLoader::get('newsletter_common', 'newsletter');
 		$picture = '/newsletter/newsletter.png';
 		$this->set_title($lang['newsletter']);
-		$this->add_link($lang['newsletter.home'], DispatchManager::get_url('/newsletter', ''), $picture);
-		$this->add_link($lang['newsletter.archives'], DispatchManager::get_url('/newsletter', '/archives'), $picture);
-		$this->add_link($lang['newsletter.streams'], DispatchManager::get_url('/newsletter', '/admin/streams'), $picture);
-		$this->add_link($lang['streams.add'], DispatchManager::get_url('/newsletter', '/admin/streams/add'), $picture);
-		$this->add_link($lang['newsletter.config'], DispatchManager::get_url('/newsletter', '/admin/config'), $picture);
+		$this->add_link($lang['newsletter.home'], NewsletterUrlBuilder::home(), $picture);
+		$this->add_link($lang['newsletter.archives'], NewsletterUrlBuilder::archives(), $picture);
+		$this->add_link($lang['newsletter.streams'], NewsletterUrlBuilder::streams(), $picture);
+		$this->add_link($lang['streams.add'], NewsletterUrlBuilder::home_add_newsletter(), $picture);
+		$this->add_link($lang['newsletter.config'], NewsletterUrlBuilder::configuration(), $picture);
 
 		$env = $this->get_graphical_environment();
 		$env->set_page_title($title_page);

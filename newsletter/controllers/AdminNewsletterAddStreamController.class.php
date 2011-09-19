@@ -53,6 +53,7 @@ class AdminNewsletterAddStreamController extends AdminController
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save();
+			$this->regenerate_cache();
 			$tpl->put('MSG', MessageHelper::display($this->lang['admin.success-add-stream'], E_USER_SUCCESS, 4));
 		}
 
@@ -134,7 +135,10 @@ class AdminNewsletterAddStreamController extends AdminController
 				'visible' => (int)$this->form->get_value('visible'),
 				'auth' => $auth
 		));
-		
+	}
+	
+	private function regenerate_cache()
+	{
 		NewsletterStreamsCache::invalidate();
 	}
 }
