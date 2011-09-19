@@ -42,7 +42,7 @@ class RanksCache implements CacheData
 		
 		$result = $db_connection->query_while("SELECT id, name, msg, icon, special
 			FROM " . PREFIX . "ranks
-			ORDER BY msg DESC", __LINE__, __FILE__);
+			ORDER BY msg ASC", __LINE__, __FILE__);
 		
 		while ($row = $db_connection->fetch_assoc($result))
 		{

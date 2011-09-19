@@ -52,5 +52,9 @@ $lang['enable_apc'] = 'Enable APC cache';
 $lang['apc_available'] = 'Availability of the APC extension';
 $lang['explain_apc_available'] = 'The extension is available on a few servers. If it\'s not available, you cannot benefit from the performance improvement.';
 $lang['cache_config_changed_successfully'] = 'The cache configuration has been changed successfully';
+$lang['css_cache'] = 'Cache CSS';
+$lang['explain_css_cache'] = '<p>PHPBoost caches all the CSS files provided by the themes and modules. 
+Normally, the display site, a set of css files are going to be loaded. The cache CSS meanwhile, will first optimize files and then create a single CSS file hash.</p>
+<p>Via this page in the administration of PHPBoost, you can clear the cache so as to force CSS to recreate PHPBoost CSS files optimized.</p>';
 
 ?>

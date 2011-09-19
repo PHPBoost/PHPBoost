@@ -39,7 +39,7 @@ de façon à ne pas avoir à les demander à la base de données.</p>
 <p>En contre partie, cela signifie que certaines données sont présentes à deux endroits : dans la base de données et sur le serveur web. Si vous modifiez des données dans la base de données, la modification ne se fera peut-être pas immédiatement car le fichier de cache contient encore les anciennes données.
 Dans ce cas, il faut vider le cache à la main via cette page de configuration de façon à ce que PHPBoost soit obligé de générer de nouveaux fichiers de cache contenant les données à jour.
 L\'emplacement de référence des données est la base de données. Si vous modifiez un fichier cache, dès qu\'il sera invalidé car la base de données aura changé, les modifications seront perdues.</p>';
-$lang['syndication_cache'] = 'Syndication';
+$lang['syndication_cache'] = 'Cache syndication';
 $lang['explain_syndication_cache'] = '<p>PHPBoost met en cache l\'ensemble des flux de données (RSS ou ATOM) qui lui sont demandés. En pratique, la première fois qu\'on lui demande un flux, il va le chercher en base de données et il l\'enregistre sur le serveur web et n\'accède plus à la base de données les fois suivantes pour
 éviter des requêtes dans la base de données qui ralentissent considérablement l\'affichage des pages.</p>
 <p>Via cette page de l\'administration de PHPBoost, vous pouvez vider le cache de façon à forcer PHPBoost à rechercher les données dans la base de données. C\'est particulièrement utile si vous avez modifié certaines choses manuellement dans la base de données. En effet, elles ne seront pas prises en compte car le cache aura toujours les valeurs précédentes.</p>';
@@ -52,5 +52,9 @@ $lang['enable_apc'] = 'Activer le cache d\'APC';
 $lang['apc_available'] = 'Disponibilité de l\'extension APC';
 $lang['explain_apc_available'] = 'L\'extension est disponible sur un nombre assez restreint de serveurs. Si elle n\'est pas disponible, vous ne pouvez malheureusement profiter des gains de performances qu\'elle permet d\'obtenir.';
 $lang['cache_config_changed_successfully'] = 'La configuration du cache a été changée avec succès';
+$lang['css_cache'] = 'Cache CSS';
+$lang['explain_css_cache'] = '<p>PHPBoost met en cache l\'ensemble des fichiers CSS fournis par les thèmes et modules. 
+En temps normal, à l\'affichage du site, un ensemble de fichiers css vas être chargés. Le système de cache CSS quant à lui, va d\'abord optimiser les fichiers pour ensuite créer un seul et même fichier CSS condensé.</p>
+<p>Via cette page de l\'administration de PHPBoost, vous pouvez vider le cache CSS de façon à forcer PHPBoost à recréer les fichiers CSS optimisés. </p>';
 
 ?>
