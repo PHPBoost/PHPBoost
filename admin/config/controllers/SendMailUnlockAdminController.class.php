@@ -27,7 +27,6 @@
 
 class SendMailUnlockAdminController extends AdminController 
 {
-	private $unlock_admin_clean;
 	private $lang;
 	
 	public function execute(HTTPRequest $request)
