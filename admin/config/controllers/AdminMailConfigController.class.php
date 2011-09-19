@@ -154,7 +154,7 @@ class AdminMailConfigController extends AbstractAdminFormPageController
 </script>
 # INCLUDE form #');
 		$tpl->put('form', $view);
-		return new AdminConfigDisplayResponse($tpl);
+		return new AdminConfigDisplayResponse($tpl, $this->lang['mail-config']);
 	}
 }
 ?>

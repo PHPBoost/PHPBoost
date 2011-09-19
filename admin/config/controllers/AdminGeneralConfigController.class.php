@@ -57,7 +57,7 @@ class AdminGeneralConfigController extends AdminController
 
 		$this->tpl->put('FORM', $this->form->display());
 
-		return new AdminConfigDisplayResponse($this->tpl);
+		return new AdminConfigDisplayResponse($this->tpl, $this->lang['general-config']);
 	}
 
 	private function init()
