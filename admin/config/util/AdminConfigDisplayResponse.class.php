@@ -27,7 +27,7 @@
 
 class AdminConfigDisplayResponse extends AdminMenuDisplayResponse
 {
-	public function __construct($view)
+	public function __construct($view, $title_page)
 	{ 
         parent::__construct($view);
         
@@ -37,6 +37,8 @@ class AdminConfigDisplayResponse extends AdminMenuDisplayResponse
         $this->add_link($lang['general-config'], DispatchManager::get_url('/admin/config/index.php', '/general'), $img);
         $this->add_link($lang['advanced-config'], DispatchManager::get_url('/admin/config/index.php', '/advanced'), $img);
         $this->add_link($lang['mail-config'], DispatchManager::get_url('/admin/config/index.php', '/mail'), $img);
+        $env = $this->get_graphical_environment();
+		$env->set_page_title($title_page);
 	}
 }
 ?>
