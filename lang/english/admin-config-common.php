@@ -127,7 +127,8 @@ $lang = array(
 		<br/><br/>
 		:signature',
 	'advanced-config.code_sent_success' => 'The unlock code has been succesfully sent',
-	'advanced-config.code_sent_fail' => 'The sending of the unlock code failed'
+	'advanced-config.code_sent_fail' => 'The sending of the unlock code failed',
+	'advanced-config.confirm_mail_sending' => 'Do you really want to send the unlock code?'
 );
 
 ?>
