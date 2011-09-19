@@ -51,7 +51,7 @@ s.session_script_title, m.login
 FROM " . DB_TABLE_SESSIONS . " s
 JOIN " . DB_TABLE_MEMBER . " m ON (m.user_id = s.user_id)
 WHERE s.session_time > '" . (time() - SessionsConfig::load()->get_active_session_duration()) . "'
-ORDER BY " . $CONFIG_ONLINE['display_order_online'] . "
+ORDER BY " . OnlineConfig::load()->get_display_order() . "
 " . $Sql->limit($Pagination->get_first_msg(25, 'p'), 25), __LINE__, __FILE__); //Membres enregistrés.
 while ($row = $Sql->fetch_assoc($result))
 {
