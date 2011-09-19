@@ -31,11 +31,10 @@ function online_mini($position, $block)
 {
     if (strpos(SCRIPT, '/online/online.php') === false)
     {
-        global $LANG, $Cache, $Sql, $CONFIG_ONLINE;
+        global $LANG, $Sql;
 
     	//Chargement de la langue du module.
     	load_module_lang('online');
-    	$Cache->load('online');
 
     	$tpl = new FileTemplate('online/online_mini.tpl');
 
@@ -50,7 +49,7 @@ function online_mini($position, $block)
     	FROM " . DB_TABLE_SESSIONS . " s
     	LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = s.user_id
     	WHERE s.session_time > '" . (time() - SessionsConfig::load()->get_active_session_duration()) . "'
-    	ORDER BY " . $CONFIG_ONLINE['display_order_online'], __LINE__, __FILE__); //4 Membres enregistrés max.
+    	ORDER BY " . OnlineConfig::load()->get_display_order(), __LINE__, __FILE__); //4 Membres enregistrés max.
     	while ($row = $Sql->fetch_assoc($result))
     	{
     		if ($i < $CONFIG_ONLINE['online_displayed'])
@@ -92,7 +91,7 @@ function online_mini($position, $block)
 
     	$member_online = $LANG['member_s'] . ' ' . strtolower($LANG['online']);
     	$more = '<br /><a href="../online/online.php' . SID . '" title="' . $member_online . '">' . $member_online . '</a><br />';
-    	$more = ($total_member > $CONFIG_ONLINE['online_displayed']) ? $more : ''; //Plus de 4 membres connectés.
+    	$more = ($total_member > OnlineConfig::load()->get_number_member_displayed()) ? $more : ''; //Plus de 4 membres connectés.
 
     	$l_guest = ($count_visit > 1) ? $LANG['guest_s'] : $LANG['guest'];
     	$l_member = ($count_member > 1) ? $LANG['member_s'] : $LANG['member'];
