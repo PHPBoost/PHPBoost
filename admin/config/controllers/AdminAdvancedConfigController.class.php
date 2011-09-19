@@ -157,8 +157,7 @@ class AdminAdvancedConfigController extends AdminController
 			array('description' => $this->lang['config.not-available'], 'disabled' => true)));
 		}
 		
-		//TODO, send mail for unlock administration
-		$miscellaneous_fieldset->add_field(new FormFieldFree('unlock_administration', $this->lang['advanced-config.unlock-administration'], '<a href="'. self::get_unlock_administration_url() .'">'. $this->lang['advanced-config.unlock-administration.request'] .'</a>', 
+		$miscellaneous_fieldset->add_field(new FormFieldFree('unlock_administration', $this->lang['advanced-config.unlock-administration'], '<a href="'. $this->get_unlock_administration_url() .'" onclick="return confirm(\'Voulez-vous vraiment envoyer le code de déverrouillage ?\');">'. $this->lang['advanced-config.unlock-administration.request'] .'</a>', 
 		array('description' => $this->lang['advanced-config.unlock-administration.explain'])));
 		
 		$miscellaneous_fieldset->add_field(new FormFieldCheckbox('debug_mode_enabled', $this->lang['advanced-config.debug-mode'], Debug::is_debug_mode_enabled(), 
@@ -226,7 +225,7 @@ class AdminAdvancedConfigController extends AdminController
 	
 	private function get_unlock_administration_url()
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/advanced/unlock/')->absolute();
+		return DispatchManager::get_url($this->dispatcher, '/advanced/unlock/')->absolute();
 	}
 	
 	private function clear_cache()
