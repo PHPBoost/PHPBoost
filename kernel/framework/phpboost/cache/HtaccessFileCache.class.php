@@ -110,13 +110,18 @@ class HtaccessFileCache implements CacheData
 		{
 			$id = $module->get_id();
 			$configuration = $module->get_configuration();
-			$this->add_section($id);
-			foreach ($configuration->get_url_rewrite_rules() as $rule)
+			$rules = $configuration->get_url_rewrite_rules();
+			if (!empty($rules))
+			{
+				$this->add_section($id);
+			}
+			foreach ($rules as $rule)
 			{
 				$this->add_line(str_replace('DIR', $this->general_config->get_site_path(), $rule));
 			}
 			if ($eps->provider_exists($id, UrlMappingsExtensionPoint::EXTENSION_POINT))
 			{
+				$this->add_section($id);
 				$provider = $eps->get_provider($id);
 				$url_mappings = $provider->get_extension_point(UrlMappingsExtensionPoint::EXTENSION_POINT);
 				$this->add_url_mapping($url_mappings);
