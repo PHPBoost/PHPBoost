@@ -52,7 +52,7 @@ function online_mini($position, $block)
     	ORDER BY " . OnlineConfig::load()->get_display_order(), __LINE__, __FILE__); //4 Membres enregistrés max.
     	while ($row = $Sql->fetch_assoc($result))
     	{
-    		if ($i < $CONFIG_ONLINE['online_displayed'])
+    		if ($i < OnlineConfig::load()->get_number_member_displayed())
     		{
     			//Visiteurs non pris en compte.
     			if ($row['level'] !== '-1')

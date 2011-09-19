@@ -40,7 +40,8 @@
 - Gérer la nouvelle fonction d'ugrade d'un module (ModuleManager::upgrade($id_module))
 
 ------------------------------------ MODULES -----------------------------------
-- 
+[b]Tous[/b]
+- Séparer la configuration du cache dans les modules (Créer des ModuleConfig pour les modules web, poll, pages, faq (voir Kévin))
 
 #################################################################################
 
