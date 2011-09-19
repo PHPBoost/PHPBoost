@@ -211,7 +211,7 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 	private static function get_subheader_tpl()
 	{
 		$subheader_tpl = new FileTemplate('admin/subheader_menu.tpl');
-		$subheader_tpl->add_lang(self::$lang);
+		$subheader_tpl->add_lang(self::$lang_admin);
 
 		$subheader_tpl->put_all(array(
 			'L_ADMINISTRATION' => self::$lang_admin['administration'],
@@ -259,10 +259,14 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 			'L_THEMES' => self::$lang_admin['themes'],
 			'L_CACHE' => self::$lang_admin['cache'],
 			'L_SYNDICATION' => self::$lang['syndication'],
+			'L_CSS_CACHE_CONFIG' => Langloader::get_message('css_cache', 'admin-cache-common'),
 			'L_CACHE_CONFIG' => LangLoader::get_message('cache_configuration', 'admin-cache-common'),
 			'L_CONTENT_CONFIG' => self::$lang_admin['content_config'],
 			'U_INDEX_SITE' => Environment::get_home_page(),
 		    'L_WEBSITE_UPDATES' => self::$lang_admin['website_updates'],
+			'L_CUSTOMIZATION' => Langloader::get_message('customization', 'admin-customization-common'),
+			'L_CUSTOMIZE_INTERFACE' => Langloader::get_message('interface', 'admin-customization-common'),
+			'L_CUSTOMIZE_FAVICON' => Langloader::get_message('favicon', 'admin-customization-common'),
 			'C_ADMIN_LINKS_1' => false,
 			'C_ADMIN_LINKS_2' => false,
 			'C_ADMIN_LINKS_3' => false,

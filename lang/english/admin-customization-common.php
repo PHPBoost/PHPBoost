@@ -32,6 +32,7 @@
 $lang = array();
 $lang['customization'] = 'Customization';
 
+$lang['interface'] = 'Interface';
 $lang['customization.interface'] = 'Customization interface';
 $lang['customization.interface.success'] = 'Modifications to successfully';
 $lang['customization.interface.all-themes'] = 'All themes';
@@ -42,7 +43,8 @@ $lang['customization.interface.logo.current'] = 'Current logo';
 $lang['customization.interface.logo.current.null'] = 'You currently have no logo';
 $lang['customization.interface.logo.current.erased'] = '<span style="color:#B22222;font-weight:bold;">The logo that you saved is visibly removed from the server, please replace it with another</span>';
 $lang['customization.interface.logo.error'] = 'The logo could not be changed';
-			
+
+$lang['favicon'] = 'Favicon';
 $lang['customization.favicon'] = 'Customizing the favicon';
 $lang['customization.favicon.success'] = 'Change favicon successful';
 $lang['customization.favicon.current'] = 'Current favicon';

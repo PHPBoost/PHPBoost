@@ -90,6 +90,7 @@
 				<ul id="ssmenu32">
 					<li><a href="{PATH_TO_ROOT}/admin/cache/?url=/data/" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/cache_mini.png);">{L_CACHE}</a></li>
 					<li><a href="{PATH_TO_ROOT}/admin/cache/?url=/syndication/" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/rss_mini.png);">{L_SYNDICATION}</a></li>
+					<li><a href="{PATH_TO_ROOT}/admin/cache/?url=/css" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/themes_mini.png);">{L_CSS_CACHE_CONFIG}</a></li>
 					<li><a href="{PATH_TO_ROOT}/admin/cache/?url=/config" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/config_mini.png);">{L_CACHE_CONFIG}</a></li>
 				</ul>
 			</li>		
@@ -99,6 +100,13 @@
 				<ul id="ssmenu33">
 					<li><a href="{PATH_TO_ROOT}/admin/admin_phpinfo.php" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/phpinfo_mini.png);">{L_PHPINFO}</a></li>
 					<li><a href="{PATH_TO_ROOT}/admin/admin_system_report.php" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/system_report_mini.png);">{L_SYSTEM_REPORT}</a></li>
+				</ul>
+			</li>
+			<li class="extend" onmouseover="show_menu(34, 1);" onmouseout="hide_menu(1);">
+				<a href="{PATH_TO_ROOT}/admin/customize/?url=/interface" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/themes_mini.png);">{L_CUSTOMIZATION}</a>
+				<ul id="ssmenu34">
+					<li><a href="{PATH_TO_ROOT}/admin/customize/?url=/interface" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/themes_mini.png);">{L_CUSTOMIZE_INTERFACE}</a></li>
+					<li><a href="{PATH_TO_ROOT}/admin/customize/?url=/favicon" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/themes_mini.png);">{L_CUSTOMIZE_FAVICON}</a></li>
 				</ul>
 			</li>
 			# IF C_ADMIN_LINKS_3 #
