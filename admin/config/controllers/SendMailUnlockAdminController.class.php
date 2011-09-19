@@ -38,11 +38,13 @@ class SendMailUnlockAdminController extends AdminController
 		if ($this->send_mail())
 		{
 			$controller = new UserErrorController($this->lang['advanced-config.unlock-administration'], $this->lang['advanced-config.code_sent_success'], 1);
+			$controller->set_response_classname(UserErrorController::ADMIN_RESPONSE);
 			DispatchManager::redirect($controller);
 		}
 		else 
 		{
 			$controller = new UserErrorController($this->lang['advanced-config.unlock-administration'], $this->lang['advanced-config.code_sent_fail'], 4);
+			$controller->set_response_classname(UserErrorController::ADMIN_RESPONSE);
 			DispatchManager::redirect($controller);
 		}
 	}
