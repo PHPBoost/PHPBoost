@@ -33,10 +33,13 @@ class SendMailUnlockAdminController extends AdminController
 	public function execute(HTTPRequest $request)
 	{
 		$this->init();
-		$this->save_unlock_code();
 		
-		if ($this->send_mail())
+		$unlock_admin_clean = KeyGenerator::generate_key(18);
+		
+		if ($this->send_mail($unlock_admin_clean))
 		{
+			$this->save_unlock_code($unlock_admin_clean);
+			
 			$controller = new UserErrorController($this->lang['advanced-config.unlock-administration'], $this->lang['advanced-config.code_sent_success'], 1);
 			$controller->set_response_classname(UserErrorController::ADMIN_RESPONSE);
 			DispatchManager::redirect($controller);
@@ -59,9 +62,8 @@ class SendMailUnlockAdminController extends AdminController
 		$this->lang = LangLoader::get('admin-config-common');
 	}
 	
-	private function send_mail()
+	private function send_mail($unlock_admin_clean)
 	{        
-        //Préparation du mail
 		$subject = $this->lang['advanced-config.unlock-code.title'] . ' - ' . GeneralConfig::load()->get_site_name();
 		$content = StringVars::replace_vars($this->lang['advanced-config.unlock-code.content'], 
 			array('unlock_code' => $unlock_admin_clean, 'host_dir' => (HOST . DIR), 'signature' => MailServiceConfig::load()->get_mail_signature())
@@ -80,14 +82,10 @@ class SendMailUnlockAdminController extends AdminController
         return AppContext::get_mail_service()->try_to_send($mail);
 	}
 	
-	private function save_unlock_code() 
+	private function save_unlock_code($unlock_admin_clean) 
 	{
-		//Génération du code de déverrouillage de l'administration
-		$this->unlock_admin_clean = KeyGenerator::generate_key(18);
-        $unlock_admin = KeyGenerator::string_hash($this->unlock_admin_clean);
-        
         $general_config = GeneralConfig::load();
-        $general_config->set_admin_unlocking_key($unlock_admin);
+        $general_config->set_admin_unlocking_key($unlock_admin_clean);
         GeneralConfig::save();
 	}
 }
