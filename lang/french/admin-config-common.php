@@ -123,7 +123,8 @@ $lang = array(
 		<br /><br />
 		:signature',
 	'advanced-config.code_sent_success' => 'Le code a été envoyé avec succès',
-	'advanced-config.code_sent_fail' => 'Une erreur est survenue dans l\'envoi du code'
+	'advanced-config.code_sent_fail' => 'Une erreur est survenue dans l\'envoi du code',
+	'advanced-config.confirm_mail_sending' => 'Voulez-vous vraiment envoyer le code de déverrouillage ?'
 
 );
 ?>
