@@ -34,9 +34,8 @@ class SendMailUnlockAdminController extends AdminController
 	{
 		$this->init();
 		$this->save_unlock_code();
-		Debug::dump($this->unlock_admin_clean);
 		
-		if ($this->send_mail() == true)
+		if ($this->send_mail())
 		{
 			$controller = new UserErrorController($this->lang['advanced-config.unlock-administration'], $this->lang['advanced-config.code_sent_success'], 1);
 			DispatchManager::redirect($controller);
