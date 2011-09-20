@@ -55,7 +55,7 @@ class AdminAdvancedConfigController extends AdminController
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save();
-			//$this->clear_cache();
+			$this->clear_cache();
 
 			$tpl->put('MSG', MessageHelper::display($this->lang['advanced-config.success'], E_USER_SUCCESS, 4));
 		}
@@ -101,21 +101,22 @@ class AdminAdvancedConfigController extends AdminController
 		
 		$url_rewriting_fieldset->set_description($this->lang['advanced-config.url-rewriting.explain']);
 		
+		$disable_url_rewriting_field = new FormFieldCheckbox('url_rewriting_enabled', $this->lang['advanced-config.url-rewriting'], FormFieldCheckbox::UNCHECKED, array('disabled' => true, 'description' => $this->lang['advanced-config.config.not-available']));
 		$server_configuration = new ServerConfiguration();
 		try 
 		{
 			if ($server_configuration->has_url_rewriting())
 			{
-				$url_rewriting_fieldset->add_field(new FormFieldCheckbox('url_rewriting', $this->lang['advanced-config.url-rewriting'], $this->server_environment_config->is_url_rewriting_enabled(), array('description' => $this->lang['advanced-config.config.available'])));
+				$url_rewriting_fieldset->add_field(new FormFieldCheckbox('url_rewriting_enabled', $this->lang['advanced-config.url-rewriting'], $this->server_environment_config->is_url_rewriting_enabled(), array('description' => $this->lang['advanced-config.config.available'])));
 			}
 			else
 			{
-				$url_rewriting_fieldset->add_field(new FormFieldCheckbox('url_rewriting', $this->lang['advanced-config.url-rewriting'], FormFieldCheckbox::UNCHECKED, array('disabled' => true, 'description' => $this->lang['advanced-config.config.not-available'])));
+				$url_rewriting_fieldset->add_field($disable_url_rewriting_field);
 			}
 		} 
 		catch (UnsupportedOperationException $ex) 
 		{
-			$url_rewriting_fieldset->add_field(new FormFieldCheckbox('url_rewriting', $this->lang['advanced-config.url-rewriting'], FormFieldCheckbox::UNCHECKED, array('disabled' => true, 'description' => $this->lang['advanced-config.config.not-available'])));
+			$url_rewriting_fieldset->add_field($disable_url_rewriting_field);
 		}
 		
 		$htaccess_manual_content_fieldset = new FormFieldsetHTML('htaccess_manual_content', $this->lang['advanced-config.htaccess-manual-content']);
@@ -148,7 +149,7 @@ class AdminAdvancedConfigController extends AdminController
 		
 		if (function_exists('ob_gzhandler') && @extension_loaded('zlib'))
 		{
-			$miscellaneous_fieldset->add_field(new FormFieldCheckbox('advanced-config.output_gziping_enabled', $this->lang['advanced-config.output-gziping-enabled'], $this->server_environment_config->is_output_gziping_enabled(), 
+			$miscellaneous_fieldset->add_field(new FormFieldCheckbox('output_gziping_enabled', $this->lang['advanced-config.output-gziping-enabled'], $this->server_environment_config->is_output_gziping_enabled(), 
 			array('description' => $this->lang['advanced-config.config.available'])));
 		}
 		else
@@ -157,8 +158,7 @@ class AdminAdvancedConfigController extends AdminController
 			array('description' => $this->lang['config.not-available'], 'disabled' => true)));
 		}
 		
-		//TODO, send mail for unlock administration
-		$miscellaneous_fieldset->add_field(new FormFieldFree('unlock_administration', $this->lang['advanced-config.unlock-administration'], '<a href="'. $this->get_unlock_administration_url() .'">'. $this->lang['advanced-config.unlock-administration.request'] .'</a>', 
+		$miscellaneous_fieldset->add_field(new FormFieldFree('unlock_administration', $this->lang['advanced-config.unlock-administration'], '<a href="'. $this->get_unlock_administration_url() .'" onclick="return confirm(\'' . $this->lang['advanced-config.confirm_mail_sending'] .'\');">'. $this->lang['advanced-config.unlock-administration.request'] .'</a>', 
 		array('description' => $this->lang['advanced-config.unlock-administration.explain'])));
 		
 		$miscellaneous_fieldset->add_field(new FormFieldCheckbox('debug_mode_enabled', $this->lang['advanced-config.debug-mode'], Debug::is_debug_mode_enabled(), 
@@ -231,7 +231,8 @@ class AdminAdvancedConfigController extends AdminController
 	
 	private function clear_cache()
 	{
-		AppContext::get_cache_service()->clear_cache();	
+		AppContext::get_cache_service()->clear_cache();
+		HtaccessFileCache::regenerate();
 	}
 }
 ?>
