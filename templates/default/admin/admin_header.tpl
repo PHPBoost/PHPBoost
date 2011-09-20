@@ -30,6 +30,15 @@
 
 	</head>
 	<body>
+	
+	# IF C_HEADER_LOGO #
+		<style type="text/css">
+			div#header_admin_container {
+   				background: url('{HEADER_LOGO}') no-repeat;
+			}
+		</style>
+	# ENDIF #
+	
 	<div id="global">
 		<div id="header_admin_container">
 			<div id="header_admin">&nbsp;</div>

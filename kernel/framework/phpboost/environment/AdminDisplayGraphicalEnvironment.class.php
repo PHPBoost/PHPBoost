@@ -187,6 +187,10 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 
 		$include_tinymce_js = AppContext::get_user()->get_attribute('user_editor') == 'tinymce';
 
+		$theme = ThemeManager::get_theme(get_utheme());
+		$customize_interface = $theme->get_customize_interface();
+		$header_logo_path = $customize_interface->get_header_logo_path();
+		
 		$customization_config = CustomizationConfig::load();
 		
 		$header_tpl->put_all(array(
@@ -194,6 +198,8 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 			'C_FAVICON' => $customization_config->favicon_exists(),
 			'FAVICON' => PATH_TO_ROOT . $customization_config->get_favicon_path(),
 			'FAVICON_TYPE' => $customization_config->favicon_type(),
+			'C_HEADER_LOGO' => !empty($header_logo_path),
+			'HEADER_LOGO' => PATH_TO_ROOT . $header_logo_path,
 			'SITE_NAME' => GeneralConfig::load()->get_site_name(),
 			'TITLE' => $this->get_page_title(),
 			'PATH_TO_ROOT' => TPL_PATH_TO_ROOT,

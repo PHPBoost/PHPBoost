@@ -60,23 +60,27 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 
 		$template =  new FileTemplate('header.tpl');
 
-		$this->display_site_maintenance($template);
-
 		$this->add_menus_css_files();
 
 		$general_config = GeneralConfig::load();
+		
+		$theme = ThemeManager::get_theme(get_utheme());
+		$customize_interface = $theme->get_customize_interface();
+		$header_logo_path = $customize_interface->get_header_logo_path();
 
 		$customization_config = CustomizationConfig::load();
 		
 		$template->put_all(array(
 			'C_BBCODE_TINYMCE_MODE' => AppContext::get_user()->get_attribute('user_editor') == 'tinymce',
 			'SITE_NAME' => $general_config->get_site_name(),
-			'C_MAINTAIN_DELAY' => false,
+			'MAINTAIN' => $this->display_site_maintenance(),
 			'C_COMPTEUR' => false,
 			'C_MENUS_RIGHT_CONTENT' => false,
 			'C_FAVICON' => $customization_config->favicon_exists(),
 			'FAVICON' => PATH_TO_ROOT . $customization_config->get_favicon_path(),
 			'FAVICON_TYPE' => $customization_config->favicon_type(),
+			'C_HEADER_LOGO' => !empty($header_logo_path),
+			'HEADER_LOGO' => PATH_TO_ROOT . $header_logo_path,
 			'TITLE' => $this->get_page_title(),
 			'SITE_DESCRIPTION' => $general_config->get_site_description(),
 			'SITE_KEYWORD' => $general_config->get_site_keywords(),
@@ -85,7 +89,6 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 			'L_XML_LANGUAGE' => LangLoader::get_message('xml_lang', 'main'),
 			'L_VISIT' => LangLoader::get_message('guest_s', 'main'),
 			'L_TODAY' => LangLoader::get_message('today', 'main'),
-			
 		));
 
 		$this->display_counter($template);
@@ -173,11 +176,13 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 		));
 	}
 
-	protected function display_site_maintenance(Template $template)
+	protected function display_site_maintenance()
 	{
 		//Users not authorized cannot come here
 		parent::process_site_maintenance();
 
+		$template =  new FileTemplate('maintain.tpl');
+		
 		$maintenance_config = MaintenanceConfig::load();
 		if ($this->is_under_maintenance() && $maintenance_config->get_display_duration_for_admin())
 		{
@@ -248,6 +253,7 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 				'L_SEC' => LangLoader::get_message('seconds', 'main'),
 			));
 		}
+		return $template;
 	}
 
 	public function enable_left_menus()

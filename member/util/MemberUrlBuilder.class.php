@@ -94,7 +94,7 @@ class MemberUrlBuilder
 	/**
 	 * @return Url
 	 */
-    public static function confirm_registeration()
+    public static function confirm_registeration($key = '')
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/confirm/' . $key);
 	}
