@@ -31,8 +31,13 @@ class SearchProvidersService {
 	{
 		return array_keys(self::get_providers());
 	}
+	
+	public static function get_authorized_providers_ids()
+	{
+		return array_keys(self::get_authorized_providers());
+	}
 
-	public static function get_providers()
+	public static function get_authorized_providers()
 	{
 		$providers = array();
         $unauthorized_providers = SearchModuleConfig::load()->get_unauthorized_providers();
@@ -44,6 +49,17 @@ class SearchProvidersService {
             {
                 $providers[$provider_id] = $provider;
             }
+        }
+        return $providers;
+	}
+	
+	public static function get_providers()
+	{
+		$providers = array();
+        $provider_service = AppContext::get_extension_provider_service();
+        foreach ($provider_service->get_providers(SearchableExtensionPoint::EXTENSION_POINT) as $provider)
+        {
+             $providers[$provider->get_id()] = $provider;
         }
         return $providers;
 	}
