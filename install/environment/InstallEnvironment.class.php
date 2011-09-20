@@ -105,7 +105,7 @@ class InstallEnvironment extends Environment
 				define('DISTRIBUTION_THEME', 'base');
 
 				//Home page
-				define('DISTRIBUTION_START_PAGE', DispatchManager::get_url('/member', '/member')->absolute());
+				define('DISTRIBUTION_START_PAGE', MemberUrlBuilder::members()->absolute());
 
 				//Can people register?
 				define('DISTRIBUTION_ENABLE_USER', false);

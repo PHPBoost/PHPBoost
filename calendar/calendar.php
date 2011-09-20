@@ -258,7 +258,7 @@ if ($checkdate === true && empty($id) && !$add)
 				'DATE' => gmdate_format('date_format', $row['timestamp']),
 				'TITLE' => $row['title'],
 				'CONTENTS' => FormatingHelper::second_parse($row['contents']),
-				'LOGIN' => '<a class="com" href="../member/member' . url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '">' . $row['login'] . '</a>',
+				'LOGIN' => '<a class="com" href="'. MemberUrlBuilder::profile($row['user_id'])->absolute() . '">' . $row['login'] . '</a>',
 				'COM' => '<a href="'. PATH_TO_ROOT .'/calendar/calendar' . url('.php?d=' . $day . '&amp;m=' . $month . '&amp;y=' . $year . '&amp;e=' . $row['id'] . '&amp;com=0', 
 					'-' . $day . '-' . $month . '-' . $year . '-' . $row['id'] . '.php?com=0') .'">'. CommentsService::get_number_and_lang_comments($comments) . '</a>',
 				'EDIT' => $edit,

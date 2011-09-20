@@ -128,7 +128,7 @@ class AdminViewAllMembersController extends AdminController
 				'MAIL' => $user_mail,
 				'LAST_CONNECT' => gmdate_format('date_format_short', $row['last_connect']),
 				'REGISTERED' => gmdate_format('date_format_short', $row['timestamp']),
-				'U_USER_ID' => DispatchManager::get_url('/member', '/profile/'. $row['user_id'] . '/')->absolute()
+				'U_USER_ID' => MemberUrlBuilder::profile($row['user_id'])->absolute()
 			));
 		}
 	}

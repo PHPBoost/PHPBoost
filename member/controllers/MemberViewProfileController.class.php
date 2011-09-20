@@ -112,7 +112,7 @@ class MemberViewProfileController extends AbstractController
 		
 		if ($user_id !== $user->get_attribute('user_id'))
 		{
-			$link_mp = '<a href="'. url('pm.php?pm=' . $row['user_id'], '-' . $row['user_id'] . '.php') .'"><img src="../templates/'. get_utheme().'/images/'. get_ulang().'/pm.png" alt="'.$this->lang['profile_edition'].'" /></a>';
+			$link_mp = '<a href="'. MemberUrlBuilder::personnal_message($row['user_id']) .'"><img src="../templates/'. get_utheme().'/images/'. get_ulang().'/pm.png" alt="'.$this->lang['profile_edition'].'" /></a>';
 			$fieldset->add_field(new FormFieldFree('private_message', $this->lang['private_message'], $link_mp));
 		}
 		$member_extended_field = new MemberExtendedField();

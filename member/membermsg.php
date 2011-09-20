@@ -26,7 +26,7 @@
  ###################################################*/
 
 require_once('../kernel/begin.php');
-$Bread_crumb->add($LANG['member_area'], DispatchManager::get_url('/member', '/member')->absolute());
+$Bread_crumb->add($LANG['member_area'], MemberUrlBuilder::members()->absolute());
 $Bread_crumb->add($LANG['member_msg'], 'membermsg.php');
 define('TITLE', $LANG['member_msg']);
 require_once('../kernel/header.php');
@@ -58,9 +58,9 @@ if (!empty($memberId)) //Affichage de tous les messages du membre
 		'L_USER_MSG_DISPLAY' => $LANG['member_msg_display'],
 		'L_COMMENTS' => $LANG['com_s'],
 		'L_BACK' => $LANG['back'],
-		'U_BACK' => url('.php?id=' . $memberId, '-' . $memberId . '.php'),
-		'U_USER_MSG' => url('.php?id=' . $memberId),
-		'U_COMMENTS' => url('.php?id=' . $memberId . '&amp;script=com')
+		'U_BACK' => MemberUrlBuilder::profile($memberId)->absolute(),
+		'U_USER_MSG' => MemberUrlBuilder::personnal_message($memberId)->absolute(),
+		'U_COMMENTS' => MemberUrlBuilder::member_message($memberId)->absolute() . '&amp;script=com'
 	));
 
 	if (!empty($script))
@@ -88,7 +88,7 @@ if (!empty($memberId)) //Affichage de tous les messages du membre
 		while ($row = $Sql->fetch_assoc($result))
 		{
 			$Template->assign_block_vars('msg_list', array(
-				'USER_PSEUDO' => '<a class="msg_link_pseudo" href="'. DispatchManager::get_url('/member', '/profile/'. $memberId)->absolute() .'"><span class="text_strong">' . TextHelper::wordwrap_html($row['login'], 13) . '</span></a>',
+				'USER_PSEUDO' => '<a class="msg_link_pseudo" href="'. MemberUrlBuilder::profile($memberId)->absolute() .'"><span class="text_strong">' . TextHelper::wordwrap_html($row['login'], 13) . '</span></a>',
 				'USER_ONLINE' => '<img src="../templates/' . get_utheme() . '/images/' . (!empty($row['connect']) ? 'online' : 'offline') . '.png" alt="" class="valign_middle" />',
 				'DATE' => gmdate_format('date_format', $row['timestamp']),
 				'CONTENTS' => ucfirst(FormatingHelper::second_parse($row['contents'])),
@@ -100,7 +100,7 @@ if (!empty($memberId)) //Affichage de tous les messages du membre
 	$Template->pparse('membermsg');
 }
 else
-	AppContext::get_response()->redirect(DispatchManager::get_url('/member', '/member/')->absolute());
+	AppContext::get_response()->redirect(MemberUrlBuilder::members()->absolute());
 
 require_once('../kernel/footer.php');
 

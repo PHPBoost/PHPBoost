@@ -76,16 +76,16 @@ class MemberViewAllMembersController extends AbstractController
 		$nbr_member = PersistenceContext::get_sql()->count_table(DB_TABLE_MEMBER, __LINE__, __FILE__);
 		$nb_pages =  ceil($nbr_member / $this->nbr_members_per_page);
 		$pagination = new Pagination($nb_pages, $page);
-		$pagination->set_url_sprintf_pattern(DispatchManager::get_url('/member', '/member/'. $field .'/'. $sort .'/%d')->absolute());
+		$pagination->set_url_sprintf_pattern(MemberUrlBuilder::members($field, $sort, '%d')->absolute());
 		$this->view->put_all(array(
-			'SORT_LOGIN_TOP' => DispatchManager::get_url('/member', '/member/login/top/'. $page)->absolute(),
-			'SORT_LOGIN_BOTTOM' => DispatchManager::get_url('/member', '/member/login/bottom/'. $page)->absolute(),
-			'SORT_REGISTERED_TOP' => DispatchManager::get_url('/member', '/member/registered/top/'. $page)->absolute(),
-			'SORT_REGISTERED_BOTTOM' => DispatchManager::get_url('/member', '/member/registered/bottom/'. $page)->absolute(),
-			'SORT_MSG_TOP' => DispatchManager::get_url('/member', '/member/messages/top/'. $page)->absolute(),
-			'SORT_MSG_BOTTOM' => DispatchManager::get_url('/member', '/member/messages/bottom/'. $page)->absolute(),
-			'SORT_LAST_CONNECT_TOP' => DispatchManager::get_url('/member', '/member/connect/top/'. $page)->absolute(),
-			'SORT_LAST_CONNECT_BOTTOM' => DispatchManager::get_url('/member', '/member/connect/bottom'. $page)->absolute(),
+			'SORT_LOGIN_TOP' => MemberUrlBuilder::members('login' ,'top', $page)->absolute(),
+			'SORT_LOGIN_BOTTOM' => MemberUrlBuilder::members('login', 'bottom', $page)->absolute(),
+			'SORT_REGISTERED_TOP' => MemberUrlBuilder::members('registered', 'top'. $page)->absolute(),
+			'SORT_REGISTERED_BOTTOM' => MemberUrlBuilder::members('registered', 'bottom', $page)->absolute(),
+			'SORT_MSG_TOP' => MemberUrlBuilder::members('messages', 'top', $page)->absolute(),
+			'SORT_MSG_BOTTOM' => MemberUrlBuilder::members('messages', 'bottom', $page)->absolute(),
+			'SORT_LAST_CONNECT_TOP' => MemberUrlBuilder::members('connect', 'top', $page)->absolute(),
+			'SORT_LAST_CONNECT_BOTTOM' => MemberUrlBuilder::members('connect', 'bottom', $page)->absolute(),
 			'PAGINATION' => '&nbsp;<strong>' . $this->lang['page'] . ' :</strong> ' . $pagination->export()->render()
 		));
 
@@ -114,8 +114,8 @@ class MemberViewAllMembersController extends AbstractController
 				'MSG' => $user_msg,
 				'LAST_CONNECT' => gmdate_format('date_format_short', $row['last_connect']),
 				'DATE' => gmdate_format('date_format_short', $row['timestamp']),
-				'U_USER_ID' => DispatchManager::get_url('/member', '/profile/'. $row['user_id'] . '/')->absolute(),
-				'U_USER_PM' => url('pm.php?pm=' . $row['user_id'], '-' . $row['user_id'] . '.php')
+				'U_USER_ID' => MemberUrlBuilder::profile($row['user_id'])->absolute(),
+				'U_USER_PM' => MemberUrlBuilder::personnal_message($row['user_id'])->absolute()
 			));
 		}
 	}

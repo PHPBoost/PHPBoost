@@ -12,19 +12,19 @@
 					</tr>
 					<tr>							
 						<td style="text-align:center;width:34%" class="row2">
-							<a href="moderation_panel{U_WARNING}" title="{L_USERS_WARNING}"><img src="../templates/{THEME}/images/notice.png" alt="{L_USERS_WARNING}" /></a>
+							<a href="{U_WARNING}" title="{L_USERS_WARNING}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/notice.png" alt="{L_USERS_WARNING}" /></a>
 							<br />
-							<a href="moderation_panel{U_WARNING}" title="{L_USERS_WARNING}">{L_USERS_WARNING}</a>
+							<a href="{U_WARNING}" title="{L_USERS_WARNING}">{L_USERS_WARNING}</a>
 						</td>
 						<td style="text-align:center;width:33%" class="row2">
-							<a href="moderation_panel{U_PUNISH}" title="{L_USERS_PUNISHMENT}"><img src="../templates/{THEME}/images/stop.png" alt="{L_USERS_PUNISHMENT}" /></a>
+							<a href="{U_PUNISH}" title="{L_USERS_PUNISHMENT}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/stop.png" alt="{L_USERS_PUNISHMENT}" /></a>
 							<br />
-							<a href="moderation_panel{U_PUNISH}" title="{L_USERS_PUNISHMENT}">{L_USERS_PUNISHMENT}</a>
+							<a href="{U_PUNISH}" title="{L_USERS_PUNISHMENT}">{L_USERS_PUNISHMENT}</a>
 						</td>
 						<td style="text-align:center;width:33%" class="row2">
-							<a href="moderation_panel{U_BAN}" title="{L_USERS_BAN}"><img src="../templates/{THEME}/images/forbidden.png" alt="{L_USERS_BAN}" /></a>
+							<a href="{U_BAN}" title="{L_USERS_BAN}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/forbidden.png" alt="{L_USERS_BAN}" /></a>
 							<br />
-							<a href="moderation_panel{U_BAN}" title="{L_USERS_BAN}">{L_USERS_BAN}</a>
+							<a href="{U_BAN}" title="{L_USERS_BAN}">{L_USERS_BAN}</a>
 						</td>
 					</tr>
 				</table>
@@ -38,7 +38,7 @@
 						if( login != "" )
 						{
 							data = "login=" + login;
-							var xhr_object = xmlhttprequest_init('../kernel/framework/ajax/member_xmlhttprequest.php?token={TOKEN}&{U_XMLHTTPREQUEST}=1');
+							var xhr_object = xmlhttprequest_init('{PATH_TO_ROOT}/kernel/framework/ajax/member_xmlhttprequest.php?token={TOKEN}&{U_XMLHTTPREQUEST}=1');
 							xhr_object.onreadystatechange = function() 
 							{
 								if( xhr_object.readyState == 4 ) 
@@ -91,7 +91,7 @@
 					# START member_list #
 					<tr>
 						<td class="row1" style="text-align:center;width:25%;">
-							<a href="../member/{member_list.U_PROFILE}">{member_list.LOGIN}</a>
+							<a href="{member_list.U_PROFILE}">{member_list.LOGIN}</a>
 						</td>
 						<td class="row1" style="text-align:center;width:25%;">
 							{member_list.INFO}
@@ -100,7 +100,7 @@
 							{member_list.U_ACTION_USER}
 						</td>
 						<td class="row1" style="text-align:center;width:25%;">
-							<a href="../member/pm{member_list.U_PM}"><img src="../templates/{THEME}/images/{LANG}/pm.png" alt="" /></a>
+							<a href="{member_list.U_PM}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/pm.png" alt="" /></a>
 						</td>
 					</tr>
 					# END member_list #
@@ -152,7 +152,7 @@
 								{L_PM}
 							</td>
 							<td class="row2">
-								<a href="../member/pm{U_PM}"><img src="../templates/{THEME}/images/{LANG}/pm.png" alt="PM" /></a>
+								<a href="{U_PM}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/pm.png" alt="PM" /></a>
 							</td>
 						</tr>
 						<tr>
@@ -203,7 +203,7 @@
 								{L_PM}
 							</td>
 							<td class="row2">
-								<a href="../member/pm{U_PM}"><img src="../templates/{THEME}/images/{LANG}/pm.png" alt="" /></a>
+								<a href="{U_PM}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/pm.png" alt="" /></a>
 							</td>
 						</tr>
 						<tr>
