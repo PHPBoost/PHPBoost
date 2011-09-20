@@ -110,7 +110,7 @@ while ($row = $Sql->fetch_assoc($result))
 
 	//Pseudo.
 	if (!$is_guest) 
-		$com_pseudo = '<a class="msg_link_pseudo" href="../member/member' . url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '" title="' . $row['mlogin'] . '"><span style="font-weight: bold;">' . TextHelper::wordwrap_html($row['mlogin'], 13) . '</span></a>';
+		$com_pseudo = '<a class="msg_link_pseudo" href="'. MemberUrlBuilder::profile($row['user_id'])->absolute() .'" title="' . $row['mlogin'] . '"><span style="font-weight: bold;">' . TextHelper::wordwrap_html($row['mlogin'], 13) . '</span></a>';
 	else
 		$com_pseudo = '<span style="font-style:italic;">' . (!empty($row['login']) ? TextHelper::wordwrap_html($row['login'], 13) : $LANG['guest']) . '</span>';
 	

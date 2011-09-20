@@ -49,47 +49,10 @@ $Template->set_filenames(array(
 	'admin_index'=> 'admin/admin_index.tpl'
 ));
 
-//Affichage des derniers commentaires
-$i = 0;
-$array_class = array('member', 'modo', 'admin');
-$result = $Sql->query_while("SELECT c.idprov, c.idcom, c.timestamp, c.script, c.path, m.user_id, m.login as mlogin, m.level, m.user_groups, c.contents
-FROM " . DB_TABLE_COM . " c
-LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = c.user_id
-GROUP BY c.idcom
-ORDER BY c.timestamp DESC
-" . $Sql->limit(0, 15), __LINE__, __FILE__);
-while ($row = $Sql->fetch_assoc($result))
-{
-	$is_guest = empty($row['user_id']);
-	$group_color = User::get_group_color($row['user_groups'], $row['level']);
-	
-	//Pseudo.
-	if (!$is_guest) 
-		$com_pseudo = '<a href="'.  DispatchManager::get_url('/member', '/profile/'. $row['user_id'] .'/')->absolute() .'" title="' . $row['mlogin'] . '" class="' . $array_class[$row['level']] . '"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . TextHelper::wordwrap_html($row['mlogin'], 13) . '</a>';
-	else
-		$com_pseudo = '<span style="font-style:italic;">' . (!empty($row['login']) ? TextHelper::wordwrap_html($row['login'], 13) : $LANG['guest']) . '</span>';
-	
-	$Template->assign_block_vars('com_list', array(
-		'ID' => $row['idcom'],
-		'CONTENTS' => ucfirst(FormatingHelper::second_parse($row['contents'])),
-		'COM_SCRIPT' => $row['script'],
-		'DATE' => $LANG['on'] . ': ' . gmdate_format('date_format', $row['timestamp']),
-		'USER_PSEUDO' => $com_pseudo,			
-		'U_PROV' => $row['path'],
-		'U_USER_PM' => '<a href="'. PATH_TO_ROOT .'/member/pm' . url('.php?pm=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '"><img src="'. PATH_TO_ROOT .'/templates/' . get_utheme() . '/images/' . get_ulang() . '/pm.png" alt="" /></a>',
-		'U_EDIT_COM' => preg_replace('`i=[0-9]+`', 'i=' . $row['idcom'], $row['path']) . '&editcom=1',
-		'U_DEL_COM' => preg_replace('`i=[0-9]+`', 'i=' . $row['idcom'], $row['path']) . '&delcom=1',
-	));
-	$i++;
-}
-$Sql->query_close($result);
-
-
-$writing_pad_content = WritingPadConfig::load()->get_content();
 
 $Template->put_all(array(
-	'WRITING_PAD_CONTENT' => $writing_pad_content,
-	'C_NO_COM' => $i == 0 ? $LANG['no_comment'] : '',
+	'WRITING_PAD_CONTENT' => WritingPadConfig::load()->get_content(),
+	'C_NO_COM' => $LANG['no_comment'],
 	'C_UNREAD_ALERTS' => (bool)AdministratorAlertService::get_number_unread_alerts(),
 	'L_INDEX_ADMIN' => $LANG['administration'],
 	'L_ADMIN_ALERTS' => $LANG['administrator_alerts'],
@@ -148,7 +111,7 @@ while ($row = $Sql->fetch_assoc($result))
 	if (!empty($robot))
 		$login = '<span class="robot">' . ($robot == 'unknow_bot' ? $LANG['unknow_bot'] : $robot) . '</span>';
 	else
-		$login = !empty($row['login']) ? '<a class="' . $class . '" href="'. DispatchManager::get_url('/member', '/profile/'. $row['user_id'] .'/')->absolute() .'">' . $row['login'] . '</a>' : $LANG['guest'];
+		$login = !empty($row['login']) ? '<a class="' . $class . '" href="'. MemberUrlBuilder::profile($row['user_id'])->absolute() .'">' . $row['login'] . '</a>' : $LANG['guest'];
 	
 	$row['session_script_get'] = !empty($row['session_script_get']) ? '?' . $row['session_script_get'] : '';
 	

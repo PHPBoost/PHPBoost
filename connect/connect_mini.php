@@ -87,9 +87,12 @@ function connect_mini($position, $block)
     		'NUM_UNREAD_CONTRIBUTIONS' => $contribution_number,
     		'NUMBER_UNREAD_ALERTS' => AdministratorAlertService::get_number_unread_alerts(),
     		'IMG_PM' => $user->get_attribute('user_pm') > 0 ? 'new_pm.gif' : 'pm_mini.png',
-    		'U_USER_PM' => TPL_PATH_TO_ROOT . '/member/pm' . url('.php?pm=' . $user->get_attribute('user_id'), '-' . $user->get_attribute('user_id') . '.php'),
-    		'U_USER_ID' => url('.php?id=' . $user->get_attribute('user_id') . '&amp;view=1', '-' . $user->get_attribute('user_id') . '.php?view=1'),
-    		'U_DISCONNECT' => PATH_TO_ROOT . '/index.php?disconnect=true&amp;token=' . AppContext::get_session()->get_token(),
+    		'U_CONTRIBUTION' => MemberUrlBuilder::contribution()->absolute(),
+    		'U_ADMINISTRATION' => MemberUrlBuilder::administration()->absolute(),
+    		'U_HOME_PROFILE' => MemberUrlBuilder::home_profile($user->get_attribute('user_id'))->absolute(),
+    		'U_USER_PM' => MemberUrlBuilder::personnal_message($user->get_attribute('user_id'))->absolute(),
+    		'U_USER_ID' => MemberUrlBuilder::home_profile($user->get_attribute('user_id'))->absolute(),
+    		'U_DISCONNECT' => MemberUrlBuilder::disconnect()->absolute(),
     		'L_NBR_PM' => ($user->get_attribute('user_pm') > 0 ? ($user->get_attribute('user_pm') . ' ' . (($user->get_attribute('user_pm') > 1) ? $LANG['message_s'] : $LANG['message'])) : $LANG['private_messaging']),
     		'L_PROFIL' => $LANG['profile'],
     		'L_ADMIN_PANEL' => $LANG['admin_panel'],
@@ -112,7 +115,7 @@ function connect_mini($position, $block)
     		'L_FORGOT_PASS' => $LANG['forget_pass'],
     		'L_REGISTER' => $LANG['register'],
     		'U_CONNECT' => (QUERY_STRING != '') ? '?' . str_replace('&', '&amp;', QUERY_STRING) . '&amp;' : '',
-    		'U_REGISTER' => DispatchManager::get_url('/member', '/register')->absolute()
+    		'U_REGISTER' => MemberUrlBuilder::registeration()->absolute()
     	));
     }
 

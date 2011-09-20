@@ -79,7 +79,7 @@
 		}
 		elseif (UserAccountsConfig::load()->get_member_accounts_validation_method() == 1)
 		{
-			$valid = sprintf(LangLoader::get_message('register_valid_email', 'main'), DispatchManager::get_url('/member', '/confirm/'.$activation_key.'')->absolute());
+			$valid = sprintf(LangLoader::get_message('register_valid_email', 'main'), MemberUrlBuilder::confirm_registeration($activation_key)->absolute());
 		}
 		else
 		{

@@ -363,7 +363,7 @@ while ( $row = $Sql->fetch_assoc($result) )
 
 	//Affichage du nombre de message.
 	if ($row['user_msg'] >= 1)
-		$user_msg = '<a href="../forum/membermsg' . url('.php?id=' . $row['user_id'], '') . '" class="small_link">' . $LANG['message_s'] . '</a>: ' . $row['user_msg'];
+		$user_msg = '<a href="'. MemberUrlBuilder::member_message($row['user_id'])->absolute() . '" class="small_link">' . $LANG['message_s'] . '</a>: ' . $row['user_msg'];
 	else		
 		$user_msg = (!$is_guest) ? '<a href="../forum/membermsg' . url('.php?id=' . $row['user_id'], '') . '" class="small_link">' . $LANG['message'] . '</a>: 0' : $LANG['message'] . ': 0';		
 	
@@ -408,7 +408,7 @@ while ( $row = $Sql->fetch_assoc($result) )
 		'U_FORUM_MSG_CUT' => url('.php?idm=' . $row['id']),
 		'U_VARS_ANCRE' => url('.php?id=' . $id_get . (!empty($page) ? '&amp;pt=' . $page : ''), '-' . $id_get . (!empty($page) ? '-' . $page : '') . $rewrited_title . '.php'),
 		'U_VARS_QUOTE' => url('.php?quote=' . $row['id'] . '&amp;id=' . $id_get . (!empty($page) ? '&amp;pt=' . $page : ''), '-' . $id_get . (!empty($page) ? '-' . $page : '-0') . '-0-' . $row['id'] . $rewrited_title . '.php'),
-		'USER_PM' => !$is_guest ? '<a href="../member/pm' . url('.php?pm=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/pm.png" alt="pm" /></a>' : '',
+		'USER_PM' => !$is_guest ? '<a href="'. MemberUrlBuilder::personnal_message($row['user_id'])->absolute() . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/pm.png" alt="pm" /></a>' : '',
 	));
 	
 	//Marqueur de suivis du sujet.

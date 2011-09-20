@@ -48,7 +48,7 @@ function stats_mini($position, $block)
     	'L_MORE_STAT' => $LANG['more_stats'],
     	'L_USER_REGISTERED' => sprintf($l_member_registered, $stats_cache->get_stats_properties('nbr_members')),
     	'L_LAST_REGISTERED_USER' => $LANG['last_member'],
-    	'U_LINK_LAST_USER' => '<a href="' . HOST . DIR . '/member/member' . url('.php?id=' . $stats_cache->get_stats_properties('last_member_id'), '-' . $stats_cache->get_stats_properties('last_member_id')  . '.php') . '">' . $stats_cache->get_stats_properties('last_member_login') . '</a>'
+    	'U_LINK_LAST_USER' => '<a href="' . MemberUrlBuilder::profile($stats_cache->get_stats_properties('last_member_id'))->absolute() . '">' . $stats_cache->get_stats_properties('last_member_login') . '</a>'
     ));
     return $tpl->render();
 }

@@ -34,7 +34,7 @@ class DisplayAtomSyndicationController extends AbstractController
 		
 		if (empty($module_id))
 		{
-			AppContext::get_response()->redirect(DispatchManager::get_url('/member', '')->absolute());
+			AppContext::get_response()->redirect(MemberUrlBuilder::members()->absolute());
 		}
 		
 		$this->init();

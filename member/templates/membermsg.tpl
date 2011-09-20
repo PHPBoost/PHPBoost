@@ -3,10 +3,10 @@
 		<div class="module_position">					
 			<div class="module_top_l"></div>		
 			<div class="module_top_r"></div>
-			<div class="module_top">&bull; <a href="member{U_BACK}">{L_BACK}</a> &raquo; <a href="membermsg{U_USER_MSG}">{L_USER_MSG}</a></div>
+			<div class="module_top">&bull; <a href="{U_BACK}">{L_BACK}</a> &raquo; <a href="{U_USER_MSG}">{L_USER_MSG}</a></div>
 			<div class="module_contents">
 				<p style="text-align:center;margin-bottom:25px;" class="text_strong">{L_USER_MSG_DISPLAY}</p>			
-				<p style="text-align:center;margin-bottom:15px;"><a href="membermsg{U_COMMENTS}"><img src="../templates/{THEME}/images/admin/com_mini.png" alt="" class="valign_middle" /> {L_COMMENTS}</a></p>	
+				<p style="text-align:center;margin-bottom:15px;"><a href="{U_COMMENTS}"><img src="../templates/{THEME}/images/admin/com_mini.png" alt="" class="valign_middle" /> {L_COMMENTS}</a></p>	
 				# START available_modules_msg #
 				<p style="text-align:center;margin-bottom:15px;"> 
 					<a href="{available_modules_msg.U_LINK_USER_MSG}">

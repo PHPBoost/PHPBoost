@@ -87,7 +87,7 @@ $Template->put_all(array(
 	'DELAY' => isset($array_delay[$key + 1]) ? $array_delay[$key + 1] : '0',
 	'MAINTAIN_NOW_FORMAT' => implode(',', $array_now),
 	'MAINTAIN_RELEASE_FORMAT' => implode(',', $array_release),
-	'U_INDEX' => !$User->check_auth(1, $maintenance_config->get_auth()) ? '<a href="../admin/admin_index.php">' . $LANG['admin'] . '</a>' : '<a href="' . Environment::get_home_page() . '">' . $LANG['home'] . '</a>',	
+	'U_INDEX' => !$User->check_auth(1, $maintenance_config->get_auth()) ? '<a href="' . MemberUrlBuilder::administration() . '">' . $LANG['admin'] . '</a>' : '<a href="' . Environment::get_home_page() . '">' . $LANG['home'] . '</a>',	
 	'L_XML_LANGUAGE' => $LANG['xml_lang'],
 	'L_MAINTAIN' => (!empty($maintenance_message) ? FormatingHelper::second_parse($maintenance_message) : $LANG['maintain']),
 	'L_MAINTAIN_TITLE' => $LANG['title_maintain'],

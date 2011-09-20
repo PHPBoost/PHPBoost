@@ -41,7 +41,7 @@ class MemberViewGroupController extends AbstractController
 		$groups = $group_cache->get_groups();
 		if ($this->group_id_selected < 1 || !array_key_exists($this->group_id_selected, $groups))
 		{
-			AppContext::get_response()->redirect(DispatchManager::get_url('/member', '/member/')->absolute());
+			AppContext::get_response()->redirect(MemberUrlBuilder::members()->absolute());
 		}
 		
 		$group = $group_cache->get_group($this->group_id_selected);
@@ -67,7 +67,7 @@ class MemberViewGroupController extends AbstractController
 				
 				$user_account_config = UserAccountsConfig::load();
 				$this->view->assign_block_vars('members_list', array(
-					'PROFILE_LINK' => DispatchManager::get_url('/member', '/profile/'. $id)->absolute(),
+					'PROFILE_LINK' => MemberUrlBuilder::profile($id)->absolute(),
 					'PSEUDO' => $row['login'],
 					'AVATAR' => empty($row['user_avatar']) && $user_account_config->is_default_avatar_enabled() ? '<img class="valign_middle" src="'. PATH_TO_ROOT .'/templates/' . get_utheme() . '/images/' .  $user_account_config->get_default_avatar_name() . '" alt="" />' : '<img class="valign_middle" src="' . $row['user_avatar'] . '" alt=""	/>',
 					'STATUS' => $status
@@ -104,7 +104,7 @@ class MemberViewGroupController extends AbstractController
 		}
 		
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('groups_select', $this->lang['select_group'] .' : ', $this->group_id_selected, $field, array('events' => 
-			array('change' => 'if (HTMLForms.getField("groups_select").getValue() > 0) {document.location = "'. DispatchManager::get_url('/member', '/group/')->absolute() .'" + HTMLForms.getField("groups_select").getValue();}')
+			array('change' => 'if (HTMLForms.getField("groups_select").getValue() > 0) {document.location = "'. MemberUrlBuilder::groups()->absolute() .'" + HTMLForms.getField("groups_select").getValue();}')
 		)));
 
 		return $form;
@@ -122,8 +122,8 @@ class MemberViewGroupController extends AbstractController
 		$response = new SiteDisplayResponse($view);
 		$env = $response->get_graphical_environment();
 		$breadcrumb = $response->get_graphical_environment()->get_breadcrumb();
-		$breadcrumb->add($this->lang['member'], DispatchManager::get_url('/member', '/member/')->absolute());
-		$breadcrumb->add($this->lang['groups'], DispatchManager::get_url('/member', '/group/')->absolute());
+		$breadcrumb->add($this->lang['member'], MemberUrlBuilder::members()->absolute());
+		$breadcrumb->add($this->lang['groups'], MemberUrlBuilder::groups()->absolute());
 		$env->set_page_title($this->lang['groups']);
 		return $response;
 	}

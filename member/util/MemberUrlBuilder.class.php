@@ -37,9 +37,9 @@ class MemberUrlBuilder
 	/**
 	 * @return Url
 	 */
-    public static function list_members($param = '')
+    public static function members($field = '', $sort = '', $page = '')
 	{
-		return DispatchManager::get_url(self::$dispatcher, $param);
+		return DispatchManager::get_url(self::$dispatcher, $field . '/' . $sort . '/' . $page);
 	}
 	
 	/**
@@ -78,7 +78,7 @@ class MemberUrlBuilder
 	/**
 	 * @return Url
 	 */
-    public static function register()
+    public static function registeration()
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/register/');
 	}
@@ -97,6 +97,81 @@ class MemberUrlBuilder
     public static function confirm_registeration()
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/confirm/' . $key);
+	}
+	
+	/**
+	 * @return Url
+	 */
+    public static function upload()
+	{
+		return new Url(self::$dispatcher . '/upload.php');
+	}
+	
+	/**
+	 * @return Url
+	 */
+    public static function personnal_message($user_id = 0)
+	{
+		$param = !empty($user_id) ? url('.php?pm=' . $user_id, '-' . $user_id . '.php') : '.php';
+		return new Url(self::$dispatcher . '/pm' . url('.php?pm=' . $user_id, '-' . $user_id . '.php'));
+	}
+	
+	/**
+	 * @return Url
+	 */
+    public static function maintain()
+	{
+		return new Url(self::$dispatcher . '/maintain.php');
+	}
+	
+	/**
+	 * @return Url
+	 */
+    public static function member_message($user_id)
+	{
+		return new Url(self::$dispatcher . '/membermsg' . url('.php?id=' . $user_id, '-' . $user_id . '.php'));
+	}
+	
+	/**
+	 * @return Url
+	 */
+    public static function contribution($id = '')
+	{
+		$param = !empty($id) ? '?' . $id : '';
+		return new Url(self::$dispatcher . '/contribution_panel.php' . $param);
+	}
+	
+	/**
+	 * @return Url
+	 */
+    public static function administration()
+	{
+		return new Url('/admin/admin_index.php');
+	}
+
+	/**
+	 * @return Url
+	 */
+    public static function moderation($type = '', $user_id = '')
+	{
+		$param = !empty($type) ? '?action=' . $type . '&' . $user_id : '';
+		return new Url(self::$dispatcher . '/moderation_panel.php' . $param);
+	}
+	
+	/**
+	 * @return Url
+	 */
+    public static function disconnect()
+	{
+		return new Url('/index.php?disconnect=true&amp;token=' . AppContext::get_session()->get_token());
+	}
+	
+	/**
+	 * @return Url
+	 */
+    public static function errors()
+	{
+		return new Url(self::$dispatcher . '/error.php');
 	}
 }
 ?>

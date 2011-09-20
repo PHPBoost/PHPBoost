@@ -102,7 +102,7 @@ class NewsletterSubscribersListController extends AbstractController
 			if (array_key_exists($row['id'], $this->stream_cache['subscribers']))
 			{
 				$moderation_auth = NewsletterAuthorizationsService::id_stream($this->id_stream)->moderation_subscribers();
-				$pseudo = $row['user_id'] > 0 ? '<a href="'. DispatchManager::get_url('/member', '/profile/'. $row['user_id'] . '/')->absolute() .'">'. $row['login'] .'</a>' : $this->lang['newsletter.visitor'];
+				$pseudo = $row['user_id'] > 0 ? '<a href="'. MemberUrlBuilder::profile($row['user_id'])->absolute() .'">'. $row['login'] .'</a>' : $this->lang['newsletter.visitor'];
 				$this->view->assign_block_vars('subscribers_list', array(
 					'C_AUTH_MODO' => $moderation_auth && $row['user_id'] > 0,
 					'EDIT_LINK' => empty($row['user_id']) ? NewsletterUrlBuilder::edit_subscriber($row['id'])->absolute() : '',

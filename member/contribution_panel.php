@@ -50,7 +50,7 @@ if ($contribution_id > 0)
 		DispatchManager::redirect($error_controller);
 	}
 	
-	$Bread_crumb->add($LANG['member_area'], DispatchManager::get_url('/member', '/profile/'. $User->get_id())->absolute(), DispatchManager::get_url('/member', '/profile/'. $User->get_id())->absolute());
+	$Bread_crumb->add($LANG['member_area'], MemberUrlBuilder::profile($User->get_id())->absolute(), MemberUrlBuilder::profile($User->get_id())->absolute());
 	$Bread_crumb->add($LANG['contribution_panel'], url('contribution_panel.php'));
 	$Bread_crumb->add($contribution->get_entitled(), url('contribution_panel.php?id=' . $contribution->get_id()));
 	
@@ -68,7 +68,7 @@ elseif ($id_update > 0)
 	   DispatchManager::redirect($error_controller);
     }
 	
-	$Bread_crumb->add($LANG['member_area'], DispatchManager::get_url('/member', '/profile/'. $User->get_id())->absolute(), DispatchManager::get_url('/member', '/profile/'. $User->get_id())->absolute());
+	$Bread_crumb->add($LANG['member_area'], MemberUrlBuilder::profile($User->get_id())->absolute(), MemberUrlBuilder::profile($User->get_id())->absolute());
 	$Bread_crumb->add($LANG['contribution_panel'], url('contribution_panel.php'));
 	$Bread_crumb->add($contribution->get_entitled(), url('contribution_panel.php?id=' . $contribution->get_id()));
 	$Bread_crumb->add($LANG['contribution_edition'], url('contribution_panel.php?edit=' . $id_update));
@@ -112,11 +112,11 @@ elseif ($id_to_update > 0)
 		//Enregistrement en base de données
 		ContributionService::save_contribution($contribution);
 		
-		AppContext::get_response()->redirect(HOST . DIR . url('/member/contribution_panel.php?id=' . $contribution->get_id(), '', '&'));
+		AppContext::get_response()->redirect(MemberUrlBuilder::contribution($contribution->get_id())->absolute());
 	}
 	//Erreur
 	else
-		AppContext::get_response()->redirect(HOST . DIR . url('/member/contribution_panel.php', '', '&'));
+		AppContext::get_response()->redirect(MemberUrlBuilder::contribution()->absolute());
 }
 //Suppression d'une contribution
 elseif ($id_to_delete > 0)
@@ -135,11 +135,11 @@ elseif ($id_to_delete > 0)
 	
 	ContributionService::delete_contribution($contribution);
 	
-	AppContext::get_response()->redirect(HOST . DIR . url('/member/contribution_panel.php', '', '&'));
+	AppContext::get_response()->redirect(MemberUrlBuilder::contribution()->absolute());
 }
 else
 {
-	$Bread_crumb->add($LANG['member_area'], DispatchManager::get_url('/member', '/profile/'. $User->get_id())->absolute(), DispatchManager::get_url('/member', '/profile/'. $User->get_id())->absolute());
+	$Bread_crumb->add($LANG['member_area'], MemberUrlBuilder::profile($User->get_id())->absolute(), MemberUrlBuilder::profile($User->get_id())->absolute());
 	$Bread_crumb->add($LANG['contribution_panel'], url('contribution_panel.php'));
 	define('TITLE', $LANG['contribution_panel']);
 }
@@ -172,7 +172,7 @@ if ($contribution_id > 0)
 		'COMMENTS' => CommentsService::display($comments)->render(),
 		'CREATION_DATE' => $contribution_creation_date->format(DATE_FORMAT_SHORT),
 		'MODULE' => $contribution->get_module_name(),
-		'U_CONTRIBUTOR_PROFILE' => DispatchManager::get_url('/member', '/profile/'. $contribution->get_poster_id())->absolute(),
+		'U_CONTRIBUTOR_PROFILE' => MemberUrlBuilder::profile($contribution->get_poster_id())->absolute(),
 		'FIXING_URL' => url(PATH_TO_ROOT . $contribution->get_fixing_url())
 	));
 	
@@ -182,7 +182,7 @@ if ($contribution_id > 0)
 			'C_CONTRIBUTION_FIXED' => true,
 			'FIXER' => $Sql->query("SELECT login FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $contribution->get_fixer_id() . "'", __LINE__, __FILE__),
 			'FIXING_DATE' => $contribution_fixing_date->format(DATE_FORMAT_SHORT),
-			'U_FIXER_PROFILE' => DispatchManager::get_url('/member', '/profile/'. $contribution->get_poster_id())->absolute()
+			'U_FIXER_PROFILE' => MemberUrlBuilder::profile($contribution->get_poster_id())->absolute()
 		));
 	
 	$template->put_all(array(
@@ -274,8 +274,8 @@ else
 					'POSTER' => $this_contribution->get_poster_login(),
 					'FIXER' => $this_contribution->get_fixer_login(),
 					'ACTIONS' => '',
-					'U_FIXER_PROFILE' => DispatchManager::get_url('/member', '/profile/'. $this_contribution->get_poster_id())->absolute(),
-					'U_POSTER_PROFILE' => DispatchManager::get_url('/member', '/profile/'. $this_contribution->get_poster_id())->absolute(),
+					'U_FIXER_PROFILE' => MemberUrlBuilder::profile($this_contribution->get_poster_id())->absolute(),
+					'U_POSTER_PROFILE' => MemberUrlBuilder::profile($this_contribution->get_poster_id())->absolute(),
 					'U_CONSULT' => PATH_TO_ROOT . '/member/' . url('contribution_panel.php?id=' . $this_contribution->get_id()),
 					'C_FIXED' => $this_contribution->get_status() == Event::EVENT_STATUS_PROCESSED,
 					'C_PROCESSING' => $this_contribution->get_status() == Event::EVENT_STATUS_BEING_PROCESSED
