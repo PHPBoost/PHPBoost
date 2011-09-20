@@ -35,8 +35,8 @@ class AdminCustomizationDisplayResponse extends AdminMenuDisplayResponse
 		
 		$picture = '/templates/' . get_utheme() . '/images/admin/configuration.png';
 		$this->set_title($lang['customization']);
-		$this->add_link($lang['customization.interface'], DispatchManager::get_url('/admin/customize/index.php', '/interface'), $picture);
-		$this->add_link($lang['customization.favicon'], DispatchManager::get_url('/admin/customize/index.php', '/favicon'), $picture);
+		$this->add_link($lang['customization.interface'], AdminCustomizeUrlBuilder::customize_interface(), $picture);
+		$this->add_link($lang['customization.favicon'], AdminCustomizeUrlBuilder::customize_favicon(), $picture);
 
 		$env = $this->get_graphical_environment();
 		$env->set_page_title($title_page);

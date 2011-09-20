@@ -48,7 +48,7 @@ class AdminCustomizeInterfaceController extends AdminController
 		
 		if ($theme !== 'all' && !ThemeManager::get_theme_existed($theme))
 		{
-			AppContext::get_response()->redirect(DispatchManager::get_url('/admin/customize', '/interface/')->absolute());
+			AppContext::get_response()->redirect(AdminCustomizeUrlBuilder::customize_interface()->absolute());
 		}
 		
 		$this->build_form($theme);
@@ -104,7 +104,7 @@ class AdminCustomizeInterfaceController extends AdminController
 		$theme_choise_fieldset->add_field(
 			new FormFieldSimpleSelectChoice('select_theme', $this->lang['customization.interface.select-theme'], $theme_selected,
 				$this->list_themes(), 
-				array('events' => array('change' => 'document.location.href = "' . DispatchManager::get_url('/admin/customize', '/interface/')->absolute() . '" + HTMLForms.getField(\'select_theme\').getValue()'))
+				array('events' => array('change' => 'document.location.href = "' . AdminCustomizeUrlBuilder::customize_interface()->absolute() . '" + HTMLForms.getField(\'select_theme\').getValue()'))
 			)
 		);
 		
