@@ -22,7 +22,6 @@
 - Balises Youtube, Dailymotion
 - Ajout des contraintes dans les formulaires d'enregistrement, d'édition, et ajout d'un membre pour voir si un mail ou login est déjà présent.
 - Corriger bbcode.css (bloc masquables + wikipédia) (publishing notamment)
-- Personnalisation du logo : ajouter les modifications dans les templates
 
 ------------------------------------ MODULES -----------------------------------
 
