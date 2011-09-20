@@ -105,10 +105,12 @@ class AdminSearchConfigController extends AdminSearchController {
 
 		$id = 'unauthorized_providers';
 		$name = $this->lang['unauthorized_modules'];
-		$value = var_export($this->config->get_unauthorized_providers(), true);
+		$value = $this->config->get_unauthorized_providers();
 		$options = array('description' => $this->lang['unauthorized_modules_explain']);
-		$field = new FormFieldTextEditor($id, $name, $value, $options);
-		$fieldset->add_field($field);
+		$fieldset->add_field(new FormFieldMultipleSelectChoice($id, $name, $value,
+			$this->list_modules(), 
+			$options
+		));
 	}
 
 	private function add_cache_configuration_fieldset()
@@ -165,6 +167,17 @@ class AdminSearchConfigController extends AdminSearchController {
 			$this->config->set_unauthorized_providers($providers);
 		}
 		SearchModuleConfig::save($this->config);
+	}
+	
+	private function list_modules()
+	{
+		$modules = array();
+		foreach (SearchProvidersService::get_providers_ids() as $provider_id)
+		{
+			$provider_name = ModuleConfigurationManager::get($provider_id)->get_name();
+			$modules[] = new FormFieldSelectChoiceOption($provider_name, $provider_id);
+		}
+		return $modules;
 	}
 }
 

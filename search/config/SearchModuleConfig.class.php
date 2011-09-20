@@ -133,11 +133,11 @@ class SearchModuleConfig extends AbstractConfigData
 	public function get_default_values()
 	{
 		return array(
-		self::weightings => array(),
-		self::nb_results_per_page => 15,
-		self::cache_lifetime => 30,
-		self::cache_max_uses => 200,
-		self::unauthorized_providers => array()
+			self::weightings => array(),
+			self::nb_results_per_page => 15,
+			self::cache_lifetime => 30,
+			self::cache_max_uses => 200,
+			self::unauthorized_providers => array()
 		);
 	}
 
