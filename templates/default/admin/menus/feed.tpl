@@ -36,13 +36,13 @@ function CheckForm() {
 						style="font-weight:bold; text-transform:uppercase; padding:1px; text-align:center;">
 						{L_AVAILABLES_FEEDS}
 					</option>
-					<option value="null" style="text-align:center;">------------------------------</option>
+					<option value="null" style="text-align:center;"></option>
 					# START modules #
 						<option
 							value="{modules.URL}"
-							{modules.SELECTED}
+							{modules.SELECTED} 
 							style="font-weight:bold; text-transform:uppercase; padding:1px; text-align:center;">
-							-- {modules.NAME} --
+							{modules.NAME}
 						</option>
 						# START modules.feeds_urls #
 							 <option value="{modules.feeds_urls.URL}"{modules.feeds_urls.SELECTED}>
@@ -50,6 +50,7 @@ function CheckForm() {
 							 	# IF modules.feeds_urls.FEED_NAME #({modules.feeds_urls.FEED_NAME})# ENDIF #
 						 	</option>
 						# END modules.feeds_urls #
+						<option value="null" style="text-align:center;"></option>
 					# END modules #
 				</select></dd>
 			</dl>
