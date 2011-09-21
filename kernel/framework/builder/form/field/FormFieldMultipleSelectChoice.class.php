@@ -36,6 +36,7 @@
 class FormFieldMultipleSelectChoice extends AbstractFormField
 {
 	private $selected_options;
+	private $options = array();
 	
     /**
      * @desc Constructs a FormFieldMultipleSelectChoice.

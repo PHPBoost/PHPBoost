@@ -20,7 +20,6 @@
 ------------------------------------- NOYAU ------------------------------------
 + Classe commentaire : Gérer les autorisations, gérer la notation +1 et -1, gérer l'affichage des commentaires, possibilité d'avoir une alerte lors d'un nouveau commentaire.
 - Balises Youtube, Dailymotion
-- Ajout des contraintes dans les formulaires d'enregistrement, d'édition, et ajout d'un membre pour voir si un mail ou login est déjà présent.
 - Corriger bbcode.css (bloc masquables + wikipédia) (publishing notamment)
 
 ------------------------------------ MODULES -----------------------------------

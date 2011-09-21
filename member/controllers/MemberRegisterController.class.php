@@ -80,19 +80,19 @@ class MemberRegisterController extends AbstractController
 		
 		$fieldset->add_field(new FormFieldTextEditor('login', $this->lang['pseudo'], '', array(
 			'class' => 'text', 'maxlength' => 25, 'size' => 25, 'description' => $this->lang['pseudo_how'], 'required' => true),
-			array(new FormFieldConstraintLengthRange(3, 25))
+			array(new FormFieldConstraintLengthRange(3, 25), new FormFieldConstraintLoginExist())
 		));		
 		$fieldset->add_field(new FormFieldTextEditor('mail', $this->lang['mail'], '', array(
 			'class' => 'text', 'maxlength' => 255, 'description' => $this->lang['valid'], 'required' => true),
-		array(new FormFieldConstraintMailAddress())
+			array(new FormFieldConstraintMailAddress(), new FormFieldConstraintMailExist())
 		));
 		$fieldset->add_field($password = new FormFieldPasswordEditor('password', $this->lang['password'], '', array(
 			'class' => 'text', 'maxlength' => 25, 'description' => $this->lang['password_how'], 'required' => true),
-		array(new FormFieldConstraintLengthRange(6, 12))
+			array(new FormFieldConstraintLengthRange(6, 12))
 		));
 		$fieldset->add_field($password_bis = new FormFieldPasswordEditor('password_bis', $this->lang['confirm_password'], '', array(
 			'class' => 'text', 'maxlength' => 25, 'required' => true),
-		array(new FormFieldConstraintLengthRange(6, 12))
+			array(new FormFieldConstraintLengthRange(6, 12))
 		));
 		$fieldset->add_field(new FormFieldCheckbox('user_hide_mail', $this->lang['hide_mail'], FormFieldCheckbox::CHECKED));
 		
