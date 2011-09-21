@@ -83,7 +83,7 @@ class MemberEditProfileController extends AbstractController
 
 		$fieldset->add_field(new FormFieldTextEditor('mail', $this->lang['mail'], $row['user_mail'], array(
 			'class' => 'text', 'maxlength' => 255, 'description' => $this->lang['valid']),
-		array(new FormFieldConstraintMailAddress())
+		array(new FormFieldConstraintMailAddress(), new FormFieldConstraintMailExist($row['user_id']))
 		));
 		
 		$fieldset->add_field(new FormFieldPasswordEditor('old_password', $this->lang['previous_password'], '', array(

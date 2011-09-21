@@ -83,12 +83,13 @@ class AdminMemberEditController extends AdminController
 		$row = PersistenceContext::get_sql()->query_array(DB_TABLE_MEMBER, '*', "WHERE user_id = '" . $this->user_id . "'", __LINE__, __FILE__);
 		
 		$fieldset->add_field(new FormFieldTextEditor('login', $this->lang['members.pseudo'], $row['login'], array(
-			'class' => 'text', 'maxlength' => 25, 'size' => 25, 'required' => true)
+			'class' => 'text', 'maxlength' => 25, 'size' => 25, 'required' => true),
+			array(new FormFieldConstraintLengthRange(3, 25), new FormFieldConstraintLoginExist($row['user_id']))
 		));		
 		
 		$fieldset->add_field(new FormFieldTextEditor('mail', $this->lang['members.mail'], $row['user_mail'], array(
 			'class' => 'text', 'maxlength' => 255, 'description' => $this->lang['members.valid'], 'required' => true),
-		array(new FormFieldConstraintMailAddress())
+			array(new FormFieldConstraintMailAddress(), new FormFieldConstraintMailExist($row['user_id']))
 		));
 		
 		$fieldset->add_field($password = new FormFieldPasswordEditor('password', $this->lang['members.password'], '', array(
@@ -170,13 +171,13 @@ class AdminMemberEditController extends AdminController
 			PersistenceContext::get_querier()->update(DB_TABLE_MEMBER, $columns, $condition, $parameters);
 		}
 		
-		$user_warning = $this->form->get_value('user_warning');
+		$user_warning = $this->form->get_value('user_warning')->get_raw_value();
 		if (!empty($user_warning))
 		{
 			MemberSanctionManager::caution($this->user_id, $user_warning);
 		}
 		
-		$user_readonly = $this->form->get_value('user_readonly');
+		$user_readonly = $this->form->get_value('user_readonly')->get_raw_value();
 		if (!empty($user_readonly))
 		{
 			MemberSanctionManager::remove_write_permissions($this->user_id, $user_readonly);
@@ -186,7 +187,7 @@ class AdminMemberEditController extends AdminController
 			MemberSanctionManager::restore_write_permissions($this->user_id);
 		}
 		
-		$user_ban = $this->form->get_value('user_readonly');
+		$user_ban = $this->form->get_value('user_readonly')->get_raw_value();
 		if (!empty($user_ban))
 		{
 			MemberSanctionManager::banish($this->user_id, $user_ban);
@@ -202,11 +203,11 @@ class AdminMemberEditController extends AdminController
 	private function get_rank_member()
 	{
 		$rank = $this->form->get_value('rank')->get_raw_value();
-		if ($rank == '3')
+		if ($rank == '2')
 		{
 			return '2';
 		}
-		elseif ($rank == '2')
+		elseif ($rank == '1')
 		{
 			return '1';
 		}

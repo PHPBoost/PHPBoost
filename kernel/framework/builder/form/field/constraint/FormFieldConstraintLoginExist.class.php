@@ -31,10 +31,16 @@
  */
 class FormFieldConstraintLoginExist extends AbstractFormFieldConstraint
 {
+	private $user_id = 0;
 	private $error_message;
  
-	public function __construct($error_message = '')
+	public function __construct($user_id = 0, $error_message = '')
 	{
+		if (!empty($user_id))
+		{
+			$this->user_id = $user_id;
+		}
+		
 		if (empty($error_message))
 		{
 			$error_message = LangLoader::get_message('e_pseudo_auth', 'errors');
@@ -45,18 +51,25 @@ class FormFieldConstraintLoginExist extends AbstractFormFieldConstraint
  
 	public function validate(FormField $field)
 	{
-		$exist = $this->exist_login($field);
-		return $exist;
+		return $this->exist_login($field);
 	}
  
 	public function exist_login(FormField $field)
 	{
-		return PersistenceContext::get_querier()->count(DB_TABLE_MEMBER, "WHERE login = '" . $field->get_value() . "'") > 0 ? false : true;
+		if (!empty($this->user_id))
+		{
+			return PersistenceContext::get_querier()->count(DB_TABLE_MEMBER, "WHERE login = '" . $field->get_value() . "' AND user_id != '" . $this->user_id . "'") > 0 ? false : true;
+		}
+		else
+		{
+			return PersistenceContext::get_querier()->count(DB_TABLE_MEMBER, "WHERE login = '" . $field->get_value() . "'") > 0 ? false : true;
+		}
 	}
  
 	public function get_js_validation(FormField $field)
 	{
-		return 'LoginExistValidator(' . TextHelper::to_js_string($field->get_id()) .', '. $this->error_message . ')';
+		return '';
+		//TODO return 'LoginExistValidator(' . TextHelper::to_js_string($field->get_id()) .', '. $this->error_message . ')';
 	}
 }
  
