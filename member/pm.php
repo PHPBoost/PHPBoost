@@ -498,7 +498,7 @@ elseif (!empty($pm_edit)) //Edition du message privé, si le destinataire ne la p
 					'CONTENTS' => (!empty($_POST['prw_convers']) XOR !empty($_POST['prw'])) ? $contents : FormatingHelper::unparse($pm['contents']),
 					'U_ACTION_EDIT' => url('.php?edit=' . $pm_edit . '&amp;token=' . $Session->get_token()),
 					'U_PM_BOX' => '<a href="pm.php' . SID . '">' . $LANG['pm_box'] . '</a>',
-					'U_USER_VIEW' => '<a href="' . MemberUrlBuilder::profile($User->get_attribute('user_id'))->absolute())->absolute() . '">' . $LANG['member_area'] . '</a>'
+					'U_USER_VIEW' => '<a href="' . MemberUrlBuilder::profile($User->get_attribute('user_id'))->absolute() . '">' . $LANG['member_area'] . '</a>'
 				));
 				
 				if (!empty($_POST['prw_convers']) XOR !empty($_POST['prw']))
@@ -573,7 +573,7 @@ elseif (!empty($pm_id_get)) //Messages associés à la conversation.
 		'PAGINATION' => $Pagination->display('pm' . url('.php?id=' . $pm_id_get . '&amp;p=%d', '-0-' . $pm_id_get . '-%d.php'), $convers['nbr_msg'], 'p', $pagination_msg, 3),
 		'U_PM_BOX' => '<a href="pm.php' . SID . '">' . $LANG['pm_box'] . '</a>',
 		'U_TITLE_CONVERS' => '<a href="pm' . url('.php?id=' . $pm_id_get, '-0-' . $pm_id_get .'.php') . '">' . $convers['title'] . '</a>',
-		'U_USER_VIEW' => '<a href="' . MemberUrlBuilder::profile($User->get_attribute('user_id'))->absolute())->absolute() . '">' . $LANG['member_area'] . '</a>'
+		'U_USER_VIEW' => '<a href="' . MemberUrlBuilder::profile($User->get_attribute('user_id'))->absolute() . '">' . $LANG['member_area'] . '</a>'
 	));
 
 	$Template->put_all(array(
@@ -804,7 +804,7 @@ else //Liste des conversation, dans la boite du membre.
 		'PAGINATION' => $Pagination->display('pm' . url('.php?p=%d', '-0-0-%d.php'), $nbr_pm, 'p', $pagination_pm, 3),
 		'U_MARK_AS_READ' => '<a href="pm.php?read=1" class="small_link">' . $LANG['mark_pm_as_read'] . '</a>',
 		'U_USER_ACTION_PM' => url('.php?del_convers=1&amp;p=' . $page . '&amp;token=' . $Session->get_token()),
-		'U_USER_VIEW' => '<a href="' . MemberUrlBuilder::profile($User->get_attribute('user_id'))->absolute())->absolute() . '">' . $LANG['member_area'] . '</a>',
+		'U_USER_VIEW' => '<a href="' . MemberUrlBuilder::profile($User->get_attribute('user_id'))->absolute() . '">' . $LANG['member_area'] . '</a>',
 		'U_PM_BOX' => '<a href="pm.php' . SID . '">' . $LANG['pm_box'] . '</a>',
 		'U_POST_NEW_CONVERS' => '<a href="pm' . url('.php?post=1', '') . '" title="' . $LANG['post_new_convers'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/post.png" alt="' . $LANG['post_new_convers'] . '" title="' . $LANG['post_new_convers'] . '" class="valign_middle" /></a>'
 	));
