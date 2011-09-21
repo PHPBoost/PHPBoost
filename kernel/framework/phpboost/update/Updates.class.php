@@ -25,9 +25,6 @@
  *
  ###################################################*/
 
-//define('Updates::PHPBOOST_OFFICIAL_REPOSITORY', '../../../tools/repository/main.xml'); // Test repository
-define('PHP_MIN_VERSION_UPDATES', '5');
-
 define('CHECK_KERNEL', 0X01);
 define('CHECK_MODULES', 0X02);
 define('CHECK_THEMES', 0X04);
@@ -44,6 +41,9 @@ class Updates
     private $apps = array();
 	
 	const PHPBOOST_OFFICIAL_REPOSITORY = 'http://www.phpboost.com/repository/main.xml';
+	//const PHPBOOST_OFFICIAL_REPOSITORY = '../../../tools/repository/main.xml'; // Test repository
+	const PHP_MIN_VERSION_UPDATES = '5';
+	
     /**
 	* @desc constructor of the class
 	* @param $checks
