@@ -61,7 +61,7 @@ class Updates
 	*/
     private function load_apps($checks = CHECK_ALL_UPDATES)
     {
-        if (ServerConfiguration::get_phpversion() > PHP_MIN_VERSION_UPDATES)
+        if (ServerConfiguration::get_phpversion() > self::PHP_MIN_VERSION_UPDATES)
         {
             if ($checks & CHECK_KERNEL)
             {   // Add the kernel to the check list
@@ -98,7 +98,7 @@ class Updates
 	*/
     private function load_repositories()
     {
-        if (ServerConfiguration::get_phpversion() > PHP_MIN_VERSION_UPDATES)
+        if (ServerConfiguration::get_phpversion() > self::PHP_MIN_VERSION_UPDATES)
         {
             foreach ($this->apps as $app)
             {
@@ -114,7 +114,7 @@ class Updates
 	*/
     private function check_repositories()
     {
-        if (ServerConfiguration::get_phpversion() > PHP_MIN_VERSION_UPDATES)
+        if (ServerConfiguration::get_phpversion() > self::PHP_MIN_VERSION_UPDATES)
         {
             foreach ($this->apps as $app)
             {
