@@ -45,21 +45,15 @@ class CustomizationConfig extends AbstractConfigData
 	
 	public function favicon_exists()
 	{
-		$favicon_path = $this->get_favicon_path();
-		if (!empty($favicon_path) || $favicon_path !== null)
-		{
-			$favicon_file = new File(PATH_TO_ROOT . $favicon_path);
-			return $favicon_file->exists();
-		}
-		return false;
+		$favicon_file = new File(PATH_TO_ROOT . $this->get_favicon_path());
+		return $favicon_file->exists();
 	}
 	
 	public function favicon_type()
 	{
-		$favicon_path = $this->get_favicon_path();
-		if (!empty($favicon_path) || $favicon_path !== null)
+		if ($this->favicon_exists())
 		{
-			$favicon = new Image(PATH_TO_ROOT . $favicon_path);
+			$favicon = new Image(PATH_TO_ROOT . $this->get_favicon_path());
 			return $favicon->get_mime_type();
 		}
 		return null;
@@ -68,6 +62,11 @@ class CustomizationConfig extends AbstractConfigData
 	public function set_header_logo_path_all_themes($path)
 	{
 		$this->set_property(self::HEADER_LOGO_PATH_ALL_THEMES, $path);
+	}
+	
+	public function remove_header_logo_path_all_themes()
+	{
+		$this->set_property(self::HEADER_LOGO_PATH_ALL_THEMES, null);
 	}
 	
 	public function get_header_logo_path_all_themes()
