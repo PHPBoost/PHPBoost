@@ -1,10 +1,10 @@
 <?php
 /*##################################################
- *                           AdminConfigDisplayResponse.class.php
+ *                       AdminConfigUrlBuilder.class.php
  *                            -------------------
- *   begin                : April 12 2010
- *   copyright            : (C) 2010 Benoit Sautel
- *   email                : benoit.sautel@phpboost.com
+ *   begin                : September 20, 2011
+ *   copyright            : (C) 2011 Patrick DUBEAU
+ *   email                : daaxwizeman@gmail.com
  *
  *
  ###################################################
@@ -25,20 +25,40 @@
  *
  ###################################################*/
 
-class AdminConfigDisplayResponse extends AdminMenuDisplayResponse
+class AdminConfigUrlBuilder
 {
-	public function __construct($view, $title_page)
-	{ 
-        parent::__construct($view);
-        
-        $lang = LangLoader::get('admin-config-common');
-        $this->set_title($lang['general-config']);
-        $img = '/templates/' . get_utheme() . '/images/admin/configuration.png';
-        $this->add_link($lang['general-config'], AdminConfigUrlBuilder::general_config(), $img);
-        $this->add_link($lang['advanced-config'], AdminConfigUrlBuilder::advanced_config(), $img);
-        $this->add_link($lang['mail-config'], AdminConfigUrlBuilder::mail_config(), $img);
-        $env = $this->get_graphical_environment();
-		$env->set_page_title($title_page);
+	private static $dispatcher = '/admin/config';
+	
+	/*
+	 * @ return Url
+	 */
+	public static function general_config()
+	{
+		return DispatchManager::get_url(self::$dispatcher, '/general/');
+	}
+	
+	/*
+	 * @ return Url
+	 */
+	public static function advanced_config()
+	{
+		return DispatchManager::get_url(self::$dispatcher, '/advanced/');
+	}
+	
+	/*
+	 * @ return Url
+	 */
+	public static function unlock_administration()
+	{
+		return DispatchManager::get_url(self::$dispatcher, '/advanced/unlock');
+	}
+	
+	/*
+	 * @ return Url
+	 */
+	public static function mail_config()
+	{
+		return DispatchManager::get_url(self::$dispatcher, '/mail/');
 	}
 }
 ?>
