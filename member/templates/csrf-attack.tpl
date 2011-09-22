@@ -1,0 +1,2 @@
+<div class="notice" style="padding:10px;text-indent:30px;line-height:24px;">{L_ATTACK_EXPLAIN}</div>
+<p style="margin:auto;margin-top:15px; text-align:center;"><a href="javascript:history.go(-1);">{L_BACK}</a></p>
