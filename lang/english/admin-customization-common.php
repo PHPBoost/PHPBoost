@@ -43,6 +43,7 @@ $lang['customization.interface.logo.current'] = 'Current logo';
 $lang['customization.interface.logo.current.null'] = 'You currently have no logo';
 $lang['customization.interface.logo.current.erased'] = '<span style="color:#B22222;font-weight:bold;">The logo that you saved is visibly removed from the server, please replace it with another</span>';
 $lang['customization.interface.logo.error'] = 'The logo could not be changed';
+$lang['customization.interface.logo.use-default'] = 'Delete the current image and use the default logo';
 
 $lang['favicon'] = 'Favicon';
 $lang['customization.favicon'] = 'Customizing the favicon';
