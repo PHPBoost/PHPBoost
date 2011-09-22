@@ -27,7 +27,7 @@
 
 class AdminThemeUrlBuilder
 {
-	private static $dispatcher = '/admin/theme';
+	private static $dispatcher = '/admin/themes';
 	
 	/*
 	 * @ return Url
