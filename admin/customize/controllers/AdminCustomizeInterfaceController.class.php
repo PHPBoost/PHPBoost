@@ -73,6 +73,11 @@ class AdminCustomizeInterfaceController extends AdminController
 					$tpl->put('MSG', MessageHelper::display($this->lang['customization.interface.logo.error'], E_USER_ERROR, 4));
 				}
 			}
+			elseif ($this->form->get_value('use_default_logo'))
+			{
+				$this->delete_pictures_saved($theme);
+				$tpl->put('MSG', MessageHelper::display($this->lang['customization.interface.success'], E_USER_SUCCESS, 4));
+			}
 			else
 			{
 				$tpl->put('MSG', MessageHelper::display($this->lang['customization.interface.logo.error'], E_USER_ERROR, 4));
@@ -133,6 +138,8 @@ class AdminCustomizeInterfaceController extends AdminController
 
 		$customize_interface_fieldset->add_field(new FormFieldFilePicker('header_logo', $this->lang['customization.interface.logo.current.change']));
 		
+		$customize_interface_fieldset->add_field(new FormFieldCheckbox('use_default_logo', $this->lang['customization.interface.logo.use-default'], FormFieldCheckbox::UNCHECKED));
+		
 		$form->add_button(new FormButtonReset());
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_button($this->submit_button);
@@ -145,12 +152,19 @@ class AdminCustomizeInterfaceController extends AdminController
 		$save_destination = new File(PATH_TO_ROOT . '/images/customization/' . $theme_selected . '_'. $header_logo->get_name());
 		$header_logo->save($save_destination);
 		
+		$this->delete_older($theme_selected);
+		
 		if ($theme_selected !== 'all')
 		{
 			$theme = ThemeManager::get_theme($theme_selected);
 			$customize_interface = $theme->get_customize_interface();
 			$customize_interface->set_header_logo_path($save_destination->get_path_from_root());
 			ThemeManager::change_customize_interface($theme_selected, $customize_interface);
+			
+			if ($this->config->get_header_logo_path_all_themes() !== null)
+			{
+				$this->config->remove_header_logo_path_all_themes();
+			}
 		}
 		else
 		{
@@ -158,10 +172,35 @@ class AdminCustomizeInterfaceController extends AdminController
 			{
 				$customize_interface = $theme->get_customize_interface();
 				$customize_interface->set_header_logo_path($save_destination->get_path_from_root());
-				ThemeManager::change_customize_interface($theme_selected, $customize_interface);
+				ThemeManager::change_customize_interface($id, $customize_interface);
+			}
+					
+			$this->config->set_header_logo_path_all_themes($save_destination->get_path_from_root());
+			CustomizationConfig::save();			
+		}
+	}
+	
+	private function delete_pictures_saved($theme_selected)
+	{
+		$this->delete_older($theme_selected);
+		
+		if ($theme_selected !== 'all')
+		{
+			$theme = ThemeManager::get_theme($theme_selected);
+			$customize_interface = $theme->get_customize_interface();
+			$customize_interface->remove_header_logo_path();
+			ThemeManager::change_customize_interface($theme_selected, $customize_interface);
+		}
+		else
+		{
+			foreach (ThemeManager::get_activated_themes_map() as $id => $theme) 
+			{
+				$customize_interface = $theme->get_customize_interface();
+				$customize_interface->remove_header_logo_path();
+				ThemeManager::change_customize_interface($id, $customize_interface);
 			}
 			
-			$this->config->set_header_logo_path_all_themes($save_destination->get_path_from_root());
+			$this->config->remove_header_logo_path_all_themes();
 			CustomizationConfig::save();			
 		}
 	}
@@ -188,6 +227,15 @@ class AdminCustomizeInterfaceController extends AdminController
 			$theme = ThemeManager::get_theme($theme);
 			$customize_interface = $theme->get_customize_interface();
 			return $customize_interface->get_header_logo_path();
+		}
+	}
+	
+	private function delete_older($theme)
+	{
+		$file = new File(PATH_TO_ROOT . '/' . $this->get_header_logo_path($theme));
+		if ($file->exists())
+		{
+			$file->delete();
 		}
 	}
 }
