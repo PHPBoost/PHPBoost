@@ -124,9 +124,20 @@ class AdminCustomizeFaviconController extends AdminController
 	{
 		$save_destination = new File(PATH_TO_ROOT . '/' . $favicon->get_name());
 		$favicon->save($save_destination);
+		
+		$this->delete_older();
 
 		$this->config->set_favicon_path($save_destination->get_path_from_root());
 		CustomizationConfig::save();
-	}	
+	}
+	
+	private function delete_older()
+	{
+		$file = new File(PATH_TO_ROOT . '/' . $this->config->get_favicon_path());
+		if ($file->exists())
+		{
+			$file->delete();
+		}
+	}
 }
 ?>

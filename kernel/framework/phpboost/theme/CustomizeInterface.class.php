@@ -44,5 +44,10 @@ class CustomizeInterface
 	{
 		return $this->header_logo_path;
 	}
+	
+	public function remove_header_logo_path()
+	{
+		$this->header_logo_path = '';
+	}
 }
 ?>
