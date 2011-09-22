@@ -84,7 +84,7 @@ class AdminThemesNotInstalledListController extends AdminController
 				foreach ($pictures as $picture)
 				{
 					$this->view->assign_block_vars('themes_not_installed.pictures', array(
-						'URL' => PATH_TO_ROOT .'/templates/' . $theme->get_id() . '/' . $picture
+						'URL' => PATH_TO_ROOT .'/templates/' . $id_theme . '/' . $picture
 					));
 				}
 			}

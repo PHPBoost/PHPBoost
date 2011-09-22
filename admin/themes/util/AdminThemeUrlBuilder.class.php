@@ -1,10 +1,10 @@
 <?php
 /*##################################################
- *                           AdminThemesDisplayResponse.class.php
+ *                       AdminThemeUrlBuilder.class.php
  *                            -------------------
- *   begin                : April 20, 2011
- *   copyright            : (C) 2011 Kévin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   begin                : September 20, 2011
+ *   copyright            : (C) 2011 Patrick DUBEAU
+ *   email                : daaxwizeman@gmail.com
  *
  *
  ###################################################
@@ -25,20 +25,32 @@
  *
  ###################################################*/
 
-class AdminThemesDisplayResponse extends AdminMenuDisplayResponse
+class AdminThemeUrlBuilder
 {
-	public function __construct($view, $title_page)
+	private static $dispatcher = '/admin/theme';
+	
+	/*
+	 * @ return Url
+	 */
+	public static function list_installed_theme()
 	{
-        parent::__construct($view);
-
-		$lang = LangLoader::get('admin-themes-common');
-		$picture = '/templates/' . get_utheme() . '/images/admin/themes.png';
-		$this->set_title($lang['themes.management']);
-		$this->add_link($lang['themes.installed'], AdminThemeUrlBuilder::list_installed_theme(), $picture);
-		$this->add_link($lang['themes.add'], AdminThemeUrlBuilder::add_theme(), $picture);
+		return DispatchManager::get_url(self::$dispatcher, '/installed/');
+	}
+	
+	/*
+	 * @ return Url
+	 */
+	public static function add_theme()
+	{
+		return DispatchManager::get_url(self::$dispatcher, '/add/');
+	}
 		
-		$env = $this->get_graphical_environment();
-		$env->set_page_title($title_page);
+	/*
+	 * @ return Url
+	 */
+	public static function delete_theme($theme_id)
+	{
+		return DispatchManager::get_url(self::$dispatcher, $theme_id . '/delete/');
 	}
 }
 ?>
