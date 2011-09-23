@@ -69,7 +69,7 @@ class AdminMailConfigController extends AbstractAdminFormPageController
 		$fieldset = new FormFieldsetHTML('send_configuration', $this->lang['mail-config.send_protocol'], array('description' => $this->lang['mail-config.send_protocol_explain']));
 		$form->add_fieldset($fieldset);
 		$fieldset->add_field(new FormFieldCheckbox('use_smtp', $this->lang['mail-config.use_custom_smtp_configuration'], $smtp_enabled,
-		array('events' => array('click' => 'if ($F("mail_sending_config_use_smtp") == "on") { show_smtp_config(); } else { hide_smtp_config(); }'))));
+		array('events' => array('click' => 'if (HTMLForms.getField("use_smtp").getValue()) { show_smtp_config(); } else { hide_smtp_config(); }'))));
 
 
 		$fieldset = new FormFieldsetHTML('smtp_configuration', $this->lang['mail-config.custom_smtp_configuration'], array('disabled' => !$smtp_enabled));
@@ -140,19 +140,19 @@ class AdminMailConfigController extends AbstractAdminFormPageController
 	protected function generate_response(View $view)
 	{
 		$tpl = new StringTemplate('<script type="text/javascript">
-<!--
-	function show_smtp_config()
-	{
-		$FFS("smtp_configuration").enable();
-	}
-
-	function hide_smtp_config()
-	{
-		$FFS("smtp_configuration").disable();
-	}
--->
-</script>
-# INCLUDE form #');
+		<!--
+			function show_smtp_config()
+			{
+				HTMLForms.getFieldset("smtp_configuration").enable();
+			}
+		
+			function hide_smtp_config()
+			{
+				HTMLForms.getFieldset("smtp_configuration").disable();
+			}
+		-->
+		</script>
+		# INCLUDE form #');
 		$tpl->put('form', $view);
 		return new AdminConfigDisplayResponse($tpl, $this->lang['mail-config']);
 	}
