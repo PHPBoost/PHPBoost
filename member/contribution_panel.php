@@ -154,9 +154,9 @@ if ($contribution_id > 0)
 		'C_CONSULT_CONTRIBUTION' => true
 	));
 	
-	$comments = new Comments();
-	$comments->set_module_name('events');
-	$comments->set_id_in_module($contribution_id);
+	$comments_topic = new CommentsTopic();
+	$comments_topic->set_module_name('events');
+	$comments_topic->set_id_in_module($contribution_id);
 
 	//For PHP 4 :(
 	$contribution_creation_date = $contribution->get_creation_date();
@@ -169,7 +169,7 @@ if ($contribution_id > 0)
 		'DESCRIPTION' => FormatingHelper::second_parse($contribution->get_description()),
 		'STATUS' => $contribution->get_status_name(),
 		'CONTRIBUTER' => $Sql->query("SELECT login FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $contribution->get_poster_id() . "'", __LINE__, __FILE__),
-		'COMMENTS' => CommentsService::display($comments)->render(),
+		'COMMENTS' => CommentsService::display($comments_topic)->render(),
 		'CREATION_DATE' => $contribution_creation_date->format(DATE_FORMAT_SHORT),
 		'MODULE' => $contribution->get_module_name(),
 		'U_CONTRIBUTOR_PROFILE' => MemberUrlBuilder::profile($contribution->get_poster_id())->absolute(),

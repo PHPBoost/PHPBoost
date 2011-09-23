@@ -35,10 +35,17 @@ class CommentsAuthorizations
 	private $read_bit = 0;
 	private $post_bit = 0;
 	private $moderation_bit = 0;
+	private $note_bit = 0;
+	
+	private $manual_authorized_read = null;
+	private $manual_authorized_post = null;
+	private $manual_authorized_moderation = null;
+	private $manual_authorized_note = null;
 	
 	const READ_AUTHORIZATIONS = 1;
 	const POST_AUTHORIZATIONS = 2;
 	const MODERATION_AUTHORIZATIONS = 4;
+	const NOTE_AUTHORIZATIONS = 8;
 	
 	/*
 	 * Setters
@@ -63,6 +70,11 @@ class CommentsAuthorizations
 		$this->moderation_bit = $moderation_bit;
 	}
 	
+	public function set_note_bit($note_bit)
+	{
+		$this->note_bit = $note_bit;
+	}
+	
 	public function is_authorized_read()
 	{
 		return $this->check_authorizations($this->read_bit, self::READ_AUTHORIZATIONS);
@@ -78,17 +90,77 @@ class CommentsAuthorizations
 		return $this->check_authorizations($this->moderation_bit, self::MODERATION_AUTHORIZATIONS);
 	}
 	
+	public function is_authorized_note()
+	{
+		return $this->check_authorizations($this->note_bit, self::NOTE_AUTHORIZATIONS);
+	}
+	
+	/**
+	 * @param boolean $authorized
+	 */
+	public function set_manual_authorized_read($authorized)
+	{
+		$this->manual_authorized_read = $authorized;
+	}
+	
+	/**
+	 * @param boolean $authorized
+	 */
+	public function set_manual_authorized_post($authorized)
+	{
+		$this->manual_authorized_post = $authorized;
+	}
+	
+	/**
+	 * @param boolean $authorized
+	 */
+	public function set_manual_authorized_moderation($authorized)
+	{
+		$this->manual_authorized_moderation = $authorized;
+	}
+	
+	/**
+	 * @param boolean $authorized
+	 */
+	public function set_manual_authorized_note($authorized)
+	{
+		$this->manual_authorized_note = $authorized;
+	}
+	
 	private function check_authorizations($bit, $global_bit)
 	{
-		if (!empty($this->array_authorization) && $bit !== 0)
+		$manual_authorizations = $this->manual_authorizations($global_bit);
+		if ($manual_authorizations !== null)
 		{
-			//return AppContext::get_user()->check_auth($this->array_authorization, $bit);
-			return true;
+			return $manual_authorizations;
+		}
+		else if (!empty($this->array_authorization) && $bit !== 0)
+		{
+			return AppContext::get_user()->check_auth($this->array_authorization, $bit);
 		}
 		else
 		{
-			//return AppContext::get_user()->check_auth(CommentsConfig::load()->get_authorizations(), $global_bit);
-			return true;
+			return AppContext::get_user()->check_auth(CommentsConfig::load()->get_authorizations(), $global_bit);
+		}
+	}
+	
+	private function manual_authorizations($type)
+	{
+		switch ($type) {
+			case self::READ_AUTHORIZATIONS:
+				return ($this->manual_authorized_read !== null ? $this->manual_authorized_read : null);
+			break;
+			case self::POST_AUTHORIZATIONS:
+				return ($this->manual_authorized_post !== null ? $this->manual_authorized_post : null);
+			break;
+			case self::MODERATION_AUTHORIZATIONS:
+				return ($this->manual_authorized_post !== null ? $this->manual_authorized_post : null);
+			break;
+			case self::NOTE_AUTHORIZATIONS:
+				return ($this->manual_authorized_note !== null ? $this->manual_authorized_note : null);
+			break;
+			default:
+			break;
 		}
 	}
 }

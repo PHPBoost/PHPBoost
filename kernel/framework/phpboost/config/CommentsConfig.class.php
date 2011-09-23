@@ -102,7 +102,7 @@ class CommentsConfig extends AbstractConfigData
 		$server_configuration = new ServerConfiguration();
 		
 		return array(
-			self::AUTHORIZATIONS => array('r1' => 7, 'r0' => 3, 'r-1' => 1),
+			self::AUTHORIZATIONS => array('r1' => 15, 'r0' => 11, 'r-1' => 3),
 			self::DISPLAY_CAPTCHA => $server_configuration->has_gd_library() ? true : false,
 			self::CAPTCHA_DIFFICULTY => 2,
 			self::NUMBER_COMMENTS_DISPLAY => 15,

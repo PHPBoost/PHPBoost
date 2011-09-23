@@ -1,9 +1,9 @@
 <?php
 /*##################################################
- *                              Comments.class.php
+ *                              CommentsTopic.class.php
  *                            -------------------
  *   begin                : March 31, 2011
- *   copyright            : (C) 2011 Kévin MASSY
+ *   copyright            : (C) 2011 KÃ©vin MASSY
  *   email                : soldier.weasel@gmail.com
  *
  *
@@ -26,10 +26,10 @@
  ###################################################*/
 
  /**
- * @author Kévin MASSY <soldier.weasel@gmail.com>
+ * @author KÃ©vin MASSY <soldier.weasel@gmail.com>
  * @package {@package}
  */
-class Comments
+class CommentsTopic
 {
 	private $module_name;
 	private $id_in_module;
@@ -78,7 +78,7 @@ class Comments
 		return $this->visibility;
 	}
 	
-	public function set_authorizations(CommentsAuthorizations $authorizations)
+	public function set_authorizations(CommentsTopicAuthorizations $authorizations)
 	{
 		$this->authorizations = $authorizations;
 	}

@@ -86,7 +86,7 @@ if ($delete_file > 0)
 		if ($file_infos['nbr_com'] > 0)
 		{
 			
-			$Comments = new Comments('download', $delete_file, url('download.php?id=' . $delete_file . '&amp;com=%s', 'download-' . $delete_file . '.php?com=%s'));
+			$Comments = new CommentsTopic('download', $delete_file, url('download.php?id=' . $delete_file . '&amp;com=%s', 'download-' . $delete_file . '.php?com=%s'));
 			$Comments->delete_all($delete_file);
 		}
 		

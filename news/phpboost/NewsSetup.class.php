@@ -51,9 +51,9 @@ class NewsSetup extends DefaultModuleSetup
 	{
 		$this->drop_tables();
 		
-		$comments = new Comments();
-		$comments->set_module_name('news');
-		CommentsService::delete_comments_module($comments);
+		$comments_topic = new CommentsTopic();
+		$comments_topic->set_module_name('news');
+		CommentsService::delete_comments_module($comments_topic);
 	}
 
 	private function drop_tables()

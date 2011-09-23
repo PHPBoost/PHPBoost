@@ -57,8 +57,8 @@ if (!$User->check_auth($calendar_config->get_authorization(), AUTH_CALENDAR_READ
 }
 
 
-$comments = new Comments();
-$comments->set_module_name('calendar');
+$comments_topic = new CommentsTopic();
+$comments_topic->set_module_name('calendar');
 
 $editor = AppContext::get_content_formatting_service()->get_default_editor();
 $editor->set_identifier('contents');
@@ -252,7 +252,7 @@ if ($checkdate === true && empty($id) && !$add)
 				$java = '';
 			}
 			
-			$comments->set_id_module($row['id']);
+			$comments_topic->set_id_module($row['id']);
 			
 			$Template->assign_block_vars('action', array(
 				'DATE' => gmdate_format('date_format', $row['timestamp']),
@@ -260,7 +260,7 @@ if ($checkdate === true && empty($id) && !$add)
 				'CONTENTS' => FormatingHelper::second_parse($row['contents']),
 				'LOGIN' => '<a class="com" href="'. MemberUrlBuilder::profile($row['user_id'])->absolute() . '">' . $row['login'] . '</a>',
 				'COM' => '<a href="'. PATH_TO_ROOT .'/calendar/calendar' . url('.php?d=' . $day . '&amp;m=' . $month . '&amp;y=' . $year . '&amp;e=' . $row['id'] . '&amp;com=0', 
-					'-' . $day . '-' . $month . '-' . $year . '-' . $row['id'] . '.php?com=0') .'">'. CommentsService::get_number_and_lang_comments($comments) . '</a>',
+					'-' . $day . '-' . $month . '-' . $year . '-' . $row['id'] . '.php?com=0') .'">'. CommentsService::get_number_and_lang_comments($comments_topic) . '</a>',
 				'EDIT' => $edit,
 				'DEL' => $del,
 				'L_ON' => $LANG['on']
@@ -290,7 +290,7 @@ if ($checkdate === true && empty($id) && !$add)
 	if (isset($_GET['com']))
 	{
 		$Template->put_all(array(
-			'COMMENTS' => CommentsService::display($comments)->render()
+			'COMMENTS' => CommentsService::display($comments_topic)->render()
 		));
 	}
 
@@ -309,8 +309,8 @@ elseif (!empty($id))
 		
 		$Sql->query_inject("DELETE FROM " . PREFIX . "calendar WHERE id = '" . $id . "'", __LINE__, __FILE__);
 		
-		$comments->set_id_module($id);
-		CommentsService::delete_comments_module($comments);
+		$comments_topic->set_id_module($id);
+		CommentsService::delete_comments_module($comments_topic);
 		
 		AppContext::get_response()->redirect(HOST . SCRIPT . SID2);
 	}

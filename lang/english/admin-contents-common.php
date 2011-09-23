@@ -45,6 +45,7 @@ $lang['comments.config.authorization'] = 'Authorizations';
 $lang['comments.config.authorization-read'] = 'Authorization to see the comments';
 $lang['comments.config.authorization-post'] = 'Authorization to post a comment';
 $lang['comments.config.authorization-moderation'] = 'Authorization to management a comments';
+$lang['comments.config.authorization-note'] = 'Authorization to note a comments';
 $lang['comments.config.max-links-comment'] = 'Number of links allowed in a comment';
 $lang['comments.config.forbidden-tags'] = 'Types of formatting allowed';
 
