@@ -68,7 +68,7 @@ class GraphicalEnvironmentConfig extends AbstractConfigData
 	{
 		return array(
 			self::VISIT_COUNTER_ENABLED => false,
-			self::DISPLAY_THEME_AUTHOR => false,
+			self::DISPLAY_THEME_AUTHOR => true,
 			self::PAGE_BENCH_ENABLED => false,
 		);
 	}
