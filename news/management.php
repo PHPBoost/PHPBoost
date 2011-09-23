@@ -48,7 +48,7 @@ if ($delete > 0)
 		$Sql->query_inject("DELETE FROM " . DB_TABLE_EVENTS . " WHERE module = 'news' AND id_in_module = '" . $delete . "'", __LINE__, __FILE__);
 
 		$comments_topic = new CommentsTopic();
-		$comments_topic->set_module_name('news');
+		$comments_topic->set_module_id('news');
 		$comments_topic->set_id_in_module($news['id']);
 		CommentsService::delete_comments_id_in_module($comments_topic);
 	    

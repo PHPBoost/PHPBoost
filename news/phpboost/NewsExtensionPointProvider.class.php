@@ -221,7 +221,7 @@ class NewsExtensionPointProvider extends ExtensionPointProvider
 						$last_release = max($last_release, $row['start']);
 
 						$comments_topic = new CommentsTopic();
-						$comments_topic->set_module_name('news');
+						$comments_topic->set_module_id('news');
 						$comments_topic->set_id_in_module($row['id']);
 		
 						$tpl->assign_block_vars('news', array(

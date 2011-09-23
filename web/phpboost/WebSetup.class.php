@@ -74,10 +74,7 @@ class WebSetup extends DefaultModuleSetup
 			'url' => array('type' => 'text', 'length' => 2048),
 			'compt' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'aprob' => array('type' => 'boolean', 'notnull' => 1, 'default' => 1),
-			'timestamp' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'nbrnote' => array('type' => 'integer', 'length' => 9, 'notnull' => 1, 'default' => 0),
-			'nbr_com' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'lock_com' => array('type' => 'boolean', 'notnull' => 1, 'default' => 0)
+			'timestamp' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0)
 		);
 		$options = array(
 			'primary' => array('id'),
@@ -124,8 +121,6 @@ class WebSetup extends DefaultModuleSetup
 			'compt' => 0,
 			'aprob' => 1,
 			'timestamp' => time(),
-			'nbr_com' => 0,
-			'lock_com' => 0
 		));
 	}
 

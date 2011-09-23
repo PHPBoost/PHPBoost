@@ -155,7 +155,7 @@ if ($contribution_id > 0)
 	));
 	
 	$comments_topic = new CommentsTopic();
-	$comments_topic->set_module_name('events');
+	$comments_topic->set_module_id('events');
 	$comments_topic->set_id_in_module($contribution_id);
 
 	//For PHP 4 :(

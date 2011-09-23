@@ -40,7 +40,7 @@ $notation->set_module_name('media');
 $notation->set_notation_scale($MEDIA_CONFIG['note_max']);
 
 $comments_topic = new CommentsTopic();
-$comments_topic->set_module_name('media');
+$comments_topic->set_module_id('media');
 
 // Display caterories and media files.
 if (empty($id_media) && $id_cat >= 0)
@@ -188,7 +188,6 @@ if (empty($id_media) && $id_cat >= 0)
 		while ($row = $Sql->fetch_assoc($result))
 		{
 			$notation->set_id_in_module($row['id']);
-			$comments_topic->set_id_in_module($row['id']);
 			
 			$Template->assign_block_vars('file', array(
 				'NAME' => $row['name'],
@@ -203,7 +202,7 @@ if (empty($id_media) && $id_cat >= 0)
 				'U_ADMIN_UNVISIBLE_MEDIA' => url('media_action.php?unvisible=' . $row['id'] . '&amp;token=' . $Session->get_token()),
 				'U_ADMIN_EDIT_MEDIA' => url('media_action.php?edit=' . $row['id']),
 				'U_ADMIN_DELETE_MEDIA' => url('media_action.php?del=' . $row['id'] . '&amp;token=' . $Session->get_token()),
-				'U_COM_LINK' => '<a href="'. PATH_TO_ROOT .'/media/media' . url('.php?id=' . $row['id'] . '&amp;com=0', '-' . $row['id'] . '-' . $id_cat . '+' . Url::encode_rewrite($row['name']) . '.php?com=0') .'">'. CommentsService::get_number_and_lang_comments($comments_topic) . '</a>'
+				'U_COM_LINK' => '<a href="'. PATH_TO_ROOT .'/media/media' . url('.php?id=' . $row['id'] . '&amp;com=0', '-' . $row['id'] . '-' . $id_cat . '+' . Url::encode_rewrite($row['name']) . '.php?com=0') .'">'. CommentsService::get_number_and_lang_comments('media', $row['id']) . '</a>'
 			));
 		}
 
@@ -247,9 +246,8 @@ elseif ($id_media > 0)
 
 	$notation->set_id_in_module($id_media);
 	$nbr_notes = NotationService::get_former_number_notes($notation);
-	
 	$comments_topic->set_id_in_module($id_media);
-
+	
 	$Template->put_all(array(
 		'C_DISPLAY_MEDIA' => true,
 		'C_MODO' => $User->check_level(MODO_LEVEL),
@@ -260,7 +258,7 @@ elseif ($id_media > 0)
 		'KERNEL_NOTATION' => NotationService::display_active_image($notation),
 		'HITS' => ((int)$media['counter']+1) > 1 ? sprintf($MEDIA_LANG['n_times'], ((int)$media['counter']+1)) : sprintf($MEDIA_LANG['n_time'], ((int)$media['counter']+1)),
 		'NUM_NOTES' => (int)$nbr_notes > 1 ? sprintf($MEDIA_LANG['num_notes'], (int)$nbr_notes) : sprintf($MEDIA_LANG['num_note'], (int)$nbr_notes),
-		'U_COM' => '<a href="'. PATH_TO_ROOT .'/media/media' . url('.php?id=' . $id_media . '&amp;com=0', '-' . $id_media . '-' . $media['idcat'] . '+' . Url::encode_rewrite($media['name']) . '.php?com=0') .'">'. CommentsService::get_number_and_lang_comments($comments_topic) . '</a>',
+		'U_COM' => '<a href="'. PATH_TO_ROOT .'/media/media' . url('.php?id=' . $id_media . '&amp;com=0', '-' . $id_media . '-' . $media['idcat'] . '+' . Url::encode_rewrite($media['name']) . '.php?com=0') .'">'. CommentsService::get_number_and_lang_comments('media', $id_media) . '</a>',
 		'L_DATE' => $LANG['date'],
 		'L_SIZE' => $LANG['size'],
 		'L_MEDIA_INFOS' => $MEDIA_LANG['media_infos'],

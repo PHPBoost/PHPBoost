@@ -125,7 +125,7 @@ if (!empty($idnews)) // On affiche la news correspondant à l'id envoyé.
 		$auth_delete = $news['idcat'] > 0 ? $User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_MODERATE) : $User->check_auth($NEWS_CONFIG['global_auth'], AUTH_NEWS_MODERATE);
 		
 		$comments_topic = new CommentsTopic();
-		$comments_topic->set_module_name('news');
+		$comments_topic->set_module_id('news');
 		$comments_topic->set_id_in_module($idnews);
 
 		$tpl->put_all(array(

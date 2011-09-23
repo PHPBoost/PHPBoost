@@ -189,16 +189,14 @@ class KernelSetup
 	private function create_comments_topic_table()
 	{
 		$fields = array(
-			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true),
-			'module_name' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
+			'id_topic' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true),
+			'module_id' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
 			'id_in_module' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'visibility' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
 			'is_locked' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'number_comments' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'authorizations' => array('type' => 'text', 'length' => 65000)
 		);
 		$options = array(
-			'primary' => array('id'),
+			'primary' => array('id_topic'),
 		);
 		self::$db_utils->create_table(self::$comments_topic_table, $fields, $options);
 	}

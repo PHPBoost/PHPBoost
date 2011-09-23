@@ -39,7 +39,7 @@ class Comment
 	private $is_locked = false;
 	private $visibility = true;
 	private $message = '';
-	private $module_name;
+	private $module_id;
 	private $id_in_module;
 	
 	public function set_id($id)
@@ -122,14 +122,14 @@ class Comment
 		return $this->message;
 	}
 	
-	public function set_module_name($module)
+	public function set_module_id($module)
 	{
-		$this->module_name = $module;
+		$this->module_id = $module;
 	}
 	
-	public function get_module_name()
+	public function get_module_id()
 	{
-		return $this->module_name;
+		return $this->module_id;
 	}
 	
 	public function set_id_in_module($id_in_module)

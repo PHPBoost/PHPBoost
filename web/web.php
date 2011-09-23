@@ -37,7 +37,7 @@ $notation->set_id_in_module($idweb);
 $notation->set_notation_scale($CONFIG_WEB['note_max']);
 
 $comments_topic = new CommentsTopic();
-$comments_topic->set_module_name('web');
+$comments_topic->set_module_id('web');
 $comments_topic->set_id_in_module($idweb);
 
 if (!empty($idweb) && !empty($CAT_WEB[$idcat]['name']) && !empty($idcat)) //Contenu du lien.
@@ -93,7 +93,7 @@ if (!empty($idweb) && !empty($CAT_WEB[$idcat]['name']) && !empty($idcat)) //Cont
 		'COMPT' => $web['compt'],
 		'THEME' => get_utheme(),
 		'LANG' => get_ulang(),
-		'COM' => '<a href="'. PATH_TO_ROOT .'/web/web' . url('.php?cat=' . $idcat . '&amp;id=' . $idweb . '&amp;com=0', '-' . $idcat . '-' . $idweb . '.php?com=0') .'">'. CommentsService::get_number_and_lang_comments($comments_topic) . '</a>',
+		'COM' => '<a href="'. PATH_TO_ROOT .'/web/web' . url('.php?cat=' . $idcat . '&amp;id=' . $idweb . '&amp;com=0', '-' . $idcat . '-' . $idweb . '.php?com=0') .'">'. CommentsService::get_number_and_lang_comments('web', $web['id']) . '</a>',
 		'KERNEL_NOTATION' => NotationService::display_active_image($notation),
 		'U_WEB_CAT' => url('.php?cat=' . $idcat, '-' . $idcat . '.php'),
 		'L_DESC' => $LANG['description'],
@@ -189,7 +189,6 @@ elseif (!empty($idcat) && empty($idweb)) //Catégories.
 	while ($row = $Sql->fetch_assoc($result))
 	{
 		$notation->set_id_in_module($row['id']);
-		$comments_topic->set_id_in_module($row['id']);
 		
 		//On reccourci le lien si il est trop long.
 		$row['title'] = (strlen($row['title']) > 45 ) ? substr(html_entity_decode($row['title']), 0, 45) . '...' : $row['title'];
@@ -200,7 +199,7 @@ elseif (!empty($idcat) && empty($idweb)) //Catégories.
 			'DATE' => gmdate_format('date_format_short', $row['timestamp']),
 			'COMPT' => $row['compt'],
 			'NOTE' => NotationService::display_static_image($notation),
-			'COM' => CommentsService::get_number_comments($comments_topic),
+			'COM' => CommentsService::get_number_comments('web', $row['id']),
 			'U_WEB_LINK' => url('.php?cat=' . $idcat . '&amp;id=' . $row['id'], '-' .  $idcat . '-' . $row['id'] . '.php')
 		));
 	}
