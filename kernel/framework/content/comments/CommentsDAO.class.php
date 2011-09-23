@@ -38,7 +38,7 @@ class CommentsDAO
 		self::$db_querier = PersistenceContext::get_querier();
 	}
 	
-	public static function delete_all_comments_by_module_name(Comments $comments)
+	public static function delete_all_comments_by_module_name(CommentsTopic $comments_topic)
 	{
 		$id_comments_topic = self::$db_querier->get_column_value(DB_TABLE_COMMENTS_TOPIC, 'id', "WHERE module_name = :module_name", array('module_name' => $comment->get_module_name()));
 		
@@ -47,45 +47,32 @@ class CommentsDAO
 		self::$db_querier->delete(DB_TABLE_COMMENTS, $condition, $parameters);
 		
 		$condition = "WHERE module_name = :module_name";
-		$parameters = array('module_name' => $comments->get_module_name());
+		$parameters = array('module_name' => $comments_topic->get_module_name());
 		self::$db_querier->delete(DB_TABLE_COMMENTS_TOPIC, $condition, $parameters);
 	}
 	
-	public static function delete_comments_id_in_module(Comments $comments)
+	public static function delete_comments_id_in_module(CommentsTopic $comments_topic)
 	{
 		$id_comments_topic = self::$db_querier->get_column_value(DB_TABLE_COMMENTS_TOPIC, 'id', "WHERE module_name = :module_name AND id_in_module = :id_in_module", 
-		array('module_name' => $comment->get_module_name(), 'id_in_module' => $comments->get_id_in_module()));
+		array('module_name' => $comment->get_module_name(), 'id_in_module' => $comments_topic->get_id_in_module()));
 		
 		$condition = "WHERE id_topic = :id_topic";
 		$parameters = array('id_topic' => $id_comments_topic);
 		self::$db_querier->delete(DB_TABLE_COMMENTS, $condition, $parameters);
 		
 		$condition = "WHERE module_name = :module_name AND id_in_module = :id_in_module";
-		$parameters = array('module_name' => $comment->get_module_name(), 'id_in_module' => $comments->get_id_in_module());
+		$parameters = array('module_name' => $comment->get_module_name(), 'id_in_module' => $comments_topic->get_id_in_module());
 		self::$db_querier->delete(DB_TABLE_COMMENTS_TOPIC, $condition, $parameters);
 	}
 	
-	public static function change_visibility(Comments $comments)
+	public static function user_id_posted_comment($comment_id)
 	{
-		$columns = array(
-			'visibility' => $comments->get_visibility()
-		);
-		$condition = "WHERE id_in_module = :id_in_module AND module_name = :module_name";
-		$parameters = array(
-			'id_in_module' => $comments->get_id_in_module(),
-			'module_name' => $comments->get_module_name()
-		);
-		self::$db_querier->update(DB_TABLE_COMMENTS_TOPIC, $columns, $condition, $parameters);	
+		return self::$db_querier->get_column_value(DB_TABLE_COMMENTS, 'user_id', "WHERE id = :id", array('id' => $comment_id));
 	}
 	
-	public static function user_id_posted_comment(Comment $comment)
+	public static function get_data_comment($comment_id)
 	{
-		return self::$db_querier->get_column_value(DB_TABLE_COMMENTS, 'user_id', "WHERE id = :id", array('id' => $comment->get_id()));
-	}
-	
-	public static function get_data_comment(Comment $comment)
-	{
-		return self::$db_querier->select_single_row(DB_TABLE_COMMENTS, array('*'), "WHERE id = :id", array('id' => $comment->get_id()));
+		return self::$db_querier->select_single_row(DB_TABLE_COMMENTS, array('*'), "WHERE id = :id", array('id' => $comment_id));
 	}
 	
 	public static function get_last_comment_user(Comment $comment)
@@ -110,13 +97,13 @@ class CommentsDAO
 		}
 	}
 	
-	public static function number_comments(Comments $comments)
+	public static function number_comments(CommentsTopic $comments_topic)
 	{
-		$row_exist = self::$db_querier->count(DB_TABLE_COMMENTS_TOPIC, "WHERE module_name = :module_name AND id_in_module = :id_in_module", array('module_name' => $comments->get_module_name(), 'id_in_module' => $comments->get_id_in_module())) > 0 ? true : false;
+		$row_exist = self::$db_querier->count(DB_TABLE_COMMENTS_TOPIC, "WHERE module_name = :module_name AND id_in_module = :id_in_module", array('module_name' => $comments_topic->get_module_name(), 'id_in_module' => $comments_topic->get_id_in_module())) > 0 ? true : false;
 		if ($row_exist)
 		{
 			return self::$db_querier->get_column_value(DB_TABLE_COMMENTS_TOPIC, 'number_comments', "WHERE module_name = :module_name AND id_in_module = :id_in_module", 
-			array('module_name' => $comments->get_module_name(), 'id_in_module' => $comments->get_id_in_module()));
+			array('module_name' => $comments_topic->get_module_name(), 'id_in_module' => $comments_topic->get_id_in_module()));
 		}
 		else
 		{
@@ -124,9 +111,9 @@ class CommentsDAO
 		}
 	}
 	
-	public static function comment_exist(Comment $comment)
+	public static function comment_exist($comment_id)
 	{
-		return self::$db_querier->count(DB_TABLE_COMMENTS, "WHERE id = :id", array('id' => $comment->get_id()));
+		return self::$db_querier->count(DB_TABLE_COMMENTS, "WHERE id = :id", array('id' => $comment_id));
 	}
 	
 	public static function add_comment(Comment $comment)
@@ -156,35 +143,35 @@ class CommentsDAO
 		self::$db_querier->insert(DB_TABLE_COMMENTS, $columns);
 	}
 	
-	public static function create_comments_topic(Comments $comments)
+	public static function create_comments_topic(CommentsTopic $comments_topic)
 	{
 		$columns = array(
-			'module_name' => $comments->get_module_name(),
-			'id_in_module' => $comments->get_id_in_module(),
+			'module_name' => $comments_topic->get_module_name(),
+			'id_in_module' => $comments_topic->get_id_in_module(),
 			'number_comments' => 0,
-			'visibility' => (string)$comments->get_visibility(),
-			'is_locked' => (string)$comments->get_is_locked()
+			'visibility' => (string)$comments_topic->get_visibility(),
+			'is_locked' => (string)$comments_topic->get_is_locked()
 		);
 		self::$db_querier->insert(DB_TABLE_COMMENTS_TOPIC, $columns);
 	}
 	
-	public static function edit_comment(Comment $comment)
+	public static function edit_comment($comment_id, $message)
 	{
 		$columns = array(
-			'message' => htmlspecialchars($comment->get_message())
+			'message' => htmlspecialchars($message)
 		);
 		$condition = "WHERE id = :id";
 		$parameters = array(
-			'id' => $comment->get_id()
+			'id' => $comment_id
 		);
 		self::$db_querier->update(DB_TABLE_COMMENTS, $columns, $condition, $parameters);
 	}
 	
-	public static function comments_topic_exist(Comments $comments)
+	public static function comments_topic_exist(CommentsTopic $comments_topic)
 	{
 		$parameters = array(
-			'id_in_module' => $comments->get_id_in_module(),
-			'module_name' => $comments->get_module_name()
+			'id_in_module' => $comments_topic->get_id_in_module(),
+			'module_name' => $comments_topic->get_module_name()
 		);
 		return self::$db_querier->count(DB_TABLE_COMMENTS_TOPIC, "WHERE id_in_module = :id_in_module AND module_name = :module_name", $parameters) > 0 ? true : false;
 	}

@@ -266,9 +266,9 @@ class ModulesManager
 			$notation->set_module_name($module_id);
 			NotationService::delete_notes_module($notation);
 			
-			$comments = new Comments();
-			$comments->set_module_name($module_id);
-			CommentsService::delete_comments_module($comments);
+			$comments_topic = new CommentsTopic();
+			$comments_topic->set_module_name($module_id);
+			CommentsService::delete_comments_module($comments_topic);
 
 			PersistenceContext::get_querier()->inject("DELETE FROM ".DB_TABLE_CONFIGS." 
 					WHERE name = :name", array('name' => $module_id));

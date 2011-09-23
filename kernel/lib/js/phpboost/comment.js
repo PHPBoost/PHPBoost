@@ -25,40 +25,30 @@
  ###################################################*/
  
 var Comment = Class.create({
-	already_post : 0,
-	id_comment = 0,
-	is_member : true,
-	lang_already_posted : 'Already posted',
-	set_id_comment : function (id_comment) {
-		this.id_comment = id_comment;
+	positive_vote : function(module_id, id_in_module, comment_id) {
+		new Ajax.Request(PATH_TO_ROOT + '/kernel/framework/ajax/dispatcher.php?url=/comments/notation/', {
+			  method: 'post',
+			  parameters: {module_id: module_id, id_in_module: id_in_module, note_type: 'plus', comment_id: comment_id},
+			  onSuccess: function(response) {
+				  this.display_response(response);
+			  }
+		});
 	},
-	set_already_post : function (already_post) {
-		this.already_post = already_post;
+	negative_vote : function (module_id, id_in_module, comment_id) {
+		new Ajax.Request(PATH_TO_ROOT + '/kernel/framework/ajax/dispatcher.php?url=/comments/notation/', {
+			  method: 'post',
+			  parameters: {module_id: module_id, id_in_module: id_in_module, note_type: 'less', comment_id: comment_id},
+			  onSuccess: function(response) {
+				  this.display_response(response);
+			  }
+		});
 	},
-	set_lang_already_posted : function (lang_already_posted) {
-		this.lang_already_posted = lang_already_posted;
-	},
-	set_is_member : function (is_member) {
-		this.is_member = is_member;
-	},
-	positively_vote : function() {
-		this.verificate_authorizations();
-		
-		//Add AJAX request
-		
-		this.already_post = 1;
-	},
-	negative_vote : function () {
-		this.verificate_authorizations();
-		
-		//Add AJAX request
-		
-		this.already_post = 1;
-	},
-	verificate_authorizations : function() {
-		if (this.already_post !== 0 )
-		{
-			alert(this.lang_already_posted);
-		}
+	display_response : function (response) {
+		if (response.responseJSON.success) {
+	    	alert(response.responseJSON.message);
+	    }
+	    else {
+	    	alert(response.responseJSON.message);
+	    }
 	}
 });

@@ -1,10 +1,10 @@
 <?php
 /*##################################################
- *                            dispatcher.php
+ *                       AjaxCommentsDisplayController.class.php
  *                            -------------------
- *   begin                : May 8, 2010
- *   copyright            : (C) 2010 Benoit Sautel
- *   email                : ben.popeye@phpboost.com
+ *   begin                : August 30, 2011
+ *   copyright            : (C) 2011 Kévin MASSY
+ *   email                : soldier.weasel@gmail.com
  *
  *
  ###################################################
@@ -25,16 +25,11 @@
  *
  ###################################################*/
 
-define('PATH_TO_ROOT', '..');
-
-require_once PATH_TO_ROOT . '/kernel/begin.php';
-
-$url_controller_mappers = array(
-	//new UrlControllerMapper('', '`^/category/display/?$`'),
-	new UrlControllerMapper('AjaxCommentsNotationController', '`^/comments/notation/?$`'),
-	new UrlControllerMapper('AjaxCommentsDisplayController', '`^/comments/display/?$`')
-);
-
-DispatchManager::dispatch($url_controller_mappers);
-
+class AjaxCommentsDisplayController extends AbstractCommentsController
+{
+	public function execute(HTTPRequest $request)
+	{
+		parent::execute($request);
+	}
+}
 ?>

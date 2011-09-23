@@ -76,7 +76,7 @@ if ($delete > 0)
 	if ($articles['nbr_com'] > 0)
 	{
 		
-		$Comments = new Comments('articles', $articles['id'], url('articles.php?id=' . $articles['id'] . '&amp;com=%s', 'articles-' . $articles['idcat'] . '-' . $articles['id'] . '.php?com=%s'));
+		$Comments = new CommentsTopic('articles', $articles['id'], url('articles.php?id=' . $articles['id'] . '&amp;com=%s', 'articles-' . $articles['idcat'] . '-' . $articles['id'] . '.php?com=%s'));
 		$Comments->delete_all($delete_articles);
 	}
 

@@ -1,3 +1,4 @@
+<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/lib/js/phpboost/comment.js"></script>
 # START comments_list #
 <div class="msg_position">
 	<div class="msg_container">

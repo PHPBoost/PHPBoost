@@ -47,10 +47,10 @@ if ($delete > 0)
 		$Sql->query_inject("DELETE FROM " . DB_TABLE_NEWS . " WHERE id = '" . $delete . "'", __LINE__, __FILE__);
 		$Sql->query_inject("DELETE FROM " . DB_TABLE_EVENTS . " WHERE module = 'news' AND id_in_module = '" . $delete . "'", __LINE__, __FILE__);
 
-		$comments = new Comments();
-		$comments->set_module_name('news');
-		$comments->set_id_in_module($news['id']);
-		CommentsService::delete_comments_id_in_module($comments);
+		$comments_topic = new CommentsTopic();
+		$comments_topic->set_module_name('news');
+		$comments_topic->set_id_in_module($news['id']);
+		CommentsService::delete_comments_id_in_module($comments_topic);
 	    
 	    Feed::clear_cache('news');
 
@@ -158,13 +158,7 @@ elseif (!empty($_POST['submit']))
 			{
 				$Sql->query_inject("UPDATE " . DB_TABLE_NEWS . " SET idcat = '" . $news['idcat'] . "', title = '" . $news['title'] . "', contents = '" . $news['desc'] . "', extend_contents = '" . $news['extend_desc'] . "', img = '" . $img->relative() . "', alt = '" . $news['alt'] . "', visible = '" . $news['visible'] . "', start = '" .  $news['start'] . "', end = '" . $news['end'] . "', timestamp = '" . $news['release'] . "', sources = '" . $news['sources'] . "'
 				WHERE id = '" . $news['id'] . "'", __LINE__, __FILE__);
-				
-				$comments = new Comments();
-				$comments->set_module_name('news');
-				$comments->set_id_in_module($news['id']);
-				$comments->set_visibility($news['visible']);
-				CommentsService::change_visibility($comments);
-				
+
 				if ($news['visible'])
 				{
 					$corresponding_contributions = ContributionService::find_by_criteria('news', $news['id']);

@@ -6,4 +6,6 @@
 	</div>
 # ENDIF #
 
+<div id="comments_list">
 # INCLUDE COMMENTS_LIST #
+</div>
