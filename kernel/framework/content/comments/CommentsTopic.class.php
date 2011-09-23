@@ -31,21 +31,18 @@
  */
 class CommentsTopic
 {
-	private $module_name;
+	private $module_id;
 	private $id_in_module;
-	private $visibility = true;
 	private $is_locked = false;
-	private $authorizations;
-	private $number_comments_pagination = 10;
 
-	public function set_module_name($module)
+	public function set_module_id($identifier)
 	{
-		$this->module_name = $module;
+		$this->module_id = $identifier;
 	}
 	
-	public function get_module_name()
+	public function get_module_id()
 	{
-		return $this->module_name;
+		return $this->module_id;
 	}
 	
 	public function set_id_in_module($id_in_module)
@@ -66,36 +63,6 @@ class CommentsTopic
 	public function get_is_locked()
 	{
 		return $this->is_locked;
-	}
-	
-	public function set_visibility($visibility)
-	{
-		$this->visibility = $visibility;
-	}
-	
-	public function get_visibility()
-	{
-		return $this->visibility;
-	}
-	
-	public function set_authorizations(CommentsTopicAuthorizations $authorizations)
-	{
-		$this->authorizations = $authorizations;
-	}
-	
-	public function get_authorizations()
-	{
-		return !empty($this->authorizations) ? $this->authorizations : new CommentsAuthorizations();
-	}
-	
-	public function set_number_comments_pagination($number)
-	{
-		$this->number_comments_pagination = $number;
-	}
-	
-	public function get_number_comments_pagination()
-	{
-		return $this->number_comments_pagination;
 	}
 }
 ?>

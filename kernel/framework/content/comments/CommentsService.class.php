@@ -46,9 +46,14 @@ class CommentsService
 	
 	public static function display(CommentsTopic $comments_topic)
 	{
+		$module_id = $comments_topic->get_module_id();
+		$id_in_module = $comments_topic->get_id_in_module();
+		$authorizations = self::get_authorizations($module_id, $id_in_module);
+		
 		$edit_comment = AppContext::get_request()->get_int('edit_comment', 0);
 		$delete_comment = AppContext::get_request()->get_int('delete_comment', 0);
-		if ($comments_topic->get_authorizations()->is_authorized_read())
+		
+		if ($authorizations->is_authorized_read())
 		{
 			$user_read_only = self::$user->get_attribute('user_readonly');
 			if ($comments_topic->get_is_locked())
@@ -61,18 +66,18 @@ class CommentsService
 			}
 			else
 			{
-				if (!CommentsDAO::comments_topic_exist($comments_topic))
+				if (!CommentsDAO::comments_topic_exists($module_id, $id_in_module))
 				{
 					CommentsDAO::create_comments_topic($comments_topic);
 				}
 				
 				if (empty($edit_comment))
 				{
-					if ($comments_topic->get_authorizations()->is_authorized_post())
+					if ($authorizations->is_authorized_post())
 					{
 						self::$template->put_all(array(
 							'C_DISPLAY_FORM' => true,
-							'COMMENT_FORM' => self::add_comment_form($comments_topic)
+							'COMMENT_FORM' => self::add_comment_form($module_id, $id_in_module)
 						));
 					}
 					else
@@ -83,20 +88,20 @@ class CommentsService
 				}
 				else
 				{
-					if (!CommentsDAO::comment_exist($edit_comment))
+					if (!CommentsDAO::comment_exists($edit_comment))
 					{
 						$error_controller = PHPBoostErrors::unexisting_page();
 						DispatchManager::redirect($error_controller);
 					}
 					
-					$user_id_posted_comment = CommentsDAO::user_id_posted_comment($comment_id);
+					$user_id_posted_comment = CommentsDAO::get_user_id_posted_comment($edit_comment);
 					
-					if ($comments_topic->get_authorizations()->is_authorized_moderation()
+					if ($authorizations->is_authorized_moderation()
 					 || $user_id_posted_comment == self::$user->get_attribute('user_id'))
 					{
 						self::$template->put_all(array(
 							'C_DISPLAY_FORM' => true,
-							'COMMENT_FORM' => self::update_comment_form($comment_id)
+							'COMMENT_FORM' => self::update_comment_form($edit_comment)
 						));
 					}
 					else
@@ -106,7 +111,13 @@ class CommentsService
 					}
 				}
 
-				self::$template->put('COMMENTS_LIST', self::display_comments_list($comments_topic));
+				$number_comments_display = self::get_number_comments_display($module_id, $id_in_module);
+				self::$template->put_all(array(
+					'COMMENTS_LIST' => self::display_comments($module_id, $id_in_module, 
+					$number_comments_display, $authorizations),
+					'MODULE_ID' => $module_id,
+					'ID_IN_MODULE' => $id_in_module,
+				));
 			}
 		}
 		else
@@ -119,38 +130,36 @@ class CommentsService
 	}
 
 	/*
-	 * Required Instance Comments class and setter function module name.
+	 * Required Instance Comments class and setter function module id.
 	*/
-	public static function delete_comments_module(CommentsTopic $comments_topic)
+	public static function delete_comments_module($module_id)
 	{
-		if (CommentsTopicDAO::comments_topic_exist($comments_topic))
+		if (CommentsTopicDAO::comments_topic_exists_by_module_id($module_id))
 		{
-			CommentsDAO::delete_all_comments_by_module_name($comments_topic);
+			CommentsDAO::delete_all_comments_by_module_name($module_id);
 		}
 	}
 	
 	/*
-	 * Required Instance Comments class and setter function module name and id in module.
+	 * Required Instance Comments class and setter function module id and id in module.
 	*/
-	public static function delete_comments_id_in_module(CommentsTopic $comments_topic)
+	public static function delete_comments_by_id_in_module($module_id, $id_in_module)
 	{
-		if (CommentsTopicDAO::comments_topic_exist($comments_topic))
+		if (CommentsTopicDAO::comments_topic_exists($module_id, $id_in_module))
 		{
-			CommentsDAO::delete_comments_id_in_module($comments_topic);
+			CommentsDAO::delete_comments_by_id_in_module($module_id, $id_in_module);
 		}
 	}
 	
 	/*
 	 * Required Instance Comments class and setter function module name, and module id.
 	*/
-	public static function get_number_comments(CommentsTopic $comments_topic)
+	public static function get_number_comments($module_id, $id_in_module)
 	{
-		return CommentsDAO::number_comments($comments_topic);
+		return CommentsDAO::number_comments($module_id, $id_in_module);
 	}
 	
-	//LastComment
-	//Other => ok
-	private static function add_comment_form(CommentsTopic $comments_topic)
+	private static function add_comment_form($module_id, $id_in_module)
 	{
 		$is_visitor = !self::$user->check_level(MEMBER_LEVEL);
 		$form = new HTMLForm('comments');
@@ -166,8 +175,8 @@ class CommentsService
 			'formatter' => self::get_formatter(),
 			'rows' => 10, 'cols' => 47, 'required' => self::$lang['require_text']),
 			array(new FormFieldConstraintMaxLinks(self::$comments_configuration->get_max_links_comment()),
-			//TODO new FormFieldConstraintAntiFlood(CommentsDAO::get_last_comment_user($comment))
-			new FormFieldConstraintAntiFlood(time())
+				//new FormFieldConstraintAntiFlood(CommentsDAO::get_last_comment_added_user(self::$user->get_id())),
+				new FormFieldConstraintAntiFlood(time())
 			)
 		));
 		
@@ -184,7 +193,7 @@ class CommentsService
 			$comment = new Comment();
 			if (!$is_visitor)
 			{
-				$comment->set_user_id(self::$user->get_attribute('user_id'));
+				$comment->set_user_id(self::$user->get_id());
 			}
 			else
 			{
@@ -193,8 +202,8 @@ class CommentsService
 			}
 			
 			$comment->set_message($form->get_value('message'));
-			$comment->set_module_name($comments_topic->get_module_name());
-			$comment->set_id_in_module($comments_topic->get_id_in_module());
+			$comment->set_module_id($module_id);
+			$comment->set_id_in_module($id_in_module);
 			CommentsDAO::add_comment($comment);
 			
 			//TODO change lang
@@ -204,16 +213,14 @@ class CommentsService
 		return $form->display();
 	}
 	
-	//OK
-	public static function get_number_and_lang_comments(CommentsTopic $comments_topic)
+	public static function get_number_and_lang_comments($module_id, $id_in_module)
 	{
-		$number_comments = self::get_number_comments($comments_topic);
+		$number_comments = self::get_number_comments($module_id, $id_in_module);
 		$lang = $number_comments > 1 ? self::$lang['com_s'] : self::$lang['com'];
 		
 		return !empty($number_comments) ? $lang . ' (' . $number_comments . ')' : self::$lang['post_com'];
 	}
 
-	//OK
 	private static function update_comment_form($comment_id)
 	{
 		$data = CommentsDAO::get_data_comment($comment_id);
@@ -241,41 +248,69 @@ class CommentsService
 		return $form->display();
 	}
 	
-	public static function display_comments_list(CommentsTopic $comments_topic)
+	public static function display_comments($module_id, $id_in_module, $number_comments_display, $authorizations, $display_from_number_comments = false)
 	{
 		$template = new FileTemplate('framework/content/comments/comments_list.tpl');
 
-		$result = PersistenceContext::get_querier()->select("
-			SELECT comments.*, topic.*
-			FROM " . DB_TABLE_COMMENTS . " comments
-			LEFT JOIN " . DB_TABLE_COMMENTS_TOPIC . " topic ON comments.id_topic = topic.id
-			WHERE topic.module_name = :module_name AND topic.id_in_module = :id_in_module
-			LIMIT ".  $comments_topic->get_number_comments_pagination() ."
-			",
-				array(
-					'module_name' =>  $comments_topic->get_module_name(),
-					'id_in_module' =>  $comments_topic->get_id_in_module()
-				), SelectQueryResult::FETCH_ASSOC
-		);
-		
-		while ($row = $result->fetch())
+		if ($authorizations->is_authorized_read() && self::is_display($module_id, $id_in_module))
 		{
-			$template->assign_block_vars('comments_list', array(
-				'MESSAGE' => $row['message'],
-				'MODULE_ID' => $row['module_name'],
-				'ID_IN_MODULE' => $row['id_in_module'],
-				'COMMENT_ID' => $row['id'],
-			));
+			$result = self::select_request($module_id, $id_in_module, $number_comments_display, $display_from_number_comments);
+			
+			while ($row = $result->fetch())
+			{
+				$template->assign_block_vars('comments_list', array(
+					'MESSAGE' => $row['message'],
+					'COMMENT_ID' => $row['id'],
+					'EDIT_COMMENT' => self::get_url_built($module_id, $id_in_module, array('edit_comment' => $row['id']))->absolute()
+				));
+			}
 		}
 		
 		$template->put_all(array(
-			'C_IS_MODERATOR' => $comments_topic->get_authorizations()->is_authorized_moderation()
+			'MODULE_ID' => $module_id,
+			'ID_IN_MODULE' => $id_in_module,
+			'C_IS_MODERATOR' => $authorizations->is_authorized_moderation()
 		));
 
 		return $template;
 	}
 	
-	//OK
+	private static function select_request($module_id, $id_in_module, $number_comments_display, $display_from_number_comments = false)
+	{
+		if (!$display_from_number_comments)
+		{
+			return PersistenceContext::get_querier()->select("
+			SELECT comments.*, topic.*
+			FROM " . DB_TABLE_COMMENTS . " comments
+			LEFT JOIN " . DB_TABLE_COMMENTS_TOPIC . " topic ON comments.id_topic = topic.id_topic
+			WHERE topic.module_id = :module_id AND topic.id_in_module = :id_in_module
+			ORDER BY comments.timestamp ASC
+			LIMIT ".  $number_comments_display ."
+			",
+				array(
+					'module_id' =>  $module_id,
+					'id_in_module' =>  $id_in_module
+				), SelectQueryResult::FETCH_ASSOC
+			);
+		}
+		else
+		{
+			return PersistenceContext::get_querier()->select("
+			SELECT comments.*, topic.*
+			FROM " . DB_TABLE_COMMENTS . " comments
+			LEFT JOIN " . DB_TABLE_COMMENTS_TOPIC . " topic ON comments.id_topic = topic.id_topic
+			WHERE topic.module_id = :module_id AND topic.id_in_module = :id_in_module
+			ORDER BY comments.timestamp ASC
+			LIMIT ".  $number_comments_display .", 18446744073709551615
+			",
+				array(
+					'module_id' =>  $module_id,
+					'id_in_module' =>  $id_in_module
+				), SelectQueryResult::FETCH_ASSOC
+			);
+		}
+	}
+	
 	private static function get_formatter()
 	{
 		$formatter = AppContext::get_content_formatting_service()->create_factory();
@@ -283,7 +318,6 @@ class CommentsService
 		return $formatter;
 	}
 	
-	//OK
 	private static function get_captcha()
 	{
 		$captcha = new Captcha();
@@ -291,31 +325,24 @@ class CommentsService
 		return $captcha;
 	}
 	
-	/////////////////////////
-	//////////////////////// TODO
-	////////////////////////
-	
-	//OK
-	public static function get_authorizations($module_id, $id_in_module)
+	private static function is_display($module_id, $id_in_module)
 	{
-		if (CommentsProvidersService::module_containing_extension_point($module_id))
-		{
-			$provider = CommentsProvidersService::get_provider($module_id);
-			return $provider->get_authorizations($module_id, $id_in_module);
-		}
-		return false;
+		return CommentsProvidersService::is_display($module_id, $id_in_module);
 	}
 	
-	//OK
-	public static function is_display($module_id, $id_in_module)
+	private static function get_authorizations($module_id, $id_in_module)
 	{
-		if (CommentsProvidersService::module_containing_extension_point($module_id))
-		{
-			$provider = CommentsProvidersService::get_provider($module_id);
-			return $provider->is_display($module_id, $id_in_module);
-		}
-		return false;
+		return CommentsProvidersService::get_authorizations($module_id, $id_in_module);
+	}
+	
+	private static function get_number_comments_display($module_id, $id_in_module)
+	{
+		return CommentsProvidersService::get_number_comments_display($module_id, $id_in_module);
+	}
+	
+	private static function get_url_built($module_id, $id_in_module, $parameters)
+	{
+		return CommentsProvidersService::get_url_built($module_id, $id_in_module, $parameters);
 	}
 }
-
 ?>

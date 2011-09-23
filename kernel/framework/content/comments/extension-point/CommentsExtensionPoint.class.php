@@ -2,8 +2,8 @@
 /*##################################################
  *                           CommentsExtensionPoint.class.php
  *                            -------------------
- *   begin                : May 06, 2011
- *   copyright            : (C) 2011 KÃ©vin MASSY
+ *   begin                : September 23, 2011
+ *   copyright            : (C) 2011 Kévin MASSY
  *   email                : soldier.weasel@gmail.com
  *
  *
@@ -42,5 +42,18 @@ interface CommentsExtensionPoint extends ExtensionPoint
 	 * @return boolean display
 	 */
 	function is_display($module_id, $id_in_module);
+	
+	/**
+	 * @param string $module_id
+	 * @param int $id_in_module
+	 * @return int number comments display default
+	 */
+	function get_number_comments_display($module_id, $id_in_module);
+	
+/**
+	 * @param int $id_in_module
+	 * @return class Url
+	 */
+	function get_url_built($module_id, $id_in_module, Array $parameters);
 }
 ?>

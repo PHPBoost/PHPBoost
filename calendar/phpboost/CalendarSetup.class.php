@@ -45,7 +45,7 @@ class CalendarSetup extends DefaultModuleSetup
 		$this->drop_table();
 		
 		$comments_topic = new CommentsTopic();
-		$comments_topic->set_module_name('calendar');
+		$comments_topic->set_module_id('calendar');
 		CommentsService::delete_comments_module($comments_topic);
 	}
 

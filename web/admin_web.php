@@ -229,7 +229,7 @@ elseif ($del && !empty($id)) //Suppresion du lien web.
 	NotationService::delete_notes_id_in_module($notation);
 	
 	$comments_topic = new CommentsTopic();
-	$comments_topic->set_module_name('web');
+	$comments_topic->set_module_id('web');
 	$comments_topic->set_id_in_module($id);
 	CommentsService::delete_comments_id_in_module($comments_topic);
 	

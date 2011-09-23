@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                           AbstractCommentsExtensionPoint.class.php
+ *                           WebComments.class.php
  *                            -------------------
  *   begin                : May 06, 2011
  *   copyright            : (C) 2011 Kévin MASSY
@@ -25,26 +25,42 @@
  *
  ###################################################*/
 
-abstract AbstractCommentsExtensionPoint implements CommentsExtensionPoint
+class WebComments extends AbstractCommentsExtensionPoint
 {
-	/**
-	 * @param string $module_id
-	 * @param int $id_in_module
-	 * @return class CommentsAuthorizations
-	 */
 	public function get_authorizations($module_id, $id_in_module)
 	{
-		return new CommentsAuthorizations();
+		global $CAT_WEB;
+		
+		$cache = new Cache();
+		$cache->load($module_id);
+		
+		$columns = 'idcat';
+		$condition = 'WHERE id = :id_in_module';
+		$parameters = array('id_in_module' => $id_in_module);
+		$id_cat = PersistenceContext::get_querier()->get_column_value(PREFIX . 'web', $columns, $condition, $parameters);
+		$authorizations = new CommentsAuthorizations();
+		
+		$authorizations->set_manual_authorized_read(AppContext::get_user()->check_level($CAT_WEB[$id_cat]['secure']));
+		return $authorizations;
 	}
 	
-	/**
-	 * @param string $module_id
-	 * @param int $id_in_module
-	 * @return boolean display
-	 */
 	public function is_display($module_id, $id_in_module)
 	{
-		return false;
+		$columns = 'aprob';
+		$condition = 'WHERE id = :id_in_module';
+		$parameters = array('id_in_module' => $id_in_module);
+		$aprobation = PersistenceContext::get_querier()->get_column_value(PREFIX . 'web', $columns, $condition, $parameters);
+		return $aprobation > 0 ? true : false; 
+	}
+	
+	public function get_url_built($module_id, $id_in_module, Array $parameters)
+	{
+		$url_parameters = '';
+		foreach ($parameters as $name => $value)
+		{
+			$url_parameters .= '&' . $name . '=' . $value;
+		}
+		return new Url('/web/web.php?cat=1&id=1&com=0' . $url_parameters);
 	}
 }
 ?>

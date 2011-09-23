@@ -322,7 +322,7 @@ class Gallery
 		NotationService::delete_notes_id_in_module($notation);
 		
 		$comments_topic = new CommentsTopic();
-		$comments_topic->set_module_name('gallery');
+		$comments_topic->set_module_id('gallery');
 		$comments_topic->set_id_in_module($id_pics);
 		CommentsService::delete_comments_id_in_module($comments_topic);
 	}

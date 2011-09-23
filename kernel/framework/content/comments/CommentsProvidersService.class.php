@@ -2,9 +2,9 @@
 /*##################################################
  *                        CommentsProvidersService.class.php
  *                            -------------------
- *   begin                : April 10, 2010
- *   copyright            : (C) 2010 Rouchon Loic
- *   email                : loic.rouchon@phpboost.com
+ *   begin                : September 23, 2011
+ *   copyright            : (C) 2011 Kévin MASSY
+ *   email                : soldier.weasel@gmail.com
  *
  *
  ###################################################
@@ -27,9 +27,53 @@
 
 class CommentsProvidersService
 {
+	public static function get_authorizations($module_id, $id_in_module)
+	{
+		if (self::module_containing_extension_point($module_id))
+		{
+			$provider = self::get_provider($module_id);
+			return $provider->get_authorizations($module_id, $id_in_module);
+		}
+		//TODO
+		return new CommentsAuthorizations();
+	}
+	
+	public static function is_display($module_id, $id_in_module)
+	{
+		if (self::module_containing_extension_point($module_id))
+		{
+			$provider = self::get_provider($module_id);
+			return $provider->is_display($module_id, $id_in_module);
+		}
+		//TODO change return false;
+		return true;
+	}
+	
+	public static function get_number_comments_display($module_id, $id_in_module)
+	{
+		if (self::module_containing_extension_point($module_id))
+		{
+			$provider = self::get_provider($module_id);
+			return $provider->get_number_comments_display($module_id, $id_in_module);
+		}
+		//TODO
+		return CommentsConfig::load()->get_number_comments_display();
+	}
+	
+	public static function get_url_built($module_id, $id_in_module, Array $parameters)
+	{
+		if (self::module_containing_extension_point($module_id))
+		{
+			$provider = self::get_provider($module_id);
+			return $provider->get_url_built($module_id, $id_in_module, $parameters);
+		}
+		//TODO
+		return new Url();
+	}
+	
 	public static function module_containing_extension_point($module_id)
 	{
-		return array_key_exists($module_id, self::get_extension_point_ids());
+		return in_array($module_id, self::get_extension_point_ids());
 	}
 	
 	public static function get_extension_point_ids()

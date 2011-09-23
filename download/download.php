@@ -34,7 +34,7 @@ $notation->set_module_name('download');
 $notation->set_notation_scale($CONFIG_DOWNLOAD['note_max']);
 
 $comments_topic = new CommentsTopic();
-$comments_topic->set_module_name('download');
+$comments_topic->set_module_id('download');
 
 if ($file_id > 0) //Contenu
 {
@@ -71,7 +71,7 @@ if ($file_id > 0) //Contenu
 		'U_IMG' => $download_info['image'],
 		'IMAGE_ALT' => str_replace('"', '\"', $download_info['title']),
 		'LANG' => get_ulang(),
-		'U_COM' => '<a href="'. PATH_TO_ROOT .'/download/download' . url('.php?id=' . $file_id . '&amp;com=0', '-' . $file_id . '+' . Url::encode_rewrite($download_info['title']) . '.php?com=0') .'">'. CommentsService::get_number_and_lang_comments($comments_topic) . '</a>',
+		'U_COM' => '<a href="'. PATH_TO_ROOT .'/download/download' . url('.php?id=' . $file_id . '&amp;com=0', '-' . $file_id . '+' . Url::encode_rewrite($download_info['title']) . '.php?com=0') .'">'. CommentsService::get_number_and_lang_comments('download', $file_id) . '</a>',
 		'L_DATE' => $LANG['date'],
 		'L_SIZE' => $LANG['size'],
 		'L_DOWNLOAD' => $DOWNLOAD_LANG['download'],
@@ -284,7 +284,6 @@ else
 		while ($row = $Sql->fetch_assoc($result))
 		{
 			$notation->set_id_in_module($row['id']);
-			$comments_topic->set_id_in_module($row['id']);
 			
 			$Template->assign_block_vars('file', array(			
 				'NAME' => $row['title'],
@@ -300,7 +299,7 @@ else
 				'U_DOWNLOAD_LINK' => url('download.php?id=' . $row['id'], 'download-' . $row['id'] . '+' . Url::encode_rewrite($row['title']) . '.php'),
 				'U_ADMIN_EDIT_FILE' => url('management.php?edit=' . $row['id']),
 				'U_ADMIN_DELETE_FILE' => url('management.php?del=' . $row['id'] . '&amp;token=' . $Session->get_token()),
-				'U_COM_LINK' => '<a href="'. PATH_TO_ROOT .'/download/download' . url('.php?id=' . $row['id'] . '&amp;com=0', '-' . $row['id'] . '+' . Url::encode_rewrite($row['title']) . '.php?com=0') .'">'. CommentsService::get_number_and_lang_comments($comments_topic) . '</a>'
+				'U_COM_LINK' => '<a href="'. PATH_TO_ROOT .'/download/download' . url('.php?id=' . $row['id'] . '&amp;com=0', '-' . $row['id'] . '+' . Url::encode_rewrite($row['title']) . '.php?com=0') .'">'. CommentsService::get_number_and_lang_comments('download', $row['id']) . '</a>'
 			));
 		}
 		$Sql->query_close($result);

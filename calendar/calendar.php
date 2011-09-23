@@ -58,7 +58,7 @@ if (!$User->check_auth($calendar_config->get_authorization(), AUTH_CALENDAR_READ
 
 
 $comments_topic = new CommentsTopic();
-$comments_topic->set_module_name('calendar');
+$comments_topic->set_module_id('calendar');
 
 $editor = AppContext::get_content_formatting_service()->get_default_editor();
 $editor->set_identifier('contents');
@@ -252,7 +252,7 @@ if ($checkdate === true && empty($id) && !$add)
 				$java = '';
 			}
 			
-			$comments_topic->set_id_module($row['id']);
+			$comments_topic->set_id_in_module($row['id']);
 			
 			$Template->assign_block_vars('action', array(
 				'DATE' => gmdate_format('date_format', $row['timestamp']),
@@ -260,7 +260,7 @@ if ($checkdate === true && empty($id) && !$add)
 				'CONTENTS' => FormatingHelper::second_parse($row['contents']),
 				'LOGIN' => '<a class="com" href="'. MemberUrlBuilder::profile($row['user_id'])->absolute() . '">' . $row['login'] . '</a>',
 				'COM' => '<a href="'. PATH_TO_ROOT .'/calendar/calendar' . url('.php?d=' . $day . '&amp;m=' . $month . '&amp;y=' . $year . '&amp;e=' . $row['id'] . '&amp;com=0', 
-					'-' . $day . '-' . $month . '-' . $year . '-' . $row['id'] . '.php?com=0') .'">'. CommentsService::get_number_and_lang_comments($comments_topic) . '</a>',
+					'-' . $day . '-' . $month . '-' . $year . '-' . $row['id'] . '.php?com=0') .'">'. CommentsService::get_number_and_lang_comments('calendar', $row['id']) . '</a>',
 				'EDIT' => $edit,
 				'DEL' => $del,
 				'L_ON' => $LANG['on']

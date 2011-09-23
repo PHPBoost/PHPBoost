@@ -2,8 +2,8 @@
 /*##################################################
  *                       AbstractCommentsController.class.php
  *                            -------------------
- *   begin                : August 30, 2011
- *   copyright            : (C) 2011 KÃ©vin MASSY
+ *   begin                : September 23, 2011
+ *   copyright            : (C) 2011 Kévin MASSY
  *   email                : soldier.weasel@gmail.com
  *
  *
@@ -27,8 +27,8 @@
 
 class AbstractCommentsController extends AbstractController
 {
-	public $module_id;
-	public $id_in_module;
+	protected $module_id;
+	protected $id_in_module;
 	
 	public function execute(HTTPRequest $request)
 	{
@@ -41,21 +41,11 @@ class AbstractCommentsController extends AbstractController
 		return $this->get_authorizations()->is_authorized_read();
 	}
 	
-	public function is_authorized_note()
-	{
-		return $this->get_authorizations()->is_authorized_note();
-	}
-	
 	public function is_display()
 	{
-		return CommentsService::is_display($this->get_module_id(), $this->get_id_in_module());
+		return CommentsProvidersService::is_display($this->get_module_id(), $this->get_id_in_module());
 	}
-	
-	public function JSON_response(Array $object)
-	{
-		return new JSONResponse($object);
-	}
-	
+
 	public function get_module_id()
 	{
 		return $this->module_id;
@@ -66,9 +56,9 @@ class AbstractCommentsController extends AbstractController
 		return $this->id_in_module;
 	}
 	
-	private function get_authorizations()
+	public function get_authorizations()
 	{
-		return CommentsService::get_authorizations($this->get_module_id(), $this->get_id_in_module());
+		return CommentsProvidersService::get_authorizations($this->get_module_id(), $this->get_id_in_module());
 	}
 }
 ?>

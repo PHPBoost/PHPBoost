@@ -98,7 +98,7 @@ elseif ($delete > 0)
 	NotationService::delete_notes_id_in_module($notation);
 	
 	$comments_topic = new CommentsTopic();
-	$comments_topic->set_module_name('media');
+	$comments_topic->set_module_id('media');
 	$comments_topic->set_id_in_module($delete);
 	CommentsService::delete_comments_id_in_module($comments_topic);
 	

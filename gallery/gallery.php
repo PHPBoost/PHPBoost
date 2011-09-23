@@ -52,7 +52,7 @@ else
 $Gallery = new Gallery();
 
 $comments_topic = new CommentsTopic();
-$comments_topic->set_module_name('gallery');
+$comments_topic->set_module_id('gallery');
 
 if (!empty($g_del)) //Suppression d'une image.
 {
