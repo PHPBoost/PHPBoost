@@ -105,3 +105,4 @@ class ExtendedFieldsCache implements CacheData
 		CacheManager::invalidate('kernel', 'extended-fields');
 	}
 }
+?>
