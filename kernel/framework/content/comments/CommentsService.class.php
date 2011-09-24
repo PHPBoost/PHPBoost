@@ -34,6 +34,7 @@ class CommentsService
 	private static $user;
 	private static $lang;
 	private static $comments_configuration;
+	private static $comments_cache;
 	private static $template;
 	
 	public static function __static()
@@ -41,6 +42,7 @@ class CommentsService
 		self::$user = AppContext::get_user();
 		self::$lang = LangLoader::get('main');
 		self::$comments_configuration = CommentsConfig::load();
+		self::$comments_cache = CommentsCache::load();
 		self::$template = new FileTemplate('framework/content/comments/comments.tpl');
 	}
 	
@@ -137,6 +139,7 @@ class CommentsService
 		if (CommentsTopicDAO::comments_topic_exists_by_module_id($module_id))
 		{
 			CommentsDAO::delete_all_comments_by_module_name($module_id);
+			self::regenerate_cache();
 		}
 	}
 	
@@ -148,6 +151,7 @@ class CommentsService
 		if (CommentsTopicDAO::comments_topic_exists($module_id, $id_in_module))
 		{
 			CommentsDAO::delete_comments_by_id_in_module($module_id, $id_in_module);
+			self::regenerate_cache();
 		}
 	}
 	
@@ -156,7 +160,7 @@ class CommentsService
 	*/
 	public static function get_number_comments($module_id, $id_in_module)
 	{
-		return CommentsDAO::number_comments($module_id, $id_in_module);
+		return CommentsDAO::get_number_comments($module_id, $id_in_module);
 	}
 	
 	private static function add_comment_form($module_id, $id_in_module)
@@ -205,6 +209,7 @@ class CommentsService
 			$comment->set_module_id($module_id);
 			$comment->set_id_in_module($id_in_module);
 			CommentsDAO::add_comment($comment);
+			self::regenerate_cache();
 			
 			//TODO change lang
 			self::$template->put('KEEP_MESSAGE', MessageHelper::display('Posted successfully', E_USER_SUCCESS, 4));
@@ -241,6 +246,7 @@ class CommentsService
 		if ($submit_button->has_been_submited() && $form->validate())
 		{
 			CommentsDAO::edit_comment($comment_id, $form->get_value('message'));
+			self::regenerate_cache();
 			
 			//TODO change lang
 			self::$template->put('KEEP_MESSAGE', MessageHelper::display('Edit successfully', E_USER_SUCCESS, 4));
@@ -254,14 +260,21 @@ class CommentsService
 
 		if ($authorizations->is_authorized_read() && self::is_display($module_id, $id_in_module))
 		{
-			$result = self::select_request($module_id, $id_in_module, $number_comments_display, $display_from_number_comments);
+			if (!$display_from_number_comments)
+			{
+				$comments = self::$comments_cache->get_comments_sliced($module_id, $id_in_module, 0, $number_comments_display);
+			}
+			else
+			{
+				$comments = self::$comments_cache->get_comments_sliced($module_id, $id_in_module, $number_comments_display);
+			}
 			
-			while ($row = $result->fetch())
+			foreach ($comments as $id_comment => $comment)
 			{
 				$template->assign_block_vars('comments_list', array(
-					'MESSAGE' => $row['message'],
-					'COMMENT_ID' => $row['id'],
-					'EDIT_COMMENT' => self::get_url_built($module_id, $id_in_module, array('edit_comment' => $row['id']))->absolute()
+					'MESSAGE' => $comment['message'],
+					'COMMENT_ID' => $id_comment,
+					'EDIT_COMMENT' => self::get_url_built($module_id, $id_in_module, array('edit_comment' => $id_comment))->absolute()
 				));
 			}
 		}
@@ -273,42 +286,6 @@ class CommentsService
 		));
 
 		return $template;
-	}
-	
-	private static function select_request($module_id, $id_in_module, $number_comments_display, $display_from_number_comments = false)
-	{
-		if (!$display_from_number_comments)
-		{
-			return PersistenceContext::get_querier()->select("
-			SELECT comments.*, topic.*
-			FROM " . DB_TABLE_COMMENTS . " comments
-			LEFT JOIN " . DB_TABLE_COMMENTS_TOPIC . " topic ON comments.id_topic = topic.id_topic
-			WHERE topic.module_id = :module_id AND topic.id_in_module = :id_in_module
-			ORDER BY comments.timestamp ASC
-			LIMIT ".  $number_comments_display ."
-			",
-				array(
-					'module_id' =>  $module_id,
-					'id_in_module' =>  $id_in_module
-				), SelectQueryResult::FETCH_ASSOC
-			);
-		}
-		else
-		{
-			return PersistenceContext::get_querier()->select("
-			SELECT comments.*, topic.*
-			FROM " . DB_TABLE_COMMENTS . " comments
-			LEFT JOIN " . DB_TABLE_COMMENTS_TOPIC . " topic ON comments.id_topic = topic.id_topic
-			WHERE topic.module_id = :module_id AND topic.id_in_module = :id_in_module
-			ORDER BY comments.timestamp ASC
-			LIMIT ".  $number_comments_display .", 18446744073709551615
-			",
-				array(
-					'module_id' =>  $module_id,
-					'id_in_module' =>  $id_in_module
-				), SelectQueryResult::FETCH_ASSOC
-			);
-		}
 	}
 	
 	private static function get_formatter()
@@ -343,6 +320,11 @@ class CommentsService
 	private static function get_url_built($module_id, $id_in_module, $parameters)
 	{
 		return CommentsProvidersService::get_url_built($module_id, $id_in_module, $parameters);
+	}
+	
+	private static function regenerate_cache()
+	{
+		CommentsCache::invalidate();
 	}
 }
 ?>
