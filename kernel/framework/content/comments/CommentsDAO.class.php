@@ -75,7 +75,6 @@ class CommentsDAO
 		return $comment['user_id'];
 	}
 	
-	//Change
 	public static function get_data_comment($comment_id)
 	{
 		return self::$comments_cache->get_comment($comment_id);

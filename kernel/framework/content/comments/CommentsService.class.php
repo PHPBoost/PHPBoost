@@ -50,7 +50,9 @@ class CommentsService
 	{
 		$module_id = $comments_topic->get_module_id();
 		$id_in_module = $comments_topic->get_id_in_module();
-		$authorizations = self::get_authorizations($module_id, $id_in_module);
+		
+		$provider = CommentsProvidersService::get_provider($module_id);
+		$authorizations = $provider->get_authorizations($module_id, $id_in_module);
 		
 		$edit_comment = AppContext::get_request()->get_int('edit_comment', 0);
 		$delete_comment = AppContext::get_request()->get_int('delete_comment', 0);
@@ -113,7 +115,7 @@ class CommentsService
 					}
 				}
 				
-				$number_comments_display = self::get_number_comments_display($module_id, $id_in_module);
+				$number_comments_display = $provider->get_number_comments_display($module_id, $id_in_module);
 				$number_comments = self::$comments_cache->get_count_comments_by_module($module_id, $id_in_module);
 				
 				self::$template->put_all(array(
@@ -261,7 +263,9 @@ class CommentsService
 	{
 		$template = new FileTemplate('framework/content/comments/comments_list.tpl');
 
-		if ($authorizations->is_authorized_read() && self::is_display($module_id, $id_in_module))
+		$provider = CommentsProvidersService::get_provider($module_id);
+
+		if ($authorizations->is_authorized_read() && $provider->is_display($module_id, $id_in_module))
 		{
 			if (!$display_from_number_comments)
 			{
@@ -272,12 +276,16 @@ class CommentsService
 				$comments = self::$comments_cache->get_comments_sliced($module_id, $id_in_module, $number_comments_display);
 			}
 
+			$global_edit_comment_url = $provider->get_url_built($module_id, $id_in_module, array('edit_comment' => ':id_comment'))->absolute();
+			
 			foreach ($comments as $id_comment => $comment)
 			{
+				$edit_comment_url = StringVars::replace_vars($global_edit_comment_url, array('id_comment' => $id_comment));
+				
 				$template->assign_block_vars('comments_list', array(
 					'MESSAGE' => $comment['message'],
 					'COMMENT_ID' => $id_comment,
-					'EDIT_COMMENT' => self::get_url_built($module_id, $id_in_module, array('edit_comment' => $id_comment))->absolute()
+					'EDIT_COMMENT' => $edit_comment_url
 				));
 			}
 		}
@@ -303,26 +311,6 @@ class CommentsService
 		$captcha = new Captcha();
 		$captcha->set_difficulty(self::$comments_configuration->get_captcha_difficulty());
 		return $captcha;
-	}
-	
-	private static function is_display($module_id, $id_in_module)
-	{
-		return CommentsProvidersService::is_display($module_id, $id_in_module);
-	}
-	
-	private static function get_authorizations($module_id, $id_in_module)
-	{
-		return CommentsProvidersService::get_authorizations($module_id, $id_in_module);
-	}
-	
-	private static function get_number_comments_display($module_id, $id_in_module)
-	{
-		return CommentsProvidersService::get_number_comments_display($module_id, $id_in_module);
-	}
-	
-	private static function get_url_built($module_id, $id_in_module, $parameters)
-	{
-		return CommentsProvidersService::get_url_built($module_id, $id_in_module, $parameters);
 	}
 	
 	private static function regenerate_cache()
