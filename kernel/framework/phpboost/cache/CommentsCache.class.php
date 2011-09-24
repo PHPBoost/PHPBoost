@@ -101,6 +101,11 @@ class CommentsCache implements CacheData
 		return $comments;
 	}
 	
+	public function get_count_comments_by_module($module_id, $id_in_module)
+	{
+		return count($this->get_comments_by_module($module_id, $id_in_module));
+	}
+	
 	public function get_comments_sliced($module_id, $id_in_module, $offset, $lenght = 0)
 	{
 		$comments = $this->get_comments_by_module($module_id, $id_in_module);
@@ -133,7 +138,7 @@ class CommentsCache implements CacheData
 	{
 		if (empty($lenght))
 		{
-			return array_slice($comments, $offset);
+			return array_slice($comments, $offset, count($comments), true);
 		}
 		else
 		{
@@ -141,3 +146,4 @@ class CommentsCache implements CacheData
 		}
 	}
 }
+?>
