@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                           DownloadComments.class.php
+ *                           MediaComments.class.php
  *                            -------------------
  *   begin                : September 23, 2011
  *   copyright            : (C) 2011 Kévin MASSY
@@ -25,37 +25,33 @@
  *
  ###################################################*/
 
-class DownloadComments extends AbstractCommentsExtensionPoint
+class MediaComments extends AbstractCommentsExtensionPoint
 {
 	public function get_authorizations($module_id, $id_in_module)
 	{
-		global $DOWNLOAD_CATS, $CONFIG_DOWNLOAD;
+		global $MEDIA_CATS, $MEDIA_DOWNLOAD;
 		
 		$cache = new Cache();
 		$cache->load($module_id);
 		
-		require_once(PATH_TO_ROOT .'/'. $module_id . '/download_auth.php');
+		require_once(PATH_TO_ROOT .'/'. $module_id . '/media_constant.php');
 		
 		$id_cat = $this->get_categorie_id($module_id, $id_in_module);
 		
-		$cat_authorizations = $DOWNLOAD_CATS[$id_cat]['auth'];
+		$cat_authorizations = $MEDIA_CATS[$id_cat]['auth'];
 		if (!is_array($cat_authorizations))
 		{
-			$cat_authorizations = $CONFIG_DOWNLOAD['global_auth'];
+			$cat_authorizations = $CONFIG_MEDIA['root']['auth'];
 		}
 		$authorizations = new CommentsAuthorizations();
 		$authorizations->set_array_authorization($cat_authorizations);
-		$authorizations->set_read_bit(DOWNLOAD_READ_CAT_AUTH_BIT);
+		$authorizations->set_read_bit(MEDIA_AUTH_READ);
 		return $authorizations;
 	}
 	
 	public function is_display($module_id, $id_in_module)
 	{
-		$columns = array('approved', 'visible');
-		$condition = 'WHERE id = :id_in_module';
-		$parameters = array('id_in_module' => $id_in_module);
-		$row = PersistenceContext::get_querier()->select_single_row(PREFIX . 'download', $columns, $condition, $parameters);
-		return (bool)$row['approved'] && (bool)$row['visible'];
+		return true;
 	}
 	
 	public function get_url_built($module_id, $id_in_module, Array $parameters)
@@ -65,7 +61,7 @@ class DownloadComments extends AbstractCommentsExtensionPoint
 		{
 			$url_parameters .= '&' . $name . '=' . $value;
 		}
-		return new Url('/download/download.php?id='. $id_in_module .'&com=0' . $url_parameters);
+		return new Url('/media/media.php?id='. $id_in_module .'&com=0' . $url_parameters);
 	}
 	
 	private function get_categorie_id($module_id, $id_in_module)
@@ -73,7 +69,7 @@ class DownloadComments extends AbstractCommentsExtensionPoint
 		$columns = 'idcat';
 		$condition = 'WHERE id = :id_in_module';
 		$parameters = array('id_in_module' => $id_in_module);
-		return PersistenceContext::get_querier()->get_column_value(PREFIX . 'download', $columns, $condition, $parameters);
+		return PersistenceContext::get_querier()->get_column_value(PREFIX . 'media', $columns, $condition, $parameters);
 	}
 }
 ?>
