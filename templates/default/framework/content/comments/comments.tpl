@@ -20,4 +20,9 @@
 <div id="comments_list">
 # INCLUDE COMMENTS_LIST #
 </div>
-<button type="submit" id="refresh_comments" class="submit">Voir les autres commentaires</button>
+
+</br>
+
+<div style="text-align:center;">
+	<button type="submit" id="refresh_comments" class="submit">Voir les autres commentaires</button>
+</div>

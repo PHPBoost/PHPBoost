@@ -58,7 +58,9 @@ abstract class AbstractCommentsExtensionPoint implements CommentsExtensionPoint
 	}
 	
 	/**
+	 * @param string $module_id
 	 * @param int $id_in_module
+	 * @param array $parameters containing name and value parameters
 	 * @return class Url
 	 */
 	public function get_url_built($module_id, $id_in_module, Array $parameters)

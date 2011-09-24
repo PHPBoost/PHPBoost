@@ -30,12 +30,14 @@ var CommentsService = Class.create({
 			parameters: {module_id: module_id, id_in_module: id_in_module},
 			insertion: Insertion.Bottom
 		})
+		
+		$('refresh_comments').remove();
 	},
 	positive_vote : function(module_id, id_in_module, comment_id) {
 		new Ajax.Request(PATH_TO_ROOT + '/kernel/framework/ajax/dispatcher.php?url=/comments/notation/', {
 			  method: 'post',
 			  parameters: {module_id: module_id, id_in_module: id_in_module, note_type: 'plus', comment_id: comment_id},
-			  onSuccess: function(response) {
+			  onComplete: function(response) {
 				  alert(response.responseJSON.message);
 			  }
 		});
@@ -44,7 +46,7 @@ var CommentsService = Class.create({
 		new Ajax.Request(PATH_TO_ROOT + '/kernel/framework/ajax/dispatcher.php?url=/comments/notation/', {
 			  method: 'post',
 			  parameters: {module_id: module_id, id_in_module: id_in_module, note_type: 'less', comment_id: comment_id},
-			  onSuccess: function(response) {
+			  onComplete: function(response) {
 				  alert(response.responseJSON.message);
 			  }
 		});

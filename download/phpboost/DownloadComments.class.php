@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                           WebComments.class.php
+ *                           DownloadComments.class.php
  *                            -------------------
- *   begin                : May 06, 2011
+ *   begin                : September 23, 2011
  *   copyright            : (C) 2011 Kévin MASSY
  *   email                : soldier.weasel@gmail.com
  *
@@ -25,28 +25,37 @@
  *
  ###################################################*/
 
-class WebComments extends AbstractCommentsExtensionPoint
+class DownloadComments extends AbstractCommentsExtensionPoint
 {
 	public function get_authorizations($module_id, $id_in_module)
 	{
-		global $CAT_WEB;
+		global $DOWNLOAD_CATS, $CONFIG_DOWNLOAD;
 		
 		$cache = new Cache();
 		$cache->load($module_id);
 		
-		$authorizations = new CommentsAuthorizations();
+		require_once(PATH_TO_ROOT .'/'. $module_id . '/download_auth.php');
+		
 		$id_cat = $this->get_categorie_id($module_id, $id_in_module);
-		$authorizations->set_manual_authorized_read(AppContext::get_user()->check_level($CAT_WEB[$id_cat]['secure']));
+		
+		$cat_authorizations = $DOWNLOAD_CATS[$id_cat]['auth'];
+		if (!is_array($cat_authorizations))
+		{
+			$cat_authorizations = $CONFIG_DOWNLOAD['global_auth'];
+		}
+		$authorizations = new CommentsAuthorizations();
+		$authorizations->set_array_authorization($cat_authorizations);
+		$authorizations->set_read_bit(DOWNLOAD_READ_CAT_AUTH_BIT);
 		return $authorizations;
 	}
 	
 	public function is_display($module_id, $id_in_module)
 	{
-		$columns = 'aprob';
+		$columns = array('approved', 'visible');
 		$condition = 'WHERE id = :id_in_module';
 		$parameters = array('id_in_module' => $id_in_module);
-		$aprobation = PersistenceContext::get_querier()->get_column_value(PREFIX . 'web', $columns, $condition, $parameters);
-		return $aprobation > 0 ? true : false; 
+		$row = PersistenceContext::get_querier()->select_single_row(PREFIX . 'download', $columns, $condition, $parameters);
+		return (bool)$row['approved'] && (bool)$row['visible'];
 	}
 	
 	public function get_url_built($module_id, $id_in_module, Array $parameters)
@@ -56,8 +65,7 @@ class WebComments extends AbstractCommentsExtensionPoint
 		{
 			$url_parameters .= '&' . $name . '=' . $value;
 		}
-		$id_cat = $this->get_categorie_id($module_id, $id_in_module);
-		return new Url('/web/web.php?cat='. $id_cat .'&id='. $id_in_module .'&com=0' . $url_parameters);
+		return new Url('/download/download.php?id='. $id_in_module .'&com=0' . $url_parameters);
 	}
 	
 	private function get_categorie_id($module_id, $id_in_module)
