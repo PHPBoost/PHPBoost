@@ -27,9 +27,14 @@
 
 class CalendarExtensionPointProvider extends ExtensionPointProvider
 {
-    function __construct()
+    public function __construct()
     {
         parent::__construct('calendar');
+    }
+    
+    public function comments()
+    {
+    	return new CalendarComments();
     }
 }
 ?>
