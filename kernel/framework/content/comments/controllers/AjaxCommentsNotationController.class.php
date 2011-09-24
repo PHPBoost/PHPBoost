@@ -50,7 +50,7 @@ class AjaxCommentsNotationController extends AbstractCommentsController
 		{
 			$object = array(
 				'success' => false,
-				'message' => 'Note unregistered !'
+				'message' => 'Note unregistered ! id : ' . $comment_id . ' verif : '. (string)$this->verificate_note_type($note_type) . ' access : ' . (string)$this->is_access_authorizations()
 			);
 		}
 		
@@ -59,23 +59,24 @@ class AjaxCommentsNotationController extends AbstractCommentsController
 	
 	private function register_note($note_type, $comment_id)
 	{
+		$comment = CommentsCache::load()->get_comment($comment_id);
+		$current_note = $comment['note'];
+		
 		switch ($note_type) {
 			case self::LESS_NOTE:
-				$note = 0;
+				$note = $current_note - 1;
 			break;
 			case self::PLUS_NOTE:
-				$note = 1;
+				$note = $current_note + 1;
 			break;
 		}
 		
-		$columns = array(
-			'note' => $note
-		);
+		$columns = array('note' => $note);
 		$condition = "WHERE id = :id";
-		$parameters = array(
-			'id' => $comment_id
-		);
+		$parameters = array('id' => $comment_id);
 		PersistenceContext::get_querier()->update(DB_TABLE_COMMENTS, $columns, $condition, $parameters);
+		
+		$this->regenerate_cache();
 	}
 	
 	private function verificate_note_type($type)
@@ -99,6 +100,11 @@ class AjaxCommentsNotationController extends AbstractCommentsController
 	private function is_authorized_note()
 	{
 		return $this->get_authorizations()->is_authorized_note();
+	}
+	
+	private function regenerate_cache()
+	{
+		CommentsCache::invalidate();
 	}
 }
 ?>
