@@ -112,13 +112,16 @@ class CommentsService
 						throw new Exception('Vous n\'êtes pas autorisé à éditer ce commentaire !');
 					}
 				}
-
+				
 				$number_comments_display = self::get_number_comments_display($module_id, $id_in_module);
+				$number_comments = self::$comments_cache->get_count_comments_by_module($module_id, $id_in_module);
+				
 				self::$template->put_all(array(
 					'COMMENTS_LIST' => self::display_comments($module_id, $id_in_module, 
 					$number_comments_display, $authorizations),
 					'MODULE_ID' => $module_id,
 					'ID_IN_MODULE' => $id_in_module,
+					'C_DISPLAY_VIEW_ALL_COMMENTS' => $number_comments > $number_comments_display
 				));
 			}
 		}
@@ -268,7 +271,7 @@ class CommentsService
 			{
 				$comments = self::$comments_cache->get_comments_sliced($module_id, $id_in_module, $number_comments_display);
 			}
-			
+
 			foreach ($comments as $id_comment => $comment)
 			{
 				$template->assign_block_vars('comments_list', array(

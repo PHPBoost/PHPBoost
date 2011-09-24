@@ -23,6 +23,8 @@
 
 </br>
 
+# IF C_DISPLAY_VIEW_ALL_COMMENTS #
 <div style="text-align:center;">
 	<button type="submit" id="refresh_comments" class="submit">Voir les autres commentaires</button>
 </div>
+# ENDIF #
