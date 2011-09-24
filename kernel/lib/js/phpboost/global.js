@@ -691,7 +691,7 @@ function insertMoviePlayer(id)
 {
 	if (!playerflowPlayerRequired)
 	{
-		include(PATH_TO_ROOT + '/kernel/lib/flash/flowplayer/flowplayer-3.2.4.min.js');
+		include(PATH_TO_ROOT + '/kernel/lib/flash/flowplayer/flowplayer.js');
 		playerflowPlayerRequired = true;
 	}
 	flowPlayerDisplay(id);
@@ -708,7 +708,7 @@ function flowPlayerDisplay(id)
 		return;
 	}
 	//On lance le flowplayer
-	flowplayer(id, PATH_TO_ROOT + '/kernel/lib/flash/flowplayer/flowplayer-3.2.4.swf', { 
+	flowplayer(id, PATH_TO_ROOT + '/kernel/lib/flash/flowplayer/flowplayer.swf', { 
 		    clip: { 
 		        url: $(id).href,
 		        autoPlay: false 
