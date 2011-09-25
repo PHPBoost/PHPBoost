@@ -227,7 +227,8 @@
 			<li class="extend" onmouseover="show_menu(61, 1);" onmouseout="hide_menu(1);">
 				<a href="{PATH_TO_ROOT}/admin/admin_modules.php" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/modules_mini.png);">{L_MODULES}</a>
 				<ul id="ssmenu61">
-					<li><a href="{PATH_TO_ROOT}/admin/admin_modules.php" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/modules_mini.png);">{L_MANAGEMENT}</a></li>
+					<li><a href="{PATH_TO_ROOT}/admin/admin_modules.php" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/modules_mini.png);">{L_MANAGEMENT}</a></li> 
+					<!-- <li><a href="{PATH_TO_ROOT}/admin/module/?url=/installed" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/modules_mini.png);">{L_MANAGEMENT}</a></li>-->
 					<li><a href="{PATH_TO_ROOT}/admin/admin_modules_add.php" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/modules_mini.png);">{L_ADD}</a></li>
 					<li><a href="{PATH_TO_ROOT}/admin/admin_modules_update.php" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/modules_mini.png);">{L_UPDATE_MODULES}</a></li>
 				</ul>
