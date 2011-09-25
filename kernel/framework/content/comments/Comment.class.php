@@ -39,8 +39,6 @@ class Comment
 	private $is_locked = false;
 	private $visibility = true;
 	private $message = '';
-	private $module_id;
-	private $id_in_module;
 	
 	public function set_id($id)
 	{
@@ -120,26 +118,6 @@ class Comment
 	public function get_message()
 	{
 		return $this->message;
-	}
-	
-	public function set_module_id($module)
-	{
-		$this->module_id = $module;
-	}
-	
-	public function get_module_id()
-	{
-		return $this->module_id;
-	}
-	
-	public function set_id_in_module($id_in_module)
-	{
-		$this->id_in_module = $id_in_module;
-	}
-	
-	public function get_id_in_module()
-	{
-		return $this->id_in_module;
 	}
 }
 ?>

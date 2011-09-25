@@ -36,21 +36,21 @@ class AjaxCommentsNotationController extends AbstractCommentsController
 		
 		$note_type = $request->get_poststring('note_type', '');
 		$comment_id = $request->get_poststring('comment_id', '');
-		
+		$comments_lang = LangLoader::get('comments-common');
 		if ($this->verificate_note_type($note_type) && $this->is_access_authorizations() && !empty($comment_id))
 		{
 			$this->register_note($note_type, $comment_id);
 			
 			$object = array(
 				'success' => true,
-				'message' => 'Success !'
+				'message' => $comments_lang['comment.note.success']
 			);
 		}
 		else
 		{
 			$object = array(
 				'success' => false,
-				'message' => 'Note unregistered ! id : ' . $comment_id . ' verif : '. (string)$this->verificate_note_type($note_type) . ' access : ' . (string)$this->is_access_authorizations()
+				'message' => $comments_lang['comment.note.error']
 			);
 		}
 		

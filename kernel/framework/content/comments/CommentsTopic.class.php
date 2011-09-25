@@ -3,7 +3,7 @@
  *                              CommentsTopic.class.php
  *                            -------------------
  *   begin                : March 31, 2011
- *   copyright            : (C) 2011 KÃ©vin MASSY
+ *   copyright            : (C) 2011 Kévin MASSY
  *   email                : soldier.weasel@gmail.com
  *
  *
@@ -26,14 +26,13 @@
  ###################################################*/
 
  /**
- * @author KÃ©vin MASSY <soldier.weasel@gmail.com>
+ * @author Kévin MASSY <soldier.weasel@gmail.com>
  * @package {@package}
  */
 class CommentsTopic
 {
 	private $module_id;
 	private $id_in_module;
-	private $is_locked = false;
 
 	public function set_module_id($identifier)
 	{
@@ -53,16 +52,6 @@ class CommentsTopic
 	public function get_id_in_module()
 	{
 		return $this->id_in_module;
-	}
-	
-	public function set_is_locked($is_locked)
-	{
-		$this->is_locked = $is_locked;
-	}
-	
-	public function get_is_locked()
-	{
-		return $this->is_locked;
 	}
 }
 ?>
