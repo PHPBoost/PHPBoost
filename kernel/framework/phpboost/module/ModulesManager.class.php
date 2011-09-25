@@ -25,16 +25,6 @@
  *
  ###################################################*/
 
-//Constants
-define('MODULE_INSTALLED', 					0);
-define('MODULE_UNINSTALLED', 				0);
-define('UNEXISTING_MODULE', 				1);
-define('MODULE_ALREADY_INSTALLED', 			2);
-define('CONFIG_CONFLICT', 					3);
-define('NOT_INSTALLED_MODULE', 				4);
-define('MODULE_FILES_COULD_NOT_BE_DROPPED',	5);
-define('PHP_VERSION_CONFLICT', 				6);
-
 /**
  * @package {@package}
  * @author Benoit Sautel <ben.popeye@phpboost.com>
@@ -45,7 +35,18 @@ class ModulesManager
 {
 	const GENERATE_CACHE_AFTER_THE_OPERATION = true;
 	const DO_NOT_GENERATE_CACHE_AFTER_THE_OPERATION = false;
-
+	const MODULE_UNINSTALLED = 0;
+	const MODULE_INSTALLED = 1;
+	const UNEXISTING_MODULE = 2;
+	const MODULE_ALREADY_INSTALLED = 3;
+	const CONFIG_CONFLICT = 4;
+	const NOT_INSTALLED_MODULE = 5;
+	const MODULE_FILES_COULD_NOT_BE_DROPPED = 6;
+	const PHP_VERSION_CONFLICT = 7;
+	const MODULE_NOT_UPGRADABLE = 8;
+	const UPGRADE_FAILED = 9;
+	const MODULE_UPDATED = 10;
+	
 	/**
 	 * @return Module[string] the Modules map (name => module) of the installed modules (activated or not)
 	 */
@@ -178,12 +179,12 @@ class ModulesManager
 
 		if (empty($module_identifier) || !is_dir(PATH_TO_ROOT . '/' . $module_identifier))
 		{
-			return UNEXISTING_MODULE;
+			return self::UNEXISTING_MODULE;
 		}
 
 		if (self::is_module_installed($module_identifier))
 		{
-			return MODULE_ALREADY_INSTALLED;
+			return self::MODULE_ALREADY_INSTALLED;
 		}
 
 		$authorizations = array('r-1' => 1, 'r0' => 1, 'r1' => 1);
@@ -193,7 +194,7 @@ class ModulesManager
 		$phpversion = ServerConfiguration::get_phpversion();
 		if (version_compare($phpversion, $configuration->get_php_version(), 'lt'))
 		{
-			return PHP_VERSION_CONFLICT;
+			return self::PHP_VERSION_CONFLICT;
 		}
 
 		self::execute_module_installation($module_identifier);
@@ -212,7 +213,7 @@ class ModulesManager
 			}
 			else
 			{
-				return CONFIG_CONFLICT;
+				return self::CONFIG_CONFLICT;
 			}
 		}
 
@@ -232,7 +233,7 @@ class ModulesManager
 			}
 		}
 
-		return MODULE_INSTALLED;
+		return self::MODULE_INSTALLED;
 	}
 
 	/**
@@ -318,15 +319,15 @@ class ModulesManager
 				}
 				catch (IOException $ex)
 				{
-					return MODULE_FILES_COULD_NOT_BE_DROPPED;
+					return self::MODULE_FILES_COULD_NOT_BE_DROPPED;
 				}
 			}
 
-			return MODULE_UNINSTALLED;
+			return self::MODULE_UNINSTALLED;
 		}
 		else
 		{
-			return NOT_INSTALLED_MODULE;
+			return self::NOT_INSTALLED_MODULE;
 		}
 
 		self::update_class_list();
@@ -340,45 +341,54 @@ class ModulesManager
 		{
 			if (self::is_module_installed($module_identifier))
 			{
-				$module = self::get_module($module_identifier);
-				
-				$version_upgrading = self::execute_module_upgrade($module_identifier, $module->get_installed_version());
-				
-				if ($version_upgrading !== null)
+				if (self::module_is_upgradable())
 				{
-					$module->set_installed_version($version_upgrading);
-					ModulesConfig::load()->update($module);
-					ModulesConfig::save();
+					$module = self::get_module($module_identifier);
 					
-					$Cache->Generate_file('modules');
-					$Cache->Generate_file('menus');
+					$version_upgrading = self::execute_module_upgrade($module_identifier, $module->get_installed_version());
 					
-					Feed::clear_cache($module_identifier);
-					ModulesCssFilesCache::invalidate();
-					
-					try {
-						$rewrite_rules = self::get_module($module_identifier)->get_configuration()->get_url_rewrite_rules();
-						if (ServerEnvironmentConfig::load()->is_url_rewriting_enabled() && !empty($rewrite_rules))
-						{
-							HtaccessFileCache::regenerate();
+					if ($version_upgrading !== null)
+					{
+						$module->set_installed_version($version_upgrading);
+						ModulesConfig::load()->update($module);
+						ModulesConfig::save();
+						
+						$Cache->Generate_file('modules');
+						$Cache->Generate_file('menus');
+						
+						Feed::clear_cache($module_identifier);
+						ModulesCssFilesCache::invalidate();
+						
+						try {
+							$rewrite_rules = self::get_module($module_identifier)->get_configuration()->get_url_rewrite_rules();
+							if (ServerEnvironmentConfig::load()->is_url_rewriting_enabled() && !empty($rewrite_rules))
+							{
+								HtaccessFileCache::regenerate();
+							}
+						} catch (IOException $ex) {
 						}
-					} catch (IOException $ex) {
+					}
+					else
+					{
+						return self::UPGRADE_FAILED;
 					}
 				}
 				else
 				{
-				
+					return self::MODULE_NOT_UPGRADABLE;
 				}
 			}
 			else
 			{
-				return NOT_INSTALLED_MODULE;
+				return self::NOT_INSTALLED_MODULE;
 			}
 		}
 		else
 		{
-			return UNEXISTING_MODULE;
+			return self::UNEXISTING_MODULE;
 		}
+		
+		return self::MODULE_UPDATED;
 	}
 	
 	public static function module_is_upgradable($module_identifier)
