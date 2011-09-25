@@ -23,6 +23,9 @@ Event.observe(window, 'load', function() {
 			</div>
 			<a href="{comments_list.EDIT_COMMENT}">
 				<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="{L_UPDATE}" title="{L_UPDATE}" class="valign_middle" />
+			</a> 
+			<a href="{comments_list.DELETE_COMMENT}">
+				<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" class="valign_middle" />
 			</a>
 			<div class="msg_contents">
 				<div class="msg_contents_overflow">

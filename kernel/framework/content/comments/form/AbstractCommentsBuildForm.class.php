@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                       AbstractCommentsController.class.php
+ *                              AbstractCommentsBuildForm.class.php
  *                            -------------------
- *   begin                : September 23, 2011
+ *   begin                : September 25, 2011
  *   copyright            : (C) 2011 Kévin MASSY
  *   email                : soldier.weasel@gmail.com
  *
@@ -25,42 +25,53 @@
  *
  ###################################################*/
 
-class AbstractCommentsController extends AbstractController
+ /**
+ * @author Kévin MASSY <soldier.weasel@gmail.com>
+ * @package {@package}
+ */
+abstract class AbstractCommentsBuildForm
 {
-	protected $module_id;
-	protected $id_in_module;
-	protected $provider;
+	private $form;
+	private $submit_button;
+	private $message_response;
 	
-	public function execute(HTTPRequest $request)
+	public function display()
 	{
-		$this->module_id = $request->get_poststring('module_id', '');
-		$this->id_in_module = $request->get_poststring('id_in_module', '');
-		$this->provider = CommentsProvidersService::get_provider($this->module_id);
+		return $this->form->display();
 	}
 	
-	public function is_authorized_read()
+	protected abstract function create_form();
+	
+	protected abstract function handle_submit();
+	
+	protected function has_been_submited()
 	{
-		return $this->get_authorizations()->is_authorized_read();
+		return $this->submit_button->has_been_submited() && $this->form->validate();
 	}
 	
-	public function is_display()
+	protected function get_form()
 	{
-		return $this->provider->is_display($this->get_module_id(), $this->get_id_in_module());
+		return $this->form;
+	}
+	
+	protected function set_form(HTMLForm $form)
+	{
+		$this->form = $form;
 	}
 
-	public function get_module_id()
+	protected function set_submit_button(FormButtonSubmit $submit_button)
 	{
-		return $this->module_id;
+		$this->submit_button = $submit_button;
 	}
 	
-	public function get_id_in_module()
+	protected function set_message_response($message_helper)
 	{
-		return $this->id_in_module;
+		$this->message_response = $message_helper;
 	}
 	
-	public function get_authorizations()
+	public function get_message_response()
 	{
-		return $this->provider->get_authorizations($this->get_module_id(), $this->get_id_in_module());
+		return $this->message_response;
 	}
 }
 ?>

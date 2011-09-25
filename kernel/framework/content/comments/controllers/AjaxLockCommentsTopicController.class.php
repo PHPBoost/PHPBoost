@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                       AbstractCommentsController.class.php
+ *                       AjaxLockCommentsTopicController.class.php
  *                            -------------------
- *   begin                : September 23, 2011
+ *   begin                : September 25, 2011
  *   copyright            : (C) 2011 Kévin MASSY
  *   email                : soldier.weasel@gmail.com
  *
@@ -25,42 +25,31 @@
  *
  ###################################################*/
 
-class AbstractCommentsController extends AbstractController
+class AjaxLockCommentsTopicController extends AbstractCommentsController
 {
-	protected $module_id;
-	protected $id_in_module;
-	protected $provider;
-	
 	public function execute(HTTPRequest $request)
 	{
-		$this->module_id = $request->get_poststring('module_id', '');
-		$this->id_in_module = $request->get_poststring('id_in_module', '');
-		$this->provider = CommentsProvidersService::get_provider($this->module_id);
-	}
-	
-	public function is_authorized_read()
-	{
-		return $this->get_authorizations()->is_authorized_read();
-	}
-	
-	public function is_display()
-	{
-		return $this->provider->is_display($this->get_module_id(), $this->get_id_in_module());
-	}
-
-	public function get_module_id()
-	{
-		return $this->module_id;
-	}
-	
-	public function get_id_in_module()
-	{
-		return $this->id_in_module;
-	}
-	
-	public function get_authorizations()
-	{
-		return $this->provider->get_authorizations($this->get_module_id(), $this->get_id_in_module());
+		parent::execute($request);
+		
+		$comments_lang = LangLoader::get('comments-common');
+		if ($this->get_authorizations()->is_authorized_moderation())
+		{
+			CommentsManager::lock_topic($this->module_id, $this->id_in_module);
+			
+			$object = array(
+				'success' => true,
+				'message' => $comments_lang['comment.lock.success']
+			);
+		}
+		else
+		{
+			$object = array(
+				'success' => false,
+				'message' => $comments_lang['comment.lock.not-authorized']
+			);
+		}
+		
+		return new JSONResponse($object);
 	}
 }
 ?>
