@@ -46,6 +46,13 @@ class AjaxCommentsNotationController extends AbstractCommentsController
 				'message' => $comments_lang['comment.note.success']
 			);
 		}
+		else if (!$this->is_access_authorizations())
+		{
+			$object = array(
+				'success' => false,
+				'message' => $comments_lang['comments.not-authorized.note']
+			);
+		}
 		else
 		{
 			$object = array(
@@ -94,12 +101,17 @@ class AjaxCommentsNotationController extends AbstractCommentsController
 	
 	private function is_access_authorizations()
 	{
-		return $this->is_authorized_note() && $this->is_display();
+		return $this->is_authorized_note() && $this->is_display() && $this->is_authorized_access();
 	}
 	
 	private function is_authorized_note()
 	{
 		return $this->get_authorizations()->is_authorized_note();
+	}
+	
+	private function is_authorized_access()
+	{
+		 return $this->get_authorizations()->is_authorized_access_module();
 	}
 	
 	private function regenerate_cache()

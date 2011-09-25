@@ -67,28 +67,24 @@ class CommentsDAO
 		return $comment['user_id'];
 	}
 	
-	public static function get_last_comment_added($user_id = 0)
+	public static function get_last_comment_added($module_id, $id_in_module, $user_id = 0)
 	{
 		if ($user_id > 0)
 		{
-			$user_id_existed = self::$db_querier->count(DB_TABLE_COMMENTS, "WHERE user_id = :user_id", array('user_id' => $user_id));
-			if ($user_id_existed > 0)
-			{
-				return self::$db_querier->get_column_value(DB_TABLE_COMMENTS, 'timestamp', "WHERE user_id = :user_id", array('user_id' => $user_id));
-			}
-			return 0;
+			$comments = self::get_comments_user($module_id, $id_in_module, $user_id);
 		}
 		else
 		{
-			$ip_visitor_existed = self::$db_querier->count(DB_TABLE_COMMENTS, "WHERE ip_visitor = :ip_visitor", array('ip_visitor' => USER_IP));
-			if ($ip_visitor_existed > 0)
-			{
-				return self::$db_querier->get_column_value(DB_TABLE_COMMENTS, 'timestamp', "WHERE ip_visitor = :ip_visitor", array('ip_visitor' => $ip_visitor));
-			}
-			return 0;
+			$comments = self::get_comments_visitor($module_id, $id_in_module, USER_IP);
 		}
+		
+		if (count($comments) > 0)
+		{
+			$last_comment = array_shift($comments);
+			return $last_comment['timestamp'];
+		}
+		return 0;
 	}
-	
 
 	public static function get_number_comments($module_id, $id_in_module)
 	{
@@ -105,16 +101,16 @@ class CommentsDAO
 		return self::$comments_cache->comment_exists($comment_id);
 	}
 	
-	public static function add_comment($module_id, $id_in_module, Comment $comment)
+	public static function add_comment($module_id, $id_in_module, $message, $user_id = '', $name_visitor = '', $ip_visitor = '')
 	{
 		$id_comments_topic = CommentsTopicDAO::get_id_topic_module($module_id, $id_in_module);
 		$columns = array(
 			'id_topic' => $id_comments_topic,
-			'user_id' => $comment->get_user_id(),
-			'name_visitor' => htmlspecialchars($comment->get_name_visitor()),
-			'ip_visitor' => htmlspecialchars($comment->get_ip_visitor()),
+			'user_id' => $user_id,
+			'name_visitor' => htmlspecialchars($name_visitor),
+			'ip_visitor' => htmlspecialchars($ip_visitor),
 			'timestamp' => time(),
-			'message' => htmlspecialchars($comment->get_message())
+			'message' => htmlspecialchars($message)
 		);
 		self::$db_querier->insert(DB_TABLE_COMMENTS, $columns);
 	}
@@ -137,6 +133,36 @@ class CommentsDAO
 			'module_id' => $module_id,
 		);
 		return self::$db_querier->count(DB_TABLE_COMMENTS_TOPIC, "WHERE AND module_id = :module_id", $parameters) > 0 ? true : false;
+	}
+	
+	private static function get_comments_user($module_id, $id_in_module, $user_id)
+	{
+		$comments = self::$comments_cache->get_comments_by_module($module_id, $id_in_module);
+		
+		$comments_user = array();
+		foreach ($comments as $id => $values)
+		{
+			if ($values['user_id'] == $user_id)
+			{
+				$comments_user[$id] = $values;
+			}
+		}
+		return $comments_user;
+	}
+	
+	private static function get_comments_visitor($module_id, $id_in_module, $ip_visitor)
+	{
+		$comments = self::$comments_cache->get_comments_by_module($module_id, $id_in_module);
+		
+		$comments_visito = array();
+		foreach ($comments as $id => $values)
+		{
+			if ($values['ip_visitor'] == $ip_visitor)
+			{
+				$comments_visito[$id] = $values;
+			}
+		}
+		return $comments_visito;
 	}
 }
 ?>

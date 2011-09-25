@@ -77,7 +77,7 @@ class AddCommentBuildForm extends AbstractCommentsBuildForm
 			'formatter' => $this->get_formatter(),
 			'rows' => 10, 'cols' => 47, 'required' => $this->lang['require_text']),
 			array(new FormFieldConstraintMaxLinks($this->comments_configuration->get_max_links_comment()),
-				//new FormFieldConstraintAntiFlood(CommentsManager::get_last_comment_added($this->user->get_id())),
+				new FormFieldConstraintAntiFlood(CommentsManager::get_last_comment_added($this->module_id, $this->id_in_module, $this->user->get_id())),
 				new FormFieldConstraintAntiFlood(time())
 			)
 		));
@@ -108,7 +108,7 @@ class AddCommentBuildForm extends AbstractCommentsBuildForm
 			CommentsManager::add_comment($this->module_id, $this->id_in_module, $form->get_value('message'));
 		}
 		
-		$this->set_message_response(MessageHelper::display($this->comments_lang['comment.add.success'], E_USER_SUCCESS, 4));
+		$this->set_message_response(MessageHelper::display($this->comments_lang['comment.add.success'], MessageHelper::SUCCESS, 4));
 	}
 	
 	private function get_formatter()

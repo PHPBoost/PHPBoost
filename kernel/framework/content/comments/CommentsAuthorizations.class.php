@@ -37,6 +37,8 @@ class CommentsAuthorizations
 	private $moderation_bit = 0;
 	private $note_bit = 0;
 	
+	private $authorized_access_module = true;
+	
 	private $manual_authorized_read = null;
 	private $manual_authorized_post = null;
 	private $manual_authorized_moderation = null;
@@ -75,6 +77,11 @@ class CommentsAuthorizations
 		$this->note_bit = $note_bit;
 	}
 	
+	public function is_authorized_access_module()
+	{
+		return $this->authorized_access_module;
+	}
+	
 	public function is_authorized_read()
 	{
 		return $this->check_authorizations($this->read_bit, self::READ_AUTHORIZATIONS);
@@ -93,6 +100,14 @@ class CommentsAuthorizations
 	public function is_authorized_note()
 	{
 		return $this->check_authorizations($this->note_bit, self::NOTE_AUTHORIZATIONS);
+	}
+	
+	/**
+	 * @param boolean $authorized
+	 */
+	public function set_authorized_access_module($authorized)
+	{
+		$this->authorized_access_module = $authorized;
 	}
 	
 	/**

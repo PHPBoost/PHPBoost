@@ -59,89 +59,79 @@ class CommentsService
 		$edit_comment_id = AppContext::get_request()->get_int('edit_comment', 0);
 		$delete_comment_id = AppContext::get_request()->get_int('delete_comment', 0);
 		
-		if ($authorizations->is_authorized_read())
+		if (!$authorizations->is_authorized_read())
 		{
-			$user_read_only = self::$user->get_attribute('user_readonly');
-			
-			//TODO
-			$comments_topic_locked = CommentsManager::comment_topic_locked($module_id, $id_in_module);
-			if (!$authorizations->is_authorized_moderation() && $comments_topic_locked)
-			{
-				self::$template->put('KEEP_MESSAGE', MessageHelper::display(self::$lang['com_locked'], E_USER_SUCCESS, 4));
-			}
-			else if (!empty($user_read_only) && $user_read_only > time())
-			{
-				self::$template->put('KEEP_MESSAGE', MessageHelper::display('Read Only', E_USER_SUCCESS, 4));
-			}
-			else
-			{
-				$number_comments_display = $provider->get_number_comments_display($module_id, $id_in_module);
-				$number_comments = self::$comments_cache->get_count_comments_by_module($module_id, $id_in_module);
-				
-				self::$template->put_all(array(
-					'COMMENTS_LIST' => self::display_comments($module_id, $id_in_module, 
-					$number_comments_display, $authorizations),
-					'MODULE_ID' => $module_id,
-					'ID_IN_MODULE' => $id_in_module,
-					'C_DISPLAY_VIEW_ALL_COMMENTS' => $number_comments > $number_comments_display
-				));
-			}
+			self::$template->put('KEEP_MESSAGE', MessageHelper::display(self::$comments_lang['comments.not-authorized.read'], MessageHelper::NOTICE, 4));
 		}
 		else
 		{
-			self::$template->put('KEEP_MESSAGE', MessageHelper::display(self::$comments_lang['comments.not-authorized.read'], E_USER_WARNING, 4));
-		}
-		
-		
-		if (!empty($delete_comment_id))
-		{
-			if (self::is_authorized_edit_or_delete_comment($authorizations, $delete_comment_id))
+			if (!empty($delete_comment_id))
 			{
-				CommentsManager::delete_comment($delete_comment_id);
-				self::$template->put('KEEP_MESSAGE', MessageHelper::display(self::$comments_lang['comment.delete.success'], E_USER_WARNING, 4));
-			}
-			self::$template->put('KEEP_MESSAGE', MessageHelper::display(self::$comments_lang['comments.not-authorized.delete'], E_USER_SUCCESS, 4));
-		}
-
-		if (!empty($edit_comment_id))
-		{
-			if (CommentsManager::comment_exists($edit_comment_id))
-			{
-				if (self::is_authorized_edit_or_delete_comment($authorizations, $edit_comment_id))
+				if (!self::is_authorized_edit_or_delete_comment($authorizations, $delete_comment_id))
 				{
-					$edit_comment_form = EditCommentBuildForm::create($edit_comment_id);
-					self::$template->put_all(array(
-						'C_DISPLAY_FORM' => true,
-						'KEEP_MESSAGE' => $edit_comment_form->get_message_response(),
-						'COMMENT_FORM' => $edit_comment_form->display()
-					));
+					$error_controller = PHPBoostErrors::unexisting_page();
+					DispatchManager::redirect($error_controller);
+				}
+	
+				CommentsManager::delete_comment($delete_comment_id);
+				self::$template->put('KEEP_MESSAGE', MessageHelper::display(self::$comments_lang['comment.delete.success'], MessageHelper::NOTICE, 4));
+			}
+	
+			if (!empty($edit_comment_id))
+			{
+				if (!CommentsManager::comment_exists($edit_comment_id) || !self::is_authorized_edit_or_delete_comment($authorizations, $edit_comment_id))
+				{
+					$error_controller = PHPBoostErrors::unexisting_page();
+					DispatchManager::redirect($error_controller);		
+				}
+				
+				$edit_comment_form = EditCommentBuildForm::create($edit_comment_id);
+				self::$template->put_all(array(
+					'C_DISPLAY_FORM' => true,
+					'KEEP_MESSAGE' => $edit_comment_form->get_message_response(),
+					'COMMENT_FORM' => $edit_comment_form->display()
+				));
+			}
+			else
+			{
+				if ($authorizations->is_authorized_post() && $authorizations->is_authorized_access_module())
+				{
+					$comments_topic_locked = CommentsManager::comment_topic_locked($module_id, $id_in_module);
+					$user_read_only = self::$user->get_attribute('user_readonly');
+					if (!$authorizations->is_authorized_moderation() && $comments_topic_locked)
+					{
+						self::$template->put('KEEP_MESSAGE', MessageHelper::display(self::$lang['com_locked'], MessageHelper::NOTICE, 4));
+					}
+					if (!empty($user_read_only) && $user_read_only > time())
+					{
+						self::$template->put('KEEP_MESSAGE', MessageHelper::display('Read Only', MessageHelper::SUCCESS, 4));
+					}
+					else
+					{
+						$add_comment_form = AddCommentBuildForm::create($module_id, $id_in_module);
+						self::$template->put_all(array(
+							'C_DISPLAY_FORM' => true,
+							'KEEP_MESSAGE' => $add_comment_form->get_message_response(),
+							'COMMENT_FORM' => $add_comment_form->display()
+						));
+					}
 				}
 				else
 				{
-					self::$template->put('KEEP_MESSAGE', MessageHelper::display(self::$comments_lang['comments.not-authorized.edit'], E_USER_WARNING, 4));
+					self::$template->put('KEEP_MESSAGE', MessageHelper::display(self::$comments_lang['comments.not-authorized.post'], MessageHelper::NOTICE, 4));
 				}
 			}
-			else
-			{
-				$error_controller = PHPBoostErrors::unexisting_page();
-				DispatchManager::redirect($error_controller);
-			}
-		}
-		else
-		{
-			if ($authorizations->is_authorized_post())
-			{
-				$add_comment_form = AddCommentBuildForm::create($module_id, $id_in_module);
-				self::$template->put_all(array(
-					'C_DISPLAY_FORM' => true,
-					'KEEP_MESSAGE' => $add_comment_form->get_message_response(),
-					'COMMENT_FORM' => $add_comment_form->display()
-				));
-			}
-			else
-			{
-				self::$template->put('KEEP_MESSAGE', MessageHelper::display(self::$comments_lang['comments.not-authorized.post'], E_USER_WARNING, 4));
-			}
+				
+			$number_comments_display = $provider->get_number_comments_display($module_id, $id_in_module);
+			$number_comments = self::$comments_cache->get_count_comments_by_module($module_id, $id_in_module);
+			
+			self::$template->put_all(array(
+				'COMMENTS_LIST' => self::display_comments($module_id, $id_in_module, 
+					$number_comments_display, $authorizations),
+				'MODULE_ID' => $module_id,
+				'ID_IN_MODULE' => $id_in_module,
+				'C_DISPLAY_VIEW_ALL_COMMENTS' => $number_comments > $number_comments_display
+			));
 		}
 
 		return self::$template;
@@ -192,7 +182,7 @@ class CommentsService
 
 		$provider = CommentsProvidersService::get_provider($module_id);
 
-		if ($authorizations->is_authorized_read() && $provider->is_display($module_id, $id_in_module))
+		if ($authorizations->is_authorized_read() && $provider->is_display($module_id, $id_in_module) && $authorizations->is_authorized_access_module())
 		{
 			$comment_url = $provider->get_url_built($module_id, $id_in_module, array(':action' => ':id_comment'))->absolute();
 			
@@ -235,7 +225,7 @@ class CommentsService
 	private static function is_authorized_edit_or_delete_comment($authorizations, $comment_id)
 	{
 		$user_id_posted_comment = CommentsManager::get_user_id_posted_comment($comment_id);
-		return $authorizations->is_authorized_moderation() || $user_id_posted_comment == self::$user->get_attribute('user_id');
+		return ($authorizations->is_authorized_moderation() || $user_id_posted_comment == self::$user->get_attribute('user_id')) && $authorizations->is_authorized_access_module();
 	}
 }
 ?>
