@@ -31,9 +31,8 @@
 
 $lang = array(
 	'comments.not-authorized.post' => 'Vous n\'êtes pas autorisé à poster un commentaire',
-	'comments.not-authorized.edit' => 'Vous n\'êtes pas autorisé à éditer ce commentaire',
 	'comments.not-authorized.read' => 'Vous n\'êtes pas autorisé à voir les commentaires',
-	'comments.not-authorized.delete' => 'Vous n\'êtes pas supprimer ce commentaire',
+	'comments.not-authorized.note' => 'Vous n\'êtes pas autorisé à noter le commentaire',
 
 	'comment.locked' => 'Commentaire bloqué, vous ne pouvez pas poster de commentaire',
 

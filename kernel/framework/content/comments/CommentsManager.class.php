@@ -40,26 +40,21 @@ class CommentsManager
 	
 	public static function add_comment($module_id, $id_in_module, $message, $name_visitor = '')
 	{
-		$comment = new Comment();
-		if(self::$user->check_level(MEMBER_LEVEL))
-		{
-			$user_id = self::$user->get_id();
-		}
-		else
-		{
-			$comment->set_name_visitor($name_visitor);
-			$comment->set_ip_visitor(USER_IP);
-		}
-		$comment->set_message($message);
-		
 		if (!CommentsTopicDAO::topic_exists($module_id, $id_in_module))
 		{
 			CommentsTopicDAO::create_topic($module_id, $id_in_module);
 		}
 		
+		if(self::$user->check_level(MEMBER_LEVEL))
+		{
+			CommentsDAO::add_comment($module_id, $id_in_module, $message, self::$user->get_id());
+		}
+		else
+		{
+			CommentsDAO::add_comment($module_id, $id_in_module, $message, '', $name_visitor, USER_IP);
+		}
+
 		CommentsTopicDAO::update_number_comment_topic($module_id, $id_in_module);
-		
-		CommentsDAO::add_comment($module_id, $id_in_module, $comment);
 		
 		self::regenerate_cache();
 	}
@@ -113,14 +108,18 @@ class CommentsManager
 		return CommentsDAO::get_user_id_posted_comment($comment_id);
 	}
 	
-	public static function get_last_comment_added($user_id = 0)
+	public static function get_last_comment_added($module_id, $id_in_module, $user_id = 0)
 	{
-		return CommentsDAO::get_last_comment_added($user_id = 0);
+		return CommentsDAO::get_last_comment_added($module_id, $id_in_module, $user_id = 0);
 	}
 	
 	public static function comment_topic_locked($module_id, $id_in_module)
 	{
-		return CommentsTopicDAO::comments_topic_locked($module_id, $id_in_module);
+		if (CommentsTopicDAO::topic_exists($module_id, $id_in_module))
+		{
+			return CommentsTopicDAO::comments_topic_locked($module_id, $id_in_module);
+		}
+		return false;
 	}
 	
 	public static function lock_topic($module_id, $id_in_module)

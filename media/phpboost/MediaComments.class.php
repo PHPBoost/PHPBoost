@@ -29,7 +29,7 @@ class MediaComments extends AbstractCommentsExtensionPoint
 {
 	public function get_authorizations($module_id, $id_in_module)
 	{
-		global $MEDIA_CATS, $MEDIA_DOWNLOAD;
+		global $MEDIA_CATS, $CONFIG_MEDIA;
 		
 		$cache = new Cache();
 		$cache->load($module_id);
@@ -44,8 +44,7 @@ class MediaComments extends AbstractCommentsExtensionPoint
 			$cat_authorizations = $CONFIG_MEDIA['root']['auth'];
 		}
 		$authorizations = new CommentsAuthorizations();
-		$authorizations->set_array_authorization($cat_authorizations);
-		$authorizations->set_read_bit(MEDIA_AUTH_READ);
+		$authorizations->set_authorized_access_module(AppContext::get_user()->check_auth($cat_authorizations, MEDIA_AUTH_READ));
 		return $authorizations;
 	}
 	
