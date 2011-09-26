@@ -87,13 +87,7 @@ class AdminMemberAddController extends AdminController
 			'class' => 'text', 'maxlength' => 25, 'required' => true)
 		));
 		
-		$fieldset->add_field(new FormFieldSimpleSelectChoice('rank', $this->lang['members.rank'], '1',
-			array(
-				new FormFieldSelectChoiceOption($this->lang['members.rank.member'], '1'),
-				new FormFieldSelectChoiceOption($this->lang['members.rank.modo'], '2'),
-				new FormFieldSelectChoiceOption($this->lang['members.rank.admin'], '3')
-			)
-		));
+		$fieldset->add_field(new FormFieldRanks('rank', $this->lang['members.rank'], FormFieldRanks::MEMBER));
 		
 		$form->add_button(new FormButtonReset());
 		$this->submit_button = new FormButtonDefaultSubmit();
@@ -117,30 +111,12 @@ class AdminMemberAddController extends AdminController
 			VALUES (:login, :password, :level, '', :user_mail, 0, :timestamp, 0, 0, :last_connect, 0, '', 0, :user_aprob)", array(
 				'login' => htmlspecialchars($this->form->get_value('login')),
 				'password' => htmlspecialchars(KeyGenerator::string_hash($this->form->get_value('password'))),
-				'level' => $this->get_rank_member(),
+				'level' => $this->form->get_value('rank')->get_raw_value(),
 				'user_mail' => htmlspecialchars($this->form->get_value('mail')),
 				'timestamp' => time(),
 				'last_connect' => '',
 				'user_aprob' => '1'
 		));
 	}
-	
-	private function get_rank_member()
-	{
-		$rank = $this->form->get_value('rank')->get_raw_value();
-		if ($rank == '3')
-		{
-			return '2';
-		}
-		elseif ($rank == '2')
-		{
-			return '1';
-		}
-		else
-		{
-			return '0';
-		}
-	}
 }
-
 ?>
