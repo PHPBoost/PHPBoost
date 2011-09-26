@@ -32,6 +32,7 @@ require_once PATH_TO_ROOT . '/kernel/begin.php';
 $url_controller_mappers = array(
 	new UrlControllerMapper('AdminCustomizeInterfaceController', '`^/interface(?:/([a-z0-9]+))?/?$`', array('theme')),
 	new UrlControllerMapper('AdminCustomizeFaviconController', '`^/favicon/?$`'),
+	new UrlControllerMapper('AdminCustomizeEditorCSSFilesController', '`^/editor(?:/([a-z0-9]+))?/?(.+)?/?$`', array('id_theme', 'file_name'))
 );
 DispatchManager::dispatch($url_controller_mappers);
 

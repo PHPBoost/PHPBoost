@@ -48,5 +48,14 @@ class AdminCustomizeUrlBuilder
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/favicon');
 	}
+
+	/**
+	 * @return Url
+	 */
+    public static function editor_file($theme = '', $file = '')
+	{
+		$url = !empty($file) ? $theme . '/' . $file : $theme;
+		return DispatchManager::get_url(self::$dispatcher, '/editor/'. $url);
+	}
 }
 ?>

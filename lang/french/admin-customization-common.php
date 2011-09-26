@@ -34,7 +34,7 @@ $lang['customization'] = 'Personnalisation';
 
 $lang['interface'] = 'Interface';
 $lang['customization.interface'] = 'Personnalisation de l\'interface';
-$lang['customization.interface.success'] = 'Modification éfféctués avec succès';
+$lang['customization.interface.success'] = 'Modification effectués avec succès';
 $lang['customization.interface.all-themes'] = 'Tous les thèmes';
 $lang['customization.interface.select-theme'] = 'Séléctionner le thème auquel vous souhaitez attribuer les changements';
 $lang['customization.interface.theme-choise'] = 'Choix du thème';
@@ -53,4 +53,9 @@ $lang['customization.favicon.current.null'] = 'Vous n\'avez pas de favicon actue
 $lang['customization.favicon.current.change'] = 'Changer votre favicon';
 $lang['customization.favicon.current.erased'] = '<span style="color:#B22222;font-weight:bold;">Le favicon que vous avez enregistré est visiblement supprimé du serveur, veuillez le remplacer par un autre</span>';
 $lang['customization.favicon.error'] = 'Le favicon n\'a pas pû être changé';
+
+$lang['customization.editor.css-files'] = 'Editeur de fichiers CSS';
+$lang['customization.editor.css-file.success'] = 'Modification effectués avec succès';
+$lang['customization.editor.css-files.select'] = 'Séléctionner le fichier que vous souhaitez éditer';
+$lang['customization.editor.css-files.content'] = 'Contenu du fichier';
 ?>
