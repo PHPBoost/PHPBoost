@@ -61,6 +61,8 @@ class CLIClearCacheCommand implements CLICommand
         $cache_service->clear_template_cache();
         CLIOutput::writeln('[clear] syndication cache');
         $cache_service->clear_syndication_cache();
+        CLIOutput::writeln('[clear] CSS cache');
+        $cache_service->clear_css_cache();
         CLIOutput::writeln('cache has been successfully cleared');
 	}
 }
