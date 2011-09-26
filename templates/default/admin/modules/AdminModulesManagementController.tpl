@@ -47,31 +47,31 @@
 			<table class="module_table" style="width:99%;margin-bottom:30px;">
 				<tr> 
 					<th colspan="5">
-						{@admin-module.installed_activated_modules}
+						{@modules.installed_activated_modules}
 					</th>
 				</tr>
 				# IF C_MODULES_ACTIVATED #
 				<tr>
 					<td class="row2" style="width:100px;text-align:center;">
-						{@admin-module.name}
+						{@modules.name}
 					</td>
 					<td class="row2" style="text-align:center;">
-						{@admin-module.description}
+						{@modules.description}
 					</td>
 					<td class="row2" style="width:50px;text-align:center;">
-						{@admin-module.activated_module}
+						{@modules.activated_module}
 					</td>
 					<td class="row2" style="width:200px;text-align:center;">
-						{@admin-module.authorization}
+						{@modules.authorization}
 					</td>
 					<td class="row2" style="width:80px;text-align:center;">
-						{@admin-module.delete}
+						{@modules.delete}
 					</td>
 				</tr>
 				# ELSE #
 				<tr>
 					<td class="row2" colspan="4" style="text-align:center;">
-						<strong>{@admin-module.modules_available}</strong>
+						<strong>{@modules.modules_available}</strong>
 					</td>
 				</tr>
 				# ENDIF #
@@ -85,16 +85,16 @@
 						</td>
 						<td class="row2">
 							<div id="desc_explain{modules_activated.ID}">
-								<strong>{@admin-module.name} :</strong> {modules_activated.AUTHOR} {modules_activated.AUTHOR_WEBSITE}<br />
-								<strong>{@admin-module.description} :</strong> {modules_activated.DESCRIPTION}<br />
-								<strong>{@admin-module.compatibility} :</strong> PHPBoost {modules_activated.COMPATIBILITY}<br />
-								<strong>{@admin-module.php_version} :</strong> {modules_activated.PHP_VERSION}
+								<strong>{@modules.name} :</strong> {modules_activated.AUTHOR} {modules_activated.AUTHOR_WEBSITE}<br />
+								<strong>{@modules.description} :</strong> {modules_activated.DESCRIPTION}<br />
+								<strong>{@modules.compatibility} :</strong> PHPBoost {modules_activated.COMPATIBILITY}<br />
+								<strong>{@modules.php_version} :</strong> {modules_activated.PHP_VERSION}
 							</div>
 							<div id="picture_desc{modules_activated.ID}" style="text-align: center;" "></div>
 						</td>
 						<td class="row2">								
-							<label><input type="radio" name="activ{modules_activated.ID}" value="1" # IF modules_activated.C_MODULE_ACTIVE # checked="checked" # ENDIF # /> {@admin-module.yes}</label>
-							<label><input type="radio" name="activ{modules_activated.ID}" value="0" # IF NOT modules_activated.C_MODULE_ACTIVE # checked="checked" # ENDIF # /> {@admin-module.no}</label>
+							<label><input type="radio" name="activ{modules_activated.ID}" value="1" # IF modules_activated.C_MODULE_ACTIVE # checked="checked" # ENDIF # /> {@modules.yes}</label>
+							<label><input type="radio" name="activ{modules_activated.ID}" value="0" # IF NOT modules_activated.C_MODULE_ACTIVE # checked="checked" # ENDIF # /> {@modules.no}</label>
 						</td>
 						<td class="row2">
 							<div id="auth_explain{modules_activated.ID}">
@@ -104,7 +104,7 @@
 						</td>
 						<td class="row2">
 							<a href="{modules_activated.U_DELETE_LINK}">	
-								<input type="submit" name="delete-{modules_activated.ID}" value="{@admin-module.delete}" class="submit" />
+								<input type="submit" name="delete-{modules_activated.ID}" value="{@modules.delete}" class="submit" />
 							</a>
 						</td>
 					</tr>

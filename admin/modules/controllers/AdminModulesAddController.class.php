@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                       AdminModuleAddController.class.php
+ *                       AdminModulesAddController.class.php
  *                            -------------------
  *   begin                : September 20, 2011
  *   copyright            : (C) 2011 Patrick DUBEAU
@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-class AdminModuleAddController extends AdminController
+class AdminModulesAddController extends AdminController
 {
 	private $lang;
 	private $view;
@@ -47,32 +47,32 @@ class AdminModuleAddController extends AdminController
 			$this->upload_module();
 		}
 		
-		return new AdminModuleDisplayResponse($this->view, $this->lang['admin-module.add_module']);
+		return new AdminModulesDisplayResponse($this->view, $this->lang['modules.add_module']);
 	}
 	
 	private function init()
 	{	
 		$this->load_lang();
-		$this->view = new FileTemplate('admin/module/AdminModuleAddController.tpl');
+		$this->view = new FileTemplate('admin/modules/AdminModulesAddController.tpl');
 		$this->view->add_lang($this->lang);
 	}
 	
 	//TODO faire fichier de langue
 	private function load_lang()
 	{
-		$this->lang = LangLoader::get('admin-module-common');
+		$this->lang = LangLoader::get('admin-modules-common');
 	}
 	
 	private function upload_form()
 	{
 		$form = new HTMLForm('upload_module');
 		
-		$fieldset = new FormFieldsetHTML('upload_module', $this->lang['admin-module.upload_module']);
+		$fieldset = new FormFieldsetHTML('upload_module', $this->lang['modules.upload_module']);
 		$form->add_fieldset($fieldset);
 		
-		$fieldset->add_field(new FormFieldFilePicker('upload_module', $this->lang['admin-module.upload_description']));
+		$fieldset->add_field(new FormFieldFilePicker('upload_module', $this->lang['modules.upload_description']));
 		
-		$this->submit_button = new FormButtonSubmit($this->lang['admin-module.install_module'], '');
+		$this->submit_button = new FormButtonSubmit($this->lang['modules.install_module'], '');
 		$form->add_button($this->submit_button);	
 		
 		$this->form = $form;
@@ -198,22 +198,22 @@ class AdminModuleAddController extends AdminController
 							$file = new File($archive_path);
 							$file->delete();
 							
-							$this->view->put('MSG', MessageHelper::display($this->lang['admin-module.upload_success'], MessageHelper::SUCCESS, 4));
+							$this->view->put('MSG', MessageHelper::display($this->lang['modules.upload_success'], MessageHelper::SUCCESS, 4));
 						}
 						else
 						{
-							$this->view->put('MSG', MessageHelper::display($this->lang['admin-module.upload_invalid_format'], MessageHelper::ERROR, 4));
+							$this->view->put('MSG', MessageHelper::display($this->lang['modules.upload_invalid_format'], MessageHelper::ERROR, 4));
 						}
 					}
 				}
 				else
 				{
-					$this->view->put('MSG', MessageHelper::display($this->lang['admin-module.already_installed'], MessageHelper::ERROR, 4));
+					$this->view->put('MSG', MessageHelper::display($this->lang['modules.already_installed'], MessageHelper::ERROR, 4));
 				}
 			}
 			else
 			{
-				$this->view->put('MSG', MessageHelper::display($this->lang['admin-module.upload_error'], MessageHelper::ERROR, 4));
+				$this->view->put('MSG', MessageHelper::display($this->lang['modules.upload_error'], MessageHelper::ERROR, 4));
 			}
 		}
 	}

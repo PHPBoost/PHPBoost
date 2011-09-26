@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                       AdminModuleUrlBuilder.class.php
+ *                       index.php
  *                            -------------------
  *   begin                : September 20, 2011
  *   copyright            : (C) 2011 Patrick DUBEAU
@@ -25,40 +25,17 @@
  *
  ###################################################*/
 
-class AdminModuleUrlBuilder
-{
-	private static $dispatcher = '/admin/module';
-	
-	/*
-	 * @ return Url
-	 */
-	public static function list_installed_module()
-	{
-		return DispatchManager::get_url(self::$dispatcher, '/installed/');
-	}
-	
-	/*
-	 * @ return Url
-	 */
-	public static function add_module()
-	{
-		return DispatchManager::get_url(self::$dispatcher, '/add/');
-	}
-	
-	/*
-	 * @ return Url
-	 */
-	public static function update_module($id = '')
-	{
-		return DispatchManager::get_url(self::$dispatcher, $id . '/update/');
-	}
-		
-	/*
-	 * @ return Url
-	 */
-	public static function delete_module($id = '')
-	{
-		return DispatchManager::get_url(self::$dispatcher, $id . '/delete/');
-	}
-}
+defined('PATH_TO_ROOT') or define('PATH_TO_ROOT', '../..');
+
+require_once PATH_TO_ROOT . '/kernel/begin.php';
+
+$url_controller_mappers = array(
+	new UrlControllerMapper('AdminModulesManagementController', '`^(?:/installed)?/?$`'),
+	new UrlControllerMapper('AdminModulesAddController', '`^/add/?$`'),
+	new UrlControllerMapper('AdminModulesUpdateController', '`^/([a-z]+)/update/?$`', array('id')),
+	new UrlControllerMapper('AdminModulesDeleteController', '`^/([a-z]+)/delete/?$`', array('id')),
+);
+
+DispatchManager::dispatch($url_controller_mappers);
+
 ?>
