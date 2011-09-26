@@ -53,4 +53,9 @@ $lang['customization.favicon.current.null'] = 'You currently have no favicon';
 $lang['customization.favicon.current.change'] = 'Change your favicon';
 $lang['customization.favicon.current.erased'] = '<span style="color:#B22222;font-weight:bold;">The favicon that you saved is visibly removed from the server, please replace it with another</span>';
 $lang['customization.favicon.error'] = 'The favicon could not be changed';
+
+$lang['customization.editor.css-files'] = 'CSS File Editor';
+$lang['customization.editor.css-file.success'] = 'Changing successfully completed';
+$lang['customization.editor.css-files.select'] = 'Select the file you want to edit';
+$lang['customization.editor.css-files.content'] = 'File Contents';
 ?>
