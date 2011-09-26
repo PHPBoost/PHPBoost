@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                       AdminModuleDisplayResponse.class.php
+ *                       AdminModulesDisplayResponse.class.php
  *                            -------------------
  *   begin                : September 20, 2011
  *   copyright            : (C) 2011 Patrick DUBEAU
@@ -25,18 +25,18 @@
  *
  ###################################################*/
 
-class AdminModuleDisplayResponse extends AdminMenuDisplayResponse
+class AdminModulesDisplayResponse extends AdminMenuDisplayResponse
 {
 	public function __construct($view, $title_page)
 	{
 		parent::__construct($view);
 		
-		$lang = LangLoader::get('admin-module-common');
+		$lang = LangLoader::get('admin-modules-common');
 		$this->set_title($title_page);
 		$icon = '/templates/' . get_utheme() . '/images/admin/modules.png';
-		$this->add_link($lang['admin-module.module_management'], AdminModuleUrlBuilder::list_installed_module(), $icon);
-		$this->add_link($lang['admin-module.add_module'], AdminModuleUrlBuilder::add_module(), $icon);
-		$this->add_link($lang['admin-module.update_module'], AdminModuleUrlBuilder::update_module(), $icon);
+		$this->add_link($lang['modules.module_management'], AdminModulesUrlBuilder::list_installed_modules(), $icon);
+		$this->add_link($lang['modules.add_module'], AdminModulesUrlBuilder::add_modules(), $icon);
+		$this->add_link($lang['modules.update_module'], AdminModulesUrlBuilder::update_modules(), $icon);
 		
 		$env = $this->get_graphical_environment();
 		$env->set_page_title($title_page);

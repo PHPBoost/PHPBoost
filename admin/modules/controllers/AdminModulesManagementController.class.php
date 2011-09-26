@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                       AdminModuleManagementController.class.php
+ *                       AdminModulesManagementController.class.php
  *                            -------------------
  *   begin                : September 20, 2011
  *   copyright            : (C) 2011 Patrick DUBEAU
@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-class AdminModuleManagementController extends AdminController
+class AdminModulesManagementController extends AdminController
 {
 	private $lang;
 	private $view;
@@ -36,20 +36,19 @@ class AdminModuleManagementController extends AdminController
 		$this->build_view();
 		$this->save($request);
 		
-		return new AdminModuleDisplayResponse($this->view, $this->lang['admin-module.module_management']);
+		return new AdminModulesDisplayResponse($this->view, $this->lang['modules.module_management']);
 	}
 	
 	private function init()
 	{	
-		//$this->load_lang();
-		$this->lang = LangLoader::get('admin-module-common');
-		$this->view = new FileTemplate('admin/module/AdminModuleManagementController.tpl');
+		$this->load_lang();
+		$this->view = new FileTemplate('admin/modules/AdminModulesManagementController.tpl');
 		$this->view->add_lang($this->lang);
 	}
 	
 	private function load_lang()
 	{
-		$this->lang = LangLoader::get('admin-module-common');
+		$this->lang = LangLoader::get('admin-modules-common');
 	}
 	
 	private function build_view()
@@ -76,14 +75,13 @@ class AdminModuleManagementController extends AdminController
 				'PHP_VERSION' => $configuration->get_php_version(),
 				'C_MODULE_ACTIVE' => $module->is_activated(),
 				'AUTHORIZATIONS' => Authorizations::generate_select(ACCESS_MODULE, $array_auth, array(2 => true), $module->get_id()),
-				'U_DELETE_LINK' => AdminModuleUrlBuilder::delete_module($module->get_id())->absolute()
+				'U_DELETE_LINK' => AdminModulesUrlBuilder::delete_module($module->get_id())->absolute()
 			));
 		}
 		
 		$this->view->put_all(array(
 			'C_MODULES_ACTIVATED' => count($modules_activated) > 0 ? true : false,
 		));
-		//Debug::dump($this->lang['admin-module.yes']);
 	}
 	
 	private function save(HTTPRequest $request)

@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                       index.php
+ *                       AdminModulesUrlBuilder.class.php
  *                            -------------------
  *   begin                : September 20, 2011
  *   copyright            : (C) 2011 Patrick DUBEAU
@@ -25,17 +25,40 @@
  *
  ###################################################*/
 
-defined('PATH_TO_ROOT') or define('PATH_TO_ROOT', '../..');
-
-require_once PATH_TO_ROOT . '/kernel/begin.php';
-
-$url_controller_mappers = array(
-	new UrlControllerMapper('AdminModuleManagementController', '`^(?:/installed)?/?$`'),
-	new UrlControllerMapper('AdminModuleAddController', '`^/add/?$`'),
-	new UrlControllerMapper('AdminModuleUpdateController', '`^/([a-z]+)/update/?$`', array('id')),
-	new UrlControllerMapper('AdminModuleDeleteController', '`^/([a-z]+)/delete/?$`', array('id')),
-);
-
-DispatchManager::dispatch($url_controller_mappers);
-
+class AdminModulesUrlBuilder
+{
+	private static $dispatcher = '/admin/modules';
+	
+	/*
+	 * @ return Url
+	 */
+	public static function list_installed_modules()
+	{
+		return DispatchManager::get_url(self::$dispatcher, '/installed/');
+	}
+	
+	/*
+	 * @ return Url
+	 */
+	public static function add_modules()
+	{
+		return DispatchManager::get_url(self::$dispatcher, '/add/');
+	}
+	
+	/*
+	 * @ return Url
+	 */
+	public static function update_modules($id = '')
+	{
+		return DispatchManager::get_url(self::$dispatcher, $id . '/update/');
+	}
+		
+	/*
+	 * @ return Url
+	 */
+	public static function delete_module($id = '')
+	{
+		return DispatchManager::get_url(self::$dispatcher, $id . '/delete/');
+	}
+}
 ?>
