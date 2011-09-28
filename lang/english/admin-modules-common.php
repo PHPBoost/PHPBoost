@@ -71,6 +71,9 @@ $lang['modules.module_not_upgradable'] = 'The mpodule cannot be updated';
 $lang['modules.not_installed_module'] = 'The module is not installed';
 $lang['modules.unexisting_module'] = 'Unexisting module';
 $lang['modules.error_id_module'] = 'No module to update';
+$lang['modules.no_upgradable_module_available'] = 'No module updates available';
+$lang['modules.updates_are_available'] = 'Module updates are available!<br />You must do it as soon as you can.';
+$lang['modules.updates_available'] = 'Module updates available';
 
 //Delete module
 $lang['modules.drop_files'] = 'Delete all files in the module';

@@ -35,8 +35,8 @@ class AdminModulesDisplayResponse extends AdminMenuDisplayResponse
 		$this->set_title($title_page);
 		$icon = '/templates/' . get_utheme() . '/images/admin/modules.png';
 		$this->add_link($lang['modules.module_management'], AdminModulesUrlBuilder::list_installed_modules(), $icon);
-		$this->add_link($lang['modules.add_module'], AdminModulesUrlBuilder::add_modules(), $icon);
-		$this->add_link($lang['modules.update_module'], AdminModulesUrlBuilder::update_modules(), $icon);
+		$this->add_link($lang['modules.add_module'], AdminModulesUrlBuilder::add_module(), $icon);
+		$this->add_link($lang['modules.update_module'], AdminModulesUrlBuilder::update_module(), $icon);
 		
 		$env = $this->get_graphical_environment();
 		$env->set_page_title($title_page);

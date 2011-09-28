@@ -40,7 +40,7 @@ class AdminModulesUrlBuilder
 	/*
 	 * @ return Url
 	 */
-	public static function add_modules()
+	public static function add_module()
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/add/');
 	}
@@ -48,9 +48,9 @@ class AdminModulesUrlBuilder
 	/*
 	 * @ return Url
 	 */
-	public static function update_modules($id = '')
+	public static function update_module($id = '')
 	{
-		return DispatchManager::get_url(self::$dispatcher, $id . '/update/');
+		return DispatchManager::get_url(self::$dispatcher, '/update/' . $id);
 	}
 		
 	/*

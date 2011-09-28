@@ -73,6 +73,9 @@ $lang['modules.module_not_upgradable'] = 'Ce module ne peut être mis à jour';
 $lang['modules.not_installed_module'] = 'Ce module n\'est pas installé';
 $lang['modules.unexisting_module'] = 'Module inexistant';
 $lang['modules.error_id_module'] = 'Aucun module à mettre à jour';
+$lang['modules.no_upgradable_module_available'] = 'Aucune mise à jour de module disponible';
+$lang['modules.updates_are_available'] = 'Des mises à jour des modules sont disponibles!<br />Veuillez les effectuer sans tarder.';
+$lang['modules.updates_available'] = 'Mises à jour disponibles';
 
 //Delete module
 $lang['modules.drop_files'] = 'Supprimer tous les fichiers du module';
