@@ -31,9 +31,9 @@ require_once PATH_TO_ROOT . '/kernel/begin.php';
 
 $url_controller_mappers = array(
 	new UrlControllerMapper('AdminModulesManagementController', '`^(?:/installed)?/?$`'),
-	new UrlControllerMapper('AdminModulesAddController', '`^/add/?$`'),
-	new UrlControllerMapper('AdminModulesUpdateController', '`^/([a-z]+)/update/?$`', array('id')),
-	new UrlControllerMapper('AdminModulesDeleteController', '`^/([a-z]+)/delete/?$`', array('id')),
+	new UrlControllerMapper('AdminModuleAddController', '`^/add/?$`'),
+	new UrlControllerMapper('AdminModuleUpdateController', '`^/update(?:/([a-z]+))?/?$`', array('id_module')),
+	new UrlControllerMapper('AdminModuleDeleteController', '`^/([a-z]+)/delete/?$`', array('id_module')),
 );
 
 DispatchManager::dispatch($url_controller_mappers);

@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                       AdminModulesAddController.class.php
+ *                       AdminModuleAddController.class.php
  *                            -------------------
  *   begin                : September 20, 2011
  *   copyright            : (C) 2011 Patrick DUBEAU
@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-class AdminModulesAddController extends AdminController
+class AdminModuleAddController extends AdminController
 {
 	private $lang;
 	private $view;
@@ -53,7 +53,7 @@ class AdminModulesAddController extends AdminController
 	private function init()
 	{	
 		$this->load_lang();
-		$this->view = new FileTemplate('admin/modules/AdminModulesAddController.tpl');
+		$this->view = new FileTemplate('admin/modules/AdminModuleAddController.tpl');
 		$this->view->add_lang($this->lang);
 	}
 	
