@@ -85,7 +85,7 @@ class EditCommentBuildForm extends AbstractCommentsBuildForm
 	{
 		$form = $this->get_form();
 		CommentsManager::edit_comment($this->id_comment, $form->get_value('message'));
-		$this->set_message_response(MessageHelper::display($this->comments_lang['comment.add.success'], MessageHelper::SUCCESS, 4));
+		$this->set_message_response(MessageHelper::display($this->comments_lang['comment.edit.success'], MessageHelper::SUCCESS, 4));
 	}
 	
 	private function get_formatter()

@@ -18,7 +18,7 @@
 #################################################################################
 
 ------------------------------------- NOYAU ------------------------------------
-+ Classe commentaire : Gérer les autorisations, gérer la notation +1 et -1, gérer l'affichage des commentaires, possibilité d'avoir une alerte lors d'un nouveau commentaire.
++ Classe commentaire : Créer le contrôleur d'affichage des commentaires, intégration du système d'approbation (avec possibilité d'avoir un mail).
 - Balises Youtube, Dailymotion
 - Corriger bbcode.css (bloc masquables + wikipédia) (publishing notamment)
 
@@ -35,11 +35,14 @@
 #################################################################################
 
 ------------------------------------- NOYAU ------------------------------------
-- Gérer la nouvelle fonction d'ugrade d'un module (ModuleManager::upgrade($id_module))
++ Gérer la nouvelle fonction d'ugrade d'un module (ModuleManager::upgrade($id_module))
 
 ------------------------------------ MODULES -----------------------------------
 [b]Tous[/b]
 - Séparer la configuration du cache dans les modules (Créer des ModuleConfig pour les modules web, poll, pages, faq (voir Kévin))
+
+[b]articles[/b]
+- Réparation du module articles avec Kévin (On va supprimer dans un premier temps le système de modèle qui n'est pas fini).
 
 #################################################################################
 
