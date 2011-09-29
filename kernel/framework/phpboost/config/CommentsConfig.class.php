@@ -36,6 +36,10 @@ class CommentsConfig extends AbstractConfigData
 	const NUMBER_COMMENTS_DISPLAY = 'number_comments_per_page';
 	const FORBIDDEN_TAGS = 'forbidden_tags';
 	const MAX_LINKS_COMMENT = 'max_links_comment';
+	const ORDER_DISPLAY_COMMENTS = 'order_display_comments';
+	
+	const ASC_ORDER = 'ASC';
+	const DESC_ORDER = 'DESC';
 	
 	public function get_authorizations()
 	{
@@ -97,6 +101,26 @@ class CommentsConfig extends AbstractConfigData
 		$this->set_property(self::MAX_LINKS_COMMENT, $number);
 	}
 	
+	public function get_order_display_comments()
+	{
+		$order_display_comments = $this->get_property(self::ORDER_DISPLAY_COMMENTS);
+		switch ($order_display_comments) {
+			case self::ASC_ORDER:
+			case self::DESC_ORDER:
+				$valid_order = $order_display_comments;
+			break;
+			default:
+				$valid_order = self::ASC_ORDER;
+			break;
+		}
+		return $valid_order;
+	}
+	
+	public function set_order_display_comments($order)
+	{
+		$this->set_property(self::ORDER_DISPLAY_COMMENTS, $order);
+	}
+	
 	public function get_default_values()
 	{
 		$server_configuration = new ServerConfiguration();
@@ -107,7 +131,8 @@ class CommentsConfig extends AbstractConfigData
 			self::CAPTCHA_DIFFICULTY => 2,
 			self::NUMBER_COMMENTS_DISPLAY => 15,
 			self::FORBIDDEN_TAGS => array(),
-			self::MAX_LINKS_COMMENT => 2
+			self::MAX_LINKS_COMMENT => 2,
+			self::ORDER_DISPLAY_COMMENTS => self::ASC_ORDER
 		);
 	}
 

@@ -40,6 +40,9 @@ $lang['comments.management'] = 'Gestion des commentaires';
 $lang['comments.config.display-captcha'] = 'Code de vérification visuel';
 $lang['comments.config.captcha-difficulty'] = 'Difficulté du code de vérification';
 $lang['comments.config.number-comments-display'] = 'Nombre de commentaires à afficher par défaut';
+$lang['comments.config.order-display-comments'] = 'Ordre d\'affichage des commentaires';
+$lang['comments.config.order-display-comments.asc'] = 'Du plus vieux au plus récent';
+$lang['comments.config.order-display-comments.desc'] = 'Du plus récent au plus vieux';
 
 $lang['comments.config.authorization'] = 'Autorisations';
 $lang['comments.config.authorization-read'] = 'Autorisation de voir les commentaires';

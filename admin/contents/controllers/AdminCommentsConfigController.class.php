@@ -50,6 +50,7 @@ class AdminCommentsConfigController extends AdminController
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save();
+			$this->regenerate_cache();
 			$tpl->put('MSG', MessageHelper::display($this->lang['comments.config.success-saving'], E_USER_SUCCESS, 4));
 		}
 
@@ -92,6 +93,13 @@ class AdminCommentsConfigController extends AdminController
 			'class' => 'text', 'maxlength' => 4, 'size' => 4, 'required' => true),
 			array(new FormFieldConstraintRegex('`^([0-9]+)$`i', '`^([0-9]+)$`i', $this->lang['number-required']))
 		));
+		
+		$fieldset->add_field(new FormFieldSimpleSelectChoice('order_display_comments', $this->lang['comments.config.order-display-comments'], $this->configuration->get_order_display_comments(),
+			array(
+				new FormFieldSelectChoiceOption($this->lang['comments.config.order-display-comments.asc'], CommentsConfig::ASC_ORDER),
+				new FormFieldSelectChoiceOption($this->lang['comments.config.order-display-comments.desc'], CommentsConfig::DESC_ORDER),
+			)
+		));
 
 		$fieldset->add_field(new FormFieldMultipleSelectChoice('forbidden_tags', $this->lang['comments.config.forbidden-tags'], $this->configuration->get_forbidden_tags(),
 			$this->generate_forbidden_tags_option()
@@ -125,6 +133,7 @@ class AdminCommentsConfigController extends AdminController
 		$this->configuration->set_number_comments_display($this->form->get_value('number_comments_display'));
 	 	$this->configuration->set_forbidden_tags($this->form->get_value('forbidden_tags'));
 		$this->configuration->set_max_links_comment($this->form->get_value('max_links_comment'));
+		$this->configuration->set_order_display_comments($this->form->get_value('order_display_comments')->get_raw_value());
 		CommentsConfig::save();
 	}
 	
@@ -136,6 +145,11 @@ class AdminCommentsConfigController extends AdminController
 			$options[] = new FormFieldSelectChoiceOption($name, $identifier);
 		}
 		return $options;
+	}
+	
+	private function regenerate_cache()
+	{
+		CommentsCache::invalidate();
 	}
 }
 ?>
