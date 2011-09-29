@@ -43,7 +43,7 @@ class CommentsCache implements CacheData
 			SELECT comments.*, topic.*
 			FROM " . DB_TABLE_COMMENTS . " comments
 			LEFT JOIN " . DB_TABLE_COMMENTS_TOPIC . " topic ON comments.id_topic = topic.id_topic
-			ORDER BY comments.timestamp ASC"
+			ORDER BY comments.timestamp " . CommentsConfig::load()->get_order_display_comments()
 		);
 		
 		while ($row = $result->fetch())
