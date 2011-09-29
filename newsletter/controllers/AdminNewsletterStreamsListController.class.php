@@ -74,7 +74,7 @@ class AdminNewsletterStreamsListController extends AbstractController
 		$pagination->set_url_sprintf_pattern(NewsletterUrlBuilder::streams($field .'/'. $sort .'/%d')->absolute());
 		$this->view->put_all(array(
 			'C_STREAMS_EXIST' => (float)$nbr_cats,
-			'C_ADD_STREAM' => NewsletterUrlBuilder::home_add_newsletter()->absolute(),
+			'C_ADD_STREAM' => NewsletterUrlBuilder::add_newsletter()->absolute(),
 			'SORT_NAME_TOP' => NewsletterUrlBuilder::streams('name/top/'. $current_page)->absolute(),
 			'SORT_NAME_BOTTOM' => NewsletterUrlBuilder::streams('name/bottom/'. $current_page)->absolute(),
 			'SORT_STATUS_TOP' => NewsletterUrlBuilder::streams('status/top/'. $current_page)->absolute(),
