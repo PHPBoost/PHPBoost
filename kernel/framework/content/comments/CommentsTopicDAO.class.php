@@ -39,6 +39,14 @@ class CommentsTopicDAO
 		self::$comments_cache = CommentsCache::load();
 		self::$db_querier = PersistenceContext::get_querier();
 	}
+
+	public static function comments_topic_exists_by_module_id($module_id)
+	{
+		$parameters = array(
+			'module_id' => $module_id,
+		);
+		return self::$db_querier->count(DB_TABLE_COMMENTS_TOPIC, "WHERE AND module_id = :module_id", $parameters) > 0 ? true : false;
+	}
 	
 	public static function get_id_topic_module($module_id, $id_in_module)
 	{
