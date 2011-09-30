@@ -55,6 +55,20 @@ class Countries
 		return self::$countries;
 	}
 	
+	public static function get_contrie($identifier)
+	{
+		if (self::is_available($identifier))
+		{
+			return self::$countries[$identifier];
+		}
+		throw new Exception($identifier . ' not available');
+	}
+	
+	public static function is_available($identifier)
+	{
+		return array_key_exists($identifier, self::$countries_identifier);
+	}
+	
 	private static function build_contries()
 	{
 		$lang = LangLoader::get('counstries');
