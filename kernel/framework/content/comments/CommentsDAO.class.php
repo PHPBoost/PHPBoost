@@ -127,14 +127,6 @@ class CommentsDAO
 		self::$db_querier->update(DB_TABLE_COMMENTS, $columns, $condition, $parameters);
 	}
 	
-	public static function comments_topic_exists_by_module_id($module_id)
-	{
-		$parameters = array(
-			'module_id' => $module_id,
-		);
-		return self::$db_querier->count(DB_TABLE_COMMENTS_TOPIC, "WHERE AND module_id = :module_id", $parameters) > 0 ? true : false;
-	}
-	
 	private static function get_comments_user($module_id, $id_in_module, $user_id)
 	{
 		$comments = self::$comments_cache->get_comments_by_module($module_id, $id_in_module);
