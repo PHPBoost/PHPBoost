@@ -282,7 +282,7 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 		));
 
 		$modules = ModulesManager::get_activated_modules_map_sorted_by_localized_name();
-		$array_pos = array(0, 4, 3, 3, 3, 1);
+		$array_pos = array(0, 4, 4, 3, 3, 1);
 		$menus_numbers = array('index' => 1, 'administration' => 2, 'tools' => 3, 'members' => 4,
 			 'content' => 5, 'modules' => 6);
 		foreach ($modules as $module)
@@ -373,7 +373,7 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 		$tpl = new FileTemplate('admin/admin_footer.tpl');
 		$tpl->add_lang(self::$lang);
 
-		$theme = load_ini_file(PATH_TO_ROOT . '/templates/' . get_utheme() . '/config/', get_ulang());
+		$theme_configuration = ThemeManager::get_theme(get_utheme())->get_configuration();
 
 		$tpl->put_all(array(
 			'THEME' => get_utheme(),
@@ -381,10 +381,10 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 			'L_POWERED_BY' => self::$lang_admin['powered_by'],
 			'L_PHPBOOST_RIGHT' => self::$lang['phpboost_right'],
 			'L_THEME' => self::$lang_admin['theme'],
-			'L_THEME_NAME' => self::$lang_admin['name'],
+			'L_THEME_NAME' => $theme_configuration->get_name(),
 			'L_BY' => strtolower(self::$lang['by']),
-			'L_THEME_AUTHOR' => $theme['author'],
-			'U_THEME_AUTHOR_LINK' => $theme['author_link'],
+			'L_THEME_AUTHOR' => $theme_configuration->get_author_name(),
+			'U_THEME_AUTHOR_LINK' => $theme_configuration->get_author_link(),
 		    'PHPBOOST_VERSION' => GeneralConfig::load()->get_phpboost_major_version()
 		));
 

@@ -84,7 +84,7 @@ foreach ($modules as $module)
 		'IMG' => PATH_TO_ROOT .'/' . $module->get_id() . '/' . $module->get_id() . '.png',
 		'START_TR' => ((($i - 1) % 5) == 0 || $i == 1)? '<tr style="text-align:center;">' : '',
 		'END_TR' => ((($i % 5) == 0 && $i != 1) || $i == $nbr_modules ) ? '</tr>' : '',			
-		'U_ADMIN_MODULE' => PATH_TO_ROOT .'/' . $module->get_id() . '/' . $admin_home_page . '.php'
+		'U_ADMIN_MODULE' => PATH_TO_ROOT .'/' . $module->get_id() . '/' . $admin_home_page
 		));
 		$i++;
 	}
