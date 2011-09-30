@@ -132,6 +132,7 @@ class InstallationServices
         $this->create_tables();
 		$this->write_connection_config_file($db_connection_data, $tables_prefix);
 		$this->generate_installation_token();
+		$this->generate_cache();
 		return true;
 	}
 
@@ -412,7 +413,7 @@ class InstallationServices
 	
 	private function generate_cache()
 	{
-		AppContext::get_cache_service()->clear_phpboost_cache();
+		AppContext::get_cache_service()->clear_cache();
 	}
 
 	private function initialize_db_connection($dbms, $host, $port, $database, $login, $password, $tables_prefix)

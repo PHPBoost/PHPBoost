@@ -58,9 +58,9 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 	{
 		self::set_page_localization($this->get_page_title());
 
-		$template =  new FileTemplate('header.tpl');
+		$template = new FileTemplate('header.tpl');
 
-		$this->add_menus_css_files();
+		$this->add_modules_css_files();
 
 		$general_config = GeneralConfig::load();
 		
@@ -75,7 +75,6 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 			'SITE_NAME' => $general_config->get_site_name(),
 			'MAINTAIN' => $this->display_site_maintenance(),
 			'C_COMPTEUR' => false,
-			'C_MENUS_RIGHT_CONTENT' => false,
 			'C_FAVICON' => $customization_config->favicon_exists(),
 			'FAVICON' => PATH_TO_ROOT . $customization_config->get_favicon_path(),
 			'FAVICON_TYPE' => $customization_config->favicon_type(),
@@ -99,22 +98,6 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 		$this->get_breadcrumb()->display($template);
 
 		$template->display();
-	}
-
-	protected function add_menus_css_files()
-	{
-		$css_files_cache = ModulesCssFilesCache::load();
-		try
-		{
-			$css_files = $css_files_cache->get_files_for_theme(get_utheme());
-			foreach ($css_files as $file)
-			{
-				$this->add_css_file($file);
-			}
-		}
-		catch(PropertyNotFoundException $ex)
-		{
-		}
 	}
 
 	protected function display_counter(Template $template)

@@ -1,10 +1,10 @@
 <?php
 /*##################################################
- *                            dispatcher.php
+ *                              EventsExtensionPointProviderclass.php
  *                            -------------------
- *   begin                : May 8, 2010
- *   copyright            : (C) 2010 Benoit Sautel
- *   email                : ben.popeye@phpboost.com
+ *   begin                : September 30, 2011
+ *   copyright            : (C) 2011 Kévin MASSY
+ *   email                : soldier.weasel@gmail.com
  *
  *
  ###################################################
@@ -13,7 +13,7 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- *
+ * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -25,18 +25,16 @@
  *
  ###################################################*/
 
-define('PATH_TO_ROOT', '../../..');
+class EventsExtensionPointProvider extends ExtensionPointProvider
+{
+   public function __construct()
+   {
+        parent::__construct('events');
+    }
 
-require_once PATH_TO_ROOT . '/kernel/begin.php';
-
-$url_controller_mappers = array(
-	//new UrlControllerMapper('', '`^/category/display/?$`'),
-	new UrlControllerMapper('AjaxCommentsNotationController', '`^/comments/notation/?$`'),
-	new UrlControllerMapper('AjaxCommentsDisplayController', '`^/comments/display/?$`'),
-	new UrlControllerMapper('AjaxLockCommentsTopicController', '`^/comments/lock/?$`'),
-	new UrlControllerMapper('AjaxUnlockCommentsTopicController', '`^/comments/unlock/?$`')
-);
-
-DispatchManager::dispatch($url_controller_mappers);
-
+	public function comments()
+	{
+		return new EventsComments();
+	}
+}
 ?>

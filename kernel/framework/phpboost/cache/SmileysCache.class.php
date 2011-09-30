@@ -42,7 +42,7 @@ class SmileysCache implements CacheData
 		$querier = PersistenceContext::get_querier();
 		
 		$columns = array('idsmiley', 'code_smiley', 'url_smiley');
-		$result = $querier->select_rows(PREFIX . 'smileys', $columns, 'ORDER BY msg ASC');
+		$result = $querier->select_rows(PREFIX . 'smileys', $columns);
 		while ($row = $result->fetch())
 		{
 			$this->smileys[$row['code_smiley']] = array(
