@@ -50,6 +50,7 @@ class ExtensionPointProviderService
 		$this->loaded_providers = new RAMDataStore();
 		$this->load_modules_providers();
 		$this->register_provider('kernel');
+		$this->register_provider('events');
 		$this->register_provider('install');
 	}
 

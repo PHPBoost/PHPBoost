@@ -153,7 +153,7 @@ if ($contribution_id > 0)
 	$template->put_all(array(
 		'C_CONSULT_CONTRIBUTION' => true
 	));
-	
+
 	$comments_topic = new CommentsTopic();
 	$comments_topic->set_module_id('events');
 	$comments_topic->set_id_in_module($contribution_id);

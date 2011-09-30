@@ -68,6 +68,22 @@
 		return $html_code;
 	}
 
+	protected function add_modules_css_files()
+	{
+		$css_files_cache = ModulesCssFilesCache::load();
+		try
+		{
+			$css_files = $css_files_cache->get_files_for_theme(get_utheme());
+			foreach ($css_files as $file)
+			{
+				$this->add_css_file($file);
+			}
+		}
+		catch(PropertyNotFoundException $ex)
+		{
+		}
+	}
+	
 	public function get_page_title()
 	{
 		return $this->page_title;

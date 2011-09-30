@@ -280,10 +280,7 @@ class KernelSetup
 			'identifier' => array('type' => 'string', 'length' => 64),
 			'contribution_type' => array('type' => 'boolean', 'length' => 1, 'notnull' => 1, 'default' => "1"),
 			'type' => array('type' => 'string', 'length' => 64),
-			'priority' => array('type' => 'boolean', 'length' => 3, 'notnull' => 1, 'default' => 3),
-			'nbr_com' => array('type' => 'integer', 'length' => 10, 'default' => 0),
-			'lock_com' => array('type' => 'boolean', 'length' => 1, 'default' => 0)
-
+			'priority' => array('type' => 'boolean', 'length' => 3, 'notnull' => 1, 'default' => 3)
 		);
 		$options = array(
 			'primary' => array('id'),

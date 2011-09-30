@@ -34,8 +34,6 @@ class CommentsProvidersService
 			$provider = self::get_provider($module_id);
 			return $provider->get_authorizations($module_id, $id_in_module);
 		}
-		//TODO
-		return new CommentsAuthorizations();
 	}
 	
 	public static function is_display($module_id, $id_in_module)
@@ -45,8 +43,6 @@ class CommentsProvidersService
 			$provider = self::get_provider($module_id);
 			return $provider->is_display($module_id, $id_in_module);
 		}
-		//TODO change return false;
-		return true;
 	}
 	
 	public static function get_number_comments_display($module_id, $id_in_module)
@@ -56,8 +52,6 @@ class CommentsProvidersService
 			$provider = self::get_provider($module_id);
 			return $provider->get_number_comments_display($module_id, $id_in_module);
 		}
-		//TODO
-		return CommentsConfig::load()->get_number_comments_display();
 	}
 	
 	public static function get_url_built($module_id, $id_in_module, Array $parameters)
@@ -67,8 +61,6 @@ class CommentsProvidersService
 			$provider = self::get_provider($module_id);
 			return $provider->get_url_built($module_id, $id_in_module, $parameters);
 		}
-		//TODO
-		return new Url();
 	}
 	
 	public static function module_containing_extension_point($module_id)
