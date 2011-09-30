@@ -42,13 +42,11 @@ class GroupsCache implements CacheData
 	public function synchronize()
 	{
 		$this->groups = array();
-		$db_connection = PersistenceContext::get_sql();
+		$querier = PersistenceContext::get_querier();
 		
-		$result = $db_connection->query_while("SELECT id, name, img, color, auth, members
-			FROM " . DB_TABLE_GROUP . "
-			ORDER BY id", __LINE__, __FILE__);
-		
-		while ($row = $db_connection->fetch_assoc($result))
+		$columns = array('id', 'name', 'img', 'color', 'auth', 'members');
+		$result = $querier->select_rows(DB_TABLE_GROUP, $columns, 'ORDER BY id');
+		while ($row = $result->fetch())
 		{
 			$this->groups[$row['id']] = array(
 				'name' => $row['name'],
@@ -58,8 +56,6 @@ class GroupsCache implements CacheData
 				'members' => $row['members']
 			);
 		}
-		
-		$db_connection->query_close($result);
 	}
 
 	/**

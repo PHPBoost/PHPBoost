@@ -38,13 +38,10 @@ class ExtendedFieldsCache implements CacheData
 	public function synchronize()
 	{
 		$this->extended_fields = array();
-		$db_connection = PersistenceContext::get_sql();
+		$querier = PersistenceContext::get_querier();
 		
-		$result = $db_connection->query_while("SELECT id, position, name , field_name , description, field_type, possible_values, default_values, required, display, regex, freeze, auth 
-			FROM " . DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST . "
-			ORDER BY position", __LINE__, __FILE__);
-		
-		while ($row = $db_connection->fetch_assoc($result))
+		$result = $querier->select_rows(DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST, array('*'), 'ORDER BY position');
+		while ($row = $result->fetch())
 		{
 			$auth = unserialize($row['auth']);
 			
@@ -61,12 +58,9 @@ class ExtendedFieldsCache implements CacheData
 				'display' => !empty($row['display']) ? (bool)$row['display'] : false,
 				'freeze' => !empty($row['freeze']) ? (bool)$row['freeze'] : false,
 				'regex' => !empty($row['regex']) ? $row['regex'] : '',
-				'auth' => !empty($auth) ? $auth : array(),
-
+				'auth' => !empty($auth) ? $auth : array()
 			);
 		}
-		
-		$db_connection->query_close($result);
 	}
 
 	public function get_extended_fields()
