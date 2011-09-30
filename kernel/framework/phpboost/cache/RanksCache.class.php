@@ -38,13 +38,11 @@ class RanksCache implements CacheData
 	public function synchronize()
 	{
 		$this->ranks = array();
-		$db_connection = PersistenceContext::get_sql();
+		$querier = PersistenceContext::get_querier();
 		
-		$result = $db_connection->query_while("SELECT id, name, msg, icon, special
-			FROM " . PREFIX . "ranks
-			ORDER BY msg ASC", __LINE__, __FILE__);
-		
-		while ($row = $db_connection->fetch_assoc($result))
+		$columns = array('id', 'name', 'msg', 'icon', 'special');
+		$result = $querier->select_rows(PREFIX . 'ranks', $columns, 'ORDER BY msg ASC');
+		while ($row = $result->fetch())
 		{
 			$this->ranks[$row['msg']] = array(
 				'id' => $row['id'],
@@ -53,8 +51,6 @@ class RanksCache implements CacheData
 				'special' => $row['special']
 			);
 		}
-		
-		$db_connection->query_close($result);
 	}
 
 	public function get_ranks()

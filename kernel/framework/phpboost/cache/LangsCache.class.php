@@ -37,17 +37,15 @@ class LangsCache implements CacheData
 	public function synchronize()
 	{
 		$this->langs = array();
-		$db_connection = PersistenceContext::get_querier();
-
-		$result = $db_connection->select("SELECT lang, secure, activ
-		FROM " . PREFIX . "lang
-		WHERE activ = 1");
-
-		foreach ($result as $lang)
+		$querier = PersistenceContext::get_querier();
+		
+		$columns = array('lang', 'secure', 'activ');
+		$result = $querier->select_rows(PREFIX . 'lang', $columns, 'WHERE activ = 1');
+		while ($row = $result->fetch())
 		{
-			$this->langs[$lang['lang']] = array(
-				'enabled' => $lang['activ'],
-				'auth' => $lang['secure']
+			$this->langs[$row['lang']] = array(
+				'enabled' => $row['activ'],
+				'auth' => $row['secure']
 			);
 		}
 	}
