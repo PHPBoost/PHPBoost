@@ -47,5 +47,10 @@ interface UserExtensionPoint extends ExtensionPoint
 	 * @return the link picture
 	 */
 	function get_messages_list_link_img();
+	
+	/**
+	 * @return int number messages
+	 */
+	function get_number_messages($user_id);
 }
 ?>
