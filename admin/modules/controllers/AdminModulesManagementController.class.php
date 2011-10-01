@@ -54,33 +54,55 @@ class AdminModulesManagementController extends AdminController
 	private function build_view()
 	{
 		$modules_activated = ModulesManager::get_activated_modules_map_sorted_by_localized_name();
-		foreach ($modules_activated as $module)
+		$modules_installed = ModulesManager::get_installed_modules_map_sorted_by_localized_name();
+
+		foreach ($modules_installed as $module)
 		{
 			$configuration = $module->get_configuration();
-			//$configuration = $module->get_configuration();
 			$array_auth = $module->get_authorizations();
 			$author = $configuration->get_author();
 			$author_email = $configuration->get_author_email();
 			$author_website = $configuration->get_author_website();
 			
-			$this->view->assign_block_vars('modules_activated', array(
-				'ID' => $module->get_id(),
-				'NAME' => ucfirst($configuration->get_name()),
-				'ICON' => $module->get_id(),
-				'VERSION' => $configuration->get_version(),
-				'AUTHOR' => !empty($author) ? '<a href="mailto:' . $author_email. '">' . $author . '</a>' : $author,
-				'AUTHOR_WEBSITE' => !empty($author_website) ? '<a href="' . $author_website . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/user_web.png" alt="" /></a>' : '',
-				'DESCRIPTION' => $configuration->get_description(),
-				'COMPATIBILITY' => $configuration->get_compatibility(),
-				'PHP_VERSION' => $configuration->get_php_version(),
-				'C_MODULE_ACTIVE' => $module->is_activated(),
-				'AUTHORIZATIONS' => Authorizations::generate_select(ACCESS_MODULE, $array_auth, array(2 => true), $module->get_id()),
-				'U_DELETE_LINK' => AdminModulesUrlBuilder::delete_module($module->get_id())->absolute()
-			));
+			if (!in_array($module, $modules_activated))
+			{
+				$this->view->assign_block_vars('modules_not_activated', array(
+					'ID' => $module->get_id(),
+					'NAME' => ucfirst($configuration->get_name()),
+					'ICON' => $module->get_id(),
+					'VERSION' => $configuration->get_version(),
+					'AUTHOR' => !empty($author) ? '<a href="mailto:' . $author_email. '">' . $author . '</a>' : $author,
+					'AUTHOR_WEBSITE' => !empty($author_website) ? '<a href="' . $author_website . '"><img src="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/' . get_ulang() . '/user_web.png" alt="" /></a>' : '',
+					'DESCRIPTION' => $configuration->get_description(),
+					'COMPATIBILITY' => $configuration->get_compatibility(),
+					'PHP_VERSION' => $configuration->get_php_version(),
+					'C_MODULE_ACTIVE' => $module->is_activated(),
+					'AUTHORIZATIONS' => Authorizations::generate_select(ACCESS_MODULE, $array_auth, array(2 => true), $module->get_id()),
+					'U_DELETE_LINK' => AdminModulesUrlBuilder::delete_module($module->get_id())->absolute()
+				));	
+			}
+			else 
+			{
+				$this->view->assign_block_vars('modules_activated', array(
+					'ID' => $module->get_id(),
+					'NAME' => ucfirst($configuration->get_name()),
+					'ICON' => $module->get_id(),
+					'VERSION' => $configuration->get_version(),
+					'AUTHOR' => !empty($author) ? '<a href="mailto:' . $author_email. '">' . $author . '</a>' : $author,
+					'AUTHOR_WEBSITE' => !empty($author_website) ? '<a href="' . $author_website . '"><img src="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/' . get_ulang() . '/user_web.png" alt="" /></a>' : '',
+					'DESCRIPTION' => $configuration->get_description(),
+					'COMPATIBILITY' => $configuration->get_compatibility(),
+					'PHP_VERSION' => $configuration->get_php_version(),
+					'C_MODULE_ACTIVE' => $module->is_activated(),
+					'AUTHORIZATIONS' => Authorizations::generate_select(ACCESS_MODULE, $array_auth, array(2 => true), $module->get_id()),
+					'U_DELETE_LINK' => AdminModulesUrlBuilder::delete_module($module->get_id())->absolute()
+				));
+			}
 		}
 		
 		$this->view->put_all(array(
 			'C_MODULES_ACTIVATED' => count($modules_activated) > 0 ? true : false,
+			'C_MODULES_NOT_ACTIVATED' => (count($modules_installed) - count($modules_activated)) > 0 ? true : false
 		));
 	}
 	
@@ -96,8 +118,9 @@ class AdminModulesManagementController extends AdminController
 				$authorizations = Authorizations::auth_array_simple(ACCESS_MODULE, $module_id);
 				ModulesManager::update_module_authorizations($module_id, $activated, $authorizations);
 			}
+			MenuService::generate_cache();
+			AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);
 		}	
-		
 	}
 }
 ?>

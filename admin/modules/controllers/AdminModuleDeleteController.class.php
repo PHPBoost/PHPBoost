@@ -36,11 +36,12 @@ class AdminModuleDeleteController extends AdminController
 	public function execute(HTTPRequest $request)
 	{
 		$this->init();
-		$this->module_id = $request->get_value('id_module', null);
+		$this->module_id = $request->get_string('id_module', null);
 		
 		if ($this->module_installed())
 		{
 			$this->build_form();
+			
 			if ($this->submit_button->has_been_submited() && $this->form->validate())
 			{	
 				$drop_files = $this->form->get_value('drop_files')->get_raw_value();
@@ -54,16 +55,15 @@ class AdminModuleDeleteController extends AdminController
 				{
 					$this->tpl->put('MSG', MessageHelper::display($this->lang['modules.deactivated_success'], MessageHelper::SUCCESS, 4));
 				}
-				
-				return new AdminModulesDisplayResponse($this->tpl, $this->lang['modules.delete_module']);
 			}
-			else 
-			{
-				$error_controller = PHPBoostErrors::module_not_installed();
-				DispatchManager::redirect($error_controller);
-			}
+			$this->tpl->put('FORM', $this->form->display());
+			return new AdminModulesDisplayResponse($this->tpl, $this->lang['modules.delete_module']);
 		}
-		
+		else
+		{
+			$error_controller = PHPBoostErrors::module_not_installed();
+			DispatchManager::redirect($error_controller);
+		}	
 	}
 	
 	private function init()
@@ -110,18 +110,7 @@ class AdminModuleDeleteController extends AdminController
 	private function delete_module($drop_files)
 	{
 		ModulesManager::uninstall_module($this->module_id, $drop_files);
-		$this->delete_css_cache();
-	}
-	
-	private function delete_css_cache()
-	{
-		$modules_cache = PATH_TO_ROOT .'/cache/css/css-cache-modules-'. $this->theme_id .'.css';
-		
-		if (file_exists($modules_cache))
-		{
-			$file = new File($modules_cache);
-			$file->delete();
-		}
+		AppContext::get_cache_service()->clear_css_cache();
 	}
 }
 
