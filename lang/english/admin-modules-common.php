@@ -48,8 +48,9 @@ $lang['modules.compatibility'] = 'Compatibility';
 $lang['modules.php_version'] = 'PHP version';
 $lang['modules.url_rewrite_rules'] = 'URL rewrite rules';
 $lang['modules.modules_available'] = 'Available modules';
-$lang['modules.no_modules_available'] = 'No module available';
+$lang['modules.no_modules_available'] = 'No installed or activated module';
 $lang['modules.installed_activated_modules'] = 'Installed and activated modules';
+$lang['modules.installed_not_activated_modules'] = 'Deactivated modules';
 
 //Module management
 $lang['modules.activate_module'] = 'Activate';
@@ -57,6 +58,8 @@ $lang['modules.install_module'] = 'Install';
 $lang['modules.activated_module'] = 'Activated';
 $lang['modules.authorization'] = 'Authorizations';
 $lang['modules.delete'] = 'Delete';
+$lang['modules.update'] = 'Modify';
+$lang['modules.reset'] = 'Reset';
 
 //Messages
 $lang['modules.upload_success'] = 'The archive has been succesfully uploaded';

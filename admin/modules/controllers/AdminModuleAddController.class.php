@@ -57,7 +57,6 @@ class AdminModuleAddController extends AdminController
 		$this->view->add_lang($this->lang);
 	}
 	
-	//TODO faire fichier de langue
 	private function load_lang()
 	{
 		$this->lang = LangLoader::get('admin-modules-common');
@@ -81,21 +80,20 @@ class AdminModuleAddController extends AdminController
 	private function build_view()
 	{
 		$modules_not_installed = $this->get_modules_not_installed();
-		foreach ($modules_not_installed as $name)
+		foreach ($modules_not_installed as $name => $module)
 		{
-			$module = new Module($name);
-			$configuration = ModuleConfigurationManager::get($name);
+			$configuration = $module->get_configuration();
 			$author = $configuration->get_author();
 			$author_email = $configuration->get_author_email();
 			$author_website = $configuration->get_author_website();
 			
 			$this->view->assign_block_vars('available', array(
 				'ID' => $module->get_id(),
-				'NAME' => ucfirst($name),
+				'NAME' => ucfirst($configuration->get_name()),
 				'ICON' => $module->get_id(),
 				'VERSION' => $configuration->get_version(),
 				'AUTHOR' => !empty($author_email) ? '<a href="mailto:' . $author_email . '">' . $author . '</a>' : $author,
-				'AUTHOR_WEBSITE' => !empty($author_website) ? '<a href="' . $author_website . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/user_web.png" alt="" /></a>' : '',
+				'AUTHOR_WEBSITE' => !empty($author_website) ? '<a href="' . $author_website . '"><img src="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/' . get_ulang() . '/user_web.png" alt="" /></a>' : '',
 				'DESCRIPTION' => $configuration->get_description(),
 				'COMPATIBILITY' => $configuration->get_compatibility(),
 				'PHP_VERSION' => $configuration->get_php_version(),
@@ -112,16 +110,25 @@ class AdminModuleAddController extends AdminController
 	{
 		$modules_not_installed = array();
 		$modules_folder = new Folder(PATH_TO_ROOT);
-		foreach ($modules_folder->get_folders() as $module)
+		foreach ($modules_folder->get_folders() as $folder)
 		{
-			$name = $module->get_name();
-			if ($name !== 'lang' && !ModulesManager::is_module_installed($name))
+			$folder_name = $folder->get_name();
+			if ($folder_name != 'lang' && !ModulesManager::is_module_installed($folder_name))
 			{
-				$modules_not_installed[] = $name;
+				try
+				{
+					$module = new Module($folder_name);
+					$module_configuration = $module->get_configuration();
+					$modules_not_installed[$module_configuration->get_name()] = $module;
+				}
+				catch (Exception $ex)
+				{
+					continue;
+				}
 			}
-			sort($modules_not_installed);
-			return $modules_not_installed;
 		}
+		sort($modules_not_installed);
+		return $modules_not_installed;
 	}
 	
 	private function save(HTTPRequest $request)

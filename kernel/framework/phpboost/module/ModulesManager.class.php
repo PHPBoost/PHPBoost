@@ -151,7 +151,7 @@ class ModulesManager
 	}
 
 	/**
-	 * @desc tells whether the requested module is installed (and activated)
+	 * @desc tells whether the requested module is installed (activated or not)
 	 * @return bool true if the requested module is installed
 	 */
 	public static function is_module_installed($module_id)
@@ -266,10 +266,8 @@ class ModulesManager
 			$notation = new Notation();
 			$notation->set_module_name($module_id);
 			NotationService::delete_notes_module($notation);
-			
-			$comments_topic = new CommentsTopic();
-			$comments_topic->set_module_id($module_id);
-			CommentsService::delete_comments_module($comments_topic);
+
+			CommentsService::delete_comments_module($module_id);
 
 			PersistenceContext::get_querier()->inject("DELETE FROM ".DB_TABLE_CONFIGS." 
 					WHERE name = :name", array('name' => $module_id));

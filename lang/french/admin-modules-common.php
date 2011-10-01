@@ -50,8 +50,10 @@ $lang['modules.url_rewrite_rules'] = 'Règles de réécriture d\'URL';
 $lang['modules.page_admin'] = 'Administration';
 $lang['modules.compatibility'] = 'Compatibilité';
 $lang['modules.modules_available'] = 'Modules disponibles';
-$lang['modules.no_modules_available'] = 'Aucun module disponible';
+$lang['modules.no_modules_available'] = 'Aucun module installé ou activé';
+$lang['modules.no_deactivated_modules_available'] = 'Aucun module désactivé';
 $lang['modules.installed_activated_modules'] = 'Modules installés et activés';
+$lang['modules.installed_not_activated_modules'] = 'Modules désactivés';
 
 //Module management
 $lang['modules.activate_module'] = 'Activer';
@@ -59,6 +61,8 @@ $lang['modules.install_module'] = 'Installer';
 $lang['modules.activated_module'] = 'Activé';
 $lang['modules.authorization'] = 'Autorisation d\'accès';
 $lang['modules.delete'] = 'Désinstaller';
+$lang['modules.update'] = 'Modifier';
+$lang['modules.reset'] = 'Défaut';
 
 //Messages
 $lang['modules.upload_success'] = 'L\'archive a été uploadé avec succès';
