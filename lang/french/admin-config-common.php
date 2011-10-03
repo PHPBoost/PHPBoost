@@ -30,7 +30,9 @@
  ####################################################
 
 $lang = array(
+	'configuration' => 'Configuration',
 	//Mail config
+	'mail' => 'Envoi de mail',
 	'mail-config' => 'Configuration de l\'envoi de mail',
 	'mail-config.general_mail_config' => 'Configuration générale',
 	'mail-config.default_mail_sender' => 'Adresse de l\'expéditeur par défaut',
