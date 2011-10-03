@@ -51,6 +51,10 @@ $lang['comments.config.authorization-moderation'] = 'Autorisation de gérer les c
 $lang['comments.config.authorization-note'] = 'Autorisation de noter les commentaires';
 $lang['comments.config.max-links-comment'] = 'Nombre de liens autorisés dans un commentaire';
 $lang['comments.config.forbidden-tags'] = 'Types de formatage interdits';
+$lang['comments.config.approbation'] = 'Approbation des commentaires';
+$lang['comments.config.approbation.auto'] = 'Automatiquement';
+$lang['comments.config.approbation.moderator'] = 'Modérateur';
+$lang['comments.config.approbation.administrator'] = 'Administrateur';
 
 $lang['number-required'] = 'La valeur saisi doit être un nombre';
 
