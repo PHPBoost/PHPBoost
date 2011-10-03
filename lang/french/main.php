@@ -106,99 +106,6 @@ $LANG['register'] = 'S\'inscrire';
 $LANG['alert_delete_msg'] = 'Supprimer le/les message(s) ?';
 $LANG['alert_delete_file'] = 'Supprimer ce fichier ?';
 
-//bbcode
-$LANG['bb_smileys'] = 'Smileys';
-$LANG['bb_bold'] = 'Texte en gras : [b]texte[/b]';
-$LANG['bb_italic'] = 'Texte en italique : [i]texte[/i]';
-$LANG['bb_underline'] = 'Texte souligné : [u]texte[/u]';
-$LANG['bb_strike'] = 'Texte barré : [s]texte[/s]';
-$LANG['bb_link'] = 'Ajouter un lien : [url]lien[/url], ou [url=lien]nom du lien[/url]';
-$LANG['bb_picture'] = 'Ajouter une image : [img]url image[/img]';
-$LANG['bb_size'] = 'Taille du texte (X entre 0 - 49) : [size=X]texte de taille X[/size]';
-$LANG['bb_color'] = 'Couleur du texte : [color=X]texte de couleur X[/color]';
-$LANG['bb_quote'] = 'Faire une citation [quote=pseudo]texte[/quote]';
-$LANG['bb_left'] = 'Positionner à gauche : [align=left]objet à gauche[/align]';
-$LANG['bb_center'] = 'Centrer : [align=center]objet centré[/align]';
-$LANG['bb_right'] = 'Positionner à droite : [align=right]objet à droite[/align]';
-$LANG['bb_justify'] = 'Justifier : [align=justify]objet justifié[/align]';
-$LANG['bb_code'] = 'Insérer du code [code]texte[/code]';
-$LANG['bb_math'] = 'Insérer du code mathématique [math]texte[/math]';
-$LANG['bb_swf'] = 'Insérer du flash [swf=largeur,hauteur]adresse animation[/swf]';
-$LANG['bb_small'] = 'Réduire le champ texte';
-$LANG['bb_large'] = 'Agrandir le champ texte';
-$LANG['bb_title'] = 'Titre [title=x]texte[/title]';
-$LANG['bb_html'] = 'Code html [html]code[/html]';
-$LANG['bb_container'] = 'Conteneur';
-$LANG['bb_block'] = 'Bloc';
-$LANG['bb_fieldset'] = 'Bloc champs';
-$LANG['bb_style'] = 'Style [style=x]texte[/style]';
-$LANG['bb_hide'] = 'Cache le texte, affiche lors du clic [hide]texte[/hide]';
-$LANG['bb_float_left'] = 'Objet flottant à gauche [float=left]texte[/float]';
-$LANG['bb_float_right'] = 'Objet flottant à droite [float=right]texte[/float]';
-$LANG['bb_list'] = 'Liste [list][*]texte1[*]texte2[/list]';
-$LANG['bb_table'] = 'Tableau [table][row][col]texte[/col][col]texte2[/col][/row][/table]';
-$LANG['bb_indent'] = 'Indentation [indent]texte[/indent]';
-$LANG['bb_sup'] = 'Exposant [sup]texte[/sup]';
-$LANG['bb_sub'] = 'Indice [sub]texte[/sub]';
-$LANG['bb_anchor'] = 'Ancre vers un endroit de la page [anchor=x]texte[/anchor]';
-$LANG['bb_sound'] = 'Son [sound]adresse du son[/sound]';
-$LANG['bb_movie'] = 'Vidéo [movie=largeur,hauteur]adresse du fichier[/movie]';
-$LANG['bb_help'] = 'Aide BBcode';
-$LANG['bb_upload'] = 'Attacher un fichier';
-$LANG['bb_url_prompt'] = 'Adresse du lien ?';
-$LANG['bb_text'] = 'Texte';
-$LANG['bb_script'] = 'Script';
-$LANG['bb_web'] = 'Web';
-$LANG['bb_prog'] = 'Programmation';
-$LANG['lines'] = 'Nombre de lignes';
-$LANG['cols'] = 'Nombre de colonnes';
-$LANG['head_table'] = 'Entête';
-$LANG['head_add'] = 'Ajouter l\'entête';
-$LANG['insert_table'] = 'Insérer le tableau';
-$LANG['ordered_list'] = 'Liste ordonnée';
-$LANG['insert_list'] = 'Insérer la liste';
-$LANG['forbidden_tags'] = 'Types de formatage interdits';
-$LANG['phpboost_languages'] = 'PHPBoost';
-$LANG['wikipedia_subdomain'] = 'fr'; //Sous domaine sur wikipédia (ex fr pour fr.wikipedia.org)
-$LANG['code_too_long_error'] = 'Le code que vous voulez colorer est trop long et consommerait trop de ressources pour être interprété. Merci de réduire sa taille ou de l\'éclater en plusieurs morceaux.';
-$LANG['feed_tag_error'] = 'Le flux du module <em>:module</em> que vous souhaitez afficher n\'a pas pu être trouvé ou les options que vous avez rentrées ne sont pas correctes.';
-$LANG['format_bold'] = 'Gras';
-$LANG['format_italic'] = 'Italique';
-$LANG['format_underline'] = 'Souligné';
-$LANG['format_strike'] = 'Barré';
-$LANG['format_title'] = 'Titre';
-$LANG['format_style'] = 'Style';
-$LANG['format_url'] = 'Lien';
-$LANG['format_img'] = 'Image';
-$LANG['format_quote'] = 'Citation';
-$LANG['format_hide'] = 'Caché';
-$LANG['format_list'] = 'Liste';
-$LANG['format_color'] = 'Couleur';
-$LANG['format_bgcolor'] = 'Couleur de fond';
-$LANG['format_font'] = 'Police';
-$LANG['format_size'] = 'Taille';
-$LANG['format_align'] = 'Alignement';
-$LANG['format_float'] = 'Elément flottant';
-$LANG['format_sup'] = 'Exposant';
-$LANG['format_sub'] = 'Indice';
-$LANG['format_indent'] = 'Indentation';
-$LANG['format_pre'] = 'Préformaté';
-$LANG['format_table'] = 'Tableau';
-$LANG['format_flash'] = 'Flash';
-$LANG['format_movie'] = 'Vidéo';
-$LANG['format_sound'] = 'Son';
-$LANG['format_code'] = 'Code';
-$LANG['format_math'] = 'Mathématiques';
-$LANG['format_anchor'] = 'Ancre';
-$LANG['format_acronym'] = 'Acronyme';
-$LANG['format_block'] = 'Bloc';
-$LANG['format_fieldset'] = 'Zone de champs';
-$LANG['format_mail'] = 'Mail';
-$LANG['format_line'] = 'Ligne horizontale';
-$LANG['format_wikipedia'] = 'Lien Wikipédia';
-$LANG['format_html'] = 'Code HTML';
-$LANG['format_feed'] = 'Flux';
-
 //Impression
 $LANG['printable_version'] = 'Version imprimable';
 
@@ -374,10 +281,6 @@ $LANG['thursday'] = 'Jeu';
 $LANG['friday'] = 'Ven';
 $LANG['saturday'] = 'Sam';
 $LANG['sunday']	= 'Dim';
-
-//Commentaires
-$LANG['add_comment'] = 'Ajout commentaire';
-$LANG['edit_comment'] = 'Editer commentaire';
 
 //Membres
 $LANG['member_area'] = 'Zone membre';
@@ -652,4 +555,6 @@ $LANG['_code_dictionnary'] = array('image', 'php', 'requete', 'azerty', 'exit', 
 'editer', 'banni', 'niveau', 'dossier', 'fichier', 'racine', 'vider', 'archive', 'boite');
 
 $LANG['csrf_attack'] = 'Jeton de session invalide. Veuillez réessayer car l\'opération n\'a pas pu être effectuée.';
+
+$LANG['forbidden_tags'] = 'Types de formatage interdits';
 ?>
