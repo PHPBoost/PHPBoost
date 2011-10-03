@@ -218,7 +218,7 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 
 	private static function get_subheader_tpl()
 	{
-		$subheader_lang = LangLoader::get('admin-menu-common');
+		$subheader_lang = LangLoader::get('admin-links-common');
 		$subheader_tpl = new FileTemplate('admin/subheader_menu.tpl');
 		$subheader_tpl->add_lang($subheader_lang);
 
