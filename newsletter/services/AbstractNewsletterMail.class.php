@@ -62,7 +62,7 @@ abstract class AbstractNewsletterMail implements NewsletterMailType
 	 */
 	public function add_unsubscribe_link()
 	{
-		return '<br /><br /><a href="' . NewsletterUrlBuilder::unsubscribe() . '">' . $this->lang['unsubscribe_newsletter'] . '</a><br /><br />';
+		return '<br /><br /><a href="' . NewsletterUrlBuilder::unsubscribe()->relative() . '">' . $this->lang['unsubscribe_newsletter'] . '</a><br /><br />';
 	}
 }
 

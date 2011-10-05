@@ -132,7 +132,7 @@ class CommentsAuthorizations
 				return $this->authorized_post;
 			break;
 			case self::MODERATION_AUTHORIZATIONS:
-				return authorized_post;
+				return $this->authorized_post;
 			break;
 			case self::NOTE_AUTHORIZATIONS:
 				return $this->authorized_note;
