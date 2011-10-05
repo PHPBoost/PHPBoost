@@ -31,52 +31,18 @@
  */
 class CommentsAuthorizations
 {
-	private $array_authorization = array();
-	private $read_bit = 0;
-	private $post_bit = 0;
-	private $moderation_bit = 0;
-	private $note_bit = 0;
-	
 	private $authorized_access_module = true;
 	
-	private $manual_authorized_read = null;
-	private $manual_authorized_post = null;
-	private $manual_authorized_moderation = null;
-	private $manual_authorized_note = null;
+	private $authorized_read = null;
+	private $authorized_post = null;
+	private $authorized_moderation = null;
+	private $authorized_note = null;
 	
 	const READ_AUTHORIZATIONS = 1;
 	const POST_AUTHORIZATIONS = 2;
 	const MODERATION_AUTHORIZATIONS = 4;
 	const NOTE_AUTHORIZATIONS = 8;
-	
-	/*
-	 * Setters
-	*/
-	public function set_array_authorization(Array $array_authorization)
-	{
-		$this->array_authorization = $array_authorization;
-	}
-	
-	public function set_read_bit($read_bit)
-	{
-		$this->read_bit = $read_bit;
-	}
-	
-	public function set_post_bit($post_bit)
-	{
-		$this->post_bit = $post_bit;
-	}
-	
-	public function set_moderation_bit($moderation_bit)
-	{
-		$this->moderation_bit = $moderation_bit;
-	}
-	
-	public function set_note_bit($note_bit)
-	{
-		$this->note_bit = $note_bit;
-	}
-	
+
 	public function is_authorized_access_module()
 	{
 		return $this->authorized_access_module;
@@ -84,22 +50,22 @@ class CommentsAuthorizations
 	
 	public function is_authorized_read()
 	{
-		return $this->check_authorizations($this->read_bit, self::READ_AUTHORIZATIONS);
+		return $this->check_authorizations(self::READ_AUTHORIZATIONS);
 	}
 	
 	public function is_authorized_post()
 	{
-		return $this->check_authorizations($this->post_bit, self::POST_AUTHORIZATIONS);
+		return $this->check_authorizations(self::POST_AUTHORIZATIONS);
 	}
 	
 	public function is_authorized_moderation()
 	{
-		return $this->check_authorizations($this->moderation_bit, self::MODERATION_AUTHORIZATIONS);
+		return $this->check_authorizations(self::MODERATION_AUTHORIZATIONS);
 	}
 	
 	public function is_authorized_note()
 	{
-		return $this->check_authorizations($this->note_bit, self::NOTE_AUTHORIZATIONS);
+		return $this->check_authorizations(self::NOTE_AUTHORIZATIONS);
 	}
 	
 	/**
@@ -113,45 +79,41 @@ class CommentsAuthorizations
 	/**
 	 * @param boolean $authorized
 	 */
-	public function set_manual_authorized_read($authorized)
+	public function set_authorized_read($authorized)
 	{
-		$this->manual_authorized_read = $authorized;
+		$this->authorized_read = $authorized;
 	}
 	
 	/**
 	 * @param boolean $authorized
 	 */
-	public function set_manual_authorized_post($authorized)
+	public function set_authorized_post($authorized)
 	{
-		$this->manual_authorized_post = $authorized;
+		$this->authorized_post = $authorized;
 	}
 	
 	/**
 	 * @param boolean $authorized
 	 */
-	public function set_manual_authorized_moderation($authorized)
+	public function set_authorized_moderation($authorized)
 	{
-		$this->manual_authorized_moderation = $authorized;
+		$this->authorized_moderation = $authorized;
 	}
 	
 	/**
 	 * @param boolean $authorized
 	 */
-	public function set_manual_authorized_note($authorized)
+	public function set_authorized_note($authorized)
 	{
-		$this->manual_authorized_note = $authorized;
+		$this->authorized_note = $authorized;
 	}
 	
-	private function check_authorizations($bit, $global_bit)
+	private function check_authorizations($global_bit)
 	{
 		$manual_authorizations = $this->manual_authorizations($global_bit);
 		if ($manual_authorizations !== null)
 		{
 			return $manual_authorizations;
-		}
-		else if (!empty($this->array_authorization) && $bit !== 0)
-		{
-			return AppContext::get_user()->check_auth($this->array_authorization, $bit);
 		}
 		else
 		{
@@ -161,20 +123,19 @@ class CommentsAuthorizations
 	
 	private function manual_authorizations($type)
 	{
-		switch ($type) {
+		switch ($type) 
+		{
 			case self::READ_AUTHORIZATIONS:
-				return ($this->manual_authorized_read !== null ? $this->manual_authorized_read : null);
+				return $this->authorized_read;
 			break;
 			case self::POST_AUTHORIZATIONS:
-				return ($this->manual_authorized_post !== null ? $this->manual_authorized_post : null);
+				return $this->authorized_post;
 			break;
 			case self::MODERATION_AUTHORIZATIONS:
-				return ($this->manual_authorized_post !== null ? $this->manual_authorized_post : null);
+				return authorized_post;
 			break;
 			case self::NOTE_AUTHORIZATIONS:
-				return ($this->manual_authorized_note !== null ? $this->manual_authorized_note : null);
-			break;
-			default:
+				return $this->authorized_note;
 			break;
 		}
 	}

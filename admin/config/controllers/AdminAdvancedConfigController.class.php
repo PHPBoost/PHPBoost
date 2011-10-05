@@ -54,7 +54,6 @@ class AdminAdvancedConfigController extends AdminController
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save();
-			$this->clear_cache();
 
 			$tpl->put('MSG', MessageHelper::display($this->lang['advanced-config.success'], E_USER_SUCCESS, 4));
 		}
@@ -207,6 +206,9 @@ class AdminAdvancedConfigController extends AdminController
 			$this->server_environment_config->set_output_gziping_enabled($this->form->get_value('output_gziping_enabled'));
 		}
 		
+		ServerEnvironmentConfig::save();
+		$this->clear_cache();
+		
 		if ($this->form->get_value('debug_mode_enabled') && $this->form->get_value('debug_mode_type')->get_raw_value() == '1')
 		{
 			Debug::enabled_debug_mode(array(Debug::STRICT_MODE => true));
@@ -218,9 +220,7 @@ class AdminAdvancedConfigController extends AdminController
 		else
 		{
 			Debug::disable_debug_mode();
-		}
-
-		ServerEnvironmentConfig::save();
+		}		
 	}
 	
 	private function clear_cache()
