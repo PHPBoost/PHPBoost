@@ -29,26 +29,27 @@
  #                     French                       #
  ####################################################
 
-$lang = array(
-	'comments.not-authorized.post' => 'Vous n\'êtes pas autorisé à poster un commentaire',
-	'comments.not-authorized.read' => 'Vous n\'êtes pas autorisé à voir les commentaires',
-	'comments.not-authorized.note' => 'Vous n\'êtes pas autorisé à noter le commentaire',
+$lang['comments.not-authorized.post'] = 'Vous n\'êtes pas autorisé à poster un commentaire';
+$lang['comments.not-authorized.read'] = 'Vous n\'êtes pas autorisé à voir les commentaires';
+$lang['comments.not-authorized.note'] = 'Vous n\'êtes pas autorisé à noter le commentaire';
 
-	'comment.locked' => 'Commentaire bloqué, vous ne pouvez pas poster de commentaire',
+$lang['comment.locked'] = 'Commentaire bloqué, vous ne pouvez pas poster de commentaire';
 
-	'comment.edit.success' => 'Commentaire modifié avec succès',
-	'comment.add.success' => 'Commentaire ajouté avec succès',
-	'comment.delete.success' => 'Commentaire supprimé avec succès',
+$lang['comment.add'] = 'Ajouter un commentaire';
+$lang['comment.edit'] = 'Editer un commentaire';
 
-	'comment.note.success' => 'Le commentaire a bien été noté',
-	'comment.note.error' => 'Le commentaire n\'a pas pu être noté',
+$lang['comment.edit.success'] = 'Commentaire modifié avec succès';
+$lang['comment.add.success'] = 'Commentaire ajouté avec succès';
+$lang['comment.delete.success'] = 'Commentaire supprimé avec succès';
 
-	'comment.unlock.success' => 'Topic vérouillé avec succès',
-	'comment.unlock.not-authorized' => 'Vous n\'êtes pas autorisé à vérouiller ce topic',
+$lang['comment.note.success'] = 'Le commentaire a bien été noté';
+$lang['comment.note.error'] = 'Le commentaire n\'a pas pu être noté';
 
-	'comment.lock.success' => 'Topic dévérouillé avec succès',
-	'comment.lock.not-authorized' => 'Vous n\'êtes pas autorisé à dévérouiller ce topic',
+$lang['comment.unlock.success'] = 'Topic vérouillé avec succès';
+$lang['comment.unlock.not-authorized'] = 'Vous n\'êtes pas autorisé à vérouiller ce topic';
 
-	'comments.user.read-only' => 'Vous êtes actuellement en lecture seule, vous ne pouvez pas poster de commentaire pour le moment',
-);
+$lang['comment.lock.success'] = 'Topic dévérouillé avec succès';
+$lang['comment.lock.not-authorized'] = 'Vous n\'êtes pas autorisé à dévérouiller ce topic';
+
+$lang['comments.user.read-only'] = 'Vous êtes actuellement en lecture seule, vous ne pouvez pas poster de commentaire pour le moment';
 ?>

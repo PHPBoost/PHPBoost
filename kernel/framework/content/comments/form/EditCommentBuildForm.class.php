@@ -63,7 +63,7 @@ class EditCommentBuildForm extends AbstractCommentsBuildForm
 	protected function create_form()
 	{
 		$form = new HTMLForm('comments');
-		$fieldset = new FormFieldsetHTML('edit_comment', $this->lang['edit_comment']);
+		$fieldset = new FormFieldsetHTML('edit_comment', $this->comments_lang['comment.edit']);
 		$form->add_fieldset($fieldset);
 		
 		$fieldset->add_field(new FormFieldRichTextEditor('message', $this->lang['message'], $this->get_contents(), array(
