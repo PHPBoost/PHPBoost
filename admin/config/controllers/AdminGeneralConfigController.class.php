@@ -31,7 +31,6 @@ class AdminGeneralConfigController extends AdminController
 	private $general_config;
 	private $graphical_environment_config;
 	private $user_accounts_config;
-	private $selected_home_page = '';
 	private $tpl;
 	/**
 	 * @var HTMLForm
@@ -119,23 +118,18 @@ class AdminGeneralConfigController extends AdminController
 			</a>'
 		));
 		
-		$field_choice_options = $this->list_modules_installed();
-		$fieldset->add_field(new FormFieldSimpleSelectChoice('start_page', $this->lang['general-config.start_page'], $this->selected_home_page, $field_choice_options,
+		$fieldset->add_field(new FormFieldSimpleSelectChoice('start_page', $this->lang['general-config.start_page'], $this->general_config->get_home_page(), $this->list_modules_installed(),
 			array('required' => false, 'events' => array('change' => 
-				'if (HTMLForms.getField("start_page").getValue() == 0) {
+				'if (HTMLForms.getField("start_page").getValue() == "other") {
 					HTMLForms.getField("other_start_page").enable();
 				} else {
-					HTMLForms.getField("other_start_page").setValue("");	
 					HTMLForms.getField("other_start_page").disable();	
 				}'
 			))
 		));
 		
-		$is_hidden = $this->selected_home_page == '' ? false : true; 
-		$other_start_page = $this->selected_home_page == '' ? $this->general_config->get_home_page() : '';
-		
-		$fieldset->add_field(new FormFieldTextEditor('other_start_page', $this->lang['general-config.other_start_page'], $other_start_page,
-			array('class' => 'text', 'maxlength' => 25, 'size' => 25, 'required' => false, 'hidden' => $is_hidden)
+		$fieldset->add_field(new FormFieldTextEditor('other_start_page', $this->lang['general-config.other_start_page'], $this->get_other_start_page(),
+			array('class' => 'text', 'maxlength' => 25, 'size' => 25, 'required' => false, 'hidden' => $this->get_other_start_page() == '')
 		));
 
 		$fieldset->add_field(new FormFieldCheckbox('visit_counter', $this->lang['general-config.visit_counter'], $this->graphical_environment_config->is_visit_counter_enabled()));
@@ -163,13 +157,14 @@ class AdminGeneralConfigController extends AdminController
 
 		$other_start_page = $this->form->get_value('other_start_page');
 
-		if (!empty($other_start_page))
+		$start_page_select_value = $this->form->get_value('start_page')->get_raw_value();
+		if ($start_page_select_value !== 'other')
 		{
-			$this->general_config->set_home_page($this->form->get_value('other_start_page'));
+			$this->general_config->set_home_page($start_page_select_value);
 		}
 		else
 		{
-			$this->general_config->set_home_page($this->form->get_value('start_page')->get_raw_value());
+			$this->general_config->set_home_page($this->form->get_value('other_start_page'));
 		}
 
 		GeneralConfig::save();
@@ -229,33 +224,42 @@ class AdminGeneralConfigController extends AdminController
 
 	private function list_modules_installed()
 	{
-		$start_page = array();
-		$i = 0;
-		foreach (ModulesManager::get_activated_modules_ids_list() as $name)
-		{
-			$module_configuration = ModuleConfigurationManager::get($name);
-
-			if ($module_configuration->get_home_page())
-			{
-				$get_home_page = '/' . $name . '/' . $module_configuration->get_home_page();
-				
-				if($get_home_page == $this->general_config->get_home_page())
-				{
-					$this->selected_home_page = $this->general_config->get_home_page();
-				}
-				$start_page[] = new FormFieldSelectChoiceOption($module_configuration->get_name(), $get_home_page);
-				$i++;
-			}
-		}
+		$modules_home_pages = $this->get_modules_home_page();
 		
-		if ($i == 0)
+		$start_page = array();
+		if (empty($modules_home_pages))
 		{
 			$start_page[] = new FormFieldSelectChoiceOption($this->lang['no_module_starteable'], '');
 		}
-		
-		$start_page[] = new FormFieldSelectChoiceOption('Autre...', 0);
+		else
+		{
+			$start_page[] = new FormFieldSelectChoiceOption($this->lang['general-config.other_start_page'], 'other');
+			foreach ($modules_home_pages as $name => $home_page)
+			{
+				$start_page[] = new FormFieldSelectChoiceOption($name, $home_page);
+			}
+		}
 		return $start_page;
-			
+	}
+	
+	private function get_other_start_page()
+	{
+		return in_array($this->general_config->get_home_page(), $this->get_modules_home_page()) ? '' : $this->general_config->get_home_page();
+	}
+	
+	private function get_modules_home_page()
+	{
+		$modules_home_pages = array();
+		foreach (ModulesManager::get_activated_modules_map() as $module)
+		{
+			$module_configuration = $module->get_configuration();
+			$module_home_page = $module_configuration->get_home_page();
+			if (!empty($module_home_page))
+			{
+				$modules_home_pages[$module_configuration->get_name()] = '/' . $module->get_id(). '/' . $module_home_page;
+			}
+		}
+		return $modules_home_pages;
 	}
 
 	private function clear_cache()
