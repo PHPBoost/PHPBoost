@@ -36,11 +36,7 @@ abstract class ModuleController extends AbstractController
 		if (ModulesManager::is_module_installed(Environment::get_running_module_name()))
 		{
 			$module = ModulesManager::get_module(Environment::get_running_module_name());
-			if (!$module->is_activated())
-			{
-				return PHPBoostErrors::module_not_activated();
-			}
-			else if(!$module->check_auth())
+			if(!$module->check_auth())
 			{
 				return PHPBoostErrors::user_not_authorized();
 			}
