@@ -72,7 +72,14 @@ class AdminCommentsConfigController extends AdminController
 		$fieldset = new FormFieldsetHTML('comments-config', $this->lang['comments.config']);
 		$form->add_fieldset($fieldset);
 		
-		$fieldset->add_field(new FormFieldCheckbox('display_captcha', $this->lang['comments.config.display-captcha'], $this->configuration->get_display_captcha()));
+		$fieldset->add_field(new FormFieldCheckbox('display_captcha', $this->lang['comments.config.display-captcha'], $this->configuration->get_display_captcha(), 
+		array('events' => array('change' => '
+				if (HTMLForms.getField("display_captcha").getValue()) { 
+					HTMLForms.getField("captcha_difficulty").enable(); 
+				} else { 
+					HTMLForms.getField("captcha_difficulty").disable(); 
+				}'
+		))));
 		
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('captcha_difficulty', $this->lang['comments.config.captcha-difficulty'], $this->configuration->get_captcha_difficulty(),
 			array(
@@ -81,7 +88,7 @@ class AdminCommentsConfigController extends AdminController
 				new FormFieldSelectChoiceOption('2', '2'),
 				new FormFieldSelectChoiceOption('3', '3'),
 				new FormFieldSelectChoiceOption('4', '4'),
-			)
+			), array('hidden' => !$this->configuration->get_display_captcha())
 		));
 		
 		$fieldset->add_field(new FormFieldTextEditor('number_comments_display', $this->lang['comments.config.number-comments-display'], $this->configuration->get_number_comments_display(), array(
@@ -137,7 +144,12 @@ class AdminCommentsConfigController extends AdminController
 	{
 		$this->configuration->set_authorizations($this->form->get_value('authorizations')->build_auth_array());
 		$this->configuration->set_display_captcha($this->form->get_value('display_captcha'));
-		$this->configuration->set_captcha_difficulty($this->form->get_value('captcha_difficulty')->get_raw_value());
+		
+		if (!$this->form->field_is_disabled('captcha_difficulty'))
+		{
+			$this->configuration->set_captcha_difficulty($this->form->get_value('captcha_difficulty')->get_raw_value());
+		}
+		
 		$this->configuration->set_number_comments_display($this->form->get_value('number_comments_display'));
 	 	$this->configuration->set_forbidden_tags($this->form->get_value('forbidden_tags'));
 		$this->configuration->set_max_links_comment($this->form->get_value('max_links_comment'));

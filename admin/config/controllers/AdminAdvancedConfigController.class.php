@@ -41,13 +41,7 @@ class AdminAdvancedConfigController extends AdminController
 		
 		$this->build_form();
 
-		$debug_mod_js = !Debug::is_debug_mode_enabled() ? 'HTMLForms.getField("debug_mode_type").disable();' : '';
-		
-		$tpl = new StringTemplate(
-			'<script type="text/javascript">
-				Event.observe(window, \'load\', function() {
-				'. $debug_mod_js .'});
-			</script># INCLUDE MSG # # INCLUDE FORM #');
+		$tpl = new StringTemplate('# INCLUDE MSG # # INCLUDE FORM #');
 		
 		$tpl->add_lang($this->lang);
 
@@ -172,7 +166,8 @@ class AdminAdvancedConfigController extends AdminController
 			array(
 				new FormFieldSelectChoiceOption($this->lang['advanced-config.debug-mode.type.normal'], '0'),
 				new FormFieldSelectChoiceOption($this->lang['advanced-config.debug-mode.type.strict'], '1')
-			)
+			), 
+			array('hidden' => !Debug::is_debug_mode_enabled())
 		));
 		
 		$this->submit_button = new FormButtonDefaultSubmit();

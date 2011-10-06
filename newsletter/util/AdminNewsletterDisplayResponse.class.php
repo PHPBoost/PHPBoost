@@ -37,7 +37,7 @@ class AdminNewsletterDisplayResponse extends AdminMenuDisplayResponse
 		$this->add_link($lang['newsletter.home'], NewsletterUrlBuilder::home(), $picture);
 		$this->add_link($lang['newsletter.archives'], NewsletterUrlBuilder::archives(), $picture);
 		$this->add_link($lang['newsletter.streams'], NewsletterUrlBuilder::streams(), $picture);
-		$this->add_link($lang['streams.add'], NewsletterUrlBuilder::add_newsletter(), $picture);
+		$this->add_link($lang['streams.add'], NewsletterUrlBuilder::add_stream(), $picture);
 		$this->add_link($lang['newsletter.config'], NewsletterUrlBuilder::configuration(), $picture);
 
 		$env = $this->get_graphical_environment();
