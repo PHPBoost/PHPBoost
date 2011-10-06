@@ -1,5 +1,6 @@
 # INCLUDE UPLOAD_FORM #
 <form action="{REWRITED_SCRIPT}" method="post">
+	# INCLUDE MSG #	
 	<table class="module_table">
 		<tr> 
 			<th colspan="4">
@@ -21,7 +22,7 @@
 		# ELSE #
 		<tr>
 			<td class="row2" colspan="4" style="text-align:center;">
-				<strong>{@modules.no_modules_available}</strong>
+				<strong>{@modules.no_module_to_install}</strong>
 			</td>
 		</tr>
 		# ENDIF #
@@ -36,9 +37,13 @@
 				<strong>{@modules.description}:</strong> {available.DESCRIPTION}<br />
 				<strong>{@modules.compatibility}:</strong> PHPBoost {available.COMPATIBILITY}<br />
 			</td>
-			<td class="row2">	
+			<td class="row2" style="text-align:center;">	
+				<input type="radio" name="activated-{available.ID}" value="1" checked="checked" /> {@modules.yes}
+				<input type="radio" name="activated-{available.ID}" value="0" /> {@modules.no}
+				<br /><br />
 				<input type="hidden" name="token" value="{TOKEN}" />
-				<input type="submit" name="module_{available.ID}" value="{@modules.activate_module}" class="submit" />
+				<input type="submit" name="add-{available.ID}" value="{@modules.install_module}" class="submit" />
+				<input type="hidden" name="module_id" value="{available.ID}" />
 			</td>
 		</tr>						
 		# END available #

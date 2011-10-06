@@ -4,7 +4,7 @@
     # ELSE #
         # IF C_UPDATES #
             <div class="warning" style="width:300px;margin:auto;">{@modules.updates_available}</div>
-            
+            # INCLUDE MSG #
             <table class="module_table">
                 <tr><th colspan="5">{@modules.updates_available}</th></tr>
                 <tr>
@@ -13,6 +13,9 @@
 					</td>
 					<td class="row2" style="text-align:center;">
 						{@modules.description}
+					</td>
+					<td class="row2" style="width:100px;text-align:center;">
+						{@modules.upgrade_module}
 					</td>
 				</tr>
                 # START modules_upgradable #
@@ -26,9 +29,13 @@
 						<strong>{@modules.compatibility}:</strong> PHPBoost {modules_upgradable.COMPATIBILITY}<br />
 						<strong>{@modules.php_version} :</strong> {modules_upgradable.PHP_VERSION}
 					</td>
-					<td class="row2">	
+					<td class="row2" style="text-align:center;">
+						<input type="radio" name="activated-{modules_upgradable.ID}" value="1" checked="checked" /> {@modules.yes}
+						<input type="radio" name="activated-{modules_upgradable.ID}" value="0" /> {@modules.no}
+						<br /><br />	
 						<input type="hidden" name="token" value="{TOKEN}" />
-						<input type="submit" name="module_{modules_upgradable.ID}" value="{@modules.activate_module}" class="submit" />
+						<input type="submit" name="upgrade-{modules_upgradable.ID}" value="{@modules.upgrade_module}" class="submit" />
+						<input type="hidden" name="module_id" value="{modules_upgradable.ID}" />
 					</td>
 				</tr>	
                 # END modules_upgradable #

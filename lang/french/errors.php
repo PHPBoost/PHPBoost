@@ -39,6 +39,7 @@ $lang['e_auth'] = 'Vous n\'avez pas le niveau requis !';
 $lang['e_unexist_module'] = 'Le module associé n\'existe pas !';
 $lang['e_uninstalled_module'] = 'Ce module n\'est pas installé !';
 $lang['e_unactivated_module'] = 'Ce module n\'est pas activé !';
+$lang['e_already_installed_module'] = 'Ce module est déjà installé !';
 $lang['e_incomplete'] = 'Tous les champs obligatoires doivent être remplis !';
 $lang['e_auth_post'] = 'Vous devez être inscrit pour poster !';
 $lang['e_readonly'] = 'Vous ne pouvez exécuter cette action, car vous avez été placé en lecture seule !';
