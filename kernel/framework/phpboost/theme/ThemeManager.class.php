@@ -197,7 +197,6 @@ class ThemeManager
 	
 	private static function regenerate_cache()
 	{
-    	ModulesCssFilesCache::invalidate();
 		ThemesCssFilesCache::invalidate();
 	}
 }

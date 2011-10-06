@@ -36,5 +36,10 @@ class CalendarExtensionPointProvider extends ExtensionPointProvider
     {
     	return new CalendarComments();
     }
+    
+	public function css_files()
+	{
+		return new CalendarCssFilesExtensionPoint();
+	}
 }
 ?>

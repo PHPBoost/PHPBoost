@@ -253,5 +253,10 @@ class WikiExtensionPointProvider extends ExtensionPointProvider
 	{
 		return new WikiSitemapExtensionPoint();
 	}
+	
+	public function css_files()
+	{
+		return new WikiCssFilesExtensionPoint();
+	}
 }
 ?>

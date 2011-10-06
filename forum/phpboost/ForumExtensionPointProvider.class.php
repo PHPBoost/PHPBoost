@@ -25,8 +25,6 @@
  *
  ###################################################*/
 
-
-
 define('FORUM_MAX_SEARCH_RESULTS', 50);
 
 class ForumExtensionPointProvider extends ExtensionPointProvider
@@ -82,6 +80,11 @@ class ForumExtensionPointProvider extends ExtensionPointProvider
 	public function user()
 	{
 		return new ForumUserExtensionPoint();
+	}
+	
+	public function css_files()
+	{
+		return new ForumCssFilesExtensionPoint();
 	}
 
 	// Recherche

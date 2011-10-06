@@ -32,8 +32,6 @@
  */
  abstract class AbstractDisplayGraphicalEnvironment extends AbstractGraphicalEnvironment
 {
-	private $css_files = array();
-	
 	private $page_title = '';
 
 	public function __construct()
@@ -41,11 +39,6 @@
 		parent::__construct();
 	}
 
-	public function add_css_file($file_path)
-	{
-		$this->css_files[] = $file_path;
-	}
-	
 	protected function get_theme_css_files_html_code()
 	{
 		$css_cache = new CSSCacheManager();
@@ -59,29 +52,30 @@
 	
 	protected function get_modules_css_files_html_code()
 	{
+		return $this->get_css_files_always_displayed_html_code() . "\n" . $this->get_css_files_running_module_displayed();
+	}
+	
+	private function get_css_files_always_displayed_html_code()
+	{
+		$theme_id = get_utheme();
 		$css_cache = new CSSCacheManager();
-		$css_cache->set_files($this->css_files);
-		$css_cache->set_cache_file_location(PATH_TO_ROOT . '/cache/css/css-cache-modules-' . get_utheme() .'.css');
+		$css_cache->set_files(ModulesCssFilesService::get_css_files_always_displayed($theme_id));
+		$css_cache->set_cache_file_location(PATH_TO_ROOT . '/cache/css/css-cache-modules-' . $theme_id .'.css');
 		$css_cache->execute();
 		$html_code = '<link rel="stylesheet" href="' . $css_cache->get_cache_file_location() . 
 				'" type="text/css" media="screen, print, handheld" />';
 		return $html_code;
 	}
-
-	protected function add_modules_css_files()
+	
+	private function get_css_files_running_module_displayed()
 	{
-		$css_files_cache = ModulesCssFilesCache::load();
-		try
+		$html_code = '';
+		foreach (ModulesCssFilesService::get_css_files_running_module_displayed(get_utheme()) as $css_file)
 		{
-			$css_files = $css_files_cache->get_files_for_theme(get_utheme());
-			foreach ($css_files as $file)
-			{
-				$this->add_css_file($file);
-			}
+			$html_code .= '<link rel="stylesheet" href="' . PATH_TO_ROOT . $css_file . 
+				'" type="text/css" media="screen, print, handheld" />';
 		}
-		catch(PropertyNotFoundException $ex)
-		{
-		}
+		return $html_code;
 	}
 	
 	public function get_page_title()
@@ -95,5 +89,4 @@
 		defined('TITLE') or define('TITLE', $title);
 	}
 }
-
 ?>
