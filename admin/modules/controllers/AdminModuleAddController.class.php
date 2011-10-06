@@ -36,11 +36,12 @@ class AdminModuleAddController extends AdminController
 	public function execute(HTTPRequest $request)
 	{
 		$this->init();
+	
 		$this->upload_form();
 		$this->view->put('UPLOAD_FORM', $this->form->display());
 		
 		$this->build_view();
-		$this->save($request);
+		$this->install_module($request);
 		
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
@@ -131,29 +132,30 @@ class AdminModuleAddController extends AdminController
 		return $modules_not_installed;
 	}
 	
-	private function save(HTTPRequest $request)
+	private function install_module(HTTPRequest $request)
 	{
-		$module_id = $request->get_string('id_module', '') ;
+		$module_id = $request->get_string('module_id', '');
 		
 		if (!empty($module_id))
 		{
-			switch(ModulesManager::install_module($module_id, true, ModulesManager::GENERATE_CACHE_AFTER_THE_OPERATION))
+			$activated = $request->get_bool('activated-' . $module_id, false);
+			switch(ModulesManager::install_module($module_id, $activated, ModulesManager::GENERATE_CACHE_AFTER_THE_OPERATION))
 			{
-				case CONFIG_CONFLICT:
-					$this->view->put('MSG', MessageHelper::display(LangLoader::get('e_config_conflict'), MessageHelper::WARNING, 10));
+				case ModulesManager::CONFIG_CONFLICT:
+					$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('e_config_conflict', 'errors'), MessageHelper::WARNING, 10));
 					break;
-				case UNEXISTING_MODULE:
-					$this->view->put('MSG', MessageHelper::display(LangLoader::get('e_unexist_module'), MessageHelper::WARNING, 10));
+				case ModulesManager::UNEXISTING_MODULE:
+					$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('e_unexist_module', 'errors'), MessageHelper::WARNING, 10));
 					break;
-				case MODULE_ALREADY_INSTALLED:
-					$this->view->put('MSG', MessageHelper::display(LangLoader::get('e_installed_module'), MessageHelper::WARNING, 10));
+				case ModulesManager::MODULE_ALREADY_INSTALLED:
+					$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('e_already_installed_module', 'errors'), MessageHelper::WARNING, 10));
 					break;
-				case PHP_VERSION_CONFLICT:
-					$this->view->put('MSG', MessageHelper::display(LangLoader::get('e_php_version_conflict'), MessageHelper::WARNING, 10));
+				case ModulesManager::PHP_VERSION_CONFLICT:
+					$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('e_php_version_conflict', 'errors'), MessageHelper::WARNING, 10));
 					break;
-				case MODULE_INSTALLED:
+				case ModulesManager::MODULE_INSTALLED:
 				default: 
-					$this->view->put('MSG', MessageHelper::display(LangLoader::get('e_installed_module'), MessageHelper::NOTICE, 10));
+					$this->view->put('MSG', MessageHelper::display($this->lang['modules.install_success'], MessageHelper::SUCCESS, 10));
 			}
 			
 		}

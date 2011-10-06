@@ -40,7 +40,7 @@ class AdminModuleUpdateController extends AdminController
 		$this->view->put('UPLOAD_FORM', $this->form->display());
 		
 		$this->build_view();
-		$this->update($request);
+		$this->upgrade_module($request);
 		
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
@@ -113,27 +113,28 @@ class AdminModuleUpdateController extends AdminController
 		}
 	}
 	
-	private function update(HTTPRequest $request)
+	private function upgrade_module(HTTPRequest $request)
 	{
-		$module_id = $request->get_string('id_module', '') ;
+		$module_id = $request->get_string('module_id', '') ;
 		
 		if (!empty($module_id))
 		{
+			$activated = $request->get_bool('upgrade-' . $module_id, false);
 			switch (ModulesManager::upgrade_module($module_id))
 			{
-				case UPGRADE_FAILED :
+				case ModulesManager::UPGRADE_FAILED :
 					$this->view->put('MSG', MessageHelper::display($this->lang['modules.upgrade_failed'], MessageHelper::WARNING, 10));
 					break;
-				case MODULE_NOT_UPGRADABLE :
+				case ModulesManager::MODULE_NOT_UPGRADABLE :
 					$this->view->put('MSG', MessageHelper::display($this->lang['modules.module_not_upgradable'], MessageHelper::WARNING, 10));
 					break;
-				case NOT_INSTALLED_MODULE :
+				case ModulesManager::NOT_INSTALLED_MODULE :
 					$this->view->put('MSG', MessageHelper::display($this->lang['modules.not_installed_module'], MessageHelper::WARNING, 10));
 					break;
-				case UNEXISTING_MODULE :
+				case ModulesManager::UNEXISTING_MODULE :
 					$this->view->put('MSG', MessageHelper::display($this->lang['modules.unexisting_module'], MessageHelper::WARNING, 10));
 					break;
-				case MODULE_UPDATED :
+				case ModulesManager::MODULE_UPDATED :
 					$this->view->put('MSG', MessageHelper::display($this->lang['modules.update_success'], MessageHelper::SUCCESS, 10));
 					break;
 			}
@@ -207,27 +208,6 @@ class AdminModuleUpdateController extends AdminController
 			{
 				$this->view->put('MSG', MessageHelper::display($this->lang['module.upload_error'], MessageHelper::ERROR, 4));
 			}
-		}
-	}
-	
-	private function get_error_message($error = 11)
-	{
-		switch ($error)
-		{
-			case UPGRADE_FAILED :
-				$this->view->put('MSG', MessageHelper::display($this->lang['modules.upgrade_failed'], MessageHelper::WARNING, 10));
-				break;
-			case MODULE_NOT_UPGRADABLE :
-				$this->view->put('MSG', MessageHelper::display($this->lang['modules.module_not_upgradable'], MessageHelper::WARNING, 10));
-				break;
-			case NOT_INSTALLED_MODULE :
-				$this->view->put('MSG', MessageHelper::display($this->lang['modules.not_installed_module'], MessageHelper::WARNING, 10));
-				break;
-			case UNEXISTING_MODULE :
-				$this->view->put('MSG', MessageHelper::display($this->lang['modules.unexisting_module'], MessageHelper::WARNING, 10));
-				break;
-			default :
-				$this->view->put('MSG', MessageHelper::display($this->lang['modules.error_id_module'], MessageHelper::WARNING, 10));
 		}
 	}
 }

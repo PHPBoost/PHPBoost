@@ -70,7 +70,7 @@ $lang['modules.upload_invalid_format'] = 'Le format de l\'archive n\'est pas val
 $lang['modules.already_installed'] = 'Ce module est déjà installé';
 $lang['modules.upload_error'] = 'Il y a eu une erreur lors de l\'upload';
 $lang['modules.delete_success'] = 'Le module a été supprimé avec succès';
-$lang['modules.deactivated_success'] = 'Le module a été désactivé avec succès';
+$lang['modules.uninstalled_success'] = 'Le module a été désinstallé avec succès';
 $lang['modules.update_success'] = 'Le module a été mis à jour avec succès';
 $lang['modules.upgrade_failed'] = 'La mise à jour a échoué';
 $lang['modules.module_not_upgradable'] = 'Ce module ne peut être mis à jour';
@@ -80,6 +80,8 @@ $lang['modules.error_id_module'] = 'Aucun module à mettre à jour';
 $lang['modules.no_upgradable_module_available'] = 'Aucune mise à jour de module disponible';
 $lang['modules.updates_are_available'] = 'Des mises à jour des modules sont disponibles!<br />Veuillez les effectuer sans tarder.';
 $lang['modules.updates_available'] = 'Mises à jour disponibles';
+$lang['modules.install_success'] = 'Module installé avec succès !';
+$lang['modules.no_module_to_install'] = 'Aucun module à installer !';
 
 //Delete module
 $lang['modules.drop_files'] = 'Supprimer tous les fichiers du module';

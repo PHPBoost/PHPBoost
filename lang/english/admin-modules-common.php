@@ -77,6 +77,8 @@ $lang['modules.error_id_module'] = 'No module to update';
 $lang['modules.no_upgradable_module_available'] = 'No module updates available';
 $lang['modules.updates_are_available'] = 'Module updates are available!<br />You must do it as soon as you can.';
 $lang['modules.updates_available'] = 'Module updates available';
+$lang['modules.install_success'] = 'Module installed succesfully !';
+$lang['modules.no_module_to_install'] = 'No module to install !';
 
 //Delete module
 $lang['modules.drop_files'] = 'Delete all files in the module';

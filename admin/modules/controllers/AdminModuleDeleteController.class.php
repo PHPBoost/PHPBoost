@@ -53,7 +53,7 @@ class AdminModuleDeleteController extends AdminController
 				}
 				else 
 				{
-					$this->tpl->put('MSG', MessageHelper::display($this->lang['modules.deactivated_success'], MessageHelper::SUCCESS, 4));
+					$this->tpl->put('MSG', MessageHelper::display($this->lang['modules.uninstalled_success'], MessageHelper::SUCCESS, 4));
 				}
 			}
 			$this->tpl->put('FORM', $this->form->display());
