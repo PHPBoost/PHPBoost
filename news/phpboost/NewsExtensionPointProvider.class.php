@@ -96,6 +96,11 @@ class NewsExtensionPointProvider extends ExtensionPointProvider
 	{
 		return new NewsSitemapExtensionPoint();
 	}
+	
+	public function css_files()
+	{
+		return new NewsCssFilesExtensionPoint();
+	}
 
 	public function get_home_page()
 	{

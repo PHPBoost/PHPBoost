@@ -27,8 +27,6 @@
 
 if (defined('PHPBOOST') !== true) exit;
 
-
-
 class GalleryExtensionPointProvider extends ExtensionPointProvider
 {
 	private $sql_querier;
@@ -107,6 +105,11 @@ class GalleryExtensionPointProvider extends ExtensionPointProvider
 	function feeds()
 	{
 		return new GalleryFeedProvider();
+	}
+	
+	public function css_files()
+	{
+		return new GalleryCssFilesExtensionPoint();
 	}
 }
 ?>

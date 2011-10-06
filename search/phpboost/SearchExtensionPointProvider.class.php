@@ -41,5 +41,10 @@ class SearchExtensionPointProvider extends ExtensionPointProvider
 	{
 		return new UrlMappings(array(new DispatcherUrlMapping('/search/index.php')));
 	}
+	
+	public function css_files()
+	{
+		return new SearchCssFilesExtensionPoint();
+	}
 }
 ?>

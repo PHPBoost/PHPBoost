@@ -1,10 +1,10 @@
 <?php
 /*##################################################
- *                        ShoutboxExtensionPointProvider.class.php
+ *                              ConnectExtensionPointProvider.class.php
  *                            -------------------
- *   begin                : July 7, 2008
- *   copyright            : (C) 2008 Régis Viarre
- *   email                : crowkait@phpboost.com
+ *   begin                : October 06, 2011
+ *   copyright            : (C) 2011 Kévin MASSY
+ *   email                : soldier.weasel@gmail.com
  *
  *
  ###################################################
@@ -25,24 +25,16 @@
  *
  ###################################################*/
 
-class ShoutboxExtensionPointProvider extends ExtensionPointProvider
+class ConnectExtensionPointProvider extends ExtensionPointProvider
 {
-	private $sql_querier;
-
-    public function __construct()
-    {
-        $this->sql_querier = PersistenceContext::get_sql();
-        parent::__construct('shoutbox');
-    }
-
-	public function scheduled_jobs()
+	public function __construct()
 	{
-		return new ShoutboxScheduledJobs();
+		parent::__construct('connect');
 	}
-	
+
 	public function css_files()
 	{
-		return new ShoutboxCssFilesExtensionPoint();
+		return new ConnectCssFilesExtensionPoint();
 	}
 }
 ?>

@@ -51,6 +51,4 @@ else
 	
 $title_gallery = !empty($CAT_GALLERY[$g_idcat]['name']) ? addslashes($CAT_GALLERY[$g_idcat]['name']) : '';
 define('TITLE', (!empty($title_gallery) ? $LANG['title_gallery'] . ' - ' . $title_gallery : $LANG['title_gallery']));
-define('ALTERNATIVE_CSS', 'gallery'); //Css alternatif
-
 ?>
