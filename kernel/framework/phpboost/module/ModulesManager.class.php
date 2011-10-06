@@ -223,7 +223,6 @@ class ModulesManager
 
 		if ($generate_cache)
 		{
-			ModulesCssFilesCache::invalidate();
 			MenuService::generate_cache();
 
 			$rewrite_rules = $configuration->get_url_rewrite_rules();
@@ -285,8 +284,6 @@ class ModulesManager
 					break;
 				}
 			}
-
-			ModulesCssFilesCache::invalidate();
 
 			//Régénération des feeds.
 			Feed::clear_cache($module_id);
@@ -355,7 +352,6 @@ class ModulesManager
 						$Cache->Generate_file('menus');
 						
 						Feed::clear_cache($module_identifier);
-						ModulesCssFilesCache::invalidate();
 						
 						try {
 							$rewrite_rules = self::get_module($module_identifier)->get_configuration()->get_url_rewrite_rules();

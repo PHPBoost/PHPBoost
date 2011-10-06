@@ -32,7 +32,7 @@ class AdminConfigDisplayResponse extends AdminMenuDisplayResponse
         parent::__construct($view);
         
         $lang = LangLoader::get('admin-config-common');
-        $this->set_title($title_page);
+        $this->set_title($lang['configuration']);
         $img = '/templates/' . get_utheme() . '/images/admin/configuration.png';
         $this->add_link($lang['general-config'], AdminConfigUrlBuilder::general_config(), $img);
         $this->add_link($lang['advanced-config'], AdminConfigUrlBuilder::advanced_config(), $img);

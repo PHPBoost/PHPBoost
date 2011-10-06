@@ -94,9 +94,6 @@ if (!empty($id))
     }
 
     MenuService::generate_cache();
-
-    ModulesCssFilesCache::invalidate();
-
     AppContext::get_response()->redirect('menus.php#m' . $id);
 }
 
