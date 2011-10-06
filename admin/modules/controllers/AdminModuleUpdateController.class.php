@@ -80,12 +80,11 @@ class AdminModuleUpdateController extends AdminController
 	
 	private function build_view()
 	{
-		$modules_installed = ModulesManager::get_installed_modules_ids_list();
-		foreach ($modules_installed as $module)
+		foreach (ModulesManager::get_installed_modules_map() as $module)
 		{
-			if (ModulesManager::module_is_upgradable($module))
+			if (ModulesManager::module_is_upgradable($module->get_id()))
 			{
-				$configuration = ModuleConfigurationManager::get($module);
+				$configuration = $module->get_configuration();
 				$author = $configuration->get_author();
 				$author_email = $configuration->get_author_email();
 				$author_website = $configuration->get_author_website();
