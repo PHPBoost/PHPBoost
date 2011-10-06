@@ -1,10 +1,10 @@
 <?php
 /*##################################################
- *                             forum_begin.php
+ *                           CssFilesExtensionPoint.class.php
  *                            -------------------
- *   begin                : October 18, 2007
- *   copyright            : (C) 2007 Viarre régis
- *   email                : crowkait@phpboost.com
+ *   begin                : October 06, 2011
+ *   copyright            : (C) 2011 Kévin MASSY
+ *   email                : soldier.weasel@gmail.com
  *
  *
  ###################################################
@@ -13,7 +13,7 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -25,18 +25,18 @@
  *
  ###################################################*/
 
-if (defined('PHPBOOST') !== true)	
-    exit;
+interface CssFilesExtensionPoint extends ExtensionPoint
+{
+	const EXTENSION_POINT = 'css_files';
 
-require_once('../forum/forum_init_auth_cats.php');
-
-//Supprime les menus suivant configuration du site.
-if ($CONFIG_FORUM['no_left_column'] == 1) 
-    define('NO_LEFT_COLUMN', true);
-if ($CONFIG_FORUM['no_right_column'] == 1) 
-    define('NO_RIGHT_COLUMN', true);
-    
-//Fonction du forum.
-require_once('../forum/forum_functions.php');
-
+	/**
+	 * @return array css files containing in the templates folder module
+	 */
+	function get_css_files_always_displayed();
+	
+	/**
+	 * @return array css files containing in the templates folder module
+	 */
+	function get_css_files_running_module_displayed();
+}
 ?>

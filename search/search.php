@@ -28,7 +28,6 @@
 //------------------------------------------------------------------- Language
 require_once('../kernel/begin.php');
 load_module_lang('search');
-define('ALTERNATIVE_CSS', 'search');
 
 $Template->set_filenames(array(
     'search_forms' => 'search/search_forms.tpl',

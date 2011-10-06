@@ -60,8 +60,6 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 
 		$template = new FileTemplate('header.tpl');
 
-		$this->add_modules_css_files();
-
 		$general_config = GeneralConfig::load();
 		
 		$theme = ThemeManager::get_theme(get_utheme());

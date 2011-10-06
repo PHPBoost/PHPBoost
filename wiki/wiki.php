@@ -28,8 +28,6 @@
 require_once('../kernel/begin.php');
 load_module_lang('wiki');
 
-define('ALTERNATIVE_CSS', 'wiki');
-
 include('../wiki/wiki_functions.php');
 
 //Titre de l'article

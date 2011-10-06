@@ -1,10 +1,10 @@
 <?php
 /*##################################################
- *                        ShoutboxExtensionPointProvider.class.php
+ *                     ShoutboxCssFilesExtensionPoint.class.php
  *                            -------------------
- *   begin                : July 7, 2008
- *   copyright            : (C) 2008 Régis Viarre
- *   email                : crowkait@phpboost.com
+ *   begin                : October 06, 2011
+ *   copyright            : (C) 2011 Kévin MASSY
+ *   email                : soldier.weasel@gmail.com
  *
  *
  ###################################################
@@ -25,24 +25,16 @@
  *
  ###################################################*/
 
-class ShoutboxExtensionPointProvider extends ExtensionPointProvider
+class ShoutboxCssFilesExtensionPoint implements CssFilesExtensionPoint
 {
-	private $sql_querier;
-
-    public function __construct()
-    {
-        $this->sql_querier = PersistenceContext::get_sql();
-        parent::__construct('shoutbox');
-    }
-
-	public function scheduled_jobs()
+	public function get_css_files_always_displayed()
 	{
-		return new ShoutboxScheduledJobs();
+		return array('shoutbox_mini.css');
 	}
-	
-	public function css_files()
+
+	public function get_css_files_running_module_displayed()
 	{
-		return new ShoutboxCssFilesExtensionPoint();
+		return array();
 	}
 }
 ?>
