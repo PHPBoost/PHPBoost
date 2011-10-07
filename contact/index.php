@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-require_once '../kernel/begin.php';
+require_once PATH_TO_ROOT . '/kernel/init.php';
 
 $url_controller_mappers = array(
 	new UrlControllerMapper('AdminContactController', '`^/admin/?$`'),
