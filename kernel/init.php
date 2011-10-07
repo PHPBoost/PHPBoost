@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                           index.php
+ *                               init.php
  *                            -------------------
- *   begin                : August 10, 2011
+ *   begin                : October 06, 2011
  *   copyright            : (C) 2011 Kévin MASSY
  *   email                : soldier.weasel@gmail.com
  *
@@ -25,14 +25,14 @@
  *
  ###################################################*/
 
-defined('PATH_TO_ROOT') or define('PATH_TO_ROOT', '../..');
+defined('PATH_TO_ROOT') or define('PATH_TO_ROOT', '..');
+require_once PATH_TO_ROOT . '/kernel/framework/core/environment/Environment.class.php';
+Environment::load_imports();
 
-require_once PATH_TO_ROOT . '/kernel/init.php';
+/* DEPRECATED VARS */
+$Cache = new Cache();
+$Bread_crumb = new BreadCrumb();
+/* END DEPRECATED */
 
-$url_controller_mappers = array(
-	new UrlControllerMapper('AdminCommentsConfigController', '`^/comments/config/?$`'),
-	new UrlControllerMapper('AdminCommentsManagementController', '`^/comments(?:/management)?$`'),
-);
-DispatchManager::dispatch($url_controller_mappers);
-
+Environment::init();
 ?>
