@@ -40,10 +40,10 @@ class CommentsDAO
 		self::$db_querier = PersistenceContext::get_querier();
 	}
 	
-	public static function delete_comments_module($module_id)
+	public static function delete_comments_by_topic($id_topic)
 	{
-		$condition = "WHERE module_id = :module_id";
-		$parameters = array('module_id' => $module_id);
+		$condition = "WHERE id_topic = :id_topic";
+		$parameters = array('id_topic' => $id_topic);
 		self::$db_querier->delete(DB_TABLE_COMMENTS, $condition, $parameters);
 	}
 	
