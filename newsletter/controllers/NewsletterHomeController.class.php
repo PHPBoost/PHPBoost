@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-class NewsletterHomeController extends AbstractController
+class NewsletterHomeController extends ModuleController
 {
 	private $lang;
 	private $view;
