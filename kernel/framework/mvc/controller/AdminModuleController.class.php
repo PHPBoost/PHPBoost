@@ -1,10 +1,10 @@
 <?php
 /*##################################################
- *                         ModuleController.class.php
+ *                          AdminModuleController.class.php
  *                            -------------------
- *   begin                : December 14 2009
- *   copyright            : (C) 2009 Loic Rouchon
- *   email                : loic.rouchon@phpboost.com
+ *   begin                : October 07, 2011
+ *   copyright            : (C) 2011 Kévin MASSY
+ *   email                : soldier.weasel@gmail.com
  *
  *
  ###################################################
@@ -25,24 +25,20 @@
  *
  ###################################################*/
 
-/**
- * @author loic rouchon <loic.rouchon@phpboost.com>
- * @desc This class defines the minimalist controler pattern
- */
-abstract class ModuleController extends AbstractController
+abstract class AdminModuleController extends AbstractController
 {
 	public final function get_right_controller_regarding_authorizations()
-	{
-		if (ModulesManager::is_module_installed(Environment::get_running_module_name()))
+    {
+    	if (!AppContext::get_user()->is_admin() && !AdminLoginService::try_to_connect())
+    	{
+    		return new AdminLoginController();
+    	}
+        else if (ModulesManager::is_module_installed(Environment::get_running_module_name()))
 		{
 			$module = ModulesManager::get_module(Environment::get_running_module_name());
 			if (!$module->is_activated())
 			{
 				return PHPBoostErrors::module_not_activated();
-			}
-			else if(!$module->check_auth())
-			{
-				return PHPBoostErrors::user_not_authorized();
 			}
 		}
 		else
@@ -50,6 +46,6 @@ abstract class ModuleController extends AbstractController
 			return PHPBoostErrors::module_not_installed();
 		}
 		return $this;
-	}
+    }
 }
 ?>

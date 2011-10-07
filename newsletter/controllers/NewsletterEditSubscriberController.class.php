@@ -24,7 +24,7 @@
  *
  ###################################################*/
 
-class NewsletterEditSubscriberController extends AdminController
+class NewsletterEditSubscriberController extends ModuleController
 {
 	private $lang;
 	/**
