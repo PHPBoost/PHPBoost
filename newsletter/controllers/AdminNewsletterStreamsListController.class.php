@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-class AdminNewsletterStreamsListController extends AbstractController
+class AdminNewsletterStreamsListController extends AdminModuleController
 {
 	private $lang;
 	private $view;
