@@ -153,7 +153,7 @@ class CommentsService
 	{
 		if (CommentsTopicDAO::comments_topic_exists_by_module_id($module_id))
 		{
-			CommentsManager::delete_comments_module($module_id, $id_in_module);
+			CommentsManager::delete_comments_module($module_id);
 		}
 	}
 	
