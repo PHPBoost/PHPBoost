@@ -32,7 +32,7 @@ class AdminModulesDisplayResponse extends AdminMenuDisplayResponse
 		parent::__construct($view);
 		
 		$lang = LangLoader::get('admin-modules-common');
-		$this->set_title($title_page);
+		$this->set_title($lang['modules.module_management']);
 		$icon = '/templates/' . get_utheme() . '/images/admin/modules.png';
 		$this->add_link($lang['modules.module_management'], AdminModulesUrlBuilder::list_installed_modules(), $icon);
 		$this->add_link($lang['modules.add_module'], AdminModulesUrlBuilder::add_module(), $icon);
