@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-class AdminNewsletterDeleteStreamController extends AdminController
+class AdminNewsletterDeleteStreamController extends AdminModuleController
 {
 	public function execute(HTTPRequest $request)
 	{

@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-class NewsletterArchiveController extends AbstractController
+class NewsletterArchiveController extends ModuleController
 {
 	private $lang;
 	private $view;
