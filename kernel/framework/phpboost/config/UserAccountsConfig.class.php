@@ -117,6 +117,10 @@ class UserAccountsConfig extends AbstractConfigData
 	
 	const MAX_PRIVATE_MESSAGES_NUMBER = 'max_pm_number';
 	
+	const AUTOMATIC_USER_ACCOUNTS_VALIDATION = '1';
+	const MAIL_USER_ACCOUNTS_VALIDATION = '2';
+	const ADMINISTRATOR_USER_ACCOUNTS_VALIDATION = '3';
+	
 	/**
 	 * Tells how the member accounts are activated
 	 * @return int 0 if there is no activation, 1 if the member activates its account thanks to the

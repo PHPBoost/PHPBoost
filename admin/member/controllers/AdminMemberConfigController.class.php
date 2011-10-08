@@ -81,9 +81,9 @@ class AdminMemberConfigController extends AdminController
 		
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('type_activation_members', $this->lang['members.config.type-activation'], (string)$user_account_config->get_member_accounts_validation_method(),
 			array(
-				new FormFieldSelectChoiceOption($this->lang['members.config.type-activation.auto'], '1'),
-				new FormFieldSelectChoiceOption($this->lang['members.config.type-activation.mail'], '2'),
-				new FormFieldSelectChoiceOption($this->lang['members.config.type-activation.admin'], '3')
+				new FormFieldSelectChoiceOption($this->lang['members.config.type-activation.auto'], UserAccountsConfig::AUTOMATIC_USER_ACCOUNTS_VALIDATION),
+				new FormFieldSelectChoiceOption($this->lang['members.config.type-activation.mail'], UserAccountsConfig::MAIL_USER_ACCOUNTS_VALIDATION),
+				new FormFieldSelectChoiceOption($this->lang['members.config.type-activation.admin'], UserAccountsConfig::ADMINISTRATOR_USER_ACCOUNTS_VALIDATION)
 			), array('hidden' => !$user_account_config->is_registration_enabled())
 		));
 
@@ -188,7 +188,7 @@ class AdminMemberConfigController extends AdminController
 			$user_account_config->set_registration_captcha_difficulty($this->form->get_value('captcha_difficulty')->get_raw_value());
 		}
 		
-		$user_account_config->set_force_theme_enabled($this->form->get_value('theme_choice_permission'));
+		$user_account_config->set_force_theme_enabled(!$this->form->get_value('theme_choice_permission'));
 		$user_account_config->set_avatar_upload_enabled($this->form->get_value('upload_avatar_server'));
 		$user_account_config->set_unactivated_accounts_timeout($this->form->get_value('unactivated_accounts_timeout'));
 		$user_account_config->set_default_avatar_name_enabled($this->form->get_value('default_avatar_activation'));
