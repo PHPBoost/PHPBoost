@@ -325,7 +325,6 @@ $tpl->put_all(array(
     'I_LEFT' => Menu::BLOCK_POSITION__LEFT,
     'I_RIGHT' => Menu::BLOCK_POSITION__RIGHT,
     'L_MENUS_AVAILABLE' => count($menus_blocks[Menu::BLOCK_POSITION__NOT_ENABLED]) ? $LANG['available_menus'] : $LANG['no_available_menus'],
-    'L_INSTALL' => $LANG['install'],
     'L_SUBMIT' => $LANG['submit'],
     'L_RESET' => $LANG['reset'],
 	'U_TOKEN' => $Session->get_token()

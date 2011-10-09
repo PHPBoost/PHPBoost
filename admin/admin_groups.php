@@ -236,7 +236,7 @@ elseif (!empty($idgroup)) //Interface d'édition du groupe.
 				$template->assign_block_vars('member', array(
 					'USER_ID' => $user_id,
 					'LOGIN' => $login,
-					'U_USER_ID' => url('.php?id=' . $user_id, '-' . $user_id . '.php')
+					'U_PROFILE' => UserUrlBuilder::profile($user_id)->absolute()
 				));
 			}
 		}
