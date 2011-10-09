@@ -35,6 +35,17 @@ $LANG['administration'] = 'Administration';
 $LANG['no_administration'] = 'No administration associated with this module !';
 
 $LANG['extend_menu'] = 'Extended menu';
+$LANG['phpinfo'] = 'PHP info';
+
+//Config
+$LANG['serv_name'] = 'Server name';
+$LANG['serv_path'] = 'PHPBoost path, empty by default';
+$LANG['default_theme'] = 'Website\'s (default) theme';
+$LANG['default_language'] = 'Language (default) of the website';
+$LANG['start_page'] = 'Website\'s start page';
+$LANG['cookie_name'] = 'Cookie name';
+$LANG['session_time'] = 'Session time';
+$LANG['session invit'] = 'Enable users duration';
 
 //Form
 $LANG['add'] = 'Add';

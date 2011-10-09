@@ -13,14 +13,14 @@
 		</tr>
 		<tr style="text-align:center;">
 			<td class="row2" style="width:20%;">
-				<a href="{PATH_TO_ROOT}/admin/admin_config.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/configuration.png" alt="" /></a>		
+				<a href="{PATH_TO_ROOT}/admin/config/?url=/general"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/configuration.png" alt="" /></a>		
 				<br />
-				<a href="{PATH_TO_ROOT}/admin/admin_config.php">{L_CONFIGURATION}</a>						
+				<a href="{PATH_TO_ROOT}/admin/config/?url=/general">{L_CONFIGURATION}</a>						
 			</td>
 			<td class="row2" style="width:20%;">
-				<a href="{PATH_TO_ROOT}/admin/admin_themes.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/themes.png" alt="" /></a>		
+				<a href="{PATH_TO_ROOT}/admin/themes/"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/themes.png" alt="" /></a>		
 				<br />
-				<a href="{PATH_TO_ROOT}/admin/admin_themes.php">{L_THEME}</a>			
+				<a href="{PATH_TO_ROOT}/admin/themes/">{L_THEME}</a>			
 			</td>
 			<td class="row2" style="width:20%;">
 				<a href="{PATH_TO_ROOT}/admin/admin_lang.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/languages.png" alt="" /></a>		

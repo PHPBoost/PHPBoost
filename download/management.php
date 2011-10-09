@@ -217,7 +217,7 @@ $Template->put_all(array(
     'L_DOWNLOAD_METHOD_EXPLAIN' => $DOWNLOAD_LANG['download_method_explain'],
     'L_FORCE_DOWNLOAD' => $DOWNLOAD_LANG['force_download'],
     'L_REDIRECTION' => $DOWNLOAD_LANG['redirection_up_to_file'],
-	'L_FILE_ADD' => $LANG['bb_upload']
+	'L_FILE_ADD' =>	LangLoader::get_message('bb_upload', 'bbcode-common')
 ));
 
 if ($edit_file_id > 0)
