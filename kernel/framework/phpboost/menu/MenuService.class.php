@@ -437,47 +437,22 @@ class MenuService
 	*/
 	public static function add_mini_module($module_id, $generate_cache = true)
 	{
-		$configuration = ModulesManager::get_module($module_id)->get_configuration();
-
-		$mini_modules_menus = $configuration->get_mini_modules();
-		if (empty($mini_modules_menus))
+		if (MenusProvidersService::module_containing_extension_point($module_id))
 		{
-			return false;
-		}
-
-		$installed = false;
-		foreach ($mini_modules_menus as $filename => $location)
-		{   // For each mini module for the current module
-			// Check the mini module file
-			if (file_exists(PATH_TO_ROOT . '/' . $module_id . '/' . $filename))
+			foreach (MenusProvidersService::get_menus($module_id) as $menu)
 			{
-				$file = explode('.', $filename, 2);
-				if (!is_array($file) || count($file) < 1)
-				{
-					continue;
-				}
-
-				// Check the mini module function
-				include_once PATH_TO_ROOT . '/' . $module_id . '/' . $filename;
-				if (!function_exists($file[0]))
-				{
-					continue;
-				}
-
-				$menu = new ModuleMiniMenu($module_id, $file[0]);
-				$menu->enabled(false);
-				$menu->set_auth(array('r1' => Menu::MENU_AUTH_BIT, 'r0' => Menu::MENU_AUTH_BIT, 'r-1' => Menu::MENU_AUTH_BIT));
-				$menu->set_block(MenuService::str_to_location($location));
-				MenuService::save($menu);
-				if ($generate_cache)
-				{
-					MenuService::generate_cache();
-				}
-
-				$installed = true;
+				$title = $menu->get_title();
+				$menu->set_title($module_id . '/' . $title);
+				self::save($menu);
 			}
+				
+			if ($generate_cache)
+			{
+				MenuService::generate_cache();
+			}
+			return true;
 		}
-		return $installed;
+		return false;
 	}
 
 	/**
@@ -506,44 +481,41 @@ class MenuService
 	{
 		// Retrieves the mini modules already installed
 		$installed_minimodules = array();
-		$modules = array();
-		// Build the availables modules list
-		foreach (ModulesManager::get_installed_modules_map() as $module)
+		$menus = array();
+		foreach (MenusProvidersService::get_extension_point() as $module_id => $extension_point)
 		{
-			if ($module->is_activated())
+			foreach ($extension_point->get_menus() as $menu)
 			{
-				$modules[] = $module->get_id();
+				$menus[get_class($menu)] = array(
+					'module_id' => $module_id,
+					'menu' => $menu
+				);
 			}
 		}
 
-		$conditions = 'WHERE class=:class';
-		$parameters = array('class' => strtolower(ModuleMiniMenu::MODULE_MINI_MENU__CLASS));
-		$results = self::$querier->select_rows(DB_TABLE_MENUS, array('id', 'title'), $conditions, $parameters);
+		$results = self::$querier->select_rows(DB_TABLE_MENUS, array('id', 'title', 'class'));
 		foreach ($results as $row)
 		{
-			// Build the module name from the mini module file_path
-			$title = explode('/', strtolower($row['title']) , 2);
-			if (!is_array($title) || count($title) < 1)
+			if (array_key_exists($row['class'], $menus))
 			{
-				continue;
-			}
-
-			$module = $title[0];
-			if (in_array($module, $modules))
-			{   // The Menu is installed and we gonna keep it
-				$installed_minimodules[] = $module;
+				$installed_minimodules[$row['class']] = $row['id'];
 			}
 			else
-			{   // The menu is not available anymore, so we delete it
+			{
 				MenuService::delete($row['id']);
 			}
 		}
 
-		$new_modules = array_diff($modules, $installed_minimodules);
-		foreach ($new_modules as $module)
-		{   // Browse availables modules without mini modules
-			MenuService::add_mini_module($module, false);
+		$new_menus = array_diff_key($menus, $installed_minimodules);
+		foreach ($new_menus as $class => $menu)
+		{
+			$mini_module = $menu['menu'];
+			$title = $mini_module->get_title();
+			$mini_module->set_title($menu['module_id'] . '/' . $title);
+			self::save($mini_module);
+			//MenuService::add_mini_module($menu['module_id'], false);
 		}
+		
 		if ($update_cache)
 		{
 			MenuService::generate_cache();

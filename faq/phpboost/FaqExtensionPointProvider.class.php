@@ -172,6 +172,10 @@ class FaqExtensionPointProvider extends ExtensionPointProvider
 	{
 		return new FaqFeedProvider();
 	}
-
+	
+	public function menus()
+	{
+		return new FaqMenusExtensionPoint();
+	}
 }
 ?>

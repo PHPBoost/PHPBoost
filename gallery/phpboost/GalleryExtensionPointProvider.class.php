@@ -111,5 +111,10 @@ class GalleryExtensionPointProvider extends ExtensionPointProvider
 	{
 		return new GalleryCssFilesExtensionPoint();
 	}
+	
+	public function menus()
+	{
+		return new GalleryMenusExtensionPoint();
+	}
 }
 ?>
