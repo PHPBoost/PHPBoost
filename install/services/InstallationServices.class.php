@@ -199,7 +199,7 @@ class InstallationServices
 
 	private function init_debug_mode()
 	{
-		Debug::enabled_debug_mode(array(Debug::STRICT_MODE => true));
+		Debug::enabled_debug_mode();
 	}
 
 	private function init_user_accounts_config($locale)
