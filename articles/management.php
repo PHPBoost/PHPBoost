@@ -305,7 +305,7 @@ elseif(retrieve(POST,'submit',false))
 					ContributionService::save_contribution($articles_contribution);
 
 					//Redirection to the contribution confirmation page
-					AppContext::get_response()->redirect(HOST . DIR . '/articles/contribution.php');
+					AppContext::get_response()->redirect(UserUrlBuilder::contribution_success()->absolute());
 				}
 			}
 

@@ -58,13 +58,10 @@ $NEWS_LANG = array(
 	'category_news' => 'Gestion des catégories',
 	'configuration_news' => 'Configuration des news',
 	'confirm_del_news' => 'Supprimer cette news ?',
-	'contribution_confirmation' => 'Confirmation de contribution',
-	'contribution_confirmation_explain' => '<p>Vous pourrez la suivre dans le <a href="' . url('../member/contribution_panel.php') . '">panneau de contribution de PHPBoost</a> et éventuellement discuter avec les validateurs si leur choix n\'est pas franc.</p><p>Merci d\'avoir participé à la vie du site !</p>',
 	'contribution_counterpart' => 'Complément de contribution',
 	'contribution_counterpart_explain' => 'Expliquez les raisons de votre contribution (pourquoi vous souhaitez proposer cette news au site). Ce champ est facultatif.',
 	'contribution_entitled' => '[News] %s',
-	'contribution_success' => 'Votre contribution a bien été enregistrée.',
-
+	
 	'delete_category_and_its_content' => 'Supprimer la catégorie et tout son contenu',
 	'desc_extend_news' => 'News étendue',
 	'desc_news' => 'News',

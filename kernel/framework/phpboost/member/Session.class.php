@@ -30,7 +30,6 @@
 define('AUTOCONNECT', true);
 define('NO_AUTOCONNECT', false);
 define('ALREADY_HASHED', true);
-define('SEASURF_ATTACK_ERROR_PAGE', PATH_TO_ROOT . '/member/csrf-attack.php');
 
 /**
  * @author Régis VIARRE <crowkait@phpboost.com
@@ -644,11 +643,9 @@ class Session
 	 * 	<li>If the token isn't in the request, we analyse the HTTP referer to be sure that the request comes from the current site and not from another which can be suspect</li>
 	 * </ul>
 	 * If the request doesn't match any of these two cases, this method will consider that it's a CSRF attack.
-	 * @param mixed $redirect if string, redirect to the $redirect error page if the token is wrong
-	 * if false, do not redirect
 	 * @return bool true if no csrf attack by post is detected
 	 */
-	public function csrf_post_protect($redirect = SEASURF_ATTACK_ERROR_PAGE)
+	public function csrf_post_protect()
 	{
 		//The user sent a POST request
 		if (!empty($_POST))
@@ -665,7 +662,7 @@ class Session
 				return true;
 			}
 			//If those two lines are executed, none of the two cases has been matched. Thow it's a potential attack.
-			$this->csrf_attack($redirect);
+			$this->csrf_attack();
 			return false;
 		}
 		//It's not a POST request, there is no problem.
@@ -678,16 +675,14 @@ class Session
 	/**
 	 * @desc Check the session against CSRF attacks by GET. Checks that GETs are done from
 	 * this site with a correct token.
-	 * @param mixed $redirect if string, redirect to the $redirect error page if the token is wrong
-	 * if false, do not redirect
 	 * @return true if no csrf attack by get is detected
 	 */
-	public function csrf_get_protect($redirect = SEASURF_ATTACK_ERROR_PAGE)
+	public function csrf_get_protect()
 	{
 		$token = $this->get_token();
 		if (empty($token) || retrieve(REQUEST, 'token', '') !== $token)
 		{
-			$this->csrf_attack($redirect);
+			$this->csrf_attack();
 			return false;
 		}
 		return true;
@@ -710,17 +705,15 @@ class Session
 	/**
 	 * @desc Redirect to the $redirect error page if the token is wrong
 	 * if false, do not redirect
-	 * @param mixed $redirect if string, redirect to the $redirect error page if the token is wrong
-	 * if false, do not redirect
 	 */
-	private function csrf_attack($redirect = SEASURF_ATTACK_ERROR_PAGE)
+	private function csrf_attack()
 	{
 		$bad_token = $this->get_printable_token(retrieve(REQUEST, 'token', ''));
 		$good_token = $this->get_printable_token($this->get_token());
 
 		if ($redirect !== false && !empty($redirect))
 		{
-			AppContext::get_response()->redirect($redirect);
+			DispatchManager::redirect(PHPBoostErrors::CSRF());
 		}
 	}
 

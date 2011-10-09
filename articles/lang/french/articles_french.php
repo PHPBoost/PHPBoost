@@ -58,8 +58,6 @@ $ARTICLES_LANG = array(
 	'articles_date' => 'Date de l\'article <span class="text_small">(jj/mm/aa)</span> <br />
 	<span class="text_small">(Laisser vide pour mettre la date d\'aujourd\'hui)',
 	'explain_page' => 'Insérer une nouvelle page',
-	'contribution_confirmation' => 'Confirmation de contribution',
-	'contribution_confirmation_explain' => '<p>Vous pourrez la suivre dans le <a href="' . url('../member/contribution_panel.php') . '">panneau de contribution de PHPBoost</a> et éventuellement discuter avec les validateurs si leur choix n\'est pas franc.</p><p>Merci d\'avoir participé à la vie du site !</p>',
 	'contribution_counterpart' => 'Complément de contribution',
 	'contribution_counterpart_explain' => 'Expliquez les raisons de votre contribution (pourquoi vous souhaitez proposer cet article au site). Ce champ est facultatif.',
 	'contribution_entitled' => '[Articles] %s',
@@ -95,8 +93,6 @@ $ARTICLES_LANG = array(
 	'delete_category_and_its_content' => 'Supprimer la catégorie et tout son contenu',
 	'move_category_content' => 'Déplacer son contenu dans :',
 	'edit_articles' => 'Éditer l\'article',
-	'contribution_confirmation' => 'Confirmation de contribution',
-	'contribution_confirmation_explain' => '<p>Vous pourrez la suivre dans le <a href="' . url('../member/contribution_panel.php') . '">panneau de contribution de PHPBoost</a> et éventuellement discuter avec les validateurs si leur choix n\'est pas franc.</p><p>Merci d\'avoir participé à la vie du site !</p>',
 	'contribution_counterpart' => 'Complément de contribution',
 	'contribution_counterpart_explain' => 'Expliquez les raisons de votre contribution (pourquoi vous souhaitez proposer cet article au site). Ce champ est facultatif.',
 	'contribution_entitled' => '[Articles] %s',

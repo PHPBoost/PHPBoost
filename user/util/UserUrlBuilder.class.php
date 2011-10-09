@@ -62,6 +62,11 @@ class UserUrlBuilder
 		return DispatchManager::get_url(self::$dispatcher, '/registration/');
 	}
 	
+	public static function contribution_success()
+	{
+		return DispatchManager::get_url(self::$dispatcher, '/contribution/success/');
+	}
+	
  	public static function contribution_panel()
 	{
 		$param = !empty($id) ? '?' . $id : '';

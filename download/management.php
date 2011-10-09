@@ -532,7 +532,7 @@ else
 				ContributionService::save_contribution($download_contribution);
 				
 				//Redirection to the contribution confirmation page
-				AppContext::get_response()->redirect('/download/contribution.php');
+				AppContext::get_response()->redirect(UserUrlBuilder::contribution_success()->absolute());
 			}
 			
 			//Updating the number of subfiles in each category

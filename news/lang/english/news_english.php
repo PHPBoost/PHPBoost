@@ -58,12 +58,9 @@ $NEWS_LANG = array(
 	'category_news' => 'Categories management',
 	'configuration_news' => 'News configuration',
 	'confirm_del_news' => 'Delete this piece of news?',
-	'contribution_confirmation' => 'Confirmation of the contribution',
-	'contribution_confirmation_explain' => '<p>You will be able to follow the evolution of the validation process of your contribution in the <a href="' . url('../member/contribution_panel.php') . '">contribution panel of PHPBoost</a>. You also will manage to chat with the approbators if they are skeptical about your participation.</p><p>Thanks for having participated to the website life!</p>',
 	'contribution_counterpart' => 'Contribution counterpart',
 	'contribution_counterpart_explain' => 'Tell us why you want us to add this news. This field is not required, but it may help the moderator to take his decision.',
 	'contribution_entitled' => '[News] %s',
-	'contribution_success' => 'Your contribution has been saved.',
 
 	'delete_category_and_its_content' => 'Delete the category and all its contents',
 	'desc_extend_news' => 'Extended news',
