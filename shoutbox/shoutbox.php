@@ -276,7 +276,7 @@ else //Affichage.
 		
 		//Pseudo.
 		if (!$is_guest) 
-			$shout_pseudo = '<a class="msg_link_pseudo" href="'. MemberUrlBuilder::profile($row['user_id'])->absolute() . '" title="' . $row['mlogin'] . '"><span style="font-weight: bold;">' . TextHelper::wordwrap_html($row['mlogin'], 13) . '</span></a>';
+			$shout_pseudo = '<a class="msg_link_pseudo" href="'. UserUrlBuilder::profile($row['user_id'])->absolute() . '" title="' . $row['mlogin'] . '"><span style="font-weight: bold;">' . TextHelper::wordwrap_html($row['mlogin'], 13) . '</span></a>';
 		else
 			$shout_pseudo = '<span style="font-style:italic;">' . (!empty($row['login']) ? TextHelper::wordwrap_html($row['login'], 13) : $LANG['guest']) . '</span>';
 		
@@ -379,7 +379,7 @@ else //Affichage.
 			'PUNISHMENT' => $readonly,			
 			'DEL' => $del_message,
 			'EDIT' => $edit_message,
-			'U_USER_PM' => !$is_guest ? '<a href="'. MemberUrlBuilder::personnal_message($row['user_id'])->absolute() . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/pm.png" alt="" /></a>' : '',
+			'U_USER_PM' => !$is_guest ? '<a href="'. UserUrlBuilder::personnal_message($row['user_id'])->absolute() . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/pm.png" alt="" /></a>' : '',
 			'U_ANCHOR' => 'shoutbox.php' . SID . '#m' . $row['id']
 		));
 		$j++;

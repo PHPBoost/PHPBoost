@@ -33,10 +33,11 @@ $lang['user'] = 'Utilisateur';
 $lang['profile'] = 'Profil';
 $lang['profile.edit'] = 'Edition du profil';
 $lang['messages'] = 'Messages de l\'utilisateur';
+$lang['maintain'] = 'Maintenance';
 
 //Contribution
 $lang['contribution.confirmed'] = 'Votre contribution a bien été enregistrée.';
-$lang['contribution.confirmed.messages'] = '<p>Vous pourrez la suivre dans le <a href="' . UserUrlBuilder::contribution_panel()->relative() . '">panneau de contribution</a> 
+$lang['contribution.confirmed.messages'] = '<p>Vous pourrez la suivre dans le <a href="' . UserUrlBuilder::contribution_panel()->absolute() . '">panneau de contribution</a> 
 et éventuellement discuter avec les validateurs si leur choix n\'est pas franc.</p><p>Merci d\'avoir participé à la vie du site !</p>';
 
 
@@ -68,6 +69,7 @@ $lang['private-message'] = 'Message privé';
 
 //Other
 $lang['banned'] = 'Banni';
+$lang['connect'] = 'Se connecter';
 
 // Ranks
 $lang['visitor'] = 'Visiteur';

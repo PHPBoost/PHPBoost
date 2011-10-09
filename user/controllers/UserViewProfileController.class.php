@@ -74,12 +74,12 @@ class UserViewProfileController extends AbstractController
 
 		$fieldset->add_field(new FormFieldFree('groups', $this->lang['groups'], $this->build_groups($user_informations['user_groups'])));
 		$fieldset->add_field(new FormFieldFree('registered_on', $this->lang['registration-date'], gmdate_format('date_format_short', $user_informations['timestamp'])));
-		$fieldset->add_field(new FormFieldFree('nbr_msg', $this->lang['number-messages'], $user_informations['user_msg'] . '<br>' . '<a href="' . UserUrlBuilder::messages($user_id)->relative() . '">'. $this->lang['messages'] .'</a>'));
+		$fieldset->add_field(new FormFieldFree('nbr_msg', $this->lang['number-messages'], $user_informations['user_msg'] . '<br>' . '<a href="' . UserUrlBuilder::messages($user_id)->absolute() . '">'. $this->lang['messages'] .'</a>'));
 		$fieldset->add_field(new FormFieldFree('last_connect', $this->lang['last-connection'], gmdate_format('date_format_short', $user_informations['last_connect'])));
 		
 		if (!$this->same_user_view_profile($user_id))
 		{
-			$link_mp = '<a href="'. MemberUrlBuilder::personnal_message($user_id)->absolute() .'">
+			$link_mp = '<a href="'. UserUrlBuilder::personnal_message($user_id)->absolute() .'">
 			<img src="' . PATH_TO_ROOT . '/templates/'. get_utheme().'/images/'. get_ulang().'/pm.png" alt="'.$this->lang['profile.edit'].'" /></a>';
 			$fieldset->add_field(new FormFieldFree('private_message', $this->lang['private-message'], $link_mp));
 		}
