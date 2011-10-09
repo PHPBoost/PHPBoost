@@ -30,7 +30,7 @@ class NewsletterMenusExtensionPoint implements MenusExtensionPoint
 	public function get_menus()
 	{
 		return array(
-			new NewsletterMiniModule()
+			new NewsletterModuleMiniMenu()
 		);
 	}
 }

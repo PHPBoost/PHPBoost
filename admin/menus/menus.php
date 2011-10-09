@@ -146,7 +146,7 @@ if ($action == 'save') //Save menus positions.
        		{
        			MenuService::disable($menu);
        		}
-       		elseif(!$enabled && $new_block != 'mod_central') //Enable menu
+       		elseif(!$enabled && $new_block !== 'mod_central') //Enable menu
        		{
        			MenuService::enable($menu);
        		}

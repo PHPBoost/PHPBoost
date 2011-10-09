@@ -52,6 +52,16 @@ class ModuleMiniMenu extends Menu
     	return '';
     }
     
+	public function get_default_block()
+    {
+    	return self::BLOCK_POSITION__NOT_ENABLED;
+    }
+    
+	public function admin_display()
+    {
+        return $this->display();
+    }
+    
     /**
 	 * @return string the string the string to write in the cache file
 	 */

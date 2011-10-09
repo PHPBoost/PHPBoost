@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                          ConnectMiniModule.class.php
+ *                          ConnectModuleMiniMenu.class.php
  *                            -------------------
  *   begin                : October 08, 2011
  *   copyright            : (C) 2011 Kévin MASSY
@@ -25,9 +25,9 @@
  *
  ###################################################*/
 
-class ConnectMiniModule extends ModuleMiniMenu
+class ConnectModuleMiniMenu extends ModuleMiniMenu
 {    
-    public function get_block()
+    public function get_default_block()
     {
     	return self::BLOCK_POSITION__SUB_HEADER;
     }

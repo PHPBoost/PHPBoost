@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                          StatsMiniModule.class.php
+ *                          SearchModuleMiniMenu.class.php
  *                            -------------------
  *   begin                : October 08, 2011
  *   copyright            : (C) 2011 Kévin MASSY
@@ -25,35 +25,31 @@
  *
  ###################################################*/
 
-class StatsMiniModule extends ModuleMiniMenu
+class SearchModuleMiniMenu extends ModuleMiniMenu
 {    
-    public function get_block()
+    public function get_default_block()
     {
-    	return self::BLOCK_POSITION__LEFT;
+    	return self::BLOCK_POSITION__HEADER;
     }
 
 	public function display($tpl = false)
     {
-	    global $LANG;
-	    //Chargement de la langue du module.
-	    load_module_lang('stats');
+    	$lang = LangLoader::get('main', 'search');
+	    $search = retrieve(REQUEST, 'q', '');
 	
-	    #########################Stats.tpl###########################
-	    $tpl = new FileTemplate('stats/stats_mini.tpl');
+	    $tpl = new FileTemplate('search/search_mini.tpl');
 	
 	    MenuService::assign_positions_conditions($tpl, $this->get_block());
-	
-	    $stats_cache = StatsCache::load();
-	    $l_member_registered = ($stats_cache->get_stats_properties('nbr_members') > 1) ? $LANG['member_registered_s'] : $LANG['member_registered'];
-	
-	    $tpl->put_all(array(
-	    	'SID' => SID,
-	    	'L_STATS' => $LANG['stats'],
-	    	'L_MORE_STAT' => $LANG['more_stats'],
-	    	'L_USER_REGISTERED' => sprintf($l_member_registered, $stats_cache->get_stats_properties('nbr_members')),
-	    	'L_LAST_REGISTERED_USER' => $LANG['last_member'],
-	    	'U_LINK_LAST_USER' => '<a href="' . UserUrlBuilder::profile($stats_cache->get_stats_properties('last_member_id'))->absolute() . '">' . $stats_cache->get_stats_properties('last_member_login') . '</a>'
+	    $tpl->put_all(Array(
+	        'SEARCH' => $lang['title'],
+	        'TEXT_SEARCHED' => !empty($search) ? stripslashes(retrieve(REQUEST, 'q', '')) : $lang['title'] . '...',
+	        'WARNING_LENGTH_STRING_SEARCH' => addslashes($lang['warning_length_string_searched']),
+	    	'L_SEARCH' => $lang['do_search'],
+	        'U_FORM_VALID' => url(TPL_PATH_TO_ROOT . '/search/search.php#results'),
+	        'L_ADVANCED_SEARCH' => $lang['advanced_search'],
+	        'U_ADVANCED_SEARCH' => url(TPL_PATH_TO_ROOT . '/search/search.php'),
 	    ));
+	
 	    return $tpl->render();
     }
 }

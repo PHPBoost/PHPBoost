@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                          PollMiniModule.class.php
+ *                          PollModuleMiniMenu.class.php
  *                            -------------------
  *   begin                : October 08, 2011
  *   copyright            : (C) 2011 Kévin MASSY
@@ -25,16 +25,16 @@
  *
  ###################################################*/
 
-class PollMiniModule extends ModuleMiniMenu
+class PollModuleMiniMenu extends ModuleMiniMenu
 {    
-    public function get_block()
+    public function get_default_block()
     {
     	return self::BLOCK_POSITION__RIGHT;
     }
 
 	public function display($tpl = false)
     {
-    	 global $Cache, $LANG, $CONFIG_POLL, $_array_poll;
+    	global $Cache, $LANG, $CONFIG_POLL, $_array_poll;
 	    $Cache->load('poll'); //Mini sondages en cache => $_array_poll.
 	    if (!empty($CONFIG_POLL['poll_mini']) && $CONFIG_POLL['poll_mini'] != array() && strpos(SCRIPT, '/poll/poll.php') === false)
 	    {
