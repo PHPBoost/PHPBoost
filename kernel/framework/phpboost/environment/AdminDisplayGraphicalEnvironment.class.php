@@ -196,10 +196,10 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 		$header_tpl->put_all(array(
 			'C_BBCODE_TINYMCE_MODE' => $include_tinymce_js,
 			'C_FAVICON' => $customization_config->favicon_exists(),
-			'FAVICON' => PATH_TO_ROOT . $customization_config->get_favicon_path(),
+			'FAVICON' => Url::to_rel($customization_config->get_favicon_path()),
 			'FAVICON_TYPE' => $customization_config->favicon_type(),
 			'C_HEADER_LOGO' => !empty($header_logo_path),
-			'HEADER_LOGO' => PATH_TO_ROOT . $header_logo_path,
+			'HEADER_LOGO' => Url::to_rel($header_logo_path),
 			'SITE_NAME' => GeneralConfig::load()->get_site_name(),
 			'TITLE' => $this->get_page_title(),
 			'PATH_TO_ROOT' => TPL_PATH_TO_ROOT,
