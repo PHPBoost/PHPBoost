@@ -186,11 +186,6 @@ class UserEditProfileController extends AbstractController
 		
 		StatsCache::invalidate();
 	}
-	
-	public function get_right_controller_regarding_authorizations()
-	{
-		return $this;
-	}
 
 	private function build_response($user_id)
 	{
