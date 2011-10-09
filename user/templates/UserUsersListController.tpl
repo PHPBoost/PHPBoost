@@ -43,7 +43,9 @@
 					<a href="{member_list.U_USER_ID}">{member_list.PSEUDO}</a>
 				</td>
 				<td class="row2" style="text-align:center;"> 
-					{member_list.MAIL}
+					# IF member_list.C_MAIL #
+						<a href="mailto:{member_list.MAIL}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/email.png" alt="{member_list.MAIL}" /></a>
+					# ENDIF #
 				</td>
 				<td class="row2" style="text-align:center;"> 
 					{member_list.DATE}

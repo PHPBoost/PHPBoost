@@ -29,6 +29,8 @@
  #                     French                       #
  ####################################################
 
+$lang['comments'] = 'Commentaires';
+$lang['comment'] = 'Commentaire';
 $lang['comments.not-authorized.post'] = 'Vous n\'êtes pas autorisé à poster un commentaire';
 $lang['comments.not-authorized.read'] = 'Vous n\'êtes pas autorisé à voir les commentaires';
 $lang['comments.not-authorized.note'] = 'Vous n\'êtes pas autorisé à noter le commentaire';
