@@ -124,9 +124,7 @@ class MenuService
 			$block_position = self::get_next_position($block);
 		}
 
-		$query = '';
 		$id_menu = $menu->get_id();
-
 		$columns = array(
 			'title' => $menu->get_title(),
 			'object' => serialize($menu),
@@ -135,6 +133,7 @@ class MenuService
 			'block' => $block,
 			'position' => $menu->get_block_position()
 		);
+		
 		if ($id_menu > 0)
 		{
 			self::$querier->update(DB_TABLE_MENUS, $columns, 'WHERE id=:id', array('id' => $id_menu));
@@ -441,9 +440,14 @@ class MenuService
 		{
 			foreach (MenusProvidersService::get_menus($module_id) as $menu)
 			{
-				$title = $menu->get_title();
-				$menu->set_title($module_id . '/' . $title);
-				self::save($menu);
+				if (strpos(get_class($menu), ModuleMiniMenu::MODULE_MINI_MENU__CLASS) !== false)
+				{
+					$title = $menu->get_title();
+					$default_block = $menu->get_default_block();
+					$menu->set_title($module_id . '/' . $title);
+					$menu->set_block($default_block);
+					self::save($menu);
+				}
 			}
 				
 			if ($generate_cache)
@@ -496,13 +500,16 @@ class MenuService
 		$results = self::$querier->select_rows(DB_TABLE_MENUS, array('id', 'title', 'class'));
 		foreach ($results as $row)
 		{
-			if (array_key_exists($row['class'], $menus))
+			if (strpos($row['class'], ModuleMiniMenu::MODULE_MINI_MENU__CLASS) !== false)
 			{
-				$installed_minimodules[$row['class']] = $row['id'];
-			}
-			else
-			{
-				MenuService::delete($row['id']);
+				if (array_key_exists($row['class'], $menus))
+				{
+					$installed_minimodules[$row['class']] = $row['id'];
+				}
+				else
+				{
+					MenuService::delete($row['id']);
+				}
 			}
 		}
 
@@ -511,9 +518,10 @@ class MenuService
 		{
 			$mini_module = $menu['menu'];
 			$title = $mini_module->get_title();
+			$default_block = $mini_module->get_default_block();
 			$mini_module->set_title($menu['module_id'] . '/' . $title);
+			$mini_module->set_block($default_block);
 			self::save($mini_module);
-			//MenuService::add_mini_module($menu['module_id'], false);
 		}
 		
 		if ($update_cache)

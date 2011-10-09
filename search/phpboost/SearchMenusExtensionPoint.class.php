@@ -30,7 +30,7 @@ class SearchMenusExtensionPoint implements MenusExtensionPoint
 	public function get_menus()
 	{
 		return array(
-			new SearchMiniModule()
+			new SearchModuleMiniMenu()
 		);
 	}
 }

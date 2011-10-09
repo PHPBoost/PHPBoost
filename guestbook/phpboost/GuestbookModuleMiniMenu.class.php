@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                          GuestbookMiniModule.class.php
+ *                          GuestbookModuleMiniMenu.class.php
  *                            -------------------
  *   begin                : October 08, 2011
  *   copyright            : (C) 2011 Kévin MASSY
@@ -25,8 +25,13 @@
  *
  ###################################################*/
 
-class GuestbookMiniModule extends ModuleMiniMenu
+class GuestbookModuleMiniMenu extends ModuleMiniMenu
 {
+	public function get_default_block()
+	{
+		return self::BLOCK_POSITION__LEFT;
+	}
+	
 	public function display($tpl = false)
     {
     	global $LANG;

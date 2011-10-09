@@ -30,7 +30,7 @@ class OnlineMenusExtensionPoint implements MenusExtensionPoint
 	public function get_menus()
 	{
 		return array(
-			new OnlineMiniModule()
+			new OnlineModuleMiniMenu()
 		);
 	}
 }

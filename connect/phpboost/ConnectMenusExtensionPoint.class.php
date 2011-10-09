@@ -30,7 +30,7 @@ class ConnectMenusExtensionPoint implements MenusExtensionPoint
 	public function get_menus()
 	{
 		return array(
-			new ConnectMiniModule()
+			new ConnectModuleMiniMenu()
 		);
 	}
 }

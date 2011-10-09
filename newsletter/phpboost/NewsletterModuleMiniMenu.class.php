@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                          NewsletterMiniModule.class.php
+ *                          NewsletterModuleMiniMenu.class.php
  *                            -------------------
  *   begin                : October 08, 2011
  *   copyright            : (C) 2011 Kévin MASSY
@@ -25,9 +25,9 @@
  *
  ###################################################*/
 
-class NewsletterMiniModule extends ModuleMiniMenu
+class NewsletterModuleMiniMenu extends ModuleMiniMenu
 {    
-    public function get_block()
+    public function get_default_block()
     {
     	return self::BLOCK_POSITION__TOP_FOOTER;
     }

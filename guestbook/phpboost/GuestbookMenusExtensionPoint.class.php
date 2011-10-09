@@ -30,7 +30,7 @@ class GuestbookMenusExtensionPoint implements MenusExtensionPoint
 	public function get_menus()
 	{
 		return array(
-			new GuestbookMiniModule()
+			new GuestbookModuleMiniMenu()
 		);
 	}
 }

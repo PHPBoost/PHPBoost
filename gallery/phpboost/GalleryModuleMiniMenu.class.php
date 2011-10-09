@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                          GalleryMiniModule.class.php
+ *                          GalleryModuleMiniMenu.class.php
  *                            -------------------
  *   begin                : October 08, 2011
  *   copyright            : (C) 2011 Kévin MASSY
@@ -25,9 +25,9 @@
  *
  ###################################################*/
 
-class GalleryMiniModule extends ModuleMiniMenu
+class GalleryModuleMiniMenu extends ModuleMiniMenu
 {
-    public function get_block()
+    public function get_default_block()
     {
     	return self::BLOCK_POSITION__RIGHT;
     }

@@ -30,7 +30,7 @@ class ShoutboxMenusExtensionPoint implements MenusExtensionPoint
 	public function get_menus()
 	{
 		return array(
-			new ShoutboxMiniModule()
+			new ShoutboxModuleMiniMenu()
 		);
 	}
 }

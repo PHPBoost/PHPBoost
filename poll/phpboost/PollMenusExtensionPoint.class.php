@@ -30,7 +30,7 @@ class PollMenusExtensionPoint implements MenusExtensionPoint
 	public function get_menus()
 	{
 		return array(
-			new PollMiniModule()
+			new PollModuleMiniMenu()
 		);
 	}
 }

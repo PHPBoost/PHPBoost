@@ -11,6 +11,9 @@
 		<!-- Theme CSS -->
 		{THEME_CSS}
 		
+		<!-- Modules CSS -->
+		{MODULES_CSS}
+		
 		# IF C_FAVICON #
 		<link rel="shortcut icon" href="{FAVICON}" type="{FAVICON_TYPE}" />
 		# ENDIF #

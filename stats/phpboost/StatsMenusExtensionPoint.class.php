@@ -30,7 +30,7 @@ class StatsMenusExtensionPoint implements MenusExtensionPoint
 	public function get_menus()
 	{
 		return array(
-			new StatsMiniModule()
+			new StatsModuleMiniMenu()
 		);
 	}
 }

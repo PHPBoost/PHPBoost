@@ -30,7 +30,7 @@ class GalleryMenusExtensionPoint implements MenusExtensionPoint
 	public function get_menus()
 	{
 		return array(
-			new GalleryMiniModule()
+			new GalleryModuleMiniMenu()
 		);
 	}
 }

@@ -30,7 +30,7 @@ class FaqMenusExtensionPoint implements MenusExtensionPoint
 	public function get_menus()
 	{
 		return array(
-			new FaqMiniModule()
+			new FaqModuleMiniMenu()
 		);
 	}
 }
