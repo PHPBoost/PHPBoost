@@ -54,13 +54,29 @@ class UserService
 		return $result->get_last_inserted_id();
 	}
 	
-	public static function change_password($user_id, $password)
+	public static function update($user_id, $password, $level, $email, $locale, $timezone, $theme, $editor, $show_email)
 	{
-		$columns = array('password' => $password);
-		$condition = 'WHERE user_id = :user_id';
-		$parameters = array('user_id' => $user_id);
-		self::$querier->update(DB_TABLE_MEMBER, $columns, $condition, $parameters);
+		self::$querier->update(DB_TABLE_MEMBER, array(
+			'password' => $password,
+			'level' => $level,
+			'user_mail' => $email,
+			'user_lang' => $locale,
+			'user_theme' => $theme,
+			'user_timezone' => $timezone,
+			'user_editor' => $editor,
+			'user_show_mail' => $show_email,
+		), 'WHERE user_id = :user_id', array('user_id' => $user_id));
 	}
+	
+	public static function delete_account($user_id)
+	{
+		self::$querier->delete(DB_TABLE_MEMBER, 'WHERE user_id = :user_id', array('user_id' => ($user_id)));
+	}
+	
+	public static function change_password($user_id, $password)
+ 	{
+ 		self::$querier->update(DB_TABLE_MEMBER, array('password' => $password), 'WHERE user_id = :user_id', array('user_id' => $user_id));
+ 	}
         
 	public static function user_exists_by_id($user_id)
 	{

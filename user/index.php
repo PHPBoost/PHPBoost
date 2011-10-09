@@ -30,13 +30,15 @@ define('PATH_TO_ROOT', '..');
 require_once PATH_TO_ROOT . '/kernel/init.php';
 
 $url_controller_mappers = array(
+	new UrlControllerMapper('UserRegistrationController', '`^/registration/?$`'),
+	new UrlControllerMapper('UserConfirmRegistrationController', '`^/registration/confirm(?:/([a-z0-9]+))?/?$`', array('key')),
+	new UrlControllerMapper('UserHomeProfileController', '`^/profile/home/?$`'),
+	new UrlControllerMapper('UserViewProfileController', '`^/profile(?:/([0-9]+))?/?$`', array('user_id')),
+	new UrlControllerMapper('UserEditProfileController', '`^/profile(?:/([0-9]+))/edit/?$`', array('user_id')),
+	new UrlControllerMapper('UserMessagesController', '`^/messages(?:/([0-9]+))?/?$`', array('user_id')),
 	new UrlControllerMapper('UserMaintainController', '`^/maintain/?$`'),
 	new UrlControllerMapper('UserLostPasswordController', '`^/password/lost/?$`'),
 	new UrlControllerMapper('UserChangeLostPasswordController', '`^/password/change(?:/([a-z0-9]+))?/?$`', array('key')),
-	new UrlControllerMapper('UserViewProfileController', '`^/profile(?:/([0-9]+))?/?$`', array('user_id')),
-	new UrlControllerMapper('UserRegistrationController', '`^/registration/?$`'),
-	new UrlControllerMapper('UserConfirmRegistrationController', '`^/registration/confirm(?:/([a-z0-9]+))?/?$`', array('key')),
-	new UrlControllerMapper('UserMessagesController', '`^/messages(?:/([0-9]+))?/?$`', array('user_id')),
 	new UrlControllerMapper('UserError404Controller', '`^/error/404/?$`'),
 	new UrlControllerMapper('UserContributionSuccessController', '`^/contribution/success/?$`'),
 );

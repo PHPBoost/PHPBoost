@@ -85,9 +85,13 @@ class UserUrlBuilder
 		return new Url(self::$dispatcher . '/upload.php');
 	}
 	
-	public static function edit_profile()
+	public static function edit_profile($user_id = '')
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/profile/edit/');
+		if (!empty($user_id))
+		{
+			return DispatchManager::get_url(self::$dispatcher, '/profile/'. $user_id .'/edit/');
+		}
+		return DispatchManager::get_url(self::$dispatcher, '/profile/'. AppContext::get_user()->get_attribute('user_id') .'/edit/');
 	}
 	
 	public static function users()
