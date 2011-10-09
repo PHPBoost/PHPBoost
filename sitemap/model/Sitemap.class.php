@@ -211,32 +211,32 @@ class Sitemap
 		//All the links which not need to be present in the search engine results.
 		if ($mode == self::USER_MODE)
 		{
-			$kernel_map->add(new SitemapLink($LANG['members_list'], MemberUrlBuilder::members()));
+			$kernel_map->add(new SitemapLink($LANG['members_list'], UserUrlBuilder::users()));
 
 			//Member space
 			if ($auth_mode == self::AUTH_USER && $User->check_level(MEMBER_LEVEL))
 			{
 				//We create a section for that
 				$member_space_section = new SitemapSection(new SitemapLink($LANG['my_private_profile'],
-				MemberUrlBuilder::profile($User->get_id())));
+				UserUrlBuilder::profile($User->get_id())));
 					
 				//Profile edition
 				$member_space_section->add(new SitemapLink($LANG['profile_edition'],
-				MemberUrlBuilder::edit_profile($User->get_id())));
+				UserUrlBuilder::edit_profile($User->get_id())));
 					
 				//Private messaging
 				$member_space_section->add(new SitemapLink($LANG['private_messaging'],
-				MemberUrlBuilder::personnal_message($User->get_id())));
+				UserUrlBuilder::personnal_message($User->get_id())));
 					
 				//Contribution panel
 				$member_space_section->add(new SitemapLink($LANG['contribution_panel'], 
-				MemberUrlBuilder::contribution()));
+				UserUrlBuilder::contribution_panel()));
 					
 				//Administration panel
 				if ($User->check_level(ADMIN_LEVEL))
 				{
 					$member_space_section->add(new SitemapLink($LANG['admin_panel'], 
-					MemberUrlBuilder::administration()));
+					UserUrlBuilder::administration()));
 				}
 					
 				//We add it to the kernel map

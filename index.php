@@ -50,16 +50,14 @@ $Cache = new Cache();
 
 Environment::init();
 
-//Sinon, c'est que tout a bien marché, on renvoie sur la page de démarrage
 $start_page = Environment::get_home_page();
-
 if ($start_page != HOST . DIR . '/index.php' && $start_page != './index.php') //Empêche une boucle de redirection.
 {
 	AppContext::get_response()->redirect($start_page);
 }
 else
 {
-	AppContext::get_response()->redirect(MemberUrlBuilder::members()->absolute());
+	AppContext::get_response()->redirect(UserUrlBuilder::home()->absolute());
 }
 
 ?>

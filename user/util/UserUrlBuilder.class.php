@@ -32,6 +32,11 @@ class UserUrlBuilder
 {
     private static $dispatcher = '/user';
 
+	public static function maintain()
+    {
+    	return DispatchManager::get_url(self::$dispatcher, '/maintain/');
+    }
+    
     public static function forget_password()
     {
     	return DispatchManager::get_url(self::$dispatcher, '/password/lost/');
@@ -42,6 +47,11 @@ class UserUrlBuilder
     	return DispatchManager::get_url(self::$dispatcher, '/password/change/' . $key);
     }
     
+    public static function home_profile()
+	{
+		return DispatchManager::get_url(self::$dispatcher, '/profile/home/');
+	}
+	
     public static function profile($user_id)
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/profile/' . $user_id);
@@ -54,12 +64,14 @@ class UserUrlBuilder
 	
  	public static function contribution_panel()
 	{
-		return new Url(self::$dispatcher . '/contribution_panel.php');
+		$param = !empty($id) ? '?' . $id : '';
+		return new Url(self::$dispatcher . '/contribution_panel.php' . $param);
 	}
 	
-	public static function moderation_panel()
+	public static function moderation_panel($type = '', $user_id = '')
 	{
-		return new Url(self::$dispatcher . '/moderation_panel.php');
+		$param = !empty($type) ? '?action=' . $type . '&' . $user_id : '';
+		return new Url(self::$dispatcher . '/moderation_panel.php' . $param);
 	}
 	
 	public static function personnal_message($user_id = 0)
@@ -82,6 +94,11 @@ class UserUrlBuilder
 	{
 		return DispatchManager::get_url(self::$dispatcher, '');
 	}
+
+	public static function home()
+	{
+		return self::users();
+	}
 	
 	public static function error_404()
 	{
@@ -96,6 +113,21 @@ class UserUrlBuilder
 	public static function group($id)
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/group/' . $id);
+	}
+	
+	public static function connect()
+	{
+		return DispatchManager::get_url(self::$dispatcher, '/connect');
+	}
+	
+	public static function disconnect()
+	{
+		return new Url('/index.php?disconnect=true&amp;token=' . AppContext::get_session()->get_token());
+	}
+	
+	public static function administration()
+	{
+		return new Url('/admin/admin_index.php');
 	}
 }
 ?>

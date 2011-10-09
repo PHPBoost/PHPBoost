@@ -51,6 +51,7 @@ class ExtensionPointProviderService
 		$this->load_modules_providers();
 		$this->register_provider('kernel');
 		$this->register_provider('events');
+		$this->register_provider('user');
 		$this->register_provider('install');
 	}
 

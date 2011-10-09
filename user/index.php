@@ -30,6 +30,7 @@ define('PATH_TO_ROOT', '..');
 require_once PATH_TO_ROOT . '/kernel/init.php';
 
 $url_controller_mappers = array(
+	new UrlControllerMapper('UserMaintainController', '`^/maintain/?$`'),
 	new UrlControllerMapper('UserLostPasswordController', '`^/password/lost/?$`'),
 	new UrlControllerMapper('UserChangeLostPasswordController', '`^/password/change(?:/([a-z0-9]+))?/?$`', array('key')),
 	new UrlControllerMapper('UserViewProfileController', '`^/profile(?:/([0-9]+))?/?$`', array('user_id')),

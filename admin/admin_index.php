@@ -111,7 +111,7 @@ while ($row = $Sql->fetch_assoc($result))
 	if (!empty($robot))
 		$login = '<span class="robot">' . ($robot == 'unknow_bot' ? $LANG['unknow_bot'] : $robot) . '</span>';
 	else
-		$login = !empty($row['login']) ? '<a class="' . $class . '" href="'. MemberUrlBuilder::profile($row['user_id'])->absolute() .'">' . $row['login'] . '</a>' : $LANG['guest'];
+		$login = !empty($row['login']) ? '<a class="' . $class . '" href="'. UserUrlBuilder::profile($row['user_id'])->absolute() .'">' . $row['login'] . '</a>' : $LANG['guest'];
 	
 	$row['session_script_get'] = !empty($row['session_script_get']) ? '?' . $row['session_script_get'] : '';
 	

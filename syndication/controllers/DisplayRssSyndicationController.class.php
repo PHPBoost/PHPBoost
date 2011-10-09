@@ -34,7 +34,7 @@ class DisplayRssSyndicationController extends AbstractController
 		
 		if (empty($module_id))
 		{
-			AppContext::get_response()->redirect(MemberUrlBuilder::members()->absolute());
+			AppContext::get_response()->redirect(UserUrlBuilder::home()->absolute());
 		}
 		
 		$this->init();
