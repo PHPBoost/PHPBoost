@@ -27,18 +27,18 @@
 		<h5 class="links"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/ranks_mini.png" class="valign_middle" alt="" /> {L_ADMINISTRATION}</h5>
 		<ul id="smenu2">
 			<li class="extend" onmouseover="show_menu(21, 1);" onmouseout="hide_menu(1);">
-				<a href="{PATH_TO_ROOT}/admin/config/index.php?url=/general" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/config_mini.png);">{L_CONFIGURATION}</a>
+				<a href="${relative_url(AdminConfigUrlBuilder::general_config())}" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/config_mini.png);">{L_CONFIGURATION}</a>
 				<ul id="ssmenu21">
-					<li><a href="{PATH_TO_ROOT}/admin/config/?url=/general" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/config_mini.png);">{L_CONFIG_GENERAL}</a></li>
-					<li><a href="{PATH_TO_ROOT}/admin/config/?url=/advanced" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/config_mini.png);">{L_CONFIG_ADVANCED}</a></li>
-					<li><a href="{PATH_TO_ROOT}/admin/config/?url=/mail" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/config_mini.png);">{L_MAIL_CONFIG}</a></li>
+					<li><a href="${relative_url(AdminConfigUrlBuilder::general_config())}" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/config_mini.png);">{L_CONFIG_GENERAL}</a></li>
+					<li><a href="${relative_url(AdminConfigUrlBuilder::advanced_config())}" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/config_mini.png);">{L_CONFIG_ADVANCED}</a></li>
+					<li><a href="${relative_url(AdminConfigUrlBuilder::mail_config())}" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/config_mini.png);">{L_MAIL_CONFIG}</a></li>
 				</ul>
 			</li>
 			<li class="extend" onmouseover="show_menu(22, 1);" onmouseout="hide_menu(1);">
-				<a href="{PATH_TO_ROOT}/admin/themes/" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/themes_mini.png);">{L_THEMES}</a>
+				<a href="${relative_url(AdminThemeUrlBuilder::list_installed_theme())}" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/themes_mini.png);">{L_THEMES}</a>
 				<ul id="ssmenu22">
-					<li><a href="{PATH_TO_ROOT}/admin/themes/" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/themes_mini.png);">{L_MANAGEMENT}</a></li>
-					<li><a href="{PATH_TO_ROOT}/admin/themes/?url=/add" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/themes_mini.png);">{L_ADD}</a></li>
+					<li><a href="${relative_url(AdminThemeUrlBuilder::list_installed_theme())}" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/themes_mini.png);">{L_MANAGEMENT}</a></li>
+					<li><a href="${relative_url(AdminThemeUrlBuilder::add_theme())}" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/themes_mini.png);">{L_ADD}</a></li>
 				</ul>
 			</li>
 			<li class="extend" onmouseover="show_menu(23, 1);" onmouseout="hide_menu(1);">
@@ -226,11 +226,11 @@
 		<h5 class="links"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/modules_mini.png" class="valign_middle" alt="" /> {L_MODULES}</h5>
 		<ul id="smenu6">
 			<li class="extend" onmouseover="show_menu(61, 1);" onmouseout="hide_menu(1);">
-				<a href="{PATH_TO_ROOT}/admin/modules/?url=/installed" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/modules_mini.png);">{L_MODULES}</a>
+				<a href="${relative_url(AdminModulesUrlBuilder::list_installed_modules())}" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/modules_mini.png);">{L_MODULES}</a>
 				<ul id="ssmenu61"> 
-					<li><a href="{PATH_TO_ROOT}/admin/modules/?url=/installed" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/modules_mini.png);">{L_MANAGEMENT}</a></li>
-					<li><a href="{PATH_TO_ROOT}/admin/modules/?url=/add" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/modules_mini.png);">{L_ADD}</a></li>
-					<li><a href="{PATH_TO_ROOT}/admin/modules/?url=/update" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/modules_mini.png);">{L_UPDATES}</a></li>
+					<li><a href="${relative_url(AdminModulesUrlBuilder::list_installed_modules())}" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/modules_mini.png);">{L_MANAGEMENT}</a></li>
+					<li><a href="${relative_url(AdminModulesUrlBuilder::add_module())}" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/modules_mini.png);">{L_ADD}</a></li>
+					<li><a href="${relative_url(AdminModulesUrlBuilder::update_module())}" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/modules_mini.png);">{L_UPDATES}</a></li>
 				</ul>
 			</li>
 			# IF C_ADMIN_LINKS_6 #

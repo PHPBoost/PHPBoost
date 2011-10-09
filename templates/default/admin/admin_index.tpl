@@ -17,9 +17,9 @@
 					<a href="menus/menus.php" class="quick_link">{L_MENUS_MANAGMENT}</a>
 				</li>
 				<li>
-					<a href="{PATH_TO_ROOT}/admin/modules/?url=/installed"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/modules.png" alt="" /></a>
+					<a href="${relative_url(AdminModulesUrlBuilder::list_installed_modules())}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/modules.png" alt="" /></a>
 					<br />
-					<a href="{PATH_TO_ROOT}/admin/modules/?url=/installed" class="quick_link">{L_MODULES_MANAGMENT}</a>
+					<a href="${relative_url(AdminModulesUrlBuilder::list_installed_modules())}" class="quick_link">{L_MODULES_MANAGMENT}</a>
 				</li>
 				<li>
 					<a href="updates/updates.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/updater.png" alt="" /></a>

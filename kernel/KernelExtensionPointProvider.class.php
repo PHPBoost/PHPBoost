@@ -43,8 +43,12 @@ class KernelExtensionPointProvider extends ExtensionPointProvider
 			new DispatcherUrlMapping('/admin/config/index.php'),
             new DispatcherUrlMapping('/admin/cache/index.php'),
             new DispatcherUrlMapping('/admin/errors/index.php'),
-			new DispatcherUrlMapping('/admin/user/index.php'),
+			new DispatcherUrlMapping('/admin/member/index.php'),
 			new DispatcherUrlMapping('/admin/themes/index.php'),
+			new DispatcherUrlMapping('/admin/modules/index.php'),
+			new DispatcherUrlMapping('/admin/customize/index.php'),
+			new DispatcherUrlMapping('/admin/content/index.php'),
+			new DispatcherUrlMapping('/user/index.php'),
 			new DispatcherUrlMapping('/syndication/index.php')
 		));
 	}

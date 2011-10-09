@@ -13,9 +13,9 @@
 		</tr>
 		<tr style="text-align:center;">
 			<td class="row2" style="width:20%;">
-				<a href="{PATH_TO_ROOT}/admin/config/?url=/general"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/configuration.png" alt="" /></a>		
+				<a href="${relative_url(AdminConfigUrlBuilder::general_config())}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/configuration.png" alt="" /></a>		
 				<br />
-				<a href="{PATH_TO_ROOT}/admin/config/?url=/general">{L_CONFIGURATION}</a>						
+				<a href="${relative_url(AdminConfigUrlBuilder::general_config())}">{L_CONFIGURATION}</a>						
 			</td>
 			<td class="row2" style="width:20%;">
 				<a href="{PATH_TO_ROOT}/admin/themes/"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/themes.png" alt="" /></a>		
@@ -50,9 +50,9 @@
 				<a href="{PATH_TO_ROOT}/admin/admin_maintain.php">{L_MAINTAIN}</a>
 			</td>	
 			<td class="row2" style="width:20%;">
-				<a href="{PATH_TO_ROOT}/admin/cache/?url=/data/"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/cache.png" alt="" /></a>		
+				<a href="${relative_url(AdminCacheUrlBuilder::clear_cache())}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/cache.png" alt="" /></a>		
 				<br />
-				<a href="{PATH_TO_ROOT}/admin/cache/?url=/data/">{L_CACHE}</a>				
+				<a href="${relative_url(AdminCacheUrlBuilder::clear_cache())}">{L_CACHE}</a>				
 			</td>				
 			<td class="row2" style="width:20%;">
 				<a href="{PATH_TO_ROOT}/admin/admin_errors.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/errors.png" alt="" /></a>		
@@ -109,7 +109,7 @@
 				<a href="{PATH_TO_ROOT}/admin/admin_files.php">{L_FILES}</a>		
 			</td>
 			<td class="row2" style="width:20%;">
-				<a href="{PATH_TO_ROOT}/admin/admin_com.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/com.png" alt="" /></a>		
+				<a href="{PATH_TO_ROOT}/admin/admin_com.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/com.png" alt="" /></a>		
 				<br />
 				<a href="{PATH_TO_ROOT}/admin/admin_com.php">{L_COM}</a>
 			</td>	
