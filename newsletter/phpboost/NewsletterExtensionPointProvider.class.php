@@ -41,5 +41,10 @@ class NewsletterExtensionPointProvider extends ExtensionPointProvider
 	{
 		return new NewsletterExtendedField();
 	}
+	
+	public function menus()
+	{
+		return new NewsletterMenusExtensionPoint();
+	}
 }
 ?>

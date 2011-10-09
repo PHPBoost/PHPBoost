@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                              ConnectExtensionPointProvider.class.php
+ *                          NewsletterMiniModule.class.php
  *                            -------------------
- *   begin                : October 06, 2011
+ *   begin                : October 08, 2011
  *   copyright            : (C) 2011 Kévin MASSY
  *   email                : soldier.weasel@gmail.com
  *
@@ -25,21 +25,29 @@
  *
  ###################################################*/
 
-class ConnectExtensionPointProvider extends ExtensionPointProvider
-{
-	public function __construct()
-	{
-		parent::__construct('connect');
-	}
+class NewsletterMiniModule extends ModuleMiniMenu
+{    
+    public function get_block()
+    {
+    	return self::BLOCK_POSITION__TOP_FOOTER;
+    }
 
-	public function css_files()
-	{
-		return new ConnectCssFilesExtensionPoint();
-	}
+	public function display($tpl = false)
+    {
+    	$tpl = new FileTemplate('newsletter/newsletter_mini.tpl');
+	    MenuService::assign_positions_conditions($tpl, $this->get_block());
+	    
+	    $lang = LangLoader::get('newsletter_common', 'newsletter');
+	    $tpl->put_all(array(
+	    	'SUBSCRIBE' => $lang['newsletter.subscribe_newsletters'],
+	    	'UNSUBSCRIBE' => $lang['newsletter.unsubscribe_newsletters'],
+	    	'USER_MAIL' => (AppContext::get_user()->get_attribute('user_mail') != '') ? AppContext::get_user()->get_attribute('user_mail') : '',
+	    	'L_NEWSLETTER' => $lang['newsletter'],
+	    	'L_SUBMIT' => $lang['newsletter.submit'],
+	    	'L_ARCHIVES' => $lang['newsletter.archives']
+	    ));
 	
-	public function menus()
-	{
-		return new ConnectMenusExtensionPoint();
-	}
+	    return $tpl->render();
+    }
 }
 ?>

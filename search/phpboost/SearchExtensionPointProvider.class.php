@@ -46,5 +46,10 @@ class SearchExtensionPointProvider extends ExtensionPointProvider
 	{
 		return new SearchCssFilesExtensionPoint();
 	}
+	
+	public function menus()
+	{
+		return new SearchMenusExtensionPoint();
+	}
 }
 ?>

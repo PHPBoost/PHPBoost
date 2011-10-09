@@ -34,5 +34,10 @@ class OnlineExtensionPointProvider extends ExtensionPointProvider
         $this->sql_querier = PersistenceContext::get_sql();
         parent::__construct('online');
     }
+    
+    public function menus()
+    {
+    	return new OnlineMenusExtensionPoint();
+    }
 }
 ?>

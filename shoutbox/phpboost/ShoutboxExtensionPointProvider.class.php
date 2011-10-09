@@ -44,5 +44,10 @@ class ShoutboxExtensionPointProvider extends ExtensionPointProvider
 	{
 		return new ShoutboxCssFilesExtensionPoint();
 	}
+	
+	public function menus()
+	{
+		return new ShoutboxMenusExtensionPoint();
+	}
 }
 ?>

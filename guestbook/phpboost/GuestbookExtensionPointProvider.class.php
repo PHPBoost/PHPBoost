@@ -36,5 +36,10 @@ class GuestbookExtensionPointProvider extends ExtensionPointProvider
         $this->sql_querier = PersistenceContext::get_sql();
         parent::__construct('guestbook');
     }
+    
+    public function menus()
+    {
+    	return new GuestbookMenusExtensionPoint();
+    }
 }
 ?>

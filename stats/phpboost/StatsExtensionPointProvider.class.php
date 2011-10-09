@@ -1,10 +1,10 @@
 <?php
 /*##################################################
- *                                link.php
+ *                        StatsExtensionPointProvider.class.php
  *                            -------------------
- *   begin                : July 06, 2006
- *   copyright            : (C) 2006 Sautel Benoit
- *   email                : ben.popeye@phpboost.com
+ *   begin                : October 08, 2011
+ *   copyright            : (C) 2011 Kévin MASSY
+ *   email                : soldier.weasel@gmail.com
  *
  *
  ###################################################
@@ -25,25 +25,16 @@
  *
  ###################################################*/
 
-if (defined('PHPBOOST') !== true)	exit;
-
-function newsletter_mini($position, $block)
+class StatsExtensionPointProvider extends ExtensionPointProvider
 {
-    $tpl = new FileTemplate('newsletter/newsletter_mini.tpl');
-
-    MenuService::assign_positions_conditions($tpl, $block);
-
-	$lang = LangLoader::get('newsletter_common', 'newsletter');
+	public function __construct()
+	{
+		parent::__construct('stats');
+	}
 	
-    $tpl->put_all(array(
-    	'SUBSCRIBE' => $lang['newsletter.subscribe_newsletters'],
-    	'UNSUBSCRIBE' => $lang['newsletter.unsubscribe_newsletters'],
-    	'USER_MAIL' => (AppContext::get_user()->get_attribute('user_mail') != '') ? AppContext::get_user()->get_attribute('user_mail') : '',
-    	'L_NEWSLETTER' => $lang['newsletter'],
-    	'L_SUBMIT' => $lang['newsletter.submit'],
-    	'L_ARCHIVES' => $lang['newsletter.archives']
-    ));
-
-    return $tpl->render();
+	public function menus()
+	{
+		return new StatsMenusExtensionPoint();
+	}
 }
 ?>

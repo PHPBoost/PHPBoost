@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                           MenuExtensionPoint.class.php
+ *                           FaqMenusExtensionPoint.class.php
  *                            -------------------
- *   begin                : May 05, 2011
+ *   begin                : October 08, 2011
  *   copyright            : (C) 2011 Kévin MASSY
  *   email                : soldier.weasel@gmail.com
  *
@@ -25,14 +25,13 @@
  *
  ###################################################*/
 
-interface MenuExtensionPoint extends ExtensionPoint
+class FaqMenusExtensionPoint implements MenusExtensionPoint
 {
-	const EXTENSION_POINT = 'menu';
-
-	/**
-	 * @desc Returns Array class name menus
-	 * @return class name menus
-	 */
-	function get_menus();
+	public function get_menus()
+	{
+		return array(
+			new FaqMiniModule()
+		);
+	}
 }
 ?>
