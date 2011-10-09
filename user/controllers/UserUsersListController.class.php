@@ -97,13 +97,12 @@ class UserUsersListController extends AbstractController
 		while ($row = $result->fetch())
 		{
 			$user_msg = !empty($row['user_msg']) ? $row['user_msg'] : '0';
-			$user_mail = ( $row['user_show_mail'] == 1 ) ? '<a href="mailto:' . $row['user_mail'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/email.png" alt="' . $row['user_mail'] . '" /></a>' : '&nbsp;';
-			
 			$last_connect = !empty($row['last_connect']) ? $row['last_connect'] : $row['timestamp'];
 		
 			$this->view->assign_block_vars('member_list', array(
+				'C_MAIL' => $row['user_show_mail'] == 1,
 				'PSEUDO' => $row['login'],
-				'MAIL' => $user_mail,
+				'MAIL' => $row['user_mail'],
 				'MSG' => $user_msg,
 				'LAST_CONNECT' => gmdate_format('date_format_short', $last_connect),
 				'DATE' => gmdate_format('date_format_short', $row['timestamp']),

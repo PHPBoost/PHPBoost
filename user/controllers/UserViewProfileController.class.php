@@ -73,15 +73,15 @@ class UserViewProfileController extends AbstractController
 		$fieldset->add_field(new FormFieldFree('level', $this->lang['level'], $this->get_level_lang($user_informations)));
 
 		$fieldset->add_field(new FormFieldFree('groups', $this->lang['groups'], $this->build_groups($user_informations['user_groups'])));
-		$fieldset->add_field(new FormFieldFree('registered_on', $this->lang['registration-date'], gmdate_format('date_format_short', $user_informations['timestamp'])));
+		$fieldset->add_field(new FormFieldFree('registered_on', $this->lang['registration_date'], gmdate_format('date_format_short', $user_informations['timestamp'])));
 		$fieldset->add_field(new FormFieldFree('nbr_msg', $this->lang['number-messages'], $user_informations['user_msg'] . '<br>' . '<a href="' . UserUrlBuilder::messages($user_id)->absolute() . '">'. $this->lang['messages'] .'</a>'));
-		$fieldset->add_field(new FormFieldFree('last_connect', $this->lang['last-connection'], gmdate_format('date_format_short', $user_informations['last_connect'])));
+		$fieldset->add_field(new FormFieldFree('last_connect', $this->lang['last_connection'], gmdate_format('date_format_short', $user_informations['last_connect'])));
 		
 		if (!$this->same_user_view_profile($user_id))
 		{
 			$link_mp = '<a href="'. UserUrlBuilder::personnal_message($user_id)->absolute() .'">
 			<img src="' . PATH_TO_ROOT . '/templates/'. get_utheme().'/images/'. get_ulang().'/pm.png" alt="'.$this->lang['profile.edit'].'" /></a>';
-			$fieldset->add_field(new FormFieldFree('private_message', $this->lang['private-message'], $link_mp));
+			$fieldset->add_field(new FormFieldFree('private_message', $this->lang['private_message'], $link_mp));
 		}
 		
 		$member_extended_field = new MemberExtendedField();
@@ -122,9 +122,9 @@ class UserViewProfileController extends AbstractController
 			{
 				if ($groups_cache->group_exists($group_id))
 				{
-					$groups_cache->get_group($group_id);
+					$group = $groups_cache->get_group($group_id);
 					$group_image = !empty($group['img']) ? '<img src="'. PATH_TO_ROOT .'/images/group/' . $group['img'] . '" alt="' . $group['name'] . '" title="' . $group['name'] . '" class="valign_middle" />' : $group['name'];
-					$user_groups_html .= '<li><a href="' . UserurlBuilder::group($group_id)->relative() . '">' . $group_image . '</a></li>';
+					$user_groups_html .= '<li><a href="' . UserUrlBuilder::group($group_id)->absolute() . '">' . $group_image . '</a></li>';
 				}
 			}
 		}
