@@ -35,6 +35,7 @@ $lang['profile'] = 'Profil';
 $lang['profile.edit'] = 'Edition du profil';
 $lang['messages'] = 'Messages de l\'utilisateur';
 $lang['maintain'] = 'Maintenance';
+$lang['groups'] = 'Groupes';
 
 $lang['profile.edit.success'] = 'Le profil a bien été modifié';
 $lang['profile.edit.password.error'] = 'Le mot de passe que vous avez entré n\'est pas correct';
@@ -65,12 +66,16 @@ $lang['timezone.choice'] = 'Choix du fuseau horaire';
 $lang['timezone.choice.explain'] = 'Permet d\'ajuster l\'heure à votre localisation';
 $lang['email.hide'] = 'Cache l\'email';
 $lang['level'] = 'Rang';
-$lang['groups'] = 'Groupes';
+
 $lang['registration_date'] = 'Date d\'inscription';
 $lang['last_connection'] = 'Dernière connexion';
 $lang['number-messages'] = 'Nombre de messages';
 $lang['private_message'] = 'Message privé';
 $lang['delete-account'] = 'Supprimer le compte';
+$lang['avatar'] = 'Avatar';
+
+$lang['groups'] = 'Groupes';
+$lang['groups.select'] = 'Séléctionner un groupe';
 
 //Other
 $lang['banned'] = 'Banni';
