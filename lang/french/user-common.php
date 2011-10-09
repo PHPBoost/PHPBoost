@@ -30,6 +30,7 @@
  ####################################################
 
 $lang['user'] = 'Utilisateur';
+$lang['users'] = 'Utilisateurs';
 $lang['profile'] = 'Profil';
 $lang['profile.edit'] = 'Edition du profil';
 $lang['messages'] = 'Messages de l\'utilisateur';
@@ -65,10 +66,10 @@ $lang['timezone.choice.explain'] = 'Permet d\'ajuster l\'heure à votre localisat
 $lang['email.hide'] = 'Cache l\'email';
 $lang['level'] = 'Rang';
 $lang['groups'] = 'Groupes';
-$lang['registration-date'] = 'Date d\'inscription';
-$lang['last-connection'] = 'Dernière connexion';
+$lang['registration_date'] = 'Date d\'inscription';
+$lang['last_connection'] = 'Dernière connexion';
 $lang['number-messages'] = 'Nombre de messages';
-$lang['private-message'] = 'Message privé';
+$lang['private_message'] = 'Message privé';
 $lang['delete-account'] = 'Supprimer le compte';
 
 //Other

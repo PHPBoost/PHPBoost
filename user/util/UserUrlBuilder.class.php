@@ -94,14 +94,14 @@ class UserUrlBuilder
 		return DispatchManager::get_url(self::$dispatcher, '/profile/'. AppContext::get_user()->get_attribute('user_id') .'/edit/');
 	}
 	
-	public static function users()
+	public static function users($field = '', $sort = '', $page = '')
 	{
-		return DispatchManager::get_url(self::$dispatcher, '');
+		return DispatchManager::get_url(self::$dispatcher, $field . '/' . $sort . '/' . $page);
 	}
 
 	public static function home()
 	{
-		return self::users();
+		return DispatchManager::get_url(self::$dispatcher, '');
 	}
 	
 	public static function error_404()
