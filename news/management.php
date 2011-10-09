@@ -221,7 +221,7 @@ elseif (!empty($_POST['submit']))
 					ContributionService::save_contribution($news_contribution);
 
 					//Redirection to the contribution confirmation page
-					AppContext::get_response()->redirect('/news/contribution.php');
+					AppContext::get_response()->redirect(UserUrlBuilder::contribution_success()->absolute());
 				}
 			}
 

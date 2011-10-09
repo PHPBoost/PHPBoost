@@ -126,11 +126,11 @@ if ($file_id > 0) //Contenu
 			}
 
 			ContributionService::save_contribution($contribution);
-			AppContext::get_response()->redirect('/download/contribution.php');
+			AppContext::get_response()->redirect(UserUrlBuilder::contribution_success()->absolute());
 		}
 		else
 		{
-			AppContext::get_response()->redirect('/download/contribution.php');
+			AppContext::get_response()->redirect(UserUrlBuilder::contribution_success()->absolute());
 		}
 	}
 	

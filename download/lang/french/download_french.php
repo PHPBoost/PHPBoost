@@ -145,9 +145,6 @@ $DOWNLOAD_LANG['notice_contribution'] = 'Vous n\'êtes pas autorisé à créer un fi
 $DOWNLOAD_LANG['contribution_counterpart'] = 'Complément de contribution';
 $DOWNLOAD_LANG['contribution_counterpart_explain'] = 'Expliquez les raisons de votre contribution (pourquoi vous souhaitez proposer ce fichier au téléchargement). Ce champ est facultatif.';
 $DOWNLOAD_LANG['contribution_entitled'] = 'Un fichier a été proposé : %s';
-$DOWNLOAD_LANG['contribution_confirmation'] = 'Confirmation de contribution';
-$DOWNLOAD_LANG['contribution_confirmation_explain'] = '<p>Vous pourrez la suivre dans le <a href="' . url('../member/contribution_panel.php') . '">panneau de contribution de PHPBoost</a> et éventuellement discuter avec les validateurs si leur choix n\'est pas franc.</p><p>Merci d\'avoir participé à la vie du site !</p>';
-$DOWNLOAD_LANG['contribution_success'] = 'Votre contribution a bien été enregistrée.';
 
 // Lien mort
 $DOWNLOAD_LANG['contribution_deadlink'] = 'Lient mort : %s';

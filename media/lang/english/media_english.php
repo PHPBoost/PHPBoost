@@ -99,11 +99,6 @@ $MEDIA_LANG = array(
 'management_cat' => 'Category management',
 'management_media' => 'Multimedia management',
 
-// contribution.php
-'contribution_confirmation' => 'Contribution confirmation',
-'contribution_confirmation_explain' => '<p>You will be able to follow the validation process of your contribution in the <a href="' . url('../member/contribution_panel.php') . '">contribution panel of PHPBoost</a>. You also will manage to chat with the validators if they are skeptical about your participation.</p><p>Thanks for having participated to the website life!</p>',
-'contribution_success' => 'Your contribution has been saved.',
-
 // media.php
 'add_on_date' => 'Added on %s',
 'n_time' => '%d time',

@@ -58,6 +58,12 @@ class UserExploreGroupsController extends AbstractController
 				'GROUP_NAME' => $group['name']
 			));
 		}
+		else
+		{
+			$this->view->put_all(array(
+				'GROUP_NAME' => $this->lang['groups']
+			));
+		}
 		
 		$this->view->put_all(array(
 			'SELECT_GROUP' => $this->build_form($group_id)->display(),
