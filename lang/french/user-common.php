@@ -35,6 +35,9 @@ $lang['profile.edit'] = 'Edition du profil';
 $lang['messages'] = 'Messages de l\'utilisateur';
 $lang['maintain'] = 'Maintenance';
 
+$lang['profile.edit.success'] = 'Le profil a bien été modifié';
+$lang['profile.edit.password.error'] = 'Le mot de passe que vous avez entré n\'est pas correct';
+
 //Contribution
 $lang['contribution.confirmed'] = 'Votre contribution a bien été enregistrée.';
 $lang['contribution.confirmed.messages'] = '<p>Vous pourrez la suivre dans le <a href="' . UserUrlBuilder::contribution_panel()->absolute() . '">panneau de contribution</a> 
@@ -47,6 +50,7 @@ $lang['pseudo.explain'] = 'Longueur minimale du pseudo : 3 caractères';
 $lang['password'] = 'Mot de passe';
 $lang['password.new'] = 'Nouveau mot de passe';
 $lang['password.old'] = 'Ancien mot de passe';
+$lang['password.old.explain'] = 'Remplir seulement en cas de modification';
 $lang['password.confirm'] = 'Confirmer le mot de passe';
 $lang['password.explain'] = 'Longueur minimale du mot de passe : 6 caractères';
 $lang['email'] = 'Email';
@@ -59,13 +63,13 @@ $lang['timezone.'] = 'Fuseau horaire';
 $lang['timezone.choice'] = 'Choix du fuseau horaire';
 $lang['timezone.choice.explain'] = 'Permet d\'ajuster l\'heure à votre localisation';
 $lang['email.hide'] = 'Cache l\'email';
-$lang['email.hide'] = 'Cache l\'email';
 $lang['level'] = 'Rang';
 $lang['groups'] = 'Groupes';
 $lang['registration-date'] = 'Date d\'inscription';
 $lang['last-connection'] = 'Dernière connexion';
 $lang['number-messages'] = 'Nombre de messages';
 $lang['private-message'] = 'Message privé';
+$lang['delete-account'] = 'Supprimer le compte';
 
 //Other
 $lang['banned'] = 'Banni';
