@@ -1,10 +1,10 @@
 <?php
 /*##################################################
- *                              NewsletterExtensionPointProvider.class.php
+ *                     NewsletterCssFilesExtensionPoint.class.php
  *                            -------------------
- *   begin                : July 7, 2008
- *   copyright            : (C) 2008 Régis Viarre
- *   email                : crowkait@phpboost.com
+ *   begin                : October 09, 2011
+ *   copyright            : (C) 2011 Kévin MASSY
+ *   email                : soldier.weasel@gmail.com
  *
  *
  ###################################################
@@ -13,7 +13,7 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -25,31 +25,16 @@
  *
  ###################################################*/
 
-class NewsletterExtensionPointProvider extends ExtensionPointProvider
+class NewsletterCssFilesExtensionPoint implements CssFilesExtensionPoint
 {
-    function __construct()
-    {
-        parent::__construct('newsletter');
-    }
-	
-	public function url_mappings()
+	public function get_css_files_always_displayed()
 	{
-		return new UrlMappings(array(new DispatcherUrlMapping('/newsletter/index.php')));
+		return array('newsletter_mini.css');
 	}
-	
-	public function extended_field()
+
+	public function get_css_files_running_module_displayed()
 	{
-		return new NewsletterExtendedField();
-	}
-	
-	public function css_files()
-	{
-		return new NewsletterCssFilesExtensionPoint();
-	}
-	
-	public function menus()
-	{
-		return new NewsletterMenusExtensionPoint();
+		return array();
 	}
 }
 ?>
