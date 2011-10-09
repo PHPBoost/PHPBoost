@@ -133,5 +133,10 @@ class UserUrlBuilder
 	{
 		return new Url('/admin/admin_index.php');
 	}
+	
+	public static function groups()
+	{
+		return DispatchManager::get_url(self::$dispatcher, '/groups/');
+	}
 }
 ?>
