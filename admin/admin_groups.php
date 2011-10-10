@@ -327,7 +327,7 @@ else //Liste des groupes.
 	while ($row = $Sql->fetch_assoc($result))
 	{
 		$template->assign_block_vars('group', array(
-			'LINK' => url('.php?g=' . $row['id'], '-0.php?g=' . $row['id']),
+			'U_USER_GROUP' => UserUrlBuilder::group($row['id'])->absolute(),
 			'ID' => $row['id'],
 			'NAME' => $row['name'],
 			'IMAGE' => !empty($row['img']) ? '<img src="'. PATH_TO_ROOT .'/images/group/' . $row['img'] . '" alt="" />' : ''

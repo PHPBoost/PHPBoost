@@ -341,47 +341,6 @@ $LANG['display'] = 'Afficher';
 $LANG['site_config_msg_mbr'] = 'Bienvenue sur le site. Vous êtes membre du site, vous pouvez accéder à tous les espaces nécessitant un compte utilisateur, éditer votre profil et voir vos contributions.';
 $LANG['register_agreement'] = 'Vous vous apprêtez à vous enregistrer sur le site. Nous vous demandons d\'être poli et courtois dans vos interventions.<br /><br />Merci, l\'équipe du site.';
 
-//Register
-$LANG['pseudo_how'] = 'Longueur minimale du pseudo : 3 caractères';
-$LANG['password_how'] = 'Longueur minimale du mot de passe : 6 caractères';
-$LANG['confirm_register'] = 'Merci de vous être enregistré %s. Un mail vous sera envoyé pour confirmer votre inscription.';
-$LANG['register_terms'] = 'Règlement';
-$LANG['register_accept'] = 'J\'accepte';
-$LANG['register_have_to_accept'] = 'Vous devez accepter le réglement pour pouvoir vous inscrire!';
-$LANG['activ_mbr_mail'] = 'Vous devrez activer votre compte dans l\'email qui vous sera envoyé avant de pouvoir vous connecter!';
-$LANG['activ_mbr_admin'] = 'Un administrateur devra activer votre compte avant de pouvoir vous connecter';
-$LANG['member_registered_to_approbate'] = 'Un nouveau membre s\'est inscrit. Son compte doit être approuvé avant de pouvoir être utilisé.';
-$LANG['activ_mbr_mail_success'] = 'Votre compte est désormais activé, vous pouvez vous connecter avec vos identifiants!';
-$LANG['activ_mbr_mail_error'] = 'Echec de l\'activation du compte';
-$LANG['weight_max'] = 'Poids maximum';
-$LANG['height_max'] = 'Hauteur maximale';
-$LANG['width_max'] = 'Largeur maximale';
-$LANG['verif_code'] = 'Code de vérification';
-$LANG['verif_code_explain'] = 'Recopier le code sur l\'image, attention aux majuscules';
-$LANG['require_verif_code'] = 'Veuillez saisir le code de vérification!';
-$LANG['timezone_choose'] = 'Choix du fuseau horaire';
-$LANG['timezone_choose_explain'] = 'Permet d\'ajuster l\'heure à votre localisation';
-$LANG['register_title_mail'] = 'Confirmation inscription sur %s';
-$LANG['register_ready'] = 'Vous pouvez désormais vous connecter à votre compte directement sur le site.';
-$LANG['register_valid_email_confirm'] = 'Vous devrez activer votre compte dans l\'email que vous reçevrez avant de pouvoir vous connecter.';
-$LANG['register_valid_email'] = 'Vous devez activer votre compte avant de pouvoir vous connecter en cliquant sur ce lien : %s';
-$LANG['register_valid_admin'] = 'Attention : Votre compte devra être activé par un administrateur avant de pouvoir vous connecter. Merci de votre patience.';
-$LANG['register_mail'] = 'Cher(e) %s,
-
-Tout d\'abord, merci de vous être inscrit sur %s. Vous faites parti dès maintenant des membres du site.
-En vous inscrivant sur %s, vous obtenez un accès à la zone membre qui vous offre plusieurs avantages. Vous pourrez, entre autre, être reconnu automatiquement sur tout le site, pour poster des messages, modifier la langue et/ou le thème par défaut, éditer votre profil, accéder à des catégories réservées aux membres... Bref vous accédez à toute la communauté du site.
-
-Pour vous connecter, il vous faudra retenir votre identifiant et votre mot de passe.
-
-Nous vous rappelons vos identifiants.
-
-Identifiant : %s
-Mot de passe : %s
-
-%s
-
-%s';
-
 //Mp
 $LANG['pm_box'] = 'Boîte de réception';
 $LANG['pm_track'] = 'Non lu par le destinataire';
@@ -394,23 +353,6 @@ $LANG['mark_pm_as_read'] = 'Marquer tous les messages privés comme lus';
 $LANG['participants'] = 'Participant(s)';
 $LANG['no_pm'] = 'Aucun message';
 $LANG['quote_last_msg'] = 'Reprise du message précédent';
-
-//Oublié
-$LANG['forget_pass'] = 'Mot de passe oublié';
-$LANG['change_password'] = 'Changement de mot de passe';
-$LANG['forget_pass_send'] = 'Renseignez le formulaire pour recevoir un mail avec une clé d\'activation pour pouvoir changer votre mot de passe';
-$LANG['forget_mail_pass'] = 'Cher(e) :login,
-
-Vous recevez cet e-mail parce que vous (ou quelqu\'un qui prétend l\'être) avez demandé à ce qu\'un nouveau mot de passe vous soit envoyé pour votre compte sur :host. 
-Si vous n\'avez pas demandé de changement de mot de passe, veuillez l\'ignorer. Si vous continuez à le recevoir, veuillez contacter l\'administrateur du site.
-
-Pour changer de mot de passe, cliquez sur le lien fourni ci-dessous et suivez les indications sur le site.
-
-:host_dir/member/index.php?url=/forget/:key
-
-Si vous rencontrez des difficultés, veuillez contacter l\'administrateur du site.
-
-:signature';
 
 //Gestion des fichiers
 $LANG['confim_del_file'] = 'Supprimer ce fichier?';

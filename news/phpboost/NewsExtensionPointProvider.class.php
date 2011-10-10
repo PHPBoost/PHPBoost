@@ -247,7 +247,7 @@ class NewsExtensionPointProvider extends ExtensionPointProvider
 							'CONTENTS' => FormatingHelper::second_parse($row['contents']),
 							'EXTEND_CONTENTS' => !empty($row['extend_contents']) ? '<a style="font-size:10px" href="' . PATH_TO_ROOT . '/news/news' . url('.php?id=' . $row['id'], '-0-' . $row['id'] . '.php') . '" onclick="document.location = \'count.php?id='. $row['id'] .'\';">[' . $NEWS_LANG['extend_contents'] . ']</a><br /><br />' : '',
 							'PSEUDO' => $NEWS_CONFIG['display_author'] && !empty($row['login']) ? $row['login'] : '',
-							'U_USER_ID' => '../member/member' . url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php'),
+							'U_USER_ID' => UserUrlBuilder::profile($row['user_id'])->absolute(),
 							'LEVEL' =>	isset($row['level']) ? $level[$row['level']] : '',
 							'DATE' => $NEWS_CONFIG['display_date'] ? sprintf($NEWS_LANG['on'], $timestamp->format(DATE_FORMAT_SHORT, TIMEZONE_AUTO)) : '',
 							'FEED_MENU' => Feed::get_feed_menu(FEED_URL)

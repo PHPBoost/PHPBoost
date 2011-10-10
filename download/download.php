@@ -122,7 +122,7 @@ if ($file_id > 0) //Contenu
 
 			if (!$User->check_level(MEMBER_LEVEL))
 			{
-				AppContext::get_response()->redirect('/member/error.php?e=e_auth&_err_stop=1');
+				DispatchManager::redirect(PHPBoostErrors::user_not_authorized());
 			}
 
 			ContributionService::save_contribution($contribution);

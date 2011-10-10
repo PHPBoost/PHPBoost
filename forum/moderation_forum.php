@@ -436,7 +436,7 @@ elseif ($action == 'punish') //Gestion des utilisateurs
 			'L_LOGIN' => $LANG['pseudo'],
 			'L_PM' => $LANG['user_contact_pm'],
 			'L_CHANGE_INFO' => $LANG['submit'],
-			'U_PM' => url('.php?pm='. $id_get, '-' . $id_get . '.php'),
+			'U_PM' => UserUrlBuilder::personnal_message($id_get)->absolute(),
 			'U_ACTION_INFO' => url('.php?action=punish&amp;id=' . $id_get . '&amp;token=' . $Session->get_token())
 		));
 	}
@@ -535,7 +535,7 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 				'INFO' => $row['user_warning'] . '%',
 				'U_ACTION_USER' => '<a href="moderation_forum.php' . url('?action=warning&amp;id=' . $row['user_id'] . '&amp;token=' . $Session->get_token()) . '"><img src="../templates/' . get_utheme() . '/images/admin/important.png" alt="" /></a>',
 				'U_PROFILE' => UserUrlBuilder::profile($row['user_id'])->absolute(),
-				'U_PM' => url('.php?pm='. $row['user_id'], '-' . $row['user_id'] . '.php'),
+				'U_PM' => UserUrlBuilder::personnal_message($row['user_id'])->absolute()
 			));
 
 			$i++;
@@ -643,7 +643,7 @@ else //Panneau de modération
 			'LOGIN' => !empty($row['login']) ? $row['login'] : $LANG['guest'],
 			'DATE' => gmdate_format('date_format', $row['timestamp']),
 			'U_ACTION' => (!empty($row['url']) ? '<a href="../forum/' . $row['url'] . '">' . $LANG[$row['action']] . '</a>' : $LANG[$row['action']]),
-			'U_USER_ID' => url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php'),
+			'U_USER_PROFILE' => UserUrlBuilder::profile($row['user_id'])->absolute(),
 			'U_USER_CONCERN' => (!empty($row['user_id_action']) ? '<a href="'. UserUrlBuilder::profile($row['user_id_action'])->absolute() .'">' . $row['member'] . '</a>' : '-')
 		));
 

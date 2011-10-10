@@ -226,7 +226,7 @@
 					<div class="msg_pseudo_mbr">
 						# IF msg.C_FORUM_USER_LOGIN # 
 							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{msg.FORUM_ONLINE_STATUT_USER}.png" alt="" class="valign_middle" />
-							<a class="msg_link_pseudo" href="{PATH_TO_ROOT}/member/member{msg.U_FORUM_USER_LOGIN}">{msg.FORUM_USER_LOGIN}</a>
+							<a class="msg_link_pseudo" href="{msg.U_FORUM_USER_PROFILE}">{msg.FORUM_USER_LOGIN}</a>
 						# ELSE # 
 							<em>{L_GUEST}</em>
 						# ENDIF #
@@ -278,7 +278,7 @@
 							<br /><br /><br /><br /><span style="padding: 10px;font-size:10px;font-style:italic;">
 							{L_EDIT_BY}
 								# IF msg.C_FORUM_USER_EDITOR_LOGIN # 
-							<a class="small_link" href="{PATH_TO_ROOT}/member/member{msg.U_FORUM_USER_EDITOR_LOGIN}">{msg.FORUM_USER_EDITOR_LOGIN}</a>
+							<a class="small_link" href="{msg.U_FORUM_USER_EDITOR_PROFILE}">{msg.FORUM_USER_EDITOR_LOGIN}</a>
 								# ELSE #
 							<em>{L_GUEST}</em>
 								# ENDIF #

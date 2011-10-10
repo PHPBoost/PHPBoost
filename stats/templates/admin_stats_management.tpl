@@ -94,7 +94,7 @@
 					{L_LAST_USER}
 				</td>
 				<td class="row2">
-					<a href="{PATH_TO_ROOT}/member/member{U_LAST_USER_ID}">{LAST_USER}</a>
+					<a href="{U_LAST_USER_PROFILE}">{LAST_USER}</a>
 				</td>
 			</tr>
 		</table>
@@ -207,7 +207,7 @@
 					{top_poster.ID}
 				</td>
 				<td class="row2" style="text-align:center;">
-					<a href="{PATH_TO_ROOT}/member/member{top_poster.U_USER_ID}">{top_poster.LOGIN}</a>
+					<a href="{top_poster.U_USER_PROFILE}">{top_poster.LOGIN}</a>
 				</td>
 				<td class="row2" style="text-align:center;">
 					{top_poster.USER_POST}

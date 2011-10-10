@@ -135,7 +135,7 @@ else //On affiche la liste des modifications
 	{
 		$Template->assign_block_vars('index.list', array(
 			'TITLE' => $row['title'],
-			'AUTHOR' => !empty($row['login']) ? '<a href="../member/member' . url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '">' . $row['login'] . '</a>' : $row['user_ip'],
+			'AUTHOR' => !empty($row['login']) ? '<a href="' . UserUrlBuilder::profile($row['user_id'])->absolute() . '">' . $row['login'] . '</a>' : $row['user_ip'],
 			'DATE' => gmdate_format('date_format', $row['timestamp']),
 			'U_ARTICLE' => url('wiki.php?title=' . $row['encoded_title'], $row['encoded_title'])
 		));

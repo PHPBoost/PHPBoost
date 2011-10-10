@@ -342,47 +342,6 @@ $LANG['display'] = 'Display';
 $LANG['site_config_msg_mbr'] = 'Welcome on the website. You are member of the site and you can access all parts of the website requiring a member account.';
 $LANG['register_agreement'] = 'You are just going to register yourself on the site. We ask you yo be polite and respectful.<br /><br />Thanks, the site team.';
 
-//Register
-$LANG['pseudo_how'] = 'Minimum login length: 3 characters';
-$LANG['password_how'] = 'Minimum password length: 6 characters';
-$LANG['confirm_register'] = '%s, thank you for your registration. An e-mail will be sent to you to confirm your registration.';
-$LANG['register_terms'] = 'Registration Agreement Terms';
-$LANG['register_accept'] = 'I accept';
-$LANG['register_have_to_accept'] = 'You have to accept the registration terms to register on the website!';
-$LANG['activ_mbr_mail'] = 'You will have to activate your account via the e-mail that has been sent to you before you are able to login!';
-$LANG['activ_mbr_admin'] = 'An administrator will have to activate your account before you are able to connect';
-$LANG['member_registered_to_approbate'] = 'A new member has registered themself. Their account must be approved to be used.';
-$LANG['activ_mbr_mail_success'] = 'Your account is activated, you can now log in to your account!';
-$LANG['activ_mbr_mail_error'] = 'Account activation error';
-$LANG['weight_max'] = 'Maximum weight';
-$LANG['height_max'] = 'Maximum height';
-$LANG['width_max'] = 'Maximum width';
-$LANG['verif_code'] = 'Verification code';
-$LANG['verif_code_explain'] = 'Enter the image code, warning for capital letter';
-$LANG['require_verif_code'] = 'Please enter the verification code!';
-$LANG['timezone_choose'] = 'Choose timezone';
-$LANG['timezone_choose_explain'] = 'Adjust hour according to your location';
-$LANG['register_title_mail'] = 'Confirm signing up on %s';
-$LANG['register_ready'] = ' You can now connect to your account directly on the site.';
-$LANG['register_valid_email_confirm'] = 'You will have to activate your account via the confirmation e-mail before you are able to connect.';
-$LANG['register_valid_email'] = 'You have to click on this link to activate your account: %s';
-$LANG['register_valid_admin'] = 'Warning: Your account must be activated by an administrator. Thanks for your patience';
-$LANG['register_mail'] = 'Dear %s,
-
-First, thank you for your registration on %s. You are now a member of the site.
-By signing you up on %s, you obtain an access to the member zone which offers several advantages to you. You could for example be recognized automatically on all the site, send messages, edit your profile, change main languages and theme, reach categories reserved to the members, etc. You are now in the community of the site.
-
-To log yourself in, don\'t forget your login and your password (we can find them).
-
-Here are your identifiers.
-
-Login: %s
-Password: %s
-
-%s
-
-%s';
-
 //Mp
 $LANG['pm_box'] = 'Private message box';
 $LANG['pm_track'] = 'Unread by recipient';
@@ -395,24 +354,6 @@ $LANG['mark_pm_as_read'] = 'Mark all privates messages as read';
 $LANG['participants'] = 'Participant(s)';
 $LANG['no_pm'] = 'No messages';
 $LANG['quote_last_msg'] = 'Repost of the preceding message';
-
-//Forgot
-$LANG['forget_pass'] = 'Forgotten password';
-$LANG['change_password'] = 'Change password';
-$LANG['forget_pass_send'] = 'Fill the form to receive a mail with an activation key to change your password';
-$LANG['forget_mail_pass'] = 'Dear :login,
-
-You have received this email because you (or someone who pretends to be you) asked for a new password for your account on :host. 
-If you have not requested this new password, please ignore this email. If you receive another message, contact the website administrator.
-
-To change your password, you have to click on the link below and follow the instructions on the website:
-
-:host_dir/member/index.php?url=/forget/:key
-
-
-If you encounter issues, contact the administrator.
-
-:signature';
 
 //Gestion des fichiers
 $LANG['confim_del_file'] = 'Delete this file?';

@@ -104,16 +104,16 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 				}
 				elseif ($info_connect['user_aprob'] == '0')
 				{
-					AppContext::get_response()->redirect('/member/error.php?activ=1');
+					DispatchManager::redirect(PHPBoostErrors::member_not_enabled());
 				}
 				elseif ($info_connect['user_warning'] == '100')
 				{
-					AppContext::get_response()->redirect('/member/error.php?ban_w=1');
+					DispatchManager::redirect(PHPBoostErrors::member_banned());
 				}
 				else
 				{
-					$delay_ban = ceil((0 - $delay_ban)/60);
-					AppContext::get_response()->redirect('/member/error.php?ban=' . $delay_ban);
+					//TODO $delay_ban = ceil((0 - $delay_ban)/60);
+					DispatchManager::redirect(PHPBoostErrors::member_banned());
 				}
 
 				if (!empty($error_report)) //Erreur
@@ -126,7 +126,7 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 				elseif (!empty($unlock) && $unlock !== GeneralConfig::load()->get_admin_unlocking_key())
 				{
 					AppContext::get_session()->end();
-					AppContext::get_response()->redirect('/admin/admin_index.php?flood=0');
+					DispatchManager::redirect(PHPBoostErrors::flood());
 				}
 				else //Succès redonne tous les essais.
 				{
@@ -134,7 +134,7 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 				}
 			}
 			else
-			AppContext::get_response()->redirect('/member/error.php?unexist=1');
+			DispatchManager::redirect(PHPBoostErrors::unexisting_member());
 
 			AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);
 		}

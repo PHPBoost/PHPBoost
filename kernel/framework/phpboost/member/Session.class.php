@@ -97,16 +97,16 @@ class Session
 					}
 					else //plus d'essais
 					{
-						AppContext::get_response()->redirect('/member/error.php?e=e_member_flood#message_helper');
+						DispatchManager::redirect(PHPBoostErrors::flood());
 					}
 				}
 				elseif ($info_connect['user_aprob'] == '0')
 				{
-					AppContext::get_response()->redirect('/member/error.php?e=e_unactiv_member#message_helper');
+					DispatchManager::redirect(PHPBoostErrors::member_not_enabled());
 				}
 				elseif ($info_connect['user_warning'] == '100')
 				{
-					AppContext::get_response()->redirect('/member/error.php?e=e_member_ban_w#message_helper');
+					DispatchManager::redirect(PHPBoostErrors::member_banned());
 				}
 				else
 				{
@@ -128,17 +128,9 @@ class Session
 			}
 			else
 			{
-				AppContext::get_response()->redirect('/member/error.php?e=e_unexist_member#message_helper');
+				DispatchManager::redirect(PHPBoostErrors::unexisting_member());
 			}
-		
-			if (SCRIPT != DIR . '/member/error.php')
-			{
-				AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);
-			}
-			else
-			{
-				AppContext::get_response()->redirect(Environment::get_home_page());
-			}
+			AppContext::get_response()->redirect(Environment::get_home_page());
 		}
 	}
 
