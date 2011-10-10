@@ -36,7 +36,13 @@ class ServerEnvironmentConfig extends AbstractConfigData
 
 	public function is_url_rewriting_enabled()
 	{
-		return $this->get_property(self::URL_REWRITING_ENABLED);
+		return $this->get_property(self::URL_REWRITING_ENABLED) && $this->htaccess_exists();
+	}
+	
+	private function htaccess_exists()
+	{
+		$file = new File(PATH_TO_ROOT . '/.htaccess');
+		return $file->exists();
 	}
 
 	public function set_url_rewriting_enabled($enabled)
