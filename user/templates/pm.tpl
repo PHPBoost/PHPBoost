@@ -162,7 +162,7 @@
 				<div class="msg_top_row">
 					<span id="m{pm.msg.ID}"></span>
 					<div class="msg_pseudo_mbr">
-					{pm.msg.USER_ONLINE} <a class="msg_link_pseudo" href="../member/member{pm.msg.U_USER_ID}">{pm.msg.USER_PSEUDO}</a>
+					{pm.msg.USER_ONLINE} <a class="msg_link_pseudo" href="{pm.msg.U_USER_PROFILE}">{pm.msg.USER_PSEUDO}</a>
 					</div>
 					<div style="float:left;">&nbsp;&nbsp;<a href="{pm.msg.U_ANCHOR}"><img src="../templates/{THEME}/images/ancre.png" alt="{pm.msg.ID}" /></a> {pm.msg.DATE}</div>
 					<div style="float:right;">

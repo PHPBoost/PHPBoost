@@ -45,7 +45,7 @@
 					# START group #
 					<tr style="text-align:center;"> 
 						<td class="row2">
-							<a href="{PATH_TO_ROOT}/member/member{group.LINK}">{group.NAME}</a>
+							<a href="{group.U_USER_GROUP}">{group.NAME}</a>
 						</td>
 						<td class="row2">
 							{group.IMAGE}

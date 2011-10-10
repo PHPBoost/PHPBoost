@@ -47,7 +47,7 @@ class EventsComments extends AbstractCommentsExtensionPoint
             {
                     $url_parameters .= '&' . $name . '=' . $value;
             }
-            return new Url('/member/contribution_panel.php?id='. $id_in_module . $url_parameters);
+            return new Url('/user/contribution_panel.php?id='. $id_in_module . $url_parameters);
     }
 }
 ?>

@@ -399,9 +399,9 @@ while ( $row = $Sql->fetch_assoc($result) )
 		'C_FORUM_USER_EDITOR' => ($row['timestamp_edit'] > 0 && $CONFIG_FORUM['edit_mark'] == '1'), //Ajout du marqueur d'édition si activé.
 		'C_FORUM_USER_EDITOR_LOGIN' => !empty($row['login_edit']) ? true : false,
 		'C_FORUM_MODERATOR' => $moderator,
-		'U_FORUM_USER_LOGIN' => url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php'),			
+		'U_FORUM_USER_PROFILE' => UserUrlBuilder::profile($row['user_id'])->absolute(),
 		'U_FORUM_MSG_EDIT' => url('.php?new=msg&amp;idm=' . $row['id'] . '&amp;id=' . $topic['idcat'] . '&amp;idt=' . $id_get),
-		'U_FORUM_USER_EDITOR_LOGIN' => url('.php?id=' . $row['user_id_edit'], '-' . $row['user_id_edit'] . '.php'),
+		'U_FORUM_USER_EDITOR_PROFILE' => UserUrlBuilder::profile($row['user_id_edit'])->absolute(),
 		'U_FORUM_MSG_DEL' => url('.php?del=1&amp;idm=' . $row['id'] . '&amp;token=' . $Session->get_token()),
 		'U_FORUM_WARNING' => url('.php?action=warning&amp;id=' . $row['user_id']),
 		'U_FORUM_PUNISHEMENT' => url('.php?action=punish&amp;id=' . $row['user_id']),

@@ -153,7 +153,7 @@ class SandboxHTMLTableModel extends AbstractHTMLTableModel
 		$user_msg = new HTMLTableRowCell(!empty($row['user_msg']) ? $row['user_msg'] : '0');
 		$user_msg->center();
 		$last_connect = new HTMLTableRowCell(gmdate_format('date_format_long', !empty($row['last_connect']) ? $row['last_connect'] : $row['timestamp']));
-		$pm_url = new Url('/member/pm.php?pm=' . $row['user_id']);
+		$pm_url = new Url('/user/pm.php?pm=' . $row['user_id']);
 		$pm = new HTMLTableRowCell('<a href="' . $pm_url->absolute() . '"><img src="../templates/base/images/french/pm.png" alt="Message(s) privé(s)" /></a>');
 		$pm->center();
 		$pm->add_css_style('width:50px');

@@ -63,7 +63,7 @@ if ($members)
 	$Template->put_all(array(
 		'C_STATS_USERS' => true,
 		'LAST_USER' => $last_user['login'],
-		'U_LAST_USER_ID' => url('.php?id=' . $last_user['user_id'], '-' . $last_user['user_id'] . '.php'),
+		'U_LAST_USER_PROFILE' => UserUrlBuilder::profile($last_user['user_id'])->absolute(),
 		'USERS' => $nbr_member,
 		'GRAPH_RESULT_THEME' => !file_exists('../cache/theme.png') ? '<img src="display_stats.php?theme=1" alt="" />' : '<img src="../cache/theme.png" alt="" />',
 		'GRAPH_RESULT_SEX' => !file_exists('../cache/sex.png') ? '<img src="display_stats.php?sex=1" alt="" />' : '<img src="../cache/sex.png" alt="" />',
@@ -142,7 +142,7 @@ if ($members)
 	{
 		$Template->assign_block_vars('top_poster', array(
 			'ID' => $i,
-			'U_USER_ID' => url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php'),
+			'U_USER_PROFILE' => UserUrlBuilder::profile($row['user_id'])->absolute(),
 			'LOGIN' => $row['login'],
 			'USER_POST' => $row['user_msg']
 		));

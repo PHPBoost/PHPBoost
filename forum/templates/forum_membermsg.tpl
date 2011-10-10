@@ -18,7 +18,7 @@
 			<div class="msg_container">
 				<div class="msg_top_row">
 					<div class="msg_pseudo_mbr">
-						{list.USER_ONLINE} <a class="forum_link_pseudo" href="{PATH_TO_ROOT}/member/member{list.U_USER_ID}">{list.USER_PSEUDO}</a>
+						{list.USER_ONLINE} <a class="forum_link_pseudo" href="{list.U_USER_PROFILE}">{list.USER_PSEUDO}</a>
 					</div>
 					<span style="float:left;">
 						&nbsp;&nbsp;<span id="m{list.ID}"></span><a href="{PATH_TO_ROOT}/forum/topic{list.U_VARS_ANCRE}#m{list.ID}" title=""><img src="{PATH_TO_ROOT}/templates/{THEME}/images/ancre.png" alt="" /></a> {list.DATE}

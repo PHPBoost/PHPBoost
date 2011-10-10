@@ -208,7 +208,7 @@ if (!empty($idart) && isset($cat) )
 		'L_EMAIL_ERROR' => $ARTICLES_LANG['admin_email_error'],
 		'L_LINK_MAIL'=> $ARTICLES_LANG['link_mail'],
 		'L_INFO'=>$LANG['info'],
-		'U_USER_ID' => url('.php?id=' . $articles['user_id'], '-' . $articles['user_id'] . '.php'),
+		'U_PROFILE' => UserUrlBuilder::profile($articles['user_id'])->absolute(),
 		'U_ARTICLES_LINK'=> url('articles.php?cat=' . $idartcat . '&amp;id=' . $idart, 'articles-' . $idartcat . '-' . $idart .  Url::encode_rewrite($articles['title']) . '.php' . "'"),
 		'U_ONCHANGE_ARTICLE' => "'" . url('articles.php?cat=' . $idartcat . '&amp;id=' . $idart . '&amp;p=\' + this.options[this.selectedIndex].value', 'articles-' . $idartcat . '-' . $idart . '-\'+ this.options[this.selectedIndex].value + \'+' . Url::encode_rewrite($articles['title']) . '.php' . "'"),
 		'U_PRINT_ARTICLE' => url('print.php?id=' . $idart),

@@ -56,7 +56,7 @@
 						# START action_list # 
 						<tr style="text-align:center;">
 							<td class="row2" style="width: 150px">
-								<a href="{PATH_TO_ROOT}/member/member{action_list.U_USER_ID}">{action_list.LOGIN}</a>
+								<a href="{action_list.U_USER_PROFILE}">{action_list.LOGIN}</a>
 							</td>
 							<td class="row2">
 								{action_list.U_ACTION}
@@ -324,7 +324,7 @@
 					# START user_list #
 					<tr>
 						<td class="row1" style="text-align:center;width:25%;">
-							<a href="{PATH_TO_ROOT}/member/{user_list.U_PROFILE}">{user_list.LOGIN}</a>
+							<a href="{user_list.U_PROFILE}">{user_list.LOGIN}</a>
 						</td>
 						<td class="row1" style="text-align:center;width:25%;">
 							{user_list.INFO}
@@ -333,7 +333,7 @@
 							{user_list.U_ACTION_USER}
 						</td>
 						<td class="row1" style="text-align:center;width:25%;">
-							<a href="{PATH_TO_ROOT}/member/pm{user_list.U_PM}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/pm.png" alt="" /></a>
+							<a href="{user_list.U_PM}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/pm.png" alt="" /></a>
 						</td>
 					</tr>
 					# END user_list #
@@ -380,7 +380,7 @@
 								{L_PM}
 							</td>
 							<td class="row2">
-								<a href="{PATH_TO_ROOT}/member/pm{U_PM}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/pm.png" alt="PM" /></a>
+								<a href="{U_PM}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/pm.png" alt="PM" /></a>
 							</td>
 						</tr>
 						<tr>
