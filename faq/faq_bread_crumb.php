@@ -27,8 +27,8 @@
 
 if (defined('PHPBOOST') !== true)	exit;
 
-$auth_read = $User->check_auth($FAQ_CONFIG['global_auth'], AUTH_READ);
-$auth_write = $User->check_auth($FAQ_CONFIG['global_auth'], AUTH_WRITE);
+$auth_read = $User->check_auth($faq_config->get_authorization(), AUTH_READ);
+$auth_write = $User->check_auth($faq_config->get_authorization(), AUTH_WRITE);
 
 //Bread_crumb : we read categories list recursively
 
@@ -49,7 +49,7 @@ while ($id_cat_for_bread_crumb > 0)
 	$id_cat_for_bread_crumb = (int)$FAQ_CATS[$id_cat_for_bread_crumb]['id_parent'];	
 }
 
-$Bread_crumb->add($FAQ_CONFIG['faq_name'], url('faq.php'));
+$Bread_crumb->add($faq_config->get_faq_name(), url('faq.php'));
 
 $Bread_crumb->reverse();
 
