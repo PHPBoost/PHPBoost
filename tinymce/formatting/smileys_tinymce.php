@@ -32,12 +32,12 @@
 /**
 * Constant definition
 */
-define('PATH_TO_ROOT', '../../../../..');
+define('PATH_TO_ROOT', '../..');
 require_once(PATH_TO_ROOT . '/kernel/begin.php');
 define('TITLE', $LANG['all_smiley']);
 require_once(PATH_TO_ROOT . '/kernel/header_no_display.php');
 
-$tpl_smileys = new FileTemplate('framework/content/formatting/smileys_tinymce.tpl');
+$tpl_smileys = new FileTemplate('tinymce/smileys_tinymce.tpl');
 
 //Chargement de la configuration.
 $smileys_cache = SmileysCache::load();
@@ -62,30 +62,32 @@ $nbr_smile = count($smileys_cache->get_smileys());
 $j = 0;
 foreach($smileys_cache->get_smileys() as $code_smile => $infos)
 {
-    $width_source = 18; //Valeur par défaut.
-    $height_source = 18;
+    $smiley_width = 18; //Valeur par défaut.
+    $smiley_height = 18;
 
-    // On recupère la hauteur et la largeur de l'image.
-    list($width_source, $height_source) = @getimagesize(PATH_TO_ROOT . '/images/smileys/' . $infos['url_smiley']);
-    if( $width_source > $width_max || $height_source > $height_max )
+    $smiley = new Image(Url::to_absolute('/images/smileys/' . $infos['url_smiley']));
+	$smiley_height = $smiley->get_height();
+	$smiley_width = $smiley->get_width();
+	
+    if( $smiley_width > $width_max || $smiley_height > $height_max )
     {
-        if( $width_source > $height_source )
+        if( $smiley_width > $smiley_height )
         {
-            $ratio = $width_source / $height_source;
+            $ratio = $smiley_width / $smiley_height;
             $width = $width_max;
             $height = $width / $ratio;
         }
         else
         {
-            $ratio = $height_source / $width_source;
+            $ratio = $smiley_height / $smiley_width;
             $height = $height_max;
             $width = $height / $ratio;
         }
     }
     else
     {
-        $width = $width_source;
-        $height = $height_source;
+        $width = $smiley_width;
+        $height = $smiley_height;
     }
 
     //On genère le tableau pour $smile_by_line colonnes
@@ -103,7 +105,7 @@ foreach($smileys_cache->get_smileys() as $code_smile => $infos)
 
     $tpl_smileys->assign_block_vars('smiley', array(
 		'URL' => $infos['url_smiley'],
-		'IMG' => '<img src="' . PATH_TO_ROOT . '/images/smileys/' . $infos['url_smiley'] . '" height="' . $height . '" width="' . $width . '" alt="' . $code_smile . '" title="' . $code_smile . '" />',
+		'IMG' => '<img src="' . $smiley->get_path() . '" height="' . $height . '" width="' . $width . '" alt="' . $code_smile . '" title="' . $code_smile . '" />',
 		'CODE' => addslashes($code_smile),
 		'TR_START' => $tr_start,
 		'TR_END' => $tr_end,

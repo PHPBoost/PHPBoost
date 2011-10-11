@@ -596,7 +596,7 @@ var BBcodeEditor_Core = Class.create(
 			if(x.url)
 			{
 				var img = new Element('img', {
-					'src': this.path_img+x.url,
+					'src': x.url,
 					'height': x.height,
 					'width': x.width
 				});
