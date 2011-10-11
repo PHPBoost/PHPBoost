@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                              UserExtensionPointProvider.class.php
+ *                          CLIUserManagementCommand.class.php
  *                            -------------------
- *   begin                : October 09, 2011
+ *   begin                : October 11, 2011
  *   copyright            : (C) 2011 Kévin MASSY
  *   email                : soldier.weasel@gmail.com
  *
@@ -13,7 +13,7 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -25,21 +25,19 @@
  *
  ###################################################*/
 
-class UserExtensionPointProvider extends ExtensionPointProvider
+class CLIUserManagementCommand extends CLIMultipleGoalsCommand
 {
-   public function __construct()
-    {
-        parent::__construct('user');
-    }
+	private static $name = 'user';
+	private static $goals = array('add' => 'CLIAddUserCommand', 'delete' => 'CLIDeleteUserCommand');
 	
-	public function commands()
-    {
-    	return new CLICommandsList(array('user' => 'CLIUserManagementCommand'));
-    }
-    
-	public function user()
+	public function __construct()
 	{
-		return new UserUserExtensionPoint();
+		parent::__construct(self::$name, self::$goals);
+	}
+	
+	public function short_description()
+	{
+		return 'manages the phpboost users';
 	}
 }
 ?>

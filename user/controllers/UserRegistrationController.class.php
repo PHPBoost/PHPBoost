@@ -145,16 +145,21 @@ class UserRegistrationController extends AbstractController
 	{
 		$activation_key = $this->user_accounts_config->get_member_accounts_validation_method() == UserAccountsConfig::MAIL_USER_ACCOUNTS_VALIDATION ? KeyGenerator::generate_key(15) : '';
 		$user_aprobation = $this->user_accounts_config->get_member_accounts_validation_method() == UserAccountsConfig::AUTOMATIC_USER_ACCOUNTS_VALIDATION ? '1' : '0';
-		$theme = !$this->form->field_is_disabled('theme') ? $this->form->get_value('theme')->get_raw_value() : $this->user_accounts_config->get_default_theme();
-		$login = $this->form->get_value('login');
-		$password = KeyGenerator::string_hash($this->form->get_value('password'));
-		$email = $this->form->get_value('email');
+		
+		if (!$this->form->field_is_disabled('theme'))
+		{
+			$theme = $this->form->get_value('theme')->get_raw_value();
+		}
+		else
+		{
+			$theme = $this->user_accounts_config->get_default_theme();
+		}
 		
 		$user_id = UserRegistrationService::user_registration(
-			$login, 
-			$password, 
+			$this->form->get_value('login'), 
+			$this->form->get_value('password'), 
 			0, 
-			$email, 
+			$this->form->get_value('email'), 
 			$this->form->get_value('lang')->get_raw_value(), 
 			$this->form->get_value('timezone')->get_raw_value(), 
 			$theme, 

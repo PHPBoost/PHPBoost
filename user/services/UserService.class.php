@@ -38,7 +38,7 @@ class UserService
 	{
 		$result = self::$querier->insert(DB_TABLE_MEMBER, array(
 			'login' => $login,
-			'password' => $password,
+			'password' => KeyGenerator::string_hash($password),
 			'level' => $level,
 			'user_mail' => $email,
 			'user_lang' => $locale,
@@ -71,6 +71,16 @@ class UserService
 	public static function delete_account($user_id)
 	{
 		self::$querier->delete(DB_TABLE_MEMBER, 'WHERE user_id = :user_id', array('user_id' => ($user_id)));
+	}
+	
+	public static function delete_account_by_login($login)
+	{
+		self::$querier->delete(DB_TABLE_MEMBER, 'WHERE login = :login', array('login' => ($login)));
+	}
+	
+	public static function delete_account_by_email($email)
+	{
+		self::$querier->delete(DB_TABLE_MEMBER, 'WHERE user_mail = :email', array('email' => ($email)));
 	}
 	
 	public static function change_password($user_id, $password)
