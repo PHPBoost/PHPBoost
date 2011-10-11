@@ -35,14 +35,7 @@ class WebExtensionPointProvider extends ExtensionPointProvider
     
 	public function get_cache()
 	{
-		$code = 'global $CAT_WEB;' . "\n" . 'global $CONFIG_WEB;' . "\n";
-			
-		//Récupération du tableau linéarisé dans la bdd.
-		$CONFIG_WEB = unserialize($this->sql_querier->query("SELECT value FROM " . DB_TABLE_CONFIGS . " WHERE name = 'web'", __LINE__, __FILE__));
-		$CONFIG_WEB = is_array($CONFIG_WEB) ? $CONFIG_WEB : array();
-		
-		$code .= '$CONFIG_WEB = ' . var_export($CONFIG_WEB, true) . ';' . "\n";
-		$code .= "\n";
+		$code = 'global $CAT_WEB;' . "\n";
 		
 		$result = $this->sql_querier->query_while("SELECT id, name, secure
 		FROM " . PREFIX . "web_cat

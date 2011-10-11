@@ -27,21 +27,21 @@
 
 require_once('../kernel/begin.php'); 
 require_once('../web/web_begin.php'); 
-require_once('../kernel/header.php'); 
+require_once('../kernel/header.php');
 
 $tpl = new FileTemplate('web/web.tpl');
 
 $notation = new Notation();
 $notation->set_module_name('web');
 $notation->set_id_in_module($idweb);
-$notation->set_notation_scale($CONFIG_WEB['note_max']);
+$notation->set_notation_scale($web_config->get_note_max());
 
 $comments_topic = new CommentsTopic();
 $comments_topic->set_module_id('web');
 $comments_topic->set_id_in_module($idweb);
 
 if (!empty($idweb) && !empty($CAT_WEB[$idcat]['name']) && !empty($idcat)) //Contenu du lien.
-{
+{	
 	if (!$User->check_level($CAT_WEB[$idcat]['secure']))
 	{
 		$error_controller = PHPBoostErrors::unexisting_page();
@@ -128,7 +128,7 @@ elseif (!empty($idcat) && empty($idweb)) //Catégories.
 		'C_IS_ADMIN' => $User->check_level(ADMIN_LEVEL),
 		'CAT_NAME' => $CAT_WEB[$idcat]['name'],		
 		'NO_CAT' => ($nbr_web == 0) ? $LANG['none_link'] : '',
-		'MAX_NOTE' => $CONFIG_WEB['note_max'],
+		'MAX_NOTE' => $web_config->get_note_max(),
 		'L_LINK' => $LANG['link'],
 		'L_DATE' => $LANG['date'],
 		'L_VIEW' => $LANG['views'],
@@ -177,7 +177,7 @@ elseif (!empty($idcat) && empty($idweb)) //Catégories.
 	$Pagination = new DeprecatedPagination();
 		
 	$tpl->put_all(array(
-		'PAGINATION' => $Pagination->display('web' . url('.php' . (!empty($unget) ? $unget . '&amp;' : '?') . 'cat=' . $idcat . '&amp;p=%d', '-' . $idcat . '-0-%d.php' . (!empty($unget) ? '?' . $unget : '')), $nbr_web, 'p', $CONFIG_WEB['nbr_web_max'], 3)
+		'PAGINATION' => $Pagination->display('web' . url('.php' . (!empty($unget) ? $unget . '&amp;' : '?') . 'cat=' . $idcat . '&amp;p=%d', '-' . $idcat . '-0-%d.php' . (!empty($unget) ? '?' . $unget : '')), $nbr_web, 'p', $web_config->get_max_nbr_weblinks(), 3)
 	));
 
 	$result = $Sql->query_while("SELECT w.id, w.title, w.timestamp, w.compt, notes.average_notes
@@ -185,7 +185,7 @@ elseif (!empty($idcat) && empty($idweb)) //Catégories.
 	LEFT JOIN " . DB_TABLE_AVERAGE_NOTES . " notes ON w.id = notes.id_in_module
 	WHERE aprob = 1 AND idcat = '" . $idcat . "'
 	ORDER BY " . $sort . " " . $mode . 
-	$Sql->limit($Pagination->get_first_msg($CONFIG_WEB['nbr_web_max'], 'p'), $CONFIG_WEB['nbr_web_max']), __LINE__, __FILE__);
+	$Sql->limit($Pagination->get_first_msg($web_config->get_max_nbr_weblinks(), 'p'), $web_config->get_max_nbr_weblinks()), __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))
 	{
 		$notation->set_id_in_module($row['id']);
@@ -216,13 +216,15 @@ else
 	 
 	$Pagination = new DeprecatedPagination();
 
-	$CONFIG_WEB['nbr_column'] = ($total_cat > $CONFIG_WEB['nbr_column']) ? $CONFIG_WEB['nbr_column'] : $total_cat;
-	$CONFIG_WEB['nbr_column'] = !empty($CONFIG_WEB['nbr_column']) ? $CONFIG_WEB['nbr_column'] : 1;
+	/*$nbr_column = (($total_cat > $web_config->get_number_columns()) ? $web_config->get_number_columns() : $total_cat);
+	$web_config->set_number_columns($nbr_column);
+	$nbr_column = (!empty($web_config->get_number_columns()) ? $web_config->get_number_columns() : 1);
+	$web_config->set_number_columns($nbr_column);*/
 	
 	$tpl->put_all(array(
 		'C_WEB_CAT' => true,
 		'C_IS_ADMIN' => $User->check_level(ADMIN_LEVEL),
-		'PAGINATION' => $Pagination->display('web' . url('.php?p=%d', '-0-0-%d.php'), $total_cat, 'p', $CONFIG_WEB['nbr_cat_max'], 3),
+		'PAGINATION' => $Pagination->display('web' . url('.php?p=%d', '-0-0-%d.php'), $total_cat, 'p', $web_config->get_max_nbr_category(), 3),
 		'TOTAL_FILE' => $total_link,
 		'L_CATEGORIES' => $LANG['categories'],
 		'L_PROPOSE_LINK' => $LANG['propose_link'],
@@ -231,7 +233,7 @@ else
 	));
 	
 	//Catégorie disponibles	
-	$column_width = floor(100/$CONFIG_WEB['nbr_column']);
+	$column_width = floor(100/$web_config->get_number_columns());
 	$result = $Sql->query_while(
 	"SELECT aw.id, aw.name, aw.contents, aw.icon, COUNT(w.id) as count
 	FROM " . PREFIX . "web_cat aw
@@ -239,7 +241,7 @@ else
 	WHERE aw.aprob = 1 AND aw.secure <= '" . $User->get_attribute('level') . "'
 	GROUP BY aw.id
 	ORDER BY aw.class
-	" . $Sql->limit($Pagination->get_first_msg($CONFIG_WEB['nbr_cat_max'], 'p'), $CONFIG_WEB['nbr_cat_max']), __LINE__, __FILE__);
+	" . $Sql->limit($Pagination->get_first_msg($web_config->get_max_nbr_category(), 'p'), $web_config->get_max_nbr_category()), __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))
 	{
 		$tpl->assign_block_vars('cat_list', array(
