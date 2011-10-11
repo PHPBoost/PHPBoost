@@ -40,17 +40,10 @@ class FaqExtensionPointProvider extends ExtensionPointProvider
 	//Récupération du cache.
 	public function get_cache()
 	{
-		//Configuration
-		$config = unserialize($this->sql_querier->query("SELECT value FROM " . DB_TABLE_CONFIGS . " WHERE name = 'faq'", __LINE__, __FILE__));
-		$root_config = $config['root'];
-		$root_config['auth'] = $config['global_auth'];
-		unset($config['root']);
-		$string = 'global $FAQ_CONFIG, $FAQ_CATS, $RANDOM_QUESTIONS;' . "\n\n";
-		$string .= '$FAQ_CONFIG = ' . var_export($config, true) . ';' . "\n\n";
+		$string = 'global $FAQ_CATS, $RANDOM_QUESTIONS;' . "\n\n";
 
 		//List of categories and their own properties
 		$string .= '$FAQ_CATS = array();' . "\n\n";
-		$string .= '$FAQ_CATS[0] = ' . var_export($root_config, true) . ';' . "\n";
 		$string .= '$FAQ_CATS[0][\'name\'] = \'\';' . "\n";
 		$result = $this->sql_querier->query_while("SELECT id, id_parent, c_order, auth, name, visible, display_mode, image, num_questions, description
 		FROM " . PREFIX . "faq_cats

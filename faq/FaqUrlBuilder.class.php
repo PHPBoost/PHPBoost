@@ -30,12 +30,12 @@ class FaqUrlBuilder
 {
 	public static function get_title($id_faq)
 	{
-		global $FAQ_CATS,$FAQ_LANG,$FAQ_CONFIG;
+		global $FAQ_CATS,$FAQ_LANG;
 		
 		if ($id_faq > 0)
 			$title = array_key_exists($id_faq, $FAQ_CATS) ? $FAQ_CATS[$id_faq]['name'] : $FAQ_LANG['faq'];
 		else
-			$title = $FAQ_CONFIG['faq_name'];
+			$title = FaqConfig::load()->get_faq_name();
 		return $title;
 	}
 

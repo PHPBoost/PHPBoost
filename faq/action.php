@@ -194,15 +194,11 @@ elseif ($cat_properties && (!empty($cat_name) || $id_cat == 0))
 		{
 			$Sql->query_inject("UPDATE " . PREFIX . "faq_cats SET display_mode = '" . $display_mode . "', auth = '" . $new_auth . "', description = '" . $description . "', name = '" . $cat_name . "' WHERE id = '" . $id_cat . "'", __LINE__, __FILE__);
 		}
-		//Root : properties into cache
 		else
 		{
-			$FAQ_CONFIG['root'] = array(
-				'display_mode' => $display_mode,
-				'auth' => $FAQ_CATS[0]['auth'],
-				'description' => stripslashes($description)
-			);
-			$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($FAQ_CONFIG)) . "' WHERE name = 'faq'", __LINE__, __FILE__);
+			$faq_config->set_root_cat_display_mode($display_mode);
+			$faq_config->set_root_cat_description(stripslashes($description));
+			FaqConfig::save();
 		}
 		$Cache->Generate_module_file('faq');
 		AppContext::get_response()->redirect(HOST . DIR . url('/faq/management.php?faq=' . $id_cat, '', '&'));
@@ -221,7 +217,7 @@ elseif ($id_question > 0 && $move_question && $target >= 0)
 	{
 		$question_infos = $Sql->query_array(PREFIX . "faq", "*", "WHERE id = '" . $id_question . "'", __LINE__, __FILE__);
 		$id_cat_for_bread_crumb = $question_infos['idcat'];
-		$auth_write = $User->check_auth($FAQ_CONFIG['global_auth'], AUTH_WRITE);
+		$auth_write = $User->check_auth($faq_config->get_authorization(), AUTH_WRITE);
 		while ($id_cat_for_bread_crumb > 0)
 		{
 			$id_cat_for_bread_crumb = (int)$FAQ_CATS[$id_cat_for_bread_crumb]['id_parent'];

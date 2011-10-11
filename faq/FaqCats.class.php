@@ -146,8 +146,8 @@ class FaqCats extends CategoriesManager
 	 */
 	public function check_auth($id)
 	{
-		global $User, $FAQ_CATS, $FAQ_CONFIG;
-		$auth_read = $User->check_auth($FAQ_CONFIG['global_auth'], AUTH_READ);
+		global $User, $FAQ_CATS;
+		$auth_read = $User->check_auth(FaqConfig::load()->get_authorization(), AUTH_READ);
 		$id_cat = $id;
 
 		//We read the categories recursively
