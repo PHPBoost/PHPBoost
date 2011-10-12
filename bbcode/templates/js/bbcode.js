@@ -400,7 +400,7 @@ var BBcodeEditor_Core = Class.create(
 		var root = this.root;
 		var field = this.element;
 		var fn = function()	{
-			window.open(root+'/member/upload.php?popup=1&amp;fd='+field+'&amp;edt='+item.editor,
+			window.open(root+'/user/upload.php?popup=1&amp;fd='+field+'&amp;edt='+item.editor,
 				'',
 				'height=500,width=720,resizable=yes,scrollbars=yes');
 			return false;

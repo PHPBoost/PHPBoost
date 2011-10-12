@@ -90,6 +90,11 @@ class UserUrlBuilder
 		return new Url(self::$dispatcher . '/upload.php');
 	}
 	
+	public static function upload_popup()
+	{
+		return new Url(self::$dispatcher . '/upload_popup.php');
+	}
+	
 	public static function edit_profile($user_id = '')
 	{
 		if (!empty($user_id))
