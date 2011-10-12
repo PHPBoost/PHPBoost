@@ -48,6 +48,6 @@ define('DISTRIBUTION_ENABLE_DEBUG_MODE', true);
 define('DISTRIBUTION_ENABLE_BENCH', true);
 
 //Modules list
-$DISTRIBUTION_MODULES = array('connect', 'database', 'doc');
+$DISTRIBUTION_MODULES = array('BBCode', 'TinyMCE', 'connect', 'database', 'doc');
 
 ?>

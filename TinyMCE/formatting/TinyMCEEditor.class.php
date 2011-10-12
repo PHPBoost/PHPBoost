@@ -46,7 +46,7 @@ class TinyMCEEditor extends ContentEditor
     {
         if (!is_object($this->template) || !($this->template instanceof Template))
         {
-            $this->template = new FileTemplate('tinymce/tinymce_editor.tpl');
+            $this->template = new FileTemplate('TinyMCE/tinymce_editor.tpl');
         }
         return $this->template;
     }

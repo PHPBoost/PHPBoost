@@ -37,7 +37,7 @@ require_once(PATH_TO_ROOT . '/kernel/begin.php');
 define('TITLE', $LANG['all_smiley']);
 require_once(PATH_TO_ROOT . '/kernel/header_no_display.php');
 
-$tpl_smileys = new FileTemplate('tinymce/smileys_tinymce.tpl');
+$tpl_smileys = new FileTemplate('TinyMCE/smileys_tinymce.tpl');
 
 //Chargement de la configuration.
 $smileys_cache = SmileysCache::load();

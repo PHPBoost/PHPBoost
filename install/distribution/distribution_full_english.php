@@ -49,6 +49,6 @@ define('DISTRIBUTION_ENABLE_DEBUG_MODE', false);
 define('DISTRIBUTION_ENABLE_BENCH', false);
 
 //Modules list
-$DISTRIBUTION_MODULES = array('articles', 'calendar', 'contact', 'connect', 'database', 'download', 'faq', 'forum', 'gallery', 'guestbook', 'media', 'news', 'newsletter', 'online', 'pages', 'poll', 'search', 'shoutbox', 'stats', 'web', 'wiki');
+$DISTRIBUTION_MODULES = array('BBCode', 'TinyMCE', 'articles', 'calendar', 'contact', 'connect', 'database', 'download', 'faq', 'forum', 'gallery', 'guestbook', 'media', 'news', 'newsletter', 'online', 'pages', 'poll', 'search', 'shoutbox', 'stats', 'web', 'wiki');
 
 ?>

@@ -46,7 +46,7 @@ class BBCodeEditor extends ContentEditor
     {
         if (!is_object($this->template) || !($this->template instanceof Template))
         {
-            $this->template = new FileTemplate('bbcode/bbcode_editor.tpl');
+            $this->template = new FileTemplate('BBCode/bbcode_editor.tpl');
         }
         return $this->template;
     }

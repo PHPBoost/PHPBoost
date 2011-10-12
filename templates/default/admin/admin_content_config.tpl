@@ -32,8 +32,9 @@
 						<dt><label for="formatting_language">{L_DEFAULT_LANGUAGE}</label></dt>
 						<dd>
 							<select name="formatting_language" id="formatting_language">
-								<option value="bbcode" {BBCODE_SELECTED}>BBCode</option>
-								<option value="tinymce" {TINYMCE_SELECTED}>TinyMCE</option>
+								# START formatting_language #
+									<option value="{formatting_language.ID}" # IF formatting_language.C_SELECTED # selected="selected" # ENDIF # >{formatting_language.NAME}</option>
+								# END formatting_language #
 							</select>
 						</dd>
 					</dl>

@@ -57,7 +57,7 @@ function insertTinyMceContent(content)
 <div style="display:none;" class="xmlhttprequest_preview" id="xmlhttprequest_preview{FIELD}"></div>
 
 # IF NOT C_JS_INCLUDED #
-	<script type="text/javascript" src="{PATH_TO_ROOT}/tinymce/templates/js/tinymce/tiny_mce.js"></script>
+	<script type="text/javascript" src="{PATH_TO_ROOT}/TinyMCE/templates/js/tinymce/tiny_mce.js"></script>
 # ENDIF #
 	
 <script type="text/javascript">
