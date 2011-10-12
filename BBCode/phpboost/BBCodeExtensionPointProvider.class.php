@@ -27,7 +27,7 @@
 
 class BBCodeExtensionPointProvider extends ExtensionPointProvider
 {
-   public function __construct()
+   	public function __construct()
     {
         parent::__construct('bbcode');
     }

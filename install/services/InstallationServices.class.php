@@ -131,8 +131,8 @@ class InstallationServices
 		$password, $tables_prefix);
         $this->create_tables();
 		$this->write_connection_config_file($db_connection_data, $tables_prefix);
-		$this->generate_installation_token();
 		$this->generate_cache();
+		$this->generate_installation_token();
 		return true;
 	}
 
@@ -144,7 +144,6 @@ class InstallationServices
 		$this->install_modules($modules_to_install);
 		$this->add_menus();
 		$this->add_extended_fields();
-		$this->generate_cache();
 		return true;
 	}
 
