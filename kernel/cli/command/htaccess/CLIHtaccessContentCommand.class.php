@@ -48,7 +48,10 @@ class CLIHtaccessContentCommand implements CLICommand
 		
 		if ($this->arg_reader->has_arg('add'))
 		{
-			ServerEnvironmentConfig::load()->set_htaccess_manual_content($this->arg_reader->get('add'));
+			$server_environment_config = ServerEnvironmentConfig::load();
+			$content = $server_environment_config->get_htaccess_manual_content();
+			$content .= $this->arg_reader->get('add');
+			$server_environment_config->set_htaccess_manual_content($content);
 			ServerEnvironmentConfig::save();
 			$this->regenerate_htaccess_file();
 			CLIOutput::writeln('sucess');		
