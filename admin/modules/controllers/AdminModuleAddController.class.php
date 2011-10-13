@@ -134,7 +134,14 @@ class AdminModuleAddController extends AdminController
 	
 	private function install_module(HTTPRequest $request)
 	{
-		$module_id = $request->get_string('module_id', '');
+		$module_id = '';
+		foreach ($_POST as $key => $value)
+		{
+			if ($value == $this->lang['modules.install_module'])
+			{
+				$module_id = str_replace('add-', '', $key);
+			}
+		}
 		
 		if (!empty($module_id))
 		{
@@ -157,7 +164,6 @@ class AdminModuleAddController extends AdminController
 				default: 
 					$this->view->put('MSG', MessageHelper::display($this->lang['modules.install_success'], MessageHelper::SUCCESS, 10));
 			}
-			
 		}
 	}
 	
