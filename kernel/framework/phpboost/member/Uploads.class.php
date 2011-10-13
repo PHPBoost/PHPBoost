@@ -79,7 +79,7 @@ class Uploads
 		$result = self::$sql_querier->query_while("SELECT path
 		FROM " . DB_TABLE_UPLOAD . " 
 		WHERE idcat = '" . $id_folder . "'", __LINE__, __FILE__);
-		while ($row = $Sql->fetch_assoc($result))
+		while ($row = self::$sql_querier->fetch_assoc($result))
 		{
 			$file = new File(PATH_TO_ROOT . '/upload/' . $row['path']);
 			$file->delete();

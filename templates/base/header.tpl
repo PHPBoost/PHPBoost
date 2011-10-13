@@ -29,8 +29,6 @@
 			var THEME = "{THEME}";
 		-->
 		</script>
-
-		<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/lib/js/tinymce/tiny_mce.js"></script>
 		<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/lib/js/scriptaculous/prototype.js"></script>
 		<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/lib/js/scriptaculous/scriptaculous.js"></script>
 		<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/lib/js/phpboost/global.js"></script>

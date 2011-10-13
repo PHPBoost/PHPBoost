@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                             tinymce_parser.class.php
+ *                             TinyMCEEditor.class.php
  *                            -------------------
  *   begin                : July 5 2008
  *   copyright            : (C) 2008 Régis Viarre
@@ -41,6 +41,15 @@ class TinyMCEEditor extends ContentEditor
     {
         parent::__construct();
     }
+    
+ 	public function get_template()
+    {
+        if (!is_object($this->template) || !($this->template instanceof Template))
+        {
+            $this->template = new FileTemplate('TinyMCE/tinymce_editor.tpl');
+        }
+        return $this->template;
+    }
 
   	/**
 	 * @desc Display the editor
@@ -54,8 +63,6 @@ class TinyMCEEditor extends ContentEditor
 
         $template->put_all(array(
         	'PAGE_PATH' => $_SERVER['PHP_SELF'],
-			'C_BBCODE_NORMAL_MODE' => false,
-			'C_BBCODE_TINYMCE_MODE' => true,
 			'C_UPLOAD_MANAGEMENT' => AppContext::get_user()->check_auth(FileUploadConfig::load()->get_authorization_enable_interface_files(), AUTH_FILES),
         	'C_NOT_JS_INCLUDED' => self::$js_included,
 			'EDITOR_NAME' => 'tinymce',
@@ -104,5 +111,4 @@ class TinyMCEEditor extends ContentEditor
         return $template->render();
     }
 }
-
 ?>
