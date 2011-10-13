@@ -43,7 +43,6 @@
 				<br /><br />
 				<input type="hidden" name="token" value="{TOKEN}" />
 				<input type="submit" name="add-{available.ID}" value="{@modules.install_module}" class="submit" />
-				<input type="hidden" name="module_id" value="{available.ID}" />
 			</td>
 		</tr>						
 		# END available #
