@@ -26,7 +26,7 @@
 
 [b]Tous[/b]
 - Réparer la fonctionnalité de période de validité d'une publication (news par exemple), en requêtant directement en fonction de la date courante
--toto
+
 #################################################################################
 
 
