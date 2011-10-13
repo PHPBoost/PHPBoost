@@ -35,8 +35,7 @@ require_once(PATH_TO_ROOT.'/admin/admin_header.php');
 if (!empty($_POST['submit']) )
 {
 	$content_formatting_config = ContentFormattingConfig::load();
-	$editor = retrieve(POST, 'formatting_language', '');
-	$content_formatting_config->set_default_editor(($editor == 'tinymce') ? 'tinymce' : 'bbcode');
+	$content_formatting_config->set_default_editor(retrieve(POST, 'formatting_language', ''));
 	$content_formatting_config->set_html_tag_auth(Authorizations::build_auth_array_from_form(1));
 	$content_formatting_config->set_forbidden_tags(isset($_POST['forbidden_tags']) ? $_POST['forbidden_tags'] : array());
 	ContentFormattingConfig::save();
@@ -59,7 +58,7 @@ else
 	
 	$content_formatting_config = ContentFormattingConfig::load();
 	$content_management_config = ContentManagementConfig::load();
-	
+
 	$j = 0;
 	foreach (AppContext::get_content_formatting_service()->get_available_tags() as $code => $name)
 	{	
@@ -71,9 +70,16 @@ else
 		));
 	}
 	
+	foreach (AppContext::get_content_formatting_service()->get_available_editors() as $id => $name)
+	{
+		$template->assign_block_vars('formatting_language', array(
+			'ID' => $id,
+			'NAME' => $name,
+			'C_SELECTED' => $id == $content_formatting_config->get_default_editor()
+		));
+	}
+	
 	$template->put_all(array(
-		'BBCODE_SELECTED' => ($content_formatting_config->get_default_editor() == 'bbcode') ? 'selected="selected"' : '',
-		'TINYMCE_SELECTED' => ($content_formatting_config->get_default_editor() == 'tinymce') ? 'selected="selected"' : '',
 		'SELECT_AUTH_USE_HTML' => Authorizations::generate_select(1, $content_formatting_config->get_html_tag_auth()),
 		'NBR_TAGS' => $j,
 		'PM_MAX' => UserAccountsConfig::load()->get_max_private_messages_number(),

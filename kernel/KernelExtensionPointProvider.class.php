@@ -34,7 +34,7 @@ class KernelExtensionPointProvider extends ExtensionPointProvider
 
 	public function commands()
 	{
-		return new CLICommandsList(array('help' => 'CLIHelpCommand', 'cache' => 'CLICacheCommand'));
+		return new CLICommandsList(array('help' => 'CLIHelpCommand', 'cache' => 'CLICacheCommand', 'htaccess' => 'CLIHtaccessCommand'));
 	}
 
 	public function url_mappings()

@@ -41,6 +41,15 @@ class BBCodeEditor extends ContentEditor
     {
         parent::__construct();
     }
+    
+ 	public function get_template()
+    {
+        if (!is_object($this->template) || !($this->template instanceof Template))
+        {
+            $this->template = new FileTemplate('BBCode/bbcode_editor.tpl');
+        }
+        return $this->template;
+    }
 
     /**
 	 * @desc Display the editor
@@ -52,15 +61,12 @@ class BBCodeEditor extends ContentEditor
 
         $template = $this->get_template();
 
-        //Chargement de la configuration.
         $smileys_cache = SmileysCache::load();
 
         $bbcode_lang = LangLoader::get('bbcode-common');
         
         $template->put_all(array(
         	'PAGE_PATH' => $_SERVER['PHP_SELF'],
-			'C_BBCODE_TINYMCE_MODE' => false,
-			'C_BBCODE_NORMAL_MODE' => true,
 			'C_EDITOR_NOT_ALREADY_INCLUDED' => !self::$editor_already_included,
 			'EDITOR_NAME' => 'bbcode',
 			'FIELD' => $this->identifier,
@@ -157,44 +163,44 @@ class BBCodeEditor extends ContentEditor
                 break;
             }
 
-            $width_source = 18; //Valeur par défaut.
-            $height_source = 18;
+            $smiley_height = 18;
+            $smiley_width = 18;
 
-            // On recupère la hauteur et la largeur de l'image.
-            list($width_source, $height_source) = @getimagesize(PATH_TO_ROOT . '/images/smileys/' . $infos['url_smiley']);
-            if ($width_source > $width_max || $height_source > $height_max)
+            $smiley = new Image(Url::to_absolute('/images/smileys/' . $infos['url_smiley']));
+			$smiley_height = $smiley->get_height();
+			$smiley_width = $smiley->get_width();
+			
+            if ($smiley_width > $width_max || $smiley_height > $height_max)
             {
-                if ($width_source > $height_source)
+                if ($smiley_width > $smiley_height)
                 {
-                    $ratio = $width_source / $height_source;
+                    $ratio = $smiley_width / $smiley_height;
                     $width = $width_max;
                     $height = $width / $ratio;
                 }
                 else
                 {
-                    $ratio = $height_source / $width_source;
+                    $ratio = $smiley_height / $smiley_width;
                     $height = $height_max;
                     $width = $height / $ratio;
                 }
             }
             else
             {
-                $width = $width_source;
-                $height = $height_source;
+                $width = $smiley_width;
+                $height = $smiley_height;
             }
 
-            $img = '<img src="' . TPL_PATH_TO_ROOT . '/images/smileys/' . $infos['url_smiley'] . '" height="' . $height . '" width="' . $width . '" alt="' . $code_smile . '" title="' . $code_smile . '" />';
-
             $template->assign_block_vars('smileys', array(
-				'URL' => PATH_TO_ROOT . '/smileys/' . $infos['url_smiley'],
+				'URL' => $smiley->get_path(),
 				'CODE' => addslashes($code_smile),
 				'HEIGHT' => $height,
                 'WIDTH' => $width,
 				'END_LINE' => $i % $smile_by_line == 0 ? '<br />' : ''
-				));
+			));
 
-				$i++;
-				$z++;
+			$i++;
+			$z++;
         }
 
         if ($z > $smile_max) //Lien vers tous les smiley!

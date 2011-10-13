@@ -33,10 +33,6 @@
  */
 class ContentFormattingService
 {
-	const BBCODE_LANGUAGE = 'bbcode';
-	const TINYMCE_LANGUAGE = 'tinymce';
-	const DEFAULT_LANGUAGE = 'default';
-
 	/**
 	 * @var AbstractContentFormattingFactory
 	 */
@@ -62,15 +58,8 @@ class ContentFormattingService
 	 */
 	public function create_factory($language = '')
 	{
-		switch ($this->get_existing_editor($language))
-		{
-			case self::BBCODE_LANGUAGE:
-				return new BBCodeFormattingFactory();
-			case self::TINYMCE_LANGUAGE:
-				return new TinyMCEFormattingFactory();
-			default:
-				return $this->create_factory($this->get_user_editor());
-		}
+		$editor = $this->get_existing_editor($language);
+		return ContentFormattingProvidersService::create_factory($editor);
 	}
 
 	/**
@@ -125,7 +114,7 @@ class ContentFormattingService
      */
     private function get_existing_editor($editor)
     {
-        if (in_array($editor, array(self::BBCODE_LANGUAGE, self::TINYMCE_LANGUAGE)))
+        if (in_array($editor, self::get_editors_identifier()))
         {
             return $editor;
         }
@@ -133,6 +122,21 @@ class ContentFormattingService
         {
             return ContentFormattingConfig::load()->get_default_editor();
         }
+    }
+    
+    public function get_editors_identifier()
+    {
+    	return array_keys(ContentFormattingProvidersService::get_editors());
+    }
+    
+    public function get_available_editors()
+    {
+    	$available_editors = array();
+    	foreach (ContentFormattingProvidersService::get_editors() as $id => $provider)
+    	{
+    		$available_editors[$id] = $provider::CONTENT_FORMATTING;
+    	}
+    	return $available_editors;
     }
     
     /**

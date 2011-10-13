@@ -57,7 +57,6 @@ if (!empty($popup)) //Popup.
 -->
 </script>
 <script type="text/javascript" src="' . PATH_TO_ROOT . '/kernel/lib/js/phpboost/global.js"></script>
-<script type="text/javascript" src="' . PATH_TO_ROOT . '/kernel/lib/js/phpboost/bbcode.js"></script>
 </head>
 
 <body>';
@@ -72,8 +71,8 @@ if (!empty($popup)) //Popup.
 }
 else //Affichage de l'interface de gestion.
 {
-	$Bread_crumb->add($LANG['member_area'], MemberUrlBuilder::profile($User->get_attribute('user_id'))->absolute());
-	$Bread_crumb->add($LANG['files_management'], MemberUrlBuilder::upload()->absolute());
+	$Bread_crumb->add($LANG['member_area'], UserUrlBuilder::profile($User->get_attribute('user_id'))->absolute());
+	$Bread_crumb->add($LANG['files_management'], UserUrlBuilder::upload_files_panel()->absolute());
 	require_once('../kernel/header.php');
 	$field = '';
 	$header = '';
@@ -111,21 +110,21 @@ $to = retrieve(POST, 'new_cat', -1);
 if (!empty($parent_folder)) //Changement de dossier
 {
 	if (empty($parent_folder))
-		AppContext::get_response()->redirect(HOST . DIR . url('/member/upload.php?f=0&' . $popup_noamp, '', '&'));
+		AppContext::get_response()->redirect(HOST . DIR . url('/user/upload.php?f=0&' . $popup_noamp, '', '&'));
 	
 	$info_folder = $Sql->query_array(PREFIX . "upload_cat", "id_parent", "user_id", "WHERE id = '" . $parent_folder . "'", __LINE__, __FILE__);
 	if ($info_folder['id_parent'] != 0 || $User->check_level(ADMIN_LEVEL))
 	{
 		if ($parent_folder['user_id'] == -1)
-			AppContext::get_response()->redirect(HOST . DIR . url('/member/upload.php?showm=1', '', '&'));
+			AppContext::get_response()->redirect(HOST . DIR . url('/user/upload.php?showm=1', '', '&'));
 		else
-			AppContext::get_response()->redirect(HOST . DIR . url('/member/upload.php?f=' . $info_folder['id_parent'] . '&' . $popup_noamp, '', '&'));
+			AppContext::get_response()->redirect(HOST . DIR . url('/user/upload.php?f=' . $info_folder['id_parent'] . '&' . $popup_noamp, '', '&'));
 	}
 	else
-		AppContext::get_response()->redirect(HOST . DIR . url('/member/upload.php?f=' . $parent_folder . '&' . $popup_noamp, '', '&'));
+		AppContext::get_response()->redirect(HOST . DIR . url('/user/upload.php?f=' . $parent_folder . '&' . $popup_noamp, '', '&'));
 }
 elseif ($home_folder) //Retour à la racine.
-	AppContext::get_response()->redirect(HOST . DIR . url('/member/upload.php?' . $popup_noamp, '', '&'));
+	AppContext::get_response()->redirect(HOST . DIR . url('/user/upload.php?' . $popup_noamp, '', '&'));
 elseif (!empty($_FILES['upload_file']['name']) && isset($_GET['f'])) //Ajout d'un fichier.
 {
 	$error = '';
@@ -157,7 +156,7 @@ elseif (!empty($_FILES['upload_file']['name']) && isset($_GET['f'])) //Ajout d'u
 				$error = $Upload->get_error();
 				if ($Upload->get_error() == 'e_upload_max_weight')
 					$error = 'e_max_data_reach';
-				AppContext::get_response()->redirect('/member/upload.php?f=' . $folder . '&erroru=' . $error . '&' . $popup_noamp . '#message_helper');
+				AppContext::get_response()->redirect('/user/upload.php?f=' . $folder . '&erroru=' . $error . '&' . $popup_noamp . '#message_helper');
 			}
 			else //Insertion dans la bdd
 			{
@@ -169,7 +168,7 @@ elseif (!empty($_FILES['upload_file']['name']) && isset($_GET['f'])) //Ajout d'u
 	}
 	
 	$error = !empty($error) ? '&error=' . $error . '&' . $popup_noamp . '#message_helper' : '&' . $popup_noamp;
-	AppContext::get_response()->redirect(HOST . DIR . url('/member/upload.php?f=' . $folder . $error, '', '&'));
+	AppContext::get_response()->redirect(HOST . DIR . url('/user/upload.php?f=' . $folder . $error, '', '&'));
 }
 elseif (!empty($del_folder)) //Supprime un dossier.
 {
@@ -192,7 +191,7 @@ elseif (!empty($del_folder)) //Supprime un dossier.
 		}
 	}
 	
-	AppContext::get_response()->redirect(HOST . DIR . url('/member/upload.php?f=' . $folder . '&' . $popup_noamp, '', '&'));
+	AppContext::get_response()->redirect(HOST . DIR . url('/user/upload.php?f=' . $folder . '&' . $popup_noamp, '', '&'));
 }
 elseif (!empty($del_file)) //Suppression d'un fichier
 {
@@ -212,7 +211,7 @@ elseif (!empty($del_file)) //Suppression d'un fichier
 		}
 	}
 	
-	AppContext::get_response()->redirect(HOST . DIR . url('/member/upload.php?f=' . $folder . '&' . $popup_noamp, '', '&'));
+	AppContext::get_response()->redirect(HOST . DIR . url('/user/upload.php?f=' . $folder . '&' . $popup_noamp, '', '&'));
 }
 elseif (!empty($move_folder) && $to != -1) //Déplacement d'un dossier
 {
@@ -233,11 +232,11 @@ elseif (!empty($move_folder) && $to != -1) //Déplacement d'un dossier
 			if ($new_folder_owner == $User->get_attribute('user_id') || $to == 0)
 			{
 				$Sql->query_inject("UPDATE " . DB_TABLE_UPLOAD_CAT . " SET id_parent = '" . $to . "' WHERE id = '" . $move_folder . "'", __LINE__, __FILE__);
-				AppContext::get_response()->redirect(HOST . DIR . url('/member/upload.php?f=' . $to . '&' . $popup_noamp, '', '&'));
+				AppContext::get_response()->redirect(HOST . DIR . url('/user/upload.php?f=' . $to . '&' . $popup_noamp, '', '&'));
 			}
 		}
 		else
-			AppContext::get_response()->redirect(HOST . DIR . url('/member/upload.php?movefd=' . $move_folder . '&f=0&error=folder_contains_folder&' . $popup_noamp, '', '&'));
+			AppContext::get_response()->redirect(HOST . DIR . url('/userr/upload.php?movefd=' . $move_folder . '&f=0&error=folder_contains_folder&' . $popup_noamp, '', '&'));
 	}
 	else
 	{
@@ -260,7 +259,7 @@ elseif (!empty($move_file) && $to != -1) //Déplacement d'un fichier
 		if ($new_folder_owner == $User->get_attribute('user_id') || $to == 0)
 		{
 			$Sql->query_inject("UPDATE " . DB_TABLE_UPLOAD . " SET idcat = '" . $to . "' WHERE id = '" . $move_file . "'", __LINE__, __FILE__);
-			AppContext::get_response()->redirect(HOST . DIR . url('/member/upload.php?f=' . $to . '&' . $popup_noamp, '', '&'));
+			AppContext::get_response()->redirect(HOST . DIR . url('/user/upload.php?f=' . $to . '&' . $popup_noamp, '', '&'));
 		}
 		else
 		{
@@ -277,7 +276,7 @@ elseif (!empty($move_file) && $to != -1) //Déplacement d'un fichier
 elseif (!empty($move_folder) || !empty($move_file))
 {
 	$Template->set_filenames(array(
-		'upload_move'=> 'member/upload_move.tpl'
+		'upload_move'=> 'user/upload_move.tpl'
 	));
 	
 	$Template->put_all(array(
@@ -372,7 +371,7 @@ else
 	$is_admin = $User->check_level(ADMIN_LEVEL);
 	
 	$Template->set_filenames(array(
-		'upload' => 'member/upload.tpl'
+		'upload' => 'user/upload.tpl'
 	));
 
 	//Gestion des erreurs.

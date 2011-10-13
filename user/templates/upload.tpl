@@ -37,7 +37,7 @@
 			height = screen.height - 150;
 		if( width == '0' )
 			width = screen.width - 200;
-		window.open('../member/upload_popup.php?id=' + id, "", "width="+width+", height="+height+ ",location=no,status=no,toolbar=no,scrollbars=" + scrollbars + ",resizable=yes");
+		window.open('../user/upload_popup.php?id=' + id, "", "width="+width+", height="+height+ ",location=no,status=no,toolbar=no,scrollbars=" + scrollbars + ",resizable=yes");
 	}
 	var hide_folder = false;
 	var empty_folder = 0;
