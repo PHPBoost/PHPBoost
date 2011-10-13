@@ -216,10 +216,11 @@ else
 	 
 	$Pagination = new DeprecatedPagination();
 
-	/*$nbr_column = (($total_cat > $web_config->get_number_columns()) ? $web_config->get_number_columns() : $total_cat);
-	$web_config->set_number_columns($nbr_column);
-	$nbr_column = (!empty($web_config->get_number_columns()) ? $web_config->get_number_columns() : 1);
-	$web_config->set_number_columns($nbr_column);*/
+	$nbr_column = $web_config->get_number_columns();
+	if ($total_cat < $web_config->get_number_columns($nbr_column))
+	{
+		$nbr_column = $total_cat;
+	}
 	
 	$tpl->put_all(array(
 		'C_WEB_CAT' => true,
