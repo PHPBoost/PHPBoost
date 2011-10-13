@@ -84,6 +84,8 @@ class FaqSitemapExtensionPoint implements SitemapExtensionPoint
 		$this_category = new SitemapLink($FAQ_CATS[$id_cat]['name'], new Url('/faq/' . url('faq.php?id=' . $id_cat, 'faq-' . $id_cat . '+' . Url::encode_rewrite($FAQ_CATS[$id_cat]['name']) . '.php')));
 			
 		$category = new SitemapSection($this_category);
+		
+		$faq_config = FaqConfig::load();
 
 		$i = 0;
 
