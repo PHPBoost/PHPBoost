@@ -120,22 +120,26 @@ class AdminThemesNotInstalledListController extends AdminController
 	
 	private function save(HTTPRequest $request)
 	{
-		$id_theme = $request->get_string('id_theme', '');
-		if (!empty($id_theme))
+		foreach ($this->get_not_installed_themes() as $id_theme)
 		{
-			$activated = $request->get_bool('activated-' . $id_theme, false);
-			$authorizations = Authorizations::auth_array_simple(Theme::ACCES_THEME, $id_theme);
-			ThemeManager::install($id_theme, $authorizations, $activated);
-			$error = ThemeManager::get_error();
-			if ($error !== null)
-			{
-				$this->view->put('MSG', MessageHelper::display($error, MessageHelper::NOTICE, 10));
+			try {
+				if ($request->get_string('add-' . $id_theme))
+				{
+					$activated = $request->get_bool('activated-' . $id_theme, false);
+					$authorizations = Authorizations::auth_array_simple(Theme::ACCES_THEME, $id_theme);
+					ThemeManager::install($id_theme, $authorizations, $activated);
+					$error = ThemeManager::get_error();
+					if ($error !== null)
+					{
+						$this->view->put('MSG', MessageHelper::display($error, MessageHelper::NOTICE, 10));
+					}
+					else
+					{
+						$this->view->put('MSG', MessageHelper::display($this->lang['themes.add.success'], MessageHelper::SUCCESS, 4));
+					}
+				}
+			} catch (Exception $e) {
 			}
-			else
-			{
-				$this->view->put('MSG', MessageHelper::display($this->lang['themes.add.success'], MessageHelper::SUCCESS, 4));
-			}
-			
 		}
 	}
 	
