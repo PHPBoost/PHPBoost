@@ -32,24 +32,44 @@ class ArticlesCategoriesService
 	
 	}
 	
-	public static function edit(ArticlesCategory $category)
+	public static function update(ArticlesCategory $category)
 	{
 	
 	}
 
-	public static function delete(ArticlesCategory $category)
+	public static function delete($id_category)
 	{
 	
 	}
 	
-	public static function change_position(ArticlesCategory $category)
+	public static function change_position($id_category, $position)
 	{
 	
 	}
 	
-	public static function change_visibility(ArticlesCategory $category)
+	public static function move($current_category_id, $moved_category_id)
 	{
 	
+	}
+	
+	public static function change_visibility($id_category, $visibility)
+	{
+	
+	}
+	
+	public static function get_categories()
+	{
+		
+	}
+	
+	public static function get_categorie($id_category)
+	{
+		
+	}
+	
+	public static function get_feed_list()
+	{
+		
 	}
 }
 ?>

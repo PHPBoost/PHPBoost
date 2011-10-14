@@ -27,13 +27,13 @@
 
 class ArticlesSetup extends DefaultModuleSetup
 {
-	private static $articles_table;
-	private static $articles_categories;
+	public static $articles_table;
+	public static $articles_categories_table;
 
 	public static function __static()
 	{
 		self::$articles_table = PREFIX . 'articles';
-		self::$articles_categories = PREFIX . 'articles_categories';
+		self::$articles_categories_table = PREFIX . 'articles_categories';
 	}
 
 	public function install()
@@ -50,7 +50,7 @@ class ArticlesSetup extends DefaultModuleSetup
 
 	private function drop_tables()
 	{
-		PersistenceContext::get_dbms_utils()->drop(array(self::$articles_table, self::$articles_categories));
+		PersistenceContext::get_dbms_utils()->drop(array(self::$articles_table, self::$articles_categories_table));
 	}
 
 	private function create_tables()
@@ -68,7 +68,6 @@ class ArticlesSetup extends DefaultModuleSetup
 			'title' => array('type' => 'string', 'length' => 255, 'notnull' => 1),
 			'description' => array('type' => 'text', 'length' => 65000),
 			'contents' => array('type' => 'text', 'length' => 65000),
-			'source' => array('type' => 'text', 'length' => 65000),
 			'number_view' => array('type' => 'integer', 'length' => 11, 'default' => 0),
 			'writer_user_id' => array('type' => 'integer', 'length' => 11, 'default' => 0),
 			'writer_name_visitor' => array('type' => 'string', 'length' => 255, 'default' => "''"),
@@ -108,7 +107,7 @@ class ArticlesSetup extends DefaultModuleSetup
 			'primary' => array('id'),
 			'indexes' => array('class' => array('type' => 'key', 'fields' => 'c_order'))
 		);
-		PersistenceContext::get_dbms_utils()->create_table(self::$articles_categories, $fields, $options);
+		PersistenceContext::get_dbms_utils()->create_table(self::$articles_categories_table, $fields, $options);
 	}
 
 	private function insert_data()

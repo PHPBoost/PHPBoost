@@ -36,17 +36,48 @@ class ArticlesDataBase
 	
 	public static function add(Article $article)
 	{
-	
+		self::$db_querier->insert(ArticlesSetup::$articles_table, array(
+			'id_category' => $article->get_id_categorie(),
+			'picture' => $article->get_picture(),
+			'title' => $article->get_title(),
+			'description' => $article->get_description(),
+			'contents' => $article->get_contents(),
+			'number_view' => $article->get_number_view(),
+			'writer_user_id' => $article->get_writer_user_id(),
+			'writer_name_visitor' => $article->get_writer_name_visitor(),
+			'visibility' => $article->get_visibility(),
+			'start_visibility' => $article->get_start_visibility(),
+			'end_visibility' => $article->get_end_visibility(),
+			'authorizations' => serialize($article->get_authorizations()),
+			'timestamp_created' => $article->get_timestamp_created(),
+			'timestamp_last_modified' => $article->get_timestamp_last_modified()
+		));
 	}
 	
-	public static function edit(Article $article)
+	public static function update(Article $article)
 	{
-	
+		$columns = array(
+			'id_category' => $article->get_id_categorie(),
+			'picture' => $article->get_picture(),
+			'title' => $article->get_title(),
+			'description' => $article->get_description(),
+			'contents' => $article->get_contents(),
+			'number_view' => $article->get_number_view(),
+			'writer_user_id' => $article->get_writer_user_id(),
+			'writer_name_visitor' => $article->get_writer_name_visitor(),
+			'visibility' => $article->get_visibility(),
+			'start_visibility' => $article->get_start_visibility(),
+			'end_visibility' => $article->get_end_visibility(),
+			'authorizations' => serialize($article->get_authorizations()),
+			'timestamp_created' => $article->get_timestamp_created(),
+			'timestamp_last_modified' => $article->get_timestamp_last_modified()
+		);
+		self::$db_querier->update(ArticlesSetup::$articles_table, $columns, 'WHERE id = :id', array('id' => $article->get_id()));
 	}
 	
-	public static function delete(Article $article)
+	public static function delete($id_article)
 	{
-	
+		self::$db_querier->delete(ArticlesSetup::$articles_table, 'WHERE id = id', array('id' => $id_article));
 	}
 }
 

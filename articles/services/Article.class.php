@@ -33,7 +33,7 @@ class Article
     private $description;
     private $contents;
     private $picture;
-    private $source;
+    private $number_view;
     private $writer_user_id;
     private $writer_name_visitor;
     private $visibility;
@@ -113,14 +113,14 @@ class Article
 		return $this->picture;
 	}
 	
-	public function set_source($source)
+	public function set_number_view($number_view)
 	{
-		$this->source = $source;
+		$this->number_view = $number_view;
 	}
 	
-	public function get_source()
+	public function get_number_view()
 	{
-		return $this->source;
+		return $this->number_view;
 	}
 	
 	public function set_writer_user_id($writer_user_id)

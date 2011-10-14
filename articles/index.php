@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                        ArticlesService.class.php
+ *                           index.php
  *                            -------------------
- *   begin                : April 25, 2011
+ *   begin                : October 14, 2011
  *   copyright            : (C) 2011 Kévin MASSY
  *   email                : soldier.weasel@gmail.com
  *
@@ -25,21 +25,25 @@
  *
  ###################################################*/
 
-class ArticlesService
-{
-    public static function add(Article $article)
-	{
-		ArticlesDataBase::add($article);
-	}
+define('PATH_TO_ROOT', '..');
+
+require_once PATH_TO_ROOT . '/kernel/init.php';
+
+$url_controller_mappers = array(
+	new UrlControllerMapper('ArticlesAdminConfigController', '`^/admin(?:/config)?/?$`'),
+	new UrlControllerMapper('ArticlesAdminCategoriesManagementController', '`^/admin/categories(?:/management)?/?$`'),
+	new UrlControllerMapper('ArticlesAdminAddCategoryController', '`^/admin/categories/add?/?$`'),
 	
-	public static function update(Article $article)
-	{
-		ArticlesDataBase::update($article);
-	}
+	new UrlControllerMapper('ArticlesExploreCategoryController', '`^/category(?:/([\w/]*))?/?$`', array('name')),
 	
-	public static function delete($id_article)
-	{
-		ArticlesDataBase::delete($id_article);
-	}
-}
+	new UrlControllerMapper('ArticlesViewArticleController', '`^/article/([\w/]*)?/?$`', array('title')),
+	new UrlControllerMapper('ArticlesPendingController', '`^/pending(?:/([\w/]*))?/?$`', array('pseudo')),
+	
+	new UrlControllerMapper('ArticlesPrintArticleController', '`^/print/([\w/]*)?/?$`', array('title')),
+	
+	new UrlControllerMapper('ArticlesHomePageController', '`^(?:/home)?/?$`'),
+);
+
+DispatchManager::dispatch($url_controller_mappers);
+
 ?>
