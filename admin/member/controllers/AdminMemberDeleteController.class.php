@@ -56,7 +56,7 @@ class AdminMemberDeleteController extends AdminController
 	
 	private static function verificate_number_admin_user()
 	{
-		return self::$db_querier->count(DB_TABLE_MEMBER, "WHERE user_aprob = 1 AND level = 1");
+		return PersistenceContext::get_querier()->count(DB_TABLE_MEMBER, "WHERE user_aprob = 1 AND level = 1");
 	}
 }
 ?>
