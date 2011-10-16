@@ -3,7 +3,7 @@
  *                        CategoriesManager.class.php
  *                            -------------------
  *   begin                : February 06, 2008
- *   copyright            : (C) 2008 Benoît Sautel
+ *   copyright            : (C) 2008 Benoï¿½t Sautel
  *   email                : ben.popeye@phpboost.com
  *
  *
@@ -56,7 +56,7 @@ define('NEW_STATUS_UNKNOWN', 0x100);
 
 /**
  * @package {@package}
- * @author Benoît Sautel <ben.popeye@phpboost.com>
+ * @author Benoï¿½t Sautel <ben.popeye@phpboost.com>
  * @desc This class enables you to manage easily the administration of categories for your modules.
  * It's as generic as possible, if you want to complete some actions to specialize them for you module,
  * you can create a new class inheritating of it in which you call its methods using the syntax
@@ -226,7 +226,7 @@ class CategoriesManager
 					//Updating current category
 					$this->sql_querier->query_inject("UPDATE " . PREFIX . $this->table . " SET c_order = c_order + 1 WHERE id = '" . $id . "'", __LINE__, __FILE__);
 					//Regeneration of the cache file of the module
-					$Cache->Generate_module_file($this->cache_file_name);
+					$this->regenerate_cache();
 
 					return true;
 				}
@@ -246,7 +246,7 @@ class CategoriesManager
 					//Updating current category
 					$this->sql_querier->query_inject("UPDATE " . PREFIX . $this->table . " SET c_order = c_order - 1 WHERE id = '" . $id . "'", __LINE__, __FILE__);
 					//Regeneration of the cache file of the module
-					$Cache->Generate_module_file($this->cache_file_name);
+					$this->regenerate_cache();
 					return true;
 				}
 				else
@@ -310,7 +310,7 @@ class CategoriesManager
 				}
 
 				//Regeneration of the cache file of the module
-				$Cache->Generate_module_file($this->cache_file_name);
+				$this->regenerate_cache();
 				return true;
 			}
 			else
@@ -357,7 +357,7 @@ class CategoriesManager
 		$this->sql_querier->query_inject("UPDATE " . PREFIX . $this->table . " SET c_order = c_order - 1 WHERE id_parent = '". $cat_infos['id_parent'] . "' AND c_order > '" . $cat_infos['order'] . "'", __LINE__, __FILE__);
 
 		//Regeneration of the cache file
-		$Cache->Generate_module_file($this->cache_file_name);
+		$this->regenerate_cache();
 
 		return true;
 	}
@@ -391,7 +391,7 @@ class CategoriesManager
 			//Regeneration of the cache file
 			if ($generate_cache)
 			{
-				$Cache->Generate_module_file($this->cache_file_name);
+				$this->regenerate_cache();
 			}
 
 			return true;
@@ -419,7 +419,7 @@ class CategoriesManager
 	 */
 	public function set_display_config($config)
 	{
-		//Respect du standard à vérifier
+		//Respect du standard ï¿½ vï¿½rifier
 		$this->display_config = $config;
 
 		return $this->check_display_config();
@@ -654,14 +654,24 @@ class CategoriesManager
 	    global $LANG;
 
 	    $list = new FeedsList();
-	    //Catégorie racine
+	    //Catï¿½gorie racine
 	    $cats_tree = new FeedsCat($this->cache_file_name, 0, $LANG['root']);
-	    //Liste de toutes les catégories (parcours récursif)
+	    //Liste de toutes les catï¿½gories (parcours rï¿½cursif)
 	    $this->build_feeds_sub_list($cats_tree, 0);
-	    //On ajoute la racine et ce qu'elle contient à la liste
+	    //On ajoute la racine et ce qu'elle contient ï¿½ la liste
 	    $list->add_feed($cats_tree, Feed::DEFAULT_FEED_NAME);
 
 	    return $list;
+	}
+	
+	public function regenerate_cache()
+	{
+		global $Cache;
+		
+		if (!empty($this->cache_file_name))
+		{
+			$Cache->Generate_module_file($this->cache_file_name);
+		}
 	}
 
 	/**
@@ -869,9 +879,9 @@ class CategoriesManager
 			if ($id != 0 && $value['id_parent'] == $parent_id)
 			{
 			    $sub_tree = new FeedsCat($this->cache_file_name, $id, $value['name']);
-			    //On construit l'éventuel sous arbre
+			    //On construit l'ï¿½ventuel sous arbre
 			    $this->build_feeds_sub_list($sub_tree, $id);
-			    //On ajoute l'arbre au père
+			    //On ajoute l'arbre au pï¿½re
 			    $tree->add_child($sub_tree);
 			}
 		}
