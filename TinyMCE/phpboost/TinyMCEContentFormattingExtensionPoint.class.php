@@ -3,7 +3,7 @@
  *                           TinyMCEContentFormattingExtensionPoint.class.php
  *                            -------------------
  *   begin                : October 11, 2011
- *   copyright            : (C) 2011 Kévin MASSY
+ *   copyright            : (C) 2011 Kï¿½vin MASSY
  *   email                : soldier.weasel@gmail.com
  *
  *
@@ -27,7 +27,10 @@
 
 class TinyMCEContentFormattingExtensionPoint extends AbstractContentFormattingExtensionPoint
 {
-	const CONTENT_FORMATTING = 'TinyMCE';
+	public function get_name()
+	{
+		return 'TinyMCE';
+	}
 	
 	/**
 	 * {@inheritdoc}

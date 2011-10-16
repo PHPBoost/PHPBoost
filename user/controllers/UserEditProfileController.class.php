@@ -3,7 +3,7 @@
  *                       UserEditProfileController.class.php
  *                            -------------------
  *   begin                : October 09, 2011
- *   copyright            : (C) 2011 Kévin MASSY
+ *   copyright            : (C) 2011 Kï¿½vin MASSY
  *   email                : soldier.weasel@gmail.com
  *
  *
@@ -122,10 +122,7 @@ class UserEditProfileController extends AbstractController
 		}
 		
 		$options_fieldset->add_field(new FormFieldSimpleSelectChoice('text-editor', $this->lang['text-editor'], $row['user_editor'],
-			array(
-				new FormFieldSelectChoiceOption('BBCode', ContentFormattingService::BBCODE_LANGUAGE),
-				new FormFieldSelectChoiceOption('TinyMCE', ContentFormattingService::TINYMCE_LANGUAGE),
-			)
+			$this->build_editor_select_options()
 		));
 		
 		$options_fieldset->add_field(new FormFieldSimpleSelectChoice('lang', $this->lang['lang'], $row['user_lang'],
@@ -194,6 +191,16 @@ class UserEditProfileController extends AbstractController
 		$response->add_breadcrumb($this->lang['user'], UserUrlBuilder::users()->absolute());
 		$response->add_breadcrumb($this->lang['profile.edit'], UserUrlBuilder::edit_profile($user_id)->absolute());
 		return $response->display($this->tpl);
+	}
+	
+	private function build_editor_select_options()
+	{
+		$choices_list = array();
+		foreach (AppContext::get_content_formatting_service()->get_available_editors() as $id => $name)
+		{
+			$choices_list[] = new FormFieldSelectChoiceOption($name, $id);
+		}
+		return $choices_list;
 	}
 	
 	private function build_themes_select_options()

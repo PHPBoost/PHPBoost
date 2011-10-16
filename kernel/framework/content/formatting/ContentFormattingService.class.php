@@ -27,7 +27,7 @@
 
 /**
  * @package {@package}
- * @author Benoît Sautel <ben.popeye@phpboost.com>
+ * @author Benoï¿½t Sautel <ben.popeye@phpboost.com>
  * @desc This class contains the default content formatting factory that must be used if you want
  * a formatting factory having the default settings.
  */
@@ -134,7 +134,7 @@ class ContentFormattingService
     	$available_editors = array();
     	foreach (ContentFormattingProvidersService::get_editors() as $id => $provider)
     	{
-    		$available_editors[$id] = $provider::CONTENT_FORMATTING;
+    		$available_editors[$id] = $provider->get_name();
     	}
     	return $available_editors;
     }

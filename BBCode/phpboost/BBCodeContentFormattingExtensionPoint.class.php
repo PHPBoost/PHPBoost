@@ -3,7 +3,7 @@
  *                           BBCodeContentFormattingExtensionPoint.class.php
  *                            -------------------
  *   begin                : October 11, 2011
- *   copyright            : (C) 2011 Kévin MASSY
+ *   copyright            : (C) 2011 Kï¿½vin MASSY
  *   email                : soldier.weasel@gmail.com
  *
  *
@@ -27,7 +27,10 @@
 
 class BBCodeContentFormattingExtensionPoint extends AbstractContentFormattingExtensionPoint
 {
-	const CONTENT_FORMATTING = 'BBCode';
+	public function get_name()
+	{
+		return 'BBCode';
+	}
 	
 	/**
 	 * {@inheritdoc}

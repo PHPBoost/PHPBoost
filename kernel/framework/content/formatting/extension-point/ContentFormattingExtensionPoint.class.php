@@ -28,8 +28,9 @@
 interface ContentFormattingExtensionPoint extends ExtensionPoint
 {
 	const EXTENSION_POINT = 'content_formatting';
-	const CONTENT_FORMATTING = 'default';
 
+	function get_name();
+	
 	/**
 	 * @desc Returns a parser which will work in the language you chose.
 	 * @return FormattingParser The parser to use to parse you formatting
