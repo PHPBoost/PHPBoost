@@ -34,12 +34,12 @@ $url_controller_mappers = array(
 	new UrlControllerMapper('ArticlesAdminCategoriesManagementController', '`^/admin/categories(?:/management)?/?$`'),
 	new UrlControllerMapper('ArticlesAdminAddCategoryController', '`^/admin/categories/add?/?$`'),
 	
-	new UrlControllerMapper('ArticlesExploreCategoryController', '`^/category(?:/([\w/]*))?/?$`', array('name')),
+	new UrlControllerMapper('ArticlesExploreCategoryController', '`^/category(?:/([A-Za-z0-9-]+))?/?$`', array('name')),
 	
-	new UrlControllerMapper('ArticlesViewArticleController', '`^/article/([\w/]*)?/?$`', array('title')),
-	new UrlControllerMapper('ArticlesPendingController', '`^/pending(?:/([\w/]*))?/?$`', array('pseudo')),
+	new UrlControllerMapper('ArticlesViewArticleController', '`^/article/([A-Za-z0-9-]+)?/?$`', array('title')),
+	new UrlControllerMapper('ArticlesPendingController', '`^/pending(?:/([A-Za-z0-9-]+))?/?$`', array('pseudo')),
 	
-	new UrlControllerMapper('ArticlesPrintArticleController', '`^/print/([\w/]*)?/?$`', array('title')),
+	new UrlControllerMapper('ArticlesPrintArticleController', '`^/print/([A-Za-z0-9-]+)?/?$`', array('title')),
 	
 	new UrlControllerMapper('ArticlesHomePageController', '`^(?:/home)?/?$`'),
 );

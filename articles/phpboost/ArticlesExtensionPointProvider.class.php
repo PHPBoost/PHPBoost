@@ -31,5 +31,10 @@ class ArticlesExtensionPointProvider extends ExtensionPointProvider
     {
 		parent::__construct('articles');
 	}
+	
+	public function url_mappings()
+	{
+		return new UrlMappings(array(new DispatcherUrlMapping('/articles/index.php')));
+	}
 }
 ?>

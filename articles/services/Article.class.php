@@ -30,6 +30,7 @@ class Article
     private $id;
     private $id_categorie;
     private $title;
+    private $rewrited_title;
     private $description;
     private $contents;
     private $picture;
@@ -73,14 +74,14 @@ class Article
 		return $this->title;
 	}
 	
-	public function set_title($title)
+	public function set_rewrited_title($rewrited_title)
 	{
-		$this->title = $title;
+		$this->rewrited_title = $rewrited_title;
 	}
 	
-	public function get_title()
+	public function get_rewrited_title()
 	{
-		return $this->title;
+		return $this->rewrited_title;
 	}
 	
 	public function set_description($description)

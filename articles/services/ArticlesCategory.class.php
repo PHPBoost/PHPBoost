@@ -137,6 +137,5 @@ class ArticlesCategory
 	{
 		return $this->visibility;
 	}
-	
 }
 ?>

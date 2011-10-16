@@ -66,6 +66,7 @@ class ArticlesSetup extends DefaultModuleSetup
 			'id_category' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'picture' => array('type' => 'string', 'length' => 255, 'default' => "''"),
 			'title' => array('type' => 'string', 'length' => 255, 'notnull' => 1),
+			'rewrited_title' => array('type' => 'string', 'length' => 255, 'notnull' => 1),
 			'description' => array('type' => 'text', 'length' => 65000),
 			'contents' => array('type' => 'text', 'length' => 65000),
 			'number_view' => array('type' => 'integer', 'length' => 11, 'default' => 0),
