@@ -3,7 +3,7 @@
  *                       UserEditProfileController.class.php
  *                            -------------------
  *   begin                : October 09, 2011
- *   copyright            : (C) 2011 Kï¿½vin MASSY
+ *   copyright            : (C) 2011 Kévin MASSY
  *   email                : soldier.weasel@gmail.com
  *
  *
@@ -96,12 +96,8 @@ class UserEditProfileController extends AbstractController
 			'class' => 'text', 'maxlength' => 25, 'description' => $this->lang['password.old.explain']))
 		);
 		
-		$fieldset->add_field($new_password = new FormFieldPasswordEditor('new_password', $this->lang['password.new'], '', array(
-			'class' => 'text', 'maxlength' => 25))
-		);
-		$fieldset->add_field($new_password_bis = new FormFieldPasswordEditor('new_password_bis', $this->lang['password.confirm'], '', array(
-			'class' => 'text', 'maxlength' => 25))
-		);
+		$fieldset->add_field($new_password = new FormFieldPasswordEditor('new_password', $this->lang['password.new'], ''));
+		$fieldset->add_field($new_password_bis = new FormFieldPasswordEditor('new_password_bis', $this->lang['password.confirm'], ''));
 		
 		$fieldset->add_field(new FormFieldCheckbox('user_hide_mail', $this->lang['email.hide'], $row['user_show_mail']));
 		
@@ -121,13 +117,9 @@ class UserEditProfileController extends AbstractController
 			$options_fieldset->add_field(new FormFieldFree('preview_theme', $this->lang['theme.preview'], '<img id="img_theme" src="'. $this->get_picture_theme($row['user_theme']) .'" alt="" style="vertical-align:top; max-height:180px;" />'));
 		}
 		
-		$options_fieldset->add_field(new FormFieldSimpleSelectChoice('text-editor', $this->lang['text-editor'], $row['user_editor'],
-			$this->build_editor_select_options()
-		));
+		$options_fieldset->add_field(new FormFieldEditors('text-editor', $this->lang['text-editor'], $row['user_editor']));
 		
-		$options_fieldset->add_field(new FormFieldSimpleSelectChoice('lang', $this->lang['lang'], $row['user_lang'],
-			$this->build_langs_select_options()
-		));	
+		$options_fieldset->add_field(new FormFieldLangs('lang', $this->lang['lang'], $row['user_lang']));	
 		
 		$member_extended_field = new MemberExtendedField();
 		$member_extended_field->set_template($form);
@@ -193,16 +185,6 @@ class UserEditProfileController extends AbstractController
 		return $response->display($this->tpl);
 	}
 	
-	private function build_editor_select_options()
-	{
-		$choices_list = array();
-		foreach (AppContext::get_content_formatting_service()->get_available_editors() as $id => $name)
-		{
-			$choices_list[] = new FormFieldSelectChoiceOption($name, $id);
-		}
-		return $choices_list;
-	}
-	
 	private function build_themes_select_options()
 	{
 		$choices_list = array();
@@ -231,23 +213,6 @@ class UserEditProfileController extends AbstractController
 	{
 		$pictures = ThemeManager::get_theme($user_theme)->get_configuration()->get_pictures();
 		return PATH_TO_ROOT .'/templates/' . $user_theme . '/' . $pictures[0];
-	}
-	
-	private function build_langs_select_options()
-	{
-		$array = array();
-		$langs_cache = LangsCache::load();
-		foreach($langs_cache->get_installed_langs() as $lang => $properties)
-		{
-			if ($properties['auth'] == -1)
-			{
-				$info_lang = load_ini_file(PATH_TO_ROOT .'/lang/', $lang);
-
-				$array[] = new FormFieldSelectChoiceOption($info_lang['name'], $lang);
-			}
-			
-		}
-		return $array;
 	}
 }
 ?>
