@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                             FormFieldGroups.class.php
+ *                             FormFieldLangs.class.php
  *                            -------------------
  *   begin                : September 26, 2011
  *   copyright            : (C) 2011 Kévin MASSY
@@ -29,10 +29,10 @@
  * @desc
  * @package {@package}
  */
-class FormFieldGroups extends FormFieldMultipleSelectChoice
+class FormFieldLangs extends FormFieldSimpleSelectChoice
 {
     /**
-     * @desc Constructs a FormFieldGroups.
+     * @desc Constructs a FormFieldLangs.
      * @param string $id Field id
      * @param string $label Field label
      * @param mixed $value Default value (either a FormFieldEnumOption object or a string corresponding to the FormFieldEnumOption's raw value)
@@ -46,11 +46,16 @@ class FormFieldGroups extends FormFieldMultipleSelectChoice
 
     private function generate_options()
 	{
-		$groups = GroupsCache::load()->get_groups();
 		$options = array();
-		foreach ($groups as $id => $informations)
+		$langs_cache = LangsCache::load();
+		foreach($langs_cache->get_installed_langs() as $lang => $properties)
 		{
-			$options[] = new FormFieldSelectChoiceOption($informations['name'], $id);
+			if ($properties['auth'] == -1)
+			{
+				$info_lang = load_ini_file(PATH_TO_ROOT .'/lang/', $lang);
+
+				$options[] = new FormFieldSelectChoiceOption($info_lang['name'], $lang);
+			}
 		}
 		return $options;
 	}

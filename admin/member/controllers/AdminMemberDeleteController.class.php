@@ -31,11 +31,11 @@ class AdminMemberDeleteController extends AdminController
 	{
 		$user_id = $request->get_int('id', null);
 		
-		if ($this->user_exist($user_id) && $user_id !== null)
+		if (!UserService::user_exists_by_id($user_id) && $user_id !== null)
 		{
 			if (self::verificate_number_admin_user() > 1)
 			{
-				$this->delete_account($user_id);
+				UserService::delete_account($user_id);
 				
 				StatsCache::invalidate();
 				
@@ -53,28 +53,10 @@ class AdminMemberDeleteController extends AdminController
 			DispatchManager::redirect($error_controller);
 		}
 	}
-
-	public static function delete_account($user_id)
-	{
-		if (self::verificate_number_admin_user() > 1)
-		{
-			PersistenceContext::get_querier()->inject(
-				"DELETE FROM " . DB_TABLE_MEMBER . " WHERE user_id = :user_id"
-				, array(
-					'user_id' => $user_id,
-			));
-		}
-	}
 	
 	private static function verificate_number_admin_user()
 	{
 		return self::$db_querier->count(DB_TABLE_MEMBER, "WHERE user_aprob = 1 AND level = 1");
 	}
-	
-	private function user_exist($user_id)
-	{
-		return PersistenceContext::get_querier()->count(DB_TABLE_MEMBER, "WHERE user_aprob = 1 AND user_id = '" . $user_id . "'") > 0 ? true : false;
-	}
 }
-
 ?>

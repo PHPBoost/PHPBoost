@@ -44,15 +44,13 @@ class AdminMemberEditController extends AdminController
 		$this->user_id = $request->get_getint('id');
 		$this->init();
 		
-		if ($this->user_exist())
-		{
-			$this->build_form();
-		}
-		else
+		if (!UserService::user_exists_by_id($this->user_id))
 		{
 			$error_controller = PHPBoostErrors::unexisting_member();
 			DispatchManager::redirect($error_controller);
 		}
+		
+		$this->build_form();
 
 		$tpl = new StringTemplate('# INCLUDE MSG # # INCLUDE FORM #');
 		$tpl->add_lang($this->lang);
@@ -92,13 +90,9 @@ class AdminMemberEditController extends AdminController
 			array(new FormFieldConstraintMailAddress(), new FormFieldConstraintMailExist($row['user_id']))
 		));
 		
-		$fieldset->add_field($password = new FormFieldPasswordEditor('password', $this->lang['members.password'], '', array(
-			'class' => 'text', 'maxlength' => 25)
-		));
+		$fieldset->add_field($password = new FormFieldPasswordEditor('password', $this->lang['members.password'], ''));
 		
-		$fieldset->add_field($password_bis = new FormFieldPasswordEditor('password_bis', $this->lang['members.confirm-password'], '', array(
-			'class' => 'text', 'maxlength' => 25)
-		));
+		$fieldset->add_field($password_bis = new FormFieldPasswordEditor('password_bis', $this->lang['members.confirm-password'], ''));
 		
 		$fieldset->add_field(new FormFieldCheckbox('user_hide_mail', $this->lang['members.hide-mail'], FormFieldCheckbox::CHECKED));
 
@@ -107,15 +101,9 @@ class AdminMemberEditController extends AdminController
 		
 		$fieldset->add_field(new FormFieldCheckbox('approbation', $this->lang['members.approbation'], (bool)$row['user_aprob']));
 		
-		$fieldset->add_field(new FormFieldSimpleSelectChoice('rank', $this->lang['members.rank'], $row['level'],
-			array(
-				new FormFieldSelectChoiceOption($this->lang['members.rank.member'], '0'),
-				new FormFieldSelectChoiceOption($this->lang['members.rank.modo'], '1'),
-				new FormFieldSelectChoiceOption($this->lang['members.rank.admin'], '2')
-			)
-		));
+		$fieldset->add_field(new FormFieldRanks('rank', $this->lang['members.rank'], $row['level']));
 		
-		$fieldset->add_field(new FormFieldMultipleSelectChoice('groups', $this->lang['members.groups'], explode('|', $row['user_groups']), $this->get_groups()));
+		$fieldset->add_field(new FormFieldGroups('groups', $this->lang['members.groups'], explode('|', $row['user_groups'])));
 		
 		$fieldset_punishment = new FormFieldsetHTML('punishment_management', $this->lang['members.punishment-management']);
 		$form->add_fieldset($fieldset_punishment);
@@ -147,7 +135,7 @@ class AdminMemberEditController extends AdminController
 		$condition = "WHERE user_id = :user_id";
 		$columns = array(
 			'login' => $this->form->get_value('login'),
-			'level' => $this->get_rank_member(),
+			'level' => $this->form->get_value('rank')->get_raw_value(),
 			'user_groups' => implode('|', $this->form->get_value('groups')),
 			'user_mail' => $this->form->get_value('mail'),
 			'user_show_mail' => (string)!$this->form->get_value('user_hide_mail'),
@@ -199,38 +187,5 @@ class AdminMemberEditController extends AdminController
 		
 		StatsCache::invalidate();
 	}
-	
-	private function get_rank_member()
-	{
-		$rank = $this->form->get_value('rank')->get_raw_value();
-		if ($rank == '2')
-		{
-			return '2';
-		}
-		elseif ($rank == '1')
-		{
-			return '1';
-		}
-		else
-		{
-			return '0';
-		}
-	}
-	
-	public function get_groups()
-	{
-		$groups = array();
-		foreach (GroupsCache::load()->get_groups() as $id => $values)
-		{
-			$groups[] = new FormFieldSelectChoiceOption($value['name'], $id);
-		}
-		return $groups;
-	}
-	
-	private function user_exist()
-	{
-		return PersistenceContext::get_querier()->count(DB_TABLE_MEMBER, "WHERE user_id = '" . $this->user_id . "'") > 0 ? true : false;
-	}
 }
-
 ?>

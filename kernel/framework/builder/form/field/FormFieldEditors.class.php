@@ -1,9 +1,9 @@
 <?php
 /*##################################################
- *                             FormFieldGroups.class.php
+ *                             FormFieldEditors.class.php
  *                            -------------------
  *   begin                : September 26, 2011
- *   copyright            : (C) 2011 Kévin MASSY
+ *   copyright            : (C) 2011 K"vin MASSY
  *   email                : soldier.weasel@gmail.com
  *
  ###################################################
@@ -29,10 +29,10 @@
  * @desc
  * @package {@package}
  */
-class FormFieldGroups extends FormFieldMultipleSelectChoice
+class FormFieldEditors extends FormFieldSimpleSelectChoice
 {
     /**
-     * @desc Constructs a FormFieldGroups.
+     * @desc Constructs a FormFieldEditors.
      * @param string $id Field id
      * @param string $label Field label
      * @param mixed $value Default value (either a FormFieldEnumOption object or a string corresponding to the FormFieldEnumOption's raw value)
@@ -46,11 +46,10 @@ class FormFieldGroups extends FormFieldMultipleSelectChoice
 
     private function generate_options()
 	{
-		$groups = GroupsCache::load()->get_groups();
 		$options = array();
-		foreach ($groups as $id => $informations)
+		foreach (AppContext::get_content_formatting_service()->get_available_editors() as $id => $name)
 		{
-			$options[] = new FormFieldSelectChoiceOption($informations['name'], $id);
+			$options[] = new FormFieldSelectChoiceOption($name, $id);
 		}
 		return $options;
 	}
