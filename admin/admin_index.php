@@ -119,12 +119,11 @@ $Template->put_all(array(
 
 
 //Liste des personnes en lignes.
-$result = $Sql->query_while("SELECT s.user_id, level, ip, expiry, s.session_script, s.session_script_get,
-s.session_script_title, u.display_name
+$result = $Sql->query_while("SELECT s.user_id, level, s.ip, s.expiry, s.location_script, s.location_title, u.display_name
 FROM " . DB_TABLE_SESSIONS . " s
 LEFT JOIN " . DB_TABLE_MEMBER . " u ON s.user_id = u.user_id
 WHERE expiry > '" . (time() - SessionsConfig::load()->get_active_session_duration()) . "'
-ORDER BY s.session_time DESC", __LINE__, __FILE__);
+ORDER BY s.expiry DESC", __LINE__, __FILE__);
 while ($row = $Sql->fetch_assoc($result))
 {
 	//On vérifie que la session ne correspond pas à un robot.
@@ -150,13 +149,11 @@ while ($row = $Sql->fetch_assoc($result))
 	else
 		$login = !empty($row['display_name']) ? '<a class="' . $class . '" href="'. DispatchManager::get_url('/member', '/profile/'. $row['user_id'] .'/')->absolute() .'">' . $row['display_name'] . '</a>' : $LANG['guest'];
 
-	$row['session_script_get'] = !empty($row['session_script_get']) ? '?' . $row['session_script_get'] : '';
-
 	$Template->assign_block_vars('user', array(
 		'USER' => !empty($login) ? $login : $LANG['guest'],
-		'USER_IP' => $row['session_ip'],
-		'WHERE' => '<a href="' . HOST . $row['session_script'] . $row['session_script_get'] . '">' . stripslashes($row['session_script_title']) . '</a>',
-		'TIME' => gmdate_format('date_format_long', $row['session_time'])
+		'USER_IP' => $row['ip'],
+		'WHERE' => '<a href="' . $row['location_script'] . '">' . stripslashes($row['location_title']) . '</a>',
+		'TIME' => gmdate_format('date_format_long', $row['expiry'])
 	));
 }
 $Sql->query_close($result);

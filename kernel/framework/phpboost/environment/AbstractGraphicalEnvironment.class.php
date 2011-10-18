@@ -59,7 +59,7 @@ abstract class AbstractGraphicalEnvironment implements GraphicalEnvironment
 
 	protected static function set_page_localization($page_title)
 	{
-		// TODO retrieve the location with the new session system
+		AppContext::get_session()->update_location_title($page_title);
 	}
 }
 

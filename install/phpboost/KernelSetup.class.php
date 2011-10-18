@@ -620,7 +620,9 @@ class KernelSetup
 			'session_id' => array('type' => 'string', 'length' =>64, 'default' => "''"),
 			'token' => array('type' => 'string', 'length' => 64, 'notnull' => 1),
 			'expiry' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'ip' => array('type' => 'string', 'length' =>64, 'default' => "''"),
+			'ip' => array('type' => 'string', 'length' => 64, 'default' => "''"),
+			'location_script' => array('type' => 'string', 'length' => 100, 'notnull' => 1, 'default' => "''"),
+			'location_title' => array('type' => 'string', 'length' => 100, 'notnull' => 1, 'default' => "''"),
 			'cached_data' => array('type' => 'text', 'length' => 65000),
 			'data' => array('type' => 'text', 'length' => 65000)
 		);

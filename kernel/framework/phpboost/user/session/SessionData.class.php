@@ -79,6 +79,16 @@ class SessionData
 		}
 		return $data;
 	}
+	
+	public static function update_location_title($title_page)
+	{
+		$data = AppContext::get_session();
+		$columns = array('location_title' => $title_page);
+		$condition = 'WHERE user_id=:user_id AND session_id=:session_id';
+		$parameters = array('user_id' => $data->user_id, 'session_id' => $data->session_id);
+		PersistenceContext::get_querier()->update(DB_TABLE_SESSIONS, $columns, $condition, $parameters);
+		return $data;
+	}
 
 	/**
 	 * @desc
@@ -102,7 +112,7 @@ class SessionData
 		$parameters = array('user_id' => $user_id);
 		$condition = 'WHERE user_id=:user_id';
 		self::update_existing_session($condition, $parameters);
-		$columns = array('session_id', 'token', 'expiry', 'ip', 'data', 'cached_data');
+		$columns = array('session_id', 'token', 'expiry', 'ip', 'location_script', 'location_title', 'data', 'cached_data');
 		$row = PersistenceContext::get_querier()->select_single_row(DB_TABLE_SESSIONS, $columns, $condition, $parameters);
 		$data = self::init_from_row($user_id, $row['session_id'], $row);
 		$data->create_cookie();
@@ -134,7 +144,7 @@ class SessionData
 		{
 			$user_id = $values[self::$KEY_USER_ID];
 			$session_id = $values[self::$KEY_SESSION_ID];
-			$columns = array('token', 'expiry', 'ip', 'data', 'cached_data');
+			$columns = array('token', 'expiry', 'ip', 'location_script', 'location_title', 'data', 'cached_data');
 			$condition = 'WHERE user_id=:user_id AND session_id=:session_id';
 			$parameters = array('user_id' => $user_id, 'session_id' => $session_id);
 			$row = PersistenceContext::get_querier()->select_single_row(DB_TABLE_SESSIONS, $columns, $condition, $parameters);
@@ -153,6 +163,8 @@ class SessionData
 		$data->token = $row['token'];
 		$data->expiry = $row['expiry'];
 		$data->ip = $row['ip'];
+		$data->location_script = $row['location_script'];
+		$data->location_title = $row['location_title'];
 		$data->cached_data = unserialize($row['cached_data']);
 		$data->data = unserialize($row['data']);
 		return $data;
@@ -161,7 +173,7 @@ class SessionData
 	private static function update(SessionData $data)
 	{
 		$data->expiry = time() + SessionsConfig::load()->get_session_duration();
-		$columns = array('expiry' => $data->expiry);
+		$columns = array('expiry' => $data->expiry, 'location_script' => REWRITED_SCRIPT);
 		$condition = 'WHERE user_id=:user_id AND session_id=:session_id';
 		$parameters = array('user_id' => $data->user_id, 'session_id' => $data->session_id);
 		PersistenceContext::get_querier()->update(DB_TABLE_SESSIONS, $columns, $condition, $parameters);
@@ -206,6 +218,8 @@ class SessionData
 	protected $token;
 	protected $expiry;
 	protected $ip;
+	protected $location_script;
+	protected $location_title;
 	protected $cached_data = array();
 	protected $data = array();
 
@@ -241,6 +255,16 @@ class SessionData
 	public function get_ip()
 	{
 		return $this->ip;
+	}
+	
+	public function get_location_script()
+	{
+		return $this->location_script;
+	}
+	
+	public function get_location_title()
+	{
+		return $this->location_title;
 	}
 
 	public function get_all_cached_data()
