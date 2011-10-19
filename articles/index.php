@@ -33,15 +33,20 @@ $url_controller_mappers = array(
 	new UrlControllerMapper('ArticlesAdminConfigController', '`^/admin(?:/config)?/?$`'),
 	new UrlControllerMapper('ArticlesAdminCategoriesManagementController', '`^/admin/categories(?:/management)?/?$`'),
 	new UrlControllerMapper('ArticlesAdminAddCategoryController', '`^/admin/categories/add?/?$`'),
+	new UrlControllerMapper('ArticlesAdminEditCategoryController', '`^/admin/categories/edit(?:/([A-Za-z0-9-]+))?/?$`', array('rewrited_name')),
+	new UrlControllerMapper('ArticlesAdminDeleteCategoryController', '`^/admin/categories/delete(?:/([A-Za-z0-9-]+))?/?$`', array('rewrited_name')),
 	
-	new UrlControllerMapper('ArticlesExploreCategoryController', '`^/category(?:/([A-Za-z0-9-]+))?/?$`', array('name')),
+	new UrlControllerMapper('ArticlesExploreCategoryController', '`^/([A-Za-z0-9-]+)?/?$`', array('rewrited_name')),
 	
-	new UrlControllerMapper('ArticlesViewArticleController', '`^/article/([A-Za-z0-9-]+)?/?$`', array('title')),
+	new UrlControllerMapper('ArticlesAddArticleController', '`^/article/add?/?$`'),
+	new UrlControllerMapper('ArticlesDeleteArticleController', '`^/article/delete/([A-Za-z0-9-]+)?/?$`', array('rewrited_title')),
+	new UrlControllerMapper('ArticlesEditArticleController', '`^/article/edit/([A-Za-z0-9-]+)?/?$`', array('rewrited_title')),
+	new UrlControllerMapper('ArticlesViewArticleController', '`^/article/([A-Za-z0-9-]+)?/?$`', array('rewrited_title')),
+	new UrlControllerMapper('ArticlesPrintArticleController', '`^/print/([A-Za-z0-9-]+)?/?$`', array('rewrited_title')),
+	
 	new UrlControllerMapper('ArticlesPendingController', '`^/pending(?:/([A-Za-z0-9-]+))?/?$`', array('pseudo')),
-	
-	new UrlControllerMapper('ArticlesPrintArticleController', '`^/print/([A-Za-z0-9-]+)?/?$`', array('title')),
-	
-	new UrlControllerMapper('ArticlesHomePageController', '`^(?:/home)?/?$`'),
+
+	new UrlControllerMapper('ArticlesHomePageController', '`^/?$`'),
 );
 
 DispatchManager::dispatch($url_controller_mappers);
