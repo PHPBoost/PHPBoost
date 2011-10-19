@@ -64,17 +64,17 @@ class ArticlesSetup extends DefaultModuleSetup
 		$fields = array(
 			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
 			'id_category' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'picture' => array('type' => 'string', 'length' => 255, 'default' => "''"),
+			'picture_path' => array('type' => 'string', 'length' => 255, 'default' => "''"),
 			'title' => array('type' => 'string', 'length' => 255, 'notnull' => 1),
 			'rewrited_title' => array('type' => 'string', 'length' => 255, 'notnull' => 1),
 			'description' => array('type' => 'text', 'length' => 65000),
 			'contents' => array('type' => 'text', 'length' => 65000),
 			'number_view' => array('type' => 'integer', 'length' => 11, 'default' => 0),
-			'writer_user_id' => array('type' => 'integer', 'length' => 11, 'default' => 0),
-			'writer_name_visitor' => array('type' => 'string', 'length' => 255, 'default' => "''"),
-			'visibility' => array('type' => 'boolean', 'notnull' => 1, 'default' => 0),
-			'start_visibility' => array('type' => 'integer', 'length' => 11, 'default' => 0),
-			'end_visibility' => array('type' => 'integer', 'length' => 11, 'default' => 0),
+			'author_user_id' => array('type' => 'integer', 'length' => 11, 'default' => 0),
+			'author_name_visitor' => array('type' => 'string', 'length' => 255, 'default' => "''"),
+			'published' => array('type' => 'boolean', 'notnull' => 1, 'default' => 0),
+			'publishing_start_date' => array('type' => 'integer', 'length' => 11, 'default' => 0),
+			'publishing_end_date' => array('type' => 'integer', 'length' => 11, 'default' => 0),
 			'authorizations' => array('type' => 'text', 'length' => 65000),
 			'timestamp_created' => array('type' => 'integer', 'length' => 11, 'default' => 0),
 			'timestamp_last_modified' => array('type' => 'integer', 'length' => 11, 'default' => 0)
@@ -82,7 +82,7 @@ class ArticlesSetup extends DefaultModuleSetup
 		$options = array(
 			'primary' => array('id'),
 			'indexes' => array(
-				'id_categorie' => array('type' => 'key', 'fields' => 'id_category'),
+				'id_category' => array('type' => 'key', 'fields' => 'id_category'),
 				'title' => array('type' => 'fulltext', 'fields' => 'title'),
 				'contents' => array('type' => 'fulltext', 'fields' => 'contents')
 			)
@@ -98,10 +98,10 @@ class ArticlesSetup extends DefaultModuleSetup
 			'c_order' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'name' => array('type' => 'string', 'length' => 150, 'notnull' => 1),
 			'description' => array('type' => 'text', 'length' => 65000),
-			'picture' => array('type' => 'string', 'length' => 255, 'default' => "''"),
+			'picture_path' => array('type' => 'string', 'length' => 255, 'default' => "''"),
 			'notation_disabled' => array('type' => 'boolean', 'notnull' => 1, 'default' => 0),
 			'comments_disabled' => array('type' => 'boolean', 'notnull' => 1, 'default' => 0),
-			'visible' => array('type' => 'boolean', 'notnull' => 1, 'default' => 0),
+			'published' => array('type' => 'boolean', 'notnull' => 1, 'default' => 0),
 			'authorizations' => array('type' => 'text', 'default' => "''")
 		);
 		$options = array(
