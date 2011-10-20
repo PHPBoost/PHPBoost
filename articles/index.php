@@ -33,20 +33,20 @@ $url_controller_mappers = array(
 	new UrlControllerMapper('ArticlesAdminConfigController', '`^/admin(?:/config)?/?$`'),
 	new UrlControllerMapper('ArticlesAdminCategoriesManagementController', '`^/admin/categories(?:/management)?/?$`'),
 	new UrlControllerMapper('ArticlesAdminAddCategoryController', '`^/admin/categories/add?/?$`'),
-	new UrlControllerMapper('ArticlesAdminEditCategoryController', '`^/admin/categories/edit(?:/([A-Za-z0-9-]+))?/?$`', array('rewrited_name')),
-	new UrlControllerMapper('ArticlesAdminDeleteCategoryController', '`^/admin/categories/delete(?:/([A-Za-z0-9-]+))?/?$`', array('rewrited_name')),
+	new UrlControllerMapper('ArticlesAdminEditCategoryController', '`^/admin/categories/edit(?:/([a-z0-9-]+))?/?$`', array('rewrited_name')),
+	new UrlControllerMapper('ArticlesAdminDeleteCategoryController', '`^/admin/categories/delete(?:/([a-z0-9-]+))?/?$`', array('rewrited_name')),
 	
-	new UrlControllerMapper('ArticlesExploreCategoryController', '`^/([A-Za-z0-9-]+)?/?$`', array('rewrited_name')),
+	new UrlControllerMapper('ArticlesExploreCategoryController', '`^/category/([a-z0-9-]+)?/?([a-z]+)?/?([a-z]+)?/?([0-9]+)?/?$`', array('rewrited_name', 'field', 'sort', 'page')),
 	
 	new UrlControllerMapper('ArticlesAddArticleController', '`^/article/add?/?$`'),
-	new UrlControllerMapper('ArticlesDeleteArticleController', '`^/article/delete/([A-Za-z0-9-]+)?/?$`', array('rewrited_title')),
-	new UrlControllerMapper('ArticlesEditArticleController', '`^/article/edit/([A-Za-z0-9-]+)?/?$`', array('rewrited_title')),
-	new UrlControllerMapper('ArticlesViewArticleController', '`^/article/([A-Za-z0-9-]+)?/?$`', array('rewrited_title')),
-	new UrlControllerMapper('ArticlesPrintArticleController', '`^/print/([A-Za-z0-9-]+)?/?$`', array('rewrited_title')),
+	new UrlControllerMapper('ArticlesDeleteArticleController', '`^/article/delete/([a-z0-9-]+)?/?$`', array('rewrited_title')),
+	new UrlControllerMapper('ArticlesEditArticleController', '`^/article/edit/([a-z0-9-]+)?/?$`', array('rewrited_title')),
+	new UrlControllerMapper('ArticlesViewArticleController', '`^/article/([a-z0-9-]+)?/?([a-z0-9-]+)?/?$`', array('rewrited_title', 'rewrited_page_name')),
+	new UrlControllerMapper('ArticlesPrintArticleController', '`^/print/([a-z0-9-]+)?/?([A-Za-z0-9-]+)?/?$`', array('rewrited_title', 'rewrited_page_name')),
 	
-	new UrlControllerMapper('ArticlesPendingController', '`^/pending(?:/([A-Za-z0-9-]+))?/?$`', array('pseudo')),
+	new UrlControllerMapper('ArticlesPendingController', '`^/pending(?:/([a-z0-9-]+))?/?$`', array('pseudo')),
 
-	new UrlControllerMapper('ArticlesHomePageController', '`^/?$`'),
+	new UrlControllerMapper('ArticlesHomePageController', '`^(?:/([a-z]+))?/?([a-z]+)?/?([0-9]+)?/?$`', array('field', 'sort', 'page'))
 );
 
 DispatchManager::dispatch($url_controller_mappers);
