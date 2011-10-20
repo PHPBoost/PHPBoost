@@ -31,12 +31,12 @@ class ArticlesCategory
 	private $id_parent;
 	private $order;
 	private $name;
-	private $picture;
+	private $picture_path;
 	private $description;
 	private $authorizations;
 	private $notation_system_is_disabled;
 	private $comments_system_is_disabled;
-	private $visibility;
+	private $published;
 	
 	public function set_id($id)
 	{
@@ -78,14 +78,14 @@ class ArticlesCategory
 		return $this->name;
 	}
 	
-	public function set_picture($picture)
+	public function set_picture_path($picture_path)
 	{
-		$this->picture = $picture;
+		$this->picture_path = $picture_path;
 	}
 	
-	public function get_picture()
+	public function get_picture_path()
 	{
-		return $this->picture;
+		return $this->picture_path;
 	}
 	
 	public function set_description($description)
@@ -128,14 +128,14 @@ class ArticlesCategory
 		return $this->notation_system_is_disabled;
 	}
 	
-	public function set_visibility($visibility)
+	public function set_publishing_state($published)
 	{
-		$this->visibility = $visibility;
+		$this->published = $published;
 	}
 	
-	public function get_visibility()
+	public function get_publishing_state()
 	{
-		return $this->visibility;
+		return $this->published;
 	}
 }
 ?>

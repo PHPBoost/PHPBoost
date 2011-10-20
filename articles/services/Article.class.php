@@ -33,13 +33,13 @@ class Article
     private $rewrited_title;
     private $description;
     private $contents;
-    private $picture;
+    private $picture_path;
     private $number_view;
-    private $writer_user_id;
-    private $writer_name_visitor;
-    private $visibility;
-    private $start_visibility;
-    private $end_visibility;
+    private $author_user_id;
+    private $author_name_visitor;
+    private $published;
+    private $publishing_start_date;
+    private $publishing_end_date;
     private $authorizations;
     private $timestamp_created;
 	private $timestamp_last_modified;
@@ -104,14 +104,14 @@ class Article
 		return $this->contents;
 	}
 	
-	public function set_picture($picture)
+	public function set_picture_path($picture_path)
 	{
-		$this->picture = $picture;
+		$this->picture_path = $picture_path;
 	}
 	
-	public function get_picture()
+	public function get_picture_path()
 	{
-		return $this->picture;
+		return $this->picture_path;
 	}
 	
 	public function set_number_view($number_view)
@@ -124,54 +124,54 @@ class Article
 		return $this->number_view;
 	}
 	
-	public function set_writer_user_id($writer_user_id)
+	public function set_author_user_id($author_user_id)
 	{
-		$this->writer_user_id = $writer_user_id;
+		$this->author_user_id = $author_user_id;
 	}
 	
-	public function get_writer_user_id()
+	public function get_author_user_id()
 	{
-		return $this->writer_user_id;
+		return $this->author_user_id;
 	}
 	
-	public function set_writer_name_visitor($writer_name_visitor)
+	public function set_author_name_visitor($author_name_visitor)
 	{
-		$this->writer_name_visitor = $writer_name_visitor;
+		$this->author_name_visitor = $author_name_visitor;
 	}
 	
-	public function get_writer_name_visitor()
+	public function get_author_name_visitor()
 	{
-		return $this->writer_name_visitor;
+		return $this->author_name_visitor;
 	}
 	
-	public function set_visibility($visibility)
+	public function set_publishing_state($published)
 	{
-		$this->visibility = $visibility;
+		$this->published = $published;
 	}
 	
-	public function get_visibility()
+	public function get_publishing_state()
 	{
-		return $this->visibility;
+		return $this->published;
 	}
 	
-	public function set_start_visibility($start_visibility)
+	public function set_publishing_start_date($publishing_start_date)
 	{
-		$this->start_visibility = $start_visibility;
+		$this->publishing_start_date = $publishing_start_date;
 	}
 	
-	public function get_start_visibility()
+	public function get_publishing_start_date()
 	{
-		return $this->start_visibility;
+		return $this->publishing_start_date;
 	}
 	
-	public function set_end_visibility($end_visibility)
+	public function set_publishing_end_date($publishing_end_date)
 	{
-		$this->end_visibility = $end_visibility;
+		$this->publishing_end_date = $publishing_end_date;
 	}
 	
-	public function get_end_visibility()
+	public function get_publishing_end_date()
 	{
-		return $this->end_visibility;
+		return $this->publishing_end_date;
 	}
 	
 	public function set_authorizations($authorizations)

@@ -52,7 +52,7 @@ class ArticlesCategoriesService
 	
 	}
 	
-	public static function change_visibility($id_category, $visibility)
+	public static function change_publishing_state($id_category, $published)
 	{
 	
 	}
