@@ -28,5 +28,35 @@
 class ArticlesUrlBuilder
 {
 	private static $dispatcher = '/articles';
+	
+	public static function articles_management($title = '')
+	{
+		return DispatchManager::get_url(self::$dispatcher, '/article/' . $title);
+	}
+	
+	public static function articles_category_management()
+	{
+		return DispatchManager::get_url(self::$dispatcher, '/admin/categories/');
+	}
+	
+	public static function add_category()
+	{
+		return DispatchManager::get_url(self::$dispatcher, '/admin/categories/add/');
+	}
+	
+	public static function print_article($title = '')
+	{
+		return DispatchManager::get_url(self::$dispatcher, '/print/' . $title);
+	}
+	
+	public static function articles_configuration()
+	{
+		return DispatchManager::get_url(self::$dispatcher, '/admin/config/');
+	}
+	
+	public static function home()
+	{
+		return DispatchManager::get_url(self::$dispatcher, '/home/');
+	}
 }
 ?>
