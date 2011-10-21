@@ -35,7 +35,6 @@ class KernelSetup
 	 * @var DBQuerier
 	 */
 	private static $db_querier;
-	private static $com_table;
 	private static $comments_table;
 	private static $comments_topic_table;
 	private static $note_table;
@@ -69,7 +68,6 @@ class KernelSetup
 		self::$db_utils = PersistenceContext::get_dbms_utils();
 		self::$db_querier = PersistenceContext::get_querier();
 
-		self::$com_table = PREFIX . 'com';
 		self::$comments_table = PREFIX . 'comments';
 		self::$comments_topic_table = PREFIX . 'comments_topic';
 		self::$note_table = PREFIX . 'note';
@@ -109,7 +107,6 @@ class KernelSetup
 	private function drop_tables()
 	{
 		self::$db_utils->drop(array(
-			self::$com_table,
 			self::$comments_table,
 			self::$comments_topic_table,
 			self::$note_table,
@@ -142,7 +139,6 @@ class KernelSetup
 
 	private function create_tables()
 	{
-		$this->create_com_table();
 		$this->create_note_table();
 		$this->create_comments_table();
 		$this->create_comments_topic_table();
@@ -172,27 +168,6 @@ class KernelSetup
 		$this->create_verif_code_table();
 	}
 
-	private function create_com_table()
-	{
-		$fields = array(
-			'idcom' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
-			'idprov' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'login' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
-			'user_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'contents' => array('type' => 'text', 'length' => 65000),
-			'timestamp' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'script' => array('type' => 'string', 'length' => 20, 'notnull' => 1, 'default' => "''"),
-			'path' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
-			'user_ip' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''")
-		);
-		$options = array(
-			'primary' => array('idcom'),
-			'indexes' => array(
-				'idprov' => array('type' => 'key', 'fields' => array('idprov', 'script'))
-		));
-		self::$db_utils->create_table(self::$com_table, $fields, $options);
-	}
-	
 	private function create_comments_table()
 	{
 		$fields = array(
@@ -214,16 +189,14 @@ class KernelSetup
 	private function create_comments_topic_table()
 	{
 		$fields = array(
-			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true),
-			'module_name' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
+			'id_topic' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true),
+			'module_id' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
 			'id_in_module' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'visibility' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
 			'is_locked' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'number_comments' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'authorizations' => array('type' => 'text', 'length' => 65000)
 		);
 		$options = array(
-			'primary' => array('id'),
+			'primary' => array('id_topic'),
 		);
 		self::$db_utils->create_table(self::$comments_topic_table, $fields, $options);
 	}
@@ -307,10 +280,7 @@ class KernelSetup
 			'identifier' => array('type' => 'string', 'length' => 64),
 			'contribution_type' => array('type' => 'boolean', 'length' => 1, 'notnull' => 1, 'default' => "1"),
 			'type' => array('type' => 'string', 'length' => 64),
-			'priority' => array('type' => 'boolean', 'length' => 3, 'notnull' => 1, 'default' => 3),
-			'nbr_com' => array('type' => 'integer', 'length' => 10, 'default' => 0),
-			'lock_com' => array('type' => 'boolean', 'length' => 1, 'default' => 0)
-
+			'priority' => array('type' => 'boolean', 'length' => 3, 'notnull' => 1, 'default' => 3)
 		);
 		$options = array(
 			'primary' => array('id'),
@@ -968,7 +938,6 @@ class KernelSetup
 	private function insert_member_data()
 	{
 		self::$db_querier->insert(self::$member_table, array(
-
 			'login' => 'login',
 			'level' => 2,
 			'user_aprob' => 1,
@@ -976,8 +945,6 @@ class KernelSetup
 			'user_desc' => '',
 			'user_sign' => ''
 		));
-
 	}
 }
-
 ?>

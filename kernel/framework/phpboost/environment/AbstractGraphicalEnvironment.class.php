@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                    abstract_graphical_environment.class.php
+ *                    AbstractGraphicalEnvironment.class.php
  *                            -------------------
  *   begin                : October 06, 2009
  *   copyright            : (C) 2009 Benoit Sautel
@@ -24,9 +24,12 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
  ###################################################*/
-
-
-
+ 
+/**
+ * @package {@package}
+ * @desc
+ * @author Benoit Sautel <ben.popeye@phpboost.com>
+ */
 abstract class AbstractGraphicalEnvironment implements GraphicalEnvironment
 {
 	protected $user;
@@ -43,9 +46,10 @@ abstract class AbstractGraphicalEnvironment implements GraphicalEnvironment
 			$maintenance_config = MaintenanceConfig::load();
 			if (!$this->user->check_auth($maintenance_config->get_auth(), 1))
 			{
-				if (SCRIPT !== (DIR . '/member/maintain.php'))
+				$maintain_url = UserUrlBuilder::maintain()->absolute();
+				if (REWRITED_SCRIPT !== $maintain_url)
 				{
-					AppContext::get_response()->redirect('/member/maintain.php');
+					AppContext::get_response()->redirect($maintain_url);
 				}
 			}
 		}

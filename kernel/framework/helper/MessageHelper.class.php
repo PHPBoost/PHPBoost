@@ -39,7 +39,7 @@ class MessageHelper
 	
 	public static function display($content, $type, $timeout = 0)
 	{
-		$tpl = new FileTemplate('framework/message.tpl');
+		$tpl = new FileTemplate('framework/helper/message.tpl');
 		
 		switch ($type)
 		{
@@ -59,7 +59,7 @@ class MessageHelper
 			case E_USER_WARNING:
 			case E_WARNING:
 			case self::WARNING:
-				$css_class = 'important';
+				$css_class = 'warning';
 				$image = 'error_warning';
 			break;
 			//Erreur fatale.

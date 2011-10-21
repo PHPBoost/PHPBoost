@@ -27,6 +27,15 @@
 
 class PHPBoostErrors
 {
+	public static function CSRF()
+	{
+		$controller = new UserErrorController(
+		LangLoader::get_message('error', 'errors'),
+		LangLoader::get_message('csrf_attack', 'main'),
+		UserErrorController::NOTICE);
+		return $controller;
+	}
+	
 	public static function module_not_installed()
 	{
         $lang = LangLoader::get('errors');

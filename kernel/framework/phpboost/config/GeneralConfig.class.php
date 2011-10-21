@@ -107,14 +107,13 @@ class GeneralConfig extends AbstractConfigData
 	{
 		$site_url = self::get_default_site_url();
 		$site_path = self::get_default_site_path();
-		$home_page = $site_url . $site_path . '/member/index.php?url=/member';
 		return array(
 			self::SITE_URL => $site_url,
 			self::SITE_PATH => $site_path,
 			self::SITE_NAME => '',
 			self::SITE_DESCRIPTION => '',
 			self::SITE_KEYWORDS => '',
-			self::HOME_PAGE => $home_page,
+			self::HOME_PAGE => $site_url . $site_path . '/user/',
 			self::PHPBOOST_VERSION => '4.0',
 			self::SITE_INSTALL_DATE => new Date(),
 			self::SITE_TIMEZONE => (int)date('I'),

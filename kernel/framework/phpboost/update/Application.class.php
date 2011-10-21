@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                           application.class.php
+ *                           Application.class.php
  *                            -------------------
  *   begin                : August 17 2008
  *   copyright            : (C) 2008 Loic Rouchon
@@ -24,11 +24,6 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
  ###################################################*/
-
-define('APPLICATION_TYPE__KERNEL', 'kernel');
-define('APPLICATION_TYPE__MODULE', 'module');
-define('APPLICATION_TYPE__TEMPLATE', 'template');
-
 
 /**
  * @author Loic Rouchon <loic.rouchon@phpboost.com>
@@ -66,6 +61,10 @@ class Application
 	private $warning_level = null;
 	private $warning = null;
 	
+	const KERNEL_TYPE = 'kernel';
+	const MODULE_TYPE = 'module';
+	const TEMPLATE_TYPE = 'template';
+	
 	/**
 	 * @desc constructor of the class
 	 * @param $id
@@ -74,7 +73,7 @@ class Application
 	 * @param $version
 	 * @param $repository
 	 */
-	public function __construct($id, $language, $type = APPLICATION_TYPE__MODULE , $version = 0, $repository = '')
+	public function __construct($id, $language, $type = self::MODULE_TYPE , $version = 0, $repository = '')
 	{
 		$this->id = $id;
 		$this->name = $id;
@@ -95,20 +94,20 @@ class Application
 	{
 		$attributes = $xml_desc->attributes();
 
-		$name = Application::get_attribute($xml_desc, 'name');
+		$name = self::get_attribute($xml_desc, 'name');
 		$this->name = !empty($name) ? $name : $this->id;
 
-		$this->language = Application::get_attribute($xml_desc, 'language');
+		$this->language = self::get_attribute($xml_desc, 'language');
 
-		$language = Application::get_attribute($xml_desc, 'localized_language');
+		$language = self::get_attribute($xml_desc, 'localized_language');
 		$this->localized_language = !empty($language) ? ($language) : $this->language;
 
-		$this->version = Application::get_attribute($xml_desc, 'num');
+		$this->version = self::get_attribute($xml_desc, 'num');
 
-		$this->compatibility_min = Application::get_attribute($xml_desc, 'min', 'compatibility');
-		$this->compatibility_max = Application::get_attribute($xml_desc, 'max', 'compatibility');
+		$this->compatibility_min = self::get_attribute($xml_desc, 'min', 'compatibility');
+		$this->compatibility_max = self::get_attribute($xml_desc, 'max', 'compatibility');
 
-		$pubdate = Application::get_attribute($xml_desc, 'pubdate');
+		$pubdate = self::get_attribute($xml_desc, 'pubdate');
 		if (!empty($pubdate))
 		{
 			$this->pubdate = new Date(DATE_FROM_STRING, TIMEZONE_SYSTEM, $pubdate, 'y/m/d');
@@ -118,10 +117,10 @@ class Application
 			$this->pubdate = new Date();
 		}
 
-		$this->security_update = Application::get_attribute($xml_desc, 'security-update');
+		$this->security_update = self::get_attribute($xml_desc, 'security-update');
 		$this->security_update = strtolower($this->security_update) == 'true' ? true : false;
 
-		$this->priority = Application::get_attribute($xml_desc, 'priority');
+		$this->priority = self::get_attribute($xml_desc, 'priority');
 		switch ($this->priority)
 		{
 			case 'high':
@@ -137,16 +136,16 @@ class Application
 		if ($this->security_update)
 		$this->priority++;
 
-		$this->download_url =  Application::get_attribute($xml_desc, 'url', '//download');
-		$this->update_url = Application::get_attribute($xml_desc, 'url', '//update');;
+		$this->download_url =  self::get_attribute($xml_desc, 'url', '//download');
+		$this->update_url = self::get_attribute($xml_desc, 'url', '//update');;
 
 		$this->authors = array();
 		$authors_elts = $xml_desc->xpath('authors/author');
 		foreach ($authors_elts as $author)
 		{
 			$this->authors[] = array(
-                'name' => Application::get_attribute($author, 'name'),
-                'email' => Application::get_attribute($author, 'email')
+                'name' => self::get_attribute($author, 'name'),
+                'email' => self::get_attribute($author, 'email')
 			);
 		}
 
@@ -180,7 +179,7 @@ class Application
 			}
 		}
 
-		$this->warning_level = Application::get_attribute($xml_desc, 'level', 'warning');
+		$this->warning_level = self::get_attribute($xml_desc, 'level', 'warning');
 		if (!empty($this->warning_level))
 		{
 			$this->warning = $xml_desc->xpath('warning');
@@ -204,10 +203,10 @@ class Application
 		$current_version = '0';
 		switch ($this->type)
 		{
-			case APPLICATION_TYPE__KERNEL:
+			case self::KERNEL_TYPE:
 				$current_version = Environment::get_phpboost_version();
 				break;
-			case APPLICATION_TYPE__MODULE:
+			case self::MODULE_TYPE:
 				$kModules = array_keys($MODULES);
 				foreach ($kModules as $module)
 				{
@@ -219,7 +218,7 @@ class Application
 					}
 				}
 				break;
-			case APPLICATION_TYPE__TEMPLATE:
+			case self::TEMPLATE_TYPE:
 				foreach (ThemeManager::get_activated_themes_map() as $id => $value)
 				{
 					if ($id == $this->name)
@@ -361,12 +360,12 @@ class Application
 	{
 		switch ($this->type)
 		{
-			case APPLICATION_TYPE__KERNEL:
+			case self::KERNEL_TYPE:
 				return GeneralConfig::load()->get_phpboost_major_version();
-			case APPLICATION_TYPE__MODULE:
+			case self::MODULE_TYPE:
 				$infos = get_ini_config(PATH_TO_ROOT . '/' . $this->id . '/lang/', get_ulang());
 				return !empty($infos['version']) ? $infos['version'] : '0';
-			case APPLICATION_TYPE__THEME:
+			case self::TEMPLATE_TYPE:
 				$infos = get_ini_config(PATH_TO_ROOT . '/templates/' . $this->id . '/config/', get_ulang());
 				return !empty($infos['version']) ? $infos['version'] : '0';
 			default:

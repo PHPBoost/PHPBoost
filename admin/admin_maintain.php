@@ -114,8 +114,12 @@ else //Sinon on rempli le formulaire
 	
 	$maintenance_terminates_after_tomorrow = $maintenance_config->get_end_date()->is_posterior_to(new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, time() + 86400));
 	$check_until = (!$maintenance_config->is_unlimited_maintenance() && $maintenance_terminates_after_tomorrow);
+	
+	$editor = AppContext::get_content_formatting_service()->get_default_editor();
+	$editor->set_identifier('contents');
+	
 	$template->put_all(array(
-		'KERNEL_EDITOR' => display_editor(),
+		'KERNEL_EDITOR' => $editor->display(),
 		'DELAY_MAINTAIN_OPTION' => $delay_maintain_option,
 		'AUTH_WEBSITE' => Authorizations::generate_select(1, $maintenance_config->get_auth()),
 		'MAINTAIN_CONTENTS' => FormatingHelper::unparse($maintenance_config->get_message()),
@@ -127,7 +131,7 @@ else //Sinon on rempli le formulaire
 		'MAINTAIN_CHECK_DELAY' => $maintenance_config->is_maintenance_enabled() && $maintenance_config->is_unlimited_maintenance() || ($maintenance_config->is_end_date_not_reached() && !$maintenance_terminates_after_tomorrow) ? ' checked="checked"' : '',
 		'MAINTAIN_CHECK_UNTIL' => $maintenance_config->is_maintenance_enabled() && $check_until ? ' checked="checked"' : '',
 		'DATE_UNTIL' => $check_until ? gmdate_format('date_format_short', $maintenance_config->get_end_date()->get_timestamp(TIMEZONE_USER)) : '',
-		'L_MAINTAIN' => $LANG['maintain'],
+		'L_MAINTAIN' => LangLoader::get_message('maintain', 'user-common'),
 		'L_UNTIL' => $LANG['until'],
 		'L_DURING' => $LANG['during'],
 		'L_SET_MAINTAIN' => $LANG['maintain_for'],

@@ -49,7 +49,6 @@ class HtaccessFileCache implements CacheData
 			$this->enable_rewrite_rules();
 
 			$this->add_core_rules();
-			$this->add_feeds_rules();
 			$this->add_modules_rules();
 
 			$this->add_bandwidth_protection();
@@ -91,26 +90,13 @@ class HtaccessFileCache implements CacheData
 	{
 		$this->add_section('Core');
 
-		$this->add_rewrite_rule('^member/pm-?([0-9]+)-?([0-9]{0,})-?([0-9]{0,})-?([0-9]{0,})-?([a-z_]{0,})\.php$', 'member/pm.php?pm=$2&id=$3&p=$4&quote=$5');
+		$this->add_rewrite_rule('^user/pm-?([0-9]+)-?([0-9]{0,})-?([0-9]{0,})-?([0-9]{0,})-?([a-z_]{0,})\.php$', 'user/pm.php?pm=$2&id=$3&p=$4&quote=$5');
 
         $eps = AppContext::get_extension_provider_service();
         $mappings = $eps->get_extension_point(UrlMappingsExtensionPoint::EXTENSION_POINT, array('kernel'));
 		foreach ($mappings as $mapping_list)
 		{
             $this->add_url_mapping($mapping_list);
-		}
-	}
-
-	private function add_feeds_rules()
-	{
-		$this->add_section('Feeds');
-		foreach (array('rss', 'atom') as $feed_type)
-		{
-	        $this->add_rewrite_rule('^' . $feed_type . '/?$', 'syndication.php?m=news&feed=' . $feed_type);
-	        $this->add_rewrite_rule('^' . $feed_type . '/([a-zA-Z0-9-]+)/?$', 'syndication.php?m=$1&feed=' . $feed_type);
-	        $this->add_rewrite_rule('^' . $feed_type . '/([a-zA-Z0-9-]+)/([0-9]+)/?$', 'syndication.php?m=$1&cat=$2&feed=' . $feed_type);
-			$this->add_rewrite_rule('^' . $feed_type . '/([a-zA-Z0-9-]+)/([0-9]+)/([a-zA-Z0-9-]+)/?$', 'syndication.php?m=$1&cat=$2&name=$3&feed=' . $feed_type);
-			$this->add_rewrite_rule('^' . $feed_type . '/([a-zA-Z0-9-]+)/([a-zA-Z0-9-]+)/([0-9]+)/?$', 'syndication.php?m=$1&cat=$3&name=$2&feed=' . $feed_type);
 		}
 	}
 
@@ -124,13 +110,18 @@ class HtaccessFileCache implements CacheData
 		{
 			$id = $module->get_id();
 			$configuration = $module->get_configuration();
-			$this->add_section($id);
-			foreach ($configuration->get_url_rewrite_rules() as $rule)
+			$rules = $configuration->get_url_rewrite_rules();
+			if (!empty($rules))
+			{
+				$this->add_section($id);
+			}
+			foreach ($rules as $rule)
 			{
 				$this->add_line(str_replace('DIR', $this->general_config->get_site_path(), $rule));
 			}
 			if ($eps->provider_exists($id, UrlMappingsExtensionPoint::EXTENSION_POINT))
 			{
+				$this->add_section($id);
 				$provider = $eps->get_provider($id);
 				$url_mappings = $provider->get_extension_point(UrlMappingsExtensionPoint::EXTENSION_POINT);
 				$this->add_url_mapping($url_mappings);
@@ -177,7 +168,7 @@ class HtaccessFileCache implements CacheData
 		//Error page
 		$this->add_empty_line();
 		$this->add_line('# Error page #');
-		$this->add_line('ErrorDocument 404 ' . $this->general_config->get_site_path() . '/member/404.php');
+		$this->add_line('ErrorDocument 404 ' . $this->general_config->get_site_path() . UserUrlBuilder::error_404()->relative());
 	}
 
 	private function add_manual_content()

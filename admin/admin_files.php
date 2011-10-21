@@ -63,7 +63,7 @@ elseif (!empty($_FILES['upload_file']['name']) && isset($_GET['f'])) //Ajout d'u
 {
 	//Si le dossier n'est pas en écriture on tente un CHMOD 777
 	@clearstatcache();
-	$dir = '../upload/';
+	$dir = PATH_TO_ROOT .'/upload/';
 	if (!is_writable($dir))
 		$is_writable = (@chmod($dir, 0777)) ? true : false;
 	
@@ -201,7 +201,7 @@ elseif (!empty($move_folder) || !empty($move_file))
 		$template->put('message_helper', MessageHelper::display($LANG['upload_folder_contains_folder'], E_USER_WARNING));
 	
 	//liste des fichiers disponibles
-	include_once('../member/upload_functions.php');
+	include_once(PATH_TO_ROOT .'/member/upload_functions.php');
 	$cats = array();
 	
 	if (empty($folder_member))
@@ -237,7 +237,7 @@ elseif (!empty($move_folder) || !empty($move_file))
 			case 'png':
 			case 'gif':
 			case 'bmp':
-			list($width_source, $height_source) = @getimagesize('../upload/' . $info_move['path']);
+			list($width_source, $height_source) = @getimagesize(PATH_TO_ROOT .'/upload/' . $info_move['path']);
 			$size_img = ' (' . $width_source . 'x' . $height_source . ')';
 			
 			//On affiche l'image réelle si elle n'est pas trop grande.
@@ -400,9 +400,9 @@ else
 			'RENAME_FOLDER' => !$show_member ? '<span id="fhref' . $row['id'] . '"><a href="javascript:display_rename_folder(\'' . $row['id'] . '\', \'' . addslashes($row['name']) . '\', \'' . addslashes($name_cut) . '\');" title="' . $LANG['edit'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/edit.png" alt="" style="vertical-align:middle;" /></a></span>' : '',
 			'DEL_TYPE' => $show_member ? 'eptf' : 'delf',
 			'C_TYPEFOLDER' => !$show_member,
-			'DEL_TYPE_IMG' => $show_member ? '<img src="../templates/' . get_utheme() . '/images/upload/trash_mini.png" alt="" class="valign_middle" />' : '<img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/delete.png" alt="" class="valign_middle" />',
+			'DEL_TYPE_IMG' => $show_member ? '<img src="'. PATH_TO_ROOT .'/templates/' . get_utheme() . '/images/upload/trash_mini.png" alt="" class="valign_middle" />' : '<img src="'. PATH_TO_ROOT .'/templates/' . get_utheme() . '/images/' . get_ulang() . '/delete.png" alt="" class="valign_middle" />',
 			'ALERT_DEL' => $show_member ? 'member' : 'folder',
-			'MOVE' => !$show_member ? '<a href="javascript:upload_display_block(' . $row['id'] . ');" onmouseover="upload_hide_block(' . $row['id'] . ', 1);" onmouseout="upload_hide_block(' . $row['id'] . ', 0);" class="bbcode_hover" title="' . $LANG['moveto'] . '"><img src="../templates/' . get_utheme() . '/images/upload/move.png" alt="" style="vertical-align:middle;" /></a>' : '',
+			'MOVE' => !$show_member ? '<a href="javascript:upload_display_block(' . $row['id'] . ');" onmouseover="upload_hide_block(' . $row['id'] . ', 1);" onmouseout="upload_hide_block(' . $row['id'] . ', 0);" class="bbcode_hover" title="' . $LANG['moveto'] . '"><img src="'. PATH_TO_ROOT .'/templates/' . get_utheme() . '/images/upload/move.png" alt="" style="vertical-align:middle;" /></a>' : '',
 			'U_ONCHANGE_FOLDER' => "'admin_files" . url(".php?movef=" . $row['id'] . "&amp;to=' + this.options[this.selectedIndex].value + '") . "'",
 			'L_TYPE_DEL_FOLDER' => $LANG['del_folder'],
 			'U_FOLDER' => '?' . ($show_member ? 'fm=' . $row['user_id'] : 'f=' . $row['id']),
@@ -456,7 +456,7 @@ else
 				'IMG' => $get_img_mimetype['img'],
 				'URL' => $link,
 				'NAME' => $name_cut,
-				'RENAME_FILE' => '<span id="fihref' . $row['id'] . '"><a href="javascript:display_rename_file(\'' . $row['id'] . '\', \'' . addslashes($row['name']) . '\', \'' . addslashes($name_cut) . '\');" title="' . $LANG['edit'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/edit.png" alt="" style="vertical-align:middle;" /></a></span>',
+				'RENAME_FILE' => '<span id="fihref' . $row['id'] . '"><a href="javascript:display_rename_file(\'' . $row['id'] . '\', \'' . addslashes($row['name']) . '\', \'' . addslashes($name_cut) . '\');" title="' . $LANG['edit'] . '"><img src="'. PATH_TO_ROOT .'/templates/' . get_utheme() . '/images/' . get_ulang() . '/edit.png" alt="" style="vertical-align:middle;" /></a></span>',
 				'FILETYPE' => $get_img_mimetype['filetype'] . $size_img,
 				'BBCODE' => '<input size="25" type="text" class="text" onclick="select_div(\'text_' . $row['id'] . '\');" id="text_' . $row['id'] . '" style="margin-top:2px;cursor:pointer;" value="' . $bbcode . '" />',
 				'SIZE' => ($row['size'] > 1024) ? NumberHelper::round($row['size']/1024, 2) . ' ' . $LANG['unit_megabytes'] : NumberHelper::round($row['size'], 0) . ' ' . $LANG['unit_kilobytes'],

@@ -7,14 +7,14 @@
 					<a href="admin_members.php" class="quick_link">{L_USERS_MANAGEMENT}</a>
 				</li>
 				<li>
-					<a href="{PATH_TO_ROOT}/admin/member/index.php?url=/members/add/"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/members.png" alt="" /></a>
+					<a href="{PATH_TO_ROOT}/admin/member/index.php?url=/add/"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/members.png" alt="" /></a>
 					<br />
-					<a href="{PATH_TO_ROOT}/admin/member/index.php?url=/members/add/" class="quick_link">{L_USERS_ADD}</a>
+					<a href="{PATH_TO_ROOT}/admin/member/index.php?url=/add/" class="quick_link">{L_USERS_ADD}</a>
 				</li>
 				<li>
-					<a href="{PATH_TO_ROOT}/admin/member/index.php?url=/members/config/"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/members.png" alt="" /></a>
+					<a href="{PATH_TO_ROOT}/admin/member/index.php?url=/config/"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/members.png" alt="" /></a>
 					<br />
-					<a href="{PATH_TO_ROOT}/admin/member/index.php?url=/members/config/" class="quick_link">{L_USERS_CONFIG}</a>
+					<a href="{PATH_TO_ROOT}/admin/member/index.php?url=/config/" class="quick_link">{L_USERS_CONFIG}</a>
 				</li>
 				<li>
 					<a href="admin_members_punishment.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/members.png" alt="" /></a>

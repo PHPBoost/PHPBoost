@@ -39,6 +39,7 @@ $lang['e_auth'] = 'Vous n\'avez pas le niveau requis !';
 $lang['e_unexist_module'] = 'Le module associé n\'existe pas !';
 $lang['e_uninstalled_module'] = 'Ce module n\'est pas installé !';
 $lang['e_unactivated_module'] = 'Ce module n\'est pas activé !';
+$lang['e_already_installed_module'] = 'Ce module est déjà installé !';
 $lang['e_incomplete'] = 'Tous les champs obligatoires doivent être remplis !';
 $lang['e_auth_post'] = 'Vous devez être inscrit pour poster !';
 $lang['e_readonly'] = 'Vous ne pouvez exécuter cette action, car vous avez été placé en lecture seule !';
@@ -80,9 +81,6 @@ $lang['e_unactiv_member'] = 'Votre compte n\'a pas encore été activé !';
 $lang['e_test_connect'] = 'Il vous reste %d essai(s) restant(s) après cela il vous faudra attendre 5 minutes pour obtenir 2 nouveaux essais (10 minutes pour 5) !';
 $lang['e_nomore_test_connect'] = 'Vous avez épuisé tous vos essais de connexion, votre compte est verrouillé pendant 5 minutes';
 
-//Champs supplémentaires
-$lang['e_exist_field'] = 'Un champ portant ce nom existe déjà!';
-
 //Groupes
 $lang['e_already_group'] = 'Le membre appartient déjà au groupe';
 
@@ -114,8 +112,4 @@ $lang['atline'] = 'à la ligne';
 // Too Many Connections
 $lang['too_many_connections'] = 'Trop de connexions';
 $lang['too_many_connections_explain'] = 'Le nombre maximum de connexions simultanées à la base de données à été atteint.<br />Veuillez réessayer dans quelques secondes.';
-
-// DEPRECATED
-global $LANG;
-$LANG = array_merge($LANG, $lang);
 ?>

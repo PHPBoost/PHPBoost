@@ -59,7 +59,6 @@ class AdminExtendedFieldMemberEditController extends AdminController
 		
 		$this->tpl = new StringTemplate('<script type="text/javascript">
 				Event.observe(window, \'load\', function() {
-				# IF IS_PERSONNAL_REGEX # HTMLForms.getField("regex").disable(); # ELSE # HTMLForms.getField("regex_type").disable(); # ENDIF #
 				'.$this->get_events_select_type().'});
 				</script>
 				# INCLUDE MSG #
@@ -68,8 +67,7 @@ class AdminExtendedFieldMemberEditController extends AdminController
 		$this->tpl->add_lang($this->lang);
 		$extended_field_cache = ExtendedFieldsCache::load()->get_extended_field($id);
 		$this->tpl->put_all(array(
-			'FIELD_TYPE' => $extended_field_cache['field_type'],
-			'IS_PERSONNAL_REGEX' => is_string($extended_field_cache['regex']) ? true : false
+			'FIELD_TYPE' => $extended_field_cache['field_type']
 		));
 		
 		$error = ExtendedFieldsService::get_error();
@@ -214,20 +212,31 @@ class AdminExtendedFieldMemberEditController extends AdminController
 	private function get_array_select_type()
 	{
 		$select = array();
-		$select_phpboost_config = array();
-		foreach (ExtendedFieldsList::get_files() as $file)
+		foreach ($this->get_extended_fields_class_name() as $module => $files)
 		{
-			$field_type = new $file();
-			if (!$field_type->get_field_used_phpboost_configuration())
+			if ($module == 'kernel')
 			{
-				$select[] = new FormFieldSelectChoiceOption($field_type->get_name(), $file);
+				$kernel_select = array();
+				foreach ($files as $file)
+				{
+					$field_type = new $file();
+					$kernel_select[] = new FormFieldSelectChoiceOption($field_type->get_name(), $file);
+				}
+				$select[] = new FormFieldSelectChoiceGroupOption($this->lang['default-field'], $kernel_select);
 			}
 			else
 			{
-				$select_phpboost_config[] = new FormFieldSelectChoiceOption($field_type->get_name(), $file);
+				$module_select = array();
+				foreach ($files as $file)
+				{
+					$field_type = new $file();
+					$module_select[] = new FormFieldSelectChoiceOption($field_type->get_name(), $file);
+				}
+
+				$module_name = ModulesManager::get_module($module)->get_configuration()->get_name();
+				$select[] = new FormFieldSelectChoiceGroupOption($module_name, $module_select);
 			}
 		}
-		$select[] = new FormFieldSelectChoiceGroupOption($this->lang['default-field'], $select_phpboost_config);
 		return $select;
 	}
 	
@@ -275,21 +284,38 @@ class AdminExtendedFieldMemberEditController extends AdminController
 			'authorizations' => array()
 		);
 		
-		foreach (ExtendedFieldsList::get_files() as $file)
+		foreach ($this->get_extended_fields_class_name() as $module => $files)
 		{
-			$field_type = new $file();
-			$disable_fields_extended_field = $field_type->get_disable_fields_configuration();
-			
-			foreach ($disable_fields_extended_field as $name_disable_field)
+			foreach ($files as $file)
 			{
-				if (array_key_exists($name_disable_field, $disable_field))
+				$field_type = new $file();
+				$disable_fields_extended_field = $field_type->get_disable_fields_configuration();
+				
+				foreach ($disable_fields_extended_field as $name_disable_field)
 				{
-					$disable_field[$name_disable_field][] = $file;
+					if (array_key_exists($name_disable_field, $disable_field))
+					{
+						$disable_field[$name_disable_field][] = $file;
+					}
 				}
 			}
 		}
 		return $disable_field;
 	}
+	
+	private function get_extended_fields_class_name()
+	{
+		$providers = AppContext::get_extension_provider_service()->get_providers(ExtendedFieldExtensionPoint::EXTENSION_POINT);
+		
+		$extended_fields_class_name = array();
+		foreach ($providers as $name_provider => $properties)
+		{
+			$extended_fiel_extension_point = $properties->get_extension_point(ExtendedFieldExtensionPoint::EXTENSION_POINT);
+			$extended_fields = $extended_fiel_extension_point->get_extended_fields();
+			
+			$extended_fields_class_name[$name_provider] = $extended_fields;
+		}
+		return $extended_fields_class_name;
+	}
 }
-
 ?>

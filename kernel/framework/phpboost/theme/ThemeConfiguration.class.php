@@ -139,6 +139,12 @@ class ThemeConfiguration
 	private function load_configuration($config_ini_file)
 	{
 		$config = @parse_ini_file($config_ini_file);
+		
+		if ($config === false)
+		{
+			throw new Exception('Load ini file "'. $config_ini_file .'" failed');
+		}
+		
 		$this->check_parse_ini_file($config, $config_ini_file);
 		
 		$this->name = $config['name'];
@@ -156,14 +162,14 @@ class ThemeConfiguration
 		$this->main_color = isset($config['main_color']) ? $config['main_color'] : '';
 		$this->variable_width = (bool)$config['variable_width'];
 		$this->width = isset($config['width']) ? $config['width'] : '';
-		$this->pictures = isset($config['pictures']) ? $this->parse_pictures_array($config['pictures']) : '';
+		$this->pictures = isset($config['pictures']) ? $this->parse_pictures_array($config['pictures']) : array();
 		$this->repository = !empty($config['repository']) ? $config['repository'] : Updates::PHPBOOST_OFFICIAL_REPOSITORY;
+
 	}
 
 	private function parse_pictures_array($pictures)
 	{
-		$pictures = explode(',', $pictures);
-		return $pictures;
+		return explode(',', $pictures);
 	}
 	
 	private function parse_columns_disabled_array($columns_disabled)
@@ -179,7 +185,7 @@ class ThemeConfiguration
 	{
 		if ($parse_result === false)
 		{
-			throw new Exception('Parse ini file ' . $ini_file . ' failed');
+			throw new Exception('Parse ini file "' . $ini_file . '" failed');
 		}
 	}
 }

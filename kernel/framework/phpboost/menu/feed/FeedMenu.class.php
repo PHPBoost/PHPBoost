@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                          feed_menu.class.php
+ *                          FeedMenu.class.php
  *                            -------------------
  *   begin                : January 14, 2009
  *   copyright            : (C) 2009 Loic Rouchon
@@ -57,7 +57,7 @@ class FeedMenu extends Menu
 	public function cache_export($template = false)
 	{
         return parent::cache_export_begin() .
-            '\';import(\'content/syndication/feed\');$__menu=Feed::get_parsed(' .
+            '\';import(\'content/feed/Feed\');$__menu=Feed::get_parsed(' .
 		    var_export($this->module_id, true) . ',' . var_export($this->name, true) . ',' .
 		    $this->category . ',FeedMenu::get_template(' . var_export($this->get_title(), true) . ', ' . var_export($this->get_block(), true) . '),' . $this->number . ',' . $this->begin_at . ');' .
             '$__menu.=\'' . parent::cache_export_end();
@@ -95,8 +95,7 @@ class FeedMenu extends Menu
 	*/
 	public function get_url($relative = false)
 	{
-		
-		$url = new Url('/syndication.php?m=' . $this->module_id . '&amp;cat=' . $this->category . '&amp;name=' . $this->name);
+		$url = DispatchManager::get_url('/syndication', '/rss/' . $this->module_id . '/' . $this->category . '/' . $this->name . '/');
 		if ($relative)
 		{
 			return $url->relative();

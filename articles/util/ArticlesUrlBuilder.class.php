@@ -54,6 +54,11 @@ class ArticlesUrlBuilder
 		return DispatchManager::get_url(self::$dispatcher, '/admin/config/');
 	}
 	
+	public static function add_article()
+	{
+		return DispatchManager::get_url(self::$dispatcher, '/article/add/');
+	}
+	
 	public static function home()
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/home/');

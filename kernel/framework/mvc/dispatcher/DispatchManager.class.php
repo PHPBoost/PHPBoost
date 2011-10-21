@@ -122,7 +122,7 @@ class DispatchManager
 
 	private static function redirect404()
 	{
-		AppContext::get_response()->redirect(PATH_TO_ROOT . '/member/404.php');
+		AppContext::get_response()->redirect(UserUrlBuilder::error_404()->absolute());
 	}
 
 	private static function show_error($exception)

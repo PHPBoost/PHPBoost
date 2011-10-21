@@ -161,6 +161,5 @@ class ImageResizer
 			throw new GDNotAvailableException();
 		}
 	}
-	
 }
 ?>

@@ -40,7 +40,7 @@ class FormFieldSelectChoiceGroupOption extends AbstractFormFieldEnumOption
 	public function __construct($label, array $options)
 	{
 		parent::__construct($label, '');
-		$this->options = $options;
+		$this->set_options($options);
 	}
 
 	public function set_field(FormField $field)
@@ -84,6 +84,16 @@ class FormFieldSelectChoiceGroupOption extends AbstractFormFieldEnumOption
 			}
 		}
 		return null;
+	}
+	
+	public function set_options(Array $options)
+	{
+		$this->options = $options;
+	}
+	
+	public function get_options()
+	{
+		return $this->options;
 	}
 }
 ?>

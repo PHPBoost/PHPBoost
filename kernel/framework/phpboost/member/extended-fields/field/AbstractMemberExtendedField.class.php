@@ -60,6 +60,7 @@ abstract class AbstractMemberExtendedField implements MemberExtendedFieldType
 	public function display_field_create(MemberExtendedField $member_extended_field)
 	{
 		$fieldset = $member_extended_field->get_fieldset();
+		return;
 	}
 	
 	/**
@@ -68,6 +69,7 @@ abstract class AbstractMemberExtendedField implements MemberExtendedFieldType
 	public function display_field_update(MemberExtendedField $member_extended_field)
 	{
 		$fieldset = $member_extended_field->get_fieldset();
+		return;
 	}
 	
 	/**

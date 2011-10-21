@@ -84,7 +84,7 @@ class AdminCacheConfigController extends AbstractAdminFormPageController
 
 	protected function generate_response(View $view)
 	{
-		return new AdminCacheMenuDisplayResponse($view);
+		return new AdminCacheMenuDisplayResponse($view, $this->lang['cache_configuration']);
 	}
 }
 ?>

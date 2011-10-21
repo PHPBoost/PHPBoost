@@ -152,7 +152,7 @@ class CLISession extends Session
 
 	private static function generate_token()
 	{
-		return substr(strhash(uniqid(mt_rand(), true), false), 0, 16);
+		return KeyGenerator::generate_token();
 	}
 
 	public function csrf_post_protect($redirect = SEASURF_ATTACK_ERROR_PAGE)

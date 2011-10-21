@@ -42,7 +42,7 @@ class DataStoreFactory
 	 */
 	public static function get_ram_store($id)
 	{
-		if (self::is_apc_available())
+		if (self::is_apc_available() && self::is_apc_enabled())
 		{
 			return new APCDataStore($id);
 		}

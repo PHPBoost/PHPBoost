@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                             url.class.php
+ *                             Url.class.php
  *                            -------------------
  *   begin                : January 14, 2009
  *   copyright            : (C) 2009 Loic Rouchon

@@ -39,7 +39,7 @@ class MemberSanctionManager
 	const SEND_MP = 'send_mp';
 	const SEND_MP_AND_MAIL = 'send_mp_and_mail';
 	
-	public function __static()
+	public static function __static()
 	{
 		self::$sql_querier = PersistenceContext::get_querier();
 		self::$lang = LangLoader::get('main');
@@ -48,7 +48,7 @@ class MemberSanctionManager
 	/*
 	 * This function request settters set_user_id, set_punish_duration, set_content_to_send. Use setters set_send_mp and set_send_mail for sending message personel or mail to confirm the sanction
 	 */
-	public static function remove_write_permissions($user_id, $punish_duration, $send_confirmation = SEND_MP, $content_to_send = '')
+	public static function remove_write_permissions($user_id, $punish_duration, $send_confirmation = self::SEND_MP, $content_to_send = '')
 	{
 		if (self::verificate_user_id($user_id))
 		{
@@ -61,11 +61,11 @@ class MemberSanctionManager
 					'user_id' => $user_id
 			));
 			
-			if ($send_confirmation == SEND_MP || $send_confirmation == SEND_MP_AND_MP && !empty($content_to_send))
+			if ($send_confirmation == SEND_MP || $send_confirmation == self::SEND_MP_AND_MP && !empty($content_to_send))
 			{
 				self::send_mp($user_id, self::$lang['read_only_title'], $content_to_send);
 			}
-			if ($send_confirmation == SEND_MAIL || $send_confirmation == SEND_MP_AND_MP && !empty($content_to_send))
+			if ($send_confirmation == SEND_MAIL || $send_confirmation == self::SEND_MP_AND_MP && !empty($content_to_send))
 			{
 				self::send_mail(self::$lang['read_only_title'], $content_to_send);
 			}
@@ -75,7 +75,7 @@ class MemberSanctionManager
 	/*
 	 * This function request settters set_user_id, set_punish_duration, set_content_to_send.
 	 */
-	public static function banish($user_id, $punish_duration, $send_confirmation = SEND_MAIL, $content_to_send = '')
+	public static function banish($user_id, $punish_duration, $send_confirmation = self::SEND_MAIL, $content_to_send = '')
 	{
 		if (self::verificate_user_id($user_id))
 		{
@@ -88,7 +88,7 @@ class MemberSanctionManager
 					'user_id' => $user_id
 			));
 			
-			if ($send_confirmation == SEND_MAIL)
+			if ($send_confirmation == self::SEND_MAIL)
 			{
 				$content = !empty($content_to_send) ? $content_to_send : self::$lang['ban_mail'];
 				self::send_mail(self::$lang['ban_title_mail'], $content);
@@ -99,7 +99,7 @@ class MemberSanctionManager
 	/*
 	 * This function request settters set_user_id, set_level_punish, set_content_to_send. Use setters set_send_mp and set_send_mail for sending message personel or mail to confirm the sanction
 	 */
-	public static function caution($user_id, $level_punish, $send_confirmation = SEND_MP, $content_to_send = '')
+	public static function caution($user_id, $level_punish, $send_confirmation = self::SEND_MP, $content_to_send = '')
 	{
 		if (self::verificate_user_id($user_id))
 		{
@@ -120,11 +120,11 @@ class MemberSanctionManager
 			}
 			else
 			{
-				if ($send_confirmation == SEND_MP || $send_confirmation == SEND_MP_AND_MP && !empty($content_to_send))
+				if ($send_confirmation == self::SEND_MP || $send_confirmation == self::SEND_MP_AND_MP && !empty($content_to_send))
 				{
 					self::send_mp($user_id, self::$lang['warning_title'], $content_to_send);
 				}
-				if ($send_confirmation == SEND_MAIL || $send_confirmation == SEND_MP_AND_MP && !empty($content_to_send))
+				if ($send_confirmation == self::SEND_MAIL || $send_confirmation == self::SEND_MP_AND_MP && !empty($content_to_send))
 				{
 					self::send_mail(self::$lang['warning_title'], $content_to_send);
 				}

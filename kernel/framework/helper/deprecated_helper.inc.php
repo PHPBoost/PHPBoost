@@ -158,15 +158,14 @@ function retrieve($var_type, $var_name, $default_value, $force_type = NULL, $fla
  */
 function url($url, $mod_rewrite = '', $ampersand = '&amp;')
 {
-	global $Session;
-
-	if (!is_object($Session))
+	$session = AppContext::get_session();
+	if (!is_object($session))
 	{
 		$session_mod = 0;
 	}
 	else
 	{
-		$session_mod = $Session->supports_cookies();
+		$session_mod = $session->supports_cookies();
 	}
 
 	if ($session_mod == 0)
@@ -182,7 +181,7 @@ function url($url, $mod_rewrite = '', $ampersand = '&amp;')
 	}
 	elseif ($session_mod == 1)
 	{
-		return $url . ((strpos($url, '?') === false) ? '?' : $ampersand) . 'sid=' . $Session->data['session_id'] . $ampersand . 'suid=' . $Session->data['user_id'];
+		return $url . ((strpos($url, '?') === false) ? '?' : $ampersand) . 'sid=' . $session->data['session_id'] . $ampersand . 'suid=' . $session->data['user_id'];
 	}
 }
 
@@ -229,7 +228,7 @@ function get_ini_config($dir_path, $require_dir, $ini_name = 'config.ini')
  */
 function check_mail($mail)
 {
-	return AppContext::get_mail_service()->is_mail_valid($mail);
+	throw new Exception('Deprecated, please use AppContext::get_mail_service()->is_mail_valid()');
 }
 
 /**
@@ -243,7 +242,7 @@ function check_mail($mail)
  */
 function gmdate_format($format, $timestamp = false, $timezone_system = 0)
 {
-	global $User, $LANG;
+	global $LANG;
 
 	if (strpos($format, 'date_format') !== false) //Inutile de tout tester si ce n'est pas un formatage prédéfini.
 	{
@@ -309,8 +308,6 @@ function gmdate_format($format, $timestamp = false, $timezone_system = 0)
  */
 function strtotimestamp($str, $date_format)
 {
-	global $User;
-
 	list($month, $day, $year) = array(0, 0, 0);
 	$array_timestamp = explode('/', $str);
 	$array_date = explode('/', $date_format);
@@ -341,7 +338,7 @@ function strtotimestamp($str, $date_format)
 	}
 
 	$serveur_hour = NumberHelper::round(date('Z')/3600, 0) - date('I'); //Décallage du serveur par rapport au méridien de greenwitch.
-	$timezone = $User->get_attribute('user_timezone') - $serveur_hour;
+	$timezone = AppContext::get_user()->get_attribute('user_timezone') - $serveur_hour;
 	if ($timezone != 0)
 	{
 		$timestamp -= $timezone * 3600;
@@ -390,26 +387,6 @@ function strtodate($str, $date_format)
 	}
 
 	return $date;
-}
-
-/**
- * @deprecated
- * @desc Deletes a file
- * @param string $file Path of the file to delete
- * @return bool true if the file could be deleted, false if an error occured.
- */
-function delete_file($filepath)
-{
-	$file = new File($filepath);
-	try
-	{
-		$file->delete();
-		return true;
-	}
-	catch (IOException $exception)
-	{
-		return false;
-	}
 }
 
 /**
@@ -466,6 +443,8 @@ function get_ulang()
  */
 function display_editor($field = 'contents', $forbidden_tags = array())
 {
+	throw new Exception('Deprecated, please use AppContext::get_content_formatting_service()->get_default_editor(), set identifier and use display function');
+	/*
 	$editor = AppContext::get_content_formatting_service()->get_default_editor();
 	if (!empty($forbidden_tags) && is_array($forbidden_tags))
 	{
@@ -474,6 +453,7 @@ function display_editor($field = 'contents', $forbidden_tags = array())
 	$editor->set_identifier($field);
 
 	return $editor->display();
+	*/
 }
 
 /**
@@ -488,9 +468,7 @@ function display_editor($field = 'contents', $forbidden_tags = array())
  */
 function display_comments($script, $idprov, $vars, $module_folder = '')
 {
-	$comments = new Comments($script, $idprov, $vars, $module_folder);
-
-	return $comments->display();
+	throw new Exception('Deprecated, please use CommentsService class');
 }
 
 /**

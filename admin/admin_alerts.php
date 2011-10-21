@@ -80,7 +80,7 @@ foreach ($alerts_list as $alert)
 		'NAME' => $alert->get_entitled(),
 		'PRIORITY' => $alert->get_priority_name(),
 		'STYLE' => 'background:#' . $color . ';',
-		'IMG' => !empty($img_type) ? '<img src="../templates/' . get_utheme() . '/images/admin/' . $img_type . '" alt="" class="valign_middle" />' : '',
+		'IMG' => !empty($img_type) ? '<img src="'. PATH_TO_ROOT .'/templates/' . get_utheme() . '/images/admin/' . $img_type . '" alt="" class="valign_middle" />' : '',
 		'DATE' => $creation_date->format(DATE_FORMAT),
 		'ID' => $alert->get_id(),
 		'STATUS' => $alert->get_status()

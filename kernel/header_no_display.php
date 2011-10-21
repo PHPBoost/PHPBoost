@@ -25,18 +25,11 @@
  *
  ###################################################*/
 
-
 if (defined('PHPBOOST') !== true)
 {
 	exit;
 }
-DeprecatedEnvironment::check_page_auth();
-
-
 $env = new SiteNodisplayGraphicalEnvironment();
-
 Environment::set_graphical_environment($env);
-
 Environment::display_header();
-
 ?>

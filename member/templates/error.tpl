@@ -33,7 +33,7 @@
 					
 					<br />
 					{U_REGISTER}
-					<a href="{PATH_TO_ROOT}/member/forget.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/forget_mini.png" alt="" class="valign_middle" />  {L_FORGOT_PASS}</a>	
+					<a href="{PATH_TO_ROOT}/member/index.php?url=/forget/"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/forget_mini.png" alt="" class="valign_middle" />  {L_FORGOT_PASS}</a>	
 				</div>
 				<div class="module_bottom_l"></div>		
 				<div class="module_bottom_r"></div>

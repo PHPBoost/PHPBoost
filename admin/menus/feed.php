@@ -45,7 +45,7 @@ if ($action_post == 'save')
 	$menu_name = retrieve(POST, 'name', '', TSTRING_UNCHANGE);
 	$menu_url = retrieve(POST, 'feed_url', '', TSTRING_UNCHANGE);
 	$matches = array();
-	preg_match('`syndication\.php\?m=(.+)&cat=([0-9]+)&name=(.+)`', $menu_url, $matches);
+	preg_match('`/rss/(.+)/([0-9]+)/(.+)/`', $menu_url, $matches);
 
 	if (!empty($id_post))
 	{   // Edit the Menu
@@ -153,36 +153,29 @@ else
     $menu = new FeedMenu('', '', '');
 }
 
-function get_feeds($feed_cat, $module_id, $feed_type, $level = 0)
+function get_feeds($feed_cat, $module_id, $feed_type, $feed_url_edit = '', $level = 0)
 {
-	$urls[] = array(
-		'name' => $feed_cat->get_category_name(),
-		'url' => $feed_cat->get_url($feed_type),
-		'level' => $level,
-		'feed_name' => $feed_type,
-		'selected' => false
-	);
-	$urls = array_merge($urls, get_feeds_children($feed_cat->get_children(), $module_id, $feed_type, $level +1));
-	return $urls;
+	return get_feeds_children($feed_cat->get_children(), $module_id, $feed_type, $feed_url_edit, $level +1);
 }
 
-function get_feeds_children(Array $children, $module_id, $feed_type, $level)
+function get_feeds_children(Array $children, $module_id, $feed_type, $feed_url_edit = '', $level)
 {
 	if (!empty($children))
 	{
 		foreach ($children as $id => $feed_cat)
 		{
+			$url = $feed_cat->get_url($feed_type);
+			
 			$urls[] = array(
 				'name' => $feed_cat->get_category_name(),
-				'url' => $feed_cat->get_url($feed_type),
+				'url' => $url,
 				'level' => $level,
 				'feed_name' => $feed_type,
-				'selected' => false
+				'selected' => $feed_url_edit == $url
 			);
 		}
 		
-		$urls = array_merge($urls, get_feeds_children($feed_cat->get_children(), $module_id, $feed_type, $level +1));
-		return $urls;
+		return array_merge($urls, get_feeds_children($feed_cat->get_children(), $module_id, $feed_type, $feed_url_edit, $level +1));
 	}
 	return array();
 }
@@ -197,12 +190,19 @@ foreach ($feeds_modules as $module)
 
 	foreach ($list->get_feeds_list() as $feed_type => $object)
 	{
-		$urls = get_feeds($object, $module->get_id(), $feed_type);
+		$urls = get_feeds($object, $module->get_id(), $feed_type, $feed_url);
+		
+		$root = array(
+			'name' => $module->get_id() . ' : ' . $object->get_category_name(),
+			'url' => $object->get_url($feed_type),
+			'selected' => $feed_url == $object->get_url($feed_type)
+		);
 	}
-	Debug::Dump($urls);
+
 	$tpl->assign_block_vars('modules', array(
-		'NAME' => $module->get_id(), 
-		'URL' => $urls[0]['url']
+		'NAME' => ucfirst($root['name']), 
+		'URL' => $root['url'],
+		'SELECTED' => $root['selected'] ? ' selected="selected"' : ''
 	));
 	
 	foreach ($urls as $url)
@@ -210,7 +210,7 @@ foreach ($feeds_modules as $module)
 		$tpl->assign_block_vars('modules.feeds_urls', array(
 			'URL' => $url['url'],
 			'NAME' => $url['name'],
-			'SPACE' => '--' . str_repeat('--', $url['level']),
+			'SPACE' => str_repeat('----', $url['level']),
 			'FEED_NAME' => $url['feed_name'] != 'master' ? $url['feed_name'] : null,
 			'SELECTED' => $url['selected'] ? ' selected="selected"' : ''
 		));

@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                            sessions.class.php
+ *                            Sessions.class.php
  *                            -------------------
  *   begin                : July 04, 2005
  *   copyright            : (C) 2005 Viarre Régis
@@ -30,7 +30,6 @@
 define('AUTOCONNECT', true);
 define('NO_AUTOCONNECT', false);
 define('ALREADY_HASHED', true);
-define('SEASURF_ATTACK_ERROR_PAGE', PATH_TO_ROOT . '/member/csrf-attack.php');
 
 /**
  * @author Régis VIARRE <crowkait@phpboost.com
@@ -98,16 +97,16 @@ class Session
 					}
 					else //plus d'essais
 					{
-						AppContext::get_response()->redirect('/member/error.php?e=e_member_flood#message_helper');
+						DispatchManager::redirect(PHPBoostErrors::flood());
 					}
 				}
 				elseif ($info_connect['user_aprob'] == '0')
 				{
-					AppContext::get_response()->redirect('/member/error.php?e=e_unactiv_member#message_helper');
+					DispatchManager::redirect(PHPBoostErrors::member_not_enabled());
 				}
 				elseif ($info_connect['user_warning'] == '100')
 				{
-					AppContext::get_response()->redirect('/member/error.php?e=e_member_ban_w#message_helper');
+					DispatchManager::redirect(PHPBoostErrors::member_banned());
 				}
 				else
 				{
@@ -129,17 +128,9 @@ class Session
 			}
 			else
 			{
-				AppContext::get_response()->redirect('/member/error.php?e=e_unexist_member#message_helper');
+				DispatchManager::redirect(PHPBoostErrors::unexisting_member());
 			}
-		
-			if (SCRIPT != DIR . '/member/error.php')
-			{
-				AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);
-			}
-			else
-			{
-				AppContext::get_response()->redirect(Environment::get_home_page());
-			}
+			AppContext::get_response()->redirect(Environment::get_home_page());
 		}
 	}
 
@@ -159,7 +150,7 @@ class Session
 		$pwd = $password;
 		if (!$already_hashed)
 		{
-			$password = strhash($password);
+			$password = KeyGenerator::string_hash($password);
 		}
 			
 		$error = '';
@@ -191,7 +182,7 @@ class Session
 		}
 
 		########Génération d'un ID de session unique########
-		$session_uniq_id = strhash(uniqid(mt_rand(), true)); //On génère un numéro de session aléatoire.
+		$session_uniq_id = KeyGenerator::generate_key(); //On génère un numéro de session aléatoire.
 		$this->data['user_id'] = $user_id;
 		$this->data['session_id'] = $session_uniq_id;
 		$this->data['token'] = self::generate_token();
@@ -633,7 +624,7 @@ class Session
 
 	private static function generate_token()
 	{
-		return substr(strhash(uniqid(mt_rand(), true), false), 0, 16);
+		return KeyGenerator::generate_token();
 	}
 
 	/**
@@ -644,11 +635,9 @@ class Session
 	 * 	<li>If the token isn't in the request, we analyse the HTTP referer to be sure that the request comes from the current site and not from another which can be suspect</li>
 	 * </ul>
 	 * If the request doesn't match any of these two cases, this method will consider that it's a CSRF attack.
-	 * @param mixed $redirect if string, redirect to the $redirect error page if the token is wrong
-	 * if false, do not redirect
 	 * @return bool true if no csrf attack by post is detected
 	 */
-	public function csrf_post_protect($redirect = SEASURF_ATTACK_ERROR_PAGE)
+	public function csrf_post_protect()
 	{
 		//The user sent a POST request
 		if (!empty($_POST))
@@ -665,7 +654,7 @@ class Session
 				return true;
 			}
 			//If those two lines are executed, none of the two cases has been matched. Thow it's a potential attack.
-			$this->csrf_attack($redirect);
+			$this->csrf_attack();
 			return false;
 		}
 		//It's not a POST request, there is no problem.
@@ -678,16 +667,14 @@ class Session
 	/**
 	 * @desc Check the session against CSRF attacks by GET. Checks that GETs are done from
 	 * this site with a correct token.
-	 * @param mixed $redirect if string, redirect to the $redirect error page if the token is wrong
-	 * if false, do not redirect
 	 * @return true if no csrf attack by get is detected
 	 */
-	public function csrf_get_protect($redirect = SEASURF_ATTACK_ERROR_PAGE)
+	public function csrf_get_protect()
 	{
 		$token = $this->get_token();
 		if (empty($token) || retrieve(REQUEST, 'token', '') !== $token)
 		{
-			$this->csrf_attack($redirect);
+			$this->csrf_attack();
 			return false;
 		}
 		return true;
@@ -710,17 +697,15 @@ class Session
 	/**
 	 * @desc Redirect to the $redirect error page if the token is wrong
 	 * if false, do not redirect
-	 * @param mixed $redirect if string, redirect to the $redirect error page if the token is wrong
-	 * if false, do not redirect
 	 */
-	private function csrf_attack($redirect = SEASURF_ATTACK_ERROR_PAGE)
+	private function csrf_attack()
 	{
 		$bad_token = $this->get_printable_token(retrieve(REQUEST, 'token', ''));
 		$good_token = $this->get_printable_token($this->get_token());
 
 		if ($redirect !== false && !empty($redirect))
 		{
-			AppContext::get_response()->redirect($redirect);
+			DispatchManager::redirect(PHPBoostErrors::CSRF());
 		}
 	}
 

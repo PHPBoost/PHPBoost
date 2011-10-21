@@ -70,5 +70,4 @@ class BBCodeFormattingFactory extends AbstractContentFormattingFactory
 		return $editor;
 	}
 }
-
 ?>

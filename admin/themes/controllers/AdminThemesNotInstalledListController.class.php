@@ -3,7 +3,7 @@
  *                      AdminThemesNotInstalledListController.class.php
  *                            -------------------
  *   begin                : April 20, 2011
- *   copyright            : (C) 2011 Kévin MASSY
+ *   copyright            : (C) 2011 KÃ©vin MASSY
  *   email                : soldier.weasel@gmail.com
  *
  *
@@ -61,11 +61,11 @@ class AdminThemesNotInstalledListController extends AdminController
 			
 			$this->view->assign_block_vars('themes_not_installed', array(
 				'C_WEBSITE' => $configuration->get_author_link() !== '',
-				'C_PICTURES' => is_array($pictures),
+				'C_PICTURES' => count($pictures) > 0,
 				'ID' => $id_theme,
 				'NAME' => $configuration->get_name(),
 				'VERSION' => $configuration->get_version(),
-				'MAIN_PICTURE' => is_array($pictures) ? PATH_TO_ROOT .'/templates/' . $id_theme . '/' . current($pictures) : '',
+				'MAIN_PICTURE' => count($pictures) > 0 ? PATH_TO_ROOT .'/templates/' . $id_theme . '/' . current($pictures) : '',
 				'AUTHOR_NAME' => $configuration->get_author_name(),
 				'AUTHOR_WEBSITE' => $configuration->get_author_link(),
 				'AUTHOR_EMAIL' => $configuration->get_author_mail(),
@@ -78,13 +78,13 @@ class AdminThemesNotInstalledListController extends AdminController
 				'WIDTH' => $configuration->get_variable_width() ? $this->lang['themes.variable-width'] : $configuration->get_width(),
 			));
 			
-			if (is_array($pictures))
+			if (count($pictures) > 0)
 			{
 				unset($pictures[0]);
 				foreach ($pictures as $picture)
 				{
 					$this->view->assign_block_vars('themes_not_installed.pictures', array(
-						'URL' => PATH_TO_ROOT .'/templates/' . $theme->get_id() . '/' . $picture
+						'URL' => PATH_TO_ROOT .'/templates/' . $id_theme . '/' . $picture
 					));
 				}
 			}
@@ -104,7 +104,6 @@ class AdminThemesNotInstalledListController extends AdminController
 	
 	private function get_not_installed_themes()
 	{
-		$installed_themes = ThemeManager::get_installed_themes_map();
 		$themes_not_installed = array();
 		$folder_containing_phpboost_themes = new Folder(PATH_TO_ROOT .'/templates/');
 		foreach($folder_containing_phpboost_themes->get_folders() as $theme)
@@ -121,15 +120,25 @@ class AdminThemesNotInstalledListController extends AdminController
 	
 	private function save(HTTPRequest $request)
 	{
-		if ($request->get_bool('add', false))
+		foreach ($this->get_not_installed_themes() as $id_theme)
 		{
-			foreach ($this->get_not_installed_themes() as $id_theme)
-			{
-				$request = AppContext::get_request();
-				$activated = $request->get_bool('activated-' . $id_theme, false);
-				$authorizations = Authorizations::auth_array_simple(Theme::ACCES_THEME, $id_theme);
-				ThemeManager::install($id_theme, $authorizations, $activated);
-				$this->view->put('MSG', MessageHelper::display($this->lang['themes.add.success'], E_USER_SUCCESS, 4));
+			try {
+				if ($request->get_string('add-' . $id_theme))
+				{
+					$activated = $request->get_bool('activated-' . $id_theme, false);
+					$authorizations = Authorizations::auth_array_simple(Theme::ACCES_THEME, $id_theme);
+					ThemeManager::install($id_theme, $authorizations, $activated);
+					$error = ThemeManager::get_error();
+					if ($error !== null)
+					{
+						$this->view->put('MSG', MessageHelper::display($error, MessageHelper::NOTICE, 10));
+					}
+					else
+					{
+						$this->view->put('MSG', MessageHelper::display($this->lang['themes.add.success'], MessageHelper::SUCCESS, 4));
+					}
+				}
+			} catch (Exception $e) {
 			}
 		}
 	}
@@ -153,45 +162,63 @@ class AdminThemesNotInstalledListController extends AdminController
 	{
 		$folder_phpboost_themes = PATH_TO_ROOT . '/templates/';
 
-        if (!is_writable($$folder_phpboost_themes))
+        if (!is_writable($folder_phpboost_themes))
 		{
 			$is_writable = @chmod($dir, 0777);
 		}
-         
+		else
+		{
+			$is_writable = true;
+		}
+        
 		if ($is_writable)
-		{	
-			$file = $form->get_value('upload_theme');
-			if (!ThemeManager::get_theme_existed($file->get_name()))
+		{
+			$file = $this->form->get_value('upload_theme');
+			if ($file !== null)
 			{
-                $upload = new Upload($folder_phpboost_themes);
-				if ($Upload->file('upload_theme', '`([a-z0-9()_-])+\.(gzip|zip)+$`i'))
-                {
-					$archive = $folder_phpboost_themes . $upload->filename['upload_theme'];
-					
-					if ($upload->extension['upload_theme'] == 'gzip')
+				if (!ThemeManager::get_theme_existed($file->get_name()))
+				{
+					$upload = new Upload($folder_phpboost_themes);
+					if ($upload->file('upload_theme_upload_theme', '`([a-z0-9()_-])+\.(gzip|zip)+$`i'))
 					{
-						import('lib/pcl/pcltar', LIB_IMPORT);
-						PclTarExtract($upload->filename['upload_theme'], $folder_phpboost_themes);
+						$archive = $folder_phpboost_themes . $upload->filename['upload_theme_upload_theme'];
 						
-						$file = new File($archive);
-						$file->delete();
-					}
-					else if ($upload->extension['upload_theme'] == 'zip')
-					{
-						import('lib/pcl/pclzip', LIB_IMPORT);
-						$zip = new PclZip($archive);
-						$zip->extract(PCLZIP_OPT_PATH, $folder_phpboost_themes, PCLZIP_OPT_SET_CHMOD, 0755);
-						
-						$file = new File($archive);
-						$file->delete();
-					}
-					else
-					{
-						$this->tpl->put('MSG', MessageHelper::display($this->lang['themes.upload.invalid_format'], MessageHelper::ERROR, 4));
+						if ($upload->extension['upload_theme_upload_theme'] == 'gzip')
+						{
+							import('lib/pcl/pcltar', LIB_IMPORT);
+							PclTarExtract($upload->filename['upload_theme_upload_theme'], $folder_phpboost_themes);
+							
+							$file = new File($archive);
+							$file->delete();
+							
+							$this->view->put('MSG', MessageHelper::display($this->lang['themes.upload.success'], MessageHelper::SUCCESS, 4));
+						}
+						else if ($upload->extension['upload_theme_upload_theme'] == 'zip')
+						{
+							import('lib/pcl/pclzip', LIB_IMPORT);
+							$zip = new PclZip($archive);
+							$zip->extract(PCLZIP_OPT_PATH, $folder_phpboost_themes, PCLZIP_OPT_SET_CHMOD, 0755);
+							
+							$file = new File($archive);
+							$file->delete();
+							
+							$this->view->put('MSG', MessageHelper::display($this->lang['themes.upload.success'], MessageHelper::SUCCESS, 4));
+						}
+						else
+						{
+							$this->view->put('MSG', MessageHelper::display($this->lang['themes.upload.invalid_format'], MessageHelper::ERROR, 4));
+						}
 					}
 				}
+				else
+				{
+					$this->view->put('MSG', MessageHelper::display($this->lang['themes.already_exist'], MessageHelper::ERROR, 4));
+				}
 			}
-			$this->tpl->put('MSG', MessageHelper::display($this->lang['themes.already_exist'], MessageHelper::ERROR, 4));
+			else
+			{
+				$this->view->put('MSG', MessageHelper::display($this->lang['themes.upload.error'], MessageHelper::ERROR, 4));
+			}
 		}
 	}
 }

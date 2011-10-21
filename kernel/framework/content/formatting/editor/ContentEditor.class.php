@@ -32,7 +32,7 @@
  */
 abstract class ContentEditor
 {
-    private $template = null;
+    protected $template = null;
     protected $forbidden_tags = array();
     protected $identifier = 'contents';
 
@@ -84,10 +84,6 @@ abstract class ContentEditor
 	 */
     public function get_template()
     {
-        if (!is_object($this->template) || !($this->template instanceof Template))
-        {
-            $this->template = new FileTemplate('framework/content/editor.tpl');
-        }
         return $this->template;
     }
 }

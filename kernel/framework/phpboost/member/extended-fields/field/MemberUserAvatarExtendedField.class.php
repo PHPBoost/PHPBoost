@@ -173,7 +173,7 @@ class MemberUserAvatarExtendedField extends AbstractMemberExtendedField
 	
 	private function key_hash()
 	{
-		return substr(strhash(uniqid(rand(), true)), 0, 5);
+		return KeyGenerator::generate_key(5);
 	}
 }
 ?>

@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                                stats_saver.class.php
+ *                                StatsSaver.class.php
  *                            -------------------
  *   begin                : July 23, 2008
  *   copyright            : (C) 2008 Viarre Régis
@@ -29,9 +29,9 @@ include_once(PATH_TO_ROOT . '/lang/' . UserAccountsConfig::load()->get_default_l
 
 /**
  * @author Viarre Régis crowkait@phpboost.com
-  * @desc 
-  * @package {@package}
-  */
+ * @desc 
+ * @package {@package}
+ */
 class StatsSaver
 {	
     /**

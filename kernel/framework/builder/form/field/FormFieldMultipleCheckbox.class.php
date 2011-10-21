@@ -164,5 +164,4 @@ class FormFieldMultipleCheckbox extends AbstractFormField
     	return $this->available_options;
     }
 }
-
 ?>

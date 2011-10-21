@@ -32,7 +32,7 @@ class Article
     private $title;
     private $rewrited_title;
     private $description;
-    private $contents;
+    private $content;
     private $picture_path;
     private $number_view;
     private $author_user_id;
@@ -94,14 +94,14 @@ class Article
 		return $this->description;
 	}
 	
-	public function set_contents($contents)
+	public function set_content($content)
 	{
-		$this->contents = $contents;
+		$this->content = $content;
 	}
 	
-	public function get_contents()
+	public function get_content()
 	{
-		return $this->contents;
+		return $this->content;
 	}
 	
 	public function set_picture_path($picture_path)

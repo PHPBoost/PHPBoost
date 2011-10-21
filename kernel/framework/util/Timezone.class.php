@@ -33,7 +33,7 @@ class Timezone
 	public static function __static()
 	{
 		self::$server_timezone = new DateTimeZone('Europe/Paris');
-		self::$site_timezone = new DateTimeZone(GeneralConfig::load()->get_site_timezone());
+		self::$site_timezone = new DateTimeZone('Europe/Paris');
 		self::$user_timezone = new DateTimeZone('Europe/Paris');
 	}
 	

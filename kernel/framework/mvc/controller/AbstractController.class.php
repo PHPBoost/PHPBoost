@@ -3,7 +3,7 @@
  *                          AbstractController.class.php
  *                            -------------------
  *   begin                : September 15 2009
- *   copyright         : (C) 2009 Loic Rouchon
+ *   copyright         	  : (C) 2009 Loic Rouchon
  *   email                : loic.rouchon@phpboost.com
  *
  *
@@ -24,8 +24,6 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
  ###################################################*/
-
-
 
 /**
  * @author loic rouchon <loic.rouchon@phpboost.com>

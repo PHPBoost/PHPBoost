@@ -131,6 +131,7 @@ class InstallationServices
 		$password, $tables_prefix);
         $this->create_tables();
 		$this->write_connection_config_file($db_connection_data, $tables_prefix);
+		$this->generate_cache();
 		$this->generate_installation_token();
 		return true;
 	}
@@ -143,7 +144,6 @@ class InstallationServices
 		$this->install_modules($modules_to_install);
 		$this->add_menus();
 		$this->add_extended_fields();
-		$this->generate_cache();
 		return true;
 	}
 
@@ -168,7 +168,7 @@ class InstallationServices
 		AppContext::set_user($user);
 		$this->save_general_config($server_url, $server_path, $site_name, $site_desc, $site_keyword, $site_timezone);
 		$this->init_graphical_config();
-		$this->init_server_environment_config();
+		$this->init_debug_mode();
 		$this->init_user_accounts_config($locale);
 		$this->install_locale($locale);
 		$this->configure_theme($this->distribution_config['theme'], $locale);
@@ -196,11 +196,9 @@ class InstallationServices
 		GraphicalEnvironmentConfig::save();
 	}
 
-	private function init_server_environment_config()
+	private function init_debug_mode()
 	{
-		$server_environment_config = ServerEnvironmentConfig::load();
-		$server_environment_config->set_debug_mode_enabled($this->distribution_config['debug']);
-		ServerEnvironmentConfig::save();
+		Debug::enabled_debug_mode();
 	}
 
 	private function init_user_accounts_config($locale)
@@ -260,50 +258,6 @@ class InstallationServices
 		$extended_field->set_field_name('user_born');
 		$extended_field->set_description($lang['field-install.date-birth-explain']);
 		$extended_field->set_field_type('MemberUserBornExtendedField');
-		$extended_field->set_is_required(false);
-		$extended_field->set_display(true);
-		$extended_field->set_is_freeze(true);
-		ExtendedFieldsService::add($extended_field);
-		
-		//Lang
-		$extended_field = new ExtendedField();
-		$extended_field->set_name($lang['field-install.default-lang']);
-		$extended_field->set_field_name('user_lang');
-		$extended_field->set_description($lang['field-install.default-lang-explain']);
-		$extended_field->set_field_type('MemberUserLangExtendedField');
-		$extended_field->set_is_required(false);
-		$extended_field->set_display(true);
-		$extended_field->set_is_freeze(true);
-		ExtendedFieldsService::add($extended_field);
-		
-		//Theme
-		$extended_field = new ExtendedField();
-		$extended_field->set_name($lang['field-install.default-theme']);
-		$extended_field->set_field_name('user_theme');
-		$extended_field->set_description($lang['field-install.default-theme-explain']);
-		$extended_field->set_field_type('MemberUserThemeExtendedField');
-		$extended_field->set_is_required(false);
-		$extended_field->set_display(true);
-		$extended_field->set_is_freeze(true);
-		ExtendedFieldsService::add($extended_field);
-		
-		//Editor
-		$extended_field = new ExtendedField();
-		$extended_field->set_name($lang['field-install.default-editor']);
-		$extended_field->set_field_name('user_editor');
-		$extended_field->set_description($lang['field-install.default-editor-explain']);
-		$extended_field->set_field_type('MemberUserEditorExtendedField');
-		$extended_field->set_is_required(false);
-		$extended_field->set_display(true);
-		$extended_field->set_is_freeze(true);
-		ExtendedFieldsService::add($extended_field);
-		
-		//Timezone
-		$extended_field = new ExtendedField();
-		$extended_field->set_name($lang['field-install.timezone']);
-		$extended_field->set_field_name('user_timezone');
-		$extended_field->set_description($lang['field-install.timezone-explain']);
-		$extended_field->set_field_type('MemberUserTimezoneExtendedField');
 		$extended_field->set_is_required(false);
 		$extended_field->set_display(true);
 		$extended_field->set_is_freeze(true);
@@ -414,7 +368,7 @@ class InstallationServices
 	
 	private function generate_cache()
 	{
-		AppContext::get_cache_service()->clear_phpboost_cache();
+		AppContext::get_cache_service()->clear_cache();
 	}
 
 	private function initialize_db_connection($dbms, $host, $port, $database, $login, $password, $tables_prefix)
@@ -493,7 +447,7 @@ class InstallationServices
 	{
 		$columns = array(
             'login' => $login,
-            'password' => strhash($password),
+            'password' => KeyGenerator::string_hash($password),
             'level' => 2,
             'user_mail' => $email,
             'user_lang' => $locale,
@@ -508,7 +462,7 @@ class InstallationServices
 
 	private function generate_admin_unlock_code()
 	{
-		$admin_unlock_code = substr(strhash(uniqid(mt_rand(), true)), 0, 12);
+		$admin_unlock_code = KeyGenerator::generate_key(12);
 		$general_config = GeneralConfig::load();
 		$general_config->set_admin_unlocking_key($admin_unlock_code);
 		GeneralConfig::save();

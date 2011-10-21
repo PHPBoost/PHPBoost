@@ -42,7 +42,7 @@ class ArticlesDataBase
 			'title' => $article->get_title(),
 			'rewrited_title' => $article->get_rewrited_title(),
 			'description' => $article->get_description(),
-			'contents' => $article->get_contents(),
+			'content' => $article->get_content(),
 			'number_view' => $article->get_number_view(),
 			'author_user_id' => $article->get_writer_user_id(),
 			'author_name_visitor' => $article->get_writer_name_visitor(),

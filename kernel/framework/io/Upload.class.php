@@ -219,7 +219,7 @@ class Upload
 			$filename1 = $filename;
 			while (file_exists($this->base_directory . $filename_tmp))
 			{
-				$filename1 = $filename . '_' . substr(strhash(uniqid(mt_rand(), true)), 0, 5);
+				$filename1 = $filename . '_' . KeyGenerator::generate_key(5);
 				$filename_tmp = $filename1;
 				if (!empty($this->extension))
 					$filename_tmp .= '.' . $this->extension;

@@ -174,15 +174,15 @@ abstract class AbstractFormFieldset implements FormFieldset
 	 */
 	public function has_field($field_id)
 	{
-		return isset($this->fields[$field_id]);
+		return isset($this->fields[$this->encode_field_id($field_id)]);
 	}
-
+	
 	/**
 	 * @return FormField
 	 */
 	public function get_field($field_id)
 	{
-		return $this->fields[$field_id];
+		return $this->fields[$this->encode_field_id($field_id)];
 	}
 
 	public function get_fields()
@@ -273,6 +273,13 @@ abstract class AbstractFormFieldset implements FormFieldset
 	public function set_css_class($css_class)
 	{
 		$this->css_class = $css_class;
+	}
+	
+	private function encode_field_id($field_id)
+	{
+		$field_id = strtolower($field_id);
+		$field_id = Url::encode_rewrite($field_id);
+		return str_replace('-', '_', $field_id);
 	}
 }
 ?>

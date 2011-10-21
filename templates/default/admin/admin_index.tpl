@@ -17,9 +17,9 @@
 					<a href="menus/menus.php" class="quick_link">{L_MENUS_MANAGMENT}</a>
 				</li>
 				<li>
-					<a href="admin_modules.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/modules.png" alt="" /></a>
+					<a href="${relative_url(AdminModulesUrlBuilder::list_installed_modules())}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/modules.png" alt="" /></a>
 					<br />
-					<a href="admin_modules.php" class="quick_link">{L_MODULES_MANAGMENT}</a>
+					<a href="${relative_url(AdminModulesUrlBuilder::list_installed_modules())}" class="quick_link">{L_MODULES_MANAGMENT}</a>
 				</li>
 				<li>
 					<a href="updates/updates.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/updater.png" alt="" /></a>
@@ -65,7 +65,7 @@
 							<div style="height:140px;width:358px;overflow:auto;margin:auto;">
 								# START com_list #	
 								<div style="margin-bottom:10px;">
-									<a href="{com_list.U_PROV}#anchor_{com_list.COM_SCRIPT}"><img src="../templates/{THEME}/images/ancre.png" alt="" /></a> <span class="text_small">{L_BY} {com_list.USER_PSEUDO}</span>
+									<a href="{com_list.U_PROV}#anchor_{com_list.COM_SCRIPT}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/ancre.png" alt="" /></a> <span class="text_small">{L_BY} {com_list.USER_PSEUDO}</span>
 									<p class="text_small">{com_list.CONTENTS}</p>
 								</div>	
 								# END com_list #

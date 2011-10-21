@@ -27,21 +27,20 @@
 
 function menu_langswitcher_langswitcher($position, $block)
 {
-	global $User, $LANG, $Session;
-
-	load_menu_lang('langswitcher');
+	$langswitcher_lang = LangLoader::get('langswitcher_common', 'menus/langswitcher');
+	$user = AppContext::get_user();
 
 	$switchlang = !empty($_GET['switchlang']) ? urldecode($_GET['switchlang']) : '';
     if (!empty($switchlang))
     {
-        if ($User->check_level(MEMBER_LEVEL))
+        if ($user->check_level(MEMBER_LEVEL))
         {
             $Session->csrf_get_protect();
         }
 
     	if (preg_match('`[ a-z0-9_-]{3,20}`i', $switchlang) && strpos($switchlang, '\'') === false)
     	{
-    		$User->update_user_lang($switchlang); //Mise à jour du thème du membre.
+    		$user->update_user_lang($switchlang); //Mise à jour du thème du membre.
     		if (QUERY_STRING != '')
     		{
 				$query_string = preg_replace('`token=[^&]+`', '', QUERY_STRING);
@@ -58,15 +57,14 @@ function menu_langswitcher_langswitcher($position, $block)
     MenuService::assign_positions_conditions($tpl, $block);
 
     $array_js_identifier = '';
-    $ulang = get_ulang();
     $langs_cache = LangsCache::load();
     foreach($langs_cache->get_installed_langs() as $lang => $properties)
     {
-    	if ($User->check_level($properties['auth']) && $properties['enabled'] == 1)
+    	if ($user->check_level($properties['auth']) && $properties['enabled'] == 1)
     	{
     		$info_lang = load_ini_file(PATH_TO_ROOT . '/lang/', $lang);
 
-			$selected = ($ulang == $lang) ? ' selected="selected"' : '';
+			$selected = ($user->get_attribute('user_lang') == $lang) ? ' selected="selected"' : '';
     		$tpl->assign_block_vars('langs', array(
     			'NAME' => $info_lang['name'],
     			'IDNAME' => $lang,
@@ -75,13 +73,13 @@ function menu_langswitcher_langswitcher($position, $block)
     	}
     }
 
-    $lang_identifier = str_replace('en', 'uk', $LANG['xml_lang']);
+    $lang_identifier = str_replace('en', 'uk', LangLoader::get_message('xml_lang', 'main'));
     $tpl->put_all(array(
     	'DEFAULT_LANG' => UserAccountsConfig::load()->get_default_lang(),
     	'IMG_LANG_IDENTIFIER' => TPL_PATH_TO_ROOT . '/images/stats/countries/' . $lang_identifier . '.png',
-    	'L_SWITCH_LANG' => $LANG['switch_lang'],
-    	'L_DEFAULT_LANG' => $LANG['default_lang'],
-    	'L_SUBMIT' => $LANG['submit']
+    	'L_SWITCH_LANG' => $langswitcher_lang['switch_lang'],
+    	'L_DEFAULT_LANG' => $langswitcher_lang['default_lang'],
+    	'L_SUBMIT' => LangLoader::get_message('submit', 'main')
     ));
 
     return $tpl->render();
