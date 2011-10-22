@@ -3,8 +3,8 @@
  *                        ArticlesFormFieldSelectCategoryIcons.class.php
  *                            -------------------
  *   begin                : October 20, 2011
- *   copyright            : (C) 2011 Kévin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   copyright            : (C) 2011 Patrick DUBEAU
+ *   email                : daaxwizeman@gmail.com
  *
  ###################################################
  *
