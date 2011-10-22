@@ -24,7 +24,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
  ###################################################*/
-class ArticlesAdminConfigController extends AdminController
+class ArticlesAdminConfigController extends AdminModuleControllerController
 {
 	private $lang;
 	private $articles_config;
