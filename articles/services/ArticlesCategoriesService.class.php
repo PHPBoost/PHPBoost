@@ -29,17 +29,17 @@ class ArticlesCategoriesService
 {
     public static function add(ArticlesCategory $category)
 	{
-	
+		ArticlesCategoriesDataBase::add($category);
 	}
 	
 	public static function update(ArticlesCategory $category)
 	{
-	
+		ArticlesCategoriesDataBase::update($category);
 	}
 
 	public static function delete($id_category)
 	{
-	
+		ArticlesCategoriesDataBase::delete($id_category);
 	}
 	
 	public static function change_position($id_category, $position)
@@ -62,7 +62,7 @@ class ArticlesCategoriesService
 		
 	}
 	
-	public static function get_categorie($id_category)
+	public static function get_category($id_category)
 	{
 		
 	}

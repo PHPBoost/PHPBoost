@@ -28,7 +28,7 @@
 class Article
 {
     private $id;
-    private $id_categorie;
+    private $id_category;
     private $title;
     private $rewrited_title;
     private $description;
@@ -54,14 +54,14 @@ class Article
 		return $this->id;
 	}
 	
-	public function set_id_categorie($id_categorie)
+	public function set_id_category($id_category)
 	{
-		$this->id_categorie = $id_categorie;
+		$this->id_category = $id_category;
 	}
 	
-	public function get_id_categorie()
+	public function get_id_category()
 	{
-		return $this->id_categorie;
+		return $this->id_category;
 	}
 	
 	public function set_title($title)

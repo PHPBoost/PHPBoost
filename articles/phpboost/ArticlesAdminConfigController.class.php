@@ -40,7 +40,7 @@ class ArticlesAdminConfigController extends AdminController
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save();
-			$tpl->put('MSG', MessageHelper::display($this->lang['articles_configuration.success-saving'], E_USER_SUCCESS, 4));
+			$tpl->put('MSG', MessageHelper::display($this->lang['articles_configuration.success-saving'], MessageHelper::SUCCESS, 4));
 		}
 		
 		 $this->tpl->put('FORM', $this->form->display());
@@ -50,15 +50,15 @@ class ArticlesAdminConfigController extends AdminController
 	
 	private function init()
 	{	
-		$this->tpl = new FileTemplate('#INCLUDE MSG# #INCLUDE FORM#');
+		$this->tpl = new StringTemplate('#INCLUDE MSG# #INCLUDE FORM#');
 		$this->load_lang();
 		$this->tpl->add_lang($this->lang);
-		$this->articles_config = ArticlesConfig::load();
+		$this->load_config();
 	}
 	
 	private function load_lang()
 	{
-		$this->lang = LangLoader::get('articles_common');
+		$this->lang = LangLoader::get('articles-common');
 	}
 	
 	private function load_config()
@@ -120,7 +120,7 @@ class ArticlesAdminConfigController extends AdminController
 		$this->articles_config->set_number_columns_displayed($this->form->get_value('number_columns_displayed'));
 		$this->articles_config->set_notation_scale($this->form->get_value('notation_scale'));
 		
-		$this->articles_config->save();
+		ArticlesConfig::save();
 	}
 }
 ?>

@@ -37,18 +37,18 @@ class ArticlesDataBase
 	public static function add(Article $article)
 	{
 		self::$db_querier->insert(ArticlesSetup::$articles_table, array(
-			'id_category' => $article->get_id_categorie(),
-			'picture_path' => $article->get_picture(),
+			'id_category' => $article->get_id_category(),
+			'picture_path' => $article->get_picture_path(),
 			'title' => $article->get_title(),
 			'rewrited_title' => $article->get_rewrited_title(),
 			'description' => $article->get_description(),
 			'content' => $article->get_content(),
 			'number_view' => $article->get_number_view(),
-			'author_user_id' => $article->get_writer_user_id(),
-			'author_name_visitor' => $article->get_writer_name_visitor(),
-			'published' => $article->get_visibility(),
-			'publishing_start_date' => $article->get_start_visibility(),
-			'publishing_end_date' => $article->get_end_visibility(),
+			'author_user_id' => $article->get_author_user_id(),
+			'author_name_visitor' => $article->get_author_name_visitor(),
+			'published' => $article->get_publishing_state(),
+			'publishing_start_date' => $article->get_publishing_start_date(),
+			'publishing_end_date' => $article->get_publishing_end_date(),
 			'authorizations' => serialize($article->get_authorizations()),
 			'timestamp_created' => $article->get_timestamp_created(),
 			'timestamp_last_modified' => $article->get_timestamp_last_modified()
@@ -58,18 +58,18 @@ class ArticlesDataBase
 	public static function update(Article $article)
 	{
 		$columns = array(
-			'id_category' => $article->get_id_categorie(),
-			'picture_path' => $article->get_picture(),
+			'id_category' => $article->get_id_category(),
+			'picture_path' => $article->get_picture_path(),
 			'title' => $article->get_title(),
 			'rewrited_title' => $article->get_rewrited_title(),
 			'description' => $article->get_description(),
 			'contents' => $article->get_contents(),
 			'number_view' => $article->get_number_view(),
-			'author_user_id' => $article->get_writer_user_id(),
-			'author_name_visitor' => $article->get_writer_name_visitor(),
-			'published' => $article->get_visibility(),
-			'publishing_start_date' => $article->get_start_visibility(),
-			'publishing_end_date' => $article->get_end_visibility(),
+			'author_user_id' => $article->get_author_user_id(),
+			'author_name_visitor' => $article->get_author_name_visitor(),
+			'published' => $article->get_publishing_state(),
+			'publishing_start_date' => $article->get_publishing_start_date(),
+			'publishing_end_date' => $article->get_publishing_end_date(),
 			'authorizations' => serialize($article->get_authorizations()),
 			'timestamp_created' => $article->get_timestamp_created(),
 			'timestamp_last_modified' => $article->get_timestamp_last_modified()
