@@ -1,23 +1,22 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{L_XML_LANGUAGE}" >
 	<head>
-		<title>{SITE_NAME} :: {TITLE}</title>
+		<title>{SITE_NAME} : {TITLE}</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 		<meta http-equiv="Content-Language" content="{L_XML_LANGUAGE}" />
 		<!-- Default CSS -->
 		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/default/theme/admin_default.css" type="text/css" media="screen" />
 		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/default/theme/default.css" type="text/css" media="screen" />
-        <!-- Theme CSS -->
-		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/{THEME}/theme/design.css" type="text/css" media="screen" />
-		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/{THEME}/theme/global.css" type="text/css" media="screen" />
-		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/{THEME}/theme/content.css" type="text/css" media="screen" />
-		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/{THEME}/theme/generic.css" type="text/css" media="screen" />
-		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/{THEME}/theme/bbcode.css" type="text/css" media="screen" />
-		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/{THEME}/theme/admin.css" type="text/css" media="screen" />
-		<!-- Alternative CSS -->
-		{ALTERNATIVE_CSS}
+
+		<!-- Theme CSS -->
+		{THEME_CSS}
 		
-		<link rel="shortcut icon" href="{PATH_TO_ROOT}/favicon.ico" type="image/x-icon" />
+		<!-- Modules CSS -->
+		{MODULES_CSS}
+		
+		# IF C_FAVICON #
+		<link rel="shortcut icon" href="{FAVICON}" type="{FAVICON_TYPE}" />
+		# ENDIF #
 		
 		<script type="text/javascript">
 		<!--
@@ -26,14 +25,22 @@
 			var THEME = "{THEME}";
 		-->
 		</script>
-		# IF C_BBCODE_TINYMCE_MODE # <script language="javascript" type="text/javascript" src="{PATH_TO_ROOT}/kernel/lib/js/tinymce/tiny_mce.js"></script> # ENDIF #
-		
+
 		<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/lib/js/scriptaculous/prototype.js"></script>
 		<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/lib/js/scriptaculous/scriptaculous.js"></script>
 		<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/lib/js/phpboost/global.js"></script>	
 
 	</head>
 	<body>
+	
+	# IF C_HEADER_LOGO #
+		<style type="text/css">
+			div#header_admin_container {
+   				background: url('{HEADER_LOGO}') no-repeat;
+			}
+		</style>
+	# ENDIF #
+	
 	<div id="global">
 		<div id="header_admin_container">
 			<div id="header_admin">&nbsp;</div>

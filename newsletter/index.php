@@ -27,7 +27,7 @@
 
 define('PATH_TO_ROOT', '..');
 
-require_once PATH_TO_ROOT . '/kernel/begin.php';
+require_once PATH_TO_ROOT . '/kernel/init.php';
 
 $url_controller_mappers = array(
 	new UrlControllerMapper('AdminNewsletterConfigController', '`^/admin(?:/config)?/?$`'),
@@ -42,15 +42,14 @@ $url_controller_mappers = array(
 	
 	new UrlControllerMapper('NewsletterSubscribersListController', '`^/subscribers(?:/([0-9]+))?/?([a-z]+)?/?([a-z]+)?/?([0-9]+)?/?$`', array('id_stream', 'field', 'sort', 'page')),
 	new UrlControllerMapper('NewsletterSubscribeController', '`^/subscribe/?$`'),
-	new UrlControllerMapper('NewsletterUnSubscribeController', '`^/unsubscribe/?$`'),
+	new UrlControllerMapper('NewsletterUnsubscribeController', '`^/unsubscribe/?$`'),
 	new UrlControllerMapper('NewsletterEditSubscriberController', '`^/subscriber/([0-9]+)/edit/?$`', array('id')),
 	new UrlControllerMapper('NewsletterDeleteSubscriberController', '`^/subscriber/([0-9]+)/delete?/?([0-9]+)/?$`', array('id', 'id_stream')),
 
 	new UrlControllerMapper('NewsletterArchivesController', '`^/archives(?:/([0-9]+))?/?([a-z]+)?/?([a-z]+)?/?([0-9]+)?/?$`', array('id_stream', 'field', 'sort', 'page')),
 	new UrlControllerMapper('NewsletterArchiveController', '`^/archive/([0-9]+)?/?$`', array('id')),
 	
-	new UrlControllerMapper('NewsletterHomeController', '`^.*$`'),
-	new UrlControllerMapper('NewsletterHomeController', '`^/list(?:/([a-z]+))?/?$`', array('page')),
+	new UrlControllerMapper('NewsletterHomeController', '`^(?:/([a-z]+))?/?$`', array('page')),
 );
 DispatchManager::dispatch($url_controller_mappers);
 

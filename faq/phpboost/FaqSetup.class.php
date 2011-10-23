@@ -159,5 +159,4 @@ class FaqSetup extends DefaultModuleSetup
 		));
 	}
 }
-
 ?>

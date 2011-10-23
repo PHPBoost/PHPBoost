@@ -36,6 +36,9 @@ $id = retrieve(GET, 'id', 0);
 $id_post = retrieve(POST, 'id', 0);
 $del = !empty($_GET['delete']) ? true : false;
 
+$editor = AppContext::get_content_formatting_service()->get_default_editor();
+$editor->set_identifier('contents');
+
 if (!empty($id) && !$del)
 {
 	$Template->set_filenames(array(
@@ -54,7 +57,7 @@ if (!empty($id) && !$del)
 		'CONTENTS' => FormatingHelper::unparse($row['contents']),
 		'URL' => $row['url'],
 		'COMPT' => $row['compt'],
-		'KERNEL_EDITOR' => display_editor(),
+		'KERNEL_EDITOR' => $editor->display(),
 		'L_WEB_ADD' => $LANG['web_add'],
 		'L_WEB_MANAGEMENT' => $LANG['web_management'],
 		'L_WEB_CAT' => $LANG['cat_management'],
@@ -143,7 +146,7 @@ elseif (!empty($_POST['previs']) && !empty($id_post))
 		'LANG' => get_ulang(),
 		'IDWEB' => $id_post,
 		'TITLE' => $title,
-		'KERNEL_EDITOR' => display_editor(),		
+		'KERNEL_EDITOR' => $editor->display(),		
 		'NAME' => $title,
 		'CONTENTS' => $contents,
 		'URL' => $url,
@@ -205,13 +208,6 @@ elseif (!empty($_POST['valid']) && !empty($id_post)) //inject
 	if (!empty($title) && !empty($url) && !empty($idcat))
 	{
 		$Sql->query_inject("UPDATE " . PREFIX . "web SET title = '" . $title . "', contents = '" . $contents . "', url = '" . $url . "', idcat = '" . $idcat . "', compt = '" . $compt . "', aprob = '" . $aprob . "' WHERE id = '" . $id_post . "'", __LINE__, __FILE__);	
-		
-		$comments = new Comments();
-		$comments->set_module_name('web');
-		$comments->set_id_in_module($id_post);
-		$comments->set_visibility($aprob);
-		CommentsService::change_visibility($comments);
-	
 		AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);
 	}
 	else
@@ -232,10 +228,10 @@ elseif ($del && !empty($id)) //Suppresion du lien web.
 	$notation->set_id_in_module($id);
 	NotationService::delete_notes_id_in_module($notation);
 	
-	$comments = new Comments();
-	$comments->set_module_name('web');
-	$comments->set_id_in_module($id);
-	CommentsService::delete_comments_id_in_module($comments);
+	$comments_topic = new CommentsTopic();
+	$comments_topic->set_module_id('web');
+	$comments_topic->set_id_in_module($id);
+	CommentsService::delete_comments_id_in_module($comments_topic);
 	
 	AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);
 }		
@@ -255,7 +251,7 @@ else
 		'PAGINATION' => $Pagination->display('admin_web.php?p=%d', $nbr_web, 'p', 25, 3),	
 		'THEME' => get_utheme(),
 		'LANG' => get_ulang(),
-		'KERNEL_EDITOR' => display_editor(),
+		'KERNEL_EDITOR' => $editor->display(),
 		'L_WEB_ADD' => $LANG['web_add'],
 		'L_WEB_MANAGEMENT' => $LANG['web_management'],
 		'L_WEB_CAT' => $LANG['cat_management'],

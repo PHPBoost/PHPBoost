@@ -60,10 +60,10 @@
 						{question.DATE}
 					</td>
 					<td class="row2">
-						<a href="{question.U_EDIT}" title="{L_EDIT}"><img src="../templates/{THEME}/images/{LANG}/edit.png" alt="{L_EDIT}" /></a>
+						<a href="{question.U_EDIT}" title="{L_EDIT}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="{L_EDIT}" /></a>
 					</td>
 					<td class="row2">
-						<a href="{question.U_DEL}" onclick="return confirm('{L_CONFIRM_DELETE}');" title="{L_DELETE}"><img src="../templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" /></a>
+						<a href="{question.U_DEL}" onclick="return confirm('{L_CONFIRM_DELETE}');" title="{L_DELETE}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" /></a>
 					</td>
 				</tr>
 			# END question #

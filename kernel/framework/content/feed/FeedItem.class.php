@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                         feed_item.class.php
+ *                         FeedItem.class.php
  *                         -------------------
  *   begin                : June 21, 2008
  *   copyright            : (C) 2005 Loïc Rouchon
@@ -24,8 +24,6 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
  ###################################################*/
-
-
 
 /**
  * @author Loic Rouchon <loic.rouchon@phpboost.com>

@@ -2,7 +2,7 @@
 /*##################################################
  *                      	 AdministratorAlertCache.class.php
  *                            -------------------
- *   begin                : August 0, 2010
+ *   begin                : August 10, 2010
  *   copyright            : (C) 2010 Kévin MASSY
  *   email                : soldier.weasel@gmail.com
  *
@@ -38,10 +38,16 @@ class AdministratorAlertCache implements CacheData
 	 */
 	public function synchronize()
 	{
-		$db_connection = PersistenceContext::get_sql();
+		$querier = PersistenceContext::get_querier();
+		
+		$parameters = array(
+			'current_status' => AdministratorAlert::ADMIN_ALERT_STATUS_UNREAD, 
+			'contribution_type' => ADMINISTRATOR_ALERT_TYPE
+		);
+		$this->unread_administrator_alert = $querier->count(DB_TABLE_EVENTS, 'WHERE current_status = :current_status AND contribution_type = :contribution_type', $parameters);
 
-		$this->unread_administrator_alert = $db_connection->query("SELECT count(*) FROM ".DB_TABLE_EVENTS  . " WHERE current_status = '" . AdministratorAlert::ADMIN_ALERT_STATUS_UNREAD . "' AND contribution_type = '" . ADMINISTRATOR_ALERT_TYPE . "'", __LINE__, __FILE__);
-		$this->all_administrator_alert =  $db_connection->query("SELECT count(*) FROM " . DB_TABLE_EVENTS . " WHERE contribution_type = '" . ADMINISTRATOR_ALERT_TYPE . "'", __LINE__, __FILE__);
+		$parameters = array('contribution_type' => ADMINISTRATOR_ALERT_TYPE);
+		$this->all_administrator_alert = $querier->count(DB_TABLE_EVENTS, 'WHERE contribution_type = :contribution_type', $parameters);
 		
 	}
 

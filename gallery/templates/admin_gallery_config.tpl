@@ -278,7 +278,7 @@
 			<form action="admin_gallery_config.php?token={TOKEN}" name="form" method="post" class="fieldset_content">
 				<fieldset>
 					<legend>{L_CACHE}</legend>
-					<img src="../templates/{THEME}/images/admin/cache.png" alt="" style="float:left;padding:6px;" />
+					<img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/cache.png" alt="" style="float:left;padding:6px;" />
 					{L_EXPLAIN_GALLERY_CACHE}
 					<br /><br />
 				</fieldset>			

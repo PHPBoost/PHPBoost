@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                              pollExtensionPointProvider.class.php
+ *                              PollExtensionPointProvider.class.php
  *                            -------------------
  *   begin                : July 7, 2008
  *   copyright            : (C) 2008 Régis Viarre
@@ -25,8 +25,6 @@
  *
  ###################################################*/
 
-
-
 class PollExtensionPointProvider extends ExtensionPointProvider
 {
 	private $sql_querier;
@@ -40,18 +38,11 @@ class PollExtensionPointProvider extends ExtensionPointProvider
     //Récupération du cache.
 	function get_cache()
 	{
-		$code = 'global $CONFIG_POLL;' . "\n";
-
-		//Récupération du tableau linéarisé dans la bdd.
-		$CONFIG_POLL = unserialize($this->sql_querier->query("SELECT value FROM " . DB_TABLE_CONFIGS . " WHERE name = 'poll'", __LINE__, __FILE__));
-		$CONFIG_POLL = is_array($CONFIG_POLL) ? $CONFIG_POLL : array();
-
-		$code .= '$CONFIG_POLL = ' . var_export($CONFIG_POLL, true) . ';' . "\n";
-
+		$poll_config = PollConfig::load();
 		$_array_poll = '';
-		if (!empty($CONFIG_POLL['poll_mini']) && is_array($CONFIG_POLL['poll_mini']))
+		if ($poll_config->get_mini_poll_selected() != '' && is_array($poll_config->get_mini_poll_selected()))
 		{
-			foreach ($CONFIG_POLL['poll_mini'] as $key => $idpoll)
+			foreach ($poll_config->get_mini_poll_selected() as $key => $idpoll)
 			{
 				$poll = $this->sql_querier->query_array(PREFIX . 'poll', 'id', 'question', 'votes', 'answers', 'type', "WHERE id = '" . $idpoll . "' AND archive = 0 AND visible = 1", __LINE__, __FILE__);
 				if (!empty($poll['id'])) //Sondage existant.
@@ -71,7 +62,7 @@ class PollExtensionPointProvider extends ExtensionPointProvider
 			}
 		}
 
-		$code .= "\n" . 'global $_array_poll;' . "\n\n" . '$_array_poll = array(' . $_array_poll . ');';
+		$code = 'global $_array_poll;' . "\n\n" . '$_array_poll = array(' . $_array_poll . ');';
 
 		return $code;
 	}
@@ -80,6 +71,10 @@ class PollExtensionPointProvider extends ExtensionPointProvider
 	{
 		return new PollScheduledJobs();
 	}
+	
+	public function menus()
+	{
+		return new PollMenusExtensionPoint();
+	}
 }
-
 ?>

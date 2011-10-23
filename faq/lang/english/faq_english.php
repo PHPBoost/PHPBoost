@@ -125,5 +125,5 @@ $LANG['ranks'] = 'Ranks';
 $FAQ_LANG['recount_success'] = 'The number of questions for each category was successfully recounted.';
 $FAQ_LANG['recount_questions_number'] = 'Recount the number of questions for each category';
 
-
+$FAQ_LANG['xml_faq_desc'] = 'News faq';
 ?>

@@ -37,5 +37,4 @@ class DatabaseExtensionPointProvider extends ExtensionPointProvider
 		return new CLICommandsList(array('dump' => 'CLIDumpCommand', 'restoredb' => 'CLIRestoreDBCommand'));
 	}
 }
-
 ?>

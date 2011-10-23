@@ -280,6 +280,9 @@ if (!empty($page_infos['auth']))
 else
 	$array_auth = !empty($_PAGES_CONFIG['auth']) ? $_PAGES_CONFIG['auth'] : array();
 
+$editor = AppContext::get_content_formatting_service()->get_default_editor();
+$editor->set_identifier('contents');
+
 $Template->put_all(array(
 	'ID_EDIT' => $id_edit,
 	'SELECT_READ_PAGE' => Authorizations::generate_select(READ_PAGE, $array_auth),
@@ -288,7 +291,7 @@ $Template->put_all(array(
 	'OWN_AUTH_DISABLED' => !empty($page_infos['auth']) ? 'false' : 'true',
 	'DISPLAY' => empty($page_infos['auth']) ? 'display:none;' : '',
 	'CAT_LIST' => $cat_list,
-	'KERNEL_EDITOR' => display_editor(),
+	'KERNEL_EDITOR' => $editor->display(),
 	'L_AUTH' => $LANG['pages_auth'],
 	'L_ACTIV_COM' => $LANG['pages_activ_com'],
 	'L_DISPLAY_PRINT_LINK' => $LANG['pages_display_print_link'],

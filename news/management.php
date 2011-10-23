@@ -47,10 +47,10 @@ if ($delete > 0)
 		$Sql->query_inject("DELETE FROM " . DB_TABLE_NEWS . " WHERE id = '" . $delete . "'", __LINE__, __FILE__);
 		$Sql->query_inject("DELETE FROM " . DB_TABLE_EVENTS . " WHERE module = 'news' AND id_in_module = '" . $delete . "'", __LINE__, __FILE__);
 
-		$comments = new Comments();
-		$comments->set_module_name('news');
-		$comments->set_id_in_module($news['id']);
-		CommentsService::delete_comments_id_in_module($comments);
+		$comments_topic = new CommentsTopic();
+		$comments_topic->set_module_id('news');
+		$comments_topic->set_id_in_module($news['id']);
+		CommentsService::delete_comments_id_in_module($comments_topic);
 	    
 	    Feed::clear_cache('news');
 
@@ -158,13 +158,7 @@ elseif (!empty($_POST['submit']))
 			{
 				$Sql->query_inject("UPDATE " . DB_TABLE_NEWS . " SET idcat = '" . $news['idcat'] . "', title = '" . $news['title'] . "', contents = '" . $news['desc'] . "', extend_contents = '" . $news['extend_desc'] . "', img = '" . $img->relative() . "', alt = '" . $news['alt'] . "', visible = '" . $news['visible'] . "', start = '" .  $news['start'] . "', end = '" . $news['end'] . "', timestamp = '" . $news['release'] . "', sources = '" . $news['sources'] . "'
 				WHERE id = '" . $news['id'] . "'", __LINE__, __FILE__);
-				
-				$comments = new Comments();
-				$comments->set_module_name('news');
-				$comments->set_id_in_module($news['id']);
-				$comments->set_visibility($news['visible']);
-				CommentsService::change_visibility($comments);
-				
+
 				if ($news['visible'])
 				{
 					$corresponding_contributions = ContributionService::find_by_criteria('news', $news['id']);
@@ -227,7 +221,7 @@ elseif (!empty($_POST['submit']))
 					ContributionService::save_contribution($news_contribution);
 
 					//Redirection to the contribution confirmation page
-					AppContext::get_response()->redirect('/news/contribution.php');
+					AppContext::get_response()->redirect(UserUrlBuilder::contribution_success()->absolute());
 				}
 			}
 
@@ -401,6 +395,15 @@ else
 	}
 	require_once('../kernel/header.php');
 
+	$editor = AppContext::get_content_formatting_service()->get_default_editor();
+	$editor->set_identifier('contents');
+	
+	$extend_contents_editor = AppContext::get_content_formatting_service()->get_default_editor();
+	$extend_contents_editor->set_identifier('extend_contents');
+	
+	$counterpart_editor = AppContext::get_content_formatting_service()->get_default_editor();
+	$counterpart_editor->set_identifier('counterpart');
+	
 	$tpl->put_all(array(
 		'NOW_DATE' => $now->format(DATE_FORMAT_SHORT, TIMEZONE_AUTO),
 		'NOW_HOUR' => $now->get_hours(),
@@ -414,9 +417,9 @@ else
 		'L_CATEGORY' => $NEWS_LANG['cat_news'],
 		'L_DESC' => $NEWS_LANG['desc_news'],
 		'L_DESC_EXTEND' => $NEWS_LANG['desc_extend_news'],
-		'KERNEL_EDITOR' => display_editor(),
-		'KERNEL_EDITOR_EXTEND' => display_editor('extend_contents'),
-		'CONTRIBUTION_COUNTERPART_EDITOR' => display_editor('counterpart'),
+		'KERNEL_EDITOR' => $editor->display(),
+		'KERNEL_EDITOR_EXTEND' => $extend_contents_editor->display(),
+		'CONTRIBUTION_COUNTERPART_EDITOR' => $counterpart_editor->display(),
 		'L_TO_DATE' => $LANG['to_date'],
 		'L_FROM_DATE' => $LANG['from_date'],
 		'L_RELEASE_DATE' => $NEWS_LANG['release_date'],

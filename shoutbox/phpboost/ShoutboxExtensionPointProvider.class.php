@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                        shoutboxExtensionPointProvider.class.php
+ *                        ShoutboxExtensionPointProvider.class.php
  *                            -------------------
  *   begin                : July 7, 2008
  *   copyright            : (C) 2008 Régis Viarre
@@ -25,8 +25,6 @@
  *
  ###################################################*/
 
-
-
 class ShoutboxExtensionPointProvider extends ExtensionPointProvider
 {
 	private $sql_querier;
@@ -41,6 +39,15 @@ class ShoutboxExtensionPointProvider extends ExtensionPointProvider
 	{
 		return new ShoutboxScheduledJobs();
 	}
+	
+	public function css_files()
+	{
+		return new ShoutboxCssFilesExtensionPoint();
+	}
+	
+	public function menus()
+	{
+		return new ShoutboxMenusExtensionPoint();
+	}
 }
-
 ?>

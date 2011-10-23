@@ -74,7 +74,7 @@ class WikiFeedProvider implements FeedProvider
 
 		$data->set_title(!empty($_WIKI_CONFIG['wiki_name']) ? $_WIKI_CONFIG['wiki_name'] : $LANG['wiki']);
 		$data->set_date(new Date());
-		$data->set_link(new Url('/syndication.php?m=wiki&amp;cat=' . $idcat));
+		$data->set_link(SyndicationUrlBuilder::rss('wiki', $idcat));
 		$data->set_host(HOST);
 		$data->set_desc($desc);
 		$data->set_lang($LANG['xml_lang']);

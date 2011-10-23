@@ -25,8 +25,6 @@
  *
  ###################################################*/
 
-
-
 class WikiExtensionPointProvider extends ExtensionPointProvider
 {
 	private $sql_querier;
@@ -191,7 +189,7 @@ class WikiExtensionPointProvider extends ExtensionPointProvider
 
 				$Template->assign_block_vars('last_articles', array(
 				'L_ARTICLES' => $LANG['wiki_last_articles_list'],
-				'RSS' => $articles_number > 0 ? '<a href="{PATH_TO_ROOT}/syndication.php?m=wiki"><img src="../templates/' . get_utheme() . '/images/rss.png" alt="RSS" /></a>' : ''
+				'RSS' => $articles_number > 0 ? '<a href="' . SyndicationUrlBuilder::rss('wiki')->rel() .'"><img src="../templates/' . get_utheme() . '/images/rss.png" alt="RSS" /></a>' : ''
 				));
 
 				$i = 0;
@@ -254,6 +252,11 @@ class WikiExtensionPointProvider extends ExtensionPointProvider
 	public function sitemap()
 	{
 		return new WikiSitemapExtensionPoint();
+	}
+	
+	public function css_files()
+	{
+		return new WikiCssFilesExtensionPoint();
 	}
 }
 ?>

@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-class AdminSitemapController extends AdminController
+class AdminSitemapController extends AdminModuleController
 {
 	private $lang = array();
 	/**

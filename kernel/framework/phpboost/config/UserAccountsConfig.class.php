@@ -117,6 +117,10 @@ class UserAccountsConfig extends AbstractConfigData
 	
 	const MAX_PRIVATE_MESSAGES_NUMBER = 'max_pm_number';
 	
+	const AUTOMATIC_USER_ACCOUNTS_VALIDATION = '1';
+	const MAIL_USER_ACCOUNTS_VALIDATION = '2';
+	const ADMINISTRATOR_USER_ACCOUNTS_VALIDATION = '3';
+	
 	/**
 	 * Tells how the member accounts are activated
 	 * @return int 0 if there is no activation, 1 if the member activates its account thanks to the
@@ -543,7 +547,7 @@ class UserAccountsConfig extends AbstractConfigData
 			self::WELCOME_MESSAGE_PROPERTY => LangLoader::get_message('site_config_msg_mbr', 'main'),
 			self::REGISTRATION_AGREEMENT_PROPERTY => LangLoader::get_message('register_agreement', 'main'),
 			self::REGISTRATION_CAPTCHA_ENABLED_PROPERTY => FormFieldCheckbox::CHECKED,
-			self::REGISTRATION_CAPTCHA_DIFFICULTY_PROPERTY => 1,
+			self::REGISTRATION_CAPTCHA_DIFFICULTY_PROPERTY => 2,
 			self::UNACTIVATED_ACCOUNTS_TIMEOUT_PROPERTY => 20,
 			self::FORCE_USERS_THEME_PROPERTY => FormFieldCheckbox::UNCHECKED,
 			self::ENABLE_AVATAR_UPLOAD_PROPERTY => FormFieldCheckbox::CHECKED,

@@ -52,5 +52,13 @@ class DefaultModuleSetup implements ModuleSetup
 	{
 
 	}
+	
+	/* (non-PHPdoc)
+	 * @see kernel/framework/phpboost/module/ModuleSetup#upgrade()
+	 */
+	public function upgrade($installed_version)
+	{
+		return null;
+	}
 }
 ?>

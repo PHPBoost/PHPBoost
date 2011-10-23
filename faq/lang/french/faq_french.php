@@ -123,4 +123,6 @@ $FAQ_LANG['no_random_question'] = 'Aucune question disponible';
 $FAQ_LANG['recount_success'] = 'Le nombre de questions pour chaque catégorie a été recompté avec succès.';
 $FAQ_LANG['recount_questions_number'] = 'Recompter le nombre de questions pour chaque catégorie';
 
+
+$FAQ_LANG['xml_faq_desc'] = 'Faq actualités';
 ?>

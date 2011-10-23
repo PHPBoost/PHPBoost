@@ -75,7 +75,7 @@
 		<br />
 		<span id="errorh"></span>
 		<div class="{ERRORH_CLASS}" style="width:500px;margin:auto;padding:15px;">
-			<img src="../templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
+			<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
 			<br />	
 		</div>
 		<br />		
@@ -140,7 +140,7 @@
 		# IF C_ERROR_HANDLER #
 		<span id="errorh"></span>
 		<div class="{ERRORH_CLASS}" style="width:500px;margin:auto;padding:15px;">
-			<img src="../templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
+			<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
 			<br />	
 		</div>
 		# ENDIF #
@@ -158,7 +158,7 @@
 							<div id="cl_date" class="calendar_block" onmouseover="hide_calendar(1, 1);" onmouseout="hide_calendar(1, 0);">							
 							</div>
 						</div>
-						<a onclick="xmlhttprequest_calendar('cl_date', '?input_field=date&amp;field=cl_date&amp;d={DAY_DATE}&amp;m={MONTH_DATE}&amp;y={YEAR_DATE}');display_calendar(1);" onmouseover="hide_calendar(1, 1);" onmouseout="hide_calendar(1, 0);" style="cursor:pointer;"><img class="valign_middle" src="../templates/{THEME}/images/calendar.png" alt="" /></a>
+						<a onclick="xmlhttprequest_calendar('cl_date', '?input_field=date&amp;field=cl_date&amp;d={DAY_DATE}&amp;m={MONTH_DATE}&amp;y={YEAR_DATE}');display_calendar(1);" onmouseover="hide_calendar(1, 1);" onmouseout="hide_calendar(1, 0);" style="cursor:pointer;"><img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/calendar.png" alt="" /></a>
 					
 						{L_AT}
 						<label><input type="text" size="2" maxlength="2" name="hour" value="{HOUR}" class="text" /></label> H <label><input type="text" size="2" maxlength="2" name="min" value="{MIN}" class="text" /></label>

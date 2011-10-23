@@ -38,21 +38,11 @@ class HomeAddNewsletterController extends ModuleController
 		
 		$type = $request->get_value('type', '');
 		
-		if ($type !== '')
+		if ($type !== '' && ($type == 'html' || $type == 'bbcode' || $type == 'text'))
 		{
-			if ($type == 'html')
-			{
-				AppContext::get_response()->redirect(DispatchManager::get_url('/newsletter', '/add/'. $type)->absolute());
-			}
-			else if ($type == 'bbcode')
-			{
-				AppContext::get_response()->redirect(DispatchManager::get_url('/newsletter', '/add/'. $type)->absolute());
-			}
-			else if ($type == 'text')
-			{
-				AppContext::get_response()->redirect(DispatchManager::get_url('/newsletter', '/add/'. $type)->absolute());
-			}
+			AppContext::get_response()->redirect(NewsletterUrlBuilder::add_newsletter($type)->absolute());
 		}
+		
 		$this->init();
 		
 		$tpl = new fileTemplate('newsletter/HomeAddNewsletterController.tpl');

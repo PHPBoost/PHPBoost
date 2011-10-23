@@ -34,31 +34,18 @@ $LANG['xml_lang'] = 'en';
 $LANG['administration'] = 'Administration';
 $LANG['no_administration'] = 'No administration associated with this module !';
 
-//Default module
-$LANG['index'] = 'Index';
-$LANG['tools'] = 'Tools';
-$LANG['link_management'] = 'Links management';
-$LANG['menu_management'] = 'Blocks management';
-$LANG['moderation'] = 'Moderation panel';
-$LANG['maintain'] = 'Maintenance';
-$LANG['updater'] = 'Updater';
-$LANG['extend_field'] = 'Members fields';
-$LANG['ranks'] = 'Ranks';
-$LANG['terms'] = 'Terms';
-$LANG['pages'] = 'Pages';
-$LANG['files'] = 'Files';
-$LANG['themes'] = 'Themes';
-$LANG['languages'] = 'Languages';
-$LANG['smile'] = 'Smilies';
-$LANG['comments'] = 'Comments';
-$LANG['group'] = 'Groups';
-$LANG['stats'] = 'Statistics';
-$LANG['errors'] = 'Archived errors';
-$LANG['server'] = 'Server';
-$LANG['phpinfo'] = 'PHP info';
-$LANG['cache'] = 'Cache';
-$LANG['punishement'] = 'Punishement';
 $LANG['extend_menu'] = 'Extended menu';
+$LANG['phpinfo'] = 'PHP info';
+
+//Config
+$LANG['serv_name'] = 'Server name';
+$LANG['serv_path'] = 'PHPBoost path, empty by default';
+$LANG['default_theme'] = 'Website\'s (default) theme';
+$LANG['default_language'] = 'Language (default) of the website';
+$LANG['start_page'] = 'Website\'s start page';
+$LANG['cookie_name'] = 'Cookie name';
+$LANG['session_time'] = 'Session time';
+$LANG['session invit'] = 'Enable users duration';
 
 //Form
 $LANG['add'] = 'Add';
@@ -110,20 +97,6 @@ $LANG['confirm_del_article'] = 'Do you want to delete this article ?';
 $LANG['confirm_del_rank'] = 'Do you want to delete this rank ?';
 $LANG['confirm_del_group'] = 'Do you want to delete this group ?';
 $LANG['confirm_del_member_group'] = 'Do you want to delete this group member ?';
-
-//bbcode
-$LANG['bb_bold'] = 'Text in bold : [b]text[/b]';
-$LANG['bb_italic'] = 'Text in italic : [i]text[/i]';
-$LANG['bb_underline'] = 'Underlined text : [u]text[/u]';
-$LANG['bb_link'] = 'Add a weblink: [url]link[/url], or [url=link]name of the link[/url]';
-$LANG['bb_picture'] = 'Add a picture : [img]url picture[/img]';
-$LANG['bb_size'] = 'Size of text (X between 0 - 49): [size=X]text on size X[/size]';
-$LANG['bb_color'] = 'Text color : [color=X]text on X color[/color]';
-$LANG['bb_quote'] = 'Make a quote [quote=pseudo]text[/quote]';
-$LANG['bb_code'] = 'Insert code (color PHP) [code]text[/code]';
-$LANG['bb_left'] = 'Align on left : [align=left]object on left[/align]';
-$LANG['bb_center'] = 'Center : [align=center]center object[/align]';
-$LANG['bb_right'] = 'Align on right : [align=right]object on right[/align]';
 
 //Common
 $LANG['pseudo'] = 'Nickname';
@@ -267,70 +240,6 @@ $LANG['administrator_alerts_action'] = 'Actions';
 $LANG['admin_alert_fix'] = 'Fix';
 $LANG['admin_alert_unfix'] = 'Consider the alert as not fixed';
 $LANG['confirm_delete_administrator_alert'] = 'Are you sure you want to delete this alert?';
-	
-//Config
-$LANG['config_main'] = 'Main configuration';
-$LANG['auth_members'] = 'Permissions';
-$LANG['auth_read_members'] = 'Configuration read permissions';
-$LANG['auth_read_members_explain'] = 'Here you define the permissions to read from the list of members as well as some personal information such as their email.';
-$LANG['config_advanced'] = 'Advanced configuration';
-$LANG['config_mail'] = 'Mail sending';
-$LANG['serv_name'] = 'Server name';
-$LANG['serv_path'] = 'PHPBoost path, empty by default';
-$LANG['serv_path_explain'] = 'Website, on the server root';
-$LANG['site_name'] = 'Website name';
-$LANG['serv_name_explain'] = 'E.g. : http://www.phpboost.com';
-$LANG['site_desc'] = 'Description of the website';
-$LANG['site_desc_explain'] = '(Optional) Useful for search engine optimization';
-$LANG['site_keywords'] = 'Website keywords';
-$LANG['site_keywords_explain'] = '(Optional) You have to enter keywords separated by commas.';
-$LANG['default_language'] = 'Language (default) of the website';
-$LANG['default_theme'] = 'Website\'s (default) theme';
-$LANG['start_page'] = 'Website\'s start page';
-$LANG['no_module_starteable'] = 'No start up module found';
-$LANG['other_start_page'] = 'Other relative or absolute URL';
-$LANG['activ_gzhandler'] = 'Enable page compression, it will increase display speed';
-$LANG['activ_gzhandler_explain'] = 'Warning. Your server must support this functionality';
-$LANG['view_com'] = 'Comments viewing';
-$LANG['rewrite'] = 'Enable URL rewriting';
-$LANG['explain_rewrite'] = 'Activation of URL rewriting makes URLs much simpler and clearer on your website. Your referencing will be largely optimized with this option.<br /><br />Unfortunately this option isn\'t available on all servers. This page tests if your server supports URL rewriting. If after the test you get errors or white pages, remove the file <strong>.htaccess</strong> from the root directory of your server.';
-$LANG['server_rewrite'] = 'URL rewriting on your server';
-$LANG['htaccess_manual_content'] = 'Content of the .htaccess file';
-$LANG['htaccess_manual_content_explain'] = 'In this field you can type the instructions you would like to integrate into the .htaccess file which is at the root of the website, for instance if you want to force special settings of your Apache web server.';
-$LANG['current_page'] = 'Current page';
-$LANG['new_page'] = 'New page';
-$LANG['compt'] = 'Counter';
-$LANG['bench'] = 'Benchmark';
-$LANG['bench_explain'] = 'Display page\'s render time and SQL requests';
-$LANG['theme_author'] = 'Theme info';
-$LANG['theme_author_explain'] = 'Display theme info in footer';
-$LANG['debug_mode'] = 'Debug mode';
-$LANG['debug_mode_explain'] = 'This mode is very useful for developers who will more easily see the errors encountered during the page execution. You shouldn\'t use this mode on a published web site.';
-$LANG['user_connexion'] = 'User\'s connection';
-$LANG['cookie_name'] = 'Cookie name';
-$LANG['session_time'] = 'Session time';
-$LANG['session_time_explain'] = '3600s recommended';
-$LANG['session invit'] = 'Enable users duration';
-$LANG['session invit_explain'] = '300s recommended';
-$LANG['post_management'] = 'Post Management';
-$LANG['pm_max'] = 'Maximum number of private messages';
-$LANG['anti_flood'] = 'Anti-flood';
-$LANG['int_flood'] = 'Minimal interval of time between two messages';
-$LANG['pm_max_explain'] = 'Unlimited for administrators and moderators';
-$LANG['anti_flood_explain'] = 'Block too rapid repeat messages, except if the visitors are authorized';
-$LANG['int_flood_explain'] = '7 seconds by default</span>';
-$LANG['confirm_unlock_admin'] = 'An email will be sent to you with the new unlock code';
-$LANG['unlock_admin_confirm'] = 'Unlock code has been sent succesfully';
-$LANG['unlock_admin'] = 'Unlock code';
-$LANG['unlock_admin_explain'] = 'This code can unlock the administration panel in case of intrusion attempt.';
-$LANG['send_unlock_admin'] = 'Send admin\'s unlock code';
-$LANG['unlock_title_mail'] = 'Mail to keep';
-$LANG['unlock_mail'] = 'Conserve this code (it will never be redelivered): %s
-
-This code can unlock the administration panel in case of intrusion attempt.
-It will be asked of you in the direct administration connection form  (yourserver/admin/admin_index.php)
-
-' . MailServiceConfig::load()->get_mail_signature();
 
 //Maintenance
 $LANG['maintain_auth'] = 'Leave access to the website during maintenance';
@@ -338,33 +247,6 @@ $LANG['maintain_for'] = 'Set website in maintenance';
 $LANG['maintain_delay'] = 'Display maintenance delay';
 $LANG['maintain_display_admin'] = 'Display maintenance delay to the administrator';
 $LANG['maintain_text'] = 'Display text, when site maintenance is in progress';
-
-//Config modules
-$LANG['modules_management'] = 'Module management';
-$LANG['add_modules'] = 'Add module';
-$LANG['update_modules'] = 'Update module';
-$LANG['update_module'] = 'Update';
-$LANG['upload_module'] = 'Upload a module';
-$LANG['del_module'] = 'Delete module';
-$LANG['del_module_data'] = 'All module\'s data will be erased, it cannot be recovered later!';
-$LANG['del_module_files'] = 'Delete all module\'s files';
-$LANG['author'] = 'Authors';
-$LANG['compat'] = 'Compatibility';
-$LANG['use_sql'] = 'Use SQL';
-$LANG['use_cache'] = 'Use cache';
-$LANG['alternative_css'] = 'Use alternative CSS';
-$LANG['modules_installed'] = 'Installed modules';
-$LANG['modules_available'] = 'Available modules';
-$LANG['no_modules_installed'] = 'No installed modules';
-$LANG['no_modules_available'] = 'No available modules';
-$LANG['install'] = 'Install';
-$LANG['uninstall'] = 'Uninstall';
-$LANG['starteable_page'] = 'Start page';
-$LANG['table'] = 'Table';
-$LANG['tables'] = 'Tables';
-$LANG['new_version'] = 'New version';
-$LANG['installed_version'] = 'Installed version';
-$LANG['e_config_conflict'] = 'Conflict with module configuration, impossible to install!';
 
 //System report
 $LANG['system_report'] = 'System report';
@@ -399,6 +281,14 @@ $LANG['files_text'] = 'Textes';
 $LANG['files_media'] = 'Media';
 $LANG['files_prog'] = 'Programation';
 $LANG['files_misc'] = 'Miscellaneous';
+
+$LANG['post_management'] = 'Post Management';
+$LANG['pm_max'] = 'Maximum number of private messages';
+$LANG['anti_flood'] = 'Anti-flood';
+$LANG['int_flood'] = 'Minimal interval of time between two messages';
+$LANG['pm_max_explain'] = 'Unlimited for administrators and moderators';
+$LANG['anti_flood_explain'] = 'Block too rapid repeat messages, except if the visitors are authorized';
+$LANG['int_flood_explain'] = '7 seconds by default</span>';
 
 //Gestion des menus
 $LANG['confirm_del_menu'] = 'Delete this menu?';
@@ -501,14 +391,6 @@ $LANG['e_lang_already_exist'] = 'Language already exists';
 $LANG['del_lang'] = 'Delete language';
 $LANG['del_lang_files'] = 'Delete all language files';
 $LANG['explain_default_lang'] = 'Default language can\'t be uninstalled, disabled or restricted';
-
-//Comments
-$LANG['com_management'] = 'Comment management';
-$LANG['com_config'] = 'Comments configuration';
-$LANG['com_max'] = 'Maximum comments displayed';
-$LANG['rank_com_post'] = 'Rank to post comments';
-$LANG['display_topic_com'] = 'Display comment\'s topics';
-$LANG['display_recent_com'] = 'Display last comments';
 
 //Gestion membre
 $LANG['job'] = 'Job';
@@ -683,5 +565,4 @@ $LANG['incompatible_php_version'] = 'Can\'t check for updates.
 Please upgrade to PHP version %s or above.<br />If you can\'t use PHP5,
 check for updates on our <a href="http://www.phpboost.com">official website</a>.';
 $LANG['check_for_updates_now'] = 'Check for updates now!';
-
 ?>

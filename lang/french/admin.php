@@ -34,31 +34,18 @@ $LANG['xml_lang'] = 'fr';
 $LANG['administration'] = 'Administration';
 $LANG['no_administration'] = 'Aucune administration associée avec ce module!';
 
-//Titre Modules par défauts
-$LANG['index'] = 'Index';
-$LANG['tools'] = 'Outils';
-$LANG['link_management'] = 'Gestion des liens';
-$LANG['menu_management'] = 'Menus';
-$LANG['moderation'] = 'Panneau modération';
-$LANG['maintain'] = 'Maintenance';
-$LANG['updater'] = 'Mises à jour';
-$LANG['extend_field'] = 'Champs membres';
-$LANG['ranks'] = 'Rangs';
-$LANG['terms'] = 'Règlement';
-$LANG['pages'] = 'Pages';
-$LANG['files'] = 'Fichiers';
-$LANG['themes'] = 'Thèmes';
-$LANG['languages'] = 'Langues';
-$LANG['smile'] = 'Smileys';
-$LANG['comments'] = 'Commentaires';
-$LANG['group'] = 'Groupes';
-$LANG['stats'] = 'Statistiques';
-$LANG['errors'] = 'Erreurs archivées';
-$LANG['server'] = 'Serveur';
-$LANG['phpinfo'] = 'PHP info';
-$LANG['cache'] = 'Cache';
-$LANG['punishement'] = 'Sanction';
 $LANG['extend_menu'] = 'Menu étendu';
+$LANG['phpinfo'] = 'PHP info';
+
+//Config
+$LANG['serv_name'] = 'URL du serveur';
+$LANG['serv_path'] = 'Chemin de PHPBoost';
+$LANG['default_theme'] = 'Thème (par défaut) du site';
+$LANG['default_language'] = 'Langue (par défaut) du site';
+$LANG['start_page'] = 'Page de démarrage du site';
+$LANG['cookie_name'] = 'Nom du cookie des sessions';
+$LANG['session_time'] = 'Durée de la session';
+$LANG['session invit'] = 'Durée utilisateurs actifs';
 
 //Form
 $LANG['add'] = 'Ajouter';
@@ -110,20 +97,6 @@ $LANG['confirm_del_article'] = 'Supprimer cet article?';
 $LANG['confirm_del_rank'] = 'Supprimer ce rang ?';
 $LANG['confirm_del_group'] = 'Supprimer ce groupe ?';
 $LANG['confirm_del_member_group'] = 'Supprimer ce membre du groupe ?';
-
-//bbcode
-$LANG['bb_bold'] = 'Texte en gras : [b]texte[/b]';
-$LANG['bb_italic'] = 'Texte en italique : [i]texte[/i]';
-$LANG['bb_underline'] = 'Texte souligné : [u]texte[/u]';
-$LANG['bb_link'] = 'Ajouter un lien : [url]lien[/url], ou [url=lien]nom du lien[/url]';
-$LANG['bb_picture'] = 'Ajouter une image : [img]url image[/img]';
-$LANG['bb_size'] = 'Taille du texte (X entre 0 - 49) : [size=X]texte de taille X[/size]';
-$LANG['bb_color'] = 'Couleur du texte : [color=X]texte de taille X[/color]';
-$LANG['bb_quote'] = 'Faire une citation [quote=pseudo]texte[/quote]';
-$LANG['bb_code'] = 'Insérer du code (PHP coloré) [code]texte[/code]';
-$LANG['bb_left'] = 'Positionner à gauche : [align=left]objet à gauche[/align]';
-$LANG['bb_center'] = 'Centrer : [align=center]objet centré[/align]';
-$LANG['bb_right'] = 'Positionner à droite : [align=right]objet à droite[/align]';
 
 //Commun
 $LANG['pseudo'] = 'Pseudo';
@@ -268,103 +241,12 @@ $LANG['admin_alert_fix'] = 'Régler';
 $LANG['admin_alert_unfix'] = 'Passer l\'alerte en non réglée';
 $LANG['confirm_delete_administrator_alert'] = 'Etes-vous sûr de vouloir supprimer cette alerte ?';
 
-//Config
-$LANG['config_main'] = 'Configuration générale';
-$LANG['auth_members'] = 'Permissions';
-$LANG['auth_read_members'] = 'Configuration des autorisations de lecture';
-$LANG['auth_read_members_explain'] = 'Vous définissez ici les permissions de lecture de la liste des membres ainsi que certaines informations personnelles comme leurs emails.';
-$LANG['config_advanced'] = 'Configuration avancée';
-$LANG['config_mail'] = 'Envoi de mail';
-$LANG['serv_name'] = 'URL du serveur';
-$LANG['serv_path'] = 'Chemin de PHPBoost';
-$LANG['serv_path_explain'] = 'Vide par défaut : site à la racine du serveur';
-$LANG['site_name'] = 'Nom du site';
-$LANG['serv_name_explain'] = 'Ex : http://www.phpboost.com';
-$LANG['site_desc'] = 'Description du site';
-$LANG['site_desc_explain'] = '(facultatif) Utile pour le référencement dans les moteurs de recherche';
-$LANG['site_keywords'] = 'Mots clés du site';
-$LANG['site_keywords_explain'] = '(facultatif) A rentrer séparés par des virgules, ils servent au référencement dans les moteurs de recherche';
-$LANG['default_language'] = 'Langue (par défaut) du site';
-$LANG['default_theme'] = 'Thème (par défaut) du site';
-$LANG['start_page'] = 'Page de démarrage du site';
-$LANG['no_module_starteable'] = 'Aucun module de démarrage trouvé';
-$LANG['other_start_page'] = 'Autre adresse relative ou absolue';
-$LANG['activ_gzhandler'] = 'Activation de la compression des pages, ceci accélère la vitesse d\'affichage';
-$LANG['activ_gzhandler_explain'] = 'Attention votre serveur doit le supporter';
-$LANG['view_com'] = 'Affichage des commentaires';
-$LANG['rewrite'] = 'Activation de la réécriture des urls';
-$LANG['explain_rewrite'] = 'L\'activation de la réécriture des urls permet d\'obtenir des urls bien plus simples et claires sur votre site. Ces adresses seront donc bien mieux compréhensibles pour vos visiteurs, mais surtout pour les robots d\'indexation. Votre référencement sera grandement optimisé grâce à cette option.<br /><br />Cette option n\'est malheureusement pas disponible chez tous les hébergeurs. Cette page va vous permettre de tester si votre serveur supporte la réécriture des urls. Si après le test vous tombez sur des erreurs serveur, ou pages blanches, c\'est que votre serveur ne le supporte pas. Supprimez alors le fichier <strong>.htaccess</strong> à la racine de votre site via accès FTP à votre serveur, puis revenez sur cette page et désactivez la réécriture.';
-$LANG['server_rewrite'] = 'Réécriture des urls sur votre serveur';
-$LANG['htaccess_manual_content'] = 'Contenu du fichier .htaccess';
-$LANG['htaccess_manual_content_explain'] = 'Vous pouvez dans ce champ mettre les instructions que vous souhaitez intégrer au fichier .htaccess qui se trouve à la racine du site, par exemple pour forcer une configuration du serveur web Apache.';
-$LANG['current_page'] = 'Page courante';
-$LANG['new_page'] = 'Nouvelle fenêtre';
-$LANG['compt'] = 'Compteur';
-$LANG['bench'] = 'Benchmark';
-$LANG['bench_explain'] = 'Affiche le temps de rendu de la page et le nombre de requêtes SQL';
-$LANG['theme_author'] = 'Info sur le thème';
-$LANG['theme_author_explain'] = 'Affiche des informations sur le thème dans le pied de page';
-$LANG['debug_mode'] = 'Mode Debug';
-$LANG['debug_mode_explain'] = 'Ce mode est particulièrement utile pour les développeurs car les erreurs sont affichées explicitement. Il est déconseillé d\'utiliser ce mode sur un site en production.';
-$LANG['user_connexion'] = 'Connexion utilisateurs';
-$LANG['cookie_name'] = 'Nom du cookie des sessions';
-$LANG['session_time'] = 'Durée de la session';
-$LANG['session_time_explain'] = '3600 secondes conseillé';
-$LANG['session invit'] = 'Durée utilisateurs actifs';
-$LANG['session invit_explain'] = '300 secondes conseillé';
-$LANG['post_management'] = 'Gestion des posts';
-$LANG['pm_max'] = 'Nombre maximum de messages privés';
-$LANG['anti_flood'] = 'Anti-flood';
-$LANG['int_flood'] = 'Intervalle minimal de temps entre les messages';
-$LANG['pm_max_explain'] = 'Illimité pour administrateurs et modérateurs';
-$LANG['anti_flood_explain'] = 'Empêche les messages trop rapprochés, sauf si les visiteurs sont autorisés';
-$LANG['int_flood_explain'] = '7 secondes par défaut';
-$LANG['confirm_unlock_admin'] = 'Un email va vous être envoyé avec le code de déverrouillage';
-$LANG['unlock_admin_confirm'] = 'Le code de déverrouillage a été renvoyé avec succès';
-$LANG['unlock_admin'] = 'Code de déverrouillage';
-$LANG['unlock_admin_explain'] = 'Ce code permet le déverrouillage de l\'administration en cas de tentative d\'intrusion dans l\'administration par un utilisateur mal intentionné.';
-$LANG['send_unlock_admin'] = 'Renvoyer le code de déverrouillage';
-$LANG['unlock_title_mail'] = 'Mail à conserver';
-$LANG['unlock_mail'] = 'Code à conserver (Il ne vous sera plus délivré) : %s
-
-Ce code permet le déverrouillage de l\'administration en cas de tentative d\'intrusion dans l\'administration par un utilisateur mal intentionné.
-Il vous sera demandé dans le formulaire de connexion directe à l\'administration (votreserveur/admin/admin_index.php)
-
-' . MailServiceConfig::load()->get_mail_signature();
-
 //Maintain
 $LANG['maintain_auth'] = 'Autorisation d\'accès au site durant la maintenance';
 $LANG['maintain_for'] = 'Mettre le site en maintenance';
 $LANG['maintain_delay'] = 'Afficher la durée de la maintenance';
 $LANG['maintain_display_admin'] = 'Afficher la durée de la maintenance à l\'administrateur';
 $LANG['maintain_text'] = 'Texte à afficher lorsque la maintenance du site est en cours';
-
-//Gestion des modules
-$LANG['modules_management'] = 'Gestion des modules';
-$LANG['add_modules'] = 'Ajouter un module';
-$LANG['update_modules'] = 'Mettre à jour un module';
-$LANG['update_module'] = 'Mettre à jour';
-$LANG['upload_module'] = 'Uploader un module';
-$LANG['del_module'] = 'Supprimer le module';
-$LANG['del_module_data'] = 'Les données du module vont être supprimées, attention vous ne pourrez plus les récupérer!';
-$LANG['del_module_files'] = 'Supprimer les fichiers du module';
-$LANG['author'] = 'Auteurs';
-$LANG['compat'] = 'Compatibilité';
-$LANG['use_sql'] = 'Utilise SQL';
-$LANG['use_cache'] = 'Utilise le cache';
-$LANG['alternative_css'] = 'Utilise un css alternatif';
-$LANG['modules_installed'] = 'Modules installés';
-$LANG['modules_available'] = 'Modules disponibles';
-$LANG['no_modules_installed'] = 'Aucun module installé';
-$LANG['no_modules_available'] = 'Aucun module disponible';
-$LANG['install'] = 'Installer';
-$LANG['uninstall'] = 'Désinstaller';
-$LANG['starteable_page'] = 'Page de démarrage';
-$LANG['table'] = 'Table';
-$LANG['tables'] = 'Tables';
-$LANG['new_version'] = 'Nouvelle version';
-$LANG['installed_version'] = 'Version installée';
-$LANG['e_config_conflict'] = 'Conflit avec la configuration du module, installation impossible!';
 
 //Rapport système
 $LANG['system_report'] = 'Rapport système';
@@ -399,6 +281,14 @@ $LANG['files_text'] = 'Textes';
 $LANG['files_media'] = 'Media';
 $LANG['files_prog'] = 'Programmation';
 $LANG['files_misc'] = 'Divers';
+
+$LANG['post_management'] = 'Gestion des posts';
+$LANG['pm_max'] = 'Nombre maximum de messages privés';
+$LANG['anti_flood'] = 'Anti-flood';
+$LANG['int_flood'] = 'Intervalle minimal de temps entre les messages';
+$LANG['pm_max_explain'] = 'Illimité pour administrateurs et modérateurs';
+$LANG['anti_flood_explain'] = 'Empêche les messages trop rapprochés, sauf si les visiteurs sont autorisés';
+$LANG['int_flood_explain'] = '7 secondes par défaut';
 
 //Gestion des menus
 $LANG['confirm_del_menu'] = 'Supprimer ce menu?';
@@ -499,14 +389,6 @@ $LANG['e_lang_already_exist'] = 'La langue existe déjà';
 $LANG['del_lang'] = 'Suppression de la langue';
 $LANG['del_lang_files'] = 'Supprimer les fichiers de la langue';
 $LANG['explain_default_lang'] = 'La langue par défaut ne peut pas être désinstallée, désactivée ou réservée';
-
-//Comments
-$LANG['com_management'] = 'Gestion des commentaires';
-$LANG['com_config'] = 'Configuration des commentaires';
-$LANG['com_max'] = 'Nombre de commentaires par page';
-$LANG['rank_com_post'] = 'Rang pour pouvoir poster des commentaires';
-$LANG['display_topic_com'] = 'Voir la discussion';
-$LANG['display_recent_com'] = 'Voir les derniers commentaires';
 
 //Gestion membre
 $LANG['job'] = 'Emploi';

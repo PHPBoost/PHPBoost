@@ -127,7 +127,7 @@ elseif (!empty($_FILES['upload_groups']['name'])) //Upload
 {
 	//Si le dossier n'est pas en écriture on tente un CHMOD 777
 	@clearstatcache();
-	$dir = '../images/group/';
+	$dir = PATH_TO_ROOT .'/images/group/';
 	if (!is_writable($dir))
 	{
 		$is_writable = (@chmod($dir, 0777)) ? true : false;
@@ -236,7 +236,7 @@ elseif (!empty($idgroup)) //Interface d'édition du groupe.
 				$template->assign_block_vars('member', array(
 					'USER_ID' => $user_id,
 					'LOGIN' => $login,
-					'U_USER_ID' => url('.php?id=' . $user_id, '-' . $user_id . '.php')
+					'U_PROFILE' => UserUrlBuilder::profile($user_id)->absolute()
 				));
 			}
 		}
@@ -301,12 +301,15 @@ else //Liste des groupes.
 	
 	$nbr_group = count($group_cache);
 	
+	$editor = AppContext::get_content_formatting_service()->get_default_editor();
+	$editor->set_identifier('contents');
+	
 	$Pagination = new DeprecatedPagination();
 	$template->put_all(array(
 		'PAGINATION' => $Pagination->display('admin_groups.php?p=%d', $nbr_group, 'p', 25, 3),
 		'THEME' => get_utheme(),
 		'LANG' => get_ulang(),
-		'KERNEL_EDITOR' => display_editor(),
+		'KERNEL_EDITOR' => $editor->display(),
 		'L_CONFIRM_DEL_GROUP' => $LANG['confirm_del_group'],
 		'L_GROUPS_MANAGEMENT' => $LANG['groups_management'],
 		'L_ADD_GROUPS' => $LANG['groups_add'],
@@ -324,10 +327,10 @@ else //Liste des groupes.
 	while ($row = $Sql->fetch_assoc($result))
 	{
 		$template->assign_block_vars('group', array(
-			'LINK' => url('.php?g=' . $row['id'], '-0.php?g=' . $row['id']),
+			'U_USER_GROUP' => UserUrlBuilder::group($row['id'])->absolute(),
 			'ID' => $row['id'],
 			'NAME' => $row['name'],
-			'IMAGE' => !empty($row['img']) ? '<img src="../images/group/' . $row['img'] . '" alt="" />' : ''
+			'IMAGE' => !empty($row['img']) ? '<img src="'. PATH_TO_ROOT .'/images/group/' . $row['img'] . '" alt="" />' : ''
 		));
 	}
 	$Sql->query_close($result);

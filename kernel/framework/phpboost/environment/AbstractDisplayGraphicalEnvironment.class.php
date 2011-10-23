@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *              abstract_display_graphical_environment.class.php
+ *              AbstractDisplayGraphicalEnvironment.class.php
  *                            -------------------
  *   begin                : October 06, 2009
  *   copyright            : (C) 2009 Benoit Sautel
@@ -25,10 +25,13 @@
  *
  ###################################################*/
 
-abstract class AbstractDisplayGraphicalEnvironment extends AbstractGraphicalEnvironment
+ /**
+ * @package {@package}
+ * @desc
+ * @author Benoit Sautel <ben.popeye@phpboost.com>
+ */
+ abstract class AbstractDisplayGraphicalEnvironment extends AbstractGraphicalEnvironment
 {
-	private $css_files = array();
-	
 	private $page_title = '';
 
 	public function __construct()
@@ -36,19 +39,42 @@ abstract class AbstractDisplayGraphicalEnvironment extends AbstractGraphicalEnvi
 		parent::__construct();
 	}
 
-	public function add_css_file($file_path)
-	{
-		$this->css_files[] = $file_path;
-	}
-	
-	protected function get_css_files_html_code()
+	protected function get_theme_css_files_html_code()
 	{
 		$css_cache = new CSSCacheManager();
-		$css_cache->set_files($this->css_files);
-		$css_cache->set_cache_file_location(PATH_TO_ROOT . '/cache/css/css-cache-' .get_utheme().'.css');
+		$css_cache->set_files(ThemesCssFilesCache::load()->get_files_for_theme(get_utheme()));
+		$css_cache->set_cache_file_location(PATH_TO_ROOT . '/cache/css/css-cache-theme-' . get_utheme() .'.css');
 		$css_cache->execute();
 		$html_code = '<link rel="stylesheet" href="' . $css_cache->get_cache_file_location() . 
-				'" type="text/css" media="screen, print, handheld" />' . "\n";
+				'" type="text/css" media="screen, print, handheld" />';
+		return $html_code;
+	}
+	
+	protected function get_modules_css_files_html_code()
+	{
+		return $this->get_css_files_always_displayed_html_code() . "\n" . $this->get_css_files_running_module_displayed();
+	}
+	
+	private function get_css_files_always_displayed_html_code()
+	{
+		$theme_id = get_utheme();
+		$css_cache = new CSSCacheManager();
+		$css_cache->set_files(ModulesCssFilesService::get_css_files_always_displayed($theme_id));
+		$css_cache->set_cache_file_location(PATH_TO_ROOT . '/cache/css/css-cache-modules-' . $theme_id .'.css');
+		$css_cache->execute();
+		$html_code = '<link rel="stylesheet" href="' . $css_cache->get_cache_file_location() . 
+				'" type="text/css" media="screen, print, handheld" />';
+		return $html_code;
+	}
+	
+	private function get_css_files_running_module_displayed()
+	{
+		$html_code = '';
+		foreach (ModulesCssFilesService::get_css_files_running_module_displayed(get_utheme()) as $css_file)
+		{
+			$html_code .= '<link rel="stylesheet" href="' . PATH_TO_ROOT . $css_file . 
+				'" type="text/css" media="screen, print, handheld" />';
+		}
 		return $html_code;
 	}
 	
@@ -63,5 +89,4 @@ abstract class AbstractDisplayGraphicalEnvironment extends AbstractGraphicalEnvi
 		defined('TITLE') or define('TITLE', $title);
 	}
 }
-
 ?>

@@ -222,7 +222,7 @@
 				# START member #
 				<tr> 
 					<td class="row2">
-						<a href="{PATH_TO_ROOT}/member/member{member.U_USER_ID}">{member.LOGIN}</a>
+						<a href="{member.U_PROFILE}">{member.LOGIN}</a>
 					</td>
 					<td class="row2">
 						<a href="admin_groups.php?del_mbr=1&amp;id={GROUP_ID}&amp;user_id={member.USER_ID}&amp;token={TOKEN}" onclick="javascript:return Confirm();"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" /></a>

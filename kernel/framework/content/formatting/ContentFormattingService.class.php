@@ -27,16 +27,12 @@
 
 /**
  * @package {@package}
- * @author Benoît Sautel <ben.popeye@phpboost.com>
+ * @author Benoï¿½t Sautel <ben.popeye@phpboost.com>
  * @desc This class contains the default content formatting factory that must be used if you want
  * a formatting factory having the default settings.
  */
 class ContentFormattingService
 {
-	const BBCODE_LANGUAGE = 'bbcode';
-	const TINYMCE_LANGUAGE = 'tinymce';
-	const DEFAULT_LANGUAGE = 'default';
-
 	/**
 	 * @var AbstractContentFormattingFactory
 	 */
@@ -62,15 +58,8 @@ class ContentFormattingService
 	 */
 	public function create_factory($language = '')
 	{
-		switch ($this->get_existing_editor($language))
-		{
-			case self::BBCODE_LANGUAGE:
-				return new BBCodeFormattingFactory();
-			case self::TINYMCE_LANGUAGE:
-				return new TinyMCEFormattingFactory();
-			default:
-				return $this->create_factory($this->get_user_editor());
-		}
+		$editor = $this->get_existing_editor($language);
+		return ContentFormattingProvidersService::create_factory($editor);
 	}
 
 	/**
@@ -125,7 +114,7 @@ class ContentFormattingService
      */
     private function get_existing_editor($editor)
     {
-        if (in_array($editor, array(self::BBCODE_LANGUAGE, self::TINYMCE_LANGUAGE)))
+        if (in_array($editor, self::get_editors_identifier()))
         {
             return $editor;
         }
@@ -135,6 +124,21 @@ class ContentFormattingService
         }
     }
 
+    public function get_editors_identifier()
+    {
+    	return array_keys(ContentFormattingProvidersService::get_editors());
+    }
+    
+    public function get_available_editors()
+    {
+    	$available_editors = array();
+    	foreach (ContentFormattingProvidersService::get_editors() as $id => $provider)
+    	{
+    		$available_editors[$id] = $provider->get_name();
+    	}
+    	return $available_editors;
+    }
+    
     /**
      * @desc Returns the map of all the formatting types supported by the PHPBoost formatting editors and parsers.
      * The keys of the map are the tags identifiers and the values the tags names.
@@ -142,44 +146,44 @@ class ContentFormattingService
      */
     public function get_available_tags()
     {
-        global $LANG;
+        $bbcode_lang = LangLoader::get('bbcode-common');
         return array(
-        	'b' => $LANG['format_bold'],
-        	'i' => $LANG['format_italic'],
-        	'u' => $LANG['format_underline'],
-        	's' => $LANG['format_strike'],
-        	'title' => $LANG['format_title'],
-        	'style' => $LANG['format_style'],
-        	'url' => $LANG['format_url'],
-        	'img' => $LANG['format_img'],
-        	'quote' => $LANG['format_quote'],
-        	'hide' => $LANG['format_hide'],
-        	'list' => $LANG['format_list'],
-        	'color' => $LANG['format_color'],
-        	'bgcolor' => $LANG['format_bgcolor'],
-        	'font' => $LANG['format_font'],
-        	'size' => $LANG['format_size'],
-        	'align' => $LANG['format_align'],
-        	'float' => $LANG['format_float'],
-        	'sup' => $LANG['format_sup'],
-			'sub' => $LANG['format_sub'],
-        	'indent' => $LANG['format_indent'],
-        	'pre' => $LANG['format_pre'],
-        	'table' => $LANG['format_table'],
-        	'swf' => $LANG['format_flash'],
-        	'movie' => $LANG['format_movie'],
-        	'sound' => $LANG['format_sound'],
-        	'code' => $LANG['format_code'],
-        	'math' => $LANG['format_math'],
-        	'anchor' => $LANG['format_anchor'],
-        	'acronym' => $LANG['format_acronym'],
-        	'block' => $LANG['format_block'],
-			'fieldset' => $LANG['format_fieldset'],
-        	'mail' => $LANG['format_mail'],
-        	'line' => $LANG['format_line'],
-        	'wikipedia' => $LANG['format_wikipedia'],
-        	'html' => $LANG['format_html'],
-        	'feed' => $LANG['format_feed']
+        	'b' => $bbcode_lang['format_bold'],
+        	'i' => $bbcode_lang['format_italic'],
+        	'u' => $bbcode_lang['format_underline'],
+        	's' => $bbcode_lang['format_strike'],
+        	'title' => $bbcode_lang['format_title'],
+        	'style' => $bbcode_lang['format_style'],
+        	'url' => $bbcode_lang['format_url'],
+        	'img' => $bbcode_lang['format_img'],
+        	'quote' => $bbcode_lang['format_quote'],
+        	'hide' => $bbcode_lang['format_hide'],
+        	'list' => $bbcode_lang['format_list'],
+        	'color' => $bbcode_lang['format_color'],
+        	'bgcolor' => $bbcode_lang['format_bgcolor'],
+        	'font' => $bbcode_lang['format_font'],
+        	'size' => $bbcode_lang['format_size'],
+        	'align' => $bbcode_lang['format_align'],
+        	'float' => $bbcode_lang['format_float'],
+        	'sup' => $bbcode_lang['format_sup'], 
+			'sub' => $bbcode_lang['format_sub'],
+        	'indent' => $bbcode_lang['format_indent'],
+        	'pre' => $bbcode_lang['format_pre'],
+        	'table' => $bbcode_lang['format_table'],
+        	'swf' => $bbcode_lang['format_flash'],
+        	'movie' => $bbcode_lang['format_movie'],
+        	'sound' => $bbcode_lang['format_sound'],
+        	'code' => $bbcode_lang['format_code'],
+        	'math' => $bbcode_lang['format_math'],
+        	'anchor' => $bbcode_lang['format_anchor'],
+        	'acronym' => $bbcode_lang['format_acronym'],
+        	'block' => $bbcode_lang['format_block'],
+			'fieldset' => $bbcode_lang['format_fieldset'],
+        	'mail' => $bbcode_lang['format_mail'],
+        	'line' => $bbcode_lang['format_line'],
+        	'wikipedia' => $bbcode_lang['format_wikipedia'],
+        	'html' => $bbcode_lang['format_html'],
+        	'feed' => $bbcode_lang['format_feed']
         );
     }
 }

@@ -73,5 +73,4 @@ class GuestbookSetup extends DefaultModuleSetup
 		PersistenceContext::get_dbms_utils()->create_table(self::$guestbook_table, $fields, $options);
 	}
 }
-
 ?>

@@ -99,7 +99,7 @@ else //Sinon on rempli le formulaire
 	foreach($ranks_cache as $msg => $row)
 	{				
 		if ($row['special'] == 0)
-			$del = '<a href="admin_ranks.php?del=1&amp;id=' . $row['id'] . '" onclick="javascript:return Confirm();"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/delete.png" alt="" title="" /></a>';
+			$del = '<a href="admin_ranks.php?del=1&amp;id=' . $row['id'] . '" onclick="javascript:return Confirm();"><img src="'. PATH_TO_ROOT .'/templates/' . get_utheme() . '/images/' . get_ulang() . '/delete.png" alt="" title="" /></a>';
 		else
 			$del = $LANG['special_rank'];
 

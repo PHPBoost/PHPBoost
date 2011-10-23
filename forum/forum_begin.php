@@ -35,10 +35,7 @@ if ($CONFIG_FORUM['no_left_column'] == 1)
     define('NO_LEFT_COLUMN', true);
 if ($CONFIG_FORUM['no_right_column'] == 1) 
     define('NO_RIGHT_COLUMN', true);
-
-//Chargement du css alternatif.
-define('ALTERNATIVE_CSS', 'forum');
-
+    
 //Fonction du forum.
 require_once('../forum/forum_functions.php');
 

@@ -45,7 +45,7 @@ $lang = array(
    'install.rank.fusee' => 'Spaceship boost',
 
    'chmod.cache.notWritable' => '<h1>PHPBoost installation</h1>
-<p><strong>Warning</strong> : the folders cache and cache/tpl must exist and be writable. Please create and/or set them the right CHMOD (775) to be able to continue the installation.</p>
+<p><strong>Warning</strong> : the folders cache and cache/tpl must exist and be writable. Please create and/or set them the right CHMOD (777) to be able to continue the installation.</p>
 <p>Once it is done, please refresh the page to continue or click <a href="">here</a>.</p>',
 
 // General variables

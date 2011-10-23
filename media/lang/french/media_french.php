@@ -98,11 +98,6 @@ $MEDIA_LANG = array(
 'management_cat' => 'Gestion des catégories',
 'management_media' => 'Gestion multimédia',
 
-// contribution.php
-'contribution_confirmation' => 'Confirmation de contribution',
-'contribution_confirmation_explain' => '<p>Vous pourrez la suivre dans le <a href="' . url('../member/contribution_panel.php') . '">panneau de contribution de PHPBoost</a> et éventuellement discuter avec les validateurs si leur choix n\'est pas franc.</p><p>Merci d\'avoir participé à la vie du site !</p>',
-'contribution_success' => 'Votre contribution a bien été enregistrée.',
-
 // media.php
 'add_on_date' => 'Ajouté le %s',
 'n_time' => '%d fois',

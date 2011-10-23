@@ -68,9 +68,12 @@ else
 	// Chargement du menu de l'administration.
 	require_once('admin_news_menu.php');
 
+	$editor = AppContext::get_content_formatting_service()->get_default_editor();
+	$editor->set_identifier('contents');
+
 	$tpl->put_all(array(
 		'ADMIN_MENU' => $admin_menu,
-		'KERNEL_EDITOR' => display_editor(),
+		'KERNEL_EDITOR' => $editor->display(),
 		'PAGINATION' => !empty($NEWS_CONFIG['pagination_news']) ? $NEWS_CONFIG['pagination_news'] : 6,
 		'PAGINATION_ARCH' => !empty($NEWS_CONFIG['pagination_arch']) ? $NEWS_CONFIG['pagination_arch'] : 15,
 		'TITLE' => !empty($NEWS_CONFIG['edito_title']) ? $NEWS_CONFIG['edito_title'] : '',

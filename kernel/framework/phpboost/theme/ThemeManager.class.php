@@ -33,7 +33,7 @@
  */
 class ThemeManager
 {
-	private static $errors = null;
+	private static $error = null;
 	
 	public static function get_installed_themes_map()
 	{
@@ -49,6 +49,11 @@ class ThemeManager
 			}
 		}
 		return $activated_themes;
+	}
+	
+	public static function get_default_theme()
+	{
+		return UserAccountsConfig::load()->get_default_theme();
 	}
 	
 	public static function get_theme($theme_id)
@@ -74,21 +79,19 @@ class ThemeManager
 			$theme->set_columns_disabled($configuration->get_columns_disabled());
 			
 			$phpboost_version = GeneralConfig::load()->get_phpboost_major_version();
-			if (version_compare($phpboost_version, $configuration->get_compatibility(), '>='))
+			if (version_compare($phpboost_version, $configuration->get_compatibility(), '>'))
 			{
-				ThemesConfig::load()->add_theme($theme);
-				ThemesConfig::save();
+				self::$error = LangLoader::get_message('themes.not_compatible', 'admin-themes-common');
+			}
+			
+			ThemesConfig::load()->add_theme($theme);
+			ThemesConfig::save();
 				
-				self::regenerate_cache();
-			}
-			else
-			{
-				self::$errors = 'Not compatible !';
-			}
+			self::regenerate_cache();
 		}
 		else
 		{
-			self::$errors = 'e_theme_already_exist';
+			self::$error = LangLoader::get_message('themes.already_exist', 'admin-themes-common');
 		}
 	}
 	
@@ -110,11 +113,6 @@ class ThemeManager
 				}
 				self::regenerate_cache();
 			}
-			self::$errors = 'e_incomplete';
-		}
-		else
-		{
-			self::$errors = 'e_theme_already_exist';
 		}
 	}
 	
@@ -179,14 +177,27 @@ class ThemeManager
 		}
 	}
 	
-	public static function get_errors()
+	public static function change_customize_interface($theme_id, CustomizeInterface $customize_interface)
 	{
-		return self::$errors;
+		if (!empty($theme_id) && self::get_theme_existed($theme_id))
+		{
+			$theme = ThemesConfig::load()->get_theme($theme_id);
+			$theme->set_customize_interface($customize_interface);
+			ThemesConfig::load()->update($theme);
+			ThemesConfig::save();
+			
+			self::regenerate_cache();
+		}
+	}
+	
+	public static function get_error()
+	{
+		return self::$error;
 	}
 	
 	private static function regenerate_cache()
 	{
-    	ModulesCssFilesCache::invalidate();
+		ThemesCssFilesCache::invalidate();
 	}
 }
 ?>

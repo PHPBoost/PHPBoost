@@ -83,5 +83,10 @@ class MediaExtensionPointProvider extends ExtensionPointProvider
 	{
 		return new MediaFeedProvider();
 	}
+	
+	public function comments()
+	{
+		return new MediaComments();
+	}
 }
 ?>

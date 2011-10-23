@@ -53,6 +53,11 @@ class ForumUserExtensionPoint implements UserExtensionPoint
 	{
 		return PATH_TO_ROOT . '/forum/forum_mini.png';
 	}
+	
+	public function get_number_messages($user_id)
+	{
+		$parameters = array('user_id' => $user_id);
+		return PersistenceContext::get_querier()->count(PREFIX . 'forum_msg', 'WHERE user_id = :user_id', $parameters);
+	}
 }
-
 ?>

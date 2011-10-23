@@ -30,8 +30,9 @@ if (defined('PHPBOOST') !== true)
 
 $Cache->load('faq');
 load_module_lang('faq'); //Chargement de la langue du module.
+$faq_config = FaqConfig::load();
 
 define('AUTH_READ', 0x01);
 define('AUTH_WRITE', 0x02);
-
+	
 ?>

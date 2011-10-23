@@ -27,8 +27,6 @@
 
 if (defined('PHPBOOST') !== true) exit;
 
-
-
 class GalleryExtensionPointProvider extends ExtensionPointProvider
 {
 	private $sql_querier;
@@ -103,6 +101,20 @@ class GalleryExtensionPointProvider extends ExtensionPointProvider
 
 		return $gallery_config . "\n" . $cat_gallery . "\n" . $_array_random_pics;
 	}
+	
+	function feeds()
+	{
+		return new GalleryFeedProvider();
+	}
+	
+	public function css_files()
+	{
+		return new GalleryCssFilesExtensionPoint();
+	}
+	
+	public function menus()
+	{
+		return new GalleryMenusExtensionPoint();
+	}
 }
-
 ?>

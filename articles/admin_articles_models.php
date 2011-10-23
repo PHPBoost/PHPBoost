@@ -151,8 +151,11 @@ if ($model_to_del > 0)
 }
 elseif ($new_model XOR $id_edit > 0)
 {
+	$editor = AppContext::get_content_formatting_service()->get_default_editor();
+	$editor->set_identifier('contents');
+	
 	$tpl->put_all(array(
-		'KERNEL_EDITOR' => display_editor(),
+		'KERNEL_EDITOR' => $editor->display(),
 		'L_MODEL' => $ARTICLES_LANG['model'],
 		'L_DESCRIPTION' => $ARTICLES_LANG['model_desc'],
 		'L_NAME' => $ARTICLES_LANG['model_name'],

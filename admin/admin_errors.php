@@ -33,7 +33,7 @@ $all = !empty($_GET['all']) ? true : false;
 
 $tpl = new FileTemplate('admin/admin_errors_management.tpl');
 
-$file_path = '../cache/error.log';
+$file_path = PATH_TO_ROOT .'/cache/error.log';
 
 if (!empty($_POST['erase']))
 {

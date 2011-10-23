@@ -94,6 +94,9 @@ $Template->set_filenames(array(
 	'faq'=> 'faq/management.tpl'
 ));
 
+$editor = AppContext::get_content_formatting_service()->get_default_editor();
+$editor->set_identifier('contents');
+
 if ($edit_question > 0)
 {
 	$Template->assign_block_vars('edit_question', array(
@@ -103,7 +106,7 @@ if ($edit_question > 0)
 		'ID_QUESTION' => $edit_question
 	));
 	$Template->put_all(array(
-		'KERNEL_EDITOR' => display_editor(),
+		'KERNEL_EDITOR' => $editor->display(),
 		'L_QUESTION' => $FAQ_LANG['question'],
 		'L_ENTITLED' => $FAQ_LANG['entitled'],
 		'L_ANSWER' => $FAQ_LANG['answer'],
@@ -121,7 +124,7 @@ elseif ($cat_of_new_question >= 0 && $new)
 		'ID_CAT' => $cat_of_new_question
 	));
 	$Template->put_all(array(
-		'KERNEL_EDITOR' => display_editor(),
+		'KERNEL_EDITOR' => $editor->display(),
 		'L_QUESTION' => $FAQ_LANG['question'],
 		'L_ENTITLED' => $FAQ_LANG['entitled'],
 		'L_ANSWER' => $FAQ_LANG['answer'],
@@ -134,7 +137,7 @@ elseif ($id_move > 0)
 	$faq_cats = new Faqcats();
 	
 	$Template->assign_block_vars('move_question', array(
-		'CATEGORIES_TREE' => $faq_cats->build_select_form(0, 'target', 'target', 0, AUTH_WRITE, $FAQ_CONFIG['global_auth'], IGNORE_AND_CONTINUE_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH),
+		'CATEGORIES_TREE' => $faq_cats->build_select_form(0, 'target', 'target', 0, AUTH_WRITE, $faq_config->get_authorization(), IGNORE_AND_CONTINUE_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH),
 		'ID_QUESTION' => $id_move
 	));
 	$Template->put_all(array(
@@ -146,13 +149,28 @@ elseif ($id_move > 0)
 }
 else
 {
+	if ($id_faq == 0)
+	{
+		$Template->put_all(array(
+			'AUTO_SELECTED' => $faq_config->get_root_cat_display_mode() == 0 ? 'selected="selected"' : '',
+			'INLINE_SELECTED' => $faq_config->get_root_cat_display_mode() == 1 ? 'selected="selected"' : '',
+			'BLOCK_SELECTED' => $faq_config->get_root_cat_display_mode() == 2 ? 'selected="selected"' : '',
+			'DESCRIPTION' => FormatingHelper::unparse($faq_config->get_root_cat_description())
+		));
+	}
+	else
+	{
+		$Template->put_all(array(
+			'AUTO_SELECTED' => $FAQ_CATS[$id_faq]['display_mode'] == 0 ? 'selected="selected"' : '',
+			'INLINE_SELECTED' => $FAQ_CATS[$id_faq]['display_mode'] == 1 ? 'selected="selected"' : '',
+			'BLOCK_SELECTED' => $FAQ_CATS[$id_faq]['display_mode'] == 2 ? 'selected="selected"' : '',
+			'DESCRIPTION' => FormatingHelper::unparse($FAQ_CATS[$id_faq]['description']),
+		));
+	}
+	
 	$Template->put_all(array(
-		'KERNEL_EDITOR' => display_editor(),
+		'KERNEL_EDITOR' => $editor->display(),
 		'TARGET' => url('action.php?idcat=' . $id_faq . '&amp;cat_properties=1&amp;token=' . $Session->get_token()),
-		'AUTO_SELECTED' => $FAQ_CATS[$id_faq]['display_mode'] == 0 ? 'selected="selected"' : '',
-		'INLINE_SELECTED' => $FAQ_CATS[$id_faq]['display_mode'] == 1 ? 'selected="selected"' : '',
-		'BLOCK_SELECTED' => $FAQ_CATS[$id_faq]['display_mode'] == 2 ? 'selected="selected"' : '',
-		'DESCRIPTION' => FormatingHelper::unparse($FAQ_CATS[$id_faq]['description']),
 		'L_CAT_PROPERTIES' => $FAQ_LANG['cat_properties'],
 		'L_DESCRIPTION' => $FAQ_LANG['cat_description'],
 		'L_DISPLAY_MODE' => $FAQ_LANG['display_mode'],
@@ -200,8 +218,8 @@ else
 
 	//Category properties
 	$Template->assign_block_vars('category', array(
-		'READ_AUTH' => 	Authorizations::generate_select(AUTH_READ, !empty($FAQ_CATS[$id_faq]['auth']) ? $FAQ_CATS[$id_faq]['auth'] : $FAQ_CONFIG['global_auth']),
-		'WRITE_AUTH' => Authorizations::generate_select(AUTH_WRITE, !empty($FAQ_CATS[$id_faq]['auth']) ? $FAQ_CATS[$id_faq]['auth'] : $FAQ_CONFIG['global_auth']),
+		'READ_AUTH' => 	Authorizations::generate_select(AUTH_READ, !empty($FAQ_CATS[$id_faq]['auth']) ? $FAQ_CATS[$id_faq]['auth'] : $faq_config->get_authorization()),
+		'WRITE_AUTH' => Authorizations::generate_select(AUTH_WRITE, !empty($FAQ_CATS[$id_faq]['auth']) ? $FAQ_CATS[$id_faq]['auth'] : $faq_config->get_authorization()),
 		'U_CREATE_BEFORE' => url('management.php?new=1&amp;idcat=' . $id_faq . '&amp;after=0'),
 		'ID_FAQ' => $id_faq
 	));
@@ -212,7 +230,7 @@ else
 			'CAT_TITLE' => $FAQ_CATS[$id_faq]['name'],
 		));
 		$Template->assign_block_vars('category.not_root_auth', array(
-			'WRITE_AUTH' => Authorizations::generate_select(AUTH_WRITE, !empty($FAQ_CATS[$id_faq]['auth']) ? $FAQ_CATS[$id_faq]['auth'] : $FAQ_CONFIG['global_auth'])
+			'WRITE_AUTH' => Authorizations::generate_select(AUTH_WRITE, !empty($FAQ_CATS[$id_faq]['auth']) ? $FAQ_CATS[$id_faq]['auth'] : $faq_config->get_authorization())
 		));
 	}
 	

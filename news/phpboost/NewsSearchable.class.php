@@ -61,5 +61,4 @@ class NewsSearchable extends AbstractSearchableExtensionPoint
             return $request;
 	}
 }
-
 ?>

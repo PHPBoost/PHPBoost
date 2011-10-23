@@ -51,8 +51,8 @@ else
 
 $Gallery = new Gallery();
 
-$comments = new Comments();
-$comments->set_module_name('gallery');
+$comments_topic = new CommentsTopic();
+$comments_topic->set_module_id('gallery');
 
 if (!empty($g_del)) //Suppression d'une image.
 {
@@ -88,7 +88,7 @@ elseif (isset($_FILES['gallery'])) //Upload
 		$CAT_GALLERY[0]['auth'] = $CONFIG_GALLERY['auth_root'];
 
 	//Niveau d'autorisation de la catégorie, accès en écriture.
-	if (!$User->check_auth($CAT_GALLERY[$g_idcat]['auth'], READ_CAT_GALLERY) && !$User->check_auth($CAT_GALLERY[$g_idcat]['auth'], WRITE_CAT_GALLERY))
+	if (!$User->check_auth($CAT_GALLERY[$g_idcat]['auth'], WRITE_CAT_GALLERY))
 	{
 		$error_controller = PHPBoostErrors::unexisting_page();
 		DispatchManager::redirect($error_controller);
@@ -108,30 +108,32 @@ elseif (isset($_FILES['gallery'])) //Upload
 
 	$Upload->file('gallery', '`([a-z0-9()_-])+\.(jpg|jpeg|gif|png)+$`i', Upload::UNIQ_NAME, $CONFIG_GALLERY['weight_max']);
 	if ($Upload->get_error() != '') //Erreur, on arrête ici
-		AppContext::get_response()->redirect('/gallery/gallery' . url('.php?add=1&cat=' . $g_idcat . '&error=' . $Upload->get_error(), '-' . $g_idcat . '.php?add=1&error=' . $Upload->get_error(), '&') . '#message_helper');
+	{
+		AppContext::get_response()->redirect(GalleryUrlBuilder::get_link_cat_add($g_idcat,$Upload->get_error()) . '#message_helper');
+	}
 	else
 	{
 		$path = $dir . $Upload->get_filename();
 		$error = $Upload->check_img($CONFIG_GALLERY['width_max'], $CONFIG_GALLERY['height_max'], Upload::DELETE_ON_ERROR);
 		if (!empty($error)) //Erreur, on arrête ici
-			AppContext::get_response()->redirect('/gallery/gallery' . url('.php?add=1&cat=' . $g_idcat . '&error=' . $error, '-' . $g_idcat . '.php?add=1&error=' . $error, '&') . '#message_helper');
+			AppContext::get_response()->redirect(GalleryUrlBuilder::get_link_cat_add($g_idcat,$error) . '#message_helper');
 		else
 		{
 			//Enregistrement de l'image dans la bdd.
 			$Gallery->Resize_pics($path);
 			if ($Gallery->get_error() != '')
-				AppContext::get_response()->redirect('/gallery/gallery' . url('.php?add=1&cat=' . $g_idcat . '&error=' . $Upload->get_error(), '-' . $g_idcat . '.php?add=1&error=' . $Upload->get_error(), '&') . '#message_helper');
+				AppContext::get_response()->redirect(GalleryUrlBuilder::get_link_cat_add($g_idcat,$Upload->get_error()) . '#message_helper');
 
 			$idpic = $Gallery->Add_pics($idcat_post, $name_post, $Upload->get_filename(), $User->get_id());
 			if ($Gallery->get_error() != '')
-				AppContext::get_response()->redirect('/gallery/gallery' . url('.php?add=1&cat=' . $g_idcat . '&error=' . $Upload->get_error(), '-' . $g_idcat . '.php?add=1&error=' . $Upload->get_error(), '&') . '#message_helper');
+				AppContext::get_response()->redirect(GalleryUrlBuilder::get_link_cat_add($g_idcat,$Upload->get_error()) . '#message_helper');
 
 			//Régénération du cache des photos aléatoires.
 			$Cache->Generate_module_file('gallery');
 		}
 	}
 
-	AppContext::get_response()->redirect('/gallery/gallery' . url('.php?add=1&cat=' . $idcat_post . '&id=' . $idpic, '-' . $idcat_post . '.php?add=1&id=' . $idpic, '&'));
+	AppContext::get_response()->redirect(GalleryUrlBuilder::get_link_item_add($idcat_post,$idpic));
 }
 elseif ($g_add)
 {
@@ -148,7 +150,7 @@ elseif ($g_add)
 			if ($id > 0)
 			{
 				if ($CAT_GALLERY[$g_idcat]['id_left'] >= $array_info_cat['id_left'] && $CAT_GALLERY[$g_idcat]['id_right'] <= $array_info_cat['id_right'] && $array_info_cat['level'] <= $CAT_GALLERY[$g_idcat]['level'])
-					$cat_links .= ' <a href="gallery' . url('.php?cat=' . $id, '-' . $id . '.php') . '">' . $array_info_cat['name'] . '</a> &raquo;';
+					$cat_links .= ' <a href="' . GalleryUrlBuilder::get_link_cat($id) . '">' . $array_info_cat['name'] . '</a> &raquo;';
 			}
 		}
 	}
@@ -161,7 +163,7 @@ elseif ($g_add)
 	}
 
 	//Niveau d'autorisation de la catégorie, accès en écriture.
-	if (!$User->check_auth($CAT_GALLERY[$g_idcat]['auth'], READ_CAT_GALLERY) && !$User->check_auth($CAT_GALLERY[$g_idcat]['auth'], WRITE_CAT_GALLERY))
+	if (!$User->check_auth($CAT_GALLERY[$g_idcat]['auth'], WRITE_CAT_GALLERY))
 	{
 		$error_controller = PHPBoostErrors::unexisting_page();
 		DispatchManager::redirect($error_controller);
@@ -235,7 +237,7 @@ elseif ($g_add)
 		'WIDTH_MAX' => $CONFIG_GALLERY['width_max'],
 		'HEIGHT_MAX' => $CONFIG_GALLERY['height_max'],
 		'WEIGHT_MAX' => $CONFIG_GALLERY['weight_max'],
-		'ADD_PICS' => $User->check_auth($CAT_GALLERY[$g_idcat]['auth'], WRITE_CAT_GALLERY) ? '<a href="gallery' . url('.php?add=1&amp;cat=' . $g_idcat) . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/add.png" alt="" class="valign_middle" /></a>' : '',
+		'ADD_PICS' => $User->check_auth($CAT_GALLERY[$g_idcat]['auth'], WRITE_CAT_GALLERY) ? '<a href="' . GalleryUrlBuilder::get_link_cat_add($g_idcat) . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/add.png" alt="" class="valign_middle" /></a>' : '',
 		'IMG_FORMAT' => 'JPG, PNG, GIF',
 		'L_IMG_FORMAT' => $LANG['img_format'],
 		'L_WIDTH_MAX' => $LANG['width_max'],
@@ -250,7 +252,7 @@ elseif ($g_add)
 		'L_UNIT_KO' => $LANG['unit_kilobytes'],
 		'L_UPLOAD' => $LANG['upload_img'],
 		'U_GALLERY_CAT_LINKS' => $cat_links,
-		'U_GALLERY_ACTION_ADD' => url('.php?add=1&amp;cat=' . $g_idcat . '&amp;token=' . $Session->get_token()),
+		'U_GALLERY_ACTION_ADD' => GalleryUrlBuilder::get_link_cat_add($g_idcat,null,$Session->get_token()),
 		'U_INDEX' => url('.php')
 	));
 
@@ -271,7 +273,7 @@ else
 			if ($id > 0)
 			{
 				if ($CAT_GALLERY[$g_idcat]['id_left'] >= $array_info_cat['id_left'] && $CAT_GALLERY[$g_idcat]['id_right'] <= $array_info_cat['id_right'] && $array_info_cat['level'] <= $CAT_GALLERY[$g_idcat]['level'])
-					$cat_links .= ' <a href="gallery' . url('.php?cat=' . $id, '-' . $id . '.php') . '">' . $array_info_cat['name'] . '</a> &raquo;';
+					$cat_links .= ' <a href="' . GalleryUrlBuilder::get_link_cat($id) . '">' . $array_info_cat['name'] . '</a> &raquo;';
 			}
 		}
 		$clause_cat = " WHERE gc.id_left > '" . $CAT_GALLERY[$g_idcat]['id_left'] . "' AND gc.id_right < '" . $CAT_GALLERY[$g_idcat]['id_right'] . "' AND gc.level = '" . ($CAT_GALLERY[$g_idcat]['level'] + 1) . "' AND gc.aprob = 1";
@@ -347,7 +349,7 @@ else
 		'HEIGHT_MAX' => $CONFIG_GALLERY['height'],
 		'WIDTH_MAX' => $column_width_pics,
 		'MODULE_DATA_PATH' => $module_data_path,
-		'ADD_PICS' => $User->check_auth($CAT_GALLERY[$g_idcat]['auth'], WRITE_CAT_GALLERY) ? '<a href="gallery' . url('.php?add=1&amp;cat=' . $g_idcat) . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/add.png" alt="" class="valign_middle" /></a>' : '',
+		'ADD_PICS' => $User->check_auth($CAT_GALLERY[$g_idcat]['auth'], WRITE_CAT_GALLERY) ? '<a href="' . GalleryUrlBuilder::get_link_cat_add($g_idcat) . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/add.png" alt="" class="valign_middle" /></a>' : '',
 		'L_CONFIRM_DEL_FILE' => $LANG['confim_del_file'],
 		'L_FILE_FORBIDDEN_CHARS' => $LANG['file_forbidden_chars'],
 		'L_TOTAL_IMG' => sprintf($LANG['total_img_cat'], $nbr_pics),
@@ -422,7 +424,7 @@ else
 				'OPEN_TR' => is_int($j++/$nbr_column_cats) ? '<tr>' : '',
 				'CLOSE_TR' => is_int($j/$nbr_column_cats) ? '</tr>' : '',
 				'L_NBR_PICS' => sprintf($LANG['nbr_pics_info'], $row['nbr_pics']),
-				'U_CAT' => url('.php?cat=' . $row['id'], '-' . $row['id'] . '+' . Url::encode_rewrite($row['name']) . '.php')
+				'U_CAT' => GalleryUrlBuilder::get_link_cat($row['id'],$row['name'])
 			));
 		}
 		$Sql->query_close($result);
@@ -503,12 +505,12 @@ else
 		//Affichage d'une photo demandée.
 		if (!empty($g_idpics))
 		{
-			$result = $Sql->query_while("SELECT g.id, g.idcat, g.name, g.user_id, g.views, g.width, g.height, g.weight, g.timestamp, g.note, g.nbrnote, g.nbr_com, g.aprob, m.login
-			FROM " . PREFIX . "gallery g
-			LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = g.user_id
-			WHERE g.idcat = '" . $g_idcat . "' AND g.id = '" . $g_idpics . "' AND g.aprob = 1
-			" . $g_sql_sort . "
-			" . $Sql->limit(0, 1), __LINE__, __FILE__);
+			$result = $Sql->query_while("SELECT g.*, m.login
+				FROM " . PREFIX . "gallery g
+				LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = g.user_id
+				WHERE g.idcat = '" . $g_idcat . "' AND g.id = '" . $g_idpics . "' AND g.aprob = 1
+				" . $g_sql_sort . "
+				" . $Sql->limit(0, 1), __LINE__, __FILE__);
 			$info_pics = $Sql->fetch_assoc($result);
 			if (!empty($info_pics['id']))
 			{
@@ -532,7 +534,7 @@ else
 						$Gallery->Resize_pics('pics/' . $row['path']); //Redimensionnement + création miniature
 
 					//Affichage de la liste des miniatures sous l'image.
-					$array_pics[] = '<td class="row2" style="text-align:center;height:' . ($CONFIG_GALLERY['height'] + 16) . 'px"><span id="thumb' . $i . '"><a href="gallery' . url('.php?cat=' . $row['idcat'] . '&amp;id=' . $row['id'] . '&amp;sort=' . $g_sort, '-' . $row['idcat'] . '-' . $row['id'] . '.php?sort=' . $g_sort) . '#pics_max' . '"><img src="pics/thumbnails/' . $row['path'] . '" alt="" / ></a></span></td>';
+					$array_pics[] = '<td class="row2" style="text-align:center;height:' . ($CONFIG_GALLERY['height'] + 16) . 'px"><span id="thumb' . $i . '"><a href="' . GalleryUrlBuilder::get_link_item($row['idcat'],$row['id'],null,$g_sort) . '#pics_max' . '"><img src="pics/thumbnails/' . $row['path'] . '" alt="" / ></a></span></td>';
 
 					if ($row['id'] == $g_idpics)
 					{
@@ -554,7 +556,7 @@ else
 						}
 					}
 					$array_js .= 'array_pics[' . $i . '] = new Array();' . "\n";
-					$array_js .= 'array_pics[' . $i . '][\'link\'] = \'' . url('.php?cat=' . $row['idcat'] . '&amp;id=' . $row['id'], '-' . $row['idcat'] . '-' . $row['id'] . '.php') . '#pics_max' . "';\n";
+					$array_js .= 'array_pics[' . $i . '][\'link\'] = \'' . GalleryUrlBuilder::get_link_item($row['idcat'],$row['id']) . '#pics_max' . "';\n";
 					$array_js .= 'array_pics[' . $i . '][\'path\'] = \'' . $row['path'] . "';\n";
 					$i++;
 				}
@@ -582,7 +584,7 @@ else
 
 				$html_protected_name = $info_pics['name'];
 
-				$comments->set_id_in_module($info_pics['id']);
+				$comments_topic->set_id_in_module($info_pics['id']);
 					
 				//Affichage de l'image et de ses informations.
 				$Template->put_all(array(
@@ -591,12 +593,12 @@ else
 					'ID' => $info_pics['id'],
 					'IMG_MAX' => '<img src="show_pics' . url('.php?id=' . $g_idpics . '&amp;cat=' . $g_idcat) . '" alt="" />',
 					'NAME' => '<span id="fi_' . $info_pics['id'] . '">' . stripslashes($info_pics['name']) . '</span> <span id="fi' . $info_pics['id'] . '"></span>',
-					'POSTOR' => '<a class="small_link" href="../member/member' . url('.php?id=' . $info_pics['user_id'], '-' . $info_pics['user_id'] . '.php') . '">' . $info_pics['login'] . '</a>',
+					'POSTOR' => '<a class="small_link" href="'. UserUrlBuilder::profile($info_pics['user_id'])->absolute() .'">' . $info_pics['login'] . '</a>',
 					'DATE' => gmdate_format('date_format_short', $info_pics['timestamp']),
 					'VIEWS' => ($info_pics['views'] + 1),
 					'DIMENSION' => $info_pics['width'] . ' x ' . $info_pics['height'],
 					'SIZE' => NumberHelper::round($info_pics['weight']/1024, 1),
-					'COM' => '<a href="'. PATH_TO_ROOT .'/gallery/gallery' . url('.php?cat=' . $info_pics['idcat'] . '&amp;id=' . $info_pics['id'] . '&amp;com=0&amp;sort=' . $g_sort, '-' . $info_pics['idcat'] . '-' . $info_pics['id'] . '.php?com=0&amp;sort=' . $g_sort) .'">'. CommentsService::get_number_and_lang_comments($comments) . '</a>',
+					'COM' => '<a href="'. GalleryUrlBuilder::get_link_item($info_pics['idcat'],$info_pics['id'],0,$g_sort) .'">'. CommentsService::get_number_and_lang_comments($comments_topic) . '</a>',
 					'KERNEL_NOTATION' => $activ_note ? NotationService::display_active_image($notation) : '',
 					'COLSPAN' => ($CONFIG_GALLERY['nbr_column'] + 2),
 					'CAT' => $cat_list,
@@ -623,8 +625,8 @@ else
 					'L_THUMBNAILS' => $LANG['thumbnails'],
 					'U_DEL' => url('.php?del=' . $info_pics['id'] . '&amp;token=' . $Session->get_token() . '&amp;cat=' . $g_idcat, '-' . $g_idcat . '.php?token=' . $Session->get_token() . '&amp;del=' . $info_pics['id']),
 					'U_MOVE' => url('.php?id=' . $info_pics['id'] . '&amp;token=' . $Session->get_token() . '&amp;move=\' + this.options[this.selectedIndex].value', '-0-' . $info_pics['id'] . '.php?token=' . $Session->get_token() . '&amp;move=\' + this.options[this.selectedIndex].value'),
-					'U_PREVIOUS' => ($pos_pics > 0) ? '<a href="gallery' . url('.php?cat=' . $g_idcat . '&amp;id=' . $id_previous, '-' . $g_idcat . '-' . $id_previous . '.php') . '#pics_max"><img src="../templates/' . get_utheme() . '/images/left.png" alt="" class="valign_middle" /></a> <a href="gallery' . url('.php?cat=' . $g_idcat . '&amp;id=' . $id_previous, '-' . $g_idcat . '-' . $id_previous . '.php') . '#pics_max">' . $LANG['previous'] . '</a>' : '',
-					'U_NEXT' => ($pos_pics < ($i - 1)) ? '<a href="gallery' . url('.php?cat=' . $g_idcat . '&amp;id=' . $id_next, '-' . $g_idcat . '-' . $id_next . '.php') . '#pics_max">' . $LANG['next'] . '</a> <a href="gallery' . url('.php?cat=' . $g_idcat . '&amp;id=' . $id_next, '-' . $g_idcat . '-' . $id_next . '.php') . '#pics_max"><img src="../templates/' . get_utheme() . '/images/right.png" alt="" class="valign_middle" /></a>' : '',
+					'U_PREVIOUS' => ($pos_pics > 0) ? '<a href="' . GalleryUrlBuilder::get_link_item($g_idcat,$id_previous) . '#pics_max"><img src="../templates/' . get_utheme() . '/images/left.png" alt="" class="valign_middle" /></a> <a href="' . GalleryUrlBuilder::get_link_item($g_idcat,$id_previous) . '#pics_max">' . $LANG['previous'] . '</a>' : '',
+					'U_NEXT' => ($pos_pics < ($i - 1)) ? '<a href="' . GalleryUrlBuilder::get_link_item($g_idcat,$id_next) . '#pics_max">' . $LANG['next'] . '</a> <a href="' . GalleryUrlBuilder::get_link_item($g_idcat,$id_next) . '#pics_max"><img src="../templates/' . get_utheme() . '/images/right.png" alt="" class="valign_middle" /></a>' : '',
 					'U_LEFT_THUMBNAILS' => (($pos_pics - $start_thumbnails) > 0) ? '<span id="display_left"><a href="javascript:display_thumbnails(\'left\')"><img src="../templates/' . get_utheme() . '/images/left.png" class="valign_middle" alt="" /></a></span>' : '<span id="display_left"></span>',
 					'U_RIGHT_THUMBNAILS' => (($pos_pics - $start_thumbnails) <= ($i - 1) - $nbr_column_pics) ? '<span id="display_right"><a href="javascript:display_thumbnails(\'right\')"><img src="../templates/' . get_utheme() . '/images/right.png" class="valign_middle" alt="" /></a></span>' : '<span id="display_right"></span>'
 				));
@@ -646,7 +648,7 @@ else
 				if (isset($_GET['com']))
 				{
 					$Template->put_all(array(
-						'COMMENTS' => CommentsService::display($comments)->render()
+						'COMMENTS' => CommentsService::display($comments_topic)->render()
 					));
 				}
 			}
@@ -708,7 +710,7 @@ else
 					$notation->set_notation_scale($CONFIG_GALLERY['note_max']);
 				}
 				
-				$comments->set_id_in_module($row['id']);
+				$comments_topic->set_id_in_module($row['id']);
 				
 				$html_protected_name = $row['name'];
 				$Template->assign_block_vars('pics_list', array(
@@ -717,9 +719,9 @@ else
 					'IMG' => '<img src="pics/thumbnails/' . $row['path'] . '" alt="' . str_replace('"', '', stripslashes($row['name'])) . '" class="gallery_image" />',
 					'PATH' => $row['path'],
 					'NAME' => ($CONFIG_GALLERY['activ_title'] == 1) ? '<a class="small_link" href="' . $display_name . '"><span id="fi_' . $row['id'] . '">' . TextHelper::wordwrap_html(stripslashes($row['name']), 22, ' ') . '</span></a> <span id="fi' . $row['id'] . '"></span>' : '<span id="fi_' . $row['id'] . '"></span></a> <span id="fi' . $row['id'] . '"></span>',
-					'POSTOR' => ($CONFIG_GALLERY['activ_user'] == 1) ? '<br />' . $LANG['by'] . (!empty($row['login']) ? ' <a class="small_link" href="../member/member' . url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '">' . $row['login'] . '</a>' : ' ' . $LANG['guest']) : '',
+					'POSTOR' => ($CONFIG_GALLERY['activ_user'] == 1) ? '<br />' . $LANG['by'] . (!empty($row['login']) ? ' <a class="small_link" href="'. UserUrlBuilder::profile($row['user_id'])->absolute() .'">' . $row['login'] . '</a>' : ' ' . $LANG['guest']) : '',
 					'VIEWS' => ($CONFIG_GALLERY['activ_view'] == 1) ? '<br /><span id="gv' . $row['id'] . '">' . $row['views'] . '</span> <span id="gvl' . $row['id'] . '">' . ($row['views'] > 1 ? $LANG['views'] : $LANG['view']) . '</span>' : '',
-					'COM' => $CONFIG_GALLERY['activ_com'] == 1 ? '<br /><a href="'. PATH_TO_ROOT .'/gallery/gallery' . url('.php?cat=' . $row['idcat'] . '&amp;id=' . $row['id'] . '&amp;com=0', '-' . $row['idcat'] . '-' . $row['id'] . '.php?com=0') .'">'. CommentsService::get_number_and_lang_comments($comments) . '</a>' : '',
+					'COM' => $CONFIG_GALLERY['activ_com'] == 1 ? '<br /><a href="'. PATH_TO_ROOT .'/gallery/gallery' . url('.php?cat=' . $row['idcat'] . '&amp;id=' . $row['id'] . '&amp;com=0', '-' . $row['idcat'] . '-' . $row['id'] . '.php?com=0') .'">'. CommentsService::get_number_and_lang_comments($comments_topic) . '</a>' : '',
 					'KERNEL_NOTATION' => $activ_note ? NotationService::display_active_image($notation) : '',
 					'CAT' => $cat_list,
 					'RENAME' => $html_protected_name,

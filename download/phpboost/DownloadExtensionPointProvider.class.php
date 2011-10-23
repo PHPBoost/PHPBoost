@@ -91,6 +91,11 @@ class DownloadExtensionPointProvider extends ExtensionPointProvider
 	{
 		return new DownloadFeedProvider();
 	}
+	
+	public function comments()
+	{
+		return new DownloadComments();
+	}
 
 	function get_search_request($args)
     /**
@@ -245,5 +250,4 @@ class DownloadExtensionPointProvider extends ExtensionPointProvider
 		return $data;
 	}
 }
-
 ?>

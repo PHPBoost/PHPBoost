@@ -47,7 +47,7 @@ class DownloadFeedProvider implements FeedProvider
 		// Meta-informations generation
 		$data->set_title($DOWNLOAD_LANG['xml_download_desc']);
 		$data->set_date(new Date());
-		$data->set_link(new Url('/syndication.php?m=download&amp;cat=' . $idcat));
+		$data->set_link(SyndicationUrlBuilder::rss('download', $idcat));
 		$data->set_host(HOST);
 		$data->set_desc($DOWNLOAD_LANG['xml_download_desc']);
 		$data->set_lang($LANG['xml_lang']);

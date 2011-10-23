@@ -113,7 +113,7 @@ class AdminSearchWeightController extends AdminSearchController {
 	private function save()
 	{
 		$this->weightings = array();
-		foreach (SearchProvidersService::get_providers_ids() as $provider_id)
+		foreach (SearchProvidersService::get_authorized_providers_ids() as $provider_id)
 		{
 			$this->weightings[$provider_id] = $this->form->get_value($provider_id);
 		}
@@ -125,7 +125,7 @@ class AdminSearchWeightController extends AdminSearchController {
 	{
 		$header = new FormFieldFree('header', $this->lang['provider'], '<b>' . $this->lang['search_weights'] . '<b>');
 		$fieldset->add_field($header);
-		foreach (SearchProvidersService::get_providers_ids() as $provider_id)
+		foreach (SearchProvidersService::get_authorized_providers_ids() as $provider_id)
 		{
 			$provider_name = ModuleConfigurationManager::get($provider_id)->get_name();
 			$value = $this->get_provider_weight($provider_id);

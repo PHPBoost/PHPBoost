@@ -35,7 +35,7 @@
 					# START last_msg #
 					<tr>
 						<td class="row2">
-							<a href="../forum/topic{last_msg.U_TOPIC_ID}">{last_msg.TITLE}</a>
+							<a href="{PATH_TO_ROOT}/forum/topic{last_msg.U_TOPIC_ID}">{last_msg.TITLE}</a>
 						</td>
 					</tr>
 					# END last_msg #
@@ -52,7 +52,7 @@
 					# START popular #
 					<tr>
 						<td class="row2">
-							<a href="../forum/topic{popular.U_TOPIC_ID}">{popular.TITLE}</a>
+							<a href="{PATH_TO_ROOT}/forum/topic{popular.U_TOPIC_ID}">{popular.TITLE}</a>
 						</td>
 					</tr>
 					# END popular #
@@ -69,7 +69,7 @@
 					# START answers #
 					<tr>
 						<td class="row2">
-							<a href="../forum/topic{answers.U_TOPIC_ID}">{answers.TITLE}</a>
+							<a href="{PATH_TO_ROOT}/forum/topic{answers.U_TOPIC_ID}">{answers.TITLE}</a>
 						</td>
 					</tr>
 					# END answers #

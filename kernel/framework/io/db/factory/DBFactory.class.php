@@ -48,10 +48,21 @@ class DBFactory
 	 */
 	private static $factory;
 
+	private static $config_file;
+
+	public static function __static()
+	{
+		self::$config_file = '/kernel/db/config.php';
+	}
+
+	public static function load_prefix()
+	{
+		include_file(self::$config_file);
+	}
 
 	public static function init_factory($dbms)
 	{
-        require_once PATH_TO_ROOT . '/kernel/db/tables.php';
+		require_file('/kernel/db/tables.php');
 		switch ($dbms)
 		{
 			case self::PDO_MYSQL:
@@ -82,12 +93,12 @@ class DBFactory
 	}
 
 	public static function close_db_connection()
-    {
-    	if (self::$db_connection != null)
-        {
-        	self::$db_connection->disconnect();
-        }
-    }
+	{
+		if (self::$db_connection != null)
+		{
+			self::$db_connection->disconnect();
+		}
+	}
 
 	public static function reset_db_connection()
 	{
@@ -126,12 +137,15 @@ class DBFactory
 
 	private static function load_config()
 	{
-		@include PATH_TO_ROOT . '/kernel/db/config.php';
-		if (!defined('PHPBOOST_INSTALLED'))
+		if (file_exists(PATH_TO_ROOT . self::$config_file))
 		{
-			throw new PHPBoostNotInstalledException();
+			include PATH_TO_ROOT . self::$config_file;
+			if (defined('PHPBOOST_INSTALLED'))
+			{
+				return $db_connection_data;
+			}
 		}
-		return $db_connection_data;
+		throw new PHPBoostNotInstalledException();
 	}
 
 	/**

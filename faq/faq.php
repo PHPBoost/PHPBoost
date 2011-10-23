@@ -39,12 +39,8 @@ if (!array_key_exists($id_faq, $FAQ_CATS) || (array_key_exists($id_faq, $FAQ_CAT
     DispatchManager::redirect($controller);
 }
 
-if ($id_faq > 0)
-	$TITLE = array_key_exists($id_faq, $FAQ_CATS) ? $FAQ_CATS[$id_faq]['name'] : $FAQ_LANG['faq'];
-else
-	$TITLE = $FAQ_CONFIG['faq_name'];
-
-define('TITLE', $FAQ_CONFIG['faq_name'] . ($id_faq > 0 ? ' - ' . $TITLE : ''));
+$TITLE = FaqUrlBuilder::get_title($id_faq);
+define('TITLE', $faq_config->get_faq_name() . ($id_faq > 0 ? ' - ' . $TITLE : ''));
 
 $id_cat_for_bread_crumb = $id_faq;
 include_once('faq_bread_crumb.php');
@@ -64,10 +60,18 @@ $template->put_all(array(
 	'TITLE' => $TITLE,
 ));
 
-if (!empty($FAQ_CATS[$id_faq]['description']))
+if (!empty($FAQ_CATS[$id_faq]['description']) && $id_faq > 0)
+{
 	$template->assign_block_vars('description', array(
 		'DESCRIPTION' => FormatingHelper::second_parse($FAQ_CATS[$id_faq]['description'])
 	));
+}
+else
+{
+	$template->assign_block_vars('description', array(
+		'DESCRIPTION' => FormatingHelper::second_parse($faq_config->get_root_cat_description())
+	));
+}
 
 if ($auth_write)
 	$template->assign_block_vars('management', array());
@@ -93,16 +97,16 @@ if ($num_subcats > 0)
 		//List of children categories
 		if ($id != 0 && $value['visible'] && $value['id_parent'] == $id_faq && (empty($value['auth']) || $User->check_auth($value['auth'], AUTH_READ)))
 		{
-			if ( $i % $FAQ_CONFIG['num_cols'] == 1 )
+			if ( $i % $faq_config->get_number_columns() == 1 )
 				$template->assign_block_vars('row', array());
 			$template->assign_block_vars('row.list_cats', array(
 				'ID' => $id,
 				'NAME' => $value['name'],
-				'WIDTH' => floor(100 / (float)$FAQ_CONFIG['num_cols']),
+				'WIDTH' => floor(100 / (float)$faq_config->get_number_columns()),
 				'SRC' => $value['image'],
 				'IMG_NAME' => addslashes($value['name']),
 				'NUM_QUESTIONS' => sprintf(((int)$value['num_questions'] > 1 ? $FAQ_LANG['num_questions_plural'] : $FAQ_LANG['num_questions_singular']), (int)$value['num_questions']),
-				'U_CAT' => url('faq.php?id=' . $id, 'faq-' . $id . '+' . Url::encode_rewrite($value['name']) . '.php'),
+				'U_CAT' => FaqUrlBuilder::get_link_cat($id,$value['name']),
 				'U_ADMIN_CAT' => url('admin_faq_cats.php?edit=' . $id)
 			));
 			
@@ -128,8 +132,14 @@ $num_rows = $Sql->num_rows($result, "SELECT COUNT(*) FROM " . PREFIX . "faq_cats
 if ($num_rows > 0)
 {
 	//Display mode : if this category has a particular display mode we use it, else we use default display mode. If the category is the root we use default mode.
-	$faq_display_block = ($FAQ_CATS[$id_faq]['display_mode'] > 0) ? ($FAQ_CATS[$id_faq]['display_mode'] == 2 ? true : false ) : $FAQ_CONFIG['display_block'];
-	
+	if ($id_faq > 0)
+	{
+		$faq_display_block = ($FAQ_CATS[$id_faq]['display_mode'] > 0) ? ($FAQ_CATS[$id_faq]['display_mode'] == 2 ? true : false ) : ($faq_config->get_display_mode() == 'inline' ? false : true);
+	}
+	else
+	{
+		$faq_display_block = ($faq_config->get_root_cat_display_mode() == 0) ? ($faq_config->get_display_mode() == 'inline' ? false : true) : ($faq_config->get_root_cat_display_mode() == 1 ? false : true);
+	}
 	//Displaying administration tools
 	$template->put_all(array(
 		'C_ADMIN_TOOLS' => $auth_write
@@ -148,7 +158,7 @@ if ($num_rows > 0)
 				'ID_QUESTION' => $row['id'],
 				'QUESTION' => $row['question'],
 				'ANSWER' => FormatingHelper::second_parse($row['answer']),
-				'U_QUESTION' => url('faq.php?id=' . $id_faq . '&amp;question=' . $row['id'], 'faq-' . $id_faq . '+' . Url::encode_rewrite($TITLE) . '.php?question=' . $row['id']) . '#q' . $row['id'],
+				'U_QUESTION' => FaqUrlBuilder::get_link_question($id_faq,$row['id']),
 				'U_DEL' => url('action.php?del=' . $row['id'] . '&amp;token=' . $Session->get_token()),
 				'U_DOWN' => url('action.php?down=' . $row['id']),
 				'U_UP' => url('action.php?up=' . $row['id']),
@@ -177,7 +187,7 @@ if ($num_rows > 0)
 				'U_UP' => url('action.php?up=' . $row['id']),
 				'U_EDIT' => url('management.php?edit=' . $row['id']),
 				'U_MOVE' => url('management.php?move=' . $row['id']),
-				'U_QUESTION' => url('faq.php?id=' . $id_faq . '&amp;question=' . $row['id'], 'faq-' . $id_faq . '+' . Url::encode_rewrite($TITLE) . '.php?question=' . $row['id']) . '#q' . $row['id']
+				'U_QUESTION' => FaqUrlBuilder::get_link_question($id_faq,$row['id'])
 			));
 			
 			if ($row['q_order'] > 1)

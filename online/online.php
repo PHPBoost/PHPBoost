@@ -51,7 +51,7 @@ s.session_script_title, m.login
 FROM " . DB_TABLE_SESSIONS . " s
 JOIN " . DB_TABLE_MEMBER . " m ON (m.user_id = s.user_id)
 WHERE s.session_time > '" . (time() - SessionsConfig::load()->get_active_session_duration()) . "'
-ORDER BY " . $CONFIG_ONLINE['display_order_online'] . "
+ORDER BY " . OnlineConfig::load()->get_display_order() . "
 " . $Sql->limit($Pagination->get_first_msg(25, 'p'), 25), __LINE__, __FILE__); //Membres enregistrés.
 while ($row = $Sql->fetch_assoc($result))
 {
@@ -75,7 +75,7 @@ while ($row = $Sql->fetch_assoc($result))
 
 	$row['session_script_get'] = !empty($row['session_script_get']) ? '?' . $row['session_script_get'] : '';
 	$Template->assign_block_vars('users', array(
-		'USER' => !empty($row['login']) ? '<a href="' . DispatchManager::get_url('/member', '/profile/'. $row['user_id'])->absolute() . '" class="' . $status . '">' . $row['login'] . '</a>': $LANG['guest'],
+		'USER' => !empty($row['login']) ? '<a href="' . UserUrlBuilder::profile($row['user_id'])->absolute() . '" class="' . $status . '">' . $row['login'] . '</a>': $LANG['guest'],
 		'LOCATION' => '<a href="' . HOST . DIR . $row['session_script'] . $row['session_script_get'] . '">' . stripslashes($row['session_script_title']) . '</a>',
 		'LAST_UPDATE' => gmdate_format('date_format_long', $row['session_time'])
 	));	

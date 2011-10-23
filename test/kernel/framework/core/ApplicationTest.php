@@ -12,7 +12,7 @@ class ApplicationTest extends PHPBoostUnitTestCase {
 		self::assertEquals($id, $app->get_id());
 		self::assertEquals($id, $app->get_name());
 		self::assertEquals($language, $app->get_language());
-		self::assertEquals(APPLICATION_TYPE__MODULE, $app->get_type());
+		self::assertEquals(Application::MODULE_TYPE, $app->get_type());
 		self::assertEquals('', $app->get_repository());
 		self::assertEquals(0, $app->get_version());
 		$d = new Date();
@@ -21,16 +21,16 @@ class ApplicationTest extends PHPBoostUnitTestCase {
 		$vers 	= 1;
 		$repo	= 'repository';
 		unset($app);
-		$app = new Application($id, $language, APPLICATION_TYPE__MODULE, $vers, $repo);
+		$app = new Application($id, $language, Application::MODULE_TYPE, $vers, $repo);
 		
-		self::assertEquals(APPLICATION_TYPE__MODULE, $app->get_type());
+		self::assertEquals(Application::MODULE_TYPE, $app->get_type());
 		self::assertEquals($repo, $app->get_repository());
 		self::assertEquals($vers, $app->get_version());
 
 		unset($app);
-		$app = new Application($id, $language, APPLICATION_TYPE__TEMPLATE, $vers, $repo);
+		$app = new Application($id, $language, Application::TEMPLATE_TYPE, $vers, $repo);
 		
-		self::assertEquals(APPLICATION_TYPE__TEMPLATE, $app->get_type());
+		self::assertEquals(Application::TEMPLATE_TYPE, $app->get_type());
 	}
 	
 	function test_load()

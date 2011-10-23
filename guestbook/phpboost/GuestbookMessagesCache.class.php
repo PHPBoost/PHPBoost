@@ -46,7 +46,7 @@ class GuestbookMessagesCache implements CacheData
 		foreach ($result as $msg)
 		{
 			$this->messages[$msg['id']] = array(
-				'id' => $theme['id'],
+				'id' => $msg['id'],
 				'contents' => nl2br(TextHelper::substr_html(strip_tags(FormatingHelper::second_parse($msg['contents'])), 0, 150)),
 				'user_id' => $msg['user_id'],
 				'login' => $msg['login'],
@@ -86,3 +86,4 @@ class GuestbookMessagesCache implements CacheData
 		CacheManager::invalidate('module', 'guestbook-messages');
 	}
 }
+?>

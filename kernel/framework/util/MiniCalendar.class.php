@@ -119,7 +119,7 @@ class MiniCalendar
 	public function display()
 	{
 		//On crée le code selon le template
-		$template = new FileTemplate('framework/mini_calendar.tpl');
+		$template = new FileTemplate('framework/util/mini_calendar.tpl');
 
 		$template->put_all(array(
 			'DEFAULT_DATE' => !empty($this->date) ? $this->date->format(DATE_FORMAT_SHORT) : '',

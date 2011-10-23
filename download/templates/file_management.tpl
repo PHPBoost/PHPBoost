@@ -47,7 +47,7 @@
 			<div class="error_handler_position">
 					<span id="errorh"></span>
 					<div class="{ERRORH_CLASS}" style="width:500px;margin:auto;padding:15px;">
-						<img src="../templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
+						<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
 						<br />	
 					</div>
 			</div>
@@ -101,7 +101,7 @@
 						<dt><label for="url">* {L_URL}</label></dt>
 						<dd>
 							<input type="text" size="50" id="url" name="url" value="{URL}" class="text" />
-							<a title="{L_FILE_ADD}" href="#" onclick="window.open('{PATH_TO_ROOT}/member/upload.php?popup=1&amp;fd=url&amp;parse=true', '', 'height=500,width=720,resizable=yes,scrollbars=yes');return false;"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/upload/files_add.png" alt="" /></a>
+							<a title="{L_FILE_ADD}" href="#" onclick="window.open('{PATH_TO_ROOT}/user/upload.php?popup=1&amp;fd=url&amp;parse=true', '', 'height=500,width=720,resizable=yes,scrollbars=yes');return false;"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/upload/files_add.png" alt="" /></a>
 						</dd>
 					</dl>
 					<dl>

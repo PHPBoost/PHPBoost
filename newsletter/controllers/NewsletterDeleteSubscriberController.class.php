@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-class NewsletterDeleteSubscriberController extends AdminController
+class NewsletterDeleteSubscriberController extends ModuleController
 {
 	public function execute(HTTPRequest $request)
 	{

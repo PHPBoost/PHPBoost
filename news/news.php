@@ -42,7 +42,7 @@ if(!$User->check_auth($NEWS_CONFIG['global_auth'], AUTH_NEWS_READ))
     $error_controller = PHPBoostErrors::unexisting_page();
     DispatchManager::redirect($error_controller);
 }
-		
+
 if (!empty($idnews)) // On affiche la news correspondant à l'id envoyé.
 {
 
@@ -124,9 +124,9 @@ if (!empty($idnews)) // On affiche la news correspondant à l'id envoyé.
 		
 		$auth_delete = $news['idcat'] > 0 ? $User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_MODERATE) : $User->check_auth($NEWS_CONFIG['global_auth'], AUTH_NEWS_MODERATE);
 		
-		$comments = new Comments();
-		$comments->set_module_name('news');
-		$comments->set_id_in_module($idnews);
+		$comments_topic = new CommentsTopic();
+		$comments_topic->set_module_id('news');
+		$comments_topic->set_id_in_module($idnews);
 
 		$tpl->put_all(array(
 			'C_NEXT_NEWS' => !empty($next_news['id']),
@@ -148,15 +148,15 @@ if (!empty($idnews)) // On affiche la news correspondant à l'id envoyé.
 			'DATE' => $NEWS_CONFIG['display_date'] ? sprintf($NEWS_LANG['on'], $timestamp->format(DATE_FORMAT_SHORT, TIMEZONE_AUTO)) : '',
 			'LEVEL' =>	isset($news['level']) ? $level[$news['level']] : '',
 			'PSEUDO' => $NEWS_CONFIG['display_author'] && !empty($news['login']) ? $news['login'] : false,
-			'COMMENTS' => isset($_GET['com']) && $NEWS_CONFIG['activ_com'] == 1 ? CommentsService::display($comments)->render() : '',
+			'COMMENTS' => isset($_GET['com']) && $NEWS_CONFIG['activ_com'] == 1 ? CommentsService::display($comments_topic)->render() : '',
 			'NEXT_NEWS' => $next_news['title'],
 			'PREVIOUS_NEWS' => $previous_news['title'],
 			'FEED_MENU' => Feed::get_feed_menu(FEED_URL . '&amp;cat=' . $news['idcat']),
 			'U_CAT' => $news['idcat'] > 0 ? 'news' . url('.php?cat=' . $news['idcat'], '-' . $news['idcat'] . '+'  . Url::encode_rewrite($NEWS_CAT[$news['idcat']]['name']) . '.php') : '',
 			'U_LINK' => 'news' . url('.php?id=' . $news['id'], '-' . $news['idcat'] . '-' . $news['id'] . '+' . Url::encode_rewrite($news['title']) . '.php'),
-			'U_COM' => $NEWS_CONFIG['activ_com'] ? '<a href="'. PATH_TO_ROOT .'/news/news' . url('.php?id=' . $idnews . '&amp;com=0', '-' . $row['idcat'] . '-' . $idnews . '+' . Url::encode_rewrite($news['title']) . '.php?com=0') .'">'. CommentsService::get_number_and_lang_comments($comments) . '</a>' : '',
-			'U_USER_ID' => '../member/member' . url('.php?id=' . $news['user_id'], '-' . $news['user_id'] . '.php'),
-			'U_SYNDICATION' => url('../syndication.php?m=news&amp;cat=' . $news['idcat']),
+			'U_COM' => $NEWS_CONFIG['activ_com'] ? '<a href="'. PATH_TO_ROOT .'/news/news' . url('.php?id=' . $idnews . '&amp;com=0', '-' . $row['idcat'] . '-' . $idnews . '+' . Url::encode_rewrite($news['title']) . '.php?com=0') .'">'. CommentsService::get_number_and_lang_comments($comments_topic) . '</a>' : '',
+			'U_USER_ID' => UserUrlBuilder::profile($news['user_id'])->absolute(),
+			'U_SYNDICATION' => SyndicationUrlBuilder::rss('news', $news['idcat'])->rel(),
 			'U_PREVIOUS_NEWS' => 'news' . url('.php?id=' . $previous_news['id'], '-0-' . $previous_news['id'] . '+' . Url::encode_rewrite($previous_news['title']) . '.php'),
 			'U_NEXT_NEWS' => 'news' . url('.php?id=' . $next_news['id'], '-0-' . $next_news['id'] . '+' . Url::encode_rewrite($next_news['title']) . '.php'),
 			'L_ALERT_DELETE_NEWS' => $NEWS_LANG['alert_delete_news'],
@@ -193,7 +193,7 @@ elseif ($user)
 	$array_cat = array();
 	$news_cat->build_children_id_list(0, $array_cat, RECURSIVE_EXPLORATION, DO_NOT_ADD_THIS_CATEGORY_IN_LIST, AUTH_NEWS_WRITE);
 		
-	$result = $Sql->query_while("SELECT n.contents, n.extend_contents, n.title, n.id, n.idcat, n.timestamp, n.user_id, n.img, n.alt, n.nbr_com, m.login, m.level
+	$result = $Sql->query_while("SELECT n.contents, n.extend_contents, n.title, n.id, n.idcat, n.timestamp, n.user_id, n.img, n.alt, m.login, m.level
 	FROM " . DB_TABLE_NEWS . " n
 	LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = n.user_id
 	WHERE n.visible = 0 AND n.start <= '" . $now->get_timestamp() . "' AND (n.end >= '" . $now->get_timestamp() . "' OR n.end = 0) AND n.user_id = '" . $User->get_id() . "'
@@ -204,7 +204,7 @@ elseif ($user)
 
 		$tpl->assign_block_vars('news', array(
 			'ID' => $row['id'],
-			'U_SYNDICATION' => url('../syndication.php?m=news&amp;cat=' . $row['idcat']),
+			'U_SYNDICATION' => SyndicationUrlBuilder::rss('news', $row['idcat'])->rel(),
 			'U_LINK' => 'news' . url('.php?id=' . $row['id'], '-' . $row['idcat'] . '-' . $row['id'] . '+' . Url::encode_rewrite($row['title']) . '.php'),
 			'TITLE' => $row['title'],
 			'C_EDIT' => true,
@@ -218,7 +218,7 @@ elseif ($user)
 			'CONTENTS' => FormatingHelper::second_parse($row['contents']),
 			'EXTEND_CONTENTS' => !empty($row['extend_contents']) ? '<a style="font-size:10px" href="' . PATH_TO_ROOT . '/news/news' . url('.php?id=' . $row['id'], '-0-' . $row['id'] . '.php') . '">[' . $NEWS_LANG['extend_contents'] . ']</a><br /><br />' : '',
 			'PSEUDO' => $NEWS_CONFIG['display_author'] && !empty($row['login']) ? $row['login'] : '',
-			'U_USER_ID' => '../member/member' . url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php'),
+			'U_USER_ID' => UserUrlBuilder::profile($row['user_id'])->absolute(),
 			'LEVEL' =>	isset($row['level']) ? $level[$row['level']] : '',
 			'DATE' => $NEWS_CONFIG['display_date'] ? sprintf($NEWS_LANG['on'], $timestamp->format(DATE_FORMAT_SHORT, TIMEZONE_AUTO)) : '',
 			'FEED_MENU' => Feed::get_feed_menu(FEED_URL)

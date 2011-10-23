@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-class AdminNewsletterStreamsListController extends AbstractController
+class AdminNewsletterStreamsListController extends AdminModuleController
 {
 	private $lang;
 	private $view;
@@ -71,14 +71,14 @@ class AdminNewsletterStreamsListController extends AbstractController
 		$nbr_pages =  ceil($nbr_cats / $this->nbr_categories_per_page);
 		$pagination = new Pagination($nbr_pages, $current_page);
 		
-		$pagination->set_url_sprintf_pattern(DispatchManager::get_url('/newsletter', '/admin/streams/list/'. $field .'/'. $sort .'/%d')->absolute());
+		$pagination->set_url_sprintf_pattern(NewsletterUrlBuilder::streams($field .'/'. $sort .'/%d')->absolute());
 		$this->view->put_all(array(
 			'C_STREAMS_EXIST' => (float)$nbr_cats,
-			'C_ADD_STREAM' => DispatchManager::get_url('/newsletter', '/admin/stream/add/')->absolute(),
-			'SORT_NAME_TOP' => DispatchManager::get_url('/newsletter', '/admin/streams/list/name/top/'. $current_page)->absolute(),
-			'SORT_NAME_BOTTOM' => DispatchManager::get_url('/newsletter', '/admin/streams/list/name/bottom/'. $current_page)->absolute(),
-			'SORT_STATUS_TOP' => DispatchManager::get_url('/newsletter', '/admin/streams/list/status/top/'. $current_page)->absolute(),
-			'SORT_STATUS_BOTTOM' => DispatchManager::get_url('/newsletter', '/admin/streams/list/status/bottom/'. $current_page)->absolute(),
+			'C_ADD_STREAM' => NewsletterUrlBuilder::add_stream()->absolute(),
+			'SORT_NAME_TOP' => NewsletterUrlBuilder::streams('name/top/'. $current_page)->absolute(),
+			'SORT_NAME_BOTTOM' => NewsletterUrlBuilder::streams('name/bottom/'. $current_page)->absolute(),
+			'SORT_STATUS_TOP' => NewsletterUrlBuilder::streams('status/top/'. $current_page)->absolute(),
+			'SORT_STATUS_BOTTOM' => NewsletterUrlBuilder::streams('status/bottom/'. $current_page)->absolute(),
 			'PAGINATION' => $pagination->export()->render()
 		));
 
@@ -96,8 +96,8 @@ class AdminNewsletterStreamsListController extends AbstractController
 		while ($row = $result->fetch())
 		{
 			$this->view->assign_block_vars('streams_list', array(
-				'EDIT_LINK' => DispatchManager::get_url('/newsletter', '/admin/stream/'. $row['id'] .'/edit/')->absolute(),
-				'DELETE_LINK' => DispatchManager::get_url('/newsletter', '/admin/stream/'. $row['id'] .'/delete/')->absolute(),
+				'EDIT_LINK' => NewsletterUrlBuilder::edit_stream($row['id'])->absolute(),
+				'DELETE_LINK' => NewsletterUrlBuilder::delete_stream($row['id'])->absolute(),
 				'NAME' => $row['name'],
 				'DESCRIPTION' => $row['description'],
 				'STATUS' => !$row['visible'] ? $this->lang['streams.visible-no'] : $this->lang['streams.visible-yes']

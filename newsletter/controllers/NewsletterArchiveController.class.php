@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-class NewsletterArchiveController extends AbstractController
+class NewsletterArchiveController extends ModuleController
 {
 	private $lang;
 	private $view;
@@ -63,13 +63,11 @@ class NewsletterArchiveController extends AbstractController
 		$this->build_form($request);
 		$this->view = new StringTemplate($this->contents);
 		$this->view->add_lang($this->lang);
-		$this->user = AppContext::get_user();
 	}
 
 	private function build_response(View $view)
 	{
-		$response = new SiteNodisplayResponse($view);
-		return $response;
+		return new SiteNodisplayResponse($view);
 	}
 }
 

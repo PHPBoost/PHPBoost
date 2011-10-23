@@ -25,15 +25,7 @@
  *
  ###################################################*/
 
-defined('PATH_TO_ROOT') or define('PATH_TO_ROOT', '..');
-require_once PATH_TO_ROOT . '/kernel/framework/core/environment/Environment.class.php';
-Environment::load_imports();
+require_once 'init.php';
 
-/* DEPRECATED VARS */
-$Cache = new Cache();
-$Bread_crumb = new BreadCrumb();
-/* END DEPRECATED */
-
-Environment::init();
-
+DeprecatedEnvironment::check_page_auth();
 ?>

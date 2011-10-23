@@ -86,7 +86,7 @@ if ($delete_file > 0)
 		if ($file_infos['nbr_com'] > 0)
 		{
 			
-			$Comments = new Comments('download', $delete_file, url('download.php?id=' . $delete_file . '&amp;com=%s', 'download-' . $delete_file . '.php?com=%s'));
+			$Comments = new CommentsTopic('download', $delete_file, url('download.php?id=' . $delete_file . '&amp;com=%s', 'download-' . $delete_file . '.php?com=%s'));
 			$Comments->delete_all($delete_file);
 		}
 		
@@ -164,9 +164,15 @@ $Template->set_filenames(array(
 	'file_management'=> 'download/file_management.tpl'
 ));
 
+$editor = AppContext::get_content_formatting_service()->get_default_editor();
+$editor->set_identifier('contents');
+
+$short_contents_editor = AppContext::get_content_formatting_service()->get_default_editor();
+$short_contents_editor->set_identifier('short_contents');
+
 $Template->put_all(array(
-	'KERNEL_EDITOR' => display_editor(),
-	'KERNEL_EDITOR_SHORT' => display_editor('short_contents'),
+	'KERNEL_EDITOR' => $editor->display(),
+	'KERNEL_EDITOR_SHORT' => $short_contents_editor->display(),
 	'C_PREVIEW' => $preview,
 	'L_PAGE_TITLE' => TITLE,
 	'L_EDIT_FILE' => $DOWNLOAD_LANG['edit_file'],
@@ -211,7 +217,7 @@ $Template->put_all(array(
     'L_DOWNLOAD_METHOD_EXPLAIN' => $DOWNLOAD_LANG['download_method_explain'],
     'L_FORCE_DOWNLOAD' => $DOWNLOAD_LANG['force_download'],
     'L_REDIRECTION' => $DOWNLOAD_LANG['redirection_up_to_file'],
-	'L_FILE_ADD' => $LANG['bb_upload']
+	'L_FILE_ADD' =>	LangLoader::get_message('bb_upload', 'bbcode-common')
 ));
 
 if ($edit_file_id > 0)
@@ -526,7 +532,7 @@ else
 				ContributionService::save_contribution($download_contribution);
 				
 				//Redirection to the contribution confirmation page
-				AppContext::get_response()->redirect('/download/contribution.php');
+				AppContext::get_response()->redirect(UserUrlBuilder::contribution_success()->absolute());
 			}
 			
 			//Updating the number of subfiles in each category
@@ -685,11 +691,15 @@ else
 			'U_TARGET' => url('management.php?new=1&amp;token=' . $Session->get_token())
 		));
 	}
+	
+	$editor = AppContext::get_content_formatting_service()->get_default_editor();
+	$editor->set_identifier('counterpart');
+
 	$Template->put_all(array(
 		'L_NOTICE_CONTRIBUTION' => $DOWNLOAD_LANG['notice_contribution'],
 		'L_CONTRIBUTION_COUNTERPART' => $DOWNLOAD_LANG['contribution_counterpart'],
 		'L_CONTRIBUTION_COUNTERPART_EXPLAIN' => $DOWNLOAD_LANG['contribution_counterpart_explain'],
-		'CONTRIBUTION_COUNTERPART_EDITOR' => display_editor('counterpart')
+		'CONTRIBUTION_COUNTERPART_EDITOR' => $editor->display()
 	));
 }
 

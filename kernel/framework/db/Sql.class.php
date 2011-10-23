@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                              mysql.class.php
+ // *                              Sql.class.php
  *                            -------------------
  *   begin                : April 08, 2008
  *   copyright            : (C) 2008 Régis Viarre, Loic Rouchon
@@ -38,6 +38,7 @@ define('CONNECTED_TO_DATABASE', 3);
 define('DBTYPE', 'mysql');
 
 /**
+ * @deprecated
  * @package {@package}
  * @author Régis Viarre crowkait@phpboost.com, Loic Rouchon <loic.rouchon@phpboost.com>
  * @desc This class manages all the database access done by PHPBoost.

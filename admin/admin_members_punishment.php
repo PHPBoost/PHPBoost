@@ -47,6 +47,10 @@ $template->put_all(array(
 
 $action = retrieve(GET, 'action', '');
 $id_get = retrieve(GET, 'id', 0);
+
+$editor = AppContext::get_content_formatting_service()->get_default_editor();
+$editor->set_identifier('action_contents');
+
 if ($action == 'punish') //Gestion des utilisateurs
 {
 	$readonly = retrieve(POST, 'new_info', 0);
@@ -110,8 +114,8 @@ if ($action == 'punish') //Gestion des utilisateurs
 			$template->assign_block_vars('list', array(
 				'LOGIN' => '<a href="admin_members_punishment.php?action=punish&amp;id=' . $row['user_id'] . '">' . $row['login'] . '</a>',
 				'INFO' => gmdate_format('date_format', $row['user_readonly']),
-				'U_PROFILE' => DispatchManager::get_url('/member', '/profile/'. $row['user_id'] .'/')->absolute(),
-				'U_ACTION_USER' => '<a href="admin_members_punishment.php?action=punish&amp;id=' . $row['user_id'] . '"><img src="../templates/' . get_utheme() . '/images/readonly.png" alt="" /></a>',
+				'U_PROFILE' => UserUrlBuilder::profile($row['user_id'])->absolute(),
+				'U_ACTION_USER' => '<a href="admin_members_punishment.php?action=punish&amp;id=' . $row['user_id'] . '"><img src="'. PATH_TO_ROOT .'/templates/' . get_utheme() . '/images/readonly.png" alt="" /></a>',
 				'U_PM' => url('.php?pm='. $row['user_id'], '-' . $row['user_id'] . '.php'),
 			));
 
@@ -161,9 +165,9 @@ if ($action == 'punish') //Gestion des utilisateurs
 		array_pop($array_sanction);
 		$template->put_all(array(
 			'C_USER_INFO' => true,
-			'KERNEL_EDITOR' => display_editor('action_contents'),
+			'KERNEL_EDITOR' => $editor->display(),
 			'ALTERNATIVE_PM' => ($key_sanction > 0) ? str_replace('%date%', $array_sanction[$key_sanction], $LANG['user_readonly_changed']) : str_replace('%date%', '1 ' . $LANG['minute'], $LANG['user_readonly_changed']),
-			'LOGIN' => '<a href="'. DispatchManager::get_url('/member', '/profile/'. $id_get .'/')->absolute() .'">' . $member['login'] . '</a>',
+			'LOGIN' => '<a href="'. UserUrlBuilder::profile($id_get)->absolute() .'">' . $member['login'] . '</a>',
 			'INFO' => $array_sanction[$key_sanction],
 			'SELECT' => $select,
 			'REPLACE_VALUE' => 'replace_value = parseInt(replace_value);'. "\n" .
@@ -260,8 +264,8 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 			$template->assign_block_vars('list', array(
 				'LOGIN' => $row['login'],
 				'INFO' => $row['user_warning'] . '%',
-				'U_ACTION_USER' => '<a href="admin_members_punishment.php?action=warning&amp;id=' . $row['user_id'] . '"><img src="../templates/' . get_utheme() . '/images/admin/important.png" alt="" /></a>',
-				'U_PROFILE' => DispatchManager::get_url('/member', '/profile/'. $row['user_id'] .'/')->absolute(),
+				'U_ACTION_USER' => '<a href="admin_members_punishment.php?action=warning&amp;id=' . $row['user_id'] . '"><img src="'. PATH_TO_ROOT .'/templates/' . get_utheme() . '/images/admin/important.png" alt="" /></a>',
+				'U_PROFILE' => UserUrlBuilder::profile($row['user_id'])->absolute(),
 				'U_PM' => url('.php?pm='. $row['user_id'], '-' . $row['user_id'] . '.php'),
 			));
 
@@ -293,9 +297,9 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 
 		$template->put_all(array(
 			'C_USER_INFO' => true,
-			'KERNEL_EDITOR' => display_editor('action_contents'),
+			'KERNEL_EDITOR' => $editor->display(),
 			'ALTERNATIVE_PM' => str_replace('%level%', $member['user_warning'], $LANG['user_warning_level_changed']),
-			'LOGIN' => '<a href="'. DispatchManager::get_url('/member', '/profile/'. $id_get .'/')->absolute() .'">' . $member['login'] . '</a>',
+			'LOGIN' => '<a href="'. UserUrlBuilder::profile($id_get)->absolute() .'">' . $member['login'] . '</a>',
 			'INFO' => $LANG['user_warning_level'] . ': ' . $member['user_warning'] . '%',
 			'SELECT' => $select,
 			'REPLACE_VALUE' => 'contents = contents.replace(regex, \' \' + replace_value + \'%\');' . "\n" . 'document.getElementById(\'action_info\').innerHTML = \'' . addslashes($LANG['user_warning_level']) . ': \' + replace_value + \'%\';',
@@ -369,8 +373,8 @@ elseif ($action == 'ban') //Gestion des utilisateurs
 			$template->assign_block_vars('list', array(
 				'LOGIN' => '<a href="admin_members_punishment.php?action=ban&amp;id=' . $row['user_id'] . '">' . $row['login'] . '</a>',
 				'INFO' => ($row['user_warning'] != 100) ? gmdate_format('date_format', $row['user_ban']) : $LANG['illimited'],
-				'U_PROFILE' => DispatchManager::get_url('/member', '/profile/'. $row['user_id'] .'/')->absolute(),
-				'U_ACTION_USER' => '<a href="admin_members_punishment.php?action=ban&amp;id=' . $row['user_id'] . '"><img src="../templates/' . get_utheme() . '/images/admin/forbidden.png" alt="" /></a>',
+				'U_PROFILE' => UserUrlBuilder::profile($row['user_id'])->absolute(),
+				'U_ACTION_USER' => '<a href="admin_members_punishment.php?action=ban&amp;id=' . $row['user_id'] . '"><img src="'. PATH_TO_ROOT .'/templates/' . get_utheme() . '/images/admin/forbidden.png" alt="" /></a>',
 				'U_PM' => url('.php?pm='. $row['user_id'], '-' . $row['user_id'] . '.php'),
 			));
 
@@ -421,9 +425,9 @@ elseif ($action == 'ban') //Gestion des utilisateurs
 
 		$template->put_all(array(
 			'C_USER_BAN' => true,
-			'KERNEL_EDITOR' => display_editor('action_contents'),
+			'KERNEL_EDITOR' => $editor->display(),
 			'BAN_OPTIONS' => $ban_options,
-			'LOGIN' => '<a href="'. DispatchManager::get_url('/member', '/profile/'. $id_get .'/')->absolute() .'">' . $mbr['login'] . '</a>',
+			'LOGIN' => '<a href="'. UserUrlBuilder::profile(id_get)->absolute() .'">' . $mbr['login'] . '</a>',
 			'U_PM' => url('.php?pm='. $id_get, '-' . $id_get . '.php'),
 			'U_ACTION_INFO' => '.php?action=ban&amp;id=' . $id_get . '&amp;token=' . $Session->get_token(),
 			'L_PM' => $LANG['user_contact_pm'],

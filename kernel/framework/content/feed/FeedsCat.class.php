@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                            feeds_cat.class.php
+ *                            FeedsCat.class.php
  *                            -------------------
  *   begin                : Februrary 25, 2009
  *   copyright            : (C) 2009 Loic Rouchon
@@ -24,8 +24,6 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
  ###################################################*/
-
-
 
 /**
  * @author Loic Rouchon <loic.rouchon@phpboost.com>
@@ -59,7 +57,7 @@ class FeedsCat
      */
     public function get_url($feed_type = '')
     {
-        $url = new Url('/syndication.php?m=' . $this->module_id . '&amp;cat=' . $this->id . '&amp;name=' . $feed_type);
+    	$url = DispatchManager::get_url('/syndication', '/rss/' . $this->module_id . '/' . $this->id . '/' . $feed_type . '/');
         return $url->relative();
     }
     

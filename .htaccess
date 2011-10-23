@@ -1,0 +1,2 @@
+# Error page #
+ErrorDocument 404 /trunk/user/?url=/error/404/

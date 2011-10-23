@@ -328,7 +328,7 @@
 							<table style="border:0;">
 								<tr>
 									<td style="width:34px;vertical-align:top;">
-										<img src="../templates/{THEME}/images/upload/{files.IMG}" alt="" />
+										<img src="{PATH_TO_ROOT}/templates/{THEME}/images/upload/{files.IMG}" alt="" />
 									</td>
 									<td style="padding-top:8px;">	
 										<a class="com" href="{files.URL}"{files.LIGHTBOX}><span id="fi1{files.ID}">{files.NAME}</span></a><span id="fi{files.ID}"></span><br />

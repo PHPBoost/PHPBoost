@@ -171,7 +171,7 @@
 				<fieldset>
 					<legend>{L_UPDATE_DATA_CACHED}</legend>
 					<p style="text-align:center;">
-						<a href="admin_forum_config.php?upd=1"><img src="../templates/{THEME}/images/admin/refresh.png" alt="" /></a>
+						<a href="admin_forum_config.php?upd=1"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/refresh.png" alt="" /></a>
 						<br />
 						<a href="admin_forum_config.php?upd=1">{L_UPDATE_DATA_CACHED}</a>
 					</p>

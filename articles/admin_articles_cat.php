@@ -79,8 +79,11 @@ if ($cat_to_del > 0)
 }
 elseif ($new_cat XOR $id_edit > 0)
 {
+	$editor = AppContext::get_content_formatting_service()->get_default_editor();
+	$editor->set_identifier('contents');
+	
 	$tpl->put_all(array(
-		'KERNEL_EDITOR' => display_editor(),
+		'KERNEL_EDITOR' => $editor->display(),
 		'L_CATEGORY' => $LANG['category'],
 		'L_REQUIRE' => $LANG['require'],
 		'L_PREVIEW' => $LANG['preview'],

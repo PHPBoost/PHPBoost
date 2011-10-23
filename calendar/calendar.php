@@ -57,9 +57,12 @@ if (!$User->check_auth($calendar_config->get_authorization(), AUTH_CALENDAR_READ
 }
 
 
-$comments = new Comments();
-$comments->set_module_name('calendar');
+$comments_topic = new CommentsTopic();
+$comments_topic->set_module_id('calendar');
 
+$editor = AppContext::get_content_formatting_service()->get_default_editor();
+$editor->set_identifier('contents');
+	
 $checkdate = checkdate($month, $day, $year); //Validité de la date entrée.
 if ($checkdate === true && empty($id) && !$add)
 {
@@ -249,15 +252,15 @@ if ($checkdate === true && empty($id) && !$add)
 				$java = '';
 			}
 
-			$comments->set_id_module($row['id']);
+			$comments_topic->set_id_in_module($row['id']);
 
 			$Template->assign_block_vars('action', array(
 				'DATE' => gmdate_format('date_format', $row['timestamp']),
 				'TITLE' => $row['title'],
 				'CONTENTS' => FormatingHelper::second_parse($row['contents']),
-				'LOGIN' => '<a class="com" href="../member/member' . url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '">' . $row['login'] . '</a>',
+				'LOGIN' => '<a class="com" href="'. UserUrlBuilder::profile($row['user_id'])->absolute() . '">' . $row['login'] . '</a>',
 				'COM' => '<a href="'. PATH_TO_ROOT .'/calendar/calendar' . url('.php?d=' . $day . '&amp;m=' . $month . '&amp;y=' . $year . '&amp;e=' . $row['id'] . '&amp;com=0', 
-					'-' . $day . '-' . $month . '-' . $year . '-' . $row['id'] . '.php?com=0') .'">'. CommentsService::get_number_and_lang_comments($comments) . '</a>',
+					'-' . $day . '-' . $month . '-' . $year . '-' . $row['id'] . '.php?com=0') .'">'. CommentsService::get_number_and_lang_comments('calendar', $row['id']) . '</a>',
 				'EDIT' => $edit,
 				'DEL' => $del,
 				'L_ON' => $LANG['on']
@@ -287,7 +290,7 @@ if ($checkdate === true && empty($id) && !$add)
 	if (isset($_GET['com']))
 	{
 		$Template->put_all(array(
-			'COMMENTS' => CommentsService::display($comments)->render()
+			'COMMENTS' => CommentsService::display($comments_topic)->render()
 		));
 	}
 
@@ -306,8 +309,8 @@ elseif (!empty($id))
 
 		$Sql->query_inject("DELETE FROM " . PREFIX . "calendar WHERE id = '" . $id . "'", __LINE__, __FILE__);
 
-		$comments->set_id_module($id);
-		CommentsService::delete_comments_module($comments);
+		$comments_topic->set_id_module($id);
+		CommentsService::delete_comments_module($comments_topic);
 
 		AppContext::get_response()->redirect(HOST . SCRIPT);
 	}
@@ -362,7 +365,7 @@ elseif (!empty($id))
 
 			$Template->put_all(array(
 				'C_CALENDAR_FORM' => true,
-				'KERNEL_EDITOR' => display_editor(),
+				'KERNEL_EDITOR' => $editor->display(),
 				'UPDATE' => url('?edit=1&amp;id=' . $id . '&amp;token=' . $Session->get_token()),
 				'DATE' => gmdate_format('date_format_short', $row['timestamp']),
 				'DAY_DATE' => !empty($row['timestamp']) ? gmdate_format('d', $row['timestamp']) : '',
@@ -464,7 +467,7 @@ elseif ($add) //Ajout d'un évenement
 
 		$Template->put_all(array(
 			'C_CALENDAR_FORM' => true,
-			'KERNEL_EDITOR' => display_editor(),
+			'KERNEL_EDITOR' => $editor->display(),
 			'UPDATE' => url('?add=1&amp;token=' . $Session->get_token()),
 			'DATE' => gmdate_format('date_format_short'),
 			'DAY_DATE' => $day,

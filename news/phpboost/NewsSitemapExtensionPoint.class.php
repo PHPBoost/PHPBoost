@@ -104,5 +104,4 @@ class NewsSitemapExtensionPoint implements SitemapExtensionPoint
 		return $category;
 	}
 }
-
 ?>

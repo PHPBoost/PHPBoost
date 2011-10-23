@@ -106,99 +106,6 @@ $LANG['register'] = 'S\'inscrire';
 $LANG['alert_delete_msg'] = 'Supprimer le/les message(s) ?';
 $LANG['alert_delete_file'] = 'Supprimer ce fichier ?';
 
-//bbcode
-$LANG['bb_smileys'] = 'Smileys';
-$LANG['bb_bold'] = 'Texte en gras : [b]texte[/b]';
-$LANG['bb_italic'] = 'Texte en italique : [i]texte[/i]';
-$LANG['bb_underline'] = 'Texte souligné : [u]texte[/u]';
-$LANG['bb_strike'] = 'Texte barré : [s]texte[/s]';
-$LANG['bb_link'] = 'Ajouter un lien : [url]lien[/url], ou [url=lien]nom du lien[/url]';
-$LANG['bb_picture'] = 'Ajouter une image : [img]url image[/img]';
-$LANG['bb_size'] = 'Taille du texte (X entre 0 - 49) : [size=X]texte de taille X[/size]';
-$LANG['bb_color'] = 'Couleur du texte : [color=X]texte de couleur X[/color]';
-$LANG['bb_quote'] = 'Faire une citation [quote=pseudo]texte[/quote]';
-$LANG['bb_left'] = 'Positionner à gauche : [align=left]objet à gauche[/align]';
-$LANG['bb_center'] = 'Centrer : [align=center]objet centré[/align]';
-$LANG['bb_right'] = 'Positionner à droite : [align=right]objet à droite[/align]';
-$LANG['bb_justify'] = 'Justifier : [align=justify]objet justifié[/align]';
-$LANG['bb_code'] = 'Insérer du code [code]texte[/code]';
-$LANG['bb_math'] = 'Insérer du code mathématique [math]texte[/math]';
-$LANG['bb_swf'] = 'Insérer du flash [swf=largeur,hauteur]adresse animation[/swf]';
-$LANG['bb_small'] = 'Réduire le champ texte';
-$LANG['bb_large'] = 'Agrandir le champ texte';
-$LANG['bb_title'] = 'Titre [title=x]texte[/title]';
-$LANG['bb_html'] = 'Code html [html]code[/html]';
-$LANG['bb_container'] = 'Conteneur';
-$LANG['bb_block'] = 'Bloc';
-$LANG['bb_fieldset'] = 'Bloc champs';
-$LANG['bb_style'] = 'Style [style=x]texte[/style]';
-$LANG['bb_hide'] = 'Cache le texte, affiche lors du clic [hide]texte[/hide]';
-$LANG['bb_float_left'] = 'Objet flottant à gauche [float=left]texte[/float]';
-$LANG['bb_float_right'] = 'Objet flottant à droite [float=right]texte[/float]';
-$LANG['bb_list'] = 'Liste [list][*]texte1[*]texte2[/list]';
-$LANG['bb_table'] = 'Tableau [table][row][col]texte[/col][col]texte2[/col][/row][/table]';
-$LANG['bb_indent'] = 'Indentation [indent]texte[/indent]';
-$LANG['bb_sup'] = 'Exposant [sup]texte[/sup]';
-$LANG['bb_sub'] = 'Indice [sub]texte[/sub]';
-$LANG['bb_anchor'] = 'Ancre vers un endroit de la page [anchor=x]texte[/anchor]';
-$LANG['bb_sound'] = 'Son [sound]adresse du son[/sound]';
-$LANG['bb_movie'] = 'Vidéo [movie=largeur,hauteur]adresse du fichier[/movie]';
-$LANG['bb_help'] = 'Aide BBcode';
-$LANG['bb_upload'] = 'Attacher un fichier';
-$LANG['bb_url_prompt'] = 'Adresse du lien ?';
-$LANG['bb_text'] = 'Texte';
-$LANG['bb_script'] = 'Script';
-$LANG['bb_web'] = 'Web';
-$LANG['bb_prog'] = 'Programmation';
-$LANG['lines'] = 'Nombre de lignes';
-$LANG['cols'] = 'Nombre de colonnes';
-$LANG['head_table'] = 'Entête';
-$LANG['head_add'] = 'Ajouter l\'entête';
-$LANG['insert_table'] = 'Insérer le tableau';
-$LANG['ordered_list'] = 'Liste ordonnée';
-$LANG['insert_list'] = 'Insérer la liste';
-$LANG['forbidden_tags'] = 'Types de formatage interdits';
-$LANG['phpboost_languages'] = 'PHPBoost';
-$LANG['wikipedia_subdomain'] = 'fr'; //Sous domaine sur wikipédia (ex fr pour fr.wikipedia.org)
-$LANG['code_too_long_error'] = 'Le code que vous voulez colorer est trop long et consommerait trop de ressources pour être interprété. Merci de réduire sa taille ou de l\'éclater en plusieurs morceaux.';
-$LANG['feed_tag_error'] = 'Le flux du module <em>:module</em> que vous souhaitez afficher n\'a pas pu être trouvé ou les options que vous avez rentrées ne sont pas correctes.';
-$LANG['format_bold'] = 'Gras';
-$LANG['format_italic'] = 'Italique';
-$LANG['format_underline'] = 'Souligné';
-$LANG['format_strike'] = 'Barré';
-$LANG['format_title'] = 'Titre';
-$LANG['format_style'] = 'Style';
-$LANG['format_url'] = 'Lien';
-$LANG['format_img'] = 'Image';
-$LANG['format_quote'] = 'Citation';
-$LANG['format_hide'] = 'Caché';
-$LANG['format_list'] = 'Liste';
-$LANG['format_color'] = 'Couleur';
-$LANG['format_bgcolor'] = 'Couleur de fond';
-$LANG['format_font'] = 'Police';
-$LANG['format_size'] = 'Taille';
-$LANG['format_align'] = 'Alignement';
-$LANG['format_float'] = 'Elément flottant';
-$LANG['format_sup'] = 'Exposant';
-$LANG['format_sub'] = 'Indice';
-$LANG['format_indent'] = 'Indentation';
-$LANG['format_pre'] = 'Préformaté';
-$LANG['format_table'] = 'Tableau';
-$LANG['format_flash'] = 'Flash';
-$LANG['format_movie'] = 'Vidéo';
-$LANG['format_sound'] = 'Son';
-$LANG['format_code'] = 'Code';
-$LANG['format_math'] = 'Mathématiques';
-$LANG['format_anchor'] = 'Ancre';
-$LANG['format_acronym'] = 'Acronyme';
-$LANG['format_block'] = 'Bloc';
-$LANG['format_fieldset'] = 'Zone de champs';
-$LANG['format_mail'] = 'Mail';
-$LANG['format_line'] = 'Ligne horizontale';
-$LANG['format_wikipedia'] = 'Lien Wikipédia';
-$LANG['format_html'] = 'Code HTML';
-$LANG['format_feed'] = 'Flux';
-
 //Impression
 $LANG['printable_version'] = 'Version imprimable';
 
@@ -375,10 +282,6 @@ $LANG['friday'] = 'Ven';
 $LANG['saturday'] = 'Sam';
 $LANG['sunday']	= 'Dim';
 
-//Commentaires
-$LANG['add_comment'] = 'Ajout commentaire';
-$LANG['edit_comment'] = 'Editer commentaire';
-
 //Membres
 $LANG['member_area'] = 'Zone membre';
 $LANG['profile'] = 'Profil';
@@ -438,47 +341,6 @@ $LANG['display'] = 'Afficher';
 $LANG['site_config_msg_mbr'] = 'Bienvenue sur le site. Vous êtes membre du site, vous pouvez accéder à tous les espaces nécessitant un compte utilisateur, éditer votre profil et voir vos contributions.';
 $LANG['register_agreement'] = 'Vous vous apprêtez à vous enregistrer sur le site. Nous vous demandons d\'être poli et courtois dans vos interventions.<br /><br />Merci, l\'équipe du site.';
 
-//Register
-$LANG['pseudo_how'] = 'Longueur minimale du pseudo : 3 caractères';
-$LANG['password_how'] = 'Longueur minimale du mot de passe : 6 caractères';
-$LANG['confirm_register'] = 'Merci de vous être enregistré %s. Un mail vous sera envoyé pour confirmer votre inscription.';
-$LANG['register_terms'] = 'Règlement';
-$LANG['register_accept'] = 'J\'accepte';
-$LANG['register_have_to_accept'] = 'Vous devez accepter le réglement pour pouvoir vous inscrire!';
-$LANG['activ_mbr_mail'] = 'Vous devrez activer votre compte dans l\'email qui vous sera envoyé avant de pouvoir vous connecter!';
-$LANG['activ_mbr_admin'] = 'Un administrateur devra activer votre compte avant de pouvoir vous connecter';
-$LANG['member_registered_to_approbate'] = 'Un nouveau membre s\'est inscrit. Son compte doit être approuvé avant de pouvoir être utilisé.';
-$LANG['activ_mbr_mail_success'] = 'Votre compte est désormais activé, vous pouvez vous connecter avec vos identifiants!';
-$LANG['activ_mbr_mail_error'] = 'Echec de l\'activation du compte';
-$LANG['weight_max'] = 'Poids maximum';
-$LANG['height_max'] = 'Hauteur maximale';
-$LANG['width_max'] = 'Largeur maximale';
-$LANG['verif_code'] = 'Code de vérification';
-$LANG['verif_code_explain'] = 'Recopier le code sur l\'image, attention aux majuscules';
-$LANG['require_verif_code'] = 'Veuillez saisir le code de vérification!';
-$LANG['timezone_choose'] = 'Choix du fuseau horaire';
-$LANG['timezone_choose_explain'] = 'Permet d\'ajuster l\'heure à votre localisation';
-$LANG['register_title_mail'] = 'Confirmation inscription sur %s';
-$LANG['register_ready'] = 'Vous pouvez désormais vous connecter à votre compte directement sur le site.';
-$LANG['register_valid_email_confirm'] = 'Vous devrez activer votre compte dans l\'email que vous reçevrez avant de pouvoir vous connecter.';
-$LANG['register_valid_email'] = 'Vous devez activer votre compte avant de pouvoir vous connecter en cliquant sur ce lien : %s';
-$LANG['register_valid_admin'] = 'Attention : Votre compte devra être activé par un administrateur avant de pouvoir vous connecter. Merci de votre patience.';
-$LANG['register_mail'] = 'Cher(e) %s,
-
-Tout d\'abord, merci de vous être inscrit sur %s. Vous faites parti dès maintenant des membres du site.
-En vous inscrivant sur %s, vous obtenez un accès à la zone membre qui vous offre plusieurs avantages. Vous pourrez, entre autre, être reconnu automatiquement sur tout le site, pour poster des messages, modifier la langue et/ou le thème par défaut, éditer votre profil, accéder à des catégories réservées aux membres... Bref vous accédez à toute la communauté du site.
-
-Pour vous connecter, il vous faudra retenir votre identifiant et votre mot de passe.
-
-Nous vous rappelons vos identifiants.
-
-Identifiant : %s
-Mot de passe : %s
-
-%s
-
-%s';
-
 //Mp
 $LANG['pm_box'] = 'Boîte de réception';
 $LANG['pm_track'] = 'Non lu par le destinataire';
@@ -491,23 +353,6 @@ $LANG['mark_pm_as_read'] = 'Marquer tous les messages privés comme lus';
 $LANG['participants'] = 'Participant(s)';
 $LANG['no_pm'] = 'Aucun message';
 $LANG['quote_last_msg'] = 'Reprise du message précédent';
-
-//Oublié
-$LANG['forget_pass'] = 'Mot de passe oublié';
-$LANG['change_password'] = 'Changement de mot de passe';
-$LANG['forget_pass_send'] = 'Renseignez le formulaire pour recevoir un mail avec une clé d\'activation pour pouvoir changer votre mot de passe';
-$LANG['forget_mail_pass'] = 'Cher(e) %s,
-
-Vous recevez cet e-mail parce que vous (ou quelqu\'un qui prétend l\'être) avez demandé à ce qu\'un nouveau mot de passe vous soit envoyé pour votre compte sur %s. 
-Si vous n\'avez pas demandé de changement de mot de passe, veuillez l\'ignorer. Si vous continuez à le recevoir, veuillez contacter l\'administrateur du site.
-
-Pour changer de mot de passe, cliquez sur le lien fourni ci-dessous et suivez les indications sur le site.
-
-%s/member/forget.php?u=%d&activ=%s
-
-Si vous rencontrez des difficultés, veuillez contacter l\'administrateur du site.
-
-%s';
 
 //Gestion des fichiers
 $LANG['confim_del_file'] = 'Supprimer ce fichier?';
@@ -652,4 +497,6 @@ $LANG['_code_dictionnary'] = array('image', 'php', 'requete', 'azerty', 'exit', 
 'editer', 'banni', 'niveau', 'dossier', 'fichier', 'racine', 'vider', 'archive', 'boite');
 
 $LANG['csrf_attack'] = 'Jeton de session invalide. Veuillez réessayer car l\'opération n\'a pas pu être effectuée.';
+
+$LANG['forbidden_tags'] = 'Types de formatage interdits';
 ?>

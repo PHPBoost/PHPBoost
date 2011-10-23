@@ -36,7 +36,7 @@ load_module_lang('media');
 
 require_once('media_constant.php');
 
-define('FEED_URL', '/syndication.php?m=media');
+define('FEED_URL', SyndicationUrlBuilder::rss('media')->absolute());
 
 function bread_crumb($id)
 {

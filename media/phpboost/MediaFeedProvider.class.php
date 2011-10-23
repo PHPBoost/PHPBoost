@@ -49,7 +49,7 @@ class MediaFeedProvider implements FeedProvider
         // Meta-informations generation
         $data->set_title($MEDIA_LANG['xml_media_desc']);
         $data->set_date(new Date());
-        $data->set_link(new Url('/syndication.php?m=media&amp;cat=' . $idcat));
+        $data->set_link(SyndicationUrlBuilder::rss('media', $idcat));
         $data->set_host(HOST);
         $data->set_desc($MEDIA_LANG['xml_media_desc']);
         $data->set_lang($LANG['xml_lang']);

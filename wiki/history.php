@@ -76,7 +76,7 @@ if (!empty($id_article))
 		
 		$Template->assign_block_vars('article.list', array(
 			'TITLE' => $LANG['wiki_consult_article'],
-			'AUTHOR' => !empty($row['login']) ? '<a href="../member/member' . url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '">' . $row['login'] . '</a>' : $row['user_ip'],
+			'AUTHOR' => !empty($row['login']) ? '<a href="'. UserUrlBuilder::profile($row['user_id'])->absolute() . '">' . $row['login'] . '</a>' : $row['user_ip'],
 			'DATE' => gmdate_format('date_format', $row['timestamp']),
 			'U_ARTICLE' => $row['activ'] == 1 ? url('wiki.php?title=' . $row['encoded_title'], $row['encoded_title']) : url('wiki.php?id_contents=' . $row['id_contents']),
 			'CURRENT_RELEASE' => $row['activ'] == 1 ? '(' . $LANG['wiki_current_version'] . ')' : '',
@@ -135,7 +135,7 @@ else //On affiche la liste des modifications
 	{
 		$Template->assign_block_vars('index.list', array(
 			'TITLE' => $row['title'],
-			'AUTHOR' => !empty($row['login']) ? '<a href="../member/member' . url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '">' . $row['login'] . '</a>' : $row['user_ip'],
+			'AUTHOR' => !empty($row['login']) ? '<a href="' . UserUrlBuilder::profile($row['user_id'])->absolute() . '">' . $row['login'] . '</a>' : $row['user_ip'],
 			'DATE' => gmdate_format('date_format', $row['timestamp']),
 			'U_ARTICLE' => url('wiki.php?title=' . $row['encoded_title'], $row['encoded_title'])
 		));

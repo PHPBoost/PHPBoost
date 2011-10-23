@@ -33,18 +33,16 @@ require_once('../admin/admin_header.php');
 
 $Cache->load('web');
 
+$web_config = WebConfig::load();
+
 if (!empty($_POST['valid']))
 {
-	$config_web = array();
-	$config_web['nbr_web_max'] = retrieve(POST, 'nbr_web_max', 10);
-	$config_web['nbr_cat_max'] = retrieve(POST, 'nbr_cat_max', 10);
-	$config_web['nbr_column'] = retrieve(POST, 'nbr_column', 2);
-	$config_web['note_max'] = max(1, retrieve(POST, 'note_max', 5));
+	$web_config->set_max_nbr_weblinks(retrieve(POST, 'nbr_web_max', 10));	
+	$web_config->set_max_nbr_category(retrieve(POST, 'nbr_cat_max', 10));
+	$web_config->set_number_columns(retrieve(POST, 'nbr_column', 2));
+	$web_config->set_note_max(retrieve(POST, 'note_max', 5));
 	
-	$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($config_web)) . "' WHERE name = 'web'", __LINE__, __FILE__);
-	
-	if ($CONFIG_WEB['note_max'] != $config_web['note_max'])
-		$Sql->query_inject("UPDATE " . PREFIX . "web SET note = note * " . ($config_web['note_max']/$CONFIG_WEB['note_max']), __LINE__, __FILE__);
+	WebConfig::save();
 	
 	###### Régénération du cache des news #######
 	$Cache->Generate_module_file('web');
@@ -59,10 +57,10 @@ else
 	));
 	
 	$Template->put_all(array(
-		'NBR_WEB_MAX' => !empty($CONFIG_WEB['nbr_web_max']) ? $CONFIG_WEB['nbr_web_max'] : '10',
-		'NBR_CAT_MAX' => !empty($CONFIG_WEB['nbr_cat_max']) ? $CONFIG_WEB['nbr_cat_max'] : '10',
-		'NBR_COLUMN' => !empty($CONFIG_WEB['nbr_column']) ? $CONFIG_WEB['nbr_column'] : '2',
-		'NOTE_MAX' => !empty($CONFIG_WEB['note_max']) ? $CONFIG_WEB['note_max'] : '10',
+		'NBR_WEB_MAX' => $web_config->get_max_nbr_weblinks(),
+		'NBR_CAT_MAX' => $web_config->get_max_nbr_category(),
+		'NBR_COLUMN' => $web_config->get_number_columns(),
+		'NOTE_MAX' => $web_config->get_note_max(),
 		'L_REQUIRE' => $LANG['require'],		
 		'L_WEB_MANAGEMENT' => $LANG['web_management'],
 		'L_WEB_ADD' => $LANG['web_add'],

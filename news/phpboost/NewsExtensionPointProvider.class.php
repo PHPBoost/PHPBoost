@@ -96,6 +96,11 @@ class NewsExtensionPointProvider extends ExtensionPointProvider
 	{
 		return new NewsSitemapExtensionPoint();
 	}
+	
+	public function css_files()
+	{
+		return new NewsCssFilesExtensionPoint();
+	}
 
 	public function get_home_page()
 	{
@@ -220,17 +225,17 @@ class NewsExtensionPointProvider extends ExtensionPointProvider
 						$timestamp = new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, $row['timestamp']);
 						$last_release = max($last_release, $row['start']);
 
-						$comments = new Comments();
-						$comments->set_module_name('news');
-						$comments->set_id_in_module($row['id']);
+						$comments_topic = new CommentsTopic();
+						$comments_topic->set_module_id('news');
+						$comments_topic->set_id_in_module($row['id']);
 		
 						$tpl->assign_block_vars('news', array(
 							'ID' => $row['id'],
 							'C_NEWS_ROW' => $new_row,
-							'U_SYNDICATION' => url('../syndication.php?m=news&amp;cat=' . $row['idcat']),
+							'U_SYNDICATION' => SyndicationUrlBuilder::rss('news', $row['idcat'])->rel(),
 							'U_LINK' => 'news' . url('.php?id=' . $row['id'], '-' . $row['idcat'] . '-' . $row['id'] . '+' . Url::encode_rewrite($row['title']) . '.php'),
 							'TITLE' => $row['title'],
-							'U_COM' => $NEWS_CONFIG['activ_com'] ? '<a href="'. PATH_TO_ROOT .'/news/news' . url('.php?id=' . $row['id'] . '&amp;com=0', '-' . $row['idcat'] . '-' . $row['id'] . '+' . Url::encode_rewrite($row['title']) . '.php?com=0') .'">'. CommentsService::get_number_and_lang_comments($comments) . '</a>' : '',
+							'U_COM' => $NEWS_CONFIG['activ_com'] ? '<a href="'. PATH_TO_ROOT .'/news/news' . url('.php?id=' . $row['id'] . '&amp;com=0', '-' . $row['idcat'] . '-' . $row['id'] . '+' . Url::encode_rewrite($row['title']) . '.php?com=0') .'">'. CommentsService::get_number_and_lang_comments($comments_topic) . '</a>' : '',
 							'C_EDIT' =>  $User->check_auth($NEWS_CONFIG['global_auth'], AUTH_NEWS_MODERATE) || $User->check_auth($NEWS_CONFIG['global_auth'], AUTH_NEWS_WRITE) && $row['user_id'] == $User->get_id(),
 							'C_DELETE' =>  $User->check_auth($NEWS_CONFIG['global_auth'], AUTH_NEWS_MODERATE),
 							'C_IMG' => !empty($row['img']),
@@ -242,7 +247,7 @@ class NewsExtensionPointProvider extends ExtensionPointProvider
 							'CONTENTS' => FormatingHelper::second_parse($row['contents']),
 							'EXTEND_CONTENTS' => !empty($row['extend_contents']) ? '<a style="font-size:10px" href="' . PATH_TO_ROOT . '/news/news' . url('.php?id=' . $row['id'], '-0-' . $row['id'] . '.php') . '" onclick="document.location = \'count.php?id='. $row['id'] .'\';">[' . $NEWS_LANG['extend_contents'] . ']</a><br /><br />' : '',
 							'PSEUDO' => $NEWS_CONFIG['display_author'] && !empty($row['login']) ? $row['login'] : '',
-							'U_USER_ID' => '../member/member' . url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php'),
+							'U_USER_ID' => UserUrlBuilder::profile($row['user_id'])->absolute(),
 							'LEVEL' =>	isset($row['level']) ? $level[$row['level']] : '',
 							'DATE' => $NEWS_CONFIG['display_date'] ? sprintf($NEWS_LANG['on'], $timestamp->format(DATE_FORMAT_SHORT, TIMEZONE_AUTO)) : '',
 							'FEED_MENU' => Feed::get_feed_menu(FEED_URL)
@@ -300,7 +305,7 @@ class NewsExtensionPointProvider extends ExtensionPointProvider
 		// Var commune
 		$tpl->put_all(array(
 			'L_ALERT_DELETE_NEWS' => $NEWS_LANG['alert_delete_news'],
-			'U_SYNDICATION' => url('../syndication.php?m=news' . ($cat > 0  ? '&amp;cat=' . $cat : '')),
+			'U_SYNDICATION' => SyndicationUrlBuilder::rss('news', $cat)->rel(),
 			'L_SYNDICATION' => $LANG['syndication'],
 			'C_ADD_OR_WRITER' => $c_add || $c_writer,
 			'C_ADD' => $c_add,
@@ -396,5 +401,4 @@ class NewsExtensionPointProvider extends ExtensionPointProvider
 		return $category;
 	}
 }
-
 ?>

@@ -106,5 +106,4 @@ class PagesSetup extends DefaultModuleSetup
 		PersistenceContext::get_dbms_utils()->create_table(self::$pages_cats_table, $fields, $options);
 	}
 }
-
 ?>

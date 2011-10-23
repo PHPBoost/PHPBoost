@@ -42,7 +42,7 @@ $field = !empty($_GET['field']) ? trim($_GET['field']) : 'calendar';
 $input_field = !empty($_GET['input_field']) ? trim($_GET['input_field']) : '';
 $lyear = !empty($_GET['lyear']) ? '&amp;lyear=1' : '';
 
-$Template = new FileTemplate('framework/mini_calendar_response.tpl');
+$Template = new FileTemplate('framework/util/mini_calendar_response.tpl');
 
 //Type date.
 if ($calendar_type == 'date')

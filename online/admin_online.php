@@ -33,14 +33,10 @@ require_once('../admin/admin_header.php');
 
 if (!empty($_POST['valid']))
 {
-	$config_online = array();
-	$config_online['online_displayed'] = retrieve(POST, 'online_displayed', 4);
-	$config_online['display_order_online'] = retrieve(POST, 'display_order_online', 's.level, s.session_time DESC');
-
-	$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($config_online)) . "' WHERE name = 'online'", __LINE__, __FILE__);
-
-	###### Régénération du cache des online #######
-	$Cache->Generate_module_file('online');
+	$online_config = OnlineConfig::load();
+	$online_config->set_display_order(retrieve(POST, 'display_order_online', 's.level, s.session_time DESC'));
+	$online_config->set_number_member_displayed(retrieve(POST, 'online_displayed', 4));
+	OnlineConfig::save();
 
 	AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);
 }
@@ -51,10 +47,10 @@ else
 		'admin_online'=> 'online/admin_online.tpl'
 	));
 
-	$Cache->load('online');
+	$online_config = OnlineConfig::load();
 
 	$Template->put_all(array(
-		'NBR_ONLINE_DISPLAYED' => !empty($CONFIG_ONLINE['online_displayed']) ? $CONFIG_ONLINE['online_displayed'] : 4,
+		'NBR_ONLINE_DISPLAYED' => $online_config->get_number_member_displayed(),
 		'L_ONLINE_CONFIG' => $LANG['online_config'],
 		'L_NBR_ONLINE_DISPLAYED' => $LANG['nbr_online_displayed'],
 		'L_DISPLAY_ORDER' => $LANG['display_order_online'],
@@ -63,13 +59,13 @@ else
 	));
 
 	$array_order_online = array(
-		'u.level DESC' => $LANG['ranks'],
-		's.expiry DESC' => $LANG['last_update'],
-		'u.level DESC, s.expiry DESC' => $LANG['ranks'] . ' ' . $LANG['and'] . ' ' . $LANG['last_update']
+		OnlineConfig::LEVEL_DISPLAY_ORDER => $LANG['ranks'], 
+		OnlineConfig::SESSION_TIME_DISPLAY_ORDER => $LANG['last_update'], 
+		OnlineConfig::LEVEL_AND_SESSION_TIME_DISPLAY_ORDER => $LANG['ranks'] . ' ' . $LANG['and'] . ' ' . $LANG['last_update']
 	);
 	foreach ($array_order_online as $key => $value)
 	{
-		$selected = ($CONFIG_ONLINE['display_order_online'] == $key) ? 'selected="selected"' : '' ;
+		$selected = ($online_config->get_display_order() == $key) ? 'selected="selected"' : '' ;
 		$Template->assign_block_vars('display_order', array(
 			'ORDER' => '<option value="' . $key . '" ' . $selected . '>' . $value . '</option>'
 		));

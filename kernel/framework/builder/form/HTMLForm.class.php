@@ -180,7 +180,8 @@ class HTMLForm
 		$field = $this->get_field_by_id($field_id);
 		if ($field == null)
 		{
-			return true;
+			throw new FormBuilderException('The field "' . $field_id .
+			'" doesn\'t exists in the "' . $this->html_id . '" form');
 		}
 		elseif ($field->is_disabled())
 		{

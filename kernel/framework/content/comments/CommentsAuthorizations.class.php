@@ -31,64 +31,112 @@
  */
 class CommentsAuthorizations
 {
-	private $array_authorization = array();
-	private $read_bit = 0;
-	private $post_bit = 0;
-	private $moderation_bit = 0;
+	private $authorized_access_module = true;
+	
+	private $authorized_read = null;
+	private $authorized_post = null;
+	private $authorized_moderation = null;
+	private $authorized_note = null;
 	
 	const READ_AUTHORIZATIONS = 1;
 	const POST_AUTHORIZATIONS = 2;
 	const MODERATION_AUTHORIZATIONS = 4;
-	
-	/*
-	 * Setters
-	*/
-	public function set_array_authorization(Array $array_authorization)
+	const NOTE_AUTHORIZATIONS = 8;
+
+	public function is_authorized_access_module()
 	{
-		$this->array_authorization = $array_authorization;
-	}
-	
-	public function set_read_bit($read_bit)
-	{
-		$this->read_bit = $read_bit;
-	}
-	
-	public function set_post_bit($post_bit)
-	{
-		$this->post_bit = $post_bit;
-	}
-	
-	public function set_moderation_bit($moderation_bit)
-	{
-		$this->moderation_bit = $moderation_bit;
+		return $this->authorized_access_module;
 	}
 	
 	public function is_authorized_read()
 	{
-		return $this->check_authorizations($this->read_bit, self::READ_AUTHORIZATIONS);
+		return $this->check_authorizations(self::READ_AUTHORIZATIONS);
 	}
 	
 	public function is_authorized_post()
 	{
-		return $this->check_authorizations($this->post_bit, self::POST_AUTHORIZATIONS);
+		return $this->check_authorizations(self::POST_AUTHORIZATIONS);
 	}
 	
 	public function is_authorized_moderation()
 	{
-		return $this->check_authorizations($this->moderation_bit, self::MODERATION_AUTHORIZATIONS);
+		return $this->check_authorizations(self::MODERATION_AUTHORIZATIONS);
 	}
 	
-	private function check_authorizations($bit, $global_bit)
+	public function is_authorized_note()
 	{
-		if (!empty($this->array_authorization) && $bit !== 0)
+		return $this->check_authorizations(self::NOTE_AUTHORIZATIONS);
+	}
+	
+	/**
+	 * @param boolean $authorized
+	 */
+	public function set_authorized_access_module($authorized)
+	{
+		$this->authorized_access_module = $authorized;
+	}
+	
+	/**
+	 * @param boolean $authorized
+	 */
+	public function set_authorized_read($authorized)
+	{
+		$this->authorized_read = $authorized;
+	}
+	
+	/**
+	 * @param boolean $authorized
+	 */
+	public function set_authorized_post($authorized)
+	{
+		$this->authorized_post = $authorized;
+	}
+	
+	/**
+	 * @param boolean $authorized
+	 */
+	public function set_authorized_moderation($authorized)
+	{
+		$this->authorized_moderation = $authorized;
+	}
+	
+	/**
+	 * @param boolean $authorized
+	 */
+	public function set_authorized_note($authorized)
+	{
+		$this->authorized_note = $authorized;
+	}
+	
+	private function check_authorizations($global_bit)
+	{
+		$manual_authorizations = $this->manual_authorizations($global_bit);
+		if ($manual_authorizations !== null)
 		{
-			//return AppContext::get_user()->check_auth($this->array_authorization, $bit);
-			return true;
+			return $manual_authorizations;
 		}
 		else
 		{
-			//return AppContext::get_user()->check_auth(CommentsConfig::load()->get_authorizations(), $global_bit);
-			return true;
+			return AppContext::get_user()->check_auth(CommentsConfig::load()->get_authorizations(), $global_bit);
+		}
+	}
+	
+	private function manual_authorizations($type)
+	{
+		switch ($type) 
+		{
+			case self::READ_AUTHORIZATIONS:
+				return $this->authorized_read;
+			break;
+			case self::POST_AUTHORIZATIONS:
+				return $this->authorized_post;
+			break;
+			case self::MODERATION_AUTHORIZATIONS:
+				return $this->authorized_post;
+			break;
+			case self::NOTE_AUTHORIZATIONS:
+				return $this->authorized_note;
+			break;
 		}
 	}
 }

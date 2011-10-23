@@ -143,7 +143,7 @@
 						</script>
 					# ENDIF #
 					<p style="text-align:center;">
-						<a href="{category.U_CREATE_BEFORE}" title="{L_INSERT_QUESTION_BEFORE}"><img src="../templates/{THEME}/images/{LANG}/add.png" alt="{L_INSERT_QUESTION_BEFORE}" /></a>
+						<a href="{category.U_CREATE_BEFORE}" title="{L_INSERT_QUESTION_BEFORE}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/add.png" alt="{L_INSERT_QUESTION_BEFORE}" /></a>
 					</p>
 					<br />
 					# START category.questions #
@@ -154,7 +154,7 @@
 							</span>
 							<span class="row2" style="float:right;">
 								<a href="{category.questions.U_MOVE}" title="{L_MOVE}">
-									<img src="../templates/{THEME}/images/upload/move.png" alt="{L_MOVE}" />
+									<img src="{PATH_TO_ROOT}/templates/{THEME}/images/upload/move.png" alt="{L_MOVE}" />
 								</a>
 								# START category.questions.up #
 									<a href="{category.questions.U_UP}" title="{L_UP}">
@@ -166,8 +166,8 @@
 										<img src="{PICTURES_DATA_PATH}/images/down.png" alt="{L_DOWN}" />
 									</a>
 								# END category.questions.down #
-								<a href="{category.questions.U_EDIT}" title="{L_EDIT}"><img src="../templates/{THEME}/images/{LANG}/edit.png" alt="{L_EDIT}" /></a>
-								<a href="{category.questions.U_DEL}" onclick="return confirm('{L_CONFIRM_DELETE}');" title="{L_DELETE}"><img src="../templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" /></a>
+								<a href="{category.questions.U_EDIT}" title="{L_EDIT}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="{L_EDIT}" /></a>
+								<a href="{category.questions.U_DEL}" onclick="return confirm('{L_CONFIRM_DELETE}');" title="{L_DELETE}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" /></a>
 							</span>
 							<div style="clear:both"></div>
 						</div>
@@ -177,7 +177,7 @@
 						</div>	
 						<br />
 						<div style="text-align:center;">
-							<a href="{category.questions.U_CREATE_AFTER}" title="{L_INSERT_QUESTION}"><img src="../templates/{THEME}/images/{LANG}/add.png" alt="{L_INSERT_QUESTION}" /></a>
+							<a href="{category.questions.U_CREATE_AFTER}" title="{L_INSERT_QUESTION}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/add.png" alt="{L_INSERT_QUESTION}" /></a>
 						</div>
 						<br />
 					# END category.questions #

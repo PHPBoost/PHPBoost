@@ -1,16 +1,17 @@
-<div class="msg_position">
-	<div class="msg_top_l"></div>			
-	<div class="msg_top_r"></div>
-	<div class="msg_top">
-		<div style="float:left;">{PAGINATION}&nbsp;</div>
-		<div style="float:right;text-align: center;">
-			# IF COM_LOCK #
-			<a href="{U_LOCK}">{L_LOCK}</a> <a href="{U_LOCK}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/{IMG}.png" alt="" class="valign_middle" /></a>
-			# ENDIF #
-		</div>
-	</div>	
-</div>
 # START comments_list #
+<script type="text/javascript">
+<!--
+Event.observe(window, 'load', function() {
+	Event.observe($('positive_note_{comments_list.COMMENT_ID}'), 'click', function() {
+		CommentsService.positive_vote(${escapejs(MODULE_ID)}, ${escapejs(ID_IN_MODULE)}, ${escapejs(comments_list.COMMENT_ID)});
+	});
+	
+	Event.observe($('negative_note_{comments_list.COMMENT_ID}'), 'click', function() {
+		CommentsService.negative_vote(${escapejs(MODULE_ID)}, ${escapejs(ID_IN_MODULE)}, ${escapejs(comments_list.COMMENT_ID)});
+	});
+});
+//-->
+</script>
 <div class="msg_position">
 	<div class="msg_container">
 		<div class="msg_top_row">
@@ -20,10 +21,18 @@
 		<div class="msg_contents_container">
 			<div class="msg_info_mbr">
 			</div>
+			<a href="{comments_list.EDIT_COMMENT}">
+				<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="{L_UPDATE}" title="{L_UPDATE}" class="valign_middle" />
+			</a> 
+			<a href="{comments_list.DELETE_COMMENT}">
+				<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" class="valign_middle" />
+			</a>
 			<div class="msg_contents">
 				<div class="msg_contents_overflow">
 					{comments_list.MESSAGE}
 				</div>
+				<button type="submit" id="positive_note_{comments_list.COMMENT_ID}" class="submit">+1</button>
+				<button type="submit" id="negative_note_{comments_list.COMMENT_ID}" class="submit">-1</button>
 			</div>
 		</div>
 	</div>	
@@ -36,8 +45,3 @@
 	</div>	
 </div>
 # END comments_list #
-<div class="msg_position">		
-	<div class="msg_bottom_l"></div>		
-	<div class="msg_bottom_r"></div>
-	<div class="msg_bottom" style="text-align:center;">{PAGINATION}&nbsp;</div>
-</div>

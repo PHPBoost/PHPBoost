@@ -277,8 +277,8 @@ else //Affichage.
 		$readonly = '';
 		if ($is_modo && !$is_guest) //Modération.
 		{
-			$warning = '&nbsp;<a href="../member/moderation_panel' . url('.php?action=warning&amp;id=' . $row['user_id']) . '" title="' . $LANG['warning_management'] . '"><img src="../templates/' . get_utheme() . '/images/admin/important.png" alt="' . $LANG['warning_management'] .  '" class="valign_middle" /></a>';
-			$readonly = '<a href="../member/moderation_panel' . url('.php?action=punish&amp;id=' . $row['user_id']) . '" title="' . $LANG['punishment_management'] . '"><img src="../templates/' . get_utheme() . '/images/readonly.png" alt="' . $LANG['punishment_management'] .  '" class="valign_middle" /></a>';
+			$warning = '&nbsp;<a href="../user/moderation_panel' . url('.php?action=warning&amp;id=' . $row['user_id']) . '" title="' . $LANG['warning_management'] . '"><img src="../templates/' . get_utheme() . '/images/admin/important.png" alt="' . $LANG['warning_management'] .  '" class="valign_middle" /></a>'; 
+			$readonly = '<a href="../user/moderation_panel' . url('.php?action=punish&amp;id=' . $row['user_id']) . '" title="' . $LANG['punishment_management'] . '"><img src="../templates/' . get_utheme() . '/images/readonly.png" alt="' . $LANG['punishment_management'] .  '" class="valign_middle" /></a>'; 
 		}
 
 		//Edition/suppression.
@@ -290,7 +290,7 @@ else //Affichage.
 
 		//Pseudo.
 		if (!$is_guest)
-			$shout_pseudo = '<a class="msg_link_pseudo" href="../member/member' . url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '" title="' . $row['mlogin'] . '"><span style="font-weight: bold;">' . TextHelper::wordwrap_html($row['mlogin'], 13) . '</span></a>';
+			$shout_pseudo = '<a class="msg_link_pseudo" href="'. UserUrlBuilder::profile($row['user_id'])->absolute() . '" title="' . $row['mlogin'] . '"><span style="font-weight: bold;">' . TextHelper::wordwrap_html($row['mlogin'], 13) . '</span></a>';
 		else
 			$shout_pseudo = '<span style="font-style:italic;">' . (!empty($row['login']) ? TextHelper::wordwrap_html($row['login'], 13) : $LANG['guest']) . '</span>';
 
@@ -393,7 +393,7 @@ else //Affichage.
 			'PUNISHMENT' => $readonly,
 			'DEL' => $del_message,
 			'EDIT' => $edit_message,
-			'U_USER_PM' => !$is_guest ? '<a href="../member/pm' . url('.php?pm=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/pm.png" alt="" /></a>' : '',
+			'U_USER_PM' => !$is_guest ? '<a href="'. UserUrlBuilder::personnal_message($row['user_id'])->absolute() . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/pm.png" alt="" /></a>' : '',
 			'U_ANCHOR' => 'shoutbox.php#m' . $row['id']
 		));
 		$j++;

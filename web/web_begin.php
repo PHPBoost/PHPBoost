@@ -29,6 +29,7 @@ if (defined('PHPBOOST') !== true)
 	exit;
 	
 load_module_lang('web'); //Chargement de la langue du module.
+$web_config = WebConfig::load();
 
 $get_note = retrieve(GET, 'note', 0);
 $idweb = retrieve(GET, 'id', 0);

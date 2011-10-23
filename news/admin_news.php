@@ -91,7 +91,7 @@ while ($row = $Sql->fetch_assoc($result))
 		'TITLE' => $title,
 		'U_NEWS' => 'news' . url('.php?id=' . $row['id'], '-' . $row['idcat'] . '-' . $row['id'] . '+' . Url::encode_rewrite($row['title']) . '.php'),
 		'LOGIN' => !empty($row['login']) ? $row['login'] : $LANG['guest'],
-		'U_USER' => !empty($row['login']) ? '../member/member' . url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') : 0,
+		'U_USER' => !empty($row['login']) ? UserUrlBuilder::profile($row['user_id'])->absolute() : 0,
 		'LEVEL' => !empty($row['login']) ? $level[$row['level']] : 0,
 		'CATEGORY' => !empty($NEWS_CAT[$row['idcat']]['name']) ? $NEWS_CAT[$row['idcat']]['name'] : '',
 		'U_CAT' => 'news' . url('.php?cat=' . $row['idcat'], '-' . $row['idcat'] . '+' . Url::encode_rewrite($NEWS_CAT[$row['idcat']]['name']) . '.php'),

@@ -73,8 +73,6 @@ $ARTICLES_LANG = array(
 	'articles_date' =>'Article date <span class="text_small">(dd/mm/yy)</span> <br />
 <span class="text_small">(Leave empty to set today date)</span>',
 	'explain_page' => 'Insert a new page',
-	'contribution_confirmation' =>  'Confirmation of the contribution',
-	'contribution_confirmation_explain' => '<p>You will be able to follow the evolution of the validation process of your contribution in the <a href="' . url('../member/contribution_panel.php') . '">contribution panel of PHPBoost</a>. You also will manage to chat with the approbators if they are skeptical about your participation.</p><p>Thanks for having participated to the website life!</p>',
 	'contribution_counterpart' => 'Contribution counterpart',
 	'contribution_counterpart_explain' => 'Tell us why you want us to add this article. This field is not required, but it may help the moderator to take his decision.',
 	'contribution_entitled' => '[Articles] %s',

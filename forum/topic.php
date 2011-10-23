@@ -362,7 +362,7 @@ while ( $row = $Sql->fetch_assoc($result) )
 
 	//Affichage du nombre de message.
 	if ($row['user_msg'] >= 1)
-		$user_msg = '<a href="../forum/membermsg' . url('.php?id=' . $row['user_id'], '') . '" class="small_link">' . $LANG['message_s'] . '</a>: ' . $row['user_msg'];
+		$user_msg = '<a href="'. UserUrlBuilder::member_message($row['user_id'])->absolute() . '" class="small_link">' . $LANG['message_s'] . '</a>: ' . $row['user_msg'];
 	else		
 		$user_msg = (!$is_guest) ? '<a href="../forum/membermsg' . url('.php?id=' . $row['user_id'], '') . '" class="small_link">' . $LANG['message'] . '</a>: 0' : $LANG['message'] . ': 0';		
 	
@@ -398,16 +398,16 @@ while ( $row = $Sql->fetch_assoc($result) )
 		'C_FORUM_USER_EDITOR' => ($row['timestamp_edit'] > 0 && $CONFIG_FORUM['edit_mark'] == '1'), //Ajout du marqueur d'édition si activé.
 		'C_FORUM_USER_EDITOR_LOGIN' => !empty($row['login_edit']) ? true : false,
 		'C_FORUM_MODERATOR' => $moderator,
-		'U_FORUM_USER_LOGIN' => url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php'),			
+		'U_FORUM_USER_PROFILE' => UserUrlBuilder::profile($row['user_id'])->absolute(),
 		'U_FORUM_MSG_EDIT' => url('.php?new=msg&amp;idm=' . $row['id'] . '&amp;id=' . $topic['idcat'] . '&amp;idt=' . $id_get),
-		'U_FORUM_USER_EDITOR_LOGIN' => url('.php?id=' . $row['user_id_edit'], '-' . $row['user_id_edit'] . '.php'),
+		'U_FORUM_USER_EDITOR_PROFILE' => UserUrlBuilder::profile($row['user_id_edit'])->absolute(),
 		'U_FORUM_MSG_DEL' => url('.php?del=1&amp;idm=' . $row['id'] . '&amp;token=' . $Session->get_token()),
 		'U_FORUM_WARNING' => url('.php?action=warning&amp;id=' . $row['user_id']),
 		'U_FORUM_PUNISHEMENT' => url('.php?action=punish&amp;id=' . $row['user_id']),
 		'U_FORUM_MSG_CUT' => url('.php?idm=' . $row['id']),
 		'U_VARS_ANCRE' => url('.php?id=' . $id_get . (!empty($page) ? '&amp;pt=' . $page : ''), '-' . $id_get . (!empty($page) ? '-' . $page : '') . $rewrited_title . '.php'),
 		'U_VARS_QUOTE' => url('.php?quote=' . $row['id'] . '&amp;id=' . $id_get . (!empty($page) ? '&amp;pt=' . $page : ''), '-' . $id_get . (!empty($page) ? '-' . $page : '-0') . '-0-' . $row['id'] . $rewrited_title . '.php'),
-		'USER_PM' => !$is_guest ? '<a href="../member/pm' . url('.php?pm=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/pm.png" alt="pm" /></a>' : '',
+		'USER_PM' => !$is_guest ? '<a href="'. UserUrlBuilder::personnal_message($row['user_id'])->absolute() . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/pm.png" alt="pm" /></a>' : '',
 	));
 	
 	//Marqueur de suivis du sujet.
@@ -489,10 +489,14 @@ else
 	$img_track_display = $track ? 'untrack_mini.png' : 'track_mini.png';
 	$img_track_pm_display = $track_pm ? 'untrack_pm_mini.png' : 'track_pm_mini.png';
 	$img_track_mail_display = $track_mail ? 'untrack_mail_mini.png' : 'track_mail_mini.png';
+	
+	$editor = AppContext::get_content_formatting_service()->get_default_editor();
+	$editor->set_identifier('contents');
+	
 	$Template->put_all(array(
 		'C_AUTH_POST' => true,
 		'CONTENTS' => $contents,
-		'KERNEL_EDITOR' => display_editor(),
+		'KERNEL_EDITOR' => $editor->display(),
 		'ICON_TRACK' => '<img src="' . $module_data_path . '/images/' . $img_track_display . '" alt="" class="valign_middle" />',
 		'ICON_TRACK2' => '<img src="' . $module_data_path . '/images/' . $img_track_display . '" alt="" class="valign_middle" id="forum_track_img" />',
 		'ICON_SUSCRIBE_PM' => '<img src="' . $module_data_path . '/images/' . $img_track_pm_display . '" alt="" class="valign_middle" />',

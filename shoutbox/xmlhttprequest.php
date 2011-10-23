@@ -80,7 +80,7 @@ if ($add)
 
 			$array_class = array('member', 'modo', 'admin');
 			if ($User->get_id() !== -1)
-				$shout_pseudo = '<a href="javascript:Confirm_del_shout(' . $last_msg_id . ');" title="' . $LANG['delete'] . '"><img src="../templates/' . get_utheme() . '/images/delete_mini.png" alt="" /></a> <a style="font-size:10px;" class="' . $array_class[$User->get_level()] . '" href="../member/member' . url('.php?id=' . $User->get_id(), '-' . $User->get_id() . '.php') . '">' . (!empty($shout_pseudo) ? TextHelper::wordwrap_html($shout_pseudo, 16) : $LANG['guest'])  . '</a>';
+				$shout_pseudo = '<a href="javascript:Confirm_del_shout(' . $last_msg_id . ');" title="' . $LANG['delete'] . '"><img src="../templates/' . get_utheme() . '/images/delete_mini.png" alt="" /></a> <a style="font-size:10px;" class="' . $array_class[$User->get_level()] . '" href="' . UserUrlBuilder::profile($User->get_id())->absolute() . '">' . (!empty($shout_pseudo) ? TextHelper::wordwrap_html($shout_pseudo, 16) : $LANG['guest'])  . '</a>';
 			else
 				$shout_pseudo = '<span class="text_small" style="font-style: italic;">' . (!empty($shout_pseudo) ? TextHelper::wordwrap_html($shout_pseudo, 16) : $LANG['guest']) . '</span>';
 
@@ -110,7 +110,7 @@ elseif ($refresh)
 			$del = '';
 
 		if ($row['user_id'] !== -1)
-			$row['login'] = $del . ' <a style="font-size:10px;" class="' . $array_class[$row['level']] . '" href="../member/member' . url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '">' . (!empty($row['login']) ? TextHelper::wordwrap_html($row['login'], 16) : $LANG['guest'])  . '</a>';
+			$row['login'] = $del . ' <a style="font-size:10px;" class="' . $array_class[$row['level']] . '" href="'. UserUrlBuilder::profile($row['user_id'])->absolute()  . '">' . (!empty($row['login']) ? TextHelper::wordwrap_html($row['login'], 16) : $LANG['guest'])  . '</a>';
 		else
 			$row['login'] = $del . ' <span class="text_small" style="font-style: italic;">' . (!empty($row['login']) ? TextHelper::wordwrap_html($row['login'], 16) : $LANG['guest']) . '</span>';
 

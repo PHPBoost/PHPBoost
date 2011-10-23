@@ -36,8 +36,8 @@
 						<div class="msg_container">
 							<div class="msg_pseudo_mbr"></div>
 							<div class="msg_top_row">
-								<div style="float:left;">&nbsp;&nbsp;<img src="../templates/{THEME}/images/ancre.png" alt="" /> {DATE}</div>
-								<div style="float:right;"><img src="../templates/{THEME}/images/{LANG}/quote.png" alt="" title="" />&nbsp;&nbsp;</div>
+								<div style="float:left;">&nbsp;&nbsp;<img src="{PATH_TO_ROOT}/templates/{THEME}/images/ancre.png" alt="" /> {DATE}</div>
+								<div style="float:right;"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/quote.png" alt="" title="" />&nbsp;&nbsp;</div>
 							</div>
 							<div class="msg_contents_container">
 								<div class="msg_info_mbr">
@@ -52,7 +52,7 @@
 						<div class="msg_sign">
 							<hr />
 							<span style="float:left;">
-								<img src="../templates/{THEME}/images/{LANG}/pm.png" alt="pm" />
+								<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/pm.png" alt="pm" />
 							</span>
 							<span style="float:right;font-size:10px;">
 							</span>&nbsp;

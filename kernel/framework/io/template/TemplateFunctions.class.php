@@ -102,5 +102,15 @@ class TemplateFunctions
     {
     	return StringVars::replace_vars($string, $parameters);
     }
+	
+	public function relative_url(Url $url)
+	{
+		return $url->rel();
+	}
+	
+	public function absolute_url(Url $url)
+	{
+		return $url->absolute();
+	}
 }
 ?>

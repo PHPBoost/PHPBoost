@@ -41,7 +41,7 @@ class NotationService
 		self::$db_querier = PersistenceContext::get_querier();
 		self::$lang = LangLoader::get('main');
 	}
-	
+        
 	/*
 	 * This function required object Notation containing the module_name, id in module and notation_scale.
 	 */
@@ -107,7 +107,7 @@ class NotationService
 		}
 		else
 		{
-			$template = new FileTemplate('framework/notation.tpl');
+			$template = new FileTemplate('framework/content/notation/notation.tpl');
 			
 			$average_notes = self::get_average_notes($notation);
 
@@ -137,19 +137,20 @@ class NotationService
 				));
 			}
 
+			$count_notes = self::get_count_notes_by_id_in_module($notation);
 			$template->put_all(array(
-				'C_VOTES' => self::get_count_notes_by_id_in_module($notation) > 0 ? true : false,
+				'C_VOTES' => $count_notes > 0 ? true : false,
 				'CURRENT_URL' => REWRITED_SCRIPT,
 				'ID_IN_MODULE' => $notation->get_id_in_module(),
 				'NOTATION_SCALE' => $notation->get_notation_scale(),
 				'NUMBER_PIXEL' => $notation->get_notation_scale() * 16,
-				'NUMBER_VOTES' => self::get_count_notes_by_id_in_module($notation),
+				'NUMBER_VOTES' => $count_notes,
 				'AVERAGE_NOTES' => $average_notes,
 				'ALREADY_VOTE' => self::get_member_already_notation($notation),
 				'L_NO_NOTE' => self::$lang['no_note'],
 				'L_AUTH_ERROR' => LangLoader::get_message('e_auth', 'errors'),
 				'L_ALREADY_VOTE' => self::$lang['already_vote'],
-				'L_NOTES' => self::get_count_notes_by_id_in_module($notation) > 1 ? self::$lang['notes'] : self::$lang['note'],
+				'L_NOTES' => $count_notes > 1 ? self::$lang['notes'] : self::$lang['note'],
 				'L_NOTE' => self::$lang['note'],
 				'L_VALID_NOTE' => self::$lang['valid_note']
 			));
@@ -341,5 +342,4 @@ class NotationService
 		self::$db_querier->inject("DELETE FROM " . DB_TABLE_NOTE . " WHERE module_name = '" . $notation->get_module_name() . "'");
 	}
 }
-
 ?>

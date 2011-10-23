@@ -25,28 +25,17 @@
  *
  ###################################################*/
 
-
-
 class WebExtensionPointProvider extends ExtensionPointProvider
 {
-    ## Public Methods ##
-    function __construct() //Constructeur de la classe ForumInterface
+   public function __construct()
     {
 		$this->sql_querier = PersistenceContext::get_sql();
         parent::__construct('web');
     }
     
-    //Récupération du cache.
-	function get_cache()
+	public function get_cache()
 	{
-		$code = 'global $CAT_WEB;' . "\n" . 'global $CONFIG_WEB;' . "\n";
-			
-		//Récupération du tableau linéarisé dans la bdd.
-		$CONFIG_WEB = unserialize($this->sql_querier->query("SELECT value FROM " . DB_TABLE_CONFIGS . " WHERE name = 'web'", __LINE__, __FILE__));
-		$CONFIG_WEB = is_array($CONFIG_WEB) ? $CONFIG_WEB : array();
-		
-		$code .= '$CONFIG_WEB = ' . var_export($CONFIG_WEB, true) . ';' . "\n";
-		$code .= "\n";
+		$code = 'global $CAT_WEB;' . "\n";
 		
 		$result = $this->sql_querier->query_while("SELECT id, name, secure
 		FROM " . PREFIX . "web_cat
@@ -59,6 +48,10 @@ class WebExtensionPointProvider extends ExtensionPointProvider
 		
 		return $code;	
 	}
+	
+	public function comments()
+	{
+		return new WebComments();
+	}
 }
-
 ?>

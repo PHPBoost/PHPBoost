@@ -135,4 +135,6 @@ $LANG['pages_notice_previewing'] = 'You are previewing the contents you have ent
 $LANG['pages_config'] = 'Configuration';
 $LANG['pages_management'] = 'Pages management';
 
+$LANG['pages_rss_desc'] = 'News pages';
+
 ?>

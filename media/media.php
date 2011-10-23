@@ -39,8 +39,8 @@ $notation = new Notation();
 $notation->set_module_name('media');
 $notation->set_notation_scale($MEDIA_CONFIG['note_max']);
 
-$comments = new Comments();
-$comments->set_module_name('media');
+$comments_topic = new CommentsTopic();
+$comments_topic->set_module_id('media');
 
 // Display caterories and media files.
 if (empty($id_media) && $id_cat >= 0)
@@ -188,14 +188,13 @@ if (empty($id_media) && $id_cat >= 0)
 		while ($row = $Sql->fetch_assoc($result))
 		{
 			$notation->set_id_in_module($row['id']);
-			$comments->set_id_in_module($row['id']);
 			
 			$Template->assign_block_vars('file', array(
 				'NAME' => $row['name'],
 				'IMG_NAME' => str_replace('"', '\"', $row['name']),
 				'C_DESCRIPTION' => !empty($row['contents']),
 				'DESCRIPTION' => FormatingHelper::second_parse($row['contents']),
-				'POSTER' => !empty($row['login']) ? sprintf($MEDIA_LANG['media_added_by'], $row['login'], '../member/member' . url('.php?id=' . $row['iduser'], '-' . $row['iduser'] . '.php'), $level[$row['level']]) : $LANG['guest'],
+				'POSTER' => !empty($row['login']) ? sprintf($MEDIA_LANG['media_added_by'], $row['login'], UserUrlBuilder::profile($row['iduser'])->absolute(), $level[$row['level']]) : $LANG['guest'],
 				'DATE' => sprintf($MEDIA_LANG['add_on_date'], gmdate_format('date_format_short', $row['timestamp'])),
 				'COUNT' => sprintf($MEDIA_LANG['view_n_times'], $row['counter']),
 				'NOTE' => NotationService::display_static_image($notation),
@@ -203,7 +202,7 @@ if (empty($id_media) && $id_cat >= 0)
 				'U_ADMIN_UNVISIBLE_MEDIA' => url('media_action.php?unvisible=' . $row['id'] . '&amp;token=' . $Session->get_token()),
 				'U_ADMIN_EDIT_MEDIA' => url('media_action.php?edit=' . $row['id']),
 				'U_ADMIN_DELETE_MEDIA' => url('media_action.php?del=' . $row['id'] . '&amp;token=' . $Session->get_token()),
-				'U_COM_LINK' => '<a href="'. PATH_TO_ROOT .'/media/media' . url('.php?id=' . $row['id'] . '&amp;com=0', '-' . $row['id'] . '-' . $id_cat . '+' . Url::encode_rewrite($row['name']) . '.php?com=0') .'">'. CommentsService::get_number_and_lang_comments($comments) . '</a>'
+				'U_COM_LINK' => '<a href="'. PATH_TO_ROOT .'/media/media' . url('.php?id=' . $row['id'] . '&amp;com=0', '-' . $row['id'] . '-' . $id_cat . '+' . Url::encode_rewrite($row['name']) . '.php?com=0') .'">'. CommentsService::get_number_and_lang_comments('media', $row['id']) . '</a>'
 			));
 		}
 
@@ -247,9 +246,8 @@ elseif ($id_media > 0)
 
 	$notation->set_id_in_module($id_media);
 	$nbr_notes = NotationService::get_former_number_notes($notation);
+	$comments_topic->set_id_in_module($id_media);
 	
-	$comments->set_id_in_module($id_media);
-
 	$Template->put_all(array(
 		'C_DISPLAY_MEDIA' => true,
 		'C_MODO' => $User->check_level(MODO_LEVEL),
@@ -260,7 +258,7 @@ elseif ($id_media > 0)
 		'KERNEL_NOTATION' => NotationService::display_active_image($notation),
 		'HITS' => ((int)$media['counter']+1) > 1 ? sprintf($MEDIA_LANG['n_times'], ((int)$media['counter']+1)) : sprintf($MEDIA_LANG['n_time'], ((int)$media['counter']+1)),
 		'NUM_NOTES' => (int)$nbr_notes > 1 ? sprintf($MEDIA_LANG['num_notes'], (int)$nbr_notes) : sprintf($MEDIA_LANG['num_note'], (int)$nbr_notes),
-		'U_COM' => '<a href="'. PATH_TO_ROOT .'/media/media' . url('.php?id=' . $id_media . '&amp;com=0', '-' . $id_media . '-' . $media['idcat'] . '+' . Url::encode_rewrite($media['name']) . '.php?com=0') .'">'. CommentsService::get_number_and_lang_comments($comments) . '</a>',
+		'U_COM' => '<a href="'. PATH_TO_ROOT .'/media/media' . url('.php?id=' . $id_media . '&amp;com=0', '-' . $id_media . '-' . $media['idcat'] . '+' . Url::encode_rewrite($media['name']) . '.php?com=0') .'">'. CommentsService::get_number_and_lang_comments('media', $id_media) . '</a>',
 		'L_DATE' => $LANG['date'],
 		'L_SIZE' => $LANG['size'],
 		'L_MEDIA_INFOS' => $MEDIA_LANG['media_infos'],
@@ -272,7 +270,7 @@ elseif ($id_media > 0)
 		'HEIGHT_P' => $media['height'] + 50,
 		'L_VIEWED' => $LANG['view'],
 		'L_BY' => $LANG['by'],
-		'BY' => !empty($media['login']) ? sprintf($MEDIA_LANG['media_added'], $media['login'], '../member/member' . url('.php?id=' . $media['iduser'], '-' . $media['iduser'] . '.php'), $level[$media['level']]) : $LANG['guest'],
+		'BY' => !empty($media['login']) ? sprintf($MEDIA_LANG['media_added'], $media['login'], UserUrlBuilder::profile($media['iduser'])->absolute(), $level[$media['level']]) : $LANG['guest'],
 		'L_CONFIRM_DELETE_MEDIA' => str_replace('\'', '\\\'', $MEDIA_LANG['confirm_delete_media']),
 		'U_UNVISIBLE_MEDIA' => url('media_action.php?unvisible=' . $id_media . '&amp;token=' . $Session->get_token()),
 		'U_EDIT_MEDIA' => url('media_action.php?edit=' . $id_media),
@@ -294,7 +292,7 @@ elseif ($id_media > 0)
 	if (isset($_GET['com']))
 	{
 		$Template->put_all(array(
-			'COMMENTS' => CommentsService::display($comments)->render()
+			'COMMENTS' => CommentsService::display($comments_topic)->render()
 		));
 	}
 }

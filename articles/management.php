@@ -76,7 +76,7 @@ if ($delete > 0)
 	if ($articles['nbr_com'] > 0)
 	{
 		
-		$Comments = new Comments('articles', $articles['id'], url('articles.php?id=' . $articles['id'] . '&amp;com=%s', 'articles-' . $articles['idcat'] . '-' . $articles['id'] . '.php?com=%s'));
+		$Comments = new CommentsTopic('articles', $articles['id'], url('articles.php?id=' . $articles['id'] . '&amp;com=%s', 'articles-' . $articles['idcat'] . '-' . $articles['id'] . '.php?com=%s'));
 		$Comments->delete_all($delete_articles);
 	}
 
@@ -305,7 +305,7 @@ elseif(retrieve(POST,'submit',false))
 					ContributionService::save_contribution($articles_contribution);
 
 					//Redirection to the contribution confirmation page
-					AppContext::get_response()->redirect(HOST . DIR . '/articles/contribution.php');
+					AppContext::get_response()->redirect(UserUrlBuilder::contribution_success()->absolute());
 				}
 			}
 
@@ -536,9 +536,15 @@ else
 
 	$user_pseudo = !empty($user_pseudo) ? $user_pseudo : '';
 
+	$editor = AppContext::get_content_formatting_service()->get_default_editor();
+	$editor->set_identifier('contents');
+	
+	$desc_editor = AppContext::get_content_formatting_service()->get_default_editor();
+	$desc_editor->set_identifier('description');
+	
 	$tpl->put_all(array(
-		'KERNEL_EDITOR' => display_editor(),
-		'KERNEL_EDITOR_DESC' => display_editor('description'),
+		'KERNEL_EDITOR' => $editor->display(),
+		'KERNEL_EDITOR_DESC' => $desc_editor->display(),
 		'TITLE' => '',	
 		'NOW_DATE' => $now->format(DATE_FORMAT_SHORT, TIMEZONE_AUTO),
 		'NOW_HOUR' => $now->get_hours(),

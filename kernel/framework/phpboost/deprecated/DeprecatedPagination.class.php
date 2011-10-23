@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                             pagination.class.php
+ *                             DeprecatedPagination.class.php
  *                            -------------------
  *   begin                : June 30, 2005
  *   copyright            : (C) 2005 Viarre Régis

@@ -211,30 +211,32 @@ class Sitemap
 		//All the links which not need to be present in the search engine results.
 		if ($mode == self::USER_MODE)
 		{
-			$kernel_map->add(new SitemapLink($LANG['members_list'], new Url(DispatchManager::get_url('/member', '/member/')->absolute())));
+			$kernel_map->add(new SitemapLink($LANG['members_list'], UserUrlBuilder::users()));
 
 			//Member space
 			if ($auth_mode == self::AUTH_USER && $User->check_level(MEMBER_LEVEL))
 			{
 				//We create a section for that
 				$member_space_section = new SitemapSection(new SitemapLink($LANG['my_private_profile'],
-				new Url(DispatchManager::get_url('/member', '/profile/'. $User->get_id())->absolute())));
+				UserUrlBuilder::profile($User->get_id())));
 					
 				//Profile edition
 				$member_space_section->add(new SitemapLink($LANG['profile_edition'],
-				new Url(DispatchManager::get_url('/member', '/profile/'. $User->get_id())->absolute() .'/edit')));
+				UserUrlBuilder::edit_profile($User->get_id())));
 					
 				//Private messaging
 				$member_space_section->add(new SitemapLink($LANG['private_messaging'],
-				new Url('/member/' . url('pm.php?pm=' . $User->get_id(), 'pm-' . $User->get_id() . '.php'))));
+				UserUrlBuilder::personnal_message($User->get_id())));
 					
 				//Contribution panel
-				$member_space_section->add(new SitemapLink($LANG['contribution_panel'], new Url('/member/contribution_panel.php')));
+				$member_space_section->add(new SitemapLink($LANG['contribution_panel'], 
+				UserUrlBuilder::contribution_panel()));
 					
 				//Administration panel
 				if ($User->check_level(ADMIN_LEVEL))
 				{
-					$member_space_section->add(new SitemapLink($LANG['admin_panel'], new Url('/admin/admin_index.php')));
+					$member_space_section->add(new SitemapLink($LANG['admin_panel'], 
+					UserUrlBuilder::administration()));
 				}
 					
 				//We add it to the kernel map

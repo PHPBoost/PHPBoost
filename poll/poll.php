@@ -50,12 +50,12 @@ $show_result = retrieve(GET, 'r', false); //Affichage des résulats.
 if (!empty($_POST['valid_poll']) && !empty($poll['id']) && !$archives)
 {
 	//Niveau d'autorisation.
-	if ($User->check_level($CONFIG_POLL['poll_auth']))
+	if ($User->check_level($poll_config->get_min_rank_poll()))
 	{
 		//On note le passage du visiteur par un cookie.
-		if (AppContext::get_request()->has_cookieparameter($CONFIG_POLL['poll_cookie'])) //Recherche dans le cookie existant.
+		if (AppContext::get_request()->has_cookieparameter($poll_config->get_poll_cookie_name())) //Recherche dans le cookie existant.
 		{
-			$array_cookie = explode('/', AppContext::get_request()->get_cookie($CONFIG_POLL['poll_cookie']));
+			$array_cookie = explode('/', AppContext::get_request()->get_cookie($poll_config->get_poll_cookie_name()));
 			if (in_array($poll['id'], $array_cookie))
 				$check_cookie = true;
 			else
@@ -65,17 +65,17 @@ if (!empty($_POST['valid_poll']) && !empty($poll['id']) && !$archives)
 				$array_cookie[] = $poll['id']; //Ajout nouvelle valeur.
 				$value_cookie = implode('/', $array_cookie); //On retransforme le tableau en chaîne.
 	
-				AppContext::get_response()->set_cookie(new HTTPCookie($CONFIG_POLL['poll_cookie'], $value_cookie, time() + $CONFIG_POLL['poll_cookie_lenght']));
+				AppContext::get_response()->set_cookie(new HTTPCookie($poll_config->get_poll_cookie_name(), $value_cookie, time() + $poll_config->get_poll_cookie_lenght()));
 			}
 		}
 		else //Génération d'un cookie.
 		{	
 			$check_cookie = false;
-			AppContext::get_response()->set_cookie(new HTTPCookie($CONFIG_POLL['poll_cookie'], $poll['id'], time() + $CONFIG_POLL['poll_cookie_lenght']));
+			AppContext::get_response()->set_cookie(new HTTPCookie($poll_config->get_poll_cookie_name(), $poll['id'], time() + $poll_config->get_poll_cookie_lenght()));
 		}
 		
 		$check_bdd = true;
-		if ($CONFIG_POLL['poll_auth'] == -1) //Autorisé aux visiteurs, on filtre par ip => fiabilité moyenne.
+		if ($poll_config->get_min_rank_poll() == -1) //Autorisé aux visiteurs, on filtre par ip => fiabilité moyenne.
 		{
 			//Injection de l'adresse ip du visiteur dans la bdd.	
 			$ip = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "poll_ip WHERE ip = '" . USER_IP . "' AND idpoll = '" . $poll['id'] . "'",  __LINE__, __FILE__);		
@@ -135,7 +135,7 @@ if (!empty($_POST['valid_poll']) && !empty($poll['id']) && !$archives)
 			//Tout s'est bien déroulé, on redirige vers la page des resultats.
 			redirect_confirm(HOST . DIR . '/poll/poll' . url('.php?id=' . $poll['id'], '-' . $poll['id'] . '.php'), $LANG['confirm_vote'], 2);
 			
-			if (in_array($poll['id'], $CONFIG_POLL['poll_mini']) ) //Vote effectué du mini poll => mise à jour du cache du mini poll.
+			if (in_array($poll['id'], $poll_config->get_mini_poll_selected())) //Vote effectué du mini poll => mise à jour du cache du mini poll.
 				$Cache->Generate_module_file('poll');
 		}	
 		else //Vote blanc
@@ -152,7 +152,7 @@ elseif (!empty($poll['id']) && !$archives) //Affichage du sondage.
 
 	//Résultats
 	$check_bdd = false;
-	if ($CONFIG_POLL['poll_auth'] == -1) //Autorisé aux visiteurs, on filtre par ip => fiabilité moyenne.
+	if ($poll_config->get_min_rank_poll() == -1) //Autorisé aux visiteurs, on filtre par ip => fiabilité moyenne.
 	{
 		//Injection de l'adresse ip du visiteur dans la bdd.	
 		$ip = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "poll_ip WHERE ip = '" . USER_IP . "' AND idpoll = '" . $poll['id'] . "'",  __LINE__, __FILE__);		
@@ -187,9 +187,9 @@ elseif (!empty($poll['id']) && !$archives) //Affichage du sondage.
 	
 	//Si le cookie existe, ou l'ip est connue on redirige vers les resulats, sinon on prend en compte le vote.
 	$array_cookie = array();
-    if (AppContext::get_request()->has_cookieparameter($CONFIG_POLL['poll_cookie']))
+    if (AppContext::get_request()->has_cookieparameter($poll_config->get_poll_cookie_name()))
     {
-    	$array_cookie = explode('/', AppContext::get_request()->get_cookie($CONFIG_POLL['poll_cookie']));
+    	$array_cookie = explode('/', AppContext::get_request()->get_cookie($poll_config->get_poll_cookie_name()));
     }
 	if ($show_result || in_array($poll['id'], $array_cookie) === true || $check_bdd) //Résultats
 	{		

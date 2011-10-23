@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                         feed_data.class.php
+ *                         FeedData.class.php
  *                         -------------------
  *   begin                : June 21, 2008
  *   copyright            : (C) 2005 Loïc Rouchon
@@ -121,11 +121,10 @@ class FeedData
      */
     public function get_items()
     {
-        global $User;
         $items = array();
         foreach ($this->items as $item)
         {
-            if ((gettype($item->get_auth()) != 'array' || $this->auth_bit == 0) || $User->check_auth($item->get_auth(), $this->auth_bit))
+            if ((gettype($item->get_auth()) != 'array' || $this->auth_bit == 0) || AppContext::get_user()->check_auth($item->get_auth(), $this->auth_bit))
                 $items[] = $item;
         }
         

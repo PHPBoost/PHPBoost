@@ -326,7 +326,7 @@
 			# ENDIF #
 			<div style="float:right" class="text_small">
 			# IF C_AUTHOR #
-				{L_WRITTEN}: <a class="small_link" href="../member/member{U_USER_ID}">{PSEUDO}</a>
+				{L_WRITTEN}: <a class="small_link" href="{U_PROFILE}">{PSEUDO}</a>
 			# ENDIF #
 			# IF C_DATE #
 				{L_ON}: {DATE}

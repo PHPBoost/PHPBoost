@@ -3,7 +3,7 @@
  *                       AdminMemberAddController.class.php
  *                            -------------------
  *   begin                : December 27, 2010
- *   copyright            : (C) 2010 Kévin MASSY
+ *   copyright            : (C) 2010 Kï¿½vin MASSY
  *   email                : soldier.weasel@gmail.com
  *
  *
@@ -70,29 +70,20 @@ class AdminMemberAddController extends AdminController
 		$form->add_fieldset($fieldset);
 		
 		$fieldset->add_field(new FormFieldTextEditor('login', $this->lang['members.pseudo'], '', array(
-			'class' => 'text', 'maxlength' => 25, 'size' => 25, 'required' => true)
+			'class' => 'text', 'maxlength' => 25, 'size' => 25, 'required' => true),
+			array(new FormFieldConstraintLengthRange(3, 25), new FormFieldConstraintLoginExist())
 		));		
 		
 		$fieldset->add_field(new FormFieldTextEditor('mail', $this->lang['members.mail'], '', array(
 			'class' => 'text', 'maxlength' => 255, 'description' => $this->lang['members.valid'], 'required' => true),
-		array(new FormFieldConstraintMailAddress())
+			array(new FormFieldConstraintMailAddress(), new FormFieldConstraintMailExist())
 		));
 		
-		$fieldset->add_field($password = new FormFieldPasswordEditor('password', $this->lang['members.password'], '', array(
-			'class' => 'text', 'maxlength' => 25, 'required' => true)
-		));
+		$fieldset->add_field($password = new FormFieldPasswordEditor('password', $this->lang['members.password'], '', array('required' => true)));
 		
-		$fieldset->add_field($password_bis = new FormFieldPasswordEditor('password_bis', $this->lang['members.confirm-password'], '', array(
-			'class' => 'text', 'maxlength' => 25, 'required' => true)
-		));
+		$fieldset->add_field($password_bis = new FormFieldPasswordEditor('password_bis', $this->lang['members.confirm-password'], '', array('required' => true)));
 		
-		$fieldset->add_field(new FormFieldSimpleSelectChoice('rank', $this->lang['members.rank'], '1',
-			array(
-				new FormFieldSelectChoiceOption($this->lang['members.rank.member'], '1'),
-				new FormFieldSelectChoiceOption($this->lang['members.rank.modo'], '2'),
-				new FormFieldSelectChoiceOption($this->lang['members.rank.admin'], '3')
-			)
-		));
+		$fieldset->add_field(new FormFieldRanks('rank', $this->lang['members.rank'], FormFieldRanks::MEMBER));
 		
 		$form->add_button(new FormButtonReset());
 		$this->submit_button = new FormButtonDefaultSubmit();
@@ -104,40 +95,22 @@ class AdminMemberAddController extends AdminController
 
 	private function save()
 	{
-		$this->register_member();
-	}
-	
-	private function register_member()
-	{
-		PersistenceContext::get_querier()->inject(
-			"INSERT INTO " . DB_TABLE_MEMBER . " (login,password,level,user_groups,user_mail,user_show_mail,timestamp,user_pm,user_warning,last_connect,test_connect, new_pass,user_ban,user_aprob)
-			VALUES (:login, :password, :level, '', :user_mail, 0, :timestamp, 0, 0, :last_connect, 0, '', 0, :user_aprob)", array(
-				'login' => htmlspecialchars($this->form->get_value('login')),
-				'password' => htmlspecialchars(strhash($this->form->get_value('password'))),
-				'level' => $this->get_rank_member(),
-				'user_mail' => htmlspecialchars($this->form->get_value('mail')),
-				'timestamp' => time(),
-				'last_connect' => '',
-				'user_aprob' => '1'
-		));
-	}
-	
-	private function get_rank_member()
-	{
-		$rank = $this->form->get_value('rank')->get_raw_value();
-		if ($rank == '3')
-		{
-			return '2';
-		}
-		elseif ($rank == '2')
-		{
-			return '1';
-		}
-		else
-		{
-			return '0';
-		}
+		$user_accounts_config = UserAccountsConfig::load();
+		UserService::create(
+			$this->form->get_value('login'), 
+			KeyGenerator::string_hash($this->form->get_value('password')), 
+			$this->form->get_value('rank')->get_raw_value(), 
+			$this->form->get_value('mail'), 
+			$user_accounts_config->get_default_theme(), 
+			GeneralConfig::load()->get_site_timezone(), 
+			$user_accounts_config->get_default_lang(), 
+			ContentFormattingConfig::load()->get_default_editor(), 
+			'0', 
+			'', 
+			'1'
+		);
+			
+		StatsCache::invalidate();
 	}
 }
-
 ?>

@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                             updates.class.php
+ *                             Updates.class.php
  *                            -------------------
  *   begin                : August 17 2008
  *   copyright            : (C) 2008 Loic Rouchon
@@ -25,9 +25,6 @@
  *
  ###################################################*/
 
-//define('Updates::PHPBOOST_OFFICIAL_REPOSITORY', '../../../tools/repository/main.xml'); // Test repository
-define('PHP_MIN_VERSION_UPDATES', '5');
-
 define('CHECK_KERNEL', 0X01);
 define('CHECK_MODULES', 0X02);
 define('CHECK_THEMES', 0X04);
@@ -44,6 +41,9 @@ class Updates
     private $apps = array();
 	
 	const PHPBOOST_OFFICIAL_REPOSITORY = 'http://www.phpboost.com/repository/main.xml';
+	//const PHPBOOST_OFFICIAL_REPOSITORY = '../../../tools/repository/main.xml'; // Test repository
+	const PHP_MIN_VERSION_UPDATES = '5';
+	
     /**
 	* @desc constructor of the class
 	* @param $checks
@@ -61,11 +61,11 @@ class Updates
 	*/
     private function load_apps($checks = CHECK_ALL_UPDATES)
     {
-        if (ServerConfiguration::get_phpversion() > PHP_MIN_VERSION_UPDATES)
+        if (ServerConfiguration::get_phpversion() > self::PHP_MIN_VERSION_UPDATES)
         {
             if ($checks & CHECK_KERNEL)
             {   // Add the kernel to the check list
-                $this->apps[] = new Application('kernel', get_ulang(), APPLICATION_TYPE__KERNEL, Environment::get_phpboost_version(), Updates::PHPBOOST_OFFICIAL_REPOSITORY);
+                $this->apps[] = new Application('kernel', get_ulang(), Application::MODULE_TYPE, Environment::get_phpboost_version(), Updates::PHPBOOST_OFFICIAL_REPOSITORY);
             }
 
             if ($checks & CHECK_MODULES)
@@ -73,7 +73,7 @@ class Updates
                 foreach (ModulesManager::get_activated_modules_map_sorted_by_localized_name() as $module)
                 {
                     $this->apps[] = new Application($module->get_id(),
-                    get_ulang(), APPLICATION_TYPE__MODULE,
+                    get_ulang(), Application::MODULE_TYPE,
                     $module->get_configuration()->get_version(), $module->get_configuration()->get_repository());
                 }
             }
@@ -86,7 +86,7 @@ class Updates
 					$repository = $value->get_configuration()->get_repository();
 					if (!empty($repository))
 					{
-						$this->apps[] = new Application($id, get_ulang(), APPLICATION_TYPE__TEMPLATE, $value->get_configuration()->get_version(), $repository);
+						$this->apps[] = new Application($id, get_ulang(), Application::TEMPLATE_TYPE, $value->get_configuration()->get_version(), $repository);
 					}
                 }
             }
@@ -98,7 +98,7 @@ class Updates
 	*/
     private function load_repositories()
     {
-        if (ServerConfiguration::get_phpversion() > PHP_MIN_VERSION_UPDATES)
+        if (ServerConfiguration::get_phpversion() > self::PHP_MIN_VERSION_UPDATES)
         {
             foreach ($this->apps as $app)
             {
@@ -114,7 +114,7 @@ class Updates
 	*/
     private function check_repositories()
     {
-        if (ServerConfiguration::get_phpversion() > PHP_MIN_VERSION_UPDATES)
+        if (ServerConfiguration::get_phpversion() > self::PHP_MIN_VERSION_UPDATES)
         {
             foreach ($this->apps as $app)
             {
@@ -140,7 +140,7 @@ class Updates
             $alert = new AdministratorAlert();
             global $LANG;
             require_once(PATH_TO_ROOT . '/lang/' . get_ulang() . '/admin.php');
-            if ($app->get_type() == APPLICATION_TYPE__KERNEL)
+            if ($app->get_type() == Application::MODULE_TYPE)
                 $alert->set_entitled(sprintf($LANG['kernel_update_available'], $app->get_version()));
             else
                 $alert->set_entitled(sprintf($LANG['update_available'], $app->get_type(), $app->get_name(), $app->get_version()));

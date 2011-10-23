@@ -47,15 +47,12 @@ abstract class AbstractFormFieldChoice extends AbstractFormField
      */
     public function __construct($id, $label, $value, array $options, array $field_options = array(), array $constraints = array())
     {
-        parent::__construct($id, $label, $value, $field_options, $constraints);
         foreach ($options as $option)
         {
             $this->add_option($option);
         }
-    	if (is_string($value))
-    	{
-    		$this->set_value($this->get_option($value));
-    	}
+        parent::__construct($id, $label, $value, $field_options, $constraints);
+        $this->set_value($value);
     }
 
     /**
@@ -103,6 +100,21 @@ abstract class AbstractFormFieldChoice extends AbstractFormField
             }
         }
         return null;
+    }
+    
+    /**
+	 * {@inheritdoc}
+	 */
+    public function set_value($value)
+    {
+    	if (is_object($value))
+    	{
+    		parent::set_value($value);
+    	}
+    	else
+    	{
+			parent::set_value($this->get_option($value));
+    	}
     }
 }
 ?>

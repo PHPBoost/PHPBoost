@@ -35,14 +35,13 @@ $page = retrieve(GET, 'p', 0);
 
 if (retrieve(POST, 'submit', false))
 {
-	$FAQ_CONFIG['faq_name'] = stripslashes(retrieve(POST, 'faq_name', $FAQ_LANG['faq']));
-	$FAQ_CONFIG['num_cols'] = retrieve(POST, 'num_cols', 3);
-	$FAQ_CONFIG['display_block'] = (!empty($_POST['display_mode']) && $_POST['display_mode'] == 'inline') ? false : true;
-	// unused auth variables ?
-	$FAQ_CONFIG['global_auth'] = Authorizations::build_auth_array_from_form(AUTH_READ, AUTH_WRITE);
-	$FAQ_CONFIG['root'] = $FAQ_CATS[0];
+	$faq_config->set_faq_name(stripslashes(retrieve(POST, 'faq_name', $FAQ_LANG['faq'])));
+	$faq_config->set_number_columns(retrieve(POST, 'num_cols', 3));
+	$faq_config->set_display_mode((!empty($_POST['display_mode']) && $_POST['display_mode'] == 'inline') ? 'inline' : 'block');
+	$faq_config->set_authorization(Authorizations::build_auth_array_from_form(AUTH_READ, AUTH_WRITE));
 	
-	$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($FAQ_CONFIG)) . "' WHERE name = 'faq'", __LINE__, __FILE__);
+	FaqConfig::save();
+	
 	//Régénération du cache
 	$Cache->Generate_module_file('faq');
 	
@@ -103,11 +102,6 @@ else
 	$Template->set_filenames(array(
 		'admin_faq'=> 'faq/admin_faq.tpl'
 	));
-
-	$FAQ_CONFIG['global_auth'] = isset($FAQ_CONFIG['global_auth']) && is_array($FAQ_CONFIG['global_auth']) ? $FAQ_CONFIG['global_auth'] : array();
-	$FAQ_CONFIG['faq_name'] = !empty($FAQ_CONFIG['faq_name']) ? $FAQ_CONFIG['faq_name'] : '';
-	$FAQ_CONFIG['num_cols'] = isset($FAQ_CONFIG['num_cols']) ? $FAQ_CONFIG['num_cols'] : 4;
-	$FAQ_CONFIG['display_block'] = isset($FAQ_CONFIG['display_block']) ? $FAQ_CONFIG['display_block'] : true;
 	
 	$Template->put_all(array(
 		'L_FAQ_MANAGEMENT' => $FAQ_LANG['faq_management'],
@@ -129,12 +123,12 @@ else
 		'L_AUTH_READ' => $FAQ_LANG['read_auth'],
 		'L_AUTH_WRITE' => $FAQ_LANG['write_auth'],
 		'L_SUBMIT' => $LANG['submit'],
-		'AUTH_READ' => Authorizations::generate_select(AUTH_READ, $FAQ_CONFIG['global_auth']),
-		'AUTH_WRITE' => Authorizations::generate_select(AUTH_WRITE, $FAQ_CONFIG['global_auth']),
-		'FAQ_NAME' => $FAQ_CONFIG['faq_name'],
-		'NUM_COLS' => $FAQ_CONFIG['num_cols'],
-		'SELECTED_BLOCK' => $FAQ_CONFIG['display_block'] ? ' selected="selected"' : '',
-		'SELECTED_INLINE' => !$FAQ_CONFIG['display_block'] ? ' selected="selected"' : ''
+		'AUTH_READ' => Authorizations::generate_select(AUTH_READ, $faq_config->get_authorization()),
+		'AUTH_WRITE' => Authorizations::generate_select(AUTH_WRITE, $faq_config->get_authorization()),
+		'FAQ_NAME' => $faq_config->get_faq_name(),
+		'NUM_COLS' => $faq_config->get_number_columns(),
+		'SELECTED_BLOCK' => $faq_config->get_display_mode() == 'block' ? ' selected="selected"' : '',
+		'SELECTED_INLINE' => $faq_config->get_display_mode() == 'inline' ? ' selected="selected"' : ''
 	));
 	
 	$Template->pparse('admin_faq');

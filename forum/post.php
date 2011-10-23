@@ -64,6 +64,9 @@ $previs = retrieve(POST, 'prw', false); //Prévisualisation des messages.
 $post_topic = retrieve(POST, 'post_topic', false);
 $preview_topic = retrieve(POST, 'prw_t', '');
 
+$editor = AppContext::get_content_formatting_service()->get_default_editor();
+$editor->set_identifier('contents');
+	
 //Niveau d'autorisation de la catégorie
 if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 {
@@ -116,7 +119,7 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 			'LANG' => get_ulang(),
 			'P_UPDATE' => $post_update,
 			'FORUM_NAME' => $CONFIG_FORUM['forum_name'],
-			'KERNEL_EDITOR' => display_editor(),
+			'KERNEL_EDITOR' => $editor->display(),
 			'DESC' => $topic['subtitle'],
 			'CONTENTS' => $contents,
 			'DATE' => $LANG['on'] . ' ' . gmdate_format('date_format'),
@@ -275,7 +278,7 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 				'TITLE' => $title,
 				'DESC' => $subtitle,
 				'CONTENTS' => $contents,
-				'KERNEL_EDITOR' => display_editor(),
+				'KERNEL_EDITOR' => $editor->display(),
 				'POLL_QUESTION' => $question,
 				'IDTOPIC' => 0,
 				'SELECTED_SIMPLE' => ($poll_type == 0) ? 'checked="ckecked"' : '',
@@ -352,7 +355,7 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 				'DESC' => '',
 				'SELECTED_SIMPLE' => 'checked="ckecked"',
 				'IDTOPIC' => 0,
-				'KERNEL_EDITOR' => display_editor(),
+				'KERNEL_EDITOR' => $editor->display(),
 				'NO_DISPLAY_POLL' => 'true',
 				'NBR_POLL_FIELD' => $nbr_poll_field,
 				'C_ADD_POLL_FIELD' => true,
@@ -585,7 +588,7 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 					'TITLE' => $title,
 					'DESC' => $subtitle,
 					'CONTENTS' => $contents,
-					'KERNEL_EDITOR' => display_editor(),
+					'KERNEL_EDITOR' => $editor->display(),
 					'POLL_QUESTION' => $question,
 					'IDTOPIC' => 0,
 					'SELECTED_SIMPLE' => 'checked="ckecked"',
@@ -711,7 +714,7 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 					'SELECTED_SIMPLE' => 'checked="ckecked"',
 					'MODULE_DATA_PATH' => $module_data_path,
 					'IDTOPIC' => $idt_get,
-					'KERNEL_EDITOR' => display_editor(),
+					'KERNEL_EDITOR' => $editor->display(),
 					'NBR_POLL_FIELD' => $nbr_poll_field,
 					'NO_DISPLAY_POLL' => !empty($poll['question']) ? 'false' : 'true',
 					'C_DELETE_POLL' => ($is_modo) ? true : false, //Suppression d'un sondage => modo uniquement.
@@ -812,7 +815,7 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 					'FORUM_NAME' => $CONFIG_FORUM['forum_name'],
 					'DESC' => $topic['subtitle'],
 					'CONTENTS' => FormatingHelper::unparse($contents),
-					'KERNEL_EDITOR' => display_editor(),
+					'KERNEL_EDITOR' => $editor->display(),
 					'U_ACTION' => 'post.php' . url('?update=1&amp;new=msg&amp;id=' . $id_get . '&amp;idt=' . $idt_get . '&amp;idm=' . $id_m . '&amp;token=' . $Session->get_token()),
 					'U_FORUM_CAT' => '<a href="forum' . url('.php?id=' . $id_get, '-' . $id_get . '.php') . '">' . $CAT_FORUM[$id_get]['name'] . '</a>',
 					'U_TITLE_T' => '<a href="topic' . url('.php?id=' . $idt_get, '-' . $idt_get . '.php') . '">' . $topic['title'] . '</a>',
@@ -873,7 +876,7 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 				'P_UPDATE' => '',
 				'FORUM_NAME' => $CONFIG_FORUM['forum_name'],
 				'DESC' => $topic['subtitle'],
-				'KERNEL_EDITOR' => display_editor(),
+				'KERNEL_EDITOR' => $editor->display(),
 				'U_ACTION' => 'post.php' . url('?new=n_msg&amp;idt=' . $idt_get . '&amp;id=' . $id_get . '&amp;token=' . $Session->get_token()),
 				'U_FORUM_CAT' => '<a href="forum' . url('.php?id=' . $id_get, '-' . $id_get . '.php') . '">' . $CAT_FORUM[$id_get]['name'] . '</a>',
 				'U_TITLE_T' => '<a href="topic' . url('.php?id=' . $idt_get, '-' . $idt_get . '.php') . '">' . $topic['title'] . '</a>',
@@ -949,7 +952,7 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 				'TITLE' => '',
 				'SELECTED_SIMPLE' => 'checked="checked"',
 				'IDTOPIC' => 0,
-				'KERNEL_EDITOR' => display_editor(),
+				'KERNEL_EDITOR' => $editor->display(),
 				'NO_DISPLAY_POLL' => 'true',
 				'NBR_POLL_FIELD' => $nbr_poll_field,
 				'C_ADD_POLL_FIELD' => true,

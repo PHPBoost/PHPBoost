@@ -44,9 +44,9 @@ class CalendarSetup extends DefaultModuleSetup
 	{
 		$this->drop_table();
 		
-		$comments = new Comments();
-		$comments->set_module_name('calendar');
-		CommentsService::delete_comments_module($comments);
+		$comments_topic = new CommentsTopic();
+		$comments_topic->set_module_id('calendar');
+		CommentsService::delete_comments_module($comments_topic);
 	}
 
 	private function drop_table()
@@ -67,5 +67,4 @@ class CalendarSetup extends DefaultModuleSetup
 		PersistenceContext::get_dbms_utils()->create_table(self::$calendar_table, $fields, $options);
 	}
 }
-
 ?>

@@ -94,9 +94,6 @@ if (!empty($id))
     }
 
     MenuService::generate_cache();
-
-    ModulesCssFilesCache::invalidate();
-
     AppContext::get_response()->redirect('menus.php#m' . $id);
 }
 
@@ -149,7 +146,7 @@ if ($action == 'save') //Save menus positions.
        		{
        			MenuService::disable($menu);
        		}
-       		elseif(!$enabled && $new_block != 'mod_central') //Enable menu
+       		elseif(!$enabled && $new_block !== 'mod_central') //Enable menu
        		{
        			MenuService::enable($menu);
        		}
@@ -328,7 +325,6 @@ $tpl->put_all(array(
     'I_LEFT' => Menu::BLOCK_POSITION__LEFT,
     'I_RIGHT' => Menu::BLOCK_POSITION__RIGHT,
     'L_MENUS_AVAILABLE' => count($menus_blocks[Menu::BLOCK_POSITION__NOT_ENABLED]) ? $LANG['available_menus'] : $LANG['no_available_menus'],
-    'L_INSTALL' => $LANG['install'],
     'L_SUBMIT' => LangLoader::get_message('submit', 'main'),
     'L_RESET' => LangLoader::get_message('reset', 'main'),
 	'U_TOKEN' => $Session->get_token()

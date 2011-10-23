@@ -81,6 +81,15 @@ class PagesExtensionPointProvider extends ExtensionPointProvider
 	{
 		return new PagesSitemapExtensionPoint();
 	}
+	
+	public function feeds()
+	{
+		return new PagesFeedProvider();
+	}
+	
+	public function css_files()
+	{
+		return new PagesCssFilesExtensionPoint();
+	}
 }
-
 ?>

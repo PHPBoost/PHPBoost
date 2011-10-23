@@ -52,6 +52,15 @@ class Arrays
 		}
 		return $default;
 	}
+	
+	public static function remove_key($key, array $values)
+	{
+		if (array_key_exists($key, $values))
+		{
+			unset($values[array_search($key, $values)]);
+		}
+		return $values;
+	}
 }
 
 ?>

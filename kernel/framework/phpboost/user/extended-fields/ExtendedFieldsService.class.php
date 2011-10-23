@@ -35,8 +35,9 @@ class ExtendedFieldsService
 	const SORT_BY_ID = 1;
 	const SORT_BY_FIELD_NAME = 2;
 	
-	/*
-	 * This function required object ExtendedField containing the name, field name, position, content, field type, possible values, default values, required and regex.
+	/**
+	 * @desc Add a extended field
+	 * @param object $extended_field ExtendedField containing the name, field name, position, content, field type, possible values, default values, required and regex.
 	 */
 	public static function add(ExtendedField $extended_field)
 	{
@@ -68,8 +69,9 @@ class ExtendedFieldsService
 		}
 	}
 	
-	/*
-	 * This function required object ExtendedField containing the id, name, field name, content, field type, possible values, default values, required and regex.
+	/**
+	 * @desc Update a extended field
+	 * @param object $extended_field ExtendedField containing the id, name, field name, content, field type, possible values, default values, required and regex.
 	 */
 	public static function update(ExtendedField $extended_field)
 	{
@@ -86,6 +88,10 @@ class ExtendedFieldsService
 		}
 	}
 	
+	/**
+	 * @desc Delete a extended field for id
+	 * @param integer $id the id of the extended field
+	 */
 	public static function delete_by_id($id)
 	{
 		if (!empty($id))
@@ -108,6 +114,10 @@ class ExtendedFieldsService
 		}
 	}
 	
+	/**
+	 * @desc Delete a extended field for field name
+	 * @param string $field_name the field name of the extended field
+	 */
 	public static function delete_by_field_name($field_name)
 	{
 		if (!empty($field_name))
@@ -130,9 +140,11 @@ class ExtendedFieldsService
 		}
 	}
 	
-	/*
-	 * This function required object ExtendedField containing the id or the field name
-	 * Return Object ExtendedField containing the informations field
+	/**
+	 * @desc Return informations for extended field by id or field name
+	 * @param object ExtendedField containing the id or the field name
+	 * @param const $sort SORT_BY_ID or SORT_BY_FIELD_NAME
+	 * $return Object ExtendedField containing the informations field
 	 */
 	public static function data_field(ExtendedField $extended_field, $sort = self::SORT_BY_ID)
 	{
@@ -171,6 +183,9 @@ class ExtendedFieldsService
 		self::$error = $error;
 	}
 	
+	/**
+	 * $return String Possible errors encountered
+	 */
 	public static function get_error()
 	{
 		$error = self::$error;

@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                      default_config_data.class.php
+ *                      AbstractConfigData.class.php
  *                            -------------------
  *   begin                : September 16, 2009
  *   copyright            : (C) 2009 Benoit Sautel

@@ -186,9 +186,12 @@ elseif ($new_cat XOR $id_edit > 0)
 			$img_str .= '<option value="' . $image . '">' . $image . '</option>'; //On ajoute l'image non sélectionnée
 		}
 	}
+	
+	$editor = AppContext::get_content_formatting_service()->get_default_editor();
+	$editor->set_identifier('contents');
 
 	$Template->put_all(array(
-		'KERNEL_EDITOR' => display_editor(),
+		'KERNEL_EDITOR' => $editor->display(),
 		'IMG_LIST' => $img_str,
 		'L_CATEGORY' => $LANG['category'],
 		'L_REQUIRED_FIELDS' => $DOWNLOAD_LANG['required_fields'],

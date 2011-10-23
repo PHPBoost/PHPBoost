@@ -63,6 +63,9 @@ else
 	
 	$CONFIG_DOWNLOAD['global_auth'] = isset($CONFIG_DOWNLOAD['global_auth']) && is_array($CONFIG_DOWNLOAD['global_auth']) ? $CONFIG_DOWNLOAD['global_auth'] : array();
 	
+	$editor = AppContext::get_content_formatting_service()->get_default_editor();
+	$editor->set_identifier('contents');
+	
 	$Template->put_all(array(
 		'NBR_FILE_MAX' => !empty($CONFIG_DOWNLOAD['nbr_file_max']) ? $CONFIG_DOWNLOAD['nbr_file_max'] : '10',
 		'NBR_COLUMN' => !empty($CONFIG_DOWNLOAD['nbr_column']) ? $CONFIG_DOWNLOAD['nbr_column'] : '2',
@@ -71,7 +74,7 @@ else
 		'WRITE_AUTH' => Authorizations::generate_select(DOWNLOAD_WRITE_CAT_AUTH_BIT, $CONFIG_DOWNLOAD['global_auth']),
 		'CONTRIBUTION_AUTH' => Authorizations::generate_select(DOWNLOAD_CONTRIBUTION_CAT_AUTH_BIT, $CONFIG_DOWNLOAD['global_auth']),
 		'DESCRIPTION' => FormatingHelper::unparse($CONFIG_DOWNLOAD['root_contents']),
-		'KERNEL_EDITOR' => display_editor(),
+		'KERNEL_EDITOR' => $editor->display(),
 		'L_REQUIRE' => $LANG['require'],		
 		'L_DOWNLOAD_MANAGEMENT' => $DOWNLOAD_LANG['download_management'],
 		'L_DOWNLOAD_ADD' => $DOWNLOAD_LANG['download_add'],

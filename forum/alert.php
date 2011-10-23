@@ -66,8 +66,11 @@ if (!empty($alert) && empty($alert_post))
 	$nbr_alert = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "forum_alerts WHERE idtopic = '" . $alert ."' AND status = 0", __LINE__, __FILE__);
 	if (empty($nbr_alert)) //On affiche le formulaire
 	{
+		$editor = AppContext::get_content_formatting_service()->get_default_editor();
+		$editor->set_identifier('contents');
+	
 		$Template->put_all(array(
-			'KERNEL_EDITOR' => display_editor(),
+			'KERNEL_EDITOR' => $editor->display(),
 			'L_ALERT' => $LANG['alert_topic'],
 			'L_ALERT_EXPLAIN' => $LANG['alert_modo_explain'],
 			'L_ALERT_TITLE' => $LANG['alert_title'],

@@ -76,13 +76,16 @@ else
 {
 	$Template->Set_filenames(array('admin_media_config'=> 'media/admin_media_config.tpl'));
 
+	$editor = AppContext::get_content_formatting_service()->get_default_editor();
+	$editor->set_identifier('contents');
+	
 	$Template->Assign_vars(array(
 		'L_CONFIG_GENERAL' => $MEDIA_LANG['config_general'],
 		'L_MODULE_NAME' => $MEDIA_LANG['module_name'],
 		'L_MODULE_NAME_EXPLAIN' => $MEDIA_LANG['module_name_explain'],
 		'MODULE_NAME' => $MEDIA_CATS[0]['name'],
 		'L_MODULE_DESC' => $MEDIA_LANG['module_desc'],
-		'KERNEL_EDITOR'	=> display_editor(),
+		'KERNEL_EDITOR'	=> $editor->display(),
 		'CONTENTS' => FormatingHelper::unparse($MEDIA_CATS[0]['desc']),
 		'L_CONFIG_DISPLAY' => $MEDIA_LANG['config_display'],
 		'L_NBR_COLS' => $MEDIA_LANG['nbr_cols'],

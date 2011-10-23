@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                          modules_mini_menu.class.php
+ *                          ModuleMiniMenu.class.php
  *                            -------------------
  *   begin                : November 15, 2008
  *   copyright            : (C) 2008 Loic Rouchon
@@ -25,8 +25,6 @@
  *
  ###################################################*/
 
-
-
 /**
  * @author Loic Rouchon <loic.rouchon@phpboost.com>
  * @desc
@@ -35,17 +33,18 @@
 class ModuleMiniMenu extends Menu
 {
 	const MODULE_MINI_MENU__CLASS = 'ModuleMiniMenu';
-	
-	private $filename = '';
-	
+
     /**
 	 * @desc Build a ModuleMiniMenu element.
-	 * @param string $title its name (according the the module folder name)
 	 */
-    public function __construct($module, $filename)
+    public function __construct()
     {
-        parent::__construct($module);
-        $this->filename = TextHelper::strprotect($filename);
+        parent::__construct($this->get_formated_title());
+    }
+    
+	public function get_formated_title()
+    {
+    	return get_class($this);
     }
     
     public function display($tpl = false)
@@ -53,28 +52,26 @@ class ModuleMiniMenu extends Menu
     	return '';
     }
     
+	public function get_default_block()
+    {
+    	return self::BLOCK_POSITION__NOT_ENABLED;
+    }
+    
+	public function admin_display()
+    {
+        return $this->display();
+    }
+    
     /**
 	 * @return string the string the string to write in the cache file
 	 */
     public function cache_export()
     {
-        $cache_str = '\';include_once PATH_TO_ROOT.\'/' . strtolower($this->title) . '/' . $this->filename . '.php\';';
-        $cache_str.= 'if(function_exists(\'' . $this->filename . '\')) { $__menu.=' . $this->filename . '(' . $this->position . ',' . $this->block . ');} $__menu.=\'';
-        return parent::cache_export_begin() . $cache_str . parent::cache_export_end();
-    }
-
-    public function get_title()
-    {
-		return $this->title . '/' . $this->filename;
-    }
-    
-    public function get_formated_title()
-    {
-    	$info_module = load_ini_file(PATH_TO_ROOT . '/' . $this->title . '/lang/', get_ulang(), 'desc.ini');
-    	if (!empty($info_module) && is_array($info_module))
-		{
-			return isset($info_module['name']) ? $info_module['name'] : '';
-		}
+    	$load_class = '\'; $class = new '. get_class($this) .'(); 
+        $class->set_block(' . $this->block . '); 
+        $class->set_block_position(' . $this->position . ');';
+        $cache_str = '$__menu.= $class->display(); $__menu.=\'';
+        return $load_class . parent::cache_export_begin() . $cache_str . parent::cache_export_end();
     }
 }
 

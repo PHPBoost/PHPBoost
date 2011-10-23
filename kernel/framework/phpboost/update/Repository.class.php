@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                           repository.class.php
+ *                           Repository.class.php
  *                            -------------------
  *   begin                : August 17 2008
  *   copyright            : (C) 2008 Loic Rouchon

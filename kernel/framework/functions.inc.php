@@ -25,28 +25,6 @@
  *
  ###################################################*/
 
-
-/**
- * @desc Return a SHA256 hash of the $str string [with a salt]
- * @param string $str the string to hash
- * @param mixed $salt If true, add the default salt : md5($str)
- * if a string, use this string as the salt
- * if false, do not use any salt
- * @return string a SHA256 hash of the $str string [with a salt]
- */
-function strhash($str, $salt = true)
-{
-	if ($salt === true)
-	{   // Default salt
-		$str = md5($str) . $str;
-	}
-	elseif ($salt !== false)
-	{   // Specific salt
-		$str = $salt . $str;
-	}
-    return hash('sha256', $str);
-}
-
 /**
  * @desc Emulates the PHP file_get_contents_emulate.
  * @param string $filename File to read.
@@ -101,7 +79,7 @@ function import($path, $import_type = CLASS_IMPORT)
 	{
 		$path = '/kernel/framework/' . $path;
 	}
-	if (!@include_once(PATH_TO_ROOT . $path . $import_type))
+	if (!include_once(PATH_TO_ROOT . $path . $import_type))
 	{
 		Debug::fatal(new Exception('Can\'t load file ' . PATH_TO_ROOT . $path . $import_type));
 	}
@@ -111,31 +89,22 @@ function import($path, $import_type = CLASS_IMPORT)
  * @desc Requires a file
  * @param string $file the file to require with an absolute path from the website root
  * @param bool $once if false use require instead of require_once
+ * @throws IOException Wether the file cannot be included because it doesn't exist
  */
-function req($file, $once = true)
+function require_file($file, $once = true)
 {
 	$file = '/' . ltrim($file, '/');
+	if (!file_exists(PATH_TO_ROOT . $file))
+	{
+		throw new IOException('File to include does\'nt exist: ' . $file);
+	}
 	if ($once)
 	{
-		if (!Debug::is_debug_mode_enabled())
-		{
-			@require_once PATH_TO_ROOT . $file ;
-		}
-		else
-		{
-			require_once PATH_TO_ROOT . $file ;
-		}
+		require_once PATH_TO_ROOT . $file ;
 	}
 	else
 	{
-		if (!Debug::is_debug_mode_enabled())
-		{
-			@require PATH_TO_ROOT . $file ;
-		}
-		else
-		{
-			require PATH_TO_ROOT . $file ;
-		}
+		require PATH_TO_ROOT . $file ;
 	}
 }
 
@@ -144,32 +113,22 @@ function req($file, $once = true)
  * @desc Includes a file
  * @param string $file the file to include with an absolute path from the website root
  * @param bool $once if false use include instead of include_once
- * @return bool true if the file have been included with success else, false
+ * @return bool true if the file has been included with success else, false
  */
-function inc($file, $once = true)
+function include_file($file, $once = true)
 {
 	$file = '/' . ltrim($file, '/');
+	if (!file_exists(PATH_TO_ROOT . $file))
+	{
+		return false;
+	}
 	if ($once)
 	{
-		if (!Debug::is_debug_mode_enabled())
-		{
-			return (@include_once(PATH_TO_ROOT . $file)) !== false;
-		}
-		else
-		{
-			return (include_once(PATH_TO_ROOT . $file)) !== false;
-		}
+		return (include_once(PATH_TO_ROOT . $file)) !== false;
 	}
 	else
 	{
-		if (!Debug::is_debug_mode_enabled())
-		{
-			return (@include(PATH_TO_ROOT . $file)) !== false;
-		}
-		else
-		{
-			return (include(PATH_TO_ROOT . $file)) !== false;
-		}
+		return (include(PATH_TO_ROOT . $file)) !== false;
 	}
 }
 

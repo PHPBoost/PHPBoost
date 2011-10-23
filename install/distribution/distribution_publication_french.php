@@ -49,6 +49,6 @@ define('DISTRIBUTION_ENABLE_DEBUG_MODE', false);
 define('DISTRIBUTION_ENABLE_BENCH', false);
 
 //Liste des modules
-$DISTRIBUTION_MODULES = array('articles', 'contact', 'connect', 'database', 'guestbook', 'news', 'pages', 'search', 'web');
+$DISTRIBUTION_MODULES = array('BBCode', 'TinyMCE', 'articles', 'contact', 'connect', 'database', 'guestbook', 'news', 'pages', 'search', 'web');
 
 ?>

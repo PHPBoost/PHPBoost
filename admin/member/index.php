@@ -27,7 +27,7 @@
 
 defined('PATH_TO_ROOT') or define('PATH_TO_ROOT', '../..');
 
-require_once PATH_TO_ROOT . '/kernel/begin.php';
+require_once PATH_TO_ROOT . '/kernel/init.php';
 
 $url_controller_mappers = array(
 new UrlControllerMapper('AdminExtendedFieldsMemberListController', '`^/extended-fields(?:/list)?/?$`'),
@@ -36,12 +36,13 @@ new UrlControllerMapper('AdminExtendedFieldMemberEditController', '`^/extended-f
 new UrlControllerMapper('AdminExtendedFieldMemberDeleteController', '`^/extended-fields/delete?/?$`'),
 new UrlControllerMapper('AdminExtendedFieldMemberRepositionController', '`^/extended-fields/position/([0-9]+)/([a-z]+)/?$`', array('id', 'type')),
 
-new UrlControllerMapper('AdminMemberAddController', '`^/members/add/?$`'),
-new UrlControllerMapper('AdminMemberConfigController', '`^/members/config/?$`'),
-new UrlControllerMapper('AdminMemberEditController', '`^/members/([0-9]+)/edit/?$`', array('id')),
-new UrlControllerMapper('AdminMemberDeleteController', '`^/members/([0-9]+)/delete/?$`', array('id')),
-new UrlControllerMapper('AdminMemberPunishmentController', '`^/members/punishment(?:/([a-z]+)/([0-9]+))?/?$`', array('type', 'user_id')),
-new UrlControllerMapper('AdminViewAllMembersController', '`^/members(?:/([a-z]+))?/?([a-z]+)?/?([0-9]+)?/?$`', array('field', 'sort', 'page')),
+new UrlControllerMapper('AdminMemberRulesController', '`^/rules/?$`'),
+new UrlControllerMapper('AdminMemberAddController', '`^/add/?$`'),
+new UrlControllerMapper('AdminMemberConfigController', '`^/config/?$`'),
+new UrlControllerMapper('AdminMemberEditController', '`^/([0-9]+)/edit/?$`', array('id')),
+new UrlControllerMapper('AdminMemberDeleteController', '`^/([0-9]+)/delete/?$`', array('id')),
+new UrlControllerMapper('AdminMemberPunishmentController', '`^/punishment(?:/([a-z]+)/([0-9]+))?/?$`', array('type', 'user_id')),
+//new UrlControllerMapper('AdminViewAllMembersController', '`^/members(?:/([a-z]+))?/?([a-z]+)?/?([0-9]+)?/?$`', array('field', 'sort', 'page')),
 );
 DispatchManager::dispatch($url_controller_mappers);
 
