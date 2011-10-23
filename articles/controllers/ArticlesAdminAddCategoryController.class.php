@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *		                   ArticlesAdminConfigController.class.php
+ *		                   ArticlesAdminAddCategoryController.class.php
  *                            -------------------
  *   begin                : October 15, 2011
  *   copyright            : (C) 2011 Patrick DUBEAU
@@ -24,7 +24,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
  ###################################################*/
-class ArticlesAdminConfigController extends AdminModuleController
+class ArticlesAdminAddCategoryController extends AdminModuleController
 {
 	private $lang;
 	private $tpl;
@@ -49,14 +49,7 @@ class ArticlesAdminConfigController extends AdminModuleController
 	
 	private function init()
 	{	
-		$this->tpl = new StringTemplate('
-		<script type="text/javascript">
-        <!--
-        	Event.observe(window, \'load\', function() {
-            	$("add_category_special_authorizations").fade({duration: 0.2});
-            });
-        -->
-        </script>#INCLUDE MSG# #INCLUDE FORM#');
+		$this->tpl = new StringTemplate('#INCLUDE MSG# #INCLUDE FORM#');
 		$this->load_lang();
 		$this->tpl->add_lang($this->lang);
 	}
@@ -77,47 +70,54 @@ class ArticlesAdminConfigController extends AdminModuleController
 			array('class' => 'text', 'maxlength' => 100, 'size' => 65, 'required' => true)
 		));
 		
-		$fieldset->add_field(new ArticlesFormFieldSelectCategories('category_location', $this->lang['add_category.category_location'], 'Racine', 
+		$fieldset->add_field(new ArticlesFormFieldSelectCategories('category_location', $this->lang['add_category.category_location'], $this->lang['add_category.default_category_location'], 
 			array('required' => true)
 		));
 		
-		$fieldset->add_field(new ArticlesFormFieldSelectCategoryIcons('category_icon', $this->lang['add_category.category_icon'], 'articles.png'));
+		$fieldset->add_field(new ArticlesFormFieldSelectCategoryIcons('category_icon', $this->lang['add_category.category_icon'], $this->lang['add_category.default_category_icon'],
+			array('events' => array('change' => 
+									'if (HTMLForms.getField("category_icon").getValue() == "other")
+									{
+										HTMLForms.getField("category_icon_path").enable();
+									}
+									else
+									{
+										HTMLForms.getField("category_icon_path").disable();
+									}'))
+		));
 		
 		$fieldset->add_field(new FormFieldTextEditor('category_icon_path', $this->lang['add_category.category_icon_path'], '',
-			array('class' => 'small_text', 'size' => 40, 'required' => false)
+			array('class' => 'small_text', 'size' => 40, 'required' => false, 'hidden' => true)
 		));
 		
 		$fieldset->add_field(new FormFieldRichTextEditor('category_description', $this->lang['add_category.category_description'], '', 
 			array('class' => 'text', 'rows' => 16, 'cols' => 47)
 		));
 		
-		$default_option_notation = new FormFieldRadioChoiceOption('Oui', 1);
-		$fieldset->add_field(new FormFieldRadioChoice('category_notation', $this->lang['add_category.category_notation'], $default_option_notation, 
-			array($default_option_notation,
-				  new FormFieldRadioChoiceOption('Non', 0))
+		$fieldset->add_field(new FormFieldRadioChoice('category_notation', $this->lang['add_category.category_notation'], ArticlesConfig::CATEGORY_NOTATION_ENABLED, 
+			array(new FormFieldRadioChoiceOption($this->lang['add_category.yes'], 1),
+				  new FormFieldRadioChoiceOption($this->lang['add_category.no'], 0))
 		));
 		
-		$default_option_comments = new FormFieldRadioChoiceOption('Oui', 1);
-		$fieldset->add_field(new FormFieldRadioChoice('category_comments', $this->lang['add_category.category_comments'], $default_option_comments, 
-			array($default_option_comments,
-				  new FormFieldRadioChoiceOption('Non', 0))
+		$fieldset->add_field(new FormFieldRadioChoice('category_comments', $this->lang['add_category.category_comments'], ArticlesConfig::CATEGORY_COMMENTS_ENABLED, 
+			array(new FormFieldRadioChoiceOption($this->lang['add_category.yes'], 1),
+				  new FormFieldRadioChoiceOption($this->lang['add_category.no'], 0))
 		));
 		
-		$default_option_publication = new FormFieldRadioChoiceOption('Oui', 1);
-		$fieldset->add_field(new FormFieldRadioChoice('category_publishing_state', $this->lang['add_category.category_publishing_state'], $default_option_publication, 
-			array($default_option_publication,
-				  new FormFieldRadioChoiceOption('Non', 0))
+		$fieldset->add_field(new FormFieldRadioChoice('category_publishing_state', $this->lang['add_category.category_publishing_state'], ArticlesConfig::CATEGORY_PUBLISHED, 
+			array(new FormFieldRadioChoiceOption($this->lang['add_category.yes'], 1),
+				  new FormFieldRadioChoiceOption($this->lang['add_category.no'], 0))
 		));
 		
-		$fieldset = new FormFieldsetHTML('special_authorizations', $this->lang['add_category.special_authorizations']);
+		$fieldset = new FormFieldsetHTML('authorizations', $this->lang['add_category.special_authorizations']);
 		$form->add_fieldset($fieldset);
 		
 		$fieldset->add_field(new FormFieldCheckbox('assign_special_authorizations', $this->lang['add_category.special_authorizations'], FormFieldCheckbox::UNCHECKED,
 			array('events' => array('click' => 
 				'if (HTMLForms.getField("assign_special_authorizations").getValue()) { 
-					$("add_category_special_authorizations").appear(); 
+					HTMLForms.getField("special_authorizations").enable(); 
 				} else { 
-					$("add_category_special_authorizations").fade(); 
+					HTMLForms.getField("special_authorizations").disable(); 
 				}'))
 		));
 		
@@ -131,7 +131,7 @@ class ArticlesAdminConfigController extends AdminModuleController
 		$article_config = ArticlesConfig::load();
 		
 		$auth_settings->build_from_auth_array($articles_config->get_authorizations());
-		$auth_setter = new FormFieldAuthorizationsSetter('special_authorizations', $auth_settings);
+		$auth_setter = new FormFieldAuthorizationsSetter('special_authorizations', $auth_settings, array('disabled' => true));
 		$fieldset->add_field($auth_setter);  
 		
 		$this->submit_button = new FormButtonDefaultSubmit();

@@ -32,6 +32,9 @@ class ArticlesConfig extends AbstractConfigData
 	const NUMBER_CATEGORIES_PER_PAGE = 'number_categories_per_page';
 	const NUMBER_COLUMNS_DISPLAYED = 'number_columns_displayed';
 	const NOTATION_SCALE = 'notation_scale';
+	const CATEGORY_NOTATION_ENABLED = 'Oui';
+	const CATEGORY_COMMENTS_ENABLED = 'Oui';
+	const CATEGORY_PUBLISHED = 'Oui';
 	
 	public function get_authorizations()
 	{

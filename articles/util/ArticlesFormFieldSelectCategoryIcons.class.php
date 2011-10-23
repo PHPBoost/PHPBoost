@@ -50,6 +50,7 @@ class ArticlesFormFieldSelectCategoryIcons extends FormFieldSimpleSelectChoice
 		$img_default_path = '../articles/articles.png';
 		
 		$options = array();
+		$options[] = new FormFieldSelectChoiceOption(LangLoader::get_message('add_category.other_location_icon', 'articles-common'), 'other');
 		$options[] = new FormFieldSelectChoiceOption($img_default_name, $img_default_path);
 		
 		$image_folder_path = new Folder('./');
