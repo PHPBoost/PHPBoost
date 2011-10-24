@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                        ArticlesFormFieldSelectCategoryIcons.class.php
+ *                        ArticlesFormFieldSelectIcons.class.php
  *                            -------------------
  *   begin                : October 20, 2011
  *   copyright            : (C) 2011 Patrick DUBEAU
@@ -29,7 +29,7 @@
  * @desc
  * @package {@package}
  */
-class ArticlesFormFieldSelectCategoryIcons extends FormFieldSimpleSelectChoice
+class ArticlesFormFieldSelectIcons extends FormFieldSimpleSelectChoice
 {
     /**
      * @desc Constructs a ArticlesFormFieldCategoryIcons.
@@ -39,6 +39,9 @@ class ArticlesFormFieldSelectCategoryIcons extends FormFieldSimpleSelectChoice
      * @param string[] $field_options Map of the field options (this field has no specific option, there are only the inherited ones)
      * @param FormFieldConstraint List of the constraints
      */
+	
+	const SELECT_OTHER_FILE_PATH = 'other';
+	
     public function __construct($id, $label, $value = 0, $field_options = array(), array $constraints = array())
     {
         parent::__construct($id, $label, $value, $this->generate_options(), $field_options, $constraints);
@@ -46,21 +49,18 @@ class ArticlesFormFieldSelectCategoryIcons extends FormFieldSimpleSelectChoice
 
     private function generate_options()
 	{
-		$img_default_name = 'articles.png';
-		$img_default_path = '../articles/articles.png';
-		
 		$options = array();
-		$options[] = new FormFieldSelectChoiceOption(LangLoader::get_message('add_category.other_location_icon', 'articles-common'), 'other');
-		$options[] = new FormFieldSelectChoiceOption($img_default_name, $img_default_path);
+		
+		$options[] = new FormFieldSelectChoiceOption('--', '');
 		
 		$image_folder_path = new Folder('./');
 		
 		foreach($image_folder_path->get_files('`\.(png|jpg|bmp|gif|jpeg|tiff)$`i') as $images)
 		{
 			$image = $images->get_name();
-			if ($image != $img_default_name)
-				$options[] = new FormFieldSelectChoiceOption($image, $image);
+			$options[] = new FormFieldSelectChoiceOption($image, $image);
 		}
+		$options[] = new FormFieldSelectChoiceOption(LangLoader::get_message('add_category.other_location_icon', 'articles-common'), 0);
 		return $options;
 	}
 }
