@@ -37,6 +37,12 @@ class ArticlesCategory
 	private $notation_system_is_disabled;
 	private $comments_system_is_disabled;
 	private $published;
+	const ENABLED_NOTATION = 1;
+	const DISABLED_NOTATION = 0;
+	const ENABLED_COMMENTS = 1;
+	const DISABLED_COMMENTS = 0;
+	const PUBLISHED = 1;
+	const NOT_PUBLISHED = 0;
 	
 	public function set_id($id)
 	{

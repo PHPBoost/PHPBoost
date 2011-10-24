@@ -94,20 +94,11 @@ class ArticlesAdminAddCategoryController extends AdminModuleController
 			array('class' => 'text', 'rows' => 16, 'cols' => 47)
 		));
 		
-		$fieldset->add_field(new FormFieldRadioChoice('category_notation', $this->lang['add_category.category_notation'], ArticlesConfig::CATEGORY_NOTATION_ENABLED, 
-			array(new FormFieldRadioChoiceOption($this->lang['add_category.yes'], 1),
-				  new FormFieldRadioChoiceOption($this->lang['add_category.no'], 0))
-		));
+		$fieldset->add_field(new FormFieldCheckbox('category_notation', $this->lang['add_category.category_notation'], ArticlesCategory::ENABLED_NOTATION));
 		
-		$fieldset->add_field(new FormFieldRadioChoice('category_comments', $this->lang['add_category.category_comments'], ArticlesConfig::CATEGORY_COMMENTS_ENABLED, 
-			array(new FormFieldRadioChoiceOption($this->lang['add_category.yes'], 1),
-				  new FormFieldRadioChoiceOption($this->lang['add_category.no'], 0))
-		));
+		$fieldset->add_field(new FormFieldCheckbox('category_comments', $this->lang['add_category.category_comments'], ArticlesCategory::ENABLED_COMMENTS));
 		
-		$fieldset->add_field(new FormFieldRadioChoice('category_publishing_state', $this->lang['add_category.category_publishing_state'], ArticlesConfig::CATEGORY_PUBLISHED, 
-			array(new FormFieldRadioChoiceOption($this->lang['add_category.yes'], 1),
-				  new FormFieldRadioChoiceOption($this->lang['add_category.no'], 0))
-		));
+		$fieldset->add_field(new FormFieldCheckbox('category_publishing_state', $this->lang['add_category.category_publishing_state'], ArticlesCategory::PUBLISHED));
 		
 		$fieldset = new FormFieldsetHTML('authorizations', $this->lang['add_category.special_authorizations']);
 		$form->add_fieldset($fieldset);
@@ -149,7 +140,7 @@ class ArticlesAdminAddCategoryController extends AdminModuleController
 		$category->set_id_parent($this->form->get_value('category_location')->get_raw_value());
 		$category->set_picture_path($this->form->get_value('category_icon')->get_raw_value());
 		
-		if ($this->form->get_value('category_icon_path') != '')
+		if ($this->form->field_is_disabled('category_icon_path'))
 		{
 			$category->set_picture_path($this->form->get_value('category_icon_path'));
 		}
@@ -160,9 +151,9 @@ class ArticlesAdminAddCategoryController extends AdminModuleController
 		
 		$category->set_description($this->form->get_value('category_description'));
 		$category->set_authorizations($this->form->get_value('special_authorizations')->build_auth_array());
-		$category->set_disable_notation_system($this->form->get_value('category_notation')->get_raw_value());
-		$category->set_disable_comments_system($this->form->get_value('category_comments')->get_raw_value());
-		$category->set_publishing_state($this->form->get_value('category_publishing_state')->get_raw_value());
+		$category->set_disable_notation_system($this->form->get_value('category_notation'));
+		$category->set_disable_comments_system($this->form->get_value('category_comments'));
+		$category->set_publishing_state($this->form->get_value('category_publishing_state'));
 		
 		ArticlesCategoriesService::add($category);
 	}
