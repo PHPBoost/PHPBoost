@@ -112,6 +112,7 @@ class FileTemplateLoader implements TemplateLoader
 		try
 		{
 			$cache_file = new File($this->cache_filepath);
+			$cache_file->open(File::WRITE);
 			$cache_file->lock();
 			$cache_file->write($result);
 			$cache_file->unlock();

@@ -214,6 +214,7 @@ class Cache
 		$cache_file->delete();
 
 		//Verrouillage du fichier (comme un mutex si une autre tâche travaille actuellement dessus)
+		$cache_file->open(File::WRITE);
 		$cache_file->lock();
 
 		//Ecriture de son contenu
