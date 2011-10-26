@@ -36,7 +36,7 @@ class File extends FileSystemElement
 	private static $WRITE = 0x2;
 	private static $APPEND = 0x3;
 	private static $BUFFER_SIZE = 8192;
-
+	
 	/**
 	 * @var string Content of the file
 	 */
@@ -83,7 +83,7 @@ class File extends FileSystemElement
 	 */
 	public function read($start = 0, $len = -1)
 	{
-		$this->open(self::$READ);
+		$opened_by_me = $this->open(self::$READ);
 
 		fseek($this->file_descriptor, $start);
 
@@ -98,7 +98,10 @@ class File extends FileSystemElement
 			$content .= fread($this->file_descriptor, min($len, self::$BUFFER_SIZE));
 			$len -= self::$BUFFER_SIZE;
 		}
-
+		if ($opened_by_me)
+		{
+			$this->close();
+		}
 		return $content;
 	}
 
@@ -118,8 +121,12 @@ class File extends FileSystemElement
 	 */
 	public function write($data)
 	{
-		$this->open(self::$WRITE);
+		$opened_by_me = $this->open(self::$WRITE);
 		$this->write_data($data);
+		if ($opened_by_me)
+		{
+			$this->close();
+		}
 	}
 
 	/**
@@ -129,8 +136,12 @@ class File extends FileSystemElement
 	 */
 	public function append($data)
 	{
-		$this->open(self::$APPEND);
+		$opened_by_me = $this->open(self::$APPEND);
 		$this->write_data($data);
+		if ($opened_by_me)
+		{
+			$this->close();
+		}
 	}
 
 	/**
@@ -138,8 +149,12 @@ class File extends FileSystemElement
 	 */
 	public function erase()
 	{
-		$this->open(self::$WRITE);
+		$opened_by_me = $this->open(self::$WRITE);
 		ftruncate($this->file_descriptor, 0);
+		if ($opened_by_me)
+		{
+			$this->close();
+		}
 	}
 
 	/**
@@ -151,6 +166,7 @@ class File extends FileSystemElement
 		{
 			$this->mode = 0;
 			fclose($this->file_descriptor);
+			$this->file_descriptor = null;
 		}
 	}
 
@@ -161,11 +177,14 @@ class File extends FileSystemElement
 	public function delete()
 	{
 		$this->close();
-
-		if (file_exists($this->get_path()) && !@unlink($this->get_path())) // Empty the file if it couldn't delete it
-		{
-			$this->erase();
-			throw new IOException('The file ' . $this->get_path() . ' couldn\'t been deleted');
+		if (file_exists($this->get_path())) {
+			$this->change_chmod(0777);
+			if (!unlink($this->get_path()))
+			{
+				// Empty the file if it couldn't delete it
+				$this->erase();
+				throw new IOException('The file ' . $this->get_path()  . ' couldn\'t been deleted');
+			}
 		}
 	}
 
@@ -176,8 +195,13 @@ class File extends FileSystemElement
 	 */
 	public function lock($blocking = true)
 	{
-		$this->open(self::$WRITE);
-		if (!@flock($this->file_descriptor, LOCK_EX, $blocking))
+		$opened_by_me = $this->open(self::$WRITE);
+		$success = @flock($this->file_descriptor, LOCK_EX, $blocking);
+		if ($opened_by_me)
+		{
+			$this->close();
+		}
+		if (!$success)
 		{
 			throw new IOException('The file ' . $this->get_path() . ' couldn\'t been locked');
 		}
@@ -189,8 +213,13 @@ class File extends FileSystemElement
 	 */
 	public function unlock()
 	{
-		$this->open(self::$WRITE);
-		if (!@flock($this->file_descriptor, LOCK_UN))
+		$opened_by_me = $this->open(self::$WRITE);
+		$succeed = @flock($this->file_descriptor, LOCK_UN);
+		if ($opened_by_me)
+		{
+			$this->close();
+		}
+		if (!$succeed)
 		{
 			throw new IOException('The file ' . $this->get_path() . ' couldn\'t been unlocked');
 		}
@@ -251,7 +280,9 @@ class File extends FileSystemElement
 					$this->check_file_descriptor('Can\'t open the file for reading');
 					break;
 			}
+			return true;
 		}
+		return false;
 	}
 
 	/**
@@ -280,7 +311,7 @@ class File extends FileSystemElement
 
 	private function check_file_descriptor($message)
 	{
-		if ($this->file_descriptor === false)
+		if ($this->file_descriptor === false || $this->file_descriptor === null)
 		{
 			throw new IOException($message . ' : ' . $this->get_path());
 		}
