@@ -59,7 +59,7 @@ class ArticlesCategoriesService
 	
 	public static function get_categories()
 	{
-		
+		return array();
 	}
 	
 	public static function get_category($id_category)

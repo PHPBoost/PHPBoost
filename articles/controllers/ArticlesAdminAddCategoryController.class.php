@@ -49,32 +49,32 @@ class ArticlesAdminAddCategoryController extends AdminModuleController
 	
 	private function init()
 	{	
-		$this->tpl = new StringTemplate('#INCLUDE MSG# #INCLUDE FORM#');
+		$this->tpl = new StringTemplate('# INCLUDE MSG # # INCLUDE FORM #');
 		$this->load_lang();
 		$this->tpl->add_lang($this->lang);
 	}
 	
 	private function load_lang()
 	{
-		$this->lang = LangLoader::get('articles-common');
+		$this->lang = LangLoader::get('articles-common', 'articles');
 	}
 	
 	private function build_form()
 	{
-		$form = new HTMLForm('add_category');
+		$this->form = new HTMLForm('add_category');
 		
 		$fieldset = new FormFieldsetHTML('add_category', $this->lang['add_category.categories']);
-		$form->add_fieldset($fieldset);
+		$this->form->add_fieldset($fieldset);
 		
 		$fieldset->add_field(new FormFieldTextEditor('category_name', $this->lang['add_category.category_name'], '',
-			array('class' => 'text', 'maxlength' => 100, 'size' => 65, 'required' => true)
+			array('maxlength' => 100, 'size' => 45, 'required' => true)
 		));
 		
 		$fieldset->add_field(new ArticlesFormFieldSelectCategories('category_location', $this->lang['add_category.category_location'], $this->lang['add_category.default_category_location'], 
 			array('required' => true)
 		));
 		
-		$fieldset->add_field(new ArticlesFormFieldSelectCategoryIcons('category_icon', $this->lang['add_category.category_icon'], $this->lang['add_category.default_category_icon'],
+		$fieldset->add_field(new ArticlesFormFieldSelectIcons('category_icon', $this->lang['add_category.category_icon'], $this->lang['add_category.default_category_icon'],
 			array('events' => array('change' => 
 									'if (HTMLForms.getField("category_icon").getValue() == "other")
 									{
@@ -101,7 +101,7 @@ class ArticlesAdminAddCategoryController extends AdminModuleController
 		$fieldset->add_field(new FormFieldCheckbox('category_publishing_state', $this->lang['add_category.category_publishing_state'], ArticlesCategory::PUBLISHED));
 		
 		$fieldset = new FormFieldsetHTML('authorizations', $this->lang['add_category.special_authorizations']);
-		$form->add_fieldset($fieldset);
+		$this->form->add_fieldset($fieldset);
 		
 		$fieldset->add_field(new FormFieldCheckbox('assign_special_authorizations', $this->lang['add_category.special_authorizations'], FormFieldCheckbox::UNCHECKED,
 			array('events' => array('click' => 
@@ -109,27 +109,25 @@ class ArticlesAdminAddCategoryController extends AdminModuleController
 					HTMLForms.getField("special_authorizations").enable(); 
 				} else { 
 					HTMLForms.getField("special_authorizations").disable(); 
-				}'))
+				}
+				'))
 		));
 		
 		$auth_settings = new AuthorizationsSettings(array(
 			new ActionAuthorization($this->lang['articles_configuration.authorizations-read'], ArticlesAuthorizationsService::AUTHORIZATIONS_READ),
 			new ActionAuthorization($this->lang['articles_configuration.config.authorizations-contribution'], ArticlesAuthorizationsService::AUTHORIZATIONS_CONTRIBUTION),
 			new ActionAuthorization($this->lang['articles_configuration.config.authorizations-write'], ArticlesAuthorizationsService::AUTHORIZATIONS_WRITE),
-			new ActionAuthorization($this->lang['articles_configuration.config.authorizations-moderation_contributions'], ArticlesAuthorizationsService::AUTHORIZATIONS_MODERATION_CONTRIBUTIONS)
+			new ActionAuthorization($this->lang['articles_configuration.config.authorizations-moderation'], ArticlesAuthorizationsService::AUTHORIZATIONS_MODERATION)
 		));
 		
-		$article_config = ArticlesConfig::load();
-		
+		$articles_config = ArticlesConfig::load();
 		$auth_settings->build_from_auth_array($articles_config->get_authorizations());
-		$auth_setter = new FormFieldAuthorizationsSetter('special_authorizations', $auth_settings, array('disabled' => true));
+		$auth_setter = new FormFieldAuthorizationsSetter('special_authorizations', $auth_settings, array('hidden' => true));
 		$fieldset->add_field($auth_setter);  
 		
 		$this->submit_button = new FormButtonDefaultSubmit();
-		$form->add_button($this->submit_button);
-		$form->add_button(new FormButtonReset());
-		
-		$this->form = $form;
+		$this->form->add_button($this->submit_button);
+		$this->form->add_button(new FormButtonReset());
 	}
 	
 	private function add()

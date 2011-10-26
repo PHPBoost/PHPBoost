@@ -60,22 +60,20 @@ class ArticlesAddArticleController extends ModuleController
 	
 	private function build_form()
 	{
-		$form = new HTMLForm('add_article');
+		$this->form = new HTMLForm('add_article');
 		
 		$fieldset = new FormFieldsetHTML('add_article', $this->lang['add_article']);
-		$form->add_fieldset($fieldset);
+		$this->form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldTextEditor('title', $this->lang['title'], ''));
+		$fieldset->add_field(new FormFieldTextEditor('title', $this->lang['title'], '', array('required' => true)));
 		
 		$fieldset->add_field(new FormFieldMultiLineTextEditor('description', $this->lang['description'], ''));
 		
 		$fieldset->add_field(new FormFieldRichTextEditor('content', $this->lang['content'], ''));
 		
-		$form->add_button(new FormButtonReset());
+		$this->form->add_button(new FormButtonReset());
 		$this->submit_button = new FormButtonDefaultSubmit();
-		$form->add_button($this->submit_button);
-
-		$this->form = $form;
+		$this->form->add_button($this->submit_button);
 	}
 	
 	private function save()

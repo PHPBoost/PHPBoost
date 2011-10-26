@@ -50,7 +50,7 @@ class ArticlesAdminConfigController extends AdminModuleController
 	
 	private function init()
 	{	
-		$this->tpl = new StringTemplate('#INCLUDE MSG# #INCLUDE FORM#');
+		$this->tpl = new StringTemplate('# INCLUDE MSG # # INCLUDE FORM #');
 		$this->load_lang();
 		$this->tpl->add_lang($this->lang);
 		$this->load_config();
@@ -58,7 +58,7 @@ class ArticlesAdminConfigController extends AdminModuleController
 	
 	private function load_lang()
 	{
-		$this->lang = LangLoader::get('articles-common');
+		$this->lang = LangLoader::get('articles-common', 'articles');
 	}
 	
 	private function load_config()
@@ -68,10 +68,10 @@ class ArticlesAdminConfigController extends AdminModuleController
 	
 	private function build_form()
 	{
-		$form = new HTMLForm('articles_configuration');
+		$this->form = new HTMLForm('articles_configuration');
 		
 		$fieldset = new FormFieldsetHTML('articles_configuration', $this->lang['articles_configuration']);
-		$form->add_fieldset($fieldset);
+		$this->form->add_fieldset($fieldset);
 		
 		$fieldset->add_field(new FormFieldTextEditor('number_articles_per_page', $this->lang['articles_configuration.number_articles_per_page'], $this->articles_config->get_number_articles_per_page(),
 			array('class' => 'text', 'maxlength' => 3, 'size' => 4, 'required' => true)
@@ -91,14 +91,14 @@ class ArticlesAdminConfigController extends AdminModuleController
 		
 		$fieldset = new FormFieldsetHTML('authorizations', $this->lang['articles_configuration_authorizations'],
 			array('description' => $this->lang['articles_configuration.authorizations_explain']));
-		$form->add_fieldset($fieldset);
+		$this->form->add_fieldset($fieldset);
 		
 		
 		$auth_settings = new AuthorizationsSettings(array(
 			new ActionAuthorization($this->lang['articles_configuration.authorizations-read'], ArticlesAuthorizationsService::AUTHORIZATIONS_READ),
 			new ActionAuthorization($this->lang['articles_configuration.config.authorizations-contribution'], ArticlesAuthorizationsService::AUTHORIZATIONS_CONTRIBUTION),
 			new ActionAuthorization($this->lang['articles_configuration.config.authorizations-write'], ArticlesAuthorizationsService::AUTHORIZATIONS_WRITE),
-			new ActionAuthorization($this->lang['articles_configuration.config.authorizations-moderation_contributions'], ArticlesAuthorizationsService::AUTHORIZATIONS_MODERATION_CONTRIBUTIONS)
+			new ActionAuthorization($this->lang['articles_configuration.config.authorizations-moderation'], ArticlesAuthorizationsService::AUTHORIZATIONS_MODERATION)
 		));
 		
 		$auth_settings->build_from_auth_array($this->articles_config->get_authorizations());
@@ -106,10 +106,8 @@ class ArticlesAdminConfigController extends AdminModuleController
 		$fieldset->add_field($auth_setter);  
 		
 		$this->submit_button = new FormButtonDefaultSubmit();
-		$form->add_button($this->submit_button);
-		$form->add_button(new FormButtonReset());
-		
-		$this->form = $form;
+		$this->form->add_button($this->submit_button);
+		$this->form->add_button(new FormButtonReset());
 	}
 	
 	private function save()

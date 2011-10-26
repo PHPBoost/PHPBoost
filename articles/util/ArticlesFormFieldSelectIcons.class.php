@@ -60,7 +60,7 @@ class ArticlesFormFieldSelectIcons extends FormFieldSimpleSelectChoice
 			$image = $images->get_name();
 			$options[] = new FormFieldSelectChoiceOption($image, $image);
 		}
-		$options[] = new FormFieldSelectChoiceOption(LangLoader::get_message('add_category.other_location_icon', 'articles-common'), 0);
+		$options[] = new FormFieldSelectChoiceOption(LangLoader::get_message('add_category.other_location_icon', 'articles-common', 'articles'), 0);
 		return $options;
 	}
 }
