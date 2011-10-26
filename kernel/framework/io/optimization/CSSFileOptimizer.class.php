@@ -124,6 +124,7 @@ class CSSFileOptimizer
 		{
 			$file = new File($location);
 			$file->delete();
+			$file->open(File::WRITE);
 			$file->lock();
 			$file->write($this->content);
 			$file->unlock();

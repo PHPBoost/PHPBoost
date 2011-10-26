@@ -32,9 +32,9 @@
  */
 class File extends FileSystemElement
 {
-	private static $READ = 0x1;
-	private static $WRITE = 0x2;
-	private static $APPEND = 0x3;
+	const READ = 0x1;
+	const WRITE = 0x2;
+	const APPEND = 0x3;
 	private static $BUFFER_SIZE = 8192;
 	
 	/**
@@ -83,7 +83,7 @@ class File extends FileSystemElement
 	 */
 	public function read($start = 0, $len = -1)
 	{
-		$opened_by_me = $this->open(self::$READ);
+		$opened_by_me = $this->open(self::READ);
 
 		fseek($this->file_descriptor, $start);
 
@@ -121,7 +121,7 @@ class File extends FileSystemElement
 	 */
 	public function write($data)
 	{
-		$opened_by_me = $this->open(self::$WRITE);
+		$opened_by_me = $this->open(self::WRITE);
 		$this->write_data($data);
 		if ($opened_by_me)
 		{
@@ -136,7 +136,7 @@ class File extends FileSystemElement
 	 */
 	public function append($data)
 	{
-		$opened_by_me = $this->open(self::$APPEND);
+		$opened_by_me = $this->open(self::APPEND);
 		$this->write_data($data);
 		if ($opened_by_me)
 		{
@@ -149,7 +149,7 @@ class File extends FileSystemElement
 	 */
 	public function erase()
 	{
-		$opened_by_me = $this->open(self::$WRITE);
+		$opened_by_me = $this->open(self::WRITE);
 		ftruncate($this->file_descriptor, 0);
 		if ($opened_by_me)
 		{
@@ -178,7 +178,6 @@ class File extends FileSystemElement
 	{
 		$this->close();
 		if (file_exists($this->get_path())) {
-			$this->change_chmod(0777);
 			if (!unlink($this->get_path()))
 			{
 				// Empty the file if it couldn't delete it
@@ -195,12 +194,12 @@ class File extends FileSystemElement
 	 */
 	public function lock($blocking = true)
 	{
-		$opened_by_me = $this->open(self::$WRITE);
-		$success = @flock($this->file_descriptor, LOCK_EX, $blocking);
-		if ($opened_by_me)
+		if (!$this->is_open())
 		{
-			$this->close();
+			throw new IOException('The file ' . $this->get_path() . ' should be opened before trying to lock it');
 		}
+		$this->open(self::WRITE);
+		$success = @flock($this->file_descriptor, LOCK_EX, $blocking);
 		if (!$success)
 		{
 			throw new IOException('The file ' . $this->get_path() . ' couldn\'t been locked');
@@ -213,12 +212,12 @@ class File extends FileSystemElement
 	 */
 	public function unlock()
 	{
-		$opened_by_me = $this->open(self::$WRITE);
-		$succeed = @flock($this->file_descriptor, LOCK_UN);
-		if ($opened_by_me)
+		if (!$this->is_open())
 		{
-			$this->close();
+			throw new IOException('The file ' . $this->get_path() . ' should be opened before trying to unlock it');
 		}
+		$this->open(self::WRITE);
+		$succeed = @flock($this->file_descriptor, LOCK_UN);
 		if (!$succeed)
 		{
 			throw new IOException('The file ' . $this->get_path() . ' couldn\'t been unlocked');
@@ -258,7 +257,7 @@ class File extends FileSystemElement
 	 * @desc Opens the file. You cannot read or write a closed file, use this method to open it.
 	 * @throws IOException If the file can neither been read nor created.
 	 */
-	private function open($mode)
+	public function open($mode)
 	{
 		if ($this->mode != $mode)
 		{
@@ -266,15 +265,15 @@ class File extends FileSystemElement
 			$this->mode = $mode;
 			switch ($this->mode)
 			{
-				case self::$APPEND:
+				case self::APPEND:
 					$this->file_descriptor = @fopen($this->get_path(), 'a+b');
 					$this->check_file_descriptor('Can\'t open the file for creating / writing');
 					break;
-				case self::$WRITE:
+				case self::WRITE:
 					$this->file_descriptor = @fopen($this->get_path(), 'w+b');
 					$this->check_file_descriptor('Can\'t open the file for creating / writing');
 					break;
-				case self::$READ:
+				case self::READ:
 				default:
 					$this->file_descriptor = @fopen($this->get_path(), 'rb');
 					$this->check_file_descriptor('Can\'t open the file for reading');
