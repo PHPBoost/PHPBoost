@@ -479,12 +479,11 @@ class Environment
 
 	public static function compute_running_module_name()
 	{
-		$path = str_replace(DIR, '', SCRIPT);
-		$path = trim($path, '/');
-		if (strpos($path, '/'))
+		$sections = explode('/', trim(SCRIPT, '/'));
+		array_shift($sections);
+		if (is_array($sections))
 		{
-			$module_name = explode('/', $path);
-			self::$running_module_name = $module_name[0];
+			self::$running_module_name = $sections[0];
 		}
 		else
 		{
