@@ -337,6 +337,7 @@ class Environment
 				$lock_file->write('');
 				$lock_file->flush();
 			}
+			$lock_file->open(File::WRITE);
 			$lock_file->lock(false);
 			$yesterday_timestamp = self::get_yesterday_timestamp();
 
