@@ -50,10 +50,6 @@ class NewsSetup extends DefaultModuleSetup
 	public function uninstall()
 	{
 		$this->drop_tables();
-		
-		$comments_topic = new CommentsTopic();
-		$comments_topic->set_module_id('news');
-		CommentsService::delete_comments_module($comments_topic);
 	}
 
 	private function drop_tables()
