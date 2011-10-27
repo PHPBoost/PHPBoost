@@ -312,6 +312,7 @@ class ModulesManager
 				try
 				{
 					$folder->delete();
+					self::update_class_list();
 				}
 				catch (IOException $ex)
 				{
@@ -325,8 +326,6 @@ class ModulesManager
 		{
 			return self::NOT_INSTALLED_MODULE;
 		}
-
-		self::update_class_list();
 	}
 
 	public static function upgrade_module($module_identifier)

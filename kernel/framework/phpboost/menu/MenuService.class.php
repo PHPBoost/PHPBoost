@@ -465,10 +465,9 @@ class MenuService
 	 */
 	public static function delete_mini_module($module)
 	{
-		$conditions = 'WHERE class=:class AND title LIKE :like_title';
+		$conditions = 'WHERE class=:class';
 		$parameters = array(
-			'class' => strtolower(ModuleMiniMenu::MODULE_MINI_MENU__CLASS),
-			'like_title' => strtolower($module) . '/%'
+			'class' => ucfirst($module) . ModuleMiniMenu::MODULE_MINI_MENU__CLASS,
 		);
 		$results = self::$querier->select_rows(DB_TABLE_MENUS, self::$columns, $conditions, $parameters);
 		foreach ($results as $row)
