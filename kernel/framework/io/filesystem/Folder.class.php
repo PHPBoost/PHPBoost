@@ -199,7 +199,7 @@ class Folder extends FileSystemElement
 			$fse->delete();
 		}
 
-		if (!@rmdir($this->get_path() && !file_exists($this->get_path())))
+		if (!@rmdir($this->get_path()) && !file_exists($this->get_path()))
 		{
 			throw new IOException('The folder ' . $this->get_path() . ' couldn\'t been deleted');
 		}
