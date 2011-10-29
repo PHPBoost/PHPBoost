@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *		                   ArticlesAdminAddCategoryController.class.php
+ *		                   ArticlesAdminEditCategoryController.class.php
  *                            -------------------
- *   begin                : October 15, 2011
+ *   begin                : October 25, 2011
  *   copyright            : (C) 2011 Patrick DUBEAU
  *   email                : daaxwizeman@gmail.com
  *
@@ -24,7 +24,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
  ###################################################*/
-class ArticlesAdminAddCategoryController extends AdminModuleController
+class ArticlesAdminEditCategoryController extends AdminModuleController
 {
 	private $lang;
 	private $tpl;
@@ -33,18 +33,26 @@ class ArticlesAdminAddCategoryController extends AdminModuleController
 	
 	function execute(HTTPRequest $request)
 	{
+		$id_category = $request->get_string('id', 0);
 		$this->init();
-		$this->build_form();
+		
+		if (!ArticlesCategoriesService::category_exist($id_category))
+		{
+			$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), $this->lang['category_inexistent']);
+			DispatchManager::redirect($controller);
+		}
+		
+		$this->build_form($id_category);
 
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
-			$this->add();
-			$tpl->put('MSG', MessageHelper::display($this->lang['add_category.success-saving'], MessageHelper::SUCCESS, 4));
+			$this->update();
+			$tpl->put('MSG', MessageHelper::display($this->lang['edit_category.success-saving'], MessageHelper::SUCCESS, 4));
 		}
 		
 		 $this->tpl->put('FORM', $this->form->display());
 
-         return new AdminArticlesDisplayResponse($this->tpl, $this->lang['add_category']);
+         return new AdminArticlesDisplayResponse($this->tpl, $this->lang['edit_category']);
 	}
 	
 	private function init()
@@ -59,47 +67,62 @@ class ArticlesAdminAddCategoryController extends AdminModuleController
 		$this->lang = LangLoader::get('articles-common', 'articles');
 	}
 	
-	private function build_form()
+	private function build_form($id_category)
 	{
-		$this->form = new HTMLForm('add_category');
+		$this->form = new HTMLForm('edit_category');
 		
-		$fieldset = new FormFieldsetHTML('add_category', $this->lang['categories']);
+		$row = ArticlesCategoriesService::get_category($id_category);
+		
+		$fieldset = new FormFieldsetHTML('edit_category', $this->lang['categories']);
 		$this->form->add_fieldset($fieldset);
 		
-		$fieldset->add_field(new FormFieldTextEditor('category_name', $this->lang['category_name'], '',
-			array('maxlength' => 100, 'size' => 45, 'required' => true)
+		$fieldset->add_field(new FormFieldTextEditor('category_name', $this->lang['category_name'], $row['name'],
+			array('class' => 'text', 'maxlength' => 100, 'size' => 65, 'required' => true)
 		));
 		
-		$fieldset->add_field(new ArticlesFormFieldSelectCategories('category_location', $this->lang['category_location'], $this->lang['default_category_location'], 
+		$fieldset->add_field(new ArticlesFormFieldSelectCategories('category_location', $this->lang['category_location'], $row['c_order'], 
 			array('required' => true)
 		));
 		
-		$fieldset->add_field(new ArticlesFormFieldSelectIcons('category_icon', $this->lang['add_category.category_icon'], $this->lang['add_category.default_category_icon'],
+		$pos = (strpos($row['picture_path'], '/') !== false);
+		if ($pos)
+		{
+			$icons_selected = '--';
+			$other_picture_path = $row['picture_path'];
+		}
+		else
+		{
+			$icon_selected = $row['picture_path'];
+			$other_picture_path = '';
+		}
+		$fieldset->add_field(new ArticlesFormFieldSelectIcons('category_icon', $this->lang['category_icon'], $row['picture_path'],
 			array('events' => array('change' => 
-									'if (HTMLForms.getField("category_icon").getValue() == "other")
+									'if (HTMLForms.getField("category_icon").getValue() == "--")
 									{
 										HTMLForms.getField("category_icon_path").enable();
 									}
 									else
 									{
 										HTMLForms.getField("category_icon_path").disable();
-									}'
-									))
+										HTMLForms.getField("category_icon").setValue("");
+									}'))
 		));
 		
+		 
 		$fieldset->add_field(new FormFieldTextEditor('category_icon_path', $this->lang['category_icon_path'], '',
-			array('class' => 'small_text', 'size' => 40, 'required' => false, 'hidden' => true)
+			array('class' => 'small_text', 'size' => 40, 'required' => false, 'hidden' => true), 
+			array('events' => array('click' => 'HTMLForms.getField("category_icon").setValue("--");'))
 		));
 		
-		$fieldset->add_field(new FormFieldRichTextEditor('category_description', $this->lang['category_description'], '', 
+		$fieldset->add_field(new FormFieldRichTextEditor('category_description', $this->lang['category_description'], $row['description'], 
 			array('class' => 'text', 'rows' => 16, 'cols' => 47)
 		));
 		
-		$fieldset->add_field(new FormFieldCheckbox('category_notation', $this->lang['category_notation'], ArticlesCategory::ENABLED_NOTATION));
+		$fieldset->add_field(new FormFieldCheckbox('category_notation', $this->lang['category_notation'], $row['notation_disabled']));
 		
-		$fieldset->add_field(new FormFieldCheckbox('category_comments', $this->lang['category_comments'], ArticlesCategory::ENABLED_COMMENTS));
+		$fieldset->add_field(new FormFieldCheckbox('category_comments', $this->lang['category_comments'], $row['comments_disabled']));
 		
-		$fieldset->add_field(new FormFieldCheckbox('category_publishing_state', $this->lang['category_publishing_state'], ArticlesCategory::PUBLISHED));
+		$fieldset->add_field(new FormFieldCheckbox('category_publishing_state', $this->lang['category_publishing_state'], $row['published']));
 		
 		$fieldset = new FormFieldsetHTML('authorizations', $this->lang['special_authorizations']);
 		$this->form->add_fieldset($fieldset);
@@ -110,8 +133,7 @@ class ArticlesAdminAddCategoryController extends AdminModuleController
 					HTMLForms.getField("special_authorizations").enable(); 
 				} else { 
 					HTMLForms.getField("special_authorizations").disable(); 
-				}
-				'))
+				}'))
 		));
 		
 		$auth_settings = new AuthorizationsSettings(array(
@@ -121,17 +143,18 @@ class ArticlesAdminAddCategoryController extends AdminModuleController
 			new ActionAuthorization($this->lang['articles_configuration.config.authorizations-moderation'], ArticlesAuthorizationsService::AUTHORIZATIONS_MODERATION)
 		));
 		
-		$articles_config = ArticlesConfig::load();
-		$auth_settings->build_from_auth_array($articles_config->get_authorizations());
+		$auth_settings->build_from_auth_array($row['authorizations']);
 		$auth_setter = new FormFieldAuthorizationsSetter('special_authorizations', $auth_settings, array('hidden' => true));
 		$fieldset->add_field($auth_setter);  
 		
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$this->form->add_button($this->submit_button);
 		$this->form->add_button(new FormButtonReset());
+		
+		$this->form = $form;
 	}
 	
-	private function add()
+	private function update()
 	{
 		$category = new ArticlesCategory();
 		
@@ -154,7 +177,7 @@ class ArticlesAdminAddCategoryController extends AdminModuleController
 		$category->set_disable_comments_system($this->form->get_value('category_comments'));
 		$category->set_publishing_state($this->form->get_value('category_publishing_state'));
 		
-		ArticlesCategoriesService::add($category);
+		ArticlesCategoriesService::update($category);
 	}
 }
 ?>

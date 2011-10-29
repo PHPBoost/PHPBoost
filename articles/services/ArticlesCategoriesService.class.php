@@ -29,17 +29,17 @@ class ArticlesCategoriesService
 {
     public static function add(ArticlesCategory $category)
 	{
-		ArticlesCategoriesDataBase::add($category);
+		
 	}
 	
 	public static function update(ArticlesCategory $category)
 	{
-		ArticlesCategoriesDataBase::update($category);
+		
 	}
 
 	public static function delete($id_category)
 	{
-		ArticlesCategoriesDataBase::delete($id_category);
+		
 	}
 	
 	public static function change_position($id_category, $position)
@@ -64,7 +64,15 @@ class ArticlesCategoriesService
 	
 	public static function get_category($id_category)
 	{
-		
+		$columns = array('*');
+		$condition = "WHERE id = '". $id_category ."'";
+		$row = PersistenceContext::get_querier()->select_single_row(ArticlesSetup::$articles_categories_table, $columns, $condition);
+		return $row;
+	}
+	
+	public static function category_exist($id_category)
+	{
+		return PersistenceContext::get_querier()->count(ArticlesSetup::$articles_categories_table, "WHERE id = '". $id_category ."'");
 	}
 	
 	public static function get_feed_list()
