@@ -53,7 +53,7 @@ class UserExploreGroupsController extends AbstractController
 		{
 			$group = $this->groups_cache->get_group($group_id);
 			$this->view->put_all(array(
-				'C_ADMIN' => AppContext::get_current_user()->check_level(ADMIN_LEVEL),
+				'C_ADMIN' => AppContext::get_current_user()->check_level(User::ADMIN_LEVEL),
 				'U_ADMIN_GROUPS' => PATH_TO_ROOT .'/admin/admin_groups.php?id=' . $group_id,
 				'GROUP_NAME' => $group['name']
 			));

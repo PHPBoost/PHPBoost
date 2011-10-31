@@ -87,8 +87,8 @@ if (empty($id_media) && $id_cat >= 0)
 	$Template->put_all(array(
 		'C_CATEGORIES' => true,
 		'TITLE' => $MEDIA_CATS[$id_cat]['name'],
-		'C_ADMIN' => $User->check_level(ADMIN_LEVEL),
-		'C_MODO' => $User->check_level(MODO_LEVEL),
+		'C_ADMIN' => $User->check_level(User::ADMIN_LEVEL),
+		'C_MODO' => $User->check_level(User::MODERATOR_LEVEL),
 		'U_ADMIN_CAT' => $id_cat == 0 ? 'admin_media_config.php' : 'admin_media_cats.php?edit=' . $id_cat,
 		'C_ADD_FILE' => $User->check_auth($MEDIA_CATS[$id_cat]['auth'], MEDIA_AUTH_WRITE) || $User->check_auth($MEDIA_CATS[$id_cat]['auth'], MEDIA_AUTH_CONTRIBUTION),
 		'U_ADD_FILE' => 'media_action.php?add=' . $id_cat,
@@ -250,7 +250,7 @@ elseif ($id_media > 0)
 	
 	$Template->put_all(array(
 		'C_DISPLAY_MEDIA' => true,
-		'C_MODO' => $User->check_level(MODO_LEVEL),
+		'C_MODO' => $User->check_level(User::MODERATOR_LEVEL),
 		'ID_MEDIA' => $id_media,
 		'NAME' => $media['name'],
 		'CONTENTS' => FormatingHelper::second_parse($media['contents']),

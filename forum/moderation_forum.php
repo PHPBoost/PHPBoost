@@ -58,7 +58,7 @@ if (is_array($CAT_FORUM))
 	}
 }
 
-if (!$User->check_level(MODO_LEVEL) && $check_auth_by_group !== true) //Si il n'est pas modérateur (total ou partiel)
+if (!$User->check_level(User::MODERATOR_LEVEL) && $check_auth_by_group !== true) //Si il n'est pas modérateur (total ou partiel)
 {
 	$error_controller = PHPBoostErrors::unexisting_page();
 	DispatchManager::redirect($error_controller);
@@ -280,7 +280,7 @@ elseif ($action == 'punish') //Gestion des utilisateurs
 		$info_mbr = $Sql->query_array(DB_TABLE_MEMBER, 'user_id', 'level', "WHERE user_id = '" . $id_get . "'", __LINE__, __FILE__);
 
 		//Modérateur ne peux avertir l'admin (logique non?).
-		if (!empty($info_mbr['user_id']) && ($info_mbr['level'] < 2 || $User->check_level(ADMIN_LEVEL)))
+		if (!empty($info_mbr['user_id']) && ($info_mbr['level'] < 2 || $User->check_level(User::ADMIN_LEVEL)))
 		{
 			$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET user_readonly = '" . $readonly . "' WHERE user_id = '" . $info_mbr['user_id'] . "'", __LINE__, __FILE__);
 
@@ -449,7 +449,7 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 		$info_mbr = $Sql->query_array(DB_TABLE_MEMBER, 'user_id', 'level', 'user_mail', "WHERE user_id = '" . $id_get . "'", __LINE__, __FILE__);
 
 		//Modérateur ne peux avertir l'admin (logique non?).
-		if (!empty($info_mbr['user_id']) && ($info_mbr['level'] < 2 || $User->check_level(ADMIN_LEVEL)))
+		if (!empty($info_mbr['user_id']) && ($info_mbr['level'] < 2 || $User->check_level(User::ADMIN_LEVEL)))
 		{
 			if ($new_warning_level < 100) //Ne peux pas mettre des avertissements supérieurs à 100.
 			{
@@ -585,7 +585,7 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 		));
 	}
 }
-elseif (retrieve(GET, 'del_h', false) && $User->check_level(ADMIN_LEVEL)) //Suppression de l'historique.
+elseif (retrieve(GET, 'del_h', false) && $User->check_level(User::ADMIN_LEVEL)) //Suppression de l'historique.
 {
 	$Sql->query_inject("DELETE FROM " . PREFIX . "forum_history");
 
@@ -602,7 +602,7 @@ else //Panneau de modération
 	));
 
 	//Bouton de suppression de l'historique, visible uniquement pour l'admin.
-	if ($User->check_level(ADMIN_LEVEL))
+	if ($User->check_level(User::ADMIN_LEVEL))
 	{
 		$Template->put_all(array(
 			'C_FORUM_ADMIN' => true

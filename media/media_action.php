@@ -51,7 +51,7 @@ if ($unvisible > 0)
             $LANG['e_unexist_media']);
         DispatchManager::redirect($controller);
 	}
-	elseif (!$User->check_level(MODO_LEVEL))
+	elseif (!$User->check_level(User::MODERATOR_LEVEL))
 	{
 		$error_controller = PHPBoostErrors::unexisting_page();
         DispatchManager::redirect($error_controller);
@@ -84,7 +84,7 @@ elseif ($delete > 0)
             $LANG['e_unexist_media']);
         DispatchManager::redirect($controller);
 	}
-	elseif (!$User->check_level(MODO_LEVEL))
+	elseif (!$User->check_level(User::MODERATOR_LEVEL))
 	{
 		$error_controller = PHPBoostErrors::unexisting_page();
         DispatchManager::redirect($error_controller);
@@ -154,7 +154,7 @@ elseif ($add >= 0 && empty($_POST['submit']) || $edit > 0)
 	}
 
 	// Édition.
-	if ($edit > 0 && ($media = $Sql->query_array(PREFIX . 'media', '*', "WHERE id = '" . $edit. "'", __LINE__, __FILE__)) && !empty($media) && $User->check_level(MODO_LEVEL))
+	if ($edit > 0 && ($media = $Sql->query_array(PREFIX . 'media', '*', "WHERE id = '" . $edit. "'", __LINE__, __FILE__)) && !empty($media) && $User->check_level(User::MODERATOR_LEVEL))
 	{
 		bread_crumb($media['idcat']);
 		
@@ -347,7 +347,7 @@ elseif (!empty($_POST['submit']))
 	}
 
 	// Édition
-	if ($media['idedit'] && $User->check_level(MODO_LEVEL))
+	if ($media['idedit'] && $User->check_level(User::MODERATOR_LEVEL))
 	{
 		$Sql->query_inject("UPDATE " . PREFIX . "media SET idcat = '" . $media['idcat'] . "', name = '" . $media['name'] . "', url='" . $media['url'] . "', contents = '" . FormatingHelper::strparse($media['contents']) . "', infos = '" . ($User->check_auth($auth_cat, MEDIA_AUTH_WRITE) ? MEDIA_STATUS_APROBED : 0) . "', width = '" . $media['width'] . "', height = '" . $media['height'] . "' WHERE id = '" . $media['idedit'] . "'", __LINE__, __FILE__);
 

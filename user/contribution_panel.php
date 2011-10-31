@@ -27,7 +27,7 @@
 
 require_once('../kernel/begin.php');
 
-if (!$User->check_level(MEMBER_LEVEL)) //Si il n'est pas member (les invités n'ont rien à faire ici)
+if (!$User->check_level(User::MEMBER_LEVEL)) //Si il n'est pas member (les invités n'ont rien à faire ici)
 {
 	$error_controller = PHPBoostErrors::unexisting_page();
 	DispatchManager::redirect($error_controller);

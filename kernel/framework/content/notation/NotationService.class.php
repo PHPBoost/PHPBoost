@@ -214,7 +214,7 @@ class NotationService
 	
 	private static function register_notation(Notation $notation)
 	{
-		if (self::$user->check_level(MEMBER_LEVEL))
+		if (self::$user->check_level(User::MEMBER_LEVEL))
 		{
 			$note_is_valid = $notation->get_note() >= 0 && $notation->get_note() <= $notation->get_notation_scale() ? true : false;
 			$member_already_notation = self::get_member_already_notation($notation);

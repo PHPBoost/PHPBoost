@@ -33,7 +33,7 @@ function menu_langswitcher_langswitcher($position, $block)
 	$switchlang = !empty($_GET['switchlang']) ? urldecode($_GET['switchlang']) : '';
     if (!empty($switchlang))
     {
-        if ($user->check_level(MEMBER_LEVEL))
+        if ($user->check_level(User::MEMBER_LEVEL))
         {
             $Session->csrf_get_protect();
         }

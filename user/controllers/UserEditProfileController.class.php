@@ -75,7 +75,7 @@ class UserEditProfileController extends AbstractController
 	
 	private function check_authorizations($user_id)
 	{
-		return AppContext::get_current_user()->get_id() == $user_id || AppContext::get_current_user()->check_level(ADMIN_LEVEL);
+		return AppContext::get_current_user()->get_id() == $user_id || AppContext::get_current_user()->check_level(User::ADMIN_LEVEL);
 	}
 	
 	private function build_form($user_id)

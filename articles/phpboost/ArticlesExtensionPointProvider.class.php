@@ -197,7 +197,7 @@ class ArticlesExtensionPointProvider extends ExtensionPointProvider
 
 		$tpl->put_all(array(
 		'C_WRITE'=> $User->check_auth($ARTICLES_CAT[$idartcat]['auth'], AUTH_ARTICLES_WRITE),
-		'C_IS_ADMIN' => $User->check_level(ADMIN_LEVEL) ? true : false,
+		'C_IS_ADMIN' => $User->check_level(User::ADMIN_LEVEL) ? true : false,
 		'C_ADD' => $User->check_auth($CONFIG_ARTICLES['global_auth'], AUTH_ARTICLES_CONTRIBUTE) || $User->check_auth($CONFIG_ARTICLES['global_auth'], AUTH_ARTICLES_WRITE),
 		'C_EDIT' => $User->check_auth($ARTICLES_CAT[$idartcat]['auth'], AUTH_ARTICLES_MODERATE) || $User->check_auth($ARTICLES_CAT[$idartcat]['auth'], AUTH_ARTICLES_WRITE) ,
 		'IDCAT' => $idartcat,

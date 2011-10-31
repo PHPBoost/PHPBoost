@@ -140,7 +140,7 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 		}
 
 		$flood = retrieve(GET, 'flood', 0);
-		$is_admin = AppContext::get_current_user()->check_level(ADMIN_LEVEL);
+		$is_admin = AppContext::get_current_user()->check_level(User::ADMIN_LEVEL);
 		if (!$is_admin || $flood)
 		{
 			$template = new FileTemplate('admin/AdminLoginController.tpl');

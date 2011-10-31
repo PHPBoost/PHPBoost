@@ -48,7 +48,7 @@ switch ($action)
 define('TITLE', $LANG['moderation_panel']);
 require_once('../kernel/header.php');
 
-if (!$User->check_level(MODO_LEVEL)) //Si il n'est pas modérateur
+if (!$User->check_level(User::MODERATOR_LEVEL)) //Si il n'est pas modérateur
 {
 	$error_controller = PHPBoostErrors::unexisting_page();
 	DispatchManager::redirect($error_controller);
@@ -356,7 +356,7 @@ switch ($action)
 			$info_mbr = $Sql->query_array(DB_TABLE_MEMBER, 'user_id', 'level', 'user_mail', "WHERE user_id = '" . $id_get . "'", __LINE__, __FILE__);
 			
 			//Modérateur ne peux avertir l'admin (logique non?).
-			if (!empty($info_mbr['user_id']) && ($info_mbr['level'] < 2 || $User->check_level(ADMIN_LEVEL)))
+			if (!empty($info_mbr['user_id']) && ($info_mbr['level'] < 2 || $User->check_level(User::ADMIN_LEVEL)))
 			{
 				if ($new_warning_level < 100) //Ne peux pas mettre des avertissements supérieurs à 100.
 				{

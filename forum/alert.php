@@ -47,7 +47,7 @@ require_once('../kernel/header.php');
 if (empty($alert) && empty($alert_post) || empty($topic['idcat']))
 	AppContext::get_response()->redirect('/forum/index' . url('.php'));
 
-if (!$User->check_level(MEMBER_LEVEL)) //Si c'est un invité
+if (!$User->check_level(User::MEMBER_LEVEL)) //Si c'est un invité
 {
 	$error_controller = PHPBoostErrors::unexisting_page();
 	DispatchManager::redirect($error_controller);

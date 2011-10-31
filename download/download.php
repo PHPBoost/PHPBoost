@@ -120,7 +120,7 @@ if ($file_id > 0) //Contenu
 				)
 			);
 
-			if (!$User->check_level(MEMBER_LEVEL))
+			if (!$User->check_level(User::MEMBER_LEVEL))
 			{
 				DispatchManager::redirect(PHPBoostErrors::user_not_authorized());
 			}

@@ -176,10 +176,6 @@ class Environment
 	{
 		### Common constants ###
 		define('GUEST_LEVEL', 		-1);
-		define('MEMBER_LEVEL', 		0);
-		define('MODO_LEVEL', 		1);
-		define('MODERATOR_LEVEL', 	1);
-		define('ADMIN_LEVEL', 		2);
 
 		//Path from the server root
 		define('SCRIPT', 			$_SERVER['PHP_SELF']);
@@ -379,7 +375,7 @@ class Environment
 	public static function csrf_protect_post_requests()
 	{
 		// Verify that the user really wanted to do this POST (only for the registered ones)
-		if (AppContext::get_current_user()->check_level(MEMBER_LEVEL))
+		if (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL))
 		{
 			AppContext::get_session()->csrf_post_protect();
 		}

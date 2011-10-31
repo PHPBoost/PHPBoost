@@ -28,7 +28,7 @@
 
 require_once('../kernel/begin.php');
 
-if (!$User->check_level(MODO_LEVEL))
+if (!$User->check_level(User::MODERATOR_LEVEL))
 {
 	$error_controller = PHPBoostErrors::unexisting_page();
 	DispatchManager::redirect($error_controller);
@@ -230,7 +230,7 @@ else
 		'PAGINATION' => $Pagination->display('moderation_media.php?p=%d', $nbr_media, 'p', NUM_MODO_MEDIA, 3),
 		'L_SUBMIT' => $LANG['submit'],
 		'L_RESET' => $LANG['reset'],
-		'C_ADMIN' => $User->check_level(ADMIN_LEVEL),
+		'C_ADMIN' => $User->check_level(User::ADMIN_LEVEL),
 		'L_RECOUNT_MEDIA' => $MEDIA_LANG['recount_per_cat'],
 		'JS_ARRAY' => '"' . implode('", "', $js_array) . '"'
 	));

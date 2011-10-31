@@ -168,7 +168,7 @@ if (!empty($idart) && isset($cat) )
 		'C_COM'=> $options['com'] ? true : false,
 		'C_AUTHOR'=> $options['author'] ? true : false,
 		'C_DATE'=> $options['date'] ? true : false,
-		'C_MAIL'=> $options['mail'] && $User->Check_level(MEMBER_LEVEL) ? true : false,
+		'C_MAIL'=> $options['mail'] && $User->Check_level(User::MEMBER_LEVEL) ? true : false,
 		'IDART' => $articles['id'],
 		'IDCAT' => $idartcat,
 		'NAME' => $articles['title'],

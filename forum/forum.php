@@ -190,7 +190,7 @@ if (!empty($id_get))
 
 	//On vérifie si l'utilisateur a les droits d'écritures.
 	$check_group_write_auth = $User->check_auth($CAT_FORUM[$id_get]['auth'], WRITE_CAT_FORUM);
-	$locked_cat = ($CAT_FORUM[$id_get]['status'] == 1 || $User->check_level(ADMIN_LEVEL)) ? false : true;
+	$locked_cat = ($CAT_FORUM[$id_get]['status'] == 1 || $User->check_level(User::ADMIN_LEVEL)) ? false : true;
 	if (!$check_group_write_auth)
 	{
 		$Template->assign_block_vars('error_auth_write', array(

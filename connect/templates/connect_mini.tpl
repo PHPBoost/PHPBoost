@@ -1,52 +1,5 @@
+# INCLUDE AUTHENTICATION_FORM #
 	# IF C_VERTICAL #
-		# IF C_USER_NOTCONNECTED #		
-		<script type="text/javascript">
-		<!--
-		function check_connect()
-		{
-			return checkForms(new Array(
-				'login', "{L_REQUIRE_PSEUDO}", 
-				'password', "{L_REQUIRE_PASSWORD}"
-			));
-		}
-		-->
-		</script>
-		
-		<form action="{U_CONNECT}" method="post" onsubmit="return check_connect();">
-		<div class="module_mini_container">
-			<div class="module_mini_top">
-				<h5 class="sub_title">{L_CONNECT}</h5>
-			</div>
-			<div class="module_mini_contents">
-				<p>
-					<label>{L_PSEUDO}
-					<br />
-					<input size="15" type="text" class="text" id="login" name="login" maxlength="25" /></label>
-					<br />
-					<label>{L_PASSWORD}
-					<br />
-					<input size="15" type="password" id="password" name="password" class="text" maxlength="30" /></label>
-					<br />
-					<label>{L_AUTOCONNECT} <input checked="checked" type="checkbox" name="auto" /></label>
-				</p>
-				<p>
-					<input type="hidden" name="token" value="{TOKEN}" />
-					<input type="submit" name="connect" value="{L_CONNECT}" class="submit" />
-				</p>
-				<p style="margin:0;margin-top:5px;">
-					# IF C_USER_REGISTER # 
-					<a class="small_link" href="${relative_url(UserUrlBuilder::registration())}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/register_mini.png" alt="" class="valign_middle" /> {L_REGISTER}</a> 
-					# ENDIF #
-					<br />
-					<a class="small_link" href="${relative_url(UserUrlBuilder::forget_password())}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/forget_mini.png" alt="" class="valign_middle" /> {L_FORGOT_PASS}</a>
-				</p>
-			</div>		
-			<div class="module_mini_bottom">
-			</div>
-		</div>				
-		</form>	
-		# ENDIF #		
-		
 		# IF C_USER_CONNECTED #		
 		<div class="module_mini_container">
 			<div class="module_mini_top">
@@ -87,40 +40,6 @@
 		</div>
 		# ENDIF #
 	# ELSE #
-		# IF C_USER_NOTCONNECTED #	
-		<script type="text/javascript">
-		<!--
-		function check_connect(){
-			if(document.getElementById('login').value == "") {
-				alert("{L_REQUIRE_PSEUDO}");
-				return false;
-			}
-			if(document.getElementById('password').value == "") {
-				alert("{L_REQUIRE_PASSWORD}");
-				return false;
-			}
-			return true;
-		}
-		
-		-->
-		</script>
-		
-		<div style="float:right;margin-right:8px;">
-			<form action="{U_CONNECT}" method="post" onsubmit="return check_connect();" style="text-align:right;display:inline;">
-				<p style="display:inline"><input size="15" type="text" id="login" name="login" value="{L_PSEUDO}" class="connect_form" onfocus="if( this.value == '{L_PSEUDO}' ) this.value = '';" maxlength="25" />
-				<input size="15" type="password" id="password" name="password" class="connect_form" value="******" onfocus="if( this.value == '******' ) this.value = '';" maxlength="30" />
-				<input checked="checked" type="checkbox" name="auto" />
-				<input type="submit" name="connect" value="{L_CONNECT}" class="submit" /></p>
-			</form>
-			
-			# IF C_USER_REGISTER #
-			<form action="{U_REGISTER}" method="post" style="display:inline;">
-				<p style="display:inline"><input type="submit" name="register" value="{L_REGISTER}" class="submit" /></p>
-			</form>
-			# ENDIF #
-		</div>
-		# ENDIF #		
-		
 		# IF C_USER_CONNECTED #
 		<p style="text-align:right;color:#FFFFFF;">
 			<img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/members_mini.png" alt="" class="valign_middle" /> <a href="{U_HOME_PROFILE}" class="small_link">{L_PRIVATE_PROFIL}</a>&nbsp;

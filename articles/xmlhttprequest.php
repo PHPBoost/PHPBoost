@@ -33,7 +33,7 @@ require_once('../kernel/header_no_display.php');
 
 $note=retrieve(GET,'note',0);
 //Notation.
-if (!empty($note) && $User->check_level(MEMBER_LEVEL)) //connected user
+if (!empty($note) && $User->check_level(User::MEMBER_LEVEL)) //connected user
 {
 	$id = retrieve(POST, 'id', 0);
 	$note = retrieve(POST, 'note', 0);

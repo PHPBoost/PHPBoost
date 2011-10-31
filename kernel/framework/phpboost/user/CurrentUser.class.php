@@ -121,7 +121,7 @@ class CurrentUser extends User
 
 	/**
 	 * @desc Check the authorization level
-	 * @param int $level Constant of level authorization to check (MEMBER_LEVEL, MODO_LEVEL, ADMIN_LEVEL).
+	 * @param int $level Constant of level authorization to check (User::MEMBER_LEVEL, User::MODERATOR_LEVEL, User::ADMIN_LEVEL).
 	 * @return boolean True if authorized, false otherwise.
 	 */
 	public function check_level($level)
@@ -140,7 +140,7 @@ class CurrentUser extends User
 	public function check_auth($array_auth_groups, $authorization_bit)
 	{
 		//Si il s'agit d'un administrateur, étant donné qu'il a tous les droits, on renvoie systématiquement vrai
-		if ($this->check_level(ADMIN_LEVEL))
+		if ($this->check_level(User::ADMIN_LEVEL))
 		{
 			return true;
 		}

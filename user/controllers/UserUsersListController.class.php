@@ -57,19 +57,19 @@ class UserUsersListController extends AbstractController
 		switch ($field)
 		{
 			case 'registered' :
-				$field_bdd = 'timestamp';
+				$field_bdd = 'registration_date';
 			break;
 			case 'connect' :
-				$field_bdd = 'last_connect';
+				$field_bdd = 'last_connection_date';
 			break;
 			case 'messages' :
 				$field_bdd = 'user_msg';
 			break;
 			case 'login' :
-				$field_bdd = 'login';
+				$field_bdd = 'display_name';
 			break;
 			default :
-				$field_bdd = 'timestamp';
+				$field_bdd = 'registration_date';
 		}
 		
 		$pagination = new UserUsersListPagination($page);
@@ -97,15 +97,15 @@ class UserUsersListController extends AbstractController
 		while ($row = $result->fetch())
 		{
 			$user_msg = !empty($row['user_msg']) ? $row['user_msg'] : '0';
-			$last_connect = !empty($row['last_connect']) ? $row['last_connect'] : $row['timestamp'];
+			$last_connect = !empty($row['last_connection_date']) ? $row['last_connection_date'] : $row['registration_date'];
 		
 			$this->view->assign_block_vars('member_list', array(
-				'C_MAIL' => $row['user_show_mail'] == 1,
-				'PSEUDO' => $row['login'],
-				'MAIL' => $row['user_mail'],
+				'C_MAIL' => $row['show_email'] == 1,
+				'PSEUDO' => $row['display_name'],
+				'MAIL' => $row['email'],
 				'MSG' => $user_msg,
 				'LAST_CONNECT' => gmdate_format('date_format_short', $last_connect),
-				'DATE' => gmdate_format('date_format_short', $row['timestamp']),
+				'DATE' => gmdate_format('date_format_short', $row['registration_date']),
 				'U_USER_ID' => UserUrlBuilder::profile($row['user_id'])->absolute(),
 				'U_USER_PM' => UserUrlBuilder::personnal_message($row['user_id'])->absolute()
 			));
