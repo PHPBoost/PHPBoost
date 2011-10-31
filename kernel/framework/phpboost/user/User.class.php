@@ -35,24 +35,24 @@ class User
 	const MODERATOR_LEVEL = 1;
 	const ADMIN_LEVEL = 2;
 
-	private $id = -1;
-	private $level = -1;
-	private $groups = array();
+	protected $id = -1;
+	protected $level = -1;
+	protected $groups = array();
 
-	private $display_name;
-	private $email;
-	private $show_email = false;
-	private $unread_pm = 0;
-	private $timestamp;
+	protected $display_name;
+	protected $email;
+	protected $show_email = false;
+	protected $unread_pm = 0;
+	protected $timestamp;
 
-	private $warning_percentage = 0;
-	private $is_banned;
-	private $is_readonly;
+	protected $warning_percentage = 0;
+	protected $is_banned;
+	protected $is_readonly;
 
-	private $locale;
-	private $theme;
-	private $timezone;
-	private $editor;
+	protected $locale;
+	protected $theme;
+	protected $timezone;
+	protected $editor;
 	
 	public function __construct()
 	{
