@@ -30,8 +30,4 @@ if (defined('PHPBOOST') !== true)
 	
 load_module_lang('online'); //Chargement de la langue du module.
 define('TITLE', $LANG['online']);
-
-//Chargement du cache
-$Cache->load('online');
-
 ?>

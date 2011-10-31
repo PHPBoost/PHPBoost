@@ -169,7 +169,7 @@ class NewsletterAuthorizationsService
 	 */
 	private function check_authorizations($authorizations_type)
 	{
-		return AppContext::get_user()->check_auth($this->get_authorizations(), $authorizations_type);
+		return AppContext::get_current_user()->check_auth($this->get_authorizations(), $authorizations_type);
 	}
 	
 	private function get_error($authorizations_type)

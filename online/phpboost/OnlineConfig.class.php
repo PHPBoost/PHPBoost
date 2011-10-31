@@ -34,8 +34,8 @@ class OnlineConfig extends AbstractConfigData
 	const NUMBER_MEMBER_DISPLAYED = 'number_member_displayed';
 	
 	const LEVEL_DISPLAY_ORDER = 's.level DESCl';
-	const SESSION_TIME_DISPLAY_ORDER = 's.session_time DESC';
-	const LEVEL_AND_SESSION_TIME_DISPLAY_ORDER = 's.level DESC, s.session_time DESC';
+	const SESSION_TIME_DISPLAY_ORDER = 's.expiry DESC';
+	const LEVEL_AND_SESSION_TIME_DISPLAY_ORDER = 's.level DESC, s.expiry DESC';
 	
 	
 	public function get_display_order()

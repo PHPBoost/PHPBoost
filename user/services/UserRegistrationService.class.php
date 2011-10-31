@@ -34,17 +34,19 @@ class UserRegistrationService
 		self::$lang = LangLoader::get('user-common');
 	}
 	
- 	public static function user_registration($login, $password, $level, $email, $locale, $timezone, $theme, $editor, $show_email = '1', $activation_key = '', $user_aprobation = '1')
- 	{
- 		return UserService::create($login, $password, $level, $email, $locale, $timezone, $theme, $editor, $show_email, $activation_key, $user_aprobation);
- 	}
- 	
-	public static function connect_user($user_id, $password)
+	public static function create_user(User $user, $password, $registration_pass = '')
 	{
-		AppContext::get_session()->start($user_id, $password, 0, SCRIPT, QUERY_STRING, self::$lang['registration'], 1, true);
+		$user_id = $this->create_user_account($user, $password, $registration_pass);
+		self::send_email_confirmation($user_id, $user->get_email(), $user->get_display_name(), $user->get_display_name(), $password);
 	}
 	
-	public static function send_email_confirmation($user_id, $email, $pseudo, $login, $password)
+	public static function create_user_account(User $user, $password, $registration_pass = '')
+	{
+		$auth_method = new PHPBoostAuthenticationMethod($user->get_display_name(), $password);
+		return UserService::create($user, $auth_method, $registration_pass);
+	}
+	
+	private static function send_email_confirmation($user_id, $email, $pseudo, $login, $password)
 	{
 		$user_accounts_config = UserAccountsConfig::load();
 		$site_name = GeneralConfig::load()->get_site_name();

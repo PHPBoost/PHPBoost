@@ -59,7 +59,7 @@ class PHPBoostAuthenticationMethod implements AuthenticationMethod
 	public function __construct($username, $password)
 	{
 		$this->username = $username;
-		$this->password = strhash($password);
+		$this->password = KeyGenerator::string_hash($password);
 		$this->querier = PersistenceContext::get_querier();
 	}
 
@@ -81,12 +81,13 @@ class PHPBoostAuthenticationMethod implements AuthenticationMethod
 	/**
 	 * {@inheritDoc}
 	 */
-	public function associate($user_id)
+	public function associate($user_id, $registration_pass = '')
 	{
 		$internal_authentication_columns = array(
-			'user_id' => 1,
+			'user_id' => $user_id,
 			'username' => $this->username,
             'password' => $this->password,
+			'registration_pass' => $registration_pass,
 			'approved' => UserAccountsConfig::load()->get_member_accounts_validation_method()
 		);
 		$authentication_method_columns = array(

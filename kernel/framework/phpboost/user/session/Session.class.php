@@ -146,5 +146,4 @@ class Session
 		return SessionData::create_visitor();
 	}
 }
-
 ?>

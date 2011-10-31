@@ -491,5 +491,4 @@ class SessionData
 		return AppContext::get_request()->get_value('token');
 	}
 }
-
 ?>

@@ -30,7 +30,7 @@
  * @desc This class manage user, it provide you methods to get or modify user informations, moreover methods allow you to control user authorizations
  * @package members
  */
-class AdminUser extends User
+class AdminUser extends CurrentUser
 {
 	/**
 	 * @desc Sets global authorizations which are given by all the user groups authorizations.

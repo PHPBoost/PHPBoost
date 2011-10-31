@@ -37,7 +37,7 @@ class ConnectModuleMiniMenu extends ModuleMiniMenu
     	global $LANG;
 
 	    $tpl = new FileTemplate('connect/connect_mini.tpl');
-	    $user = AppContext::get_user();
+	    $user = AppContext::get_current_user();
 	    MenuService::assign_positions_conditions($tpl, $this->get_block());
 	    if ($user->check_level(MEMBER_LEVEL)) //Connecté.
 	    {

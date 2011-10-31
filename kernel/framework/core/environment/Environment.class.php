@@ -88,7 +88,7 @@ class Environment
 		/* DEPRECATED VARS */
 		global $Session, $User, $Template;
 		$Session = AppContext::get_session();
-		$User = AppContext::get_user();
+		$User = AppContext::get_current_user();
 		$Template = new DeprecatedTemplate();
 		/* END DEPRECATED */
 
@@ -254,30 +254,30 @@ class Environment
 	{
 		$session_data = Session::start();
 		AppContext::set_session($session_data);
-		AppContext::init_user();
+		AppContext::init_current_user();
 
-		$user_theme = AppContext::get_user()->get_theme();
+		$user_theme = AppContext::get_current_user()->get_theme();
 		//Is that theme authorized for this member? If not, we assign it the default theme
 		$user_theme_properties = ThemeManager::get_theme($user_theme);
 		if (UserAccountsConfig::load()->is_users_theme_forced() || $user_theme_properties == null
-		|| !AppContext::get_user()->check_auth($user_theme_properties->get_authorizations(), AUTH_THEME))
+		|| !AppContext::get_current_user()->check_auth($user_theme_properties->get_authorizations(), AUTH_THEME))
 		{
 			$user_theme = UserAccountsConfig::load()->get_default_theme();
 		}
 		//If the user's theme doesn't exist, we assign it a default one which exists
 		$user_theme = find_require_dir(PATH_TO_ROOT . '/templates/', $user_theme);
-		AppContext::get_user()->set_user_theme($user_theme);
+		AppContext::get_current_user()->set_user_theme($user_theme);
 
-		$user_lang = AppContext::get_user()->get_locale();
+		$user_lang = AppContext::get_current_user()->get_locale();
 		//Is that member authorized to use this lang? If not, we assign it the default lang
 		$langs_cache = LangsCache::load();
 		$lang_properties = $langs_cache->get_lang_properties($user_lang);
-		if ($lang_properties == null || !AppContext::get_user()->check_level($lang_properties['auth']))
+		if ($lang_properties == null || !AppContext::get_current_user()->check_level($lang_properties['auth']))
 		{
 			$user_lang = UserAccountsConfig::load()->get_default_lang();
 		}
 		$user_lang = find_require_dir(PATH_TO_ROOT . '/lang/', $user_lang);
-		AppContext::get_user()->set_user_lang($user_lang);
+		AppContext::get_current_user()->set_user_lang($user_lang);
 	}
 
 	public static function init_output_bufferization()
@@ -379,7 +379,7 @@ class Environment
 	public static function csrf_protect_post_requests()
 	{
 		// Verify that the user really wanted to do this POST (only for the registered ones)
-		if (AppContext::get_user()->check_level(MEMBER_LEVEL))
+		if (AppContext::get_current_user()->check_level(MEMBER_LEVEL))
 		{
 			AppContext::get_session()->csrf_post_protect();
 		}

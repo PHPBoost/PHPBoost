@@ -31,14 +31,14 @@ function forum_list_user_online($sql_condition)
 	global $Sql;
 	
 	list($total_admin, $total_modo, $total_member, $total_visit, $users_list) = array(0, 0, 0, 0, '');
-	$result = $Sql->query_while("SELECT s.user_id, s.level, m.login, m.user_groups
+	$result = $Sql->query_while("SELECT s.user_id, m.level, m.display_name, m.groups
 	FROM " . DB_TABLE_SESSIONS . " s 
 	LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = s.user_id 
-	WHERE s.session_time > '" . (time() - SessionsConfig::load()->get_active_session_duration()) . "' " . $sql_condition . "
-	ORDER BY s.session_time DESC", __LINE__, __FILE__);
+	WHERE s.expiry > '" . (time() - SessionsConfig::load()->get_active_session_duration()) . "' " . $sql_condition . "
+	ORDER BY s.expiry DESC", __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))
 	{
-		$group_color = User::get_group_color($row['user_groups'], $row['level']);
+		$group_color = User::get_group_color($row['groups'], $row['level']);
 		switch ($row['level']) //Coloration du membre suivant son level d'autorisation. 
 		{ 		
 			case -1:
@@ -59,7 +59,7 @@ function forum_list_user_online($sql_condition)
 			break;
 		} 
 		$coma = !empty($users_list) && $row['level'] != -1 ? ', ' : '';
-		$users_list .= (!empty($row['login']) && $row['level'] != -1) ?  $coma . '<a href="'. UserUrlBuilder::profile($row['user_id'])->absolute() .'" class="' . $status . '"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . $row['login'] . '</a>' : '';
+		$users_list .= (!empty($row['display_name']) && $row['level'] != -1) ?  $coma . '<a href="'. UserUrlBuilder::profile($row['user_id'])->absolute() .'" class="' . $status . '"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . $row['display_name'] . '</a>' : '';
 	}
 	$Sql->query_close($result);
 	

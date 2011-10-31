@@ -33,7 +33,7 @@ class Random
 {
 	public static function hexa64uid($maxlength = 64)
 	{
-		return substr(strhash(uniqid(mt_rand(), true)), 0, $maxlength);
+		return substr(KeyGenerator::string_hash(uniqid(mt_rand(), true)), 0, $maxlength);
 	}
 }
 

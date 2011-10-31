@@ -37,7 +37,7 @@ include_once(PATH_TO_ROOT . '/kernel/header_no_display.php');
 
 //Initialisation  de la class de gestion des fichiers.
 
-$user = AppContext::get_user();
+$user = AppContext::get_current_user();
 
 if (!empty($_GET['new_folder'])) //Ajout d'un dossier dans la gestion des fichiers.
 {

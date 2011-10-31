@@ -34,7 +34,7 @@ class OnlineModuleMiniMenu extends ModuleMiniMenu
 
 	public function display($tpl = false)
     {
-    	if (strpos(SCRIPT, '/online/online.php') === false)
+    	/*if (strpos(SCRIPT, '/online/online.php') === false)
 	    {
 	        global $LANG, $Sql;
 	
@@ -49,24 +49,20 @@ class OnlineModuleMiniMenu extends ModuleMiniMenu
 	
 	    	$i = 0;
 	    	$array_class = array('member', 'modo', 'admin');
-	    	$result = $Sql->query_while("SELECT s.user_id, s.level, s.session_time, m.user_groups, m.login
+	    	$result = $Sql->query_while("SELECT s.user_id, m.level, s.expiry, m.groups, m.display_name
 	    	FROM " . DB_TABLE_SESSIONS . " s
 	    	LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = s.user_id
-	    	WHERE s.session_time > '" . (time() - SessionsConfig::load()->get_active_session_duration()) . "'
+	    	WHERE s.user_id != -1 AND s.expiry > '" . (time() - SessionsConfig::load()->get_active_session_duration()) . "'
 	    	ORDER BY " . OnlineConfig::load()->get_display_order(), __LINE__, __FILE__); //4 Membres enregistrés max.
 	    	while ($row = $Sql->fetch_assoc($result))
 	    	{
 	    		if ($i < OnlineConfig::load()->get_number_member_displayed())
 	    		{
-	    			//Visiteurs non pris en compte.
-	    			if ($row['level'] !== '-1')
-	    			{
-	    				$group_color = User::get_group_color($row['user_groups'], $row['level']);
-						$tpl->assign_block_vars('online', array(
-	    					'USER' => '<a href="'. UserUrlBuilder::profile($row['user_id'])->absolute() .'" class="' . $array_class[$row['level']] . '"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . TextHelper::wordwrap_html($row['login'], 19) . '</a><br />'
-	    				));
-	    				$i++;
-	    			}
+    				$group_color = User::get_group_color($row['groups'], $row['level']);
+					$tpl->assign_block_vars('online', array(
+    					'USER' => '<a href="'. UserUrlBuilder::profile($row['user_id'])->absolute() .'" class="' . $array_class[$row['level']] . '"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . TextHelper::wordwrap_html($row['display_name'], 19) . '</a><br />'
+    				));
+    				$i++;
 	    		}
 	
 	    		switch ($row['level'])
@@ -118,6 +114,7 @@ class OnlineModuleMiniMenu extends ModuleMiniMenu
 	    	));
 			return $tpl->render();
 	    }
+	    */
 	
 	    return '';
     }

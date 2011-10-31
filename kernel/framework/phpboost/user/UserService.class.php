@@ -38,30 +38,123 @@ class UserService
 		self::$querier = PersistenceContext::get_querier();
 	}
 
-	public static function create($display_name, $level, $email, $locale, $timezone, $theme, $editor, $show_email, AuthenticationMethod $auth_method)
+	public static function create(User $user, AuthenticationMethod $auth_method, $registration_pass = '')
 	{
 		$result = self::$querier->insert(DB_TABLE_MEMBER, array(
-			'display_name' => $display_name,
-			'level' => $level,
-			'email' => $email,
-			'show_email' => (int) $show_email,
-			'locale' => $locale,
-			'timezone' => $timezone,
-			'theme' => $theme,
-			'editor' => $editor,
+			'display_name' => $user->get_display_name(),
+			'level' => $user->get_level(),
+			'groups' => implode('|', $user->get_groups()),
+			'email' => $user->get_email(),
+			'show_email' => $user->get_show_email(),
+			'locale' => $user->get_locale(),
+			'timezone' => $user->get_timezone(),
+			'theme' => $user->get_theme(),
+			'editor' => $user->get_editor(),
 			'registration_date' => time()
 		));
 
 		$user_id = $result->get_last_inserted_id();
-		$auth_method->associate($user_id);
+		$auth_method->associate($user_id, $registration_pass);
+		self::regenerate_stats_cache();
+		
 		return $user_id;
 	}
-
+	
+	public static function update($user_id, $password, $level, $email, $locale, $timezone, $theme, $editor, $show_email)
+	{
+		die('todo');
+		self::$querier->update(DB_TABLE_MEMBER, array(
+			'password' => $password,
+			'level' => $level,
+			'user_mail' => $email,
+			'user_lang' => $locale,
+			'user_theme' => $theme,
+			'user_timezone' => $timezone,
+			'user_editor' => $editor,
+			'user_show_mail' => $show_email,
+		), 'WHERE user_id = :user_id', array('user_id' => $user_id));
+	}
+	
 	public static function delete_by_id($user_id)
 	{
 		self::$querier->delete(DB_TABLE_MEMBER, 'WHERE user_id=:user_id', $user_id);
 		self::$querier->delete(DB_TABLE_INTERNAL_AUTHENTICATION, 'WHERE user_id=:user_id', $user_id);
 		self::$querier->delete(DB_TABLE_AUTHENTICATION_METHOD, 'WHERE user_id=:user_id', $user_id);
+	}
+	
+	public static function delete_account_by_login($login)
+	{
+		die('todo');
+		self::$querier->delete(DB_TABLE_MEMBER, 'WHERE login = :login', array('login' => ($login)));
+	}
+	
+	public static function delete_account_by_email($email)
+	{
+		die('todo');
+		self::$querier->delete(DB_TABLE_MEMBER, 'WHERE user_mail = :email', array('email' => ($email)));
+	}
+	
+	public static function change_password($user_id, $password)
+ 	{
+ 		die('todo');
+ 		self::$querier->update(DB_TABLE_MEMBER, array('password' => $password), 'WHERE user_id = :user_id', array('user_id' => $user_id));
+ 	}
+        
+	public static function user_exists_by_id($user_id)
+	{
+		die('todo');
+		$parameters = array('user_id' => $user_id);
+		return self::$querier->count(DB_TABLE_MEMBER, 'WHERE user_aprob = 1 AND user_id = :user_id', $parameters) > 0 ? true : false;
+	}
+	
+	public static function user_exists_by_login($login)
+	{
+		die('todo');
+		$parameters = array('login' => $login);
+		return self::$querier->count(DB_TABLE_MEMBER, 'WHERE user_aprob = 1 AND login = :login', $parameters) > 0 ? true : false;
+	}
+	
+	public static function user_exists_by_email($email)
+	{
+		die('todo');
+		$parameters = array('email' => $email);
+		return self::$querier->count(DB_TABLE_MEMBER, 'WHERE user_aprob = 1 AND user_mail = :email', $parameters) > 0 ? true : false;
+	}
+	
+	public static function activation_passkey_exists($passkey)
+	{
+		die('todo');
+		$parameters = array('passkey' => $passkey);
+		return self::$querier->count(DB_TABLE_MEMBER, 'WHERE activ_pass = :passkey', $parameters) > 0 ? true : false;
+	}
+	
+	public static function update_approbation_passkey($passkey)
+	{
+		die('todo');
+		$columns = array('user_aprob' => 1, 'activ_pass' => '');
+		$condition = 'WHERE activ_pass = :passkey';
+		$parameters = array('passkey' => $passkey);
+		self::$querier->update(DB_TABLE_MEMBER, $columns, $condition, $parameters);
+	}
+	
+	public static function get_level_lang($level)
+	{
+		$lang = LangLoader::get('user-common');
+		switch ($level) 
+		{
+			case -1:
+				return $lang['visitor'];
+			break;
+			case 0:
+				return $lang['member'];
+			break;
+			case 1:
+			 	return $lang['moderator'];
+			break;
+			case 2:
+				return $lang['administrator'];
+			break;
+		}
 	}
 
 	public static function remove_old_unactivated_member_accounts()
@@ -73,10 +166,7 @@ class UserService
 			$ids_to_delete = self::get_old_unactivated_member_accounts_ids($delay_unactiv_max);
 			if (!empty($ids_to_delete))
 			{
-				$users_id_params = array('users_id' => $ids_to_delete);
-				self::$querier->delete(DB_TABLE_MEMBER, 'WHERE user_id in :users_id', $users_id_params);
-				self::$querier->delete(DB_TABLE_INTERNAL_AUTHENTICATION, 'WHERE user_id in :users_id', $users_id_params);
-				self::$querier->delete(DB_TABLE_AUTHENTICATION_METHOD, 'WHERE user_id in :users_id', $users_id_params);
+				$this->delete_by_id($users_id_params);
 			}
 		}
 	}
@@ -92,6 +182,11 @@ class UserService
 			$users_id_to_remove[] = $row['user_id'];
 		}
 		return $users_id_to_remove;
+	}
+	
+	private static function regenerate_stats_cache()
+	{
+		StatsCache::invalidate();
 	}
 }
 

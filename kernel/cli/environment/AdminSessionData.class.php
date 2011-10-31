@@ -36,7 +36,7 @@ class AdminSessionData extends SessionData
 		$this->ip = '0000:0000:0000:0000:0000:0000:0000:0001';
 			$user_accounts_config = UserAccountsConfig::load();
 		$this->cached_data = array(
-			'level' => 2,
+			'level' => User::ADMIN_LEVEL,
 			'login' => 'Admin',
 			'display_name' => 'Admin',
 		);

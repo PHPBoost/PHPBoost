@@ -226,7 +226,7 @@ if ($checkdate === true && empty($id) && !$add)
 	if (!empty($day))
 	{
 		$java = '';
-		$result = $Sql->query_while("SELECT cl.id, cl.timestamp, cl.title, cl.contents, cl.user_id, m.login
+		$result = $Sql->query_while("SELECT cl.id, cl.timestamp, cl.title, cl.contents, cl.user_id, m.display_name
 		FROM " . PREFIX . "calendar cl
 		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id=cl.user_id
 		WHERE cl.timestamp BETWEEN '" . mktime(0, 0, 0, $month, $day, $year) . "' AND '" . mktime(23, 59, 59, $month, $day, $year) . "'
@@ -258,7 +258,7 @@ if ($checkdate === true && empty($id) && !$add)
 				'DATE' => gmdate_format('date_format', $row['timestamp']),
 				'TITLE' => $row['title'],
 				'CONTENTS' => FormatingHelper::second_parse($row['contents']),
-				'LOGIN' => '<a class="com" href="'. UserUrlBuilder::profile($row['user_id'])->absolute() . '">' . $row['login'] . '</a>',
+				'LOGIN' => '<a class="com" href="'. UserUrlBuilder::profile($row['user_id'])->absolute() . '">' . $row['display_name'] . '</a>',
 				'COM' => '<a href="'. PATH_TO_ROOT .'/calendar/calendar' . url('.php?d=' . $day . '&amp;m=' . $month . '&amp;y=' . $year . '&amp;e=' . $row['id'] . '&amp;com=0', 
 					'-' . $day . '-' . $month . '-' . $year . '-' . $row['id'] . '.php?com=0') .'">'. CommentsService::get_number_and_lang_comments('calendar', $row['id']) . '</a>',
 				'EDIT' => $edit,

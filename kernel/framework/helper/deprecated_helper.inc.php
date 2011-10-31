@@ -165,7 +165,8 @@ function url($url, $mod_rewrite = '')
 	}
 	else
 	{
-		$session_mod = $session->supports_cookies();
+		//TODO $session_mod = $session->supports_cookies();
+		$session_mod = 1;
 	}
 
 	if (ServerEnvironmentConfig::load()->is_url_rewriting_enabled() && !empty($mod_rewrite)) //Activation du mod rewrite => cookies activés.
@@ -291,7 +292,7 @@ function gmdate_format($format, $timestamp = false, $timezone_system = 0)
 	}
 	else //Timestamp utilisateur dépendant de la localisation de l'utilisateur par rapport à serveur.
 	{
-		$timezone = AppContext::get_user()->get_timezone() - $serveur_hour;
+		$timezone = AppContext::get_current_user()->get_timezone() - $serveur_hour;
 	}
 
 	if ($timezone != 0)
@@ -347,7 +348,7 @@ function strtotimestamp($str, $date_format)
 	}
 
 	$serveur_hour = NumberHelper::round(date('Z')/3600, 0) - date('I'); //Décallage du serveur par rapport au méridien de greenwitch.
-	$timezone = AppContext::get_user()->get_timezone('user_timezone') - $serveur_hour;
+	$timezone = AppContext::get_current_user()->get_timezone('user_timezone') - $serveur_hour;
 	if ($timezone != 0)
 	{
 		$timestamp -= $timezone * 3600;
@@ -428,7 +429,7 @@ function redirect_confirm($url_error, $l_error, $delay_redirect = 3)
  */
 function get_utheme()
 {
-	$user = AppContext::get_user();
+	$user = AppContext::get_current_user();
 	return $user->get_theme();
 }
 
@@ -439,7 +440,7 @@ function get_utheme()
  */
 function get_ulang()
 {
-	$user = AppContext::get_user();
+	$user = AppContext::get_current_user();
 	return $user->get_locale();
 }
 

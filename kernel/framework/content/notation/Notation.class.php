@@ -75,7 +75,7 @@ class Notation
 
 	public function get_user_id()
 	{
-		return !empty($this->user_id) ? $this->user_id : AppContext::get_user()->get_id();
+		return !empty($this->user_id) ? $this->user_id : AppContext::get_current_user()->get_id();
 	}
 
 	public function set_note($note)

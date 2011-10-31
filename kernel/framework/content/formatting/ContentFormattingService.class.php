@@ -68,7 +68,7 @@ class ContentFormattingService
 	 */
 	public function get_user_editor()
 	{
-		return AppContext::get_user()->get_editor();
+		return AppContext::get_current_user()->get_editor();
 	}
 
 	/**

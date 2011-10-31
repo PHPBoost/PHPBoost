@@ -41,7 +41,7 @@ class UserEditProfileController extends AbstractController
 	{
 		$this->init();
 		
-		$user_id = $request->get_getint('user_id', AppContext::get_user()->get_attribute('user_id'));
+		$user_id = $request->get_getint('user_id', AppContext::get_current_user()->get_attribute('user_id'));
 		if (!$this->check_authorizations($user_id))
 		{
 			$error_controller = PHPBoostErrors::user_not_authorized();
@@ -75,7 +75,7 @@ class UserEditProfileController extends AbstractController
 	
 	private function check_authorizations($user_id)
 	{
-		return AppContext::get_user()->get_id() == $user_id || AppContext::get_user()->check_level(ADMIN_LEVEL);
+		return AppContext::get_current_user()->get_id() == $user_id || AppContext::get_current_user()->check_level(ADMIN_LEVEL);
 	}
 	
 	private function build_form($user_id)
@@ -190,7 +190,7 @@ class UserEditProfileController extends AbstractController
 		$choices_list = array();
 		foreach (ThemeManager::get_activated_themes_map() as $id => $value) 
 		{
-			if ($this->user_accounts_config->get_default_theme() == $id || (AppContext::get_user()->check_auth($value->get_authorizations(), AUTH_THEME)))
+			if ($this->user_accounts_config->get_default_theme() == $id || (AppContext::get_current_user()->check_auth($value->get_authorizations(), AUTH_THEME)))
 			{
 				$choices_list[] = new FormFieldSelectChoiceOption($value->get_configuration()->get_name(), $id);
 			}

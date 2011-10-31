@@ -380,8 +380,8 @@ class KernelSetup
 			'user_id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
 			'username' => array('type' => 'string', 'length' => 255, 'default' => "''"),
 			'password' => array('type' => 'string', 'length' => 64, 'default' => "''"),
-			'activ_pass' => array('type' => 'string', 'length' => 30, 'notnull' => 1, 'default' => 0),
-			'new_pass' => array('type' => 'string', 'length' => 64, 'notnull' => 1, 'default' => "''"),
+			'registration_pass' => array('type' => 'string', 'length' => 30, 'notnull' => 1, 'default' => 0),
+			'change_password_pass' => array('type' => 'string', 'length' => 64, 'notnull' => 1, 'default' => "''"),
 			'connection_attemps' => array('type' => 'boolean', 'length' => 4, 'notnull' => 1, 'default' => 0),
 			'last_connection' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'approved' => array('type' => 'boolean', 'length' => 1, 'notnull' => 1, 'default' => 0)

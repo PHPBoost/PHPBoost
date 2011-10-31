@@ -143,7 +143,7 @@ class UserRegistrationController extends AbstractController
 	
 	private function save()
 	{
-		$activation_key = $this->user_accounts_config->get_member_accounts_validation_method() == UserAccountsConfig::MAIL_USER_ACCOUNTS_VALIDATION ? KeyGenerator::generate_key(15) : '';
+		$registration_key = $this->user_accounts_config->get_member_accounts_validation_method() == UserAccountsConfig::MAIL_USER_ACCOUNTS_VALIDATION ? KeyGenerator::generate_key(15) : '';
 		$user_aprobation = $this->user_accounts_config->get_member_accounts_validation_method() == UserAccountsConfig::AUTOMATIC_USER_ACCOUNTS_VALIDATION ? '1' : '0';
 		
 		if (!$this->form->field_is_disabled('theme'))
@@ -155,25 +155,18 @@ class UserRegistrationController extends AbstractController
 			$theme = $this->user_accounts_config->get_default_theme();
 		}
 		
-		$user_id = UserRegistrationService::user_registration(
-			$this->form->get_value('login'), 
-			$this->form->get_value('password'), 
-			0, 
-			$this->form->get_value('email'), 
-			$this->form->get_value('lang')->get_raw_value(), 
-			$this->form->get_value('timezone')->get_raw_value(), 
-			$theme, 
-			$this->form->get_value('text-editor')->get_raw_value(), 
-			$this->form->get_value('user_hide_mail'), 
-			$activation_key, 
-			$user_aprobation
-		);
+		$username = $this->form->get_value('login');
+		$user = new User();
+		$user->set_display_name($username);
+		$user->set_level(User::MEMBER_LEVEL);
+		$user->set_email($this->form->get_value('email'));
+		$user->set_locale($this->form->get_value('lang')->get_raw_value());
+		$user->set_theme($theme);
+		$user->set_timezone($this->form->get_value('timezone')->get_raw_value());
+		$user->set_editor($this->form->get_value('text-editor')->get_raw_value());
+		UserRegistrationService::create_user($user, $this->form->get_value('password'), $registration_key);
 		
 		MemberExtendedFieldsService::register_fields($this->form, $user_id);
-		
-		UserRegistrationService::send_email_confirmation($user_id, $email, $login, $login, $this->form->get_value('password'));
-		
-		UserRegistrationService::connect_user($user_id, $password);
 	}
 	
 	private function confirm_registration_message()
@@ -204,7 +197,7 @@ class UserRegistrationController extends AbstractController
 	
 	public function get_right_controller_regarding_authorizations()
 	{
-		if (!UserAccountsConfig::load()->is_registration_enabled() || AppContext::get_user()->check_level(MEMBER_LEVEL))
+		if (!UserAccountsConfig::load()->is_registration_enabled() || AppContext::get_current_user()->check_level(MEMBER_LEVEL))
 		{
 			AppContext::get_response()->redirect(Environment::get_home_page());
 		}
@@ -216,7 +209,7 @@ class UserRegistrationController extends AbstractController
 		$choices_list = array();
 		foreach (ThemeManager::get_activated_themes_map() as $id => $value) 
 		{
-			if ($this->user_accounts_config->get_default_theme() == $id || (AppContext::get_user()->check_auth($value->get_authorizations(), AUTH_THEME)))
+			if ($this->user_accounts_config->get_default_theme() == $id || (AppContext::get_current_user()->check_auth($value->get_authorizations(), AUTH_THEME)))
 			{
 				$choices_list[] = new FormFieldSelectChoiceOption($value->get_configuration()->get_name(), $id);
 			}

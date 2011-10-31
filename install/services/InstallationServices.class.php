@@ -165,7 +165,7 @@ class InstallationServices
 		$locale = LangLoader::get_locale();
 		$user = new AdminUser();
 		$user->set_user_lang($locale);
-		AppContext::set_user($user);
+		AppContext::set_current_user($user);
 		$this->save_general_config($server_url, $server_path, $site_name, $site_desc, $site_keyword, $site_timezone);
 		$this->init_graphical_config();
 		$this->init_debug_mode();
@@ -445,8 +445,14 @@ class InstallationServices
 
 	private function create_first_admin_account($username, $password, $email, $locale, $theme, $timezone)
 	{
+		$user = new User();
+		$user->set_display_name($username);
+		$user->set_level(User::ADMIN_LEVEL);
+		$user->set_email($email);
+		$user->set_locale($locale);
+		$user->set_theme($theme);
 		$auth_method = new PHPBoostAuthenticationMethod($username, $password);
-		return UserService::create($username, 2, $email, $locale, $timezone, $theme, 'bbcode', false, $auth_method);
+		return UserService::create($user, $auth_method);
 	}
 
 	private function generate_admin_unlock_code()

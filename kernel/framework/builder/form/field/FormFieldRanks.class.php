@@ -31,10 +31,6 @@
  */
 class FormFieldRanks extends FormFieldSimpleSelectChoice
 {
-	const MEMBER = '0';
-	const MODERATOR = '1';
-	const ADMINISTRATOR = '2';
-	
     /**
      * @desc Constructs a FormFieldRanks.
      * @param string $id Field id
@@ -52,9 +48,9 @@ class FormFieldRanks extends FormFieldSimpleSelectChoice
 	{
 		$lang = LangLoader::get('admin-members-common');
 		$options = array();
-		$options[] = new FormFieldSelectChoiceOption($lang['members.rank.member'], self::MEMBER);
-		$options[] = new FormFieldSelectChoiceOption($lang['members.rank.modo'], self::MODERATOR);
-		$options[] = new FormFieldSelectChoiceOption($lang['members.rank.admin'], self::ADMINISTRATOR);
+		$options[] = new FormFieldSelectChoiceOption($lang['members.rank.member'], User::MEMBER_LEVEL);
+		$options[] = new FormFieldSelectChoiceOption($lang['members.rank.modo'], User::MODERATOR_LEVEL);
+		$options[] = new FormFieldSelectChoiceOption($lang['members.rank.admin'], User::ADMIN_LEVEL);
 		return $options;
 	}
 }

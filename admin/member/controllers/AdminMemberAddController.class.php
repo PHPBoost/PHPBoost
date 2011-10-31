@@ -71,10 +71,10 @@ class AdminMemberAddController extends AdminController
 		
 		$fieldset->add_field(new FormFieldTextEditor('login', $this->lang['members.pseudo'], '', array(
 			'class' => 'text', 'maxlength' => 25, 'size' => 25, 'required' => true),
-			array(new FormFieldConstraintLengthRange(3, 25), new FormFieldConstraintLoginExist())
+			array(new FormFieldConstraintLengthRange(3, 25))
 		));		
 		
-		$fieldset->add_field(new FormFieldTextEditor('mail', $this->lang['members.mail'], '', array(
+		$fieldset->add_field(new FormFieldTextEditor('email', $this->lang['members.mail'], '', array(
 			'class' => 'text', 'maxlength' => 255, 'description' => $this->lang['members.valid'], 'required' => true),
 			array(new FormFieldConstraintMailAddress(), new FormFieldConstraintMailExist())
 		));
@@ -83,7 +83,7 @@ class AdminMemberAddController extends AdminController
 		
 		$fieldset->add_field($password_bis = new FormFieldPasswordEditor('password_bis', $this->lang['members.confirm-password'], '', array('required' => true)));
 		
-		$fieldset->add_field(new FormFieldRanks('rank', $this->lang['members.rank'], FormFieldRanks::MEMBER));
+		$fieldset->add_field(new FormFieldRanks('rank', $this->lang['members.rank'], User::MEMBER_LEVEL));
 		
 		$form->add_button(new FormButtonReset());
 		$this->submit_button = new FormButtonDefaultSubmit();
@@ -95,22 +95,13 @@ class AdminMemberAddController extends AdminController
 
 	private function save()
 	{
-		$user_accounts_config = UserAccountsConfig::load();
-		UserService::create(
-			$this->form->get_value('login'), 
-			KeyGenerator::string_hash($this->form->get_value('password')), 
-			$this->form->get_value('rank')->get_raw_value(), 
-			$this->form->get_value('mail'), 
-			$user_accounts_config->get_default_theme(), 
-			GeneralConfig::load()->get_site_timezone(), 
-			$user_accounts_config->get_default_lang(), 
-			ContentFormattingConfig::load()->get_default_editor(), 
-			'0', 
-			'', 
-			'1'
-		);
-			
-		StatsCache::invalidate();
+		$username = $this->form->get_value('login');
+		$user = new User();
+		$user->set_display_name($username);
+		$user->set_email($this->form->get_value('email'));
+		$user->set_level($this->form->get_value('rank')->get_raw_value());
+		$auth_method = new PHPBoostAuthenticationMethod($username, $this->form->get_value('password'));
+		UserService::create($user, $auth_method);
 	}
 }
 ?>
