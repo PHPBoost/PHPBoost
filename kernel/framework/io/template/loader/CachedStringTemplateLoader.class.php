@@ -78,6 +78,7 @@ class CachedStringTemplateLoader implements TemplateLoader
 		try
 		{
 			$cache_file = new File($this->cache_file_path);
+			$cache_file->open(File::WRITE);
 			$cache_file->lock();
 			$cache_file->write($this->get_parsed_content());
 			$cache_file->unlock();

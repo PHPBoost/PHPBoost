@@ -337,6 +337,7 @@ class Environment
 				$lock_file->write('');
 				$lock_file->flush();
 			}
+			$lock_file->open(File::WRITE);
 			$lock_file->lock(false);
 			$yesterday_timestamp = self::get_yesterday_timestamp();
 
@@ -479,11 +480,12 @@ class Environment
 
 	public static function compute_running_module_name()
 	{
-		$sections = explode('/', trim(SCRIPT, '/'));
-		array_shift($sections);
-		if (is_array($sections))
+		$path = str_replace(DIR, '', SCRIPT);
+		$path = trim($path, '/');
+		if (strpos($path, '/'))
 		{
-			self::$running_module_name = $sections[0];
+         $module_name = explode('/', $path);
+         self::$running_module_name = $module_name[0];
 		}
 		else
 		{
