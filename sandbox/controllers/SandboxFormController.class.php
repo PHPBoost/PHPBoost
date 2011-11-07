@@ -131,7 +131,7 @@ class SandboxFormController extends ModuleController
 		// RICH TEXT
 		$fieldset->add_field(new FormFieldRichTextEditor('rich_text', 'Champ texte riche dans éditeur', 'toto <strong>tata</strong>'));
 
-		$fieldset->add_field(new FormFieldRichTextEditor('rich_text_wysiwyg', 'Champ texte riche avec éditeur', 'toto <strong>tata</strong>', array('formatter' => AppContext::get_content_formatting_service()->create_factory(ContentFormattingService::TINYMCE_LANGUAGE))));
+		$fieldset->add_field(new FormFieldRichTextEditor('rich_text_wysiwyg', 'Champ texte riche avec éditeur', 'toto <strong>tata</strong>', array('formatter' => AppContext::get_content_formatting_service()->create_factory('tinymce'))));
 
 		//Checkbox
 		$fieldset->add_field(new FormFieldMultipleCheckbox('multiple_check_box', 'Plusieurs checkbox', 
