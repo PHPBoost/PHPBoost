@@ -35,13 +35,13 @@ class ArticlesAdminDeleteCategoryController extends AdminModuleController
 		$id_category = $request->get_string('id', 0);
 		$this->init();
 		
-		if (!ArticlesCategoriesService::category_exist($id_category))
+		if (!ArticlesCategoriesService::exists($id_category))
 		{
 			$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), $this->lang['category_inexistent']);
 			DispatchManager::redirect($controller);
 		}
 		
-		if ($this->get_nbr_articles_in_category($id_category) > 0)
+		if (ArticlesCategoriesService::number_articles_contained($id_category) > 0)
 		{
 			$this->build_form($id_category);
 		}
@@ -82,12 +82,13 @@ class ArticlesAdminDeleteCategoryController extends AdminModuleController
 		$this->lang = LangLoader::get('articles-common', 'articles');
 	}
 	
-	private function build_form()
+	private function build_form($id_category)
 	{
 		
 		$this->form = new HTMLForm('delete_category');
 		
-		$row = ArticlesCategoriesService::get_category($id);
+		$category = new ArticlesCategory();
+		$category = ArticlesCategoriesService::get_category($id_category);
 		
 		$fieldset = new FormFieldsetHTML('delete_category', $this->lang['delete_category'], array('description' => $this->lang['delete_category.explain']));
 		$this->form->add_fieldset($fieldset);
@@ -115,11 +116,6 @@ class ArticlesAdminDeleteCategoryController extends AdminModuleController
 		$this->form->add_button($this->submit_button);
 		
 		$this->form = $form;
-	}
-	
-	private function get_nbr_articles_in_category($id_category)
-	{
-		return PersistenceContext::get_querier()->count(ArticlesSetup::$articles_table, "WHERE id_cat = '". $id_category ."'");
 	}
 	
 	private function move($id_category)

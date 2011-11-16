@@ -67,10 +67,27 @@ class ArticlesCategoriesService
 		$columns = array('*');
 		$condition = "WHERE id = '". $id_category ."'";
 		$row = PersistenceContext::get_querier()->select_single_row(ArticlesSetup::$articles_categories_table, $columns, $condition);
-		return $row;
+		
+		$category = new ArticlesCategory();
+		
+		$category->set_name($row['name']);
+		$category->set_id_parent($row['id_parent']);
+		$category->set_order($row['c_order']);
+		$category->set_description($row['description']);
+		$category->set_picture_path($row['picture_path']);
+		$category->set_disable_comments_system($row['comments_disabled']);
+		$category->set_disable_comments_system($row['comments_disabled']);
+		$category->set_publishing_state($row['published']);
+		$category->set_authorizations($row['authorizations']);
+		
+		return $category;
 	}
 	
-	public static function category_exist($id_category)
+	public static function number_articles_contained($id_category)
+	{
+		return PersistenceContext::get_querier()->count(ArticlesSetup::$articles_table, "WHERE id_cat = :id_category", array('id_category' => $id_category));
+	}
+	public static function exists($id_category)
 	{
 		return PersistenceContext::get_querier()->count(ArticlesSetup::$articles_categories_table, "WHERE id = '". $id_category ."'");
 	}

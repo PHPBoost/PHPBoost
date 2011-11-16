@@ -36,7 +36,7 @@ class ArticlesAdminEditCategoryController extends AdminModuleController
 		$id_category = $request->get_string('id', 0);
 		$this->init();
 		
-		if (!ArticlesCategoriesService::category_exist($id_category))
+		if (!ArticlesCategoriesService::exists($id_category))
 		{
 			$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), $this->lang['category_inexistent']);
 			DispatchManager::redirect($controller);
@@ -71,31 +71,32 @@ class ArticlesAdminEditCategoryController extends AdminModuleController
 	{
 		$this->form = new HTMLForm('edit_category');
 		
-		$row = ArticlesCategoriesService::get_category($id_category);
+		$category = new ArticlesCategory(); 
+		$category = ArticlesCategoriesService::get_category($id_category);
 		
 		$fieldset = new FormFieldsetHTML('edit_category', $this->lang['categories']);
 		$this->form->add_fieldset($fieldset);
 		
-		$fieldset->add_field(new FormFieldTextEditor('category_name', $this->lang['category_name'], $row['name'],
+		$fieldset->add_field(new FormFieldTextEditor('category_name', $this->lang['category_name'], $category['name'],
 			array('class' => 'text', 'maxlength' => 100, 'size' => 65, 'required' => true)
 		));
 		
-		$fieldset->add_field(new ArticlesFormFieldSelectCategories('category_location', $this->lang['category_location'], $row['c_order'], 
+		$fieldset->add_field(new ArticlesFormFieldSelectCategories('category_location', $this->lang['category_location'], $category['c_order'], 
 			array('required' => true)
 		));
 		
-		$pos = (strpos($row['picture_path'], '/') !== false);
+		$pos = (strpos($category['picture_path'], '/') !== false);
 		if ($pos)
 		{
 			$icons_selected = '--';
-			$other_picture_path = $row['picture_path'];
+			$other_picture_path = $category['picture_path'];
 		}
 		else
 		{
-			$icon_selected = $row['picture_path'];
+			$icon_selected = $category['picture_path'];
 			$other_picture_path = '';
 		}
-		$fieldset->add_field(new ArticlesFormFieldSelectIcons('category_icon', $this->lang['category_icon'], $row['picture_path'],
+		$fieldset->add_field(new ArticlesFormFieldSelectIcons('category_icon', $this->lang['category_icon'], $category['picture_path'],
 			array('events' => array('change' => 
 									'if (HTMLForms.getField("category_icon").getValue() == "--")
 									{
@@ -114,15 +115,15 @@ class ArticlesAdminEditCategoryController extends AdminModuleController
 			array('events' => array('click' => 'HTMLForms.getField("category_icon").setValue("--");'))
 		));
 		
-		$fieldset->add_field(new FormFieldRichTextEditor('category_description', $this->lang['category_description'], $row['description'], 
+		$fieldset->add_field(new FormFieldRichTextEditor('category_description', $this->lang['category_description'], $category['description'], 
 			array('class' => 'text', 'rows' => 16, 'cols' => 47)
 		));
 		
-		$fieldset->add_field(new FormFieldCheckbox('category_notation', $this->lang['category_notation'], $row['notation_disabled']));
+		$fieldset->add_field(new FormFieldCheckbox('category_notation', $this->lang['category_notation'], $category['notation_disabled']));
 		
-		$fieldset->add_field(new FormFieldCheckbox('category_comments', $this->lang['category_comments'], $row['comments_disabled']));
+		$fieldset->add_field(new FormFieldCheckbox('category_comments', $this->lang['category_comments'], $category['comments_disabled']));
 		
-		$fieldset->add_field(new FormFieldCheckbox('category_publishing_state', $this->lang['category_publishing_state'], $row['published']));
+		$fieldset->add_field(new FormFieldCheckbox('category_publishing_state', $this->lang['category_publishing_state'], $category['published']));
 		
 		$fieldset = new FormFieldsetHTML('authorizations', $this->lang['special_authorizations']);
 		$this->form->add_fieldset($fieldset);
@@ -143,7 +144,7 @@ class ArticlesAdminEditCategoryController extends AdminModuleController
 			new ActionAuthorization($this->lang['articles_configuration.config.authorizations-moderation'], ArticlesAuthorizationsService::AUTHORIZATIONS_MODERATION)
 		));
 		
-		$auth_settings->build_from_auth_array($row['authorizations']);
+		$auth_settings->build_from_auth_array($category['authorizations']);
 		$auth_setter = new FormFieldAuthorizationsSetter('special_authorizations', $auth_settings, array('hidden' => true));
 		$fieldset->add_field($auth_setter);  
 		
