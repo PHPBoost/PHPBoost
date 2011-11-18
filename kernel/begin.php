@@ -28,4 +28,19 @@
 require_once 'init.php';
 
 DeprecatedEnvironment::check_page_auth();
+
+/* DEPRECATED VARS */
+global $Cache, $Bread_crumb;
+$Cache = new Cache();
+$Bread_crumb = new BreadCrumb();
+
+global $Session, $User, $Template;
+$Session = AppContext::get_session();
+$User = AppContext::get_current_user();
+$Template = new DeprecatedTemplate();
+
+global $Sql;
+$Sql = PersistenceContext::get_sql();
+/* END DEPRECATED */
+
 ?>

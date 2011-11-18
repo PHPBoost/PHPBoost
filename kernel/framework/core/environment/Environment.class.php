@@ -76,21 +76,8 @@ class Environment
 		self::init_services();
 		self::load_static_constants();
 
-		// TODO Suppress uses of $Sql in the framework
-		global $Sql;
-		$Sql = PersistenceContext::get_sql();
-		/* END DEPRECATED */
-
 		self::load_dynamic_constants();
 		self::init_session();
-
-		// TODO move in begin
-		/* DEPRECATED VARS */
-		global $Session, $User, $Template;
-		$Session = AppContext::get_session();
-		$User = AppContext::get_current_user();
-		$Template = new DeprecatedTemplate();
-		/* END DEPRECATED */
 
 		self::init_output_bufferization();
 		self::load_lang_files();
@@ -174,9 +161,6 @@ class Environment
 
 	public static function load_static_constants()
 	{
-		### Common constants ###
-		define('GUEST_LEVEL', 		-1);
-
 		//Path from the server root
 		define('SCRIPT', 			$_SERVER['PHP_SELF']);
 		define('REWRITED_SCRIPT', 	$_SERVER['REQUEST_URI']);
