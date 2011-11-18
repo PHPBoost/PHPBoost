@@ -44,7 +44,7 @@ class SessionData
 	 */
 	public static function gc()
 	{
-		PersistenceContext::get_querier()->delete(DB_TABLE_SESSIONS, 'WHERE expiry < :now', array('now' => time()));
+		PersistenceContext::get_querier()->delete(DB_TABLE_SESSIONS, 'WHERE timestamp < :now', array('now' => time() + SessionsConfig::load()->get_session_duration()));
 	}
 
 	/**
@@ -72,7 +72,7 @@ class SessionData
 		{
 			$data = new SessionData($user_id, Random::hexa64uid());
 			$data->token = Random::hexa64uid(16);
-			$data->expiry = time() + SessionsConfig::load()->get_session_duration();
+			$data->timestamp = time();
 			$data->ip = AppContext::get_request()->get_ip_address();
 			self::fill_user_cached_data($data);
 			$data->create();
@@ -112,7 +112,7 @@ class SessionData
 		$parameters = array('user_id' => $user_id);
 		$condition = 'WHERE user_id=:user_id';
 		self::update_existing_session($condition, $parameters);
-		$columns = array('session_id', 'token', 'expiry', 'ip', 'location_script', 'location_title', 'data', 'cached_data');
+		$columns = array('session_id', 'token', 'timestamp', 'ip', 'location_script', 'location_title', 'data', 'cached_data');
 		$row = PersistenceContext::get_querier()->select_single_row(DB_TABLE_SESSIONS, $columns, $condition, $parameters);
 		$data = self::init_from_row($user_id, $row['session_id'], $row);
 		$data->create_cookie();
@@ -122,7 +122,7 @@ class SessionData
 	private static function update_existing_session($condition, $parameters)
 	{
 		$columns = array(
-			'expiry' => time() + SessionsConfig::load()->get_session_duration(),
+			'timestamp' => time() + SessionsConfig::load()->get_session_duration(),
 			'ip' => AppContext::get_request()->get_ip_address()
 		);
 		PersistenceContext::get_querier()->update(DB_TABLE_SESSIONS, $columns, $condition, $parameters);
@@ -144,7 +144,7 @@ class SessionData
 		{
 			$user_id = $values[self::$KEY_USER_ID];
 			$session_id = $values[self::$KEY_SESSION_ID];
-			$columns = array('token', 'expiry', 'ip', 'location_script', 'location_title', 'data', 'cached_data');
+			$columns = array('token', 'timestamp', 'ip', 'location_script', 'location_title', 'data', 'cached_data');
 			$condition = 'WHERE user_id=:user_id AND session_id=:session_id';
 			$parameters = array('user_id' => $user_id, 'session_id' => $session_id);
 			$row = PersistenceContext::get_querier()->select_single_row(DB_TABLE_SESSIONS, $columns, $condition, $parameters);
@@ -161,7 +161,7 @@ class SessionData
 	{
 		$data = new SessionData($user_id, $session_id);
 		$data->token = $row['token'];
-		$data->expiry = $row['expiry'];
+		$data->timestamp = $row['timestamp'];
 		$data->ip = $row['ip'];
 		$data->location_script = $row['location_script'];
 		$data->location_title = $row['location_title'];
@@ -172,8 +172,8 @@ class SessionData
 
 	private static function update(SessionData $data)
 	{
-		$data->expiry = time() + SessionsConfig::load()->get_session_duration();
-		$columns = array('expiry' => $data->expiry, 'location_script' => REWRITED_SCRIPT);
+		$data->timestamp = time();
+		$columns = array('timestamp' => $data->timestamp, 'location_script' => REWRITED_SCRIPT);
 		$condition = 'WHERE user_id=:user_id AND session_id=:session_id';
 		$parameters = array('user_id' => $data->user_id, 'session_id' => $data->session_id);
 		PersistenceContext::get_querier()->update(DB_TABLE_SESSIONS, $columns, $condition, $parameters);
@@ -216,7 +216,7 @@ class SessionData
 	protected $user_id;
 	protected $session_id;
 	protected $token;
-	protected $expiry;
+	protected $timestamp;
 	protected $ip;
 	protected $location_script;
 	protected $location_title;
@@ -249,7 +249,12 @@ class SessionData
 
 	public function get_expiry_date()
 	{
-		return $this->expiry;
+		return $this->timestamp + SessionsConfig::load()->get_session_duration();
+	}
+	
+	public function get_timestamp()
+	{
+		return $this->timestamp;
 	}
 
 	public function get_ip()
@@ -380,7 +385,7 @@ class SessionData
 			'user_id' => $this->user_id,
 			'session_id' => $this->session_id,
 			'token' => $this->token,
-			'expiry' => $this->expiry,
+			'timestamp' => $this->timestamp,
 			'ip' => $this->ip,
 			'cached_data' => serialize($this->cached_data),
 			'data' => serialize($this->data)

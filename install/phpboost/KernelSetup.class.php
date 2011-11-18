@@ -589,7 +589,7 @@ class KernelSetup
 			'user_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'session_id' => array('type' => 'string', 'length' =>64, 'default' => "''"),
 			'token' => array('type' => 'string', 'length' => 64, 'notnull' => 1),
-			'expiry' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
+			'timestamp' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'ip' => array('type' => 'string', 'length' => 64, 'default' => "''"),
 			'location_script' => array('type' => 'string', 'length' => 100, 'notnull' => 1, 'default' => "''"),
 			'location_title' => array('type' => 'string', 'length' => 100, 'notnull' => 1, 'default' => "''"),
@@ -600,7 +600,7 @@ class KernelSetup
 			'primary' => array('session_id'),
 			'indexes' => array(
 				'user_id' => array('type' => 'key', 'fields' => 'user_id'),
-				'expiry' => array('type' => 'key', 'fields' => 'expiry')
+				'timestamp' => array('type' => 'key', 'fields' => 'timestamp')
 			)
 		);
 		self::$db_utils->create_table(self::$sessions_table, $fields, $options);

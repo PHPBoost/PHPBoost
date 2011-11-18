@@ -60,18 +60,19 @@ class UserService
 		return $user_id;
 	}
 	
-	public static function update($user_id, $password, $level, $email, $locale, $timezone, $theme, $editor, $show_email)
+	public static function update(User $user)
 	{
-		die('todo');
 		self::$querier->update(DB_TABLE_MEMBER, array(
-			'password' => $password,
-			'level' => $level,
-			'user_mail' => $email,
-			'user_lang' => $locale,
-			'user_theme' => $theme,
-			'user_timezone' => $timezone,
-			'user_editor' => $editor,
-			'user_show_mail' => $show_email,
+			'display_name' => $user->get_display_name(),
+			'level' => $user->get_level(),
+			'groups' => implode('|', $user->get_groups()),
+			'email' => $user->get_email(),
+			'show_email' => $user->get_show_email(),
+			'locale' => $user->get_locale(),
+			'timezone' => $user->get_timezone(),
+			'theme' => $user->get_theme(),
+			'editor' => $user->get_editor(),
+			'registration_date' => $user->get_timestamp()
 		), 'WHERE user_id = :user_id', array('user_id' => $user_id));
 	}
 	
@@ -189,5 +190,4 @@ class UserService
 		StatsCache::invalidate();
 	}
 }
-
 ?>

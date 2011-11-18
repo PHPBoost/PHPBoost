@@ -49,6 +49,7 @@ $Template->set_filenames(array(
 	'admin_index'=> 'admin/admin_index.tpl'
 ));
 
+$i = 0;
 
 $Template->put_all(array(
 	'WRITING_PAD_CONTENT' => WritingPadConfig::load()->get_content(),
@@ -82,11 +83,11 @@ $Template->put_all(array(
 
 
 //Liste des personnes en lignes.
-$result = $Sql->query_while("SELECT s.user_id, level, s.ip, s.expiry, s.location_script, s.location_title, u.display_name
+$result = $Sql->query_while("SELECT s.*, level, u.display_name
 FROM " . DB_TABLE_SESSIONS . " s
 LEFT JOIN " . DB_TABLE_MEMBER . " u ON s.user_id = u.user_id
-WHERE expiry > '" . (time() - SessionsConfig::load()->get_active_session_duration()) . "'
-ORDER BY s.expiry DESC", __LINE__, __FILE__);
+WHERE s.timestamp > '" . (time() - SessionsConfig::load()->get_active_session_duration()) . "'
+ORDER BY s.timestamp DESC", __LINE__, __FILE__);
 while ($row = $Sql->fetch_assoc($result))
 {
 	//On vérifie que la session ne correspond pas à un robot.
@@ -116,7 +117,7 @@ while ($row = $Sql->fetch_assoc($result))
 		'USER' => !empty($login) ? $login : $LANG['guest'],
 		'USER_IP' => $row['ip'],
 		'WHERE' => '<a href="' . $row['location_script'] . '">' . stripslashes($row['location_title']) . '</a>',
-		'TIME' => gmdate_format('date_format_long', $row['expiry'])
+		'TIME' => gmdate_format('date_format_long', $row['timestamp'])
 	));
 }
 $Sql->query_close($result);
