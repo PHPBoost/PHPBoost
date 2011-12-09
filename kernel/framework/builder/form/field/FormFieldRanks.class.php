@@ -48,8 +48,8 @@ class FormFieldRanks extends FormFieldSimpleSelectChoice
 	{
 		$lang = LangLoader::get('admin-members-common');
 		$options = array();
-		$options[] = new FormFieldSelectChoiceOption($lang['members.rank.member'], User::User::MEMBER_LEVEL);
-		$options[] = new FormFieldSelectChoiceOption($lang['members.rank.modo'], User::User::MODERATOR_LEVEL);
+		$options[] = new FormFieldSelectChoiceOption($lang['members.rank.member'], User::MEMBER_LEVEL);
+		$options[] = new FormFieldSelectChoiceOption($lang['members.rank.modo'], User::MODERATOR_LEVEL);
 		$options[] = new FormFieldSelectChoiceOption($lang['members.rank.admin'], User::ADMIN_LEVEL);
 		return $options;
 	}
