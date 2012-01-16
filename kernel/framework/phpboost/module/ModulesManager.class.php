@@ -336,7 +336,7 @@ class ModulesManager
 		{
 			if (self::is_module_installed($module_identifier))
 			{
-				if (self::module_is_upgradable())
+				if (self::module_is_upgradable($module_identifier))
 				{
 					$module = self::get_module($module_identifier);
 					

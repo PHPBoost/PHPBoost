@@ -32,7 +32,6 @@ class AdminModuleUpdateController extends AdminController
 	private $form;
 	private $submit_button;
 	
-	
 	public function execute(HTTPRequest $request)
 	{
 		$this->init();
@@ -79,6 +78,7 @@ class AdminModuleUpdateController extends AdminController
 	
 	private function build_view()
 	{
+		$modules_upgradable = 0;
 		foreach (ModulesManager::get_installed_modules_map() as $module)
 		{
 			if (ModulesManager::module_is_upgradable($module->get_id()))
@@ -90,7 +90,7 @@ class AdminModuleUpdateController extends AdminController
 				
 				$this->view->assign_block_vars('modules_upgradable', array(
 					'ID' => $module->get_id(),
-					'NAME' => ucfirst($name),
+					'NAME' => ucfirst($configuration->get_name()),
 					'ICON' => $module->get_id(),
 					'VERSION' => $configuration->get_version(),
 					'AUTHOR' => !empty($author_email) ? '<a href="mailto:' . $author_email . '">' . $author . '</a>' : $author,
@@ -98,17 +98,16 @@ class AdminModuleUpdateController extends AdminController
 					'DESCRIPTION' => $configuration->get_description(),
 					'COMPATIBILITY' => $configuration->get_compatibility(),
 					'PHP_VERSION' => $configuration->get_php_version(),
-					'URL_REWRITE_RULES' => $configuration->get_url_rewrite_rules(),
-					'C_UPDATE' => true	
+					'URL_REWRITE_RULES' => $configuration->get_url_rewrite_rules()
 				));
+				
+				$modules_upgradable++;
 			}
-			else
-			{
-				$this->view->put_all(array(
-					'C_NO_UPGRADABLE_MODULES_AVAILABLE' => true
-				));
-			}	
 		}
+		
+		$this->view->put_all(array(
+			'C_UPDATES' => !empty($modules_upgradable)
+		));
 	}
 	
 	private function upgrade_module(HTTPRequest $request)
@@ -117,29 +116,24 @@ class AdminModuleUpdateController extends AdminController
 		
 		if (!empty($module_id))
 		{
-			$activated = $request->get_bool('upgrade-' . $module_id, false);
 			switch (ModulesManager::upgrade_module($module_id))
 			{
-				case ModulesManager::UPGRADE_FAILED :
+				case ModulesManager::UPGRADE_FAILED:
 					$this->view->put('MSG', MessageHelper::display($this->lang['modules.upgrade_failed'], MessageHelper::WARNING, 10));
 					break;
-				case ModulesManager::MODULE_NOT_UPGRADABLE :
+				case ModulesManager::MODULE_NOT_UPGRADABLE:
 					$this->view->put('MSG', MessageHelper::display($this->lang['modules.module_not_upgradable'], MessageHelper::WARNING, 10));
 					break;
-				case ModulesManager::NOT_INSTALLED_MODULE :
+				case ModulesManager::NOT_INSTALLED_MODULE:
 					$this->view->put('MSG', MessageHelper::display($this->lang['modules.not_installed_module'], MessageHelper::WARNING, 10));
 					break;
-				case ModulesManager::UNEXISTING_MODULE :
+				case ModulesManager::UNEXISTING_MODULE:
 					$this->view->put('MSG', MessageHelper::display($this->lang['modules.unexisting_module'], MessageHelper::WARNING, 10));
 					break;
-				case ModulesManager::MODULE_UPDATED :
+				case ModulesManager::MODULE_UPDATED:
 					$this->view->put('MSG', MessageHelper::display($this->lang['modules.update_success'], MessageHelper::SUCCESS, 10));
 					break;
 			}
-		}
-		else 
-		{
-			$this->view->put('MSG', MessageHelper::display($this->lang['modules.error_id_module'], MessageHelper::WARNING, 10));
 		}
 	}
 	
@@ -209,5 +203,4 @@ class AdminModuleUpdateController extends AdminController
 		}
 	}
 }
-
 ?>

@@ -88,4 +88,6 @@ $lang['modules.drop_files'] = 'Supprimer tous les fichiers du module';
 $lang['modules.yes'] = 'Oui';
 $lang['modules.no'] = 'Non';
 
+//Update
+$lang['modules.upgrade_module'] = 'Mettre à jour';
 ?>
