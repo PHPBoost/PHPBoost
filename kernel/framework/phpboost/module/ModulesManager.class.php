@@ -348,10 +348,7 @@ class ModulesManager
 						ModulesConfig::load()->update($module);
 						ModulesConfig::save();
 						
-						$Cache->Generate_file('modules');
-						$Cache->Generate_file('menus');
-						
-						Feed::clear_cache($module_identifier);
+						AppContext::get_cache_service()->clear_cache();
 						
 						try {
 							$rewrite_rules = self::get_module($module_identifier)->get_configuration()->get_url_rewrite_rules();
