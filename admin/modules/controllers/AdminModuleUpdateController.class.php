@@ -57,7 +57,6 @@ class AdminModuleUpdateController extends AdminController
 		$this->view->add_lang($this->lang);
 	}
 	
-	//TODO faire fichier de langue
 	private function load_lang()
 	{
 		$this->lang = LangLoader::get('admin-modules-common');
