@@ -110,7 +110,7 @@ class AdminNewsletterStreamsListController extends AdminModuleController
 		$this->lang = LangLoader::get('newsletter_common', 'newsletter');
 		$this->view = new FileTemplate('newsletter/AdminNewsletterStreamsListController.tpl');
 		$this->view->add_lang($this->lang);
-		$this->user = AppContext::get_user();
+		$this->user = AppContext::get_current_user();
 	}
 }
 

@@ -61,7 +61,7 @@ class UserConfirmRegistrationController extends AbstractController
 	
 	public function get_right_controller_regarding_authorizations()
 	{
-		if(AppContext::get_user()->check_level(MEMBER_LEVEL))
+		if(AppContext::get_current_user()->check_level(MEMBER_LEVEL))
 		{
 			AppContext::get_response()->redirect(Environment::get_home_page());
 		}

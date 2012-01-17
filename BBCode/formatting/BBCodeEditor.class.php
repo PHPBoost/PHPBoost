@@ -71,7 +71,7 @@ class BBCodeEditor extends ContentEditor
 			'EDITOR_NAME' => 'bbcode',
 			'FIELD' => $this->identifier,
 			'FORBIDDEN_TAGS' => !empty($this->forbidden_tags) ? implode(',', $this->forbidden_tags) : '',
-			'C_UPLOAD_MANAGEMENT' => AppContext::get_user()->check_auth(FileUploadConfig::load()->get_authorization_enable_interface_files(), AUTH_FILES),
+			'C_UPLOAD_MANAGEMENT' => AppContext::get_current_user()->check_auth(FileUploadConfig::load()->get_authorization_enable_interface_files(), AUTH_FILES),
 			'L_REQUIRE_TEXT' => $LANG['require_text'],
 			'L_BB_UPLOAD' => $bbcode_lang['bb_upload'],
 			'L_BB_SMILEYS' => $bbcode_lang['bb_smileys'],

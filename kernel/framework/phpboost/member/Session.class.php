@@ -305,6 +305,7 @@ class Session
 		$this->data['user_lang'] = !empty($userdata['user_lang']) ? $userdata['user_lang'] : UserAccountsConfig::load()->get_default_lang(); //Langue membre
 		$this->data['user_theme'] = !empty($userdata['user_theme']) ? $userdata['user_theme'] : UserAccountsConfig::load()->get_default_theme(); //Thème membre
 		$this->data['user_mail'] = isset($userdata['user_mail']) ? $userdata['user_mail'] : '';
+		$this->data['user_show_mail'] = isset($userdata['user_show_mail']) ? $userdata['user_show_mail'] : false;
 		$this->data['user_pm'] = isset($userdata['user_pm']) ? $userdata['user_pm'] : '0';
 		$this->data['user_readonly'] = isset($userdata['user_readonly']) ? $userdata['user_readonly'] : '0';
 		$this->data['user_editor'] = !empty($userdata['user_editor']) ? $userdata['user_editor'] : ContentFormattingConfig::load()->get_default_editor();

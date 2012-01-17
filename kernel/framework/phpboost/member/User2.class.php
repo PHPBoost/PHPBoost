@@ -34,7 +34,7 @@ define('USER_TYPE', 3);
  * @desc This class manage user, it provide you methods to get or modify user informations, moreover methods allow you to control user authorizations
  * @package {@package}
  */
-class User
+class User2
 {
 	private $is_admin = false;
 	private $user_data; //Données du membres, obtenues à partir de la class de session.

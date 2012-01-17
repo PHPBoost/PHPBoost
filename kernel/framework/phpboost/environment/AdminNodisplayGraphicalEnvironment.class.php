@@ -52,7 +52,7 @@ class AdminNodisplayGraphicalEnvironment extends AbstractGraphicalEnvironment
 
 	private function check_admin_auth()
 	{
-		if (!AppContext::get_user()->is_admin())
+		if (!AppContext::get_current_user()->is_admin())
 		{
 			exit;
 		}

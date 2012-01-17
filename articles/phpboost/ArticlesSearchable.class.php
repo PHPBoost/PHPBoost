@@ -35,7 +35,7 @@ class ArticlesSearchable extends AbstractSearchableExtensionPoint
 
 		$weight = isset($args['weight']) && is_numeric($args['weight']) ? $args['weight'] : 1;
 
-		$user = AppContext::get_user();
+		$user = AppContext::get_current_user();
 		//Catégories non autorisées.
 		$unauth_cats_sql = array();
 		foreach ($ARTICLES_CAT as $idcat => $key)

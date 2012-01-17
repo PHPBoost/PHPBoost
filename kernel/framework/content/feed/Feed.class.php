@@ -113,7 +113,7 @@ class Feed
 		}
 
 		global $MODULES;
-		if (AppContext::get_user()->check_auth($MODULES[$this->module_id]['auth'], ACCESS_MODULE))
+		if (AppContext::get_current_user()->check_auth($MODULES[$this->module_id]['auth'], ACCESS_MODULE))
 		{
 			if (!empty($this->data))
 			{

@@ -28,7 +28,7 @@
 function menu_langswitcher_langswitcher($position, $block)
 {
 	$langswitcher_lang = LangLoader::get('langswitcher_common', 'menus/langswitcher');
-	$user = AppContext::get_user();
+	$user = AppContext::get_current_user();
 
 	$switchlang = !empty($_GET['switchlang']) ? urldecode($_GET['switchlang']) : '';
     if (!empty($switchlang))

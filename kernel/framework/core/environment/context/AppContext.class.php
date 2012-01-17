@@ -55,9 +55,9 @@ class AppContext
 	 */
 	private static $session;
 	/**
-	 * @var User
+	 * @var CurrentUser
 	 */
-	private static $user;
+	private static $current_user;
 	/**
 	 * @var ExtensionPointProviderService
 	 */
@@ -174,26 +174,26 @@ class AppContext
 	}
 
 	/**
-	 * Inits the user
+	 * Inits the current user
 	 */
-	public static function init_user()
+	public static function init_current_user()
 	{
-		self::$user = new User();
+		self::$current_user = new CurrentUser();
 	}
 
 	/**
 	 * Returns the current user
-	 * @return User
+	 * @return CurrentUser
 	 */
-	public static function get_user()
+	public static function get_current_user()
 	{
-		return self::$user;
+		return self::$current_user;
 	}
 
-	public static function set_user($user)
+	public static function set_current_user($current_user)
 	{
 		// TODO ben, supprime ça, mais casse pas l'installateur
-		self::$user = $user;
+		self::$current_user = $current_user;
 	}
 
 	/**

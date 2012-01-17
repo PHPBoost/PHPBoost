@@ -36,7 +36,7 @@ abstract class AbstractGraphicalEnvironment implements GraphicalEnvironment
 
 	public function __construct()
 	{
-		$this->user = AppContext::get_user();
+		$this->user = AppContext::get_current_user();
 	}
 
 	protected function process_site_maintenance()

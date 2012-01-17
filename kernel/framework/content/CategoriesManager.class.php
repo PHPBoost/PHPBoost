@@ -143,7 +143,7 @@ class CategoriesManager
 		$this->cache_var =& $cache_var;
 		
 		$this->sql_querier = PersistenceContext::get_sql();
-		$this->user = AppContext::get_user();
+		$this->user = AppContext::get_current_user();
 	}
 
 	/**

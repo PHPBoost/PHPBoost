@@ -204,7 +204,7 @@ class UserRegistrationController extends AbstractController
 	
 	public function get_right_controller_regarding_authorizations()
 	{
-		if (!UserAccountsConfig::load()->is_registration_enabled() || AppContext::get_user()->check_level(MEMBER_LEVEL))
+		if (!UserAccountsConfig::load()->is_registration_enabled() || AppContext::get_current_user()->check_level(MEMBER_LEVEL))
 		{
 			AppContext::get_response()->redirect(Environment::get_home_page());
 		}
@@ -216,7 +216,7 @@ class UserRegistrationController extends AbstractController
 		$choices_list = array();
 		foreach (ThemeManager::get_activated_themes_map() as $id => $value) 
 		{
-			if ($this->user_accounts_config->get_default_theme() == $id || (AppContext::get_user()->check_auth($value->get_authorizations(), AUTH_THEME)))
+			if ($this->user_accounts_config->get_default_theme() == $id || (AppContext::get_current_user()->check_auth($value->get_authorizations(), AUTH_THEME)))
 			{
 				$choices_list[] = new FormFieldSelectChoiceOption($value->get_configuration()->get_name(), $id);
 			}

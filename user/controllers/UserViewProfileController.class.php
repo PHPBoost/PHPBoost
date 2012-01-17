@@ -56,7 +56,7 @@ class UserViewProfileController extends AbstractController
 		$this->lang = LangLoader::get('user-common');
 		$this->tpl = new StringTemplate('# INCLUDE FORM #');
 		$this->tpl->add_lang($this->lang);
-		$this->user = AppContext::get_user();
+		$this->user = AppContext::get_current_user();
 	}
 	
 	private function build_form($user_id)

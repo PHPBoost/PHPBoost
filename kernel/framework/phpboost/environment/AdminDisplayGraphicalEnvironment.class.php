@@ -140,7 +140,7 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 		}
 
 		$flood = retrieve(GET, 'flood', 0);
-		$is_admin = AppContext::get_user()->check_level(ADMIN_LEVEL);
+		$is_admin = AppContext::get_current_user()->check_level(ADMIN_LEVEL);
 		if (!$is_admin || $flood)
 		{
 			$template = new FileTemplate('admin/AdminLoginController.tpl');
@@ -185,7 +185,7 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 		$header_tpl = new FileTemplate('admin/admin_header.tpl');
 		$header_tpl->add_lang(self::$lang);
 
-		$include_tinymce_js = AppContext::get_user()->get_attribute('user_editor') == 'tinymce';
+		$include_tinymce_js = AppContext::get_current_user()->get_attribute('user_editor') == 'tinymce';
 
 		$theme = ThemeManager::get_theme(get_utheme());
 		$customize_interface = $theme->get_customize_interface();

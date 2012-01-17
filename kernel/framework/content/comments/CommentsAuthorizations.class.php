@@ -117,7 +117,7 @@ class CommentsAuthorizations
 		}
 		else
 		{
-			return AppContext::get_user()->check_auth(CommentsConfig::load()->get_authorizations(), $global_bit);
+			return AppContext::get_current_user()->check_auth(CommentsConfig::load()->get_authorizations(), $global_bit);
 		}
 	}
 	

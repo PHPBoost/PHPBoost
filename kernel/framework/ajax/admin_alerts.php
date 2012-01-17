@@ -40,7 +40,7 @@ require_once(PATH_TO_ROOT . '/kernel/header_no_display.php');
 //On vérifie la validité du jeton
 AppContext::get_session()->csrf_get_protect();
 
-if (!AppContext::get_user()->check_level(ADMIN_LEVEL))
+if (!AppContext::get_current_user()->check_level(ADMIN_LEVEL))
 {
     exit;
 }

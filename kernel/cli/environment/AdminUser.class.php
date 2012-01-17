@@ -30,33 +30,16 @@
  * @desc This class manage user, it provide you methods to get or modify user informations, moreover methods allow you to control user authorizations
  * @package members
  */
-class AdminUser extends User
+class AdminUser extends CurrentUser
 {
-	private $is_admin = false;
-	private $user_data = array();
-	private $groups_auth = array(); //Tableau contenant le nom des groupes disponibles.
-	private $user_groups = array(); //Groupes du membre.
-
+	protected $id = 1;
+	
 	/**
 	 * @desc Sets global authorizations which are given by all the user groups authorizations.
 	 */
 	public function __construct()
 	{
-		$this->is_admin = true;
-	}
-
-	public function is_admin()
-	{
-		return true;
-	}
-
-	/**
-	 * @desc Get the user id
-	 * @return int The user id.
-	 */
-	public function get_id()
-	{
-		return 1;
+		$this->level = User::ADMIN_LEVEL;
 	}
 
 	/**

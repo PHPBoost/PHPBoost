@@ -37,7 +37,7 @@ class NotationService
 	
 	public static function __static()
 	{
-		self::$user = AppContext::get_user();
+		self::$user = AppContext::get_current_user();
 		self::$db_querier = PersistenceContext::get_querier();
 		self::$lang = LangLoader::get('main');
 	}

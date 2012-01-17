@@ -28,7 +28,7 @@
 function menu_themeswitcher_themeswitcher($position, $block)
 {
 	$themeswitcher_lang = LangLoader::get('themeswitcher_common', 'menus/themeswitcher');
-	$user = AppContext::get_user();
+	$user = AppContext::get_current_user();
 	
 	$switchtheme = !empty($_GET['switchtheme']) ? urldecode($_GET['switchtheme']) : '';
     if (!empty($switchtheme))

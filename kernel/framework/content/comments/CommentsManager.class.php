@@ -35,7 +35,7 @@ class CommentsManager
 	
 	public static function __static()
 	{
-		self::$user = AppContext::get_user();
+		self::$user = AppContext::get_current_user();
 	}
 	
 	public static function add_comment($module_id, $id_in_module, $message, $name_visitor = '')

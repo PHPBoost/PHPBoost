@@ -122,7 +122,7 @@ class UserUsersListController extends AbstractController
 	
 	public function get_right_controller_regarding_authorizations()
 	{
-		if (!AppContext::get_user()->check_auth(UserAccountsConfig::load()->get_auth_read_members(), AUTH_READ_MEMBERS))
+		if (!AppContext::get_current_user()->check_auth(UserAccountsConfig::load()->get_auth_read_members(), AUTH_READ_MEMBERS))
 		{
 			$error_controller = PHPBoostErrors::user_not_authorized();
 			DispatchManager::redirect($error_controller);

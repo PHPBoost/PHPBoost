@@ -165,7 +165,7 @@ class InstallationServices
 		$locale = LangLoader::get_locale();
 		$user = new AdminUser();
 		$user->set_user_lang($locale);
-		AppContext::set_user($user);
+		AppContext::set_current_user($user);
 		$this->save_general_config($server_url, $server_path, $site_name, $site_desc, $site_keyword, $site_timezone);
 		$this->init_graphical_config();
 		$this->init_debug_mode();
