@@ -431,7 +431,7 @@ function get_utheme()
 function get_ulang()
 {
 	$user = AppContext::get_current_user();
-	return $user->get_attribute('user_lang');
+	return $user->get_locale();
 }
 
 /**
