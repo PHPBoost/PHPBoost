@@ -19,7 +19,7 @@ class UserService
 			'password' => $user_authentification->get_password_hashed(),
 			'level' => $user->get_level(),
 			'user_mail' => $user->get_email(),
-			'user_show_mail' => $user->get_show_email(),
+			'user_show_mail' => (int)$user->get_show_email(),
 			'user_lang' => $user->get_locale(),
 			'user_theme' => $user->get_theme(),
 			'user_timezone' => $user->get_timezone(),
@@ -36,7 +36,7 @@ class UserService
 		self::$querier->update(DB_TABLE_MEMBER, array(
 			'level' => $user->get_level(),
 			'user_mail' => $user->get_email(),
-			'user_show_mail' => $user->get_show_email(),
+			'user_show_mail' => (int)$user->get_show_email(),
 			'user_lang' => $user->get_locale(),
 			'user_theme' => $user->get_theme(),
 			'user_timezone' => $user->get_timezone(),
@@ -50,10 +50,19 @@ class UserService
 	
 	public static function update_authentification($id, UserAuthentification $user_authentification)
 	{
-		self::$querier->update(DB_TABLE_MEMBER, array(
-			'login' => $user_authentification->get_login(),
-			'password' => $user_authentification->get_password_hashed()
-		), 'WHERE user_id = :user_id', array('user_id' => $id));
+		if ($user_authentification->get_password_hashed() !== null)
+		{
+			self::$querier->update(DB_TABLE_MEMBER, array(
+				'login' => $user_authentification->get_login(),
+				'password' => $user_authentification->get_password_hashed()
+			), 'WHERE user_id = :user_id', array('user_id' => $id));
+		}
+		else
+		{
+			self::$querier->update(DB_TABLE_MEMBER, array(
+				'login' => $user_authentification->get_login(),
+			), 'WHERE user_id = :user_id', array('user_id' => $id));
+		}
 	}
 	
 	public static function get_user($condition, $parameters)

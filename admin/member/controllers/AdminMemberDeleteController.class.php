@@ -31,11 +31,11 @@ class AdminMemberDeleteController extends AdminController
 	{
 		$user_id = $request->get_int('id', null);
 		
-		if (!UserService::user_exists_by_id($user_id) && $user_id !== null)
+		if (!UserService::user_exists('WHERE user_id:user_id', array('user_id' => $user_id)) && $user_id !== null)
 		{
 			if (self::verificate_number_admin_user() > 1)
 			{
-				UserService::delete_account($user_id);
+				UserService::delete_account('WHERE user_id:user_id', array('user_id' => $user_id));
 				
 				StatsCache::invalidate();
 				
