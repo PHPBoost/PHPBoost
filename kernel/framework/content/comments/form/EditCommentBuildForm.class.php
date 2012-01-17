@@ -54,7 +54,7 @@ class EditCommentBuildForm extends AbstractCommentsBuildForm
 	public function __construct($id_comment)
 	{
 		$this->id_comment = $id_comment;
-		$this->user = AppContext::get_user();
+		$this->user = AppContext::get_current_user();
 		$this->lang = LangLoader::get('main');
 		$this->comments_lang = LangLoader::get('comments-common');
 		$this->comments_configuration = CommentsConfig::load();

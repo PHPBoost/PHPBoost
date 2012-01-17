@@ -36,7 +36,7 @@ class WebComments extends AbstractCommentsExtensionPoint
 		
 		$authorizations = new CommentsAuthorizations();
 		$id_cat = $this->get_categorie_id($module_id, $id_in_module);
-		$authorizations->set_authorized_access_module(AppContext::get_user()->check_level($CAT_WEB[$id_cat]['secure']));
+		$authorizations->set_authorized_access_module(AppContext::get_current_user()->check_level($CAT_WEB[$id_cat]['secure']));
 		return $authorizations;
 	}
 	

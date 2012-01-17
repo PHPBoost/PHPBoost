@@ -57,7 +57,7 @@ class DefaultTemplateData implements TemplateData
 	public function auto_load_frequent_vars()
 	{
 		$session = AppContext::get_session();
-		$user = AppContext::get_user();
+		$user = AppContext::get_current_user();
 		$is_connected = $user->check_level(MEMBER_LEVEL);
 		$this->put_all(array(
 			'SID' => SID,

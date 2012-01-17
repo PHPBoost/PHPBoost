@@ -69,7 +69,7 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 		$customization_config = CustomizationConfig::load();
 		
 		$template->put_all(array(
-			'C_BBCODE_TINYMCE_MODE' => AppContext::get_user()->get_attribute('user_editor') == 'tinymce',
+			'C_BBCODE_TINYMCE_MODE' => AppContext::get_current_user()->get_attribute('user_editor') == 'tinymce',
 			'SITE_NAME' => $general_config->get_site_name(),
 			'MAINTAIN' => $this->display_site_maintenance(),
 			'C_COMPTEUR' => false,

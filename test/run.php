@@ -36,7 +36,7 @@ AppContext::set_request(new HTTPRequest());
 AppContext::init_session();
 AppContext::get_session()->load();
 AppContext::get_session()->act();
-AppContext::init_user();
+AppContext::init_current_user();
 require_file('/test/PHPUnit/Framework.php');
 
 if (isset($argv))

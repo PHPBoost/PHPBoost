@@ -55,7 +55,7 @@ class BBCodeParser extends ContentFormattingParser
 		}
 
 		//On prélève tout le code HTML afin de ne pas l'altérer
-		if (!in_array('html', $this->forbidden_tags) && AppContext::get_user()->check_auth($this->html_auth, 1))
+		if (!in_array('html', $this->forbidden_tags) && AppContext::get_current_user()->check_auth($this->html_auth, 1))
 		{
 			$this->pick_up_tag('html');
 		}

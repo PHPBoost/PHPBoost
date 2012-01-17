@@ -56,7 +56,7 @@ class AddCommentBuildForm extends AbstractCommentsBuildForm
 	{
 		$this->module_id = $module_id;
 		$this->id_in_module = $id_in_module;
-		$this->user = AppContext::get_user();
+		$this->user = AppContext::get_current_user();
 		$this->lang = LangLoader::get('main');
 		$this->comments_lang = LangLoader::get('comments-common');
 		$this->comments_configuration = CommentsConfig::load();

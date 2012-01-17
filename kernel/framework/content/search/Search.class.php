@@ -63,7 +63,7 @@ class Search
         $this->id_search = array();
         $this->cache = array();
 
-        $this->id_user = AppContext::get_user()->get_attribute('user_id');
+        $this->id_user = AppContext::get_current_user()->get_attribute('user_id');
         $this->modules_conditions = $this->get_modules_conditions($this->modules);
 
         $this->sql_querier = PersistenceContext::get_sql();

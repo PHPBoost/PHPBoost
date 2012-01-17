@@ -102,7 +102,7 @@ class Theme
     
     public function check_auth()
     {
-    	return AppContext::get_user()->check_auth($this->authorizations, self::ACCES_THEME);
+    	return AppContext::get_current_user()->check_auth($this->authorizations, self::ACCES_THEME);
     }
 }
 ?>

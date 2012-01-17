@@ -86,7 +86,7 @@ class Module
     
     public function check_auth()
     {
-    	return AppContext::get_user()->check_auth($this->authorizations, ACCESS_MODULE);
+    	return AppContext::get_current_user()->check_auth($this->authorizations, ACCESS_MODULE);
     }
 }
 ?>

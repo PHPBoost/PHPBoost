@@ -44,7 +44,7 @@ class MediaComments extends AbstractCommentsExtensionPoint
 			$cat_authorizations = $CONFIG_MEDIA['root']['auth'];
 		}
 		$authorizations = new CommentsAuthorizations();
-		$authorizations->set_authorized_access_module(AppContext::get_user()->check_auth($cat_authorizations, MEDIA_AUTH_READ));
+		$authorizations->set_authorized_access_module(AppContext::get_current_user()->check_auth($cat_authorizations, MEDIA_AUTH_READ));
 		return $authorizations;
 	}
 	

@@ -90,7 +90,7 @@ class MemberExtendedFieldsService
 					$value = !empty($extended_field[$extended_field['field_name']]) ? MemberExtendedFieldsFactory::unparse($member_extended_field, $extended_field[$extended_field['field_name']]) : $extended_field['default_values'];
 					$member_extended_field->set_value($value);
 					
-					if (AppContext::get_user()->check_auth($extended_field['auth'], ExtendedField::READ_PROFILE_AUTHORIZATION))
+					if (AppContext::get_current_user()->check_auth($extended_field['auth'], ExtendedField::READ_PROFILE_AUTHORIZATION))
 					{
 						MemberExtendedFieldsFactory::display_field_profile($member_extended_field);
 					}
@@ -126,7 +126,7 @@ class MemberExtendedFieldsService
 						$value_rewrite = MemberExtendedFieldsFactory::parse($member_extended_field, $value);
 						$member_extended_field->set_value($value_rewrite);
 						
-						if (AppContext::get_user()->check_auth($extended_field['auth'], ExtendedField::READ_EDIT_AND_ADD_AUTHORIZATION))
+						if (AppContext::get_current_user()->check_auth($extended_field['auth'], ExtendedField::READ_EDIT_AND_ADD_AUTHORIZATION))
 						{
 							MemberExtendedFieldsFactory::register($member_extended_field, $member_extended_fields_dao, $form);
 						}
@@ -157,7 +157,7 @@ class MemberExtendedFieldsService
 				$member_extended_field->set_required($extended_field['required']);
 				$member_extended_field->set_regex($extended_field['regex']);
 				
-				if (AppContext::get_user()->check_auth($extended_field['auth'], ExtendedField::READ_EDIT_AND_ADD_AUTHORIZATION))
+				if (AppContext::get_current_user()->check_auth($extended_field['auth'], ExtendedField::READ_EDIT_AND_ADD_AUTHORIZATION))
 				{
 					MemberExtendedFieldsFactory::display_field_create($member_extended_field);
 				}
@@ -191,7 +191,7 @@ class MemberExtendedFieldsService
 			$member_extended_field->set_required($required);
 			$member_extended_field->set_regex($extended_field['regex']);
 			
-			if (AppContext::get_user()->check_auth($extended_field['auth'], ExtendedField::READ_EDIT_AND_ADD_AUTHORIZATION))
+			if (AppContext::get_current_user()->check_auth($extended_field['auth'], ExtendedField::READ_EDIT_AND_ADD_AUTHORIZATION))
 			{
 				MemberExtendedFieldsFactory::display_field_update($member_extended_field);
 			}

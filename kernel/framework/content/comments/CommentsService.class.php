@@ -40,7 +40,7 @@ class CommentsService
 	
 	public static function __static()
 	{
-		self::$user = AppContext::get_user();
+		self::$user = AppContext::get_current_user();
 		self::$lang = LangLoader::get('main');
 		self::$comments_lang = LangLoader::get('comments-common');
 		self::$comments_configuration = CommentsConfig::load();

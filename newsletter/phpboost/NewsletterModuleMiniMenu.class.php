@@ -41,7 +41,7 @@ class NewsletterModuleMiniMenu extends ModuleMiniMenu
 	    $tpl->put_all(array(
 	    	'SUBSCRIBE' => $lang['newsletter.subscribe_newsletters'],
 	    	'UNSUBSCRIBE' => $lang['newsletter.unsubscribe_newsletters'],
-	    	'USER_MAIL' => (AppContext::get_user()->get_attribute('user_mail') != '') ? AppContext::get_user()->get_attribute('user_mail') : '',
+	    	'USER_MAIL' => (AppContext::get_current_user()->get_attribute('user_mail') != '') ? AppContext::get_current_user()->get_attribute('user_mail') : '',
 	    	'L_NEWSLETTER' => $lang['newsletter'],
 	    	'L_SUBMIT' => $lang['newsletter.submit'],
 	    	'L_ARCHIVES' => $lang['newsletter.archives']

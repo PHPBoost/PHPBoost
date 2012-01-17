@@ -52,7 +52,7 @@ class UserMessagesController extends AbstractController
 
 	private function init()
 	{
-		$this->user = AppContext::get_user();
+		$this->user = AppContext::get_current_user();
 		$this->tpl = new FileTemplate('user/UserMessagesController.tpl');
 		$this->lang = LangLoader::get('user-common');
 		$this->tpl->add_lang($this->lang);
