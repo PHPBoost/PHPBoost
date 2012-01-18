@@ -1,17 +1,21 @@
 <?php
 /**
- * @author Kévin MASSY <soldier.weasel@gmail.com>
+ * @author Kï¿½vin MASSY <soldier.weasel@gmail.com>
  * @package {@package}
  */
 class UserAuthentification
 {
 	protected $login;
-	protected $password;
+	protected $password_hashed;
 	
-	public function __construct($login, $password = '')
+	public function __construct($login, $password = '', $password_hashed = false)
 	{
 		$this->login = $login;
-		$this->password = $password;
+		
+		if (!empty($password))
+		{
+			$this->password_hashed = $password_hashed ? $password : KeyGenerator::string_hash($password);
+		}
 	}
 	
 	public function get_login()
@@ -21,7 +25,7 @@ class UserAuthentification
 
 	public function get_password_hashed()
 	{
-		return KeyGenerator::string_hash($this->password);
+		return $this->password_hashed;
 	}
 }
 ?>

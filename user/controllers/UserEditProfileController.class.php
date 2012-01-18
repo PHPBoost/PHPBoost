@@ -3,7 +3,7 @@
  *                       UserEditProfileController.class.php
  *                            -------------------
  *   begin                : October 09, 2011
- *   copyright            : (C) 2011 Kévin MASSY
+ *   copyright            : (C) 2011 Kï¿½vin MASSY
  *   email                : soldier.weasel@gmail.com
  *
  *
@@ -138,20 +138,20 @@ class UserEditProfileController extends AbstractController
 	{
 		if ($this->form->get_value('delete_account'))
 		{
-			UserService::delete_account($user_id);
+			UserService::delete_account('WHERE user_id=:user_id', array('user_id' => $user_id));
 		}
 		else
 		{
 			$theme = !$this->form->field_is_disabled('theme') ? $this->form->get_value('theme')->get_raw_value() : $this->user_accounts_config->get_default_theme();
-			UserUpdateProfileService::update(
-				$user_id, 
-				$this->form->get_value('email'), 
-				$this->form->get_value('lang')->get_raw_value(), 
-				$this->form->get_value('timezone')->get_raw_value(), 
-				$theme, 
-				$this->form->get_value('text-editor')->get_raw_value(), 
-				!$this->form->get_value('email.hide')
-			);
+			$user = new User();
+			$user->set_id($user_id);
+			$user->set_email($this->form->get_value('email'));
+			$user->set_locale($this->form->get_value('lang')->get_raw_value());
+			$user->set_theme($theme);
+			$user->set_timezone($this->form->get_value('timezone')->get_raw_value());
+			$user->set_editor($this->form->get_value('text-editor')->get_raw_value());
+			$user->set_show_email(!$this->form->get_value('email.hide'));
+			UserService::update($user);
 		}
 		
 		MemberExtendedFieldsService::register_fields($this->form, $user_id);
@@ -163,9 +163,10 @@ class UserEditProfileController extends AbstractController
 		if (!empty($old_password) && !empty($new_password))
 		{
 			$old_password_hashed = KeyGenerator::string_hash($old_password);
-			if ($old_password_hashed == UserUpdateProfileService::get_password($user_id))
+			$user_authentification = UserService::get_user_authentification('WHERE user_id=:user_id', array('user_id' => $user_id));
+			if ($old_password_hashed == $user_authentification->get_password_hashed())
 			{
-				UserService::change_password($user_id, KeyGenerator::string_hash($new_password));
+				UserService::change_password(KeyGenerator::string_hash($new_password), 'WHERE user_id=:user_id', array('user_id' => $user_id));
 			}
 			else
 			{

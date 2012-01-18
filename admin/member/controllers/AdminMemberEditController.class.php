@@ -3,7 +3,7 @@
  *                       AdminMemberEditController.class.php
  *                            -------------------
  *   begin                : February 28, 2010
- *   copyright            : (C) 2010 Kévin MASSY
+ *   copyright            : (C) 2010 Kï¿½vin MASSY
  *   email                : soldier.weasel@gmail.com
  *
  *
@@ -146,7 +146,7 @@ class AdminMemberEditController extends AdminController
 		
 		if ($this->form->get_value('delete_account'))
 		{
-			UserService::delete_account();
+			UserService::delete_account('WHERE user_id:user_id', array('user_id' => $this->user_id));
 		}
 		
 		MemberExtendedFieldsService::register_fields($this->form, $this->user_id);
