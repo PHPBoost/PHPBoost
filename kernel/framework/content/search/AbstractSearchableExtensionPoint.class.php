@@ -49,7 +49,9 @@ abstract class AbstractSearchableExtensionPoint implements SearchableExtensionPo
 	 */
 	public function build_search_form()
 	{
-		throw new UnsupportedOperationException();
+		$fieldset = new FormFieldsetHTML('test', 'toto');
+		$fieldset->add_field(new FormFieldHTML('no_options', LangLoader::get_message('search_no_options', 'main', 'search')));
+		return $fieldset;
 	}
 
 	/**
