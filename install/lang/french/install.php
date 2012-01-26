@@ -246,9 +246,10 @@ Cordialement l\'équipe PHPBoost.',
                         <fieldset>
                             <legend>Crédits</legend>
                             <ul>
-                                <li><strong>Régis VIARRE</strong> <em>(alias CrowkaiT)</em>, fondateur du projet PHPBoost et développeur</li>
-                                <li><strong>Benoît SAUTEL</strong> <em>(alias ben.popeye)</em>, développeur</li>
-                                <li><strong>Loic ROUCHON</strong> <em>(alias horn)</em>, développeur</li>
+                                <li><strong>Régis VIARRE</strong> <em>(alias CrowkaiT)</em>, fondateur du projet PHPBoost et développeur retraité</li>
+                                <li><strong>Benoît SAUTEL</strong> <em>(alias ben.popeye)</em>, développeur retraité</li>
+                                <li><strong>Loic ROUCHON</strong> <em>(alias horn)</em>, développeur retraité</li>
+                                <li><strong>Kévin MASSY</strong> <em>(alias ReidLos)</em>, développeur</li>
                             </ul>
                         </fieldset>',
 	'site.index' => 'Aller à l\'accueil du site',
