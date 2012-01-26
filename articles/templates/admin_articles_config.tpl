@@ -44,37 +44,7 @@
 						<dt><label for="note_max">* {L_NOTE_MAX}</label></dt>
 						<dd><label><input type="text" size="2" maxlength="2" id="note_max" name="note_max" value="{NOTE_MAX}" class="text" /></label></dd>
 					</dl>
-					<dl>
-						<dt>
-							<label for="name">
-								* {L_CAT_TPL_DEFAULT}
-							</label>
-						</dt>
-						<dd>
-							<select name="tpl_cat">
-								{TPL_CAT_LIST}
-							</select>
-						</dd>
-					</dl>
-				</fieldset>
-				<fieldset>
-					<legend>{L_ARTICLES_MINI_CONFIG}</legend>
-					<dl>
-						<dt><label for="nbr_articles_max">* {L_NBR_ARTICLES_MINI}</label></dt>
-						<dd><label><input type="text" size="3" maxlength="3" id="nbr_articles_mini" name="nbr_articles_mini" value="{NBR_ARTICLES_MINI}" class="text" /></label></dd>
-					</dl>
-					<dl>
-						<dt><label for="nbr_cat_max">* {L_MINI_TYPE}</label></dt>
-						<dd><label>	<select name="mini_type" id="mini_type">
-									<option value="view"{SELECTED_VIEW}>{L_ARTICLES_MOST_POPULAR}</option>
-									<option value="date"{SELECTED_DATE}>{L_ARTICLES_BY_DATE}</option>
-									<option value="com"{SELECTED_COM}>{L_ARTICLES_MORE_COM}</option>
-									<option value="note"{SELECTED_NOTE}>{L_ARTICLES_BEST_NOTE}</option>
-								</select>
-							</label>
-						</dd>
-					</dl>
-				</fieldset>							
+				</fieldset>					
 				<fieldset>
 					<legend>{L_GLOBAL_AUTH}</legend>
 					<p>{L_GLOBAL_AUTH_EXPLAIN}</p>

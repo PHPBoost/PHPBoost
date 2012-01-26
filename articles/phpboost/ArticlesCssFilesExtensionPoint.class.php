@@ -1,10 +1,10 @@
 <?php
 /*##################################################
- *                              articles_begin.php
+ *                     ArticlesCssFilesExtensionPoint.class.php
  *                            -------------------
- *   begin                : October 18, 2007
- *   copyright            : (C) 2007 Viarre régis
- *   email                : crowkait@phpboost.com
+ *   begin                : January, 2012
+ *   copyright            : (C) 2012 Kévin MASSY
+ *   email                : soldier.weasel@gmail.com
  *
  *
  ###################################################
@@ -25,17 +25,16 @@
  *
  ###################################################*/
 
-if (defined('PHPBOOST') !== true)
-exit;
+class ArticlesCssFilesExtensionPoint implements CssFilesExtensionPoint
+{
+	public function get_css_files_always_displayed()
+	{
+		return array();
+	}
 
-define('AUTH_ARTICLES_READ', 1);
-define('AUTH_ARTICLES_CONTRIBUTE', 2);
-define('AUTH_ARTICLES_WRITE', 4);
-define('AUTH_ARTICLES_MODERATE', 8);
-
-define('DB_TABLE_ARTICLES', PREFIX . 'articles');
-define('DB_TABLE_ARTICLES_CAT', PREFIX . 'articles_cats');
-$idartcat = retrieve(GET, 'cat',0);
-$idart = retrieve(GET, 'id', 0);
-$invisible = retrieve(GET, 'invisible', false, TBOOL);
+	public function get_css_files_running_module_displayed()
+	{
+		return array('articles.css');
+	}
+}
 ?>

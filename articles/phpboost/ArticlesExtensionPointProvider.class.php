@@ -47,7 +47,7 @@ class ArticlesExtensionPointProvider extends ExtensionPointProvider
 		$string .= '$CONFIG_ARTICLES = ' . var_export($config_articles, true) . ';' . "\n\n";
 
 		//List of categories and their own properties
-		$result = $this->sql_querier->query_while("SELECT id, id_parent, c_order, auth, name, visible, image, description,id_models,tpl_cat
+		$result = $this->sql_querier->query_while("SELECT id, id_parent, c_order, auth, name, visible, image, description
 			FROM " . DB_TABLE_ARTICLES_CAT . "
 			ORDER BY id_parent, c_order", __LINE__, __FILE__);
 
@@ -62,17 +62,10 @@ class ArticlesExtensionPointProvider extends ExtensionPointProvider
 					'visible' => (bool)$row['visible'],
 					'image' => !empty($row['image']) ? $row['image'] : '/articles/articles.png',
 					'description' => $row['description'],
-					'auth' => !empty($row['auth']) ? unserialize($row['auth']) : $config_articles['global_auth'],
-					'models'=>$row['id_models'],
-					'tpl_cat'=>$row['tpl_cat']
+					'auth' => !empty($row['auth']) ? unserialize($row['auth']) : $config_articles['global_auth']
 			), true) . ';' . "\n\n";
 		}
 		return $string;
-	}
-
-	function scheduled_jobs()
-	{
-		return new ArticlesScheduledJobs();
 	}
 
 	public function search()
@@ -84,8 +77,13 @@ class ArticlesExtensionPointProvider extends ExtensionPointProvider
 	{
 		return new ArticlesFeedProvider();
 	}
+	
+	public function css_files()
+	{
+		return new ArticlesCssFilesExtensionPoint();
+	}
 
-	function get_cat()
+	public function get_cat()
 	{
 		$result = $this->sql_querier->query_while("SELECT *
 	            FROM " . DB_TABLE_ARTICLES_CAT, __LINE__, __FILE__);
@@ -97,7 +95,7 @@ class ArticlesExtensionPointProvider extends ExtensionPointProvider
 		return $data;
 	}
 
-	function get_home_page()
+	public function get_home_page()
 	{
 		global $idartcat, $Session,$User,$invisible, $Cache, $Bread_crumb, $ARTICLES_CAT, $CONFIG_ARTICLES, $LANG,$ARTICLES_LANG;
 		require_once('../articles/articles_begin.php'); 

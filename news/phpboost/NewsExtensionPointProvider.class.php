@@ -77,11 +77,6 @@ class NewsExtensionPointProvider extends ExtensionPointProvider
 		return $string;
 	}
 
-	public function scheduled_jobs()
-	{
-		return new NewsScheduledJobs();
-	}
-
 	public function search()
 	{
 		return new NewsSearchable();

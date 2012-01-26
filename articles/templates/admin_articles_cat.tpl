@@ -130,39 +130,11 @@
 					<span class="text_small">{L_OR_DIRECT_PATH}</span> <input size="40" type="text" class="text" name="icon_path" value="{edition_interface.IMG_PATH}" onblur="if( this.value != '' )change_icon(this.value)" />
 				</label></dd>
 			</dl>
-			<dl>
-				<dt>
-					<label for="name">
-						* {L_CAT_TPL}
-					</label>
-				</dt>
-				<dd>
-					<select name="tpl_cat">
-						{edition_interface.TPL_CAT_LIST}
-					</select>
-				</dd>
-			</dl>
 			<label for="description">
 				{L_DESCRIPTION}
 			</label>
 			{KERNEL_EDITOR}
 			<textarea id="contents" rows="15" cols="40" name="description">{edition_interface.DESCRIPTION}</textarea>
-		</fieldset>
-		<fieldset>
-			<legend>
-				{L_ARTICLES_MODELS}
-			</legend>
-			<dl>
-				<dt><label for="models">{L_MODELS}</label>
-				<br />
-				<span class="text_small">{L_MODELS_EXPLAIN}</span></dt>
-				<dd>
-					<select id="models" name="models" onchange="ajax_models_desc()">
-						{edition_interface.MODELS}
-					</select>
-				</dd>				
-			</dl>
-			<div id="model_desc"></div>
 		</fieldset>
 		<fieldset>
 			<legend>
