@@ -158,7 +158,6 @@ class AdminModuleAddController extends AdminController
 						default: 
 							$this->view->put('MSG', MessageHelper::display($this->lang['modules.install_success'], MessageHelper::SUCCESS, 10));
 					}
-					
 				}
 			}
 			catch (Exception $e)

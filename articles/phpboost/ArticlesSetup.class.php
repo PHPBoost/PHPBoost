@@ -29,13 +29,11 @@ class ArticlesSetup extends DefaultModuleSetup
 {
 	private static $articles_table;
 	private static $articles_cat_table;
-	private static $articles_model_table;
 
 	public static function __static()
 	{
 		self::$articles_table = PREFIX . 'articles';
 		self::$articles_cat_table = PREFIX . 'articles_cats';
-		self::$articles_model_table = PREFIX . 'articles_models';
 	}
 
 	public function install()
@@ -52,14 +50,13 @@ class ArticlesSetup extends DefaultModuleSetup
 
 	private function drop_tables()
 	{
-		PersistenceContext::get_dbms_utils()->drop(array(self::$articles_table, self::$articles_cat_table, self::$articles_model_table));
+		PersistenceContext::get_dbms_utils()->drop(array(self::$articles_table, self::$articles_cat_table));
 	}
 
 	private function create_tables()
 	{
 		$this->create_articles_table();
 		$this->create_articles_cats_table();
-		$this->create_articles_models_table();
 	}
 
 	private function create_articles_table()
@@ -120,24 +117,6 @@ class ArticlesSetup extends DefaultModuleSetup
 			'indexes' => array('class' => array('type' => 'key', 'fields' => 'c_order'))
 		);
 		PersistenceContext::get_dbms_utils()->create_table(self::$articles_cat_table, $fields, $options);
-	}
-
-	private function create_articles_models_table()
-	{
-		$fields = array(
-			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
-			'name' => array('type' => 'string', 'length' => 150, 'notnull' => 1),
-			'model_default' => array('type' => 'boolean', 'notnull' => 1, 'default' => 1),
-			'description' => array('type' => 'text', 'length' => 65000),
-			'pagination_tab' => array('type' => 'boolean', 'notnull' => 1, 'default' => 1),
-			'extend_field' => array('type' => 'text', 'length' => 65000),
-			'options' => array('type' => 'text', 'length' => 65000),
-			'tpl_articles' => array('type' => 'string', 'length' => 150, 'notnull' => 1, 'default' => "'articles.tpl'")
-		);
-		$options = array(
-			'primary' => array('id'),
-		);
-		PersistenceContext::get_dbms_utils()->create_table(self::$articles_model_table, $fields, $options);
 	}
 
 	private function insert_data()

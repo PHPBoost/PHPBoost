@@ -102,11 +102,7 @@ elseif ($new_cat XOR $id_edit > 0)
 		'L_REQUIRE_TITLE' => $LANG['required_field'].' : '.$ARTICLES_LANG['category_name'],
 		'L_OR_DIRECT_PATH' => $ARTICLES_LANG['or_direct_path'],
 		'L_ARTICLES_MODELS'=>$ARTICLES_LANG['articles_models'],
-		'L_MODELS'=>$ARTICLES_LANG['models'],
-		'L_MODELS_EXPLAIN'=>$ARTICLES_LANG['models_explain'],
 		'L_CAT_ICON'=>$ARTICLES_LANG['cat_icon'],
-		'L_MODELS_DESCRIPTION'=>$ARTICLES_LANG['model_desc'],
-		'L_CAT_TPL'=>$ARTICLES_LANG['cat_tpl'],
 	));
 
 	if ($id_edit > 0 && array_key_exists($id_edit, $ARTICLES_CAT))
@@ -126,36 +122,12 @@ elseif ($new_cat XOR $id_edit > 0)
 			$image_list .= '<option value="' . $image . '"' . ($img_direct_path ? '' : $selected) . '>' . $image . '</option>';
 		}
 		
-		// category templates
-		$tpl_cat_list = '<option value="articles_cat.tpl" >articles_cat.tpl</option>';
-		$tpl_folder_path = new Folder('./templates/models');
-		foreach ($tpl_folder_path->get_files('`\.tpl$`i') as $tpl_cat)
-		{
-			$tpl_cat = $tpl_cat->get_name();
-			$selected = ($tpl_cat == $ARTICLES_CAT[$id_edit]['tpl_cat'] || './models/'.$tpl_cat == $ARTICLES_CAT[$id_edit]['tpl_cat']) ? ' selected="selected"' : '';
-			$tpl_cat_list .= '<option value="' . $tpl_cat. '"' .  $selected . '>' . $tpl_cat . '</option>';
-		}
-		// models
-		$result = $Sql->query_while("SELECT id, name,description
-		FROM " . DB_TABLE_ARTICLES_MODEL 
-		, __LINE__, __FILE__);
-		$models='';
-		while ($row = $Sql->fetch_assoc($result))
-		{
-			if($row['id'] == $ARTICLES_CAT[$id_edit]['models'])
-				$models.='<option value="' . $row['id'] . '" selected="selected">' . $row['name']. '</option>';
-			else
-				$models.='<option value="' . $row['id'] . '">' . $row['name']. '</option>';
-		}
-		
 		$tpl->assign_block_vars('edition_interface', array(
 			'NAME' => $ARTICLES_CAT[$id_edit]['name'],
 			'DESCRIPTION' => FormatingHelper::unparse($ARTICLES_CAT[$id_edit]['description']),
-			'MODELS'=>$models,
 			'IMG_PATH' => $img_direct_path ? $ARTICLES_CAT[$id_edit]['image'] : '',
 			'IMG_ICON' => !empty($ARTICLES_CAT[$id_edit]['image']) ? '<img src="' . $ARTICLES_CAT[$id_edit]['image'] . '" alt="" class="valign_middle" />' : '',		
 			'IMG_LIST'=>$image_list,
-			'TPL_CAT_LIST'=>$tpl_cat_list,
 			'CATEGORIES_TREE' => $articles_categories->build_select_form($ARTICLES_CAT[$id_edit]['id_parent'], 'id_parent', 'id_parent', $id_edit),
 			'IDCAT' => $id_edit,
 			'JS_SPECIAL_AUTH' => $special_auth ? 'true' : 'false',
@@ -181,30 +153,6 @@ elseif ($new_cat XOR $id_edit > 0)
 			if($image != $img_default_name)
 			$image_list .= '<option value="' . $image . '">' . $image . '</option>';
 		}
-
-		// category templates
-		$tpl_cat_list = '<option value="articles_cat.tpl" >articles_cat.tpl</option>';
-		$tpl_folder_path = new Folder('./templates/models');
-		foreach ($tpl_folder_path->get_files('`\.tpl$`i') as $tpl_cat)
-		{
-			$tpl_cat = $tpl_cat->get_name();
-			$selected = ($tpl_cat == $CONFIG_ARTICLES['tpl_cat'] || './models/'.$tpl_cat == $CONFIG_ARTICLES['tpl_cat']) ? ' selected="selected"' : '';
-			$tpl_cat_list .= '<option value="' . $tpl_cat. '"' .  $selected . '>' . $tpl_cat . '</option>';
-		}
-			
-		// models
-		$result = $Sql->query_while("SELECT id, name,description,model_default
-		FROM " . DB_TABLE_ARTICLES_MODEL 
-		, __LINE__, __FILE__);
-		
-		$models='';
-		while ($row = $Sql->fetch_assoc($result))
-		{
-			if($row['model_default'] == 1)
-				$models.='<option value="' . $row['id'] . '" selected="selected">' . $row['name']. '</option>';
-			else
-				$models.='<option value="' . $row['id'] . '">' . $row['name']. '</option>';
-		}
 			
 		$tpl->assign_block_vars('edition_interface', array(
 			'NAME' => '',
@@ -212,8 +160,6 @@ elseif ($new_cat XOR $id_edit > 0)
 			'IMG_PATH' => '',
 			'IMG_ICON' => '',	
 			'IMG_LIST' => $image_list,
-			'TPL_CAT_LIST'=>$tpl_cat_list,
-			'MODELS'=>$models,
 			'IMG_PREVIEW' => FormatingHelper::second_parse_url($img_default),
 			'CATEGORIES_TREE' => $articles_categories->build_select_form($id_edit, 'id_parent', 'id_parent'),
 			'IDCAT' => $id_edit,
@@ -249,11 +195,7 @@ elseif (retrieve(POST,'submit',false))
 		$id_cat = retrieve(POST, 'idcat', 0,TINTEGER);
 		$id_parent = retrieve(POST, 'id_parent', 0,TINTEGER);
 		$name = retrieve(POST, 'name', '');
-		$icon=retrieve(POST, 'icon', '', TSTRING);
-		$models=retrieve(POST, 'models', 1, TINTEGER);	
-		$tpl_cat=retrieve(POST, 'tpl_cat', 'articles_cat.tpl', TSTRING);
-		$tpl_cat= $tpl_cat != 'articles_cat.tpl' ? "./models/".$tpl_cat : $tpl_cat;
-	
+		$icon=retrieve(POST, 'icon', '', TSTRING);	
 		
 		if(retrieve(POST,'icon_path',false))
 			$icon=retrieve(POST,'icon_path','');
@@ -265,9 +207,9 @@ elseif (retrieve(POST,'submit',false))
 			AppContext::get_response()->redirect(url(HOST . SCRIPT . '?error=e_required_fields_empty#message_helper'), '', '&');
 	
 		if ($id_cat > 0)
-			$error_string = $articles_categories->update_category($id_cat, $id_parent, $name, $description, $icon, $auth,$models,$tpl_cat);
+			$error_string = $articles_categories->update_category($id_cat, $id_parent, $name, $description, $icon, $auth);
 		else
-			$error_string = $articles_categories->add_category($id_parent, $name, $description, $icon, $auth,$models,$tpl_cat);
+			$error_string = $articles_categories->add_category($id_parent, $name, $description, $icon, $auth);
 	}
 
 	// Feeds Regeneration

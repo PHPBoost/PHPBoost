@@ -38,12 +38,6 @@ require_once('admin_articles_menu.php');
 if (retrieve(POST,'valid',false))
 {
 	$Cache->load('articles');
-
-	$mini = array();
-	$mini['nbr_articles']=retrieve(POST, 'nbr_articles_mini', 5,TINTEGER);
-	$tpl_cat=retrieve(POST, 'tpl_cat', 'articles_cat.tpl', TSTRING);
-	$tpl_cat= $tpl_cat != 'articles_cat.tpl' ? "./models/".$tpl_cat : $tpl_cat;
-	
 	
 	switch (retrieve(POST, 'mini_type', 'date',TSTRING))
 	{
@@ -68,9 +62,7 @@ if (retrieve(POST,'valid',false))
 		'nbr_cat_max' => retrieve(POST, 'nbr_cat_max', 10),
 		'nbr_column' => retrieve(POST, 'nbr_column', 2),
 		'note_max' => max(1, retrieve(POST, 'note_max', 5)),
-		'global_auth' => Authorizations::build_auth_array_from_form(AUTH_ARTICLES_READ, AUTH_ARTICLES_CONTRIBUTE, AUTH_ARTICLES_WRITE, AUTH_ARTICLES_MODERATE),
-		'mini'=>serialize($mini),
-		'tpl_cat'=>$tpl_cat,
+		'global_auth' => Authorizations::build_auth_array_from_form(AUTH_ARTICLES_READ, AUTH_ARTICLES_CONTRIBUTE, AUTH_ARTICLES_WRITE, AUTH_ARTICLES_MODERATE)
 	);
 	
 	$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($config_articles)) . "' WHERE name = 'articles'", __LINE__, __FILE__);
@@ -136,8 +128,6 @@ else
 
 	$Cache->load('articles');
 		
-	$mini_conf=unserialize($CONFIG_ARTICLES['mini']);
-		
 	$array_ranks =
 		array(
 			'-1' => $LANG['guest'],
@@ -146,28 +136,12 @@ else
 			'2' => $LANG['admin']
 		);
 
-	// category templates
-	$tpl_cat_list = '<option value="articles_cat.tpl" >articles_cat.tpl</option>';
-	$tpl_folder_path = new Folder('./templates/models');
-	foreach ($tpl_folder_path->get_files('`\.tpl$`i') as $tpl_cat)
-	{
-		$tpl_cat = $tpl_cat->get_name();
-		$selected = ($tpl_cat == $CONFIG_ARTICLES['tpl_cat'] || './models/'.$tpl_cat == $CONFIG_ARTICLES['tpl_cat']) ? ' selected="selected"' : '';
-		$tpl_cat_list .= '<option value="' . $tpl_cat. '"' .  $selected . '>' . $tpl_cat . '</option>';
-	}
-	
 	$tpl->put_all(array(
 		'NBR_ARTICLES_MAX' => !empty($CONFIG_ARTICLES['nbr_articles_max']) ? $CONFIG_ARTICLES['nbr_articles_max'] : '10',
 		'NBR_CAT_MAX' => !empty($CONFIG_ARTICLES['nbr_cat_max']) ? $CONFIG_ARTICLES['nbr_cat_max'] : '10',
 		'NBR_COLUMN' => !empty($CONFIG_ARTICLES['nbr_column']) ? $CONFIG_ARTICLES['nbr_column'] : '2',
 		'NOTE_MAX' => !empty($CONFIG_ARTICLES['note_max']) ? $CONFIG_ARTICLES['note_max'] : '10',
 		'AUTH_READ' => Authorizations::generate_select(AUTH_ARTICLES_READ, $CONFIG_ARTICLES['global_auth']),
-		'NBR_ARTICLES_MINI'=>$mini_conf['nbr_articles'],
-		'SELECTED_VIEW' => $mini_conf['type'] == 'view' ? ' selected="selected"' : '',
-		'SELECTED_DATE' => $mini_conf['type'] == 'date' ? ' selected="selected"' : '',
-		'SELECTED_COM' => $mini_conf['type'] == 'com' ? ' selected="selected"' : '',
-		'SELECTED_NOTE' => $mini_conf['type'] == 'note' ? ' selected="selected"' : '',
-		'TPL_CAT_LIST'=>$tpl_cat_list,
 		'L_REQUIRE' => $LANG['require'],	
 		'L_NBR_CAT_MAX' => $LANG['nbr_cat_max'],
 		'L_NBR_COLUMN_MAX' => $LANG['nbr_column_max'],
@@ -186,12 +160,10 @@ else
 		'L_ARTICLES_CONFIG'=>$ARTICLES_LANG['configuration_articles'],
 		'L_ARTICLES_MINI_CONFIG'=>$ARTICLES_LANG['articles_mini_config'],
 		'L_NBR_ARTICLES_MINI'=>$ARTICLES_LANG['nbr_articles_mini'],
-		'L_MINI_TYPE'=>$ARTICLES_LANG['mini_type'],
 		'L_ARTICLES_BEST_NOTE'=>$ARTICLES_LANG['articles_best_note'],
 		'L_ARTICLES_MORE_COM' => $ARTICLES_LANG['articles_more_com'],
 		'L_ARTICLES_BY_DATE' => $ARTICLES_LANG['articles_by_date'],
 		'L_ARTICLES_MOST_POPULAR' =>$ARTICLES_LANG['articles_most_popular'],
-		'L_CAT_TPL_DEFAULT'=>$ARTICLES_LANG['cat_tpl_default'],		
 	));
 	
 	$array_ranks =
