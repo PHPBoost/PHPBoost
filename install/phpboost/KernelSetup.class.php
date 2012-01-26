@@ -194,6 +194,7 @@ class KernelSetup
 			'id_in_module' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'is_locked' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'number_comments' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
+			'path' => array('type' => 'string', 'length' => 255, 'notnull' => 1)
 		);
 		$options = array(
 			'primary' => array('id_topic'),

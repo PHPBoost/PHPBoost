@@ -37,10 +37,11 @@ class AddCommentBuildForm extends AbstractCommentsBuildForm
 	private $comments_configuration;
 	private $module_id;
 	private $id_in_module;
+	private $topic_path;
 	
-	public static function create($module_id, $id_in_module)
+	public static function create($module_id, $id_in_module, $topic_path)
 	{
-		$instance = new self($module_id, $id_in_module);
+		$instance = new self($module_id, $id_in_module, $topic_path);
 		
 		$instance->create_form();
 		
@@ -52,10 +53,11 @@ class AddCommentBuildForm extends AbstractCommentsBuildForm
 		return $instance;
 	}
 	
-	public function __construct($module_id, $id_in_module)
+	public function __construct($module_id, $id_in_module, $topic_path)
 	{
 		$this->module_id = $module_id;
 		$this->id_in_module = $id_in_module;
+		$this->topic_path = $topic_path;
 		$this->user = AppContext::get_current_user();
 		$this->lang = LangLoader::get('main');
 		$this->comments_lang = LangLoader::get('comments-common');
@@ -64,7 +66,7 @@ class AddCommentBuildForm extends AbstractCommentsBuildForm
 	
 	protected function create_form()
 	{
-		$form = new HTMLForm('comments');
+		$form = new HTMLForm('comments', REWRITED_SCRIPT . '#comments_list');
 		$fieldset = new FormFieldsetHTML('add_comment', $this->comments_lang['comment.add']);
 		$form->add_fieldset($fieldset);
 		
@@ -101,11 +103,11 @@ class AddCommentBuildForm extends AbstractCommentsBuildForm
 		$form = $this->get_form();
 		if ($form->has_field('name'))
 		{
-			CommentsManager::add_comment($this->module_id, $this->id_in_module, $form->get_value('message'), $form->get_value('name'));
+			CommentsManager::add_comment($this->module_id, $this->id_in_module, $form->get_value('message'), $this->topic_path, $form->get_value('name'));
 		}
 		else
 		{
-			CommentsManager::add_comment($this->module_id, $this->id_in_module, $form->get_value('message'));
+			CommentsManager::add_comment($this->module_id, $this->id_in_module, $form->get_value('message'), $this->topic_path);
 		}
 		
 		$this->set_message_response(MessageHelper::display($this->comments_lang['comment.add.success'], MessageHelper::SUCCESS, 4));

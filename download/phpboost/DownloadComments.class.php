@@ -57,16 +57,6 @@ class DownloadComments extends AbstractCommentsExtensionPoint
 		return (bool)$row['approved'] && (bool)$row['visible'];
 	}
 	
-	public function get_url_built($module_id, $id_in_module, Array $parameters)
-	{
-		$url_parameters = '';
-		foreach ($parameters as $name => $value)
-		{
-			$url_parameters .= '&' . $name . '=' . $value;
-		}
-		return new Url('/download/download.php?id='. $id_in_module .'&com=0' . $url_parameters);
-	}
-	
 	private function get_categorie_id($module_id, $id_in_module)
 	{
 		$columns = 'idcat';
