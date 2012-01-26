@@ -38,11 +38,11 @@ class CommentsManager
 		self::$user = AppContext::get_current_user();
 	}
 	
-	public static function add_comment($module_id, $id_in_module, $message, $name_visitor = '')
+	public static function add_comment($module_id, $id_in_module, $message, $topic_path, $name_visitor = '')
 	{
 		if (!CommentsTopicDAO::topic_exists($module_id, $id_in_module))
 		{
-			CommentsTopicDAO::create_topic($module_id, $id_in_module);
+			CommentsTopicDAO::create_topic($module_id, $id_in_module, $topic_path);
 		}
 		
 		if(self::$user->check_level(MEMBER_LEVEL))

@@ -33,14 +33,10 @@ $notation = new Notation();
 $notation->set_module_name('download');
 $notation->set_notation_scale($CONFIG_DOWNLOAD['note_max']);
 
-$comments_topic = new CommentsTopic();
-$comments_topic->set_module_id('download');
-
 if ($file_id > 0) //Contenu
 {
 	$notation->set_id_in_module($file_id);
-	$comments_topic->set_id_in_module($file_id);
-	
+
 	$Template->set_filenames(array('download'=> 'download/download.tpl'));
 	
 	if ($download_info['size'] > 1)
@@ -93,6 +89,10 @@ if ($file_id > 0) //Contenu
 	//Affichage commentaires.
 	if (isset($_GET['com']))
 	{
+		$comments_topic = new CommentsTopic();
+		$comments_topic->set_module_id('download');
+		$comments_topic->set_id_in_module($file_id);
+		$comments_topic->set_url(new Url('/download/download.php?id='. $file_id .'&com=0'));
 		$Template->put_all(array(
 			'COMMENTS' => CommentsService::display($comments_topic)->render()
 		));

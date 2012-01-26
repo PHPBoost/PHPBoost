@@ -58,7 +58,8 @@ class CommentsCache implements CacheData
 				'name_visitor' => $row['name_visitor'],
 				'ip_visitor' => $row['ip_visitor'],
 				'note' => $row['note'],
-				'timestamp' => $row['timestamp']
+				'timestamp' => $row['timestamp'],
+				'path' => $row['path']
 			);
 		}
 	}

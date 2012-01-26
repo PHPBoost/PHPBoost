@@ -54,15 +54,6 @@ class CommentsProvidersService
 		}
 	}
 	
-	public static function get_url_built($module_id, $id_in_module, Array $parameters)
-	{
-		if (self::module_containing_extension_point($module_id))
-		{
-			$provider = self::get_provider($module_id);
-			return $provider->get_url_built($module_id, $id_in_module, $parameters);
-		}
-	}
-	
 	public static function module_containing_extension_point($module_id)
 	{
 		return in_array($module_id, self::get_extension_point_ids());

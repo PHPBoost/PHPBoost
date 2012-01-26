@@ -108,7 +108,7 @@ class CommentsService
 					}
 					else
 					{
-						$add_comment_form = AddCommentBuildForm::create($module_id, $id_in_module);
+						$add_comment_form = AddCommentBuildForm::create($module_id, $id_in_module, $comments_topic->get_path());
 						self::$template->put_all(array(
 							'C_DISPLAY_FORM' => true,
 							'KEEP_MESSAGE' => $add_comment_form->get_message_response(),
@@ -184,13 +184,11 @@ class CommentsService
 
 		if ($authorizations->is_authorized_read() && $provider->is_display($module_id, $id_in_module) && $authorizations->is_authorized_access_module())
 		{
-			$comment_url = $provider->get_url_built($module_id, $id_in_module, array(':action' => ':id_comment'))->absolute();
-			
 			$comments = self::get_comments($module_id, $id_in_module, $number_comments_display, $display_from_number_comments);
 			foreach ($comments as $id_comment => $comment)
 			{
-				$edit_comment_url = StringVars::replace_vars($comment_url, array('action' => 'edit_comment', 'id_comment' => $id_comment));
-				$delete_comment_url = StringVars::replace_vars($comment_url, array('action' => 'delete_comment', 'id_comment' => $id_comment));
+				$edit_comment_url = $comment['path'] . '&edit_comment=' . $id_comment . '#comments_message';
+				$delete_comment_url = $comment['path'] . '&delete_comment=' . $id_comment . '#comments_list';
 				
 				$template->assign_block_vars('comments_list', array(
 					'MESSAGE' => $comment['message'],

@@ -48,18 +48,7 @@ class WebComments extends AbstractCommentsExtensionPoint
 		$aprobation = PersistenceContext::get_querier()->get_column_value(PREFIX . 'web', $columns, $condition, $parameters);
 		return $aprobation > 0 ? true : false; 
 	}
-	
-	public function get_url_built($module_id, $id_in_module, Array $parameters)
-	{
-		$url_parameters = '';
-		foreach ($parameters as $name => $value)
-		{
-			$url_parameters .= '&' . $name . '=' . $value;
-		}
-		$id_cat = $this->get_categorie_id($module_id, $id_in_module);
-		return new Url('/web/web.php?cat='. $id_cat .'&id='. $id_in_module .'&com=0' . $url_parameters);
-	}
-	
+		
 	private function get_categorie_id($module_id, $id_in_module)
 	{
 		$columns = 'idcat';

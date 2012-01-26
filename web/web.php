@@ -36,10 +36,6 @@ $notation->set_module_name('web');
 $notation->set_id_in_module($idweb);
 $notation->set_notation_scale($web_config->get_note_max());
 
-$comments_topic = new CommentsTopic();
-$comments_topic->set_module_id('web');
-$comments_topic->set_id_in_module($idweb);
-
 if (!empty($idweb) && !empty($CAT_WEB[$idcat]['name']) && !empty($idcat)) //Contenu du lien.
 {	
 	if (!$User->check_level($CAT_WEB[$idcat]['secure']))
@@ -106,6 +102,10 @@ if (!empty($idweb) && !empty($CAT_WEB[$idcat]['name']) && !empty($idcat)) //Cont
 	//Affichage commentaires.
 	if (isset($_GET['com']))
 	{
+		$comments_topic = new CommentsTopic();
+		$comments_topic->set_module_id('web');
+		$comments_topic->set_id_in_module($idweb);
+		$comments_topic->set_url(new Url('/web/web.php?cat='. $idcat .'&id=' . $web['id'] . '&com=0'));
 		$tpl->put_all(array(
 			'COMMENTS' => CommentsService::display($comments_topic)->render()
 		));

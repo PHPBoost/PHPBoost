@@ -33,6 +33,7 @@ class CommentsTopic
 {
 	private $module_id;
 	private $id_in_module;
+	private $url;
 
 	public function set_module_id($identifier)
 	{
@@ -52,6 +53,16 @@ class CommentsTopic
 	public function get_id_in_module()
 	{
 		return $this->id_in_module;
+	}
+	
+	public function set_url(Url $url)
+	{
+		$this->url = $url;
+	}
+	
+	public function get_path()
+	{
+		return $this->url->relative();
 	}
 }
 ?>

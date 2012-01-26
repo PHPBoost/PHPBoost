@@ -39,9 +39,6 @@ $notation = new Notation();
 $notation->set_module_name('media');
 $notation->set_notation_scale($MEDIA_CONFIG['note_max']);
 
-$comments_topic = new CommentsTopic();
-$comments_topic->set_module_id('media');
-
 // Display caterories and media files.
 if (empty($id_media) && $id_cat >= 0)
 {
@@ -246,7 +243,6 @@ elseif ($id_media > 0)
 
 	$notation->set_id_in_module($id_media);
 	$nbr_notes = NotationService::get_former_number_notes($notation);
-	$comments_topic->set_id_in_module($id_media);
 	
 	$Template->put_all(array(
 		'C_DISPLAY_MEDIA' => true,
@@ -291,6 +287,10 @@ elseif ($id_media > 0)
 	//Affichage commentaires.
 	if (isset($_GET['com']))
 	{
+		$comments_topic = new CommentsTopic();
+		$comments_topic->set_module_id('media');
+		$comments_topic->set_id_in_module($id_media);
+		$comments_topic->set_url(new Url('/media/media.php?id='. $id_media . '&com=0'));
 		$Template->put_all(array(
 			'COMMENTS' => CommentsService::display($comments_topic)->render()
 		));

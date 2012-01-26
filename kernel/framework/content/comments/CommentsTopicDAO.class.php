@@ -55,13 +55,14 @@ class CommentsTopicDAO
 		return self::$db_querier->get_column_value(DB_TABLE_COMMENTS_TOPIC, 'id_topic', $condition, $parameters);
 	}
 	
-	public static function create_topic($module_id, $id_in_module)
+	public static function create_topic($module_id, $id_in_module, $path)
 	{
 		$columns = array(
 			'module_id' => $module_id,
 			'id_in_module' => $id_in_module,
 			'number_comments' => 0,
-			'is_locked' => 0
+			'is_locked' => 0,
+			'path' => $path
 		);
 		self::$db_querier->insert(DB_TABLE_COMMENTS_TOPIC, $columns);
 	}
