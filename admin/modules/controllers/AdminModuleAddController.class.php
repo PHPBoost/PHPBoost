@@ -160,10 +160,7 @@ class AdminModuleAddController extends AdminController
 					}
 				}
 			}
-			catch (Exception $e)
-			{
-				Debug::fatal($e);
-			}
+			catch (UnexistingHTTPParameterException $e)	{}
 		}
 	}
 	
