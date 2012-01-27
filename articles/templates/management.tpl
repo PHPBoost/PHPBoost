@@ -156,18 +156,6 @@
 						</select>
 					</label></dd>
 				</dl>
-				# IF NOT C_CONTRIBUTION #
-				<dl>
-					<dt><label for="special_auth">{L_MODELS}</label>
-					<dd>
-						<select id="models" name="models" onchange="ajax_model_extend_field()">
-							{MODELS}
-						</select>
-					</dd>	
-				</dl>
-				<div id="model_desc" ></div>
-			
-				# ENDIF #
 				<dl>
 					<dt><label for="icon">{L_ARTICLE_ICON}</label></dt>
 						<dd>

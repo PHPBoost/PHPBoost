@@ -36,10 +36,9 @@ $idart = retrieve(GET, 'id', 0);
 
 if (!empty($idart) && isset($cat) )
 {		
-	$result = $Sql->query_while("SELECT a.contents, a.title, a.id, a.idcat,a.auth, a.timestamp, a.sources,a.start, a.visible, a.user_id, a.icon,a.nbr_com,a.id_models, m.login, m.level,a.extend_field,mo.tpl_articles ,mo.options,mo.pagination_tab
+	$result = $Sql->query_while("SELECT a.contents, a.title, a.id, a.idcat,a.auth, a.timestamp, a.sources,a.start, a.visible, a.user_id, a.icon,a.nbr_com, m.login, m.level
 		FROM " . DB_TABLE_ARTICLES . " a 
 		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = a.user_id
-		LEFT JOIN " . DB_TABLE_ARTICLES_MODEL . " mo ON a.id_models = mo.id
 		WHERE a.id = '" . $idart . "'", __LINE__, __FILE__);
 	$articles = $Sql->fetch_assoc($result);
 	$Sql->query_close($result);
@@ -252,9 +251,9 @@ else
 	$modulesLoader = AppContext::get_extension_provider_service();
 	$module_name = 'articles';
 	$module = $modulesLoader->get_provider($module_name);
-	if ($module->has_extension_point('get_home_page'))
+	if ($module->has_extension_point(HomePageExtensionPoint::EXTENSION_POINT))
 	{
-		echo $module->get_extension_point('get_home_page');
+		echo $module->get_extension_point(HomePageExtensionPoint::EXTENSION_POINT)->get_home_page()->get_view()->display();
 	}
 	elseif (!$no_alert_on_error) 
 	{
