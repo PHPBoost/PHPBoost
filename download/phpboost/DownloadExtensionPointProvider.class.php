@@ -27,21 +27,16 @@
 
 define('DOWNLOAD_MAX_SEARCH_RESULTS', 100);
 
-
-// Class DownloadInterface
-//  Provides download module services to the kernel and extern modules
 class DownloadExtensionPointProvider extends ExtensionPointProvider
 {
 	private $sql_querier;
 
-    ## Public Methods ##
     function __construct()
     {
 		$this->sql_querier = PersistenceContext::get_sql();
         parent::__construct('download');
     }
 
-	//Récupération du cache.
 	function get_cache()
 	{
 		global $LANG, $Cache;

@@ -217,77 +217,20 @@ elseif (!empty($encoded_title) && $num_rows == 0)
 //Sinon c'est l'accueil
 else
 {
-	if ($_WIKI_CONFIG['last_articles'] > 1)
-    {
-    	$result = $Sql->query_while("SELECT a.title, a.encoded_title, a.id
-			FROM " . PREFIX . "wiki_articles a
-			LEFT JOIN " . PREFIX . "wiki_contents c ON c.id_contents = a.id_contents
-			WHERE a.redirect = 0
-			ORDER BY c.timestamp DESC
-			LIMIT 0, " . $_WIKI_CONFIG['last_articles'], __LINE__, __FILE__);              
-		$articles_number = $Sql->num_rows($result, "SELECT COUNT(*) FROM " . PREFIX . "wiki_articles WHERE encoded_title = '" . $encoded_title . "'", __LINE__, __FILE__);
-		
-		$Template->assign_block_vars('last_articles', array(
-			'L_ARTICLES' => $LANG['wiki_last_articles_list'],
-			'RSS' => $articles_number > 0 ? '<a href="' . SyndicationUrlBuilder::rss('wiki')->rel() . '"><img src="../templates/' . get_utheme() . '/images/rss.png" alt="RSS" /></a>' : ''
-		));
-		
-		$i = 0;
-		while ($row = $Sql->fetch_assoc($result))
-		{
-			$Template->assign_block_vars('last_articles.list', array(
-				'ARTICLE' => $row['title'],
-				'TR' => ($i > 0 && ($i%2 == 0)) ? '</tr><tr>' : '',
-				'U_ARTICLE' => url('wiki.php?title=' . $row['encoded_title'], $row['encoded_title'])
-			));
-			$i++;
-		}
-		
-		if ($articles_number == 0)
-		{
-			$Template->put_all(array(
-				'L_NO_ARTICLE' => '<td style="text-align:center;" class="row2">' . $LANG['wiki_no_article'] . '</td>',
-			));
-		}
-	}
-	//Affichage de toutes les catégories si c'est activé
-	if ($_WIKI_CONFIG['display_cats'] != 0)
+	$modulesLoader = AppContext::get_extension_provider_service();
+	$module_name = 'wiki';
+	$module = $modulesLoader->get_provider($module_name);
+	if ($module->has_extension_point(HomePageExtensionPoint::EXTENSION_POINT))
 	{
-		$Template->assign_block_vars('cat_list', array(
-			'L_CATS' => $LANG['wiki_cats_list']
-		));
-		$i = 0;
-		foreach ($_WIKI_CATS as $id => $infos)
-		{
-			//Si c'est une catégorie mère
-			if ($infos['id_parent'] == 0)
-			{
-				$Template->assign_block_vars('cat_list.list', array(
-					'CAT' => $infos['name'],
-					'U_CAT' => url('wiki.php?title=' . Url::encode_rewrite($infos['name']), Url::encode_rewrite($infos['name']))
-				));
-				$i++;
-			}
-		}
-		if ($i == 0)
-		{
-			$Template->put_all(array(
-				'L_NO_CAT' => $LANG['wiki_no_cat'],
-			));
-		}
+		echo $module->get_extension_point(HomePageExtensionPoint::EXTENSION_POINT)->get_home_page()->get_view()->display();
 	}
-	
-	$Template->put_all(array(
-		'TITLE' => !empty($_WIKI_CONFIG['wiki_name']) ? $_WIKI_CONFIG['wiki_name'] : $LANG['wiki'],
-		'INDEX_TEXT' => !empty($_WIKI_CONFIG['index_text']) ? FormatingHelper::second_parse(wiki_no_rewrite($_WIKI_CONFIG['index_text'])) : $LANG['wiki_empty_index'],
-		'L_EXPLORER' => $LANG['wiki_explorer'],
-		'U_EXPLORER' => url('explorer.php'),
-        ));
-
-	$page_type = 'index';
-	include('../wiki/wiki_tools.php');
-	
-	$Template->pparse('index');
+	elseif (!$no_alert_on_error)
+	{
+		//TODO Gestion de la langue
+		$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
+            'Le module <strong>' . $module_name . '</strong> n\'a pas de fonction get_home_page!', UserErrorController::FATAL);
+        DispatchManager::redirect($controller);
+	}
 }
 
 require_once('../kernel/footer.php');

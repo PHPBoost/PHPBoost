@@ -253,9 +253,9 @@ else
 	$modulesLoader = AppContext::get_extension_provider_service();
 	$module_name = 'news';
 	$module = $modulesLoader->get_provider($module_name);
-	if ($module->has_extension_point('get_home_page'))
+	if ($module->has_extension_point(HomePageExtensionPoint::EXTENSION_POINT))
 	{
-		echo $module->get_extension_point('get_home_page', $idcat);
+		echo $module->get_extension_point(HomePageExtensionPoint::EXTENSION_POINT)->get_home_page()->get_view()->display();
 	}
 	elseif (!$no_alert_on_error)
 	{

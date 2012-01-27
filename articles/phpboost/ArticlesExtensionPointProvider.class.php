@@ -88,5 +88,4 @@ class ArticlesExtensionPointProvider extends ExtensionPointProvider
 		return new ArticlesHomePageExtensionPoint();
 	}
 }
-
 ?>
