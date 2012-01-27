@@ -64,7 +64,6 @@ class ArticlesSetup extends DefaultModuleSetup
 		$fields = array(
 			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
 			'idcat' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'id_models' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 1),
 			'title' => array('type' => 'string', 'length' => 255, 'notnull' => 1),
 			'description' => array('type' => 'text', 'length' => 65000),
 			'contents' => array('type' => 'text', 'length' => 65000),
@@ -81,8 +80,7 @@ class ArticlesSetup extends DefaultModuleSetup
 			'note' => array('type' => 'decimal', 'default' => 0),
 			'nbr_com' => array('type' => 'integer', 'length' => 11, 'default' => 0),
 			'lock_com' => array('type' => 'integer', 'length' => 11, 'default' => 0),
-			'auth' => array('type' => 'text', 'length' => 65000),
-			'extend_field' => array('type' => 'text', 'length' => 65000)
+			'auth' => array('type' => 'text', 'length' => 65000)
 		);
 		$options = array(
 			'primary' => array('id'),
@@ -90,8 +88,7 @@ class ArticlesSetup extends DefaultModuleSetup
 				'idcat' => array('type' => 'key', 'fields' => 'idcat'),
 				'title' => array('type' => 'fulltext', 'fields' => 'title'),
 				'contents' => array('type' => 'fulltext', 'fields' => 'contents')
-		)
-		);
+		));
 		PersistenceContext::get_dbms_utils()->create_table(self::$articles_table, $fields, $options);
 	}
 
@@ -100,7 +97,6 @@ class ArticlesSetup extends DefaultModuleSetup
 		$fields = array(
 			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
 			'id_parent' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'id_models' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 1),
 			'c_order' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'auth' => array('type' => 'text', 'length' => 65000),
 			'name' => array('type' => 'string', 'length' => 150, 'notnull' => 1),
@@ -109,8 +105,7 @@ class ArticlesSetup extends DefaultModuleSetup
 			'nbr_articles_unvisible' => array('type' => 'integer', 'length' => 9, 'notnull' => 1, 'default' => 0),
 			'image' => array('type' => 'string', 'length' => 255, 'default' => "''"),
 			'visible' => array('type' => 'boolean', 'notnull' => 1, 'default' => 0),
-			'auth' => array('type' => 'text', 'default' => "''"),
-			'tpl_cat' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "'articles_cat.tpl'")
+			'auth' => array('type' => 'text', 'default' => "''")
 		);
 		$options = array(
 			'primary' => array('id'),
@@ -123,5 +118,4 @@ class ArticlesSetup extends DefaultModuleSetup
 	{
 	}
 }
-
 ?>

@@ -30,9 +30,7 @@ require_once('articles_begin.php');
 
 $articles_categories = new ArticlesCats();
 
-
 $now = new Date(DATE_NOW, TIMEZONE_AUTO);
-
 
 $new = retrieve(GET, 'new', 0);
 $edit = retrieve(GET, 'edit', 0);
@@ -329,23 +327,6 @@ else
 {
 	$tpl = new FileTemplate('articles/management.tpl');
 
-	// models
-	$result = $Sql->query_while("SELECT id, name,description
-	FROM " . DB_TABLE_ARTICLES_MODEL 
-	, __LINE__, __FILE__);
-	
-	$select_models = '--';		
-	while ($row = $Sql->fetch_assoc($result))
-	{
-		if($row['id'] == $articles['id_models'])
-		{
-			$select_models.='<option value="' . $row['id'] . '" selected="selected">' . $row['name']. '</option>';
-			$model_desc=$row['description'];
-		}
-		else
-			$select_models.='<option value="' . $row['id'] . '">' . $row['name']. '</option>';
-	}
-
 	if ($edit > 0)
 	{
 		$articles = $Sql->query_array(DB_TABLE_ARTICLES, '*', "WHERE id = '" . $edit . "'", __LINE__, __FILE__);
@@ -413,9 +394,7 @@ else
 				'RELEASE_CALENDAR_ID' => $release_calendar->get_html_id(),
 				'TITLE_ART' => $articles['title'],
 				'CONTENTS' => FormatingHelper::unparse($articles['contents']),
-				'DESCRIPTION' => FormatingHelper::unparse($articles['description']),
 				'MODELE_DESCRIPTION'=>FormatingHelper::second_parse($model_desc),
-				'MODELS'=>$select_models,
 				'VISIBLE_WAITING' => $articles['visible'] && (!empty($articles['start']) || !empty($articles['end'])),
 				'VISIBLE_ENABLED' => $articles['visible'] && empty($articles['start']) && empty($articles['end']),
 				'VISIBLE_UNAPROB' => !$articles['visible'],
@@ -481,10 +460,6 @@ else
 			$release_calendar = new MiniCalendar('release');
 			$release_calendar->set_date(new Date(DATE_NOW, TIMEZONE_AUTO));
 
-			$result = $Sql->query_while("SELECT id, name,description
-			FROM " . DB_TABLE_ARTICLES_MODEL 
-			, __LINE__, __FILE__);
-
 			$tpl->put_all(array(
 				'C_ADD' => false,
 				'C_CONTRIBUTION' => $auth_contrib ,
@@ -493,7 +468,6 @@ else
 				'TITLE' => '',
 				'CONTENTS' => '',
 				'DESCRIPTION'=>'',
-				'MODELE_DESCRIPTION'=> isset($model_desc) ? FormatingHelper::second_parse($model_desc) : '',
 				'EXTEND_CONTENTS' => '',
 				'VISIBLE_WAITING' => 0,
 				'VISIBLE_ENABLED' => 1,
@@ -514,7 +488,6 @@ else
 				'IMG_PATH' => '',
 				'IMG_ICON' => '',	
 				'IMG_LIST' => $image_list,
-				'MODELS'=>$select_models,
 				'NB_SOURCE'=>1,
 				'JS_SPECIAL_AUTH' => 'false',
 				'DISPLAY_SPECIAL_AUTH' => 'none',
@@ -581,9 +554,7 @@ else
 		'L_RESET' => $LANG['reset'],
 		'L_REQUIRE_TITLE' => $LANG['require_title'],
 		'L_REQUIRE_TEXT' => $LANG['require_text'],
-		'L_CONTRIBUTION_LEGEND' => $LANG['contribution'],
-		'L_MODELS'=>$ARTICLES_LANG['models'],
-		'L_MODELS_DESCRIPTION'=>$ARTICLES_LANG['model_desc'],
+		'L_CONTRIBUTION_LEGEND' => $LANG['contribution']
 	));
 
 	//Gestion erreur.
