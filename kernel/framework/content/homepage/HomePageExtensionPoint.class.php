@@ -27,6 +27,8 @@
 
 interface HomePageExtensionPoint
 {
+	const EXTENSION_POINT = 'home_page';
+	
 	/**
 	 * @return HomePage 
 	 */

@@ -35,7 +35,7 @@ interface HomePage
 	/**
 	 * @return View The content of the home page
 	 */
-	function get_content();
+	function get_view();
 }
 
 ?>
