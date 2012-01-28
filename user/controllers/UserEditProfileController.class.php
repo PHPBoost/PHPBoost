@@ -47,7 +47,7 @@ class UserEditProfileController extends AbstractController
 			$error_controller = PHPBoostErrors::user_not_authorized();
 			DispatchManager::redirect($error_controller);
 		}
-		else if (!UserService::user_exists_by_id($user_id))
+		else if (!UserService::user_exists('WHERE user_id=:user_id', array('user_id' => $user_id)))
 		{
 			$error_controller = PHPBoostErrors::unexisting_member();
 			DispatchManager::redirect($error_controller);

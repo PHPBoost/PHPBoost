@@ -72,25 +72,6 @@
 			}
 			return false;
 		}
-		function ajax_model_extend_field()
-		{			
-			new Ajax.Request(
-				'xmlhttprequest.php',
-				{
-					method: 'post',
-					parameters: {
-						model_extend_field: true,
-						models: document.getElementById('models').value,
-						id_art: document.getElementById('id').value,
-					 },
-					onSuccess: function(response)
-					{
-				
-						document.getElementById('model_desc').innerHTML = response.responseText;
-					}				
-				}
-			);
-		}
 		function change_icon(img_path)
 		{
 			document.getElementById('icon_img').innerHTML = '<img src="' + img_path + '" alt="" class="valign_middle" />';

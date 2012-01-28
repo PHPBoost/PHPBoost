@@ -25,7 +25,11 @@ class UserService
 			'user_timezone' => $user->get_timezone(),
 			'user_editor' => $user->get_editor(),
 			'timestamp' => time(),
-			'user_aprob' => (int)$user->get_approbation()
+			'user_aprob' => (int)$user->get_approbation(),
+			'user_warning' => $user->get_warning_percentage(),
+			'user_readonly' => $user->get_is_readonly(),
+			'user_ban' => $user->get_is_banned(),
+			'registration_pass' => $user->registration_pass()
 		));
 		
 		return $result->get_last_inserted_id();
@@ -45,6 +49,7 @@ class UserService
 			'user_warning' => $user->get_warning_percentage(),
 			'user_readonly' => $user->get_is_readonly(),
 			'user_ban' => $user->get_is_banned(),
+			'registration_pass' => $user->registration_pass()
 		), 'WHERE user_id = :user_id', array('user_id' => $user->get_id()));
 	}
 	
@@ -103,17 +108,17 @@ class UserService
 		return self::$querier->count(DB_TABLE_MEMBER, $condition, $parameters) > 0 ? true : false;
 	}
 	
-	public static function registration_pass_exists($registration_pass)
+	public static function approbation_pass_exists($approbation_pass)
 	{
-		$parameters = array('registration_pass' => $registration_pass);
-		return self::$querier->count(DB_TABLE_MEMBER, 'WHERE registration_pass = :registration_pass', $parameters) > 0 ? true : false;
+		$parameters = array('approbation_pass' => $approbation_pass);
+		return self::$querier->count(DB_TABLE_MEMBER, 'WHERE approbation_pass = :approbation_pass', $parameters) > 0 ? true : false;
 	}
 	
-	public static function update_registration_pass($registration_pass)
+	public static function update_approbation_pass($approbation_pass)
 	{
-		$columns = array('user_aprob' => 1, 'registration_pass' => '');
-		$condition = 'WHERE registration_pass = :registration_pass';
-		$parameters = array('registration_pass' => $registration_pass);
+		$columns = array('user_aprob' => 1, 'approbation_pass' => '');
+		$condition = 'WHERE approbation_pass = :approbation_pass';
+		$parameters = array('approbation_pass' => $approbation_pass);
 		self::$querier->update(DB_TABLE_MEMBER, $columns, $condition, $parameters);
 	}
 	

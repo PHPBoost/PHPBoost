@@ -36,7 +36,7 @@ $idart = retrieve(GET, 'id', 0);
 
 if (!empty($idart) && isset($cat) )
 {		
-	$result = $Sql->query_while("SELECT a.contents, a.title, a.id, a.idcat,a.auth, a.timestamp, a.sources,a.start, a.visible, a.user_id, a.icon,a.nbr_com, m.login, m.level
+	$result = $Sql->query_while("SELECT a.contents, a.title, a.id, a.idcat, a.auth, a.timestamp, a.sources, a.start, a.visible, a.user_id, a.icon, a.nbr_com, m.login, m.level
 		FROM " . DB_TABLE_ARTICLES . " a 
 		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = a.user_id
 		WHERE a.id = '" . $idart . "'", __LINE__, __FILE__);
@@ -60,7 +60,7 @@ if (!empty($idart) && isset($cat) )
         DispatchManager::redirect($controller);
 	}
 
-	$tpl = new FileTemplate('articles/'.$articles['tpl_articles']);
+	$tpl = new FileTemplate('articles/articles.tpl');
 	
 	//MAJ du compteur.
 	$Sql->query_inject("UPDATE " . LOW_PRIORITY . " " . DB_TABLE_ARTICLES . " SET views = views + 1 WHERE id = " . $idart, __LINE__, __FILE__); 
@@ -134,40 +134,23 @@ if (!empty($idart) && isset($cat) )
 		$i++;
 	}	
 	
-	// extend field
-	$extend_field_tab=unserialize($articles['extend_field']);
-	$extend_field=!empty($extend_field_tab) ? true : false;
-	if($extend_field)
-	{
-		foreach ($extend_field_tab as $field)
-		{	
-			$tpl->assign_block_vars('extend_field',array(
-				'CONTENTS'=>$field['contents'],
-				'NAME'=>$field['name'],
-			));
-		}	
-	}
 	//options
 	$options=unserialize($articles['options']);
 	
-	//Affichage notation
-	 
-	$Note = new Note('articles', $idart, url('articles.php?cat=' . $idartcat . '&amp;id=' . $idart, 'articles-' . $idartcat . '-' . $idart . '.php'), $CONFIG_ARTICLES['note_max'], '', NOTE_DISPLAY_NOTE);
-	
-	
+	$notation = new Notation();
+	$notation->set_module_name('articles');
+	$notation->set_notation_scale($CONFIG_ARTICLES['note_max']);
 	
 	$tpl->put_all(array(
 		'C_IS_ADMIN' => ($User->check_auth($ARTICLES_CAT[$idartcat]['auth'], AUTH_ARTICLES_WRITE)),
 		'C_DISPLAY_ARTICLE' => true,
 		'C_SOURCES'=> $i > 0 ? true : false,
 		'C_TAB'=>$c_tab,
-		'C_EXTEND_FIELD'=>$extend_field,
 		'C_NOTE'=> $options['note'] ? true : false,
 		'C_PRINT'=> $options['impr'] ? true : false,
 		'C_COM'=> $options['com'] ? true : false,
 		'C_AUTHOR'=> $options['author'] ? true : false,
 		'C_DATE'=> $options['date'] ? true : false,
-		'C_MAIL'=> $options['mail'] && $User->Check_level(MEMBER_LEVEL) ? true : false,
 		'IDART' => $articles['id'],
 		'IDCAT' => $idartcat,
 		'NAME' => $articles['title'],
@@ -180,10 +163,8 @@ if (!empty($idart) && isset($cat) )
 		'PAGE_NAME' => (isset($array_page[1][($page-1)]) && $array_page[1][($page-1)] != '&nbsp;') ? $array_page[1][($page-1)] : '',
 		'PAGE_PREVIOUS_ARTICLES' => ($page > 1 && $page <= $nbr_page && $nbr_page > 1) ? '<a href="' . url('articles.php?cat=' . $idartcat . '&amp;id=' . $idart . '&amp;p=' . ($page - 1), 'articles-' . $idartcat . '-' . $idart . '-' . ($page - 1) . '+' . Url::encode_rewrite($articles['title']) . '.php') . '">&laquo; ' . $LANG['previous_page'] . '</a><br />' . $array_page[1][($page-2)] : '',
 		'PAGE_NEXT_ARTICLES' => ($page > 0 && $page < $nbr_page && $nbr_page > 1) ? '<a href="' . url('articles.php?cat=' . $idartcat . '&amp;id=' . $idart . '&amp;p=' . ($page + 1), 'articles-' . $idartcat . '-' . $idart . '-' . ($page + 1) . '+' . Url::encode_rewrite($articles['title']) . '.php') . '">' . $LANG['next_page'] . ' &raquo;</a><br />' . $array_page[1][$page] : '',
-		'COM' => Comments::com_display_link($articles['nbr_com'], '../articles/articles' . url('.php?cat=' . $idartcat . '&amp;id=' . $idart . '&amp;com=0', '-' . $idartcat . '-' . $idart . '+' . Url::encode_rewrite($articles['title']) . '.php?com=0'), $articles['id'], 'articles'),
-		'KERNEL_NOTATION' => $Note->display_form(),
-		'USER_MAIL'=>$User->get_attribute('user_mail'),
-		'SENDER'=>$User->get_attribute('login'),
+		'COM' => '<a href="'. PATH_TO_ROOT .'/articles/articles' . url('.php?cat=' . $idartcat . '&amp;id=' . $idart . '&amp;com=0', '-' . $idartcat . '-' . $idart . '+' . Url::encode_rewrite($articles['title']) . '.php?com=0') .'">'. CommentsService::get_number_and_lang_comments('articles', $idart) . '</a>',
+		'KERNEL_NOTATION' => NotationService::display_active_image($notation),
 		'L_DELETE' => $LANG['delete'],
 		'L_EDIT' => $LANG['edit'],
 		'L_SUBMIT' => $LANG['submit'],
@@ -197,15 +178,6 @@ if (!empty($idart) && isset($cat) )
 		'L_SUMMARY' => $ARTICLES_LANG['summary'],
 		'L_ERASE'=>$LANG['erase'],
 		'L_MAIL_ARTICLES'=>$ARTICLES_LANG['mail_articles'],
-		'L_SENDER'=>$ARTICLES_LANG['sender'],
-		'L_MAIL_RECIPIENT'=>$ARTICLES_LANG['mail_recipient'],
-		'L_USER_MAIL'=>$ARTICLES_LANG['user_mail'],
-		'L_SUBJECT'=>$ARTICLES_LANG['subject'],
-		'L_MAIL_INVALID' => $ARTICLES_LANG['admin_invalid_email_error'],
-		'L_REQUIRE_SENDER'  => $ARTICLES_LANG['require_sender'],
-		'L_REQUIRE_SUBJECT' => $ARTICLES_LANG['require_subject'],
-		'L_EMAIL_ERROR' => $ARTICLES_LANG['admin_email_error'],
-		'L_LINK_MAIL'=> $ARTICLES_LANG['link_mail'],
 		'L_INFO'=>$LANG['info'],
 		'U_PROFILE' => UserUrlBuilder::profile($articles['user_id'])->absolute(),
 		'U_ARTICLES_LINK'=> url('articles.php?cat=' . $idartcat . '&amp;id=' . $idart, 'articles-' . $idartcat . '-' . $idart .  Url::encode_rewrite($articles['title']) . '.php' . "'"),
@@ -213,41 +185,23 @@ if (!empty($idart) && isset($cat) )
 		'U_PRINT_ARTICLE' => url('print.php?id=' . $idart),
 		'U_ARTICLES_EDIT' =>url('management.php?edit=' . $idart),
 		'U_ARTICLES_DEL' =>url('management.php?del=' . $idart . '&amp;token=' . $Session->get_token()),
-
 	));
 
 	//Affichage commentaires.
 	if (isset($_GET['com']))
 	{
-		$tpl->put_all(array(
-			'COMMENTS' => display_comments('articles', $idart, url('articles.php?cat=' . $idartcat . '&amp;id=' . $idart . '&amp;com=%s', 'articles-' . $idartcat . '-' . $idart . '.php?com=%s'))
+		$comments_topic = new CommentsTopic();
+		$comments_topic->set_module_id('articles');
+		$comments_topic->set_id_in_module($idart);
+		$comments_topic->set_url(new Url('/articles/articles?cat=' . $idartcat . '&amp;id=' . $idart . '&com=0'));
+		$Template->put_all(array(
+			'COMMENTS' => CommentsService::display($comments_topic)->render()
 		));
 	}	
-	if(retrieve(POST,'submit',false))
-	{
-		$mail_recipient=retrieve(POST,'mail_recipient','',TSTRING_AS_RECEIVED);
-		$user_mail=retrieve(POST,'user_mail','',TSTRING_AS_RECEIVED);
-		$exp=retrieve(POST,'exp','',TSTRING);
-		$object=retrieve(POST,'subject','',TSTRING);		
-		$link=retrieve(POST,'link','',TSTRING_AS_RECEIVED);
-
-		$general_config = GeneralConfig::load();
-		$contents = sprintf($ARTICLES_LANG['text_link_mail'], $general_config->get_site_name(), $exp, $user_mail, $general_config->get_site_url(), $link) ;
-		
-		if (AppContext::get_mail_service()->send_from_properties($mail_recipient, $object,  $contents , $user_mail, $mail_header = null, $exp))
-		{
-			$Template->put('message_helper', MessageHelper::display($ARTICLES_LANG['successful_send_mail'], E_USER_SUCCESS, 4));
-		}
-		else
-		{
-			$Template->put('message_helper', MessageHelper::display($ARTICLES_LANG['error_send_mail'], E_USER_WARNING));
-		}
-	}
 	$tpl->display();
 }
 else
 {
-	
 	$modulesLoader = AppContext::get_extension_provider_service();
 	$module_name = 'articles';
 	$module = $modulesLoader->get_provider($module_name);

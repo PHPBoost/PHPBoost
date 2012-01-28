@@ -97,7 +97,7 @@ class UserLostPasswordController extends AbstractController
 			break;
 			case UserLostPasswordService::LOST_PASSWORD_BY_LOGIN:
 				$login = $this->form->get_value('information');
-				if (UserService::user_exists_by_login($login))
+				if (UserService::user_exists('WHERE login=:login', array('login' => $login)))
 				{
 					$email = UserLostPasswordService::get_email_by_login($login);
 				}
@@ -108,7 +108,7 @@ class UserLostPasswordController extends AbstractController
 			break;
 		}
 		
-		if ($email !== false && UserService::user_exists_by_email($email))
+		if ($email !== false && UserService::user_exists('WHERE user_mail=:email', array('email' => $email)))
 		{
 			$change_password_pass = KeyGenerator::generate_key(15);
 			UserLostPasswordService::register_change_password_pass($change_password_pass, $email);

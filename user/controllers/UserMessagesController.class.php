@@ -40,7 +40,7 @@ class UserMessagesController extends AbstractController
 		{
 			AppContext::get_response()->redirect(UserUrlBuilder::users()->absolute());
 		}
-		else if (!UserService::user_exists_by_id($user_id))
+		else if (!UserService::user_exists('WHERE user_id=:user_id', array('user_id' => $user_id)))
 		{
 			$error_controller = PHPBoostErrors::unexisting_member();
 			DispatchManager::redirect($error_controller);
