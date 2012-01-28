@@ -44,7 +44,7 @@ class AdminMemberEditController extends AdminController
 		$this->user_id = $request->get_getint('id');
 		$this->init();
 		
-		if (!UserService::user_exists('WHERE user_id:user_id', array('user_id' => $this->user_id)))
+		if (!UserService::user_exists('WHERE user_id=:user_id', array('user_id' => $this->user_id)))
 		{
 			$error_controller = PHPBoostErrors::unexisting_member();
 			DispatchManager::redirect($error_controller);
@@ -146,14 +146,14 @@ class AdminMemberEditController extends AdminController
 		
 		if ($this->form->get_value('delete_account'))
 		{
-			UserService::delete_account('WHERE user_id:user_id', array('user_id' => $this->user_id));
+			UserService::delete_account('WHERE user_id=:user_id', array('user_id' => $this->user_id));
 		}
 		
 		MemberExtendedFieldsService::register_fields($this->form, $this->user_id);
 		
 		if ($this->form->get_value('password') !== '')
 		{
-			UserService::change_password($this->form->get_value('password'), 'WHERE user_id:user_id', array('user_id' => $this->user_id));
+			UserService::change_password($this->form->get_value('password'), 'WHERE user_id=:user_id', array('user_id' => $this->user_id));
 		}
 		
 		$user_warning = $this->form->get_value('user_warning')->get_raw_value();
