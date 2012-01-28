@@ -276,7 +276,7 @@ elseif ($get_theme)
     include_once(PATH_TO_ROOT . '/kernel/header_no_display.php');
 
     $stats_array = array();
-	foreach (ThemeManager::get_activated_themes_map() as $id)
+	foreach (ThemeManager::get_activated_themes_map() as $id => $theme)
 	{
 		$stats_array[$id] = PersistenceContext::get_querier()->count(DB_TABLE_MEMBER, "WHERE user_theme = '" . $id . "'");
 	}

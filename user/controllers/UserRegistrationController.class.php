@@ -106,12 +106,7 @@ class UserRegistrationController extends AbstractController
 			$options_fieldset->add_field(new FormFieldFree('preview_theme', $this->lang['theme.preview'], '<img id="img_theme" src="'. $this->get_picture_theme() .'" alt="" style="vertical-align:top; max-height:180px;" />'));
 		}
 		
-		$options_fieldset->add_field(new FormFieldSimpleSelectChoice('text-editor', $this->lang['text-editor'], ContentFormattingConfig::load()->get_default_editor(),
-			array(
-				new FormFieldSelectChoiceOption('BBCode', ContentFormattingService::BBCODE_LANGUAGE),
-				new FormFieldSelectChoiceOption('TinyMCE', ContentFormattingService::TINYMCE_LANGUAGE),
-			)
-		));
+		$options_fieldset->add_field(new FormFieldEditors('text-editor', $this->lang['text-editor'], ContentFormattingConfig::load()->get_default_editor()));
 		
 		$options_fieldset->add_field(new FormFieldSimpleSelectChoice('lang', $this->lang['lang'], $this->user_accounts_config->get_default_lang(),
 			$this->build_langs_select_options()
