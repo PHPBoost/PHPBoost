@@ -404,7 +404,7 @@ $LANG['user_alternative_pm'] = 'Message privé envoyé au membre <span class="text
 $LANG['punishment'] = 'Sanctions';
 $LANG['punishment_management'] = 'Gestion des sanctions';
 $LANG['user_punish_until'] = 'Sanction jusqu\'au';
-$LANG['no_punish'] = 'Aucun membre sanctionné';
+$LANG['no_punish'] = 'Il n\'y a aucun utilisateur sanctionné.';
 $LANG['user_readonly_explain'] = 'Membre en lecture seule, celui-ci peut lire mais plus poster sur le site entier (commentaires, etc...)';
 $LANG['weeks'] = 'semaines';
 $LANG['life'] = 'A vie';
