@@ -74,12 +74,7 @@ class ArticlesSetup extends DefaultModuleSetup
 			'end' => array('type' => 'integer', 'length' => 11, 'default' => 0),
 			'user_id' => array('type' => 'integer', 'length' => 11, 'default' => 0),
 			'views' => array('type' => 'integer', 'length' => 11, 'default' => 0),
-			'users_note' => array('type' => 'text', 'length' => 65000),
-			'nbrnote' => array('type' => 'integer', 'length' => 11, 'default' => 0),
 			'visible' => array('type' => 'boolean', 'notnull' => 1, 'default' => 0),
-			'note' => array('type' => 'decimal', 'default' => 0),
-			'nbr_com' => array('type' => 'integer', 'length' => 11, 'default' => 0),
-			'lock_com' => array('type' => 'integer', 'length' => 11, 'default' => 0),
 			'auth' => array('type' => 'text', 'length' => 65000)
 		);
 		$options = array(
@@ -98,7 +93,6 @@ class ArticlesSetup extends DefaultModuleSetup
 			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
 			'id_parent' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'c_order' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'auth' => array('type' => 'text', 'length' => 65000),
 			'name' => array('type' => 'string', 'length' => 150, 'notnull' => 1),
 			'description' => array('type' => 'text', 'length' => 65000),
 			'nbr_articles_visible' => array('type' => 'integer', 'length' => 9, 'notnull' => 1, 'default' => 0),

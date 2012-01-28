@@ -25,6 +25,8 @@ class User
 	protected $is_banned;
 	protected $is_readonly;
 	protected $warning_percentage = 0;
+	
+	protected $approbation_pass = '';
 
 	public function set_id($id)
 	{
@@ -179,6 +181,16 @@ class User
 	public function get_is_readonly()
 	{
 		return $this->is_readonly;
+	}
+	
+	public function set_approbation_pass($approbation_pass)
+	{
+		$this->approbation_pass = $approbation_pass;
+	}
+	
+	public function get_approbation_pass()
+	{
+		return $this->approbation_pass;
 	}
 	
 	public static function get_group_color($user_groups, $level = 0)

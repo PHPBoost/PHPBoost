@@ -43,9 +43,9 @@ class UserConfirmRegistrationController extends AbstractController
 
 	private function check_activation($key)
 	{
-		if (UserService::activation_passkey_exists($key) && !empty($key))
+		if (UserService::approbation_pass_exists($key) && !empty($key))
 		{
-			UserService::update_approbation_passkey($key);
+			UserService::update_approbation_pass($key);
 			
 			StatsCache::invalidate();
 			

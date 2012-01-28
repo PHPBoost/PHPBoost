@@ -381,7 +381,7 @@ class KernelSetup
 			'last_connect' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'test_connect' => array('type' => 'boolean', 'length' => 4, 'notnull' => 1, 'default' => 0),
 		
-			'registration_pass' => array('type' => 'string', 'length' => 30, 'notnull' => 1, 'default' => 0),
+			'approbation_pass' => array('type' => 'string', 'length' => 30, 'notnull' => 1, 'default' => 0),
 			'change_password_pass' => array('type' => 'string', 'length' => 64, 'notnull' => 1, 'default' => "''"),
 		
 			'user_ban' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),

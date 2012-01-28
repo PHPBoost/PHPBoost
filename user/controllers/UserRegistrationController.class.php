@@ -155,25 +155,24 @@ class UserRegistrationController extends AbstractController
 			$theme = $this->user_accounts_config->get_default_theme();
 		}
 		
-		$user_id = UserRegistrationService::user_registration(
-			$this->form->get_value('login'), 
-			$this->form->get_value('password'), 
-			0, 
-			$this->form->get_value('email'), 
-			$this->form->get_value('lang')->get_raw_value(), 
-			$this->form->get_value('timezone')->get_raw_value(), 
-			$theme, 
-			$this->form->get_value('text-editor')->get_raw_value(), 
-			$this->form->get_value('user_hide_mail'), 
-			$activation_key, 
-			$user_aprobation
-		);
+		$user_authentification = new UserAuthentification($this->form->get_value('login'), $this->form->get_value('password'));
+		$user = new User();
+		$user->set_level(User::MEMBER_LEVEL);
+		$user->set_email($this->form->get_value('email'));
+		$user->set_show_email(!$this->form->get_value('user_hide_mail'));
+		$user->set_locale($this->form->get_value('lang')->get_raw_value());
+		$user->set_theme($theme);
+		$user->set_timezone($this->form->get_value('timezone')->get_raw_value());
+		$user->set_editor($this->form->get_value('text-editor')->get_raw_value());
+		$user->set_approbation($user_aprobation);
+		$user->set_approbation_pass($activation_key);
+		$user_id = UserService::create($user_authentification, $user);
 		
 		MemberExtendedFieldsService::register_fields($this->form, $user_id);
 		
-		UserRegistrationService::send_email_confirmation($user_id, $email, $login, $login, $this->form->get_value('password'));
+		UserRegistrationService::send_email_confirmation($user_id, $user->get_email(), $user_authentification->get_login(), $user_authentification->get_login(), $this->form->get_value('password'));
 		
-		UserRegistrationService::connect_user($user_id, $password);
+		UserRegistrationService::connect_user($user_id, $user_authentification->get_password_hashed());
 	}
 	
 	private function confirm_registration_message()
