@@ -158,6 +158,7 @@ while ($row = $Sql->fetch_assoc($result))
 	$user_web = !empty($row['user_web']) ? '<a href="' . $row['user_web'] . '"><img src="'. PATH_TO_ROOT .'/templates/' . get_utheme() . '/images/' . get_ulang() . '/user_web.png" alt="' . $row['user_web'] . '" title="' . $row['user_web'] . '" /></a>' : '';
 	
 	$template->assign_block_vars('member', array(
+		'U_PROFILE' => UserUrlBuilder::profile($row['user_id'])->absolute(),
 		'IDMBR' => $row['user_id'],
 		'NAME' => $row['login'],
 		'RANK' => $rank,
