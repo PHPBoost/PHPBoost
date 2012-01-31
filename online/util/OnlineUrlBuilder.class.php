@@ -1,19 +1,19 @@
 <?php
 /*##################################################
- *                             online_french.php
+ *                          OnlineUrlBuilder.class.php
  *                            -------------------
- *   begin                :  November 23 2006
- *   copyright            : (C) 2006 CrowkaiT
- *   email                : crowkait@phpboost.com
+ *   begin                : January 30, 2012
+ *   copyright            : (C) 2012 Julien BRISWALTER
+ *   email                : julien.briswalter@gmail.com
  *
- *  
+ *
  ###################################################
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -25,19 +25,29 @@
  *
  ###################################################*/
 
+/**
+ * @author Julien BRISWALTER <julien.briswalter@gmail.com>
+ * @desc
+ */
+class OnlineUrlBuilder
+{
+    private static $dispatcher = '/online';
+    
 
- ####################################################
-#                                                          French                                                                        #
- ####################################################
-
-//En ligne
-$LANG['online'] = 'En ligne';
-$LANG['location'] = 'Localisation';
-$LANG['last_update'] = 'Dernière mise à jour';
-
-//Admin
-$LANG['online_config'] = 'Configuration en ligne';
-$LANG['nbr_online_displayed'] = 'Nombre de personnes en ligne affichées';
-$LANG['display_order_online'] = 'Ordre d\'affichage';
-
+	/**
+	 * @return Url
+	 */
+    public static function configuration()
+	{
+		return DispatchManager::get_url(self::$dispatcher, '/admin/config/');
+	}
+	
+	/**
+	 * @return Url
+	 */
+    public static function home($page = '')
+	{
+		return DispatchManager::get_url(self::$dispatcher, '/' . $page);
+	}
+}
 ?>

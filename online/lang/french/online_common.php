@@ -1,19 +1,19 @@
 <?php
 /*##################################################
- *                           index.php
+ *                             online_common.php
  *                            -------------------
- *   begin                : January 30, 2012
- *   copyright            : (C) 2012 Julien BRISWALTER
- *   email                : julien.briswalter@gmail.com
+ *   begin                :  November 23 2006
+ *   copyright            : (C) 2006 CrowkaiT
+ *   email                : crowkait@phpboost.com
  *
- *
+ *  
  ###################################################
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- *
+ * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -25,15 +25,24 @@
  *
  ###################################################*/
 
-define('PATH_TO_ROOT', '..');
 
-require_once PATH_TO_ROOT . '/kernel/init.php';
+ ####################################################
+ #						French						#
+ ####################################################
 
-$url_controller_mappers = array(
-	new UrlControllerMapper('AdminOnlineConfigController', '`^/admin(?:/config)?/?$`'),
-	
-	new UrlControllerMapper('OnlineHomeController', '`^(?:/([a-z]+))?/?$`', array('page')),
-);
-DispatchManager::dispatch($url_controller_mappers);
+ $lang = array();
 
+//En ligne
+$lang['online.home'] = 'Accueil';
+$lang['online'] = 'En ligne';
+$lang['online.location'] = 'Localisation';
+$lang['online.last_update'] = 'Dernière mise à jour';
+
+//Admin
+$lang['admin.config'] = 'Configuration en ligne';
+$lang['admin.nbr-displayed'] = 'Nombre de personnes en ligne affichées';
+$lang['admin.display-order'] = 'Ordre d\'affichage';
+
+//Errors
+$lang['admin.success-saving-config'] = 'Vous avez modifié la configuration avec succès ';
 ?>

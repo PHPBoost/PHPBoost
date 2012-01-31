@@ -33,7 +33,7 @@ class OnlineConfig extends AbstractConfigData
 	const DISPLAY_ORDER = 'display_order';
 	const NUMBER_MEMBER_DISPLAYED = 'number_member_displayed';
 	
-	const LEVEL_DISPLAY_ORDER = 's.level DESCl';
+	const LEVEL_DISPLAY_ORDER = 's.level DESC';
 	const SESSION_TIME_DISPLAY_ORDER = 's.session_time DESC';
 	const LEVEL_AND_SESSION_TIME_DISPLAY_ORDER = 's.level DESC, s.session_time DESC';
 	
@@ -57,7 +57,7 @@ class OnlineConfig extends AbstractConfigData
 	{
 		$this->set_property(self::NUMBER_MEMBER_DISPLAYED, $number);
 	}
-	
+		
 	public function get_default_values()
 	{
 		return array(
