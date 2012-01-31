@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                             online_english.php
+ *                             online_common.php
  *                            -------------------
  *   begin                :  November 23 2006
  *   last modified		: July 31, 2009 - Forensic
@@ -26,19 +26,24 @@
  *
  ###################################################*/
 
-
+ 
  ####################################################
-#                                                           English                                                                             #
+ #						English						#
  ####################################################
 
-//Online
-$LANG['online'] = 'Online';
-$LANG['location'] = 'Localisation';
-$LANG['last_update'] = 'Last update';
-	
+ $lang = array();
+
+//En ligne
+$lang['online.home'] = 'Home';
+$lang['online'] = 'Online';
+$lang['online.location'] = 'Location';
+$lang['online.last_update'] = 'Last update';
+
 //Admin
-$LANG['online_config'] = 'Online configuration';
-$LANG['nbr_online_displayed'] = 'Number of online members displayed';
-$LANG['display_order_online'] = 'Display order';
+$lang['admin.config'] = 'Online configuration';
+$lang['admin.nbr-displayed'] = 'Number of online members displayed';
+$lang['admin.display-order'] = 'Display order';
 
+//Errors
+$lang['admin.success-saving-config'] = 'You have successfully changed the configuration';
 ?>

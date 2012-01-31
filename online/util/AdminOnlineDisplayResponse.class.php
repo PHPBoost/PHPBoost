@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                           index.php
+ *                           AdminOnlineDisplayResponse.class.php
  *                            -------------------
  *   begin                : January 30, 2012
  *   copyright            : (C) 2012 Julien BRISWALTER
@@ -25,15 +25,19 @@
  *
  ###################################################*/
 
-define('PATH_TO_ROOT', '..');
+class AdminOnlineDisplayResponse extends AdminMenuDisplayResponse
+{
+	public function __construct($view, $title_page)
+	{
+		parent::__construct($view);
 
-require_once PATH_TO_ROOT . '/kernel/init.php';
+		$lang = LangLoader::get('online_common', 'online');
+		$picture = '/online/online.png';
+		$this->set_title($lang['online']);
+		$this->add_link($lang['admin.config'], OnlineUrlBuilder::configuration(), $picture);
 
-$url_controller_mappers = array(
-	new UrlControllerMapper('AdminOnlineConfigController', '`^/admin(?:/config)?/?$`'),
-	
-	new UrlControllerMapper('OnlineHomeController', '`^(?:/([a-z]+))?/?$`', array('page')),
-);
-DispatchManager::dispatch($url_controller_mappers);
-
+		$env = $this->get_graphical_environment();
+		$env->set_page_title($title_page);
+	}
+}
 ?>
