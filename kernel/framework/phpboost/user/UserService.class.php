@@ -1,6 +1,6 @@
 <?php
 /**
- * @author Kévin MASSY <soldier.weasel@gmail.com>
+ * @author Kï¿½vin MASSY <soldier.weasel@gmail.com>
  * @package {@package}
  */
 class UserService
@@ -29,7 +29,7 @@ class UserService
 			'user_warning' => $user->get_warning_percentage(),
 			'user_readonly' => $user->get_is_readonly(),
 			'user_ban' => $user->get_is_banned(),
-			'registration_pass' => $user->registration_pass()
+			'registration_pass' => $user->get_approbation_pass()
 		));
 		
 		return $result->get_last_inserted_id();
