@@ -1,16 +1,26 @@
-#################################################################################
-##                                   BENOIT                                    ##
-#################################################################################
+###################################### PHPBoost 4.0 ##################################
 
-------------------------------------- NOYAU ------------------------------------
+## PRIORITAIRE ##
 - Faire un script qui modifie le path et l'URL du site après une migration (plus possible de bidouiller le cache)
-+ Corriger le bug qui fait que quand on autorise un modérateur par exemple à naviguer sur le site en maintenance, il ne peut pas se logguer si il l'était pas déjà parce que le lien fonctionne seulement pour les admins.
+- Corriger le bug qui fait que quand on autorise un modérateur par exemple à naviguer sur le site en maintenance, il ne peut pas se logguer si il l'était pas déjà parce que le lien fonctionne seulement pour les admins.
 
------------------------------------- MODULES ------------------------------------ 
+- Filtres d'exclusion pour les menus
+
+## AUTRES ##
+- Balises Youtube, Dailymotion
+- Corriger bbcode.css (bloc masquables + wikipédia) (publishing notamment)
+- Séparer la configuration du cache dans les modules (Créer des ModuleConfig)
+- [color=red]Nouveauté:[/color] Nouveau thème Base2 pour la distribution complete.
+- Remplacement des icônes de base par le pack famfamfam
+
+
+## NON DEFINITIF ##
+- Revoir la cohérence de l'API FormBuilder (nommage des paramètres, ordres, ...) ex : dans FormButtonButton, param $label => $html_content ou autre... 
 - Intégration d'un système AJAX permettant l'envoi de mail par paquet
-[color=red]Nouveauté:[/color] Nouveau module de page de démarrage du site.
 
 #################################################################################
+
+
 
 
 #################################################################################
@@ -19,63 +29,52 @@
 
 ------------------------------------- NOYAU ------------------------------------
 + Classe commentaire : Créer le contrôleur d'affichage des commentaires, intégration du système d'approbation (avec possibilité d'avoir un mail).
-- Balises Youtube, Dailymotion
-- Corriger bbcode.css (bloc masquables + wikipédia) (publishing notamment)
++ Joindre tous les champs étendus dans la session utilisateur.
++ Gestion des langues
 
 ------------------------------------ MODULES -----------------------------------
+[b]Articles[/b]
+- Réparation du module
 
-[b]Tous[/b]
-- Réparer la fonctionnalité de période de validité d'une publication (news par exemple), en requêtant directement en fonction de la date courante
+[b]Recherche[/b]
+- Réparation du module
+
+[color=red]Nouveauté:[/color] Nouveau module de page de démarrage du site.
 
 #################################################################################
+
+
 
 
 #################################################################################
 ##                                   PATRICK                                   ##
 #################################################################################
 
-------------------------------------- NOYAU ------------------------------------
-+ Gérer la nouvelle fonction d'ugrade d'un module (ModuleManager::upgrade($id_module))
-
 ------------------------------------ MODULES -----------------------------------
-[b]Tous[/b]
-- Séparer la configuration du cache dans les modules (Créer des ModuleConfig pour les modules web, poll, pages, faq (voir Kévin))
 
-[b]articles[/b]
+[b]Articles[/b]
 - Réparation du module articles avec Kévin (On va supprimer dans un premier temps le système de modèle qui n'est pas fini).
 
 #################################################################################
 
 
-#################################################################################
-##                                   REGIS                                    ##
-#################################################################################
 
-------------------------------------- NOYAU ------------------------------------
-- [color=red]Nouveauté:[/color] Nouveau thème Base2 pour la distribution complete.
-- Remplacement des icônes de base par le pack famfamfam
-- Filtres d'exclusion pour les menus
+
+#################################################################################
+##                                   JULIEN                                    ##
+#################################################################################
 
 ------------------------------------ MODULES -----------------------------------
 
-##################################################################################
+[b]En ligne[/b]
+- Refonte du module
 
-[b]Forum[/b]
-? Bug du nombre de sujet/messages lors du déplacement d'un forum (qui devient un sous-forum) dans un autre forum avec déjà  des messages/sujets.
-
-#################################################################################
-##                                    LOIC                                    ##
-#################################################################################
-
-------------------------------------- NOYAU ------------------------------------
-- Réparer le moteur de recherche
-- Revoir la cohérence de l'API FormBuilder (nommage des paramètres, ordres, ...) ex : dans FormButtonButton, param $label => $html_content ou autre... 
-- Joindre tous les champs étendus dans la session utilisateur.
-- Finir les sessions (ou alors on garde l'ancien système)
-
------------------------------------- MODULES -----------------------------------
+[b]Tous[/b]
+- Réparer la fonctionnalité de période de validité d'une publication (news par exemple), en requêtant directement en fonction de la date courante
+- Intégration de l'ExtensionPoint HomePage dans les différents modules
 
 #################################################################################
+
 
 
 ######################################DOSSIERS##################################
