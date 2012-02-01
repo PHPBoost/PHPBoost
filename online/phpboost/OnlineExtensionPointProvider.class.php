@@ -27,13 +27,15 @@
 
 class OnlineExtensionPointProvider extends ExtensionPointProvider
 {
-	private $sql_querier;
-	
     public function __construct()
     {
-        $this->sql_querier = PersistenceContext::get_sql();
         parent::__construct('online');
     }
+	
+	public function url_mappings()
+	{
+		return new UrlMappings(array(new DispatcherUrlMapping('/online/index.php')));
+	}
     
     public function menus()
     {

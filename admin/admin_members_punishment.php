@@ -127,7 +127,7 @@ if ($action == 'punish') //Gestion des utilisateurs
 		{
 			$template->put_all(array(
 				'C_NO_USER' => true,
-				'L_NO_USER' => $LANG['no_ban'],
+				'L_NO_USER' => $LANG['no_punish'],
 			));
 		}
 	}
@@ -277,7 +277,7 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 		{
 			$template->put_all(array(
 				'C_NO_USER' => true,
-				'L_NO_USER' => $LANG['no_ban'],
+				'L_NO_USER' => $LANG['no_user_warning'],
 			));
 		}
 	}
