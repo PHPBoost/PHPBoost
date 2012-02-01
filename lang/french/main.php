@@ -404,7 +404,7 @@ $LANG['user_alternative_pm'] = 'Message privé envoyé au membre <span class="text
 $LANG['punishment'] = 'Sanctions';
 $LANG['punishment_management'] = 'Gestion des sanctions';
 $LANG['user_punish_until'] = 'Sanction jusqu\'au';
-$LANG['no_punish'] = 'Aucun membre sanctionné';
+$LANG['no_punish'] = 'Il n\'y a aucun utilisateur sanctionné.';
 $LANG['user_readonly_explain'] = 'Membre en lecture seule, celui-ci peut lire mais plus poster sur le site entier (commentaires, etc...)';
 $LANG['weeks'] = 'semaines';
 $LANG['life'] = 'A vie';
@@ -495,6 +495,9 @@ $LANG['disabled'] = 'Désactivé';
 $LANG['_code_dictionnary'] = array('image', 'php', 'requete', 'azerty', 'exit', 'genre', 'design', 'web', 'inter', 'cache', 'media', 'cms', 'cesar', 'watt', 'site', 'mail', 'email', 'spam', 'index', 'membre',
 'date', 'jour', 'mois', 'nom', 'noter', 'objet', 'options', 'titre', 'valide', 'liste', 'citer', 'fermer', 'minute', 'heure', 'semaine', 'groupe', 'taille', 'modules', 'pendant', 'style', 'divers', 'autre', 'erreur',
 'editer', 'banni', 'niveau', 'dossier', 'fichier', 'racine', 'vider', 'archive', 'boite');
+$LANG['verif_code'] = 'Code de vérification';
+$LANG['verif_code_explain'] = 'Recopier le code sur l\'image, attention aux majuscules';
+$LANG['require_verif_code'] = 'Veuillez saisir le code de vérification!';
 
 $LANG['csrf_attack'] = 'Jeton de session invalide. Veuillez réessayer car l\'opération n\'a pas pu être effectuée.';
 

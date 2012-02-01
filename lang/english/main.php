@@ -494,6 +494,9 @@ $LANG['disabled'] = 'Disabled';
 
 //Dictionnaire pour le captcha.
 $LANG['_code_dictionnary'] = array('image', 'php', 'query', 'azerty', 'exit', 'verif', 'gender', 'search', 'design', 'exec', 'web', 'inter', 'extern', 'cache', 'media', 'cms', 'cesar', 'watt', 'data', 'site', 'mail', 'email', 'spam', 'index', 'rand', 'text', 'inner', 'over', 'under', 'users', 'visitor', 'member', 'home', 'date', 'today', 'month', 'year', 'name', 'picture', 'notes', 'next', 'subject', 'content', 'options', 'title', 'valid', 'list', 'place', 'quote', 'hide', 'default', 'type', 'status', 'replies', 'back', 'close', 'smiley', 'total', 'average', 'page', 'minute', 'week', 'group', 'size', 'theme', 'online', 'modules', 'result', 'during', 'until', 'lock', 'style', 'notice', 'warning', 'success', 'unknow', 'other', 'final', 'code');
+$LANG['verif_code'] = 'Verification code';
+$LANG['verif_code_explain'] = 'Enter the image code, warning for capital letter';
+$LANG['require_verif_code'] = 'Please enter the verification code!';
 
 $LANG['csrf_attack'] = 'Invalid session token. Please retry because the operation has not been performed.';
 
