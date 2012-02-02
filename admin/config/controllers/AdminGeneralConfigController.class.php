@@ -129,7 +129,7 @@ class AdminGeneralConfigController extends AdminController
 		));
 		
 		$fieldset->add_field(new FormFieldTextEditor('other_start_page', $this->lang['general-config.other_start_page'], $this->get_other_start_page(),
-			array('class' => 'text', 'maxlength' => 25, 'size' => 25, 'required' => false, 'hidden' => $this->get_other_start_page() == '')
+			array('class' => 'text', 'required' => false, 'hidden' => $this->get_other_start_page() == '')
 		));
 
 		$fieldset->add_field(new FormFieldCheckbox('visit_counter', $this->lang['general-config.visit_counter'], $this->graphical_environment_config->is_visit_counter_enabled()));
