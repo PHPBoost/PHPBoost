@@ -57,17 +57,15 @@ function menu_langswitcher_langswitcher($position, $block)
     MenuService::assign_positions_conditions($tpl, $block);
 
     $array_js_identifier = '';
-    $langs_cache = LangsCache::load();
-    foreach($langs_cache->get_installed_langs() as $lang => $properties)
-    {
-    	if ($user->check_level($properties['auth']) && $properties['enabled'] == 1)
-    	{
-    		$info_lang = load_ini_file(PATH_TO_ROOT . '/lang/', $lang);
 
-			$selected = ($user->get_attribute('user_lang') == $lang) ? ' selected="selected"' : '';
+    foreach(LangManager::get_activated_langs_map() as $id => $lang)
+    {
+    	if ($lang->check_auth())
+    	{
+			$selected = ($user->get_locale() == $id) ? ' selected="selected"' : '';
     		$tpl->assign_block_vars('langs', array(
-    			'NAME' => $info_lang['name'],
-    			'IDNAME' => $lang,
+    			'NAME' => $lang->get_configuration()->get_name(),
+    			'IDNAME' => $id,
     			'SELECTED' => $selected
     		));
     	}

@@ -199,15 +199,9 @@ class AdminGeneralConfigController extends AdminController
 	private function list_langs()
 	{
 		$choices_list = array();
-		$langs_cache = LangsCache::load();
-		foreach($langs_cache->get_installed_langs() as $lang => $properties)
+		foreach(LangManager::get_activated_langs_map() as $id => $value)
 		{
-			if ($properties['auth'] == -1)
-			{
-				$info_lang = load_ini_file(PATH_TO_ROOT .'/lang/', $lang);
-				$choices_list[] = new FormFieldSelectChoiceOption($info_lang['name'], $lang);
-			}
-
+			$choices_list[] = new FormFieldSelectChoiceOption($value->get_configuration()->get_name(), $id);
 		}
 		return $choices_list;
 	}

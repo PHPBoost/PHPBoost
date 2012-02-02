@@ -54,7 +54,7 @@ class User
 	
 	public function is_admin()
 	{
-		return $this->level == self::User::ADMIN_LEVEL;
+		return $this->level == self::ADMIN_LEVEL;
 	}
 	
 	public function set_groups(Array $groups)

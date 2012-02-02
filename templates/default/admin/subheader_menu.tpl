@@ -42,10 +42,10 @@
 				</ul>
 			</li>
 			<li class="extend" onmouseover="show_menu(23, 1);" onmouseout="hide_menu(1);">
-				<a href="{PATH_TO_ROOT}/admin/admin_lang.php" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/languages_mini.png);">{L_LANGS}</a>
+				<a href="${relative_url(AdminLangsUrlBuilder::list_installed_langs())}" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/languages_mini.png);">{L_LANGS}</a>
 				<ul id="ssmenu23">
-					<li><a href="{PATH_TO_ROOT}/admin/admin_lang.php" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/languages_mini.png);">{L_MANAGEMENT}</a></li>
-					<li><a href="{PATH_TO_ROOT}/admin/admin_lang_add.php" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/languages_mini.png);">{L_ADD}</a></li>
+					<li><a href="${relative_url(AdminLangsUrlBuilder::list_installed_langs())}" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/languages_mini.png);">{L_MANAGEMENT}</a></li>
+					<li><a href="${relative_url(AdminLangsUrlBuilder::install())}" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/languages_mini.png);">{L_ADD}</a></li>
 				</ul>
 			</li>
 			<li class="extend" onmouseover="show_menu(24, 1);" onmouseout="hide_menu(1);">

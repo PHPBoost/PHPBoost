@@ -211,8 +211,7 @@ class InstallationServices
 
 	private function install_locale($locale)
 	{
-		PersistenceContext::get_querier()->inject("INSERT INTO " . DB_TABLE_LANG . " (lang, activ, secure) VALUES (:config_lang, 1, -1)", array(
-			'config_lang' => $locale));
+		LangManager::install($locale);
 	}
 
 	private function configure_theme($theme, $locale)
