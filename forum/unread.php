@@ -37,7 +37,7 @@ require_once('../kernel/header.php');
 //Redirection changement de catégorie.
 if (!empty($_POST['change_cat']))
 	AppContext::get_response()->redirect('/forum/forum' . url('.php?id=' . $_POST['change_cat'], '-' . $_POST['change_cat'] . $rewrited_title . '.php', '&'));
-if (!$User->check_level(MEMBER_LEVEL)) //Réservé aux membres.
+if (!$User->check_level(User::MEMBER_LEVEL)) //Réservé aux membres.
 {	
 	AppContext::get_response()->redirect(UserUrlBuilder::errors()->absolute()); 
 }

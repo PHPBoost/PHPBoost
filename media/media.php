@@ -84,7 +84,7 @@ if (empty($id_media) && $id_cat >= 0)
 	$Template->put_all(array(
 		'C_CATEGORIES' => true,
 		'TITLE' => $MEDIA_CATS[$id_cat]['name'],
-		'C_ADMIN' => $User->check_level(ADMIN_LEVEL),
+		'C_ADMIN' => $User->check_level(User::ADMIN_LEVEL),
 		'C_MODO' => $User->check_level(MODO_LEVEL),
 		'U_ADMIN_CAT' => $id_cat == 0 ? 'admin_media_config.php' : 'admin_media_cats.php?edit=' . $id_cat,
 		'C_ADD_FILE' => $User->check_auth($MEDIA_CATS[$id_cat]['auth'], MEDIA_AUTH_WRITE) || $User->check_auth($MEDIA_CATS[$id_cat]['auth'], MEDIA_AUTH_CONTRIBUTION),

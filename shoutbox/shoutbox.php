@@ -47,7 +47,7 @@ if ($add && empty($shout_id)) //Insertion
         DispatchManager::redirect($error_controller);
 	}
 	
-	$shout_pseudo = $User->check_level(MEMBER_LEVEL) ? $User->get_attribute('login') : substr(retrieve(POST, 'shoutboxForm_shoutbox_pseudo', $LANG['guest']), 0, 25);  //Pseudo posté.
+	$shout_pseudo = $User->check_level(User::MEMBER_LEVEL) ? $User->get_attribute('login') : substr(retrieve(POST, 'shoutboxForm_shoutbox_pseudo', $LANG['guest']), 0, 25);  //Pseudo posté.
 	$shout_contents = retrieve(POST, 'shoutboxForm_shoutbox_contents', '', TSTRING_PARSE);
 	
 	if (!empty($shout_pseudo) && !empty($shout_contents))
@@ -140,7 +140,7 @@ elseif (!empty($shout_id)) //Edition + suppression!
 		{
 			$shout_contents = retrieve(POST, 'shoutboxForm_shoutbox_contents', '', TSTRING_UNCHANGE);			
 			$shout_pseudo = retrieve(POST, 'shoutboxForm_shoutbox_pseudo', $LANG['guest']);
-			$shout_pseudo = empty($shout_pseudo) && $User->check_level(MEMBER_LEVEL) ? $User->get_attribute('login') : $shout_pseudo;
+			$shout_pseudo = empty($shout_pseudo) && $User->check_level(User::MEMBER_LEVEL) ? $User->get_attribute('login') : $shout_pseudo;
 			
 			if (!empty($shout_contents) && !empty($shout_pseudo))
 			{
@@ -212,7 +212,7 @@ else //Affichage.
 	
 	$form = new HTMLForm('shoutboxForm', 'shoutbox.php?add=1&amp;token=' . $Session->get_token());
 	$fieldset = new FormFieldsetHTML('add_msg', $LANG['add_msg']);
-	if (!$User->check_level(MEMBER_LEVEL)) //Visiteur
+	if (!$User->check_level(User::MEMBER_LEVEL)) //Visiteur
 	{
 		$fieldset->add_field(new FormFieldTextEditor('shoutbox_pseudo', $LANG['pseudo'], $LANG['guest'], array(
 			'class' => 'text', 'maxlength' => 25, 'required' => true)

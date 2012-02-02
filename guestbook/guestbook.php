@@ -84,7 +84,7 @@ if ($User->check_auth($authorizations, GuestbookConfig::AUTH_WRITE))
 			|| ($row['user_id'] === $User->get_attribute('user_id') && $User->get_attribute('user_id') !== -1);
 	}
 	
-	$is_guest = $is_edition_mode ? $user_id == -1 : !$User->check_level(MEMBER_LEVEL);
+	$is_guest = $is_edition_mode ? $user_id == -1 : !$User->check_level(User::MEMBER_LEVEL);
 
 	$formatter = AppContext::get_content_formatting_service()->create_factory();
 	$formatter->set_forbidden_tags($guestbook_config->get_forbidden_tags());
@@ -151,7 +151,7 @@ if ($User->check_auth($authorizations, GuestbookConfig::AUTH_WRITE))
 			if ($form->has_field('pseudo')) {
 				$guestbook_login = $form->get_value('pseudo');
 			}
-			$guestbook_login = $User->check_level(MEMBER_LEVEL) ? $User->get_attribute('login') : $guestbook_login;	
+			$guestbook_login = $User->check_level(User::MEMBER_LEVEL) ? $User->get_attribute('login') : $guestbook_login;	
 			$guestbook_login = empty($guestbook_login) ? $LANG['guest'] : $guestbook_login;
 			
 			$guestbook_contents = $form->get_value('contents');

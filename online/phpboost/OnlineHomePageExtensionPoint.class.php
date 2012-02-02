@@ -51,7 +51,7 @@ class OnlineHomePageExtensionPoint implements HomePageExtensionPoint
 		global $CONFIG_ONLINE, $LANG, $ONLINE_LANG;
 		
 		$this->lang = LangLoader::get('online_common', 'online');
-		$tpl =  = new FileTemplate('online/OnlineHomeController.tpl');
+		$tpl = new FileTemplate('online/OnlineHomeController.tpl');
 		
 		//Membre connectés..
 		$nbr_members_connected = PersistenceContext::get_sql()->num_rows("SELECT *

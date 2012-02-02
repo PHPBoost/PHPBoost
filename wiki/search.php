@@ -35,7 +35,7 @@ require_once('../wiki/wiki_bread_crumb.php');
 
 require_once('../kernel/header.php');
 
-if (!$User->check_level(MEMBER_LEVEL))
+if (!$User->check_level(User::MEMBER_LEVEL))
 {
 	$error_controller = PHPBoostErrors::unexisting_page();
 	DispatchManager::redirect($error_controller);

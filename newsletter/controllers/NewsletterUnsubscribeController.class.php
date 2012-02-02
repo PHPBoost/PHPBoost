@@ -58,7 +58,7 @@ class NewsletterUnSubscribeController extends ModuleController
 	private function build_form()
 	{
 		$mail_request = AppContext::get_request()->get_string('mail_newsletter', '');
-		if (AppContext::get_current_user()->check_level(MEMBER_LEVEL) && empty($mail_request))
+		if (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL) && empty($mail_request))
 		{
 			$email = AppContext::get_current_user()->get_attribute('user_mail');
 		}
@@ -86,7 +86,7 @@ class NewsletterUnSubscribeController extends ModuleController
 		}')
 		)));
 
-		$newsletter_subscribe = AppContext::get_current_user()->check_level(MEMBER_LEVEL) ? NewsletterService::get_id_streams_member(AppContext::get_current_user()->get_attribute('user_id')) : array();
+		$newsletter_subscribe = AppContext::get_current_user()->check_level(User::MEMBER_LEVEL) ? NewsletterService::get_id_streams_member(AppContext::get_current_user()->get_attribute('user_id')) : array();
 		$fieldset->add_field(new FormFieldMultipleSelectChoice('newsletter_choice', $this->lang['subscribe.newsletter_choice'], $newsletter_subscribe, $this->get_streams()));
 		
 		$form->add_button(new FormButtonReset());
@@ -127,7 +127,7 @@ class NewsletterUnSubscribeController extends ModuleController
 		$delete_all_streams = $this->form->get_value('delete_all_streams');
 		if ($delete_all_streams)
 		{
-			if (AppContext::get_current_user()->check_level(MEMBER_LEVEL))
+			if (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL))
 			{
 				NewsletterService::unsubscriber_all_streams_member(AppContext::get_current_user()->get_attribute('user_id'));
 			}
@@ -139,7 +139,7 @@ class NewsletterUnSubscribeController extends ModuleController
 		else
 		{
 			$streams = $this->form->get_value('newsletter_choice');
-			if (AppContext::get_current_user()->check_level(MEMBER_LEVEL) &&  $streams !== '')
+			if (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL) &&  $streams !== '')
 			{
 				NewsletterService::update_subscribtions_member_registered($streams, AppContext::get_current_user()->get_attribute('user_id'));
 			}

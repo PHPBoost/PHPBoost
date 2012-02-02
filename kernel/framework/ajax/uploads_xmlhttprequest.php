@@ -47,7 +47,7 @@ if (!empty($_GET['new_folder'])) //Ajout d'un dossier dans la gestion des fichie
 
     if (!empty($user_id) && $user->get_attribute('user_id') != $user_id)
     {
-        if ($user->check_level(ADMIN_LEVEL))
+        if ($user->check_level(User::ADMIN_LEVEL))
         {
             echo Uploads::Add_folder($id_parent, $user_id, $name);
         }
@@ -72,7 +72,7 @@ elseif (!empty($_GET['rename_folder'])) //Renomme un dossier dans la gestion des
     {
         if ($user->get_attribute('user_id') != $user_id)
         {
-            if ($user->check_level(ADMIN_LEVEL))
+            if ($user->check_level(User::ADMIN_LEVEL))
             {
                 echo Uploads::Rename_folder($id_folder, $name, $previous_name, $user_id, Uploads::ADMIN_NO_CHECK);
             }
@@ -100,7 +100,7 @@ elseif (!empty($_GET['rename_file'])) //Renomme un fichier d'un dossier dans la 
     {
         if ($user->get_attribute('user_id') != $user_id)
         {
-            if ($user->check_level(ADMIN_LEVEL))
+            if ($user->check_level(User::ADMIN_LEVEL))
             {
                 echo Uploads::Rename_file($id_file, $name, $previous_name, $user_id, Uploads::ADMIN_NO_CHECK);
             }

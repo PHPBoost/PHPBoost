@@ -142,7 +142,7 @@ elseif ($page_type == 'index')
 {
 	$tools = array();
 	$tools[$LANG['wiki_history']] = array(url('history.php'), 'history');
-	if ($User->check_level(ADMIN_LEVEL))
+	if ($User->check_level(User::ADMIN_LEVEL))
 	{
 		$tools[$LANG['wiki_update_index']] = array(url('admin_wiki.php#index'), 'edit_index');
 	}
@@ -166,7 +166,7 @@ if ($User->check_auth($_WIKI_CONFIG['auth'], WIKI_CREATE_CAT))
 //Recherche
 $other_tools[$LANG['wiki_search']] = array(url('search.php'), 'search');
 //Sujets suivis (membres seulement)
-if ($User->check_level(MEMBER_LEVEL))
+if ($User->check_level(User::MEMBER_LEVEL))
 {
 	$other_tools[$LANG['wiki_followed_articles']] = array(url('favorites.php'), 'followed-articles');
 	//Suivre ce sujet (articles)

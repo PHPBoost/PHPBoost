@@ -39,7 +39,7 @@ class ConnectModuleMiniMenu extends ModuleMiniMenu
 	    $tpl = new FileTemplate('connect/connect_mini.tpl');
 	    $user = AppContext::get_current_user();
 	    MenuService::assign_positions_conditions($tpl, $this->get_block());
-	    if ($user->check_level(MEMBER_LEVEL)) //Connecté.
+	    if ($user->check_level(User::MEMBER_LEVEL)) //Connecté.
 	    {
 	    	$unread_contributions = UnreadContributionsCache::load();
 	
@@ -47,11 +47,11 @@ class ConnectModuleMiniMenu extends ModuleMiniMenu
 	    	//Vaut -1 si l'utilisateur a au moins une contribution (mais on ne sait pas combien à cause des recoupements entre les groupes)
 	    	$contribution_number = 0;
 	
-	    	if ($user->check_level(ADMIN_LEVEL))
+	    	if ($user->check_level(User::ADMIN_LEVEL))
 	    	{
 	    		$contribution_number = $unread_contributions->get_admin_unread_contributions_number();
 	    	}
-	    	elseif ($user->check_level(MODERATOR_LEVEL))
+	    	elseif ($user->check_level(User::MODERATOR_LEVEL))
 	    	{
 	    		if ($unread_contributions->have_moderators_unread_contributions())
 	    		{
@@ -82,8 +82,8 @@ class ConnectModuleMiniMenu extends ModuleMiniMenu
 	    	}
 	
 	    	$tpl->put_all(array(
-	    		'C_ADMIN_AUTH' => $user->check_level(ADMIN_LEVEL),
-	    		'C_MODERATOR_AUTH' => $user->check_level(MODERATOR_LEVEL),
+	    		'C_ADMIN_AUTH' => $user->check_level(User::ADMIN_LEVEL),
+	    		'C_MODERATOR_AUTH' => $user->check_level(User::MODERATOR_LEVEL),
 	    		'C_UNREAD_CONTRIBUTION' => $contribution_number != 0,
 	    		'C_KNOWN_NUMBER_OF_UNREAD_CONTRIBUTION' => $contribution_number > 0,
 	    		'C_UNREAD_ALERT' => (bool)AdministratorAlertService::get_number_unread_alerts(),
