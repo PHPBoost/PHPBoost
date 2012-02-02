@@ -195,7 +195,6 @@ class Environment
 		define('AUTH_MENUS', 		0x01);
 		define('AUTH_FILES', 		0x01);
 		define('ACCESS_MODULE', 	0x01);
-		define('AUTH_THEME', 		0x01);
 		define('AUTH_FLOOD', 		'auth_flood');
 		define('PM_GROUP_LIMIT', 	'pm_group_limit');
 		define('DATA_GROUP_LIMIT', 	'data_group_limit');
@@ -268,11 +267,11 @@ class Environment
 			define('SID2', '');
 		}
 
-		$user_theme = AppContext::get_current_user()->get_attribute('user_theme');
+		$user_theme = AppContext::get_current_user()->get_theme();
 		//Is that theme authorized for this member? If not, we assign it the default theme
 		$user_theme_properties = ThemeManager::get_theme($user_theme);
 		if (UserAccountsConfig::load()->is_users_theme_forced() || $user_theme_properties == null
-		|| !AppContext::get_current_user()->check_auth($user_theme_properties->get_authorizations(), AUTH_THEME))
+		|| !AppContext::get_current_user()->check_auth($user_theme_properties->get_authorizations(), Theme::ACCES_THEME))
 		{
 			$user_theme = UserAccountsConfig::load()->get_default_theme();
 		}
@@ -280,11 +279,10 @@ class Environment
 		$user_theme = find_require_dir(PATH_TO_ROOT . '/templates/', $user_theme);
 		AppContext::get_current_user()->set_theme($user_theme);
 
-		$user_lang = AppContext::get_current_user()->get_attribute('user_lang');
+		$user_lang = AppContext::get_current_user()->get_locale();
 		//Is that member authorized to use this lang? If not, we assign it the default lang
-		$langs_cache = LangsCache::load();
-		$lang_properties = $langs_cache->get_lang_properties($user_lang);
-		if ($lang_properties == null || !AppContext::get_current_user()->check_level($lang_properties['auth']))
+		$lang_properties = LangManager::get_lang($user_lang);
+		if ($lang_properties == null || !$lang_properties->check_auth())
 		{
 			$user_lang = UserAccountsConfig::load()->get_default_lang();
 		}

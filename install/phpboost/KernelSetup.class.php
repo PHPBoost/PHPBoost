@@ -44,7 +44,6 @@ class KernelSetup
 	private static $events_table;
 	private static $errors_404_table;
 	private static $group_table;
-	private static $lang_table;
 	private static $member_table;
 	private static $member_extended_fields_table;
 	private static $member_extended_fields_list;
@@ -77,7 +76,6 @@ class KernelSetup
 		self::$events_table = PREFIX . 'events';
 		self::$errors_404_table = PREFIX . 'errors_404';
 		self::$group_table = PREFIX . 'group';
-		self::$lang_table = PREFIX . 'lang';
 		self::$member_table = PREFIX . 'member';
 		self::$member_extended_fields_table = PREFIX . 'member_extended_fields';
 		self::$member_extended_fields_list = PREFIX . 'member_extended_fields_list';
@@ -116,7 +114,6 @@ class KernelSetup
 			self::$events_table,
 			self::$errors_404_table,
 			self::$group_table,
-			self::$lang_table,
 			self::$member_table,
 			self::$member_extended_fields_table,
 			self::$member_extended_fields_list,
@@ -148,7 +145,6 @@ class KernelSetup
 		$this->create_events_table();
 		$this->create_errors_404_table();
 		$this->create_group_table();
-		$this->create_lang_table();
 		$this->create_member_table();
 		$this->create_member_extended_fields_table();
 		$this->create_member_extended_fields_list_table();
@@ -325,20 +321,6 @@ class KernelSetup
 			'primary' => array('id'),
 		);
 		self::$db_utils->create_table(self::$group_table, $fields, $options);
-	}
-
-	private function create_lang_table()
-	{
-		$fields = array(
-			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
-			'lang' => array('type' => 'string', 'length' => 150, 'notnull' => 1, 'default' => "''"),
-			'activ' => array('type' => 'boolean', 'length' => 1, 'notnull' => 1, 'default' => 0),
-			'secure' => array('type' => 'boolean', 'length' => 2, 'notnull' => 1, 'default' => 0)
-		);
-		$options = array(
-			'primary' => array('id'),
-		);
-		self::$db_utils->create_table(self::$lang_table, $fields, $options);
 	}
 
 	private function create_member_table()

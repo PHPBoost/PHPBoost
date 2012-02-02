@@ -238,19 +238,12 @@ class UserRegistrationController extends AbstractController
 	
 	private function build_langs_select_options()
 	{
-		$array = array();
-		$langs_cache = LangsCache::load();
-		foreach($langs_cache->get_installed_langs() as $lang => $properties)
+		$choices_list = array();
+		foreach(LangManager::get_activated_langs_map() as $id => $value)
 		{
-			if ($properties['auth'] == -1)
-			{
-				$info_lang = load_ini_file(PATH_TO_ROOT .'/lang/', $lang);
-
-				$array[] = new FormFieldSelectChoiceOption($info_lang['name'], $lang);
-			}
-			
+			$choices_list[] = new FormFieldSelectChoiceOption($value->get_configuration()->get_name(), $id);
 		}
-		return $array;
+		return $choices_list;
 	}
 }
 ?>

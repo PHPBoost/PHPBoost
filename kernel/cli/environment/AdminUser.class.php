@@ -39,7 +39,7 @@ class AdminUser extends CurrentUser
 	 */
 	public function __construct()
 	{
-		$this->level = User::User::ADMIN_LEVEL;
+		$this->level = User::ADMIN_LEVEL;
 	}
 
 	/**

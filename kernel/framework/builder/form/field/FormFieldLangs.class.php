@@ -47,15 +47,9 @@ class FormFieldLangs extends FormFieldSimpleSelectChoice
     private function generate_options()
 	{
 		$options = array();
-		$langs_cache = LangsCache::load();
-		foreach($langs_cache->get_installed_langs() as $lang => $properties)
+		foreach (ThemeManager::get_activated_themes_map() as $id => $value)
 		{
-			if ($properties['auth'] == -1)
-			{
-				$info_lang = load_ini_file(PATH_TO_ROOT .'/lang/', $lang);
-
-				$options[] = new FormFieldSelectChoiceOption($info_lang['name'], $lang);
-			}
+			$options[] = new FormFieldSelectChoiceOption($value->get_configuration()->get_name(), $id);
 		}
 		return $options;
 	}
