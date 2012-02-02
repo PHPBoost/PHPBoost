@@ -214,7 +214,7 @@ class Sitemap
 			$kernel_map->add(new SitemapLink($LANG['members_list'], UserUrlBuilder::users()));
 
 			//Member space
-			if ($auth_mode == self::AUTH_USER && $User->check_level(MEMBER_LEVEL))
+			if ($auth_mode == self::AUTH_USER && $User->check_level(User::MEMBER_LEVEL))
 			{
 				//We create a section for that
 				$member_space_section = new SitemapSection(new SitemapLink($LANG['my_private_profile'],
@@ -233,7 +233,7 @@ class Sitemap
 				UserUrlBuilder::contribution_panel()));
 					
 				//Administration panel
-				if ($User->check_level(ADMIN_LEVEL))
+				if ($User->check_level(User::ADMIN_LEVEL))
 				{
 					$member_space_section->add(new SitemapLink($LANG['admin_panel'], 
 					UserUrlBuilder::administration()));

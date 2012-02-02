@@ -70,7 +70,7 @@ class AddCommentBuildForm extends AbstractCommentsBuildForm
 		$fieldset = new FormFieldsetHTML('add_comment', $this->comments_lang['comment.add']);
 		$form->add_fieldset($fieldset);
 		
-		if (!$this->user->check_level(MEMBER_LEVEL))
+		if (!$this->user->check_level(User::MEMBER_LEVEL))
 		{
 			$fieldset->add_field(new FormFieldTextEditor('name', $this->lang['pseudo'], $this->lang['guest'], array('maxlength' => 25)));
 		}

@@ -257,7 +257,7 @@ class NewsHomePageExtensionPoint implements HomePageExtensionPoint
 			'L_ADD' => $NEWS_LANG['add_news'],
 			'C_WRITER' => $c_writer,
 			'L_WRITER' => $NEWS_LANG['waiting_news'],
-			'C_ADMIN' => $User->check_level(ADMIN_LEVEL),
+			'C_ADMIN' => $User->check_level(User::ADMIN_LEVEL),
 			'U_ADMIN' => $cat > 0 ? url('admin_news_cat.php?edit=' . $cat) : url('admin_news_config.php#preview_description'),
 			'L_ADMIN' => $LANG['edit'],
 			'L_EDIT' => $LANG['edit'],

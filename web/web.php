@@ -51,7 +51,7 @@ if (!empty($idweb) && !empty($CAT_WEB[$idcat]['name']) && !empty($idcat)) //Cont
         DispatchManager::redirect($controller);
 	}
 		
-	if ($User->check_level(ADMIN_LEVEL))
+	if ($User->check_level(User::ADMIN_LEVEL))
 	{
 		$java = "<script language='JavaScript' type='text/javascript'>
 		<!--
@@ -125,7 +125,7 @@ elseif (!empty($idcat) && empty($idweb)) //Catégories.
 	
 	$tpl->put_all(array(
 		'C_WEB_LINK' => true,
-		'C_IS_ADMIN' => $User->check_level(ADMIN_LEVEL),
+		'C_IS_ADMIN' => $User->check_level(User::ADMIN_LEVEL),
 		'CAT_NAME' => $CAT_WEB[$idcat]['name'],		
 		'NO_CAT' => ($nbr_web == 0) ? $LANG['none_link'] : '',
 		'MAX_NOTE' => $web_config->get_note_max(),
@@ -224,7 +224,7 @@ else
 	
 	$tpl->put_all(array(
 		'C_WEB_CAT' => true,
-		'C_IS_ADMIN' => $User->check_level(ADMIN_LEVEL),
+		'C_IS_ADMIN' => $User->check_level(User::ADMIN_LEVEL),
 		'PAGINATION' => $Pagination->display('web' . url('.php?p=%d', '-0-0-%d.php'), $total_cat, 'p', $web_config->get_max_nbr_category(), 3),
 		'TOTAL_FILE' => $total_link,
 		'L_CATEGORIES' => $LANG['categories'],

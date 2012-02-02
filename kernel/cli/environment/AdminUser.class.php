@@ -39,12 +39,12 @@ class AdminUser extends CurrentUser
 	 */
 	public function __construct()
 	{
-		$this->level = User::ADMIN_LEVEL;
+		$this->level = User::User::ADMIN_LEVEL;
 	}
 
 	/**
 	 * @desc Check the authorization level
-	 * @param int $secure Constant of level authorization to check (MEMBER_LEVEL, MODO_LEVEL, ADMIN_LEVEL).
+	 * @param int $secure Constant of level authorization to check (User::MEMBER_LEVEL, MODO_LEVEL, User::ADMIN_LEVEL).
 	 * @return boolean True if authorized, false otherwise.
 	 */
 	public function check_level($secure)

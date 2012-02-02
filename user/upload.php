@@ -81,7 +81,7 @@ else //Affichage de l'interface de gestion.
 	$popup_noamp = '';
 }
 
-if (!$User->check_level(MEMBER_LEVEL)) //Visiteurs interdits!
+if (!$User->check_level(User::MEMBER_LEVEL)) //Visiteurs interdits!
 {
 	$error_controller = PHPBoostErrors::unexisting_page();
 	DispatchManager::redirect($error_controller);
@@ -113,7 +113,7 @@ if (!empty($parent_folder)) //Changement de dossier
 		AppContext::get_response()->redirect(HOST . DIR . url('/user/upload.php?f=0&' . $popup_noamp, '', '&'));
 	
 	$info_folder = $Sql->query_array(PREFIX . "upload_cat", "id_parent", "user_id", "WHERE id = '" . $parent_folder . "'", __LINE__, __FILE__);
-	if ($info_folder['id_parent'] != 0 || $User->check_level(ADMIN_LEVEL))
+	if ($info_folder['id_parent'] != 0 || $User->check_level(User::ADMIN_LEVEL))
 	{
 		if ($parent_folder['user_id'] == -1)
 			AppContext::get_response()->redirect(HOST . DIR . url('/user/upload.php?showm=1', '', '&'));
@@ -130,7 +130,7 @@ elseif (!empty($_FILES['upload_file']['name']) && isset($_GET['f'])) //Ajout d'u
 	$error = '';
 	//Autorisation d'upload aux groupes.
 	$group_limit = $User->check_max_value(DATA_GROUP_LIMIT, $files_upload_config->get_maximum_size_upload());
-	$unlimited_data = ($group_limit === -1) || $User->check_level(ADMIN_LEVEL);
+	$unlimited_data = ($group_limit === -1) || $User->check_level(User::ADMIN_LEVEL);
 	
 	$member_memory_used = Uploads::Member_memory_used($User->get_attribute('user_id'));
 	if ($member_memory_used >= $group_limit && !$unlimited_data)
@@ -174,7 +174,7 @@ elseif (!empty($del_folder)) //Supprime un dossier.
 {
 	$Session->csrf_get_protect(); //Protection csrf
 	
-	if ($User->check_level(ADMIN_LEVEL))
+	if ($User->check_level(User::ADMIN_LEVEL))
 		Uploads::Del_folder($del_folder);
 	else
 	{
@@ -197,7 +197,7 @@ elseif (!empty($del_file)) //Suppression d'un fichier
 {
 	$Session->csrf_get_protect(); //Protection csrf
 	
-	if ($User->check_level(ADMIN_LEVEL))
+	if ($User->check_level(User::ADMIN_LEVEL))
 	{
 		Uploads::Del_file($del_file, $User->get_attribute('user_id'), Uploads::ADMIN_NO_CHECK);
 	}
@@ -368,7 +368,7 @@ elseif (!empty($move_folder) || !empty($move_file))
 }
 else
 {
-	$is_admin = $User->check_level(ADMIN_LEVEL);
+	$is_admin = $User->check_level(User::ADMIN_LEVEL);
 	
 	$Template->set_filenames(array(
 		'upload' => 'user/upload.tpl'
@@ -514,7 +514,7 @@ else
 	
 	//Autorisation d'uploader sans limite aux groupes.
 	$group_limit = $User->check_max_value(DATA_GROUP_LIMIT, $files_upload_config->get_maximum_size_upload());
-	$unlimited_data = ($group_limit === -1) || $User->check_level(ADMIN_LEVEL);
+	$unlimited_data = ($group_limit === -1) || $User->check_level(User::ADMIN_LEVEL);
 	
 	$total_size = !empty($folder) ? Uploads::Member_memory_used($User->get_attribute('user_id')) : $Sql->query("SELECT SUM(size) FROM " . DB_TABLE_UPLOAD . " WHERE user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__);
 	$Template->put_all(array(

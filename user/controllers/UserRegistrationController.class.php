@@ -198,7 +198,7 @@ class UserRegistrationController extends AbstractController
 	
 	public function get_right_controller_regarding_authorizations()
 	{
-		if (!UserAccountsConfig::load()->is_registration_enabled() || AppContext::get_current_user()->check_level(MEMBER_LEVEL))
+		if (!UserAccountsConfig::load()->is_registration_enabled() || AppContext::get_current_user()->check_level(User::MEMBER_LEVEL))
 		{
 			AppContext::get_response()->redirect(Environment::get_home_page());
 		}

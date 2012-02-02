@@ -33,7 +33,7 @@ function menu_themeswitcher_themeswitcher($position, $block)
 	$switchtheme = !empty($_GET['switchtheme']) ? urldecode($_GET['switchtheme']) : '';
     if (!empty($switchtheme))
     {
-        if ($user->check_level(MEMBER_LEVEL))
+        if ($user->check_level(User::MEMBER_LEVEL))
         {
             AppContext::get_session()->csrf_get_protect();
         }

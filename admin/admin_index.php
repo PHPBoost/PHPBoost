@@ -95,15 +95,15 @@ while ($row = $Sql->fetch_assoc($result))
 
 	switch ($row['level']) //Coloration du membre suivant son level d'autorisation. 
 	{ 		
-		case MEMBER_LEVEL:
+		case User::MEMBER_LEVEL:
 		$class = 'member';
 		break;
 		
-		case MODERATOR_LEVEL: 
+		case User::MODERATOR_LEVEL: 
 		$class = 'modo';
 		break;
 		
-		case ADMIN_LEVEL: 
+		case User::ADMIN_LEVEL: 
 		$class = 'admin';
 		break;
 	} 

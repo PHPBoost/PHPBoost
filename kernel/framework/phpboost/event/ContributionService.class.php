@@ -258,13 +258,13 @@ class ContributionService
 			$array_result['r2']++;
 			
 			//For moderators ?
-			if (Authorizations::check_auth(RANK_TYPE, MODERATOR_LEVEL, $this_auth, Contribution::CONTRIBUTION_AUTH_BIT))
+			if (Authorizations::check_auth(RANK_TYPE, User::MODERATOR_LEVEL, $this_auth, Contribution::CONTRIBUTION_AUTH_BIT))
 			{
 				$array_result['r1']++;
 			}
 			
 			//For members ?
-			if (Authorizations::check_auth(RANK_TYPE, MEMBER_LEVEL, $this_auth, Contribution::CONTRIBUTION_AUTH_BIT))
+			if (Authorizations::check_auth(RANK_TYPE, User::MEMBER_LEVEL, $this_auth, Contribution::CONTRIBUTION_AUTH_BIT))
 			{
 				$array_result['r0']++;
 			}

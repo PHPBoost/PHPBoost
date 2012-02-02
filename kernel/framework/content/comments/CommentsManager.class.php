@@ -45,7 +45,7 @@ class CommentsManager
 			CommentsTopicDAO::create_topic($module_id, $id_in_module, $topic_path);
 		}
 		
-		if(self::$user->check_level(MEMBER_LEVEL))
+		if(self::$user->check_level(User::MEMBER_LEVEL))
 		{
 			CommentsDAO::add_comment($module_id, $id_in_module, $message, self::$user->get_id());
 		}

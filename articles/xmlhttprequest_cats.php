@@ -29,7 +29,7 @@ define('NO_SESSION_LOCATION', true); //Permet de ne pas mettre jour la page dans
 require_once('../kernel/begin.php');
 require_once('../kernel/header_no_display.php');
 
-if ($User->check_level(ADMIN_LEVEL)) //Admin
+if ($User->check_level(User::ADMIN_LEVEL)) //Admin
 {
 	$Session->csrf_get_protect();
 

@@ -134,14 +134,14 @@ elseif (retrieve(GET, 'del', false)) //Suppression d'un message.
 	else
 		echo '-1';
 }
-elseif (!empty($track) && $User->check_level(MEMBER_LEVEL)) //Ajout du sujet aux sujets suivis.
+elseif (!empty($track) && $User->check_level(User::MEMBER_LEVEL)) //Ajout du sujet aux sujets suivis.
 {
 	//Instanciation de la class du forum.
 	$Forumfct = new Forum();
 	$Forumfct->Track_topic($track); //Ajout du sujet aux sujets suivis.
 	echo 1;
 }
-elseif (!empty($untrack) && $User->check_level(MEMBER_LEVEL)) //Retrait du sujet, aux sujets suivis.
+elseif (!empty($untrack) && $User->check_level(User::MEMBER_LEVEL)) //Retrait du sujet, aux sujets suivis.
 {
 	//Instanciation de la class du forum.
 	$Forumfct = new Forum();
@@ -149,7 +149,7 @@ elseif (!empty($untrack) && $User->check_level(MEMBER_LEVEL)) //Retrait du sujet
 	$Forumfct->Untrack_topic($untrack); //Retrait du sujet aux sujets suivis.
 	echo 2;
 }
-elseif (!empty($track_pm) && $User->check_level(MEMBER_LEVEL)) //Ajout du sujet aux sujets suivis.
+elseif (!empty($track_pm) && $User->check_level(User::MEMBER_LEVEL)) //Ajout du sujet aux sujets suivis.
 {
 	//Instanciation de la class du forum.
 	$Forumfct = new Forum();
@@ -157,14 +157,14 @@ elseif (!empty($track_pm) && $User->check_level(MEMBER_LEVEL)) //Ajout du sujet 
 	$Forumfct->Track_topic($track_pm, FORUM_PM_TRACKING); //Ajout du sujet aux sujets suivis.
 	echo 1;
 }
-elseif (!empty($untrack_pm) && $User->check_level(MEMBER_LEVEL)) //Retrait du sujet, aux sujets suivis.
+elseif (!empty($untrack_pm) && $User->check_level(User::MEMBER_LEVEL)) //Retrait du sujet, aux sujets suivis.
 {
 	//Instanciation de la class du forum.
 	$Forumfct = new Forum();
 	$Forumfct->Untrack_topic($untrack_pm, FORUM_PM_TRACKING); //Retrait du sujet aux sujets suivis.
 	echo 2;
 }
-elseif (!empty($track_mail) && $User->check_level(MEMBER_LEVEL)) //Ajout du sujet aux sujets suivis.
+elseif (!empty($track_mail) && $User->check_level(User::MEMBER_LEVEL)) //Ajout du sujet aux sujets suivis.
 {
 	//Instanciation de la class du forum.
 	$Forumfct = new Forum();
@@ -172,7 +172,7 @@ elseif (!empty($track_mail) && $User->check_level(MEMBER_LEVEL)) //Ajout du suje
 	$Forumfct->Track_topic($track_mail, FORUM_EMAIL_TRACKING); //Ajout du sujet aux sujets suivis.
 	echo 1;
 }
-elseif (!empty($untrack_mail) && $User->check_level(MEMBER_LEVEL)) //Retrait du sujet, aux sujets suivis.
+elseif (!empty($untrack_mail) && $User->check_level(User::MEMBER_LEVEL)) //Retrait du sujet, aux sujets suivis.
 {
 	//Instanciation de la class du forum.
 	$Forumfct = new Forum();

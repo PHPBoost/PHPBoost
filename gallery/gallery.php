@@ -318,7 +318,7 @@ else
 	$nbr_column_pics = !empty($nbr_column_pics) ? $nbr_column_pics : 1;
 	$column_width_pics = floor(100/$nbr_column_pics);
 
-	$is_admin = $User->check_level(ADMIN_LEVEL) ? true : false;
+	$is_admin = $User->check_level(User::ADMIN_LEVEL) ? true : false;
 	$is_modo = ($User->check_auth($CAT_GALLERY[$g_idcat]['auth'], EDIT_CAT_GALLERY)) ? true : false;
 
 	$module_data_path = $Template->get_pictures_data_path();
@@ -569,7 +569,7 @@ else
 				foreach ($array_cat_list as $key_cat => $option_value)
 					$cat_list .= ($key_cat == $info_pics['idcat']) ? sprintf($option_value, 'selected="selected"') : sprintf($option_value, '');
 
-				$activ_note = ($CONFIG_GALLERY['activ_note'] == 1 && $User->check_level(MEMBER_LEVEL) );
+				$activ_note = ($CONFIG_GALLERY['activ_note'] == 1 && $User->check_level(User::MEMBER_LEVEL) );
 				if ($activ_note)
 				{
 					//Affichage notation.
@@ -671,7 +671,7 @@ else
 			));
 
 
-			$is_connected = $User->check_level(MEMBER_LEVEL);
+			$is_connected = $User->check_level(User::MEMBER_LEVEL);
 			$j = 0;
 			$result = $Sql->query_while("SELECT g.id, g.idcat, g.name, g.path, g.timestamp, g.aprob, g.width, g.height, g.user_id, g.views, g.nbr_com, g.aprob, m.login
 			FROM " . PREFIX . "gallery g

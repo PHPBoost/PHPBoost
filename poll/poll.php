@@ -199,7 +199,7 @@ elseif (!empty($poll['id']) && !$archives) //Affichage du sondage.
 		$sum_vote = array_sum($array_vote);
 		$Template->put_all(array(
 			'C_POLL_VIEW' => true,
-			'C_IS_ADMIN' => $User->check_level(ADMIN_LEVEL),
+			'C_IS_ADMIN' => $User->check_level(User::ADMIN_LEVEL),
 			'IDPOLL' => $poll['id'],
 			'QUESTION' => $poll['question'],
 			'DATE' => gmdate_format('date_format_short', $poll['timestamp']),
@@ -232,7 +232,7 @@ elseif (!empty($poll['id']) && !$archives) //Affichage du sondage.
 		$Template->put_all(array(
 			'C_POLL_VIEW' => true,
 			'C_POLL_QUESTION' => true,
-			'C_IS_ADMIN' => $User->check_level(ADMIN_LEVEL),
+			'C_IS_ADMIN' => $User->check_level(User::ADMIN_LEVEL),
 			'IDPOLL' => $poll['id'],
 			'QUESTION' => $poll['question'],
 			'DATE' => gmdate_format('date_format_short'),
@@ -292,7 +292,7 @@ elseif (!$archives) //Menu principal.
 	$show_archives = !empty($show_archives) ? '<a href="poll' . url('.php?archives=1', '.php?archives=1') . '">' . $LANG['archives'] . '</a>' : '';
 	
 	$edit = '';	
-	if ($User->check_level(ADMIN_LEVEL))
+	if ($User->check_level(User::ADMIN_LEVEL))
 		$edit = '<a href="../poll/admin_poll.php" title="' . $LANG['edit'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/edit.png" class="valign_middle" /></a>';
 	
 	$Template->put_all(array(
@@ -332,7 +332,7 @@ elseif ($archives) //Archives.
 		'C_POLL_ARCHIVES' => true,
 		'SID' => SID,
 		'THEME' => get_utheme(),		
-		'C_IS_ADMIN' => $User->check_level(ADMIN_LEVEL),
+		'C_IS_ADMIN' => $User->check_level(User::ADMIN_LEVEL),
 		'PAGINATION' => $Pagination->display('poll' . url('.php?p=%d', '-0-0-%d.php'), $nbrarchives, 'p', 10, 3),
 		'L_ALERT_DELETE_POLL' => $LANG['alert_delete_poll'],
 		'L_ARCHIVE' => $LANG['archives'],

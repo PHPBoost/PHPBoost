@@ -86,7 +86,7 @@ class Captcha
 	 */
 	public function is_valid()
 	{
-		if (!$this->is_available() || AppContext::get_current_user()->check_level(MEMBER_LEVEL)) //Non activé, retourne vrai.
+		if (!$this->is_available() || AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Non activé, retourne vrai.
 		{
 			return true;
 		}

@@ -62,7 +62,7 @@ class CurrentUser extends User
 	public function check_auth($array_auth_groups, $authorization_bit)
 	{
 		//Si il s'agit d'un administrateur, étant donné qu'il a tous les droits, on renvoie systématiquement vrai
-		if ($this->check_level(ADMIN_LEVEL))
+		if ($this->check_level(User::ADMIN_LEVEL))
 		{
 			return true;
 		}

@@ -31,7 +31,7 @@ define('NO_SESSION_LOCATION', true);
 require_once('../kernel/begin.php');
 require_once('../kernel/header_no_display.php');
 
-if ($User->check_level(ADMIN_LEVEL)) //Admin
+if ($User->check_level(User::ADMIN_LEVEL)) //Admin
 {
 	$media_categories = new MediaCats();
 	$id_up = retrieve(GET, 'id_up', 0);

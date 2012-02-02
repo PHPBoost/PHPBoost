@@ -109,7 +109,7 @@ class FormFieldCaptcha extends AbstractFormField
 
     private function is_enabled()
     {
-        return !AppContext::get_current_user()->check_level(MEMBER_LEVEL);
+        return !AppContext::get_current_user()->check_level(User::MEMBER_LEVEL);
     }
 
     protected function get_default_template()
