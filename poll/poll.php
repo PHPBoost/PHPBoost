@@ -45,7 +45,8 @@ if (!empty($poll_id))
 }	
 	
 $archives = retrieve(GET, 'archives', false); //On vérifie si on est sur les archives
-$show_result = retrieve(GET, 'r', false); //Affichage des résulats.
+$show_result = retrieve(GET, 'r', false); //Affichage des résultats.
+$now = new Date(DATE_NOW, TIMEZONE_AUTO);
 
 if (!empty($_POST['valid_poll']) && !empty($poll['id']) && !$archives)
 {
@@ -305,7 +306,7 @@ elseif (!$archives) //Menu principal.
 	
 	$result = $Sql->query_while("SELECT id, question 
 	FROM " . PREFIX . "poll 
-	WHERE archive = 0 AND visible = 1
+	WHERE archive = 0 AND visible = 1 AND start <= '" . $now->get_timestamp() . "' AND (end >= '" . $now->get_timestamp() . "' OR end = 0)
 	ORDER BY id DESC", __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))
 	{
