@@ -91,7 +91,7 @@ class LangConfiguration
 		$this->author_mail = $config['author_mail'];
 		$this->author_link = $config['author_link'];
 		$this->date = $config['date'];
-		$this->version = isset($config['version']);
+		$this->version = $config['version'];
 		$this->compatibility = $config['compatibility'];
 	}
 
