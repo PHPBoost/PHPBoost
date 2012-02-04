@@ -30,7 +30,6 @@
 ------------------------------------- NOYAU ------------------------------------
 + Classe commentaire : Créer le contrôleur d'affichage des commentaires, intégration du système d'approbation (avec possibilité d'avoir un mail).
 + Joindre tous les champs étendus dans la session utilisateur.
-+ Gestion des langues
 
 ------------------------------------ MODULES -----------------------------------
 [b]Articles[/b]
@@ -106,18 +105,12 @@
 - Possibilité d'envoyer des messages privés à tous les membres d'un groupe ou à tous les membres pour l'administrateur.
 - Possibilité de demander l'envoi d'un mail lors de l'envoi d'un mp.
 
-[b]Gestion des langues[/b]
-- Gérer finement les autorisations des langues
-- Refonte en MVC
-- Refonte de l'interface
-
 [b]Forum[/b]
 - [color=red]Nouveauté:[/color] Nouveaux droits globaux aux groupes dans le forum, suppression/édition des messages/sujets appartenant au membre.
 - [color=red]Nouveauté:[/color] Possibilité de créer des messages semi-automatiques pour les modérateurs.
 - [color=red]Nouveauté:[/color] Possibilité de délestage automatique des sujets (configuration).
 - [color=red]Nouveauté:[/color] Possibilité de définir des mots interdits (remplacés par des étoiles).
 - Possibilité de mettre un pseudo lorsque l'on poste en visiteur.
-
 
 [b]Galerie:[/b]
 - Voir les images plus vues/mieux notées, affichage sur l'ensemble de la galerie et non sur une catégorie.
