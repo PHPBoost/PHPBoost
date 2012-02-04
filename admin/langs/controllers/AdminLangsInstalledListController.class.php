@@ -49,7 +49,7 @@ class AdminLangsInstalledListController extends AdminController
 			$default_lang = LangManager::get_default_lang();
 
 			$this->view->assign_block_vars('langs_installed', array(
-				'C_IS_DEFAULT' => $lang->get_id() == $default_lang,
+				'C_IS_DEFAULT_LANG' => $lang->get_id() == $default_lang,
 				'C_IS_ACTIVATED' => $lang->is_activated(),
 				'ID' => $lang->get_id(),
 				'NAME' => $configuration->get_name(),
