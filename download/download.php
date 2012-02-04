@@ -32,6 +32,7 @@ require_once('../kernel/header.php');
 $notation = new Notation();
 $notation->set_module_name('download');
 $notation->set_notation_scale($CONFIG_DOWNLOAD['note_max']);
+$now = new Date(DATE_NOW, TIMEZONE_AUTO);
 
 if ($file_id > 0) //Contenu
 {
