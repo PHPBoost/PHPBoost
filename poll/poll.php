@@ -33,7 +33,7 @@ $poll = array();
 $poll_id = retrieve(GET, 'id', 0);
 if (!empty($poll_id))
 {
-	$poll = $Sql->query_array(PREFIX . 'poll', 'id', 'question', 'votes', 'answers', 'type', 'timestamp', "WHERE id = '" . $poll_id . "' AND archive = 0 AND visible = 1", __LINE__, __FILE__);
+	$poll = $Sql->query_array(PREFIX . 'poll', 'id', 'question', 'votes', 'answers', 'type', 'timestamp', "WHERE id = '" . $poll_id . "' AND archive = 0 AND visible = 1 AND start <= '" . $now->get_timestamp() . "' AND (end >= '" . $now->get_timestamp() . "' OR end = 0)", __LINE__, __FILE__);
 	
 	//Pas de sondage trouvé => erreur.
 	if (empty($poll['id']))
@@ -385,8 +385,20 @@ elseif ($archives) //Archives.
 }
 else
 {
-	$error_controller = PHPBoostErrors::unexisting_page();
-    DispatchManager::redirect($error_controller);
+	$modulesLoader = AppContext::get_extension_provider_service();
+	$module_name = 'poll';
+	$module = $modulesLoader->get_provider($module_name);
+	if ($module->has_extension_point(HomePageExtensionPoint::EXTENSION_POINT))
+	{
+		echo $module->get_extension_point(HomePageExtensionPoint::EXTENSION_POINT)->get_home_page()->get_view()->display();
+	}
+	elseif (!$no_alert_on_error) 
+	{
+		//TODO Gestion de la langue
+		$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
+            'Le module <strong>' . $module_name . '</strong> n\'a pas de fonction get_home_page!', UserErrorController::FATAL);
+        DispatchManager::redirect($controller);
+	}
 }
 	
 require_once('../kernel/footer.php');
