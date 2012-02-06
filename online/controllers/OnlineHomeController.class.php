@@ -38,10 +38,42 @@ class OnlineHomeController extends ModuleController
 
 		return $this->build_response($this->view);
 	}
-
+	
+	private function init()
+	{
+		$this->lang = LangLoader::get('online_common', 'online');
+		$this->view = new FileTemplate('online/OnlineHomeController.tpl');
+		$this->view->add_lang($this->lang);
+	}
+	
 	private function build_form($request)
 	{
 		global $LANG;
+		
+		$display_order['LEVEL_DISPLAY_ORDER'] = 's.level DESC';
+		$display_order['SESSION_TIME_DISPLAY_ORDER'] = 's.session_time DESC';
+		$display_order['LEVEL_AND_SESSION_TIME_DISPLAY_ORDER'] = 's.level DESC, s.session_time DESC';
+		
+		$field = $request->get_value('field', 'login');
+		$sort = $request->get_value('sort', 'top');
+		$page = $request->get_int('page', 1);
+		
+		$mode = ($sort == 'top') ? 'ASC' : 'DESC';
+		
+		switch ($field)
+		{
+			case 'login' :
+				$field_bdd = 'login';
+			break;
+			case 'location' :
+				$field_bdd = 'location';
+			break;
+			case 'last_update' :
+				$field_bdd = 'lastupdate';
+			break;
+			default :
+				$field_bdd = 'location';
+		}
 		
 		//Membre connectés..
 		$nbr_members_connected = PersistenceContext::get_sql()->num_rows("SELECT *
@@ -67,7 +99,7 @@ class OnlineHomeController extends ModuleController
 		FROM " . DB_TABLE_SESSIONS . " s
 		JOIN " . DB_TABLE_MEMBER . " m ON (m.user_id = s.user_id)
 		WHERE s.session_time > '" . (time() - SessionsConfig::load()->get_active_session_duration()) . "'
-	"/*	ORDER BY " . OnlineConfig::load()->get_display_order() . " */ . "
+		ORDER BY " . $display_order[OnlineConfig::load()->get_display_order()] . "
 		LIMIT ". $this->nbr_members_per_page ." OFFSET :start_limit",
 			array(
 				'start_limit' => $limit_page
@@ -101,13 +133,6 @@ class OnlineHomeController extends ModuleController
 				'LAST_UPDATE' => gmdate_format('date_format_long', $row['session_time'])
 			));
 		}
-	}
-	
-	private function init()
-	{
-		$this->lang = LangLoader::get('online_common', 'online');
-		$this->view = new FileTemplate('online/OnlineHomeController.tpl');
-		$this->view->add_lang($this->lang);
 	}
 
 	private function build_response(View $view)
