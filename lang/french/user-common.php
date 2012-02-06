@@ -110,7 +110,7 @@ Si vous rencontrez des difficultés, veuillez contacter l\'administrateur du site
 $lang['registration'] = 'Inscription';
 $lang['registration.validation.mail.explain'] = 'Vous devrez activer votre compte dans l\'email qui vous sera envoyé avant de pouvoir vous connecter';
 $lang['registration.validation.administrator.explain'] = 'Un administrateur devra activer votre compte avant de pouvoir vous connecter';
-$lang['registration.confirm.success'] = 'Votre a été validé avec succès';
+$lang['registration.confirm.success'] = 'Votre compte a été validé avec succès';
 $lang['registration.confirm.error'] = 'Un problème est survenue lors de votre activation, vérifier que votre clé est bien valide';
 $lang['registration.success'] = 'Vous vous êtes bien enregistré et êtes dès à présent connecté';
 $lang['registration.success.administrator-validation'] = 'Vous vous êtes enregistré avec succès. Cependant un administrateur doit valider votre compte avant de pouvoir l\'utiliser';

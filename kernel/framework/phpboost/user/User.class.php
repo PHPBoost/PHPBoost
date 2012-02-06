@@ -8,7 +8,7 @@ class User
 	const MEMBER_LEVEL = 0;
 	const MODERATOR_LEVEL = 1;
 	const ADMIN_LEVEL = 2;
-
+	
 	protected $id = -1;
 	protected $level = -1;
 	protected $groups = array();
@@ -36,6 +36,16 @@ class User
 	public function get_id()
 	{
 		return $this->id;
+	}
+	
+	public function set_pseudo($pseudo)
+	{
+		$this->pseudo = $pseudo;
+	}
+	
+	public function get_pseudo()
+	{
+		return $this->pseudo;
 	}
 	
 	public function set_level($level)

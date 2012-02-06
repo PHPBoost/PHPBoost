@@ -53,20 +53,20 @@ class UserService
 		), 'WHERE user_id = :user_id', array('user_id' => $user->get_id()));
 	}
 	
-	public static function update_authentification($id, UserAuthentification $user_authentification)
+	public static function update_authentification($condition, $parameters, UserAuthentification $user_authentification)
 	{
 		if ($user_authentification->get_password_hashed() !== null)
 		{
 			self::$querier->update(DB_TABLE_MEMBER, array(
 				'login' => $user_authentification->get_login(),
 				'password' => $user_authentification->get_password_hashed()
-			), 'WHERE user_id = :user_id', array('user_id' => $id));
+			), $condition, $parameters);
 		}
 		else
 		{
 			self::$querier->update(DB_TABLE_MEMBER, array(
 				'login' => $user_authentification->get_login(),
-			), 'WHERE user_id = :user_id', array('user_id' => $id));
+			), $condition, $parameters);
 		}
 	}
 	
@@ -74,6 +74,8 @@ class UserService
 	{
 		$row = self::$querier->select_single_row(PREFIX . 'member', array('*'), $condition, $parameters);
 		$user = new User();
+		$user->set_id($row['user_id']);
+		$user->set_pseudo($row['login']);
 		$user->set_approbation($row['user_aprob']);
 		$user->set_email($row['user_mail']);
 		$user->set_show_email($row['user_show_mail']);

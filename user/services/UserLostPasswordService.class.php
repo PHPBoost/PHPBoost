@@ -43,16 +43,6 @@ class UserLostPasswordService
 		array('change_password_pass' => $change_password_pass)) > 0 ? true : false;
 	}
 	
-	public static function get_user_id_by_change_password_pass($change_password_pass)
-	{
-		return self::$querier->get_column_value(DB_TABLE_MEMBER, 'user_id', 'WHERE change_password_pass = :change_password_pass', array('change_password_pass' => $change_password_pass));
-	}
-	
-	public static function get_pseudo_by_email($email)
-	{
-		return self::$querier->get_column_value(DB_TABLE_MEMBER, 'login', 'WHERE user_mail = :email', array('email' => $email));
-	}
-	
 	public static function connect_user($user_id, $password)
 	{
 		AppContext::get_session()->start($user_id, $password, 0, SCRIPT, QUERY_STRING, '', true);
@@ -60,8 +50,7 @@ class UserLostPasswordService
 	
 	public static function clear_activation_key($user_id)
 	{
-		self::$querier->inject("UPDATE " . DB_TABLE_MEMBER . " SET change_password_pass = :change_password_pass  WHERE user_id = :user_id",
-		array('change_password_pass' => '', 'user_id' => $user_id));
+		self::$querier->update(DB_TABLE_MEMBER, array('change_password_pass' => ''), 'WHERE user_id = :id', array('id' => $user_id));
 	}
 	
 	public static function send_mail($email, $subject, $content)
@@ -74,10 +63,9 @@ class UserLostPasswordService
 		AppContext::get_mail_service()->try_to_send($mail);
 	}
 	
-	public static function register_change_password_pass($change_password_pass, $email)
+	public static function update_change_password_pass($change_password_pass, $email)
 	{
-		self::$querier->inject("UPDATE " . DB_TABLE_MEMBER . " SET change_password_pass = :change_password_pass  WHERE user_mail = :email",
-		array('change_password_pass' => $change_password_pass, 'email' => $email));
+		self::$querier->update(DB_TABLE_MEMBER, array('change_password_pass' => $change_password_pass), 'WHERE user_mail = :email', array('email' => $email));
 	}
 	
 	public static function get_email_by_login($login)

@@ -40,7 +40,7 @@ class UserLostPasswordController extends AbstractController
 		
 		if($this->submit_button->has_been_submited() && $this->form->validate())
 		{
-			$this->send_mail();
+			$this->send_email();
 		}
 		
 		$this->tpl->put('FORM', $this->form->display());
@@ -88,44 +88,43 @@ class UserLostPasswordController extends AbstractController
 		return $response->display($view);
 	}
 	
-	private function send_mail()
+	private function send_email()
+	{
+		$change_password_pass = KeyGenerator::generate_key(15);
+		$user = $this->get_user();
+
+		UserLostPasswordService::update_change_password_pass($change_password_pass, $user->get_email());
+		
+		$parameters = array(
+				'pseudo' => $user->get_pseudo(),
+				'change_password_link' => UserUrlBuilder::change_password($change_password_pass)->absolute(),
+				'signature' => MailServiceConfig::load()->get_mail_signature()
+		);
+		$subject = GeneralConfig::load()->get_site_name() . ' : ' . $this->lang['forget-password'];
+		$content = StringVars::replace_vars($this->lang['forget-password.mail.content'], $parameters);
+		UserLostPasswordService::send_mail($user->get_email(), $subject, $content);
+		
+		$this->tpl->put('MSG', MessageHelper::display($this->lang['forget-password.success'], MessageHelper::SUCCESS));
+	}
+	
+	private function get_user()
 	{
 		switch ($this->form->get_value('field_choice')->get_raw_value()) 
 		{
 			case UserLostPasswordService::LOST_PASSWORD_BY_EMAIL:
-				$email = $this->form->get_value('information');
+				try {
+				return UserService::get_user('WHERE user_mail=:email', array('email' => $this->form->get_value('information')));
+				} catch (Exception $e) {
+					$this->tpl->put('MSG', MessageHelper::display($this->lang['forget-password.error'], MessageHelper::NOTICE));
+				}
 			break;
 			case UserLostPasswordService::LOST_PASSWORD_BY_LOGIN:
-				$login = $this->form->get_value('information');
-				if (UserService::user_exists('WHERE login=:login', array('login' => $login)))
-				{
-					$email = UserLostPasswordService::get_email_by_login($login);
-				}
-				else
-				{
-					$email = false;
+				try {
+					return UserService::get_user('WHERE login=:login', array('login' => $this->form->get_value('information')));
+				} catch (Exception $e) {
+					$this->tpl->put('MSG', MessageHelper::display($this->lang['forget-password.error'], MessageHelper::NOTICE));
 				}
 			break;
-		}
-		
-		if ($email !== false && UserService::user_exists('WHERE user_mail=:email', array('email' => $email)))
-		{
-			$change_password_pass = KeyGenerator::generate_key(15);
-			UserLostPasswordService::register_change_password_pass($change_password_pass, $email);
-			$subject = GeneralConfig::load()->get_site_name() . ' : ' . $this->lang['forget-password'];
-			$parameters = array(
-					'pseudo' => UserLostPasswordService::get_pseudo_by_email($email),
-					'change_password_link' => UserUrlBuilder::change_password($change_password_pass)->absolute(),
-					'signature' => MailServiceConfig::load()->get_mail_signature()
-			);
-			$content = StringVars::replace_vars($this->lang['forget-password.mail.content'], $parameters);
-			UserLostPasswordService::send_mail($email, $subject, $content);
-			
-			$this->tpl->put('MSG', MessageHelper::display($this->lang['forget-password.success'], MessageHelper::SUCCESS));
-		}
-		else
-		{
-			$this->tpl->put('MSG', MessageHelper::display($this->lang['forget-password.error'], MessageHelper::NOTICE));
 		}
 	}
 	
