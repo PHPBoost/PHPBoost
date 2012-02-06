@@ -36,7 +36,11 @@ class OnlineModuleMiniMenu extends ModuleMiniMenu
     {
 		global $LANG;
 		
-		if (!Url::is_current_url('/guestbook/guestbook.php'))
+		$display_order['LEVEL_DISPLAY_ORDER'] = 's.level DESC';
+		$display_order['SESSION_TIME_DISPLAY_ORDER'] = 's.session_time DESC';
+		$display_order['LEVEL_AND_SESSION_TIME_DISPLAY_ORDER'] = 's.level DESC, s.session_time DESC';
+		
+		if (!Url::is_current_url('/online/index.php'))
 	    {
 			$tpl = new FileTemplate('online/OnlineModuleMiniMenu.tpl');
 			MenuService::assign_positions_conditions($tpl, $this->get_block());
@@ -53,7 +57,7 @@ class OnlineModuleMiniMenu extends ModuleMiniMenu
 				FROM " . DB_TABLE_SESSIONS . " s
 				LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = s.user_id
 				WHERE s.session_time > '" . (time() - SessionsConfig::load()->get_active_session_duration()) . "'
-            "//    ORDER BY " . OnlineConfig::load()->get_display_order()
+                ORDER BY " . $display_order[OnlineConfig::load()->get_display_order()]
 			);
 			
 			while ($row = $result->fetch())

@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *		             OnlineConfigclass.php
+ *		             OnlineConfig.class.php
  *                            -------------------
  *   begin                : September 19, 2011
  *   copyright            : (C) 2011 Kévin MASSY
@@ -36,7 +36,6 @@ class OnlineConfig extends AbstractConfigData
 	const LEVEL_DISPLAY_ORDER = 's.level DESC';
 	const SESSION_TIME_DISPLAY_ORDER = 's.session_time DESC';
 	const LEVEL_AND_SESSION_TIME_DISPLAY_ORDER = 's.level DESC, s.session_time DESC';
-	
 	
 	public function get_display_order()
 	{
