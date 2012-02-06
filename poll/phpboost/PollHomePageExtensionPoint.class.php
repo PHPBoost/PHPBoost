@@ -63,7 +63,7 @@ class PollHomePageExtensionPoint implements HomePageExtensionPoint
 		if ($User->check_level(User::ADMIN_LEVEL))
 			$edit = '<a href="../poll/admin_poll.php" title="' . $LANG['edit'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/edit.png" class="valign_middle" /></a>';
 	
-		$Template->put_all(array(
+		$tpl->put_all(array(
 			'C_POLL_MAIN' => true,
 			'EDIT' => $edit,
 			'U_ARCHIVE' => $show_archives,
@@ -77,7 +77,7 @@ class PollHomePageExtensionPoint implements HomePageExtensionPoint
 		ORDER BY id DESC", __LINE__, __FILE__);
 		while ($row = $Sql->fetch_assoc($result))
 		{
-			$Template->assign_block_vars('list', array(
+			$tpl->assign_block_vars('list', array(
 				'U_POLL_ID' => url('.php?id=' . $row['id'], '-' . $row['id'] . '.php'),
 				'QUESTION' => $row['question']
 			));
