@@ -91,6 +91,11 @@ class DownloadExtensionPointProvider extends ExtensionPointProvider
 	{
 		return new DownloadComments();
 	}
+	
+	public function home_page()
+	{
+		return new DownloadHomePageExtensionPoint();
+	}
 
 	function get_search_request($args)
     /**

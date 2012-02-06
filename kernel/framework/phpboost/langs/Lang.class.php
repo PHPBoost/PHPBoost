@@ -49,6 +49,11 @@ class Lang
     {
         return $this->id;
     }
+    
+    public function get_identifier()
+    {
+    	return substr($this->id, 1, 2);
+    }
 
     public function is_activated()
     {
