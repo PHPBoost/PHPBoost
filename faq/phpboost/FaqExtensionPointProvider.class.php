@@ -156,6 +156,11 @@ class FaqExtensionPointProvider extends ExtensionPointProvider
         return $tpl->render();
     }
 
+	public function home_page()
+	{
+		return new PollHomePageExtensionPoint();
+	}
+	
     public function sitemap()
     {
     	return new FaqSitemapExtensionPoint();

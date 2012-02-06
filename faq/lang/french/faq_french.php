@@ -34,6 +34,7 @@ global $FAQ_LANG;
 $FAQ_LANG = array();
 
 //Généralités
+$FAQ_LANG['title_faq'] = 'FAQ';
 $FAQ_LANG['faq'] = 'FAQ';
 $FAQ_LANG['faq_no_question_here'] = 'Aucune question présente dans cette catégorie';
 $FAQ_LANG['faq_page_title'] = 'FAQ - %s';
