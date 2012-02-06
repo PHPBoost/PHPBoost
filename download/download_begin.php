@@ -39,6 +39,10 @@ $file_id = retrieve(GET, 'id', 0);
 $deadlink = retrieve(GET, 'deadlink', 0);
 $id_cat_for_download = 0;
 
+$notation = new Notation();
+$notation->set_module_name('download');
+$notation->set_notation_scale($CONFIG_DOWNLOAD['note_max']);
+
 if (!empty($file_id))
 {
 	$download_info = $Sql->query_array(PREFIX . 'download', '*', "WHERE visible = 1 AND approved = 1 AND id = '" . $file_id . "'", __LINE__, __FILE__);
