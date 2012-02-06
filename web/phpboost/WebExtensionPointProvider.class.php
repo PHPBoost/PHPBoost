@@ -49,6 +49,11 @@ class WebExtensionPointProvider extends ExtensionPointProvider
 		return $code;	
 	}
 	
+	public function home_page()
+	{
+		return new WebHomePageExtensionPoint();
+	}
+	
 	public function comments()
 	{
 		return new WebComments();

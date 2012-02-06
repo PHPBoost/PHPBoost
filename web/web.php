@@ -31,11 +31,6 @@ require_once('../kernel/header.php');
 
 $tpl = new FileTemplate('web/web.tpl');
 
-$notation = new Notation();
-$notation->set_module_name('web');
-$notation->set_id_in_module($idweb);
-$notation->set_notation_scale($web_config->get_note_max());
-
 if (!empty($idweb) && !empty($CAT_WEB[$idcat]['name']) && !empty($idcat)) //Contenu du lien.
 {	
 	if (!$User->check_level($CAT_WEB[$idcat]['secure']))
@@ -207,54 +202,12 @@ elseif (!empty($idcat) && empty($idweb)) //Catégories.
 }
 else
 {
-	$total_link = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "web_cat wc
-	LEFT JOIN " . PREFIX . "web w ON w.idcat = wc.id
-	WHERE w.aprob = 1 AND wc.aprob = 1 AND wc.secure <= '" . $User->get_attribute('level') . "'", __LINE__, __FILE__);
-	$total_cat = $Sql->query("SELECT COUNT(*) as compt FROM " . PREFIX . "web_cat WHERE aprob = 1 AND secure <= '" . $User->get_attribute('level') . "'", __LINE__, __FILE__);
-	
-	//On crée une pagination si le nombre de catégories est trop important.
-	 
-	$Pagination = new DeprecatedPagination();
-
-	$nbr_column = $web_config->get_number_columns();
-	if ($total_cat < $web_config->get_number_columns($nbr_column))
+	$modulesLoader = AppContext::get_extension_provider_service();
+	$module = $modulesLoader->get_provider('poll');
+	if ($module->has_extension_point(HomePageExtensionPoint::EXTENSION_POINT))
 	{
-		$nbr_column = $total_cat;
+		echo $module->get_extension_point(HomePageExtensionPoint::EXTENSION_POINT)->get_home_page()->get_view()->display();
 	}
-	
-	$tpl->put_all(array(
-		'C_WEB_CAT' => true,
-		'C_IS_ADMIN' => $User->check_level(User::ADMIN_LEVEL),
-		'PAGINATION' => $Pagination->display('web' . url('.php?p=%d', '-0-0-%d.php'), $total_cat, 'p', $web_config->get_max_nbr_category(), 3),
-		'TOTAL_FILE' => $total_link,
-		'L_CATEGORIES' => $LANG['categories'],
-		'L_PROPOSE_LINK' => $LANG['propose_link'],
-		'L_HOW_LINK' => $LANG['how_link'],
-		'U_WEB_ADD' => url('.php?web=true')
-	));
-	
-	//Catégorie disponibles	
-	$column_width = floor(100/$web_config->get_number_columns());
-	$result = $Sql->query_while(
-	"SELECT aw.id, aw.name, aw.contents, aw.icon, COUNT(w.id) as count
-	FROM " . PREFIX . "web_cat aw
-	LEFT JOIN " . PREFIX . "web w ON w.idcat = aw.id AND w.aprob = 1
-	WHERE aw.aprob = 1 AND aw.secure <= '" . $User->get_attribute('level') . "'
-	GROUP BY aw.id
-	ORDER BY aw.class
-	" . $Sql->limit($Pagination->get_first_msg($web_config->get_max_nbr_category(), 'p'), $web_config->get_max_nbr_category()), __LINE__, __FILE__);
-	while ($row = $Sql->fetch_assoc($result))
-	{
-		$tpl->assign_block_vars('cat_list', array(
-			'WIDTH' => $column_width,
-			'TOTAL' => $row['count'],
-			'CAT' => $row['name'],
-			'CONTENTS' => $row['contents'],	
-			'U_IMG_CAT' => !empty($row['icon']) ? '<a href="../web/web' . url('.php?cat=' . $row['id'], '-' . $row['id'] . '.php') . '"><img src="' . $row['icon'] . '" alt="" /></a><br />' : '',
-			'U_WEB_CAT' => url('.php?cat=' . $row['id'], '-' . $row['id'] . '.php')
-		));
-	}
-	$Sql->query_close($result);
 }
 $tpl->display();
 
