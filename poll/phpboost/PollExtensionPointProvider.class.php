@@ -74,6 +74,11 @@ class PollExtensionPointProvider extends ExtensionPointProvider
 		return $code;
 	}
 
+	public function home_page()
+	{
+		return new PollHomePageExtensionPoint();
+	}
+	
 	public function scheduled_jobs()
 	{
 		return new PollScheduledJobs();

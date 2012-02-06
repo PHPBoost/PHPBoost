@@ -283,42 +283,6 @@ elseif (!empty($poll['id']) && !$archives) //Affichage du sondage.
 		$Template->pparse('poll');
 	}
 }
-elseif (!$archives) //Menu principal.
-{
-	$Template->set_filenames(array(
-		'poll'=> 'poll/poll.tpl'
-	));
-
-	$show_archives = $Sql->query("SELECT COUNT(*) as compt FROM " . PREFIX . "poll WHERE archive = 1 AND visible = 1 AND start <= '" . $now->get_timestamp() . "' AND (end >= '" . $now->get_timestamp() . "' OR end = 0)", __LINE__, __FILE__);
-	$show_archives = !empty($show_archives) ? '<a href="poll' . url('.php?archives=1', '.php?archives=1') . '">' . $LANG['archives'] . '</a>' : '';
-	
-	$edit = '';	
-	if ($User->check_level(User::ADMIN_LEVEL))
-		$edit = '<a href="../poll/admin_poll.php" title="' . $LANG['edit'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/edit.png" class="valign_middle" /></a>';
-	
-	$Template->put_all(array(
-		'C_POLL_MAIN' => true,
-		'EDIT' => $edit,
-		'U_ARCHIVE' => $show_archives,
-		'L_POLL' => $LANG['poll'],
-		'L_POLL_MAIN' => $LANG['poll_main']		
-	));
-	
-	$result = $Sql->query_while("SELECT id, question 
-	FROM " . PREFIX . "poll 
-	WHERE archive = 0 AND visible = 1 AND start <= '" . $now->get_timestamp() . "' AND (end >= '" . $now->get_timestamp() . "' OR end = 0)
-	ORDER BY id DESC", __LINE__, __FILE__);
-	while ($row = $Sql->fetch_assoc($result))
-	{
-		$Template->assign_block_vars('list', array(
-			'U_POLL_ID' => url('.php?id=' . $row['id'], '-' . $row['id'] . '.php'),
-			'QUESTION' => $row['question']
-		));
-	}
-	$Sql->query_close($result);
-	
-	$Template->pparse('poll');	
-}
 elseif ($archives) //Archives.
 {
 	$Template->set_filenames(array(
@@ -386,18 +350,10 @@ elseif ($archives) //Archives.
 else
 {
 	$modulesLoader = AppContext::get_extension_provider_service();
-	$module_name = 'poll';
-	$module = $modulesLoader->get_provider($module_name);
+	$module = $modulesLoader->get_provider('poll');
 	if ($module->has_extension_point(HomePageExtensionPoint::EXTENSION_POINT))
 	{
 		echo $module->get_extension_point(HomePageExtensionPoint::EXTENSION_POINT)->get_home_page()->get_view()->display();
-	}
-	elseif (!$no_alert_on_error) 
-	{
-		//TODO Gestion de la langue
-		$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
-            'Le module <strong>' . $module_name . '</strong> n\'a pas de fonction get_home_page!', UserErrorController::FATAL);
-        DispatchManager::redirect($controller);
 	}
 }
 	
