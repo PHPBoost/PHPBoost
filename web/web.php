@@ -203,7 +203,7 @@ elseif (!empty($idcat) && empty($idweb)) //Catégories.
 else
 {
 	$modulesLoader = AppContext::get_extension_provider_service();
-	$module = $modulesLoader->get_provider('poll');
+	$module = $modulesLoader->get_provider('web');
 	if ($module->has_extension_point(HomePageExtensionPoint::EXTENSION_POINT))
 	{
 		echo $module->get_extension_point(HomePageExtensionPoint::EXTENSION_POINT)->get_home_page()->get_view()->display();

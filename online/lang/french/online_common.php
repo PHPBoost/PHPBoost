@@ -38,6 +38,9 @@ $lang['online'] = 'En ligne';
 $lang['online.location'] = 'Localisation';
 $lang['online.last_update'] = 'Dernière mise à jour';
 
+//Title
+$lang['title_online'] = 'En ligne';
+
 //Admin
 $lang['admin.config'] = 'Configuration en ligne';
 $lang['admin.nbr-displayed'] = 'Nombre de personnes en ligne affichées';

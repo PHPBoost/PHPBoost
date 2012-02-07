@@ -63,8 +63,8 @@ class WebHomePageExtensionPoint implements HomePageExtensionPoint
 		 
 		$Pagination = new DeprecatedPagination();
 
-		$nbr_column = $web_config->get_number_columns();
-		if ($total_cat < $web_config->get_number_columns($nbr_column))
+		$nbr_column = $CONFIG_WEB->get_number_columns();
+		if ($total_cat < $CONFIG_WEB->get_number_columns($nbr_column))
 		{
 			$nbr_column = $total_cat;
 		}
