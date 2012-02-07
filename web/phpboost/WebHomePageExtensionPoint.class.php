@@ -54,10 +54,10 @@ class WebHomePageExtensionPoint implements HomePageExtensionPoint
 		
 		$tpl = new FileTemplate('web/web.tpl');
 		
-		$total_link = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "web_cat wc
+		$total_link = $this->sql_querier->query("SELECT COUNT(*) FROM " . PREFIX . "web_cat wc
 		LEFT JOIN " . PREFIX . "web w ON w.idcat = wc.id
 		WHERE w.aprob = 1 AND wc.aprob = 1 AND wc.secure <= '" . $User->get_attribute('level') . "'", __LINE__, __FILE__);
-		$total_cat = $Sql->query("SELECT COUNT(*) as compt FROM " . PREFIX . "web_cat WHERE aprob = 1 AND secure <= '" . $User->get_attribute('level') . "'", __LINE__, __FILE__);
+		$total_cat = $this->sql_querier->query("SELECT COUNT(*) as compt FROM " . PREFIX . "web_cat WHERE aprob = 1 AND secure <= '" . $User->get_attribute('level') . "'", __LINE__, __FILE__);
 		
 		//On crée une pagination si le nombre de catégories est trop important.
 		 
@@ -82,15 +82,15 @@ class WebHomePageExtensionPoint implements HomePageExtensionPoint
 		
 		//Catégorie disponibles	
 		$column_width = floor(100/$web_config->get_number_columns());
-		$result = $Sql->query_while(
+		$result = $this->sql_querier->query_while(
 		"SELECT aw.id, aw.name, aw.contents, aw.icon, COUNT(w.id) as count
 		FROM " . PREFIX . "web_cat aw
 		LEFT JOIN " . PREFIX . "web w ON w.idcat = aw.id AND w.aprob = 1
 		WHERE aw.aprob = 1 AND aw.secure <= '" . $User->get_attribute('level') . "'
 		GROUP BY aw.id
 		ORDER BY aw.class
-		" . $Sql->limit($Pagination->get_first_msg($web_config->get_max_nbr_category(), 'p'), $web_config->get_max_nbr_category()), __LINE__, __FILE__);
-		while ($row = $Sql->fetch_assoc($result))
+		" . $this->sql_querier->limit($Pagination->get_first_msg($web_config->get_max_nbr_category(), 'p'), $web_config->get_max_nbr_category()), __LINE__, __FILE__);
+		while ($row = $this->sql_querier->fetch_assoc($result))
 		{
 			$tpl->assign_block_vars('cat_list', array(
 				'WIDTH' => $column_width,
@@ -101,7 +101,7 @@ class WebHomePageExtensionPoint implements HomePageExtensionPoint
 				'U_WEB_CAT' => url('.php?cat=' . $row['id'], '-' . $row['id'] . '.php')
 			));
 		}
-		$Sql->query_close($result);
+		$this->sql_querier->query_close($result);
 		return $tpl;
 	}
 }

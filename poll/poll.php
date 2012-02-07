@@ -31,6 +31,9 @@ require_once('../kernel/header.php');
 
 $poll = array();
 $poll_id = retrieve(GET, 'id', 0);
+
+$now = new Date(DATE_NOW, TIMEZONE_AUTO);
+
 if (!empty($poll_id))
 {
 	$poll = $Sql->query_array(PREFIX . 'poll', 'id', 'question', 'votes', 'answers', 'type', 'timestamp', "WHERE id = '" . $poll_id . "' AND archive = 0 AND visible = 1 AND start <= '" . $now->get_timestamp() . "' AND (end >= '" . $now->get_timestamp() . "' OR end = 0)", __LINE__, __FILE__);

@@ -56,7 +56,7 @@ class PollHomePageExtensionPoint implements HomePageExtensionPoint
         
 		$now = new Date(DATE_NOW, TIMEZONE_AUTO);
 
-		$show_archives = $Sql->query("SELECT COUNT(*) as compt FROM " . PREFIX . "poll WHERE archive = 1 AND visible = 1 AND start <= '" . $now->get_timestamp() . "' AND (end >= '" . $now->get_timestamp() . "' OR end = 0)", __LINE__, __FILE__);
+		$show_archives = $this->sql_querier->query("SELECT COUNT(*) as compt FROM " . PREFIX . "poll WHERE archive = 1 AND visible = 1 AND start <= '" . $now->get_timestamp() . "' AND (end >= '" . $now->get_timestamp() . "' OR end = 0)", __LINE__, __FILE__);
 		$show_archives = !empty($show_archives) ? '<a href="poll' . url('.php?archives=1', '.php?archives=1') . '">' . $LANG['archives'] . '</a>' : '';
 	
 		$edit = '';	
@@ -71,18 +71,18 @@ class PollHomePageExtensionPoint implements HomePageExtensionPoint
 			'L_POLL_MAIN' => $LANG['poll_main']		
 		));
 	
-		$result = $Sql->query_while("SELECT id, question 
+		$result = $this->sql_querier->query_while("SELECT id, question 
 		FROM " . PREFIX . "poll 
 		WHERE archive = 0 AND visible = 1 AND start <= '" . $now->get_timestamp() . "' AND (end >= '" . $now->get_timestamp() . "' OR end = 0)
 		ORDER BY id DESC", __LINE__, __FILE__);
-		while ($row = $Sql->fetch_assoc($result))
+		while ($row = $this->sql_querier->fetch_assoc($result))
 		{
 			$tpl->assign_block_vars('list', array(
 				'U_POLL_ID' => url('.php?id=' . $row['id'], '-' . $row['id'] . '.php'),
 				'QUESTION' => $row['question']
 			));
 		}
-		$Sql->query_close($result);	
+		$this->sql_querier->query_close($result);	
 
 		return $tpl;
 	}

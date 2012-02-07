@@ -32,6 +32,11 @@ class OnlineExtensionPointProvider extends ExtensionPointProvider
         parent::__construct('online');
     }
 	
+	public function home_page()
+	{
+		return new OnlineHomePageExtensionPoint();
+	}
+	
 	public function url_mappings()
 	{
 		return new UrlMappings(array(new DispatcherUrlMapping('/online/index.php')));

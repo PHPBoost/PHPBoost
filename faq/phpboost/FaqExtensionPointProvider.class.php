@@ -158,7 +158,7 @@ class FaqExtensionPointProvider extends ExtensionPointProvider
 
 	public function home_page()
 	{
-		return new PollHomePageExtensionPoint();
+		return new FaqHomePageExtensionPoint();
 	}
 	
     public function sitemap()
