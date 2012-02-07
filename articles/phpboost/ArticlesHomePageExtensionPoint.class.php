@@ -3,7 +3,7 @@
  *                     ArticlesHomePageExtensionPoint.class.php
  *                            -------------------
  *   begin                : January 27, 2012
- *   copyright            : (C) 2012 Kévin MASSY
+ *   copyright            : (C) 2012 Kï¿½vin MASSY
  *   email                : soldier.weasel@gmail.com
  *
  *
@@ -48,7 +48,7 @@ class ArticlesHomePageExtensionPoint implements HomePageExtensionPoint
 	
 	private function get_view()
 	{
-		global $idartcat, $Session, $User, $invisible, $Cache, $Bread_crumb, $ARTICLES_CAT, $CONFIG_ARTICLES, $LANG, $ARTICLES_LANG;
+		global $idartcat, $Session, $User, $invisible, $Cache, $ARTICLES_CAT, $CONFIG_ARTICLES, $LANG, $ARTICLES_LANG;
 		require_once('../articles/articles_begin.php'); 
 		
 		// Initialisation des imports.
@@ -75,7 +75,7 @@ class ArticlesHomePageExtensionPoint implements HomePageExtensionPoint
 
 		$tpl = new FileTemplate('articles/articles_cat.tpl');
 
-		/*//Niveau d'autorisation de la catégorie
+		/*//Niveau d'autorisation de la catï¿½gorie
 		if (!isset($ARTICLES_CAT[$idartcat]) || !$User->check_auth($ARTICLES_CAT[$idartcat]['auth'], AUTH_ARTICLES_READ))
 		{
 			$error_controller = PHPBoostErrors::unexisting_page();
@@ -139,7 +139,7 @@ class ArticlesHomePageExtensionPoint implements HomePageExtensionPoint
 		else
 		$selected_fields['desc'] = ' selected="selected"';
 
-		//Colonnes des catégories.
+		//Colonnes des catï¿½gories.
 		$nbr_column_cats = ($total_cat > $CONFIG_ARTICLES['nbr_column']) ? $CONFIG_ARTICLES['nbr_column'] : $total_cat;
 		$nbr_column_cats = !empty($nbr_column_cats) ? $nbr_column_cats : 1;
 		$column_width_cats = floor(100/$nbr_column_cats);
@@ -197,11 +197,11 @@ class ArticlesHomePageExtensionPoint implements HomePageExtensionPoint
 
 		$unget = (!empty($get_sort) && !empty($mode)) ? '?sort=' . $get_sort . '&amp;mode=' . $get_mode : '';
 
-		//On crée une pagination si le nombre de fichiers est trop important.
+		//On crï¿½e une pagination si le nombre de fichiers est trop important.
 
 		$Pagination = new DeprecatedPagination();
 
-		//Catégories non autorisées.
+		//Catï¿½gories non autorisï¿½es.
 		$unauth_cats_sql = array();
 		foreach ($ARTICLES_CAT as $id => $key)
 		{
@@ -211,7 +211,7 @@ class ArticlesHomePageExtensionPoint implements HomePageExtensionPoint
 		$nbr_unauth_cats = count($unauth_cats_sql);
 		$clause_unauth_cats = ($nbr_unauth_cats > 0) ? " AND ac.id NOT IN (" . implode(', ', $unauth_cats_sql) . ")" : '';
 
-		##### Catégories disponibles #####
+		##### Catï¿½gories disponibles #####
 		if ($total_cat > 0)
 		{
 			$tpl->put_all(array(
