@@ -48,23 +48,25 @@ class WebHomePageExtensionPoint implements HomePageExtensionPoint
 	
 	private function get_view()
 	{
-		global $idwebcat, $Session, $User, $invisible, $Cache, $Bread_crumb, $WEB_CAT, $CONFIG_WEB, $LANG, $WEB_LANG;
+		global $idwebcat, $Session, $User, $WEB_CAT, $LANG, $WEB_LANG;
 		
 		require_once('../web/web_begin.php'); 
 		
 		$tpl = new FileTemplate('web/web.tpl');
+		
+		$web_config = WebConfig::load();
 		
 		$total_link = $this->sql_querier->query("SELECT COUNT(*) FROM " . PREFIX . "web_cat wc
 		LEFT JOIN " . PREFIX . "web w ON w.idcat = wc.id
 		WHERE w.aprob = 1 AND wc.aprob = 1 AND wc.secure <= '" . $User->get_attribute('level') . "'", __LINE__, __FILE__);
 		$total_cat = $this->sql_querier->query("SELECT COUNT(*) as compt FROM " . PREFIX . "web_cat WHERE aprob = 1 AND secure <= '" . $User->get_attribute('level') . "'", __LINE__, __FILE__);
 		
-		//On crée une pagination si le nombre de catégories est trop important.
+		//On crï¿½e une pagination si le nombre de catï¿½gories est trop important.
 		 
 		$Pagination = new DeprecatedPagination();
 
-		$nbr_column = $CONFIG_WEB->get_number_columns();
-		if ($total_cat < $CONFIG_WEB->get_number_columns($nbr_column))
+		$nbr_column = $web_config->get_number_columns();
+		if ($total_cat < $web_config->get_number_columns($nbr_column))
 		{
 			$nbr_column = $total_cat;
 		}
@@ -80,7 +82,7 @@ class WebHomePageExtensionPoint implements HomePageExtensionPoint
 			'U_WEB_ADD' => url('.php?web=true')
 		));
 		
-		//Catégorie disponibles	
+		//Catï¿½gorie disponibles	
 		$column_width = floor(100/$web_config->get_number_columns());
 		$result = $this->sql_querier->query_while(
 		"SELECT aw.id, aw.name, aw.contents, aw.icon, COUNT(w.id) as count

@@ -48,15 +48,13 @@ class FaqHomePageExtensionPoint implements HomePageExtensionPoint
 	
 	private function get_view()
 	{
-		global $idartcat, $Session, $User, $invisible, $Cache, $Bread_crumb, $ARTICLES_CAT, $CONFIG_ARTICLES, $LANG, $ARTICLES_LANG;
+		global $FAQ_CATS, $LANG, $FAQ_LANG, $id_faq, $User, $auth_write, $Session, $id_question;
 		
 		require_once('../faq/faq_begin.php');
 		
 		$tpl = new FileTemplate('faq/faq.tpl');
-
-		$tpl->put_all(array(
-			'TITLE' => $TITLE,
-		));
+		
+		$faq_config = FaqConfig::load();
 
 		if (!empty($FAQ_CATS[$id_faq]['description']) && $id_faq > 0)
 		{
