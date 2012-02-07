@@ -69,7 +69,6 @@
 + Refonte du module
 
 [b]Tous[/b]
-* Réparer la fonctionnalité de période de validité d'une publication (news par exemple), en requêtant directement en fonction de la date courante
 - Intégration de l'ExtensionPoint HomePage dans les différents modules
 
 #################################################################################
