@@ -139,6 +139,7 @@ $MEDIA_LANG = array(
 'require_url' => 'Vous devez renseigner le lien de votre fichier multimédia !',
 
 // mediaExtensionPointProvider.class.php
+'title_media' => 'Fichier Multimédia',
 'media' => 'Fichier Multimédia',
 'all_cats' => 'Toutes les catégories',
 'xml_media_desc' => 'Derniers médias',

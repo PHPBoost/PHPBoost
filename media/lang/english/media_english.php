@@ -140,6 +140,7 @@ $MEDIA_LANG = array(
 'require_url' => 'Please enter a link for your multimedia file!',
 
 // mediaExtensionPointProvider.class.php
+'title_media' => 'Multimedia file',
 'media' => 'Multimedia file',
 'all_cats' => 'All categories',
 'xml_media_desc' => 'Last multimedia file',
