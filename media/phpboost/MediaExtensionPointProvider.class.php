@@ -79,6 +79,11 @@ class MediaExtensionPointProvider extends ExtensionPointProvider
 		return $string;
 	}
 	
+	public function home_page()
+	{
+		return new MediaHomePageExtensionPoint();
+	}
+	
 	public function feeds()
 	{
 		return new MediaFeedProvider();
