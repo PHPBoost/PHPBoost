@@ -119,13 +119,13 @@ class FaqHomePageExtensionPoint implements HomePageExtensionPoint
 		}
 
 		//Displaying the questions that this cat contains
-		$result = $Sql->query_while("SELECT id, question, q_order, answer
+		$result = $this->sql_querier->query_while("SELECT id, question, q_order, answer
 		FROM " . PREFIX . "faq
 		WHERE idcat = '" . $id_faq . "'
 		ORDER BY q_order",
 		__LINE__, __FILE__);
 
-		$num_rows = $Sql->num_rows($result, "SELECT COUNT(*) FROM " . PREFIX . "faq_cats WHERE idcat = '" . $id_faq . "'", __LINE__, __FILE__);
+		$num_rows = $this->sql_querier->num_rows($result, "SELECT COUNT(*) FROM " . PREFIX . "faq_cats WHERE idcat = '" . $id_faq . "'", __LINE__, __FILE__);
 
 		if ($num_rows > 0)
 		{
@@ -148,7 +148,7 @@ class FaqHomePageExtensionPoint implements HomePageExtensionPoint
 			else
 				$tpl->assign_block_vars('questions_block', array());
 				
-			while ($row = $Sql->fetch_assoc($result))
+			while ($row = $this->sql_querier->fetch_assoc($result))
 			{
 				if (!$faq_display_block)
 				{

@@ -57,7 +57,7 @@ class OnlineModuleMiniMenu extends ModuleMiniMenu
 				FROM " . DB_TABLE_SESSIONS . " s
 				LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = s.user_id
 				WHERE s.session_time > '" . (time() - SessionsConfig::load()->get_active_session_duration()) . "'
-                ORDER BY " . $display_order[OnlineConfig::load()->get_display_order()]
+                "//ORDER BY " . $display_order[OnlineConfig::load()->get_display_order()]
 			);
 			
 			while ($row = $result->fetch())
