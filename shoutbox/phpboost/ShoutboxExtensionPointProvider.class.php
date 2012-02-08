@@ -34,7 +34,12 @@ class ShoutboxExtensionPointProvider extends ExtensionPointProvider
         $this->sql_querier = PersistenceContext::get_sql();
         parent::__construct('shoutbox');
     }
-
+	
+	public function home_page()
+	{
+		return new ShoutboxHomePageExtensionPoint();
+	}
+	
 	public function scheduled_jobs()
 	{
 		return new ShoutboxScheduledJobs();
