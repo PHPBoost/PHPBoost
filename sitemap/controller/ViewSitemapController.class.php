@@ -36,20 +36,14 @@ class ViewSitemapController extends ModuleController
 	
 	public function execute(HTTPRequest $request)
 	{
-		$config_html = new SitemapExportConfig('sitemap/export/sitemap.html.tpl',
-			'sitemap/export/module_map.html.tpl', 'sitemap/export/sitemap_section.html.tpl', 'sitemap/export/sitemap_link.html.tpl');
-
-		$sitemap = SitemapService::get_personal_sitemap();
-		
-		$tpl = new FileTemplate('sitemap/ViewSitemapController.tpl');
-		$tpl->add_lang($this->lang);
-		$tpl->put('SITEMAP', $sitemap->export($config_html));
-		
-		$response = new SiteDisplayResponse($tpl);
-		
-		$response->get_graphical_environment()->set_page_title($this->lang['sitemap']);
-
-		return $response;
+		return $this->build_response(SitemapModuleHomePage::get_view());
+	}
+	
+	private function build_response(View $view)
+	{
+			$response = new SiteDisplayResponse($view);
+			$response->get_graphical_environment()->set_page_title(LangLoader::get_message('title_sitemap', 'common', 'sitemap'));
+			return $response;
 	}
 }
 ?>
