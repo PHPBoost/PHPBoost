@@ -31,5 +31,10 @@ class ContactExtensionPointProvider extends ExtensionPointProvider
     {
         parent::__construct('contact');
     }
+    
+	public function home_page()
+	{
+		return new ContactHomePageExtensionPoint();
+	}
 }
 ?>
