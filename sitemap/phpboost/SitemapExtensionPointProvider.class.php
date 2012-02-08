@@ -31,7 +31,12 @@ class SitemapExtensionPointProvider extends ExtensionPointProvider
 	{
 		parent::__construct('sitemap');
 	}
-
+	
+	public function home_page()
+	{
+		return new SitemapHomePageExtensionPoint();
+	}
+	
 	public function scheduled_jobs()
 	{
 		return new SitemapScheduledJobs();
