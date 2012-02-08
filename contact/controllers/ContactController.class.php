@@ -27,92 +27,15 @@
 
 class ContactController extends ModuleController
 {
-	private $lang;
-	/**
-	 * @var HTMLForm
-	 */
-	private $form;
-	/**
-	 * @var FormButtonDefaultSubmit
-	 */
-	private $submit_button;
-
 	public function execute(HTTPRequest $request)
 	{
-		$this->init();
-		$this->build_form();
-
-		$tpl = new FileTemplate('contact/ContactController.tpl');
-		$tpl->add_lang($this->lang);
-
-		if ($this->submit_button->has_been_submited() && $this->form->validate())
-		{
-			$mail_success = $this->send_mail();
-
-			$tpl->put_all(array(
-				'C_SUBMITED' => true,
-				'C_SUCCESS' => $mail_success
-			));
-		}
-
-		$tpl->put('FORM', $this->form->display());
-
-		return $this->build_response($tpl);
-	}
-
-	private function init()
-	{
-		$this->lang = LangLoader::get('contact_common', 'contact');
-	}
-
-	private function build_form()
-	{
-		$form = new HTMLForm('contact');
-
-		$fieldset = new FormFieldsetHTML('send_a_mail', $this->lang['contact_mail']);
-		$form->add_fieldset($fieldset);
-		$fieldset->add_field(new FormFieldMailEditor('sender_mail', $this->lang['your_mail_address'], AppContext::get_current_user()->get_attribute('user_mail'),
-			array('description' => $this->lang['your_mail_address_explain'])));
-
-		$fieldset->add_field(new FormFieldTextEditor('subject', $this->lang['contact_subject'], '', array('description' => $this->lang['contact_subject_explain']), array(new FormFieldConstraintNotEmpty())));
-
-		$fieldset->add_field(new FormFieldMultiLineTextEditor('message', $this->lang['message'], '', array(), array(new FormFieldConstraintNotEmpty())));
-
-		$config = ContactConfig::load();
-		if ($config->is_captcha_enabled())
-		{
-			$captcha = new Captcha();
-			$captcha->set_difficulty($config->get_captcha_difficulty_level());
-			$fieldset->add_field(new FormFieldCaptcha('captcha', $captcha));
-		}
-
-		$form->add_button(new FormButtonReset());
-		$this->submit_button = new FormButtonDefaultSubmit();
-		$form->add_button($this->submit_button);
-
-		$this->form = $form;
-	}
-
-	private function send_mail()
-	{
-		$mail = new Mail();
-		$mail->set_sender($this->form->get_value('sender_mail'), 'user');
-		$mail->set_subject($this->form->get_value('subject'));
-		$mail->set_content($this->form->get_value('message'));
-
-		$admin_mails = MailServiceConfig::load()->get_administrators_mails();
-		foreach ($admin_mails as $mail_address)
-		{
-			$mail->add_recipient($mail_address);
-		}
-
-		return AppContext::get_mail_service()->try_to_send($mail);
+		return $this->build_response(ContactModuleHomePage::get_view());
 	}
 
 	private function build_response(View $view)
 	{
 		$response = new SiteDisplayResponse($view);
-		$response->get_graphical_environment()->set_page_title($this->lang['title_contact']);
+		$response->get_graphical_environment()->set_page_title(LangLoader::get_message('title_contact', 'contact_common', 'contact'));
 		return $response;
 	}
 }
