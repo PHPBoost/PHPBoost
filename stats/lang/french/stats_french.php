@@ -30,6 +30,7 @@
 #                                                          French                                                                        #
  ####################################################
 
+$LANG['title_stats'] = 'Statistiques';
 $LANG['stats'] = 'Statistiques';
 $LANG['more_stats'] = 'Plus de stats';
 $LANG['last_member'] = 'Dernier membre';

@@ -32,6 +32,11 @@ class StatsExtensionPointProvider extends ExtensionPointProvider
 		parent::__construct('stats');
 	}
 	
+	public function home_page()
+	{
+		return new StatsHomePageExtensionPoint();
+	}
+	
 	public function menus()
 	{
 		return new StatsMenusExtensionPoint();

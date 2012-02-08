@@ -31,6 +31,7 @@
 #                                                          English                                                                        #
  ####################################################
 
+$LANG['title_stats'] = 'Statistics';
 $LANG['stats'] = 'Statistics';
 $LANG['more_stats'] = 'More statistics';
 $LANG['last_member'] = 'Latest member';
