@@ -22,8 +22,8 @@ class User
 	protected $timezone;
 	protected $editor;
 	
-	protected $is_banned;
-	protected $is_readonly;
+	protected $is_banned = 0;
+	protected $is_readonly = 0;
 	protected $warning_percentage = 0;
 	
 	protected $approbation_pass = '';

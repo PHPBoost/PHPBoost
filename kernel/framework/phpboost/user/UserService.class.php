@@ -29,7 +29,7 @@ class UserService
 			'user_warning' => $user->get_warning_percentage(),
 			'user_readonly' => $user->get_is_readonly(),
 			'user_ban' => $user->get_is_banned(),
-			'registration_pass' => $user->get_approbation_pass()
+			'approbation_pass' => $user->get_approbation_pass()
 		));
 		
 		return $result->get_last_inserted_id();
@@ -49,7 +49,7 @@ class UserService
 			'user_warning' => $user->get_warning_percentage(),
 			'user_readonly' => $user->get_is_readonly(),
 			'user_ban' => $user->get_is_banned(),
-			'registration_pass' => $user->registration_pass()
+			'approbation_pass' => $user->get_approbation_pass()
 		), 'WHERE user_id = :user_id', array('user_id' => $user->get_id()));
 	}
 	
