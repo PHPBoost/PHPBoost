@@ -511,8 +511,8 @@ class Environment
 	 */
 	public static function get_home_page()
 	{
-		$home_page = GeneralConfig::load()->get_home_page();
-		return (substr($home_page, 0, 1) == '/') ? url(HOST . DIR . $home_page) : $home_page;
+		$url = new Url(GeneralConfig::load()->get_other_home_page());
+		return $url->absolute();
 	}
 
 	/**
