@@ -77,6 +77,11 @@ class PagesExtensionPointProvider extends ExtensionPointProvider
 		return $config . "\n\r" . $code;	
 	}
     
+	public function home_page()
+	{
+		return new PagesHomePageExtensionPoint();
+	}
+	
 	public function sitemap()
 	{
 		return new PagesSitemapExtensionPoint();
