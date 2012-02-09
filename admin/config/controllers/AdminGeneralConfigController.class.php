@@ -101,11 +101,12 @@ class AdminGeneralConfigController extends AdminController
 			array('rows' => 4, 'description' => $this->lang['general-config.site_keywords-explain'])
 		));
 
-		$fieldset->add_field(new FormFieldSimpleSelectChoice('default_language', $this->lang['general-config.default_language'], $this->user_accounts_config->get_default_lang(), $this->list_langs(),
+		$fieldset->add_field(new FormFieldLangsSelect('default_language', $this->lang['general-config.default_language'], 
+			$this->user_accounts_config->get_default_lang(), 
 			array('required' => true)
 		));
 
-		$fieldset->add_field(new FormFieldSimpleSelectChoice('default_theme', $this->lang['general-config.default_theme'], $this->user_accounts_config->get_default_theme(), $this->list_themes(),
+		$fieldset->add_field(new FormFieldThemesSelect('default_theme', $this->lang['general-config.default_theme'], $this->user_accounts_config->get_default_theme(),
 			array('required' => true, 'events' => array('change' => $this->construct_javascript_picture_theme() .
 			' var theme_id = HTMLForms.getField("default_theme").get_value();
 			document.images[\'img_theme\'].src = theme[theme_id];'))
@@ -118,7 +119,7 @@ class AdminGeneralConfigController extends AdminController
 			</a>'
 		));
 		
-		$fieldset->add_field(new FormFieldSimpleSelectChoice('start_page', $this->lang['general-config.start_page'], $this->general_config->get_home_page(), $this->list_modules_installed(),
+		$fieldset->add_field(new FormFieldSimpleSelectChoice('start_page', $this->lang['general-config.start_page'], $this->general_config->get_module_home_page(), $this->list_modules_home_page(),
 			array('required' => false, 'events' => array('change' => 
 				'if (HTMLForms.getField("start_page").getValue() == "other") {
 					HTMLForms.getField("other_start_page").enable();
@@ -128,8 +129,8 @@ class AdminGeneralConfigController extends AdminController
 			))
 		));
 		
-		$fieldset->add_field(new FormFieldTextEditor('other_start_page', $this->lang['general-config.other_start_page'], $this->get_other_start_page(),
-			array('class' => 'text', 'required' => false, 'hidden' => $this->get_other_start_page() == '')
+		$fieldset->add_field(new FormFieldTextEditor('other_start_page', $this->lang['general-config.other_start_page'], $this->general_config->get_other_home_page(),
+			array('class' => 'text', 'required' => false, 'hidden' => $this->general_config->get_other_home_page() == '')
 		));
 
 		$fieldset->add_field(new FormFieldCheckbox('visit_counter', $this->lang['general-config.visit_counter'], $this->graphical_environment_config->is_visit_counter_enabled()));
@@ -157,14 +158,14 @@ class AdminGeneralConfigController extends AdminController
 
 		$other_start_page = $this->form->get_value('other_start_page');
 
-		$start_page_select_value = $this->form->get_value('start_page')->get_raw_value();
-		if ($start_page_select_value !== 'other')
+		$module_home_page = $this->form->get_value('start_page')->get_raw_value();
+		if ($module_home_page !== 'other')
 		{
-			$this->general_config->set_home_page($start_page_select_value);
+			$this->general_config->set_module_home_page($module_home_page);
 		}
 		else
 		{
-			$this->general_config->set_home_page($this->form->get_value('other_start_page'));
+			$this->general_config->set_other_home_page($this->form->get_value('other_start_page'));
 		}
 
 		GeneralConfig::save();
@@ -196,66 +197,26 @@ class AdminGeneralConfigController extends AdminController
     	return PATH_TO_ROOT .'/templates/' . $theme_id . '/' . $pictures[0];
     }
 
-	private function list_langs()
+	private function list_modules_home_page()
 	{
-		$choices_list = array();
-		foreach(LangManager::get_activated_langs_map() as $id => $value)
+		$options = array();
+		$options[] = new FormFieldSelectChoiceOption($this->lang['general-config.other_start_page'], 'other');
+		$providers = AppContext::get_extension_provider_service()->get_providers(HomePageExtensionPoint::EXTENSION_POINT);
+		foreach ($providers as $id => $provider)
 		{
-			$choices_list[] = new FormFieldSelectChoiceOption($value->get_configuration()->get_name(), $id);
+			$module = ModulesManager::get_module($id);
+			$configuration = $module->get_configuration();
+			$options[] = new FormFieldSelectChoiceOption($configuration->get_name(), $id);
 		}
-		return $choices_list;
-	}
-
-	private function list_themes()
-	{
-		$choices_list = array();
-		foreach (ThemeManager::get_activated_themes_map() as $id => $value)
-		{
-			$choices_list[] = new FormFieldSelectChoiceOption($value->get_configuration()->get_name(), $id);
-		}
-		return $choices_list;
-	}
-
-	private function list_modules_installed()
-	{
-		$modules_home_pages = $this->get_modules_home_page();
 		
-		$start_page = array();
-		if (empty($modules_home_pages))
+		if (empty($options))
 		{
-			$start_page[] = new FormFieldSelectChoiceOption($this->lang['no_module_starteable'], '');
+			$options[] = new FormFieldSelectChoiceOption($this->lang['no_module_starteable'], '');
 		}
-		else
-		{
-			$start_page[] = new FormFieldSelectChoiceOption($this->lang['general-config.other_start_page'], 'other');
-			foreach ($modules_home_pages as $name => $home_page)
-			{
-				$start_page[] = new FormFieldSelectChoiceOption($name, $home_page);
-			}
-		}
-		return $start_page;
-	}
-	
-	private function get_other_start_page()
-	{
-		return in_array($this->general_config->get_home_page(), $this->get_modules_home_page()) ? '' : $this->general_config->get_home_page();
-	}
-	
-	private function get_modules_home_page()
-	{
-		$modules_home_pages = array();
-		foreach (ModulesManager::get_activated_modules_map() as $module)
-		{
-			$module_configuration = $module->get_configuration();
-			$module_home_page = $module_configuration->get_home_page();
-			if (!empty($module_home_page))
-			{
-				$modules_home_pages[$module_configuration->get_name()] = '/' . $module->get_id(). '/' . $module_home_page;
-			}
-		}
-		return $modules_home_pages;
-	}
 
+		return $options;
+	}
+	
 	private function clear_cache()
 	{
 		AppContext::get_cache_service()->clear_cache();

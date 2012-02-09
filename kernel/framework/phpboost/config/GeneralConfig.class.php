@@ -35,7 +35,8 @@ class GeneralConfig extends AbstractConfigData
 	const SITE_NAME = 'site_name';
 	const SITE_DESCRIPTION = 'site_description';
 	const SITE_KEYWORDS = 'site_keywords';
-	const HOME_PAGE = 'home_page';
+	const MODULE_HOME_PAGE = 'module_home_page';
+	const OTHER_HOME_PAGE = 'other_home_page';
 	const PHPBOOST_VERSION = 'phpboost_version';
 	const SITE_INSTALL_DATE = 'site_install_date';
 	const SITE_TIMEZONE = 'timezone';
@@ -105,7 +106,6 @@ class GeneralConfig extends AbstractConfigData
 	 */
 	protected function get_default_values()
 	{
-		$site_url = self::get_default_site_url();
 		$site_path = self::get_default_site_path();
 		return array(
 			self::SITE_URL => $site_url,
@@ -113,7 +113,8 @@ class GeneralConfig extends AbstractConfigData
 			self::SITE_NAME => '',
 			self::SITE_DESCRIPTION => '',
 			self::SITE_KEYWORDS => '',
-			self::HOME_PAGE => $site_url . $site_path . '/user/',
+			self::MODULE_HOME_PAGE => '',
+			self::OTHER_HOME_PAGE => $site_path . '/user',
 			self::PHPBOOST_VERSION => '4.0',
 			self::SITE_INSTALL_DATE => new Date(),
 			self::SITE_TIMEZONE => (int)date('I'),
@@ -183,16 +184,26 @@ class GeneralConfig extends AbstractConfigData
 		$this->set_property(self::SITE_KEYWORDS, $keywords);
 	}
 
-	public function get_home_page()
+	public function get_module_home_page()
 	{
-		return $this->get_property(self::HOME_PAGE);
+		return $this->get_property(self::MODULE_HOME_PAGE);
 	}
 
-	public function set_home_page($start_page)
+	public function set_module_home_page($start_page)
 	{
-		$this->set_property(self::HOME_PAGE, $start_page);
+		$this->set_property(self::MODULE_HOME_PAGE, $start_page);
 	}
 
+	public function get_other_home_page()
+	{
+		return $this->get_property(self::OTHER_HOME_PAGE);
+	}
+
+	public function set_other_home_page($start_page)
+	{
+		$this->set_property(self::OTHER_HOME_PAGE, $start_page);
+	}
+	
 	public function get_admin_unlocking_key()
 	{
 		return $this->get_property(self::ADMIN_UNLOCKING_KEY);
