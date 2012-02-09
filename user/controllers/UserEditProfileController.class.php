@@ -110,16 +110,15 @@ class UserEditProfileController extends AbstractController
 		
 		if (!$this->user_accounts_config->is_users_theme_forced())
 		{
-			$options_fieldset->add_field(new FormFieldSimpleSelectChoice('theme', $this->lang['theme'], $row['user_theme'],
-				$this->build_themes_select_options(),
-				array('events' => array('change' => $this->build_javascript_picture_themes()))
+			$options_fieldset->add_field(new FormFieldThemesSelect('theme', $this->lang['theme'], $row['user_theme'],
+				array('check_authorizations' => true, 'events' => array('change' => $this->build_javascript_picture_themes()))
 			));
 			$options_fieldset->add_field(new FormFieldFree('preview_theme', $this->lang['theme.preview'], '<img id="img_theme" src="'. $this->get_picture_theme($row['user_theme']) .'" alt="" style="vertical-align:top; max-height:180px;" />'));
 		}
 		
 		$options_fieldset->add_field(new FormFieldEditors('text-editor', $this->lang['text-editor'], $row['user_editor']));
 		
-		$options_fieldset->add_field(new FormFieldLangs('lang', $this->lang['lang'], $row['user_lang']));	
+		$options_fieldset->add_field(new FormFieldLangsSelect('lang', $this->lang['lang'], $row['user_lang'], array('check_authorizations' => true)));	
 		
 		$member_extended_field = new MemberExtendedField();
 		$member_extended_field->set_template($form);
@@ -142,12 +141,15 @@ class UserEditProfileController extends AbstractController
 		}
 		else
 		{
-			$theme = !$this->form->field_is_disabled('theme') ? $this->form->get_value('theme')->get_raw_value() : $this->user_accounts_config->get_default_theme();
+			if (!$this->form->field_is_disabled('theme'))
+			{
+				$user->set_theme($this->form->get_value('theme')->get_raw_value());
+			}
+			
 			$user = new User();
 			$user->set_id($user_id);
 			$user->set_email($this->form->get_value('email'));
 			$user->set_locale($this->form->get_value('lang')->get_raw_value());
-			$user->set_theme($theme);
 			$user->set_timezone($this->form->get_value('timezone')->get_raw_value());
 			$user->set_editor($this->form->get_value('text-editor')->get_raw_value());
 			$user->set_show_email(!$this->form->get_value('email.hide'));
@@ -184,19 +186,6 @@ class UserEditProfileController extends AbstractController
 		$response->add_breadcrumb($this->lang['user'], UserUrlBuilder::users()->absolute());
 		$response->add_breadcrumb($this->lang['profile.edit'], UserUrlBuilder::edit_profile($user_id)->absolute());
 		return $response->display($this->tpl);
-	}
-	
-	private function build_themes_select_options()
-	{
-		$choices_list = array();
-		foreach (ThemeManager::get_activated_themes_map() as $id => $value) 
-		{
-			if ($this->user_accounts_config->get_default_theme() == $id || (AppContext::get_current_user()->check_auth($value->get_authorizations(), AUTH_THEME)))
-			{
-				$choices_list[] = new FormFieldSelectChoiceOption($value->get_configuration()->get_name(), $id);
-			}
-		}
-		return $choices_list;
 	}
 	
 	private function build_javascript_picture_themes()

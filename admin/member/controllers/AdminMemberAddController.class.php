@@ -83,7 +83,7 @@ class AdminMemberAddController extends AdminController
 		
 		$fieldset->add_field($password_bis = new FormFieldPasswordEditor('password_bis', $this->lang['members.confirm-password'], '', array('required' => true)));
 		
-		$fieldset->add_field(new FormFieldRanks('rank', $this->lang['members.rank'], FormFieldRanks::MEMBER));
+		$fieldset->add_field(new FormFieldRanksSelect('rank', $this->lang['members.rank'], FormFieldRanksSelect::MEMBER));
 		
 		$form->add_button(new FormButtonReset());
 		$this->submit_button = new FormButtonDefaultSubmit();

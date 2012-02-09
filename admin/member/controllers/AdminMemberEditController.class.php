@@ -101,7 +101,7 @@ class AdminMemberEditController extends AdminController
 		
 		$fieldset->add_field(new FormFieldCheckbox('approbation', $this->lang['members.approbation'], (bool)$row['user_aprob']));
 		
-		$fieldset->add_field(new FormFieldRanks('rank', $this->lang['members.rank'], $row['level']));
+		$fieldset->add_field(new FormFieldRanksSelect('rank', $this->lang['members.rank'], $row['level']));
 		
 		$fieldset->add_field(new FormFieldGroups('groups', $this->lang['members.groups'], explode('|', $row['user_groups'])));
 		
