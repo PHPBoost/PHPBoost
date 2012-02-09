@@ -32,7 +32,7 @@
 
 $lang = array(
 
-	'poll_question' => 'PHPBoost 3.0',
+	'poll_question' => 'Comment trouvez-vous notre site ?',
 	'poll_answers' => 'Super site!|Pas mal|Plutôt moyen|Bof',
 	'poll_votes' => '|||'
 );

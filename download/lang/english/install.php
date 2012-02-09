@@ -30,9 +30,9 @@
  ####################################################
 
 $lang = array(
-    'download_title' => 'PHPBoost 3.0 Poster',
+    'download_title' => 'PHPBoost Poster',
     'download_short_contents' => '',
-    'download_contents' => 'Presentation of PHPBoost 3.0 Poster.',
+    'download_contents' => 'Presentation of PHPBoost Poster.',
     'download_cats_title' => 'First category',
     'download_cats_desc' => 'Demonstration of a download module category'
 );
