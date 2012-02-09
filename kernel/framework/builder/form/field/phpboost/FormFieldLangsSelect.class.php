@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                             FormFieldRanks.class.php
+ *                             FormFieldLangsSelect.class.php
  *                            -------------------
  *   begin                : September 26, 2011
  *   copyright            : (C) 2011 Kévin MASSY
@@ -29,14 +29,12 @@
  * @desc
  * @package {@package}
  */
-class FormFieldRanks extends FormFieldSimpleSelectChoice
+class FormFieldLangsSelect extends FormFieldSimpleSelectChoice
 {
-	const MEMBER = '0';
-	const MODERATOR = '1';
-	const ADMINISTRATOR = '2';
+	private $check_authorizations = false;
 	
     /**
-     * @desc Constructs a FormFieldRanks.
+     * @desc Constructs a FormFieldLangsSelect.
      * @param string $id Field id
      * @param string $label Field label
      * @param mixed $value Default value (either a FormFieldEnumOption object or a string corresponding to the FormFieldEnumOption's raw value)
@@ -50,12 +48,38 @@ class FormFieldRanks extends FormFieldSimpleSelectChoice
 
     private function generate_options()
 	{
-		$lang = LangLoader::get('admin-members-common');
 		$options = array();
-		$options[] = new FormFieldSelectChoiceOption($lang['members.rank.member'], self::MEMBER);
-		$options[] = new FormFieldSelectChoiceOption($lang['members.rank.modo'], self::MODERATOR);
-		$options[] = new FormFieldSelectChoiceOption($lang['members.rank.admin'], self::ADMINISTRATOR);
+		foreach (LangManager::get_activated_langs_map() as $lang)
+		{
+			if ($this->check_authorizations)
+			{
+				if ($lang->check_auth())
+				{
+					$options[] = new FormFieldSelectChoiceOption($lang->get_configuration()->get_name(), $lang->get_id());
+				}
+			}
+			else
+			{
+				$options[] = new FormFieldSelectChoiceOption($lang->get_configuration()->get_name(), $lang->get_id());
+			}
+		}
 		return $options;
 	}
+	
+	protected function compute_options(array &$field_options)
+    {
+        foreach ($field_options as $attribute => $value)
+        {
+            $attribute = strtolower($attribute);
+            switch ($attribute)
+            {
+				case 'check_authorizations' :
+                    $this->check_authorizations = (bool)$value;
+                    unset($field_options['check_authorizations']);
+                    break;
+            }
+        }
+        parent::compute_options($field_options);
+    }
 }
 ?>
