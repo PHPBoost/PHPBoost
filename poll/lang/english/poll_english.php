@@ -64,9 +64,6 @@ $LANG['e_unexist_poll'] = 'This poll doesn\'t exist';
 $LANG['e_no_poll'] = 'No poll available';
 $LANG['e_already_vote'] = 'You have already voted';
 $LANG['e_unauth_poll'] = 'You aren\'t authorized to vote !';
-
-//Title 
- $LANG['title_poll'] = 'Polls';
  
 //Poll
 $LANG['poll'] = 'Polls';

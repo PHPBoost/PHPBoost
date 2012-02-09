@@ -64,9 +64,6 @@ $LANG['e_no_poll'] = 'Aucun sondage disponible';
 $LANG['e_already_vote'] = 'Vous avez déjà voté';
 $LANG['e_unauth_poll'] = 'Vous n\'êtes pas autorisé à voter !';
 
-//Titre
-$LANG['title_poll'] = 'Sondage';
-
 //polls
 $LANG['poll'] = 'Sondages';
 $LANG['mini_poll'] = 'Mini sondage';

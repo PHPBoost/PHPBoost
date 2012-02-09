@@ -34,7 +34,7 @@ class SitemapHomePageExtensionPoint implements HomePageExtensionPoint
 
 	private function get_title()
 	{
-		return LangLoader::get_message('title_sitemap', 'common', 'sitemap');
+		return LangLoader::get_message('sitemap', 'common', 'sitemap');
 	}
 	
 	private function get_view()

@@ -43,7 +43,7 @@ class FaqHomePageExtensionPoint implements HomePageExtensionPoint
 	{
 		global $FAQ_LANG;
 		
-		return $FAQ_LANG['title_faq'];
+		return $FAQ_LANG['faq'];
 	}
 	
 	private function get_view()

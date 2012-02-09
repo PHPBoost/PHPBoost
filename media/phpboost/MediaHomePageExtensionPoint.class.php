@@ -43,7 +43,7 @@ class MediaHomePageExtensionPoint implements HomePageExtensionPoint
 	{
 		global $MEDIA_LANG;
 		
-		return $MEDIA_LANG['title_media'];
+		return $MEDIA_LANG['media'];
 	}
 	
 	private function get_view()

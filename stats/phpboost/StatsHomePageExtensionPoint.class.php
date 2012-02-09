@@ -43,7 +43,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 	{
 		global $STATS_LANG;
 		
-		return $STATS_LANG['title_stats'];
+		return $STATS_LANG['stats'];
 	}
 	
 	private function get_view()

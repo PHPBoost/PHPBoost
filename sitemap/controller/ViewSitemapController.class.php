@@ -42,7 +42,7 @@ class ViewSitemapController extends ModuleController
 	private function build_response(View $view)
 	{
 			$response = new SiteDisplayResponse($view);
-			$response->get_graphical_environment()->set_page_title(LangLoader::get_message('title_sitemap', 'common', 'sitemap'));
+			$response->get_graphical_environment()->set_page_title(LangLoader::get_message('sitemap', 'common', 'sitemap'));
 			return $response;
 	}
 }
