@@ -99,18 +99,15 @@ class UserRegistrationController extends AbstractController
 		
 		if (!$this->user_accounts_config->is_users_theme_forced())
 		{
-			$options_fieldset->add_field(new FormFieldSimpleSelectChoice('theme', $this->lang['theme'], $this->user_accounts_config->get_default_theme(),
-				$this->build_themes_select_options(),
-				array('events' => array('change' => $this->build_javascript_picture_themes()))
+			$options_fieldset->add_field(new FormFieldThemesSelect('theme', $this->lang['theme'], $this->user_accounts_config->get_default_theme(),
+				array('check_authorizations' => true, 'events' => array('change' => $this->build_javascript_picture_themes()))
 			));
 			$options_fieldset->add_field(new FormFieldFree('preview_theme', $this->lang['theme.preview'], '<img id="img_theme" src="'. $this->get_picture_theme() .'" alt="" style="vertical-align:top; max-height:180px;" />'));
 		}
 		
 		$options_fieldset->add_field(new FormFieldEditors('text-editor', $this->lang['text-editor'], ContentFormattingConfig::load()->get_default_editor()));
 		
-		$options_fieldset->add_field(new FormFieldSimpleSelectChoice('lang', $this->lang['lang'], $this->user_accounts_config->get_default_lang(),
-			$this->build_langs_select_options()
-		));	
+		$options_fieldset->add_field(new FormFieldLangsSelect('lang', $this->lang['lang'], $this->user_accounts_config->get_default_lang(), array('check_authorizations' => true)));	
 		
 		$member_extended_field = new MemberExtendedField();
 		$member_extended_field->set_template($form);
@@ -143,11 +140,7 @@ class UserRegistrationController extends AbstractController
 		
 		if (!$this->form->field_is_disabled('theme'))
 		{
-			$theme = $this->form->get_value('theme')->get_raw_value();
-		}
-		else
-		{
-			$theme = $this->user_accounts_config->get_default_theme();
+			$user->set_theme($this->form->get_value('theme')->get_raw_value());
 		}
 		
 		$user_authentification = new UserAuthentification($this->form->get_value('login'), $this->form->get_value('password'));
@@ -156,7 +149,6 @@ class UserRegistrationController extends AbstractController
 		$user->set_email($this->form->get_value('email'));
 		$user->set_show_email(!$this->form->get_value('user_hide_mail'));
 		$user->set_locale($this->form->get_value('lang')->get_raw_value());
-		$user->set_theme($theme);
 		$user->set_timezone($this->form->get_value('timezone')->get_raw_value());
 		$user->set_editor($this->form->get_value('text-editor')->get_raw_value());
 		$user->set_approbation($user_aprobation);
@@ -204,20 +196,7 @@ class UserRegistrationController extends AbstractController
 		}
 		return $this;
 	}
-	
-	private function build_themes_select_options()
-	{
-		$choices_list = array();
-		foreach (ThemeManager::get_activated_themes_map() as $id => $value) 
-		{
-			if ($this->user_accounts_config->get_default_theme() == $id || (AppContext::get_current_user()->check_auth($value->get_authorizations(), AUTH_THEME)))
-			{
-				$choices_list[] = new FormFieldSelectChoiceOption($value->get_configuration()->get_name(), $id);
-			}
-		}
-		return $choices_list;
-	}
-	
+
 	private function build_javascript_picture_themes()
 	{
 		$text = 'var theme = new Array;' . "\n";
@@ -234,16 +213,6 @@ class UserRegistrationController extends AbstractController
 		$theme_id = $this->user_accounts_config->get_default_theme();
 		$pictures = ThemeManager::get_theme($theme_id)->get_configuration()->get_pictures();
 		return PATH_TO_ROOT .'/templates/' . $theme_id . '/' . $pictures[0];
-	}
-	
-	private function build_langs_select_options()
-	{
-		$choices_list = array();
-		foreach(LangManager::get_activated_langs_map() as $id => $value)
-		{
-			$choices_list[] = new FormFieldSelectChoiceOption($value->get_configuration()->get_name(), $id);
-		}
-		return $choices_list;
 	}
 }
 ?>
