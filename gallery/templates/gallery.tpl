@@ -273,9 +273,9 @@
 							# START cat_list #
 							{cat_list.OPEN_TR}								
 							<td style="vertical-align:bottom;text-align:center;width:{COLUMN_WIDTH_CATS}%;margin:15px 0px;">
-								<a href="gallery{cat_list.U_CAT}">{cat_list.IMG}</a>
+								<a href="{cat_list.U_CAT}">{cat_list.IMG}</a>
 								<br />
-								<a href="gallery{cat_list.U_CAT}">{cat_list.CAT}</a> {cat_list.EDIT}
+								<a href="{cat_list.U_CAT}">{cat_list.CAT}</a> {cat_list.EDIT}
 								<br />
 								<span class="text_small">{cat_list.DESC}</span> 
 								<br />
@@ -350,7 +350,7 @@
 								<tr>										
 									<td colspan="2" class="row2 text_small" style="border:none;padding:4px;">
 										&nbsp;&nbsp;&nbsp;<span id="fihref{ID}"><a href="javascript:display_rename_file('{ID}', '{RENAME}', '{RENAME_CUT}');"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="{L_EDIT}" class="valign_middle" /></a></span>									
-										<a href="gallery{U_DEL}" onclick="javascript:return Confirm_file();" title="{L_DELETE}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" class="valign_middle" /></a> 						
+										<a href="{U_DEL}" onclick="javascript:return Confirm_file();" title="{L_DELETE}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" class="valign_middle" /></a> 						
 										<div style="position:absolute;z-index:100;margin-top:95px;float:left;display:none;" id="move{ID}">
 											<div class="bbcode_block" style="width:190px;overflow:auto;" onmouseover="pics_hide_block({ID}, 1);" onmouseout="pics_hide_block({ID}, 0);">
 												<div style="margin-bottom:4px;"><strong>{L_MOVETO}</strong>:</div>
