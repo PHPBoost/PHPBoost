@@ -407,7 +407,7 @@
 									<div style="width:180px;margin:auto;">										
 										# IF C_GALLERY_MODO #
 										<span id="fihref{pics_list.ID}"><a href="javascript:display_rename_file('{pics_list.ID}', '{pics_list.RENAME}', '{pics_list.RENAME_CUT}');" title="{L_EDIT}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="{L_EDIT}" class="valign_middle" /></a></span>									
-										<a href="gallery{pics_list.U_DEL}" onclick="javascript:return Confirm_file();" title="{L_DELETE}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" class="valign_middle" /></a>									
+										<a href="{pics_list.U_DEL}" onclick="javascript:return Confirm_file();" title="{L_DELETE}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" class="valign_middle" /></a>									
 										<div style="position:relative;margin:auto;width:170px;display:none;float:right" onmouseover="pics_hide_block({pics_list.ID}, 1);" onmouseout="pics_hide_block({pics_list.ID}, 0);" id="move{pics_list.ID}">
 											<div style="position:absolute;z-index:100;margin-top:90px;">
 												<div class="bbcode_block" style="width:170px;overflow:auto;">
