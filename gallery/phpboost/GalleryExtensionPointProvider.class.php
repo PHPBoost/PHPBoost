@@ -116,5 +116,10 @@ class GalleryExtensionPointProvider extends ExtensionPointProvider
 	{
 		return new GalleryMenusExtensionPoint();
 	}
+	
+	public function home_page()
+	{
+		return new GalleryHomePageExtensionPoint();
+	}
 }
 ?>

@@ -32,17 +32,17 @@ class GalleryUrlBuilder
 	
 	public static function get_link_item($idcat,$id,$com=null,$sort=null)
 	{
-		return self::PREFIX.url(
+		return Url::to_absolute(self::PREFIX.url(
 			'.php?cat='.$idcat.'&amp;id='.$id.(isset($com)?'&amp;com='.$com:'').(isset($sort)?'&amp;sort='.$sort:'') ,
-			'-'.$idcat.'-'.$id.'.php'.(isset($com)?'?com='.$com:'').(isset($sort)?'&amp;sort='.$sort:''));
+			'-'.$idcat.'-'.$id.'.php'.(isset($com)?'?com='.$com:'').(isset($sort)?'&amp;sort='.$sort:'')));
 	}
 	
 	public static function get_link_item_add($idcat,$id)
 	{
-		return self::PREFIX.url(
+		return Url::to_absolute(self::PREFIX.url(
 			'.php?add=1&amp;cat='.$idcat.'&amp;id='.$id,
 			'-'.$idcat.'-'.$id.'.php?add=1',
-			'&');
+			'&'));
 	}
 	
 	public static function get_link_cat($id,$name=null)
@@ -50,9 +50,9 @@ class GalleryUrlBuilder
 		if (!empty($name))
 			$name = '+'+Url::encode_rewrite($name);
 			
-		return self::PREFIX.url(
+		return Url::to_absolute(self::PREFIX.url(
 			'.php?cat='.$id,
-			'-'.$id.$name.'.php');
+			'-'.$id.$name.'.php'));
 	}
 	
 	public static function get_link_cat_add($id,$error=null,$token=null)
@@ -61,10 +61,10 @@ class GalleryUrlBuilder
 			$error = '&amp;error='+$error;
 		if (!empty($token))
 			$token = '&amp;token='+$token;			
-		return self::PREFIX.url(
+		return Url::to_absolute(self::PREFIX.url(
 			'.php?add=1&amp;cat='.$id.$error.$token,
 			'-'.$id.'.php?add=1'.$error.$token,
-			'&');
+			'&'));
 	}
 }
 ?>
