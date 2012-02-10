@@ -793,7 +793,7 @@ else //Liste des conversation, dans la boite du membre.
 	$pagination_msg = 25;
 	
 	$limit_group = $User->check_max_value(PM_GROUP_LIMIT, UserAccountsConfig::load()->get_max_private_messages_number());
-	$unlimited_pm = $User->check_level(MODO_LEVEL) || ($limit_group === -1);
+	$unlimited_pm = $User->check_level(User::MODERATOR_LEVEL) || ($limit_group === -1);
 	$pm_max = $unlimited_pm ? $LANG['illimited'] : $limit_group;
 	
 	$Template->assign_block_vars('convers', array(

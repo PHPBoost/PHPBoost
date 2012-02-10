@@ -35,7 +35,7 @@ class UserService
 		return $result->get_last_inserted_id();
 	}
 	
-	public static function update(User $user)
+	public static function update(User $user, $condition, $parameters)
 	{
 		self::$querier->update(DB_TABLE_MEMBER, array(
 			'level' => $user->get_level(),
@@ -45,12 +45,17 @@ class UserService
 			'user_theme' => $user->get_theme(),
 			'user_timezone' => $user->get_timezone(),
 			'user_editor' => $user->get_editor(),
-			'user_aprob' => (int)$user->get_approbation(),
+			'user_aprob' => (int)$user->get_approbation()
+		), $condition, $parameters);
+	}
+	
+	public static function update_punishment(User $user, $condition, $parameters)
+	{
+		self::$querier->update(DB_TABLE_MEMBER, array(
 			'user_warning' => $user->get_warning_percentage(),
 			'user_readonly' => $user->get_is_readonly(),
 			'user_ban' => $user->get_is_banned(),
-			'approbation_pass' => $user->get_approbation_pass()
-		), 'WHERE user_id = :user_id', array('user_id' => $user->get_id()));
+		), $condition, $parameters);
 	}
 	
 	public static function update_authentification($condition, $parameters, UserAuthentification $user_authentification)
@@ -76,9 +81,9 @@ class UserService
 		$user = new User();
 		$user->set_id($row['user_id']);
 		$user->set_pseudo($row['login']);
-		$user->set_approbation($row['user_aprob']);
+		$user->set_approbation((bool)$row['user_aprob']);
 		$user->set_email($row['user_mail']);
-		$user->set_show_email($row['user_show_mail']);
+		$user->set_show_email((bool)$row['user_show_mail']);
 		$user->set_locale($row['user_lang']);
 		$user->set_theme($row['user_theme']);
 		$user->set_timezone($row['user_timezone']);

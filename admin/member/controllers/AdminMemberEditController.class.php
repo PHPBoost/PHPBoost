@@ -37,15 +37,16 @@ class AdminMemberEditController extends AdminController
 	 */
 	private $submit_button;
 	
-	private $user_id;
+	private $user;
 
 	public function execute(HTTPRequest $request)
 	{
-		$this->user_id = $request->get_getint('id');
+		$user_id = $request->get_getint('id');
 		$this->init();
 		
-		if (!UserService::user_exists('WHERE user_id=:user_id', array('user_id' => $this->user_id)))
-		{
+		try {
+			$this->user = UserService::get_user('WHERE user_id=:id', array('id' => $user_id));
+		} catch (Exception $e) {
 			$error_controller = PHPBoostErrors::unexisting_member();
 			DispatchManager::redirect($error_controller);
 		}
@@ -78,16 +79,14 @@ class AdminMemberEditController extends AdminController
 		$fieldset = new FormFieldsetHTML('edit_member', $this->lang['members.edit-member']);
 		$form->add_fieldset($fieldset);
 		
-		$row = PersistenceContext::get_sql()->query_array(DB_TABLE_MEMBER, '*', "WHERE user_id = '" . $this->user_id . "'", __LINE__, __FILE__);
-		
-		$fieldset->add_field(new FormFieldTextEditor('login', $this->lang['members.pseudo'], $row['login'], array(
+		$fieldset->add_field(new FormFieldTextEditor('login', $this->lang['members.pseudo'], $this->user->get_pseudo(), array(
 			'class' => 'text', 'maxlength' => 25, 'size' => 25, 'required' => true),
-			array(new FormFieldConstraintLengthRange(3, 25), new FormFieldConstraintLoginExist($row['user_id']))
+			array(new FormFieldConstraintLengthRange(3, 25), new FormFieldConstraintLoginExist($this->user->get_id()))
 		));		
 		
-		$fieldset->add_field(new FormFieldTextEditor('mail', $this->lang['members.mail'], $row['user_mail'], array(
+		$fieldset->add_field(new FormFieldTextEditor('mail', $this->lang['members.mail'], $this->user->get_email(), array(
 			'class' => 'text', 'maxlength' => 255, 'description' => $this->lang['members.valid'], 'required' => true),
-			array(new FormFieldConstraintMailAddress(), new FormFieldConstraintMailExist($row['user_id']))
+			array(new FormFieldConstraintMailAddress(), new FormFieldConstraintMailExist($this->user->get_id()))
 		));
 		
 		$fieldset->add_field($password = new FormFieldPasswordEditor('password', $this->lang['members.password'], ''));
@@ -99,26 +98,26 @@ class AdminMemberEditController extends AdminController
 		$fieldset = new FormFieldsetHTML('member_management', $this->lang['members.member-management']);
 		$form->add_fieldset($fieldset);
 		
-		$fieldset->add_field(new FormFieldCheckbox('approbation', $this->lang['members.approbation'], (bool)$row['user_aprob']));
+		$fieldset->add_field(new FormFieldCheckbox('approbation', $this->lang['members.approbation'], (bool)$this->user->get_approbation()));
 		
-		$fieldset->add_field(new FormFieldRanksSelect('rank', $this->lang['members.rank'], $row['level']));
+		$fieldset->add_field(new FormFieldRanksSelect('rank', $this->lang['members.rank'], $this->user->get_level()));
 		
-		$fieldset->add_field(new FormFieldGroups('groups', $this->lang['members.groups'], explode('|', $row['user_groups'])));
+		$fieldset->add_field(new FormFieldGroups('groups', $this->lang['members.groups'], $this->user->get_groups()));
 		
 		$fieldset_punishment = new FormFieldsetHTML('punishment_management', $this->lang['members.punishment-management']);
 		$form->add_fieldset($fieldset_punishment);
 
 		$fieldset_punishment->add_field(new FormFieldCheckbox('delete_account', LangLoader::get_message('del_member', 'main'), FormFieldCheckbox::UNCHECKED));
 		
-		$fieldset_punishment->add_field(new FormFieldMemberCaution('user_warning', $this->lang['members.caution'], $row['user_warning']));
+		$fieldset_punishment->add_field(new FormFieldMemberCaution('user_warning', $this->lang['members.caution'], $this->user->get_warning_percentage()));
 		
-		$fieldset_punishment->add_field(new FormFieldMemberSanction('user_readonly', $this->lang['members.readonly'], $row['user_readonly']));
+		$fieldset_punishment->add_field(new FormFieldMemberSanction('user_readonly', $this->lang['members.readonly'], $this->user->get_is_readonly()));
 		
-		$fieldset_punishment->add_field(new FormFieldMemberSanction('user_ban', $this->lang['members.bannish'], $row['user_ban']));
+		$fieldset_punishment->add_field(new FormFieldMemberSanction('user_ban', $this->lang['members.bannish'], $this->user->get_is_banned()));
 		
 		$member_extended_field = new MemberExtendedField();
 		$member_extended_field->set_template($form);
-		$member_extended_field->set_user_id($this->user_id);
+		$member_extended_field->set_user_id($this->user->get_id());
 		$member_extended_field->set_is_admin(true);
 		MemberExtendedFieldsService::display_form_fields($member_extended_field);
 		
@@ -132,54 +131,52 @@ class AdminMemberEditController extends AdminController
 
 	private function save()
 	{
-		$condition = "WHERE user_id = :user_id";
-		$columns = array(
-			'login' => $this->form->get_value('login'),
-			'level' => $this->form->get_value('rank')->get_raw_value(),
-			'user_groups' => implode('|', $this->form->get_value('groups')),
-			'user_mail' => $this->form->get_value('mail'),
-			'user_show_mail' => (string)!$this->form->get_value('user_hide_mail'),
-			'user_aprob' => (string)$this->form->get_value('approbation')
-		);
-		$parameters = array('user_id' => $this->user_id);
-		PersistenceContext::get_querier()->update(DB_TABLE_MEMBER, $columns, $condition, $parameters);
+		$user_id = $this->user->get_id();
 		
+		$this->user->set_pseudo($this->form->get_value('login'));
+		$this->user->set_level($this->form->get_value('rank')->get_raw_value());
+		$this->user->set_groups($this->form->get_value('groups'));
+		$this->user->set_email($this->form->get_value('mail'));
+		$this->user->set_show_email(!$this->form->get_value('user_hide_mail'));
+		$this->user->set_approbation($this->form->get_value('approbation'));
+		UserService::update($this->user, 'WHERE user_id=:id', array('id' => $user_id));
+
 		if ($this->form->get_value('delete_account'))
 		{
-			UserService::delete_account('WHERE user_id=:user_id', array('user_id' => $this->user_id));
+			UserService::delete_account('WHERE user_id=:user_id', array('user_id' => $user_id));
 		}
 		
-		MemberExtendedFieldsService::register_fields($this->form, $this->user_id);
+		MemberExtendedFieldsService::register_fields($this->form, $user_id);
 		
 		if ($this->form->get_value('password') !== '')
 		{
-			UserService::change_password($this->form->get_value('password'), 'WHERE user_id=:user_id', array('user_id' => $this->user_id));
+			UserService::change_password($this->form->get_value('password'), 'WHERE user_id=:user_id', array('user_id' => $user_id));
 		}
 		
 		$user_warning = $this->form->get_value('user_warning')->get_raw_value();
 		if (!empty($user_warning))
 		{
-			MemberSanctionManager::caution($this->user_id, $user_warning);
+			MemberSanctionManager::caution($user_id, $user_warning);
 		}
 		
 		$user_readonly = $this->form->get_value('user_readonly')->get_raw_value();
 		if (!empty($user_readonly))
 		{
-			MemberSanctionManager::remove_write_permissions($this->user_id, $user_readonly);
+			MemberSanctionManager::remove_write_permissions($user_id, $user_readonly);
 		}
 		else
 		{
-			MemberSanctionManager::restore_write_permissions($this->user_id);
+			MemberSanctionManager::restore_write_permissions($user_id);
 		}
 		
 		$user_ban = $this->form->get_value('user_readonly')->get_raw_value();
 		if (!empty($user_ban))
 		{
-			MemberSanctionManager::banish($this->user_id, $user_ban);
+			MemberSanctionManager::banish($user_id, $user_ban);
 		}
 		else
 		{
-			MemberSanctionManager::cancel_banishment($this->user_id);
+			MemberSanctionManager::cancel_banishment($user_id);
 		}
 		
 		StatsCache::invalidate();
