@@ -48,7 +48,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 	
 	private function get_view()
 	{
-		global $LANG, $STATS_LANG, $Cache, $User, $auth_write, $Session, $Bread_crumb, $members, $pages, $pages_year, $referer, $keyword, $visit, $visit_year, $os, $browser, $user_lang;
+		global $LANG, $STATS_LANG, $Cache, $User, $auth_write, $Session, $Bread_crumb, $members, $pages, $pages_year, $referer, $keyword, $visit, $visit_year, $os, $browser, $user_lang, $stats_array_browsers, $stats_array_os, $stats_array_lang;
 		
 		require_once('../stats/stats_begin.php');
 		
