@@ -46,18 +46,11 @@ catch (IOException $ex)
 	}
 }
 
-$Cache = new Cache();
+require_once PATH_TO_ROOT . '/kernel/init.php';
 
-Environment::init();
-
-$start_page = Environment::get_home_page();
-if ($start_page != HOST . DIR . '/index.php' && $start_page != './index.php') //Empêche une boucle de redirection.
-{
-	AppContext::get_response()->redirect($start_page);
-}
-else
-{
-	AppContext::get_response()->redirect(UserUrlBuilder::home()->absolute());
-}
+$url_controller_mappers = array(
+	new UrlControllerMapper('PHPBoostIndexController', '`^/?$`')
+);
+DispatchManager::dispatch($url_controller_mappers);
 
 ?>

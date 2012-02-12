@@ -49,9 +49,9 @@ class WikiHomePageExtensionPoint implements HomePageExtensionPoint
 		global $User, $Template, $Cache, $Bread_crumb, $_WIKI_CONFIG, $_WIKI_CATS, $LANG;
 
 		load_module_lang('wiki');
-		include_once('../wiki/wiki_functions.php');
+		include_once(PATH_TO_ROOT . '/wiki/wiki_functions.php');
 		$bread_crumb_key = 'wiki';
-		require_once('../wiki/wiki_bread_crumb.php');
+		require_once(PATH_TO_ROOT . '/wiki/wiki_bread_crumb.php');
 
 		$Template->set_filenames(array(
 			'wiki'=> 'wiki/wiki.tpl',
@@ -124,7 +124,7 @@ class WikiHomePageExtensionPoint implements HomePageExtensionPoint
 		));
 
 		$page_type = 'index';
-		include('../wiki/wiki_tools.php');
+		include(PATH_TO_ROOT . '/wiki/wiki_tools.php');
 
 		return new StringTemplate($Template->pparse('index'));
 	}

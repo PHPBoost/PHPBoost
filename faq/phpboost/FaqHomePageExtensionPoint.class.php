@@ -50,7 +50,7 @@ class FaqHomePageExtensionPoint implements HomePageExtensionPoint
 	{
 		global $FAQ_CATS, $LANG, $FAQ_LANG, $id_faq, $User, $auth_write, $Session, $id_question;
 		
-		require_once('../faq/faq_begin.php');
+		require_once(PATH_TO_ROOT . '/faq/faq_begin.php');
 		
 		$tpl = new FileTemplate('faq/faq.tpl');
 		

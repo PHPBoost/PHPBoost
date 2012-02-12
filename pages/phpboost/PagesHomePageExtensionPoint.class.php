@@ -50,7 +50,7 @@ class PagesHomePageExtensionPoint implements HomePageExtensionPoint
 	{
 		global $User, $Cache, $Bread_crumb, $PAGES_CONFIG, $_PAGES_CATS, $PAGES_LANG, $LANG, $Session, $pages;
 
-		require_once('../pages/pages_begin.php');
+		require_once(PATH_TO_ROOT . '/pages/pages_begin.php');
 
 		$tpl = new FileTemplate('pages/index.tpl');
         

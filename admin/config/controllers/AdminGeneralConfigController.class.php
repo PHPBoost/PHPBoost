@@ -162,6 +162,7 @@ class AdminGeneralConfigController extends AdminController
 		if ($module_home_page !== 'other')
 		{
 			$this->general_config->set_module_home_page($module_home_page);
+			$this->general_config->set_other_home_page('');
 		}
 		else
 		{

@@ -50,7 +50,7 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 	{
 		global $LANG, $STATS_LANG, $Cache, $User, $auth_write, $Session, $Bread_crumb, $members, $pages, $pages_year, $referer, $keyword, $visit, $visit_year, $os, $browser, $user_lang, $stats_array_browsers, $stats_array_os, $stats_array_lang;
 		
-		require_once('../stats/stats_begin.php');
+		require_once(PATH_TO_ROOT . '/stats/stats_begin.php');
 		
 		$tpl = new FileTemplate('stats/stats.tpl');
 		
