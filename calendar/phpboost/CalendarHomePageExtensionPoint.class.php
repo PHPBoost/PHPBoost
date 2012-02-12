@@ -50,7 +50,7 @@ class CalendarHomePageExtensionPoint implements HomePageExtensionPoint
 	{
 		global $LANG, $CALENDAR_LANG, $User, $Session, $calendar_config, $year, $month, $day, $bissextile, $get_event, $comments_topic;
 		
-		require_once('../calendar/calendar_begin.php');
+		require_once(PATH_TO_ROOT . '/calendar/calendar_begin.php');
 		
 		$tpl = new FileTemplate('calendar/calendar.tpl');
 		

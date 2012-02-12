@@ -48,8 +48,8 @@ class ArticlesHomePageExtensionPoint implements HomePageExtensionPoint
 	
 	private function get_view()
 	{
-		global $idartcat, $Session, $User, $invisible, $Cache, $ARTICLES_CAT, $CONFIG_ARTICLES, $LANG, $ARTICLES_LANG;
-		require_once('../articles/articles_begin.php'); 
+		global $idartcat, $Session, $User, $invisible, $Cache, $ARTICLES_CAT, $CONFIG_ARTICLES, $LANG, $ARTICLES_LANG, $Bread_crumb;
+		require_once(PATH_TO_ROOT . '/articles/articles_begin.php'); 
 		
 		// Initialisation des imports.
 		$now = new Date(DATE_NOW, TIMEZONE_AUTO);

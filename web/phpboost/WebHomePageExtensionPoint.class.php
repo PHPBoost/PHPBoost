@@ -50,7 +50,7 @@ class WebHomePageExtensionPoint implements HomePageExtensionPoint
 	{
 		global $idwebcat, $Session, $User, $WEB_CAT, $LANG, $WEB_LANG;
 		
-		require_once('../web/web_begin.php'); 
+		require_once(PATH_TO_ROOT . '/web/web_begin.php'); 
 		
 		$tpl = new FileTemplate('web/web.tpl');
 		

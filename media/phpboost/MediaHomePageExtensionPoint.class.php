@@ -50,7 +50,7 @@ class MediaHomePageExtensionPoint implements HomePageExtensionPoint
 	{
 		global $MEDIA_CATS, $LANG, $MEDIA_LANG, $MEDIA_CONFIG, $Cache, $id_cat, $id_media, $User, $auth_write, $Session, $Bread_crumb, $level;
 		
-		require_once('../media/media_begin.php');
+		require_once(PATH_TO_ROOT . '/media/media_begin.php');
 		
 		$tpl = new FileTemplate('media/media.tpl');
 		

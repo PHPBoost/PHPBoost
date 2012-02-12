@@ -50,7 +50,7 @@ class ShoutboxHomePageExtensionPoint implements HomePageExtensionPoint
 	{
 		global $LANG, $SHOUTBOX_LANG, $SHOUTBOX_CONFIG, $Cache, $User, $auth_write, $Session, $Bread_crumb;
 		
-		require_once('../shoutbox/shoutbox_begin.php');
+		require_once(PATH_TO_ROOT . '/shoutbox/shoutbox_begin.php');
 		
 		$tpl = new FileTemplate('shoutbox/shoutbox.tpl');
 		

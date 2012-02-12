@@ -50,7 +50,7 @@ class PollHomePageExtensionPoint implements HomePageExtensionPoint
 	{
 		global $User, $Cache, $Bread_crumb, $POLL_CONFIG, $POLL_CAT, $POLL_LANG, $LANG, $Session;
 
-		require_once('../poll/poll_begin.php');
+		require_once(PATH_TO_ROOT . '/poll/poll_begin.php');
 
 		$tpl = new FileTemplate('poll/poll.tpl');
         

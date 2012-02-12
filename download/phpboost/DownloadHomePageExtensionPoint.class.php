@@ -50,7 +50,7 @@ class DownloadHomePageExtensionPoint implements HomePageExtensionPoint
 	{
 		global $DOWNLOAD_LANG, $LANG, $CONFIG_DOWNLOAD, $DOWNLOAD_CATS, $Session, $category_id, $auth_read, $auth_write, $auth_contribution, $notation;
 		
-		require_once('../download/download_begin.php');
+		require_once(PATH_TO_ROOT . '/download/download_begin.php');
 
 		$tpl = new FileTemplate('download/download.tpl');
 	

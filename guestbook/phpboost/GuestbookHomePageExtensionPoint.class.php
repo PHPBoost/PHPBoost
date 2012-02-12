@@ -50,7 +50,7 @@ class GuestbookHomePageExtensionPoint implements HomePageExtensionPoint
 	{
 		global $LANG, $GUESTBOOK_LANG, $GUESTBOOK_CONFIG, $Cache, $User, $auth_write, $Session, $Bread_crumb, $level, $id_get, $guestbook;
 		
-		require_once('../guestbook/guestbook_begin.php');
+		require_once(PATH_TO_ROOT . '/guestbook/guestbook_begin.php');
 		
 		$tpl = new FileTemplate('guestbook/guestbook.tpl');
 		
