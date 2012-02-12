@@ -68,4 +68,6 @@ $LANG['sunday']	= 'Dim';
 //Erreurs
 $LANG['e_invalid_date'] = 'Date entrée invalide';
 
+//Alertes
+$LANG['alert_delete_event'] = 'Supprimer l\'évènement ?';
 ?>

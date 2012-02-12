@@ -68,4 +68,6 @@ $LANG['sunday']	= 'Sun';
 //Erreurs
 $LANG['e_invalid_date'] = 'Invalid date';
 
+//Alertes
+$LANG['alert_delete_event'] = 'Delete event ?';
 ?>
