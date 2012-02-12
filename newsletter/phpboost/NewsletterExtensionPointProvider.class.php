@@ -32,6 +32,11 @@ class NewsletterExtensionPointProvider extends ExtensionPointProvider
         parent::__construct('newsletter');
     }
 	
+	public function home_page()
+	{
+		return new NewsletterHomePageExtensionPoint();
+	}
+	
 	public function url_mappings()
 	{
 		return new UrlMappings(array(new DispatcherUrlMapping('/newsletter/index.php')));
