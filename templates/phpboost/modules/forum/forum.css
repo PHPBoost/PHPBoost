@@ -1,0 +1,199 @@
+/* Classe du lien du pseudo sur forum */
+a.forum_link_pseudo{
+	color:#e8eaeb; 
+	font-weight:bold;
+}
+a.forum_link_pseudo:hover { 
+	color:#f2fbff; 
+	font-weight:bold;
+}
+/* Barre du titre du forum */
+.forum_title_l{
+	height:60px;
+	margin-right:0px !important;
+	margin-right:-3px;
+	width:10px;
+	background:url(images/forum_top_l.png) no-repeat;
+	float:left;
+}
+.forum_title_r{
+	height:60px;
+	width:10px;
+	margin-left:0px !important;
+	margin-left:-3px;
+	background:url(images/forum_top_r.png) no-repeat right;
+	float:right;
+}
+.forum_title{
+	margin:auto;
+	height:55px;
+	background:url(images/forum_top.png) repeat-x;
+	color:#FFFFFF;
+	padding-top:5px;
+	margin-left:5px;
+	margin-right:5px;
+}
+.forum_title h2{ /* Titre du forum */
+	font-size:14px;
+	font-weight:bold;
+	color:#FFFFFF;
+}
+.forum_title a{ /* Couleur des liens */
+	color:#FFFFFF;
+}
+/* Barre de liens du forum */
+.forum_links{
+	background:#3187C7 url(images/msg_top_row.png) repeat-x;
+	padding:6px;
+	border:2px solid #D1E3F6;
+}
+.forum_links a{ /* Couleur des liens */
+	color:#FFFFFF;
+}
+.forum_notread{ /* Message non lus */
+	background:#3187C7;
+	padding:4px;
+	font-size:10px;
+	color:#FFFFFF;
+}
+/* Barre des textes relatifs aux colonnes */
+.forum_text_column {	
+	height:20px;
+	background:#3187C7 url(images/msg_top_row.png) repeat-x;
+	border-bottom:1px solid #55819D;
+	font-size:10px;
+	color:#FFFFFF;	
+	text-align:center;
+	font-weight:bold;
+}
+/* Case des liens sous-catégories */
+.forum_sous_cat{
+	background:#FFFFFF;
+	border-bottom:1px dotted #C4CED6;
+	border-right:1px dotted #C4CED6;
+	padding:6px;
+}
+.forum_sous_cat:hover{
+	background:#EEF4F9;
+}
+/* Case compteur message/topic */
+.forum_sous_cat_compteur{	
+	width:60px;
+	background:#E3EDF5;
+	border-bottom:1px dotted #C4CED6;
+	border-right:1px dotted #C4CED6;
+	color:#000000;
+	text-align:center; 
+}
+/* Case compteur dernier topic/dernier message */
+.forum_sous_cat_last{
+	width:150px;
+	background:#FFFFFF;
+	border-bottom:1px dotted #C4CED6;
+	font-size:10px;
+	color:#000000;
+	text-align:center; 
+}
+.forum_sous_cat_last:hover{
+	background:#EFFBFF;
+}
+/* Cadre des liens:alerter les modérateurs et suivre le sujet */
+.forum_action{
+	text-align:center;
+	margin-top:5px;
+}
+/* Les des catégories de niveau 0 */
+a.forum_link_cat{
+	font-weight:bold;
+}
+/* Affichage des membres en ligne */
+.forum_online{
+	background:#FFFFFF;
+	border:2px solid #D1E3F6;
+	color:#000000;
+	border-top:none;
+	padding:6px;
+	overflow:hidden !important;
+	height:auto !important;
+	overflow:visible;
+	height:1%;
+	clear:both;
+}
+/* Fond des catégories dans l'administration */
+.forum_cat_admin{
+	width:100%;
+	height:20px;
+	margin-bottom:2px;
+	padding:4px 0px;
+}
+/* Contenu */
+.forum_contents{
+	padding:0px;
+	margin:0px;
+}
+
+.module_top_l{ /* Barre supérieur des modules */
+	margin-right:0px !important;
+	margin-right:-3px;
+	width:29px;
+	height:34px;
+	background:url(images/msg_top_l.png) no-repeat left;
+	float:left;
+}
+.module_top_r{
+	margin-left:0px !important;
+	margin-left:-3px;
+	width:21px;
+	height:34px;
+	background:url(images/msg_top_r.png) no-repeat right;
+	float:right;
+}
+.module_top{
+	height:25px;
+	background:url(images/msg_top.png) repeat-x;
+	padding-left:6px;
+	margin-left:20px;
+	margin-right:15px;
+	padding-top:9px;
+	color:#FFFFFF;
+	font-weight:normal;
+	border-bottom:none;
+}
+.module_top a{
+	color:#FFFFFF;
+}
+.module_contents{ /* Contenu des modules */
+	background:#FFFFFF;
+	border-left:1px solid #71BAF1;	
+	border-right:1px solid #71BAF1;	
+	border-bottom:1px solid #FFFFFF;	
+	clear:both;
+}
+.module_bottom_l{ /* Barre inférieure des modules */
+	margin-right:0px !important;
+	margin-right:-3px;
+	width:8px;
+	height:24px;
+	background:url(images/msg_bottom_l.png) no-repeat left;
+	float:left;
+}
+.module_bottom_r{
+	margin-left:0px !important;
+	margin-left:-3px;
+	width:8px;
+	height:24px;
+	background:url(images/msg_bottom_r.png) no-repeat right;
+	float:right;
+}
+.module_bottom{
+	height:22px;
+	background:url(images/msg_bottom.png) repeat-x;
+	padding-top:2px;
+	padding-left:6px;
+	margin-left:8px !important;
+	margin-left:0px;
+	margin-right:8px !important;
+	margin-right:0px;
+	font-size:12px;
+}
+

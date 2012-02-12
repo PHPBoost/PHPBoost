@@ -1,0 +1,195 @@
+/* Classe du lien du pseudo sur forum */
+a.forum_link_pseudo{
+	color:#e8eaeb; 
+	font-weight:bold;
+}
+a.forum_link_pseudo:hover { 
+	color:#f2fbff; 
+	font-weight:bold;
+}
+/* Barre du titre du forum */
+.forum_title_l{
+	height:59px;
+	width:14px;
+	margin-right:0px !important;
+	margin-right:-3px;
+	background:url(images/forum_top_l.png) no-repeat transparent;
+	float:left;
+}
+.forum_title_r{
+	height:59px;
+	width:14px;
+	margin-left:0px !important;
+	margin-left:-3px;
+	background:url(images/forum_top_r.png) no-repeat right transparent;
+	float:right;
+}
+.forum_title{
+	margin:auto;
+	height:54px;
+	background:url(images/forum_top.png) repeat-x transparent;
+	color:#FFFFFF;
+	padding-top:5px;
+	margin-left:5px;
+	margin-right:5px;
+}
+.forum_title h2{ /* Titre du forum */
+	font-size:14px;
+	font-weight:bold;
+	color:#FFFFFF;
+}
+.forum_title a{ /* Couleur des liens */
+	color:#FFFFFF;
+}
+/* Barre de liens du forum */
+.forum_links{
+	background:url(images/forum_links.png) repeat-x transparent;
+	height:19px;
+	padding:6px;
+	border-top:none;
+}
+.forum_links a{ /* Couleur des liens */
+	color:#FFFFFF;
+}
+/* Barre des textes relatifs aux colonnes */
+.forum_text_column {	
+	height:20px;
+	background:#3187C7 url(images/msg_top_row.png) repeat-x;
+	font-size:10px;
+	color:#FFFFFF;	
+	text-align:center;
+	font-weight:bold;
+}
+/* Case des liens sous-catégories */
+.forum_sous_cat{
+	background:#050C11;
+	border-bottom:1px dotted #193855;
+	border-right:1px dotted #193855;
+	padding:6px;
+}
+.forum_sous_cat:hover{
+	background:#12232F;
+}
+/* Case compteur message/topic */
+.forum_sous_cat_compteur{	
+	width:60px;
+	background:url(images/background.png) repeat transparent;
+	border-bottom:1px dotted #193855;
+	border-right:1px dotted #193855;
+	color: #FFFFFF;
+	text-align:center; 
+}
+/* Case compteur dernier topic/dernier message */
+.forum_sous_cat_last{
+	width:150px;
+	background:url(images/background.png) repeat transparent;
+	border-bottom:1px dotted #193855;
+	font-size:10px;
+	color: #FFFFFF;
+	text-align:center; 
+}
+.forum_sous_cat_last:hover{
+	background:url(images/background.png) repeat transparent;
+}
+/* Cadre des liens:alerter les modérateurs et suivre le sujet */
+.forum_action{
+	width:550px;
+	margin:auto;
+	background:#274D74;
+	border:1px solid #174a84;
+	border-spacing:1px;
+	text-align:center;
+	-moz-border-radius:0.4em;
+}
+/* Les des catégories de niveau 0 */
+a.forum_link_cat{
+	font-weight:bold;
+}
+/* Affichage des membres en ligne */
+.forum_online{
+	background:#37536F;
+	border:;
+	color:#FFFFFF;
+	border-top:none;
+	padding:6px;
+	overflow:hidden !important;
+	height:auto !important;
+	overflow:visible;
+	height:1%;
+	clear:both;
+}
+/* Fond des catégories dans l'administration */
+.forum_cat_admin{
+	width:100%;
+	height:20px;
+	margin-bottom:2px;
+	padding:4px 0px;
+}
+/* Contenu */
+.forum_contents{
+	padding:0px;
+	margin:0px;
+}
+
+.module_top_l{ /* Barre supérieur des modules */
+	margin-right:0px !important;
+	margin-right:-3px;
+	height:33px;
+	width:22px;
+	background:url(images/msg_top_l.png) no-repeat left;
+	float:left;
+}
+.module_top_r{
+	margin-left:0px !important;
+	margin-left:-3px;
+	height:33px;
+	width:21px;
+	background:url(images/msg_top_r.png) no-repeat right;
+	float:right;
+}
+.module_top{
+	height:25px;
+	background:url(images/msg_top.png) repeat-x;
+	padding-left:6px;
+	margin-left:20px;
+	margin-right:15px;
+	padding-top:9px;
+	color:#FFFFFF;
+	font-weight:normal;
+	border-bottom:none;
+}
+.module_top a{
+	color:#FFFFFF;
+}
+.module_contents{ /* Contenu des modules */
+	background:url(images/background.png) repeat transparent;
+	clear:both;
+}
+.module_bottom_l{ /* Barre inférieure des modules */
+	margin-right:0px !important;
+	margin-right:-3px;
+	width:10px;
+	height:23px;
+	background:url(images/msg_bottom_l.png) no-repeat left;
+	float:left;
+}
+.module_bottom_r{
+	margin-left:0px !important;
+	margin-left:-3px;
+	width:10px;
+	height:23px;
+	background:url(images/msg_bottom_r.png) no-repeat right;
+	float:right;
+}
+.module_bottom{
+	height:22px;
+	background:url(images/msg_bottom.png) repeat-x;
+	padding-top:2px;
+	padding-left:6px;
+	margin-left:8px !important;
+	margin-left:0px;
+	margin-right:8px !important;
+	margin-right:0px;
+	font-size:12px;
+}
+

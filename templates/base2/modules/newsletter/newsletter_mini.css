@@ -1,0 +1,24 @@
+.newsletter_form{
+	width:250px;
+	height:20px;
+	color:#FFFFFF;
+	background:url(images/newsletter_form.png) no-repeat;
+}
+.newsletter_title{
+	font-weight:bold;
+	text-indent:10px;
+	font-size:11px;
+	margin:0;
+	margin-top:3px;
+	float:left;
+}
+.newsletter_text{
+	height:14px;
+	border:none;
+	border-left:1px solid #A9A9A9;
+}
+.newsletter_img{
+	margin-left:-4px;
+	padding:0;
+	border:none;
+}

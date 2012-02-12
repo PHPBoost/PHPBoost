@@ -1,0 +1,247 @@
+/* --------------------------------------
+		global.css
+ Contient les classes globales au site, peuvent être utilisées partout.
+--------------------------------------*/
+
+/* Classes générales
+--------------------------------------*/
+/* Case générale des tableaux du site*/
+.row1, .block_contents1{
+	background:#101010;
+	border:1px solid #063E59;
+	padding:6px;
+	margin-bottom:-1px;
+}
+.block_contents1{
+	padding:20px 6px;
+}
+.row2, .block_contents2{
+	border:1px solid #063E59;
+	padding:6px;
+	margin-bottom:-1px;
+}
+.block_contents2{
+	padding:20px 6px;
+	margin-bottom:-1px;
+}
+.row3, .block_contents3{
+	background:#101010;
+	border:1px solid #063E59;
+	padding:6px;
+	margin-bottom:-1px;
+}
+.block_contents3{
+	padding:20px 6px;
+}
+
+/* Case résultat recherche membre AJAX */
+.xmlhttprequest_result_search{
+	overflow:auto;
+	height:100px;
+	width:100px;	
+	overflow:auto;
+	font-size:11px;
+	background:#DEF2FF;
+	border:1px solid #2C5169;
+	color:#061729;
+	padding:2px;
+}
+/*Affichage du mini calendrier */
+.calendar_block{
+	position:absolute;
+	text-align:center;
+	padding:6px 4px;
+	background:#274D74;
+	color:#FFFFFF;
+	border:1px solid #1E1F24;
+	bottom:28px; 
+	width:204px;
+	z-index:100;
+}
+/* Déplacement des fichiers*/
+.upload_selected_cat{
+	background:#000000;
+	border:1px solid #1E1F24;
+}
+
+/* Lien du site
+--------------------------------------*/
+a{ 
+	color:#00ABD6; 
+	text-decoration:none; 
+	font-weight:bold;
+	font-size:11px;
+}
+a:hover{ 
+	color:#0066B9; 
+	text-decoration:underline;
+	font-weight:bold;
+	font-size:11px; 
+}
+/* Liens petite taille */
+a.small_link{ 
+	font-size:10px;
+}
+a.small_link:hover{ 
+	font-size:10px;
+}
+/* Liens grande taille */
+a.big_link{ 
+	font-size:15px;
+}
+a.big_link:hover{ 
+	font-size:15px;
+}
+/* Liens des commentaires. */
+a.com{
+	color:#0578CC; 
+	font-size:10px;
+	font-weight:bold;
+}
+a.com:hover{ 
+	color:#7B8B9A; 
+	font-size:10px;
+	font-weight:bold;
+}
+/* Lien des utilisateurs => ne pas changer le nom de ces classes! */
+a.admin{
+	color:#D00000; 
+	font-size:11px;
+	font-weight:bold;
+}
+a.modo{
+	color:#2569AE; 
+	font-size:11px;
+	font-weight:bold;
+}
+a.membre{
+	color:#FFFFFF; 
+	font-size:11px;
+	font-weight:bold;
+}
+
+/* Liens pagination
+--------------------------------------*/
+.pagination {
+    font-size: 11px;
+}
+.pagination_current_page {
+    text-decoration:underline;
+}
+
+/*Menu dynamique des liens
+--------------------------------------*/
+.dynamic_menu{ 
+	position:relative; 
+	z-index:100;
+}
+.dynamic_menu ul{
+	margin:0;
+	padding:0;
+	border:none;
+	font-weight:bold;
+	list-style:none;
+}
+.dynamic_menu li{
+	position:relative;
+	float:left;  
+	display:inline;
+}
+.dynamic_menu li.vertical{
+	display:block;
+	float:none;
+	margin-bottom:15px;
+}
+ /* Lien du menu */
+.dynamic_menu h5{
+	color:#edfff0;
+	text-align:center;
+	background:#032538;
+	border:1px solid #122B40;
+	padding:4px 6px;
+	font-weight:bold;
+	font-size:12px;
+}
+.dynamic_menu h5:hover{
+	color:#01528D;
+	background:#252837;
+	cursor:default;
+}
+
+/* Séparateur */
+.dynamic_menu ul li.separator { 
+	background:#104069;  
+	height:2px;
+}
+.dynamic_menu ul li.extend{
+	background:url(images/bgmenu_extend.png);
+}
+/* Case du menu */
+.dynamic_menu li ul {
+	visibility:hidden; 
+	position:absolute;
+	border-top:1px solid #122B40;
+	border-bottom:1px solid #122B40;
+}
+.dynamic_menu li.vertical ul {
+	top:0;
+	margin-left:150px; 
+}
+.dynamic_menu li li{
+	clear:both;
+	color:#0578CC;	
+	background:#000000 url(images/bgmenu.gif) repeat-y;
+	display:block;
+	width:167px;
+}
+.dynamic_menu li li a{
+	color:#0578CC;	
+	font-size:10px;
+	text-decoration:none;
+	padding-left:32px;
+	width:131px;
+	display:block;
+	white-space:nowrap; 	
+	margin:auto;
+	padding-top:6px;
+	padding-bottom:6px;	
+	background-repeat:no-repeat;
+	background-position:5px;
+}
+.dynamic_menu li li a:hover{	
+	background-color:#252837;
+	border:1px solid #40486D;
+	background-repeat:no-repeat;
+	background-position:5px;
+	padding-top:5px;
+	padding-bottom:5px;
+	cursor:pointer;
+}
+/* Niveau 2 */
+.dynamic_menu li li ul {  
+	visibility:hidden; 
+	top:-2px; 
+	left:100%;
+}
+
+ul#dock {
+height:130px;
+list-style-image:none;
+list-style-position:outside;
+list-style-type:none;
+margin:0;
+padding:0;
+text-align:center;
+white-space:nowrap;
+}
+ul#dock li {
+display:inline;
+margin:0;
+padding:0;
+}
+ul#dock li img {
+border:0 none;
+margin:0;
+padding:0;
+vertical-align:top;
+}

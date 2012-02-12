@@ -1,0 +1,122 @@
+################################################################################
+##                                   BENOIT                                   ##
+################################################################################
+
+------------------------------------- NOYAU ------------------------------------
+
+------------------------------------ MODULES -----------------------------------
+
+
+################################################################################
+
+
+
+
+################################################################################
+##                                   REGIS                                    ##
+################################################################################
+
+------------------------------------- NOYAU ------------------------------------
+
+------------------------------------ MODULES -----------------------------------
+
+#################################################################################
+
+
+
+
+################################################################################
+##                                    LOIC                                    ##
+################################################################################
+
+------------------------------------- NOYAU ------------------------------------
+
+------------------------------------ MODULES -----------------------------------
+
+################################################################################
+
+
+######################################DOSSIERS##################################
+
+[+] Noix : Panneau de contribution
+[+] Loic : Recherche
+[-] Croquette : Nouveaux placement des menus
+
+
+
+###################################### PHPBoost 3.1 ##################################
+
+[b]Structure et fonctionnement:[/b]
+- [color=red]Nouveauté:[/color] Interface pour gérer intégralement la page de démarrage du site.
+- [color=red]Nouveauté:[/color] Pose de verrous sur les contenus lors de leur édition afin de faciliter le travail colaboratif.
+- [color=red]Nouveauté:[/color] Possibilité de choisir une disposition des menus par thème.
+- [color=red]Nouveauté:[/color] Possibilité d'associer un menu sur une catégorie/page donnée, une partie de site et non à l'ensemble.
+- [color=red]Nouveauté:[/color] Exportation en pdf (articles, wiki, pages).
+- [color=red]Nouveauté:[/color] Editeur d'image avec interface js pour redimensionner, faire des rotations, des mises à l'échelles, etc.
+- [color=red]Nouveauté:[/color] Système de centralisation de mots clés, gestion de nuages de tags... A intégrer peut-être dans le module de recherche.
+- [color=red]Nouveauté:[/color] Nouvelle interface de déplacement des menus (drag and drop).
+- [color=red]Nouveauté:[/color] Nouvelle interface de déplacement les catégories (drag and drop).
+- [color=red]Nouveauté:[/color] Possibilité de créer des formulaires personnalisés.
+- [color=red]Nouveauté:[/color] Interface de visualisation des valeurs des champs supplémentaires saisies par les membres.
+- [color=red]Nouveauté:[/color] Compression de la base de données à l'exportation, importation en fichier compressé ou non.
+- [color=red]Nouveauté:[/color] Possibilité d'utiliser un serveur smtp pour l'envoi de mails.
+- [color=red]Nouveauté:[/color] Possibilité de mettre les champs à l'inscription en obligatoire.
+- [color=red]Nouveauté:[/color] Galerie d'avatar.
+- Possibilité d'envoyer des messages privés à tout les membres d'un groupe ou à tout les membres pour l'administrateur.
+- Possibilité de demander l'envoi d'un mail lors de l'envoi d'un mp.
+- Outils avancés de visualisation et gestion du cache.
+- Redimensionnement automatisé des avatars s'ils dépassent les dimensions maximales autorisées.
+- Ajout du tri sur les lettres de l'alphabet dans la liste des membres.
+- Etudier la possibilité de joindre les sessions et l'espace membre à un annuaire de type LDAP.
+
+
+[b]Forum[/b]
+- [color=red]Nouveauté:[/color] Nouveaux droits globaux aux groupes dans le forum, suppression/édition des messages/sujets appartenant au membre.
+- [color=red]Nouveauté:[/color] Possibilité de créer des messages semi-automatiques pour les modérateurs.
+- [color=red]Nouveauté:[/color] Possibilité de délestage automatique des sujets (configuration).
+- [color=red]Nouveauté:[/color] Possibilité de définir des mots interdits (remplacés par des étoiles).
+- Possibilité de mettre un pseudo lorsque l'on poste en visiteur.
+
+
+[b]Galerie:[/b]
+- [color=red]Nouveauté:[/color] Gestion des catégories infinies, droits de lecture/ecriture sur les catégories.
+- [color=red]Nouveauté:[/color] Possibilité de redimensionnement automatique des images dans la galerie, avec prévisualisation du rendu.
+- [color=red]Nouveauté:[/color] Approbation des photos envoyées par les membres/invités, alerte envoyée à l'administrateur.
+- [color=red]Nouveauté:[/color] Galerie privée pour les membres.
+- [color=red]Nouveauté:[/color] Diaporama sur l'index de la galerie.
+- Voir les images plus vues/mieux notées, affichage sur l'ensemble de la galerie et non sur une catégorie.
+- Possibilité de définir une limite d'upload en fonction des groupes.
+- Possibilité de télécharger l'image.
+
+[b]Téléchargement[/b]
+- Possibilité d'afficher la dernière mise à jour du fichier.
+- Possibilité de signaler les liens cassés.
+
+[b]Liens web[/b]
+- [color=red]Nouveauté:[/color] Gestion des catégories infinies, droits de lecture/ecriture sur les catégories.
+- [color=red]Nouveauté:[/color] Possibilité aux membres de proposer des liens.
+- Possibilité de signaler les liens cassés.
+
+[b]Wiki:[/b]
+- [color=red]Nouveauté:[/color] Système d'enregistrement ligne par ligne des articles pour un encombrement réduit lors des éditions successives.
+
+[b]Calendrier:[/b]
+- [color=red]Nouveauté:[/color] Possibilité d'ajouter des évenements sur plusieurs jours.
+- Possibilité d'afficher les évenements sur une période donnée. 
+- Posibilité de modifier les évenements (avant réservé aux administrateur).
+
+[b]Contact:[/b]
+- Possibilité de choisir à quel groupe d'utilisateurs envoyer le mail.
+
+[b]Nouveau module:[/b]
+- [color=red]Nouveauté:[/color] Module blogs, proposez à tous vos membres un système de gestion de blog complet.
+
+[b]Nouveau module:[/b]
+- [color=red]Nouveauté:[/color] Module mini-calendrier, module mini attenant au module du calendrier.
+
+[b]Nouveau module:[/b]
+- [color=red]Nouveauté:[/color] Module bannière, Bannières aléatoire à afficher sur le site. Possibilité de créer des campagnes d'affichage:
+choix du nombre d'affichage de la bannière, du nombre de clics sur la bannière, etc..
+
+[b]Nouveau module:[/b]
+- [color=red]Nouveauté:[/color] Module tchat, permet de discuter facilement dans une interface prévue à cet effet.
