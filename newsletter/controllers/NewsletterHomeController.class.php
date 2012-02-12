@@ -28,67 +28,10 @@
 class NewsletterHomeController extends ModuleController
 {
 	private $lang;
-	private $view;
-	private $nbr_streams_per_page = 25;
 
 	public function execute(HTTPRequest $request)
 	{
-		$this->init();
-		$this->build_form($request);
-
-		return $this->build_response($this->view);
-	}
-
-	private function build_form($request)
-	{
-		$current_page = $request->get_int('page', 1);
-		$nbr_streams = PersistenceContext::get_sql()->count_table(NewsletterSetup::$newsletter_table_streams, __LINE__, __FILE__);
-		$nbr_pages =  ceil($nbr_streams / $this->nbr_streams_per_page);
-		$pagination = new Pagination($nbr_pages, $current_page);
-		
-		$pagination->set_url_sprintf_pattern(DispatchManager::get_url('/newsletter', '')->absolute());
-		$this->view->put_all(array(
-			'C_STREAMS' => (float)$nbr_streams,
-			'C_CREATE_AUTH' => NewsletterAuthorizationsService::default_authorizations()->create_newsletters(),
-			'LINK_CREATE' => NewsletterUrlBuilder::add_newsletter()->absolute(),
-			'LINK_SUBSCRIBE' => NewsletterUrlBuilder::subscribe()->absolute(),
-			'LINK_UNSUBSCRIBE' => NewsletterUrlBuilder::unsubscribe()->absolute(),
-			'PAGINATION' => $pagination->export()->render()
-		));
-
-		$limit_page = $current_page > 0 ? $current_page : 1;
-		$limit_page = (($limit_page - 1) * $this->nbr_streams_per_page);
-		
-		$result = PersistenceContext::get_querier()->select("SELECT id, name, description, picture, visible, auth
-		FROM " . NewsletterSetup::$newsletter_table_streams . "
-		LIMIT ". $this->nbr_streams_per_page ." OFFSET :start_limit",
-			array(
-				'start_limit' => $limit_page
-			), SelectQueryResult::FETCH_ASSOC
-		);
-		while ($row = $result->fetch())
-		{
-			$read_auth = NewsletterAuthorizationsService::id_stream($row['id'])->read();
-			if ($read_auth && $row['visible'] == 1)
-			{
-				$read_archives_auth = NewsletterAuthorizationsService::id_stream($row['id'])->read_archives();
-				$read_subscribers_auth = NewsletterAuthorizationsService::id_stream($row['id'])->read_subscribers();
-				$this->view->assign_block_vars('streams_list', array(
-					'PICTURE' => PATH_TO_ROOT . $row['picture'],
-					'NAME' => $row['name'],
-					'DESCRIPTION' => $row['description'],
-					'VIEW_ARCHIVES' => $read_archives_auth ? '<a href="' . NewsletterUrlBuilder::archives($row['id'])->absolute() . '">'. $this->lang['newsletter.view_archives'] .'</a>' : $this->lang['newsletter.not_level'],
-					'VIEW_SUBSCRIBERS' => $read_subscribers_auth ? '<a href="' . NewsletterUrlBuilder::subscribers($row['id'])->absolute() . '">'. $this->lang['newsletter.view_subscribers'] .'</a>' : $this->lang['newsletter.not_level'],
-				));
-			}
-		}
-	}
-	
-	private function init()
-	{
-		$this->lang = LangLoader::get('newsletter_common', 'newsletter');
-		$this->view = new FileTemplate('newsletter/NewsletterHomeController.tpl');
-		$this->view->add_lang($this->lang);
+		return $this->build_response(NewsletterModuleHomePage::get_view());
 	}
 
 	private function build_response(View $view)

@@ -37,6 +37,11 @@ class GuestbookExtensionPointProvider extends ExtensionPointProvider
         parent::__construct('guestbook');
     }
     
+	public function home_page()
+	{
+		return new GuestbookHomePageExtensionPoint();
+	}
+	
     public function menus()
     {
     	return new GuestbookMenusExtensionPoint();
