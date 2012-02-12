@@ -49,7 +49,7 @@ class PHPBoostIndexController extends AbstractController
 			AppContext::get_response()->redirect(UserUrlBuilder::home());
 		}
 		
-		return $this->build_response(new StringTemplate('toto'), '');
+		return $this->build_response($home_page->get_view(), $home_page->get_title());
 	}
 	
 	private function build_response($view, $title)
