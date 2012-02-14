@@ -511,8 +511,12 @@ class Environment
 	 */
 	public static function get_home_page()
 	{
-		$url = new Url(GeneralConfig::load()->get_other_home_page());
-		return $url->absolute();
+		$general_config = GeneralConfig::load();
+		if ($general_config->get_module_home_page())
+		{
+			return Url::to_absolute('/index.php');
+		}
+		return Url::to_absolute(GeneralConfig::load()->get_other_home_page());
 	}
 
 	/**
