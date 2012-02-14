@@ -48,41 +48,12 @@ class GuestbookHomePageExtensionPoint implements HomePageExtensionPoint
 	
 	private function get_view()
 	{
-		global $LANG, $GUESTBOOK_LANG, $GUESTBOOK_CONFIG, $Cache, $User, $auth_write, $Session, $Bread_crumb, $level, $id_get, $guestbook;
+		global $LANG, $GUESTBOOK_LANG, $GUESTBOOK_CONFIG, $Cache, $User, $auth_write, $Session, $Bread_crumb, $level, $id_get, $guestbook, $guestbook_config, $authorizations;
 		
 		require_once(PATH_TO_ROOT . '/guestbook/guestbook_begin.php');
 		
 		$tpl = new FileTemplate('guestbook/guestbook.tpl');
 		
-		$guestbook_config = GuestbookConfig::load();
-		$authorizations = $guestbook_config->get_authorizations();
-
-		if (!$User->check_auth($authorizations, GuestbookConfig::AUTH_READ)) //Autorisation de lire ?
-		{
-			$error_controller = PHPBoostErrors::user_not_authorized();
-			DispatchManager::redirect($error_controller);
-		}
-		
-		$del = retrieve(GET, 'del', false);
-		if ($del && !empty($id_get)) //Suppression.
-		{
-			$row = $this->sql_querier->query_array(PREFIX . 'guestbook', '*', "WHERE id='" . $id_get . "'", __LINE__, __FILE__);
-			$row['user_id'] = (int)$row['user_id'];
-			
-			$has_edit_auth = $User->check_auth($authorizations, GuestbookConfig::AUTH_MODO) 
-				|| ($row['user_id'] === $User->get_attribute('user_id') && $User->get_attribute('user_id') !== -1);
-			if ($has_edit_auth) {
-				$Session->csrf_get_protect(); //Protection csrf
-			
-				$this->sql_querier->query_inject("DELETE FROM " . PREFIX . "guestbook WHERE id = '" . $id_get . "'", __LINE__, __FILE__);
-				$previous_id = $this->sql_querier->query("SELECT MAX(id) FROM " . PREFIX . "guestbook", __LINE__, __FILE__);
-			
-				GuestbookMessagesCache::invalidate();
-			
-				AppContext::get_response()->redirect(HOST . SCRIPT . SID2 . '#m' . $previous_id);
-			}
-		}
-
 		//Construction du formulaire
 		if ($User->check_auth($authorizations, GuestbookConfig::AUTH_WRITE))
 		{
