@@ -314,5 +314,10 @@ class ForumExtensionPointProvider extends ExtensionPointProvider
 	{
 		return new ForumFeedProvider();
 	}
+	
+	public function home_page()
+	{
+		return new ForumHomePageExtensionPoint();
+	}
 }
 ?>
