@@ -4,12 +4,10 @@
 - Faire un script qui modifie le path et l'URL du site après une migration (plus possible de bidouiller le cache)
 - Corriger le bug qui fait que quand on autorise un modérateur par exemple à naviguer sur le site en maintenance, il ne peut pas se logguer si il l'était pas déjà parce que le lien fonctionne seulement pour les admins.
 
-- Filtres d'exclusion pour les menus
 
 ## AUTRES ##
 - Balises Youtube, Dailymotion
 - Corriger bbcode.css (bloc masquables + wikipédia) (publishing notamment)
-- Séparer la configuration du cache dans les modules (Créer des ModuleConfig)
 - [color=red]Nouveauté:[/color] Nouveau thème Base2 pour la distribution complete.
 - Remplacement des icônes de base par le pack famfamfam
 
@@ -69,7 +67,9 @@
 + Refonte du module
 
 [b]Tous[/b]
-- Intégration de l'ExtensionPoint HomePage dans les différents modules
+[*] Intégration de l'ExtensionPoint HomePage dans les différents modules
+- Séparer la configuration du cache dans les modules (Créer des ModuleConfig)
+- Filtres d'exclusion pour les menus
 
 #################################################################################
 
