@@ -29,6 +29,7 @@ require_once('../admin/admin_begin.php');
 load_module_lang('download'); //Chargement de la langue du module.
 define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
+$download_config = DownloadConfig::load();
 
 include_once('download_auth.php');
 $Cache->load('download');
@@ -226,9 +227,9 @@ elseif ($new_cat XOR $id_edit > 0)
 			'JS_SPECIAL_AUTH' => !empty($DOWNLOAD_CATS[$id_edit]['auth']) ? 'true' : 'false',
 			'DISPLAY_SPECIAL_AUTH' => !empty($DOWNLOAD_CATS[$id_edit]['auth']) ? 'block' : 'none',
 			'SPECIAL_CHECKED' => !empty($DOWNLOAD_CATS[$id_edit]['auth']) ? 'checked="checked"' : '',
-			'READ_AUTH' => Authorizations::generate_select(DOWNLOAD_READ_CAT_AUTH_BIT, !empty($DOWNLOAD_CATS[$id_edit]['auth']) ? $DOWNLOAD_CATS[$id_edit]['auth'] : $CONFIG_DOWNLOAD['global_auth']),
-			'WRITE_AUTH' => Authorizations::generate_select(DOWNLOAD_WRITE_CAT_AUTH_BIT, !empty($DOWNLOAD_CATS[$id_edit]['auth']) ? $DOWNLOAD_CATS[$id_edit]['auth'] : $CONFIG_DOWNLOAD['global_auth']),
-			'CONTRIBUTION_AUTH' => Authorizations::generate_select(DOWNLOAD_CONTRIBUTION_CAT_AUTH_BIT, !empty($DOWNLOAD_CATS[$id_edit]['auth']) ? $DOWNLOAD_CATS[$id_edit]['auth'] : $CONFIG_DOWNLOAD['global_auth'])
+			'READ_AUTH' => Authorizations::generate_select(DOWNLOAD_READ_CAT_AUTH_BIT, !empty($DOWNLOAD_CATS[$id_edit]['auth']) ? $DOWNLOAD_CATS[$id_edit]['auth'] : $download_config->get_authorization()),
+			'WRITE_AUTH' => Authorizations::generate_select(DOWNLOAD_WRITE_CAT_AUTH_BIT, !empty($DOWNLOAD_CATS[$id_edit]['auth']) ? $DOWNLOAD_CATS[$id_edit]['auth'] : $download_config->get_authorization()),
+			'CONTRIBUTION_AUTH' => Authorizations::generate_select(DOWNLOAD_CONTRIBUTION_CAT_AUTH_BIT, !empty($DOWNLOAD_CATS[$id_edit]['auth']) ? $DOWNLOAD_CATS[$id_edit]['auth'] : $download_config->get_authorization())
 		));
 	}
 	else
@@ -244,9 +245,9 @@ elseif ($new_cat XOR $id_edit > 0)
 			'JS_SPECIAL_AUTH' => 'false',
 			'DISPLAY_SPECIAL_AUTH' => 'none',
 			'SPECIAL_CHECKED' => '',
-			'READ_AUTH' => Authorizations::generate_select(DOWNLOAD_READ_CAT_AUTH_BIT, $CONFIG_DOWNLOAD['global_auth']),
-			'WRITE_AUTH' => Authorizations::generate_select(DOWNLOAD_WRITE_CAT_AUTH_BIT, $CONFIG_DOWNLOAD['global_auth']),
-			'CONTRIBUTION_AUTH' => Authorizations::generate_select(DOWNLOAD_CONTRIBUTION_CAT_AUTH_BIT, $CONFIG_DOWNLOAD['global_auth'])
+			'READ_AUTH' => Authorizations::generate_select(DOWNLOAD_READ_CAT_AUTH_BIT, $download_config->get_authorization()),
+			'WRITE_AUTH' => Authorizations::generate_select(DOWNLOAD_WRITE_CAT_AUTH_BIT, $download_config->get_authorization()),
+			'CONTRIBUTION_AUTH' => Authorizations::generate_select(DOWNLOAD_CONTRIBUTION_CAT_AUTH_BIT, $download_config->get_authorization())
 		));
 	}
 
