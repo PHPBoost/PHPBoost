@@ -41,18 +41,13 @@ class DownloadExtensionPointProvider extends ExtensionPointProvider
 	{
 		global $LANG, $Cache;
 
-		$code = 'global $DOWNLOAD_CATS;' . "\n" . 'global $CONFIG_DOWNLOAD;' . "\n\n";
-
-		//Récupération du tableau linéarisé dans la bdd.
-		$CONFIG_DOWNLOAD = unserialize($this->sql_querier->query("SELECT value FROM " . DB_TABLE_CONFIGS . " WHERE name = 'download'", __LINE__, __FILE__));
-
-		$code .= '$CONFIG_DOWNLOAD = ' . var_export($CONFIG_DOWNLOAD, true) . ';' . "\n";
-
+		$download_config = DownloadConfig::load();
+		
 		//Liste des catégories et de leurs propriétés
-		$code .= '$DOWNLOAD_CATS = array();' . "\n\n";
+		$code = '$DOWNLOAD_CATS = array();' . "\n\n";
 
 		//Racine
-		$code .= '$DOWNLOAD_CATS[0] = ' . var_export(array('name' => $LANG['root'], 'auth' => $CONFIG_DOWNLOAD['global_auth']) ,true) . ';' . "\n\n";
+		$code .= '$DOWNLOAD_CATS[0] = ' . var_export(array('name' => $LANG['root'], 'auth' => $download_config->get_authorization()) ,true) . ';' . "\n\n";
 
 		$result = $this->sql_querier->query_while("SELECT id, id_parent, c_order, auth, name, visible, icon, num_files, contents
 		FROM " . PREFIX . "download_cat
@@ -167,9 +162,11 @@ class DownloadExtensionPointProvider extends ExtensionPointProvider
      */
     function parse_search_result($result_data)
     {
-        global $Cache, $LANG, $DOWNLOAD_LANG, $CONFIG_DOWNLOAD;
+        global $Cache, $LANG, $DOWNLOAD_LANG;
         $Cache->load('download');
-
+		
+		$download_config = DownloadConfig::load();
+		
         load_module_lang('download'); //Chargement de la langue du module.
         $tpl = new FileTemplate('download/download_generic_results.tpl');
 
@@ -186,7 +183,7 @@ class DownloadExtensionPointProvider extends ExtensionPointProvider
             'SHORT_DESCRIPTION' => FormatingHelper::second_parse($result_data['short_contents']),
             'L_NB_DOWNLOADS' => $DOWNLOAD_LANG['downloaded'] . ' ' . sprintf($DOWNLOAD_LANG['n_times'], $result_data['count']),
             'L_NB_COMMENTS' => $result_data['nbr_com'] > 1 ? sprintf($DOWNLOAD_LANG['num_com'], $result_data['nbr_com']) : sprintf($DOWNLOAD_LANG['num_coms'], $result_data['nbr_com']),
-            'L_MARK' => $result_data['note'] > 0 ? Note::display_img($result_data['note'], $CONFIG_DOWNLOAD['note_max'], 5) : ('<em>' . $LANG['no_note'] . '</em>')
+            'L_MARK' => $result_data['note'] > 0 ? Note::display_img($result_data['note'], $download_config->get_note_max(), 5) : ('<em>' . $LANG['no_note'] . '</em>')
         ));
 
         return $tpl->render();
@@ -195,11 +192,13 @@ class DownloadExtensionPointProvider extends ExtensionPointProvider
     ## Private ##
     function _check_cats_auth($id_cat, $list)
     {
-        global $DOWNLOAD_CATS, $CONFIG_DOWNLOAD;
-
+        global $DOWNLOAD_CATS;
+		
+		$download_config = DownloadConfig::load();
+		
         if ($id_cat == 0)
         {
-            if (Authorizations::check_auth(RANK_TYPE, GUEST_LEVEL, $CONFIG_DOWNLOAD['global_auth'], DOWNLOAD_READ_CAT_AUTH_BIT))
+            if (Authorizations::check_auth(RANK_TYPE, GUEST_LEVEL, $download_config->get_authorization(), DOWNLOAD_READ_CAT_AUTH_BIT))
                 $list[] = 0;
             else
                 return;
@@ -208,7 +207,7 @@ class DownloadExtensionPointProvider extends ExtensionPointProvider
         {
 			if (!empty($DOWNLOAD_CATS[$id_cat]))
 			{
-				$auth = !empty($DOWNLOAD_CATS[$id_cat]['auth']) ? $DOWNLOAD_CATS[$id_cat]['auth'] : $CONFIG_DOWNLOAD['global_auth'];
+				$auth = !empty($DOWNLOAD_CATS[$id_cat]['auth']) ? $DOWNLOAD_CATS[$id_cat]['auth'] : $download_config->get_authorization();
 				if (Authorizations::check_auth(RANK_TYPE, GUEST_LEVEL, $auth, DOWNLOAD_READ_CAT_AUTH_BIT))
 					$list[] = $id_cat;
             }
@@ -227,7 +226,7 @@ class DownloadExtensionPointProvider extends ExtensionPointProvider
 
             if ($properties['id_parent'] == $id_cat)
             {
-                $this_auth = is_array($properties['auth']) ? Authorizations::check_auth(RANK_TYPE, GUEST_LEVEL, $properties['auth'], DOWNLOAD_READ_CAT_AUTH_BIT) :  Authorizations::check_auth(RANK_TYPE, GUEST_LEVEL, $CONFIG_DOWNLOAD['global_auth'], DOWNLOAD_READ_CAT_AUTH_BIT);
+                $this_auth = is_array($properties['auth']) ? Authorizations::check_auth(RANK_TYPE, GUEST_LEVEL, $properties['auth'], DOWNLOAD_READ_CAT_AUTH_BIT) :  Authorizations::check_auth(RANK_TYPE, GUEST_LEVEL, $download_config->get_authorization(), DOWNLOAD_READ_CAT_AUTH_BIT);
 
                 if ($this_auth)
                 {
