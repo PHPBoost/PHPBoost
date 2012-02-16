@@ -48,11 +48,41 @@ class ForumHomePageExtensionPoint implements HomePageExtensionPoint
 	
 	private function get_view()
 	{
-		global $LANG, $FORUM_LANG, $CONFIG_FORUM, $User, $auth_write, $Session, $CAT_FORUM, $AUTH_READ_FORUM;
+		global $LANG, $FORUM_LANG, $CONFIG_FORUM, $User, $auth_write, $Session, $CAT_FORUM, $AUTH_READ_FORUM, $nbr_msg_not_read, $sid;
 		
 		require_once(PATH_TO_ROOT . '/forum/forum_begin.php');
-		
+
 		$tpl = new FileTemplate('forum/forum_index.tpl');
+		$tpl_top = new FileTemplate('forum/forum_top.tpl');
+		$tpl_bottom = new FileTemplate('forum/forum_bottom.tpl');
+		
+		if ($CONFIG_FORUM['display_connexion'])
+		{
+			$display_connexion = array(	
+				'C_FORUM_CONNEXION' => true,
+				'L_CONNECT' => $LANG['connect'],
+				'L_DISCONNECT' => $LANG['disconnect'],
+				'L_AUTOCONNECT' => $LANG['autoconnect'],
+				'L_REGISTER' => $LANG['register']
+			);
+			
+			$tpl_top->put_all($display_connexion);
+			$tpl_bottom->put_all($display_connexion);
+		}
+		
+		$vars_tpl = array(	
+			'C_DISPLAY_UNREAD_DETAILS' => ($User->get_attribute('user_id') !== -1) ? true : false,
+			'C_MODERATION_PANEL' => $User->check_level(1) ? true : false,
+			'U_TOPIC_TRACK' => '<a class="small_link" href="../forum/track.php' . $sid . '" title="' . $LANG['show_topic_track'] . '">' . $LANG['show_topic_track'] . '</a>',
+			'U_LAST_MSG_READ' => '<a class="small_link" href="../forum/lastread.php' . $sid . '" title="' . $LANG['show_last_read'] . '">' . $LANG['show_last_read'] . '</a>',
+			'U_MSG_NOT_READ' => '<a class="small_link" href="../forum/unread.php' . $sid  . '" title="' . $LANG['show_not_reads'] . '">' . $LANG['show_not_reads'] . ($User->get_attribute('user_id') !== -1 ? ' (' . $nbr_msg_not_read . ')' : '') . '</a>',
+			'U_MSG_SET_VIEW' => '<a class="small_link" href="../forum/action' . url('.php?read=1', '') . '" title="' . $LANG['mark_as_read'] . '" onclick="javascript:return Confirm_read_topics();">' . $LANG['mark_as_read'] . '</a>',
+			'L_MODERATION_PANEL' => $LANG['moderation_panel'],
+			'L_CONFIRM_READ_TOPICS' => $LANG['confirm_mark_as_read'],
+			'L_AUTH_ERROR' => LangLoader::get_message('e_auth', 'errors'),
+			'L_SEARCH' => $LANG['search'],
+			'L_ADVANCED_SEARCH' => $LANG['advanced_search']
+		);
 		
 		//Affichage des sous-catégories de la catégorie.
 		$display_sub_cat = ' AND c.level BETWEEN 0 AND 1';
@@ -216,7 +246,7 @@ class ForumHomePageExtensionPoint implements HomePageExtensionPoint
 		//Listes les utilisateurs en lignes.
 		list($users_list, $total_admin, $total_modo, $total_member, $total_visit, $total_online) = forum_list_user_online("AND s.session_script LIKE '/forum/%'");
 
-		$tpl->put_all(array(
+		$vars_tpl = array_merge($vars_tpl, array(
 			'FORUM_NAME' => $CONFIG_FORUM['forum_name'],
 			'NBR_MSG' => $total_msg,
 			'NBR_TOPIC' => $total_topic,
@@ -252,6 +282,13 @@ class ForumHomePageExtensionPoint implements HomePageExtensionPoint
 			'L_AND' => $LANG['and'],
 			'L_ONLINE' => strtolower($LANG['online'])
 		));
+		
+		$tpl->put_all($vars_tpl);
+		$tpl_top->put_all($vars_tpl);
+		$tpl_bottom->put_all($vars_tpl);
+		
+		$tpl->add_subtemplate('forum_top', $tpl_top);
+		$tpl->add_subtemplate('forum_bottom', $tpl_bottom);
 
 		return $tpl;
 	}
