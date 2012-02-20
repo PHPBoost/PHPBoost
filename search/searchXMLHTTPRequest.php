@@ -37,13 +37,10 @@ $module_id = strtolower(retrieve(POST, 'moduleName', ''));
 $id_search = retrieve(POST, 'idSearch', -1);
 $selected_modules = retrieve(POST, 'searched_modules', array());
 //------------------------------------------------------------- Other includes
-import('modules/modules_discovery_service');
 require_once(PATH_TO_ROOT . '/search/search.inc.php');
 
 
 //----------------------------------------------------------------------- Main
-
-$modules = new ModulesDiscoveryService();
 $modules_args = array();
 
 if (($id_search >= 0) && ($module_id != ''))
@@ -55,33 +52,30 @@ if (($id_search >= 0) && ($module_id != ''))
     {   // MAJ DES RESULTATS SI ILS NE SONT PLUS DANS LE CACHE
         // Listes des modules de recherches
         $search_modules = array();
-        $all_search_modules = $modules->get_available_modules('get_search_request');
-        foreach ($all_search_modules as $search_module)
-        {
-            if (in_array($search_module->get_id(), $selected_modules))
-                $search_modules[] = $search_module;
+        $provider_service = AppContext::get_extension_provider_service();
+		foreach ($provider_service->get_extension_point(SearchableExtensionPoint::EXTENSION_POINT) as $id => $extension_point)
+		{
+            if (in_array($id, $selected_modules))
+                $search_modules[] = $extension_point;
         }
         
-        // Chargement des modules avec formulaires
-        $forms_module = $modules->get_available_modules('get_search_form', $search_modules);
-        
         // Ajout du paramètre search à tous les modules
-        foreach ($search_modules as $module)
-            $modules_args[$module->get_id()] = array('search' => $search_txt);
+        foreach ($search_modules as $id => $extension_point)
+            $modules_args[$id] = array('search' => $search_txt);
         
         // Ajout de la liste des paramètres de recherches spécifiques à chaque module
-        foreach ($forms_module as $form_module)
+        foreach ($search_modules as $id => $extension_point)
         {
-            if ($form_module->has_functionality('get_search_args'))
+            if ($form_module->has_search_options())
             {
                 // Récupération de la liste des paramètres
-                $form_module_args = $form_module->functionality('get_search_args');
+                $form_module_args = $extension_point->get_search_args();
                 // Ajout des paramètres optionnels sans les sécuriser.
                 // Ils sont sécurisés à l'intérieur de chaque module.
                 foreach ($form_module_args as $arg)
                 {
                     if ( isset($_POST[$arg]) )
-                        $modules_args[$form_module->get_id()][$arg] = $_POST[$arg];
+                        $modules_args[$id][$arg] = $_POST[$arg];
                 }
             }
         }
