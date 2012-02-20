@@ -3,16 +3,16 @@
 *                         searchXMLHTTPRequest.php
 *                            -------------------
 *   begin                : January 27, 2008
-*   copyright            : (C) 2008 Rouchon Loic
-*   email                : loic.rouchon@phpboost.com
+*   copyright            : (C) 2008 Rouchon Loïc
+*   email                : horn@phpboost.com
 *
 *
- ###################################################
+###################################################
 *
-*  This program is free software; you can redistribute it and/or modify
-*  it under the terms of the GNU General Public License as published by
-*  the Free Software Foundation; either version 2 of the License, or
-*  (at your option) any later version.
+*   This program is free software; you can redistribute it and/or modify
+*   it under the terms of the GNU General Public License as published by
+*   the Free Software Foundation; either version 2 of the License, or
+*   (at your option) any later version.
 *
 * This program is distributed in the hope that it will be useful,
 * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -23,7 +23,7 @@
 * along with this program; if not, write to the Free Software
 * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 *
- ###################################################*/
+###################################################*/
 
 define('NO_SESSION_LOCATION', true); //Permet de ne pas mettre jour la page dans la session.
 require_once('../kernel/begin.php');
@@ -37,13 +37,13 @@ $module_id = strtolower(retrieve(POST, 'moduleName', ''));
 $id_search = retrieve(POST, 'idSearch', -1);
 $selected_modules = retrieve(POST, 'searched_modules', array());
 //------------------------------------------------------------- Other includes
-
+import('modules/modules_discovery_service');
 require_once(PATH_TO_ROOT . '/search/search.inc.php');
 
 
 //----------------------------------------------------------------------- Main
 
-$modules = AppContext::get_extension_provider_service();
+$modules = new ModulesDiscoveryService();
 $modules_args = array();
 
 if (($id_search >= 0) && ($module_id != ''))
@@ -55,7 +55,7 @@ if (($id_search >= 0) && ($module_id != ''))
     {   // MAJ DES RESULTATS SI ILS NE SONT PLUS DANS LE CACHE
         // Listes des modules de recherches
         $search_modules = array();
-        $all_search_modules = $modules->get_providers('get_search_request');
+        $all_search_modules = $modules->get_available_modules('get_search_request');
         foreach ($all_search_modules as $search_module)
         {
             if (in_array($search_module->get_id(), $selected_modules))
@@ -63,7 +63,7 @@ if (($id_search >= 0) && ($module_id != ''))
         }
         
         // Chargement des modules avec formulaires
-        $forms_module = $modules->get_providers('get_search_form', $search_modules);
+        $forms_module = $modules->get_available_modules('get_search_form', $search_modules);
         
         // Ajout du paramètre search à tous les modules
         foreach ($search_modules as $module)
@@ -72,10 +72,10 @@ if (($id_search >= 0) && ($module_id != ''))
         // Ajout de la liste des paramètres de recherches spécifiques à chaque module
         foreach ($forms_module as $form_module)
         {
-            if ($form_module->has_extension_point('get_search_args'))
+            if ($form_module->has_functionality('get_search_args'))
             {
                 // Récupération de la liste des paramètres
-                $form_module_args = $form_module->get_extension_point('get_search_args');
+                $form_module_args = $form_module->functionality('get_search_args');
                 // Ajout des paramètres optionnels sans les sécuriser.
                 // Ils sont sécurisés à l'intérieur de chaque module.
                 foreach ($form_module_args as $arg)
@@ -111,7 +111,7 @@ if (($id_search >= 0) && ($module_id != ''))
     $nb_results = $search->get_results_by_id($results, $search->id_search[$module_id]);;
     if ($nb_results > 0)
     {
-        $module = $modules->get_provider($module_id);
+        $module = $modules->get_module($module_id);
         $html_results = '';
         get_html_results($results, $html_results, $module_id);
     

@@ -31,17 +31,19 @@ class SearchExtensionPointProvider extends ExtensionPointProvider
 	{
 		parent::__construct('search');
 	}
+	
+	public function get_cache()
+	{
+		$search_config = unserialize(PersistenceContext::get_sql()->query("SELECT value FROM " . DB_TABLE_CONFIGS . " WHERE name = 'search'", __LINE__, __FILE__));
+
+		return 'global $SEARCH_CONFIG;' . "\n" . '$SEARCH_CONFIG = '.var_export($search_config, true).';';	
+	}
 
 	public function scheduled_jobs()
 	{
 		return new SearchScheduledJobs();
 	}
 
-	public function url_mappings()
-	{
-		return new UrlMappings(array(new DispatcherUrlMapping('/search/index.php')));
-	}
-	
 	public function css_files()
 	{
 		return new SearchCssFilesExtensionPoint();
