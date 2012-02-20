@@ -44,7 +44,7 @@ class MaintainDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnviro
 	{
 		self::set_page_localization($this->get_page_title());
 
-		$template = new FileTemplate('user/maintain_header.tpl');
+		$template = new FileTemplate('user/header.tpl');
 
 		$general_config = GeneralConfig::load();
 		
@@ -79,7 +79,7 @@ class MaintainDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnviro
 	 */
 	function display_footer()
 	{
-		$template = new FileTemplate('user/maintain_footer.tpl');
+		$template = new FileTemplate('user/footer.tpl');
 		$main_lang = LangLoader::get('main');
 		
 		$theme_configuration = ThemeManager::get_theme(get_utheme())->get_configuration();
