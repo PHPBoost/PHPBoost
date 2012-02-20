@@ -46,72 +46,42 @@ if (!empty($_POST['valid']))
 {
     if (!$weighting)
     {
-        // Configuration de la classe search.class.php
-        $CONFIG['search_cache_time'] = retrieve(POST, 'cache_time', 15);
-        $CONFIG['search_max_use'] = retrieve(POST, 'max_use', 200);
+    	$config = SearchConfig::load();
+		$config->set_nb_results_per_page(retrieve(POST, 'nb_results_p', 15));
+		$config->set_cache_lifetime(retrieve(POST, 'cache_time', 15));
+		$config->set_cache_max_uses(retrieve(POST, 'max_use', 200));
+		$config->set_unauthorized_providers(retrieve(POST, 'authorized_modules', array()));
+		SearchConfig::save();
 
-        // Configuration du module 'Search'
-        if (!is_array($SEARCH_CONFIG))
-        $SEARCH_CONFIG = array();
-        $SEARCH_CONFIG['nb_results_per_page'] = retrieve(POST, 'nb_results_p', 15);
-        $SEARCH_CONFIG['unauthorized_modules'] = retrieve(POST, 'authorized_modules', array());
-        
-        // Enregistrement des modifications de la config
-        $config_string = addslashes(serialize($CONFIG));
-        $request = "UPDATE " . DB_TABLE_CONFIGS . " SET value = '".$config_string."' WHERE name = 'config'";
-        $Sql->query_inject($request, __LINE__, __FILE__);
-
-        // Enregistrement des modifications de la config du module 'Search'
-        $search_cfg = addslashes(serialize($SEARCH_CONFIG));
-        $request = "UPDATE " . DB_TABLE_CONFIGS . " SET value = '".$search_cfg."' WHERE name = 'search'";
-        $Sql->query_inject($request, __LINE__, __FILE__);
-
-        // Génération des nouveaux fichiers de cache
-        $Cache->Generate_file('config');
-        $Cache->Generate_module_file('search');
-
-        redirect(HOST . SCRIPT);
+        AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);
     }
     else
     {
-		$SEARCH_CONFIG['modules_weighting'] = array();
-		import('modules/modules_discovery_service');
-		$Modules = new ModulesDiscoveryService();
-		$searchModules = $Modules->get_available_modules('get_search_request');
-
-        // Configuration du module 'Search'
-		foreach ($searchModules as $module)
-		{
-			if (!in_array($module->get_id(), $SEARCH_CONFIG['unauthorized_modules']))
-			{
-				$SEARCH_CONFIG['modules_weighting'][$module->get_id()] = retrieve(POST, $module->get_id(), 1);
-			}
-		}
-
-        // Enregistrement des modifications de la config du module 'Search'
-        $search_cfg = addslashes(serialize($SEARCH_CONFIG));
-        $request = "UPDATE " . DB_TABLE_CONFIGS . " SET value = '".$search_cfg."' WHERE name = 'search'";
-        $Sql->query_inject($request, __LINE__, __FILE__);
-
-        // Génération des nouveaux fichiers de cache
-        $Cache->Generate_module_file('search');
-
-        redirect(HOST . SCRIPT . '?weighting=true');
+		$search_weightings = new SearchWeightings();
+		$provider_service = AppContext::get_extension_provider_service();
+        foreach ($provider_service->get_providers(SearchableExtensionPoint::EXTENSION_POINT) as $module_id => $provider)
+        {
+        	$search_weightings->add_module_weighting($module_id, retrieve(POST, $module_id, SearchWeightings::DEFAULT_WEIGHTING));
+        }
+        SearchConfig::load()->set_weightings($search_weightings);
+        SearchConfig::save();
+        
+        AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);
     }
 }
 elseif ($clearOutCache) // On vide le contenu du cache de la recherche
 {
-    $Sql->query_inject("TRUNCATE " . PREFIX . "search_results", __LINE__, __FILE__);
-    $Sql->query_inject("TRUNCATE " . PREFIX . "search_index", __LINE__, __FILE__);
-    redirect(HOST.SCRIPT);
+    $querier = PersistenceContext::get_querier();
+	$querier->truncate(PREFIX . 'search_results');
+	$querier->truncate(PREFIX . 'search_index');
+    AppContext::get_response()->redirect(HOST.SCRIPT);
 }
 else
 {
-    $Tpl = new FileTemplate('search/admin_search.tpl');
-
-    import('modules/modules_discovery_service');
-
-    $Tpl->assign_vars(array(
+    $tpl = new FileTemplate('search/admin_search.tpl');
+	$config = SearchConfig::load();
+	
+    $tpl->assign_vars(array(
         'THEME' => get_utheme(),
         'L_SEARCH_MANAGEMENT' => $LANG['search_management'],
         'L_SEARCH_CONFIG' => $LANG['search_config'],
@@ -123,29 +93,24 @@ else
 
     if (!$weighting)
     {
-        $SEARCH_CONFIG['search_cache_time'] = isset($CONFIG['search_cache_time']) ? $CONFIG['search_cache_time'] : 15;
-        $SEARCH_CONFIG['search_max_use'] = isset($CONFIG['search_max_use']) ? $CONFIG['search_max_use'] : 200;
-        $SEARCH_CONFIG['nb_results_per_page'] = isset($SEARCH_CONFIG['nb_results_per_page']) ? $SEARCH_CONFIG['nb_results_per_page'] : 15;
-        $SEARCH_CONFIG['unauthorized_modules'] = isset($SEARCH_CONFIG['unauthorized_modules']) && is_array($SEARCH_CONFIG['unauthorized_modules']) ? $SEARCH_CONFIG['unauthorized_modules'] : array();
-
-        $Modules = new ModulesDiscoveryService();
-        $searchModules = $Modules->get_available_modules('get_search_request');
-
-        foreach ($searchModules as $module)
+        $provider_service = AppContext::get_extension_provider_service();
+        foreach ($provider_service->get_providers(SearchableExtensionPoint::EXTENSION_POINT) as $module_id => $provider)
         {
-            if ( in_array($module->get_id(), $SEARCH_CONFIG['unauthorized_modules']) )
+        	$module_configuration = ModulesManager::get_module($module_id)->get_configuration();
+        	
+            if (in_array($module_id, $config->get_unauthorized_providers()))
             $selected = ' selected="selected"';
             else
             $selected = '';
 
-            $Tpl->assign_block_vars('authorized_modules', array(
-                'MODULE' => $module->get_id(),
+            $tpl->assign_block_vars('authorized_modules', array(
+                'MODULE' => $module_id,
                 'SELECTED' => $selected,
-                'L_MODULE_NAME' => ucfirst($module->get_name())
+                'L_MODULE_NAME' => ucfirst($module_configuration->get_name())
             ));
         }
 
-        $Tpl->assign_vars(array(
+        $tpl->put_all(array(
             'L_CACHE_TIME' => $LANG['cache_time'],
             'L_CACHE_TIME_EXPLAIN' => $LANG['cache_time_explain'],
             'L_NB_RESULTS_P' => $LANG['nb_results_per_page'],
@@ -155,40 +120,30 @@ else
             'L_AUTHORIZED_MODULES' => $LANG['unauthorized_modules'],
             'L_AUTHORIZED_MODULES_EXPLAIN' => $LANG['unauthorized_modules_explain'],
             'L_SEARCH_CACHE' => $LANG['search_cache'],
-            'CACHE_TIME' => $SEARCH_CONFIG['search_cache_time'],
-            'MAX_USE' => $SEARCH_CONFIG['search_max_use'],
-            'NB_RESULTS_P' => $SEARCH_CONFIG['nb_results_per_page']
+            'CACHE_TIME' => $config->get_cache_lifetime(),
+            'MAX_USE' => $config->get_cache_max_uses(),
+            'NB_RESULTS_P' => $config->get_nb_results_per_page()
         ));
     }
     else
     {
-        $modules = new ModulesDiscoveryService();
-        $all_modules = $modules->get_available_modules('get_search_request');
-        $authorized_modules = array_diff(array_keys($all_modules), $SEARCH_CONFIG['unauthorized_modules']);
-        foreach ($authorized_modules as $module_id)
+        foreach ($config->get_weightings()->get_modules_weighting() as $module_id => $weighting)
         {
-            $module = $all_modules[$module_id];
-            if (!$module->got_error())
-            {
-                $Tpl->assign_block_vars('weights', array(
-                    'MODULE' => $module->get_id(),
-                    'L_MODULE_NAME' => ucfirst($module->get_name()),
-                    'WEIGHT' => (!empty($SEARCH_CONFIG['modules_weighting']) && !empty($SEARCH_CONFIG['modules_weighting'][$module->get_id()])) ? $SEARCH_CONFIG['modules_weighting'][$module->get_id()] : 1
-                ));
-            }
+			$tpl->assign_block_vars('weights', array(
+				'MODULE' => $module_id,
+				'L_MODULE_NAME' => ucfirst(ModulesManager::get_module($module_id)->get_configuration()->get_name()),
+				'WEIGHT' => $weighting
+			));
         }
 
-        $Tpl->assign_vars(array(
+        $tpl->assign_vars(array(
             'L_MODULES' => $LANG['modules'],
             'L_WEIGHTS' => $LANG['search_weights'],
             'L_SEARCH_CONFIG_WEIGHTING_EXPLAIN' => $LANG['search_config_weighting_explain']
         ));
     }
 
-    $Tpl->parse();
+    $tpl->display();
 }
-
-//--------------------------------------------------------------------- Footer
 require_once('../admin/admin_footer.php');
-
 ?>
