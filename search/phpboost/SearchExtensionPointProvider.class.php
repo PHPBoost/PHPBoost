@@ -31,13 +31,6 @@ class SearchExtensionPointProvider extends ExtensionPointProvider
 	{
 		parent::__construct('search');
 	}
-	
-	public function get_cache()
-	{
-		$search_config = unserialize(PersistenceContext::get_sql()->query("SELECT value FROM " . DB_TABLE_CONFIGS . " WHERE name = 'search'", __LINE__, __FILE__));
-
-		return 'global $SEARCH_CONFIG;' . "\n" . '$SEARCH_CONFIG = '.var_export($search_config, true).';';	
-	}
 
 	public function scheduled_jobs()
 	{
