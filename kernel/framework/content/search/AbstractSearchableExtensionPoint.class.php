@@ -28,14 +28,14 @@
 abstract class AbstractSearchableExtensionPoint implements SearchableExtensionPoint
 {
 	private $has_search_options;
-	private $build_output_as_list;
+	private $customized_results;
 
-	public function __construct($has_search_options = false, $build_output_as_list = true)
+	public function __construct($has_search_options = false, $customized_results = false)
 	{
 		$this->has_search_options = $has_search_options;
-		$this->build_output_as_list = $build_output_as_list;
+		$this->customized_results = $customized_results;
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -43,34 +43,10 @@ abstract class AbstractSearchableExtensionPoint implements SearchableExtensionPo
 	{
 		return $this->has_search_options;
 	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public function build_search_form()
+	
+	public function has_customized_results()
 	{
-		$fieldset = new FormFieldsetHTML('test', 'toto');
-		$fieldset->add_field(new FormFieldHTML('no_options', LangLoader::get_message('search_no_options', 'main', 'search')));
-		return $fieldset;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public function build_output_as_list()
-	{
-		return $this->build_output_as_list;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public function format_element(SearchResult $result)
-	{
-		$tpl = new FileTemplate('framework/content/search/SearchGenericResult.tpl');
-		$tpl->put('title', $result->get_title());
-		$tpl->put('link', $result->get_link());
-		return $tpl;
+		return $this->customized_results;
 	}
 }
 ?>

@@ -28,7 +28,6 @@
 //------------------------------------------------------------------- Language
 require_once('../kernel/begin.php');
 load_module_lang('search');
-define('ALTERNATIVE_CSS', 'search');
 
 $Template->set_filenames(array(
     'search_forms' => 'search/search_forms.tpl',
@@ -69,29 +68,27 @@ $Template->assign_vars(Array(
 
 //------------------------------------------------------------- Other includes
 
-import('modules/modules_discovery_service');
 require_once('../search/search.inc.php');
 
 //----------------------------------------------------------------------- Main
 
-$modules = new ModulesDiscoveryService();
+$config = SearchConfig::load();
 $modules_args = array();
 $used_modules = array();
 
-// Chargement des modules avec formulaires
-$search_module = $modules->get_available_modules('get_search_request');
-
 // Génération des formulaires précomplétés et passage aux templates
-foreach ($search_module as $module)
+$provider_service = AppContext::get_extension_provider_service();
+foreach ($provider_service->get_extension_point(SearchableExtensionPoint::EXTENSION_POINT) as $module_id => $extension_point)
 {
-	if (!in_array($module->get_id(), $SEARCH_CONFIG['unauthorized_modules']))
+	$module_configuration = ModulesManager::get_module($module_id)->get_configuration();
+	if (!in_array($module_id, $config->get_unauthorized_providers()))
 	{
 	    // Ajout du paramètre search à tous les modules
-	    $modules_args[$module->get_id()]['search'] = $search;
-	    if ($module->has_functionality('get_search_args'))
+	    $modules_args[$module_id]['search'] = $search;
+	    if ($extension_point->has_search_options())
 	    {
 	        // Récupération de la liste des paramètres
-	        $form_module_args = $module->functionality('get_search_args');
+	        $form_module_args = $extension_point->get_search_args();
 	        // Ajout des paramètres optionnels sans les sécuriser.
 	        // Ils sont sécurisés à l'intérieur de chaque module.
 	        if ($search_in != 'all')
@@ -110,28 +107,28 @@ foreach ($search_module as $module)
 	        }
 	        
 	        $Template->assign_block_vars('forms', array(
-	            'MODULE_NAME' => $module->get_id(),
-	            'L_MODULE_NAME' => ucfirst($module->get_name()),
+	            'MODULE_NAME' => $module_id,
+	            'L_MODULE_NAME' => ucfirst($module_configuration->get_name()),
 	            'C_SEARCH_FORM' => true,
-	            'SEARCH_FORM' => $module->functionality('get_search_form', $modules_args[$module->get_id()])
+	            'SEARCH_FORM' => $module->get_search_form($modules_args[$module_id])
 	        ));
 	    }
 	    else
 	    {
 	        $Template->assign_block_vars('forms', array(
-	            'MODULE_NAME' => $module->get_id(),
-	            'L_MODULE_NAME' => ucfirst($module->get_name()),
+	            'MODULE_NAME' => $module_id,
+	            'L_MODULE_NAME' => ucfirst($module_configuration->get_name()),
 	            'C_SEARCH_FORM' => false,
 	            'SEARCH_FORM' => $LANG['search_no_options']
 	        ));
 	    }
 	    
 	    // Récupération de la liste des modules à traiter
-	    if ( ($selected_modules === array()) || ($search_in === $module->get_id()) ||
-	    	(($search_in === 'all') && (in_array($module->get_id(), $selected_modules))) )
+	    if ( ($selected_modules === array()) || ($search_in === $module_id) ||
+	    	(($search_in === 'all') && (in_array($module_id, $selected_modules))) )
 	    {
 	        $selected = ' selected="selected"';
-	        $used_modules[$module->get_id()] = $module; // Ajout du module à traiter
+	        $used_modules[$module_id] = $extension_point; // Ajout du module à traiter
 	    }
 	    else
 	    {
@@ -139,14 +136,10 @@ foreach ($search_module as $module)
 	    }
 	    
 	    $Template->assign_block_vars('searched_modules', array(
-	        'MODULE' => $module->get_id(),
-	        'L_MODULE_NAME' => ucfirst($module->get_name()),
+	        'MODULE' => $module_id,
+	        'L_MODULE_NAME' => ucfirst($module_configuration->get_name()),
 	        'SELECTED' => $selected
 	    ));
-	}
-	else
-	{
-		unset($module);
 	}
 }
 
@@ -185,12 +178,12 @@ if (!empty($search))
     // Génération des résultats et passage aux templates
     $nbResults = get_search_results($search, $used_modules, $modules_args, $results, $idsSearch);
     
-    foreach ($used_modules as $module)
+    foreach ($used_modules as $module_id => $extension_point)
     {
         $Template->assign_block_vars('results', array(
-            'MODULE_NAME' => $module->get_id(),
-            'L_MODULE_NAME' => ucfirst($module->get_name()),
-            'ID_SEARCH' => $idsSearch[$module->get_id()]
+            'MODULE_NAME' => $module_id,
+            'L_MODULE_NAME' => ucfirst(ModulesManager::get_module($module_id)->get_configuration()->get_name()),
+            'ID_SEARCH' => $idsSearch[$module_id]
         ));
     }
     

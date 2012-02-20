@@ -27,14 +27,9 @@
 
 if (defined('PHPBOOST') !== true) exit;
 
-import('modules/modules_discovery_service');
-import('content/search');
+$config = SearchConfig::load();
 
-
-$Cache->load('search');
-global $SEARCH_CONFIG;
-
-define ( 'NB_RESULTS_PER_PAGE', $SEARCH_CONFIG['nb_results_per_page']);
+define ( 'NB_RESULTS_PER_PAGE', $config->get_nb_results_per_page());
 
 /**
  *  Exécute la recherche
@@ -43,16 +38,15 @@ function execute_search($search, &$search_modules, &$modules_args, &$results)
 {
     $requests = array();
     
-    global $SEARCH_CONFIG;
-    
-    foreach ($search_modules as $module)
+    $config = SearchConfig::load();
+    foreach ($search_modules as $module_id => $module)
     {
-        if (!$search->is_in_cache($module->get_id()))
+        if (!$search->is_in_cache($module_id))
         {
-            $modules_args[$module->get_id()]['weight'] = !empty($SEARCH_CONFIG['modules_weighting'][$module->get_id()]) ? $SEARCH_CONFIG['modules_weighting'][$module->get_id()] : 1;
+            $modules_args[$module_id]['weight'] = $config->get_weightings()->get_module_weighting($module_id);
             // On rajoute l'identifiant de recherche comme parametre pour faciliter la requete
-            $modules_args[$module->get_id()]['id_search'] = !empty($search->id_search[$module->get_id()]) ? $search->id_search[$module->get_id()] : 0;
-            $requests[$module->get_id()] = $module->functionality('get_search_request', $modules_args[$module->get_id()]);
+            $modules_args[$module_id]['id_search'] = !empty($search->id_search[$module_id]) ? $search->id_search[$module_id] : 0;
+            $requests[$module_id] = $module->get_search_request($modules_args[$module_id]);
         }
     }
     
@@ -75,9 +69,9 @@ function get_search_results($search_string, &$search_modules, &$modules_args, &$
     if (!$just_insert)
     {
         $modules_ids = array();
-        foreach ($search_modules as $module)
+        foreach ($search_modules as $module_id => $module)
         {
-            $modules_ids[] = $module->get_id();
+            $modules_ids[] = $module_id;
         }
         return $search->get_results($results, $modules_ids);
     }
@@ -90,8 +84,7 @@ function get_search_results($search_string, &$search_modules, &$modules_args, &$
  */
 function get_html_results(&$results, &$html_results, &$results_name)
 {
-    global $CONFIG;
-    $modules = new ModulesDiscoveryService();
+    $provider_service = AppContext::get_extension_provider_service();
     $display_all_results = ($results_name == 'all' ? true : false);
     
     $tpl_results = new Template('search/search_generic_pagination_results.tpl');
@@ -105,13 +98,13 @@ function get_html_results(&$results, &$html_results, &$results_name)
     
     if (!$display_all_results)
     {
-        $module = $modules->get_module(strtolower($results_name));
+    	$provider = $provider_service->get_provider(strtolower($results_name));
         
         $results_data = array();
-        $personnal_parse_results = $module->has_functionality('compute_search_results') && $module->has_functionality('parse_search_result');
+        $personnal_parse_results = $provider->has_customized_results();
         if ($personnal_parse_results && $results_name != 'all')
         {
-            $results_data = $module->functionality('compute_search_results', array('results' => $results));
+            $results_data = $provider->compute_search_results(array('results' => $results));
             $nb_results = min($nb_results, count($results_data));
         }
     }
@@ -132,19 +125,19 @@ function get_html_results(&$results, &$html_results, &$results_name)
             if ($display_all_results || !$personnal_parse_results)
             {
                 $tpl_result = new Template('search/search_generic_results.tpl');
+                $module = ModulesManager::get_module($results[$num_item]['module']);
                 if ($display_all_results)
                 {
-                    $module = $modules->get_module($results[$num_item]['module']);
                     $tpl_result->assign_vars(array(
                         'C_ALL_RESULTS' => true,
-                        'L_MODULE_NAME' => $module->get_name()
+                        'L_MODULE_NAME' => $module->configuration()->get_name()
                     ));
                 }
                 else
                 {
                     $tpl_result->assign_vars(array(
                         'C_ALL_RESULTS' => false,
-                        'L_MODULE_NAME' => $module->get_name(),
+                        'L_MODULE_NAME' => $module->configuration()->get_name(),
                     ));
                 }
                 $tpl_result->assign_vars(array(
@@ -153,18 +146,18 @@ function get_html_results(&$results, &$html_results, &$results_name)
                 ));
                 
                 $tpl_results->assign_block_vars('page.results', array(
-                    'result' => $tpl_result->parse(TEMPLATE_STRING_MODE)
+                    'result' => $tpl_result->render()
                 ));
             }
             else
             {
                 $tpl_results->assign_block_vars('page.results', array(
-                    'result' => $module->functionality('parse_search_result', $results_data[$num_item])
+                    'result' => $provider->parse_search_result($results_data[$num_item])
                 ));
             }
         }
     }
-    $html_results = $tpl_results->parse(TEMPLATE_STRING_MODE);
+    $html_results = $tpl_results->render();
 }
 
 ?>
