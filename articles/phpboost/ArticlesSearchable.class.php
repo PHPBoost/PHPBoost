@@ -27,7 +27,14 @@
 
 class ArticlesSearchable extends AbstractSearchableExtensionPoint
 {
-	public function get_search_request($search_text)
+	private $sql_querier;
+
+    public function __construct()
+    {
+        $this->sql_querier = PersistenceContext::get_sql();
+	}
+	
+	public function get_search_request($args)
 	{
 		global $Cache, $CONFIG_ARTICLES, $ARTICLES_CAT, $LANG,$ARTICLES_LANG;
 		$Cache->load('articles');
@@ -52,7 +59,7 @@ class ArticlesSearchable extends AbstractSearchableExtensionPoint
 		}
 		$clause_unauth_cats = (count($unauth_cats_sql) > 0) ? " AND gc.id NOT IN (" . implode(', ', $unauth_cats_sql) . ")" : '';
 
-		$request = "SELECT
+		return "SELECT
 				" . $args['id_search'] . " AS id_search,
 	             a.id AS id_content,
 	             a.title AS title,
@@ -64,8 +71,6 @@ class ArticlesSearchable extends AbstractSearchableExtensionPoint
 					a.visible = 1 AND ((ac.visible = 1 AND ac.auth LIKE '%s:3:\"r-1\";i:1;%') OR a.idcat = 0)
 					AND (FT_SEARCH(a.title, '" . $args['search'] . "') OR FT_SEARCH(a.contents, '" . $args['search'] . "'))
 				ORDER BY relevance DESC " . $this->sql_querier->limit(0, $CONFIG_ARTICLES['nbr_articles_max']);
-
-	             return $request;
 	}
 }
 
