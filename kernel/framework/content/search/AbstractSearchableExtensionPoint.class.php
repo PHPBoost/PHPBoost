@@ -28,12 +28,12 @@
 abstract class AbstractSearchableExtensionPoint implements SearchableExtensionPoint
 {
 	private $has_search_options;
-	private $customized_results;
+	private $has_customized_results;
 
-	public function __construct($has_search_options = false, $customized_results = false)
+	public function __construct($has_search_options = false, $has_customized_results = false)
 	{
 		$this->has_search_options = $has_search_options;
-		$this->customized_results = $customized_results;
+		$this->has_customized_results = $has_customized_results;
 	}
 	
 	/**
@@ -46,7 +46,7 @@ abstract class AbstractSearchableExtensionPoint implements SearchableExtensionPo
 	
 	public function has_customized_results()
 	{
-		return $this->customized_results;
+		return $this->has_customized_results;
 	}
 }
 ?>
