@@ -28,45 +28,49 @@
 class DownloadConfig extends AbstractConfigData
 {
 	const AUTHORIZATION = 'authorization';
+	const NBR_FILE_MAX = 'nbr_file_max';
+	const NBR_COLUMNS = 'nbr_colums';
+	const NOTE_MAX = 'note_max';
+	const ROOT_CONTENT = 'root_content';
 	
 	public function get_nbr_file_max()
 	{
-		return $this->get_property('nbr_file_max');
+		return $this->get_property(self::NBR_FILE_MAX);
 	}
 	
 	public function set_nbr_file_max($nbr) 
 	{
-		$this->set_property('nbr_file_max', $nbr);
+		$this->set_property(self::NBR_FILE_MAX, $nbr);
 	}
 	
 	public function get_number_columns()
 	{
-		return $this->get_property('num_cols');
+		return $this->get_property(self::NBR_COLUMNS);
 	}
 	
 	public function set_number_columns($num_cols) 
 	{
-		$this->set_property('num_cols', $num_cols);
+		$this->set_property(self::NBR_COLUMNS, $num_cols);
 	}
 	
 	public function get_note_max()
 	{
-		return $this->get_property('note_max');
+		return $this->get_property(self::NOTE_MAX);
 	}
 	
 	public function set_note_max($note) 
 	{
-		$this->set_property('note_max', $note);
+		$this->set_property(self::NOTE_MAX, $note);
 	}
 	
 	public function get_root_contents()
 	{
-		return $this->get_property('root_contents');
+		return $this->get_property(self::ROOT_CONTENT);
 	}
 	
 	public function set_root_contents($content) 
 	{
-		$this->set_property('root_contents', $content);
+		$this->set_property(self::ROOT_CONTENT, $content);
 	}
 	
 	public function get_authorization()
@@ -83,10 +87,10 @@ class DownloadConfig extends AbstractConfigData
 	{
 		return array(
 			self::AUTHORIZATION => array('r-1' => 1, 'r0' => 5, 'r1' => 7),
-			'nbr_file_max' => 10,
-			'num_cols' => 2,
-			'note_max' => 5,
-			'root_contents' => 'Bienvenue dans l\'espace de téléchargement du site!'
+			self::NBR_FILE_MAX => 10,
+			self::NBR_COLUMNS => 2,
+			self::NOTE_MAX => 5,
+			self::ROOT_CONTENT => 'Bienvenue dans l\'espace de téléchargement du site!'
 		);
 	}
 	
