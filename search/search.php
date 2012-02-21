@@ -110,7 +110,7 @@ foreach ($provider_service->get_extension_point(SearchableExtensionPoint::EXTENS
 	            'MODULE_NAME' => $module_id,
 	            'L_MODULE_NAME' => ucfirst($module_configuration->get_name()),
 	            'C_SEARCH_FORM' => true,
-	            'SEARCH_FORM' => $module->get_search_form($modules_args[$module_id])
+	            'SEARCH_FORM' => $extension_point->get_search_form($modules_args[$module_id])
 	        ));
 	    }
 	    else

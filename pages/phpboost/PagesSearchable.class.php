@@ -26,7 +26,7 @@
  *
  ###################################################*/
 
-class PagesSearchable extends AbstractSearchable
+class PagesSearchable extends AbstractSearchableExtensionPoint
 {
 	function get_search_request($args = null)
     /**
