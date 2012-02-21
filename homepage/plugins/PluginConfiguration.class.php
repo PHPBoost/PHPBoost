@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                           Plugin.class.php
+ *                           PluginConfiguration.class.php
  *                            -------------------
  *   begin                : February 21, 2012
  *   copyright            : (C) 2012 Kévin MASSY
@@ -25,52 +25,25 @@
  *
  ###################################################*/
 
-abstract class Plugin
+abstract class PluginConfiguration
 {
-	private $title;
-	private $view;
-	private $has_configuration;
+	private $id;
+	private $form_configuration;
 	
-	public function __construct($title, $view, $has_configuration = false)
+	public function __construct($id, PluginFormConfiguration $form_configuration)
 	{
-		$this->title = $title;
-		$this->view = $view;
-		$this->has_configuration = $has_configuration;
+		$this->id = $id;
+		$this->form_configuration = $form_configuration;
 	}
 	
 	public function get_id()
 	{
-		return get_class($this);
+		return $this->id;
 	}
 	
-	public function get_title()
+	public function get_form_configuration()
 	{
-		return $this->title;
-	}
-	
-	public function get_view()
-	{
-		return $this->view;
-	}
-	
-	public function get_preview()
-	{
-		return $this->view;
-	}
-	
-	public function has_configuration()
-	{
-		return $this->has_configuration;
-	}
-	
-	public function set_configuration(PluginConfiguration $configuration)
-	{
-		$this->configuration = $configuration;
-	}
-	
-	public function get_configuration()
-	{
-		return $this->configuration;
+		return $this->form_configuration;
 	}
 }
 ?>
