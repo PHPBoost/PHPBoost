@@ -96,5 +96,10 @@ class PagesExtensionPointProvider extends ExtensionPointProvider
 	{
 		return new PagesCssFilesExtensionPoint();
 	}
+	
+	public function search()
+	{
+		return new PagesSearchable();
+	}
 }
 ?>

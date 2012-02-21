@@ -26,9 +26,9 @@
  *
  ###################################################*/
 
-class MediaSearchable extends AbstractSearchable
+class MediaSearchable extends AbstractSearchableExtensionPoint
 {
-	function get_search_request($args = null)
+	public function get_search_request($args = null)
     /**
      *  Renvoie la requête de recherche
      */

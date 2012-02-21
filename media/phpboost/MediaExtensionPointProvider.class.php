@@ -93,5 +93,10 @@ class MediaExtensionPointProvider extends ExtensionPointProvider
 	{
 		return new MediaComments();
 	}
+	
+	public function search()
+	{
+		return new MediaSearchable();
+	}
 }
 ?>
