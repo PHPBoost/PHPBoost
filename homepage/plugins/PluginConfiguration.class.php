@@ -28,22 +28,15 @@
 abstract class PluginConfiguration
 {
 	private $id;
-	private $form_configuration;
 	
-	public function __construct($id, PluginFormConfiguration $form_configuration)
+	public function __construct($id)
 	{
 		$this->id = $id;
-		$this->form_configuration = $form_configuration;
 	}
 	
 	public function get_id()
 	{
 		return $this->id;
-	}
-	
-	public function get_form_configuration()
-	{
-		return $this->form_configuration;
-	}
+	}	
 }
 ?>

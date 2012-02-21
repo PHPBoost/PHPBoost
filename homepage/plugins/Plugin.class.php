@@ -30,6 +30,8 @@ abstract class Plugin
 	private $title;
 	private $view;
 	private $has_configuration;
+	private $configuration;
+	private $form_configuration;
 	
 	public function __construct($title, $view, $has_configuration = false)
 	{
@@ -71,6 +73,16 @@ abstract class Plugin
 	public function get_configuration()
 	{
 		return $this->configuration;
+	}
+	
+	public function set_form_configuration(PluginFormConfiguration $form_configuration)
+	{
+		$this->form_configuration = $form_configuration;
+	}
+	
+	public function get_form_configuration()
+	{
+		return $this->form_configuration;
 	}
 }
 ?>

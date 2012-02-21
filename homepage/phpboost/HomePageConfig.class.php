@@ -56,24 +56,24 @@ class HomePageConfig extends AbstractConfigData
         $this->set_property(self::$plugins_property, $plugins);
     }
 
-    public function add_plugin(Plugin $plugin)
+    public function add_plugin(PluginConfiguration $configuration)
     {
         $plugins = $this->get_property(self::$plugins_property);
-        $plugins[$plugin->get_id()] = $plugin;
+        $plugins[$configuration->get_id()] = $configuration;
         $this->set_property(self::$plugins_property, $plugins);
     }
-
-    public function remove_plugin(Plugin $plugin)
+ 
+    public function remove_plugin(PluginConfiguration $configuration)
     {
         $plugins = $this->get_property(self::$plugins_property);
-        unset($plugins[$plugin->get_id()]);
+        unset($plugins[$configuration->get_id()]);
         $this->set_property(self::$plugins_property, $plugins);
     }
 	
-	public function update(Plugin $plugin)
+	public function update(PluginConfiguration $configuration)
 	{
 		$plugins = $this->get_property(self::$plugins_property);
-        $plugins[$plugin->get_id()] = $plugin;
+        $plugins[$configuration->get_id()] = $configuration;
 
         $this->set_property(self::$plugins_property, $plugins);
 	}
