@@ -27,8 +27,11 @@
 
 class FaqSearchable extends AbstractSearchableExtensionPoint
 {
+	private $sql_querier;
+
 	public function __construct()
 	{
+		$this->sql_querier = PersistenceContext::get_sql();
 		parent::__construct(false, true);
 	}
 	
