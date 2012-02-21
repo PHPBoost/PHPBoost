@@ -26,17 +26,14 @@
 #################################################################################
 
 ------------------------------------- NOYAU ------------------------------------
-+ Classe commentaire : Créer le contrôleur d'affichage des commentaires, intégration du système d'approbation (avec possibilité d'avoir un mail).
++ Classe commentaire : Design + intégration du système d'approbation (avec possibilité d'avoir un mail).
 + Joindre tous les champs étendus dans la session utilisateur.
 
 ------------------------------------ MODULES -----------------------------------
 [b]Articles[/b]
 - Réparation du module
 
-[b]Recherche[/b]
-- Réparation du module
-
-[color=red]Nouveauté:[/color] Nouveau module de page de démarrage du site.
+[color=red]Nouveauté:[/color] Début du nouveau module de page de démarrage du site.
 
 #################################################################################
 
@@ -48,9 +45,6 @@
 #################################################################################
 
 ------------------------------------ MODULES -----------------------------------
-
-[b]Articles[/b]
-- Réparation du module articles avec Kévin (On va supprimer dans un premier temps le système de modèle qui n'est pas fini).
 
 #################################################################################
 
@@ -67,7 +61,6 @@
 + Refonte du module
 
 [b]Tous[/b]
-[*] Intégration de l'ExtensionPoint HomePage dans les différents modules
 - Séparer la configuration du cache dans les modules (Créer des ModuleConfig)
 - Filtres d'exclusion pour les menus
 
@@ -88,7 +81,7 @@
 - [color=red]Nouveauté:[/color] Exportation en pdf (articles, wiki, pages).
 - [color=red]Nouveauté:[/color] Editeur d'image avec interface js pour redimensionner, faire des rotations, des mises à l'échelles, etc.
 - [color=red]Nouveauté:[/color] Système de centralisation de mots clés, gestion de nuages de tags... A intégrer peut-être dans le module de recherche.
-- [color=red]Nouveauté:[/color] Possibilité de créer des formulaires personnalisés avec contrÃ´les sur les champs.
+- [color=red]Nouveauté:[/color] Possibilité de créer des formulaires personnalisés avec contrôles sur les champs.
 - [color=red]Nouveauté:[/color] Interface de visualisation des valeurs des champs supplémentaires saisies par les membres.
 - [color=red]Nouveauté:[/color] Compression de la base de données à l'exportation, importation en fichier compressé ou non.
 - [color=red]Nouveauté:[/color] Interface de personnalisation graphique du site, modification du titre/sous-titre et des couleurs du site.

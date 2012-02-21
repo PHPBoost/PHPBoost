@@ -34,6 +34,7 @@
 [*] Refonte du système de notation : suppression des champs BDD sur tous les modules, système autonome.
 [*] Refonte de la section membre.
 [*] Amélioration de la fonction d'upgrade d'un module.
+[*] [color=red]Nouveauté:[/color] Possibilité d'avoir la page d'accueil d'un module sur l'index du site
 
 [b]Menus :[/b]
 [*] [color=red]Nouveauté :[/color] Nouveau système de gestion des menus en drag'n drop.

@@ -27,8 +27,6 @@
 
 class PHPBoostIndexController extends AbstractController
 {
-	private $config;
-	
 	public function execute(HTTPRequest $request)
 	{
 		$general_config = GeneralConfig::load();
