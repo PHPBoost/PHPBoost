@@ -97,11 +97,11 @@ foreach ($provider_service->get_extension_point(SearchableExtensionPoint::EXTENS
 	            {
 	                if ($arg == 'search')
 	                {   // 'search' non sécurisé
-	                    $modules_args[$module->get_id()]['search'] = $search;
+	                    $modules_args[$module_id]['search'] = $search;
 	                }
 	                elseif (isset($_POST[$arg]))
 	                {   // Argument non sécurisé (sécurisé par le module en question)
-	                    $modules_args[$module->get_id()][$arg] = $_POST[$arg];
+	                    $modules_args[$module_id][$arg] = $_POST[$arg];
 	                }
 	            }
 	        }

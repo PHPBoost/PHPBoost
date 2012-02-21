@@ -28,6 +28,13 @@
 
 class PagesSearchable extends AbstractSearchableExtensionPoint
 {
+	private $sql_querier;
+
+	public function __construct()
+	{
+		$this->sql_querier = PersistenceContext::get_sql();
+	}
+	
 	function get_search_request($args = null)
     /**
      *  Renvoie la requête de recherche
