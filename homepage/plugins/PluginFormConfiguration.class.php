@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                           Plugin.class.php
+ *                           PluginFormConfiguration.class.php
  *                            -------------------
  *   begin                : February 21, 2012
  *   copyright            : (C) 2012 Kévin MASSY
@@ -25,52 +25,49 @@
  *
  ###################################################*/
 
-abstract class Plugin
+abstract class PluginFormConfiguration
 {
-	private $title;
-	private $view;
-	private $has_configuration;
+	private $form;
+	private $submit_button;
+	private $message_response;
 	
-	public function __construct($title, $view, $has_configuration = false)
+	public function display()
 	{
-		$this->title = $title;
-		$this->view = $view;
-		$this->has_configuration = $has_configuration;
+		return $this->form->display();
 	}
 	
-	public function get_id()
+	protected abstract function create_form();
+	
+	protected abstract function handle_submit();
+	
+	protected function has_been_submited()
 	{
-		return get_class($this);
+		return $this->submit_button->has_been_submited() && $this->form->validate();
 	}
 	
-	public function get_title()
+	protected function get_form()
 	{
-		return $this->title;
+		return $this->form;
 	}
 	
-	public function get_view()
+	protected function set_form(HTMLForm $form)
 	{
-		return $this->view;
+		$this->form = $form;
+	}
+
+	protected function set_submit_button(FormButtonSubmit $submit_button)
+	{
+		$this->submit_button = $submit_button;
 	}
 	
-	public function get_preview()
+	protected function set_message_response($message_helper)
 	{
-		return $this->view;
+		$this->message_response = $message_helper;
 	}
 	
-	public function has_configuration()
+	public function get_message_response()
 	{
-		return $this->has_configuration;
-	}
-	
-	public function set_configuration(PluginConfiguration $configuration)
-	{
-		$this->configuration = $configuration;
-	}
-	
-	public function get_configuration()
-	{
-		return $this->configuration;
+		return $this->message_response;
 	}
 }
 ?>
