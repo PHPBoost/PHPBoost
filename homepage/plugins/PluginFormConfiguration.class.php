@@ -30,7 +30,22 @@ abstract class PluginFormConfiguration
 	private $form;
 	private $submit_button;
 	private $message_response;
+	private $plugin_id;
+	private $configuration;
+	private $plugin_configuration;
 	
+	public function __construct($plugin_id)
+	{
+		$this->plugin_id = $plugin_id;
+		$this->configuration = HomePageConfig::load();
+		$this->plugin_configuration = $this->get_configuration()->get_plugin($this->get_id());
+	}
+	
+	public function get_plugin_id()
+	{
+		return $this->plugin_id;
+	}
+		
 	public function display()
 	{
 		return $this->form->display();
@@ -68,6 +83,16 @@ abstract class PluginFormConfiguration
 	public function get_message_response()
 	{
 		return $this->message_response;
+	}
+	
+	public function get_configuration()
+	{
+		return $this->configuration;
+	}
+	
+	public function get_plugin_configuration()
+	{
+		return $this->plugin_configuration;
 	}
 }
 ?>
