@@ -41,6 +41,8 @@ class ArticlesExtensionPointProvider extends ExtensionPointProvider
 	//Deprecated
 	function get_cache()
 	{
+		global $LANG;
+		
 		$config_articles = unserialize($this->sql_querier->query("SELECT value FROM " . DB_TABLE_CONFIGS . " WHERE name = 'articles'", __LINE__, __FILE__));
 
 		$string = 'global $CONFIG_ARTICLES, $ARTICLES_CAT;' . "\n\n" . '$CONFIG_ARTICLES = $ARTICLES_CAT = array();' . "\n\n";
@@ -51,6 +53,8 @@ class ArticlesExtensionPointProvider extends ExtensionPointProvider
 			FROM " . DB_TABLE_ARTICLES_CAT . "
 			ORDER BY id_parent, c_order", __LINE__, __FILE__);
 
+		$string .= '$ARTICLES_CAT[0] = ' . var_export(array('name' => $LANG['root'], 'order' => 0, 'auth' => $config_articles['global_auth']), true) . ';' . "\n\n";
+		
 		while ($row = $this->sql_querier->fetch_assoc($result))
 		{
 			$string .= '$ARTICLES_CAT[' . $row['id'] . '] = ' .
