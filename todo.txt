@@ -30,8 +30,6 @@
 + Joindre tous les champs étendus dans la session utilisateur.
 
 ------------------------------------ MODULES -----------------------------------
-[b]Articles[/b]
-- Réparation du module
 
 [color=red]Nouveauté:[/color] Début du nouveau module de page de démarrage du site.
 

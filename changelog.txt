@@ -88,7 +88,7 @@
 [*] Refonte complète du module, collaboration des utilisateurs possible.
 
 [b]Articles :[/b]
-+ Refonte complète du module, collaboration des utilisateurs possible.
+[*] Refonte complète du module, collaboration des utilisateurs possible.
 
 [b]ShoutBox :[/b]
 [*] Possibilité de gérer les autorisations d'écriture, de lecture et de modération
