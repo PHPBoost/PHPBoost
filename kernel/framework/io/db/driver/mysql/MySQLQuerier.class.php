@@ -46,12 +46,14 @@ class MySQLQuerier extends AbstractSQLQuerier
 	public function select($query, $parameters = array(), $fetch_mode = SelectQueryResult::FETCH_ASSOC)
 	{
 		$resource = $this->execute($query, $parameters);
+		Debug::Dump($query);
 		return new MySQLSelectQueryResult($query, $parameters, $resource, $fetch_mode);
 	}
 
 	public function inject($query, $parameters = array())
 	{
 		$resource = $this->execute($query, $parameters);
+		Debug::Dump($query);
 		return new MySQLInjectQueryResult($query, $parameters, $resource, $this->link);
 	}
 

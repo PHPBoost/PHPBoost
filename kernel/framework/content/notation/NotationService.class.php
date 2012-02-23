@@ -49,15 +49,14 @@ class NotationService
 	{
 		if ($notation->get_notation_scale() > 0)
 		{
-			$nbr_notes = self::get_count_average_notes_by_id_in_module($notation);
-			if ($nbr_notes > 0)
+			$average_notes = self::get_average_notes($notation);
+			if ($average_notes > 0)
 			{
 				$template = new StringTemplate('
 				# START notation #
 					<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{notation.PICTURE}" alt="" class="valign_middle" />
 				# END notation #');
 				
-				$average_notes = self::get_average_notes($notation);
 				for ($i = 1; $i <= $notation->get_notation_scale(); $i++)
 				{
 					$star_img = 'stars.png';
@@ -164,11 +163,10 @@ class NotationService
 	 */
 	public static function delete_notes_id_in_module(Notation $notation)
 	{
-		$nbr_notes = self::get_count_average_notes_by_id_in_module($notation);
-		if ($nbr_notes > 0)
-		{
+		try {
 			self::delete_average_notes_by_id_in_module($notation);
 			self::delete_notes_by_id_in_module($notation);
+		} catch (Exception $e) {
 		}
 	}
 	
@@ -177,11 +175,10 @@ class NotationService
 	 */
 	public static function delete_notes_module(Notation $notation)
 	{
-		$nbr_notes = self::get_count_average_notes_by_module($notation);
-		if ($nbr_notes > 0)
-		{
+		try {
 			self::delete_all_notes_by_module($notation);
 			self::delete_all_average_notes_by_module($notation);
+		} catch (Exception $e) {
 		}
 	}
 	
@@ -190,11 +187,10 @@ class NotationService
 	 */
 	public static function get_former_number_notes(Notation $notation)
 	{
-		$nbr_notes = self::get_count_average_notes_by_id_in_module($notation);
-		if ($nbr_notes > 0)
-		{
-			$row = self::$db_querier->select_single_row(DB_TABLE_AVERAGE_NOTES, array('number_notes'), "WHERE module_name = '" . $notation->get_module_name() . "' AND id_in_module = '". $notation->get_id_in_module() ."'");
-			return (int)$row['number_notes'];
+		try {
+			return self::$db_querier->get_column_value(DB_TABLE_AVERAGE_NOTES, 'number_notes', 'WHERE module_name = :module_name AND id_in_module = :id_in_module', 
+			array('module_name' => $notation->get_module_name(), 'id_in_module' => $notation->get_id_in_module()));
+		} catch (RowNotFoundException $e) {
 		}
 	}
 	
@@ -203,13 +199,12 @@ class NotationService
 	 */
 	public static function get_average_notes(Notation $notation)
 	{
-		$nbr_notes = self::get_count_average_notes_by_id_in_module($notation);
-		if ($nbr_notes > 0)
-		{
-			$row = self::$db_querier->select_single_row(DB_TABLE_AVERAGE_NOTES, array('average_notes'), "WHERE module_name = '" . $notation->get_module_name() . "' AND id_in_module = '". $notation->get_id_in_module() ."'");
-			return $row['average_notes'];
+		try {
+			return self::$db_querier->get_column_value(DB_TABLE_AVERAGE_NOTES, 'average_notes', 'WHERE module_name = :module_name AND id_in_module = :id_in_module', 
+			array('module_name' => $notation->get_module_name(), 'id_in_module' => $notation->get_id_in_module()));
+		} catch (RowNotFoundException $e) {
+			return '0';
 		}
-		return 0;
 	}
 	
 	private static function register_notation(Notation $notation)
@@ -283,14 +278,9 @@ class NotationService
 
 	private static function calculates_average_notes(Notation $notation)
 	{
-		$nbr_notes = self::get_count_notes_by_id_in_module($notation);
-		if ($nbr_notes > 0)
-		{
-			$result = self::$db_querier->select("SELECT note
-				FROM " . DB_TABLE_NOTE . "
-				WHERE module_name = '" . $notation->get_module_name() . "' 
-				AND id_in_module = '". $notation->get_id_in_module() ."'
-			");
+		try {
+			$result = self::$db_querier->select_rows(DB_TABLE_NOTE, array('note'), 'WHERE module_name = :module_name AND id_in_module = :id_in_module', 
+			array('module_name' => $notation->get_module_name(), 'id_in_module' => $notation->get_id_in_module()));
 			
 			$notes = 0;
 			while ($row = $result->fetch())
@@ -299,6 +289,7 @@ class NotationService
 			}
 
 			return (round(($notes / $nbr_notes) / 0.25) * 0.25);
+		} catch (Exception $e) {
 		}
 	}
 

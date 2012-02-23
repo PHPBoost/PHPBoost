@@ -53,4 +53,5 @@
 			<input type="hidden" name="token" value="{TOKEN}" />
 			<input type="submit" name="valid" id="valid_note{ID_IN_MODULE}" value="{L_VALID_NOTE}" class="submit" style="padding:1px 2px;" />
 		</form>
+		{NUMBER_VOTES} {L_NOTES}
 		
