@@ -182,7 +182,7 @@ class CommentsService
 
 		$provider = CommentsProvidersService::get_provider($module_id);
 
-		if ($authorizations->is_authorized_read() && $provider->is_display($module_id, $id_in_module) && $authorizations->is_authorized_access_module())
+		if ($authorizations->is_authorized_read() && $authorizations->is_authorized_access_module())
 		{
 			$comments = self::get_comments($module_id, $id_in_module, $number_comments_display, $display_from_number_comments);
 			foreach ($comments as $id_comment => $comment)
