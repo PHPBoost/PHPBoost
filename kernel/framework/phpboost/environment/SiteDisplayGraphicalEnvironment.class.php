@@ -143,17 +143,24 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 		$enable_left_column_is_activated = !$columns_disabled->left_columns_is_disabled() && $this->are_left_menus_enabled() && !empty($MENUS[Menu::BLOCK_POSITION__LEFT]);
 		$enable_right_column_is_activated = !$columns_disabled->right_columns_is_disabled() && $this->are_right_menus_enabled() && !empty($MENUS[Menu::BLOCK_POSITION__RIGHT]);
 		$enable_top_central_is_activated = !$columns_disabled->top_central_is_disabled() && !empty($MENUS[Menu::BLOCK_POSITION__TOP_CENTRAL]);
+		
+		$header_content = $enable_header_is_activated ? $MENUS[Menu::BLOCK_POSITION__HEADER] : '';
+		$sub_header_content = $enable_sub_header_is_activated ? $MENUS[Menu::BLOCK_POSITION__SUB_HEADER] : '';
+		$left_content = $enable_left_column_is_activated ? $MENUS[Menu::BLOCK_POSITION__LEFT] : '';
+		$right_content = $enable_right_column_is_activated ? $MENUS[Menu::BLOCK_POSITION__RIGHT] : '';
+		$top_central_content = $enable_top_central_is_activated ? $MENUS[Menu::BLOCK_POSITION__TOP_CENTRAL] : '';
+		
 		$template->put_all(array(
 			'C_MENUS_HEADER_CONTENT' => $enable_header_is_activated,
-		    'MENUS_HEADER_CONTENT' => $MENUS[Menu::BLOCK_POSITION__HEADER],
+		    'MENUS_HEADER_CONTENT' => $header_content,
 			'C_MENUS_SUB_HEADER_CONTENT' => $enable_sub_header_is_activated,
-			'MENUS_SUB_HEADER_CONTENT' => $MENUS[Menu::BLOCK_POSITION__SUB_HEADER],
+			'MENUS_SUB_HEADER_CONTENT' => $sub_header_content,
 			'C_MENUS_LEFT_CONTENT' => $enable_left_column_is_activated,
-			'MENUS_LEFT_CONTENT' => $MENUS[Menu::BLOCK_POSITION__LEFT],
+			'MENUS_LEFT_CONTENT' => $left_content,
 			'C_MENUS_RIGHT_CONTENT' => $enable_right_column_is_activated,
-			'MENUS_RIGHT_CONTENT' => $MENUS[Menu::BLOCK_POSITION__RIGHT],
+			'MENUS_RIGHT_CONTENT' => $right_content,
 			'C_MENUS_TOPCENTRAL_CONTENT' => $enable_top_central_is_activated,
-			'MENUS_TOPCENTRAL_CONTENT' => $MENUS[Menu::BLOCK_POSITION__TOP_CENTRAL]
+			'MENUS_TOPCENTRAL_CONTENT' => $top_central_content
 		));
 	}
 
@@ -282,14 +289,18 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 		$top_footer_is_activated = !$columns_disabled->top_footer_is_disabled() && !empty($MENUS[Menu::BLOCK_POSITION__TOP_FOOTER]);
 		$footer_is_activated = !$columns_disabled->footer_is_disabled() && !empty($MENUS[Menu::BLOCK_POSITION__FOOTER]);
 	
+		$bottom_top_central_content = $bottom_top_central_is_activated ? $MENUS[Menu::BLOCK_POSITION__BOTTOM_CENTRAL] : '';
+		$top_footer_content = $top_footer_is_activated ? $MENUS[Menu::BLOCK_POSITION__TOP_FOOTER] : '';
+		$footer_content = $footer_is_activated ? $MENUS[Menu::BLOCK_POSITION__FOOTER] : '';
+		
 		$template->put_all(array(
 			'THEME' => get_utheme(),
 			'C_MENUS_BOTTOM_CENTRAL_CONTENT' => $bottom_top_central_is_activated,
-			'MENUS_BOTTOMCENTRAL_CONTENT' => $MENUS[Menu::BLOCK_POSITION__BOTTOM_CENTRAL],
+			'MENUS_BOTTOMCENTRAL_CONTENT' => $bottom_top_central_content,
 			'C_MENUS_TOP_FOOTER_CONTENT' => $top_footer_is_activated,
-			'MENUS_TOP_FOOTER_CONTENT' => $MENUS[Menu::BLOCK_POSITION__TOP_FOOTER],
+			'MENUS_TOP_FOOTER_CONTENT' => $top_footer_content,
 			'C_MENUS_FOOTER_CONTENT' => $footer_is_activated,
-			'MENUS_FOOTER_CONTENT' => $MENUS[Menu::BLOCK_POSITION__FOOTER],
+			'MENUS_FOOTER_CONTENT' => $footer_content,
 			'C_DISPLAY_AUTHOR_THEME' => GraphicalEnvironmentConfig::load()->get_display_theme_author(),
 			'L_POWERED_BY' => LangLoader::get_message('powered_by', 'main'),
 			'L_PHPBOOST_RIGHT' => LangLoader::get_message('phpboost_right', 'main'),
