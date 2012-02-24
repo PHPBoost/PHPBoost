@@ -123,7 +123,7 @@ class ArticlesSetup extends DefaultModuleSetup
 	
 	private function insert_categories_data()
 	{
-		$this->querier->insert(self::$forum_cats_table, array(
+		$this->querier->insert(self::$articles_cat_table, array(
 			'id' => 1,
 			'id_parent' => 1,
 			'c_order' => 1,
@@ -133,13 +133,13 @@ class ArticlesSetup extends DefaultModuleSetup
 			'nbr_articles_unvisible' => 0,
 			'image' => 'articles.png',
 			'visible' => 1,
-			'auth' => array()
+			'auth' => serialize(array())
 		));
 	}
 	
 	private function insert_articles_data()
 	{
-		$this->querier->insert(self::$forum_cats_table, array(
+		$this->querier->insert(self::$articles_table, array(
 			'id' => 1,
 			'idcat' => 1,
 			'title' => $this->messages['default.article.name'],
@@ -153,7 +153,7 @@ class ArticlesSetup extends DefaultModuleSetup
 			'user_id' => 1,
 			'views' => 0,
 			'visible' => 1,
-			'auth' => array()
+			'auth' => serialize(array())
 		));
 	}
 }
