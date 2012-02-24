@@ -421,7 +421,7 @@ class KernelSetup
 		$fields = array(
 			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
 			'title' => array('type' => 'string', 'length' => 128, 'notnull' => 1),
-			'object' => array('type' => 'text', 'length' => 65000),
+			'object' => array('type' => 'text', 'length' => 16777215),
 			'class' => array('type' => 'string', 'length' => 67, 'notnull' => 1),
 			'enabled' => array('type' => 'boolean', 'length' => 1, 'notnull' => 1, 'default' => 0),
 			'block' => array('type' => 'boolean', 'length' => 2, 'notnull' => 1, 'default' => 0),
