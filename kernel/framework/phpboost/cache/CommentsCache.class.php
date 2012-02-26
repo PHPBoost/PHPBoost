@@ -40,9 +40,10 @@ class CommentsCache implements CacheData
 		$this->comments = array();
 
 		$result = PersistenceContext::get_querier()->select("
-			SELECT comments.*, topic.*
+			SELECT comments.*, topic.*, member.*
 			FROM " . DB_TABLE_COMMENTS . " comments
 			LEFT JOIN " . DB_TABLE_COMMENTS_TOPIC . " topic ON comments.id_topic = topic.id_topic
+			LEFT JOIN " . DB_TABLE_MEMBER . " member ON member.user_id = comments.user_id
 			ORDER BY comments.timestamp " . CommentsConfig::load()->get_order_display_comments()
 		);
 		
@@ -54,12 +55,12 @@ class CommentsCache implements CacheData
 				'module_id' => $row['module_id'],
 				'id_in_module' => $row['id_in_module'],
 				'message' => $row['message'],
-				'user_id' => $row['user_id'],
-				'name_visitor' => $row['name_visitor'],
-				'ip_visitor' => $row['ip_visitor'],
 				'note' => $row['note'],
 				'timestamp' => $row['timestamp'],
-				'path' => $row['path']
+				'path' => $row['path'],
+				'visitor' => array('name_visitor' => $row['name_visitor'], 'ip_visitor' => $row['ip_visitor']),
+				'user' => array('user_id' => $row['user_id'], 'pseudo' => $row['login'], 'email' => $row['user_mail'], 'show_email' => $row['user_show_mail']),
+				'is_visitor' => empty($row['user_id'])
 			);
 		}
 	}
