@@ -27,7 +27,7 @@
 
 abstract class KernelUpdateVersion implements UpdateVersion
 {
-	private $part_name;
+	protected $part_name;
 	
 	public function __construct($part_name)
 	{

@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                       ModuleUpdateVersion.class.php
+ *                       WebModuleUpdateVersion.class.php
  *                            -------------------
- *   begin                : February 26, 2012
+ *   begin                : February 27, 2012
  *   copyright            : (C) 2012 Kévin MASSY
  *   email                : soldier.weasel@gmail.com
  *
@@ -25,30 +25,39 @@
  *
  ###################################################*/
 
-abstract class ModuleUpdateVersion implements UpdateVersion
+class WebModuleUpdateVersion extends ModuleUpdateVersion
 {
-	protected $module_id;
-	protected $has_update_config;
+	private $querier;
 	
-	public function __construct($module_id, $has_update_config = false)
+	public function __construct()
 	{
-		$this->module_id = $module_id;
-		$this->has_update_config = $has_update_config;
+		parent::__construct('web', true);
+		$this->querier = PersistenceContext::get_querier();
 	}
 	
-	public function get_module_id()
+	public function execute()
 	{
-		return $this->module_id;
-	}
-	
-	public function has_update_config()
-	{
-		return $this->has_update_config;
+		$this->update_configuration();
+		$this->update_tables();
 	}
 	
 	public function update_configuration()
 	{
-		
+		return new WebConfigUpdateVersion($this->get_module_id());
+	}
+	
+	public function update_tables()
+	{
+		$this->drop_columns(array('lock_com', 'nbr_com', 'note', 'nbrnote', 'users_note'));
+	}
+	
+	public function drop_columns(array $columns)
+	{
+		$db_utils = PersistenceContext::get_dbms_utils();
+		foreach ($columns as $column_name)
+		{
+			$db_utils->drop_column(PREFIX .'web', $column_name);
+		}
 	}
 }
 ?>
