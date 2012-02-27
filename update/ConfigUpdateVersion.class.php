@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                       ModuleUpdateVersion.class.php
+ *                       ConfigUpdateVersion.class.php
  *                            -------------------
- *   begin                : February 26, 2012
+ *   begin                : February 27, 2012
  *   copyright            : (C) 2012 Kévin MASSY
  *   email                : soldier.weasel@gmail.com
  *
@@ -25,30 +25,43 @@
  *
  ###################################################*/
 
-abstract class ModuleUpdateVersion implements UpdateVersion
+abstract class ConfigUpdateVersion implements UpdateVersion
 {
-	protected $module_id;
-	protected $has_update_config;
+	protected $config_name;
+	protected $querier;
 	
-	public function __construct($module_id, $has_update_config = false)
+	public function __construct($config_name)
 	{
-		$this->module_id = $module_id;
-		$this->has_update_config = $has_update_config;
+		$this->config_name = $config_name;
+		$this->querier = PersistenceContext::get_querier();
 	}
 	
-	public function get_module_id()
+	public function get_config_name()
 	{
-		return $this->module_id;
+		return $this->config_name;
 	}
 	
-	public function has_update_config()
+	public function execute()
 	{
-		return $this->has_update_config;
+		if ($this->build_new_config())
+		{
+			$this->delete_old_config();
+		}
 	}
 	
-	public function update_configuration()
+	protected function get_old_config()
 	{
-		
+		return unserialize($this->querier->select_single_row(DB_TABLE_CONFIGS, 'value', 'WHERE name = :config_name', array('config_name' => $this->get_config_name())));
+	}
+	
+	abstract protected function build_new_config()
+	{
+		return true;
+	}
+	
+	protected function delete_old_config()
+	{
+		$this->querier->delete(DB_TABLE_CONFIGS, 'WHERE name = :config_name', array('config_name' => $this->get_config_name()));
 	}
 }
 ?>

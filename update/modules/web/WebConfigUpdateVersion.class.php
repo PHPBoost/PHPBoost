@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                       ModuleUpdateVersion.class.php
+ *                       WebConfigUpdateVersion.class.php
  *                            -------------------
- *   begin                : February 26, 2012
+ *   begin                : February 27, 2012
  *   copyright            : (C) 2012 Kévin MASSY
  *   email                : soldier.weasel@gmail.com
  *
@@ -25,30 +25,20 @@
  *
  ###################################################*/
 
-abstract class ModuleUpdateVersion implements UpdateVersion
+class WebConfigUpdateVersion extends ConfigUpdateVersion
 {
-	protected $module_id;
-	protected $has_update_config;
-	
-	public function __construct($module_id, $has_update_config = false)
+	protected function build_new_config()
 	{
-		$this->module_id = $module_id;
-		$this->has_update_config = $has_update_config;
-	}
-	
-	public function get_module_id()
-	{
-		return $this->module_id;
-	}
-	
-	public function has_update_config()
-	{
-		return $this->has_update_config;
-	}
-	
-	public function update_configuration()
-	{
+		$config = $this->get_old_config();
 		
+		$web_config = WebConfig::load();
+		$web_config->set_max_nbr_weblinks($config['nbr_web_max']);   
+        $web_config->set_max_nbr_category($config['nbr_cat_max']);
+        $web_config->set_number_columns($config['nbr_column']);
+        $web_config->set_note_max($config['note_max']);
+        WebConfig::save();
+        
+		return true;
 	}
 }
 ?>
