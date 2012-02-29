@@ -27,55 +27,23 @@
 
 class HomePageConfig extends AbstractConfigData
 {
-	private static $plugins_property = 'plugins';
+	const NUMBER_COLUMNS = 'number_columns';
+	
+	public function get_number_columns()
+	{
+		return $this->get_property(self::NUMBER_COLUMNS);
+	}
+
+	public function set_number_columns($number_columns)
+	{
+		$this->set_property(self::NUMBER_COLUMNS, $number_columns);
+	}
 	
 	public function get_default_values()
 	{
 		return array(
-			self::$plugins_property => array()
+			self::NUMBER_COLUMNS => 2
 		);
-	}
-	
-	public function get_plugins()
-	{
-		return $this->get_property(self::$plugins_property);
-	}
-
-	public function get_plugin($id)
-	{
-		$plugins = $this->get_property(self::$plugins_property);
-		if (array_key_exists($id, $plugins))
-		{
-			return $plugins[$id];
-		}
-		return null;
-	}
-
-    public function set_plugins(array $plugins)
-    {
-        $this->set_property(self::$plugins_property, $plugins);
-    }
-
-    public function add_plugin(PluginConfiguration $configuration)
-    {
-        $plugins = $this->get_property(self::$plugins_property);
-        $plugins[$configuration->get_id()] = $configuration;
-        $this->set_property(self::$plugins_property, $plugins);
-    }
- 
-    public function remove_plugin(PluginConfiguration $configuration)
-    {
-        $plugins = $this->get_property(self::$plugins_property);
-        unset($plugins[$configuration->get_id()]);
-        $this->set_property(self::$plugins_property, $plugins);
-    }
-	
-	public function update(PluginConfiguration $configuration)
-	{
-		$plugins = $this->get_property(self::$plugins_property);
-        $plugins[$configuration->get_id()] = $configuration;
-
-        $this->set_property(self::$plugins_property, $plugins);
 	}
 	
 	/**
