@@ -13,10 +13,12 @@ class ModulesUpdateVersion extends KernelUpdateVersion
 	{
 		$results = $this->querier->select_rows(PREFIX .'modules', array('*'));
 		
+		$modules_config = ModulesConfig::load();
 		foreach ($results as $row)
 		{
-			ModulesConfig::load()->add_module(new Module($row['name'], $row['activ'], unserialize($row['auth'])));
+			$modules_config->add_module(new Module($row['name'], $row['activ'], unserialize($row['auth'])));
 		}
+		ModulesConfig::save();
 		
 		$this->drop_modules_table();
 	}
