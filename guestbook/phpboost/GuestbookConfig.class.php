@@ -37,7 +37,7 @@ class GuestbookConfig extends AbstractConfigData
 	const AUTHORIZATION = 'authorizations';
 	
 	const AUTH_READ = 1;
-	const AUTH_WRITE= 2;
+	const AUTH_WRITE = 2;
 	const AUTH_MODO = 4;
 	
 	public function get_display_captcha()

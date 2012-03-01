@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                       FileUploadUpdateVersion.class.php
+ *                       FileUploadConfigUpdateVersion.class.php
  *                            -------------------
  *   begin                : February 28, 2012
  *   copyright            : (C) 2012 Kévin MASSY
@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-class FileUploadUpdateVersion extends ConfigUpdateVersion
+class FileUploadConfigUpdateVersion extends ConfigUpdateVersion
 {
 	public function __construct()
 	{

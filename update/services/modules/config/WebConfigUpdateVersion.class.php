@@ -27,6 +27,11 @@
 
 class WebConfigUpdateVersion extends ConfigUpdateVersion
 {
+	public function __construct()
+	{
+		parent::__construct('web');
+	}
+	
 	protected function build_new_config()
 	{
 		$config = $this->get_old_config();
