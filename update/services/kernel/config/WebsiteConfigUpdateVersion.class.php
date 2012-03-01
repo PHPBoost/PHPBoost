@@ -92,6 +92,11 @@ class WebsiteConfigUpdateVersion extends ConfigUpdateVersion
 		$maintenance_config->set_message($config['maintain_text']);
 		MaintenanceConfig::save();
 		
+		$search_config = SearchConfig::load();
+		$search_config->set_cache_lifetime($config['search_cache_time']);
+		$search_config->set_cache_max_uses($config['search_max_use']);
+		SearchConfig::save();
+		
 		if ($config['debug_mode'])
 		{
 			Debug::enabled_debug_mode(array());

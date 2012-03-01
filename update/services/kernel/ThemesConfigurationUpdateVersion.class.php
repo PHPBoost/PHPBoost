@@ -37,10 +37,31 @@ class ThemesConfigurationUpdateVersion extends KernelUpdateVersion
 		$results = PersistenceContext::get_querier()->select_rows(PREFIX . 'themes', array('*'));
 		foreach ($results as $row)
 		{
-			$this->insert_to_new_configuration($row['theme'], array(), $row['activ']);
+			$this->insert_to_new_configuration($row['theme'], $this->build_authorizations($row['secure']), (bool)$row['activ']);
 			die('TODO authorizations !');
 		}
 		$this->drop_table();
+	}
+	
+	private function build_authorizations($old_auth)
+	{
+		switch ($old_auth) {
+			case -1:
+				return array('r-1' => 1, 'r0' => 1, 'r1' => 1);
+			break;
+			case 0:
+				return array('r0' => 1, 'r1' => 1);
+			break;
+			case 1:
+				return array('r1' => 1);
+			break;
+			case 2:
+				return array('r2' => 1);
+			break;
+			default:
+				return array('r-1' => 1, 'r0' => 1, 'r1' => 1);
+			break;
+		}
 	}
 	
 	private function insert_to_new_configuration($theme_id, $authorizations, $enable_theme)

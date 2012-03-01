@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                       WebModuleUpdateVersion.class.php
+ *                       FaqConfigUpdateVersion.class.php
  *                            -------------------
- *   begin                : February 27, 2012
+ *   begin                : February 29, 2012
  *   copyright            : (C) 2012 Kévin MASSY
  *   email                : soldier.weasel@gmail.com
  *
@@ -25,39 +25,25 @@
  *
  ###################################################*/
 
-class WebModuleUpdateVersion extends ModuleUpdateVersion
+class FaqConfigUpdateVersion extends ConfigUpdateVersion
 {
-	private $querier;
-	
 	public function __construct()
 	{
-		parent::__construct('web', true);
-		$this->querier = PersistenceContext::get_querier();
+		parent::__construct('faq');
 	}
 	
-	public function execute()
+	protected function build_new_config()
 	{
-		$this->update_configuration();
-		$this->update_tables();
-	}
-	
-	public function update_configuration()
-	{
-		return new WebConfigUpdateVersion($this->get_module_id());
-	}
-	
-	public function update_tables()
-	{
-		$this->drop_columns(array('lock_com', 'nbr_com', 'note', 'nbrnote', 'users_note'));
-	}
-	
-	public function drop_columns(array $columns)
-	{
-		$db_utils = PersistenceContext::get_dbms_utils();
-		foreach ($columns as $column_name)
-		{
-			$db_utils->drop_column(PREFIX .'web', $column_name);
-		}
+		$config = $this->get_old_config();
+		
+		$faq_config = FaqConfig::load();
+		$faq_config->set_faq_name($config['faq_name']);
+		$faq_config->set_number_columns($config['num_cols']);
+		$faq_config->set_display_mode($config['display_block']);
+		$faq_config->set_authorization($config['global_auth']);
+		FaqConfig::save();
+        
+		return true;
 	}
 }
 ?>

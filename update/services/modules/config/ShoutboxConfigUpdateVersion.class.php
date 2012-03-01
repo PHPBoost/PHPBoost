@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                       LangsConfigurationUpdateVersion.class.php
+ *                       ShoutboxConfigUpdateVersion.class.php
  *                            -------------------
- *   begin                : February 26, 2012
+ *   begin                : February 29, 2012
  *   copyright            : (C) 2012 Kévin MASSY
  *   email                : soldier.weasel@gmail.com
  *
@@ -25,52 +25,47 @@
  *
  ###################################################*/
 
-class LangsConfigurationUpdateVersion extends KernelUpdateVersion
+class ShoutboxConfigUpdateVersion extends ConfigUpdateVersion
 {
 	public function __construct()
 	{
-		parent::__construct('langs');
+		parent::__construct('shoutbox');
 	}
-
-	public function execute()
+	
+	protected function build_new_config()
 	{
-		$results = PersistenceContext::get_querier()->select_rows(PREFIX . 'langs', array('*'));
-		foreach ($results as $row)
-		{
-			$this->insert_to_new_configuration($row['lang'], $this->build_authorizations($row['secure']), (bool)$row['activ']);
-		}
-		$this->drop_table();
+		$config = $this->get_old_config();
+		
+		$config_shoutbox = ShoutboxConfig::load();
+		$config_shoutbox->set_max_messages_number($config['shoutbox_max_msg']);
+		$config_shoutbox->set_authorization($this->build_authorizations($config['shoutbox_auth']));
+		$config_shoutbox->set_forbidden_formatting_tags($config['shoutbox_forbidden_tags']);
+		$config_shoutbox->set_max_links_number_per_message($config['shoutbox_max_link']);
+		$config_shoutbox->set_refresh_delay($config['shoutbox_refresh_delay']);
+		ShoutboxConfig::save();
+        
+		return true;
 	}
 	
 	private function build_authorizations($old_auth)
 	{
 		switch ($old_auth) {
 			case -1:
-				return array('r-1' => 1, 'r0' => 1, 'r1' => 1);
+				return array ('r-1' => 3, 'r0' => 3, 'r1' => 7);
 			break;
 			case 0:
-				return array('r0' => 1, 'r1' => 1);
+				return array('r-1' => 1, 'r0' => 3, 'r1' => 7);
 			break;
 			case 1:
-				return array('r1' => 1);
+				return array('r-1' => 1, 'r0' => 1, 'r1' => 7);
 			break;
 			case 2:
-				return array('r2' => 1);
+				return array('r-1' => 1, 'r0' => 1, 'r1' => 1, 'r2' => 7);
 			break;
 			default:
-				return array('r-1' => 1, 'r0' => 1, 'r1' => 1);
+				return array ('r-1' => 3, 'r0' => 3, 'r1' => 7);
 			break;
 		}
-	}
-	
-	private function insert_to_new_configuration($lang_id, $authorizations, $enable)
-	{
-		LangManager::install($lang_id, $authorizations, $enable);
-	}
-	
-	private function drop_table()
-	{
-		PersistenceContext::get_dbms_utils()->drop(array(PREFIX . 'langs'));
 	}
 }
 ?>

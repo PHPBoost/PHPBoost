@@ -16,7 +16,7 @@ class ModulesUpdateVersion extends KernelUpdateVersion
 		$modules_config = ModulesConfig::load();
 		foreach ($results as $row)
 		{
-			$modules_config->add_module(new Module($row['name'], $row['activ'], unserialize($row['auth'])));
+			$modules_config->add_module(new Module($row['name'], (bool)$row['activ'], unserialize($row['auth'])));
 		}
 		ModulesConfig::save();
 		
