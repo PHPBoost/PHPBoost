@@ -43,9 +43,12 @@ abstract class ConfigUpdateVersion implements UpdateVersion
 	
 	public function execute()
 	{
-		if ($this->build_new_config())
-		{
-			$this->delete_old_config();
+		try {
+			if ($this->build_new_config())
+			{
+				$this->delete_old_config();
+			}
+		} catch (RowNotFoundException $e) {
 		}
 	}
 	
