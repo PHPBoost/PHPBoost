@@ -34,14 +34,21 @@ class GalleryModuleMiniMenu extends ModuleMiniMenu
 
 	public function display($tpl = false)
     {
-    	global $Cache, $User, $CAT_GALLERY, $CONFIG_GALLERY, $LANG, $_array_random_pics, $Sql;
+    	global $Cache, $User, $CAT_GALLERY, $LANG, $_array_random_pics, $Sql;
    		$tpl = new FileTemplate('gallery/gallery_mini.tpl');
 	    MenuService::assign_positions_conditions($tpl, $this->get_block());
 	    
 		//Chargement de la langue du module.
 	    load_module_lang('gallery');
 	    $Cache->load('gallery'); //Requête des configuration générales (gallery), $CONFIG_ALBUM variable globale.
-	
+		
+		// Chargement de la configuration
+		$gallery_config = GalleryConfig::load();
+		$config_nbr_pics_mini = $gallery_config->get_nbr_pics_mini();
+		$config_scroll_type = $gallery_config->get_scroll_type();
+		$config_height = $gallery_config->get_height();
+		$config_width = $gallery_config->get_width();
+		
 	    $i = 0;
 	    
 	    //Affichage des miniatures disponibles
@@ -56,7 +63,7 @@ class GalleryModuleMiniMenu extends ModuleMiniMenu
 	    	shuffle($_array_random_pics); //On mélange les éléments du tableau.
 	
 	    	//Autorisations de la racine.
-	    	$CAT_GALLERY[0]['auth'] = $CONFIG_GALLERY['auth_root'];
+	    	$CAT_GALLERY[0]['auth'] = $gallery_config->get_authorization();
 	    	//Vérification des autorisations.
 	    	$break = 0;
 	    	foreach ($_array_random_pics as $array_pics_info)
@@ -66,7 +73,7 @@ class GalleryModuleMiniMenu extends ModuleMiniMenu
 	    			$gallery_mini[] = $array_pics_info;
 	    			$break++;
 	    		}
-	    		if ($break == $CONFIG_GALLERY['nbr_pics_mini'])
+	    		if ($break == $config_nbr_pics_mini)
 	    			break;
 	    	}
 	
@@ -79,7 +86,7 @@ class GalleryModuleMiniMenu extends ModuleMiniMenu
 	    		LEFT JOIN " . PREFIX . "gallery_cats gc on gc.id = g.idcat
 	    		WHERE g.aprob = 1 AND gc.aprob = 1
 	    		ORDER BY RAND()
-	    		" . $Sql->limit(0, $CONFIG_GALLERY['nbr_pics_mini']), __LINE__, __FILE__);
+	    		" . $Sql->limit(0, $config_nbr_pics_mini), __LINE__, __FILE__);
 	    		while($row = $Sql->fetch_assoc($result))
 				{
 					$_array_random_pics[] = $row;
@@ -94,7 +101,7 @@ class GalleryModuleMiniMenu extends ModuleMiniMenu
 	    				$gallery_mini[] = $array_pics_info;
 	    				$break++;
 	    			}
-	    			if ($break == $CONFIG_GALLERY['nbr_pics_mini'])
+	    			if ($break == $config_nbr_pics_mini)
 	    				break;
 	    		}
 	    	}
@@ -104,7 +111,7 @@ class GalleryModuleMiniMenu extends ModuleMiniMenu
 	    		'C_HORIZONTAL_SCROLL' => false,
 	    		'C_STATIC' => false
 	    	));
-	    	switch ($CONFIG_GALLERY['scroll_type'])
+	    	switch ($config_scroll_type)
 	    	{
 				case 0:
 	        	$tpl->put('C_FADE', true);
@@ -146,7 +153,7 @@ class GalleryModuleMiniMenu extends ModuleMiniMenu
 	    		$sum_height += $row['height'] + 5;
 	    		$sum_width += $row['width'] + 5;
 	
-				if ($CONFIG_GALLERY['scroll_type'] == 3)
+				if ($config_scroll_type == 3)
 					break;
 					
 				$i++;
@@ -156,13 +163,13 @@ class GalleryModuleMiniMenu extends ModuleMiniMenu
 	    $tpl->put_all(array(
 	    	'SID' => SID,
 	    	'ARRAY_PICS' => $array_pics_mini,
-	    	'HEIGHT_DIV' => $CONFIG_GALLERY['height'],
+	    	'HEIGHT_DIV' => $config_height,
 	    	'SUM_HEIGHT' => $sum_height + 10,
-	    	'HIDDEN_HEIGHT' => $CONFIG_GALLERY['height'] + 10,
-	    	'WIDTH_DIV' => $CONFIG_GALLERY['width'],
+	    	'HIDDEN_HEIGHT' => $config_height + 10,
+	    	'WIDTH_DIV' => $config_width,
 	    	'SUM_WIDTH' => $sum_width + 30,
-	    	'HIDDEN_WIDTH' => ($CONFIG_GALLERY['width'] * 3) + 30,
-	    	'SCROLL_DELAY' => 0.2 * (11 - $CONFIG_GALLERY['speed_mini_pics']),
+	    	'HIDDEN_WIDTH' => ($config_width * 3) + 30,
+	    	'SCROLL_DELAY' => 0.2 * (11 - $gallery_config->get_speed_mini_pics()),
 	    	'L_RANDOM_PICS' => $LANG['random_img'],
 	    	'L_NO_RANDOM_PICS' => ($i == 0) ? '<br /><span class="text_small"><em>' . $LANG['no_random_img']  . '</em></span><br />' : '',
 	    	'L_GALLERY' => $LANG['gallery']
