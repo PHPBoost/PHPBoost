@@ -100,7 +100,7 @@ class DownloadConfig extends AbstractConfigData
 	 */
 	public static function load()
 	{
-		return ConfigManager::load(__CLASS__, 'download', 'main');
+		return ConfigManager::load(__CLASS__, 'module-download', 'config');
 	}
 
 	/**
@@ -108,7 +108,7 @@ class DownloadConfig extends AbstractConfigData
 	 */
 	public static function save()
 	{
-		ConfigManager::save('download', self::load(), 'main');
+		ConfigManager::save('module-download', self::load(), 'config');
 	}
 }
 ?>
