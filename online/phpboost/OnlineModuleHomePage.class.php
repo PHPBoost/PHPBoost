@@ -42,10 +42,11 @@ class OnlineModuleHomePage implements ModuleHomePage
 	
 	public function build_view()
 	{
+		global $LANG;
+		
 		$request = AppContext::get_request();
 		$this->init();
 		
-		global $LANG;
 		$nbr_members_per_page = OnlineConfig::load()->get_nbr_members_per_page();
 		
 		//Membre connectés..
@@ -65,9 +66,9 @@ class OnlineModuleHomePage implements ModuleHomePage
 		$limit_page = $current_page > 0 ? $current_page : 1;
 		$limit_page = (($limit_page - 1) * $nbr_members_per_page);
 		
-		$online_user_list = OnlineService::get_online_users_list("WHERE s.session_time > ':time' ORDER BY :display_order LIMIT " . $nbr_members_per_page . " OFFSET :start_limit", array('time' => (time() - SessionsConfig::load()->get_active_session_duration()), 'display_order' => OnlineConfig::load()->get_display_order(), 'start_limit' => $limit_page));
+		$online_users = OnlineService::get_online_users("WHERE s.session_time > ':time' ORDER BY :display_order LIMIT " . $nbr_members_per_page . " OFFSET :start_limit", array('time' => (time() - SessionsConfig::load()->get_active_session_duration()), 'display_order' => OnlineConfig::load()->get_display_order(), 'start_limit' => $limit_page));
 		
-		foreach ($online_user_list as $o)
+		foreach ($online_users as $o)
 		{
 			$this->view->assign_block_vars('users', array(
 				'USER' => '<a href="' . UserUrlBuilder::profile($o->get_id())->absolute() . '" class="' . User::get_group_color(implode('|', $o->get_groups()), $o->get_level()) . '">' . $o->get_pseudo() . '</a>',

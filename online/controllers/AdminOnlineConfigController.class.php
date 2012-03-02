@@ -79,9 +79,9 @@ class AdminOnlineConfigController extends AdminModuleController
 		));
 		
 		$fieldset_config->add_field(new FormFieldSimpleSelectChoice('display_order', $this->lang['admin.display-order'], $online_config->get_display_order(), array(
-				new FormFieldSelectChoiceOption($LANG['ranks'], 'LEVEL_DISPLAY_ORDER'),
-				new FormFieldSelectChoiceOption($this->lang['online.last_update'], 'SESSION_TIME_DISPLAY_ORDER'),
-				new FormFieldSelectChoiceOption($LANG['ranks'] . ' ' . $LANG['and'] . ' ' . $this->lang['online.last_update'], 'LEVEL_AND_SESSION_TIME_DISPLAY_ORDER')
+				new FormFieldSelectChoiceOption($LANG['ranks'], OnlineConfig::'LEVEL_DISPLAY_ORDER'),
+				new FormFieldSelectChoiceOption($this->lang['online.last_update'], OnlineConfig::'SESSION_TIME_DISPLAY_ORDER'),
+				new FormFieldSelectChoiceOption($LANG['ranks'] . ' ' . $LANG['and'] . ' ' . $this->lang['online.last_update'], OnlineConfig::'LEVEL_AND_SESSION_TIME_DISPLAY_ORDER')
 			)
 		));
 		

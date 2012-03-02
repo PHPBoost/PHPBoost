@@ -36,21 +36,18 @@ class OnlineService
 	
 	public static function get_nbr_users_connected($condition, $parameters)
 	{
-		$row = self::$querier->select_single_row(DB_TABLE_SESSIONS, array('count(*) as total'), $condition, $parameters);
-		return $row['total'];
+		return self::$querier->get_column_value(DB_TABLE_SESSIONS, 'count(*)', $condition, $parameters);
 	}
 	
-	public static function get_online_users_list($condition, $parameters)
+	public static function get_online_users($condition, $parameters)
 	{
-		$display_order = OnlineConfig::load()->get_display_order();
-		$user_list[] = '';
+		$users = array();
 		
 		$result = self::$querier->select("SELECT s.user_id as id, s.level, s.session_time, s.session_script, s.session_script_get, s.session_script_title, m.login, m.user_groups
 		FROM " . DB_TABLE_SESSIONS . " s
 		JOIN " . DB_TABLE_MEMBER . " m ON (m.user_id = s.user_id) "
-		. $condition, $parameters, SelectQueryResult::FETCH_ASSOC);
+		. $condition, $parameters);
 		
-		$i = 0;
 		while ($row = $result->fetch())
 		{
 			$row['session_script_get'] = !empty($row['session_script_get']) ? '?' . $row['session_script_get'] : '';
@@ -62,11 +59,10 @@ class OnlineService
 			$user->set_last_update(gmdate_format('date_format_long', $row['session_time']));
 			$user->set_location_script(HOST . DIR . $row['session_script'] . $row['session_script_get']);
 			$user->set_location_title(stripslashes($row['session_script_title']));
-			$user_list[$i] = $user;
-			$i++;
+			$users[] = $user;
 		}
 		
-		return $user_list;
+		return $users;
 	}
 }
 
