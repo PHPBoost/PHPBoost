@@ -39,11 +39,15 @@ class PagesSitemapExtensionPoint implements SitemapExtensionPoint
 
 	private function get_module_map($auth_mode)
 	{
-		global $_PAGES_CATS, $LANG, $User, $_PAGES_CONFIG, $Cache;
+		global $_PAGES_CATS, $LANG, $User, $Cache;
 
 		include(PATH_TO_ROOT.'/pages/pages_defines.php');
 		load_module_lang('pages');
 		$Cache->load('pages');
+		$pages_config = PagesConfig::load();
+		
+		//Configuration des authorisations
+		$config_auth = $pages_config->get_authorization();
 
 		$pages_link = new SitemapLink($LANG['pages'], new Url('/pages/explorer.php'), Sitemap::FREQ_DEFAULT, Sitemap::PRIORITY_MAX);
 		$module_map = new ModuleMap($pages_link, 'pages');
@@ -59,14 +63,14 @@ class PagesSitemapExtensionPoint implements SitemapExtensionPoint
 			$properties = $_PAGES_CATS[$id];
 			if ($auth_mode == Sitemap::AUTH_PUBLIC)
 			{
-				$this_auth = is_array($properties['auth']) ? Authorizations::check_auth(RANK_TYPE, GUEST_LEVEL, $properties['auth'], READ_PAGE) : Authorizations::check_auth(RANK_TYPE, GUEST_LEVEL, $_PAGES_CONFIG['auth'], READ_PAGE);
+				$this_auth = is_array($properties['auth']) ? Authorizations::check_auth(RANK_TYPE, GUEST_LEVEL, $properties['auth'], READ_PAGE) : Authorizations::check_auth(RANK_TYPE, GUEST_LEVEL, $config_auth, READ_PAGE);
 			}
 			elseif ($auth_mode == Sitemap::AUTH_USER)
 			{
 				if($User->get_attribute('level') == User::ADMIN_LEVEL)
 				$this_auth = true;
 				else
-				$this_auth = is_array($properties['auth']) ? Authorizations::check_auth(RANK_TYPE, $User->get_attribute('level'), $properties['auth'], READ_PAGE) : Authorizations::check_auth(RANK_TYPE, $User->get_attribute('level'), $_PAGES_CONFIG['auth'], READ_PAGE);
+				$this_auth = is_array($properties['auth']) ? Authorizations::check_auth(RANK_TYPE, $User->get_attribute('level'), $properties['auth'], READ_PAGE) : Authorizations::check_auth(RANK_TYPE, $User->get_attribute('level'), $config_auth, READ_PAGE);
 			}
 			if ($this_auth && $id != 0 && $properties['id_parent'] == $id_cat)
 			{
@@ -79,8 +83,13 @@ class PagesSitemapExtensionPoint implements SitemapExtensionPoint
 
 	private function create_module_map_sections($id_cat, $auth_mode)
 	{
-		global $_PAGES_CATS, $LANG, $User, $_PAGES_CONFIG;
-
+		global $_PAGES_CATS, $LANG, $User;
+		
+		$pages_config = PagesConfig::load();
+		
+		//Configuration des authorisations
+		$config_auth = $pages_config->get_authorization();
+		
 		$this_category = new SitemapLink($_PAGES_CATS[$id_cat]['name'], new Url('/pages/' . url('pages.php?title='.Url::encode_rewrite($_PAGES_CATS[$id_cat]['name']), Url::encode_rewrite($_PAGES_CATS[$id_cat]['name']))));
 			
 		$category = new SitemapSection($this_category);
@@ -96,14 +105,14 @@ class PagesSitemapExtensionPoint implements SitemapExtensionPoint
 			$properties = $_PAGES_CATS[$id];
 			if ($auth_mode == Sitemap::AUTH_PUBLIC)
 			{
-				$this_auth = is_array($properties['auth']) ? Authorizations::check_auth(RANK_TYPE, GUEST_LEVEL, $properties['auth'], READ_PAGE) : Authorizations::check_auth(RANK_TYPE, GUEST_LEVEL, $_PAGES_CONFIG['auth'], READ_PAGE);
+				$this_auth = is_array($properties['auth']) ? Authorizations::check_auth(RANK_TYPE, GUEST_LEVEL, $properties['auth'], READ_PAGE) : Authorizations::check_auth(RANK_TYPE, GUEST_LEVEL, $config_auth, READ_PAGE);
 			}
 			elseif ($auth_mode == Sitemap::AUTH_USER)
 			{
 				if($User->get_attribute('level') == User::ADMIN_LEVEL)
 				$this_auth = true;
 				else
-				$this_auth = is_array($properties['auth']) ? Authorizations::check_auth(RANK_TYPE, $User->get_attribute('level'), $properties['auth'], READ_PAGE) : Authorizations::check_auth(RANK_TYPE, $User->get_attribute('level'), $_PAGES_CONFIG['auth'], READ_PAGE);
+				$this_auth = is_array($properties['auth']) ? Authorizations::check_auth(RANK_TYPE, $User->get_attribute('level'), $properties['auth'], READ_PAGE) : Authorizations::check_auth(RANK_TYPE, $User->get_attribute('level'), $config_auth, READ_PAGE);
 			}
 			if ($this_auth && $id != 0 && $properties['id_parent'] == $id_cat)
 			{

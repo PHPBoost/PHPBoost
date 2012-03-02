@@ -43,6 +43,9 @@ $display_print_link = !empty($_POST['display_print_link']) ? 1 : 0;
 $preview = !empty($_POST['preview']);
 $del_article = retrieve(GET, 'del', 0);
 
+//Configuration des authorisations
+$config_auth = $pages_config->get_authorization();
+
 //Variable d'erreur
 $error = '';
 if ($id_edit > 0)
@@ -61,7 +64,7 @@ if ($id_edit > 0)
 		$Bread_crumb->add($_PAGES_CATS[$id]['name'], url('pages.php?title=' . Url::encode_rewrite($_PAGES_CATS[$id]['name']), Url::encode_rewrite($_PAGES_CATS[$id]['name'])));
 		$id = (int)$_PAGES_CATS[$id]['id_parent'];
 	}
-	if ($User->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE))
+	if ($User->check_auth($config_auth, EDIT_PAGE))
 		$Bread_crumb->add($LANG['pages'], url('pages.php'));
 	$Bread_crumb->reverse();
 }
@@ -94,7 +97,7 @@ if (!empty($contents))
 			$special_auth = !empty($page_infos['auth']);
 			$array_auth = unserialize($page_infos['auth']);
 			//Vérification de l'autorisation d'éditer la page
-			if (($special_auth && !$User->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && !$User->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE)))
+			if (($special_auth && !$User->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && !$User->check_auth($config_auth, EDIT_PAGE)))
 				AppContext::get_response()->redirect(HOST . DIR . url('/pages/pages.php?error=e_auth', '', '&'));
 			
 			//on vérifie que la catégorie ne s'insère pas dans un de ses filles
@@ -134,7 +137,7 @@ if (!empty($contents))
 		//Création d'une page
 		elseif (!empty($title))
 		{
-			if (!$User->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE))
+			if (!$User->check_auth($config_auth, EDIT_PAGE))
 				AppContext::get_response()->redirect(HOST . DIR . url('/pages/pages.php?error=e_auth', '', '&'));
 			
 			$encoded_title = Url::encode_rewrite($title);
@@ -178,7 +181,7 @@ elseif ($del_article > 0)
 	//Autorisation particulière ?
 	$special_auth = !empty($page_infos['auth']);
 	$array_auth = unserialize($page_infos['auth']);
-	if (($special_auth && !$User->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && !$User->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE)))
+	if (($special_auth && !$User->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && !$User->check_auth($config_auth, EDIT_PAGE)))
 		AppContext::get_response()->redirect(HOST . DIR . url('/pages/pages.php?error=e_auth', '', '&'));
 		
 	//la page existe bien, on supprime
@@ -201,7 +204,7 @@ if ($id_edit > 0)
 	$special_auth = !empty($page_infos['auth']);
 	$array_auth = unserialize($page_infos['auth']);
 	//Vérification de l'autorisation d'éditer la page
-	if (($special_auth && !$User->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && !$User->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE)))
+	if (($special_auth && !$User->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && !$User->check_auth($config_auth, EDIT_PAGE)))
 		AppContext::get_response()->redirect(HOST . DIR . url('/pages/pages.php?error=e_auth', '', '&'));
 	
 	//Erreur d'enregistrement ?
@@ -237,7 +240,7 @@ if ($id_edit > 0)
 else
 {
 	//Autorisations
-	if (!$User->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE))
+	if (!$User->check_auth($config_auth, EDIT_PAGE))
 		AppContext::get_response()->redirect('/pages/pages.php?error=e_auth');
 		
 	//La page existe déjà !
@@ -265,8 +268,8 @@ else
 	$current_cat = $LANG['pages_root'];
 	
 	$Template->put_all(array(
-		'COUNT_HITS_CHECKED' => !empty($error) ? ($count_hits == 1 ? 'checked="checked"' : '') : ($_PAGES_CONFIG['count_hits'] == 1 ? 'checked="checked"' : ''),
-		'ACTIV_COM_CHECKED' => !empty($error) ? ($enable_com == 1 ? 'checked="checked"' : '') :($_PAGES_CONFIG['activ_com'] == 1 ? 'checked="checked"' : ''),
+		'COUNT_HITS_CHECKED' => !empty($error) ? ($count_hits == 1 ? 'checked="checked"' : '') : ($pages_config->get_count_hits() == 1 ? 'checked="checked"' : ''),
+		'ACTIV_COM_CHECKED' => !empty($error) ? ($enable_com == 1 ? 'checked="checked"' : '') :($pages_config->get_activ_com() == 1 ? 'checked="checked"' : ''),
 		'DISPLAY_PRINT_LINK_CHECKED' => !empty($error) ? ($display_print_link == 1 ? 'checked="checked"' : '') : 'checked="checked"',
 		'OWN_AUTH_CHECKED' => '',
 		'CAT_0' => 'pages_selected_cat',
@@ -278,7 +281,7 @@ else
 if (!empty($page_infos['auth']))
 	$array_auth = unserialize($page_infos['auth']);
 else
-	$array_auth = !empty($_PAGES_CONFIG['auth']) ? $_PAGES_CONFIG['auth'] : array();
+	$array_auth = !empty($config_auth) ? $config_auth : array();
 
 $editor = AppContext::get_content_formatting_service()->get_default_editor();
 $editor->set_identifier('contents');
