@@ -39,7 +39,7 @@ class DownloadExtensionPointProvider extends ExtensionPointProvider
 
 	function get_cache()
 	{
-		global $LANG, $Cache;
+		global $LANG;
 
 		$download_config = DownloadConfig::load();
 		
@@ -68,6 +68,7 @@ class DownloadExtensionPointProvider extends ExtensionPointProvider
 			), true)
 			. ';' . "\n";
 		}
+		$this->sql_querier->query_close($result);
 
 		return $code;
 	}
