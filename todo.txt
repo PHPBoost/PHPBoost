@@ -6,6 +6,7 @@
 
 
 ## AUTRES ##
+- Mettre à jour la liste des membres de la communauté à la dernière étape de l'installation
 - Balises Youtube, Dailymotion
 - Corriger bbcode.css (bloc masquables + wikipédia) (publishing notamment)
 - [color=red]Nouveauté:[/color] Nouveau thème Base2 pour la distribution complete.
@@ -55,11 +56,8 @@
 
 ------------------------------------ MODULES -----------------------------------
 
-[b]En ligne[/b]
-+ Refonte du module
-
 [b]Tous[/b]
-- Séparer la configuration du cache dans les modules (Créer des ModuleConfig)
++ Séparer la configuration du cache dans les modules (Créer des ModuleConfig)
 - Filtres d'exclusion pour les menus
 
 #################################################################################
