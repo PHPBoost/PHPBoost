@@ -74,12 +74,14 @@ class DownloadHomePageExtensionPoint implements HomePageExtensionPoint
 		
 		//let's check if there are some subcategories
 		$num_subcats = 0;
-		foreach ($DOWNLOAD_CATS as $id => $value)
+		if (!empty($DOWNLOAD_CATS))
 		{
-			if ($id != 0 && $value['id_parent'] == $category_id)
-				$num_subcats ++;
+			foreach ($DOWNLOAD_CATS as $id => $value)
+			{
+				if ($id != 0 && $value['id_parent'] == $category_id)
+					$num_subcats ++;
+			}
 		}
-	
 		//listing of subcategories
 		if ($num_subcats > 0)
 		{
