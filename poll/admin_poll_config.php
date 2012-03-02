@@ -29,7 +29,7 @@ require_once('../admin/admin_begin.php');
 load_module_lang('poll'); //Chargement de la langue du module.
 define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
-require_once('../poll/poll_begin.php');
+$poll_config = PollConfig::load();
 
 if (!empty($_POST['valid']))
 {
