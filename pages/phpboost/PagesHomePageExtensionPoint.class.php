@@ -48,8 +48,12 @@ class PagesHomePageExtensionPoint implements HomePageExtensionPoint
 	
 	private function get_view()
 	{
-		global $User, $Cache, $Bread_crumb, $PAGES_CONFIG, $_PAGES_CATS, $PAGES_LANG, $LANG, $Session, $pages;
-
+		global $User, $Cache, $Bread_crumb, $_PAGES_CATS, $PAGES_LANG, $LANG, $Session, $pages;
+		
+		$pages_config = PagesConfig::load();
+		//Configuration des authorisations
+		$config_auth = $pages_config->get_authorization();
+		
 		require_once(PATH_TO_ROOT . '/pages/pages_begin.php');
 
 		$tpl = new FileTemplate('pages/index.tpl');
@@ -81,16 +85,18 @@ class PagesHomePageExtensionPoint implements HomePageExtensionPoint
 		
 		//Liste des dossiers de la racine
 		$root = '';
-		foreach ($_PAGES_CATS as $key => $value)
-		{
-			if ($value['id_parent'] == 0)
+		if (!empty($_PAGES_CATS)) {
+			foreach ($_PAGES_CATS as $key => $value)
 			{
-				//Autorisation particulière ?
-				$special_auth = !empty($value['auth']);
-				//Vérification de l'autorisation d'éditer la page
-				if (($special_auth && $User->check_auth($value['auth'], READ_PAGE)) || (!$special_auth && $User->check_auth($_PAGES_CONFIG['auth'], READ_PAGE)))
+				if ($value['id_parent'] == 0)
 				{
-					$root .= '<tr><td class="row2"><img src="' . $tpl->get_pictures_data_path() . '/images/closed_cat.png" alt="" style="vertical-align:middle" />&nbsp;<a href="javascript:open_cat(' . $key . '); show_cat_contents(' . $value['id_parent'] . ', 0);">' . $value['name'] . '</a></td></tr>';
+					//Autorisation particulière ?
+					$special_auth = !empty($value['auth']);
+					//Vérification de l'autorisation d'éditer la page
+					if (($special_auth && $User->check_auth($value['auth'], READ_PAGE)) || (!$special_auth && $User->check_auth($_PAGES_CONFIG['auth'], READ_PAGE)))
+					{
+						$root .= '<tr><td class="row2"><img src="' . $tpl->get_pictures_data_path() . '/images/closed_cat.png" alt="" style="vertical-align:middle" />&nbsp;<a href="javascript:open_cat(' . $key . '); show_cat_contents(' . $value['id_parent'] . ', 0);">' . $value['name'] . '</a></td></tr>';
+					}
 				}
 			}
 		}

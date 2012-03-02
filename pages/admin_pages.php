@@ -36,18 +36,13 @@ include_once('pages_functions.php');
 
 if (!empty($_POST['update']))  //Mise à jour
 {
-	$count_hits = !empty($_POST['count_hits']) ? 1 : 0;
-	$activ_com = !empty($_POST['activ_com']) ? 1 : 0;
-	
-	//Génération du tableau des droits.
-	$array_auth_all = Authorizations::build_auth_array_from_form(READ_PAGE, EDIT_PAGE, READ_COM);
-	
-	$_PAGES_CONFIG['auth'] = serialize($array_auth_all);
-	$_PAGES_CONFIG['count_hits'] = $count_hits;
-	$_PAGES_CONFIG['activ_com'] = $activ_com;
+	$pages_config->set_authorization(Authorizations::build_auth_array_from_form(READ_PAGE, EDIT_PAGE, READ_COM));
+	$pages_config->set_count_hits(!empty($_POST['count_hits']) ? 1 : 0);
+	$pages_config->set_activ_com(!empty($_POST['activ_com']) ? 1 : 0);
 
-	$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($_PAGES_CONFIG)) . "' WHERE name = 'pages'", __LINE__, __FILE__);
-	//Régénération du cache
+	PagesConfig::save();
+	
+	###### Régénération du cache #######
 	$Cache->Generate_module_file('pages');
 	
 	AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);
@@ -57,11 +52,14 @@ $Template->set_filenames(array(
 	'pages_config'=> 'pages/admin_pages.tpl'
 ));
 
-$array_auth = isset($_PAGES_CONFIG['auth']) ? $_PAGES_CONFIG['auth'] : array();
+//Configuration des authorisations
+$config_auth = $pages_config->get_authorization();
+
+$array_auth = isset($config_auth) ? $config_auth : array();
 
 $Template->put_all(array(
-	'HITS_CHECKED' => $_PAGES_CONFIG['count_hits'] == 1 ? 'checked="checked"' : '',
-	'COM_CHECKED' => $_PAGES_CONFIG['activ_com'] == 1 ? 'checked="checked"' : '',
+	'HITS_CHECKED' => ($pages_config->get_count_hits() == 1) ? 'checked="checked"' : '',
+	'COM_CHECKED' => ($pages_config->get_activ_com() == 1) ? 'checked="checked"' : '',
 	'SELECT_READ_PAGE' => Authorizations::generate_select(READ_PAGE, $array_auth),
 	'SELECT_EDIT_PAGE' => Authorizations::generate_select(EDIT_PAGE, $array_auth),
 	'SELECT_READ_COM' => Authorizations::generate_select(READ_COM, $array_auth),
