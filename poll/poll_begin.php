@@ -29,7 +29,7 @@ if (defined('PHPBOOST') !== true)
 	exit;
 	
 load_module_lang('poll'); //Chargement de la langue du module.
-define('TITLE', $LANG['poll']);
+$poll_config = PollConfig::load();
 
 //Chargement du cache
 $Cache->load('poll');
