@@ -29,11 +29,15 @@ require_once('../admin/admin_begin.php');
 load_module_lang('poll'); //Chargement de la langue du module.
 define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
+require_once('../poll/poll_begin.php');
 
 //On recupère les variables.
 $id = retrieve(GET, 'id', 0);
 $id_post = retrieve(POST, 'id', 0);
 $del = !empty($_GET['delete']) ? true : false;
+
+//Configuration du mini poll
+$config_poll_mini = $poll_config->get_poll_mini();
 
 if ($del && !empty($id)) //Suppresion poll
 {
@@ -45,10 +49,12 @@ if ($del && !empty($id)) //Suppresion poll
 	$Sql->query_inject("DELETE FROM " . PREFIX . "poll WHERE id = '" . $id . "'", __LINE__, __FILE__);	
 	
 	###### Régénération du cache du mini poll #######
-	if ($id == $CONFIG_POLL['mini_poll'])		
+	if ($id == $config_poll_mini)		
 	{	
-		$CONFIG_POLL['poll_mini'] = '-1';
-		$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($CONFIG_POLL)) . "' WHERE name = 'poll'", __LINE__, __FILE__);
+		$poll_config->set_poll_mini('-1');
+		
+		PollConfig::save();
+		
 		$Cache->Generate_module_file('poll');
 	}
 	AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);
@@ -125,16 +131,17 @@ elseif (!empty($_POST['valid']) && !empty($id_post)) //inject
 		
 		$Sql->query_inject("UPDATE " . PREFIX . "poll SET question = '" . $question . "', answers = '" . substr($answers, 0, strlen($answers) - 1) . "', votes = '" . $votes . "', type = '" . $type . "', archive = '" . $archive . "', visible = '" . $visible . "', start = '" .  $start_timestamp . "', end = '" . $end_timestamp . "', timestamp = '" . $timestamp . "' WHERE id = '" . $id_post . "'", __LINE__, __FILE__);
 		
-		if ($id_post == $CONFIG_POLL['poll_mini'] && ($visible == '0' || $archive == '1'))
+		if ($id_post == $config_poll_mini && ($visible == '0' || $archive == '1'))
 		{
-			$CONFIG_POLL['poll_mini'] = '-1';
-			$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($CONFIG_POLL)) . "' WHERE name = 'poll'", __LINE__, __FILE__);	
+			$poll_config->set_poll_mini('-1');
 		
+			PollConfig::save();
+			
 			###### Régénération du cache #######
 			$Cache->Generate_module_file('poll');
 		}	
 		//Régénaration du cache du mini poll, si celui-ci a été modifié.
-		if ($id_post == $CONFIG_POLL['poll_mini'])
+		if ($id_post == $config_poll_mini)
 			$Cache->Generate_module_file('poll');
 		
 		AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);
