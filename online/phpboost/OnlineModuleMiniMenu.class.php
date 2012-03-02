@@ -49,7 +49,7 @@ class OnlineModuleMiniMenu extends ModuleMiniMenu
 			$i = 0;
 			$array_class = array('member', 'modo', 'admin');
 			
-			$online_user_list = OnlineService::get_online_users_list("WHERE s.session_time > ':time' ORDER BY :display_order", array('time' => (time() - SessionsConfig::load()->get_active_session_duration()), 'display_order' => OnlineConfig::load()->get_display_order()));
+			$online_user_list = OnlineService::get_online_users("WHERE s.session_time > ':time' ORDER BY :display_order", array('time' => (time() - SessionsConfig::load()->get_active_session_duration()), 'display_order' => OnlineConfig::load()->get_display_order()));
 			
 			foreach ($online_user_list as $o)
 			{
