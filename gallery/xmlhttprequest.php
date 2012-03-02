@@ -45,7 +45,7 @@ if (!empty($_GET['increment_view']))
 	}
 	else //Racine.
 	{
-		$CAT_GALLERY[0]['auth'] = $CONFIG_GALLERY['auth_root'];
+		$CAT_GALLERY[0]['auth'] = $gallery_config->get_authorization();
 		$CAT_GALLERY[0]['aprob'] = 1;
 	}
 	//Niveau d'autorisation de la catégorie

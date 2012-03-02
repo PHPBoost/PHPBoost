@@ -117,7 +117,7 @@ class Gallery
 	//Création de l'image.
 	public function Create_pics($thumbnail, $source, $path, $ext)
 	{
-		global $CONFIG_GALLERY;
+		$gallery_config = GalleryConfig::load();
 		
 		// Make the background transparent
 		imagecolortransparent($source, imagecolorallocate($source, 0, 0, 0));	
@@ -127,7 +127,7 @@ class Gallery
 		if (function_exists('imagegif') && $ext === 'gif') 
 			imagegif ($thumbnail, $path_mini);
 		elseif (function_exists('imagejpeg') && ($ext === 'jpg' || $ext === 'jpeg')) 
-			imagejpeg($thumbnail, $path_mini, $CONFIG_GALLERY['quality']);
+			imagejpeg($thumbnail, $path_mini, $gallery_config->get_quality());
 		elseif (function_exists('imagepng')  && $ext === 'png') 
 			imagepng($thumbnail, $path_mini);
 		else 
@@ -153,11 +153,14 @@ class Gallery
 	//Incrustation du logo (possible en transparent si jpg).
 	public function Incrust_pics($path)
 	{
-		global $CONFIG_GALLERY, $LANG;
+		global $LANG;
 		
-		if ($CONFIG_GALLERY['activ_logo'] == '1' && is_file($CONFIG_GALLERY['logo'])) //Incrustation du logo.
+		$gallery_config = GalleryConfig::load();
+		$config_logo = $gallery_config->get_logo();
+		
+		if ($gallery_config->get_activ_logo() == '1' && is_file($config_logo)) //Incrustation du logo.
 		{
-			list($width_s, $height_s, $weight_s, $ext_s) = $this->Arg_pics($CONFIG_GALLERY['logo']);
+			list($width_s, $height_s, $weight_s, $ext_s) = $this->Arg_pics($config_logo);
 			list($width, $height, $weight, $ext) = $this->Arg_pics($path);
 			
 			if ($width_s <= $width && $height_s <= $height)
@@ -166,13 +169,13 @@ class Gallery
 				{
 					case 'jpg':
 					case 'jpeg':
-						$source = @imagecreatefromjpeg($CONFIG_GALLERY['logo']);
+						$source = @imagecreatefromjpeg($config_logo);
 						break;
 					case 'gif':
-						$source = @imagecreatefromgif ($CONFIG_GALLERY['logo']);
+						$source = @imagecreatefromgif ($config_logo);
 						break;
 					case 'png':
-						$source = @imagecreatefrompng($CONFIG_GALLERY['logo']);
+						$source = @imagecreatefrompng($config_logo);
 						break;
 					default: 
 						$this->error = 'e_unsupported_format';
@@ -207,10 +210,10 @@ class Gallery
 					if (function_exists('imagecopymerge'))
 					{
 						// On veut placer le logo en bas à droite, on calcule les coordonnées où on doit placer le logo sur la photo
-						$destination_x = $width - $width_s - $CONFIG_GALLERY['d_width'];
-						$destination_y =  $height - $height_s - $CONFIG_GALLERY['d_height'];
+						$destination_x = $width - $width_s - $gallery_config->get_d_width();
+						$destination_y =  $height - $height_s - $gallery_config->get_d_height();
 						
-						if (@imagecopymerge($destination, $source, $destination_x, $destination_y, 0, 0, $width_s, $height_s, (100 - $CONFIG_GALLERY['trans'])) === false)
+						if (@imagecopymerge($destination, $source, $destination_x, $destination_y, 0, 0, $width_s, $height_s, (100 - $gallery_config->get_trans())) === false)
 							$this->error = 'e_unabled_incrust_logo';
 							
 						switch ($ext) //Création de l'image suivant l'extension.
@@ -440,7 +443,7 @@ class Gallery
 	//Vérifie si le membre peut uploader une image
 	public function Auth_upload_pics($user_id, $level)
 	{
-		global $CONFIG_GALLERY;
+		$gallery_config = GalleryConfig::load();
 		
 		switch ($level)
 		{
@@ -448,10 +451,10 @@ class Gallery
 			$pics_quota = 10000;
 			break;
 			case 1:
-			$pics_quota = $CONFIG_GALLERY['limit_modo'];
+			$pics_quota = $gallery_config->get_limit_modo();
 			break;
 			default:
-			$pics_quota = $CONFIG_GALLERY['limit_member'];
+			$pics_quota = $gallery_config->get_limit_member();
 		}
 
 		if ($this->get_nbr_upload_pics($user_id) >= $pics_quota)
@@ -505,10 +508,10 @@ class Gallery
 	//Calcul des dimensions avec respect des proportions.
 	public function get_resize_properties($width_s, $height_s, $width_max = 0, $height_max = 0)
 	{
-		global $CONFIG_GALLERY;
+		$gallery_config = GalleryConfig::load();
 		
-		$width_max = ($width_max == 0) ? $CONFIG_GALLERY['width'] : $width_max;
-		$height_max = ($height_max == 0) ? $CONFIG_GALLERY['height'] : $height_max;
+		$width_max = ($width_max == 0) ? $gallery_config->get_width() : $width_max;
+		$height_max = ($height_max == 0) ? $gallery_config->get_height() : $height_max;
 		if ($width_s > $width_max || $height_s > $height_max) 
 		{
 			if ($width_s > $height_s)
@@ -626,10 +629,12 @@ class Gallery
 	//Création de l'image d'erreur
 	private function _create_pics_error($path, $width, $height)
 	{
-		global $CONFIG_GALLERY, $LANG; 
+		global $LANG; 
 		
-		$width = ($width == 0) ? $CONFIG_GALLERY['width'] : $width;
-		$height = ($height == 0) ? $CONFIG_GALLERY['height'] : $height;
+		$gallery_config = GalleryConfig::load();
+		
+		$width = ($width == 0) ? $gallery_config->get_width() : $width;
+		$height = ($height == 0) ? $gallery_config->get_height() : $height;
 			
 		$font = PATH_TO_ROOT . '/kernel/data/fonts/impact.ttf';		
 		$font_size = 12;

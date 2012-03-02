@@ -38,6 +38,8 @@ $LANG['extend_menu'] = 'Menu étendu';
 $LANG['phpinfo'] = 'PHP info';
 
 //Config
+$LANG['config_main'] = 'Configuration générale';
+$LANG['config_advanced'] = 'Configuration avancée';
 $LANG['serv_name'] = 'URL du serveur';
 $LANG['serv_path'] = 'Chemin de PHPBoost';
 $LANG['default_theme'] = 'Thème (par défaut) du site';
@@ -181,6 +183,7 @@ $LANG['generate'] = 'Générer';
 $LANG['or_direct_path'] = 'Ou chemin direct';
 $LANG['unknow_bot'] = 'Bot inconnu';
 $LANG['captcha_difficulty'] = 'Difficulté du code de vérification';
+$LANG['cache'] = 'Cache';
 
 //Connexion
 $LANG['unlock_admin_panel'] = 'Déverrouillage de l\'administration';

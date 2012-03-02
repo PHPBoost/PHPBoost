@@ -40,6 +40,12 @@ $Gallery = new Gallery();
 
 $Cache->load('gallery');
 
+$gallery_config = GalleryConfig::load();
+$config_nbr_columns = $gallery_config->get_nbr_columns();
+$config_nbr_pics_max = $gallery_config->get_nbr_pics_max();
+$config_display_pics = $gallery_config->get_display_pics();
+$config_height = $gallery_config->get_height();
+
 if (!empty($idpics) && isset($_GET['move'])) //Déplacement d'une image.
 {
 	$Session->csrf_get_protect(); //Protection csrf
@@ -104,25 +110,25 @@ else
 	$Pagination = new DeprecatedPagination();
 
 	//Colonnes des catégories.
-	$nbr_column_cats = ($total_cat > $CONFIG_GALLERY['nbr_column']) ? $CONFIG_GALLERY['nbr_column'] : $total_cat;
+	$nbr_column_cats = ($total_cat > $config_nbr_columns) ? $config_nbr_columns : $total_cat;
 	$nbr_column_cats = !empty($nbr_column_cats) ? $nbr_column_cats : 1;
 	$column_width_cats = floor(100/$nbr_column_cats);
 
 	//Colonnes des images.
-	$nbr_column_pics = ($nbr_pics > $CONFIG_GALLERY['nbr_column']) ? $CONFIG_GALLERY['nbr_column'] : $nbr_pics;
+	$nbr_column_pics = ($nbr_pics > $config_nbr_columns) ? $config_nbr_columns : $nbr_pics;
 	$nbr_column_pics = !empty($nbr_column_pics) ? $nbr_column_pics : 1;
 	$column_width_pics = floor(100/$nbr_column_pics);
 
 	$Template->put_all(array(
 		'THEME' => get_utheme(),
 		'LANG' => get_ulang(),
-		'PAGINATION' => $Pagination->display('admin_gallery.php?p=%d', $total_cat, 'p', $CONFIG_GALLERY['nbr_pics_max'], 3),
+		'PAGINATION' => $Pagination->display('admin_gallery.php?p=%d', $total_cat, 'p', $config_nbr_pics_max, 3),
 		'COLUMN_WIDTH_CAT' => $column_width_cats,
 		'COLUMN_WIDTH_PICS' => $column_width_pics,
-		'COLSPAN' => $CONFIG_GALLERY['nbr_column'],
+		'COLSPAN' => $config_nbr_columns,
 		'CAT_ID' => $idcat,
 		'GALLERY' => !empty($idcat) ? $CAT_GALLERY[$idcat]['name'] : $LANG['gallery'],
-		'HEIGHT_MAX' => ($CONFIG_GALLERY['height'] - 15),
+		'HEIGHT_MAX' => ($config_height - 15),
 		'ADD_PICS' => '<a href="admin_gallery_add.php?cat=' . $idcat . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/add.png" alt="" class="valign_middle" /></a>',
 		'ARRAY_JS' => '',
 		'NBR_PICS' => 0,
@@ -164,7 +170,7 @@ else
 		" . $Sql->limit($Pagination->get_first_msg(10, 'p'), 10), __LINE__, __FILE__);
 		while ($row = $Sql->fetch_assoc($result))
 		{
-			//On genère le tableau pour $CONFIG_GALLERY['nbr_column'] colonnes
+			//On genère le tableau pour $config_nbr_columns colonnes
 			$multiple_x = $i / $nbr_column_cats;
 			$tr_start = is_int($multiple_x) ? '<tr>' : '';
 			$i++;
@@ -211,7 +217,7 @@ else
 		$Pagination = new DeprecatedPagination();
 
 		$Template->put_all(array(
-			'PAGINATION_PICS' => $Pagination->display('admin_gallery.php?cat=' . $idcat . '&amp;pp=%d', $nbr_pics, 'pp', $CONFIG_GALLERY['nbr_pics_max'], 3),
+			'PAGINATION_PICS' => $Pagination->display('admin_gallery.php?cat=' . $idcat . '&amp;pp=%d', $nbr_pics, 'pp', $config_nbr_pics_max, 3),
 		));
 
 		$array_cat_list = array(0 => '<option value="0" %s>' . $LANG['root'] . '</option>');
@@ -254,7 +260,7 @@ else
 						$Gallery->Resize_pics('pics/' . $row['path']); //Redimensionnement + création miniature
 
 					//Affichage de la liste des miniatures sous l'image.
-					$array_pics[] = '<td class="row2" style="text-align:center;height:' . ($CONFIG_GALLERY['height'] + 16) . 'px"><span id="thumb' . $i . '"><a href="admin_gallery.php?cat=' . $row['idcat'] . '&amp;id=' . $row['id'] . '#pics_max' . '"><img src="pics/thumbnails/' . $row['path'] . '" alt="" / ></a></span></td>';
+					$array_pics[] = '<td class="row2" style="text-align:center;height:' . ($config_height + 16) . 'px"><span id="thumb' . $i . '"><a href="admin_gallery.php?cat=' . $row['idcat'] . '&amp;id=' . $row['id'] . '#pics_max' . '"><img src="pics/thumbnails/' . $row['path'] . '" alt="" / ></a></span></td>';
 
 					if ($row['id'] == $idpics)
 					{
@@ -322,7 +328,7 @@ else
 					'VIEWS' => ($info_pics['views'] + 1),
 					'DIMENSION' => $info_pics['width'] . ' x ' . $info_pics['height'],
 					'SIZE' => NumberHelper::round($info_pics['weight']/1024, 1),
-					'COLSPAN' => ($CONFIG_GALLERY['nbr_column'] + 2),
+					'COLSPAN' => ($config_nbr_columns + 2),
 					'CAT' => $cat_list,
 					'RENAME' => addslashes($info_pics['name']),
 					'RENAME_CUT' => addslashes($info_pics['name']),
@@ -357,7 +363,7 @@ else
 			LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = g.user_id
 			WHERE g.idcat = '" . $idcat . "'
 			ORDER BY g.timestamp
-			" . $Sql->limit($Pagination->get_first_msg($CONFIG_GALLERY['nbr_pics_max'], 'pp'), $CONFIG_GALLERY['nbr_pics_max']), __LINE__, __FILE__);
+			" . $Sql->limit($Pagination->get_first_msg($config_nbr_pics_max, 'pp'), $config_nbr_pics_max), __LINE__, __FILE__);
 			while ($row = $Sql->fetch_assoc($result))
 			{
 				//Si la miniature n'existe pas (cache vidé) on regénère la miniature à partir de l'image en taille réelle.
@@ -376,11 +382,11 @@ else
 				$tr_end = is_int($j / $nbr_column_pics) ? '</tr>' : '';
 
 				//Affichage de l'image en grand.
-				if ($CONFIG_GALLERY['display_pics'] == 3) //Ouverture en popup plein écran.
+				if ($config_display_pics == 3) //Ouverture en popup plein écran.
 					$display_link = HOST . DIR . '/gallery/show_pics' . url('.php?id=' . $row['id'] . '&amp;cat=' . $row['idcat']);
-				elseif ($CONFIG_GALLERY['display_pics'] == 2) //Ouverture en popup simple.
+				elseif ($config_display_pics == 2) //Ouverture en popup simple.
 					$display_link = 'javascript:display_pics_popup(\'' . HOST . DIR . '/gallery/show_pics' . url('.php?id=' . $row['id'] . '&amp;cat=' . $row['idcat']) . '\', \'' . $row['width'] . '\', \'' . $row['height'] . '\')';
-				elseif ($CONFIG_GALLERY['display_pics'] == 1) //Ouverture en agrandissement simple.
+				elseif ($config_display_pics == 1) //Ouverture en agrandissement simple.
 					$display_link = 'javascript:display_pics(' . $row['id'] . ', \'' . HOST . DIR . '/gallery/show_pics' . url('.php?id=' . $row['id'] . '&amp;cat=' . $row['idcat']) . '\', 0)';
 				else //Ouverture nouvelle page.
 					$display_link = 'admin_gallery.php?cat=' . $row['idcat'] . '&amp;id=' . $row['id'] . '#pics_max';
