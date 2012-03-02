@@ -74,6 +74,10 @@ class AdminOnlineConfigController extends AdminModuleController
 			'class' => 'text', 'maxlength' => 3)
 		));
 		
+		$fieldset_config->add_field(new FormFieldTextEditor('nbr_members_per_page', $this->lang['admin.nbr-members-per-page'], $online_config->get_nbr_members_per_page(), array(
+			'class' => 'text', 'maxlength' => 3)
+		));
+		
 		$fieldset_config->add_field(new FormFieldSimpleSelectChoice('display_order', $this->lang['admin.display-order'], $online_config->get_display_order(), array(
 				new FormFieldSelectChoiceOption($LANG['ranks'], 'LEVEL_DISPLAY_ORDER'),
 				new FormFieldSelectChoiceOption($this->lang['online.last_update'], 'SESSION_TIME_DISPLAY_ORDER'),
@@ -92,6 +96,7 @@ class AdminOnlineConfigController extends AdminModuleController
 	{
 		$online_config = OnlineConfig::load();
 		$online_config->set_number_member_displayed($this->form->get_value('number_member_displayed'));
+		$online_config->set_nbr_members_per_page($this->form->get_value('nbr_members_per_page'));
 		$online_config->set_display_order($this->form->get_value('display_order')->get_raw_value());
 		OnlineConfig::save();
 	}

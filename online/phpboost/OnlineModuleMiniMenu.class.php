@@ -36,10 +36,6 @@ class OnlineModuleMiniMenu extends ModuleMiniMenu
     {
 		global $LANG;
 		
-		$display_order['LEVEL_DISPLAY_ORDER'] = 's.level DESC';
-		$display_order['SESSION_TIME_DISPLAY_ORDER'] = 's.session_time DESC';
-		$display_order['LEVEL_AND_SESSION_TIME_DISPLAY_ORDER'] = 's.level DESC, s.session_time DESC';
-		
 		if (!Url::is_current_url('/online/index.php'))
 	    {
 			$tpl = new FileTemplate('online/OnlineModuleMiniMenu.tpl');
@@ -53,29 +49,24 @@ class OnlineModuleMiniMenu extends ModuleMiniMenu
 			$i = 0;
 			$array_class = array('member', 'modo', 'admin');
 			
-			$result = PersistenceContext::get_querier()->select("SELECT s.user_id, s.level, s.session_time, m.user_groups, m.login
-				FROM " . DB_TABLE_SESSIONS . " s
-				LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = s.user_id
-				WHERE s.session_time > '" . (time() - SessionsConfig::load()->get_active_session_duration()) . "'
-                "//ORDER BY " . $display_order[OnlineConfig::load()->get_display_order()]
-			);
+			$online_user_list = OnlineService::get_online_users_list("WHERE s.session_time > ':time' ORDER BY :display_order", array('time' => (time() - SessionsConfig::load()->get_active_session_duration()), 'display_order' => OnlineConfig::load()->get_display_order()));
 			
-			while ($row = $result->fetch())
+			foreach ($online_user_list as $o)
 			{
 				if ($i < OnlineConfig::load()->get_number_member_displayed())
 				{
 					//Visiteurs non pris en compte.
-					if ($row['level'] !== '-1')
+					if ($o->get_level() !== '-1')
 					{
-						$group_color = User::get_group_color($row['user_groups'], $row['level']);
+						$group_color = User::get_group_color(implode('|', $o->get_groups()), $o->get_level());
 						$tpl->assign_block_vars('online', array(
-							'USER' => '<a href="'. UserUrlBuilder::profile($row['user_id'])->absolute() .'" class="' . $array_class[$row['level']] . '"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . TextHelper::wordwrap_html($row['login'], 19) . '</a><br />'
+							'USER' => '<a href="'. UserUrlBuilder::profile($o->get_id())->absolute() .'" class="' . UserService::get_level_lang($o->get_level()) . '"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . TextHelper::wordwrap_html($o->get_pseudo(), 19) . '</a><br />'
 						));
 						$i++;
 					}
 				}
 				
-				switch ($row['level'])
+				switch ($o->get_level())
 				{
 					case '-1':
 					$count_visit++;
@@ -93,30 +84,21 @@ class OnlineModuleMiniMenu extends ModuleMiniMenu
 			}
 			
 			$count_visit = (empty($count_visit) && empty($count_member) && empty($count_modo) && empty($count_admin)) ? '1' : $count_visit;
-			
-			$total = $count_visit + $count_member + $count_modo + $count_admin;
-			$total_member = $count_member + $count_modo + $count_admin;
+			$total_members = $count_member + $count_modo + $count_admin;
 			
 			$member_online = $LANG['member_s'] . ' ' . strtolower($lang['online']);
-			$more = '<br /><a href="../online/index.php' . SID . '" title="' . $member_online . '">' . $member_online . '</a><br />';
-			$more = ($total_member > OnlineConfig::load()->get_number_member_displayed()) ? $more : ''; //Plus de 4 membres connectés.
-			
-			$l_guest = ($count_visit > 1) ? $LANG['guest_s'] : $LANG['guest'];
-			$l_member = ($count_member > 1) ? $LANG['member_s'] : $LANG['member'];
-			$l_modo = ($count_modo > 1) ? $LANG['modo_s'] : $LANG['modo'];
-			$l_admin = ($count_admin > 1) ? $LANG['admin_s'] : $LANG['admin'];
-			
+
 			$tpl->put_all(array(
 				'VISIT' => $count_visit,
-				'USER' => $count_member,
+				'MEMBER' => $count_member,
 				'MODO' => $count_modo,
 				'ADMIN' => $count_admin,
-				'MORE' => $more,
-				'TOTAL' => $total,
-				'L_VISITOR' => $l_guest,
-				'L_USER' => $l_member,
-				'L_MODO' => $l_modo,
-				'L_ADMIN' => $l_admin,
+				'MORE' => ($total_members > OnlineConfig::load()->get_number_member_displayed()) ? '<br /><a href="../online/index.php' . SID . '" title="' . $member_online . '">' . $member_online . '</a><br />' : '', //Plus de 4 membres connectés.
+				'TOTAL' => $count_visit + $total_members,
+				'L_VISITOR' => ($count_visit > 1) ? $LANG['guest_s'] : $LANG['guest'],
+				'L_MEMBER' => ($count_member > 1) ? $LANG['member_s'] : $LANG['member'],
+				'L_MODO' => ($count_modo > 1) ? $LANG['modo_s'] : $LANG['modo'],
+				'L_ADMIN' => ($count_admin > 1) ? $LANG['admin_s'] : $LANG['admin'],
 				'L_ONLINE' => $lang['online'],
 				'L_TOTAL' => $LANG['total']
 			));

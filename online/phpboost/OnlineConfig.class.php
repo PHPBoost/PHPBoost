@@ -32,6 +32,7 @@ class OnlineConfig extends AbstractConfigData
 {
 	const DISPLAY_ORDER = 'display_order';
 	const NUMBER_MEMBER_DISPLAYED = 'number_member_displayed';
+	const NBR_MEMBERS_PER_PAGE = 'nbr_members_per_page';
 	
 	const LEVEL_DISPLAY_ORDER = 's.level DESC';
 	const SESSION_TIME_DISPLAY_ORDER = 's.session_time DESC';
@@ -44,7 +45,7 @@ class OnlineConfig extends AbstractConfigData
 	
 	public function set_display_order($value)
 	{
-		$this->set_property(self::DISPLAY_ORDER, $value);
+		$this->set_property(self::DISPLAY_ORDER, self::LEVEL_AND_SESSION_TIME_DISPLAY_ORDER);
 	}
 	
 	public function get_number_member_displayed()
@@ -56,12 +57,23 @@ class OnlineConfig extends AbstractConfigData
 	{
 		$this->set_property(self::NUMBER_MEMBER_DISPLAYED, $number);
 	}
+	
+	public function get_nbr_members_per_page()
+	{
+		return $this->get_property(self::NBR_MEMBERS_PER_PAGE);
+	}
+	
+	public function set_nbr_members_per_page($number)
+	{
+		$this->set_property(self::NBR_MEMBERS_PER_PAGE, $number);
+	}
 		
 	public function get_default_values()
 	{
 		return array(
 			self::DISPLAY_ORDER => self::LEVEL_AND_SESSION_TIME_DISPLAY_ORDER,
-			self::NUMBER_MEMBER_DISPLAYED => 4
+			self::NUMBER_MEMBER_DISPLAYED => 4,
+			self::NBR_MEMBERS_PER_PAGE => 20
 		);
 	}
 	
@@ -71,7 +83,7 @@ class OnlineConfig extends AbstractConfigData
 	 */
 	public static function load()
 	{
-		return ConfigManager::load(__CLASS__, 'online', 'main');
+		return ConfigManager::load(__CLASS__, 'module-online', 'config');
 	}
 
 	/**
@@ -79,7 +91,7 @@ class OnlineConfig extends AbstractConfigData
 	 */
 	public static function save()
 	{
-		ConfigManager::save('online', self::load(), 'main');
+		ConfigManager::save('module-online', self::load(), 'config');
 	}
 }
 ?>

@@ -51,7 +51,7 @@ class OnlineUsersListPagination
 		return $this->number_users_per_page;
 	}
 	
-	public function get_display_from()
+	public function get_display_form()
 	{
 		$current_page = $this->current_page > 0 ? $this->current_page : 1;
 		return ($current_page - 1) * $this->number_users_per_page;
