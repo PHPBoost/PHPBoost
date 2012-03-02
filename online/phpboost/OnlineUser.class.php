@@ -27,17 +27,28 @@
 
 class OnlineUser extends User
 {
-	protected $location;
+	protected $location_script;
+	protected $location_title;
 	protected $last_update;
 	
-	public function set_location($location)
+	public function set_location_script($location_script)
 	{
-		$this->location = $location;
+		$this->location_script = $location_script;
 	}
 	
-	public function get_location()
+	public function get_location_script()
 	{
-		return $this->location;
+		return $this->location_script;
+	}
+	
+	public function set_location_title($location_title)
+	{
+		$this->location_title = $location_title;
+	}
+	
+	public function get_location_title()
+	{
+		return $this->location_title;
 	}
 	
 	public function set_last_update($last_update)

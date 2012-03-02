@@ -38,12 +38,10 @@ $lang['online'] = 'En ligne';
 $lang['online.location'] = 'Localisation';
 $lang['online.last_update'] = 'Dernière mise à jour';
 
-//Title
-$lang['title_online'] = 'En ligne';
-
 //Admin
 $lang['admin.config'] = 'Configuration en ligne';
-$lang['admin.nbr-displayed'] = 'Nombre de personnes en ligne affichées';
+$lang['admin.nbr-displayed'] = 'Nombre d\'utilisateurs en ligne affichées';
+$lang['admin.nbr-members-per-page'] = 'Nombre d\'utilisateurs affichés par page';
 $lang['admin.display-order'] = 'Ordre d\'affichage';
 
 //Errors
