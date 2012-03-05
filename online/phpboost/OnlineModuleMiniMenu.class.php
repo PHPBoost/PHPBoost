@@ -51,22 +51,22 @@ class OnlineModuleMiniMenu extends ModuleMiniMenu
 			
 			$online_user_list = OnlineService::get_online_users("WHERE s.session_time > ':time' ORDER BY :display_order", array('time' => (time() - SessionsConfig::load()->get_active_session_duration()), 'display_order' => OnlineConfig::load()->get_display_order()));
 			
-			foreach ($online_user_list as $o)
+			foreach ($online_user_list as $user)
 			{
 				if ($i < OnlineConfig::load()->get_number_member_displayed())
 				{
 					//Visiteurs non pris en compte.
-					if ($o->get_level() !== '-1')
+					if ($user->get_level() !== '-1')
 					{
-						$group_color = User::get_group_color(implode('|', $o->get_groups()), $o->get_level());
+						$group_color = User::get_group_color(implode('|', $user->get_groups()), $user->get_level());
 						$tpl->assign_block_vars('online', array(
-							'USER' => '<a href="'. UserUrlBuilder::profile($o->get_id())->absolute() .'" class="' . UserService::get_level_lang($o->get_level()) . '"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . TextHelper::wordwrap_html($o->get_pseudo(), 19) . '</a><br />'
+							'USER' => '<a href="'. UserUrlBuilder::profile($user->get_id())->absolute() .'" class="' . UserService::get_level_lang($user->get_level()) . '"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . TextHelper::wordwrap_html($user->get_pseudo(), 19) . '</a><br />'
 						));
 						$i++;
 					}
 				}
 				
-				switch ($o->get_level())
+				switch ($user->get_level())
 				{
 					case '-1':
 					$count_visit++;

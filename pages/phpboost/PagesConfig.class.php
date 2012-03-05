@@ -76,7 +76,7 @@ class PagesConfig extends AbstractConfigData
 	 */
 	public static function load()
 	{
-		return ConfigManager::load(__CLASS__, 'module-pages', 'config');
+		return ConfigManager::load(__CLASS__, 'module', 'pages-config');
 	}
 
 	/**
@@ -84,7 +84,7 @@ class PagesConfig extends AbstractConfigData
 	 */
 	public static function save()
 	{
-		ConfigManager::save('module-pages', self::load(), 'config');
+		ConfigManager::save('module', self::load(), 'pages-config');
 	}
 }
 ?>
