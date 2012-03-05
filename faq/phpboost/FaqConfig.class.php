@@ -119,7 +119,7 @@ class FaqConfig extends AbstractConfigData
 	 */
 	public static function load()
 	{
-		return ConfigManager::load(__CLASS__, 'module-faq', 'config');
+		return ConfigManager::load(__CLASS__, 'module', 'faq-config');
 	}
 
 	/**
@@ -127,7 +127,7 @@ class FaqConfig extends AbstractConfigData
 	 */
 	public static function save()
 	{
-		ConfigManager::save('module-faq', self::load(), 'config');
+		ConfigManager::save('module', self::load(), 'faq-config');
 	}
 }
 ?>

@@ -68,12 +68,12 @@ class OnlineModuleHomePage implements ModuleHomePage
 		
 		$online_users = OnlineService::get_online_users("WHERE s.session_time > ':time' ORDER BY :display_order LIMIT " . $nbr_members_per_page . " OFFSET :start_limit", array('time' => (time() - SessionsConfig::load()->get_active_session_duration()), 'display_order' => OnlineConfig::load()->get_display_order(), 'start_limit' => $limit_page));
 		
-		foreach ($online_users as $o)
+		foreach ($online_users as $user)
 		{
 			$this->view->assign_block_vars('users', array(
-				'USER' => '<a href="' . UserUrlBuilder::profile($o->get_id())->absolute() . '" class="' . User::get_group_color(implode('|', $o->get_groups()), $o->get_level()) . '">' . $o->get_pseudo() . '</a>',
-				'LOCATION' => '<a href="' . $o->get_location_script() . '">' . $o->get_location_title() . '</a>',
-				'LAST_UPDATE' => $o->get_last_update()
+				'USER' => '<a href="' . UserUrlBuilder::profile($user->get_id())->absolute() . '" class="' . User::get_group_color(implode('|', $user->get_groups()), $user->get_level()) . '">' . $user->get_pseudo() . '</a>',
+				'LOCATION' => '<a href="' . $user->get_location_script() . '">' . $user->get_location_title() . '</a>',
+				'LAST_UPDATE' => $user->get_last_update()
 			));
 		}
 
