@@ -32,6 +32,7 @@ require_once('articles_constants.php');
 load_module_lang('articles');
 
 $Cache->load('articles');
+$articles_config = ArticlesConfig::load();
 
 if (isset($ARTICLES_CAT[$idartcat]) )
 {

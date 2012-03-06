@@ -36,8 +36,11 @@ class ArticlesSearchable extends AbstractSearchableExtensionPoint
 	
 	public function get_search_request($args)
 	{
-		global $Cache, $CONFIG_ARTICLES, $ARTICLES_CAT, $LANG,$ARTICLES_LANG;
+		global $Cache, $ARTICLES_CAT, $LANG,$ARTICLES_LANG;
+		
 		$Cache->load('articles');
+		$articles_config = ArticlesConfig::load();
+		
 		require_once PATH_TO_ROOT . '/articles/articles_constants.php';
 
 		$weight = isset($args['weight']) && is_numeric($args['weight']) ? $args['weight'] : 1;
@@ -70,7 +73,7 @@ class ArticlesSearchable extends AbstractSearchableExtensionPoint
 				WHERE
 					a.visible = 1 AND ((ac.visible = 1 AND ac.auth LIKE '%s:3:\"r-1\";i:1;%') OR a.idcat = 0)
 					AND (FT_SEARCH(a.title, '" . $args['search'] . "') OR FT_SEARCH(a.contents, '" . $args['search'] . "'))
-				ORDER BY relevance DESC " . $this->sql_querier->limit(0, $CONFIG_ARTICLES['nbr_articles_max']);
+				ORDER BY relevance DESC " . $this->sql_querier->limit(0, $articles_config->get_nbr_articles_max());
 	}
 }
 

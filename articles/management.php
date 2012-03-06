@@ -39,6 +39,9 @@ $id = retrieve(GET, 'id', 0);
 $cat = retrieve(GET, 'cat', 0);
 $file_approved = retrieve(POST, 'visible', false);
 
+//Récupération des éléments de configuration
+$config_auth = $articles_config->get_authorization();
+
 if ($delete > 0)
 {
 	$Session->csrf_get_protect();
@@ -275,7 +278,7 @@ elseif(retrieve(POST,'submit',false))
 					//C'est la fusion entre l'autorisation de la racine et de l'ensemble de la branche des catégories
 					//We merge the whole authorizations of the branch constituted by the selected category
 					Authorizations::merge_auth(
-					$CONFIG_ARTICLES['global_auth'],
+					$config_auth,
 					//Autorisation de l'ensemble de la branche des catégories jusqu'à la catégorie demandée
 					$articles_categories->compute_heritated_auth($articles['idcat'], AUTH_ARTICLES_MODERATE, Authorizations::AUTH_CHILD_PRIORITY),
 					AUTH_ARTICLES_MODERATE, Authorizations::AUTH_CHILD_PRIORITY
@@ -402,7 +405,7 @@ else
 				'AUTH_READ' => Authorizations::generate_select(AUTH_ARTICLES_READ, $articles['auth']),
 			));
 
-			$articles_categories->build_select_form($articles['idcat'], 'idcat', 'idcat', 0, AUTH_ARTICLES_READ, $CONFIG_ARTICLES['global_auth'], IGNORE_AND_CONTINUE_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH, $tpl);
+			$articles_categories->build_select_form($articles['idcat'], 'idcat', 'idcat', 0, AUTH_ARTICLES_READ, $config_auth, IGNORE_AND_CONTINUE_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH, $tpl);
 		}
 		else
 		{
@@ -419,7 +422,7 @@ else
 		}
 		else
 		{
-			$auth_contrib = !$User->check_auth($CONFIG_ARTICLES['global_auth'], AUTH_ARTICLES_WRITE) && $User->check_auth($CONFIG_ARTICLES['global_auth'], AUTH_ARTICLES_CONTRIBUTE);			
+			$auth_contrib = !$User->check_auth($config_auth, AUTH_ARTICLES_WRITE) && $User->check_auth($config_auth, AUTH_ARTICLES_CONTRIBUTE);			
 			$Bread_crumb->add($ARTICLES_LANG['articles_add'],url('management.php?new=1&amp;cat=' . $cat));
 			
 			//Images disponibles
@@ -485,7 +488,7 @@ else
 			));
 			
 			$cat = $cat > 0 && ($User->check_auth($ARTICLES_CAT[$cat]['auth'], AUTH_ARTICLES_CONTRIBUTE) || $User->check_auth($ARTICLES_CAT[$cat]['auth'], AUTH_ARTICLES_WRITE)) ? $cat : 0;
-			$articles_categories->build_select_form($cat, 'idcat', 'idcat', 0, AUTH_ARTICLES_READ, $CONFIG_ARTICLES['global_auth'], IGNORE_AND_CONTINUE_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH, $tpl);
+			$articles_categories->build_select_form($cat, 'idcat', 'idcat', 0, AUTH_ARTICLES_READ, $config_auth, IGNORE_AND_CONTINUE_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH, $tpl);
 		}
 	}
 	require_once('../kernel/header.php');

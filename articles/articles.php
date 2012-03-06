@@ -139,7 +139,7 @@ if (!empty($idart) && isset($cat) )
 	
 	$notation = new Notation();
 	$notation->set_module_name('articles');
-	$notation->set_notation_scale($CONFIG_ARTICLES['note_max']);
+	$notation->set_notation_scale($articles_config->get_note_max());
 	
 	$tpl->put_all(array(
 		'C_IS_ADMIN' => ($User->check_auth($ARTICLES_CAT[$idartcat]['auth'], AUTH_ARTICLES_WRITE)),
