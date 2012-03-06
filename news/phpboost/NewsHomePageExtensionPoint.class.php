@@ -48,14 +48,31 @@ class NewsHomePageExtensionPoint implements HomePageExtensionPoint
 	
 	private function get_view()
 	{
-		global $User, $Cache, $Bread_crumb, $NEWS_CONFIG, $NEWS_CAT, $NEWS_LANG, $LANG, $Session;
+		global $User, $Cache, $Bread_crumb, $NEWS_CAT, $NEWS_LANG, $LANG, $Session;
 
 		// Begin.
 		load_module_lang('news');
 		$Cache->load('news');
-
+		$news_config = NewsConfig::load();
+		
 		require_once PATH_TO_ROOT . '/news/news_constants.php';
-
+		
+		//Récupération des éléments de configuration
+		$config_pagination_news = $news_config->get_pagination_news();
+		$config_pagination_arch = $news_config->get_pagination_arch();
+		$config_edito_title = $news_config->get_edito_title();
+		$config_edito = $news_config->get_edito();
+		$config_type = $news_config->get_type();
+		$config_activ_pagin = $news_config->get_activ_pagin();
+		$config_nbr_columns = $news_config->get_nbr_columns();
+		$config_nbr_news = $news_config->get_nbr_news();
+		$config_activ_edito = $news_config->get_activ_edito();
+		$config_activ_com = $news_config->get_activ_com();
+		$config_activ_icon = $news_config->get_activ_icon();
+		$config_display_author = $news_config->get_display_author();
+		$config_display_date = $news_config->get_display_date();
+		$config_auth = $news_config->get_authorization();
+		
 		// Initialisation des imports.
 		$now = new Date(DATE_NOW, TIMEZONE_AUTO);
 		$Pagination = new DeprecatedPagination();
@@ -70,7 +87,7 @@ class NewsHomePageExtensionPoint implements HomePageExtensionPoint
 		// Couleurs du login
 		$level = array('', ' modo', ' admin');
 
-		$filetpl = $NEWS_CONFIG['type'] ? 'news/news_cat.tpl' :'news/news_list.tpl';
+		$filetpl = $config_type ? 'news/news_cat.tpl' :'news/news_list.tpl';
 
 		$tpl = new FileTemplate($filetpl);
 
@@ -107,31 +124,31 @@ class NewsHomePageExtensionPoint implements HomePageExtensionPoint
 		}
 		else
 		{
-			if ($NEWS_CONFIG['activ_pagin']) // Pagination activée, sinon affichage lien vers les archives.
+			if ($config_activ_pagin) // Pagination activée, sinon affichage lien vers les archives.
 			{
-				$show_pagin = $Pagination->display(PATH_TO_ROOT . '/news/news' . url('.php?p=%d', '-0-0-%d.php'), $NEWS_CONFIG['nbr_news'], 'p', $NEWS_CONFIG['pagination_news'], 3);
-				$first_msg = $Pagination->get_first_msg($NEWS_CONFIG['pagination_news'], 'p');
+				$show_pagin = $Pagination->display(PATH_TO_ROOT . '/news/news' . url('.php?p=%d', '-0-0-%d.php'), $config_nbr_news, 'p', $config_pagination_news, 3);
+				$first_msg = $Pagination->get_first_msg($config_pagination_news, 'p');
 			}
 			elseif ($arch) // Pagination des archives.
 			{
-				$show_pagin = $Pagination->display(PATH_TO_ROOT . '/news/news' . url('.php?arch=1&amp;p=%d', '-0-0-%d.php?arch=1'), $NEWS_CONFIG['nbr_news'] - $NEWS_CONFIG['pagination_news'], 'p', $NEWS_CONFIG['pagination_arch'], 3);
-				$first_msg = $NEWS_CONFIG['pagination_news'] + $Pagination->get_first_msg($NEWS_CONFIG['pagination_arch'], 'p');
-				$NEWS_CONFIG['pagination_news'] = $NEWS_CONFIG['pagination_arch'];
+				$show_pagin = $Pagination->display(PATH_TO_ROOT . '/news/news' . url('.php?arch=1&amp;p=%d', '-0-0-%d.php?arch=1'), $config_nbr_news - $config_pagination_news, 'p', $config_pagination_arch, 3);
+				$first_msg = $config_pagination_news + $Pagination->get_first_msg($config_pagination_arch, 'p');
+				$config_pagination_news = $config_pagination_arch;
 			}
 			else // Affichage du lien vers les archives.
 			{
-				$show_pagin = (($NEWS_CONFIG['nbr_news'] > $NEWS_CONFIG['pagination_news']) && ($NEWS_CONFIG['nbr_news'] != 0)) ? '<a href="' . PATH_TO_ROOT . '/news/news.php' . '?arch=1" title="' . $NEWS_LANG['display_archive'] . '">' . $NEWS_LANG['display_archive'] . '</a>' : '';
+				$show_pagin = (($config_nbr_news > $config_pagination_news) && ($config_nbr_news != 0)) ? '<a href="' . PATH_TO_ROOT . '/news/news.php' . '?arch=1" title="' . $NEWS_LANG['display_archive'] . '">' . $NEWS_LANG['display_archive'] . '</a>' : '';
 				$first_msg = 0;
 			}
 			$tpl->put_all(array('PAGINATION' => $show_pagin));
 
-			if($NEWS_CONFIG['type'] ==1 || $NEWS_CONFIG['type'] ==0)
+			if($config_type ==1 || $config_type ==0)
 			{
-				if ($NEWS_CONFIG['nbr_column'] > 1)
+				if ($config_nbr_columns > 1)
 				{
 					$i = 0;
-					$NEWS_CONFIG['nbr_column'] = !empty($NEWS_CONFIG['nbr_column']) ? $NEWS_CONFIG['nbr_column'] : 1;
-					$column_width = floor(100 / $NEWS_CONFIG['nbr_column']);
+					$config_nbr_columns = !empty($config_nbr_columns) ? $config_nbr_columns : 1;
+					$column_width = floor(100 / $config_nbr_columns);
 
 					$tpl->put_all(array(
 						'C_NEWS_LINK_COLUMN' => true,
@@ -140,7 +157,7 @@ class NewsHomePageExtensionPoint implements HomePageExtensionPoint
 				}
 			}
 			// News en bloc => news_cat.tpl
-			if($NEWS_CONFIG['type'] == 1)
+			if($config_type == 1)
 			{
 
 				$result = $this->sql_querier->query_while("SELECT n.contents, n.extend_contents, n.title, n.id, n.idcat, n.timestamp, n.start, n.user_id, n.img, n.alt, m.login, m.level
@@ -148,7 +165,7 @@ class NewsHomePageExtensionPoint implements HomePageExtensionPoint
 					LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = n.user_id
 					".$where."
 					ORDER BY n.timestamp DESC
-					" . $this->sql_querier->limit($first_msg, $NEWS_CONFIG['pagination_news']), __LINE__, __FILE__);
+					" . $this->sql_querier->limit($first_msg, $config_pagination_news), __LINE__, __FILE__);
 
 				while ($row = $this->sql_querier->fetch_assoc($result))
 				{
@@ -156,9 +173,9 @@ class NewsHomePageExtensionPoint implements HomePageExtensionPoint
 					if($User->check_auth($NEWS_CAT[$row['idcat']]['auth'], AUTH_NEWS_READ))
 					{
 						// Séparation des news en colonnes si activé.
-						if ($NEWS_CONFIG['nbr_column'] > 1)
+						if ($config_nbr_columns > 1)
 						{
-							$new_row = (($i % $NEWS_CONFIG['nbr_column']) == 0 && $i > 0);
+							$new_row = (($i % $config_nbr_columns) == 0 && $i > 0);
 							$i++;
 						}
 						else
@@ -179,21 +196,21 @@ class NewsHomePageExtensionPoint implements HomePageExtensionPoint
 							'U_SYNDICATION' => SyndicationUrlBuilder::rss('news', $row['idcat'])->rel(),
 							'U_LINK' => 'news' . url('.php?id=' . $row['id'], '-' . $row['idcat'] . '-' . $row['id'] . '+' . Url::encode_rewrite($row['title']) . '.php'),
 							'TITLE' => $row['title'],
-							'U_COM' => $NEWS_CONFIG['activ_com'] ? '<a href="'. PATH_TO_ROOT .'/news/news' . url('.php?id=' . $row['id'] . '&amp;com=0', '-' . $row['idcat'] . '-' . $row['id'] . '+' . Url::encode_rewrite($row['title']) . '.php?com=0') .'">'. CommentsService::get_number_and_lang_comments($comments_topic) . '</a>' : '',
-							'C_EDIT' =>  $User->check_auth($NEWS_CONFIG['global_auth'], AUTH_NEWS_MODERATE) || $User->check_auth($NEWS_CONFIG['global_auth'], AUTH_NEWS_WRITE) && $row['user_id'] == $User->get_attribute('user_id'),
-							'C_DELETE' =>  $User->check_auth($NEWS_CONFIG['global_auth'], AUTH_NEWS_MODERATE),
+							'U_COM' => $config_activ_com ? '<a href="'. PATH_TO_ROOT .'/news/news' . url('.php?id=' . $row['id'] . '&amp;com=0', '-' . $row['idcat'] . '-' . $row['id'] . '+' . Url::encode_rewrite($row['title']) . '.php?com=0') .'">'. CommentsService::get_number_and_lang_comments($comments_topic) . '</a>' : '',
+							'C_EDIT' =>  $User->check_auth($config_auth, AUTH_NEWS_MODERATE) || $User->check_auth($config_auth, AUTH_NEWS_WRITE) && $row['user_id'] == $User->get_attribute('user_id'),
+							'C_DELETE' =>  $User->check_auth($config_auth, AUTH_NEWS_MODERATE),
 							'C_IMG' => !empty($row['img']),
 							'IMG' => FormatingHelper::second_parse_url($row['img']),
 							'IMG_DESC' => $row['alt'],
-							'C_ICON' => $NEWS_CONFIG['activ_icon'],
+							'C_ICON' => $config_activ_icon,
 							'U_CAT' => !empty($row['idcat']) ? 'news' . url('.php?cat=' . $row['idcat'], '-' . $row['idcat'] . '+' . Url::encode_rewrite($NEWS_CAT[$row['idcat']]['name']) . '.php') : '',
 							'ICON' => !empty($row['idcat']) ? FormatingHelper::second_parse_url($NEWS_CAT[$row['idcat']]['image']) : '',
 							'CONTENTS' => FormatingHelper::second_parse($row['contents']),
 							'EXTEND_CONTENTS' => !empty($row['extend_contents']) ? '<a style="font-size:10px" href="' . PATH_TO_ROOT . '/news/news' . url('.php?id=' . $row['id'], '-0-' . $row['id'] . '.php') . '" onclick="document.location = \'count.php?id='. $row['id'] .'\';">[' . $NEWS_LANG['extend_contents'] . ']</a><br /><br />' : '',
-							'PSEUDO' => $NEWS_CONFIG['display_author'] && !empty($row['login']) ? $row['login'] : '',
+							'PSEUDO' => $config_display_author && !empty($row['login']) ? $row['login'] : '',
 							'U_USER_ID' => UserUrlBuilder::profile($row['user_id'])->absolute(),
 							'LEVEL' =>	isset($row['level']) ? $level[$row['level']] : '',
-							'DATE' => $NEWS_CONFIG['display_date'] ? sprintf($NEWS_LANG['on'], $timestamp->format(DATE_FORMAT_SHORT, TIMEZONE_AUTO)) : '',
+							'DATE' => $config_display_date ? sprintf($NEWS_LANG['on'], $timestamp->format(DATE_FORMAT_SHORT, TIMEZONE_AUTO)) : '',
 							'FEED_MENU' => Feed::get_feed_menu(FEED_URL)
 						));
 					}
@@ -207,16 +224,16 @@ class NewsHomePageExtensionPoint implements HomePageExtensionPoint
 
 				$result = $this->sql_querier->query_while("SELECT n.id, n.idcat, n.title, n.timestamp, n.start, n.nbr_com
 					FROM " . DB_TABLE_NEWS . " n " . $where . "
-					ORDER BY n.timestamp DESC" . $this->sql_querier->limit($first_msg, $NEWS_CONFIG['pagination_news']), __LINE__, __FILE__);
+					ORDER BY n.timestamp DESC" . $this->sql_querier->limit($first_msg, $config_pagination_news), __LINE__, __FILE__);
 
 				while ($row = $this->sql_querier->fetch_assoc($result))
 				{
 					if($User->check_auth($NEWS_CAT[$row['idcat']]['auth'], AUTH_NEWS_READ))
 					{
 						// Séparation des news en colonnes si activé.
-						if ($NEWS_CONFIG['nbr_column'] > 1)
+						if ($config_nbr_columns > 1)
 						{
-							$new_row = ($i % $NEWS_CONFIG['nbr_column']) == 0 && $i > 0;
+							$new_row = ($i % $config_nbr_columns) == 0 && $i > 0;
 							$i++;
 						}
 						else
@@ -230,12 +247,12 @@ class NewsHomePageExtensionPoint implements HomePageExtensionPoint
 						$tpl->assign_block_vars('list', array(
 							'ID' => $row['id'],
 							'C_NEWS_ROW' => $new_row,
-							'ICON' => $NEWS_CONFIG['activ_icon'] ? FormatingHelper::second_parse_url($NEWS_CAT[$row['idcat']]['image']) : 0,
+							'ICON' => $config_activ_icon ? FormatingHelper::second_parse_url($NEWS_CAT[$row['idcat']]['image']) : 0,
 							'U_CAT' => 'news' . url('.php?cat=' . $row['idcat'], '-' . $row['idcat'] . '+' . Url::encode_rewrite($NEWS_CAT[$row['idcat']]['name']) . '.php'),
 							'DATE' => $timestamp->format(DATE_FORMAT_TINY, TIMEZONE_AUTO),
 							'U_NEWS' => 'news' . url('.php?id=' . $row['id'], '-' . $row['idcat'] . '-' . $row['id'] . '+' . Url::encode_rewrite($row['title']) . '.php'),
 							'TITLE' => $row['title'],
-							'C_COM' => $NEWS_CONFIG['activ_com'] ? true : false,
+							'C_COM' => $config_activ_com ? true : false,
 							'COM' => $row['nbr_com']
 						));
 					}
@@ -276,12 +293,12 @@ class NewsHomePageExtensionPoint implements HomePageExtensionPoint
 				'EDITO_CONTENTS' => !empty($NEWS_CAT[$cat]['desc']) ? FormatingHelper::second_parse($NEWS_CAT[$cat]['desc']) : ''
 			));
 		}
-		elseif($NEWS_CONFIG['activ_edito'])
+		elseif($config_activ_edito)
 		{
 			$tpl->put_all(array(
 				'C_EDITO' => true,
-				'EDITO_NAME' => $NEWS_CONFIG['edito_title'],
-				'EDITO_CONTENTS' => FormatingHelper::second_parse($NEWS_CONFIG['edito'])
+				'EDITO_NAME' => $config_edito_title,
+				'EDITO_CONTENTS' => FormatingHelper::second_parse($config_edito)
 			));
 		}
 		else

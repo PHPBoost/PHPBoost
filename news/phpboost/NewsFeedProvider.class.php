@@ -41,7 +41,7 @@ class NewsFeedProvider implements FeedProvider
 	public function get_feed_data_struct($idcat = 0, $name = '')
 	{
 		$querier = PersistenceContext::get_querier();
-		global $Cache, $LANG, $NEWS_CONFIG, $NEWS_CAT, $NEWS_LANG;
+		global $Cache, $LANG, $NEWS_CAT, $NEWS_LANG;
 
 		// Load the new's config
 		$Cache->load('news');
@@ -51,7 +51,9 @@ class NewsFeedProvider implements FeedProvider
 		$now = new Date(DATE_NOW, TIMEZONE_AUTO);
 
 		load_module_lang('news');
-
+		
+		$news_config = NewsConfig::load();
+		
 		$site_name = GeneralConfig::load()->get_site_name();
 		$site_name = $idcat > 0 ? $site_name . ' : ' . $NEWS_CAT[$idcat]['name'] : $site_name;
 
@@ -80,7 +82,7 @@ class NewsFeedProvider implements FeedProvider
                  ORDER BY timestamp DESC LIMIT :limit OFFSET 0', array(
                      'timestamp' => $now->get_timestamp(),
 			         'cats_ids' => $array_cat,
-			         'limit' => 2 * $NEWS_CONFIG['pagination_news']));
+			         'limit' => 2 * $news_config->get__pagination_news()));
 
 			foreach ($results as $row)
 			{
