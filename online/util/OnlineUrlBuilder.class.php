@@ -33,7 +33,6 @@ class OnlineUrlBuilder
 {
     private static $dispatcher = '/online';
     
-
 	/**
 	 * @return Url
 	 */
@@ -41,7 +40,7 @@ class OnlineUrlBuilder
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/admin/config/');
 	}
-	
+
 	/**
 	 * @return Url
 	 */

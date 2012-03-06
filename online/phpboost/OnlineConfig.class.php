@@ -35,11 +35,8 @@ class OnlineConfig extends AbstractConfigData
 	const NBR_MEMBERS_PER_PAGE = 'nbr_members_per_page';
 	
 	const LEVEL_DISPLAY_ORDER = 'level_display_order';
-	//'s.level DESC';
 	const SESSION_TIME_DISPLAY_ORDER = 'session_time_display_order';
-	//'s.session_time DESC';
 	const LEVEL_AND_SESSION_TIME_DISPLAY_ORDER = 'level_and_session_time_display_order';
-	//'s.level DESC, s.session_time DESC';
 	
 	public function get_display_order()
 	{
@@ -49,6 +46,24 @@ class OnlineConfig extends AbstractConfigData
 	public function set_display_order($value)
 	{
 		$this->set_property(self::DISPLAY_ORDER, $value);
+	}
+	
+	public function get_display_order_request() 
+	{
+		$order = '';
+		switch (self::DISPLAY_ORDER)
+		{
+			case 'level_display_order':
+			$order = 's.level DESC';
+			break;
+			case 'session_time_display_order':
+			$order = 's.session_time DESC';
+			break;
+			case 'level_and_session_time_display_order':
+			$order = 's.level DESC, s.session_time DESC';
+			break;
+		}
+		return $order; 
 	}
 	
 	public function get_number_member_displayed()

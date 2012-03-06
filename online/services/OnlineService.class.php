@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                        NewsletterService.class.php
+ *                        OnlineService.class.php
  *                            -------------------
- *   begin                : February 01, 2012
+ *   begin                : February 1, 2012
  *   copyright            : (C) 2012 Julien BRISWALTER
  *   email                : julien.briswalter@gmail.com
  *
@@ -36,7 +36,7 @@ class OnlineService
 	
 	public static function get_nbr_users_connected($condition, $parameters)
 	{
-		return self::$querier->get_column_value(DB_TABLE_SESSIONS, 'count(*)', $condition, $parameters);
+		return self::$querier->count(DB_TABLE_SESSIONS, $condition, $parameters);
 	}
 	
 	public static function get_online_users($condition, $parameters)
@@ -57,7 +57,7 @@ class OnlineService
 			$user->set_level($row['level']);
 			$user->set_groups(explode('|', $row['user_groups']));
 			$user->set_last_update(gmdate_format('date_format_long', $row['session_time']));
-			$user->set_location_script(HOST . DIR . $row['session_script'] . $row['session_script_get']);
+			$user->set_location_script($row['session_script'] . $row['session_script_get']);
 			$user->set_location_title(stripslashes($row['session_script_title']));
 			$users[] = $user;
 		}

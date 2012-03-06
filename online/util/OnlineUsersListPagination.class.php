@@ -29,7 +29,7 @@ class OnlineUsersListPagination
 {
 	private $pagination;
 	private $current_page;
-	private $number_users_per_page = 25;
+	private $number_users_per_page = OnlineConfig::load()->get_nbr_members_per_page();
 	
 	public function __construct($current_page)
 	{
@@ -39,8 +39,9 @@ class OnlineUsersListPagination
 	
 	public function set_url($field, $sort)
 	{
-		$this->pagination->set_url_sprintf_pattern(OnlineUrlBuilder::users($field, $sort, '%d')->absolute());
+		$this->pagination->set_url_sprintf_pattern(OnlineUrlBuilder::users_list($field, $sort, '%d')->absolute());
 	}
+	
 	public function display()
 	{
 		return $this->pagination->export();

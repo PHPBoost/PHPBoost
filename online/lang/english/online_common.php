@@ -31,7 +31,7 @@
  #						English						#
  ####################################################
 
- $lang = array();
+$lang = array();
 
 //En ligne
 $lang['online.home'] = 'Home';
@@ -40,7 +40,7 @@ $lang['online.location'] = 'Location';
 $lang['online.last_update'] = 'Last update';
 
 //Admin
-$lang['admin.config'] = 'Online configuration';
+$lang['admin.online-config'] = 'Online configuration';
 $lang['admin.nbr-displayed'] = 'Number of online members displayed';
 $lang['admin.nbr-members-per-page'] = 'Number of members per page';
 $lang['admin.display-order'] = 'Display order';
