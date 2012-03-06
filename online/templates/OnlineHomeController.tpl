@@ -29,9 +29,5 @@
 		</td>
 	</tr>
 	# END users #
-	<tr>
-		<td class="row1" style="text-align:center" colspan="3">
-			{PAGINATION}&nbsp;
-		</td>
-	</tr>
 </table>
+<p style="text-align: center;">{PAGINATION}</p>

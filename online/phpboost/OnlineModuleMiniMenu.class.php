@@ -34,8 +34,6 @@ class OnlineModuleMiniMenu extends ModuleMiniMenu
 
 	public function display($tpl = false)
     {
-		global $LANG;
-		
 		if (!Url::is_current_url('/online/index.php'))
 	    {
 			$tpl = new FileTemplate('online/OnlineModuleMiniMenu.tpl');
@@ -49,7 +47,7 @@ class OnlineModuleMiniMenu extends ModuleMiniMenu
 			$i = 0;
 			$array_class = array('member', 'modo', 'admin');
 			
-			$online_user_list = OnlineService::get_online_users("WHERE s.session_time > ':time' ORDER BY :display_order", array('time' => (time() - SessionsConfig::load()->get_active_session_duration()), 'display_order' => OnlineConfig::load()->get_display_order()));
+			$online_user_list = OnlineService::get_online_users("WHERE s.session_time > ':time' ORDER BY :display_order", array('time' => (time() - SessionsConfig::load()->get_active_session_duration()), 'display_order' => OnlineConfig::load()->get_display_order_request()));
 			
 			foreach ($online_user_list as $user)
 			{
@@ -86,21 +84,22 @@ class OnlineModuleMiniMenu extends ModuleMiniMenu
 			$count_visit = (empty($count_visit) && empty($count_member) && empty($count_modo) && empty($count_admin)) ? '1' : $count_visit;
 			$total_members = $count_member + $count_modo + $count_admin;
 			
-			$member_online = $LANG['member_s'] . ' ' . strtolower($lang['online']);
+			$lang_member_s = LangLoader::get_message('member_s', 'main');
+			$member_online = $lang_member_s . ' ' . strtolower($lang['online']);
 
 			$tpl->put_all(array(
 				'VISIT' => $count_visit,
 				'MEMBER' => $count_member,
 				'MODO' => $count_modo,
 				'ADMIN' => $count_admin,
-				'MORE' => ($total_members > OnlineConfig::load()->get_number_member_displayed()) ? '<br /><a href="../online/index.php' . SID . '" title="' . $member_online . '">' . $member_online . '</a><br />' : '', //Plus de 4 membres connectés.
+				'MORE' => ($total_members > OnlineConfig::load()->get_number_member_displayed()) ? '<br /><a href="' . OnlineUrlBuilder::home()->absolute() . '" title="' . $member_online . '">' . $member_online . '</a><br />' : '', //Plus de 4 membres connectés.
 				'TOTAL' => $count_visit + $total_members,
-				'L_VISITOR' => ($count_visit > 1) ? $LANG['guest_s'] : $LANG['guest'],
-				'L_MEMBER' => ($count_member > 1) ? $LANG['member_s'] : $LANG['member'],
-				'L_MODO' => ($count_modo > 1) ? $LANG['modo_s'] : $LANG['modo'],
-				'L_ADMIN' => ($count_admin > 1) ? $LANG['admin_s'] : $LANG['admin'],
+				'L_VISITOR' => ($count_visit > 1) ? LangLoader::get_message('guest_s', 'main') : LangLoader::get_message('guest', 'main'),
+				'L_MEMBER' => ($count_member > 1) ? $lang_member_s : LangLoader::get_message('member', 'main'),
+				'L_MODO' => ($count_modo > 1) ? LangLoader::get_message('modo_s', 'main') : LangLoader::get_message('modo', 'main'),
+				'L_ADMIN' => ($count_admin > 1) ? LangLoader::get_message('admin_s', 'main') : LangLoader::get_message('admin', 'main'),
 				'L_ONLINE' => $lang['online'],
-				'L_TOTAL' => $LANG['total']
+				'L_TOTAL' => LangLoader::get_message('total', 'main')
 			));
 		
 			return $tpl->render();    

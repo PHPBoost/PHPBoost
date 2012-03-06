@@ -34,7 +34,7 @@ class AdminOnlineDisplayResponse extends AdminMenuDisplayResponse
 		$lang = LangLoader::get('online_common', 'online');
 		$picture = '/online/online.png';
 		$this->set_title($lang['online']);
-		$this->add_link($lang['admin.config'], OnlineUrlBuilder::configuration(), $picture);
+		$this->add_link($lang['admin.online-config'], OnlineUrlBuilder::configuration(), $picture);
 
 		$env = $this->get_graphical_environment();
 		$env->set_page_title($title_page);

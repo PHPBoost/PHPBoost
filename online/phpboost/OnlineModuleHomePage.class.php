@@ -42,31 +42,26 @@ class OnlineModuleHomePage implements ModuleHomePage
 	
 	public function build_view()
 	{
-		global $LANG;
-		
 		$request = AppContext::get_request();
 		$this->init();
 		
-		$nbr_members_per_page = OnlineConfig::load()->get_nbr_members_per_page();
-		
-		//Membre connectés..
+		$page = $request->get_int('page', 1);
 		$nbr_members_connected = OnlineService::get_nbr_users_connected("WHERE level <> -1 AND session_time > ':time'", array('time' => (time() - SessionsConfig::load()->get_active_session_duration())));
+		$nbr_members_per_page = OnlineConfig::load()->get_nbr_members_per_page();
+		$nb_pages =  ceil($nbr_members_connected / $nbr_members_per_page);
 		
-		$current_page = $request->get_int('page', 1);
-		$nbr_pages =  ceil($nbr_members_connected / $nbr_members_per_page);
-		$pagination = new Pagination($nbr_pages, $current_page);
-		
-		$pagination->set_url_sprintf_pattern(DispatchManager::get_url('/online', '')->absolute());
+		$pagination = new Pagination($nb_pages, $page);
+		$pagination->set_url_sprintf_pattern(OnlineUrlBuilder::home($page)->absolute());
 		
 		$this->view->put_all(array(
-			'L_LOGIN' => $LANG['pseudo'],
-			'PAGINATION' => $pagination->export()->render()
+			'L_LOGIN' => LangLoader::get_message('pseudo', 'main'),
+			'PAGINATION' => '&nbsp;<strong>' . LangLoader::get_message('page', 'main') . ' :</strong> ' . $pagination->export()->render()
 		));
 
-		$limit_page = $current_page > 0 ? $current_page : 1;
+		$limit_page = $page > 0 ? $page : 1;
 		$limit_page = (($limit_page - 1) * $nbr_members_per_page);
 		
-		$online_users = OnlineService::get_online_users("WHERE s.session_time > ':time' ORDER BY :display_order LIMIT " . $nbr_members_per_page . " OFFSET :start_limit", array('time' => (time() - SessionsConfig::load()->get_active_session_duration()), 'display_order' => OnlineConfig::load()->get_display_order(), 'start_limit' => $limit_page));
+		$online_users = OnlineService::get_online_users("WHERE s.session_time > ':time' ORDER BY :display_order LIMIT " . $nbr_members_per_page . " OFFSET :start_limit", array('time' => (time() - SessionsConfig::load()->get_active_session_duration()), 'display_order' => OnlineConfig::load()->get_display_order_request(), 'start_limit' => $limit_page));
 		
 		foreach ($online_users as $user)
 		{
