@@ -31,6 +31,11 @@ define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
 require_once('articles_constants.php');
 
+$articles_config = ArticlesConfig::load();
+
+//Récupération des éléments de configuration
+$config_auth = $articles_config->get_authorization();
+
 $id = retrieve(GET, 'id', 0,TINTEGER);
 $cat_to_del = retrieve(GET, 'del', 0,TINTEGER);
 $cat_to_del_post = retrieve(POST, 'cat_to_del', 0,TINTEGER);
@@ -107,8 +112,8 @@ elseif ($new_cat XOR $id_edit > 0)
 
 	if ($id_edit > 0 && array_key_exists($id_edit, $ARTICLES_CAT))
 	{
-		$special_auth = $ARTICLES_CAT[$id_edit]['auth'] !== $CONFIG_ARTICLES['global_auth'] ? true : false;
-		$ARTICLES_CAT[$id_edit]['auth'] = $special_auth ? $ARTICLES_CAT[$id_edit]['auth'] : $CONFIG_ARTICLES['global_auth'];
+		$special_auth = $ARTICLES_CAT[$id_edit]['auth'] !== $config_auth ? true : false;
+		$ARTICLES_CAT[$id_edit]['auth'] = $special_auth ? $ARTICLES_CAT[$id_edit]['auth'] : $config_auth;
 
 		// category icon
 		$img_direct_path = (strpos($ARTICLES_CAT[$id_edit]['image'], '/') !== false);
@@ -166,10 +171,10 @@ elseif ($new_cat XOR $id_edit > 0)
 			'JS_SPECIAL_AUTH' => 'false',
 			'DISPLAY_SPECIAL_AUTH' => 'none',
 			'SPECIAL_CHECKED' => '',
-			'AUTH_READ' => Authorizations::generate_select(AUTH_ARTICLES_READ, $CONFIG_ARTICLES['global_auth']),
-			'AUTH_WRITE' => Authorizations::generate_select(AUTH_ARTICLES_WRITE, $CONFIG_ARTICLES['global_auth']),
-			'AUTH_CONTRIBUTION' => Authorizations::generate_select(AUTH_ARTICLES_CONTRIBUTE, $CONFIG_ARTICLES['global_auth']),
-			'AUTH_MODERATION' => Authorizations::generate_select(AUTH_ARTICLES_MODERATE, $CONFIG_ARTICLES['global_auth']),			
+			'AUTH_READ' => Authorizations::generate_select(AUTH_ARTICLES_READ, $config_auth),
+			'AUTH_WRITE' => Authorizations::generate_select(AUTH_ARTICLES_WRITE, $config_auth),
+			'AUTH_CONTRIBUTION' => Authorizations::generate_select(AUTH_ARTICLES_CONTRIBUTE, $config_auth),
+			'AUTH_MODERATION' => Authorizations::generate_select(AUTH_ARTICLES_MODERATE, $config_auth),			
 		));
 
 	}

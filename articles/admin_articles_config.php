@@ -34,44 +34,30 @@ define('TITLE', $LANG['administration']);
 
 require_once('../admin/admin_header.php');
 require_once('admin_articles_menu.php');
+$articles_config = ArticlesConfig::load();
 
 if (retrieve(POST,'valid',false))
 {
 	$Cache->load('articles');
 	
-	switch (retrieve(POST, 'mini_type', 'date',TSTRING))
-	{
-		case 'note' :
-			$mini['type'] = 'note';		
-			break;
-		case 'com' :
-			$mini['type'] = 'com';
-			break;
-		case 'date' :
-			$mini['type'] = 'date';
-		case 'view' :
-			$mini['type']= 'view';
-			break;
-		default :
-			$mini['type'] = 'date';
-			break;
-	}
+	$config_note_max = $articles_config->get_note_max();
+	$note_max = max(1, retrieve(POST, 'note_max', 5));
 	
-	$config_articles = array(
-		'nbr_articles_max' => retrieve(POST, 'nbr_articles_max', 10),
-		'nbr_cat_max' => retrieve(POST, 'nbr_cat_max', 10),
-		'nbr_column' => retrieve(POST, 'nbr_column', 2),
-		'note_max' => max(1, retrieve(POST, 'note_max', 5)),
-		'global_auth' => Authorizations::build_auth_array_from_form(AUTH_ARTICLES_READ, AUTH_ARTICLES_CONTRIBUTE, AUTH_ARTICLES_WRITE, AUTH_ARTICLES_MODERATE)
-	);
+	if ($config_note_max != $note_max)
+		$Sql->query_inject("UPDATE " .DB_TABLE_ARTICLES . " SET note = note * " . ($note_max/$config_note_max), __LINE__, __FILE__);
 	
-	$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($config_articles)) . "' WHERE name = 'articles'", __LINE__, __FILE__);
-
-	if ($CONFIG_ARTICLES['note_max'] != $config_articles['note_max'])
-		$Sql->query_inject("UPDATE " .DB_TABLE_ARTICLES . " SET note = note * '" . ($config_articles['note_max']/$CONFIG_ARTICLES['note_max']) . "'", __LINE__, __FILE__);
+	$news_config->set_nbr_cat_max(retrieve(POST, 'nbr_cat_max', 10));
+	$news_config->set_nbr_articles_max(retrieve(POST, 'nbr_articles_max', 10));
+	$news_config->set_nbr_columns(retrieve(POST, 'nbr_column', 3));
+	$news_config->set_note_max($note_max);
+	$news_config->set_authorization(Authorizations::build_auth_array_from_form(AUTH_ARTICLES_READ, AUTH_ARTICLES_CONTRIBUTE, AUTH_ARTICLES_WRITE, AUTH_ARTICLES_MODERATE));
+	$news_config->set_mini(array('nbr_articles' => 5, 'type' => retrieve(POST, 'mini_type', 'date',TSTRING)));
+	
+	ArticlesConfig::save();
 
 	###### Régénération du cache des articles #######
 	$Cache->Generate_module_file('articles');
+	
 	AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);
 }
 elseif (retrieve(POST,'articles_count',false)) //Recompte le nombre d'articles de chaque catégories
@@ -127,7 +113,14 @@ else
 	$tpl->put_all(array('ADMIN_MENU' => $admin_menu));
 
 	$Cache->load('articles');
-		
+	
+	//Récupération des éléments de configuration
+	$config_auth = $articles_config->get_authorization();
+	$config_nbr_columns = $articles_config->get_nbr_columns();
+	$config_nbr_cat_max = $articles_config->get_nbr_cat_max();
+	$config_nbr_articles_max = $articles_config->get_nbr_articles_max();
+	$config_note_max = $articles_config->get_note_max();
+	
 	$array_ranks =
 		array(
 			'-1' => $LANG['guest'],
@@ -137,11 +130,11 @@ else
 		);
 
 	$tpl->put_all(array(
-		'NBR_ARTICLES_MAX' => !empty($CONFIG_ARTICLES['nbr_articles_max']) ? $CONFIG_ARTICLES['nbr_articles_max'] : '10',
-		'NBR_CAT_MAX' => !empty($CONFIG_ARTICLES['nbr_cat_max']) ? $CONFIG_ARTICLES['nbr_cat_max'] : '10',
-		'NBR_COLUMN' => !empty($CONFIG_ARTICLES['nbr_column']) ? $CONFIG_ARTICLES['nbr_column'] : '2',
-		'NOTE_MAX' => !empty($CONFIG_ARTICLES['note_max']) ? $CONFIG_ARTICLES['note_max'] : '10',
-		'AUTH_READ' => Authorizations::generate_select(AUTH_ARTICLES_READ, $CONFIG_ARTICLES['global_auth']),
+		'NBR_ARTICLES_MAX' => !empty($config_nbr_articles_max) ? $config_nbr_articles_max : '10',
+		'NBR_CAT_MAX' => !empty($config_nbr_cat_max) ? $config_nbr_cat_max : '10',
+		'NBR_COLUMN' => !empty($config_nbr_columns) ? $config_nbr_columns : '2',
+		'NOTE_MAX' => !empty($config_note_max) ? $config_note_max : '10',
+		'AUTH_READ' => Authorizations::generate_select(AUTH_ARTICLES_READ, $config_auth),
 		'L_REQUIRE' => $LANG['require'],	
 		'L_NBR_CAT_MAX' => $LANG['nbr_cat_max'],
 		'L_NBR_COLUMN_MAX' => $LANG['nbr_column_max'],
@@ -174,9 +167,9 @@ else
 	);
 			
 	$tpl->put_all(array(
-			'AUTH_WRITE' => Authorizations::generate_select(AUTH_ARTICLES_WRITE,$CONFIG_ARTICLES['global_auth']),
-			'AUTH_CONTRIBUTION' => Authorizations::generate_select(AUTH_ARTICLES_CONTRIBUTE,$CONFIG_ARTICLES['global_auth']),
-			'AUTH_MODERATION' => Authorizations::generate_select(AUTH_ARTICLES_MODERATE,$CONFIG_ARTICLES['global_auth']),
+			'AUTH_WRITE' => Authorizations::generate_select(AUTH_ARTICLES_WRITE,$config_auth),
+			'AUTH_CONTRIBUTION' => Authorizations::generate_select(AUTH_ARTICLES_CONTRIBUTE,$config_auth),
+			'AUTH_MODERATION' => Authorizations::generate_select(AUTH_ARTICLES_MODERATE,$config_auth),
 		));
 		
 	$tpl->display();
