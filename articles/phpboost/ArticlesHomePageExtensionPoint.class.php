@@ -55,6 +55,8 @@ class ArticlesHomePageExtensionPoint implements HomePageExtensionPoint
 		$now = new Date(DATE_NOW, TIMEZONE_AUTO);
 		$Pagination = new DeprecatedPagination();
 		
+		$articles_config = ArticlesConfig::load();
+		
 		//Récupération des éléments de configuration
 		$config_auth = $articles_config->get_authorization();
 		$config_nbr_columns = $articles_config->get_nbr_columns();
