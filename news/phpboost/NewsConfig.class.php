@@ -27,69 +27,69 @@
 
 class NewsConfig extends AbstractConfigData
 {
-	const TYPE = 'type';
-	const ACTIV_COM = 'activ_com';
-	const ACTIV_ICON = 'activ_icon';
-	const ACTIV_EDITO = 'activ_edito';
-	const ACTIV_PAGIN = 'activ_pagin';
+	const NEWS_BLOCK_ACTIVATED = 'news_block_activated';
+	const COMMENTS_ACTIVATED = 'comments_activated';
+	const ICON_ACTIVATED = 'icon_activated';
+	const EDITO_ACTIVATED = 'edito_activated';
+	const PAGINATION_ACTIVATED = 'pagination_activated';
 	const DISPLAY_DATE = 'display_date';
 	const DISPLAY_AUTHOR = 'display_author';
-	const PAGINATION_NEWS = 'pagination_news';
-	const PAGINATION_ARCH = 'pagination_arch';
+	const NEWS_PAGINATION = 'news_pagination';
+	const ARCHIVES_PAGINATION = 'archives_pagination';
 	const NBR_COLUMNS = 'nbr_columns';
-	const NBR_NEWS= 'nbr_news';
-	const AUTHORIZATION = 'global_auth';
+	const NBR_VISIBLE_NEWS= 'nbr_visible_news';
+	const AUTHORIZATIONS = 'authorizations';
 	const EDITO_TITLE = 'edito_title';
-	const EDITO = 'edito';
+	const EDITO_CONTENT = 'edito_content';
 	
-	public function get_type()
+	public function get_news_block_activated()
 	{
-		return $this->get_property(self::TYPE);
+		return $this->get_property(self::NEWS_BLOCK_ACTIVATED);
 	}
 
-	public function set_type($value) 
+	public function set_news_block_activated($value) 
 	{
-		$this->set_property(self::TYPE, $value);
+		$this->set_property(self::NEWS_BLOCK_ACTIVATED, $value);
 	}
 
-	public function get_activ_com()
+	public function get_comments_activated()
 	{
-		return $this->get_property(self::ACTIV_COM);
+		return $this->get_property(self::COMMENTS_ACTIVATED);
 	}
 
-	public function set_activ_com($value) 
+	public function set_comments_activated($value) 
 	{
-		$this->set_property(self::ACTIV_COM, $value);
+		$this->set_property(self::COMMENTS_ACTIVATED, $value);
 	}
 
-	public function get_activ_icon()
+	public function get_icon_activated()
 	{
-		return $this->get_property(self::ACTIV_ICON);
+		return $this->get_property(self::ICON_ACTIVATED);
 	}
 
-	public function set_activ_icon($value) 
+	public function set_icon_activated($value) 
 	{
-		$this->set_property(self::ACTIV_ICON, $value);
+		$this->set_property(self::ICON_ACTIVATED, $value);
 	}
 	
-	public function get_activ_edito()
+	public function get_edito_activated()
 	{
-		return $this->get_property(self::ACTIV_EDITO);
+		return $this->get_property(self::EDITO_ACTIVATED);
 	}
 
-	public function set_activ_edito($value) 
+	public function set_edito_activated($value) 
 	{
-		$this->set_property(self::ACTIV_EDITO, $value);
+		$this->set_property(self::EDITO_ACTIVATED, $value);
 	}	
 	
-	public function get_activ_pagin()
+	public function get_pagination_activated()
 	{
-		return $this->get_property(self::ACTIV_PAGIN);
+		return $this->get_property(self::PAGINATION_ACTIVATED);
 	}
 
-	public function set_activ_pagin($value) 
+	public function set_pagination_activated($value) 
 	{
-		$this->set_property(self::ACTIV_PAGIN, $value);
+		$this->set_property(self::PAGINATION_ACTIVATED, $value);
 	}
 	
 	public function get_display_date()
@@ -112,24 +112,24 @@ class NewsConfig extends AbstractConfigData
 		$this->set_property(self::DISPLAY_AUTHOR, $value);
 	}
 	
-	public function get_pagination_news()
+	public function get_news_pagination()
 	{
-		return $this->get_property(self::PAGINATION_NEWS);
+		return $this->get_property(self::NEWS_PAGINATION);
 	}
 
-	public function set_pagination_news($value) 
+	public function set_news_pagination($value) 
 	{
-		$this->set_property(self::PAGINATION_NEWS, $value);
+		$this->set_property(self::NEWS_PAGINATION, $value);
 	}	
 	
-	public function get_pagination_arch()
+	public function get_archives_pagination()
 	{
-		return $this->get_property(self::PAGINATION_ARCH);
+		return $this->get_property(self::ARCHIVES_PAGINATION);
 	}
 
-	public function set_pagination_arch($value) 
+	public function set_archives_pagination($value) 
 	{
-		$this->set_property(self::PAGINATION_ARCH, $value);
+		$this->set_property(self::ARCHIVES_PAGINATION, $value);
 	}	
 	
 	public function get_nbr_columns()
@@ -142,24 +142,24 @@ class NewsConfig extends AbstractConfigData
 		$this->set_property(self::NBR_COLUMNS, $value);
 	}	
 	
-	public function get_nbr_news()
+	public function get_nbr_visible_news()
 	{
-		return $this->get_property(self::NBR_NEWS);
+		return $this->get_property(self::NBR_VISIBLE_NEWS);
 	}
 
-	public function set_nbr_news($value) 
+	public function set_nbr_visible_news($value) 
 	{
-		$this->set_property(self::NBR_NEWS, $value);
+		$this->set_property(self::NBR_VISIBLE_NEWS, $value);
 	}
 	
-	public function get_authorization()
+	public function get_authorizations()
 	{
-		return $this->get_property(self::AUTHORIZATION);
+		return $this->get_property(self::AUTHORIZATIONS);
 	}
 
-	public function set_authorization(Array $array)
+	public function set_authorizations(Array $array)
 	{
-		$this->set_property(self::AUTHORIZATION, $array);
+		$this->set_property(self::AUTHORIZATIONS, $array);
 	}
 	
 	public function get_edito_title()
@@ -172,33 +172,33 @@ class NewsConfig extends AbstractConfigData
 		$this->set_property(self::EDITO_TITLE, $value);
 	}
 	
-	public function get_edito()
+	public function get_edito_content()
 	{
-			return $this->get_property(self::EDITO);
+		return $this->get_property(self::EDITO_CONTENT);
 	}
 
-	public function set_edito($value)
+	public function set_edito_content($value)
 	{
-			$this->set_property(self::EDITO, $value);
+		$this->set_property(self::EDITO_CONTENT, $value);
 	}
 	
 	public function get_default_values()
 	{
 		return array(
-			self::TYPE => 1,
-			self::ACTIV_COM => 1,
-			self::ACTIV_ICON => 1,
-			self::ACTIV_EDITO => 1,
-			self::ACTIV_PAGIN => 1,
-			self::DISPLAY_DATE => 1,
-			self::DISPLAY_AUTHOR => 1,
-			self::PAGINATION_NEWS => 6,
-			self::PAGINATION_ARCH => 15,
+			self::NEWS_BLOCK_ACTIVATED => true,
+			self::COMMENTS_ACTIVATED => true,
+			self::ICON_ACTIVATED => true,
+			self::EDITO_ACTIVATED => true,
+			self::PAGINATION_ACTIVATED => true,
+			self::DISPLAY_DATE => true,
+			self::DISPLAY_AUTHOR => true,
+			self::NEWS_PAGINATION => 6,
+			self::ARCHIVES_PAGINATION => 15,
 			self::NBR_COLUMNS => 1,
-			self::NBR_NEWS => 1,
-			self::AUTHORIZATION => array('r-1' => 1, 'r0' => 3, 'r1' => 15),
-			self::EDITO_TITLE => 'Bienvenue sur votre site!',
-			self::EDITO => 'Vous désirez un site dynamique capable de s\'adapter à vos besoins ? PHPBoost est fait pour vous !<br /><br />Vous pourrez à travers une administration intuitive personnaliser entièrement votre site sans connaissances particulières. En effet ce logiciel a été conçu avec la volonté de le rendre utilisable simplement par le plus grand nombre. Prenez le temps de découvrir toutes les fonctionnalités qui vous sont offertes. En cas de problème une communauté grandissante sera toujours là pour vous épauler !<br /><br />Bienvenue sur votre site !'
+			self::NBR_VISIBLE_NEWS => 1,
+			self::AUTHORIZATIONS => array('r-1' => 1, 'r0' => 3, 'r1' => 15),
+			self::EDITO_TITLE => LangLoader::get_message('news.config.edito_title', 'news_config', 'news'),
+			self::EDITO_CONTENT => LangLoader::get_message('news.config.edito_content', 'news_config', 'news')
 		);
 	}
 

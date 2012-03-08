@@ -84,7 +84,7 @@ elseif (isset($_POST['preview']))
 	$preview->assign_block_vars('news', array(
 		'C_NEWS_ROW' => false,
 		'C_IMG' => !empty($news['img']),
-		'C_ICON' => $news_config->get_activ_icon(),
+		'C_ICON' => $news_config->get_icon_activated(),
 		'ID' => $news['id'],
 		'IDCAT' => $news['idcat'],
 		'ICON' => FormatingHelper::second_parse_url($NEWS_CAT[$news['idcat']]['image']),

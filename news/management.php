@@ -38,7 +38,7 @@ $edit = retrieve(GET, 'edit', 0);
 $delete = retrieve(GET, 'del', 0);
 
 //Configuration des authorisations
-$config_auth = $news_config->get_authorization();
+$config_authorizations = $news_config->get_authorizations();
 
 if ($delete > 0)
 {
@@ -211,7 +211,7 @@ elseif (!empty($_POST['submit']))
 							//C'est la fusion entre l'autorisation de la racine et de l'ensemble de la branche des catégories
 							//We merge the whole authorizations of the branch constituted by the selected category
 							Authorizations::merge_auth(
-								$config_auth,
+								$config_authorizations,
 								//Autorisation de l'ensemble de la branche des catégories jusqu'à la catégorie demandée
 								$news_categories->compute_heritated_auth($news['idcat'], AUTH_NEWS_MODERATE, Authorizations::AUTH_CHILD_PRIORITY),
 								AUTH_NEWS_MODERATE, Authorizations::AUTH_CHILD_PRIORITY
@@ -256,7 +256,7 @@ else
 	{
 		$news = $Sql->query_array(DB_TABLE_NEWS, '*', "WHERE id = '" . $edit . "'", __LINE__, __FILE__);
 		
-		$auth_edit = $news['idcat'] > 0 ? $User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_MODERATE) || $User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_WRITE) && $news['user_id'] == $User->get_attribute('user_id') : $User->check_auth($config_auth, AUTH_NEWS_MODERATE) || $User->check_auth($config_auth, AUTH_NEWS_WRITE) && $news['user_id'] == $User->get_attribute('user_id');
+		$auth_edit = $news['idcat'] > 0 ? $User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_MODERATE) || $User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_WRITE) && $news['user_id'] == $User->get_attribute('user_id') : $User->check_auth($config_authorizations, AUTH_NEWS_MODERATE) || $User->check_auth($config_authorizations, AUTH_NEWS_WRITE) && $news['user_id'] == $User->get_attribute('user_id');
 		
 		if (!empty($news['id']) && $auth_edit)
 		{
@@ -326,7 +326,7 @@ else
 				'USER_ID' => $news['user_id']
 			));
 
-			$news_categories->build_select_form($news['idcat'], 'idcat', 'idcat', 0, AUTH_NEWS_READ, $config_auth, IGNORE_AND_CONTINUE_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH, $tpl);
+			$news_categories->build_select_form($news['idcat'], 'idcat', 'idcat', 0, AUTH_NEWS_READ, $config_authorizations, IGNORE_AND_CONTINUE_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH, $tpl);
 		}
 		else
 		{
@@ -336,14 +336,14 @@ else
 	}
 	else
 	{
-		if (!$User->check_auth($config_auth, AUTH_NEWS_CONTRIBUTE) && !$User->check_auth($config_auth, AUTH_NEWS_WRITE))
+		if (!$User->check_auth($config_authorizations, AUTH_NEWS_CONTRIBUTE) && !$User->check_auth($config_authorizations, AUTH_NEWS_WRITE))
 		{
 	       $error_controller = PHPBoostErrors::unexisting_page();
 	       DispatchManager::redirect($error_controller);
 		}
 		else
 		{
-			$auth_contrib = !$User->check_auth($config_auth, AUTH_NEWS_WRITE) && $User->check_auth($config_auth, AUTH_NEWS_CONTRIBUTE);
+			$auth_contrib = !$User->check_auth($config_authorizations, AUTH_NEWS_WRITE) && $User->check_auth($config_authorizations, AUTH_NEWS_CONTRIBUTE);
 			$Bread_crumb->add($NEWS_LANG['news'], url('news.php'));
 			$Bread_crumb->add($NEWS_LANG['add_news'], url('management.php?new=1'));
 			define('TITLE', $NEWS_LANG['add_news']);
@@ -393,7 +393,7 @@ else
 
 			
 			$cat = $cat > 0 && ($User->check_auth($NEWS_CAT[$cat]['auth'], AUTH_NEWS_CONTRIBUTE) || $User->check_auth($NEWS_CAT[$cat]['auth'], AUTH_NEWS_WRITE)) ? $cat : 0;
-			$news_categories->build_select_form($cat, 'idcat', 'idcat', 0, AUTH_NEWS_READ, $config_auth, IGNORE_AND_CONTINUE_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH, $tpl);
+			$news_categories->build_select_form($cat, 'idcat', 'idcat', 0, AUTH_NEWS_READ, $config_authorizations, IGNORE_AND_CONTINUE_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH, $tpl);
 		}
 	}
 	require_once('../kernel/header.php');

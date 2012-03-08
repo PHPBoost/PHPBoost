@@ -38,13 +38,13 @@ $level = array('', ' modo', ' admin');
 $now = new Date(DATE_NOW, TIMEZONE_AUTO);
 
 //Récupération des éléments de configuration
-$config_auth = $news_config->get_authorization();
-$config_activ_icon = $news_config->get_activ_icon();
-$config_activ_com = $news_config->get_activ_com();
+$config_authorizations = $news_config->get_authorizations();
+$config_icon_activated = $news_config->get_icon_activated();
+$config_comments_activated = $news_config->get_comments_activated();
 $config_display_author = $news_config->get_display_author();
 $config_display_date = $news_config->get_display_date();
 
-if(!$User->check_auth($config_auth, AUTH_NEWS_READ))
+if(!$User->check_auth($config_authorizations, AUTH_NEWS_READ))
 {
     $error_controller = PHPBoostErrors::unexisting_page();
     DispatchManager::redirect($error_controller);
@@ -127,9 +127,9 @@ if (!empty($idnews)) // On affiche la news correspondant à l'id envoyé.
 		}	
 		
 		$auth_edit = $news['idcat'] > 0 ? $User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_MODERATE) || $User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_WRITE) && $news['user_id'] == $User->get_attribute('user_id')
-		: $User->check_auth($config_auth, AUTH_NEWS_MODERATE) || $User->check_auth($config_auth, AUTH_NEWS_WRITE) && $news['user_id'] == $User->get_attribute('user_id');
+		: $User->check_auth($config_authorizations, AUTH_NEWS_MODERATE) || $User->check_auth($config_authorizations, AUTH_NEWS_WRITE) && $news['user_id'] == $User->get_attribute('user_id');
 		
-		$auth_delete = $news['idcat'] > 0 ? $User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_MODERATE) : $User->check_auth($config_auth, AUTH_NEWS_MODERATE);
+		$auth_delete = $news['idcat'] > 0 ? $User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_MODERATE) : $User->check_auth($config_authorizations, AUTH_NEWS_MODERATE);
 		
 		$comments_topic = new CommentsTopic();
 		$comments_topic->set_module_id('news');
@@ -141,9 +141,9 @@ if (!empty($idnews)) // On affiche la news correspondant à l'id envoyé.
 			'C_DELETE' => $auth_delete,
 			'C_NEWS_NAVIGATION_LINKS' => !empty($previous_news['id']) || !empty($next_news['id']),
 			'C_PREVIOUS_NEWS' => !empty($previous_news['id']),
-			'C_NEWS_SUGGESTED' => $nbr_suggested > 0 ? 1 : 0,
+			'C_NEWS_SUGGESTED' => $nbr_suggested > 0 ? true : false,
 			'C_IMG' => !empty($news['img']),
-			'C_ICON' => $config_activ_icon,
+			'C_ICON' => $config_icon_activated,
 			'C_SOURCES' => $i > 0 ? true : false,
 			'ID' => $news['id'],
 			'TITLE' => $news['title'],
@@ -155,13 +155,13 @@ if (!empty($idnews)) // On affiche la news correspondant à l'id envoyé.
 			'DATE' => $config_display_date ? sprintf($NEWS_LANG['on'], $timestamp->format(DATE_FORMAT_SHORT, TIMEZONE_AUTO)) : '',
 			'LEVEL' =>	isset($news['level']) ? $level[$news['level']] : '',
 			'PSEUDO' => $config_display_author && !empty($news['login']) ? $news['login'] : false,
-			'COMMENTS' => isset($_GET['com']) && $config_activ_com == 1 ? CommentsService::display($comments_topic)->render() : '',
+			'COMMENTS' => isset($_GET['com']) && $config_comments_activated ? CommentsService::display($comments_topic)->render() : '',
 			'NEXT_NEWS' => $next_news['title'],
 			'PREVIOUS_NEWS' => $previous_news['title'],
 			'FEED_MENU' => Feed::get_feed_menu(FEED_URL . '&amp;cat=' . $news['idcat']),
 			'U_CAT' => $news['idcat'] > 0 ? 'news' . url('.php?cat=' . $news['idcat'], '-' . $news['idcat'] . '+'  . Url::encode_rewrite($NEWS_CAT[$news['idcat']]['name']) . '.php') : '',
 			'U_LINK' => 'news' . url('.php?id=' . $news['id'], '-' . $news['idcat'] . '-' . $news['id'] . '+' . Url::encode_rewrite($news['title']) . '.php'),
-			'U_COM' => $config_activ_com ? '<a href="'. PATH_TO_ROOT .'/news/news' . url('.php?id=' . $idnews . '&amp;com=0', '-' . $row['idcat'] . '-' . $idnews . '+' . Url::encode_rewrite($news['title']) . '.php?com=0') .'">'. CommentsService::get_number_and_lang_comments($comments_topic) . '</a>' : '',
+			'U_COM' => $config_comments_activated ? '<a href="'. PATH_TO_ROOT .'/news/news' . url('.php?id=' . $idnews . '&amp;com=0', '-' . $row['idcat'] . '-' . $idnews . '+' . Url::encode_rewrite($news['title']) . '.php?com=0') .'">'. CommentsService::get_number_and_lang_comments($comments_topic) . '</a>' : '',
 			'U_USER_ID' => UserUrlBuilder::profile($news['user_id'])->absolute(),
 			'U_SYNDICATION' => SyndicationUrlBuilder::rss('news', $news['idcat'])->rel(),
 			'U_PREVIOUS_NEWS' => 'news' . url('.php?id=' . $previous_news['id'], '-0-' . $previous_news['id'] . '+' . Url::encode_rewrite($previous_news['title']) . '.php'),
@@ -219,7 +219,7 @@ elseif ($user)
 			'C_IMG' => !empty($row['img']),
 			'IMG' => FormatingHelper::second_parse_url($row['img']),
 			'IMG_DESC' => $row['alt'],
-			'C_ICON' => $config_activ_icon,
+			'C_ICON' => $config_icon_activated,
 			'U_CAT' => $row['idcat'] > 0 ? 'news' . url('.php?cat=' . $row['idcat'], '-' . $row['idcat'] . '+' . Url::encode_rewrite($NEWS_CAT[$row['idcat']]['name']) . '.php') : '',
 			'ICON' => $row['idcat'] > 0 ? FormatingHelper::second_parse_url($NEWS_CAT[$row['idcat']]['image']) : '',
 			'CONTENTS' => FormatingHelper::second_parse($row['contents']),
@@ -242,7 +242,7 @@ elseif ($user)
 			'C_NEWS_NO_AVAILABLE' => true,
 			'L_LAST_NEWS' => $NEWS_LANG['waiting_news'],
 			'L_NO_NEWS_AVAILABLE' => $NEWS_LANG['no_news_available'],
-			'C_ADD' => $User->check_auth($config_auth, AUTH_NEWS_CONTRIBUTE) || $User->check_auth($config_auth, AUTH_NEWS_WRITE),
+			'C_ADD' => $User->check_auth($config_authorizations, AUTH_NEWS_CONTRIBUTE) || $User->check_auth($config_authorizations, AUTH_NEWS_WRITE),
 			'U_ADD' => url('management.php?new=1'),
 			'L_ADD' => $NEWS_LANG['add_news']
 		));
