@@ -48,7 +48,7 @@ $error = retrieve(GET, 'error', '');
 $tpl = new FileTemplate('news/admin_news_cat.tpl');
 
 //Configuration des authorisations
-$config_auth = $news_config->get_authorization();
+$config_auth = $news_config->get_authorizations();
 
 // Chargement du menu de l'administration.
 require_once('admin_news_menu.php');
@@ -99,7 +99,6 @@ elseif ($cat_to_del > 0)
 		
 		$tpl->put_all(array(
 			'EMPTY_CATS' => count($NEWS_CAT) < 2 ? true : false,
-			// 'EMPTY_CATS' => false,
 			'L_REMOVING_CATEGORY' => $NEWS_LANG['removing_category'],
 			'L_EXPLAIN_REMOVING' => $NEWS_LANG['explain_removing_category'],
 			'L_DELETE_CATEGORY_AND_CONTENT' => $NEWS_LANG['delete_category_and_its_content'],

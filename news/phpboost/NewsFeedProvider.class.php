@@ -82,7 +82,7 @@ class NewsFeedProvider implements FeedProvider
                  ORDER BY timestamp DESC LIMIT :limit OFFSET 0', array(
                      'timestamp' => $now->get_timestamp(),
 			         'cats_ids' => $array_cat,
-			         'limit' => 2 * $news_config->get__pagination_news()));
+			         'limit' => 2 * $news_config->get_news_pagination()));
 
 			foreach ($results as $row)
 			{
