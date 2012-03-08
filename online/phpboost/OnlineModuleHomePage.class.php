@@ -51,11 +51,11 @@ class OnlineModuleHomePage implements ModuleHomePage
 		$nb_pages =  ceil($nbr_members_connected / $nbr_members_per_page);
 		
 		$pagination = new Pagination($nb_pages, $page);
-		$pagination->set_url_sprintf_pattern(OnlineUrlBuilder::home($page)->absolute());
+		$pagination->set_url_sprintf_pattern(DispatchManager::get_url('/online', '')->absolute());
 		
 		$this->view->put_all(array(
 			'L_LOGIN' => LangLoader::get_message('pseudo', 'main'),
-			'PAGINATION' => '&nbsp;<strong>' . LangLoader::get_message('page', 'main') . ' :</strong> ' . $pagination->export()->render()
+			'PAGINATION' => '<strong>' . LangLoader::get_message('page', 'main') . ' :</strong> ' . $pagination->export()->render()
 		));
 
 		$limit_page = $page > 0 ? $page : 1;
