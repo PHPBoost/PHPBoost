@@ -2,15 +2,15 @@
 		<!--
 		function check_form()
 		{
-			if(document.getElementById('pagination_news').value == "") {
-				new Effect.ScrollTo('pagination_news',{duration:1.2});
-				alert("{L_REQUIRE_PAGIN_NEWS}");
+			if(document.getElementById('news_pagination').value == "") {
+				new Effect.ScrollTo('news_pagination',{duration:1.2});
+				alert("{L_REQUIRE_NEWS_PAGINATION}");
 				return false;
 			}
 
-			if(document.getElementById('pagination_arch').value == "") {
-				new Effect.ScrollTo('pagination_arch',{duration:1.2});
-				alert("{L_REQUIRE_PAGIN_ARCH}");
+			if(document.getElementById('archives_pagination').value == "") {
+				new Effect.ScrollTo('archives_pagination',{duration:1.2});
+				alert("{L_REQUIRE_ARCHIVES_PAGINATION}");
 				return false;
 			}
 
