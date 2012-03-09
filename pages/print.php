@@ -54,7 +54,7 @@ if (!empty($encoded_title)) //Si on connait son titre
 	$array_auth = unserialize($page_infos['auth']);
 
 	//Vérification de l'autorisation de voir la page
-	if (($special_auth && !$User->check_auth($array_auth, READ_PAGE)) || (!$special_auth && !$User->check_auth($pages_config->get_authorization(), READ_PAGE)))
+	if (($special_auth && !$User->check_auth($array_auth, READ_PAGE)) || (!$special_auth && !$User->check_auth($pages_config->get_authorizations(), READ_PAGE)))
 		AppContext::get_response()->redirect(HOST . DIR . url('/pages/pages.php?error=e_auth'));
 }
 

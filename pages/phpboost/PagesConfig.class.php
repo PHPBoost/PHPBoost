@@ -27,46 +27,46 @@
 
 class PagesConfig extends AbstractConfigData
 {
-	const AUTHORIZATION = 'authorization';
-	const COUNT_HITS = 'count_hits';
-	const ACTIV_COM = 'activ_com';
+	const COUNT_HITS_ACTIVATED = 'count_hits_activated';
+	const COMMENTS_ACTIVATED = 'comments_activated';
+	const AUTHORIZATIONS = 'authorizations';
 
-	public function get_count_hits()
+	public function get_count_hits_activated()
 	{
-		return $this->get_property(self::COUNT_HITS);
+		return $this->get_property(self::COUNT_HITS_ACTIVATED);
 	}
 	
-	public function set_count_hits($nbr) 
+	public function set_count_hits_activated($value) 
 	{
-		$this->set_property(self::COUNT_HITS, $nbr);
+		$this->set_property(self::COUNT_HITS_ACTIVATED, $value);
 	}
 	
-	public function get_activ_com()
+	public function get_comments_activated()
 	{
-		return $this->get_property(self::ACTIV_COM);
+		return $this->get_property(self::COMMENTS_ACTIVATED);
 	}
 	
-	public function set_activ_com($active) 
+	public function set_comments_activated($value) 
 	{
-		$this->set_property(self::ACTIV_COM, $active);
+		$this->set_property(self::COMMENTS_ACTIVATED, $value);
 	}
 	
-	public function get_authorization()
+	public function get_authorizations()
 	{
-		return $this->get_property(self::AUTHORIZATION);
+		return $this->get_property(self::AUTHORIZATIONS);
 	}
 	
-	public function set_authorization(Array $array)
+	public function set_authorizations(Array $array)
 	{
-		$this->set_property(self::AUTHORIZATION, $array);
+		$this->set_property(self::AUTHORIZATIONS, $array);
 	}
 	
 	public function get_default_values()
 	{
 		return array(
-			self::AUTHORIZATION => array('r-1' => 5, 'r0' => 7, 'r1' => 7, 'r2' => 7),
-			self::COUNT_HITS => 1,
-			self::ACTIV_COM => 1
+			self::COUNT_HITS_ACTIVATED => true,
+			self::COMMENTS_ACTIVATED => true,
+			self::AUTHORIZATIONS => array('r-1' => 5, 'r0' => 7, 'r1' => 7, 'r2' => 7),
 		);
 	}
 	

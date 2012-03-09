@@ -13,7 +13,7 @@ $open_cat = retrieve(POST, 'open_cat', 0);
 $root = !empty($_GET['root']) ? 1 : 0;
 
 //Configuration des authorisations
-$config_auth = $pages_config->get_authorization();
+$config_authorizations = $pages_config->get_authorizations();
 
 //Chargement d'un fichier template pour connaître l'emplacement du template
 $Template = new FileTemplate('pages/page.tpl');
@@ -35,7 +35,7 @@ if ($id_cat != 0)
 		//Autorisation particulière ?
 		$special_auth = !empty($row['auth']);
 		//Vérification de l'autorisation d'éditer la page
-		if (($special_auth && $User->check_auth($row['auth'], READ_PAGE)) || (!$special_auth && $User->check_auth($config_auth, READ_PAGE)))
+		if (($special_auth && $User->check_auth($row['auth'], READ_PAGE)) || (!$special_auth && $User->check_auth($config_authorizations, READ_PAGE)))
 		{
 			//On compte le nombre de catégories présentes pour savoir si on donne la possibilité de faire un sous dossier
 			$sub_cats_number = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "pages_cats WHERE id_parent = '" . $row['id'] . "'", __LINE__, __FILE__);
@@ -84,7 +84,7 @@ elseif (!empty($open_cat) || $root == 1)
 			//Autorisation particulière ?
 			$special_auth = !empty($value['auth']);
 			//Vérification de l'autorisation d'éditer la page
-			if (($special_auth && $User->check_auth($value['auth'], READ_PAGE)) || (!$special_auth && $User->check_auth($config_auth, READ_PAGE)))
+			if (($special_auth && $User->check_auth($value['auth'], READ_PAGE)) || (!$special_auth && $User->check_auth($config_authorizations, READ_PAGE)))
 			{
 				$return .= '<tr><td class="row2"><img src="' . $pages_data_path . '/images/closed_cat.png" alt=""  style="vertical-align:middle" />&nbsp;<a href="javascript:open_cat(' . $key . '); show_cat_contents(' . $value['id_parent'] . ', 0);">' . $value['name'] . '</a></td></tr>';
 			}
@@ -99,7 +99,7 @@ elseif (!empty($open_cat) || $root == 1)
 		//Autorisation particulière ?
 		$special_auth = !empty($row['auth']);
 		//Vérification de l'autorisation d'éditer la page
-		if (($special_auth && $User->check_auth(unserialize($row['auth']), READ_PAGE)) || (!$special_auth && $User->check_auth($config_auth, READ_PAGE)))
+		if (($special_auth && $User->check_auth(unserialize($row['auth']), READ_PAGE)) || (!$special_auth && $User->check_auth($config_authorizations, READ_PAGE)))
 		{
 			$return .= '<tr><td class="row2"><img src="' . $pages_data_path . '/images/page.png" alt=""  style="vertical-align:middle" />&nbsp;<a href="' . url('pages.php?title=' . $row['encoded_title'], $row['encoded_title']) . '">' . $row['title'] . '</a></td></tr>';
 		}

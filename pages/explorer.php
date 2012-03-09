@@ -34,7 +34,7 @@ $Bread_crumb->add($LANG['pages_explorer'], url('explorer.php'));
 require_once('../kernel/header.php');
 
 //Configuration des authorisations
-$config_auth = $pages_config->get_authorization();
+$config_authorizations = $pages_config->get_authorizations();
 
 $Template = new FileTemplate('pages/explorer.tpl');
 
@@ -49,7 +49,7 @@ foreach ($_PAGES_CATS as $key => $value)
 		//Autorisation particulière ?
 		$special_auth = !empty($value['auth']);
 		//Vérification de l'autorisation d'éditer la page
-		if (($special_auth && $User->check_auth($value['auth'], READ_PAGE)) || (!$special_auth && $User->check_auth($config_auth, READ_PAGE)))
+		if (($special_auth && $User->check_auth($value['auth'], READ_PAGE)) || (!$special_auth && $User->check_auth($config_authorizations, READ_PAGE)))
 		{
 			$root .= '<tr><td class="row2"><img src="' . $module_data_path . '/images/closed_cat.png" alt="" style="vertical-align:middle" />&nbsp;<a href="javascript:open_cat(' . $key . '); show_cat_contents(' . $value['id_parent'] . ', 0);">' . $value['name'] . '</a></td></tr>';
 		}
@@ -66,7 +66,7 @@ while ($row = $Sql->fetch_assoc($result))
 	$special_auth = !empty($row['auth']);
 	$array_auth = unserialize($row['auth']);
 	//Vérification de l'autorisation d'éditer la page
-	if (($special_auth && $User->check_auth($array_auth, READ_PAGE)) || (!$special_auth && $User->check_auth($config_auth, READ_PAGE)))
+	if (($special_auth && $User->check_auth($array_auth, READ_PAGE)) || (!$special_auth && $User->check_auth($config_authorizations, READ_PAGE)))
 	{
 		$root .= '<tr><td class="row2"><img src="' . $module_data_path . '/images/page.png" alt=""  style="vertical-align:middle" />&nbsp;<a href="' . url('pages.php?title=' . $row['encoded_title'], $row['encoded_title']) . '">' . $row['title'] . '</a></td></tr>';
 	}
