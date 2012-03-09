@@ -46,12 +46,11 @@ if (retrieve(POST,'valid',false))
 	if ($config_note_max != $note_max)
 		$Sql->query_inject("UPDATE " .DB_TABLE_ARTICLES . " SET note = note * " . ($note_max/$config_note_max), __LINE__, __FILE__);
 	
-	$news_config->set_nbr_cat_max(retrieve(POST, 'nbr_cat_max', 10));
-	$news_config->set_nbr_articles_max(retrieve(POST, 'nbr_articles_max', 10));
-	$news_config->set_nbr_columns(retrieve(POST, 'nbr_column', 3));
-	$news_config->set_note_max($note_max);
-	$news_config->set_authorization(Authorizations::build_auth_array_from_form(AUTH_ARTICLES_READ, AUTH_ARTICLES_CONTRIBUTE, AUTH_ARTICLES_WRITE, AUTH_ARTICLES_MODERATE));
-	$news_config->set_mini(array('nbr_articles' => 5, 'type' => retrieve(POST, 'mini_type', 'date',TSTRING)));
+	$articles_config->set_nbr_cat_max(retrieve(POST, 'nbr_cat_max', 10));
+	$articles_config->set_nbr_articles_max(retrieve(POST, 'nbr_articles_max', 10));
+	$articles_config->set_nbr_columns(retrieve(POST, 'nbr_column', 3));
+	$articles_config->set_note_max($note_max);
+	$articles_config->set_authorizations(Authorizations::build_auth_array_from_form(AUTH_ARTICLES_READ, AUTH_ARTICLES_CONTRIBUTE, AUTH_ARTICLES_WRITE, AUTH_ARTICLES_MODERATE));
 	
 	ArticlesConfig::save();
 
@@ -115,7 +114,7 @@ else
 	$Cache->load('articles');
 	
 	//Récupération des éléments de configuration
-	$config_auth = $articles_config->get_authorization();
+	$config_authorizations = $articles_config->get_authorizations();
 	$config_nbr_columns = $articles_config->get_nbr_columns();
 	$config_nbr_cat_max = $articles_config->get_nbr_cat_max();
 	$config_nbr_articles_max = $articles_config->get_nbr_articles_max();
@@ -134,7 +133,7 @@ else
 		'NBR_CAT_MAX' => !empty($config_nbr_cat_max) ? $config_nbr_cat_max : '10',
 		'NBR_COLUMN' => !empty($config_nbr_columns) ? $config_nbr_columns : '2',
 		'NOTE_MAX' => !empty($config_note_max) ? $config_note_max : '10',
-		'AUTH_READ' => Authorizations::generate_select(AUTH_ARTICLES_READ, $config_auth),
+		'AUTH_READ' => Authorizations::generate_select(AUTH_ARTICLES_READ, $config_authorizations),
 		'L_REQUIRE' => $LANG['require'],	
 		'L_NBR_CAT_MAX' => $LANG['nbr_cat_max'],
 		'L_NBR_COLUMN_MAX' => $LANG['nbr_column_max'],
@@ -151,8 +150,6 @@ else
 		'L_AUTH_MODERATION' => $ARTICLES_LANG['auth_moderate'],
 		'L_AUTH_CONTRIBUTION' => $ARTICLES_LANG['auth_contribute'],
 		'L_ARTICLES_CONFIG'=>$ARTICLES_LANG['configuration_articles'],
-		'L_ARTICLES_MINI_CONFIG'=>$ARTICLES_LANG['articles_mini_config'],
-		'L_NBR_ARTICLES_MINI'=>$ARTICLES_LANG['nbr_articles_mini'],
 		'L_ARTICLES_BEST_NOTE'=>$ARTICLES_LANG['articles_best_note'],
 		'L_ARTICLES_MORE_COM' => $ARTICLES_LANG['articles_more_com'],
 		'L_ARTICLES_BY_DATE' => $ARTICLES_LANG['articles_by_date'],
@@ -165,11 +162,11 @@ else
 		'1' => $LANG['modo'],
 		'2' => $LANG['admin']
 	);
-			
+	
 	$tpl->put_all(array(
-			'AUTH_WRITE' => Authorizations::generate_select(AUTH_ARTICLES_WRITE,$config_auth),
-			'AUTH_CONTRIBUTION' => Authorizations::generate_select(AUTH_ARTICLES_CONTRIBUTE,$config_auth),
-			'AUTH_MODERATION' => Authorizations::generate_select(AUTH_ARTICLES_MODERATE,$config_auth),
+			'AUTH_WRITE' => Authorizations::generate_select(AUTH_ARTICLES_WRITE,$config_authorizations),
+			'AUTH_CONTRIBUTION' => Authorizations::generate_select(AUTH_ARTICLES_CONTRIBUTE,$config_authorizations),
+			'AUTH_MODERATION' => Authorizations::generate_select(AUTH_ARTICLES_MODERATE,$config_authorizations),
 		));
 		
 	$tpl->display();

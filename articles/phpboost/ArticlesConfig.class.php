@@ -31,9 +31,7 @@ class ArticlesConfig extends AbstractConfigData
 	const NBR_CAT_MAX = 'nbr_cat_max';
 	const NBR_COLUMNS = 'nbr_columns';
 	const NOTE_MAX = 'note_max';
-	const AUTHORIZATION = 'global_auth';
-	const MINI = 'mini';
-	const TPL_CAT = 'tpl_cat';
+	const AUTHORIZATIONS = 'authorisations';
 	
 	public function get_nbr_articles_max()
 	{
@@ -75,34 +73,14 @@ class ArticlesConfig extends AbstractConfigData
 		$this->set_property(self::NOTE_MAX, $value);
 	}
 	
-	public function get_authorization()
+	public function get_authorizations()
 	{
-		return $this->get_property(self::AUTHORIZATION);
+		return $this->get_property(self::AUTHORIZATIONS);
 	}
 
-	public function set_authorization(Array $array)
+	public function set_authorizations(Array $array)
 	{
-		$this->set_property(self::AUTHORIZATION, $array);
-	}
-	
-	public function get_mini()
-	{
-		return $this->get_property(self::MINI);
-	}
-
-	public function set_mini(Array $array)
-	{
-		$this->set_property(self::MINI, $array);
-	}
-	
-	public function get_tpl_cat()
-	{
-			return $this->get_property(self::TPL_CAT);
-	}
-
-	public function set_tpl_cat($value)
-	{
-			$this->set_property(self::TPL_CAT, $value);
+		$this->set_property(self::AUTHORIZATIONS, $array);
 	}
 	
 	public function get_default_values()
@@ -112,9 +90,7 @@ class ArticlesConfig extends AbstractConfigData
 			self::NBR_CAT_MAX => 10,
 			self::NBR_COLUMNS => 3,
 			self::NOTE_MAX => 5,
-			self::AUTHORIZATION => array('r-1' => 1, 'r0' => 3, 'r1' => 7),
-			self::MINI => array('nbr_articles' => 5, 'type' => 'view'),
-			self::TPL_CAT => 'articles_cat.tpl'
+			self::AUTHORIZATIONS => array('r-1' => 1, 'r0' => 3, 'r1' => 7)
 		);
 	}
 
