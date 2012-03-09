@@ -47,7 +47,7 @@ class PagesSitemapExtensionPoint implements SitemapExtensionPoint
 		$pages_config = PagesConfig::load();
 		
 		//Configuration des authorisations
-		$config_auth = $pages_config->get_authorization();
+		$config_authorizations = $pages_config->get_authorizations();
 
 		$pages_link = new SitemapLink($LANG['pages'], new Url('/pages/explorer.php'), Sitemap::FREQ_DEFAULT, Sitemap::PRIORITY_MAX);
 		$module_map = new ModuleMap($pages_link, 'pages');
@@ -63,14 +63,14 @@ class PagesSitemapExtensionPoint implements SitemapExtensionPoint
 			$properties = $_PAGES_CATS[$id];
 			if ($auth_mode == Sitemap::AUTH_PUBLIC)
 			{
-				$this_auth = is_array($properties['auth']) ? Authorizations::check_auth(RANK_TYPE, GUEST_LEVEL, $properties['auth'], READ_PAGE) : Authorizations::check_auth(RANK_TYPE, GUEST_LEVEL, $config_auth, READ_PAGE);
+				$this_auth = is_array($properties['auth']) ? Authorizations::check_auth(RANK_TYPE, GUEST_LEVEL, $properties['auth'], READ_PAGE) : Authorizations::check_auth(RANK_TYPE, GUEST_LEVEL, $config_authorizations, READ_PAGE);
 			}
 			elseif ($auth_mode == Sitemap::AUTH_USER)
 			{
 				if($User->get_attribute('level') == User::ADMIN_LEVEL)
 				$this_auth = true;
 				else
-				$this_auth = is_array($properties['auth']) ? Authorizations::check_auth(RANK_TYPE, $User->get_attribute('level'), $properties['auth'], READ_PAGE) : Authorizations::check_auth(RANK_TYPE, $User->get_attribute('level'), $config_auth, READ_PAGE);
+				$this_auth = is_array($properties['auth']) ? Authorizations::check_auth(RANK_TYPE, $User->get_attribute('level'), $properties['auth'], READ_PAGE) : Authorizations::check_auth(RANK_TYPE, $User->get_attribute('level'), $config_authorizations, READ_PAGE);
 			}
 			if ($this_auth && $id != 0 && $properties['id_parent'] == $id_cat)
 			{
@@ -88,7 +88,7 @@ class PagesSitemapExtensionPoint implements SitemapExtensionPoint
 		$pages_config = PagesConfig::load();
 		
 		//Configuration des authorisations
-		$config_auth = $pages_config->get_authorization();
+		$config_authorizations = $pages_config->get_authorizations();
 		
 		$this_category = new SitemapLink($_PAGES_CATS[$id_cat]['name'], new Url('/pages/' . url('pages.php?title='.Url::encode_rewrite($_PAGES_CATS[$id_cat]['name']), Url::encode_rewrite($_PAGES_CATS[$id_cat]['name']))));
 			
@@ -105,14 +105,14 @@ class PagesSitemapExtensionPoint implements SitemapExtensionPoint
 			$properties = $_PAGES_CATS[$id];
 			if ($auth_mode == Sitemap::AUTH_PUBLIC)
 			{
-				$this_auth = is_array($properties['auth']) ? Authorizations::check_auth(RANK_TYPE, GUEST_LEVEL, $properties['auth'], READ_PAGE) : Authorizations::check_auth(RANK_TYPE, GUEST_LEVEL, $config_auth, READ_PAGE);
+				$this_auth = is_array($properties['auth']) ? Authorizations::check_auth(RANK_TYPE, GUEST_LEVEL, $properties['auth'], READ_PAGE) : Authorizations::check_auth(RANK_TYPE, GUEST_LEVEL, $config_authorizations, READ_PAGE);
 			}
 			elseif ($auth_mode == Sitemap::AUTH_USER)
 			{
 				if($User->get_attribute('level') == User::ADMIN_LEVEL)
 				$this_auth = true;
 				else
-				$this_auth = is_array($properties['auth']) ? Authorizations::check_auth(RANK_TYPE, $User->get_attribute('level'), $properties['auth'], READ_PAGE) : Authorizations::check_auth(RANK_TYPE, $User->get_attribute('level'), $config_auth, READ_PAGE);
+				$this_auth = is_array($properties['auth']) ? Authorizations::check_auth(RANK_TYPE, $User->get_attribute('level'), $properties['auth'], READ_PAGE) : Authorizations::check_auth(RANK_TYPE, $User->get_attribute('level'), $config_authorizations, READ_PAGE);
 			}
 			if ($this_auth && $id != 0 && $properties['id_parent'] == $id_cat)
 			{

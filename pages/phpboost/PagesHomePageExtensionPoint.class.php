@@ -51,8 +51,9 @@ class PagesHomePageExtensionPoint implements HomePageExtensionPoint
 		global $User, $Cache, $Bread_crumb, $_PAGES_CATS, $PAGES_LANG, $LANG, $Session, $pages;
 		
 		$pages_config = PagesConfig::load();
+		
 		//Configuration des authorisations
-		$config_auth = $pages_config->get_authorization();
+		$config_authorizations = $pages_config->get_authorizations();
 		
 		require_once(PATH_TO_ROOT . '/pages/pages_begin.php');
 
@@ -93,7 +94,7 @@ class PagesHomePageExtensionPoint implements HomePageExtensionPoint
 					//Autorisation particulière ?
 					$special_auth = !empty($value['auth']);
 					//Vérification de l'autorisation d'éditer la page
-					if (($special_auth && $User->check_auth($value['auth'], READ_PAGE)) || (!$special_auth && $User->check_auth($_PAGES_CONFIG['auth'], READ_PAGE)))
+					if (($special_auth && $User->check_auth($value['auth'], READ_PAGE)) || (!$special_auth && $User->check_auth($config_authorizations, READ_PAGE)))
 					{
 						$root .= '<tr><td class="row2"><img src="' . $tpl->get_pictures_data_path() . '/images/closed_cat.png" alt="" style="vertical-align:middle" />&nbsp;<a href="javascript:open_cat(' . $key . '); show_cat_contents(' . $value['id_parent'] . ', 0);">' . $value['name'] . '</a></td></tr>';
 					}
@@ -111,7 +112,7 @@ class PagesHomePageExtensionPoint implements HomePageExtensionPoint
 			$special_auth = !empty($row['auth']);
 			$array_auth = unserialize($row['auth']);
 			//Vérification de l'autorisation d'éditer la page
-			if (($special_auth && $User->check_auth($array_auth, READ_PAGE)) || (!$special_auth && $User->check_auth($_PAGES_CONFIG['auth'], READ_PAGE)))
+			if (($special_auth && $User->check_auth($array_auth, READ_PAGE)) || (!$special_auth && $User->check_auth($config_authorizations, READ_PAGE)))
 			{
 				$root .= '<tr><td class="row2"><img src="' . $tpl->get_pictures_data_path() . '/images/page.png" alt=""  style="vertical-align:middle" />&nbsp;<a href="' . PagesUrlBuilder::get_link_item($row['encoded_title']) . '">' . $row['title'] . '</a></td></tr>';
 			}

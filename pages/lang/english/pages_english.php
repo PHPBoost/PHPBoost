@@ -37,7 +37,7 @@ $LANG['pages'] = 'Pages';
 $LANG['page_hits'] = 'This page has been seen %d times';
 
 //Administration
-$LANG['pages_count_hits'] = 'Hits count';
+$LANG['pages_count_hitsactivated'] = 'Hits count';
 $LANG['pages_count_hits_explain'] = 'Can be changed for each page.';
 $LANG['pages_auth_read'] = 'Read page';
 $LANG['pages_auth_edit'] = 'Edit page';
@@ -57,7 +57,7 @@ $LANG['page_contents'] = 'Page contents';
 $LANG['pages_edit'] = 'Edit this page';
 $LANG['pages_delete'] = 'Delete this page';
 $LANG['pages_create'] = 'Create a page';
-$LANG['pages_activ_com'] = 'Activate comments';
+$LANG['pages_comments_activated'] = 'Activate comments';
 $LANG['pages_display_print_link'] = 'Display print link';
 $LANG['pages_own_auth'] = 'Apply individual permissions to this page';
 $LANG['pages_is_cat'] = 'This page is a category';

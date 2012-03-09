@@ -100,8 +100,8 @@
 					<dd><label><input type="checkbox" id="count_hits" name="count_hits" {COUNT_HITS_CHECKED} /></label></dd>					
 				</dl>
 				<dl>
-					<dt><label for="activ_com">{L_ACTIV_COM}</label></dt>
-					<dd><label><input type="checkbox" id="activ_com" name="activ_com" {ACTIV_COM_CHECKED} /></label></dd>					
+					<dt><label for="comments_activated">{L_COMMENTS_ACTIVATED}</label></dt>
+					<dd><label><input type="checkbox" id="comments_activated" name="comments_activated" {COMMENTS_ACTIVATED_CHECKED} /></label></dd>					
 				</dl>
 				<dl>
 					<dt><label for="activ_com">{L_DISPLAY_PRINT_LINK}</label></dt>

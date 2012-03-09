@@ -36,7 +36,7 @@ $LANG['pages'] = 'Pages';
 $LANG['page_hits'] = 'Cette page a été consultée %d fois';
 
 //Administration
-$LANG['pages_count_hits'] = 'Compter le nombre de fois que la page est consultée';
+$LANG['pages_count_hits_activated'] = 'Compter le nombre de fois que la page est consultée';
 $LANG['pages_count_hits_explain'] = 'Peut-être choisi au cas par cas pour chaque page';
 $LANG['pages_auth_read'] = 'Lecture des pages';
 $LANG['pages_auth_edit'] = 'Modification de page';
@@ -56,7 +56,7 @@ $LANG['page_contents'] = 'Contenu de la page';
 $LANG['pages_edit'] = 'Modifier cette page';
 $LANG['pages_delete'] = 'Supprimer cette page';
 $LANG['pages_create'] = 'Créer une page';
-$LANG['pages_activ_com'] = 'Activer les commentaires';
+$LANG['pages_comments_activated'] = 'Activer les commentaires';
 $LANG['pages_display_print_link'] = 'Afficher le lien d\'impression';
 $LANG['pages_own_auth'] = 'Mettre des autorisations particulières à la page';
 $LANG['pages_is_cat'] = 'Cette page est une catégorie';
