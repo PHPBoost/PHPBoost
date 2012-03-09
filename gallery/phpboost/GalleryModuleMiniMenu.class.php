@@ -63,7 +63,7 @@ class GalleryModuleMiniMenu extends ModuleMiniMenu
 	    	shuffle($_array_random_pics); //On mélange les éléments du tableau.
 	
 	    	//Autorisations de la racine.
-	    	$CAT_GALLERY[0]['auth'] = $gallery_config->get_authorization();
+	    	$CAT_GALLERY[0]['auth'] = $gallery_config->get_authorizations();
 	    	//Vérification des autorisations.
 	    	$break = 0;
 	    	foreach ($_array_random_pics as $array_pics_info)

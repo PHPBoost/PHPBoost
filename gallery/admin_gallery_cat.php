@@ -189,7 +189,7 @@ elseif (!empty($_POST['valid_root'])) //Modification des autorisations de la rac
 	$Cache->load('gallery');
 	
 	$gallery_config = GalleryConfig::load();
-	$gallery_config->set_authorization(Authorizations::build_auth_array_from_form(READ_CAT_GALLERY, WRITE_CAT_GALLERY, EDIT_CAT_GALLERY));
+	$gallery_config->set_authorizations(Authorizations::build_auth_array_from_form(READ_CAT_GALLERY, WRITE_CAT_GALLERY, EDIT_CAT_GALLERY));
 	
 	GalleryConfig::save();
 	
@@ -770,7 +770,7 @@ elseif (!empty($root)) //Edition de la racine.
 	$Cache->load('gallery');
 	
 	$gallery_config = GalleryConfig::load();
-	$config_auth = $gallery_config->get_authorization();
+	$config_authorizations = $gallery_config->get_authorizations();
 	
 	$Template->set_filenames(array(
 		'admin_gallery_cat_edit2'=> 'gallery/admin_gallery_cat_edit2.tpl'
@@ -781,7 +781,7 @@ elseif (!empty($root)) //Edition de la racine.
 	if ($get_error == 'incomplete')
 		$Template->put('message_helper', MessageHelper::display($LANG['e_incomplete'], E_USER_NOTICE));	
 	
-	$array_auth = !empty($config_auth) ? $config_auth : array(); //Récupération des tableaux des autorisations et des groupes.
+	$array_auth = !empty($config_authorizations) ? $config_authorizations : array(); //Récupération des tableaux des autorisations et des groupes.
 	$Template->put_all(array(
 		'THEME' => get_utheme(),
 		'AUTH_READ' => Authorizations::generate_select(READ_CAT_GALLERY, $array_auth),

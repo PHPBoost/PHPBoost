@@ -41,7 +41,7 @@ $g_sort = retrieve(GET, 'sort', '');
 $g_sort = !empty($g_sort) ? 'sort=' . $g_sort : '';
 
 //Configuration des authorisations
-$config_auth = $gallery_config->get_authorization();
+$config_authorizations = $gallery_config->get_authorizations();
 $config_height_max = $gallery_config->get_height_max();
 $config_width_max = $gallery_config->get_width_max();
 $config_weight_max = $gallery_config->get_weight_max();
@@ -88,7 +88,7 @@ elseif (isset($_FILES['gallery'])) //Upload
 			AppContext::get_response()->redirect('/gallery/gallery' . url('.php?error=unexist_cat', '', '&'));
 	}
 	else //Racine.
-		$CAT_GALLERY[0]['auth'] = $config_auth;
+		$CAT_GALLERY[0]['auth'] = $config_authorizations;
 
 	//Niveau d'autorisation de la catégorie, accès en écriture.
 	if (!$User->check_auth($CAT_GALLERY[$g_idcat]['auth'], WRITE_CAT_GALLERY))
@@ -160,7 +160,7 @@ elseif ($g_add)
 	else //Racine.
 	{
 		$cat_links = '';
-		$CAT_GALLERY[0]['auth'] = $config_auth;
+		$CAT_GALLERY[0]['auth'] = $config_authorizations;
 		$CAT_GALLERY[0]['aprob'] = 1;
 		$CAT_GALLERY[0]['name'] = $LANG['root'];
 	}
