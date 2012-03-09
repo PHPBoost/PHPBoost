@@ -38,10 +38,10 @@ include_once('download_auth.php');
 if (!empty($_POST['valid']))
 {
 	$download_config->set_nbr_file_max(retrieve(POST, 'nbr_file_max', 10));
-	$download_config->set_number_columns(retrieve(POST, 'nbr_column', 2));
+	$download_config->set_number_columns(retrieve(POST, 'nbr_columns', 2));
 	$download_config->set_note_max(max(1, retrieve(POST, 'note_max', 5)));
 	$download_config->set_root_contents(stripslashes(retrieve(POST, 'root_contents', '', TSTRING_PARSE)));
-	$download_config->set_authorization(Authorizations::build_auth_array_from_form(DOWNLOAD_READ_CAT_AUTH_BIT, DOWNLOAD_WRITE_CAT_AUTH_BIT, DOWNLOAD_CONTRIBUTION_CAT_AUTH_BIT));
+	$download_config->set_authorizations(Authorizations::build_auth_array_from_form(DOWNLOAD_READ_CAT_AUTH_BIT, DOWNLOAD_WRITE_CAT_AUTH_BIT, DOWNLOAD_CONTRIBUTION_CAT_AUTH_BIT));
 	
 	DownloadConfig::save();
 	
@@ -59,18 +59,18 @@ else
 	
 	$Cache->load('download');
 	
-	$config_auth = $download_config->get_authorization();
+	$config_authorizations = $download_config->get_authorizations();
 	
 	$editor = AppContext::get_content_formatting_service()->get_default_editor();
 	$editor->set_identifier('contents');
 	
 	$Template->put_all(array(
 		'NBR_FILE_MAX' => $download_config->get_nbr_file_max(),
-		'NBR_COLUMN' => $download_config->get_number_columns(),
+		'NBR_COLUMNS' => $download_config->get_number_columns(),
 		'NOTE_MAX' => $download_config->get_note_max(),
-		'READ_AUTH' => Authorizations::generate_select(DOWNLOAD_READ_CAT_AUTH_BIT, $config_auth),
-		'WRITE_AUTH' => Authorizations::generate_select(DOWNLOAD_WRITE_CAT_AUTH_BIT, $config_auth),
-		'CONTRIBUTION_AUTH' => Authorizations::generate_select(DOWNLOAD_CONTRIBUTION_CAT_AUTH_BIT, $config_auth),
+		'READ_AUTH' => Authorizations::generate_select(DOWNLOAD_READ_CAT_AUTH_BIT, $config_authorizations),
+		'WRITE_AUTH' => Authorizations::generate_select(DOWNLOAD_WRITE_CAT_AUTH_BIT, $config_authorizations),
+		'CONTRIBUTION_AUTH' => Authorizations::generate_select(DOWNLOAD_CONTRIBUTION_CAT_AUTH_BIT, $config_authorizations),
 		'DESCRIPTION' => FormatingHelper::unparse($download_config->get_root_contents()),
 		'KERNEL_EDITOR' => $editor->display(),
 		'L_REQUIRE' => $LANG['require'],		
