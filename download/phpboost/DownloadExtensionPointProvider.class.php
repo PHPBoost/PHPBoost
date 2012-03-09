@@ -47,7 +47,7 @@ class DownloadExtensionPointProvider extends ExtensionPointProvider
 		$code = '$DOWNLOAD_CATS = array();' . "\n\n";
 
 		//Racine
-		$code .= '$DOWNLOAD_CATS[0] = ' . var_export(array('name' => $LANG['root'], 'auth' => $download_config->get_authorization()) ,true) . ';' . "\n\n";
+		$code .= '$DOWNLOAD_CATS[0] = ' . var_export(array('name' => $LANG['root'], 'auth' => $download_config->get_authorizations()) ,true) . ';' . "\n\n";
 
 		$result = $this->sql_querier->query_while("SELECT id, id_parent, c_order, auth, name, visible, icon, num_files, contents
 		FROM " . PREFIX . "download_cat
@@ -107,7 +107,7 @@ class DownloadExtensionPointProvider extends ExtensionPointProvider
 		
         if ($id_cat == 0)
         {
-            if (Authorizations::check_auth(RANK_TYPE, GUEST_LEVEL, $download_config->get_authorization(), DOWNLOAD_READ_CAT_AUTH_BIT))
+            if (Authorizations::check_auth(RANK_TYPE, GUEST_LEVEL, $download_config->get_authorizations(), DOWNLOAD_READ_CAT_AUTH_BIT))
                 $list[] = 0;
             else
                 return;
@@ -116,7 +116,7 @@ class DownloadExtensionPointProvider extends ExtensionPointProvider
         {
 			if (!empty($DOWNLOAD_CATS[$id_cat]))
 			{
-				$auth = !empty($DOWNLOAD_CATS[$id_cat]['auth']) ? $DOWNLOAD_CATS[$id_cat]['auth'] : $download_config->get_authorization();
+				$auth = !empty($DOWNLOAD_CATS[$id_cat]['auth']) ? $DOWNLOAD_CATS[$id_cat]['auth'] : $download_config->get_authorizations();
 				if (Authorizations::check_auth(RANK_TYPE, GUEST_LEVEL, $auth, DOWNLOAD_READ_CAT_AUTH_BIT))
 					$list[] = $id_cat;
             }
@@ -135,7 +135,7 @@ class DownloadExtensionPointProvider extends ExtensionPointProvider
 
             if ($properties['id_parent'] == $id_cat)
             {
-                $this_auth = is_array($properties['auth']) ? Authorizations::check_auth(RANK_TYPE, GUEST_LEVEL, $properties['auth'], DOWNLOAD_READ_CAT_AUTH_BIT) :  Authorizations::check_auth(RANK_TYPE, GUEST_LEVEL, $download_config->get_authorization(), DOWNLOAD_READ_CAT_AUTH_BIT);
+                $this_auth = is_array($properties['auth']) ? Authorizations::check_auth(RANK_TYPE, GUEST_LEVEL, $properties['auth'], DOWNLOAD_READ_CAT_AUTH_BIT) :  Authorizations::check_auth(RANK_TYPE, GUEST_LEVEL, $download_config->get_authorizations(), DOWNLOAD_READ_CAT_AUTH_BIT);
 
                 if ($this_auth)
                 {

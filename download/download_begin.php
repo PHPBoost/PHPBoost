@@ -78,9 +78,9 @@ else
 
 $l_com_note = !empty($idurl) ? (!empty($get_note) ? $LANG['note'] : (!empty($_GET['i']) ? $LANG['com'] : '') ) : '';
 
-$auth_read = $User->check_auth($download_config->get_authorization(), DOWNLOAD_READ_CAT_AUTH_BIT);
-$auth_write = $User->check_auth($download_config->get_authorization(), DOWNLOAD_WRITE_CAT_AUTH_BIT);
-$auth_contribution = $User->check_auth($download_config->get_authorization(), DOWNLOAD_CONTRIBUTION_CAT_AUTH_BIT);
+$auth_read = $User->check_auth($download_config->get_authorizations(), DOWNLOAD_READ_CAT_AUTH_BIT);
+$auth_write = $User->check_auth($download_config->get_authorizations(), DOWNLOAD_WRITE_CAT_AUTH_BIT);
+$auth_contribution = $User->check_auth($download_config->get_authorizations(), DOWNLOAD_CONTRIBUTION_CAT_AUTH_BIT);
 
 //Bread_crumb : we read categories list recursively
 while ($id_cat_for_download > 0)

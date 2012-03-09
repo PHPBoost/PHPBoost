@@ -29,7 +29,9 @@ class DownloadComments extends AbstractCommentsExtensionPoint
 {
 	public function get_authorizations($module_id, $id_in_module)
 	{
-		global $DOWNLOAD_CATS, $CONFIG_DOWNLOAD;
+		global $DOWNLOAD_CATS;
+		
+		$download_config = DownloadConfig::load();
 		
 		$cache = new Cache();
 		$cache->load($module_id);
@@ -41,7 +43,7 @@ class DownloadComments extends AbstractCommentsExtensionPoint
 		$cat_authorizations = $DOWNLOAD_CATS[$id_cat]['auth'];
 		if (!is_array($cat_authorizations))
 		{
-			$cat_authorizations = $CONFIG_DOWNLOAD['global_auth'];
+			$cat_authorizations = $download_config->get_authorizations();
 		}
 		$authorizations = new CommentsAuthorizations();
 		$authorizations->set_authorized_access_module(AppContext::get_current_user()->check_auth($cat_authorizations, DOWNLOAD_READ_CAT_AUTH_BIT));
