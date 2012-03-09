@@ -42,7 +42,7 @@ if (!empty($g_idpics))
 	}
 	else //Racine.
 	{
-		$CAT_GALLERY[0]['auth'] = $gallery_config->get_authorization();
+		$CAT_GALLERY[0]['auth'] = $gallery_config->get_authorizations();
 		$CAT_GALLERY[0]['aprob'] = 1;
 	}
 	//Niveau d'autorisation de la catégorie

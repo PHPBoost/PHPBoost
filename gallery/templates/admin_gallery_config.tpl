@@ -41,7 +41,7 @@
 				alert("{L_REQUIRE_WIDTH}");
 				return false;
 		    }
-			if(document.getElementById('nbr_column').value == "") {
+			if(document.getElementById('nbr_columns').value == "") {
 				alert("{L_REQUIRE_ROW}");
 				return false;
 		    }
@@ -50,7 +50,7 @@
 				return false;
 		    }
 			if(document.getElementById('quality').value == "") {
-				alert("{L_REQUIRE_QUALITY}V");
+				alert("{L_REQUIRE_QUALITY}");
 				return false;
 		    }
 			if(document.getElementById('weight_max').value == "") {
@@ -126,8 +126,8 @@
 						<dd><label><input type="text" size="3" id="quality" name="quality" value="{QUALITY}" class="text" /> %</label></dd>
 					</dl>
 					<dl>
-						<dt><label for="nbr_column">* {L_NBR_COLUMN}</label><br /><span>{L_NBR_COLUMN_EXPLAIN}</span></dt>
-						<dd><label><input type="text" size="1" maxlength="1" id="nbr_column" name="nbr_column" value="{NBR_COLUMN}" class="text" /> {L_COLUMN}</label></dd>
+						<dt><label for="nbr_columns">* {L_NBR_COLUMNS}</label><br /><span>{L_NBR_COLUMNS_EXPLAIN}</span></dt>
+						<dd><label><input type="text" size="1" maxlength="1" id="nbr_columns" name="nbr_columns" value="{NBR_COLUMNS}" class="text" /> {L_COLUMNS}</label></dd>
 					</dl>
 					<dl>
 						<dt><label for="nbr_pics_max">* {L_NBR_PICS_MAX}</label></dt>
@@ -171,27 +171,27 @@
 						</dd>
 					</dl>
 					<dl>
-						<dt><label for="activ_com">{L_ACTIV_COM}</label></dt>
+						<dt><label for="comments_activated">{L_COMMENTS_ACTIVATED}</label></dt>
 						<dd>
-							<label><input type="radio" {COM_ENABLED} name="activ_com" id="activ_com" value="1" /> {L_ACTIV}</label>
+							<label><input type="radio" {COM_ENABLED} name="comments_activated" id="comments_activated" value="1" /> {L_ACTIV}</label>
 							&nbsp;&nbsp; 
-							<label><input type="radio" {COM_DISABLED} name="activ_com" value="0" /> {L_UNACTIV}</label>
+							<label><input type="radio" {COM_DISABLED} name="comments_activated" value="0" /> {L_UNACTIV}</label>
 						</dd>
 					</dl>
 					<dl>
-						<dt><label for="activ_note">{L_ACTIV_NOTE}</label></dt>
+						<dt><label for="note_activated">{L_NOTE_ACTIVATED}</label></dt>
 						<dd>
-							<label><input type="radio" {NOTE_ENABLED} name="activ_note" id="activ_note" value="1" /> {L_ACTIV}</label>
+							<label><input type="radio" {NOTE_ENABLED} name="note_activated" id="activ_note" value="1" /> {L_ACTIV}</label>
 							&nbsp;&nbsp; 
-							<label><input type="radio" {NOTE_DISABLED} name="activ_note" value="0" /> {L_UNACTIV}</label>
+							<label><input type="radio" {NOTE_DISABLED} name="note_activated" value="0" /> {L_UNACTIV}</label>
 						</dd>
 					</dl>
 					<dl>
-						<dt><label for="display_nbrnote">{L_DISPLAY_NBRNOTE}</label></dt>
+						<dt><label for="display_nbr_note">{L_DISPLAY_NBR_NOTE}</label></dt>
 						<dd>
-							<label><input type="radio" {NBRNOTE_ENABLED} name="display_nbrnote" id="display_nbrnote" value="1" /> {L_YES}</label>
+							<label><input type="radio" {NBR_NOTE_ENABLED} name="display_nbr_note" id="display_nbr_note" value="1" /> {L_YES}</label>
 							&nbsp;&nbsp; 
-							<label><input type="radio" {NBRNOTE_DISABLED} name="display_nbrnote" value="0" /> {L_NO}</label>
+							<label><input type="radio" {NBR_NOTE_DISABLED} name="display_nbr_note" value="0" /> {L_NO}</label>
 						</dd>
 					</dl>
 					<dl>
@@ -230,11 +230,11 @@
 				<fieldset>
 					<legend>{L_IMG_PROTECT}</legend>
 					<dl>
-						<dt><label for="activ_logo">{L_ACTIV_LOGO}</label><br /><span>{L_ACTIV_LOGO_EXPLAIN}</span></dt>
+						<dt><label for="logo_activated">{L_LOGO_ACTIVATED}</label><br /><span>{L_LOGO_ACTIVATED_EXPLAIN}</span></dt>
 						<dd>
-							<label><input type="radio" {LOGO_ENABLED} name="activ_logo" id="activ_logo" value="1" /> {L_ACTIV}</label>
+							<label><input type="radio" {LOGO_ENABLED} name="logo_activated" id="logo_activated" value="1" /> {L_ACTIV}</label>
 							&nbsp;&nbsp; 
-							<label><input type="radio" {LOGO_DISABLED} name="activ_logo" value="0" /> {L_UNACTIV}</label>
+							<label><input type="radio" {LOGO_DISABLED} name="logo_activated" value="0" /> {L_UNACTIV}</label>
 						</dd>
 					</dl>
 					<dl>
@@ -242,8 +242,8 @@
 						<dd><label><input type="text" size="25" name="logo" id="logo" value="{LOGO}" class="text" /></label></dd>
 					</dl>
 					<dl>
-						<dt><label for="trans">{L_LOGO_TRANS}</label><br /><span>{L_LOGO_TRANS_EXPLAIN}</span></dt>
-						<dd><label><input type="text" size="3" name="trans" id="trans" value="{TRANS}" class="text" /> %</label></dd>
+						<dt><label for="transparency">{L_LOGO_TRANSPARENCY}</label><br /><span>{L_LOGO_TRANSPARENCY_EXPLAIN}</span></dt>
+						<dd><label><input type="text" size="3" name="transparency" id="transparency" value="{TRANSPARENCY}" class="text" /> %</label></dd>
 					</dl>
 					<dl>
 						<dt><label for="d_width">{L_WIDTH_BOTTOM_RIGHT}</label><br /><span>{L_WIDTH_BOTTOM_RIGHT_EXPLAIN}</span></dt>

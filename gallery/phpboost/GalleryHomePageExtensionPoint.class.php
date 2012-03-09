@@ -59,7 +59,7 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 		$config_nbr_columns = $gallery_config->get_nbr_columns();
 		$config_height = $gallery_config->get_height();
 		$config_display_pics = $gallery_config->get_display_pics();
-		$config_activ_note = $gallery_config->get_activ_note();
+		$config_note_activated = $gallery_config->get_note_activated();
 		$config_note_max = $gallery_config->get_note_max();
 		
 		$comments_topic = new CommentsTopic();
@@ -85,7 +85,7 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 		{
 			$cat_links = '';
 			$clause_cat = " WHERE gc.level = '0' AND gc.aprob = 1";
-			$CAT_GALLERY[0]['auth'] = $gallery_config->get_authorization();
+			$CAT_GALLERY[0]['auth'] = $gallery_config->get_authorizations();
 			$CAT_GALLERY[0]['aprob'] = 1;
 			$CAT_GALLERY[0]['name'] = $LANG['root'];
 			$CAT_GALLERY[0]['level'] = -1;
@@ -371,7 +371,7 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 					foreach ($array_cat_list as $key_cat => $option_value)
 						$cat_list .= ($key_cat == $info_pics['idcat']) ? sprintf($option_value, 'selected="selected"') : sprintf($option_value, '');
 	
-					$activ_note = ($config_activ_note == 1 && $User->check_level(User::MEMBER_LEVEL) );
+					$activ_note = ($config_note_activated == true && $User->check_level(User::MEMBER_LEVEL) );
 					if ($activ_note)
 					{
 						//Affichage notation.

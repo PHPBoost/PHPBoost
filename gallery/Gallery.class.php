@@ -158,7 +158,7 @@ class Gallery
 		$gallery_config = GalleryConfig::load();
 		$config_logo = $gallery_config->get_logo();
 		
-		if ($gallery_config->get_activ_logo() == '1' && is_file($config_logo)) //Incrustation du logo.
+		if ($gallery_config->get_logo_activated() == true && is_file($config_logo)) //Incrustation du logo.
 		{
 			list($width_s, $height_s, $weight_s, $ext_s) = $this->Arg_pics($config_logo);
 			list($width, $height, $weight, $ext) = $this->Arg_pics($path);
@@ -213,7 +213,7 @@ class Gallery
 						$destination_x = $width - $width_s - $gallery_config->get_d_width();
 						$destination_y =  $height - $height_s - $gallery_config->get_d_height();
 						
-						if (@imagecopymerge($destination, $source, $destination_x, $destination_y, 0, 0, $width_s, $height_s, (100 - $gallery_config->get_trans())) === false)
+						if (@imagecopymerge($destination, $source, $destination_x, $destination_y, 0, 0, $width_s, $height_s, (100 - $gallery_config->get_transparency())) === false)
 							$this->error = 'e_unabled_incrust_logo';
 							
 						switch ($ext) //Création de l'image suivant l'extension.

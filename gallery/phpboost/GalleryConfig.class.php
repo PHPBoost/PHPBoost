@@ -33,27 +33,27 @@ class GalleryConfig extends AbstractConfigData
 	const HEIGHT_MAX = 'height_max';
 	const WEIGHT_MAX = 'weight_max';
 	const QUALITY = 'quality';
-	const TRANS = 'trans';
+	const TRANSPARENCY = 'transparency';
 	const LOGO = 'logo';
-	const ACTIV_LOGO = 'activ_logo';
+	const LOGO_ACTIVATED = 'logo_activated';
 	const D_WIDTH = 'd_width';
 	const D_HEIGHT = 'd_height';
 	const NBR_COLUMNS = 'nbr_columns';
 	const NBR_PICS_MAX = 'nbr_pics_max';
 	const NOTE_MAX = 'note_max';
-	const ACTIV_TITLE = 'activ_title';
-	const ACTIV_COM = 'activ_com';
-	const ACTIV_NOTE = 'activ_note';
+	const TITLE_ACTIVATED = 'title_activated';
+	const COMMENTS_ACTIVATED = 'comments_activated';
+	const NOTE_ACTIVATED = 'note_activated';
 	const DISPLAY_NBR_NOTE = 'display_nbrnote';
-	const ACTIV_VIEW = 'activ_view';
-	const ACTIV_USER = 'activ_user';
+	const VIEW_ACTIVATED = 'view_activated';
+	const USER_ACTIVATED = 'user_activated';
 	const LIMIT_MEMBER = 'limit_member';
 	const LIMIT_MODO = 'limit_modo';
 	const DISPLAY_PICS = 'display_pics';
 	const SCROLL_TYPE = 'scroll_type';
 	const NBR_PICS_MINI = 'nbr_pics_mini';
 	const SPEED_MINI_PICS = 'speed_mini_pics';
-	const AUTHORIZATION = 'auth_root';
+	const AUTHORIZATIONS = 'authorizations';
 
 	public function get_width()
 	{
@@ -115,14 +115,14 @@ class GalleryConfig extends AbstractConfigData
 		$this->set_property(self::QUALITY, $value);
 	}
 	
-	public function get_trans()
+	public function get_transparency()
 	{
-		return $this->get_property(self::TRANS);
+		return $this->get_property(self::TRANSPARENCY);
 	}
 	
-	public function set_trans($value) 
+	public function set_transparency($value) 
 	{
-		$this->set_property(self::TRANS, $value);
+		$this->set_property(self::TRANSPARENCY, $value);
 	}
 	
 	public function get_logo()
@@ -135,14 +135,14 @@ class GalleryConfig extends AbstractConfigData
 		$this->set_property(self::LOGO, $value);
 	}
 	
-	public function get_activ_logo()
+	public function get_logo_activated()
 	{
-		return $this->get_property(self::ACTIV_LOGO);
+		return $this->get_property(self::LOGO_ACTIVATED);
 	}
 	
-	public function set_activ_logo($value) 
+	public function set_logo_activated($value) 
 	{
-		$this->set_property(self::ACTIV_LOGO, $value);
+		$this->set_property(self::LOGO_ACTIVATED, $value);
 	}
 	
 	public function get_d_width()
@@ -195,34 +195,34 @@ class GalleryConfig extends AbstractConfigData
 		$this->set_property(self::NOTE_MAX, $value);
 	}
 	
-	public function get_activ_title()
+	public function get_title_activated()
 	{
-		return $this->get_property(self::ACTIV_TITLE);
+		return $this->get_property(self::TITLE_ACTIVATED);
 	}
 	
-	public function set_activ_title($value) 
+	public function set_title_activated($value) 
 	{
-		$this->set_property(self::ACTIV_TITLE, $value);
+		$this->set_property(self::TITLE_ACTIVATED, $value);
 	}
 	
-	public function get_activ_com()
+	public function get_comments_activated()
 	{
-		return $this->get_property(self::ACTIV_COM);
+		return $this->get_property(self::COMMENTS_ACTIVATED);
 	}
 	
-	public function set_activ_com($value) 
+	public function set_comments_activated($value) 
 	{
-		$this->set_property(self::ACTIV_COM, $value);
+		$this->set_property(self::COMMENTS_ACTIVATED, $value);
 	}
 	
-	public function get_activ_note()
+	public function get_note_activated()
 	{
-		return $this->get_property(self::ACTIV_NOTE);
+		return $this->get_property(self::NOTE_ACTIVATED);
 	}
 	
-	public function set_activ_note($value) 
+	public function set_note_activated($value) 
 	{
-		$this->set_property(self::ACTIV_NOTE, $value);
+		$this->set_property(self::NOTE_ACTIVATED, $value);
 	}
 	
 	public function get_display_nbr_note()
@@ -235,24 +235,24 @@ class GalleryConfig extends AbstractConfigData
 		$this->set_property(self::DISPLAY_NBR_NOTE, $value);
 	}
 	
-	public function get_activ_view()
+	public function get_view_activated()
 	{
-		return $this->get_property(self::ACTIV_VIEW);
+		return $this->get_property(self::VIEW_ACTIVATED);
 	}
 	
-	public function set_activ_view($value) 
+	public function set_view_activated($value) 
 	{
-		$this->set_property(self::ACTIV_VIEW, $value);
+		$this->set_property(self::VIEW_ACTIVATED, $value);
 	}
 	
-	public function get_activ_user()
+	public function get_user_activated()
 	{
-		return $this->get_property(self::ACTIV_USER);
+		return $this->get_property(self::USER_ACTIVATED);
 	}
 	
-	public function set_activ_user($value) 
+	public function set_user_activated($value) 
 	{
-		$this->set_property(self::ACTIV_USER, $value);
+		$this->set_property(self::USER_ACTIVATED, $value);
 	}
 	
 	public function get_limit_member()
@@ -315,14 +315,14 @@ class GalleryConfig extends AbstractConfigData
 		$this->set_property(self::SPEED_MINI_PICS, $value);
 	}
 	
-	public function get_authorization()
+	public function get_authorizations()
 	{
-		return $this->get_property(self::AUTHORIZATION);
+		return $this->get_property(self::AUTHORIZATIONS);
 	}
 	
-	public function set_authorization(Array $array)
+	public function set_authorizations(Array $array)
 	{
-		$this->set_property(self::AUTHORIZATION, $array);
+		$this->set_property(self::AUTHORIZATIONS, $array);
 	}
 	
 	public function get_default_values()
@@ -334,27 +334,27 @@ class GalleryConfig extends AbstractConfigData
 			self::HEIGHT_MAX => 600,
 			self::WEIGHT_MAX => 1024,
 			self::QUALITY => 80,
-			self::TRANS => 40,
+			self::TRANSPARENCY => 40,
 			self::LOGO => 'logo.jpg',
-			self::ACTIV_LOGO => 1,
+			self::LOGO_ACTIVATED => true,
 			self::D_WIDTH => 5,
 			self::D_HEIGHT => 5,
 			self::NBR_COLUMNS => 4,
 			self::NBR_PICS_MAX => 16,
 			self::NOTE_MAX => 5,
-			self::ACTIV_TITLE => 1,
-			self::ACTIV_COM => 1,
-			self::ACTIV_NOTE => 1,
-			self::DISPLAY_NBR_NOTE => 1,
-			self::ACTIV_VIEW => 1,
-			self::ACTIV_USER => 1,
+			self::TITLE_ACTIVATED => true,
+			self::COMMENTS_ACTIVATED => true,
+			self::NOTE_ACTIVATED => true,
+			self::DISPLAY_NBR_NOTE => true,
+			self::VIEW_ACTIVATED => true,
+			self::USER_ACTIVATED => true,
 			self::LIMIT_MEMBER => 10,
 			self::LIMIT_MODO => 25,
 			self::DISPLAY_PICS => 3,
 			self::SCROLL_TYPE => 1,
 			self::NBR_PICS_MINI => 6,
 			self::SPEED_MINI_PICS => 6,
-			self::AUTHORIZATION => array('r-1' => 1, 'r0' => 3, 'r1' => 7, 'r2' => 7)
+			self::AUTHORIZATIONS => array('r-1' => 1, 'r0' => 3, 'r1' => 7, 'r2' => 7)
 		);
 	}
 
