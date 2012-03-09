@@ -44,7 +44,7 @@ class ArticlesExtensionPointProvider extends ExtensionPointProvider
 		global $LANG;
 		
 		$articles_config = ArticlesConfig::load();
-		$config_auth = $articles_config->get_authorization();
+		$config_authorizations = $articles_config->get_authorizations();
 
 		$code = '$ARTICLES_CAT = array();' . "\n\n";
 
@@ -53,7 +53,7 @@ class ArticlesExtensionPointProvider extends ExtensionPointProvider
 			FROM " . DB_TABLE_ARTICLES_CAT . "
 			ORDER BY id_parent, c_order", __LINE__, __FILE__);
 
-		$code .= '$ARTICLES_CAT[0] = ' . var_export(array('name' => $LANG['root'], 'order' => 0, 'auth' => $config_auth), true) . ';' . "\n\n";
+		$code .= '$ARTICLES_CAT[0] = ' . var_export(array('name' => $LANG['root'], 'order' => 0, 'auth' => $config_authorizations), true) . ';' . "\n\n";
 		
 		while ($row = $this->sql_querier->fetch_assoc($result))
 		{
@@ -66,7 +66,7 @@ class ArticlesExtensionPointProvider extends ExtensionPointProvider
 					'visible' => (bool)$row['visible'],
 					'image' => !empty($row['image']) ? $row['image'] : '/articles/articles.png',
 					'description' => $row['description'],
-					'auth' => !empty($row['auth']) ? unserialize($row['auth']) : $config_auth
+					'auth' => !empty($row['auth']) ? unserialize($row['auth']) : $config_authorizations
 			), true) . ';' . "\n\n";
 		}
 		

@@ -58,7 +58,7 @@ class ArticlesHomePageExtensionPoint implements HomePageExtensionPoint
 		$articles_config = ArticlesConfig::load();
 		
 		//Récupération des éléments de configuration
-		$config_auth = $articles_config->get_authorization();
+		$config_authorizations = $articles_config->get_authorizations();
 		$config_nbr_columns = $articles_config->get_nbr_columns();
 		$config_nbr_cat_max = $articles_config->get_nbr_cat_max();
 		$config_nbr_articles_max = $articles_config->get_nbr_articles_max();
@@ -159,7 +159,7 @@ class ArticlesHomePageExtensionPoint implements HomePageExtensionPoint
 		$tpl->put_all(array(
 		'C_WRITE'=> $User->check_auth($ARTICLES_CAT[$idartcat]['auth'], AUTH_ARTICLES_WRITE),
 		'C_IS_ADMIN' => $User->check_level(User::ADMIN_LEVEL) ? true : false,
-		'C_ADD' => $User->check_auth($config_auth, AUTH_ARTICLES_CONTRIBUTE) || $User->check_auth($config_auth, AUTH_ARTICLES_WRITE),
+		'C_ADD' => $User->check_auth($config_authorizations, AUTH_ARTICLES_CONTRIBUTE) || $User->check_auth($config_authorizations, AUTH_ARTICLES_WRITE),
 		'C_EDIT' => $User->check_auth($ARTICLES_CAT[$idartcat]['auth'], AUTH_ARTICLES_MODERATE) || $User->check_auth($ARTICLES_CAT[$idartcat]['auth'], AUTH_ARTICLES_WRITE) ,
 		'IDCAT' => $idartcat,
 		'COLUMN_WIDTH_CAT' => $column_width_cats,
