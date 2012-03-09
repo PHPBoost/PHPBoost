@@ -27,58 +27,58 @@
 
 class PollConfig extends AbstractConfigData
 {
-	const POLL_AUTH = 'poll_auth';
-	const POLL_MINI = 'poll_mini';
-	const POLL_COOKIE = 'poll_cookie';
-	const POLL_COOKIE_LENGHT = 'poll_cookie_lenght';
+	const COOKIE_NAME = 'cookie_name';
+	const COOKIE_LENGHT = 'cookie_lenght';
+	const DISPLAYED_IN_MINI_MODULE_LIST = 'displayed_in_mini_module_list';
+	const AUTHORIZATIONS = 'authorizations';
 	
-	public function get_poll_auth()
+	public function get_cookie_name()
 	{
-		return $this->get_property(self::POLL_AUTH);
+		return $this->get_property(self::COOKIE_NAME);
 	}
 	
-	public function set_poll_auth($auth)
+	public function set_cookie_name($value) 
 	{
-		$this->set_property(self::POLL_AUTH, $auth);
+		$this->set_property(self::COOKIE_NAME, $value);
 	}
 	
-	public function get_poll_mini()
+	public function get_cookie_lenght()
 	{
-		return $this->get_property(self::POLL_MINI);
+		return $this->get_property(self::COOKIE_LENGHT);
 	}
 	
-	public function set_poll_mini($value) 
+	public function set_cookie_lenght($value) 
 	{
-		$this->set_property(self::POLL_MINI, $value);
+		$this->set_property(self::COOKIE_LENGHT, $value);
 	}
 	
-	public function get_poll_cookie()
+	public function get_displayed_in_mini_module_list()
 	{
-		return $this->get_property(self::POLL_COOKIE);
+		return $this->get_property(self::DISPLAYED_IN_MINI_MODULE_LIST);
 	}
 	
-	public function set_poll_cookie($cookie) 
+	public function set_displayed_in_mini_module_list(Array $array) 
 	{
-		$this->set_property(self::POLL_COOKIE, $cookie);
+		$this->set_property(self::displayed_in_mini_module_list, $array);
 	}
 	
-	public function get_poll_cookie_lenght()
+	public function get_authorizations()
 	{
-		return $this->get_property(self::POLL_COOKIE_LENGHT);
+		return $this->get_property(self::AUTHORIZATIONS);
 	}
-	
-	public function set_poll_cookie_lenght($cookie_lenght) 
+
+	public function set_authorizations($value)
 	{
-		$this->set_property(self::POLL_COOKIE_LENGHT, $cookie_lenght);
+		$this->set_property(self::AUTHORIZATIONS, $value);
 	}
 	
 	public function get_default_values()
 	{
 		return array(
-			self::POLL_AUTH => -1,
-			self::POLL_MINI => array(0 => 1),
-			self::POLL_COOKIE => 'poll',
-			self::POLL_COOKIE_LENGHT => 2592000
+			self::COOKIE_NAME => 'poll',
+			self::COOKIE_LENGHT => 30 * 24 * 3600, //La durée du cookie est de 30 jours par défaut (30 * 24 * 3600 secondes)
+			self::DISPLAYED_IN_MINI_MODULE_LIST => 1,
+			self::AUTHORIZATIONS => array(0 => -1)
 		);
 	}
 	

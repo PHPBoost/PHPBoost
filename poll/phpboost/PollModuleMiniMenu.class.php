@@ -37,10 +37,9 @@ class PollModuleMiniMenu extends ModuleMiniMenu
     	global $Cache, $LANG, $_array_poll;
 	    $Cache->load('poll'); //Mini sondages en cache => $_array_poll.
 		$poll_config = PollConfig::load();
-		$config_poll_mini = $poll_config->get_poll_mini();
-		$config_poll_cookie = $poll_config->get_poll_cookie();
+		$config_cookie_name = $poll_config->get_cookie_name();
 		
-	    if (!empty($config_poll_mini) && $config_poll_mini != array() && strpos(SCRIPT, '/poll/poll.php') === false)
+	    if (!empty($_array_poll) && $_array_poll != array() && strpos(SCRIPT, '/poll/poll.php') === false)
 	    {
 	    	//Chargement de la langue du module.
 	    	load_module_lang('poll');
@@ -56,9 +55,9 @@ class PollModuleMiniMenu extends ModuleMiniMenu
 				#####################Résultats######################
 				//Si le cookie existe, on redirige vers les resulats, sinon on prend en compte le vote (vérification par ip plus tard).
 				$array_cookie = array();
-				if (AppContext::get_request()->has_cookieparameter($config_poll_cookie))
+				if (AppContext::get_request()->has_cookieparameter($config_cookie_name))
 				{
-					$array_cookie = explode('/', AppContext::get_request()->get_cookie($config_poll_cookie));
+					$array_cookie = explode('/', AppContext::get_request()->get_cookie($config_cookie_name));
 				}
 				if (in_array($poll_mini['id'], $array_cookie))
 				{

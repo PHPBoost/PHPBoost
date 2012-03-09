@@ -29,15 +29,16 @@ require_once('../admin/admin_begin.php');
 load_module_lang('poll'); //Chargement de la langue du module.
 define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
-require_once('../poll/poll_begin.php');
 
 //On recupère les variables.
 $id = retrieve(GET, 'id', 0);
 $id_post = retrieve(POST, 'id', 0);
 $del = !empty($_GET['delete']) ? true : false;
 
-//Configuration du mini poll
-$config_poll_mini = $poll_config->get_poll_mini();
+$poll_config = PollConfig::load();
+
+//Liste des sondages affichés dans le mini module
+$config_displayed_in_mini_module_list = $poll_config->get_displayed_in_mini_module_list();
 
 if ($del && !empty($id)) //Suppresion poll
 {
@@ -48,10 +49,13 @@ if ($del && !empty($id)) //Suppresion poll
 	//On supprime des tables config et reponses des polls.
 	$Sql->query_inject("DELETE FROM " . PREFIX . "poll WHERE id = '" . $id . "'", __LINE__, __FILE__);	
 	
-	###### Régénération du cache du mini poll #######
-	if ($id == $config_poll_mini)		
-	{	
-		$poll_config->set_poll_mini('-1');
+	###### Régénération du cache si le sondage fait parti de la liste des sondages affichés dans le mini-module #######
+	if (in_array($id, $config_displayed_in_mini_module_list))		
+	{
+		$displayed_in_mini_module_list = $config_displayed_in_mini_module_list;
+		unset($displayed_in_mini_module_list[array_search($id, $displayed_in_mini_module_list)]);
+		
+		$poll_config->set_displayed_in_mini_module_list($displayed_in_mini_module_list);
 		
 		PollConfig::save();
 		
@@ -130,19 +134,6 @@ elseif (!empty($_POST['valid']) && !empty($id_post)) //inject
 		$votes = trim($votes, '|');
 		
 		$Sql->query_inject("UPDATE " . PREFIX . "poll SET question = '" . $question . "', answers = '" . substr($answers, 0, strlen($answers) - 1) . "', votes = '" . $votes . "', type = '" . $type . "', archive = '" . $archive . "', visible = '" . $visible . "', start = '" .  $start_timestamp . "', end = '" . $end_timestamp . "', timestamp = '" . $timestamp . "' WHERE id = '" . $id_post . "'", __LINE__, __FILE__);
-		
-		if ($id_post == $config_poll_mini && ($visible == '0' || $archive == '1'))
-		{
-			$poll_config->set_poll_mini('-1');
-		
-			PollConfig::save();
-			
-			###### Régénération du cache #######
-			$Cache->Generate_module_file('poll');
-		}	
-		//Régénaration du cache du mini poll, si celui-ci a été modifié.
-		if ($id_post == $config_poll_mini)
-			$Cache->Generate_module_file('poll');
 		
 		AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);
 	}
