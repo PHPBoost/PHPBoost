@@ -30,22 +30,22 @@
  */
 class CalendarConfig extends AbstractConfigData
 {
-	const AUTHORIZATION = 'authorization';
+	const AUTHORIZATIONS = 'authorizations';
 	
-	public function get_authorization()
+	public function get_authorizations()
 	{
-		return $this->get_property(self::AUTHORIZATION);
+		return $this->get_property(self::AUTHORIZATIONS);
 	}
 	
-	public function set_authorization(Array $array)
+	public function set_authorizations(Array $array)
 	{
-		$this->set_property(self::AUTHORIZATION, $array);
+		$this->set_property(self::AUTHORIZATIONS, $array);
 	}
 	
 	public function get_default_values()
 	{
 		return array(
-			self::AUTHORIZATION => array('r-1' => 1, 'r0' => 1, 'r1' => 5)
+			self::AUTHORIZATIONS => array('r-1' => 1, 'r0' => 1, 'r1' => 5)
 		);
 	}
 	
@@ -55,7 +55,7 @@ class CalendarConfig extends AbstractConfigData
 	 */
 	public static function load()
 	{
-		return ConfigManager::load(__CLASS__, 'calendar', 'main');
+		return ConfigManager::load(__CLASS__, 'module', 'calendar-config');
 	}
 
 	/**
@@ -63,7 +63,7 @@ class CalendarConfig extends AbstractConfigData
 	 */
 	public static function save()
 	{
-		ConfigManager::save('calendar', self::load(), 'main');
+		ConfigManager::save('module', self::load(), 'calendar-config');
 	}
 }
 ?>
