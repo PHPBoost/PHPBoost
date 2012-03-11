@@ -111,7 +111,7 @@ class SitemapConfig extends AbstractConfigData
 	 */
 	public static function load()
 	{
-		return ConfigManager::load(__CLASS__, 'module', 'sitemap-config');
+		return ConfigManager::load(__CLASS__, 'sitemap', 'config');
 	}
 
 	/**
@@ -120,7 +120,7 @@ class SitemapConfig extends AbstractConfigData
 	 */
 	public static function save(SitemapConfig $config)
 	{
-		ConfigManager::save('module', $config, 'sitemap-config');
+		ConfigManager::save('sitemap', $config, 'config');
 	}
 }
 ?>

@@ -40,7 +40,7 @@ if (!empty($note) && $User->check_level(User::MEMBER_LEVEL)) //connected user
 
 	// intialize management system class
 
-	$Note = new Note('articles', $id, '', $articles_config->get_note_max(), '', NOTE_DISPLAY_NOTE);
+	$Note = new Note('articles', $id, '', $CONFIG_ARTICLES['note_max'], '', NOTE_DISPLAY_NOTE);
 
 	if (!empty($note) && !empty($id))
 	echo $Note->add($note); //add a note

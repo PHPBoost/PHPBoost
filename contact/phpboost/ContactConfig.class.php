@@ -77,7 +77,7 @@ class ContactConfig extends AbstractConfigData
 	 */
 	public static function load()
 	{
-		return ConfigManager::load(__CLASS__, 'module', 'contact-config');
+		return ConfigManager::load(__CLASS__, 'contact', 'config');
 	}
 
 	/**
@@ -85,7 +85,7 @@ class ContactConfig extends AbstractConfigData
 	 */
 	public static function save()
 	{
-		ConfigManager::save('module', self::load(), 'contact-config');
+		ConfigManager::save('contact', self::load(), 'config');
 	}
 }
 ?>

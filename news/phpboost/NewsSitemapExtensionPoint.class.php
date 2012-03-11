@@ -39,15 +39,10 @@ class NewsSitemapExtensionPoint implements SitemapExtensionPoint
 
 	private function get_module_map($auth_mode)
 	{
-		global $NEWS_CAT, $NEWS_LANG, $LANG, $User, $Cache;
+		global $NEWS_CAT, $NEWS_LANG, $LANG, $User, $NEWS_CONFIG, $Cache;
 
 		require_once PATH_TO_ROOT . '/news/news_begin.php';
-		
-		$news_config = NewsConfig::load();
-		
-		//Récupération des éléments de configuration
-		$config_authorizations = $news_config->get_authorizations();
-		
+
 		$news_link = new SitemapLink($NEWS_LANG['news'], new Url('/news/news.php'), Sitemap::FREQ_DAILY, Sitemap::PRIORITY_MAX);
 
 		$module_map = new ModuleMap($news_link, 'news');
@@ -63,11 +58,11 @@ class NewsSitemapExtensionPoint implements SitemapExtensionPoint
 
 			if ($auth_mode == Sitemap::AUTH_PUBLIC)
 			{
-				$this_auth = is_array($properties['auth']) ? Authorizations::check_auth(RANK_TYPE, GUEST_LEVEL, $properties['auth'], AUTH_NEWS_READ) : Authorizations::check_auth(RANK_TYPE, GUEST_LEVEL, $config_authorizations, AUTH_NEWS_READ);
+				$this_auth = is_array($properties['auth']) ? Authorizations::check_auth(RANK_TYPE, GUEST_LEVEL, $properties['auth'], AUTH_NEWS_READ) : Authorizations::check_auth(RANK_TYPE, GUEST_LEVEL, $NEWS_CONFIG['global_auth'], AUTH_NEWS_READ);
 			}
 			else
 			{
-				$this_auth = is_array($properties['auth']) ? $User->check_auth($properties['auth'], AUTH_NEWS_READ) : $User->check_auth($config_authorizations, AUTH_NEWS_READ);
+				$this_auth = is_array($properties['auth']) ? $User->check_auth($properties['auth'], AUTH_NEWS_READ) : $User->check_auth($NEWS_CONFIG['global_auth'], AUTH_NEWS_READ);
 			}
 
 			if ($this_auth && $id != 0 && $properties['visible'] && $properties['id_parent'] == $id_cat)
@@ -81,7 +76,7 @@ class NewsSitemapExtensionPoint implements SitemapExtensionPoint
 	
 	private function create_module_map_sections($id_cat, $auth_mode)
 	{
-		global $NEWS_CAT, $LANG, $User;
+		global $NEWS_CAT, $LANG, $User, $NEWS_CONFIG;
 		
 		$this_category = new SitemapLink($NEWS_CAT[$id_cat]['name'], new Url('/news/news' . url('.php?cat='.$id_cat, '-' . $id_cat . '+' . Url::encode_rewrite($NEWS_CAT[$id_cat]['name']) . '.php')));
 

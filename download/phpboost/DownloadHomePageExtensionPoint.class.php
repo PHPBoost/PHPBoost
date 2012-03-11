@@ -58,15 +58,15 @@ class DownloadHomePageExtensionPoint implements HomePageExtensionPoint
 		
 		$now = new Date(DATE_NOW, TIMEZONE_AUTO);
 		
-		$root_contents = $download_config->get_root_contents();
+		$root_content = $download_config->get_root_contents();
 		$tpl->put_all(array(
 			'C_ADMIN' => $auth_write,
 			'C_DOWNLOAD_CAT' => true,
 			'C_ADD_FILE' => $auth_write || $auth_contribution,
-			'C_DESCRIPTION' => !empty($DOWNLOAD_CATS[$category_id]['contents']) || ($category_id == 0 && !empty($root_contents)),
+			'C_DESCRIPTION' => !empty($DOWNLOAD_CATS[$category_id]['contents']) || ($category_id == 0 && !empty($root_content)),
 			'IDCAT' => $category_id,
 			'TITLE' => sprintf($DOWNLOAD_LANG['title_download'] . ($category_id > 0 ? ' - ' . $DOWNLOAD_CATS[$category_id]['name'] : '')),
-			'DESCRIPTION' => $category_id > 0 ? FormatingHelper::second_parse($DOWNLOAD_CATS[$category_id]['contents']) : FormatingHelper::second_parse($root_contents),
+			'DESCRIPTION' => $category_id > 0 ? FormatingHelper::second_parse($DOWNLOAD_CATS[$category_id]['contents']) : FormatingHelper::second_parse($root_content),
 			'L_ADD_FILE' => $DOWNLOAD_LANG['add_file'],
 			'U_ADMIN_CAT' => $category_id > 0 ? url('admin_download_cat.php?edit=' . $category_id) : url('admin_download_cat.php'),
 			'U_ADD_FILE' => url('management.php?new=1&amp;idcat=' . $category_id)
@@ -74,14 +74,12 @@ class DownloadHomePageExtensionPoint implements HomePageExtensionPoint
 		
 		//let's check if there are some subcategories
 		$num_subcats = 0;
-		if (!empty($DOWNLOAD_CATS))
+		foreach ($DOWNLOAD_CATS as $id => $value)
 		{
-			foreach ($DOWNLOAD_CATS as $id => $value)
-			{
-				if ($id != 0 && $value['id_parent'] == $category_id)
-					$num_subcats ++;
-			}
+			if ($id != 0 && $value['id_parent'] == $category_id)
+				$num_subcats ++;
 		}
+	
 		//listing of subcategories
 		if ($num_subcats > 0)
 		{

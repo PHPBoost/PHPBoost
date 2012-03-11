@@ -31,7 +31,6 @@ require_once('news_constants.php');
 define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
 load_module_lang('news'); //Chargement de la langue du module.
-$news_config = NewsConfig::load();
 
 $news_categories = new NewsCats();
 
@@ -47,8 +46,6 @@ $error = retrieve(GET, 'error', '');
 
 $tpl = new FileTemplate('news/admin_news_cat.tpl');
 
-//Configuration des authorisations
-$config_auth = $news_config->get_authorizations();
 
 // Chargement du menu de l'administration.
 require_once('admin_news_menu.php');
@@ -99,6 +96,7 @@ elseif ($cat_to_del > 0)
 		
 		$tpl->put_all(array(
 			'EMPTY_CATS' => count($NEWS_CAT) < 2 ? true : false,
+			// 'EMPTY_CATS' => false,
 			'L_REMOVING_CATEGORY' => $NEWS_LANG['removing_category'],
 			'L_EXPLAIN_REMOVING' => $NEWS_LANG['explain_removing_category'],
 			'L_DELETE_CATEGORY_AND_CONTENT' => $NEWS_LANG['delete_category_and_its_content'],
@@ -184,8 +182,8 @@ elseif ($new_cat XOR $id_edit > 0)
 
 	if ($id_edit > 0 && array_key_exists($id_edit, $NEWS_CAT))
 	{
-		$special_auth = $NEWS_CAT[$id_edit]['auth'] !== $config_auth ? true : false;
-		$NEWS_CAT[$id_edit]['auth'] = $special_auth ? $NEWS_CAT[$id_edit]['auth'] : $config_auth;
+		$special_auth = $NEWS_CAT[$id_edit]['auth'] !== $NEWS_CONFIG['global_auth'] ? true : false;
+		$NEWS_CAT[$id_edit]['auth'] = $special_auth ? $NEWS_CAT[$id_edit]['auth'] : $NEWS_CONFIG['global_auth'];
 
 		$tpl->assign_block_vars('edition_interface', array(
 			'NAME' => $NEWS_CAT[$id_edit]['name'],
@@ -218,10 +216,10 @@ elseif ($new_cat XOR $id_edit > 0)
 			'JS_SPECIAL_AUTH' => 'false',
 			'DISPLAY_SPECIAL_AUTH' => 'none',
 			'SPECIAL_CHECKED' => '',
-			'AUTH_READ' => Authorizations::generate_select(AUTH_NEWS_READ, $config_auth),
-			'AUTH_WRITE' => Authorizations::generate_select(AUTH_NEWS_WRITE, $config_auth),
-			'AUTH_CONTRIBUTION' => Authorizations::generate_select(AUTH_NEWS_CONTRIBUTE, $config_auth),
-			'AUTH_MODERATION' => Authorizations::generate_select(AUTH_NEWS_MODERATE, $config_auth),
+			'AUTH_READ' => Authorizations::generate_select(AUTH_NEWS_READ, $NEWS_CONFIG['global_auth']),
+			'AUTH_WRITE' => Authorizations::generate_select(AUTH_NEWS_WRITE, $NEWS_CONFIG['global_auth']),
+			'AUTH_CONTRIBUTION' => Authorizations::generate_select(AUTH_NEWS_CONTRIBUTE, $NEWS_CONFIG['global_auth']),
+			'AUTH_MODERATION' => Authorizations::generate_select(AUTH_NEWS_MODERATE, $NEWS_CONFIG['global_auth']),
 		));
 	}
 }

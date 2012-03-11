@@ -40,12 +40,6 @@ $g_notes = retrieve(GET, 'notes', false);
 $g_sort = retrieve(GET, 'sort', '');
 $g_sort = !empty($g_sort) ? 'sort=' . $g_sort : '';
 
-//Configuration des authorisations
-$config_authorizations = $gallery_config->get_authorizations();
-$config_height_max = $gallery_config->get_height_max();
-$config_width_max = $gallery_config->get_width_max();
-$config_weight_max = $gallery_config->get_weight_max();
-
 //Récupération du mode d'ordonnement.
 if (preg_match('`([a-z]+)_([a-z]+)`', $g_sort, $array_match))
 {
@@ -88,7 +82,7 @@ elseif (isset($_FILES['gallery'])) //Upload
 			AppContext::get_response()->redirect('/gallery/gallery' . url('.php?error=unexist_cat', '', '&'));
 	}
 	else //Racine.
-		$CAT_GALLERY[0]['auth'] = $config_authorizations;
+		$CAT_GALLERY[0]['auth'] = $CONFIG_GALLERY['auth_root'];
 
 	//Niveau d'autorisation de la catégorie, accès en écriture.
 	if (!$User->check_auth($CAT_GALLERY[$g_idcat]['auth'], WRITE_CAT_GALLERY))
@@ -109,7 +103,7 @@ elseif (isset($_FILES['gallery'])) //Upload
 	$idcat_post = retrieve(POST, 'cat', '');
 	$name_post = retrieve(POST, 'name', '');
 
-	$Upload->file('gallery', '`([a-z0-9()_-])+\.(jpg|jpeg|gif|png)+$`i', Upload::UNIQ_NAME, $config_weight_max);
+	$Upload->file('gallery', '`([a-z0-9()_-])+\.(jpg|jpeg|gif|png)+$`i', Upload::UNIQ_NAME, $CONFIG_GALLERY['weight_max']);
 	if ($Upload->get_error() != '') //Erreur, on arrête ici
 	{
 		AppContext::get_response()->redirect(GalleryUrlBuilder::get_link_cat_add($g_idcat,$Upload->get_error()) . '#message_helper');
@@ -117,7 +111,7 @@ elseif (isset($_FILES['gallery'])) //Upload
 	else
 	{
 		$path = $dir . $Upload->get_filename();
-		$error = $Upload->check_img($config_width_max, $config_height_max, Upload::DELETE_ON_ERROR);
+		$error = $Upload->check_img($CONFIG_GALLERY['width_max'], $CONFIG_GALLERY['height_max'], Upload::DELETE_ON_ERROR);
 		if (!empty($error)) //Erreur, on arrête ici
 			AppContext::get_response()->redirect(GalleryUrlBuilder::get_link_cat_add($g_idcat,$error) . '#message_helper');
 		else
@@ -160,7 +154,7 @@ elseif ($g_add)
 	else //Racine.
 	{
 		$cat_links = '';
-		$CAT_GALLERY[0]['auth'] = $config_authorizations;
+		$CAT_GALLERY[0]['auth'] = $CONFIG_GALLERY['auth_root'];
 		$CAT_GALLERY[0]['aprob'] = 1;
 		$CAT_GALLERY[0]['name'] = $LANG['root'];
 	}
@@ -219,10 +213,10 @@ elseif ($g_add)
 			$l_pics_quota = $LANG['illimited'];
 			break;
 			case 1:
-			$l_pics_quota = $gallery_config->get_limit_modo();
+			$l_pics_quota = $CONFIG_GALLERY['limit_modo'];
 			break;
 			default:
-			$l_pics_quota = $gallery_config->get_limit_user();
+			$l_pics_quota = $CONFIG_GALLERY['limit_member'];
 		}
 		$nbr_upload_pics = $Gallery->get_nbr_upload_pics($User->get_attribute('user_id'));
 
@@ -238,9 +232,9 @@ elseif ($g_add)
 		'CAT_ID' => $g_idcat,
 		'GALLERY' => !empty($g_idcat) ? $CAT_GALLERY[$g_idcat]['name'] : $LANG['gallery'],
 		'CATEGORIES' => $auth_cats,
-		'WIDTH_MAX' => $config_width_max,
-		'HEIGHT_MAX' => $config_height_max,
-		'WEIGHT_MAX' => $config_weight_max,
+		'WIDTH_MAX' => $CONFIG_GALLERY['width_max'],
+		'HEIGHT_MAX' => $CONFIG_GALLERY['height_max'],
+		'WEIGHT_MAX' => $CONFIG_GALLERY['weight_max'],
 		'ADD_PICS' => $User->check_auth($CAT_GALLERY[$g_idcat]['auth'], WRITE_CAT_GALLERY) ? '<a href="' . GalleryUrlBuilder::get_link_cat_add($g_idcat) . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/add.png" alt="" class="valign_middle" /></a>' : '',
 		'IMG_FORMAT' => 'JPG, PNG, GIF',
 		'L_IMG_FORMAT' => $LANG['img_format'],

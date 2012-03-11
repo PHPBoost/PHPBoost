@@ -30,48 +30,47 @@ require_once('../admin/admin_begin.php');
 load_module_lang('gallery'); //Chargement de la langue du module.
 define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
-$gallery_config = GalleryConfig::load();
 
 //Si c'est confirmé on execute
 if (!empty($_POST['valid']))
 {
-	$config_note_max = $gallery_config->get_note_max();
-	$note_max = isset($_POST['note_max']) ? max(1, NumberHelper::numeric($_POST['note_max'])) : 5;
-	
-	if ($config_note_max != $note_max)
-		$Sql->query_inject("UPDATE " . PREFIX . "gallery SET note = note * " . ($note_max/$config_note_max), __LINE__, __FILE__);
-		
-	$gallery_config->set_width(isset($_POST['width']) ? NumberHelper::numeric($_POST['width']) : 150);
-	$gallery_config->set_height(isset($_POST['height']) ? NumberHelper::numeric($_POST['height']) : 150);
-	$gallery_config->set_width_max(isset($_POST['width_max']) ? NumberHelper::numeric($_POST['width_max']) : 800);
-	$gallery_config->set_height_max(isset($_POST['height_max']) ? NumberHelper::numeric($_POST['height_max']) : 600);
-	$gallery_config->set_weight_max(isset($_POST['weight_max']) ? NumberHelper::numeric($_POST['weight_max']) : 1024);
-	$gallery_config->set_quality(isset($_POST['quality']) ? NumberHelper::numeric($_POST['quality']) : 80);
-	$gallery_config->set_transparency(isset($_POST['transparency']) ? NumberHelper::numeric($_POST['transparency']) : 40);
-	$gallery_config->set_logo(TextHelper::strprotect(retrieve(POST, 'logo', ''), TextHelper::HTML_PROTECT, TextHelper::ADDSLASHES_NONE));
-	$gallery_config->set_logo_activated(isset($_POST['logo_activated']) ? true : false);
-	$gallery_config->set_d_width(isset($_POST['d_width']) ? NumberHelper::numeric($_POST['d_width']) : 5);
-	$gallery_config->set_d_height(isset($_POST['d_height']) ? NumberHelper::numeric($_POST['d_height']) : 5);
-	$gallery_config->set_nbr_columns(isset($_POST['nbr_columns']) ? NumberHelper::numeric($_POST['nbr_columns']) : 4);
-	$gallery_config->set_nbr_pics_max(isset($_POST['nbr_pics_max']) ? NumberHelper::numeric($_POST['nbr_pics_max']) : 16);
-	$gallery_config->set_note_max($note_max);
-	$gallery_config->set_title_activated(isset($_POST['title_activated']) ? true : false);
-	$gallery_config->set_comments_activated(isset($_POST['comments_activated']) ? true : false);
-	$gallery_config->set_note_activated(isset($_POST['note_activated']) ? true : false);
-	$gallery_config->set_display_nbr_note(isset($_POST['display_nbr_note']) ? true : false);
-	$gallery_config->set_view_activated(isset($_POST['view_activated']) ? true : false);
-	$gallery_config->set_user_activated(isset($_POST['user_activated']) ? true : false);
-	$gallery_config->set_limit_member(!empty($_POST['limit_member']) ? NumberHelper::numeric($_POST['limit_member']) : 10);
-	$gallery_config->set_limit_modo(!empty($_POST['limit_modo']) ? NumberHelper::numeric($_POST['limit_modo']) : 25);
-	$gallery_config->set_display_pics(!empty($_POST['display_pics']) ? NumberHelper::numeric($_POST['display_pics']) : 3);
-	$gallery_config->set_scroll_type(!empty($_POST['scroll_type']) ? NumberHelper::numeric($_POST['scroll_type']) : 1);
-	$gallery_config->set_nbr_pics_mini(!empty($_POST['nbr_pics_mini']) ? NumberHelper::numeric($_POST['nbr_pics_mini']) : 6);
-	$gallery_config->set_speed_mini_pics(!empty($_POST['speed_mini_pics']) ? NumberHelper::numeric($_POST['speed_mini_pics']) : 6);
-	$gallery_config->set_authorizations(Authorizations::build_auth_array_from_form(READ_CAT_GALLERY, WRITE_CAT_GALLERY, EDIT_CAT_GALLERY));
-	
-	GalleryConfig::save();
-	
-	###### Régénération du cache #######
+	$Cache->load('gallery');
+
+	$config_gallery = array();
+	$config_gallery['width'] = isset($_POST['width']) ? NumberHelper::numeric($_POST['width']) : '150';
+	$config_gallery['height'] = isset($_POST['height']) ? NumberHelper::numeric($_POST['height']) : '150';
+	$config_gallery['width_max'] = isset($_POST['width_max']) ? NumberHelper::numeric($_POST['width_max']) : '640';
+	$config_gallery['height_max'] = isset($_POST['height_max']) ? NumberHelper::numeric($_POST['height_max']) : '640';
+	$config_gallery['weight_max'] = isset($_POST['weight_max']) ? NumberHelper::numeric($_POST['weight_max']) : '1024';
+	$config_gallery['quality'] = isset($_POST['quality']) ? NumberHelper::numeric($_POST['quality']) : '80';
+	$config_gallery['trans'] = isset($_POST['trans']) ? NumberHelper::numeric($_POST['trans']) : '40';
+	$config_gallery['logo'] = TextHelper::strprotect(retrieve(POST, 'logo', ''), TextHelper::HTML_PROTECT, TextHelper::ADDSLASHES_NONE);
+	$config_gallery['activ_logo'] = isset($_POST['activ_logo']) ? NumberHelper::numeric($_POST['activ_logo']) : '0';
+	$config_gallery['d_width'] = isset($_POST['d_width']) ? NumberHelper::numeric($_POST['d_width']) : '5';
+	$config_gallery['d_height'] = isset($_POST['d_height']) ? NumberHelper::numeric($_POST['d_height']) : '5';
+	$config_gallery['nbr_column'] = isset($_POST['nbr_column']) ? NumberHelper::numeric($_POST['nbr_column']) : '4';
+	$config_gallery['nbr_pics_max'] = isset($_POST['nbr_pics_max']) ? NumberHelper::numeric($_POST['nbr_pics_max']) : '16';
+	$config_gallery['note_max'] = isset($_POST['note_max']) ? max(1, NumberHelper::numeric($_POST['note_max'])) : '5';
+	$config_gallery['activ_title'] = isset($_POST['activ_title']) ? NumberHelper::numeric($_POST['activ_title']) : '0';
+	$config_gallery['activ_com'] = isset($_POST['activ_com']) ? NumberHelper::numeric($_POST['activ_com']) : '0';
+	$config_gallery['activ_note'] = isset($_POST['activ_note']) ? NumberHelper::numeric($_POST['activ_note']) : '0';
+	$config_gallery['display_nbrnote'] = isset($_POST['display_nbrnote']) ? NumberHelper::numeric($_POST['display_nbrnote']) : '0';
+	$config_gallery['activ_view'] = isset($_POST['activ_view']) ? NumberHelper::numeric($_POST['activ_view']) : '0';
+	$config_gallery['activ_user'] = isset($_POST['activ_user']) ? NumberHelper::numeric($_POST['activ_user']) : '0';
+	$config_gallery['limit_member'] = !empty($_POST['limit_member']) ? NumberHelper::numeric($_POST['limit_member']) : '0';
+	$config_gallery['limit_modo'] = !empty($_POST['limit_modo']) ? NumberHelper::numeric($_POST['limit_modo']) : '0';
+	$config_gallery['display_pics'] = !empty($_POST['display_pics']) ? NumberHelper::numeric($_POST['display_pics']) : '0';
+	$config_gallery['scroll_type'] = !empty($_POST['scroll_type']) ? NumberHelper::numeric($_POST['scroll_type']) : 0;
+	$config_gallery['nbr_pics_mini'] = !empty($_POST['nbr_pics_mini']) ? NumberHelper::numeric($_POST['nbr_pics_mini']) : 8;
+	$config_gallery['speed_mini_pics'] = retrieve(POST, 'speed_mini_pics', 6);
+	$config_gallery['auth_root'] = !empty($CONFIG_GALLERY['auth_root']) ? stripslashes(serialize($CONFIG_GALLERY['auth_root'])) : serialize(array());
+
+	$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($config_gallery)) . "' WHERE name = 'gallery'", __LINE__, __FILE__);
+
+	if ($CONFIG_GALLERY['note_max'] != $config_gallery['note_max'])
+		$Sql->query_inject("UPDATE " . PREFIX . "gallery SET note = note * " . ($config_gallery['note_max']/$CONFIG_GALLERY['note_max']), __LINE__, __FILE__);
+
+	###### Régénération du cache de la gallery #######
 	$Cache->Generate_module_file('gallery');
 
 	AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);
@@ -96,23 +95,24 @@ else
 	));
 
 	$Cache->load('gallery');
-	
-	$config_title_activated = $gallery_config->get_title_activated();
-	$config_view_activated = $gallery_config->get_view_activated();
-	$config_note_activated = $gallery_config->get_note_activated();
-	$config_display_nbr_note = $gallery_config->get_display_nbr_note();
-	$config_comments_activated = $gallery_config->get_comments_activated();
-	$config_user_activated = $gallery_config->get_user_activated();
-	$config_logo_activated = $gallery_config->get_logo_activated();
-	$config_display_pics = $gallery_config->get_display_pics();
-	$config_speed_mini_pics = $gallery_config->get_speed_mini_pics();
-	$config_scroll_type = $gallery_config->get_scroll_type();
+
+	$CONFIG_GALLERY['activ_pop'] = !isset($CONFIG_GALLERY['activ_pop']) ? 0 : $CONFIG_GALLERY['activ_pop'];
+	$CONFIG_GALLERY['activ_title'] = !isset($CONFIG_GALLERY['activ_title']) ? 1 : $CONFIG_GALLERY['activ_title'];
+	$CONFIG_GALLERY['activ_view'] = !isset($CONFIG_GALLERY['activ_view']) ? 1 : $CONFIG_GALLERY['activ_view'];
+	$CONFIG_GALLERY['activ_note'] = !isset($CONFIG_GALLERY['activ_note']) ? 1 : $CONFIG_GALLERY['activ_note'];
+	$CONFIG_GALLERY['display_nbrnote'] = !isset($CONFIG_GALLERY['display_nbrnote']) ? 1 : $CONFIG_GALLERY['display_nbrnote'];
+	$CONFIG_GALLERY['activ_com'] = !isset($CONFIG_GALLERY['activ_com']) ? 1 : $CONFIG_GALLERY['activ_com'];
+	$CONFIG_GALLERY['activ_user'] = !isset($CONFIG_GALLERY['activ_user']) ? 1 : $CONFIG_GALLERY['activ_user'];
+	$CONFIG_GALLERY['activ_logo'] = !isset($CONFIG_GALLERY['activ_logo']) ? 1 : $CONFIG_GALLERY['activ_logo'];
+	$CONFIG_GALLERY['display_pics'] = !isset($CONFIG_GALLERY['display_pics']) ? 0 : $CONFIG_GALLERY['display_pics'];
+	$CONFIG_GALLERY['speed_mini_pics'] = !isset($CONFIG_GALLERY['speed_mini_pics']) ? 6 : $CONFIG_GALLERY['speed_mini_pics'];
+	$CONFIG_GALLERY['scroll_type'] = !isset($CONFIG_GALLERY['scroll_type']) ? 1 : $CONFIG_GALLERY['scroll_type'];
 
 	//Vitesse de défilement des miniatures.
 	$speed_mini_pics = '';
 	for ($i = 1; $i <= 10; $i++)
 	{
-		$selected = ($config_speed_mini_pics == $i) ? ' selected="selected"' : '';
+		$selected = ($CONFIG_GALLERY['speed_mini_pics'] == $i) ? ' selected="selected"' : '';
 		$speed_mini_pics .= '<option value="' . $i . '"' . $selected . '>' . $i . '</option>';
 	}
 
@@ -121,45 +121,45 @@ else
 	$array_scroll = array($LANG['static_scroll'], $LANG['vertical_dynamic_scroll'], $LANG['horizontal_dynamic_scroll'], $LANG['no_scroll']);
 	foreach ($array_scroll as $key => $name)
 	{
-		$selected = ($config_scroll_type == $key) ? ' selected="selected"' : '';
+		$selected = ($CONFIG_GALLERY['scroll_type'] == $key) ? ' selected="selected"' : '';
 		$scroll_types .= '<option value="' . $key . '"' . $selected . '>' . $name . '</option>';
 	}
 
 	$Template->put_all(array(
-		'WIDTH' => $gallery_config->get_width(),
-		'HEIGHT' => $gallery_config->get_height(),
-		'WIDTH_MAX' => $gallery_config->get_width_max(),
-		'HEIGHT_MAX' => $gallery_config->get_height_max(),
-		'WEIGHT_MAX' => $gallery_config->get_weight_max(),
-		'QUALITY' => $gallery_config->get_quality(),
-		'TRANSPARENCY' => $gallery_config->get_transparency(),
-		'LOGO' => $gallery_config->get_logo(),
-		'D_WIDTH' => $gallery_config->get_d_width(),
-		'D_HEIGHT' => $gallery_config->get_d_height(),
-		'NBR_COLUMNS' => $gallery_config->get_nbr_columns(),
-		'NBR_PICS_MAX' => $gallery_config->get_nbr_pics_max(),
-		'NOTE_MAX' => $gallery_config->get_note_max(),
-		'LIMIT_USER' => $gallery_config->get_limit_member(),
-		'LIMIT_MODO' => $gallery_config->get_limit_modo(),
-		'TITLE_ENABLED' => ($config_title_activated == true) ? 'checked="checked"' : '',
-		'TITLE_DISABLED' => ($config_title_activated == false) ? 'checked="checked"' : '',
-		'VIEW_ENABLED' => ($config_view_activated == true) ? 'checked="checked"' : '',
-		'VIEW_DISABLED' => ($config_view_activated == false) ? 'checked="checked"' : '',
-		'NOTE_ENABLED' => ($config_note_activated == true) ? 'checked="checked"' : '',
-		'NOTE_DISABLED' => ($config_note_activated == false) ? 'checked="checked"' : '',
-		'NBR_NOTE_ENABLED' => ($config_display_nbr_note == true) ? 'checked="checked"' : '',
-		'NBR_NOTE_DISABLED' => ($config_display_nbr_note == false) ? 'checked="checked"' : '',
-		'COM_ENABLED' => ($config_comments_activated == true) ? 'checked="checked"' : '',
-		'COM_DISABLED' => ($config_comments_activated == false) ? 'checked="checked"' : '',
-		'USER_ENABLED' => ($config_user_activated == true) ? 'checked="checked"' : '',
-		'USER_DISABLED' => ($config_user_activated == false) ? 'checked="checked"' : '',
-		'LOGO_ENABLED' => ($config_logo_activated == true) ? 'checked="checked"' : '',
-		'LOGO_DISABLED' => ($config_logo_activated == false) ? 'checked="checked"' : '',
-		'DISPLAY_PICS_NEW_PAGE' => ($config_display_pics == 0) ? 'checked="checked"' : '',
-		'DISPLAY_PICS' => ($config_display_pics == 1) ? 'checked="checked"' : '',
-		'DISPLAY_PICS_POPUP' => ($config_display_pics == 2) ? 'checked="checked"' : '',
-		'DISPLAY_PICS_POPUP_FULL' => ($config_display_pics == 3) ? 'checked="checked"' : '',
-		'NBR_PICS_MINI' => $gallery_config->get_nbr_pics_mini(),
+		'WIDTH' => isset($CONFIG_GALLERY['width']) ? $CONFIG_GALLERY['width'] : '150',
+		'HEIGHT' => isset($CONFIG_GALLERY['height']) ? $CONFIG_GALLERY['height'] : '150',
+		'WIDTH_MAX' => isset($CONFIG_GALLERY['width_max']) ? $CONFIG_GALLERY['width_max'] : '640',
+		'HEIGHT_MAX' => isset($CONFIG_GALLERY['height_max']) ? $CONFIG_GALLERY['height_max'] : '640',
+		'WEIGHT_MAX' => isset($CONFIG_GALLERY['weight_max']) ? $CONFIG_GALLERY['weight_max'] : '1024',
+		'QUALITY' => isset($CONFIG_GALLERY['quality']) ? $CONFIG_GALLERY['quality'] : '80',
+		'TRANS' => isset($CONFIG_GALLERY['trans']) ? $CONFIG_GALLERY['trans'] : '40',
+		'LOGO' => isset($CONFIG_GALLERY['logo']) ? $CONFIG_GALLERY['logo'] : 'logo.jpg',
+		'D_WIDTH' => isset($CONFIG_GALLERY['d_width']) ? $CONFIG_GALLERY['d_width'] : '5',
+		'D_HEIGHT' => isset($CONFIG_GALLERY['d_height']) ? $CONFIG_GALLERY['d_height'] : '5',
+		'NBR_COLUMN' => isset($CONFIG_GALLERY['nbr_column']) ? $CONFIG_GALLERY['nbr_column'] : '4',
+		'NBR_PICS_MAX' => isset($CONFIG_GALLERY['nbr_pics_max']) ? $CONFIG_GALLERY['nbr_pics_max'] : '16',
+		'NOTE_MAX' => isset($CONFIG_GALLERY['note_max']) ? $CONFIG_GALLERY['note_max'] : '5',
+		'LIMIT_USER' => isset($CONFIG_GALLERY['limit_member']) ? $CONFIG_GALLERY['limit_member'] : '10',
+		'LIMIT_MODO' => isset($CONFIG_GALLERY['limit_modo']) ? $CONFIG_GALLERY['limit_modo'] : '25',
+		'TITLE_ENABLED' => ($CONFIG_GALLERY['activ_title'] == 1) ? 'checked="checked"' : '',
+		'TITLE_DISABLED' => ($CONFIG_GALLERY['activ_title'] == 0) ? 'checked="checked"' : '',
+		'VIEW_ENABLED' => ($CONFIG_GALLERY['activ_view'] == 1) ? 'checked="checked"' : '',
+		'VIEW_DISABLED' => ($CONFIG_GALLERY['activ_view'] == 0) ? 'checked="checked"' : '',
+		'NOTE_ENABLED' => ($CONFIG_GALLERY['activ_note'] == 1) ? 'checked="checked"' : '',
+		'NOTE_DISABLED' => ($CONFIG_GALLERY['activ_note'] == 0) ? 'checked="checked"' : '',
+		'NBRNOTE_ENABLED' => ($CONFIG_GALLERY['display_nbrnote'] == 1) ? 'checked="checked"' : '',
+		'NBRNOTE_DISABLED' => ($CONFIG_GALLERY['display_nbrnote'] == 0) ? 'checked="checked"' : '',
+		'COM_ENABLED' => ($CONFIG_GALLERY['activ_com'] == 1) ? 'checked="checked"' : '',
+		'COM_DISABLED' => ($CONFIG_GALLERY['activ_com'] == 0) ? 'checked="checked"' : '',
+		'USER_ENABLED' => ($CONFIG_GALLERY['activ_user'] == 1) ? 'checked="checked"' : '',
+		'USER_DISABLED' => ($CONFIG_GALLERY['activ_user'] == 0) ? 'checked="checked"' : '',
+		'LOGO_ENABLED' => ($CONFIG_GALLERY['activ_logo'] == 1) ? 'checked="checked"' : '',
+		'LOGO_DISABLED' => ($CONFIG_GALLERY['activ_logo'] == 0) ? 'checked="checked"' : '',
+		'DISPLAY_PICS_NEW_PAGE' => ($CONFIG_GALLERY['display_pics'] == 0) ? 'checked="checked"' : '',
+		'DISPLAY_PICS' => ($CONFIG_GALLERY['display_pics'] == 1) ? 'checked="checked"' : '',
+		'DISPLAY_PICS_POPUP' => ($CONFIG_GALLERY['display_pics'] == 2) ? 'checked="checked"' : '',
+		'DISPLAY_PICS_POPUP_FULL' => ($CONFIG_GALLERY['display_pics'] == 3) ? 'checked="checked"' : '',
+		'NBR_PICS_MINI' => isset($CONFIG_GALLERY['nbr_pics_mini']) ? $CONFIG_GALLERY['nbr_pics_mini'] : '8',
 		'SPEED_MINI_PICS' => $speed_mini_pics,
 		'SCROLL_TYPES' => $scroll_types,
 		'L_UNAUTH' => $LANG['unauthorized'],
@@ -191,8 +191,8 @@ else
 		'L_WEIGHT_MAX_EXPLAIN' => $LANG['weight_max_explain'],
 		'L_QUALITY_THUMB' => $LANG['quality_thumb'],
 		'L_QUALITY_THUMB_EXPLAIN' => $LANG['quality_thumb_explain'],
-		'L_NBR_COLUMNS' => $LANG['nbr_column'],
-		'L_NBR_COLUMNS_EXPLAIN' => $LANG['nbr_column_explain'],
+		'L_NBR_COLUMN' => $LANG['nbr_column'],
+		'L_NBR_COLUMN_EXPLAIN' => $LANG['nbr_column_explain'],
 		'L_NBR_PICS_MAX' => $LANG['nbr_pics_max'],
 		'L_YES' => $LANG['yes'],
 		'L_NO' => $LANG['no'],
@@ -210,18 +210,18 @@ else
 		'L_UNACTIV' => $LANG['unactiv'],
 		'L_COMPT_VIEWS' => $LANG['compt_views'],
 		'L_COMPT_VIEWS_EXPLAIN' => $LANG['compt_views_explain'],
-		'L_COMMENTS_ACTIVATED' => $LANG['comments_activated'],
-		'L_NOTE_ACTIVATED' => $LANG['note_activated'],
-		'L_DISPLAY_NBR_NOTE' => $LANG['display_nbr_note'],
+		'L_ACTIV_COM' => $LANG['activ_com'],
+		'L_ACTIV_NOTE' => $LANG['activ_note'],
+		'L_DISPLAY_NBRNOTE' => $LANG['display_nbrnote'],
 		'L_NOTE_MAX' => $LANG['note_max'],
 		'L_NOTE_MAX_EXPLAIN' => $LANG['note_max_explain'],
 		'L_IMG_PROTECT' => $LANG['img_protect'],
-		'L_LOGO_ACTIVATED' => $LANG['logo_activated'],
-		'L_LOGO_ACTIVATED_EXPLAIN' => $LANG['logo_activated_explain'],
+		'L_ACTIV_LOGO' => $LANG['activ_logo'],
+		'L_ACTIV_LOGO_EXPLAIN' => $LANG['activ_logo_explain'],
 		'L_LOGO_URL' => $LANG['logo_url'],
 		'L_LOGO_URL_EXPLAIN' => $LANG['logo_url_explain'],
-		'L_LOGO_TRANSPARENCY' => $LANG['logo_transparency'],
-		'L_LOGO_TRANSPARENCY_EXPLAIN' => $LANG['logo_transparency_explain'],
+		'L_LOGO_TRANS' => $LANG['logo_trans'],
+		'L_LOGO_TRANS_EXPLAIN' => $LANG['logo_trans_explain'],
 		'L_WIDTH_BOTTOM_RIGHT' => $LANG['width_bottom_right'],
 		'L_WIDTH_BOTTOM_RIGHT_EXPLAIN' => $LANG['width_bottom_right_explain'],
 		'L_HEIGHT_BOTTOM_RIGHT' => $LANG['height_bottom_right'],

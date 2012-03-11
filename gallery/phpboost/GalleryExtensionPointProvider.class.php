@@ -40,28 +40,36 @@ class GalleryExtensionPointProvider extends ExtensionPointProvider
 	//Récupération du cache.
 	function get_cache()
 	{
-		$gallery_config = GalleryConfig::load();
-		
-		$cat_gallery = '$CAT_GALLERY = array();' . "\n\n";
+		global $CONFIG_GALLERY;
 
+		$gallery_config = 'global $CONFIG_GALLERY;' . "\n";
+
+		//Récupération du tableau linéarisé dans la bdd.
+		$CONFIG_GALLERY = unserialize($this->sql_querier->query("SELECT value FROM " . DB_TABLE_CONFIGS . " WHERE name = 'gallery'", __LINE__, __FILE__));
+		$CONFIG_GALLERY = is_array($CONFIG_GALLERY) ? $CONFIG_GALLERY : array();
+		if (isset($CONFIG_GALLERY['auth_root']))
+			$CONFIG_GALLERY['auth_root'] = unserialize($CONFIG_GALLERY['auth_root']);
+
+		$gallery_config .= '$CONFIG_GALLERY = ' . var_export($CONFIG_GALLERY, true) . ';' . "\n";
+
+		$cat_gallery = 'global $CAT_GALLERY;' . "\n";
 		$result = $this->sql_querier->query_while("SELECT id, id_left, id_right, level, name, aprob, auth
 		FROM " . PREFIX . "gallery_cats
 		ORDER BY id_left", __LINE__, __FILE__);
 		while ($row = $this->sql_querier->fetch_assoc($result))
 		{
-			$cat_gallery .= '$CAT_GALLERY[' . $row['id'] . '] = ' .
-			var_export(array(
-			'id_left' => $row['id_left'],
-			'id_right' => $row['id_right'],
-			'level' => $row['level'],
-			'name' => $row['name'],
-			'aprob' => $row['aprob'],
-			'auth' => unserialize($row['auth'])
-			), true)
-			. ';' . "\n";
+			if (empty($row['auth']))
+				$row['auth'] = serialize(array());
+
+			$cat_gallery .= '$CAT_GALLERY[\'' . $row['id'] . '\'][\'id_left\'] = ' . var_export($row['id_left'], true) . ';' . "\n";
+			$cat_gallery .= '$CAT_GALLERY[\'' . $row['id'] . '\'][\'id_right\'] = ' . var_export($row['id_right'], true) . ';' . "\n";
+			$cat_gallery .= '$CAT_GALLERY[\'' . $row['id'] . '\'][\'level\'] = ' . var_export($row['level'], true) . ';' . "\n";
+			$cat_gallery .= '$CAT_GALLERY[\'' . $row['id'] . '\'][\'name\'] = ' . var_export($row['name'], true) . ';' . "\n";
+			$cat_gallery .= '$CAT_GALLERY[\'' . $row['id'] . '\'][\'aprob\'] = ' . var_export($row['aprob'], true) . ';' . "\n";
+			$cat_gallery .= '$CAT_GALLERY[\'' . $row['id'] . '\'][\'auth\'] = ' . var_export(unserialize($row['auth']), true) . ';' . "\n";
 		}
 		$this->sql_querier->query_close($result);
-		
+
 		$Gallery = new Gallery;
 
 		$_array_random_pics = 'global $_array_random_pics;' . "\n" . '$_array_random_pics = array(';
@@ -91,7 +99,7 @@ class GalleryExtensionPointProvider extends ExtensionPointProvider
 		$this->sql_querier->query_close($result);
 		$_array_random_pics .= ');';
 
-		return $cat_gallery . "\n" . $_array_random_pics;
+		return $gallery_config . "\n" . $cat_gallery . "\n" . $_array_random_pics;
 	}
 	
 	function feeds()

@@ -43,7 +43,7 @@ class PagesSearchable extends AbstractSearchableExtensionPoint
         $search = $args['search'];
         $weight = isset($args['weight']) && is_numeric($args['weight']) ? $args['weight'] : 1;
         
-        global $_PAGES_CATS, $User, $Cache;
+        global $_PAGES_CATS, $CONFIG_PAGES, $User, $Cache;
         require_once(PATH_TO_ROOT . '/pages/pages_defines.php');
         $Cache->load('pages');
         

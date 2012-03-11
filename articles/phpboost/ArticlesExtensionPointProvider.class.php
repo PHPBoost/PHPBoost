@@ -43,21 +43,21 @@ class ArticlesExtensionPointProvider extends ExtensionPointProvider
 	{
 		global $LANG;
 		
-		$articles_config = ArticlesConfig::load();
-		$config_authorizations = $articles_config->get_authorizations();
+		$config_articles = unserialize($this->sql_querier->query("SELECT value FROM " . DB_TABLE_CONFIGS . " WHERE name = 'articles'", __LINE__, __FILE__));
 
-		$code = '$ARTICLES_CAT = array();' . "\n\n";
+		$string = 'global $CONFIG_ARTICLES, $ARTICLES_CAT;' . "\n\n" . '$CONFIG_ARTICLES = $ARTICLES_CAT = array();' . "\n\n";
+		$string .= '$CONFIG_ARTICLES = ' . var_export($config_articles, true) . ';' . "\n\n";
 
 		//List of categories and their own properties
 		$result = $this->sql_querier->query_while("SELECT id, id_parent, c_order, auth, name, visible, image, description
 			FROM " . DB_TABLE_ARTICLES_CAT . "
 			ORDER BY id_parent, c_order", __LINE__, __FILE__);
 
-		$code .= '$ARTICLES_CAT[0] = ' . var_export(array('name' => $LANG['root'], 'order' => 0, 'auth' => $config_authorizations), true) . ';' . "\n\n";
+		$string .= '$ARTICLES_CAT[0] = ' . var_export(array('name' => $LANG['root'], 'order' => 0, 'auth' => $config_articles['global_auth']), true) . ';' . "\n\n";
 		
 		while ($row = $this->sql_querier->fetch_assoc($result))
 		{
-			$code .= '$ARTICLES_CAT[' . $row['id'] . '] = ' .
+			$string .= '$ARTICLES_CAT[' . $row['id'] . '] = ' .
 			var_export(array(
 					'id_parent' => (int)$row['id_parent'],
 					'order' => (int)$row['c_order'],
@@ -66,11 +66,10 @@ class ArticlesExtensionPointProvider extends ExtensionPointProvider
 					'visible' => (bool)$row['visible'],
 					'image' => !empty($row['image']) ? $row['image'] : '/articles/articles.png',
 					'description' => $row['description'],
-					'auth' => !empty($row['auth']) ? unserialize($row['auth']) : $config_authorizations
+					'auth' => !empty($row['auth']) ? unserialize($row['auth']) : $config_articles['global_auth']
 			), true) . ';' . "\n\n";
 		}
-		
-		return $code;
+		return $string;
 	}
 
 	public function search()

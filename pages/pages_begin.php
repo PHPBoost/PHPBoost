@@ -29,8 +29,6 @@ if (defined('PHPBOOST') !== true)	exit;
 
 load_module_lang('pages');
 
-$pages_config = PagesConfig::load();
-
 require_once('../pages/pages_defines.php');
 
 $Cache->load('pages');

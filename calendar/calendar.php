@@ -50,7 +50,7 @@ $edit = retrieve(GET, 'edit', false);
 if ($delete)
     $Session->csrf_get_protect();
 	
-if (!$User->check_auth($calendar_config->get_authorizations(), AUTH_CALENDAR_READ)) //Autorisation de poster?
+if (!$User->check_auth($calendar_config->get_authorization(), AUTH_CALENDAR_READ)) //Autorisation de poster?
 	{
 	$error_controller = PHPBoostErrors::unexisting_page();
 	DispatchManager::redirect($error_controller);
@@ -122,7 +122,7 @@ elseif (!empty($id))
 	
 	if ($delete) //Suppression simple.
 	{
-		if (!$User->check_auth($calendar_config->get_authorizations(), AUTH_CALENDAR_MODO)) //Autorisation de supprimer ?
+		if (!$User->check_auth($calendar_config->get_authorization(), AUTH_CALENDAR_MODO)) //Autorisation de supprimer ?
 		{
 			$error_controller = PHPBoostErrors::unexisting_page();
 			DispatchManager::redirect($error_controller);
@@ -137,7 +137,7 @@ elseif (!empty($id))
 	}
 	elseif ($edit)
 	{
-		if (!$User->check_auth($calendar_config->get_authorizations(), AUTH_CALENDAR_MODO)) //Autorisation de modifier ?
+		if (!$User->check_auth($calendar_config->get_authorization(), AUTH_CALENDAR_MODO)) //Autorisation de modifier ?
 		{
 			$error_controller = PHPBoostErrors::unexisting_page();
 			DispatchManager::redirect($error_controller);
@@ -232,7 +232,7 @@ elseif (!empty($id))
 }
 elseif ($add) //Ajout d'un évenement
 {
-	if (!$User->check_auth($calendar_config->get_authorizations(), AUTH_CALENDAR_WRITE)) //Autorisation de poster?
+	if (!$User->check_auth($calendar_config->get_authorization(), AUTH_CALENDAR_WRITE)) //Autorisation de poster?
 	{
 	$error_controller = PHPBoostErrors::unexisting_page();
 	DispatchManager::redirect($error_controller);

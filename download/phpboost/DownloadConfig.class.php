@@ -27,20 +27,20 @@
 
 class DownloadConfig extends AbstractConfigData
 {
+	const AUTHORIZATION = 'authorization';
 	const NBR_FILE_MAX = 'nbr_file_max';
 	const NBR_COLUMNS = 'nbr_colums';
 	const NOTE_MAX = 'note_max';
-	const ROOT_CONTENTS = 'root_contents';
-	const AUTHORIZATIONS = 'authorizations';
+	const ROOT_CONTENT = 'root_content';
 	
 	public function get_nbr_file_max()
 	{
 		return $this->get_property(self::NBR_FILE_MAX);
 	}
 	
-	public function set_nbr_file_max($value) 
+	public function set_nbr_file_max($nbr) 
 	{
-		$this->set_property(self::NBR_FILE_MAX, $value);
+		$this->set_property(self::NBR_FILE_MAX, $nbr);
 	}
 	
 	public function get_number_columns()
@@ -48,9 +48,9 @@ class DownloadConfig extends AbstractConfigData
 		return $this->get_property(self::NBR_COLUMNS);
 	}
 	
-	public function set_number_columns($value) 
+	public function set_number_columns($num_cols) 
 	{
-		$this->set_property(self::NBR_COLUMNS, $value);
+		$this->set_property(self::NBR_COLUMNS, $num_cols);
 	}
 	
 	public function get_note_max()
@@ -58,39 +58,39 @@ class DownloadConfig extends AbstractConfigData
 		return $this->get_property(self::NOTE_MAX);
 	}
 	
-	public function set_note_max($value) 
+	public function set_note_max($note) 
 	{
-		$this->set_property(self::NOTE_MAX, $value);
+		$this->set_property(self::NOTE_MAX, $note);
 	}
 	
 	public function get_root_contents()
 	{
-		return $this->get_property(self::ROOT_CONTENTS);
+		return $this->get_property(self::ROOT_CONTENT);
 	}
 	
-	public function set_root_contents($value) 
+	public function set_root_contents($content) 
 	{
-		$this->set_property(self::ROOT_CONTENTS, $value);
+		$this->set_property(self::ROOT_CONTENT, $content);
 	}
 	
-	public function get_authorizations()
+	public function get_authorization()
 	{
-		return $this->get_property(self::AUTHORIZATIONS);
+		return $this->get_property(self::AUTHORIZATION);
 	}
 	
-	public function set_authorizations(Array $array)
+	public function set_authorization(Array $array)
 	{
-		$this->set_property(self::AUTHORIZATIONS, $array);
+		$this->set_property(self::AUTHORIZATION, $array);
 	}
 	
 	public function get_default_values()
 	{
 		return array(
+			self::AUTHORIZATION => array('r-1' => 1, 'r0' => 5, 'r1' => 7),
 			self::NBR_FILE_MAX => 10,
 			self::NBR_COLUMNS => 2,
 			self::NOTE_MAX => 5,
-			self::ROOT_CONTENTS => LangLoader::get_message('download.config.root_contents', 'download_config', 'download'),
-			self::AUTHORIZATIONS => array('r-1' => 1, 'r0' => 5, 'r1' => 7),
+			self::ROOT_CONTENT => 'Bienvenue dans l\'espace de téléchargement du site!'
 		);
 	}
 	
@@ -100,7 +100,7 @@ class DownloadConfig extends AbstractConfigData
 	 */
 	public static function load()
 	{
-		return ConfigManager::load(__CLASS__, 'module', 'download-config');
+		return ConfigManager::load(__CLASS__, 'download', 'main');
 	}
 
 	/**
@@ -108,7 +108,7 @@ class DownloadConfig extends AbstractConfigData
 	 */
 	public static function save()
 	{
-		ConfigManager::save('module', self::load(), 'download-config');
+		ConfigManager::save('download', self::load(), 'main');
 	}
 }
 ?>

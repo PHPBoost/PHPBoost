@@ -34,9 +34,6 @@ $error = retrieve(GET, 'error', '');
 include_once('pages_begin.php');
 include_once('pages_functions.php');
 
-//Configuration des authorisations
-$config_authorizations = $pages_config->get_authorizations();
-
 //Requêtes préliminaires utiles par la suite
 if (!empty($encoded_title)) //Si on connait son titre
 {
@@ -70,7 +67,7 @@ if (!empty($encoded_title)) //Si on connait son titre
 				PagesUrlBuilder::get_link_item(Url::encode_rewrite($_PAGES_CATS[$id]['name'])));
 		$id = (int)$_PAGES_CATS[$id]['id_parent'];
 	}	
-	if ($User->check_auth($config_authorizations, EDIT_PAGE))
+	if ($User->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE))
 		$Bread_crumb->add($LANG['pages'], url('pages.php'));
 	//On renverse ce fil pour le mettre dans le bon ordre d'arborescence
 	$Bread_crumb->reverse();
@@ -95,14 +92,14 @@ elseif ($id_com > 0)
 			PagesUrlBuilder::get_link_item(Url::encode_rewrite($_PAGES_CATS[$id]['name'])));
 		$id = (int)$_PAGES_CATS[$id]['id_parent'];
 	}
-	if ($User->check_auth($config_authorizations, EDIT_PAGE))
+	if ($User->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE))
 		$Bread_crumb->add($LANG['pages'], url('pages.php'));
 	$Bread_crumb->reverse();
 }
 else
 {
 	define('TITLE', $LANG['pages']);
-	$auth_index = $User->check_auth($config_authorizations, EDIT_PAGE);
+	$auth_index = $User->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE);
 	if ($auth_index)
 		$Bread_crumb->add($LANG['pages'], url('pages.php'));
 	elseif (!$auth_index && empty($error))
@@ -120,13 +117,13 @@ if (!empty($encoded_title) && $num_rows == 1)
 	$array_auth = unserialize($page_infos['auth']);
 
 	//Vérification de l'autorisation de voir la page
-	if (($special_auth && !$User->check_auth($array_auth, READ_PAGE)) || (!$special_auth && !$User->check_auth($config_authorizations, READ_PAGE)))
+	if (($special_auth && !$User->check_auth($array_auth, READ_PAGE)) || (!$special_auth && !$User->check_auth($_PAGES_CONFIG['auth'], READ_PAGE)))
 		AppContext::get_response()->redirect(PagesUrlBuilder::get_link_error('e_auth'));
 	
 	//Génération des liens de la page
 	$links = array();
 	$is_page_admin = false;
-	if (($special_auth && $User->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && $User->check_auth($config_authorizations, EDIT_PAGE)))
+	if (($special_auth && $User->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && $User->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE)))
 	{
 		$links[$LANG['pages_edit']] = array(url('post.php?id=' . $page_infos['id']), $Template->get_data()->get('PICTURES_DATA_PATH') . '/images/edit.png');
 		$links[$LANG['pages_rename']] = array(url('action.php?rename=' . $page_infos['id']), $Template->get_data()->get('PICTURES_DATA_PATH') . '/images/rename.png');
@@ -136,7 +133,7 @@ if (!empty($encoded_title) && $num_rows == 1)
 		$links[$LANG['pages_explorer']] = array(url('explorer.php'), $Template->get_data()->get('PICTURES_DATA_PATH') . '/images/explorer.png');
 		$is_page_admin = true;
 	}
-	if ($User->check_auth($config_authorizations, READ_PAGE) && ($page_infos['display_print_link'] || $is_page_admin))
+	if ($User->check_auth($_PAGES_CONFIG['auth'], READ_PAGE) && ($page_infos['display_print_link'] || $is_page_admin))
 	{
 		$links[$LANG['printable_version']] = array(url('print.php?title=' . $encoded_title), '../templates/' . get_utheme() . '/images/print_mini.png');
 	}
@@ -168,12 +165,12 @@ if (!empty($encoded_title) && $num_rows == 1)
 		$Template->assign_block_vars('redirect', array(
 			'REDIRECTED_FROM' => sprintf($LANG['pages_redirected_from'], $redirect_title),
 			'DELETE_REDIRECTION' => (($special_auth && $User->check_auth($array_auth, EDIT_PAGE)) ||
-				(!$special_auth && $User->check_auth($config_authorizations, EDIT_PAGE))) ? '<a href="action.php?del=' . $redirect_id . '&amp;token=' . $Session->get_token() . '" onclick="return confirm(\'' . $LANG['pages_confirm_delete_redirection'] . '\');" title="' . $LANG['pages_delete_redirection'] . '"><img src="' . $Template->get_pictures_data_path() . '/images/delete.png" alt="' . $LANG['pages_delete_redirection'] . '" /></a>' : ''
+				(!$special_auth && $User->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE))) ? '<a href="action.php?del=' . $redirect_id . '&amp;token=' . $Session->get_token() . '" onclick="return confirm(\'' . $LANG['pages_confirm_delete_redirection'] . '\');" title="' . $LANG['pages_delete_redirection'] . '"><img src="' . $Template->get_pictures_data_path() . '/images/delete.png" alt="' . $LANG['pages_delete_redirection'] . '" /></a>' : ''
 		));
 	}
 	
 	//Affichage des commentaires si il y en a la possibilité
-	if ($page_infos['activ_com'] == 1 && (($special_auth && $User->check_auth($array_auth, READ_COM)) || (!$special_auth && $User->check_auth($config_authorizations, READ_COM))))
+	if ($page_infos['activ_com'] == 1 && (($special_auth && $User->check_auth($array_auth, READ_COM)) || (!$special_auth && $User->check_auth($_PAGES_CONFIG['auth'], READ_COM))))
 	{	
 		$Template->put_all(array(
 			'C_ACTIV_COM' => true,
@@ -209,7 +206,7 @@ elseif ($id_com > 0)
 	$special_auth = !empty($page_infos['auth']);
 	$array_auth = unserialize($page_infos['auth']);
 	//Vérification de l'autorisation de voir la page
-	if (($special_auth && !$User->check_auth($array_auth, READ_PAGE)) || (!$special_auth && !$User->check_auth($config_authorizations, READ_PAGE)) && ($special_auth && !$User->check_auth($array_auth, READ_COM)) || (!$special_auth && !$User->check_auth($config_authorizations, READ_COM)))
+	if (($special_auth && !$User->check_auth($array_auth, READ_PAGE)) || (!$special_auth && !$User->check_auth($_PAGES_CONFIG['auth'], READ_PAGE)) && ($special_auth && !$User->check_auth($array_auth, READ_COM)) || (!$special_auth && !$User->check_auth($_PAGES_CONFIG['auth'], READ_COM)))
 		AppContext::get_response()->redirect(PagesUrlBuilder::get_link_error('e_auth_com'));
 	
 	$Template = new FileTemplate('pages/com.tpl');

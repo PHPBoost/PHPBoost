@@ -31,29 +31,28 @@ require_once('news_constants.php');
 define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
 load_module_lang('news'); //Chargement de la langue du module.
-$news_config = NewsConfig::load();
 
 if (!empty($_POST['submit']))
 {
-	$nbr_visible_news = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_NEWS . " WHERE visible = 1", __LINE__, __FILE__);
+	$config_news = array(
+		'type' => retrieve(POST, 'type', 0),
+		'activ_com' => retrieve(POST, 'activ_com', 0),
+		'activ_icon' => retrieve(POST, 'activ_icon', 0),
+		'activ_edito' => retrieve(POST, 'activ_edito', 0),
+		'activ_pagin' => retrieve(POST, 'activ_pagin', 0),
+		'display_date' => retrieve(POST, 'display_date', 0),
+		'display_author' => retrieve(POST, 'display_author', 0),
+		'pagination_news' => retrieve(POST, 'pagination_news', 6),
+		'pagination_arch' => retrieve(POST, 'pagination_arch', 15),
+		'nbr_column' => retrieve(POST, 'nbr_column', 1),
+		'nbr_news' => $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_NEWS . " WHERE visible = 1", __LINE__, __FILE__),
+		'global_auth' => Authorizations::build_auth_array_from_form(AUTH_NEWS_READ, AUTH_NEWS_CONTRIBUTE, AUTH_NEWS_WRITE, AUTH_NEWS_MODERATE),
+		'edito_title' => stripslashes(retrieve(POST, 'edito_title', '')),
+		'edito' => stripslashes(retrieve(POST, 'edito', '', TSTRING_PARSE))
+	);
 
-	$news_config->set_news_block_activated(retrieve(POST, 'news_block_activated', false));
-	$news_config->set_comments_activated(retrieve(POST, 'comments_activated', false));
-	$news_config->set_icon_activated(retrieve(POST, 'icon_activated', false));
-	$news_config->set_edito_activated(retrieve(POST, 'edito_activated', false));
-	$news_config->set_pagination_activated(retrieve(POST, 'pagination_activated', false));
-	$news_config->set_display_date(retrieve(POST, 'display_date', false));
-	$news_config->set_display_author(retrieve(POST, 'display_author', false));
-	$news_config->set_news_pagination(retrieve(POST, 'news_pagination', 6));
-	$news_config->set_archives_pagination(retrieve(POST, 'archives_pagination', 15));
-	$news_config->set_nbr_columns(retrieve(POST, 'nbr_columns', 1));
-	$news_config->set_nbr_visible_news($nbr_visible_news);
-	$news_config->set_authorizations(Authorizations::build_auth_array_from_form(AUTH_NEWS_READ, AUTH_NEWS_CONTRIBUTE, AUTH_NEWS_WRITE, AUTH_NEWS_MODERATE));
-	$news_config->set_edito_title(stripslashes(retrieve(POST, 'edito_title', '')));
-	$news_config->set_edito_content(stripslashes(retrieve(POST, 'edito_content', '', TSTRING_PARSE)));
-	
-	NewsConfig::save();
-    
+	$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($config_news)) . "' WHERE name = 'news'", __LINE__, __FILE__);
+
 	###### Régénération du cache des news #######
 	$Cache->Generate_module_file('news');
 
@@ -66,15 +65,6 @@ else
 
 	$Cache->load('news');
 
-	$config_news_block_activated = $news_config->get_news_block_activated();
-	$config_pagination_activated = $news_config->get_pagination_activated();
-	$config_edito_activated = $news_config->get_edito_activated();
-	$config_comments_activated = $news_config->get_comments_activated();
-	$config_icon_activated = $news_config->get_icon_activated();
-	$config_display_author = $news_config->get_display_author();
-	$config_display_date = $news_config->get_display_date();
-	$config_authorizations = $news_config->get_authorizations();
-
 	// Chargement du menu de l'administration.
 	require_once('admin_news_menu.php');
 
@@ -84,32 +74,32 @@ else
 	$tpl->put_all(array(
 		'ADMIN_MENU' => $admin_menu,
 		'KERNEL_EDITOR' => $editor->display(),
-		'NEWS_PAGINATION' => $news_config->get_news_pagination(),
-		'ARCHIVES_PAGINATION' => $news_config->get_archives_pagination(),
-		'TITLE' => $news_config->get_edito_title(),
-		'CONTENTS' => FormatingHelper::unparse($news_config->get_edito_content()),
-		'BLOCK_ENABLED' => ($config_news_block_activated == true) ? true : false,
-		'BLOCK_DISABLED' => ($config_news_block_activated == false) ? true : false,
-		'PAGIN_ENABLED' => ($config_pagination_activated == true) ? true : false,
-		'PAGIN_DISABLED' => ($config_pagination_activated == false) ? true : false,
-		'NBR_COLUMNS' => $news_config->get_nbr_columns(),
-		'EDITO_ENABLED' => ($config_edito_activated == true) ? true : false,
-		'EDITO_DISABLED' => ($config_edito_activated == false) ? true : false,
-		'COM_ENABLED' => ($config_comments_activated == true) ? true : false,
-		'COM_DISABLED' => ($config_comments_activated == false) ? true : false,
-		'ICON_ENABLED' => ($config_icon_activated == true) ? true : false,
-		'ICON_DISABLED' => ($config_icon_activated == false) ? true : false,
-		'AUTHOR_ENABLED' => ($config_display_author == true) ? true : false,
-		'AUTHOR_DISABLED' => ($config_display_author == false) ? true : false,
-		'DATE_ENABLED' => ($config_display_date == true) ? true : false,
-		'DATE_DISABLED' => ($config_display_date == false) ? true : false,
-		'AUTH_READ' => Authorizations::generate_select(AUTH_NEWS_READ, $config_authorizations),
-		'AUTH_WRITE' => Authorizations::generate_select(AUTH_NEWS_WRITE, $config_authorizations),
-		'AUTH_CONTRIBUTION' => Authorizations::generate_select(AUTH_NEWS_CONTRIBUTE, $config_authorizations),
-		'AUTH_MODERATION' => Authorizations::generate_select(AUTH_NEWS_MODERATE, $config_authorizations),
+		'PAGINATION' => !empty($NEWS_CONFIG['pagination_news']) ? $NEWS_CONFIG['pagination_news'] : 6,
+		'PAGINATION_ARCH' => !empty($NEWS_CONFIG['pagination_arch']) ? $NEWS_CONFIG['pagination_arch'] : 15,
+		'TITLE' => !empty($NEWS_CONFIG['edito_title']) ? $NEWS_CONFIG['edito_title'] : '',
+		'CONTENTS' => !empty($NEWS_CONFIG['edito']) ? FormatingHelper::unparse($NEWS_CONFIG['edito']) : '',
+		'BLOCK_ENABLED' => ($NEWS_CONFIG['type'] == '1') ? 1 : 0,
+		'BLOCK_DISABLED' => ($NEWS_CONFIG['type'] == '0') ? 1 : 0,
+		'PAGIN_ENABLED' => ($NEWS_CONFIG['activ_pagin'] == '1') ? 1 : 0,
+		'PAGIN_DISABLED' => ($NEWS_CONFIG['activ_pagin'] == '0') ? 1 : 0,
+		'NBR_COLUMN' => !empty($NEWS_CONFIG['nbr_column']) ? $NEWS_CONFIG['nbr_column'] : 1,
+		'EDITO_ENABLED' => ($NEWS_CONFIG['activ_edito'] == '1') ? 1 : 0,
+		'EDITO_DISABLED' => ($NEWS_CONFIG['activ_edito'] == '0') ? 1 : 0,
+		'COM_ENABLED' => ($NEWS_CONFIG['activ_com'] == '1') ? 1 : 0,
+		'COM_DISABLED' => ($NEWS_CONFIG['activ_com'] == '0') ? 1 : 0,
+		'ICON_ENABLED' => ($NEWS_CONFIG['activ_icon'] == '1') ? 1 : 0,
+		'ICON_DISABLED' => ($NEWS_CONFIG['activ_icon'] == '0') ? 1 : 0,
+		'AUTHOR_ENABLED' => ($NEWS_CONFIG['display_author'] == '1') ? 1 : 0,
+		'AUTHOR_DISABLED' => ($NEWS_CONFIG['display_author'] == '0') ? 1 : 0,
+		'DATE_ENABLED' => ($NEWS_CONFIG['display_date'] == '1') ? 1 : 0,
+		'DATE_DISABLED' => ($NEWS_CONFIG['display_date'] == '0') ? 1 : 0,
+		'AUTH_READ' => Authorizations::generate_select(AUTH_NEWS_READ, $NEWS_CONFIG['global_auth']),
+		'AUTH_WRITE' => Authorizations::generate_select(AUTH_NEWS_WRITE, $NEWS_CONFIG['global_auth']),
+		'AUTH_CONTRIBUTION' => Authorizations::generate_select(AUTH_NEWS_CONTRIBUTE, $NEWS_CONFIG['global_auth']),
+		'AUTH_MODERATION' => Authorizations::generate_select(AUTH_NEWS_MODERATE, $NEWS_CONFIG['global_auth']),
 		'L_REQUIRE' => $LANG['require'],
-		'L_REQUIRE_NEWS_PAGINATION' => sprintf($LANG['required_field'], $NEWS_LANG['nbr_news_p']),
-		'L_REQUIRE_ARCHIVES_PAGINATION' => sprintf($LANG['required_field'], $NEWS_LANG['nbr_arch_p']),
+		'L_REQUIRE_PAGIN_NEWS' => sprintf($LANG['required_field'], $NEWS_LANG['nbr_news_p']),
+		'L_REQUIRE_PAGIN_ARCH' => sprintf($LANG['required_field'], $NEWS_LANG['nbr_arch_p']),
 		'L_REQUIRE_NBR_COL' => sprintf($LANG['required_field'], $NEWS_LANG['nbr_news_column']),
 		'L_TITLE' => $LANG['title'],
 		'L_TEXT' => $LANG['content'],
@@ -126,11 +116,11 @@ else
 		'L_NBR_NEWS_P' => $NEWS_LANG['nbr_news_p'],
 		'L_NBR_ARCH_P' => $NEWS_LANG['nbr_arch_p'],
 		'L_NBR_COLUMN_MAX' => $NEWS_LANG['nbr_news_column'],
-		'L_ACTIV_PAGINATION' => $NEWS_LANG['pagination_activated'],
-		'L_ACTIV_EDITO' => $NEWS_LANG['edito_activated'],
-		'L_ACTIV_NEWS_BLOCK' => $NEWS_LANG['news_block_activated'],
-		'L_ACTIV_COM_NEWS' => $NEWS_LANG['comments_activated_n'],
-		'L_ACTIV_ICON_NEWS' => $NEWS_LANG['icon_activated_n'],
+		'L_ACTIV_PAGINATION' => $NEWS_LANG['activ_pagination'],
+		'L_ACTIV_EDITO' => $NEWS_LANG['activ_edito'],
+		'L_ACTIV_NEWS_BLOCK' => $NEWS_LANG['activ_news_block'],
+		'L_ACTIV_COM_NEWS' => $NEWS_LANG['activ_com_n'],
+		'L_ACTIV_ICON_NEWS' => $NEWS_LANG['activ_icon_n'],
 		'L_DISPLAY_NEWS_AUTHOR' => $NEWS_LANG['display_news_author'],
 		'L_DISPLAY_NEWS_DATE' => $NEWS_LANG['display_news_date'],
 		'L_GLOBAL_AUTH' => $NEWS_LANG['global_auth'],

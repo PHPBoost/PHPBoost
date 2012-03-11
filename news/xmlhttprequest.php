@@ -46,8 +46,7 @@ elseif (isset($_POST['preview']))
 	$Cache->load('news');
 	//Chargement de la langue du module.
 	load_module_lang('news');
-	$news_config = NewsConfig::load();
-	
+
 	$news = array(
 		'id' => retrieve(POST, 'id', 0, TINTEGER),
 		'idcat' => retrieve(POST, 'idcat', 0, TINTEGER),
@@ -84,7 +83,7 @@ elseif (isset($_POST['preview']))
 	$preview->assign_block_vars('news', array(
 		'C_NEWS_ROW' => false,
 		'C_IMG' => !empty($news['img']),
-		'C_ICON' => $news_config->get_icon_activated(),
+		'C_ICON' => $NEWS_CONFIG['activ_icon'],
 		'ID' => $news['id'],
 		'IDCAT' => $news['idcat'],
 		'ICON' => FormatingHelper::second_parse_url($NEWS_CAT[$news['idcat']]['image']),
@@ -93,9 +92,9 @@ elseif (isset($_POST['preview']))
 		'EXTEND_CONTENTS' => stripslashes(FormatingHelper::second_parse($news['extend_desc'])),
 		'IMG' => FormatingHelper::second_parse_url($news['img']),
 		'IMG_DESC' => $news['alt'],
-		'PSEUDO' => $news_config->get_display_author() && !empty($user['login']) ? $user['login'] : $LANG['guest'],
+		'PSEUDO' => $NEWS_CONFIG['display_author'] && !empty($user['login']) ? $user['login'] : $LANG['guest'],
 		'LEVEL' =>	$level[$user['level']],
-		'DATE' => $news_config->get_display_date() ? sprintf($NEWS_LANG['on'], $date->format(DATE_FORMAT_SHORT, TIMEZONE_AUTO)) : '',
+		'DATE' => $NEWS_CONFIG['display_date'] ? sprintf($NEWS_LANG['on'], $date->format(DATE_FORMAT_SHORT, TIMEZONE_AUTO)) : '',
 		'U_USER_ID' => UserUrlBuilder::profile($news['user_id'])->absolute(),
 		'U_CAT' => 'news' . url('.php?cat=' . $news['idcat'], '-' . $news['idcat'] . '+' . Url::encode_rewrite($NEWS_CAT[$news['idcat']]['name']) . '.php'),
 		'U_NEWS_LINK' => 'news' . url('.php?id=' . $news['id'], '-' . $news['idcat'] . '-' . $news['id'] . '+' . Url::encode_rewrite($news['title']) . '.php')

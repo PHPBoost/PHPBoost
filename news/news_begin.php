@@ -34,5 +34,4 @@ $Cache->load('news');
 
 require_once('news_constants.php');
 
-$news_config = NewsConfig::load();
 ?>

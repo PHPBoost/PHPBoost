@@ -36,11 +36,11 @@ $LANG['e_unexist_news'] = 'This news doesn\'t exist!';
 $LANG['e_unexist_cat_news'] = 'The category you have selected does not exist!';
 
 $NEWS_LANG = array(
-	'comments_activated_n' => 'Activate news comments',
-	'edito_activated' => 'Activate editorial',
-	'icon_activated_n' => 'Show news category icon',
+	'activ_com_n' => 'Activate news comments',
+	'activ_edito' => 'Activate editorial',
+	'activ_icon_n' => 'Show news category icon',
 	'activ_news_block' => 'Activate news in block',
-	'pagination_activated' => 'Activate pagination',
+	'activ_pagination' => 'Activate pagination',
 	'add_category' => 'Add a category',
 	'add_news' => 'Add an item of news',
 	'alert_delete_news' => 'Delete this piece of news?',

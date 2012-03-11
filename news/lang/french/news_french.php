@@ -36,11 +36,11 @@ $LANG['e_unexist_news'] = 'La news que vous demandez n\'existe pas !';
 $LANG['e_unexist_cat_news'] = 'La catégorie que vous demandez n\'existe pas !';
 
 $NEWS_LANG = array(
-	'comments_activated_n' => 'Activer les commentaires des news',
-	'edito_activated' => 'Activer l\'édito',
-	'icon_activated_n' => 'Afficher les icônes de catégories des news',
-	'news_block_activated' => 'Activer les news en bloc',
-	'pagination_activated' => 'Activer la pagination',
+	'activ_com_n' => 'Activer les commentaires des news',
+	'activ_edito' => 'Activer l\'édito',
+	'activ_icon_n' => 'Afficher les icônes de catégories des news',
+	'activ_news_block' => 'Activer les news en bloc',
+	'activ_pagination' => 'Activer la pagination',
 	'add_category' => 'Ajouter une catégorie',
 	'add_news' => 'Ajouter une news',
 	'alert_delete_news' => 'Supprimer cette News ?',
