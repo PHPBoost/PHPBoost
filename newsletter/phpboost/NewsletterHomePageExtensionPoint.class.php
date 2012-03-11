@@ -34,7 +34,7 @@ class NewsletterHomePageExtensionPoint implements HomePageExtensionPoint
 
 	private function get_title()
 	{
-		return LangLoader::get_message('newsletter', 'common', 'newsletter');
+		return LangLoader::get_message('newsletter', 'newsletter_common', 'newsletter');
 	}
 	
 	private function get_view()

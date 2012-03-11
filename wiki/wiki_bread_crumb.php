@@ -27,7 +27,7 @@
 
 if (defined('PHPBOOST') !== true)	exit;
 
-require_once('../wiki/wiki_auth.php');
+require_once(PATH_TO_ROOT .'/wiki/wiki_auth.php');
 
 switch ($bread_crumb_key)
 {

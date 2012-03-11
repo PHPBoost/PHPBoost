@@ -48,7 +48,7 @@ class WebHomePageExtensionPoint implements HomePageExtensionPoint
 	
 	private function get_view()
 	{
-		global $idwebcat, $Session, $User, $WEB_CAT, $LANG, $WEB_LANG;
+		global $Cache, $Bread_crumb, $idwebcat, $Session, $User, $WEB_CAT, $LANG, $WEB_LANG;
 		
 		require_once(PATH_TO_ROOT . '/web/web_begin.php'); 
 		

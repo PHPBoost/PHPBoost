@@ -48,15 +48,17 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 	
 	private function get_view()
 	{
-		global $CONFIG_GALLERY, $CAT_GALLERY, $LANG, $User, $g_idcat, $g_idpics, $g_sort, $g_idpics, $g_type, $g_notes, $g_views, $g_mode, $Session;
+		global $CONFIG_GALLERY, $Cache, $CAT_GALLERY, $Bread_crumb, $LANG, $User, $g_idcat, $g_idpics, $g_sort, $g_idpics, $g_type, $g_notes, $g_views, $g_mode, $Session;
 		
-		require_once('../gallery/gallery_begin.php');
+		require_once(PATH_TO_ROOT . '/gallery/gallery_begin.php');
 		
 		$Template = new FileTemplate('gallery/gallery.tpl');
 
 		$comments_topic = new CommentsTopic();
 		$comments_topic->set_module_id('gallery');
 
+		$Gallery = new Gallery();
+		
 		if (!empty($g_idcat))
 		{
 			if (!isset($CAT_GALLERY[$g_idcat]) || $CAT_GALLERY[$g_idcat]['aprob'] == 0)
