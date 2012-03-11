@@ -41,31 +41,10 @@ class DownloadConfigUpdateVersion extends ConfigUpdateVersion
 		$download_config->set_number_columns($config['number_column']);
 		$download_config->set_note_max($config['note_max']);
 		$download_config->set_root_contents($config['root_contents']);
-		$download_config->set_authorizations($this->build_authorizations($config['global_auth']));
+		$download_config->set_authorizations($config['global_auth']);
 		DownloadConfig::save();
 
 		return true;
-	}
-	
-	private function build_authorizations($old_auth)
-	{
-		switch ($old_auth) {
-			case -1:
-				return array ('r-1' => 3, 'r0' => 3, 'r1' => 7);
-			break;
-			case 0:
-				return array('r-1' => 1, 'r0' => 3, 'r1' => 7);
-			break;
-			case 1:
-				return array('r-1' => 1, 'r0' => 1, 'r1' => 7);
-			break;
-			case 2:
-				return array('r-1' => 1, 'r0' => 1, 'r1' => 1, 'r2' => 7);
-			break;
-			default:
-				return array ('r-1' => 3, 'r0' => 3, 'r1' => 7);
-			break;
-		}
 	}
 }
 ?>
