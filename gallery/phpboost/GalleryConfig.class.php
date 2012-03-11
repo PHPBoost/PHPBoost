@@ -44,7 +44,7 @@ class GalleryConfig extends AbstractConfigData
 	const TITLE_ACTIVATED = 'title_activated';
 	const COMMENTS_ACTIVATED = 'comments_activated';
 	const NOTE_ACTIVATED = 'note_activated';
-	const DISPLAY_NBR_NOTE = 'display_nbrnote';
+	const DISPLAY_NBR_NOTE = 'display_nbr_note';
 	const VIEW_ACTIVATED = 'view_activated';
 	const USER_ACTIVATED = 'user_activated';
 	const LIMIT_MEMBER = 'limit_member';
