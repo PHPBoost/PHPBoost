@@ -14,9 +14,8 @@
 		<td class="row2" style="width:33%">
 			{@online.last_update}
 		</td>
-	</tr>	
-	
-	# START users # 
+	</tr>
+	# START users #
 	<tr>
 		<td class="row3">
 			{users.USER}
@@ -29,5 +28,9 @@
 		</td>
 	</tr>
 	# END users #
+	<tr>
+		<td colspan="8" class="row1">
+			<span style="float:left;">{PAGINATION}</span>
+		</td>
+	</tr>
 </table>
-<p style="text-align: center;">{PAGINATION}</p>
