@@ -48,10 +48,12 @@ class GuestbookHomePageExtensionPoint implements HomePageExtensionPoint
 	
 	private function get_view()
 	{
-		global $LANG, $GUESTBOOK_LANG, $GUESTBOOK_CONFIG, $Cache, $User, $auth_write, $Session, $Bread_crumb, $level, $id_get, $guestbook, $guestbook_config, $authorizations;
+		global $LANG, $GUESTBOOK_LANG, $GUESTBOOK_CONFIG, $Cache, $User, $auth_write, $Session, $Bread_crumb, $level, $id_get, $guestbook, $authorizations;
 		
 		require_once(PATH_TO_ROOT . '/guestbook/guestbook_begin.php');
 		
+		$guestbook_config = GuestbookConfig::load();
+
 		$tpl = new FileTemplate('guestbook/guestbook.tpl');
 		
 		//Construction du formulaire

@@ -48,7 +48,7 @@ class ForumHomePageExtensionPoint implements HomePageExtensionPoint
 	
 	private function get_view()
 	{
-		global $LANG, $FORUM_LANG, $CONFIG_FORUM, $User, $auth_write, $Session, $CAT_FORUM, $AUTH_READ_FORUM, $nbr_msg_not_read, $sid;
+		global $Cache, $LANG, $FORUM_LANG, $CONFIG_FORUM, $User, $auth_write, $Session, $CAT_FORUM, $AUTH_READ_FORUM, $nbr_msg_not_read, $sid;
 		
 		require_once(PATH_TO_ROOT . '/forum/forum_begin.php');
 

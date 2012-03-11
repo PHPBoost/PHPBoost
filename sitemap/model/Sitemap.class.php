@@ -203,7 +203,7 @@ class Sitemap
 		global $LANG, $User;
 			
 		//We consider the kernel as a module
-		$kernel_map = new ModuleMap(new SitemapLink($LANG['home'], new Url(GeneralConfig::load()->get_home_page())));
+		$kernel_map = new ModuleMap(new SitemapLink($LANG['home'], new Url(Environment::get_home_page())));
 			
 		//The site description
 		$kernel_map->set_description(nl2br(GeneralConfig::load()->get_site_description()));
