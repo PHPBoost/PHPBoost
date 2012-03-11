@@ -37,7 +37,7 @@ class CalendarConfigUpdateVersion extends ConfigUpdateVersion
 		$config = $this->get_old_config();
 		
 		$calendar_config = CalendarConfig::load();
-		$calendar_config->set_authorizations($this->build_authorizations($config['calendar_auth']));
+		$calendar_config->set_authorization($this->build_authorizations($config['calendar_auth']));
 		CalendarConfig::save();
         
 		return true;

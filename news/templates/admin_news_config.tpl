@@ -2,20 +2,20 @@
 		<!--
 		function check_form()
 		{
-			if(document.getElementById('news_pagination').value == "") {
-				new Effect.ScrollTo('news_pagination',{duration:1.2});
-				alert("{L_REQUIRE_NEWS_PAGINATION}");
+			if(document.getElementById('pagination_news').value == "") {
+				new Effect.ScrollTo('pagination_news',{duration:1.2});
+				alert("{L_REQUIRE_PAGIN_NEWS}");
 				return false;
 			}
 
-			if(document.getElementById('archives_pagination').value == "") {
-				new Effect.ScrollTo('archives_pagination',{duration:1.2});
-				alert("{L_REQUIRE_ARCHIVES_PAGINATION}");
+			if(document.getElementById('pagination_arch').value == "") {
+				new Effect.ScrollTo('pagination_arch',{duration:1.2});
+				alert("{L_REQUIRE_PAGIN_ARCH}");
 				return false;
 			}
 
-			if(document.getElementById('nbr_columns').value == "") {
-				new Effect.ScrollTo('nbr_columns',{duration:1.2});
+			if(document.getElementById('nbr_column').value == "") {
+				new Effect.ScrollTo('nbr_column',{duration:1.2});
 				alert("{L_REQUIRE_NBR_COL}");
 				return false;
 			}
@@ -34,47 +34,47 @@
 					<legend>{L_CONFIG_NEWS}</legend>
 					<p>{L_REQUIRE}</p>
 					<dl>
-						<dt><label for="news_pagination">* {L_NBR_NEWS_P}</label></dt>
-						<dd><label><input type="text" maxlength="3" size="6" name="news_pagination" id="news_pagination" value="{NEWS_PAGINATION}" class="text" /></label></dd>
+						<dt><label for="pagination_news">* {L_NBR_NEWS_P}</label></dt>
+						<dd><label><input type="text" maxlength="3" size="6" name="pagination_news" id="pagination_news" value="{PAGINATION}" class="text" /></label></dd>
 					</dl>
 					<dl>
-						<dt><label for="archives_pagination">* {L_NBR_ARCH_P}</label></dt>
-						<dd><label><input type="text" maxlength="3" size="6" name="archives_pagination" id="archives_pagination" value="{ARCHIVES_PAGINATION}" class="text" /></label></dd>
+						<dt><label for="pagination_arch">* {L_NBR_ARCH_P}</label></dt>
+						<dd><label><input type="text" maxlength="3" size="6" name="pagination_arch" id="pagination_arch" value="{PAGINATION_ARCH}" class="text" /></label></dd>
 					</dl>
 					<dl>
-						<dt><label for="nbr_columns">* {L_NBR_COLUMN_MAX}</label></dt>
-						<dd><label><input type="text" size="6" maxlength="1" id="nbr_columns" name="nbr_columns" value="{NBR_COLUMNS}" class="text" /></label></dd>
+						<dt><label for="nbr_column">* {L_NBR_COLUMN_MAX}</label></dt>
+						<dd><label><input type="text" size="6" maxlength="1" id="nbr_column" name="nbr_column" value="{NBR_COLUMN}" class="text" /></label></dd>
 					</dl>
 					<dl>
-						<dt><label for="pagination_activated">{L_ACTIV_PAGINATION}</label></dt>
+						<dt><label for="activ_pagin">{L_ACTIV_PAGINATION}</label></dt>
 						<dd>
-							<label><input type="radio" name="pagination_activated" id="pagination_activated" value="1" # IF PAGIN_ENABLED #checked="checked" # ENDIF #/> {L_YES}</label>
+							<label><input type="radio" name="activ_pagin" id="activ_pagin" value="1" # IF PAGIN_ENABLED #checked="checked" # ENDIF #/> {L_YES}</label>
 							&nbsp;&nbsp;
-							<label><input type="radio" name="pagination_activated" value="0" # IF PAGIN_DISABLED #checked="checked" # ENDIF #/> {L_NO}</label>
+							<label><input type="radio" name="activ_pagin" value="0" # IF PAGIN_DISABLED #checked="checked" # ENDIF #/> {L_NO}</label>
 						</dd>
 					</dl>
 					<dl>
 						<dt><label for="type">{L_ACTIV_NEWS_BLOCK}</label></dt>
 						<dd>
-							<label><input type="radio" name="type" id="news_block_activated" value="1" # IF BLOCK_ENABLED #checked="checked" # ENDIF #/> {L_YES}</label>
+							<label><input type="radio" name="type" id="type" value="1" # IF BLOCK_ENABLED #checked="checked" # ENDIF #/> {L_YES}</label>
 							&nbsp;&nbsp;
 							<label><input type="radio" name="type" value="0" # IF BLOCK_DISABLED #checked="checked" # ENDIF #/> {L_NO}</label>
 						</dd>
 					</dl>
 					<dl>
-						<dt><label for="comments_activated">{L_ACTIV_COM_NEWS}</label></dt>
+						<dt><label for="activ_com">{L_ACTIV_COM_NEWS}</label></dt>
 						<dd>
-							<label><input type="radio" name="comments_activated" id="comments_activated" value="1" # IF COM_ENABLED #checked="checked" # ENDIF #/> {L_YES}</label>
+							<label><input type="radio" name="activ_com" id="activ_com" value="1" # IF COM_ENABLED #checked="checked" # ENDIF #/> {L_YES}</label>
 							&nbsp;&nbsp;
-							<label><input type="radio" name="comments_activated" value="0" # IF COM_DISABLED #checked="checked" # ENDIF #/> {L_NO}</label>
+							<label><input type="radio" name="activ_com" value="0" # IF COM_DISABLED #checked="checked" # ENDIF #/> {L_NO}</label>
 						</dd>
 					</dl>
 					<dl>
-						<dt><label for="icon_activated">{L_ACTIV_ICON_NEWS}</label></dt>
+						<dt><label for="activ_icon">{L_ACTIV_ICON_NEWS}</label></dt>
 						<dd>
-							<label><input type="radio" name="icon_activated" id="icon_activated" value="1" # IF ICON_ENABLED #checked="checked" # ENDIF #/> {L_YES}</label>
+							<label><input type="radio" name="activ_icon" id="activ_icon" value="1" # IF ICON_ENABLED #checked="checked" # ENDIF #/> {L_YES}</label>
 							&nbsp;&nbsp;
-							<label><input type="radio" name="icon_activated" value="0" # IF ICON_DISABLED #checked="checked" # ENDIF #/> {L_NO}</label>
+							<label><input type="radio" name="activ_icon" value="0" # IF ICON_DISABLED #checked="checked" # ENDIF #/> {L_NO}</label>
 						</dd>
 					</dl>
 					<dl>
@@ -135,11 +135,11 @@
 				<fieldset id="preview_description">
 					<legend>{L_EDITO_WHERE}</legend>
 					<dl>
-						<dt><label for="edito_activated">{L_ACTIV_EDITO}</label></dt>
+						<dt><label for="activ_edito">{L_ACTIV_EDITO}</label></dt>
 						<dd>
-							<label><input type="radio" name="edito_activated" id="edito_activated" value="1" # IF EDITO_ENABLED #checked="checked" # ENDIF #/> {L_YES}</label>
+							<label><input type="radio" name="activ_edito" id="activ_edito" value="1" # IF EDITO_ENABLED #checked="checked" # ENDIF #/> {L_YES}</label>
 							&nbsp;&nbsp;
-							<label><input type="radio" name="edito_activated" value="0" # IF EDITO_DISABLED #checked="checked" # ENDIF #/> {L_NO}</label>
+							<label><input type="radio" name="activ_edito" value="0" # IF EDITO_DISABLED #checked="checked" # ENDIF #/> {L_NO}</label>
 						</dd>
 					</dl>
 					<dl>
@@ -150,7 +150,7 @@
 					<label for="contents">{L_TEXT}</label>
 					<label>
 						{KERNEL_EDITOR}
-						<textarea rows="20" cols="90" id="contents" name="edito_content">{CONTENTS}</textarea>
+						<textarea rows="20" cols="90" id="contents" name="edito">{CONTENTS}</textarea>
 					</label>
 					<br />
 				</fieldset>

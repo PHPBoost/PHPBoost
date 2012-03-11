@@ -48,21 +48,12 @@ class ArticlesHomePageExtensionPoint implements HomePageExtensionPoint
 	
 	private function get_view()
 	{
-		global $idartcat, $Session, $User, $invisible, $Cache, $ARTICLES_CAT, $LANG, $ARTICLES_LANG, $Bread_crumb;
+		global $idartcat, $Session, $User, $invisible, $Cache, $ARTICLES_CAT, $CONFIG_ARTICLES, $LANG, $ARTICLES_LANG, $Bread_crumb;
 		require_once(PATH_TO_ROOT . '/articles/articles_begin.php'); 
 		
 		// Initialisation des imports.
 		$now = new Date(DATE_NOW, TIMEZONE_AUTO);
 		$Pagination = new DeprecatedPagination();
-		
-		$articles_config = ArticlesConfig::load();
-		
-		//Récupération des éléments de configuration
-		$config_authorizations = $articles_config->get_authorizations();
-		$config_nbr_columns = $articles_config->get_nbr_columns();
-		$config_nbr_cat_max = $articles_config->get_nbr_cat_max();
-		$config_nbr_articles_max = $articles_config->get_nbr_articles_max();
-		$config_note_max = $articles_config->get_note_max();
 		
 		if ($idartcat > 0)
 		{
@@ -149,7 +140,7 @@ class ArticlesHomePageExtensionPoint implements HomePageExtensionPoint
 		$selected_fields['desc'] = ' selected="selected"';
 
 		//Colonnes des cat�gories.
-		$nbr_column_cats = ($total_cat > $config_nbr_columns) ? $config_nbr_columns : $total_cat;
+		$nbr_column_cats = ($total_cat > $CONFIG_ARTICLES['nbr_column']) ? $CONFIG_ARTICLES['nbr_column'] : $total_cat;
 		$nbr_column_cats = !empty($nbr_column_cats) ? $nbr_column_cats : 1;
 		$column_width_cats = floor(100/$nbr_column_cats);
 
@@ -159,7 +150,7 @@ class ArticlesHomePageExtensionPoint implements HomePageExtensionPoint
 		$tpl->put_all(array(
 		'C_WRITE'=> $User->check_auth($ARTICLES_CAT[$idartcat]['auth'], AUTH_ARTICLES_WRITE),
 		'C_IS_ADMIN' => $User->check_level(User::ADMIN_LEVEL) ? true : false,
-		'C_ADD' => $User->check_auth($config_authorizations, AUTH_ARTICLES_CONTRIBUTE) || $User->check_auth($config_authorizations, AUTH_ARTICLES_WRITE),
+		'C_ADD' => $User->check_auth($CONFIG_ARTICLES['global_auth'], AUTH_ARTICLES_CONTRIBUTE) || $User->check_auth($CONFIG_ARTICLES['global_auth'], AUTH_ARTICLES_WRITE),
 		'C_EDIT' => $User->check_auth($ARTICLES_CAT[$idartcat]['auth'], AUTH_ARTICLES_MODERATE) || $User->check_auth($ARTICLES_CAT[$idartcat]['auth'], AUTH_ARTICLES_WRITE) ,
 		'IDCAT' => $idartcat,
 		'COLUMN_WIDTH_CAT' => $column_width_cats,
@@ -225,7 +216,7 @@ class ArticlesHomePageExtensionPoint implements HomePageExtensionPoint
 		{
 			$tpl->put_all(array(
 			'C_ARTICLES_CAT' => true,
-			'PAGINATION_CAT' => $Pagination->display('articles' . url('.php' . (!empty($unget) ? $unget . '&amp;' : '?') . 'cat=' . $idartcat . '&amp;pcat=%d', '-' . $idartcat . '-0+' . $rewrite_title . '.php?pcat=%d' . $unget), $total_cat , 'pcat', $config_nbr_cat_max, 3)
+			'PAGINATION_CAT' => $Pagination->display('articles' . url('.php' . (!empty($unget) ? $unget . '&amp;' : '?') . 'cat=' . $idartcat . '&amp;pcat=%d', '-' . $idartcat . '-0+' . $rewrite_title . '.php?pcat=%d' . $unget), $total_cat , 'pcat', $CONFIG_ARTICLES['nbr_cat_max'], 3)
 			));
 
 			$i = 0;
@@ -233,7 +224,7 @@ class ArticlesHomePageExtensionPoint implements HomePageExtensionPoint
 			FROM " . DB_TABLE_ARTICLES_CAT . " ac
 			" . $clause_cat . $clause_unauth_cats . "
 			ORDER BY ac.id_parent
-			" . $this->sql_querier->limit($Pagination->get_first_msg($config_nbr_cat_max, 'pcat'), $config_nbr_cat_max), __LINE__, __FILE__);
+			" . $this->sql_querier->limit($Pagination->get_first_msg($CONFIG_ARTICLES['nbr_cat_max'], 'pcat'), $CONFIG_ARTICLES['nbr_cat_max']), __LINE__, __FILE__);
 
 			while ($row = $this->sql_querier->fetch_assoc($result))
 			{
@@ -255,7 +246,7 @@ class ArticlesHomePageExtensionPoint implements HomePageExtensionPoint
 		{
 			$tpl->put_all(array(
 			'C_ARTICLES_LINK' => true,
-			'PAGINATION' => $Pagination->display('articles' . url('.php' . (!empty($unget) ? $unget . '&amp;' : '?') . 'cat=' . $idartcat . '&amp;p=%d', '-' . $idartcat . '-0-%d+' . $rewrite_title . '.php' . $unget), $nbr_articles , 'p', $config_nbr_articles_max, 3),
+			'PAGINATION' => $Pagination->display('articles' . url('.php' . (!empty($unget) ? $unget . '&amp;' : '?') . 'cat=' . $idartcat . '&amp;p=%d', '-' . $idartcat . '-0-%d+' . $rewrite_title . '.php' . $unget), $nbr_articles , 'p', $CONFIG_ARTICLES['nbr_articles_max'], 3),
 			'CAT' => $ARTICLES_CAT[$idartcat]['name']
 			));
 
@@ -265,7 +256,7 @@ class ArticlesHomePageExtensionPoint implements HomePageExtensionPoint
 			LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = a.user_id
 			WHERE a.visible = 1 AND a.idcat = '" . $idartcat .	"' AND a.start <= '" . $now->get_timestamp() . "' AND (a.end >= '" . $now->get_timestamp() . "' OR a.end = 0)
 			ORDER BY " . $sort . " " . $mode .
-			$this->sql_querier->limit($Pagination->get_first_msg($config_nbr_articles_max, 'p'), $config_nbr_articles_max), __LINE__, __FILE__);
+			$this->sql_querier->limit($Pagination->get_first_msg($CONFIG_ARTICLES['nbr_articles_max'], 'p'), $CONFIG_ARTICLES['nbr_articles_max']), __LINE__, __FILE__);
 
 			while ($row = $this->sql_querier->fetch_assoc($result))
 			{
@@ -278,7 +269,7 @@ class ArticlesHomePageExtensionPoint implements HomePageExtensionPoint
 				'CAT' => $ARTICLES_CAT[$idartcat]['name'],
 				'DATE' => gmdate_format('date_format_short', $row['timestamp']),
 				'COMPT' => $row['views'],
-				'NOTE' => ($row['nbrnote'] > 0) ? Note::display_img($row['note'], $config_note_max, 5) : '<em>' . $LANG['no_note'] . '</em>',
+				'NOTE' => ($row['nbrnote'] > 0) ? Note::display_img($row['note'], $CONFIG_ARTICLES['note_max'], 5) : '<em>' . $LANG['no_note'] . '</em>',
 				'COM' => $row['nbr_com'],
 				'DESCRIPTION'=>FormatingHelper::second_parse($row['description']),
 				'U_ARTICLES_PSEUDO'=>'<a href="' . UserUrlBuilder::profile($row['user_id'])->absolute() . '" class="' . $array_class[$row['level']] . '"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . TextHelper::wordwrap_html($row['login'], 19) . '</a>',
@@ -304,7 +295,7 @@ class ArticlesHomePageExtensionPoint implements HomePageExtensionPoint
 				LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = a.user_id
 				WHERE a.visible = 0 AND a.idcat = '" . $idartcat .	"'  AND a.user_id != -1 AND a.start > '" . $now->get_timestamp() . "' AND (a.end <= '" . $now->get_timestamp() . "' OR a.start = 0)
 				ORDER BY " . $sort . " " . $mode .
-				$this->sql_querier->limit($Pagination->get_first_msg($config_nbr_articles_max, 'p'), $config_nbr_articles_max), __LINE__, __FILE__);
+				$this->sql_querier->limit($Pagination->get_first_msg($CONFIG_ARTICLES['nbr_articles_max'], 'p'), $CONFIG_ARTICLES['nbr_articles_max']), __LINE__, __FILE__);
 
 				while ($row = $this->sql_querier->fetch_assoc($result))
 				{
@@ -317,7 +308,7 @@ class ArticlesHomePageExtensionPoint implements HomePageExtensionPoint
 						'CAT' => $ARTICLES_CAT[$idartcat]['name'],
 						'DATE' => gmdate_format('date_format_short', $row['timestamp']),
 						'COMPT' => $row['views'],
-						'NOTE' => ($row['nbrnote'] > 0) ? Note::display_img($row['note'], $config_note_max, 5) : '<em>' . $LANG['no_note'] . '</em>',
+						'NOTE' => ($row['nbrnote'] > 0) ? Note::display_img($row['note'], $CONFIG_ARTICLES['note_max'], 5) : '<em>' . $LANG['no_note'] . '</em>',
 						'COM' => $row['nbr_com'],
 						'U_ARTICLES_PSEUDO'=>'<a href="' . UserUrlBuilder::profile($row['user_id'])->absolute() . '" class="' . $array_class[$row['level']] . '"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . TextHelper::wordwrap_html($row['login'], 19) . '</a>',
 						'U_ARTICLES_LINK' => url('.php?id=' . $row['id'] . '&amp;cat=' . $idartcat, '-' . $idartcat . '-' . $row['id'] . '+' . Url::encode_rewrite($fichier) . '.php'),

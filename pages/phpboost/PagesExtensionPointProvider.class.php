@@ -25,11 +25,12 @@
  *
  ###################################################*/
  
+
 define('PAGES_MAX_SEARCH_RESULTS', 100);
 
 class PagesExtensionPointProvider extends ExtensionPointProvider
 {
-    public function __construct() //Constructeur de la classe
+    public function __construct() //Constructeur de la classe WikiInterface
     {
 		$this->sql_querier = PersistenceContext::get_sql();
         parent::__construct('pages');
@@ -38,28 +39,42 @@ class PagesExtensionPointProvider extends ExtensionPointProvider
 	//Récupération du cache.
 	public function get_cache()
 	{
-		$pages_config = PagesConfig::load();
-		
 		//Catégories des pages
-		$code = '$_PAGES_CATS = array();' . "\n\n";
-
+		$config = 'global $_PAGES_CATS;' . "\n";
+		$config .= '$_PAGES_CATS = array();' . "\n";
 		$result = $this->sql_querier->query_while("SELECT c.id, c.id_parent, c.id_page, p.title, p.auth
 		FROM " . PREFIX . "pages_cats c
 		LEFT JOIN " . PREFIX . "pages p ON p.id = c.id_page
 		ORDER BY p.title", __LINE__, __FILE__);
 		while ($row = $this->sql_querier->fetch_assoc($result))
 		{
-			$code .= '$_PAGES_CATS[' . $row['id'] . '] = ' .
-			var_export(array(
-			'id_parent' => !empty($row['id_parent']) ? $row['id_parent'] : '0',
-			'name' => $row['title'],
-			'auth' => unserialize($row['auth'])
-			), true)
-			. ';' . "\n";
+			$config .= '$_PAGES_CATS[\'' . $row['id'] . '\'] = ' . var_export(array(
+				'id_parent' => !empty($row['id_parent']) ? $row['id_parent'] : '0',
+				'name' => $row['title'],
+				'auth' => unserialize($row['auth'])
+			), true) . ';' . "\n";
 		}
-		$this->sql_querier->query_close($result);
+
+		//Configuration du module de pages
+		$code = 'global $_PAGES_CONFIG;' . "\n";
+		$CONFIG_PAGES = unserialize($this->sql_querier->query("SELECT value FROM " . DB_TABLE_CONFIGS . " WHERE name = 'pages'", __LINE__, __FILE__));
+								
+		if (is_array($CONFIG_PAGES))
+			$CONFIG_PAGES['auth'] = unserialize($CONFIG_PAGES['auth']);
+		else
+			$CONFIG_PAGES = array(
+			'count_hits' => 1,
+			'activ_com' => 1,
+			'auth' => array (
+				'r-1' => 5,
+				'r0' => 5,
+				'r1' => 7,
+				'r2' => 7,
+			));
 		
-		return $code;
+		$code .=  '$_PAGES_CONFIG = ' . var_export($CONFIG_PAGES, true) . ';' . "\n";
+		
+		return $config . "\n\r" . $code;	
 	}
     
 	public function home_page()

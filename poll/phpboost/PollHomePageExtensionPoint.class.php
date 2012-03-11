@@ -48,7 +48,7 @@ class PollHomePageExtensionPoint implements HomePageExtensionPoint
 	
 	private function get_view()
 	{
-		global $User, $Cache, $Bread_crumb, $POLL_CAT, $POLL_LANG, $LANG, $Session;
+		global $User, $Cache, $Bread_crumb, $POLL_CONFIG, $POLL_CAT, $POLL_LANG, $LANG, $Session;
 
 		require_once(PATH_TO_ROOT . '/poll/poll_begin.php');
 

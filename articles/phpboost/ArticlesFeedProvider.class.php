@@ -37,11 +37,10 @@ class ArticlesFeedProvider implements FeedProvider
 	function get_feed_data_struct($idcat = 0, $name = '')
 	{
 		$querier = PersistenceContext::get_querier();
-		global $Cache, $LANG, $ARTICLES_CAT,$ARTICLES_LANG;
+		global $Cache, $LANG, $CONFIG_ARTICLES, $ARTICLES_CAT,$ARTICLES_LANG;
 
 		$Cache->load('articles');
-		$articles_config = ArticlesConfig::load();
-		
+
 		require_once(PATH_TO_ROOT . '/articles/articles_constants.php');
 		$data = new FeedData();
 
@@ -60,7 +59,7 @@ class ArticlesFeedProvider implements FeedProvider
         WHERE a.visible = 1 AND (ac.visible = 1 OR a.idcat = 0) ' . $cat_clause . '
         ORDER BY a.timestamp DESC LIMIT :limit OFFSET 0', array(
             'idcat' => $idcat,
-            'limit' => 2 * $articles_config->get_nbr_articles_max()));
+            'limit' => 2 * $CONFIG_ARTICLES['nbr_articles_max']));
 
 		// Generation of the feed's items
 		foreach ($results as $row)
@@ -78,7 +77,7 @@ class ArticlesFeedProvider implements FeedProvider
                 $item->set_desc(preg_replace('`\[page\](.+)\[/page\]`U', '<br /><strong>$1</strong><hr />', FormatingHelper::second_parse($row['contents'])));
                 $item->set_date(new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $row['timestamp']));
                 $item->set_image_url($row['icon']);
-                $item->set_auth($row['idcat'] == 0 ? $articles_config->get_authorizations() : unserialize($row['auth']));
+                $item->set_auth($row['idcat'] == 0 ? $CONFIG_ARTICLES['global_auth'] : unserialize($row['auth']));
 
                 $data->add_item($item);
 		}

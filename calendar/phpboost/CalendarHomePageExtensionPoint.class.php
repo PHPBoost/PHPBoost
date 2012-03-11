@@ -78,7 +78,7 @@ class CalendarHomePageExtensionPoint implements HomePageExtensionPoint
 		$tpl->put_all(array(
 			'C_CALENDAR_DISPLAY' => true,
 			'ADMIN_CALENDAR' => ($User->check_level(User::ADMIN_LEVEL)) ? '<a href="' . HOST . DIR . '/calendar/admin_calendar.php"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/edit.png" alt ="" style="vertical-align:middle;" /></a>' : '',
-			'ADD' => $User->check_auth($calendar_config->get_authorizations(), AUTH_CALENDAR_WRITE) ? '<a href="calendar' . url('.php?add=1') . '" title="' . $LANG['add_event'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/add.png" alt="" /></a><br />' : '',
+			'ADD' => $User->check_auth($calendar_config->get_authorization(), AUTH_CALENDAR_WRITE) ? '<a href="calendar' . url('.php?add=1') . '" title="' . $LANG['add_event'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/add.png" alt="" /></a><br />' : '',
 			'DATE' => $day . ' ' . $array_l_month[$month - 1] . ' ' . $year,
 			'U_PREVIOUS' => ($month == 1) ? url('.php?d=' . $day . '&amp;m=12&amp;y=' . ($year - 1), '-' . $day . '-12-' . ($year - 1) . '.php') :  url('.php?d=1&amp;m=' . ($month - 1) . '&amp;y=' . $year, '-1-' . ($month - 1) . '-' . $year . '.php'),
 			'U_NEXT' => ($month == 12) ? url('.php?d=' . $day . '&amp;m=1&amp;y=' . ($year + 1), '-' . $day . '-1-' . ($year + 1) . '.php') :  url('.php?d=1&amp;m=' . ($month + 1) . '&amp;y=' . $year, '-1-' . ($month + 1) . '-' . $year . '.php'),
@@ -176,7 +176,7 @@ class CalendarHomePageExtensionPoint implements HomePageExtensionPoint
 			GROUP BY cl.id", __LINE__, __FILE__);
 			while ($row = $this->sql_querier->fetch_assoc($result))
 			{
-				if ($User->check_auth($calendar_config->get_authorizations(), AUTH_CALENDAR_MODO))
+				if ($User->check_auth($calendar_config->get_authorization(), AUTH_CALENDAR_MODO))
 				{
 					$edit = '&nbsp;&nbsp;<a href="calendar' . url('.php?edit=1&amp;id=' . $row['id']) . '" title="' . $LANG['edit'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/edit.png" class="valign_middle" /></a>';
 					$del = '&nbsp;&nbsp;<a href="calendar' . url('.php?delete=1&amp;id=' . $row['id'] . '&amp;token=' . $Session->get_token()) . '" title="' . $LANG['delete'] . '" onclick="javascript:return Confirm_del();"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/delete.png" class="valign_middle" alt="" /></a>';

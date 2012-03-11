@@ -36,7 +36,7 @@ if (!empty($_POST['valid']) )
 {
 	$calendar_config = CalendarConfig::load();
 	
-	$calendar_config->set_authorizations(Authorizations::build_auth_array_from_form(AUTH_CALENDAR_READ, AUTH_CALENDAR_WRITE, AUTH_CALENDAR_MODO));
+	$calendar_config->set_authorization(Authorizations::build_auth_array_from_form(AUTH_CALENDAR_READ, AUTH_CALENDAR_WRITE, AUTH_CALENDAR_MODO));
 	
 	CalendarConfig::save();
 
@@ -58,9 +58,9 @@ else
 		'L_AUTH_MODO' => $LANG['rank_modo'],
 		'L_UPDATE' => $LANG['update'],
 		'L_ERASE' => $LANG['erase'],
-		'AUTH_READ' => Authorizations::generate_select(AUTH_CALENDAR_READ,$calendar_config->get_authorizations()),
-		'AUTH_WRITE' => Authorizations::generate_select(AUTH_CALENDAR_WRITE,$calendar_config->get_authorizations()),
-		'AUTH_MODO' => Authorizations::generate_select(AUTH_CALENDAR_MODO,$calendar_config->get_authorizations()),
+		'AUTH_READ' => Authorizations::generate_select(AUTH_CALENDAR_READ,$calendar_config->get_authorization()),
+		'AUTH_WRITE' => Authorizations::generate_select(AUTH_CALENDAR_WRITE,$calendar_config->get_authorization()),
+		'AUTH_MODO' => Authorizations::generate_select(AUTH_CALENDAR_MODO,$calendar_config->get_authorization()),
 		));
 
 	$Template->display();

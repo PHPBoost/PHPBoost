@@ -25,6 +25,8 @@
  *
  ###################################################*/
 
+
+
 define('NEWS_MAX_SEARCH_RESULTS', 100);
 
 require_once PATH_TO_ROOT . '/news/news_constants.php';
@@ -43,11 +45,11 @@ class NewsExtensionPointProvider extends ExtensionPointProvider
 	public function get_cache()
 	{
 		global $LANG;
-		
-		$news_config = NewsConfig::load();
-		$config_authorizations = $news_config->get_authorizations();
-		
-		$code = '$NEWS_CAT = array();' . "\n\n";
+		//Récupération du tableau linéarisé dans la bdd
+		$news_config = unserialize($this->sql_querier->query("SELECT value FROM " . DB_TABLE_CONFIGS . " WHERE name = 'news'", __LINE__, __FILE__));
+
+		$string = 'global $NEWS_CONFIG, $NEWS_CAT;' . "\n\n" . '$NEWS_CONFIG = $NEWS_CAT = array();' . "\n\n";
+		$string .= '$NEWS_CONFIG = ' . var_export($news_config, true) . ';' . "\n\n";
 
 		//List of categories and their own properties
 		$result = $this->sql_querier->query_while("SELECT id, id_parent, c_order, auth, name, visible, image, description
@@ -55,11 +57,11 @@ class NewsExtensionPointProvider extends ExtensionPointProvider
 			ORDER BY id_parent, c_order", __LINE__, __FILE__);
 
 		//Racine
-		$code .= '$NEWS_CAT[0] = ' . var_export(array('name' => $LANG['root'],'auth' => $config_authorizations), true) . ';' . "\n\n";
+		$string .= '$NEWS_CAT[0] = ' . var_export(array('name' => $LANG['root'],'auth' => $news_config['global_auth']), true) . ';' . "\n\n";
 
 		while ($row = $this->sql_querier->fetch_assoc($result))
 		{
-			$code .= '$NEWS_CAT[' . $row['id'] . '] = ' .
+			$string .= '$NEWS_CAT[' . $row['id'] . '] = ' .
 			var_export(array(
 					'id_parent' => (int)$row['id_parent'],
 					'order' => (int)$row['c_order'],
@@ -68,11 +70,11 @@ class NewsExtensionPointProvider extends ExtensionPointProvider
 					'visible' => (bool)$row['visible'],
 					'image' => !empty($row['image']) ? $row['image'] : '/news/news.png',
 					'description' => $row['description'],
-					'auth' => !empty($row['auth']) ? unserialize($row['auth']) : $config_authorizations
+					'auth' => !empty($row['auth']) ? unserialize($row['auth']) : $news_config['global_auth']
 			), true) . ';' . "\n\n";
 		}
 
-		return $code;
+		return $string;
 	}
 
 	public function search()
@@ -102,11 +104,8 @@ class NewsExtensionPointProvider extends ExtensionPointProvider
 
 	private function create_module_map_sections($id_cat, $auth_mode)
 	{
-		global $NEWS_CAT, $NEWS_LANG, $LANG, $User;
-		
-		$news_config = NewsConfig::load();
-		$config_authorizations = $news_config->get_authorizations();
-		
+		global $NEWS_CAT, $NEWS_LANG, $LANG, $User, $NEWS_CONFIG;
+
 		$this_category = new SitemapLink($NEWS_CAT[$id_cat]['name'], new Url('/news/' . url('news.php?cat=' . $id_cat, 'news-' . $id_cat . '+' . Url::encode_rewrite($NEWS_CAT[$id_cat]['name']) . '.php')), Sitemap::FREQ_WEEKLY);
 
 		$category = new SitemapSection($this_category);
@@ -123,11 +122,11 @@ class NewsExtensionPointProvider extends ExtensionPointProvider
 			$properties = $NEWS_CAT[$id];
 			if ($auth_mode == Sitemap::AUTH_PUBLIC)
 			{
-				$this_auth = is_array($properties['auth']) ? Authorizations::check_auth(RANK_TYPE, GUEST_LEVEL, $properties['auth'], AUTH_NEWS_READ) : Authorizations::check_auth(RANK_TYPE, GUEST_LEVEL, $config_authorizations, AUTH_NEWS_READ);
+				$this_auth = is_array($properties['auth']) ? Authorizations::check_auth(RANK_TYPE, GUEST_LEVEL, $properties['auth'], AUTH_NEWS_READ) : Authorizations::check_auth(RANK_TYPE, GUEST_LEVEL, $NEWS_CONFIG['global_auth'], AUTH_NEWS_READ);
 			}
 			else
 			{
-				$this_auth = is_array($properties['auth']) ? $User->check_auth($properties['auth'], AUTH_NEWS_READ) : $User->check_auth($config_authorizations, AUTH_NEWS_READ);
+				$this_auth = is_array($properties['auth']) ? $User->check_auth($properties['auth'], AUTH_NEWS_READ) : $User->check_auth($NEWS_CONFIG['global_auth'], AUTH_NEWS_READ);
 			}
 			if ($this_auth && $id != 0 && $properties['visible'] && $properties['id_parent'] == $id_cat)
 			{

@@ -105,18 +105,17 @@ class GalleryFeedProvider implements FeedProvider
 
 	function get_feed_data_struct($idcat = 0, $name = '')
 	{
-		global $Cache,$LANG,$GALLERY_CAT,$GALLERY_LANG;
+		global $Cache,$LANG,$CONFIG_GALLERY,$GALLERY_CAT,$GALLERY_LANG;
 
 		$querier = PersistenceContext::get_querier();
-		$gallery_config = GalleryConfig::load();
-		
-		if(!isset($gallery_config))
+
+		if(!isset($CONFIG_GALLERY))
 		{
 			load_module_lang('gallery'); //Chargement de la langue du module.
 			$Cache->load('gallery');
 		}
 		defined('READ_CAT_GALLERY') OR define('READ_CAT_GALLERY', 0x01);
-		
+			
 		$data = new FeedData();
 
 		$data->set_title($GALLERY_LANG['xml_gallery_desc']);
@@ -128,7 +127,7 @@ class GalleryFeedProvider implements FeedProvider
 		$data->set_auth_bit(READ_CAT_GALLERY);
 
         $req_cats = (($idcat > 0) && isset($GALLERY_CAT[$idcat])) ? ' AND c.id_left >= :cat_left AND id_right <= :cat_right' : '';
-        $parameters = array('limit' => 2 * $gallery_config->get_nbr_pics_max());
+        $parameters = array('limit' => 2 * $CONFIG_GALLERY['nbr_pics_max']);
         if ($idcat > 0)
         {
         	$parameters['cat_left'] = $GALLERY_CAT[$idcat]['id_left'];
@@ -154,7 +153,7 @@ class GalleryFeedProvider implements FeedProvider
 			$item->set_guid($link);
 			$item->set_date(new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $row['timestamp']));
 			$item->set_image_url($row['path']);
-			$item->set_auth($row['idcat'] == 0 ? $gallery_config->get_authorizations() : unserialize($row['auth']));
+			$item->set_auth($row['idcat'] == 0 ? $CONFIG_GALLERY['auth_root'] : unserialize($row['auth']));
 
 			$data->add_item($item);
 		}

@@ -38,15 +38,18 @@ class PollExtensionPointProvider extends ExtensionPointProvider
     //Récupération du cache.
 	function get_cache()
 	{
-		$poll_config = PollConfig::load();
-		
-		//Liste des sondages affichés dans le mini module
-		$config_displayed_in_mini_module_list = $poll_config->get_displayed_in_mini_module_list();
-		
+		$code = 'global $CONFIG_POLL;' . "\n";
+
+		//Récupération du tableau linéarisé dans la bdd.
+		$CONFIG_POLL = unserialize($this->sql_querier->query("SELECT value FROM " . DB_TABLE_CONFIGS . " WHERE name = 'poll'", __LINE__, __FILE__));
+		$CONFIG_POLL = is_array($CONFIG_POLL) ? $CONFIG_POLL : array();
+
+		$code .= '$CONFIG_POLL = ' . var_export($CONFIG_POLL, true) . ';' . "\n";
+
 		$_array_poll = '';
-		if (!empty($config_displayed_in_mini_module_list) && is_array($config_displayed_in_mini_module_list))
+		if (!empty($CONFIG_POLL['poll_mini']) && is_array($CONFIG_POLL['poll_mini']))
 		{
-			foreach ($config_displayed_in_mini_module_list as $key => $idpoll)
+			foreach ($CONFIG_POLL['poll_mini'] as $key => $idpoll)
 			{
 				$poll = $this->sql_querier->query_array(PREFIX . 'poll', 'id', 'question', 'votes', 'answers', 'type', "WHERE id = '" . $idpoll . "' AND archive = 0 AND visible = 1", __LINE__, __FILE__);
 				if (!empty($poll['id'])) //Sondage existant.
@@ -66,7 +69,7 @@ class PollExtensionPointProvider extends ExtensionPointProvider
 			}
 		}
 
-		$code = 'global $_array_poll;' . "\n\n" . '$_array_poll = array(' . $_array_poll . ');';
+		$code .= "\n" . 'global $_array_poll;' . "\n\n" . '$_array_poll = array(' . $_array_poll . ');';
 
 		return $code;
 	}
