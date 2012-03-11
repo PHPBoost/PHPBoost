@@ -2,11 +2,11 @@
 		<!--
 		function check_form_conf()
 		{
-			if(document.getElementById('nbr_download_max').value == "") {
+			if(document.getElementById('nbr_file_max').value == "") {
 				alert("{L_REQUIRE}");
 				return false;
 			}
-			if(document.getElementById('nbr_column').value == "") {
+			if(document.getElementById('nbr_columns').value == "") {
 				alert("{L_REQUIRE}");
 				return false;
 			}
@@ -67,8 +67,8 @@
 						<dd><label><input type="text" size="3" maxlength="3" id="nbr_file_max" name="nbr_file_max" value="{NBR_FILE_MAX}" class="text" /></label></dd>
 					</dl>
 					<dl>
-						<dt><label for="nbr_column">* {L_NBR_COLUMN_MAX}</label></dt>
-						<dd><label><input type="text" size="3" maxlength="3" id="nbr_column" name="nbr_column" value="{NBR_COLUMN}" class="text" /></label></dd>
+						<dt><label for="nbr_columns">* {L_NBR_COLUMN_MAX}</label></dt>
+						<dd><label><input type="text" size="3" maxlength="3" id="nbr_columns" name="nbr_columns" value="{NBR_COLUMNS}" class="text" /></label></dd>
 					</dl>
 					<dl>
 						<dt><label for="note_max">* {L_NOTE_MAX}</label></dt>
