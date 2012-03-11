@@ -119,11 +119,10 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 
 	protected function display_menus(Template $template)
 	{
-		global $MENUS;
+		global $MENUS, $Cache;
 
-		if (!include_file(PATH_TO_ROOT . '/cache/menus.php'))
+		if (!include_once(PATH_TO_ROOT . '/cache/menus.php'))
 		{
-			global $Cache;
 			//En cas d'échec, on régénère le cache
 			$Cache->Generate_file('menus');
 
