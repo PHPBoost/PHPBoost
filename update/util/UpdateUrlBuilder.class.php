@@ -71,7 +71,7 @@ class UpdateUrlBuilder
     /**
      * @return Url
      */
-    public static function execute_update()
+    public static function update()
     {
         return self::url('/execute');
     }

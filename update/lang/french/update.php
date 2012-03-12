@@ -43,11 +43,6 @@ $lang = array(
 	'step.list.execute' => 'Mise à jour',
 	'step.list.end' => 'Fin de la mise à jour',
 	'installation.progression' => 'Progression de la mise à jour',
-	'appendices' => 'Annexes',
-	'documentation' => 'Documentation',
-	'documentation.link' => 'http://www.phpboost.com/wiki/installer-phpboost',
-	'installation.restart' => 'Recommencer l\'installation',
-	'installation.confirmRestart' => 'Etes-vous certain de vouloir recommencer la mise à jour ?',
 	'language.change' => 'Changer de langue',
 	'change' => 'Changer',
     'step.previous' => 'Etape précédente',
@@ -121,6 +116,13 @@ $lang = array(
 	'phpboost.alreadyInstalled.overwrite' => 'Je souhaite écraser l\'installation de PHPBoost déjà existante',
 	'phpboost.alreadyInstalled.overwrite.confirm' => 'Vous devez confirmer l\'écrasement de la précédente installation',
 
+//Execute update
+	'step.execute.title' => 'Exécuter la mise à jour',
+	'step.execute.message' => 'Mise à jour du site',
+	'step.execute.explanation' => 'Cette étape va convertir votre site PHPBoost 3.0 vers PHPBoost 4.0.
+	<br /><br />
+	Attention cette étape est irréversible, veuillez par précaution sauvegarder votre base de données au préalable !',
+
 //configuraton du site
     'step.websiteConfig.title' => 'Configuration du serveur',
 	'websiteConfig' => 'Configuration du site',
@@ -141,89 +143,5 @@ $lang = array(
 	'website.name.required' => 'Vous devez entrer le nom de votre site !',
 	'website.host.warning' => 'L\'adresse du site que vous avez rentrée ne correspond pas à celle détectée par le serveur. Souhaitez vous vraiment choisir cette adresse ?',
 	'website.path.warning' => 'Le chemin du site sur le serveur que vous avez rentrée ne correspond pas à celle détectée par le serveur. Souhaitez vous vraiment choisir ce chemin ?',
-//	'site_config_mail_signature' => 'Cordialement, l\'équipe du site.',
-
-//administration
-    'step.admin.title' => 'Compte administrateur',
-	'adminCreation' => 'Création du compte administrateur',
-	'adminCreation.explanation' => '<p>Ce compte donne accès au panneau d\'administration par lequel vous configurerez votre site. Vous pourrez modifier les informations concernant ce compte par la suite en consultant votre profil.</p>
-<p>Par la suite, il sera possible de donner à plusieurs personnes le statut d\'administrateur, ce compte est celui du premier administrateur, sans lequel vous ne pourriez pas gérer le site.</p>',
-	'admin.account' => 'Compte administrateur',
-	'admin.login' => 'Pseudo',
-	'admin.login.explanation' => 'Minimum 3 caractères',
-	'admin.password' => 'Mot de passe',
-	'admin.password.explanation' => 'Minimum 6 caractères',
-	'admin.password.repeat' => 'Répéter le mot de passe',
-	'admin.email' => 'Courrier électronique',
-	'admin.email.explanation' => 'Doit être valide pour recevoir le code de déverrouillage',
-	'admin.login.required' => 'Vous devez choisir un pseudo',
-	'admin.login.length' => 'Votre pseudo est trop court (3 caractères minimum)',
-	'admin.password.required' => 'Vous devez entrer un mot de passe',
-	'admin.password.length' => 'Votre mot de passe est trop court (6 caractères minimum)',
-	'admin.confirmPassword.required' => 'Vous devez confirmer votre mot de passe',
-	'admin.passwords.mismatch' => 'Les deux mots de passe que vous avez entrés ne correspondent pas',
-	'admin.email.required' => 'Vous devez entrer une adresse de courier électronique',
-	'admin.email.invalid' => 'L\'adresse de courier électronique que vous avez entrée n\'a pas une forme correcte',
-//	'admin_invalid_email_error' => 'Mail invalide',
-	'admin.connectAfterInstall' => 'Me connecter à la fin de l\'installation',
-	'admin.autoconnect' => 'Rester connecté systématiquement à chacune de mes visites',
-//	'admin_error' => 'Erreur',
-	'admin.created.email.object' => 'Identifiants de votre site créé avec PHPBoost (message à conserver)',
-	'admin.created.email.unlockCode' => 'Cher %s,
-
-Tout d\'abord, merci d\'avoir choisi PHPBoost pour réaliser votre site, nous espérons qu\'il répondra au mieux à vos besoins. Pour tout problème n\'hésitez pas à vous rendre sur le forum http://www.phpboost.com/forum/index.php
-
-Voici vos identifiants (ne les perdez pas, ils vous seront utiles pour administrer votre site et ne pourront plus être récupérés).
-
-Identifiant: %s
-Password: %s
-
-A conserver ce code (Il ne vous sera plus délivré) : %s
-
-Ce code permet le déverrouillage de l\'administration en cas de tentative d\'intrusion dans l\'administration par un utilisateur mal intentionné, il vous sera demandé dans le formulaire de connexion directe à l\'administration (%s/admin/admin_index.php)
-
-Cordialement l\'équipe PHPBoost.',
-
-//Fin de l'installation
-    'step.finish.title' => 'Fin de l\'installation',
-	'finish.message' => '<fieldset>
-                            <legend>PHPBoost est désormais installé !</legend>
-                            <p class="success">L\'installation de PHPBoost s\'est déroulée avec succès. L\'équipe PHPBoost vous remercie de lui avoir fait confiance et est heureuse de vous compter parmi ses utilisateurs.</p>
-                            <p>Nous vous conseillons de vous tenir au courant de l\'évolution de PHPBoost via le site de la communauté francophone, <a href="http://www.phpboost.com">www.phpboost.com</a>. Vous serez automatiquement averti dans le panneau d\'administration de l\'arrivée de nouvelles mises à jour. Il est fortement conseillé de tenir votre système à jour afin de profiter des dernières nouveautés et de corriger les éventuelles failles ou erreurs.</p>
-                            <p class="warning">Par mesure de sécurité nous vous conseillons fortement de supprimer le dossier install et tout ce qu\'il contient, des personnes mal intentionnées pourraient relancer le script d\'installation et écraser certaines de vos données !</p>
-                            <p>N\'oubliez pas la <a href="http://www.phpboost.com/wiki/wiki.php">documentation</a> qui vous guidera dans l\'utilisation de PHPBoost ainsi que la <a href="http://www.phpboost.com/faq/faq.php"><acronym title="Foire Aux Questions">FAQ</acronym></a> qui répond aux questions les plus fréquentes.</p>
-                            <p>En cas de problème, rendez-vous sur le <a href="http://www.phpboost.com/forum/index.php">forum du support de PHPBoost</a>.</p>
-                        </fieldset>
-                        <fieldset>
-                            <legend>Remerciements</legend>
-                            <h2>Membres de la communauté</h2>
-                            <p>Merci à tous les membres de la communauté qui nous encouragent au quotidien et contribuent à la qualité du logiciel que ce soit en suggérant des nouvelles fonctionnalités ou en signalant des dysfonctionnements, ce qui permet d\'aboutir entre autres à une version 4.0 stable et efficace.</p>
-                            <p>Merci aux membres des équipes de PHPBoost et particulièrement à <strong>Ptithom</strong> et <strong>giliam</strong> de l\'équipe rédaction pour la documentation, <strong>KONA</strong>, <strong>Frenchbulldog</strong>, <strong>Grenouille</strong>, <strong>EnimSay</strong>, <strong>swan</strong> pour les graphismes, <strong>Gsgsd</strong>, <strong>Alain91</strong> et <strong>Crunchfamily</strong> de l\'équipe de développement de modules, <strong>Forensic</strong>, <strong>PiJean</strong> et <strong>Beowulf</strong> pour la traduction anglaise et <strong>Shadow</strong> et <strong>Kak Miortvi Pengvin</strong> pour la modération de la communauté.</p>
-                            <h2>Projets</h2>
-                            <p>PHPBoost utilise différents outils afin d\'élargir ses fonctionnalités sans augmenter trop le temps de développement. Ces outils sont tous libres, distribués sous la licence GNU/GPL pour la plupart.</p>
-                            <ul>
-                                <li><a href="http://notepad-plus.sourceforge.net">Notepad++</a> : Editeur de texte puissant très utilisé pour le développement de PHPBoost.</li>
-                                <li><a href="http://www.eclipse.org/pdt/">Eclipse <acronym title="PHP Development Tools">PDT</acronym></a> : <acronym title="Integrated Development Environment">IDE</acronym> PHP (outil de développement PHP) basé sur Eclipse.</li>
-                                <li><a href="http://tango.freedesktop.org/Tango_Desktop_Project">Tango Desktop Project</a> : Ensemble d\'icônes diverses utilisées sur l\'ensemble de PHPBoost.</li>
-                                <li><a href="http://www.phpconcept.net/pclzip/">PCLZIP</a> : Librairie permettant de travailler sur des archives au format Zip.</li>
-                                <li><a href="http://www.xm1math.net/phpmathpublisher/index_fr.html">PHPMathPublisher</a> : Ensemble de fonctions permettant de mettre en forme des formules mathématiques à partir d\'une syntaxe proche de celle du <a href="http://fr.wikipedia.org/wiki/LaTeX">LaTeX</a>.</li>
-                                <li><a href="http://tinymce.moxiecode.com/">TinyMCE</a> : Editeur <acronym title="What You See Is What You Get">WYSIWYG</acronym> permettant la mise en page à la volée.</li>
-                                <li><a href="http://qbnz.com/highlighter/">GeSHi</a> : Colorateur de code source dans de nombreux langages informatiques.</li>
-                                <li><a href="http://script.aculo.us/">script.aculo.us</a> : Framework Javascript et <acronym title="Asynchronous Javascript And XML">AJAX</acronym></li>
-                                <li><a href="http://www.alsacreations.fr/mp3-dewplayer.html">Dewplayer</a> : lecteur audio au format flash</li>
-                                <li><a href="http://flowplayer.org">Flowplayer</a> : lecteur vidéo au format flash</li>
-                            </ul>
-                        </fieldset>
-                        <fieldset>
-                            <legend>Crédits</legend>
-                            <ul>
-                                <li><strong>Régis VIARRE</strong> <em>(alias CrowkaiT)</em>, fondateur du projet PHPBoost et développeur retraité</li>
-                                <li><strong>Benoît SAUTEL</strong> <em>(alias ben.popeye)</em>, développeur retraité</li>
-                                <li><strong>Loic ROUCHON</strong> <em>(alias horn)</em>, développeur retraité</li>
-                                <li><strong>Kévin MASSY</strong> <em>(alias ReidLos)</em>, développeur</li>
-                            </ul>
-                        </fieldset>',
-	'site.index' => 'Aller à l\'accueil du site',
-	'admin.index' => 'Aller dans le panneau d\'administration'
 );
 ?>
