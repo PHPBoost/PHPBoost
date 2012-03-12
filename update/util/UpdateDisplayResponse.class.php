@@ -106,11 +106,11 @@ class UpdateDisplayResponse extends AbstractResponse
 			array('name' => $this->lang['step.list.introduction'], 'img' => 'intro.png'),
 			array('name' => $this->lang['step.list.server'], 'img' => 'config.png'),
 			array('name' => $this->lang['step.list.database'], 'img' => 'database.png'),
+			array('name' => $this->lang['step.list.execute'], 'img' => 'database.png'),
 			array('name' => $this->lang['step.list.website'], 'img' => 'advanced_config.png'),
-			array('name' => $this->lang['step.list.execute'], 'img' => 'execute.png'),
 			array('name' => $this->lang['step.list.end'], 'img' => 'end.png')
 		);
-		$this->nb_steps = count($steps) - 1;
+		$this->nb_steps = count($steps);
 
 		for ($i = 0; $i < $this->nb_steps; $i++)
 		{
