@@ -43,7 +43,9 @@ class WebHomePageExtensionPoint implements HomePageExtensionPoint
 	{
 		global $WEB_LANG;
 		
-		return $WEB_LANG['title_web'];
+		load_module_lang('web');
+		
+		return $WEB_LANG['web'];
 	}
 	
 	private function get_view()

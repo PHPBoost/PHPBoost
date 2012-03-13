@@ -43,6 +43,8 @@ class PagesHomePageExtensionPoint implements HomePageExtensionPoint
 	{
 		global $PAGES_LANG;
 		
+		load_module_lang('pages');
+		
 		return $PAGES_LANG['pages'];
 	}
 	

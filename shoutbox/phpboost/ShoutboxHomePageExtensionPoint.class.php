@@ -43,7 +43,9 @@ class ShoutboxHomePageExtensionPoint implements HomePageExtensionPoint
 	{
 		global $SHOUTBOX_LANG;
 		
-		return $SHOUTBOX_LANG['title_shoutbox'];
+		load_module_lang('shoutbox');
+		
+		return $SHOUTBOX_LANG['shoutbox'];
 	}
 	
 	private function get_view()

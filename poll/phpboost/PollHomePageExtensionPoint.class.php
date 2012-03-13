@@ -43,6 +43,8 @@ class PollHomePageExtensionPoint implements HomePageExtensionPoint
 	{
 		global $POLL_LANG;
 		
+		load_module_lang('poll');
+		
 		return $POLL_LANG['poll'];
 	}
 	

@@ -43,7 +43,9 @@ class GuestbookHomePageExtensionPoint implements HomePageExtensionPoint
 	{
 		global $GUESTBOOK_LANG;
 		
-		return $GUESTBOOK_LANG['title_guestbook'];
+		load_module_lang('guestbook');
+		
+		return $GUESTBOOK_LANG['guestbook'];
 	}
 	
 	private function get_view()

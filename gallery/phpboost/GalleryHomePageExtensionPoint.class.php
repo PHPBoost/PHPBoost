@@ -41,9 +41,11 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 	
 	private function get_title()
 	{
-		global $ARTICLES_LANG;
+		global $LANG;
 		
-		return $ARTICLES_LANG['title_articles'];
+		load_module_lang('gallery');
+		
+		return $LANG['gallery'];
 	}
 	
 	private function get_view()
