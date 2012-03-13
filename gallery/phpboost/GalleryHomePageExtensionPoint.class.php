@@ -64,7 +64,7 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 		if (!empty($g_idcat))
 		{
 			if (!isset($CAT_GALLERY[$g_idcat]) || $CAT_GALLERY[$g_idcat]['aprob'] == 0)
-				AppContext::get_response()->redirect('/gallery/gallery' . url('.php?error=unexist_cat', '', '&'));
+				AppContext::get_response()->redirect(PATH_TO_ROOT .'/gallery/gallery' . url('.php?error=unexist_cat', '', '&'));
 	
 			$cat_links = '';
 			foreach ($CAT_GALLERY as $id => $array_info_cat)
@@ -149,7 +149,7 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 			'HEIGHT_MAX' => $CONFIG_GALLERY['height'],
 			'WIDTH_MAX' => $column_width_pics,
 			'MODULE_DATA_PATH' => $module_data_path,
-			'ADD_PICS' => $User->check_auth($CAT_GALLERY[$g_idcat]['auth'], WRITE_CAT_GALLERY) ? '<a href="' . GalleryUrlBuilder::get_link_cat_add($g_idcat) . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/add.png" alt="" class="valign_middle" /></a>' : '',
+			'ADD_PICS' => $User->check_auth($CAT_GALLERY[$g_idcat]['auth'], WRITE_CAT_GALLERY) ? '<a href="' . GalleryUrlBuilder::get_link_cat_add($g_idcat) . '"><img src="'. PATH_TO_ROOT.'/templates/' . get_utheme() . '/images/' . get_ulang() . '/add.png" alt="" class="valign_middle" /></a>' : '',
 			'L_CONFIRM_DEL_FILE' => $LANG['confim_del_file'],
 			'L_FILE_FORBIDDEN_CHARS' => $LANG['file_forbidden_chars'],
 			'L_TOTAL_IMG' => sprintf($LANG['total_img_cat'], $nbr_pics),
@@ -167,10 +167,10 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 			'L_DISPLAY' => $LANG['display'],
 			'U_INDEX' => url('.php'),
 			'U_GALLERY_CAT_LINKS' => $cat_links,
-			'U_BEST_VIEWS' => '<a class="small_link" href="gallery' . url('.php?views=1&amp;cat=' . $g_idcat, '-' . $g_idcat . '.php?views=1') . '" style="background-image:url(' . $module_data_path . '/images/views.png);">' . $LANG['best_views'] . '</a>',
-			'U_BEST_NOTES' => '<a class="small_link" href="gallery' . url('.php?notes=1&amp;cat=' . $g_idcat, '-' . $g_idcat . '.php?notes=1') . '" style="background-image:url(' . $module_data_path . '/images/notes.png);">' . $LANG['best_notes'] . '</a>',
-			'U_ASC' => '<a class="small_link" href="gallery' . url('.php?cat=' . $g_idcat . '&amp;sort=' . $g_type . '_' . 'asc', '-' . $g_idcat . '.php?sort=' . $g_type . '_' . 'asc') . '" style="background-image:url(' . $module_data_path . '/images/up.png);">' . $LANG['asc'] . '</a>',
-			'U_DESC' => '<a class="small_link" href="gallery' . url('.php?cat=' . $g_idcat . '&amp;sort=' . $g_type . '_' . 'desc', '-' . $g_idcat . '.php?sort=' . $g_type . '_' . 'desc') . '" style="background-image:url(' . $module_data_path . '/images/down.png);">' . $LANG['desc'] . '</a>',
+			'U_BEST_VIEWS' => '<a class="small_link" href="'. PATH_TO_ROOT.'/gallery/gallery' . url('.php?views=1&amp;cat=' . $g_idcat, '-' . $g_idcat . '.php?views=1') . '" style="background-image:url(' . $module_data_path . '/images/views.png);">' . $LANG['best_views'] . '</a>',
+			'U_BEST_NOTES' => '<a class="small_link" href="'. PATH_TO_ROOT.'/gallery/gallery' . url('.php?notes=1&amp;cat=' . $g_idcat, '-' . $g_idcat . '.php?notes=1') . '" style="background-image:url(' . $module_data_path . '/images/notes.png);">' . $LANG['best_notes'] . '</a>',
+			'U_ASC' => '<a class="small_link" href="'. PATH_TO_ROOT.'/gallery/gallery' . url('.php?cat=' . $g_idcat . '&amp;sort=' . $g_type . '_' . 'asc', '-' . $g_idcat . '.php?sort=' . $g_type . '_' . 'asc') . '" style="background-image:url(' . $module_data_path . '/images/up.png);">' . $LANG['asc'] . '</a>',
+			'U_DESC' => '<a class="small_link" href="'. PATH_TO_ROOT.'/gallery/gallery' . url('.php?cat=' . $g_idcat . '&amp;sort=' . $g_type . '_' . 'desc', '-' . $g_idcat . '.php?sort=' . $g_type . '_' . 'desc') . '" style="background-image:url(' . $module_data_path . '/images/down.png);">' . $LANG['desc'] . '</a>',
 		));
 	
 		//Catégories non autorisées.
@@ -197,7 +197,7 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 		{
 			$Template->put_all(array(
 				'C_GALLERY_CATS' => true,
-				'EDIT_CAT' => $is_admin ? '<a href="admin_gallery_cat.php"><img class="valign_middle" src="../templates/' . get_utheme() .  '/images/' . get_ulang() . '/edit.png" alt="" /></a>' : ''
+				'EDIT_CAT' => $is_admin ? '<a href="'. PATH_TO_ROOT.'/gallery/admin_gallery_cat.php"><img class="valign_middle" src="'. PATH_TO_ROOT.'/templates/' . get_utheme() .  '/images/' . get_ulang() . '/edit.png" alt="" /></a>' : ''
 			));
 	
 			$j = 0;
@@ -218,9 +218,9 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 					'IDCAT' => $row['id'],
 					'CAT' => $row['name'],
 					'DESC' => $row['contents'],
-					'IMG' => !empty($row['path']) ? '<img src="pics/thumbnails/' . $row['path'] . '" alt="" />' : '',
-					'EDIT' => $is_admin ? '<a href="admin_gallery_cat.php?id=' . $row['id'] . '"><img class="valign_middle" src="../templates/' . get_utheme() .  '/images/' . get_ulang() . '/edit.png" alt="" /></a>' : '',
-					'LOCK' => ($row['status'] == 0) ? '<img class="valign_middle" src="../templates/' . get_utheme() . '/images/readonly.png" alt="" title="' . $LANG['gallery_lock'] . '" />' : '',
+					'IMG' => !empty($row['path']) ? '<img src="'. PATH_TO_ROOT.'/gallery/pics/thumbnails/' . $row['path'] . '" alt="" />' : '',
+					'EDIT' => $is_admin ? '<a href="'. PATH_TO_ROOT.'/gallery/admin_gallery_cat.php?id=' . $row['id'] . '"><img class="valign_middle" src="'. PATH_TO_ROOT.'/templates/' . get_utheme() .  '/images/' . get_ulang() . '/edit.png" alt="" /></a>' : '',
+					'LOCK' => ($row['status'] == 0) ? '<img class="valign_middle" src="'. PATH_TO_ROOT.'/templates/' . get_utheme() . '/images/readonly.png" alt="" title="' . $LANG['gallery_lock'] . '" />' : '',
 					'OPEN_TR' => is_int($j++/$nbr_column_cats) ? '<tr>' : '',
 					'CLOSE_TR' => is_int($j/$nbr_column_cats) ? '</tr>' : '',
 					'L_NBR_PICS' => sprintf($LANG['nbr_pics_info'], $row['nbr_pics']),
@@ -281,7 +281,7 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 	
 			$Template->put_all(array(
 				'C_GALLERY_PICS' => true,
-				'EDIT' => $is_admin ? '<a href="admin_gallery_cat.php' . (!empty($g_idcat) ? '?id=' . $g_idcat : '') . '"><img class="valign_middle" src="../templates/' . get_utheme() .  '/images/' . get_ulang() . '/edit.png" alt="" /></a>' : ''
+				'EDIT' => $is_admin ? '<a href="'. PATH_TO_ROOT.'/gallery/admin_gallery_cat.php' . (!empty($g_idcat) ? '?id=' . $g_idcat : '') . '"><img class="valign_middle" src="'. PATH_TO_ROOT.'/templates/' . get_utheme() .  '/images/' . get_ulang() . '/edit.png" alt="" /></a>' : ''
 			));
 	
 			//Liste des catégories.
@@ -330,8 +330,8 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 					while ($row = $Sql->fetch_assoc($result))
 					{
 						//Si la miniature n'existe pas (cache vidé) on regénère la miniature à partir de l'image en taille réelle.
-						if (!file_exists('pics/thumbnails/' . $row['path']))
-							$Gallery->Resize_pics('pics/' . $row['path']); //Redimensionnement + création miniature
+						if (!file_exists(PATH_TO_ROOT . '/gallery/pics/thumbnails/' . $row['path']))
+							$Gallery->Resize_pics(PATH_TO_ROOT . '/gallery/pics/' . $row['path']); //Redimensionnement + création miniature
 	
 						//Affichage de la liste des miniatures sous l'image.
 						$array_pics[] = '<td class="row2" style="text-align:center;height:' . ($CONFIG_GALLERY['height'] + 16) . 'px"><span id="thumb' . $i . '"><a href="' . GalleryUrlBuilder::get_link_item($row['idcat'],$row['id'],null,$g_sort) . '#pics_max' . '"><img src="pics/thumbnails/' . $row['path'] . '" alt="" / ></a></span></td>';
@@ -391,7 +391,7 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 						'C_GALLERY_PICS_MAX' => true,
 						'C_GALLERY_PICS_MODO' => $is_modo ? true : false,
 						'ID' => $info_pics['id'],
-						'IMG_MAX' => '<img src="show_pics' . url('.php?id=' . $g_idpics . '&amp;cat=' . $g_idcat) . '" alt="" />',
+						'IMG_MAX' => '<img src="' . PATH_TO_ROOT . '/gallery/show_pics' . url('.php?id=' . $g_idpics . '&amp;cat=' . $g_idcat) . '" alt="" />',
 						'NAME' => '<span id="fi_' . $info_pics['id'] . '">' . stripslashes($info_pics['name']) . '</span> <span id="fi' . $info_pics['id'] . '"></span>',
 						'POSTOR' => '<a class="small_link" href="'. UserUrlBuilder::profile($info_pics['user_id'])->absolute() .'">' . $info_pics['login'] . '</a>',
 						'DATE' => gmdate_format('date_format_short', $info_pics['timestamp']),
@@ -425,10 +425,10 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 						'L_THUMBNAILS' => $LANG['thumbnails'],
 						'U_DEL' => url('.php?del=' . $info_pics['id'] . '&amp;token=' . $Session->get_token() . '&amp;cat=' . $g_idcat, '-' . $g_idcat . '.php?token=' . $Session->get_token() . '&amp;del=' . $info_pics['id']),
 						'U_MOVE' => url('.php?id=' . $info_pics['id'] . '&amp;token=' . $Session->get_token() . '&amp;move=\' + this.options[this.selectedIndex].value', '-0-' . $info_pics['id'] . '.php?token=' . $Session->get_token() . '&amp;move=\' + this.options[this.selectedIndex].value'),
-						'U_PREVIOUS' => ($pos_pics > 0) ? '<a href="' . GalleryUrlBuilder::get_link_item($g_idcat,$id_previous) . '#pics_max"><img src="../templates/' . get_utheme() . '/images/left.png" alt="" class="valign_middle" /></a> <a href="' . GalleryUrlBuilder::get_link_item($g_idcat,$id_previous) . '#pics_max">' . $LANG['previous'] . '</a>' : '',
-						'U_NEXT' => ($pos_pics < ($i - 1)) ? '<a href="' . GalleryUrlBuilder::get_link_item($g_idcat,$id_next) . '#pics_max">' . $LANG['next'] . '</a> <a href="' . GalleryUrlBuilder::get_link_item($g_idcat,$id_next) . '#pics_max"><img src="../templates/' . get_utheme() . '/images/right.png" alt="" class="valign_middle" /></a>' : '',
-						'U_LEFT_THUMBNAILS' => (($pos_pics - $start_thumbnails) > 0) ? '<span id="display_left"><a href="javascript:display_thumbnails(\'left\')"><img src="../templates/' . get_utheme() . '/images/left.png" class="valign_middle" alt="" /></a></span>' : '<span id="display_left"></span>',
-						'U_RIGHT_THUMBNAILS' => (($pos_pics - $start_thumbnails) <= ($i - 1) - $nbr_column_pics) ? '<span id="display_right"><a href="javascript:display_thumbnails(\'right\')"><img src="../templates/' . get_utheme() . '/images/right.png" class="valign_middle" alt="" /></a></span>' : '<span id="display_right"></span>'
+						'U_PREVIOUS' => ($pos_pics > 0) ? '<a href="' . GalleryUrlBuilder::get_link_item($g_idcat,$id_previous) . '#pics_max"><img src="'. PATH_TO_ROOT.'/templates/' . get_utheme() . '/images/left.png" alt="" class="valign_middle" /></a> <a href="' . GalleryUrlBuilder::get_link_item($g_idcat,$id_previous) . '#pics_max">' . $LANG['previous'] . '</a>' : '',
+						'U_NEXT' => ($pos_pics < ($i - 1)) ? '<a href="' . GalleryUrlBuilder::get_link_item($g_idcat,$id_next) . '#pics_max">' . $LANG['next'] . '</a> <a href="' . GalleryUrlBuilder::get_link_item($g_idcat,$id_next) . '#pics_max"><img src="'. PATH_TO_ROOT.'/templates/' . get_utheme() . '/images/right.png" alt="" class="valign_middle" /></a>' : '',
+						'U_LEFT_THUMBNAILS' => (($pos_pics - $start_thumbnails) > 0) ? '<span id="display_left"><a href="javascript:display_thumbnails(\'left\')"><img src="'. PATH_TO_ROOT.'/templates/' . get_utheme() . '/images/left.png" class="valign_middle" alt="" /></a></span>' : '<span id="display_left"></span>',
+						'U_RIGHT_THUMBNAILS' => (($pos_pics - $start_thumbnails) <= ($i - 1) - $nbr_column_pics) ? '<span id="display_right"><a href="javascript:display_thumbnails(\'right\')"><img src="'. PATH_TO_ROOT.'/templates/' . get_utheme() . '/images/right.png" class="valign_middle" alt="" /></a></span>' : '<span id="display_right"></span>'
 					));
 	
 					//Affichage de la liste des miniatures sous l'image.
@@ -462,7 +462,7 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 				$sort = retrieve(GET, 'sort', '');
 				$Template->put_all(array(
 					'C_GALLERY_MODO' => $is_modo ? true : false,
-					'PAGINATION_PICS' => $Pagination->display('gallery' . url('.php?pp=%d' . (!empty($sort) ? '&amp;sort=' . $sort : '') . '&amp;cat=' . $g_idcat, '-' . $g_idcat . '+' . $rewrite_title . '.php?pp=%d'), $nbr_pics, 'pp', $CONFIG_GALLERY['nbr_pics_max'], 3),
+					'PAGINATION_PICS' => $Pagination->display(PATH_TO_ROOT . '/gallery/gallery' . url('.php?pp=%d' . (!empty($sort) ? '&amp;sort=' . $sort : '') . '&amp;cat=' . $g_idcat, '-' . $g_idcat . '+' . $rewrite_title . '.php?pp=%d'), $nbr_pics, 'pp', $CONFIG_GALLERY['nbr_pics_max'], 3),
 					'L_EDIT' => $LANG['edit'],
 					'L_VIEW' => $LANG['view'],
 					'L_VIEWS' => $LANG['views']
@@ -480,19 +480,19 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 				while ($row = $this->sql_querier->fetch_assoc($result))
 				{
 					//Si la miniature n'existe pas (cache vidé) on regénère la miniature à partir de l'image en taille réelle.
-					if (!file_exists('pics/thumbnails/' . $row['path']))
-						$Gallery->Resize_pics('pics/' . $row['path']); //Redimensionnement + création miniature
+					if (!file_exists(PATH_TO_ROOT . '/gallery/pics/thumbnails/' . $row['path']))
+						$Gallery->Resize_pics(PATH_TO_ROOT . '/gallery/pics/' . $row['path']); //Redimensionnement + création miniature
 					
 					//Affichage de l'image en grand.
 					if ($CONFIG_GALLERY['display_pics'] == 3) //Ouverture en popup plein écran.
 					{
-						$display_link = HOST . DIR . '/gallery/show_pics' . url('.php?id=' . $row['id'] . '&amp;cat=' . $row['idcat']) . '" rel="lightbox[1]" onmousedown="increment_view(' . $row['id'] . ');" title="' . str_replace('"', '', stripslashes($row['name']));
-						$display_name = HOST . DIR . '/gallery/show_pics' . url('.php?id=' . $row['id'] . '&amp;cat=' . $row['idcat']) . '" rel="lightbox[2]" onmousedown="increment_view(' . $row['id'] . ');" title="' . str_replace('"', '', stripslashes($row['name']));
+						$display_link = PATH_TO_ROOT.'/gallery/show_pics' . url('.php?id=' . $row['id'] . '&amp;cat=' . $row['idcat']) . '" rel="lightbox[1]" onmousedown="increment_view(' . $row['id'] . ');" title="' . str_replace('"', '', stripslashes($row['name']));
+						$display_name = PATH_TO_ROOT.'/gallery/show_pics' . url('.php?id=' . $row['id'] . '&amp;cat=' . $row['idcat']) . '" rel="lightbox[2]" onmousedown="increment_view(' . $row['id'] . ');" title="' . str_replace('"', '', stripslashes($row['name']));
 					}
 					elseif ($CONFIG_GALLERY['display_pics'] == 2) //Ouverture en popup simple.
-						$display_name = $display_link = 'javascript:increment_view(' . $row['id'] . ');display_pics_popup(\'' . HOST . DIR . '/gallery/show_pics' . url('.php?id=' . $row['id'] . '&amp;cat=' . $row['idcat']) . '\', \'' . $row['width'] . '\', \'' . $row['height'] . '\')';
+						$display_name = $display_link = 'javascript:increment_view(' . $row['id'] . ');display_pics_popup(\'' . PATH_TO_ROOT . '/gallery/show_pics' . url('.php?id=' . $row['id'] . '&amp;cat=' . $row['idcat']) . '\', \'' . $row['width'] . '\', \'' . $row['height'] . '\')';
 					elseif ($CONFIG_GALLERY['display_pics'] == 1) //Ouverture en agrandissement simple.
-						$display_name = $display_link = 'javascript:increment_view(' . $row['id'] . ');display_pics(' . $row['id'] . ', \'' . HOST . DIR . '/gallery/show_pics' . url('.php?id=' . $row['id'] . '&amp;cat=' . $row['idcat']) . '\')';
+						$display_name = $display_link = 'javascript:increment_view(' . $row['id'] . ');display_pics(' . $row['id'] . ', \'' . PATH_TO_ROOT . '/gallery/show_pics' . url('.php?id=' . $row['id'] . '&amp;cat=' . $row['idcat']) . '\')';
 					else //Ouverture nouvelle page.
 						$display_name = $display_link = url('gallery.php?cat=' . $row['idcat'] . '&amp;id=' . $row['id'], 'gallery-' . $row['idcat'] . '-' . $row['id'] . '.php') . '#pics_max';
 					
@@ -516,7 +516,7 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 					$Template->assign_block_vars('pics_list', array(
 						'ID' => $row['id'],
 						'APROB' => $row['aprob'],
-						'IMG' => '<img src="pics/thumbnails/' . $row['path'] . '" alt="' . str_replace('"', '', stripslashes($row['name'])) . '" class="gallery_image" />',
+						'IMG' => '<img src="'. PATH_TO_ROOT.'/gallery/pics/thumbnails/' . $row['path'] . '" alt="' . str_replace('"', '', stripslashes($row['name'])) . '" class="gallery_image" />',
 						'PATH' => $row['path'],
 						'NAME' => ($CONFIG_GALLERY['activ_title'] == 1) ? '<a class="small_link" href="' . $display_name . '"><span id="fi_' . $row['id'] . '">' . TextHelper::wordwrap_html(stripslashes($row['name']), 22, ' ') . '</span></a> <span id="fi' . $row['id'] . '"></span>' : '<span id="fi_' . $row['id'] . '"></span></a> <span id="fi' . $row['id'] . '"></span>',
 						'POSTOR' => ($CONFIG_GALLERY['activ_user'] == 1) ? '<br />' . $LANG['by'] . (!empty($row['login']) ? ' <a class="small_link" href="'. UserUrlBuilder::profile($row['user_id'])->absolute() .'">' . $row['login'] . '</a>' : ' ' . $LANG['guest']) : '',

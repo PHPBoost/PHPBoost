@@ -67,7 +67,7 @@ else
 		if ($User->check_auth($CAT_GALLERY[$id_cat]['auth'], EDIT_CAT_GALLERY)) //Modo
 		{	
 			//Initialisation  de la class de gestion des fichiers.
-			include_once('../gallery/gallery.class.php');
+			include_once(PATH_TO_ROOT .'/gallery/Gallery.class.php');
 			$Gallery = new Gallery;
 
 			$name = !empty($_POST['name']) ? TextHelper::strprotect(utf8_decode($_POST['name'])) : '';
@@ -88,7 +88,7 @@ else
 		if ($User->check_auth($CAT_GALLERY[$id_cat]['auth'], EDIT_CAT_GALLERY)) //Modo
 		{
 			//Initialisation  de la class de gestion des fichiers.
-			include_once('../gallery/gallery.class.php');
+			include_once(PATH_TO_ROOT .'/gallery/Gallery.class.php');
 			$Gallery = new Gallery;
 			
 			if (!empty($id_file))
