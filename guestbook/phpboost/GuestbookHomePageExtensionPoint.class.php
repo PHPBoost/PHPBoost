@@ -238,21 +238,21 @@ class GuestbookHomePageExtensionPoint implements HomePageExtensionPoint
 			$readonly = '';
 			if ($is_modo && !$is_guest) //Modération.
 			{
-				$warning = '&nbsp;<a href="../user/moderation_panel' . url('.php?action=warning&amp;id=' . $row['user_id']) . '" title="' . $LANG['warning_management'] . '"><img src="../templates/' . get_utheme() . '/images/admin/important.png" alt="' . $LANG['warning_management'] .  '" class="valign_middle" /></a>';
-				$readonly = '<a href="../user/moderation_panel' . url('.php?action=punish&amp;id=' . $row['user_id']) . '" title="' . $LANG['punishment_management'] . '"><img src="../templates/' . get_utheme() . '/images/readonly.png" alt="' . $LANG['punishment_management'] .  '" class="valign_middle" /></a>';
+				$warning = '&nbsp;<a href="'. PATH_TO_ROOT.'/user/moderation_panel' . url('.php?action=warning&amp;id=' . $row['user_id']) . '" title="' . $LANG['warning_management'] . '"><img src="'. PATH_TO_ROOT.'/templates/' . get_utheme() . '/images/admin/important.png" alt="' . $LANG['warning_management'] .  '" class="valign_middle" /></a>';
+				$readonly = '<a href="'. PATH_TO_ROOT.'/user/moderation_panel' . url('.php?action=punish&amp;id=' . $row['user_id']) . '" title="' . $LANG['punishment_management'] . '"><img src="'. PATH_TO_ROOT.'/templates/' . get_utheme() . '/images/readonly.png" alt="' . $LANG['punishment_management'] .  '" class="valign_middle" /></a>';
 			}
 
 			//Edition/suppression.
 			if ($User->check_auth($authorizations, GuestbookConfig::AUTH_MODO) || ($row['user_id'] === $User->get_attribute('user_id') && $User->get_attribute('user_id') !== -1))
 			{
-				$edit = '&nbsp;&nbsp;<a href="../guestbook/guestbook' . url('.php?edit=1&id=' . $row['id']) . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/edit.png" alt="' . $LANG['edit'] . '" title="' . $LANG['edit'] . '" class="valign_middle" /></a>';
-				$del = '&nbsp;&nbsp;<a href="../guestbook/guestbook' . url('.php?del=1&amp;id=' . $row['id'] . '&amp;token=' . $Session->get_token()) . '" onclick="javascript:return Confirm();"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/delete.png" alt="' . $LANG['delete'] . '" title="' . $LANG['delete'] . '" class="valign_middle" /></a>';
+				$edit = '&nbsp;&nbsp;<a href="'. PATH_TO_ROOT.'/guestbook/guestbook' . url('.php?edit=1&id=' . $row['id']) . '"><img src="'. PATH_TO_ROOT.'/templates/' . get_utheme() . '/images/' . get_ulang() . '/edit.png" alt="' . $LANG['edit'] . '" title="' . $LANG['edit'] . '" class="valign_middle" /></a>';
+				$del = '&nbsp;&nbsp;<a href="'. PATH_TO_ROOT.'/guestbook/guestbook' . url('.php?del=1&amp;id=' . $row['id'] . '&amp;token=' . $Session->get_token()) . '" onclick="javascript:return Confirm();"><img src="'. PATH_TO_ROOT.'/templates/' . get_utheme() . '/images/' . get_ulang() . '/delete.png" alt="' . $LANG['delete'] . '" title="' . $LANG['delete'] . '" class="valign_middle" /></a>';
 			}
 
 			//Pseudo.
 			if (!$is_guest)
 			{
-				$guestbook_login = '<a class="msg_link_pseudo" href="../user/member' . url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '" title="' . $row['mlogin'] . '"><span style="font-weight: bold;">' . TextHelper::wordwrap_html($row['mlogin'], 13) . '</span></a>';
+				$guestbook_login = '<a class="msg_link_pseudo" href="'. PATH_TO_ROOT.'/user/member' . url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '" title="' . $row['mlogin'] . '"><span style="font-weight: bold;">' . TextHelper::wordwrap_html($row['mlogin'], 13) . '</span></a>';
 			}
 			else
 			{
@@ -289,7 +289,7 @@ class GuestbookHomePageExtensionPoint implements HomePageExtensionPoint
 			}
 
 			//Image associée au rang.
-			$user_assoc_img = !empty($user_rank_icon) ? '<img src="../templates/' . get_utheme() . '/images/ranks/' . $user_rank_icon . '" alt="" />' : '';
+			$user_assoc_img = !empty($user_rank_icon) ? '<img src="'. PATH_TO_ROOT.'/templates/' . get_utheme() . '/images/ranks/' . $user_rank_icon . '" alt="" />' : '';
 
 			//Affichage des groupes du membre.
 			if (!empty($row['user_groups']))
@@ -300,7 +300,7 @@ class GuestbookHomePageExtensionPoint implements HomePageExtensionPoint
 				{
 					if (is_numeric(array_search($idgroup, $array_user_groups)))
 					{
-						$user_groups .= !empty($array_group_info['img']) ? '<img src="../images/group/' . $array_group_info['img'] . '" alt="' . $array_group_info['name'] . '" title="' . $array_group_info['name'] . '"/><br />' : $LANG['group'] . ': ' . $array_group_info['name'] . '<br />';
+						$user_groups .= !empty($array_group_info['img']) ? '<img src="'. PATH_TO_ROOT.'/images/group/' . $array_group_info['img'] . '" alt="' . $array_group_info['name'] . '" title="' . $array_group_info['name'] . '"/><br />' : $LANG['group'] . ': ' . $array_group_info['name'] . '<br />';
 					}
 				}
 			}
@@ -317,7 +317,7 @@ class GuestbookHomePageExtensionPoint implements HomePageExtensionPoint
 			//Avatar
 			if (empty($row['user_avatar']))
 			{
-				$user_avatar = ($user_accounts_config->is_default_avatar_enabled()) ? '<img src="../templates/' . get_utheme() . '/images/' .  $user_accounts_config->get_default_avatar_name() . '" alt="" />' : '';
+				$user_avatar = ($user_accounts_config->is_default_avatar_enabled()) ? '<img src="'. PATH_TO_ROOT.'/templates/' . get_utheme() . '/images/' .  $user_accounts_config->get_default_avatar_name() . '" alt="" />' : '';
 			}
 			else
 			{
@@ -328,11 +328,11 @@ class GuestbookHomePageExtensionPoint implements HomePageExtensionPoint
 			$user_sex = '';
 			if ($row['user_sex'] == 1)
 			{
-				$user_sex = $LANG['sex'] . ': <img src="../templates/' . get_utheme() . '/images/man.png" alt="" /><br />';
+				$user_sex = $LANG['sex'] . ': <img src="'. PATH_TO_ROOT.'/templates/' . get_utheme() . '/images/man.png" alt="" /><br />';
 			}
 			elseif ($row['user_sex'] == 2)
 			{
-				$user_sex = $LANG['sex'] . ': <img src="../templates/' . get_utheme() . '/images/woman.png" alt="" /><br />';
+				$user_sex = $LANG['sex'] . ': <img src="'. PATH_TO_ROOT.'/templates/' . get_utheme() . '/images/woman.png" alt="" /><br />';
 			}
 
 			//Nombre de message.
@@ -354,7 +354,7 @@ class GuestbookHomePageExtensionPoint implements HomePageExtensionPoint
 				'CONTENTS' => ucfirst(FormatingHelper::second_parse($row['contents'])),
 				'DATE' => $LANG['on'] . ': ' . gmdate_format('date_format', $row['timestamp']),
 				'CLASS_COLOR' => ($j%2 == 0) ? '' : 2,
-				'USER_ONLINE' => '<img src="../templates/' . get_utheme() . '/images/' . $user_online . '.png" alt="" class="valign_middle" />',
+				'USER_ONLINE' => '<img src="'. PATH_TO_ROOT.'/templates/' . get_utheme() . '/images/' . $user_online . '.png" alt="" class="valign_middle" />',
 				'USER_PSEUDO' => $guestbook_login,
 				'USER_RANK' => (($row['user_warning'] < '100' || (time() - $row['user_ban']) < 0) ? $user_rank : $LANG['banned']),
 				'USER_IMG_ASSOC' => $user_assoc_img,
@@ -364,16 +364,16 @@ class GuestbookHomePageExtensionPoint implements HomePageExtensionPoint
 				'USER_SEX' => $user_sex,
 				'USER_MSG' => !$is_guest ? $user_msg : '',
 				'USER_LOCAL' => $user_local,
-				'USER_MAIL' => (!empty($row['user_mail']) && ($row['user_show_mail'] == '1')) ? '<a href="mailto:' . $row['user_mail'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/email.png" alt="' . $row['user_mail']  . '" title="' . $row['user_mail']  . '" /></a>' : '',
-				'USER_MSN' => !empty($row['user_msn']) ? '<a href="mailto:' . $row['user_msn'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/msn.png" alt="' . $row['user_msn']  . '" title="' . $row['user_msn']  . '" /></a>' : '',
-				'USER_YAHOO' => !empty($row['user_yahoo']) ? '<a href="mailto:' . $row['user_yahoo'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/yahoo.png" alt="' . $row['user_yahoo']  . '" title="' . $row['user_yahoo']  . '" /></a>' : '',
+				'USER_MAIL' => (!empty($row['user_mail']) && ($row['user_show_mail'] == '1')) ? '<a href="mailto:' . $row['user_mail'] . '"><img src="'. PATH_TO_ROOT.'/templates/' . get_utheme() . '/images/' . get_ulang() . '/email.png" alt="' . $row['user_mail']  . '" title="' . $row['user_mail']  . '" /></a>' : '',
+				'USER_MSN' => !empty($row['user_msn']) ? '<a href="mailto:' . $row['user_msn'] . '"><img src="'. PATH_TO_ROOT.'/templates/' . get_utheme() . '/images/' . get_ulang() . '/msn.png" alt="' . $row['user_msn']  . '" title="' . $row['user_msn']  . '" /></a>' : '',
+				'USER_YAHOO' => !empty($row['user_yahoo']) ? '<a href="mailto:' . $row['user_yahoo'] . '"><img src="'. PATH_TO_ROOT.'/templates/' . get_utheme() . '/images/' . get_ulang() . '/yahoo.png" alt="' . $row['user_yahoo']  . '" title="' . $row['user_yahoo']  . '" /></a>' : '',
 				'USER_SIGN' => !empty($row['user_sign']) ? '____________________<br />' . FormatingHelper::second_parse($row['user_sign']) : '',
-				'USER_WEB' => !empty($row['user_web']) ? '<a href="' . $row['user_web'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/user_web.png" alt="' . $row['user_web']  . '" title="' . $row['user_yahoo']  . '" /></a>' : '',
+				'USER_WEB' => !empty($row['user_web']) ? '<a href="' . $row['user_web'] . '"><img src="'. PATH_TO_ROOT.'/templates/' . get_utheme() . '/images/' . get_ulang() . '/user_web.png" alt="' . $row['user_web']  . '" title="' . $row['user_yahoo']  . '" /></a>' : '',
 				'WARNING' => (!empty($row['user_warning']) ? $row['user_warning'] : '0') . '%' . $warning,
 				'PUNISHMENT' => $readonly,
 				'DEL' => $del,
 				'EDIT' => $edit,
-				'U_USER_PM' => !$is_guest ? '<a href="../user/pm' . url('.php?pm=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/pm.png" alt="" /></a>' : '',
+				'U_USER_PM' => !$is_guest ? '<a href="'. PATH_TO_ROOT.'/user/pm' . url('.php?pm=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '"><img src="'. PATH_TO_ROOT.'/templates/' . get_utheme() . '/images/' . get_ulang() . '/pm.png" alt="" /></a>' : '',
 				'U_ANCHOR' => 'guestbook.php' . SID . '#m' . $row['id']
 			));
 			$j++;

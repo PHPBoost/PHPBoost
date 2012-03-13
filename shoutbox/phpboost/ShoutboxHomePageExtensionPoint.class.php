@@ -149,15 +149,15 @@ class ShoutboxHomePageExtensionPoint implements HomePageExtensionPoint
 			$readonly = '';
 			if ($is_modo && !$is_guest) //Modération.
 			{
-				$warning = '&nbsp;<a href="../user/moderation_panel' . url('.php?action=warning&amp;id=' . $row['user_id']) . '" title="' . $LANG['warning_management'] . '"><img src="../templates/' . get_utheme() . '/images/admin/important.png" alt="' . $LANG['warning_management'] .  '" class="valign_middle" /></a>'; 
-				$readonly = '<a href="../user/moderation_panel' . url('.php?action=punish&amp;id=' . $row['user_id']) . '" title="' . $LANG['punishment_management'] . '"><img src="../templates/' . get_utheme() . '/images/readonly.png" alt="' . $LANG['punishment_management'] .  '" class="valign_middle" /></a>'; 
+				$warning = '&nbsp;<a href="' . PATH_TO_ROOT . '/user/moderation_panel' . url('.php?action=warning&amp;id=' . $row['user_id']) . '" title="' . $LANG['warning_management'] . '"><img src="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/admin/important.png" alt="' . $LANG['warning_management'] .  '" class="valign_middle" /></a>'; 
+				$readonly = '<a href="' . PATH_TO_ROOT . '/user/moderation_panel' . url('.php?action=punish&amp;id=' . $row['user_id']) . '" title="' . $LANG['punishment_management'] . '"><img src="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/readonly.png" alt="' . $LANG['punishment_management'] .  '" class="valign_middle" /></a>'; 
 			}
 			
 			//Edition/suppression.
 			if ($is_modo || ($row['user_id'] === $User->get_attribute('user_id') && $User->get_attribute('user_id') !== -1))
 			{
-				$edit_message = '&nbsp;&nbsp;<a href="../shoutbox/shoutbox' . url('.php?edit=1&amp;id=' . $row['id']) . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/edit.png" alt="' . $LANG['edit'] . '" title="' . $LANG['edit'] . '" class="valign_middle" /></a>';
-				$del_message = '&nbsp;&nbsp;<a href="../shoutbox/shoutbox' . url('.php?del=1&amp;id=' . $row['id'] . '&amp;token=' . $Session->get_token()) . '" onclick="javascript:return Confirm_shout();"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/delete.png" alt="' . $LANG['delete'] . '" title="' . $LANG['delete'] . '" class="valign_middle" /></a>';
+				$edit_message = '&nbsp;&nbsp;<a href="' . PATH_TO_ROOT . '/shoutbox/shoutbox' . url('.php?edit=1&amp;id=' . $row['id']) . '"><img src="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/' . get_ulang() . '/edit.png" alt="' . $LANG['edit'] . '" title="' . $LANG['edit'] . '" class="valign_middle" /></a>';
+				$del_message = '&nbsp;&nbsp;<a href="' . PATH_TO_ROOT . '/shoutbox/shoutbox' . url('.php?del=1&amp;id=' . $row['id'] . '&amp;token=' . $Session->get_token()) . '" onclick="javascript:return Confirm_shout();"><img src="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/' . get_ulang() . '/delete.png" alt="' . $LANG['delete'] . '" title="' . $LANG['delete'] . '" class="valign_middle" /></a>';
 			}
 			
 			//Pseudo.
@@ -196,7 +196,7 @@ class ShoutboxHomePageExtensionPoint implements HomePageExtensionPoint
 			}
 				
 			//Image associée au rang.
-			$user_assoc_img = !empty($user_rank_icon) ? '<img src="../templates/' . get_utheme() . '/images/ranks/' . $user_rank_icon . '" alt="" />' : '';
+			$user_assoc_img = !empty($user_rank_icon) ? '<img src="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/ranks/' . $user_rank_icon . '" alt="" />' : '';
 			
 			//Affichage des groupes du membre.		
 			if (!empty($row['user_groups'])) 
@@ -206,7 +206,7 @@ class ShoutboxHomePageExtensionPoint implements HomePageExtensionPoint
 				foreach (GroupsService::get_groups() as $idgroup => $array_group_info)
 				{
 					if (is_numeric(array_search($idgroup, $array_user_groups)))
-						$user_groups .= !empty($array_group_info['img']) ? '<img src="../images/group/' . $array_group_info['img'] . '" alt="' . $array_group_info['name'] . '" title="' . $array_group_info['name'] . '"/><br />' : $LANG['group'] . ': ' . $array_group_info['name'] . '<br />';
+						$user_groups .= !empty($array_group_info['img']) ? '<img src="' . PATH_TO_ROOT . '/images/group/' . $array_group_info['img'] . '" alt="' . $array_group_info['name'] . '" title="' . $array_group_info['name'] . '"/><br />' : $LANG['group'] . ': ' . $array_group_info['name'] . '<br />';
 				}
 			}
 			else
@@ -219,16 +219,16 @@ class ShoutboxHomePageExtensionPoint implements HomePageExtensionPoint
 			
 			//Avatar			
 			if (empty($row['user_avatar'])) 
-				$user_avatar = $user_accounts_config->is_default_avatar_enabled() ? '<img src="../templates/' . get_utheme() . '/images/' .  $user_accounts_config->get_default_avatar_name() . '" alt="" />' : '';
+				$user_avatar = $user_accounts_config->is_default_avatar_enabled() ? '<img src="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/' .  $user_accounts_config->get_default_avatar_name() . '" alt="" />' : '';
 			else
 				$user_avatar = '<img src="' . $row['user_avatar'] . '" alt=""	/>';
 			
 			//Affichage du sexe et du statut (connecté/déconnecté).	
 			$user_sex = '';
 			if ($row['user_sex'] == 1)	
-				$user_sex = $LANG['sex'] . ': <img src="../templates/' . get_utheme() . '/images/man.png" alt="" /><br />';	
+				$user_sex = $LANG['sex'] . ': <img src="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/man.png" alt="" /><br />';	
 			elseif ($row['user_sex'] == 2) 
-				$user_sex = $LANG['sex'] . ': <img src="../templates/' . get_utheme() . '/images/woman.png" alt="" /><br />';
+				$user_sex = $LANG['sex'] . ': <img src="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/woman.png" alt="" /><br />';
 					
 			//Nombre de message.
 			$user_msg = ($row['user_msg'] > 1) ? $LANG['message_s'] . ': ' . $row['user_msg'] : $LANG['message'] . ': ' . $row['user_msg'];
@@ -246,7 +246,7 @@ class ShoutboxHomePageExtensionPoint implements HomePageExtensionPoint
 				'CONTENTS' => ucfirst(FormatingHelper::second_parse($row['contents'])),
 				'DATE' => $LANG['on'] . ': ' . gmdate_format('date_format', $row['timestamp']),
 				'CLASS_COLOR' => ($j%2 == 0) ? '' : 2,
-				'USER_ONLINE' => '<img src="../templates/' . get_utheme() . '/images/' . $user_online . '.png" alt="" class="valign_middle" />',
+				'USER_ONLINE' => '<img src="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/' . $user_online . '.png" alt="" class="valign_middle" />',
 				'USER_PSEUDO' => $shout_pseudo,			
 				'USER_RANK' => (($row['user_warning'] < '100' || (time() - $row['user_ban']) < 0) ? $user_rank : $LANG['banned']),
 				'USER_IMG_ASSOC' => $user_assoc_img,
@@ -256,16 +256,16 @@ class ShoutboxHomePageExtensionPoint implements HomePageExtensionPoint
 				'USER_SEX' => $user_sex,
 				'USER_MSG' => !$is_guest ? $user_msg : '',
 				'USER_LOCAL' => $user_local,
-				'USER_MAIL' => (!empty($row['user_mail']) && ($row['user_show_mail'] == '1')) ? '<a href="mailto:' . $row['user_mail'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/email.png" alt="' . $row['user_mail']  . '" title="' . $row['user_mail']  . '" /></a>' : '',			
-				'USER_MSN' => !empty($row['user_msn']) ? '<a href="mailto:' . $row['user_msn'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/msn.png" alt="' . $row['user_msn']  . '" title="' . $row['user_msn']  . '" /></a>' : '',
-				'USER_YAHOO' => !empty($row['user_yahoo']) ? '<a href="mailto:' . $row['user_yahoo'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/yahoo.png" alt="' . $row['user_yahoo']  . '" title="' . $row['user_yahoo']  . '" /></a>' : '',
+				'USER_MAIL' => (!empty($row['user_mail']) && ($row['user_show_mail'] == '1')) ? '<a href="mailto:' . $row['user_mail'] . '"><img src="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/' . get_ulang() . '/email.png" alt="' . $row['user_mail']  . '" title="' . $row['user_mail']  . '" /></a>' : '',			
+				'USER_MSN' => !empty($row['user_msn']) ? '<a href="mailto:' . $row['user_msn'] . '"><img src="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/' . get_ulang() . '/msn.png" alt="' . $row['user_msn']  . '" title="' . $row['user_msn']  . '" /></a>' : '',
+				'USER_YAHOO' => !empty($row['user_yahoo']) ? '<a href="mailto:' . $row['user_yahoo'] . '"><img src="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/' . get_ulang() . '/yahoo.png" alt="' . $row['user_yahoo']  . '" title="' . $row['user_yahoo']  . '" /></a>' : '',
 				'USER_SIGN' => !empty($row['user_sign']) ? '____________________<br />' . FormatingHelper::second_parse($row['user_sign']) : '',
-				'USER_WEB' => !empty($row['user_web']) ? '<a href="' . $row['user_web'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/user_web.png" alt="' . $row['user_web']  . '" title="' . $row['user_yahoo']  . '" /></a>' : '',
+				'USER_WEB' => !empty($row['user_web']) ? '<a href="' . $row['user_web'] . '"><img src="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/' . get_ulang() . '/user_web.png" alt="' . $row['user_web']  . '" title="' . $row['user_yahoo']  . '" /></a>' : '',
 				'WARNING' => (!empty($row['user_warning']) ? $row['user_warning'] : '0') . '%' . $warning,
 				'PUNISHMENT' => $readonly,			
 				'DEL' => $del_message,
 				'EDIT' => $edit_message,
-				'U_USER_PM' => !$is_guest ? '<a href="'. UserUrlBuilder::personnal_message($row['user_id'])->absolute() . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/pm.png" alt="" /></a>' : '',
+				'U_USER_PM' => !$is_guest ? '<a href="'. UserUrlBuilder::personnal_message($row['user_id'])->absolute() . '"><img src="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/' . get_ulang() . '/pm.png" alt="" /></a>' : '',
 				'U_ANCHOR' => 'shoutbox.php' . SID . '#m' . $row['id']
 			));
 			$j++;
