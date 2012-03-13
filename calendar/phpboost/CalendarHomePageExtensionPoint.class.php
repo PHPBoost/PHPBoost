@@ -43,7 +43,9 @@ class CalendarHomePageExtensionPoint implements HomePageExtensionPoint
 	{
 		global $CALENDAR_LANG;
 		
-		return $CALENDAR_LANG['title_calendar'];
+		load_module_lang('calendar');
+		
+		return $CALENDAR_LANG['calendar'];
 	}
 	
 	private function get_view()
