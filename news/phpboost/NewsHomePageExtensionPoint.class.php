@@ -43,7 +43,9 @@ class NewsHomePageExtensionPoint implements HomePageExtensionPoint
 	{
 		global $NEWS_LANG;
 		
-		return $NEWS_LANG['title_news'];
+		load_module_lang('news');
+		
+		return $NEWS_LANG['news'];
 	}
 	
 	private function get_view()

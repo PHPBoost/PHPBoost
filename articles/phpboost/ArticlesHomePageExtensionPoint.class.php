@@ -43,7 +43,9 @@ class ArticlesHomePageExtensionPoint implements HomePageExtensionPoint
 	{
 		global $ARTICLES_LANG;
 		
-		return $ARTICLES_LANG['title_articles'];
+		load_module_lang('articles');
+		
+		return $ARTICLES_LANG['articles'];
 	}
 	
 	private function get_view()

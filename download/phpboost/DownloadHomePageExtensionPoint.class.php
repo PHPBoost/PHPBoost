@@ -43,7 +43,9 @@ class DownloadHomePageExtensionPoint implements HomePageExtensionPoint
 	{
 		global $DOWNLOAD_LANG;
 		
-		return $DOWNLOAD_LANG['title_download'];
+		load_module_lang('download');
+		
+		return $DOWNLOAD_LANG['download'];
 	}
 	
 	private function get_view()
