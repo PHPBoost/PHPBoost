@@ -51,4 +51,22 @@ var CommentsService = Class.create({
 			  }
 		});
 	},
+	lock : function (module_id, id_in_module) {
+		new Ajax.Request(PATH_TO_ROOT + '/kernel/framework/ajax/dispatcher.php?url=/comments/lock/', {
+			  method: 'post',
+			  parameters: {module_id: module_id, id_in_module: id_in_module},
+			  onComplete: function(response) {
+				  alert(response.responseJSON.message);
+			  }
+		});
+	},
+	unlock : function (module_id, id_in_module) {
+		new Ajax.Request(PATH_TO_ROOT + '/kernel/framework/ajax/dispatcher.php?url=/comments/unlock/', {
+			  method: 'post',
+			  parameters: {module_id: module_id, id_in_module: id_in_module},
+			  onComplete: function(response) {
+				  alert(response.responseJSON.message);
+			  }
+		});
+	}
 });
