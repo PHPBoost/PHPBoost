@@ -516,7 +516,7 @@ class Environment
 		{
 			return Url::to_absolute('/index.php');
 		}
-		return Url::to_absolute(GeneralConfig::load()->get_other_home_page());
+		return Url::to_absolute($general_config->get_other_home_page());
 	}
 
 	/**

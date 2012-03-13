@@ -72,7 +72,7 @@
 		$html_code = '';
 		foreach (ModulesCssFilesService::get_css_files_running_module_displayed(get_utheme()) as $css_file)
 		{
-			$html_code .= '<link rel="stylesheet" href="' . PATH_TO_ROOT . $css_file . 
+			$html_code .= '<link rel="stylesheet" href="' . Url::to_rel($css_file) . 
 				'" type="text/css" media="screen, print, handheld" />';
 		}
 		return $html_code;
