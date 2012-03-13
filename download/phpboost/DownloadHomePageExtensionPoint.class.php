@@ -48,7 +48,7 @@ class DownloadHomePageExtensionPoint implements HomePageExtensionPoint
 	
 	private function get_view()
 	{
-		global $DOWNLOAD_LANG, $LANG, $DOWNLOAD_CATS, $Session, $category_id, $auth_read, $auth_write, $auth_contribution, $notation;
+		global $Cache, $User, $Bread_crumb, $DOWNLOAD_LANG, $LANG, $DOWNLOAD_CATS, $Session, $category_id, $auth_read, $auth_write, $auth_contribution, $notation;
 		
 		require_once(PATH_TO_ROOT . '/download/download_begin.php');
 		

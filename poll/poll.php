@@ -104,7 +104,7 @@ if (!empty($_POST['valid_poll']) && !empty($poll['id']) && !$archives)
 		
 		//Si le cookie n'existe pas et l'ip n'est pas connue on enregistre.
 		if ($check_bdd || $check_cookie)
-			AppContext::get_response()->redirect('/poll/poll' . url('.php?id=' . $poll['id'] . '&error=e_already_vote', '-' . $poll['id'] . '.php?error=e_already_vote', '&') . '#message_helper');
+			AppContext::get_response()->redirect(PATH_TO_ROOT .'/poll/poll' . url('.php?id=' . $poll['id'] . '&error=e_already_vote', '-' . $poll['id'] . '.php?error=e_already_vote', '&') . '#message_helper');
 		
 		//Récupération du vote.
 		$check_answer = false;
@@ -137,16 +137,16 @@ if (!empty($_POST['valid_poll']) && !empty($poll['id']) && !$archives)
 			$Sql->query_inject("UPDATE " . PREFIX . "poll SET votes = '" . implode('|', $array_votes) . "' WHERE id = '" . $poll['id'] . "'", __LINE__, __FILE__);
 			
 			//Tout s'est bien déroulé, on redirige vers la page des resultats.
-			redirect_confirm(HOST . DIR . '/poll/poll' . url('.php?id=' . $poll['id'], '-' . $poll['id'] . '.php'), $LANG['confirm_vote'], 2);
+			redirect_confirm(PATH_TO_ROOT . '/poll/poll' . url('.php?id=' . $poll['id'], '-' . $poll['id'] . '.php'), $LANG['confirm_vote'], 2);
 			
 			if (in_array($poll['id'], $CONFIG_POLL['poll_mini']) ) //Vote effectué du mini poll => mise à jour du cache du mini poll.
 				$Cache->Generate_module_file('poll');
 		}	
 		else //Vote blanc
-			redirect_confirm(HOST . DIR . '/poll/poll' . url('.php?id=' . $poll['id'], '-' . $poll['id'] . '.php'), $LANG['no_vote'], 2);
+			redirect_confirm(PATH_TO_ROOT . '/poll/poll' . url('.php?id=' . $poll['id'], '-' . $poll['id'] . '.php'), $LANG['no_vote'], 2);
 	}
 	else
-		AppContext::get_response()->redirect('/poll/poll' . url('.php?id=' . $poll['id'] . '&error=e_unauth_poll', '-' . $poll['id'] . '.php?error=e_unauth_poll', '&') . '#message_helper');
+		AppContext::get_response()->redirect(PATH_TO_ROOT .'/poll/poll' . url('.php?id=' . $poll['id'] . '&error=e_unauth_poll', '-' . $poll['id'] . '.php?error=e_unauth_poll', '&') . '#message_helper');
 }
 elseif (!empty($poll['id']) && !$archives) //Affichage du sondage.
 {
@@ -327,8 +327,8 @@ elseif ($archives) //Archives.
 		$Template->assign_block_vars('list', array(
 			'ID' => $row['id'],
 			'QUESTION' => $row['question'],
-			'EDIT' => '<a href="../poll/admin_poll' . url('.php?id=' . $row['id']) . '" title="' . $LANG['edit'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/edit.png" class="valign_middle" /></a>',
-			'DEL' => '&nbsp;&nbsp;<a href="../poll/admin_poll' . url('.php?delete=1&amp;id=' . $row['id']) . '" title="' . $LANG['delete'] . '" onclick="javascript:return Confirm();"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/delete.png" class="valign_middle" /></a>',
+			'EDIT' => '<a href="' . PATH_TO_ROOT . '/poll/admin_poll' . url('.php?id=' . $row['id']) . '" title="' . $LANG['edit'] . '"><img src="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/' . get_ulang() . '/edit.png" class="valign_middle" /></a>',
+			'DEL' => '&nbsp;&nbsp;<a href="' . PATH_TO_ROOT . '/poll/admin_poll' . url('.php?delete=1&amp;id=' . $row['id']) . '" title="' . $LANG['delete'] . '" onclick="javascript:return Confirm();"><img src="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/' . get_ulang() . '/delete.png" class="valign_middle" /></a>',
 			'VOTE' => $sum_vote,
 			'DATE' => gmdate_format('date_format'),			
 			'L_VOTE' => (($sum_vote > 1 ) ? $LANG['poll_vote_s'] : $LANG['poll_vote'])

@@ -61,7 +61,7 @@ class PollHomePageExtensionPoint implements HomePageExtensionPoint
 	
 		$edit = '';	
 		if ($User->check_level(User::ADMIN_LEVEL))
-			$edit = '<a href="../poll/admin_poll.php" title="' . $LANG['edit'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/edit.png" class="valign_middle" /></a>';
+			$edit = '<a href="' . PATH_TO_ROOT . '/poll/admin_poll.php" title="' . $LANG['edit'] . '"><img src="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/' . get_ulang() . '/edit.png" class="valign_middle" /></a>';
 	
 		$tpl->put_all(array(
 			'C_POLL_MAIN' => true,
