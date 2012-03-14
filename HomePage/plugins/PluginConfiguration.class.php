@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                      HomePageExtensionPointProvider.class.php
+ *                           PluginConfiguration.class.php
  *                            -------------------
  *   begin                : February 21, 2012
  *   copyright            : (C) 2012 Kévin MASSY
@@ -13,7 +13,7 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -25,26 +25,27 @@
  *
  ###################################################*/
 
-class HomePageExtensionPointProvider extends ExtensionPointProvider
+abstract class PluginConfiguration
 {
-    function __construct()
-    {
-        parent::__construct('homepage');
-    }
+	private $id;
 	
-	public function home_page()
+	public function __construct($id)
 	{
-		return new PHPBoostHomePageExtensionPoint();
+		$this->id = $id;
 	}
 	
-	public function url_mappings()
+	public function get_id()
 	{
-		return new UrlMappings(array(new DispatcherUrlMapping('/homepage/index.php')));
+		return $this->id;
 	}
 	
-	public function plugins_home_page()
+	public static function load($id)
 	{
-		return array();
+		try {
+			return PersistenceContext::get_querier()->get_column_value(HomePageSetup::$home_page_table, 'object', 'WHERE id=:id', array('id' => $id));
+		} catch (RowNotFoundException $e) {
+			return new self($id);
+		}
 	}
 }
 ?>

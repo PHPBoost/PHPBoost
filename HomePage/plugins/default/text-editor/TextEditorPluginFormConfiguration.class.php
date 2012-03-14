@@ -47,8 +47,7 @@ class TextEditorPluginFormConfiguration extends PluginFormConfiguration
 	protected function handle_form()
 	{
 		$this->get_plugin_configuration()->set_content($this->get_form()->get_value('contents'));
-		$this->get_configuration()->update($this->get_plugin_configuration());
-		HomePageConfig::save();
+		$this->save();
 	}
 }
 ?>

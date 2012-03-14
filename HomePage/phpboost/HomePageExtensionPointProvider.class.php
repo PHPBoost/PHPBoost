@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                           PluginConfiguration.class.php
+ *                      HomePageExtensionPointProvider.class.php
  *                            -------------------
  *   begin                : February 21, 2012
  *   copyright            : (C) 2012 Kévin MASSY
@@ -13,7 +13,7 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- *
+ * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -25,18 +25,26 @@
  *
  ###################################################*/
 
-abstract class PluginConfiguration
+class HomePageExtensionPointProvider extends ExtensionPointProvider
 {
-	private $id;
+    function __construct()
+    {
+        parent::__construct('homepage');
+    }
 	
-	public function __construct($id)
+	public function home_page()
 	{
-		$this->id = $id;
+		return new PHPBoostHomePageExtensionPoint();
 	}
 	
-	public function get_id()
+	public function url_mappings()
 	{
-		return $this->id;
-	}	
+		return new UrlMappings(array(new DispatcherUrlMapping('/homepage/index.php')));
+	}
+	
+	public function plugins_home_page()
+	{
+		return new HomePagePluginsHomePageExtensionPoint();
+	}
 }
 ?>
