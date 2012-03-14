@@ -31,14 +31,12 @@ abstract class PluginFormConfiguration
 	private $submit_button;
 	private $message_response;
 	private $plugin_id;
-	private $configuration;
 	private $plugin_configuration;
 	
-	public function __construct($plugin_id)
+	public function __construct($plugin_id, PluginConfiguration $plugin_configuration)
 	{
 		$this->plugin_id = $plugin_id;
-		$this->configuration = HomePageConfig::load();
-		$this->plugin_configuration = $this->get_configuration()->get_plugin($this->get_id());
+		$this->plugin_configuration = $plugin_configuration;
 	}
 	
 	public function get_plugin_id()
@@ -85,14 +83,18 @@ abstract class PluginFormConfiguration
 		return $this->message_response;
 	}
 	
-	public function get_configuration()
-	{
-		return $this->configuration;
-	}
-	
 	public function get_plugin_configuration()
 	{
 		return $this->plugin_configuration;
+	}
+	
+	public function save()
+	{
+		try {
+			PersistenceContext::get_querier()->update(HomePageSetup::$home_page_table, array('object' => $this->get_plugin_configuration()), 'WHERE id=:id', array('id' => $id));
+		} catch (MySQLQuerierException $e) {
+			PersistenceContext::get_querier()->insert(HomePageSetup::$home_page_table, array('object' => $this->get_plugin_configuration()));
+		}
 	}
 }
 ?>

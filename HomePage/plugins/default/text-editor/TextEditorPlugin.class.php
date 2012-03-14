@@ -30,14 +30,22 @@ class TextEditorPlugin extends Plugin
 	public function __construct()
 	{
 		parent::__construct('Text-editor', $this->build_view(), true);
-		$this->set_configuration(HomePageConfig::load()->get_plugin($this->get_id()));
-		$this->set_form_configuration(new TextEditorPluginFormConfiguration($this->get_id()));
 	}
 	
 	private function build_view()
 	{
 		$tpl = new StringTemplate($this->get_configuration()->get_content());
 		return $tpl;
+	}
+	
+	public function get_configuration()
+	{
+		return TextEditorPluginConfiguration::load($this->get_id());
+	}
+	
+	public function get_form_configuration()
+	{
+		return new TextEditorPluginFormConfiguration($this->get_id(), $this->get_configuration());
 	}
 }
 ?>
