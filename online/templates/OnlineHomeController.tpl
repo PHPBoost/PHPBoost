@@ -18,10 +18,10 @@
 	# START users #
 	<tr>
 		<td class="row3">
-			{users.USER}
+			<a href="{users.U_PROFILE}" class="{users.LEVEL_CLASS}">{users.PSEUDO}</a>
 		</td>
 		<td class="row3">
-			{users.LOCATION}
+			<a href="{users.U_LOCATION}">{users.TITLE_LOCATION}</a>
 		</td>
 		<td class="row3">
 			{users.LAST_UPDATE}

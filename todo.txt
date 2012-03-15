@@ -55,9 +55,6 @@
 
 ------------------------------------ MODULES -----------------------------------
 
-[b]En ligne[/b]
-+ Refonte du module
-
 [b]Tous[/b]
 - Séparer la configuration du cache dans les modules (Créer des ModuleConfig)
 - Filtres d'exclusion pour les menus

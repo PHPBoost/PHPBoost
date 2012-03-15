@@ -50,20 +50,20 @@ class OnlineConfig extends AbstractConfigData
 	
 	public function get_display_order_request() 
 	{
-		$order = '';
 		switch (self::DISPLAY_ORDER)
 		{
-			case 'level_display_order':
-			$order = 's.level DESC';
+			case self::LEVEL_DISPLAY_ORDER:
+				return 's.level DESC';
 			break;
-			case 'session_time_display_order':
-			$order = 's.session_time DESC';
+			case self::SESSION_TIME_DISPLAY_ORDER:
+				return 's.session_time DESC';
 			break;
-			case 'level_and_session_time_display_order':
-			$order = 's.level DESC, s.session_time DESC';
+			case self::LEVEL_AND_SESSION_TIME_DISPLAY_ORDER:
+				return 's.level DESC, s.session_time DESC';
 			break;
+			default:
+				return 's.level DESC, s.session_time DESC';
 		}
-		return $order; 
 	}
 	
 	public function get_number_member_displayed()
