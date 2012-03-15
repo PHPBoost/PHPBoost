@@ -29,19 +29,16 @@ class OnlineUsersListPagination
 {
 	private $pagination;
 	private $current_page;
-	private $number_users_per_page = OnlineConfig::load()->get_nbr_members_per_page();
+	private $number_users_per_page;
 	
 	public function __construct($current_page)
 	{
 		$this->current_page = $current_page;
+		$this->number_users_per_page = OnlineConfig::load()->get_nbr_members_per_page();
 		$this->pagination = new Pagination($this->get_number_pages(), $this->current_page);
+		$this->pagination->set_url_sprintf_pattern(OnlineUrlBuilder::home('%d')->absolute());
 	}
-	
-	public function set_url($field, $sort)
-	{
-		$this->pagination->set_url_sprintf_pattern(OnlineUrlBuilder::users_list($field, $sort, '%d')->absolute());
-	}
-	
+
 	public function display()
 	{
 		return $this->pagination->export();
@@ -52,7 +49,7 @@ class OnlineUsersListPagination
 		return $this->number_users_per_page;
 	}
 	
-	public function get_display_form()
+	public function get_display_from()
 	{
 		$current_page = $this->current_page > 0 ? $this->current_page : 1;
 		return ($current_page - 1) * $this->number_users_per_page;
@@ -65,7 +62,9 @@ class OnlineUsersListPagination
 	
     private function get_number_users()
     {
-    	return PersistenceContext::get_querier()->count(DB_TABLE_SESSIONS);
+    	$condition = 'WHERE level <> -1 AND session_time > :time';
+    	$parameters = array('time' => time() - SessionsConfig::load()->get_active_session_duration());
+    	return PersistenceContext::get_querier()->count(DB_TABLE_SESSIONS, $condition, $parameters);
     }
 }
 ?>

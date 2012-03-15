@@ -28,10 +28,6 @@
 class OnlineModuleHomePage implements ModuleHomePage
 {
 	private $lang;
-	/**
-	 * @var HTMLForm
-	 */
-	
 	private $view;
 		
 	public static function get_view()
@@ -42,32 +38,32 @@ class OnlineModuleHomePage implements ModuleHomePage
 	
 	public function build_view()
 	{
-		$request = AppContext::get_request();
 		$this->init();
 		
-		$page = $request->get_int('page', 1);
-		$nbr_members_connected = OnlineService::get_nbr_users_connected("WHERE level <> -1 AND session_time > ':time'", array('time' => (time() - SessionsConfig::load()->get_active_session_duration())));
-		$nbr_members_per_page = OnlineConfig::load()->get_nbr_members_per_page();
-		$nb_pages =  ceil($nbr_members_connected / $nbr_members_per_page);
-		
-		$pagination = new Pagination($nb_pages, $page);
-		$pagination->set_url_sprintf_pattern(DispatchManager::get_url('/online', '')->absolute());
+		$pagination = new OnlineUsersListPagination(AppContext::get_request()->get_int('page', 1));
 		
 		$this->view->put_all(array(
 			'L_LOGIN' => LangLoader::get_message('pseudo', 'main'),
-			'PAGINATION' => '<strong>' . LangLoader::get_message('page', 'main') . ' :</strong> ' . $pagination->export()->render()
+			'PAGINATION' => '<strong>' . LangLoader::get_message('page', 'main') . ' :</strong> ' . $pagination->display()->render()
 		));
-
-		$limit_page = $page > 0 ? $page : 1;
-		$limit_page = (($limit_page - 1) * $nbr_members_per_page);
 		
-		$online_users = OnlineService::get_online_users("WHERE s.session_time > ':time' ORDER BY :display_order LIMIT " . $nbr_members_per_page . " OFFSET :start_limit", array('time' => (time() - SessionsConfig::load()->get_active_session_duration()), 'display_order' => OnlineConfig::load()->get_display_order_request(), 'start_limit' => $limit_page));
+		$condition = 'WHERE s.session_time > :time ORDER BY :display_order LIMIT :number_users_per_page OFFSET :start_limit';
+		$parameters = array(
+			'time' => (time() - SessionsConfig::load()->get_active_session_duration()), 
+			'display_order' => OnlineConfig::load()->get_display_order_request(), 
+			'start_limit' => $pagination->get_display_from(),
+			'number_users_per_page' => $pagination->get_number_users_per_page()
+		);
 		
-		foreach ($online_users as $user)
+		$users = OnlineService::get_online_users($condition, $parameters);
+		foreach ($users as $user)
 		{
 			$this->view->assign_block_vars('users', array(
-				'USER' => '<a href="' . UserUrlBuilder::profile($user->get_id())->absolute() . '" class="' . User::get_group_color(implode('|', $user->get_groups()), $user->get_level()) . '">' . $user->get_pseudo() . '</a>',
-				'LOCATION' => '<a href="' . $user->get_location_script() . '">' . $user->get_location_title() . '</a>',
+				'U_PROFILE' => UserUrlBuilder::profile($user->get_id())->absolute(),
+				'U_LOCATION' => $user->get_location_script(),
+				'PSEUDO' => $user->get_pseudo(),
+				'LEVEL_CLASS' => OnlineService::get_level_class($user->get_level()),
+				'TITLE_LOCATION' => $user->get_location_title(),
 				'LAST_UPDATE' => $user->get_last_update()
 			));
 		}

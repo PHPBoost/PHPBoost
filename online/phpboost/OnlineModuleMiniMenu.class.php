@@ -26,86 +26,108 @@
  ###################################################*/
 
 class OnlineModuleMiniMenu extends ModuleMiniMenu
-{    
-    public function get_default_block()
-    {
-    	return self::BLOCK_POSITION__RIGHT;
-    }
-
+{
+	private $number_visitor = 0;
+	private $number_member = 0;
+	private $number_moderator = 0;
+	private $number_administrator = 0;
+	private $total_users = 0;
+	
+	public function get_default_block()
+	{
+		return self::BLOCK_POSITION__RIGHT;
+	}
+	
 	public function display($tpl = false)
-    {
+	{
 		if (!Url::is_current_url('/online/index.php'))
-	    {
+		{
 			$tpl = new FileTemplate('online/OnlineModuleMiniMenu.tpl');
 			MenuService::assign_positions_conditions($tpl, $this->get_block());
 			
 			$lang = LangLoader::get('online_common', 'online');
+			$tpl->add_lang($lang);
 			
-			//On compte les visiteurs en ligne dans la bdd, en prenant en compte le temps max de connexion.
-			list($count_visit, $count_member, $count_modo, $count_admin) = array(0, 0, 0, 0);
+			$condition = 'WHERE s.session_time > :time ORDER BY :display_order';
+			$parameters = array(
+				'time' => (time() - SessionsConfig::load()->get_active_session_duration()), 
+				'display_order' => OnlineConfig::load()->get_display_order_request()
+			);
 			
-			$i = 0;
-			$array_class = array('member', 'modo', 'admin');
-			
-			$online_user_list = OnlineService::get_online_users("WHERE s.session_time > ':time' ORDER BY :display_order", array('time' => (time() - SessionsConfig::load()->get_active_session_duration()), 'display_order' => OnlineConfig::load()->get_display_order_request()));
-			
-			foreach ($online_user_list as $user)
+			$users = OnlineService::get_online_users($condition, $parameters);
+			foreach ($users as $user)
 			{
-				if ($i < OnlineConfig::load()->get_number_member_displayed())
-				{
-					//Visiteurs non pris en compte.
-					if ($user->get_level() !== '-1')
-					{
-						$group_color = User::get_group_color(implode('|', $user->get_groups()), $user->get_level());
-						$tpl->assign_block_vars('online', array(
-							'USER' => '<a href="'. UserUrlBuilder::profile($user->get_id())->absolute() .'" class="' . UserService::get_level_lang($user->get_level()) . '"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . TextHelper::wordwrap_html($user->get_pseudo(), 19) . '</a><br />'
-						));
-						$i++;
-					}
-				}
-				
-				switch ($user->get_level())
-				{
-					case '-1':
-					$count_visit++;
-					break;
-					case '0':
-					$count_member++;
-					break;
-					case '1':
-					$count_modo++;
-					break;
-					case '2':
-					$count_admin++;
-					break;
-				}
+				$this->incremente_level($user);
+				$tpl->assign_block_vars('users', array(
+					'U_PROFILE' => UserUrlBuilder::profile($user->get_id())->absolute(),
+					'PSEUDO' => TextHelper::wordwrap_html($user->get_pseudo(), 19),
+					'LEVEL_CLASS' => OnlineService::get_level_class($user->get_level()),
+				));
 			}
 			
-			$count_visit = (empty($count_visit) && empty($count_member) && empty($count_modo) && empty($count_admin)) ? '1' : $count_visit;
-			$total_members = $count_member + $count_modo + $count_admin;
-			
-			$lang_member_s = LangLoader::get_message('member_s', 'main');
-			$member_online = $lang_member_s . ' ' . strtolower($lang['online']);
-
+			$main_lang = LangLoader::get('main');
 			$tpl->put_all(array(
-				'VISIT' => $count_visit,
-				'MEMBER' => $count_member,
-				'MODO' => $count_modo,
-				'ADMIN' => $count_admin,
-				'MORE' => ($total_members > OnlineConfig::load()->get_number_member_displayed()) ? '<br /><a href="' . OnlineUrlBuilder::home()->absolute() . '" title="' . $member_online . '">' . $member_online . '</a><br />' : '', //Plus de 4 membres connectés.
-				'TOTAL' => $count_visit + $total_members,
-				'L_VISITOR' => ($count_visit > 1) ? LangLoader::get_message('guest_s', 'main') : LangLoader::get_message('guest', 'main'),
-				'L_MEMBER' => ($count_member > 1) ? $lang_member_s : LangLoader::get_message('member', 'main'),
-				'L_MODO' => ($count_modo > 1) ? LangLoader::get_message('modo_s', 'main') : LangLoader::get_message('modo', 'main'),
-				'L_ADMIN' => ($count_admin > 1) ? LangLoader::get_message('admin_s', 'main') : LangLoader::get_message('admin', 'main'),
-				'L_ONLINE' => $lang['online'],
-				'L_TOTAL' => LangLoader::get_message('total', 'main')
+				'C_MORE_USERS' => $this->total_users > OnlineConfig::load()->get_number_member_displayed(),
+				'L_VISITOR' => $this->number_visitor > 1 ? $main_lang['guest_s'] : $main_lang['guest'],
+				'L_MEMBER' => $this->number_member > 1 ? $main_lang['member_s'] : $main_lang['member'],
+				'L_MODO' => $this->number_moderator > 1 ? $main_lang['modo_s'] : $main_lang['modo'],
+				'L_ADMIN' => $this->number_administrator > 1 ? $main_lang['admin_s'] : $main_lang['admin'],
+				'L_USERS_ONLINE' => strtolower($lang['online']),
+				'L_TOTAL' => $main_lang['total'],
+				'TOTAL_USERS_CONNECTED' => $this->total_users,
+				'TOTAL_VISITOR_CONNECTED' => $this->number_visitor,
+				'TOTAL_MEMBER_CONNECTED' => $this->number_member,
+				'TOTAL_MODERATOR_CONNECTED' => $this->number_moderator,
+				'TOTAL_ADMINISTRATOR_CONNECTED' => $this->number_administrator
 			));
-		
-			return $tpl->render();    
-	    }
+			return $tpl->render();  
+		}
+		return '';
+	}
 	
-	    return '';
-    } 
+	private function incremente_level(User $user)
+	{
+		$this->incremente_user();
+		switch ($user->get_level())
+		{
+			case '-1':
+				$this->incremente_visitor();
+			break;
+			case User::MEMBER_LEVEL:
+				$this->incremente_member();
+			break;
+			case User::MODERATOR_LEVEL:
+				$this->incremente_moderator();
+			break;
+			case User::ADMIN_LEVEL:
+				$this->incremente_administrator();
+			break;
+		}
+	}
+	
+	private function incremente_user()
+	{
+		$this->total_users++;
+	}
+	
+	private function incremente_visitor()
+	{
+		$this->number_visitor++;
+	}
+	
+	private function incremente_member()
+	{
+		$this->number_member++;
+	}
+	
+	private function incremente_moderator()
+	{
+		$this->number_moderator++;
+	}
+	
+	private function incremente_administrator()
+	{
+		$this->number_administrator++;
+	}
 }
 ?>
