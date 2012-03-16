@@ -27,8 +27,8 @@
 
 if (defined('PHPBOOST') !== true)	exit;
 
-$auth_read = $User->check_auth($faq_config->get_authorization(), AUTH_READ);
-$auth_write = $User->check_auth($faq_config->get_authorization(), AUTH_WRITE);
+$auth_read = $User->check_auth($faq_config->get_authorizations(), AUTH_READ);
+$auth_write = $User->check_auth($faq_config->get_authorizations(), AUTH_WRITE);
 
 //Bread_crumb : we read categories list recursively
 

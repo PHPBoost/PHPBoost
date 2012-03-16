@@ -27,6 +27,7 @@
 
 include_once('../kernel/begin.php'); 
 include_once('faq_begin.php');
+include_once('../kernel/header.php');
 
 $id_faq = retrieve(GET, 'id', 0);
 //For users who have disabled javascript
@@ -51,8 +52,6 @@ if (!$auth_read)
 	$error_controller = PHPBoostErrors::unexisting_page();
 	DispatchManager::redirect($error_controller);
 }
-
-include_once('../kernel/header.php');
 
 $modulesLoader = AppContext::get_extension_provider_service();
 $module = $modulesLoader->get_provider('faq');

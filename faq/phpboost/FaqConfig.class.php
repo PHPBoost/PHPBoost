@@ -32,84 +32,83 @@
  */
 class FaqConfig extends AbstractConfigData
 {
-	const AUTHORIZATION = 'authorization';
+	const FAQ_NAME = 'faq_name';
+	const NUMBER_COLUMNS = 'number_columns';
+	const DISPLAY_MODE = 'display_mode';
+	const ROOT_CAT_DISPLAY_MODE = 'root_cat_display_mode';
+	const ROOT_CAT_DESCRIPTION = 'root_cat_description';
+	const AUTHORIZATIONS = 'authorizations';
 	
 	public function get_faq_name()
 	{
-		return $this->get_property('faq_name');
+		return $this->get_property(self::FAQ_NAME);
 	}
 	
-	public function set_faq_name($name) 
+	public function set_faq_name($value) 
 	{
-		$this->set_property('faq_name', $name);
+		$this->set_property(self::FAQ_NAME, $value);
 	}
 	
 	public function get_number_columns()
 	{
-		return $this->get_property('num_cols');
+		return $this->get_property(self::NUMBER_COLUMNS);
 	}
 	
-	public function set_number_columns($num_cols) 
+	public function set_number_columns($value) 
 	{
-		$this->set_property('num_cols', $num_cols);
+		$this->set_property(self::NUMBER_COLUMNS, $value);
 	}
 	
 	public function get_display_mode()
 	{
-		return $this->get_property('display_mode');
+		return $this->get_property(self::DISPLAY_MODE);
 	}
 	
-	public function set_display_mode($mode) 
+	public function set_display_mode($value) 
 	{
-		$this->set_property('display_mode', $mode);
+		$this->set_property(self::DISPLAY_MODE, $value);
 	}
 	
-	public function get_authorization()
+	public function get_authorizations()
 	{
-		return $this->get_property(self::AUTHORIZATION);
+		return $this->get_property(self::AUTHORIZATIONS);
 	}
 	
-	public function set_authorization(Array $array)
+	public function set_authorizations(Array $array)
 	{
-		$this->set_property(self::AUTHORIZATION, $array);
+		$this->set_property(self::AUTHORIZATIONS, $array);
 	}
 	
 	//Config de la catégorie racine
 	public function get_root_cat_display_mode()
 	{
-		return $this->get_property('root_cat_display_mode');
+		return $this->get_property(self::ROOT_CAT_DISPLAY_MODE);
 	}
 	
-	public function set_root_cat_display_mode($num_mode) 
+	public function set_root_cat_display_mode($value) 
 	{
-		$this->set_property('root_cat_display_mode', $num_mode);
+		$this->set_property(self::ROOT_CAT_DISPLAY_MODE, $value);
 	}
 	
 	public function get_root_cat_description()
 	{
-		return $this->get_property('root_cat_description');
+		return $this->get_property(self::ROOT_CAT_DESCRIPTION);
 	}
 	
-	public function set_root_cat_description($desc) 
+	public function set_root_cat_description($value) 
 	{
-		$this->set_property('root_cat_description', $desc);
+		$this->set_property(self::ROOT_CAT_DESCRIPTION, $value);
 	}
 	
 	public function get_default_values()
 	{
 		return array(
-			self::AUTHORIZATION => array('r-1' => 1, 'r0' => 1),
-			'faq_name' => 'FAQ PHPBoost',
-			'num_cols' => 4,
-			'display_mode' => 'inline',
-			'root_cat_display_mode' => 0,
-			'root_cat_description' => 'Bienvenue dans la FAQ !<br /><br /> 2 catégories et quelques questions ont été créées pour vous montrer comment fonctionne ce module. Voici quelques conseils pour bien débuter sur ce module.
-			<br /><br /> 
-			<ul class="bb_ul"><li class="bb_li">Pour configurer votre module, rendez vous dans l\'<a href="/faq/admin_faq.php">administration du module</a> 
-			</li><li class="bb_li">Pour créer des catégories, <a href="/faq/admin_faq_cats.php?new=1">cliquez ici</a> 
-			</li><li class="bb_li">Pour créer des questions, rendez vous dans la catégorie souhaitée et cliquez sur \'Gérer la catégorie\' puis \'ajout\'</li></ul>
-			<br /><br />Pour personnaliser l\'accueil de ce module, <a href="/faq/management.php">cliquez ici</a>
-			<br />Pour en savoir plus, n\'hésitez pas à consulter la documentation du module sur le site de PHPBoost.'
+			self::AUTHORIZATIONS => array('r-1' => 1, 'r0' => 1),
+			self::FAQ_NAME => 'FAQ PHPBoost',
+			self::NUMBER_COLUMNS => 4,
+			self::DISPLAY_MODE => 'inline',
+			self::ROOT_CAT_DISPLAY_MODE => 0,
+			self::ROOT_CAT_DESCRIPTION => LangLoader::get_message('faq.config.root_cat_description', 'faq_config', 'faq')
 		);
 	}
 	
@@ -119,7 +118,7 @@ class FaqConfig extends AbstractConfigData
 	 */
 	public static function load()
 	{
-		return ConfigManager::load(__CLASS__, 'faq', 'config');
+		return ConfigManager::load(__CLASS__, 'module', 'faq-config');
 	}
 
 	/**
@@ -127,7 +126,7 @@ class FaqConfig extends AbstractConfigData
 	 */
 	public static function save()
 	{
-		ConfigManager::save('faq', self::load(), 'config');
+		ConfigManager::save('module', self::load(), 'faq-config');
 	}
 }
 ?>
