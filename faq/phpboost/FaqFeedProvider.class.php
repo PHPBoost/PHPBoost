@@ -77,7 +77,7 @@ class FaqFeedProvider implements FeedProvider
 			$item->set_guid($link);
 			$item->set_desc(preg_replace('`\[page\](.+)\[/page\]`U', '<br /><strong>$1</strong><hr />', FormatingHelper::second_parse($row['answer'])));
 			$item->set_date(new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $row['timestamp']));
-			$item->set_auth($row['idcat'] == 0 ? $faq_config->get_authorization() : unserialize($row['auth']));
+			$item->set_auth($row['idcat'] == 0 ? $faq_config->get_authorizations() : unserialize($row['auth']));
 
 			$data->add_item($item);
 		}
