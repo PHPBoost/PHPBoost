@@ -41,7 +41,8 @@ class PagesExtensionPointProvider extends ExtensionPointProvider
 		$pages_config = PagesConfig::load();
 		
 		//Catégories des pages
-		$code = '$_PAGES_CATS = array();' . "\n\n";
+		$code = 'global $_PAGES_CATS;' . "\n";
+		$code .= '$_PAGES_CATS = array();' . "\n\n";
 
 		$result = $this->sql_querier->query_while("SELECT c.id, c.id_parent, c.id_page, p.title, p.auth
 		FROM " . PREFIX . "pages_cats c
