@@ -28,6 +28,7 @@
 class AdminHomePageConfigController extends AdminController
 {
 	private $lang;
+	private $config;
 
 	public function execute(HTTPRequest $request)
 	{
@@ -40,6 +41,7 @@ class AdminHomePageConfigController extends AdminController
 	private function init()
 	{
 		$this->lang = LangLoader::get('common', 'HomePage');
+		$this->config = HomePageConfig::load();
 	}
 
 	private function build_view()
@@ -51,7 +53,53 @@ class AdminHomePageConfigController extends AdminController
 			'CONFIGURATION' => $this->build_form_configuration()->display()
 		));
 		
+		for ($i = 0; $i < $this->config->get_number_columns(); $i++) {
+			$view->assign_block_vars('containers', array(
+				'ID' => $i
+			));
+			
+			$view->assign_block_vars('containers.elements', array(
+				'ID' => $i,
+				'PLUGIN' => 'TEST'
+			));
+		}
+
+		$view->put_all(array(
+			'WIDTH_CSS_CONTAINERS' => $this->get_width_containers(),
+			'LIST_CONTAINERS' => $this->get_list_containers()
+		));
+		
 		return $view;
+	}
+	
+	private function get_list_containers()
+	{
+		switch ($this->config->get_number_columns()) {
+			case 1:
+				return "'container0'";
+			break;
+			case 2:
+				return "'container0', 'container1'";
+			break;
+			case 3:
+				return "'container0', 'container1', 'container2'";
+			break;
+		}
+	}
+	
+	private function get_width_containers()
+	{
+		switch ($this->config->get_number_columns()) {
+			case 1:
+				return '98%';
+			break;
+			case 2:
+				return '46%';
+			break;
+			case 3:
+				return '20%';
+			break;
+		}
 	}
 	
 	private function build_form_configuration()
@@ -59,7 +107,7 @@ class AdminHomePageConfigController extends AdminController
 		$form = new HTMLForm('HomePageConfig');
 		$fieldset = new FormFieldsetHorizontal('HomePageConfig');
 		$form->add_fieldset($fieldset);
-		$fieldset->add_field(new FormFieldSimpleSelectChoice('number_columns', $this->lang['number_columns'] . ' : ', HomePageConfig::load()->get_number_columns(), array(
+		$fieldset->add_field(new FormFieldSimpleSelectChoice('number_columns', $this->lang['number_columns'] . ' : ', $this->config->get_number_columns(), array(
 			new FormFieldSelectChoiceOption('1', '1'),
 			new FormFieldSelectChoiceOption('2', '2'),
 			new FormFieldSelectChoiceOption('3', '3')
@@ -69,9 +117,7 @@ class AdminHomePageConfigController extends AdminController
 	
 	private function response()
 	{
-		$response = new AdminMenuDisplayResponse($this->build_view());
-		$response->set_title($this->lang['home_page']);
-		
+		$response = new AdminDisplayResponse($this->build_view());
 		$env = $response->get_graphical_environment();
 		$env->set_page_title($this->lang['config']);
 		return $response;

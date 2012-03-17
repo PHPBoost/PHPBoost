@@ -27,10 +27,10 @@
 
 abstract class Plugin
 {
-	private $id;
-	private $title;
+	private $id = 0;
+	private $title = '';
 	private $view;
-	private $has_configuration;
+	private $has_configuration = false;
 	
 	public function __construct($title, View $view, $has_configuration = false)
 	{
