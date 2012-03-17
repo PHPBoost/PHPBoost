@@ -208,7 +208,7 @@ class NewsConfig extends AbstractConfigData
 	 */
 	public static function load()
 	{
-		return ConfigManager::load(__CLASS__, 'module', 'news-config');
+		return ConfigManager::load(__CLASS__, 'news', 'config');
 	}
 
 	/**
@@ -216,7 +216,7 @@ class NewsConfig extends AbstractConfigData
 	 */
 	public static function save()
 	{
-		ConfigManager::save('module', self::load(), 'news-config');
+		ConfigManager::save('news', self::load(), 'config');
 	}
 }
 ?>

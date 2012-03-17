@@ -34,7 +34,7 @@ class GuestbookConfig extends AbstractConfigData
 	const CAPTCHA_DIFFICULTY = 'captcha_difficulty';
 	const FORBIDDEN_TAGS = 'forbidden_tags';
 	const MAXIMUM_LINKS_MESSAGE = 'maximum_links_message';
-	const AUTHORIZATION = 'authorizations';
+	const AUTHORIZATIONS = 'authorizations';
 	
 	const AUTH_READ = 1;
 	const AUTH_WRITE = 2;
@@ -82,12 +82,12 @@ class GuestbookConfig extends AbstractConfigData
 
 	public function get_authorizations()
 	{
-		return $this->get_property(self::AUTHORIZATION);
+		return $this->get_property(self::AUTHORIZATIONS);
 	}
 
 	public function set_authorizations(Array $auth)
 	{
-		$this->set_property(self::AUTHORIZATION, $auth);
+		$this->set_property(self::AUTHORIZATIONS, $auth);
 	}
 	
 	/**
@@ -100,7 +100,7 @@ class GuestbookConfig extends AbstractConfigData
 			self::CAPTCHA_DIFFICULTY => 2,
 			self::FORBIDDEN_TAGS => array('swf', 'movie', 'sound', 'code', 'math', 'mail', 'html', 'feed'),
 			self::MAXIMUM_LINKS_MESSAGE => -1,
-			self::AUTHORIZATION => array('r-1' => 3, 'r0' => 3, 'r1' => 7) 
+			self::AUTHORIZATIONS => array('r-1' => 3, 'r0' => 3, 'r1' => 7) 
 		);
 	}
 
@@ -110,7 +110,7 @@ class GuestbookConfig extends AbstractConfigData
 	 */
 	public static function load()
 	{
-		return ConfigManager::load(__CLASS__, 'module', 'guestbook-config');
+		return ConfigManager::load(__CLASS__, 'guestbook', 'config');
 	}
 
 	/**
@@ -118,7 +118,7 @@ class GuestbookConfig extends AbstractConfigData
 	 */
 	public static function save()
 	{
-		ConfigManager::save('module', self::load(), 'guestbook-config');
+		ConfigManager::save('guestbook', self::load(), 'config');
 	}
 }
 ?>
