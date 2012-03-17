@@ -104,7 +104,7 @@ class FaqConfig extends AbstractConfigData
 	{
 		return array(
 			self::AUTHORIZATIONS => array('r-1' => 1, 'r0' => 1),
-			self::FAQ_NAME => LangLoader::get_message('faq.config.faq_name', 'faq_config', 'faq'),
+			self::FAQ_NAME => 'FAQ PHPBoost',
 			self::NUMBER_COLUMNS => 4,
 			self::DISPLAY_MODE => 'inline',
 			self::ROOT_CAT_DISPLAY_MODE => 0,
@@ -118,7 +118,7 @@ class FaqConfig extends AbstractConfigData
 	 */
 	public static function load()
 	{
-		return ConfigManager::load(__CLASS__, 'faq', 'config');
+		return ConfigManager::load(__CLASS__, 'module', 'faq-config');
 	}
 
 	/**
@@ -126,7 +126,7 @@ class FaqConfig extends AbstractConfigData
 	 */
 	public static function save()
 	{
-		ConfigManager::save('faq', self::load(), 'config');
+		ConfigManager::save('module', self::load(), 'faq-config');
 	}
 }
 ?>
