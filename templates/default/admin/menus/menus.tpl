@@ -86,7 +86,8 @@ function createSortableMenu()
 				containment:['mod_header','mod_subheader','mod_left','mod_right','mod_topcentral','mod_central','mod_bottomcentral','mod_topfooter','mod_footer'],
 				constraint:false,
 				scroll:window,
-				format:/^menu_([0-9]+)$/
+				format:/^menu_([0-9]+)$/,
+				dropOnEmpty: true
 			}
 		);   
 	}
