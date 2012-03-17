@@ -87,7 +87,7 @@ function createSortableMenu()
 				constraint:false,
 				scroll:window,
 				format:/^menu_([0-9]+)$/,
-				dropOnEmpty: true
+				//dropOnEmpty: true
 			}
 		);   
 	}

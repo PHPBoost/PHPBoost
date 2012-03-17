@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                           PluginConfiguration.class.php
+ *                           HomePageService.class.php
  *                            -------------------
- *   begin                : February 21, 2012
+ *   begin                : March 17, 2012
  *   copyright            : (C) 2012 Kévin MASSY
  *   email                : soldier.weasel@gmail.com
  *
@@ -25,27 +25,8 @@
  *
  ###################################################*/
 
-abstract class PluginConfiguration
+class HomePageService
 {
-	private $id;
 	
-	public function __construct($id)
-	{
-		$this->id = $id;
-	}
-	
-	public function get_id()
-	{
-		return $this->id;
-	}
-	
-	public static function load($id, $class)
-	{
-		try {
-			return PersistenceContext::get_querier()->get_column_value(HomePageSetup::$home_page_table, 'object', 'WHERE id=:id', array('id' => $id));
-		} catch (RowNotFoundException $e) {
-			return new $class($id);
-		}
-	}
 }
 ?>

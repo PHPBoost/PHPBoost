@@ -27,7 +27,7 @@
 
 class TextEditorPluginConfiguration extends PluginConfiguration
 {
-	private $content = '';
+	private $content = 'cxwcxw';
 	
 	public function set_content($content)
 	{
@@ -36,7 +36,12 @@ class TextEditorPluginConfiguration extends PluginConfiguration
 	
 	public function get_content()
 	{
-		$this->content;
+		return $this->content;
+	}
+	
+	public static function load($id, $class = '')
+	{
+		return parent::load($id, __CLASS__);
 	}
 }
 ?>
