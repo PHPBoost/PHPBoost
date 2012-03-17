@@ -101,7 +101,7 @@ class OnlineConfig extends AbstractConfigData
 	 */
 	public static function load()
 	{
-		return ConfigManager::load(__CLASS__, 'module', 'online-config');
+		return ConfigManager::load(__CLASS__, 'online', 'config');
 	}
 
 	/**
@@ -109,7 +109,7 @@ class OnlineConfig extends AbstractConfigData
 	 */
 	public static function save()
 	{
-		ConfigManager::save('module', self::load(), 'online-config');
+		ConfigManager::save('online', self::load(), 'config');
 	}
 }
 ?>

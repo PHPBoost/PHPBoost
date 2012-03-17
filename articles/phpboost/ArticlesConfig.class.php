@@ -100,7 +100,7 @@ class ArticlesConfig extends AbstractConfigData
 	 */
 	public static function load()
 	{
-		return ConfigManager::load(__CLASS__, 'module', 'articles-config');
+		return ConfigManager::load(__CLASS__, 'articles', 'config');
 	}
 
 	/**
@@ -108,7 +108,7 @@ class ArticlesConfig extends AbstractConfigData
 	 */
 	public static function save()
 	{
-		ConfigManager::save('module', self::load(), 'articles-config');
+		ConfigManager::save('articles', self::load(), 'config');
 	}
 }
 ?>
