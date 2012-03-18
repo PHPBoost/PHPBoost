@@ -53,15 +53,22 @@ class AdminHomePageConfigController extends AdminController
 			'CONFIGURATION' => $this->build_form_configuration()->display()
 		));
 		
-		for ($i = 0; $i < $this->config->get_number_columns(); $i++) {
+		$all_plugins = HomePagePluginsService::get_installed_plugins();
+		for ($column = 1; $column <= $this->config->get_number_columns(); $column++) {
 			$view->assign_block_vars('containers', array(
-				'ID' => $i
+				'ID' => $column
 			));
 			
-			$view->assign_block_vars('containers.elements', array(
-				'ID' => $i,
-				'PLUGIN' => 'TEST'
-			));
+			/*$plugins = $all_plugins[$column];
+			foreach ($plugins as $plugin)
+			{
+				$object = $plugin['object'];
+				$view->assign_block_vars('containers.elements', array(
+					'ID' => $plugin['id'],
+					'PLUGIN' => $object->get_view()
+				));
+			}
+			*/
 		}
 
 		$view->put_all(array(
@@ -76,13 +83,13 @@ class AdminHomePageConfigController extends AdminController
 	{
 		switch ($this->config->get_number_columns()) {
 			case 1:
-				return "'container0'";
+				return "'container1'";
 			break;
 			case 2:
-				return "'container0', 'container1'";
+				return "'container1', 'container3'";
 			break;
 			case 3:
-				return "'container0', 'container1', 'container2'";
+				return "'container1', 'container2', 'container3'";
 			break;
 		}
 	}

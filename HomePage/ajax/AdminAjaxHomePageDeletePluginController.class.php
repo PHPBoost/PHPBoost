@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                           HomePagePluginsHomePageExtensionPoint.class.php
+ *                           AdminAjaxHomePageDeletePluginController.class.php
  *                            -------------------
- *   begin                : March 14, 2012
+ *   begin                : March 18, 2012
  *   copyright            : (C) 2012 Kévin MASSY
  *   email                : soldier.weasel@gmail.com
  *
@@ -25,13 +25,26 @@
  *
  ###################################################*/
 
-class HomePagePluginsHomePageExtensionPoint implements PluginsHomePageExtensionPoint
+class AdminAjaxHomePageDeletePluginController extends AdminModuleController
 {
-	public function get_plugins()
+	public function execute(HTTPRequest $request)
 	{
-		return array(
-			new TextEditorPlugin()
-		);
+		$lang = LangLoader::get('common', 'HomePage');
+		$plugin_id = $request->get_postint('id', 0);
+		try {
+			HomePagePluginsService::delete('WHERE id=:id', array('id' => $plugin_id));
+			$object = array(
+				'success' => true,
+				'message' => $comments_lang['success']
+			);
+		} catch (Exception $e) {
+			$object = array(
+				'success' => false,
+				'message' => $comments_lang['error']
+			);
+		}
+		
+		return new JSONResponse($object);
 	}
 }
 ?>

@@ -29,4 +29,8 @@ $lang = array();
 $lang['home_page'] = 'Page d\'accueil';
 $lang['config'] = 'Configuration';
 $lang['number_columns'] = 'Nombre de colonne';
+$lang['column'] = 'Colonne';
+
+$lang['plugin.add'] = 'Ajouter un plugin';
+$lang['plugin.type'] = 'Type de plugin';
 ?>

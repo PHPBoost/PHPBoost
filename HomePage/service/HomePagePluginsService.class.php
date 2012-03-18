@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                           HomePageService.class.php
+ *                           HomePagePluginsService.class.php
  *                            -------------------
  *   begin                : March 17, 2012
  *   copyright            : (C) 2012 Kévin MASSY
@@ -25,8 +25,28 @@
  *
  ###################################################*/
 
-class HomePageService
+class HomePagePluginsService
 {
+	private static $db_querier;
 	
+	public static function __static()
+	{
+		self::$db_querier = PersistenceContext::get_querier();
+	}
+	
+	public static function add(Array $columns)
+	{
+		self::$db_querier->insert(HomePageSetup::$home_page_table, $columns);
+	}
+	
+	public static function delete($condition, Array $parameters)
+	{
+		self::$db_querier->delete(HomePageSetup::$home_page_table, $condition, $parameters);
+	}
+	
+	public static function get_installed_plugins()
+	{
+		return HomePagePluginsCache::load()->get_plugins();
+	}
 }
 ?>

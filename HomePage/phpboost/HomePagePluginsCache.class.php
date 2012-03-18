@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                      HomePageExtensionPointProvider.class.php
+ *                      	 HomePagePluginsCache.class.php
  *                            -------------------
- *   begin                : February 21, 2012
+ *   begin                : March 18, 2012
  *   copyright            : (C) 2012 Kévin MASSY
  *   email                : soldier.weasel@gmail.com
  *
@@ -13,7 +13,7 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -25,26 +25,46 @@
  *
  ###################################################*/
 
-class HomePageExtensionPointProvider extends ExtensionPointProvider
+/**
+ * @author Kévin MASSY <soldier.weasel@gmail.com>
+ */
+class HomePagePluginsCache implements CacheData
 {
-    function __construct()
-    {
-        parent::__construct('HomePage');
-    }
+	private $installed_plugins = array();
 	
-	public function home_page()
+	/**
+	 * {@inheritdoc}
+	 */
+	public function synchronize()
 	{
-		return new PHPBoostHomePageExtensionPoint();
+		$db_querier = PersistenceContext::get_querier();
+		
+		$result = $db_querier->select_rows(HomePageSetup::$home_page_table, array('*'));
+		while ($row = $result->fetch())
+		{
+			$this->installed_plugins[$row['column']] = array(
+				'id' => $row[''],
+				'title' => $row['title'],
+				'class' => $row['class'],
+				'object' => $row['object'],
+				'enabled' => $row['enabled'],
+				'authorizations' => $row['authorizations'],
+			);
+		}
 	}
 	
-	public function url_mappings()
+	public function get_plugins()
 	{
-		return new UrlMappings(array(new DispatcherUrlMapping('/homepage/index.php')));
+		return $this->installed_plugins;
+	}
+
+	public static function load()
+	{
+		return CacheManager::load(__CLASS__, 'HomePage', 'plugins');
 	}
 	
-	public function plugins_home_page()
+	public static function invalidate()
 	{
-		return new HomePagePluginsHomePageExtensionPoint();
+		CacheManager::invalidate('HomePage', 'plugins');
 	}
 }
-?>
