@@ -96,7 +96,7 @@ class NewsletterConfig extends AbstractConfigData
 	 */
 	public static function load()
 	{
-		return ConfigManager::load(__CLASS__, 'module', 'newsletter-config');
+		return ConfigManager::load(__CLASS__, 'newsletter', 'config');
 	}
 
 	/**
@@ -104,7 +104,7 @@ class NewsletterConfig extends AbstractConfigData
 	 */
 	public static function save()
 	{
-		ConfigManager::save('module', self::load(), 'newsletter-config');
+		ConfigManager::save('newsletter', self::load(), 'config');
 	}
 }
 ?>

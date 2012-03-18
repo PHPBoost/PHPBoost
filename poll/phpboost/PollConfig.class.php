@@ -88,7 +88,7 @@ class PollConfig extends AbstractConfigData
 	 */
 	public static function load()
 	{
-		return ConfigManager::load(__CLASS__, 'module', 'poll-config');
+		return ConfigManager::load(__CLASS__, 'poll', 'config');
 	}
 
 	/**
@@ -96,7 +96,7 @@ class PollConfig extends AbstractConfigData
 	 */
 	public static function save()
 	{
-		ConfigManager::save('module', self::load(), 'poll-config');
+		ConfigManager::save('poll', self::load(), 'config');
 	}
 }
 ?>
