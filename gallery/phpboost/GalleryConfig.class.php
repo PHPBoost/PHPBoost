@@ -364,7 +364,7 @@ class GalleryConfig extends AbstractConfigData
 	 */
 	public static function load()
 	{
-		return ConfigManager::load(__CLASS__, 'module', 'gallery-config');
+		return ConfigManager::load(__CLASS__, 'gallery', 'config');
 	}
 
 	/**
@@ -372,7 +372,7 @@ class GalleryConfig extends AbstractConfigData
 	 */
 	public static function save()
 	{
-		ConfigManager::save('module', self::load(), 'gallery-config');
+		ConfigManager::save('gallery', self::load(), 'config');
 	}
 }
 ?>
