@@ -37,6 +37,7 @@ abstract class PluginFormConfiguration
 	{
 		$this->plugin_id = $plugin_id;
 		$this->plugin_configuration = $plugin_configuration;
+		$this->create_form();
 	}
 	
 	public function get_plugin_id()

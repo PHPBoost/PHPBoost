@@ -35,12 +35,24 @@ class AdminHomePageAddPluginController extends AdminController
 	public function execute(HTTPRequest $request)
 	{
 		$column_selected = $request->get_int('column', 1);
+		
 		$this->init();
 		$this->build_form($column_selected);
 		$this->view->put('FORM', $this->form->display());
 
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
+			/*$plugin_class = $this->form->get_value('PluginSelect')->get_raw_value();
+			$plugin = new $plugin_class();
+			
+			if ($plugin->has_configuration())
+			{
+				$plugin_form = $plugin->get_form_configuration();
+				$this->view->put_all(array(
+					'PLUGIN_FORM_CONFIG' => $plugin_form->display()
+				));
+			}
+			*/
 			$this->save();
 			$this->view->put('MSG', MessageHelper::display($this->lang['success'], MessageHelper::SUCCESS));
 		}
@@ -51,7 +63,7 @@ class AdminHomePageAddPluginController extends AdminController
 	private function init()
 	{
 		$this->lang = LangLoader::get('common', 'HomePage');
-		$this->view = new StringTemplate('# INCLUDE MSG # # INCLUDE FORM #');
+		$this->view = new StringTemplate('# INCLUDE MSG # # INCLUDE FORM # # INCLUDE PLUGIN_FORM_CONFIG #');
 	}
 	
 	private function build_form($column_selected)
@@ -61,6 +73,8 @@ class AdminHomePageAddPluginController extends AdminController
 		$fieldset = new FormFieldsetHTML('AddPlugin', $this->lang['plugin.add']);
 		$this->form->add_fieldset($fieldset);
 		
+		$fieldset->add_field(new FormFieldTextEditor('title', $this->lang['title'], ''));
+		
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('column', $this->lang['column'], $column_selected, array(
 			new FormFieldSelectChoiceOption('1', '1'),
 			new FormFieldSelectChoiceOption('2', '2'),
@@ -68,6 +82,13 @@ class AdminHomePageAddPluginController extends AdminController
 		)));
 
 		$fieldset->add_field(new FormFieldHomePagePluginSelect('PluginSelect', $this->lang['plugin.type']));
+		
+		$fieldset->add_field(new FormFieldCheckbox('enabled', $this->lang['enabled']));
+		
+		$auth_settings = new AuthorizationsSettings(array(new ActionAuthorization($this->lang['authorizations'], Plugin::READ_AUTHORIZATIONS)));
+		$auth_settings->build_from_auth_array(array('r1' => 1, 'r0' => 1, 'r-1' => 1));
+		$auth_setter = new FormFieldAuthorizationsSetter('authorizations', $auth_settings);
+		$fieldset->add_field($auth_setter);
 		
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$this->form->add_button($this->submit_button);
