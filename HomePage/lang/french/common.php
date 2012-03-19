@@ -28,6 +28,9 @@
 $lang = array();
 $lang['home_page'] = 'Page d\'accueil';
 $lang['config'] = 'Configuration';
+$lang['title'] = 'Title';
+$lang['enabled'] = 'Activé';
+$lang['authorizations'] = 'Autorisations';
 $lang['number_columns'] = 'Nombre de colonne';
 $lang['column'] = 'Colonne';
 

@@ -32,6 +32,8 @@ abstract class Plugin
 	private $view;
 	private $has_configuration = false;
 	
+	const READ_AUTHORIZATIONS = 1;
+	
 	public function __construct($title, View $view, $has_configuration = false)
 	{
 		$this->title = $title;

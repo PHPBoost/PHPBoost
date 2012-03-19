@@ -44,7 +44,7 @@ class TextEditorPluginFormConfiguration extends PluginFormConfiguration
 		return $form;
 	}
 	
-	protected function handle_form()
+	protected function handle_submit()
 	{
 		$this->get_plugin_configuration()->set_content($this->get_form()->get_value('contents'));
 		$this->save();
