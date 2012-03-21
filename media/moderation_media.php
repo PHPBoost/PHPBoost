@@ -28,7 +28,7 @@
 
 require_once('../kernel/begin.php');
 
-if (!$User->check_level(MODO_LEVEL))
+if (!$User->check_level(User::MODERATOR_LEVEL))
 {
 	$error_controller = PHPBoostErrors::unexisting_page();
 	DispatchManager::redirect($error_controller);

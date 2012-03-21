@@ -261,7 +261,7 @@ class MediaHomePageExtensionPoint implements HomePageExtensionPoint
 			
 			$tpl->put_all(array(
 				'C_DISPLAY_MEDIA' => true,
-				'C_MODO' => $User->check_level(MODO_LEVEL),
+				'C_MODO' => $User->check_level(User::MODERATOR_LEVEL),
 				'ID_MEDIA' => $id_media,
 				'NAME' => $media['name'],
 				'CONTENTS' => FormatingHelper::second_parse($media['contents']),
@@ -297,8 +297,15 @@ class MediaHomePageExtensionPoint implements HomePageExtensionPoint
 				'L_CONFIRM_DELETE_FILE' => str_replace('\'', '\\\'', $MEDIA_LANG['confirm_delete_media'])
 			));
 
-			$tpl->set_filenames(array('media_format' => (empty($mime_type_tpl[$media['mime_type']]) ? 'media/format/media_other.tpl' : 'media/' . $mime_type_tpl[$media['mime_type']])));
-
+			if (empty($mime_type_tpl[$media['mime_type']]))
+			{
+				$tpl->put('media_format', new FileTemplate('media/format/media_other.tpl'));
+			}
+			else
+			{
+				$tpl->put('media_format', new FileTemplate('media/' . $mime_type_tpl[$media['mime_type']]));
+			}
+			
 			//Affichage commentaires.
 			if (isset($_GET['com']))
 			{
