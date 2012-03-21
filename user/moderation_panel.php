@@ -48,7 +48,7 @@ switch ($action)
 define('TITLE', $LANG['moderation_panel']);
 require_once('../kernel/header.php');
 
-if (!$User->check_level(MODO_LEVEL)) //Si il n'est pas modérateur
+if (!$User->check_level(User::MODERATOR_LEVEL)) //Si il n'est pas modérateur
 {
 	$error_controller = PHPBoostErrors::unexisting_page();
 	DispatchManager::redirect($error_controller);

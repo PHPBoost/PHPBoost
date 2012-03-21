@@ -57,7 +57,7 @@ if ($read)
 	$nbr_pm = PrivateMsg::count_conversations($User->get_attribute('user_id'));
 	$max_pm_number = UserAccountsConfig::load()->get_max_private_messages_number();
 	$limit_group = $User->check_max_value(PM_GROUP_LIMIT, $max_pm_number);
-	$unlimited_pm = $User->check_level(MODO_LEVEL) || ($limit_group === -1);
+	$unlimited_pm = $User->check_level(User::MODERATOR_LEVEL) || ($limit_group === -1);
 
 	$nbr_waiting_pm = 0;
 	if (!$unlimited_pm && $nbr_pm > $limit_group)
@@ -93,7 +93,7 @@ if ($convers && empty($pm_edit) && empty($pm_del)) //Envoi de conversation.
 	
 	$limit_group = $User->check_max_value(PM_GROUP_LIMIT, UserAccountsConfig::load()->get_max_private_messages_number());
 	//Vérification de la boite de l'expéditeur.
-	if (PrivateMsg::count_conversations($User->get_attribute('user_id')) >= $limit_group && (!$User->check_level(MODO_LEVEL) && !($limit_group === -1))) //Boîte de l'expéditeur pleine.
+	if (PrivateMsg::count_conversations($User->get_attribute('user_id')) >= $limit_group && (!$User->check_level(User::MODERATOR_LEVEL) && !($limit_group === -1))) //Boîte de l'expéditeur pleine.
 		AppContext::get_response()->redirect('/user/pm' . url('.php?post=1&error=e_pm_full_post', '', '&') . '#message_helper');
 		
 	if (!empty($title) && !empty($contents) && !empty($login))
@@ -149,7 +149,7 @@ elseif (!empty($post) || (!empty($pm_get) && $pm_get != $User->get_attribute('us
 	
 	$limit_group = $User->check_max_value(PM_GROUP_LIMIT, UserAccountsConfig::load()->get_max_private_messages_number());
 	$nbr_pm = PrivateMsg::count_conversations($User->get_attribute('user_id'));
-	if (!$User->check_level(MODO_LEVEL) && !($limit_group === -1) && $nbr_pm >= $limit_group)
+	if (!$User->check_level(User::MODERATOR_LEVEL) && !($limit_group === -1) && $nbr_pm >= $limit_group)
 		$Template->put('message_helper', MessageHelper::display($LANG['e_pm_full_post'], E_USER_WARNING));
 	else
 	{

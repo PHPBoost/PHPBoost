@@ -44,7 +44,7 @@ class AdminUser extends CurrentUser
 
 	/**
 	 * @desc Check the authorization level
-	 * @param int $secure Constant of level authorization to check (User::MEMBER_LEVEL, MODO_LEVEL, User::ADMIN_LEVEL).
+	 * @param int $secure Constant of level authorization to check (User::MEMBER_LEVEL, User::MODERATOR_LEVEL, User::ADMIN_LEVEL).
 	 * @return boolean True if authorized, false otherwise.
 	 */
 	public function check_level($secure)
