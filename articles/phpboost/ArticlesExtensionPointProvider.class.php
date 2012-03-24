@@ -53,7 +53,7 @@ class ArticlesExtensionPointProvider extends ExtensionPointProvider
 			FROM " . DB_TABLE_ARTICLES_CAT . "
 			ORDER BY id_parent, c_order", __LINE__, __FILE__);
 
-		$string .= '$ARTICLES_CAT[0] = ' . var_export(array('name' => $LANG['root'], 'order' => 0, 'auth' => $config_articles['global_auth']), true) . ';' . "\n\n";
+		$string .= '$ARTICLES_CAT[0] = ' . var_export(array('name' => $LANG['root'], 'order' => 0, 'visible' => true, 'auth' => $config_articles['global_auth']), true) . ';' . "\n\n";
 		
 		while ($row = $this->sql_querier->fetch_assoc($result))
 		{

@@ -42,57 +42,43 @@ $file_approved = retrieve(POST, 'visible', false);
 if ($delete > 0)
 {
 	$Session->csrf_get_protect();
-	$articles = $Sql->query_array(DB_TABLE_ARTICLES, '*', "WHERE id = '" . $delete . "'", __LINE__, __FILE__);
-
-	if (empty($articles['id']))
-	{
+	
+	try {
+		$article = PersistenceContext::get_querier()->select_single_row(DB_TABLE_ARTICLES, array('*'), 'WHERE id=:id', array('id' => $delete));
+		
+		if (!$User->check_auth($ARTICLES_CAT[$article['idcat']]['auth'], AUTH_ARTICLES_MODERATE))
+		{
+			$error_controller = PHPBoostErrors::unexisting_page();
+			DispatchManager::redirect($error_controller);
+		}
+	} catch (RowNotFoundException $e) {
+		$error_controller = PHPBoostErrors::unexisting_page();
+		DispatchManager::redirect($error_controller);
+	}
+	
+	try {
+		PersistenceContext::get_querier()->delete(DB_TABLE_ARTICLES, 'WHERE id=:id', array('id' => $article['id']));
+		PersistenceContext::get_querier()->delete(DB_TABLE_EVENTS, 'WHERE module=:module AND id_in_module=:id_in_module', array('module' => 'articles', 'id_in_module' => $article['id']));
+		CommentsService::delete_comments_topic_module('articles', $article['id']);
+		Feed::clear_cache('articles');
+		
+		AppContext::get_response()->redirect('articles' . url('.php?cat=' . $article['idcat'], '-' . $article['idcat'] . '+' . Url::encode_rewrite($ARTICLES_CAT[$article['idcat']]['name']) . '.php'));
+		
+	} catch (RowNotFoundException $e) {
 		$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
             $LANG['e_unexist_articles']);
         DispatchManager::redirect($controller);
 	}
-	elseif (!$User->check_auth($ARTICLES_CAT[$articles['idcat']]['auth'], AUTH_ARTICLES_MODERATE))
-	{
-		$error_controller = PHPBoostErrors::unexisting_page();
-		DispatchManager::redirect($error_controller);
-	}
-
-	$Sql->query_inject("DELETE FROM " . DB_TABLE_ARTICLES . " WHERE id = '" . $articles['id'] . "'", __LINE__, __FILE__);
-	$Sql->query_inject("DELETE FROM " . DB_TABLE_EVENTS . " WHERE module = 'articles' AND id_in_module = '" . $articles['id'] . "'", __LINE__, __FILE__);
-
-	$articles_cat_info= $Sql->query_array(DB_TABLE_ARTICLES_CAT, "id", "nbr_articles_visible", "nbr_articles_unvisible","WHERE id = '".$articles['idcat']."'", __LINE__, __FILE__);
-	
-	if($articles['visible'] == 1)
-	{
-		$nb=$articles_cat_info['nbr_articles_visible'] - 1;
-		$Sql->query_inject("UPDATE " . DB_TABLE_ARTICLES_CAT. " SET nbr_articles_visible = '" . $nb. "' WHERE id = '" . $articles['idcat'] . "'", __LINE__, __FILE__);
-	}
-	else
-	{
-		$nb=$articles_cat_info['nbr_articles_unvisible'] - 1;
-		$Sql->query_inject("UPDATE " . DB_TABLE_ARTICLES_CAT. " SET nbr_articles_unvisible = '" . $nb. "' WHERE id = '" . $articles['idcat'] . "'", __LINE__, __FILE__);
-	}
-	if ($articles['nbr_com'] > 0)
-	{
-		
-		$Comments = new CommentsTopic('articles', $articles['id'], url('articles.php?id=' . $articles['id'] . '&amp;com=%s', 'articles-' . $articles['idcat'] . '-' . $articles['id'] . '.php?com=%s'));
-		$Comments->delete_all($delete_articles);
-	}
-
-	// Feeds Regeneration
-	
-	Feed::clear_cache('articles');
-
-	AppContext::get_response()->redirect('articles' . url('.php?cat=' . $articles['idcat'], '-' . $articles['idcat'] . '+' . Url::encode_rewrite($ARTICLES_CAT[$articles['idcat']]['name']) . '.php'));
 }
 elseif(retrieve(POST,'submit',false))
 {
 	$begining_date  = MiniCalendar::retrieve_date('start');
 	$end_date = MiniCalendar::retrieve_date('end');
 	$release = MiniCalendar::retrieve_date('release');
-	$icon=retrieve(POST, 'icon', '', TSTRING);
+	$icon = retrieve(POST, 'icon', '', TSTRING);
 
 	if(retrieve(POST,'icon_path',false))
-	$icon=retrieve(POST,'icon_path','');
+		$icon = retrieve(POST,'icon_path','');
 
 	$sources = array();
 	for ($i = 0;$i < 100; $i++)
@@ -123,8 +109,7 @@ elseif(retrieve(POST,'submit',false))
 		'release_min' => retrieve(POST, 'release_min', 0, TINTEGER),
 		'icon' => $icon,		
 		'sources'=>addslashes(serialize($sources)),
-		'description'=>retrieve(POST, 'description', '', TSTRING_PARSE),
-		'auth'=>retrieve(POST,'special_auth',false)  ? addslashes(serialize(Authorizations::build_auth_array_from_form(AUTH_ARTICLES_READ))) : ''
+		'description'=>retrieve(POST, 'description', '', TSTRING_PARSE)
 	);
 
 	if ($articles['id'] == 0 && ($User->check_auth($ARTICLES_CAT[$articles['idcat']]['auth'], AUTH_ARTICLES_WRITE) || $User->check_auth($ARTICLES_CAT[$articles['idcat']]['auth'], AUTH_ARTICLES_CONTRIBUTE)) || $articles['id'] > 0 && ($User->check_auth($ARTICLES_CAT[$articles['idcat']]['auth'], AUTH_ARTICLES_MODERATE) || $User->check_auth($ARTICLES_CAT[$articles['idcat']]['auth'], AUTH_ARTICLES_WRITE) && $articles['user_id'] == $User->get_attribute('user_id')))
@@ -168,9 +153,6 @@ elseif(retrieve(POST,'submit',false))
 			if ($articles['release'] == 0)
 				$articles['release'] = $now->get_timestamp();
 
-			// Image.
-			$img = $articles['icon'];
-
 			if ($articles['id'] > 0)
 			{
 				$visible = 1;
@@ -196,64 +178,59 @@ elseif(retrieve(POST,'submit',false))
 					default:
 						list($visible, $start_timestamp, $end_timestamp) = array(0, 0, 0);
 				}
-				$articles_properties = $Sql->query_array(PREFIX . "articles", "visible", "WHERE id = '" . $articles['id'] . "'", __LINE__, __FILE__);
+				
+				$visible = PersistenceContext::get_querier()->get_column_value(DB_TABLE_ARTICLES, 'visible', 'WHERE id=:id', array('id' => $articles['id']));
 			
-				$Sql->query_inject("UPDATE " . DB_TABLE_ARTICLES . " SET idcat = '" . $articles['idcat'] . "', title = '" . $articles['title'] . "', contents = '" . $articles['desc'] . "',  icon = '" . $img . "',  visible = '" . $visible . "', start = '" .  $articles['start'] . "', end = '" . $articles['end'] . "', timestamp = '" . $articles['release'] . "',sources = '".$articles['sources']."',auth = '".$articles['auth']."',description = '".$articles['description']."'
-				WHERE id = '" . $articles['id'] . "'", __LINE__, __FILE__);
+				PersistenceContext::get_querier()->update(DB_TABLE_ARTICLES, array(
+					'idcat' => $articles['idcat'], 
+					'title' => $articles['title'], 
+					'contents' => $articles['desc'],
+					'description' => $articles['description'],
+					'timestamp' => $articles['release'], 
+					'visible' => $articles['visible'], 
+					'start' => $articles['start'], 
+					'end' => $articles['end'], 
+					'icon' => $articles['icon'], 
+					'sources' => $articles['sources']
+				), 'WHERE id=:id', array('id' => $articles['id']));
 
 				//If it wasn't approved and now it's, we try to consider the corresponding contribution as processed
-				if ($file_approved && !$articles_properties['visible'])
+				if ($file_approved && !$visible)
 				{
-					
-					
-						
 					$corresponding_contributions = ContributionService::find_by_criteria('articles', $articles['id']);
 					if (count($corresponding_contributions) > 0)
 					{
-						$articles_cat_info = $Sql->query_array(DB_TABLE_ARTICLES_CAT, "id", "nbr_articles_visible", "nbr_articles_unvisible","WHERE id = '".$articles['idcat']."'", __LINE__, __FILE__);
-						$nb_visible = $articles_cat_info['nbr_articles_visible'] + 1 ;
-						$nb_unvisible = $articles_cat_info['nbr_articles_unvisible'] - 1;
-						$Sql->query_inject("UPDATE " . DB_TABLE_ARTICLES_CAT. " SET nbr_articles_visible = '" . $nb_visible. "',nbr_articles_unvisible = '".$nb_unvisible."' WHERE id = '" . $articles['idcat'] . "'", __LINE__, __FILE__);
 						$file_contribution = $corresponding_contributions[0];
-						//The contribution is now processed
 						$file_contribution->set_status(Event::EVENT_STATUS_PROCESSED);
-						//We save the contribution
 						ContributionService::save_contribution($file_contribution);
 					}
 				}
-				$Cache->Generate_module_file('articles');
+				Feed::clear_cache('articles');
 			}
 			else
 			{
 				$auth_contrib = !$User->check_auth($ARTICLES_CAT[$articles['idcat']]['auth'], AUTH_ARTICLES_WRITE) && $User->check_auth($ARTICLES_CAT[$articles['idcat']]['auth'], AUTH_ARTICLES_CONTRIBUTE);
-			
-				$auth = $articles['auth'];
-					
-				$Sql->query_inject("INSERT INTO " . DB_TABLE_ARTICLES . " (idcat, title, contents,timestamp, visible, start, end, user_id, icon, nbr_com,sources,auth,description)
-				VALUES('" . $articles['idcat'] . "', '" . $articles['title'] . "', '" . $articles['desc'] . "', '" . $articles['release'] . "', '" . $articles['visible'] . "', '" . $articles['start'] . "', '" . $articles['end'] . "', '" . $User->get_attribute('user_id') . "', '" . $img . "', '0','".$articles['sources']."','".$auth."','".$articles['description']."')", __LINE__, __FILE__);
-				$articles['id'] = $Sql->insert_id("SELECT MAX(id) FROM " . DB_TABLE_ARTICLES);
 
-				$articles_cat_info= $Sql->query_array(DB_TABLE_ARTICLES_CAT, "id", "nbr_articles_visible", "nbr_articles_unvisible","WHERE id = '".$articles['idcat']."'", __LINE__, __FILE__);
-
-				if($articles['visible'] == 1)
-				{
-					$nb=$articles_cat_info['nbr_articles_visible'] + 1;
-					$Sql->query_inject("UPDATE " . DB_TABLE_ARTICLES_CAT. " SET nbr_articles_visible = '" . $nb. "' WHERE id = '" . $articles['idcat'] . "'", __LINE__, __FILE__);
-				}
-				else
-				{
-					$nb=$articles_cat_info['nbr_articles_unvisible'] + 1;
-					$Sql->query_inject("UPDATE " . DB_TABLE_ARTICLES_CAT. " SET nbr_articles_unvisible = '" . $nb. "' WHERE id = '" . $articles['idcat'] . "'", __LINE__, __FILE__);
-				}
+				$insert_article = PersistenceContext::get_querier()->insert(DB_TABLE_ARTICLES, array(
+					'idcat' => $articles['idcat'], 
+					'title' => $articles['title'], 
+					'contents' => $articles['desc'],
+					'description' => $articles['description'],
+					'timestamp' => $articles['release'], 
+					'visible' => $articles['visible'], 
+					'start' => $articles['start'], 
+					'end' => $articles['end'], 
+					'user_id' => $User->get_attribute('user_id'), 
+					'icon' => $articles['icon'], 
+					'sources' => $articles['sources']
+				));
+				
+				$articles['id'] = $insert_article->get_last_inserted_id();
 
 				//If the poster couldn't write, it's a contribution and we put it in the contribution panel, it must be approved
 				if ($auth_contrib)
 				{
-					//Importing the contribution classes
-					
-					
 					$articles_contribution = new Contribution();
-
 					//The id of the file in the module. It's useful when the module wants to search a contribution (we will need it in the file edition)
 					$articles_contribution->set_id_in_module($articles['id']);
 					//The description of the contribution (the counterpart) to explain why did the contributor contributed
@@ -291,14 +268,12 @@ elseif(retrieve(POST,'submit',false))
 				}
 			}
 
-			// Feeds Regeneration
-			
 			Feed::clear_cache('articles');
 
 			if ($articles['visible'])
-			AppContext::get_response()->redirect('./articles' . url('.php?id=' . $articles['id'].'&cat='.$articles['idcat'] , '-' . $articles['idcat'] . '-' . $articles['id'] . '+' . Url::encode_rewrite($articles['title']) . '.php'));
+				AppContext::get_response()->redirect('./articles' . url('.php?id=' . $articles['id'].'&cat='.$articles['idcat'] , '-' . $articles['idcat'] . '-' . $articles['id'] . '+' . Url::encode_rewrite($articles['title']) . '.php'));
 			else
-			AppContext::get_response()->redirect(url('articles.php'));
+				AppContext::get_response()->redirect(url('articles.php'));
 		}
 	}
 	else
@@ -313,7 +288,7 @@ else
 
 	if ($edit > 0)
 	{
-		$articles = $Sql->query_array(DB_TABLE_ARTICLES, '*', "WHERE id = '" . $edit . "'", __LINE__, __FILE__);
+		$articles = PersistenceContext::get_querier()->select_single_row(DB_TABLE_ARTICLES, array('*'), 'WHERE id=:id', array('id' => $edit));
 
 		if (!empty($articles['id']) && ($User->check_auth($ARTICLES_CAT[$articles['idcat']]['auth'], AUTH_ARTICLES_MODERATE) || $User->check_auth($ARTICLES_CAT[$articles['idcat']]['auth'], AUTH_ARTICLES_WRITE) && $articles['user_id'] == $User->get_attribute('user_id')))
 		{
@@ -479,9 +454,9 @@ else
 			));
 				
 			$tpl->assign_block_vars('sources', array(
-				'I'=>0,
-				'SOURCE'=>'',
-				'URL'=>'',
+				'I' => 0,
+				'SOURCE' => '',
+				'URL' => '',
 			));
 			
 			$cat = $cat > 0 && ($User->check_auth($ARTICLES_CAT[$cat]['auth'], AUTH_ARTICLES_CONTRIBUTE) || $User->check_auth($ARTICLES_CAT[$cat]['auth'], AUTH_ARTICLES_WRITE)) ? $cat : 0;
@@ -550,5 +525,4 @@ else
 }
 
 require_once('../kernel/footer.php');
-
 ?>
