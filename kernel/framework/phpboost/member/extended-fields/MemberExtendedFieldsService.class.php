@@ -31,9 +31,7 @@
  * @package {@package}
  */
 class MemberExtendedFieldsService
-{	
-	const REWRITE = 1;
-	
+{
 	/**
 	 * @desc This function displayed fields form
 	 * @param object $member_extended_field MemberExtendedField containing user_id and Template. If user is not registered, use object MemberExtendedField, and define user_id of null.
@@ -201,19 +199,16 @@ class MemberExtendedFieldsService
 	
 	/**
 	 * @desc This public function return the data sent by the user depending field_name
-	 * @param object $member_extended_field MemberExtendedField containing user_id and field_name.
 	 */
-	public static function return_field_member(MemberExtendedField $member_extended_field, $rewrite = false)
+	public static function return_field_member($field_name, $user_id, $rewrite = false)
 	{
-		if ($rewrite == self::REWRITE)
+		if ($rewrite)
 		{
-			$field_name = 'f_' . $member_extended_field->get_field_name();
+			$field_name = 'f_' . $field_name;
 		}
-	
-		$field_name = $member_extended_field->get_field_name();
-		$data = MemberExtendedFieldsDAO::select_data_field_by_user_id($member_extended_field);
-		$field_member = !empty($data[$field_name]) && isset($data[$field_name]) ? $data[$field_name] : '';
-		return $field_member;
+
+		$data = MemberExtendedFieldsDAO::select_data_field_by_user_id($user_id);
+		return !empty($data[$field_name]) && isset($data[$field_name]) ? $data[$field_name] : '';
 	}
 }
 ?>

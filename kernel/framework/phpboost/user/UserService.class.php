@@ -81,6 +81,7 @@ class UserService
 		$user = new User();
 		$user->set_id($row['user_id']);
 		$user->set_pseudo($row['login']);
+		$user->set_level($row['level']);
 		$user->set_approbation((bool)$row['user_aprob']);
 		$user->set_email($row['user_mail']);
 		$user->set_show_email((bool)$row['user_show_mail']);

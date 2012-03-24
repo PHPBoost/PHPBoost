@@ -339,9 +339,8 @@ class KernelSetup
 			'user_timezone' => array('type' => 'boolean', 'length' => 2, 'notnull' => 1, 'default' => 0),
 			'timestamp' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 		
-			//
+			/*
 				'user_avatar' => array('type' => 'string', 'length' => 255, 'default' => "''"),
-				'user_msg' => array('type' => 'integer', 'length' => 9, 'notnull' => 1, 'default' => 0),
 				'user_local' => array('type' => 'string', 'length' => 50, 'default' => "''"),
 				'user_msn' => array('type' => 'string', 'length' => 50, 'default' => "''"),
 				'user_yahoo' => array('type' => 'string', 'length' => 50, 'default' => "''"),
@@ -352,6 +351,8 @@ class KernelSetup
 				'user_sex' => array('type' => 'boolean', 'length' => 1, 'notnull' => 1, 'default' => 0),
 				'user_born' => array('type' => 'date', 'notnull' => 1, 'default' => "'0000-00-00'"),
 				'user_sign' => array('type' => 'text', 'length' => 65000),
+			*/
+			'user_msg' => array('type' => 'integer', 'length' => 9, 'notnull' => 1, 'default' => 0),
 			//
 			
 			'user_pm' => array('type' => 'integer', 'length' => 6, 'notnull' => 1, 'default' => 0),
@@ -933,9 +934,7 @@ class KernelSetup
 			'login' => 'login',
 			'level' => 2,
 			'user_aprob' => 1,
-			'user_groups' => '',
-			'user_desc' => '',
-			'user_sign' => ''
+			'user_groups' => ''
 		));
 	}
 }

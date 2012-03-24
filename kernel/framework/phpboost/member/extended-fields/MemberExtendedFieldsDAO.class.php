@@ -50,16 +50,13 @@ class MemberExtendedFieldsDAO
 	public function set_request(MemberExtendedField $member_extended_field)
 	{
 		$this->set_request_update($member_extended_field);
-
 		$this->set_request_insert($member_extended_field);
-		
 		$this->fields[$member_extended_field->get_field_name()] = $member_extended_field->get_value();
 	}
 	
 	public function get_request($user_id)
 	{
 		$check_member = $this->db_connection->query("SELECT COUNT(*) FROM " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
-
 		if ($check_member)
 		{
 			$this->get_request_update($user_id);
@@ -124,12 +121,12 @@ class MemberExtendedFieldsDAO
 	/**
 	 * @desc Return Array containing list fields and the value.
 	 */
-	public static function select_data_field_by_user_id(MemberExtendedField $member_extended_field)
+	public static function select_data_field_by_user_id($user_id)
 	{
-		$exist = PersistenceContext::get_querier()->count(DB_TABLE_MEMBER_EXTENDED_FIELDS, "WHERE user_id = '" . $member_extended_field->get_user_id() . "'") > 0 ? true : false;
-		if ($exist)
-		{
-			return PersistenceContext::get_querier()->select_single_row(DB_TABLE_MEMBER_EXTENDED_FIELDS, array('*'), "WHERE user_id = '" . $member_extended_field->get_user_id() . "'");
+		try {
+			return PersistenceContext::get_querier()->select_single_row(DB_TABLE_MEMBER_EXTENDED_FIELDS, array('*'), "WHERE user_id = '" . $user_id . "'");
+		} catch (RowNotFoundException $e) {
+			return array();
 		}
 	}
 }
