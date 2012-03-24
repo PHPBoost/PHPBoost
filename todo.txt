@@ -26,12 +26,9 @@
 #################################################################################
 
 ------------------------------------- NOYAU ------------------------------------
-+ Classe commentaire : Design + intégration du système d'approbation (avec possibilité d'avoir un mail).
-+ Joindre tous les champs étendus dans la session utilisateur.
++ Commentaires : Design + intégration du système d'approbation (avec possibilité d'avoir un mail).
 
 ------------------------------------ MODULES -----------------------------------
-
-[color=red]Nouveauté:[/color] Début du nouveau module de page de démarrage du site.
 
 #################################################################################
 

@@ -102,7 +102,7 @@ class MemberUserAvatarExtendedField extends AbstractMemberExtendedField
 		$delete = $form->get_value('delete_avatar');
 		if ($delete)
 		{
-			$value = MemberExtendedFieldsService::return_field_member($member_extended_field);
+			$value = MemberExtendedFieldsService::return_field_member($member_extended_field->get_field_name(), $member_extended_field->get_user_id());
 			if (!empty($value) && preg_match('`\.\./images/avatars/(([a-z0-9()_-])+\.([a-z]){3,4})`i', $value) && is_file($value))
 			{
 				@unlink($value);
@@ -127,7 +127,7 @@ class MemberUserAvatarExtendedField extends AbstractMemberExtendedField
 			$dir = PATH_TO_ROOT .'/images/avatars/';
 			
 			$avatar = $form->get_value('upload_avatar', 0);
-			$former_avatar = MemberExtendedFieldsService::return_field_member($member_extended_field);
+			$former_avatar = MemberExtendedFieldsService::return_field_member($member_extended_field->get_field_name(), $member_extended_field->get_user_id());
 			if ($former_avatar !== $avatar)
 			{
 				@unlink($former_avatar);
