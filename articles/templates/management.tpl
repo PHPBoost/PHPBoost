@@ -196,29 +196,6 @@
 				</table>
 				<br /><br />
 				# IF NOT C_CONTRIBUTION #
-				<fieldset>
-					<legend>
-						{L_SPECIAL_AUTH}
-					</legend>
-					<dl>
-						<dt><label for="special_auth">{L_SPECIAL_AUTH}</label>
-						<br />
-						<span class="text_small">{L_SPECIAL_AUTH_EXPLAIN_ARTICLES}</span></dt>
-						<dd>
-							<input type="checkbox" name="special_auth" id="special_auth" onclick="javascript: change_status_global_auth();" {SPECIAL_CHECKED} />
-						</dd>					
-					</dl>
-					<div id="hide_special_auth" style="display:{DISPLAY_SPECIAL_AUTH};">
-						<dl>
-							<dt>
-								<label for="auth_read">{L_AUTH_READ}</label>
-							</dt>
-							<dd>
-								{AUTH_READ}
-							</dd>
-						</dl>
-					</div>
-				</fieldset>
 				<dl class="overflow_visible">
 					<dt><label for="release_date">* {L_RELEASE_DATE}</label></dt>
 					<dd>

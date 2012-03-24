@@ -151,9 +151,9 @@ class CommentsService
 	*/
 	public static function delete_comments_module($module_id)
 	{
-		if (CommentsTopicDAO::comments_topic_exists_by_module_id($module_id))
-		{
+		try {
 			CommentsManager::delete_comments_module($module_id);
+		} catch (Exception $e) {
 		}
 	}
 	
@@ -162,9 +162,9 @@ class CommentsService
 	*/
 	public static function delete_comments_topic_module($module_id, $id_in_module)
 	{
-		if (CommentsTopicDAO::comments_topic_exists($module_id, $id_in_module))
-		{
+		try {
 			CommentsManager::delete_comments_topic_module($module_id, $id_in_module);
+		} catch (Exception $e) {
 		}
 	}
 	

@@ -253,9 +253,10 @@ class ArticlesHomePageExtensionPoint implements HomePageExtensionPoint
 			));
 
 
-			$result = $this->sql_querier->query_while("SELECT a.id, a.title,a.description, a.icon, a.timestamp, a.views, a.note, a.nbrnote, a.nbr_com,a.user_id,m.user_id,m.login,m.level
+			$result = $this->sql_querier->query_while("SELECT a.id, a.title,a.description, a.icon, a.timestamp, a.views, a.user_id, m.user_id, m.login, m.level, com.number_comments
 			FROM " . DB_TABLE_ARTICLES . " a
 			LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = a.user_id
+			LEFT JOIN " . DB_TABLE_COMMENTS_TOPIC . " com ON com.id_in_module = a.id AND com.module_id = 'articles'
 			WHERE a.visible = 1 AND a.idcat = '" . $idartcat .	"' AND a.start <= '" . $now->get_timestamp() . "' AND (a.end >= '" . $now->get_timestamp() . "' OR a.end = 0)
 			ORDER BY " . $sort . " " . $mode .
 			$this->sql_querier->limit($Pagination->get_first_msg($CONFIG_ARTICLES['nbr_articles_max'], 'p'), $CONFIG_ARTICLES['nbr_articles_max']), __LINE__, __FILE__);
@@ -272,7 +273,7 @@ class ArticlesHomePageExtensionPoint implements HomePageExtensionPoint
 				'DATE' => gmdate_format('date_format_short', $row['timestamp']),
 				'COMPT' => $row['views'],
 				'NOTE' => ($row['nbrnote'] > 0) ? Note::display_img($row['note'], $CONFIG_ARTICLES['note_max'], 5) : '<em>' . $LANG['no_note'] . '</em>',
-				'COM' => $row['nbr_com'],
+				'COM' => empty($row['number_comments']) ? '0' : $row['number_comments'],
 				'DESCRIPTION'=>FormatingHelper::second_parse($row['description']),
 				'U_ARTICLES_PSEUDO'=>'<a href="' . UserUrlBuilder::profile($row['user_id'])->absolute() . '" class="' . $array_class[$row['level']] . '"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . TextHelper::wordwrap_html($row['login'], 19) . '</a>',
 				'U_ARTICLES_LINK' => url('.php?id=' . $row['id'] . '&amp;cat=' . $idartcat, '-' . $idartcat . '-' . $row['id'] . '+' . Url::encode_rewrite($fichier) . '.php'),
@@ -292,7 +293,7 @@ class ArticlesHomePageExtensionPoint implements HomePageExtensionPoint
 				));
 
 
-				$result = $this->sql_querier->query_while("SELECT a.id, a.title, a.icon, a.timestamp, a.views, a.note, a.nbrnote, a.nbr_com,a.user_id,m.user_id,m.login,m.level
+				$result = $this->sql_querier->query_while("SELECT a.id, a.title, a.icon, a.timestamp, a.views, a.user_id, m.user_id, m.login, m.level
 				FROM " . DB_TABLE_ARTICLES . " a
 				LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = a.user_id
 				WHERE a.visible = 0 AND a.idcat = '" . $idartcat .	"'  AND a.user_id != -1 AND a.start > '" . $now->get_timestamp() . "' AND (a.end <= '" . $now->get_timestamp() . "' OR a.start = 0)

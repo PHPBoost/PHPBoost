@@ -35,16 +35,15 @@ $cat = retrieve(GET, 'cat', 0);
 $idart = retrieve(GET, 'id', 0);	
 
 if (!empty($idart) && isset($cat) )
-{		
-	$result = $Sql->query_while("SELECT a.contents, a.title, a.id, a.idcat, a.auth, a.timestamp, a.sources, a.start, a.visible, a.user_id, a.icon, a.nbr_com, m.login, m.level
+{
+	$result = $Sql->query_while("SELECT a.contents, a.title, a.id, a.idcat, a.auth, a.timestamp, a.sources, a.start, a.visible, a.user_id, a.icon, m.login, m.level
 		FROM " . DB_TABLE_ARTICLES . " a 
 		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = a.user_id
 		WHERE a.id = '" . $idart . "'", __LINE__, __FILE__);
 	$articles = $Sql->fetch_assoc($result);
 	$Sql->query_close($result);
 	
-	$special_auth = (unserialize($articles['auth']) !== $ARTICLES_CAT[$articles['idcat']]['auth']) && ($articles['auth'] != '')  ? true : false;
-	$articles['auth'] = $special_auth ? unserialize($articles['auth']) : $ARTICLES_CAT[$articles['idcat']]['auth'];
+	$articles['auth'] = $ARTICLES_CAT[$articles['idcat']]['auth'];
 
 	//Niveau d'autorisation de la catégorie
 	if (!isset($ARTICLES_CAT[$idartcat]) || (!$User->check_auth($ARTICLES_CAT[$idartcat]['auth'], AUTH_ARTICLES_READ) && !$User->check_auth($articles['auth'], AUTH_ARTICLES_READ))|| $ARTICLES_CAT[$idartcat]['visible'] == 0 ) 
@@ -65,8 +64,6 @@ if (!empty($idart) && isset($cat) )
 	//MAJ du compteur.
 	$Sql->query_inject("UPDATE " . LOW_PRIORITY . " " . DB_TABLE_ARTICLES . " SET views = views + 1 WHERE id = " . $idart, __LINE__, __FILE__); 
 	
-	//On crée une pagination si il y plus d'une page.
-	 
 	$Pagination = new DeprecatedPagination();
 
 	//Si l'article ne commence pas par une page on l'ajoute.
@@ -89,7 +86,7 @@ if (!empty($idart) && isset($cat) )
 	$i = 1;
 	
 	// If tab pagination is active
-	$c_tab=$articles['pagination_tab'];
+	$c_tab = $articles['pagination_tab'];
 	
 	//Nombre de pages
 	$nbr_page = count($array_page[1]);
@@ -134,9 +131,6 @@ if (!empty($idart) && isset($cat) )
 		$i++;
 	}	
 	
-	//options
-	$options=unserialize($articles['options']);
-	
 	$notation = new Notation();
 	$notation->set_module_name('articles');
 	$notation->set_notation_scale($CONFIG_ARTICLES['note_max']);
@@ -146,11 +140,6 @@ if (!empty($idart) && isset($cat) )
 		'C_DISPLAY_ARTICLE' => true,
 		'C_SOURCES'=> $i > 0 ? true : false,
 		'C_TAB'=>$c_tab,
-		'C_NOTE'=> $options['note'] ? true : false,
-		'C_PRINT'=> $options['impr'] ? true : false,
-		'C_COM'=> $options['com'] ? true : false,
-		'C_AUTHOR'=> $options['author'] ? true : false,
-		'C_DATE'=> $options['date'] ? true : false,
 		'IDART' => $articles['id'],
 		'IDCAT' => $idartcat,
 		'NAME' => $articles['title'],
@@ -211,7 +200,6 @@ else
 	}
 	elseif (!$no_alert_on_error) 
 	{
-		//TODO Gestion de la langue
 		$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
             'Le module <strong>' . $module_name . '</strong> n\'a pas de fonction get_home_page!', UserErrorController::FATAL);
         DispatchManager::redirect($controller);
