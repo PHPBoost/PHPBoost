@@ -26,4 +26,7 @@
     margin-left:-4px;
     padding:0;
     border:none;
+    width: 35px;
+    height: 20px;
+    background: url(images/newsletter_submit.png) no-repeat;
 }
