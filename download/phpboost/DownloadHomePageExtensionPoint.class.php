@@ -43,32 +43,27 @@ class DownloadHomePageExtensionPoint implements HomePageExtensionPoint
 	{
 		global $DOWNLOAD_LANG;
 		
-		load_module_lang('download');
-		
-		return $DOWNLOAD_LANG['download'];
+		return $DOWNLOAD_LANG['title_download'];
 	}
 	
 	private function get_view()
 	{
-		global $Cache, $User, $Bread_crumb, $DOWNLOAD_LANG, $LANG, $DOWNLOAD_CATS, $Session, $category_id, $auth_read, $auth_write, $auth_contribution, $notation;
+		global $DOWNLOAD_LANG, $LANG, $CONFIG_DOWNLOAD, $DOWNLOAD_CATS, $Session, $category_id, $auth_read, $auth_write, $auth_contribution, $notation;
 		
 		require_once(PATH_TO_ROOT . '/download/download_begin.php');
-		
-		$download_config = DownloadConfig::load();
-		
+
 		$tpl = new FileTemplate('download/download.tpl');
-		
+	
 		$now = new Date(DATE_NOW, TIMEZONE_AUTO);
 		
-		$root_contents = $download_config->get_root_contents();
 		$tpl->put_all(array(
 			'C_ADMIN' => $auth_write,
 			'C_DOWNLOAD_CAT' => true,
 			'C_ADD_FILE' => $auth_write || $auth_contribution,
-			'C_DESCRIPTION' => !empty($DOWNLOAD_CATS[$category_id]['contents']) || ($category_id == 0 && !empty($root_contents)),
+			'C_DESCRIPTION' => !empty($DOWNLOAD_CATS[$category_id]['contents']) || ($category_id == 0 && !empty($CONFIG_DOWNLOAD['root_contents'])),
 			'IDCAT' => $category_id,
 			'TITLE' => sprintf($DOWNLOAD_LANG['title_download'] . ($category_id > 0 ? ' - ' . $DOWNLOAD_CATS[$category_id]['name'] : '')),
-			'DESCRIPTION' => $category_id > 0 ? FormatingHelper::second_parse($DOWNLOAD_CATS[$category_id]['contents']) : FormatingHelper::second_parse($root_contents),
+			'DESCRIPTION' => $category_id > 0 ? FormatingHelper::second_parse($DOWNLOAD_CATS[$category_id]['contents']) : FormatingHelper::second_parse($CONFIG_DOWNLOAD['root_contents']),
 			'L_ADD_FILE' => $DOWNLOAD_LANG['add_file'],
 			'U_ADMIN_CAT' => $category_id > 0 ? url('admin_download_cat.php?edit=' . $category_id) : url('admin_download_cat.php'),
 			'U_ADD_FILE' => url('management.php?new=1&amp;idcat=' . $category_id)
@@ -76,14 +71,12 @@ class DownloadHomePageExtensionPoint implements HomePageExtensionPoint
 		
 		//let's check if there are some subcategories
 		$num_subcats = 0;
-		if (!empty($DOWNLOAD_CATS))
+		foreach ($DOWNLOAD_CATS as $id => $value)
 		{
-			foreach ($DOWNLOAD_CATS as $id => $value)
-			{
-				if ($id != 0 && $value['id_parent'] == $category_id)
-					$num_subcats ++;
-			}
+			if ($id != 0 && $value['id_parent'] == $category_id)
+				$num_subcats ++;
 		}
+	
 		//listing of subcategories
 		if ($num_subcats > 0)
 		{
@@ -98,13 +91,13 @@ class DownloadHomePageExtensionPoint implements HomePageExtensionPoint
 				//List of children categories
 				if ($id != 0 && $value['visible'] && $value['id_parent'] == $category_id && (empty($value['auth']) || $User->check_auth($value['auth'], DOWNLOAD_READ_CAT_AUTH_BIT)))
 				{
-					if ( $i % $download_config->get_number_columns() == 1 )
+					if ( $i % $CONFIG_DOWNLOAD['nbr_column'] == 1 )
 						$tpl->assign_block_vars('row', array());
 						
 					$tpl->assign_block_vars('row.list_cats', array(
 						'ID' => $id,
 						'NAME' => $value['name'],
-						'WIDTH' => floor(100 / (float)$download_config->get_number_columns()),
+						'WIDTH' => floor(100 / (float)$CONFIG_DOWNLOAD['nbr_column']),
 						'SRC' => $value['icon'],
 						'IMG_NAME' => addslashes($value['name']),
 						'NUM_FILES' => sprintf(((int)$value['num_files'] > 1 ? $DOWNLOAD_LANG['num_files_plural'] : $DOWNLOAD_LANG['num_files_singular']), (int)$value['num_files']),
@@ -194,21 +187,21 @@ class DownloadHomePageExtensionPoint implements HomePageExtensionPoint
 			$Pagination = new DeprecatedPagination();
 			
 			$tpl->put_all(array(
-				'PAGINATION' => $Pagination->display(url('download.php' . (!empty($unget) ? $unget . '&amp;' : '?') . 'cat=' . $category_id . '&amp;p=%d', 'category-' . $category_id . '-%d.php' . $unget), $nbr_files, 'p', $download_config->get_nbr_file_max(), 3),
+				'PAGINATION' => $Pagination->display(url('download.php' . (!empty($unget) ? $unget . '&amp;' : '?') . 'cat=' . $category_id . '&amp;p=%d', 'category-' . $category_id . '-%d.php' . $unget), $nbr_files, 'p', $CONFIG_DOWNLOAD['nbr_file_max'], 3),
 				'C_FILES' => true,
 				'TARGET_ON_CHANGE_ORDER' => ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? 'category-' . $category_id . '.php?' : 'download.php?cat=' . $category_id . '&'
 			));
 	
-			$result = $this->sql_querier->query_while("SELECT d.id, d.title, d.timestamp, d.size, d.count, d.image, d.short_contents
+			$result = $this->sql_querier->query_while("SELECT d.id, d.title, d.timestamp, d.size, d.count, d.image, d.short_contents, notes.average_notes
 			FROM " . PREFIX . "download d
-			LEFT JOIN " . DB_TABLE_AVERAGE_NOTES . " notes ON d.id = notes.id_in_module
+			LEFT JOIN " . DB_TABLE_AVERAGE_NOTES . " notes ON d.id = notes.id_in_module AND module_name = 'download'
 			WHERE visible = 1 AND approved = 1 AND idcat = '" . $category_id . "' AND start <= '" . $now->get_timestamp() . "' AND (end >= '" . $now->get_timestamp() . "' OR end = 0)
 			ORDER BY " . $sort . " " . $mode . 
-			$this->sql_querier->limit($Pagination->get_first_msg($download_config->get_nbr_file_max(), 'p'), $download_config->get_nbr_file_max()), __LINE__, __FILE__);
+			$this->sql_querier->limit($Pagination->get_first_msg($CONFIG_DOWNLOAD['nbr_file_max'], 'p'), $CONFIG_DOWNLOAD['nbr_file_max']), __LINE__, __FILE__);
 			while ($row = $this->sql_querier->fetch_assoc($result))
 			{
 				$notation->set_id_in_module($row['id']);
-				
+
 				$tpl->assign_block_vars('file', array(			
 					'NAME' => $row['title'],
 					'IMG_NAME' => str_replace('"', '\"', $row['title']),
@@ -216,7 +209,7 @@ class DownloadHomePageExtensionPoint implements HomePageExtensionPoint
 					'DESCRIPTION' => FormatingHelper::second_parse($row['short_contents']),
 					'DATE' => sprintf($DOWNLOAD_LANG['add_on_date'], gmdate_format('date_format_short', $row['timestamp'])),
 					'COUNT_DL' => sprintf($DOWNLOAD_LANG['downloaded_n_times'], $row['count']),
-					'NOTE' => NotationService::display_static_image($notation),
+					'NOTE' => NotationService::display_static_image($notation, $row['average_notes']),
 					'SIZE' => ($row['size'] >= 1) ? NumberHelper::round($row['size'], 1) . ' ' . $LANG['unit_megabytes'] : (NumberHelper::round($row['size'], 1) * 1024) . ' ' . $LANG['unit_kilobytes'],
 					'C_IMG' => !empty($row['image']),
 					'IMG' => $row['image'],

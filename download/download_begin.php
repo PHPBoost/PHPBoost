@@ -29,9 +29,6 @@ if (defined('PHPBOOST') !== true)
 	exit;
 
 load_module_lang('download'); //Chargement de la langue du module.
-
-$download_config = DownloadConfig::load();
-
 $Cache->load('download');
 
 require_once('download_auth.php');
@@ -44,7 +41,7 @@ $id_cat_for_download = 0;
 
 $notation = new Notation();
 $notation->set_module_name('download');
-$notation->set_notation_scale($download_config->get_note_max());
+$notation->set_notation_scale($CONFIG_DOWNLOAD['note_max']);
 
 if (!empty($file_id))
 {
@@ -78,9 +75,9 @@ else
 
 $l_com_note = !empty($idurl) ? (!empty($get_note) ? $LANG['note'] : (!empty($_GET['i']) ? $LANG['com'] : '') ) : '';
 
-$auth_read = $User->check_auth($download_config->get_authorizations(), DOWNLOAD_READ_CAT_AUTH_BIT);
-$auth_write = $User->check_auth($download_config->get_authorizations(), DOWNLOAD_WRITE_CAT_AUTH_BIT);
-$auth_contribution = $User->check_auth($download_config->get_authorizations(), DOWNLOAD_CONTRIBUTION_CAT_AUTH_BIT);
+$auth_read = $User->check_auth($CONFIG_DOWNLOAD['global_auth'], DOWNLOAD_READ_CAT_AUTH_BIT);
+$auth_write = $User->check_auth($CONFIG_DOWNLOAD['global_auth'], DOWNLOAD_WRITE_CAT_AUTH_BIT);
+$auth_contribution = $User->check_auth($CONFIG_DOWNLOAD['global_auth'], DOWNLOAD_CONTRIBUTION_CAT_AUTH_BIT);
 
 //Bread_crumb : we read categories list recursively
 while ($id_cat_for_download > 0)

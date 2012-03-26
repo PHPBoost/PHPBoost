@@ -30,22 +30,24 @@ require_once('../admin/admin_begin.php');
 load_module_lang('download'); //Chargement de la langue du module.
 $Cache->load('download');
 define('TITLE', $LANG['administration']);
-$download_config = DownloadConfig::load();
 require_once('../admin/admin_header.php');
 
 include_once('download_auth.php');
 
 if (!empty($_POST['valid']))
 {
-	$download_config->set_nbr_file_max(retrieve(POST, 'nbr_file_max', 10));
-	$download_config->set_number_columns(retrieve(POST, 'nbr_columns', 2));
-	$download_config->set_note_max(max(1, retrieve(POST, 'note_max', 5)));
-	$download_config->set_root_contents(stripslashes(retrieve(POST, 'root_contents', '', TSTRING_PARSE)));
-	$download_config->set_authorizations(Authorizations::build_auth_array_from_form(DOWNLOAD_READ_CAT_AUTH_BIT, DOWNLOAD_WRITE_CAT_AUTH_BIT, DOWNLOAD_CONTRIBUTION_CAT_AUTH_BIT));
+	$config_download['nbr_file_max'] = retrieve(POST, 'nbr_file_max', 10);
+	$config_download['nbr_column'] = retrieve(POST, 'nbr_column', 4);
+	$config_download['note_max'] = max(1, retrieve(POST, 'note_max', 5));
+	$config_download['root_contents'] = stripslashes(retrieve(POST, 'root_contents', '', TSTRING_PARSE));
+	$config_download['global_auth'] = Authorizations::build_auth_array_from_form(DOWNLOAD_READ_CAT_AUTH_BIT, DOWNLOAD_WRITE_CAT_AUTH_BIT, DOWNLOAD_CONTRIBUTION_CAT_AUTH_BIT);
 	
-	DownloadConfig::save();
+	$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($config_download)) . "' WHERE name = 'download'", __LINE__, __FILE__);
 	
-	###### Régénération du cache #######
+	if (!empty($CONFIG_DOWNLOAD['note_max']) && $CONFIG_DOWNLOAD['note_max'] != $config_download['note_max'])
+		$Sql->query_inject("UPDATE " . PREFIX . "download SET note = note * " . ($config_download['note_max'] / $CONFIG_DOWNLOAD['note_max']), __LINE__, __FILE__);
+	
+	###### Régénération du cache des news #######
 	$Cache->Generate_module_file('download');
 	
 	AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);	
@@ -59,19 +61,19 @@ else
 	
 	$Cache->load('download');
 	
-	$config_authorizations = $download_config->get_authorizations();
+	$CONFIG_DOWNLOAD['global_auth'] = isset($CONFIG_DOWNLOAD['global_auth']) && is_array($CONFIG_DOWNLOAD['global_auth']) ? $CONFIG_DOWNLOAD['global_auth'] : array();
 	
 	$editor = AppContext::get_content_formatting_service()->get_default_editor();
 	$editor->set_identifier('contents');
 	
 	$Template->put_all(array(
-		'NBR_FILE_MAX' => $download_config->get_nbr_file_max(),
-		'NBR_COLUMNS' => $download_config->get_number_columns(),
-		'NOTE_MAX' => $download_config->get_note_max(),
-		'READ_AUTH' => Authorizations::generate_select(DOWNLOAD_READ_CAT_AUTH_BIT, $config_authorizations),
-		'WRITE_AUTH' => Authorizations::generate_select(DOWNLOAD_WRITE_CAT_AUTH_BIT, $config_authorizations),
-		'CONTRIBUTION_AUTH' => Authorizations::generate_select(DOWNLOAD_CONTRIBUTION_CAT_AUTH_BIT, $config_authorizations),
-		'DESCRIPTION' => FormatingHelper::unparse($download_config->get_root_contents()),
+		'NBR_FILE_MAX' => !empty($CONFIG_DOWNLOAD['nbr_file_max']) ? $CONFIG_DOWNLOAD['nbr_file_max'] : '10',
+		'NBR_COLUMN' => !empty($CONFIG_DOWNLOAD['nbr_column']) ? $CONFIG_DOWNLOAD['nbr_column'] : '2',
+		'NOTE_MAX' => !empty($CONFIG_DOWNLOAD['note_max']) ? $CONFIG_DOWNLOAD['note_max'] : '10',
+		'READ_AUTH' => Authorizations::generate_select(DOWNLOAD_READ_CAT_AUTH_BIT, $CONFIG_DOWNLOAD['global_auth']),
+		'WRITE_AUTH' => Authorizations::generate_select(DOWNLOAD_WRITE_CAT_AUTH_BIT, $CONFIG_DOWNLOAD['global_auth']),
+		'CONTRIBUTION_AUTH' => Authorizations::generate_select(DOWNLOAD_CONTRIBUTION_CAT_AUTH_BIT, $CONFIG_DOWNLOAD['global_auth']),
+		'DESCRIPTION' => FormatingHelper::unparse($CONFIG_DOWNLOAD['root_contents']),
 		'KERNEL_EDITOR' => $editor->display(),
 		'L_REQUIRE' => $LANG['require'],		
 		'L_DOWNLOAD_MANAGEMENT' => $DOWNLOAD_LANG['download_management'],
