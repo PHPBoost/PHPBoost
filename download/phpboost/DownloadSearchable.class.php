@@ -79,11 +79,9 @@ class DownloadSearchable extends AbstractSearchableExtensionPoint
      */
     public function parse_search_result($result_data)
     {
-        global $Cache, $LANG, $DOWNLOAD_LANG;
+        global $Cache, $LANG, $DOWNLOAD_LANG, $CONFIG_DOWNLOAD;
         $Cache->load('download');
-		
-		$download_config = DownloadConfig::load();
-		
+
         load_module_lang('download'); //Chargement de la langue du module.
         $tpl = new FileTemplate('download/download_generic_results.tpl');
 
@@ -100,7 +98,7 @@ class DownloadSearchable extends AbstractSearchableExtensionPoint
             'SHORT_DESCRIPTION' => FormatingHelper::second_parse($result_data['short_contents']),
             'L_NB_DOWNLOADS' => $DOWNLOAD_LANG['downloaded'] . ' ' . sprintf($DOWNLOAD_LANG['n_times'], $result_data['count']),
             'L_NB_COMMENTS' => $result_data['nbr_com'] > 1 ? sprintf($DOWNLOAD_LANG['num_com'], $result_data['nbr_com']) : sprintf($DOWNLOAD_LANG['num_coms'], $result_data['nbr_com']),
-            'L_MARK' => $result_data['note'] > 0 ? Note::display_img($result_data['note'], $download_config->get_note_max(), 5) : ('<em>' . $LANG['no_note'] . '</em>')
+            'L_MARK' => $result_data['note'] > 0 ? Note::display_img($result_data['note'], $CONFIG_DOWNLOAD['note_max'], 5) : ('<em>' . $LANG['no_note'] . '</em>')
         ));
 
         return $tpl->render();

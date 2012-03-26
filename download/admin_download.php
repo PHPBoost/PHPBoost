@@ -32,8 +32,6 @@ require_once('../admin/admin_header.php');
 
 $Cache->load('download');
 
-global $DOWNLOAD_CATS;
-
 $Template->set_filenames(array(
 	'admin_download_management'=> 'download/admin_download_management.tpl'
  ));
