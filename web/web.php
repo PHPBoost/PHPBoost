@@ -177,7 +177,7 @@ elseif (!empty($idcat) && empty($idweb)) //Catégories.
 
 	$result = $Sql->query_while("SELECT w.id, w.title, w.timestamp, w.compt, notes.average_notes
 	FROM " . PREFIX . "web w
-	LEFT JOIN " . DB_TABLE_AVERAGE_NOTES . " notes ON w.id = notes.id_in_module
+	LEFT JOIN " . DB_TABLE_AVERAGE_NOTES . " notes ON w.id = notes.id_in_module AND notes.module_name = 'web'
 	WHERE aprob = 1 AND idcat = '" . $idcat . "'
 	ORDER BY " . $sort . " " . $mode . 
 	$Sql->limit($Pagination->get_first_msg($web_config->get_max_nbr_weblinks(), 'p'), $web_config->get_max_nbr_weblinks()), __LINE__, __FILE__);
@@ -193,7 +193,7 @@ elseif (!empty($idcat) && empty($idweb)) //Catégories.
 			'CAT' => $CAT_WEB[$idcat]['name'],
 			'DATE' => gmdate_format('date_format_short', $row['timestamp']),
 			'COMPT' => $row['compt'],
-			'NOTE' => NotationService::display_static_image($notation),
+			'NOTE' => NotationService::display_static_image($notation, $row['average_notes']),
 			'COM' => CommentsService::get_number_comments('web', $row['id']),
 			'U_WEB_LINK' => url('.php?cat=' . $idcat . '&amp;id=' . $row['id'], '-' .  $idcat . '-' . $row['id'] . '.php')
 		));

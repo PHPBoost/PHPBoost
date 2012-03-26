@@ -41,5 +41,4 @@ class OnlineHomeController extends ModuleController
 		return $response;
 	}
 }
-
 ?>

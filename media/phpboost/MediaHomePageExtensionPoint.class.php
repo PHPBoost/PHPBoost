@@ -192,7 +192,7 @@ class MediaHomePageExtensionPoint implements HomePageExtensionPoint
 				$result = $this->sql_querier->query_while("SELECT v.id, v.iduser, v.name, v.timestamp, v.counter, v.infos, v.contents, mb.login, mb.level, notes.average_notes
 					FROM " . PREFIX . "media AS v
 					LEFT JOIN " . DB_TABLE_MEMBER . " AS mb ON v.iduser = mb.user_id
-					LEFT JOIN " . DB_TABLE_AVERAGE_NOTES . " notes ON v.id = notes.id_in_module
+					LEFT JOIN " . DB_TABLE_AVERAGE_NOTES . " notes ON v.id = notes.id_in_module AND notes.module_name = 'media'
 					WHERE idcat = '" . $id_cat . "' AND infos = '" . MEDIA_STATUS_APROBED . "'
 					ORDER BY " . $sort . " " . $mode .
 					$this->sql_querier->limit($Pagination->get_first_msg($MEDIA_CONFIG['pagin'], 'p'), $MEDIA_CONFIG['pagin']), __LINE__, __FILE__);
@@ -209,7 +209,7 @@ class MediaHomePageExtensionPoint implements HomePageExtensionPoint
 						'POSTER' => !empty($row['login']) ? sprintf($MEDIA_LANG['media_added_by'], $row['login'], UserUrlBuilder::profile($row['iduser'])->absolute(), $level[$row['level']]) : $LANG['guest'],
 						'DATE' => sprintf($MEDIA_LANG['add_on_date'], gmdate_format('date_format_short', $row['timestamp'])),
 						'COUNT' => sprintf($MEDIA_LANG['view_n_times'], $row['counter']),
-						'NOTE' => NotationService::display_static_image($notation),
+						'NOTE' => NotationService::display_static_image($notation, $row['average_notes']),
 						'U_MEDIA_LINK' => url('media.php?id=' . $row['id'], 'media-' . $row['id'] . '-' . $id_cat . '+' . Url::encode_rewrite($row['name']) . '.php'),
 						'U_ADMIN_UNVISIBLE_MEDIA' => url('media_action.php?unvisible=' . $row['id'] . '&amp;token=' . $Session->get_token()),
 						'U_ADMIN_EDIT_MEDIA' => url('media_action.php?edit=' . $row['id']),
