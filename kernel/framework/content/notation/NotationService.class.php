@@ -45,11 +45,15 @@ class NotationService
 	/*
 	 * This function required object Notation containing the module_name, id in module and notation_scale.
 	 */
-	public static function display_static_image(Notation $notation)
+	public static function display_static_image(Notation $notation, $average_notes = false)
 	{
 		if ($notation->get_notation_scale() > 0)
 		{
-			$average_notes = self::get_average_notes($notation);
+			if ($average_notes === false)
+			{
+				$average_notes = self::get_average_notes($notation);
+			}
+			
 			if ($average_notes > 0)
 			{
 				$template = new StringTemplate('
@@ -283,13 +287,16 @@ class NotationService
 			array('module_name' => $notation->get_module_name(), 'id_in_module' => $notation->get_id_in_module()));
 			
 			$notes = 0;
+			$nbr_notes = 0;
 			while ($row = $result->fetch())
 			{
 				$notes += $row['note'];
+				$nbr_notes++;
 			}
 
 			return (round(($notes / $nbr_notes) / 0.25) * 0.25);
 		} catch (Exception $e) {
+			return 0;
 		}
 	}
 
