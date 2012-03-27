@@ -94,7 +94,7 @@ class NewsExtensionPointProvider extends ExtensionPointProvider
 	
 	public function css_files()
 	{
-		return new NewsCssFilesExtensionPoint();
+		return new ModuleCssFiles(array('news.css'));
 	}
 
 	public function home_page()

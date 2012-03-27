@@ -39,7 +39,7 @@ class SearchExtensionPointProvider extends ExtensionPointProvider
 
 	public function css_files()
 	{
-		return new SearchCssFilesExtensionPoint();
+		return new ModuleCssFiles(array('search.css'), array('search_mini.css'));
 	}
 	
 	public function menus()

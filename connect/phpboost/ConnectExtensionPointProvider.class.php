@@ -34,7 +34,7 @@ class ConnectExtensionPointProvider extends ExtensionPointProvider
 
 	public function css_files()
 	{
-		return new ConnectCssFilesExtensionPoint();
+		return new ModuleCssFiles(array(), array('connect_mini.css'));
 	}
 	
 	public function menus()

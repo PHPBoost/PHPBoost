@@ -109,7 +109,7 @@ class GalleryExtensionPointProvider extends ExtensionPointProvider
 	
 	public function css_files()
 	{
-		return new GalleryCssFilesExtensionPoint();
+		return new ModuleCssFiles(array('gallery.css'));
 	}
 	
 	public function menus()

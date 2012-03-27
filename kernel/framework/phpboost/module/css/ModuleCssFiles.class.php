@@ -1,9 +1,9 @@
 <?php
 /*##################################################
- *                     WikiCssFilesExtensionPoint.class.php
+ *                     ModuleCssFiles.class.php
  *                            -------------------
- *   begin                : October 06, 2011
- *   copyright            : (C) 2011 Kévin MASSY
+ *   begin                : March 27, 2012
+ *   copyright            : (C) 2012 Kévin MASSY
  *   email                : soldier.weasel@gmail.com
  *
  *
@@ -25,16 +25,25 @@
  *
  ###################################################*/
 
-class WikiCssFilesExtensionPoint implements CssFilesExtensionPoint
+class ModuleCssFiles implements CssFilesExtensionPoint
 {
+	private $css_files_always_displayed = array();
+	private $css_files_running_module_displayed = array();
+	
+	public function __construct($css_files_running_module_displayed = array(), $css_files_always_displayed = array())
+	{
+		$this->css_files_running_module_displayed = $css_files_running_module_displayed;
+		$this->css_files_always_displayed = $css_files_always_displayed;
+	}
+	
 	public function get_css_files_always_displayed()
 	{
-		return array();
+		return $this->css_files_always_displayed;
 	}
 
 	public function get_css_files_running_module_displayed()
 	{
-		return array('wiki.css');
+		return $this->css_files_running_module_displayed;
 	}
 }
 ?>

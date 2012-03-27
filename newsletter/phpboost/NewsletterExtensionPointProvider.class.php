@@ -49,7 +49,7 @@ class NewsletterExtensionPointProvider extends ExtensionPointProvider
 	
 	public function css_files()
 	{
-		return new NewsletterCssFilesExtensionPoint();
+		return new ModuleCssFiles(array(), array('newsletter_mini.css'));
 	}
 	
 	public function menus()

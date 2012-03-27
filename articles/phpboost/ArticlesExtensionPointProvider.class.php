@@ -84,7 +84,7 @@ class ArticlesExtensionPointProvider extends ExtensionPointProvider
 	
 	public function css_files()
 	{
-		return new ArticlesCssFilesExtensionPoint();
+		return new ModuleCssFiles(array('articles.css'));
 	}
 
 	public function home_page()
