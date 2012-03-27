@@ -105,7 +105,7 @@ class WikiExtensionPointProvider extends ExtensionPointProvider
 	
 	public function css_files()
 	{
-		return new WikiCssFilesExtensionPoint();
+		return new ModuleCssFiles(array('wiki.css'));
 	}
 	
 	public function search()

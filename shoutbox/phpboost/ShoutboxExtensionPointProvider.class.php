@@ -47,7 +47,7 @@ class ShoutboxExtensionPointProvider extends ExtensionPointProvider
 	
 	public function css_files()
 	{
-		return new ShoutboxCssFilesExtensionPoint();
+		return new ModuleCssFiles(array(), array('shoutbox_mini.css'));
 	}
 	
 	public function menus()
