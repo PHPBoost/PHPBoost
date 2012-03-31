@@ -432,7 +432,7 @@ else
 		'L_PREVIEW_IMG_EXPLAIN' => $NEWS_LANG['preview_image_explain'],
 		'L_IMG_LINK' => $NEWS_LANG['img_link'],
 		'L_IMG_DESC' => $NEWS_LANG['img_desc'],
-		'L_BB_UPLOAD' => $LANG['bb_upload'],
+		'L_BB_UPLOAD' => LangLoader::get_message('bb_upload', 'bbcode-common'),
 		'L_CONTRIBUTION_LEGEND' => $LANG['contribution'],
 		'L_NOTICE_CONTRIBUTION' => $NEWS_LANG['notice_contribution'],
 		'L_CONTRIBUTION_COUNTERPART' => $NEWS_LANG['contribution_counterpart'],

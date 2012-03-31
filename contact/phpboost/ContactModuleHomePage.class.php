@@ -57,7 +57,9 @@ class ContactModuleHomePage implements ModuleHomePage
 
 			$tpl->put_all(array(
 				'C_SUBMITED' => true,
-				'C_SUCCESS' => $mail_success
+				'C_SUCCESS' => $mail_success,
+				'L_SUCCESS_MAIL' => $this->lang['success_mail'],
+				'L_ERROR_MAIL' => $this->lang['error_mail']
 			));
 		}
 
