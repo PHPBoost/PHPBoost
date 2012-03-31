@@ -51,7 +51,7 @@ class FaqSitemapExtensionPoint implements SitemapExtensionPoint
 		$faq_link = new SitemapLink($FAQ_LANG['faq'], new Url('/faq/faq.php'), Sitemap::FREQ_DEFAULT, Sitemap::PRIORITY_MAX);
 
 		$module_map = new ModuleMap($faq_link, 'faq');
-		$module_map->set_description($FAQ_CATS[0]['desc']);
+		$module_map->set_description($faq_config->get_root_cat_description());
 
 		$id_cat = 0;
 		$keys = array_keys($FAQ_CATS);
