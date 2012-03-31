@@ -61,8 +61,8 @@ class DefaultTemplateData implements TemplateData
 		$is_connected = $user->check_level(User::MEMBER_LEVEL);
 		$this->put_all(array(
 			'SID' => SID,
-			'THEME' => get_utheme(),
-			'LANG' => get_ulang(),
+			'THEME' => $user->get_theme(),
+			'LANG' => $user->get_locale(),
 			'IS_USER_CONNECTED' => $is_connected,
 			'IS_ADMIN' => $user->check_level(User::ADMIN_LEVEL),
     		'IS_MODERATOR' => $user->check_level(User::MODERATOR_LEVEL),
