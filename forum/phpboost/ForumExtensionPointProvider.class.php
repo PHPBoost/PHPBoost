@@ -40,7 +40,6 @@ class ForumExtensionPointProvider extends ExtensionPointProvider
 		$sql_querier = PersistenceContext::get_sql();
 		//Configuration du forum
 		$forum_config = 'global $CONFIG_FORUM;' . "\n";
-
 		//Récupération du tableau linéarisé dans la bdd.
 		$CONFIG_FORUM = unserialize($sql_querier->query("SELECT value FROM " . DB_TABLE_CONFIGS . " WHERE name = 'forum'", __LINE__, __FILE__));
 		$CONFIG_FORUM['auth'] = unserialize($CONFIG_FORUM['auth']);
@@ -50,6 +49,7 @@ class ForumExtensionPointProvider extends ExtensionPointProvider
 		//Liste des catégories du forum
 		$i = 0;
 		$forum_cats = 'global $CAT_FORUM;' . "\n";
+		$forum_cats .= '$CAT_FORUM = array();' . "\n";
 		$result = $sql_querier->query_while("SELECT id, id_left, id_right, level, name, url, status, aprob, auth, aprob
 		FROM " . PREFIX . "forum_cats
 		ORDER BY id_left", __LINE__, __FILE__);
