@@ -48,22 +48,20 @@ class AdminCustomizeEditorCSSFilesController extends AdminController
 		
 		$id_theme = $request->get_value('id_theme', '');
 		$file_name = $request->get_value('file_name', '');
+
+		$this->build_form($id_theme, $file_name);
 		
 		if (!empty($id_theme) && !empty($file_name))
 		{
-			$this->css_file = new File(PATH_TO_ROOT . $this->templates_path . $id_theme . $this->css_files_path . $file_name);
+			if ($this->submit_button->has_been_submited() && $this->form->validate())
+			{
+				$this->save();
+				$tpl->put('MSG', MessageHelper::display($this->lang['customization.editor.css-file.success'], E_USER_SUCCESS, 4));
+			}
 		}
-		
-		$this->build_form($id_theme, $file_name);
 
 		$tpl = new StringTemplate('# INCLUDE MSG # # INCLUDE FORM #');
 		$tpl->add_lang($this->lang);
-		
-		if ($this->submit_button->has_been_submited() && $this->form->validate())
-		{
-			$this->save();
-			$tpl->put('MSG', MessageHelper::display($this->lang['customization.editor.css-file.success'], E_USER_SUCCESS, 4));
-		}
 
 		$tpl->put('FORM', $this->form->display());
 
@@ -103,23 +101,27 @@ class AdminCustomizeEditorCSSFilesController extends AdminController
 			
 			if (!empty($file_selected))
 			{
-				$content = new File(PATH_TO_ROOT . $this->templates_path . $theme_selected . $this->css_files_path . $file_selected);
-				$file_editor_fieldset->add_field(new FormFieldMultiLineTextEditor('css_file', $this->lang['customization.editor.css-files.content'], $content->read(),
+				$this->css_file = new File(PATH_TO_ROOT . $this->templates_path . $theme_selected . $this->css_files_path . $file_selected);
+				$file_editor_fieldset->add_field(new FormFieldMultiLineTextEditor('css_file', $this->lang['customization.editor.css-files.content'], $this->css_file->read(),
 					array('rows' => 30)
 				));
 			}
 		}
 		
-		$form->add_button(new FormButtonReset());
-		$this->submit_button = new FormButtonDefaultSubmit();
-		$form->add_button($this->submit_button);
-
+		if (!empty($theme_selected) && !empty($file_selected))
+		{
+			$form->add_button(new FormButtonReset());
+			$this->submit_button = new FormButtonDefaultSubmit();
+			$form->add_button($this->submit_button);
+		}
+		
 		$this->form = $form;
 	}
 
 	private function save()
 	{
 		$this->css_file->write($this->form->get_value('css_file'));
+		$this->css_file->close();
 	}
 	
 	private function list_themes()
