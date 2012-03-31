@@ -41,6 +41,7 @@ class MemberSimpleSelectExtendedField extends AbstractMemberExtendedField
 		$field = array();
 		$array_values = $this->possible_values($member_extended_field);
 		$i = 0;
+		$default = '';
 		foreach ($array_values as $values)
 		{
 			$field[] = new FormFieldSelectChoiceOption($values, $member_extended_field->get_field_name() . '_' . $i);
@@ -61,6 +62,7 @@ class MemberSimpleSelectExtendedField extends AbstractMemberExtendedField
 		$field = array();
 		$array_values = $this->possible_values($member_extended_field);
 		$i = 0;
+		$default = '';
 		foreach ($array_values as $values)
 		{
 			$field[] = new FormFieldSelectChoiceOption($values, $member_extended_field->get_field_name() . '_' . $i);
