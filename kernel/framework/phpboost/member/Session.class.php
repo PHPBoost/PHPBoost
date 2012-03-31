@@ -111,7 +111,7 @@ class Session
 				else
 				{
 					$delay_ban = ceil((0 - $delay_ban)/60);
-					AppContext::get_response()->redirect('/member/error.php?e=e_member_ban&ban=' . $delay_ban . '#message_helper');
+					DispatchManager::redirect(PHPBoostErrors::member_banned($delay_ban));
 				}
 
 				if (!empty($error_report)) //Erreur
@@ -119,7 +119,7 @@ class Session
 					$this->sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET last_connect='" . time() . "', test_connect = test_connect + 1 WHERE user_id='" . $user_id . "'", __LINE__, __FILE__);
 					$info_connect['test_connect']++;
 					$info_connect['test_connect'] = 5 - $info_connect['test_connect'];
-					AppContext::get_response()->redirect('/member/error.php?e=e_member_flood&flood=' . $info_connect['test_connect'] . '#message_helper');
+					DispatchManager::redirect(PHPBoostErrors::member_flood($info_connect['test_connect']));
 				}
 				elseif ($info_connect['test_connect'] > 0) //Succès redonne tous les essais.
 				{
