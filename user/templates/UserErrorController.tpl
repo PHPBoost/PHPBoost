@@ -1,5 +1,5 @@
 # IF HAS_TIME #
-<meta http-equiv="refresh" content="{U_TIME};url=${U_LINK}">
+<meta http-equiv="refresh" content="{TIME};url=${U_LINK}">
 # ENDIF #
 <!-- Move the styles in CSS -->
 <div style="margin-bottom:25px;">
