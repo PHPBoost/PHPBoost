@@ -118,7 +118,7 @@ class UserErrorController extends AbstractController
             'TITLE' => $this->title,
             'MESSAGE' => $this->message,
             'U_LINK' => $this->link,
-			'U_TIME' => $this->time,
+			'TIME' => $this->time,
             'LINK_NAME' => $this->link_name,
 		    'HAS_LINK' => !empty($this->link) && !empty($this->link_name),
 			'HAS_TIME' => !empty($this->time) && !empty($this->link),

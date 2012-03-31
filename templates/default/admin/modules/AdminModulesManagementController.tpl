@@ -173,7 +173,7 @@
 								<strong>{@modules.compatibility} :</strong> PHPBoost {modules_activated.COMPATIBILITY}<br />
 								<strong>{@modules.php_version} :</strong> {modules_activated.PHP_VERSION}
 							</div>
-							<div id="picture_desc{modules_activated.ID}" style="text-align: center;" "></div>
+							<div id="picture_desc{modules_activated.ID}" style="text-align: center;"></div>
 						</td>
 						<td class="row2">								
 							<label><input type="radio" name="activated-{modules_activated.ID}" value="1" # IF modules_activated.C_MODULE_ACTIVE # checked="checked" # ENDIF # /> {@modules.yes}</label>
