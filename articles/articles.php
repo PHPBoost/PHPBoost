@@ -36,17 +36,15 @@ $idart = retrieve(GET, 'id', 0);
 
 if (!empty($idart) && isset($cat) )
 {
-	$result = $Sql->query_while("SELECT a.contents, a.title, a.id, a.idcat, a.auth, a.timestamp, a.sources, a.start, a.visible, a.user_id, a.icon, m.login, m.level
+	$result = $Sql->query_while("SELECT a.contents, a.title, a.id, a.idcat, a.timestamp, a.sources, a.start, a.visible, a.user_id, a.icon, m.login, m.level
 		FROM " . DB_TABLE_ARTICLES . " a 
 		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = a.user_id
 		WHERE a.id = '" . $idart . "'", __LINE__, __FILE__);
 	$articles = $Sql->fetch_assoc($result);
 	$Sql->query_close($result);
 	
-	$articles['auth'] = $ARTICLES_CAT[$articles['idcat']]['auth'];
-
 	//Niveau d'autorisation de la catégorie
-	if (!isset($ARTICLES_CAT[$idartcat]) || (!$User->check_auth($ARTICLES_CAT[$idartcat]['auth'], AUTH_ARTICLES_READ) && !$User->check_auth($articles['auth'], AUTH_ARTICLES_READ))|| $ARTICLES_CAT[$idartcat]['visible'] == 0 ) 
+	if (!isset($ARTICLES_CAT[$idartcat]) || !$User->check_auth($ARTICLES_CAT[$idartcat]['auth'], AUTH_ARTICLES_READ) || $ARTICLES_CAT[$idartcat]['visible'] == 0 ) 
 	{
 		$error_controller = PHPBoostErrors::unexisting_page();
 		DispatchManager::redirect($error_controller);
