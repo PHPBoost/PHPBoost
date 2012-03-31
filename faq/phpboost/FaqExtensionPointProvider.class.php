@@ -44,7 +44,6 @@ class FaqExtensionPointProvider extends ExtensionPointProvider
 
 		//List of categories and their own properties
 		$string .= '$FAQ_CATS = array();' . "\n\n";
-		$string .= '$FAQ_CATS[0][\'name\'] = \'\';' . "\n";
 		$result = $this->sql_querier->query_while("SELECT id, id_parent, c_order, auth, name, visible, display_mode, image, num_questions, description
 		FROM " . PREFIX . "faq_cats
 		ORDER BY id_parent, c_order", __LINE__, __FILE__);
