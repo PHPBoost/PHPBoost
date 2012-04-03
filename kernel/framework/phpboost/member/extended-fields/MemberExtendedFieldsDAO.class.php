@@ -88,13 +88,11 @@ class MemberExtendedFieldsDAO
 	
 	public function set_request_update(MemberExtendedField $member_extended_field)
 	{
-		Debug::dump($member_extended_field->get_value());
 		$this->request_update .= $member_extended_field->get_field_name() . ' = \'' . htmlspecialchars(trim($member_extended_field->get_value(), '|')) . '\', ';
 	}
 	
 	private function get_request_update($user_id)
 	{
-		Debug::dump($this->request_update);
 		if (!empty($this->request_update))
 		{
 			$this->db_connection->query_inject("UPDATE " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " SET " . trim($this->request_update, ', ') . " WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
