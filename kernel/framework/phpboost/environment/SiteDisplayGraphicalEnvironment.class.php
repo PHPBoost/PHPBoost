@@ -121,13 +121,13 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 	{
 		global $MENUS, $Cache;
 
-		if (!include_once(PATH_TO_ROOT . '/cache/menus.php'))
+		if (!@include_once(PATH_TO_ROOT . '/cache/menus.php'))
 		{
 			//En cas d'échec, on régénère le cache
 			$Cache->Generate_file('menus');
 
 			//On inclut une nouvelle fois
-			if (!include_once(PATH_TO_ROOT . '/cache/menus.php'))
+			if (!@include_once(PATH_TO_ROOT . '/cache/menus.php'))
 			{
 				$controller = new UserErrorController(LangLoader::get_message('error', 'errors'),
                     $LANG['e_cache_modules'], UserErrorController::FATAL);
