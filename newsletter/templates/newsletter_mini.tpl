@@ -6,7 +6,7 @@
 		</div>
 		<div class="module_mini_contents">
 			<p>
-				<input type="text" name="mail_newsletter" maxlength="50" size="18" class="text" value="{USER_MAIL}" />
+				<input type="text" name="mail_newsletter" maxlength="50" class="text" value="{USER_MAIL}" />
 			</p>
 			<p>
 				<label><input type="radio" name="subscribe" value="subscribe" checked="checked" /> {SUBSCRIBE}</label>
@@ -17,8 +17,8 @@
 				<input type="hidden" name="token" value="{TOKEN}" />
 				<input type="submit" value="{L_SUBMIT}" class="submit" />	
 			</p>
-			<p style="margin:0;margin-top:10px;">
-				<a href="{PATH_TO_ROOT}/newsletter/" class="small_link">{L_ARCHIVES}</a>
+			<p class="newsletter_link">
+				<a href="{PATH_TO_ROOT}/newsletter/newsletter.php{SID}" class="small_link">{L_ARCHIVES}</a>
 			</p>
 		</div>
 		<div class="module_mini_bottom">
@@ -26,13 +26,13 @@
 	</div>
 </form>
 # ELSE #
-<div style="margin:10px 10px">
+<div id="newsletter">
 	<form action="{PATH_TO_ROOT}/newsletter/?url=/subscribe/" method="post">
-		<div class="newsletter_form" style="float:right;">
+		<div class="newsletter_form">
 			<span class="newsletter_title">{L_NEWSLETTER}</span> 
-			<input type="text" name="mail_newsletter" maxlength="50" size="16" class="text newsletter_text" value="{USER_MAIL}" />
-			<input type="image" class="newsletter_img" value="1" src="{PATH_TO_ROOT}/newsletter/templates/images/newsletter_submit.png" />
-			<input type="hidden" name="token" value="{TOKEN}" />
+			<input type="text" name="mail_newsletter" maxlength="50" class="text newsletter_text" value="{USER_MAIL}" />
+			<input type="submit" class="newsletter_img" value="" />
+			<input type="hidden" name="subscribe" value="subscribe" />
 		</div>
 	</form>
 </div>

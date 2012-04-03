@@ -7,6 +7,7 @@
     background-repeat: no-repeat;
     background-attachment: scroll;
     background-position: 0% 0%;
+	float:right;
 }
 .newsletter_title{
     font-weight:bold;
@@ -21,9 +22,23 @@
     height:14px;
     border:none;
     border-left:1px solid #A9A9A9;
+	font-size:11px;
 }
 .newsletter_img{
     margin-left:-4px;
     padding:0;
     border:none;
+	width:35px;
+	height:20px;
+	background: url('images/newsletter_submit.png') no-repeat;
+	cursor:  pointer;
+}
+ 
+div#newsletter {
+	margin:10px;
+}
+ 
+.newsletter_link {
+	margin:0;
+	margin-top:10px;
 }
