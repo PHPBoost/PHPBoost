@@ -55,15 +55,19 @@ class AdminExtendedFieldMemberAddController extends AdminController
 				# INCLUDE FORM #');
 		$this->tpl->add_lang($this->lang);
 
-		$error = ExtendedFieldsService::get_error();
-		if (!empty($error))
-		{
-			$this->tpl->put('MSG', MessageHelper::display($error, E_USER_NOTICE, 6));
-		}
-		elseif ($this->submit_button->has_been_submited() && $this->form->validate())
+		
+		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save();
-			$this->tpl->put('MSG', MessageHelper::display($this->lang['extended-fields-sucess-add'], MessageHelper::SUCCESS, 6));
+			$error = ExtendedFieldsService::get_error();
+			if (!empty($error))
+			{
+				$this->tpl->put('MSG', MessageHelper::display($error, E_USER_NOTICE, 6));
+			}
+			else
+			{
+				$this->tpl->put('MSG', MessageHelper::display($this->lang['extended-fields-sucess-add'], MessageHelper::SUCCESS, 6));
+			}
 		}
 
 		$this->tpl->put('FORM', $this->form->display());

@@ -130,5 +130,4 @@ class DispatchManager
 		Debug::fatal($exception);
 	}
 }
-
 ?>

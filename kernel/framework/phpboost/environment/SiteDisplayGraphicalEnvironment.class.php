@@ -349,5 +349,4 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 		$this->breadcrumb->set_graphical_environment($this);
 	}
 }
-
 ?>

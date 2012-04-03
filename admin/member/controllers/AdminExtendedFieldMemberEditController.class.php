@@ -70,15 +70,18 @@ class AdminExtendedFieldMemberEditController extends AdminController
 			'FIELD_TYPE' => $extended_field_cache['field_type']
 		));
 		
-		$error = ExtendedFieldsService::get_error();
-		if (!empty($error))
-		{
-			$this->tpl->put('MSG', MessageHelper::display($error, E_USER_NOTICE, 6));
-		}
-		elseif ($this->submit_button->has_been_submited() && $this->form->validate())
+		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save($id);
-			$this->tpl->put('MSG', MessageHelper::display($this->lang['extended-fields-sucess-add'], E_USER_SUCCESS, 6));
+			$error = ExtendedFieldsService::get_error();
+			if (!empty($error))
+			{
+				$this->tpl->put('MSG', MessageHelper::display($error, E_USER_NOTICE, 6));
+			}
+			else
+			{
+				$this->tpl->put('MSG', MessageHelper::display($this->lang['extended-fields-sucess-edit'], MessageHelper::SUCCESS, 6));
+			}
 		}
 
 		$this->tpl->put('FORM', $this->form->display());

@@ -31,7 +31,6 @@ require_once PATH_TO_ROOT . '/kernel/init.php';
 
 $url_controller_mappers = array(
 	new UrlControllerMapper('AdminOnlineConfigController', '`^/admin(?:/config)?/?$`'),
-	
 	new UrlControllerMapper('OnlineHomeController', '`^(?:/([a-z]+))?/?$`', array('page')),
 );
 DispatchManager::dispatch($url_controller_mappers);
