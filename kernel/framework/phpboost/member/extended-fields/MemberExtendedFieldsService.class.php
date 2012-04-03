@@ -188,6 +188,7 @@ class MemberExtendedFieldsService
 			$member_extended_field->set_description($extended_field['description']);
 			$member_extended_field->set_value($value);
 			$member_extended_field->set_possible_values($extended_field['possible_values']);
+			$member_extended_field->set_default_values($extended_field['default_values']);
 			$required = $member_extended_field->get_is_admin() ? 0 : $extended_field['required'];
 			$member_extended_field->set_required($required);
 			$member_extended_field->set_regex($extended_field['regex']);
