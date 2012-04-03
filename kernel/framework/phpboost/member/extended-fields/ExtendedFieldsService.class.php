@@ -195,5 +195,4 @@ class ExtendedFieldsService
 		}
 	}
 }
-
 ?>

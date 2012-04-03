@@ -86,10 +86,8 @@ class UserUsersListController extends AbstractController
 			'PAGINATION' => '&nbsp;<strong>' . LangLoader::get_message('page', 'main') . ' :</strong> ' . $pagination->display()->render()
 		));
 
-		$condition = 'WHERE user_aprob = 1 ORDER BY :field :sort LIMIT :number_users_per_page OFFSET :display_from';
+		$condition = 'WHERE user_aprob = 1 ORDER BY '. $field_bdd .' '. $mode .' LIMIT :number_users_per_page OFFSET :display_from';
 		$parameters = array(
-			'field' => $field_bdd,
-			'sort' => $mode,
 			'number_users_per_page' => $pagination->get_number_users_per_page(),
 			'display_from' => $pagination->get_display_from()
 		);
