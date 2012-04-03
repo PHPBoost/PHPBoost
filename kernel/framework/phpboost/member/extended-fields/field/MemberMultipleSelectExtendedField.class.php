@@ -40,7 +40,7 @@ class MemberMultipleSelectExtendedField extends AbstractMemberExtendedField
 		
 		$field = array();
 		$array_values = $this->possible_values($member_extended_field);
-		$default_values = $this->default_values($member_extended_field);
+		$default_values = $this->default_values($member_extended_field->get_default_values());
 		$i = 0;
 		foreach ($array_values as $values)
 		{
@@ -57,7 +57,7 @@ class MemberMultipleSelectExtendedField extends AbstractMemberExtendedField
 		
 		$field = array();
 		$array_values = $this->possible_values($member_extended_field);
-		$default_values = $this->default_values($member_extended_field);
+		$default_values = $this->default_values($member_extended_field->get_value());
 		$i = 0;
 		foreach ($array_values as $values)
 		{
@@ -71,7 +71,7 @@ class MemberMultipleSelectExtendedField extends AbstractMemberExtendedField
 	public function return_value(HTMLForm $form, MemberExtendedField $member_extended_field)
 	{
 		$field_name = $member_extended_field->get_field_name();
-		return $form->get_value($field_name);
+		return $this->serialise_value($form->get_value($field_name));
 	}
 	
 	private function possible_values(MemberExtendedField $member_extended_field)
@@ -79,9 +79,14 @@ class MemberMultipleSelectExtendedField extends AbstractMemberExtendedField
 		return explode('|', $member_extended_field->get_possible_values());
 	}
 	
-	private function default_values(MemberExtendedField $member_extended_field)
+	private function default_values($default_values)
 	{
-		return explode('|', $member_extended_field->get_default_values());
+		return explode('|', $default_values);
+	}
+	
+	private function serialise_value(Array $array)
+	{
+		return implode('|', $array);
 	}
 }
 ?>
