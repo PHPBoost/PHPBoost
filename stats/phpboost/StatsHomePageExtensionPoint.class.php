@@ -41,14 +41,16 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 	
 	private function get_title()
 	{
-		global $STATS_LANG;
+		global $LANG;
 		
-		return $STATS_LANG['stats'];
+		load_module_lang('stats');
+		
+		return $LANG['stats'];
 	}
 	
 	private function get_view()
 	{
-		global $LANG, $STATS_LANG, $Cache, $User, $auth_write, $Session, $Bread_crumb, $members, $pages, $pages_year, $referer, $keyword, $visit, $visit_year, $os, $browser, $user_lang, $stats_array_browsers, $stats_array_os, $stats_array_lang;
+		global $LANG, $Cache, $User, $auth_write, $Session, $Bread_crumb, $members, $pages, $pages_year, $referer, $keyword, $visit, $visit_year, $os, $browser, $user_lang, $stats_array_browsers, $stats_array_os, $stats_array_lang;
 		
 		require_once(PATH_TO_ROOT . '/stats/stats_begin.php');
 		

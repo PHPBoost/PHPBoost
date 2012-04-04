@@ -41,16 +41,16 @@ class GuestbookHomePageExtensionPoint implements HomePageExtensionPoint
 	
 	private function get_title()
 	{
-		global $GUESTBOOK_LANG;
+		global $LANG;
 		
 		load_module_lang('guestbook');
 		
-		return $GUESTBOOK_LANG['guestbook'];
+		return $LANG['title_guestbook'];
 	}
 	
 	private function get_view()
 	{
-		global $LANG, $GUESTBOOK_LANG, $GUESTBOOK_CONFIG, $Cache, $User, $auth_write, $Session, $Bread_crumb, $level, $id_get, $guestbook, $authorizations;
+		global $LANG, $Cache, $User, $auth_write, $Session, $Bread_crumb, $level, $id_get, $guestbook, $authorizations;
 		
 		require_once(PATH_TO_ROOT . '/guestbook/guestbook_begin.php');
 		

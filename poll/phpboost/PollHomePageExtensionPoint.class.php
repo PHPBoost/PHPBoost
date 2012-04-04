@@ -41,11 +41,11 @@ class PollHomePageExtensionPoint implements HomePageExtensionPoint
 	
 	private function get_title()
 	{
-		global $POLL_LANG;
+		global $LANG;
 		
 		load_module_lang('poll');
 		
-		return $POLL_LANG['poll'];
+		return $LANG['poll'];
 	}
 	
 	private function get_view()
