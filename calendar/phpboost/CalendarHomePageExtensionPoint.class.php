@@ -41,18 +41,19 @@ class CalendarHomePageExtensionPoint implements HomePageExtensionPoint
 	
 	private function get_title()
 	{
-		global $CALENDAR_LANG;
+		global $LANG;
 		
 		load_module_lang('calendar');
 		
-		return $CALENDAR_LANG['calendar'];
+		return $LANG['calendar'];
 	}
 	
 	private function get_view()
 	{
-		global $LANG, $CALENDAR_LANG, $User, $Session, $calendar_config, $year, $month, $day, $bissextile, $get_event, $comments_topic;
+		global $LANG, $User, $Session, $calendar_config, $year, $month, $day, $bissextile, $get_event, $comments_topic;
 		
 		require_once(PATH_TO_ROOT . '/calendar/calendar_begin.php');
+		require_once(PATH_TO_ROOT . '/calendar/calendar_constants.php');
 		
 		$tpl = new FileTemplate('calendar/calendar.tpl');
 		
@@ -79,13 +80,13 @@ class CalendarHomePageExtensionPoint implements HomePageExtensionPoint
 			
 		$tpl->put_all(array(
 			'C_CALENDAR_DISPLAY' => true,
-			'ADMIN_CALENDAR' => ($User->check_level(User::ADMIN_LEVEL)) ? '<a href="' . HOST . DIR . '/calendar/admin_calendar.php"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/edit.png" alt ="" style="vertical-align:middle;" /></a>' : '',
-			'ADD' => $User->check_auth($calendar_config->get_authorizations(), AUTH_CALENDAR_WRITE) ? '<a href="calendar' . url('.php?add=1') . '" title="' . $LANG['add_event'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/add.png" alt="" /></a><br />' : '',
+			'ADMIN_CALENDAR' => ($User->check_level(User::ADMIN_LEVEL)) ? '<a href="' . PATH_TO_ROOT . '/calendar/admin_calendar.php"><img src="'. PATH_TO_ROOT .'/templates/' . get_utheme() . '/images/' . get_ulang() . '/edit.png" alt ="" style="vertical-align:middle;" /></a>' : '',
+			'ADD' => $User->check_auth($calendar_config->get_authorizations(), AUTH_CALENDAR_WRITE) ? '<a href="'. PATH_TO_ROOT .'/calendar/calendar' . url('.php?add=1') . '" title="' . $LANG['add_event'] . '"><img src="'. PATH_TO_ROOT .'/templates/' . get_utheme() . '/images/' . get_ulang() . '/add.png" alt="" /></a><br />' : '',
 			'DATE' => $day . ' ' . $array_l_month[$month - 1] . ' ' . $year,
 			'U_PREVIOUS' => ($month == 1) ? url('.php?d=' . $day . '&amp;m=12&amp;y=' . ($year - 1), '-' . $day . '-12-' . ($year - 1) . '.php') :  url('.php?d=1&amp;m=' . ($month - 1) . '&amp;y=' . $year, '-1-' . ($month - 1) . '-' . $year . '.php'),
 			'U_NEXT' => ($month == 12) ? url('.php?d=' . $day . '&amp;m=1&amp;y=' . ($year + 1), '-' . $day . '-1-' . ($year + 1) . '.php') :  url('.php?d=1&amp;m=' . ($month + 1) . '&amp;y=' . $year, '-1-' . ($month + 1) . '-' . $year . '.php'),
-			'U_PREVIOUS_EVENT' => ( $get_event != 'fd' ) ? '<a href="calendar' . url('.php?e=down&amp;d=' . $day . '&amp;m=' . $month . '&amp;y=' . $year, '-' . $day . '-' . $month . '-' . $year . '.php?e=down') . '#act" title="">&laquo;</a>' : '',
-			'U_NEXT_EVENT' => ( $get_event != 'fu') ? '<a href="calendar' . url('.php?e=up&amp;d=' . $day . '&amp;m=' . $month . '&amp;y=' . $year, '-' . $day . '-' . $month . '-' . $year . '.php?e=up') . '#act" title="">&raquo;</a>' : '',
+			'U_PREVIOUS_EVENT' => ( $get_event != 'fd' ) ? '<a href="'. PATH_TO_ROOT .'/calendar/calendar' . url('.php?e=down&amp;d=' . $day . '&amp;m=' . $month . '&amp;y=' . $year, '-' . $day . '-' . $month . '-' . $year . '.php?e=down') . '#act" title="">&laquo;</a>' : '',
+			'U_NEXT_EVENT' => ( $get_event != 'fu') ? '<a href="'. PATH_TO_ROOT .'/calendar/calendar' . url('.php?e=up&amp;d=' . $day . '&amp;m=' . $month . '&amp;y=' . $year, '-' . $day . '-' . $month . '-' . $year . '.php?e=up') . '#act" title="">&raquo;</a>' : '',
 			'L_CALENDAR' => $LANG['calendar'],
 			'L_ACTION' => $LANG['action'],
 			'L_EVENTS' => $LANG['events'],
@@ -146,7 +147,7 @@ class CalendarHomePageExtensionPoint implements HomePageExtensionPoint
 				$action = $j;
 				if ( !empty($array_action[$j]) )
 				{
-					$action = '<a href="calendar' . url('.php?d=' . $j . '&amp;m=' . $month . '&amp;y=' . $year, '-' . $j . '-' . $month . '-' . $year . '.php') . '#act">' . $j . '</a>';
+					$action = '<a href="'. PATH_TO_ROOT .'/calendar/calendar' . url('.php?d=' . $j . '&amp;m=' . $month . '&amp;y=' . $year, '-' . $j . '-' . $month . '-' . $year . '.php') . '#act">' . $j . '</a>';
 					$class = 'calendar_event';
 				}
 				elseif ($day == $j)
@@ -180,8 +181,8 @@ class CalendarHomePageExtensionPoint implements HomePageExtensionPoint
 			{
 				if ($User->check_auth($calendar_config->get_authorizations(), AUTH_CALENDAR_MODO))
 				{
-					$edit = '&nbsp;&nbsp;<a href="calendar' . url('.php?edit=1&amp;id=' . $row['id']) . '" title="' . $LANG['edit'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/edit.png" class="valign_middle" /></a>';
-					$del = '&nbsp;&nbsp;<a href="calendar' . url('.php?delete=1&amp;id=' . $row['id'] . '&amp;token=' . $Session->get_token()) . '" title="' . $LANG['delete'] . '" onclick="javascript:return Confirm_del();"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/delete.png" class="valign_middle" alt="" /></a>';
+					$edit = '&nbsp;&nbsp;<a href="'. PATH_TO_ROOT .'/calendar/calendar' . url('.php?edit=1&amp;id=' . $row['id']) . '" title="' . $LANG['edit'] . '"><img src="'. PATH_TO_ROOT .'/templates/' . get_utheme() . '/images/' . get_ulang() . '/edit.png" class="valign_middle" /></a>';
+					$del = '&nbsp;&nbsp;<a href="'. PATH_TO_ROOT .'/calendar/calendar' . url('.php?delete=1&amp;id=' . $row['id'] . '&amp;token=' . $Session->get_token()) . '" title="' . $LANG['delete'] . '" onclick="javascript:return Confirm_del();"><img src="'. PATH_TO_ROOT .'/templates/' . get_utheme() . '/images/' . get_ulang() . '/delete.png" class="valign_middle" alt="" /></a>';
 					$java = '<script type="text/javascript">
 					<!--
 					function Confirm_del() {
