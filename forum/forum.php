@@ -349,7 +349,7 @@ if (!empty($id_get))
 	}
 		
 	//Listes les utilisateurs en lignes.
-	list($users_list, $total_admin, $total_modo, $total_member, $total_visit, $total_online) = forum_list_user_online("AND s.session_script = '/forum/forum.php' AND s.session_script_get LIKE '%id=" . $id_get . "%'");
+	list($users_list, $total_admin, $total_modo, $total_member, $total_visit, $total_online) = forum_list_user_online("AND s.session_script = '". GeneralConfig::get_default_site_path() ."/forum/forum.php?id=" . $id_get . "'");
 
 	$Template->put_all(array(
 		'TOTAL_ONLINE' => $total_online,
