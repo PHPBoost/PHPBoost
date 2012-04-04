@@ -41,11 +41,11 @@ class PagesHomePageExtensionPoint implements HomePageExtensionPoint
 	
 	private function get_title()
 	{
-		global $PAGES_LANG;
+		global $LANG;
 		
 		load_module_lang('pages');
 		
-		return $PAGES_LANG['pages'];
+		return $LANG['pages'];
 	}
 	
 	private function get_view()

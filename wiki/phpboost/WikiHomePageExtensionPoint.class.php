@@ -41,7 +41,11 @@ class WikiHomePageExtensionPoint implements HomePageExtensionPoint
 	
 	private function get_title()
 	{
-		return 'todo';
+		global $LANG;
+		
+		load_module_lang('wiki');
+		
+		return $LANG['wiki'];
 	}
 	
 	private function get_view()

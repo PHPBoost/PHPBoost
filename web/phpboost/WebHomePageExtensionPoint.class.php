@@ -41,11 +41,11 @@ class WebHomePageExtensionPoint implements HomePageExtensionPoint
 	
 	private function get_title()
 	{
-		global $WEB_LANG;
+		global $LANG;
 		
 		load_module_lang('web');
 		
-		return $WEB_LANG['web'];
+		return $LANG['title_web'];
 	}
 	
 	private function get_view()
