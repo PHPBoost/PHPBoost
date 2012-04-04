@@ -143,7 +143,7 @@ class ForumHomePageExtensionPoint implements HomePageExtensionPoint
 				$tpl->assign_block_vars('forums_list.cats', array(
 					'IDCAT' => $row['cid'],
 					'NAME' => $row['name'],
-					'U_FORUM_VARS' => url('index.php?id=' . $row['cid'], 'cat-' . $row['cid'] . '+' . Url::encode_rewrite($row['name']) . '.php')
+					'U_FORUM_VARS' => url(PATH_TO_ROOT . '/forum/index.php?id=' . $row['cid'], 'cat-' . $row['cid'] . '+' . Url::encode_rewrite($row['name']) . '.php')
 				));
 			}
 			else //On liste les sous-catégories
@@ -153,7 +153,7 @@ class ForumHomePageExtensionPoint implements HomePageExtensionPoint
 					$tpl->assign_block_vars('forums_list.cats', array(
 						'IDCAT' => $id_get,
 						'NAME' => $CAT_FORUM[$id_get]['name'],
-						'U_FORUM_VARS' => url('index.php?id=' . $id_get, 'cat-' . $id_get . '+' . Url::encode_rewrite($CAT_FORUM[$id_get]['name']) . '.php')
+						'U_FORUM_VARS' => url(PATH_TO_ROOT . '/forum/index.php?id=' . $id_get, 'cat-' . $id_get . '+' . Url::encode_rewrite($CAT_FORUM[$id_get]['name']) . '.php')
 					));
 					$display_cat = false;
 				}
@@ -232,7 +232,7 @@ class ForumHomePageExtensionPoint implements HomePageExtensionPoint
 					'NBR_TOPIC' => $row['nbr_topic'],
 					'NBR_MSG' => $row['nbr_msg'],
 					'U_FORUM_URL' => $row['url'],
-					'U_FORUM_VARS' => url(PATH_TO_ROOT .'/forum/index.php?id=' . $row['cid'], '-' . $row['cid'] . '+' . Url::encode_rewrite($row['name']) . '.php'),
+					'U_FORUM_VARS' => url(PATH_TO_ROOT .'/forum/forum.php?id=' . $row['cid'], '-' . $row['cid'] . '+' . Url::encode_rewrite($row['name']) . '.php'),
 					'U_LAST_TOPIC' => $last
 				));
 			}
@@ -246,9 +246,16 @@ class ForumHomePageExtensionPoint implements HomePageExtensionPoint
 			));
 		}
 		
-		//Listes les utilisateurs en lignes.
-		list($users_list, $total_admin, $total_modo, $total_member, $total_visit, $total_online) = forum_list_user_online("AND s.session_script LIKE '/forum/%'");
-
+		$site_path = GeneralConfig::get_default_site_path();
+		if (GeneralConfig::load()->get_module_home_page() == 'forum')
+		{
+			list($users_list, $total_admin, $total_modo, $total_member, $total_visit, $total_online) = forum_list_user_online("AND s.session_script = '". $site_path ."/forum/' OR s.session_script = '". $site_path ."/forum/index.php' OR s.session_script = '". $site_path ."/index.php' OR s.session_script = '". $site_path ."/'");
+		}
+		else
+		{
+			list($users_list, $total_admin, $total_modo, $total_member, $total_visit, $total_online) = forum_list_user_online("AND s.session_script = '". $site_path ."/forum/' OR s.session_script = '". $site_path ."/forum/index.php'");
+		}
+		
 		$vars_tpl = array_merge($vars_tpl, array(
 			'FORUM_NAME' => $CONFIG_FORUM['forum_name'],
 			'NBR_MSG' => $total_msg,
