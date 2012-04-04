@@ -43,12 +43,14 @@ class DownloadHomePageExtensionPoint implements HomePageExtensionPoint
 	{
 		global $DOWNLOAD_LANG;
 		
+		load_module_lang('download');
+		
 		return $DOWNLOAD_LANG['title_download'];
 	}
 	
 	private function get_view()
 	{
-		global $DOWNLOAD_LANG, $LANG, $CONFIG_DOWNLOAD, $DOWNLOAD_CATS, $Session, $category_id, $auth_read, $auth_write, $auth_contribution, $notation;
+		global $DOWNLOAD_LANG, $LANG, $CONFIG_DOWNLOAD, $DOWNLOAD_CATS, $Cache, $User, $Bread_crumb, $Session, $category_id, $auth_read, $auth_write, $auth_contribution, $notation;
 		
 		require_once(PATH_TO_ROOT . '/download/download_begin.php');
 
@@ -65,8 +67,8 @@ class DownloadHomePageExtensionPoint implements HomePageExtensionPoint
 			'TITLE' => sprintf($DOWNLOAD_LANG['title_download'] . ($category_id > 0 ? ' - ' . $DOWNLOAD_CATS[$category_id]['name'] : '')),
 			'DESCRIPTION' => $category_id > 0 ? FormatingHelper::second_parse($DOWNLOAD_CATS[$category_id]['contents']) : FormatingHelper::second_parse($CONFIG_DOWNLOAD['root_contents']),
 			'L_ADD_FILE' => $DOWNLOAD_LANG['add_file'],
-			'U_ADMIN_CAT' => $category_id > 0 ? url('admin_download_cat.php?edit=' . $category_id) : url('admin_download_cat.php'),
-			'U_ADD_FILE' => url('management.php?new=1&amp;idcat=' . $category_id)
+			'U_ADMIN_CAT' => $category_id > 0 ? url(PATH_TO_ROOT . '/download/admin_download_cat.php?edit=' . $category_id) : url('admin_download_cat.php'),
+			'U_ADD_FILE' => url(PATH_TO_ROOT . '/download/management.php?new=1&amp;idcat=' . $category_id)
 		));
 		
 		//let's check if there are some subcategories
@@ -101,8 +103,8 @@ class DownloadHomePageExtensionPoint implements HomePageExtensionPoint
 						'SRC' => $value['icon'],
 						'IMG_NAME' => addslashes($value['name']),
 						'NUM_FILES' => sprintf(((int)$value['num_files'] > 1 ? $DOWNLOAD_LANG['num_files_plural'] : $DOWNLOAD_LANG['num_files_singular']), (int)$value['num_files']),
-						'U_CAT' => url('download.php?cat=' . $id, 'category-' . $id . '+' . Url::encode_rewrite($value['name']) . '.php'),
-						'U_ADMIN_CAT' => url('admin_download_cat.php?edit=' . $id),
+						'U_CAT' => url(PATH_TO_ROOT . '/download/download.php?cat=' . $id, 'category-' . $id . '+' . Url::encode_rewrite($value['name']) . '.php'),
+						'U_ADMIN_CAT' => url(PATH_TO_ROOT . '/download/admin_download_cat.php?edit=' . $id),
 						'C_CAT_IMG' => !empty($value['icon'])
 					));
 						
@@ -187,7 +189,7 @@ class DownloadHomePageExtensionPoint implements HomePageExtensionPoint
 			$Pagination = new DeprecatedPagination();
 			
 			$tpl->put_all(array(
-				'PAGINATION' => $Pagination->display(url('download.php' . (!empty($unget) ? $unget . '&amp;' : '?') . 'cat=' . $category_id . '&amp;p=%d', 'category-' . $category_id . '-%d.php' . $unget), $nbr_files, 'p', $CONFIG_DOWNLOAD['nbr_file_max'], 3),
+				'PAGINATION' => $Pagination->display(url(PATH_TO_ROOT . '/download/download.php' . (!empty($unget) ? $unget . '&amp;' : '?') . 'cat=' . $category_id . '&amp;p=%d', 'category-' . $category_id . '-%d.php' . $unget), $nbr_files, 'p', $CONFIG_DOWNLOAD['nbr_file_max'], 3),
 				'C_FILES' => true,
 				'TARGET_ON_CHANGE_ORDER' => ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? 'category-' . $category_id . '.php?' : 'download.php?cat=' . $category_id . '&'
 			));
@@ -213,9 +215,9 @@ class DownloadHomePageExtensionPoint implements HomePageExtensionPoint
 					'SIZE' => ($row['size'] >= 1) ? NumberHelper::round($row['size'], 1) . ' ' . $LANG['unit_megabytes'] : (NumberHelper::round($row['size'], 1) * 1024) . ' ' . $LANG['unit_kilobytes'],
 					'C_IMG' => !empty($row['image']),
 					'IMG' => $row['image'],
-					'U_DOWNLOAD_LINK' => url('download.php?id=' . $row['id'], 'download-' . $row['id'] . '+' . Url::encode_rewrite($row['title']) . '.php'),
-					'U_ADMIN_EDIT_FILE' => url('management.php?edit=' . $row['id']),
-					'U_ADMIN_DELETE_FILE' => url('management.php?del=' . $row['id'] . '&amp;token=' . $Session->get_token()),
+					'U_DOWNLOAD_LINK' => url(PATH_TO_ROOT . '/download/download.php?id=' . $row['id'], 'download-' . $row['id'] . '+' . Url::encode_rewrite($row['title']) . '.php'),
+					'U_ADMIN_EDIT_FILE' => url(PATH_TO_ROOT . '/download/management.php?edit=' . $row['id']),
+					'U_ADMIN_DELETE_FILE' => url(PATH_TO_ROOT . '/download/management.php?del=' . $row['id'] . '&amp;token=' . $Session->get_token()),
 					'U_COM_LINK' => '<a href="'. PATH_TO_ROOT .'/download/download' . url('.php?id=' . $row['id'] . '&amp;com=0', '-' . $row['id'] . '+' . Url::encode_rewrite($row['title']) . '.php?com=0') .'">'. CommentsService::get_number_and_lang_comments('download', $row['id']) . '</a>'
 				));
 			}
