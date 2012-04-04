@@ -84,6 +84,9 @@
 - Changer de format de stockage des fuseaux horaires
 + [color=red]Nouveauté:[/color] Gestion des menus avec arborescence repliable
 + Etudier la possibilité de joindre les sessions et l'espace membre à un annuaire de type LDAP.
++ [color=red]Nouveauté:[/color] Interface de personnalisation de la page de démarrage du site.
+- Possibilité de désactiver l'affichage d'un lien dans les menus
+- [color=red]Nouveauté:[/color] Système d'alertes (javascript) utilisateur évolué.
 
 [b]Messages privés[/b]
 - Possibilité d'envoyer des messages privés à tous les membres d'un groupe ou à tous les membres pour l'administrateur.
