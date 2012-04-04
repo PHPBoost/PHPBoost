@@ -39,7 +39,7 @@
 			xmlhttprequest_sender(xhr_object, null);
 		}
 		
-		var delay_forum = 1000; //D�lai apr�s lequel le bloc est automatiquement masqu�, apr�s le d�part de la souris.
+		var delay_forum = 1000;
 		var timeout_forum;
 		var displayed_forum = false;
 		var previous_forumblock;
@@ -99,16 +99,16 @@
 							
 							# IF C_MODERATION_PANEL #
 								# IF C_FORUM_CONNEXION # <span style="color:#000000;">&bull;</span> # ENDIF #
-								<a class="small_link" href="./moderation_forum.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/modo_mini.png" class="valign_middle" alt="" /> {L_MODERATION_PANEL}</a>
+								<a class="small_link" href="{PATH_TO_ROOT}/forum/moderation_forum.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/modo_mini.png" class="valign_middle" alt="" /> {L_MODERATION_PANEL}</a>
 							# ENDIF #
 						</div>
 					</div>
 					<div style="float:right;text-align:right">
-						<form action="search.php?token={TOKEN}" method="post">
+						<form action="{PATH_TO_ROOT}/forum/search.php?token={TOKEN}" method="post">
                             <div>
                                 <label><input type="text" size="14" id="search" name="search" value="{L_SEARCH}{PATH_TO_ROOT}." class="text" style="background:#FFFFFF url({PATH_TO_ROOT}/templates/{THEME}/images/search.png) no-repeat;background-position:2px 1px;padding-left:22px;" onclick="if(this.value=='{L_SEARCH}{PATH_TO_ROOT}.')this.value='';" onblur="if(this.value=='')this.value='{L_SEARCH}{PATH_TO_ROOT}.';" /></label>
                                 <input class="submit" value="{L_SEARCH}" type="submit" name="valid_search" style="padding:1px" /><br />
-                                <a href="search.php{SID}" title="{L_ADVANCED_SEARCH}" class="small_link">{L_ADVANCED_SEARCH}</a>
+                                <a href="{PATH_TO_ROOT}/forum/search.php{SID}" title="{L_ADVANCED_SEARCH}" class="small_link">{L_ADVANCED_SEARCH}</a>
                                 
                                 <input type="hidden" name="time" value="30000" />
                                 <input type="hidden" name="where" value="contents" />
