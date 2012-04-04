@@ -30,23 +30,6 @@ require_once('../calendar/calendar_begin.php');
 require_once('../kernel/header.php');
 require_once('calendar_constants.php');
 
-$date = new Date();
-$array_time = explode('-',$date->to_date());
-
-$year = retrieve(GET, 'y', $array_time[0]);
-$year = empty($year) ? 0 : $year;
-$month = retrieve(GET, 'm', $array_time[1]);
-$month = empty($month) ? 0 : $month;
-$day = retrieve(GET, 'd', $array_time[2]);
-$day = empty($day) ? 0 : $day;
-$bissextile = (date("L", mktime(0, 0, 0, 1, 1, $year)) == 1) ? 29 : 28;
-
-$get_event = retrieve(GET, 'e', '');
-$id = retrieve(GET, 'id', 0);
-$add = retrieve(GET, 'add', false);
-$delete = retrieve(GET, 'delete', false);
-$edit = retrieve(GET, 'edit', false);
-
 if ($delete)
     $Session->csrf_get_protect();
 	
