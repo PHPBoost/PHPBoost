@@ -103,7 +103,7 @@ class CSSFileOptimizer
 		else
 		{
 			$cleared_file_content = $this->delete_comments($this->content);
-			$content = str_replace(array("\r\n", "\n", "\r", "\t", "  "), '', $cleared_file_content);
+			$content = str_replace(array("\r\n", "\n", "\r", "\t", "  "), ' ', $cleared_file_content);
 			$content = preg_replace(array('`\s*{\s*`', '`\s*}\s*`', '`\s*:\s*`', '`\s*;\s*`'), array('{', '}', ':', ';'), $content);
 		}
 
