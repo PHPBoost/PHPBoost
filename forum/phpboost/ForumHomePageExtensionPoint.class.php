@@ -41,16 +41,19 @@ class ForumHomePageExtensionPoint implements HomePageExtensionPoint
 	
 	private function get_title()
 	{
-		global $FORUM_LANG;
+		global $LANG;
 		
-		return $FORUM_LANG['title_forum'];
+		load_module_lang('forum');
+		
+		return $LANG['title_forum'];
 	}
 	
 	private function get_view()
 	{
-		global $Cache, $LANG, $FORUM_LANG, $CONFIG_FORUM, $User, $auth_write, $Session, $CAT_FORUM, $AUTH_READ_FORUM, $nbr_msg_not_read, $sid;
+		global $Cache, $LANG, $CONFIG_FORUM, $User, $auth_write, $Session, $CAT_FORUM, $AUTH_READ_FORUM, $nbr_msg_not_read, $Template, $Sql, $sid;
 		
 		require_once(PATH_TO_ROOT . '/forum/forum_begin.php');
+		require_once(PATH_TO_ROOT . '/forum/forum_tools.php');
 
 		$tpl = new FileTemplate('forum/forum_index.tpl');
 		$tpl_top = new FileTemplate('forum/forum_top.tpl');
@@ -73,10 +76,10 @@ class ForumHomePageExtensionPoint implements HomePageExtensionPoint
 		$vars_tpl = array(	
 			'C_DISPLAY_UNREAD_DETAILS' => ($User->get_attribute('user_id') !== -1) ? true : false,
 			'C_MODERATION_PANEL' => $User->check_level(1) ? true : false,
-			'U_TOPIC_TRACK' => '<a class="small_link" href="../forum/track.php' . $sid . '" title="' . $LANG['show_topic_track'] . '">' . $LANG['show_topic_track'] . '</a>',
-			'U_LAST_MSG_READ' => '<a class="small_link" href="../forum/lastread.php' . $sid . '" title="' . $LANG['show_last_read'] . '">' . $LANG['show_last_read'] . '</a>',
-			'U_MSG_NOT_READ' => '<a class="small_link" href="../forum/unread.php' . $sid  . '" title="' . $LANG['show_not_reads'] . '">' . $LANG['show_not_reads'] . ($User->get_attribute('user_id') !== -1 ? ' (' . $nbr_msg_not_read . ')' : '') . '</a>',
-			'U_MSG_SET_VIEW' => '<a class="small_link" href="../forum/action' . url('.php?read=1', '') . '" title="' . $LANG['mark_as_read'] . '" onclick="javascript:return Confirm_read_topics();">' . $LANG['mark_as_read'] . '</a>',
+			'U_TOPIC_TRACK' => '<a class="small_link" href="'. PATH_TO_ROOT .'/forum/track.php' . $sid . '" title="' . $LANG['show_topic_track'] . '">' . $LANG['show_topic_track'] . '</a>',
+			'U_LAST_MSG_READ' => '<a class="small_link" href="'. PATH_TO_ROOT .'/forum/lastread.php' . $sid . '" title="' . $LANG['show_last_read'] . '">' . $LANG['show_last_read'] . '</a>',
+			'U_MSG_NOT_READ' => '<a class="small_link" href="'. PATH_TO_ROOT .'/forum/unread.php' . $sid  . '" title="' . $LANG['show_not_reads'] . '">' . $LANG['show_not_reads'] . ($User->get_attribute('user_id') !== -1 ? ' (' . $nbr_msg_not_read . ')' : '') . '</a>',
+			'U_MSG_SET_VIEW' => '<a class="small_link" href="'. PATH_TO_ROOT .'/forum/action' . url('.php?read=1', '') . '" title="' . $LANG['mark_as_read'] . '" onclick="javascript:return Confirm_read_topics();">' . $LANG['mark_as_read'] . '</a>',
 			'L_MODERATION_PANEL' => $LANG['moderation_panel'],
 			'L_CONFIRM_READ_TOPICS' => $LANG['confirm_mark_as_read'],
 			'L_AUTH_ERROR' => LangLoader::get_message('e_auth', 'errors'),
@@ -201,8 +204,8 @@ class ForumHomePageExtensionPoint implements HomePageExtensionPoint
 					$last_topic_title = (strlen(html_entity_decode($last_topic_title)) > 20) ? TextHelper::substr_html($last_topic_title, 0, 20) . '...' : $last_topic_title;
 					$row['login'] = !empty($row['login']) ? $row['login'] : $LANG['guest'];
 
-					$last = '<a href="topic' . url('.php?id=' . $row['tid'], '-' . $row['tid'] . '+' . Url::encode_rewrite($row['title'])  . '.php') . '" class="small_link">' . $last_topic_title . '</a><br />
-					<a href="topic' . url('.php?' . $last_page .  'id=' . $row['tid'], '-' . $row['tid'] . $last_page_rewrite . '+' . Url::encode_rewrite($row['title'])  . '.php') . '#m' .  $last_msg_id . '"><img src="../templates/' . get_utheme() . '/images/ancre.png" alt="" /></a> ' . $LANG['on'] . ' ' . gmdate_format('date_format', $row['last_timestamp']) . '<br />' . $LANG['by'] . ' ' . ($row['last_user_id'] != '-1' ? '<a href="'. UserUrlBuilder::profile($row['last_user_id'])->absolute() . '" class="small_link">' . $row['login'] . '</a>' : '<em>' . $LANG['guest'] . '</em>');
+					$last = '<a href="'. PATH_TO_ROOT . '/forum/topic' . url('.php?id=' . $row['tid'], '-' . $row['tid'] . '+' . Url::encode_rewrite($row['title'])  . '.php') . '" class="small_link">' . $last_topic_title . '</a><br />
+					<a href="'. PATH_TO_ROOT . '/forum/topic' . url('.php?' . $last_page .  'id=' . $row['tid'], '-' . $row['tid'] . $last_page_rewrite . '+' . Url::encode_rewrite($row['title'])  . '.php') . '#m' .  $last_msg_id . '"><img src="'. PATH_TO_ROOT .'/templates/' . get_utheme() . '/images/ancre.png" alt="" /></a> ' . $LANG['on'] . ' ' . gmdate_format('date_format', $row['last_timestamp']) . '<br />' . $LANG['by'] . ' ' . ($row['last_user_id'] != '-1' ? '<a href="'. UserUrlBuilder::profile($row['last_user_id'])->absolute() . '" class="small_link">' . $row['login'] . '</a>' : '<em>' . $LANG['guest'] . '</em>');
 				}
 				else
 				{
@@ -229,7 +232,7 @@ class ForumHomePageExtensionPoint implements HomePageExtensionPoint
 					'NBR_TOPIC' => $row['nbr_topic'],
 					'NBR_MSG' => $row['nbr_msg'],
 					'U_FORUM_URL' => $row['url'],
-					'U_FORUM_VARS' => url('.php?id=' . $row['cid'], '-' . $row['cid'] . '+' . Url::encode_rewrite($row['name']) . '.php'),
+					'U_FORUM_VARS' => url(PATH_TO_ROOT .'/forum/index.php?id=' . $row['cid'], '-' . $row['cid'] . '+' . Url::encode_rewrite($row['name']) . '.php'),
 					'U_LAST_TOPIC' => $last
 				));
 			}
@@ -259,8 +262,8 @@ class ForumHomePageExtensionPoint implements HomePageExtensionPoint
 			'SID' => SID,
 			'SELECT_CAT' => !empty($id_get) ? forum_list_cat($id_get, 0) : '', //Retourne la liste des catégories, avec les vérifications d'accès qui s'imposent.
 			'C_TOTAL_POST' => true,
-			'U_ONCHANGE' => url(".php?id=' + this.options[this.selectedIndex].value + '", "-' + this.options[this.selectedIndex].value + '.php"),
-			'U_ONCHANGE_CAT' => url("index.php?id=' + this.options[this.selectedIndex].value + '", "cat-' + this.options[this.selectedIndex].value + '.php"),
+			'U_ONCHANGE' => url(PATH_TO_ROOT ."/forum/index.php?id=' + this.options[this.selectedIndex].value + '", "-' + this.options[this.selectedIndex].value + '.php"),
+			'U_ONCHANGE_CAT' => url(PATH_TO_ROOT ."/forum/index.php?id=' + this.options[this.selectedIndex].value + '", "cat-' + this.options[this.selectedIndex].value + '.php"),
 			'L_SEARCH' => $LANG['search'],
 			'L_ADVANCED_SEARCH' => $LANG['advanced_search'],
 			'L_FORUM_INDEX' => $LANG['forum_index'],

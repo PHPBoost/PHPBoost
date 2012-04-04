@@ -78,7 +78,7 @@
 						{L_TOTAL_POST}: <strong>{NBR_MSG}</strong> {L_MESSAGE} {L_DISTRIBUTED} <strong>{NBR_TOPIC}</strong> {L_TOPIC}
 					</span>
 					<span style="float:right;">
-						<a href="stats.php{SID}">{L_STATS}</a> <a href="stats.php{SID}"><img src="{PICTURES_DATA_PATH}/images/stats.png" alt="" class="valign_middle" /></a>
+						<a href="{PATH_TO_ROOT}/forum/stats.php{SID}">{L_STATS}</a> <a href="{PATH_TO_ROOT}/forum/stats.php{SID}"><img src="{PICTURES_DATA_PATH}/images/stats.png" alt="" class="valign_middle" /></a>
 					</span>
 					<div class="spacer"></div>
 				</div>
@@ -88,7 +88,7 @@
 				<div class="forum_action">
 					# IF C_DISPLAY_MSG #
 					<span id="forum_change_statut">
-						<a href="action{U_ACTION_MSG_DISPLAY}#go_bottom">{ICON_DISPLAY_MSG}</a>	<a href="action{U_ACTION_MSG_DISPLAY}#go_bottom" class="small_link">{L_EXPLAIN_DISPLAY_MSG_DEFAULT}</a>
+						<a href="{PATH_TO_ROOT}/forum/action{U_ACTION_MSG_DISPLAY}#go_bottom">{ICON_DISPLAY_MSG}</a>	<a href="{PATH_TO_ROOT}/forum/action{U_ACTION_MSG_DISPLAY}#go_bottom" class="small_link">{L_EXPLAIN_DISPLAY_MSG_DEFAULT}</a>
 					</span>
 					<script type="text/javascript">
 					<!--				
@@ -98,9 +98,9 @@
 					</script>
 					&bull;
 					# ENDIF #
-					<a href="alert{U_ALERT}#go_bottom" class="small_link"><img class="valign_middle" src="{PICTURES_DATA_PATH}/images/important_mini.png" alt="" /></a> <a href="alert{U_ALERT}#go_bottom" class="small_link">{L_ALERT}</a>
+					<a href="{PATH_TO_ROOT}/forum/alert{U_ALERT}#go_bottom" class="small_link"><img class="valign_middle" src="{PICTURES_DATA_PATH}/images/important_mini.png" alt="" /></a> <a href="alert{U_ALERT}#go_bottom" class="small_link">{L_ALERT}</a>
 					<span id="forum_track">
-						<a href="action{U_SUSCRIBE}#go_bottom">{ICON_TRACK}</a> <a href="action{U_SUSCRIBE}#go_bottom" class="small_link">{L_TRACK_DEFAULT}</a>
+						<a href="{PATH_TO_ROOT}/forum/action{U_SUSCRIBE}#go_bottom">{ICON_TRACK}</a> <a href="{PATH_TO_ROOT}/forum/action{U_SUSCRIBE}#go_bottom" class="small_link">{L_TRACK_DEFAULT}</a>
 					</span>
 					<script type="text/javascript">
 					<!--				
@@ -110,7 +110,7 @@
 					</script>
 					&bull;
 					<span id="forum_track_pm">
-						<a href="action{U_SUSCRIBE_PM}#go_bottom">{ICON_SUSCRIBE_PM}</a> <a href="action{U_SUSCRIBE_PM}#go_bottom" class="small_link">{L_SUSCRIBE_PM_DEFAULT}</a>
+						<a href="{PATH_TO_ROOT}/forum/action{U_SUSCRIBE_PM}#go_bottom">{ICON_SUSCRIBE_PM}</a> <a href="{PATH_TO_ROOT}/forum/action{U_SUSCRIBE_PM}#go_bottom" class="small_link">{L_SUSCRIBE_PM_DEFAULT}</a>
 					</span>
 					<script type="text/javascript">
 					<!--				
@@ -120,7 +120,7 @@
 					</script>
 					&bull;
 					<span id="forum_track_mail">
-						<a href="action{U_SUSCRIBE_MAIL}#go_bottom">{ICON_SUSCRIBE}</a> <a href="action{U_SUSCRIBE_MAIL}#go_bottom" class="small_link">{L_SUSCRIBE_DEFAULT}</a>
+						<a href="{PATH_TO_ROOT}/forum/action{U_SUSCRIBE_MAIL}#go_bottom">{ICON_SUSCRIBE}</a> <a href="{PATH_TO_ROOT}/forum/action{U_SUSCRIBE_MAIL}#go_bottom" class="small_link">{L_SUSCRIBE_DEFAULT}</a>
 					</span>
 					<script type="text/javascript">
 					<!--				
