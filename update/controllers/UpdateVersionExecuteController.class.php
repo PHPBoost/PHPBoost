@@ -43,7 +43,8 @@ class UpdateVersionExecuteController extends UpdateController
 	
 	private function handle_form()
 	{
-		//Execute update
+		$service = new UpdateServices();
+		$service->execute();
 		AppContext::get_response()->redirect(UpdateUrlBuilder::config());
 	}
 

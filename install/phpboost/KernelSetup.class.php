@@ -338,38 +338,16 @@ class KernelSetup
 			'user_editor' => array('type' => 'string', 'length' => 15, 'default' => "''"),
 			'user_timezone' => array('type' => 'boolean', 'length' => 2, 'notnull' => 1, 'default' => 0),
 			'timestamp' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-		
-			/*
-				'user_avatar' => array('type' => 'string', 'length' => 255, 'default' => "''"),
-				'user_local' => array('type' => 'string', 'length' => 50, 'default' => "''"),
-				'user_msn' => array('type' => 'string', 'length' => 50, 'default' => "''"),
-				'user_yahoo' => array('type' => 'string', 'length' => 50, 'default' => "''"),
-				'user_web' => array('type' => 'string', 'length' => 70, 'default' => "''"),
-				'user_occupation' => array('type' => 'string', 'length' => 50, 'default' => "''"),
-				'user_hobbies' => array('type' => 'string', 'length' => 50, 'default' => "''"),
-				'user_desc' => array('type' => 'text', 'length' => 65000),
-				'user_sex' => array('type' => 'boolean', 'length' => 1, 'notnull' => 1, 'default' => 0),
-				'user_born' => array('type' => 'date', 'notnull' => 1, 'default' => "'0000-00-00'"),
-				'user_sign' => array('type' => 'text', 'length' => 65000),
-			*/
 			'user_msg' => array('type' => 'integer', 'length' => 9, 'notnull' => 1, 'default' => 0),
-			//
-			
 			'user_pm' => array('type' => 'integer', 'length' => 6, 'notnull' => 1, 'default' => 0),
-		
-		
 			'user_warning' => array('type' => 'integer', 'length' => 6, 'notnull' => 1, 'default' => 0),
 			'user_readonly' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-		
 			'last_connect' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'test_connect' => array('type' => 'boolean', 'length' => 4, 'notnull' => 1, 'default' => 0),
-		
 			'approbation_pass' => array('type' => 'string', 'length' => 30, 'notnull' => 1, 'default' => 0),
 			'change_password_pass' => array('type' => 'string', 'length' => 64, 'notnull' => 1, 'default' => "''"),
-		
 			'user_ban' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'user_aprob' => array('type' => 'boolean', 'length' => 1, 'notnull' => 1, 'default' => 0)
-
 		);
 
 		$options = array(
@@ -401,7 +379,7 @@ class KernelSetup
 			'name' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
 			'field_name' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
 			'description' => array('type' => 'text', 'length' => 65000),
-			'field_type' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => 0),
+			'field_type' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
 			'possible_values' => array('type' => 'text', 'length' => 65000),
 			'default_values' => array('type' => 'text', 'length' => 65000),
 			'required' => array('type' => 'boolean', 'length' => 1, 'notnull' => 1, 'default' => 0),

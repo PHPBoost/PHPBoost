@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                       LangsConfigurationUpdateVersion.class.php
+ *                       LangsConfigurationKernelUpdateVersion.class.php
  *                            -------------------
  *   begin                : February 26, 2012
  *   copyright            : (C) 2012 Kévin MASSY
@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-class LangsConfigurationUpdateVersion extends KernelUpdateVersion
+class LangsConfigurationKernelUpdateVersion extends KernelUpdateVersion
 {
 	public function __construct()
 	{
@@ -34,7 +34,7 @@ class LangsConfigurationUpdateVersion extends KernelUpdateVersion
 
 	public function execute()
 	{
-		$results = PersistenceContext::get_querier()->select_rows(PREFIX . 'langs', array('*'));
+		$results = PersistenceContext::get_querier()->select_rows(PREFIX . 'lang', array('*'));
 		foreach ($results as $row)
 		{
 			$this->insert_to_new_configuration($row['lang'], $this->build_authorizations($row['secure']), (bool)$row['activ']);
@@ -70,7 +70,7 @@ class LangsConfigurationUpdateVersion extends KernelUpdateVersion
 	
 	private function drop_table()
 	{
-		PersistenceContext::get_dbms_utils()->drop(array(PREFIX . 'langs'));
+		PersistenceContext::get_dbms_utils()->drop(array(PREFIX . 'lang'));
 	}
 }
 ?>

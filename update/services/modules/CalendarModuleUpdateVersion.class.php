@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                       ModuleUpdateVersion.class.php
+ *                       CalendarModuleUpdateVersion.class.php
  *                            -------------------
- *   begin                : February 26, 2012
+ *   begin                : April 05, 2012
  *   copyright            : (C) 2012 Kévin MASSY
  *   email                : soldier.weasel@gmail.com
  *
@@ -25,18 +25,30 @@
  *
  ###################################################*/
 
-abstract class ModuleUpdateVersion implements UpdateVersion
+class CalendarModuleUpdateVersion extends ModuleUpdateVersion
 {
-	protected $module_id;
-	
-	public function __construct($module_id)
+	public function __construct()
 	{
-		$this->module_id = $module_id;
+		parent::__construct('calendar');
 	}
 	
-	public function get_module_id()
+	public function execute()
 	{
-		return $this->module_id;
+		$this->update_tables();
+	}
+	
+	private function update_tables()
+	{
+		$this->drop_columns(array('lock_com', 'nbr_com'));
+	}
+	
+	private function drop_columns(array $columns)
+	{
+		$db_utils = PersistenceContext::get_dbms_utils();
+		foreach ($columns as $column_name)
+		{
+			$db_utils->drop_column(PREFIX .'calendar', $column_name);
+		}
 	}
 }
 ?>

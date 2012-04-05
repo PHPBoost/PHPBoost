@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                       ThemesConfigurationUpdateVersion.class.php
+ *                       ThemesConfigurationKernelUpdateVersion.class.php
  *                            -------------------
  *   begin                : February 26, 2012
  *   copyright            : (C) 2012 Kévin MASSY
@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-class ThemesConfigurationUpdateVersion extends KernelUpdateVersion
+class ThemesConfigurationKernelUpdateVersion extends KernelUpdateVersion
 {
 	public function __construct()
 	{
