@@ -29,7 +29,7 @@ class WebModuleUpdateVersion extends ModuleUpdateVersion
 {
 	public function __construct()
 	{
-		parent::__construct('web', true);
+		parent::__construct('web');
 	}
 	
 	public function execute()
@@ -37,12 +37,12 @@ class WebModuleUpdateVersion extends ModuleUpdateVersion
 		$this->update_tables();
 	}
 	
-	public function update_tables()
+	private function update_tables()
 	{
 		$this->drop_columns(array('lock_com', 'nbr_com', 'note', 'nbrnote', 'users_note'));
 	}
 	
-	public function drop_columns(array $columns)
+	private function drop_columns(array $columns)
 	{
 		$db_utils = PersistenceContext::get_dbms_utils();
 		foreach ($columns as $column_name)

@@ -176,7 +176,7 @@ class UpdateServices
 	
 	public function update_kernel()
 	{
-		$update_kernel_class = $this->get_class(self::$directory . '/kernel/', self::$kernel_pattern);
+		$update_kernel_class = $this->get_class(PATH_TO_ROOT . self::$directory . '/kernel/', self::$kernel_pattern);
 		foreach ($update_kernel_class as $class_name)
 		{
 			$object = new $class_name();
@@ -186,8 +186,8 @@ class UpdateServices
 	
 	public function update_configurations()
 	{
-		$configs_module_class = $this->get_class(self::$directory . '/modules/config/', self::$configuration_pattern);
-		$configs_kernel_class = $this->get_class(self::$directory . '/kernel/config/', self::$configuration_pattern);
+		$configs_module_class = $this->get_class(PATH_TO_ROOT . self::$directory . '/modules/config/', self::$configuration_pattern);
+		$configs_kernel_class = $this->get_class(PATH_TO_ROOT . self::$directory . '/kernel/config/', self::$configuration_pattern);
 		
 		$configs_class = array_merge($configs_module_class, $configs_kernel_class);
 		foreach ($configs_class as $class_name)
@@ -199,7 +199,7 @@ class UpdateServices
 	
 	public function update_modules()
 	{
-		$update_module_class = $this->get_class(self::$directory . '/modules/', self::$module_pattern);
+		$update_module_class = $this->get_class(PATH_TO_ROOT . self::$directory . '/modules/', self::$module_pattern);
 		foreach ($update_module_class as $class_name)
 		{
 			$object = new $class_name();
@@ -213,7 +213,7 @@ class UpdateServices
 		$folder = new Folder($directory);
 		foreach ($folder->get_files($pattern) as $file)
 		{
-			$class[] = $file->get_name();
+			$class[] = $file->get_name_without_extension();
 		}
 		return $class;
 	}
