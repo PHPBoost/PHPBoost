@@ -37,7 +37,7 @@ class FileUploadConfigUpdateVersion extends ConfigUpdateVersion
 		$config = $this->get_old_config();
 		
 		$file_upload_config = FileUploadConfig::load();
-	    $file_upload_config->set_authorization_enable_interface_files($config['auth_files']);
+	    $file_upload_config->set_authorization_enable_interface_files(unserialize($config['auth_files']));
         $file_upload_config->set_maximum_size_upload($config['size_limit']);
         $file_upload_config->set_enable_bandwidth_protect($config['bandwidth_protect']);
         $file_upload_config->set_authorized_extensions($config['auth_extensions']);

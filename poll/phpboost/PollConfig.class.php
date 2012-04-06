@@ -59,7 +59,7 @@ class PollConfig extends AbstractConfigData
 	
 	public function set_displayed_in_mini_module_list(Array $array) 
 	{
-		$this->set_property(self::displayed_in_mini_module_list, $array);
+		$this->set_property(self::DISPLAYED_IN_MINI_MODULE_LIST, $array);
 	}
 	
 	public function get_authorizations()

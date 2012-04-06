@@ -66,7 +66,7 @@ class NewsModuleUpdateVersion extends ModuleUpdateVersion
 		$this->db_utils->add_column(PREFIX .'news_cat', 'auth', array('type' => 'text', 'length' => 65000));
 		
 		$i = 0;
-		$result = self::$db_querier->select_rows(PREFIX .'news_cat', array('*'));
+		$result = $this->querier->select_rows(PREFIX .'news_cat', array('*'));
 		while ($row = $result->fetch())
 		{
 			$this->querier->update(PREFIX .'news_cat', array(
