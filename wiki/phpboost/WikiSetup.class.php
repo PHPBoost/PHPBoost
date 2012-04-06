@@ -77,9 +77,7 @@ class WikiSetup extends DefaultModuleSetup
 			'defined_status' => array('type' => 'string', 'length' => 6, 'notnull' => 1, 'default' => 0),
 			'undefined_status' => array('type' => 'text', 'length' => 65000),
 			'redirect' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'auth' => array('type' => 'text', 'length' => 65000),
-			'nbr_com' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'lock_com' => array('type' => 'boolean', 'length' => 1, 'notnull' => 1, 'default' => 0)
+			'auth' => array('type' => 'text', 'length' => 65000)
 		);
 		$options = array(
 			'primary' => array('id'),
