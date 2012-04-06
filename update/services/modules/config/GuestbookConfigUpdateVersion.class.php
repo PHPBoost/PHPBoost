@@ -38,7 +38,7 @@ class GuestbookConfigUpdateVersion extends ConfigUpdateVersion
 		
 		$guestbook_config = GuestbookConfig::load();
 		$guestbook_config->set_authorizations($this->build_authorizations($config['guestbook_auth']));
-		$guestbook_config->set_forbidden_tags($config['guestbook_forbidden_tags']);
+		$guestbook_config->set_forbidden_tags(unserialize($config['guestbook_forbidden_tags']));
 		$guestbook_config->set_maximum_links_message($config['guestbook_max_link']);
 		$guestbook_config->set_captcha_difficulty($config['guestbook_difficulty_verifcode']);
 		$guestbook_config->set_display_captcha($config['guestbook_verifcode']);

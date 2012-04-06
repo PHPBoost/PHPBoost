@@ -55,7 +55,7 @@ class MembersKernelUpdateVersion extends KernelUpdateVersion
 	
 	private function move_member_data()
 	{
-		$result = self::$db_querier->select_rows(PREFIX .'member', array('user_id', 'user_sex', 'user_born', 'user_local', 'user_web', 'user_job', 'user_entertainement', 'user_sign', 'user_biography', 'user_msn', 'user_yahoo', 'user_avatar'));
+		$result = $this->querier->select_rows(PREFIX .'member', array('user_id', 'user_avatar', 'user_local', 'user_msn', 'user_yahoo', 'user_web', 'user_occupation', 'user_hobbies', 'user_desc', 'user_sex', 'user_born', 'user_sign'));
 		while ($row = $result->fetch())
 		{
 			$this->querier->update(PREFIX .'member_extended_fields', array(
@@ -63,10 +63,10 @@ class MembersKernelUpdateVersion extends KernelUpdateVersion
 				'user_born' => $row['user_born'], 
 				'user_location' => $row['user_local'], 
 				'user_website' => $row['user_web'],  
-				'user_job' => $row['user_job'],  
-				'user_entertainement' => $row['user_entertainement'], 
+				'user_job' => $row['user_occupation'],  
+				'user_entertainement' => $row['user_hobbies'], 
 				'user_sign' => $row['user_sign'], 
-				'user_biography' => $row['user_biography'], 
+				'user_biography' => $row['user_desc'], 
 				'user_msn' => $row['user_msn'], 
 				'user_yahoo' => $row['user_yahoo'],  
 				'user_avatar' => $row['user_avatar'], 

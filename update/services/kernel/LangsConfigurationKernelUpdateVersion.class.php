@@ -65,7 +65,10 @@ class LangsConfigurationKernelUpdateVersion extends KernelUpdateVersion
 	
 	private function insert_to_new_configuration($lang_id, $authorizations, $enable)
 	{
-		LangManager::install($lang_id, $authorizations, $enable);
+		try {
+			LangManager::install($lang_id, $authorizations, $enable);
+		} catch (IOException $e) {
+		}
 	}
 	
 	private function drop_table()

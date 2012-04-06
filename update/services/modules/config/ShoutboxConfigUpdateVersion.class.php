@@ -39,7 +39,7 @@ class ShoutboxConfigUpdateVersion extends ConfigUpdateVersion
 		$config_shoutbox = ShoutboxConfig::load();
 		$config_shoutbox->set_max_messages_number($config['shoutbox_max_msg']);
 		$config_shoutbox->set_authorization($this->build_authorizations($config['shoutbox_auth']));
-		$config_shoutbox->set_forbidden_formatting_tags($config['shoutbox_forbidden_tags']);
+		$config_shoutbox->set_forbidden_formatting_tags(unserialize($config['shoutbox_forbidden_tags']));
 		$config_shoutbox->set_max_links_number_per_message($config['shoutbox_max_link']);
 		$config_shoutbox->set_refresh_delay($config['shoutbox_refresh_delay']);
 		ShoutboxConfig::save();

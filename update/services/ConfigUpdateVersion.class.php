@@ -56,12 +56,12 @@ abstract class ConfigUpdateVersion implements UpdateVersion
 	{
 		if ($serialize)
 		{
-			return unserialize($this->querier->select_single_row(DB_TABLE_CONFIGS, 'value', 'WHERE name = :config_name', array('config_name' => $this->get_config_name())));
+			return unserialize($this->querier->get_column_value(DB_TABLE_CONFIGS, 'value', 'WHERE name = :config_name', array('config_name' => $this->get_config_name())));
 		}
-		return $this->querier->select_single_row(DB_TABLE_CONFIGS, 'value', 'WHERE name = :config_name', array('config_name' => $this->get_config_name()));
+		return $this->querier->get_column_value(DB_TABLE_CONFIGS, 'value', 'WHERE name = :config_name', array('config_name' => $this->get_config_name()));
 	}
 	
-	abstract protected function build_new_config()
+	protected function build_new_config()
 	{
 		return true;
 	}

@@ -42,7 +42,7 @@ class PagesConfigUpdateVersion extends ConfigUpdateVersion
 		$pages_config = PagesConfig::load();
 		$pages_config->set_count_hits_activated($count_hits_activated);
 		$pages_config->set_comments_activated($comments_activated);
-		$pages_config->set_authorizations($config['auth']);
+		$pages_config->set_authorizations(unserialize($config['auth']));
 		PagesConfig::save();
 
 		return true;

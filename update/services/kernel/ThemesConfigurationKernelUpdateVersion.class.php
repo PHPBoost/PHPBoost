@@ -38,7 +38,6 @@ class ThemesConfigurationKernelUpdateVersion extends KernelUpdateVersion
 		foreach ($results as $row)
 		{
 			$this->insert_to_new_configuration($row['theme'], $this->build_authorizations($row['secure']), (bool)$row['activ']);
-			die('TODO authorizations !');
 		}
 		$this->drop_table();
 	}
@@ -66,7 +65,10 @@ class ThemesConfigurationKernelUpdateVersion extends KernelUpdateVersion
 	
 	private function insert_to_new_configuration($theme_id, $authorizations, $enable_theme)
 	{
-		ThemeManager::install($theme_id, $authorizations, $enable_theme);
+		try {
+			ThemeManager::install($theme_id, $authorizations, $enable_theme);
+		} catch (IOException $e) {
+		}
 	}
 	
 	private function drop_table()

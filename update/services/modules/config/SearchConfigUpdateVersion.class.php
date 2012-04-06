@@ -40,8 +40,8 @@ class SearchConfigUpdateVersion extends ConfigUpdateVersion
 		$search_config->set_nb_results_per_page($config['nb_results_per_page']);
 		$search_config->set_unauthorized_providers($config['unauthorized_modules']);
 		$search_weightings = new SearchWeightings();
-		$search_weightings->set_weightings();
-		$search_config->set_weightings($config['modules_weighting']);
+		$search_weightings->set_weightings((!empty($config['modules_weighting']) ? $config['modules_weighting'] : array()));
+		$search_config->set_weightings($search_weightings);
 		SearchConfig::save();
         
 		return true;

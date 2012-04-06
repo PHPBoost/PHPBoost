@@ -77,7 +77,7 @@ class ArticlesModuleUpdateVersion extends ModuleUpdateVersion
 		$this->db_utils->add_column(PREFIX .'articles_cats', 'c_order', array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0));
 
 		$i = 0;
-		$result = self::$db_querier->select_rows(PREFIX .'articles_cats', array('*'));
+		$result = $this->querier->select_rows(PREFIX .'articles_cats', array('*'));
 		while ($row = $result->fetch())
 		{
 			$this->querier->update(PREFIX .'articles_cats', array(
