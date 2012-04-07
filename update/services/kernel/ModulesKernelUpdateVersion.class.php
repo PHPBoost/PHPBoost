@@ -47,6 +47,13 @@ class ModulesKernelUpdateVersion extends KernelUpdateVersion
 			} catch (IOException $e) {
 			}
 		}
+		
+		$default_modules = array('TinyMCE', 'BBCode', 'LangsSwitcher', 'ThemesSwitcher', 'sitemap');
+		foreach ($default_modules as $module_name)
+		{
+			$modules_config->add_module(new Module($module_name, true));
+		}
+		
 		ModulesConfig::save();
 		
 		$this->drop_modules_table();
