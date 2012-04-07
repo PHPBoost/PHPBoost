@@ -41,14 +41,14 @@ class WebsiteConfigUpdateVersion extends ConfigUpdateVersion
 		$general_config->set_site_description($config['site_desc']);
 		$general_config->set_site_keywords($config['site_keyword']);
 		$general_config->set_other_home_page($config['start_page']);
-		$general_config->set_site_url($config['server_name']);
-		$general_config->set_site_path($config['server_path']);
+		//$general_config->set_site_url($config['server_name']);
+		//$general_config->set_site_path($config['server_path']);
 		$general_config->set_site_timezone($config['timezone']);
 		GeneralConfig::save();
 		
 		$server_environment_config = ServerEnvironmentConfig::load();
 		$server_environment_config->set_htaccess_manual_content($config['htaccess_manual_content']);
-		$server_environment_config->set_url_rewriting_enabled($config['rewrite']);
+		//$server_environment_config->set_url_rewriting_enabled($config['rewrite']);
 		$server_environment_config->set_output_gziping_enabled($config['ob_gzhandler']);
 		ServerEnvironmentConfig::save();
 		
@@ -97,14 +97,15 @@ class WebsiteConfigUpdateVersion extends ConfigUpdateVersion
 		$search_config->set_cache_max_uses($config['search_max_use']);
 		SearchConfig::save();
 		
-		if ($config['debug_mode'])
+		/*if ($config['debug_mode'])
 		{
 			Debug::enabled_debug_mode(array());
 		}
 		else
 		{
 			Debug::disable_debug_mode();
-		}	
+		}
+		*/
         
 		return true;
 	}

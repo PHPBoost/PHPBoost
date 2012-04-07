@@ -45,6 +45,11 @@ class UpdateServices
 	private $token;
 	
 	/**
+	 * @var File
+	 */
+	private $update_followed_file;
+	
+	/**
 	 * @var string[string]
 	 */
 	private $messages;
@@ -52,6 +57,8 @@ class UpdateServices
 	public function __construct($locale = '')
 	{
 		$this->token = new File(PATH_TO_ROOT . '/cache/.update_token');
+		$this->update_followed_file = new File(PATH_TO_ROOT . '/cache/update_followed.txt');
+		$this->update_followed_file->delete();
 		if (!empty($locale))
 		{
 			LangLoader::set_locale($locale);
@@ -179,8 +186,16 @@ class UpdateServices
 		$update_kernel_class = $this->get_class(PATH_TO_ROOT . self::$directory . '/kernel/', self::$kernel_pattern);
 		foreach ($update_kernel_class as $class_name)
 		{
-			$object = new $class_name();
-			$object->execute();
+			try {
+				$object = new $class_name();
+				$object->execute();
+				$success = true;
+				$message = '';
+			} catch (Exception $e) {
+				$success = false;
+				$message = $e->getMessage();
+			}
+			$this->add_error_to_file($object->get_part_name() . '_kernel', $success, $message);
 		}
 	}
 	
@@ -192,8 +207,16 @@ class UpdateServices
 		$configs_class = array_merge($configs_module_class, $configs_kernel_class);
 		foreach ($configs_class as $class_name)
 		{
-			$object = new $class_name();
-			$object->execute();
+			try {
+				$object = new $class_name();
+				$object->execute();
+				$success = true;
+				$message = '';
+			} catch (Exception $e) {
+				$success = false;
+				$message = $e->getMessage();
+			}
+			$this->add_error_to_file($object->get_config_name() . '_config', $success, $message);
 		}
 	}
 	
@@ -202,8 +225,16 @@ class UpdateServices
 		$update_module_class = $this->get_class(PATH_TO_ROOT . self::$directory . '/modules/', self::$module_pattern);
 		foreach ($update_module_class as $class_name)
 		{
-			$object = new $class_name();
-			$object->execute();
+			try {
+				$object = new $class_name();
+				$object->execute();
+				$success = true;
+				$message = '';
+			} catch (Exception $e) {
+				$success = false;
+				$message = $e->getMessage();
+			}
+			$this->add_error_to_file($object->get_module_id() . '_module', $success, $message);
 		}
 	}
 	
@@ -221,6 +252,12 @@ class UpdateServices
 	private function generate_cache()
 	{
 		AppContext::get_cache_service()->clear_cache();
+	}
+	
+	private function add_error_to_file($step_name, $success, $message)
+	{
+		$success_message = $success ? 'Ok !' : 'Error :';
+		$this->update_followed_file->append($step_name.' '.$success_message.' '. $message. "\r\n");
 	}
 	
 	private function generate_update_token()

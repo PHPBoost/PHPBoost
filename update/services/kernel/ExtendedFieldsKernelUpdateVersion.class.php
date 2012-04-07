@@ -71,7 +71,9 @@ class ExtendedFieldsKernelUpdateVersion extends KernelUpdateVersion
 	
 	private function add_authorizations_row()
 	{
-		PersistenceContext::get_dbms_utils()->add_column(PREFIX .'member_extended_fields_list', 'auth', array('type' => 'text', 'length' => 65000));
+		$db_utils = PersistenceContext::get_dbms_utils();
+		$db_utils->add_column(PREFIX .'member_extended_fields_list', 'auth', array('type' => 'text', 'length' => 65000));
+		$db_utils->add_column(PREFIX .'member_extended_fields_list', 'freeze', array('type' => 'boolean', 'length' => 1, 'notnull' => 1, 'default' => 0));
 		$this->querier->update(PREFIX .'member_extended_fields_list', array('auth' => serialize(array('r1' => 3, 'r0' => 3, 'r-1' => 1))), 'WHERE 1');
 	}
 }
