@@ -189,7 +189,7 @@ if (($page_type == 'article' || $page_type == 'cat') && (!$general_auth || $User
 	$Template->put_all(array(
 		'C_ACTIV_COM' => true,
 		'U_COM' => url('property.php?idcom=' . $id_article . '&amp;com=0'),
-		'L_COM' => $LANG['wiki_article_com_article'] . ($article_infos['nbr_com'] > 0 ? ' (' . $article_infos['nbr_com'] . ')' : '')
+		'L_COM' => $LANG['wiki_article_com_article'] . ($article_infos['number_comments'] > 0 ? ' (' . $article_infos['number_comments'] . ')' : '')
 	));
 }
 

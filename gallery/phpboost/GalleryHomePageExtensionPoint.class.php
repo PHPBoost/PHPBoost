@@ -310,7 +310,7 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 					LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = g.user_id
 					WHERE g.idcat = '" . $g_idcat . "' AND g.id = '" . $g_idpics . "' AND g.aprob = 1
 					" . $g_sql_sort . "
-					" . $Sql->limit(0, 1), __LINE__, __FILE__);
+					" . $this->sql_querier->limit(0, 1), __LINE__, __FILE__);
 				$info_pics = $this->sql_querier->fetch_assoc($result);
 				if (!empty($info_pics['id']))
 				{
@@ -322,12 +322,12 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 					list($i, $reach_pics_pos, $pos_pics, $thumbnails_before, $thumbnails_after, $start_thumbnails, $end_thumbnails) = array(0, false, 0, 0, 0, $nbr_pics_display_before, $nbr_pics_display_after);
 					$array_pics = array();
 					$array_js = 'var array_pics = new Array();';
-					$result = $Sql->query_while("SELECT g.id, g.idcat, g.path
+					$result = $this->sql_querier->query_while("SELECT g.id, g.idcat, g.path
 					FROM " . PREFIX . "gallery g
 					LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = g.user_id
 					WHERE g.idcat = '" . $g_idcat . "' AND g.aprob = 1
 					" . $g_sql_sort, __LINE__, __FILE__);
-					while ($row = $Sql->fetch_assoc($result))
+					while ($row = $this->sql_querier->fetch_assoc($result))
 					{
 						//Si la miniature n'existe pas (cache vidé) on regénère la miniature à partir de l'image en taille réelle.
 						if (!file_exists(PATH_TO_ROOT . '/gallery/pics/thumbnails/' . $row['path']))
@@ -373,7 +373,7 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 						//Affichage notation.
 						$notation = new Notation();
 						$notation->set_module_name('gallery');
-						$notation->set_id_in_module($row['idcat']);
+						$notation->set_id_in_module($info_pics['id']);
 						$notation->set_notation_scale($CONFIG_GALLERY['note_max']);
 					}
 	
@@ -398,7 +398,7 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 						'VIEWS' => ($info_pics['views'] + 1),
 						'DIMENSION' => $info_pics['width'] . ' x ' . $info_pics['height'],
 						'SIZE' => NumberHelper::round($info_pics['weight']/1024, 1),
-						'COM' => '<a href="'. GalleryUrlBuilder::get_link_item($info_pics['idcat'],$info_pics['id'],0,$g_sort) .'">'. CommentsService::get_number_and_lang_comments($comments_topic) . '</a>',
+						'COM' => '<a href="'. GalleryUrlBuilder::get_link_item($info_pics['idcat'],$info_pics['id'],0,$g_sort) .'">'. CommentsService::get_number_and_lang_comments('gallery', $info_pics['id']) . '</a>',
 						'KERNEL_NOTATION' => $activ_note ? NotationService::display_active_image($notation) : '',
 						'COLSPAN' => ($CONFIG_GALLERY['nbr_column'] + 2),
 						'CAT' => $cat_list,
@@ -471,7 +471,7 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 	
 				$is_connected = $User->check_level(User::MEMBER_LEVEL);
 				$j = 0;
-				$result = $this->sql_querier->query_while("SELECT g.id, g.idcat, g.name, g.path, g.timestamp, g.aprob, g.width, g.height, g.user_id, g.views, g.nbr_com, g.aprob, m.login
+				$result = $this->sql_querier->query_while("SELECT g.id, g.idcat, g.name, g.path, g.timestamp, g.aprob, g.width, g.height, g.user_id, g.views, g.aprob, m.login
 				FROM " . PREFIX . "gallery g
 				LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = g.user_id
 				WHERE g.idcat = '" . $g_idcat . "' AND g.aprob = 1
