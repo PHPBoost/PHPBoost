@@ -271,7 +271,7 @@ class Environment
 		//Is that theme authorized for this member? If not, we assign it the default theme
 		$user_theme_properties = ThemeManager::get_theme($user_theme);
 		if (UserAccountsConfig::load()->is_users_theme_forced() || $user_theme_properties == null
-		|| !AppContext::get_current_user()->check_auth($user_theme_properties->get_authorizations(), Theme::ACCES_THEME))
+		|| !$user_theme_properties->check_auth())
 		{
 			$user_theme = UserAccountsConfig::load()->get_default_theme();
 		}
@@ -324,7 +324,6 @@ class Environment
 		$current_date->set_seconds(0);
 		if ($last_use_date->is_anterior_to($current_date))
 		{
-
 			$lock_file = new File(PATH_TO_ROOT . '/cache/changeday_lock');
 			if (!$lock_file->exists())
 			{
@@ -439,7 +438,7 @@ class Environment
 	private static function execute_modules_changedays_tasks()
 	{
 		$today = new Date();
-		$yesterday = new Date(); // FIXME set yesterday date
+		$yesterday = new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, $this->get_yesterday_timestamp());
 		$jobs = AppContext::get_extension_provider_service()->get_extension_point(ScheduledJobExtensionPoint::EXTENSION_POINT);
 		foreach ($jobs as $job)
 		{
@@ -626,8 +625,6 @@ class Environment
 	{
 		if (self::$graphical_environment === null)
 		{
-			//Default graphical environment
-
 			self::$graphical_environment = new SiteDisplayGraphicalEnvironment();
 		}
 		return self::$graphical_environment;
@@ -643,5 +640,4 @@ class Environment
 		@set_time_limit(600);
 	}
 }
-
 ?>
