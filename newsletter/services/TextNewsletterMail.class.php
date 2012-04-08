@@ -55,5 +55,4 @@ class TextNewsletterMail extends AbstractNewsletterMail
 		return stripslashes(FormatingHelper::strparse(addslashes($contents)));
 	}
 }
-
 ?>
