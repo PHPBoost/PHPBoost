@@ -438,7 +438,7 @@ class Environment
 	private static function execute_modules_changedays_tasks()
 	{
 		$today = new Date();
-		$yesterday = new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, $this->get_yesterday_timestamp());
+		$yesterday = new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, self::get_yesterday_timestamp());
 		$jobs = AppContext::get_extension_provider_service()->get_extension_point(ScheduledJobExtensionPoint::EXTENSION_POINT);
 		foreach ($jobs as $job)
 		{

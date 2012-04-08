@@ -127,9 +127,7 @@ class GallerySetup extends DefaultModuleSetup
 			'user_id' => 1,
 			'aprob' => 1,
 			'views' => 0,
-			'timestamp' => time(),
-			'nbr_com' => 0,
-			'lock_com' => 0
+			'timestamp' => time()
 		));
 	}
 	
