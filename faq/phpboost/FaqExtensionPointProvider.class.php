@@ -41,9 +41,11 @@ class FaqExtensionPointProvider extends ExtensionPointProvider
 	public function get_cache()
 	{
 		$string = 'global $FAQ_CATS, $RANDOM_QUESTIONS;' . "\n\n";
-
+		
+		$root = array('name' => '', 'auth' => FaqConfig::load()->get_authorizations());
 		//List of categories and their own properties
 		$string .= '$FAQ_CATS = array();' . "\n\n";
+		$string .= '$FAQ_CATS[0] = ' . var_export($root, true) . ';' . "\n";
 		$result = $this->sql_querier->query_while("SELECT id, id_parent, c_order, auth, name, visible, display_mode, image, num_questions, description
 		FROM " . PREFIX . "faq_cats
 		ORDER BY id_parent, c_order", __LINE__, __FILE__);
@@ -51,18 +53,17 @@ class FaqExtensionPointProvider extends ExtensionPointProvider
 		{
 			$string .= '$FAQ_CATS[' . $row['id'] . '] = ' .
 				var_export(array(
-				'id_parent' => $row['id_parent'],
-				'order' => $row['c_order'],
-				'name' => $row['name'],
-				'desc' => $row['description'],
-				'visible' => (bool)$row['visible'],
-				'display_mode' => $row['display_mode'],
-				'image' => $row['image'],
-				'num_questions' => $row['num_questions'],
-				'description' => $row['description'],
-				'auth' => unserialize($row['auth'])
-				),
-			true)
+					'id_parent' => $row['id_parent'],
+					'order' => $row['c_order'],
+					'name' => $row['name'],
+					'desc' => $row['description'],
+					'visible' => (bool)$row['visible'],
+					'display_mode' => $row['display_mode'],
+					'image' => $row['image'],
+					'num_questions' => $row['num_questions'],
+					'description' => $row['description'],
+					'auth' => unserialize($row['auth'])
+					), true)
 			. ';' . "\n";
 		}
 

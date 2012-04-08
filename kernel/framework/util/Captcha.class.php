@@ -58,7 +58,7 @@ class Captcha
 	public function __construct()
 	{
 		$this->update_instance(); //Mise à jour de l'instance.
-		$server_configuration = ServerConfiguration();
+		$server_configuration = new ServerConfiguration();
 		if ($server_configuration->has_gd_library())
 		{
 			$this->gd_loaded = true;
