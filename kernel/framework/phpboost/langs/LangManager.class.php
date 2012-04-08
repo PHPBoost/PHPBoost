@@ -95,9 +95,10 @@ class LangManager
 	{
 		if (!empty($id) && self::get_lang_existed($id))
 		{
-			if (self::get_lang($id)->get_id() !== UserAccountsConfig::load()->get_default_lang())
+			$default_lang = UserAccountsConfig::load()->get_default_lang();
+			if (self::get_lang($id)->get_id() !== $default_lang)
 			{
-				// TODO change user lang in Database
+				AppContext::get_current_user()->update_lang($default_lang);
 				
 				LangsConfig::load()->remove_lang_by_id($id);
 				LangsConfig::save();

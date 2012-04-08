@@ -99,9 +99,10 @@ class ThemeManager
 	{
 		if (!empty($theme_id) && self::get_theme_existed($theme_id))
 		{
-			if (self::get_theme($theme_id)->get_id() !== UserAccountsConfig::load()->get_default_theme())
+			$default_theme = UserAccountsConfig::load()->get_default_theme();
+			if (self::get_theme($theme_id)->get_id() !== $default_theme)
 			{
-				// TODO change user theme in Database
+				AppContext::get_current_user()->update_theme($default_theme);
 				
 				ThemesConfig::load()->remove_theme_by_id($theme_id);
 				ThemesConfig::save();
