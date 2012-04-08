@@ -69,5 +69,4 @@ class HTMLNewsletterMail extends AbstractNewsletterMail
 		return $contents;
 	}
 }
-
 ?>

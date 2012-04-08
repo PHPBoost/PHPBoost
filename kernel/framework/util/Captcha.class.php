@@ -58,7 +58,8 @@ class Captcha
 	public function __construct()
 	{
 		$this->update_instance(); //Mise à jour de l'instance.
-		if (@extension_loaded('gd')) //TODO à remplacer par les fonctions verifs du kernel
+		$server_configuration = ServerConfiguration();
+		if ($server_configuration->has_gd_library())
 		{
 			$this->gd_loaded = true;
 		}

@@ -259,7 +259,6 @@ else
 	}
 	elseif (!$no_alert_on_error)
 	{
-		//TODO Gestion de la langue
 		$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
             'Le module <strong>' . $module_name . '</strong> n\'a pas de fonction get_home_page!', UserErrorController::FATAL);
         DispatchManager::redirect($controller);

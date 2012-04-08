@@ -187,12 +187,11 @@ class MySQLDBMSUtils implements DBMSUtils
 	{
 		$result = $this->select('SELECT column_name  FROM `information_schema`.`COLUMNS` C WHERE TABLE_SCHEMA=:schema
 			AND TABLE_NAME=:table_name AND COLUMN_NAME=:column_name',
-		array(
+			array(
 				'schema' => $this->get_database_name(),
 				'table_name' => $table_name,
 				'column_name' => $column_name
-		)
-		);
+		));
 		if ($result->get_rows_count() > 0)
 		{
 			$this->inject('ALTER TABLE `' . $table_name . '` DROP `' . $column_name . '`');
