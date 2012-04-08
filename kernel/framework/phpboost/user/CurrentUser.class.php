@@ -58,21 +58,7 @@ class CurrentUser extends User
 	{
 		return $this->login;
 	}
-	
-	private function build_groups()
-	{
-		$groups_auth = array();
-		foreach (GroupsService::get_groups() as $idgroup => $array_info)
-		{
-			$groups_auth[$idgroup] = $array_info['auth'];
-		}
-		$this->groups_auth = $groups_auth;
 
-		$this->groups = explode('|', $this->user_data['user_groups']);
-		array_unshift($this->groups, 'r' . $this->level); //Ajoute le groupe associé au rang du membre.
-		array_pop($this->groups); //Supprime l'élément vide en fin de tableau.
-	}
-	
 	public function get_attribute($attribute)
 	{
 		return isset($this->user_data[$attribute]) ? $this->user_data[$attribute] : '';
@@ -126,6 +112,58 @@ class CurrentUser extends User
 		}
 
 		return $max_auth;
+	}
+	
+	/**
+	 * @desc Modify the theme for guest in the database (sessions table).
+	 * @param string $theme The new theme
+	 */
+	public function update_theme($theme)
+	{
+		$user_accounts_config = UserAccountsConfig::load();
+		$db_querier = PersistenceContext::get_querier();
+		if ($user_accounts_config->is_users_theme_forced())
+		{
+			if ($this->get_level() > -1)
+			{
+				$db_querier->update(DB_TABLE_MEMBER, array('user_theme' => strprotect($theme)), 'WHERE user_id=:user_id', array('user_id' => $this->get_id()));
+			}
+			else
+			{
+				$db_querier->update(DB_TABLE_MEMBER, array('user_theme' => strprotect($theme)), 'WHERE WHERE level=-1 AND session_id=session_id', array('session_id' => $this->user_data['session_id']));
+			}
+		}
+	}
+	
+	/**
+	 * @desc Modify the lang for guest in the database (sessions table).
+	 * @param string $theme The new lang
+	 */
+	public function update_lang($lang)
+	{
+		$db_querier = PersistenceContext::get_querier();
+		if ($this->get_level() > -1)
+		{
+			$db_querier->update(DB_TABLE_MEMBER, array('user_lang' => strprotect($lang)), 'WHERE user_id=:user_id', array('user_id' => $this->get_id()));
+		}
+		else
+		{
+			$db_querier->update(DB_TABLE_MEMBER, array('user_lang' => strprotect($lang)), 'WHERE WHERE level=-1 AND session_id=session_id', array('session_id' => $this->user_data['session_id']));
+		}
+	}
+
+	private function build_groups()
+	{
+		$groups_auth = array();
+		foreach (GroupsService::get_groups() as $idgroup => $array_info)
+		{
+			$groups_auth[$idgroup] = $array_info['auth'];
+		}
+		$this->groups_auth = $groups_auth;
+
+		$this->groups = explode('|', $this->user_data['user_groups']);
+		array_unshift($this->groups, 'r' . $this->level); //Ajoute le groupe associé au rang du membre.
+		array_pop($this->groups); //Supprime l'élément vide en fin de tableau.
 	}
 	
 	private function sum_auth_groups($array_auth_groups)
