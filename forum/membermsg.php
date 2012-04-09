@@ -108,7 +108,7 @@ if (!empty($view_msg)) //Affichage de tous les messages du membre
 	$Sql->query_close($result);
 	
 	//Listes les utilisateurs en lignes.
-	list($users_list, $total_admin, $total_modo, $total_member, $total_visit, $total_online) = forum_list_user_online("AND s.session_script LIKE '" . DIR . "/forum/%'");
+	list($users_list, $total_admin, $total_modo, $total_member, $total_visit, $total_online) = forum_list_user_online("AND s.session_script = '". GeneralConfig::get_default_site_path() ."/forum/membermsg.php'");
 
 	$Template->put_all(array(
 		'TOTAL_ONLINE' => $total_online,

@@ -228,7 +228,7 @@ elseif (!empty($valid_search))
 	$Template->put('message_helper', MessageHelper::display($LANG['invalid_req'], E_USER_WARNING));
 	
 //Listes les utilisateurs en lignes.
-list($users_list, $total_admin, $total_modo, $total_member, $total_visit, $total_online) = forum_list_user_online("AND s.session_script = '/forum/search.php'");
+list($users_list, $total_admin, $total_modo, $total_member, $total_visit, $total_online) = forum_list_user_online("AND s.session_script = '". GeneralConfig::get_default_site_path() ."/forum/search.php'");
 	
 $Template->put_all(array(
 	'TOTAL_ONLINE' => $total_online,
