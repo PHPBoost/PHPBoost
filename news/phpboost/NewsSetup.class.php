@@ -45,6 +45,7 @@ class NewsSetup extends DefaultModuleSetup
 	{
 		$this->drop_tables();
 		$this->create_tables();
+		$this->insert_data();
 	}
 
 	public function uninstall()
@@ -71,16 +72,13 @@ class NewsSetup extends DefaultModuleSetup
 			'title' => array('type' => 'string', 'length' => 100, 'notnull' => 1, 'default' => "''"),
 			'contents' => array('type' => 'text', 'length' => 65000),
 			'extend_contents' => array('type' => 'text', 'length' => 65000),
-			'archive' => array('type' => 'boolean', 'notnull' => 1, 'notnull' => 1, 'default' => 0),
 			'timestamp' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'visible' => array('type' => 'boolean', 'notnull' => 1, 'notnull' => 1, 'default' => 0),
 			'start' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'end' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'user_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'img' => array('type' => 'string', 'length' => 255, 'notnull' => 1),
 			'alt' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
 			'user_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'archive' => array('type' => 'boolean', 'notnull' => 1, 'notnull' => 1, 'default' => 0),
 			'compt' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'sources' => array('type' => 'text', 'length' => 65000),
 		);
@@ -113,6 +111,45 @@ class NewsSetup extends DefaultModuleSetup
 		);
 		PersistenceContext::get_dbms_utils()->create_table(self::$news_cats_table, $fields, $options);
 	}
+	
+	private function insert_data()
+	{
+        $this->messages = LangLoader::get('install', 'news');
+		$this->insert_news_cats_data();
+		$this->insert_news_data();
+	}
 
+	private function insert_news_cats_data()
+	{
+		PersistenceContext::get_querier()->insert(self::$news_cats_table, array(
+			'id' => 1,
+			'id_parent' => 0,
+			'c_order' => 1,
+			'auth' => serialize(array()),
+			'name' => $this->messages['cat.name'],
+			'visible' => (int)true,
+			'description' => $this->messages['cat.description'],
+			'image' => 'news.png'
+		));
+	}
+	
+	private function insert_news_data()
+	{
+		PersistenceContext::get_querier()->insert(self::$news_table, array(
+			'id' => 1,
+			'idcat' => 1,
+			'title' => $this->messages['news.title'],
+			'contents' => $this->messages['news.content'],
+			'extend_contents' => '',
+			'timestamp' => time(),
+			'visible' => (int)true,
+			'start' => 0,
+			'end' => 0,
+			'img' => '',
+			'alt' => '',
+			'compt' => 0,
+			'sources' => serialize(array())
+		));
+	}
 }
 ?>

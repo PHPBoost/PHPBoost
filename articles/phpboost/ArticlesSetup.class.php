@@ -122,7 +122,7 @@ class ArticlesSetup extends DefaultModuleSetup
 	{
 		$this->querier->insert(self::$articles_cat_table, array(
 			'id' => 1,
-			'id_parent' => 1,
+			'id_parent' => 0,
 			'c_order' => 1,
 			'name' => $this->messages['default.category.name'],
 			'description' => $this->messages['default.category.description'],
