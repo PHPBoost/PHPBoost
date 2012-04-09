@@ -127,7 +127,8 @@ if (!empty($idnews)) // On affiche la news correspondant à l'id envoyé.
 		$comments_topic = new CommentsTopic();
 		$comments_topic->set_module_id('news');
 		$comments_topic->set_id_in_module($idnews);
-
+		$comments_topic->set_url(new Url('/news/news.php?cat='. $news['idcat'] .'&id=' . $news['id'] . '&com=0'));
+		
 		$tpl->put_all(array(
 			'C_NEXT_NEWS' => !empty($next_news['id']),
 			'C_EDIT' => $auth_edit,
@@ -154,7 +155,7 @@ if (!empty($idnews)) // On affiche la news correspondant à l'id envoyé.
 			'FEED_MENU' => Feed::get_feed_menu(FEED_URL . '&amp;cat=' . $news['idcat']),
 			'U_CAT' => $news['idcat'] > 0 ? 'news' . url('.php?cat=' . $news['idcat'], '-' . $news['idcat'] . '+'  . Url::encode_rewrite($NEWS_CAT[$news['idcat']]['name']) . '.php') : '',
 			'U_LINK' => 'news' . url('.php?id=' . $news['id'], '-' . $news['idcat'] . '-' . $news['id'] . '+' . Url::encode_rewrite($news['title']) . '.php'),
-			'U_COM' => $NEWS_CONFIG['activ_com'] ? '<a href="'. PATH_TO_ROOT .'/news/news' . url('.php?id=' . $idnews . '&amp;com=0', '-' . $row['idcat'] . '-' . $idnews . '+' . Url::encode_rewrite($news['title']) . '.php?com=0') .'">'. CommentsService::get_number_and_lang_comments($comments_topic) . '</a>' : '',
+			'U_COM' => $NEWS_CONFIG['activ_com'] ? '<a href="'. PATH_TO_ROOT .'/news/news' . url('.php?id=' . $idnews . '&amp;com=0', '-' . $row['idcat'] . '-' . $idnews . '+' . Url::encode_rewrite($news['title']) . '.php?com=0') .'">'. CommentsService::get_number_and_lang_comments('news', $idnews) . '</a>' : '',
 			'U_USER_ID' => UserUrlBuilder::profile($news['user_id'])->absolute(),
 			'U_SYNDICATION' => SyndicationUrlBuilder::rss('news', $news['idcat'])->rel(),
 			'U_PREVIOUS_NEWS' => 'news' . url('.php?id=' . $previous_news['id'], '-0-' . $previous_news['id'] . '+' . Url::encode_rewrite($previous_news['title']) . '.php'),

@@ -101,6 +101,11 @@ class NewsExtensionPointProvider extends ExtensionPointProvider
 	{
 		return new NewsHomePageExtensionPoint();
 	}
+	
+	public function comments()
+	{
+		return new NewsComments();
+	}
 
 	private function create_module_map_sections($id_cat, $auth_mode)
 	{
