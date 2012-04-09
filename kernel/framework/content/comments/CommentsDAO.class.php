@@ -134,7 +134,7 @@ class CommentsDAO
 		$comments_user = array();
 		foreach ($comments as $id => $values)
 		{
-			if ($values['user_id'] == $user_id)
+			if ($values['user']['user_id'] == $user_id)
 			{
 				$comments_user[$id] = $values;
 			}
@@ -146,15 +146,15 @@ class CommentsDAO
 	{
 		$comments = self::$comments_cache->get_comments_by_module($module_id, $id_in_module);
 		
-		$comments_visito = array();
+		$comments_visitor = array();
 		foreach ($comments as $id => $values)
 		{
-			if ($values['ip_visitor'] == $ip_visitor)
+			if ($values['visitor']['ip_visitor'] == $ip_visitor)
 			{
-				$comments_visito[$id] = $values;
+				$comments_visitor[$id] = $values;
 			}
 		}
-		return $comments_visito;
+		return $comments_visitor;
 	}
 }
 ?>
