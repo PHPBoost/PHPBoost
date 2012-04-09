@@ -112,5 +112,10 @@ class WikiExtensionPointProvider extends ExtensionPointProvider
 	{
 		return new WikiSearchable();
 	}
+	
+	public function comments()
+	{
+		return new WikiComments();
+	}
 }
 ?>
