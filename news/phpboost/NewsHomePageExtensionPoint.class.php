@@ -170,10 +170,6 @@ class NewsHomePageExtensionPoint implements HomePageExtensionPoint
 
 						$timestamp = new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, $row['timestamp']);
 						$last_release = max($last_release, $row['start']);
-
-						$comments_topic = new CommentsTopic();
-						$comments_topic->set_module_id('news');
-						$comments_topic->set_id_in_module($row['id']);
 		
 						$tpl->assign_block_vars('news', array(
 							'ID' => $row['id'],
@@ -181,7 +177,7 @@ class NewsHomePageExtensionPoint implements HomePageExtensionPoint
 							'U_SYNDICATION' => SyndicationUrlBuilder::rss('news', $row['idcat'])->rel(),
 							'U_LINK' => 'news' . url('.php?id=' . $row['id'], '-' . $row['idcat'] . '-' . $row['id'] . '+' . Url::encode_rewrite($row['title']) . '.php'),
 							'TITLE' => $row['title'],
-							'U_COM' => $NEWS_CONFIG['activ_com'] ? '<a href="'. PATH_TO_ROOT .'/news/news' . url('.php?id=' . $row['id'] . '&amp;com=0', '-' . $row['idcat'] . '-' . $row['id'] . '+' . Url::encode_rewrite($row['title']) . '.php?com=0') .'">'. CommentsService::get_number_and_lang_comments($comments_topic) . '</a>' : '',
+							'U_COM' => $NEWS_CONFIG['activ_com'] ? '<a href="'. PATH_TO_ROOT .'/news/news' . url('.php?id=' . $row['id'] . '&amp;com=0', '-' . $row['idcat'] . '-' . $row['id'] . '+' . Url::encode_rewrite($row['title']) . '.php?com=0') .'">'. CommentsService::get_number_and_lang_comments('news', $row['id']) . '</a>' : '',
 							'C_EDIT' =>  $User->check_auth($NEWS_CONFIG['global_auth'], AUTH_NEWS_MODERATE) || $User->check_auth($NEWS_CONFIG['global_auth'], AUTH_NEWS_WRITE) && $row['user_id'] == $User->get_attribute('user_id'),
 							'C_DELETE' =>  $User->check_auth($NEWS_CONFIG['global_auth'], AUTH_NEWS_MODERATE),
 							'C_IMG' => !empty($row['img']),
