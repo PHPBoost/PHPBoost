@@ -324,9 +324,14 @@ elseif ($create_redirection > 0) //Création d'une redirection
 }
 elseif (isset($_GET['com']) && $idcom > 0) //Affichage des commentaires
 {
+	$comments_topic = new CommentsTopic();
+	$comments_topic->set_module_id('wiki');
+	$comments_topic->set_id_in_module($idcom);
+	$comments_topic->set_url(new Url('/wiki/property.php?idcom=' . $idcom . '&amp;com=%s'));
+	
 	$Template->put_all(array(
 		'C_COMMENTS' => true,
-		'COMMENTS' => display_comments('wiki_articles', $idcom, url('property.php?idcom=' . $idcom . '&amp;com=%s'), 'wiki')
+		'COMMENTS' => CommentsService::display($comments_topic)->render()
 	));
 }
 elseif ($del_article > 0) //Suppression d'un article ou d'une catégorie
