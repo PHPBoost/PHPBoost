@@ -385,6 +385,7 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 					$html_protected_name = $info_pics['name'];
 	
 					$comments_topic->set_id_in_module($info_pics['id']);
+					$comments_topic->set_url(new Url('/gallery/show_pics.php?cat='. $g_idcat .'&id=' . $g_idpics . '&com=0'));
 						
 					//Affichage de l'image et de ses informations.
 					$Template->put_all(array(

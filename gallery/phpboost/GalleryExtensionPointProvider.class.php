@@ -121,5 +121,10 @@ class GalleryExtensionPointProvider extends ExtensionPointProvider
 	{
 		return new GalleryHomePageExtensionPoint();
 	}
+	
+	public function comments()
+	{
+		return new GalleryComments();
+	}
 }
 ?>
