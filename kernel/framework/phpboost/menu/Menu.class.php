@@ -55,37 +55,37 @@ abstract class Menu
 	 * @access protected
 	 * @var int the element identifier, only used by the service
 	 */
-    protected $id = 0;
+    public $id = 0;
 	/**
 	 * @access protected
 	 * @var string the Menu title
 	 */
-    protected $title = '';
+    public $title = '';
     /**
 	 * @access protected
 	 * @var int[string] Represents the Menu authorisations array
 	 */
-    protected $auth = null;
+    public $auth = null;
     /**
 	 * @access protected
 	 * @var bool true if the Menu is used
 	 */
-    protected $enabled = self::MENU_NOT_ENABLED;
+    public $enabled = self::MENU_NOT_ENABLED;
     /**
 	 * @access protected
 	 * @var int The Menu block position
 	 */
-    protected $block = self::BLOCK_POSITION__NOT_ENABLED;
+    public $block = self::BLOCK_POSITION__NOT_ENABLED;
     /**
 	 * @access protected
 	 * @var int The Menu position on the website
 	 */
-    protected $position = -1;
+    public $position = -1;
     /**
 	 * @access protected
 	 * @var Array<Filter> The filter list
 	 */
-    protected $filters = array();
+    public $filters = array();
     
     
     /**

@@ -45,22 +45,22 @@ abstract class LinksMenuElement extends Menu
 	 * @access protected
 	 * @var string the LinksMenuElement url
 	 */
-	protected $url = '';
+	public $url = '';
 	/**
 	 * @access protected
 	 * @var string the image url. Could be relative to the website root or absolute
 	 */
-	protected $image = '';
+	public $image = '';
 	/**
 	 * @access protected
 	 * @var int Menu's uid
 	 */
-	protected $uid = null;
+	public $uid = null;
 	/**
 	 * @access protected
 	 * @var int Menu's depth
 	 */
-	protected $depth = 0;
+	public $depth = 0;
 
 	/**
 	 * @desc Build a LinksMenuElement object
