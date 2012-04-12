@@ -3,7 +3,7 @@
  *                             BooleanHelper.class.php
  *                            -------------------
  *   begin                : September 09, 2011
- *   copyright            : (C) 2011 Kévin MASSY
+ *   copyright            : (C) 2011 Kevin MASSY
  *   email                : soldier.weasel@gmail.com
  *
  *
@@ -27,7 +27,7 @@
 
 /**
  * @desc Boolean helper
- * @author Kévin MASSY <soldier.weasel@gmail.com>
+ * @author Kevin MASSY <soldier.weasel@gmail.com>
  * @package {@package}
  */
 class BooleanHelper

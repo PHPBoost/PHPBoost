@@ -3,7 +3,7 @@
  *                      AdminThemeDeleteController.class.php
  *                            -------------------
  *   begin                : April 21, 2011
- *   copyright            : (C) 2011 Kévin MASSY
+ *   copyright            : (C) 2011 Kevin MASSY
  *   email                : soldier.weasel@gmail.com
  *
  *

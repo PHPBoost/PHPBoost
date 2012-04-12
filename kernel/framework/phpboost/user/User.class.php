@@ -3,7 +3,7 @@
  *                       User.class.php
  *                            -------------------
  *   begin                : March 31, 2012
- *   copyright            : (C) 2012 Kévin MASSY
+ *   copyright            : (C) 2012 Kevin MASSY
  *   email                : soldier.weasel@gmail.com
  *
  *
@@ -30,7 +30,7 @@ define('GROUP_TYPE', 2);
 define('USER_TYPE', 3);
 
 /**
- * @author Kévin MASSY <soldier.weasel@gmail.com>
+ * @author Kevin MASSY <soldier.weasel@gmail.com>
  * @package {@package}
  */
 class User

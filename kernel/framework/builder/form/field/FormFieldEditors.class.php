@@ -25,7 +25,7 @@
  ###################################################*/
 
 /**
- * @author Kévin MASSY <soldier.weasel@gmail.com>
+ * @author Kevin MASSY <soldier.weasel@gmail.com>
  * @desc
  * @package {@package}
  */

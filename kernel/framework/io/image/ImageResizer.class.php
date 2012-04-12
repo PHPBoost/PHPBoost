@@ -3,7 +3,7 @@
  *		                   ImageResizer.class.php
  *                            -------------------
  *   begin                : July 11, 2010
- *   copyright            : (C) 2010 Kévin MASSY
+ *   copyright            : (C) 2010 Kevin MASSY
  *   email                : soldier.weasel@gmail.com
  *
  *
@@ -25,7 +25,7 @@
  *
  ###################################################*/
  /*
- * @author Kévin MASSY <soldier.weasel@gmail.com>
+ * @author Kevin MASSY <soldier.weasel@gmail.com>
  * @desc This class allows you to resize images easily.
  * @package {@package}
  */

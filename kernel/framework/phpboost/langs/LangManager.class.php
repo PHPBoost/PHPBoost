@@ -3,7 +3,7 @@
  *                             LangManager.class.php
  *                            -------------------
  *   begin                : January 19, 2012
- *   copyright            : (C) 2012 Kévin MASSY
+ *   copyright            : (C) 2012 Kevin MASSY
  *   email                : soldier.weasel@gmail.com
  *
  *
@@ -27,7 +27,7 @@
  */
 
  /**
- * @author Kévin MASSY <soldier.weasel@gmail.com>
+ * @author Kevin MASSY <soldier.weasel@gmail.com>
  * @package {@package}
  */
 class LangManager

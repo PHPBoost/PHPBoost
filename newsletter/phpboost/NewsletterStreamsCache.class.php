@@ -26,7 +26,7 @@
  ###################################################*/
 
 /**
- * @author Kévin MASSY <soldier.weasel@gmail.com>
+ * @author Kevin MASSY <soldier.weasel@gmail.com>
  */
 class NewsletterStreamsCache implements CacheData
 {
