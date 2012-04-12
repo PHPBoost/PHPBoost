@@ -79,3 +79,4 @@ class SmileysCache implements CacheData
 		CacheManager::invalidate('kernel', 'smileys');
 	}
 }
+?>

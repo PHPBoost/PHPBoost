@@ -36,5 +36,4 @@ class MySQLUnexistingDatabaseException extends UnexistingDatabaseException
         parent::__construct('(ERRNO ' . mysql_errno() . ') ' . mysql_error());
     }
 }
-
 ?>

@@ -134,5 +134,4 @@ class NewsletterSubscribersListController extends ModuleController
 		return $response;
 	}
 }
-
 ?>

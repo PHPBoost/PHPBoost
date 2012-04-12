@@ -136,5 +136,4 @@ class MySQLSelectQueryResult extends AbstractSelectQueryResult
 		return $this->index == 0;
 	}
 }
-
 ?>

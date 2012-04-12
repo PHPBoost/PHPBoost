@@ -99,5 +99,4 @@ abstract class AbstractPHPMailerMailService implements MailService
 		return self::$regex;
 	}
 }
-
 ?>

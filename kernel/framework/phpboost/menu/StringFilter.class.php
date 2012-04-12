@@ -35,5 +35,4 @@ class StringFilter extends MenuFilter {
 		return strpos($input, $this->pattern) !== false;
 	}
 }
-
 ?>

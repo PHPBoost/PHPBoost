@@ -111,5 +111,4 @@ class Path
 		return str_replace('\\', '/', $path);
 	}
 }
-
 ?>

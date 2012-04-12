@@ -38,5 +38,4 @@ class PropertyNotFoundException extends Exception
 		parent::__construct('The property "' . $property_name . '" was not found');
 	}
 }
-
 ?>

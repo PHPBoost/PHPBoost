@@ -257,5 +257,4 @@ class Cache
 	*/
 	var $files = array('menus');
 }
-
 ?>

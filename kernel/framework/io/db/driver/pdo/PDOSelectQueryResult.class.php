@@ -132,5 +132,4 @@ class PDOSelectQueryResult extends AbstractSelectQueryResult
 		return $this->iterator === null;
 	}
 }
-
 ?>

@@ -51,5 +51,4 @@ class StringOutputStream
 		return $this->stream;
 	}
 }
-
 ?>

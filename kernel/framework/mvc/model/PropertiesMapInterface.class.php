@@ -39,5 +39,4 @@ interface PropertiesMapInterface
      */
     function get_raw_value($properties_list);
 }
-
 ?>

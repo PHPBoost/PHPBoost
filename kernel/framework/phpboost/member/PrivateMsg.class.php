@@ -204,5 +204,4 @@ class PrivateMsg
 		return $pm_max_id;
 	}
 }
-
 ?>

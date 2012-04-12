@@ -79,5 +79,4 @@ class StringVars
         return $parameter;
     }
 }
-
 ?>

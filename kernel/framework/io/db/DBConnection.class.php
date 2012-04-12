@@ -70,5 +70,4 @@ interface DBConnection
      */
     function rollback();
 }
-
 ?>

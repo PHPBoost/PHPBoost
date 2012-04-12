@@ -321,5 +321,4 @@ abstract class SQLDAO implements DAO
 		return $left_joins;
 	}
 }
-
 ?>

@@ -575,5 +575,4 @@ class ImagesStats
 		imagedestroy($thumbtail);
 	}
 }
-
 ?>

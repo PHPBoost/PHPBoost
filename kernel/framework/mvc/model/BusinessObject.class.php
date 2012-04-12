@@ -49,5 +49,4 @@ abstract class BusinessObject implements PropertiesMapInterface
         return $properties_map;
     }
 }
-
 ?>

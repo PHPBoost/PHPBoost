@@ -37,5 +37,4 @@ class NotASingleRowFoundException extends SQLQuerierException
         $query_result->get_query() . '<br />' . var_export($query_result->get_parameters(), true));
     }
 }
-
 ?>

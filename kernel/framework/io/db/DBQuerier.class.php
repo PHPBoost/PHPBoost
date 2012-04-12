@@ -225,5 +225,4 @@ class DBQuerier implements SQLQuerier
 		return (int) $row[0];
 	}
 }
-
 ?>

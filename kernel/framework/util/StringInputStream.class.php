@@ -142,5 +142,4 @@ class StringInputStream
 		return $this->stream;
 	}
 }
-
 ?>

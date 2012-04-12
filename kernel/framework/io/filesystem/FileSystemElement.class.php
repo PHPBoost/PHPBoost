@@ -135,5 +135,4 @@ abstract class FileSystemElement
 	 */
 	public abstract function delete();
 }
-
 ?>

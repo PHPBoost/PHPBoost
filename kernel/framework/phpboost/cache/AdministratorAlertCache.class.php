@@ -78,3 +78,4 @@ class AdministratorAlertCache implements CacheData
 		CacheManager::invalidate('kernel', 'administrator-alert');
 	}
 }
+?>

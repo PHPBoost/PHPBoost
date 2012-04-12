@@ -195,5 +195,4 @@ class MemberSanctionManager
 		return $row['user_mail'];
 	}
 }
-
 ?>

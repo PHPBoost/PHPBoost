@@ -80,3 +80,4 @@ class RanksCache implements CacheData
 		CacheManager::invalidate('kernel', 'ranks');
 	}
 }
+?>

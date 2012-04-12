@@ -142,5 +142,4 @@ class AdminNewsletterAddStreamController extends AdminModuleController
 		NewsletterStreamsCache::invalidate();
 	}
 }
-
 ?>

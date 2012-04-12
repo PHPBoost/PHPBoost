@@ -79,5 +79,4 @@ class JoinMappingModel
 		return $this->fields;
 	}
 }
-
 ?>

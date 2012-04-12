@@ -205,5 +205,4 @@ class Folder extends FileSystemElement
 		}
 	}
 }
-
 ?>

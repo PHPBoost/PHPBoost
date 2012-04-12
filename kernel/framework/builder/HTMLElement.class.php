@@ -69,5 +69,4 @@ abstract class HTMLElement
 		$this->css_classes = $classes;
 	}
 }
-
 ?>

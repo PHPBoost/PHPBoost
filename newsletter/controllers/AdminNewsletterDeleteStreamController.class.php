@@ -59,5 +59,4 @@ class AdminNewsletterDeleteStreamController extends AdminModuleController
 		return NewsletterStreamsCache::load()->get_existed_stream($id);
 	}
 }
-
 ?>

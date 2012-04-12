@@ -330,5 +330,4 @@ class Event
 		$this->must_regenerate_cache = false;
 	}
 }
-
 ?>

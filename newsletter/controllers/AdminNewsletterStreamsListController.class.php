@@ -113,5 +113,4 @@ class AdminNewsletterStreamsListController extends AdminModuleController
 		$this->user = AppContext::get_current_user();
 	}
 }
-
 ?>

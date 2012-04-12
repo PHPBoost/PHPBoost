@@ -235,5 +235,4 @@ abstract class Menu
     public function set_filters($filters) { $this->filters = $filters; }
     
 }
-
 ?>

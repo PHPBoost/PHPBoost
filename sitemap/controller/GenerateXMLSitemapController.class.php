@@ -50,3 +50,4 @@ class GenerateXMLSitemapController extends AdminController
 		return new AdminSitemapResponse($view);
 	}
 }
+?>

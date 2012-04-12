@@ -63,5 +63,4 @@ class HomeAddNewsletterController extends ModuleController
 		return $response;
 	}	
 }
-
 ?>

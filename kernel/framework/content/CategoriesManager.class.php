@@ -887,5 +887,4 @@ class CategoriesManager
 		}
 	}
 }
-
 ?>

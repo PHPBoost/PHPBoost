@@ -80,5 +80,4 @@ class MessageHelper
 		return $tpl;
 	}
 }
-
 ?>

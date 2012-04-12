@@ -78,5 +78,4 @@ class PDOQuerier extends AbstractSQLQuerier
 		}
 	}
 }
-
 ?>

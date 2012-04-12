@@ -186,5 +186,4 @@ class AdministratorAlert extends Event
         }
     }
 }
-
 ?>

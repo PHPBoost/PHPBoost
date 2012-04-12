@@ -90,3 +90,4 @@ class ThemesCssFilesCache implements CacheData
 		CacheManager::invalidate('kernel', 'themes-css-files');
 	}
 }
+?>

@@ -245,5 +245,4 @@ class AdministratorAlertService
 		return AdministratorAlertCache::load()->get_all_alerts_number();
 	}
 }
-
 ?>

@@ -129,5 +129,4 @@ class ModuleMap extends SitemapSection
 		return $this->module_id;
 	}
 }
-
 ?>

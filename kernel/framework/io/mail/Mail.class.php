@@ -197,5 +197,4 @@ class Mail
 		return $this->is_html;
 	}
 }
-
 ?>

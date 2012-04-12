@@ -43,5 +43,4 @@ interface QueryResult
 	 */
 	function get_parameters();
 }
-
 ?>

@@ -72,5 +72,4 @@ class SQLQueryVars extends StringVars
         }
     }
 }
-
 ?>

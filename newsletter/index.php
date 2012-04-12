@@ -52,5 +52,4 @@ $url_controller_mappers = array(
 	new UrlControllerMapper('NewsletterHomeController', '`^(?:/([a-z]+))?/?$`', array('page')),
 );
 DispatchManager::dispatch($url_controller_mappers);
-
 ?>

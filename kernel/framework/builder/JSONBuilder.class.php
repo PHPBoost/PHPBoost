@@ -92,5 +92,4 @@ class JSONBuilder
 		return false;
 	}
 }
-
 ?>

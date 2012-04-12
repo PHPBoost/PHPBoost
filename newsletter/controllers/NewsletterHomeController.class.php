@@ -44,5 +44,4 @@ class NewsletterHomeController extends ModuleController
 		return $response;
 	}
 }
-
 ?>
