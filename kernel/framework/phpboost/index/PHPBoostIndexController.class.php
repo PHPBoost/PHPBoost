@@ -32,22 +32,27 @@ class PHPBoostIndexController extends AbstractController
 		$general_config = GeneralConfig::load();
 		
 		$other_home_page = $general_config->get_other_home_page();
-		if (!empty($other_home_page))
-		{
-			AppContext::get_response()->redirect($other_home_page);
-		}
-		
-		$module = AppContext::get_extension_provider_service()->get_provider($general_config->get_module_home_page());
-		if ($module->has_extension_point(HomePageExtensionPoint::EXTENSION_POINT))
-		{
-			$home_page = $module->get_extension_point(HomePageExtensionPoint::EXTENSION_POINT)->get_home_page();
-		}
-		else
+		if (strpos($other_home_page, '/index.php') !== false)
 		{
 			AppContext::get_response()->redirect(UserUrlBuilder::home());
 		}
-		
-		return $this->build_response($home_page->get_view(), $home_page->get_title());
+		else if (!empty($other_home_page))
+		{
+			AppContext::get_response()->redirect($other_home_page);
+		}
+		else
+		{
+			$module = AppContext::get_extension_provider_service()->get_provider($general_config->get_module_home_page());
+			if ($module->has_extension_point(HomePageExtensionPoint::EXTENSION_POINT))
+			{
+				$home_page = $module->get_extension_point(HomePageExtensionPoint::EXTENSION_POINT)->get_home_page();
+				return $this->build_response($home_page->get_view(), $home_page->get_title());
+			}
+			else
+			{
+				AppContext::get_response()->redirect(UserUrlBuilder::home());
+			}
+		}
 	}
 	
 	private function build_response($view, $title)
