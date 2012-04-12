@@ -34,11 +34,13 @@ class ThemesConfigurationKernelUpdateVersion extends KernelUpdateVersion
 
 	public function execute()
 	{
-		$results = PersistenceContext::get_querier()->select_rows(PREFIX . 'themes', array('*'));
+		ThemeManager::install('base', array(), true);
+		/*$results = PersistenceContext::get_querier()->select_rows(PREFIX . 'themes', array('*'));
 		foreach ($results as $row)
 		{
 			$this->insert_to_new_configuration($row['theme'], $this->build_authorizations($row['secure']), (bool)$row['activ']);
 		}
+		*/
 		$this->drop_table();
 	}
 	

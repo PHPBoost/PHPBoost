@@ -176,7 +176,7 @@ class UpdateDBConfigController extends UpdateController
 			$this->view->put('ERROR', $this->error);
 		}
 		$step_title = $this->lang['step.dbConfig.title'];
-		$response = new UpdateDisplayResponse(2, $step_title, $this->view);
+		$response = new UpdateDisplayResponse(3, $step_title, $this->view);
 		return $response;
 	}
 }

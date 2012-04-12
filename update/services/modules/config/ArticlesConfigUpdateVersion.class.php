@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                           NewsConfigUpdateVersion.class.php
+ *                           ArticlesConfigUpdateVersion.class.php
  *                            -------------------
  *   begin                : April 12, 2012
  *   copyright            : (C) 2012 Kevin MASSY
@@ -25,20 +25,20 @@
  *
  ###################################################*/
 
-class NewsConfigUpdateVersion extends ConfigUpdateVersion
+class ArticlesConfigUpdateVersion extends ConfigUpdateVersion
 {
 	public function __construct()
 	{
-		parent::__construct('news', false);
+		parent::__construct('articles', false);
 	}
 
 	protected function build_new_config()
 	{
 		$config = $this->get_old_config();
+
+		$config['global_auth'] = array('r-1' => 1, 'r0' => 3, 'r1' => 7);
 		
-		$config['global_auth'] = array('r-1' => 1, 'r0' => 3, 'r1' => 15);
-		
-		$this->querier->update(PREFIX . 'configs', array('value' => serialize($config)), 'WHERE name = :name', array('name' => 'news'));
+		$this->querier->update(PREFIX . 'configs', array('value' => serialize($config)), 'WHERE name = :name', array('name' => 'articles'));
 		
 		return true;
 	}

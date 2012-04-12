@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                           NewsConfigUpdateVersion.class.php
+ *                       LinksMenusKernelUpdateVersion.class.php
  *                            -------------------
- *   begin                : April 12, 2012
+ *   begin                : April 07, 2012
  *   copyright            : (C) 2012 Kevin MASSY
  *   email                : soldier.weasel@gmail.com
  *
@@ -25,22 +25,27 @@
  *
  ###################################################*/
 
-class NewsConfigUpdateVersion extends ConfigUpdateVersion
+class LinksMenusKernelUpdateVersion extends KernelUpdateVersion
 {
+	private $querier;
+	private $db_utils;
+	
 	public function __construct()
 	{
-		parent::__construct('news', false);
+		parent::__construct('links-menus');
+		$this->querier = PersistenceContext::get_querier();
 	}
-
-	protected function build_new_config()
+	
+	public function execute()
 	{
-		$config = $this->get_old_config();
-		
-		$config['global_auth'] = array('r-1' => 1, 'r0' => 3, 'r1' => 15);
-		
-		$this->querier->update(PREFIX . 'configs', array('value' => serialize($config)), 'WHERE name = :name', array('name' => 'news'));
-		
-		return true;
+		$this->querier->delete(PREFIX .'menus', 'WHERE class=:type', array('type' => 'linksmenu'));
+		/*
+		$result = $this->querier->select_rows(PREFIX .'menus', array('*'), 'WHERE class=:type', array('type' => 'linksmenu'));
+		while ($row = $result->fetch())
+		{
+			
+		}
+		*/
 	}
 }
 ?>

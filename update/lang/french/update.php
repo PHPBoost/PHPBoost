@@ -122,26 +122,45 @@ $lang = array(
 	'step.execute.explanation' => 'Cette étape va convertir votre site PHPBoost 3.0 vers PHPBoost 4.0.
 	<br /><br />
 	Attention cette étape est irréversible, veuillez par précaution sauvegarder votre base de données au préalable !',
-
-//configuraton du site
-    'step.websiteConfig.title' => 'Configuration du serveur',
-	'websiteConfig' => 'Configuration du site',
-	'websiteConfig.explanation' => '<p>La configuration de base du site va être créée dans cette étape afin de permettre à PHPBoost de fonctionner. Sachez cependant que toutes les données que vous allez rentrer seront ultérieurement modifiables dans le panneau d\'administration dans la rubrique configuration du site. Vous pourrez dans ce même panneau renseigner davantage d\'informations facultatives à propos de votre site.</p>',
-	'website.yours' => 'Votre site',
-	'website.host' => 'Adresse du site :',
-	'website.host.explanation' => 'De la forme http://www.phpboost.com',
-	'website.path' => 'Chemin de PHPBoost :',
-	'website.path.explanation' => 'Vide si votre site est à la racine du serveur, de la forme /dossier sinon',
-	'website.name' => 'Nom du site',
-    'website.description' => 'Description du site',
-    'website.description.explanation' => '(facultatif) Utile pour le référencement dans les moteurs de recherche',
-    'website.metaKeywords' => 'Mots clés du site',
-    'website.metaKeywords.explanation' => '(facultatif) A rentrer séparés par des virgules, ils servent au référencement dans les moteurs de recherche',
-	'website.timezone' => 'Fuseau horaire du site',
-	'website.timezone.explanation' => 'La valeur par défaut est celle correspondant à la localisation de votre serveur. Pour la France, il s\'agit de GMT + 1. Vous pourrez changer cette valeur par la suite dans le panneau d\'administration.',
-	'website.host.required' => 'Vous devez entrer l\'adresse de votre site !',
-	'website.name.required' => 'Vous devez entrer le nom de votre site !',
-	'website.host.warning' => 'L\'adresse du site que vous avez rentrée ne correspond pas à celle détectée par le serveur. Souhaitez vous vraiment choisir cette adresse ?',
-	'website.path.warning' => 'Le chemin du site sur le serveur que vous avez rentrée ne correspond pas à celle détectée par le serveur. Souhaitez vous vraiment choisir ce chemin ?',
+	
+	'finish.message' => '<fieldset>
+                            <legend>PHPBoost est désormais mis à jour!</legend>
+                            <p class="success">La mise à jour de PHPBoost s\'est déroulée avec succès. L\'équipe PHPBoost vous remercie de lui avoir fait confiance et est heureuse de vous compter parmi ses utilisateurs.</p>
+                            <p>Nous vous conseillons de vous tenir au courant de l\'évolution de PHPBoost via le site de la communauté francophone, <a href="http://www.phpboost.com">www.phpboost.com</a>. Vous serez automatiquement averti dans le panneau d\'administration de l\'arrivée de nouvelles mises à jour. Il est fortement conseillé de tenir votre système à jour afin de profiter des dernières nouveautés et de corriger les éventuelles failles ou erreurs.</p>
+                            <p class="warning">Par mesure de sécurité nous vous conseillons fortement de supprimer le dossier install et tout ce qu\'il contient, des personnes mal intentionnées pourraient relancer le script d\'installation et écraser certaines de vos données !</p>
+                            <p>N\'oubliez pas la <a href="http://www.phpboost.com/wiki/wiki.php">documentation</a> qui vous guidera dans l\'utilisation de PHPBoost ainsi que la <a href="http://www.phpboost.com/faq/faq.php"><acronym title="Foire Aux Questions">FAQ</acronym></a> qui répond aux questions les plus fréquentes.</p>
+                            <p>En cas de problème, rendez-vous sur le <a href="http://www.phpboost.com/forum/index.php">forum du support de PHPBoost</a>.</p>
+                        </fieldset>
+                        <fieldset>
+                            <legend>Remerciements</legend>
+                            <h2>Membres de la communauté</h2>
+                            <p>Merci à tous les membres de la communauté qui nous encouragent au quotidien et contribuent à la qualité du logiciel que ce soit en suggérant des nouvelles fonctionnalités ou en signalant des dysfonctionnements, ce qui permet d\'aboutir entre autres à une version 4.0 stable et efficace.</p>
+                            <p>Merci aux membres des équipes de PHPBoost et particulièrement à <strong>soupaloignon</strong> de l\'équipe communication, <strong>Ptithom</strong>, <strong>aiglobulles</strong>, <strong>55 Escape</strong> et <strong>Micman</strong> pour la documentation, <strong>Schyzo</strong> pour les graphismes, <strong>DaaX</strong>, <strong>Alain91</strong> et <strong>julienseth78</strong> de l\'équipe de développement de modules et <strong>benflovideo</strong> pour la modération de la communauté.</p>
+                            <h2>Projets</h2>
+                            <p>PHPBoost utilise différents outils afin d\'élargir ses fonctionnalités sans augmenter trop le temps de développement. Ces outils sont tous libres, distribués sous la licence GNU/GPL pour la plupart.</p>
+                            <ul>
+                                <li><a href="http://notepad-plus.sourceforge.net">Notepad++</a> : Editeur de texte puissant très utilisé pour le développement de PHPBoost.</li>
+                                <li><a href="http://www.eclipse.org/pdt/">Eclipse <acronym title="PHP Development Tools">PDT</acronym></a> : <acronym title="Integrated Development Environment">IDE</acronym> PHP (outil de développement PHP) basé sur Eclipse.</li>
+                                <li><a href="http://tango.freedesktop.org/Tango_Desktop_Project">Tango Desktop Project</a> : Ensemble d\'icônes diverses utilisées sur l\'ensemble de PHPBoost.</li>
+                                <li><a href="http://www.phpconcept.net/pclzip/">PCLZIP</a> : Librairie permettant de travailler sur des archives au format Zip.</li>
+                                <li><a href="http://www.xm1math.net/phpmathpublisher/index_fr.html">PHPMathPublisher</a> : Ensemble de fonctions permettant de mettre en forme des formules mathématiques à partir d\'une syntaxe proche de celle du <a href="http://fr.wikipedia.org/wiki/LaTeX">LaTeX</a>.</li>
+                                <li><a href="http://tinymce.moxiecode.com/">TinyMCE</a> : Editeur <acronym title="What You See Is What You Get">WYSIWYG</acronym> permettant la mise en page à la volée.</li>
+                                <li><a href="http://qbnz.com/highlighter/">GeSHi</a> : Colorateur de code source dans de nombreux langages informatiques.</li>
+                                <li><a href="http://script.aculo.us/">script.aculo.us</a> : Framework Javascript et <acronym title="Asynchronous Javascript And XML">AJAX</acronym></li>
+                                <li><a href="http://www.alsacreations.fr/mp3-dewplayer.html">Dewplayer</a> : lecteur audio au format flash</li>
+                                <li><a href="http://flowplayer.org">Flowplayer</a> : lecteur vidéo au format flash</li>
+                            </ul>
+                        </fieldset>
+                        <fieldset>
+                            <legend>Crédits</legend>
+                            <ul>
+                                <li><strong>Régis VIARRE</strong> <em>(alias CrowkaiT)</em>, fondateur du projet PHPBoost et développeur retraité</li>
+                                <li><strong>Benoît SAUTEL</strong> <em>(alias ben.popeye)</em>, développeur retraité</li>
+                                <li><strong>Loic ROUCHON</strong> <em>(alias horn)</em>, développeur retraité</li>
+                                <li><strong>Kevin MASSY</strong> <em>(alias ReidLos)</em>, développeur</li>
+                            </ul>
+                        </fieldset>',
+	'site.index' => 'Aller à l\'accueil du site',
+	'admin.index' => 'Aller dans le panneau d\'administration'
 );
 ?>

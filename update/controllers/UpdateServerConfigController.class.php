@@ -127,7 +127,7 @@ class UpdateServerConfigController extends InstallController
 	private function create_response()
 	{
 		$step_title = $this->lang['step.server.title'];
-		$response = new UpdateDisplayResponse(1, $step_title, $this->view);
+		$response = new UpdateDisplayResponse(2, $step_title, $this->view);
 		return $response;
 	}
 }

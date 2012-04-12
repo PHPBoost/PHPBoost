@@ -1,10 +1,10 @@
 <?php
 /*##################################################
- *                           NewsConfigUpdateVersion.class.php
+ *                         UpdateFinishController.class.php
  *                            -------------------
- *   begin                : April 12, 2012
- *   copyright            : (C) 2012 Kevin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   begin                : October 04 2010
+ *   copyright            : (C) 2010 Loic Rouchon
+ *   email                : loic.rouchon@phpboost.com
  *
  *
  ###################################################
@@ -25,22 +25,24 @@
  *
  ###################################################*/
 
-class NewsConfigUpdateVersion extends ConfigUpdateVersion
+class UpdateFinishController extends UpdateController
 {
-	public function __construct()
+	public function execute(HTTPRequest $request)
 	{
-		parent::__construct('news', false);
+        parent::load_lang($request);
+		$view = new FileTemplate('update/finish.tpl');
+		return $this->create_response($view);
 	}
 
-	protected function build_new_config()
+	/**
+	 * @param Template $view
+	 * @return InstallDisplayResponse
+	 */
+	private function create_response(View $view)
 	{
-		$config = $this->get_old_config();
-		
-		$config['global_auth'] = array('r-1' => 1, 'r0' => 3, 'r1' => 15);
-		
-		$this->querier->update(PREFIX . 'configs', array('value' => serialize($config)), 'WHERE name = :name', array('name' => 'news'));
-		
-		return true;
+        $step_title = $this->lang['step.list.end'];
+		$response = new UpdateDisplayResponse(5, $step_title, $view);
+		return $response;
 	}
 }
 ?>

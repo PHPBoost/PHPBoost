@@ -58,7 +58,7 @@ class UpdateDisplayResponse extends AbstractResponse
             'C_HAS_NEXT_STEP' => false,
             'PROGRESSION' => floor(100 * $this->current_step / $this->nb_steps)
 		));
-
+		
 		parent::__construct($env, $this->full_view);
 	}
 
@@ -107,7 +107,6 @@ class UpdateDisplayResponse extends AbstractResponse
 			array('name' => $this->lang['step.list.server'], 'img' => 'config.png'),
 			array('name' => $this->lang['step.list.database'], 'img' => 'database.png'),
 			array('name' => $this->lang['step.list.execute'], 'img' => 'database.png'),
-			array('name' => $this->lang['step.list.website'], 'img' => 'advanced_config.png'),
 			array('name' => $this->lang['step.list.end'], 'img' => 'end.png')
 		);
 		$this->nb_steps = count($steps);
