@@ -160,6 +160,8 @@ class UserRegistrationController extends AbstractController
 		UserRegistrationService::send_email_confirmation($user_id, $user->get_email(), $user_authentification->get_login(), $user_authentification->get_login(), $this->form->get_value('password'));
 		
 		UserRegistrationService::connect_user($user_id, $user_authentification->get_password_hashed());
+		
+		StatsCache::invalidate();
 	}
 	
 	private function confirm_registration_message()

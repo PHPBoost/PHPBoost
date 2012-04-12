@@ -66,5 +66,4 @@ abstract class AbstractGraphicalEnvironment implements GraphicalEnvironment
 		AppContext::get_session()->check($page_title);
 	}
 }
-
 ?>
