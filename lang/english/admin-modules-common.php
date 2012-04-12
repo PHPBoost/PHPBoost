@@ -30,6 +30,12 @@
  ####################################################
 $lang = array();
 
+//Title
+$lang['modules.module_management'] = 'Module management';
+$lang['modules.add_module_page_title'] = 'Add a module';
+$lang['modules.update_module'] = 'Update a module';
+$lang['modules.delete_module'] = 'Delete or deactivate a module';
+
 //Upload
 $lang['modules.upload_module'] = 'Install a module';
 $lang['modules.upload_description'] = 'The file must be uploaded as a zip or gzip archive';
