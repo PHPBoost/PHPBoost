@@ -46,12 +46,12 @@ class LinksMenu extends LinksMenuElement
 	* @access protected
 	* @var string menu's type
 	*/
-    protected $type;
+    public $type;
     /**
 	* @access protected
 	* @var LinksMenuElement[] Direct menu children list
 	*/
-    protected $elements = array();
+    public $elements = array();
 
     /**
 	* @desc Constructor
