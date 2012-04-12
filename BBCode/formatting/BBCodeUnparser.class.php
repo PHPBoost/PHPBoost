@@ -287,10 +287,8 @@ class BBCodeUnparser extends ContentFormattingUnparser
 	 */
 	protected function unparse_wikipedia_link($matches)
 	{
-		global $LANG;
-
 		//On est dans la langue par défaut
-		if ($matches[1] == $LANG['wikipedia_subdomain'])
+		if ($matches[1] == LangLoader::get_message('wikipedia_subdomain', 'bbcode-common'))
 		{
 			$lang = '';
 		}

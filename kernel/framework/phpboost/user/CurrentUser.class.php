@@ -186,7 +186,7 @@ class CurrentUser extends User
 		{
 			if (is_numeric($idgroup)) //Groupe
 			{
-				if (in_array($idgroup, $this->user_groups))
+				if (in_array($idgroup, $this->groups))
 				{
 					$array_user_auth_groups[$idgroup] = $auth_group;
 				}
