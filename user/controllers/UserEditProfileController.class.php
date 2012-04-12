@@ -47,7 +47,7 @@ class UserEditProfileController extends AbstractController
 		
 		try {
 			$this->user = UserService::get_user('WHERE user_aprob = 1 AND user_id=:id', array('id' => $user_id));
-		} catch (Exception $e) {
+		} catch (RowNotFoundException $e) {
 			$error_controller = PHPBoostErrors::unexisting_member();
 			DispatchManager::redirect($error_controller);
 		}

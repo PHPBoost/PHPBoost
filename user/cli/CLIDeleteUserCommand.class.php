@@ -65,13 +65,13 @@ class CLIDeleteUserCommand implements CLICommand
 		if (!empty($this->id))
 		{
 			$this->show_parameter('--id', $this->id);
-			if(UserService::user_exists('WHERE user_id=:user_id', array('user_id' => $this->id)))
+			try
 			{
 				UserService::delete_account('WHERE user_id=:user_id', array('user_id' => $this->id));
+				StatsCache::invalidate();
 				$this->write_success_message();
 			}
-			else
-			{
+			catch (RowNotFoundException $ex) {
 				$this->write_user_not_exists_message();
 			}
 			exit;
@@ -79,13 +79,13 @@ class CLIDeleteUserCommand implements CLICommand
 		else if (!empty($this->login))
 		{
 			$this->show_parameter('--login', $this->login);
-			if(UserService::user_exists('WHERE login=:login', array('login' => $this->login)))
+			try
 			{
 				UserService::delete_account('WHERE login=:login', array('login' => $this->login));
+				StatsCache::invalidate();
 				$this->write_success_message();
 			}
-			else
-			{
+			catch (RowNotFoundException $ex) {
 				$this->write_user_not_exists_message();
 			}
 			exit;
@@ -93,13 +93,13 @@ class CLIDeleteUserCommand implements CLICommand
 		else if (!empty($this->email))
 		{
 			$this->show_parameter('--email', $this->email);
-			if(UserService::user_exists('WHERE user_mail=:email', array('email' => $this->email)))
+			try
 			{
 				UserService::delete_account('WHERE user_mail=:email', array('email' => $this->email));
+				StatsCache::invalidate();
 				$this->write_success_message();
 			}
-			else
-			{
+			catch (RowNotFoundException $ex) {
 				$this->write_user_not_exists_message();
 			}
 		}

@@ -55,5 +55,4 @@ class SiteNodisplayGraphicalEnvironment extends AbstractGraphicalEnvironment
 		
 	}
 }
-
 ?>

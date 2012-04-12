@@ -66,5 +66,4 @@ class AdminNodisplayGraphicalEnvironment extends AbstractGraphicalEnvironment
 
 	}
 }
-
 ?>
