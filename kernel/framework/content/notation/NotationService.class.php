@@ -3,7 +3,7 @@
  *                              NotationService.class.php
  *                            -------------------
  *   begin                : February 14, 2010
- *   copyright            : (C) 2010 Kévin MASSY
+ *   copyright            : (C) 2010 Kevin MASSY
  *   email                : soldier.weasel@gmail.com
  *
  *
@@ -26,7 +26,7 @@
  ###################################################*/
  
  /**
- * @author Kévin MASSY <soldier.weasel@gmail.com>
+ * @author Kevin MASSY <soldier.weasel@gmail.com>
  * @package {@package}
  */
 class NotationService

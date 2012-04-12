@@ -4,7 +4,7 @@
  *                              install.php
  *                            -------------------
  *   begin                : January 17, 2010
- *   copyright            : (C) 2010 Kévin MASSY
+ *   copyright            : (C) 2010 Kevin MASSY
  *   email                : soldier.weasel@gmail.com
  *
  *

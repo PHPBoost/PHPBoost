@@ -3,7 +3,7 @@
  *                               MemberExtendedFieldsDAO.class.php
  *                            -------------------
  *   begin                : September 2, 2010
- *   copyright            : (C) 2010 Kévin MASSY
+ *   copyright            : (C) 2010 Kevin MASSY
  *   email                : soldier.weasel@gmail.com
  *
  *
@@ -26,7 +26,7 @@
  ###################################################*/
 
  /**
- * @author Kévin MASSY <soldier.weasel@gmail.com>
+ * @author Kevin MASSY <soldier.weasel@gmail.com>
  * @desc The class is responsible for access to the database fields extended.
  * @package {@package}
  */

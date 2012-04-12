@@ -3,7 +3,7 @@
  *                         UpdateDBConfigController.class.php
  *                            -------------------
  *   begin                : March 12, 2012
- *   copyright            : (C) 2012 Kévin MASSY
+ *   copyright            : (C) 2012 Kevin MASSY
  *   email                : soldier.weasel@gmail.com
  *
  *

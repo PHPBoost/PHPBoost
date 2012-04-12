@@ -3,7 +3,7 @@
  *                               FileType.class.php
  *                            -------------------
  *   begin                : August 31, 2011
- *   copyright            : (C) 2011 Kévin MASSY
+ *   copyright            : (C) 2011 Kevin MASSY
  *   email                : soldier.weasel@gmail.com
  *
  *
@@ -27,7 +27,7 @@
 
 /**
  * @package {@package}
- * @author Kévin MASSY <soldier.weasel@gmail.com>
+ * @author Kevin MASSY <soldier.weasel@gmail.com>
  */
 class FileType
 {

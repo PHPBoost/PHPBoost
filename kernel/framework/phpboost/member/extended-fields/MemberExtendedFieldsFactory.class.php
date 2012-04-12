@@ -3,7 +3,7 @@
  *                               MemberExtendedFieldsFactory.class.php
  *                            -------------------
  *   begin                : December 10, 2010
- *   copyright            : (C) 2010 Kévin MASSY
+ *   copyright            : (C) 2010 Kevin MASSY
  *   email                : soldier.weasel@gmail.com
  *
  *
@@ -26,7 +26,7 @@
  ###################################################*/
 
  /**
- * @author Kévin MASSY <soldier.weasel@gmail.com>
+ * @author Kevin MASSY <soldier.weasel@gmail.com>
  * @desc This class is a Factory and return instance class
  * @package {@package}
  */

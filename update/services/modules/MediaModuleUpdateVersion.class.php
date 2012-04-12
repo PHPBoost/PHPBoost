@@ -3,7 +3,7 @@
  *                       MediaModuleUpdateVersion.class.php
  *                            -------------------
  *   begin                : April 06, 2012
- *   copyright            : (C) 2012 Kévin MASSY
+ *   copyright            : (C) 2012 Kevin MASSY
  *   email                : soldier.weasel@gmail.com
  *
  *

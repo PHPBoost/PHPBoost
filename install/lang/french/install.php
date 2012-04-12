@@ -3,7 +3,7 @@
  *                                install.php
  *                            -------------------
  *   begin                : May 30, 2010
- *   copyright            : (C) 2010 Kévin MASSY
+ *   copyright            : (C) 2010 Kevin MASSY
  *   email                : soldier.weasel@gmail.com
  *
  *
@@ -249,7 +249,7 @@ Cordialement l\'équipe PHPBoost.',
                                 <li><strong>Régis VIARRE</strong> <em>(alias CrowkaiT)</em>, fondateur du projet PHPBoost et développeur retraité</li>
                                 <li><strong>Benoît SAUTEL</strong> <em>(alias ben.popeye)</em>, développeur retraité</li>
                                 <li><strong>Loic ROUCHON</strong> <em>(alias horn)</em>, développeur retraité</li>
-                                <li><strong>Kévin MASSY</strong> <em>(alias ReidLos)</em>, développeur</li>
+                                <li><strong>Kevin MASSY</strong> <em>(alias ReidLos)</em>, développeur</li>
                             </ul>
                         </fieldset>',
 	'site.index' => 'Aller à l\'accueil du site',

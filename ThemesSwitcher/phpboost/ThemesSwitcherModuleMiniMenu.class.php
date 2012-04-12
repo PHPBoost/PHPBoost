@@ -3,7 +3,7 @@
  *                        ThemesSwitcherModuleMiniMenu.class.php
  *                            -------------------
  *   begin                : February 22, 2012
- *   copyright            : (C) 2012 Kévin MASSY
+ *   copyright            : (C) 2012 Kevin MASSY
  *   email                : reidlos@phpboost.com
  *
  *
@@ -47,7 +47,7 @@ class ThemesSwitcherModuleMiniMenu extends ModuleMiniMenu
 	
 	    	if (preg_match('`[ a-z0-9_-]{3,20}`i', $switchtheme) && strpos($switchtheme, '\'') === false)
 	    	{
-	    		$user->update_user_theme($switchtheme); //Mise à jour du thème du membre.
+	    		$user->update_theme($switchtheme); //Mise à jour du thème du membre.
 	    		if (QUERY_STRING != '')
 	    		{
 					$query_string = preg_replace('`token=[^&]+`', '', QUERY_STRING);

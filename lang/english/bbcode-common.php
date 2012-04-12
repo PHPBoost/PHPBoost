@@ -3,7 +3,7 @@
  *                           bbcode-common.php
  *                            -------------------
  *   begin                : October 03, 2011
- *   copyright            : (C) 2011 Kévin MASSY
+ *   copyright            : (C) 2011 Kevin MASSY
  *   email                : soldier.weasel@gmail.com
  *
  *

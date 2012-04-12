@@ -3,7 +3,7 @@
  *                               AbstractShare.class.php
  *                            -------------------
  *   begin                : July 06, 2011
- *   copyright            : (C) 2011 Kévin MASSY
+ *   copyright            : (C) 2011 Kevin MASSY
  *   email                : soldier.weasel@gmail.com
  *
  *
@@ -26,7 +26,7 @@
  ###################################################*/
  
  /**
- * @author Kévin MASSY <soldier.weasel@gmail.com>
+ * @author Kevin MASSY <soldier.weasel@gmail.com>
  * @package {@package}
  */
 abstract class AbstractShare implements ShareInterface

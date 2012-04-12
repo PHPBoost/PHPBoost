@@ -3,7 +3,7 @@
  *                           index.php
  *                            -------------------
  *   begin                : March 11, 2011
- *   copyright            : (C) 2010 Kévin MASSY
+ *   copyright            : (C) 2010 Kevin MASSY
  *   email                : soldier.weasel@gmail.com
  *
  *

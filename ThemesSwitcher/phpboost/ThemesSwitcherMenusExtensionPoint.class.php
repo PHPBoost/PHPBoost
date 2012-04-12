@@ -3,7 +3,7 @@
  *                         ThemesSwitcherMenusExtensionPoint.class.php
  *                            -------------------
  *   begin                : February 22, 2012
- *   copyright            : (C) 2012 Kévin MASSY
+ *   copyright            : (C) 2012 Kevin MASSY
  *   email                : reidlos@phpboost.com
  *
  *
