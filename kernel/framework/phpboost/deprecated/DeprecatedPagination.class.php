@@ -189,5 +189,4 @@ class DeprecatedPagination
 		return $this->page;
 	}
 }
-
 ?>

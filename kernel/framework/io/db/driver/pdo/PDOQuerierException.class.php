@@ -42,5 +42,4 @@ class PDOQuerierException extends SQLQuerierException
 		implode('<br />', $infos));
 	}
 }
-
 ?>

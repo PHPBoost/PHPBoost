@@ -114,5 +114,4 @@ class MySQLDBConnection implements DBConnection
 		}
 	}
 }
-
 ?>

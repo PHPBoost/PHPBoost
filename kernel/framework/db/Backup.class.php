@@ -274,5 +274,4 @@ class Backup
 		return $structure;
 	}
 }
-
 ?>

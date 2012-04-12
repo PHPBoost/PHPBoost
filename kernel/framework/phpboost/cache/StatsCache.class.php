@@ -81,3 +81,4 @@ class StatsCache implements CacheData
 		CacheManager::invalidate('kernel', 'stats');
 	}
 }
+?>

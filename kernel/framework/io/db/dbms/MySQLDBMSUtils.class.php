@@ -347,5 +347,4 @@ class MySQLDBMSUtils implements DBMSUtils
 		return $this->platform;
 	}
 }
-
 ?>

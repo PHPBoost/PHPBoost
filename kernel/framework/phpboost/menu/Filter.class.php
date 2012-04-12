@@ -55,5 +55,4 @@ abstract class Filter {
 	
 	abstract function match($input);
 }
-
 ?>

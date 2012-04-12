@@ -79,5 +79,4 @@ class NewsletterMailService
 		return self::$db_querier->count(NewsletterSetup::$newsletter_table_subscribers, 'WHERE id = '. $id_cat .'');
 	}
 }
-
 ?>

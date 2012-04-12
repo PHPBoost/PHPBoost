@@ -122,5 +122,4 @@ class NewsletterEditSubscriberController extends ModuleController
 		return PersistenceContext::get_querier()->count(NewsletterSetup::$newsletter_table_subscribers, "WHERE id = '" . $id . "'") > 0 ? true : false;
 	}
 }
-
 ?>

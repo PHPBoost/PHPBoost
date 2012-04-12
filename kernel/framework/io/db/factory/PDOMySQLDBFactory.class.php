@@ -53,5 +53,4 @@ class PDOMySQLDBFactory implements DBMSFactory
 		return new MySQLQueryTranslator();
 	}
 }
-
 ?>

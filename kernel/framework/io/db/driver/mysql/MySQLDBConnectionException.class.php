@@ -36,5 +36,4 @@ class MySQLDBConnectionException extends DBConnectionException
         parent::__construct($message . '. (ERRNO ' . mysql_errno() . ') ' . mysql_error());
     }
 }
-
 ?>

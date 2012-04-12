@@ -150,5 +150,4 @@ class NewsletterUnSubscribeController extends ModuleController
 		}
 	}
 }
-
 ?>

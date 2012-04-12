@@ -160,5 +160,4 @@ class AdminNewsletterEditStreamController extends AdminModuleController
 		return PersistenceContext::get_querier()->count(NewsletterSetup::$newsletter_table_streams, "WHERE id = '". $id ."'");
 	}
 }
-
 ?>

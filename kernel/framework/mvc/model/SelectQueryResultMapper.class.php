@@ -115,5 +115,4 @@ class SelectQueryResultMapper implements SelectQueryResult
 		return $this->query_result->dispose();
 	}
 }
-
 ?>

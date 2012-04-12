@@ -53,5 +53,4 @@ class MySQLDBFactory implements DBMSFactory
 		return new MySQLQueryTranslator();
 	}
 }
-
 ?>

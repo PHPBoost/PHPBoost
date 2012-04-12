@@ -155,5 +155,4 @@ class DBFactory
 		return self::$factory;
 	}
 }
-
 ?>

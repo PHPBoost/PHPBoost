@@ -72,5 +72,4 @@ class MySQLQuerier extends AbstractSQLQuerier
 		return $resource;
 	}
 }
-
 ?>

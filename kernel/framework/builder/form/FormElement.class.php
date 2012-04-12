@@ -33,5 +33,4 @@ interface FormElement
 {
 	function display();
 }
-
 ?>

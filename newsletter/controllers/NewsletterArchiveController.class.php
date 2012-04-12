@@ -70,5 +70,4 @@ class NewsletterArchiveController extends ModuleController
 		return new SiteNodisplayResponse($view);
 	}
 }
-
 ?>

@@ -62,5 +62,4 @@ class Arrays
 		return $values;
 	}
 }
-
 ?>

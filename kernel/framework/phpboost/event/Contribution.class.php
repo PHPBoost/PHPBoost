@@ -348,5 +348,4 @@ class Contribution extends Event
 		}
 	}
 }
-
 ?>

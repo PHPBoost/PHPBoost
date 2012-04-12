@@ -30,5 +30,4 @@
  * @package {@package}
  */
 class DBConnectionException extends Exception {}
-
 ?>

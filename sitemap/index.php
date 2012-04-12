@@ -37,5 +37,4 @@ $url_controller_mappers = array(
 );
 
 DispatchManager::dispatch($url_controller_mappers);
-
 ?>

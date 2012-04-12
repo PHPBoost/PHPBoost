@@ -42,5 +42,4 @@ interface CacheData
 	 */
 	function synchronize();
 }
-
 ?>

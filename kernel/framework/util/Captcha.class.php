@@ -438,5 +438,4 @@ class Captcha
 		return $this->html_id;
 	}
 }
-
 ?>

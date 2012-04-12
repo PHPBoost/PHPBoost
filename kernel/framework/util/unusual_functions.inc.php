@@ -82,5 +82,4 @@ function cancel_register_globals_effect()
     }
     unset($input);
 }
-
 ?>

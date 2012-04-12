@@ -354,5 +354,4 @@ class Uploads
 		return array('img' => $img, 'filetype' => $filetype);
 	}
 }
-
 ?>

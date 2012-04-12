@@ -123,3 +123,4 @@ class ModulesConfig extends AbstractConfigData
 		ConfigManager::save('kernel', self::load(), 'modules');
 	}
 }
+?>

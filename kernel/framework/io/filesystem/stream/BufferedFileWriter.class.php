@@ -71,3 +71,4 @@ class BufferedFileWriter implements FileWriter
 		$this->buffer .= $content;
 	}
 }
+?>

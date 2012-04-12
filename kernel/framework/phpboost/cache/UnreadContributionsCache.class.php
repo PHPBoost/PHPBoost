@@ -234,3 +234,4 @@ class UnreadContributionsCache implements CacheData
 		}
 	}
 }
+?>

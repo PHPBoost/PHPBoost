@@ -581,5 +581,4 @@ function find_require_dir($dir_path, $require_dir, $fatal_error = true)
         DispatchManager::redirect($controller);
 	}
 }
-
 ?>

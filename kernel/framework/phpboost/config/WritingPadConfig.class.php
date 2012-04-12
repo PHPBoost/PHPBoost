@@ -84,3 +84,4 @@ class WritingPadConfig extends AbstractConfigData
 		ConfigManager::save('kernel', self::load(), 'writing-pad');
 	}
 }
+?>

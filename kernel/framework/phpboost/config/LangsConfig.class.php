@@ -105,3 +105,4 @@ class LangsConfig extends AbstractConfigData
 		ConfigManager::save('kernel', self::load(), 'langs');
 	}
 }
+?>

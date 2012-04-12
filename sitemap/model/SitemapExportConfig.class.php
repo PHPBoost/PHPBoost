@@ -144,5 +144,4 @@ class SitemapExportConfig
 		$this->link_file = is_string($link_file) ? new FileTemplate($link_file) : $link_file;
 	}
 }
-
 ?>

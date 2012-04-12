@@ -73,5 +73,4 @@ interface DBMSUtils
 	
 	function parse_file(File $file, $prefix = '');
 }
-
 ?>

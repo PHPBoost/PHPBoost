@@ -109,5 +109,4 @@ class AdminNewsletterConfigController extends AdminModuleController
 		NewsletterConfig::save();
 	}
 }
-
 ?>

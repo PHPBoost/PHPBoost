@@ -35,5 +35,4 @@ class RegexFilter extends Filter {
 		return preg_match('`' . $this->pattern . '`i', $input);
 	}
 }
-
 ?>

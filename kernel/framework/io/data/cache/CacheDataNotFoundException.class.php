@@ -38,5 +38,4 @@ class CacheDataNotFoundException extends Exception
 		parent::__construct('The cache data identified by "' . $config_name . '" doesn\'t exist');
 	}
 }
-
 ?>

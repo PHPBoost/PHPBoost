@@ -733,5 +733,4 @@ class Session
 		return substr($token, 0, $digits) . '...' . substr($token, strlen($token) - $digits);
 	}
 }
-
 ?>

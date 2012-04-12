@@ -68,5 +68,4 @@ class NumberHelper
 		return trim(number_format($number, $dec, '.', ''));
 	}
 }
-
 ?>

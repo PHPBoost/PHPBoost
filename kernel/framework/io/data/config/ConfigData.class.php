@@ -57,5 +57,4 @@ interface ConfigData extends CacheData
 	 */
 	function set_default_values();
 }
-
 ?>

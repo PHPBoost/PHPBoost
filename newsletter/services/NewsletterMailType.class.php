@@ -49,5 +49,4 @@ interface NewsletterMailType
 	 */
 	public function parse_contents($contents);
 }
-
 ?>

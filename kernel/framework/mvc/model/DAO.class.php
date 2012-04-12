@@ -100,5 +100,4 @@ interface DAO
 	 */
 	function find_by_criteria($criteria, $parameters = array());
 }
-
 ?>

@@ -32,5 +32,4 @@ class DefaultMailService extends AbstractPHPMailerMailService
 		$mailer->IsMail();
 	}
 }
-
 ?>

@@ -45,5 +45,4 @@ class SitemapUrlBuilder
 		return DispatchManager::get_url(self::$dispatcher, '/admin/generate');
 	}
 }
-
 ?>

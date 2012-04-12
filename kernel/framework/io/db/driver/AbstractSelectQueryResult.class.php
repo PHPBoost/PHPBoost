@@ -61,5 +61,4 @@ abstract class AbstractSelectQueryResult extends AbstractQueryResult implements 
 	 */
 	abstract protected function needs_rewind();
 }
-
 ?>

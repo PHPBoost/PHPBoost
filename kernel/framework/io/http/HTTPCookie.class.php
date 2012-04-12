@@ -150,5 +150,4 @@ class HTTPCookie
 		return $this->httponly;
 	}
 }
-
 ?>

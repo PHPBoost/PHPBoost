@@ -32,3 +32,4 @@ class UnexistingHTTPParameterException extends Exception
 		parent::__construct('The "' . $varname . '" parameter does not exists in the http request');
 	}
 }
+?>

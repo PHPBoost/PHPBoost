@@ -316,5 +316,4 @@ class File extends FileSystemElement
 		}
 	}
 }
-
 ?>

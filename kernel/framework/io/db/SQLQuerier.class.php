@@ -70,5 +70,4 @@ interface SQLQuerier
 
 	function get_executed_requests_count();
 }
-
 ?>

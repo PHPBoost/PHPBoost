@@ -97,5 +97,4 @@ class Bench
 		return ((float)$usec + (float)$sec);
 	}
 }
-
 ?>

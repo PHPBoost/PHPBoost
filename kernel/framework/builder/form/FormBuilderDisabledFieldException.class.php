@@ -45,5 +45,4 @@ class FormBuilderDisabledFieldException extends FormBuilderException
 		return $this->value;
 	}
 }
-
 ?>

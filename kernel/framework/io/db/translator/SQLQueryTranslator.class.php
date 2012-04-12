@@ -39,5 +39,4 @@ interface SQLQueryTranslator
 	 */
 	function translate($query);
 }
-
 ?>

@@ -248,5 +248,4 @@ class Sitemap
 		$this->add($kernel_map);
 	}
 }
-
 ?>

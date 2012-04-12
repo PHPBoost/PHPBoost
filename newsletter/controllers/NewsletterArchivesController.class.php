@@ -147,5 +147,4 @@ class NewsletterArchivesController extends ModuleController
 		return $response;
 	}
 }
-
 ?>

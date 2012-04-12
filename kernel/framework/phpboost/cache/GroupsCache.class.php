@@ -106,3 +106,4 @@ class GroupsCache implements CacheData
 		CacheManager::invalidate('kernel', 'groups');
 	}
 }
+?>

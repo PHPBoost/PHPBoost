@@ -81,5 +81,4 @@ class UrlSerializedParameterEncoder
 		return addcslashes((string) $value, ':{}\\,');
 	}
 }
-
 ?>

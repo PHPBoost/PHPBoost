@@ -245,3 +245,4 @@ class HtaccessFileCache implements CacheData
 		return self::load()->get_htaccess_file_content();
 	}
 }
+?>
