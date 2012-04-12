@@ -58,6 +58,13 @@ class OnlineModuleHomePage implements ModuleHomePage
 		$users = OnlineService::get_online_users($condition, $parameters);
 		foreach ($users as $user)
 		{
+			if ($user->get_id() == AppContext::get_current_user()->get_id())
+			{
+				$user->set_location_script(OnlineUrlBuilder::home()->absolute());
+				$user->set_location_title($this->lang['online']);
+				$user->set_last_update(gmdate_format('date_format_long', time()));
+			}
+			
 			$this->view->assign_block_vars('users', array(
 				'U_PROFILE' => UserUrlBuilder::profile($user->get_id())->absolute(),
 				'U_LOCATION' => $user->get_location_script(),
