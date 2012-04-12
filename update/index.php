@@ -47,7 +47,6 @@ $url_controller_mappers = array(
 	new UrlControllerMapper('UpdateDBConfigController', '`^/database/?$`'),
 	new UrlControllerMapper('UpdateDBConfigCheckController', '`^/database/check/?$`'),
 	new UrlControllerMapper('UpdateVersionExecuteController', '`^/execute/?$`'),
-	new UrlControllerMapper('UpdateConfigWebsiteController', '`^/config/?$`'),
 	new UrlControllerMapper('UpdateFinishController', '`^/finish/?$`')
 );
 DispatchManager::dispatch($url_controller_mappers);

@@ -32,14 +32,16 @@ class CommentsKernelUpdateVersion extends KernelUpdateVersion
 	
 	public function __construct()
 	{
-		parent::__construct('members');
+		parent::__construct('comments');
 		$this->querier = PersistenceContext::get_querier();
 		$this->db_utils = PersistenceContext::get_dbms_utils();
 	}
 	
 	public function execute()
 	{
-		/*$this->create_comments_topic_table();
+		$this->create_comments_topic_table();
+		$this->create_comments_table();
+		/*
 		$this->add_comments_rows();
 		$this->rename_comments_rows();
 		$result = self::$db_querier->select_rows(PREFIX .'com', array('*'));
@@ -92,7 +94,25 @@ class CommentsKernelUpdateVersion extends KernelUpdateVersion
 		$options = array(
 			'primary' => array('id_topic'),
 		);
-		self::$db_utils->create_table(PREFIX . 'comments_topic', $fields, $options);
+		$this->db_utils->create_table(PREFIX . 'comments_topic', $fields, $options);
+	}
+	
+	private function create_comments_table()
+	{
+		$fields = array(
+			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true),
+			'id_topic' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
+			'message' => array('type' => 'text', 'length' => 65000),
+			'user_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
+			'name_visitor' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
+			'ip_visitor' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
+			'note' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
+			'timestamp' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0)
+		);
+		$options = array(
+			'primary' => array('id'),
+		);
+		$this->db_utils->create_table(PREFIX . 'comments', $fields, $options);
 	}
 }
 ?>

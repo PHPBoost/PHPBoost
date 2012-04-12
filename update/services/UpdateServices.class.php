@@ -176,6 +176,7 @@ class UpdateServices
 	
 	public function execute()
 	{
+		$this->get_update_token();
 		$this->update_kernel();
 		$this->update_configurations();
 		$this->update_modules();
@@ -263,6 +264,24 @@ class UpdateServices
 	private function generate_update_token()
 	{
 		$this->token->write(self::$token_file_content);
+	}
+	
+	private function get_update_token()
+	{
+		$is_token_valid = false;
+		try
+		{
+			$is_token_valid = $this->token->exists() && $this->token->read() == self::$token_file_content;
+		}
+		catch (IOException $ioe)
+		{
+			$is_token_valid = false;
+		}
+
+		if (!$is_token_valid)
+		{
+			throw new TokenNotFoundException($this->token->get_path_from_root());
+		}
 	}
 	
 	private function delete_update_token()

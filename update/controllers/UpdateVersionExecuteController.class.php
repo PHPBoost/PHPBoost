@@ -45,7 +45,7 @@ class UpdateVersionExecuteController extends UpdateController
 	{
 		$service = new UpdateServices();
 		$service->execute();
-		AppContext::get_response()->redirect(UpdateUrlBuilder::config());
+		AppContext::get_response()->redirect(UpdateUrlBuilder::finish());
 	}
 
 	/**
@@ -55,7 +55,7 @@ class UpdateVersionExecuteController extends UpdateController
 	private function create_response(Template $view)
 	{
         $step_title = $this->lang['step.execute.title'];
-		$response = new UpdateDisplayResponse(3, $step_title, $view);
+		$response = new UpdateDisplayResponse(4, $step_title, $view);
 		return $response;
 	}
 
@@ -65,7 +65,7 @@ class UpdateVersionExecuteController extends UpdateController
 		$action_fieldset = new FormFieldsetSubmit('actions');
 		$back = new FormButtonLink($this->lang['step.previous'], UpdateUrlBuilder::database(), 'templates/images/left.png');
 		$action_fieldset->add_element($back);
-		$this->submit = new FormButtonSubmitImg($this->lang['step.next'], 'templates/images/right.png', 'config');
+		$this->submit = new FormButtonSubmitImg($this->lang['step.next'], 'templates/images/right.png', 'finish');
 		$action_fieldset->add_element($this->submit);
 		$form->add_fieldset($action_fieldset);
         $view->put('SERVER_FORM', $form->display());

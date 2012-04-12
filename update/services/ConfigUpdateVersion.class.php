@@ -29,10 +29,12 @@ abstract class ConfigUpdateVersion implements UpdateVersion
 {
 	protected $config_name;
 	protected $querier;
+	protected $delete_old_config = true;
 	
-	public function __construct($config_name)
+	public function __construct($config_name, $delete_old_config = true)
 	{
 		$this->config_name = $config_name;
+		$this->delete_old_config = $delete_old_config;
 		$this->querier = PersistenceContext::get_querier();
 	}
 	
@@ -46,7 +48,10 @@ abstract class ConfigUpdateVersion implements UpdateVersion
 		try {
 			if ($this->build_new_config())
 			{
-				$this->delete_old_config();
+				if ($this->delete_old_config)
+				{
+					$this->delete_old_config();
+				}
 			}
 		} catch (RowNotFoundException $e) {
 		}

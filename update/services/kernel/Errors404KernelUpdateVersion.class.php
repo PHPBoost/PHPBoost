@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                           NewsConfigUpdateVersion.class.php
+ *                       Errors404KernelUpdateVersion.class.php
  *                            -------------------
- *   begin                : April 12, 2012
+ *   begin                : April 11, 2012
  *   copyright            : (C) 2012 Kevin MASSY
  *   email                : soldier.weasel@gmail.com
  *
@@ -25,22 +25,32 @@
  *
  ###################################################*/
 
-class NewsConfigUpdateVersion extends ConfigUpdateVersion
+class Errors404KernelUpdateVersion extends KernelUpdateVersion
 {
 	public function __construct()
 	{
-		parent::__construct('news', false);
+		parent::__construct('errors-404-table');
 	}
-
-	protected function build_new_config()
+	
+	public function execute()
 	{
-		$config = $this->get_old_config();
-		
-		$config['global_auth'] = array('r-1' => 1, 'r0' => 3, 'r1' => 15);
-		
-		$this->querier->update(PREFIX . 'configs', array('value' => serialize($config)), 'WHERE name = :name', array('name' => 'news'));
-		
-		return true;
+		$this->create_errors_404_table();
+	}
+	
+	private function create_errors_404_table()
+	{
+		$fields = array(
+			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
+			'requested_url' => array('type' => 'string', 'length' => 255, 'notnull' => 1),
+			'from_url' => array('type' => 'string', 'length' => 255, 'notnull' => 1),
+			'times' => array('type' => 'integer', 'length' => 11, 'notnull' => 1)
+		);
+		$options = array(
+			'primary' => array('id'),
+			'indexes' => array(
+				'unique' => array('type' => 'unique', 'fields' => array('requested_url', 'from_url'))
+		));
+		PersistenceContext::get_dbms_utils()->create_table(PREFIX . 'errors_404', $fields, $options);
 	}
 }
 ?>
