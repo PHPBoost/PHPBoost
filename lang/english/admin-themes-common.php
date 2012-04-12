@@ -31,12 +31,6 @@
  
 $lang = array();
 
-//Messages 
-$lang['themes.add.success'] = 'The theme has been added';
-$lang['themes.edit.success'] = 'The themes have been updated';
-$lang['themes.delete.success'] = 'The topic has been deleted';
-$lang['themes.upload.success'] = 'The theme has been uploaded';
-
 // Title 
 $lang['themes.management'] = 'Theme management';
 $lang['themes.installed'] = 'Installed themes';

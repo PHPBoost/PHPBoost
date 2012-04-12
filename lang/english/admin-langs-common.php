@@ -26,40 +26,39 @@
  ###################################################*/
 
  ####################################################
- #                     French                       #
+ #                     ENGLISH                      #
  ####################################################
  
 $lang = array();
 
 //Title
-$lang['langs'] = 'Langues';
-$lang['langs.management'] = 'Gestion des langues';
-$lang['langs.installed'] = 'Langues installées';
-$lang['langs.uninstall'] = 'Suppression de la langue';
-$lang['langs.install'] = 'Installer';
+$lang['langs'] = 'Languages';
+$lang['langs.management'] = 'Languages Management';
+$lang['langs.installed'] = 'Installed languages';
+$lang['langs.uninstall'] = 'Remove language';
+$lang['langs.install'] = 'Install';
 
 //Errors
-$lang['langs.already_exist'] = 'La langue existe déjà';
-$lang['langs.not_compatible'] = 'La langue n\'est pas compatible avec votre version de PHPBoost';
-$lang['themes.add.not_lang'] = 'Aucune langue à ajouter';
+$lang['langs.already_exist'] = 'Language already exists';
+$lang['langs.not_compatible'] = 'The language is not compatible with your version of PHPBoost';
+$lang['themes.add.not_lang'] = 'No language to add';
 
 //Uninstall
-$lang['langs.uninstall.drop_files'] = 'Supprimer tous les fichiers de la langue';
-$lang['langs.default_lang_explain'] = 'La langue par défaut ne peut pas être désinstallée, désactivée ou réservée';
+$lang['langs.uninstall.drop_files'] = 'Delete all files in the language';
+$lang['langs.default_lang_explain'] = 'The default language can not be uninstalled, disabled or reserved';
 
-$lang['langs.upload'] = 'Uploader une langue';
-$lang['langs.upload.description'] = 'L\'archive uploadée doit être au format zip ou gzip';
+$lang['langs.upload'] = 'Upload a language';
+$lang['langs.upload.description'] = 'The archive should be uploaded as zip or gzip';
 
-
-$lang['langs.not_installed'] = 'Langues non installées';
-$lang['langs.name'] = 'Nom';
-$lang['langs.authorisations'] = 'Autorisations';
-$lang['langs.activated'] = 'Activé';
-$lang['langs.compatibility'] = 'Compatibilité';
-$lang['langs.author'] = 'Auteur';
+$lang['langs.not_installed'] = 'Languages not installed';
+$lang['langs.name'] = 'Name';
+$lang['langs.authorisations'] = 'Authorizations';
+$lang['langs.activated'] = 'Activated';
+$lang['langs.compatibility'] = 'Compatibility';
+$lang['langs.author'] = 'Autor';
 $lang['langs.description'] = 'Description';
 
-$lang['langs.no'] = 'Non';
-$lang['langs.yes'] = 'Oui';
-$lang['langs.visitor'] = 'Visiteur';
+$lang['langs.no'] = 'No';
+$lang['langs.yes'] = 'Yes';
+$lang['langs.visitor'] = 'Visitor';
 ?>

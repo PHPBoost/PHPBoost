@@ -80,7 +80,7 @@ class AdminExtendedFieldMemberEditController extends AdminController
 			}
 			else
 			{
-				$this->tpl->put('MSG', MessageHelper::display($this->lang['extended-fields-sucess-edit'], MessageHelper::SUCCESS, 6));
+				$this->tpl->put('MSG', MessageHelper::display(LangLoader::get_message('proccess.success', 'errors-common'), MessageHelper::SUCCESS, 6));
 			}
 		}
 

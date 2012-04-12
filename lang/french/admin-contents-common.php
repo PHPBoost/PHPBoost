@@ -31,8 +31,6 @@
  
 $lang = array();
 
-$lang['comments.config.success-saving'] = 'Configuration enregistré avec succès';
-
 $lang['comments'] = 'Commentaires';
 $lang['comments.config'] = 'Configuration des commentaires';
 $lang['comments.management'] = 'Gestion des commentaires';

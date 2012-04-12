@@ -55,10 +55,8 @@ $lang = array(
 	'mail-config.smtp_secure_protocol_none' => 'Aucun',
 	'mail-config.smtp_secure_protocol_tls' => 'TLS',
 	'mail-config.smtp_secure_protocol_ssl' => 'SSL',
-	'mail-config.mail_config_saved' => 'La configuration a bien été enregistrée',
 	
 	//General config
-	'general-config.success' => 'La configuration générale du site a été enregistrée avec succès',
 	'general-config' => 'Configuration générale',
 	'general-config.site_name' => 'Nom du site',
 	'general-config.site_description' => 'Description du site',
@@ -79,7 +77,6 @@ $lang = array(
 	'general-config.display_theme_author-explain' => 'Affiche des informations sur le thème dans le pied de page',
 	
 	//Advanced config
-	'advanced-config.success' => 'La configuration avancée du site a été enregistrée avec succès',
 	'advanced-config' => 'Configuration avancée',
 	'advanced-config.site_url' => 'URL du serveur',
 	'advanced-config.site_url-explain' => 'Ex : http://www.phpboost.com',
@@ -127,6 +124,5 @@ $lang = array(
 	'advanced-config.code_sent_success' => 'Le code a été envoyé avec succès',
 	'advanced-config.code_sent_fail' => 'Une erreur est survenue dans l\'envoi du code',
 	'advanced-config.confirm_mail_sending' => 'Voulez-vous vraiment envoyer le code de déverrouillage ?'
-
 );
 ?>

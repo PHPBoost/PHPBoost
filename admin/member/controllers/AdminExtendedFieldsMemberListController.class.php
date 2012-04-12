@@ -120,5 +120,4 @@ class AdminExtendedFieldsMemberListController extends AdminController
 		}
 	}
 }
-
 ?>

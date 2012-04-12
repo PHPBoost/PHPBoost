@@ -49,12 +49,12 @@ class UserConfirmRegistrationController extends AbstractController
 			
 			StatsCache::invalidate();
 			
-			$controller = new UserErrorController($this->lang['profile'], $this->lang['registration.confirm.success'], UserErrorController::SUCCESS);
+			$controller = new UserErrorController($this->lang['profile'], LangLoader::get_message('proccess.success', 'errors-common'), UserErrorController::SUCCESS);
 			DispatchManager::redirect($controller);
 		}
 		else
 		{
-			$controller = new UserErrorController($this->lang['profile'], $this->lang['registration.confirm.error'], UserErrorController::WARNING);
+			$controller = new UserErrorController($this->lang['profile'], LangLoader::get_message('proccess.error', 'errors-common'), UserErrorController::WARNING);
 			DispatchManager::redirect($controller);
 		}
 	}

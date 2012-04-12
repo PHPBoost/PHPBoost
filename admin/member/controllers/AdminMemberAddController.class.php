@@ -48,7 +48,7 @@ class AdminMemberAddController extends AdminController
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save();
-			$tpl->put('MSG', MessageHelper::display($this->lang['members.add-member.success'], E_USER_SUCCESS, 4));
+			$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('proccess.success', 'errors-common'), E_USER_SUCCESS, 4));
 		}
 
 		$tpl->put('FORM', $this->form->display());

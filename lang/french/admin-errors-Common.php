@@ -35,5 +35,4 @@ $lang = array(
 	'all_errors' => 'Afficher toutes les erreurs',
 	'error_management' => 'Gestionnaire d\'erreurs'
 );
-
 ?>

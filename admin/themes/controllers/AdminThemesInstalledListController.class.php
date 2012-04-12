@@ -104,7 +104,7 @@ class AdminThemesInstalledListController extends AdminController
 					$authorizations = Authorizations::auth_array_simple(Theme::ACCES_THEME, $id_theme);
 					ThemeManager::change_informations($id_theme, $activated, $authorizations);
 					
-					$this->view->put('MSG', MessageHelper::display($this->lang['themes.edit.success'], E_USER_SUCCESS, 4));
+					$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('proccess.success', 'errors-common'), E_USER_SUCCESS, 4));
 				}
 			}
 		}

@@ -31,7 +31,6 @@
  
 $lang = array();
 $lang['cache'] = 'Cache';
-$lang['cache_cleared_successfully'] = 'Le cache a été vidé avec succès !';
 $lang['clear_cache'] = 'Vider';
 $lang['explain_data_cache'] = '<p>PHPBoost met en cache un certain nombre d\'informations, ce qui permet d\'améliorer considérablement ses performances.
 Toutes les données manipulées par PHPBoost sont stockées en base de données mais chaque accès à la base de données coûte cher en temps. Les données qui sont accédées de façon régulière (notamment la configuration) sont ainsi conservées par le serveur
@@ -51,7 +50,6 @@ A l\'heure actuelle, PHPBoost supporte <acronym title="Advanced PHP Cache">APC</
 $lang['enable_apc'] = 'Activer le cache d\'APC';
 $lang['apc_available'] = 'Disponibilité de l\'extension APC';
 $lang['explain_apc_available'] = 'L\'extension est disponible sur un nombre assez restreint de serveurs. Si elle n\'est pas disponible, vous ne pouvez malheureusement profiter des gains de performances qu\'elle permet d\'obtenir.';
-$lang['cache_config_changed_successfully'] = 'La configuration du cache a été changée avec succès';
 $lang['css_cache'] = 'Cache CSS';
 $lang['explain_css_cache'] = '<p>PHPBoost met en cache l\'ensemble des fichiers CSS fournis par les thèmes et modules. 
 En temps normal, à l\'affichage du site, un ensemble de fichiers css vas être chargés. Le système de cache CSS quant à lui, va d\'abord optimiser les fichiers pour ensuite créer un seul et même fichier CSS condensé.</p>

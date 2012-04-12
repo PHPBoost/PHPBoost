@@ -1,10 +1,10 @@
 <?php
 /*##################################################
- *                           admin-errors-Common.php
+ *                                errors-common.php
  *                            -------------------
- *   begin                : December 13, 2009
- *   copyright            : (C) 2009 Loic Rouchon
- *   email                : loic.rouchon@phpboost.com
+ *   begin                : April 12, 2012
+ *   copyright            : (C) 2012 Kevin MASSY
+ *   email                : soldier.weasel@gmail.com
  *
  *
  ###################################################
@@ -25,14 +25,11 @@
  *
  ###################################################*/
 
- ####################################################
-#                    English                       #
- ####################################################
+$lang = array();
 
-$lang = array(
-    'logged_errors' => 'Logged errors',
-    '404_errors' => '404 errors',
-	'all_errors' => 'Show all errors',
-	'error_management' => 'Error handler'
-);
+//Process
+$lang['process.success'] = 'L\'opération s\'est déroulé avec succès';
+$lang['process.success'] = 'Une erreur s\'est produite lors de l\'opération';
+
+
 ?>
