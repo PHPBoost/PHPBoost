@@ -53,10 +53,8 @@ $lang = array(
 	'mail-config.smtp_secure_protocol_none' => 'None',
 	'mail-config.smtp_secure_protocol_tls' => 'TLS',
 	'mail-config.smtp_secure_protocol_ssl' => 'SSL',
-	'mail-config.mail_config_saved' => 'Mail Configuration has been saved succesfully',
 	
 	//General config
-	'general-config.success' => 'General configuration has been saved succesfully',
 	'general-config' => 'General configuration',
 	'general-config.site_name' => 'Site name',
 	'general-config.site_description' => 'Site description',
@@ -77,7 +75,6 @@ $lang = array(
 	'general-config.display_theme_author-explain' => 'Displays theme info in footer',
 	
 	//Advanced config
-	'advanced-config.success' => 'Advanced configuration has been saved succesfully',
 	'advanced-config' => 'Advanced configuration',
 	'advanced-config.site_url' => 'Server\'s URL',
 	'advanced-config.site_url-explain' => 'Ex : http://www.phpboost.com',
@@ -130,5 +127,4 @@ $lang = array(
 	'advanced-config.code_sent_fail' => 'The sending of the unlock code failed',
 	'advanced-config.confirm_mail_sending' => 'Do you really want to send the unlock code?'
 );
-
 ?>

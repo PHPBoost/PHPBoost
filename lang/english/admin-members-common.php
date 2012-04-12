@@ -31,12 +31,6 @@
  
 $lang = array();
 
-//Messages 
-$lang['members.config.success-saving'] = 'The configuration was successfully saved';
-$lang['members.add-member.success'] = 'The member was added successfully';
-$lang['members.member-edit.success'] = 'The member has been changed';
-$lang['members.rules.success-saving'] = 'The rules has been updated';
-
 // Title 
 $lang['members.config-members'] = 'Members configuration';
 $lang['members.members-management'] = 'Members management';

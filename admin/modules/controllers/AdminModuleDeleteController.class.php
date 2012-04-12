@@ -49,11 +49,11 @@ class AdminModuleDeleteController extends AdminController
 				
 				if ($drop_files == 1)
 				{
-					$this->tpl->put('MSG', MessageHelper::display($this->lang['modules.delete_success'], MessageHelper::SUCCESS, 4));
+					$this->tpl->put('MSG', MessageHelper::display(LangLoader::get_message('proccess.success', 'errors-common'), MessageHelper::SUCCESS, 4));
 				}
 				else 
 				{
-					$this->tpl->put('MSG', MessageHelper::display($this->lang['modules.uninstalled_success'], MessageHelper::SUCCESS, 4));
+					$this->tpl->put('MSG', MessageHelper::display(LangLoader::get_message('proccess.success', 'errors-common'), MessageHelper::SUCCESS, 4));
 				}
 			}
 			$this->tpl->put('FORM', $this->form->display());

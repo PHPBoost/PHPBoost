@@ -35,9 +35,6 @@ $lang['extended-field-add'] = 'Ajouter un champ membre';
 $lang['extended-field-edit'] = 'Editer un champ membre';
 $lang['extended-field'] = 'Champs membres';
 $lang['extended-fields-management'] = 'Gestion des champs membres';
-$lang['extended-fields-sucess-edit'] = 'Le champ étendu à été mis à jour avec succès.';
-$lang['extended-fields-sucess-add'] = 'Le champ étendu à été ajouté avec succès.';
-$lang['extended-fields-sucess-delete'] = 'Le champ étendu à été supprimé avec succès.';
 $lang['extended-fields-error-already-exist'] = 'Le champ étendu existe déjà.';
 $lang['extended-fields-error-phpboost-config'] = 'Les champs utilisés par défaut par PHPBoost ne peuvent pas être créés plusieurs fois, veuillez choisir un autre type de champ.';
 

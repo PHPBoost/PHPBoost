@@ -32,7 +32,7 @@ class AdminCacheConfigController extends AbstractAdminFormPageController
 	public function __construct()
 	{
 		$this->lang = LangLoader::get('admin-cache-common');
-		parent::__construct($this->lang['cache_config_changed_successfully']);
+		parent::__construct(LangLoader::get_message('proccess.success', 'errors-common'));
 	}
 
 	protected function create_form()

@@ -58,11 +58,11 @@ class AdminCustomizeFaviconController extends AdminController
 				if ($file_type->is_picture())
 				{
 					$this->save($favicon);
-					$tpl->put('MSG', MessageHelper::display($this->lang['customization.favicon.success'], E_USER_SUCCESS, 4));
+					$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('proccess.success', 'errors-common'), E_USER_SUCCESS, 4));
 				}
 				else
 				{
-					$tpl->put('MSG', MessageHelper::display($this->lang['customization.favicon.error'], E_USER_ERROR, 4));
+					$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('proccess.error', 'errors-common'), E_USER_ERROR, 4));
 				}
 			}
 			else

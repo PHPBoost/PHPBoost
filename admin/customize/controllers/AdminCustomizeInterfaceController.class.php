@@ -66,11 +66,11 @@ class AdminCustomizeInterfaceController extends AdminController
 				if ($file_type->is_picture())
 				{
 					$this->save($header_logo, $theme);
-					$tpl->put('MSG', MessageHelper::display($this->lang['customization.interface.success'], E_USER_SUCCESS, 4));
+					$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('proccess.success', 'errors-common'), E_USER_SUCCESS, 4));
 				}
 				else
 				{
-					$tpl->put('MSG', MessageHelper::display($this->lang['customization.interface.logo.error'], E_USER_ERROR, 4));
+					$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('proccess.error', 'errors-common'), E_USER_ERROR, 4));
 				}
 			}
 			elseif ($this->form->get_value('use_default_logo'))
