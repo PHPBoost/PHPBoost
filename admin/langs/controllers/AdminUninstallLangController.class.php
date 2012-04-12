@@ -45,7 +45,7 @@ class AdminUninstallLangController extends AdminController
 			{
 				$this->uninstall($this->form->get_value('drop_files')->get_raw_value());
 
-				$this->tpl->put('MSG', MessageHelper::display(LangLoader::get_message('proccess.success', 'errors-common'), MessageHelper::SUCCESS, 4));
+				$this->tpl->put('MSG', MessageHelper::display(LangLoader::get_message('process.success', 'errors-common'), MessageHelper::SUCCESS, 4));
 			}
 			
 			$this->tpl->put('FORM', $this->form->display());

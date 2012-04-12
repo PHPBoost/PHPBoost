@@ -29,7 +29,7 @@ $lang = array();
 
 //Process
 $lang['process.success'] = 'The operation was completed successfully';
-$lang['process.success'] = 'An error occurred during the operation';
+$lang['process.error'] = 'An error occurred during the operation';
 
 
 ?>
