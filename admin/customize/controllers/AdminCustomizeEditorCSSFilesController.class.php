@@ -56,7 +56,7 @@ class AdminCustomizeEditorCSSFilesController extends AdminController
 			if ($this->submit_button->has_been_submited() && $this->form->validate())
 			{
 				$this->save();
-				$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('proccess.success', 'errors-common'), E_USER_SUCCESS, 4));
+				$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('process.success', 'errors-common'), E_USER_SUCCESS, 4));
 			}
 		}
 

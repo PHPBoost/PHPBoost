@@ -37,7 +37,7 @@ class AdminMailConfigController extends AbstractAdminFormPageController
 	public function __construct()
 	{
 		$this->load_lang();
-		parent::__construct(LangLoader::get_message('proccess.success', 'errors-common'));
+		parent::__construct(LangLoader::get_message('process.success', 'errors-common'));
 		$this->load_config();
 	}
 

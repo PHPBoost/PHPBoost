@@ -135,7 +135,7 @@ class AdminThemesNotInstalledListController extends AdminController
 					}
 					else
 					{
-						$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('proccess.success', 'errors-common'), MessageHelper::SUCCESS, 4));
+						$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('process.success', 'errors-common'), MessageHelper::SUCCESS, 4));
 					}
 				}
 			} catch (Exception $e) {

@@ -49,7 +49,7 @@ class AdminAdvancedConfigController extends AdminController
 		{
 			$this->save();
 
-			$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('proccess.success', 'errors-common'), E_USER_SUCCESS, 4));
+			$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('process.success', 'errors-common'), E_USER_SUCCESS, 4));
 		}
 
 		$tpl->put('FORM', $this->form->display());
