@@ -78,8 +78,6 @@ class PagesSetup extends DefaultModuleSetup
 			'timestamp' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'display_print_link' => array('type' => 'integer', 'length' => 1, 'notnull' => 1, 'default' => 0),
 			'activ_com' => array('type' => 'integer', 'length' => 1, 'notnull' => 1, 'default' => 0),
-			'lock_com' => array('type' => 'integer', 'length' => 1, 'notnull' => 1, 'default' => 0),
-			'nbr_com' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'redirect' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0)
 		);
 		$options = array(
