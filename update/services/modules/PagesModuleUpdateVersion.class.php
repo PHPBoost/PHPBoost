@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                       WikiModuleUpdateVersion.class.php
+ *                       PagesModuleUpdateVersion.class.php
  *                            -------------------
- *   begin                : April 06, 2012
+ *   begin                : April 13, 2012
  *   copyright            : (C) 2012 Kevin MASSY
  *   email                : soldier.weasel@gmail.com
  *
@@ -25,12 +25,16 @@
  *
  ###################################################*/
 
-class WikiModuleUpdateVersion extends ModuleUpdateVersion
+class PagesModuleUpdateVersion extends ModuleUpdateVersion
 {
+	private $querier;
+	private $db_utils;
+	
 	public function __construct()
 	{
-		parent::__construct('wiki');
+		parent::__construct('pages');
 		$this->querier = PersistenceContext::get_querier();
+		$this->db_utils = PersistenceContext::get_dbms_utils();
 	}
 	
 	public function execute()
@@ -42,14 +46,15 @@ class WikiModuleUpdateVersion extends ModuleUpdateVersion
 	private function update_tables()
 	{
 		$this->drop_columns(array('lock_com', 'nbr_com'));
+		$this->db_utils->add_column(PREFIX .'pages', 'display_print_link', array('type' => 'integer', 'length' => 1, 'notnull' => 1, 'default' => 0));
 	}
 	
 	private function update_comments()
 	{
-		$result = $this->querier->select('SELECT wiki.id, wiki.nbr_com, wiki.lock_com, com.*
-		FROM ' . PREFIX . 'wiki_articles wiki
-		JOIN ' . PREFIX . 'com com ON com.idprov = wiki.id
-		WHERE com.script = \'wiki_articles\'');
+		$result = $this->querier->select('SELECT pages.id, pages.nbr_com, pages.lock_com, com.*
+		FROM ' . PREFIX . 'pages pages
+		JOIN ' . PREFIX . 'com com ON com.idprov = pages.id
+		WHERE com.script = \'pages\'');
 		$id_in_module = 0;
 		$id_topic = 0;
 		while ($row = $result->fetch())
@@ -62,7 +67,7 @@ class WikiModuleUpdateVersion extends ModuleUpdateVersion
 					'id_in_module' => $row['id'],
 					'number_comments' => $row['nbr_com'],
 					'is_locked' => $row['lock_com'],
-					'path' => '/wiki/property.php?idcom='. $row['id'] .'&com=0',
+					'path' => '/pages/pages.php?id='. $row['id'] .'&amp;com=0',
 				));
 				$id_topic = $topic->get_last_inserted_id();
 			}
@@ -80,10 +85,9 @@ class WikiModuleUpdateVersion extends ModuleUpdateVersion
 	
 	private function drop_columns(array $columns)
 	{
-		$db_utils = PersistenceContext::get_dbms_utils();
 		foreach ($columns as $column_name)
 		{
-			$db_utils->drop_column(PREFIX .'wiki_articles', $column_name);
+			$this->db_utils->drop_column(PREFIX .'pages', $column_name);
 		}
 	}
 }

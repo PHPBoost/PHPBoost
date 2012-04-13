@@ -39,9 +39,44 @@ class ArticlesModuleUpdateVersion extends ModuleUpdateVersion
 	
 	public function execute()
 	{
+		$this->update_comments();
 		$this->update_articles_table();
 		$this->update_cats_table();
 		$this->rename_cats_rows();
+	}
+	
+	private function update_comments()
+	{
+		$result = $this->querier->select('SELECT articles.id, articles.idcat, articles.nbr_com, articles.lock_com, com.*
+		FROM ' . PREFIX . 'articles articles
+		JOIN ' . PREFIX . 'com com ON com.idprov = articles.id
+		WHERE com.script = \'articles\'');
+		$id_in_module = 0;
+		$id_topic = 0;
+		while ($row = $result->fetch())
+		{
+			if (empty($id_in_module) || $id_in_module !== $row['id'])
+			{
+				$id_in_module = $row['id'];
+				$topic = $this->querier->insert(PREFIX . 'comments_topic', array(
+					'module_id' => $row['script'],
+					'id_in_module' => $row['id'],
+					'number_comments' => $row['nbr_com'],
+					'is_locked' => $row['lock_com'],
+					'path' => '/articles/articles.php?id='. $row['id'] .'&cat='. $row['idcat'] .'&com=0',
+				));
+				$id_topic = $topic->get_last_inserted_id();
+			}
+			
+			$this->querier->insert(PREFIX . 'comments', array(
+				'id_topic' => $id_topic,
+				'user_id' => $row['user_id'],
+				'name_visitor' => $row['login'],
+				'ip_visitor' => $row['user_ip'],
+				'timestamp' => $row['timestamp'],
+				'message' => $row['contents']
+			));
+		}
 	}
 	
 	private function update_articles_table()
