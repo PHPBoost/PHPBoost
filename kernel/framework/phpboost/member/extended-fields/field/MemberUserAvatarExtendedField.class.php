@@ -103,7 +103,7 @@ class MemberUserAvatarExtendedField extends AbstractMemberExtendedField
 		if ($delete)
 		{
 			$value = MemberExtendedFieldsService::return_field_member($member_extended_field->get_field_name(), $member_extended_field->get_user_id());
-			if (!empty($value) && preg_match('`\.\./images/avatars/(([a-z0-9()_-])+\.([a-z]){3,4})`i', $value) && is_file($value))
+			if (!empty($value) && strpos($value, '/images/avatars/') !== false && is_file($value))
 			{
 				@unlink($value);
 			}
