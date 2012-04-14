@@ -39,10 +39,40 @@ class ArticlesModuleUpdateVersion extends ModuleUpdateVersion
 	
 	public function execute()
 	{
+		$this->update_notes();
 		$this->update_comments();
 		$this->update_articles_table();
 		$this->update_cats_table();
 		$this->rename_cats_rows();
+	}
+	
+	private function update_notes()
+	{
+		$result = $this->querier->select_rows(PREFIX .'articles', array('id', 'note', 'nbrnote', 'users_note'));
+		while ($row = $result->fetch())
+		{
+			if (!empty($row['note']) && !empty($row['nbrnote']))
+			{
+				$this->querier->insert(PREFIX . 'average_notes', array(
+					'module_name' => 'articles',
+					'id_in_module' => $row['id'],
+					'average_notes' => $row['note'],
+					'number_notes' => $row['nbrnote'],
+				));
+				
+				$note = $row['note'] / $row['nbrnote'];
+				$users_note = explode('/', $row['users_note']);
+				foreach ($users_note as $user_id)
+				{
+					$this->querier->insert(PREFIX . 'note', array(
+						'module_name' => 'articles',
+						'id_in_module' => $row['id'],
+						'user_id' => $user_id,
+						'note' => $note
+					));
+				}
+			}
+		}
 	}
 	
 	private function update_comments()

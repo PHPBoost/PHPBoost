@@ -43,13 +43,6 @@ class NotationsKernelUpdateVersion extends KernelUpdateVersion
 		$this->create_note_table();
 	}
 	
-	private function add_comments_rows()
-	{
-		$this->db_utils->add_column(PREFIX .'com', 'id_topic', array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0));
-		$this->db_utils->add_column(PREFIX .'com', 'name_visitor', array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"));
-		$this->db_utils->add_column(PREFIX .'com', 'note', array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0));
-	}
-	
 	private function create_average_notes_table()
 	{
 		$fields = array(
