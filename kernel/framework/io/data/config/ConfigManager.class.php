@@ -75,6 +75,17 @@ class ConfigManager
 				$data = new $classname();
                 $data->set_default_values();
 			}
+			catch (MySQLUnexistingDatabaseException $ex)
+			{
+				$data = new $classname();
+                $data->set_default_values();
+			}
+			catch (MySQLQuerierException $ex)
+			{
+				$data = new $classname();
+                $data->set_default_values();
+			}
+			
 			return $data;
 		}
 	}
