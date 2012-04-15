@@ -65,5 +65,4 @@ class AdminUser extends CurrentUser
 		return true;
 	}
 }
-
 ?>
