@@ -99,26 +99,12 @@ class UpdateDBConfigController extends UpdateController
 		array('description' => $this->lang['schema.tablePrefix.explanation']));
 		$fieldset_schema->add_field($tables_prefix);
 
-		$this->overwrite_fieldset = new FormFieldsetHTML('overwriteFieldset', $this->lang['phpboost.alreadyInstalled']);
-		$this->form->add_fieldset($this->overwrite_fieldset);
-
-		$overwrite_message = new FormFieldHTML('', $this->lang['phpboost.alreadyInstalled.explanation']);
-		$this->overwrite_fieldset->add_field($overwrite_message);
-		$this->overwrite_field = new FormFieldCheckbox('overwrite', $this->lang['phpboost.alreadyInstalled.overwrite'], false,
-			array('required' => $this->lang['phpboost.alreadyInstalled.overwrite.confirm']));
-		$this->overwrite_fieldset->add_field($this->overwrite_field);
-		$this->overwrite_fieldset->disable();
-
 		$action_fieldset = new FormFieldsetSubmit('actions');
 		$back = new FormButtonLink($this->lang['step.previous'], InstallUrlBuilder::server_configuration(), 'templates/images/left.png');
 		$action_fieldset->add_element($back);
 		$check_request = new AjaxRequest(InstallUrlBuilder::check_database(), 'function(response){
 		alert(response.responseJSON.message);
-		if (response.responseJSON.alreadyInstalled) {
-			$FFS(\'overwriteFieldset\').enable();
-		} else {
-			$FFS(\'overwriteFieldset\').disable();
-		}}');
+		}');
 		$check = new FormButtonAjax($this->lang['db.config.check'], $check_request, 'templates/images/refresh.png',
 		array($host, $port, $login, $password, $schema, $tables_prefix), '$HF(\'databaseForm\').validate()');
 		$action_fieldset->add_element($check);
@@ -133,16 +119,16 @@ class UpdateDBConfigController extends UpdateController
 		$status = $service->check_db_connection($host, $port, $login, $password, $schema, $tables_prefix);
 		switch ($status)
 		{
-			case InstallationServices::CONNECTION_SUCCESSFUL:
+			case UpdateServices::CONNECTION_SUCCESSFUL:
 				$this->create_connection($service, $host, $port, $login, $password, $schema, $tables_prefix);
 				break;
-			case InstallationServices::CONNECTION_ERROR:
+			case UpdateServices::CONNECTION_ERROR:
 				$this->error = $this->lang['db.connection.error'];
 				break;
-			case InstallationServices::UNEXISTING_DATABASE:
+			case UpdateServices::UNEXISTING_DATABASE:
 				$this->error = $this->lang['db.unexisting_database'];
 				break;
-			case InstallationServices::UNKNOWN_ERROR:
+			case UpdateServices::UNKNOWN_ERROR:
 			default:
 				$this->error = $this->lang['db.unknown.error'];
 				break;
@@ -151,7 +137,7 @@ class UpdateDBConfigController extends UpdateController
 
 	private function create_connection(UpdateServices $service, $host, $port, $login, $password, $schema, $tables_prefix)
 	{
-		if ($service->is_already_installed() || (!$this->overwrite_field->is_disabled() && $this->overwrite_field->is_checked()))
+		if ($service->is_already_installed())
 		{
 			PersistenceContext::close_db_connection();
 			$service->create_connection(DBFactory::MYSQL, $host, $port, $schema, $login, $password, $tables_prefix);
@@ -159,7 +145,6 @@ class UpdateDBConfigController extends UpdateController
 		}
 		else
 		{
-			$this->overwrite_fieldset->enable();
 			$this->error = $this->lang['phpboost.notInstalled.explanation'];
 		}
 	}
