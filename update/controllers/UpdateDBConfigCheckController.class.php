@@ -80,11 +80,11 @@ class UpdateDBConfigCheckController extends UpdateController
 					return $this->lang['phpboost.notInstalled.alert'];
 				}
 				return $this->lang['db.connection.success'];
-			case InstallationServices::CONNECTION_ERROR:
+			case UpdateServices::CONNECTION_ERROR:
 				return $this->lang['db.connection.error'];
-			case InstallationServices::UNEXISTING_DATABASE:
+			case UpdateServices::UNEXISTING_DATABASE:
 				return $this->lang['db.unexisting_database'];
-			case InstallationServices::UNKNOWN_ERROR:
+			case UpdateServices::UNKNOWN_ERROR:
 			default:
 				return $this->lang['db.unknown.error'];
 

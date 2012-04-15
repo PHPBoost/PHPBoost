@@ -110,11 +110,9 @@ $lang = array(
 	'db.required.port' => 'Vous devez renseigner le port !',
 	'db.required.login' => 'Vous devez renseigner l\'identifiant de connexion !',
 	'db.required.schema' => 'Vous devez renseigner le nom de la base de données !',
-	'phpboost.alreadyInstalled' => 'Installation existante',
-	'phpboost.alreadyInstalled.explanation' => '<p>La base de données sur laquelle vous souhaitez installer PHPBoost contient déjà une installation de PHPBoost.</p>
-<p>Si vous effectuez l\'installation sur cette base de données avec cette configuration, vous écraserez les données présentes actuellement. Si vous voulez installer deux fois PHPBoost sur la même base de données, utilisez des préfixes différents.</p>',
-	'phpboost.alreadyInstalled.overwrite' => 'Je souhaite écraser l\'installation de PHPBoost déjà existante',
-	'phpboost.alreadyInstalled.overwrite.confirm' => 'Vous devez confirmer l\'écrasement de la précédente installation',
+	'phpboost.notInstalled' => 'Installation inexistante',
+	'phpboost.notInstalled.explanation' => '<p>La base de données sur laquelle vous souhaitez mettre à jour PHPBoost ne contient pas d\'installation.</p>
+	<p> Veuillez vérifier que vous avez bien saisi le bon prefix et la bonne base de données.</p>',
 
 //Execute update
 	'step.execute.title' => 'Exécuter la mise à jour',
