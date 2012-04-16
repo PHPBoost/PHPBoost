@@ -82,7 +82,16 @@ class Environment
 		/* END DEPRECATED */
 
 		self::load_dynamic_constants();
-		self::init_session();
+		
+		$error_controller = null;
+		try
+		{
+			self::init_session();
+		}
+		catch (UnableToInitializeSessionException $exception)
+		{
+			$error_controller = $exception->get_error_controller();
+		}
 
 		// TODO move in begin
 		/* DEPRECATED VARS */
@@ -98,6 +107,11 @@ class Environment
 		self::compute_running_module_name();
 		self::csrf_protect_post_requests();
 		self::enable_errors_and_exceptions_management();
+		
+		if ($error_controller != null)
+		{
+			DispatchManager::redirect($error_controller);
+		}
 	}
 
 	public static function init_http_services()
@@ -249,7 +263,16 @@ class Environment
 	public static function init_session()
 	{
 		AppContext::get_session()->load();
-		AppContext::get_session()->act();
+		
+		$error_controller = null;
+		try
+		{
+			AppContext::get_session()->act();
+		}
+		catch (UnableToInitializeSessionException $exception)
+		{
+			$error_controller = $exception->get_error_controller();
+		}
 
 		AppContext::init_current_user();
 
@@ -288,6 +311,11 @@ class Environment
 		}
 		$user_lang = find_require_dir(PATH_TO_ROOT . '/lang/', $user_lang);
 		AppContext::get_current_user()->set_locale($user_lang);
+		
+		if ($error_controller != null)
+		{
+			throw new UnableToInitializeSessionException($error_controller);
+		}
 	}
 
 	public static function init_output_bufferization()

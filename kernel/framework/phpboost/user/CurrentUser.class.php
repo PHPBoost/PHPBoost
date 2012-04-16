@@ -38,19 +38,6 @@ class CurrentUser extends User
 	public function __construct()
 	{
 		$this->user_data = AppContext::get_session()->get_data();
-		
-		$this->id = $this->user_data['user_id'];
-		$this->login = $this->user_data['login'];
-		$this->level = $this->user_data['level'];
-		$this->email = $this->user_data['user_mail'];
-		
-		$this->show_email = $this->user_data['user_show_mail'];
-		
-		$this->locale = $this->user_data['user_lang'];
-		$this->theme = $this->user_data['user_theme'];
-		$this->timezone = $this->user_data['user_timezone'];
-		$this->editor = $this->user_data['user_editor'];
-		
 		$this->build_groups();
 	}
 	
