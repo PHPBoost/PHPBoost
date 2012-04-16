@@ -165,7 +165,6 @@ class LangLoader
 			return $real_lang_file;
 		}
 
-
 		throw new LangNotFoundException($folder, $filename);
 	}
 

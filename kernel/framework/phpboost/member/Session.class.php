@@ -64,74 +64,89 @@ class Session
 
 		if (retrieve(GET, 'disconnect', false)) //Déconnexion.
 		{
-			//vérification de la validité du jeton
-			$this->csrf_get_protect();
-
-			$this->end();
-			AppContext::get_response()->redirect(Environment::get_home_page());
+			$this->close();
 		}
 		elseif (retrieve(POST, 'connect', false) && !empty($login) && !empty($password)) //Création de la session.
 		{
-			$user_id = $this->sql->query("SELECT user_id FROM " . DB_TABLE_MEMBER . " WHERE login = '" . $login . "'", __LINE__, __FILE__);
-			if (!empty($user_id)) //Membre existant.
+			$this->connect($login, $password);
+			AppContext::get_response()->redirect(Environment::get_home_page());
+		}
+	}
+	
+	private function connect($login, $password)
+	{
+		$user_id = $this->sql->query("SELECT user_id FROM " . DB_TABLE_MEMBER . " WHERE login = '" . $login . "'", __LINE__, __FILE__);
+		if (!empty($user_id)) //Membre existant.
+		{
+			$info_connect = $this->sql->query_array(DB_TABLE_MEMBER, 'level', 'user_warning', 'last_connect', 'test_connect', 'user_ban', 'user_aprob', "WHERE user_id='" . $user_id . "'", __LINE__, __FILE__);
+			$delay_connect = (time() - $info_connect['last_connect']); //Délai entre deux essais de connexion.
+			$delay_ban = (time() - $info_connect['user_ban']); //Vérification si le membre est banni.
+		
+			if ($delay_ban >= 0 && $info_connect['user_aprob'] == '1' && $info_connect['user_warning'] < '100') //Utilisateur non (plus) banni.
 			{
-				$info_connect = $this->sql->query_array(DB_TABLE_MEMBER, 'level', 'user_warning', 'last_connect', 'test_connect', 'user_ban', 'user_aprob', "WHERE user_id='" . $user_id . "'", __LINE__, __FILE__);
-				$delay_connect = (time() - $info_connect['last_connect']); //Délai entre deux essais de connexion.
-				$delay_ban = (time() - $info_connect['user_ban']); //Vérification si le membre est banni.
-
-				if ($delay_ban >= 0 && $info_connect['user_aprob'] == '1' && $info_connect['user_warning'] < '100') //Utilisateur non (plus) banni.
-				{
-					if ($delay_connect >= 600) //5 nouveau essais, 10 minutes après.
-					{
-						$this->sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET last_connect='" . time() . "', test_connect = 0 WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__); //Remise à zéro du compteur d'essais.
-						$error_report = $this->start($user_id, $password, $info_connect['level'], REWRITED_SCRIPT, '', '', $autoconnexion); //On lance la session.
-					}
-					elseif ($delay_connect >= 300) //2 essais 5 minutes après
-					{
-						$this->sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET last_connect='" . time() . "', test_connect = 3 WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__); //Redonne 2 essais.
-						$error_report = $this->start($user_id, $password, $info_connect['level'], REWRITED_SCRIPT, '', '', $autoconnexion); //On lance la session.
-					}
-					elseif ($info_connect['test_connect'] < 5) //Succès.
-					{
-						$error_report = $this->start($user_id, $password, $info_connect['level'], REWRITED_SCRIPT, '', '', $autoconnexion); //On lance la session.
-					}
-					else //plus d'essais
-					{
-						DispatchManager::redirect(PHPBoostErrors::flood());
-					}
-				}
-				elseif ($info_connect['user_aprob'] == '0')
-				{
-					DispatchManager::redirect(PHPBoostErrors::member_not_enabled());
-				}
-				elseif ($info_connect['user_warning'] == '100')
-				{
-					DispatchManager::redirect(PHPBoostErrors::member_banned());
-				}
-				else
-				{
-					$delay_ban = ceil((0 - $delay_ban)/60);
-					DispatchManager::redirect(PHPBoostErrors::member_banned($delay_ban));
-				}
-
-				if (!empty($error_report)) //Erreur
-				{
-					$this->sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET last_connect='" . time() . "', test_connect = test_connect + 1 WHERE user_id='" . $user_id . "'", __LINE__, __FILE__);
-					$info_connect['test_connect']++;
-					$info_connect['test_connect'] = 5 - $info_connect['test_connect'];
-					DispatchManager::redirect(PHPBoostErrors::member_flood($info_connect['test_connect']));
-				}
-				elseif ($info_connect['test_connect'] > 0) //Succès redonne tous les essais.
+				if ($delay_connect >= 600) //5 nouveau essais, 10 minutes après.
 				{
 					$this->sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET last_connect='" . time() . "', test_connect = 0 WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__); //Remise à zéro du compteur d'essais.
+					$error_report = $this->start($user_id, $password, $info_connect['level'], REWRITED_SCRIPT, '', '', $autoconnexion); //On lance la session.
 				}
+				elseif ($delay_connect >= 300) //2 essais 5 minutes après
+				{
+					$this->sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET last_connect='" . time() . "', test_connect = 3 WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__); //Redonne 2 essais.
+					$error_report = $this->start($user_id, $password, $info_connect['level'], REWRITED_SCRIPT, '', '', $autoconnexion); //On lance la session.
+				}
+				elseif ($info_connect['test_connect'] < 5) //Succès.
+				{
+					$error_report = $this->start($user_id, $password, $info_connect['level'], REWRITED_SCRIPT, '', '', $autoconnexion); //On lance la session.
+				}
+				else //plus d'essais
+				{
+					$this->redirect_to_error_controller(PHPBoostErrors::flood());
+				}
+			}
+			elseif ($info_connect['user_aprob'] == '0')
+			{
+				$this->redirect_to_error_controller(PHPBoostErrors::member_not_enabled());
+			}
+			elseif ($info_connect['user_warning'] == '100')
+			{
+				$this->redirect_to_error_controller(PHPBoostErrors::member_banned());
 			}
 			else
 			{
-				DispatchManager::redirect(PHPBoostErrors::unexisting_member());
+				$delay_ban = ceil((0 - $delay_ban)/60);
+				$this->redirect_to_error_controller(PHPBoostErrors::member_banned($delay_ban));
 			}
-			AppContext::get_response()->redirect(Environment::get_home_page());
+		
+			if (!empty($error_report)) //Erreur
+			{
+				$this->sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET last_connect='" . time() . "', test_connect = test_connect + 1 WHERE user_id='" . $user_id . "'", __LINE__, __FILE__);
+				$info_connect['test_connect']++;
+				$info_connect['test_connect'] = 5 - $info_connect['test_connect'];
+				$this->redirect_to_error_controller(PHPBoostErrors::member_flood($info_connect['test_connect']));
+			}
+			elseif ($info_connect['test_connect'] > 0) //Succès redonne tous les essais.
+			{
+				$this->sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET last_connect='" . time() . "', test_connect = 0 WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__); //Remise à zéro du compteur d'essais.
+			}
 		}
+		else
+		{
+			$this->redirect_to_error_controller(PHPBoostErrors::unexisting_member());
+		}
+	}
+	
+	private function redirect_to_error_controller(Controller $controller)
+	{
+		throw new UnableToInitializeSessionException($controller);
+	}
+	
+	private function close()
+	{
+		//vérification de la validité du jeton
+		$this->csrf_get_protect();
+		
+		$this->end();
+		AppContext::get_response()->redirect(Environment::get_home_page());
 	}
 
 	/**
@@ -249,6 +264,8 @@ class Session
 
 			AppContext::get_response()->set_cookie(new HTTPCookie($sessions_config->get_cookie_name().'_autoconnect', serialize($session_autoconnect), time() + 31536000));
 		}
+		
+		AppContext::init_current_user();
 
 		unset($pwd);
 		return $error;
@@ -705,7 +722,7 @@ class Session
 
 		if ($redirect !== false && !empty($redirect))
 		{
-			DispatchManager::redirect(PHPBoostErrors::CSRF());
+			$this->redirect_to_error_controller(PHPBoostErrors::CSRF());
 		}
 	}
 
