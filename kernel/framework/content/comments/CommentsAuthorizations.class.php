@@ -33,11 +33,6 @@ class CommentsAuthorizations
 {
 	private $authorized_access_module = true;
 	
-	private $authorized_read = null;
-	private $authorized_post = null;
-	private $authorized_moderation = null;
-	private $authorized_note = null;
-	
 	const READ_AUTHORIZATIONS = 1;
 	const POST_AUTHORIZATIONS = 2;
 	const MODERATION_AUTHORIZATIONS = 4;
@@ -76,68 +71,9 @@ class CommentsAuthorizations
 		$this->authorized_access_module = $authorized;
 	}
 	
-	/**
-	 * @param boolean $authorized
-	 */
-	public function set_authorized_read($authorized)
-	{
-		$this->authorized_read = $authorized;
-	}
-	
-	/**
-	 * @param boolean $authorized
-	 */
-	public function set_authorized_post($authorized)
-	{
-		$this->authorized_post = $authorized;
-	}
-	
-	/**
-	 * @param boolean $authorized
-	 */
-	public function set_authorized_moderation($authorized)
-	{
-		$this->authorized_moderation = $authorized;
-	}
-	
-	/**
-	 * @param boolean $authorized
-	 */
-	public function set_authorized_note($authorized)
-	{
-		$this->authorized_note = $authorized;
-	}
-	
 	private function check_authorizations($global_bit)
 	{
-		$manual_authorizations = $this->manual_authorizations($global_bit);
-		if ($manual_authorizations !== null)
-		{
-			return $manual_authorizations;
-		}
-		else
-		{
-			return AppContext::get_current_user()->check_auth(CommentsConfig::load()->get_authorizations(), $global_bit);
-		}
-	}
-	
-	private function manual_authorizations($type)
-	{
-		switch ($type) 
-		{
-			case self::READ_AUTHORIZATIONS:
-				return $this->authorized_read;
-			break;
-			case self::POST_AUTHORIZATIONS:
-				return $this->authorized_post;
-			break;
-			case self::MODERATION_AUTHORIZATIONS:
-				return $this->authorized_post;
-			break;
-			case self::NOTE_AUTHORIZATIONS:
-				return $this->authorized_note;
-			break;
-		}
+		return AppContext::get_current_user()->check_auth(CommentsConfig::load()->get_authorizations(), $global_bit);
 	}
 }
 ?>

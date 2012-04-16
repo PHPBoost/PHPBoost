@@ -64,7 +64,7 @@ class CommentsDAO
 	public static function get_user_id_posted_comment($comment_id)
 	{
 		$comment = self::$comments_cache->get_comment($comment_id);
-		return $comment['user_id'];
+		return $comment['user']['user_id'];
 	}
 	
 	public static function get_last_comment_added($module_id, $id_in_module, $user_id = 0)

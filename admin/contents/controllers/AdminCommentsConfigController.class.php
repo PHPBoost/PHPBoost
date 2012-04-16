@@ -113,7 +113,7 @@ class AdminCommentsConfigController extends AdminController
 				new FormFieldSelectChoiceOption($this->lang['comments.config.approbation.auto'], CommentsConfig::ALWAYS_APPROVE_COMMENTS),
 				new FormFieldSelectChoiceOption($this->lang['comments.config.approbation.moderator'], CommentsConfig::APPROBATE_COMMENTS_FOR_MODERATOR),
 				new FormFieldSelectChoiceOption($this->lang['comments.config.approbation.administrator'], CommentsConfig::APPROBATE_COMMENTS_FOR_ADMINISTRATOR)
-			)
+			), array('disabled' => true)
 		));
 
 		$fieldset->add_field(new FormFieldMultipleSelectChoice('forbidden_tags', $this->lang['comments.config.forbidden-tags'], $this->configuration->get_forbidden_tags(),

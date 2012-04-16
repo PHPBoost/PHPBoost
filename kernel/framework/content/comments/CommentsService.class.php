@@ -104,7 +104,7 @@ class CommentsService
 					}
 					if (!empty($user_read_only) && $user_read_only > time())
 					{
-						self::$template->put('KEEP_MESSAGE', MessageHelper::display('Read Only', MessageHelper::SUCCESS, 4));
+						self::$template->put('KEEP_MESSAGE', MessageHelper::display('Read Only', MessageHelper::NOTICE, 4));
 					}
 					else
 					{
@@ -179,8 +179,6 @@ class CommentsService
 	public static function display_comments($module_id, $id_in_module, $number_comments_display, $authorizations, $display_from_number_comments = false)
 	{
 		$template = new FileTemplate('framework/content/comments/comments_list.tpl');
-
-		$provider = CommentsProvidersService::get_provider($module_id);
 
 		if ($authorizations->is_authorized_read() && $authorizations->is_authorized_access_module())
 		{

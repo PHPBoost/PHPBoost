@@ -124,6 +124,15 @@ class UserUrlBuilder
 		return DispatchManager::get_url(self::$dispatcher, '/messages/'. $user_id);
 	}
 	
+	public static function comments($module = '', $user_id = null)
+	{
+		if (!empty($user_id))
+		{
+			return DispatchManager::get_url(self::$dispatcher, '/messages/'. $user_id . '/comments/' . $module);
+		}
+		return DispatchManager::get_url(self::$dispatcher, '/messages/comments/' . $module);
+	}
+	
 	public static function group($id)
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/group/' . $id);
