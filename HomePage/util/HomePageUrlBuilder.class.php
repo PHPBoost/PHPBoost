@@ -40,5 +40,10 @@ class HomePageUrlBuilder
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/admin/config/');
 	}
+	
+	public static function add_plugin($column, $plugin_class = '')
+	{
+		return DispatchManager::get_url(self::$dispatcher, '/admin/plugin/add/' . $column . '/' . $plugin_class);
+	}
 }
 ?>

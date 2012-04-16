@@ -64,7 +64,7 @@ class HomePageSetup extends DefaultModuleSetup
 			'object' => array('type' => 'text', 'length' => 65000),
 			'column' => array('type' => 'boolean', 'length' => 2, 'notnull' => 1, 'default' => 0),
 			'position' => array('type' => 'boolean', 'length' => 2, 'notnull' => 1, 'default' => 0),
-			'enabled' => array('type' => 'boolean', 'length' => 1, 'notnull' => 1, 'default' => 0),
+			'enabled' => array('type' => 'boolean', 'notnull' => 1, 'default' => 0),
 			'authorizations' => array('type' => 'text', 'length' => 65000),
 		);
 		$options = array(

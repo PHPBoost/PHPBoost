@@ -81,9 +81,9 @@ abstract class Plugin
 		return new PluginConfiguration($this->get_id());
 	}
 	
-	public function get_form_configuration()
+	public function get_fieldset_configuration(HTMLForm $form)
 	{
-		return new PluginFormConfiguration($this->get_id());
+		return new PluginFieldsetConfiguration($this->get_id(), $this->get_configuration(), $form);
 	}
 }
 ?>

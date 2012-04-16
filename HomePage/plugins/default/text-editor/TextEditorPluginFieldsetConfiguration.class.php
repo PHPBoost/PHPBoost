@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                      TextEditorPluginFormConfiguration.class.php
+ *                      TextEditorPluginFieldsetConfiguration.class.php
  *                            -------------------
  *   begin                : February 22, 2012
  *   copyright            : (C) 2012 Kevin MASSY
@@ -25,26 +25,17 @@
  *
  ###################################################*/
 
-class TextEditorPluginFormConfiguration extends PluginFormConfiguration
+class TextEditorPluginFieldsetConfiguration extends PluginFieldsetConfiguration
 {
-	protected function create_form()
+	protected function create_fieldset()
 	{
-		$form = new HTMLForm(__CLASS__);
 		$fieldset = new FormFieldsetHTML('config', 'config');
-		$form->add_fieldset($fieldset);
-		
 		$fieldset->add_field(new FormFieldTextEditor('contents', 'contents', $this->get_plugin_configuration()->get_content()));
-	
-		$form->add_button($submit_button = new FormButtonDefaultSubmit());
-		$form->add_button(new FormButtonReset());
-		
-		$this->set_form($form);
-		$this->set_submit_button($submit_button);
-
-		return $form;
+		$this->set_fieldset($fieldset);
+		return $fieldset;
 	}
 	
-	protected function handle_submit()
+	public function handle_submit()
 	{
 		$this->get_plugin_configuration()->set_content($this->get_form()->get_value('contents'));
 		$this->save();

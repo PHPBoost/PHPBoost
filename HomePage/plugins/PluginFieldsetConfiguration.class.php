@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                           PluginFormConfiguration.class.php
+ *                           PluginFieldsetConfiguration.class.php
  *                            -------------------
  *   begin                : February 21, 2012
  *   copyright            : (C) 2012 Kevin MASSY
@@ -25,63 +25,44 @@
  *
  ###################################################*/
 
-abstract class PluginFormConfiguration
+abstract class PluginFieldsetConfiguration
 {
 	private $form;
-	private $submit_button;
-	private $message_response;
+	private $fieldset;
+	private $id;
 	private $plugin_id;
 	private $plugin_configuration;
 	
-	public function __construct($plugin_id, PluginConfiguration $plugin_configuration)
+	public function __construct($plugin_id, PluginConfiguration $plugin_configuration, HTMLForm $form)
 	{
 		$this->plugin_id = $plugin_id;
 		$this->plugin_configuration = $plugin_configuration;
-		$this->create_form();
+		$this->form = $form;
+		$this->create_fieldset();
 	}
 	
 	public function get_plugin_id()
 	{
 		return $this->plugin_id;
 	}
-		
-	public function display()
-	{
-		return $this->form->display();
-	}
 	
-	protected abstract function create_form();
-	
-	protected abstract function handle_submit();
-	
-	protected function has_been_submited()
-	{
-		return $this->submit_button->has_been_submited() && $this->form->validate();
-	}
-	
-	protected function get_form()
+	public function get_form()
 	{
 		return $this->form;
 	}
 	
-	protected function set_form(HTMLForm $form)
+	protected abstract function create_fieldset();
+	
+	public abstract function handle_submit();
+	
+	protected function set_fieldset(FormFieldset $fieldset)
 	{
-		$this->form = $form;
-	}
-
-	protected function set_submit_button(FormButtonSubmit $submit_button)
-	{
-		$this->submit_button = $submit_button;
+		$this->fieldset = $fieldset;
 	}
 	
-	protected function set_message_response($message_helper)
+	public function get_fieldset()
 	{
-		$this->message_response = $message_helper;
-	}
-	
-	public function get_message_response()
-	{
-		return $this->message_response;
+		return $this->fieldset;
 	}
 	
 	public function get_plugin_configuration()
@@ -91,11 +72,7 @@ abstract class PluginFormConfiguration
 	
 	public function save()
 	{
-		try {
-			PersistenceContext::get_querier()->update(HomePageSetup::$home_page_table, array('object' => $this->get_plugin_configuration()), 'WHERE id=:id', array('id' => $id));
-		} catch (MySQLQuerierException $e) {
-			PersistenceContext::get_querier()->insert(HomePageSetup::$home_page_table, array('object' => $this->get_plugin_configuration()));
-		}
+		PersistenceContext::get_querier()->update(HomePageSetup::$home_page_table, array('object' => serialize($this->get_plugin_configuration())), 'WHERE id=:id', array('id' => $this->plugin_configuration->get_id()));
 	}
 }
 ?>

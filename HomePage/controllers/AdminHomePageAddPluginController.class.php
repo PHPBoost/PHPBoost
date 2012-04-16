@@ -30,31 +30,28 @@ class AdminHomePageAddPluginController extends AdminController
 	private $lang;
 	private $view;
 	private $form;
+	private $plugin_fieldset_configuration;
 	private $submit_button;
 
 	public function execute(HTTPRequest $request)
 	{
 		$column_selected = $request->get_int('column', 1);
+		$plugin_selected = $request->get_string('plugin', '');
 		
 		$this->init();
-		$this->build_form($column_selected);
-		$this->view->put('FORM', $this->form->display());
-
-		if ($this->submit_button->has_been_submited() && $this->form->validate())
+		
+		$this->view->put('FORM_CHOICE_PLUGIN', $this->build_plugin_choice($column_selected, $plugin_selected)->display());
+		
+		if (!empty($plugin_selected))
 		{
-			$plugin_class = $this->form->get_value('PluginSelect')->get_raw_value();
-			$plugin = new $plugin_class();
+			$this->build_form($column_selected, $plugin_selected);
+			$this->view->put('FORM', $this->form->display());
 			
-			if ($plugin->has_configuration())
+			if ($this->submit_button->has_been_submited() && $this->form->validate())
 			{
-				$plugin_form = $plugin->get_form_configuration();
-				$this->view->put_all(array(
-					'PLUGIN_FORM_CONFIG' => $plugin_form->display()
-				));
+				$this->save($plugin_selected);
+				$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('process.success', 'errors-common'), MessageHelper::SUCCESS));
 			}
-			
-			$this->save();
-			$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('process.success', 'errors-common'), MessageHelper::SUCCESS));
 		}
 
 		return $this->response();
@@ -63,10 +60,20 @@ class AdminHomePageAddPluginController extends AdminController
 	private function init()
 	{
 		$this->lang = LangLoader::get('common', 'HomePage');
-		$this->view = new StringTemplate('# INCLUDE MSG # # INCLUDE FORM # # INCLUDE PLUGIN_FORM_CONFIG #');
+		$this->view = new StringTemplate('# INCLUDE MSG # # INCLUDE FORM_CHOICE_PLUGIN # # INCLUDE FORM # # INCLUDE PLUGIN_FORM_CONFIG #');
 	}
 	
-	private function build_form($column_selected)
+	private function build_plugin_choice($column_selected, $plugin_selected)
+	{
+		$form = new HTMLForm('PluginChoice');
+		$fieldset = new FormFieldsetHTML('PluginChoice', $this->lang['plugin.type']);
+		$form->add_fieldset($fieldset);
+		$fieldset->add_field(new FormFieldHomePagePluginSelect('PluginSelect', $this->lang['plugin.type'], $plugin_selected,
+		array('events' => array('change' => 'document.location = "'. HomePageUrlBuilder::add_plugin($column_selected, $plugin_selected)->absolute() .'" + HTMLForms.getField("plugin").getValue();'))));
+		return $form;
+	}
+	
+	private function build_form($column_selected, $plugin_selected)
 	{
 		$this->form = new HTMLForm('HomePage');
 
@@ -81,8 +88,6 @@ class AdminHomePageAddPluginController extends AdminController
 			new FormFieldSelectChoiceOption('3', '3')
 		)));
 
-		$fieldset->add_field(new FormFieldHomePagePluginSelect('PluginSelect', $this->lang['plugin.type']));
-		
 		$fieldset->add_field(new FormFieldCheckbox('enabled', $this->lang['enabled']));
 		
 		$auth_settings = new AuthorizationsSettings(array(new ActionAuthorization($this->lang['authorizations'], Plugin::READ_AUTHORIZATIONS)));
@@ -90,14 +95,31 @@ class AdminHomePageAddPluginController extends AdminController
 		$auth_setter = new FormFieldAuthorizationsSetter('authorizations', $auth_settings);
 		$fieldset->add_field($auth_setter);
 		
+		$plugin = new $plugin_selected();
+		if ($plugin->has_configuration())
+		{
+			$this->plugin_fieldset_configuration = $plugin->get_fieldset_configuration($this->form);
+			$this->form->add_fieldset($this->plugin_fieldset_configuration->get_fieldset());
+		}
+		
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$this->form->add_button($this->submit_button);
 		$this->form->add_button(new FormButtonReset());
 	}
 	
-	private function save()
+	private function save($plugin_selected)
 	{
-		
+		$enabled = $this->form->get_value('enabled');
+		$title = $this->form->get_value('title');
+		$id = HomePagePluginsService::add(array(
+			'title' => $title,
+			'column' => $this->form->get_value('column')->get_raw_value(),
+			'class' => $plugin_selected,
+			'enabled' => (int)$this->form->get_value('enabled'),
+			'authorizations' => serialize($this->form->get_value('authorizations')->build_auth_array())
+		));
+		$this->plugin_fieldset_configuration->get_plugin_configuration()->set_id($id);
+		$this->plugin_fieldset_configuration->handle_submit();
 	}
 	
 	private function response()

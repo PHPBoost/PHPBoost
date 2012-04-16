@@ -34,6 +34,11 @@ abstract class PluginConfiguration
 		$this->id = $id;
 	}
 	
+	public function set_id($id)
+	{
+		$this->id = $id;
+	}
+	
 	public function get_id()
 	{
 		return $this->id;

@@ -36,7 +36,8 @@ class HomePagePluginsService
 	
 	public static function add(Array $columns)
 	{
-		self::$db_querier->insert(HomePageSetup::$home_page_table, $columns);
+		$result = self::$db_querier->insert(HomePageSetup::$home_page_table, $columns);
+		return $result->get_last_inserted_id();
 	}
 	
 	public static function delete($condition, Array $parameters)

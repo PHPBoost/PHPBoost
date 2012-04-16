@@ -43,9 +43,9 @@ class TextEditorPlugin extends Plugin
 		return TextEditorPluginConfiguration::load($this->get_id());
 	}
 	
-	public function get_form_configuration()
+	public function get_fieldset_configuration(HTMLForm $form)
 	{
-		return new TextEditorPluginFormConfiguration($this->get_id(), $this->get_configuration());
+		return new TextEditorPluginFieldsetConfiguration($this->get_id(), $this->get_configuration(), $form);
 	}
 }
 ?>

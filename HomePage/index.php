@@ -31,7 +31,7 @@ require_once PATH_TO_ROOT . '/kernel/init.php';
 
 $url_controller_mappers = array(
 	new UrlControllerMapper('AdminHomePageConfigController', '`^/admin(?:/config)?/?$`'),
-	new UrlControllerMapper('AdminHomePageAddPluginController', '`^/admin/plugin/add(?:/([0-9]+))?/?$`', array('column')),
+	new UrlControllerMapper('AdminHomePageAddPluginController', '`^/admin/plugin/add(?:/([0-9]+))?/?([A-Za-z0-9]+)?/?$`', array('column', 'plugin')),
 	new UrlControllerMapper('HomePagePreviewController', '`^/preview/?$`'),
 );
 DispatchManager::dispatch($url_controller_mappers);
