@@ -63,17 +63,17 @@
 					<tr> 
 						<td class="row2">
 							<div style="height:140px;width:358px;overflow:auto;margin:auto;">
-								# START com_list #	
+								# START comments_list #	
 								<div style="margin-bottom:10px;">
-									<a href="{com_list.U_PROV}#anchor_{com_list.COM_SCRIPT}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/ancre.png" alt="" /></a> <span class="text_small">{L_BY} {com_list.USER_PSEUDO}</span>
-									<p class="text_small">{com_list.CONTENTS}</p>
+									<a href="{comments_list.U_LINK}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/ancre.png" alt="" /></a> <span class="text_small">{L_BY} {comments_list.U_PSEUDO}</span>
+									<p class="text_small">{comments_list.CONTENT}</p>
 								</div>	
-								# END com_list #
+								# END comments_list #
 								# IF C_NO_COM #
 								<p style="text-align:center;margin:0px;margin-top:50px;"><em>{L_NO_COMMENT}</em></p>
 								# ENDIF #
 							</div>
-							<p style="text-align:center;margin:0;margin-top:9px;"><a class="small_link" href="admin_com.php">{L_VIEW_ALL_COMMENTS}</a></p>
+							<p style="text-align:center;margin:0;margin-top:9px;"><a class="small_link" href="${relative_url(UserUrlBuilder::comments())}">{L_VIEW_ALL_COMMENTS}</a></p>
 						</td>
 					</tr>
 				</table>

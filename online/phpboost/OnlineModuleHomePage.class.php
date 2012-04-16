@@ -69,7 +69,7 @@ class OnlineModuleHomePage implements ModuleHomePage
 				'U_PROFILE' => UserUrlBuilder::profile($user->get_id())->absolute(),
 				'U_LOCATION' => $user->get_location_script(),
 				'PSEUDO' => $user->get_pseudo(),
-				'LEVEL_CLASS' => OnlineService::get_level_class($user->get_level()),
+				'LEVEL_CLASS' => UserService::get_level_class($user->get_level()),
 				'TITLE_LOCATION' => $user->get_location_title(),
 				'LAST_UPDATE' => $user->get_last_update()
 			));

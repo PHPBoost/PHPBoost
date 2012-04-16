@@ -61,7 +61,7 @@ class OnlineModuleMiniMenu extends ModuleMiniMenu
 				$tpl->assign_block_vars('users', array(
 					'U_PROFILE' => UserUrlBuilder::profile($user->get_id())->absolute(),
 					'PSEUDO' => TextHelper::wordwrap_html($user->get_pseudo(), 19),
-					'LEVEL_CLASS' => OnlineService::get_level_class($user->get_level()),
+					'LEVEL_CLASS' => UserService::get_level_class($user->get_level()),
 				));
 			}
 			

@@ -185,11 +185,11 @@ class CommentsService
 			$comments = self::get_comments($module_id, $id_in_module, $number_comments_display, $display_from_number_comments);
 			foreach ($comments as $id_comment => $comment)
 			{
-				$edit_comment_url = $comment['path'] . '&edit_comment=' . $id_comment . '#comments_message';
-				$delete_comment_url = $comment['path'] . '&delete_comment=' . $id_comment . '#comments_list';
+				$edit_comment_url = PATH_TO_ROOT . $comment['path'] . '&edit_comment=' . $id_comment . '#comments_message';
+				$delete_comment_url = PATH_TO_ROOT . $comment['path'] . '&delete_comment=' . $id_comment . '#comments_list';
 				
 				$template->assign_block_vars('comments_list', array(
-					'MESSAGE' => $comment['message'],
+					'MESSAGE' => FormatingHelper::second_parse($comment['message']),
 					'COMMENT_ID' => $id_comment,
 					'EDIT_COMMENT' => $edit_comment_url,
 					'DELETE_COMMENT' => $delete_comment_url
