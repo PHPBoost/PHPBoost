@@ -49,11 +49,37 @@ $Template->set_filenames(array(
 	'admin_index'=> 'admin/admin_index.tpl'
 ));
 
+$result = PersistenceContext::get_querier()->select("
+	SELECT comments.*, topic.*, member.*
+	FROM " . DB_TABLE_COMMENTS . " comments
+	LEFT JOIN " . DB_TABLE_COMMENTS_TOPIC . " topic ON comments.id_topic = topic.id_topic
+	LEFT JOIN " . DB_TABLE_MEMBER . " member ON member.user_id = comments.user_id
+	ORDER BY comments.timestamp DESC"
+);
+$i = 0;
+while ($row = $result->fetch())
+{
+	if (!empty($row['user_id'])) 
+	{
+		$group_color = User::get_group_color($row['user_groups'], $row['level']);
+		$com_pseudo = '<a href="'.  UserUrlBuilder::profile($row['user_id'])->absolute() .'" title="' . $row['login'] . '" class="' . UserService::get_level_class($row['level']) . '"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . TextHelper::wordwrap_html($row['login'], 13) . '</a>';
+	}
+	else
+		$com_pseudo = '<span style="font-style:italic;">' . (!empty($row['login']) ? TextHelper::wordwrap_html($row['login'], 13) : $LANG['guest']) . '</span>';
+	
+	$Template->assign_block_vars('comments_list', array(
+		'CONTENT' => ucfirst(FormatingHelper::second_parse($row['message'])),
+		'U_PSEUDO' => $com_pseudo,			
+		'U_LINK' => PATH_TO_ROOT . $row['path'],
+	));
+	$i++;
+}
 
 $Template->put_all(array(
 	'WRITING_PAD_CONTENT' => WritingPadConfig::load()->get_content(),
-	'C_NO_COM' => $LANG['no_comment'],
+	'C_NO_COM' => $i == 0,
 	'C_UNREAD_ALERTS' => (bool)AdministratorAlertService::get_number_unread_alerts(),
+	'L_NO_COM' => $LANG['no_comment'],
 	'L_INDEX_ADMIN' => $LANG['administration'],
 	'L_ADMIN_ALERTS' => $LANG['administrator_alerts'],
 	'L_NO_UNREAD_ALERT' => $LANG['no_unread_alert'],

@@ -176,5 +176,21 @@ class UserService
 			break;
 		}
 	}
+	
+	public static function get_level_class($level)
+	{
+		switch ($level)
+		{
+			case User::MEMBER_LEVEL:
+				return 'member';
+			break;
+			case User::MODERATOR_LEVEL:
+				return 'modo';
+			break;
+			case User::ADMIN_LEVEL:
+				return 'admin';
+			break;
+		}
+	}
 }
 ?>
