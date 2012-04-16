@@ -42,7 +42,7 @@ class AdminHomePageAddPluginController extends AdminController
 
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
-			/*$plugin_class = $this->form->get_value('PluginSelect')->get_raw_value();
+			$plugin_class = $this->form->get_value('PluginSelect')->get_raw_value();
 			$plugin = new $plugin_class();
 			
 			if ($plugin->has_configuration())
@@ -52,9 +52,9 @@ class AdminHomePageAddPluginController extends AdminController
 					'PLUGIN_FORM_CONFIG' => $plugin_form->display()
 				));
 			}
-			*/
+			
 			$this->save();
-			$this->view->put('MSG', MessageHelper::display($this->lang['success'], MessageHelper::SUCCESS));
+			$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('process.success', 'errors-common'), MessageHelper::SUCCESS));
 		}
 
 		return $this->response();
