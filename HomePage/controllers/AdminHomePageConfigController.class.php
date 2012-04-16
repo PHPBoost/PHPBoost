@@ -29,10 +29,13 @@ class AdminHomePageConfigController extends AdminController
 {
 	private $lang;
 	private $config;
+	private $form;
 
 	public function execute(HTTPRequest $request)
 	{
 		$this->init();
+		$this->build_form_configuration();
+		
 		$this->build_view();
 
 		return $this->response();
@@ -50,16 +53,17 @@ class AdminHomePageConfigController extends AdminController
 		$view->add_lang($this->lang);
 		
 		$view->put_all(array(
-			'CONFIGURATION' => $this->build_form_configuration()->display()
+			'CONFIGURATION' => $this->form->display()
 		));
 		
 		$all_plugins = HomePagePluginsService::get_installed_plugins();
-		for ($column = 1; $column <= $this->config->get_number_columns(); $column++) {
+		for ($column = 1; $column <= $this->config->get_number_columns(); $column++) 
+		{
 			$view->assign_block_vars('containers', array(
 				'ID' => $column
 			));
 			
-			/*$plugins = $all_plugins[$column];
+			$plugins = $all_plugins[$column];
 			foreach ($plugins as $plugin)
 			{
 				$object = $plugin['object'];
@@ -68,7 +72,7 @@ class AdminHomePageConfigController extends AdminController
 					'PLUGIN' => $object->get_view()
 				));
 			}
-			*/
+			
 		}
 
 		$view->put_all(array(
@@ -119,7 +123,7 @@ class AdminHomePageConfigController extends AdminController
 			new FormFieldSelectChoiceOption('2', '2'),
 			new FormFieldSelectChoiceOption('3', '3')
 		)));
-		return $form;
+		$this->form = $form;
 	}
 	
 	private function response()
