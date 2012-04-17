@@ -662,10 +662,21 @@ class KernelSetup
 	private function insert_data()
 	{
 		$this->messages = LangLoader::get('install', 'install');
+		$this->insert_visit_counter_data();
 		$this->insert_menu_configuration_data();
 		$this->insert_ranks_data();
 		$this->insert_member_data();
 		$this->insert_smileys_data();
+	}
+	
+	private function insert_visit_counter_data()
+	{
+		self::$db_querier->insert(self::$visit_counter_table, array(
+			'id' => 1,
+			'ip' => '',
+			'time' => time(),
+			'total' => 0
+		));
 	}
 
 	private function insert_menu_configuration_data()
@@ -676,7 +687,6 @@ class KernelSetup
 			'match_regex' => '`.*`',
 			'priority' => 1
 		));
-
 	}
 
 	private function insert_smileys_data()

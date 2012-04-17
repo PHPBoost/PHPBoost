@@ -255,7 +255,7 @@ class GuestbookHomePageExtensionPoint implements HomePageExtensionPoint
 			//Pseudo.
 			if (!$is_guest)
 			{
-				$guestbook_login = '<a class="msg_link_pseudo" href="'. PATH_TO_ROOT.'/user/member' . url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '" title="' . $row['mlogin'] . '"><span style="font-weight: bold;">' . TextHelper::wordwrap_html($row['mlogin'], 13) . '</span></a>';
+				$guestbook_login = '<a class="msg_link_pseudo" href="'. UserUrlBuilder::profile($row['user_id'])->absolute() .'" title="' . $row['mlogin'] . '"><span style="font-weight: bold;">' . TextHelper::wordwrap_html($row['mlogin'], 13) . '</span></a>';
 			}
 			else
 			{

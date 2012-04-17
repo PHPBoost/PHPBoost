@@ -119,9 +119,10 @@ if (!empty($members))
 	}
 
 	$stats_array = array();
-	$result = $Sql->query_while ("SELECT count(user_sex) as compt, user_sex
-	FROM " . PREFIX . "member
-	GROUP BY user_sex
+	$result = $Sql->query_while ("SELECT member.user_id, count(ext_field.user_sex) as compt, ext_field.user_sex
+	FROM " . PREFIX . "member member
+	LEFT JOIN " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " ext_field ON ext_field.user_id = member.user_id
+	GROUP BY ext_field.user_sex
 	ORDER BY compt", __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))
 	{

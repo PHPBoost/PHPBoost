@@ -83,7 +83,7 @@ class AddNewsletterController extends ModuleController
 		$fieldset = new FormFieldsetHTML('add-newsletter', $this->lang['newsletter-add']);
 		$form->add_fieldset($fieldset);
 		
-		$fieldset->add_field(new FormFieldMultipleSelectChoice('newsletter_choice', $this->lang['add.choice_streams'], array(), $this->get_streams()));
+		$fieldset->add_field(new FormFieldMultipleSelectChoice('newsletter_choice', $this->lang['add.choice_streams'], array(), $this->get_streams(), array('required' => true)));
 		
 		$fieldset->add_field(new FormFieldTextEditor('title', $this->lang['newsletter.title'], NewsletterConfig::load()->get_newsletter_name(), array(
 			'class' => 'text', 'required' => true)
