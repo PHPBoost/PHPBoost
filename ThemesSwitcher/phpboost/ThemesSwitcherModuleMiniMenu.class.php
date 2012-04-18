@@ -37,27 +37,20 @@ class ThemesSwitcherModuleMiniMenu extends ModuleMiniMenu
     	$themeswitcher_lang = LangLoader::get('themeswitcher_common', 'ThemesSwitcher');
 		$user = AppContext::get_current_user();
 		
-		$switchtheme = !empty($_GET['switchtheme']) ? urldecode($_GET['switchtheme']) : '';
-	    if (!empty($switchtheme))
-	    {
-	        if ($user->check_level(User::MEMBER_LEVEL))
-	        {
-	            AppContext::get_session()->csrf_get_protect();
-	        }
-	
-	    	if (preg_match('`[ a-z0-9_-]{3,20}`i', $switchtheme) && strpos($switchtheme, '\'') === false)
-	    	{
-	    		$user->update_theme($switchtheme); //Mise à jour du thème du membre.
-	    		if (QUERY_STRING != '')
-	    		{
-					$query_string = preg_replace('`token=[^&]+`', '', QUERY_STRING);
-					$query_string = preg_replace('`&switchtheme=[^&]+`', '', $query_string);
-					AppContext::get_response()->redirect(trim(HOST . SCRIPT . (!empty($query_string) ? '?' . $query_string : '')));
-	    		}
-				else
-	    			AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);
-	    	}
-	    }
+    	$theme_id = AppContext::get_request()->get_string('switchtheme', '');
+        if (!empty($theme_id))
+        {
+	        $theme = ThemeManager::get_theme($theme_id);
+			if ($theme !== null)
+			{
+				if ($theme->check_auth())
+				{
+					$user->update_theme($theme->get_id());
+				}
+			}
+			$query_string = preg_replace('`switchtheme=[^&]+`', '', QUERY_STRING);
+			AppContext::get_response()->redirect(trim(HOST . SCRIPT . (!empty($query_string) ? '?' . $query_string : '')));
+        }
 	
 	    $tpl = new FileTemplate('ThemesSwitcher/themeswitcher.tpl');
 	

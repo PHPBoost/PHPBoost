@@ -119,15 +119,15 @@ class CurrentUser extends User
 	{
 		$user_accounts_config = UserAccountsConfig::load();
 		$db_querier = PersistenceContext::get_querier();
-		if ($user_accounts_config->is_users_theme_forced())
+		if (!$user_accounts_config->is_users_theme_forced())
 		{
 			if ($this->get_level() > -1)
 			{
-				$db_querier->update(DB_TABLE_MEMBER, array('user_theme' => strprotect($theme)), 'WHERE user_id=:user_id', array('user_id' => $this->get_id()));
+				$db_querier->update(DB_TABLE_MEMBER, array('user_theme' => $theme), 'WHERE user_id=:user_id', array('user_id' => $this->get_id()));
 			}
 			else
 			{
-				$db_querier->update(DB_TABLE_MEMBER, array('user_theme' => strprotect($theme)), 'WHERE WHERE level=-1 AND session_id=session_id', array('session_id' => $this->user_data['session_id']));
+				$db_querier->update(DB_TABLE_MEMBER, array('user_theme' => $theme), 'WHERE level=-1 AND session_id=session_id', array('session_id' => $this->user_data['session_id']));
 			}
 		}
 	}
@@ -141,11 +141,11 @@ class CurrentUser extends User
 		$db_querier = PersistenceContext::get_querier();
 		if ($this->get_level() > -1)
 		{
-			$db_querier->update(DB_TABLE_MEMBER, array('user_lang' => strprotect($lang)), 'WHERE user_id=:user_id', array('user_id' => $this->get_id()));
+			$db_querier->update(DB_TABLE_MEMBER, array('user_lang' => $lang), 'WHERE user_id=:user_id', array('user_id' => $this->get_id()));
 		}
 		else
 		{
-			$db_querier->update(DB_TABLE_MEMBER, array('user_lang' => strprotect($lang)), 'WHERE WHERE level=-1 AND session_id=session_id', array('session_id' => $this->user_data['session_id']));
+			$db_querier->update(DB_TABLE_MEMBER, array('user_lang' => $lang), 'WHERE level=-1 AND session_id=session_id', array('session_id' => $this->user_data['session_id']));
 		}
 	}
 
