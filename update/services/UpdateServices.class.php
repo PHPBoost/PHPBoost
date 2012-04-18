@@ -66,10 +66,10 @@ class UpdateServices
 		$this->messages = LangLoader::get('update', 'update');
 	}
 	
-	public function is_already_installed()
+	public function is_already_installed($tables_prefix)
 	{
 		$tables_list = PersistenceContext::get_dbms_utils()->list_tables();
-		return in_array(PREFIX . 'member', $tables_list) || in_array(PREFIX . 'configs', $tables_list);
+		return in_array($tables_prefix . 'member', $tables_list) || in_array($tables_prefix . 'configs', $tables_list);
 	}
 	
 	public function check_db_connection($host, $port, $login, $password, &$database, $tables_prefix)

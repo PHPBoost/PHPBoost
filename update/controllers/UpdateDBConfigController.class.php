@@ -137,7 +137,7 @@ class UpdateDBConfigController extends UpdateController
 
 	private function create_connection(UpdateServices $service, $host, $port, $login, $password, $schema, $tables_prefix)
 	{
-		if ($service->is_already_installed())
+		if ($service->is_already_installed($tables_prefix))
 		{
 			PersistenceContext::close_db_connection();
 			$service->create_connection(DBFactory::MYSQL, $host, $port, $schema, $login, $password, $tables_prefix);
