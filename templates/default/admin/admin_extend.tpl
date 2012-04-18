@@ -18,14 +18,14 @@
 				<a href="${relative_url(AdminConfigUrlBuilder::general_config())}">{L_CONFIGURATION}</a>						
 			</td>
 			<td class="row2" style="width:20%;">
-				<a href="{PATH_TO_ROOT}/admin/themes/"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/themes.png" alt="" /></a>		
+				<a href="${relative_url(AdminThemeUrlBuilder::list_installed_theme())}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/themes.png" alt="" /></a>		
 				<br />
-				<a href="{PATH_TO_ROOT}/admin/themes/">{L_THEME}</a>			
+				<a href="${relative_url(AdminThemeUrlBuilder::list_installed_theme())}">{L_THEME}</a>			
 			</td>
 			<td class="row2" style="width:20%;">
-				<a href="{PATH_TO_ROOT}/admin/admin_lang.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/languages.png" alt="" /></a>		
+				<a href="${relative_url(AdminLangsUrlBuilder::list_installed_langs())}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/languages.png" alt="" /></a>		
 				<br />
-				<a href="{PATH_TO_ROOT}/admin/admin_lang.php">{L_LANG}</a>
+				<a href="${relative_url(AdminLangsUrlBuilder::list_installed_langs())}">{L_LANG}</a>
 			</td>	
 			<td class="row2" style="width:20%;">
 				<a href="{PATH_TO_ROOT}/admin/admin_smileys.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/smileys.png" alt="" /></a>	
@@ -109,14 +109,14 @@
 				<a href="{PATH_TO_ROOT}/admin/admin_files.php">{L_FILES}</a>		
 			</td>
 			<td class="row2" style="width:20%;">
-				<a href="{PATH_TO_ROOT}/admin/admin_com.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/com.png" alt="" /></a>		
+				<a href="${relative_url(UserUrlBuilder::comments())}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/com.png" alt="" /></a>		
 				<br />
-				<a href="{PATH_TO_ROOT}/admin/admin_com.php">{L_COM}</a>
+				<a href="${relative_url(UserUrlBuilder::comments())}">{L_COM}</a>
 			</td>	
 			<td class="row2" style="width:20%;">
-				<a href="{PATH_TO_ROOT}/admin/admin_modules.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/modules.png" alt="" /></a>		
+				<a href="${relative_url(AdminModulesUrlBuilder::list_installed_modules())}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/modules.png" alt="" /></a>		
 				<br />
-				<a href="{PATH_TO_ROOT}/admin/admin_modules.php">{L_MODULES}</a>	
+				<a href="${relative_url(AdminModulesUrlBuilder::list_installed_modules())}">{L_MODULES}</a>	
 			</td>
 		</tr>
 	</table>

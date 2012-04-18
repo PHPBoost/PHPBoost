@@ -49,7 +49,7 @@ class UpdateDBConfigCheckController extends UpdateController
 		$this->status = $service->check_db_connection($host, $port, $login, $password, $schema, $tables_prefix);
 		if ($this->status == UpdateServices::CONNECTION_SUCCESSFUL)
 		{
-			$this->already_installed = $service->is_already_installed();
+			$this->already_installed = $service->is_already_installed($tables_prefix);
 		}
 	}
 

@@ -105,11 +105,11 @@ $lang = array(
 	'db.connection.error' => 'Impossible de se connecter à la base de données. Merci de vérifier vos paramètres.',
 	'db.creation.error' => 'La base de données que vous avez indiquée n\'existe pas et le système n\'a pas l\'autorisation de la créer.',
 	'db.unknown.error' => 'Une erreur inconnue a été rencontrée.',
-	'phpboost.alreadyInstalled.alert' => 'Il existe déjà une installation de PHPBoost sur cette base de données avec ce préfixe. Si vous continuez, ces tables seront supprimées et vous perdrez certainement des données.',
 	'db.required.host' => 'Vous devez renseigner le nom de l\'hôte !',
 	'db.required.port' => 'Vous devez renseigner le port !',
 	'db.required.login' => 'Vous devez renseigner l\'identifiant de connexion !',
 	'db.required.schema' => 'Vous devez renseigner le nom de la base de données !',
+	'db.unexisting_database' => 'La base de donnée n\'existe pas. Veuillez vérifier vos paramètres.',
 	'phpboost.notInstalled' => 'Installation inexistante',
 	'phpboost.notInstalled.explanation' => '<p>La base de données sur laquelle vous souhaitez mettre à jour PHPBoost ne contient pas d\'installation.</p>
 	<p> Veuillez vérifier que vous avez bien saisi le bon prefix et la bonne base de données.</p>',
