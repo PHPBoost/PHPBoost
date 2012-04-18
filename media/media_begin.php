@@ -40,8 +40,6 @@ $notation = new Notation();
 $notation->set_module_name('media');
 $notation->set_notation_scale($MEDIA_CONFIG['note_max']);
 
-define('FEED_URL', SyndicationUrlBuilder::rss('media')->absolute());
-
 function bread_crumb($id)
 {
 	global $Bread_crumb, $MEDIA_CATS;

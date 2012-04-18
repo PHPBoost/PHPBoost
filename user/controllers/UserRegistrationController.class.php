@@ -137,12 +137,7 @@ class UserRegistrationController extends AbstractController
 	{
 		$activation_key = $this->user_accounts_config->get_member_accounts_validation_method() == UserAccountsConfig::MAIL_USER_ACCOUNTS_VALIDATION ? KeyGenerator::generate_key(15) : '';
 		$user_aprobation = $this->user_accounts_config->get_member_accounts_validation_method() == UserAccountsConfig::AUTOMATIC_USER_ACCOUNTS_VALIDATION ? '1' : '0';
-		
-		if (!$this->form->field_is_disabled('theme'))
-		{
-			$user->set_theme($this->form->get_value('theme')->get_raw_value());
-		}
-		
+
 		$user_authentification = new UserAuthentification($this->form->get_value('login'), $this->form->get_value('password'));
 		$user = new User();
 		$user->set_level(User::MEMBER_LEVEL);
@@ -154,6 +149,11 @@ class UserRegistrationController extends AbstractController
 		$user->set_approbation($user_aprobation);
 		$user->set_approbation_pass($activation_key);
 		$user_id = UserService::create($user_authentification, $user);
+		
+		if (!$this->form->field_is_disabled('theme'))
+		{
+			$user->set_theme($this->form->get_value('theme')->get_raw_value());
+		}
 		
 		MemberExtendedFieldsService::register_fields($this->form, $user_id);
 		
