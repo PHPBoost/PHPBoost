@@ -34,22 +34,14 @@ class BugtrackerExtensionPointProvider extends ExtensionPointProvider
 		$this->sql_querier = PersistenceContext::get_sql();
         parent::__construct('bugtracker');
     }
-    
+	
 	function get_cache()
 	{
-		global $Sql;
-		
-		$config_bugs = 'global $BUGS_CONFIG;' . "\n";
-		
-		//R�cup�ration du tableau lin�aris� dans la bdd.
-		$BUGS_CONFIG = unserialize($Sql->query("SELECT value FROM " . DB_TABLE_CONFIGS . " WHERE name = 'bugtracker'", __LINE__, __FILE__));
-		$BUGS_CONFIG = is_array($BUGS_CONFIG) ? $BUGS_CONFIG : array();
-		
-		$config_bugs .= '$BUGS_CONFIG = ' . var_export($BUGS_CONFIG, true) . ';' . "\n\n";
+		$config_bugs = BugtrackerConfig::load();
 		
 		return $config_bugs;	
 	}
-	
+
 	public function home_page()
 	{
 		return new BugtrackerHomePageExtensionPoint();

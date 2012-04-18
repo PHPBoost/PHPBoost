@@ -40,7 +40,7 @@ $categories = $bugtracker_config->get_categories();
 $versions = $bugtracker_config->get_versions();
 $authorizations = $bugtracker_config->get_authorizations();
 
-if( $User->check_level(User::ADMIN_LEVEL))
+if ($User->check_level(User::ADMIN_LEVEL))
 {
 	$Errorh->error_handler('e_auth', E_USER_REDIRECT); 
 	exit;
@@ -61,7 +61,7 @@ if (!empty($_POST['valid_add_type']))
 
 		BugtrackerConfig::save();
 	
-		###### Rï¿½gï¿½nï¿½ration du cache #######
+		###### Régénération du cache #######
 		$Cache->Generate_module_file('bugtracker');
 		
 		redirect(HOST . SCRIPT . '?error=success#errorh');
@@ -73,7 +73,7 @@ else if (!empty($_POST['valid_edit_type']) && is_numeric($id_post))
 {
 	$type = retrieve(POST, 'type', '');
 	
-	//On met ï¿½ jour
+	//On met à jour
 	if (!empty($type))
 	{
 		//Modification du type en question dans la liste des bugs
@@ -85,7 +85,7 @@ else if (!empty($_POST['valid_edit_type']) && is_numeric($id_post))
 		
 		BugtrackerConfig::save();
 		
-		###### Rï¿½gï¿½nï¿½ration du cache #######
+		###### Régénération du cache #######
 		$Cache->Generate_module_file('bugtracker');
 
 		redirect(HOST . SCRIPT . '?error=edit_type_success#errorh');
@@ -137,7 +137,7 @@ else if (isset($_GET['delete_type']) && is_numeric($id)) //Suppression d'un type
 	
 	BugtrackerConfig::save();
 	
-	//Mise ï¿½ jour de la liste des bugs dans le cache de la configuration.
+	//Mise à jour de la liste des bugs dans le cache de la configuration.
 	$Cache->Generate_module_file('bugtracker');
 
 	redirect(HOST . SCRIPT . '?error=success#errorh');
@@ -154,7 +154,7 @@ else if (!empty($_POST['valid_add_category']))
 	
 		BugtrackerConfig::save();
 		
-		###### Rï¿½gï¿½nï¿½ration du cache #######
+		###### Régénération du cache #######
 		$Cache->Generate_module_file('bugtracker');
 		
 		redirect(HOST . SCRIPT . '?error=success#errorh');
@@ -166,7 +166,7 @@ else if (!empty($_POST['valid_edit_category']) && is_numeric($id_post))
 {
 	$category = retrieve(POST, 'category', '');
 	
-	//On met ï¿½ jour
+	//On met à jour
 	if (!empty($category))
 	{
 		//Modification de la categorie en question dans la liste des bugs
@@ -178,7 +178,7 @@ else if (!empty($_POST['valid_edit_category']) && is_numeric($id_post))
 		
 		BugtrackerConfig::save();
 		
-		###### Rï¿½gï¿½nï¿½ration du cache #######
+		###### Régénération du cache #######
 		$Cache->Generate_module_file('bugtracker');
 
 		redirect(HOST . SCRIPT . '?error=edit_category_success#errorh');
@@ -186,7 +186,7 @@ else if (!empty($_POST['valid_edit_category']) && is_numeric($id_post))
 	else
 	redirect(HOST . SCRIPT . '?edit_category=true&id= ' . $id_post . '&error=incomplete#errorh');
 }
-else if (isset($_GET['edit_category']) && is_numeric($id)) // edition d'une catï¿½gorie
+else if (isset($_GET['edit_category']) && is_numeric($id)) // edition d'une catégorie
 {
 	$Template->set_filenames(array(
 		'admin_bugtracker'=> 'bugtracker/admin_bugtracker.tpl'
@@ -216,21 +216,21 @@ else if (isset($_GET['edit_category']) && is_numeric($id)) // edition d'une catï
 	
 	$Template->pparse('admin_bugtracker');
 }
-else if (isset($_GET['delete_category']) && is_numeric($id)) //Suppression d'une catï¿½gorie
+else if (isset($_GET['delete_category']) && is_numeric($id)) //Suppression d'une catégorie
 {
 	$Session->csrf_get_protect(); //Protection csrf
 	
-	//Suppression de la catï¿½gorie en question dans la liste des bugs
+	//Suppression de la catégorie en question dans la liste des bugs
 	$Sql->query_inject("UPDATE " . PREFIX . "bugtracker SET category = '' WHERE category = '" . addslashes($categories[$id]) . "'", __LINE__, __FILE__);
 	
-	//On supprime la catï¿½gorie de la liste
+	//On supprime la catégorie de la liste
 	unset($categories[$id]);
 	
 	$bugtracker_config->set_categories($category);
 	
 	BugtrackerConfig::save();
 	
-	//Mise ï¿½ jour de la liste des bugs dans le cache de la configuration.
+	//Mise à jour de la liste des bugs dans le cache de la configuration.
 	$Cache->Generate_module_file('bugtracker');
 
 	redirect(HOST . SCRIPT . '?error=success#errorh');
@@ -247,7 +247,7 @@ else if (!empty($_POST['valid_add_version']))
 	
 		BugtrackerConfig::save();
 		
-		###### Rï¿½gï¿½nï¿½ration du cache #######
+		###### Régénération du cache #######
 		$Cache->Generate_module_file('bugtracker');
 		
 		redirect(HOST . SCRIPT . '?error=success#errorh');
@@ -259,7 +259,7 @@ else if (!empty($_POST['valid_edit_version']) && is_numeric($id_post))
 {
 	$version = retrieve(POST, 'version', '');
 	
-	//On met ï¿½ jour
+	//On met à jour
 	if (!empty($version))
 	{
 		//Modification de la version en question dans la liste des bugs
@@ -272,7 +272,7 @@ else if (!empty($_POST['valid_edit_version']) && is_numeric($id_post))
 	
 		BugtrackerConfig::save();
 		
-		###### Rï¿½gï¿½nï¿½ration du cache #######
+		###### Régénération du cache #######
 		$Cache->Generate_module_file('bugtracker');
 
 		redirect(HOST . SCRIPT . '?error=edit_version_success#errorh');
@@ -325,7 +325,7 @@ else if (isset($_GET['delete_version']) && is_numeric($id)) //Suppression d'une 
 	
 	BugtrackerConfig::save();
 	
-	//Mise ï¿½ jour de la liste des bugs dans le cache de la configuration.
+	//Mise à jour de la liste des bugs dans le cache de la configuration.
 	$Cache->Generate_module_file('bugtracker');
 
 	redirect(HOST . SCRIPT . '?error=success#errorh');
@@ -344,7 +344,7 @@ else if (!empty($_POST['valid']))
 	
 	BugtrackerConfig::save();
 	
-	###### Rï¿½gï¿½nï¿½ration du cache #######
+	###### Régénération du cache #######
 	$Cache->Generate_module_file('bugtracker');
 	
 	redirect(HOST . SCRIPT . '?error=success#errorh');

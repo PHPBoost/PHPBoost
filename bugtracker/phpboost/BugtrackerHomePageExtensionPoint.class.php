@@ -151,12 +151,12 @@ class BugtrackerHomePageExtensionPoint implements HomePageExtensionPoint
 		$result = $this->sql_querier->query_while("SELECT *
 		FROM " . PREFIX . "bugtracker
 		ORDER BY " . $sort . " " . $mode .
-		$this->sql_querier->limit($Pagination->get_first_msg($bugtracker_config->get_items_per_page(), 'p'), $bugtracker_config->get_items_per_page()), __LINE__, __FILE__); //Bugs enregistrï¿½s.
+		$this->sql_querier->limit($Pagination->get_first_msg($bugtracker_config->get_items_per_page(), 'p'), $bugtracker_config->get_items_per_page()), __LINE__, __FILE__); //Bugs enregistrés.
 		while ($row = $this->sql_querier->fetch_assoc($result))
 		{
 			$tpl->assign_block_vars('list.bug', array(
 				'ID'			=> $row['id'],
-				'TITLE'			=> (strlen($row['title']) > 45 ) ? substr($row['title'], 0, 45) . '...' : $row['title'], // On raccourcis le titre pour ne pas dï¿½former le tableau
+				'TITLE'			=> (strlen($row['title']) > 45 ) ? substr($row['title'], 0, 45) . '...' : $row['title'], // On raccourcis le titre pour ne pas déformer le tableau
 				'TYPE'			=> !empty($row['type']) ? stripslashes($row['type']) : $BUGTRACKER_LANG['bugs.notice.none'],
 				'SEVERITY'		=> $BUGTRACKER_LANG['bugs.severity.' . $row['severity']],
 				'PRIORITY'		=> $BUGTRACKER_LANG['bugs.priority.' . $row['priority']],

@@ -150,6 +150,14 @@ $LANG['bugs.explain.version'] = 'Liste des versions du produit.<br />
 Remarques :<br />
 - Si la liste est vide, l\'option "Détecté dans la version" ne sera pas visible lors de la signalisation d\'un bug<br />
 - Si la liste ne contient qu\'une seule valeur, cette option ne sera pas non plus visible et sera attribuée par défaut au bug';
+$LANG['bugs.explain.default_content'] = 'Merci de nous donner les informations demandées ci-dessous, elles nous serons utiles pour la résolution du bug :
+Système d\'exploitation :
+Navigateur Web :
+Version de test (Site de test, archive zip) :
+Installation locale ou sur un serveur web ? :
+Lien :
+----------------------------------------------------------------------
+';
 
 //Recherche
 $LANG['bugs.search.where'] = 'Où ?';
