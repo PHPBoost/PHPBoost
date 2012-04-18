@@ -93,32 +93,32 @@
 				</tr>
 				# ELSE #
 				# START list.bug #
-				<tr style="text-align:center;"{bug.LINE_COLOR}> 
+				<tr style="text-align:center;"{list.bug.LINE_COLOR}> 
 					<td class="row2">
-						<a href="../bugtracker/bugtracker.php?view=true&amp;id={bug.ID}">#{bug.ID}</a>
+						<a href="../bugtracker/bugtracker.php?view=true&amp;id={list.bug.ID}">#{list.bug.ID}</a>
 					</td>
 					<td class="row2">
-						{bug.TITLE}
+						{list.bug.TITLE}
 					</td>
 					# IF NOT C_EMPTY_TYPES #
 					<td class="row2">
-						{bug.TYPE}
+						{list.bug.TYPE}
 					</td>
 					# ENDIF #
 					<td class="row2"{bug.COLOR}> 
-						<b>{bug.SEVERITY}</b>
+						<b>{list.bug.SEVERITY}</b>
 					</td>
 					<td class="row2"> 
-						{bug.PRIORITY}
+						{list.bug.PRIORITY}
 					</td>
 					<td class="row2">
-						{bug.DATE}
+						{list.bug.DATE}
 					</td>
 					# IF C_IS_ADMIN #
 					<td class="row2"> 
-						<a href="bugtracker.php?edit=true&amp;id={bug.ID}"><img src="../templates/{THEME}/images/{LANG}/edit.png" alt="{L_UPDATE}" title="{L_UPDATE}" /></a>
-						<a href="bugtracker.php?history=true&amp;id={bug.ID}"><img src="{PATH_TO_ROOT}/bugtracker/templates/images/history.png" alt="{L_HISTORY}" title="{L_HISTORY}" /></a>
-						<a href="bugtracker.php?delete=true&amp;id={bug.ID}&amp;token={TOKEN}" onclick="javascript:return Confirm();"><img src="../templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" /></a>
+						<a href="bugtracker.php?edit=true&amp;id={list.bug.ID}"><img src="../templates/{THEME}/images/{LANG}/edit.png" alt="{L_UPDATE}" title="{L_UPDATE}" /></a>
+						<a href="bugtracker.php?history=true&amp;id={list.bug.ID}"><img src="{PATH_TO_ROOT}/bugtracker/templates/images/history.png" alt="{L_HISTORY}" title="{L_HISTORY}" /></a>
+						<a href="bugtracker.php?delete=true&amp;id={list.bug.ID}&amp;token={TOKEN}" onclick="javascript:return Confirm();"><img src="../templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" /></a>
 					</td>
 					# ENDIF #
 				</tr>

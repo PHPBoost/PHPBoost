@@ -35,11 +35,15 @@ class BugtrackerExtensionPointProvider extends ExtensionPointProvider
         parent::__construct('bugtracker');
     }
 	
+	//Deprecated
 	function get_cache()
 	{
-		$config_bugs = BugtrackerConfig::load();
-		
-		return $config_bugs;	
+		$config_bugtracker = unserialize($this->sql_querier->query("SELECT value FROM " . DB_TABLE_CONFIGS . " WHERE name = 'module-bugtracker-config'", __LINE__, __FILE__));
+
+		$string = 'global $CONFIG_BUGTRACKER;' . "\n\n" . '$CONFIG_BUGTRACKER = array();' . "\n\n";
+		$string .= '$CONFIG_BUGTRACKER = ' . var_export($config_bugtracker, true) . ';' . "\n\n";
+
+		return $string;
 	}
 
 	public function home_page()

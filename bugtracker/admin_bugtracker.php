@@ -40,12 +40,6 @@ $categories = $bugtracker_config->get_categories();
 $versions = $bugtracker_config->get_versions();
 $authorizations = $bugtracker_config->get_authorizations();
 
-if ($User->check_level(User::ADMIN_LEVEL))
-{
-	$Errorh->error_handler('e_auth', E_USER_REDIRECT); 
-	exit;
-}
-
 $id = retrieve(GET, 'id', 0, TINTEGER);
 $id_post = retrieve(POST, 'id', 0, TINTEGER);
 
