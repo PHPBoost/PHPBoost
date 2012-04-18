@@ -108,7 +108,7 @@
 					</dl>
 					<dl class="overflow_visible">
 						<dt><label for="severity_minor_color">{L_SEVERITY_MINOR_COLOR}</label></dt>
-						<dd>#<input type="text" size="7" name="severity_minor_color" id="severity_minor_color" value="{SEVERITY_MINOR_COLOR}" style="background-color:#{SEVERITY_MINOR_COLOR};" class="text" />
+						<dd>\#<input type="text" size="7" name="severity_minor_color" id="severity_minor_color" value="{SEVERITY_MINOR_COLOR}" style="background-color:\#{SEVERITY_MINOR_COLOR};" class="text" />
 							<a href="javascript:bbcode_color('severity_minor_color');bb_display_block('1', '');" onmouseout="bb_hide_block('1', '', 0);" class="bbcode_hover"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/color.png" alt="" class="valign_middle" /></a>	
 							<div style="position:relative;z-index:100;display:none;" id="bb_block1">
 								<div id="severity_minor_color_list" class="bbcode_block" style="background:white;width:150px;" onmouseover="bb_hide_block('1', '', 1);" onmouseout="bb_hide_block('1', '', 0);">
@@ -118,7 +118,7 @@
 					</dl>
 					<dl class="overflow_visible">
 						<dt><label for="severity_major_color">{L_SEVERITY_MAJOR_COLOR}</label></dt>
-						<dd>#<input type="text" size="7" name="severity_major_color" id="severity_major_color" value="{SEVERITY_MAJOR_COLOR}" style="background-color:#{SEVERITY_MAJOR_COLOR};" class="text" />
+						<dd>\#<input type="text" size="7" name="severity_major_color" id="severity_major_color" value="{SEVERITY_MAJOR_COLOR}" style="background-color:\#{SEVERITY_MAJOR_COLOR};" class="text" />
 							<a href="javascript:bbcode_color('severity_major_color');bb_display_block('2', '');" onmouseout="bb_hide_block('2', '', 0);" class="bbcode_hover"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/color.png" alt="" class="valign_middle" /></a>	
 							<div style="position:relative;z-index:100;display:none;" id="bb_block2">
 								<div id="severity_major_color_list" class="bbcode_block" style="background:white;width:150px;" onmouseover="bb_hide_block('2', '', 1);" onmouseout="bb_hide_block('2', '', 0);">
@@ -128,7 +128,7 @@
 					</dl>
 					<dl class="overflow_visible">
 						<dt><label for="severity_critical_color">{L_SEVERITY_CRITICAL_COLOR}</label></dt>
-						<dd>#<input type="text" size="7" name="severity_critical_color" id="severity_critical_color" value="{SEVERITY_CRITICAL_COLOR}" style="background-color:#{SEVERITY_CRITICAL_COLOR};" class="text" />
+						<dd>\#<input type="text" size="7" name="severity_critical_color" id="severity_critical_color" value="{SEVERITY_CRITICAL_COLOR}" style="background-color:\#{SEVERITY_CRITICAL_COLOR};" class="text" />
 							<a href="javascript:bbcode_color('severity_critical_color');bb_display_block('3', '');" onmouseout="bb_hide_block('3', '', 0);" class="bbcode_hover"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/color.png" alt="" class="valign_middle" /></a>	
 							<div style="position:relative;z-index:100;display:none;" id="bb_block3">
 								<div id="severity_critical_color_list" class="bbcode_block" style="background:white;width:150px;" onmouseover="bb_hide_block('3', '', 1);" onmouseout="bb_hide_block('3', '', 0);">
@@ -138,7 +138,7 @@
 					</dl>
 					<dl class="overflow_visible">
 						<dt><label for="closed_bug_color">{L_CLOSED_BUG_COLOR}</label></dt>
-						<dd>#<input type="text" size="7" name="closed_bug_color" id="closed_bug_color" value="{CLOSED_BUG_COLOR}" style="background-color:#{CLOSED_BUG_COLOR};" class="text" />
+						<dd>\#<input type="text" size="7" name="closed_bug_color" id="closed_bug_color" value="{CLOSED_BUG_COLOR}" style="background-color:\#{CLOSED_BUG_COLOR};" class="text" />
 							<a href="javascript:bbcode_color('closed_bug_color');bb_display_block('4', '');" onmouseout="bb_hide_block('4', '', 0);" class="bbcode_hover"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/color.png" alt="" class="valign_middle" /></a>	
 							<div style="position:relative;z-index:100;display:none;" id="bb_block4">
 								<div id="closed_bug_color_list" class="bbcode_block" style="background:white;width:150px;" onmouseover="bb_hide_block('4', '', 1);" onmouseout="bb_hide_block('4', '', 0);">

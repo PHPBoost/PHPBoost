@@ -34,27 +34,21 @@ include_once('bugtracker_constants.php');
 //Chargement du cache
 $Cache->load('bugtracker');
 
-$bugtracker_config = BugtrackerConfig::load();
-$types = $bugtracker_config->get_types();
-$categories = $bugtracker_config->get_categories();
-$versions = $bugtracker_config->get_versions();
-$authorizations = $bugtracker_config->get_authorizations();
-
 $id = retrieve(GET, 'id', 0, TINTEGER);
 $id_post = retrieve(POST, 'id', 0, TINTEGER);
 
 if (!empty($_POST['valid_add_type']))
 {
 	$type = retrieve(POST, 'type', '');
-
+	
+	$config_bugs = $BUGS_CONFIG;
+	
 	if (!empty($type))
 	{
-		$types[] = $type;
+		$config_bugs['types'][] = $type;
 
-		$bugtracker_config->set_types($types);
-
-		BugtrackerConfig::save();
-	
+		$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($config_bugs)) . "' WHERE name = 'bugtracker'", __LINE__, __FILE__);
+		
 		###### Régénération du cache #######
 		$Cache->Generate_module_file('bugtracker');
 		
@@ -71,13 +65,11 @@ else if (!empty($_POST['valid_edit_type']) && is_numeric($id_post))
 	if (!empty($type))
 	{
 		//Modification du type en question dans la liste des bugs
-		$Sql->query_inject("UPDATE " . PREFIX . "bugtracker SET type = '" . addslashes($type) . "' WHERE type = '" . addslashes($types[$id_post]) . "'", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE " . PREFIX . "bugtracker SET type = '" . addslashes($type) . "' WHERE type = '" . addslashes($BUGS_CONFIG['types'][$id_post]) . "'", __LINE__, __FILE__);
 		
-		$types[$id_post] = $type;
+		$BUGS_CONFIG['types'][$id_post] = $type;
 		
-		$bugtracker_config->set_types($types);
-		
-		BugtrackerConfig::save();
+		$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($BUGS_CONFIG)) . "' WHERE name = 'bugtracker'", __LINE__, __FILE__);
 		
 		###### Régénération du cache #######
 		$Cache->Generate_module_file('bugtracker');
@@ -95,7 +87,7 @@ else if (isset($_GET['edit_type']) && is_numeric($id)) // edition d'un type
 	
 	$Template->assign_block_vars('edit_type', array(
 		'ID'	=> $id,
-		'TYPE'	=> stripslashes($types[$id])
+		'TYPE'	=> stripslashes($BUGS_CONFIG['types'][$id])
 	));	
 	
 	$Template->assign_vars(array(
@@ -122,14 +114,12 @@ else if (isset($_GET['delete_type']) && is_numeric($id)) //Suppression d'un type
 	$Session->csrf_get_protect(); //Protection csrf
 	
 	//Suppression du type en question dans la liste des bugs
-	$Sql->query_inject("UPDATE " . PREFIX . "bugtracker SET type = '' WHERE type = '" . addslashes($types[$id]) . "'", __LINE__, __FILE__);
+	$Sql->query_inject("UPDATE " . PREFIX . "bugtracker SET type = '' WHERE type = '" . addslashes($BUGS_CONFIG['types'][$id]) . "'", __LINE__, __FILE__);
 	
 	//On supprime le type de la liste
-	unset($types[$id]);
+	unset($BUGS_CONFIG['types'][$id]);
 	
-	$bugtracker_config->set_types($types);
-	
-	BugtrackerConfig::save();
+	$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($BUGS_CONFIG)) . "' WHERE name = 'bugtracker'", __LINE__, __FILE__);
 	
 	//Mise à jour de la liste des bugs dans le cache de la configuration.
 	$Cache->Generate_module_file('bugtracker');
@@ -140,13 +130,13 @@ else if (!empty($_POST['valid_add_category']))
 {
 	$category = retrieve(POST, 'category', '');
 	
+	$config_bugs = $BUGS_CONFIG;
+	
 	if (!empty($category))
 	{
-		$categories[] = $category;
+		$config_bugs['categories'][] = $category;
 
-		$bugtracker_config->set_categories($categories);
-	
-		BugtrackerConfig::save();
+		$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($config_bugs)) . "' WHERE name = 'bugtracker'", __LINE__, __FILE__);
 		
 		###### Régénération du cache #######
 		$Cache->Generate_module_file('bugtracker');
@@ -164,13 +154,11 @@ else if (!empty($_POST['valid_edit_category']) && is_numeric($id_post))
 	if (!empty($category))
 	{
 		//Modification de la categorie en question dans la liste des bugs
-		$Sql->query_inject("UPDATE " . PREFIX . "bugtracker SET category = '" . addslashes($category) . "' WHERE category = '" . addslashes($categories[$id_post]) . "'", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE " . PREFIX . "bugtracker SET category = '" . addslashes($category) . "' WHERE category = '" . addslashes($BUGS_CONFIG['categories'][$id_post]) . "'", __LINE__, __FILE__);
 		
-		$categories[$id_post] = $category;
+		$BUGS_CONFIG['categories'][$id_post] = $category;
 		
-		$bugtracker_config->set_categories($category);
-		
-		BugtrackerConfig::save();
+		$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($BUGS_CONFIG)) . "' WHERE name = 'bugtracker'", __LINE__, __FILE__);
 		
 		###### Régénération du cache #######
 		$Cache->Generate_module_file('bugtracker');
@@ -188,7 +176,7 @@ else if (isset($_GET['edit_category']) && is_numeric($id)) // edition d'une caté
 	
 	$Template->assign_block_vars('edit_category', array(
 		'ID'		=> $id,
-		'CATEGORY'	=> stripslashes($categories[$id])
+		'CATEGORY'	=> stripslashes($BUGS_CONFIG['categories'][$id])
 	));	
 	
 	$Template->assign_vars(array(
@@ -215,14 +203,12 @@ else if (isset($_GET['delete_category']) && is_numeric($id)) //Suppression d'une
 	$Session->csrf_get_protect(); //Protection csrf
 	
 	//Suppression de la catégorie en question dans la liste des bugs
-	$Sql->query_inject("UPDATE " . PREFIX . "bugtracker SET category = '' WHERE category = '" . addslashes($categories[$id]) . "'", __LINE__, __FILE__);
+	$Sql->query_inject("UPDATE " . PREFIX . "bugtracker SET category = '' WHERE category = '" . addslashes($BUGS_CONFIG['categories'][$id]) . "'", __LINE__, __FILE__);
 	
 	//On supprime la catégorie de la liste
-	unset($categories[$id]);
+	unset($BUGS_CONFIG['categories'][$id]);
 	
-	$bugtracker_config->set_categories($category);
-	
-	BugtrackerConfig::save();
+	$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($BUGS_CONFIG)) . "' WHERE name = 'bugtracker'", __LINE__, __FILE__);
 	
 	//Mise à jour de la liste des bugs dans le cache de la configuration.
 	$Cache->Generate_module_file('bugtracker');
@@ -233,13 +219,13 @@ else if (!empty($_POST['valid_add_version']))
 {
 	$version = retrieve(POST, 'version', '');
 	
+	$config_bugs = $BUGS_CONFIG;
+	
 	if (!empty($version))
 	{
-		$versions[] = $version;
+		$config_bugs['versions'][] = $version;
 
-		$bugtracker_config->set_versions($version);
-	
-		BugtrackerConfig::save();
+		$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($config_bugs)) . "' WHERE name = 'bugtracker'", __LINE__, __FILE__);
 		
 		###### Régénération du cache #######
 		$Cache->Generate_module_file('bugtracker');
@@ -257,14 +243,12 @@ else if (!empty($_POST['valid_edit_version']) && is_numeric($id_post))
 	if (!empty($version))
 	{
 		//Modification de la version en question dans la liste des bugs
-		$Sql->query_inject("UPDATE " . PREFIX . "bugtracker SET detected_in = '" . addslashes($version) . "' WHERE detected_in = '" . addslashes($versions[$id_post]) . "'", __LINE__, __FILE__);
-		$Sql->query_inject("UPDATE " . PREFIX . "bugtracker SET fixed_in = '" . addslashes($version) . "' WHERE fixed_in = '" . addslashes($versions[$id_post]) . "'", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE " . PREFIX . "bugtracker SET detected_in = '" . addslashes($version) . "' WHERE detected_in = '" . addslashes($BUGS_CONFIG['versions'][$id_post]) . "'", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE " . PREFIX . "bugtracker SET fixed_in = '" . addslashes($version) . "' WHERE fixed_in = '" . addslashes($BUGS_CONFIG['versions'][$id_post]) . "'", __LINE__, __FILE__);
 		
-		$versions[$id_post] = $version;
+		$BUGS_CONFIG['versions'][$id_post] = $version;
 		
-		$bugtracker_config->set_versions($version);
-	
-		BugtrackerConfig::save();
+		$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($BUGS_CONFIG)) . "' WHERE name = 'bugtracker'", __LINE__, __FILE__);
 		
 		###### Régénération du cache #######
 		$Cache->Generate_module_file('bugtracker');
@@ -282,7 +266,7 @@ else if (isset($_GET['edit_version']) && is_numeric($id)) // edition d'une versi
 	
 	$Template->assign_block_vars('edit_version', array(
 		'ID'		=> $id,
-		'VERSION'	=> stripslashes($versions[$id])
+		'VERSION'	=> stripslashes($BUGS_CONFIG['versions'][$id])
 	));	
 	
 	$Template->assign_vars(array(
@@ -309,15 +293,13 @@ else if (isset($_GET['delete_version']) && is_numeric($id)) //Suppression d'une 
 	$Session->csrf_get_protect(); //Protection csrf
 	
 	//Suppression de la version en question dans la liste des bugs
-	$Sql->query_inject("UPDATE " . PREFIX . "bugtracker SET detected_in = '' WHERE detected_in = '" . addslashes($versions[$id]) . "'", __LINE__, __FILE__);
-	$Sql->query_inject("UPDATE " . PREFIX . "bugtracker SET fixed_in = '' WHERE fixed_in = '" . addslashes($versions[$id]) . "'", __LINE__, __FILE__);
+	$Sql->query_inject("UPDATE " . PREFIX . "bugtracker SET detected_in = '' WHERE detected_in = '" . addslashes($BUGS_CONFIG['versions'][$id]) . "'", __LINE__, __FILE__);
+	$Sql->query_inject("UPDATE " . PREFIX . "bugtracker SET fixed_in = '' WHERE fixed_in = '" . addslashes($BUGS_CONFIG['versions'][$id]) . "'", __LINE__, __FILE__);
 	
 	//On supprime la version de la liste
-	unset($versions[$id]);
+	unset($BUGS_CONFIG['versions'][$id]);
 	
-	$bugtracker_config->set_versions($version);
-	
-	BugtrackerConfig::save();
+	$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($BUGS_CONFIG)) . "' WHERE name = 'bugtracker'", __LINE__, __FILE__);
 	
 	//Mise à jour de la liste des bugs dans le cache de la configuration.
 	$Cache->Generate_module_file('bugtracker');
@@ -326,22 +308,38 @@ else if (isset($_GET['delete_version']) && is_numeric($id)) //Suppression d'une 
 }
 else if (!empty($_POST['valid']))
 {
+	$config_bugs = array();
+	
 	$fields = array('items_per_page', 'severity_minor_color', 'severity_major_color', 'severity_critical_color', 'closed_bug_color', 'activ_com');
 	
-	$bugtracker_config->set_items_per_page(retrieve(POST, 'items_per_page', 20));
-	$bugtracker_config->set_severity_minor_color(retrieve(POST, 'severity_minor_color', '99CC00'));
-	$bugtracker_config->set_severity_major_color(retrieve(POST, 'severity_major_color', 'ffa500'));
-	$bugtracker_config->set_severity_critical_color(retrieve(POST, 'severity_critical_color', 'F04343'));
-	$bugtracker_config->set_closed_bug_color(retrieve(POST, 'closed_bug_color', 'ACA899'));
-	$bugtracker_config->set_comments_activated(!empty($_POST['activ_com']) ? true : false);	
-	$bugtracker_config->set_authorizations(Authorizations::build_auth_array_from_form(BUG_READ_AUTH_BIT, BUG_CREATE_AUTH_BIT, BUG_CREATE_ADVANCED_AUTH_BIT));
+	foreach ($fields as $field)
+	{
+		$config_bugs[$field] = retrieve(POST, $field, '');
+		if ($field == 'activ_com' && $config_bugs[$field] == 'on')
+			$config_bugs[$field] = 1;
+		else if ($field == 'activ_com' && $config_bugs[$field] == 'off')
+			$config_bugs[$field] = 0;
+	}
 	
-	BugtrackerConfig::save();
+	$config_bugs['types'] = $BUGS_CONFIG['types'];
+	$config_bugs['versions'] = $BUGS_CONFIG['versions'];
+	$config_bugs['categories'] = $BUGS_CONFIG['categories'];
+	$config_bugs['auth'] = Authorizations::build_auth_array_from_form(BUG_READ_AUTH_BIT, BUG_CREATE_AUTH_BIT, BUG_CREATE_ADVANCED_AUTH_BIT);
 	
-	###### Régénération du cache #######
-	$Cache->Generate_module_file('bugtracker');
-	
-	redirect(HOST . SCRIPT . '?error=success#errorh');
+	if ($config_bugs == $BUGS_CONFIG)
+		redirect(HOST . SCRIPT);
+		
+	if (!empty($config_bugs['items_per_page']))
+	{
+		$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($config_bugs)) . "' WHERE name = 'bugtracker'", __LINE__, __FILE__);
+		
+		###### Régénération du cache #######
+		$Cache->Generate_module_file('bugtracker');
+		
+		redirect(HOST . SCRIPT . '?error=success#errorh');
+	}
+	else
+	redirect(HOST . SCRIPT . '?error=require_items_per_page#errorh');
 }
 //Sinon on rempli le formulaire
 else	
@@ -354,10 +352,12 @@ else
 	
 	$Cache->load('bugtracker');
 	
+	$BUGS_CONFIG['auth'] = isset($BUGS_CONFIG['auth']) && is_array($BUGS_CONFIG['auth']) ? $BUGS_CONFIG['auth'] : array();
+	
 	$Template->assign_vars(array(
-		'C_NO_VERSION' 					=> empty($versions) ? true : false,
-		'C_NO_TYPE' 					=> empty($types) ? true : false,
-		'C_NO_CATEGORY' 				=> empty($categories) ? true : false,
+		'C_NO_VERSION' 					=> empty($BUGS_CONFIG['versions']) ? true : false,
+		'C_NO_TYPE' 					=> empty($BUGS_CONFIG['types']) ? true : false,
+		'C_NO_CATEGORY' 				=> empty($BUGS_CONFIG['categories']) ? true : false,
 		'L_CONFIRM_DEL_VERSION' 		=> $LANG['bugs.actions.confirm.del_version'],
 		'L_CONFIRM_DEL_TYPE' 			=> $LANG['bugs.actions.confirm.del_type'],
 		'L_CONFIRM_DEL_CATEGORY' 		=> $LANG['bugs.actions.confirm.del_category'],
@@ -398,18 +398,18 @@ else
 		'L_ADD' 						=> $LANG['add'],
 		'L_UPDATE' 						=> $LANG['update'],
 		'L_DELETE' 						=> $LANG['delete'],
-		'ITEMS_PER_PAGE'				=> $bugtracker_config->get_items_per_page(),
-		'SEVERITY_MINOR_COLOR'			=> $bugtracker_config->get_severity_minor_color(),
-		'SEVERITY_MAJOR_COLOR'			=> $bugtracker_config->get_severity_major_color(),
-		'SEVERITY_CRITICAL_COLOR'		=> $bugtracker_config->get_severity_critical_color(),
-		'CLOSED_BUG_COLOR'				=> $bugtracker_config->get_closed_bug_color(),
-		'COM_CHECKED'					=> ($bugtracker_config->get_comments_activated() == true) ? 'checked="checked"' : '',
-		'BUG_READ_AUTH'					=> Authorizations::generate_select(BUG_READ_AUTH_BIT, $authorizations),
-		'BUG_CREATE_AUTH'				=> Authorizations::generate_select(BUG_CREATE_AUTH_BIT, $authorizations),
-		'BUG_CREATE_ADVANCED_AUTH'		=> Authorizations::generate_select(BUG_CREATE_ADVANCED_AUTH_BIT, $authorizations)
+		'ITEMS_PER_PAGE'				=> $BUGS_CONFIG['items_per_page'],
+		'SEVERITY_MINOR_COLOR'			=> $BUGS_CONFIG['severity_minor_color'],
+		'SEVERITY_MAJOR_COLOR'			=> $BUGS_CONFIG['severity_major_color'],
+		'SEVERITY_CRITICAL_COLOR'		=> $BUGS_CONFIG['severity_critical_color'],
+		'CLOSED_BUG_COLOR'				=> $BUGS_CONFIG['closed_bug_color'],
+		'COM_CHECKED'					=> ($BUGS_CONFIG['activ_com'] == true) ? 'checked=checked' : '',
+		'BUG_READ_AUTH'					=> Authorizations::generate_select(BUG_READ_AUTH_BIT, $BUGS_CONFIG['auth']),
+		'BUG_CREATE_AUTH'				=> Authorizations::generate_select(BUG_CREATE_AUTH_BIT, $BUGS_CONFIG['auth']),
+		'BUG_CREATE_ADVANCED_AUTH'		=> Authorizations::generate_select(BUG_CREATE_ADVANCED_AUTH_BIT, $BUGS_CONFIG['auth'])
 	));
 	
-	foreach ($versions as $key => $version)
+	foreach ($BUGS_CONFIG['versions'] as $key => $version)
 	{
 		$Template->assign_block_vars('versions', array(
 			'ID'		=> $key,
@@ -417,7 +417,7 @@ else
 		));	
 	}
 	
-	foreach ($types as $key => $type)
+	foreach ($BUGS_CONFIG['types'] as $key => $type)
 	{
 		$Template->assign_block_vars('types', array(
 			'ID'				=> $key,
@@ -425,7 +425,7 @@ else
 		));	
 	}	
 	
-	foreach ($categories as $key => $category)
+	foreach ($BUGS_CONFIG['categories'] as $key => $category)
 	{
 		$Template->assign_block_vars('categories', array(
 			'ID'				=> $key,

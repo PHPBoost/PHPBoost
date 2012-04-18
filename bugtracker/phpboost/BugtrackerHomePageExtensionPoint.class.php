@@ -48,12 +48,10 @@ class BugtrackerHomePageExtensionPoint implements HomePageExtensionPoint
 	
 	private function get_view()
 	{
-		global $User, $Cache, $Bread_crumb, $Errorh, $BUGTRACKER_LANG, $LANG, $Session;
-		
-		$bugtracker_config = BugtrackerConfig::load();
+		global $User, $Cache, $Bread_crumb, $Errorh, $BUGTRACKER_LANG, $BUGS_CONFIG, $LANG, $Session;
 		
 		//Configuration des authorisations
-		$authorizations = $bugtracker_config->get_authorizations();
+		$authorizations = $BUGS_CONFIG['auth'];
 		
 		require_once(PATH_TO_ROOT . '/bugtracker/bugtracker_begin.php');
 
@@ -114,11 +112,11 @@ class BugtrackerHomePageExtensionPoint implements HomePageExtensionPoint
 			));
 		}
 		
-		$types = $bugtracker_config->get_types();
+		$types = $BUGS_CONFIG['types'];
 		$tpl->put_all(array(
 			'C_EMPTY_TYPES' 		=> empty($types) ? true : false,
 			'C_NO_BUGS' 			=> empty($nbr_bugs) ? true : false,
-			'PAGINATION' 			=> $Pagination->display('bugtracker' . url('.php?p=%d'), $nbr_bugs, 'p', $bugtracker_config->get_items_per_page(), 3),
+			'PAGINATION' 			=> $Pagination->display('bugtracker' . url('.php?p=%d'), $nbr_bugs, 'p', $BUGS_CONFIG['items_per_page'], 3),
 			'L_CONFIRM_DEL_BUG' 	=> $BUGTRACKER_LANG['bugs.actions.confirm.del_bug'],
 			'L_BUGS_LIST' 			=> $BUGTRACKER_LANG['bugs.titles.bugs_list'],
 			'L_ID' 					=> $BUGTRACKER_LANG['bugs.labels.fields.id'],
@@ -151,7 +149,7 @@ class BugtrackerHomePageExtensionPoint implements HomePageExtensionPoint
 		$result = $this->sql_querier->query_while("SELECT *
 		FROM " . PREFIX . "bugtracker
 		ORDER BY " . $sort . " " . $mode .
-		$this->sql_querier->limit($Pagination->get_first_msg($bugtracker_config->get_items_per_page(), 'p'), $bugtracker_config->get_items_per_page()), __LINE__, __FILE__); //Bugs enregistrés.
+		$this->sql_querier->limit($Pagination->get_first_msg($BUGS_CONFIG['items_per_page'], 'p'), $BUGS_CONFIG['items_per_page']), __LINE__, __FILE__); //Bugs enregistrés.
 		while ($row = $this->sql_querier->fetch_assoc($result))
 		{
 			$tpl->assign_block_vars('list.bug', array(
@@ -160,8 +158,8 @@ class BugtrackerHomePageExtensionPoint implements HomePageExtensionPoint
 				'TYPE'			=> !empty($row['type']) ? stripslashes($row['type']) : $BUGTRACKER_LANG['bugs.notice.none'],
 				'SEVERITY'		=> $BUGTRACKER_LANG['bugs.severity.' . $row['severity']],
 				'PRIORITY'		=> $BUGTRACKER_LANG['bugs.priority.' . $row['priority']],
-				'COLOR' 		=> ($row['status'] != 'closed') ? 'bgcolor="#' . $bugtracker_config->get_severity_color($row['severity']) . '"' : '',
-				'LINE_COLOR'	=> ($row['status'] == 'closed') ? 'bgcolor="#' . $bugtracker_config->get_closed_bug_color() . '"' : '',
+				'COLOR' 		=> ($row['status'] != 'closed') ? 'bgcolor="#' . $BUGS_CONFIG['severity_' . $row['severity'] . '_color'] . '"' : '',
+				'LINE_COLOR'	=> ($row['status'] == 'closed') ? 'bgcolor="#' . $BUGS_CONFIG['closed_bug_color'] . '"' : '',
 				'DATE' 			=> gmdate_format('date_format_short', $row['submit_date'])
 			));
 		}

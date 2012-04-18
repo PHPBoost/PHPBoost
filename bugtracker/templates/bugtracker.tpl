@@ -95,7 +95,7 @@
 				# START list.bug #
 				<tr style="text-align:center;"{list.bug.LINE_COLOR}> 
 					<td class="row2">
-						<a href="../bugtracker/bugtracker.php?view=true&amp;id={list.bug.ID}">#{list.bug.ID}</a>
+						<a href="../bugtracker/bugtracker.php?view=true&amp;id={list.bug.ID}">\#{list.bug.ID}</a>
 					</td>
 					<td class="row2">
 						{list.bug.TITLE}

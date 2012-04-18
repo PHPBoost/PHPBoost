@@ -30,15 +30,10 @@ include_once('bugtracker_begin.php');
 include_once('bugtracker_functions.php');
 require_once('../kernel/header.php');
 
-$types = $bugtracker_config->get_types();
-$categories = $bugtracker_config->get_categories();
-$versions = $bugtracker_config->get_versions();
-$authorizations = $bugtracker_config->get_authorizations();
-
-$auth_read = $User->check_auth($authorizations, BUG_READ_AUTH_BIT);
-$auth_create = $User->check_auth($authorizations, BUG_CREATE_AUTH_BIT);
-$auth_create_advanced = $User->check_auth($authorizations, BUG_CREATE_ADVANCED_AUTH_BIT);
-$display_categories = sizeof($categories) > 1 ? true : false;
+$auth_read = $User->check_auth($BUGS_CONFIG['auth'], BUG_READ_AUTH_BIT);
+$auth_create = $User->check_auth($BUGS_CONFIG['auth'], BUG_CREATE_AUTH_BIT);
+$auth_create_advanced = $User->check_auth($BUGS_CONFIG['auth'], BUG_CREATE_ADVANCED_AUTH_BIT);
+$display_categories = sizeof($BUGS_CONFIG['categories']) > 1 ? true : false;
 
 $id = retrieve(GET, 'id', 0, TINTEGER);
 $id_post = retrieve(POST, 'id', 0, TINTEGER);
@@ -57,11 +52,11 @@ if ( !empty($_POST['valid_add']) )
 	
 	$title = retrieve(POST, 'title', '');
 	$contents = retrieve(POST, 'contents', '', TSTRING_PARSE);
-	$type = (sizeof($types) == 1) ? $types[0] : retrieve(POST, 'type', '');
-	$category = (sizeof($categories) == 1) ? $categories[0] : retrieve(POST, 'category', '');
+	$type = (sizeof($BUGS_CONFIG['types']) == 1) ? $BUGS_CONFIG['types'][0] : retrieve(POST, 'type', '');
+	$category = (sizeof($BUGS_CONFIG['categories']) == 1) ? $BUGS_CONFIG['categories'][0] : retrieve(POST, 'category', '');
 	$severity = $auth_create_advanced ? retrieve(POST, 'severity', '') : 'minor';
 	$priority = $auth_create_advanced ? retrieve(POST, 'priority', '') : 'normal';
-	$detected_in = (sizeof($versions) == 1) ? $versions[0] : retrieve(POST, 'detected_in', '');
+	$detected_in = (sizeof($BUGS_CONFIG['versions']) == 1) ? $BUGS_CONFIG['versions'][0] : retrieve(POST, 'detected_in', '');
 	$reproductible = retrieve(POST, 'reproductible', '', TBOOL);
 	$reproduction_method = retrieve(POST, 'reproduction_method', '', TSTRING_PARSE);
 	
@@ -96,9 +91,9 @@ else if (isset($_GET['add'])) // ajout d'un bug
 	));
 	
 	$Template->assign_vars(array(
-		'C_DISPLAY_TYPES' 		=> sizeof($types) > 1 ? true : false,
+		'C_DISPLAY_TYPES' 		=> sizeof($BUGS_CONFIG['types']) > 1 ? true : false,
 		'C_DISPLAY_CATEGORIES' 	=> $display_categories,
-		'C_DISPLAY_VERSIONS' 	=> sizeof($versions) > 1 ? true : false,
+		'C_DISPLAY_VERSIONS' 	=> sizeof($BUGS_CONFIG['versions']) > 1 ? true : false,
 		'C_DISPLAY_ADVANCED' 	=> $auth_create_advanced ? true : false,
 		'L_ADD_BUG'				=> $LANG['bugs.titles.add_bug'],
 		'L_TITLE'				=> $LANG['bugs.labels.fields.title'],
@@ -148,7 +143,7 @@ else if (isset($_GET['add'])) // ajout d'un bug
 	}
 	
 	//Types
-	foreach ($types as $type)
+	foreach ($BUGS_CONFIG['types'] as $type)
 	{
 		$Template->assign_block_vars('select_type', array(
 			'TYPE' => '<option value="' . $type . '">' . stripslashes($type) . '</option>'
@@ -159,7 +154,7 @@ else if (isset($_GET['add'])) // ajout d'un bug
 	$Template->assign_block_vars('select_category', array(
 		'CATEGORY' => '<option value=""></option>'
 	));
-	foreach ($categories as $category)
+	foreach ($BUGS_CONFIG['categories'] as $category)
 	{
 		$Template->assign_block_vars('select_category', array(
 			'CATEGORY' => '<option value="' . $category . '">' . stripslashes($category) . '</option>'
@@ -170,7 +165,7 @@ else if (isset($_GET['add'])) // ajout d'un bug
 	$Template->assign_block_vars('select_detected_in', array(
 		'VERSION' => '<option value=""></option>'
 	));
-	foreach ($versions as $version)
+	foreach ($BUGS_CONFIG['versions'] as $version)
 	{
 		$selected = ($result['detected_in'] == $version) ? 'selected="selected"' : '';
 		$Template->assign_block_vars('select_detected_in', array(
@@ -415,9 +410,9 @@ else if (isset($_GET['edit']) && is_numeric($id)) // edition d'un bug
 	}
 	
 	$Template->assign_vars(array(
-		'C_DISPLAY_TYPES' 		=> sizeof($types) > 1 ? true : false,
+		'C_DISPLAY_TYPES' 		=> sizeof($BUGS_CONFIG['types']) > 1 ? true : false,
 		'C_DISPLAY_CATEGORIES' 	=> $display_categories,
-		'C_DISPLAY_VERSIONS' 	=> sizeof($versions) > 1 ? true : false,
+		'C_DISPLAY_VERSIONS' 	=> sizeof($BUGS_CONFIG['versions']) > 1 ? true : false,
 		'C_DISPLAY_ADVANCED' 	=> $auth_create_advanced ? true : false,
 		'C_REPRODUCTIBLE' 		=> ($result['reproductible'] == true) ? true : false,
 		'L_EDIT_BUG'			=> $LANG['bugs.titles.edit_bug'],
@@ -457,7 +452,7 @@ else if (isset($_GET['edit']) && is_numeric($id)) // edition d'un bug
 	$Template->assign_block_vars('edit.select_type', array(
 		'TYPE' => '<option value="" ' . $selected . '></option>'
 	));
-	foreach ($types as $type)
+	foreach ($BUGS_CONFIG['types'] as $type)
 	{
 		$selected = ($result['type'] == $type) ? 'selected="selected"' : '';
 		$Template->assign_block_vars('edit.select_type', array(
@@ -470,7 +465,7 @@ else if (isset($_GET['edit']) && is_numeric($id)) // edition d'un bug
 	$Template->assign_block_vars('edit.select_category', array(
 		'CATEGORY' => '<option value="" ' . $selected . '></option>'
 	));
-	foreach ($categories as $category)
+	foreach ($BUGS_CONFIG['categories'] as $category)
 	{
 		$selected = ($result['category'] == $category) ? 'selected="selected"' : '';
 		$Template->assign_block_vars('edit.select_category', array(
@@ -511,7 +506,7 @@ else if (isset($_GET['edit']) && is_numeric($id)) // edition d'un bug
 	$Template->assign_block_vars('edit.select_detected_in', array(
 		'VERSION' => '<option value="" ' . $selected . '></option>'
 	));
-	foreach ($versions as $version)
+	foreach ($BUGS_CONFIG['versions'] as $version)
 	{
 		$selected = ($result['detected_in'] == $version) ? 'selected="selected"' : '';
 		$Template->assign_block_vars('edit.select_detected_in', array(
@@ -524,7 +519,7 @@ else if (isset($_GET['edit']) && is_numeric($id)) // edition d'un bug
 	$Template->assign_block_vars('edit.select_fixed_in', array(
 		'VERSION' => '<option value="" ' . $selected . '></option>'
 	));
-	foreach ($versions as $version)
+	foreach ($BUGS_CONFIG['versions'] as $version)
 	{
 		$selected = ($result['fixed_in'] == $version) ? 'selected="selected"' : '';
 		$Template->assign_block_vars('edit.select_fixed_in', array(
@@ -649,6 +644,8 @@ else if (isset($_GET['view']) && is_numeric($id)) // Visualisation d'une fiche B
 		exit;
 	}
 	
+	import('content/comments');
+	
   	$Template->set_filenames(array(
 		'bugtracker' => 'bugtracker/bugtracker.tpl'
 	));
@@ -688,9 +685,9 @@ else if (isset($_GET['view']) && is_numeric($id)) // Visualisation d'une fiche B
 	}
 	
 	$Template->assign_vars(array(
-		'C_EMPTY_TYPES' 		=> empty($types) ? true : false,
-		'C_EMPTY_CATEGORIES' 	=> empty($categories) ? true : false,
-		'C_EMPTY_VERSIONS' 		=> empty($versions) ? true : false,
+		'C_EMPTY_TYPES' 		=> empty($BUGS_CONFIG['types']) ? true : false,
+		'C_EMPTY_CATEGORIES' 	=> empty($BUGS_CONFIG['categories']) ? true : false,
+		'C_EMPTY_VERSIONS' 		=> empty($BUGS_CONFIG['versions']) ? true : false,
 		'C_REPRODUCTIBLE' 		=> ($result['reproductible'] == true && !empty($result['reproduction_method'])) ? true : false,
 		'L_VIEW_BUG' 			=> $LANG['bugs.titles.view_bug'],
 		'L_BUG_INFOS' 			=> $LANG['bugs.titles.bugs_infos'],
@@ -707,9 +704,9 @@ else if (isset($_GET['view']) && is_numeric($id)) // Visualisation d'une fiche B
 		'L_REPRODUCTION_METHOD'	=> $LANG['bugs.labels.fields.reproduction_method'],
 		'L_ASSIGNED_TO'			=> $LANG['bugs.labels.fields.assigned_to_id'],
 		'L_DETECTED_BY' 		=> $LANG['bugs.labels.fields.author_id'],
-		'L_COM' 				=> $result['nbr_com'] > 0 ? sprintf($LANG['display_coms'], $result['nbr_com']) : $LANG['post_com'],
+		'L_COM' 				=> '<a href="' . PATH_TO_ROOT . '/bugtracker/bugtracker.php?view=true&amp;id=' . $id . '&amp;com=true">' . $LANG['post_com'] . '</a>',
 		'L_ON' 					=> $LANG['on'],
-		'C_COM' 				=> ($bugtracker_config->get_comments_activated() == true) ? true : false
+		'C_COM' 				=> $BUGS_CONFIG['activ_com'] ? true : false
 	));
 	
 	if (!empty($result['assigned_to_id'])) {
@@ -722,7 +719,7 @@ else if (isset($_GET['view']) && is_numeric($id)) // Visualisation d'une fiche B
 	$Template->assign_block_vars('view', array(
 		'TOKEN' 				=> $Session->get_token(),
 		'ID' 					=> $id,
-		'U_COM' 				=> BugtrackerUrlBuilder::get_link_item_com($id),
+		'U_COM' 				=> Comments::com_display_link($result['nbr_com'], PATH_TO_ROOT . '/bugtracker/bugtracker' . url('.php?view=true&amp;id=' . $id . '&amp;com=0', '-1-0-' . $id . '+' . url_encode_rewrite($result['title']) . '.php?com=0'), $id, 'bugtracker'),
 		'TITLE' 				=> $result['title'],
 		'CONTENTS' 				=> second_parse($result['contents']),
 		'STATUS' 				=> $LANG['bugs.status.' . $result['status']],
@@ -742,19 +739,123 @@ else if (isset($_GET['view']) && is_numeric($id)) // Visualisation d'une fiche B
 }
 else // Affichage de la liste
 {
-	$modulesLoader = AppContext::get_extension_provider_service();
-	$module = $modulesLoader->get_provider('bugtracker');
-	if ($module->has_extension_point(HomePageExtensionPoint::EXTENSION_POINT))
+	//checking authorization
+	if (!$auth_read)
 	{
-		echo $module->get_extension_point(HomePageExtensionPoint::EXTENSION_POINT)->get_home_page()->get_view()->display();
+		$Errorh->handler('e_auth', E_USER_REDIRECT);
+		exit;
 	}
+
+  	$Template->set_filenames(array(
+		'bugtracker' => 'bugtracker/bugtracker.tpl'
+	));
+	
+	//Nombre de bugs
+	$nbr_bugs = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "bugtracker", __LINE__, __FILE__);
+	import('util/pagination'); 
+	$Pagination = new Pagination();
+	
+	$get_sort = retrieve(GET, 'sort', '');
+	switch ($get_sort)
+	{
+		case 'id' :
+			$sort = 'id';
+			break;
+		case 'title' :
+			$sort = 'title';
+			break;
+		case 'type' :
+			$sort = 'type';
+			break;
+		case 'severity' :
+			$sort = 'severity';
+			break;
+		case 'priority' :
+			$sort = 'priority';
+			break;
+		case 'date' :
+			$sort = 'submit_date';
+			break;
+		default :
+			$sort = 'submit_date';
+	}
+	
+	$get_mode = retrieve(GET, 'mode', '');
+	$mode = ($get_mode == 'asc') ? 'ASC' : 'DESC';
+	
+	if ($auth_create || $Session->data['level'] == 2)
+	{
+		$Template->assign_vars(array(
+			'ADD_BUG' 	=> '&raquo; <a href="bugtracker' . url('.php?add=true') . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/add.png" alt="' . $LANG['bugs.actions.add'] . '" title="' . $LANG['bugs.actions.add'] . '" class="valign_middle" /></a>'
+		));
+	}
+	
+	//Activation de la colonne "Actions" si administrateur
+	if ($Session->data['level'] == 2)
+	{
+		$Template->assign_vars(array(
+			'C_IS_ADMIN'	=> true
+		));
+	}
+	
+	$Template->assign_vars(array(
+		'C_EMPTY_TYPES' 		=> empty($BUGS_CONFIG['types']) ? true : false,
+		'C_NO_BUGS' 			=> empty($nbr_bugs) ? true : false,
+		'PAGINATION' 			=> $Pagination->display('bugtracker' . url('.php?p=%d'), $nbr_bugs, 'p', $BUGS_CONFIG['items_per_page'], 3),
+		'L_CONFIRM_DEL_BUG' 	=> $LANG['bugs.actions.confirm.del_bug'],
+		'L_BUGS_LIST' 			=> $LANG['bugs.titles.bugs_list'],
+		'L_ID' 					=> $LANG['bugs.labels.fields.id'],
+		'L_TITLE'				=> $LANG['bugs.labels.fields.title'],
+		'L_TYPE'				=> $LANG['bugs.labels.fields.type'],
+		'L_SEVERITY'			=> $LANG['bugs.labels.fields.severity'],
+		'L_PRIORITY'			=> $LANG['bugs.labels.fields.priority'],
+		'L_DATE'				=> $LANG['bugs.labels.fields.submit_date'],
+		'L_NO_BUG' 				=> $LANG['bugs.notice.no_bug'],
+		'L_ACTIONS' 			=> $LANG['bugs.actions'],
+		'L_UPDATE' 				=> $LANG['update'],
+		'L_HISTORY' 			=> $LANG['bugs.actions.history'],
+		'L_DELETE' 				=> $LANG['delete'],
+		'U_BUG_ID_TOP' 			=> url('.php?sort=id&amp;mode=desc'),
+		'U_BUG_ID_BOTTOM' 		=> url('.php?sort=id&amp;mode=asc'),
+		'U_BUG_TITLE_TOP' 		=> url('.php?sort=title&amp;mode=desc'),
+		'U_BUG_TITLE_BOTTOM' 	=> url('.php?sort=title&amp;mode=asc'),
+		'U_BUG_TYPE_TOP' 		=> url('.php?sort=type&amp;mode=desc'),
+		'U_BUG_TYPE_BOTTOM' 	=> url('.php?sort=type&amp;mode=asc'),
+		'U_BUG_SEVERITY_TOP' 	=> url('.php?sort=severity&amp;mode=desc'),
+		'U_BUG_SEVERITY_BOTTOM'	=> url('.php?sort=severity&amp;mode=asc'),
+		'U_BUG_PRIORITY_TOP' 	=> url('.php?sort=priority&amp;mode=desc'),
+		'U_BUG_PRIORITY_BOTTOM'	=> url('.php?sort=priority&amp;mode=asc'),
+		'U_BUG_DATE_TOP' 		=> url('.php?sort=date&amp;mode=desc'),
+		'U_BUG_DATE_BOTTOM' 	=> url('.php?sort=date&amp;mode=asc')
+	));
+	
+	$Template->assign_block_vars('list', array());
+	
+	$result = $Sql->query_while("SELECT *
+	FROM " . PREFIX . "bugtracker
+	ORDER BY " . $sort . " " . $mode .
+	$Sql->limit($Pagination->get_first_msg($BUGS_CONFIG['items_per_page'], 'p'), $BUGS_CONFIG['items_per_page']), __LINE__, __FILE__); //Bugs enregistrés.
+	while ($row = $Sql->fetch_assoc($result))
+	{
+		$Template->assign_block_vars('list.bug', array(
+			'ID'			=> $row['id'],
+			'TITLE'			=> (strlen($row['title']) > 45 ) ? substr($row['title'], 0, 45) . '...' : $row['title'], // On raccourcis le titre pour ne pas déformer le tableau
+			'TYPE'			=> !empty($row['type']) ? stripslashes($row['type']) : $LANG['bugs.notice.none'],
+			'SEVERITY'		=> $LANG['bugs.severity.' . $row['severity']],
+			'PRIORITY'		=> $LANG['bugs.priority.' . $row['priority']],
+			'COLOR' 		=> ($row['status'] != 'closed') ? 'bgcolor="#' . $BUGS_CONFIG['severity_' . $row['severity'] . '_color'] . '"' : '',
+			'LINE_COLOR'	=> ($row['status'] == 'closed') ? 'bgcolor="#' . $BUGS_CONFIG['closed_bug_color'] . '"' : '',
+			'DATE' 			=> gmdate_format('date_format_short', $row['submit_date'])
+		));
+	}
+	$Sql->query_close($result);
 }
 
 //Affichage des commentaires
 if (isset($_GET['com']) && is_numeric($id))
 {
 	$Template->assign_vars(array(
-		'COMMENTS' => display_comments('bugtracker', $id, BugtrackerUrlBuilder::get_link_item_com($id,'%s'))
+		'COMMENTS' => display_comments('bugtracker', $id, url('bugtracker.php?view=true&amp;id=' . $id . '&amp;com=%s', 'bugtracker-1-0-' . $id . '.php?com=%s'))
 	));
 }
 
