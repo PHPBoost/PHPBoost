@@ -62,7 +62,7 @@ $LANG['bugs.actions.confirm.del_type'] = 'Delete this type?';
 $LANG['bugs.actions.confirm.del_category'] = 'Delete this category?';
 
 //Titles
-$LANG['bugs.titles.add_bug'] = 'Add a new bug';
+$LANG['bugs.titles.add_bug'] = 'Post a new bug';
 $LANG['bugs.titles.add_version'] = 'Add a new version';
 $LANG['bugs.titles.add_type'] = 'Add a new type';
 $LANG['bugs.titles.add_category'] = 'Add a new category';
@@ -135,21 +135,29 @@ $LANG['bugs.config.closed_bug_color_label'] = 'Closed bug line color';
 $LANG['bugs.config.activ_com'] = 'Active comments';
 
 //Explainations
-$LANG['bugs.explain.type'] = 'Types des demandes. Examples : Anomaly, Evolution...<br />
+$LANG['bugs.explain.type'] = 'Demands types. Examples : Anomaly, Evolution...<br />
 <br />
-Remarques : <br />
-- Si le tableau est vide, cette option ne sera pas visible lors de la signalisation d\'un bug<br />
-- Si le tableau ne contient qu\'une seule valeur, cette option ne sera pas non plus visible et sera attribuée par défaut au bug';
-$LANG['bugs.explain.category'] = 'Catégorie des demandes. Exemples : Noyau, Module...<br />
+Remarks : <br />
+- If the table is empty, this option will not be visible on the post bug page<br />
+- If the table contains only one type, will not be visible too and will automatically be assigned to the bug';
+$LANG['bugs.explain.category'] = 'Demands categories. Examples : Kernel, Module...<br />
 <br />
-Remarques : <br />
-- Si le tableau est vide, cette option ne sera pas visible lors de la signalisation d\'un bug<br />
-- Si le tableau ne contient qu\'une seule valeur, cette option ne sera pas non plus visible et sera attribuée par défaut au bug';
+Remarks : <br />
+- If the table is empty, this option will not be visible on the post bug page<br />
+- If the table contains only one type, will not be visible too and will automatically be assigned to the bug';
 $LANG['bugs.explain.version'] = 'Liste des versions du produit.<br />
 <br />
-Remarques :<br />
-- Si le tableau est vide, l\'option "Détecté dans la version" ne sera pas visible lors de la signalisation d\'un bug<br />
-- Si le tableau ne contient qu\'une seule valeur, cette option ne sera pas non plus visible et sera attribuée par défaut au bug';
+Remarks :<br />
+- If the table is empty, the option "Detected in version" will not be visible on the post bug page<br />
+- If the table contains only one type, will not be visible too and will automatically be assigned to the bug';
+$LANG['bugs.explain.default_content'] = 'Thank you for given the informations below, they will be useful to treat the bug
+Operating system :
+Web navigator :
+Test version (test site, zip archive) :
+Local installation or on a web server ? :
+Link :
+----------------------------------------------------------------------
+';
 
 //Search
 $LANG['bugs.search.where'] = 'Where?';

@@ -119,6 +119,7 @@ else if (isset($_GET['add'])) // ajout d'un bug
 		'L_RESET' 				=> $LANG['reset'],
 		'L_YES' 				=> $LANG['yes'],
 		'L_NO'	 				=> $LANG['no'],
+		'CONTENTS'	 			=> $LANG['bugs.explain.default_content'],
 		'REPRODUCTIBLE_ENABLED' => 'checked="checked"',
 		'REPRODUCTIBLE_DISABLED'=> '',
 		'REPRODUCTION_METHOD' 	=> '',
@@ -129,7 +130,7 @@ else if (isset($_GET['add'])) // ajout d'un bug
 	
 	$Template->assign_block_vars('add', array());
 	
-	// Gravitï¿½s
+	// Gravités
 	foreach ($severity as $s)
 	{
 		$Template->assign_block_vars('select_severity', array(
@@ -137,7 +138,7 @@ else if (isset($_GET['add'])) // ajout d'un bug
 		));
 	}
 	
-	// Prioritï¿½s
+	// Priorités
 	foreach ($priority as $p)
 	{
 		$selected = ($p == 'normal') ? 'selected="selected"' : '';
@@ -199,10 +200,10 @@ else if (isset($_GET['delete']) && is_numeric($id)) //Suppression du bug.
 	//On supprime dans la bdd.
 	$Sql->query_inject("DELETE FROM " . PREFIX . "bugtracker WHERE id = '" . $id . "'", __LINE__, __FILE__);
 
-	//On supprimes les ï¿½ventuels commentaires associï¿½s.
+	//On supprimes les éventuels commentaires associés.
 	$Sql->query_inject("DELETE FROM " . DB_TABLE_COM . " WHERE idprov = '" . $id . "' AND script = 'bugtracker'", __LINE__, __FILE__);
 
-	//Mise ï¿½ jour de la liste des bugs dans le cache de la configuration.
+	//Mise à jour de la liste des bugs dans le cache de la configuration.
 	$Cache->Generate_module_file('bugtracker');
 
 	redirect(HOST . SCRIPT);
@@ -234,7 +235,7 @@ else if (!empty($_POST['valid_edit']) && is_numeric($id_post))
 	if ($display_categories && empty($category))
 		$category_needed = true;
 	
-	//On met ï¿½ jour
+	//On met à jour
 	if (!empty($title) && !empty($contents) && !$category_needed)
 	{
 		$old_values = $Sql->query_array(PREFIX . 'bugtracker b', '*', "
@@ -244,18 +245,18 @@ else if (!empty($_POST['valid_edit']) && is_numeric($id_post))
 		$severity = $auth_create_advanced ? retrieve(POST, 'severity', '') : $old_values['severity'];
 		$priority = $auth_create_advanced ? retrieve(POST, 'priority', '') : $old_values['priority'];
 		
-		//Champs supplï¿½mentaires pour l'administrateur
+		//Champs supplémentaires pour l'administrateur
 		if ($Session->data['level'] == 2)
 		{
 			if ($old_values['status'] != $status && !change_bug_status_possible($old_values['status'], $status))
 				redirect(PATH_TO_ROOT . '/bugtracker/bugtracker.php?edit=true&id=' . $id_post . '&error=bad_status#errorh');
 			
-			if ($status == 'assigned' && empty($assigned_to)) // Erreur si le statut est "Assignï¿½" et aucun utilisateur n'est sï¿½lectionnï¿½
+			if ($status == 'assigned' && empty($assigned_to)) // Erreur si le statut est "Assigné" et aucun utilisateur n'est sélectionné
 				redirect(PATH_TO_ROOT . '/bugtracker/bugtracker.php?edit=true&id=' . $id_post . '&error=no_user_assigned#errorh');
 			
 			$assigned_to_id = (!empty($assigned_to)) ? $Sql->query("SELECT user_id FROM " . DB_TABLE_MEMBER . " WHERE login = '" . $assigned_to . "'", __LINE__, __FILE__) : 0;
 			
-			if (!empty($assigned_to) && empty($assigned_to_id)) // Erreur si l'utilisateur sï¿½lectionnï¿½ n'existe pas
+			if (!empty($assigned_to) && empty($assigned_to_id)) // Erreur si l'utilisateur sélectionné n'existe pas
 				redirect(PATH_TO_ROOT . '/bugtracker/bugtracker.php?edit=true&id=' . $id_post . '&error=unexist_user#errorh');
 			
 			$new_values = array(
@@ -349,7 +350,7 @@ else if (!empty($_POST['valid_edit']) && is_numeric($id_post))
 		}
 		$Sql->query_close($old_values);
 		
-		###### Rï¿½gï¿½nï¿½ration du cache #######
+		###### Régénération du cache #######
 		$Cache->Generate_module_file('bugtracker');
 
 		redirect(HOST . DIR . '/bugtracker/bugtracker.php?edit=true&id= ' . $id_post . '&error=success#errorh');
@@ -370,7 +371,7 @@ else if (isset($_GET['edit']) && is_numeric($id)) // edition d'un bug
 		'bugtracker' => 'bugtracker/bugtracker.tpl'
 	));
 	
-	//Rï¿½cupï¿½ration de l'id de l'auteur du bug
+	//Récupération de l'id de l'auteur du bug
 	$author_id = $Sql->query("SELECT author_id FROM " . PREFIX . "bugtracker WHERE id = '" . $id . "'", __LINE__, __FILE__);
 	
 	if ($author_id == '-1')
@@ -385,7 +386,7 @@ else if (isset($_GET['edit']) && is_numeric($id)) // edition d'un bug
 		WHERE b.id = '" . $id . "'", __LINE__, __FILE__);
 	}
 	
-	//Champs supplï¿½mentaires pour l'administrateur
+	//Champs supplémentaires pour l'administrateur
 	if ($Session->data['level'] == 2)
 	{
 		$assigned_to = !empty($result['assigned_to_id']) ? $Sql->query("SELECT login FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $result['assigned_to_id'] . "'", __LINE__, __FILE__) : '';
@@ -487,7 +488,7 @@ else if (isset($_GET['edit']) && is_numeric($id)) // edition d'un bug
 		));
 	}
 	
-	//Gravitï¿½s
+	//Gravités
 	foreach ($severity as $s)
 	{
 		$selected = ($result['severity'] == $s) ? 'selected="selected"' : '';
@@ -496,7 +497,7 @@ else if (isset($_GET['edit']) && is_numeric($id)) // edition d'un bug
 		));
 	}
 	
-	//Prioritï¿½s
+	//Priorités
 	foreach ($priority as $p)
 	{
 		$selected = ($result['priority'] == $p) ? 'selected="selected"' : '';
@@ -577,8 +578,8 @@ else if (isset($_GET['history']) && is_numeric($id)) // Affichage de l'historiqu
 		switch ($row['updated_field']) //Coloration du membre suivant son level d'autorisation. 
 		{ 		
 			case 'title':
-			$old_value = (strlen($row['old_value']) > 25 ) ? substr($row['old_value'], 0, 25) . '...' : $row['old_value']; // On raccourcis le titre pour ne pas dï¿½former le tableau
-			$new_value = (strlen($row['new_value']) > 25 ) ? substr($row['new_value'], 0, 25) . '...' : $row['new_value']; // On raccourcis le titre pour ne pas dï¿½former le tableau
+			$old_value = (strlen($row['old_value']) > 25 ) ? substr($row['old_value'], 0, 25) . '...' : $row['old_value']; // On raccourcis le titre pour ne pas déformer le tableau
+			$new_value = (strlen($row['new_value']) > 25 ) ? substr($row['new_value'], 0, 25) . '...' : $row['new_value']; // On raccourcis le titre pour ne pas déformer le tableau
 			break;
 
 			case 'priority':
@@ -652,7 +653,7 @@ else if (isset($_GET['view']) && is_numeric($id)) // Visualisation d'une fiche B
 		'bugtracker' => 'bugtracker/bugtracker.tpl'
 	));
 	
-	//Rï¿½cupï¿½ration de l'id de l'auteur du bug
+	//Récupération de l'id de l'auteur du bug
 	$author_id = $Sql->query("SELECT author_id FROM " . PREFIX . "bugtracker WHERE id = '" . $id . "'", __LINE__, __FILE__);
 	
 	if ($author_id == '-1')
