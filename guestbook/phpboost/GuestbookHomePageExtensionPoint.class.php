@@ -98,11 +98,11 @@ class GuestbookHomePageExtensionPoint implements HomePageExtensionPoint
 				'formatter' => $formatter, 'rows' => 10, 'cols' => 47, 'required' => $LANG['require_text'])
 			));
 			
-			if ($is_guest && !$is_edition_mode && $guestbook_config->get_display_captcha()) //Code de vérification, anti-bots.
+			if ($is_guest && !$is_edition_mode && $guestbook_config->get_display_captcha()) //Code de vï¿½rification, anti-bots.
 			{
 				$captcha = new Captcha();
 				$captcha->set_difficulty($guestbook_config->get_captcha_difficulty());
-				$fieldset->add_field(new FormFieldCaptcha($captcha));
+				$fieldset->add_field(new FormFieldCaptcha('captcha', $captcha));
 			}
 				
 			if ($is_edition_mode)
@@ -190,7 +190,7 @@ class GuestbookHomePageExtensionPoint implements HomePageExtensionPoint
 						);
 						PersistenceContext::get_querier()->insert(PREFIX . "guestbook", $columns);
 						
-						$last_msg_id = $this->sql_querier->insert_id("SELECT MAX(id) FROM " . PREFIX . "guestbook"); //Dernier message inséré.
+						$last_msg_id = $this->sql_querier->insert_id("SELECT MAX(id) FROM " . PREFIX . "guestbook"); //Dernier message insï¿½rï¿½.
 			
 						GuestbookMessagesCache::invalidate();
 			
@@ -207,7 +207,7 @@ class GuestbookHomePageExtensionPoint implements HomePageExtensionPoint
 			));
 		}
 
-		//On crée une pagination si le nombre de msg est trop important.
+		//On crï¿½e une pagination si le nombre de msg est trop important.
 		$nbr_guestbook = $this->sql_querier->count_table(PREFIX . 'guestbook', __LINE__, __FILE__);
 
 		$Pagination = new DeprecatedPagination();
@@ -216,7 +216,7 @@ class GuestbookHomePageExtensionPoint implements HomePageExtensionPoint
 			'L_DELETE_MSG' => $LANG['alert_delete_msg'],
 		));
 
-		//Création du tableau des rangs.
+		//Crï¿½ation du tableau des rangs.
 		$array_ranks = array(-1 => $LANG['guest'], 0 => $LANG['member'], 1 => $LANG['modo'], 2 => $LANG['admin']);
 
 		//Gestion des rangs.
@@ -239,7 +239,7 @@ class GuestbookHomePageExtensionPoint implements HomePageExtensionPoint
 			$is_modo = $User->check_level(User::MODERATOR_LEVEL);
 			$warning = '';
 			$readonly = '';
-			if ($is_modo && !$is_guest) //Modération.
+			if ($is_modo && !$is_guest) //Modï¿½ration.
 			{
 				$warning = '&nbsp;<a href="'. PATH_TO_ROOT.'/user/moderation_panel' . url('.php?action=warning&amp;id=' . $row['user_id']) . '" title="' . $LANG['warning_management'] . '"><img src="'. PATH_TO_ROOT.'/templates/' . get_utheme() . '/images/admin/important.png" alt="' . $LANG['warning_management'] .  '" class="valign_middle" /></a>';
 				$readonly = '<a href="'. PATH_TO_ROOT.'/user/moderation_panel' . url('.php?action=punish&amp;id=' . $row['user_id']) . '" title="' . $LANG['punishment_management'] . '"><img src="'. PATH_TO_ROOT.'/templates/' . get_utheme() . '/images/readonly.png" alt="' . $LANG['punishment_management'] .  '" class="valign_middle" /></a>';
@@ -266,13 +266,13 @@ class GuestbookHomePageExtensionPoint implements HomePageExtensionPoint
 			$user_rank = ($row['level'] === '0') ? $LANG['member'] : $LANG['guest'];
 			$user_group = $user_rank;
 			$user_rank_icon = '';
-			if ($row['level'] === '2') //Rang spécial (admins).
+			if ($row['level'] === '2') //Rang spï¿½cial (admins).
 			{
 				$user_rank = $ranks_cache[-2]['name'];
 				$user_group = $user_rank;
 				$user_rank_icon = $ranks_cache[-2]['icon'];
 			}
-			elseif ($row['level'] === '1') //Rang spécial (modos).
+			elseif ($row['level'] === '1') //Rang spï¿½cial (modos).
 			{
 				$user_rank = $ranks_cache[-1]['name'];
 				$user_group = $user_rank;
@@ -291,7 +291,7 @@ class GuestbookHomePageExtensionPoint implements HomePageExtensionPoint
 				}
 			}
 
-			//Image associée au rang.
+			//Image associï¿½e au rang.
 			$user_assoc_img = !empty($user_rank_icon) ? '<img src="'. PATH_TO_ROOT.'/templates/' . get_utheme() . '/images/ranks/' . $user_rank_icon . '" alt="" />' : '';
 
 			//Affichage des groupes du membre.
@@ -327,7 +327,7 @@ class GuestbookHomePageExtensionPoint implements HomePageExtensionPoint
 				$user_avatar = '<img src="' . $row['user_avatar'] . '" alt="" />';
 			}
 
-			//Affichage du sexe et du statut (connecté/déconnecté).
+			//Affichage du sexe et du statut (connectï¿½/dï¿½connectï¿½).
 			$user_sex = '';
 			if ($row['user_sex'] == 1)
 			{
