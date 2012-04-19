@@ -68,12 +68,12 @@ class Session
 		}
 		elseif (retrieve(POST, 'connect', false) && !empty($login) && !empty($password)) //Création de la session.
 		{
-			$this->connect($login, $password);
+			$this->connect($login, $password, $autoconnexion);
 			AppContext::get_response()->redirect(Environment::get_home_page());
 		}
 	}
 	
-	private function connect($login, $password)
+	private function connect($login, $password, $autoconnexion)
 	{
 		$user_id = $this->sql->query("SELECT user_id FROM " . DB_TABLE_MEMBER . " WHERE login = '" . $login . "'", __LINE__, __FILE__);
 		if (!empty($user_id)) //Membre existant.
