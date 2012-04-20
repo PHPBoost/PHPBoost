@@ -33,10 +33,10 @@ $poll_config = PollConfig::load();
 
 if (!empty($_POST['valid']))
 {
-	$config_poll->set_authorizations(retrieve(POST, 'poll_auth', -1));
-	$config_poll->set_displayed_in_mini_module_list(!empty($_POST['displayed_in_mini_module_list']) ? $_POST['displayed_in_mini_module_list'] : array());
-	$config_poll->set_cookie_name(retrieve(POST, 'cookie_name', 'poll', TSTRING_UNCHANGE));
-	$config_poll->set_cookie_lenght(!empty($_POST['cookie_lenght']) ? (NumberHelper::numeric($_POST['cookie_lenght']) * 3600 * 24) : 30 * 24 * 3600);
+	$poll_config->set_authorizations(retrieve(POST, 'poll_auth', -1));
+	$poll_config->set_displayed_in_mini_module_list(!empty($_POST['displayed_in_mini_module_list']) ? $_POST['displayed_in_mini_module_list'] : array());
+	$poll_config->set_cookie_name(retrieve(POST, 'cookie_name', 'poll', TSTRING_UNCHANGE));
+	$poll_config->set_cookie_lenght(!empty($_POST['cookie_lenght']) ? (NumberHelper::numeric($_POST['cookie_lenght']) * 3600 * 24) : 30 * 24 * 3600);
 
 	PollConfig::save();
 	
