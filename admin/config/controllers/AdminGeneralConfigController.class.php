@@ -195,7 +195,7 @@ class AdminGeneralConfigController extends AdminController
     {
         $theme_id = $theme_id !== null ? $theme_id : get_utheme();
         $pictures = ThemeManager::get_theme($theme_id)->get_configuration()->get_pictures();
-    	return PATH_TO_ROOT .'/templates/' . $theme_id . '/' . $pictures[0];
+    	return Url::to_rel('/templates/' . $theme_id . '/' . $pictures[0]);
     }
 
 	private function list_modules_home_page()

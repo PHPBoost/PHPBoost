@@ -36,11 +36,11 @@ $lang['default.article.contents'] = 'Ce bref article va vous donner quelques con
 <br /> 
 <ul class="bb_ul"> 
 <li class="bb_li">Pour configurer votre module, <a href="/articles/admin_articles_config.php">cliquez ici</a> 
-</li><li class="bb_li">Pour ajouter des catégories : <a href="/admin_articles_cat_add.php">cliquez ici</a> (les catégories et sous catégories sont à l\'infini) 
+</li><li class="bb_li">Pour ajouter des catégories : <a href="/articles/admin_articles_cat.php?new=1">cliquez ici</a> (les catégories et sous catégories sont à l\'infini) 
 </li><li class="bb_li">Pour ajouter un article, vous avez 2 solutions (les 2 arrivent au même lien)<br /> 
 <ul class="bb_ul"> 
 <li class="bb_li">Dans la catégorie souhaitée, cliquez sur le bouton \'Ajout\' 
-</li><li class="bb_li"><a href="/articles/admin_articles_add.php">Cliquez ici</a> pour l\'ajouter via le panneau d\'administration du module.<br /> 
+</li><li class="bb_li"><a href="/articles/management.php?new=1">Cliquez ici</a> pour l\'ajouter via le panneau d\'administration du module.<br /> 
 </li></ul> 
 </li><li class="bb_li">Pour mettre en page vos articles, vous pouvez utiliser le langage bbcode ou l\'éditeur WYSIWYG (cf cet <a href="http://www.phpboost.com/articles/articles-6-61+mise-en-page-du-contenu.php">article</a>)<br /> 
 </li></ul><br /> 
