@@ -298,7 +298,7 @@ $Template->put_all(array(
 	'L_AUTH' => $LANG['pages_auth'],
 	'L_COMMENTS_ACTIVATED' => $LANG['pages_comments_activated'],
 	'L_DISPLAY_PRINT_LINK' => $LANG['pages_display_print_link'],
-	'L_COUNT_HITS' => $LANG['pages_count_hits'],
+	'L_COUNT_HITS' => $LANG['pages_count_hits_activated'],
 	'L_ALERT_CONTENTS' => $LANG['page_alert_contents'],
 	'L_ALERT_TITLE' => $LANG['page_alert_title'],
 	'L_READ_PAGE' => $LANG['pages_auth_read'],
