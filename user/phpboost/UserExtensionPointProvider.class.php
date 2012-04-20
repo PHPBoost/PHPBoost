@@ -41,5 +41,10 @@ class UserExtensionPointProvider extends ExtensionPointProvider
 	{
 		return new UserUserExtensionPoint();
 	}
+	
+	public function url_mappings()
+	{
+		return new UrlMappings(array(new DispatcherUrlMapping('/user/index.php')));
+	}
 }
 ?>
