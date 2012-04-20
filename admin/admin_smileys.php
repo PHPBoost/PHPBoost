@@ -62,7 +62,7 @@ elseif (!empty($id) && $del) //Suppression.
 	###### Régénération du cache des smileys #######
 	SmileysCache::invalidate();
 	
-	AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);
+	AppContext::get_response()->redirect(HOST . SCRIPT);
 }
 elseif (!empty($id) && $edit) //Edition.
 {

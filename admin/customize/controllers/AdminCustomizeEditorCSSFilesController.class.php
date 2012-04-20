@@ -51,6 +51,9 @@ class AdminCustomizeEditorCSSFilesController extends AdminController
 
 		$this->build_form($id_theme, $file_name);
 		
+		$tpl = new StringTemplate('# INCLUDE MSG # # INCLUDE FORM #');
+		$tpl->add_lang($this->lang);
+		
 		if (!empty($id_theme) && !empty($file_name))
 		{
 			if ($this->submit_button->has_been_submited() && $this->form->validate())
@@ -59,9 +62,6 @@ class AdminCustomizeEditorCSSFilesController extends AdminController
 				$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('process.success', 'errors-common'), E_USER_SUCCESS, 4));
 			}
 		}
-
-		$tpl = new StringTemplate('# INCLUDE MSG # # INCLUDE FORM #');
-		$tpl->add_lang($this->lang);
 
 		$tpl->put('FORM', $this->form->display());
 

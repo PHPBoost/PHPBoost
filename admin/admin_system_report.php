@@ -149,7 +149,7 @@ $template->put_all(array(
 	'KERNEL_DEFAULT_THEME' => $template_ini_file['name'],
 	'KERNEL_DEFAULT_LANGUAGE' => $lang_ini_file['name'],
 	'KERNEL_DEFAULT_EDITOR' => $content_formatting_config->get_default_editor() == 'tinymce' ? 'TinyMCE' : 'BBCode',
-	'KERNEL_START_PAGE' => $general_config->get_home_page(),
+	'KERNEL_START_PAGE' => Environment::get_home_page(),
 	'C_KERNEL_URL_REWRITING' => $server_environment_config->is_url_rewriting_enabled(),
 	'C_KERNEL_OUTPUT_GZ' => $server_environment_config->is_output_gziping_enabled(),
 	'COOKIE_NAME' => $sessions_config->get_cookie_name(),
