@@ -65,7 +65,7 @@ class AdminThemesNotInstalledListController extends AdminController
 				'ID' => $id_theme,
 				'NAME' => $configuration->get_name(),
 				'VERSION' => $configuration->get_version(),
-				'MAIN_PICTURE' => count($pictures) > 0 ? PATH_TO_ROOT .'/templates/' . $id_theme . '/' . current($pictures) : '',
+				'MAIN_PICTURE' => count($pictures) > 0 ? Url::to_rel('/templates/' . $id_theme . '/' . current($pictures)) : '',
 				'AUTHOR_NAME' => $configuration->get_author_name(),
 				'AUTHOR_WEBSITE' => $configuration->get_author_link(),
 				'AUTHOR_EMAIL' => $configuration->get_author_mail(),
@@ -84,7 +84,7 @@ class AdminThemesNotInstalledListController extends AdminController
 				foreach ($pictures as $picture)
 				{
 					$this->view->assign_block_vars('themes_not_installed.pictures', array(
-						'URL' => PATH_TO_ROOT .'/templates/' . $id_theme . '/' . $picture
+						'URL' => Url::to_rel('/templates/' . $id_theme . '/' . $picture)
 					));
 				}
 			}

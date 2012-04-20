@@ -76,11 +76,11 @@ class AdminCustomizeInterfaceController extends AdminController
 			elseif ($this->form->get_value('use_default_logo'))
 			{
 				$this->delete_pictures_saved($theme);
-				$tpl->put('MSG', MessageHelper::display($this->lang['customization.interface.success'], E_USER_SUCCESS, 4));
+				$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('process.success', 'errors-common'), E_USER_SUCCESS, 4));
 			}
 			else
 			{
-				$tpl->put('MSG', MessageHelper::display($this->lang['customization.interface.logo.error'], E_USER_ERROR, 4));
+				$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('process.error', 'errors-common'), E_USER_ERROR, 4));
 			}
 		}
 
@@ -123,7 +123,7 @@ class AdminCustomizeInterfaceController extends AdminController
 
 			if ($header_logo_file->exists())
 			{
-				$picture = '<img src="' . $header_logo_file->get_path() . '">';
+				$picture = '<img src="' . Url::to_rel($header_logo_file->get_path()) . '">';
 				$customize_interface_fieldset->add_field(new FormFieldFree('current_logo', $this->lang['customization.interface.logo.current'], $picture));
 			}
 			else
@@ -232,10 +232,14 @@ class AdminCustomizeInterfaceController extends AdminController
 	
 	private function delete_older($theme)
 	{
-		$file = new File(PATH_TO_ROOT . '/' . $this->get_header_logo_path($theme));
-		if ($file->exists())
+		$logo = $this->get_header_logo_path($theme);
+		if (!empty($logo))
 		{
-			$file->delete();
+			$file = new File(PATH_TO_ROOT . '/' . $logo);
+			if ($file->exists())
+			{
+				$file->delete();
+			}
 		}
 	}
 }
