@@ -82,13 +82,8 @@ if ($delete_file > 0)
 	if ($download_categories->check_auth($file_infos['idcat']))
 	{
 		$Sql->query_inject("DELETE FROM " . PREFIX . "download WHERE id = '" . $delete_file . "'", __LINE__, __FILE__);
-		//Deleting comments if the file has
-		if ($file_infos['nbr_com'] > 0)
-		{
-			
-			$Comments = new CommentsTopic('download', $delete_file, url('download.php?id=' . $delete_file . '&amp;com=%s', 'download-' . $delete_file . '.php?com=%s'));
-			$Comments->delete_all($delete_file);
-		}
+		
+		CommentsService::delete_comments_topic_module('download', $delete_file);
 		
 		$notation = new Notation();
 		$notation->set_module_name('download');
@@ -98,7 +93,6 @@ if ($delete_file > 0)
 		AppContext::get_response()->redirect(HOST. DIR . '/download/' . ($file_infos['idcat'] > 0 ? url('download.php?cat=' . $file_infos['idcat'], 'category-' . $file_infos['idcat'] . '+' . Url::encode_rewrite($DOWNLOAD_CATS[$file_infos['idcat']]['name']) . '.php') : url('download.php')));
         
         // Feeds Regeneration
-        
         Feed::clear_cache('download');
 	}
 	else

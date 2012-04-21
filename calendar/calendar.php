@@ -113,8 +113,7 @@ elseif (!empty($id))
 		
 		$Sql->query_inject("DELETE FROM " . PREFIX . "calendar WHERE id = '" . $id . "'", __LINE__, __FILE__);
 		
-		$comments_topic->set_id_module($id);
-		CommentsService::delete_comments_module($comments_topic);
+		CommentsService::delete_comments_topic_module('calendar', $id);
 		
 		AppContext::get_response()->redirect(HOST . SCRIPT . SID2);
 	}
