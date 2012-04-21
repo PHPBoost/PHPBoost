@@ -30,7 +30,7 @@
  * @desc
  * @author Benoit Sautel <ben.popeye@phpboost.com>
  */
-class MaintainDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironment
+class UserDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironment
 {
 	public function __construct()
 	{

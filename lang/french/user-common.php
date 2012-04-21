@@ -80,6 +80,7 @@ $lang['groups.select'] = 'Séléctionner un groupe';
 //Other
 $lang['banned'] = 'Banni';
 $lang['connect'] = 'Se connecter';
+$lang['autoconnect'] = 'Connexion auto';
 
 // Ranks
 $lang['visitor'] = 'Visiteur';

@@ -489,7 +489,7 @@ else
 			$link = PATH_TO_ROOT . '/upload/' . $row['path'];
 		}
 		
-		$is_bbcode_editor = ($editor == ContentFormattingService::BBCODE_LANGUAGE);
+		$is_bbcode_editor = ($editor == 'bbcode');
 		$displayed_code = $is_bbcode_editor ? $bbcode : '/upload/' . $row['path'];
 		$inserted_code = !empty($parse) ? $link : ($is_bbcode_editor ? addslashes($bbcode) : htmlentities($tinymce));
 		$Template->assign_block_vars('files', array(

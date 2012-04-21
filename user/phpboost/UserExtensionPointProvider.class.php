@@ -44,7 +44,7 @@ class UserExtensionPointProvider extends ExtensionPointProvider
 	
 	public function url_mappings()
 	{
-		return new UrlMappings(array(new DispatcherUrlMapping('/user/index.php')));
+		return new UrlMappings(array(new DispatcherUrlMapping('/user/index.php', '([\w/-_]*)$')));
 	}
 }
 ?>
