@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-include_once(PATH_TO_ROOT . '/lang/' . UserAccountsConfig::load()->get_default_lang() . '/stats.php');
+include_once(PATH_TO_ROOT . '/lang/' . get_ulang() . '/stats.php');
 
 /**
  * @author Viarre Régis crowkait@phpboost.com
