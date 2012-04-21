@@ -187,6 +187,10 @@ class AppContext
 	 */
 	public static function get_current_user()
 	{
+		if (self::$current_user === null)
+		{
+			self::$current_user = new CurrentUser();
+		}
 		return self::$current_user;
 	}
 

@@ -138,9 +138,9 @@ class UserUrlBuilder
 		return DispatchManager::get_url(self::$dispatcher, '/group/' . $id);
 	}
 	
-	public static function connect()
+	public static function connect($parameters = '')
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/login');
+		return DispatchManager::get_url(self::$dispatcher, '/login/' . $parameters);
 	}
 	
 	public static function disconnect()
