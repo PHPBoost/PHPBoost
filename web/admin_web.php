@@ -228,12 +228,9 @@ elseif ($del && !empty($id)) //Suppresion du lien web.
 	$notation->set_id_in_module($id);
 	NotationService::delete_notes_id_in_module($notation);
 	
-	$comments_topic = new CommentsTopic();
-	$comments_topic->set_module_id('web');
-	$comments_topic->set_id_in_module($id);
-	CommentsService::delete_comments_id_in_module($comments_topic);
+	CommentsService::delete_comments_topic_module('web', $id);
 	
-	AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);
+	AppContext::get_response()->redirect(HOST . SCRIPT);
 }		
 else
 {			
