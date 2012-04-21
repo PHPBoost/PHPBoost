@@ -87,10 +87,12 @@ if (!empty($idart) && isset($cat) )
 	$page_list .= '<option value="1"></option>';
 	$i = 1;
 
+	$nbr_page = 0;
 	foreach ($array_page[1] as $page_name)
 	{
 		$selected = ($i == $page) ? 'selected="selected"' : '';
 		$page_list .= '<option value="' . $i++ . '"' . $selected . '>' . $page_name . '</option>';
+		$nbr_page++;
 	}
 	
 	$array_sources = unserialize($articles['sources']);
