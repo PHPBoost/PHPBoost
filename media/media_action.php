@@ -97,10 +97,7 @@ elseif ($delete > 0)
 	$notation->set_id_in_module($delete);
 	NotationService::delete_notes_id_in_module($notation);
 	
-	$comments_topic = new CommentsTopic();
-	$comments_topic->set_module_id('media');
-	$comments_topic->set_id_in_module($delete);
-	CommentsService::delete_comments_id_in_module($comments_topic);
+	CommentsService::delete_comments_topic_module('media', $delete);
 	
 	// Feeds Regeneration
 	Feed::clear_cache('media');
