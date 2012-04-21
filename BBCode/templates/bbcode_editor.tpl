@@ -59,7 +59,7 @@ displayed[${escapejs(FIELD)}] = false;
 	{
 		root: '{PATH_TO_ROOT}',
 		path: '{PATH_TO_ROOT}/templates/{THEME}/',
-		upload: {type:{C_UPLOAD_MANAGEMENT} , title:${escapejs(L_BB_UPLOAD)}, editor:${escapejs(EDITOR_NAME)} },
+		upload: {type:${escapejs(C_UPLOAD_MANAGEMENT)} , title:${escapejs(L_BB_UPLOAD)}, editor:${escapejs(EDITOR_NAME)} },
 		block1: [
 			{type:'separator'},
 			{type:'menu_smileys', id:'smileys', fname:'smileys.png', label:${escapejs(L_BB_SMILEYS)}, disabled:${escapejs(DISABLED_SMILEYS)}},
