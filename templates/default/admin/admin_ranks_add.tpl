@@ -77,7 +77,7 @@
 					<dl>
 						<dt><label for="icon">{L_IMG_ASSOC}</label></dt>
 						<dd><label>
-							<select name="icon" id="icon" onchange="img_change('img_icon', this.options[selectedIndex].value)">
+							<select name="icon" id="icon" onchange="img_change('img_icon', '{PATH_TO_ROOT}/templates/{THEME}/images/ranks/' + this.options[selectedIndex].value)">
 								{RANK_OPTIONS}
 							</select>
 							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/ranks/rank_0.png" id="img_icon" alt="" style="display:none;" />
