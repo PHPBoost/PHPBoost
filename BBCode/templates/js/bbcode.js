@@ -69,8 +69,6 @@ var Textarea_Core = Class.create(
 		
 		var selection = document.selection.createRange().text;
 		
-		alert(selection);
-
 		if ( close_balise != "" && selection == "" && close_balise != "smile" )
 			document.selection.createRange().text = open_balise + close_balise;
 		else if ( close_balise == "smile" )
@@ -91,7 +89,7 @@ var Textarea_Core = Class.create(
 
 		if (Prototype.Browser.IE) // Internet Explorer
 			this.ie_sel(area, open_balise, close_balise);
-		else if (Prototype.Browser.Gecko || Prototype.Browser.Opera) //Netscape ou opera
+		else if (Prototype.Browser.Gecko || Prototype.Browser.Opera || Prototype.Browser.WebKit) //Netscape ou opera
 			this.netscape_sel(area, open_balise, close_balise);
 		else //insertion normale (autres navigateurs)
 			this.simple_insert(area, open_balise, close_balise);
