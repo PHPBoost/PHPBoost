@@ -366,6 +366,7 @@ else
 				'RELEASE_CALENDAR_ID' => $release_calendar->get_html_id(),
 				'TITLE_ART' => $articles['title'],
 				'CONTENTS' => FormatingHelper::unparse($articles['contents']),
+				'DESCRIPTION' => FormatingHelper::unparse($articles['description']),
 				'VISIBLE_WAITING' => $articles['visible'] && (!empty($articles['start']) || !empty($articles['end'])),
 				'VISIBLE_ENABLED' => $articles['visible'] && empty($articles['start']) && empty($articles['end']),
 				'VISIBLE_UNAPROB' => !$articles['visible'],
@@ -380,7 +381,7 @@ else
 				'RELEASE_MIN' => !empty($articles['timestamp']) ? $release->get_minutes() : '',
 				'IMG_PATH' => $img_direct_path ? $articles['icon'] : '',
 				'IMG_ICON' => !empty($articles['icon']) ? '<img src="' . $articles['icon'] . '" alt="" class="valign_middle" />' : '',		
-				'IMG_LIST'=>$image_list,
+				'IMG_LIST' => $image_list,
 				'IDARTICLES' => $articles['id'],
 				'USER_ID' => $articles['user_id'],
 				'NB_SOURCE' => $i == 0 ? 1 : $i

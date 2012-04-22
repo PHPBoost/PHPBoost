@@ -465,9 +465,7 @@ elseif (!empty($pm_edit)) //Edition du message privé, si le destinataire ne la p
 			}
 			else //Interface d'édition
 			{
-				$tpl->set_filenames(array(
-					'pm'=> 'user/pm.tpl'
-				));
+				$tpl = new FileTemplate('user/pm.tpl');
 				
 				$tpl->put_all(array(
 					'LANG' => get_ulang(),
