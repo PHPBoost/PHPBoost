@@ -203,8 +203,9 @@ class NewsHomePageExtensionPoint implements HomePageExtensionPoint
 			else
 			{
 
-				$result = $this->sql_querier->query_while("SELECT n.id, n.idcat, n.title, n.timestamp, n.start, n.nbr_com
-					FROM " . DB_TABLE_NEWS . " n " . $where . "
+				$result = $this->sql_querier->query_while("SELECT n.id, n.idcat, n.title, n.timestamp, n.start, com.number_comments
+					FROM " . DB_TABLE_NEWS . " n 
+					LEFT JOIN " . DB_TABLE_COMMENTS_TOPIC . " com ON com.id_in_module = n.id AND com.module_id = 'news'" . $where . "
 					ORDER BY n.timestamp DESC" . $this->sql_querier->limit($first_msg, $NEWS_CONFIG['pagination_news']), __LINE__, __FILE__);
 
 				while ($row = $this->sql_querier->fetch_assoc($result))
@@ -234,7 +235,7 @@ class NewsHomePageExtensionPoint implements HomePageExtensionPoint
 							'U_NEWS' => 'news' . url('.php?id=' . $row['id'], '-' . $row['idcat'] . '-' . $row['id'] . '+' . Url::encode_rewrite($row['title']) . '.php'),
 							'TITLE' => $row['title'],
 							'C_COM' => $NEWS_CONFIG['activ_com'] ? true : false,
-							'COM' => $row['nbr_com']
+							'COM' => $row['number_comments']
 						));
 					}
 				}
