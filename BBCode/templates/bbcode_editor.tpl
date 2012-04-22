@@ -2,6 +2,7 @@
 <!--
 var displayed = new Array();
 displayed[${escapejs(FIELD)}] = false;
+function XMLHttpRequest_preview(field)
 {
 	if( XMLHttpRequest_preview.arguments.length == 0 )
 		field = ${escapejs(FIELD)};
