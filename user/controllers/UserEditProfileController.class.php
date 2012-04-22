@@ -143,6 +143,8 @@ class UserEditProfileController extends AbstractController
 		if ($this->form->get_value('delete_account'))
 		{
 			UserService::delete_account('WHERE user_id=:user_id', array('user_id' => $user_id));
+			$upload = new Uploads();
+			$upload->Empty_folder_member($user_id);
 		}
 		else
 		{

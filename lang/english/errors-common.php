@@ -27,6 +27,9 @@
 
 $lang = array();
 
+$lang['success'] = 'Success';
+$lang['error'] = 'Error';
+
 //Process
 $lang['process.success'] = 'The operation was completed successfully';
 $lang['process.error'] = 'An error occurred during the operation';
