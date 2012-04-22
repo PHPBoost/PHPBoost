@@ -131,6 +131,10 @@ class UserRegistrationController extends AbstractController
 		{
 			return '<strong>'. $this->lang['registration.validation.administrator.explain'] . '<strong>';
 		}
+		else
+		{
+			return '';
+		}
 	}
 	
 	private function save()

@@ -69,7 +69,7 @@ class AdminHomePageAddPluginController extends AdminController
 		$fieldset = new FormFieldsetHTML('PluginChoice', $this->lang['plugin.type']);
 		$form->add_fieldset($fieldset);
 		$fieldset->add_field(new FormFieldHomePagePluginSelect('PluginSelect', $this->lang['plugin.type'], $plugin_selected,
-		array('events' => array('change' => 'document.location = "'. HomePageUrlBuilder::add_plugin($column_selected, $plugin_selected)->absolute() .'" + HTMLForms.getField("plugin").getValue();'))));
+		array('events' => array('change' => 'document.location = "'. HomePageUrlBuilder::add_plugin($column_selected, $plugin_selected)->absolute() .'" + HTMLForms.getField("pluginselect").getValue();'))));
 		return $form;
 	}
 	
