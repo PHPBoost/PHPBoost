@@ -125,7 +125,7 @@ class UserService
 	public static function get_user_authentification($condition, $parameters)
 	{
 		$row = self::$querier->select_single_row(PREFIX . 'member', array('*'), $condition, $parameters);
-		return new UserAuthentification($row['login'], $row['password']);
+		return new UserAuthentification($row['login'], $row['password'], true);
 	}
 	
 	public static function delete_account($condition, $parameters)
