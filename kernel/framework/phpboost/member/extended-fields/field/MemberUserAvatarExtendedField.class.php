@@ -56,7 +56,7 @@ class MemberUserAvatarExtendedField extends AbstractMemberExtendedField
 		$fieldset = $member_extended_field->get_fieldset();
 		
 		$value = $member_extended_field->get_value();
-		$image = !empty($value) ? '<img src="'. $value .'" alt="" title="" />' : $this->lang['no_avatar'];
+		$image = !empty($value) ? '<img src="'. Url::to_rel($value) .'" alt="" title="" />' : $this->lang['no_avatar'];
 		$fieldset->add_field(new FormFieldFree('current_avatar', $this->lang['current_avatar'], $image));
 		
 		if (UserAccountsConfig::load()->is_avatar_upload_enabled())
@@ -80,11 +80,11 @@ class MemberUserAvatarExtendedField extends AbstractMemberExtendedField
 		$value = $member_extended_field->get_value();
 		if (empty($value) && $user_accounts_config->is_default_avatar_enabled())
 		{
-			$avatar = '<img src="'. PATH_TO_ROOT .'/templates/'. get_utheme() .'/images/'. $user_accounts_config->get_default_avatar_name() .'" alt="" title="" />';
+			$avatar = '<img src="'. Url::to_rel('/templates/'. get_utheme() .'/images/'. $user_accounts_config->get_default_avatar_name()) .'" alt="" title="" />';
 		}
 		elseif (!empty($value))
 		{
-			$avatar = '<img src="'. $value .'" alt="" title="" />';
+			$avatar = '<img src="'. Url::to_rel($value) .'" alt="" title="" />';
 		}
 		else
 		{
