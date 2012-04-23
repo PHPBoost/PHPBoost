@@ -1,0 +1,27 @@
+div.syndication_choices {
+    position:absolute;
+    width:0px;
+    height:0px;
+    visibility:hidden;
+    overflow:visible;
+    margin-top:2px;
+    margin-left:-20px;
+}
+
+div.syndication_choices ul {
+    width:90px;
+    list-style-type:none;
+	line-height:18px;
+}
+div.syndication_choices ul li {
+	height:18px;
+    margin-bottom:1px;
+}
+
+ul.rss_feed {
+    margin-left:20px;
+}
+
+ul.rss_feed li {
+    list-style-image:url(../../../images/li.png);
+}
