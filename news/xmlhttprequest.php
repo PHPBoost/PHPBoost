@@ -80,7 +80,7 @@ elseif (isset($_POST['preview']))
 
 	$preview->put_all(array('C_NEWS_BLOCK' => true));
 
-	$preview->assign_block_vars('news', array(
+	$preview->assign_vars(array(
 		'C_NEWS_ROW' => false,
 		'C_IMG' => !empty($news['img']),
 		'C_ICON' => $NEWS_CONFIG['activ_icon'],
