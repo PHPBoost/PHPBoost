@@ -114,8 +114,8 @@ function createSortableMenu()
 			<tr>
 				<td id="container_header" colspan="3">
 					<div style="width:165px;margin:auto;">
-						<div style="position:relative;float:left;">
-							<div style="position:absolute;z-index:99;margin-top:125px;margin-left:0px;float:left;display:none;" id="moveaddmenu1">
+						<div style="position:relative;float:left;z-index:101;">
+							<div style="position:absolute;margin-top:125px;margin-left:0px;float:left;display:none;" id="moveaddmenu1">
 								<div style="position:absolute;bottom:13px;z-index:100;" onmouseover="menu_hide_block('addmenu1', 1);" onmouseout="menu_hide_block('addmenu1', 0);">
 								    <p class="menus_block_add menus_block_add_links" style="margin:0px;margin-top:-1px;">
 										<a href="{PATH_TO_ROOT}/admin/menus/links.php?s=1" class="small_link">{L_ADD_LINKS_MENUS}</a>
@@ -153,8 +153,8 @@ function createSortableMenu()
 			<tr>
 				<td id="container_subheader" colspan="3">
 					<div style="width:165px;margin:auto;">
-						<div style="position:relative;float:left;">
-							<div style="position:absolute;z-index:99;margin-top:125px;margin-left:0px;float:left;display:none;" id="moveaddmenu2">
+						<div style="position:relative;float:left;z-index:101;">
+							<div style="position:absolute;margin-top:125px;margin-left:0px;float:left;display:none;" id="moveaddmenu2">
 								<div style="position:absolute;bottom:13px;z-index:100;" onmouseover="menu_hide_block('addmenu2', 1);" onmouseout="menu_hide_block('addmenu2', 0);">
 									<p class="menus_block_add menus_block_add_links" style="margin:0px;margin-top:-1px;">
 										<a href="{PATH_TO_ROOT}/admin/menus/links.php?s=2" class="small_link">{L_ADD_LINKS_MENUS}</a>
@@ -192,8 +192,8 @@ function createSortableMenu()
 			<tr>				
 				<td id="container_leftmenu">
 					<div style="width:165px;margin:auto;">
-						<div style="position:relative;float:left;">
-							<div style="position:absolute;z-index:99;margin-top:125px;margin-left:0px;float:left;display:none;" id="moveaddmenu3">
+						<div style="position:relative;float:left;z-index:101;">
+							<div style="position:absolute;margin-top:125px;margin-left:0px;float:left;display:none;" id="moveaddmenu3">
 								<div style="position:absolute;bottom:13px;z-index:100;" onmouseover="menu_hide_block('addmenu3', 1);" onmouseout="menu_hide_block('addmenu3', 0);">
 									<p class="menus_block_add menus_block_add_links" style="margin:0px;margin-top:-1px;">
 										<a href="{PATH_TO_ROOT}/admin/menus/links.php?s=7" class="small_link">{L_ADD_LINKS_MENUS}</a>
@@ -233,8 +233,8 @@ function createSortableMenu()
 						<tr>
 							<td id="container_topcentral">
 								<div style="width:165px;margin:auto;">
-									<div style="position:relative;float:left;">
-										<div style="position:absolute;z-index:99;margin-top:125px;margin-left:0px;float:left;display:none;" id="moveaddmenu4">
+									<div style="position:relative;float:left;z-index:101;">
+										<div style="position:absolute;margin-top:125px;margin-left:0px;float:left;display:none;" id="moveaddmenu4">
 											<div style="position:absolute;bottom:13px;z-index:100;" onmouseover="menu_hide_block('addmenu4', 1);" onmouseout="menu_hide_block('addmenu4', 0);">
 												<p class="menus_block_add menus_block_add_links" style="margin:0px;margin-top:-1px;">
 													<a href="{PATH_TO_ROOT}/admin/menus/links.php?s=3" class="small_link">{L_ADD_LINKS_MENUS}</a>
@@ -291,8 +291,8 @@ function createSortableMenu()
 						<tr>
 							<td id="container_bottomcentral">
 								<div style="width:165px;margin:auto;">
-									<div style="position:relative;float:left;">
-										<div style="position:absolute;z-index:99;margin-top:125px;margin-left:0px;float:left;display:none;" id="moveaddmenu5">
+									<div style="position:relative;float:left;z-index:101;">
+										<div style="position:absolute;margin-top:125px;margin-left:0px;float:left;display:none;" id="moveaddmenu5">
 											<div style="position:absolute;bottom:13px;z-index:100;" onmouseover="menu_hide_block('addmenu5', 1);" onmouseout="menu_hide_block('addmenu5', 0);">
 												<p class="menus_block_add menus_block_add_links" style="margin:0px;margin-top:-1px;">
 													<a href="{PATH_TO_ROOT}/admin/menus/links.php?s=4" class="small_link">{L_ADD_LINKS_MENUS}</a>
@@ -331,8 +331,8 @@ function createSortableMenu()
 				</td>
 				<td id="container_rightmenu">
 					<div style="width:165px;margin:auto;">
-						<div style="position:relative;float:left;">
-							<div style="position:absolute;z-index:99;margin-top:125px;margin-left:0px;float:left;display:none;" id="moveaddmenu6">
+						<div style="position:relative;float:left;z-index:101;">
+							<div style="position:absolute;margin-top:125px;margin-left:0px;float:left;display:none;" id="moveaddmenu6">
 								<div style="position:absolute;bottom:13px;z-index:100;" onmouseover="menu_hide_block('addmenu6', 1);" onmouseout="menu_hide_block('addmenu6', 0);">
 									<p class="menus_block_add menus_block_add_links" style="margin:0px;margin-top:-1px;">
 										<a href="{PATH_TO_ROOT}/admin/menus/links.php?s=8" class="small_link">{L_ADD_LINKS_MENUS}</a>
@@ -371,8 +371,8 @@ function createSortableMenu()
 			<tr>
 				<td colspan="3" id="container_topfooter">
 					<div style="width:165px;margin:auto;">
-						<div style="position:relative;float:left;">
-							<div style="position:absolute;z-index:99;margin-top:125px;margin-left:0px;float:left;display:none;" id="moveaddmenu7">
+						<div style="position:relative;float:left;z-index:101;">
+							<div style="position:absolute;margin-top:125px;margin-left:0px;float:left;display:none;" id="moveaddmenu7">
 								<div style="position:absolute;bottom:13px;z-index:100;" onmouseover="menu_hide_block('addmenu7', 1);" onmouseout="menu_hide_block('addmenu7', 0);">
 									<p class="menus_block_add menus_block_add_links" style="margin:0px;margin-top:-1px;">
 										<a href="{PATH_TO_ROOT}/admin/menus/links.php?s=5" class="small_link">{L_ADD_LINKS_MENUS}</a>
@@ -410,8 +410,8 @@ function createSortableMenu()
 			<tr>
 				<td colspan="3" id="container_footer">
 					<div style="width:165px;margin:auto;">
-						<div style="position:relative;float:left;">
-							<div style="position:absolute;z-index:99;margin-top:125px;margin-left:0px;float:left;display:none;" id="moveaddmenu8">
+						<div style="position:relative;float:left;z-index:101;">
+							<div style="position:absolute;margin-top:125px;margin-left:0px;float:left;display:none;" id="moveaddmenu8">
 								<div style="position:absolute;bottom:13px;z-index:100;" onmouseover="menu_hide_block('addmenu8', 1);" onmouseout="menu_hide_block('addmenu8', 0);">
 									<p class="menus_block_add menus_block_add_links" style="margin:0px;margin-top:-1px;">
 										<a href="{PATH_TO_ROOT}/admin/menus/links.php?s=6" class="small_link">{L_ADD_LINKS_MENUS}</a>
