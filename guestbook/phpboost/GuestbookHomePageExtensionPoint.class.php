@@ -117,8 +117,6 @@ class GuestbookHomePageExtensionPoint implements HomePageExtensionPoint
 			$form->add_button(new FormButtonReset());
 				
 			$form->add_fieldset($fieldset);
-			   
-			$tpl->put('GUESTBOOK_FORM', $form->display());
 			
 			//Formulaire soumis
 			if ($submit_button->has_been_submited())
@@ -207,6 +205,8 @@ class GuestbookHomePageExtensionPoint implements HomePageExtensionPoint
 			));
 		}
 
+		$tpl->put('GUESTBOOK_FORM', $form->display());
+		
 		//On cr�e une pagination si le nombre de msg est trop important.
 		$nbr_guestbook = $this->sql_querier->count_table(PREFIX . 'guestbook', __LINE__, __FILE__);
 
