@@ -145,7 +145,7 @@
 		</div>
 		# ENDIF #
 		
-		<form action="{PATH_TO_ROOT}/calendar/calendar.php{UPDATE}" method="post" onsubmit="return check_form_cl();" class="fieldset_content" style="width:70%">
+		<form action="{PATH_TO_ROOT}/calendar/calendar.php{UPDATE}" method="post" onsubmit="return check_form_cl();" class="fieldset_content" style="max-width:700px">
 			<fieldset>
 				<legend>{L_EDIT_EVENT}</legend>
 				<dl class="overflow_visible">
