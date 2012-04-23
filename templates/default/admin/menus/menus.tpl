@@ -4,7 +4,7 @@ function Confirm_menu() {
 	return confirm("{L_CONFIRM_DEL_MENU}");
 }
 
-var delay = 1200; //Délai après lequel le bloc est automatiquement masqué, après le départ de la souris.
+var delay = 1200; //Dï¿½lai aprï¿½s lequel le bloc est automatiquement masquï¿½, aprï¿½s le dï¿½part de la souris.
 var timeout;
 var displayed = false;
 var previous = '';
@@ -87,7 +87,7 @@ function createSortableMenu()
 				constraint:false,
 				scroll:window,
 				format:/^menu_([0-9]+)$/,
-				//dropOnEmpty: true
+				dropOnEmpty: true
 			}
 		);   
 	}
