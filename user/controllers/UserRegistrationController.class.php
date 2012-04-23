@@ -90,6 +90,7 @@ class UserRegistrationController extends AbstractController
 			'class' => 'text', 'maxlength' => 25, 'required' => true),
 			array(new FormFieldConstraintLengthRange(6, 12))
 		));
+		$fieldset->add_field(new FormFieldCaptcha());
 		$fieldset->add_field(new FormFieldCheckbox('user_hide_mail', $this->lang['email.hide'], FormFieldCheckbox::CHECKED));
 		
 		$options_fieldset = new FormFieldsetHTML('options', LangLoader::get_message('options', 'main'));
