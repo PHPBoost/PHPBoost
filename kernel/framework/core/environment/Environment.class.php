@@ -267,27 +267,22 @@ class Environment
 			define('SID2', '');
 		}
 
-		$user_theme = AppContext::get_current_user()->get_theme();
-		//Is that theme authorized for this member? If not, we assign it the default theme
-		$user_theme_properties = ThemeManager::get_theme($user_theme);
-		if (UserAccountsConfig::load()->is_users_theme_forced() || $user_theme_properties == null
-		|| !$user_theme_properties->check_auth())
+		$current_user = AppContext::get_current_user();
+		$user_accounts_config = UserAccountsConfig::load();
+		
+		$user_theme = ThemeManager::get_theme($current_user->get_theme());
+		$default_theme = $user_accounts_config->get_default_theme();
+		if ($user_accounts_config->is_users_theme_forced() || $user_theme == null || !$user_theme->check_auth() || !$user_theme->is_activated())
 		{
-			$user_theme = UserAccountsConfig::load()->get_default_theme();
+			AppContext::get_current_user()->update_theme($default_theme);
 		}
-		//If the user's theme doesn't exist, we assign it a default one which exists
-		$user_theme = find_require_dir(PATH_TO_ROOT . '/templates/', $user_theme);
-		AppContext::get_current_user()->set_theme($user_theme);
-
-		$user_lang = AppContext::get_current_user()->get_locale();
-		//Is that member authorized to use this lang? If not, we assign it the default lang
-		$lang_properties = LangManager::get_lang($user_lang);
-		if ($lang_properties == null || !$lang_properties->check_auth())
+		
+		$user_lang = LangManager::get_lang($current_user->get_locale());
+		$default_lang = $user_accounts_config->get_default_lang();
+		if ($user_lang == null || !$user_lang->check_auth() || !$user_lang->is_activated())
 		{
-			$user_lang = UserAccountsConfig::load()->get_default_lang();
+			AppContext::get_current_user()->update_lang($default_lang);
 		}
-		$user_lang = find_require_dir(PATH_TO_ROOT . '/lang/', $user_lang);
-		AppContext::get_current_user()->set_locale($user_lang);
 	}
 
 	public static function init_output_bufferization()
