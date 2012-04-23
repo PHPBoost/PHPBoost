@@ -138,10 +138,6 @@ class UserAccountsConfig extends AbstractConfigData
 	 */
 	public function set_member_accounts_validation_method($method)
 	{
-		if ($method > 2 || $method < 0)
-		{
-			$method = 0;
-		}
 		$this->set_property(self::MEMBER_ACCOUNTS_VALIDATION_METHOD_PROPERTY, $method);
 	}
 
@@ -543,7 +539,7 @@ class UserAccountsConfig extends AbstractConfigData
 		
 		return array(
 			self::REGISTRATION_ENABLED_PROPERTY => FormFieldCheckbox::CHECKED,
-			self::MEMBER_ACCOUNTS_VALIDATION_METHOD_PROPERTY => 1,
+			self::MEMBER_ACCOUNTS_VALIDATION_METHOD_PROPERTY => self::AUTOMATIC_USER_ACCOUNTS_VALIDATION,
 			self::WELCOME_MESSAGE_PROPERTY => LangLoader::get_message('site_config_msg_mbr', 'main'),
 			self::REGISTRATION_AGREEMENT_PROPERTY => LangLoader::get_message('register_agreement', 'main'),
 			self::REGISTRATION_CAPTCHA_ENABLED_PROPERTY => FormFieldCheckbox::CHECKED,

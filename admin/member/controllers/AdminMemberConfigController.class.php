@@ -110,8 +110,8 @@ class AdminMemberConfigController extends AdminController
 				new FormFieldSelectChoiceOption('4', '4'),
 			), array('hidden' => !$user_account_config->is_registration_captcha_enabled())
 		));
-		
-		$fieldset->add_field(new FormFieldCheckbox('theme_choice_permission', $this->lang['members.config.theme-choice-permission'], $user_account_config->is_users_theme_forced()));
+
+		$fieldset->add_field(new FormFieldCheckbox('theme_choice_permission', $this->lang['members.config.theme-choice-permission'], !$user_account_config->is_users_theme_forced()));
 		
 		$fieldset = new FormFieldsetHTML('avatar_management', $this->lang['members.config.avatars-management']);
 		$form->add_fieldset($fieldset);
