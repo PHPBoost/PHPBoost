@@ -272,7 +272,7 @@ function createSortableMenu()
 						<tr>
 							<td id="container_central">
 								<div style="width:165px;margin:auto;">
-									<div style="position:relative;float:left;margin-top:10px;">
+									<div style="position:relative;float:left;margin-top:5px;z-index:101;">
 										<p class="menu_block_libelle">{L_MENUS_AVAILABLE}</p>
 										<p class="menus_block_add" style="height:3px;"></p>
 									</div>
