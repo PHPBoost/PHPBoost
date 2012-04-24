@@ -68,6 +68,7 @@ $lang['bb_movie'] = 'Movie [movie=width,height]url movie[/movie]';
 $lang['bb_help'] = 'BBcode help';
 $lang['bb_upload'] = 'Attach files';
 $lang['bb_url_prompt'] = 'Link address?';
+$lang['bb_image_prompt'] = 'Picture address ?';
 $lang['bb_text'] = 'Text';
 $lang['bb_script'] = 'Script';
 $lang['bb_web'] = 'Web';
