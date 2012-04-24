@@ -199,6 +199,7 @@ class CalendarHomePageExtensionPoint implements HomePageExtensionPoint
 				}
 				
 				$comments_topic->set_id_in_module($row['id']);
+				$comments_topic->set_url(new Url('/calendar/calendar.php?d=' . $day . '&m=' . $month . '&y=' . $year . '&e=' . $row['id'] . '&com=0'));
 				
 				$tpl->assign_block_vars('action', array(
 					'DATE' => gmdate_format('date_format', $row['timestamp']),
