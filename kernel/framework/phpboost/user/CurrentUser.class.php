@@ -127,7 +127,7 @@ class CurrentUser extends User
 			}
 			else
 			{
-				$db_querier->update(DB_TABLE_MEMBER, array('user_theme' => $theme), 'WHERE level=-1 AND session_id=session_id', array('session_id' => $this->user_data['session_id']));
+				$db_querier->update(DB_TABLE_SESSIONS, array('user_theme' => $theme), 'WHERE level=-1 AND session_id=session_id', array('session_id' => $this->user_data['session_id']));
 			}
 		}
 	}
@@ -145,7 +145,7 @@ class CurrentUser extends User
 		}
 		else
 		{
-			$db_querier->update(DB_TABLE_MEMBER, array('user_lang' => $lang), 'WHERE level=-1 AND session_id=session_id', array('session_id' => $this->user_data['session_id']));
+			$db_querier->update(DB_TABLE_SESSIONS, array('user_lang' => $lang), 'WHERE level=-1 AND session_id=session_id', array('session_id' => $this->user_data['session_id']));
 		}
 	}
 
