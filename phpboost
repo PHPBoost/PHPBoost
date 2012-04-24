@@ -32,6 +32,14 @@ CLIEnvironment::load_imports();
 CLIEnvironment::init();
 
 $launcher = new CLILauncher($_SERVER['argv']);
-$launcher->launch();
+$result = $launcher->launch();
+if ($result)
+{
+	exit(0);
+}
+else
+{
+	exit(1);
+}
 
 ?>
