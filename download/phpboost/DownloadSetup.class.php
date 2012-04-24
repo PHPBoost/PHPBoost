@@ -152,7 +152,7 @@ class DownloadSetup extends DefaultModuleSetup
 			'id' => 1,
 			'id_parent' => 0,
 			'c_order' => 1,
-			'auth' => '',
+			'auth' => serialize(array('r-1' => 2, 'r0' => 2, 'r1' => 7)),
 			'name' => $this->messages['download_cats_title'],
 			'contents' => $this->messages['download_cats_desc'],
 			'icon' => 'download.png',
