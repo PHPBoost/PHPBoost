@@ -3,7 +3,7 @@
  *                               articles.php
  *                            -------------------
  *   begin                : July 17, 2005
- *   copyright            : (C) 2005 Viarre Régis & (C) 2009 Maurel Nicolas
+ *   copyright            : (C) 2005 Viarre Rï¿½gis & (C) 2009 Maurel Nicolas
  *   email                : crowkait@phpboost.com
  *
  *  
@@ -45,7 +45,7 @@ if (!empty($idart) && isset($cat) )
 	
 	$articles['auth'] = $ARTICLES_CAT[$articles['idcat']]['auth'];
 
-	//Niveau d'autorisation de la catégorie
+	//Niveau d'autorisation de la catï¿½gorie
 	if (!isset($ARTICLES_CAT[$idartcat]) || (!$User->check_auth($ARTICLES_CAT[$idartcat]['auth'], AUTH_ARTICLES_READ) && !$User->check_auth($articles['auth'], AUTH_ARTICLES_READ))|| $ARTICLES_CAT[$idartcat]['visible'] == 0 ) 
 	{
 		$error_controller = PHPBoostErrors::unexisting_page();
@@ -64,7 +64,7 @@ if (!empty($idart) && isset($cat) )
 	//MAJ du compteur.
 	$Sql->query_inject("UPDATE " . LOW_PRIORITY . " " . DB_TABLE_ARTICLES . " SET views = views + 1 WHERE id = " . $idart, __LINE__, __FILE__); 
 	
-	//On crée une pagination si il y plus d'une page.
+	//On crï¿½e une pagination si il y plus d'une page.
 	 
 	$Pagination = new DeprecatedPagination();
 
@@ -81,7 +81,7 @@ if (!empty($idart) && isset($cat) )
 	//Pagination des articles.
 	$array_contents = preg_split('`\[page\].+\[/page\](.*)`Us', $articles['contents'], -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
 
-	//Récupération de la liste des pages.
+	//Rï¿½cupï¿½ration de la liste des pages.
 	preg_match_all('`\[page\]([^[]+)\[/page\]`U', $articles['contents'], $array_page);
 	$page_list = '<option value="1">' . $ARTICLES_LANG['select_page'] . '</option>';
 	$page_list .= '<option value="1"></option>';
