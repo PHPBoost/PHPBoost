@@ -122,7 +122,7 @@ class AdminModuleAddController extends AdminController
 					$module_configuration = $module->get_configuration();
 					$modules_not_installed[$module_configuration->get_name()] = $module;
 				}
-				catch (Exception $ex)
+				catch (IOException $ex)
 				{
 					continue;
 				}
