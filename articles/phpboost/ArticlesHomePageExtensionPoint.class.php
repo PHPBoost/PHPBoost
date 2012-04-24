@@ -308,7 +308,9 @@ class ArticlesHomePageExtensionPoint implements HomePageExtensionPoint
 				{
 					//On reccourci le lien si il est trop long.
 					$fichier = (strlen($row['title']) > 45 ) ? substr(html_entity_decode($row['title']), 0, 45) . '...' : $row['title'];
-
+					
+					$notation->set_id_in_module($row['id']);
+					
 					$tpl->assign_block_vars('articles_invisible', array(
 						'NAME' => $row['title'],
 						'ICON' => !empty($row['icon']) ? '<a href="articles' . url('.php?id=' . $row['id'] . '&amp;cat=' . $idartcat, '-' . $idartcat . '-' . $row['id'] . '+' . Url::encode_rewrite($fichier) . '.php') . '"><img src="' . $row['icon'] . '" alt="" class="valign_middle" /></a>' : '',
