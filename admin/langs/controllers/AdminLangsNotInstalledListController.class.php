@@ -37,7 +37,6 @@ class AdminLangsNotInstalledListController extends AdminController
 		$this->init();
 		
 		$this->upload_form();
-		$this->view->put('UPLOAD_FORM', $this->form->display());
 		
 		$this->build_view();
 		$this->save($request);
@@ -46,6 +45,8 @@ class AdminLangsNotInstalledListController extends AdminController
 		{
 			$this->upload();
 		}
+		
+		$this->view->put('UPLOAD_FORM', $this->form->display());
 
 		return new AdminLangsDisplayResponse($this->view, $this->lang['langs.install']);
 	}
@@ -55,18 +56,21 @@ class AdminLangsNotInstalledListController extends AdminController
 		$not_installed_langs = $this->get_not_installed_langs();
 		foreach($not_installed_langs as $id)
 		{
-			$configuration = LangConfigurationManager::get($id);
-			$this->view->assign_block_vars('langs_not_installed', array(
-				'C_WEBSITE' => $configuration->get_author_link() !== '',
-				'ID' => $id,
-				'NAME' => $configuration->get_name(),
-				'VERSION' => $configuration->get_version(),
-				'AUTHOR_NAME' => $configuration->get_author_name(),
-				'AUTHOR_WEBSITE' => $configuration->get_author_link(),
-				'AUTHOR_EMAIL' => $configuration->get_author_mail(),
-				'COMPATIBILITY' => $configuration->get_compatibility(),
-				'AUTHORIZATIONS' => Authorizations::generate_select(Lang::ACCES_LANG, array('r-1' => 1, 'r0' => 1, 'r1' => 1), array(2 => true), $id)
-			));
+			try {
+				$configuration = LangConfigurationManager::get($id);
+				$this->view->assign_block_vars('langs_not_installed', array(
+					'C_WEBSITE' => $configuration->get_author_link() !== '',
+					'ID' => $id,
+					'NAME' => $configuration->get_name(),
+					'VERSION' => $configuration->get_version(),
+					'AUTHOR_NAME' => $configuration->get_author_name(),
+					'AUTHOR_WEBSITE' => $configuration->get_author_link(),
+					'AUTHOR_EMAIL' => $configuration->get_author_mail(),
+					'COMPATIBILITY' => $configuration->get_compatibility(),
+					'AUTHORIZATIONS' => Authorizations::generate_select(Lang::ACCES_LANG, array('r-1' => 1, 'r0' => 1, 'r1' => 1), array(2 => true), $id)
+				));
+			} catch (IOException $e) {
+			}
 		}
 		$this->view->put_all(array(
 			'C_LANG_INSTALL' => count($not_installed_langs) > 0 ? true : false,
@@ -124,12 +128,12 @@ class AdminLangsNotInstalledListController extends AdminController
 	
 	private function upload_form()
 	{
-		$form = new HTMLForm('upload');
+		$form = new HTMLForm('upload_lang');
 		
 		$fieldset = new FormFieldsetHTML('upload', $this->lang['langs.upload']);
 		$form->add_fieldset($fieldset);
 	
-		$fieldset->add_field(new FormFieldFilePicker('upload', $this->lang['langs.upload.description']));
+		$fieldset->add_field(new FormFieldFilePicker('file', $this->lang['langs.upload.description']));
 		
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_button($this->submit_button);
@@ -139,8 +143,66 @@ class AdminLangsNotInstalledListController extends AdminController
 	
 	private function upload()
 	{
-		//TODO
-		new Exception('todo');
+		$folder_phpboost_langs = PATH_TO_ROOT . '/lang/';
+
+        if (!is_writable($folder_phpboost_langs))
+		{
+			$is_writable = @chmod($dir, 0777);
+		}
+		else
+		{
+			$is_writable = true;
+		}
+        
+		if ($is_writable)
+		{
+			$file = $this->form->get_value('file');
+			if ($file !== null)
+			{
+				if (!LangManager::get_lang_existed($file->get_name()))
+				{
+					$upload = new Upload($folder_phpboost_langs);
+					if ($upload->file('upload_lang_file', '`([a-z0-9()_-])+\.(gzip|zip)+$`i'))
+					{
+						$archive = $folder_phpboost_langs . $upload->get_filename();
+						
+						if ($upload->get_extension() == 'gzip')
+						{
+							import('php/pcl/pcltar', LIB_IMPORT);
+							PclTarExtract($upload->get_filename(), $folder_phpboost_langs);
+							
+							$file = new File($archive);
+							$file->delete();
+							
+							$this->view->put('MSG', MessageHelper::display($this->lang['langs.upload.success'], MessageHelper::SUCCESS, 4));
+						}
+						else if ($upload->get_extension() == 'zip')
+						{
+							import('php/pcl/pclzip', LIB_IMPORT);
+							$zip = new PclZip($archive);
+							$zip->extract(PCLZIP_OPT_PATH, $folder_phpboost_langs, PCLZIP_OPT_SET_CHMOD, 0755);
+							
+							$file = new File($archive);
+							$file->delete();
+							
+							$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('process.success', 'errors-common'), MessageHelper::SUCCESS, 4));
+						}
+						else
+						{
+							$this->view->put('MSG', MessageHelper::display($this->lang['langs.upload.invalid_format'], MessageHelper::ERROR, 4));
+						}
+					}
+				}
+				else
+				{
+					$this->view->put('MSG', MessageHelper::display($this->lang['langs.already_exist'], MessageHelper::ERROR, 4));
+				}
+			}
+			else
+			{
+				$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('process.error', 'errors-common'), MessageHelper::ERROR, 4));
+			}
+		}
 	}
 }
 ?>

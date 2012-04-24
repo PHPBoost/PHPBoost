@@ -37,7 +37,6 @@ class AdminThemesNotInstalledListController extends AdminController
 		$this->init();
 		
 		$this->upload_form();
-		$this->view->put('UPLOAD_FORM', $this->form->display());
 		
 		$this->build_view();
 		$this->save($request);
@@ -46,6 +45,8 @@ class AdminThemesNotInstalledListController extends AdminController
 		{
 			$this->upload_theme();
 		}
+		
+		$this->view->put('UPLOAD_FORM', $this->form->display());
 
 		return new AdminThemesDisplayResponse($this->view, $this->lang['themes.add']);
 	}
@@ -55,38 +56,41 @@ class AdminThemesNotInstalledListController extends AdminController
 		$not_installed_themes = $this->get_not_installed_themes();
 		foreach($not_installed_themes as $name)
 		{
-			$configuration = ThemeConfigurationManager::get($name);
-			$pictures = $configuration->get_pictures();
-			$id_theme = $name;
-			
-			$this->view->assign_block_vars('themes_not_installed', array(
-				'C_WEBSITE' => $configuration->get_author_link() !== '',
-				'C_PICTURES' => count($pictures) > 0,
-				'ID' => $id_theme,
-				'NAME' => $configuration->get_name(),
-				'VERSION' => $configuration->get_version(),
-				'MAIN_PICTURE' => count($pictures) > 0 ? Url::to_rel('/templates/' . $id_theme . '/' . current($pictures)) : '',
-				'AUTHOR_NAME' => $configuration->get_author_name(),
-				'AUTHOR_WEBSITE' => $configuration->get_author_link(),
-				'AUTHOR_EMAIL' => $configuration->get_author_mail(),
-				'DESCRIPTION' => $configuration->get_description() !== '' ? $configuration->get_description() : $this->lang['themes.bot_informed'],
-				'COMPATIBILITY' => $configuration->get_compatibility(),
-				'AUTHORIZATIONS' => Authorizations::generate_select(Theme::ACCES_THEME, array('r-1' => 1, 'r0' => 1, 'r1' => 1), array(2 => true), $id_theme),
-				'HTML_VERSION' => $configuration->get_html_version() !== '' ? $configuration->get_html_version() : $this->lang['themes.bot_informed'],
-				'CSS_VERSION' => $configuration->get_css_version() !== '' ? $configuration->get_css_version() : $this->lang['themes.bot_informed'],
-				'MAIN_COLOR' => $configuration->get_main_color() !== '' ? $configuration->get_main_color() : $this->lang['themes.bot_informed'],
-				'WIDTH' => $configuration->get_variable_width() ? $this->lang['themes.variable-width'] : $configuration->get_width(),
-			));
-			
-			if (count($pictures) > 0)
-			{
-				unset($pictures[0]);
-				foreach ($pictures as $picture)
+			try {
+				$configuration = ThemeConfigurationManager::get($name);
+				$pictures = $configuration->get_pictures();
+				$id_theme = $name;
+				
+				$this->view->assign_block_vars('themes_not_installed', array(
+					'C_WEBSITE' => $configuration->get_author_link() !== '',
+					'C_PICTURES' => count($pictures) > 0,
+					'ID' => $id_theme,
+					'NAME' => $configuration->get_name(),
+					'VERSION' => $configuration->get_version(),
+					'MAIN_PICTURE' => count($pictures) > 0 ? Url::to_rel('/templates/' . $id_theme . '/' . current($pictures)) : '',
+					'AUTHOR_NAME' => $configuration->get_author_name(),
+					'AUTHOR_WEBSITE' => $configuration->get_author_link(),
+					'AUTHOR_EMAIL' => $configuration->get_author_mail(),
+					'DESCRIPTION' => $configuration->get_description() !== '' ? $configuration->get_description() : $this->lang['themes.bot_informed'],
+					'COMPATIBILITY' => $configuration->get_compatibility(),
+					'AUTHORIZATIONS' => Authorizations::generate_select(Theme::ACCES_THEME, array('r-1' => 1, 'r0' => 1, 'r1' => 1), array(2 => true), $id_theme),
+					'HTML_VERSION' => $configuration->get_html_version() !== '' ? $configuration->get_html_version() : $this->lang['themes.bot_informed'],
+					'CSS_VERSION' => $configuration->get_css_version() !== '' ? $configuration->get_css_version() : $this->lang['themes.bot_informed'],
+					'MAIN_COLOR' => $configuration->get_main_color() !== '' ? $configuration->get_main_color() : $this->lang['themes.bot_informed'],
+					'WIDTH' => $configuration->get_variable_width() ? $this->lang['themes.variable-width'] : $configuration->get_width(),
+				));
+				
+				if (count($pictures) > 0)
 				{
-					$this->view->assign_block_vars('themes_not_installed.pictures', array(
-						'URL' => Url::to_rel('/templates/' . $id_theme . '/' . $picture)
-					));
+					unset($pictures[0]);
+					foreach ($pictures as $picture)
+					{
+						$this->view->assign_block_vars('themes_not_installed.pictures', array(
+							'URL' => Url::to_rel('/templates/' . $id_theme . '/' . $picture)
+						));
+					}
 				}
+			} catch (IOException $e) {
 			}
 		}
 		$this->view->put_all(array(
@@ -147,10 +151,10 @@ class AdminThemesNotInstalledListController extends AdminController
 	{
 		$form = new HTMLForm('upload_theme');
 		
-		$fieldset = new FormFieldsetHTML('upload_theme', $this->lang['themes.upload']);
+		$fieldset = new FormFieldsetHTML('upload', $this->lang['themes.upload']);
 		$form->add_fieldset($fieldset);
 	
-		$fieldset->add_field(new FormFieldFilePicker('upload_theme', $this->lang['themes.upload.description']));
+		$fieldset->add_field(new FormFieldFilePicker('file', $this->lang['themes.upload.description']));
 		
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_button($this->submit_button);
@@ -173,36 +177,36 @@ class AdminThemesNotInstalledListController extends AdminController
         
 		if ($is_writable)
 		{
-			$file = $this->form->get_value('upload_theme');
+			$file = $this->form->get_value('file');
 			if ($file !== null)
 			{
 				if (!ThemeManager::get_theme_existed($file->get_name()))
 				{
 					$upload = new Upload($folder_phpboost_themes);
-					if ($upload->file('upload_theme_upload_theme', '`([a-z0-9()_-])+\.(gzip|zip)+$`i'))
+					if ($upload->file('upload_theme_file', '`([a-z0-9()_-])+\.(gzip|zip)+$`i'))
 					{
-						$archive = $folder_phpboost_themes . $upload->filename['upload_theme_upload_theme'];
+						$archive = $folder_phpboost_themes . $upload->get_filename();
 						
-						if ($upload->extension['upload_theme_upload_theme'] == 'gzip')
+						if ($upload->get_extension() == 'gzip')
 						{
-							import('lib/pcl/pcltar', LIB_IMPORT);
-							PclTarExtract($upload->filename['upload_theme_upload_theme'], $folder_phpboost_themes);
+							import('php/pcl/pcltar', LIB_IMPORT);
+							PclTarExtract($upload->get_filename(), $folder_phpboost_themes);
 							
 							$file = new File($archive);
 							$file->delete();
 							
 							$this->view->put('MSG', MessageHelper::display($this->lang['themes.upload.success'], MessageHelper::SUCCESS, 4));
 						}
-						else if ($upload->extension['upload_theme_upload_theme'] == 'zip')
+						else if ($upload->get_extension() == 'zip')
 						{
-							import('lib/pcl/pclzip', LIB_IMPORT);
+							import('php/pcl/pclzip', LIB_IMPORT);
 							$zip = new PclZip($archive);
 							$zip->extract(PCLZIP_OPT_PATH, $folder_phpboost_themes, PCLZIP_OPT_SET_CHMOD, 0755);
 							
 							$file = new File($archive);
 							$file->delete();
 							
-							$this->view->put('MSG', MessageHelper::display($this->lang['themes.upload.success'], MessageHelper::SUCCESS, 4));
+							$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('process.success', 'errors-common'), MessageHelper::SUCCESS, 4));
 						}
 						else
 						{
@@ -217,7 +221,7 @@ class AdminThemesNotInstalledListController extends AdminController
 			}
 			else
 			{
-				$this->view->put('MSG', MessageHelper::display($this->lang['themes.upload.error'], MessageHelper::ERROR, 4));
+				$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('process.error', 'errors-common'), MessageHelper::ERROR, 4));
 			}
 		}
 	}

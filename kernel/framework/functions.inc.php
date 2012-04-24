@@ -77,7 +77,8 @@ function import($path, $import_type = CLASS_IMPORT)
 {
 	if (substr($path, 0, 1) !== '/')
 	{
-		$path = '/kernel/framework/' . $path;
+		$path_to_folder = $import_type == LIB_IMPORT ? '/kernel/lib/' : '/kernel/framework/';
+		$path = $path_to_folder . $path;
 	}
 	if (!include_once(PATH_TO_ROOT . $path . $import_type))
 	{
