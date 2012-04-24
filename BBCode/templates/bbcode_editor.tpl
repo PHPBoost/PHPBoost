@@ -75,7 +75,7 @@ function XMLHttpRequest_preview(field)
 			{type:'menu_style', id:'style', fname:'style.png', label:${escapejs(L_BB_STYLE)}, tag: 'style', disabled:${escapejs(DISABLED_STYLE)}},
 			{type:'separator'},
 			{type:'action_prompt_url', fname:'url.png', label:${escapejs(L_BB_URL)}, tag: 'url', disabled:${escapejs(DISABLED_URL)}, prompt:${escapejs(L_URL_PROMPT)} },
-			{type:'action_prompt_picture', fname:'image.png', label:${escapejs(L_BB_IMAGE)}, tag: 'img', disabled:${escapejs(DISABLED_IMAGE)}, prompt:${escapejs(L_URL_PROMPT)} },
+			{type:'action_prompt_picture', fname:'image.png', label:${escapejs(L_BB_IMAGE)}, tag: 'img', disabled:${escapejs(DISABLED_IMAGE)}, prompt:${escapejs(L_IMAGE_PROMPT)} },
 			{type:'balise2', fname:'quote.png', label:${escapejs(L_BB_QUOTE)}, tag: 'quote', disabled:${escapejs(DISABLED_QUOTE)}},
 			{type:'balise2', fname:'hide.png', label:${escapejs(L_BB_HIDE)}, tag: 'hide', disabled:${escapejs(DISABLED_HIDE)}},
 			{type:'menu_list', id:'list', fname:'list.png', label:${escapejs(L_BB_LIST)}, disabled:${escapejs(DISABLED_LIST)}},
