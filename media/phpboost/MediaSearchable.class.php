@@ -35,9 +35,9 @@ class MediaSearchable extends AbstractSearchableExtensionPoint
 		$this->sql_querier = PersistenceContext::get_sql();
 	}
 	
-	public function get_search_request($args = null)
+	public function get_search_request($args)
     /**
-     *  Renvoie la requête de recherche
+     *  Renvoie la requï¿½te de recherche
      */
     {
         global $Cache;

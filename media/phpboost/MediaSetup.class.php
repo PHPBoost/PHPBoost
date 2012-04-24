@@ -142,7 +142,7 @@ class MediaSetup extends DefaultModuleSetup
 			'id' => 1,
 			'id_parent' => 0,
 			'c_order' => 1,
-			'auth' => 'a:3:{s:3:"r-1";i:1;s:2:"r0";i:3;s:2:"r1";i:7;}',
+			'auth' => array('r-1' => 1, 'r0' => 3, 'r1' => 7),
 			'name' => $this->messages['media_name_cat'],
 			'visible' => 1,
 			'mime_type' => 2,
