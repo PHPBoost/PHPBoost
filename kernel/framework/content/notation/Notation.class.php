@@ -97,7 +97,5 @@ class Notation
 	{
 		return $this->notation_scale;
 	}
-	
 }
-
 ?>
