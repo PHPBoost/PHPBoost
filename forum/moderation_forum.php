@@ -238,7 +238,7 @@ if ($action == 'alert') //Gestion des alertes
 			if ($row['status'] == 0)
 				$status = $LANG['alert_not_solved'];
 			else
-				$status = $LANG['alert_solved'] . '<a href="'. UserUrlBuilder::profile($row['id_modo'])->absolute() .'">' . $row['login_modo'] . '</a>';
+				$status = $LANG['alert_solved'] . '<a href="'. UserUrlBuilder::profile($row['idmodo'])->absolute() .'">' . $row['login_modo'] . '</a>';
 
 			$Template->put_all(array(
 				'ID' => $id_get,
