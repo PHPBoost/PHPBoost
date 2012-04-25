@@ -1,4 +1,4 @@
-		<form action="gallery{U_GALLERY_ACTION_ADD}" method="post" enctype="multipart/form-data">
+		<form action="{U_GALLERY_ACTION_ADD}" method="post" enctype="multipart/form-data">
 			<div class="module_position">					
 				<div class="module_top_l"></div>		
 				<div class="module_top_r"></div>
