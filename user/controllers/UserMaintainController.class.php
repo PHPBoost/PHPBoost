@@ -120,7 +120,7 @@ class UserMaintainController extends AbstractController
 	
 	private function build_reponse()
 	{
-		$response = new UserDisplayResponse($this->tpl);
+		$response = new UserSiteDisplayResponse($this->tpl);
 		$graphical_environment = $response->get_graphical_environment();
 		$graphical_environment->set_page_title($this->lang['maintain']);
 		return $response;
