@@ -131,7 +131,7 @@ class DownloadSetup extends DefaultModuleSetup
 			'title' => $this->messages['download_title'],
 			'short_contents' => $this->messages['download_short_contents'],
 			'contents' => $this->messages['download_contents'],
-			'url' => '/templates/base/theme/images/phpboost3.png',
+			'url' => '/templates/base/theme/images/phpboost.png',
 			'image' => '',
 			'size' => 14.9,
 			'count' => 11,
