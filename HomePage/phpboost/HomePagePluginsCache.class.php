@@ -42,13 +42,13 @@ class HomePagePluginsCache implements CacheData
 		$result = $db_querier->select_rows(HomePageSetup::$home_page_table, array('*'));
 		while ($row = $result->fetch())
 		{
-			$this->installed_plugins[$row['column']] = array(
-				'id' => $row[''],
+			$this->installed_plugins[$row['block']] = array(
+				'id' => $row['id'],
 				'title' => $row['title'],
 				'class' => $row['class'],
-				'object' => $row['object'],
+				'object' => unserialize($row['object']),
 				'enabled' => $row['enabled'],
-				'authorizations' => $row['authorizations'],
+				'authorizations' => unserialize($row['authorizations']),
 			);
 		}
 	}
