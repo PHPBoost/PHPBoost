@@ -63,9 +63,9 @@ class AdminHomePageConfigController extends AdminController
 				'ID' => $column
 			));
 			
-			foreach ($installed_plugins as $column_plugin => $plugin)
+			foreach ($installed_plugins as $plugin)
 			{
-				if ($column_plugin == $column)
+				if ($plugin['block'] == $column)
 				{
 					$class = $plugin['class'];
 					$object = new $class($plugin['id']);
