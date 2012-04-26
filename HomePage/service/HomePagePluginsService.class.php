@@ -45,7 +45,7 @@ class HomePagePluginsService
 		$column = 'MAX(position) + 1 AS position';
 		$condition = 'WHERE block=:block';
 		$parameters = array('block' => $block);
-		return (int) self::$db_querier->get_column_value(DB_TABLE_MENUS, $column, $condition, $parameters);
+		return (int) self::$db_querier->get_column_value(HomePageSetup::$home_page_table, $column, $condition, $parameters);
 	}
 	
 	public static function delete($condition, Array $parameters)
