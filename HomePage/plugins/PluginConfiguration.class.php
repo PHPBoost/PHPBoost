@@ -47,7 +47,8 @@ abstract class PluginConfiguration
 	public static function load($id, $class)
 	{
 		try {
-			return PersistenceContext::get_querier()->get_column_value(HomePageSetup::$home_page_table, 'object', 'WHERE id=:id', array('id' => $id));
+			$serialized = PersistenceContext::get_querier()->get_column_value(HomePageSetup::$home_page_table, 'object', 'WHERE id=:id', array('id' => $id));
+			return unserialize($serialized);
 		} catch (RowNotFoundException $e) {
 			return new $class($id);
 		}

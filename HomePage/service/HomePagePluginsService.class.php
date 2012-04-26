@@ -40,6 +40,14 @@ class HomePagePluginsService
 		return $result->get_last_inserted_id();
 	}
 	
+	public static function get_next_position($block)
+	{
+		$column = 'MAX(position) + 1 AS position';
+		$condition = 'WHERE block=:block';
+		$parameters = array('block' => $block);
+		return (int) self::$db_querier->get_column_value(DB_TABLE_MENUS, $column, $condition, $parameters);
+	}
+	
 	public static function delete($condition, Array $parameters)
 	{
 		self::$db_querier->delete(HomePageSetup::$home_page_table, $condition, $parameters);
