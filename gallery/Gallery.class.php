@@ -268,7 +268,7 @@ class Gallery
 		$Sql->query_inject("UPDATE " . PREFIX . "gallery_cats SET nbr_pics_aprob = nbr_pics_aprob + 1 WHERE " . $clause_parent_cats_to, __LINE__, __FILE__);		
 		
 		list($width, $height, $weight, $ext) = $this->Arg_pics('pics/' . $path);	
-		$Sql->query_inject("INSERT INTO " . PREFIX . "gallery (idcat, name, path, width, height, weight, user_id, aprob, views, timestamp, users_note, nbrnote, note, nbr_com) VALUES('" . $idcat . "', '" .TextHelper::strprotect($name, TextHelper::HTML_PROTECT, TextHelper::ADDSLASHES_FORCE). "', '" . $path . "', '" . $width . "', '" . $height . "', '" . $weight ."', '" . $user_id . "', 1, 0, '" . time() . "', '', 0, 0, 0)", __LINE__, __FILE__);
+		$Sql->query_inject("INSERT INTO " . PREFIX . "gallery (idcat, name, path, width, height, weight, user_id, aprob, views, timestamp) VALUES('" . $idcat . "', '" .TextHelper::strprotect($name, TextHelper::HTML_PROTECT, TextHelper::ADDSLASHES_FORCE). "', '" . $path . "', '" . $width . "', '" . $height . "', '" . $weight ."', '" . $user_id . "', 1, 0, '" . time() . "')", __LINE__, __FILE__);
 		
 		return $Sql->insert_id("SELECT MAX(id) FROM " . PREFIX . "gallery");
 	}
