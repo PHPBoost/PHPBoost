@@ -139,7 +139,7 @@ class AdminThemesNotInstalledListController extends AdminController
 					}
 					else
 					{
-						$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('process.success', 'errors-common'), MessageHelper::SUCCESS, 4));
+						AppContext::get_response()->redirect(AdminThemeUrlBuilder::list_installed_theme());
 					}
 				}
 			} catch (Exception $e) {
@@ -206,7 +206,7 @@ class AdminThemesNotInstalledListController extends AdminController
 							$file = new File($archive);
 							$file->delete();
 							
-							$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('process.success', 'errors-common'), MessageHelper::SUCCESS, 4));
+							AppContext::get_response()->redirect(AdminThemeUrlBuilder::list_installed_theme());
 						}
 						else
 						{
