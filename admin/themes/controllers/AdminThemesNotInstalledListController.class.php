@@ -180,7 +180,7 @@ class AdminThemesNotInstalledListController extends AdminController
 			$file = $this->form->get_value('file');
 			if ($file !== null)
 			{
-				if (!ThemeManager::get_theme_existed($file->get_name()))
+				if (!ThemeManager::get_theme_existed($file->get_name_without_extension()))
 				{
 					$upload = new Upload($folder_phpboost_themes);
 					if ($upload->file('upload_theme_file', '`([a-z0-9()_-])+\.(gzip|zip)+$`i'))
@@ -194,8 +194,6 @@ class AdminThemesNotInstalledListController extends AdminController
 							
 							$file = new File($archive);
 							$file->delete();
-							
-							$this->view->put('MSG', MessageHelper::display($this->lang['themes.upload.success'], MessageHelper::SUCCESS, 4));
 						}
 						else if ($upload->get_extension() == 'zip')
 						{
@@ -205,23 +203,24 @@ class AdminThemesNotInstalledListController extends AdminController
 							
 							$file = new File($archive);
 							$file->delete();
-							
-							AppContext::get_response()->redirect(AdminThemeUrlBuilder::list_installed_theme());
 						}
 						else
 						{
-							$this->view->put('MSG', MessageHelper::display($this->lang['themes.upload.invalid_format'], MessageHelper::ERROR, 4));
+							$this->view->put('MSG', MessageHelper::display($this->lang['themes.upload.invalid_format'], MessageHelper::NOTICE, 4));
 						}
+						
+						ThemeManager::install($file->get_name_without_extension());
+						AppContext::get_response()->redirect(AdminThemeUrlBuilder::list_installed_theme());
 					}
 				}
 				else
 				{
-					$this->view->put('MSG', MessageHelper::display($this->lang['themes.already_exist'], MessageHelper::ERROR, 4));
+					$this->view->put('MSG', MessageHelper::display($this->lang['themes.already_exist'], MessageHelper::NOTICE, 4));
 				}
 			}
 			else
 			{
-				$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('process.error', 'errors-common'), MessageHelper::ERROR, 4));
+				$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('process.error', 'errors-common'), MessageHelper::NOTICE, 4));
 			}
 		}
 	}
