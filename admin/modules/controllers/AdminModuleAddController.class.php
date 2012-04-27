@@ -67,10 +67,10 @@ class AdminModuleAddController extends AdminController
 	{
 		$form = new HTMLForm('upload_module');
 		
-		$fieldset = new FormFieldsetHTML('upload_module', $this->lang['modules.upload_module']);
+		$fieldset = new FormFieldsetHTML('upload', $this->lang['modules.upload_module']);
 		$form->add_fieldset($fieldset);
 		
-		$fieldset->add_field(new FormFieldFilePicker('upload_module', $this->lang['modules.upload_description']));
+		$fieldset->add_field(new FormFieldFilePicker('file', $this->lang['modules.upload_description']));
 		
 		$this->submit_button = new FormButtonSubmit($this->lang['modules.install_module'], '');
 		$form->add_button($this->submit_button);	
@@ -166,8 +166,7 @@ class AdminModuleAddController extends AdminController
 	
 	private function upload_module()
 	{
-		$modules_folder = new Folder(PATH_TO_ROOT);
-		
+		$modules_folder = new Folder(PATH_TO_ROOT . '/');
 		if (!is_writable($modules_folder))
 		{
 			$is_writable = @chmod($dir, 0755);
@@ -175,33 +174,28 @@ class AdminModuleAddController extends AdminController
 		else
 		{
 			$is_writable = true;
-		
 		}
 		
 		if (is_writable)
 		{
-			$file = $this->form->get_value('upload_module');
+			$file = $this->form->get_value('file');
 			if ($file !== null)
 			{
-				if (!ModulesManager::is_module_installed($file->get_name()))
+				if (!ModulesManager::is_module_installed($file->get_name_without_extension()))
 				{
 					$upload = new Upload($modules_folder);
-					
-					if ($upload->file('upload_module_upload_module', '`([a-z0-9()_-])+\.(gzip|zip)+$`i'))
+					if ($upload->file('upload_module_file', '`([a-z0-9()_-])+\.(gzip|zip)+$`i'))
 					{
-						$archive_path = $modules_folder. '/' .$upload->filename['upload_module_upload_module'];
-						
-						if ($upload->extension['upload_module_upload_module'] == 'gzip')
+						$archive_path = $modules_folder . $upload->get_filename();
+						if ($upload->get_extension() == 'gzip')
 						{
 							import('lib/pcl/pcltar', LIB_IMPORT);
-							PclTarExtract($upload->filename['upload_module_upload_module'], $module_folder);
+							PclTarExtract($upload->get_filename(), $module_folder);
 							
 							$file = new File($archive_path);
 							$file->delete();
-							
-							$this->view->put('MSG', MessageHelper::display($this->lang['module.upload.success'], MessageHelper::SUCCESS, 4));
 						}
-						else if ($upload->extension['upload_module_upload_module'] == 'zip')
+						else if ($upload->get_extension() == 'zip')
 						{
 							import('lib/pcl/pclzip', LIB_IMPORT);
 							$zip = new PclZip($archive_path);
@@ -209,26 +203,26 @@ class AdminModuleAddController extends AdminController
 							
 							$file = new File($archive_path);
 							$file->delete();
-							
-							$this->view->put('MSG', MessageHelper::display($this->lang['modules.upload_success'], MessageHelper::SUCCESS, 4));
 						}
 						else
 						{
-							$this->view->put('MSG', MessageHelper::display($this->lang['modules.upload_invalid_format'], MessageHelper::ERROR, 4));
+							$this->view->put('MSG', MessageHelper::display($this->lang['modules.upload_invalid_format'], MessageHelper::NOTICE, 4));
 						}
+						
+						ModulesManager::install_module($file->get_name_without_extension());
+						AppContext::get_response()->redirect(AdminModulesUrlBuilder::list_installed_modules());
 					}
 				}
 				else
 				{
-					$this->view->put('MSG', MessageHelper::display($this->lang['modules.already_installed'], MessageHelper::ERROR, 4));
+					$this->view->put('MSG', MessageHelper::display($this->lang['modules.already_installed'], MessageHelper::NOTICE, 4));
 				}
 			}
 			else
 			{
-				$this->view->put('MSG', MessageHelper::display($this->lang['modules.upload_error'], MessageHelper::ERROR, 4));
+				$this->view->put('MSG', MessageHelper::display($this->lang['modules.upload_error'], MessageHelper::NOTICE, 4));
 			}
 		}
 	}
 }
-
 ?>

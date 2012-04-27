@@ -144,7 +144,6 @@ class AdminLangsNotInstalledListController extends AdminController
 	private function upload()
 	{
 		$folder_phpboost_langs = PATH_TO_ROOT . '/lang/';
-
         if (!is_writable($folder_phpboost_langs))
 		{
 			$is_writable = @chmod($dir, 0777);
@@ -165,7 +164,6 @@ class AdminLangsNotInstalledListController extends AdminController
 					if ($upload->file('upload_lang_file', '`([a-z0-9()_-])+\.(gzip|zip)+$`i'))
 					{
 						$archive = $folder_phpboost_langs . $upload->get_filename();
-						
 						if ($upload->get_extension() == 'gzip')
 						{
 							import('php/pcl/pcltar', LIB_IMPORT);
