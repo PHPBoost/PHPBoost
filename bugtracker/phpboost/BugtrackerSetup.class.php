@@ -75,9 +75,7 @@ class BugtrackerSetup extends DefaultModuleSetup
 			'reproduction_method' => array('type' => 'text', 'length' => 65000),
 			'detected_in' => array('type' => 'string', 'length' => 255, 'default' => "''"),
 			'fixed_in' => array('type' => 'string', 'length' => 255, 'default' => "''"),
-			'assigned_to_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'nbr_com' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'lock_com' => array('type' => 'integer', 'length' => 1, 'notnull' => 1, 'default' => 0)
+			'assigned_to_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0)
 		);
 		$options = array(
 			'primary' => array('id'),

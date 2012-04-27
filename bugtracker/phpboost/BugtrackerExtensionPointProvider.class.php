@@ -35,17 +35,29 @@ class BugtrackerExtensionPointProvider extends ExtensionPointProvider
         parent::__construct('bugtracker');
     }
 	
-	//Deprecated
+	public function comments()
+    {
+        return new BugtrackerComments();
+    }
+	
+	/**
+	* @method Recuperation du cache
+	*/
 	function get_cache()
 	{
-		$config_bugtracker = unserialize($this->sql_querier->query("SELECT value FROM " . DB_TABLE_CONFIGS . " WHERE name = 'module-bugtracker-config'", __LINE__, __FILE__));
-
-		$string = 'global $CONFIG_BUGTRACKER;' . "\n\n" . '$CONFIG_BUGTRACKER = array();' . "\n\n";
-		$string .= '$CONFIG_BUGTRACKER = ' . var_export($config_bugtracker, true) . ';' . "\n\n";
-
-		return $string;
+		global $Sql;
+		
+		$config_bugs = 'global $BUGS_CONFIG;' . "\n";
+		
+		//Récupération du tableau linéarisé dans la bdd.
+		$BUGS_CONFIG = unserialize($Sql->query("SELECT value FROM " . DB_TABLE_CONFIGS . " WHERE name = 'bugtracker'", __LINE__, __FILE__));
+		$BUGS_CONFIG = is_array($BUGS_CONFIG) ? $BUGS_CONFIG : array();
+		
+		$config_bugs .= '$BUGS_CONFIG = ' . var_export($BUGS_CONFIG, true) . ';' . "\n\n";
+		
+		return $config_bugs;	
 	}
-
+	
 	public function home_page()
 	{
 		return new BugtrackerHomePageExtensionPoint();
@@ -55,5 +67,6 @@ class BugtrackerExtensionPointProvider extends ExtensionPointProvider
 	{
 		return new BugtrackerSearchable();
 	}
+	
 }
 ?>

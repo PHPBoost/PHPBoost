@@ -70,6 +70,7 @@ $LANG['bugs.titles.edit_bug'] = 'Edition du bug';
 $LANG['bugs.titles.history_bug'] = 'Historique du bug';
 $LANG['bugs.titles.view_bug'] = 'Affichage du bug';
 $LANG['bugs.titles.bugs_list'] = 'Liste des bugs';
+$LANG['bugs.titles.roadmap'] = 'Roadmap';
 $LANG['bugs.titles.bugs_infos'] = 'Informations sur le bug';
 $LANG['bugs.titles.bugs_treatment_state'] = 'Etat du traitement du bug';
 $LANG['bugs.titles.disponible_versions'] = 'Versions disponibles';
@@ -80,6 +81,7 @@ $LANG['bugs.titles.admin.config'] = 'Configuration Bugtracker';
 $LANG['bugs.titles.edit_type'] = 'Edition d\'un type';
 $LANG['bugs.titles.edit_category'] = 'Edition d\'une catégorie';
 $LANG['bugs.titles.edit_version'] = 'Edition d\'une version';
+$LANG['bugs.titles.choose_version'] = 'Version à afficher';
 
 //Libellés
 $LANG['bugs.labels.fields.id'] = 'ID';
@@ -104,6 +106,10 @@ $LANG['bugs.labels.fields.old_value'] = 'Ancienne valeur';
 $LANG['bugs.labels.fields.new_value'] = 'Nouvelle valeur';
 $LANG['bugs.labels.fields.change_comment'] = 'Commentaire';
 $LANG['bugs.labels.fields.version'] = 'Version';
+$LANG['bugs.labels.fields.version_detected_in'] = 'Afficher dans la liste "Détecté dans la version"';
+$LANG['bugs.labels.fields.version_fixed_in'] = 'Afficher dans la liste "Corrigé dans la version"';
+$LANG['bugs.labels.fields.version_detected'] = 'Version détectée';
+$LANG['bugs.labels.fields.version_fixed'] = 'Version corrigée';
 
 //Priorités
 $LANG['bugs.priority.none'] = 'Aucune';
@@ -117,11 +123,9 @@ $LANG['bugs.priority.immediate'] = 'Immédiate';
 $LANG['bugs.status.new'] = 'Nouveau';
 $LANG['bugs.status.assigned'] = 'Assigné';
 $LANG['bugs.status.fixed'] = 'Corrigé';
-$LANG['bugs.status.verified'] = 'Vérifié';
 $LANG['bugs.status.closed'] = 'Fermé';
 $LANG['bugs.status.reopen'] = 'Ré-ouvert';
 $LANG['bugs.status.rejected'] = 'Rejeté';
-$LANG['bugs.status.pending'] = 'En attente';
 
 //Importance
 $LANG['bugs.severity.minor'] = 'Mineur';
@@ -131,6 +135,7 @@ $LANG['bugs.severity.critical'] = 'Bloquant';
 //Configuration
 $LANG['bugs.config.items_per_page'] = 'Nombre de bugs par page'; 
 $LANG['bugs.config.severity_color_label'] = 'Couleur du niveau d\'un bug';
+$LANG['bugs.config.rejected_bug_color_label'] = 'Couleur de la ligne d\'un bug "Rejeté"';
 $LANG['bugs.config.closed_bug_color_label'] = 'Couleur de la ligne d\'un bug "Fermé"';
 $LANG['bugs.config.activ_com'] = 'Activer les commentaires';
 
@@ -139,18 +144,18 @@ $LANG['bugs.explain.type'] = 'Types des demandes. Exemples : Anomalie, Demande d
 <br />
 Remarques : <br />
 - Si la liste est vide, cette option ne sera pas visible lors de la signalisation d\'un bug<br />
-- Si la liste ne contient qu\'une seule valeur, cette option ne sera pas non plus visible et sera attribuée par défaut au bug';
+- Si la liste ne contient qu\'une seule valeur, cette option ne sera pas non plus visible et sera attribuée par défaut au bug<br />';
 $LANG['bugs.explain.category'] = 'Catégorie des demandes. Exemples : Noyau, Module...<br />
 <br />
 Remarques : <br />
 - Si la liste est vide, cette option ne sera pas visible lors de la signalisation d\'un bug<br />
-- Si la liste ne contient qu\'une seule valeur, cette option ne sera pas non plus visible et sera attribuée par défaut au bug';
+- Si la liste ne contient qu\'une seule valeur, cette option ne sera pas non plus visible et sera attribuée par défaut au bug<br />';
 $LANG['bugs.explain.version'] = 'Liste des versions du produit.<br />
 <br />
 Remarques :<br />
 - Si la liste est vide, l\'option "Détecté dans la version" ne sera pas visible lors de la signalisation d\'un bug<br />
-- Si la liste ne contient qu\'une seule valeur, cette option ne sera pas non plus visible et sera attribuée par défaut au bug';
-$LANG['bugs.explain.default_content'] = 'Merci de nous donner les informations demandées ci-dessous, elles nous serons utiles pour la résolution du bug :
+- Si la liste ne contient qu\'une seule valeur, cette option ne sera pas non plus visible et sera attribuée par défaut au bug<br />';
+$LANG['bugs.explain.default_content'] = 'Merci de nous donner les informations demandées ci-dessous, elles nous seront utiles pour la résolution du bug :
 Système d\'exploitation :
 Navigateur Web :
 Version de test (Site de test, archive zip) :
@@ -158,6 +163,11 @@ Installation locale ou sur un serveur web ? :
 Lien :
 ----------------------------------------------------------------------
 ';
+
+//MP
+$LANG['bugs.pm.assigned.title'] = '[%s] Le bug #%d vous a été assigné';
+$LANG['bugs.pm.assigned.contents'] = 'Cliquez ici pour afficher le détail du bug :
+%s';
 
 //Recherche
 $LANG['bugs.search.where'] = 'Où ?';
@@ -173,8 +183,8 @@ $LANG['bugs.config.auth.create_advanced_explain'] = 'Permet de choisir le niveau
 
 //Erreurs
 $LANG['bugs.error.require_items_per_page'] = 'Veuillez remplir le champ \"Nombre de bugs par page\"';
-$LANG['bugs.error.e_bad_status'] = 'Le nouvel état sélectionné est incorrect';
 $LANG['bugs.error.e_no_user_assigned'] = 'Ce bug n\'a été assigné à aucun utilisateur, l\état ne pas passer à "' . $LANG['bugs.status.assigned'] . '"';
+$LANG['bugs.error.e_no_closed_version'] = 'Veuillez sélectionner la version de correction avant de passer à l\'état "' . $LANG['bugs.status.closed'] . '"';
 $LANG['bugs.error.e_config_success'] = 'La configuration a été modifiée avec succès';
 $LANG['bugs.error.e_edit_success'] = 'Le bug a été modifié avec succès';
 $LANG['bugs.error.e_edit_type_success'] = 'Le type a été modifié avec succès';

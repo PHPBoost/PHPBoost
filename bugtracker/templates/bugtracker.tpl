@@ -57,7 +57,7 @@
 						{L_TITLE}
 					<a href="../bugtracker/bugtracker{U_BUG_TITLE_BOTTOM}"><img src="../templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
 					</th>
-					# IF NOT C_EMPTY_TYPES #
+					# IF C_DISPLAY_TYPES #
 					<th>
 					<a href="../bugtracker/bugtracker{U_BUG_TYPE_TOP}"><img src="../templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
 						{L_TYPE}
@@ -87,42 +87,42 @@
 				</tr>
 				# IF C_NO_BUGS #
 				<tr style="text-align:center;"> 
-					<td colspan="# IF NOT C_EMPTY_TYPES ## IF C_IS_ADMIN #7# ELSE #6# ENDIF ## ELSE ## IF C_IS_ADMIN #6# ELSE #5# ENDIF ## ENDIF #" class="row2">
+					<td colspan="# IF C_DISPLAY_TYPES ## IF C_IS_ADMIN #7# ELSE #6# ENDIF ## ELSE ## IF C_IS_ADMIN #6# ELSE #5# ENDIF ## ENDIF #" class="row2">
 						{L_NO_BUG}
 					</td>
 				</tr>
 				# ELSE #
 				# START list.bug #
-				<tr style="text-align:center;"{list.bug.LINE_COLOR}> 
-					<td class="row2">
-						<a href="../bugtracker/bugtracker.php?view=true&amp;id={list.bug.ID}">#{list.bug.ID}</a>
+				<tr style="text-align:center;"> 
+					<td class="row2" {list.bug.COLOR}>
+						<a href="../bugtracker/bugtracker.php?view=true&amp;id={list.bug.ID}">\#{list.bug.ID}</a>
 					</td>
-					<td class="row2">
+					<td class="row2" {list.bug.COLOR}>
 						{list.bug.TITLE}
 					</td>
-					# IF NOT C_EMPTY_TYPES #
-					<td class="row2">
+					# IF C_DISPLAY_TYPES #
+					<td class="row2" {list.bug.COLOR}>
 						{list.bug.TYPE}
 					</td>
 					# ENDIF #
-					<td class="row2"{bug.COLOR}> 
+					<td class="row2" {list.bug.SEVERITY_COLOR}> 
 						<b>{list.bug.SEVERITY}</b>
 					</td>
-					<td class="row2"> 
+					<td class="row2" {list.bug.COLOR}> 
 						{list.bug.PRIORITY}
 					</td>
-					<td class="row2">
+					<td class="row2" {list.bug.COLOR}>
 						{list.bug.DATE}
 					</td>
 					# IF C_IS_ADMIN #
-					<td class="row2"> 
+					<td class="row2" {list.bug.COLOR}> 
 						<a href="bugtracker.php?edit=true&amp;id={list.bug.ID}"><img src="../templates/{THEME}/images/{LANG}/edit.png" alt="{L_UPDATE}" title="{L_UPDATE}" /></a>
 						<a href="bugtracker.php?history=true&amp;id={list.bug.ID}"><img src="{PATH_TO_ROOT}/bugtracker/templates/images/history.png" alt="{L_HISTORY}" title="{L_HISTORY}" /></a>
 						<a href="bugtracker.php?delete=true&amp;id={list.bug.ID}&amp;token={TOKEN}" onclick="javascript:return Confirm();"><img src="../templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" /></a>
 					</td>
 					# ENDIF #
 				</tr>
-				# END list.bugs #
+				# END list.bug #
 				# ENDIF #
 			</table>
 
@@ -336,7 +336,7 @@
 			insertbbcode('[page]' + page, '[/page]', 'contents');
 	}
 	
-	# IF edit.C_IS_ADMIN #
+	# IF edit.C_IS_ASSIGNED #
 	function XMLHttpRequest_search()
 	{
 		var login = document.getElementById("login").value;
@@ -376,7 +376,7 @@
 		<div class="module_top_r"></div>
 		<div class="module_top">
 			<div style="float:left">
-				{L_EDIT_BUG} : #{edit.ID}
+				{L_EDIT_BUG} : \#{edit.ID}
 			</div>
 		</div>
 		<div class="module_contents">
@@ -401,7 +401,7 @@
 					{KERNEL_EDITOR}
 					<label><textarea rows="20" cols="86" id="contents" name="contents">{edit.CONTENTS}</textarea></label>
 					<br />
-					# IF edit.C_IS_ADMIN #
+					# IF edit.C_IS_ASSIGNED #
 					<dl>
 						<dt><label for="author">{L_AUTHOR}</label></dt>
 						<dd><label>{edit.AUTHOR}</label></dd>
@@ -487,7 +487,7 @@
 							</select>
 						</label></dd>
 					</dl>
-					# IF edit.C_IS_ADMIN #
+					# IF edit.C_IS_ASSIGNED #
 					<dl>
 						<dt><label for="fixed_in">{L_FIXED_IN}</label></dt>
 						<dd><label>
@@ -549,10 +549,10 @@
 		<div class="module_top_r"></div>
 		<div class="module_top">
 			<div style="float:left">
-				{L_VIEW_BUG} #{view.ID}
+				{L_VIEW_BUG} \#{view.ID}
 			</div>
 			<div style="float:right">
-				# IF C_COM #<img src="{PATH_TO_ROOT}/bugtracker/templates/images/comments.png" alt="" class="valign_top" /> {view.U_COM}# ENDIF #
+				# IF C_COM #{U_COM}# ENDIF #
 				# IF C_EDIT_BUG #&nbsp;<a href="bugtracker.php?edit=true&amp;id={view.ID}"><img src="../templates/{THEME}/images/{LANG}/edit.png" alt="{L_UPDATE}" title="{L_UPDATE}" /></a># ENDIF #
 				# IF C_HISTORY_BUG #&nbsp;<a href="bugtracker.php?history=true&amp;id={view.ID}"><img src="{PATH_TO_ROOT}/bugtracker/templates/images/history.png" alt="{L_HISTORY}" title="{L_HISTORY}" /></a># ENDIF #
 				# IF C_DELETE_BUG #&nbsp;<a href="admin_bugtracker.php?delete=true&amp;id={view.ID}&amp;token={TOKEN}" onclick="javascript:return Confirm();"><img src="../templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" /></a># ENDIF #
@@ -651,7 +651,7 @@
 		<div class="module_top_r"></div>
 		<div class="module_top">
 			<div style="float:left">
-				{L_HISTORY_BUG} : #{ID}
+				{L_HISTORY_BUG} : \#{ID}
 			</div>
 		</div>
 		<div class="module_contents">
@@ -686,22 +686,22 @@
 				# START history.bug #
 				<tr style="text-align:center;"> 
 					<td class="row2"> 
-						{bug.UPDATER}
+						{history.bug.UPDATER}
 					</td>
 					<td class="row2"> 
-						{bug.UPDATED_FIELD}
+						{history.bug.UPDATED_FIELD}
 					</td>
 					<td class="row2"> 
-						{bug.OLD_VALUE}
+						{history.bug.OLD_VALUE}
 					</td>
 					<td class="row2"> 
-						{bug.NEW_VALUE}
+						{history.bug.NEW_VALUE}
 					</td>	
 					<td class="row2">
-						{bug.DATE}
+						{history.bug.DATE}
 					</td>
 					<td class="row2">
-						{bug.COMMENT}
+						{history.bug.COMMENT}
 					</td>
 				</tr>
 				# END history.bug #
