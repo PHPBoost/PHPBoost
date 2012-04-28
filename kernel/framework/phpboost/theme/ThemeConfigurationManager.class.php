@@ -80,7 +80,7 @@ class ThemeConfigurationManager
 				return $config_ini_file;
 			}
 		}
-		throw new Exception('Theme "' . $theme_id . '" config.ini not found in' .
+		throw new IOException('Theme "' . $theme_id . '" config.ini not found in' .
 			    '/' . $theme_id . '/lang/');
 	}
 }

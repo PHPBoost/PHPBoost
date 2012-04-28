@@ -26,7 +26,7 @@
  ###################################################*/
 
  ####################################################
- #                     French                       #
+ #                     English                      #
  ####################################################
 
 $lang['user'] = 'Utilisateur';
@@ -80,7 +80,6 @@ $lang['groups.select'] = 'Séléctionner un groupe';
 //Other
 $lang['banned'] = 'Banni';
 $lang['connect'] = 'Se connecter';
-$lang['autoconnect'] = 'Connexion auto';
 
 // Ranks
 $lang['visitor'] = 'Visiteur';
@@ -134,7 +133,7 @@ Mot de passe : :password
 
 :signature';
 
-$lang['agreement'] = 'Réglement';
-$lang['agreement.agree'] = 'J\'accepte les conditions';
-$lang['agreement.agree.required'] = 'Vous devez accepter le réglement pour vous inscrire';
+$lang['agreement'] = 'Agreement';
+$lang['agreement.agree'] = 'I agree this agreement';
+$lang['agreement.agree.required'] = 'You must agree for registration';
 ?>

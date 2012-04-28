@@ -68,7 +68,7 @@ class LangConfigurationManager
 			return $config_ini_file;
 		}
 
-		throw new Exception('Lang "' . $id . '" config.ini not found in ' .
+		throw new IOException('Lang "' . $id . '" config.ini not found in ' .
 			    $config_ini_file);
 	}
 }

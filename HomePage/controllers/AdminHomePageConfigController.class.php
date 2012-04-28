@@ -56,23 +56,26 @@ class AdminHomePageConfigController extends AdminController
 			'CONFIGURATION' => $this->form->display()
 		));
 		
-		$all_plugins = HomePagePluginsService::get_installed_plugins();
+		$installed_plugins = HomePagePluginsService::get_installed_plugins();
 		for ($column = 1; $column <= $this->config->get_number_columns(); $column++) 
 		{
 			$view->assign_block_vars('containers', array(
 				'ID' => $column
 			));
 			
-			$plugins = $all_plugins[$column];
-			foreach ($plugins as $plugin)
+			foreach ($installed_plugins as $plugin)
 			{
-				$object = $plugin['object'];
-				$view->assign_block_vars('containers.elements', array(
-					'ID' => $plugin['id'],
-					'PLUGIN' => $object->get_view()
-				));
+				if ($plugin['block'] == $column)
+				{
+					$class = $plugin['class'];
+					$object = new $class($plugin['id']);
+					
+					$view->assign_block_vars('containers.elements', array(
+						'ID' => $plugin['id'],
+						'PLUGIN' => $object->get_view()->render()
+					));
+				}
 			}
-			
 		}
 
 		$view->put_all(array(
@@ -90,7 +93,7 @@ class AdminHomePageConfigController extends AdminController
 				return "'container1'";
 			break;
 			case 2:
-				return "'container1', 'container3'";
+				return "'container1', 'container2'";
 			break;
 			case 3:
 				return "'container1', 'container2', 'container3'";

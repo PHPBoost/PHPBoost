@@ -129,6 +129,7 @@ class CurrentUser extends User
 			{
 				$db_querier->update(DB_TABLE_SESSIONS, array('user_theme' => $theme), 'WHERE level=-1 AND session_id=session_id', array('session_id' => $this->user_data['session_id']));
 			}
+			AppContext::get_current_user()->set_theme($theme);
 		}
 	}
 	
@@ -147,6 +148,7 @@ class CurrentUser extends User
 		{
 			$db_querier->update(DB_TABLE_SESSIONS, array('user_lang' => $lang), 'WHERE level=-1 AND session_id=session_id', array('session_id' => $this->user_data['session_id']));
 		}
+		AppContext::get_current_user()->set_locale($lang);
 	}
 
 	private function build_groups()

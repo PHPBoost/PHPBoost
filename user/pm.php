@@ -156,7 +156,7 @@ elseif (!empty($post) || (!empty($pm_get) && $pm_get != $User->get_attribute('us
 		switch ($get_error)
 		{
 			case 'e_unexist_user':
-				$errstr = $LANG['e_unexist_user'];
+				$errstr = $LANG['e_unexist_member'];
 				$type = E_USER_WARNING;
 				break;
 			case 'e_pm_full_post':
