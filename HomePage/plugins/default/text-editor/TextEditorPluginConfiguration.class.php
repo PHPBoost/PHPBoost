@@ -27,7 +27,7 @@
 
 class TextEditorPluginConfiguration extends PluginConfiguration
 {
-	private $content = 'cxwcxw';
+	private $content = '';
 	
 	public function set_content($content)
 	{

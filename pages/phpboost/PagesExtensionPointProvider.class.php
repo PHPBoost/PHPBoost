@@ -87,5 +87,10 @@ class PagesExtensionPointProvider extends ExtensionPointProvider
 	{
 		return new PagesSearchable();
 	}
+	
+	public function comments()
+	{
+		return new PagesComments();
+	}
 }
 ?>

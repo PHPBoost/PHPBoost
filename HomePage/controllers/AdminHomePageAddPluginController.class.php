@@ -109,19 +109,24 @@ class AdminHomePageAddPluginController extends AdminController
 	
 	private function save($plugin_selected)
 	{
+		$block = (int)$this->form->get_value('column')->get_raw_value();
 		$enabled = $this->form->get_value('enabled');
 		$title = $this->form->get_value('title');
-		$id = HomePagePluginsService::add(array(
+		$plugin = array(
 			'title' => $title,
-			'column' => $this->form->get_value('column')->get_raw_value(),
+			'block' => $block,
 			'class' => $plugin_selected,
-			'enabled' => (int)$this->form->get_value('enabled'),
+			'enabled' => (int)$enabled,
+			'position' => HomePagePluginsService::get_next_position($block),
 			'authorizations' => serialize($this->form->get_value('authorizations')->build_auth_array())
-		));
+		);
+		$id = HomePagePluginsService::add($plugin);
 		$this->plugin_fieldset_configuration->get_plugin_configuration()->set_id($id);
 		$this->plugin_fieldset_configuration->handle_submit();
+		
+		HomePagePluginsCache::invalidate();
 	}
-	
+		
 	private function response()
 	{
 		$response = new AdminMenuDisplayResponse($this->view);

@@ -55,7 +55,7 @@ class UserMaintainController extends AbstractController
 		$this->tpl->put_all(array(
 			'L_MAINTAIN' => FormatingHelper::second_parse($this->maintain_config->get_message()),
 			'L_CONNECT' => $this->lang['connect'],
-			'U_CONNECT' => PATH_TO_ROOT . '/admin/index.php',
+			'U_CONNECT' => UserUrlBuilder::connect()->absolute(),
 			'L_MAINTAIN_DELAY' => $this->main_lang['maintain_delay'],
 			'L_LOADING' => $this->main_lang['loading'],
 			'L_DAYS' => $this->main_lang['days'],
@@ -120,7 +120,7 @@ class UserMaintainController extends AbstractController
 	
 	private function build_reponse()
 	{
-		$response = new UserDisplayResponse($this->tpl);
+		$response = new UserSiteDisplayResponse($this->tpl);
 		$graphical_environment = $response->get_graphical_environment();
 		$graphical_environment->set_page_title($this->lang['maintain']);
 		return $response;

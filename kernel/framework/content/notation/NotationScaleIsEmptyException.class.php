@@ -1,10 +1,10 @@
 <?php
 /*##################################################
- *                     GenerateXMLSitemapController.class.php
+ *                           NotationScaleIsEmptyException.class.php
  *                            -------------------
- *   begin                : December 08 2009
- *   copyright            : (C) 2009 Benoit Sautel
- *   email                : ben.popeye@phpboost.com
+ *   begin                : April 25, 2012
+ *   copyright            : (C) 2012 Kevin MASSY
+ *   email                : soldier.weasel@gmail.com
  *
  *
  ###################################################
@@ -25,32 +25,11 @@
  *
  ###################################################*/
 
-class GenerateXMLSitemapController extends AdminController
+class NotationScaleIsEmptyException extends Exception
 {
-	public function execute(HTTPRequest $request)
+	public function __construct()
 	{
-		$view = new FileTemplate('sitemap/GenerateXMLSitemapController.tpl');
-		$lang = LangLoader::get('common', 'sitemap');
-		$view->add_lang($lang);
-		
-		try
-		{
-			SitemapXMLFileService::try_to_generate();
-		}
-		catch(IOException $ex)
-		{
-			$view->put_all(
-				array('C_GOT_ERROR' => true)
-			);
-		}
-		
-		$view->put_all(array(
-			'U_GENERATE' => SitemapUrlBuilder::get_xml_file_generation()->absolute()
-		));
-
-		$response = new AdminSitemapResponse($view);
-		$response->get_graphical_environment()->set_page_title($lang['generate_xml_file']);
-		return $response;
+		parent::__construct('The notation scale is empty');
 	}
 }
 ?>

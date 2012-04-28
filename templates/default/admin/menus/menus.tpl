@@ -4,7 +4,7 @@ function Confirm_menu() {
 	return confirm("{L_CONFIRM_DEL_MENU}");
 }
 
-var delay = 1200; //Dï¿½lai aprï¿½s lequel le bloc est automatiquement masquï¿½, aprï¿½s le dï¿½part de la souris.
+var delay = 1200; //Délai après lequel le bloc est automatiquement masqué, après le départ de la souris.
 var timeout;
 var displayed = false;
 var previous = '';
@@ -46,11 +46,13 @@ function minimize_container(input, containerName)
 
 	if(input.checked == false)
 	{
-		container.style.display = 'none';
+		container.style.opacity = 0.5;
+		container.style.filter='alpha(opacity=50)';
 	}
 	else
 	{
-		container.style.display = 'block';
+		container.style.opacity = 1;
+		container.style.filter='alpha(opacity=100)';
 	}
 }
 
@@ -142,7 +144,8 @@ function createSortableMenu()
 						# IF C_HEADER_COLUMN #
 							<script type="text/javascript">
 							<!--
-							$('mod_header').style.display = 'none';
+							$('mod_header').style.opacity = 0.5;
+							$('mod_header').style.filter='alpha(opacity=50)';
 							-->
 							</script>
 						# ENDIF #
@@ -181,7 +184,8 @@ function createSortableMenu()
 						# IF C_SUB_HEADER_COLUMN #
 							<script type="text/javascript">
 							<!--
-							$('mod_subheader').style.display = 'none';
+							$('mod_subheader').style.opacity = 0.5;
+							$('mod_subheader').style.filter='alpha(opacity=50)';
 							-->
 							</script>
 						# ENDIF #
@@ -221,7 +225,8 @@ function createSortableMenu()
 						# IF C_LEFT_COLUMN #
 							<script type="text/javascript">
 							<!--
-							$('mod_left').style.display = 'none';
+							$('mod_left').style.opacity = 0.5;
+							$('mod_left').style.filter='alpha(opacity=50)';
 							-->
 							</script>
 						# ENDIF #
@@ -261,7 +266,8 @@ function createSortableMenu()
 									# IF C_TOP_CENTRAL_COLUMN #
 										<script type="text/javascript">
 										<!--
-										$('mod_topcentral').style.display = 'none';
+										$('mod_topcentral').style.opacity = 0.5;
+										$('mod_topcentral').style.filter='alpha(opacity=50)';
 										-->
 										</script>
 									# ENDIF #
@@ -319,7 +325,8 @@ function createSortableMenu()
 									# IF C_BOTTOM_CENTRAL_COLUMN #
 										<script type="text/javascript">
 										<!--
-										$('mod_bottomcentral').style.display = 'none';
+										$('mod_bottomcentral').style.opacity = 0.5;
+										$('mod_bottomcentral').style.filter='alpha(opacity=50)';
 										-->
 										</script>
 									# ENDIF #
@@ -360,7 +367,8 @@ function createSortableMenu()
 						# IF C_RIGHT_COLUMN #
 							<script type="text/javascript">
 							<!--
-							$('mod_right').style.display = 'none';
+							$('mod_right').style.opacity = 0.5;
+							$('mod_right').style.filter='alpha(opacity=50)';
 							-->
 							</script>
 						# ENDIF #
@@ -399,7 +407,8 @@ function createSortableMenu()
 						# IF C_TOP_FOOTER_COLUMN #
 							<script type="text/javascript">
 							<!--
-							$('mod_topfooter').style.display = 'none';
+							$('mod_topfooter').style.opacity = 0.5;
+							$('mod_topfooter').style.filter='alpha(opacity=50)';
 							-->
 							</script>
 						# ENDIF #
@@ -437,7 +446,8 @@ function createSortableMenu()
 						# IF C_FOOTER_COLUMN #
 							<script type="text/javascript">
 							<!--
-							$('mod_footer').style.display = 'none';
+							$('mod_footer').style.opacity = 0.5;
+							$('mod_footer').style.filter='alpha(opacity=50)';
 							-->
 							</script>
 						# ENDIF #

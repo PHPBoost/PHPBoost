@@ -50,6 +50,12 @@ class UploadedFile
 		return $this->name;
 	}
 	
+	public function get_name_without_extension()
+	{
+		$name = $this->get_name();
+		return substr($name, 0, strpos($name, '.'));
+	}
+	
 	public function get_mime_type()
 	{
 		return $this->mime_type;

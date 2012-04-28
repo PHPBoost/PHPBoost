@@ -46,7 +46,7 @@ class AdminThemeDeleteController extends AdminController
 				$drop_files = $this->form->get_value('drop_files')->get_raw_value();
 				$this->delete_theme($drop_files);
 
-				$this->tpl->put('MSG', MessageHelper::display(LangLoader::get_message('process.success', 'errors-common'), MessageHelper::SUCCESS, 4));
+				AppContext::get_response()->redirect(AdminThemeUrlBuilder::list_installed_theme());
 			}
 			
 			$this->tpl->put('FORM', $this->form->display());
@@ -63,7 +63,7 @@ class AdminThemeDeleteController extends AdminController
 	private function init()
 	{
 		$this->lang = LangLoader::get('admin-themes-common');
-		$this->tpl = new StringTemplate('# INCLUDE MSG # # INCLUDE FORM #');
+		$this->tpl = new StringTemplate('# INCLUDE FORM #');
 		$this->tpl->add_lang($this->lang);
 	}
 	

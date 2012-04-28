@@ -91,7 +91,7 @@ class ModuleConfigurationManager
 				return $desc_ini_file;
 			}
 		}
-		throw new Exception('Module "' . $module_id . '" description desc.ini not found in' .
+		throw new IOException('Module "' . $module_id . '" description desc.ini not found in' .
 			    '/' . $module_id . '/lang/');
 	}
 }
