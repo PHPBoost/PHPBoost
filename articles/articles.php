@@ -110,7 +110,7 @@ if (!empty($idart) && isset($cat) )
 	
 	$notation = new Notation();
 	$notation->set_module_name('articles');
-	$notation->set_id_in_module($idartcat);
+	$notation->set_id_in_module($articles['id']);
 	$notation->set_notation_scale($CONFIG_ARTICLES['note_max']);
 	
 	$tpl->put_all(array(
