@@ -317,10 +317,12 @@ else
 			$start_calendar = new MiniCalendar('start');
 			$start = new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, ($articles['start'] > 0 ? $articles['start'] : $now->get_timestamp()));
 			$start_calendar->set_date($start);
+			
 			$end_calendar = new MiniCalendar('end');
 			$end = new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, ($articles['end'] > 0 ? $articles['end'] : $now->get_timestamp()));
 			$end_calendar->set_date($end);
-			$end_calendar->set_style('margin-left:150px;');
+			$end_calendar->set_style('margin-left:100px;');
+			
 			$release_calendar = new MiniCalendar('release');
 			$release = new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, ($articles['timestamp'] > 0 ? $articles['timestamp'] : $now->get_timestamp()));
 			$release_calendar->set_date($release);
@@ -423,9 +425,11 @@ else
 			$start_calendar = new MiniCalendar('start');
 			$start_calendar->set_date(new Date(DATE_NOW, TIMEZONE_AUTO));
 			$end_calendar = new MiniCalendar('end');
+			
 			$end_calendar->set_date(new Date(DATE_NOW, TIMEZONE_AUTO));
-			$end_calendar->set_style('margin-left:150px;');
+			$end_calendar->set_style('margin-left:100px;');
 			$release_calendar = new MiniCalendar('release');
+			
 			$release_calendar->set_date(new Date(DATE_NOW, TIMEZONE_AUTO));
 
 			$tpl->put_all(array(
@@ -500,9 +504,9 @@ else
 		'L_CONTRIBUTION_COUNTERPART' => $ARTICLES_LANG['contribution_counterpart'],
 		'L_CONTRIBUTION_COUNTERPART_EXPLAIN' => $ARTICLES_LANG['contribution_counterpart_explain'],	
 		'L_OR_DIRECT_PATH' => $ARTICLES_LANG['or_direct_path'],
-		'L_SOURCE'=>$ARTICLES_LANG['source'],
-		'L_ADD_SOURCE'=>$ARTICLES_LANG['add_source'],
-		'L_SOURCE_LINK'=>$ARTICLES_LANG['source_link'],
+		'L_SOURCE' => $ARTICLES_LANG['source'],
+		'L_ADD_SOURCE' => $ARTICLES_LANG['add_source'],
+		'L_SOURCE_LINK' => $ARTICLES_LANG['source_link'],
 		'L_SPECIAL_AUTH' => $ARTICLES_LANG['special_auth'],
 		'L_SPECIAL_AUTH_EXPLAIN_ARTICLES' => $ARTICLES_LANG['special_auth_explain_articles'],
 		'L_AUTH_READ' => $ARTICLES_LANG['auth_read'],
