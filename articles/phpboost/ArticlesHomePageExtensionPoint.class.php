@@ -240,7 +240,7 @@ class ArticlesHomePageExtensionPoint implements HomePageExtensionPoint
 			$this->sql_querier->query_close($result);
 		}
 
-		if ($nbr_articles > 0 ||  $invisible)
+		if ($nbr_articles > 0 || $invisible)
 		{
 			$tpl->put_all(array(
 				'C_ARTICLES_LINK' => true,
@@ -300,7 +300,7 @@ class ArticlesHomePageExtensionPoint implements HomePageExtensionPoint
 				LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = a.user_id
 				LEFT JOIN " . DB_TABLE_COMMENTS_TOPIC . " com ON com.id_in_module = a.id AND com.module_id = 'articles'
 				LEFT JOIN " . DB_TABLE_AVERAGE_NOTES . " note ON note.id_in_module = a.id AND note.module_name = 'articles'
-				WHERE a.visible = 0 AND a.idcat = '" . $idartcat .	"'  AND a.user_id != -1 AND a.start > '" . $now->get_timestamp() . "' AND (a.end <= '" . $now->get_timestamp() . "' OR a.start = 0)
+				WHERE a.visible = 0 AND a.idcat = '" . $idartcat .	"'  AND a.user_id != -1 OR a.start > '" . $now->get_timestamp() . "' AND (a.end <= '" . $now->get_timestamp() . "' OR a.start = 0)
 				ORDER BY " . $sort . " " . $mode .
 				$this->sql_querier->limit($Pagination->get_first_msg($CONFIG_ARTICLES['nbr_articles_max'], 'p'), $CONFIG_ARTICLES['nbr_articles_max']), __LINE__, __FILE__);
 
