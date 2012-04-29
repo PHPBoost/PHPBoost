@@ -38,7 +38,6 @@ class AdminModuleAddController extends AdminController
 		$this->init();
 	
 		$this->upload_form();
-		$this->view->put('UPLOAD_FORM', $this->form->display());
 		
 		$this->build_view();
 		$this->install_module($request);
@@ -47,6 +46,8 @@ class AdminModuleAddController extends AdminController
 		{
 			$this->upload_module();
 		}
+		
+		$this->view->put('UPLOAD_FORM', $this->form->display());
 		
 		return new AdminModulesDisplayResponse($this->view, $this->lang['modules.add_module']);
 	}
@@ -72,7 +73,7 @@ class AdminModuleAddController extends AdminController
 		
 		$fieldset->add_field(new FormFieldFilePicker('file', $this->lang['modules.upload_description']));
 		
-		$this->submit_button = new FormButtonSubmit($this->lang['modules.install_module'], '');
+		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_button($this->submit_button);	
 		
 		$this->form = $form;
@@ -166,7 +167,7 @@ class AdminModuleAddController extends AdminController
 	
 	private function upload_module()
 	{
-		$modules_folder = new Folder(PATH_TO_ROOT . '/');
+		$modules_folder = PATH_TO_ROOT . '/';
 		if (!is_writable($modules_folder))
 		{
 			$is_writable = @chmod($dir, 0755);
@@ -176,7 +177,7 @@ class AdminModuleAddController extends AdminController
 			$is_writable = true;
 		}
 		
-		if (is_writable)
+		if ($is_writable)
 		{
 			$file = $this->form->get_value('file');
 			if ($file !== null)
@@ -184,22 +185,23 @@ class AdminModuleAddController extends AdminController
 				if (!ModulesManager::is_module_installed($file->get_name_without_extension()))
 				{
 					$upload = new Upload($modules_folder);
+					$upload->disableContentCheck();
 					if ($upload->file('upload_module_file', '`([a-z0-9()_-])+\.(gzip|zip)+$`i'))
 					{
 						$archive_path = $modules_folder . $upload->get_filename();
 						if ($upload->get_extension() == 'gzip')
 						{
-							import('lib/pcl/pcltar', LIB_IMPORT);
-							PclTarExtract($upload->get_filename(), $module_folder);
+							import('php/pcl/pcltar', LIB_IMPORT);
+							PclTarExtract($upload->get_filename(), $modules_folder);
 							
 							$file = new File($archive_path);
 							$file->delete();
 						}
 						else if ($upload->get_extension() == 'zip')
 						{
-							import('lib/pcl/pclzip', LIB_IMPORT);
+							import('php/pcl/pclzip', LIB_IMPORT);
 							$zip = new PclZip($archive_path);
-							$zip->extract(PCLZIP_OPT_PATH, $module_folder, PCLZIP_OPT_SET_CHMOD, 0755);
+							$zip->extract(PCLZIP_OPT_PATH, $modules_folder, PCLZIP_OPT_SET_CHMOD, 0755);
 							
 							$file = new File($archive_path);
 							$file->delete();
@@ -209,8 +211,28 @@ class AdminModuleAddController extends AdminController
 							$this->view->put('MSG', MessageHelper::display($this->lang['modules.upload_invalid_format'], MessageHelper::NOTICE, 4));
 						}
 						
-						ModulesManager::install_module($file->get_name_without_extension());
-						AppContext::get_response()->redirect(AdminModulesUrlBuilder::list_installed_modules());
+						switch(ModulesManager::install_module($file->get_name_without_extension()))
+						{
+							case ModulesManager::CONFIG_CONFLICT:
+								$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('e_config_conflict', 'errors'), MessageHelper::WARNING, 10));
+								break;
+							case ModulesManager::UNEXISTING_MODULE:
+								$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('e_unexist_module', 'errors'), MessageHelper::WARNING, 10));
+								break;
+							case ModulesManager::MODULE_ALREADY_INSTALLED:
+								$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('e_already_installed_module', 'errors'), MessageHelper::WARNING, 10));
+								break;
+							case ModulesManager::PHP_VERSION_CONFLICT:
+								$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('e_php_version_conflict', 'errors'), MessageHelper::WARNING, 10));
+								break;
+							case ModulesManager::MODULE_INSTALLED:
+							default: 
+								$this->view->put('MSG', MessageHelper::display($this->lang['modules.install_success'], MessageHelper::SUCCESS, 10));
+						}
+					}
+					else
+					{
+						$this->view->put('MSG', MessageHelper::display($this->lang['modules.upload_error'], MessageHelper::NOTICE, 4));
 					}
 				}
 				else

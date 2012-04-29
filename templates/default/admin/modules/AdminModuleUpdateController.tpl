@@ -1,8 +1,9 @@
     # INCLUDE UPLOAD_FORM #
+    
+    # INCLUDE MSG #
     <form action="{REWRITED_SCRIPT}" method="post">
         # IF C_UPDATES #
             <div class="warning" style="width:300px;margin:auto;">{@modules.updates_available}</div>&nbsp;&nbsp;
-            # INCLUDE MSG #
             <table class="module_table">
                 <tr><th colspan="5">{@modules.updates_available}</th></tr>
                 <tr>
