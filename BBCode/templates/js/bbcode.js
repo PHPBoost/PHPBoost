@@ -537,7 +537,7 @@ var BBcodeEditor_Core = Class.create(
 			{
 				menu.observe('mouseleave', function(e) { 
 					if(this.id)
-						Element.fade.delay(3, this);
+						Element.fade.delay(0.5, this);
 				});
 			}
 		}.bind(this));
