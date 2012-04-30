@@ -151,7 +151,11 @@ class UserEditProfileController extends AbstractController
 			if ($this->form->has_field('theme'))
 			{
 				$this->user->set_theme($this->form->get_value('theme')->get_raw_value());
+				AppContext::get_current_user()->set_theme($this->form->get_value('theme')->get_raw_value());
 			}
+			
+			$this->user->set_locale($this->form->get_value('lang')->get_raw_value());
+			AppContext::get_current_user()->set_locale($this->form->get_value('lang')->get_raw_value());
 			
 			$this->user->set_email($this->form->get_value('email'));
 			$this->user->set_locale($this->form->get_value('lang')->get_raw_value());
@@ -198,7 +202,8 @@ class UserEditProfileController extends AbstractController
 		$text = 'var theme = new Array;' . "\n";
 		foreach (ThemeManager::get_activated_themes_map() as $theme)
 		{
-			$text .= 'theme["' . $theme->get_id() . '"] = "' . Url::to_rel($this->get_picture_theme($theme->get_id())) . '";' . "\n";
+			$pictures = $theme->get_configuration()->get_pictures();
+			$text .= 'theme["' . $theme->get_id() . '"] = "' . Url::to_rel(PATH_TO_ROOT .'/templates/' . $theme->get_id() . '/' . $pictures[0]) . '";' . "\n";
 		}
 		$text .= 'var theme_id = HTMLForms.getField("theme").getValue(); document.images[\'img_theme\'].src = theme[theme_id];';
 		return $text;
