@@ -3,7 +3,7 @@
 			var theme = '{THEME}';
 		-->
 		</script>
-		<script type="text/javascript" src="../kernel/lib/js/form/calendar.js"></script>
+		<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/lib/js/phpboost/calendar.js"></script>
 		<script type="text/javascript">
 		<!--
 		function check_form(){

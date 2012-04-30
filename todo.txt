@@ -2,8 +2,6 @@
 
 ## PRIORITAIRE ##
 - Faire un script qui modifie le path et l'URL du site après une migration (plus possible de bidouiller le cache)
-- Corriger le bug qui fait que quand on autorise un modérateur par exemple à naviguer sur le site en maintenance, il ne peut pas se logguer si il l'était pas déjà parce que le lien fonctionne seulement pour les admins.
-
 
 ## AUTRES ##
 - Balises Youtube, Dailymotion

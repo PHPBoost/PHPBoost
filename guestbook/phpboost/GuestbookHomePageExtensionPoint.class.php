@@ -117,8 +117,6 @@ class GuestbookHomePageExtensionPoint implements HomePageExtensionPoint
 			$form->add_button(new FormButtonReset());
 				
 			$form->add_fieldset($fieldset);
-			   
-			$tpl->put('GUESTBOOK_FORM', $form->display());
 			
 			//Formulaire soumis
 			if ($submit_button->has_been_submited())
@@ -155,7 +153,7 @@ class GuestbookHomePageExtensionPoint implements HomePageExtensionPoint
 					//Nombre de liens max dans le message ou dans le login
 					if (!TextHelper::check_nbr_links($guestbook_contents, $guestbook_config->get_maximum_links_message())) 
 					{
-						$controller = PHPBoostErrors::link_flood();
+						$controller = PHPBoostErrors::link_flood($guestbook_config->get_maximum_links_message());
 						DispatchManager::redirect($controller);
 					}
 					if (!TextHelper::check_nbr_links($guestbook_login, 0)) 
@@ -198,6 +196,8 @@ class GuestbookHomePageExtensionPoint implements HomePageExtensionPoint
 					}
 				}
 			}
+			
+			$tpl->put('GUESTBOOK_FORM', $form->display());
 		}
 		else
 		{
@@ -206,7 +206,7 @@ class GuestbookHomePageExtensionPoint implements HomePageExtensionPoint
 				'L_ERROR_WRITING_AUTH' => $LANG['e_unauthorized']
 			));
 		}
-
+		
 		//On cr�e une pagination si le nombre de msg est trop important.
 		$nbr_guestbook = $this->sql_querier->count_table(PREFIX . 'guestbook', __LINE__, __FILE__);
 

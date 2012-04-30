@@ -93,10 +93,14 @@ class HtaccessFileCache implements CacheData
 		$this->add_rewrite_rule('^user/pm-?([0-9]+)-?([0-9]{0,})-?([0-9]{0,})-?([0-9]{0,})-?([a-z_]{0,})\.php$', 'user/pm.php?pm=$2&id=$3&p=$4&quote=$5');
 
         $eps = AppContext::get_extension_provider_service();
-        $mappings = $eps->get_extension_point(UrlMappingsExtensionPoint::EXTENSION_POINT, array('kernel'));
-		foreach ($mappings as $mapping_list)
+        $mappings = $eps->get_extension_point(UrlMappingsExtensionPoint::EXTENSION_POINT);
+        $authorized_extension_point = array('kernel', 'user', 'install', 'update');
+		foreach ($mappings as $id => $mapping_list)
 		{
-            $this->add_url_mapping($mapping_list);
+			if (in_array($id, $authorized_extension_point))
+			{
+				$this->add_url_mapping($mapping_list);
+			}
 		}
 	}
 

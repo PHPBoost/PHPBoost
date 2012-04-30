@@ -137,11 +137,21 @@
 						</dd>
 					</dl>
 					<dl class="overflow_visible">
-						<dt><label for="closed_bug_color">{L_CLOSED_BUG_COLOR}</label></dt>
-						<dd>\#<input type="text" size="7" name="closed_bug_color" id="closed_bug_color" value="{CLOSED_BUG_COLOR}" style="background-color:\#{CLOSED_BUG_COLOR};" class="text" />
-							<a href="javascript:bbcode_color('closed_bug_color');bb_display_block('4', '');" onmouseout="bb_hide_block('4', '', 0);" class="bbcode_hover"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/color.png" alt="" class="valign_middle" /></a>	
+						<dt><label for="rejected_bug_color">{L_REJECTED_BUG_COLOR}</label></dt>
+						<dd>#<input type="text" size="7" name="rejected_bug_color" id="rejected_bug_color" value="{REJECTED_BUG_COLOR}" style="background-color:\#{REJECTED_BUG_COLOR};" class="text" />
+							<a href="javascript:bbcode_color('rejected_bug_color');bb_display_block('4', '');" onmouseout="bb_hide_block('4', '', 0);" class="bbcode_hover"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/color.png" alt="" class="valign_middle" /></a>	
 							<div style="position:relative;z-index:100;display:none;" id="bb_block4">
-								<div id="closed_bug_color_list" class="bbcode_block" style="background:white;width:150px;" onmouseover="bb_hide_block('4', '', 1);" onmouseout="bb_hide_block('4', '', 0);">
+								<div id="rejected_bug_color_list" class="bbcode_block" style="background:white;width:150px;" onmouseover="bb_hide_block('4', '', 1);" onmouseout="bb_hide_block('4', '', 0);">
+								</div>
+							</div>
+						</dd>
+					</dl>
+					<dl class="overflow_visible">
+						<dt><label for="closed_bug_color">{L_CLOSED_BUG_COLOR}</label></dt>
+						<dd>#<input type="text" size="7" name="closed_bug_color" id="closed_bug_color" value="{CLOSED_BUG_COLOR}" style="background-color:\#{CLOSED_BUG_COLOR};" class="text" />
+							<a href="javascript:bbcode_color('closed_bug_color');bb_display_block('5', '');" onmouseout="bb_hide_block('5', '', 0);" class="bbcode_hover"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/color.png" alt="" class="valign_middle" /></a>	
+							<div style="position:relative;z-index:100;display:none;" id="bb_block5">
+								<div id="closed_bug_color_list" class="bbcode_block" style="background:white;width:150px;" onmouseover="bb_hide_block('5', '', 1);" onmouseout="bb_hide_block('5', '', 0);">
 								</div>
 							</div>
 						</dd>
@@ -245,8 +255,14 @@
 					<span>{L_BUGS_VERSION_EXPLAIN}</span>
 					<table class="module_table">
 						<tr style="text-align:center;">
-							<th style="width:80%">
+							<th>
 								{L_VERSION}
+							</th>
+							<th>
+								{L_VERSION_DETECTED}
+							</th>
+							<th>
+								{L_VERSION_FIXED}
 							</th>
 							<th>
 								{L_ACTIONS}
@@ -254,7 +270,7 @@
 						</tr>
 						# IF C_NO_VERSION #
 						<tr style="text-align:center;"> 
-							<td colspan="2" class="row2">
+							<td colspan="4" class="row2">
 								{L_NO_VERSION}
 							</td>
 						</tr>
@@ -263,7 +279,13 @@
 						<tr style="text-align:center;"> 
 							<td class="row2">
 								{versions.VERSION}
-							</td>
+							</td> 
+							<td class="row2">
+								<input type="checkbox" {versions.DETECTED_IN} disabled=disabled />
+							</td> 
+							<td class="row2">
+								<input type="checkbox" {versions.FIXED_IN} disabled=disabled />
+							</td> 
 							<td class="row2"> 
 								<a href="admin_bugtracker.php?edit_version=true&amp;id={versions.ID}"><img src="../templates/{THEME}/images/{LANG}/edit.png" alt="{L_UPDATE}" title="{L_UPDATE}" /></a>
 								<a href="admin_bugtracker.php?delete_version=true&amp;id={versions.ID}&amp;token={TOKEN}" onclick="javascript:return Confirm_del_version();"><img src="../templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" /></a>
@@ -277,10 +299,25 @@
 						<dt><label for="version">{L_ADD_VERSION}</label></dt>
 						<dd>
 							<input type="text" size="40" maxlength="100" name="version" id="version" value="{VERSION}" class="text" />
-							&nbsp;&nbsp; 
-							<input type="submit" name="valid_add_version" onclick="return check_version();" value="{L_ADD}" class="submit" />
 						</dd>
 					</dl>	
+					<dl>
+						<dt><label for="detected_in">{L_VERSION_DETECTED_IN}</label></dt>
+						<dd> 
+							<input type="checkbox" name="detected_in" {DETECTED_IN} />
+						</dd>
+					</dl>
+					<dl>
+						<dt><label for="fixed_in">{L_VERSION_FIXED_IN}</label></dt>
+						<dd> 
+							<input type="checkbox" name="fixed_in" {FIXED_IN} />
+						</dd>
+					</dl>
+					<dl>
+						<dd>
+							<input type="submit" name="valid_add_version" onclick="return check_version();" value="{L_ADD}" class="submit" />
+						</dd>
+					</dl>
 				</fieldset>
 				
 				<fieldset>
@@ -444,6 +481,18 @@
 					<dl>
 						<dt><label for="version">* {L_VERSION}</label></dt>
 						<dd><label><input type="text" size="40" maxlength="100" id="version" name="version" value="{edit_version.VERSION}" class="text" /></label></dd>
+					</dl>
+					<dl>
+						<dt><label for="detected_in">{L_VERSION_DETECTED_IN}</label></dt>
+						<dd> 
+							<input type="checkbox" name="detected_in" {edit_version.DETECTED_IN} />
+						</dd>
+					</dl>
+					<dl>
+						<dt><label for="fixed_in">{L_VERSION_FIXED_IN}</label></dt>
+						<dd> 
+							<input type="checkbox" name="fixed_in" {edit_version.FIXED_IN} />
+						</dd>
 					</dl>
 				</fieldset>	
 				

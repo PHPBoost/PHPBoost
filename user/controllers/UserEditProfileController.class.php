@@ -116,7 +116,7 @@ class UserEditProfileController extends AbstractController
 			$options_fieldset->add_field(new FormFieldThemesSelect('theme', $this->lang['theme'], $this->user->get_theme(),
 				array('check_authorizations' => true, 'events' => array('change' => $this->build_javascript_picture_themes()))
 			));
-			$options_fieldset->add_field(new FormFieldFree('preview_theme', $this->lang['theme.preview'], '<img id="img_theme" src="'. $this->get_picture_theme($this->user->get_theme()) .'" alt="" style="vertical-align:top; max-height:180px;" />'));
+			$options_fieldset->add_field(new FormFieldFree('preview_theme', $this->lang['theme.preview'], '<img id="img_theme" src="'. Url::to_rel($this->get_picture_theme($this->user->get_theme())) .'" alt="" style="vertical-align:top; max-height:180px;" />'));
 		}
 		
 		$options_fieldset->add_field(new FormFieldEditors('text-editor', $this->lang['text-editor'], $this->user->get_editor()));
@@ -143,10 +143,12 @@ class UserEditProfileController extends AbstractController
 		if ($this->form->get_value('delete_account'))
 		{
 			UserService::delete_account('WHERE user_id=:user_id', array('user_id' => $user_id));
+			$upload = new Uploads();
+			$upload->Empty_folder_member($user_id);
 		}
 		else
 		{
-			if (!$this->form->field_is_disabled('theme'))
+			if ($this->form->has_field('theme'))
 			{
 				$this->user->set_theme($this->form->get_value('theme')->get_raw_value());
 			}
@@ -196,7 +198,7 @@ class UserEditProfileController extends AbstractController
 		$text = 'var theme = new Array;' . "\n";
 		foreach (ThemeManager::get_activated_themes_map() as $theme)
 		{
-			$text .= 'theme["' . $theme->get_id() . '"] = "' . $this->get_picture_theme($theme->get_id()) . '";' . "\n";
+			$text .= 'theme["' . $theme->get_id() . '"] = "' . Url::to_rel($this->get_picture_theme($theme->get_id())) . '";' . "\n";
 		}
 		$text .= 'var theme_id = HTMLForms.getField("theme").getValue(); document.images[\'img_theme\'].src = theme[theme_id];';
 		return $text;

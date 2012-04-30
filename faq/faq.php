@@ -27,7 +27,6 @@
 
 include_once('../kernel/begin.php'); 
 include_once('faq_begin.php');
-include_once('../kernel/header.php');
 
 $id_faq = retrieve(GET, 'id', 0);
 //For users who have disabled javascript
@@ -45,6 +44,7 @@ define('TITLE', $faq_config->get_faq_name() . ($id_faq > 0 ? ' - ' . $TITLE : ''
 
 $id_cat_for_bread_crumb = $id_faq;
 include_once('faq_bread_crumb.php');
+include_once('../kernel/header.php');
 
 //checking authorization
 if (!$auth_read)

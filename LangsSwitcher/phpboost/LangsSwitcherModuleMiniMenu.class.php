@@ -36,35 +36,26 @@ class LangsSwitcherModuleMiniMenu extends ModuleMiniMenu
     {
 	    $langswitcher_lang = LangLoader::get('langswitcher_common', 'LangsSwitcher');
 		$user = AppContext::get_current_user();
-	
-		$switchlang = !empty($_GET['switchlang']) ? urldecode($_GET['switchlang']) : '';
-	    if (!empty($switchlang))
-	    {
-	        if ($user->check_level(User::MEMBER_LEVEL))
-	        {
-	            $Session->csrf_get_protect();
-	        }
-	
-	    	if (preg_match('`[ a-z0-9_-]{3,20}`i', $switchlang) && strpos($switchlang, '\'') === false)
-	    	{
-	    		$user->update_ang($switchlang); //Mise à jour du thème du membre.
-	    		if (QUERY_STRING != '')
-	    		{
-					$query_string = preg_replace('`token=[^&]+`', '', QUERY_STRING);
-					$query_string = preg_replace('`&switchlang=[^&]+`', '', $query_string);
-					AppContext::get_response()->redirect(trim(HOST . SCRIPT . (!empty($query_string) ? '?' . $query_string : '')));
-	    		}
-	    		else
-	    			AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);
-	    	}
-	    }
-	
+
+        $lang_id = AppContext::get_request()->get_string('switchlang', '');
+        if (!empty($lang_id))
+        {
+	        $lang = LangManager::get_lang($lang_id);
+			if ($lang !== null)
+			{
+				if ($lang->check_auth())
+				{
+					$user->update_lang($lang->get_id());
+				}
+			}
+			$query_string = preg_replace('`switchlang=[^&]+`', '', QUERY_STRING);
+			AppContext::get_response()->redirect(trim(HOST . SCRIPT . (!empty($query_string) ? '?' . $query_string : '')));
+        }
+
 	    $tpl = new FileTemplate('LangsSwitcher/langswitcher.tpl');
 	
 	    MenuService::assign_positions_conditions($tpl, $this->get_block());
-	
-	    $array_js_identifier = '';
-	
+
 	    foreach(LangManager::get_activated_langs_map() as $id => $lang)
 	    {
 	    	if ($lang->check_auth())

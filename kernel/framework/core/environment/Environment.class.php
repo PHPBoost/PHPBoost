@@ -82,16 +82,7 @@ class Environment
 		/* END DEPRECATED */
 
 		self::load_dynamic_constants();
-		
-		$error_controller = null;
-		try
-		{
-			self::init_session();
-		}
-		catch (UnableToInitializeSessionException $exception)
-		{
-			$error_controller = $exception->get_error_controller();
-		}
+		self::init_session();
 
 		// TODO move in begin
 		/* DEPRECATED VARS */
@@ -107,11 +98,6 @@ class Environment
 		self::compute_running_module_name();
 		self::csrf_protect_post_requests();
 		self::enable_errors_and_exceptions_management();
-		
-		if ($error_controller != null)
-		{
-			DispatchManager::redirect($error_controller);
-		}
 	}
 
 	public static function init_http_services()
@@ -263,16 +249,7 @@ class Environment
 	public static function init_session()
 	{
 		AppContext::get_session()->load();
-		
-		$error_controller = null;
-		try
-		{
-			AppContext::get_session()->act();
-		}
-		catch (UnableToInitializeSessionException $exception)
-		{
-			$error_controller = $exception->get_error_controller();
-		}
+		AppContext::get_session()->act();
 
 		AppContext::init_current_user();
 
@@ -290,31 +267,21 @@ class Environment
 			define('SID2', '');
 		}
 
-		$user_theme = AppContext::get_current_user()->get_theme();
-		//Is that theme authorized for this member? If not, we assign it the default theme
-		$user_theme_properties = ThemeManager::get_theme($user_theme);
-		if (UserAccountsConfig::load()->is_users_theme_forced() || $user_theme_properties == null
-		|| !$user_theme_properties->check_auth())
-		{
-			$user_theme = UserAccountsConfig::load()->get_default_theme();
-		}
-		//If the user's theme doesn't exist, we assign it a default one which exists
-		$user_theme = find_require_dir(PATH_TO_ROOT . '/templates/', $user_theme);
-		AppContext::get_current_user()->set_theme($user_theme);
-
-		$user_lang = AppContext::get_current_user()->get_locale();
-		//Is that member authorized to use this lang? If not, we assign it the default lang
-		$lang_properties = LangManager::get_lang($user_lang);
-		if ($lang_properties == null || !$lang_properties->check_auth())
-		{
-			$user_lang = UserAccountsConfig::load()->get_default_lang();
-		}
-		$user_lang = find_require_dir(PATH_TO_ROOT . '/lang/', $user_lang);
-		AppContext::get_current_user()->set_locale($user_lang);
+		$current_user = AppContext::get_current_user();
+		$user_accounts_config = UserAccountsConfig::load();
 		
-		if ($error_controller != null)
+		$user_theme = ThemeManager::get_theme($current_user->get_theme());
+		$default_theme = $user_accounts_config->get_default_theme();
+		if (($user_accounts_config->is_users_theme_forced() || $user_theme == null || !$user_theme->check_auth() || !$user_theme->is_activated()) && $user_theme->get_id() !== $default_theme)
 		{
-			throw new UnableToInitializeSessionException($error_controller);
+			AppContext::get_current_user()->update_theme($default_theme);
+		}
+		
+		$user_lang = LangManager::get_lang($current_user->get_locale());
+		$default_lang = $user_accounts_config->get_default_lang();
+		if (($user_lang == null || !$user_lang->check_auth() || !$user_lang->is_activated()) && $user_lang->get_id() !== $default_lang)
+		{
+			AppContext::get_current_user()->update_lang($default_lang);
 		}
 	}
 

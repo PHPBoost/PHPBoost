@@ -84,7 +84,7 @@ class AdminLangsInstalledListController extends AdminController
 					$authorizations = Authorizations::auth_array_simple(Lang::ACCES_LANG, $id);
 					LangManager::change_informations($id, $activated, $authorizations);
 					
-					$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('process.success', 'errors-common'), E_USER_SUCCESS, 4));
+					AppContext::get_response()->redirect(AdminLangsUrlBuilder::list_installed_langs());
 				}
 			}
 		}

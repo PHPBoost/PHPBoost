@@ -39,7 +39,7 @@ if (!empty($_POST['change_cat']))
 	AppContext::get_response()->redirect('/forum/forum' . url('.php?id=' . $_POST['change_cat'], '-' . $_POST['change_cat'] . $rewrited_title . '.php', '&'));
 if (!$User->check_level(User::MEMBER_LEVEL)) //Réservé aux membres.
 {	
-	AppContext::get_response()->redirect(UserUrlBuilder::errors()->absolute()); 
+	AppContext::get_response()->redirect(UserUrlBuilder::connect()->absolute()); 
 }
 	
 $Template->set_filenames(array(

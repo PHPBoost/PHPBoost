@@ -3,7 +3,7 @@
  *                               articles.php
  *                            -------------------
  *   begin                : July 17, 2005
- *   copyright            : (C) 2005 Viarre Régis & (C) 2009 Maurel Nicolas
+ *   copyright            : (C) 2005 Viarre Rï¿½gis & (C) 2009 Maurel Nicolas
  *   email                : crowkait@phpboost.com
  *
  *  
@@ -35,7 +35,7 @@ $cat = retrieve(GET, 'cat', 0);
 $idart = retrieve(GET, 'id', 0);	
 
 if (!empty($idart) && isset($cat) )
-{
+{		
 	$result = $Sql->query_while("SELECT a.contents, a.title, a.id, a.idcat, a.timestamp, a.sources, a.start, a.visible, a.user_id, a.icon, m.login, m.level
 		FROM " . DB_TABLE_ARTICLES . " a 
 		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = a.user_id
@@ -43,8 +43,10 @@ if (!empty($idart) && isset($cat) )
 	$articles = $Sql->fetch_assoc($result);
 	$Sql->query_close($result);
 	
-	//Niveau d'autorisation de la catégorie
-	if (!isset($ARTICLES_CAT[$idartcat]) || !$User->check_auth($ARTICLES_CAT[$idartcat]['auth'], AUTH_ARTICLES_READ) || $ARTICLES_CAT[$idartcat]['visible'] == 0 ) 
+	$articles['auth'] = $ARTICLES_CAT[$articles['idcat']]['auth'];
+
+	//Niveau d'autorisation de la catï¿½gorie
+	if (!isset($ARTICLES_CAT[$idartcat]) || (!$User->check_auth($ARTICLES_CAT[$idartcat]['auth'], AUTH_ARTICLES_READ) && !$User->check_auth($articles['auth'], AUTH_ARTICLES_READ))|| $ARTICLES_CAT[$idartcat]['visible'] == 0 ) 
 	{
 		$error_controller = PHPBoostErrors::unexisting_page();
 		DispatchManager::redirect($error_controller);
@@ -62,6 +64,8 @@ if (!empty($idart) && isset($cat) )
 	//MAJ du compteur.
 	$Sql->query_inject("UPDATE " . LOW_PRIORITY . " " . DB_TABLE_ARTICLES . " SET views = views + 1 WHERE id = " . $idart, __LINE__, __FILE__); 
 	
+	//On crï¿½e une pagination si il y plus d'une page.
+	 
 	$Pagination = new DeprecatedPagination();
 
 	//Si l'article ne commence pas par une page on l'ajoute.
@@ -77,43 +81,18 @@ if (!empty($idart) && isset($cat) )
 	//Pagination des articles.
 	$array_contents = preg_split('`\[page\].+\[/page\](.*)`Us', $articles['contents'], -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
 
-	//Récupération de la liste des pages.
+	//Rï¿½cupï¿½ration de la liste des pages.
 	preg_match_all('`\[page\]([^[]+)\[/page\]`U', $articles['contents'], $array_page);
 	$page_list = '<option value="1">' . $ARTICLES_LANG['select_page'] . '</option>';
 	$page_list .= '<option value="1"></option>';
 	$i = 1;
-	
-	// If tab pagination is active
-	$c_tab = $articles['pagination_tab'];
-	
-	//Nombre de pages
-	$nbr_page = count($array_page[1]);
-	$nbr_page = !empty($nbr_page) ? $nbr_page : 1;
-	$tpl->put_all( array(
-		'TOTAL_TAB'=> count($array_page[1]),
-		'C_CAROUSEL'=>count($array_page[1]) > 5 ? true : false
-	));
 
+	$nbr_page = 0;
 	foreach ($array_page[1] as $page_name)
 	{
-		if($c_tab && $Pagination->display('articles' . url('.php?cat=' . $idartcat . '&amp;id='. $idart . '&amp;p=%d', '-' . $idartcat . '-'. $idart . '-%d+' . Url::encode_rewrite($articles['title']) . '.php'), $nbr_page, 'p', 1, 3, 11, NO_PREVIOUS_NEXT_LINKS) )
-		{	
-			$c_tab=true;
-			$tpl->assign_block_vars('tab', array(
-				'CONTENTS_TAB'=>isset($array_contents[$i]) ? FormatingHelper::second_parse($array_contents[$i]) : '',
-				'ID_TAB' =>$i,
-				'DISPLAY' => ( $i == 1 )? "yes" : "none",
-				'STYLE' => ($i == 1)? 'style="margin-left: 1px"' : '',
-				'ID_TAB_ACT' =>($i == 1)?'Active' : $i,
-				'TOTAL_TAB'=> count($array_page[1]),
-				'PAGE_NAME'=> Trim($page_name) == '' ? $LANG['page']." : ".$i : substr(Trim($page_name),0,8).( strlen($page_name) > 8 ? "..." : ''),
-			));
-		}
-		else
-			$c_tab=false;
-			
 		$selected = ($i == $page) ? 'selected="selected"' : '';
 		$page_list .= '<option value="' . $i++ . '"' . $selected . '>' . $page_name . '</option>';
+		$nbr_page++;
 	}
 	
 	$array_sources = unserialize($articles['sources']);
@@ -131,13 +110,13 @@ if (!empty($idart) && isset($cat) )
 	
 	$notation = new Notation();
 	$notation->set_module_name('articles');
+	$notation->set_id_in_module($articles['id']);
 	$notation->set_notation_scale($CONFIG_ARTICLES['note_max']);
 	
 	$tpl->put_all(array(
 		'C_IS_ADMIN' => ($User->check_auth($ARTICLES_CAT[$idartcat]['auth'], AUTH_ARTICLES_WRITE)),
 		'C_DISPLAY_ARTICLE' => true,
-		'C_SOURCES'=> $i > 0 ? true : false,
-		'C_TAB'=>$c_tab,
+		'C_SOURCES' => $i > 0,
 		'IDART' => $articles['id'],
 		'IDCAT' => $idartcat,
 		'NAME' => $articles['title'],
@@ -181,7 +160,7 @@ if (!empty($idart) && isset($cat) )
 		$comments_topic->set_module_id('articles');
 		$comments_topic->set_id_in_module($idart);
 		$comments_topic->set_url(new Url('/articles/articles?cat=' . $idartcat . '&amp;id=' . $idart . '&com=0'));
-		$Template->put_all(array(
+		$tpl->put_all(array(
 			'COMMENTS' => CommentsService::display($comments_topic)->render()
 		));
 	}	
@@ -198,6 +177,7 @@ else
 	}
 	elseif (!$no_alert_on_error) 
 	{
+		//TODO Gestion de la langue
 		$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
             'Le module <strong>' . $module_name . '</strong> n\'a pas de fonction get_home_page!', UserErrorController::FATAL);
         DispatchManager::redirect($controller);

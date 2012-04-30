@@ -106,7 +106,7 @@ class NewsletterSubscribersListController extends ModuleController
 				$this->view->assign_block_vars('subscribers_list', array(
 					'C_AUTH_MODO' => $moderation_auth && $row['user_id'] > 0,
 					'EDIT_LINK' => empty($row['user_id']) ? NewsletterUrlBuilder::edit_subscriber($row['id'])->absolute() : '',
-					'DELETE_LINK' => NewsletterUrlBuilder::delete_subscribe($row['id'])->absolute(),
+					'DELETE_LINK' => NewsletterUrlBuilder::delete_subscriber($row['id'])->absolute(),
 					'PSEUDO' => $pseudo,
 					'MAIL' => $row['user_id'] > 0 ? $row['user_mail'] : $row['mail']
 				));

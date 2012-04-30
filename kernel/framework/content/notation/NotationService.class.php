@@ -47,7 +47,8 @@ class NotationService
 	 */
 	public static function display_static_image(Notation $notation, $average_notes = false)
 	{
-		if ($notation->get_notation_scale() > 0)
+		$notation_scale = $notation->get_notation_scale();
+		if (!empty($notation_scale))
 		{
 			if ($average_notes === false)
 			{
@@ -61,7 +62,7 @@ class NotationService
 					<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{notation.PICTURE}" alt="" class="valign_middle" />
 				# END notation #');
 				
-				for ($i = 1; $i <= $notation->get_notation_scale(); $i++)
+				for ($i = 1; $i <= $notation_scale; $i++)
 				{
 					$star_img = 'stars.png';
 					if ($average_notes < $i)
@@ -90,7 +91,7 @@ class NotationService
 		}
 		else
 		{
-			throw new Exception('Not display, notation scale is null');
+			throw new NotationScaleIsEmptyException();
 		}
 	}
 	
@@ -238,7 +239,7 @@ class NotationService
 		}
 		else
 		{
-			throw new Exception('Not level member');
+			DispatchManager::redirect(PHPBoostErrors::user_not_authorized());
 		}
 	}
 	

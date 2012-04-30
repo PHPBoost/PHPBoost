@@ -41,7 +41,7 @@ $config_authorizations = $pages_config->get_authorizations();
 if (!empty($encoded_title)) //Si on connait son titre
 {
 	$page_infos = $Sql->query_array(PREFIX . "pages", 'id', 'title', 'auth', 'is_cat', 'id_cat',
-		'hits', 'count_hits', 'activ_com', 'nbr_com', 'redirect', 'contents', 'display_print_link',
+		'hits', 'count_hits', 'activ_com', 'redirect', 'contents', 'display_print_link',
 		"WHERE encoded_title = '" . $encoded_title . "'", __LINE__, __FILE__);
 	$num_rows =!empty($page_infos['title']) ? 1 : 0;
 	if ($page_infos['redirect'] > 0)
@@ -49,7 +49,7 @@ if (!empty($encoded_title)) //Si on connait son titre
 		$redirect_title = $page_infos['title'];
 		$redirect_id = $page_infos['id'];
 		$page_infos = $Sql->query_array(PREFIX . "pages", 'id', 'title', 'auth', 'is_cat', 'id_cat',
-			'hits', 'count_hits', 'activ_com', 'nbr_com', 'redirect', 'contents', 'display_print_link',
+			'hits', 'count_hits', 'activ_com', 'redirect', 'contents', 'display_print_link',
 			"WHERE id = '" . $page_infos['redirect'] . "'", __LINE__, __FILE__);
 	}
 	else
@@ -77,8 +77,8 @@ if (!empty($encoded_title)) //Si on connait son titre
 }
 elseif ($id_com > 0)
 {
-	$result = $Sql->query_while("SELECT id, title, encoded_title, auth, is_cat, id_cat, hits,
-		count_hits, activ_com, nbr_com, contents
+	$result = $Sql->query_while("SELECT id, title, encoded_title, auth, is_cat, id_cat, hits
+		count_hits, activ_com, contents
 		FROM " . PREFIX . "pages
 		WHERE id = '" . $id_com . "'"
 	, __LINE__, __FILE__);
@@ -175,10 +175,11 @@ if (!empty($encoded_title) && $num_rows == 1)
 	//Affichage des commentaires si il y en a la possibilité
 	if ($page_infos['activ_com'] == 1 && (($special_auth && $User->check_auth($array_auth, READ_COM)) || (!$special_auth && $User->check_auth($config_authorizations, READ_COM))))
 	{	
+		$number_comments = CommentsManager::get_number_comments('pages', $page_infos['id']);
 		$Template->put_all(array(
 			'C_ACTIV_COM' => true,
 			'U_COM' => PagesUrlBuilder::get_link_item_com($page_infos['id']),
-			'L_COM' => $page_infos['nbr_com'] > 0 ? sprintf($LANG['pages_display_coms'], $page_infos['nbr_com']) : $LANG['pages_post_com']
+			'L_COM' => $number_comments > 0 ? sprintf($LANG['pages_display_coms'], $number_comments) : $LANG['pages_post_com']
 		));
 	}
 	
@@ -213,9 +214,13 @@ elseif ($id_com > 0)
 		AppContext::get_response()->redirect(PagesUrlBuilder::get_link_error('e_auth_com'));
 	
 	$Template = new FileTemplate('pages/com.tpl');
-		
+	
+	$comments_topic = new CommentsTopic();
+	$comments_topic->set_module_id('pages');
+	$comments_topic->set_id_in_module($id_com);
+	$comments_topic->set_url(new Url(PagesUrlBuilder::get_link_item_com($id_com,'%s')));
 	$Template->put_all(array(
-		'COMMENTS' => display_comments('pages', $id_com, PagesUrlBuilder::get_link_item_com($id_com,'%s'))
+		'COMMENTS' => CommentsService::display($comments_topic)->render()
 	));
 	
 	$Template->display();

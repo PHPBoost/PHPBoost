@@ -47,14 +47,7 @@ class AdminModuleDeleteController extends AdminController
 				$drop_files = $this->form->get_value('drop_files')->get_raw_value();
 				$this->delete_module($drop_files);
 				
-				if ($drop_files == 1)
-				{
-					$this->tpl->put('MSG', MessageHelper::display(LangLoader::get_message('process.success', 'errors-common'), MessageHelper::SUCCESS, 4));
-				}
-				else 
-				{
-					$this->tpl->put('MSG', MessageHelper::display(LangLoader::get_message('process.success', 'errors-common'), MessageHelper::SUCCESS, 4));
-				}
+				AppContext::get_response()->redirect(AdminModulesUrlBuilder::list_installed_modules());
 			}
 			$this->tpl->put('FORM', $this->form->display());
 			return new AdminModulesDisplayResponse($this->tpl, $this->lang['modules.delete_module']);

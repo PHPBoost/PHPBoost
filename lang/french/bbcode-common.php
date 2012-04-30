@@ -68,6 +68,7 @@ $lang['bb_movie'] = 'Vidéo [movie=largeur,hauteur]adresse du fichier[/movie]';
 $lang['bb_help'] = 'Aide BBcode';
 $lang['bb_upload'] = 'Attacher un fichier';
 $lang['bb_url_prompt'] = 'Adresse du lien ?';
+$lang['bb_image_prompt'] = 'Adresse de l\'image ?';
 $lang['bb_text'] = 'Texte';
 $lang['bb_script'] = 'Script';
 $lang['bb_web'] = 'Web';

@@ -119,7 +119,7 @@ class AdminModulesManagementController extends AdminController
 				ModulesManager::update_module_authorizations($module_id, $activated, $authorizations);
 			}
 			MenuService::generate_cache();
-			AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);
+			AppContext::get_response()->redirect(AdminModulesUrlBuilder::list_installed_modules());
 		}	
 	}
 }

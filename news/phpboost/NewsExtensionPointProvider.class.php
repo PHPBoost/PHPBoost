@@ -57,7 +57,7 @@ class NewsExtensionPointProvider extends ExtensionPointProvider
 			ORDER BY id_parent, c_order", __LINE__, __FILE__);
 
 		//Racine
-		$string .= '$NEWS_CAT[0] = ' . var_export(array('name' => $LANG['root'],'auth' => $news_config['global_auth']), true) . ';' . "\n\n";
+		$string .= '$NEWS_CAT[0] = ' . var_export(array('name' => $LANG['root'], 'auth' => $news_config['global_auth'], 'image' => ''), true) . ';' . "\n\n";
 
 		while ($row = $this->sql_querier->fetch_assoc($result))
 		{

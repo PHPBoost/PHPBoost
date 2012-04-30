@@ -39,16 +39,18 @@ class HomePagePluginsCache implements CacheData
 	{
 		$db_querier = PersistenceContext::get_querier();
 		
-		$result = $db_querier->select_rows(HomePageSetup::$home_page_table, array('*'));
+		$result = $db_querier->select_rows(HomePageSetup::$home_page_table, array('*'), 'WHERE 1 ORDER BY block DESC, position DESC');
 		while ($row = $result->fetch())
 		{
-			$this->installed_plugins[$row['column']] = array(
-				'id' => $row[''],
+			$this->installed_plugins[] = array(
+				'id' => $row['id'],
 				'title' => $row['title'],
 				'class' => $row['class'],
-				'object' => $row['object'],
+				'block' => $row['block'],
+				'position' => $row['position'],
+				'object' => unserialize($row['object']),
 				'enabled' => $row['enabled'],
-				'authorizations' => $row['authorizations'],
+				'authorizations' => unserialize($row['authorizations']),
 			);
 		}
 	}

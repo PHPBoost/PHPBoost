@@ -27,10 +27,10 @@
 
 abstract class Plugin
 {
-	private $id = 0;
-	private $title = '';
-	private $view;
-	private $has_configuration = false;
+	protected $id = 0;
+	protected $title = '';
+	protected $view;
+	protected $has_configuration = false;
 	
 	const READ_AUTHORIZATIONS = 1;
 	

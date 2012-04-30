@@ -103,7 +103,7 @@
 				</ul>
 			</li>
 			<li class="extend" onmouseover="show_menu(34, 1);" onmouseout="hide_menu(1);">
-				<a href="{PATH_TO_ROOT}/admin/customize/?url=/interface" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/themes_mini.png);">{L_CUSTOMIZATION}</a>
+				<a href="${relative_url(AdminCustomizeUrlBuilder::customize_interface())}" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/themes_mini.png);">{L_CUSTOMIZATION}</a>
 				<ul id="ssmenu34">
 					<li><a href="${relative_url(AdminCustomizeUrlBuilder::customize_interface())}" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/themes_mini.png);">{L_CUSTOMIZE_INTERFACE}</a></li>
 					<li><a href="${relative_url(AdminCustomizeUrlBuilder::customize_favicon())}" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/themes_mini.png);">{L_CUSTOMIZE_FAVICON}</a></li>
@@ -199,7 +199,7 @@
 				</ul>
 			</li>								
 			<li class="extend" onmouseover="show_menu(53, 1);" onmouseout="hide_menu(1);">
-				<a href="{PATH_TO_ROOT}/admin/admin_com.php" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/com_mini.png);">{L_COMMENTS}</a>
+				<a href="${relative_url(UserUrlBuilder::comments())}" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/com_mini.png);">{L_COMMENTS}</a>
 				<ul id="ssmenu53">
 					<li><a href="${relative_url(UserUrlBuilder::comments())}" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/com_mini.png);">{L_MANAGEMENT}</a></li>
 					<li><a href="{PATH_TO_ROOT}/admin/contents/?url=/comments/config/" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/com_mini.png);">{L_CONFIGURATION}</a></li>

@@ -84,7 +84,7 @@ class BBCodeEditor extends ContentEditor
 			'L_BB_HTML' => $bbcode_lang['bb_html'],
 			'L_BB_STYLE' => $bbcode_lang['bb_style'],
 			'L_BB_URL' => $bbcode_lang['bb_link'],
-			'L_BB_IMG' => $bbcode_lang['bb_picture'],
+			'L_BB_IMAGE' => $bbcode_lang['bb_picture'],
 			'L_BB_QUOTE' => $bbcode_lang['bb_quote'],
 			'L_BB_HIDE' => $bbcode_lang['bb_hide'],
 			'L_BB_COLOR' => $bbcode_lang['bb_color'],
@@ -102,7 +102,7 @@ class BBCodeEditor extends ContentEditor
 			'L_BB_INDENT' => $bbcode_lang['bb_indent'],
 			'L_BB_LIST' => $bbcode_lang['bb_list'],
 			'L_BB_TABLE' => $bbcode_lang['bb_table'],
-			'L_BB_SWF' => $bbcode_lang['bb_swf'],
+			'L_BB_FLASH' => $bbcode_lang['bb_swf'],
 			'L_BB_MOVIE' => $bbcode_lang['bb_movie'],
 			'L_BB_SOUND' => $bbcode_lang['bb_sound'],
 			'L_BB_CODE' => $bbcode_lang['bb_code'],
@@ -110,6 +110,7 @@ class BBCodeEditor extends ContentEditor
 			'L_BB_ANCHOR' => $bbcode_lang['bb_anchor'],
 			'L_BB_HELP' => $bbcode_lang['bb_help'],
 			'L_URL_PROMPT' => $bbcode_lang['bb_url_prompt'],
+        	'L_IMAGE_PROMPT' => $bbcode_lang['bb_image_prompt'],
 			'L_TITLE' => $bbcode_lang['bb_title'],
 			'L_CONTAINER' => $bbcode_lang['bb_container'],
 			'L_BLOCK' => $bbcode_lang['bb_block'],
@@ -166,7 +167,7 @@ class BBCodeEditor extends ContentEditor
             $smiley_height = 18;
             $smiley_width = 18;
 
-            $smiley = new Image(Url::to_absolute('/images/smileys/' . $infos['url_smiley']));
+            $smiley = new Image(PATH_TO_ROOT . '/images/smileys/' . $infos['url_smiley']);
 			$smiley_height = $smiley->get_height();
 			$smiley_width = $smiley->get_width();
 			

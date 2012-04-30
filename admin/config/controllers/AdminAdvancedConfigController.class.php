@@ -215,13 +215,14 @@ class AdminAdvancedConfigController extends AdminController
 		else
 		{
 			Debug::disable_debug_mode();
-		}		
+		}
+		
+		HtaccessFileCache::regenerate();
 	}
 	
 	private function clear_cache()
 	{
 		AppContext::get_cache_service()->clear_cache();
-		HtaccessFileCache::regenerate();
 	}
 }
 ?>

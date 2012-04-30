@@ -70,6 +70,7 @@ $lang = array(
     'step.next' => 'Etape suivante',
     'yes' => 'Oui',
     'no' => 'Non',
+	'unknown' => 'Inconnu',
 	'generatedBy' => 'Généré par %s',
 	'poweredBy' => 'Boosté par',
 	'phpboost.rights' => '',

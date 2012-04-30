@@ -31,31 +31,23 @@ class AdminMemberDeleteController extends AdminController
 	{
 		$user_id = $request->get_int('id', null);
 		
-		if (self::verificate_number_admin_user() > 1)
+		$lang = LangLoader::get('errors-common');
+		try
 		{
-			try
-			{
-				UserService::delete_account('WHERE user_id=:user_id', array('user_id' => $user_id));
-				throw new Exception('Ok !');
-			}
-			catch (RowNotFoundException $ex) {
-				$error_controller = PHPBoostErrors::unexisting_member();
-				DispatchManager::redirect($error_controller);
-			}
-			
-			StatsCache::invalidate();
-			
-			throw new Exception('Ok !');
+			UserService::delete_account('WHERE user_id=:user_id', array('user_id' => $user_id));
 		}
-		else
-		{
-			throw new Exception('Is the last admin !');
+		catch (RowNotFoundException $ex) {
+			$error_controller = PHPBoostErrors::unexisting_member();
+			DispatchManager::redirect($error_controller);
 		}
-	}
-	
-	private static function verificate_number_admin_user()
-	{
-		return PersistenceContext::get_querier()->count(DB_TABLE_MEMBER, "WHERE user_aprob = 1 AND level = 1");
+		
+		$upload = new Uploads();
+		$upload->Empty_folder_member($user_id);
+		
+		StatsCache::invalidate();
+		
+		$controller = new UserErrorController($lang['success'], $lang['process.success'], UserErrorController::NOTICE);
+		DispatchManager::redirect($controller);
 	}
 }
 ?>

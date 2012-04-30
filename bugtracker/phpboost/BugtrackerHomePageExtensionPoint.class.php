@@ -41,17 +41,19 @@ class BugtrackerHomePageExtensionPoint implements HomePageExtensionPoint
 	
 	private function get_title()
 	{
-		global $BUGTRACKER_LANG;
+		global $LANG;
 		
-		return $BUGTRACKER_LANG['bugtracker'];
+		return $LANG['bugs.module_title'];
 	}
 	
 	private function get_view()
 	{
-		global $User, $Cache, $Bread_crumb, $Errorh, $BUGTRACKER_LANG, $BUGS_CONFIG, $LANG, $Session;
+		global $User, $Cache, $Bread_crumb, $Errorh, $BUGS_CONFIG, $LANG, $Session;
 		
 		//Configuration des authorisations
 		$authorizations = $BUGS_CONFIG['auth'];
+		
+		$display_types = sizeof($BUGS_CONFIG['types']) > 1 ? true : false;
 		
 		require_once(PATH_TO_ROOT . '/bugtracker/bugtracker_begin.php');
 
@@ -60,8 +62,8 @@ class BugtrackerHomePageExtensionPoint implements HomePageExtensionPoint
 		//checking authorization
 		if (!$User->check_auth($authorizations, BUG_READ_AUTH_BIT))
 		{
-			$Errorh->handler('e_auth', E_USER_REDIRECT);
-			exit;
+			$error_controller = PHPBoostErrors::unexisting_page();
+			DispatchManager::redirect($error_controller);
 		}
 		
 		//Nombre de bugs
@@ -100,7 +102,7 @@ class BugtrackerHomePageExtensionPoint implements HomePageExtensionPoint
 		if ($User->check_auth($authorizations, BUG_CREATE_AUTH_BIT) || $User->check_level(User::ADMIN_LEVEL))
 		{
 			$tpl->put_all(array(
-				'ADD_BUG' 	=> '&raquo; <a href="bugtracker' . url('.php?add=true') . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/add.png" alt="' . $BUGTRACKER_LANG['bugs.actions.add'] . '" title="' . $BUGTRACKER_LANG['bugs.actions.add'] . '" class="valign_middle" /></a>'
+				'ADD_BUG' 	=> '&raquo; <a href="bugtracker' . url('.php?add=true') . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/add.png" alt="' . $LANG['bugs.actions.add'] . '" title="' . $LANG['bugs.actions.add'] . '" class="valign_middle" /></a>'
 			));
 		}
 		
@@ -114,21 +116,21 @@ class BugtrackerHomePageExtensionPoint implements HomePageExtensionPoint
 		
 		$types = $BUGS_CONFIG['types'];
 		$tpl->put_all(array(
-			'C_EMPTY_TYPES' 		=> empty($types) ? true : false,
+			'C_DISPLAY_TYPES' 		=> $display_types,
 			'C_NO_BUGS' 			=> empty($nbr_bugs) ? true : false,
-			'PAGINATION' 			=> $Pagination->display('bugtracker' . url('.php?p=%d'), $nbr_bugs, 'p', $BUGS_CONFIG['items_per_page'], 3),
-			'L_CONFIRM_DEL_BUG' 	=> $BUGTRACKER_LANG['bugs.actions.confirm.del_bug'],
-			'L_BUGS_LIST' 			=> $BUGTRACKER_LANG['bugs.titles.bugs_list'],
-			'L_ID' 					=> $BUGTRACKER_LANG['bugs.labels.fields.id'],
-			'L_TITLE'				=> $BUGTRACKER_LANG['bugs.labels.fields.title'],
-			'L_TYPE'				=> $BUGTRACKER_LANG['bugs.labels.fields.type'],
-			'L_SEVERITY'			=> $BUGTRACKER_LANG['bugs.labels.fields.severity'],
-			'L_PRIORITY'			=> $BUGTRACKER_LANG['bugs.labels.fields.priority'],
-			'L_DATE'				=> $BUGTRACKER_LANG['bugs.labels.fields.submit_date'],
-			'L_NO_BUG' 				=> $BUGTRACKER_LANG['bugs.notice.no_bug'],
-			'L_ACTIONS' 			=> $BUGTRACKER_LANG['bugs.actions'],
+			'PAGINATION' 			=> $Pagination->display('bugtracker' . url('.php?p=%d' . (!empty($get_sort) ? '&amp;sort=' . $get_sort : '') . (!empty($get_mode) ? '&amp;mode=' . $get_mode : '')), $nbr_bugs, 'p', $BUGS_CONFIG['items_per_page'], 3),
+			'L_CONFIRM_DEL_BUG' 	=> $LANG['bugs.actions.confirm.del_bug'],
+			'L_BUGS_LIST' 			=> $LANG['bugs.titles.bugs_list'],
+			'L_ID' 					=> $LANG['bugs.labels.fields.id'],
+			'L_TITLE'				=> $LANG['bugs.labels.fields.title'],
+			'L_TYPE'				=> $LANG['bugs.labels.fields.type'],
+			'L_SEVERITY'			=> $LANG['bugs.labels.fields.severity'],
+			'L_PRIORITY'			=> $LANG['bugs.labels.fields.priority'],
+			'L_DATE'				=> $LANG['bugs.labels.fields.submit_date'],
+			'L_NO_BUG' 				=> $LANG['bugs.notice.no_bug'],
+			'L_ACTIONS' 			=> $LANG['bugs.actions'],
 			'L_UPDATE' 				=> $LANG['update'],
-			'L_HISTORY' 			=> $BUGTRACKER_LANG['bugs.actions.history'],
+			'L_HISTORY' 			=> $LANG['bugs.actions.history'],
 			'L_DELETE' 				=> $LANG['delete'],
 			'U_BUG_ID_TOP' 			=> url('.php?sort=id&amp;mode=desc'),
 			'U_BUG_ID_BOTTOM' 		=> url('.php?sort=id&amp;mode=asc'),
@@ -152,15 +154,28 @@ class BugtrackerHomePageExtensionPoint implements HomePageExtensionPoint
 		$this->sql_querier->limit($Pagination->get_first_msg($BUGS_CONFIG['items_per_page'], 'p'), $BUGS_CONFIG['items_per_page']), __LINE__, __FILE__); //Bugs enregistrés.
 		while ($row = $this->sql_querier->fetch_assoc($result))
 		{
+			switch ($row['status'])
+			{
+			case 'closed' :
+				$color = $severity_color = 'style="background-color:#' . $BUGS_CONFIG['closed_bug_color'] . ';"';
+				break;
+			case 'rejected' :
+				$color = $severity_color = 'style="background-color:#' . $BUGS_CONFIG['rejected_bug_color'] . ';"';
+				break;
+			default :
+				$color = '';
+				$severity_color = 'style="background-color:#' . $BUGS_CONFIG['severity_' . $row['severity'] . '_color'] . ';"';
+			}
+			
 			$tpl->assign_block_vars('list.bug', array(
 				'ID'			=> $row['id'],
 				'TITLE'			=> (strlen($row['title']) > 45 ) ? substr($row['title'], 0, 45) . '...' : $row['title'], // On raccourcis le titre pour ne pas déformer le tableau
 				'TYPE'			=> !empty($row['type']) ? stripslashes($row['type']) : $BUGTRACKER_LANG['bugs.notice.none'],
-				'SEVERITY'		=> $BUGTRACKER_LANG['bugs.severity.' . $row['severity']],
-				'PRIORITY'		=> $BUGTRACKER_LANG['bugs.priority.' . $row['priority']],
-				'COLOR' 		=> ($row['status'] != 'closed') ? 'bgcolor="#' . $BUGS_CONFIG['severity_' . $row['severity'] . '_color'] . '"' : '',
-				'LINE_COLOR'	=> ($row['status'] == 'closed') ? 'bgcolor="#' . $BUGS_CONFIG['closed_bug_color'] . '"' : '',
-				'DATE' 			=> gmdate_format('date_format_short', $row['submit_date'])
+				'SEVERITY'		=> $LANG['bugs.severity.' . $row['severity']],
+				'PRIORITY'		=> $LANG['bugs.priority.' . $row['priority']],
+				'COLOR' 		=> $color,
+				'SEVERITY_COLOR'=> $severity_color,
+				'DATE' 			=> gmdate_format('date_format', $row['submit_date'])
 			));
 		}
 		$this->sql_querier->query_close($result);

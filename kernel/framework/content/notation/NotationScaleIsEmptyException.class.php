@@ -1,19 +1,19 @@
 <?php
 /*##################################################
- *                              BugtrackerUrlBuilder.class.php
+ *                           NotationScaleIsEmptyException.class.php
  *                            -------------------
- *   begin                : April 17, 2012
- *   copyright            : (C) 2012 Julien BRISWALTER
- *   email                : julien.briswalter@gmail.com
+ *   begin                : April 25, 2012
+ *   copyright            : (C) 2012 Kevin MASSY
+ *   email                : soldier.weasel@gmail.com
  *
- *  
+ *
  ###################################################
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -25,15 +25,11 @@
  *
  ###################################################*/
 
-class BugtrackerUrlBuilder
+class NotationScaleIsEmptyException extends Exception
 {
-	const PREFIX = '/bugtracker/bugtracker';
-
-	public static function get_link_item_com($id,$com=0)
+	public function __construct()
 	{
-		return self::PREFIX.url(
-			'.php?view=true&amp;id='.$id.'&amp;com='.$com);
+		parent::__construct('The notation scale is empty');
 	}
-
 }
 ?>

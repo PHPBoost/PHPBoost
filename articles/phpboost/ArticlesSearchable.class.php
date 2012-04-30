@@ -36,7 +36,7 @@ class ArticlesSearchable extends AbstractSearchableExtensionPoint
 	
 	public function get_search_request($args)
 	{
-		global $Cache, $CONFIG_ARTICLES, $ARTICLES_CAT, $LANG, $ARTICLES_LANG;
+		global $Cache, $CONFIG_ARTICLES, $ARTICLES_CAT, $LANG,$ARTICLES_LANG;
 		$Cache->load('articles');
 		require_once PATH_TO_ROOT . '/articles/articles_constants.php';
 

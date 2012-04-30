@@ -70,6 +70,7 @@ $LANG['bugs.titles.edit_bug'] = 'Bug edition';
 $LANG['bugs.titles.history_bug'] = 'Bug history';
 $LANG['bugs.titles.view_bug'] = 'Bug view';
 $LANG['bugs.titles.bugs_list'] = 'Bugs list';
+$LANG['bugs.titles.roadmap'] = 'Roadmap';
 $LANG['bugs.titles.bugs_infos'] = 'Bug\'s informations';
 $LANG['bugs.titles.bugs_treatment_state'] = 'Bug\'s treatment state';
 $LANG['bugs.titles.disponible_versions'] = 'Disponible versions';
@@ -80,6 +81,7 @@ $LANG['bugs.titles.admin.config'] = 'Configuration Bugtracker';
 $LANG['bugs.titles.edit_type'] = 'Type edition';
 $LANG['bugs.titles.edit_category'] = 'Category edition';
 $LANG['bugs.titles.edit_version'] = 'Version edition';
+$LANG['bugs.titles.choose_version'] = 'Version to display';
 
 //Labels
 $LANG['bugs.labels.fields.id'] = 'ID';
@@ -104,7 +106,10 @@ $LANG['bugs.labels.fields.old_value'] = 'Old value';
 $LANG['bugs.labels.fields.new_value'] = 'New value';
 $LANG['bugs.labels.fields.change_comment'] = 'Comment';
 $LANG['bugs.labels.fields.version'] = 'Version';
-
+$LANG['bugs.labels.fields.version_detected_in'] = 'Display in the list "Detected in version"';
+$LANG['bugs.labels.fields.version_fixed_in'] = 'Display in the list "Fixed in version"';
+$LANG['bugs.labels.fields.version_detected'] = 'Detected version';
+$LANG['bugs.labels.fields.version_fixed'] = 'Fixed version';
 //Priorities
 $LANG['bugs.priority.none'] = 'None';
 $LANG['bugs.priority.low'] = 'Low';
@@ -117,11 +122,9 @@ $LANG['bugs.priority.immediate'] = 'Immediate';
 $LANG['bugs.status.new'] = 'New';
 $LANG['bugs.status.assigned'] = 'Assigned';
 $LANG['bugs.status.fixed'] = 'Fixed';
-$LANG['bugs.status.verified'] = 'Verified';
 $LANG['bugs.status.closed'] = 'Closed';
 $LANG['bugs.status.reopen'] = 'Reopen';
 $LANG['bugs.status.rejected'] = 'Rejected';
-$LANG['bugs.status.pending'] = 'Pending';
 
 //Severities
 $LANG['bugs.severity.minor'] = 'Minor';
@@ -131,6 +134,7 @@ $LANG['bugs.severity.critical'] = 'Critical';
 //Configuration
 $LANG['bugs.config.items_per_page'] = 'Bugs number per page'; 
 $LANG['bugs.config.severity_color_label'] = 'Severity color';
+$LANG['bugs.config.rejected_bug_color_label'] = 'Rejected bug line color';
 $LANG['bugs.config.closed_bug_color_label'] = 'Closed bug line color';
 $LANG['bugs.config.activ_com'] = 'Active comments';
 
@@ -139,17 +143,17 @@ $LANG['bugs.explain.type'] = 'Demands types. Examples : Anomaly, Evolution...<br
 <br />
 Remarks : <br />
 - If the table is empty, this option will not be visible on the post bug page<br />
-- If the table contains only one type, will not be visible too and will automatically be assigned to the bug';
+- If the table contains only one type, will not be visible too and will automatically be assigned to the bug<br />';
 $LANG['bugs.explain.category'] = 'Demands categories. Examples : Kernel, Module...<br />
 <br />
 Remarks : <br />
 - If the table is empty, this option will not be visible on the post bug page<br />
-- If the table contains only one type, will not be visible too and will automatically be assigned to the bug';
+- If the table contains only one type, will not be visible too and will automatically be assigned to the bug<br />';
 $LANG['bugs.explain.version'] = 'Liste des versions du produit.<br />
 <br />
 Remarks :<br />
 - If the table is empty, the option "Detected in version" will not be visible on the post bug page<br />
-- If the table contains only one type, will not be visible too and will automatically be assigned to the bug';
+- If the table contains only one type, will not be visible too and will automatically be assigned to the bug<br />';
 $LANG['bugs.explain.default_content'] = 'Thank you for given the informations below, they will be useful to treat the bug
 Operating system :
 Web navigator :
@@ -158,6 +162,11 @@ Local installation or on a web server ? :
 Link :
 ----------------------------------------------------------------------
 ';
+
+//PM
+$LANG['bugs.pm.assigned.title'] = '[%s] The bug #%d has been assigned to you';
+$LANG['bugs.pm.assigned.contents'] = 'Clic here to display the detail of the bug :
+%s';
 
 //Search
 $LANG['bugs.search.where'] = 'Where?';
@@ -173,8 +182,8 @@ $LANG['bugs.config.auth.create_advanced_explain'] = 'Permits to choose the sever
 
 //Errors
 $LANG['bugs.error.require_items_per_page'] = 'The field \"Bugs number per page\" must not be empty';
-$LANG['bugs.error.e_bad_status'] = 'The new status selected is incorrect';
 $LANG['bugs.error.e_no_user_assigned'] = 'There is no user assigned for this bug, the status can\'t be "' . $LANG['bugs.status.assigned'] . '"';
+$LANG['bugs.error.e_no_closed_version'] = 'Please select the correction version before choosing the status "' . $LANG['bugs.status.closed'] . '"';
 $LANG['bugs.error.e_config_success'] = 'The configuration has successfully been modified';
 $LANG['bugs.error.e_edit_success'] = 'The bug has successfully been updated';
 $LANG['bugs.error.e_edit_type_success'] = 'The type has successfully been updated';

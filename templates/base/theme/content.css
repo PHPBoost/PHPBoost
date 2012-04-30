@@ -563,6 +563,8 @@ a.msg_link_pseudo:hover {
     padding-bottom:15px;
     clear:both;
     text-align:justify;
+	word-wrap:break-word;
+	overflow:auto;
 }
 
 .module_bottom_l { /* Barre inf�rieure des modules */

@@ -31,8 +31,6 @@ if (defined('PHPBOOST') !== true)
 require_once('bugtracker_constants.php');
 load_module_lang('bugtracker'); //Chargement de la langue du module.
 
-$bugtracker_config = BugtrackerConfig::load();
-
 $Bread_crumb->add($LANG['bugs.module_title'], url('bugtracker.php'));
 $Bread_crumb->reverse();
 if (!defined('TITLE'))
