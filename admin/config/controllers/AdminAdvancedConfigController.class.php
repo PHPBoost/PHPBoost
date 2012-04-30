@@ -181,7 +181,7 @@ class AdminAdvancedConfigController extends AdminController
 	{
 		$this->general_config->set_site_url($this->form->get_value('site_url'));
 		$this->general_config->set_site_path($this->form->get_value('site_path'));
-		$this->general_config->set_site_timezone($this->form->get_value('site_timezone')->get_label());
+		$this->general_config->set_site_timezone($this->form->get_value('site_timezone')->get_raw_value());
 		GeneralConfig::save();
 		
 		$this->sessions_config->set_cookie_name($this->form->get_value('cookie_name'));
