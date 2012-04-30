@@ -191,7 +191,7 @@ class HTMLForm
 	 */
 	public function has_field($field_id) {
 		try {
-			return !$this->field_is_disabled($field_id);
+			$this->field_is_disabled($field_id);
 		} catch (FormBuilderException $ex) {
 			return false;
 		}
