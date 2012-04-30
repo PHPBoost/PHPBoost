@@ -43,7 +43,7 @@ if (!$User->check_auth($authorizations, GuestbookConfig::AUTH_READ)) //Autorisat
 $del = retrieve(GET, 'del', false);
 if ($del && !empty($id_get)) //Suppression.
 {
-	$row = $this->sql_querier->query_array(PREFIX . 'guestbook', '*', "WHERE id='" . $id_get . "'", __LINE__, __FILE__);
+	$row = $Sql->query_array(PREFIX . 'guestbook', '*', "WHERE id='" . $id_get . "'", __LINE__, __FILE__);
 	$row['user_id'] = (int)$row['user_id'];
 	
 	$has_edit_auth = $User->check_auth($authorizations, GuestbookConfig::AUTH_MODO) 
@@ -51,7 +51,7 @@ if ($del && !empty($id_get)) //Suppression.
 	if ($has_edit_auth) {
 		$Session->csrf_get_protect(); //Protection csrf
 	
-		$this->sql_querier->query_inject("DELETE FROM " . PREFIX . "guestbook WHERE id = '" . $id_get . "'", __LINE__, __FILE__);
+		$Sql->query_inject("DELETE FROM " . PREFIX . "guestbook WHERE id = '" . $id_get . "'", __LINE__, __FILE__);
 		$previous_id = $this->sql_querier->query("SELECT MAX(id) FROM " . PREFIX . "guestbook", __LINE__, __FILE__);
 	
 		GuestbookMessagesCache::invalidate();
