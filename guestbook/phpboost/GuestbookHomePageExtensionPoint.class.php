@@ -153,7 +153,7 @@ class GuestbookHomePageExtensionPoint implements HomePageExtensionPoint
 					//Nombre de liens max dans le message ou dans le login
 					if (!TextHelper::check_nbr_links($guestbook_contents, $guestbook_config->get_maximum_links_message())) 
 					{
-						$controller = PHPBoostErrors::link_flood();
+						$controller = PHPBoostErrors::link_flood($guestbook_config->get_maximum_links_message());
 						DispatchManager::redirect($controller);
 					}
 					if (!TextHelper::check_nbr_links($guestbook_login, 0)) 
