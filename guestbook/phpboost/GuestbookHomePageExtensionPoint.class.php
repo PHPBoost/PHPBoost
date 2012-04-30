@@ -196,6 +196,8 @@ class GuestbookHomePageExtensionPoint implements HomePageExtensionPoint
 					}
 				}
 			}
+			
+			$tpl->put('GUESTBOOK_FORM', $form->display());
 		}
 		else
 		{
@@ -204,8 +206,6 @@ class GuestbookHomePageExtensionPoint implements HomePageExtensionPoint
 				'L_ERROR_WRITING_AUTH' => $LANG['e_unauthorized']
 			));
 		}
-
-		$tpl->put('GUESTBOOK_FORM', $form->display());
 		
 		//On cr�e une pagination si le nombre de msg est trop important.
 		$nbr_guestbook = $this->sql_querier->count_table(PREFIX . 'guestbook', __LINE__, __FILE__);
