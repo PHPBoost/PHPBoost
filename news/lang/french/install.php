@@ -51,11 +51,11 @@ comme vous le souhaitez!  Pour cela : <br />
 <br />
 <ul class="bb_ul">
 <li class="bb_li"><a href="/admin/admin_maintain.php">Mettez votre site en maintenance</a> en attendant que vous le configuriez à votre guise.	
-</li><li class="bb_li">Rendez vous à la <a href="/admin/admin_config.php">Configuration générale du site</a>.	
-</li><li class="bb_li"><a href="/admin/admin_modules.php">Configurez les modules</a> disponibles et donnez leur les droits d\'accès (si vous n\'avez pas installé le pack complet, tous les modules sont disponibles sur le site de <a href="http://www.phpboost.com">phpboost.com</a> dans la section téléchargement).	
+</li><li class="bb_li">Rendez vous à la <a href="/admin/config/?url=/general/">Configuration générale du site</a>.	
+</li><li class="bb_li"><a href="/admin/modules/?url=/installed/">Configurez les modules</a> disponibles et donnez leur les droits d\'accès (si vous n\'avez pas installé le pack complet, tous les modules sont disponibles sur le site de <a href="http://www.phpboost.com">phpboost.com</a> dans la section téléchargement).	
 </li><li class="bb_li"><a href="/admin/admin_content_config.php">Choisissez le langage de formatage du contenu</a> par défaut du site.	
-</li><li class="bb_li"><a href="/admin/admin_members_config.php">Configurez l\'inscription des membres</a>.	
-</li><li class="bb_li"><a href="/admin/admin_themes.php">Choisissez le thème par défaut de votre site</a> pour changer l\'apparence de votre site (vous pouvez en obtenir d\'autres sur le site de <a href="http://www.phpboost.com">phpboost.com</a>).	
+</li><li class="bb_li"><a href="/admin/member/?url=/config/">Configurez l\'inscription des membres</a>.	
+</li><li class="bb_li"><a href="/admin/themes/?url=/installed/">Choisissez le thème par défaut de votre site</a> pour changer l\'apparence de votre site (vous pouvez en obtenir d\'autres sur le site de <a href="http://www.phpboost.com">phpboost.com</a>).	
 </li><li class="bb_li"><a href="/news/admin_news_config.php">Modifiez l\'édito</a> de votre site.	
 </li><li class="bb_li">Avant de donner l\'accès de votre site à vos visiteurs, prenez un peu de temps pour y mettre du contenu.
 </li><li class="bb_li">Enfin <a href="/admin/admin_maintain.php">désactivez la maintenance</a> de votre site afin qu\'il soit visible par vos visiteurs.<br />

@@ -102,7 +102,7 @@ class AdminCustomizeFaviconController extends AdminController
 			if ($this->config->favicon_exists())
 			{
 				$favicon_file = new File(PATH_TO_ROOT . $this->config->get_favicon_path());
-				$picture = '<img src="' . $favicon_file->get_path() . '">';
+				$picture = '<img src="' . Url::to_rel($favicon_file->get_path()) . '">';
 				$fieldset->add_field(new FormFieldFree('current_favicon', $this->lang['customization.favicon.current'], $picture));
 			}
 			else

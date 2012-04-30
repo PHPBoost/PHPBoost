@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                           SiteDisplayResponse.class.php
+ *                           UserSiteDisplayResponse.class.php
  *                            -------------------
  *   begin                : October 18 2009
  *   copyright            : (C) 2009 Loic Rouchon
@@ -30,11 +30,11 @@
  * @desc the response
  * @package {@package}
  */
-class MaintainDisplayResponse extends AbstractResponse
+class UserSiteDisplayResponse extends AbstractResponse
 {
 	public function __construct($view)
 	{
-		parent::__construct(new MaintainDisplayGraphicalEnvironment(), $view);
+		parent::__construct(new UserDisplayGraphicalEnvironment(), $view);
 	}
 }
 ?>

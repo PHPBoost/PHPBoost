@@ -6,3 +6,16 @@ div#shout_container{
 	text-align:left;
 	margin:auto;
 }
+
+.shout_horizontal div#shout_container{
+	width:auto;
+}
+
+.shout_horizontal {
+	width:auto;
+}
+
+.shout_spacing {
+	margin:0;
+	margin-bottom:10px;
+}

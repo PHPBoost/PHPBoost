@@ -241,6 +241,11 @@ ul.horizontal_scrolling_menu li {
     padding-right:5px;
 }
 
+.horizontal_scrolling_menu .dynamic_menu li {
+    width:163px;
+    padding-left:1px;
+}
+
 ul.horizontal_scrolling_menu li.first_level {
     padding-left:20px;
 }

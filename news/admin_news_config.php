@@ -3,7 +3,7 @@
  *                               admin_news_config.php
  *                            -------------------
  *   begin                : June 20, 2005
- *   copyright            : (C) 2005 Viarre Régis, Roguelon Geoffrey
+ *   copyright            : (C) 2005 Viarre Rï¿½gis, Roguelon Geoffrey
  *   email                : crowkait@phpboost.com, liaght@gmail.com
  *
  *
@@ -53,7 +53,7 @@ if (!empty($_POST['submit']))
 
 	$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($config_news)) . "' WHERE name = 'news'", __LINE__, __FILE__);
 
-	###### Régénération du cache des news #######
+	###### Rï¿½gï¿½nï¿½ration du cache des news #######
 	$Cache->Generate_module_file('news');
 
 	AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);

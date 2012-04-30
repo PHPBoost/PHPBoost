@@ -31,7 +31,7 @@ class PagesUrlBuilder
 
 	public static function get_link_item($encoded_title)
 	{
-		return self::PREFIX.url(
+		return PATH_TO_ROOT . self::PREFIX.url(
 			'.php?title=' . $encoded_title,
 			'-'.$encoded_title);
 	}
@@ -40,12 +40,12 @@ class PagesUrlBuilder
 	{
 		if (!empty($error))
 			$error = '?error='.$error;
-		return HOST.DIR.self::PREFIX.url('.php'.$error);
+		return PATH_TO_ROOT . self::PREFIX.url('.php'.$error);
 	}
 	
 	public static function get_link_item_com($id,$com=0)
 	{
-		return self::PREFIX.url(
+		return PATH_TO_ROOT . self::PREFIX.url(
 			'.php?id='.$id.'&amp;com='.$com);
 	}
 

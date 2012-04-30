@@ -30,7 +30,7 @@ if (defined('PHPBOOST') !== true)
 
 $severity = array('minor', 'major', 'critical');
 $priority = array('none', 'low', 'normal', 'high', 'urgent', 'immediate');
-$status_list = array('new', 'assigned', 'fixed', 'verified', 'closed', 'reopen', 'rejected', 'pending');
+$status_list = array('new', 'assigned', 'fixed', 'closed', 'reopen', 'rejected');
 
 //Authorization bit to display de bugs list
 define('BUG_READ_AUTH_BIT',		0x01);

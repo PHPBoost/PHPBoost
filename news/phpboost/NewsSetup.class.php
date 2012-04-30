@@ -125,7 +125,7 @@ class NewsSetup extends DefaultModuleSetup
 			'id' => 1,
 			'id_parent' => 0,
 			'c_order' => 1,
-			'auth' => serialize(array()),
+			'auth' => serialize(array('r-1' => 1, 'r0' => 3, 'r1' => 15)),
 			'name' => $this->messages['cat.name'],
 			'visible' => (int)true,
 			'description' => $this->messages['cat.description'],

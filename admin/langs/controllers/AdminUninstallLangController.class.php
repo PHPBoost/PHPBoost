@@ -45,7 +45,7 @@ class AdminUninstallLangController extends AdminController
 			{
 				$this->uninstall($this->form->get_value('drop_files')->get_raw_value());
 
-				$this->tpl->put('MSG', MessageHelper::display(LangLoader::get_message('process.success', 'errors-common'), MessageHelper::SUCCESS, 4));
+				AppContext::get_response()->redirect(AdminLangsUrlBuilder::list_installed_langs());
 			}
 			
 			$this->tpl->put('FORM', $this->form->display());
@@ -62,7 +62,7 @@ class AdminUninstallLangController extends AdminController
 	private function init()
 	{
 		$this->lang = LangLoader::get('admin-langs-common');
-		$this->tpl = new StringTemplate('# INCLUDE MSG # # INCLUDE FORM #');
+		$this->tpl = new StringTemplate('# INCLUDE FORM #');
 		$this->tpl->add_lang($this->lang);
 	}
 	

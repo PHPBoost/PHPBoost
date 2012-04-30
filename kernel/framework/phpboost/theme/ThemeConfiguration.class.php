@@ -142,7 +142,7 @@ class ThemeConfiguration
 		
 		if ($config === false)
 		{
-			throw new Exception('Load ini file "'. $config_ini_file .'" failed');
+			throw new IOException('Load ini file "'. $config_ini_file .'" failed');
 		}
 		
 		$this->check_parse_ini_file($config, $config_ini_file);

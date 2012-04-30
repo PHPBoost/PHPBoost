@@ -90,6 +90,14 @@ class UserRegistrationController extends AbstractController
 			'class' => 'text', 'maxlength' => 25, 'required' => true),
 			array(new FormFieldConstraintLengthRange(6, 12))
 		));
+		
+		if ($this->user_accounts_config->is_registration_captcha_enabled())
+		{
+			$captcha = new Captcha();
+			$captcha->set_difficulty($this->user_accounts_config->get_registration_captcha_difficulty());
+			$fieldset->add_field(new FormFieldCaptcha('captcha', $captcha));
+		}
+		
 		$fieldset->add_field(new FormFieldCheckbox('user_hide_mail', $this->lang['email.hide'], FormFieldCheckbox::CHECKED));
 		
 		$options_fieldset = new FormFieldsetHTML('options', LangLoader::get_message('options', 'main'));
@@ -102,7 +110,7 @@ class UserRegistrationController extends AbstractController
 			$options_fieldset->add_field(new FormFieldThemesSelect('theme', $this->lang['theme'], $this->user_accounts_config->get_default_theme(),
 				array('check_authorizations' => true, 'events' => array('change' => $this->build_javascript_picture_themes()))
 			));
-			$options_fieldset->add_field(new FormFieldFree('preview_theme', $this->lang['theme.preview'], '<img id="img_theme" src="'. $this->get_picture_theme() .'" alt="" style="vertical-align:top; max-height:180px;" />'));
+			$options_fieldset->add_field(new FormFieldFree('preview_theme', $this->lang['theme.preview'], '<img id="img_theme" src="'. Url::to_rel($this->get_picture_theme()) .'" alt="" style="vertical-align:top; max-height:180px;" />'));
 		}
 		
 		$options_fieldset->add_field(new FormFieldEditors('text-editor', $this->lang['text-editor'], ContentFormattingConfig::load()->get_default_editor()));
@@ -113,6 +121,22 @@ class UserRegistrationController extends AbstractController
 		$member_extended_field->set_template($form);
 		MemberExtendedFieldsService::display_form_fields($member_extended_field);
 		
+		$agreement_fieldset = new FormFieldsetHTML('agreement_fieldset', $this->lang['agreement']);
+    	$form->add_fieldset($agreement_fieldset);
+    	
+		$agreement = new FormFieldHTML('agreement.required', $this->lang['agreement.agree.required'] . '<br /><br />');
+		$agreement_fieldset->add_field($agreement);
+
+		$agreement = new FormFieldHTML('agreement', 
+			'<div style="width:auto;height:auto;overflow-y:scroll;border:1px solid #DFDFDF;background-color:#F1F4F1;margin-bottom:10px;">' . $this->user_accounts_config->get_registration_agreement() . '</div>'
+		);
+		$agreement_fieldset->add_field($agreement);
+		
+		$agreement_fieldset->add_field(new FormFieldCheckbox('agree', $this->lang['agreement.agree'], 
+			FormFieldCheckbox::UNCHECKED, 
+			array('required' => $this->lang['agreement.agree.required'])
+		));
+    	
 		$form->add_button(new FormButtonReset());
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_constraint(new FormConstraintFieldsEquality($password, $password_bis));
@@ -131,18 +155,17 @@ class UserRegistrationController extends AbstractController
 		{
 			return '<strong>'. $this->lang['registration.validation.administrator.explain'] . '<strong>';
 		}
+		else
+		{
+			return '';
+		}
 	}
 	
 	private function save()
 	{
 		$activation_key = $this->user_accounts_config->get_member_accounts_validation_method() == UserAccountsConfig::MAIL_USER_ACCOUNTS_VALIDATION ? KeyGenerator::generate_key(15) : '';
 		$user_aprobation = $this->user_accounts_config->get_member_accounts_validation_method() == UserAccountsConfig::AUTOMATIC_USER_ACCOUNTS_VALIDATION ? '1' : '0';
-		
-		if (!$this->form->field_is_disabled('theme'))
-		{
-			$user->set_theme($this->form->get_value('theme')->get_raw_value());
-		}
-		
+
 		$user_authentification = new UserAuthentification($this->form->get_value('login'), $this->form->get_value('password'));
 		$user = new User();
 		$user->set_level(User::MEMBER_LEVEL);
@@ -154,6 +177,11 @@ class UserRegistrationController extends AbstractController
 		$user->set_approbation($user_aprobation);
 		$user->set_approbation_pass($activation_key);
 		$user_id = UserService::create($user_authentification, $user);
+		
+		if (!$this->form->field_is_disabled('theme'))
+		{
+			$user->set_theme($this->form->get_value('theme')->get_raw_value());
+		}
 		
 		MemberExtendedFieldsService::register_fields($this->form, $user_id);
 		
@@ -204,7 +232,7 @@ class UserRegistrationController extends AbstractController
 		$text = 'var theme = new Array;' . "\n";
 		foreach (ThemeManager::get_activated_themes_map() as $theme)
 		{
-			$text .= 'theme["' . $theme->get_id() . '"] = "' . $this->get_picture_theme($theme->get_id()) . '";' . "\n";
+			$text .= 'theme["' . $theme->get_id() . '"] = "' . Url::to_rel($this->get_picture_theme($theme->get_id())) . '";' . "\n";
 		}
 		$text .= 'var theme_id = HTMLForms.getField("theme").getValue(); document.images[\'img_theme\'].src = theme[theme_id];';
 		return $text;

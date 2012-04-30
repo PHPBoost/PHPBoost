@@ -57,7 +57,7 @@ class AdminThemesInstalledListController extends AdminController
 				'ID' => $theme->get_id(),
 				'NAME' => $configuration->get_name(),
 				'VERSION' => $configuration->get_version(),
-				'MAIN_PICTURE' => count($pictures) > 0 ? PATH_TO_ROOT .'/templates/' . $theme->get_id() . '/' . current($pictures) : '',
+				'MAIN_PICTURE' => count($pictures) > 0 ? Url::to_rel('/templates/' . $theme->get_id() . '/' . current($pictures)) : '',
 				'AUTHOR_NAME' => $configuration->get_author_name(),
 				'AUTHOR_WEBSITE' => $configuration->get_author_link(),
 				'AUTHOR_EMAIL' => $configuration->get_author_mail(),
@@ -77,7 +77,7 @@ class AdminThemesInstalledListController extends AdminController
 				foreach ($pictures as $picture)
 				{
 					$this->view->assign_block_vars('themes_installed.pictures', array(
-						'URL' => PATH_TO_ROOT .'/templates/' . $theme->get_id() . '/' . $picture
+						'URL' => Url::to_rel('/templates/' . $theme->get_id() . '/' . $picture)
 					));
 				}
 			}
@@ -104,7 +104,7 @@ class AdminThemesInstalledListController extends AdminController
 					$authorizations = Authorizations::auth_array_simple(Theme::ACCES_THEME, $id_theme);
 					ThemeManager::change_informations($id_theme, $activated, $authorizations);
 					
-					$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('process.success', 'errors-common'), E_USER_SUCCESS, 4));
+					AppContext::get_response()->redirect(AdminThemeUrlBuilder::list_installed_theme());
 				}
 			}
 		}

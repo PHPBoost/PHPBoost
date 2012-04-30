@@ -51,9 +51,9 @@ class ArticlesHomePageExtensionPoint implements HomePageExtensionPoint
 	private function get_view()
 	{
 		global $idartcat, $Session, $User, $invisible, $Cache, $ARTICLES_CAT, $CONFIG_ARTICLES, $LANG, $ARTICLES_LANG, $Bread_crumb;
+		
 		require_once(PATH_TO_ROOT . '/articles/articles_begin.php'); 
 		
-		// Initialisation des imports.
 		$now = new Date(DATE_NOW, TIMEZONE_AUTO);
 		$Pagination = new DeprecatedPagination();
 		
@@ -77,13 +77,11 @@ class ArticlesHomePageExtensionPoint implements HomePageExtensionPoint
 
 		$tpl = new FileTemplate('articles/articles_cat.tpl');
 
-		/*//Niveau d'autorisation de la cat�gorie
 		if (!isset($ARTICLES_CAT[$idartcat]) || !$User->check_auth($ARTICLES_CAT[$idartcat]['auth'], AUTH_ARTICLES_READ))
 		{
 			$error_controller = PHPBoostErrors::unexisting_page();
 			DispatchManager::redirect($error_controller);
 		}
-		*/
 
 		$nbr_articles = $this->sql_querier->query("SELECT COUNT(*) FROM " . DB_TABLE_ARTICLES . " WHERE visible = 1 AND idcat = '" . $idartcat . "' AND start <= '" . $now->get_timestamp() . "' AND (end >= '" . $now->get_timestamp() . "' OR end = 0)", __LINE__, __FILE__);
 		$nbr_articles_invisible = $this->sql_querier->query("SELECT COUNT(*) FROM " . DB_TABLE_ARTICLES . " WHERE visible = 0 AND idcat = '" . $idartcat . "' AND user_id != -1 AND start > '" . $now->get_timestamp() . "' AND (end <= '" . $now->get_timestamp() . "' OR start = 0)", __LINE__, __FILE__);
@@ -102,7 +100,7 @@ class ArticlesHomePageExtensionPoint implements HomePageExtensionPoint
 			'author'=>'',
 			'asc' => '',
 			'desc' => '',
-		);
+			);
 
 		switch ($get_sort)
 		{
@@ -111,7 +109,7 @@ class ArticlesHomePageExtensionPoint implements HomePageExtensionPoint
 				$selected_fields['alpha'] = ' selected="selected"';
 				break;
 			case 'com' :
-				$sort = 'nbr_com';
+				$sort = 'com.number_comments';
 				$selected_fields['com'] = ' selected="selected"';
 				break;
 			case 'date' :
@@ -123,7 +121,7 @@ class ArticlesHomePageExtensionPoint implements HomePageExtensionPoint
 				$selected_fields['view'] = ' selected="selected"';
 				break;
 			case 'note' :
-				$sort = 'note';
+				$sort = 'note.average_notes';
 				$selected_fields['note'] = ' selected="selected"';
 				break;
 			case 'author' :
@@ -222,7 +220,7 @@ class ArticlesHomePageExtensionPoint implements HomePageExtensionPoint
 			));
 
 			$i = 0;
-			$result = $this->sql_querier->query_while("SELECT ac.id, ac.name, ac.auth,ac.description, ac.image
+			$result = $this->sql_querier->query_while("SELECT ac.id, ac.name, ac.auth, ac.description, ac.image, ac.nbr_articles_visible AS nbr_articles
 			FROM " . DB_TABLE_ARTICLES_CAT . " ac
 			" . $clause_cat . $clause_unauth_cats . "
 			ORDER BY ac.id_parent
@@ -242,21 +240,19 @@ class ArticlesHomePageExtensionPoint implements HomePageExtensionPoint
 			$this->sql_querier->query_close($result);
 		}
 
-		##### Affichage des articles #####
-
-		if ($nbr_articles > 0 ||  $invisible)
+		if ($nbr_articles > 0 || $invisible)
 		{
 			$tpl->put_all(array(
-			'C_ARTICLES_LINK' => true,
-			'PAGINATION' => $Pagination->display('articles' . url('.php' . (!empty($unget) ? $unget . '&amp;' : '?') . 'cat=' . $idartcat . '&amp;p=%d', '-' . $idartcat . '-0-%d+' . $rewrite_title . '.php' . $unget), $nbr_articles , 'p', $CONFIG_ARTICLES['nbr_articles_max'], 3),
-			'CAT' => $ARTICLES_CAT[$idartcat]['name']
+				'C_ARTICLES_LINK' => true,
+				'PAGINATION' => $Pagination->display('articles' . url('.php' . (!empty($unget) ? $unget . '&amp;' : '?') . 'cat=' . $idartcat . '&amp;p=%d', '-' . $idartcat . '-0-%d+' . $rewrite_title . '.php' . $unget), $nbr_articles , 'p', $CONFIG_ARTICLES['nbr_articles_max'], 3),
+				'CAT' => $ARTICLES_CAT[$idartcat]['name']
 			));
-
-
+			
 			$notation = new Notation();
 			$notation->set_module_name('articles');
-			
-			$result = $this->sql_querier->query_while("SELECT a.id, a.title,a.description, a.icon, a.timestamp, a.views, a.user_id, m.user_id, m.login, m.level, note.average_notes, note.number_notes, com.number_comments
+			$notation->set_notation_scale($CONFIG_ARTICLES['note_max']);
+
+			$result = $this->sql_querier->query_while("SELECT a.id, a.title, a.description, a.icon, a.timestamp, a.views, a.user_id, m.user_id, m.login, m.level, note.average_notes, note.number_notes, com.number_comments
 			FROM " . DB_TABLE_ARTICLES . " a
 			LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = a.user_id
 			LEFT JOIN " . DB_TABLE_COMMENTS_TOPIC . " com ON com.id_in_module = a.id AND com.module_id = 'articles'
@@ -267,11 +263,11 @@ class ArticlesHomePageExtensionPoint implements HomePageExtensionPoint
 
 			while ($row = $this->sql_querier->fetch_assoc($result))
 			{
-				$notation->set_id_in_module($row['id']);
-				
 				//On reccourci le lien si il est trop long.
 				$fichier = (strlen($row['title']) > 45 ) ? substr(html_entity_decode($row['title']), 0, 45) . '...' : $row['title'];
-
+				
+				$notation->set_id_in_module($row['id']);
+				
 				$tpl->assign_block_vars('articles', array(
 					'NAME' => $row['title'],
 					'ICON' => !empty($row['icon']) ? '<a href="articles' . url('.php?id=' . $row['id'] . '&amp;cat=' . $idartcat, '-' . $idartcat . '-' . $row['id'] . '+' . Url::encode_rewrite($fichier) . '.php') . '"><img src="' . $row['icon'] . '" alt="" class="valign_middle" /></a>' : '',
@@ -299,10 +295,12 @@ class ArticlesHomePageExtensionPoint implements HomePageExtensionPoint
 				));
 
 
-				$result = $this->sql_querier->query_while("SELECT a.id, a.title, a.icon, a.timestamp, a.views, a.user_id, m.user_id, m.login, m.level
+				$result = $this->sql_querier->query_while("SELECT a.id, a.title, a.icon, a.timestamp, a.views, a.user_id, m.user_id, m.login, m.level, note.average_notes, note.number_notes, com.number_comments
 				FROM " . DB_TABLE_ARTICLES . " a
 				LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = a.user_id
-				WHERE a.visible = 0 AND a.idcat = '" . $idartcat .	"'  AND a.user_id != -1 AND a.start > '" . $now->get_timestamp() . "' AND (a.end <= '" . $now->get_timestamp() . "' OR a.start = 0)
+				LEFT JOIN " . DB_TABLE_COMMENTS_TOPIC . " com ON com.id_in_module = a.id AND com.module_id = 'articles'
+				LEFT JOIN " . DB_TABLE_AVERAGE_NOTES . " note ON note.id_in_module = a.id AND note.module_name = 'articles'
+				WHERE a.visible = 0 AND a.idcat = '" . $idartcat .	"'  AND a.user_id != -1 OR a.start > '" . $now->get_timestamp() . "' AND (a.end <= '" . $now->get_timestamp() . "' OR a.start = 0)
 				ORDER BY " . $sort . " " . $mode .
 				$this->sql_querier->limit($Pagination->get_first_msg($CONFIG_ARTICLES['nbr_articles_max'], 'p'), $CONFIG_ARTICLES['nbr_articles_max']), __LINE__, __FILE__);
 
@@ -310,15 +308,17 @@ class ArticlesHomePageExtensionPoint implements HomePageExtensionPoint
 				{
 					//On reccourci le lien si il est trop long.
 					$fichier = (strlen($row['title']) > 45 ) ? substr(html_entity_decode($row['title']), 0, 45) . '...' : $row['title'];
-
+					
+					$notation->set_id_in_module($row['id']);
+					
 					$tpl->assign_block_vars('articles_invisible', array(
 						'NAME' => $row['title'],
 						'ICON' => !empty($row['icon']) ? '<a href="articles' . url('.php?id=' . $row['id'] . '&amp;cat=' . $idartcat, '-' . $idartcat . '-' . $row['id'] . '+' . Url::encode_rewrite($fichier) . '.php') . '"><img src="' . $row['icon'] . '" alt="" class="valign_middle" /></a>' : '',
 						'CAT' => $ARTICLES_CAT[$idartcat]['name'],
 						'DATE' => gmdate_format('date_format_short', $row['timestamp']),
 						'COMPT' => $row['views'],
-						'NOTE' => ($row['nbrnote'] > 0) ? Note::display_img($row['note'], $CONFIG_ARTICLES['note_max'], 5) : '<em>' . $LANG['no_note'] . '</em>',
-						'COM' => $row['nbr_com'],
+						'NOTE' => ($row['number_notes'] > 0) ? NotationService::display_static_image($notation, $row['average_notes']) : $LANG['no_note'],
+						'COM' => empty($row['number_comments']) ? '0' : $row['number_comments'],
 						'U_ARTICLES_PSEUDO'=>'<a href="' . UserUrlBuilder::profile($row['user_id'])->absolute() . '" class="' . $array_class[$row['level']] . '"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . TextHelper::wordwrap_html($row['login'], 19) . '</a>',
 						'U_ARTICLES_LINK' => url('.php?id=' . $row['id'] . '&amp;cat=' . $idartcat, '-' . $idartcat . '-' . $row['id'] . '+' . Url::encode_rewrite($fichier) . '.php'),
 						'U_ARTICLES_LINK_COM' => url('.php?cat=' . $idartcat . '&amp;id=' . $row['id'] . '&amp;com=%s', '-' . $idartcat . '-' . $row['id'] . '.php?com=0'),

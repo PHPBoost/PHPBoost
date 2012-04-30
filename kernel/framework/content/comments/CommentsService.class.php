@@ -67,24 +67,15 @@ class CommentsService
 		{
 			if (!empty($delete_comment_id))
 			{
-				if (!self::is_authorized_edit_or_delete_comment($authorizations, $delete_comment_id))
-				{
-					$error_controller = PHPBoostErrors::unexisting_page();
-					DispatchManager::redirect($error_controller);
-				}
-	
+				self::verificate_authorized_edit_or_delete_comment($authorizations, $delete_comment_id);
+
 				CommentsManager::delete_comment($delete_comment_id);
 				self::$template->put('KEEP_MESSAGE', MessageHelper::display(self::$comments_lang['comment.delete.success'], MessageHelper::NOTICE, 4));
 			}
-	
-			if (!empty($edit_comment_id))
+			elseif (!empty($edit_comment_id))
 			{
-				if (!CommentsManager::comment_exists($edit_comment_id) || !self::is_authorized_edit_or_delete_comment($authorizations, $edit_comment_id))
-				{
-					$error_controller = PHPBoostErrors::unexisting_page();
-					DispatchManager::redirect($error_controller);		
-				}
-				
+				self::verificate_authorized_edit_or_delete_comment($authorizations, $edit_comment_id);
+	
 				$edit_comment_form = EditCommentBuildForm::create($edit_comment_id);
 				self::$template->put_all(array(
 					'C_DISPLAY_FORM' => true,
@@ -98,11 +89,11 @@ class CommentsService
 				{
 					$comments_topic_locked = CommentsManager::comment_topic_locked($module_id, $id_in_module);
 					$user_read_only = self::$user->get_attribute('user_readonly');
-					if (!$authorizations->is_authorized_moderation() && $comments_topic_locked)
+					if (!$authorizations->is_authorized_moderation() || $comments_topic_locked)
 					{
 						self::$template->put('KEEP_MESSAGE', MessageHelper::display(self::$lang['com_locked'], MessageHelper::NOTICE, 4));
 					}
-					if (!empty($user_read_only) && $user_read_only > time())
+					elseif (!empty($user_read_only) && $user_read_only > time())
 					{
 						self::$template->put('KEEP_MESSAGE', MessageHelper::display('Read Only', MessageHelper::NOTICE, 4));
 					}
@@ -218,10 +209,21 @@ class CommentsService
 		}
 	}
 	
-	private static function is_authorized_edit_or_delete_comment($authorizations, $comment_id)
+	private static function verificate_authorized_edit_or_delete_comment($authorizations, $comment_id)
 	{
 		$user_id_posted_comment = CommentsManager::get_user_id_posted_comment($comment_id);
-		return ($authorizations->is_authorized_moderation() || $user_id_posted_comment == self::$user->get_attribute('user_id')) && $authorizations->is_authorized_access_module();
+		$is_authorized = ($authorizations->is_authorized_moderation() || $user_id_posted_comment == self::$user->get_attribute('user_id')) && $authorizations->is_authorized_access_module();
+		
+		if (!CommentsManager::comment_exists($comment_id))
+		{
+			$error_controller = PHPBoostErrors::unexisting_page();
+			DispatchManager::redirect($error_controller);
+		}
+		else if (!$is_authorized)
+		{
+			$error_controller = PHPBoostErrors::user_not_authorized();
+			DispatchManager::redirect($error_controller);
+		}
 	}
 }
 ?>

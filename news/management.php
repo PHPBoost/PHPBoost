@@ -47,10 +47,7 @@ if ($delete > 0)
 		$Sql->query_inject("DELETE FROM " . DB_TABLE_NEWS . " WHERE id = '" . $delete . "'", __LINE__, __FILE__);
 		$Sql->query_inject("DELETE FROM " . DB_TABLE_EVENTS . " WHERE module = 'news' AND id_in_module = '" . $delete . "'", __LINE__, __FILE__);
 
-		$comments_topic = new CommentsTopic();
-		$comments_topic->set_module_id('news');
-		$comments_topic->set_id_in_module($news['id']);
-		CommentsService::delete_comments_id_in_module($comments_topic);
+		CommentsService::delete_comments_topic_module('news', $news['id']);
 	    
 	    Feed::clear_cache('news');
 

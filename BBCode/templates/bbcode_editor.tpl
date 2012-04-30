@@ -2,6 +2,7 @@
 <!--
 var displayed = new Array();
 displayed[${escapejs(FIELD)}] = false;
+function XMLHttpRequest_preview(field)
 {
 	if( XMLHttpRequest_preview.arguments.length == 0 )
 		field = ${escapejs(FIELD)};
@@ -59,7 +60,7 @@ displayed[${escapejs(FIELD)}] = false;
 	{
 		root: '{PATH_TO_ROOT}',
 		path: '{PATH_TO_ROOT}/templates/{THEME}/',
-		upload: {type:{C_UPLOAD_MANAGEMENT} , title:${escapejs(L_BB_UPLOAD)}, editor:${escapejs(EDITOR_NAME)} },
+		upload: {type:${escapejs(C_UPLOAD_MANAGEMENT)} , title:${escapejs(L_BB_UPLOAD)}, editor:${escapejs(EDITOR_NAME)} },
 		block1: [
 			{type:'separator'},
 			{type:'menu_smileys', id:'smileys', fname:'smileys.png', label:${escapejs(L_BB_SMILEYS)}, disabled:${escapejs(DISABLED_SMILEYS)}},
@@ -74,7 +75,7 @@ displayed[${escapejs(FIELD)}] = false;
 			{type:'menu_style', id:'style', fname:'style.png', label:${escapejs(L_BB_STYLE)}, tag: 'style', disabled:${escapejs(DISABLED_STYLE)}},
 			{type:'separator'},
 			{type:'action_prompt_url', fname:'url.png', label:${escapejs(L_BB_URL)}, tag: 'url', disabled:${escapejs(DISABLED_URL)}, prompt:${escapejs(L_URL_PROMPT)} },
-			{type:'action_prompt_picture', fname:'image.png', label:${escapejs(L_BB_IMAGE)}, tag: 'img', disabled:${escapejs(DISABLED_IMAGE)}, prompt:${escapejs(L_URL_PROMPT)} },
+			{type:'action_prompt_picture', fname:'image.png', label:${escapejs(L_BB_IMAGE)}, tag: 'img', disabled:${escapejs(DISABLED_IMAGE)}, prompt:${escapejs(L_IMAGE_PROMPT)} },
 			{type:'balise2', fname:'quote.png', label:${escapejs(L_BB_QUOTE)}, tag: 'quote', disabled:${escapejs(DISABLED_QUOTE)}},
 			{type:'balise2', fname:'hide.png', label:${escapejs(L_BB_HIDE)}, tag: 'hide', disabled:${escapejs(DISABLED_HIDE)}},
 			{type:'menu_list', id:'list', fname:'list.png', label:${escapejs(L_BB_LIST)}, disabled:${escapejs(DISABLED_LIST)}},

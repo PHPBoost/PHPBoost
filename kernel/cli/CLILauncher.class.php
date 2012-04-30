@@ -47,16 +47,21 @@ class CLILauncher
 		$this->load_commands_list();
 	}
 
+	/**
+	 * @return bool true whether it works, false whether an error occurred
+	 */
 	public function launch()
 	{
 		try
 		{
 			$this->do_launch();
+			return true;
 		}
 		catch (Exception $exception)
 		{
 			CLIOutput::err('Uncaught exception: ' . $exception->getMessage() . ' at:');
 			CLIOutput::err($exception->getTraceAsString());
+			return false;
 		}
 	}
 	

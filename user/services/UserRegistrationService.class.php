@@ -104,7 +104,7 @@ class UserRegistrationService
 	{
 		$alert = new AdministratorAlert();
 		$alert->set_entitled(self::$lang['registration.pending-approval']);
-		$alert->set_fixing_url(DispatchManager::get_url('/admin/member', '/members/' . $user_id . '/edit/')->absolute());
+		$alert->set_fixing_url('/admin/member/index.php?url=/'. $user_id .'/edit/');
 		$alert->set_priority(AdministratorAlert::ADMIN_ALERT_MEDIUM_PRIORITY);
 		$alert->set_id_in_module($user_id);
 		$alert->set_type('member_account_to_approbate');

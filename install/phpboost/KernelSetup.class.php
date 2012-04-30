@@ -293,7 +293,7 @@ class KernelSetup
 	private function create_errors_404_table()
 	{
 		$fields = array(
-			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
+			'id' => array('type' => 'integer', 'length' => 10, 'autoincrement' => true, 'notnull' => 1),
 			'requested_url' => array('type' => 'string', 'length' => 255, 'notnull' => 1),
 			'from_url' => array('type' => 'string', 'length' => 255, 'notnull' => 1),
 			'times' => array('type' => 'integer', 'length' => 11, 'notnull' => 1)
@@ -649,7 +649,7 @@ class KernelSetup
 		$fields = array(
 			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
 			'user_id' => array('type' => 'integer', 'length' => 15, 'notnull' => 1, 'default' => 0),
-			'code' => array('type' => 'integer', 'length' => 20, 'notnull' => 1, 'default' => 0),
+			'code' => array('type' => 'string', 'length' => 20, 'notnull' => 1, 'default' => 0),
 			'difficulty' => array('type' => 'boolean', 'length' => 1, 'notnull' => 1),
 			'timestamp' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0)
 		);

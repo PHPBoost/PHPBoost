@@ -170,7 +170,7 @@ class ModuleConfiguration
 	{
 		if ($parse_result === false)
 		{
-			throw new Exception('Parse ini file ' . $ini_file . ' failed');
+			throw new IOException('Parse ini file ' . $ini_file . ' failed');
 		}
 	}
 

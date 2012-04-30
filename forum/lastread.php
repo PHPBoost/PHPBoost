@@ -40,7 +40,7 @@ $change_cat = retrieve(POST, 'change_cat', '');
 if (!empty($change_cat))
 	AppContext::get_response()->redirect('/forum/forum' . url('.php?id=' . $change_cat, '-' . $change_cat . $rewrited_title . '.php', '&'));
 if (!$User->check_level(User::MEMBER_LEVEL)) //Réservé aux membres.
-	AppContext::get_response()->redirect('/member/error.php'); 
+	AppContext::get_response()->redirect(UserUrlBuilder::connect()->absolute()); 
 
 if ($User->check_level(User::MEMBER_LEVEL)) //Affichage des message()s non lu(s) du membre.
 {

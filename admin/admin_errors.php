@@ -50,7 +50,7 @@ if (!empty($_POST['erase']))
 
 $tpl->add_lang(LangLoader::get('admin-errors-Common'));
 $tpl->put_all(array(
-	'L_ERRORS' => $LANG['errors'],
+	'L_ERRORS' => LangLoader::get_message('logged_errors', 'admin-errors-Common'),
 	'L_DESC' => $LANG['description'],
 	'L_DATE' => $LANG['date'],
 	'L_ERASE_RAPPORT' => $LANG['erase_rapport'],

@@ -145,7 +145,7 @@ if (!empty($_POST['valid_poll']) && !empty($poll['id']) && !$archives)
 			//Tout s'est bien déroulé, on redirige vers la page des resultats.
 			redirect_confirm(PATH_TO_ROOT . '/poll/poll' . url('.php?id=' . $poll['id'], '-' . $poll['id'] . '.php'), $LANG['confirm_vote'], 2);
 			
-			if (in_array($poll['id'], $displayed_in_mini_module_list) ) //Vote effectué du mini poll => mise à jour du cache du mini poll.
+			if (in_array($poll['id'], $config_displayed_in_mini_module_list) ) //Vote effectué du mini poll => mise à jour du cache du mini poll.
 				$Cache->Generate_module_file('poll');
 		}	
 		else //Vote blanc

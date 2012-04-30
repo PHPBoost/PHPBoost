@@ -160,10 +160,10 @@ class PHPBoostErrors
 		return $controller;
 	}
 	
-	public static function link_flood()
+	public static function link_flood($max_link)
 	{
 		$lang = LangLoader::get('errors');
-		$controller = new UserErrorController($lang['error'], $lang['e_l_flood']);
+		$controller = new UserErrorController($lang['error'], sprintf($lang['e_l_flood'], $max_link));
 		return $controller;
 	}
 	

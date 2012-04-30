@@ -258,7 +258,7 @@ elseif (!empty($untrack_mail) && $User->check_level(User::MEMBER_LEVEL)) //Retra
 elseif ($read) //Marquer comme lu.
 {
 	if (!$User->check_level(User::MEMBER_LEVEL)) //Réservé aux membres.
-		AppContext::get_response()->redirect('/member/error.php');
+		AppContext::get_response()->redirect(UserUrlBuilder::connect()->absolute());
 
 	//Calcul du temps de péremption, ou de dernière vue des messages.
 	$check_last_view_forum = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " WHERE user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__);

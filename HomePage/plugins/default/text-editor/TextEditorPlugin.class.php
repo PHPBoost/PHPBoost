@@ -27,8 +27,9 @@
 
 class TextEditorPlugin extends Plugin
 {
-	public function __construct()
+	public function __construct($id = 0)
 	{
+		$this->set_id($id);
 		parent::__construct('Text-editor', $this->build_view(), true);
 	}
 	

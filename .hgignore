@@ -23,6 +23,9 @@ syntax: regexp
 ^images/maths/*
 
 syntax: regexp
+^images/customization/*
+
+syntax: regexp
 ^templates/vita*
 
 syntax: regexp
@@ -33,5 +36,3 @@ syntax: regexp
 
 syntax: regexp
 ^shop/*
-
-

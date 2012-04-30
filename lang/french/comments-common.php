@@ -54,4 +54,6 @@ $lang['comment.lock.success'] = 'Topic dévérouillé avec succès';
 $lang['comment.lock.not-authorized'] = 'Vous n\'êtes pas autorisé à dévérouiller ce topic';
 
 $lang['comments.user.read-only'] = 'Vous êtes actuellement en lecture seule, vous ne pouvez pas poster de commentaire pour le moment';
+
+$lang['module.choice'] = 'Choisissez un module';
 ?>

@@ -43,7 +43,7 @@ class FormFieldConstraintMaxLinks extends AbstractFormFieldConstraint
 		
 		if (empty($error_message))
 		{
-			$error_message = LangLoader::get_message('e_l_flood', 'errors');
+			$error_message = sprintf(LangLoader::get_message('e_l_flood', 'errors'), $this->number_links_authorized);
 		}
 		$this->set_validation_error_message($error_message);
 	}

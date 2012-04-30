@@ -79,8 +79,24 @@
 		function bbcode_page()
 		{
 			var page = prompt("{L_PAGE_PROMPT}");
-			if( page != null && page != '' )
-				insertbbcode('[page]' + page, '[/page]', 'contents');
+			var textarea = $('contents');
+			var start = textarea.selectionStart;
+			var end = textarea.selectionEnd;
+
+			if (start == end)
+			{
+				var insert_value = '[page]' + page + '[/page]';
+				textarea.value = textarea.value.substr(0, start) + insert_value + textarea.value.substr(end);
+			}
+			else
+			{
+				var value = textarea.value;
+				var insert_value = '[page]' + value.substring(start, end) + '[/page]';
+				textarea.value = textarea.value.substr(0, start) + insert_value + textarea.value.substr(end);
+			}
+
+			textarea.selectionStart = start + insert_value.length;
+			textarea.selectionEnd = start + insert_value.length;
 		}
 		# IF C_ADD #
 		function value_now(id_date, id_hour, id_min)
@@ -106,15 +122,6 @@
 				document.getElementById('v'+i).innerHTML = '<label><input type="text" size="40" name="v'+i+'" value="" class="text" /></label><br /><span id="v'+i2+'"></span>';	
 			if( document.getElementById('s'+i) )
 				document.getElementById('s'+i).innerHTML = (i < i_max) ? '<div style="height:22px;text-align:center;line-height:22px;" id="s'+i2+'"><a href="javascript:add_field('+i2+', '+i_max+')"><img style="vertical-align:bottom;" src="../templates/{THEME}/images/form/plus.png" alt="+" />&nbsp;&nbsp;{L_ADD_SOURCE}</a></span>' : '';					
-		}
-		var global_auth = {JS_SPECIAL_AUTH};
-		function change_status_global_auth()
-		{
-			if( global_auth )
-				hide_div("hide_special_auth");
-			else
-				show_div("hide_special_auth");
-			global_auth = !global_auth;
 		}
 		-->
 		</script>		
