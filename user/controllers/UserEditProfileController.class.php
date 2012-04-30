@@ -148,7 +148,7 @@ class UserEditProfileController extends AbstractController
 		}
 		else
 		{
-			if (!$this->form->field_is_disabled('theme'))
+			if ($this->form->has_field('theme'))
 			{
 				$this->user->set_theme($this->form->get_value('theme')->get_raw_value());
 			}
