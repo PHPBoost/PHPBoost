@@ -45,49 +45,65 @@
 			</div>
 		</div>
 		<div class="module_contents">
+			# IF C_ERROR_HANDLER #
+			<div class="error_handler_position">
+				<span id="errorh"></span>
+				<div class="{ERRORH_CLASS}" style="width:500px;margin:auto;padding:15px;">
+					<img src="../templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
+					<br />	
+				</div>
+			</div>
+			<br />
+			# ENDIF #
+			
 			<table  class="module_table">
 				<tr style="text-align:center;">
-					<th>
-					<a href="../bugtracker/bugtracker{U_BUG_ID_TOP}"><img src="../templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
-						{L_ID}
-					<a href="../bugtracker/bugtracker{U_BUG_ID_BOTTOM}"><img src="../templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
+					<th style="width:45px;text-align:center;">
+						{L_ID}<br />
+						<a href="../bugtracker/bugtracker{U_BUG_ID_TOP}"><img src="../templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
+						<a href="../bugtracker/bugtracker{U_BUG_ID_BOTTOM}"><img src="../templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
 					</th>
-					<th style="width:15%">
-					<a href="../bugtracker/bugtracker{U_BUG_TITLE_TOP}"><img src="../templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
-						{L_TITLE}
-					<a href="../bugtracker/bugtracker{U_BUG_TITLE_BOTTOM}"><img src="../templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
+					<th style="text-align:center;">
+						{L_TITLE}<br />
+						<a href="../bugtracker/bugtracker{U_BUG_TITLE_TOP}"><img src="../templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
+						<a href="../bugtracker/bugtracker{U_BUG_TITLE_BOTTOM}"><img src="../templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
 					</th>
 					# IF C_DISPLAY_TYPES #
-					<th>
-					<a href="../bugtracker/bugtracker{U_BUG_TYPE_TOP}"><img src="../templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
-						{L_TYPE}
-					<a href="../bugtracker/bugtracker{U_BUG_TYPE_BOTTOM}"><img src="../templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
+					<th style="width:66px;text-align:center;">
+						{L_TYPE}<br />
+						<a href="../bugtracker/bugtracker{U_BUG_TYPE_TOP}"><img src="../templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
+						<a href="../bugtracker/bugtracker{U_BUG_TYPE_BOTTOM}"><img src="../templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
 					</th>
 					# ENDIF #
-					<th>
-					<a href="../bugtracker/bugtracker{U_BUG_SEVERITY_TOP}"><img src="../templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
-						{L_SEVERITY}
-					<a href="../bugtracker/bugtracker{U_BUG_SEVERITY_BOTTOM}"><img src="../templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
+					<th style="width:70px;text-align:center;">
+						{L_SEVERITY}<br />
+						<a href="../bugtracker/bugtracker{U_BUG_SEVERITY_TOP}"><img src="../templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
+						<a href="../bugtracker/bugtracker{U_BUG_SEVERITY_BOTTOM}"><img src="../templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
 					</th>
-					<th>
-					<a href="../bugtracker/bugtracker{U_BUG_PRIORITY_TOP}"><img src="../templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
-						{L_PRIORITY}
-					<a href="../bugtracker/bugtracker{U_BUG_PRIORITY_BOTTOM}"><img src="../templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
+					<th style="width:60px;text-align:center;">
+						{L_STATUS}<br />
+						<a href="../bugtracker/bugtracker{U_BUG_STATUS_TOP}"><img src="../templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
+						<a href="../bugtracker/bugtracker{U_BUG_STATUS_BOTTOM}"><img src="../templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
 					</th>
-					<th>
-					<a href="../bugtracker/bugtracker{U_BUG_DATE_TOP}"><img src="../templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
-						{L_DATE}
-					<a href="../bugtracker/bugtracker{U_BUG_DATE_BOTTOM}"><img src="../templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
+					<th style="width:84px;text-align:center;">
+						{L_COMMENTS}<br />
+						<a href="../bugtracker/bugtracker{U_BUG_COMMENTS_TOP}"><img src="../templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
+						<a href="../bugtracker/bugtracker{U_BUG_COMMENTS_BOTTOM}"><img src="../templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
+					</th>
+					<th style="width:63px;text-align:center;">
+						{L_DATE}<br />
+						<a href="../bugtracker/bugtracker{U_BUG_DATE_TOP}"><img src="../templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
+						<a href="../bugtracker/bugtracker{U_BUG_DATE_BOTTOM}"><img src="../templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
 					</th>
 					# IF C_IS_ADMIN #
-					<th>
-						{L_ACTIONS}
+					<th style="width:56px;text-align:center;">
+						{L_ACTIONS}<br /><br />
 					</th>
 					# ENDIF #
 				</tr>
 				# IF C_NO_BUGS #
 				<tr style="text-align:center;"> 
-					<td colspan="# IF C_DISPLAY_TYPES ## IF C_IS_ADMIN #7# ELSE #6# ENDIF ## ELSE ## IF C_IS_ADMIN #6# ELSE #5# ENDIF ## ENDIF #" class="row2">
+					<td colspan="# IF C_DISPLAY_TYPES ## IF C_IS_ADMIN #8# ELSE #7# ENDIF ## ELSE ## IF C_IS_ADMIN #7# ELSE #6# ENDIF ## ENDIF #" class="row2">
 						{L_NO_BUG}
 					</td>
 				</tr>
@@ -107,6 +123,9 @@
 					# ENDIF #
 					<td class="row2" {list.bug.SEVERITY_COLOR}> 
 						<b>{list.bug.SEVERITY}</b>
+					</td>
+					<td class="row2" {list.bug.COLOR}> 
+						{list.bug.STATUS}
 					</td>
 					<td class="row2" {list.bug.COLOR}> 
 						{list.bug.PRIORITY}

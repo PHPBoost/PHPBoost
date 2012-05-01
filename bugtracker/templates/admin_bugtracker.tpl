@@ -10,7 +10,7 @@
 		</div>
 		
 		# START list #
-		<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/framework/js/bbcode.js"></script>
+		<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/lib/js/phpboost/bbcode.js"></script>
 		<script type="text/javascript">
 		<!--
 		function check_form(){
@@ -348,6 +348,14 @@
 						</dt>
 						<dd>
 							{BUG_CREATE_ADVANCED_AUTH}
+						</dd>
+					</dl>
+					<dl>
+						<dt>
+							<label>{L_MODERATE_AUTH}</label>
+						</dt>
+						<dd>
+							{BUG_MODERATE_AUTH}
 						</dd>
 					</dl>
 				</fieldset>

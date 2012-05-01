@@ -33,6 +33,7 @@ require_once('../kernel/header.php');
 $auth_read = $User->check_auth($BUGS_CONFIG['auth'], BUG_READ_AUTH_BIT);
 $auth_create = $User->check_auth($BUGS_CONFIG['auth'], BUG_CREATE_AUTH_BIT);
 $auth_create_advanced = $User->check_auth($BUGS_CONFIG['auth'], BUG_CREATE_ADVANCED_AUTH_BIT);
+$auth_moderate = $User->check_auth($BUGS_CONFIG['auth'], BUG_MODERATE_AUTH_BIT);
 $display_types = sizeof($BUGS_CONFIG['types']) > 1 ? true : false;
 $display_categories = sizeof($BUGS_CONFIG['categories']) > 1 ? true : false;
 $display_versions = sizeof($BUGS_CONFIG['versions']) > 1 ? true : false;
@@ -254,13 +255,13 @@ else if (!empty($_POST['valid_edit']) && is_numeric($id_post))
 		$priority = $auth_create_advanced ? retrieve(POST, 'priority', '') : $old_values['priority'];
 		
 		//Champs supplémentaires pour l'administrateur
-		if ($User->is_admin() || (!empty($old_values['assigned_to_id']) && $User->get_attribute('user_id') == $old_values['assigned_to_id']))
+		if ($User->is_admin() || $auth_moderate || (!empty($old_values['assigned_to_id']) && $User->get_attribute('user_id') == $old_values['assigned_to_id']))
 		{
 			if ($status == 'assigned' && empty($assigned_to)) // Erreur si le statut est "Assigné" et aucun utilisateur n'est sélectionné
 				AppContext::get_response()->redirect(PATH_TO_ROOT . '/bugtracker/bugtracker.php?edit=true&id=' . $id_post . '&error=no_user_assigned#message_helper');
 			
-			if ($status == 'closed' && empty($fixed_in)) // Erreur si le statut est "Fermé" et aucune version de correction n'est sélectionné
-				AppContext::get_response()->redirect(PATH_TO_ROOT . '/bugtracker/bugtracker.php?edit=true&id=' . $id_post . '&error=no_closed_version#message_helper');
+			// if ($status == 'closed' && empty($fixed_in)) // Erreur si le statut est "Fermé" et aucune version de correction n'est sélectionnée
+				// AppContext::get_response()->redirect(PATH_TO_ROOT . '/bugtracker/bugtracker.php?edit=true&id=' . $id_post . '&error=no_closed_version#message_helper');
 			
 			$assigned_to_id = (!empty($assigned_to)) ? $Sql->query("SELECT user_id FROM " . DB_TABLE_MEMBER . " WHERE login = '" . $assigned_to . "'", __LINE__, __FILE__) : 0;
 			
@@ -274,7 +275,7 @@ else if (!empty($_POST['valid_edit']) && is_numeric($id_post))
 				'category' 				=> $category,
 				'severity' 				=> $severity,
 				'priority' 				=> $priority,		
-				'detected_in' 			=> $detected_in,		
+				'detected_in' 			=> $detected_in,
 				'reproductible' 		=> $reproductible,
 				'reproduction_method' 	=> $reproduction_method,
 				'status' 				=> $status,
@@ -372,7 +373,7 @@ else if (!empty($_POST['valid_edit']) && is_numeric($id_post))
 		###### Régénération du cache #######
 		$Cache->Generate_module_file('bugtracker');
 
-		AppContext::get_response()->redirect(HOST . DIR . '/bugtracker/bugtracker.php?edit=true&id= ' . $id_post . '&error=success#message_helper');
+		AppContext::get_response()->redirect(HOST . DIR . '/bugtracker/bugtracker.php?error=edit_success#message_helper');
 	}
 	else
 	AppContext::get_response()->redirect(HOST . DIR . '/bugtracker/bugtracker.php?edit=true&id= ' . $id_post . '&error=incomplete#message_helper');
@@ -406,7 +407,7 @@ else if (isset($_GET['edit']) && is_numeric($id)) // edition d'un bug
 	}
 	
 	//Champs supplémentaires pour l'administrateur
-	if ($User->is_admin() || (!empty($result['assigned_to_id']) && $User->get_attribute('user_id') == $result['assigned_to_id']))
+	if ($User->is_admin() || $auth_moderate || (!empty($result['assigned_to_id']) && $User->get_attribute('user_id') == $result['assigned_to_id']))
 	{
 		$assigned_to = !empty($result['assigned_to_id']) ? $Sql->query("SELECT login FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $result['assigned_to_id'] . "'", __LINE__, __FILE__) : '';
 		$Template->assign_block_vars('edit', array(
@@ -557,17 +558,12 @@ else if (isset($_GET['edit']) && is_numeric($id)) // edition d'un bug
 				'VERSION' => '<option value="' . $version['name'] . '" ' . $selected . '>' . stripslashes($version['name']) . '</option>'
 			));
 		}
-
 	}
 	
 	//Gestion erreur.
 	$get_error = retrieve(GET, 'error', '');
 	switch ($get_error)
 	{
-		case 'success':
-		$errstr = $LANG['bugs.error.e_edit_success'];
-		$errtyp = E_USER_SUCCESS;
-		break;
 		case 'incomplete':
 		$errstr = $LANG['e_incomplete'];
 		$errtyp = E_USER_NOTICE;
@@ -594,7 +590,7 @@ else if (isset($_GET['edit']) && is_numeric($id)) // edition d'un bug
 else if (isset($_GET['history']) && is_numeric($id)) // Affichage de l'historique du bug
 {
 	//checking authorization
-	if (!$User->is_admin())
+	if (!$auth_read)
 	{
 		$error_controller = PHPBoostErrors::unexisting_page();
 		DispatchManager::redirect($error_controller);
@@ -623,8 +619,8 @@ else if (isset($_GET['history']) && is_numeric($id)) // Affichage de l'historiqu
 		switch ($row['updated_field']) //Coloration du membre suivant son level d'autorisation. 
 		{ 		
 			case 'title':
-			$old_value = (strlen($row['old_value']) > 25 ) ? substr($row['old_value'], 0, 25) . '...' : $row['old_value']; // On raccourcis le titre pour ne pas déformer le tableau
-			$new_value = (strlen($row['new_value']) > 25 ) ? substr($row['new_value'], 0, 25) . '...' : $row['new_value']; // On raccourcis le titre pour ne pas déformer le tableau
+			$old_value = $row['old_value'];
+			$new_value = $row['new_value'];
 			break;
 
 			case 'priority':
@@ -721,11 +717,9 @@ else if (isset($_GET['view']) && is_numeric($id)) // Visualisation d'une fiche B
 		));
 	}
 	
-	if ($User->is_admin())
+	if ($User->is_admin() || $auth_moderate)
 	{
 		$Template->assign_vars(array(
-			'C_HISTORY_BUG'		=> true,
-			'L_HISTORY'	 		=> $LANG['bugs.actions.history'],
 			'C_DELETE_BUG'		=> true,
 			'L_CONFIRM_DEL_BUG' => $LANG['bugs.actions.confirm.del_bug'],
 			'L_DELETE' 			=> $LANG['delete']
@@ -752,6 +746,8 @@ else if (isset($_GET['view']) && is_numeric($id)) // Visualisation d'une fiche B
 		'L_REPRODUCTION_METHOD'	=> $LANG['bugs.labels.fields.reproduction_method'],
 		'L_ASSIGNED_TO'			=> $LANG['bugs.labels.fields.assigned_to_id'],
 		'L_DETECTED_BY' 		=> $LANG['bugs.labels.fields.author_id'],
+		'C_HISTORY_BUG'			=> true,
+		'L_HISTORY'	 			=> $LANG['bugs.actions.history'],
 		'L_ON' 					=> $LANG['on'],
 		'C_COM' 				=> ($BUGS_CONFIG['activ_com'] == true) ? true : false,
 		'U_COM' 				=> '<a href="' . PATH_TO_ROOT . '/bugtracker/bugtracker' . url('.php?view=true&amp;id=' . $id . '&amp;com=0', '-' . $id . '.php?com=0') .'">'. CommentsService::get_number_and_lang_comments('bugtracker', $id) . '</a>'
