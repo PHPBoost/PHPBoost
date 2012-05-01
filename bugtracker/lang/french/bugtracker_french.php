@@ -37,6 +37,7 @@ $LANG['bugs.notice.no_one'] = 'Personne';
 $LANG['bugs.notice.none'] = 'Aucun';
 $LANG['bugs.notice.none_e'] = 'Aucune';
 $LANG['bugs.notice.no_bug'] = 'Aucun bug n\'a été déclaré';
+$LANG['bugs.notice.no_bug_fixed'] = 'Aucun bug n\'a été corrigé dans cette version';
 $LANG['bugs.notice.no_version'] = 'Aucune version existante';
 $LANG['bugs.notice.no_type'] = 'Aucun type n\'a été déclaré';
 $LANG['bugs.notice.no_category'] = 'Aucune catégorie n\'a été déclarée';
@@ -180,10 +181,11 @@ $LANG['bugs.config.auth.read'] = 'Autorisation d\'afficher la liste des bugs';
 $LANG['bugs.config.auth.create'] = 'Autorisation de signaler un bug';
 $LANG['bugs.config.auth.create_advanced'] = 'Autorisation avancées pour signaler un bug';
 $LANG['bugs.config.auth.create_advanced_explain'] = 'Permet de choisir le niveau et la priorité du bug';
+$LANG['bugs.config.auth.moderate'] = 'Autorisation de modération des bugs';
 
 //Erreurs
 $LANG['bugs.error.require_items_per_page'] = 'Veuillez remplir le champ \"Nombre de bugs par page\"';
-$LANG['bugs.error.e_no_user_assigned'] = 'Ce bug n\'a été assigné à aucun utilisateur, l\état ne pas passer à "' . $LANG['bugs.status.assigned'] . '"';
+$LANG['bugs.error.e_no_user_assigned'] = 'Ce bug n\'a été assigné à aucun utilisateur, l\'état ne pas passer à "' . $LANG['bugs.status.assigned'] . '"';
 $LANG['bugs.error.e_no_closed_version'] = 'Veuillez sélectionner la version de correction avant de passer à l\'état "' . $LANG['bugs.status.closed'] . '"';
 $LANG['bugs.error.e_config_success'] = 'La configuration a été modifiée avec succès';
 $LANG['bugs.error.e_edit_success'] = 'Le bug a été modifié avec succès';
