@@ -86,8 +86,11 @@ class BugtrackerHomePageExtensionPoint implements HomePageExtensionPoint
 			case 'severity' :
 				$sort = 'severity';
 				break;
-			case 'priority' :
-				$sort = 'priority';
+			case 'status' :
+				$sort = 'status';
+				break;
+			case 'comments' :
+				$sort = 'nbr_com';
 				break;
 			case 'date' :
 				$sort = 'submit_date';
@@ -107,7 +110,7 @@ class BugtrackerHomePageExtensionPoint implements HomePageExtensionPoint
 		}
 		
 		//Activation de la colonne "Actions" si administrateur
-		if ($User->check_level(User::ADMIN_LEVEL))
+		if ($User->check_level(User::ADMIN_LEVEL) || $User->check_auth($authorizations, BUG_MODERATE_AUTH_BIT))
 		{
 			$tpl->put_all(array(
 				'C_IS_ADMIN'	=> true
@@ -125,8 +128,9 @@ class BugtrackerHomePageExtensionPoint implements HomePageExtensionPoint
 			'L_TITLE'				=> $LANG['bugs.labels.fields.title'],
 			'L_TYPE'				=> $LANG['bugs.labels.fields.type'],
 			'L_SEVERITY'			=> $LANG['bugs.labels.fields.severity'],
-			'L_PRIORITY'			=> $LANG['bugs.labels.fields.priority'],
+			'L_STATUS'				=> $LANG['bugs.labels.fields.status'],
 			'L_DATE'				=> $LANG['bugs.labels.fields.submit_date'],
+			'L_COMMENTS'			=> $LANG['title_com'],
 			'L_NO_BUG' 				=> $LANG['bugs.notice.no_bug'],
 			'L_ACTIONS' 			=> $LANG['bugs.actions'],
 			'L_UPDATE' 				=> $LANG['update'],
@@ -140,8 +144,10 @@ class BugtrackerHomePageExtensionPoint implements HomePageExtensionPoint
 			'U_BUG_TYPE_BOTTOM' 	=> url('.php?sort=type&amp;mode=asc'),
 			'U_BUG_SEVERITY_TOP' 	=> url('.php?sort=severity&amp;mode=desc'),
 			'U_BUG_SEVERITY_BOTTOM'	=> url('.php?sort=severity&amp;mode=asc'),
-			'U_BUG_PRIORITY_TOP' 	=> url('.php?sort=priority&amp;mode=desc'),
-			'U_BUG_PRIORITY_BOTTOM'	=> url('.php?sort=priority&amp;mode=asc'),
+			'U_BUG_STATUS_TOP'	 	=> url('.php?sort=status&amp;mode=desc'),
+			'U_BUG_STATUS_BOTTOM'	=> url('.php?sort=status&amp;mode=asc'),
+			'U_BUG_COMMENTS_TOP' 	=> url('.php?sort=comments&amp;mode=desc'),
+			'U_BUG_COMMENTS_BOTTOM'	=> url('.php?sort=comments&amp;mode=asc'),
 			'U_BUG_DATE_TOP' 		=> url('.php?sort=date&amp;mode=desc'),
 			'U_BUG_DATE_BOTTOM' 	=> url('.php?sort=date&amp;mode=asc')
 		));
@@ -167,19 +173,38 @@ class BugtrackerHomePageExtensionPoint implements HomePageExtensionPoint
 				$severity_color = 'style="background-color:#' . $BUGS_CONFIG['severity_' . $row['severity'] . '_color'] . ';"';
 			}
 			
+			//Nombre de commentaires
+			$nbr_coms = $this->sql_querier->query("SELECT number_comments FROM " . PREFIX . "comments_topic WHERE module_id='bugtracker' AND id_in_module='" . $row['id'] . "'", __LINE__, __FILE__);
+		
 			$tpl->assign_block_vars('list.bug', array(
 				'ID'			=> $row['id'],
-				'TITLE'			=> (strlen($row['title']) > 45 ) ? substr($row['title'], 0, 45) . '...' : $row['title'], // On raccourcis le titre pour ne pas déformer le tableau
+				'TITLE'			=> $row['title'],
 				'TYPE'			=> !empty($row['type']) ? stripslashes($row['type']) : $BUGTRACKER_LANG['bugs.notice.none'],
 				'SEVERITY'		=> $LANG['bugs.severity.' . $row['severity']],
-				'PRIORITY'		=> $LANG['bugs.priority.' . $row['priority']],
+				'STATUS'		=> $LANG['bugs.status.' . $row['status']],
 				'COLOR' 		=> $color,
 				'SEVERITY_COLOR'=> $severity_color,
+				'COMMENTS'		=> '<a href="bugtracker' . url('.php?view=true&id=' . $row['id'] . '&com=0#anchor_bugtracker') . '">' . $nbr_coms . '</a>',
 				'DATE' 			=> gmdate_format('date_format', $row['submit_date'])
 			));
 		}
 		$this->sql_querier->query_close($result);
-	
+		
+		//Gestion erreur.
+		$get_error = retrieve(GET, 'error', '');
+		switch ($get_error)
+		{
+			case 'edit_success':
+			$errstr = $LANG['bugs.error.e_edit_success'];
+			$errtyp = E_USER_SUCCESS;
+			break;
+			default:
+			$errstr = '';
+			$errtyp = E_USER_NOTICE;
+		}
+		if (!empty($errstr))
+			$Template->put('message_helper', MessageHelper::display($errstr, $errtyp));
+			
 		return $tpl;
 	}
 }

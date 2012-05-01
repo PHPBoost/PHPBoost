@@ -362,7 +362,7 @@ else if (!empty($_POST['valid']))
 	$config_bugs['types'] = $BUGS_CONFIG['types'];
 	$config_bugs['versions'] = $BUGS_CONFIG['versions'];
 	$config_bugs['categories'] = $BUGS_CONFIG['categories'];
-	$config_bugs['auth'] = Authorizations::build_auth_array_from_form(BUG_READ_AUTH_BIT, BUG_CREATE_AUTH_BIT, BUG_CREATE_ADVANCED_AUTH_BIT);
+	$config_bugs['auth'] = Authorizations::build_auth_array_from_form(BUG_READ_AUTH_BIT, BUG_CREATE_AUTH_BIT, BUG_CREATE_ADVANCED_AUTH_BIT, BUG_MODERATE_AUTH_BIT);
 	
 	if ($config_bugs == $BUGS_CONFIG)
 		AppContext::get_response()->redirect(HOST . SCRIPT);
@@ -438,6 +438,7 @@ else
 		'L_CREATE_AUTH' 				=> $LANG['bugs.config.auth.create'],
 		'L_CREATE_ADVANCED_AUTH'		=> $LANG['bugs.config.auth.create_advanced'],
 		'L_CREATE_ADVANCED_AUTH_EXPLAIN'=> $LANG['bugs.config.auth.create_advanced_explain'],
+		'L_MODERATE_AUTH'				=> $LANG['bugs.config.auth.moderate'],
 		'L_ADD' 						=> $LANG['add'],
 		'L_UPDATE' 						=> $LANG['update'],
 		'L_DELETE' 						=> $LANG['delete'],
@@ -452,7 +453,8 @@ else
 		'FIXED_IN'						=> 'checked=checked',
 		'BUG_READ_AUTH'					=> Authorizations::generate_select(BUG_READ_AUTH_BIT, $BUGS_CONFIG['auth']),
 		'BUG_CREATE_AUTH'				=> Authorizations::generate_select(BUG_CREATE_AUTH_BIT, $BUGS_CONFIG['auth']),
-		'BUG_CREATE_ADVANCED_AUTH'		=> Authorizations::generate_select(BUG_CREATE_ADVANCED_AUTH_BIT, $BUGS_CONFIG['auth'])
+		'BUG_CREATE_ADVANCED_AUTH'		=> Authorizations::generate_select(BUG_CREATE_ADVANCED_AUTH_BIT, $BUGS_CONFIG['auth']),
+		'BUG_MODERATE_AUTH'				=> Authorizations::generate_select(BUG_MODERATE_AUTH_BIT, $BUGS_CONFIG['auth'])
 	));
 	
 	foreach ($BUGS_CONFIG['types'] as $key => $type)
@@ -474,13 +476,12 @@ else
 	foreach ($BUGS_CONFIG['versions'] as $key => $version)
 	{
 		$Template->assign_block_vars('versions', array(
-			'ID'		=> $key,
+			'ID'			=> $key,
 			'VERSION'		=> stripslashes($version['name']),
 			'DETECTED_IN'	=> ($version['detected_in'] == true) ? 'checked=checked' : '',
 			'FIXED_IN'		=> ($version['fixed_in'] == true) ? 'checked=checked' : '',
 		));	
 	}
-
 	//Gestion erreur.
 	$get_error = retrieve(GET, 'error', '');
 	switch ($get_error)

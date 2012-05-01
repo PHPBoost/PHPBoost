@@ -38,4 +38,6 @@ define('BUG_READ_AUTH_BIT',		0x01);
 define('BUG_CREATE_AUTH_BIT',	0x02);
 //Advanced authorization bit to create a bug (more options are activated)
 define('BUG_CREATE_ADVANCED_AUTH_BIT',	0x04);
+//Authorization bit to moderate the bugtracker
+define('BUG_MODERATE_AUTH_BIT',	0x08);
 ?>
