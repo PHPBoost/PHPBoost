@@ -37,6 +37,7 @@ $LANG['bugs.notice.no_one'] = 'No one';
 $LANG['bugs.notice.none'] = 'None';
 $LANG['bugs.notice.none_e'] = 'None';
 $LANG['bugs.notice.no_bug'] = 'No bug declared';
+$LANG['bugs.notice.no_bug_fixed'] = 'No bug fixed in this version';
 $LANG['bugs.notice.no_version'] = 'No version';
 $LANG['bugs.notice.no_type'] = 'No type declared';
 $LANG['bugs.notice.no_category'] = 'No category declared';
@@ -110,6 +111,7 @@ $LANG['bugs.labels.fields.version_detected_in'] = 'Display in the list "Detected
 $LANG['bugs.labels.fields.version_fixed_in'] = 'Display in the list "Fixed in version"';
 $LANG['bugs.labels.fields.version_detected'] = 'Detected version';
 $LANG['bugs.labels.fields.version_fixed'] = 'Fixed version';
+
 //Priorities
 $LANG['bugs.priority.none'] = 'None';
 $LANG['bugs.priority.low'] = 'Low';
@@ -179,6 +181,7 @@ $LANG['bugs.config.auth.read'] = 'Permission to display the bugs list';
 $LANG['bugs.config.auth.create'] = 'Permission to post a bug';
 $LANG['bugs.config.auth.create_advanced'] = 'Advanced permission to post a bug';
 $LANG['bugs.config.auth.create_advanced_explain'] = 'Permits to choose the severity and the priority of the bug';
+$LANG['bugs.config.auth.moderate'] = 'Permission to moderate the Bugtracker';
 
 //Errors
 $LANG['bugs.error.require_items_per_page'] = 'The field \"Bugs number per page\" must not be empty';
