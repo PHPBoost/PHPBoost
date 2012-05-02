@@ -1,0 +1,87 @@
+# Rewrite rules #
+Options +FollowSymlinks
+RewriteEngine on
+
+# Core #
+RewriteRule ^user/pm-?([0-9]+)-?([0-9]{0,})-?([0-9]{0,})-?([0-9]{0,})-?([a-z_]{0,})\.php$ /trunk/user/pm.php?pm=$2&id=$3&p=$4&quote=$5 [L,QSA]
+RewriteRule ^admin/config/([\w/-]*)$ /trunk/admin/config/index.php?url=/$1 [L,QSA]
+RewriteRule ^admin/cache/([\w/-]*)$ /trunk/admin/cache/index.php?url=/$1 [L,QSA]
+RewriteRule ^admin/errors/([\w/-]*)$ /trunk/admin/errors/index.php?url=/$1 [L,QSA]
+RewriteRule ^admin/themes/([\w/-]*)$ /trunk/admin/themes/index.php?url=/$1 [L,QSA]
+RewriteRule ^admin/langs/([\w/-]*)$ /trunk/admin/langs/index.php?url=/$1 [L,QSA]
+RewriteRule ^admin/modules/([\w/-]*)$ /trunk/admin/modules/index.php?url=/$1 [L,QSA]
+RewriteRule ^admin/member/([\w/-]*)$ /trunk/admin/member/index.php?url=/$1 [L,QSA]
+RewriteRule ^admin/customize/([\w/-]*(?:\.css)?)$ /trunk/admin/customize/index.php?url=/$1 [L,QSA]
+RewriteRule ^admin/content/([\w/-]*)$ /trunk/admin/content/index.php?url=/$1 [L,QSA]
+RewriteRule ^syndication/([\w/-]*)$ /trunk/syndication/index.php?url=/$1 [L,QSA]
+RewriteRule ^user/([\w/-_]*)$ /trunk/user/index.php?url=/$1 [L,QSA]
+RewriteRule ^install/([\w/-]*)$ /trunk/install/index.php?url=/$1 [L,QSA]
+
+# Modules rules #
+
+# articles #
+RewriteRule ^(.*)articles/articles-([0-9]+)-?([0-9]*)-?([0-9]*)(\+?[^.]*)\.php$ /trunk/articles/articles.php?cat=$2&id=$3&p=$4 [L,QSA]
+
+# contact #
+RewriteRule ^(.*)contact/([^.]+)$ /trunk/contact/index.php?url=/$2 [L,QSA]
+
+# download #
+RewriteRule ^(.*)download/category-([0-9]+)-?([0-9]+)?(\+?[^.]*)\.php$ /trunk/download/download.php?cat=$2&p=$3 [L,QSA]
+RewriteRule ^(.*)download/download-([0-9]+)(\+?[^.]*)\.php$ /trunk/download/download.php?id=$2 [L,QSA]
+RewriteRule ^(.*)download/file-([0-9]+)(\+?[^.]*)\.php$ /trunk/download/count.php?id=$2 [L,QSA]
+
+# faq #
+RewriteRule ^(.*)faq/faq-([0-9]+)(\+?[^.]*)\.php(\?question=([0-9]+))?$ /trunk/faq/faq.php?id=$2&id_question=$4 [L,QSA]
+
+# forum #
+RewriteRule ^(.*)forum/forum-([0-9]+)-?([0-9]*)(\+?[^.]*)\.php$ /trunk/forum/forum.php?id=$2&p=$3 [L,QSA]
+RewriteRule ^(.*)forum/topic-([0-9]+)-?([0-9]*)-?([0-9]*)-?([0-9]*)(\+?[^.]*)\.php$ /trunk/forum/topic.php?id=$2&pt=$3&idm=$4&quote=$5 [L]
+RewriteRule ^(.*)forum/cat-([0-9]+)(\+?[^.]*)\.php$ /trunk/forum/index.php?id=$2 [L,QSA]
+
+# gallery #
+RewriteRule ^(.*)gallery/gallery-([0-9]+)-?([0-9]*)-?([0-9]*)(\+?[^.]*)\.php$ /trunk/gallery/gallery.php?cat=$2&id=$3&p=$4 [L,QSA]
+
+# media #
+RewriteRule ^(.*)media/media-([0-9]+)-?([0-9]*)-?([0-9]*)(\+?[^.]*)\.php$ /trunk/media/media.php?id=$2&cat=$3&p=$4 [L,QSA]
+
+# news #
+RewriteRule ^(.*)news/news-([0-9]+)-?([0-9]*)-?([0-9]*)(\+?[^.]*)\.php$ /trunk/news/news.php?cat=$2&id=$3&p=$4 [L,QSA]
+
+# newsletter #
+RewriteRule ^newsletter/([\w/-]*)$ /trunk/newsletter/index.php?url=/$1 [L,QSA]
+
+# online #
+RewriteRule ^online/([\w/-]*)$ /trunk/online/index.php?url=/$1 [L,QSA]
+
+# pages #
+RewriteRule ^(.*)pages/([a-z0-9-]+)$ /trunk/pages/pages.php?title=$2
+
+# poll #
+RewriteRule ^(.*)poll/poll-([0-9]+)-?([0-9]*)-?([0-9]*)\.php$ /trunk/poll/poll.php?id=$2&r=$3&p=$4 [L,QSA]
+
+# sitemap #
+RewriteRule ^sitemap/([\w/-]*)$ /trunk/sitemap/index.php?url=/$1 [L,QSA]
+
+# stats #
+RewriteRule ^(.*)stats/stats-([a-z]+)\.php$ /trunk/stats/stats.php?$2=1 [L,QSA]
+
+# web #
+RewriteRule ^(.*)web/web-([0-9]+)-?([0-9]*)-?([0-9]*)(\+?[^.]*)\.php$ /trunk/web/web.php?cat=$2&id=$3&p=$4 [L,QSA]
+
+# wiki #
+RewriteRule ^(.*)wiki/([a-z0-9-]+)$ /trunk/wiki/wiki.php?title=$2
+
+# calendar #
+RewriteRule ^(.*)calendar/calendar-([0-9]+)-([0-9]+)-([0-9]+)-?([0-9]*)\.php$ /trunk/calendar/calendar.php?d=$2&m=$3&y=$4&e=$5 [L,QSA]
+
+# Bandwith protection #
+RewriteCond %{HTTP_REFERER} !^$
+RewriteCond %{HTTP_REFERER} !^http://localhost
+ReWriteRule .*upload/.*$ - [F]
+
+# Avoid Hacking Attempt #
+RewriteCond %{HTTP_USER_AGENT} libwww [NC]
+RewriteRule .* - [F,L]
+
+# Error page #
+ErrorDocument 404 /trunk/user/error/404/
