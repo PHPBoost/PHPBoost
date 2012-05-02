@@ -30,7 +30,7 @@ define('PATH_TO_ROOT', '..');
 require_once PATH_TO_ROOT . '/kernel/init.php';
 
 $url_controller_mappers = array(
-	new UrlControllerMapper('UserLoginController', '`^/login(?:/([a-z_]+))?/?([A-Za-z0-9]+)?$`', array('error_type', 'error_value')),
+	new UrlControllerMapper('UserLoginController', '`^/connect(?:/([a-z_]+))?/?([A-Za-z0-9]+)?$`', array('error_type', 'error_value')),
 	new UrlControllerMapper('UserExploreGroupsController', '`^/groups(?:/([0-9]+))?/?$`', array('id')),
 	new UrlControllerMapper('UserRegistrationController', '`^/registration/?$`'),
 	new UrlControllerMapper('UserConfirmRegistrationController', '`^/registration/confirm(?:/([a-z0-9]+))?/?$`', array('key')),
