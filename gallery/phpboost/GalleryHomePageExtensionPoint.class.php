@@ -376,7 +376,7 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 						$notation->set_id_in_module($info_pics['id']);
 						$notation->set_notation_scale($CONFIG_GALLERY['note_max']);
 					}
-	
+
 					if ($thumbnails_before < $nbr_pics_display_before)
 						$end_thumbnails += $nbr_pics_display_before - $thumbnails_before;
 					if ($thumbnails_after < $nbr_pics_display_after)
@@ -470,6 +470,10 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 				));
 	
 	
+				$notation = new Notation();
+				$notation->set_module_name('gallery');
+				$notation->set_notation_scale($CONFIG_GALLERY['note_max']);
+				
 				$is_connected = $User->check_level(User::MEMBER_LEVEL);
 				$j = 0;
 				$result = $this->sql_querier->query_while("SELECT g.id, g.idcat, g.name, g.path, g.timestamp, g.aprob, g.width, g.height, g.user_id, g.views, g.aprob, m.login
@@ -503,13 +507,8 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 						$cat_list .= ($key_cat == $row['idcat']) ? sprintf($option_value, 'selected="selected"') : sprintf($option_value, '');
 		
 					$activ_note = ($CONFIG_GALLERY['activ_note'] == 1 && $is_connected );
-					if ($activ_note) //Affichage notation.
-					{
-						$notation = new Notation();
-						$notation->set_module_name('gallery');
-						$notation->set_id_in_module($row['id']);
-						$notation->set_notation_scale($CONFIG_GALLERY['note_max']);
-					}
+
+					$notation->set_id_in_module($row['id']);
 					
 					$comments_topic->set_id_in_module($row['id']);
 					

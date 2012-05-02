@@ -65,7 +65,7 @@
 		return this.lang[name];
 	},
 	send_request : function(note) {
-		var id = Note.get_id();
+		var id = this.id;
 		var user_connected = this.user_connected;
 		var already_post = this.already_post;
 		var auth_error = this.get_lang('auth_error');
@@ -100,7 +100,7 @@
 	},
 	out_event : function () {
 		if(this.timeout == null)
-			this.timeout = setTimeout('Note.change_picture_status(' + this.get_default_note() + ');', '50');
+			this.timeout = setTimeout('this.change_picture_status(' + this.get_default_note() + ');', '50');
 	},
 	change_picture_status : function (note) {
 		var picture_star;
