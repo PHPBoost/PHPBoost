@@ -140,7 +140,7 @@ class UserUrlBuilder
 	
 	public static function connect($parameters = '')
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/login/' . $parameters);
+		return DispatchManager::get_url(self::$dispatcher, '/connect/' . $parameters);
 	}
 	
 	public static function disconnect()
