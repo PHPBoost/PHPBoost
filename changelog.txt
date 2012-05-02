@@ -106,6 +106,12 @@
 [*] Possibilité de signaler les liens cassés.
 [*] Possibilité d'ajouter le lien d'un fichier contenu dans la section upload
 
+[b]Shoutbox[/b]
+[*] Menu adaptable automatiquement à la largeur du site en positionnement horizontal
+
+[b]Gallerie[/b]
+[*] Possibilité de définir une catégorie principale pour tous les fichiers dans l'ajout d'image par FTP
+
 [b]Compatibilité des thèmes 3.0 :[/b]
 [*] Ajout d'une variable js THEME dans header.tpl
 - Modification de la classe xmlhttprequest_preview (border-radius en plus).

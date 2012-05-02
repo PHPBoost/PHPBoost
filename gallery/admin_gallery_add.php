@@ -204,7 +204,8 @@ else
 
 			$Template->put_all(array(
 				'NBR_PICS' => $nbr_pics,
-				'COLUMN_WIDTH_PICS' => $column_width_pics
+				'COLUMN_WIDTH_PICS' => $column_width_pics,
+				'CATEGORIES' => $cat_list_unselect
 			));
 
 			$j = 0;
