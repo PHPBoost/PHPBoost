@@ -102,6 +102,10 @@ class Theme
     
     public function check_auth()
     {
+    	if ($this->theme_id == UserAccountsConfig::load()->get_default_theme())
+    	{
+    		return true;
+    	}
     	return AppContext::get_current_user()->check_auth($this->authorizations, self::ACCES_THEME);
     }
 }
