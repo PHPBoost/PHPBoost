@@ -21,10 +21,8 @@
 				<br />
 				<input size="30" type="text" class="text" name="${escape(ID)}" id="${escape(ID)}" onblur="${escape(ONBLUR)}" # IF C_DISABLED # disabled="disabled" # ENDIF #/>
 				<a href="javascript:refresh_img_{CAPTCHA_INSTANCE}()"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/refresh.png" alt="" class="valign_middle" /></a>
-				<div>
-					<span id="onblurContainerResponse{ID}"></span>
-					<span style="font-weight:bold;display:none" id="onblurMesssageResponse{ID}"></span>
-			 	</div>
+				<span id="onblurContainerResponse{ID}"></span>
+				<span style="font-weight:bold;display:none" id="onblurMesssageResponse{ID}"></span>
 			</dd>
 		</dl>
 		# ENDIF #
