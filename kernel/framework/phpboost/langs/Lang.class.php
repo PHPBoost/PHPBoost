@@ -85,6 +85,10 @@ class Lang
     
     public function check_auth()
     {
+    	if ($this->id == UserAccountsConfig::load()->get_default_lang())
+    	{
+    		return true;
+    	}
     	return AppContext::get_current_user()->check_auth($this->authorizations, self::ACCES_LANG);
     }
 }
