@@ -144,7 +144,22 @@ class ConfigManager
 
 		CacheManager::save($data, $module_name, $entry_name);
 	}
+	
+	/**
+	 * Delete in the data base (DB_TABLE_CONFIGS table) the data.
+	 * @param string $module_name Name of the module owning this entry
+	 * @param string $entry_name The name of the entry if the module uses several entries
+	 */
+	public static function delete($module_name, $entry_name = '')
+	{
+		$name = self::compute_entry_name($module_name, $entry_name);
 
+		try {
+			PersistenceContext::get_querier()->delete(DB_TABLE_CONFIGS, 'WHERE name=:name', array('name' => $name));
+		} catch (MySQLQuerierException $e) {
+		}
+	}
+	
 	private static function save_in_db($name, ConfigData $data)
 	{
 		$serialized_data = serialize($data);
