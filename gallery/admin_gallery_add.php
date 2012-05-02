@@ -93,6 +93,7 @@ elseif (!empty($_POST['valid']) && !empty($nbr_pics_post)) //Ajout massif d'imag
 			}
 			else
 				$Gallery->Add_pics($cat, $name, $uniq, $User->get_attribute('user_id'));
+	
 		}
 	}
 
@@ -259,7 +260,7 @@ else
 					'ID' => $j,
 					'THUMNAILS' => '<img src="pics/thumbnails/' .  $pics . '" alt="" />',
 					'NAME' => $pics,
-					'Upload::UNIQ_NAME' => $pics,
+					'UNIQ_NAME' => $pics,
 					'TR_START' => $tr_start,
 					'TR_END' => $tr_end,
 					'CATEGORIES' => $cat_list_unselect

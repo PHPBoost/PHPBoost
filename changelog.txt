@@ -72,13 +72,14 @@
 
 =================================== Modules =====================================
 [b]BugTracker :[/b]
-- [color=red]Nouveauté:[/color] Nouveau module de gestion des bugs.
+[*] [color=red]Nouveauté:[/color] Nouveau module de gestion des bugs.
 
 [b]Galerie :[/b]
 - Voir les images plus vues/mieux notées, affichage sur l'ensemble de la galerie et non sur une catégorie.
 - Possibilité de télécharger l'image.
 [*] Tri des images conservé dans la pagination.
 [*] Gestion des flux RSS et Atom
+[*] Possibilité de définir une catégorie principale pour tous les fichiers dans l'ajout d'image par FTP
 
 [b]News :[/b]
 [*] Refonte complète du module, collaboration des utilisateurs possible.
@@ -108,9 +109,6 @@
 
 [b]Shoutbox[/b]
 [*] Menu adaptable automatiquement à la largeur du site en positionnement horizontal
-
-[b]Gallerie[/b]
-[*] Possibilité de définir une catégorie principale pour tous les fichiers dans l'ajout d'image par FTP
 
 [b]Compatibilité des thèmes 3.0 :[/b]
 [*] Ajout d'une variable js THEME dans header.tpl
