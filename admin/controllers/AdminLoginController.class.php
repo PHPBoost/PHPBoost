@@ -33,7 +33,11 @@ class AdminLoginController extends AbstractController
 		$lang = LangLoader::get_class(__CLASS__);
 		$view->add_lang($lang);
 
-		$flood = $request->get_getint('flood', 5); 
+		$view->put_all(array(
+			'SITE_NAME' => GeneralConfig::load()->get_site_name()
+		));
+			
+		$flood = $request->get_getint('flood', 0); 
 		if ($flood > 0)
 		{
 			$view->put_all(array(

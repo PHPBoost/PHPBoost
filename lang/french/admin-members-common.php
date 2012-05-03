@@ -42,7 +42,7 @@ $lang['members.rules'] = 'Réglement';
 //Configuration
 $lang['members.config.registration-activation'] = 'Activer l\'inscription des membres';
 $lang['members.config.type-activation'] = 'Mode d\'activation du compte membre';
-$lang['members.config.unactivated-accounts-timeout'] = 'Durée après laquelle les membres non activés sont effacés';
+$lang['members.config.unactivated-accounts-timeout'] = 'Nombre de jours après lequel les membres non activés sont effacés';
 $lang['members.config.unactivated-accounts-timeout-explain'] = 'Laisser vide pour ignorer cette option (Non pris en compte si validation par administrateur)';
 $lang['members.config.captcha-activation'] = 'Code de vérification visuel';
 $lang['members.config.captcha-difficulty'] = 'Difficulté du code de vérification';

@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{L_XML_LANGUAGE}" >
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{@xml_lang}" >
 	<head>
-		<title>${escape(SITE_NAME)} :: ${escape(TITLE)}</title>
+		<title>${escape(SITE_NAME)} :: {@connect}</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 		<meta http-equiv="Content-Language" content="{L_XML_LANGUAGE}" />
 		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/{THEME}/theme/design.css" type="text/css" media="screen" />
@@ -28,11 +28,11 @@
 		<!--
 		function check_connect(){
 			if(document.getElementById('login').value == "") {
-				alert('{L_REQUIRE_PSEUDO}');
+				alert('{@require_pseudo}');
 				return false;
 			}
 			if(document.getElementById('password').value == "") {
-				alert('{L_REQUIRE_PASSWORD}');
+				alert('{@require_password}');
 				return false;
 			}
 			return true;
@@ -43,29 +43,28 @@
 		
 		<form action="{PATH_TO_ROOT}/admin/admin_index.php?token={TOKEN}" method="post" onsubmit="return check_connect();" class="fieldset_content" style="width:550px;margin:auto;margin-top:10%">
 			<fieldset>
-				<legend>{L_ADMIN}</legend>
+				<legend>{@admin}</legend>
 				<dl>
-					<dt><label for="login">{L_PSEUDO}</label></dt>
+					<dt><label for="login">{@pseudo}</label></dt>
 					<dd><label><input size="15" type="text" class="text" id="login" name="login" maxlength="25" /></label></dd>
 				</dl>
 				<dl>
-					<dt><label for="password">{L_PASSWORD}</label></dt>
+					<dt><label for="password">{@password}</label></dt>
 					<dd><label><input size="15" type="password" id="password" name="password" class="text" maxlength="30" /></label></dd>
 				</dl>
 				# IF C_UNLOCK #
 				<dl>
-					<dt><label for="unlock">{L_UNLOCK_ADMIN_PANEL}</label></dt>
+					<dt><label for="unlock">{@unlock_admin_panel}</label></dt>
 					<dd><label><input size="15" type="password" name="unlock" id="unlock" class="text" maxlength="30" /></label></dd>
 				</dl>
 				# ENDIF #
 				<dl>
-					<dt><label for="auto">{L_AUTOCONNECT}</label></dt>
+					<dt><label for="auto">{@autoconnect}</label></dt>
 					<dd><label><input type="checkbox" checked="checked" name="auto" id="auto" /></label></dd>
 				</dl>
 			</fieldset>			
 			<fieldset class="fieldset_submit">
-				<legend>{L_DELETE}</legend>
-				<input type="submit" name="connect" value="{L_CONNECT}" class="submit" />		
+				<input type="submit" name="connect" value="{@connect}" class="submit" />		
 			</fieldset>	
 		</form>
 	</body>
