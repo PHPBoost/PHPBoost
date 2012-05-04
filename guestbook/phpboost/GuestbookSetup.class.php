@@ -43,11 +43,17 @@ class GuestbookSetup extends DefaultModuleSetup
 	public function uninstall()
 	{
 		$this->drop_tables();
+		$this->delete_configuration();
 	}
 
 	private function drop_tables()
 	{
 		PersistenceContext::get_dbms_utils()->drop(array(self::$guestbook_table));
+	}
+	
+	private function delete_configuration()
+	{
+		ConfigManager::delete('guestbook', 'config');
 	}
 
 	private function create_tables()

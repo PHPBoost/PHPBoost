@@ -246,7 +246,7 @@ class ShoutboxHomePageExtensionPoint implements HomePageExtensionPoint
 			
 			$tpl->assign_block_vars('shoutbox_list',array(
 				'ID' => $row['id'],
-				'CONTENTS' => ucfirst(FormatingHelper::second_parse($row['contents'])),
+				'CONTENTS' => stripslashes(ucfirst(FormatingHelper::second_parse($row['contents']))),
 				'DATE' => $LANG['on'] . ': ' . gmdate_format('date_format', $row['timestamp']),
 				'CLASS_COLOR' => ($j%2 == 0) ? '' : 2,
 				'USER_ONLINE' => '<img src="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/' . $user_online . '.png" alt="" class="valign_middle" />',

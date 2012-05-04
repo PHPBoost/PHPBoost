@@ -51,11 +51,17 @@ class NewsletterSetup extends DefaultModuleSetup
 	{
 		$this->drop_tables();
 		$this->delete_field_member();
+		$this->delete_configuration();
 	}
 
 	private function drop_tables()
 	{
 		PersistenceContext::get_dbms_utils()->drop(array(self::$newsletter_table_subscribers, self::$newsletter_table_streams, self::$newsletter_table_archives, self::$newsletter_table_subscribtions));
+	}
+	
+	private function delete_configuration()
+	{
+		ConfigManager::delete('newsletter', 'config');
 	}
 
 	private function create_tables()
