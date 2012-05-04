@@ -43,11 +43,17 @@ class CalendarSetup extends DefaultModuleSetup
 	public function uninstall()
 	{
 		$this->drop_table();
+		$this->delete_configuration();
 	}
 
 	private function drop_table()
 	{
 		PersistenceContext::get_dbms_utils()->drop(self::$calendar_table);
+	}
+	
+	private function delete_configuration()
+	{
+		ConfigManager::delete('calendar', 'config');
 	}
 
 	private function create_table()
