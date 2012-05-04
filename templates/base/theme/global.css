@@ -94,6 +94,10 @@ a:hover {
     font-family:Verdana, Arial, Helvetica, sans-serif;
 }
 
+.img_link, .img_link:hover{
+	text-decoration:none;
+}
+
 
 /* Liens petite taille */
 a.small_link {
