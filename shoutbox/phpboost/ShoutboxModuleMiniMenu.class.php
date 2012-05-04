@@ -131,8 +131,8 @@ class ShoutboxModuleMiniMenu extends ModuleMiniMenu
 	    		$row['user_id'] = (int)$row['user_id'];
 	    		if ($User->check_auth($config_shoutbox->get_authorization(), ShoutboxConfig::AUTHORIZATION_MODERATION) || ($row['user_id'] === $User->get_attribute('user_id') && $User->get_attribute('user_id') !== -1))
 	    			$del_message = '<script type="text/javascript"><!--
-	    			document.write(\'<a href="javascript:Confirm_del_shout(' . $row['id'] . ');" title="' . $LANG['delete'] . '"><img src="' . TPL_PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/delete_mini.png" alt="" /></a>\');
-	    			--></script><ins><noscript><p><a href="' . TPL_PATH_TO_ROOT . '/shoutbox/shoutbox' . url('.php?del=true&amp;id=' . $row['id']) . '"><img src="' . TPL_PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/delete_mini.png" alt="" /></a></p></noscript></ins>';
+	    			document.write(\'<a href="javascript:Confirm_del_shout(' . $row['id'] . ');" title="' . $LANG['delete'] . '"><img src="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/delete_mini.png" alt="" /></a>\');
+	    			--></script><ins><noscript><p><a href="' . PATH_TO_ROOT . '/shoutbox/shoutbox' . url('.php?del=true&amp;id=' . $row['id']) . '"><img src="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/delete_mini.png" alt="" /></a></p></noscript></ins>';
 	    		else
 	    			$del_message = '';
 	
