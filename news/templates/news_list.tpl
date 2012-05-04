@@ -17,7 +17,7 @@
 			&nbsp;
 			# IF C_WRITER #
 			<a href="news.php?user=1" title="{L_WRITER}">
-				<img src="news_mini.png" class="valign_middle" alt="{L_WRITER}" />
+				<img src="{PATH_TO_ROOT}/news/news_mini.png" class="valign_middle" alt="{L_WRITER}" />
 			</a>
 			# ENDIF #
 		</div>
