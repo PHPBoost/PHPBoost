@@ -7,22 +7,23 @@
         -->
         </script>
 
-		<div class="news_container">
-			<div class="news_top_l"></div>
-			<div class="news_top_r"></div>
-            <div class="news_top">
-               	<div style="float:left">
-					<a href="{U_SYNDICATION}" title="{L_SYNDICATION}">
-						<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/rss.png" alt="{L_SYNDICATION}" />
+		<div class="module_position">
+			<div class="module_top_l"></div>
+			<div class="module_top_r"></div>
+			<div class="module_top">
+               	<div class="module_top_title">
+					<a href="{U_SYNDICATION}" title="{L_SYNDICATION}" class="img_link">
+						<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/rss.png" alt="{L_SYNDICATION}"/>
 					</a>
-               		<a href="{U_LINK}" class="big_link">{TITLE}</a>
+					{TITLE}
                	</div>
-               	<div style="float:right">
+               	<div class="module_top_com">
 					# IF U_COM #
-					<img src="{PATH_TO_ROOT}/news/templates/images/comments.png" alt="" class="valign_middle" /> {U_COM}
+						<img src="{PATH_TO_ROOT}/templates/{THEME}/images/com_mini.png" alt="" class="valign_middle" />
+						{U_COM}
 					# ENDIF #
 					# IF C_EDIT #
-					<a href="management.php?edit={ID}" title="{L_EDIT}">
+					<a href="management.php?edit={ID}" title="{L_EDIT}" class="img_link">
 						<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="{L_EDIT}" />
 					</a>
 					# ENDIF #
@@ -34,7 +35,7 @@
 				</div>
 				<div class="spacer"></div>
            	</div>
-           	<div class="news_content">
+           	<div class="module_contents">
                	# IF C_IMG #<img src="{IMG}" alt="{IMG_DESC}" title="{IMG_DESC}" class="img_right" /># ENDIF #
 				# IF C_ICON #<a href="{U_CAT}"><img class="valign_middle" src="{ICON}" alt="" /></a># ENDIF #
 				{CONTENTS}
@@ -48,9 +49,9 @@
 				# ENDIF #
 				<div class="spacer"></div>
            	</div>
-			<div class="news_bottom_l"></div>
-           	<div class="news_bottom_r"></div>
-           	<div class="news_bottom">
+			<div class="module_bottom_l"></div>
+           	<div class="module_bottom_r"></div>
+           	<div class="module_bottom">
                	<div style="float:left"># IF PSEUDO #<a class="small_link{LEVEL}" href="{U_USER_ID}">{PSEUDO}</a>, # ENDIF # {DATE}</div>
 				<div class="spacer">
            	</div>

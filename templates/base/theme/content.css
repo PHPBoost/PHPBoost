@@ -592,8 +592,7 @@ a.msg_link_pseudo:hover {
 
 .module_bottom {
     height:22px;
-    padding-top:2px;
-    padding-left:6px;
+    padding:2px 0 15px 6px;
     font-size:10px;
 }
 
