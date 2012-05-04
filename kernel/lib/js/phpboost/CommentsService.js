@@ -55,7 +55,10 @@ var CommentsService = Class.create({
 		new Ajax.Request(PATH_TO_ROOT + '/kernel/framework/ajax/dispatcher.php?url=/comments/lock/', {
 			  method: 'post',
 			  parameters: {module_id: module_id, id_in_module: id_in_module},
-			  onComplete: function(response) {
+			  onComplete: function(response) {				  
+				  if (response.responseJSON.success) {
+					  this.change_picture_lock(true);
+				  }
 				  alert(response.responseJSON.message);
 			  }
 		});
@@ -65,8 +68,19 @@ var CommentsService = Class.create({
 			  method: 'post',
 			  parameters: {module_id: module_id, id_in_module: id_in_module},
 			  onComplete: function(response) {
+				  if (response.responseJSON.success) {
+					  this.change_picture_lock(false);
+				  }
 				  alert(response.responseJSON.message);
 			  }
 		});
+	},
+	change_picture_lock : function (locked) {
+		if (locked) {
+			$('locked_picture').src = PATH_TO_ROOT + '/templates/' + THEME + '/images/' + LANG + '/lock.png';
+		}
+		else {
+			$('locked_picture').src = PATH_TO_ROOT + '/templates/' + THEME + '/images/' + LANG + '/unlock.png';
+		}
 	}
 });

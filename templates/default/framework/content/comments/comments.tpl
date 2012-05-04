@@ -3,7 +3,7 @@
 <!--
 	var CommentsService = new CommentsService();
 	Event.observe(window, 'load', function() {
-		Event.observe($('refresh_comments'), 'click', function() {
+		$('refresh_comments').observe('click', function() {
 			CommentsService.refresh_comments_list(${escapejs(MODULE_ID)}, ${escapejs(ID_IN_MODULE)});
 		});
 	});
@@ -17,6 +17,12 @@
 # ENDIF #
 
 # INCLUDE KEEP_MESSAGE #
+
+# IF C_IS_LOCKED #
+<img id="locked_picture" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/unlock.png">
+# ELSE #
+<img id="locked_picture" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/lock.png">
+# ENDIF #
 
 <div id="comments_list">
 # INCLUDE COMMENTS_LIST #

@@ -174,24 +174,27 @@ class CommentsService
 		if ($authorizations->is_authorized_read() && $authorizations->is_authorized_access_module())
 		{
 			$comments = self::get_comments($module_id, $id_in_module, $number_comments_display, $display_from_number_comments);
-			foreach ($comments as $id_comment => $comment)
+			foreach ($comments as $id => $comment)
 			{
-				$edit_comment_url = PATH_TO_ROOT . $comment['path'] . '&edit_comment=' . $id_comment . '#comments_message';
-				$delete_comment_url = PATH_TO_ROOT . $comment['path'] . '&delete_comment=' . $id_comment . '#comments_list';
-				
-				$template->assign_block_vars('comments_list', array(
+				$path = PATH_TO_ROOT . $comment['path'];
+				$template->assign_block_vars('comments', array(
+					'U_EDIT' => CommentsUrlBuilder::edit($path, $id)->absolute(),
+					'U_DELETE' => CommentsUrlBuilder::delete($path, $id)->absolute(),
 					'MESSAGE' => FormatingHelper::second_parse($comment['message']),
-					'COMMENT_ID' => $id_comment,
-					'EDIT_COMMENT' => $edit_comment_url,
-					'DELETE_COMMENT' => $delete_comment_url
+					'COMMENT_ID' => $id
 				));
 			}
 		}
 		
 		$template->put_all(array(
+			'C_MODERATOR' => self::is_authorized_edit_or_delete_comment($authorizations, $id),
+		
+			//TODO
+			'C_IS_LOCKED' => false,
+			//TODO
+			
 			'MODULE_ID' => $module_id,
-			'ID_IN_MODULE' => $id_in_module,
-			'C_IS_MODERATOR' => $authorizations->is_authorized_moderation()
+			'ID_IN_MODULE' => $id_in_module
 		));
 
 		return $template;
@@ -211,8 +214,7 @@ class CommentsService
 	
 	private static function verificate_authorized_edit_or_delete_comment($authorizations, $comment_id)
 	{
-		$user_id_posted_comment = CommentsManager::get_user_id_posted_comment($comment_id);
-		$is_authorized = ($authorizations->is_authorized_moderation() || $user_id_posted_comment == self::$user->get_attribute('user_id')) && $authorizations->is_authorized_access_module();
+		$is_authorized = self::is_authorized_edit_or_delete_comment($authorizations, $comment_id);
 		
 		if (!CommentsManager::comment_exists($comment_id))
 		{
@@ -224,6 +226,12 @@ class CommentsService
 			$error_controller = PHPBoostErrors::user_not_authorized();
 			DispatchManager::redirect($error_controller);
 		}
+	}
+	
+	private static function is_authorized_edit_or_delete_comment($authorizations, $comment_id)
+	{
+		$user_id_posted_comment = CommentsManager::get_user_id_posted_comment($comment_id);
+		return ($authorizations->is_authorized_moderation() || $user_id_posted_comment == self::$user->get_attribute('user_id')) && $authorizations->is_authorized_access_module();
 	}
 }
 ?>
