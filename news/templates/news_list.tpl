@@ -8,9 +8,9 @@
 		</script>
 
 		# IF C_ADD_OR_WRITER #
-		<div style="float:right" style="margin:0 10px 15px;">
+		<div style="float:right;margin:0 10px 15px;margin-top:-25px;">
 			# IF C_ADD #
-			<a href="{U_ADD}" title="{L_ADD}">
+			<a href="{U_ADD}" title="{L_ADD}" class="img_link">
 				<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/add.png" class="valign_middle" alt="{L_ADD}" />
 			</a>
 			# ENDIF #
@@ -25,19 +25,19 @@
 		# ENDIF #
 
 		# IF C_EDITO #
-		<div class="news_container edito">
-			<div class="news_top_l"></div>
-			<div class="news_top_r"></div>
-			<div class="news_top">
-				<div style="float:left">
-					<a href="{U_SYNDICATION}" title="{L_SYNDICATION}">
+		<div class="module_position edito">
+			<div class="module_top_l"></div>
+			<div class="module_top_r"></div>
+			<div class="module_top">
+        		<div class="module_top_title">
+					<a href="{U_SYNDICATION}" title="{L_SYNDICATION}" class="img_link">
 						<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/rss.png" alt="{L_SYNDICATION}" />
 					</a>
-					<h3 class="title">{EDITO_NAME}</h3>
+					{EDITO_NAME}
 				</div>
-				<div style="float:right">
+				<div class="module_top_com">
 					# IF C_ADMIN #
-					<a href="{U_ADMIN}" title="{L_ADMIN}">
+					<a href="{U_ADMIN}" title="{L_ADMIN}" class="img_link">
 						<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="{L_ADMIN}" />
 					</a>
 					# ENDIF #
@@ -45,70 +45,66 @@
 				<div class="spacer"></div>
 			</div>
 			# IF EDITO_CONTENTS #
-			<div class="news_content">
+			<div class="module_contents">
 				{EDITO_CONTENTS}
 			</div>
 			# ENDIF #
-			<div class="news_bottom_l"></div>
-			<div class="news_bottom_r"></div>
-			<div class="news_bottom"></div>
+			<div class="module_bottom_l"></div>
+           	<div class="module_bottom_r"></div>
+           	<div class="module_bottom"></div>
 		</div>
 		# ENDIF #
 
 		# IF C_NEWS_NO_AVAILABLE #
-		<div class="news_container">
-			<div class="news_top_l"></div>
-			<div class="news_top_r"></div>
-			<div class="news_top">
-				<div style="float:left">
-					<a href="{U_SYNDICATION}" title="{L_SYNDICATION}">
+		<div class="module_position">
+			<div class="module_top_l"></div>
+			<div class="module_top_r"></div>
+			<div class="module_top">
+               	<div class="module_top_title">
+					<a href="{U_SYNDICATION}" title="{L_SYNDICATION}" class="img_link">
 						<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/rss.png" alt="{L_SYNDICATION}" />
 					</a>
-					<h3 class="title">
-						{L_LAST_NEWS}
-						# IF C_CAT # : {EDITO_NAME}# ENDIF #
-					</h3>
+					{L_LAST_NEWS}
+					# IF C_CAT # : {EDITO_NAME}# ENDIF #
 				</div>
-				<div style="float:right">
+				<div class="module_top_com">
 					# IF C_ADMIN #
-					<a href="{U_ADMIN}" title="{L_ADMIN}">
+					<a href="{U_ADMIN}" title="{L_ADMIN}" class="img_link">
 						<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="{L_ADMIN}" />
 					</a>
 					# ENDIF #
 				</div>
 				<div class="spacer"></div>
 			</div>
-			<div class="news_content" style="text-align:center;">
+			<div class="module_contents" style="text-align:center;">
 				{L_NO_NEWS_AVAILABLE}
 			</div>
-			<div class="news_bottom_l"></div>
-			<div class="news_bottom_r"></div>
-			<div class="news_bottom"></div>
+			<div class="module_bottom_l"></div>
+           	<div class="module_bottom_r"></div>
+           	<div class="module_bottom"></div>
 		</div>
 		# ELSE #
-		<div class="news_container">
-			<div class="news_top_l"></div>
-			<div class="news_top_r"></div>
-			<div class="news_top">
-				<div style="float:left">
-					<a href="{U_SYNDICATION}" title="{L_SYNDICATION}">
+		<div class="module_position">
+			<div class="module_top_l"></div>
+			<div class="module_top_r"></div>
+			<div class="module_top">
+               	<div class="module_top_title">
+					<a href="{U_SYNDICATION}" title="{L_SYNDICATION}" class="img_link">
 						<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/rss.png" alt="{L_SYNDICATION}" />
 					</a>
-					<h3 class="title">
-						{L_LAST_NEWS}
-						# IF C_CAT # : {EDITO_NAME}# ENDIF #
-					</h3>
+					{L_LAST_NEWS}
+					# IF C_CAT # : {EDITO_NAME}# ENDIF #
 				</div>
-				<div style="float:right">
+				<div class="module_top_com">
 					# IF C_ADMIN #
-					<a href="{U_ADMIN}" title="{L_ADMIN}">
+					<a href="{U_ADMIN}" title="{L_ADMIN}" class="img_link">
 						<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="{L_ADMIN}" />
 					</a>
 					# ENDIF #
 				</div>
 				<div class="spacer"></div>
 			</div>
-			<div class="news_content">
+			<div class="module_contents">
 				# START list #
 				# IF list.C_NEWS_ROW #<div class="spacer"></div># ENDIF #
 				# IF C_NEWS_LINK_COLUMN #<div style="float:left;width:{COLUMN_WIDTH}%"># ELSE #<div># ENDIF #
@@ -126,8 +122,8 @@
 				<div class="spacer"></div>
 				# IF PAGINATION #<div class="text_center">{PAGINATION}</div># ENDIF #
 			</div>
-			<div class="news_bottom_l"></div>
-			<div class="news_bottom_r"></div>
-			<div class="news_bottom"></div>
+			<div class="module_bottom_l"></div>
+           	<div class="module_bottom_r"></div>
+           	<div class="module_bottom"></div>
 		</div>
 		# ENDIF #
