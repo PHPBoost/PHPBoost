@@ -30,6 +30,7 @@
  ####################################################
 
 $lang = array(
+	'configuration' => 'Configuration',
 	//Mail config
 	'mail-config' => 'Mail configuration',
 	'mail-config.general_mail_config' => 'General mail configuration',

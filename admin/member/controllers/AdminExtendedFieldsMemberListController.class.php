@@ -58,8 +58,6 @@ class AdminExtendedFieldsMemberListController extends AdminController
 			'L_REQUIRED' => $this->lang['field.required'],
 			'L_DISPLAY' => LangLoader::get_message('display', 'main'),
 			'L_ALERT_DELETE_FIELD' => $this->lang['field.delete_field'],
-			'L_AUTH_READ_PROFILE' => $this->lang['field.read_authorizations'],
-			'L_AUTH_READ_EDIT_AND_ADD' => $this->lang['field.actions_authorizations'],
 			'L_VALID' => LangLoader::get_message('update', 'main')
 		));
 
