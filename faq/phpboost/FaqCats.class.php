@@ -222,5 +222,4 @@ class FaqCats extends CategoriesManager
 		return ;
 	}
 }
-
 ?>

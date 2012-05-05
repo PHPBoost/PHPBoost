@@ -36,7 +36,7 @@ class NewsCats extends CategoriesManager
 		if (!isset($NEWS_CAT))
 			$Cache->load('news');
 
-		parent::CategoriesManager('news_cat', 'news', $NEWS_CAT);
+		parent::__construct('news_cat', 'news', $NEWS_CAT);
 	}
 
 	//Method which removes all subcategories and their content
@@ -176,7 +176,5 @@ class NewsCats extends CategoriesManager
 		else
 			return false;
 	}
-
 }
-
 ?>
