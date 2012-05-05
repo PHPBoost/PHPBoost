@@ -77,6 +77,8 @@ $lang['groups'] = 'Groups';
 $lang['groups.select'] = 'Group select';
 
 //Other
+$lang['caution'] = 'Caution';
+$lang['readonly'] = 'Read only';
 $lang['banned'] = 'Banned';
 $lang['connect'] = 'Login';
 
