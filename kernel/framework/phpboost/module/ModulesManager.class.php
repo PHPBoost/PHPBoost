@@ -263,9 +263,7 @@ class ModulesManager
 			//Suppression du fichier cache
 			$Cache->delete_file($module_id);
 
-			$notation = new Notation();
-			$notation->set_module_name($module_id);
-			NotationService::delete_notes_module($notation);
+			NotationService::delete_notes_module($module_id);
 
 			CommentsService::delete_comments_module($module_id);
 

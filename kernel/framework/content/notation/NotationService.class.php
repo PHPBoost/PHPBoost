@@ -164,25 +164,29 @@ class NotationService
 	}
 	
 	/*
-	 * This function required object Notation containing the module_name and id_in_module.
+	 * @desc This fonction delete all notes by id module and id in module element
+	 * @param string $module_name 
+	 * @param string $id_in_module
 	 */
-	public static function delete_notes_id_in_module(Notation $notation)
+	public static function delete_notes_id_in_module($module_name, $id_in_module)
 	{
 		try {
-			self::delete_average_notes_by_id_in_module($notation);
-			self::delete_notes_by_id_in_module($notation);
+			self::delete_average_notes_by_id_in_module($module_name, $id_in_module);
+			self::delete_notes_by_id_in_module($module_name, $id_in_module);
 		} catch (Exception $e) {
 		}
 	}
 	
 	/*
-	 * This function required object Notation containing the module_name.
+	 * @desc This fonction delete all notes by module
+	 * @param string $module_name 
+	 * @param string $id_in_module
 	 */
-	public static function delete_notes_module(Notation $notation)
+	public static function delete_notes_module($module_name)
 	{
 		try {
-			self::delete_all_notes_by_module($notation);
-			self::delete_all_average_notes_by_module($notation);
+			self::delete_all_notes_by_module($module_name);
+			self::delete_all_average_notes_by_module($module_name);
 		} catch (Exception $e) {
 		}
 	}
@@ -321,24 +325,24 @@ class NotationService
 		return self::$db_querier->count(DB_TABLE_NOTE, "WHERE user_id = '" . $notation->get_user_id() . "' AND module_name = '" . $notation->get_module_name() . "' AND id_in_module = '". $notation->get_id_in_module() ."' ") > 0 ? true : false;
 	}
 	
-	private static function delete_average_notes_by_id_in_module(Notation $notation)
+	private static function delete_average_notes_by_id_in_module($module_name, $id_in_module)
 	{
-		self::$db_querier->inject("DELETE FROM " . DB_TABLE_AVERAGE_NOTES . " WHERE module_name = '" . $notation->get_module_name() . "' AND id_in_module = '". $notation->get_id_in_module() ."' ");
+		self::$db_querier->inject("DELETE FROM " . DB_TABLE_AVERAGE_NOTES . " WHERE module_name = '" . $module_name . "' AND id_in_module = '". $id_in_module ."' ");
 	}
 	
-	private static function delete_notes_by_id_in_module(Notation $notation)
+	private static function delete_notes_by_id_in_module($module_name, $id_in_module)
 	{
-		self::$db_querier->inject("DELETE FROM " . DB_TABLE_NOTE . " WHERE module_name = '" . $notation->get_module_name() . "' AND id_in_module = '". $notation->get_id_in_module() ."' ");
+		self::$db_querier->inject("DELETE FROM " . DB_TABLE_NOTE . " WHERE module_name = '" . $module_name . "' AND id_in_module = '". $id_in_module ."' ");
 	}
 	
-	private static function delete_all_average_notes_by_module(Notation $notation)
+	private static function delete_all_average_notes_by_module($module_name)
 	{
-		self::$db_querier->inject("DELETE FROM " . DB_TABLE_AVERAGE_NOTES . " WHERE module_name = '" . $notation->get_module_name() . "'");
+		self::$db_querier->inject("DELETE FROM " . DB_TABLE_AVERAGE_NOTES . " WHERE module_name = '" . $module_name . "'");
 	}
 	
-	private static function delete_all_notes_by_module(Notation $notation)
+	private static function delete_all_notes_by_module($module_name)
 	{
-		self::$db_querier->inject("DELETE FROM " . DB_TABLE_NOTE . " WHERE module_name = '" . $notation->get_module_name() . "'");
+		self::$db_querier->inject("DELETE FROM " . DB_TABLE_NOTE . " WHERE module_name = '" . $module_name . "'");
 	}
 }
 ?>

@@ -92,10 +92,7 @@ elseif ($delete > 0)
 
 	$Sql->query_inject("DELETE FROM " . PREFIX . "media WHERE id = '" . $delete . "'", __LINE__, __FILE__);
 
-	$notation = new Notation();
-	$notation->set_module_name('media');
-	$notation->set_id_in_module($delete);
-	NotationService::delete_notes_id_in_module($notation);
+	NotationService::delete_notes_id_in_module('media', $delete);
 	
 	CommentsService::delete_comments_topic_module('media', $delete);
 	

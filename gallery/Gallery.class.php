@@ -315,16 +315,10 @@ class Gallery
 				
 		$file = new File('pics/thumbnails/' . $info_pics['path']);
 		$file->delete();
+
+		NotationService::delete_notes_id_in_module('gallery', $id_pics);
 		
-		$notation = new Notation();
-		$notation->set_module_name('gallery');
-		$notation->set_id_in_module($id_pics);
-		NotationService::delete_notes_id_in_module($notation);
-		
-		$comments_topic = new CommentsTopic();
-		$comments_topic->set_module_id('gallery');
-		$comments_topic->set_id_in_module($id_pics);
-		CommentsService::delete_comments_id_in_module($comments_topic);
+		CommentsService::delete_comments_topic_module('gallery', $id_pics);
 	}
 	
 	//Renomme une image.
