@@ -35,7 +35,7 @@ class ForumSearchable extends AbstractSearchableExtensionPoint
 		parent::__construct(true, true);
 	}
 	
-	public function get_search_form($args=null)
+	public function get_search_form($args)
 	/**
 	 *  Renvoie le formulaire de recherche du forum
 	 */
