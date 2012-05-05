@@ -71,6 +71,8 @@ $lang['field.possible-values-explain'] = 'Separate each value with |';
 $lang['field.default-values'] = 'Default values';
 $lang['field.default-values-explain'] = 'Separate each value with |';
 $lang['field.default-possible-values'] = 'Yes|No';
+$lang['field.read_authorizations'] = 'Read permissions field in the profile';
+$lang['field.actions_authorizations'] = 'Read permissions for the field in creating or editing a profile';
 
 // Regex
 $lang['regex.figures'] = 'Numbers';
