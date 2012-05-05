@@ -29,105 +29,105 @@
  #                     English                      #
  ####################################################
 
-$lang['user'] = 'Utilisateur';
-$lang['users'] = 'Utilisateurs';
-$lang['profile'] = 'Profil';
-$lang['profile.edit'] = 'Edition du profil';
-$lang['messages'] = 'Messages de l\'utilisateur';
-$lang['maintain'] = 'Maintenance';
-$lang['groups'] = 'Groupes';
+$lang['user'] = 'User';
+$lang['users'] = 'Users';
+$lang['profile'] = 'Profile';
+$lang['profile.edit'] = 'Edit profile';
+$lang['messages'] = 'User messages';
+$lang['maintain'] = 'Maintain';
+$lang['groups'] = 'Groups';
 
-$lang['profile.edit.success'] = 'Le profil a bien été modifié';
-$lang['profile.edit.password.error'] = 'Le mot de passe que vous avez entré n\'est pas correct';
+$lang['profile.edit.password.error'] = 'The password you entered is not correct';
 
 //Contribution
-$lang['contribution.confirmed'] = 'Votre contribution a bien été enregistrée.';
-$lang['contribution.confirmed.messages'] = '<p>Vous pourrez la suivre dans le <a href="' . UserUrlBuilder::contribution_panel()->absolute() . '">panneau de contribution</a> 
-et éventuellement discuter avec les validateurs si leur choix n\'est pas franc.</p><p>Merci d\'avoir participé à la vie du site !</p>';
+$lang['contribution.confirmed'] = 'Your contribution has been saved.';
+$lang['contribution.confirmed.messages'] = '<p>You can follow her into the <a href="' . UserUrlBuilder::contribution_panel()->absolute() . '">panel contribution</a> 
+and possibly discuss with the validators if their choice is not straightforward.</p><p>Thank you for participating in the life of the site!</p>';
 
 
 //User fields
 $lang['pseudo'] = 'Pseudo';
-$lang['pseudo.explain'] = 'Longueur minimale du pseudo : 3 caractères';
-$lang['password'] = 'Mot de passe';
-$lang['password.new'] = 'Nouveau mot de passe';
-$lang['password.old'] = 'Ancien mot de passe';
-$lang['password.old.explain'] = 'Remplir seulement en cas de modification';
-$lang['password.confirm'] = 'Confirmer le mot de passe';
-$lang['password.explain'] = 'Longueur minimale du mot de passe : 6 caractères';
+$lang['pseudo.explain'] = 'Minimum length of the pseudo: 3 characters';
+$lang['password'] = 'Password';
+$lang['password.new'] = 'New password';
+$lang['password.old'] = 'Old password';
+$lang['password.old.explain'] = 'Complete only if amended';
+$lang['password.confirm'] = 'Confirm the password';
+$lang['password.explain'] = 'Minimum length of password: 6 characters';
 $lang['email'] = 'Email';
-$lang['email.hide'] = 'Cache l\'email';
-$lang['theme'] = 'Thème';
-$lang['theme.preview'] = 'Prévisualiser le thème';
-$lang['text-editor'] = 'Editeur de texte';
-$lang['lang'] = 'Langue';
-$lang['timezone.'] = 'Fuseau horaire';
-$lang['timezone.choice'] = 'Choix du fuseau horaire';
-$lang['timezone.choice.explain'] = 'Permet d\'ajuster l\'heure à votre localisation';
-$lang['email.hide'] = 'Cache l\'email';
-$lang['level'] = 'Rang';
+$lang['email.hide'] = 'Hide email';
+$lang['theme'] = 'Theme';
+$lang['theme.preview'] = 'Theme preview';
+$lang['text-editor'] = 'Text editor';
+$lang['lang'] = 'Lang';
+$lang['timezone'] = 'Timezone';
+$lang['timezone.choice'] = 'Timezone choice';
+$lang['timezone.choice.explain'] = 'Adjusts the time at your location';
+$lang['level'] = 'Level';
+$lang['approbation'] = 'Approbation';
 
-$lang['registration_date'] = 'Date d\'inscription';
-$lang['last_connection'] = 'Dernière connexion';
-$lang['number-messages'] = 'Nombre de messages';
-$lang['private_message'] = 'Message privé';
-$lang['delete-account'] = 'Supprimer le compte';
+$lang['registration_date'] = 'Registration date';
+$lang['last_connection'] = 'Last connection';
+$lang['number-messages'] = 'Number messages';
+$lang['private_message'] = 'Private message';
+$lang['delete-account'] = 'Delete account';
 $lang['avatar'] = 'Avatar';
 
-$lang['groups'] = 'Groupes';
-$lang['groups.select'] = 'Séléctionner un groupe';
+$lang['groups'] = 'Groups';
+$lang['groups.select'] = 'Group select';
 
 //Other
-$lang['banned'] = 'Banni';
-$lang['connect'] = 'Se connecter';
+$lang['banned'] = 'Banned';
+$lang['connect'] = 'Login';
 
 // Ranks
-$lang['visitor'] = 'Visiteur';
-$lang['member'] = 'Membre';
-$lang['moderator'] = 'Modérateur';
-$lang['administrator'] = 'Administrateur';
+$lang['rank'] = 'Rank';
+$lang['visitor'] = 'Visitor';
+$lang['member'] = 'Member';
+$lang['moderator'] = 'Moderator';
+$lang['administrator'] = 'Administrator';
 
 //Forget password
-$lang['forget-password'] = 'Mot de passe oublié';
-$lang['forget-password.select'] = 'Sélectionnez le champ que vous voulez renseigner (email ou pseudo)';
-$lang['forget-password.success'] = 'Un email vous a été envoyé avec un lien pour changer votre mot de passe';
-$lang['forget-password.error'] = 'Les informations fournisent ne sont pas correct, veuillez les rectifier et réessayer';
-$lang['change-password'] = 'Changement de mot de passe';
+$lang['forget-password'] = 'Forget password';
+$lang['forget-password.select'] = 'Select the field you want information (email or username)';
+$lang['forget-password.success'] = 'An email has been sent with a link to change your password';
+$lang['forget-password.error'] = 'The information provided is not correct, please correct and try again';
+$lang['change-password'] = 'Change password';
 $lang['forget-password.mail.content'] = 'Cher(e) :pseudo,
 
-Vous recevez cet e-mail parce que vous (ou quelqu\'un qui prétend l\'être) avez demandé à ce qu\'un nouveau mot de passe vous soit envoyé pour votre compte sur :host. 
-Si vous n\'avez pas demandé de changement de mot de passe, veuillez l\'ignorer. Si vous continuez à le recevoir, veuillez contacter l\'administrateur du site.
+You are receiving this email because you (or someone claiming to be) have requested a new password will be sent to your account :host. 
+If you have not asked to change your password, please ignore it. If you continue to receive it, please contact the site administrator.
 
-Pour changer de mot de passe, cliquez sur le lien fourni ci-dessous et suivez les indications sur le site.
+To change your password, click on the link below and follow the directions on the site.
 
 :change_password_link
 
-Si vous rencontrez des difficultés, veuillez contacter l\'administrateur du site.
+If you have problems, please contact the site administrator.
 
 :signature';
 
 //Registration 
-$lang['registration'] = 'Inscription';
-$lang['registration.validation.mail.explain'] = 'Vous devrez activer votre compte dans l\'email qui vous sera envoyé avant de pouvoir vous connecter';
-$lang['registration.validation.administrator.explain'] = 'Un administrateur devra activer votre compte avant de pouvoir vous connecter';
-$lang['registration.confirm.success'] = 'Votre compte a été validé avec succès';
-$lang['registration.confirm.error'] = 'Un problème est survenue lors de votre activation, vérifier que votre clé est bien valide';
-$lang['registration.success'] = 'Vous vous êtes bien enregistré et êtes dès à présent connecté';
-$lang['registration.success.administrator-validation'] = 'Vous vous êtes enregistré avec succès. Cependant un administrateur doit valider votre compte avant de pouvoir l\'utiliser';
-$lang['registration.success.mail-validation'] = 'Vous vous êtes enregistré avec succès. Cependant il vous faudra cliquer sur le lien d\'activation contenu dans le mail qui vous a été envoyé';
-$lang['registration.pending-approval'] = 'Un nouveau membre s\'est inscrit. Son compte doit être approuvé avant de pouvoir être utilisé.';
-$lang['registration.subject-mail'] = 'Confirmation d\'inscription sur :site_name';
+$lang['registration'] = 'Registration';
+$lang['registration.validation.mail.explain'] = 'You will need to activate your account in the email sent to you before you can log';
+$lang['registration.validation.administrator.explain'] = 'An administrator will activate your account before you can log';
+$lang['registration.confirm.success'] = 'Your account has been successfully validated';
+$lang['registration.confirm.error'] = 'A problem occurred during your activation, make sure your key is valid';
+$lang['registration.success'] = 'You have successfully registered and are now connected';
+$lang['registration.success.administrator-validation'] = 'You have registered successfully. However, an administrator must validate your account before you can use';
+$lang['registration.success.mail-validation'] = 'You have registered successfully. However you must click the activation link in the email you were sent';
+$lang['registration.pending-approval'] = 'A new member has registered. His account must be approved before they can be used.';
+$lang['registration.subject-mail'] = 'Confirmation of registration :site_name';
 $lang['registration.content-mail'] = 'Cher(e) :pseudo,
 
-Tout d\'abord, merci de vous être inscrit sur :site_name. Vous faites parti dès maintenant des membres du site.
-En vous inscrivant sur :site_name, vous obtenez un accès à la zone membre qui vous offre plusieurs avantages. Vous pourrez, entre autre, être reconnu automatiquement sur tout le site, pour poster des messages, modifier la langue et/ou le thème par défaut, éditer votre profil, accéder à des catégories réservées aux membres... Bref vous accédez à toute la communauté du site.
+First of all, thank you for being part of :site_name. Now you are part of the site members.
+By registering on :site_name, you get access to the member area that offers several advantages. You can, among other things, be automatically recognized throughout the site to post messages, change the language and / or the default theme, edit your profile, access to classes for members only ... In short you access to all the community site.
 
-Pour vous connecter, il vous faudra retenir votre identifiant et votre mot de passe.
+To connect, you will retain your username and password.
 
-Nous vous rappelons vos identifiants.
+Please remember your login.
 
-Identifiant : :login
-Mot de passe : :password
+Login : :login
+Password : :password
 
 :accounts_validation_explain
 

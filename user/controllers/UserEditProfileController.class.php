@@ -109,7 +109,9 @@ class UserEditProfileController extends AbstractController
 		$options_fieldset = new FormFieldsetHTML('options', LangLoader::get_message('options', 'main'));
 		$form->add_fieldset($options_fieldset);
 		
-		$options_fieldset->add_field(new FormFieldTimezone('timezone', $this->lang['timezone.choice'], $this->user->get_timezone(), array('description' => $this->lang['timezone.choice.explain'])));
+		$options_fieldset->add_field(new FormFieldTimezone('timezone', $this->lang['timezone.choice'], 
+			$this->user->get_timezone(), array('description' => $this->lang['timezone.choice.explain'])
+		));
 		
 		if (!$this->user_accounts_config->is_users_theme_forced())
 		{
@@ -167,7 +169,7 @@ class UserEditProfileController extends AbstractController
 		
 		MemberExtendedFieldsService::register_fields($this->form, $user_id);
 		
-		$this->tpl->put('MSG', MessageHelper::display($this->lang['profile.edit.success'], MessageHelper::SUCCESS));
+		$this->tpl->put('MSG', MessageHelper::display(LangLoader::get_message('process.success', 'errors-common'), MessageHelper::SUCCESS));
 		
 		$old_password = $this->form->get_value('old_password');
 		$new_password = $this->form->get_value('new_password');
