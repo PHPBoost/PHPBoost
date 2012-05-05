@@ -35,9 +35,7 @@ $lang['profile'] = 'Profil';
 $lang['profile.edit'] = 'Edition du profil';
 $lang['messages'] = 'Messages de l\'utilisateur';
 $lang['maintain'] = 'Maintenance';
-$lang['groups'] = 'Groupes';
 
-$lang['profile.edit.success'] = 'Le profil a bien été modifié';
 $lang['profile.edit.password.error'] = 'Le mot de passe que vous avez entré n\'est pas correct';
 
 //Contribution
@@ -66,6 +64,7 @@ $lang['timezone.choice'] = 'Choix du fuseau horaire';
 $lang['timezone.choice.explain'] = 'Permet d\'ajuster l\'heure à votre localisation';
 $lang['email.hide'] = 'Cache l\'email';
 $lang['level'] = 'Rang';
+$lang['approbation'] = 'Approbation';
 
 $lang['registration_date'] = 'Date d\'inscription';
 $lang['last_connection'] = 'Dernière connexion';
@@ -78,11 +77,14 @@ $lang['groups'] = 'Groupes';
 $lang['groups.select'] = 'Séléctionner un groupe';
 
 //Other
+$lang['caution'] = 'Avertissement';
+$lang['readonly'] = 'Lecture seule';
 $lang['banned'] = 'Banni';
 $lang['connect'] = 'Se connecter';
 $lang['autoconnect'] = 'Connexion auto';
 
 // Ranks
+$lang['rank'] = 'Rang';
 $lang['visitor'] = 'Visiteur';
 $lang['member'] = 'Membre';
 $lang['moderator'] = 'Modérateur';
@@ -92,7 +94,7 @@ $lang['administrator'] = 'Administrateur';
 $lang['forget-password'] = 'Mot de passe oublié';
 $lang['forget-password.select'] = 'Sélectionnez le champ que vous voulez renseigner (email ou pseudo)';
 $lang['forget-password.success'] = 'Un email vous a été envoyé avec un lien pour changer votre mot de passe';
-$lang['forget-password.error'] = 'Les informations fournisent ne sont pas correct, veuillez les rectifier et réessayer';
+$lang['forget-password.error'] = 'Les informations fournis ne sont pas correct, veuillez les rectifier et réessayer';
 $lang['change-password'] = 'Changement de mot de passe';
 $lang['forget-password.mail.content'] = 'Cher(e) :pseudo,
 

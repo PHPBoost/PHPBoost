@@ -53,36 +53,36 @@ class AdminMemberAddController extends AdminController
 
 		$tpl->put('FORM', $this->form->display());
 
-		return new AdminMembersDisplayResponse($tpl, $this->lang['members.add-member']);
+		return new AdminMembersDisplayResponse($tpl, LangLoader::get_message('members.add-member', 'admin-members-common'));
 	}
 
 	private function init()
 	{
-		$this->lang = LangLoader::get('admin-members-common');
+		$this->lang = LangLoader::get('user-common');
 	}
 
 	private function build_form()
 	{
 		$form = new HTMLForm('member-add');
 		
-		$fieldset = new FormFieldsetHTML('add_member', $this->lang['members.add-member']);
+		$fieldset = new FormFieldsetHTML('add_member', LangLoader::get_message('members.add-member', 'admin-members-common'));
 		$form->add_fieldset($fieldset);
 		
-		$fieldset->add_field(new FormFieldTextEditor('login', $this->lang['members.pseudo'], '', array(
+		$fieldset->add_field(new FormFieldTextEditor('login', $this->lang['pseudo'], '', array(
 			'class' => 'text', 'maxlength' => 25, 'size' => 25, 'required' => true),
 			array(new FormFieldConstraintLengthRange(3, 25), new FormFieldConstraintLoginExist())
 		));		
 		
-		$fieldset->add_field(new FormFieldTextEditor('mail', $this->lang['members.mail'], '', array(
-			'class' => 'text', 'maxlength' => 255, 'description' => $this->lang['members.valid'], 'required' => true),
+		$fieldset->add_field(new FormFieldTextEditor('mail', $this->lang['email'], '', array(
+			'class' => 'text', 'maxlength' => 255, 'required' => true),
 			array(new FormFieldConstraintMailAddress(), new FormFieldConstraintMailExist())
 		));
 		
-		$fieldset->add_field($password = new FormFieldPasswordEditor('password', $this->lang['members.password'], '', array('required' => true)));
+		$fieldset->add_field($password = new FormFieldPasswordEditor('password', $this->lang['password'], '', array('required' => true)));
 		
-		$fieldset->add_field($password_bis = new FormFieldPasswordEditor('password_bis', $this->lang['members.confirm-password'], '', array('required' => true)));
+		$fieldset->add_field($password_bis = new FormFieldPasswordEditor('password_bis', $this->lang['password.confirm'], '', array('required' => true)));
 		
-		$fieldset->add_field(new FormFieldRanksSelect('rank', $this->lang['members.rank'], FormFieldRanksSelect::MEMBER));
+		$fieldset->add_field(new FormFieldRanksSelect('rank', $this->lang['rank'], FormFieldRanksSelect::MEMBER));
 		
 		$form->add_button(new FormButtonReset());
 		$this->submit_button = new FormButtonDefaultSubmit();

@@ -68,22 +68,6 @@ $lang['members.config.welcome-message-content'] = 'Welcome message displayed in 
 $lang['members.config.avatars-management'] = 'Avatars management';
 $lang['members.config.authorization'] = 'Authorizations';
 
-//Add and edit member
-$lang['members.pseudo'] = 'Pseudo';
-$lang['members.mail'] = 'email address';
-$lang['members.hide-mail'] = 'Hide email';
-$lang['members.password'] = 'Password';
-$lang['members.confirm-password'] = 'Confirm password';
-$lang['members.rank'] = 'Rank';
-$lang['members.rank.member'] = 'Member';
-$lang['members.rank.modo'] = 'Moderator';
-$lang['members.rank.admin'] = 'Administrator';
-$lang['members.approbation'] = 'Approbation';
-$lang['members.groups'] = 'Groups';
-$lang['members.caution'] = 'Caution';
-$lang['members.readonly'] = 'Read only';
-$lang['members.bannish'] = 'Bannish';
-
 //Other fieldset add and edit title
 $lang['members.member-management'] = 'Member mangement';
 $lang['members.punishment-management'] = 'Punishment management';

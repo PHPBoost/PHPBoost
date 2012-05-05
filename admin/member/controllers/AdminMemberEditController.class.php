@@ -27,7 +27,9 @@
 
 class AdminMemberEditController extends AdminController
 {
-	private $lang;
+	private $user_lang;
+	private $admin_user_lang;
+	
 	/**
 	 * @var HTMLForm
 	 */
@@ -54,7 +56,7 @@ class AdminMemberEditController extends AdminController
 		$this->build_form();
 
 		$tpl = new StringTemplate('# INCLUDE MSG # # INCLUDE FORM #');
-		$tpl->add_lang($this->lang);
+		$tpl->add_lang($this->user_lang);
 
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
@@ -64,56 +66,73 @@ class AdminMemberEditController extends AdminController
 
 		$tpl->put('FORM', $this->form->display());
 
-		return new AdminMembersDisplayResponse($tpl, $this->lang['members.edit-member']);
+		return new AdminMembersDisplayResponse($tpl, $this->admin_user_lang['members.edit-member']);
 	}
 
 	private function init()
 	{
-		$this->lang = LangLoader::get('admin-members-common');
+		$this->user_lang = LangLoader::get('user-common');
+		$this->admin_user_lang = LangLoader::get('admin-members-common');
 	}
 
 	private function build_form()
 	{
 		$form = new HTMLForm('member-edit');
 		
-		$fieldset = new FormFieldsetHTML('edit_member', $this->lang['members.edit-member']);
+		$fieldset = new FormFieldsetHTML('edit_member', $this->admin_user_lang['members.edit-member']);
 		$form->add_fieldset($fieldset);
 		
-		$fieldset->add_field(new FormFieldTextEditor('login', $this->lang['members.pseudo'], $this->user->get_pseudo(), array(
+		$fieldset->add_field(new FormFieldTextEditor('login', $this->user_lang['pseudo'], $this->user->get_pseudo(), array(
 			'class' => 'text', 'maxlength' => 25, 'size' => 25, 'required' => true),
 			array(new FormFieldConstraintLengthRange(3, 25), new FormFieldConstraintLoginExist($this->user->get_id()))
 		));		
 		
-		$fieldset->add_field(new FormFieldTextEditor('mail', $this->lang['members.mail'], $this->user->get_email(), array(
-			'class' => 'text', 'maxlength' => 255, 'description' => $this->lang['members.valid'], 'required' => true),
+		$fieldset->add_field(new FormFieldTextEditor('mail', $this->user_lang['email'], $this->user->get_email(), array(
+			'class' => 'text', 'maxlength' => 255, 'required' => true),
 			array(new FormFieldConstraintMailAddress(), new FormFieldConstraintMailExist($this->user->get_id()))
 		));
 		
-		$fieldset->add_field($password = new FormFieldPasswordEditor('password', $this->lang['members.password'], ''));
+		$fieldset->add_field($password = new FormFieldPasswordEditor('password', $this->user_lang['password'], ''));
 		
-		$fieldset->add_field($password_bis = new FormFieldPasswordEditor('password_bis', $this->lang['members.confirm-password'], ''));
+		$fieldset->add_field($password_bis = new FormFieldPasswordEditor('password_bis', $this->user_lang['password.confirm'], ''));
 		
-		$fieldset->add_field(new FormFieldCheckbox('user_hide_mail', $this->lang['members.hide-mail'], FormFieldCheckbox::CHECKED));
+		$fieldset->add_field(new FormFieldCheckbox('user_hide_mail', $this->user_lang['email.hide'], FormFieldCheckbox::CHECKED));
 
-		$fieldset = new FormFieldsetHTML('member_management', $this->lang['members.member-management']);
+		$fieldset = new FormFieldsetHTML('member_management', $this->admin_user_lang['members.member-management']);
 		$form->add_fieldset($fieldset);
 		
-		$fieldset->add_field(new FormFieldCheckbox('approbation', $this->lang['members.approbation'], (bool)$this->user->get_approbation()));
+		$fieldset->add_field(new FormFieldCheckbox('approbation', $this->user_lang['approbation'], (bool)$this->user->get_approbation()));
 		
-		$fieldset->add_field(new FormFieldRanksSelect('rank', $this->lang['members.rank'], $this->user->get_level()));
+		$fieldset->add_field(new FormFieldRanksSelect('rank', $this->user_lang['rank'], $this->user->get_level()));
 		
-		$fieldset->add_field(new FormFieldGroups('groups', $this->lang['members.groups'], $this->user->get_groups()));
+		$fieldset->add_field(new FormFieldGroups('groups', $this->user_lang['groups'], $this->user->get_groups()));
 		
-		$fieldset_punishment = new FormFieldsetHTML('punishment_management', $this->lang['members.punishment-management']);
+		$options_fieldset = new FormFieldsetHTML('options', LangLoader::get_message('options', 'main'));
+		$form->add_fieldset($options_fieldset);
+		
+		$options_fieldset->add_field(new FormFieldTimezone('timezone', $this->user_lang['timezone.choice'], 
+			$this->user->get_timezone(), array('description' => $this->user_lang['timezone.choice.explain'])
+		));
+		
+		$options_fieldset->add_field(new FormFieldThemesSelect('theme', $this->user_lang['theme'], $this->user->get_theme(),
+				array('check_authorizations' => true, 'events' => array('change' => $this->build_javascript_picture_themes()))
+		));
+		$options_fieldset->add_field(new FormFieldFree('preview_theme', $this->user_lang['theme.preview'], '<img id="img_theme" src="'. Url::to_rel($this->get_picture_theme($this->user->get_theme())) .'" alt="" style="vertical-align:top; max-height:180px;" />'));
+	
+		$options_fieldset->add_field(new FormFieldEditors('text-editor', $this->user_lang['text-editor'], $this->user->get_editor()));
+		
+		$options_fieldset->add_field(new FormFieldLangsSelect('lang',$this->user_lang['lang'], $this->user->get_locale(), array('check_authorizations' => true)));
+		
+		$fieldset_punishment = new FormFieldsetHTML('punishment_management', $this->admin_user_lang['members.punishment-management']);
 		$form->add_fieldset($fieldset_punishment);
 
-		$fieldset_punishment->add_field(new FormFieldCheckbox('delete_account', LangLoader::get_message('del_member', 'main'), FormFieldCheckbox::UNCHECKED));
+		$fieldset_punishment->add_field(new FormFieldCheckbox('delete_account', $this->user_lang['delete-account'], FormFieldCheckbox::UNCHECKED));
 		
-		$fieldset_punishment->add_field(new FormFieldMemberCaution('user_warning', $this->lang['members.caution'], $this->user->get_warning_percentage()));
+		$fieldset_punishment->add_field(new FormFieldMemberCaution('user_warning', $this->user_lang['caution'], $this->user->get_warning_percentage()));
 		
-		$fieldset_punishment->add_field(new FormFieldMemberSanction('user_readonly', $this->lang['members.readonly'], $this->user->get_is_readonly()));
+		$fieldset_punishment->add_field(new FormFieldMemberSanction('user_readonly', $this->user_lang['readonly'], $this->user->get_is_readonly()));
 		
-		$fieldset_punishment->add_field(new FormFieldMemberSanction('user_ban', $this->lang['members.bannish'], $this->user->get_is_banned()));
+		$fieldset_punishment->add_field(new FormFieldMemberSanction('user_ban', $this->user_lang['banned'], $this->user->get_is_banned()));
 		
 		$member_extended_field = new MemberExtendedField();
 		$member_extended_field->set_template($form);
@@ -139,6 +158,13 @@ class AdminMemberEditController extends AdminController
 		$this->user->set_email($this->form->get_value('mail'));
 		$this->user->set_show_email(!$this->form->get_value('user_hide_mail'));
 		$this->user->set_approbation($this->form->get_value('approbation'));
+		
+
+		$this->user->set_theme($this->form->get_value('theme')->get_raw_value());
+		$this->user->set_locale($this->form->get_value('lang')->get_raw_value());
+		$this->user->set_timezone($this->form->get_value('timezone')->get_raw_value());
+		$this->user->set_editor($this->form->get_value('text-editor')->get_raw_value());
+		
 		UserService::update($this->user, 'WHERE user_id=:id', array('id' => $user_id));
 
 		if ($this->form->get_value('delete_account'))
@@ -180,6 +206,24 @@ class AdminMemberEditController extends AdminController
 		}
 		
 		StatsCache::invalidate();
+	}
+	
+	private function build_javascript_picture_themes()
+	{
+		$text = 'var theme = new Array;' . "\n";
+		foreach (ThemeManager::get_activated_themes_map() as $theme)
+		{
+			$pictures = $theme->get_configuration()->get_pictures();
+			$text .= 'theme["' . $theme->get_id() . '"] = "' . Url::to_rel(PATH_TO_ROOT .'/templates/' . $theme->get_id() . '/' . $pictures[0]) . '";' . "\n";
+		}
+		$text .= 'var theme_id = HTMLForms.getField("theme").getValue(); document.images[\'img_theme\'].src = theme[theme_id];';
+		return $text;
+	}
+	
+	private function get_picture_theme($user_theme)
+	{
+		$pictures = ThemeManager::get_theme($user_theme)->get_configuration()->get_pictures();
+		return PATH_TO_ROOT .'/templates/' . $user_theme . '/' . $pictures[0];
 	}
 }
 ?>
