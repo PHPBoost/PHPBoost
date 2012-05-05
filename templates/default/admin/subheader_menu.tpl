@@ -134,8 +134,8 @@
 				<a href="{PATH_TO_ROOT}/admin/admin_members.php" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/members_mini.png);">{L_USER}</a>
 				<ul id="ssmenu41">
 					<li><a href="{PATH_TO_ROOT}/admin/admin_members.php" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/members_mini.png);">{L_MANAGEMENT}</a></li>
-					<li><a href="{PATH_TO_ROOT}/admin/member/?url=/add/" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/members_mini.png);">{L_ADD}</a></li>
-					<li><a href="{PATH_TO_ROOT}/admin/member/?url=/config/" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/members_mini.png);">{L_CONFIGURATION}</a></li>
+					<li><a href="${relative_url(AdminMembersUrlBuilder::add())}" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/members_mini.png);">{L_ADD}</a></li>
+					<li><a href="${relative_url(AdminMembersUrlBuilder::configuration())}" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/members_mini.png);">{L_CONFIGURATION}</a></li>
 					<li><a href="{PATH_TO_ROOT}/admin/admin_members_punishment.php" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/members_mini.png);">{L_PUNISHEMENT}</a></li>
 				</ul>
 			</li>								
@@ -160,7 +160,7 @@
 					<li><a href="{PATH_TO_ROOT}/admin/admin_ranks_add.php" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/ranks_mini.png);">{L_ADD}</a></li>
 				</ul>
 			</li>
-			<li><a href="{PATH_TO_ROOT}/admin/member/?url=/rules/" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/terms_mini.png);">{L_TERMS}</a></li>
+			<li><a href="${relative_url(AdminMembersUrlBuilder::rules())}" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/terms_mini.png);">{L_TERMS}</a></li>
 			# IF C_ADMIN_LINKS_4 #
 			<li class="separator"></li>
 				# START admin_links_4 #

@@ -8,7 +8,7 @@
 		<div class="msg_contents_container">
 			<div class="msg_info_mbr">
 			</div>
-			# IF C_MODERATOR #
+			# IF comments.C_MODERATOR #
 				<a href="{comments.U_EDIT}">
 					<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="{L_UPDATE}" title="{L_UPDATE}" class="valign_middle" />
 				</a> 
