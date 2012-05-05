@@ -35,10 +35,10 @@ class AdminMembersDisplayResponse extends AdminMenuDisplayResponse
 		$picture = '/templates/' . get_utheme() . '/images/admin/members.png';
 		$this->set_title($lang['members.members-management']);
 		$this->add_link($lang['members.members-management'], PATH_TO_ROOT . '/admin/admin_members.php', $picture);
-		$this->add_link($lang['members.add-member'], DispatchManager::get_url('/admin/member/index.php', '/add'), $picture);
-		$this->add_link($lang['members.config-members'], DispatchManager::get_url('/admin/member/index.php', '/config'), $picture);
+		$this->add_link($lang['members.add-member'], AdminMembersUrlBuilder::add(), $picture);
+		$this->add_link($lang['members.config-members'], AdminMembersUrlBuilder::configuration(), $picture);
 		$this->add_link($lang['members.members-punishment'], PATH_TO_ROOT . '/admin/admin_members_punishment.php', $picture);
-		$this->add_link($lang['members.rules'], DispatchManager::get_url('/admin/member/index.php', '/rules'), '/templates/' . get_utheme() . '/images/admin/terms.png');
+		$this->add_link($lang['members.rules'], AdminMembersUrlBuilder::rules(), '/templates/' . get_utheme() . '/images/admin/terms.png');
 
 		$env = $this->get_graphical_environment();
 		$env->set_page_title($title_page);

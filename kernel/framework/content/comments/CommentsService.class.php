@@ -178,6 +178,7 @@ class CommentsService
 			{
 				$path = PATH_TO_ROOT . $comment['path'];
 				$template->assign_block_vars('comments', array(
+					'C_MODERATOR' => self::is_authorized_edit_or_delete_comment($authorizations, $id),
 					'U_EDIT' => CommentsUrlBuilder::edit($path, $id)->absolute(),
 					'U_DELETE' => CommentsUrlBuilder::delete($path, $id)->absolute(),
 					'MESSAGE' => FormatingHelper::second_parse($comment['message']),
@@ -187,8 +188,6 @@ class CommentsService
 		}
 		
 		$template->put_all(array(
-			'C_MODERATOR' => self::is_authorized_edit_or_delete_comment($authorizations, $id),
-		
 			//TODO
 			'C_IS_LOCKED' => false,
 			//TODO
