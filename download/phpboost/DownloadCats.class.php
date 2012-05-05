@@ -37,14 +37,14 @@ class DownloadCats extends CategoriesManager
 	## Public methods ##
 	
 	//Constructor
-	function DownloadCats()
+	public function DownloadCats()
 	{
 		global $DOWNLOAD_CATS;
-		parent::CategoriesManager('download_cat', 'download', $DOWNLOAD_CATS);
+		parent::__construct('download_cat', 'download', $DOWNLOAD_CATS);
 	}
 	
 	//Method which removes all subcategories and their content
-	function Delete_category_recursively($id)
+	public function Delete_category_recursively($id)
 	{
 		global $Cache;
 		//We delete the content of the category
@@ -62,7 +62,7 @@ class DownloadCats extends CategoriesManager
 	}
 	
 	//Method which deletes a category and move its content in another category
-	function Delete_category_and_move_content($id_category, $new_id_cat_content)
+	public function Delete_category_and_move_content($id_category, $new_id_cat_content)
 	{
 		global $Sql;
 		
@@ -87,7 +87,7 @@ class DownloadCats extends CategoriesManager
 	}
 	
 	//Function which adds a category
-	function add_category($id_parent, $name, $description, $image, $auth, $visible)
+	public function add_category($id_parent, $name, $description, $image, $auth, $visible)
 	{
 		global $Sql;
 		if ($id_parent == 0 || array_key_exists($id_parent, $this->cache_var))
@@ -102,7 +102,7 @@ class DownloadCats extends CategoriesManager
 	}
 	
 	//Function which updates a category
-	function update_category($id_cat, $id_parent, $name, $description, $icon, $auth, $visible)
+	public function update_category($id_cat, $id_parent, $name, $description, $icon, $auth, $visible)
 	{
 		global $Sql, $Cache;
 		if ($id_cat == 0 || array_key_exists($id_cat, $this->cache_var))
@@ -132,7 +132,7 @@ class DownloadCats extends CategoriesManager
 	}
 	
 	//Function which moves a category
-	function move_into_another($id, $new_id_cat, $position = 0)
+	public function move_into_another($id, $new_id_cat, $position = 0)
 	{
 		$result = parent::move_into_another($id, $new_id_cat, $position);
 		if ($result)
@@ -141,7 +141,7 @@ class DownloadCats extends CategoriesManager
 	}
 	
 	//Function which recounts the number of subquestions of each category (it should be unuseful but if they are errors it will correct them)
-	function recount_sub_files($no_cache_generation = false)
+	public function recount_sub_files($no_cache_generation = false)
 	{
 		global $Cache, $DOWNLOAD_CATS;
 		$this->recount_cat_subquestions($DOWNLOAD_CATS, 0);
@@ -152,7 +152,7 @@ class DownloadCats extends CategoriesManager
 	}
 	
 	//Method which determines if a category is writable by the current user
-	function check_auth($id)
+	public function check_auth($id)
 	{
 		global $User, $CONFIG_DOWNLOAD, $DOWNLOAD_CATS;
 		$auth_write = $User->check_auth($CONFIG_DOWNLOAD['global_auth'], DOWNLOAD_WRITE_CAT_AUTH_BIT);
@@ -171,7 +171,7 @@ class DownloadCats extends CategoriesManager
 	}
 	
 	//Method which determines if a category is writable by the current user
-	function check_contribution_auth($id)
+	public function check_contribution_auth($id)
 	{
 		global $User, $CONFIG_DOWNLOAD, $DOWNLOAD_CATS;
 		$contribution_auth = $User->check_auth($CONFIG_DOWNLOAD['global_auth'], DOWNLOAD_CONTRIBUTION_CAT_AUTH_BIT);
@@ -190,7 +190,7 @@ class DownloadCats extends CategoriesManager
 	}
 	
 	//Method which changes the visibility of a category
-	function change_visibility($category_id, $visibility, $generate_cache = LOAD_CACHE)
+	public function change_visibility($category_id, $visibility, $generate_cache = LOAD_CACHE)
 	{
 		$result = parent::change_visibility($category_id, $visibility, $generate_cache = LOAD_CACHE);
 		$this->recount_sub_files(NOT_GENERATE_CACHE);
@@ -239,5 +239,4 @@ class DownloadCats extends CategoriesManager
 		return;
 	}
 }
-
 ?>

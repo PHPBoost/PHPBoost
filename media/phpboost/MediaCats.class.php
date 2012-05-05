@@ -36,18 +36,18 @@ class MediaCats extends CategoriesManager
 	## Public methods ##
 
 	//Constructor
-	function MediaCats()
+	public function MediaCats()
 	{
 		global $Cache, $MEDIA_CATS;
 		
 		if (!isset($MEDIA_CATS))
 			$Cache->load('media');
 		
-		parent::CategoriesManager('media_cat', 'media', $MEDIA_CATS);
+		parent::__construct('media_cat', 'media', $MEDIA_CATS);
 	}
 
 	//Method which removes all subcategories and their content
-	function Delete_category_recursively($id)
+	public function Delete_category_recursively($id)
 	{
 		//We delete the category
 		$this->delete_category_with_content($id);
@@ -64,7 +64,7 @@ class MediaCats extends CategoriesManager
 	}
 
 	//Method which deletes a category and move its content in another category
-	function Delete_category_and_move_content($id_category, $new_id_cat_content)
+	public function Delete_category_and_move_content($id_category, $new_id_cat_content)
 	{
 		global $Sql;
 
@@ -91,7 +91,7 @@ class MediaCats extends CategoriesManager
 	}
 
 	//Function which adds a category
-	function add_category($id_parent, $name, $description, $image, $new_auth, $mime_type, $activ)
+	public function add_category($id_parent, $name, $description, $image, $new_auth, $mime_type, $activ)
 	{
 		global $Sql;
 
@@ -125,7 +125,7 @@ class MediaCats extends CategoriesManager
 	}
 
 	//Function which updates a category
-	function Update_category($id_cat, $id_parent, $name, $description, $image, $new_auth, $mime_type, $activ)
+	public function Update_category($id_cat, $id_parent, $name, $description, $image, $new_auth, $mime_type, $activ)
 	{
 		global $Sql, $Cache;
 
@@ -179,7 +179,7 @@ class MediaCats extends CategoriesManager
 	}
 
 	//Function which moves a category
-	function move_into_another($id, $new_id_cat, $position = 0)
+	public function move_into_another($id, $new_id_cat, $position = 0)
 	{
 		$result = parent::move_into_another($id, $new_id_cat, $position);
 
@@ -192,7 +192,7 @@ class MediaCats extends CategoriesManager
 	}
 
 	//function which changes the visibility of one category
-	function change_visibility($category_id, $visibility, $generate_cache = LOAD_CACHE)
+	public function change_visibility($category_id, $visibility, $generate_cache = LOAD_CACHE)
 	{
 		$result = parent::change_visibility($category_id, $visibility, DO_NOT_LOAD_CACHE);
 
@@ -202,7 +202,7 @@ class MediaCats extends CategoriesManager
 	}
 
 	//Recursive function which counts for all category or for one category
-	function recount_media_per_cat($id = null, $num = null, $generate_cache = true)
+	public function recount_media_per_cat($id = null, $num = null, $generate_cache = true)
 	{
 		global $Sql, $Cache, $MEDIA_CATS;
 
@@ -290,7 +290,7 @@ class MediaCats extends CategoriesManager
 	## Private methods ##
 
 	//method which deletes a category and its content (not recursive)
-	function delete_category_with_content($id)
+	public function delete_category_with_content($id)
 	{
 		global $Sql;
 
@@ -308,5 +308,4 @@ class MediaCats extends CategoriesManager
 		}
 	}
 }
-
 ?>

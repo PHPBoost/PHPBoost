@@ -32,16 +32,16 @@ class ArticlesCats extends CategoriesManager
 	## Public methods ##
 
 	//Constructor
-	function ArticlesCats()
+	public function ArticlesCats()
 	{
 		global $Cache, $ARTICLES_CAT;
 		if (!isset($ARTICLES_CAT))
 		$Cache->load('articles');
-		parent::CategoriesManager('articles_cats', 'articles', $ARTICLES_CAT);
+		parent::__construct('articles_cats', 'articles', $ARTICLES_CAT);
 	}
 
 	//Method which removes all subcategories and their content
-	function delete_category_recursively($id)
+	public function delete_category_recursively($id)
 	{
 		global $Cache;
 		//We delete the category
@@ -57,7 +57,7 @@ class ArticlesCats extends CategoriesManager
 	}
 
 	//Method which deletes a category and move its content in another category
-	function delete_category_and_move_content($id_category, $new_id_cat_content)
+	public function delete_category_and_move_content($id_category, $new_id_cat_content)
 	{
 		global $Sql;
 
@@ -80,7 +80,7 @@ class ArticlesCats extends CategoriesManager
 	}
 
 	//Function which adds a category
-	function add_category($id_parent, $name, $description, $image, $auth)
+	public function add_category($id_parent, $name, $description, $image, $auth)
 	{
 		global $Sql;
 		if (array_key_exists($id_parent, $this->cache_var) || $id_parent == 0)
@@ -95,7 +95,7 @@ class ArticlesCats extends CategoriesManager
 	}
 
 	//Function which updates a category
-	function update_category($id_cat, $id_parent, $name, $description, $image, $auth)
+	public function update_category($id_cat, $id_parent, $name, $description, $image, $auth)
 	{
 		global $Sql, $Cache;
 		if (array_key_exists($id_cat, $this->cache_var))
@@ -124,7 +124,7 @@ class ArticlesCats extends CategoriesManager
 	}
 
 	//Function which moves a category
-	function move_into_another($id, $new_id_cat, $position = 0)
+	public function move_into_another($id, $new_id_cat, $position = 0)
 	{
 		$result = parent::move_into_another($id, $new_id_cat, $position);
 
@@ -132,14 +132,14 @@ class ArticlesCats extends CategoriesManager
 	}
 
 	//function which changes the visibility of one category
-	function change_visibility($category_id, $visibility, $generate_cache = LOAD_CACHE)
+	public function change_visibility($category_id, $visibility, $generate_cache = LOAD_CACHE)
 	{
 		$result = parent::change_visibility($category_id, $visibility, $generate_cache);
 		return $result;
 	}
 
 	// Genrerate the bread crumb from a category.
-	function bread_crumb($id = 0)
+	public function bread_crumb($id = 0)
 	{
 		global $Bread_crumb, $User, $ARTICLES_LANG, $ARTICLES_CAT;
 
@@ -157,7 +157,7 @@ class ArticlesCats extends CategoriesManager
 	## Private methods ##
 
 	//method which deletes a category and its content (not recursive)
-	function _delete_category_with_content($id)
+	public function _delete_category_with_content($id)
 	{
 		global $Sql;
 
@@ -176,5 +176,4 @@ class ArticlesCats extends CategoriesManager
 		return false;
 	}
 }
-
 ?>
