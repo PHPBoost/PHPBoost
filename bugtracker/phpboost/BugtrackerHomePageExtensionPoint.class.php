@@ -41,9 +41,9 @@ class BugtrackerHomePageExtensionPoint implements HomePageExtensionPoint
 	
 	private function get_title()
 	{
-		global $LANG;
+		global $BUGTRACKER_LANG;
 		
-		return $LANG['bugs.module_title'];
+		return $BUGTRACKER_LANG['bugs.module_title'];
 	}
 	
 	private function get_view()
@@ -105,7 +105,7 @@ class BugtrackerHomePageExtensionPoint implements HomePageExtensionPoint
 		if ($User->check_auth($authorizations, BUG_CREATE_AUTH_BIT) || $User->check_level(User::ADMIN_LEVEL))
 		{
 			$tpl->put_all(array(
-				'ADD_BUG' 	=> '&raquo; <a href="bugtracker' . url('.php?add=true') . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/add.png" alt="' . $LANG['bugs.actions.add'] . '" title="' . $LANG['bugs.actions.add'] . '" class="valign_middle" /></a>'
+				'ADD_BUG' 	=> '&raquo; <a href="bugtracker' . url('.php?add=true') . '"><img src="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/' . get_ulang() . '/add.png" alt="' . $LANG['bugs.actions.add'] . '" title="' . $LANG['bugs.actions.add'] . '" class="valign_middle" /></a>'
 			));
 		}
 		
@@ -174,17 +174,17 @@ class BugtrackerHomePageExtensionPoint implements HomePageExtensionPoint
 			}
 			
 			//Nombre de commentaires
-			$nbr_coms = $this->sql_querier->query("SELECT number_comments FROM " . PREFIX . "comments_topic WHERE module_id='bugtracker' AND id_in_module='" . $row['id'] . "'", __LINE__, __FILE__);
-		
+			$nbr_coms = $this->sql_querier->query("SELECT number_comments FROM " . PREFIX . "comments_topic WHERE module_id = 'bugtracker' AND id_in_module = '" . $row['id'] . "'", __LINE__, __FILE__);
+
 			$tpl->assign_block_vars('list.bug', array(
 				'ID'			=> $row['id'],
 				'TITLE'			=> $row['title'],
-				'TYPE'			=> !empty($row['type']) ? stripslashes($row['type']) : $BUGTRACKER_LANG['bugs.notice.none'],
+				'TYPE'			=> !empty($row['type']) ? stripslashes($row['type']) : $LANG['bugs.notice.none'],
 				'SEVERITY'		=> $LANG['bugs.severity.' . $row['severity']],
 				'STATUS'		=> $LANG['bugs.status.' . $row['status']],
 				'COLOR' 		=> $color,
 				'SEVERITY_COLOR'=> $severity_color,
-				'COMMENTS'		=> '<a href="bugtracker' . url('.php?view=true&id=' . $row['id'] . '&com=0#anchor_bugtracker') . '">' . $nbr_coms . '</a>',
+				'COMMENTS'		=> '<a href="bugtracker' . url('.php?view=true&id=' . $row['id'] . '&com=0#anchor_bugtracker') . '">' . empty($nbr_coms) ? 0 : $nbr_coms . '</a>',
 				'DATE' 			=> gmdate_format('date_format', $row['submit_date'])
 			));
 		}
@@ -198,12 +198,16 @@ class BugtrackerHomePageExtensionPoint implements HomePageExtensionPoint
 			$errstr = $LANG['bugs.error.e_edit_success'];
 			$errtyp = E_USER_SUCCESS;
 			break;
+			case 'unexist_bug':
+			$errstr = $LANG['bugs.error.e_unexist_bug'];
+			$errtyp = E_USER_WARNING;
+			break;
 			default:
 			$errstr = '';
 			$errtyp = E_USER_NOTICE;
 		}
 		if (!empty($errstr))
-			$Template->put('message_helper', MessageHelper::display($errstr, $errtyp));
+			$tpl->put('message_helper', MessageHelper::display($errstr, $errtyp));
 			
 		return $tpl;
 	}

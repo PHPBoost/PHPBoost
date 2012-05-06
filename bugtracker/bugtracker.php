@@ -43,6 +43,15 @@ $now = new Date(DATE_NOW, TIMEZONE_AUTO);
 $id = retrieve(GET, 'id', 0, TINTEGER);
 $id_post = retrieve(POST, 'id', 0, TINTEGER);
 
+if (!empty($id) || !empty($id_post))
+{
+	$id_tmp = !empty($id) ? $id : $id_post;
+	
+	$bug_exist = $Sql->query_array(PREFIX . 'bugtracker', '*', "WHERE id = '" . $id_tmp . "'", __LINE__, __FILE__);
+	if (empty($bug_exist))
+		AppContext::get_response()->redirect(HOST . DIR . '/bugtracker/bugtracker.php?error=unexist_bug#message_helper');
+}
+
 if ( !empty($_POST['valid_add']) )
 {
 	//checking authorization
@@ -54,11 +63,11 @@ if ( !empty($_POST['valid_add']) )
 	
 	$title = retrieve(POST, 'title', '');
 	$contents = retrieve(POST, 'contents', '', TSTRING_PARSE);
-	$type = $display_types ? $BUGS_CONFIG['types'][0] : retrieve(POST, 'type', '');
-	$category = $display_categories ? $BUGS_CONFIG['categories'][0] : retrieve(POST, 'category', '');
+	$type = $display_types ? retrieve(POST, 'type', '') : $BUGS_CONFIG['types'][0];
+	$category = $display_categories ? retrieve(POST, 'category', '') : $BUGS_CONFIG['categories'][0];
 	$severity = $auth_create_advanced ? retrieve(POST, 'severity', '') : 'minor';
 	$priority = $auth_create_advanced ? retrieve(POST, 'priority', '') : 'normal';
-	$detected_in = $display_versions ? $BUGS_CONFIG['versions'][0] : retrieve(POST, 'detected_in', '');
+	$detected_in = $display_versions ? retrieve(POST, 'detected_in', '') : $BUGS_CONFIG['versions'][0];
 	$reproductible = retrieve(POST, 'reproductible', '', TBOOL);
 	$reproduction_method = retrieve(POST, 'reproduction_method', '', TSTRING_PARSE);
 	
@@ -387,6 +396,9 @@ else if (isset($_GET['edit']) && is_numeric($id)) // edition d'un bug
 		DispatchManager::redirect($error_controller);
 	}
 	
+	if (empty($id))
+		AppContext::get_response()->redirect(HOST . DIR . '/bugtracker/bugtracker.php?error=unexist_bug#message_helper');
+	
 	$Template->set_filenames(array(
 		'bugtracker' => 'bugtracker/bugtracker.tpl'
 	));
@@ -574,11 +586,11 @@ else if (isset($_GET['edit']) && is_numeric($id)) // edition d'un bug
 		break;
 		case 'no_user_assigned':
 		$errstr = $LANG['bugs.error.e_no_user_assigned'];
-		$errtyp = E_USER_ERROR;
+		$errtyp = E_USER_WARNING;
 		break;
 		case 'no_closed_version':
 		$errstr = $LANG['bugs.error.e_no_closed_version'];
-		$errtyp = E_USER_ERROR;
+		$errtyp = E_USER_WARNING;
 		break;
 		default:
 		$errstr = '';
@@ -595,6 +607,9 @@ else if (isset($_GET['history']) && is_numeric($id)) // Affichage de l'historiqu
 		$error_controller = PHPBoostErrors::unexisting_page();
 		DispatchManager::redirect($error_controller);
 	}
+	
+	if (empty($id))
+		AppContext::get_response()->redirect(HOST . DIR . '/bugtracker/bugtracker.php?error=unexist_bug#message_helper');
 	
 	$Template->set_filenames(array(
 		'bugtracker' => 'bugtracker/bugtracker.tpl'
@@ -689,7 +704,10 @@ else if (isset($_GET['view']) && is_numeric($id)) // Visualisation d'une fiche B
 		$error_controller = PHPBoostErrors::unexisting_page();
 		DispatchManager::redirect($error_controller);
 	}
-
+	
+	if (empty($id))
+		AppContext::get_response()->redirect(HOST . DIR . '/bugtracker/bugtracker.php?error=unexist_bug#message_helper');
+	
   	$Template->set_filenames(array(
 		'bugtracker' => 'bugtracker/bugtracker.tpl'
 	));
