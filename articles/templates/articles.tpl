@@ -12,16 +12,26 @@
 		<div class="module_top_l"></div>		
 		<div class="module_top_r"></div>
 		<div class="module_top">
-			<div style="float:left">
-				<a href="{PATH_TO_ROOT}/syndication/?url=/rss/articles/{IDCAT}" title="Rss"><img style="vertical-align:middle;margin-top:-2px;" src="../templates/{THEME}/images/rss.png" alt="Rss" title="Rss" /></a>  <strong>&nbsp;{NAME}</strong>	
+			<div class="module_top_title">
+				<a href="{PATH_TO_ROOT}/syndication/?url=/rss/articles/{IDCAT}" title="Rss" class="img_link">
+					<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/rss.png" alt="Rss" title="Rss" />
+				</a>
+				{NAME}
 			</div>
-			<div style="float:right">
+			<div class="module_top_com">
+				<img src="{PATH_TO_ROOT}/templates/{THEME}/images/com_mini.png" alt="" class="valign_middle" />
 				{COM}
 				# IF C_IS_ADMIN #
-				&nbsp;&nbsp;<a href="{U_ARTICLES_EDIT}" title="{L_EDIT}"><img src="../templates/{THEME}/images/{LANG}/edit.png" class="valign_middle" alt="{L_EDIT}" /></a>
-				&nbsp;&nbsp;<a href="{U_ARTICLES_DEL}" title="{L_DELETE}" onclick="javascript:return Confirm_del_article();"><img src="../templates/{THEME}/images/{LANG}/delete.png" class="valign_middle" alt="{L_DELETE}" /></a>
+				<a href="{U_ARTICLES_EDIT}" title="{L_EDIT}" class="img_link">
+					<img src="../templates/{THEME}/images/{LANG}/edit.png" class="valign_middle" alt="{L_EDIT}" />
+				</a>
+				<a href="{U_ARTICLES_DEL}" title="{L_DELETE}" onclick="javascript:return Confirm_del_article();" class="img_link">
+					<img src="../templates/{THEME}/images/{LANG}/delete.png" class="valign_middle" alt="{L_DELETE}" />
+				</a>
 				# ENDIF #
-				&nbsp;&nbsp;<a href="{U_PRINT_ARTICLE}" title="{L_PRINTABLE_VERSION}"><img src="../templates/{THEME}/images/print_mini.png" alt="{L_PRINTABLE_VERSION}" class="valign_middle" /></a>
+				<a href="{U_PRINT_ARTICLE}" title="{L_PRINTABLE_VERSION}" class="img_link">
+					<img src="../templates/{THEME}/images/print_mini.png" alt="{L_PRINTABLE_VERSION}" class="valign_middle" />
+				</a>
 			</div>
 		</div>
 		<div class="module_contents">

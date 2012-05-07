@@ -5,27 +5,36 @@
 	return confirm("{L_ALERT_DELETE_ARTICLE}");
 	}
 -->
-</script>	
-<div class="module_position">					
-	<div class="module_top_l"></div>		
-	<div class="module_top_r"></div>
-	<div class="module_top">
-		<a href="{PATH_TO_ROOT}/syndication/?url=/rss/articles/{IDCAT}" title="Rss"><img style="vertical-align:middle;margin-top:-2px;" src="../templates/{THEME}/images/rss.png" alt="Rss" title="Rss" /></a>&nbsp;{U_ARTICLES_CAT_LINKS} 			
-		&nbsp;
-		# IF C_EDIT #			
-			<a href="{U_EDIT}" title="{L_EDIT}">
-				<img class="valign_middle" src="../templates/{THEME}/images/{LANG}/edit.png" alt="" />
-			</a>
-			# ENDIF #
-			# IF C_ADD #
-			<a href="{U_ADD}" title="{L_ADD}">
+</script>
+
+# IF C_EDIT #
+	<div style="float:right;margin:0 10px 15px;margin-top:-25px;">
+		<a href="{U_EDIT}" title="{L_EDIT}" class="img_link">
+			<img class="valign_middle" src="../templates/{THEME}/images/{LANG}/edit.png" alt=""/>
+		</a>
+		# IF C_ADD #
+			<a href="{U_ADD}" title="{L_ADD}" class="img_link">
 				<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/add.png" class="valign_middle" alt="{L_ADD}" />
 			</a>
 			&nbsp;
 			# IF C_WRITE #
 				<div style="display:inline;float:right;">{U_ARTICLES_WAITING}</div>				
-			# ENDIF #	
-		# ENDIF #		
+			# ENDIF #
+		# ENDIF #
+	</div>
+	<div class="spacer"></div>
+# ENDIF #	
+
+<div class="module_position">					
+	<div class="module_top_l"></div>		
+	<div class="module_top_r"></div>
+	<div class="module_top">
+		<div class="module_top_title">
+			<a href="{PATH_TO_ROOT}/syndication/?url=/rss/articles/{IDCAT}" title="Rss" class="img_link">
+				<img class="valign_middle" src="../templates/{THEME}/images/rss.png" alt="Rss" title="Rss" />
+			</a>
+			{U_ARTICLES_CAT_LINKS} 			
+		</div>
 	</div>
 	<div class="module_contents">
 		# IF C_ARTICLES_CAT #
