@@ -47,12 +47,9 @@ class OnlineModuleHomePage implements ModuleHomePage
 			'PAGINATION' => '<strong>' . LangLoader::get_message('page', 'main') . ' :</strong> ' . $pagination->display()->render()
 		));
 		
-		$condition = 'WHERE s.session_time > :time ORDER BY :display_order LIMIT :number_users_per_page OFFSET :start_limit';
+		$condition = 'WHERE s.session_time > :time ORDER BY '. OnlineConfig::load()->get_display_order_request() .' LIMIT '. $pagination->get_number_users_per_page() .' OFFSET '. $pagination->get_display_from();
 		$parameters = array(
-			'time' => (time() - SessionsConfig::load()->get_active_session_duration()), 
-			'display_order' => OnlineConfig::load()->get_display_order_request(), 
-			'start_limit' => $pagination->get_display_from(),
-			'number_users_per_page' => $pagination->get_number_users_per_page()
+			'time' => (time() - SessionsConfig::load()->get_active_session_duration())
 		);
 		
 		$users = OnlineService::get_online_users($condition, $parameters);

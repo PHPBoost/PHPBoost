@@ -44,7 +44,7 @@ class OnlineExtensionPointProvider extends ExtensionPointProvider
     
     public function menus()
     {
-    	return new OnlineMenusExtensionPoint();
+    	return new ModuleMenus(array(new OnlineModuleMiniMenu()));
     }
 }
 ?>

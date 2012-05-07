@@ -16,7 +16,7 @@
 			# ENDIF #
 			&nbsp;
 			# IF C_WRITER #
-			<a href="news.php?user=1" title="{L_WRITER}">
+			<a href="{PATH_TO_ROOT}/news/news.php?user=1" title="{L_WRITER}">
 				<img src="{PATH_TO_ROOT}/news/news_mini.png" class="valign_middle" alt="{L_WRITER}" />
 			</a>
 			# ENDIF #
@@ -104,12 +104,12 @@
 						<img src="{PATH_TO_ROOT}/templates/{THEME}/images/com_mini.png" alt="" class="valign_middle" /> {news.U_COM}
 						# ENDIF #
 						# IF news.C_EDIT #
-						<a href="management.php?edit={news.ID}" title="{L_EDIT}" class="img_link">
+						<a href="{PATH_TO_ROOT}/news/management.php?edit={news.ID}" title="{L_EDIT}" class="img_link">
 							<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="{L_EDIT}" />
 						</a>
 						# ENDIF #
 						# IF news.C_DELETE #
-						<a href="management.php?del={news.ID}&amp;token={TOKEN}" title="{L_DELETE}" onclick="javascript:return Confirm();">
+						<a href="{PATH_TO_ROOT}/news/management.php?del={news.ID}&amp;token={TOKEN}" title="{L_DELETE}" onclick="javascript:return Confirm();">
 							<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" />
 						</a>
 						# ENDIF #
