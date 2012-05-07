@@ -145,17 +145,17 @@ $LANG['bugs.explain.type'] = 'Types des demandes. Exemples : Anomalie, Demande d
 <br />
 Remarques : <br />
 - Si la liste est vide, cette option ne sera pas visible lors de la signalisation d\'un bug<br />
-- Si la liste ne contient qu\'une seule valeur, cette option ne sera pas non plus visible et sera attribuée par défaut au bug<br />';
+- Si la liste ne contient qu\'une seule valeur, cette option ne sera pas non plus visible et sera attribuée par défaut au bug<br /><br />';
 $LANG['bugs.explain.category'] = 'Catégorie des demandes. Exemples : Noyau, Module...<br />
 <br />
 Remarques : <br />
 - Si la liste est vide, cette option ne sera pas visible lors de la signalisation d\'un bug<br />
-- Si la liste ne contient qu\'une seule valeur, cette option ne sera pas non plus visible et sera attribuée par défaut au bug<br />';
+- Si la liste ne contient qu\'une seule valeur, cette option ne sera pas non plus visible et sera attribuée par défaut au bug<br /><br />';
 $LANG['bugs.explain.version'] = 'Liste des versions du produit.<br />
 <br />
 Remarques :<br />
 - Si la liste est vide, l\'option "Détecté dans la version" ne sera pas visible lors de la signalisation d\'un bug<br />
-- Si la liste ne contient qu\'une seule valeur, cette option ne sera pas non plus visible et sera attribuée par défaut au bug<br />';
+- Si la liste ne contient qu\'une seule valeur, cette option ne sera pas non plus visible et sera attribuée par défaut au bug<br /><br />';
 $LANG['bugs.explain.default_content'] = 'Merci de nous donner les informations demandées ci-dessous, elles nous seront utiles pour la résolution du bug :
 Système d\'exploitation :
 Navigateur Web :
@@ -192,4 +192,5 @@ $LANG['bugs.error.e_edit_success'] = 'Le bug a été modifié avec succès';
 $LANG['bugs.error.e_edit_type_success'] = 'Le type a été modifié avec succès';
 $LANG['bugs.error.e_edit_category_success'] = 'La catégorie a été modifiée avec succès';
 $LANG['bugs.error.e_edit_version_success'] = 'La version a été modifié avec succès';
+$LANG['bugs.error.e_unexist_bug'] = 'Ce bug n\'existe pas';
 ?>

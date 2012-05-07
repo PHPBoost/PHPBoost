@@ -145,18 +145,18 @@ $LANG['bugs.explain.type'] = 'Demands types. Examples : Anomaly, Evolution...<br
 <br />
 Remarks : <br />
 - If the table is empty, this option will not be visible on the post bug page<br />
-- If the table contains only one type, will not be visible too and will automatically be assigned to the bug<br />';
+- If the table contains only one type, will not be visible too and will automatically be assigned to the bug<br /><br />';
 $LANG['bugs.explain.category'] = 'Demands categories. Examples : Kernel, Module...<br />
 <br />
 Remarks : <br />
 - If the table is empty, this option will not be visible on the post bug page<br />
-- If the table contains only one type, will not be visible too and will automatically be assigned to the bug<br />';
+- If the table contains only one type, will not be visible too and will automatically be assigned to the bug<br /><br />';
 $LANG['bugs.explain.version'] = 'Liste des versions du produit.<br />
 <br />
 Remarks :<br />
 - If the table is empty, the option "Detected in version" will not be visible on the post bug page<br />
-- If the table contains only one type, will not be visible too and will automatically be assigned to the bug<br />';
-$LANG['bugs.explain.default_content'] = 'Thank you for given the informations below, they will be useful to treat the bug
+- If the table contains only one type, will not be visible too and will automatically be assigned to the bug<br /><br />';
+$LANG['bugs.explain.default_content'] = 'Please fill the informations below, they will be useful to treat the bug
 Operating system :
 Web navigator :
 Test version (test site, zip archive) :
@@ -192,4 +192,5 @@ $LANG['bugs.error.e_edit_success'] = 'The bug has successfully been updated';
 $LANG['bugs.error.e_edit_type_success'] = 'The type has successfully been updated';
 $LANG['bugs.error.e_edit_category_success'] = 'The category has successfully been updated';
 $LANG['bugs.error.e_edit_version_success'] = 'The version has successfully been updated';
+$LANG['bugs.error.e_unexist_bug'] = 'This bug does not exist';
 ?>
