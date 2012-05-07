@@ -220,7 +220,12 @@ class Session
 				{
 					$this->sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET password = '" . $password . "' WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
 				}
-
+				
+				if (array_key_exists('modules_parameters', $this->data))
+				{
+					$this->data['modules_parameters'] = '';
+				}
+				
 				$this->sql->query_inject("INSERT INTO " . DB_TABLE_SESSIONS . " VALUES('" . $session_uniq_id . "', '" . $user_id . "', '" . $level . "', '" . USER_IP . "', '" . time() . "', '" . $session_script . "', '" . $session_script_get . "', '" . $session_script_title . "', '0', '', '', '" . addslashes($this->data['modules_parameters']) . "', '" . $this->data['token'] . "')", __LINE__, __FILE__);
 			}
 			else //Session visiteur, echec!
