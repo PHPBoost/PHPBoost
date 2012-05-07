@@ -3,7 +3,7 @@
  *                     ArticlesHomePageExtensionPoint.class.php
  *                            -------------------
  *   begin                : January 27, 2012
- *   copyright            : (C) 2012 Kï¿½vin MASSY
+ *   copyright            : (C) 2012 Kévin MASSY
  *   email                : soldier.weasel@gmail.com
  *
  *
@@ -139,7 +139,7 @@ class ArticlesHomePageExtensionPoint implements HomePageExtensionPoint
 		else
 		$selected_fields['desc'] = ' selected="selected"';
 
-		//Colonnes des catï¿½gories.
+		//Colonnes des catégories.
 		$nbr_column_cats = ($total_cat > $CONFIG_ARTICLES['nbr_column']) ? $CONFIG_ARTICLES['nbr_column'] : $total_cat;
 		$nbr_column_cats = !empty($nbr_column_cats) ? $nbr_column_cats : 1;
 		$column_width_cats = floor(100/$nbr_column_cats);
@@ -170,6 +170,8 @@ class ArticlesHomePageExtensionPoint implements HomePageExtensionPoint
 			'L_DESC' => $LANG['desc'],
 			'L_ASC' => $LANG['asc'],
 			'L_TITLE'=> $LANG['title'],
+			'L_EDIT' => $LANG['edit'],
+			'L_ADD' => $ARTICLES_LANG['articles_add'],
 			'L_WRITTEN' => $LANG['written_by'],
 			'L_ARTICLES' => $ARTICLES_LANG['articles'],
 			'L_AUTHOR' => $ARTICLES_LANG['author'],
@@ -178,6 +180,7 @@ class ArticlesHomePageExtensionPoint implements HomePageExtensionPoint
 			'L_TOTAL_ARTICLE' => ($nbr_articles > 0) ? sprintf($ARTICLES_LANG['nbr_articles_info'], $nbr_articles) : '',
 			'L_NO_ARTICLES' => ($nbr_articles == 0) ? $ARTICLES_LANG['none_article'] : '',
 			'L_ARTICLES_INDEX' => $ARTICLES_LANG['title_articles'],
+			'L_ARTICLES_WAITING' => $ARTICLES_LANG['waiting_articles'],
 			'L_CATEGORIES' => ($ARTICLES_CAT[$idartcat]['order'] >= 0) ? $ARTICLES_LANG['sub_categories'] : $LANG['categories'],
 			'U_ADD' => url('management.php?new=1&amp;cat=' . $idartcat),
 			'U_EDIT'=> url('admin_articles_cat.php?edit='.$idartcat),
@@ -197,11 +200,11 @@ class ArticlesHomePageExtensionPoint implements HomePageExtensionPoint
 
 		$unget = (!empty($get_sort) && !empty($mode)) ? '?sort=' . $get_sort . '&amp;mode=' . $get_mode : '';
 
-		//On crï¿½e une pagination si le nombre de fichiers est trop important.
+		//On créé une pagination si le nombre de fichiers est trop important.
 
 		$Pagination = new DeprecatedPagination();
 
-		//Catï¿½gories non autorisï¿½es.
+		//Catégories non autorisées.
 		$unauth_cats_sql = array();
 		foreach ($ARTICLES_CAT as $id => $key)
 		{
@@ -211,7 +214,7 @@ class ArticlesHomePageExtensionPoint implements HomePageExtensionPoint
 		$nbr_unauth_cats = count($unauth_cats_sql);
 		$clause_unauth_cats = ($nbr_unauth_cats > 0) ? " AND ac.id NOT IN (" . implode(', ', $unauth_cats_sql) . ")" : '';
 
-		##### Catï¿½gories disponibles #####
+		##### Catégories disponibles #####
 		if ($total_cat > 0)
 		{
 			$tpl->put_all(array(
