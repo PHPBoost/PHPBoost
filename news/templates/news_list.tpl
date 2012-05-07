@@ -16,8 +16,8 @@
 			# ENDIF #
 			&nbsp;
 			# IF C_WRITER #
-			<a href="{PATH_TO_ROOT}/news/news.php?user=1" title="{L_WRITER}">
-				<img src="{PATH_TO_ROOT}/news/news_mini.png" class="valign_middle" alt="{L_WRITER}" />
+			<a href="{PATH_TO_ROOT}/news/news.php?user=1" title="{L_NEWS_WAITING}">
+				<img src="{PATH_TO_ROOT}/news/news_mini.png" class="valign_middle" alt="{L_NEWS_WAITING}" />
 			</a>
 			# ENDIF #
 		</div>
