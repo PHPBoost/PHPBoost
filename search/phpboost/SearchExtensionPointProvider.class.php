@@ -39,12 +39,16 @@ class SearchExtensionPointProvider extends ExtensionPointProvider
 
 	public function css_files()
 	{
-		return new ModuleCssFiles(array('search.css'), array('search_mini.css'));
+		$module_css_files = new ModuleCssFiles();
+		$module_css_files->set_css_files_running_module_displayed(array('search.css'));
+		return $module_css_files;
 	}
 	
 	public function menus()
 	{
-		return new SearchMenusExtensionPoint();
+		return new ModuleMenus(array(
+			new SearchModuleMiniMenu()
+		));
 	}
 }
 ?>

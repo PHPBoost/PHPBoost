@@ -44,17 +44,21 @@ class NewsletterExtensionPointProvider extends ExtensionPointProvider
 	
 	public function extended_field()
 	{
-		return new NewsletterExtendedField();
+		return new ExtendedFields(array(new RegisterNewsletterExtendedField()));
 	}
 	
 	public function css_files()
 	{
-		return new ModuleCssFiles(array(), array('newsletter_mini.css'));
+		$module_css_files = new ModuleCssFiles();
+		$module_css_files->set_css_files_always_displayed(array('newsletter_mini.css'));
+		return $module_css_files;
 	}
 	
 	public function menus()
 	{
-		return new NewsletterMenusExtensionPoint();
+		return new ModuleMenus(array(
+			new NewsletterModuleMiniMenu()
+		));
 	}
 }
 ?>

@@ -83,7 +83,9 @@ class PollExtensionPointProvider extends ExtensionPointProvider
 	
 	public function menus()
 	{
-		return new PollMenusExtensionPoint();
+		return new ModuleMenus(array(
+			new PollModuleMiniMenu()
+		));
 	}
 }
 ?>

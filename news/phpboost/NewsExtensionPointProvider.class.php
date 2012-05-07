@@ -94,7 +94,9 @@ class NewsExtensionPointProvider extends ExtensionPointProvider
 	
 	public function css_files()
 	{
-		return new ModuleCssFiles(array('news.css'));
+		$module_css_files = new ModuleCssFiles();
+		$module_css_files->set_css_files_always_displayed(array('news.css'));
+		return $module_css_files;
 	}
 
 	public function home_page()

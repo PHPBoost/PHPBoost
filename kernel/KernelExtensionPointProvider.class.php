@@ -55,7 +55,19 @@ class KernelExtensionPointProvider extends ExtensionPointProvider
 	
 	public function extended_field()
 	{
-		return new KernelExtendedField();
+		return new ExtendedFields(array(
+			new MemberShortTextExtendedField(),
+			new MemberHalfLongTextExtendedField(),
+			new MemberLongTextExtendedField(),
+			new MemberSimpleSelectExtendedField(),
+			new MemberMultipleSelectExtendedField(),
+			new MemberSimpleChoiceExtendedField(),
+			new MemberMultipleChoiceExtendedField(),
+			new MemberDateExtendedField(),
+			new MemberUserAvatarExtendedField(),
+			new MemberUserBornExtendedField(),
+			new MemberUserSexExtendedField()
+		));
 	}
 }
 ?>

@@ -34,7 +34,9 @@ class LangsSwitcherExtensionPointProvider extends ExtensionPointProvider
 		
 	public function menus()
 	{
-		return new LangsSwitcherMenusExtensionPoint();
+		return new ModuleMenus(array(
+			new LangsSwitcherModuleMiniMenu()
+		));
 	}
 }
 ?>

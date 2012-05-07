@@ -1,9 +1,9 @@
 <?php
 /*##################################################
- *                           NewsletterMenusExtensionPoint.class.php
+ *                           ExtendedFields.class.php
  *                            -------------------
- *   begin                : October 08, 2011
- *   copyright            : (C) 2011 Kevin MASSY
+ *   begin                : May 07, 2012
+ *   copyright            : (C) 2012 Kevin MASSY
  *   email                : soldier.weasel@gmail.com
  *
  *
@@ -25,13 +25,18 @@
  *
  ###################################################*/
 
-class NewsletterMenusExtensionPoint implements MenusExtensionPoint
+class ExtendedFields implements ExtendedFieldExtensionPoint
 {
-	public function get_menus()
+	private $extended_fields = array();
+	
+	public function __construct(Array $extended_fields)
 	{
-		return array(
-			new NewsletterModuleMiniMenu()
-		);
+		$this->extended_fields = $extended_fields;
+	}
+	
+	public function get_extended_fields()
+	{
+		return $this->extended_fields;
 	}
 }
 ?>

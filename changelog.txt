@@ -19,7 +19,11 @@
 [*] [color=red]Nouveauté :[/color] Installation possible en ligne de commande.
 [*] [color=red]Nouveauté :[/color] Système de cache CSS.
 [*] [color=red]Nouveauté :[/color] Création de diverses classes permettant le partage et la publication d'informations sur les réseaux sociaux.
-[*] Utilitaire en ligne de commande permettant l'installation de PHPBoost.
+[*] Utilitaire en ligne de commande permettant :
+	- l'installation de PHPBoost
+	- la gestion des utilisateurs (ajout, suppression)
+	- Régénération du cache
+	- Gestion du htaccess
 [*] Nouveau gestionnaire d'erreur et d'exception.
 [*] Création d'une classe de débug pour les développeurs.
 [*] Refonte du système de communication entres les modules et le noyau.

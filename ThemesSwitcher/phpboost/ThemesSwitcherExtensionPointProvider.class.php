@@ -34,7 +34,9 @@ class ThemesSwitcherExtensionPointProvider extends ExtensionPointProvider
 		
 	public function menus()
 	{
-		return new ThemesSwitcherMenusExtensionPoint();
+		return new ModuleMenus(array(
+			new ThemesSwitcherModuleMiniMenu()
+		));
 	}
 }
 ?>

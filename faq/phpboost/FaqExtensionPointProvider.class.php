@@ -95,7 +95,9 @@ class FaqExtensionPointProvider extends ExtensionPointProvider
 	
 	public function menus()
 	{
-		return new FaqMenusExtensionPoint();
+		return new ModuleMenus(array(
+			new FaqModuleMiniMenu()
+		));
 	}
 	
 	public function search()

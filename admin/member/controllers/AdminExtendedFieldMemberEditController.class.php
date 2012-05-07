@@ -112,7 +112,7 @@ class AdminExtendedFieldMemberEditController extends AdminController
 		$fieldset->add_field(new FormFieldShortMultiLineTextEditor('description', $this->lang['field.description'], $extended_field_cache['description'],
 		array('rows' => 4, 'cols' => 47)
 		));
-		
+		Debug::dump($extended_field_cache['field_type']);
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('field_type', $this->lang['field.type'], $extended_field_cache['field_type'],
 			$this->get_array_select_type(),
 			array('events' => array('change' => $this->get_events_select_type()))
@@ -220,20 +220,18 @@ class AdminExtendedFieldMemberEditController extends AdminController
 			if ($module == 'kernel')
 			{
 				$kernel_select = array();
-				foreach ($files as $file)
+				foreach ($files as $field_type)
 				{
-					$field_type = new $file();
-					$kernel_select[] = new FormFieldSelectChoiceOption($field_type->get_name(), $file);
+					$kernel_select[] = new FormFieldSelectChoiceOption($field_type->get_name(), get_class($field_type));
 				}
 				$select[] = new FormFieldSelectChoiceGroupOption($this->lang['default-field'], $kernel_select);
 			}
 			else
 			{
 				$module_select = array();
-				foreach ($files as $file)
+				foreach ($files as $field_type)
 				{
-					$field_type = new $file();
-					$module_select[] = new FormFieldSelectChoiceOption($field_type->get_name(), $file);
+					$module_select[] = new FormFieldSelectChoiceOption($field_type->get_name(), get_class($field_type));
 				}
 
 				$module_name = ModulesManager::get_module($module)->get_configuration()->get_name();
@@ -289,16 +287,15 @@ class AdminExtendedFieldMemberEditController extends AdminController
 		
 		foreach ($this->get_extended_fields_class_name() as $module => $files)
 		{
-			foreach ($files as $file)
+			foreach ($files as $field_type)
 			{
-				$field_type = new $file();
 				$disable_fields_extended_field = $field_type->get_disable_fields_configuration();
 				
 				foreach ($disable_fields_extended_field as $name_disable_field)
 				{
 					if (array_key_exists($name_disable_field, $disable_field))
 					{
-						$disable_field[$name_disable_field][] = $file;
+						$disable_field[$name_disable_field][] = get_class($field_type);
 					}
 				}
 			}

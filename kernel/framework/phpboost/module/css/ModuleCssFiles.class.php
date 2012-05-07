@@ -30,9 +30,8 @@ class ModuleCssFiles implements CssFilesExtensionPoint
 	private $css_files_always_displayed = array();
 	private $css_files_running_module_displayed = array();
 	
-	public function __construct($css_files_running_module_displayed = array(), $css_files_always_displayed = array())
+	public function set_css_files_always_displayed(Array $css_files_always_displayed)
 	{
-		$this->css_files_running_module_displayed = $css_files_running_module_displayed;
 		$this->css_files_always_displayed = $css_files_always_displayed;
 	}
 	
@@ -41,6 +40,11 @@ class ModuleCssFiles implements CssFilesExtensionPoint
 		return $this->css_files_always_displayed;
 	}
 
+	public function set_css_files_running_module_displayed(Array $css_files_running_module_displayed)
+	{
+		$this->css_files_running_module_displayed = $css_files_running_module_displayed;
+	}
+	
 	public function get_css_files_running_module_displayed()
 	{
 		return $this->css_files_running_module_displayed;

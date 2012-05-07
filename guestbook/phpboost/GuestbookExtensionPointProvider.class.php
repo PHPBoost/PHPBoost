@@ -44,7 +44,9 @@ class GuestbookExtensionPointProvider extends ExtensionPointProvider
 	
     public function menus()
     {
-    	return new GuestbookMenusExtensionPoint();
+    	return new ModuleMenus(array(
+			new GuestbookModuleMiniMenu()
+		));
     }
 }
 ?>

@@ -1,9 +1,9 @@
 <?php
 /*##################################################
- *                           GalleryMenusExtensionPoint.class.php
+ *                           ModuleMenus.class.php
  *                            -------------------
- *   begin                : October 08, 2011
- *   copyright            : (C) 2011 Kevin MASSY
+ *   begin                : May 07, 2012
+ *   copyright            : (C) 2012 Kevin MASSY
  *   email                : soldier.weasel@gmail.com
  *
  *
@@ -25,13 +25,18 @@
  *
  ###################################################*/
 
-class GalleryMenusExtensionPoint implements MenusExtensionPoint
+class ModuleMenus implements MenusExtensionPoint
 {
+	private $menus = array();
+	
+	public function __construct(Array $menus)
+	{
+		$this->menus = $menus;
+	}
+	
 	public function get_menus()
 	{
-		return array(
-			new GalleryModuleMiniMenu()
-		);
+		return $this->menus;
 	}
 }
 ?>

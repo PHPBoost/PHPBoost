@@ -34,12 +34,16 @@ class ConnectExtensionPointProvider extends ExtensionPointProvider
 
 	public function css_files()
 	{
-		return new ModuleCssFiles(array(), array('connect_mini.css'));
+		$module_css_files = new ModuleCssFiles();
+		$module_css_files->set_css_files_always_displayed(array('connect_mini.css'));
+		return $module_css_files;
 	}
 	
 	public function menus()
 	{
-		return new ConnectMenusExtensionPoint();
+		return new ModuleMenus(array(
+			new ConnectModuleMiniMenu()
+		));
 	}
 }
 ?>

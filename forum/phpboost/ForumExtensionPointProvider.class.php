@@ -84,7 +84,9 @@ class ForumExtensionPointProvider extends ExtensionPointProvider
 	
 	public function css_files()
 	{
-		return new ModuleCssFiles(array('forum.css'));
+		$module_css_files = new ModuleCssFiles();
+		$module_css_files->set_css_files_running_module_displayed(array('forum.css'));
+		return $module_css_files;
 	}
 
 	public function search()

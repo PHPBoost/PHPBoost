@@ -47,12 +47,16 @@ class ShoutboxExtensionPointProvider extends ExtensionPointProvider
 	
 	public function css_files()
 	{
-		return new ModuleCssFiles(array(), array('shoutbox_mini.css'));
+		$module_css_files = new ModuleCssFiles();
+		$module_css_files->set_css_files_always_displayed(array('shoutbox_mini.css'));
+		return $module_css_files;
 	}
 	
 	public function menus()
 	{
-		return new ShoutboxMenusExtensionPoint();
+		return new ModuleMenus(array(
+			new ShoutboxModuleMiniMenu()
+		));
 	}
 }
 ?>
