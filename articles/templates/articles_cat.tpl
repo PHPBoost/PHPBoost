@@ -33,7 +33,7 @@
 			<a href="{PATH_TO_ROOT}/syndication/?url=/rss/articles/{IDCAT}" title="Rss" class="img_link">
 				<img class="valign_middle" src="../templates/{THEME}/images/rss.png" alt="Rss" title="Rss" />
 			</a>
-			{U_ARTICLES_CAT_LINKS} 			
+			# IF CAT # {CAT} # ELSE # {L_ARTICLES} # ENDIF # 			
 		</div>
 	</div>
 	<div class="module_contents">
