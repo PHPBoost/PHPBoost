@@ -144,18 +144,18 @@ class SandboxFormController extends ModuleController
 		
 		// RADIO
 		$default_option = new FormFieldRadioChoiceOption('Choix 1', '1');
-		$fieldset->add_field(new FormFieldRadioChoice('radio', 'Choix ?num?ration', $default_option,
+		$fieldset->add_field(new FormFieldRadioChoice('radio', 'Choix énumération', $default_option,
 			array(
 				$default_option,
 				new FormFieldRadioChoiceOption('Choix 2', '2')
 			)));
 
 		// CHECKBOX
-		$fieldset->add_field(new FormFieldCheckbox('checkbox', 'Case ? cocher', FormFieldCheckbox::CHECKED));
+		$fieldset->add_field(new FormFieldCheckbox('checkbox', 'Case à cocher', FormFieldCheckbox::CHECKED));
 
 		// SELECT
 		$default_select_option = new FormFieldSelectChoiceOption('Choix 1', '1');
-		$fieldset->add_field(new FormFieldSimpleSelectChoice('select', 'Liste d?roulante', $default_select_option,
+		$fieldset->add_field(new FormFieldSimpleSelectChoice('select', 'Liste déroulante', $default_select_option,
 			array(
 				$default_select_option,
 				new FormFieldSelectChoiceOption('Choix 2', '2'),
@@ -220,20 +220,20 @@ class SandboxFormController extends ModuleController
 		$vertical_fieldset = new FormFieldsetVertical('fieldset4');
 		$vertical_fieldset->set_description('Ceci est ma description');
 		$form->add_fieldset($vertical_fieldset);
-		$vertical_fieldset->add_field(new FormFieldTextEditor('alone', 'Texte', 'fieldset s?par?'));
+		$vertical_fieldset->add_field(new FormFieldTextEditor('alone', 'Texte', 'fieldset séparé'));
 		$vertical_fieldset->add_field(new FormFieldCheckbox('cbhor', 'A cocher', FormFieldCheckbox::UNCHECKED));
 
 		// HORIZONTAL FIELDSET
 		$horizontal_fieldset = new FormFieldsetHorizontal('fieldset5');
 		$horizontal_fieldset->set_description('Ceci est ma description');
 		$form->add_fieldset($horizontal_fieldset);
-		$horizontal_fieldset->add_field(new FormFieldTextEditor('texthor', 'Texte', 'fieldset s?par?'));
+		$horizontal_fieldset->add_field(new FormFieldTextEditor('texthor', 'Texte', 'fieldset séparé'));
 		$horizontal_fieldset->add_field(new FormFieldCheckbox('cbvert', 'A cocher', FormFieldCheckbox::CHECKED));
 
 		// BUTTONS
 		$buttons_fieldset = new FormFieldsetSubmit('buttons');
 		$buttons_fieldset->add_element(new FormButtonReset());
-		$this->preview_button = new FormButtonSubmit('Pr?visualiser', 'preview', 'alert("Voulez-vous vraiment pr?visualiser ?")');
+		$this->preview_button = new FormButtonSubmit('Pr?visualiser', 'preview', 'alert("Voulez-vous vraiment prévisualiser ?")');
 		$buttons_fieldset->add_element($this->preview_button);
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$buttons_fieldset->add_element($this->submit_button);

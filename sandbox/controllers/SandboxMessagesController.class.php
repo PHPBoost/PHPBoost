@@ -1,10 +1,10 @@
 <?php
 /*##################################################
- *                       SandboxHomeController.class.php
+ *                       SandboxMessagesController.class.php
  *                            -------------------
- *   begin                : February 10, 2010
- *   copyright            : (C) 2010 Benoit Sautel
- *   email                : ben.popeye@phpboost.com
+ *   begin                : May 05, 2012
+ *   copyright            : (C) 2012 Kévin MASSY
+ *   email                : soldier.weasel@gmail.com
  *
  *
  ###################################################
@@ -25,35 +25,25 @@
  *
  ###################################################*/
 
-class SandboxHomeController extends ModuleController
+class SandboxMessagesController extends ModuleController
 {
-	private static $tpl_src = '<h1>Sandbox parts</h1>
-	<ul class="bb_ul">
-	# START parts #
-		<li><a href="{parts.URL}">{parts.NAME}</a>
-	# END parts #
-	</ul>';
-
-	private static $links = array(
-		'Form builder' => '?url=/form', 
-		'Messages builder' => '?url=/messages',
-		'Table builder' => '?url=/table', 
-		'String template bencher' => '?url=/template', 
-		'Mail sender' => '?url=/mail'
-	);
-
 	public function execute(HTTPRequest $request)
 	{
-		$tpl = new StringTemplate(self::$tpl_src);
-
-		foreach (self::$links as $name => $url)
+		$view = new StringTemplate('# START messages # # INCLUDE messages.VIEW # <br/> # END messages #');
+		
+		$messages = array(
+			MessageHelper::display('Ceci est un message de succès', MessageHelper::SUCCESS),
+			MessageHelper::display('Ceci est un message d\'information', MessageHelper::NOTICE),
+			MessageHelper::display('Ceci est un message d\'avertissement', MessageHelper::WARNING),
+			MessageHelper::display('Ceci est un message d\'erreur', MessageHelper::ERROR)
+		);
+		
+		foreach ($messages as $message)
 		{
-			$tpl->assign_block_vars('parts', array(
-				'URL' => $url,
-				'NAME' => $name
-			));
+			$view->assign_block_vars('messages', array('VIEW' => $message));
 		}
-		return new SiteDisplayResponse($tpl);
+		
+		return new SiteDisplayResponse($view);
 	}
 }
 ?>
