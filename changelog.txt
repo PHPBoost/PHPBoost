@@ -16,7 +16,6 @@
 [*] [color=red]Nouveauté :[/color] Création d'un chargeur de langue permettant une gestion plus aisée des langues.
 [*] [color=red]Nouveauté :[/color] Générateur automatique de formulaire avec contrôle client et serveur automatisés.
 [*] [color=red]Nouveauté :[/color] Générateur automatique de tableau avec gestion de la pagination, filtres, tris.
-[*] [color=red]Nouveauté :[/color] Installation possible en ligne de commande.
 [*] [color=red]Nouveauté :[/color] Système de cache CSS.
 [*] [color=red]Nouveauté :[/color] Création de diverses classes permettant le partage et la publication d'informations sur les réseaux sociaux.
 [*] Utilitaire en ligne de commande permettant :
