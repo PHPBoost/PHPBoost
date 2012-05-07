@@ -49,7 +49,7 @@
 			<div class="error_handler_position">
 				<span id="errorh"></span>
 				<div class="{ERRORH_CLASS}" style="width:500px;margin:auto;padding:15px;">
-					<img src="../templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
+					<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
 					<br />	
 				</div>
 			</div>
@@ -60,40 +60,40 @@
 				<tr style="text-align:center;">
 					<th style="width:45px;text-align:center;">
 						{L_ID}<br />
-						<a href="../bugtracker/bugtracker{U_BUG_ID_TOP}"><img src="../templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
-						<a href="../bugtracker/bugtracker{U_BUG_ID_BOTTOM}"><img src="../templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
+						<a href="{PATH_TO_ROOT}/bugtracker/bugtracker{U_BUG_ID_TOP}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
+						<a href="{PATH_TO_ROOT}/bugtracker/bugtracker{U_BUG_ID_BOTTOM}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
 					</th>
 					<th style="text-align:center;">
 						{L_TITLE}<br />
-						<a href="../bugtracker/bugtracker{U_BUG_TITLE_TOP}"><img src="../templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
-						<a href="../bugtracker/bugtracker{U_BUG_TITLE_BOTTOM}"><img src="../templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
+						<a href="{PATH_TO_ROOT}/bugtracker/bugtracker{U_BUG_TITLE_TOP}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
+						<a href="{PATH_TO_ROOT}/bugtracker/bugtracker{U_BUG_TITLE_BOTTOM}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
 					</th>
 					# IF C_DISPLAY_TYPES #
 					<th style="width:66px;text-align:center;">
 						{L_TYPE}<br />
-						<a href="../bugtracker/bugtracker{U_BUG_TYPE_TOP}"><img src="../templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
-						<a href="../bugtracker/bugtracker{U_BUG_TYPE_BOTTOM}"><img src="../templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
+						<a href="{PATH_TO_ROOT}/bugtracker/bugtracker{U_BUG_TYPE_TOP}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
+						<a href="{PATH_TO_ROOT}/bugtracker/bugtracker{U_BUG_TYPE_BOTTOM}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
 					</th>
 					# ENDIF #
 					<th style="width:70px;text-align:center;">
 						{L_SEVERITY}<br />
-						<a href="../bugtracker/bugtracker{U_BUG_SEVERITY_TOP}"><img src="../templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
-						<a href="../bugtracker/bugtracker{U_BUG_SEVERITY_BOTTOM}"><img src="../templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
+						<a href="{PATH_TO_ROOT}/bugtracker/bugtracker{U_BUG_SEVERITY_TOP}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
+						<a href="{PATH_TO_ROOT}/bugtracker/bugtracker{U_BUG_SEVERITY_BOTTOM}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
 					</th>
 					<th style="width:60px;text-align:center;">
 						{L_STATUS}<br />
-						<a href="../bugtracker/bugtracker{U_BUG_STATUS_TOP}"><img src="../templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
-						<a href="../bugtracker/bugtracker{U_BUG_STATUS_BOTTOM}"><img src="../templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
+						<a href="{PATH_TO_ROOT}/bugtracker/bugtracker{U_BUG_STATUS_TOP}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
+						<a href="{PATH_TO_ROOT}/bugtracker/bugtracker{U_BUG_STATUS_BOTTOM}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
 					</th>
 					<th style="width:84px;text-align:center;">
 						{L_COMMENTS}<br />
-						<a href="../bugtracker/bugtracker{U_BUG_COMMENTS_TOP}"><img src="../templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
-						<a href="../bugtracker/bugtracker{U_BUG_COMMENTS_BOTTOM}"><img src="../templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
+						<a href="{PATH_TO_ROOT}/bugtracker/bugtracker{U_BUG_COMMENTS_TOP}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
+						<a href="{PATH_TO_ROOT}/bugtracker/bugtracker{U_BUG_COMMENTS_BOTTOM}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
 					</th>
 					<th style="width:63px;text-align:center;">
 						{L_DATE}<br />
-						<a href="../bugtracker/bugtracker{U_BUG_DATE_TOP}"><img src="../templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
-						<a href="../bugtracker/bugtracker{U_BUG_DATE_BOTTOM}"><img src="../templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
+						<a href="{PATH_TO_ROOT}/bugtracker/bugtracker{U_BUG_DATE_TOP}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
+						<a href="{PATH_TO_ROOT}/bugtracker/bugtracker{U_BUG_DATE_BOTTOM}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
 					</th>
 					# IF C_IS_ADMIN #
 					<th style="width:56px;text-align:center;">
@@ -111,7 +111,7 @@
 				# START list.bug #
 				<tr style="text-align:center;"> 
 					<td class="row2" {list.bug.COLOR}>
-						<a href="../bugtracker/bugtracker.php?view=true&amp;id={list.bug.ID}">\#{list.bug.ID}</a>
+						<a href="{PATH_TO_ROOT}/bugtracker/bugtracker.php?view=true&amp;id={list.bug.ID}">\#{list.bug.ID}</a>
 					</td>
 					<td class="row2" {list.bug.COLOR}>
 						{list.bug.TITLE}
@@ -135,9 +135,9 @@
 					</td>
 					# IF C_IS_ADMIN #
 					<td class="row2" {list.bug.COLOR}> 
-						<a href="bugtracker.php?edit=true&amp;id={list.bug.ID}"><img src="../templates/{THEME}/images/{LANG}/edit.png" alt="{L_UPDATE}" title="{L_UPDATE}" /></a>
+						<a href="bugtracker.php?edit=true&amp;id={list.bug.ID}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="{L_UPDATE}" title="{L_UPDATE}" /></a>
 						<a href="bugtracker.php?history=true&amp;id={list.bug.ID}"><img src="{PATH_TO_ROOT}/bugtracker/templates/images/history.png" alt="{L_HISTORY}" title="{L_HISTORY}" /></a>
-						<a href="bugtracker.php?delete=true&amp;id={list.bug.ID}&amp;token={TOKEN}" onclick="javascript:return Confirm();"><img src="../templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" /></a>
+						<a href="bugtracker.php?delete=true&amp;id={list.bug.ID}&amp;token={TOKEN}" onclick="javascript:return Confirm();"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" /></a>
 					</td>
 					# ENDIF #
 				</tr>
@@ -205,7 +205,7 @@
 			<div class="error_handler_position">
 				<span id="errorh"></span>
 				<div class="{ERRORH_CLASS}" style="width:500px;margin:auto;padding:15px;">
-					<img src="../templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
+					<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
 					<br />	
 				</div>
 			</div>
@@ -403,7 +403,7 @@
 			<div class="error_handler_position">
 				<span id="errorh"></span>
 				<div class="{ERRORH_CLASS}" style="width:500px;margin:auto;padding:15px;">
-					<img src="../templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
+					<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
 					<br />	
 				</div>
 			</div>
@@ -572,9 +572,9 @@
 			</div>
 			<div style="float:right">
 				# IF C_COM #{U_COM}# ENDIF #
-				# IF C_EDIT_BUG #&nbsp;<a href="bugtracker.php?edit=true&amp;id={view.ID}"><img src="../templates/{THEME}/images/{LANG}/edit.png" alt="{L_UPDATE}" title="{L_UPDATE}" /></a># ENDIF #
+				# IF C_EDIT_BUG #&nbsp;<a href="bugtracker.php?edit=true&amp;id={view.ID}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="{L_UPDATE}" title="{L_UPDATE}" /></a># ENDIF #
 				# IF C_HISTORY_BUG #&nbsp;<a href="bugtracker.php?history=true&amp;id={view.ID}"><img src="{PATH_TO_ROOT}/bugtracker/templates/images/history.png" alt="{L_HISTORY}" title="{L_HISTORY}" /></a># ENDIF #
-				# IF C_DELETE_BUG #&nbsp;<a href="admin_bugtracker.php?delete=true&amp;id={view.ID}&amp;token={TOKEN}" onclick="javascript:return Confirm();"><img src="../templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" /></a># ENDIF #
+				# IF C_DELETE_BUG #&nbsp;<a href="admin_bugtracker.php?delete=true&amp;id={view.ID}&amp;token={TOKEN}" onclick="javascript:return Confirm();"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" /></a># ENDIF #
 			</div>
 		</div>
 		<div class="module_contents">
