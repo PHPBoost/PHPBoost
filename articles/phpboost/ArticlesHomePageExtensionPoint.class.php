@@ -172,6 +172,7 @@ class ArticlesHomePageExtensionPoint implements HomePageExtensionPoint
 			'L_TITLE'=> $LANG['title'],
 			'L_EDIT' => $LANG['edit'],
 			'L_ADD' => $ARTICLES_LANG['articles_add'],
+			'L_DELETE' => $LANG['delete'],
 			'L_WRITTEN' => $LANG['written_by'],
 			'L_ARTICLES' => $ARTICLES_LANG['articles'],
 			'L_AUTHOR' => $ARTICLES_LANG['author'],
