@@ -129,7 +129,7 @@ class NewsSetup extends DefaultModuleSetup
 			'name' => $this->messages['cat.name'],
 			'visible' => (int)true,
 			'description' => $this->messages['cat.description'],
-			'image' => 'news.png'
+			'image' => '/news/news.png'
 		));
 	}
 	

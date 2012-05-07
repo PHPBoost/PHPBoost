@@ -48,10 +48,9 @@ class OnlineModuleMiniMenu extends ModuleMiniMenu
 			$lang = LangLoader::get('online_common', 'online');
 			$tpl->add_lang($lang);
 			
-			$condition = 'WHERE s.session_time > :time ORDER BY :display_order';
+			$condition = 'WHERE s.session_time > :time ORDER BY '. OnlineConfig::load()->get_display_order_request();
 			$parameters = array(
-				'time' => (time() - SessionsConfig::load()->get_active_session_duration()), 
-				'display_order' => OnlineConfig::load()->get_display_order_request()
+				'time' => (time() - SessionsConfig::load()->get_active_session_duration())
 			);
 			
 			$users = OnlineService::get_online_users($condition, $parameters);
