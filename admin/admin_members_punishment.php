@@ -428,7 +428,7 @@ elseif ($action == 'ban') //Gestion des utilisateurs
 			'C_USER_BAN' => true,
 			'KERNEL_EDITOR' => $editor->display(),
 			'BAN_OPTIONS' => $ban_options,
-			'LOGIN' => '<a href="'. UserUrlBuilder::profile(id_get)->absolute() .'">' . $mbr['login'] . '</a>',
+			'LOGIN' => '<a href="'. UserUrlBuilder::profile($id_get)->absolute() .'">' . $mbr['login'] . '</a>',
 			'U_PM' => url('.php?pm='. $id_get, '-' . $id_get . '.php'),
 			'U_ACTION_INFO' => '.php?action=ban&amp;id=' . $id_get . '&amp;token=' . $Session->get_token(),
 			'L_PM' => $LANG['user_contact_pm'],
