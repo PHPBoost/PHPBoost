@@ -18,7 +18,9 @@
 			</a>
 			&nbsp;
 			# IF C_WRITE #
-				{U_ARTICLES_WAITING}				
+				<a href="{PATH_TO_ROOT}/articles/articles.php?invisible=1&cat={IDCAT}" title="{L_ARTICLES_WAITING}">
+					<img src="{PATH_TO_ROOT}/news/news_mini.png" class="valign_middle" alt="{L_ARTICLES_WAITING}" />
+				</a>
 			# ENDIF #
 		# ENDIF #
 	</div>
@@ -33,7 +35,7 @@
 			<a href="{PATH_TO_ROOT}/syndication/?url=/rss/articles/{IDCAT}" title="Rss" class="img_link">
 				<img class="valign_middle" src="../templates/{THEME}/images/rss.png" alt="Rss" title="Rss" />
 			</a>
-			# IF CAT # {CAT} # ELSE # {L_ARTICLES} # ENDIF # 			
+			{L_CAT_NAME}
 		</div>
 	</div>
 	<div class="module_contents">
