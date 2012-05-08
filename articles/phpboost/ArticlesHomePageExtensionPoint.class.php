@@ -66,12 +66,12 @@ class ArticlesHomePageExtensionPoint implements HomePageExtensionPoint
 			}
 
 			$cat_links = '';
-			$cat_links .= ' <a href="articles' . url('.php?cat=' . $idartcat, '-' . $idartcat . '.php') . '">' . $ARTICLES_CAT[$idartcat]['name'] . '</a>';
+			//$cat_links .= ' <a href="articles' . url('.php?cat=' . $idartcat, '-' . $idartcat . '.php') . '">' . $ARTICLES_CAT[$idartcat]['name'] . '</a>';
 			$clause_cat = " WHERE ac.id_parent = '" . $idartcat . "' AND ac.visible = 1";
 		}
 		else //Racine.
 		{
-			$cat_links = ' <a href="articles.php">' . $ARTICLES_LANG['title_articles'] . '</a>';
+			//$cat_links = ' <a href="articles.php">' . $ARTICLES_LANG['title_articles'] . '</a>';
 			$clause_cat = " WHERE ac.id_parent = '0' AND ac.visible = 1";
 		}
 
@@ -163,6 +163,7 @@ class ArticlesHomePageExtensionPoint implements HomePageExtensionPoint
 			'SELECTED_ASC' => $selected_fields['asc'],
 			'SELECTED_DESC' => $selected_fields['desc'],
 			'TARGET_ON_CHANGE_ORDER' => ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? 'category-' . $idartcat . '.php?' : 'articles.php?cat=' . $idartcat . '&',
+			'L_CAT_NAME' => $idartcat > 0 ? $ARTICLES_CAT[$idartcat]['name'] : $ARTICLES_LANG['title_articles'],
 			'L_DATE' => $LANG['date'],
 			'L_VIEW' => $LANG['views'],
 			'L_NOTE' => $LANG['note'],
@@ -185,8 +186,6 @@ class ArticlesHomePageExtensionPoint implements HomePageExtensionPoint
 			'L_CATEGORIES' => ($ARTICLES_CAT[$idartcat]['order'] >= 0) ? $ARTICLES_LANG['sub_categories'] : $LANG['categories'],
 			'U_ADD' => url('management.php?new=1&amp;cat=' . $idartcat),
 			'U_EDIT'=> url('admin_articles_cat.php?edit='.$idartcat),
-			'U_ARTICLES_CAT_LINKS' => trim($cat_links, ' &raquo;'),
-			'U_ARTICLES_WAITING'=> $User->check_auth($ARTICLES_CAT[$idartcat]['auth'], AUTH_ARTICLES_WRITE) ? ' <a href="articles.php?invisible=1&amp;cat='.$idartcat.'">' . $ARTICLES_LANG['waiting_articles'] . '</a>' : '',
 			'U_ARTICLES_ALPHA_TOP' => url('.php?sort=alpha&amp;mode=desc&amp;cat=' . $idartcat, '-' . $idartcat . '+' . $rewrite_title . '.php?sort=alpha&amp;mode=desc'),
 			'U_ARTICLES_ALPHA_BOTTOM' => url('.php?sort=alpha&amp;mode=asc&amp;cat=' . $idartcat, '-' . $idartcat . '+' . $rewrite_title . '.php?sort=alpha&amp;mode=asc'),
 			'U_ARTICLES_DATE_TOP' => url('.php?sort=date&amp;mode=desc&amp;cat=' . $idartcat, '-' . $idartcat . '+' . $rewrite_title . '.php?sort=date&amp;mode=desc'),
