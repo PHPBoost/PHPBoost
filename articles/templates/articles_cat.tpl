@@ -18,9 +18,7 @@
 			</a>
 			&nbsp;
 			# IF C_WRITE #
-				<a href="{PATH_TO_ROOT}/articles/articles.php?invisible=1&cat={IDCAT}" title="{L_ARTICLES_WAITING}">
-					<img src="{PATH_TO_ROOT}/news/news_mini.png" class="valign_middle" alt="{L_ARTICLES_WAITING}" />
-				</a>
+				{U_ARTICLES_WAITING}
 			# ENDIF #
 		# ENDIF #
 	</div>
