@@ -118,8 +118,6 @@ class ForumHomePageExtensionPoint implements HomePageExtensionPoint
 		$total_msg = 0;
 		$i = 0;
 
-		$tpl->assign_block_vars('forums_list', array());
-
 		//On liste les catégories et sous-catégories.
 		$result = $this->sql_querier->query_while("SELECT c.id AS cid, c.level, c.name, c.subname, c.url, c.nbr_msg, c.nbr_topic, c.status, c.last_topic_id, t.id AS tid,
 		t.idcat, t.title, t.last_timestamp, t.last_user_id, t.last_msg_id, t.nbr_msg AS t_nbr_msg, t.display_msg, m.user_id, m.login, v.last_view_id
@@ -131,6 +129,7 @@ class ForumHomePageExtensionPoint implements HomePageExtensionPoint
 		ORDER BY c.id_left", __LINE__, __FILE__);
 		while ($row = $this->sql_querier->fetch_assoc($result))
 		{
+			$tpl->assign_block_vars('forums_list', array());
 			if ($CAT_FORUM[$row['cid']]['level'] == 0 && $i > 0) //Fermeture de la catégorie racine.
 			{
 				$tpl->assign_block_vars('forums_list.endcats', array(
