@@ -18,7 +18,7 @@
 			</a>
 			&nbsp;
 			# IF C_WRITE #
-				<div style="display:inline;float:right;">{U_ARTICLES_WAITING}</div>				
+				{U_ARTICLES_WAITING}				
 			# ENDIF #
 		# ENDIF #
 	</div>
