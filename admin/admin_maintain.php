@@ -95,7 +95,7 @@ else //Sinon on rempli le formulaire
 		$timestamp_end = $maintenance_config->get_end_date()->get_timestamp(TIMEZONE_SYSTEM);
 		for ($i = $array_size; $i >= 1; $i--)
 		{					
-			if (($timestamp_end - $current_time) - $array_time[$i] < 0 && ($timestamp_end - $current_time) - $array_time[$i-1] > 0)
+			if ((($timestamp_end - $current_time) - $array_time[$i]) < 0 && ($timestamp_end - $current_time) - $array_time[$i-1] > 0)
 			{	
 				$key_delay = $i-1;
 				break;
@@ -128,7 +128,7 @@ else //Sinon on rempli le formulaire
 		'DISPLAY_ADMIN_ENABLED' => $maintenance_config->get_display_duration_for_admin() ? 'checked="checked"' : '',
 		'DISPLAY_ADMIN_DISABLED' => !$maintenance_config->get_display_duration_for_admin() ? 'checked="checked"' : '',
 		'MAINTAIN_CHECK_NO' => !$maintenance_config->is_maintenance_enabled() || !$maintenance_config->is_end_date_not_reached() ? ' checked="checked"' : '',
-		'MAINTAIN_CHECK_DELAY' => $maintenance_config->is_maintenance_enabled() && $maintenance_config->is_unlimited_maintenance() || ($maintenance_config->is_end_date_not_reached() && !$maintenance_terminates_after_tomorrow) ? ' checked="checked"' : '',
+		'MAINTAIN_CHECK_DELAY' => $maintenance_config->is_maintenance_enabled() && ($maintenance_config->is_unlimited_maintenance() || ($maintenance_config->is_end_date_not_reached() && !$maintenance_terminates_after_tomorrow)) ? ' checked="checked"' : '',
 		'MAINTAIN_CHECK_UNTIL' => $maintenance_config->is_maintenance_enabled() && $check_until ? ' checked="checked"' : '',
 		'DATE_UNTIL' => $check_until ? gmdate_format('date_format_short', $maintenance_config->get_end_date()->get_timestamp(TIMEZONE_USER)) : '',
 		'L_MAINTAIN' => LangLoader::get_message('maintain', 'user-common'),
