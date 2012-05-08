@@ -67,7 +67,7 @@ class MemberSanctionManager
 			}
 			if ($send_confirmation == self::SEND_MAIL || $send_confirmation == self::SEND_MP_AND_MAIL && !empty($content_to_send))
 			{
-				self::send_mail(self::$lang['read_only_title'], $content_to_send);
+				self::send_mail($user_id, self::$lang['read_only_title'], $content_to_send);
 			}
 		}
 	}
@@ -91,7 +91,7 @@ class MemberSanctionManager
 			if ($send_confirmation == self::SEND_MAIL)
 			{
 				$content = !empty($content_to_send) ? $content_to_send : self::$lang['ban_mail'];
-				self::send_mail(self::$lang['ban_title_mail'], $content);
+				self::send_mail($user_id, self::$lang['ban_title_mail'], $content);
 			}
 		}
 	}
@@ -116,7 +116,7 @@ class MemberSanctionManager
 			{
 				self::$sql_querier->inject("DELETE " . DB_TABLE_SESSIONS . " WHERE user_id = :user_id", array('user_id' => $user_id));
 
-				self::send_mail(self::$lang['ban_title_mail'], self::$lang['ban_mail']);
+				self::send_mail($user_id, self::$lang['ban_title_mail'], self::$lang['ban_mail']);
 			}
 			else
 			{
@@ -126,7 +126,7 @@ class MemberSanctionManager
 				}
 				if ($send_confirmation == self::SEND_MAIL || $send_confirmation == self::SEND_MP_AND_MAIL && !empty($content_to_send))
 				{
-					self::send_mail(self::$lang['warning_title'], $content_to_send);
+					self::send_mail($user_id, self::$lang['warning_title'], $content_to_send);
 				}
 			}
 		}
@@ -179,9 +179,9 @@ class MemberSanctionManager
 		PrivateMsg::start_conversation($user_id, addslashes($title), $content, '-1', PrivateMsg::SYSTEM_PM);
 	}
 	
-	private static function send_mail($title, $content)
+	private static function send_mail($user_id, $title, $content)
 	{
-		AppContext::get_mail_service()->send_from_properties(self::get_member_mail(), addslashes($title), sprintf(addslashes($content), GeneralConfig::load()->get_site_name(), addslashes(MailServiceConfig::load()->get_mail_signature())));
+		AppContext::get_mail_service()->send_from_properties(self::get_member_mail($user_id), addslashes($title), sprintf(addslashes($content), GeneralConfig::load()->get_site_name(), addslashes(MailServiceConfig::load()->get_mail_signature())));
 	}
 	
 	private static function verificate_user_id($user_id)
@@ -191,8 +191,7 @@ class MemberSanctionManager
 	
 	private static function get_member_mail($user_id)
 	{
-		$row = self::$sql_querier->select_single_row(DB_TABLE_MEMBER, array('user_mail'), "WHERE user_id = '" . $user_id . "'");
-		return $row['user_mail'];
+		return self::$sql_querier->get_column_value(DB_TABLE_MEMBER, 'user_mail', 'WHERE user_id=:user_id', array('user_id' => $user_id));
 	}
 }
 ?>
