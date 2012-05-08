@@ -221,7 +221,7 @@ class Session
 					$this->sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET password = '" . $password . "' WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
 				}
 				
-				if (array_key_exists('modules_parameters', $this->data))
+				if (!array_key_exists('modules_parameters', $this->data))
 				{
 					$this->data['modules_parameters'] = '';
 				}
