@@ -61,11 +61,11 @@ class MemberSanctionManager
 					'user_id' => $user_id
 			));
 			
-			if ($send_confirmation == SEND_MP || $send_confirmation == self::SEND_MP_AND_MP && !empty($content_to_send))
+			if ($send_confirmation == SEND_MP || $send_confirmation == self::SEND_MP_AND_MAIL && !empty($content_to_send))
 			{
 				self::send_mp($user_id, self::$lang['read_only_title'], $content_to_send);
 			}
-			if ($send_confirmation == SEND_MAIL || $send_confirmation == self::SEND_MP_AND_MP && !empty($content_to_send))
+			if ($send_confirmation == SEND_MAIL || $send_confirmation == self::SEND_MP_AND_MAIL && !empty($content_to_send))
 			{
 				self::send_mail(self::$lang['read_only_title'], $content_to_send);
 			}
@@ -120,11 +120,11 @@ class MemberSanctionManager
 			}
 			else
 			{
-				if ($send_confirmation == self::SEND_MP || $send_confirmation == self::SEND_MP_AND_MP && !empty($content_to_send))
+				if ($send_confirmation == self::SEND_MP || $send_confirmation == self::SEND_MP_AND_MAIL && !empty($content_to_send))
 				{
 					self::send_mp($user_id, self::$lang['warning_title'], $content_to_send);
 				}
-				if ($send_confirmation == self::SEND_MAIL || $send_confirmation == self::SEND_MP_AND_MP && !empty($content_to_send))
+				if ($send_confirmation == self::SEND_MAIL || $send_confirmation == self::SEND_MP_AND_MAIL && !empty($content_to_send))
 				{
 					self::send_mail(self::$lang['warning_title'], $content_to_send);
 				}
