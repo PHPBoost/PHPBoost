@@ -99,10 +99,8 @@ class ImageResizer
 			case 'image/gif':
 					return imagecreatefromgif($Image->get_path());
 				break;
-			case 'image/bmp':
-					return imagecreatefrombmp($Image->get_path());
-				break;
-			// TODO Erreur mime non prise en compte
+			default:
+				throw new MimeTypeNotSupportedException($Image->get_mime_type());
 		}
 	}
 	
