@@ -140,13 +140,7 @@ class MemberUserAvatarExtendedField extends AbstractMemberExtendedField
 				$image = new Image($avatar->get_temporary_filename());
 				$resizer = new ImageResizer();
 				
-				$explode = explode('.', $avatar->get_name());
-				$extension = array_pop($explode);
-				
-				$explode = explode('.', $avatar->get_name());
-				$name = $explode[0];
-				
-				$directory = $dir . $name. '_' . $this->key_hash() . '.' . $extension;
+				$directory = $dir . $image->get_name(). '_' . $this->key_hash() . '.' . $image->get_extension();
 				$resizer->resize_with_max_values($image, $user_accounts_config->get_max_avatar_height(), $user_accounts_config->get_max_avatar_height(), $directory);
 				
 				return $directory;
