@@ -169,7 +169,7 @@ class UserEditProfileController extends AbstractController
 		
 		MemberExtendedFieldsService::register_fields($this->form, $user_id);
 		
-		$this->tpl->put('MSG', MessageHelper::display(LangLoader::get_message('process.success', 'errors-common'), MessageHelper::SUCCESS));
+		$redirect = true;
 		
 		$old_password = $this->form->get_value('old_password');
 		$new_password = $this->form->get_value('new_password');
@@ -183,11 +183,17 @@ class UserEditProfileController extends AbstractController
 			}
 			else
 			{
+				$redirect = false;
 				$this->tpl->put('MSG', MessageHelper::display($this->lang['profile.edit.password.error'], MessageHelper::NOTICE));
 			}
 		}
 		
 		StatsCache::invalidate();
+		
+		if ($redirect)
+		{
+			AppContext::get_response()->redirect(UserUrlBuilder::edit_profile($user_id));
+		}
 	}
 
 	private function build_response()
