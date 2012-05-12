@@ -39,12 +39,12 @@ class PollModuleMiniMenu extends ModuleMiniMenu
 		$poll_config = PollConfig::load();
 		$config_cookie_name = $poll_config->get_cookie_name();
 		
-	    if (!empty($_array_poll) && $_array_poll != array() && strpos(SCRIPT, '/poll/poll.php') === false)
+	    if (!empty($_array_poll) && $_array_poll != array() && !Url::is_current_url('/poll/poll.php'))
 	    {
 	    	//Chargement de la langue du module.
 	    	load_module_lang('poll');
 			$rand = array_rand($_array_poll);
-			if (in_array($rand, $_array_poll))
+			if (array_key_exists($rand, $_array_poll))
 			{
 				$poll_mini = $_array_poll[$rand]; //Sondage aléatoire.
 	
