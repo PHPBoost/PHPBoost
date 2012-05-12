@@ -154,7 +154,7 @@ class AdminCommentsConfigController extends AdminController
 	 	$this->configuration->set_forbidden_tags($this->form->get_value('forbidden_tags'));
 		$this->configuration->set_max_links_comment($this->form->get_value('max_links_comment'));
 		$this->configuration->set_order_display_comments($this->form->get_value('order_display_comments')->get_raw_value());
-		$this->configuration->set_approbation_comments($this->form->get_value('approbation_comments')->get_raw_value());
+		//$this->configuration->set_approbation_comments($this->form->get_value('approbation_comments')->get_raw_value());
 		CommentsConfig::save();
 	}
 	
