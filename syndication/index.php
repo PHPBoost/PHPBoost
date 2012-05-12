@@ -29,8 +29,8 @@ define('PATH_TO_ROOT', '..');
 require_once PATH_TO_ROOT . '/kernel/init.php';
 
 $url_controller_mappers = array(
-	new UrlControllerMapper('DisplayRssSyndicationController', '`^/rss(?:/([a-z0-9]+))?/?([0-9]+)?/?([a-z0-9]+)?/?$`', array('module_id', 'module_category_id', 'feed_name')),
-	new UrlControllerMapper('DisplayAtomSyndicationController', '`^/atom(?:/([a-z0-9]+))?/?([0-9]+)?/?([a-z0-9]+)?/?$`', array('module_id', 'module_category_id', 'feed_name')),
+	new UrlControllerMapper('DisplayRssSyndicationController', '`^/rss(?:/([A-Za-z0-9]+))?/?([0-9]+)?/?([A-Za-z0-9]+)?/?$`', array('module_id', 'module_category_id', 'feed_name')),
+	new UrlControllerMapper('DisplayAtomSyndicationController', '`^/atom(?:/([A-Za-z0-9]+))?/?([0-9]+)?/?([A-Za-z0-9]+)?/?$`', array('module_id', 'module_category_id', 'feed_name')),
 );
 
 header("Content-Type: application/xml; charset=iso-8859-1");
