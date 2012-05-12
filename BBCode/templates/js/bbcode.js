@@ -257,15 +257,15 @@ var BBcodeEditor_Core = Class.create(
 			var tmp = elt.getStyle('display');
 			if (tmp != 'none') {
 				tmp = 'none'; 
-				elt.fade({duration: 0.3});
+				elt.fade({duration: 0.1});
 				this.open_element = null;
 			}
 			else {
 				tmp = 'block';
-				elt.appear({duration: 0.5});
+				elt.appear({duration: 0.1});
 				if (this.open_element != null && this.open_element != name)
 				{
-					$(this.open_element).fade({duration: 0.3});
+					$(this.open_element).fade({duration: 0.1});
 				}
 				this.open_element = name;
 			}
@@ -537,7 +537,7 @@ var BBcodeEditor_Core = Class.create(
 			{
 				menu.observe('mouseleave', function(e) { 
 					if(this.id)
-						Element.fade.delay(0.5, this);
+						Element.fade.delay(0.5, this, {duration: 0.1});
 				});
 			}
 		}.bind(this));
