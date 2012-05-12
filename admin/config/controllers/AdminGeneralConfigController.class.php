@@ -108,7 +108,7 @@ class AdminGeneralConfigController extends AdminController
 
 		$fieldset->add_field(new FormFieldThemesSelect('default_theme', $this->lang['general-config.default_theme'], $this->user_accounts_config->get_default_theme(),
 			array('required' => true, 'events' => array('change' => $this->construct_javascript_picture_theme() .
-			' var theme_id = HTMLForms.getField("default_theme").get_value();
+			' var theme_id = HTMLForms.getField("default_theme").getValue();
 			document.images[\'img_theme\'].src = theme[theme_id];'))
 		));
 		
@@ -193,7 +193,7 @@ class AdminGeneralConfigController extends AdminController
     
 	private function get_picture_theme($theme_id = null)
     {
-        $theme_id = $theme_id !== null ? $theme_id : get_utheme();
+        $theme_id = $theme_id !== null ? $theme_id : $this->user_accounts_config->get_default_theme();
         $pictures = ThemeManager::get_theme($theme_id)->get_configuration()->get_pictures();
     	return Url::to_rel('/templates/' . $theme_id . '/' . $pictures[0]);
     }
