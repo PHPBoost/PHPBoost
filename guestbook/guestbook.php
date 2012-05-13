@@ -52,7 +52,7 @@ if ($del && !empty($id_get)) //Suppression.
 		$Session->csrf_get_protect(); //Protection csrf
 	
 		$Sql->query_inject("DELETE FROM " . PREFIX . "guestbook WHERE id = '" . $id_get . "'", __LINE__, __FILE__);
-		$previous_id = $this->sql_querier->query("SELECT MAX(id) FROM " . PREFIX . "guestbook", __LINE__, __FILE__);
+		$previous_id = $Sql->query("SELECT MAX(id) FROM " . PREFIX . "guestbook", __LINE__, __FILE__);
 	
 		GuestbookMessagesCache::invalidate();
 	
