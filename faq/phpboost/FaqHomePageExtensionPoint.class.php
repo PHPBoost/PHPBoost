@@ -201,6 +201,7 @@ class FaqHomePageExtensionPoint implements HomePageExtensionPoint
 		}
 
 		$tpl->put_all(array(
+			'TITLE' => TITLE,
 			'L_NO_QUESTION_THIS_CATEGORY' => $FAQ_LANG['faq_no_question_here'],
 			'L_CAT_MANAGEMENT' => $FAQ_LANG['category_manage'],
 			'L_EDIT' => $FAQ_LANG['update'],
