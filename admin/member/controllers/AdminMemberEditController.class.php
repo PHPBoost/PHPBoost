@@ -152,6 +152,12 @@ class AdminMemberEditController extends AdminController
 	{
 		$user_id = $this->user->get_id();
 		
+		try {
+			MemberExtendedFieldsService::register_fields($this->form, $user_id);
+		} catch (MemberExtendedFieldErrorsMessageException $e) {
+			$this->tpl->put('MSG', MessageHelper::display($e->getMessage(), MessageHelper::NOTICE));
+		}
+		
 		$this->user->set_pseudo($this->form->get_value('login'));
 		$this->user->set_level($this->form->get_value('rank')->get_raw_value());
 		$this->user->set_groups($this->form->get_value('groups'));
@@ -171,8 +177,6 @@ class AdminMemberEditController extends AdminController
 		{
 			UserService::delete_account('WHERE user_id=:user_id', array('user_id' => $user_id));
 		}
-		
-		MemberExtendedFieldsService::register_fields($this->form, $user_id);
 		
 		if ($this->form->get_value('password') !== '')
 		{

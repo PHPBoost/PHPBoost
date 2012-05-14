@@ -357,6 +357,11 @@ class HTMLForm
 		$html_id = Url::encode_rewrite($html_id);
 		$this->html_id = str_replace('-', '_', $html_id);
 	}
+	
+	public function get_html_id()
+	{
+		return $this->html_id;
+	}
 
 	/**
 	 * @desc Sets the form's target

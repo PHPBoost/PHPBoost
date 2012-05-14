@@ -183,13 +183,17 @@ class UserRegistrationController extends AbstractController
 			$user->set_theme($this->form->get_value('theme')->get_raw_value());
 		}
 		
-		MemberExtendedFieldsService::register_fields($this->form, $user_id);
-		
-		UserRegistrationService::send_email_confirmation($user_id, $user->get_email(), $user_authentification->get_login(), $user_authentification->get_login(), $this->form->get_value('password'));
-		
-		UserRegistrationService::connect_user($user_id, $user_authentification->get_password_hashed());
-		
-		StatsCache::invalidate();
+		try {
+			MemberExtendedFieldsService::register_fields($this->form, $user_id);
+			
+			UserRegistrationService::send_email_confirmation($user_id, $user->get_email(), $user_authentification->get_login(), $user_authentification->get_login(), $this->form->get_value('password'));
+			
+			UserRegistrationService::connect_user($user_id, $user_authentification->get_password_hashed());
+			
+			StatsCache::invalidate();
+		} catch (MemberExtendedFieldErrorsMessageException $e) {
+			$this->tpl->put('MSG', MessageHelper::display($e->getMessage(), MessageHelper::NOTICE));
+		}
 	}
 	
 	private function confirm_registration_message()

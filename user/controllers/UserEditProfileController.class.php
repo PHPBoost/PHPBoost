@@ -140,6 +140,8 @@ class UserEditProfileController extends AbstractController
 	
 	private function save()
 	{
+		$redirect = true;
+		
 		$user_id = $this->user->get_id();
 		
 		if ($this->form->get_value('delete_account'))
@@ -167,9 +169,12 @@ class UserEditProfileController extends AbstractController
 			UserService::update($this->user, 'WHERE user_id=:id', array('id' => $user_id));
 		}
 		
-		MemberExtendedFieldsService::register_fields($this->form, $user_id);
-		
-		$redirect = true;
+		try {
+			MemberExtendedFieldsService::register_fields($this->form, $user_id);
+		} catch (MemberExtendedFieldErrorsMessageException $e) {
+			$redirect = false;
+			$this->tpl->put('MSG', MessageHelper::display($e->getMessage(), MessageHelper::NOTICE));
+		}
 		
 		$old_password = $this->form->get_value('old_password');
 		$new_password = $this->form->get_value('new_password');
