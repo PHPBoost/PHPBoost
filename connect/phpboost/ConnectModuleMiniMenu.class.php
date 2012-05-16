@@ -80,7 +80,14 @@ class ConnectModuleMiniMenu extends ModuleMiniMenu
 	    			}
 	    		}
 	    	}
-	
+	    	
+			$user_accounts_config = UserAccountsConfig::load();
+	    	$user_avatar = MemberExtendedFieldsService::return_field_member('user_avatar', $user->get_id());
+		    if (empty($user_avatar) || $user_accounts_config->is_default_avatar_enabled())
+			{
+				$user_avatar = '/templates/'. get_utheme() .'/images/'. $user_accounts_config->get_default_avatar_name();
+			}
+
 	    	$tpl->put_all(array(
 	    		'C_ADMIN_AUTH' => $user->check_level(User::ADMIN_LEVEL),
 	    		'C_MODERATOR_AUTH' => $user->check_level(User::MODERATOR_LEVEL),
@@ -96,6 +103,7 @@ class ConnectModuleMiniMenu extends ModuleMiniMenu
 	    		'U_USER_PM' => UserUrlBuilder::personnal_message($user->get_attribute('user_id'))->absolute(),
 	    		'U_USER_ID' => UserUrlBuilder::home_profile()->absolute(),
 	    		'U_DISCONNECT' => UserUrlBuilder::disconnect()->absolute(),
+	    		'U_AVATAR_IMG' => $user_avatar,
 	    		'L_NBR_PM' => ($user->get_attribute('user_pm') > 0 ? ($user->get_attribute('user_pm') . ' ' . (($user->get_attribute('user_pm') > 1) ? $LANG['message_s'] : $LANG['message'])) : $LANG['private_messaging']),
 	    		'L_PROFIL' => $LANG['profile'],
 	    		'L_ADMIN_PANEL' => $LANG['admin_panel'],
