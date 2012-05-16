@@ -150,7 +150,7 @@ class CurrentUser extends User
 		}
 		AppContext::get_current_user()->set_locale($lang);
 	}
-
+	
 	private function build_groups()
 	{
 		$groups_auth = array();

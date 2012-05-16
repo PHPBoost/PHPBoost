@@ -38,7 +38,6 @@ class CSSCacheManager
 	public function __construct()
 	{
 		$this->css_optimizer = new CSSFileOptimizer();
-		$this->optimize_file_intensity = CSSFileOptimizer::HIGH_OPTIMIZATION;
 	}
 	
 	public function set_files(Array $files)
@@ -55,11 +54,11 @@ class CSSCacheManager
 		$this->cache_file_location = $location;
 	}
 	
-	public function execute()
+	public function execute($intensity = CSSFileOptimizer::LOW_OPTIMIZATION)
 	{
 		if (!file_exists($this->cache_file_location))
 		{
-			$this->force_regenerate_cache();
+			$this->force_regenerate_cache($intensity);
 		}
 		else
 		{
@@ -67,7 +66,7 @@ class CSSCacheManager
 			{
 				if(filemtime($file) > filemtime($this->cache_file_location))
 				{
-					$this->force_regenerate_cache();
+					$this->force_regenerate_cache($intensity);
 					break;
 				}
 			}
@@ -79,9 +78,9 @@ class CSSCacheManager
 		return Url::to_rel($this->cache_file_location);
 	}
 	
-	public function force_regenerate_cache()
+	public function force_regenerate_cache($intensity)
 	{
-		$this->css_optimizer->optimize($this->optimize_file_intensity);
+		$this->css_optimizer->optimize($intensity);
 		$this->css_optimizer->export_to_file($this->cache_file_location);
 	}	
 }

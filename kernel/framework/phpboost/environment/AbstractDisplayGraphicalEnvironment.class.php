@@ -41,12 +41,24 @@
 
 	protected function get_theme_css_files_html_code()
 	{
-		$css_cache = new CSSCacheManager();
-		$css_cache->set_files(ThemesCssFilesCache::load()->get_files_for_theme(get_utheme()));
-		$css_cache->set_cache_file_location(PATH_TO_ROOT . '/cache/css/css-cache-theme-' . get_utheme() .'.css');
-		$css_cache->execute();
-		$html_code = '<link rel="stylesheet" href="' . $css_cache->get_cache_file_location() . 
-				'" type="text/css" media="screen, print, handheld" />';
+		$theme_id = get_utheme();
+		$css_cache_config = CSSCacheConfig::load();
+		if ($css_cache_config->is_enabled())
+		{
+			$css_cache = new CSSCacheManager();
+			$css_cache->set_files(ThemesCssFilesCache::load()->get_files_for_theme($theme_id));
+			$css_cache->set_cache_file_location(PATH_TO_ROOT . '/cache/css/css-cache-theme-' . $theme_id .'.css');
+			$css_cache->execute(CSSCacheConfig::load()->get_optimization_level());
+			$html_code = '<link rel="stylesheet" href="' . $css_cache->get_cache_file_location() . '" type="text/css" media="screen, print, handheld" />';
+		}
+		else
+		{
+			$html_code = '';
+			foreach (ThemesCssFilesCache::load()->get_files_for_theme($theme_id) as $file)
+			{
+				$html_code .= '<link rel="stylesheet" href="' . Url::to_rel($file) .	'" type="text/css" media="screen, print, handheld" />';
+			}
+		}
 		return $html_code;
 	}
 	
@@ -58,12 +70,23 @@
 	private function get_css_files_always_displayed_html_code()
 	{
 		$theme_id = get_utheme();
-		$css_cache = new CSSCacheManager();
-		$css_cache->set_files(ModulesCssFilesService::get_css_files_always_displayed($theme_id));
-		$css_cache->set_cache_file_location(PATH_TO_ROOT . '/cache/css/css-cache-modules-' . $theme_id .'.css');
-		$css_cache->execute();
-		$html_code = '<link rel="stylesheet" href="' . $css_cache->get_cache_file_location() . 
-				'" type="text/css" media="screen, print, handheld" />';
+		$css_cache_config = CSSCacheConfig::load();
+		if ($css_cache_config->is_enabled())
+		{
+			$css_cache = new CSSCacheManager();
+			$css_cache->set_files(ModulesCssFilesService::get_css_files_always_displayed($theme_id));
+			$css_cache->set_cache_file_location(PATH_TO_ROOT . '/cache/css/css-cache-modules-' . $theme_id .'.css');
+			$css_cache->execute($css_cache_config->get_optimization_level());
+			$html_code = '<link rel="stylesheet" href="' . $css_cache->get_cache_file_location() . '" type="text/css" media="screen, print, handheld" />';
+		}
+		else
+		{
+			$html_code = '';
+			foreach (ModulesCssFilesService::get_css_files_always_displayed($theme_id) as $file)
+			{
+				$html_code .= '<link rel="stylesheet" href="' . Url::to_rel($file) .	'" type="text/css" media="screen, print, handheld" />';
+			}
+		}
 		return $html_code;
 	}
 	

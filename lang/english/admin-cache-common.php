@@ -54,5 +54,12 @@ $lang['css_cache'] = 'Cache CSS';
 $lang['explain_css_cache'] = '<p>PHPBoost caches all the CSS files provided by the themes and modules. 
 Normally, the display site, a set of css files are going to be loaded. The cache CSS meanwhile, will first optimize files and then create a single CSS file hash.</p>
 <p>Via this page in the administration of PHPBoost, you can clear the cache so as to force CSS to recreate PHPBoost CSS files optimized.</p>';
-
+$lang['explain_css_cache_config'] = '<p>PHPBoost caches all CSS files provided by the themes and modules to improve the time to display pages.
+You through this setup, choose to activate this feature or not and to choose its level of intensity.<br/>
+Disabling this option can allow you to more easily customize your themes.</p>';
+$lang['enable_css_cache'] = 'Enable CSS cache';
+$lang['level_css_cache'] = 'Optimization level';
+$lang['low_level_css_cache'] = 'Low';
+$lang['high_level_css_cache'] = 'High';
+$lang['explain_level_css_cache'] = 'The low level can only remove the tabs and spaces while the upper level fully optimizes your CSS files.';
 ?>
