@@ -54,5 +54,12 @@ $lang['css_cache'] = 'Cache CSS';
 $lang['explain_css_cache'] = '<p>PHPBoost met en cache l\'ensemble des fichiers CSS fournis par les thèmes et modules. 
 En temps normal, à l\'affichage du site, un ensemble de fichiers css vas être chargés. Le système de cache CSS quant à lui, va d\'abord optimiser les fichiers pour ensuite créer un seul et même fichier CSS condensé.</p>
 <p>Via cette page de l\'administration de PHPBoost, vous pouvez vider le cache CSS de façon à forcer PHPBoost à recréer les fichiers CSS optimisés. </p>';
-
+$lang['explain_css_cache_config'] = '<p>PHPBoost met en cache l\'ensemble des fichiers CSS fournis par les thèmes et modules pour améliorer le temps d\'affichage des pages. 
+Vous pouvez à travers cette configuration, choisir d\'activer ou pas cette fonctionnalité et de choisir son niveau d\'intensité. <br/>
+La désactivation de cette option peut vous permettre de personnaliser plus facilement vos thèmes. </p>';
+$lang['enable_css_cache'] = 'Activer le cache CSS';
+$lang['level_css_cache'] = 'Niveau d\'optimisation';
+$lang['low_level_css_cache'] = 'Bas';
+$lang['high_level_css_cache'] = 'Haut';
+$lang['explain_level_css_cache'] = 'Le niveau bas permet de ne supprimer que les tabulations et les espaces tandis que le niveau haut optimise totalement vos fichiers CSS.';
 ?>
