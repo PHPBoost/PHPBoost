@@ -79,6 +79,7 @@ $lang['e_member_ban'] = 'You have been banned! You can retry to connect in';
 $lang['e_member_ban_w'] = 'You have been banned for your behaviour! Contact the administator if you think it\'s an error.';
 $lang['e_unactiv_member'] = 'You still have %d attempt(s) remaining after that you will have to wait 5 minutes to obtain 2 new attempts (10mins for 5) !';
 $lang['e_nomore_test_connect'] = 'You have used all your log in attempts and your account is locked for 5 minutes';
+$lang['e_wrong_password'] = 'The password is incorrect';
 
 //Groups
 $lang['e_already_group'] = 'Member already in group';

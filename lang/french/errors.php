@@ -80,6 +80,7 @@ $lang['e_member_ban_w'] = 'Vous avez été banni pour un comportement abusif! Cont
 $lang['e_unactiv_member'] = 'Votre compte n\'a pas encore été activé !';
 $lang['e_test_connect'] = 'Il vous reste %d essai(s) restant(s) après cela il vous faudra attendre 5 minutes pour obtenir 2 nouveaux essais (10 minutes pour 5) !';
 $lang['e_nomore_test_connect'] = 'Vous avez épuisé tous vos essais de connexion, votre compte est verrouillé pendant 5 minutes';
+$lang['e_wrong_password'] = 'Le mot de passe est incorrect';
 
 //Groupes
 $lang['e_already_group'] = 'Le membre appartient déjà au groupe';
