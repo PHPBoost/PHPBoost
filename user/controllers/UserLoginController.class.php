@@ -97,6 +97,9 @@ class UserLoginController extends AbstractController
 			case 'not_enabled':
 				$this->display_error_message($errors_lang['e_unactiv_member']);				
 			break;
+			case 'wrong_password':
+				$this->display_error_message($errors_lang['e_wrong_password']);
+			break;
 			case 'banned':
 				if (!empty($error_value))
 				{
