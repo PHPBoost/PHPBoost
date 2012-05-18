@@ -121,14 +121,18 @@ class MemberExtendedFieldsService
 						$member_extended_field->set_field_name($extended_field['field_name']);
 						$member_extended_field->set_user_id($user_id);
 						
-						$value = MemberExtendedFieldsFactory::return_value($form, $member_extended_field);
-						$value_rewrite = MemberExtendedFieldsFactory::parse($member_extended_field, $value);
-						$member_extended_field->set_value($value_rewrite);
-						
-						$authorizations = $extended_field['auth'];
-						if (AppContext::get_current_user()->check_auth($authorizations, ExtendedField::READ_EDIT_AND_ADD_AUTHORIZATION))
-						{
-							MemberExtendedFieldsFactory::register($member_extended_field, $member_extended_fields_dao, $form);
+						try {
+							$value = MemberExtendedFieldsFactory::return_value($form, $member_extended_field);
+							$value_rewrite = MemberExtendedFieldsFactory::parse($member_extended_field, $value);
+							$member_extended_field->set_value($value_rewrite);
+							
+							$authorizations = $extended_field['auth'];
+							if (AppContext::get_current_user()->check_auth($authorizations, ExtendedField::READ_EDIT_AND_ADD_AUTHORIZATION))
+							{
+								MemberExtendedFieldsFactory::register($member_extended_field, $member_extended_fields_dao, $form);
+							}
+						} catch (MemberExtendedFieldErrorsMessageException $e) {
+							throw new MemberExtendedFieldErrorsMessageException($e->getMessage());
 						}
 					}
 				}
