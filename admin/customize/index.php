@@ -30,9 +30,9 @@ defined('PATH_TO_ROOT') or define('PATH_TO_ROOT', '../..');
 require_once PATH_TO_ROOT . '/kernel/init.php';
 
 $url_controller_mappers = array(
-	new UrlControllerMapper('AdminCustomizeInterfaceController', '`^/interface(?:/([a-z0-9]+))?/?$`', array('theme')),
+	new UrlControllerMapper('AdminCustomizeInterfaceController', '`^/interface(?:/([A-Za-z0-9-_]+))?/?$`', array('theme')),
 	new UrlControllerMapper('AdminCustomizeFaviconController', '`^/favicon/?$`'),
-	new UrlControllerMapper('AdminCustomizeEditorCSSFilesController', '`^/editor(?:/([a-z0-9]+))?/?(.+)?/?$`', array('id_theme', 'file_name'))
+	new UrlControllerMapper('AdminCustomizeEditorCSSFilesController', '`^/editor(?:/([A-Za-z0-9-_]+))?/?(.+)?/?$`', array('id_theme', 'file_name'))
 );
 DispatchManager::dispatch($url_controller_mappers);
 
