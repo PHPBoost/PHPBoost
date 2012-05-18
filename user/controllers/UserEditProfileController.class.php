@@ -165,7 +165,7 @@ class UserEditProfileController extends AbstractController
 			$this->user->set_locale($this->form->get_value('lang')->get_raw_value());
 			$this->user->set_timezone($this->form->get_value('timezone')->get_raw_value());
 			$this->user->set_editor($this->form->get_value('text-editor')->get_raw_value());
-			$this->user->set_show_email(!$this->form->get_value('email.hide'));
+			$this->user->set_show_email(!$this->form->get_value('user_hide_mail'));
 			UserService::update($this->user, 'WHERE user_id=:id', array('id' => $user_id));
 		}
 		
@@ -185,6 +185,8 @@ class UserEditProfileController extends AbstractController
 			if ($old_password_hashed == $user_authentification->get_password_hashed())
 			{
 				UserService::change_password(KeyGenerator::string_hash($new_password), 'WHERE user_id=:user_id', array('user_id' => $user_id));
+				$redirect = false;
+				$this->tpl->put('MSG', MessageHelper::display(LangLoader::get_message('process.success', 'errors-common'), MessageHelper::SUCCESS, 6));
 			}
 			else
 			{
