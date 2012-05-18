@@ -308,12 +308,12 @@ class Gallery
 			else
 				$Sql->query_inject("UPDATE " . PREFIX . "gallery_cats SET nbr_pics_unaprob = nbr_pics_unaprob - 1 WHERE " . $clause_parent_cats_to, __LINE__, __FILE__);
 		}
-		
+
 		//Suppression physique.
-		$file = new File('pics/' . $uniq);
+		$file = new File(PATH_TO_ROOT . '/gallery/pics/' . $info_pics['path']);
 		$file->delete();
 				
-		$file = new File('pics/thumbnails/' . $info_pics['path']);
+		$file = new File(PATH_TO_ROOT . '/gallery/pics/thumbnails/' . $info_pics['path']);
 		$file->delete();
 
 		NotationService::delete_notes_id_in_module('gallery', $id_pics);
