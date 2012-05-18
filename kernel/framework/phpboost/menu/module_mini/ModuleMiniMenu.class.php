@@ -71,16 +71,7 @@ class ModuleMiniMenu extends Menu
         $class->set_block(' . $this->block . '); 
         $class->set_block_position(' . $this->position . ');';
         $cache_str = '$__menu.= $class->display(); $__menu.= \'';
-        return $load_class . $this->cache_export_begin() . $cache_str . parent::cache_export_end();
-    }
-    
-	public function cache_export_begin()
-    {
-        if (is_array($this->auth) && !empty($this->auth))
-        {
-        	return 'if ($User->check_auth(' . var_export($this->auth, true) . ',1)){';
-        }
-        return '';
+        return $this->cache_export_begin() . $load_class . $cache_str . parent::cache_export_end();
     }
 }
 ?>
