@@ -224,7 +224,7 @@ class ShoutboxHomePageExtensionPoint implements HomePageExtensionPoint
 			if (empty($row['user_avatar'])) 
 				$user_avatar = $user_accounts_config->is_default_avatar_enabled() ? '<img src="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/' .  $user_accounts_config->get_default_avatar_name() . '" alt="" />' : '';
 			else
-				$user_avatar = '<img src="' . $row['user_avatar'] . '" alt=""	/>';
+				$user_avatar = '<img src="' . Url::to_rel($row['user_avatar']) . '" alt=""	/>';
 			
 			//Affichage du sexe et du statut (connecté/déconnecté).	
 			$user_sex = '';
