@@ -132,7 +132,7 @@ class MemberUserAvatarExtendedField extends AbstractMemberExtendedField
 		elseif(UserAccountsConfig::load()->is_avatar_upload_enabled() && !empty($avatar))
 		{
 			$user_accounts_config = UserAccountsConfig::load();
-			$dir = PATH_TO_ROOT .'/images/avatars/';
+			$dir = '/images/avatars/';
 
 			if ($user_accounts_config->is_avatar_auto_resizing_enabled())
 			{
@@ -151,7 +151,7 @@ class MemberUserAvatarExtendedField extends AbstractMemberExtendedField
 					$name = $explode[0];
 					
 					$directory = $dir . $name . '_' . $this->key_hash() . '.' . $extension;
-					$resizer->resize_with_max_values($image, $user_accounts_config->get_max_avatar_height(), $user_accounts_config->get_max_avatar_height(), $directory);
+					$resizer->resize_with_max_values($image, $user_accounts_config->get_max_avatar_height(), $user_accounts_config->get_max_avatar_height(), PATH_TO_ROOT . $directory);
 					
 					return $directory;
 				}
@@ -162,7 +162,7 @@ class MemberUserAvatarExtendedField extends AbstractMemberExtendedField
 			}
 			else
 			{
-				$Upload = new Upload($dir);
+				$Upload = new Upload(PATH_TO_ROOT . $dir);
 
 				$Upload->file($form->get_html_id() . '_upload_avatar', '`([A-Za-z0-9()_-])+\.(jpg|gif|png|bmp)+$`i', Upload::UNIQ_NAME, $user_accounts_config->get_max_avatar_weight() * 1024);
 				$upload_error = $Upload->get_error();
