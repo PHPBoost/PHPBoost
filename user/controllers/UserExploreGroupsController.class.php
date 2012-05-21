@@ -76,7 +76,7 @@ class UserExploreGroupsController extends AbstractController
 				'PROFILE_LINK' => UserUrlBuilder::profile($user_id)->absolute(),
 				'PSEUDO' => $user['login'],
 				'U_AVATAR' => empty($user['user_avatar']) && $this->user_account_config->is_default_avatar_enabled() ? 
-					PATH_TO_ROOT .'/templates/' . get_utheme() . '/images/' .  $this->user_account_config->get_default_avatar_name() : $user['user_avatar'],
+					PATH_TO_ROOT .'/templates/' . get_utheme() . '/images/' .  $this->user_account_config->get_default_avatar_name() : Url::to_rel($user['user_avatar']),
 				'STATUS' => UserService::get_level_lang($user['level'])
 			));
 		}

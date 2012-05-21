@@ -324,7 +324,7 @@ class GuestbookHomePageExtensionPoint implements HomePageExtensionPoint
 			}
 			else
 			{
-				$user_avatar = '<img src="' . $row['user_avatar'] . '" alt="" />';
+				$user_avatar = '<img src="' . Url::to_rel($row['user_avatar']) . '" alt="" />';
 			}
 
 			//Affichage du sexe et du statut (connect�/d�connect�).

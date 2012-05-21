@@ -662,7 +662,7 @@ elseif (!empty($pm_id_get)) //Messages associés à la conversation.
 		if (empty($row['user_avatar']))
 			$user_avatar = UserAccountsConfig::load()->is_default_avatar_enabled() ? '<img src="../templates/' . get_utheme() . '/images/' .  UserAccountsConfig::load()->get_default_avatar_name() . '" alt="" />' : '';
 		else
-			$user_avatar = '<img src="' . $row['user_avatar'] . '" alt=""	/>';
+			$user_avatar = '<img src="' . Url::to_rel($row['user_avatar']) . '" alt=""	/>';
 			
 		//Affichage du sexe et du statut (connecté/déconnecté).
 		$user_sex = '';
