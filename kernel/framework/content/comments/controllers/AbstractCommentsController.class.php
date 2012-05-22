@@ -29,13 +29,16 @@ class AbstractCommentsController extends AbstractController
 {
 	protected $module_id;
 	protected $id_in_module;
+	protected $topic_identifier;
 	protected $provider;
 	
 	public function execute(HTTPRequest $request)
 	{
 		$this->module_id = $request->get_poststring('module_id', '');
 		$this->id_in_module = $request->get_poststring('id_in_module', '');
-		$this->provider = CommentsProvidersService::get_provider($this->module_id);
+		$this->topic_identifier = $request->get_poststring('topic_identifier', '');
+		$this->provider = CommentsProvidersService::get_provider($this->module_id, $this->topic_identifier);
+		$this->provider->set_id_in_module($this->id_in_module);
 	}
 	
 	public function is_authorized_read()
@@ -56,6 +59,11 @@ class AbstractCommentsController extends AbstractController
 	public function get_id_in_module()
 	{
 		return $this->id_in_module;
+	}
+	
+	public function get_topic_identifier()
+	{
+		return $this->topic_identifier;
 	}
 	
 	public function get_authorizations()

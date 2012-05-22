@@ -34,7 +34,7 @@ class AjaxLockCommentsTopicController extends AbstractCommentsController
 		$comments_lang = LangLoader::get('comments-common');
 		if ($this->get_authorizations()->is_authorized_moderation())
 		{
-			CommentsManager::lock_topic($this->module_id, $this->id_in_module);
+			CommentsManager::lock_topic($this->module_id, $this->id_in_module, $this->topic_identifier);
 			
 			$object = array(
 				'success' => true,

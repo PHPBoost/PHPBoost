@@ -171,8 +171,8 @@ class KernelSetup
 			'id_topic' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'message' => array('type' => 'text', 'length' => 65000),
 			'user_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'name_visitor' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
-			'ip_visitor' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
+			'pseudo' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
+			'user_ip' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
 			'note' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'timestamp' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0)
 		);
@@ -187,6 +187,7 @@ class KernelSetup
 		$fields = array(
 			'id_topic' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true),
 			'module_id' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
+			'topic_identifier' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "'default'"),	
 			'id_in_module' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'is_locked' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'number_comments' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),

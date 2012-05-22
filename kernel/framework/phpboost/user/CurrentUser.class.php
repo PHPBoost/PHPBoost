@@ -48,6 +48,7 @@ class CurrentUser extends User
 		$this->set_editor($this->user_data['user_editor']);
 		
 		$this->login = $this->user_data['login'];
+		$this->pseudo = $this->user_data['login'];
 		$this->build_groups();
 	}
 	

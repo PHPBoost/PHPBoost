@@ -4,7 +4,7 @@
 	var CommentsService = new CommentsService();
 	Event.observe(window, 'load', function() {
 		$('refresh_comments').observe('click', function() {
-			CommentsService.refresh_comments_list(${escapejs(MODULE_ID)}, ${escapejs(ID_IN_MODULE)});
+			CommentsService.refresh_comments_list(${escapejs(MODULE_ID)}, ${escapejs(ID_IN_MODULE)}, ${escapejs(TOPIC_IDENTIFIER)});
 		});
 	});
 //-->

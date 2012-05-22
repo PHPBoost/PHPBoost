@@ -75,8 +75,8 @@ class PagesModuleUpdateVersion extends ModuleUpdateVersion
 			$this->querier->insert(PREFIX . 'comments', array(
 				'id_topic' => $id_topic,
 				'user_id' => $row['user_id'],
-				'name_visitor' => $row['login'],
-				'ip_visitor' => $row['user_ip'],
+				'pseudo' => $row['login'],
+				'user_ip' => $row['user_ip'],
 				'timestamp' => $row['timestamp'],
 				'message' => $row['contents']
 			));

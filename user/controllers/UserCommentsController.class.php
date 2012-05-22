@@ -83,7 +83,7 @@ class UserCommentsController extends AbstractController
 			$edit_comment_url = PATH_TO_ROOT . $row['path'] . '&edit_comment=' . $row['id'] . '#comments_message';
 			$delete_comment_url = PATH_TO_ROOT . $row['path'] . '&delete_comment=' . $row['id'] . '#comments_list';
 				
-			$template->assign_block_vars('comments_list', array(
+			$template->assign_block_vars('comments', array(
 				'MESSAGE' => $row['message'],
 				'COMMENT_ID' => $row['id'],
 				'EDIT_COMMENT' => $edit_comment_url,
@@ -137,10 +137,14 @@ class UserCommentsController extends AbstractController
 	
 	private function build_select()
 	{
+		$extensions_point = CommentsProvidersService::get_extension_point();
 		$modules = array(new FormFieldSelectChoiceOption(LangLoader::get_message('view_all_comments', 'admin'), ''));
 		foreach (ModulesManager::get_activated_modules_map() as $id => $module)
 		{
-			$modules[] = new FormFieldSelectChoiceOption($module->get_configuration()->get_name(), $id);
+			if (array_key_exists($id, $extensions_point))
+			{
+				$modules[] = new FormFieldSelectChoiceOption($module->get_configuration()->get_name(), $id);
+			}
 		}
 		return $modules;
 	}

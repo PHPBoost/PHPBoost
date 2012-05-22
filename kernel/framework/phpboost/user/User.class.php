@@ -40,6 +40,7 @@ class User
 	const ADMIN_LEVEL = 2;
 	
 	protected $id = -1;
+	protected $pseudo = '';
 	protected $level = -1;
 	protected $groups = array();
 

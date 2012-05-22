@@ -41,37 +41,6 @@ class CommentsKernelUpdateVersion extends KernelUpdateVersion
 	{
 		$this->create_comments_topic_table();
 		$this->create_comments_table();
-		/*
-		$this->add_comments_rows();
-		$this->rename_comments_rows();
-		$result = self::$db_querier->select_rows(PREFIX .'com', array('*'));
-		while ($row = $result->fetch())
-		{
-			$id_topic = $this->querier->insert(PREFIX . 'comments_topic', array(
-				'module_id' => $row['script'], 
-				'id_in_module' => $row['idprov'],
-				'path' => $row['path']
-			));
-			
-			$this->querier->update(PREFIX . 'com', array(
-				'id_topic' => $id_topic,
-				'name_visitor' => '', 
-				'timestamp' => $row['timestamp'],
-				'note' => '',
-				'name_visitor' => '', 
-				'timestamp' => $row['timestamp'],
-				'note' => ''
-			), 'WHERE id=:id', array('id' => $row['idcom']));
-		}
-		*/
-	}
-	
-	private function rename_comments_rows()
-	{
-		/*'idcom' => 'id',
-		'contents' => 'message'
-		'user_ip' => 'ip_visitor'
-		*/
 	}
 	
 	private function add_comments_rows()
@@ -105,7 +74,7 @@ class CommentsKernelUpdateVersion extends KernelUpdateVersion
 			'message' => array('type' => 'text', 'length' => 65000),
 			'user_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'name_visitor' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
-			'ip_visitor' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
+			'ip' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
 			'note' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'timestamp' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0)
 		);

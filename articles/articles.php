@@ -158,7 +158,7 @@ if (!empty($idart) && isset($cat) )
 	{
 		$comments_topic = new ArticlesCommentsTopic();
 		$comments_topic->set_id_in_module($idart);
-		$comments_topic->set_url(new Url('/articles/articles?cat=' . $idartcat . '&amp;id=' . $idart . '&com=0'));
+		$comments_topic->set_url(new Url('/articles/articles.php?cat=' . $idartcat . '&amp;id=' . $idart . '&com=0'));
 		$tpl->put_all(array(
 			'COMMENTS' => CommentsService::display($comments_topic)->render()
 		));

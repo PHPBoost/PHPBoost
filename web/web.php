@@ -72,7 +72,7 @@ if (!empty($idweb) && !empty($CAT_WEB[$idcat]['name']) && !empty($idcat)) //Cont
 		'DEL' => $del
 	));
 	
-	
+	$comments_topic = new WebCommentsTopic();
 	$tpl->put_all(array(
 		'C_DISPLAY_WEB' => true,
 		'IDWEB' => $web['id'],		
@@ -84,7 +84,7 @@ if (!empty($idweb) && !empty($CAT_WEB[$idcat]['name']) && !empty($idcat)) //Cont
 		'COMPT' => $web['compt'],
 		'THEME' => get_utheme(),
 		'LANG' => get_ulang(),
-		'COM' => '<a href="'. PATH_TO_ROOT .'/web/web' . url('.php?cat=' . $idcat . '&amp;id=' . $idweb . '&amp;com=0', '-' . $idcat . '-' . $idweb . '.php?com=0') .'">'. CommentsService::get_number_and_lang_comments('web', $web['id']) . '</a>',
+		'COM' => '<a href="'. PATH_TO_ROOT .'/web/web' . url('.php?cat=' . $idcat . '&amp;id=' . $idweb . '&amp;com=0', '-' . $idcat . '-' . $idweb . '.php?com=0') .'">'. $comments_topic->get_number_and_lang_comments() . '</a>',
 		'KERNEL_NOTATION' => NotationService::display_active_image($notation),
 		'U_WEB_CAT' => url('.php?cat=' . $idcat, '-' . $idcat . '.php'),
 		'L_DESC' => $LANG['description'],
@@ -97,7 +97,6 @@ if (!empty($idweb) && !empty($CAT_WEB[$idcat]['name']) && !empty($idcat)) //Cont
 	//Affichage commentaires.
 	if (isset($_GET['com']))
 	{
-		$comments_topic = new WebCommentsTopic();
 		$comments_topic->set_id_in_module($idweb);
 		$comments_topic->set_url(new Url('/web/web.php?cat='. $idcat .'&id=' . $web['id'] . '&com=0'));
 		$tpl->put_all(array(
