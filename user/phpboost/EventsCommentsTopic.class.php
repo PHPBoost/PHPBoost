@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                           EventsComments.class.php
+ *                           EventsCommentsTopic.class.php
  *                            -------------------
  *   begin                : September 30, 2011
  *   copyright            : (C) 2011 Kevin MASSY
@@ -25,19 +25,24 @@
  *
  ###################################################*/
 
-class EventsComments extends AbstractCommentsExtensionPoint
+class EventsCommentsTopic extends CommentsTopic
 {
-    public function get_authorizations($module_id, $id_in_module)
+	public function __construct()
+	{
+		parent::__construct('events');
+	}
+	
+    public function get_authorizations()
     {
-            $contribution = ContributionService::find_by_id($id_in_module);
-            $authorizations = new CommentsAuthorizations();
-            $authorizations->set_authorized_access_module(AppContext::get_current_user()->check_auth($contribution->get_auth(), Contribution::CONTRIBUTION_AUTH_BIT));
-            return $authorizations;
+		$contribution = ContributionService::find_by_id($this->get_id_in_module());
+		$authorizations = new CommentsAuthorizations();
+		$authorizations->set_authorized_access_module(AppContext::get_current_user()->check_auth($contribution->get_auth(), Contribution::CONTRIBUTION_AUTH_BIT));
+		return $authorizations;
     }
 
-    public function is_display($module_id, $id_in_module)
+    public function is_display()
     {
-            return true;
+		return true;
     }
 }
 ?>

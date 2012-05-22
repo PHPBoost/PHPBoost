@@ -1,9 +1,9 @@
 <?php
 /*##################################################
- *                           DownloadComments.class.php
+ *                           MediaCommentsTopic.class.php
  *                            -------------------
  *   begin                : September 23, 2011
- *   copyright            : (C) 2011 Kévin MASSY
+ *   copyright            : (C) 2011 Kevin MASSY
  *   email                : soldier.weasel@gmail.com
  *
  *
@@ -25,44 +25,45 @@
  *
  ###################################################*/
 
-class DownloadComments extends AbstractCommentsExtensionPoint
+class MediaCommentsTopic extends CommentsTopic
 {
-	public function get_authorizations($module_id, $id_in_module)
+	public function __construct()
 	{
-		global $DOWNLOAD_CATS, $CONFIG_DOWNLOAD;
+		parent::__construct('media');
+	}
+	
+	public function get_authorizations()
+	{
+		global $MEDIA_CATS, $CONFIG_MEDIA;
 		
 		$cache = new Cache();
-		$cache->load($module_id);
+		$cache->load($this->get_module_id());
 		
-		require_once(PATH_TO_ROOT .'/'. $module_id . '/download_auth.php');
+		require_once(PATH_TO_ROOT .'/'. $this->get_module_id() . '/media_constant.php');
 		
-		$id_cat = $this->get_categorie_id($module_id, $id_in_module);
+		$id_cat = $this->get_categorie_id();
 		
-		$cat_authorizations = $DOWNLOAD_CATS[$id_cat]['auth'];
+		$cat_authorizations = $MEDIA_CATS[$id_cat]['auth'];
 		if (!is_array($cat_authorizations))
 		{
-			$cat_authorizations = $CONFIG_DOWNLOAD['global_auth'];
+			$cat_authorizations = $CONFIG_MEDIA['root']['auth'];
 		}
 		$authorizations = new CommentsAuthorizations();
-		$authorizations->set_authorized_access_module(AppContext::get_current_user()->check_auth($cat_authorizations, DOWNLOAD_READ_CAT_AUTH_BIT));
+		$authorizations->set_authorized_access_module(AppContext::get_current_user()->check_auth($cat_authorizations, MEDIA_AUTH_READ));
 		return $authorizations;
 	}
 	
-	public function is_display($module_id, $id_in_module)
+	public function is_display()
 	{
-		$columns = array('approved', 'visible');
-		$condition = 'WHERE id = :id_in_module';
-		$parameters = array('id_in_module' => $id_in_module);
-		$row = PersistenceContext::get_querier()->select_single_row(PREFIX . 'download', $columns, $condition, $parameters);
-		return (bool)$row['approved'] && (bool)$row['visible'];
+		return true;
 	}
-	
-	private function get_categorie_id($module_id, $id_in_module)
+
+	private function get_categorie_id()
 	{
 		$columns = 'idcat';
 		$condition = 'WHERE id = :id_in_module';
-		$parameters = array('id_in_module' => $id_in_module);
-		return PersistenceContext::get_querier()->get_column_value(PREFIX . 'download', $columns, $condition, $parameters);
+		$parameters = array('id_in_module' => $this->get_id_in_module());
+		return PersistenceContext::get_querier()->get_column_value(PREFIX . 'media', $columns, $condition, $parameters);
 	}
 }
 ?>

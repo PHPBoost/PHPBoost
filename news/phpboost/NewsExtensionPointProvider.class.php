@@ -106,7 +106,9 @@ class NewsExtensionPointProvider extends ExtensionPointProvider
 	
 	public function comments()
 	{
-		return new NewsComments();
+		return new CommentsTopics(array(
+			new NewsCommentsTopic()
+		));
 	}
 
 	private function create_module_map_sections($id_cat, $auth_mode)

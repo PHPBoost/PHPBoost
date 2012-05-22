@@ -34,7 +34,9 @@ class EventsExtensionPointProvider extends ExtensionPointProvider
 
 	public function comments()
 	{
-		return new EventsComments();
+		return new CommentsTopics(array(
+			new EventsCommentsTopic()
+		));
 	}
 }
 ?>

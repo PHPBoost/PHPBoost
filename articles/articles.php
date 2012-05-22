@@ -156,8 +156,7 @@ if (!empty($idart) && isset($cat) )
 	//Affichage commentaires.
 	if (isset($_GET['com']))
 	{
-		$comments_topic = new CommentsTopic();
-		$comments_topic->set_module_id('articles');
+		$comments_topic = new ArticlesCommentsTopic();
 		$comments_topic->set_id_in_module($idart);
 		$comments_topic->set_url(new Url('/articles/articles?cat=' . $idartcat . '&amp;id=' . $idart . '&com=0'));
 		$tpl->put_all(array(

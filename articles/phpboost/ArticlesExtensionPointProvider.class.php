@@ -96,7 +96,9 @@ class ArticlesExtensionPointProvider extends ExtensionPointProvider
 	
 	public function comments()
 	{
-		return new ArticlesComments();
+		return new CommentsTopics(array(
+			new ArticlesCommentsTopic()
+		));
 	}
 }
 ?>

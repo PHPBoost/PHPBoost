@@ -89,7 +89,9 @@ class DownloadExtensionPointProvider extends ExtensionPointProvider
 	
 	public function comments()
 	{
-		return new DownloadComments();
+		return new CommentsTopics(array(
+			new DownloadCommentsTopic()
+		));
 	}
 	
 	public function home_page()

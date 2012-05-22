@@ -90,7 +90,9 @@ class PagesExtensionPointProvider extends ExtensionPointProvider
 	
 	public function comments()
 	{
-		return new PagesComments();
+		return new CommentsTopics(array(
+			new PagesCommentsTopic()
+		));
 	}
 }
 ?>

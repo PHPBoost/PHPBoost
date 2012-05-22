@@ -1,9 +1,9 @@
 <?php
 /*##################################################
- *                           MediaComments.class.php
+ *                           PagesCommentsTopic.class.php
  *                            -------------------
- *   begin                : September 23, 2011
- *   copyright            : (C) 2011 Kévin MASSY
+ *   begin                : April 25, 2012
+ *   copyright            : (C) 2012 Kevin MASSY
  *   email                : soldier.weasel@gmail.com
  *
  *
@@ -25,40 +25,45 @@
  *
  ###################################################*/
 
-class MediaComments extends AbstractCommentsExtensionPoint
+class PagesCommentsTopic extends CommentsTopic
 {
-	public function get_authorizations($module_id, $id_in_module)
+	public function __construct()
 	{
-		global $MEDIA_CATS, $CONFIG_MEDIA;
+		parent::__construct('pages');
+	}
+	
+	public function get_authorizations()
+	{
+		require_once(PATH_TO_ROOT .'/'. $this->get_module_id() . '/pages_defines.php');
 		
-		$cache = new Cache();
-		$cache->load($module_id);
+		$authorizations = PagesConfig::load()->get_authorizations();
+		$page_authorizations = $this->get_page_authorizations();
 		
-		require_once(PATH_TO_ROOT .'/'. $module_id . '/media_constant.php');
-		
-		$id_cat = $this->get_categorie_id($module_id, $id_in_module);
-		
-		$cat_authorizations = $MEDIA_CATS[$id_cat]['auth'];
-		if (!is_array($cat_authorizations))
-		{
-			$cat_authorizations = $CONFIG_MEDIA['root']['auth'];
-		}
 		$authorizations = new CommentsAuthorizations();
-		$authorizations->set_authorized_access_module(AppContext::get_current_user()->check_auth($cat_authorizations, MEDIA_AUTH_READ));
+		if (!empty($page_authorizations))
+		{
+			$authorizations->set_authorized_access_module(AppContext::get_current_user()->check_auth($page_authorizations, READ_PAGE));
+		
+		}
+		else
+		{
+			$authorizations->set_authorized_access_module(AppContext::get_current_user()->check_auth($authorizations, READ_PAGE));
+		
+		}
 		return $authorizations;
 	}
 	
-	public function is_display($module_id, $id_in_module)
+	public function is_display()
 	{
 		return true;
 	}
-
-	private function get_categorie_id($module_id, $id_in_module)
+	
+	private function get_page_authorizations()
 	{
-		$columns = 'idcat';
+		$columns = 'auth';
 		$condition = 'WHERE id = :id_in_module';
-		$parameters = array('id_in_module' => $id_in_module);
-		return PersistenceContext::get_querier()->get_column_value(PREFIX . 'media', $columns, $condition, $parameters);
+		$parameters = array('id_in_module' => $this->get_id_in_module());
+		return PersistenceContext::get_querier()->get_column_value(PREFIX . 'pages', $columns, $condition, $parameters);
 	}
 }
 ?>

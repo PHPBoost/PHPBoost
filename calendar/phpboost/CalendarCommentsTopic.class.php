@@ -1,9 +1,9 @@
 <?php
 /*##################################################
- *                           AbstractCommentsExtensionPoint.class.php
+ *                           CalendarCommentsTopic.class.php
  *                            -------------------
- *   begin                : September 23, 2011
- *   copyright            : (C) 2011 Kevin MASSY
+ *   begin                : May 06, 2011
+ *   copyright            : (C) 2011 Kévin MASSY
  *   email                : soldier.weasel@gmail.com
  *
  *
@@ -25,36 +25,25 @@
  *
  ###################################################*/
 
-abstract class AbstractCommentsExtensionPoint implements CommentsExtensionPoint
+class CalendarCommentsTopic extends CommentsTopic
 {
-	/**
-	 * @param string $module_id
-	 * @param int $id_in_module
-	 * @return class CommentsAuthorizations
-	 */
-	public function get_authorizations($module_id, $id_in_module)
+	public function __construct()
 	{
-		return new CommentsAuthorizations();
+		parent::__construct('calendar');
 	}
 	
-	/**
-	 * @param string $module_id
-	 * @param int $id_in_module
-	 * @return boolean display
-	 */
-	public function is_display($module_id, $id_in_module)
+	public function get_authorizations()
 	{
-		return false;
+		require_once(PATH_TO_ROOT .'/'. $this->get_module_id() . '/calendar_constants.php');
+		
+		$authorizations = new CommentsAuthorizations();
+		$authorizations->set_authorized_access_module(AppContext::get_current_user()->check_auth(CalendarConfig::load()->get_authorizations(), AUTH_CALENDAR_READ));
+		return $authorizations;
 	}
 	
-	/**
-	 * @param string $module_id
-	 * @param int $id_in_module
-	 * @return int number comments display default
-	 */
-	public function get_number_comments_display($module_id, $id_in_module)
+	public function is_display()
 	{
-		return CommentsConfig::load()->get_number_comments_display();
+		return true;
 	}
 }
 ?>

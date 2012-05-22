@@ -56,8 +56,7 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 		
 		$Template = new FileTemplate('gallery/gallery.tpl');
 
-		$comments_topic = new CommentsTopic();
-		$comments_topic->set_module_id('gallery');
+		$comments_topic = new GalleryCommentsTopic();
 
 		$Gallery = new Gallery();
 		
