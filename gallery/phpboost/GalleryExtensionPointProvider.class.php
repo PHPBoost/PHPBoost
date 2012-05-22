@@ -128,7 +128,9 @@ class GalleryExtensionPointProvider extends ExtensionPointProvider
 	
 	public function comments()
 	{
-		return new GalleryComments();
+		return new CommentsTopics(array(
+			new GalleryCommentsTopic()
+		));
 	}
 }
 ?>

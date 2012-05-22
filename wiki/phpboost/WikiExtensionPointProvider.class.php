@@ -115,7 +115,9 @@ class WikiExtensionPointProvider extends ExtensionPointProvider
 	
 	public function comments()
 	{
-		return new WikiComments();
+		return new CommentsTopics(array(
+			new WikiCommentsTopic()
+		));
 	}
 }
 ?>

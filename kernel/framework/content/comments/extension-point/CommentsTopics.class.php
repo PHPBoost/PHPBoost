@@ -1,9 +1,9 @@
 <?php
 /*##################################################
- *                           CommentsExtensionPoint.class.php
+ *                           CommentsTopics.class.php
  *                            -------------------
- *   begin                : September 23, 2011
- *   copyright            : (C) 2011 Kevin MASSY
+ *   begin                : May 22, 2012
+ *   copyright            : (C) 2012 Kevin MASSY
  *   email                : soldier.weasel@gmail.com
  *
  *
@@ -25,15 +25,24 @@
  *
  ###################################################*/
 
-interface CommentsExtensionPoint extends ExtensionPoint
+class CommentsTopics implements CommentsExtensionPoint
 {
-	const EXTENSION_POINT = 'comments';
-
-	function __construct(Array $comments_topics);
+	private $comments_topics = array();
 	
-	/**
-	 * @return class CommentsTopics
-	 */
-	function get_comments_topics();
+	public function __construct(Array $comments_topics)
+	{
+		if (is_array($comments_topics))
+		{
+			foreach ($comments_topics as $topic)
+			{
+				$this->comments_topics[$topic->get_topic_identifier()] = $topic;
+			}
+		}
+	}
+	
+	public function get_comments_topics()
+	{
+		return $this->comments_topics;
+	}
 }
 ?>

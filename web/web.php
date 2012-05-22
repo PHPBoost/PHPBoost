@@ -97,12 +97,11 @@ if (!empty($idweb) && !empty($CAT_WEB[$idcat]['name']) && !empty($idcat)) //Cont
 	//Affichage commentaires.
 	if (isset($_GET['com']))
 	{
-		$comments_topic = new CommentsTopic();
-		$comments_topic->set_module_id('web');
+		$comments_topic = new WebCommentsTopic();
 		$comments_topic->set_id_in_module($idweb);
 		$comments_topic->set_url(new Url('/web/web.php?cat='. $idcat .'&id=' . $web['id'] . '&com=0'));
 		$tpl->put_all(array(
-			'COMMENTS' => CommentsService::display($comments_topic)->render()
+			'COMMENTS' => $comments_topic->display()->render()
 		));
 	}	
 }

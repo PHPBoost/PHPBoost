@@ -40,8 +40,7 @@ if (!$User->check_auth($calendar_config->get_authorizations(), AUTH_CALENDAR_REA
 }
 
 
-$comments_topic = new CommentsTopic();
-$comments_topic->set_module_id('calendar');
+$comments_topic = new CalendarCommentsTopic();
 
 $editor = AppContext::get_content_formatting_service()->get_default_editor();
 $editor->set_identifier('contents');

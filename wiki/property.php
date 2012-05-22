@@ -324,8 +324,7 @@ elseif ($create_redirection > 0) //Création d'une redirection
 }
 elseif (isset($_GET['com']) && $idcom > 0) //Affichage des commentaires
 {
-	$comments_topic = new CommentsTopic();
-	$comments_topic->set_module_id('wiki');
+	$comments_topic = new WikiCommentsTopic();
 	$comments_topic->set_id_in_module($idcom);
 	$comments_topic->set_url(new Url('/wiki/property.php?idcom=' . $idcom . '&amp;com=%s'));
 	

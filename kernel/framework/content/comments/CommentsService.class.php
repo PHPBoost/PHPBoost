@@ -48,23 +48,21 @@ class CommentsService
 		self::$template = new FileTemplate('framework/content/comments/comments.tpl');
 	}
 	
-	public static function display(CommentsTopic $comments_topic)
+	public static function display(CommentsTopic $topic)
 	{
-		$module_id = $comments_topic->get_module_id();
-		$id_in_module = $comments_topic->get_id_in_module();
-		
-		$provider = CommentsProvidersService::get_provider($module_id);
-		$authorizations = $provider->get_authorizations($module_id, $id_in_module);
-		
-		$edit_comment_id = AppContext::get_request()->get_int('edit_comment', 0);
-		$delete_comment_id = AppContext::get_request()->get_int('delete_comment', 0);
-		
+		$module_id = $topic->get_module_id();
+		$id_in_module = $topic->get_id_in_module();
+		$authorizations = $topic->get_authorizations();
+				
 		if (!$authorizations->is_authorized_read())
 		{
 			self::$template->put('KEEP_MESSAGE', MessageHelper::display(self::$comments_lang['comments.not-authorized.read'], MessageHelper::NOTICE, 4));
 		}
 		else
 		{
+			$edit_comment_id = AppContext::get_request()->get_int('edit_comment', 0);
+			$delete_comment_id = AppContext::get_request()->get_int('delete_comment', 0);
+			
 			if (!empty($delete_comment_id))
 			{
 				self::verificate_authorized_edit_or_delete_comment($authorizations, $delete_comment_id);
@@ -99,7 +97,7 @@ class CommentsService
 					}
 					else
 					{
-						$add_comment_form = AddCommentBuildForm::create($module_id, $id_in_module, $comments_topic->get_path());
+						$add_comment_form = AddCommentBuildForm::create($module_id, $id_in_module, $topic->get_path());
 						self::$template->put_all(array(
 							'C_DISPLAY_FORM' => true,
 							'KEEP_MESSAGE' => $add_comment_form->get_message_response(),
@@ -113,7 +111,7 @@ class CommentsService
 				}
 			}
 				
-			$number_comments_display = $provider->get_number_comments_display($module_id, $id_in_module);
+			$number_comments_display = $topic->get_number_comments_display();
 			$number_comments = self::$comments_cache->get_count_comments_by_module($module_id, $id_in_module);
 			
 			self::$template->put_all(array(

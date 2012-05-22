@@ -37,11 +37,13 @@ class CalendarExtensionPointProvider extends ExtensionPointProvider
 		return new CalendarHomePageExtensionPoint();
 	}
 	
-    public function comments()
+	public function comments()
     {
-    	return new CalendarComments();
+    	return new CommentsTopics(array(
+			new CalendarCommentsTopic()
+		));
     }
-    
+	
 	public function css_files()
 	{
 		return new CalendarCssFilesExtensionPoint();

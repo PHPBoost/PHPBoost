@@ -136,8 +136,7 @@ elseif ($id_media > 0)
 	//Affichage commentaires.
 	if (isset($_GET['com']))
 	{
-		$comments_topic = new CommentsTopic();
-		$comments_topic->set_module_id('media');
+		$comments_topic = new MediaCommentsTopic();
 		$comments_topic->set_id_in_module($id_media);
 		$comments_topic->set_url(new Url('/media/media.php?id='. $id_media . '&com=0'));
 		$tpl->put_all(array(

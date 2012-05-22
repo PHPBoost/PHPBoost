@@ -56,7 +56,9 @@ class WebExtensionPointProvider extends ExtensionPointProvider
 	
 	public function comments()
 	{
-		return new WebComments();
+		return new CommentsTopics(array(
+			new WebCommentsTopic()
+		));
 	}
 }
 ?>

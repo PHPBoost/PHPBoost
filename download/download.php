@@ -85,8 +85,7 @@ if ($file_id > 0) //Contenu
 	//Affichage commentaires.
 	if (isset($_GET['com']))
 	{
-		$comments_topic = new CommentsTopic();
-		$comments_topic->set_module_id('download');
+		$comments_topic = new DownloadCommentsTopic();
 		$comments_topic->set_id_in_module($file_id);
 		$comments_topic->set_url(new Url('/download/download.php?id='. $file_id .'&com=0'));
 		$Template->put_all(array(

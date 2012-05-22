@@ -215,8 +215,7 @@ elseif ($id_com > 0)
 	
 	$Template = new FileTemplate('pages/com.tpl');
 	
-	$comments_topic = new CommentsTopic();
-	$comments_topic->set_module_id('pages');
+	$comments_topic = new PagesCommentsTopic();
 	$comments_topic->set_id_in_module($id_com);
 	$comments_topic->set_url(new Url(PagesUrlBuilder::get_link_item_com($id_com,'%s')));
 	$Template->put_all(array(

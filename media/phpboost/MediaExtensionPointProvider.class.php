@@ -91,7 +91,9 @@ class MediaExtensionPointProvider extends ExtensionPointProvider
 	
 	public function comments()
 	{
-		return new MediaComments();
+		return new CommentsTopics(array(
+			new MediaCommentsTopic()
+		));
 	}
 	
 	public function search()

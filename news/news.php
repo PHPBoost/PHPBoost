@@ -124,8 +124,7 @@ if (!empty($idnews)) // On affiche la news correspondant à l'id envoyé.
 		
 		$auth_delete = $news['idcat'] > 0 ? $User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_MODERATE) : $User->check_auth($NEWS_CONFIG['global_auth'], AUTH_NEWS_MODERATE);
 		
-		$comments_topic = new CommentsTopic();
-		$comments_topic->set_module_id('news');
+		$comments_topic = new NewsCommentsTopic();
 		$comments_topic->set_id_in_module($idnews);
 		$comments_topic->set_url(new Url('/news/news.php?cat='. $news['idcat'] .'&id=' . $news['id'] . '&com=0'));
 		
