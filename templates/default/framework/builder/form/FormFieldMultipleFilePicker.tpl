@@ -6,7 +6,7 @@
 	add_file_input : function () {
 		if (this.integer <= this.max_input) {
 			var id = this.id_input + '_' + this.integer;
-			var input = new Element('input', {'type' : 'file', 'id' : id});
+			var input = new Element('input', {'type' : 'file', 'id' : id, 'name' : id,});
 			$('input_files_list_' + this.id_input).insert(input);
 			$(id).form.enctype = "multipart/form-data";
 			var br = new Element('br');
@@ -25,7 +25,7 @@ var MultipleFilePicker = new MultipleFilePicker();
 
 </script>
 <div id="input_files_list_${escape(ID)}">
-	<input type="file" name="${escape(NAME)}" id="${escape(ID)}_1" # IF C_DISABLED # disabled="disabled" # ENDIF # /></br>
+	<input type="file" name="${escape(NAME)}_1" id="${escape(ID)}_1" # IF C_DISABLED # disabled="disabled" # ENDIF # /></br>
 	<input name="max_file_size" value="{MAX_FILE_SIZE}" type="hidden" />
 </div>
 <img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/plus.png" id="add_${escape(ID)}" class="valign_middle" style="width:25px;"/>
