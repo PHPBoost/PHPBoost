@@ -64,31 +64,24 @@ class CommentsDAO
 	public static function get_user_id_posted_comment($comment_id)
 	{
 		$comment = self::$comments_cache->get_comment($comment_id);
-		return $comment['user']['user_id'];
+		return $comment['user_id'];
 	}
 	
-	public static function get_last_comment_added($module_id, $id_in_module, $user_id = 0)
+	public static function get_last_comment_added($user_id)
 	{
-		if ($user_id > 0)
+		if ($user_id !== '-1')
 		{
-			$comments = self::get_comments_user($module_id, $id_in_module, $user_id);
+			return self::$db_querier->inject("SELECT MAX(timestamp) as timestamp FROM " . DB_TABLE_COMMENTS . " WHERE user_id = '" . AppContext::get_current_user()->get_id() . "'");
 		}
 		else
 		{
-			$comments = self::get_comments_visitor($module_id, $id_in_module, USER_IP);
+			return 0;
 		}
-		
-		if (count($comments) > 0)
-		{
-			$last_comment = array_shift($comments);
-			return $last_comment['timestamp'];
-		}
-		return 0;
 	}
 
-	public static function get_number_comments($module_id, $id_in_module)
+	public static function get_number_comments($module_id, $id_in_module, $topic_identifier)
 	{
-		$comments = self::$comments_cache->get_comments_by_module($module_id, $id_in_module);
+		$comments = self::$comments_cache->get_comments_by_module($module_id, $id_in_module, $topic_identifier);
 		if (!empty($comments))
 		{
 			return count($comments);
@@ -101,14 +94,13 @@ class CommentsDAO
 		return self::$comments_cache->comment_exists($comment_id);
 	}
 	
-	public static function add_comment($module_id, $id_in_module, $message, $user_id = '', $name_visitor = '', $ip_visitor = '')
+	public static function add_comment($id_topic, $message, $user_id, $pseudo, $user_ip)
 	{
-		$id_comments_topic = CommentsTopicDAO::get_id_topic_module($module_id, $id_in_module);
 		$columns = array(
-			'id_topic' => $id_comments_topic,
+			'id_topic' => $id_topic,
 			'user_id' => $user_id,
-			'name_visitor' => htmlspecialchars($name_visitor),
-			'ip_visitor' => htmlspecialchars($ip_visitor),
+			'pseudo' => htmlspecialchars($pseudo),
+			'user_ip' => htmlspecialchars($user_ip),
 			'timestamp' => time(),
 			'message' => htmlspecialchars($message)
 		);
@@ -125,36 +117,6 @@ class CommentsDAO
 			'id' => $comment_id
 		);
 		self::$db_querier->update(DB_TABLE_COMMENTS, $columns, $condition, $parameters);
-	}
-	
-	private static function get_comments_user($module_id, $id_in_module, $user_id)
-	{
-		$comments = self::$comments_cache->get_comments_by_module($module_id, $id_in_module);
-		
-		$comments_user = array();
-		foreach ($comments as $id => $values)
-		{
-			if ($values['user']['user_id'] == $user_id)
-			{
-				$comments_user[$id] = $values;
-			}
-		}
-		return $comments_user;
-	}
-	
-	private static function get_comments_visitor($module_id, $id_in_module, $ip_visitor)
-	{
-		$comments = self::$comments_cache->get_comments_by_module($module_id, $id_in_module);
-		
-		$comments_visitor = array();
-		foreach ($comments as $id => $values)
-		{
-			if ($values['visitor']['ip_visitor'] == $ip_visitor)
-			{
-				$comments_visitor[$id] = $values;
-			}
-		}
-		return $comments_visitor;
 	}
 }
 ?>

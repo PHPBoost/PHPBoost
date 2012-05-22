@@ -48,34 +48,38 @@ class CommentsTopicDAO
 		return self::$db_querier->count(DB_TABLE_COMMENTS_TOPIC, "WHERE module_id = :module_id", $parameters) > 0 ? true : false;
 	}
 	
-	public static function get_id_topic_module($module_id, $id_in_module)
+	public static function get_id_topic_module($module_id, $id_in_module, $topic_identifier)
 	{
-		$condition = "WHERE id_in_module = :id_in_module AND module_id = :module_id";
+		$condition = "WHERE id_in_module = :id_in_module AND module_id = :module_id AND topic_identifier=:topic_identifier";
 		$parameters = array(
 			'module_id' => $module_id,
-			'id_in_module' => $id_in_module
+			'id_in_module' => $id_in_module,
+			'topic_identifier' => $topic_identifier,
 		);
 		return self::$db_querier->get_column_value(DB_TABLE_COMMENTS_TOPIC, 'id_topic', $condition, $parameters);
 	}
 	
-	public static function create_topic($module_id, $id_in_module, $path)
+	public static function create_topic($module_id, $id_in_module, $topic_identifier, $path)
 	{
 		$columns = array(
 			'module_id' => $module_id,
 			'id_in_module' => $id_in_module,
+			'topic_identifier' => $topic_identifier,
 			'number_comments' => 0,
 			'is_locked' => 0,
 			'path' => $path
 		);
-		self::$db_querier->insert(DB_TABLE_COMMENTS_TOPIC, $columns);
+		$result = self::$db_querier->insert(DB_TABLE_COMMENTS_TOPIC, $columns);
+		return $result->get_last_inserted_id();
 	}
 	
-	public static function topic_exists($module_id, $id_in_module)
+	public static function topic_exists($module_id, $id_in_module, $topic_identifier)
 	{
-		$condition = "WHERE id_in_module = :id_in_module AND module_id = :module_id";
+		$condition = "WHERE id_in_module = :id_in_module AND module_id = :module_id AND topic_identifier=:topic_identifier";
 		$parameters = array(
 			'module_id' => $module_id,
-			'id_in_module' => $id_in_module
+			'id_in_module' => $id_in_module,
+			'topic_identifier' => $topic_identifier
 		);
 		return self::$db_querier->count(DB_TABLE_COMMENTS_TOPIC, $condition, $parameters) > 0 ? true : false;
 	}
@@ -94,46 +98,47 @@ class CommentsTopicDAO
 		self::$db_querier->delete(DB_TABLE_COMMENTS_TOPIC, $condition, $parameters);
 	}
 	
-	public static function update_number_comment_topic($module_id, $id_in_module)
+	public static function incremente_number_comments_topic($id_topic)
 	{
-		$number_comments = CommentsDAO::get_number_comments($module_id, $id_in_module);
-		$columns = array('number_comments' => $number_comments + 1);
-		$condition = "WHERE id_in_module = :id_in_module AND module_id = :module_id";
-		$parameters = array(
-			'id_in_module' => $id_in_module,
-			'module_id' => $module_id
-		);
-		self::$db_querier->update(DB_TABLE_COMMENTS_TOPIC, $columns, $condition, $parameters);
+		self::$db_querier->inject("UPDATE ". DB_TABLE_COMMENTS_TOPIC ." SET number_comments = number_comments + 1 WHERE id_topic = '" . $id_topic . "'");
 	}
 	
-	public static function comments_topic_locked($module_id, $id_in_module)
+	public static function decremente_number_comments_topic($id_topic)
 	{
-		$condition = "WHERE id_in_module = :id_in_module AND module_id = :module_id";
+		self::$db_querier->inject("UPDATE ". DB_TABLE_COMMENTS_TOPIC ." SET number_comments = number_comments - 1 WHERE id_topic = '" . $id_topic . "'");
+	}
+	
+	public static function comments_topic_locked($module_id, $id_in_module, $topic_identifier)
+	{
+		$condition = "WHERE id_in_module = :id_in_module AND module_id = :module_id AND topic_identifier=:topic_identifier";
 		$parameters = array(
 			'id_in_module' => $id_in_module,
-			'module_id' => $module_id
+			'module_id' => $module_id,
+			'topic_identifier' => $topic_identifier
 		);
 		return self::$db_querier->get_column_value(DB_TABLE_COMMENTS_TOPIC, 'is_locked', $condition, $parameters) > 0 ? true : false;
 	}
 	
-	public static function lock_topic($module_id, $id_in_module)
+	public static function lock_topic($module_id, $id_in_module, $topic_identifier)
 	{
 		$columns = array('is_locked' => 1);
-		$condition = "WHERE id_in_module = :id_in_module AND module_id = :module_id";
+		$condition = "WHERE id_in_module = :id_in_module AND module_id = :module_id AND topic_identifier=:topic_identifier";
 		$parameters = array(
 			'id_in_module' => $id_in_module,
-			'module_id' => $module_id
+			'module_id' => $module_id,
+			'topic_identifier' => $topic_identifier
 		);
 		self::$db_querier->update(DB_TABLE_COMMENTS_TOPIC, $columns, $condition, $parameters);
 	}
 	
-	public static function unlock_topic($module_id, $id_in_module)
+	public static function unlock_topic($module_id, $id_in_module, $topic_identifier)
 	{
 		$columns = array('is_locked' => 0);
-		$condition = "WHERE id_in_module = :id_in_module AND module_id = :module_id";
+		$condition = "WHERE id_in_module = :id_in_module AND module_id = :module_id AND topic_identifier=:topic_identifier";
 		$parameters = array(
 			'id_in_module' => $id_in_module,
-			'module_id' => $module_id
+			'module_id' => $module_id,
+			'topic_identifier' => $topic_identifier
 		);
 		self::$db_querier->update(DB_TABLE_COMMENTS_TOPIC, $columns, $condition, $parameters);
 	}

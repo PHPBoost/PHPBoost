@@ -54,13 +54,12 @@ class CommentsCache implements CacheData
 				'id_topic' => $row['id_topic'],
 				'module_id' => $row['module_id'],
 				'id_in_module' => $row['id_in_module'],
+				'topic_identifier' => $row['topic_identifier'],
 				'message' => $row['message'],
 				'note' => $row['note'],
 				'timestamp' => $row['timestamp'],
 				'path' => $row['path'],
-				'visitor' => array('name_visitor' => $row['name_visitor'], 'ip_visitor' => $row['ip_visitor']),
-				'user' => array('user_id' => $row['user_id'], 'pseudo' => $row['login'], 'email' => $row['user_mail'], 'show_email' => $row['user_show_mail']),
-				'is_visitor' => empty($row['user_id'])
+				'user_id' => $row['user_id']
 			);
 		}
 	}
@@ -90,12 +89,12 @@ class CommentsCache implements CacheData
 		return null;
 	}
 
-	public function get_comments_by_module($module_id, $id_in_module)
+	public function get_comments_by_module($module_id, $id_in_module, $topic_identifier)
 	{
 		$comments = array();
 		foreach ($this->comments as $id_comment => $informations)
 		{
-			if ($informations['module_id'] == $module_id && $informations['id_in_module'] == $id_in_module)
+			if ($informations['module_id'] == $module_id && $informations['id_in_module'] == $id_in_module && $informations['topic_identifier'] == $topic_identifier)
 			{
 				$comments[$id_comment] = $informations;
 			}
@@ -103,15 +102,9 @@ class CommentsCache implements CacheData
 		return $comments;
 	}
 	
-	public function get_count_comments_by_module($module_id, $id_in_module)
+	public function get_count_comments_by_module($module_id, $id_in_module, $topic_identifier)
 	{
-		return count($this->get_comments_by_module($module_id, $id_in_module));
-	}
-	
-	public function get_comments_sliced($module_id, $id_in_module, $offset, $lenght = 0)
-	{
-		$comments = $this->get_comments_by_module($module_id, $id_in_module);
-		return $this->slice_comments($comments, $offset, $lenght);
+		return count($this->get_comments_by_module($module_id, $id_in_module, $topic_identifier));
 	}
 	
 	public function get_count_comments()

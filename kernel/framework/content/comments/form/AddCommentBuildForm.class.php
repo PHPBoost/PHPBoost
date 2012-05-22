@@ -37,11 +37,17 @@ class AddCommentBuildForm extends AbstractCommentsBuildForm
 	private $comments_configuration;
 	private $module_id;
 	private $id_in_module;
+	private $topic_identifier;
 	private $topic_path;
 	
-	public static function create($module_id, $id_in_module, $topic_path)
+	public static function create(CommentsTopic $topic)
 	{
-		$instance = new self($module_id, $id_in_module, $topic_path);
+		$instance = new self(
+			$topic->get_module_id(), 
+			$topic->get_id_in_module(), 
+			$topic->get_topic_identifier(), 
+			$topic->get_path()
+		);
 		
 		$instance->create_form();
 		
@@ -53,10 +59,11 @@ class AddCommentBuildForm extends AbstractCommentsBuildForm
 		return $instance;
 	}
 	
-	public function __construct($module_id, $id_in_module, $topic_path)
+	public function __construct($module_id, $id_in_module, $topic_identifier, $topic_path)
 	{
 		$this->module_id = $module_id;
 		$this->id_in_module = $id_in_module;
+		$this->topic_identifier = $topic_identifier;
 		$this->topic_path = $topic_path;
 		$this->user = AppContext::get_current_user();
 		$this->lang = LangLoader::get('main');
@@ -79,8 +86,7 @@ class AddCommentBuildForm extends AbstractCommentsBuildForm
 			'formatter' => $this->get_formatter(),
 			'rows' => 10, 'cols' => 47, 'required' => $this->lang['require_text']),
 			array(new FormFieldConstraintMaxLinks($this->comments_configuration->get_max_links_comment()),
-				new FormFieldConstraintAntiFlood(CommentsManager::get_last_comment_added($this->module_id, $this->id_in_module, $this->user->get_id())),
-				new FormFieldConstraintAntiFlood(time())
+				new FormFieldConstraintAntiFlood(CommentsManager::get_last_comment_added($this->user->get_id()))
 			)
 		));
 		
@@ -103,11 +109,11 @@ class AddCommentBuildForm extends AbstractCommentsBuildForm
 		$form = $this->get_form();
 		if ($form->has_field('name'))
 		{
-			CommentsManager::add_comment($this->module_id, $this->id_in_module, $form->get_value('message'), $this->topic_path, $form->get_value('name'));
+			CommentsManager::add_comment($this->module_id, $this->id_in_module, $this->topic_identifier, $this->topic_path, $form->get_value('message'), $form->get_value('name'));
 		}
 		else
 		{
-			CommentsManager::add_comment($this->module_id, $this->id_in_module, $form->get_value('message'), $this->topic_path);
+			CommentsManager::add_comment($this->module_id, $this->id_in_module, $this->topic_identifier, $this->topic_path, $form->get_value('message'));
 		}
 		
 		$this->set_message_response(MessageHelper::display($this->comments_lang['comment.add.success'], MessageHelper::SUCCESS, 4));

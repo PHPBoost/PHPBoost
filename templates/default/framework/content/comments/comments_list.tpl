@@ -20,8 +20,8 @@
 				<div class="msg_contents_overflow">
 					{comments.MESSAGE}
 				</div>
-				<button type="submit" onclick="CommentsService.positive_vote(${escapejs(MODULE_ID)}, ${escapejs(ID_IN_MODULE)}, ${escapejs(comments.COMMENT_ID)});" class="submit">+1</button>
-				<button type="submit" onclick="CommentsService.negative_vote(${escapejs(MODULE_ID)}, ${escapejs(ID_IN_MODULE)}, ${escapejs(comments.COMMENT_ID)});" class="submit">-1</button>
+				<button type="submit" onclick="CommentsService.positive_vote(${escapejs(MODULE_ID)}, ${escapejs(ID_IN_MODULE)}, ${escapejs(TOPIC_IDENTIFIER)}, ${escapejs(comments.COMMENT_ID)});" class="submit">+1</button>
+				<button type="submit" onclick="CommentsService.negative_vote(${escapejs(MODULE_ID)}, ${escapejs(ID_IN_MODULE)}, ${escapejs(TOPIC_IDENTIFIER)}, ${escapejs(comments.COMMENT_ID)});" class="submit">-1</button>
 			</div>
 		</div>
 	</div>	
