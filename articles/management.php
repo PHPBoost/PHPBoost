@@ -406,7 +406,15 @@ else
 		}
 		else
 		{
-			$auth_contrib = !$User->check_auth($CONFIG_ARTICLES['global_auth'], AUTH_ARTICLES_WRITE) && $User->check_auth($CONFIG_ARTICLES['global_auth'], AUTH_ARTICLES_CONTRIBUTE);			
+			if (!empty($cat))
+			{
+				$auth_contrib = !$User->check_auth($ARTICLES_CAT[$cat]['auth'], AUTH_ARTICLES_WRITE);
+			}
+			else
+			{
+				$auth_contrib = !$User->check_auth($CONFIG_ARTICLES['global_auth'], AUTH_ARTICLES_WRITE);
+			}
+						
 			$Bread_crumb->add($ARTICLES_LANG['articles_add'],url('management.php?new=1&amp;cat=' . $cat));
 			
 			//Images disponibles
@@ -434,7 +442,7 @@ else
 
 			$tpl->put_all(array(
 				'C_ADD' => false,
-				'C_CONTRIBUTION' => $auth_contrib ,
+				'C_CONTRIBUTION' => $auth_contrib,
 				'JS_CONTRIBUTION' => $auth_contrib ? 'true' : 'false',
 				'RELEASE_CALENDAR_ID' => $release_calendar->get_html_id(),
 				'TITLE' => '',

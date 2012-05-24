@@ -131,6 +131,15 @@ class ThemeConfiguration
 		return $this->pictures;
 	}
 	
+	public function get_first_pictures()
+	{
+		if (isset($this->pictures[0]))
+		{
+			return $this->pictures[0];
+		}
+		return '';
+	}
+	
 	public function get_repository()
 	{
 		return $this->repository;

@@ -21,7 +21,7 @@
 			<div class="module_top_com">
 				<img src="{PATH_TO_ROOT}/templates/{THEME}/images/com_mini.png" alt="" class="valign_middle" />
 				{COM}
-				# IF C_IS_ADMIN #
+				# IF C_IS_MODERATE #
 				<a href="{U_ARTICLES_EDIT}" title="{L_EDIT}" class="img_link">
 					<img src="../templates/{THEME}/images/{LANG}/edit.png" class="valign_middle" alt="{L_EDIT}" />
 				</a>

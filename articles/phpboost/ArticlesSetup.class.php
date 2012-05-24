@@ -132,7 +132,7 @@ class ArticlesSetup extends DefaultModuleSetup
 			'nbr_articles_unvisible' => 0,
 			'image' => 'articles.png',
 			'visible' => 1,
-			'auth' => serialize(array('r-1' => 1, 'r0' => 3, 'r1' => 7))
+			'auth' => ''
 		));
 	}
 	
