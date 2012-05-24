@@ -295,8 +295,8 @@ class KernelSetup
 	{
 		$fields = array(
 			'id' => array('type' => 'integer', 'length' => 10, 'autoincrement' => true, 'notnull' => 1),
-			'requested_url' => array('type' => 'string', 'length' => 255, 'notnull' => 1),
-			'from_url' => array('type' => 'string', 'length' => 255, 'notnull' => 1),
+			'requested_url' => array('type' => 'string', 'length' => 249, 'notnull' => 1),
+			'from_url' => array('type' => 'string', 'length' => 249, 'notnull' => 1),
 			'times' => array('type' => 'integer', 'length' => 11, 'notnull' => 1)
 		);
 
