@@ -40,7 +40,7 @@
 		# IF C_ARTICLES_CAT #
 		<p style="text-align:center;" class="text_strong">
 			{L_CATEGORIES}
-			# IF C_IS_ADMIN # <a href="admin_articles_cat.php"><img class="valign_middle" src="../templates/{THEME}/images/{LANG}/edit.png" alt="" /></a> # ENDIF #
+			# IF C_MODERATE # <a href="admin_articles_cat.php"><img class="valign_middle" src="../templates/{THEME}/images/{LANG}/edit.png" alt="" /></a> # ENDIF #
 		</p>
 		<hr style="margin-bottom:20px;" />
 		# START cat_list #
@@ -93,7 +93,7 @@
 						<div style="float:left;width:70%">
 							<p style="margin-bottom:10px">
 								<a href="../articles/articles{articles_invisible.U_ARTICLES_LINK}" class="big_link">{articles_invisible.NAME}</a>
-								# IF C_WRITE #
+								# IF C_MODERATE #
 									<a href="{articles_invisible.U_ADMIN_EDIT_ARTICLES}">
 										<img class="valign_middle" src="../templates/{THEME}/images/{LANG}/edit.png" alt="" />
 									</a>
@@ -135,7 +135,7 @@
 						<div style="float:left;width:70%">
 							<p style="margin-bottom:10px">
 								<a href="../articles/articles{articles.U_ARTICLES_LINK}" class="big_link">{articles.NAME}</a>
-								# IF C_WRITE #
+								# IF C_MODERATE #
 									<a href="{articles.U_ADMIN_EDIT_ARTICLES}">
 										<img class="valign_middle" src="../templates/{THEME}/images/{LANG}/edit.png" alt="" />
 									</a>

@@ -114,7 +114,7 @@ if (!empty($idart) && isset($cat) )
 	$notation->set_notation_scale($CONFIG_ARTICLES['note_max']);
 	
 	$tpl->put_all(array(
-		'C_IS_ADMIN' => ($User->check_auth($ARTICLES_CAT[$idartcat]['auth'], AUTH_ARTICLES_WRITE)),
+		'C_IS_MODERATE' => ($User->check_auth($ARTICLES_CAT[$idartcat]['auth'], AUTH_ARTICLES_MODERATE)),
 		'C_DISPLAY_ARTICLE' => true,
 		'C_SOURCES' => $i > 0,
 		'IDART' => $articles['id'],
