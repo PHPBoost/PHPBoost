@@ -147,7 +147,7 @@ class AdminAdvancedConfigController extends AdminController
 		else
 		{
 			$miscellaneous_fieldset->add_field(new FormFieldCheckbox('output_gziping_enabled', $this->lang['advanced-config.output-gziping-enabled'], FormFieldCheckbox::UNCHECKED, 
-			array('description' => $this->lang['config.not-available'], 'disabled' => true)));
+			array('description' => $this->lang['advanced-config.config.not-available'], 'disabled' => true)));
 		}
 		
 		$miscellaneous_fieldset->add_field(new FormFieldFree('unlock_administration', $this->lang['advanced-config.unlock-administration'], '<a href="'. AdminConfigUrlBuilder::unlock_administration()->absolute() .'" onclick="return confirm(\'' . $this->lang['advanced-config.confirm_mail_sending'] .'\');">'. $this->lang['advanced-config.unlock-administration.request'] .'</a>', 
