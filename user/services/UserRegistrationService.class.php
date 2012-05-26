@@ -97,7 +97,7 @@ class UserRegistrationService
 		$mail->set_sender(MailServiceConfig::load()->get_default_mail_sender());
 		$mail->set_subject($subject);
 		$mail->set_content($content);
-		AppContext::get_mail_service()->send($mail);
+		AppContext::get_mail_service()->try_to_send($mail);
 	}
 	
 	private static function add_administrator_alert($user_id)

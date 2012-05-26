@@ -136,8 +136,6 @@ class MemberUserAvatarExtendedField extends AbstractMemberExtendedField
 
 			if ($user_accounts_config->is_avatar_auto_resizing_enabled())
 			{
-				if (preg_match('`([A-Za-z0-9()_-])+\.(jpg|gif|png)+$`i', $avatar->get_name()))
-				{
 					import('io/image/Image');
 					import('io/image/ImageResizer');
 					
@@ -150,15 +148,15 @@ class MemberUserAvatarExtendedField extends AbstractMemberExtendedField
 					$explode = explode('.', $avatar->get_name());
 					$name = $explode[0];
 					
-					$directory = $dir . $name . '_' . $this->key_hash() . '.' . $extension;
-					$resizer->resize_with_max_values($image, $user_accounts_config->get_max_avatar_height(), $user_accounts_config->get_max_avatar_height(), PATH_TO_ROOT . $directory);
+					$directory = $dir . Url::encode_rewrite($name . '_' . $this->key_hash()) . '.' . $extension;
 					
-					return $directory;
-				}
-				else
-				{
-					throw new MemberExtendedFieldErrorsMessageException(LangLoader::get_message('e_upload_invalid_format', 'errors'));
-				}
+					try {
+						$resizer->resize_with_max_values($image, $user_accounts_config->get_max_avatar_height(), $user_accounts_config->get_max_avatar_height(), PATH_TO_ROOT . $directory);
+						
+						return $directory;
+					} catch (MimeTypeNotSupportedException $e) {
+						throw new MemberExtendedFieldErrorsMessageException(LangLoader::get_message('e_upload_invalid_format', 'errors'));
+					}
 			}
 			else
 			{
