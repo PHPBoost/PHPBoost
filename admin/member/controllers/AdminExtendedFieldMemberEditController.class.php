@@ -112,7 +112,7 @@ class AdminExtendedFieldMemberEditController extends AdminController
 		$fieldset->add_field(new FormFieldShortMultiLineTextEditor('description', $this->lang['field.description'], $extended_field_cache['description'],
 		array('rows' => 4, 'cols' => 47)
 		));
-		Debug::dump($extended_field_cache['field_type']);
+
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('field_type', $this->lang['field.type'], $extended_field_cache['field_type'],
 			$this->get_array_select_type(),
 			array('events' => array('change' => $this->get_events_select_type()))
