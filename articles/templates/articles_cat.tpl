@@ -7,23 +7,25 @@
 -->
 </script>
 
-# IF C_EDIT #
-	<div style="float:right;margin:0 10px 15px;margin-top:-25px;">
-		<a href="{U_EDIT}" title="{L_EDIT}" class="img_link">
-			<img class="valign_middle" src="../templates/{THEME}/images/{LANG}/edit.png" alt=""/>
+
+<div style="float:right;margin:0 10px 15px;margin-top:-25px;">
+	# IF IS_ADMIN #
+	<a href="{U_EDIT}" title="{L_EDIT}" class="img_link">
+		<img class="valign_middle" src="../templates/{THEME}/images/{LANG}/edit.png" alt=""/>
+	</a>
+	# ENDIF #
+	# IF C_ADD #
+		<a href="{U_ADD}" title="{L_ADD}" class="img_link">
+			<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/add.png" class="valign_middle" alt="{L_ADD}" />
 		</a>
-		# IF C_ADD #
-			<a href="{U_ADD}" title="{L_ADD}" class="img_link">
-				<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/add.png" class="valign_middle" alt="{L_ADD}" />
-			</a>
-			&nbsp;
-			# IF C_WRITE #
-				{U_ARTICLES_WAITING}
-			# ENDIF #
+		&nbsp;
+		# IF C_WRITE #
+			{U_ARTICLES_WAITING}
 		# ENDIF #
-	</div>
-	<div class="spacer"></div>
-# ENDIF #	
+	# ENDIF #
+</div>
+<div class="spacer"></div>
+	
 
 <div class="module_position">					
 	<div class="module_top_l"></div>		

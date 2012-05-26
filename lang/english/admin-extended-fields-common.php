@@ -117,7 +117,7 @@ $lang['field-install.avatar'] = 'Avatar';
 $lang['field-install.avatar-explain'] = '';
 
 $lang['field-install.website'] = 'Website';
-$lang['field-install.website-explain'] = 'Please enter a valid url';
+$lang['field-install.website-explain'] = 'Please enter a valid url (ex : http://www.phpboost.com)';
 
 $lang['field-install.location'] = 'Localization';
 $lang['field-install.location-explain'] = '';
