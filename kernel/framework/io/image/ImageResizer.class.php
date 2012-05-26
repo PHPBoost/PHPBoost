@@ -121,7 +121,7 @@ class ImageResizer
 		$explode = explode('/', $directory);
 		$name_and_extension = array_pop($explode);
 		$explode = explode('.', $name_and_extension);
-		return array_pop($explode);
+		return strtolower(array_pop($explode));
 	}
 	
 	private function create_image(Image $image, $create_picture, $directory)
@@ -141,10 +141,8 @@ class ImageResizer
 			case 'gif':
 				return imagegif($create_picture, $directory);
 					break;
-			case 'bmp':
-				return imagebmp($create_picture, $directory);
-					break;
-			// TODO extension non prise en compte
+			default:
+				throw new MimeTypeNotSupportedException($image->get_mime_type());
 		}
 	}
 	
