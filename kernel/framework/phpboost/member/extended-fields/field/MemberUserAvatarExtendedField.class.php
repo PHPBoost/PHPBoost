@@ -117,7 +117,7 @@ class MemberUserAvatarExtendedField extends AbstractMemberExtendedField
 	
 	private function upload_avatar($form, $member_extended_field)
 	{
-		$avatar = $form->get_value('upload_avatar', 0);
+		$avatar = $form->get_value('upload_avatar');
 		if ($form->get_value('link_avatar'))
 		{
 			if (preg_match('`([A-Za-z0-9()_-])+\.(jpg|gif|png)+$`i', $avatar->get_name()))
@@ -129,51 +129,57 @@ class MemberUserAvatarExtendedField extends AbstractMemberExtendedField
 				throw new MemberExtendedFieldErrorsMessageException(LangLoader::get_message('e_upload_invalid_format', 'errors'));
 			}
 		}
-		elseif(UserAccountsConfig::load()->is_avatar_upload_enabled() && !empty($avatar))
+		elseif (!empty($avatar))
 		{
-			$user_accounts_config = UserAccountsConfig::load();
-			$dir = '/images/avatars/';
-
-			if ($user_accounts_config->is_avatar_auto_resizing_enabled())
+			if(UserAccountsConfig::load()->is_avatar_upload_enabled())
 			{
+				$user_accounts_config = UserAccountsConfig::load();
+				$dir = '/images/avatars/';
+			
+				if ($user_accounts_config->is_avatar_auto_resizing_enabled())
+				{
 					import('io/image/Image');
 					import('io/image/ImageResizer');
-					
+			
 					$image = new Image($avatar->get_temporary_filename());
 					$resizer = new ImageResizer();
-					
+			
 					$explode = explode('.', $avatar->get_name());
 					$extension = array_pop($explode);
-					
+			
 					$explode = explode('.', $avatar->get_name());
 					$name = $explode[0];
-					
+			
 					$directory = $dir . Url::encode_rewrite($name . '_' . $this->key_hash()) . '.' . $extension;
-					
+			
 					try {
 						$resizer->resize_with_max_values($image, $user_accounts_config->get_max_avatar_height(), $user_accounts_config->get_max_avatar_height(), PATH_TO_ROOT . $directory);
-						
+			
 						return $directory;
 					} catch (MimeTypeNotSupportedException $e) {
 						throw new MemberExtendedFieldErrorsMessageException(LangLoader::get_message('e_upload_invalid_format', 'errors'));
 					}
-			}
-			else
-			{
-				$Upload = new Upload(PATH_TO_ROOT . $dir);
-
-				$Upload->file($form->get_html_id() . '_upload_avatar', '`([A-Za-z0-9()_-])+\.(jpg|gif|png|bmp)+$`i', Upload::UNIQ_NAME, $user_accounts_config->get_max_avatar_weight() * 1024);
-				$upload_error = $Upload->get_error();
-				if (!empty($upload_error))
-					throw new MemberExtendedFieldErrorsMessageException(LangLoader::get_message($upload_error, 'errors'));
-				
-				$error = $Upload->check_img($user_accounts_config->get_max_avatar_width(), $user_accounts_config->get_max_avatar_height(), Upload::DELETE_ON_ERROR);
-				if (!empty($error))
-					throw new MemberExtendedFieldErrorsMessageException(LangLoader::get_message($error, 'errors'));	
+				}
 				else
-					return $dir . $Upload->get_filename();
-			}
+				{
+					$Upload = new Upload(PATH_TO_ROOT . $dir);
 			
+					$Upload->file($form->get_html_id() . '_upload_avatar', '`([A-Za-z0-9()_-])+\.(jpg|gif|png|bmp)+$`i', Upload::UNIQ_NAME, $user_accounts_config->get_max_avatar_weight() * 1024);
+					$upload_error = $Upload->get_error();
+					if (!empty($upload_error))
+						throw new MemberExtendedFieldErrorsMessageException(LangLoader::get_message($upload_error, 'errors'));
+			
+					$error = $Upload->check_img($user_accounts_config->get_max_avatar_width(), $user_accounts_config->get_max_avatar_height(), Upload::DELETE_ON_ERROR);
+					if (!empty($error))
+						throw new MemberExtendedFieldErrorsMessageException(LangLoader::get_message($error, 'errors'));
+					else
+						return $dir . $Upload->get_filename();
+				}
+			}
+		}
+		else
+		{
+			return MemberExtendedFieldsService::return_field_member($member_extended_field->get_field_name(), $member_extended_field->get_user_id());
 		}
 	}
 	
