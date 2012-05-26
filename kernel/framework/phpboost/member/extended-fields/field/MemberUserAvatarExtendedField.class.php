@@ -78,7 +78,7 @@ class MemberUserAvatarExtendedField extends AbstractMemberExtendedField
 		
 		$user_accounts_config = UserAccountsConfig::load();
 		$value = $member_extended_field->get_value();
-		if (empty($value) || $user_accounts_config->is_default_avatar_enabled())
+		if (empty($value) && $user_accounts_config->is_default_avatar_enabled())
 		{
 			$avatar = '<img src="'. Url::to_rel('/templates/'. get_utheme() .'/images/'. $user_accounts_config->get_default_avatar_name()) .'" alt="" title="" />';
 		}
