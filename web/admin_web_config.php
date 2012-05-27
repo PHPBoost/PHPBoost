@@ -37,13 +37,15 @@ $web_config = WebConfig::load();
 
 if (!empty($_POST['valid']))
 {
+	NotationService::update_notation_scale('web', $web_config->get_note_max(), retrieve(POST, 'note_max', 5));
+	
 	$web_config->set_max_nbr_weblinks(retrieve(POST, 'nbr_web_max', 10));	
 	$web_config->set_max_nbr_category(retrieve(POST, 'nbr_cat_max', 10));
 	$web_config->set_number_columns(retrieve(POST, 'nbr_column', 2));
 	$web_config->set_note_max(retrieve(POST, 'note_max', 5));
-	
+
 	WebConfig::save();
-	
+		
 	###### Régénération du cache des news #######
 	$Cache->Generate_module_file('web');
 	

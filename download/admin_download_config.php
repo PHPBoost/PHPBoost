@@ -45,8 +45,8 @@ if (!empty($_POST['valid']))
 	$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($config_download)) . "' WHERE name = 'download'", __LINE__, __FILE__);
 	
 	if (!empty($CONFIG_DOWNLOAD['note_max']) && $CONFIG_DOWNLOAD['note_max'] != $config_download['note_max'])
-		$Sql->query_inject("UPDATE " . PREFIX . "download SET note = note * " . ($config_download['note_max'] / $CONFIG_DOWNLOAD['note_max']), __LINE__, __FILE__);
-	
+		NotationService::update_notation_scale('download', $CONFIG_DOWNLOAD['note_max'], $config_download['note_max']);
+		
 	###### Régénération du cache des news #######
 	$Cache->Generate_module_file('download');
 	

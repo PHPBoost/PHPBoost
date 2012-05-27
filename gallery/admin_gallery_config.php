@@ -68,8 +68,8 @@ if (!empty($_POST['valid']))
 	$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($config_gallery)) . "' WHERE name = 'gallery'", __LINE__, __FILE__);
 
 	if ($CONFIG_GALLERY['note_max'] != $config_gallery['note_max'])
-		$Sql->query_inject("UPDATE " . PREFIX . "gallery SET note = note * " . ($config_gallery['note_max']/$CONFIG_GALLERY['note_max']), __LINE__, __FILE__);
-
+		NotationService::update_notation_scale('gallery', $CONFIG_GALLERY['note_max'], $config_gallery['note_max']);
+		
 	###### Régénération du cache de la gallery #######
 	$Cache->Generate_module_file('gallery');
 
