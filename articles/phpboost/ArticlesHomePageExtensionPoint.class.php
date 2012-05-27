@@ -100,7 +100,7 @@ class ArticlesHomePageExtensionPoint implements HomePageExtensionPoint
 			'author'=>'',
 			'asc' => '',
 			'desc' => '',
-			);
+		);
 
 		switch ($get_sort)
 		{
@@ -152,6 +152,7 @@ class ArticlesHomePageExtensionPoint implements HomePageExtensionPoint
 			'C_MODERATE' => $User->check_auth($ARTICLES_CAT[$idartcat]['auth'], AUTH_ARTICLES_MODERATE),
 			'C_ADD' => $User->check_auth($ARTICLES_CAT[$idartcat]['auth'], AUTH_ARTICLES_CONTRIBUTE) || $User->check_auth($ARTICLES_CAT[$idartcat]['auth'], AUTH_ARTICLES_WRITE),
 			'C_EDIT' => $User->check_auth($ARTICLES_CAT[$idartcat]['auth'], AUTH_ARTICLES_MODERATE) || $User->check_auth($ARTICLES_CAT[$idartcat]['auth'], AUTH_ARTICLES_WRITE) ,
+			'C_ARTICLES_WAITING' => $User->check_auth($ARTICLES_CAT[$idartcat]['auth'], AUTH_ARTICLES_MODERATE) || $User->check_auth($ARTICLES_CAT[$idartcat]['auth'], AUTH_ARTICLES_WRITE),
 			'IDCAT' => $idartcat,
 			'COLUMN_WIDTH_CAT' => $column_width_cats,
 			'SELECTED_ALPHA' => $selected_fields['alpha'],
@@ -186,7 +187,8 @@ class ArticlesHomePageExtensionPoint implements HomePageExtensionPoint
 			'L_CATEGORIES' => ($ARTICLES_CAT[$idartcat]['order'] >= 0) ? $ARTICLES_LANG['sub_categories'] : $LANG['categories'],
 			'U_ADD' => url('management.php?new=1&amp;cat=' . $idartcat),
 			'U_EDIT'=> url('admin_articles_cat.php?edit='.$idartcat),
-				'U_ARTICLES_WAITING'=> $User->check_auth($ARTICLES_CAT[$idartcat]['auth'], AUTH_ARTICLES_WRITE) ? ' <a href="articles.php?invisible=1&amp;cat='.$idartcat.'">' . $ARTICLES_LANG['waiting_articles'] . '</a>' : '',
+			'U_ARTICLES_WAITING'=> 'articles.php?invisible=1&amp;cat='.$idartcat,
+			'L_ARTICLES_WAINTING' => $ARTICLES_LANG['waiting_articles'],
 			'U_ARTICLES_ALPHA_TOP' => url('.php?sort=alpha&amp;mode=desc&amp;cat=' . $idartcat, '-' . $idartcat . '+' . $rewrite_title . '.php?sort=alpha&amp;mode=desc'),
 			'U_ARTICLES_ALPHA_BOTTOM' => url('.php?sort=alpha&amp;mode=asc&amp;cat=' . $idartcat, '-' . $idartcat . '+' . $rewrite_title . '.php?sort=alpha&amp;mode=asc'),
 			'U_ARTICLES_DATE_TOP' => url('.php?sort=date&amp;mode=desc&amp;cat=' . $idartcat, '-' . $idartcat . '+' . $rewrite_title . '.php?sort=date&amp;mode=desc'),
@@ -289,13 +291,13 @@ class ArticlesHomePageExtensionPoint implements HomePageExtensionPoint
 				));
 			}
 
-			if($invisible && $User->check_auth($ARTICLES_CAT[$idartcat]['auth'], AUTH_ARTICLES_WRITE))
+			if($invisible && ($User->check_auth($ARTICLES_CAT[$idartcat]['auth'], AUTH_ARTICLES_MODERATE) || $User->check_auth($ARTICLES_CAT[$idartcat]['auth'], AUTH_ARTICLES_WRITE)))
 			{
 				$tpl->put_all(array(
-					'C_INVISIBLE'=>true,
-					'L_WAITING_ARTICLES' => $ARTICLES_LANG['waiting_articles'],
+					'C_INVISIBLE' => true,
+					'L_ARTICLES_WAINTING' => $ARTICLES_LANG['publicate_articles'],
 					'L_NO_ARTICLES_WAITING'=>($nbr_articles_invisible == 0) ? $ARTICLES_LANG['no_articles_waiting'] : '',
-					'U_ARTICLES_WAITING'=> $User->check_auth($ARTICLES_CAT[$idartcat]['auth'], AUTH_ARTICLES_READ) ? ' <a href="articles.php?cat='.$idartcat.'">' . $ARTICLES_LANG['publicate_articles'] . '</a>' : ''
+					'U_ARTICLES_WAITING'=> 'articles.php?cat='.$idartcat,
 				));
 
 
