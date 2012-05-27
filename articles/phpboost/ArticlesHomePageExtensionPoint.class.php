@@ -296,8 +296,8 @@ class ArticlesHomePageExtensionPoint implements HomePageExtensionPoint
 				$tpl->put_all(array(
 					'C_INVISIBLE' => true,
 					'L_ARTICLES_WAINTING' => $ARTICLES_LANG['publicate_articles'],
-					'L_NO_ARTICLES_WAITING'=>($nbr_articles_invisible == 0) ? $ARTICLES_LANG['no_articles_waiting'] : '',
-					'U_ARTICLES_WAITING'=> 'articles.php?cat='.$idartcat,
+					'L_NO_ARTICLES_WAITING' => ($nbr_articles_invisible == 0) ? $ARTICLES_LANG['no_articles_waiting'] : '',
+					'U_ARTICLES_WAITING' => 'articles.php?cat='.$idartcat,
 				));
 
 
