@@ -19,9 +19,11 @@
 			<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/add.png" class="valign_middle" alt="{L_ADD}" />
 		</a>
 		&nbsp;
-		# IF C_WRITE #
-			{U_ARTICLES_WAITING}
-		# ENDIF #
+	# ENDIF #
+	# IF C_ARTICLES_WAITING #
+		<a href="{U_ARTICLES_WAITING}" title="{L_ARTICLES_WAINTING}" class="img_link">
+			{L_ARTICLES_WAINTING}
+		</a>
 	# ENDIF #
 </div>
 <div class="spacer"></div>
