@@ -163,6 +163,16 @@ class NotationService
 		}
 	}
 	
+	public static function update_notation_scale($module_name, $old_notation_scale, $new_notation_scale)
+	{
+		if ($old_notation_scale !== $new_notation_scale)
+		{
+			$coefficient = $new_notation_scale / $old_notation_scale;
+			self::$db_querier->inject("UPDATE " . DB_TABLE_AVERAGE_NOTES . " SET average_notes = average_notes * " . $coefficient . " WHERE module_name = '". $module_name . "'");
+			self::$db_querier->inject("UPDATE " . DB_TABLE_NOTE . " SET note = note * " . $coefficient . " WHERE module_name = '". $module_name . "'");
+		}
+	}
+	
 	/*
 	 * @desc This fonction delete all notes by id module and id in module element
 	 * @param string $module_name 

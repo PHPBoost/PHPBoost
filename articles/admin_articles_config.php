@@ -68,8 +68,8 @@ if (retrieve(POST,'valid',false))
 	$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($config_articles)) . "' WHERE name = 'articles'", __LINE__, __FILE__);
 
 	if ($CONFIG_ARTICLES['note_max'] != $config_articles['note_max'])
-		$Sql->query_inject("UPDATE " .DB_TABLE_ARTICLES . " SET note = note * '" . ($config_articles['note_max']/$CONFIG_ARTICLES['note_max']) . "'", __LINE__, __FILE__);
-
+		NotationService::update_notation_scale('articles', $CONFIG_ARTICLES['note_max'], $config_articles['note_max']);
+			
 	###### Régénération du cache des articles #######
 	$Cache->Generate_module_file('articles');
 	AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);

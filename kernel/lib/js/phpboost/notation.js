@@ -99,8 +99,12 @@
 		this.timeout = null;
 	},
 	out_event : function () {
-		if(this.timeout == null)
-			this.timeout = setTimeout('this.change_picture_status(' + this.get_default_note() + ');', '50');
+		if(this.timeout == null) {
+			object = this;
+			this.timeout = window.setTimeout(function() {
+				object.change_picture_status(object.get_default_note()); 
+			}, 50);
+		}
 	},
 	change_picture_status : function (note) {
 		var picture_star;

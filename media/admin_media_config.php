@@ -63,7 +63,7 @@ if (!empty($_POST['valid']))
 	// Met � jour les notes des fichiers.
 	if ($MEDIA_CONFIG['note_max'] != $config_media['note_max'] && !empty($MEDIA_CONFIG))
 	{
-		$Sql->Query_inject("UPDATE ".PREFIX."media SET note = note * " . ($config_media['note_max']/$MEDIA_CONFIG['note_max']), __LINE__, __FILE__);
+		NotationService::update_notation_scale('media', $MEDIA_CONFIG['note_max'], $config_media['note_max']);
 	}
 
 	$Sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($config_media)) . "' WHERE name = 'media'", __LINE__, __FILE__);
