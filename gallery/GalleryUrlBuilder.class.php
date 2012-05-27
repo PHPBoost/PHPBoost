@@ -48,7 +48,7 @@ class GalleryUrlBuilder
 	public static function get_link_cat($id, $name = null)
 	{
 		if (!empty($name))
-			$name = '+'+Url::encode_rewrite($name);
+			$name = '+' . Url::encode_rewrite($name);
 			
 		return Url::to_absolute(self::PREFIX.url(
 			'.php?cat='.$id,
