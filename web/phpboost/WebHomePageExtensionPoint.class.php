@@ -85,7 +85,7 @@ class WebHomePageExtensionPoint implements HomePageExtensionPoint
 		));
 		
 		//Cat�gorie disponibles	
-		$column_width = floor(100/$web_config->get_number_columns());
+		$column_width = floor(100/$nbr_column);
 		$result = $this->sql_querier->query_while(
 		"SELECT aw.id, aw.name, aw.contents, aw.icon, COUNT(w.id) as count
 		FROM " . PREFIX . "web_cat aw
