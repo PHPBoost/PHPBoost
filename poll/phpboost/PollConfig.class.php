@@ -44,12 +44,12 @@ class PollConfig extends AbstractConfigData
 	
 	public function get_cookie_lenght()
 	{
-		return $this->get_property(self::COOKIE_LENGHT);
+		return $this->get_property(self::COOKIE_LENGHT) / (3600 * 24);
 	}
 	
 	public function set_cookie_lenght($value) 
 	{
-		$this->set_property(self::COOKIE_LENGHT, $value);
+		$this->set_property(self::COOKIE_LENGHT, $value * (3600 * 24));
 	}
 	
 	public function get_displayed_in_mini_module_list()
