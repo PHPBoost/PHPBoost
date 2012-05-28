@@ -85,7 +85,6 @@ class ArticlesHomePageExtensionPoint implements HomePageExtensionPoint
 
 		$nbr_articles = $this->sql_querier->query("SELECT COUNT(*) FROM " . DB_TABLE_ARTICLES . " WHERE visible = 1 AND idcat = '" . $idartcat . "' AND start <= '" . $now->get_timestamp() . "' AND (end >= '" . $now->get_timestamp() . "' OR end = 0)", __LINE__, __FILE__);
 		$nbr_articles_invisible = $this->sql_querier->query("SELECT COUNT(*) FROM " . DB_TABLE_ARTICLES . " WHERE visible = 0 AND idcat = '" . $idartcat . "' AND user_id != -1 AND start > '" . $now->get_timestamp() . "' AND (end <= '" . $now->get_timestamp() . "' OR start = 0)", __LINE__, __FILE__);
-		$total_cat = $this->sql_querier->query("SELECT COUNT(*) FROM " . DB_TABLE_ARTICLES_CAT . " ac " . $clause_cat, __LINE__, __FILE__);
 
 		$rewrite_title = Url::encode_rewrite($ARTICLES_CAT[$idartcat]['name']);
 
@@ -138,12 +137,7 @@ class ArticlesHomePageExtensionPoint implements HomePageExtensionPoint
 		$selected_fields['asc'] = ' selected="selected"';
 		else
 		$selected_fields['desc'] = ' selected="selected"';
-
-		//Colonnes des catégories.
-		$nbr_column_cats = ($total_cat > $CONFIG_ARTICLES['nbr_column']) ? $CONFIG_ARTICLES['nbr_column'] : $total_cat;
-		$nbr_column_cats = !empty($nbr_column_cats) ? $nbr_column_cats : 1;
-		$column_width_cats = floor(100/$nbr_column_cats);
-
+		
 		$group_color = User::get_group_color($User->get_attribute('user_groups'), $User->get_attribute('level'));
 		$array_class = array('member', 'modo', 'admin');
 
@@ -154,7 +148,6 @@ class ArticlesHomePageExtensionPoint implements HomePageExtensionPoint
 			'C_EDIT' => $User->check_auth($ARTICLES_CAT[$idartcat]['auth'], AUTH_ARTICLES_MODERATE) || $User->check_auth($ARTICLES_CAT[$idartcat]['auth'], AUTH_ARTICLES_WRITE) ,
 			'C_ARTICLES_WAITING' => $User->check_auth($ARTICLES_CAT[$idartcat]['auth'], AUTH_ARTICLES_MODERATE) || $User->check_auth($ARTICLES_CAT[$idartcat]['auth'], AUTH_ARTICLES_WRITE),
 			'IDCAT' => $idartcat,
-			'COLUMN_WIDTH_CAT' => $column_width_cats,
 			'SELECTED_ALPHA' => $selected_fields['alpha'],
 			'SELECTED_COM' => $selected_fields['com'],
 			'SELECTED_DATE' => $selected_fields['date'],
@@ -218,33 +211,41 @@ class ArticlesHomePageExtensionPoint implements HomePageExtensionPoint
 		$clause_unauth_cats = ($nbr_unauth_cats > 0) ? " AND ac.id NOT IN (" . implode(', ', $unauth_cats_sql) . ")" : '';
 
 		##### Catégories disponibles #####
+		
+		$result = $this->sql_querier->query_while("SELECT ac.id, ac.name, ac.auth, ac.description, ac.image, ac.nbr_articles_visible AS nbr_articles
+		FROM " . DB_TABLE_ARTICLES_CAT . " ac
+		" . $clause_cat . $clause_unauth_cats . "
+		ORDER BY ac.id_parent
+		" . $this->sql_querier->limit($Pagination->get_first_msg($CONFIG_ARTICLES['nbr_cat_max'], 'pcat'), $CONFIG_ARTICLES['nbr_cat_max']), __LINE__, __FILE__);
+
+		$total_cat = 0;
+		while ($row = $this->sql_querier->fetch_assoc($result))
+		{
+			$tpl->assign_block_vars('cat_list', array(
+				'IDCAT' => $row['id'],
+				'CAT' => $row['name'],
+				'DESC' => FormatingHelper::second_parse($row['description']),
+				'ICON_CAT' => !empty($row['image']) ? '<a href="articles' . url('.php?cat=' . $row['id'], '-' . $row['id'] . '+' . Url::encode_rewrite($row['name']) . '.php') . '"><img src="' . $row['image'] . '" alt="" class="valign_middle" /></a><br />' : '',
+				'U_CAT' => url('.php?cat=' . $row['id'], '-' . $row['id'] . '+' . Url::encode_rewrite($row['name']) . '.php'),
+				'L_NBR_ARTICLES' => sprintf($ARTICLES_LANG['nbr_articles_info'], $row['nbr_articles']),
+			));
+			$total_cat++;
+		}
+		
 		if ($total_cat > 0)
 		{
+			$nbr_column_cats = ($total_cat > $CONFIG_ARTICLES['nbr_column']) ? $CONFIG_ARTICLES['nbr_column'] : $total_cat;
+			$nbr_column_cats = !empty($nbr_column_cats) ? $nbr_column_cats : 1;
+			$column_width_cats = floor(100/$nbr_column_cats);
+			
 			$tpl->put_all(array(
 				'C_ARTICLES_CAT' => true,
+				'COLUMN_WIDTH_CAT' => $column_width_cats,
 				'PAGINATION_CAT' => $Pagination->display('articles' . url('.php' . (!empty($unget) ? $unget . '&amp;' : '?') . 'cat=' . $idartcat . '&amp;pcat=%d', '-' . $idartcat . '-0+' . $rewrite_title . '.php?pcat=%d' . $unget), $total_cat , 'pcat', $CONFIG_ARTICLES['nbr_cat_max'], 3)
 			));
-
-			$i = 0;
-			$result = $this->sql_querier->query_while("SELECT ac.id, ac.name, ac.auth, ac.description, ac.image, ac.nbr_articles_visible AS nbr_articles
-			FROM " . DB_TABLE_ARTICLES_CAT . " ac
-			" . $clause_cat . $clause_unauth_cats . "
-			ORDER BY ac.id_parent
-			" . $this->sql_querier->limit($Pagination->get_first_msg($CONFIG_ARTICLES['nbr_cat_max'], 'pcat'), $CONFIG_ARTICLES['nbr_cat_max']), __LINE__, __FILE__);
-
-			while ($row = $this->sql_querier->fetch_assoc($result))
-			{
-				$tpl->assign_block_vars('cat_list', array(
-					'IDCAT' => $row['id'],
-					'CAT' => $row['name'],
-					'DESC' => FormatingHelper::second_parse($row['description']),
-					'ICON_CAT' => !empty($row['image']) ? '<a href="articles' . url('.php?cat=' . $row['id'], '-' . $row['id'] . '+' . Url::encode_rewrite($row['name']) . '.php') . '"><img src="' . $row['image'] . '" alt="" class="valign_middle" /></a><br />' : '',
-					'U_CAT' => url('.php?cat=' . $row['id'], '-' . $row['id'] . '+' . Url::encode_rewrite($row['name']) . '.php'),
-					'L_NBR_ARTICLES' => sprintf($ARTICLES_LANG['nbr_articles_info'], $row['nbr_articles']),
-				));
-			}
-			$this->sql_querier->query_close($result);
 		}
+			
+		$this->sql_querier->query_close($result);
 
 		if ($nbr_articles > 0 || $invisible)
 		{
