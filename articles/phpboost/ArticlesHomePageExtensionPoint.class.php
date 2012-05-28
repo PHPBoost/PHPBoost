@@ -146,7 +146,7 @@ class ArticlesHomePageExtensionPoint implements HomePageExtensionPoint
 			'C_MODERATE' => $User->check_auth($ARTICLES_CAT[$idartcat]['auth'], AUTH_ARTICLES_MODERATE),
 			'C_ADD' => $User->check_auth($ARTICLES_CAT[$idartcat]['auth'], AUTH_ARTICLES_CONTRIBUTE) || $User->check_auth($ARTICLES_CAT[$idartcat]['auth'], AUTH_ARTICLES_WRITE),
 			'C_EDIT' => $User->check_auth($ARTICLES_CAT[$idartcat]['auth'], AUTH_ARTICLES_MODERATE) || $User->check_auth($ARTICLES_CAT[$idartcat]['auth'], AUTH_ARTICLES_WRITE) ,
-			'C_ARTICLES_WAITING' => $User->check_auth($ARTICLES_CAT[$idartcat]['auth'], AUTH_ARTICLES_MODERATE) || $User->check_auth($ARTICLES_CAT[$idartcat]['auth'], AUTH_ARTICLES_WRITE),
+			'C_ARTICLES_WAITING' => $User->check_auth($ARTICLES_CAT[$idartcat]['auth'], AUTH_ARTICLES_MODERATE),
 			'IDCAT' => $idartcat,
 			'SELECTED_ALPHA' => $selected_fields['alpha'],
 			'SELECTED_COM' => $selected_fields['com'],
@@ -292,7 +292,7 @@ class ArticlesHomePageExtensionPoint implements HomePageExtensionPoint
 				));
 			}
 
-			if($invisible && ($User->check_auth($ARTICLES_CAT[$idartcat]['auth'], AUTH_ARTICLES_MODERATE) || $User->check_auth($ARTICLES_CAT[$idartcat]['auth'], AUTH_ARTICLES_WRITE)))
+			if($invisible && ($User->check_auth($ARTICLES_CAT[$idartcat]['auth'], AUTH_ARTICLES_MODERATE)))
 			{
 				$tpl->put_all(array(
 					'C_INVISIBLE' => true,
