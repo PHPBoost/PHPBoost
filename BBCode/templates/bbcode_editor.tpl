@@ -109,7 +109,7 @@ function XMLHttpRequest_preview(field)
 			{type:'balise2', fname:'math.png', label:${escapejs(L_BB_MATH)}, tag: 'math', disabled:${escapejs(DISABLED_MATH)}},
 			{type:'balise2', fname:'html.png', label:${escapejs(L_BB_HTML)}, tag: 'html', disabled:${escapejs(DISABLED_HTML)}},
 			{type:'separator'},
-			{type:'action_help', fname:'help.png', label:${escapejs(L_BB_HELP)}, disabled:${escapejs(DISABLED_HELP)}}	,
+			{type:'action_help', fname:'help.png', label:${escapejs(L_BB_HELP)}, disabled:${escapejs(DISABLED_HELP)}},
 			{type:'separator'}				
 		],
 		smileys: [

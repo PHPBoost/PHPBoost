@@ -611,6 +611,20 @@ var BBcodeEditor_Core = Class.create(
 			}
 		}.bind(this));
 		
+		elt.insert('<br />');
+
+		var a = new Element('a', {'title':item.title, 'href':'#'}).update(item.title);
+		var root = this.root;
+		var field = this.element;
+		var element = this.element;
+		var title = item.title;
+		var fn = function()	{
+			window.open(root + '/BBCode/formatting/smileys.php?field='+ element, title, 'height=550,width=650,resizable=yes,scrollbars=yes');
+			return false;
+		};
+		a.observe('click', fn);
+		elt.insert(a);
+		
 		div.update(elt);
 		return div;
 	},
