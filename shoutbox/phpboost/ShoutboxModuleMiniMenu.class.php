@@ -39,7 +39,7 @@ class ShoutboxModuleMiniMenu extends ModuleMiniMenu
 	    $config_shoutbox = ShoutboxConfig::load();
 	
 	    //Mini Shoutbox non activée si sur la page archive shoutbox.
-	    if (strpos(SCRIPT, '/shoutbox/shoutbox.php') === false || $User->check_auth($config_shoutbox->get_authorization(), ShoutboxConfig::AUTHORIZATION_READ))
+	    if (strpos(SCRIPT, '/shoutbox/shoutbox.php') === false && $User->check_auth($config_shoutbox->get_authorization(), ShoutboxConfig::AUTHORIZATION_READ))
 	    {
 	    	load_module_lang('shoutbox');
 	
@@ -144,7 +144,7 @@ class ShoutboxModuleMiniMenu extends ModuleMiniMenu
 	    		$tpl->assign_block_vars('shout', array(
 	    			'IDMSG' => $row['id'],
 	    			'PSEUDO' => $row['login'],
-	    			'CONTENTS' => ucfirst(FormatingHelper::second_parse($row['contents'])) //Majuscule premier caractère.
+	    			'CONTENTS' => ucfirst(FormatingHelper::second_parse(stripslashes($row['contents']))) //Majuscule premier caractère.
 	    		));
 	    	}
 	    	$Sql->query_close($result);
