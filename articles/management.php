@@ -485,15 +485,15 @@ else
 
 	$user_pseudo = !empty($user_pseudo) ? $user_pseudo : '';
 
-	$editor = AppContext::get_content_formatting_service()->get_default_editor();
-	$editor->set_identifier('contents');
-	
 	$desc_editor = AppContext::get_content_formatting_service()->get_default_editor();
 	$desc_editor->set_identifier('description');
 	
+	$editor = AppContext::get_content_formatting_service()->get_default_editor();
+	$editor->set_identifier('contents');
+	
 	$tpl->put_all(array(
-		'KERNEL_EDITOR' => $editor->display(),
 		'KERNEL_EDITOR_DESC' => $desc_editor->display(),
+		'KERNEL_EDITOR' => $editor->display(),
 		'TITLE' => '',	
 		'NOW_DATE' => $now->format(DATE_FORMAT_SHORT, TIMEZONE_AUTO),
 		'NOW_HOUR' => $now->get_hours(),

@@ -1,11 +1,5 @@
 		<script type="text/javascript">
 		<!--
-		 window.onload = function() {
-			ajax_models_desc();
-		}
-
-		var theme = '{THEME}';
-
 		function check_form()
 		{
 			# IF C_BBCODE_TINYMCE_MODE #
@@ -269,8 +263,3 @@
 				<input type="reset" value="{L_RESET}" class="reset" />				
 			</fieldset>	
 		</form>
-		<script type="text/javascript">
-		<!--
-			ajax_model_extend_field();
-		-->
-		</script>

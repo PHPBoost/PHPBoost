@@ -344,13 +344,17 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 				}
 				else
 				{
-					$subheader_tpl->assign_block_vars('admin_links_' . $menu_pos, array(
+					$admin_main_page = $configuration->get_admin_main_page();
+					if (!empty($admin_main_page))
+					{
+						$subheader_tpl->assign_block_vars('admin_links_' . $menu_pos, array(
 							'C_ADMIN_LINKS_EXTEND' => false,
 							'IDMENU' => $menu_pos,
 							'NAME' => $configuration->get_name(),
 							'U_ADMIN_MODULE' => TPL_PATH_TO_ROOT . '/' . $module_id . '/' . $configuration->get_admin_main_page(),
 							'IMG' => TPL_PATH_TO_ROOT . '/' . $module_id . '/' . $module_id . '_mini.png'
-							));
+						));
+					}
 				}
 			}
 		}
