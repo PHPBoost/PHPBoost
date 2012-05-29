@@ -35,7 +35,7 @@ class CommentsAuthorizations
 	
 	const READ_AUTHORIZATIONS = 1;
 	const POST_AUTHORIZATIONS = 2;
-	const MODERATION_AUTHORIZATIONS = 4;
+	const MODERATE_AUTHORIZATIONS = 4;
 	const NOTE_AUTHORIZATIONS = 8;
 
 	public function is_authorized_access_module()
@@ -55,7 +55,7 @@ class CommentsAuthorizations
 	
 	public function is_authorized_moderation()
 	{
-		return $this->check_authorizations(self::MODERATION_AUTHORIZATIONS);
+		return $this->check_authorizations(self::MODERATE_AUTHORIZATIONS);
 	}
 	
 	public function is_authorized_note()

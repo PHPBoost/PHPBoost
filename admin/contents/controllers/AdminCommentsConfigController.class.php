@@ -126,7 +126,7 @@ class AdminCommentsConfigController extends AdminController
 		$auth_settings = new AuthorizationsSettings(array(
 			new ActionAuthorization($this->lang['comments.config.authorization-read'], CommentsAuthorizations::READ_AUTHORIZATIONS),
 			new ActionAuthorization($this->lang['comments.config.authorization-post'], CommentsAuthorizations::POST_AUTHORIZATIONS),
-			new ActionAuthorization($this->lang['comments.config.authorization-moderation'], CommentsAuthorizations::MODERATION_AUTHORIZATIONS),
+			new ActionAuthorization($this->lang['comments.config.authorization-moderation'], CommentsAuthorizations::MODERATE_AUTHORIZATIONS),
 			new ActionAuthorization($this->lang['comments.config.authorization-note'], CommentsAuthorizations::NOTE_AUTHORIZATIONS)
 		));
 		$auth_settings->build_from_auth_array($this->configuration->get_authorizations());

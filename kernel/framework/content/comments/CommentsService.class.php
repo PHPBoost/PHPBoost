@@ -89,7 +89,7 @@ class CommentsService
 				{
 					$comments_topic_locked = CommentsManager::comment_topic_locked($module_id, $id_in_module, $topic_identifier);
 					$user_read_only = self::$user->get_attribute('user_readonly');
-					if (!$authorizations->is_authorized_moderation() || $comments_topic_locked)
+					if (!$authorizations->is_authorized_moderation() && $comments_topic_locked)
 					{
 						self::$template->put('KEEP_MESSAGE', MessageHelper::display(self::$lang['com_locked'], MessageHelper::NOTICE, 4));
 					}
@@ -161,9 +161,9 @@ class CommentsService
 	/*
 	 * Required Instance Comments class and setter function module name, and module id.
 	*/
-	public static function get_number_comments($module_id, $id_in_module)
+	public static function get_number_comments($module_id, $id_in_module, $topic_identifier = CommentsTopic::DEFAULT_TOPIC_IDENTIFIER)
 	{
-		return CommentsManager::get_number_comments($module_id, $id_in_module);
+		return CommentsManager::get_number_comments($module_id, $id_in_module, $topic_identifier);
 	}
 
 	public static function display_comments($module_id, $id_in_module, $topic_identifier, $number_comments_display, $authorizations, $display_from_number_comments = false)

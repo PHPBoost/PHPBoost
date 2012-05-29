@@ -47,11 +47,12 @@ if ($add && empty($shout_id)) //Insertion
         DispatchManager::redirect($error_controller);
 	}
 	
-	$shout_pseudo = $User->check_level(User::MEMBER_LEVEL) ? $User->get_attribute('login') : substr(retrieve(POST, 'shoutboxForm_shoutbox_pseudo', $LANG['guest']), 0, 25);  //Pseudo posté.
-	$shout_contents = retrieve(POST, 'shoutboxForm_shoutbox_contents', '', TSTRING_PARSE);
+	$shout_pseudo = $User->check_level(User::MEMBER_LEVEL) ? $User->get_attribute('login') : substr(retrieve(POST, 'shoutboxform_shoutbox_pseudo', $LANG['guest']), 0, 25);  //Pseudo posté.
+	$shout_contents = retrieve(POST, 'shoutboxform_shoutbox_contents', '', TSTRING_PARSE);
 	
 	if (!empty($shout_pseudo) && !empty($shout_contents))
 	{
+		
 		//Accès pour poster.		
 		if ($User->check_auth($config_shoutbox->get_authorization(), ShoutboxConfig::AUTHORIZATION_WRITE))
 		{
@@ -138,8 +139,8 @@ elseif (!empty($shout_id)) //Edition + suppression!
 		}
 		elseif ($update_message)
 		{
-			$shout_contents = retrieve(POST, 'shoutboxForm_shoutbox_contents', '', TSTRING_UNCHANGE);			
-			$shout_pseudo = retrieve(POST, 'shoutboxForm_shoutbox_pseudo', $LANG['guest']);
+			$shout_contents = retrieve(POST, 'shoutboxform_shoutbox_contents', '', TSTRING_UNCHANGE);			
+			$shout_pseudo = retrieve(POST, 'shoutboxform_shoutbox_pseudo', $LANG['guest']);
 			$shout_pseudo = empty($shout_pseudo) && $User->check_level(User::MEMBER_LEVEL) ? $User->get_attribute('login') : $shout_pseudo;
 			
 			if (!empty($shout_contents) && !empty($shout_pseudo))

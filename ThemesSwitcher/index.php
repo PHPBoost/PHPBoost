@@ -1,3 +1,10 @@
-<?php 
-header('Location: ../admin/menus/menus.php');
-?>
+<html>
+<head>
+<title></title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+
+<body>
+
+</body>
+</html>
