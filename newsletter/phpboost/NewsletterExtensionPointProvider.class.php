@@ -54,6 +54,11 @@ class NewsletterExtensionPointProvider extends ExtensionPointProvider
 		return $module_css_files;
 	}
 	
+	public function sitemap()
+	{
+		return new NewsletterSitemapExtensionPoint();
+	}
+	
 	public function menus()
 	{
 		return new ModuleMenus(array(
