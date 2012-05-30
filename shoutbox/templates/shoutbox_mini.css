@@ -2,7 +2,7 @@
 div#shout_container{
 	width:142px;
 	height:150px;
-	overflow:hidden;
+	overflow:auto;
 	text-align:left;
 	margin:auto;
 	word-wrap: break-word;
