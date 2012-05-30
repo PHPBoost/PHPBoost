@@ -161,5 +161,10 @@ class DownloadExtensionPointProvider extends ExtensionPointProvider
 		$this->sql_querier->query_close($result);
 		return $data;
 	}
+	
+	public function sitemap()
+	{
+		return new DownloadSitemapExtensionPoint();
+	}
 }
 ?>

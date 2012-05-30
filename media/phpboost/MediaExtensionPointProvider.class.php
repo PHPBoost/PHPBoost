@@ -100,5 +100,10 @@ class MediaExtensionPointProvider extends ExtensionPointProvider
 	{
 		return new MediaSearchable();
 	}
+	
+	public function sitemap()
+	{
+		return new MediaSitemapExtensionPoint();
+	}
 }
 ?>

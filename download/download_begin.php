@@ -71,7 +71,8 @@ elseif (!empty($category_id))
 	define('TITLE', $DOWNLOAD_LANG['title_download'] . ' - ' . $DOWNLOAD_CATS[$category_id]['name']);
 }
 else
-	define('TITLE', $DOWNLOAD_LANG['title_download']);
+	if (!defined('TITLE'))
+		define('TITLE', $DOWNLOAD_LANG['title_download']);
 
 $l_com_note = !empty($idurl) ? (!empty($get_note) ? $LANG['note'] : (!empty($_GET['i']) ? $LANG['com'] : '') ) : '';
 
