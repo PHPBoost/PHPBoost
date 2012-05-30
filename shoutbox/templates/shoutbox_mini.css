@@ -2,9 +2,10 @@
 div#shout_container{
 	width:142px;
 	height:150px;
-	overflow:auto;
+	overflow:hidden;
 	text-align:left;
 	margin:auto;
+	word-wrap: break-word;
 }
 
 .shout_horizontal div#shout_container{
