@@ -100,5 +100,10 @@ class ArticlesExtensionPointProvider extends ExtensionPointProvider
 			new ArticlesCommentsTopic()
 		));
 	}
+	
+	public function sitemap()
+	{
+		return new ArticlesSitemapExtensionPoint();
+	}
 }
 ?>
