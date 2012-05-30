@@ -77,8 +77,8 @@ class MediaSitemapExtensionPoint implements SitemapExtensionPoint
 	private function create_module_map_sections($id_cat, $auth_mode)
 	{
 		global $MEDIA_CATS, $LANG, $User, $MEDIA_CONFIG;
-		
-		$this_category = new SitemapLink($MEDIA_CATS[$id_cat]['name'], new Url('/media/media' . url('.php?cat='.$id_cat, '-' . $id_cat . '+' . Url::encode_rewrite($MEDIA_CATS[$id_cat]['name']) . '.php')));
+
+		$this_category = new SitemapLink($MEDIA_CATS[$id_cat]['name'], new Url('/media/media' . url('.php?cat='.$id_cat, '-0-' . $id_cat . '+' . Url::encode_rewrite($MEDIA_CATS[$id_cat]['name']) . '.php')));
 
 		$category = new SitemapSection($this_category);
 		
