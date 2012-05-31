@@ -51,5 +51,12 @@ class SitemapExtensionPointProvider extends ExtensionPointProvider
 	{
 		return new UrlMappings(array(new DispatcherUrlMapping('/sitemap/index.php')));
 	}
+	
+	public function css_files()
+	{
+		$module_css_files = new ModuleCssFiles();
+		$module_css_files->set_css_files_running_module_displayed(array('sitemap.css'));
+		return $module_css_files;
+	}
 }
 ?>
