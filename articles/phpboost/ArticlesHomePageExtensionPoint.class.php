@@ -156,7 +156,7 @@ class ArticlesHomePageExtensionPoint implements HomePageExtensionPoint
 			'SELECTED_AUTHOR' => $selected_fields['author'],
 			'SELECTED_ASC' => $selected_fields['asc'],
 			'SELECTED_DESC' => $selected_fields['desc'],
-			'TARGET_ON_CHANGE_ORDER' => ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? 'category-' . $idartcat . '.php?' : 'articles.php?cat=' . $idartcat . '&',
+			'TARGET_ON_CHANGE_ORDER' => ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? $invisible ? 'category-' . $idartcat . '.php?invisible=1&' : 'category-' . $idartcat . '.php?' : $invisible ? 'articles.php?cat=' . $idartcat . '&invisible=1&' : 'articles.php?cat=' . $idartcat . '&',
 			'L_CAT_NAME' => $idartcat > 0 ? $ARTICLES_CAT[$idartcat]['name'] : $ARTICLES_LANG['title_articles'],
 			'L_DATE' => $LANG['date'],
 			'L_VIEW' => $LANG['views'],
@@ -307,7 +307,7 @@ class ArticlesHomePageExtensionPoint implements HomePageExtensionPoint
 				LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = a.user_id
 				LEFT JOIN " . DB_TABLE_COMMENTS_TOPIC . " com ON com.id_in_module = a.id AND com.module_id = 'articles'
 				LEFT JOIN " . DB_TABLE_AVERAGE_NOTES . " note ON note.id_in_module = a.id AND note.module_name = 'articles'
-				WHERE a.visible = 0 AND a.idcat = '" . $idartcat .	"'  AND a.user_id != -1 OR a.start > '" . $now->get_timestamp() . "' AND (a.end <= '" . $now->get_timestamp() . "' OR a.start = 0)
+				WHERE a.visible = 0 OR (a.start > '" . $now->get_timestamp() . "' AND (a.end <= '" . $now->get_timestamp() . "' OR a.start = 0)) AND a.idcat = '" . $idartcat .	"'  AND a.user_id != -1
 				ORDER BY " . $sort . " " . $mode .
 				$this->sql_querier->limit($Pagination->get_first_msg($CONFIG_ARTICLES['nbr_articles_max'], 'p'), $CONFIG_ARTICLES['nbr_articles_max']), __LINE__, __FILE__);
 
