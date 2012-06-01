@@ -152,11 +152,27 @@ class AdminMemberEditController extends AdminController
 	{
 		$user_id = $this->user->get_id();
 		
+		if ($this->user->get_approbation() != $this->form->get_value('approbation') && $this->user->get_approbation())
+		{
+			//Recherche de l'alerte correspondante
+			$matching_alerts = AdministratorAlertService::find_by_criteria($user_id, 'member_account_to_approbate');
+		
+			//L'alerte a été trouvée
+			if (count($matching_alerts) == 1)
+			{
+				$alert = $matching_alerts[0];
+				$alert->set_status(ADMIN_ALERT_STATUS_PROCESSED);
+				AdministratorAlertService::save_alert($alert);
+			}
+		}
+
 		try {
 			MemberExtendedFieldsService::register_fields($this->form, $user_id);
 		} catch (MemberExtendedFieldErrorsMessageException $e) {
 			$this->tpl->put('MSG', MessageHelper::display($e->getMessage(), MessageHelper::NOTICE));
 		}
+		
+		GroupsService::edit_member($user_id, $this->form->get_value('groups'));
 		
 		$this->user->set_pseudo($this->form->get_value('login'));
 		$this->user->set_level($this->form->get_value('rank')->get_raw_value());
@@ -172,7 +188,7 @@ class AdminMemberEditController extends AdminController
 		$this->user->set_editor($this->form->get_value('text-editor')->get_raw_value());
 		
 		UserService::update($this->user, 'WHERE user_id=:id', array('id' => $user_id));
-
+				
 		if ($this->form->get_value('delete_account'))
 		{
 			UserService::delete_account('WHERE user_id=:user_id', array('user_id' => $user_id));
