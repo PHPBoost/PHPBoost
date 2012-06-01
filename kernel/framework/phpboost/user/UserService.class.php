@@ -46,6 +46,7 @@ class UserService
 			'level' => $user->get_level(),
 			'user_mail' => $user->get_email(),
 			'user_show_mail' => (int)$user->get_show_email(),
+			'user_groups' => implode('|', $user->get_groups()),
 			'user_lang' => $user->get_locale(),
 			'user_theme' => $user->get_theme(),
 			'user_timezone' => $user->get_timezone(),
@@ -68,6 +69,7 @@ class UserService
  			'level' => $user->get_level(),
 			'user_mail' => $user->get_email(),
 			'user_show_mail' => (int)$user->get_show_email(),
+			'user_groups' => implode('|', $user->get_groups()),
 			'user_lang' => $user->get_locale(),
 			'user_theme' => $user->get_theme(),
 			'user_timezone' => $user->get_timezone(),
@@ -112,6 +114,7 @@ class UserService
 		$user->set_approbation((bool)$row['user_aprob']);
 		$user->set_email($row['user_mail']);
 		$user->set_show_email((bool)$row['user_show_mail']);
+		$user->set_groups(explode('|', $row['user_groups']));
 		$user->set_locale($row['user_lang']);
 		$user->set_theme($row['user_theme']);
 		$user->set_timezone($row['user_timezone']);
