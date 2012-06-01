@@ -237,13 +237,13 @@ class NotationService
 			{
 				self::insert_note($notation);
 				$nbr_notes = self::get_count_average_notes_by_id_in_module($notation);
-				if ($nbr_notes > 0)
+				if ($nbr_notes == 0)
 				{
-					self::update_average_notes($notation);
+					self::insert_average_notes($notation);
 				}
 				else
 				{
-					self::insert_average_notes($notation);
+					self::update_average_notes($notation);
 				}
 			}
 			else
