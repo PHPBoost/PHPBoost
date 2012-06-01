@@ -73,6 +73,8 @@
 		
 		$('noteloading' + id).update('<img src="' + PATH_TO_ROOT + '/templates/' + THEME + '/images/loading_mini.gif" alt="" class="valign_middle" />');
 
+		object = this;
+		
 		new Ajax.Request(
 		this.get_current_url(),
 		{
@@ -87,9 +89,9 @@
 					alert(already_vote);
 				}
 				else {
-					Note.set_default_note(note);
-					Note.set_already_post(1);
-					Note.change_picture_status(note);
+					object.set_default_note(note);
+					object.set_already_post(1);
+					object.change_picture_status(note);
 				}
 			}
 		});
