@@ -162,8 +162,7 @@ class CurrentUser extends User
 		$this->groups_auth = $groups_auth;
 
 		$this->groups = explode('|', $this->user_data['user_groups']);
-		array_unshift($this->groups, 'r' . $this->level); //Ajoute le groupe associ� au rang du membre.
-		array_pop($this->groups); //Supprime l'�l�ment vide en fin de tableau.
+		array_unshift($this->groups, 'r' . $this->level);
 	}
 	
 	private function sum_auth_groups($array_auth_groups)
@@ -193,14 +192,14 @@ class CurrentUser extends User
 			}
 			elseif (substr($idgroup, 0, 1) == 'r') //Rang
 			{
-				if ($this->get_attribute('level') >= (int)str_replace('r', '', $idgroup))
+				if ($this->get_level() >= (int)str_replace('r', '', $idgroup))
 				{
 					$array_user_auth_groups[$idgroup] = $auth_group;
 				}
 			}
 			else //Membre
 			{
-				if ($this->get_attribute('user_id') == (int)str_replace('m', '', $idgroup))
+				if ($this->get_id() == (int)str_replace('m', '', $idgroup))
 				{
 					$array_user_auth_groups[$idgroup] = $auth_group;
 				}
