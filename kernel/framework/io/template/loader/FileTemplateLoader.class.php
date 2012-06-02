@@ -71,7 +71,7 @@ class FileTemplateLoader implements TemplateLoader
 		$this->cache_filepath = PATH_TO_ROOT . '/cache/tpl/' . trim(str_replace(
 		array('/', '.', '..', 'tpl', 'templates'),
 		array('_', '', '', '', 'tpl'),
-		$this->filepath
+		$this->real_filepath
 		), '_') . '.php';
 
 	}
