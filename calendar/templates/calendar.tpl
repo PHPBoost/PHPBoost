@@ -2,16 +2,23 @@
 
 
 		# IF C_CALENDAR_DISPLAY #
+		
+		<div style="float:right;margin:0 10px 15px;margin-top:-25px;">
+			{ADMIN_CALENDAR}
+			{ADD}
+		</div>
+		<div class="spacer"></div>
 
 		<form action="{PATH_TO_ROOT}/calendar/calendar.php?token={TOKEN}" method="get">
 			<div class="module_position">					
 				<div class="module_top_l"></div>		
 				<div class="module_top_r"></div>
 				<div class="module_top">
-					<strong>{L_CALENDAR} {ADMIN_CALENDAR}</strong>
+					<div class="module_top_title">
+						<strong>{L_CALENDAR}</strong>
+					</div>
 				</div>
-				<div class="module_contents" style="text-align:center;">
-					{ADD}	
+				<div class="module_contents" style="text-align:center;">	
 					<select name="m">
 						# START month #
 						{month.MONTH}

@@ -80,8 +80,8 @@ class CalendarHomePageExtensionPoint implements HomePageExtensionPoint
 			
 		$tpl->put_all(array(
 			'C_CALENDAR_DISPLAY' => true,
-			'ADMIN_CALENDAR' => ($User->check_level(User::ADMIN_LEVEL)) ? '<a href="' . PATH_TO_ROOT . '/calendar/admin_calendar.php"><img src="'. PATH_TO_ROOT .'/templates/' . get_utheme() . '/images/' . get_ulang() . '/edit.png" alt ="" style="vertical-align:middle;" /></a>' : '',
-			'ADD' => $User->check_auth($calendar_config->get_authorizations(), AUTH_CALENDAR_WRITE) ? '<a href="'. PATH_TO_ROOT .'/calendar/calendar' . url('.php?add=1') . '" title="' . $LANG['add_event'] . '"><img src="'. PATH_TO_ROOT .'/templates/' . get_utheme() . '/images/' . get_ulang() . '/add.png" alt="" /></a><br />' : '',
+			'ADMIN_CALENDAR' => ($User->check_level(User::ADMIN_LEVEL)) ? '<a href="' . PATH_TO_ROOT . '/calendar/admin_calendar.php" title="' . $LANG['edit'] . '"><img src="'. PATH_TO_ROOT .'/templates/' . get_utheme() . '/images/' . get_ulang() . '/edit.png" alt ="" style="vertical-align:middle;" /></a>' : '',
+			'ADD' => $User->check_auth($calendar_config->get_authorizations(), AUTH_CALENDAR_WRITE) ? '<a href="'. PATH_TO_ROOT .'/calendar/calendar' . url('.php?add=1') . '" title="' . $LANG['add_event'] . '"><img src="'. PATH_TO_ROOT .'/templates/' . get_utheme() . '/images/' . get_ulang() . '/add.png" class="valign_middle" alt="" /></a><br />' : '',
 			'DATE' => $day . ' ' . $array_l_month[$month - 1] . ' ' . $year,
 			'U_PREVIOUS' => ($month == 1) ? url('.php?d=' . $day . '&amp;m=12&amp;y=' . ($year - 1), '-' . $day . '-12-' . ($year - 1) . '.php') :  url('.php?d=1&amp;m=' . ($month - 1) . '&amp;y=' . $year, '-1-' . ($month - 1) . '-' . $year . '.php'),
 			'U_NEXT' => ($month == 12) ? url('.php?d=' . $day . '&amp;m=1&amp;y=' . ($year + 1), '-' . $day . '-1-' . ($year + 1) . '.php') :  url('.php?d=1&amp;m=' . ($month + 1) . '&amp;y=' . $year, '-1-' . ($month + 1) . '-' . $year . '.php'),
