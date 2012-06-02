@@ -29,7 +29,7 @@
 		<div>
 			<div style="width:{NUMBER_PIXEL}px;margin:auto;display:none" id="note_pictures{ID_IN_MODULE}" >
 				# START notation #
-					<a href="javascript:Note{ID_IN_MODULE}.send_request({notation.I})" onmouseover="javascript:Note{ID_IN_MODULE}.change_picture_status({notation.I});">
+					<a href="javascript:Note{ID_IN_MODULE}.send_request({notation.I})" onmouseover="javascript:Note{ID_IN_MODULE}.change_picture_status({notation.I});" class="img_link">
 						<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{notation.PICTURE}" alt="" class="valign_middle" id="n{ID_IN_MODULE}_stars{notation.I}" />
 					</a>
 				# END notation #
