@@ -71,7 +71,7 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 				if ($id > 0)
 				{
 					if ($CAT_GALLERY[$g_idcat]['id_left'] >= $array_info_cat['id_left'] && $CAT_GALLERY[$g_idcat]['id_right'] <= $array_info_cat['id_right'] && $array_info_cat['level'] <= $CAT_GALLERY[$g_idcat]['level'])
-						$cat_links .= ' <a href="' . GalleryUrlBuilder::get_link_cat($id) . '">' . $array_info_cat['name'] . '</a> &raquo;';
+						$cat_links .= '&raquo; <a href="' . GalleryUrlBuilder::get_link_cat($id) . '">' . $array_info_cat['name'] . '</a>';
 				}
 			}
 			$clause_cat = " WHERE gc.id_left > '" . $CAT_GALLERY[$g_idcat]['id_left'] . "' AND gc.id_right < '" . $CAT_GALLERY[$g_idcat]['id_right'] . "' AND gc.level = '" . ($CAT_GALLERY[$g_idcat]['level'] + 1) . "' AND gc.aprob = 1";
@@ -148,7 +148,7 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 			'HEIGHT_MAX' => $CONFIG_GALLERY['height'],
 			'WIDTH_MAX' => $column_width_pics,
 			'MODULE_DATA_PATH' => $module_data_path,
-			'ADD_PICS' => $User->check_auth($CAT_GALLERY[$g_idcat]['auth'], WRITE_CAT_GALLERY) ? '<a href="' . GalleryUrlBuilder::get_link_cat_add($g_idcat) . '"><img src="'. PATH_TO_ROOT.'/templates/' . get_utheme() . '/images/' . get_ulang() . '/add.png" alt="" class="valign_middle" /></a>' : '',
+			'ADD_PICS' => $User->check_auth($CAT_GALLERY[$g_idcat]['auth'], WRITE_CAT_GALLERY) ? '<a href="' . GalleryUrlBuilder::get_link_cat_add($g_idcat) . '"><img src="'. PATH_TO_ROOT.'/templates/' . get_utheme() . '/images/' . get_ulang() . '/add.png" alt="" class="valign_middle" title="' . $LANG['gallery_pics_add'] .'"/></a>' : '',
 			'L_CONFIRM_DEL_FILE' => $LANG['confim_del_file'],
 			'L_FILE_FORBIDDEN_CHARS' => $LANG['file_forbidden_chars'],
 			'L_TOTAL_IMG' => sprintf($LANG['total_img_cat'], $nbr_pics),
@@ -196,7 +196,7 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 		{
 			$Template->put_all(array(
 				'C_GALLERY_CATS' => true,
-				'EDIT_CAT' => $is_admin ? '<a href="'. PATH_TO_ROOT.'/gallery/admin_gallery_cat.php"><img class="valign_middle" src="'. PATH_TO_ROOT.'/templates/' . get_utheme() .  '/images/' . get_ulang() . '/edit.png" alt="" /></a>' : ''
+				'EDIT_CAT' => $is_admin ? '<a href="'. PATH_TO_ROOT.'/gallery/admin_gallery_cat.php"><img class="valign_middle" src="'. PATH_TO_ROOT.'/templates/' . get_utheme() .  '/images/' . get_ulang() . '/edit.png" alt="" title="' . $LANG['gallery_cats_management'] .'"/></a>' : ''
 			));
 	
 			$j = 0;
@@ -218,7 +218,7 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 					'CAT' => $row['name'],
 					'DESC' => $row['contents'],
 					'IMG' => !empty($row['path']) ? '<img src="'. PATH_TO_ROOT.'/gallery/pics/thumbnails/' . $row['path'] . '" alt="" />' : '',
-					'EDIT' => $is_admin ? '<a href="'. PATH_TO_ROOT.'/gallery/admin_gallery_cat.php?id=' . $row['id'] . '"><img class="valign_middle" src="'. PATH_TO_ROOT.'/templates/' . get_utheme() .  '/images/' . get_ulang() . '/edit.png" alt="" /></a>' : '',
+					'EDIT' => $is_admin ? '<a href="'. PATH_TO_ROOT.'/gallery/admin_gallery_cat.php?id=' . $row['id'] . '"><img class="valign_middle" src="'. PATH_TO_ROOT.'/templates/' . get_utheme() .  '/images/' . get_ulang() . '/edit.png" alt="" title="' . $LANG['cat_edit'] . '"/></a>' : '',
 					'LOCK' => ($row['status'] == 0) ? '<img class="valign_middle" src="'. PATH_TO_ROOT.'/templates/' . get_utheme() . '/images/readonly.png" alt="" title="' . $LANG['gallery_lock'] . '" />' : '',
 					'OPEN_TR' => is_int($j++/$nbr_column_cats) ? '<tr>' : '',
 					'CLOSE_TR' => is_int($j/$nbr_column_cats) ? '</tr>' : '',
@@ -280,7 +280,7 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 	
 			$Template->put_all(array(
 				'C_GALLERY_PICS' => true,
-				'EDIT' => $is_admin ? '<a href="'. PATH_TO_ROOT.'/gallery/admin_gallery_cat.php' . (!empty($g_idcat) ? '?id=' . $g_idcat : '') . '"><img class="valign_middle" src="'. PATH_TO_ROOT.'/templates/' . get_utheme() .  '/images/' . get_ulang() . '/edit.png" alt="" /></a>' : ''
+				'EDIT' => $is_admin ? '<a href="'. PATH_TO_ROOT.'/gallery/admin_gallery_cat.php' . (!empty($g_idcat) ? '?id=' . $g_idcat : '') . '"><img class="valign_middle" src="'. PATH_TO_ROOT.'/templates/' . get_utheme() .  '/images/' . get_ulang() . '/edit.png" alt="" title="' . $LANG['cat_edit'] . '"/></a>' : ''
 			));
 	
 			//Liste des catégories.

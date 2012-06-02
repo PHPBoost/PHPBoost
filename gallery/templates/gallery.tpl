@@ -222,32 +222,37 @@
 		-->
 		</script> 
 
-		# INCLUDE message_helper #
-
+				# INCLUDE message_helper #
+		<div style="float:right;margin:0 10px 15px;margin-top:-25px;">
+			{EDIT_CAT} {EDIT}
+			{ADD_PICS}
+		</div>
+		<div class="spacer"></div>
+		
 		<div class="module_position">					
 			<div class="module_top_l"></div>		
 			<div class="module_top_r"></div>
 			<div class="module_top">
-				<div style="float:left">
-					<a href="{PATH_TO_ROOT}/gallery/gallery.php{SID}">{L_GALLERY}</a> &raquo; {U_GALLERY_CAT_LINKS} {ADD_PICS}
+				<div class="module_top_title">
+					<a href="{PATH_TO_ROOT}/gallery/gallery.php{SID}">{L_GALLERY}</a> {U_GALLERY_CAT_LINKS} 
 				</div>
-				<div style="float:right">
+				<div class="module_top_com">
 					{PAGINATION}
 				</div>
 			</div>
 			<div class="module_contents">
 				<div style="margin-bottom:50px;">
-					<div class="dynamic_menu" style="float:right;margin-right:55px;">
+					<div class="dynamic_menu" style="float:right;margin-right:85px;">
 						<ul>
 							<li onmouseover="show_menu(1, 0);" onmouseout="hide_menu(0);">
-								<h5 style="margin-right:20px;"><img src="{PATH_TO_ROOT}/wiki/templates/images/contribuate.png" class="valign_middle" alt="" /> {L_DISPLAY}</h5>
+								<h5 style="margin-right:20px;"><img src="{PATH_TO_ROOT}/gallery/templates/images/contribuate.png" class="valign_middle" alt="" /> {L_DISPLAY}</h5>
 								<ul id="smenu1">
 									<li>{U_BEST_VIEWS}</li>
 									<li>{U_BEST_NOTES}</li>
 								</ul>
 							</li>
 							<li onmouseover="show_menu(2, 0);" onmouseout="hide_menu(0);">
-								<h5 style="margin-right:20px;"><img src="{PATH_TO_ROOT}/wiki/templates/images/tools.png" class="valign_middle" alt="" /> {L_ORDER_BY}</h5>
+								<h5 style="margin-right:20px;"><img src="{PATH_TO_ROOT}/gallery/templates/images/tools.png" class="valign_middle" alt="" /> {L_ORDER_BY}</h5>
 								<ul id="smenu2">
 									# START order #
 									<li>{order.ORDER_BY}</li>
@@ -255,7 +260,7 @@
 								</ul>
 							</li>
 							<li onmouseover="show_menu(3, 0);" onmouseout="hide_menu(0);">
-								<h5 style="margin-right:5px;"><img src="{PATH_TO_ROOT}/wiki/templates/images/tools.png" class="valign_middle" alt="" /> {L_DIRECTION}</h5>
+								<h5 style="margin-right:5px;"><img src="{PATH_TO_ROOT}/gallery/templates/images/tools.png" class="valign_middle" alt="" /> {L_DIRECTION}</h5>
 								<ul id="smenu3">
 									<li>{U_ASC}</li>
 									<li>{U_DESC}</li>	
@@ -267,7 +272,7 @@
 				
 				# IF C_GALLERY_CATS #
 				<div class="block_container">
-					<div class="block_top">{L_CATEGORIES} {EDIT_CAT}</div>
+					<div class="block_top">{L_CATEGORIES}</div>
 					<div class="block_contents">
 						<table style="width:100%">
 							# START cat_list #
@@ -296,7 +301,7 @@
 				
 				# IF C_GALLERY_PICS #
 				<div class="block_container">
-					<div class="block_top">{GALLERY} {EDIT}</div>
+					<div class="block_top">{GALLERY}</div>
 					<div class="block_contents">
 						<p style="text-align:center" id="pics_max">{PAGINATION_PICS}</p>				
 						
@@ -445,9 +450,6 @@
 			<div class="module_bottom_l"></div>		
 			<div class="module_bottom_r"></div>
 			<div class="module_bottom">
-				<div style="float:left" class="text_strong">
-					<a href="gallery.php{SID}">{L_GALLERY}</a> &raquo; {U_GALLERY_CAT_LINKS} {ADD_PICS}
-				</div>
 				<div style="float:right">
 					{PAGINATION}
 				</div>

@@ -31,6 +31,6 @@
 
 $lang = array(
     'gallery_cat_name' => 'Test',
-    'gallery_cat_content' => 'Gallerie de test',
+    'gallery_cat_content' => 'Galerie de test',
 );
 ?>
