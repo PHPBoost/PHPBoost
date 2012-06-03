@@ -34,7 +34,7 @@ class DisplayAtomSyndicationController extends AbstractController
 		
 		if (empty($module_id))
 		{
-			AppContext::get_response()->redirect(UserUrlBuilder::home()->absolute());
+			AppContext::get_response()->redirect(Environment::get_home_page());
 		}
 		
 		$this->init();

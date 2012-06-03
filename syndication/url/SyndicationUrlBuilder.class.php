@@ -42,7 +42,7 @@ class SyndicationUrlBuilder
 	private static function build($id_module, $type = self::RSS_FEED, $id_category = null) 
 	{
 		return DispatchManager::get_url('/syndication', '/' . $type . '/'. $id_module . '/' . 
-			  ($id_category !== null && $id_category !== 0 ? $id_category :  ''));
+			  ($id_category !== null && $id_category !== 0 ? $id_category : ''));
 	}
 }
 ?>

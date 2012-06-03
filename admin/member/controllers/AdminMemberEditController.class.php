@@ -29,6 +29,7 @@ class AdminMemberEditController extends AdminController
 {
 	private $user_lang;
 	private $admin_user_lang;
+	private $main_lang;
 	
 	/**
 	 * @var HTMLForm
@@ -73,6 +74,7 @@ class AdminMemberEditController extends AdminController
 	{
 		$this->user_lang = LangLoader::get('user-common');
 		$this->admin_user_lang = LangLoader::get('admin-members-common');
+		$this->main_lang = LangLoader::get('main');
 	}
 
 	private function build_form()
@@ -200,27 +202,27 @@ class AdminMemberEditController extends AdminController
 		}
 		
 		$user_warning = $this->form->get_value('user_warning')->get_raw_value();
-		if (!empty($user_warning))
+		if (!empty($user_warning) && $user_warning != $this->user->get_warning_percentage())
 		{
-			MemberSanctionManager::caution($user_id, $user_warning);
+			MemberSanctionManager::caution($user_id, $user_warning, MemberSanctionManager::SEND_MP, str_replace('%level%', $user_warning, $this->main_lang['user_warning_level_changed']));
 		}
 		
 		$user_readonly = $this->form->get_value('user_readonly')->get_raw_value();
-		if (!empty($user_readonly))
+		if (!empty($user_readonly) && $user_readonly != $this->user->get_is_readonly())
 		{
-			MemberSanctionManager::remove_write_permissions($user_id, $user_readonly);
+			MemberSanctionManager::remove_write_permissions($user_id, $user_readonly, MemberSanctionManager::SEND_MP, str_replace('%date%', $this->form->get_value('user_readonly')->get_label(), $this->main_lang['user_readonly_changed']));
 		}
-		else
+		elseif (!empty($user_readonly) && $user_readonly != $this->user->get_is_readonly())
 		{
 			MemberSanctionManager::restore_write_permissions($user_id);
 		}
 		
 		$user_ban = $this->form->get_value('user_readonly')->get_raw_value();
-		if (!empty($user_ban))
+		if (!empty($user_ban) && $user_ban != $this->user->get_is_banned())
 		{
-			MemberSanctionManager::banish($user_id, $user_ban);
+			MemberSanctionManager::banish($user_id, $user_ban, MemberSanctionManager::SEND_MAIL);
 		}
-		else
+		elseif (!empty($user_ban) && $user_ban != $this->user->get_is_banned())
 		{
 			MemberSanctionManager::cancel_banishment($user_id);
 		}
