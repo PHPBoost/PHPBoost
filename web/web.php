@@ -127,6 +127,7 @@ elseif (!empty($idcat) && empty($idweb)) //Catégories.
 		'L_VIEW' => $LANG['views'],
 		'L_NOTE' => $LANG['note'],
 		'L_COM' => $LANG['com'],
+		'L_EDIT' => $LANG['edit'],
 		'U_WEB_ALPHA_TOP' => url('.php?sort=alpha&amp;mode=desc&amp;cat=' . $idcat, '-' . $idcat . '.php?sort=alpha&amp;mode=desc'),
 		'U_WEB_ALPHA_BOTTOM' => url('.php?sort=alpha&amp;mode=asc&amp;cat=' . $idcat, '-' . $idcat . '.php?sort=alpha&amp;mode=asc'),
 		'U_WEB_DATE_TOP' => url('.php?sort=date&amp;mode=desc&amp;cat=' . $idcat, '-' . $idcat . '.php?sort=date&amp;mode=desc'),

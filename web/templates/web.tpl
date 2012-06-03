@@ -5,10 +5,15 @@
 			<div class="module_top_l"></div>		
 			<div class="module_top_r"></div>
 			<div class="module_top">
-				<div style="float:left">
-					<strong>{L_CATEGORIES}</strong> # IF C_IS_ADMIN # &nbsp;&nbsp;<a href="{PATH_TO_ROOT}/web/admin_web_cat.php{SID}" title=""><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" class="valign_middle" /></a> # ENDIF #
+				<div class="module_top_title">
+					<strong>{L_CATEGORIES}</strong>
 				</div>
-				<div style="float:right">
+				<div class="module_top_com">
+					# IF C_IS_ADMIN # 
+						<a href="{PATH_TO_ROOT}/web/admin_web_cat.php{SID}" title="{L_EDIT}">
+							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" class="valign_middle" alt="" />
+						</a> 
+					# ENDIF #
 					{PAGINATION}
 				</div>
 			</div>
@@ -43,10 +48,15 @@
 			<div class="module_top_l"></div>		
 			<div class="module_top_r"></div>
 			<div class="module_top">
-				<div style="float:left">
-					<strong>{CAT_NAME}</strong>  # IF C_IS_ADMIN # &nbsp;&nbsp;<a href="{PATH_TO_ROOT}/web/admin_web_cat.php{SID}" title=""><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" class="valign_middle" /></a> # ENDIF #
+				<div class="module_top_title">
+					<strong>{CAT_NAME}</strong>
 				</div>
-				<div style="float:right">
+				<div class="module_top_com">
+					# IF C_IS_ADMIN # 
+						<a href="{PATH_TO_ROOT}/web/admin_web_cat.php{SID}" title="{L_EDIT}">
+							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" class="valign_middle" alt="" />
+						</a> 
+					# ENDIF #
 					{PAGINATION}
 				</div>
 			</div>
@@ -82,7 +92,7 @@
 					# START web #
 					<tr>	
 						<td class="row2">
-							&raquo; <a href="web{web.U_WEB_LINK}">{web.NAME}</a>
+							<a href="web{web.U_WEB_LINK}">{web.NAME}</a>
 						</td>
 						<td class="row2" style="text-align: center;">
 							{web.DATE}
@@ -155,5 +165,4 @@
 		<br /><br />
 		{COMMENTS}
 		# ENDIF #
-		
 		
