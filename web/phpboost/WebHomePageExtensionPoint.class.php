@@ -63,7 +63,7 @@ class WebHomePageExtensionPoint implements HomePageExtensionPoint
 		WHERE w.aprob = 1 AND wc.aprob = 1 AND wc.secure <= '" . $User->get_attribute('level') . "'", __LINE__, __FILE__);
 		$total_cat = $this->sql_querier->query("SELECT COUNT(*) as compt FROM " . PREFIX . "web_cat WHERE aprob = 1 AND secure <= '" . $User->get_attribute('level') . "'", __LINE__, __FILE__);
 		
-		//On crï¿½e une pagination si le nombre de catï¿½gories est trop important.
+		//On créé une pagination si le nombre de catégories est trop important.
 		 
 		$Pagination = new DeprecatedPagination();
 
@@ -79,12 +79,13 @@ class WebHomePageExtensionPoint implements HomePageExtensionPoint
 			'PAGINATION' => $Pagination->display('web' . url('.php?p=%d', '-0-0-%d.php'), $total_cat, 'p', $web_config->get_max_nbr_category(), 3),
 			'TOTAL_FILE' => $total_link,
 			'L_CATEGORIES' => $LANG['categories'],
+			'L_EDIT' => $LANG['edit'],
 			'L_PROPOSE_LINK' => $LANG['propose_link'],
 			'L_HOW_LINK' => $LANG['how_link'],
 			'U_WEB_ADD' => url('.php?web=true')
 		));
 		
-		//Catï¿½gorie disponibles	
+		//Catégorie disponibles	
 		$column_width = floor(100/$nbr_column);
 		$result = $this->sql_querier->query_while(
 		"SELECT aw.id, aw.name, aw.contents, aw.icon, COUNT(w.id) as count
