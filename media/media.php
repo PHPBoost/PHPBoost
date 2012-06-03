@@ -95,7 +95,10 @@ elseif ($id_media > 0)
 		'L_SIZE' => $LANG['size'],
 		'L_MEDIA_INFOS' => $MEDIA_LANG['media_infos'],
 		'DATE' => gmdate_format('date_format', $media['timestamp']),
-		
+		'L_MODO_PANEL' => $LANG['modo_panel'],
+		'L_EDIT' => $LANG['edit'],
+		'L_DELETE' => $LANG['delete'],
+		'L_UNAPROBED' => $MEDIA_LANG['unaprobed_media_short'],
 		'HEIGHT_P' => $media['height'] + 50,
 		'L_VIEWED' => $LANG['view'],
 		'L_BY' => $LANG['by'],

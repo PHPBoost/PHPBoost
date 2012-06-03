@@ -1,30 +1,35 @@
+
 		# IF C_CATEGORIES #
+		<div style="float:right;margin:0 10px 15px;margin-top:-25px;">
+			# IF C_ADMIN #
+				<a href="{U_ADMIN_CAT}" class="img_link" title="{L_EDIT}">
+					<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="">
+				</a>
+			# END IF #
+			# IF C_MODO #
+				<a href="moderation_media.php" class="img_link" title="{L_MODO_PANEL}">
+					<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/moderation_panel.png" style="width:16px;height:16px;" alt="">
+				</a>
+			# END IF #
+			# IF C_ADD_FILE #
+					<a href="{U_ADD_FILE}" title="{L_ADD_FILE}">
+						<img src="{PATH_TO_ROOT}/templates/{THEME}/images/french/add.png" alt="{L_ADD_FILE}" class="valign_middle"/>
+					</a>
+			# ENDIF #
+		</div>
+		<div class="spacer"></div>
 		<div class="module_position">
 			<div class="module_top_l"></div>
 			<div class="module_top_r"></div>
 			<div class="module_top">
-				<a href="${relative_url(SyndicationUrlBuilder::rss('media'))}" title="Syndication"><img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/rss.png" alt="Syndication" title="Syndication" /></a>
-				{TITLE}
-				# IF C_ADMIN #
-				<a href="{U_ADMIN_CAT}">
-					<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="">
-				</a>
-				# END IF #
-				# IF C_MODO #
-				<a href="moderation_media.php">
-					<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/moderation_panel.png" style="width:16px;height:16px;" alt="">
-				</a>
-				# END IF #
+				<div class="module_top_title">
+					<a href="${relative_url(SyndicationUrlBuilder::rss('media'))}" title="Syndication"><img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/rss.png" alt="Syndication" title="Syndication" /></a>
+					{TITLE}
+				</div>
+				<div class="module_top_com">
+				</div>
 			</div>
 			<div class="module_contents">
-				# IF C_ADD_FILE #
-					<div style="text-align:center;">
-						<a href="{U_ADD_FILE}" title="{L_ADD_FILE}">
-							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/french/add.png" alt="{L_ADD_FILE}" />
-						</a>
-					</div>
-					<hr style="margin-top:25px; margin-bottom:25px;" />
-				# ENDIF #
 				# IF C_DESCRIPTION #
 					{DESCRIPTION}
 					<hr style="margin-top:25px;" />
@@ -40,7 +45,7 @@
 								<br />
 								<a href="{row.list_cats.U_CAT}">{row.list_cats.NAME}</a>
 								# IF C_ADMIN #
-								<a href="{row.list_cats.U_ADMIN_CAT}">
+								<a href="{row.list_cats.U_ADMIN_CAT}" title="{L_EDIT}">
 									<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="">
 								</a>
 								# ENDIF #
@@ -87,13 +92,13 @@
 								<div>
 									# IF C_MODO #
 									<div style="float:right;">
-										<a href="{file.U_ADMIN_UNVISIBLE_MEDIA}">
-											<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/visible.png" alt="">
+										<a href="{file.U_ADMIN_UNVISIBLE_MEDIA}" class="img_link" title="{L_UNAPROBED}">
+											<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/unvisible.png" alt="">
 										</a>
-										<a href="{file.U_ADMIN_EDIT_MEDIA}">
+										<a href="{file.U_ADMIN_EDIT_MEDIA}" class="img_link" title="{L_EDIT}">
 											<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="">
 										</a>
-										<a href="{file.U_ADMIN_DELETE_MEDIA}" onclick="return confirm('{L_CONFIRM_DELETE_FILE}');">
+										<a href="{file.U_ADMIN_DELETE_MEDIA}" onclick="return confirm('{L_CONFIRM_DELETE_FILE}');" class="img_link" title="{L_DELETE}">
 											<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="">
 										</a>
 									</div>
@@ -158,24 +163,25 @@
 			<div class="module_top_l"></div>
 			<div class="module_top_r"></div>
 			<div class="module_top">
-				<div style="float:left">
+				<div class="module_top_title">
 					{NAME}
-					# IF C_MODO #
-					<a href="moderation_media.php">
-						<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/moderation_panel.png" style="width:16px;height:16px;" alt="">
-					</a>
-					# END IF #
 				</div>
-				<div style="float:right">
-					# IF A_COM #{U_COM}# ENDIF #
+				<div class="module_top_com">
+					# IF A_COM #
+						<img src="{PATH_TO_ROOT}/templates/{THEME}/images/com_mini.png" alt="" class="valign_middle" />
+						{U_COM}
+					# ENDIF #
 					# IF C_MODO #
-						<a href="{U_UNVISIBLE_MEDIA}">
-							<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/visible.png" alt="">
+						<a href="moderation_media.php" class="img_link" title="{L_MODO_PANEL}">
+							<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/moderation_panel.png" style="width:16px;height:16px;" alt="">
 						</a>
-						<a href="{U_EDIT_MEDIA}">
+						<a href="{U_UNVISIBLE_MEDIA}" class="img_link" title="{L_UNAPROBED}">
+							<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/unvisible.png" alt="">
+						</a>
+						<a href="{U_EDIT_MEDIA}" class="img_link" title="{L_EDIT}">
 							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" class="valign_middle" alt="" />
 						</a>
-						<a href="{U_DELETE_MEDIA}" onclick="return confirm('{L_CONFIRM_DELETE_FILE}');">
+						<a href="{U_DELETE_MEDIA}" onclick="return confirm('{L_CONFIRM_DELETE_FILE}');" class="img_link" title="{L_DELETE}">
 							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" class="valign_middle" alt="" />
 						</a>
 					# ENDIF #

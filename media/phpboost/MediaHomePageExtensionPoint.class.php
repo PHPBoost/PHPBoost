@@ -95,6 +95,10 @@ class MediaHomePageExtensionPoint implements HomePageExtensionPoint
 	
 		$tpl->put_all(array(
 			'C_CATEGORIES' => true,
+			'L_EDIT' => $LANG['edit'],
+			'L_MODO_PANEL' => $LANG['modo_panel'],
+			'L_DELETE' => $LANG['delete'],
+			'L_UNAPROBED' => $MEDIA_LANG['unaprobed_media_short'],
 			'TITLE' => $MEDIA_CATS[$id_cat]['name'],
 			'C_ADMIN' => $User->check_level(User::ADMIN_LEVEL),
 			'C_MODO' => $User->check_level(User::MODERATOR_LEVEL),
