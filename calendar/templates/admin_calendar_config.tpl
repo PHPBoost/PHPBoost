@@ -23,39 +23,38 @@
 		</div>
 		
 		<div id="admin_contents">
-		
-		<form action="admin_calendar.php?token={TOKEN}" method="post" onsubmit="return check_form_conf();" class="fieldset_content">
-			<fieldset>
-				<legend>{L_CALENDAR_CONFIG}</legend>
-				<dl>
-					<dt>
-						<label for="calendar_auth">{L_AUTH_READ}</label>
-					</dt>
-					<dd>
-						{AUTH_READ}
-					</dd>
-				</dl>
-				<dl>
-					<dt>
-						<label for="calendar_auth">{L_AUTH_WRITE}</label>
-					</dt>
-					<dd>
-						{AUTH_WRITE}
-					</dd>
-				</dl>
-				<dl>
-					<dt>
-						<label for="calendar_auth">{L_AUTH_MODO}</label>
-					</dt>
-					<dd>
-						{AUTH_MODO}
-					</dd>
-				</dl>
-			</fieldset>	
-			
-			<fieldset class="fieldset_submit">
-				<legend>{L_UPDATE}</legend>
-				<input type="submit" name="valid" value="{L_UPDATE}" class="submit" />
-			</fieldset>
-		</form>
-		
+			<form action="admin_calendar.php?token={TOKEN}" method="post" onsubmit="return check_form_conf();" class="fieldset_content">
+				<fieldset>
+					<legend>{L_CALENDAR_CONFIG}</legend>
+					<dl>
+						<dt>
+							<label for="calendar_auth">{L_AUTH_READ}</label>
+						</dt>
+						<dd>
+							{AUTH_READ}
+						</dd>
+					</dl>
+					<dl>
+						<dt>
+							<label for="calendar_auth">{L_AUTH_WRITE}</label>
+						</dt>
+						<dd>
+							{AUTH_WRITE}
+						</dd>
+					</dl>
+					<dl>
+						<dt>
+							<label for="calendar_auth">{L_AUTH_MODO}</label>
+						</dt>
+						<dd>
+							{AUTH_MODO}
+						</dd>
+					</dl>
+				</fieldset>	
+				
+				<fieldset class="fieldset_submit">
+					<legend>{L_UPDATE}</legend>
+					<input type="submit" name="valid" value="{L_UPDATE}" class="submit" />
+				</fieldset>
+			</form>
+		</div>
