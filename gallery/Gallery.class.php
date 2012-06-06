@@ -327,7 +327,7 @@ class Gallery
 		global $Sql;
 		
 		$Sql->query_inject("UPDATE " . PREFIX . "gallery SET name = '" . TextHelper::strprotect($name, TextHelper::HTML_PROTECT, TextHelper::ADDSLASHES_FORCE). "' WHERE id = '" . $id_pics . "'", __LINE__, __FILE__);
-		return stripslashes((strlen(html_entity_decode($name)) > 22) ? htmlentities(substr(html_entity_decode($name), 0, 22)) . PATH_TO_ROOT . '.' : $name);
+		return stripslashes((strlen(TextHelper::html_entity_decode($name)) > 22) ? TextHelper::htmlentities(substr(TextHelper::html_entity_decode($name), 0, 22)) . PATH_TO_ROOT . '.' : $name);
 	}
 	
 	//Approuve une image.

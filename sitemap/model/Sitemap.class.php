@@ -146,7 +146,7 @@ class Sitemap
 
 		$template->put_all(array(
 		    'C_SITE_MAP' => true,
-            'SITE_NAME' => htmlspecialchars($this->site_name, ENT_QUOTES)
+            'SITE_NAME' => TextHelper::htmlspecialchars($this->site_name, ENT_QUOTES)
 		));
 
 		//Let's export all the element it contains

@@ -206,9 +206,9 @@ else
 	while ($row = $Sql->fetch_assoc($result))
 	{
 		//On reccourci le lien si il est trop long pour éviter de déformer l'administration.
-		$row['name'] = html_entity_decode($row['name']);
+		$row['name'] = TextHelper::html_entity_decode($row['name']);
 		$name = strlen($row['name']) > 45 ? substr($row['name'], 0, 45) . '...' : $row['name'];
-		$name = htmlspecialchars($name);
+		$name = TextHelper::htmlspecialchars($name);
 
 		//Activation des catégories.
 		$enabled = $row['aprob'] == '1' ? 'checked="checked"' : '';	

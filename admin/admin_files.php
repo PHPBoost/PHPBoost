@@ -391,7 +391,7 @@ else
 	$result = $Sql->query_while ($sql_folder, __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))
 	{
-		$name_cut = (strlen(html_entity_decode($row['name'])) > 22) ? htmlentities(substr(html_entity_decode($row['name']), 0, 22)) . '...' : $row['name'];	
+		$name_cut = (strlen(TextHelper::html_entity_decode($row['name'])) > 22) ? TextHelper::htmlentities(substr(TextHelper::html_entity_decode($row['name']), 0, 22)) . '...' : $row['name'];	
 		
 		$template->assign_block_vars('folder', array(
 			'ID' => $row['id'],
@@ -418,7 +418,7 @@ else
 		$result = $Sql->query_while ($sql_files, __LINE__, __FILE__);
 		while ($row = $Sql->fetch_assoc($result))
 		{
-			$name_cut = (strlen(html_entity_decode($row['name'])) > 22) ? htmlentities(substr(html_entity_decode($row['name']), 0, 22)) . '...' : $row['name'];
+			$name_cut = (strlen(TextHelper::html_entity_decode($row['name'])) > 22) ? TextHelper::htmlentities(substr(TextHelper::html_entity_decode($row['name']), 0, 22)) . '...' : $row['name'];
 		
 			$get_img_mimetype = Uploads::get_img_mimetype($row['type']);
 			$size_img = '';

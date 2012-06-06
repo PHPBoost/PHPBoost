@@ -145,9 +145,9 @@ class AdminNewsletterEditStreamController extends AdminModuleController
 			"UPDATE ". NewsletterSetup::$newsletter_table_streams ." SET 
 			name = :name, description = :description, picture = :picture, visible = :visible, auth = :auth
 			WHERE id = '". $id ."'", array(
-                'name' => htmlspecialchars($this->form->get_value('name')),
-				'description' => htmlspecialchars($this->form->get_value('description')),
-				'picture' => htmlspecialchars($this->form->get_value('picture')),
+                'name' => TextHelper::htmlspecialchars($this->form->get_value('name')),
+				'description' => TextHelper::htmlspecialchars($this->form->get_value('description')),
+				'picture' => TextHelper::htmlspecialchars($this->form->get_value('picture')),
 				'visible' => (int)$this->form->get_value('visible'),
 				'auth' => $auth
 		));

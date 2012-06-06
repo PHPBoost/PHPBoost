@@ -88,7 +88,7 @@ class HTTPFatalExceptionPrinter
 			}
 		}
 		function getOutputBufferContent() {
-			return \'' . str_replace("\n", '\n\' + ' . "\n" . '\'', str_replace("\r", '', addslashes(htmlspecialchars($this->ob_content)))) . '\';
+			return \'' . str_replace("\n", '\n\' + ' . "\n" . '\'', str_replace("\r", '', addslashes(TextHelper::htmlspecialchars($this->ob_content)))) . '\';
 		}
 		function openOutputBufferPopup(content) {
 			var obWindow = window.open(\'\', \'Output Buffer\', \'\');
@@ -195,13 +195,13 @@ class HTTPFatalExceptionPrinter
 			$value_to_display = '<ul>';
 			foreach ($value as $a_value)
 			{
-				$value_to_display .= '<li>' . htmlspecialchars($a_value) . '</li>';
+				$value_to_display .= '<li>' . TextHelper::htmlspecialchars($a_value) . '</li>';
 			}
 			$value_to_display .= '</ul>';
 		}
 		else
 		{
-			$value_to_display = htmlspecialchars($value);
+			$value_to_display = TextHelper::htmlspecialchars($value);
 		}
 		$row_class = $this->is_row_odd ? 'oddRow' : 'evenRow';
 		$this->is_row_odd = !$this->is_row_odd;

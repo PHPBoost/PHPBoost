@@ -142,17 +142,17 @@ class Uploads
 		if ($admin) //Administration, on ne vérifie pas l'appartenance.
 		{
 			self::$sql_querier->query_inject("UPDATE " . DB_TABLE_UPLOAD_CAT . " SET name = '" . $name . "' WHERE id = '" . $id_folder . "'", __LINE__, __FILE__);
-			return stripslashes((strlen(html_entity_decode($name)) > 22) ? htmlentities(substr(html_entity_decode($name), 0, 22)) . '...' : $name);
+			return stripslashes((strlen(TextHelper::html_entity_decode($name)) > 22) ? TextHelper::htmlentities(substr(TextHelper::html_entity_decode($name), 0, 22)) . '...' : $name);
 		}
 		else
 		{
 			if ($user_id == $info_folder['user_id'])
 			{
 				self::$sql_querier->query_inject("UPDATE " . DB_TABLE_UPLOAD_CAT . " SET name = '" . $name . "' WHERE id = '" . $id_folder . "'", __LINE__, __FILE__);
-				return stripslashes((strlen(html_entity_decode($name)) > 22) ? htmlentities(substr(html_entity_decode($name), 0, 22)) . '...' : $name);
+				return stripslashes((strlen(TextHelper::html_entity_decode($name)) > 22) ? TextHelper::htmlentities(substr(TextHelper::html_entity_decode($name), 0, 22)) . '...' : $name);
 			}
 		}
-		return stripslashes((strlen(html_entity_decode($previous_name)) > 22) ? htmlentities(substr(html_entity_decode($previous_name), 0, 22)) . '...' : $previous_name);
+		return stripslashes((strlen(TextHelper::html_entity_decode($previous_name)) > 22) ? TextHelper::htmlentities(substr(TextHelper::html_entity_decode($previous_name), 0, 22)) . '...' : $previous_name);
 	}
 	
 	//Renomme un fichier virtuel
@@ -167,17 +167,17 @@ class Uploads
 		if ($admin) //Administration, on ne vérifie pas l'appartenance.
 		{
 			self::$sql_querier->query_inject("UPDATE " . DB_TABLE_UPLOAD . " SET name = '" . $name . "' WHERE id = '" . $id_file . "'", __LINE__, __FILE__);
-			return stripslashes((strlen(html_entity_decode($name)) > 22) ? htmlentities(substr(html_entity_decode($name), 0, 22)) . '...' : $name);
+			return stripslashes((strlen(TextHelper::html_entity_decode($name)) > 22) ? TextHelper::htmlentities(substr(TextHelper::html_entity_decode($name), 0, 22)) . '...' : $name);
 		}
 		else
 		{
 			if ($user_id == $info_cat['user_id'])
 			{
 				self::$sql_querier->query_inject("UPDATE " . DB_TABLE_UPLOAD . " SET name = '" . $name . "' WHERE id = '" . $id_file . "'", __LINE__, __FILE__);
-				return stripslashes((strlen(html_entity_decode($name)) > 22) ? htmlentities(substr(html_entity_decode($name), 0, 22)) . '...' : $name);
+				return stripslashes((strlen(TextHelper::html_entity_decode($name)) > 22) ? TextHelper::htmlentities(substr(TextHelper::html_entity_decode($name), 0, 22)) . '...' : $name);
 			}
 		}
-		return stripslashes((strlen(html_entity_decode($previous_name)) > 22) ? htmlentities(substr(html_entity_decode($previous_name), 0, 22)) . '...' : $previous_name);
+		return stripslashes((strlen(TextHelper::html_entity_decode($previous_name)) > 22) ? TextHelper::htmlentities(substr(TextHelper::html_entity_decode($previous_name), 0, 22)) . '...' : $previous_name);
 	}
 		
 	//Déplacement dun dossier.

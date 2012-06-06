@@ -78,14 +78,14 @@ class ErrorViewBuilder
 		{
 			if ($exception !== null && Debug::is_debug_mode_enabled())
 			{
-				$message = htmlspecialchars($exception->getMessage()) . '<br /><br /><i>' .
+				$message = TextHelper::htmlspecialchars($exception->getMessage()) . '<br /><br /><i>' .
 				$exception->getFile() . ':' . $exception->getLine() .
 				'</i><div class="spacer">&nbsp;</div>' .
 				Debug::get_stacktrace_as_string(0, $exception);
 			}
 			else
 			{
-				$message = htmlspecialchars($this->lang['unexpected_error_occurs']);
+				$message = TextHelper::htmlspecialchars($this->lang['unexpected_error_occurs']);
 			}
 		}
 		return $message;

@@ -110,7 +110,7 @@ define('GESHI_VISITED', 3);
 
 // Important string starter/finisher
 // Note that if you change these, they should be as-is: i.e., don't
-// write them as if they had been run through htmlentities()
+// write them as if they had been run through TextHelper::htmlentities()
 /** The starter for important parts of the source */
 define('GESHI_START_IMPORTANT', '<BEGIN GeSHi>');
 /** The ender for important parts of the source */
@@ -4125,7 +4125,7 @@ class GeSHi {
      * different character sets. (If indeed htmlspecialchars() works at
      * byte-value level that goes some  way towards explaining why the
      * vulnerability would exist in this function, too, and not only in
-     * htmlentities() which certainly is working at byte-value level.)
+     * TextHelper::htmlentities() which certainly is working at byte-value level.)
      *
      * This replacement function however works at character level and should
      * therefore be "immune" to character set differences - so no charset

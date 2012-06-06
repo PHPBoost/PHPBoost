@@ -33,7 +33,7 @@ abstract class UpdateController extends AbstractController
 
 	protected function load_lang(HTTPRequest $request)
 	{
-		$locale = htmlspecialchars($request->get_string('lang', UpdateController::DEFAULT_LOCALE));
+		$locale = TextHelper::htmlspecialchars($request->get_string('lang', UpdateController::DEFAULT_LOCALE));
 		LangLoader::set_locale($locale);
 		UpdateUrlBuilder::set_locale($locale);
 		$this->lang = LangLoader::get('update', 'update');

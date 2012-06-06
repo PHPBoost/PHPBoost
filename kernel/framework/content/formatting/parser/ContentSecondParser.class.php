@@ -118,7 +118,7 @@ class ContentSecondParser extends AbstractParser
 	 */
 	private static function highlight_code($contents, $language, $line_number, $inline_code)
 	{
-		$contents = htmlspecialchars_decode($contents);
+		$contents = TextHelper::htmlspecialchars_decode($contents);
 		
 		//BBCode PHPBoost
 		if (strtolower($language) == 'bbcode')

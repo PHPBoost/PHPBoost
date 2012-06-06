@@ -39,8 +39,8 @@ class NewsletterDAO
 		$stream_cache = NewsletterStreamsCache::load()->get_stream($stream_id);
 		$columns = array(
 			'stream_id' => $stream_id,
-			'subject' => htmlspecialchars($subject),
-			'contents' => htmlspecialchars($contents),
+			'subject' => TextHelper::htmlspecialchars($subject),
+			'contents' => TextHelper::htmlspecialchars($contents),
 			'timestamp' => time(),
 			'language_type' => $language_type,
 			'nbr_subscribers' => count($stream_cache['subscribers'])

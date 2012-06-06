@@ -79,12 +79,12 @@ class TemplateFunctions
      */
     public function escape($string)
     {
-        return htmlspecialchars($string);
+        return TextHelper::htmlspecialchars($string);
     }
     
     public function html($string)
     {
-        return htmlspecialchars_decode($string);
+        return TextHelper::htmlspecialchars_decode($string);
     }
 
     /**

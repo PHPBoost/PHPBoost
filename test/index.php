@@ -30,7 +30,7 @@ import('/test/util/phpboost_unit_tests', INC_IMPORT);
         </style>
 	</head>
 	<body>
-		<?php $params = htmlentities(!empty($_REQUEST['params']) ? $_REQUEST['params'] : ''); ?>
+		<?php $params = TextHelper::htmlentities(!empty($_REQUEST['params']) ? $_REQUEST['params'] : ''); ?>
 		<form name="phpunit_launcher">
             <table class="run-options">
                 <tr>

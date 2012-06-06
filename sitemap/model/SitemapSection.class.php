@@ -118,7 +118,7 @@ class SitemapSection extends SitemapElement
 		$template = $export_config->get_section_stream();
 		 
 		$template->put_all(array(
-			'SECTION_NAME' => htmlspecialchars($this->get_name(), ENT_QUOTES),
+			'SECTION_NAME' => TextHelper::htmlspecialchars($this->get_name(), ENT_QUOTES),
             'SECTION_URL' => !empty($this->link) ? $this->link->get_url() : '',
 		    'DEPTH' => $this->depth,
             'C_SECTION' => true
