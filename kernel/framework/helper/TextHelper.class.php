@@ -55,7 +55,7 @@ class TextHelper
 		//Protection contre les balises html.
 		if ($html_protect)
 		{
-			$var = htmlspecialchars($var);
+			$var = self::htmlspecialchars($var);
 			//While we aren't in UTF8 encoding, we have to use HTML entities to display some special chars, we accept them.
 			$var = preg_replace('`&amp;((?:#[0-9]{2,5})|(?:[a-z0-9]{2,8}));`i', "&$1;", $var);
 		}
@@ -94,8 +94,8 @@ class TextHelper
 	 */
 	public static function wordwrap_html($str, $lenght, $cut_char = '<br />', $cut = true)
 	{
-		$str = wordwrap(html_entity_decode($str), $lenght, $cut_char, $cut);
-		return str_replace('&lt;br /&gt;', '<br />', htmlspecialchars($str, ENT_NOQUOTES));
+		$str = wordwrap(TextHelper::html_entity_decode($str), $lenght, $cut_char, $cut);
+		return str_replace('&lt;br /&gt;', '<br />', self::htmlspecialchars($str, ENT_NOQUOTES));
 	}
 
 	/**
@@ -112,11 +112,11 @@ class TextHelper
 	{
 		if ($end == '')
 		{
-			return htmlspecialchars(substr(html_entity_decode($str), $start), ENT_NOQUOTES);
+			return self::htmlspecialchars(substr(self::html_entity_decode($str), $start), ENT_NOQUOTES);
 		}
 		else
 		{
-			return htmlspecialchars(substr(html_entity_decode($str), $start, $end), ENT_NOQUOTES);
+			return self::htmlspecialchars(substr(self::html_entity_decode($str), $start, $end), ENT_NOQUOTES);
 		}
 	}
 
@@ -144,6 +144,42 @@ class TextHelper
 		$bounds = $add_quotes ? '"' : '';
 		return $bounds . str_replace(array("\r\n", "\r", "\n", ), array('\n', '\n', '\n', ),
 		addcslashes($string, '"')) . $bounds;
+	}
+	
+	public static function htmlspecialchars($string, $flags = null)
+	{
+		if ($flags == null)
+		{
+			return htmlspecialchars($string, ENT_COMPAT | ENT_HTML401, 'ISO-8859-1');
+		}
+		return htmlspecialchars($string, $flags, 'ISO-8859-1');
+	}
+	
+	public static function htmlspecialchars_decode($string, $flags = null)
+	{
+		if ($flags == null)
+		{
+			return htmlspecialchars_decode($string, ENT_COMPAT | ENT_HTML401);
+		}
+		return htmlspecialchars_decode($string, $flags);
+	}
+	
+	public static function htmlentities($string, $flags = null)
+	{
+		if ($flags == null)
+		{
+			return htmlentities($string, ENT_COMPAT | ENT_HTML401, 'ISO-8859-1');
+		}
+		return htmlentities($string, $flags, 'ISO-8859-1');
+	}
+	
+	public static function html_entity_decode($string, $flags = null)
+	{
+		if ($flags == null)
+		{
+			return html_entity_decode($string, ENT_COMPAT | ENT_HTML401, 'ISO-8859-1');
+		}
+		return html_entity_decode($string, $flags, 'ISO-8859-1');
 	}
 
 	/**

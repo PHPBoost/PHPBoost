@@ -99,10 +99,10 @@ class CommentsDAO
 		$columns = array(
 			'id_topic' => $id_topic,
 			'user_id' => $user_id,
-			'pseudo' => htmlspecialchars($pseudo),
-			'user_ip' => htmlspecialchars($user_ip),
+			'pseudo' => TextHelper::htmlspecialchars($pseudo),
+			'user_ip' => TextHelper::htmlspecialchars($user_ip),
 			'timestamp' => time(),
-			'message' => htmlspecialchars($message)
+			'message' => TextHelper::htmlspecialchars($message)
 		);
 		self::$db_querier->insert(DB_TABLE_COMMENTS, $columns);
 	}
@@ -110,7 +110,7 @@ class CommentsDAO
 	public static function edit_comment($comment_id, $message)
 	{
 		$columns = array(
-			'message' => htmlspecialchars($message)
+			'message' => TextHelper::htmlspecialchars($message)
 		);
 		$condition = "WHERE id = :id";
 		$parameters = array(

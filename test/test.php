@@ -37,7 +37,7 @@ require_once PATH_TO_ROOT . '/kernel/header.php';
 
 import('/test/util/phpboost_unit_tests', INC_IMPORT);
 
-$params = htmlentities(!empty($_REQUEST['params']) ? $_REQUEST['params'] : '');
+$params = TextHelper::htmlentities(!empty($_REQUEST['params']) ? $_REQUEST['params'] : '');
 
 $tpl = new FileTemplate('test/test.tpl');
 

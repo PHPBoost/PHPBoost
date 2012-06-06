@@ -364,10 +364,10 @@ else
 				if (!file_exists('pics/thumbnails/' . $row['path']))
 					$Gallery->Resize_pics('pics/' . $row['path']); //Redimensionnement + création miniature
 
-				$name_cut = (strlen(html_entity_decode($row['name'])) > 22) ? htmlentities(substr(html_entity_decode($row['name']), 0, 22)) . '...' : $row['name'];
+				$name_cut = (strlen(TextHelper::html_entity_decode($row['name'])) > 22) ? TextHelper::htmlentities(substr(TextHelper::html_entity_decode($row['name']), 0, 22)) . '...' : $row['name'];
 
 				//On reccourci le nom s'il est trop long pour éviter de déformer l'administration.
-				$name = html_entity_decode($row['name']);
+				$name = TextHelper::html_entity_decode($row['name']);
 				$name = strlen($name) > 20 ? substr($name, 0, 20) . '...' : $name;
 
 				//On genère le tableau pour x colonnes

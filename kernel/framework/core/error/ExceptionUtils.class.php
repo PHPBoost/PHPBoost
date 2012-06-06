@@ -112,7 +112,7 @@ public static function get_file($call)
 		$trace = '<ul>';
 		foreach ($args as $arg)
 		{
-			$trace .= '<li><pre>' . htmlspecialchars(print_r($arg, true)) . '</pre></li>';
+			$trace .= '<li><pre>' . TextHelper::htmlspecialchars(print_r($arg, true)) . '</pre></li>';
 		}
 		$trace .= '</ul>';
 		return $trace;

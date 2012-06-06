@@ -271,7 +271,7 @@ class ArticlesHomePageExtensionPoint implements HomePageExtensionPoint
 			while ($row = $this->sql_querier->fetch_assoc($result))
 			{
 				//On reccourci le lien si il est trop long.
-				$fichier = (strlen($row['title']) > 45 ) ? substr(html_entity_decode($row['title']), 0, 45) . '...' : $row['title'];
+				$fichier = (strlen($row['title']) > 45 ) ? substr(TextHelper::html_entity_decode($row['title']), 0, 45) . '...' : $row['title'];
 				
 				$notation->set_id_in_module($row['id']);
 				
@@ -314,7 +314,7 @@ class ArticlesHomePageExtensionPoint implements HomePageExtensionPoint
 				while ($row = $this->sql_querier->fetch_assoc($result))
 				{
 					//On reccourci le lien si il est trop long.
-					$fichier = (strlen($row['title']) > 45 ) ? substr(html_entity_decode($row['title']), 0, 45) . '...' : $row['title'];
+					$fichier = (strlen($row['title']) > 45 ) ? substr(TextHelper::html_entity_decode($row['title']), 0, 45) . '...' : $row['title'];
 					
 					$notation->set_id_in_module($row['id']);
 					

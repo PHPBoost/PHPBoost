@@ -240,7 +240,7 @@ class ShoutboxHomePageExtensionPoint implements HomePageExtensionPoint
 			if (!empty($row['user_location'])) 
 			{
 				$user_local = $LANG['place'] . ': ' . $row['user_location'];
-				$user_local = $user_local > 15 ? htmlentities(substr(html_entity_decode($user_local), 0, 15)) . '...<br />' : $user_local . '<br />';			
+				$user_local = $user_local > 15 ? TextHelper::htmlentities(substr(TextHelper::html_entity_decode($user_local), 0, 15)) . '...<br />' : $user_local . '<br />';			
 			}
 			else $user_local = '';
 			

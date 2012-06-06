@@ -180,7 +180,7 @@ if (!empty($valid_search) && !empty($search))
 		{ 
 			$title = $row['title'];
 			if (!empty($row['title']))
-				$title = (strlen(html_entity_decode($row['title'])) > 45 ) ? TextHelper::substr_html($row['title'], 0, 45) . '...' : $row['title'];
+				$title = (strlen(TextHelper::html_entity_decode($row['title'])) > 45 ) ? TextHelper::substr_html($row['title'], 0, 45) . '...' : $row['title'];
 			
 			//On encode l'url pour un éventuel rewriting, c'est une opération assez gourmande
 			$rewrited_title = ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? '+' . Url::encode_rewrite($row['title']) : '';

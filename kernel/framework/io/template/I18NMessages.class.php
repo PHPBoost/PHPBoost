@@ -81,7 +81,7 @@ class I18NMessages
 
     public function i18n($key, $parameters)
     {
-        return htmlspecialchars($this->i18nraw($key, $parameters));
+        return TextHelper::htmlspecialchars($this->i18nraw($key, $parameters));
     }
 
     public function i18njs($key, $parameters)

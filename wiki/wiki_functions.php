@@ -92,7 +92,7 @@ function wiki_explode_menu(&$content)
 			//If the line contains a title
 			if (preg_match('`^\s*[\-]{' . $level . '}[\s]+(.+)[\s]+[\-]{' . $level . '}(?:<br />)?\s*$`', $lines[$i], $matches))
 			{
-				$title_name = strip_tags(html_entity_decode($matches[1]));
+				$title_name = strip_tags(TextHelper::html_entity_decode($matches[1]));
 				
 				//We add it to the list
 				$list[] = array($level - 1, $title_name);
@@ -101,7 +101,7 @@ function wiki_explode_menu(&$content)
 				
 				//Réinsertion
 				$class_level = $level - 1;
-				$lines[$i] = '<h' . $class_level . ' class="wiki_paragraph' .  $class_level . '" id="paragraph_' . Url::encode_rewrite($title_name) . '">' . htmlspecialchars($title_name) .'</h' . $class_level . '><br />' . "\n";
+				$lines[$i] = '<h' . $class_level . ' class="wiki_paragraph' .  $class_level . '" id="paragraph_' . Url::encode_rewrite($title_name) . '">' . TextHelper::htmlspecialchars($title_name) .'</h' . $class_level . '><br />' . "\n";
 			}
 		}
 		$i++;
@@ -128,7 +128,7 @@ function wiki_display_menu($menu_list)
 		$current_level = $title[0];
 		
 		$title_name = stripslashes($title[1]);		
-		$title_link = '<a href="#paragraph_' . Url::encode_rewrite($title_name) . '">' . htmlspecialchars($title_name) . '</a>';
+		$title_link = '<a href="#paragraph_' . Url::encode_rewrite($title_name) . '">' . TextHelper::htmlspecialchars($title_name) . '</a>';
 		
 		if ($current_level > $last_level)
 		{
