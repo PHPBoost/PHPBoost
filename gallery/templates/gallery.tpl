@@ -417,7 +417,7 @@
 											<div style="position:absolute;z-index:100;margin-top:90px;">
 												<div class="bbcode_block" style="width:170px;overflow:auto;">
 													<div style="margin-bottom:4px;" class="text_small"><strong>{L_MOVETO}</strong>:</div>
-													<select class="valign_middle" name="{pics_list.ID}cat" onchange="document.location = 'gallery{pics_list.U_MOVE}">
+													<select class="valign_middle" name="{pics_list.ID}cat" onchange="document.location = '{pics_list.U_MOVE}">
 														{pics_list.CAT}
 													</select>
 													<br /><br />
