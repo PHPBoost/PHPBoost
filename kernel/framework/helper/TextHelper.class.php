@@ -150,7 +150,7 @@ class TextHelper
 	{
 		if ($flags == null)
 		{
-			return htmlspecialchars($string, ENT_COMPAT | ENT_HTML401, 'ISO-8859-1');
+			return htmlspecialchars($string, ENT_COMPAT, 'ISO-8859-1');
 		}
 		return htmlspecialchars($string, $flags, 'ISO-8859-1');
 	}
@@ -159,7 +159,7 @@ class TextHelper
 	{
 		if ($flags == null)
 		{
-			return htmlspecialchars_decode($string, ENT_COMPAT | ENT_HTML401);
+			return htmlspecialchars_decode($string, ENT_COMPAT);
 		}
 		return htmlspecialchars_decode($string, $flags);
 	}
@@ -168,7 +168,7 @@ class TextHelper
 	{
 		if ($flags == null)
 		{
-			return htmlentities($string, ENT_COMPAT | ENT_HTML401, 'ISO-8859-1');
+			return htmlentities($string, ENT_COMPAT, 'ISO-8859-1');
 		}
 		return htmlentities($string, $flags, 'ISO-8859-1');
 	}
@@ -177,7 +177,7 @@ class TextHelper
 	{
 		if ($flags == null)
 		{
-			return html_entity_decode($string, ENT_COMPAT | ENT_HTML401, 'ISO-8859-1');
+			return html_entity_decode($string, ENT_COMPAT, 'ISO-8859-1');
 		}
 		return html_entity_decode($string, $flags, 'ISO-8859-1');
 	}
