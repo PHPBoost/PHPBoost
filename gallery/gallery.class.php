@@ -318,7 +318,7 @@ class Gallery
 		global $Sql;
 		
 		$Sql->query_inject("UPDATE " . PREFIX . "gallery SET name = '" . strprotect($name,HTML_PROTECT,ADDSLASHES_FORCE). "' WHERE id = '" . $id_pics . "'", __LINE__, __FILE__);
-		return stripslashes((strlen(html_entity_decode($name)) > 22) ? htmlentities(substr(html_entity_decode($name), 0, 22)) . PATH_TO_ROOT . '.' : $name);
+		return stripslashes((strlen(html_entity_decode($name, ENT_COMPAT | ENT_HTML401, 'ISO-8859-1')) > 22) ? htmlentities(substr(html_entity_decode($name, ENT_COMPAT | ENT_HTML401, 'ISO-8859-1'), 0, 22), ENT_COMPAT | ENT_HTML401, 'ISO-8859-1') . PATH_TO_ROOT . '.' : $name);
 	}
 	
 	//Approuve une image.

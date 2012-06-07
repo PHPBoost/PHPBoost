@@ -70,7 +70,7 @@ define('ADMIN_LEVEL', 		2); //Niveau Admin.
 define('SCRIPT', 			$_SERVER['PHP_SELF']); //Adresse relative à la racine du script.
 define('QUERY_STRING', 		addslashes($_SERVER['QUERY_STRING'])); //Récupère la chaine de variables $_GET.
 define('PHPBOOST', 			true); //Permet de s'assurer des inclusions.
-define('ERROR_REPORTING', 	E_ALL | E_NOTICE);
+define('ERROR_REPORTING', 	E_ALL & ~E_STRICT);
 define('E_TOKEN', 			-3); // Token error
 define('E_USER_REDIRECT', 	-1); //Erreur avec redirection
 define('E_USER_SUCCESS', 	-2); //Succès.

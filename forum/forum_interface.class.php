@@ -425,7 +425,7 @@ class ForumInterface extends ModuleInterface
                     );
             $item->set_title(
             	(($CONFIG_FORUM['activ_display_msg'] && !empty($row['display_msg'])) ?
-            	html_entity_decode($CONFIG_FORUM['display_msg'], ENT_NOQUOTES) . ' ' : '') .
+            	html_entity_decode($CONFIG_FORUM['display_msg'], ENT_NOQUOTES, 'ISO-8859-1') . ' ' : '') .
                 ucfirst($row['title'])
             );
             $item->set_link($link);
