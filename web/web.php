@@ -181,7 +181,7 @@ elseif (!empty($idcat) && empty($idweb)) //Catégories.
 	while ($row = $Sql->fetch_assoc($result))
 	{
 		//On reccourci le lien si il est trop long.
-		$row['title'] = (strlen($row['title']) > 45 ) ? substr(html_entity_decode($row['title'], ENT_COMPAT | ENT_HTML401, 'ISO-8859-1'), 0, 45) . '...' : $row['title'];
+		$row['title'] = (strlen($row['title']) > 45 ) ? substr(html_entity_decode($row['title'], ENT_COMPAT, 'ISO-8859-1'), 0, 45) . '...' : $row['title'];
 		
 		$Template->assign_block_vars('web', array(			
 			'NAME' => $row['title'],

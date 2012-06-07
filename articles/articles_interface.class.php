@@ -441,7 +441,7 @@ class ArticlesInterface extends ModuleInterface
 			while ($row = $Sql->fetch_assoc($result))
 			{
 				//On reccourci le lien si il est trop long.
-				$fichier = (strlen($row['title']) > 45 ) ? substr(html_entity_decode($row['title'], ENT_COMPAT | ENT_HTML401, 'ISO-8859-1'), 0, 45) . '...' : $row['title'];
+				$fichier = (strlen($row['title']) > 45 ) ? substr(html_entity_decode($row['title'], ENT_COMPAT, 'ISO-8859-1'), 0, 45) . '...' : $row['title'];
 
 				$tpl->assign_block_vars('articles', array(
 					'NAME' => $row['title'],

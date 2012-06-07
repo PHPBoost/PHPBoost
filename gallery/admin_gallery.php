@@ -366,10 +366,10 @@ else
 				if (!file_exists('pics/thumbnails/' . $row['path']))
 					$Gallery->Resize_pics('pics/' . $row['path']); //Redimensionnement + création miniature
 				
-				$name_cut = (strlen(html_entity_decode($row['name'], ENT_COMPAT | ENT_HTML401, 'ISO-8859-1')) > 22) ? htmlentities(substr(html_entity_decode($row['name'], ENT_COMPAT | ENT_HTML401, 'ISO-8859-1'), 0, 22), ENT_COMPAT | ENT_HTML401, 'ISO-8859-1') . '...' : $row['name'];	
+				$name_cut = (strlen(html_entity_decode($row['name'], ENT_COMPAT, 'ISO-8859-1')) > 22) ? htmlentities(substr(html_entity_decode($row['name'], ENT_COMPAT, 'ISO-8859-1'), 0, 22), ENT_COMPAT, 'ISO-8859-1') . '...' : $row['name'];	
 
 				//On reccourci le nom s'il est trop long pour éviter de déformer l'administration.
-				$name = html_entity_decode($row['name'], ENT_COMPAT | ENT_HTML401, 'ISO-8859-1');
+				$name = html_entity_decode($row['name'], ENT_COMPAT, 'ISO-8859-1');
 				$name = strlen($name) > 20 ? substr($name, 0, 20) . '...' : $name;
 				
 				//On genère le tableau pour x colonnes

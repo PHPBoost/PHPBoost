@@ -138,17 +138,17 @@ class Uploads
 		if ($admin) //Administration, on ne vérifie pas l'appartenance.
 		{
 			$Sql->query_inject("UPDATE " . DB_TABLE_UPLOAD_CAT . " SET name = '" . $name . "' WHERE id = '" . $id_folder . "'", __LINE__, __FILE__);
-			return stripslashes((strlen(html_entity_decode($name, ENT_COMPAT | ENT_HTML401, 'ISO-8859-1')) > 22) ? htmlentities(substr(html_entity_decode($name, ENT_COMPAT | ENT_HTML401, 'ISO-8859-1'), 0, 22), ENT_COMPAT | ENT_HTML401, 'ISO-8859-1') . '...' : $name);
+			return stripslashes((strlen(html_entity_decode($name, ENT_COMPAT, 'ISO-8859-1')) > 22) ? htmlentities(substr(html_entity_decode($name, ENT_COMPAT, 'ISO-8859-1'), 0, 22), ENT_COMPAT, 'ISO-8859-1') . '...' : $name);
 		}
 		else
 		{
 			if ($user_id == $info_folder['user_id'])
 			{
 				$Sql->query_inject("UPDATE " . DB_TABLE_UPLOAD_CAT . " SET name = '" . $name . "' WHERE id = '" . $id_folder . "'", __LINE__, __FILE__);
-				return stripslashes((strlen(html_entity_decode($name, ENT_COMPAT | ENT_HTML401, 'ISO-8859-1')) > 22) ? htmlentities(substr(html_entity_decode($name, ENT_COMPAT | ENT_HTML401, 'ISO-8859-1'), 0, 22), ENT_COMPAT | ENT_HTML401, 'ISO-8859-1') . '...' : $name);
+				return stripslashes((strlen(html_entity_decode($name, ENT_COMPAT, 'ISO-8859-1')) > 22) ? htmlentities(substr(html_entity_decode($name, ENT_COMPAT, 'ISO-8859-1'), 0, 22), ENT_COMPAT, 'ISO-8859-1') . '...' : $name);
 			}
 		}
-		return stripslashes((strlen(html_entity_decode($previous_name, ENT_COMPAT | ENT_HTML401, 'ISO-8859-1')) > 22) ? htmlentities(substr(html_entity_decode($previous_name, ENT_COMPAT | ENT_HTML401, 'ISO-8859-1'), 0, 22), ENT_COMPAT | ENT_HTML401, 'ISO-8859-1') . '...' : $previous_name);
+		return stripslashes((strlen(html_entity_decode($previous_name, ENT_COMPAT, 'ISO-8859-1')) > 22) ? htmlentities(substr(html_entity_decode($previous_name, ENT_COMPAT, 'ISO-8859-1'), 0, 22), ENT_COMPAT, 'ISO-8859-1') . '...' : $previous_name);
 	}
 	
 	//Renomme un fichier virtuel
@@ -165,17 +165,17 @@ class Uploads
 		if ($admin) //Administration, on ne vérifie pas l'appartenance.
 		{
 			$Sql->query_inject("UPDATE " . DB_TABLE_UPLOAD . " SET name = '" . $name . "' WHERE id = '" . $id_file . "'", __LINE__, __FILE__);
-			return stripslashes((strlen(html_entity_decode($name, ENT_COMPAT | ENT_HTML401, 'ISO-8859-1')) > 22) ? htmlentities(substr(html_entity_decode($name, ENT_COMPAT | ENT_HTML401, 'ISO-8859-1'), 0, 22), ENT_COMPAT | ENT_HTML401, 'ISO-8859-1') . '...' : $name);
+			return stripslashes((strlen(html_entity_decode($name, ENT_COMPAT, 'ISO-8859-1')) > 22) ? htmlentities(substr(html_entity_decode($name, ENT_COMPAT, 'ISO-8859-1'), 0, 22), ENT_COMPAT, 'ISO-8859-1') . '...' : $name);
 		}
 		else
 		{
 			if ($user_id == $info_cat['user_id'])
 			{
 				$Sql->query_inject("UPDATE " . DB_TABLE_UPLOAD . " SET name = '" . $name . "' WHERE id = '" . $id_file . "'", __LINE__, __FILE__);
-				return stripslashes((strlen(html_entity_decode($name, ENT_COMPAT | ENT_HTML401, 'ISO-8859-1')) > 22) ? htmlentities(substr(html_entity_decode($name, ENT_COMPAT | ENT_HTML401, 'ISO-8859-1'), 0, 22), ENT_COMPAT | ENT_HTML401, 'ISO-8859-1') . '...' : $name);
+				return stripslashes((strlen(html_entity_decode($name, ENT_COMPAT, 'ISO-8859-1')) > 22) ? htmlentities(substr(html_entity_decode($name, ENT_COMPAT, 'ISO-8859-1'), 0, 22), ENT_COMPAT, 'ISO-8859-1') . '...' : $name);
 			}
 		}
-		return stripslashes((strlen(html_entity_decode($previous_name, ENT_COMPAT | ENT_HTML401, 'ISO-8859-1')) > 22) ? htmlentities(substr(html_entity_decode($previous_name, ENT_COMPAT | ENT_HTML401, 'ISO-8859-1'), 0, 22), ENT_COMPAT | ENT_HTML401, 'ISO-8859-1') . '...' : $previous_name);
+		return stripslashes((strlen(html_entity_decode($previous_name, ENT_COMPAT, 'ISO-8859-1')) > 22) ? htmlentities(substr(html_entity_decode($previous_name, ENT_COMPAT, 'ISO-8859-1'), 0, 22), ENT_COMPAT, 'ISO-8859-1') . '...' : $previous_name);
 	}
 		
 	//Déplacement dun dossier.

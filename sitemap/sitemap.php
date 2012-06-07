@@ -15,7 +15,7 @@ $config_xml = new SitemapExportConfig('framework/content/sitemap/site_map.xml.tp
 $site_map->build_kernel_map(SITE_MAP_USER_MODE, SITE_MAP_AUTH_USER);
 $site_map->build_modules_maps();
 
-echo '<pre>' . htmlentities($site_map->export($config_xml), ENT_COMPAT | ENT_HTML401, 'ISO-8859-1') . '</pre>';
+echo '<pre>' . htmlentities($site_map->export($config_xml), ENT_COMPAT, 'ISO-8859-1') . '</pre>';
 	
 $sub_section_tpl = new Template('sitemap/site_map_section_html.tpl');
 $sub_section_tpl->assign_vars(array(

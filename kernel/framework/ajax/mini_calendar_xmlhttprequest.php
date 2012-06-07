@@ -82,7 +82,7 @@ if ($calendar_type == 'date')
     {
         $selected = ($month == $i) ? 'selected="selected"' : '';
         $Template->assign_block_vars('month', array(
-			'MONTH' => '<option value="' . $i . '" ' . $selected . '>' . htmlentities($array_l_month[$i - 1], ENT_COMPAT | ENT_HTML401, 'ISO-8859-1') . '</option>'
+			'MONTH' => '<option value="' . $i . '" ' . $selected . '>' . htmlentities($array_l_month[$i - 1], ENT_COMPAT, 'ISO-8859-1') . '</option>'
 			));
     }
     for ($i = 1900; $i <= 2037; $i++)

@@ -172,7 +172,7 @@ function strprotect($var, $html_protect = HTML_PROTECT, $addslashes = ADDSLASHES
 	//Protection contre les balises html.
 	if ($html_protect)
 	{
-		$var = htmlspecialchars($var, ENT_COMPAT | ENT_HTML401, 'ISO-8859-1');
+		$var = htmlspecialchars($var, ENT_COMPAT, 'ISO-8859-1');
 		//While we aren't in UTF8 encoding, we have to use HTML entities to display some special chars, we accept them.
 		$var = preg_replace('`&amp;((?:#[0-9]{2,5})|(?:[a-z0-9]{2,8}));`i', "&$1;", $var);
 	}
@@ -256,7 +256,7 @@ function get_ulang()
  */
 function wordwrap_html(&$str, $lenght, $cut_char = '<br />', $cut = true)
 {
-	$str = wordwrap(html_entity_decode($str, ENT_COMPAT | ENT_HTML401, 'ISO-8859-1'), $lenght, $cut_char, $cut);
+	$str = wordwrap(html_entity_decode($str, ENT_COMPAT, 'ISO-8859-1'), $lenght, $cut_char, $cut);
 	return str_replace('&lt;br /&gt;', '<br />', htmlspecialchars($str, ENT_NOQUOTES, 'ISO-8859-1'));
 }
 
@@ -274,11 +274,11 @@ function substr_html(&$str, $start, $end = '')
 {
 	if ($end == '')
 	{
-		return htmlspecialchars(substr(html_entity_decode($str, ENT_COMPAT | ENT_HTML401, 'ISO-8859-1'), $start), ENT_NOQUOTES, 'ISO-8859-1');
+		return htmlspecialchars(substr(html_entity_decode($str, ENT_COMPAT, 'ISO-8859-1'), $start), ENT_NOQUOTES, 'ISO-8859-1');
 	}
 	else
 	{
-		return htmlspecialchars(substr(html_entity_decode($str, ENT_COMPAT | ENT_HTML401, 'ISO-8859-1'), $start, $end), ENT_NOQUOTES, 'ISO-8859-1');
+		return htmlspecialchars(substr(html_entity_decode($str, ENT_COMPAT, 'ISO-8859-1'), $start, $end), ENT_NOQUOTES, 'ISO-8859-1');
 	}
 }
 
@@ -765,7 +765,7 @@ function url($url, $mod_rewrite = '', $ampersand = '&amp;')
  */
 function url_encode_rewrite($string)
 {
-	$string = strtolower(html_entity_decode($string, ENT_COMPAT | ENT_HTML401, 'ISO-8859-1'));
+	$string = strtolower(html_entity_decode($string, ENT_COMPAT, 'ISO-8859-1'));
 	$string = strtr($string, ' ÈËÍ‡‚˘¸˚ÔÓÙÁ', '-eeeaauuuiioc');
 	$string = preg_replace('`([^a-z0-9]|[\s])`', '-', $string);
 	$string = preg_replace('`[-]{2,}`', '-', $string);

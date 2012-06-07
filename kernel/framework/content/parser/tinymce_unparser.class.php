@@ -108,7 +108,7 @@ class TinyMCEUnparser extends ContentUnparser
         //Unparsing tags unsupported by TinyMCE, those are in BBCode
         $this->_unparse_bbcode_tags();
         
-        $this->content = htmlspecialchars($this->content, ENT_COMPAT | ENT_HTML401, 'ISO-8859-1');
+        $this->content = htmlspecialchars($this->content, ENT_COMPAT, 'ISO-8859-1');
 	    
 		//If we don't protect the HTML code inserted into the tags code and HTML TinyMCE will parse it!
 		if (!empty($this->array_tags['html_unparse']))

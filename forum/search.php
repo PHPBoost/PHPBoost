@@ -180,7 +180,7 @@ if (!empty($valid_search) && !empty($search))
 		{ 
 			$title = $row['title'];
 			if (!empty($row['title']))
-				$title = (strlen(html_entity_decode($row['title'], ENT_COMPAT | ENT_HTML401, 'ISO-8859-1')) > 45 ) ? substr_html($row['title'], 0, 45) . '...' : $row['title'];
+				$title = (strlen(html_entity_decode($row['title'], ENT_COMPAT, 'ISO-8859-1')) > 45 ) ? substr_html($row['title'], 0, 45) . '...' : $row['title'];
 			
 			//On encode l'url pour un éventuel rewriting, c'est une opération assez gourmande
 			$rewrited_title = ($CONFIG['rewrite'] == 1) ? '+' . url_encode_rewrite($row['title']) : '';
