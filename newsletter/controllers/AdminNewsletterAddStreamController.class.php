@@ -47,14 +47,14 @@ class AdminNewsletterAddStreamController extends AdminModuleController
 				$("newsletter_admin_advanced_authorizations").fade({duration: 0.2});
 			});
 		-->		
-		</script># INCLUDE MSG # # INCLUDE FORM #');
+		</script># INCLUDE FORM #');
 		$tpl->add_lang($this->lang);
 
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save();
 			$this->regenerate_cache();
-			$tpl->put('MSG', MessageHelper::display($this->lang['admin.success-add-stream'], E_USER_SUCCESS, 4));
+			AppContext::get_response()->redirect(NewsletterUrlBuilder::streams());
 		}
 
 		$tpl->put('FORM', $this->form->display());
