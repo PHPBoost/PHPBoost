@@ -59,6 +59,9 @@ class HomeAddNewsletterController extends ModuleController
 	private function build_response(View $view)
 	{
 		$response = new SiteDisplayResponse($view);
+		$breadcrumb = $response->get_graphical_environment()->get_breadcrumb();
+		$breadcrumb->add($this->lang['newsletter'], NewsletterUrlBuilder::home()->absolute());
+		$breadcrumb->add($this->lang['newsletter-add'], NewsletterUrlBuilder::add_newsletter()->absolute());
 		$response->get_graphical_environment()->set_page_title($this->lang['newsletter-add']);
 		return $response;
 	}	

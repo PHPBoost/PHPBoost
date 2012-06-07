@@ -68,7 +68,7 @@ class AddNewsletterController extends ModuleController
 		
 		$tpl->put('FORM', $this->form->display());
 		
-		return $this->build_response($tpl);
+		return $this->build_response($tpl, $type);
 	}
 	
 	private function init()
@@ -121,12 +121,13 @@ class AddNewsletterController extends ModuleController
 		);
 	}
 	
-	private function build_response(View $view)
+	private function build_response(View $view, $type)
 	{
 		$response = new SiteDisplayResponse($view);
 		$breadcrumb = $response->get_graphical_environment()->get_breadcrumb();
 		$breadcrumb->add($this->lang['newsletter'], NewsletterUrlBuilder::home()->absolute());
 		$breadcrumb->add($this->lang['newsletter-add'], NewsletterUrlBuilder::add_newsletter()->absolute());
+		$breadcrumb->add($this->lang['newsletter.types.' . $type], NewsletterUrlBuilder::add_newsletter($type)->absolute());
 		$response->get_graphical_environment()->set_page_title($this->lang['newsletter-add']);
 		return $response;
 	}
