@@ -438,7 +438,7 @@ else
 			$aprob = $LANG['no'];
 
 			//On reccourci le lien si il est trop long pour éviter de déformer l'administration.
-			$title = html_entity_decode($row['title'], ENT_COMPAT | ENT_HTML401, 'ISO-8859-1');
+			$title = html_entity_decode($row['title'], ENT_COMPAT, 'ISO-8859-1');
 			$title = strlen($title) > 45 ? substr($title, 0, 45) . '...' : $title;
 
 			$visible = '';

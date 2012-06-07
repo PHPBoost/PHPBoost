@@ -52,7 +52,7 @@ function mathimage($text, $size)
 	$valign = $v - 1000;
 	
 	//On passe à la moulinette le texte alternatif pour éviter des failles xss.
-	$text = htmlentities(strip_tags($text), ENT_COMPAT | ENT_HTML401, 'ISO-8859-1');
+	$text = htmlentities(strip_tags($text), ENT_COMPAT, 'ISO-8859-1');
 	
 	return '<img src="/images/maths/math_' . $v . '_' . $nameimg . '" style="vertical-align:' . $valign . 'px;display:inline-block;background-color:#FFFFFF;" alt="' . $text . '" title="' . $text . '"/>';
 }

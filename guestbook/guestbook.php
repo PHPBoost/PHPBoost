@@ -407,7 +407,7 @@ else //Affichage.
 		if (!empty($row['user_local']))
 		{
 			$user_local = $LANG['place'] . ': ' . $row['user_local'];
-			$user_local = $user_local > 15 ? htmlentities(substr(html_entity_decode($user_local, ENT_COMPAT | ENT_HTML401, 'ISO-8859-1'), 0, 15), ENT_COMPAT | ENT_HTML401, 'ISO-8859-1') . '...<br />' : $user_local . '<br />';
+			$user_local = $user_local > 15 ? htmlentities(substr(html_entity_decode($user_local, ENT_COMPAT, 'ISO-8859-1'), 0, 15), ENT_COMPAT, 'ISO-8859-1') . '...<br />' : $user_local . '<br />';
 		}
 		else $user_local = '';
 		

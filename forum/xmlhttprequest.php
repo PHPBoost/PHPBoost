@@ -87,7 +87,7 @@ if (retrieve(GET, 'refresh_unread', false)) //Affichage des messages non lus
 			}	
 
 			$last_topic_title = (($CONFIG_FORUM['activ_display_msg'] && $row['display_msg']) ? $CONFIG_FORUM['display_msg'] : '') . ' ' . ucfirst($row['title']);			
-			$last_topic_title = (strlen(html_entity_decode($last_topic_title, ENT_COMPAT | ENT_HTML401, 'ISO-8859-1')) > 25) ? substr_html($last_topic_title, 0, 25) . '...' : $last_topic_title;			
+			$last_topic_title = (strlen(html_entity_decode($last_topic_title, ENT_COMPAT, 'ISO-8859-1')) > 25) ? substr_html($last_topic_title, 0, 25) . '...' : $last_topic_title;			
 			$last_topic_title = addslashes($last_topic_title);			
 			$row['login'] = !empty($row['login']) ? $row['login'] : $LANG['guest'];
 

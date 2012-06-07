@@ -120,7 +120,7 @@ class TinyMCEParser extends ContentParser
 	function _prepare_content()
 	{
 	    //On enlève toutes les entités HTML rajoutées par TinyMCE
-		$this->content = html_entity_decode($this->content, ENT_COMPAT | ENT_HTML401, 'ISO-8859-1');
+		$this->content = html_entity_decode($this->content, ENT_COMPAT, 'ISO-8859-1');
 			
 		//On casse toutes les balises HTML (sauf celles qui ont été prélevées dans le code et la balise HTML)
 		$this->content = htmlspecialchars($this->content, ENT_NOQUOTES, 'ISO-8859-1');
@@ -776,7 +776,7 @@ class TinyMCEParser extends ContentParser
 	{
 		$var = preg_replace('`</p>\s*<p>`i', "\n", $var);
 		$var = str_replace('<br />', "\n", $var);
-		$var = html_entity_decode($var, ENT_COMPAT | ENT_HTML401, 'ISO-8859-1');
+		$var = html_entity_decode($var, ENT_COMPAT, 'ISO-8859-1');
 		return $var;
 	}
 	

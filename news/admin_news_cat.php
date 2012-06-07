@@ -133,9 +133,9 @@ else
 	while ($row = $Sql->fetch_assoc($result))
 	{
 		//On raccourci le lien si il est trop long pour éviter de déformer l'administration.
-		$row['name'] = html_entity_decode($row['name'], ENT_COMPAT | ENT_HTML401, 'ISO-8859-1');
+		$row['name'] = html_entity_decode($row['name'], ENT_COMPAT, 'ISO-8859-1');
 		$name = strlen($row['name']) > 45 ? substr($row['name'], 0, 45) . '...' : $row['name'];
-		$name = htmlspecialchars($name, ENT_COMPAT | ENT_HTML401, 'ISO-8859-1');
+		$name = htmlspecialchars($name, ENT_COMPAT, 'ISO-8859-1');
 
 		$img_direct_path = (strpos($row['icon'], '/') !== false);
 		$image_list = '<option value=""' . ($img_direct_path ? ' selected="selected"' : '') . '>--</option>';

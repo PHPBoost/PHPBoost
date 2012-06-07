@@ -104,7 +104,7 @@ if (is_file($file_path) && is_readable($file_path)) //Fichier accessible en lect
 		$i = 0;
 		foreach ($array_errinfo as $key => $errinfo)
 		{
-			$str_error = sprintf($LANG[$errinfo['errclass']], str_replace('&lt;br /&gt;', '<br />', htmlentities($errinfo['errstr'], ENT_COMPAT | ENT_HTML401, 'ISO-8859-1')), $errinfo['errline'], basename($errinfo['errfile']));
+			$str_error = sprintf($LANG[$errinfo['errclass']], str_replace('&lt;br /&gt;', '<br />', htmlentities($errinfo['errstr'], ENT_COMPAT, 'ISO-8859-1')), $errinfo['errline'], basename($errinfo['errfile']));
 			
 			$Template->assign_block_vars('errors', array(
 				'IMG' => $images[$errinfo['errclass']],

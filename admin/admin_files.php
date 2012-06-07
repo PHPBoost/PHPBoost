@@ -392,7 +392,7 @@ else
 	$result = $Sql->query_while ($sql_folder, __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))
 	{
-		$name_cut = (strlen(html_entity_decode($row['name'], ENT_COMPAT | ENT_HTML401, 'ISO-8859-1')) > 22) ? htmlentities(substr(html_entity_decode($row['name'], ENT_COMPAT | ENT_HTML401, 'ISO-8859-1'), 0, 22), ENT_COMPAT | ENT_HTML401, 'ISO-8859-1') . '...' : $row['name'];	
+		$name_cut = (strlen(html_entity_decode($row['name'], ENT_COMPAT, 'ISO-8859-1')) > 22) ? htmlentities(substr(html_entity_decode($row['name'], ENT_COMPAT, 'ISO-8859-1'), 0, 22), ENT_COMPAT, 'ISO-8859-1') . '...' : $row['name'];	
 		
 		$Template->assign_block_vars('folder', array(
 			'ID' => $row['id'],
@@ -419,7 +419,7 @@ else
 		$result = $Sql->query_while ($sql_files, __LINE__, __FILE__);
 		while ($row = $Sql->fetch_assoc($result))
 		{
-			$name_cut = (strlen(html_entity_decode($row['name'], ENT_COMPAT | ENT_HTML401, 'ISO-8859-1')) > 22) ? htmlentities(substr(html_entity_decode($row['name'], ENT_COMPAT | ENT_HTML401, 'ISO-8859-1'), 0, 22), ENT_COMPAT | ENT_HTML401, 'ISO-8859-1') . '...' : $row['name'];
+			$name_cut = (strlen(html_entity_decode($row['name'], ENT_COMPAT, 'ISO-8859-1')) > 22) ? htmlentities(substr(html_entity_decode($row['name'], ENT_COMPAT, 'ISO-8859-1'), 0, 22), ENT_COMPAT, 'ISO-8859-1') . '...' : $row['name'];
 		
 			$get_img_mimetype = $Uploads->get_img_mimetype($row['type']);
 			$size_img = '';
