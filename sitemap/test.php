@@ -15,7 +15,7 @@ foreach ($Modules->get_availables_modules('get_module_map') as $module)
 	
 	$config_xml = new SitemapExportConfig('sitemap/sitemap_xml.tpl', 'sitemap/modulemapsection_xml.tpl', 'sitemap/modulemaplink_xml.tpl');
 
-	echo '<pre>' . htmlentities($modulemap->export($config_xml)) . '</pre>';
+	echo '<pre>' . htmlentities($modulemap->export($config_xml), ENT_COMPAT | ENT_HTML401, 'ISO-8859-1') . '</pre>';
 
 	$sub_section_tpl = new Template('sitemap/modulemapsection_html.tpl');
 	$sub_section_tpl->assign_vars(array(

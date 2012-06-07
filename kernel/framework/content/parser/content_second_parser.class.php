@@ -203,7 +203,7 @@ class ContentSecondParser extends Parser
 	function _math_code($matches)
 	{
 		$matches[1] = str_replace('<br />', '', $matches[1]);
-		$matches = mathfilter(html_entity_decode($matches[1]), 12);
+		$matches = mathfilter(html_entity_decode($matches[1], ENT_COMPAT | ENT_HTML401, 'ISO-8859-1'), 12);
 
 		return $matches;
 	}

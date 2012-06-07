@@ -103,7 +103,7 @@ class TinyMCEParser extends ContentParser
 		//On réinsère les fragments de code qui ont été prélevés pour ne pas les considérer
 		if (!empty($this->array_tags['code']))
 		{
-			$this->array_tags['code'] = array_map(create_function('$string', 'return preg_replace(\'`^\[code(=.+)?\](.+)\[/code\]$`isU\', \'[[CODE$1]]$2[[/CODE]]\', htmlspecialchars($string, ENT_NOQUOTES));'), $this->array_tags['code']);
+			$this->array_tags['code'] = array_map(create_function('$string', 'return preg_replace(\'`^\[code(=.+)?\](.+)\[/code\]$`isU\', \'[[CODE$1]]$2[[/CODE]]\', htmlspecialchars($string, ENT_NOQUOTES, \'ISO-8859-1\'));'), $this->array_tags['code']);
 			
 			//If we don't protect the HTML code inserted into the tags code and HTML TinyMCE will parse it!
 			$this->array_tags['code'] = array_map(array('TinyMCEParser', '_clear_html_and_code_tag'), $this->array_tags['code']);
@@ -120,10 +120,10 @@ class TinyMCEParser extends ContentParser
 	function _prepare_content()
 	{
 	    //On enlève toutes les entités HTML rajoutées par TinyMCE
-		$this->content = html_entity_decode($this->content);
+		$this->content = html_entity_decode($this->content, ENT_COMPAT | ENT_HTML401, 'ISO-8859-1');
 			
 		//On casse toutes les balises HTML (sauf celles qui ont été prélevées dans le code et la balise HTML)
-		$this->content = htmlspecialchars($this->content, ENT_NOQUOTES);
+		$this->content = htmlspecialchars($this->content, ENT_NOQUOTES, 'ISO-8859-1');
 		
 		//While we aren't in UTF8 encoding, we have to use HTML entities to display some special chars, we accept them.
 		$this->content = preg_replace('`&amp;((?:#[0-9]{2,5})|(?:[a-z0-9]{2,8}));`i', "&$1;", $this->content);
@@ -776,7 +776,7 @@ class TinyMCEParser extends ContentParser
 	{
 		$var = preg_replace('`</p>\s*<p>`i', "\n", $var);
 		$var = str_replace('<br />', "\n", $var);
-		$var = html_entity_decode($var);
+		$var = html_entity_decode($var, ENT_COMPAT | ENT_HTML401, 'ISO-8859-1');
 		return $var;
 	}
 	

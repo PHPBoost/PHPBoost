@@ -69,7 +69,7 @@ class BBCodeHighlighter extends Parser
 	function parse($inline_code = BBCODE_HIGHLIGHTER_BLOCK_CODE)
 	{		
 		//Protection of html code
-		$this->content = htmlspecialchars($this->content);
+		$this->content = htmlspecialchars($this->content, ENT_COMPAT | ENT_HTML401, 'ISO-8859-1');
 
 		//Line tag
 		$this->content = str_replace('[line]', '<span style="color:' . BBCODE_TAG_COLOR . ';">[line]</span>', $this->content);

@@ -105,7 +105,7 @@ class BBCodeParser extends ContentParser
         //On réinsère les fragments de code qui ont été prévelevés pour ne pas les considérer
         if (!empty($this->array_tags['code']))
         {
-            $this->array_tags['code'] = array_map(create_function('$string', 'return preg_replace(\'`^\[code(=.+)?\](.+)\[/code\]$`isU\', \'[[CODE$1]]$2[[/CODE]]\', htmlspecialchars($string, ENT_NOQUOTES));'), $this->array_tags['code']);
+            $this->array_tags['code'] = array_map(create_function('$string', 'return preg_replace(\'`^\[code(=.+)?\](.+)\[/code\]$`isU\', \'[[CODE$1]]$2[[/CODE]]\', htmlspecialchars($string, ENT_NOQUOTES, \'ISO-8859-1\'));'), $this->array_tags['code']);
             $this->_reimplant_tag('code');
         }
     }
@@ -122,7 +122,7 @@ class BBCodeParser extends ContentParser
     function _protect_content()
     {
         //Breaking the HTML code
-        $this->content = htmlspecialchars($this->content, ENT_NOQUOTES);
+        $this->content = htmlspecialchars($this->content, ENT_NOQUOTES, 'ISO-8859-1');
         $this->content = strip_tags($this->content);
 
         //While we aren't in UTF8 encoding, we have to use HTML entities to display some special chars, we accept them.

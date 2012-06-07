@@ -211,7 +211,7 @@ class NewsletterService
 	//Fonction qui remplace les caract�res sp�ciaux par leurs entit�s en conservant les balises html
 	function clean_html($text)
 	{
-		$text = htmlentities($text, ENT_NOQUOTES);
+		$text = htmlentities($text, ENT_NOQUOTES, 'ISO-8859-1');
 		$text = str_replace(array('&amp;', '&lt;', '&gt;'), array('&', '<', '>'), $text);
 		return $text;
 	}

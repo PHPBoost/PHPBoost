@@ -399,7 +399,7 @@ else
 	ORDER BY name", __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))
 	{
-		$name_cut = (strlen(html_entity_decode($row['name'])) > 22) ? htmlentities(substr(html_entity_decode($row['name']), 0, 22)) . '...' : $row['name'];
+		$name_cut = (strlen(html_entity_decode($row['name'], ENT_COMPAT | ENT_HTML401, 'ISO-8859-1')) > 22) ? htmlentities(substr(html_entity_decode($row['name'], ENT_COMPAT | ENT_HTML401, 'ISO-8859-1'), 0, 22), ENT_COMPAT | ENT_HTML401, 'ISO-8859-1') . '...' : $row['name'];
 		
 		$Template->assign_block_vars('folder', array(
 			'ID' => $row['id'],
@@ -422,7 +422,7 @@ else
 	ORDER BY up.name", __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))
 	{
-		$name_cut = (strlen(html_entity_decode($row['name'])) > 22) ? htmlentities(substr(html_entity_decode($row['name']), 0, 22)) . '...' : $row['name'];
+		$name_cut = (strlen(html_entity_decode($row['name'], ENT_COMPAT | ENT_HTML401, 'ISO-8859-1')) > 22) ? htmlentities(substr(html_entity_decode($row['name'], ENT_COMPAT | ENT_HTML401, 'ISO-8859-1'), 0, 22), ENT_COMPAT | ENT_HTML401, 'ISO-8859-1') . '...' : $row['name'];
 		
 		$get_img_mimetype = $Uploads->get_img_mimetype($row['type']);
 		$size_img = '';
@@ -460,9 +460,9 @@ else
 		}
 		
 		$is_bbcode_editor = ($editor == BBCODE_LANGUAGE);
-		$inserted_code = ($User->get_attribute('user_editor') == BBCODE_LANGUAGE) ? addslashes($bbcode) : htmlentities($tinymce);
+		$inserted_code = ($User->get_attribute('user_editor') == BBCODE_LANGUAGE) ? addslashes($bbcode) : htmlentities($tinymce, ENT_COMPAT | ENT_HTML401, 'ISO-8859-1');
 		$displayed_code = $is_bbcode_editor ? $bbcode : '/upload/' . $row['path'];
-		$inserted_code = $is_bbcode_editor ? addslashes($bbcode) : htmlentities($tinymce);
+		$inserted_code = $is_bbcode_editor ? addslashes($bbcode) : htmlentities($tinymce, ENT_COMPAT | ENT_HTML401, 'ISO-8859-1');
 		$Template->assign_block_vars('files', array(
 			'ID' => $row['id'],
 			'IMG' => '<img src="../templates/' . get_utheme() . '/images/upload/' . $get_img_mimetype['img'] . '" alt="" />',

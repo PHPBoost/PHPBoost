@@ -65,7 +65,7 @@ class Forum
 			//Message précédent ce nouveau message.
 			$previous_msg_id = $Sql->query("SELECT MAX(id) FROM " . PREFIX . "forum_msg WHERE idtopic = '" . $idtopic . "' AND id < '" . $last_msg_id . "'", __LINE__, __FILE__);
 
-			$title_subject = html_entity_decode($title);
+			$title_subject = html_entity_decode($title, ENT_COMPAT | ENT_HTML401, 'ISO-8859-1');
 			$title_subject_pm = '[url=' . HOST . DIR . '/forum/topic' . url('.php?id=' . $idtopic . $last_page, '-' . $idtopic . $last_page_rewrite . '.php') . '#m' . $previous_msg_id . ']' . $title_subject . '[/url]';
 			if ($User->get_attribute('user_id') > 0)
 			{
