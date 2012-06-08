@@ -58,11 +58,16 @@ table th:first-child{
 	-webkit-border-radius:5px 0 0 5px;
     border-radius:5px 0 0 5px;
 }
+
 table th:last-child{
-	-moz-border-radius-topright:0 4px 4px 0;
-	-khtml-border-radius-topright:0 5px 5px 0;
-	-webkit-border-top-right-radius:0 5px 5px 0;
-    border-radius:0 5px 5px 0;
+	-moz-border-radius-topright:4px;
+	-khtml-border-radius-topright:5px;
+	-webkit-border-top-right-radius:5px;
+    border-top-right-radius:5px;
+	-moz-border-radius-bottomright:4px;
+	-khtml-border-radius-bottomright:5px;
+	-webkit-border-bottom-right-radius:5px;
+    border-bottom-right-radius:5px;
 }
 
 table th.row1 a {
