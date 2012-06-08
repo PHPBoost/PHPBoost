@@ -2,14 +2,21 @@
 		<div class="module_position">		
 			<div class="module_top_l"></div>		
 			<div class="module_top_r"></div>
-			<div class="module_top"><strong>{L_POLL} {EDIT}</strong></div>
+			<div class="module_top">
+				<div class="module_top_title">
+					{L_POLL}
+				</div>
+				<div class="module_top_com">
+					{EDIT}
+				</div>
+			</div>
 			<div class="module_contents" style="text-align:center;">
 				{L_POLL_MAIN}
 				<br /><br />		
 				# START list #					
 				<a href="{PATH_TO_ROOT}/poll/poll{list.U_POLL_ID}">{list.QUESTION}
 				<br />  
-				<a href="{PATH_TO_ROOT}/poll/poll{list.U_POLL_ID}"><img src="{PATH_TO_ROOT}/poll/poll.png" alt="" /></a> 
+				<a href="{PATH_TO_ROOT}/poll/poll{list.U_POLL_ID}"><img src="{PATH_TO_ROOT}/poll/poll.png" alt="" title="{list.QUESTION}" /></a> 
 				<br /><br />
 				# END list #
 				
@@ -35,11 +42,15 @@
 				<div class="module_top_l"></div>		
 				<div class="module_top_r"></div>
 				<div class="module_top">
-					{QUESTION}
-					# IF C_IS_ADMIN #
-					<a href="{PATH_TO_ROOT}/poll/admin_poll.php?id={IDPOLL}" title="{L_EDIT}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" class="valign_middle" alt="" /></a>
-					&nbsp;&nbsp;<a href="{PATH_TO_ROOT}/poll/admin_poll.php?delete=1&amp;id={IDPOLL}&amp;token={TOKEN}" title="{L_DELETE}" onclick="javascript:return Confirm();"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" class="valign_middle" alt="" /></a>
-					# ENDIF #
+					<div class="module_top_title">
+						{QUESTION}
+					</div>
+					<div class="module_top_com">
+						# IF C_IS_ADMIN #
+						<a href="{PATH_TO_ROOT}/poll/admin_poll.php?id={IDPOLL}" title="{L_EDIT}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" class="valign_middle" alt="" /></a>
+						<a href="{PATH_TO_ROOT}/poll/admin_poll.php?delete=1&amp;id={IDPOLL}&amp;token={TOKEN}" title="{L_DELETE}" onclick="javascript:return Confirm();"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" class="valign_middle" alt="" /></a>
+						# ENDIF #
+					</div>
 				</div>
 				<div class="module_contents">
 					# INCLUDE message_helper #
