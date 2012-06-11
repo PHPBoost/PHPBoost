@@ -587,15 +587,15 @@ class Session
 					$test_connect = $this->sql->query("SELECT test_connect FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $session_autoconnect['user_id'] . "'", __LINE__, __FILE__);
 
 					AppContext::get_response()->set_cookie(new HTTPCookie($sessions_config->get_cookie_name() . '_autoconnect', '', time() - 31536000)); //Destruction cookie.
-
-					AppContext::get_response()->redirect('/member/error.php?flood=' . (5 - ($test_connect + 1)));
+					
+					AppContext::get_response()->redirect(UserUrlBuilder::connect('flood', 5 - ($test_connect + 1))->absolute());	
 				}
 				elseif (is_numeric($error_report))
 				{
 					AppContext::get_response()->set_cookie(new HTTPCookie($sessions_config->get_cookie_name() . '_autoconnect', '', time() - 31536000)); //Destruction cookie.
 
 					$error_report = ceil($error_report/60);
-					AppContext::get_response()->redirect('/member/error.php?ban=' . $error_report);
+					AppContext::get_response()->redirect(UserUrlBuilder::connect('banned', $error_report)->absolute());
 				}
 				else //Succès on recharge la page.
 				{

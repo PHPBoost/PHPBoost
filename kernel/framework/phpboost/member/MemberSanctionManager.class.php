@@ -88,6 +88,8 @@ class MemberSanctionManager
 					'user_id' => $user_id
 			));
 			
+			self::$sql_querier->delete(DB_TABLE_SESSIONS, 'WHERE user_id = :user_id', array('user_id' => $user_id));
+			
 			if ($send_confirmation == self::SEND_MAIL)
 			{
 				$content = !empty($content_to_send) ? $content_to_send : self::$lang['ban_mail'];
