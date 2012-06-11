@@ -166,7 +166,7 @@ elseif ($del_cat_post > 0 && $report_cat >= 0)
 		//Suppression des pages contenues par cette catégorie
 		$Sql->query_inject("DELETE FROM " . PREFIX . "pages WHERE id_cat IN (" . $id_to_delete . ")", __LINE__, __FILE__);
 		$Sql->query_inject("DELETE FROM " . PREFIX . "pages_cats WHERE id IN (" . $id_to_delete . ")", __LINE__, __FILE__);
-		$Sql->query_inject("DELETE FROM " . DB_TABLE_COM . " WHERE script = 'pages' AND idprov IN (" . $id_to_delete . ")", __LINE__);
+		CommentsService::delete_comments_topic_module('pages', $id_to_delete);
 		$Cache->Generate_module_file('pages');
 		
 		//On redirige soit vers l'article parent soit vers la catégorie

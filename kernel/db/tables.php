@@ -5,7 +5,6 @@
 /**
 * Constant definition
 */
-define('DB_TABLE_COM', PREFIX . 'com');
 define('DB_TABLE_COMMENTS', PREFIX . 'comments');
 define('DB_TABLE_COMMENTS_TOPIC', PREFIX . 'comments_topic');
 define('DB_TABLE_NOTE', PREFIX . 'note');

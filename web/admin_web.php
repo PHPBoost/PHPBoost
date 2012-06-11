@@ -221,7 +221,7 @@ elseif ($del && !empty($id)) //Suppresion du lien web.
 	$Sql->query_inject("DELETE FROM " . PREFIX . "web WHERE id = '" . $id . "'", __LINE__, __FILE__);	
 
 	//On supprimes les éventuels commentaires associés.
-	$Sql->query_inject("DELETE FROM " . DB_TABLE_COM . " WHERE idprov = '" . $id . "' AND script = 'web'", __LINE__, __FILE__);
+	CommentsService::delete_comments_topic_module('web', $id);
 	
 	NotationService::delete_notes_id_in_module('web', $id);
 	

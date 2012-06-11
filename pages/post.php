@@ -189,7 +189,7 @@ elseif ($del_article > 0)
 	{
 		$Sql->query_inject("DELETE FROM " . PREFIX . "pages WHERE id = '" . $del_article . "'", __LINE__, __FILE__);
 		$Sql->query_inject("DELETE FROM " . PREFIX . "pages WHERE redirect = '" . $del_article . "'", __LINE__, __FILE__);
-		$Sql->query_inject("DELETE FROM " . DB_TABLE_COM . " WHERE script = 'pages' AND idprov = '" . $del_article . "'", __LINE__, __FILE__);
+		CommentsService::delete_comments_topic_module('pages', $del_article);
 		AppContext::get_response()->redirect(HOST . DIR . url('/pages/pages.php?error=delete_success', '', '&'));
 	}
 	else
