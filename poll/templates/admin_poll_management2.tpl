@@ -88,7 +88,7 @@
 					</dl>
 					<dl>
 						<dt><label>* {L_ANSWERS}</label></dt>
-						<dd><label>
+						<dd>
 							<table style="border:none;border-spacing:0">
 								<tr>
 									<th style="text-align:center;">
@@ -124,7 +124,7 @@
 									</td>
 								</tr>
 							</table>
-						</label></dd>
+						</dd>
 					</dl>
 				</fieldset>		
 
