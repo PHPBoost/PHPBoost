@@ -57,7 +57,7 @@
 					<dl>
 						<dt><label for="displayed_in_mini_module_list">{L_DISPLAYED_IN_MINI_MODULE_LIST}</label><br /><span>{L_DISPLAYED_IN_MINI_MODULE_LIST_EXPLAIN}</span></dt>
 						<dd><label>
-							<select id="displayed_in_mini_module_list" name="displayed_in_mini_module_list" size="5" multiple="multiple">
+							<select id="displayed_in_mini_module_list" name="displayed_in_mini_module_list[]" size="5" multiple="multiple">
 								{POLL_LIST}				
 							</select>
 							<br />
