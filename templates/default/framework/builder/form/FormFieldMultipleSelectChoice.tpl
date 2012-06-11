@@ -20,7 +20,7 @@
 	}
 -->		
 </script>
-<select multiple name="${escape(NAME)}[]" id="${escape(ID)}" class="${escape(CSS_CLASS)}" # IF C_DISABLED # disabled="disabled" # ENDIF # >
+<select multiple="multiple" name="${escape(NAME)}[]" id="${escape(ID)}" class="${escape(CSS_CLASS)}" # IF C_DISABLED # disabled="disabled" # ENDIF # >
 	# START options # # INCLUDE options.OPTION # # END options # 
 </select>
 <br />
