@@ -210,19 +210,19 @@ class AdminMemberEditController extends AdminController
 		$user_readonly = $this->form->get_value('user_readonly')->get_raw_value();
 		if (!empty($user_readonly) && $user_readonly != $this->user->get_is_readonly())
 		{
-			MemberSanctionManager::remove_write_permissions($user_id, $user_readonly, MemberSanctionManager::SEND_MP, str_replace('%date%', $this->form->get_value('user_readonly')->get_label(), $this->main_lang['user_readonly_changed']));
+			MemberSanctionManager::remove_write_permissions($user_id, time() + $user_readonly, MemberSanctionManager::SEND_MP, str_replace('%date%', $this->form->get_value('user_readonly')->get_label(), $this->main_lang['user_readonly_changed']));
 		}
-		elseif (!empty($user_readonly) && $user_readonly != $this->user->get_is_readonly())
+		elseif ($user_readonly != $this->user->get_is_readonly())
 		{
 			MemberSanctionManager::restore_write_permissions($user_id);
 		}
 		
-		$user_ban = $this->form->get_value('user_readonly')->get_raw_value();
+		$user_ban = $this->form->get_value('user_ban')->get_raw_value();
 		if (!empty($user_ban) && $user_ban != $this->user->get_is_banned())
 		{
-			MemberSanctionManager::banish($user_id, $user_ban, MemberSanctionManager::SEND_MAIL);
+			MemberSanctionManager::banish($user_id, time() + $user_ban, MemberSanctionManager::SEND_MAIL);
 		}
-		elseif (!empty($user_ban) && $user_ban != $this->user->get_is_banned())
+		elseif ($user_ban != $this->user->get_is_banned())
 		{
 			MemberSanctionManager::cancel_banishment($user_id);
 		}
