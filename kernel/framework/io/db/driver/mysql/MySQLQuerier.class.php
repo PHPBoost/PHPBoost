@@ -65,7 +65,8 @@ class MySQLQuerier extends AbstractSQLQuerier
 		$query = $this->prepare($query);
 		$query = $this->query_var_replacator->replace($query, $parameters);
 		$resource = mysql_query($query, $this->link);
-		if ($resource === false)
+		$has_error = mysql_error() !== '' && mysql_errno() > 0;
+		if ($resource === false && $has_error)
 		{
 			throw new MySQLQuerierException('invalid query', $query);
 		}
