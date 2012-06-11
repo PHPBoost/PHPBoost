@@ -28,7 +28,6 @@
 require_once('../kernel/begin.php'); 
 include_once('../wiki/wiki_functions.php'); 
 load_module_lang('wiki');
-define('ALTERNATIVE_CSS', 'wiki');
 
 require_once('../wiki/wiki_auth.php');
 

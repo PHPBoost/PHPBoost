@@ -200,8 +200,7 @@ function show_cat_contents($id_cat, $cats, $id, $display_select_link)
 {
 	global $_WIKI_CATS, $Sql, $Template;
 	
-	$Template = new FileTemplate('wiki/index.tpl');
-	$module_data_path = $Template->get_pictures_data_path();
+	$module_data_path = PATH_TO_ROOT . '/wiki/templates/';
 	$line = '';
 	foreach ($_WIKI_CATS as $key => $value)
 	{

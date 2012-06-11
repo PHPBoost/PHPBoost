@@ -30,7 +30,6 @@ include_once('../wiki/wiki_functions.php');
 load_module_lang('wiki');
 
 define('TITLE', $LANG['wiki'] . ': ' . $LANG['wiki_contribuate']);
-define('ALTERNATIVE_CSS', 'wiki');
 
 $bread_crumb_key = 'wiki_post';
 require_once('../wiki/wiki_bread_crumb.php');
@@ -254,6 +253,7 @@ else
 		ORDER BY title ASC", __LINE__, __FILE__);
 		while ($row = $Sql->fetch_assoc($result))
 		{
+			$module_data_path = PATH_TO_ROOT . '/wiki/templates';
 			$sub_cats_number = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "wiki_cats WHERE id_parent = '" . $row['id'] . "'", __LINE__, __FILE__);
 			if ($sub_cats_number > 0)
 			{	
