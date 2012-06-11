@@ -339,8 +339,9 @@ elseif ($del_article > 0) //Suppression d'un article
 	//On rippe l'article
 	$Sql->query_inject("DELETE FROM " . PREFIX . "wiki_articles WHERE id = '" . $del_article . "'", __LINE__, __FILE__);
 	$Sql->query_inject("DELETE FROM " . PREFIX . "wiki_contents WHERE id_article = '" . $del_article . "'", __LINE__, __FILE__);
-	$Sql->query_inject("DELETE FROM " . DB_TABLE_COM . " WHERE script = 'wiki' AND idprov = '" . $del_article . "'", __LINE__, __FILE__); 
 	
+	CommentsService::delete_comments_topic_module('wiki', $del_article);
+
 	 // Feeds Regeneration
      
      Feed::clear_cache('wiki');
@@ -389,7 +390,7 @@ elseif ($del_to_remove > 0 && $report_cat >= 0) //Suppression d'une catégorie
 	$Sql->query_inject("DELETE FROM " . PREFIX . "wiki_articles WHERE id = '" . $del_to_remove . "'", __LINE__, __FILE__);
 	
 	$Sql->query_inject("DELETE FROM " . PREFIX . "wiki_cats WHERE id = '" . $article_infos['id_cat'] . "'", __LINE__, __FILE__);
-	$Sql->query_inject("DELETE FROM " . DB_TABLE_COM . " WHERE script = 'wiki' AND idprov = '" . $del_to_remove . "'", __LINE__, __FILE__);
+	CommentsService::delete_comments_topic_module('wiki', $del_to_remove);
 	
 	if ($remove_action == 'remove_all') //On supprime le contenu de la catégorie
 	{
@@ -399,7 +400,7 @@ elseif ($del_to_remove > 0 && $report_cat >= 0) //Suppression d'une catégorie
 			while ($row = $Sql->fetch_assoc($result)) //On supprime toutes les archives de chaque article avant de le supprimer lui-même
 			{
 				$Sql->query_inject("DELETE FROM " . PREFIX . "wiki_contents WHERE id_article = '" . $row['id'] . "'", __LINE__, __FILE__);
-				$Sql->query_inject("DELETE FROM " . DB_TABLE_COM . " WHERE script = 'wiki' AND idprov = '" . $row['id'] . "'", __LINE__);
+				CommentsService::delete_comments_topic_module('wiki', $row['id']);
 			}
 				
 			$Sql->query_close($result);
