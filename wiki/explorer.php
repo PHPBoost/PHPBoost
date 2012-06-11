@@ -30,8 +30,6 @@ include_once('../wiki/wiki_functions.php');
 load_module_lang('wiki');
 
 define('TITLE', $LANG['wiki'] . ': ' . $LANG['wiki_explorer']);
-define('ALTERNATIVE_CSS', 'wiki');
-
 
 $bread_crumb_key = 'wiki_explorer';
 require_once('../wiki/wiki_bread_crumb.php');
