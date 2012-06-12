@@ -73,7 +73,7 @@ class Session
 		}
 	}
 	
-	public function connect($login, $password, $autoconnexion)
+	public function connect($login, $password, $autoconnexion, $url_to_redirect = null)
 	{
 		$user_id = $this->sql->query("SELECT user_id FROM " . DB_TABLE_MEMBER . " WHERE login = '" . $login . "'", __LINE__, __FILE__);
 		if (!empty($user_id)) //Membre existant.
@@ -136,6 +136,11 @@ class Session
 		else
 		{
 			AppContext::get_response()->redirect(UserUrlBuilder::connect('unexisting')->absolute());
+		}
+		
+		if ($url_to_redirect !== null)
+		{
+			AppContext::get_response()->redirect($url_to_redirect);
 		}
 		AppContext::get_response()->redirect(Environment::get_home_page());
 	}
