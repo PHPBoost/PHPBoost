@@ -128,7 +128,7 @@ class UserCommentsController extends AbstractController
 		$selected = $this->module !== null ? $this->module->get_id() : '';
 		$user_id = $this->user !== null ? $this->user->get_id() : null;
 		$form = new HTMLForm('ModuleChoice');
-		$fieldset = new FormFieldsetHorizontal('ModuleChoice');
+		$fieldset = new FormFieldsetHTML('ModuleChoice', $this->lang['module.choice']);
 		$form->add_fieldset($fieldset);
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('module', $this->lang['module.choice'] . ' : ', $selected, $this->build_select(), 
 		array('events' => array('change' => 'document.location = "'. UserUrlBuilder::comments('', $user_id)->absolute() .'" + HTMLForms.getField("module").getValue();'))));
