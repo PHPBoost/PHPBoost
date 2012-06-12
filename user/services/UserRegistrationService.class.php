@@ -72,7 +72,7 @@ class UserRegistrationService
 					'accounts_validation_explain' => 
 						StringVars::replace_vars(
 							self::$lang['registration.email.mail-validation'], 
-							array('validation_link' => UserUrlBuilder::confirm_registration($activation_key))
+							array('validation_link' => UserUrlBuilder::confirm_registration($activation_key)->absolute())
 						),
 					'signature' => MailServiceConfig::load()->get_mail_signature()
 				);
