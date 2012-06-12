@@ -46,7 +46,7 @@ class AdminMemberDeleteController extends AdminController
 		
 		StatsCache::invalidate();
 		
-		$controller = new UserErrorController($lang['success'], $lang['process.success'], UserErrorController::NOTICE);
+		$controller = new UserErrorController($lang['success'], $lang['process.success'], UserErrorController::SUCCESS);
 		DispatchManager::redirect($controller);
 	}
 }
