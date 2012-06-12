@@ -110,13 +110,20 @@ If you have problems, please contact the site administrator.
 
 //Registration 
 $lang['registration'] = 'Registration';
+
 $lang['registration.validation.mail.explain'] = 'You will need to activate your account in the email sent to you before you can log';
 $lang['registration.validation.administrator.explain'] = 'An administrator will activate your account before you can log';
+
 $lang['registration.confirm.success'] = 'Your account has been successfully validated';
 $lang['registration.confirm.error'] = 'A problem occurred during your activation, make sure your key is valid';
-$lang['registration.success'] = 'You have successfully registered and are now connected';
+
 $lang['registration.success.administrator-validation'] = 'You have registered successfully. However, an administrator must validate your account before you can use';
 $lang['registration.success.mail-validation'] = 'You have registered successfully. However you must click the activation link in the email you were sent';
+
+$lang['registration.email.automatic-validation'] = 'You can now connect to your account directly on the site.';
+$lang['registration.email.mail-validation'] = 'You have to click on this link to activate your account: :validation_link';
+$lang['registration.email.administrator-validation'] = 'Warning: Your account must be activated by an administrator. Thanks for your patience.';
+
 $lang['registration.pending-approval'] = 'A new member has registered. His account must be approved before they can be used.';
 $lang['registration.subject-mail'] = 'Confirmation of registration :site_name';
 $lang['registration.content-mail'] = 'Cher(e) :pseudo,

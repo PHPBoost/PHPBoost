@@ -186,7 +186,7 @@ class UserRegistrationController extends AbstractController
 		try {
 			MemberExtendedFieldsService::register_fields($this->form, $user_id);
 			
-			UserRegistrationService::send_email_confirmation($user_id, $user->get_email(), $user_authentification->get_login(), $user_authentification->get_login(), $this->form->get_value('password'));
+			UserRegistrationService::send_email_confirmation($user_id, $user->get_email(), $user_authentification->get_login(), $user_authentification->get_login(), $this->form->get_value('password'), $activation_key);
 			
 			UserRegistrationService::connect_user($user_id, $user_authentification->get_password_hashed());
 			
@@ -208,7 +208,7 @@ class UserRegistrationController extends AbstractController
 		}
 		else
 		{
-			$this->tpl->put('MSG', MessageHelper::display($this->lang['registration.success'], MessageHelper::SUCCESS));
+			AppContext::get_response()->redirect(Environment::get_home_page());
 		}
 	}
 
