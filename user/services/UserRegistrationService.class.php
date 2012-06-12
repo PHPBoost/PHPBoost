@@ -44,7 +44,7 @@ class UserRegistrationService
 		AppContext::get_session()->start($user_id, $password, 0, SCRIPT, QUERY_STRING, self::$lang['registration'], 1, true);
 	}
 	
-	public static function send_email_confirmation($user_id, $email, $pseudo, $login, $password)
+	public static function send_email_confirmation($user_id, $email, $pseudo, $login, $password, $activation_key)
 	{
 		$user_accounts_config = UserAccountsConfig::load();
 		$site_name = GeneralConfig::load()->get_site_name();
@@ -57,7 +57,7 @@ class UserRegistrationService
 					'site_name' => $site_name,
 					'login' => $login,
 					'password' => $password,
-					'accounts_validation_explain' => self::$lang['registration.success'],
+					'accounts_validation_explain' => self::$lang['registration.email.automatic-validation'],
 					'signature' => MailServiceConfig::load()->get_mail_signature()
 				);
 				$content = StringVars::replace_vars(self::$lang['registration.content-mail'], $parameters);
@@ -69,10 +69,15 @@ class UserRegistrationService
 					'site_name' => $site_name,
 					'login' => $login,
 					'password' => $password,
-					'accounts_validation_explain' => self::$lang['registration.success'],
+					'accounts_validation_explain' => 
+						StringVars::replace_vars(
+							self::$lang['registration.email.mail-validation'], 
+							array('validation_link' => $activation_key)
+						),
 					'signature' => MailServiceConfig::load()->get_mail_signature()
 				);
-				$content = StringVars::replace_vars(self::$lang['registration.success.mail-validation'], $parameters);
+				$content = StringVars::replace_vars(self::$lang['registration.content-mail'], $parameters);
+				self::send_email_user($email, $login, $subject, $content);
 			break;
 			case UserAccountsConfig::ADMINISTRATOR_USER_ACCOUNTS_VALIDATION:
 				self::add_administrator_alert($user_id);
@@ -82,10 +87,11 @@ class UserRegistrationService
 					'site_name' => $site_name,
 					'login' => $login,
 					'password' => $password,
-					'accounts_validation_explain' => self::$lang['registration.success.administrator-validation'],
+					'accounts_validation_explain' => self::$lang['registration.email.administrator-validation'],
 					'signature' => MailServiceConfig::load()->get_mail_signature()
 				);
 				$content = StringVars::replace_vars(self::$lang['registration.content-mail'], $parameters);
+				self::send_email_user($email, $login, $subject, $content);
 			break;
 		}
 	}
