@@ -95,12 +95,14 @@ class UserLostPasswordController extends AbstractController
 
 		UserLostPasswordService::update_change_password_pass($change_password_pass, $user->get_email());
 		
+		$general_config = GeneralConfig::load();
 		$parameters = array(
 				'pseudo' => $user->get_pseudo(),
+				'host' => $general_config->get_site_url(),
 				'change_password_link' => UserUrlBuilder::change_password($change_password_pass)->absolute(),
 				'signature' => MailServiceConfig::load()->get_mail_signature()
 		);
-		$subject = GeneralConfig::load()->get_site_name() . ' : ' . $this->lang['forget-password'];
+		$subject = $general_config->get_site_name() . ' : ' . $this->lang['forget-password'];
 		$content = StringVars::replace_vars($this->lang['forget-password.mail.content'], $parameters);
 		UserLostPasswordService::send_mail($user->get_email(), $subject, $content);
 		

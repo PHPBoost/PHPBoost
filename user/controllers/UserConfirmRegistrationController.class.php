@@ -45,12 +45,17 @@ class UserConfirmRegistrationController extends AbstractController
 	{
 		if (UserService::approbation_pass_exists($key) && !empty($key))
 		{
+			$condition = 'WHERE approbation_pass = :new_approbation_pass';
+			$parameters = array('new_approbation_pass' => $key);
+			$user = UserService::get_user($condition, $parameters);
+			$user_authentification = UserService::get_user_authentification($condition, $parameters);
+	
 			UserService::update_approbation_pass($key);
-			
 			StatsCache::invalidate();
 			
-			$controller = new UserErrorController($this->lang['profile'], LangLoader::get_message('process.success', 'errors-common'), UserErrorController::SUCCESS);
-			DispatchManager::redirect($controller);
+			AppContext::get_session()->start($user->get_id(), $user_authentification->get_password_hashed(), 0, SCRIPT, QUERY_STRING, self::$lang['registration'], 1, true);
+			
+			AppContext::get_response()->redirect(Environment::get_home_page());
 		}
 		else
 		{
