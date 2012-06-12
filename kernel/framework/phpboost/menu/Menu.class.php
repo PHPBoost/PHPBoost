@@ -126,13 +126,9 @@ abstract class Menu
 	 */
     public function cache_export_begin()
     {
-        if (is_array($this->auth) && !empty($this->auth))
+        if (is_array($this->auth))
         {
         	return '\'; $__auth=' . preg_replace('`[\s]+`', '', var_export($this->auth, true)) . ';if ($User->check_auth($__auth,1)){$__menu.=\'';
-        }
-        else if (is_array($this->auth)) 
-        {
-        	return '\'; if ($User->check_auth($__auth,1)) { $__menu.=\''; 
         }
         return '';
     }
