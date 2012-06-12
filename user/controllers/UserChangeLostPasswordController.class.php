@@ -91,7 +91,9 @@ class UserChangeLostPasswordController extends AbstractController
 		UserService::change_password($password, 'WHERE change_password_pass =:change_password_pass', array('change_password_pass' => $change_password_pass));
 		$user = UserService::get_user('WHERE change_password_pass =:change_password_pass', array('change_password_pass' => $change_password_pass));
 		UserLostPasswordService::clear_activation_key($user->get_id());
-		UserLostPasswordService::connect_user($user->get_id(), $password);
+		UserLostPasswordService::connect_user($user->get_id(), $password, $user->get_level());
+		
+		AppContext::get_response()->redirect(Environment::get_home_page());
 	}
 	
 	private function build_response(View $view, $key)
