@@ -43,9 +43,9 @@ class UserLostPasswordService
 		array('change_password_pass' => $change_password_pass)) > 0 ? true : false;
 	}
 	
-	public static function connect_user($user_id, $password)
+	public static function connect_user($user_id, $password, $level)
 	{
-		AppContext::get_session()->start($user_id, $password, 0, SCRIPT, QUERY_STRING, '', true);
+		AppContext::get_session()->start($user_id, $password, $level, SCRIPT, QUERY_STRING, '', true);
 	}
 	
 	public static function clear_activation_key($user_id)
