@@ -53,7 +53,7 @@ class UserConfirmRegistrationController extends AbstractController
 			UserService::update_approbation_pass($key);
 			StatsCache::invalidate();
 			
-			AppContext::get_session()->start($user->get_id(), $user_authentification->get_password_hashed(), 0, SCRIPT, QUERY_STRING, self::$lang['registration'], 1, true);
+			AppContext::get_session()->start($user->get_id(), $user_authentification->get_password_hashed(), 0, SCRIPT, QUERY_STRING, $this->lang['registration'], 1, true);
 			
 			AppContext::get_response()->redirect(Environment::get_home_page());
 		}
