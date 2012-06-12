@@ -62,6 +62,11 @@ class UserUrlBuilder
 		return DispatchManager::get_url(self::$dispatcher, '/registration/');
 	}
 	
+	public static function confirm_registration($key)
+	{
+		return DispatchManager::get_url(self::$dispatcher, '/registration/confirm/' . $key);
+	}
+	
 	public static function contribution_success()
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/contribution/success/');
