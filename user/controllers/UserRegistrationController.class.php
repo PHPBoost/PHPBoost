@@ -50,7 +50,6 @@ class UserRegistrationController extends AbstractController
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save();
-			$this->confirm_registration_message();
 		}
 		
 		$this->tpl->put('FORM', $this->form->display());
@@ -188,15 +187,15 @@ class UserRegistrationController extends AbstractController
 			
 			UserRegistrationService::send_email_confirmation($user_id, $user->get_email(), $user_authentification->get_login(), $user_authentification->get_login(), $this->form->get_value('password'), $activation_key);
 			
-			UserRegistrationService::connect_user($user_id, $user_authentification->get_password_hashed());
-			
 			StatsCache::invalidate();
+			
+			$this->confirm_registration($user_id, $user_authentification);
 		} catch (MemberExtendedFieldErrorsMessageException $e) {
 			$this->tpl->put('MSG', MessageHelper::display($e->getMessage(), MessageHelper::NOTICE));
 		}
 	}
 	
-	private function confirm_registration_message()
+	private function confirm_registration($user_id, $user_authentification)
 	{
 		if ($this->user_accounts_config->get_member_accounts_validation_method() == UserAccountsConfig::MAIL_USER_ACCOUNTS_VALIDATION)
 		{
@@ -208,6 +207,7 @@ class UserRegistrationController extends AbstractController
 		}
 		else
 		{
+			UserRegistrationService::connect_user($user_id, $user_authentification->get_password_hashed());
 			AppContext::get_response()->redirect(Environment::get_home_page());
 		}
 	}

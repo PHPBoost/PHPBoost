@@ -155,8 +155,8 @@ class UserService
 	public static function update_approbation_pass($approbation_pass)
 	{
 		$columns = array('user_aprob' => 1, 'approbation_pass' => '');
-		$condition = 'WHERE approbation_pass = :approbation_pass';
-		$parameters = array('approbation_pass' => $approbation_pass);
+		$condition = 'WHERE approbation_pass = :new_approbation_pass';
+		$parameters = array('new_approbation_pass' => $approbation_pass);
 		self::$querier->update(DB_TABLE_MEMBER, $columns, $condition, $parameters);
 	}
 	
