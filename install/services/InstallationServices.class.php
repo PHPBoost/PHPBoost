@@ -491,7 +491,7 @@ class InstallationServices
 		$mail->add_recipient($email);
 		$mail->set_subject($this->messages['admin.created.email.object']);
 		$mail->set_content(sprintf($this->messages['admin.created.email.unlockCode'], stripslashes($login),
-		stripslashes($login), $password, $unlock_admin, $general_config->get_default_site_url() . $general_config->get_default_site_url()));
+		stripslashes($login), $password, $unlock_admin, $general_config->get_default_site_url() . $general_config->get_default_site_path()));
 		AppContext::get_mail_service()->try_to_send($mail);
 	}
 
