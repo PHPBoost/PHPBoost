@@ -61,7 +61,7 @@
 					-->
 				</script>
 				
-				<form action="moderation_panel{U_ACTION}" method="post" class="fieldset_content">
+				<form action="l{U_ACTION}" method="post" class="fieldset_content">
 					<fieldset>
 						<legend>{L_SEARCH_USER}</legend>
 						<dl>
@@ -134,7 +134,7 @@
 				</script>
 				
 				<br /><br />
-				<form action="moderation_panel{U_ACTION_INFO}" method="post">		
+				<form action="{U_ACTION_INFO}" method="post">		
 					<table class="module_table">
 						<tr>
 							<th colspan="2">{L_ACTION_INFO}</th>
@@ -185,7 +185,7 @@
 				
 				# IF C_MODO_PANEL_USER_BAN #					
 				<br /><br />
-				<form action="moderation_panel{U_ACTION_INFO}" method="post">		
+				<form action="{U_ACTION_INFO}" method="post">		
 					<table class="module_table">
 						<tr>
 							<th colspan="2">{L_ACTION_INFO}</th>
