@@ -80,7 +80,7 @@ class UserUrlBuilder
 	
 	public static function moderation_panel($type = '', $user_id = '')
 	{
-		$param = !empty($type) ? '?action=' . $type . '&' . $user_id : '';
+		$param = !empty($type) ? '?action=' . $type . '&id=' . $user_id : '';
 		return new Url(self::$dispatcher . '/moderation_panel.php' . $param);
 	}
 	
