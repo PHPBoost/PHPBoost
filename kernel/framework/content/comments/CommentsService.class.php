@@ -181,6 +181,7 @@ class CommentsService
 					LEFT JOIN " . DB_TABLE_COMMENTS_TOPIC . " topic ON comments.id_topic = topic.id_topic
 					LEFT JOIN " . DB_TABLE_MEMBER . " member ON member.user_id = comments.user_id
 					LEFT JOIN " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " ext_field ON ext_field.user_id = comments.user_id
+					WHERE topic.module_id = '". $module_id ."' AND topic.id_in_module = '". $id_in_module ."' AND topic.topic_identifier = '". $topic_identifier ."'
 					ORDER BY comments.timestamp " . CommentsConfig::load()->get_order_display_comments() . " " . $condition
 			);
 			
