@@ -117,14 +117,16 @@ class UserLostPasswordController extends AbstractController
 				try {
 				return UserService::get_user('WHERE user_mail=:email', array('email' => $this->form->get_value('information')));
 				} catch (Exception $e) {
-					$this->tpl->put('MSG', MessageHelper::display($this->lang['forget-password.error'], MessageHelper::NOTICE));
+					$controller = new UserErrorController(LangLoader::get_message('error', 'errors-common'), $this->lang['forget-password.error'], MessageHelper::NOTICE);
+					DispatchManager::redirect($controller);
 				}
 			break;
 			case UserLostPasswordService::LOST_PASSWORD_BY_LOGIN:
 				try {
 					return UserService::get_user('WHERE login=:login', array('login' => $this->form->get_value('information')));
 				} catch (Exception $e) {
-					$this->tpl->put('MSG', MessageHelper::display($this->lang['forget-password.error'], MessageHelper::NOTICE));
+					$controller = new UserErrorController(LangLoader::get_message('error', 'errors-common'), $this->lang['forget-password.error'], MessageHelper::NOTICE);
+					DispatchManager::redirect($controller);
 				}
 			break;
 		}
