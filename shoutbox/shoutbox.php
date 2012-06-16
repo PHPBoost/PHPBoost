@@ -64,8 +64,7 @@ if ($add && empty($shout_id)) //Insertion
 					AppContext::get_response()->redirect('/shoutbox/shoutbox.php' . url('?error=flood', '', '&') . '#errorh');
 			}
 			
-			//Vérifie que le message ne contient pas du flood de lien.
-			$shout_contents = FormatingHelper::strparse($shout_contents, $config_shoutbox->get_forbidden_formatting_tags());		
+			//Vérifie que le message ne contient pas du flood de lien.	
 			if (!TextHelper::check_nbr_links($shout_pseudo, 0)) //Nombre de liens max dans le pseudo.
 				AppContext::get_response()->redirect(HOST . SCRIPT . url('?error=l_pseudo', '', '&') . '#errorh');
 			if (!TextHelper::check_nbr_links($shout_contents, $config_shoutbox->get_max_links_number_per_message())) //Nombre de liens max dans le message.
@@ -125,7 +124,7 @@ elseif (!empty($shout_id)) //Edition + suppression!
 					'class' => 'text', 'required' => true, 'maxlength' => 25)
 				));
 			}
-			$fieldset->add_field(new FormFieldRichTextEditor('shoutbox_contents', $LANG['message'], FormatingHelper::unparse($row['contents']), array(
+			$fieldset->add_field(new FormFieldRichTextEditor('shoutbox_contents', $LANG['message'], $row['contents'], array(
 				'formatter' => $formatter, 
 				'rows' => 10, 'cols' => 47, 'required' => true)
 			));
@@ -139,14 +138,12 @@ elseif (!empty($shout_id)) //Edition + suppression!
 		}
 		elseif ($update_message)
 		{
-			$shout_contents = retrieve(POST, 'shoutboxform_shoutbox_contents', '', TSTRING_UNCHANGE);			
+			$shout_contents = retrieve(POST, 'shoutboxform_shoutbox_contents', '', TSTRING_PARSE);			
 			$shout_pseudo = retrieve(POST, 'shoutboxform_shoutbox_pseudo', $LANG['guest']);
 			$shout_pseudo = empty($shout_pseudo) && $User->check_level(User::MEMBER_LEVEL) ? $User->get_attribute('login') : $shout_pseudo;
-			
 			if (!empty($shout_contents) && !empty($shout_pseudo))
 			{
 				//Vérifie que le message ne contient pas du flood de lien.
-				$shout_contents = FormatingHelper::strparse($shout_contents, $config_shoutbox->get_forbidden_formatting_tags());
 				if (!TextHelper::check_nbr_links($shout_pseudo, 0)) //Nombre de liens max dans le pseudo.
 					AppContext::get_response()->redirect(HOST . SCRIPT . url('?error=l_pseudo', '', '&') . '#errorh');
 				if (!TextHelper::check_nbr_links($shout_contents, $config_shoutbox->get_max_links_number_per_message())) //Nombre de liens max dans le message.
