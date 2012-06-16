@@ -61,6 +61,8 @@ class Session
 		$login = retrieve(POST, 'login', '');
 		$password = retrieve(POST, 'password', '', TSTRING_UNCHANGE);
 		$autoconnexion = retrieve(POST, 'auto', false);
+		$redirect = retrieve(POST, 'redirect', '');
+		$redirect = !empty($redirect) ? HOST . $redirect : ''; 
 
 		if (retrieve(GET, 'disconnect', false)) //Déconnexion.
 		{
@@ -68,12 +70,11 @@ class Session
 		}
 		elseif (retrieve(POST, 'connect', false) && !empty($login) && !empty($password)) //Création de la session.
 		{
-			$this->connect($login, $password, $autoconnexion);
-			AppContext::get_response()->redirect(Environment::get_home_page());
+			$this->connect($login, $password, $autoconnexion, $redirect);
 		}
 	}
 	
-	public function connect($login, $password, $autoconnexion, $url_to_redirect = null)
+	public function connect($login, $password, $autoconnexion, $url_to_redirect = '')
 	{
 		$user_id = $this->sql->query("SELECT user_id FROM " . DB_TABLE_MEMBER . " WHERE login = '" . $login . "'", __LINE__, __FILE__);
 		if (!empty($user_id)) //Membre existant.
@@ -138,7 +139,7 @@ class Session
 			AppContext::get_response()->redirect(UserUrlBuilder::connect('unexisting')->absolute());
 		}
 		
-		if ($url_to_redirect !== null)
+		if (!empty($url_to_redirect))
 		{
 			AppContext::get_response()->redirect($url_to_redirect);
 		}
