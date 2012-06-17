@@ -46,7 +46,7 @@ if (!empty($_POST['valid']))
 			}
 			else if ($maintain > 0)
 			{
-				$date = new Date(DATE_TIMESTAMP, TIMEZONE_USER, time() + 5 + $maintain);
+				$date = new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, time() + 5 + $maintain);
 				$maintenance_config->enable_maintenance();
 				$maintenance_config->set_unlimited_maintenance(false);
 				$maintenance_config->set_end_date($date);
