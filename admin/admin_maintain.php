@@ -59,7 +59,7 @@ if (!empty($_POST['valid']))
 		case 2:
 			$maintain = retrieve(POST, 'end', '', TSTRING_UNCHANGE);
 			$maintain = strtotimestamp($maintain, $LANG['date_format_short']);
-			$date = new Date(DATE_TIMESTAMP, TIMEZONE_USER, $maintain);
+			$date = new Date(DATE_TIMESTAMP, TIMEZONE_SITE, $maintain);
 			$maintenance_config->enable_maintenance();
 			$maintenance_config->set_unlimited_maintenance(false);
 			$maintenance_config->set_end_date($date);
