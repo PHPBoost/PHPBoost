@@ -188,10 +188,11 @@ $tpl->put_all(array(
     'L_CONTENT' => $LANG['content'],
     'L_AUTHORIZATIONS' => $LANG['authorizations'],
     'L_ADD' => $LANG['add'],
-    'J_AUTH_FORM' => TextHelper::to_js_string(Authorizations::generate_select(
+    'J_AUTH_FORM' => str_replace(array('&quot;'), array('"'),
+		TextHelper::to_js_string(Authorizations::generate_select(
         AUTH_MENUS, array('r-1' => AUTH_MENUS, 'r0' => AUTH_MENUS, 'r1' =>AUTH_MENUS),
         array(), 'menu_element_##UID##_auth'
-     )),
+     ))),
     'JL_AUTHORIZATIONS' => TextHelper::to_js_string($LANG['authorizations']),
     'JL_PROPERTIES' => TextHelper::to_js_string($LANG['properties']),
     'JL_NAME' => TextHelper::to_js_string($LANG['name']),
