@@ -419,6 +419,7 @@ else
 		'CONTRIBUTION_COUNTERPART_EDITOR' => $counterpart_editor->display(),
 		'L_TO_DATE' => $LANG['to_date'],
 		'L_FROM_DATE' => $LANG['from_date'],
+		'L_AT' => $LANG['at'],
 		'L_RELEASE_DATE' => $NEWS_LANG['release_date'],
 		'L_NEWS_DATE' => $NEWS_LANG['news_date'],
 		'L_UNIT_HOUR' => strtolower($LANG['unit_hour']),

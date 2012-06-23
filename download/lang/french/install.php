@@ -30,7 +30,7 @@
  ####################################################
 
 $lang = array(
-    'download_title' => 'Affiche PHPboost',
+    'download_title' => 'Affiche PHPBoost',
     'download_short_contents' => '',
     'download_contents' => 'Présentation de l\'affiche de PHPBoost.',
     'download_cats_title' => 'Catégorie de test',

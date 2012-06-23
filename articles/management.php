@@ -319,7 +319,7 @@ else
 			$start_calendar->set_date($start);
 			
 			$end_calendar = new MiniCalendar('end');
-			$end = new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, ($articles['end'] > 0 ? $articles['end'] : $now->get_timestamp()));
+			$end = new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, ($articles['end'] > 0 ? $articles['end'] : ''));
 			$end_calendar->set_date($end);
 			$end_calendar->set_style('margin-left:100px;');
 			
@@ -530,7 +530,11 @@ else
 		'L_RESET' => $LANG['reset'],
 		'L_REQUIRE_TITLE' => $LANG['require_title'],
 		'L_REQUIRE_TEXT' => $LANG['require_text'],
-		'L_CONTRIBUTION_LEGEND' => $LANG['contribution']
+		'L_CONTRIBUTION_LEGEND' => $LANG['contribution'],
+		'L_UNIT_HOUR' => strtolower($LANG['unit_hour']),
+		'L_TO_DATE' => $LANG['to_date'],
+		'L_FROM_DATE' => $LANG['from_date'],
+		'L_AT' => $LANG['at'],
 	));
 
 	//Gestion erreur.
