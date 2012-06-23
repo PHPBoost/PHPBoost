@@ -31,6 +31,10 @@ define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
 require_once('articles_constants.php');
 
+$id_up = retrieve(GET, 'id_up', 0);
+$id_down = retrieve(GET, 'id_down', 0);
+$id_show = retrieve(GET, 'show', 0);
+$id_hide = retrieve(GET, 'hide', 0);
 $id = retrieve(GET, 'id', 0,TINTEGER);
 $cat_to_del = retrieve(GET, 'del', 0,TINTEGER);
 $cat_to_del_post = retrieve(POST, 'cat_to_del', 0,TINTEGER);
@@ -45,6 +49,30 @@ $tpl = new FileTemplate('articles/admin_articles_cat.tpl');
 require_once('admin_articles_menu.php');
 $tpl->put_all(array('ADMIN_MENU' => $admin_menu));
 
+if ($id_up > 0)
+{
+	$Session->csrf_get_protect();
+	$articles_categories->move($id_up, MOVE_CATEGORY_UP);
+	AppContext::get_response()->redirect(url('admin_articles_cat.php'));
+}
+elseif ($id_down > 0)
+{
+	$Session->csrf_get_protect();
+	$articles_categories->move($id_down, MOVE_CATEGORY_DOWN);
+	AppContext::get_response()->redirect(url('admin_articles_cat.php'));
+}
+elseif ($id_show > 0)
+{
+	$Session->csrf_get_protect();
+	$articles_categories->change_visibility($id_show, CAT_VISIBLE, LOAD_CACHE);
+	AppContext::get_response()->redirect(url('admin_articles_cat.php'));
+}
+elseif ($id_hide > 0)
+{
+	$Session->csrf_get_protect();
+	$articles_categories->change_visibility($id_hide, CAT_UNVISIBLE, LOAD_CACHE);
+	AppContext::get_response()->redirect(url('admin_articles_cat.php'));
+}
 if ($cat_to_del > 0)
 {
 	$array_cat = array();
