@@ -34,12 +34,7 @@ class BugtrackerExtensionPointProvider extends ExtensionPointProvider
 		$this->sql_querier = PersistenceContext::get_sql();
         parent::__construct('bugtracker');
     }
-	
-	public function comments()
-    {
-        return new BugtrackerComments();
-    }
-	
+		
 	/**
 	* @method Recuperation du cache
 	*/
@@ -68,5 +63,11 @@ class BugtrackerExtensionPointProvider extends ExtensionPointProvider
 		return new BugtrackerSearchable();
 	}
 	
+	public function comments()
+    {
+    	return new CommentsTopics(array(
+			new BugtrackerCommentsTopic()
+		));
+    }	
 }
 ?>

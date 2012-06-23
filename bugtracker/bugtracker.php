@@ -800,8 +800,7 @@ else if (isset($_GET['view']) && is_numeric($id)) // Visualisation d'une fiche B
 	//Affichage des commentaires
 	if (isset($_GET['com']) && is_numeric($id))
 	{
-		$comments_topic = new CommentsTopic();
-		$comments_topic->set_module_id('bugtracker');
+		$comments_topic = new BugtrackerCommentsTopic();
 		$comments_topic->set_id_in_module($id);
 		$comments_topic->set_url(new Url('/bugtracker/bugtracker?view=true&amp;id=' . $id . '&com=0'));
 		$Template->put_all(array(
