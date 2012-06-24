@@ -93,7 +93,6 @@ class AdminAdvancedConfigController extends AdminController
 		
 		$url_rewriting_fieldset->set_description($this->lang['advanced-config.url-rewriting.explain']);
 		
-		$disable_url_rewriting_field = new FormFieldCheckbox('url_rewriting_enabled', $this->lang['advanced-config.url-rewriting'], FormFieldCheckbox::UNCHECKED, array('disabled' => true, 'description' => $this->lang['advanced-config.config.not-available']));
 		$server_configuration = new ServerConfiguration();
 		try 
 		{
@@ -103,12 +102,12 @@ class AdminAdvancedConfigController extends AdminController
 			}
 			else
 			{
-				$url_rewriting_fieldset->add_field($disable_url_rewriting_field);
+				$url_rewriting_fieldset->add_field(new FormFieldCheckbox('url_rewriting_enabled', $this->lang['advanced-config.url-rewriting'], FormFieldCheckbox::UNCHECKED, array('disabled' => true, 'description' => $this->lang['advanced-config.config.not-available'])));
 			}
 		} 
 		catch (UnsupportedOperationException $ex) 
 		{
-			$url_rewriting_fieldset->add_field($disable_url_rewriting_field);
+			$url_rewriting_fieldset->add_field(new FormFieldCheckbox('url_rewriting_enabled', $this->lang['advanced-config.url-rewriting'], $this->server_environment_config->is_url_rewriting_enabled(), array('description' => $this->lang['advanced-config.config.unknown'])));
 		}
 		
 		$htaccess_manual_content_fieldset = new FormFieldsetHTML('htaccess_manual_content', $this->lang['advanced-config.htaccess-manual-content']);

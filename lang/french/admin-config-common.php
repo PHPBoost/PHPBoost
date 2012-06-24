@@ -90,6 +90,7 @@ $lang = array(
 	
 	'advanced-config.config.not-available' => '<span style="color:#B22222;font-weight:bold;">Non disponible sur votre serveur</span>',
 	'advanced-config.config.available' => '<span style="color:#008000;font-weight:bold;">Disponible sur votre serveur</span>',
+	'advanced-config.config.unknown' => '<span style="color:#004b80;font-weight:bold;">Inconnu sur votre serveur</span>',
 
 	'advanced-config.htaccess-manual-content' => 'Contenu du fichier .htaccess',
 	'advanced-config.htaccess-manual-content.explain' => 'Vous pouvez dans ce champ mettre les instructions que vous souhaitez intégrer au fichier .htaccess qui se trouve à la racine du site, par exemple pour forcer une configuration du serveur web Apache.',
