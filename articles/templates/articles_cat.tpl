@@ -106,6 +106,9 @@
 									</a>
 								# ENDIF #
 							</p>
+							<p style="margin-bottom:10px">
+								{articles.DESCRIPTION}
+							</p>
 							<div class="text_small">
 								{L_DATE} : {articles_invisible.DATE}
 								<br />
@@ -147,6 +150,9 @@
 										<img class="valign_middle" src="../templates/{THEME}/images/{LANG}/delete.png" alt="" />
 									</a>
 								# ENDIF #
+							</p>
+							<p style="margin-bottom:10px">
+								{articles.DESCRIPTION}
 							</p>
 							<div class="text_small">
 								{L_DATE} : {articles.DATE}

@@ -134,7 +134,7 @@ if (!empty($idart) && isset($cat) )
 		'L_DELETE' => $LANG['delete'],
 		'L_EDIT' => $LANG['edit'],
 		'L_SUBMIT' => $LANG['submit'],
-		'L_WRITTEN' =>  $LANG['written_by'],
+		'L_WRITTEN' => $LANG['written_by'],
 		'L_ON' => $LANG['on'],
 		'L_DATE' => $LANG['date'],
 		'L_COM' => $LANG['com'],
