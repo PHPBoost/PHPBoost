@@ -233,7 +233,7 @@ class ForumHomePageExtensionPoint implements HomePageExtensionPoint
 					'NBR_TOPIC' => $row['nbr_topic'],
 					'NBR_MSG' => $row['nbr_msg'],
 					'U_FORUM_URL' => $row['url'],
-					'U_FORUM_VARS' => url(PATH_TO_ROOT .'/forum/forum.php?id=' . $row['cid'], '-' . $row['cid'] . '+' . Url::encode_rewrite($row['name']) . '.php'),
+					'U_FORUM_VARS' => url(PATH_TO_ROOT .'/forum/forum.php?id=' . $row['cid'], 'forum-' . $row['cid'] . '+' . Url::encode_rewrite($row['name']) . '.php'),
 					'U_LAST_TOPIC' => $last
 				));
 			}
