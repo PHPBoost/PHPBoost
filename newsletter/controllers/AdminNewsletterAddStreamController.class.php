@@ -41,13 +41,7 @@ class AdminNewsletterAddStreamController extends AdminModuleController
 		$this->init();
 		$this->build_form();
 
-		$tpl = new StringTemplate('<script type="text/javascript">
-		<!--
-			Event.observe(window, \'load\', function() {
-				$("newsletter_admin_advanced_authorizations").fade({duration: 0.2});
-			});
-		-->		
-		</script># INCLUDE FORM #');
+		$tpl = new StringTemplate('# INCLUDE FORM #');
 		$tpl->add_lang($this->lang);
 
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
@@ -119,7 +113,7 @@ class AdminNewsletterAddStreamController extends AdminModuleController
 		));
 		
 		$default_authorizations = NewsletterConfig::load()->get_authorizations();
-		$auth_setter = new FormFieldAuthorizationsSetter('advanced_authorizations', $auth_settings);
+		$auth_setter = new FormFieldAuthorizationsSetter('advanced_authorizations', $auth_settings, array('hidden' => true));
 		$auth_settings->build_from_auth_array($default_authorizations);
 		$fieldset_authorizations->add_field($auth_setter);
 		
