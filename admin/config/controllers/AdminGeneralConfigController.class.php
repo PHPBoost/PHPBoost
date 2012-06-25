@@ -50,8 +50,7 @@ class AdminGeneralConfigController extends AdminController
 		{
 			$this->save();
 			$this->clear_cache();
-
-			$this->tpl->put('MSG', MessageHelper::display(LangLoader::get_message('process.success', 'errors-common'), E_USER_SUCCESS, 4));
+			AppContext::get_response()->redirect(AdminConfigUrlBuilder::general_config());
 		}
 
 		$this->tpl->put('FORM', $this->form->display());
@@ -62,7 +61,7 @@ class AdminGeneralConfigController extends AdminController
 	private function init()
 	{
 		$this->tpl = new StringTemplate('<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/lib/js/lightbox/lightbox.js"></script>
-			# INCLUDE MSG # # INCLUDE FORM #');
+			# INCLUDE FORM #');
 
 		$this->load_lang();
 		$this->tpl->add_lang($this->lang);

@@ -66,7 +66,7 @@ class AdminCustomizeInterfaceController extends AdminController
 				if ($file_type->is_picture())
 				{
 					$this->save($header_logo, $theme);
-					$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('process.success', 'errors-common'), E_USER_SUCCESS, 4));
+					AppContext::get_response()->redirect(AdminCustomizeUrlBuilder::customize_interface()->absolute());
 				}
 				else
 				{
@@ -76,7 +76,7 @@ class AdminCustomizeInterfaceController extends AdminController
 			elseif ($this->form->get_value('use_default_logo'))
 			{
 				$this->delete_pictures_saved($theme);
-				$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('process.success', 'errors-common'), E_USER_SUCCESS, 4));
+				AppContext::get_response()->redirect(AdminCustomizeUrlBuilder::customize_interface()->absolute());
 			}
 			else
 			{
