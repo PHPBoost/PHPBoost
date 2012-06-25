@@ -49,20 +49,9 @@ class AdminNewsletterEditStreamController extends AdminModuleController
 
 		$this->build_form($id);
 
-		$tpl = new StringTemplate('<script type="text/javascript">
-		<!--
-			Event.observe(window, \'load\', function() {
-				if ({ADVANCED_AUTH})
-				{
-					$("newsletter_admin_advanced_authorizations").fade({duration: 0.2});
-				}
-			});
-		-->		
-		</script>
-		# INCLUDE MSG # # INCLUDE FORM #');
+		$tpl = new StringTemplate('# INCLUDE MSG # # INCLUDE FORM #');
 		$tpl->add_lang($this->lang);
 		
-		$tpl->put('ADVANCED_AUTH', is_array(NewsletterStreamsCache::load()->get_authorizations_by_stream($id)) ? false : true);
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save($id);
@@ -71,7 +60,7 @@ class AdminNewsletterEditStreamController extends AdminModuleController
 
 		$tpl->put('FORM', $this->form->display());
 
-		return new AdminNewsletterDisplayResponse($tpl, $this->lang['streams.add']);
+		return new AdminNewsletterDisplayResponse($tpl, $this->lang['streams.edit']);
 	}
 
 	private function init()
@@ -135,7 +124,7 @@ class AdminNewsletterEditStreamController extends AdminModuleController
 		
 		$default_authorizations = is_array($newsletter_stream_cache['authorizations']) ? $newsletter_stream_cache['authorizations'] : NewsletterConfig::load()->get_authorizations();
 		$auth_settings->build_from_auth_array($default_authorizations);
-		$auth_setter = new FormFieldAuthorizationsSetter('advanced_authorizations', $auth_settings);
+		$auth_setter = new FormFieldAuthorizationsSetter('advanced_authorizations', $auth_settings, array('hidden' => !$active_authorizations));
 		$fieldset_authorizations->add_field($auth_setter);
 		
 		$form->add_button(new FormButtonReset());
