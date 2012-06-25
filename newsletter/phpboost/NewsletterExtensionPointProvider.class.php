@@ -39,7 +39,9 @@ class NewsletterExtensionPointProvider extends ExtensionPointProvider
 	
 	public function url_mappings()
 	{
-		return new UrlMappings(array(new DispatcherUrlMapping('/newsletter/index.php')));
+		return new UrlMappings(array(
+			new DispatcherUrlMapping('/newsletter/index.php')
+		));
 	}
 	
 	public function extended_field()

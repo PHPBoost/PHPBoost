@@ -49,20 +49,9 @@ class AdminNewsletterEditStreamController extends AdminModuleController
 
 		$this->build_form($id);
 
-		$tpl = new StringTemplate('<script type="text/javascript">
-		<!--
-			Event.observe(window, \'load\', function() {
-				if ({ADVANCED_AUTH})
-				{
-					$("newsletter_admin_advanced_authorizations").fade({duration: 0.2});
-				}
-			});
-		-->		
-		</script>
-		# INCLUDE MSG # # INCLUDE FORM #');
+		$tpl = new StringTemplate('# INCLUDE MSG # # INCLUDE FORM #');
 		$tpl->add_lang($this->lang);
 		
-		$tpl->put('ADVANCED_AUTH', is_array(NewsletterStreamsCache::load()->get_authorizations_by_stream($id)) ? false : true);
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save($id);
@@ -71,7 +60,7 @@ class AdminNewsletterEditStreamController extends AdminModuleController
 
 		$tpl->put('FORM', $this->form->display());
 
-		return new AdminNewsletterDisplayResponse($tpl, $this->lang['streams.add']);
+		return new AdminNewsletterDisplayResponse($tpl, $this->lang['streams.edit']);
 	}
 
 	private function init()
@@ -96,11 +85,18 @@ class AdminNewsletterEditStreamController extends AdminModuleController
 		array('rows' => 4, 'cols' => 47)
 		));
 		
+		$image_preview_request = new AjaxRequest(NewsletterUrlBuilder::image_preview(), 'function(response){
+		if (response.responseJSON.image_url) {
+			$(\'preview_picture\').src = response.responseJSON.image_url;
+		}}');
+		$image_preview_request->add_event_callback(AjaxRequest::ON_CREATE, 'function(response){ $(\'preview_picture\').src = PATH_TO_ROOT + \'/templates/'. get_utheme() .'/images/loading_mini.gif\';}');
+		$image_preview_request->add_param('image', 'HTMLForms.getField(\'picture\').getValue()');
+		
 		$fieldset->add_field(new FormFieldTextEditor('picture', $this->lang['streams.picture'], $newsletter_stream_cache['picture'], array(
 			'class' => 'text',
-			'events' => array('change' => '$(\'preview_picture\').src = HTMLForms.getField(\'picture\').getValue();')
+			'events' => array('change' => $image_preview_request->render())
 		)));
-		$fieldset->add_field(new FormFieldFree('preview_picture', $this->lang['streams.picture-preview'], '<img id="preview_picture" src="'. $newsletter_stream_cache['picture'] .'" alt="" style="vertical-align:top" />'));
+		$fieldset->add_field(new FormFieldFree('preview_picture', $this->lang['streams.picture-preview'], '<img id="preview_picture" src="'. Url::to_rel($newsletter_stream_cache['picture']) .'" alt="" style="vertical-align:top" />'));
 		
 		$fieldset->add_field(new FormFieldCheckbox('visible', $this->lang['streams.visible'], $newsletter_stream_cache['visible']));
 		
@@ -128,7 +124,7 @@ class AdminNewsletterEditStreamController extends AdminModuleController
 		
 		$default_authorizations = is_array($newsletter_stream_cache['authorizations']) ? $newsletter_stream_cache['authorizations'] : NewsletterConfig::load()->get_authorizations();
 		$auth_settings->build_from_auth_array($default_authorizations);
-		$auth_setter = new FormFieldAuthorizationsSetter('advanced_authorizations', $auth_settings);
+		$auth_setter = new FormFieldAuthorizationsSetter('advanced_authorizations', $auth_settings, array('hidden' => !$active_authorizations));
 		$fieldset_authorizations->add_field($auth_setter);
 		
 		$form->add_button(new FormButtonReset());

@@ -41,13 +41,7 @@ class AdminNewsletterAddStreamController extends AdminModuleController
 		$this->init();
 		$this->build_form();
 
-		$tpl = new StringTemplate('<script type="text/javascript">
-		<!--
-			Event.observe(window, \'load\', function() {
-				$("newsletter_admin_advanced_authorizations").fade({duration: 0.2});
-			});
-		-->		
-		</script># INCLUDE FORM #');
+		$tpl = new StringTemplate('# INCLUDE FORM #');
 		$tpl->add_lang($this->lang);
 
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
@@ -82,11 +76,18 @@ class AdminNewsletterAddStreamController extends AdminModuleController
 		array('rows' => 4, 'cols' => 47)
 		));
 		
+		$image_preview_request = new AjaxRequest(NewsletterUrlBuilder::image_preview(), 'function(response){
+		if (response.responseJSON.image_url) {
+			$(\'preview_picture\').src = response.responseJSON.image_url;
+		}}');
+		$image_preview_request->add_event_callback(AjaxRequest::ON_CREATE, 'function(response){ $(\'preview_picture\').src = PATH_TO_ROOT + \'/templates/'. get_utheme() .'/images/loading_mini.gif\';}');
+		$image_preview_request->add_param('image', 'HTMLForms.getField(\'picture\').getValue()');
+		
 		$fieldset->add_field(new FormFieldTextEditor('picture', $this->lang['streams.picture'], '/newsletter/newsletter.png', array(
 			'class' => 'text',
-			'events' => array('change' => '$(\'preview_picture\').src = HTMLForms.getField(\'picture\').getValue();')
+			'events' => array('change' => $image_preview_request->render())
 		)));
-		$fieldset->add_field(new FormFieldFree('preview_picture', $this->lang['streams.picture-preview'], '<img id="preview_picture" src="'. PATH_TO_ROOT .'/newsletter/newsletter.png" alt="" style="vertical-align:top" />'));
+		$fieldset->add_field(new FormFieldFree('preview_picture', $this->lang['streams.picture-preview'], '<img id="preview_picture" src="'. Url::to_rel('/newsletter/newsletter.png') .'" alt="" style="vertical-align:top" />'));
 		
 		$fieldset->add_field(new FormFieldCheckbox('visible', $this->lang['streams.visible'], FormFieldCheckbox::CHECKED));
 		
@@ -112,7 +113,7 @@ class AdminNewsletterAddStreamController extends AdminModuleController
 		));
 		
 		$default_authorizations = NewsletterConfig::load()->get_authorizations();
-		$auth_setter = new FormFieldAuthorizationsSetter('advanced_authorizations', $auth_settings);
+		$auth_setter = new FormFieldAuthorizationsSetter('advanced_authorizations', $auth_settings, array('hidden' => true));
 		$auth_settings->build_from_auth_array($default_authorizations);
 		$fieldset_authorizations->add_field($auth_setter);
 		
