@@ -49,7 +49,8 @@ $url_controller_mappers = array(
 	new UrlControllerMapper('NewsletterArchivesController', '`^/archives(?:/([0-9]+))?/?([a-z]+)?/?([a-z]+)?/?([0-9]+)?/?$`', array('id_stream', 'field', 'sort', 'page')),
 	new UrlControllerMapper('NewsletterArchiveController', '`^/archive/([0-9]+)?/?$`', array('id')),
 	
-	new UrlControllerMapper('NewsletterHomeController', '`^(?:/([a-z]+))?/?$`', array('page')),
+	new UrlControllerMapper('AjaxImagePreviewController', '`^/ajax/image/preview/?$`'),
+	new UrlControllerMapper('NewsletterHomeController', '`^(?:/([0-9]+))?/?$`', array('page')),
 );
 DispatchManager::dispatch($url_controller_mappers);
 ?>
