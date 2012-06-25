@@ -143,10 +143,10 @@ class AdminMemberConfigController extends AdminController
 		
 		$default_avatar_link = $user_account_config->get_default_avatar_name();
 		$fieldset->add_field(new FormFieldTextEditor('default_avatar_link', $this->lang['members.config.default-avatar-link'], $default_avatar_link, array(
-			'class' => 'text', 'description' => $this->lang['members.default-avatar-link-explain'], 'events' => array('change' => 'document.images[\'img_avatar\'].src = "' . PATH_TO_ROOT . '/templates/'. get_utheme() .'/images/" + HTMLForms.getField("default-avatar-link").getValue()'))
+			'class' => 'text', 'description' => $this->lang['members.default-avatar-link-explain'], 'events' => array('change' => '$(\'img_avatar\').src = "' . TPL_PATH_TO_ROOT . '/templates/'. get_utheme() .'/images/" + HTMLForms.getField("default_avatar_link").getValue()'))
 		));
 		
-		$fieldset->add_field(new FormFieldFree('preview', LangLoader::get_message('preview', 'main'), '<img id="img_avatar" src="' . PATH_TO_ROOT . '/templates/'. get_utheme() .'/images/'. $default_avatar_link .'" alt="" style="vertical-align:top" />'));
+		$fieldset->add_field(new FormFieldFree('preview', LangLoader::get_message('preview', 'main'), '<img id="img_avatar" src="' . Url::to_rel('/templates/'. get_utheme() .'/images/'. $default_avatar_link) .'" alt="" style="vertical-align:top" />'));
 
 		$fieldset = new FormFieldsetHTML('authorization', $this->lang['members.config.authorization']);
 		$form->add_fieldset($fieldset);
