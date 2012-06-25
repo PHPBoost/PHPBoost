@@ -30,7 +30,7 @@
 				<a href="${relative_url(AdminConfigUrlBuilder::general_config())}" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/config_mini.png);">{L_CONFIGURATION}</a>
 				<ul id="ssmenu21">
 					<li><a href="${relative_url(AdminConfigUrlBuilder::general_config())}" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/config_mini.png);">{L_CONFIG_GENERAL}</a></li>
-					<li><a href="${relative_url(AdminConfigUrlBuilder::advanced_config())}" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/config_mini.png);">{L_CONFIG_ADVANCED}</a></li>
+					<li><a href="{PATH_TO_ROOT}/admin/config/?url=/advanced/" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/config_mini.png);">{L_CONFIG_ADVANCED}</a></li>
 					<li><a href="${relative_url(AdminConfigUrlBuilder::mail_config())}" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/config_mini.png);">{L_MAIL_CONFIG}</a></li>
 				</ul>
 			</li>
