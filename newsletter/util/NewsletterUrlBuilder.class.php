@@ -32,7 +32,6 @@
 class NewsletterUrlBuilder
 {
     private static $dispatcher = '/newsletter';
-    
 
 	/**
 	 * @return Url
@@ -144,6 +143,14 @@ class NewsletterUrlBuilder
     public static function home($page = '')
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/' . $page);
+	}
+	
+	/**
+	 * @return Url
+	 */
+    public static function image_preview()
+	{
+		return DispatchManager::get_url(self::$dispatcher, '/ajax/image/preview/');
 	}
 }
 ?>

@@ -1,6 +1,6 @@
-<div id="${escape(ID)}">
+<div id="${escape(ID)}" # IF C_HIDDEN # style="display:none;" # ENDIF #>
 # START actions #
-<dl id="${escape(ID)}_field_{actions.BIT}" # IF C_HIDDEN # style="display:none;" # ENDIF #>
+<dl id="${escape(ID)}_field_{actions.BIT}">
 	<dt>
 		<label>
 			{actions.LABEL}
