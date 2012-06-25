@@ -107,7 +107,7 @@
 								# ENDIF #
 							</p>
 							<p style="margin-bottom:10px">
-								{articles.DESCRIPTION}
+								{articles_invisible.DESCRIPTION}
 							</p>
 							<div class="text_small">
 								{L_DATE} : {articles_invisible.DATE}
