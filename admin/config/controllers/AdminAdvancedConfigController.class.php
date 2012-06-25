@@ -41,15 +41,14 @@ class AdminAdvancedConfigController extends AdminController
 		
 		$this->build_form();
 
-		$tpl = new StringTemplate('# INCLUDE MSG # # INCLUDE FORM #');
+		$tpl = new StringTemplate('# INCLUDE FORM #');
 		
 		$tpl->add_lang($this->lang);
 
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save();
-
-			$tpl->put('MSG', MessageHelper::display(LangLoader::get_message('process.success', 'errors-common'), E_USER_SUCCESS, 4));
+			AppContext::get_response()->redirect(AdminConfigUrlBuilder::advanced_config());
 		}
 
 		$tpl->put('FORM', $this->form->display());
