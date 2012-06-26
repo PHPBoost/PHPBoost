@@ -29,13 +29,15 @@
 	timeout : null,
 	notation_scale : 0,
 	default_note : 0,
+	number_votes : 0,
 	already_post : 1,
 	user_connected : 0,
 	current_url : '',
 	lang : new Array(),
-	initialize : function(id, notation_scale) {
+	initialize : function(id, notation_scale, number_votes) {
 		this.id = id;
 		this.notation_scale = notation_scale;
+		this.number_votes = number_votes;
 	},
 	get_id : function() {
 		return this.id;
@@ -92,6 +94,7 @@
 					object.set_default_note(note);
 					object.set_already_post(1);
 					object.change_picture_status(note);
+					object.change_nbr_note();
 				}
 			}
 		});
@@ -131,6 +134,16 @@
 			if($(name_picture_id)) {
 				$(name_picture_id).src = PATH_TO_ROOT + '/templates/' + THEME + '/images/' + picture_star;
 			}
+		}
+	},
+	change_nbr_note : function () {
+		var nbr_note = this.number_votes + 1;
+		if (nbr_note > 1) {
+			console.log(nbr_note);
+			$('note_value' + this.id).innerHTML = nbr_note + ' ' + this.get_lang('notes');
+		}
+		else {
+			$('note_value' + this.id).innerHTML = nbr_note + ' ' + this.get_lang('note');
 		}
 	}
 });

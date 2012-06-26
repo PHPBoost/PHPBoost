@@ -144,6 +144,7 @@ class NotationService
 			$count_notes = self::get_count_notes_by_id_in_module($notation);
 			$template->put_all(array(
 				'C_VOTES' => $count_notes > 0 ? true : false,
+				'C_MORE_1_VOTES' => $count_notes > 1 ? true : false,
 				'CURRENT_URL' => REWRITED_SCRIPT,
 				'ID_IN_MODULE' => $notation->get_id_in_module(),
 				'NOTATION_SCALE' => $notation->get_notation_scale(),
@@ -154,7 +155,7 @@ class NotationService
 				'L_NO_NOTE' => self::$lang['no_note'],
 				'L_AUTH_ERROR' => LangLoader::get_message('e_auth', 'errors'),
 				'L_ALREADY_VOTE' => self::$lang['already_vote'],
-				'L_NOTES' => $count_notes > 1 ? self::$lang['notes'] : self::$lang['note'],
+				'L_NOTES' => self::$lang['notes'],
 				'L_NOTE' => self::$lang['note'],
 				'L_VALID_NOTE' => self::$lang['valid_note']
 			));
