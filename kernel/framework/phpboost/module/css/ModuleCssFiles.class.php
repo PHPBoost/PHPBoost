@@ -25,11 +25,28 @@
  *
  ###################################################*/
 
+/**
+ * @author Kevin MASSY <soldier.weasel@gmail.com>
+ * @desc This class allows you to manage css files of a module
+ * @package {@package}
+ */
 class ModuleCssFiles implements CssFilesExtensionPoint
 {
+	/**
+	 * @var string[]
+	 */
 	private $css_files_always_displayed = array();
+	
+	/**
+	 * @var string[]
+	 */
 	private $css_files_running_module_displayed = array();
 	
+	
+	/**
+	 * @desc Adding css files to the module to display only the pages of the module
+	 * @param string[] $css_files_always_displayed Array containing css file name
+	 */
 	public function set_css_files_always_displayed(Array $css_files_always_displayed)
 	{
 		$this->css_files_always_displayed = $css_files_always_displayed;
@@ -40,6 +57,10 @@ class ModuleCssFiles implements CssFilesExtensionPoint
 		return $this->css_files_always_displayed;
 	}
 
+	/**
+	 * @desc Adding css files to display on all pages
+	 * @param string[] $css_files_running_module_displayed Array containing css file name
+	 */
 	public function set_css_files_running_module_displayed(Array $css_files_running_module_displayed)
 	{
 		$this->css_files_running_module_displayed = $css_files_running_module_displayed;

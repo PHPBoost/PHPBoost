@@ -24,6 +24,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
  ###################################################*/
+
  /*
  * @author Kevin MASSY <soldier.weasel@gmail.com>
  * @desc This class allows you to resize images easily.
