@@ -70,6 +70,7 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 		
 		$template->put_all(array(
 			'C_BBCODE_TINYMCE_MODE' => AppContext::get_current_user()->get_attribute('user_editor') == 'tinymce',
+			'C_CSS_CACHE_ENABLED' => CSSCacheConfig::load()->is_enabled(),
 			'SITE_NAME' => $general_config->get_site_name(),
 			'MAINTAIN' => $this->display_site_maintenance(),
 			'C_COMPTEUR' => false,
@@ -81,7 +82,6 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 			'TITLE' => $this->get_page_title(),
 			'SITE_DESCRIPTION' => $general_config->get_site_description(),
 			'SITE_KEYWORD' => $general_config->get_site_keywords(),
-			'THEME_CSS' => $this->get_theme_css_files_html_code(),
 			'MODULES_CSS' => $this->get_modules_css_files_html_code(),
 			'L_XML_LANGUAGE' => LangLoader::get_message('xml_lang', 'main'),
 			'L_VISIT' => LangLoader::get_message('guest_s', 'main'),
