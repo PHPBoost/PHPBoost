@@ -185,8 +185,6 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 		$header_tpl = new FileTemplate('admin/admin_header.tpl');
 		$header_tpl->add_lang(self::$lang);
 
-		$include_tinymce_js = AppContext::get_current_user()->get_attribute('user_editor') == 'tinymce';
-
 		$theme = ThemeManager::get_theme(get_utheme());
 		$customize_interface = $theme->get_customize_interface();
 		$header_logo_path = $customize_interface->get_header_logo_path();
@@ -194,8 +192,9 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 		$customization_config = CustomizationConfig::load();
 		
 		$header_tpl->put_all(array(
-			'C_BBCODE_TINYMCE_MODE' => $include_tinymce_js,
+			'C_BBCODE_TINYMCE_MODE' => AppContext::get_current_user()->get_attribute('user_editor') == 'tinymce',
 			'C_FAVICON' => $customization_config->favicon_exists(),
+			'C_CSS_CACHE_ENABLED' => CSSCacheConfig::load()->is_enabled(),
 			'FAVICON' => Url::to_rel($customization_config->get_favicon_path()),
 			'FAVICON_TYPE' => $customization_config->favicon_type(),
 			'C_HEADER_LOGO' => !empty($header_logo_path),
@@ -203,7 +202,6 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 			'SITE_NAME' => GeneralConfig::load()->get_site_name(),
 			'TITLE' => $this->get_page_title(),
 			'PATH_TO_ROOT' => TPL_PATH_TO_ROOT,
-			'THEME_CSS' => $this->get_theme_css_files_html_code(),
 			'MODULES_CSS' => $this->get_modules_css_files_html_code(),
 			'L_XML_LANGUAGE' => self::$lang['xml_lang'],
 			'L_EXTEND_MENU' => self::$lang_admin['extend_menu'],

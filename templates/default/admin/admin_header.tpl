@@ -7,9 +7,25 @@
 		<!-- Default CSS -->
 		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/default/theme/admin_default.css" type="text/css" media="screen" />
 		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/default/theme/default.css" type="text/css" media="screen" />
-
+		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/{THEME}/theme/admin.css" type="text/css" media="screen" />
+		
 		<!-- Theme CSS -->
-		{THEME_CSS}
+		# IF C_CSS_CACHE_ENABLED #
+		<link rel="stylesheet" href="{PATH_TO_ROOT}/kernel/css_cache.php?name=admin-theme-{THEME}&files=
+		/templates/{THEME}/theme/design.css;
+		/templates/{THEME}/theme/global.css;
+		/templates/{THEME}/theme/content.css;
+		/templates/{THEME}/theme/generic.css;
+		/templates/{THEME}/theme/admin.css;
+		/templates/{THEME}/theme/bbcode.css" type="text/css" media="screen, print, handheld" />
+		# ELSE #
+		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/{THEME}/theme/design.css" type="text/css" media="screen" />
+		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/{THEME}/theme/global.css" type="text/css" media="screen" />
+		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/{THEME}/theme/content.css" type="text/css" media="screen" />
+		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/{THEME}/theme/generic.css" type="text/css" media="screen" />
+		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/{THEME}/theme/bbcode.css" type="text/css" media="screen" />
+		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/{THEME}/theme/admin.css" type="text/css" media="screen" />
+		# ENDIF #
 		
 		<!-- Modules CSS -->
 		{MODULES_CSS}

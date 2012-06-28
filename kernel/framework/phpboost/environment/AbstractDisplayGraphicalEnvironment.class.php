@@ -38,29 +38,6 @@
 	{
 		parent::__construct();
 	}
-
-	protected function get_theme_css_files_html_code()
-	{
-		$theme_id = get_utheme();
-		$css_cache_config = CSSCacheConfig::load();
-		if ($css_cache_config->is_enabled())
-		{
-			$css_cache = new CSSCacheManager();
-			$css_cache->set_files(ThemesCssFilesCache::load()->get_files_for_theme($theme_id));
-			$css_cache->set_cache_file_location(PATH_TO_ROOT . '/cache/css/css-cache-theme-' . $theme_id .'.css');
-			$css_cache->execute(CSSCacheConfig::load()->get_optimization_level());
-			$html_code = '<link rel="stylesheet" href="' . $css_cache->get_cache_file_location() . '" type="text/css" media="screen, print, handheld" />';
-		}
-		else
-		{
-			$html_code = '';
-			foreach (ThemesCssFilesCache::load()->get_files_for_theme($theme_id) as $file)
-			{
-				$html_code .= '<link rel="stylesheet" href="' . Url::to_rel($file) .	'" type="text/css" media="screen, print, handheld" />';
-			}
-		}
-		return $html_code;
-	}
 	
 	protected function get_modules_css_files_html_code()
 	{
