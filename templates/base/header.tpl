@@ -46,16 +46,16 @@
 		<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/lib/js/scriptaculous/prototype.js"></script>
 		<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/lib/js/scriptaculous/scriptaculous.js"></script>
 		<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/lib/js/phpboost/global.js"></script>
-	</head>
-	<body>
-	
-	# IF C_HEADER_LOGO #
+		
+		# IF C_HEADER_LOGO #
 		<style type="text/css">
 			div#header_container {
    				background: url('{HEADER_LOGO}') no-repeat;
 			}
 		</style>
-	# ENDIF #
+		# ENDIF #
+	</head>
+	<body>
 	
 	# INCLUDE MAINTAIN #
 
