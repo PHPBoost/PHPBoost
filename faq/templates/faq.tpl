@@ -23,6 +23,7 @@
 			<div class="module_top_r"></div>
 			<div class="module_top">
 				<div class="module_top_title">
+					<a href="${relative_url(SyndicationUrlBuilder::rss('faq', ID_FAQ))}" title="Rss"><img style="vertical-align:middle;margin-top:-2px;" src="{PATH_TO_ROOT}/templates/{THEME}/images/rss.png" alt="Rss" title="Rss" /></a>
 					{TITLE}
 				</div>
 			<div class="module_top_com">
