@@ -86,8 +86,6 @@ class ThemeManager
 			
 			ThemesConfig::load()->add_theme($theme);
 			ThemesConfig::save();
-				
-			self::regenerate_cache();
 		}
 		else
 		{
@@ -112,7 +110,6 @@ class ThemeManager
 					$folder = new Folder(PATH_TO_ROOT . '/templates/' . $theme_id);
 					$folder->delete();
 				}
-				self::regenerate_cache();
 			}
 		}
 	}
@@ -125,8 +122,6 @@ class ThemeManager
 			$theme->set_activated($visibility);
 			ThemesConfig::load()->update($theme);
 			ThemesConfig::save();
-			
-			self::regenerate_cache();
 		}
 	}
 	
@@ -160,8 +155,6 @@ class ThemeManager
 			
 			ThemesConfig::load()->update($theme);
 			ThemesConfig::save();
-			
-			self::regenerate_cache();
 		}
 	}
 	
@@ -173,8 +166,6 @@ class ThemeManager
 			$theme->set_columns_disabled($columns_disabled);
 			ThemesConfig::load()->update($theme);
 			ThemesConfig::save();
-			
-			self::regenerate_cache();
 		}
 	}
 	
@@ -186,19 +177,12 @@ class ThemeManager
 			$theme->set_customize_interface($customize_interface);
 			ThemesConfig::load()->update($theme);
 			ThemesConfig::save();
-			
-			self::regenerate_cache();
 		}
 	}
 	
 	public static function get_error()
 	{
 		return self::$error;
-	}
-	
-	private static function regenerate_cache()
-	{
-		ThemesCssFilesCache::invalidate();
 	}
 }
 ?>
