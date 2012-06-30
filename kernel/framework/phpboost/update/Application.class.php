@@ -207,13 +207,11 @@ class Application
 				$current_version = Environment::get_phpboost_version();
 				break;
 			case self::MODULE_TYPE:
-				$kModules = array_keys($MODULES);
-				foreach ($kModules as $module)
+				foreach (ModulesManager::get_activated_modules_map() as $id => $value)
 				{
-					if ($module == $this->name)
+					if ($id == $this->name)
 					{
-						$infos = load_ini_file(PATH_TO_ROOT . '/' . $module . '/lang/', get_ulang());
-						$current_version = $infos['version'];
+						$current_version = $value->get_configuration()->get_version();
 						break;
 					}
 				}
@@ -363,11 +361,9 @@ class Application
 			case self::KERNEL_TYPE:
 				return GeneralConfig::load()->get_phpboost_major_version();
 			case self::MODULE_TYPE:
-				$infos = get_ini_config(PATH_TO_ROOT . '/' . $this->id . '/lang/', get_ulang());
-				return !empty($infos['version']) ? $infos['version'] : '0';
+				return ModulesManager::get_module($this->id)->get_configuration()->get_version();
 			case self::TEMPLATE_TYPE:
-				$infos = get_ini_config(PATH_TO_ROOT . '/templates/' . $this->id . '/config/', get_ulang());
-				return !empty($infos['version']) ? $infos['version'] : '0';
+				return ThemesManager::get_theme($this->id)->get_configuration()->get_version();
 			default:
 				return '0';
 		}
