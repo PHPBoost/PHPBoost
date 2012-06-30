@@ -65,7 +65,6 @@ class UserDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 			'TITLE' => $this->get_page_title(),
 			'SITE_DESCRIPTION' => $general_config->get_site_description(),
 			'SITE_KEYWORD' => $general_config->get_site_keywords(),
-			'THEME_CSS' => $this->get_theme_css_files_html_code(),
 			'L_XML_LANGUAGE' => $main_lang['xml_lang'],
 			'L_VISIT' => $main_lang['guest_s'],
 			'L_TODAY' => $main_lang['today'],
