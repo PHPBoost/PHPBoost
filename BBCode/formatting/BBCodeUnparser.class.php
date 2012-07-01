@@ -134,6 +134,7 @@ class BBCodeUnparser extends ContentFormattingUnparser
 			'`<object type="application/x-shockwave-flash" data="([^"]+)" width="([^"]+)" height="([^"]+)">(.*)</object>`isU',
 			'`<script type="text/javascript"><!--\s{1,5}insertSwfPlayer\("([^"]+)", (\d{1,3}), (\d{1,3})\);\s{1,5}--></script>`sU',
 			'`\[\[MEDIA\]\]insertSwfPlayer\(\'([^\']+)\', (\d{1,3}), (\d{1,3})\);\[\[/MEDIA\]\]`sU',
+			'`\[\[MEDIA\]\]insertYoutubePlayer\(\'([^\']+)\', (\d{1,3}), (\d{1,3})\);\[\[/MEDIA\]\]`sU',
 			'`\[\[MATH\]\](.+)\[\[/MATH\]\]`sU'
 		);
 
@@ -162,6 +163,7 @@ class BBCodeUnparser extends ContentFormattingUnparser
 			"[swf=$2,$3]$1[/swf]",
 			"[swf=$2,$3]$1[/swf]",
 			"[swf=$2,$3]$1[/swf]",
+			"[youtube=$2,$3]$1[/youtube]",
 			"[math]$1[/math]"
 		);
 		$this->content = preg_replace($array_preg, $array_preg_replace, $this->content);

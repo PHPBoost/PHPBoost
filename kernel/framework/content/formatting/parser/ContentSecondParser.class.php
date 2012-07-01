@@ -233,6 +233,8 @@ class ContentSecondParser extends AbstractParser
 		$this->content = preg_replace_callback('`\[\[MEDIA\]\]insertMoviePlayer\(\'([^\']+)\', ([0-9]+), ([0-9]+)\);\[\[/MEDIA\]\]`isU', array('ContentSecondParser', 'process_movie_tag'), $this->content);
 		//Sound
 		$this->content = preg_replace_callback('`\[\[MEDIA\]\]insertSoundPlayer\(\'([^\']+)\'\);\[\[/MEDIA\]\]`isU', array('ContentSecondParser', 'process_sound_tag'), $this->content);
+		//Youtube
+		$this->content = preg_replace_callback('`\[\[MEDIA\]\]insertYoutubePlayer\(\'([^\']+)\', ([0-9]+), ([0-9]+)\);\[\[/MEDIA\]\]`isU', array('ContentSecondParser', 'process_youtube_tag'), $this->content);
 	}
 
 	/**
@@ -286,6 +288,12 @@ class ContentSecondParser extends AbstractParser
                 <param name="wmode" value="transparent" />
                 <param name="bgcolor" value="#FFFFFF" />
             </object>';
+	}
+	
+	private static function process_youtube_tag($matches)
+	{
+		$matches[1] = str_replace('/watch?v=', '/v/', $matches[1]);
+		return self::process_swf_tag($matches);
 	}
 	
 	private function parse_feed_tag()
