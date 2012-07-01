@@ -189,7 +189,8 @@ class BBCodeParser extends ContentFormattingParser
 			'url1' => '`\[url\]((?!javascript:)' . Url::get_wellformness_regex() . ')\[/url\]`isU',
 			'url2' => '`\[url=((?!javascript:)' . Url::get_wellformness_regex() . ')\]([^\n\r\t\f]+)\[/url\]`isU',
 			'url3' => '`(\s+)(' . Url::get_wellformness_regex(REGEX_MULTIPLICITY_REQUIRED) . ')(\s|<+)`isU',
-			'url4' => '`(\s+)(www\.' . Url::get_wellformness_regex(REGEX_MULTIPLICITY_NOT_USED) . ')(\s|<+)`isU'
+			'url4' => '`(\s+)(www\.' . Url::get_wellformness_regex(REGEX_MULTIPLICITY_NOT_USED) . ')(\s|<+)`isU',
+			'youtube' => '`\[youtube=([0-9]{1,3}),([0-9]{1,3})\](((?:[./]+|(?:https?|ftps?)://([a-z0-9-]+\.)*[a-z0-9-]+\.[a-z]{2,4})+(?:[a-z0-9~_-]+/)*[a-z0-9_+.:?/=#%@&;,-]*))\[/youtube\]`iU',
 			);
 
 			$array_preg_replace = array(
@@ -218,7 +219,8 @@ class BBCodeParser extends ContentFormattingParser
 			'url1' => '<a href="$1">$1</a>',
 			'url2' => '<a href="$1">$2</a>',
             'url3' => '$1<a href="$2">$2</a>$3',
-            'url4' => '$1<a href="$2">$2</a>$3'
+            'url4' => '$1<a href="$2">$2</a>$3',
+			'youtube' => '[[MEDIA]]insertYoutubePlayer(\'$3\', $1, $2);[[/MEDIA]]'
             );
 
             $parse_line = true;
