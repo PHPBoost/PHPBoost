@@ -292,7 +292,7 @@ class ContentSecondParser extends AbstractParser
 	
 	private static function process_youtube_tag($matches)
 	{
-		$matches[1] = str_replace('/watch?v=', '/v/', $matches[1]);
+		$matches[1] = str_replace(array('/watch?v=', '/embed/'), '/v/', $matches[1]);
 		return self::process_swf_tag($matches);
 	}
 	
