@@ -219,7 +219,7 @@
 						<dd><label><input type="text" size="40" maxlength="100" id="title" name="title" class="text" /></label></dd>
 					</dl>
 					<label for="contents">* {L_CONTENT}</label>
-					{KERNEL_EDITOR}
+					{CONTENTS_KERNEL_EDITOR}
 					<label><textarea rows="20" cols="86" id="contents" name="contents">{CONTENTS}</textarea></label>
 					<br />
 					# IF C_DISPLAY_TYPES #
@@ -290,7 +290,7 @@
 					</dl>
 					<div id="reproduction">
 						<label for="reproduction_method">{L_REPRODUCTION_METHOD}</label>
-						{KERNEL_EDITOR}
+						{METHOD_KERNEL_EDITOR}
 						<label><textarea rows="20" cols="86" id="reproduction_method" name="reproduction_method">{REPRODUCTION_METHOD}</textarea></label>
 						<br />
 					</div>
