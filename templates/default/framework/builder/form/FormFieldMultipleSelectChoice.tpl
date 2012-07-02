@@ -1,6 +1,6 @@
 <script type="text/javascript">
 <!--
-	function select_all()
+	function ${escape(NAME)}select_all()
 	{
 		var select = $(${escapejs(ID)});
 		for(i = 0; i < select.length; i++)
@@ -9,7 +9,7 @@
 				select[i].selected = true;
 		}
 	}
-	function unselect_all()
+	function ${escape(NAME)}unselect_all()
 	{
 		var select = $(${escapejs(ID)});
 		for(i = 0; i < select.length; i++)
@@ -24,6 +24,6 @@
 	# START options # # INCLUDE options.OPTION # # END options # 
 </select>
 <br />
-<a href="javascript:select_all()" class="small_link">{L_SELECT_ALL}</a> / <a href="javascript:unselect_all()" class="small_link">{L_UNSELECT_ALL}</a>
+<a href="javascript:${escape(NAME)}select_all()" class="small_link">{L_SELECT_ALL}</a> / <a href="javascript:${escape(NAME)}unselect_all()" class="small_link">{L_UNSELECT_ALL}</a>
 <br />
 <span class="text_small">{L_SELECT_EXPLAIN}</span>
