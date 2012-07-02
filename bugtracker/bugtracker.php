@@ -101,8 +101,11 @@ else if (isset($_GET['add'])) // ajout d'un bug
 		'bugtracker' => 'bugtracker/bugtracker.tpl'
 	));
 	
-	$editor = AppContext::get_content_formatting_service()->get_default_editor();
-	$editor->set_identifier('contents');
+	$contents_editor = AppContext::get_content_formatting_service()->get_default_editor();
+	$contents_editor->set_identifier('contents');
+	
+	$reproduction_method_editor = AppContext::get_content_formatting_service()->get_default_editor();
+	$reproduction_method_editor->set_identifier('reproduction_method');
 	
 	$Template->assign_vars(array(
 		'C_DISPLAY_TYPES' 		=> $display_types,
@@ -132,7 +135,8 @@ else if (isset($_GET['add'])) // ajout d'un bug
 		'REPRODUCTIBLE_ENABLED' => 'checked="checked"',
 		'REPRODUCTIBLE_DISABLED'=> '',
 		'REPRODUCTION_METHOD' 	=> '',
-		'KERNEL_EDITOR'			=> $editor->display(),
+		'CONTENTS_KERNEL_EDITOR' 	=> $contents_editor->display(),
+		'METHOD_KERNEL_EDITOR' 		=> $reproduction_method_editor->display(),
 		'TOKEN'					=> $Session->get_token()
 	));
 	
@@ -446,8 +450,11 @@ else if (isset($_GET['edit']) && is_numeric($id)) // edition d'un bug
 		));
 	}
 	
-	$editor = AppContext::get_content_formatting_service()->get_default_editor();
-	$editor->set_identifier('contents');
+	$contents_editor = AppContext::get_content_formatting_service()->get_default_editor();
+	$contents_editor->set_identifier('contents');
+	
+	$reproduction_method_editor = AppContext::get_content_formatting_service()->get_default_editor();
+	$reproduction_method_editor->set_identifier('reproduction_method');
 	
 	$Template->assign_vars(array(
 		'C_DISPLAY_TYPES' 		=> $display_types,
@@ -482,7 +489,8 @@ else if (isset($_GET['edit']) && is_numeric($id)) // edition d'un bug
 		'L_YES' 				=> $LANG['yes'],
 		'L_NO'	 				=> $LANG['no'],
 		'L_JOKER' 				=> $LANG['bugs.notice.joker'],
-		'KERNEL_EDITOR' 		=> $editor->display(),
+		'CONTENTS_KERNEL_EDITOR' 	=> $contents_editor->display(),
+		'METHOD_KERNEL_EDITOR' 		=> $reproduction_method_editor->display(),
 		'TOKEN'					=> $Session->get_token()
 	));
 	
