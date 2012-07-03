@@ -183,7 +183,9 @@ class ContentFormattingService
         	'line' => $bbcode_lang['format_line'],
         	'wikipedia' => $bbcode_lang['format_wikipedia'],
         	'html' => $bbcode_lang['format_html'],
-        	'feed' => $bbcode_lang['format_feed']
+        	'feed' => $bbcode_lang['format_feed'],
+        	'youtube' => $bbcode_lang['format_youtube'],
+        	'lightbox' => $bbcode_lang['format_lightbox']
         );
     }
 }
