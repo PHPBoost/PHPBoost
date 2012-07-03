@@ -60,8 +60,7 @@ class AdminGeneralConfigController extends AdminController
 
 	private function init()
 	{
-		$this->tpl = new StringTemplate('<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/lib/js/lightbox/lightbox.js"></script>
-			# INCLUDE FORM #');
+		$this->tpl = new StringTemplate('# INCLUDE FORM #');
 
 		$this->load_lang();
 		$this->tpl->add_lang($this->lang);
