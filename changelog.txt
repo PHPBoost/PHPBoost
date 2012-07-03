@@ -77,6 +77,10 @@
 [b]BugTracker :[/b]
 [*] [color=red]Nouveauté:[/color] Nouveau module de gestion des bugs.
 
+[b]BBCode :[/b]
+[*] [color=red]Nouveauté:[/color] Ajout de la balise YouTube
+[*] [color=red]Nouveauté:[/color] Ajout de la balise LightBox
+
 [b]Galerie :[/b]
 - Voir les images plus vues/mieux notées, affichage sur l'ensemble de la galerie et non sur une catégorie.
 - Possibilité de télécharger l'image.
@@ -98,7 +102,6 @@
 
 [b]Pages :[/b]
 [*] Possibilité de cacher le lien d'impression pour chacune des pages.
-[*] Gestion des flux RSS et Atom
 
 [b]Calendrier :[/b]
 [*] Possibilité de gérer les autorisations d'écriture, de lecture et de modération (édition et suppression).

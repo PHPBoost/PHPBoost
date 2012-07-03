@@ -1,4 +1,3 @@
-<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/lib/js/lightbox/lightbox.js"></script>
 <form action="{REWRITED_SCRIPT}" method="post">
 	<table class="module_table" style="width:99%;margin-bottom:30px;">
 		<tr> 
