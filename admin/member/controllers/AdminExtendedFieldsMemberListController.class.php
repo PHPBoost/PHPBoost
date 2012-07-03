@@ -41,14 +41,17 @@ class AdminExtendedFieldsMemberListController extends AdminController
 
 		foreach ($extended_field as $id => $row)
 		{
-			$this->view->assign_block_vars('list_extended_fields', array(
-				'ID' => $row['id'],
-				'NAME' => $row['name'],
-				'L_REQUIRED' => $row['required'] ? $this->lang['field.yes'] : $this->lang['field.no'],
-				'EDIT_LINK' => DispatchManager::get_url('/admin/member', '/extended-fields/'.$row['id'].'/edit/')->absolute(),
-				'DISPLAY' => $row['display'],
-				'FREEZE' => $row['freeze']
-			));
+			if ($row['name'] !== 'last_view_forum')
+			{
+				$this->view->assign_block_vars('list_extended_fields', array(
+					'ID' => $row['id'],
+					'NAME' => $row['name'],
+					'L_REQUIRED' => $row['required'] ? $this->lang['field.yes'] : $this->lang['field.no'],
+					'EDIT_LINK' => DispatchManager::get_url('/admin/member', '/extended-fields/'.$row['id'].'/edit/')->absolute(),
+					'DISPLAY' => $row['display'],
+					'FREEZE' => $row['freeze']
+				));
+			}
 		}
 		
 		$this->view->put_all(array(
