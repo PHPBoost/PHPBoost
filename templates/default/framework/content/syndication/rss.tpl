@@ -7,7 +7,7 @@
         <atom:link href="{U_LINK}" rel="self" type="application/rss+xml"/>
         <link>{HOST}</link>
         <description>{DESC}</description>
-        <copyright>(C) 2005-2009 PHPBoost</copyright>
+        <copyright>(C) 2005-2012 PHPBoost</copyright>
         <language>{LANG}</language>
         <generator>PHPBoost</generator>
         
