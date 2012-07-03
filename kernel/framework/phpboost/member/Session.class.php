@@ -719,18 +719,14 @@ class Session
 	}
 
 	/**
-	 * @desc Redirect to the $redirect error page if the token is wrong
-	 * if false, do not redirect
+	 * @desc Redirect to the error page if the token is wrong
 	 */
-	private function csrf_attack()
+	private function csrf_attack($redirect = false)
 	{
 		$bad_token = $this->get_printable_token(retrieve(REQUEST, 'token', ''));
 		$good_token = $this->get_printable_token($this->get_token());
 
-		if ($redirect !== false && !empty($redirect))
-		{
-			DispatchManager::redirect(PHPBoostErrors::CSRF());
-		}
+		DispatchManager::redirect(PHPBoostErrors::CSRF());
 	}
 
 	/**
