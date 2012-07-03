@@ -90,7 +90,7 @@ class HtaccessFileCache implements CacheData
 	{
 		$this->add_section('Core');
 
-		$this->add_rewrite_rule('^user/pm-?([0-9]+)-?([0-9]{0,})-?([0-9]{0,})-?([0-9]{0,})-?([a-z_]{0,})\.php$', 'user/pm.php?pm=$2&id=$3&p=$4&quote=$5');
+		$this->add_rewrite_rule('^user/pm-?([0-9]+)-?([0-9]{0,})-?([0-9]{0,})-?([0-9]{0,})-?([a-z_]{0,})\.php$', 'user/pm.php?pm=$1&id=$2&p=$3&quote=$4');
 
         $eps = AppContext::get_extension_provider_service();
         $mappings = $eps->get_extension_point(UrlMappingsExtensionPoint::EXTENSION_POINT);
