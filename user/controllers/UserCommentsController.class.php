@@ -80,8 +80,8 @@ class UserCommentsController extends AbstractController
 		
 		while ($row = $result->fetch())
 		{
-			$edit_comment_url = PATH_TO_ROOT . $row['path'] . '&edit_comment=' . $row['id'] . '#comments_message';
-			$delete_comment_url = PATH_TO_ROOT . $row['path'] . '&delete_comment=' . $row['id'] . '#comments_list';
+			$edit_comment_url = TPL_PATH_TO_ROOT . $row['path'] . '&edit_comment=' . $row['id'] . '#comments_message';
+			$delete_comment_url = TPL_PATH_TO_ROOT . $row['path'] . '&delete_comment=' . $row['id'] . '#comments_list';
 				
 			$template->assign_block_vars('comments', array(
 				'MESSAGE' => $row['message'],
@@ -156,8 +156,8 @@ class UserCommentsController extends AbstractController
 		
 		if ($this->user !== null)
 		{
-			$response->add_breadcrumb(LangLoader::get_message('messages', 'user-common'), UserUrlBuilder::messages($this->user->get_id())->absolute());
 			$response->add_breadcrumb($this->user->get_pseudo(), UserUrlBuilder::profile($this->user->get_id())->absolute());
+			$response->add_breadcrumb(LangLoader::get_message('messages', 'user-common'), UserUrlBuilder::messages($this->user->get_id())->absolute());
 			$response->add_breadcrumb($this->lang['comments'], UserUrlBuilder::comments('', $this->user->get_id())->absolute());
 		}
 		else

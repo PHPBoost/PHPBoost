@@ -109,7 +109,7 @@ class UserRegistrationController extends AbstractController
 			$options_fieldset->add_field(new FormFieldThemesSelect('theme', $this->lang['theme'], $this->user_accounts_config->get_default_theme(),
 				array('check_authorizations' => true, 'events' => array('change' => $this->build_javascript_picture_themes()))
 			));
-			$options_fieldset->add_field(new FormFieldFree('preview_theme', $this->lang['theme.preview'], '<img id="img_theme" src="'. Url::to_rel($this->get_picture_theme()) .'" alt="" style="vertical-align:top; max-height:180px;" />'));
+			$options_fieldset->add_field(new FormFieldFree('preview_theme', $this->lang['theme.preview'], '<img id="img_theme" src="'. $this->get_picture_theme() .'" alt="" style="vertical-align:top; max-height:180px;" />'));
 		}
 		
 		$options_fieldset->add_field(new FormFieldEditors('text-editor', $this->lang['text-editor'], ContentFormattingConfig::load()->get_default_editor()));
@@ -246,7 +246,7 @@ class UserRegistrationController extends AbstractController
 	{
 		$theme_id = $this->user_accounts_config->get_default_theme();
 		$pictures = ThemeManager::get_theme($theme_id)->get_configuration()->get_pictures();
-		return PATH_TO_ROOT .'/templates/' . $theme_id . '/' . $pictures[0];
+		return TPL_PATH_TO_ROOT .'/templates/' . $theme_id . '/' . $pictures[0];
 	}
 }
 ?>

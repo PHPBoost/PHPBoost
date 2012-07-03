@@ -71,7 +71,7 @@ class UserViewProfileController extends AbstractController
 		if ($this->user->check_level(User::ADMIN_LEVEL))
 		{
 			$link_edit = '<a href="'. AdminMembersUrlBuilder::edit($user_id)->absolute() .'">
-			<img src="' . PATH_TO_ROOT . '/templates/'. get_utheme().'/images/'. get_ulang().'/edit.png" alt="'.$this->lang['profile.edit'].'" /></a>';
+			<img src="' . TPL_PATH_TO_ROOT . '/templates/'. get_utheme().'/images/'. get_ulang().'/edit.png" alt="'.$this->lang['profile.edit'].'" /></a>';
 			$fieldset->add_field(new FormFieldFree('profile_edit', $this->lang['profile.edit'], $link_edit));
 		}
 
@@ -87,7 +87,7 @@ class UserViewProfileController extends AbstractController
 		if (!$this->same_user_view_profile($user_id))
 		{
 			$link_mp = '<a href="'. UserUrlBuilder::personnal_message($user_id)->absolute() .'">
-			<img src="' . PATH_TO_ROOT . '/templates/'. get_utheme().'/images/'. get_ulang().'/pm.png" alt="'.$this->lang['private_message'].'" /></a>';
+			<img src="' . TPL_PATH_TO_ROOT . '/templates/'. get_utheme().'/images/'. get_ulang().'/pm.png" alt="'.$this->lang['private_message'].'" /></a>';
 			$fieldset->add_field(new FormFieldFree('private_message', $this->lang['private_message'], $link_mp));
 		}
 		
@@ -130,7 +130,7 @@ class UserViewProfileController extends AbstractController
 				if ($groups_cache->group_exists($group_id))
 				{
 					$group = $groups_cache->get_group($group_id);
-					$group_image = !empty($group['img']) ? '<img src="'. PATH_TO_ROOT .'/images/group/' . $group['img'] . '" alt="' . $group['name'] . '" title="' . $group['name'] . '" class="valign_middle" />' : $group['name'];
+					$group_image = !empty($group['img']) ? '<img src="'. TPL_PATH_TO_ROOT .'/images/group/' . $group['img'] . '" alt="' . $group['name'] . '" title="' . $group['name'] . '" class="valign_middle" />' : $group['name'];
 					$user_groups_html .= '<li><a href="' . UserUrlBuilder::group($group_id)->absolute() . '">' . $group_image . '</a></li>';
 				}
 			}

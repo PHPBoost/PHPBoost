@@ -118,7 +118,7 @@ class UserEditProfileController extends AbstractController
 			$options_fieldset->add_field(new FormFieldThemesSelect('theme', $this->lang['theme'], $this->user->get_theme(),
 				array('check_authorizations' => true, 'events' => array('change' => $this->build_javascript_picture_themes()))
 			));
-			$options_fieldset->add_field(new FormFieldFree('preview_theme', $this->lang['theme.preview'], '<img id="img_theme" src="'. Url::to_rel($this->get_picture_theme($this->user->get_theme())) .'" alt="" style="vertical-align:top; max-height:180px;" />'));
+			$options_fieldset->add_field(new FormFieldFree('preview_theme', $this->lang['theme.preview'], '<img id="img_theme" src="'. $this->get_picture_theme($this->user->get_theme()) .'" alt="" style="vertical-align:top; max-height:180px;" />'));
 		}
 		
 		$options_fieldset->add_field(new FormFieldEditors('text-editor', $this->lang['text-editor'], $this->user->get_editor()));
@@ -218,7 +218,7 @@ class UserEditProfileController extends AbstractController
 		foreach (ThemeManager::get_activated_themes_map() as $theme)
 		{
 			$pictures = $theme->get_configuration()->get_pictures();
-			$text .= 'theme["' . $theme->get_id() . '"] = "' . Url::to_rel(PATH_TO_ROOT .'/templates/' . $theme->get_id() . '/' . $pictures[0]) . '";' . "\n";
+			$text .= 'theme["' . $theme->get_id() . '"] = "' . TPL_PATH_TO_ROOT .'/templates/' . $theme->get_id() . '/' . $pictures[0] . '";' . "\n";
 		}
 		$text .= 'var theme_id = HTMLForms.getField("theme").getValue(); document.images[\'img_theme\'].src = theme[theme_id];';
 		return $text;
@@ -227,7 +227,7 @@ class UserEditProfileController extends AbstractController
 	private function get_picture_theme($user_theme)
 	{
 		$pictures = ThemeManager::get_theme($user_theme)->get_configuration()->get_pictures();
-		return PATH_TO_ROOT .'/templates/' . $user_theme . '/' . $pictures[0];
+		return TPL_PATH_TO_ROOT .'/templates/' . $user_theme . '/' . $pictures[0];
 	}
 }
 ?>

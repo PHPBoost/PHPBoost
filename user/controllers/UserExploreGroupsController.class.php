@@ -54,7 +54,7 @@ class UserExploreGroupsController extends AbstractController
 			$group = $this->groups_cache->get_group($group_id);
 			$this->view->put_all(array(
 				'C_ADMIN' => AppContext::get_current_user()->check_level(User::ADMIN_LEVEL),
-				'U_ADMIN_GROUPS' => PATH_TO_ROOT .'/admin/admin_groups.php?id=' . $group_id,
+				'U_ADMIN_GROUPS' => TPL_PATH_TO_ROOT .'/admin/admin_groups.php?id=' . $group_id,
 				'GROUP_NAME' => $group['name']
 			));
 		}
@@ -71,14 +71,18 @@ class UserExploreGroupsController extends AbstractController
 		
 		foreach ($this->get_members_group($group_id) as $user_id)
 		{
-			$user = PersistenceContext::get_querier()->select_single_row(DB_TABLE_MEMBER, array('*'), 'WHERE user_aprob = 1 AND user_id = :user_id', array('user_id' => $user_id));
-			$this->view->assign_block_vars('members_list', array(
-				'PROFILE_LINK' => UserUrlBuilder::profile($user_id)->absolute(),
-				'PSEUDO' => $user['login'],
-				'U_AVATAR' => empty($user['user_avatar']) && $this->user_account_config->is_default_avatar_enabled() ? 
-					PATH_TO_ROOT .'/templates/' . get_utheme() . '/images/' .  $this->user_account_config->get_default_avatar_name() : Url::to_rel($user['user_avatar']),
-				'STATUS' => UserService::get_level_lang($user['level'])
-			));
+			try {
+				$user = PersistenceContext::get_querier()->select_single_row(DB_TABLE_MEMBER, array('*'), 'WHERE user_aprob = 1 AND user_id = :user_id', array('user_id' => $user_id));
+				$this->view->assign_block_vars('members_list', array(
+					'PROFILE_LINK' => UserUrlBuilder::profile($user_id)->absolute(),
+					'PSEUDO' => $user['login'],
+					'U_AVATAR' => empty($user['user_avatar']) && $this->user_account_config->is_default_avatar_enabled() ? 
+						TPL_PATH_TO_ROOT .'/templates/' . get_utheme() . '/images/' .  $this->user_account_config->get_default_avatar_name() : Url::to_rel($user['user_avatar']),
+					'STATUS' => UserService::get_level_lang($user['level'])
+				));
+			} catch (RowNotFoundException $e) {
+				
+			}
 		}
 	}
 	

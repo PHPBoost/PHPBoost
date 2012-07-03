@@ -48,7 +48,7 @@ class AdminMemberAddController extends AdminController
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save();
-			AppContext::get_response()->redirect(PATH_TO_ROOT . '/admin/admin_members.php');
+			AppContext::get_response()->redirect(TPL_PATH_TO_ROOT . '/admin/admin_members.php');
 		}
 
 		$tpl->put('FORM', $this->form->display());

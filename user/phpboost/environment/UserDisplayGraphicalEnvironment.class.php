@@ -58,10 +58,10 @@ class UserDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 		$template->put_all(array(
 			'SITE_NAME' => $general_config->get_site_name(),
 			'C_FAVICON' => $customization_config->favicon_exists(),
-			'FAVICON' => PATH_TO_ROOT . $customization_config->get_favicon_path(),
+			'FAVICON' => TPL_PATH_TO_ROOT . $customization_config->get_favicon_path(),
 			'FAVICON_TYPE' => $customization_config->favicon_type(),
 			'C_HEADER_LOGO' => !empty($header_logo_path),
-			'HEADER_LOGO' => PATH_TO_ROOT . $header_logo_path,
+			'HEADER_LOGO' => TPL_PATH_TO_ROOT . $header_logo_path,
 			'TITLE' => $this->get_page_title(),
 			'SITE_DESCRIPTION' => $general_config->get_site_description(),
 			'SITE_KEYWORD' => $general_config->get_site_keywords(),
