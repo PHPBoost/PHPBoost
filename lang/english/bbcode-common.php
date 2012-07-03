@@ -120,5 +120,6 @@ $lang['format_line'] = 'Horizontal line';
 $lang['format_wikipedia'] = 'Wikipedia link';
 $lang['format_html'] = 'HTML code';
 $lang['format_feed'] = 'Feed';
-
+$lang['format_youtube'] = 'Youtube';
+$lang['format_lightbox'] = 'LightBox';
 ?>
