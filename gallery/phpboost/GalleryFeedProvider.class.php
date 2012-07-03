@@ -146,7 +146,7 @@ class GalleryFeedProvider implements FeedProvider
 		{
 			$item = new FeedItem();
 
-			$link = new Url(GalleryUrlBuilder::get_link_item($row['idcat'],$row['id']));
+			$link = TextHelper::htmlentities(GalleryUrlBuilder::get_link_item($row['idcat'], $row['id']));
 
 			$item->set_title($row['name']);
 			$item->set_link($link);
