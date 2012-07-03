@@ -79,7 +79,7 @@ class NewsletterModuleHomePage implements ModuleHomePage
 				$read_archives_auth = NewsletterAuthorizationsService::id_stream($row['id'])->read_archives();
 				$read_subscribers_auth = NewsletterAuthorizationsService::id_stream($row['id'])->read_subscribers();
 				$this->view->assign_block_vars('streams_list', array(
-					'PICTURE' => PATH_TO_ROOT . $row['picture'],
+					'PICTURE' => TPL_PATH_TO_ROOT . $row['picture'],
 					'NAME' => $row['name'],
 					'DESCRIPTION' => $row['description'],
 					'VIEW_ARCHIVES' => $read_archives_auth ? '<a href="' . NewsletterUrlBuilder::archives($row['id'])->absolute() . '">'. $this->lang['newsletter.view_archives'] .'</a>' : $this->lang['newsletter.not_level'],
