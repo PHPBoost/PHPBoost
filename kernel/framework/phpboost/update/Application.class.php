@@ -200,35 +200,7 @@ class Application
 	 */
 	public function check_compatibility()
 	{
-		$current_version = '0';
-		switch ($this->type)
-		{
-			case self::KERNEL_TYPE:
-				$current_version = Environment::get_phpboost_version();
-				break;
-			case self::MODULE_TYPE:
-				foreach (ModulesManager::get_activated_modules_map() as $id => $value)
-				{
-					if ($id == $this->name)
-					{
-						$current_version = $value->get_configuration()->get_version();
-						break;
-					}
-				}
-				break;
-			case self::TEMPLATE_TYPE:
-				foreach (ThemeManager::get_activated_themes_map() as $id => $value)
-				{
-					if ($id == $this->name)
-					{
-						$current_version = $value->get_configuration()->get_version();
-						break;
-					}
-				}
-				break;
-			default:
-				return false;
-		}
+		$current_version = $this->get_installed_version();
 		
         if ($current_version == '0')
         {
@@ -361,9 +333,17 @@ class Application
 			case self::KERNEL_TYPE:
 				return GeneralConfig::load()->get_phpboost_major_version();
 			case self::MODULE_TYPE:
-				return ModulesManager::get_module($this->id)->get_configuration()->get_version();
+				if (ModulesManager::is_module_installed($this->id))
+				{
+					return ModulesManager::get_module($this->id)->get_configuration()->get_version();
+				}
+				return '0';
 			case self::TEMPLATE_TYPE:
-				return ThemesManager::get_theme($this->id)->get_configuration()->get_version();
+				if (ThemeManager::get_theme_existed($this->id))
+				{
+					return ThemeManager::get_theme($this->id)->get_configuration()->get_version();
+				}
+				return '0';
 			default:
 				return '0';
 		}
