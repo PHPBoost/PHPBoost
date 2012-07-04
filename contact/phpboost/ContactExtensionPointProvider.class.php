@@ -36,5 +36,10 @@ class ContactExtensionPointProvider extends ExtensionPointProvider
 	{
 		return new ContactHomePageExtensionPoint();
 	}
+	
+	public function url_mappings()
+	{
+		return new UrlMappings(array(new DispatcherUrlMapping('/contact/index.php')));
+	}
 }
 ?>
