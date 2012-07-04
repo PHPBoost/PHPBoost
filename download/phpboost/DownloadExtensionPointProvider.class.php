@@ -77,11 +77,6 @@ class DownloadExtensionPointProvider extends ExtensionPointProvider
 		return $code;
 	}
 
-	public function scheduled_jobs()
-	{
-		return new DownloadScheduledJobs();
-	}
-
 	public function feeds()
 	{
 		return new DownloadFeedProvider();
