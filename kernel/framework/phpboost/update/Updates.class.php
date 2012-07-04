@@ -41,7 +41,7 @@ class Updates
     private $apps = array();
 	
 	const PHPBOOST_OFFICIAL_REPOSITORY = 'http://www.phpboost.com/repository/main.xml';
-	//const PHPBOOST_OFFICIAL_REPOSITORY = '../../../tools/repository/main.xml'; // Test repository
+	//const PHPBOOST_OFFICIAL_REPOSITORY = '../../../../../main.xml'; // Test repository
 	const PHP_MIN_VERSION_UPDATES = '5';
 	
     /**
@@ -65,7 +65,7 @@ class Updates
         {
             if ($checks & CHECK_KERNEL)
             {   // Add the kernel to the check list
-                $this->apps[] = new Application('kernel', get_ulang(), Application::MODULE_TYPE, Environment::get_phpboost_version(), Updates::PHPBOOST_OFFICIAL_REPOSITORY);
+                $this->apps[] = new Application('kernel', get_ulang(), Application::KERNEL_TYPE, Environment::get_phpboost_version(), Updates::PHPBOOST_OFFICIAL_REPOSITORY);
             }
 
             if ($checks & CHECK_MODULES)
