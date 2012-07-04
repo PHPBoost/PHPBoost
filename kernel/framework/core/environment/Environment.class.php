@@ -310,7 +310,6 @@ class Environment
 	public static function process_changeday_tasks_if_needed()
 	{
 		//If the day changed compared to the last request, we execute the daily tasks
-
 		$last_use_config = LastUseDateConfig::load();
 		$last_use_date = $last_use_config->get_last_use_date();
 		$current_date = new Date();
@@ -329,13 +328,15 @@ class Environment
 			$lock_file->lock(false);
 			$yesterday_timestamp = self::get_yesterday_timestamp();
 
-			$num_entry_today = PersistenceContext::get_sql()->query("SELECT COUNT(*) FROM " . DB_TABLE_STATS
-			. " WHERE stats_year = '" . gmdate_format('Y', $yesterday_timestamp,
-			TIMEZONE_SYSTEM) . "' AND stats_month = '" . gmdate_format('m',
-			$yesterday_timestamp, TIMEZONE_SYSTEM) . "' AND stats_day = '" . gmdate_format(
-				  'd', $yesterday_timestamp, TIMEZONE_SYSTEM) . "'", __LINE__, __FILE__);
+			$condition = 'WHERE stats_year=:stats_years AND stats_month=:stats_month AND stats_day=:stats_day';
+			$parameters = array(
+				'stats_years' => gmdate_format('Y', $yesterday_timestamp, TIMEZONE_SYSTEM),
+				'stats_month' => gmdate_format('m',	$yesterday_timestamp, TIMEZONE_SYSTEM),
+				'stats_day' => gmdate_format('d', $yesterday_timestamp, TIMEZONE_SYSTEM)
+			);
+			$num_entry_today = PersistenceContext::get_querier()->count(DB_TABLE_STATS, $condition, $parameters);
 
-			if ((int) $num_entry_today == 0)
+			if ($num_entry_today == 0)
 			{
 				$last_use_config->set_last_use_date(new Date());
 				LastUseDateConfig::save();
