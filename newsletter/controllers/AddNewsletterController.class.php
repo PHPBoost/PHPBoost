@@ -39,7 +39,7 @@ class AddNewsletterController extends ModuleController
 	
 	private $send_test_button;
 	
-	public function execute(HTTPRequest $request)
+	public function execute(HTTPRequestCustom $request)
 	{
 		if (!NewsletterAuthorizationsService::default_authorizations()->create_newsletters())
 		{

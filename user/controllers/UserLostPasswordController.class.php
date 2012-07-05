@@ -32,7 +32,7 @@ class UserLostPasswordController extends AbstractController
 	private $form;
 	private $submit_button;
 
-	public function execute(HTTPRequest $request)
+	public function execute(HTTPRequestCustom $request)
 	{
 		$this->init();
 

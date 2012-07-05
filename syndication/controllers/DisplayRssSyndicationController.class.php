@@ -28,7 +28,7 @@ class DisplayRssSyndicationController extends AbstractController
 {
 	private $tpl;
 	
-	public function execute(HTTPRequest $request)
+	public function execute(HTTPRequestCustom $request)
 	{
 		$module_id = $request->get_getstring('module_id', '');
 		

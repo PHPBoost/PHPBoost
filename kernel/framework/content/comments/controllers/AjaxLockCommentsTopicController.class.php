@@ -27,7 +27,7 @@
 
 class AjaxLockCommentsTopicController extends AbstractCommentsController
 {
-	public function execute(HTTPRequest $request)
+	public function execute(HTTPRequestCustom $request)
 	{
 		parent::execute($request);
 		

@@ -49,7 +49,7 @@ class InstallServerConfigController extends InstallController
 		$this->server_conf = new ServerConfiguration();
 	}
 
-	public function execute(HTTPRequest $request)
+	public function execute(HTTPRequestCustom $request)
 	{
 		parent::load_lang($request);
 		$this->build_form();

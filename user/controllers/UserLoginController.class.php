@@ -34,7 +34,7 @@ class UserLoginController extends AbstractController
 	private $fieldset;
 	private $submit_button;
 
-	public function execute(HTTPRequest $request)
+	public function execute(HTTPRequestCustom $request)
 	{
 		$this->init($request);
 		$this->build_error_message();
@@ -52,7 +52,7 @@ class UserLoginController extends AbstractController
 		return $this->build_view();
 	}
 	
-	private function init(HTTPRequest $request)
+	private function init(HTTPRequestCustom $request)
 	{
 		$this->request = $request;
 		$this->view = new FileTemplate('user/UserLoginController.tpl');

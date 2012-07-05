@@ -27,7 +27,7 @@
 
 class AdminErrorsController404Delete extends AdminController
 {
-	public function execute(HTTPRequest $request)
+	public function execute(HTTPRequestCustom $request)
 	{
 		AppContext::get_session()->csrf_get_protect();
 		AdminError404Service::delete_404_error($request->get_getint('id'));

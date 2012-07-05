@@ -32,7 +32,7 @@ class AdminModuleUpdateController extends AdminController
 	private $form;
 	private $submit_button;
 	
-	public function execute(HTTPRequest $request)
+	public function execute(HTTPRequestCustom $request)
 	{
 		$this->init();
 		$this->upload_form();
@@ -111,7 +111,7 @@ class AdminModuleUpdateController extends AdminController
 		));
 	}
 	
-	private function upgrade_module(HTTPRequest $request)
+	private function upgrade_module(HTTPRequestCustom $request)
 	{
 		$module_id = $request->get_string('module_id', '') ;
 		

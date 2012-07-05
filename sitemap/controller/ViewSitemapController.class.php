@@ -34,7 +34,7 @@ class ViewSitemapController extends ModuleController
 		$this->lang = LangLoader::get('common', 'sitemap');
 	}
 	
-	public function execute(HTTPRequest $request)
+	public function execute(HTTPRequestCustom $request)
 	{
 		return $this->build_response(SitemapModuleHomePage::get_view());
 	}

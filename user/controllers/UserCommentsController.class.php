@@ -32,7 +32,7 @@ class UserCommentsController extends AbstractController
 	private $tpl;
 	private $lang;
 	
-	public function execute(HTTPRequest $request)
+	public function execute(HTTPRequestCustom $request)
 	{
 		$module_id = $request->get_getstring('module_id', '');
 		$user_id = $request->get_getint('user_id', 0);

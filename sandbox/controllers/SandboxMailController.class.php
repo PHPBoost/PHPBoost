@@ -36,7 +36,7 @@ class SandboxMailController extends ModuleController
 	 */
 	private $submit_button;
 
-	public function execute(HTTPRequest $request)
+	public function execute(HTTPRequestCustom $request)
 	{
 		$view = new StringTemplate('# IF C_MAIL_SENT # # IF C_SUCCESS # <div class="success">The mail has been sent</div>
 			# ELSE # <div class="error">{ERROR}</div> # ENDIF # # ENDIF #

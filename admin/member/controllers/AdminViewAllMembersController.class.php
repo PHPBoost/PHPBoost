@@ -33,7 +33,7 @@ class AdminViewAllMembersController extends AdminController
 	
 	private $nbr_members_per_page = 25;
 
-	public function execute(HTTPRequest $request)
+	public function execute(HTTPRequestCustom $request)
 	{
 		$this->init();
 		$this->build_view($request);

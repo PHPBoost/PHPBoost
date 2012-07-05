@@ -33,7 +33,7 @@ class AdminHomePageAddPluginController extends AdminController
 	private $plugin_fieldset_configuration;
 	private $submit_button;
 
-	public function execute(HTTPRequest $request)
+	public function execute(HTTPRequestCustom $request)
 	{
 		$column_selected = $request->get_int('column', 1);
 		$plugin_selected = $request->get_string('plugin', '');

@@ -33,7 +33,7 @@ class AdminModuleAddController extends AdminController
 	private $submit_button;
 	
 	
-	public function execute(HTTPRequest $request)
+	public function execute(HTTPRequestCustom $request)
 	{
 		$this->init();
 	
@@ -133,7 +133,7 @@ class AdminModuleAddController extends AdminController
 		return $modules_not_installed;
 	}
 	
-	private function install_module(HTTPRequest $request)
+	private function install_module(HTTPRequestCustom $request)
 	{
 		foreach ($this->get_modules_not_installed() as $name => $module)
 		{

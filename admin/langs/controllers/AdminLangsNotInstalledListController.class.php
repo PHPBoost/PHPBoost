@@ -32,7 +32,7 @@ class AdminLangsNotInstalledListController extends AdminController
 	private $form;
 	private $submit_button;
 	
-	public function execute(HTTPRequest $request)
+	public function execute(HTTPRequestCustom $request)
 	{
 		$this->init();
 		
@@ -101,7 +101,7 @@ class AdminLangsNotInstalledListController extends AdminController
 		return $langs_not_installed;
 	}
 	
-	private function save(HTTPRequest $request)
+	private function save(HTTPRequestCustom $request)
 	{
 		foreach ($this->get_not_installed_langs() as $id)
 		{

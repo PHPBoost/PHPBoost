@@ -37,7 +37,7 @@ class AdminMemberRulesController extends AdminController
 	 */
 	private $submit_button;
 
-	public function execute(HTTPRequest $request)
+	public function execute(HTTPRequestCustom $request)
 	{
 		$this->init();
 		$this->build_form();

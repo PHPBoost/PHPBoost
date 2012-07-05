@@ -29,7 +29,7 @@ class HomeAddNewsletterController extends ModuleController
 {
 	private $lang;
 	
-	public function execute(HTTPRequest $request)
+	public function execute(HTTPRequestCustom $request)
 	{
 		if (!NewsletterAuthorizationsService::default_authorizations()->create_newsletters())
 		{

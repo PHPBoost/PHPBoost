@@ -29,7 +29,7 @@ class NewsletterHomeController extends ModuleController
 {
 	private $lang;
 
-	public function execute(HTTPRequest $request)
+	public function execute(HTTPRequestCustom $request)
 	{
 		return $this->build_response(NewsletterModuleHomePage::get_view());
 	}

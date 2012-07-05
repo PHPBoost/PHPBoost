@@ -27,7 +27,7 @@
 
 class AdminLoginController extends AbstractController
 {
-	public function execute(HTTPRequest $request)
+	public function execute(HTTPRequestCustom $request)
 	{
 		$view = new FileTemplate('admin/AdminLoginController.tpl');
 		$lang = LangLoader::get_class(__CLASS__);

@@ -37,7 +37,7 @@ class AdminMemberAddController extends AdminController
 	 */
 	private $submit_button;
 
-	public function execute(HTTPRequest $request)
+	public function execute(HTTPRequestCustom $request)
 	{
 		$this->init();
 		$this->build_form();
@@ -48,7 +48,7 @@ class AdminMemberAddController extends AdminController
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save();
-			AppContext::get_response()->redirect(TPL_PATH_TO_ROOT . '/admin/admin_members.php');
+			AppContext::get_response()->redirect(PATH_TO_ROOT . '/admin/admin_members.php');
 		}
 
 		$tpl->put('FORM', $this->form->display());

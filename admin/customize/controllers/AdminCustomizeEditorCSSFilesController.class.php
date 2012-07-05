@@ -42,7 +42,7 @@ class AdminCustomizeEditorCSSFilesController extends AdminController
 	private $templates_path = '/templates/';
 	private $css_files_path = '/theme/';
 
-	public function execute(HTTPRequest $request)
+	public function execute(HTTPRequestCustom $request)
 	{
 		$this->load_lang();
 		

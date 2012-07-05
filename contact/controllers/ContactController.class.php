@@ -27,7 +27,7 @@
 
 class ContactController extends ModuleController
 {
-	public function execute(HTTPRequest $request)
+	public function execute(HTTPRequestCustom $request)
 	{
 		return $this->build_response(ContactModuleHomePage::get_view());
 	}

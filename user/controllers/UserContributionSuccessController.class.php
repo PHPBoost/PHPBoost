@@ -34,7 +34,7 @@ class UserContributionSuccessController extends UserErrorController
 		parent::__construct($lang['contribution.confirmed'], $lang['contribution.confirmed.messages'], self::SUCCESS);
 	}
 	
-	public function execute(HTTPRequest $request)
+	public function execute(HTTPRequestCustom $request)
 	{
 		return parent::execute($request);
 	}

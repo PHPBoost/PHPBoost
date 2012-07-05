@@ -30,7 +30,7 @@ class UpdateDBConfigCheckController extends UpdateController
 	private $status;
 	private $already_installed = false;
 
-	public function execute(HTTPRequest $request)
+	public function execute(HTTPRequestCustom $request)
 	{
 		parent::load_lang($request);
 		$host = $request->get_value('host');

@@ -27,7 +27,7 @@
 
 class NewsletterDeleteSubscriberController extends ModuleController
 {
-	public function execute(HTTPRequest $request)
+	public function execute(HTTPRequestCustom $request)
 	{
 		$id = $request->get_int('id', 0);
 		$id_stream = $request->get_int('id_stream', 0);

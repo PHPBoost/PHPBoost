@@ -102,8 +102,8 @@ class Environment
 
 	public static function init_http_services()
 	{
-		AppContext::set_request(new HTTPRequest());
-		$response = new HTTPResponse();
+		AppContext::set_request(new HTTPRequestCustom());
+		$response = new HTTPResponseCustom();
 		$response->set_default_attributes();
 		AppContext::set_response($response);
 	}

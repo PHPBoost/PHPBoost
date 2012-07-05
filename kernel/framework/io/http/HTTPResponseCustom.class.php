@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                             HTTPResponse.class.php
+ *                             HTTPResponseCustom.class.php
  *                            -------------------
  *   begin                : Januar 23, 2010
  *   copyright            : (C) 2010 Régis Viarre
@@ -30,7 +30,7 @@
  * @desc Manages response via the HTTP protocol
  * @package {@package}
  */
-class HTTPResponse
+class HTTPResponseCustom
 {
 	const PROTOCOL = 'HTTP/1.0';
 

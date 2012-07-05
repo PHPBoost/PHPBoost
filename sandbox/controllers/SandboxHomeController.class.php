@@ -42,7 +42,7 @@ class SandboxHomeController extends ModuleController
 		'Mail sender' => '?url=/mail'
 	);
 
-	public function execute(HTTPRequest $request)
+	public function execute(HTTPRequestCustom $request)
 	{
 		$tpl = new StringTemplate(self::$tpl_src);
 

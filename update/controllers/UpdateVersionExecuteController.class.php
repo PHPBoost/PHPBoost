@@ -29,7 +29,7 @@ class UpdateVersionExecuteController extends UpdateController
 {
 	private $submit;
 	
-	public function execute(HTTPRequest $request)
+	public function execute(HTTPRequestCustom $request)
 	{
         parent::load_lang($request);
 		$view = new FileTemplate('update/execute.tpl');

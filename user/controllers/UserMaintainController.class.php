@@ -32,7 +32,7 @@ class UserMaintainController extends AbstractController
 	private $main_lang;
 	private $maintain_config;
 	
-	public function execute(HTTPRequest $request)
+	public function execute(HTTPRequestCustom $request)
 	{
 		$this->init();
 		$this->init_vars_template();

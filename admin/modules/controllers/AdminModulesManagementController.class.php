@@ -30,7 +30,7 @@ class AdminModulesManagementController extends AdminController
 	private $lang;
 	private $view;
 	
-	public function execute(HTTPRequest $request)
+	public function execute(HTTPRequestCustom $request)
 	{
 		$this->init();		
 		$this->build_view();
@@ -106,7 +106,7 @@ class AdminModulesManagementController extends AdminController
 		));
 	}
 	
-	private function save(HTTPRequest $request)
+	private function save(HTTPRequestCustom $request)
 	{
 		if ($request->get_bool('update', false))
 		{

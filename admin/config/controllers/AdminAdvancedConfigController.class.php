@@ -34,7 +34,7 @@ class AdminAdvancedConfigController extends AdminController
 	private $form;
 	private $submit_button;
 
-	public function execute(HTTPRequest $request)
+	public function execute(HTTPRequestCustom $request)
 	{
 		$this->load_lang();
 		$this->load_config();

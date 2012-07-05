@@ -31,7 +31,7 @@ class NewsletterUnSubscribeController extends ModuleController
 	private $view;
 	private $form;
 	
-	public function execute(HTTPRequest $request)
+	public function execute(HTTPRequestCustom $request)
 	{
 		$this->init();
 		$this->build_form();

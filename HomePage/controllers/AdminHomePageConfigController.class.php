@@ -31,7 +31,7 @@ class AdminHomePageConfigController extends AdminController
 	private $config;
 	private $form;
 
-	public function execute(HTTPRequest $request)
+	public function execute(HTTPRequestCustom $request)
 	{
 		$this->init();
 		$this->build_form_configuration();

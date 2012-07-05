@@ -27,7 +27,7 @@
 
 class OnlineHomeController extends ModuleController
 {
-	public function execute(HTTPRequest $request)
+	public function execute(HTTPRequestCustom $request)
 	{
 		return $this->build_response(OnlineModuleHomePage::get_view());
 	}

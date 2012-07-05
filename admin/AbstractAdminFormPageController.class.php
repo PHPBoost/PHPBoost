@@ -42,7 +42,7 @@ abstract class AbstractAdminFormPageController extends AdminController
 		$this->success_message = $success_message;
 	}
 
-	public function execute(HTTPRequest $request)
+	public function execute(HTTPRequestCustom $request)
 	{
 		$template = new StringTemplate('# IF C_SUCCESS # <div class="success" id="success_message">{SUCCESS_MESSAGE}</div> # ENDIF #
 		<script type="text/javascript"><!--
