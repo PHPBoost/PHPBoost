@@ -82,7 +82,8 @@ class WebHomePageExtensionPoint implements HomePageExtensionPoint
 			'L_EDIT' => $LANG['edit'],
 			'L_PROPOSE_LINK' => $LANG['propose_link'],
 			'L_HOW_LINK' => $LANG['how_link'],
-			'U_WEB_ADD' => url('.php?web=true')
+			'U_WEB_ADD' => url('.php?web=true'),
+			'L_WEB' => $LANG['title_web']
 		));
 		
 		//Catégorie disponibles	

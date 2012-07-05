@@ -221,7 +221,7 @@
 		</script> 
 
 		# INCLUDE message_helper #
-		<div style="float:right;margin:0 10px 15px;margin-top:-25px;">
+		<div style="text-align:center;">
 			{EDIT_CAT} {EDIT}
 			{ADD_PICS}
 		</div>
@@ -233,7 +233,7 @@
 			<div class="module_top">
 				<div class="module_top_title">
 					<a href="${relative_url(SyndicationUrlBuilder::rss('gallery', CAT_ID))}" title="Rss"><img style="vertical-align:middle;margin-top:-2px;" src="{PATH_TO_ROOT}/templates/{THEME}/images/rss.png" alt="Rss" title="Rss" /></a>
-					<a href="{PATH_TO_ROOT}/gallery/gallery.php{SID}">{L_GALLERY}</a> {U_GALLERY_CAT_LINKS} 
+					{L_GALLERY} {U_GALLERY_CAT_LINKS} 
 				</div>
 				<div class="module_top_com">
 					{PAGINATION}

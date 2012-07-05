@@ -214,6 +214,7 @@ class GuestbookHomePageExtensionPoint implements HomePageExtensionPoint
 		$tpl->put_all(array(
 			'PAGINATION' => $Pagination->display('guestbook' . url('.php?p=%d'), $nbr_guestbook, 'p', 10, 3),
 			'L_DELETE_MSG' => $LANG['alert_delete_msg'],
+			'L_GUESTBOOK' => $LANG['title_guestbook']
 		));
 
 		//Cr�ation du tableau des rangs.

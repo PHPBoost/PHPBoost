@@ -88,7 +88,10 @@ class NewsletterModuleHomePage implements ModuleHomePage
 			}
 		}
 		
-		return $this->view;
+		$body_view = new FileTemplate('newsletter/NewsletterBody.tpl');
+		$body_view->add_lang($this->lang);
+		$body_view->put('TEMPLATE', $this->view);
+		return $body_view;
 	}
 	
 	private function init()

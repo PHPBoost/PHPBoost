@@ -6,7 +6,7 @@
 			<div class="module_top_r"></div>
 			<div class="module_top">
 				<div class="module_top_title">
-					<strong>{L_CATEGORIES}</strong>
+					{L_WEB} - {L_CATEGORIES}
 				</div>
 				<div class="module_top_com">
 					# IF C_IS_ADMIN # 
@@ -49,7 +49,7 @@
 			<div class="module_top_r"></div>
 			<div class="module_top">
 				<div class="module_top_title">
-					<strong>{CAT_NAME}</strong>
+					{L_WEB} - {CAT_NAME}
 				</div>
 				<div class="module_top_com">
 					# IF C_IS_ADMIN # 
