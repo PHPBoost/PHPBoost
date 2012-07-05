@@ -8,7 +8,7 @@
 </script>
 
 
-<div style="text-align:center;">
+<div class="module_actions">
 	# IF IS_ADMIN #
 	<a href="{U_EDIT}" title="{L_EDIT}" class="img_link">
 		<img class="valign_middle" src="../templates/{THEME}/images/{LANG}/edit.png" alt=""/>

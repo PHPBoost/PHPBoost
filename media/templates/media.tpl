@@ -1,6 +1,6 @@
 
 		# IF C_CATEGORIES #
-		<div style="text-align:center;">
+		<div class="module_actions">
 			# IF C_ADMIN #
 				<a href="{U_ADMIN_CAT}" class="img_link" title="{L_EDIT}">
 					<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="">
