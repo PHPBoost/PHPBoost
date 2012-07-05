@@ -544,6 +544,27 @@ a.msg_link_pseudo:hover {
     
 }
 
+.module_top_title {
+	float:left;
+    font-size:12px;
+	margin-left:3px;
+	font-weight:bold;
+}
+
+.module_top_title img {
+	margin-top:-2px;
+}
+
+.module_top_com {
+	float:right;
+}
+
+.module_actions {
+	float:right;
+	margin:0 10px 15px;
+	margin-top:-25px;
+}
+
 .module_contents { /* Contenu des modules */
     padding:20px 15px;
     padding-bottom:15px;
