@@ -78,7 +78,7 @@
                 function XMLHttpRequest_search_module(module)
                 // Affiche les résultats de la recherche pour le module particulier <module>
                 {
-                    var xhr_object = xmlhttprequest_init('../search/searchXMLHTTPRequest.php?token={TOKEN}');
+                    var xhr_object = xmlhttprequest_init('../search/searchXMLHTTPRequestCustom.php?token={TOKEN}');
                     xhr_object.onreadystatechange = function()
                     {
                         if( xhr_object.readyState == 1 )

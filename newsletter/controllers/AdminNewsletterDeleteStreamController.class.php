@@ -27,7 +27,7 @@
 
 class AdminNewsletterDeleteStreamController extends AdminModuleController
 {
-	public function execute(HTTPRequest $request)
+	public function execute(HTTPRequestCustom $request)
 	{
 		$id = $request->get_int('id', 0);
 		

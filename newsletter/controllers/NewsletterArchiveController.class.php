@@ -31,7 +31,7 @@ class NewsletterArchiveController extends ModuleController
 	private $view;
 	private $contents;
 
-	public function execute(HTTPRequest $request)
+	public function execute(HTTPRequestCustom $request)
 	{
 		$this->init($request);
 		return $this->build_response($this->view);

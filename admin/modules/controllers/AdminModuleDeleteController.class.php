@@ -33,7 +33,7 @@ class AdminModuleDeleteController extends AdminController
 	private $module_id;
 	private $tpl;
 	
-	public function execute(HTTPRequest $request)
+	public function execute(HTTPRequestCustom $request)
 	{
 		$this->init();
 		$this->module_id = $request->get_string('id_module', null);

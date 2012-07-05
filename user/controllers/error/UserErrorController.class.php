@@ -90,7 +90,7 @@ class UserErrorController extends AbstractController
         $this->link = "";
 	}
 	
-	public function execute(HTTPRequest $request)
+	public function execute(HTTPRequestCustom $request)
 	{
 		$this->create_view();
 		$this->fill_view();

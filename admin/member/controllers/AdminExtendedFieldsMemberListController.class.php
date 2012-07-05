@@ -31,7 +31,7 @@ class AdminExtendedFieldsMemberListController extends AdminController
 	
 	private $view;
 
-	public function execute(HTTPRequest $request)
+	public function execute(HTTPRequestCustom $request)
 	{
 		$this->update_fields($request);
 		

@@ -36,7 +36,7 @@ class SandboxFormController extends ModuleController
 	 */
 	private $submit_button;
 
-	public function execute(HTTPRequest $request)
+	public function execute(HTTPRequestCustom $request)
 	{
 		$view = new FileTemplate('sandbox/SandboxFormController.tpl');
 		$form = $this->build_form();

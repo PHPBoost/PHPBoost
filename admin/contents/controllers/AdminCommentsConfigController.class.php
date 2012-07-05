@@ -39,7 +39,7 @@ class AdminCommentsConfigController extends AdminController
 	
 	private $configuration;
 
-	public function execute(HTTPRequest $request)
+	public function execute(HTTPRequestCustom $request)
 	{
 		$this->init();
 		$this->build_form();

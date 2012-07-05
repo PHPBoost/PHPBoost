@@ -50,7 +50,7 @@ class InstallDBConfigController extends InstallController
 	private $overwrite_field;
 	private $error = null;
 
-	public function execute(HTTPRequest $request)
+	public function execute(HTTPRequestCustom $request)
 	{
 		parent::load_lang($request);
 		$this->build_form();

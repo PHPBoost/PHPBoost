@@ -27,7 +27,7 @@
 
 class InstallWelcomeController extends InstallController
 {
-	public function execute(HTTPRequest $request)
+	public function execute(HTTPRequestCustom $request)
 	{
 		AppContext::get_cache_service()->clear_phpboost_cache();
         parent::load_lang($request);

@@ -36,7 +36,7 @@ class AdminNewsletterEditStreamController extends AdminModuleController
 	 */
 	private $submit_button;
 
-	public function execute(HTTPRequest $request)
+	public function execute(HTTPRequestCustom $request)
 	{
 		$id = $request->get_getint('id', 0);
 		$this->init();

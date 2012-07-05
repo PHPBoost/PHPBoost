@@ -32,7 +32,7 @@ class UserExploreGroupsController extends AbstractController
 	private $user_account_config;
 	private $view;
 
-	public function execute(HTTPRequest $request)
+	public function execute(HTTPRequestCustom $request)
 	{
 		$group_id = $request->get_getint('id', 0);
 		$this->init();

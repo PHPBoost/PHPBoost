@@ -1,6 +1,6 @@
 <?php
 /*##################################################
-*                         searchXMLHTTPRequest.php
+*                         searchXMLHTTPRequestCustom.php
 *                            -------------------
 *   begin                : January 27, 2008
 *   copyright            : (C) 2008 Rouchon Loïc

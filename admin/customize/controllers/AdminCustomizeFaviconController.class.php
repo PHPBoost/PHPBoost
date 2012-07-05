@@ -39,7 +39,7 @@ class AdminCustomizeFaviconController extends AdminController
 	
 	private $config;
 
-	public function execute(HTTPRequest $request)
+	public function execute(HTTPRequestCustom $request)
 	{
 		$this->load_lang();
 		$this->load_config();	

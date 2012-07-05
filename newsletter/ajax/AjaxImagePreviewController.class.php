@@ -27,7 +27,7 @@
 
 class AjaxImagePreviewController extends AbstractController
 {
-	public function execute(HTTPRequest $request)
+	public function execute(HTTPRequestCustom $request)
 	{
 		$image = $request->get_string('image', '');
 		

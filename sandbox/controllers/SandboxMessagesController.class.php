@@ -27,7 +27,7 @@
 
 class SandboxMessagesController extends ModuleController
 {
-	public function execute(HTTPRequest $request)
+	public function execute(HTTPRequestCustom $request)
 	{
 		$view = new StringTemplate('# START messages # # INCLUDE messages.VIEW # <br/> # END messages #');
 		

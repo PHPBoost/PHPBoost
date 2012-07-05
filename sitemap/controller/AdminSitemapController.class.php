@@ -46,7 +46,7 @@ class AdminSitemapController extends AdminModuleController
 		$this->lang = LangLoader::get('common', 'sitemap');
 	}
 
-	public function execute(HTTPRequest $request)
+	public function execute(HTTPRequestCustom $request)
 	{
 		$this->build_form();
 

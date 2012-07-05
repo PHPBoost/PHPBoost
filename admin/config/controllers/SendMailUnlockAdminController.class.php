@@ -29,7 +29,7 @@ class SendMailUnlockAdminController extends AdminController
 {
 	private $lang;
 	
-	public function execute(HTTPRequest $request)
+	public function execute(HTTPRequestCustom $request)
 	{
 		$this->init();
 		

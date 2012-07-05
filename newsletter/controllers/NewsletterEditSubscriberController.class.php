@@ -36,7 +36,7 @@ class NewsletterEditSubscriberController extends ModuleController
 	 */
 	private $submit_button;
 
-	public function execute(HTTPRequest $request)
+	public function execute(HTTPRequestCustom $request)
 	{
 		if (!NewsletterAuthorizationsService::default_authorizations()->moderation_subscribers())
 		{

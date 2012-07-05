@@ -30,7 +30,7 @@ class AjaxCommentsNotationController extends AbstractCommentsController
 	const LESS_NOTE = 'less';
 	const PLUS_NOTE = 'plus';
 	
-	public function execute(HTTPRequest $request)
+	public function execute(HTTPRequestCustom $request)
 	{
 		parent::execute($request);
 		

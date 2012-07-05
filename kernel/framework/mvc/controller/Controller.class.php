@@ -40,9 +40,9 @@ interface Controller
 
 	/**
 	 * @desc execute the controller and returns the response
-	 * @param HTTPRequest $request the request received
+	 * @param HTTPRequestCustom $request the request received
 	 * @return Response the controller response
 	 */
-	function execute(HTTPRequest $request);
+	function execute(HTTPRequestCustom $request);
 }
 ?>

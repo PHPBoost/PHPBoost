@@ -41,7 +41,7 @@ class UserRegistrationController extends AbstractController
 	
 	private $user_accounts_config;
 
-	public function execute(HTTPRequest $request)
+	public function execute(HTTPRequestCustom $request)
 	{
 		$this->get_right_controller_regarding_authorizations();
 		$this->init();

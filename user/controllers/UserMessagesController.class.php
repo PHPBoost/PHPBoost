@@ -31,7 +31,7 @@ class UserMessagesController extends AbstractController
 	private $tpl;
 	private $user;
 
-	public function execute(HTTPRequest $request)
+	public function execute(HTTPRequestCustom $request)
 	{
 		$this->init();
 

@@ -33,7 +33,7 @@ class AdminThemeDeleteController extends AdminController
 	private $theme_id;
 	private $tpl;
 	
-	public function execute(HTTPRequest $request)
+	public function execute(HTTPRequestCustom $request)
 	{
 		$this->init();
 		$this->theme_id = $request->get_value('id', null);

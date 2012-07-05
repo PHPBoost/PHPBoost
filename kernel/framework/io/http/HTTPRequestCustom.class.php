@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                           HTTPRequest.class.php
+ *                           HTTPRequestCustom.class.php
  *                            -------------------
  *   begin                : October 17 2009
  *   copyright            : (C) 2009 Loic Rouchon
@@ -30,7 +30,7 @@
  * @desc Provides access to the HTTP request parameters
  * @package {@package}
  */
-class HTTPRequest
+class HTTPRequestCustom
 {
 	const bool = 0x00;
 	const int = 0x01;

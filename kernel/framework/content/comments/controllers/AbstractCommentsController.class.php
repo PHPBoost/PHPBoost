@@ -32,7 +32,7 @@ class AbstractCommentsController extends AbstractController
 	protected $topic_identifier;
 	protected $provider;
 	
-	public function execute(HTTPRequest $request)
+	public function execute(HTTPRequestCustom $request)
 	{
 		$this->module_id = $request->get_poststring('module_id', '');
 		$this->id_in_module = $request->get_poststring('id_in_module', '');

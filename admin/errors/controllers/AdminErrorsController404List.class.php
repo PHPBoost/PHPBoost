@@ -37,7 +37,7 @@ class AdminErrorsController404List extends AdminController
 	 */
 	private $response;
 
-	public function execute(HTTPRequest $request)
+	public function execute(HTTPRequestCustom $request)
 	{
 		$this->load_env();
 		$errors_404 = AdminError404Service::list_404_errors();

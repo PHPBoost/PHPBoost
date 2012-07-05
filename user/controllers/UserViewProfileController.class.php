@@ -33,7 +33,7 @@ class UserViewProfileController extends AbstractController
 	private $tpl;
 	private $submit_button;
 
-	public function execute(HTTPRequest $request)
+	public function execute(HTTPRequestCustom $request)
 	{
 		$this->init();
 

@@ -27,7 +27,7 @@
 
 class AdminAjaxHomePageDeletePluginController extends AdminModuleController
 {
-	public function execute(HTTPRequest $request)
+	public function execute(HTTPRequestCustom $request)
 	{
 		$lang = LangLoader::get('common', 'HomePage');
 		$plugin_id = $request->get_postint('id', 0);

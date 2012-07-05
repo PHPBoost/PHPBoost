@@ -27,7 +27,7 @@
 
 class AdminMemberDeleteController extends AdminController
 {
-	public function execute(HTTPRequest $request)
+	public function execute(HTTPRequestCustom $request)
 	{
 		$user_id = $request->get_int('id', null);
 		
@@ -46,8 +46,7 @@ class AdminMemberDeleteController extends AdminController
 		
 		StatsCache::invalidate();
 		
-		$controller = new UserErrorController($lang['success'], $lang['process.success'], UserErrorController::SUCCESS);
-		DispatchManager::redirect($controller);
+		AppContext::get_response()->redirect(PATH_TO_ROOT . '/admin/admin_members.php');
 	}
 }
 ?>

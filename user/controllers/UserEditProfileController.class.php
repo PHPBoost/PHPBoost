@@ -39,7 +39,7 @@ class UserEditProfileController extends AbstractController
 	
 	private $user;
 
-	public function execute(HTTPRequest $request)
+	public function execute(HTTPRequestCustom $request)
 	{
 		$this->init();
 		

@@ -33,7 +33,7 @@ class AdminUninstallLangController extends AdminController
 	private $id;
 	private $tpl;
 	
-	public function execute(HTTPRequest $request)
+	public function execute(HTTPRequestCustom $request)
 	{
 		$this->init();
 		$this->id = $request->get_value('id', null);

@@ -27,7 +27,7 @@
 
 class SandboxTableController extends ModuleController
 {
-	public function execute(HTTPRequest $request)
+	public function execute(HTTPRequestCustom $request)
 	{
 		$view = new FileTemplate('sandbox/SandboxTableController.tpl');
 		$table = $this->build_table();

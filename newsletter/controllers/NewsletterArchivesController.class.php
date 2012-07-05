@@ -33,7 +33,7 @@ class NewsletterArchivesController extends ModuleController
 	
 	private $nbr_archives_per_page = 25;
 
-	public function execute(HTTPRequest $request)
+	public function execute(HTTPRequestCustom $request)
 	{
 		$this->id_stream = $request->get_int('id_stream', 0);
 		$this->init();

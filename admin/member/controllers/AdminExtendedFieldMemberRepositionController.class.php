@@ -27,7 +27,7 @@
 
 class AdminExtendedFieldMemberRepositionController extends AdminController
 {
-	public function execute(HTTPRequest $request)
+	public function execute(HTTPRequestCustom $request)
 	{
 		$type = $request->get_getstring('type');
 		
