@@ -98,7 +98,10 @@ class NewsletterUnSubscribeController extends ModuleController
 	
 	private function build_response(View $view)
 	{
-		$response = new SiteDisplayResponse($view);
+		$body_view = new FileTemplate('newsletter/NewsletterBody.tpl');
+		$body_view->add_lang($this->lang);
+		$body_view->put('TEMPLATE', $view);
+		$response = new SiteDisplayResponse($body_view);
 		$breadcrumb = $response->get_graphical_environment()->get_breadcrumb();
 		$breadcrumb->add($this->lang['newsletter'], NewsletterUrlBuilder::home()->absolute());
 		$breadcrumb->add($this->lang['unsubscribe.newsletter'], NewsletterUrlBuilder::unsubscribe()->absolute());
