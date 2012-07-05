@@ -8,7 +8,7 @@
 		</script>
 
 		# IF C_ADD_OR_WRITER #
-		<div style="text-align:center;">
+		<div class="module_actions">
 			# IF C_ADD #
 			<a href="{U_ADD}" title="{L_ADD}" class="img_link">
 				<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/add.png" class="valign_middle" alt="{L_ADD}" />

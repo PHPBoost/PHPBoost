@@ -3,7 +3,7 @@
 
 		# IF C_CALENDAR_DISPLAY #
 		
-		<div style="text-align:center;">
+		<div class="module_actions">
 			{ADMIN_CALENDAR}
 			{ADD}
 		</div>

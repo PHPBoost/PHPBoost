@@ -221,7 +221,7 @@
 		</script> 
 
 		# INCLUDE message_helper #
-		<div style="text-align:center;">
+		<div class="module_actions">
 			{EDIT_CAT} {EDIT}
 			{ADD_PICS}
 		</div>

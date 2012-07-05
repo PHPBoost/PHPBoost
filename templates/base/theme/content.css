@@ -579,6 +579,12 @@ a.msg_link_pseudo:hover {
 	float:right;
 }
 
+.module_actions {
+	float:right;
+	margin:0 10px 15px;
+	margin-top:-25px;
+}
+
 .module_contents { /* Contenu des modules */
     padding:20px 15px;
     padding-bottom:15px;
