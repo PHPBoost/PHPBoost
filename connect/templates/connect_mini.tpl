@@ -116,7 +116,7 @@
 		# ENDIF #
 	</div>
 	# ELSE #
-	<p class="connect_align">
+	<div class="connect_align">
 		<img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/members_mini.png" alt="" class="valign_middle" /> <a href="{U_HOME_PROFILE}" class="small_link">{L_PRIVATE_PROFIL}</a>&nbsp;
 		<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{IMG_PM}" class="valign_middle" alt="" /> <a href="{U_USER_PM}" class="small_link">{L_NBR_PM}</a>&nbsp;
 		# IF C_ADMIN_AUTH #
@@ -132,6 +132,6 @@
 			<img src="{PATH_TO_ROOT}/templates/{THEME}/images/contribution_panel_mini.png" alt="" class="valign_middle" /> <a href="{U_CONTRIBUTION}" class="small_link">{L_CONTRIBUTION_PANEL}</a>&nbsp;
 		# ENDIF #
 		<img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/home_mini.png" alt="" class="valign_middle" /> <a href="{U_DISCONNECT}" class="small_link">{L_DISCONNECT}</a>
-	</p>
+	</div>
 	# ENDIF #
 # ENDIF #
