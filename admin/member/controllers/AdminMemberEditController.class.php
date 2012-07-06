@@ -163,7 +163,7 @@ class AdminMemberEditController extends AdminController
 			if (count($matching_alerts) == 1)
 			{
 				$alert = $matching_alerts[0];
-				$alert->set_status(ADMIN_ALERT_STATUS_PROCESSED);
+				$alert->set_status(AdministratorAlert::ADMIN_ALERT_STATUS_PROCESSED);
 				AdministratorAlertService::save_alert($alert);
 			}
 		}
