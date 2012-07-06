@@ -103,11 +103,10 @@ class AdminThemesInstalledListController extends AdminController
 					$activated = $request->get_bool('activated-' . $id_theme, false);
 					$authorizations = Authorizations::auth_array_simple(Theme::ACCES_THEME, $id_theme);
 					ThemeManager::change_informations($id_theme, $activated, $authorizations);
-					
-					AppContext::get_response()->redirect(AdminThemeUrlBuilder::list_installed_theme());
 				}
 			}
 		}
+		AppContext::get_response()->redirect(AdminThemeUrlBuilder::list_installed_theme());
 	}
 	
 	private function init()
