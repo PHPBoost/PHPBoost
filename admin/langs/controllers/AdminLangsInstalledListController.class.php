@@ -83,11 +83,10 @@ class AdminLangsInstalledListController extends AdminController
 					$activated = $request->get_bool('activated-' . $id, false);
 					$authorizations = Authorizations::auth_array_simple(Lang::ACCES_LANG, $id);
 					LangManager::change_informations($id, $activated, $authorizations);
-					
-					AppContext::get_response()->redirect(AdminLangsUrlBuilder::list_installed_langs());
 				}
 			}
 		}
+		AppContext::get_response()->redirect(AdminLangsUrlBuilder::list_installed_langs());
 	}
 	
 	private function init()

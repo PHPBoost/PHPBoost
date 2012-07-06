@@ -167,7 +167,7 @@ class BBCodeEditor extends ContentEditor
             $smiley_height = 18;
             $smiley_width = 18;
 
-            $smiley = new Image(Url::to_absolute('/images/smileys/' . $infos['url_smiley']));
+            $smiley = new Image(TPL_PATH_TO_ROOT . '/images/smileys/' . $infos['url_smiley']);
 			$smiley_height = $smiley->get_height();
 			$smiley_width = $smiley->get_width();
 			
