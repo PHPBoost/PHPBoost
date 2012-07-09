@@ -6,7 +6,7 @@
 	height:18px;
 	width:115px;
 	font-size:12px;
-	color: #E9ECEF ;
+	color: #E9ECEF;
 }
 .connect_form:hover {
 	background:url('images/form.png') no-repeat right bottom;
@@ -17,9 +17,13 @@
 	border:none;
 }
  
-div.connect_align ,p.connect_align {
+div.connect_align {
 	text-align:right;
 	margin-right:8px;
+}
+
+div.connect_align a {
+	color:#FFF;
 }
  
 .connect_align form {

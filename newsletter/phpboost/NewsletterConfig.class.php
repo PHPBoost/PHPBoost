@@ -86,7 +86,7 @@ class NewsletterConfig extends AbstractConfigData
 		return array(
 			self::MAIL_SENDER => MailServiceConfig::load()->get_default_mail_sender(),
 			self::NEWSLETTER_NAME => '',
-			self::AUTHORIZATION => array('r1' => 15, 'r0' => 3, 'r-1' => 3, '2' => 48, '-1' => 32, '1' => 32)
+			self::AUTHORIZATION => array('r1' => 15, 'r0' => 3, 'r-1' => 3)
 		);
 	}
 
