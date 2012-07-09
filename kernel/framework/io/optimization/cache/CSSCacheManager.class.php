@@ -75,7 +75,7 @@ class CSSCacheManager
 	
 	public function get_cache_file_location()
 	{
-		return Url::to_absolute($this->cache_file_location);
+		return $this->cache_file_location;
 	}
 	
 	public function force_regenerate_cache($intensity)
