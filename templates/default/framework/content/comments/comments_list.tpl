@@ -77,7 +77,7 @@ div#comment-message {
 				# ENDIF #
 			</div>
 			<div id="comment-level">{comments.L_LEVEL}</div>
-			<img src="http://www.phpboost.com/images/avatars/avatar_3e3b1.png">
+			<img src="{comments.U_AVATAR}">
 		</div>
 		<div id="comment-content">
 			<div id="comment-date">
