@@ -105,8 +105,8 @@ class AdminThemesInstalledListController extends AdminController
 					ThemeManager::change_informations($id_theme, $activated, $authorizations);
 				}
 			}
+			AppContext::get_response()->redirect(AdminThemeUrlBuilder::list_installed_theme());
 		}
-		AppContext::get_response()->redirect(AdminThemeUrlBuilder::list_installed_theme());
 	}
 	
 	private function init()
