@@ -57,9 +57,9 @@
 		<div id="header">
 			<div id="logo">
 				# IF C_HEADER_LOGO # 
-					<img src="{HEADER_LOGO}"  title="Logo" alt="logo"/>
+					<img src="{HEADER_LOGO}"  title="Logo" alt="logo" width="128px;"/>
 				# ELSE #
-					<img src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/phpboost.png"  title="Logo" alt="logo"/>
+					<img src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/phpboost.png"  title="Logo" alt="logo" width="128px;"/>
 				# ENDIF #
 			</div>
 			<div id="site_name">{SITE_NAME}</div>
