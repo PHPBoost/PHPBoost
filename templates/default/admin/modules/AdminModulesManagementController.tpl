@@ -102,7 +102,7 @@
 						</td>
 						<td class="row2">
 							<a href="{modules_not_activated.U_DELETE_LINK}">	
-								<input type="submit" name="delete-{modules_not_activated.ID}" value="{@modules.delete}" class="submit" />
+								<input name="delete-{modules_not_activated.ID}" value="{@modules.delete}" class="submit" style="width:70px;text-align:center;"/>
 							</a>
 						</td>
 					</tr>
@@ -185,7 +185,7 @@
 						</td>
 						<td class="row2">
 							<a href="{modules_activated.U_DELETE_LINK}">	
-								<input type="submit" name="delete-{modules_activated.ID}" value="{@modules.delete}" class="submit" />
+								<input name="delete-{modules_activated.ID}" value="{@modules.delete}" class="submit" style="width:70px;text-align:center;"/>
 							</a>
 						</td>
 					</tr>
