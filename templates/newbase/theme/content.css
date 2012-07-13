@@ -116,7 +116,6 @@ h6.sub_title2 { /* Sous titre dans les menu */
 input, textarea, optgroup, select, .xmlhttprequest_preview{
 	font-family:"Lucida Grande","Lucida Sans Unicode",Verdana,'Bitstream Vera Sans',Times,serif;
 	font-size:11px;
-	vertical-align:middle;
 	border-left:1px solid #99b1cb;
 	border-top:1px solid #99b1cb;
 	border-right:1px solid #CCCCCC;
@@ -159,16 +158,12 @@ input.text{
 input.submit, button.submit{
 	padding:1px 2px;
 	font-family:Verdana, 'Bitstream Vera Sans', Times, serif;
-	border:1px solid #515C68;	
-	border-top:1px solid #8498ae;	
 	color:#515C68;	
 	font-weight:bold;
 	font-size:10px;
-	background:#A9CEE9 url(images/form.png) repeat-x;	
-	-moz-border-radius:5px;
-	-khtml-border-radius:5px;
-	-webkit-border-radius:5px;
-    border-radius:5px;
+	background: none repeat scroll 0 0 #E8EDF3;
+    border: 1px solid #BEBEBE;
+    margin-top:5px;
 }
 
 input[type=checkbox] { 
@@ -188,22 +183,17 @@ input.file{
 input.reset, button.reset{
 	padding:1px 2px;
 	font-family:Verdana, 'Bitstream Vera Sans', Times, serif;
-	border:1px solid #515C68;	
-	border-top:1px solid #8498ae;	
-	color:#E10000;
+	background: none repeat scroll 0 0 #E8EDF3;
+    border: 1px solid #BEBEBE;
+    color: #336397;
 	font-weight:bold;
 	font-size:10px;
-	background:url(images/form.png) repeat-x;
-	-moz-border-radius:5px;
-	-khtml-border-radius:5px;
-	-webkit-border-radius:5px;
-    border-radius:5px;
 }
 
 input.reset:hover, button.reset:hover, input.submit:hover, button.submit:hover{
-	border:1px solid #11365f;
+	border:1px solid #334455;
 	cursor:pointer;
-	color:#3776ba;
+	color:#336397;
 }
 
 optgroup, select{
@@ -231,8 +221,8 @@ legend {
 	font-family:"Lucida Grande","Lucida Sans Unicode",Verdana,'Bitstream Vera Sans',Times,serif;
 	font-size:0.85em;
 	font-weight:bold;
-	background:#D2E3F1;
-	border:1px solid #CCCCCC;
+	background:#99B1CB;
+	border:1px solid #336397;
 	padding:2px 10px;
 	margin-top:-0.4em;
 	margin-left:0.5em;
@@ -257,9 +247,9 @@ fieldset{
 	font-family:"Lucida Grande","Lucida Sans Unicode",Verdana,'Bitstream Vera Sans',Times,serif;
 	margin:20px 0;
 	padding:6px;
-	border:1px solid #CCCCCC;
+	border:1px solid #BEBEBE;
 	color:#445766;
-	background:#eceeef;
+	background:#E8EDF3;
 	position:relative;
 	-moz-border-radius:5px;
 	-khtml-border-radius:5px;
@@ -325,7 +315,7 @@ fieldset label {
     font-size:11px;
     text-align:left;
     font-weight:bold;
-    color:#1F507F;
+    color:#334455;
 }
 
 dd label {
@@ -337,7 +327,7 @@ dd label {
 
 dt span {
     font-size:10px;
-    color:#476A7F;
+    color:#0E2A48;
 }
 
 label img {
