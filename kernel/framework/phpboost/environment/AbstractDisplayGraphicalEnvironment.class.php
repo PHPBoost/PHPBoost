@@ -54,7 +54,7 @@
 			$css_cache->set_files(ModulesCssFilesService::get_css_files_always_displayed($theme_id));
 			$css_cache->set_cache_file_location(PATH_TO_ROOT . '/cache/css/css-cache-modules-' . $theme_id .'.css');
 			$css_cache->execute($css_cache_config->get_optimization_level());
-			$html_code = '<link rel="stylesheet" href="' . $css_cache->get_cache_file_location() . '" type="text/css" media="screen, print, handheld" />';
+			$html_code = '<link rel="stylesheet" href="' . Url::to_rel($css_cache->get_cache_file_location()) . '" type="text/css" media="screen, print, handheld" />';
 		}
 		else
 		{
