@@ -85,8 +85,8 @@ class AdminLangsInstalledListController extends AdminController
 					LangManager::change_informations($id, $activated, $authorizations);
 				}
 			}
+			AppContext::get_response()->redirect(AdminLangsUrlBuilder::list_installed_langs());
 		}
-		AppContext::get_response()->redirect(AdminLangsUrlBuilder::list_installed_langs());
 	}
 	
 	private function init()
