@@ -145,7 +145,7 @@
 				
 				# START member #
 				<tr style="text-align:center;"> 
-					<td class="row1"> 
+					<td class="row2"> 
 						<a href="{PATH_TO_ROOT}/admin/member/index.php?url=/{member.IDMBR}/edit/"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="{L_UPDATE}" title="{L_UPDATE}" /></a>
 						<a href="{PATH_TO_ROOT}/admin/member/index.php?url=/{member.IDMBR}/delete/" onclick="javascript:return Confirm({member.LEVEL});"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" /></a>
 					</td>
