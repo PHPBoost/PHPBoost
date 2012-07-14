@@ -307,10 +307,10 @@
 			</div>	
 		</div>	
 		# END msg #
-		<div class="msg_position">
-			<div class="msg_bottom_l"></div>
-			<div class="msg_bottom_r"></div>
-			<div class="msg_bottom" style="text-align:center;">
+		<div class="module_position">
+			<div class="module_bottom_l"></div>
+			<div class="module_bottom_r"></div>
+			<div class="module_bottom" style="text-align:center;">
 				<span style="float:left;">
 					<a href="${relative_url(SyndicationUrlBuilder::rss('forum',ID))}" title="Rss"><img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/rss.png" alt="Rss" title="Rss" /></a>
 					&bull; {U_FORUM_CAT} <a href="{U_TITLE_T}"><span id="display_msg_title2">{DISPLAY_MSG}</span>{TITLE_T}</a> <span style="font-weight:normal"><em>{DESC}</em></span>
