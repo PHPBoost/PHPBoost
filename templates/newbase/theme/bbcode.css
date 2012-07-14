@@ -1,7 +1,8 @@
 /** BBcode **/
 /* Tableau du bbcode */
 .bbcode, .bbcode2{
-	width:485px;
+	text-align: center;
+    width: 500px !important;
 	background:#336397;
 	border:1px solid #BEBEBE;
 	border-collapse:collapse;
@@ -76,9 +77,9 @@ h4.stitle1, h4.stitle2{
 }
 /* Sous titre 1 */
 h4.stitle1{
-	border:1px solid #6B9BBF;
-	border-left:3px solid #6B9BBF;
-	border-right:3px solid #6B9BBF;
+	border:1px solid #336397;
+	border-left:3px solid #336397;
+	border-right:3px solid #336397;
 }
 /* Sous titre 2 */
 h4.stitle2{
