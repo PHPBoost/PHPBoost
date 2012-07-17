@@ -7,11 +7,15 @@ body{
 	margin:0;
 	padding:0;
 }
+html, body{
+	height: 100%;	
+}
 
 /* Conteneurs */
 div#global{
 	width:1000px;
     margin:auto;
+    min-height: 100%;
 }
 div#header_container {
     background: url(images/header.png) no-repeat;
@@ -42,13 +46,11 @@ html>body #main{
 div#footer {
 	height:30px;
 	clear:both;
-    margin:auto;
-    margin-top:0px;
-    padding:0px;
-    padding-top:36px;
+    padding-top:25px;
     padding-right:20px;
     text-align:right;
-	background:#F5F4ED url(images/footer.png) repeat-x;
+	border-top: #336397 2px solid;
+	background: #212121;
 }
 div#footer span {
     color:#FFF;
@@ -64,11 +66,7 @@ div#footer span a {
 	margin:auto;
 	border:1px solid #CCCCCC;
 	border-spacing:1px;
-    background:#F7F8F5 url(images/contentbg.png) repeat-x;
-    -moz-border-radius:12px;
-    -khtml-border-radius:12px;
-    -webkit-border-radius:12px;
-    border-radius:12px;
+	background: #FFF;
 }
 .row_contents{
 	padding:10px;
@@ -85,10 +83,7 @@ html>body #row_contents{
 	border-spacing:1px;
 	border:1px solid #CCCCCC;
 	margin-bottom:20px;
-	background:#F7F8F5 url(images/contentbg.png) repeat-x;
-	-moz-border-radius: 9px;
-	-khtml-border-radius: 9px;
-	-webkit-border-radius: 9px;
+	background: #FFF;
 }
 
 h1{
@@ -112,13 +107,8 @@ th{
 	text-align:center;
 	font-weight:bold;
 	color:#5C5C5C;
-	padding:4px;
-	-moz-border-radius-topleft: 7px;
-	-moz-border-radius-topright: 7px;
-	-khtml-border-radius-topleft: 7px;
-	-khtml-border-radius-topright: 7px;
-	-webkit-border-radius-topleft: 7px;
-	-webkit-border-radius-topright: 7px;
+	padding:6px;
+	border-bottom: 2px #336397 solid;
 }
 .row_success{
 	background:#8AC77F;
@@ -131,7 +121,7 @@ th{
 	padding-left:6px;	
 }
 .row_next{
-	background:#F7F8F5;
+	background:#FFF;
 	padding:4px;
 	padding-left:6px;	
 }
