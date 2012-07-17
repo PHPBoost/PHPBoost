@@ -253,10 +253,10 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 				$sort_type = 'g.views';
 				break;
 				case 'notes' :
-				$sort_type = 'g.note';
+				$sort_type = 'note.average_notes';
 				break;
 				case 'com' :
-				$sort_type = 'g.nbr_com';
+				$sort_type = 'com.number_comments';
 				break;
 				default :
 				$sort_type = 'g.timestamp';
@@ -307,6 +307,8 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 				$result = $this->sql_querier->query_while("SELECT g.*, m.login
 					FROM " . PREFIX . "gallery g
 					LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = g.user_id
+					LEFT JOIN " . DB_TABLE_COMMENTS_TOPIC . " com ON com.id_in_module = g.id AND com.module_id = 'gallery'
+					LEFT JOIN " . DB_TABLE_AVERAGE_NOTES . " note ON note.id_in_module = g.id AND note.module_name = 'gallery'
 					WHERE g.idcat = '" . $g_idcat . "' AND g.id = '" . $g_idpics . "' AND g.aprob = 1
 					" . $g_sql_sort . "
 					" . $this->sql_querier->limit(0, 1), __LINE__, __FILE__);
@@ -324,6 +326,8 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 					$result = $this->sql_querier->query_while("SELECT g.id, g.idcat, g.path
 					FROM " . PREFIX . "gallery g
 					LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = g.user_id
+					LEFT JOIN " . DB_TABLE_COMMENTS_TOPIC . " com ON com.id_in_module = g.id AND com.module_id = 'gallery'
+					LEFT JOIN " . DB_TABLE_AVERAGE_NOTES . " note ON note.id_in_module = g.id AND note.module_name = 'gallery'
 					WHERE g.idcat = '" . $g_idcat . "' AND g.aprob = 1
 					" . $g_sql_sort, __LINE__, __FILE__);
 					while ($row = $this->sql_querier->fetch_assoc($result))
@@ -478,6 +482,8 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 				$result = $this->sql_querier->query_while("SELECT g.id, g.idcat, g.name, g.path, g.timestamp, g.aprob, g.width, g.height, g.user_id, g.views, g.aprob, m.login
 				FROM " . PREFIX . "gallery g
 				LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = g.user_id
+				LEFT JOIN " . DB_TABLE_COMMENTS_TOPIC . " com ON com.id_in_module = g.id AND com.module_id = 'gallery'
+				LEFT JOIN " . DB_TABLE_AVERAGE_NOTES . " note ON note.id_in_module = g.id AND note.module_name = 'gallery'
 				WHERE g.idcat = '" . $g_idcat . "' AND g.aprob = 1
 				" . $g_sql_sort . "
 				" . $this->sql_querier->limit($Pagination->get_first_msg($CONFIG_GALLERY['nbr_pics_max'], 'pp'), $CONFIG_GALLERY['nbr_pics_max']), __LINE__, __FILE__);
