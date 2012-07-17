@@ -31,7 +31,7 @@ require_once PATH_TO_ROOT . '/kernel/init.php';
 
 $url_controller_mappers = array(
 	new UrlControllerMapper('ViewXMLSitemapController', '`^/view/xml?$`'),
-	new UrlControllerMapper('ViewSitemapController', '`^(?:/view)?$`'),
+	new UrlControllerMapper('ViewSitemapController', '`^(?:/view)?/?$`'),
 	new UrlControllerMapper('AdminSitemapController', '`^/admin/?$`'),
 	new UrlControllerMapper('GenerateXMLSitemapController', '`^/admin/generate?$`')
 );
