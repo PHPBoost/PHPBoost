@@ -75,7 +75,7 @@ else //Affichage de l'interface de gestion.
 	$Bread_crumb->add($LANG['files_management'], UserUrlBuilder::upload_files_panel()->absolute());
 	require_once('../kernel/header.php');
 	$field = '';
-	$header = '<script type="text/javascript" src="' . PATH_TO_ROOT . '/kernel/lib/js/lightbox/lightbox.js"></script>';
+	$header = '';
 	$footer = '';
 	$popup = '';
 	$popup_noamp = '';
