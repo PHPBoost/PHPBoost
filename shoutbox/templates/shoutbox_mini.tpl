@@ -150,7 +150,7 @@
 				</div>
 			</div>
 		# ELSE #
-				<div class="block_container">
+				<div class="module_mini_container" style="width: auto;">
 					<div class="module_mini_top">
 						<h5 class="sub_title">{L_SHOUTBOX}</h5>
 					</div>

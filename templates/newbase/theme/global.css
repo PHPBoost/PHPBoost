@@ -16,13 +16,6 @@
 
 .row2,.block_contents2 {
 	padding:8px 6px;
-	
-	-moz-border-radius:0px 0px 5px 5px;
-	-khtml-border-bottom-right-radius:5px;
-	-khtml-border-bottom-left-radius:5px;
-	-webkit-border-bottom-right-radius:5px;
-	-webkit-border-bottom-left-radius:5px;
-    border-radius:5px;
 }
 
 .block_contents2 {
@@ -160,17 +153,15 @@ a.membre {
 --------------------------------------*/
 /* Lien du menu */
 .dynamic_menu h5 {
-    color:#FFFFFF;
+    color:#515C68;
+    background:#F2F7FB;
+    border:1px solid #C4CED6;
 	margin-right:2px;
-	background:none;
-	border:none;
-	font-weight:normal;
 }
 
 .dynamic_menu h5:hover {
-    color:#366393;
-    background:#e8edf3;
-     border-bottom:1px solid #99B1CB;
+    color:#01528D;
+    background:#eaedee;
 }
 
 /* Séparateur */
@@ -185,6 +176,7 @@ a.membre {
 /* Case du menu */
 .dynamic_menu li ul {
     border:none;
+    border:1px solid #C4CED6;
     border-bottom:1px solid #99B1CB;
 }
 
@@ -199,7 +191,7 @@ a.membre {
 
 .dynamic_menu li li a:hover {
     background-color:#D2E3F1;
-    border:1px solid #8BBFE8;
+    
 }
 
 h3.menu_vertical_0{
