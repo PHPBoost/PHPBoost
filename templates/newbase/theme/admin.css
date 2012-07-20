@@ -87,7 +87,6 @@ div#admin_quick_menu li.title_menu {
     text-transform:uppercase;
     font-weight:bold;
     font-size:11px;
- 
     color:#0E2A48;
     padding:6px 0px;
 	margin-bottom:20px;
@@ -100,7 +99,7 @@ div#admin_quick_menu li a.quick_link {
     font-weight:normal;
     font-size:10px;
     color:#0E2A48;
-	background: none repeat scroll 0 0 #e8edf3;
+	background: none repeat scroll 0 0 #FAFBFC;
     border:1px solid #CCCCCC;
     padding:3px 8px;
     text-decoration:none;
@@ -199,4 +198,18 @@ pre {
 .em {
     color:#666666;
     background-color:#cccccc;
+}
+
+div#sub_header_admin .dynamic_menu h5 {
+    color:#FFFFFF;
+	margin-right:2px;
+	background:none;
+	border:none;
+	font-weight:normal;
+}
+
+div#sub_header_admin .dynamic_menu h5:hover {
+    color:#366393;
+    background:#e8edf3;
+    border-bottom:1px solid #99B1CB;
 }

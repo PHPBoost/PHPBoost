@@ -52,7 +52,7 @@
 	
 	# IF C_HEADER_LOGO #
 		<style type="text/css">
-			div#header_admin_container {
+			div#logo {
    				background: url('{HEADER_LOGO}') no-repeat;
 			}
 		</style>
@@ -61,13 +61,7 @@
 	<div id="global">
 		<div id="header_admin_container">
 			<div id="header_admin">
-			<div id="logo">
-				# IF C_HEADER_LOGO # 
-					<img src="{HEADER_LOGO}"  title="Logo" alt="logo" width="128px;"/>
-				# ELSE #
-					<img src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/phpboost.png"  title="Logo" alt="logo" width="128px;"/>
-				# ENDIF #
-			</div>
+			<div id="logo"></div>
 			<div id="site_name">{SITE_NAME}</div>
 			</div>
 			<div id="sub_header_admin">
