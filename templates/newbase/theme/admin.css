@@ -99,8 +99,8 @@ div#admin_quick_menu li a.quick_link {
     font-weight:normal;
     font-size:10px;
     color:#0E2A48;
-	background: none repeat scroll 0 0 #FAFBFC;
-    border:1px solid #CCCCCC;
+	background: none repeat scroll 0 0 #F2F8FF;
+    border:1px solid #D6DEE7;
     padding:3px 8px;
     text-decoration:none;
 }
@@ -208,7 +208,7 @@ div#sub_header_admin .dynamic_menu h5 {
 	font-weight:normal;
 }
 
-div#sub_header_admin .dynamic_menu h5:hover {
+div#sub_header_admin .dynamic_menu h5:hover, div#sub_header_admin .dynamic_menu h5:active {
     color:#366393;
     background:#e8edf3;
     border-bottom:1px solid #99B1CB;
