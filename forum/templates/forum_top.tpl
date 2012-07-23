@@ -80,7 +80,7 @@
 		-->
 		</script>
 		
-		<div class="module_position" style="margin-bottom:15px;background:none;border:none">
+		<div class="module_position" style="margin-bottom:15px;">
 			<div class="forum_title_l"></div>
 			<div class="forum_title_r"></div>
 			<div class="forum_title">
