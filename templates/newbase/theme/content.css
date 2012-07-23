@@ -13,8 +13,8 @@ div.block_container {
     width:auto;
 	margin:10px auto;
     border: 1px solid #CCCCCC;
-    border-top:10px solid #366393;
-    border-bottom: 2px solid #99B1CB;
+    border-top:2px solid #366393;
+    border-bottom: 1px solid #99B1CB;
     background:#F2F8FF;
     padding:5px;
 }
@@ -223,8 +223,8 @@ legend {
 	font-family:"Lucida Grande","Lucida Sans Unicode",Verdana,'Bitstream Vera Sans',Times,serif;
 	font-size:0.85em;
 	font-weight:bold;
-	background:#e8ebef;
-	border:1px solid #cbd4de;
+	background:#c4d0de;
+	border:1px solid #99B1CB;
 	padding:2px 10px;
 	margin-top:-0.4em;
 	margin-left:0.5em;
@@ -248,7 +248,7 @@ fieldset{
 	padding:6px;
 	border:1px solid #d6dee7;
 	color:#445766;
-	background:#FAFBFC;
+	background:#f2f5f8;
 	position:relative;
 }
 fieldset.fieldset_submit{

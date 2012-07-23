@@ -7,10 +7,15 @@
 	border:1px solid #BEBEBE;
 	border-collapse:collapse;
 	border-spacing:0px;
-	
+	height:32px;
 }
+
 .bbcode td, .bbcode2 td{
-	padding-top:5px; 
+	 
+}
+
+.bbcode img, .bbcode2 img{
+	vertical-align:middle; 
 }
 
 .bbcode2{
