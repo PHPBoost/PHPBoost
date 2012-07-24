@@ -124,6 +124,11 @@ class UserUrlBuilder
 		return DispatchManager::get_url(self::$dispatcher, '/error/404/');
 	}
 	
+	public static function CSRF()
+	{
+		return DispatchManager::get_url(self::$dispatcher, '/error/csrf/');
+	}
+	
 	public static function messages($user_id)
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/messages/'. $user_id);

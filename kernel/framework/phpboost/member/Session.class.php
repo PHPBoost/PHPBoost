@@ -721,12 +721,12 @@ class Session
 	/**
 	 * @desc Redirect to the error page if the token is wrong
 	 */
-	private function csrf_attack($redirect = false)
+	private function csrf_attack()
 	{
 		$bad_token = $this->get_printable_token(retrieve(REQUEST, 'token', ''));
 		$good_token = $this->get_printable_token($this->get_token());
 
-		DispatchManager::redirect(PHPBoostErrors::CSRF());
+		AppContext::get_response()->redirect(UserUrlBuilder::CSRF());
 	}
 
 	/**
