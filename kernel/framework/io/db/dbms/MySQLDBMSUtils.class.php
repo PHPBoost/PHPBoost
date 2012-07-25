@@ -325,8 +325,8 @@ class MySQLDBMSUtils implements DBMSUtils
 					{
 						$query = str_replace('phpboost_', $tableprefix, $query);
 					}
-					$parameter_extractor = new SqlParameterExtractor($query);
-					$this->querier->inject($parameter_extractor->get_query(), $parameter_extractor->get_parameters());
+
+					$this->querier->inject($query);
 					$query = '';
 				}
 				else
