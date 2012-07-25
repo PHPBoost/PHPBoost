@@ -303,7 +303,7 @@ else
 		$file_path = PATH_TO_ROOT . '/cache/backup/' . $file_name;
 
 		Environment::try_to_increase_max_execution_time();
-		PersistenceContext::get_dbms_utils()->dump_phpboost(new BufferedFileWriter(new File($file_path), $backup_type, $selected_tables));
+		PersistenceContext::get_dbms_utils()->dump_tables(new BufferedFileWriter(new File($file_path)), $selected_tables, $backup_type);
 		
 		AppContext::get_response()->redirect(HOST . DIR . url('/database/admin_database.php?error=backup_success&file=' . $file_name));
 	}
