@@ -174,7 +174,7 @@ class UserLoginController extends AbstractController
 		$this->fieldset->add_field($login);
 		$password = new FormFieldPasswordEditor('password', $this->lang['password'], '', array('required' => true));
 		$this->fieldset->add_field($password);
-		$autoconnect = new FormFieldCheckbox('autoconnect', $this->lang['autoconnect'], false);
+		$autoconnect = new FormFieldCheckbox('autoconnect', $this->lang['autoconnect'], true);
 		$this->fieldset->add_field($autoconnect);
 
 		$this->form->add_fieldset($this->fieldset);
