@@ -1,17 +1,10 @@
 ###################################### PHPBoost 4.0 ##################################
 
-## PRIORITAIRE ##
-- Faire un script qui modifie le path et l'URL du site après une migration (plus possible de bidouiller le cache)
-
 ## AUTRES ##
 - Corriger bbcode.css (bloc masquables + wikipédia) (publishing notamment)
 - [color=red]Nouveauté:[/color] Nouveau thème Base2 pour la distribution complete.
 - Remplacement des icônes de base par le pack famfamfam
 
-
-## NON DEFINITIF ##
-- Revoir la cohérence de l'API FormBuilder (nommage des paramètres, ordres, ...) ex : dans FormButtonButton, param $label => $html_content ou autre... 
-- Intégration d'un système AJAX permettant l'envoi de mail par paquet
 
 #################################################################################
 
@@ -23,7 +16,8 @@
 #################################################################################
 
 ------------------------------------- NOYAU ------------------------------------
-+ Commentaires : Design + intégration du système d'approbation (avec possibilité d'avoir un mail).
++ Terminer commentaires
+- Filtres d'exclusion pour les menus
 
 ------------------------------------ MODULES -----------------------------------
 
@@ -48,10 +42,6 @@
 #################################################################################
 
 ------------------------------------ MODULES -----------------------------------
-
-[b]Tous[/b]
-- Séparer la configuration du cache dans les modules (Créer des ModuleConfig)
-- Filtres d'exclusion pour les menus
 
 #################################################################################
 
