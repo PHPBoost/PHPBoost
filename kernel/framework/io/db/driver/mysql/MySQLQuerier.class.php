@@ -63,7 +63,10 @@ class MySQLQuerier extends AbstractSQLQuerier
 	private function execute($query, $parameters)
 	{
 		$query = $this->prepare($query);
-		$query = $this->query_var_replacator->replace($query, $parameters);
+		if (!empty($parameters))
+		{
+			$query = $this->query_var_replacator->replace($query, $parameters);
+		}
 		$resource = mysql_query($query, $this->link);
 		$has_error = mysql_error() !== '' && mysql_errno() > 0;
 		if ($resource === false && $has_error)
