@@ -89,8 +89,8 @@ class SandboxFormController extends ModuleController
 			'class' => 'text', 'maxlength' => 25, 'description' => 'Contraintes lettres, chiffres et tiret bas'),
 			array(new FormFieldConstraintRegex('`^[a-z0-9_ ]+$`i'))
 		));
-		$fieldset->add_field(new FormFieldTextEditor('textdisabled', 'Champ d?sactiv?', '', array(
-				'class' => 'text', 'maxlength' => 25, 'description' => 'd?sactiv?', 'disabled' => true)
+		$fieldset->add_field(new FormFieldTextEditor('textdisabled', 'Champ désactivé', '', array(
+				'class' => 'text', 'maxlength' => 25, 'description' => 'désactivé', 'disabled' => true)
 		));
 		$fieldset->add_field(new FormFieldTextEditor('siteweb', 'Site web', 'http://www.phpboost.com/index.php', array(
 			'class' => 'text', 'maxlength' => 255, 'description' => 'Url valide'),
@@ -104,7 +104,7 @@ class SandboxFormController extends ModuleController
 			'class' => 'text', 'maxlength' => 25, 'description' => 'Champs requis', 'required' => true)
 		));
 		$fieldset->add_field(new FormFieldTextEditor('age', 'Age', '20', array(
-			'class' => 'text', 'maxlength' => 25, 'description' => 'Intervalle 10 ? 100'),
+			'class' => 'text', 'maxlength' => 25, 'description' => 'Intervalle 10 à 100'),
 			array(new FormFieldConstraintIntegerRange(10, 100))
 		));
 
@@ -233,7 +233,7 @@ class SandboxFormController extends ModuleController
 		// BUTTONS
 		$buttons_fieldset = new FormFieldsetSubmit('buttons');
 		$buttons_fieldset->add_element(new FormButtonReset());
-		$this->preview_button = new FormButtonSubmit('Pr?visualiser', 'preview', 'alert("Voulez-vous vraiment prévisualiser ?")');
+		$this->preview_button = new FormButtonSubmit('Prévisualiser', 'preview', 'alert("Voulez-vous vraiment prévisualiser ?")');
 		$buttons_fieldset->add_element($this->preview_button);
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$buttons_fieldset->add_element($this->submit_button);
