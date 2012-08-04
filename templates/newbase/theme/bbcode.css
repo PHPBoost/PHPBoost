@@ -43,39 +43,46 @@
 
 /* Titre 1 */
 h3.title1{
-	color:#334455;
+	color:#3E4D5C;
 	border-bottom:2px solid #366393;
-	font-size:20px;
+	font-size:15px;
 	font-weight:bold;
 	padding:0px 5px;
 }
 /* Titre 2 */
 h3.title2{
-	font-size:18px;
-	text-transform:capitalize;
+	font-size:14px;
+	text-decoration:underline;
 	font-weight:bold;
-	color:#334455;
-	border-bottom:1px solid #366393;
+	color:#3E4D5C;
 	width:100%;
 	margin:auto;
 	padding:0px 5px;
 }
 
 /* Sous titre 1 */
-h4.stitle1{
-	text-decoration:underline;
-	margin-left:10px;
-	font-size:16px;
+h4.stitle1, h4.stitle2{
+	display:inline;
+	color:#3E4D5C;
+	font-size:12px;
 	font-weight:bold;
-	color:#334455;
-
+	margin-left:35px;
+	padding:4px 5px;
+	font-weight:bold;
+	background:#ECEFFA;	
+	border-radius:8px;
+}
+/* Sous titre 1 */
+h4.stitle1{
+	border:1px solid #336397;
+	border-left:4px solid #336397;
+	border-right:4px solid #336397;
 }
 /* Sous titre 2 */
 h4.stitle2{
-	margin-left:20px;
-	font-size:14px;
-	color:#334455;
-	text-decoration:underline;
+	margin-left:50px;
+	background:none;
+	border-bottom:3px solid #336397;
 }
 .float_left
 {

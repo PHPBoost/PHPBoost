@@ -167,7 +167,7 @@ input.submit, button.submit{
 
 input.submit:hover, button.submit:hover{
 	cursor:pointer;
-	background: url(images/bouton.png) repeat-x;
+	background:#e8edf3;
 }
 
 input[type=checkbox] { 
@@ -199,7 +199,7 @@ input.reset, button.reset{
 
 input.reset:hover, button.reset:hover{
 	cursor:pointer;
-	background: url(images/bouton.png) repeat-x;	
+	background:#e8edf3;
 }
 
 optgroup, select{
@@ -252,7 +252,7 @@ fieldset{
 	padding:6px;
 	border:1px solid #d6dee7;
 	color:#445766;
-	background:#f2f5f8;
+	background:#ECEFFA;
 	position:relative;
 }
 fieldset.fieldset_submit{
