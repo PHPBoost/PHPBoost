@@ -96,7 +96,7 @@ if (!empty($idnews)) // On affiche la news correspondant à l'id envoyé.
 		FT_SEARCH(contents, '" . $news_content . "') OR
 		FT_SEARCH(extend_contents, '" . $news_content . "') 
 		) AND id <> '" . $news['id'] . "'
-		ORDER BY relevance DESC LIMIT 0, 100", __LINE__, __FILE__);
+		ORDER BY relevance DESC LIMIT 0, 10", __LINE__, __FILE__);
 		while ($row = $Sql->fetch_assoc($result))
 		{
 			$tpl->assign_block_vars('suggested', array(
