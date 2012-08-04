@@ -88,14 +88,12 @@
 						</tr>
 						<tr> 
 							<td class="row2">
-								
-									<textarea id="writing_pad_content" name="writing_pad_content" cols="15" rows="10" style="height:243px">{WRITING_PAD_CONTENT}</textarea> 
-									<p style="text-align:center;margin:0;margin-top:8px;">
-										<input type="submit" name="writingpad" value="{L_UPDATE}" class="submit" />
+								<textarea id="writing_pad_content" name="writing_pad_content" cols="15" rows="10" style="height:243px">{WRITING_PAD_CONTENT}</textarea> 
+								<p style="text-align:center;margin:0;margin-top:8px;">
+									<input type="submit" name="writingpad" value="{L_UPDATE}" class="submit" />
 										&nbsp;&nbsp; 
-										<input type="reset" value="{L_RESET}" class="reset" />
-									</p>
-							
+									<input type="reset" value="{L_RESET}" class="reset" />
+								</p>
 							</td>
 						</tr>
 					</table>	
