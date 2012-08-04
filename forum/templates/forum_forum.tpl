@@ -15,22 +15,19 @@
 					<a href="${relative_url(SyndicationUrlBuilder::rss('forum',IDCAT))}" title="Rss"><img style="vertical-align:middle;margin-top:-2px;" src="{PATH_TO_ROOT}/templates/{THEME}/images/rss.png" alt="Rss" title="Rss" /></a>
 					&nbsp;&nbsp;<strong>{L_SUBFORUMS}</strong>
 				</div>
-			</div>
-			
-			<div class="module_position" style="border-bottom:none;border-color:#366393;">
 				<div class="module_contents forum_contents">
 					<table class="module_table forum_table">
 						<tr>
-							<td class="forum_text_column" style="min-width:175px;border-left:none;">{L_FORUM}</td>
+							<td class="forum_text_column" style="min-width:175px;">{L_FORUM}</td>
 							<td class="forum_text_column" style="width:60px;">{L_TOPIC}</td>
 							<td class="forum_text_column" style="width:60px;">{L_MESSAGE}</td>
-							<td class="forum_text_column" style="width:150px;border-right:none;">{L_LAST_MESSAGE}</td>
+							<td class="forum_text_column" style="width:150px;">{L_LAST_MESSAGE}</td>
 						</tr>
 					</table>
 				</div>
 			</div>
 			# START subcats #
-			<div class="module_position" style="border-bottom:none;">
+			<div class="module_position">
 				<div class="module_contents forum_contents">
 					<table class="module_table forum_table">
 						<tr>
@@ -75,7 +72,7 @@
 			</div>
 		</div>
 		# ENDIF #
-	<div style="margin-top:20px;margin-bottom:20px;">
+
 		<div class="module_position">
 			<div class="module_top_l"></div>
 			<div class="module_top_r"></div>
@@ -93,22 +90,19 @@
 					{PAGINATION}
 				</span>
 			</div>
-		</div>
-			
-		<div class="module_position" style="border-bottom:none;border-color:#366393;">
 			<div class="module_contents forum_contents">
 				<table class="module_table forum_table">
 					<tr>
-						<td class="forum_text_column" style="min-width:175px;border-left:none;">{L_TOPIC}</td>
+						<td class="forum_text_column" style="min-width:175px;">{L_TOPIC}</td>
 						<td class="forum_text_column" style="width:100px;">{L_AUTHOR}</td>
 						<td class="forum_text_column" style="width:60px;">{L_ANSWERS}</td>
 						<td class="forum_text_column" style="width:60px;">{L_VIEW}</td>
-						<td class="forum_text_column" style="width:150px;border-right:none;">{L_LAST_MESSAGE}</td>
+						<td class="forum_text_column" style="width:150px;">{L_LAST_MESSAGE}</td>
 					</tr>
 				</table>
 			</div>
 		</div>
-		<div class="module_position" style="border-bottom:none;">
+		<div class="module_position">
 			<div class="module_contents forum_contents">
 				<table class="module_table forum_table">
 					# IF C_NO_MSG_NOT_READ #
@@ -182,5 +176,5 @@
 				<span style="float:right;">{PAGINATION}</span>&nbsp;
 			</div>
 		</div>
-	</div>
+
 		# INCLUDE forum_bottom #

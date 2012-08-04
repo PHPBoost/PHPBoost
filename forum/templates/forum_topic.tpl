@@ -143,7 +143,7 @@
 		-->
 		</script>
 
-		<div class="module_position" style="margin-bottom:15px;">
+		<div class="module_position">
 			<div class="module_top_l"></div>
 			<div class="module_top_r"></div>
 			<div class="module_top">
@@ -219,7 +219,7 @@
 		# ENDIF #
 
 		# START msg #		
-		<div class="module_position" id="d{msg.ID}" style="margin-bottom:15px;">
+		<div class="msg_position" id="d{msg.ID}">
 			<div class="msg_container{msg.CLASS_COLOR}">
 				<span id="m{msg.ID}" />
 				<div class="msg_top_row">
@@ -307,10 +307,10 @@
 			</div>	
 		</div>	
 		# END msg #
-		<div class="module_position">
-			<div class="module_bottom_l"></div>
-			<div class="module_bottom_r"></div>
-			<div class="module_bottom" style="text-align:center;">
+		<div class="msg_position">
+			<div class="msg_bottom_l"></div>
+			<div class="msg_bottom_r"></div>
+			<div class="msg_bottom" style="text-align:center;">
 				<span style="float:left;">
 					<a href="${relative_url(SyndicationUrlBuilder::rss('forum',ID))}" title="Rss"><img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/rss.png" alt="Rss" title="Rss" /></a>
 					&bull; {U_FORUM_CAT} <a href="{U_TITLE_T}"><span id="display_msg_title2">{DISPLAY_MSG}</span>{TITLE_T}</a> <span style="font-weight:normal"><em>{DESC}</em></span>
