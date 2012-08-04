@@ -180,6 +180,7 @@ class UpdateServices
 		$this->update_kernel();
 		$this->update_configurations();
 		$this->update_modules();
+		$this->delete_update_token();
 	}
 	
 	public function update_kernel()
