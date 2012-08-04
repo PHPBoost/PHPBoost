@@ -175,7 +175,7 @@ if (!empty($encoded_title) && $num_rows == 1)
 	//Affichage des commentaires si il y en a la possibilité
 	if ($page_infos['activ_com'] == 1 && (($special_auth && $User->check_auth($array_auth, READ_COM)) || (!$special_auth && $User->check_auth($config_authorizations, READ_COM))))
 	{	
-		$number_comments = CommentsManager::get_number_comments('pages', $page_infos['id']);
+		$number_comments = CommentsService::get_number_comments('pages', $page_infos['id']);
 		$Template->put_all(array(
 			'C_ACTIV_COM' => true,
 			'U_COM' => PagesUrlBuilder::get_link_item_com($page_infos['id']),
