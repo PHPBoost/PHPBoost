@@ -143,7 +143,7 @@
 		-->
 		</script>
 
-		<div class="module_position">
+		<div class="module_position" style="margin-bottom:15px;">
 			<div class="module_top_l"></div>
 			<div class="module_top_r"></div>
 			<div class="module_top">
@@ -219,7 +219,7 @@
 		# ENDIF #
 
 		# START msg #		
-		<div class="msg_position" id="d{msg.ID}">
+		<div class="module_position" id="d{msg.ID}" style="margin-bottom:15px;">
 			<div class="msg_container{msg.CLASS_COLOR}">
 				<span id="m{msg.ID}" />
 				<div class="msg_top_row">
