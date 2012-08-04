@@ -36,12 +36,5 @@ class InstallExtensionPointProvider extends ExtensionPointProvider
     {
     	return new CLICommandsList(array('install' => 'CLIInstallCommand'));
     }
-
-    public function url_mappings()
-    {
-        return new UrlMappings(array(
-            new DispatcherUrlMapping('/install/index.php')
-        ));
-    }
 }
 ?>

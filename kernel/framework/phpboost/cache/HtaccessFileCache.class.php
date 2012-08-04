@@ -94,7 +94,7 @@ class HtaccessFileCache implements CacheData
 
         $eps = AppContext::get_extension_provider_service();
         $mappings = $eps->get_extension_point(UrlMappingsExtensionPoint::EXTENSION_POINT);
-        $authorized_extension_point = array('kernel', 'user', 'install', 'update');
+        $authorized_extension_point = array('kernel', 'user');
 		foreach ($mappings as $id => $mapping_list)
 		{
 			if (in_array($id, $authorized_extension_point))
