@@ -81,7 +81,7 @@
 			<div class="msg_bottom_r"></div>
 			<div class="msg_bottom" style="text-align:center;">{PAGINATION}&nbsp;</div>
 		</div>
-	</div>
+	
 	<div class="module_bottom_l"></div>
 	<div class="module_bottom_r"></div>
 	<div class="module_bottom"></div>

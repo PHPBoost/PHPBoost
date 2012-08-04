@@ -29,7 +29,7 @@ div.block_top, table tr:first-child th {
     color:#FFFFFF;
     background:#366393;
     text-align:left;
-    font-size:0.75em;
+    font-size:11px;
     font-weight:normal;
     text-transform:uppercase;
 }
@@ -354,14 +354,14 @@ a.msg_link_pseudo:hover {
 
 .msg_position { /* Conteneur des messages */
     width:98%;
-    margin:auto;
-    background:#e8edf3;
-    margin-bottom:5px;
+    margin:5px auto;
+    background:#ECEFFA;
+    border: 1px solid #D1D4DF;
 }
 
 .msg_container,.msg_container2 {
     /* Case contenant l'ensemble du message */
-    background:#EEEEEE;
+    background:#ECEFFA;
     overflow:hidden !important;
     height:auto !important;
     overflow:visible;
@@ -371,7 +371,7 @@ a.msg_link_pseudo:hover {
 
 .msg_container2 {
     /*  Case contenant l'ensemble du message => Couleur alternative */
-    background:#e8edf3;
+    background:#ECEFFA;
 }
 
 /* Barre sup�rieur des messages */
@@ -380,7 +380,7 @@ a.msg_link_pseudo:hover {
 	margin-right:-3px;
 	height:34px;
 	width:29px;
-	background:#91BAD8 url(images/msg_top_l.png) no-repeat left;
+	background:#ECEFFA;
 	float:left;
 }
 
@@ -389,13 +389,13 @@ a.msg_link_pseudo:hover {
 	margin-left:-3px;
 	height:34px;
 	width:21px;
-	background:#91BAD8 url(images/msg_top_r.png) no-repeat right;
+	background:#ECEFFA;
 	float:right;
 }
 
 .msg_top {
 	height:25px;
-	background:#FFFFFF url(images/msg_top.png) repeat-x;
+	background:#ECEFFA;
 	padding-left:6px;
 	margin-left:20px;
 	margin-right:15px;
@@ -435,7 +435,7 @@ a.msg_link_pseudo:hover {
 }
 
 .msg_info_mbr { /* Case des informations du membre */
-    background:#EEEEEE;
+    background:#ECEFFA;
     width:127px;
     padding:4px;
     float:left;
@@ -445,19 +445,18 @@ a.msg_link_pseudo:hover {
 
 .msg_contents_container {
     /* Case contenant l'ensemble du message, infos membre + contenu */
-    margin-right:1px;
-    background:#EEEEEE;
+    background:#ECEFFA;
 }
 
 .msg_contents,.msg_contents2 { /* Case du message */
     margin-left:135px;
-    background:#EEEEEE;
+    background:#ECEFFA;
     padding:0px 5px;
     border-left:1px dotted #C4CED6;
 }
 
 .msg_contents2 { /* Case du message => Couleur alternative */
-    background:#EEEEEE;
+    background:#ECEFFA;
 }
 
 .msg_contents_overflow {
@@ -471,7 +470,7 @@ a.msg_link_pseudo:hover {
 }
 
 .msg_sign,.msg_sign2 { /* Signature du membre */
-   	background:#EEEEEE;
+   	background:#ECEFFA;
     padding:4px;
     font-size:11px;
     margin-left:135px;
@@ -479,7 +478,7 @@ a.msg_link_pseudo:hover {
 }
 
 .msg_sign2 { /* Signature du membre => Couleur alternative */
-    background:#EEEEEE;
+    background:#ECEFFA;
 }
 
 .msg_sign_overflow { /* Signature du membre, fixe la hauteur maximale */
@@ -501,8 +500,7 @@ a.msg_link_pseudo:hover {
 
 .msg_bottom {
     height:23px;
-    padding-top:6px;
-    padding-left:6px;
+    padding:6px 6px 0px 6px;
     border:none;
     background:none;
 }
@@ -510,7 +508,7 @@ a.msg_link_pseudo:hover {
 /* Modules
 --------------------------------------*/ /* Conteneur des modules */
 .module_position {
-    width:98%;
+    width:96%;
     margin:auto;
 }
 
@@ -556,6 +554,7 @@ a.msg_link_pseudo:hover {
     text-align:justify;
 	word-wrap:break-word;
 	overflow:auto;
+
 }
 
 .module_bottom_l { /* Barre inf�rieure des modules */}

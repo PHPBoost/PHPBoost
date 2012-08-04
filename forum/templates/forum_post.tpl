@@ -139,11 +139,11 @@
 							# ENDIF #
 							<dl>
 								<dt><label for="title">* {L_TITLE}</label></dt>
-								<dd><label><input type="text" size="65" maxlength="100" id="title" name="title" value="{TITLE}" class="text" /></label></dd>
+								<dd><label><input type="text" size="51" maxlength="100" id="title" name="title" value="{TITLE}" class="text" /></label></dd>
 							</dl>
 							<dl>
 								<dt><label for="desc">{L_DESC}</label></dt>
-								<dd><label><input type="text" size="50" maxlength="75" id="desc" name="desc" value="{DESC}" class="text" /></label></dd>
+								<dd><label><input type="text" size="51" maxlength="75" id="desc" name="desc" value="{DESC}" class="text" /></label></dd>
 							</dl>
 							
 							<label for="contents">* {L_MESSAGE}</label>
