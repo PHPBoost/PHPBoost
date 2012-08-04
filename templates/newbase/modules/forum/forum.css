@@ -2,7 +2,6 @@
 	width:100%;
 	border-collapse:collapse;
 	border:none;
-	background:#eeeeee;
 }
  
 /* Classe du lien du pseudo sur forum */
@@ -17,15 +16,24 @@ a.forum_link_pseudo:hover {
 /* Barre du titre du forum */
 .forum_title_l{
 	float:left;
+	width:5px;
+	height: 55px;
+	border-top:1px solid #D1D4DF;
+	border-left:1px solid #D1D4DF;
 }
 .forum_title_r{
 	float:right;
+	width:5px;
+	height: 55px;
+	border-top:1px solid #D1D4DF;
+	border-right:1px solid #D1D4DF;
 }
 .forum_title{
 	margin:auto;
 	height:55px;
 	color:#334455;
-	padding-top:5px;
+	background:#ECEFFA;
+	border-top:1px solid #D1D4DF;
 
 }
 .forum_title h2{ /* Titre du forum */
@@ -41,8 +49,10 @@ a.forum_link_pseudo:hover {
 	color:#334455;
 	padding:6px;
 	border: 2px solid #336397;
-	border-right:none;
-	border-left:none;
+	border-left:1px solid #D1D4DF;
+	border-right:1px solid #D1D4DF;
+	background:#ECEFFA;
+	
 
 }
 .forum_links a{ /* Couleur des liens */
@@ -57,8 +67,7 @@ a.forum_link_pseudo:hover {
 /* Barre des textes relatifs aux colonnes */
 .forum_text_column {	
 	height:20px;
-	border-left: 1px solid #CCCCCC;
-	border-right: 1px solid #CCCCCC;
+
 	font-size:11px;
 	color:#FFFFFF;	
 	text-align:center;
@@ -66,7 +75,7 @@ a.forum_link_pseudo:hover {
 }
 /* Case des liens sous-catégories */
 .forum_sous_cat{
-	background:#eeeeee;
+	background:#ECEFFA;
 	border-right:1px dotted #C4CED6;
 	padding:6px;
 }
@@ -74,7 +83,7 @@ a.forum_link_pseudo:hover {
 /* Case compteur message/topic */
 .forum_sous_cat_compteur{	
 	width:60px;
-	background:#eeeeee;
+	background:#ECEFFA;
 	border-right:1px dotted #C4CED6;
 	color:#000000;
 	text-align:center; 
@@ -82,7 +91,7 @@ a.forum_link_pseudo:hover {
 /* Case compteur dernier topic/dernier message */
 .forum_sous_cat_last{
 	width:150px;
-	background:#eeeeee;
+	background:#ECEFFA;
 	font-size:10px;
 	color:#000000;
 	text-align:center; 
@@ -113,6 +122,10 @@ a.forum_link_cat{
 	overflow:visible;
 	height:1%;
 	clear:both;
+	border-bottom:1px solid #D1D4DF;
+	border-left:1px solid #D1D4DF;
+	border-right:1px solid #D1D4DF;
+	background:#ECEFFA;
 }
 /* Fond des catégories dans l'administration */
 .forum_cat_admin{
@@ -125,6 +138,8 @@ a.forum_link_cat{
 .forum_contents{
 	padding:0px;
 	margin:0px;
+	border:1px solid #D1D4DF;
+	border-bottom:none;
 }
 .forum_cat_title{
 	float:left;
@@ -137,49 +152,68 @@ a.forum_mbrmsg_links { /* Couleur des liens pour les messages du membre */
 }
 
 .module_top_l{ /* Barre supérieur des modules */
-
+	float:left;
+	width:5px;
+	height:40px;
+	border-top:1px solid #D1D4DF;
+	border-left:1px solid #D1D4DF;
+	border-bottom:1px solid #D1D4DF;
 }
 .module_top_r{
-
+	float:right;
+	width:5px;
+	height:40px;
+	border-top:1px solid #D1D4DF;
+	border-right:1px solid #D1D4DF;
+	border-bottom:1px solid #D1D4DF;
 }
 .module_top{
-	height: 15px;
-    margin: 3px 10px 15px 10px;
-	padding:5px 5px 0px 5px;
-	border:none;
+	height:30px;
+	padding:10px 5px 0px 5px;
+	background:#ECEFFA;
+	border-top:1px solid #D1D4DF;
+	border-bottom:1px solid #D1D4DF;
 	color:#334455;
 	font-weight:normal;
 	text-indent:0px;
 }
 .module_top a{
 	color:#334455;
-	font-size:15px;
+	font-size:13px;
 }
 .module_contents{ /* Contenu des modules */
 	clear:both;
 }
 
 .module_position{
-	background:#eeeeee;
-    border: 1px solid #D6DEE7;
     
 }
 
 .module_bottom_l{ /* Barre inférieure des modules */
-
+	float:left;
+	width:5px;
+	height:25px;
+	border-top:1px solid #D1D4DF;
+	border-left:1px solid #D1D4DF;
 }
 .module_bottom_r{
-
+	float:right;
+	width:5px;
+	height:25px;
+	border-top:1px solid #D1D4DF;
+	border-right:1px solid #D1D4DF;
 }
 .module_bottom{
-	height: 15px;
-    margin: 3px 10px 15px 10px;
-    padding:5px 5px 0px 5px;
-	border:none;
+	height:20px;
+	padding:5px 5px 0px 5px;
+	background:#ECEFFA;
+	border-bottom:1px solid #D1D4DF;
+	border-top:1px solid #D1D4DF;
 	color:#334455;
 	font-weight:normal;
+	text-indent:0px;
 }
 .module_bottom a{
 	color:#334455;
-	font-size:15px;
+	font-size:13px;
 }
