@@ -50,7 +50,7 @@ class FormFieldTimezone extends FormFieldSimpleSelectChoice
 		for ($i = -12; $i <= 14; $i++)
 		{
 			$name = (!empty($i) ? ($i > 0 ? ' + ' . $i : ' - ' . -$i) : ' ' . $i);
-			$options[] = new FormFieldSelectChoiceOption('UTC' . ($i >= 1 ? ' +' : ' ') . $i, $i);
+			$options[] = new FormFieldSelectChoiceOption('GMT' . ($i >= 1 ? ' +' : ' ') . $i, $i);
 		}
 		return $options;
 	}

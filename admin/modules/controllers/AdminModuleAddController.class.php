@@ -32,7 +32,6 @@ class AdminModuleAddController extends AdminController
 	private $form;
 	private $submit_button;
 	
-	
 	public function execute(HTTPRequestCustom $request)
 	{
 		$this->init();
@@ -82,7 +81,7 @@ class AdminModuleAddController extends AdminController
 	private function build_view()
 	{
 		$modules_not_installed = $this->get_modules_not_installed();
-		foreach ($modules_not_installed as $name => $module)
+		foreach ($modules_not_installed as $id => $module)
 		{
 			$configuration = $module->get_configuration();
 			$author = $configuration->get_author();
@@ -121,7 +120,7 @@ class AdminModuleAddController extends AdminController
 				{
 					$module = new Module($folder_name);
 					$module_configuration = $module->get_configuration();
-					$modules_not_installed[$module_configuration->get_name()] = $module;
+					$modules_not_installed[$folder_name] = $module;
 				}
 				catch (IOException $ex)
 				{
