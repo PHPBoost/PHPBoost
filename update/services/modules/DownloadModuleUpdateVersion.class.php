@@ -81,7 +81,8 @@ class DownloadModuleUpdateVersion extends ModuleUpdateVersion
 		$result = $this->querier->select('SELECT download.id, download.nbr_com, download.lock_com, com.*
 		FROM ' . PREFIX . 'download download
 		JOIN ' . PREFIX . 'com com ON com.idprov = download.id
-		WHERE com.script = \'download\'');
+		WHERE com.script = \'download\'
+		ORDER BY id ASC');
 		$id_in_module = 0;
 		$id_topic = 0;
 		while ($row = $result->fetch())

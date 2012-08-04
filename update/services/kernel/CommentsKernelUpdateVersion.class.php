@@ -46,7 +46,7 @@ class CommentsKernelUpdateVersion extends KernelUpdateVersion
 	private function add_comments_rows()
 	{
 		$this->db_utils->add_column(PREFIX .'com', 'id_topic', array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0));
-		$this->db_utils->add_column(PREFIX .'com', 'name_visitor', array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"));
+		$this->db_utils->add_column(PREFIX .'com', 'pseudo', array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"));
 		$this->db_utils->add_column(PREFIX .'com', 'note', array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0));
 	}
 	
@@ -55,6 +55,7 @@ class CommentsKernelUpdateVersion extends KernelUpdateVersion
 		$fields = array(
 			'id_topic' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true),
 			'module_id' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
+			'topic_identifier' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "'default'"),	
 			'id_in_module' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'is_locked' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'number_comments' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
@@ -73,8 +74,8 @@ class CommentsKernelUpdateVersion extends KernelUpdateVersion
 			'id_topic' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'message' => array('type' => 'text', 'length' => 65000),
 			'user_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'name_visitor' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
-			'ip' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
+			'pseudo' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
+			'user_ip' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
 			'note' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'timestamp' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0)
 		);

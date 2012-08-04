@@ -51,7 +51,8 @@ class EventsModuleUpdateVersion extends ModuleUpdateVersion
 		$result = $this->querier->select('SELECT events.id, events.nbr_com, events.lock_com, com.*
 		FROM ' . PREFIX . 'events events
 		JOIN ' . PREFIX . 'com com ON com.idprov = events.id
-		WHERE com.script = \'events\'');
+		WHERE com.script = \'events\'
+		ORDER BY id ASC');
 		$id_in_module = 0;
 		$id_topic = 0;
 		while ($row = $result->fetch())

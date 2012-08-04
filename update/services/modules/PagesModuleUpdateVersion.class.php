@@ -54,7 +54,8 @@ class PagesModuleUpdateVersion extends ModuleUpdateVersion
 		$result = $this->querier->select('SELECT pages.id, pages.nbr_com, pages.lock_com, com.*
 		FROM ' . PREFIX . 'pages pages
 		JOIN ' . PREFIX . 'com com ON com.idprov = pages.id
-		WHERE com.script = \'pages\'');
+		WHERE com.script = \'pages\'
+		ORDER BY id ASC');
 		$id_in_module = 0;
 		$id_topic = 0;
 		while ($row = $result->fetch())

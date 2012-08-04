@@ -50,7 +50,8 @@ class NewsModuleUpdateVersion extends ModuleUpdateVersion
 		$result = $this->querier->select('SELECT news.id, news.nbr_com, news.lock_com, com.*
 		FROM ' . PREFIX . 'news news
 		JOIN ' . PREFIX . 'com com ON com.idprov = news.id
-		WHERE com.script = \'news\'');
+		WHERE com.script = \'news\'
+		ORDER BY id ASC');
 		$id_in_module = 0;
 		$id_topic = 0;
 		while ($row = $result->fetch())
