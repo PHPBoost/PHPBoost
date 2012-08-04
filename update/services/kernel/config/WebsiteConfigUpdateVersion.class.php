@@ -66,7 +66,8 @@ class WebsiteConfigUpdateVersion extends ConfigUpdateVersion
 
 		$user_accounts_config = UserAccountsConfig::load();
 		$user_accounts_config->set_default_lang($config['lang']);
-		$user_accounts_config->set_default_theme($config['theme']);
+		// TODO Default theme
+		//$user_accounts_config->set_default_theme($config['theme']);
 		$user_accounts_config->set_max_private_messages_number($config['pm_max']);
 		UserAccountsConfig::save();
 		

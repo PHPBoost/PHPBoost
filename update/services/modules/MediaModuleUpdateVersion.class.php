@@ -81,7 +81,8 @@ class MediaModuleUpdateVersion extends ModuleUpdateVersion
 		$result = $this->querier->select('SELECT media.id, media.nbr_com, media.lock_com, com.*
 		FROM ' . PREFIX . 'media media
 		JOIN ' . PREFIX . 'com com ON com.idprov = media.id
-		WHERE com.script = \'media\'');
+		WHERE com.script = \'media\'
+		ORDER BY id ASC');
 		$id_in_module = 0;
 		$id_topic = 0;
 		while ($row = $result->fetch())

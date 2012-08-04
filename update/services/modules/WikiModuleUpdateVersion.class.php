@@ -49,7 +49,8 @@ class WikiModuleUpdateVersion extends ModuleUpdateVersion
 		$result = $this->querier->select('SELECT wiki.id, wiki.nbr_com, wiki.lock_com, com.*
 		FROM ' . PREFIX . 'wiki_articles wiki
 		JOIN ' . PREFIX . 'com com ON com.idprov = wiki.id
-		WHERE com.script = \'wiki_articles\'');
+		WHERE com.script = \'wiki_articles\'
+		ORDER BY id ASC');
 		$id_in_module = 0;
 		$id_topic = 0;
 		while ($row = $result->fetch())

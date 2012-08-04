@@ -51,7 +51,8 @@ class CalendarModuleUpdateVersion extends ModuleUpdateVersion
 		$result = $this->querier->select('SELECT calendar.id, calendar.nbr_com, calendar.lock_com, com.*
 		FROM ' . PREFIX . 'calendar calendar
 		JOIN ' . PREFIX . 'com com ON com.idprov = calendar.id
-		WHERE com.script = \'calendar\'');
+		WHERE com.script = \'calendar\'
+		ORDER BY id ASC');
 		$id_in_module = 0;
 		$id_topic = 0;
 		while ($row = $result->fetch())

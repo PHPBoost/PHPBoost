@@ -81,7 +81,8 @@ class WebModuleUpdateVersion extends ModuleUpdateVersion
 		$result = $this->querier->select('SELECT web.id, web.idcat, web.nbr_com, web.lock_com, com.*
 		FROM ' . PREFIX . 'web web
 		JOIN ' . PREFIX . 'com com ON com.idprov = web.id
-		WHERE com.script = \'web\'');
+		WHERE com.script = \'web\'
+		ORDER BY id ASC');
 		$id_in_module = 0;
 		$id_topic = 0;
 		while ($row = $result->fetch())

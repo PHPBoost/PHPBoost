@@ -81,7 +81,8 @@ class GalleryModuleUpdateVersion extends ModuleUpdateVersion
 		$result = $this->querier->select('SELECT gallery.id, gallery.idcat, gallery.nbr_com, gallery.lock_com, com.*
 		FROM ' . PREFIX . 'gallery gallery
 		JOIN ' . PREFIX . 'com com ON com.idprov = gallery.id
-		WHERE com.script = \'gallery\'');
+		WHERE com.script = \'gallery\'
+		ORDER BY id ASC');
 		$id_in_module = 0;
 		$id_topic = 0;
 		while ($row = $result->fetch())
