@@ -218,7 +218,7 @@ class CommentsService
 					'L_LEVEL' => UserService::get_level_lang(!empty($row['level']) ? $row['level'] : '-1'),
 				));
 				
-				$template->put('C_IS_LOCKED', $row['is_locked']);
+				$template->put('C_IS_LOCKED', (bool)$row['is_locked']);
 			}
 		}
 
@@ -226,7 +226,6 @@ class CommentsService
 			//TODO
 			'C_IS_LOCKED' => false,
 			//TODO
-			
 			'MODULE_ID' => $module_id,
 			'ID_IN_MODULE' => $id_in_module,
 			'TOPIC_IDENTIFIER' => $topic_identifier

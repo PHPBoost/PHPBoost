@@ -31,24 +31,47 @@ class AjaxLockCommentsTopicController extends AbstractCommentsController
 	{
 		parent::execute($request);
 		
-		$comments_lang = LangLoader::get('comments-common');
-		if ($this->get_authorizations()->is_authorized_moderation())
-		{
-			CommentsManager::lock_topic($this->module_id, $this->id_in_module, $this->topic_identifier);
+		try {
+			$locked = $request->get_postbool('locked');
 			
-			$object = array(
-				'success' => true,
-				'message' => $comments_lang['comment.lock.success']
-			);
-		}
-		else
-		{
+			$comments_lang = LangLoader::get('comments-common');
+			if ($this->get_authorizations()->is_authorized_moderation())
+			{
+				if (!$locked)
+				{
+					CommentsManager::lock_topic($this->module_id, $this->id_in_module, $this->topic_identifier);
+				
+					$object = array(
+						'success' => true,
+						'locked' => true,
+						'message' => $comments_lang['comment.lock.success']
+					);
+				}
+				else
+				{
+					CommentsManager::unlock_topic($this->module_id, $this->id_in_module, $this->topic_identifier);
+				
+					$object = array(
+						'success' => true,
+						'locked' => false,
+						'message' => $comments_lang['comment.unlock.success']
+					);
+				}
+			}
+			else
+			{
+				$object = array(
+					'success' => false,
+					'message' => $comments_lang['comment.lock.not-authorized']
+				);
+			}
+		} catch (UnexistingHTTPParameterException $e) {
 			$object = array(
 				'success' => false,
 				'message' => $comments_lang['comment.lock.not-authorized']
 			);
 		}
-		
+
 		return new JSONResponse($object);
 	}
 }

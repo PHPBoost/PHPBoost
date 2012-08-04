@@ -38,26 +38,26 @@ div#comment-rating .negative{
 	background:#39ab01;
 }
 
-div#comment {
+.comment {
 	width:98%;
 	margin-bottom:20px;
 }
 
-div#comment-date {
+.comment-date {
 	margin-left: 10px;
 }
 
-div#comment-user_infos {
+.comment-user_infos {
 	text-align:center;
 	width:150px;
 	float:left;
 }
 
-div#comment-content {
+.comment-content {
 	margin-left:180px;
 }
 
-div#comment-message {
+.comment-message {
 	background:#e8edf3;
 	padding: 10px 10px 10px 10px;
 	margin-top: 10px;
@@ -67,8 +67,8 @@ div#comment-message {
 </style>
 
 # START comments #
-	<div id="comment">
-		<div id="comment-user_infos">
+	<div class="comment">
+		<div class="comment-user_infos">
 			<div id="comment-pseudo">
 				# IF comments.C_VISITOR #
 					{comments.PSEUDO}
@@ -76,11 +76,11 @@ div#comment-message {
 					<a href="{comments.U_PROFILE}">{comments.PSEUDO}</a>
 				# ENDIF #
 			</div>
-			<div id="comment-level">{comments.L_LEVEL}</div>
+			<div class="comment-level">{comments.L_LEVEL}</div>
 			<img src="{comments.U_AVATAR}">
 		</div>
-		<div id="comment-content">
-			<div id="comment-date">
+		<div class="comment-content">
+			<div class="comment-date">
 				{comments.DATE}
 				# IF comments.C_MODERATOR #
 				<a href="{comments.U_EDIT}">
@@ -91,7 +91,7 @@ div#comment-message {
 				</a>
 				# ENDIF #
 			</div>
-			<div id="comment-message">
+			<div class="comment-message">
 				{comments.MESSAGE}
 				<div id="comment-rating">
 					<div class="positive_vote_button">+</div>
@@ -100,7 +100,6 @@ div#comment-message {
 			</div>
 		</div>
 	</div>
-	
 # END comments #
 
 	

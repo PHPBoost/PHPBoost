@@ -1,14 +1,52 @@
-<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/lib/js/phpboost/CommentsService.js"></script>
+
 <script type="text/javascript">
 <!--
-	var CommentsService = new CommentsService();
 	Event.observe(window, 'load', function() {
+		# IF C_DISPLAY_VIEW_ALL_COMMENTS #
 		$('refresh_comments').observe('click', function() {
-			CommentsService.refresh_comments_list(${escapejs(MODULE_ID)}, ${escapejs(ID_IN_MODULE)}, ${escapejs(TOPIC_IDENTIFIER)});
+			new Ajax.Updater('comments_list', PATH_TO_ROOT + '/kernel/framework/ajax/dispatcher.php?url=/comments/display/', {
+				parameters: {module_id: ${escapejs(MODULE_ID)}, id_in_module: ${escapejs(ID_IN_MODULE)}, topic_identifier: ${escapejs(TOPIC_IDENTIFIER)})},
+				insertion: Insertion.Bottom,
+				onComplete: function() { 
+					$('refresh_comments').remove() 
+				}
+			})
+		});
+		# ENDIF #
+
+		var is_locked = true;
+		
+		$('comments_locked').observe('click', function() {
+			new Ajax.Request(PATH_TO_ROOT + '/kernel/framework/ajax/dispatcher.php?url=/comments/lock/', {
+				  method: 'post',
+				  parameters: {locked: is_locked, module_id: ${escapejs(MODULE_ID)}, id_in_module: ${escapejs(ID_IN_MODULE)}, topic_identifier: ${escapejs(TOPIC_IDENTIFIER)}},
+				  onComplete: function(response) {				  
+					  if (response.responseJSON.success) {
+						if (response.responseJSON.locked) {
+							$('comments_locked').src = PATH_TO_ROOT + '/templates/' + THEME + '/images/' + LANG + '/lock.png';
+							is_locked = true;
+						}
+						else {
+							$('comments_locked').src = PATH_TO_ROOT + '/templates/' + THEME + '/images/' + LANG + '/unlock.png';
+							is_locked = false;
+						}
+					  }
+					  alert(response.responseJSON.message);
+				  }
+			});
 		});
 	});
 //-->
 </script>
+
+
+<style>
+<!--
+img#comments_locked {
+	cursor:pointer;
+}
+-->
+</style>
 
 # IF C_DISPLAY_FORM #
 	<div id="comment_form">
@@ -19,16 +57,14 @@
 # INCLUDE KEEP_MESSAGE #
 
 # IF C_IS_LOCKED #
-<img id="locked_picture" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/unlock.png">
+<img id="comments_locked" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/unlock.png">
 # ELSE #
-<img id="locked_picture" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/lock.png">
+<img id="comments_locked" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/lock.png">
 # ENDIF #
 
 <div id="comments_list">
 # INCLUDE COMMENTS_LIST #
 </div>
-
-</br>
 
 # IF C_DISPLAY_VIEW_ALL_COMMENTS #
 <div style="text-align:center;">
