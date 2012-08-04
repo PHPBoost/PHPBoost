@@ -10,13 +10,17 @@ table {
 
 /* Conteneur */
 div.block_container {
-    width:auto;
+	width:auto;
 	margin:10px auto;
-    padding:5px;
+	border: 1px solid #CCCCCC;
+	border-top:2px solid #366393;
+	border-bottom: 1px solid #99B1CB;
+	background:#F2F8FF;
 }
 div.block_contents {
-    width:auto;
-    padding:10px;
+	width:auto;
+	padding:10px;
+	border:none;
 	text-align:justify;
 } 
 /* Ent�te de conteneur et des tableaux */
@@ -42,13 +46,9 @@ table caption a {
 	font-size: inherit;	
 }
 
-table th:first-child{
+table th:first-child{ }
 
-}
-
-table th:last-child{
-
-}
+table th:last-child{ }
 
 table th.row1 a {
 	vertical-align: middle;
@@ -159,7 +159,7 @@ input.submit, button.submit{
 	color:#0E2A48;	
 	font-weight:bold;
 	font-size:10px;
-	background: url(images/btn_valid.png) repeat-x 0% 100%;
+	background: url(images/bouton.png) repeat-x;
     border: 1px solid #bac5ca;
     border-radius:4px;
     margin-top:5px;
@@ -167,9 +167,8 @@ input.submit, button.submit{
 
 input.submit:hover, button.submit:hover{
 	cursor:pointer;
-	background: url(images/btn_valid.png) repeat-x 0% 0%;
+	background: url(images/bouton.png) repeat-x;
 }
-
 
 input[type=checkbox] { 
 	border:none;
@@ -189,7 +188,7 @@ input.reset, button.reset{
 	height: 20px;
 	padding:0px 5px;
 	font-family:Verdana, 'Bitstream Vera Sans', Times, serif;
-	background: url(images/btn_reset.png) repeat-x 0% 100%;
+	background: url(images/bouton.png) repeat-x;
     border: 1px solid #c9c9c9;
     border-radius:4px;
     color: #cc0000;
@@ -200,10 +199,8 @@ input.reset, button.reset{
 
 input.reset:hover, button.reset:hover{
 	cursor:pointer;
-	background: url(images/btn_reset.png) repeat-x 0% 0%;	
+	background: url(images/bouton.png) repeat-x;	
 }
-
-
 
 optgroup, select{
 	font-family:"Lucida Grande","Lucida Sans Unicode",Verdana,'Bitstream Vera Sans',Times,serif;
@@ -517,13 +514,8 @@ a.msg_link_pseudo:hover {
     margin:auto;
 }
 
-.module_top_l { /* Barre sup�rieure des modules */
-    
-}
-
-.module_top_r {
-    
-}
+.module_top_l { /* Barre sup�rieure des modules */}
+.module_top_r {}
 
 .module_top {
     height:18px;
@@ -534,9 +526,7 @@ a.msg_link_pseudo:hover {
     border-bottom:2px solid #336397;
 }
 
-.module_top a {
-    
-}
+.module_top a {}
 
 .module_top_title {
 	float:left;
@@ -568,13 +558,8 @@ a.msg_link_pseudo:hover {
 	overflow:auto;
 }
 
-.module_bottom_l { /* Barre inf�rieure des modules */
-    
-}
-
-.module_bottom_r {
-    
-}
+.module_bottom_l { /* Barre inf�rieure des modules */}
+.module_bottom_r {}
 
 .module_bottom {
     height:22px;
