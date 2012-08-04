@@ -113,7 +113,7 @@
 						</tr>
 						# END convers.no_pm #	
 						<tr>
-							<td colspan="6" class="row3">
+							<td colspan="6" style="padding:8px 6px;">
 								<div style="float:left;">&nbsp;<input type="checkbox" id="validc" onclick="check_convers(this.checked, 'd');" /> &nbsp;<input type="submit" name="valid" value="{L_DELETE}" class="submit" /></div>
 								<div style="float:right;">{convers.PAGINATION}&nbsp;</div>
 							</td>
