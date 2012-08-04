@@ -272,14 +272,29 @@ class Environment
 		
 		$user_theme = ThemeManager::get_theme($current_user->get_theme());
 		$default_theme = $user_accounts_config->get_default_theme();
-		if (($user_accounts_config->is_users_theme_forced() || $user_theme == null || !$user_theme->check_auth() || !$user_theme->is_activated()) && $user_theme->get_id() !== $default_theme)
+		
+		if ($user_theme !== null)
+		{
+			if (($user_accounts_config->is_users_theme_forced() || !$user_theme->check_auth() || !$user_theme->is_activated()) && $user_theme->get_id() !== $default_theme)
+			{
+				AppContext::get_current_user()->update_theme($default_theme);
+			}
+		}
+		else
 		{
 			AppContext::get_current_user()->update_theme($default_theme);
 		}
 		
 		$user_lang = LangManager::get_lang($current_user->get_locale());
 		$default_lang = $user_accounts_config->get_default_lang();
-		if (($user_lang == null || !$user_lang->check_auth() || !$user_lang->is_activated()) && $user_lang->get_id() !== $default_lang)
+		if ($user_lang !== null)
+		{
+			if ((!$user_lang->check_auth() || !$user_lang->is_activated()) && $user_lang->get_id() !== $default_lang)
+			{
+				AppContext::get_current_user()->update_lang($default_lang);
+			}
+		}
+		else
 		{
 			AppContext::get_current_user()->update_lang($default_lang);
 		}
