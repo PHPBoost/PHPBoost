@@ -156,7 +156,7 @@ input.text{
 }
 
 input.submit, button.submit{
-	height: 24px;
+	height: 20px;
 	padding:0px 5px;
 	font-family:Verdana, 'Bitstream Vera Sans', Times, serif;
 	color:#0E2A48;	
@@ -189,7 +189,7 @@ input.file{
 }
 
 input.reset, button.reset{
-	height: 23px;
+	height: 20px;
 	padding:0px 5px;
 	font-family:Verdana, 'Bitstream Vera Sans', Times, serif;
 	background: url(images/btn_reset.png) repeat-x 0% 100%;

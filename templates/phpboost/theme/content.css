@@ -10,14 +10,13 @@ table {
 
 /* Conteneur */
 div.block_container {
-    width:auto;
-	margin:10px auto;
-    border:1px #cccccc solid;
-    background:#F7F8F5 url(images/contentbg.png) repeat-x;
-    -moz-border-radius:12px;
-    -khtml-border-radius:12px;
-    -webkit-border-radius:12px;
-    border-radius:12px;
+    width: auto;
+	margin: 10px auto;
+	border: 1px solid #CCC;
+	border-top: 2px solid #366393;
+	border-bottom: 1px solid #99B1CB;
+	background: #F2F8FF;
+	padding: 5px;
 }
 div.block_contents {
     width:auto;
