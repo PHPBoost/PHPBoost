@@ -39,7 +39,7 @@ class FaqConfigUpdateVersion extends ConfigUpdateVersion
 		$faq_config = FaqConfig::load();
 		$faq_config->set_faq_name($config['faq_name']);
 		$faq_config->set_number_columns($config['num_cols']);
-		$faq_config->set_display_mode($config['display_block']);
+		$faq_config->set_display_mode($config['display_block'] ? 'block' : 'inline');
 		$faq_config->set_authorizations($config['global_auth']);
 		$faq_config->set_root_cat_display_mode($config['root']['display_mode']);
 		$faq_config->set_root_cat_description($config['root']['description']);
