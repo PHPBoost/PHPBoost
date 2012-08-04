@@ -278,6 +278,7 @@ var BBcodeEditor_Core = Class.create(
 		return function()
 		{
 			this.toggleElement('bb_block_'+index+'_'+this.element);
+			$(index+this.element).options[0].selected = true;
 		}.bind(this);
 	},
 	
@@ -338,7 +339,8 @@ var BBcodeEditor_Core = Class.create(
 		{
 			var value = elt.value;
 			var tags = this.getTags(code+'='+value, code);
-			this.textarea.insert(tags.begin, tags.end, this.element);                                       
+			this.textarea.insert(tags.begin, tags.end, this.element);    
+			elt.options[0].selected = true;
 		}
 	},
 	
@@ -357,7 +359,8 @@ var BBcodeEditor_Core = Class.create(
 		{
 			var value = elt.value;
 			var tags = this.getTags(value, value);
-			this.textarea.insert(tags.begin, tags.end, this.element);                                       
+			this.textarea.insert(tags.begin, tags.end, this.element);
+			elt.options[0].selected = true;
 		}
 	},
 	
@@ -535,7 +538,7 @@ var BBcodeEditor_Core = Class.create(
 			}
 			if(menu)
 			{
-				menu.observe('mouseleave', function(e) { 
+				menu.observe('mouseleave', function(e) {
 					if(this.id)
 						Element.fade.delay(0.5, this, {duration: 0.1});
 				});
@@ -641,7 +644,10 @@ var BBcodeEditor_Core = Class.create(
 			'display':'none'
 		});
 				
-		var elt = new Element('div', {'class':'bbcode_block'});
+		var elt = new Element('div', {
+		'class':'bbcode_block',
+		'javascript':'Element.fade.delay(0.5, this, {duration: 0.1});'
+		});
 		elt.setStyle({'marginLeft':'120px'});
 		var sel = new Element('select', {'id': index+this.element});
 		var fn = this.callbackChangeSelect(index, index);
