@@ -50,7 +50,7 @@ class WikiHomePageExtensionPoint implements HomePageExtensionPoint
 	
 	private function get_view()
 	{
-		global $User, $Template, $Cache, $Bread_crumb, $_WIKI_CONFIG, $_WIKI_CATS, $LANG;
+		global $User, $Template, $Cache, $Bread_crumb, $_WIKI_CONFIG, $_WIKI_CATS, $LANG, $encoded_title;
 
 		load_module_lang('wiki');
 		include_once(PATH_TO_ROOT . '/wiki/wiki_functions.php');
