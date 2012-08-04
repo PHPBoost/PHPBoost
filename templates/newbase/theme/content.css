@@ -17,9 +17,6 @@ div.block_container {
 div.block_contents {
     width:auto;
     padding:10px;
-    border: 1px solid #CCCCCC;
-    border-bottom: 1px solid #99B1CB;
-    background:#EEEEEE;
 	text-align:justify;
 } 
 /* Ent�te de conteneur et des tableaux */
