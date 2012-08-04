@@ -127,8 +127,8 @@ else
 		'AUTH_WRITE' => Authorizations::generate_select(AUTH_WRITE, $faq_config->get_authorizations()),
 		'FAQ_NAME' => $faq_config->get_faq_name(),
 		'NUM_COLS' => $faq_config->get_number_columns(),
-		'SELECTED_BLOCK' => $faq_config->get_display_mode() == 'block' ? ' selected="selected"' : '',
-		'SELECTED_INLINE' => $faq_config->get_display_mode() == 'inline' ? ' selected="selected"' : ''
+		'SELECTED_BLOCK' => $faq_config->get_display_mode() == FaqConfig::DISPLAY_MODE_BLOCK ? ' selected="selected"' : '',
+		'SELECTED_INLINE' => $faq_config->get_display_mode() == FaqConfig::DISPLAY_MODE_INLINE ? ' selected="selected"' : ''
 	));
 	
 	$Template->pparse('admin_faq');
