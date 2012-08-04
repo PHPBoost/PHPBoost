@@ -47,16 +47,13 @@ div#admin_main {
 
 /* Conteneurs */
 div#admin_contents {
-    margin:auto;
-    margin-left:202px;
-    border:1px #cccccc solid;
-    border-spacing:1px;
-    padding:10px;
-    background:#F7F8F5 url(images/contentbg.png) repeat-x;
-    -moz-border-radius:12px;
-    -khtml-border-radius:12px;
-    -webkit-border-radius:12px;
-    border-radius:12px;
+    margin: auto;
+	margin-left: 202px;
+	border-spacing: 1px;
+	padding: 10px;
+	background: white;
+	border: 1px #BEBEBE solid;
+	border-bottom: 2px solid #99B1CB;
 }
 
 html>body div#admin_contents {
@@ -66,20 +63,17 @@ html>body div#admin_contents {
 
 /* Menu de gauche */
 div#admin_quick_menu {
-    float:left;
-    width:170px;
-    text-align:center;
-    padding-top:5px;
-    margin:auto;
-    border:1px #cccccc solid;
-    border-spacing:1px;
-    padding:10px;
-    padding-bottom:20px;
-    background:#F7F8F5 url(images/contentbg.png) repeat-x;
-    -moz-border-radius:12px;
-    -khtml-border-radius:12px;
-    -webkit-border-radius:12px;
-    border-radius:12px;
+    float: left;
+	width: 170px;
+	text-align: center;
+	padding-top: 5px;
+	margin: auto;
+	border-spacing: 1px;
+	padding: 10px;
+	padding-bottom: 20px;
+	background: white;
+	border: 1px #BEBEBE solid;
+	border-bottom: 2px solid #99B1CB;
 }
 
 div#admin_quick_menu ul {
@@ -95,36 +89,26 @@ div#admin_quick_menu li {
 }
 
 div#admin_quick_menu li.title_menu {
-    font-family:Verdana, 'Bitstream Vera Sans', Times, serif;
-    text-transform:uppercase;
-    font-weight:bold;
-    font-size:0.75em;
-	background:#5D7C94 url(images/msg_top_row.png) repeat-x;
-    border:1px solid #CCCCCC;
-    color:#FFFFFF;
-    padding:3px 0px;
-	margin-bottom:20px;
-    -moz-border-radius:12px;
-    -khtml-border-radius:12px;
-    -webkit-border-radius:12px;
-    border-radius:12px;
+    font-family: Verdana, 'Bitstream Vera Sans', Times, serif;
+	text-transform: uppercase;
+	font-weight: bold;
+	font-size: 11px;
+	color: #0E2A48;
+	padding: 6px 0px;
+	margin-bottom: 20px;
+	border-bottom: 2px solid #336397;
 }
 
 div#admin_quick_menu li a.quick_link {
-    font-family:Verdana, 'Bitstream Vera Sans', Times, serif;
-    text-transform:uppercase;
-    font-weight:bold;
-    font-size:0.75em;
-    color:#FFFFFF;
-	background:#5D7C94 url(images/msg_top_row.png) repeat-x;
-    border:1px solid #CCCCCC;
-    padding:3px 8px;
-    text-decoration:none;
-    line-height:2.2em;
-    -moz-border-radius:5px;
-    -khtml-border-radius:5px;
-    -webkit-border-radius:5px;
-    border-radius:5px;
+    font-family: Verdana, 'Bitstream Vera Sans', Times, serif;
+	text-transform: none;
+	font-weight: normal;
+	font-size: 10px;
+	color: #0E2A48;
+	background: none repeat scroll 0 0 #F2F5F8;
+	border: 1px solid #D6DEE7;
+	padding: 3px 8px;
+	text-decoration: none;
 }
 
 /* Tableaux de l'administration */
