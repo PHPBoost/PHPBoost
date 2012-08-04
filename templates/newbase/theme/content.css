@@ -12,16 +12,14 @@ table {
 div.block_container {
     width:auto;
 	margin:10px auto;
-    border: 1px solid #CCCCCC;
-    border-top:2px solid #366393;
-    border-bottom: 1px solid #99B1CB;
-    background:#F2F8FF;
     padding:5px;
 }
 div.block_contents {
     width:auto;
     padding:10px;
-	border:none;
+    border: 1px solid #CCCCCC;
+    border-bottom: 1px solid #99B1CB;
+    background:#EEEEEE;
 	text-align:justify;
 } 
 /* Ent�te de conteneur et des tableaux */
@@ -158,15 +156,23 @@ input.text{
 }
 
 input.submit, button.submit{
-	padding:1px 2px;
+	height: 24px;
+	padding:0px 5px;
 	font-family:Verdana, 'Bitstream Vera Sans', Times, serif;
-	color:#515C68;	
+	color:#0E2A48;	
 	font-weight:bold;
 	font-size:10px;
-	background: none repeat scroll 0 0 #E8EDF3;
-    border: 1px solid #BEBEBE;
+	background: url(images/btn_valid.png) repeat-x 0% 100%;
+    border: 1px solid #bac5ca;
+    border-radius:4px;
     margin-top:5px;
 }
+
+input.submit:hover, button.submit:hover{
+	cursor:pointer;
+	background: url(images/btn_valid.png) repeat-x 0% 0%;
+}
+
 
 input[type=checkbox] { 
 	border:none;
@@ -183,20 +189,24 @@ input.file{
 }
 
 input.reset, button.reset{
-	padding:1px 2px;
+	height: 23px;
+	padding:0px 5px;
 	font-family:Verdana, 'Bitstream Vera Sans', Times, serif;
-	background: none repeat scroll 0 0 #E8EDF3;
-    border: 1px solid #BEBEBE;
-    color: #336397;
+	background: url(images/btn_reset.png) repeat-x 0% 100%;
+    border: 1px solid #c9c9c9;
+    border-radius:4px;
+    color: #cc0000;
 	font-weight:bold;
 	font-size:10px;
+	
 }
 
-input.reset:hover, button.reset:hover, input.submit:hover, button.submit:hover{
-	border:1px solid #334455;
+input.reset:hover, button.reset:hover{
 	cursor:pointer;
-	color:#336397;
+	background: url(images/btn_reset.png) repeat-x 0% 0%;	
 }
+
+
 
 optgroup, select{
 	font-family:"Lucida Grande","Lucida Sans Unicode",Verdana,'Bitstream Vera Sans',Times,serif;
@@ -223,8 +233,8 @@ legend {
 	font-family:"Lucida Grande","Lucida Sans Unicode",Verdana,'Bitstream Vera Sans',Times,serif;
 	font-size:0.85em;
 	font-weight:bold;
-	background:#c4d0de;
-	border:1px solid #99B1CB;
+	background:#d7dfe9;
+	border:1px solid #bbcde0;
 	padding:2px 10px;
 	margin-top:-0.4em;
 	margin-left:0.5em;
