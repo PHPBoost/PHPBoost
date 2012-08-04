@@ -17,6 +17,8 @@
 			<div class="module_top">
 				&bull; <a href="index.php{SID}">{L_FORUM_INDEX}</a> &raquo; {U_FORUM_CAT}
 			</div>
+		</div>
+		
 			<div class="module_contents">
 				<form action="search.php?token={TOKEN}#search_forum" method="post" onsubmit="return check_form();" class="fieldset_content">
 					<fieldset>
@@ -108,6 +110,8 @@
 					# END list #
 				</form>			
 			</div>	
+			
+		<div class="module_position" style="margin-bottom:15px;">	
 			<div class="module_bottom_l"></div>		
 			<div class="module_bottom_r"></div>
 			<div class="module_bottom">

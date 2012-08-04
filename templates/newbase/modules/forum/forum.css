@@ -153,7 +153,7 @@ a.forum_mbrmsg_links { /* Couleur des liens pour les messages du membre */
 }
 .module_top a{
 	color:#334455;
-	font-size:16px;
+	font-size:15px;
 }
 .module_contents{ /* Contenu des modules */
 	clear:both;
@@ -181,5 +181,5 @@ a.forum_mbrmsg_links { /* Couleur des liens pour les messages du membre */
 }
 .module_bottom a{
 	color:#334455;
-	font-size:16px;
+	font-size:15px;
 }

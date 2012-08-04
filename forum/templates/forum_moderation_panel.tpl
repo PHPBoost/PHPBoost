@@ -4,6 +4,7 @@
 			<div class="module_top_l"></div>		
 			<div class="module_top_r"></div>
 			<div class="module_top">&bull; <a href="index.php{SID}">{FORUM_NAME}</a> &raquo; <a href="moderation_forum.php{SID}">{L_MODERATION_FORUM}</a> {U_MODERATION_FORUM_ACTION}</div>
+		</div>
 			<div class="module_contents">
 				<table class="module_table">
 					<tr>							
@@ -119,7 +120,7 @@
 				
 					<table class="module_table">
 						# START alert_list #
-						<tr>
+						<tr >
 							<td class="row1" style="text-align:center;width:25px;">
 								<input type="checkbox" name="{alert_list.ID}" />
 							</td>
@@ -368,7 +369,7 @@
 				<form action="moderation_forum{U_ACTION_INFO}" method="post">		
 					<table class="module_table">
 						<tr>
-							<td class="row1" style="width:30%;">
+							<td class="row1" style="width:32%;text-align: right;background:none;border:none;">
 								{L_LOGIN}
 							</td>
 							<td class="row2">
@@ -376,7 +377,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td class="row1">
+							<td class="row1" style="width:32%;text-align: right;background:none;border:none;">
 								{L_PM}
 							</td>
 							<td class="row2">
@@ -391,7 +392,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td class="row1">
+							<td class="row1" style="background:none;border:none;">
 								<label for="new_info">{L_INFO_EXPLAIN}</label>
 							</td>
 							<td class="row2">
@@ -410,6 +411,7 @@
 
 				<br /><br />
 			</div>	
+		<div class="module_position" style="margin-bottom: 15px;">
 			<div class="module_bottom_r"></div>	
 			<div class="module_bottom_l"></div>
 			<div class="module_bottom text_strong">
