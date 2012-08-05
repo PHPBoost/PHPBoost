@@ -74,18 +74,16 @@
 /* Lien du site
 --------------------------------------*/
 a {
-	color:#3F5164;
+	color:#2F5B8A;
     text-decoration:none;
     font-size:12px;
     font-weight:bold;
-    font-family:"Trebuchet MS", Verdana, Times, serif;
 }
 
 a:hover {
     color:#718396;
     text-decoration:underline;
     font-weight:bold;
-    font-family:"Trebuchet MS", Verdana, Times, serif;
 }
 
 .img_link, .img_link:hover{
