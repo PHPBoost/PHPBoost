@@ -40,7 +40,6 @@ div#admin_main {
 div#admin_contents {
     margin:auto;
     margin-left:202px;
-
     border-spacing:1px;
     padding:10px;
     background:#FFFFFF;
@@ -60,7 +59,6 @@ div#admin_quick_menu {
     text-align:center;
     padding-top:5px;
     margin:auto;
-    
     border-spacing:1px;
     padding:10px;
     padding-bottom:20px;
@@ -79,7 +77,6 @@ div#admin_quick_menu li {
     display:block;
     width:auto;
     padding:15px 0px;
-    
 }
 
 div#admin_quick_menu li.title_menu {
@@ -186,11 +183,6 @@ h2 {
     font-size:125%;
 }
 
-pre {
-    margin:0px;
-    font-family:monospace;
-}
-
 .center {
     text-align:center;
 }
@@ -198,6 +190,12 @@ pre {
 .em {
     color:#666666;
     background-color:#cccccc;
+}
+
+pre {
+    margin:0px;
+    font-family:monospace;
+    color:#000;
 }
 
 div#sub_header_admin .dynamic_menu h5 {
