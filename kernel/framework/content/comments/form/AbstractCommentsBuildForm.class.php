@@ -63,15 +63,5 @@ abstract class AbstractCommentsBuildForm
 	{
 		$this->submit_button = $submit_button;
 	}
-	
-	protected function set_message_response($message_helper)
-	{
-		$this->message_response = $message_helper;
-	}
-	
-	public function get_message_response()
-	{
-		return $this->message_response;
-	}
 }
 ?>

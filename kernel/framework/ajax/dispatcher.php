@@ -32,8 +32,7 @@ require_once PATH_TO_ROOT . '/kernel/init.php';
 $url_controller_mappers = array(
 	//new UrlControllerMapper('', '`^/category/display/?$`'),
 	new UrlControllerMapper('AjaxCommentsNotationController', '`^/comments/notation/?$`'),
-	new UrlControllerMapper('AjaxCommentsDisplayController', '`^/comments/display/?$`'),
-	new UrlControllerMapper('AjaxLockCommentsTopicController', '`^/comments/lock/?$`'),
+	new UrlControllerMapper('AjaxCommentsDisplayController', '`^/comments/display/?$`')
 );
 
 DispatchManager::dispatch($url_controller_mappers);

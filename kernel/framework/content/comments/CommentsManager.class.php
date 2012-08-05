@@ -51,16 +51,17 @@ class CommentsManager
 		
 		if(self::$user->check_level(User::MEMBER_LEVEL))
 		{
-			CommentsDAO::add_comment($id_topic, $message, self::$user->get_id(), self::$user->get_pseudo(), USER_IP);
+			$id_comment = CommentsDAO::add_comment($id_topic, $message, self::$user->get_id(), self::$user->get_pseudo(), USER_IP);
 		}
 		else
 		{
-			CommentsDAO::add_comment($id_topic, $message, self::$user->get_id(), $pseudo, USER_IP);
+			$id_comment = CommentsDAO::add_comment($id_topic, $message, self::$user->get_id(), $pseudo, USER_IP);
 		}
 
 		CommentsTopicDAO::incremente_number_comments_topic($id_topic);
 		
 		self::regenerate_cache();
+		return $id_comment;
 	}
 	
 	public static function edit_comment($comment_id, $message)

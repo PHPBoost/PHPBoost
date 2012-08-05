@@ -37,6 +37,19 @@ class CommentsUrlBuilder
     	return self::build_url($comment_path, 'delete_comment=' . $id . '#comments_list');
     }
     
+    /*
+     * var lock is integer
+     */
+	public static function lock_and_unlock($comment_path, $lock)
+    {
+    	return self::build_url($comment_path, 'lock=' . (int)$lock . '#comments_list');
+    }
+    
+	public static function comment_added($comment_path, $id_comment)
+    {
+    	return self::build_url($comment_path, 'refresh_all=1#com' . $id_comment);
+    }
+    
     private static function build_url($comment_path, $parameters)
     {
     	if (strpos($comment_path, '?') === false)

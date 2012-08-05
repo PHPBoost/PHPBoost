@@ -109,14 +109,14 @@ class AddCommentBuildForm extends AbstractCommentsBuildForm
 		$form = $this->get_form();
 		if ($form->has_field('name'))
 		{
-			CommentsManager::add_comment($this->module_id, $this->id_in_module, $this->topic_identifier, $this->topic_path, $form->get_value('message'), $form->get_value('name'));
+			$id_comment = CommentsManager::add_comment($this->module_id, $this->id_in_module, $this->topic_identifier, $this->topic_path, $form->get_value('message'), $form->get_value('name'));
 		}
 		else
 		{
-			CommentsManager::add_comment($this->module_id, $this->id_in_module, $this->topic_identifier, $this->topic_path, $form->get_value('message'));
+			$id_comment = CommentsManager::add_comment($this->module_id, $this->id_in_module, $this->topic_identifier, $this->topic_path, $form->get_value('message'));
 		}
 		
-		$this->set_message_response(MessageHelper::display($this->comments_lang['comment.add.success'], MessageHelper::SUCCESS, 4));
+		AppContext::get_response()->redirect(CommentsUrlBuilder::comment_added($this->topic_path, $id_comment));
 	}
 	
 	private function get_formatter()

@@ -108,14 +108,6 @@ class AdminCommentsConfigController extends AdminController
 			)
 		));
 		
-		$fieldset->add_field(new FormFieldSimpleSelectChoice('approbation_comments', $this->lang['comments.config.approbation'], $this->configuration->get_approbation_comments(),
-			array(
-				new FormFieldSelectChoiceOption($this->lang['comments.config.approbation.auto'], CommentsConfig::ALWAYS_APPROVE_COMMENTS),
-				new FormFieldSelectChoiceOption($this->lang['comments.config.approbation.moderator'], CommentsConfig::APPROBATE_COMMENTS_FOR_MODERATOR),
-				new FormFieldSelectChoiceOption($this->lang['comments.config.approbation.administrator'], CommentsConfig::APPROBATE_COMMENTS_FOR_ADMINISTRATOR)
-			), array('disabled' => true)
-		));
-
 		$fieldset->add_field(new FormFieldMultipleSelectChoice('forbidden_tags', $this->lang['comments.config.forbidden-tags'], $this->configuration->get_forbidden_tags(),
 			$this->generate_forbidden_tags_option()
 		));
@@ -126,8 +118,7 @@ class AdminCommentsConfigController extends AdminController
 		$auth_settings = new AuthorizationsSettings(array(
 			new ActionAuthorization($this->lang['comments.config.authorization-read'], CommentsAuthorizations::READ_AUTHORIZATIONS),
 			new ActionAuthorization($this->lang['comments.config.authorization-post'], CommentsAuthorizations::POST_AUTHORIZATIONS),
-			new ActionAuthorization($this->lang['comments.config.authorization-moderation'], CommentsAuthorizations::MODERATE_AUTHORIZATIONS),
-			new ActionAuthorization($this->lang['comments.config.authorization-note'], CommentsAuthorizations::NOTE_AUTHORIZATIONS)
+			new ActionAuthorization($this->lang['comments.config.authorization-moderation'], CommentsAuthorizations::MODERATE_AUTHORIZATIONS)
 		));
 		$auth_settings->build_from_auth_array($this->configuration->get_authorizations());
 		$auth_setter = new FormFieldAuthorizationsSetter('authorizations', $auth_settings);
@@ -154,7 +145,6 @@ class AdminCommentsConfigController extends AdminController
 	 	$this->configuration->set_forbidden_tags($this->form->get_value('forbidden_tags'));
 		$this->configuration->set_max_links_comment($this->form->get_value('max_links_comment'));
 		$this->configuration->set_order_display_comments($this->form->get_value('order_display_comments')->get_raw_value());
-		//$this->configuration->set_approbation_comments($this->form->get_value('approbation_comments')->get_raw_value());
 		CommentsConfig::save();
 	}
 	

@@ -36,10 +36,11 @@ class EditCommentBuildForm extends AbstractCommentsBuildForm
 	private $lang;
 	private $comments_lang;
 	private $comments_configuration;
+	private $topic_path;
 	
-	public static function create($id_comment)
+	public static function create($id_comment, $topic_path)
 	{
-		$instance = new self($id_comment);
+		$instance = new self($id_comment, $topic_path);
 		
 		$instance->create_form();
 		
@@ -51,11 +52,12 @@ class EditCommentBuildForm extends AbstractCommentsBuildForm
 		return $instance;
 	}
 	
-	public function __construct($id_comment)
+	public function __construct($id_comment, $topic_path)
 	{
 		$this->id_comment = $id_comment;
 		$this->user = AppContext::get_current_user();
 		$this->lang = LangLoader::get('main');
+		$this->topic_path = $topic_path;
 		$this->comments_lang = LangLoader::get('comments-common');
 		$this->comments_configuration = CommentsConfig::load();
 	}
@@ -85,7 +87,7 @@ class EditCommentBuildForm extends AbstractCommentsBuildForm
 	{
 		$form = $this->get_form();
 		CommentsManager::edit_comment($this->id_comment, $form->get_value('message'));
-		$this->set_message_response(MessageHelper::display($this->comments_lang['comment.edit.success'], MessageHelper::SUCCESS, 4));
+		AppContext::get_response()->redirect(CommentsUrlBuilder::comment_added($this->topic_path, $this->id_comment));
 	}
 	
 	private function get_formatter()
