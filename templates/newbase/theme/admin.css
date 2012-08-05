@@ -1,7 +1,7 @@
 /* --------------------------------------
 		admin.css
-Contient les classes supplÃ©mentaires pour l'administration.
---------------------------------------*/ /* EntÃ©te de la page */
+Contient les classes supplémentaires pour l'administration.
+--------------------------------------*/ /* Entête de la page */
 div#header_admin_container {
 }
 
@@ -115,7 +115,7 @@ div#admin_quick_menu li a.quick_link {
     margin-top:15px;
 }
 
-/* Fond des catÃ©gories dans l'administration */
+/* Fond des catégories dans l'administration */
 .management_cat_admin {
     width:100%;
     height:20px;
@@ -123,7 +123,7 @@ div#admin_quick_menu li a.quick_link {
     padding:4px 0px;
 }
 
-/* Liens vers les menus Ã©tendus */
+/* Liens vers les menus étendus */
 a.admin_extend_link {
     text-decoration:none;
     color:#FFFFFF;

@@ -111,7 +111,6 @@ h6.sub_title2 { /* Sous titre dans les menu */
 }
 
 input, textarea, optgroup, select, .xmlhttprequest_preview{
-	font-family:"Trebuchet MS", Verdana, Times, serif;
 	font-size:11px;
 	border-left:1px solid #99b1cb;
 	border-top:1px solid #99b1cb;
@@ -155,7 +154,6 @@ input.text{
 input.submit, button.submit{
 	height: 20px;
 	padding:0px 5px;
-	font-family:"Trebuchet MS", Verdana, Times, serif;
 	color:#0E2A48;	
 	font-weight:bold;
 	font-size:10px;
@@ -187,7 +185,6 @@ input.file{
 input.reset, button.reset{
 	height: 20px;
 	padding:0px 5px;
-	font-family:"Trebuchet MS", Verdana, Times, serif;
 	background: url(images/bouton.png) repeat-x;
     border: 1px solid #c9c9c9;
     border-radius:4px;
@@ -203,7 +200,6 @@ input.reset:hover, button.reset:hover{
 }
 
 optgroup, select{
-	font-family:"Trebuchet MS", Verdana, Times, serif;
 	cursor:pointer;
 	vertical-align:middle;
 	width:auto;		
@@ -224,7 +220,6 @@ option {
 
 legend {
 	padding:1px 0;
-	font-family:"Trebuchet MS", Verdana, Times, serif;
 	font-size:0.85em;
 	font-weight:bold;
 	background:#d7dfe9;
@@ -247,7 +242,6 @@ legend {
 }
 
 fieldset{
-	font-family:"Trebuchet MS", Verdana, Times, serif;
 	margin:20px 0;
 	padding:6px;
 	border:1px solid #d6dee7;
@@ -338,7 +332,7 @@ fieldset dl dd label:hover {
     color:#183A4F;
 }
 
-/* Messages postï¿½s par les membres (messages privï¿½s, commentaires, etc...) 
+/* Messages postés par les membres (messages privés, etc...) 
 --------------------------------------*/
     /* Classe du lien du pseudo des messages */
 a.msg_link_pseudo {
@@ -460,7 +454,7 @@ a.msg_link_pseudo:hover {
 }
 
 .msg_contents_overflow {
-    /* Case du contents du message, ï¿½vite que les images trop grandes dï¿½forme */
+    /* Case du contents du message, évite que les images trop grandes dï¿½forme */
     width:99%;
     height:auto;
     min-height:80px;
@@ -490,7 +484,7 @@ a.msg_link_pseudo:hover {
     overflow:hidden;
 }
 
-.msg_bottom_l { /* Barre infï¿½rieure des messages */
+.msg_bottom_l { /* Barre inférieure des messages */
     
 }
 
@@ -512,7 +506,7 @@ a.msg_link_pseudo:hover {
     margin:auto;
 }
 
-.module_top_l { /* Barre supï¿½rieure des modules */}
+.module_top_l { /* Barre supérieure des modules */}
 .module_top_r {}
 
 .module_top {
@@ -557,7 +551,7 @@ a.msg_link_pseudo:hover {
 
 }
 
-.module_bottom_l { /* Barre infï¿½rieure des modules */}
+.module_bottom_l { /* Barre inférieure des modules */}
 .module_bottom_r {}
 
 .module_bottom {
@@ -567,7 +561,7 @@ a.msg_link_pseudo:hover {
 }
 
 
-/* Tableau global, utilisï¿½ dans les diffï¿½rents modules */
+/* Tableau global, utilisé dans les différents modules */
 .module_table {
     width:98%;
     margin:auto;
@@ -611,7 +605,7 @@ a.msg_link_pseudo:hover {
     padding-bottom:0px;
 }
 
-.module_mini_bottom { /* Bordure infï¿½rieure des modules minis */
+.module_mini_bottom { /* Bordure inférieure des modules minis */
     height:15px;
 }
 
