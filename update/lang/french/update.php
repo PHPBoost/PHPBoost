@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                                install.php
+ *                                update.php
  *                            -------------------
  *   begin                : May 30, 2010
  *   copyright            : (C) 2010 Kevin MASSY
@@ -49,6 +49,7 @@ $lang = array(
     'step.next' => 'Etape suivante',
     'yes' => 'Oui',
     'no' => 'Non',
+	'unknown' => 'Inconnu',
 	'generatedBy' => 'Généré par %s',
 	'poweredBy' => 'Boosté par',
 	'phpboost.rights' => '',
@@ -103,7 +104,7 @@ $lang = array(
 	'db.config.check' => 'Essayer',
 	'db.connection.success' => 'La connexion à la base de données a été effectuée avec succès. Vous pouvez poursuivre l\'installation',
 	'db.connection.error' => 'Impossible de se connecter à la base de données. Merci de vérifier vos paramètres.',
-	'db.creation.error' => 'La base de données que vous avez indiquée n\'existe pas et le système n\'a pas l\'autorisation de la créer.',
+	'db.creation.error' => 'La base de données que vous avez indiquée n\'existe pas.',
 	'db.unknown.error' => 'Une erreur inconnue a été rencontrée.',
 	'db.required.host' => 'Vous devez renseigner le nom de l\'hôte !',
 	'db.required.port' => 'Vous devez renseigner le port !',
