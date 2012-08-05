@@ -1,7 +1,7 @@
 /* --------------------------------------
 		admin.css
-Contient les classes supplémentaires pour l'administration.
---------------------------------------*/ /* Entête de la page */
+Contient les classes supplÃ©mentaires pour l'administration.
+--------------------------------------*/ /* EntÃ©te de la page */
 div#header_admin_container {
 }
 
@@ -26,7 +26,16 @@ div#admin_extend_link{
 	float:right;
 	margin-right:15px;
 	margin-top:-3px;
+	background:#F2F7FB;
+    border:1px solid #C4CED6;
     padding:4px 6px;
+    -moz-border-radius-topleft:12px;
+    -khtml-border-radius-topleft:12px;
+    -webkit-border-top-left-radius:12px;
+    -moz-border-radius-bottomright:12px;
+    -khtml-border-radius-bottomright:12px;
+    -webkit-border-bottom-right-radius:12px;
+    border-radius:12px;
 }
 
 /* Conteneur principal */
@@ -40,12 +49,14 @@ div#admin_main {
 div#admin_contents {
     margin:auto;
     margin-left:202px;
-
+    border:1px #cccccc solid;
     border-spacing:1px;
     padding:10px;
-    background:#FFFFFF;
-    border:1px #BEBEBE solid;
-    border-bottom:2px solid #99B1CB;
+    background:#F7F8F5 url(images/contentbg.png) repeat-x;
+    -moz-border-radius:12px;
+    -khtml-border-radius:12px;
+    -webkit-border-radius:12px;
+    border-radius:12px;
 }
 
 html>body div#admin_contents {
@@ -60,13 +71,15 @@ div#admin_quick_menu {
     text-align:center;
     padding-top:5px;
     margin:auto;
-    
+    border:1px #cccccc solid;
     border-spacing:1px;
     padding:10px;
     padding-bottom:20px;
-    background:#FFFFFF;
-    border:1px #BEBEBE solid;
-    border-bottom:2px solid #99B1CB;
+    background:#F7F8F5 url(images/contentbg.png) repeat-x;
+    -moz-border-radius:12px;
+    -khtml-border-radius:12px;
+    -webkit-border-radius:12px;
+    border-radius:12px;
 }
 
 div#admin_quick_menu ul {
@@ -77,32 +90,41 @@ div#admin_quick_menu ul {
 
 div#admin_quick_menu li {
     display:block;
-    width:auto;
+    width:160px;
     padding:15px 0px;
-    
 }
 
 div#admin_quick_menu li.title_menu {
     font-family:Verdana, 'Bitstream Vera Sans', Times, serif;
     text-transform:uppercase;
     font-weight:bold;
-    font-size:11px;
-    color:#0E2A48;
-    padding:6px 0px;
+    font-size:0.75em;
+	background:#5D7C94 url(images/msg_top_row.png) repeat-x;
+    border:1px solid #CCCCCC;
+    color:#FFFFFF;
+    padding:3px 0px;
 	margin-bottom:20px;
-	border-bottom: 2px solid #336397;
+    -moz-border-radius:12px;
+    -khtml-border-radius:12px;
+    -webkit-border-radius:12px;
+    border-radius:12px;
 }
 
 div#admin_quick_menu li a.quick_link {
     font-family:Verdana, 'Bitstream Vera Sans', Times, serif;
-    text-transform:none;
-    font-weight:normal;
-    font-size:10px;
-    color:#0E2A48;
-	background: none repeat scroll 0 0 #f2f5f8;
-    border:1px solid #D6DEE7;
+    text-transform:uppercase;
+    font-weight:bold;
+    font-size:0.75em;
+    color:#FFFFFF;
+	background:#5D7C94 url(images/msg_top_row.png) repeat-x;
+    border:1px solid #CCCCCC;
     padding:3px 8px;
     text-decoration:none;
+    line-height:2.2em;
+    -moz-border-radius:5px;
+    -khtml-border-radius:5px;
+    -webkit-border-radius:5px;
+    border-radius:5px;
 }
 
 /* Tableaux de l'administration */
@@ -115,7 +137,7 @@ div#admin_quick_menu li a.quick_link {
     margin-top:15px;
 }
 
-/* Fond des catégories dans l'administration */
+/* Fond des catÃ©gories dans l'administration */
 .management_cat_admin {
     width:100%;
     height:20px;
@@ -123,10 +145,10 @@ div#admin_quick_menu li a.quick_link {
     padding:4px 0px;
 }
 
-/* Liens vers les menus étendus */
+/* Liens vers les menus Ã©tendus */
 a.admin_extend_link {
     text-decoration:none;
-    color:#FFFFFF;
+    color:#666666;
 }
 
 /* Coloration des moteur de recherche */
@@ -198,18 +220,4 @@ pre {
 .em {
     color:#666666;
     background-color:#cccccc;
-}
-
-div#sub_header_admin .dynamic_menu h5 {
-    color:#FFFFFF;
-	margin-right:2px;
-	background:none;
-	border:none;
-	font-weight:normal;
-}
-
-div#sub_header_admin .dynamic_menu h5:hover, div#sub_header_admin .dynamic_menu h5:active {
-    color:#366393;
-    background:#e8edf3;
-    border-bottom:1px solid #99B1CB;
 }
