@@ -74,18 +74,18 @@
 /* Lien du site
 --------------------------------------*/
 a {
-	color:#445766;
+	color:#3F5164;
     text-decoration:none;
-    font-size:11px;
+    font-size:12px;
     font-weight:bold;
-    font-family:Verdana, Arial, Helvetica, sans-serif;
+    font-family:"Trebuchet MS", Verdana, Times, serif;
 }
 
 a:hover {
-    color:#2F404D;
+    color:#718396;
     text-decoration:underline;
     font-weight:bold;
-    font-family:Verdana, Arial, Helvetica, sans-serif;
+    font-family:"Trebuchet MS", Verdana, Times, serif;
 }
 
 .img_link, .img_link:hover{
@@ -95,11 +95,11 @@ a:hover {
 
 /* Liens petite taille */
 a.small_link {
-    font-size:10px;
+    font-size:11px;
 }
 
 a.small_link:hover {
-    font-size:10px;
+    font-size:11px;
 }
 
 /* Liens grande taille */

@@ -111,7 +111,7 @@ h6.sub_title2 { /* Sous titre dans les menu */
 }
 
 input, textarea, optgroup, select, .xmlhttprequest_preview{
-	font-family:"Lucida Grande","Lucida Sans Unicode",Verdana,'Bitstream Vera Sans',Times,serif;
+	font-family:"Trebuchet MS", Verdana, Times, serif;
 	font-size:11px;
 	border-left:1px solid #99b1cb;
 	border-top:1px solid #99b1cb;
@@ -155,7 +155,7 @@ input.text{
 input.submit, button.submit{
 	height: 20px;
 	padding:0px 5px;
-	font-family:Verdana, 'Bitstream Vera Sans', Times, serif;
+	font-family:"Trebuchet MS", Verdana, Times, serif;
 	color:#0E2A48;	
 	font-weight:bold;
 	font-size:10px;
@@ -187,7 +187,7 @@ input.file{
 input.reset, button.reset{
 	height: 20px;
 	padding:0px 5px;
-	font-family:Verdana, 'Bitstream Vera Sans', Times, serif;
+	font-family:"Trebuchet MS", Verdana, Times, serif;
 	background: url(images/bouton.png) repeat-x;
     border: 1px solid #c9c9c9;
     border-radius:4px;
@@ -203,7 +203,7 @@ input.reset:hover, button.reset:hover{
 }
 
 optgroup, select{
-	font-family:"Lucida Grande","Lucida Sans Unicode",Verdana,'Bitstream Vera Sans',Times,serif;
+	font-family:"Trebuchet MS", Verdana, Times, serif;
 	cursor:pointer;
 	vertical-align:middle;
 	width:auto;		
@@ -224,7 +224,7 @@ option {
 
 legend {
 	padding:1px 0;
-	font-family:"Lucida Grande","Lucida Sans Unicode",Verdana,'Bitstream Vera Sans',Times,serif;
+	font-family:"Trebuchet MS", Verdana, Times, serif;
 	font-size:0.85em;
 	font-weight:bold;
 	background:#d7dfe9;
@@ -247,7 +247,7 @@ legend {
 }
 
 fieldset{
-	font-family:"Lucida Grande","Lucida Sans Unicode",Verdana,'Bitstream Vera Sans',Times,serif;
+	font-family:"Trebuchet MS", Verdana, Times, serif;
 	margin:20px 0;
 	padding:6px;
 	border:1px solid #d6dee7;
@@ -403,7 +403,7 @@ a.msg_link_pseudo:hover {
 }
 
 .msg_top a {
-    color:#FFFFFF;
+    color:#3F5164;
 }
 
 .msg_pseudo_mbr { /* Pseudo du membre */

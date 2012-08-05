@@ -36,7 +36,7 @@
 	<div id="search_form">
 		<input type="text" id="TxTMiniSearched" name="q" value="{TEXT_SEARCHED}" class="search_entry" onclick="if(this.value=='{L_SEARCH}...')this.value='';" onblur="if(this.value=='')this.value='{L_SEARCH}...';" />
 		<input type="hidden" name="search_submit" id="search_submit_mini" value="{SEARCH}" class="submit" />
-		<input type="submit" name="search_submit" class="search_submit" value="" />
+		<input type="submit" name="search_submit" class="search_submit" value=" " />
 	</div>
 </form>
 # ENDIF #
