@@ -234,9 +234,11 @@ class User
 		return $this->approbation_pass;
 	}
 	
-	public static function get_group_color($user_groups, $level = 0)
+	public static function get_group_color($user_groups, $level = 0, $is_array = false)
 	{
-		$user_groups = explode('|', $user_groups);
+		if (!$is_array)
+			$user_groups = explode('|', $user_groups);
+			
 		array_pop($user_groups); //Supprime l'élément vide en fin de tableau.
 		$i = 0;
 
