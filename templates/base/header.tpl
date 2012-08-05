@@ -49,12 +49,14 @@
 		<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/lib/js/lightbox/lightbox.js"></script>
 		
 		# IF C_HEADER_LOGO #
-		<style type="text/css">
-			div#header_container {
-   				background: url('{HEADER_LOGO}') no-repeat;
-			}
-		</style>
+			<style type="text/css">
+				div#logo {
+	   				background: url('{HEADER_LOGO}') no-repeat;
+				}
+			</style>
 		# ENDIF #
+		
+		
 	</head>
 	<body>
 	
@@ -63,7 +65,8 @@
 <div id="global">
 	<div id="header_container">
 		<div id="header">
-			<h1 style="display:none;font-size:9px;">{SITE_NAME}</h1>
+			<div id="logo"></div>
+			<div id="site_name">{SITE_NAME}</div>
 			# IF C_MENUS_HEADER_CONTENT #
 			{MENUS_HEADER_CONTENT}
 			# ENDIF #
