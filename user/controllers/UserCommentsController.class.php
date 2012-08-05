@@ -70,24 +70,54 @@ class UserCommentsController extends AbstractController
 		$template = new FileTemplate('framework/content/comments/comments_list.tpl');
 		
 		$result = PersistenceContext::get_querier()->select('
-			SELECT comments.*, topic.*, member.*
+			SELECT comments.*, comments.timestamp AS comment_timestamp, comments.id AS id_comment,
+			topic.*,
+			member.user_id, member.login, member.level, member.user_groups,
+			ext_field.user_avatar
 			FROM ' . DB_TABLE_COMMENTS . ' comments
 			LEFT JOIN ' . DB_TABLE_COMMENTS_TOPIC . ' topic ON comments.id_topic = topic.id_topic
 			LEFT JOIN ' . DB_TABLE_MEMBER . ' member ON member.user_id = comments.user_id
+			LEFT JOIN ' . DB_TABLE_MEMBER_EXTENDED_FIELDS . ' ext_field ON ext_field.user_id = comments.user_id
 			'. $this->build_where_request() .'
 			ORDER BY comments.timestamp ' . CommentsConfig::load()->get_order_display_comments()
 		);
 		
+		$user_accounts_config = UserAccountsConfig::load();
+		$comments_authorizations = new CommentsAuthorizations();
+		
 		while ($row = $result->fetch())
 		{
-			$edit_comment_url = TPL_PATH_TO_ROOT . $row['path'] . '&edit_comment=' . $row['id'] . '#comments_message';
-			$delete_comment_url = TPL_PATH_TO_ROOT . $row['path'] . '&delete_comment=' . $row['id'] . '#comments_list';
-				
+			$id = $row['id_comment'];
+			$path = PATH_TO_ROOT . $row['path'];
+			
+			if (empty($row['user_avatar']))
+				$user_avatar = $user_accounts_config->is_default_avatar_enabled() == '1' ? Url::to_rel(PATH_TO_ROOT .'/templates/' . get_utheme() . '/images/' .  $user_accounts_config->get_default_avatar_name()) : '';
+			else
+				$user_avatar = Url::to_rel($row['user_avatar']);
+			
+			$timestamp = new Date(DATE_TIMESTAMP, TIMEZONE_SITE, $row['comment_timestamp']);
+
+			$group_color = User::get_group_color($row['user_groups'], $row['level']);
+			
 			$template->assign_block_vars('comments', array(
-				'MESSAGE' => $row['message'],
-				'COMMENT_ID' => $row['id'],
-				'EDIT_COMMENT' => $edit_comment_url,
-				'DELETE_COMMENT' => $delete_comment_url
+				'C_MODERATOR' => $comments_authorizations->is_authorized_moderation(),
+				'C_VISITOR' => empty($row['login']),
+			
+				'U_EDIT' => CommentsUrlBuilder::edit($path, $id)->absolute(),
+				'U_DELETE' => CommentsUrlBuilder::delete($path, $id)->absolute(),
+				'U_PROFILE' => UserUrlBuilder::profile($row['user_id'])->absolute(),
+				'U_AVATAR' => $user_avatar,
+				
+				'ID_COMMENT' => $id,
+				'DATE' => $timestamp->format(DATE_FORMAT, TIMEZONE_AUTO),
+				'MESSAGE' => FormatingHelper::second_parse($row['message']),
+					
+				// User
+				'USER_ID' => $row['user_id'],
+				'PSEUDO' => empty($row['login']) ? $row['pseudo'] : $row['login'],
+				'LEVEL_CLASS' => UserService::get_level_class($row['level']),
+				
+				'L_LEVEL' => UserService::get_level_lang(!empty($row['level']) ? $row['level'] : '-1'),
 			));
 			
 			$template->put_all(array(

@@ -1,5 +1,5 @@
 # START comments #
-	<div id="com{id_comment}" class="comment">
+	<div id="com{comments.ID_COMMENT}" class="comment">
 		<div class="comment-user_infos">
 			<div id="comment-pseudo">
 				# IF comments.C_VISITOR #

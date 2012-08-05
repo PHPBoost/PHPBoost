@@ -34,7 +34,6 @@ class CommentsService
 	private static $user;
 	private static $lang;
 	private static $comments_lang;
-	private static $comments_configuration;
 	private static $comments_cache;
 	private static $template;
 	
@@ -43,7 +42,6 @@ class CommentsService
 		self::$user = AppContext::get_current_user();
 		self::$lang = LangLoader::get('main');
 		self::$comments_lang = LangLoader::get('comments-common');
-		self::$comments_configuration = CommentsConfig::load();
 		self::$comments_cache = CommentsCache::load();
 		self::$template = new FileTemplate('framework/content/comments/comments.tpl');
 		self::$template->add_lang(self::$comments_lang);
@@ -209,7 +207,7 @@ class CommentsService
 			
 			while ($row = $result->fetch())
 			{
-				$id = $row['id'];
+				$id = $row['id_comment'];
 				$path = PATH_TO_ROOT . $row['path'];
 				
 				if (empty($row['user_avatar']))
@@ -231,10 +229,9 @@ class CommentsService
 					'U_PROFILE' => UserUrlBuilder::profile($row['user_id'])->absolute(),
 					'U_AVATAR' => $user_avatar,
 					
-					'ID_COMMENT' => $row['id_comment'],
+					'ID_COMMENT' => $id,
 					'DATE' => $timestamp->format(DATE_FORMAT, TIMEZONE_AUTO),
 					'MESSAGE' => FormatingHelper::second_parse($row['message']),
-					'COMMENT_ID' => $id,
 						
 					// User
 					'USER_ID' => $row['user_id'],
