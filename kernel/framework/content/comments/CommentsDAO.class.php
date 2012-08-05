@@ -104,7 +104,8 @@ class CommentsDAO
 			'timestamp' => time(),
 			'message' => TextHelper::htmlspecialchars($message)
 		);
-		self::$db_querier->insert(DB_TABLE_COMMENTS, $columns);
+		$result = self::$db_querier->insert(DB_TABLE_COMMENTS, $columns);
+		return $result->get_last_inserted_id();
 	}
 	
 	public static function edit_comment($comment_id, $message)

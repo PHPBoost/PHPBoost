@@ -37,14 +37,9 @@ class CommentsConfig extends AbstractConfigData
 	const FORBIDDEN_TAGS = 'forbidden_tags';
 	const MAX_LINKS_COMMENT = 'max_links_comment';
 	const ORDER_DISPLAY_COMMENTS = 'order_display_comments';
-	const APPROBATION_COMMENTS = 'approbation_comments';
 	
 	const ASC_ORDER = 'ASC';
 	const DESC_ORDER = 'DESC';
-	
-	const ALWAYS_APPROVE_COMMENTS = '0';
-	const APPROBATE_COMMENTS_FOR_MODERATOR = '1';
-	const APPROBATE_COMMENTS_FOR_ADMINISTRATOR = '2';
 	
 	public function get_authorizations()
 	{
@@ -147,8 +142,7 @@ class CommentsConfig extends AbstractConfigData
 			self::NUMBER_COMMENTS_DISPLAY => 15,
 			self::FORBIDDEN_TAGS => array(),
 			self::MAX_LINKS_COMMENT => 2,
-			self::ORDER_DISPLAY_COMMENTS => self::ASC_ORDER,
-			self::APPROBATION_COMMENTS => self::ALWAYS_APPROVE_COMMENTS
+			self::ORDER_DISPLAY_COMMENTS => self::ASC_ORDER
 		);
 	}
 

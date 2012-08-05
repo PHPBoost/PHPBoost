@@ -46,6 +46,7 @@ class CommentsService
 		self::$comments_configuration = CommentsConfig::load();
 		self::$comments_cache = CommentsCache::load();
 		self::$template = new FileTemplate('framework/content/comments/comments.tpl');
+		self::$template->add_lang(self::$lang);
 	}
 	
 	public static function display(CommentsTopic $topic)
@@ -57,29 +58,45 @@ class CommentsService
 				
 		if (!$authorizations->is_authorized_read())
 		{
-			self::$template->put('KEEP_MESSAGE', MessageHelper::display(self::$comments_lang['comments.not-authorized.read'], MessageHelper::NOTICE, 4));
+			self::$template->put('KEEP_MESSAGE', MessageHelper::display(self::$comments_lang['comments.not-authorized.read'], MessageHelper::NOTICE));
 		}
 		else
 		{
-			$edit_comment_id = AppContext::get_request()->get_int('edit_comment', 0);
-			$delete_comment_id = AppContext::get_request()->get_int('delete_comment', 0);
+			$edit_comment_id = AppContext::get_request()->get_getint('edit_comment', 0);
+			$delete_comment_id = AppContext::get_request()->get_getint('delete_comment', 0);
+			
+			try {
+				$lock = AppContext::get_request()->get_getbool('lock');
+				
+				if ($authorizations->is_authorized_moderation())
+				{
+					if ($lock)
+					{
+						CommentsManager::lock_topic($module_id, $id_in_module, $topic_identifier);
+					}
+					else
+					{
+						CommentsManager::unlock_topic($module_id, $id_in_module, $topic_identifier);
+					}
+				}
+				AppContext::get_response()->redirect($topic->get_path());
+			} catch (UnexistingHTTPParameterException $e) {
+			}
 			
 			if (!empty($delete_comment_id))
 			{
 				self::verificate_authorized_edit_or_delete_comment($authorizations, $delete_comment_id);
 
 				CommentsManager::delete_comment($delete_comment_id);
-				
-				self::$template->put('KEEP_MESSAGE', MessageHelper::display(self::$comments_lang['comment.delete.success'], MessageHelper::SUCCESS, 4));
+				AppContext::get_response()->redirect($topic->get_path());
 			}
 			elseif (!empty($edit_comment_id))
 			{
 				self::verificate_authorized_edit_or_delete_comment($authorizations, $edit_comment_id);
 	
-				$edit_comment_form = EditCommentBuildForm::create($edit_comment_id);
+				$edit_comment_form = EditCommentBuildForm::create($edit_comment_id, $topic->get_path());
 				self::$template->put_all(array(
 					'C_DISPLAY_FORM' => true,
-					'KEEP_MESSAGE' => $edit_comment_form->get_message_response(),
 					'COMMENT_FORM' => $edit_comment_form->display()
 				));
 			}
@@ -91,37 +108,39 @@ class CommentsService
 					$user_read_only = self::$user->get_attribute('user_readonly');
 					if (!$authorizations->is_authorized_moderation() && $comments_topic_locked)
 					{
-						self::$template->put('KEEP_MESSAGE', MessageHelper::display(self::$lang['com_locked'], MessageHelper::NOTICE, 4));
+						self::$template->put('KEEP_MESSAGE', MessageHelper::display(self::$lang['com_locked'], MessageHelper::NOTICE));
 					}
 					elseif (!empty($user_read_only) && $user_read_only > time())
 					{
-						self::$template->put('KEEP_MESSAGE', MessageHelper::display('Read Only', MessageHelper::NOTICE, 4));
+						self::$template->put('KEEP_MESSAGE', MessageHelper::display('Read Only', MessageHelper::NOTICE));
 					}
 					else
 					{
 						$add_comment_form = AddCommentBuildForm::create($topic);
 						self::$template->put_all(array(
 							'C_DISPLAY_FORM' => true,
-							'KEEP_MESSAGE' => $add_comment_form->get_message_response(),
 							'COMMENT_FORM' => $add_comment_form->display()
 						));
 					}
 				}
 				else
 				{
-					self::$template->put('KEEP_MESSAGE', MessageHelper::display(self::$comments_lang['comments.not-authorized.post'], MessageHelper::NOTICE, 4));
+					self::$template->put('KEEP_MESSAGE', MessageHelper::display(self::$comments_lang['comments.not-authorized.post'], MessageHelper::NOTICE));
 				}
 			}
 				
 			$number_comments_display = $topic->get_number_comments_display();
 			$number_comments = self::$comments_cache->get_count_comments_by_module($module_id, $id_in_module, $topic_identifier);
+			$refresh_all = AppContext::get_request()->get_getbool('refresh_all', false);
 			
 			self::$template->put_all(array(
 				'COMMENTS_LIST' => self::display_comments($module_id, $id_in_module, $topic_identifier, $number_comments_display, $authorizations),
 				'MODULE_ID' => $module_id,
 				'ID_IN_MODULE' => $id_in_module,
 				'TOPIC_IDENTIFIER' => $topic_identifier,
-				'C_DISPLAY_VIEW_ALL_COMMENTS' => $number_comments > $number_comments_display
+				'C_DISPLAY_VIEW_ALL_COMMENTS' => ($number_comments > $number_comments_display) && $refresh_all == false,
+				'C_REFRESH_ALL' => $refresh_all,
+				'C_MODERATE' => $authorizations->is_authorized_moderation()
 			));
 		}
 
@@ -176,7 +195,10 @@ class CommentsService
 			
 			$condition = !$display_from_number_comments ? ' LIMIT '. $number_comments_display : ' LIMIT ' . $number_comments_display . ',18446744073709551615';
 			$result = PersistenceContext::get_querier()->select("
-					SELECT comments.*, comments.timestamp AS comment_timestamp, topic.*, member.*, ext_field.user_avatar
+					SELECT comments.*, comments.timestamp AS comment_timestamp, comments.id AS id_comment,
+					topic.is_locked, topic.path,
+					member.user_id, member.login, member.level, member.user_groups, 
+					ext_field.user_avatar
 					FROM " . DB_TABLE_COMMENTS . " comments
 					LEFT JOIN " . DB_TABLE_COMMENTS_TOPIC . " topic ON comments.id_topic = topic.id_topic
 					LEFT JOIN " . DB_TABLE_MEMBER . " member ON member.user_id = comments.user_id
@@ -197,6 +219,9 @@ class CommentsService
 				
 				$timestamp = new Date(DATE_TIMESTAMP, TIMEZONE_SITE, $row['comment_timestamp']);
 
+				
+				$group_color = User::get_group_color($row['user_groups'], $row['level']);
+				
 				$template->assign_block_vars('comments', array(
 					'C_MODERATOR' => self::is_authorized_edit_or_delete_comment($authorizations, $id),
 					'C_VISITOR' => empty($row['login']),
@@ -206,6 +231,7 @@ class CommentsService
 					'U_PROFILE' => UserUrlBuilder::profile($row['user_id'])->absolute(),
 					'U_AVATAR' => $user_avatar,
 					
+					'ID_COMMENT' => $row['id_comment'],
 					'DATE' => $timestamp->format(DATE_FORMAT, TIMEZONE_AUTO),
 					'MESSAGE' => FormatingHelper::second_parse($row['message']),
 					'COMMENT_ID' => $id,
@@ -213,19 +239,20 @@ class CommentsService
 					// User
 					'USER_ID' => $row['user_id'],
 					'PSEUDO' => empty($row['login']) ? $row['pseudo'] : $row['login'],
+					'LEVEL_CLASS' => UserService::get_level_class($row['level']),
 					
-				
 					'L_LEVEL' => UserService::get_level_lang(!empty($row['level']) ? $row['level'] : '-1'),
 				));
 				
-				$template->put('C_IS_LOCKED', (bool)$row['is_locked']);
+				self::$template->put_all(array(
+					'C_IS_LOCKED' => (bool)$row['is_locked'],
+					'U_LOCK' => CommentsUrlBuilder::lock_and_unlock($path, true)->absolute(),
+					'U_UNLOCK' => CommentsUrlBuilder::lock_and_unlock($path, false)->absolute(),
+				));
 			}
 		}
 
-		$template->put_all(array(
-			//TODO
-			'C_IS_LOCKED' => false,
-			//TODO
+		self::$template->put_all(array(
 			'MODULE_ID' => $module_id,
 			'ID_IN_MODULE' => $id_in_module,
 			'TOPIC_IDENTIFIER' => $topic_identifier

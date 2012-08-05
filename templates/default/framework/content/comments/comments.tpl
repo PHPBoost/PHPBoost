@@ -1,53 +1,31 @@
-
 <script type="text/javascript">
 <!--
-	Event.observe(window, 'load', function() {
-		# IF C_DISPLAY_VIEW_ALL_COMMENTS #
-		$('refresh_comments').observe('click', function() {
-			new Ajax.Updater('comments_list', PATH_TO_ROOT + '/kernel/framework/ajax/dispatcher.php?url=/comments/display/', {
-				parameters: {module_id: ${escapejs(MODULE_ID)}, id_in_module: ${escapejs(ID_IN_MODULE)}, topic_identifier: ${escapejs(TOPIC_IDENTIFIER)})},
-				insertion: Insertion.Bottom,
-				onComplete: function() { 
-					$('refresh_comments').remove() 
-				}
-			})
-		});
-		# ENDIF #
+function refresh_comments()
+{
+	new Ajax.Updater('comments_list', PATH_TO_ROOT + '/kernel/framework/ajax/dispatcher.php?url=/comments/display/', {
+		parameters: {module_id: ${escapejs(MODULE_ID)}, id_in_module: ${escapejs(ID_IN_MODULE)}, topic_identifier: ${escapejs(TOPIC_IDENTIFIER)}},
+		insertion: Insertion.Bottom,
+		onComplete: function() { 
+			$('refresh_comments').remove() 
+		}
+	})
+}
 
-		var is_locked = true;
-		
-		$('comments_locked').observe('click', function() {
-			new Ajax.Request(PATH_TO_ROOT + '/kernel/framework/ajax/dispatcher.php?url=/comments/lock/', {
-				  method: 'post',
-				  parameters: {locked: is_locked, module_id: ${escapejs(MODULE_ID)}, id_in_module: ${escapejs(ID_IN_MODULE)}, topic_identifier: ${escapejs(TOPIC_IDENTIFIER)}},
-				  onComplete: function(response) {				  
-					  if (response.responseJSON.success) {
-						if (response.responseJSON.locked) {
-							$('comments_locked').src = PATH_TO_ROOT + '/templates/' + THEME + '/images/' + LANG + '/lock.png';
-							is_locked = true;
-						}
-						else {
-							$('comments_locked').src = PATH_TO_ROOT + '/templates/' + THEME + '/images/' + LANG + '/unlock.png';
-							is_locked = false;
-						}
-					  }
-					  alert(response.responseJSON.message);
-				  }
-			});
-		});
+Event.observe(window, 'load', function() {
+	# IF C_DISPLAY_VIEW_ALL_COMMENTS #
+	$('refresh_comments').observe('click', function() {
+		refresh_comments();
 	});
+	# ENDIF #
+});
+
+# IF C_REFRESH_ALL #
+	refresh_comments();
+# ENDIF #
 //-->
 </script>
 
-
-<style>
-<!--
-img#comments_locked {
-	cursor:pointer;
-}
--->
-</style>
-
+<div id="comments_list">
 # IF C_DISPLAY_FORM #
 	<div id="comment_form">
 		# INCLUDE COMMENT_FORM #
@@ -56,13 +34,16 @@ img#comments_locked {
 
 # INCLUDE KEEP_MESSAGE #
 
-# IF C_IS_LOCKED #
-<img id="comments_locked" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/unlock.png">
-# ELSE #
-<img id="comments_locked" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/lock.png">
+# IF C_MODERATE #
+	# IF C_IS_LOCKED #
+	<a href="{U_UNLOCK}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/unlock.png"> {@unlock}</a>
+	# ELSE #
+	<a href="{U_LOCK}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/lock.png"> {@lock}</a>
+	# ENDIF #
 # ENDIF #
 
-<div id="comments_list">
+<div class="spacer">&nbsp;</div>
+
 # INCLUDE COMMENTS_LIST #
 </div>
 

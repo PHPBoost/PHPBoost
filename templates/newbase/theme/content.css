@@ -620,3 +620,69 @@ a.msg_link_pseudo:hover {
     font-size:11px;
     color:#476a7f;
 }
+
+/* Commentaires */
+
+
+/*div#comment-rating {
+	width:48px;
+	height:22px;
+	margin-top: 10px;
+}
+
+div#comment-rating div {
+	width:50%;
+	color:#FFF;
+	cursor: pointer;
+	text-align:center;
+	font-weight:900;
+	font-size: 16px;
+}
+
+.positive_vote_button {
+	background:#CCC;
+	border-top-left-radius:2px;
+	border-bottom-left-radius:2px;
+	float:left;
+}
+
+.negative_vote_button {
+	background:#e0e0e0;
+	border-top-right-radius:2px;
+	border-bottom-right-radius:2px;
+	float:right;
+}
+
+div#comment-rating .positive {
+	background:#ab0119;
+}
+
+div#comment-rating .negative {
+	background:#39ab01;
+}
+*/
+.comment {
+	width:98%;
+	margin-bottom:20px;
+}
+
+.comment-date {
+	margin-left: 10px;
+}
+
+.comment-user_infos {
+	text-align:center;
+	width:150px;
+	float:left;
+}
+
+.comment-content {
+	margin-left:180px;
+}
+
+.comment-message {
+	background:#e8edf3;
+	padding: 10px 10px 10px 10px;
+	margin-top: 10px;
+	min-height: 110px;
+}
