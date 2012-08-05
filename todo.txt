@@ -2,7 +2,6 @@
 
 ## AUTRES ##
 - Corriger bbcode.css (bloc masquables + wikipédia) (publishing notamment)
-- [color=red]Nouveauté:[/color] Nouveau thème Base2 pour la distribution complete.
 - Remplacement des icônes de base par le pack famfamfam
 
 

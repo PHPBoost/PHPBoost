@@ -7,7 +7,6 @@
 		<!-- Default CSS -->
 		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/default/theme/admin_default.css" type="text/css" media="screen" />
 		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/default/theme/default.css" type="text/css" media="screen" />
-		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/{THEME}/theme/admin.css" type="text/css" media="screen" />
 		
 		<!-- Theme CSS -->
 		# IF C_CSS_CACHE_ENABLED #
@@ -61,8 +60,8 @@
 	<div id="global">
 		<div id="header_admin_container">
 			<div id="header_admin">
-			<div id="logo"></div>
-			<div id="site_name">{SITE_NAME}</div>
+				<div id="logo"></div>
+				<div id="site_name">{SITE_NAME}</div>
 			</div>
 			<div id="sub_header_admin">
 				<div class="dynamic_menu">

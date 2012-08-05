@@ -57,7 +57,7 @@ class UpdateServices
 	public function __construct($locale = '')
 	{
 		$this->token = new File(PATH_TO_ROOT . '/cache/.update_token');
-		$this->update_followed_file = new File(PATH_TO_ROOT . '/cache/update_followed.txt');
+		$this->update_followed_file = new File(PATH_TO_ROOT . '/update/update_followed.txt');
 		$this->update_followed_file->delete();
 		if (!empty($locale))
 		{
@@ -181,6 +181,7 @@ class UpdateServices
 		$this->update_configurations();
 		$this->update_modules();
 		$this->delete_update_token();
+		$this->generate_cache();
 	}
 	
 	public function update_kernel()
