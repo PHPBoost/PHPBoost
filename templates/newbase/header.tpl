@@ -67,7 +67,6 @@
 		<div id="header">
 			<div id="logo"></div>
 			<div id="site_name">{SITE_NAME}</div>
-			
 			# IF C_MENUS_HEADER_CONTENT #
 			{MENUS_HEADER_CONTENT}
 			# ENDIF #
