@@ -46,7 +46,7 @@ class CommentsService
 		self::$comments_configuration = CommentsConfig::load();
 		self::$comments_cache = CommentsCache::load();
 		self::$template = new FileTemplate('framework/content/comments/comments.tpl');
-		self::$template->add_lang(self::$lang);
+		self::$template->add_lang(self::$comments_lang);
 	}
 	
 	public static function display(CommentsTopic $topic)
