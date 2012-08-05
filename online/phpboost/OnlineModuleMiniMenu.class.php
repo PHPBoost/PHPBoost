@@ -56,11 +56,15 @@ class OnlineModuleMiniMenu extends ModuleMiniMenu
 			$users = OnlineService::get_online_users($condition, $parameters);
 			foreach ($users as $user)
 			{
+				$group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
+				
 				$this->incremente_level($user);
 				$tpl->assign_block_vars('users', array(
 					'U_PROFILE' => UserUrlBuilder::profile($user->get_id())->absolute(),
 					'PSEUDO' => TextHelper::wordwrap_html($user->get_pseudo(), 19),
 					'LEVEL_CLASS' => UserService::get_level_class($user->get_level()),
+					'C_GROUP_COLOR' => !empty($group_color),
+					'GROUP_COLOR' => $group_color,
 				));
 			}
 			

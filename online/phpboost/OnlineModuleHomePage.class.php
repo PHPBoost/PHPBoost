@@ -62,11 +62,15 @@ class OnlineModuleHomePage implements ModuleHomePage
 				$user->set_last_update(gmdate_format('date_format_long', time()));
 			}
 			
+			$group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
+			
 			$this->view->assign_block_vars('users', array(
 				'U_PROFILE' => UserUrlBuilder::profile($user->get_id())->absolute(),
 				'U_LOCATION' => $user->get_location_script(),
 				'PSEUDO' => $user->get_pseudo(),
 				'LEVEL_CLASS' => UserService::get_level_class($user->get_level()),
+				'C_GROUP_COLOR' => !empty($group_color),
+				'GROUP_COLOR' => $group_color,
 				'TITLE_LOCATION' => $user->get_location_title(),
 				'LAST_UPDATE' => $user->get_last_update()
 			));

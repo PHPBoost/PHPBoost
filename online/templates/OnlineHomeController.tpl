@@ -23,7 +23,7 @@
 			# START users #
 			<tr>
 				<td class="row3">
-					<a href="{users.U_PROFILE}" class="{users.LEVEL_CLASS}">{users.PSEUDO}</a>
+					<a href="{users.U_PROFILE}" class="{users.LEVEL_CLASS}" # IF users.C_GROUP_COLOR # style="color:{users.GROUP_COLOR}" # ENDIF #>{users.PSEUDO}</a>
 				</td>
 				<td class="row3">
 					<a href="{users.U_LOCATION}">{users.TITLE_LOCATION}</a>
