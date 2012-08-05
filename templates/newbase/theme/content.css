@@ -119,6 +119,7 @@ input, textarea, optgroup, select, .xmlhttprequest_preview{
 	background-color:#FFFFFF;	
 	color:#2E3B5F;
 	padding:1px 2px;
+	font-family: "Trebuchet MS", Verdana, 'Bitstream Vera Sans', Times, serif;
 }
 
 input:hover, textarea:hover{
