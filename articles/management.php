@@ -73,7 +73,8 @@ if ($delete > 0)
 	}
 	
 	CommentsService::delete_comments_topic_module('articles', $articles['id']);
-
+	NotationService::delete_notes_id_in_module('articles', $articles['id']);
+	
 	// Feeds Regeneration
 	Feed::clear_cache('articles');
 
