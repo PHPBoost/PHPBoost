@@ -356,7 +356,7 @@ a.msg_link_pseudo:hover {
 
 .msg_container,.msg_container2 {
     /* Case contenant l'ensemble du message */
-    background:#f0f3ff;
+    background: #FCFCFD;
     overflow:hidden !important;
     height:auto !important;
     overflow:visible;
@@ -366,7 +366,7 @@ a.msg_link_pseudo:hover {
 
 .msg_container2 {
     /*  Case contenant l'ensemble du message => Couleur alternative */
-    background:#f0f3ff;
+    background: #FCFCFD;
 }
 
 /* Barre sup�rieur des messages */
@@ -445,13 +445,13 @@ a.msg_link_pseudo:hover {
 
 .msg_contents,.msg_contents2 { /* Case du message */
     margin-left:135px;
-    background:#f0f3ff;
+    background: #FCFCFD;
     padding:0px 5px;
     border-left:1px dotted #C4CED6;
 }
 
 .msg_contents2 { /* Case du message => Couleur alternative */
-    background:#f0f3ff;
+    background: #FCFCFD;
 }
 
 .msg_contents_overflow {
@@ -465,7 +465,7 @@ a.msg_link_pseudo:hover {
 }
 
 .msg_sign,.msg_sign2 { /* Signature du membre */
-   	background:#f0f3ff;
+   	background: #FCFCFD;
     padding:4px;
     font-size:11px;
     margin-left:135px;
@@ -473,7 +473,7 @@ a.msg_link_pseudo:hover {
 }
 
 .msg_sign2 { /* Signature du membre => Couleur alternative */
-    background:#f0f3ff;
+    background: #FCFCFD;
 }
 
 .msg_sign_overflow { /* Signature du membre, fixe la hauteur maximale */
