@@ -266,7 +266,7 @@ class ForumSetup extends DefaultModuleSetup
 
 	private function delete_member_extended_last_view_forum()
 	{
-		ExtendedFieldsService::delete_by_field_name(self::$member_extended_field_last_view_forum_column);
+		PersistenceContext::get_dbms_utils()->drop_column(DB_TABLE_MEMBER_EXTENDED_FIELDS, self::$member_extended_field_last_view_forum_column);
 	}
 
 	private function insert_data()
