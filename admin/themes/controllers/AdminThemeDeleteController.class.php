@@ -120,5 +120,4 @@ class AdminThemeDeleteController extends AdminController
 		}
 	}
 }
-
 ?>
