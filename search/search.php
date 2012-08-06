@@ -175,9 +175,10 @@ if (!empty($search))
             }
         }
     }
+
     // Génération des résultats et passage aux templates
     $nbResults = get_search_results($search, $used_modules, $modules_args, $results, $idsSearch);
-    
+
     foreach ($used_modules as $module_id => $extension_point)
     {
         $Template->assign_block_vars('results', array(

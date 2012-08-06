@@ -58,9 +58,11 @@ class DownloadSearchable extends AbstractSearchableExtensionPoint
         for ($i = 0; $i < $nb_results; $i++)
             $ids[] = $results[$i]['id_content'];
 
-        $request = "SELECT id, idcat, title, short_contents, url, note, image, count, timestamp, nbr_com
-            FROM " . PREFIX . "download
-            WHERE id IN (" . implode(',', $ids) . ")";
+        $request = "SELECT d.id, d.idcat, d.title, d.short_contents, d.url, d.image, d.count, d.timestamp, notes.average_notes, com.number_comments
+            FROM " . PREFIX . "download d
+            LEFT JOIN " . DB_TABLE_COMMENTS_TOPIC . " com ON d.id = com.id_in_module AND com.module_id = 'download'
+            LEFT JOIN " . DB_TABLE_AVERAGE_NOTES . " notes ON d.id = notes.id_in_module AND module_name = 'download'
+            WHERE d.id IN (" . implode(',', $ids) . ")";
 
         $request_results = $this->sql_querier->query_while ($request, __LINE__, __FILE__);
         while ($row = $this->sql_querier->fetch_assoc($request_results))
@@ -88,6 +90,10 @@ class DownloadSearchable extends AbstractSearchableExtensionPoint
 
         $date = new Date(DATE_TIMESTAMP, TIMEZONE_USER, $result_data['timestamp']);
          //Notes
+         
+        $notation = new Notation();
+		$notation->set_module_name('download');
+		$notation->set_notation_scale($CONFIG_DOWNLOAD['note_max']);
 
         $tpl->put_all(array(
             'L_ADDED_ON' => sprintf($DOWNLOAD_LANG['add_on_date'], $date->format(DATE_FORMAT_TINY, TIMEZONE_USER)),
@@ -97,8 +103,8 @@ class DownloadSearchable extends AbstractSearchableExtensionPoint
             'TITLE' => $result_data['title'],
             'SHORT_DESCRIPTION' => FormatingHelper::second_parse($result_data['short_contents']),
             'L_NB_DOWNLOADS' => $DOWNLOAD_LANG['downloaded'] . ' ' . sprintf($DOWNLOAD_LANG['n_times'], $result_data['count']),
-            'L_NB_COMMENTS' => $result_data['nbr_com'] > 1 ? sprintf($DOWNLOAD_LANG['num_com'], $result_data['nbr_com']) : sprintf($DOWNLOAD_LANG['num_coms'], $result_data['nbr_com']),
-            'L_MARK' => $result_data['note'] > 0 ? Note::display_img($result_data['note'], $CONFIG_DOWNLOAD['note_max'], 5) : ('<em>' . $LANG['no_note'] . '</em>')
+            'L_NB_COMMENTS' => $result_data['number_comments'] > 1 ? sprintf($DOWNLOAD_LANG['num_com'], $result_data['number_comments']) : sprintf($DOWNLOAD_LANG['num_coms'], $result_data['number_comments']),
+            'L_MARK' => $result_data['average_notes'] > 0 ? NotationService::display_static_image($notation, $result_data['average_notes']) : ('<em>' . $LANG['no_note'] . '</em>')
         ));
 
         return $tpl->render();

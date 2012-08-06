@@ -1,6 +1,6 @@
 <?php
 /*##################################################
-*                         searchXMLHTTPRequestCustom.php
+*                         searchXMLHTTPRequest.php
 *                            -------------------
 *   begin                : January 27, 2008
 *   copyright            : (C) 2008 Rouchon Loïc
@@ -45,7 +45,7 @@ $modules_args = array();
 
 if (($id_search >= 0) && ($module_id != ''))
 {
-    echo 'var syncErr = false;';
+	echo 'var syncErr = false;';
     
     $search = new Search();
     if (!$search->is_search_id_in_cache($id_search))
@@ -105,7 +105,7 @@ if (($id_search >= 0) && ($module_id != ''))
     $nb_results = $search->get_results_by_id($results, $search->id_search[$module_id]);;
     if ($nb_results > 0)
     {
-        $module = $modules->get_module($module_id);
+        //$module = $modules->get_module($module_id);
         $html_results = '';
         get_html_results($results, $html_results, $module_id);
     

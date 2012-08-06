@@ -43,13 +43,14 @@ function execute_search($search, &$search_modules, &$modules_args, &$results)
     {
         if (!$search->is_in_cache($module_id))
         {
+        	Debug::dump($module_id);
             $modules_args[$module_id]['weight'] = $config->get_weightings()->get_module_weighting($module_id);
             // On rajoute l'identifiant de recherche comme parametre pour faciliter la requete
             $modules_args[$module_id]['id_search'] = !empty($search->id_search[$module_id]) ? $search->id_search[$module_id] : 0;
             $requests[$module_id] = $module->get_search_request($modules_args[$module_id]);
         }
     }
-    
+
     $search->insert_results($requests);
 }
 
@@ -87,7 +88,7 @@ function get_html_results(&$results, &$html_results, &$results_name)
     $provider_service = AppContext::get_extension_provider_service();
     $display_all_results = ($results_name == 'all' ? true : false);
     
-    $tpl_results = new Template('search/search_generic_pagination_results.tpl');
+    $tpl_results = new FileTemplate('search/search_generic_pagination_results.tpl');
     $tpl_results->assign_vars(Array(
         'RESULTS_NAME' => $results_name,
         'C_ALL_RESULTS' => $display_all_results
@@ -99,12 +100,12 @@ function get_html_results(&$results, &$html_results, &$results_name)
     if (!$display_all_results)
     {
     	$provider = $provider_service->get_provider(strtolower($results_name));
-        
+        $extension_point = $provider->get_extension_point(SearchableExtensionPoint::EXTENSION_POINT);
         $results_data = array();
-        $personnal_parse_results = $provider->has_customized_results();
+        $personnal_parse_results = $extension_point->has_customized_results();
         if ($personnal_parse_results && $results_name != 'all')
         {
-            $results_data = $provider->compute_search_results(array('results' => $results));
+            $results_data = $extension_point->compute_search_results(array('results' => $results));
             $nb_results = min($nb_results, count($results_data));
         }
     }
@@ -124,20 +125,20 @@ function get_html_results(&$results, &$html_results, &$results_name)
             
             if ($display_all_results || !$personnal_parse_results)
             {
-                $tpl_result = new Template('search/search_generic_results.tpl');
+                $tpl_result = new FileTemplate('search/search_generic_results.tpl');
                 $module = ModulesManager::get_module($results[$num_item]['module']);
                 if ($display_all_results)
                 {
                     $tpl_result->assign_vars(array(
                         'C_ALL_RESULTS' => true,
-                        'L_MODULE_NAME' => $module->configuration()->get_name()
+                        'L_MODULE_NAME' => $module->get_configuration()->get_name()
                     ));
                 }
                 else
                 {
                     $tpl_result->assign_vars(array(
                         'C_ALL_RESULTS' => false,
-                        'L_MODULE_NAME' => $module->configuration()->get_name(),
+                        'L_MODULE_NAME' => $module->get_configuration()->get_name(),
                     ));
                 }
                 $tpl_result->assign_vars(array(
@@ -152,7 +153,7 @@ function get_html_results(&$results, &$html_results, &$results_name)
             else
             {
                 $tpl_results->assign_block_vars('page.results', array(
-                    'result' => $provider->parse_search_result($results_data[$num_item])
+                    'result' => $extension_point->parse_search_result($results_data[$num_item])
                 ));
             }
         }
