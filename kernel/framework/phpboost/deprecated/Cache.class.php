@@ -157,28 +157,6 @@ class Cache
 		{
 			$this->generate_file($cache_file);
 		}
-
-		//Génération de tout les fichiers de cache des modules.
-		$this->generate_all_modules();
-	}
-
-	/**
-	 * @desc Generates all the module cache files.
-	 */
-	function generate_all_modules()
-	{
-		global $MODULES;
-
-
-		$modulesLoader = AppContext::get_extension_provider_service();
-		$modules = $modulesLoader->get_providers('get_cache');
-		foreach ($modules as $module)
-		{
-			if ($MODULES[strtolower($module->get_id())]['activ'] == '1') //Module activé
-			{
-				$this->write(strtolower($module->get_id()), $module->get_extension_point('get_cache'));
-			}
-		}
 	}
 
 	/**
