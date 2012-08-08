@@ -633,7 +633,6 @@ elseif (!empty($pm_id_get)) //Messages associés à la conversation.
 				{
 					$user_rank = $ranks_info['name'];
 					$user_rank_icon = $ranks_info['icon'];
-					break;
 				}
 			}
 		}

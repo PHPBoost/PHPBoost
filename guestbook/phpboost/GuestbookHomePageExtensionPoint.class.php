@@ -287,7 +287,6 @@ class GuestbookHomePageExtensionPoint implements HomePageExtensionPoint
 					{
 						$user_rank = $ranks_info['name'];
 						$user_rank_icon = $ranks_info['icon'];
-						break;
 					}
 				}
 			}
