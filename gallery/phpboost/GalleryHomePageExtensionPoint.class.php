@@ -276,7 +276,7 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 			if ($g_views)
 				$g_sql_sort = ' ORDER BY g.views DESC';
 			elseif ($g_notes)
-				$g_sql_sort = ' ORDER BY g.note DESC';
+				$g_sql_sort = ' ORDER BY note.average_notes DESC';
 	
 			$Template->put_all(array(
 				'C_GALLERY_PICS' => true,
