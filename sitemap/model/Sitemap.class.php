@@ -211,8 +211,11 @@ class Sitemap
 		//All the links which not need to be present in the search engine results.
 		if ($mode == self::USER_MODE)
 		{
-			$kernel_map->add(new SitemapLink($LANG['members_list'], UserUrlBuilder::users()));
-
+			if (AppContext::get_current_user()->check_auth(UserAccountsConfig::load()->get_auth_read_members(), AUTH_READ_MEMBERS))
+			{
+				$kernel_map->add(new SitemapLink($LANG['members_list'], UserUrlBuilder::users()));
+			}
+			
 			//Member space
 			if ($auth_mode == self::AUTH_USER && $User->check_level(User::MEMBER_LEVEL))
 			{
