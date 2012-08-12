@@ -186,7 +186,7 @@ a.forum_mbrmsg_links { /* Couleur des liens pour les messages du membre */
 }
 
 .module_position{
-    
+    width:auto;
 }
 
 .module_bottom_l{ /* Barre inférieure des modules */
