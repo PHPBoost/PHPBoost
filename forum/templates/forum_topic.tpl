@@ -171,7 +171,7 @@
 		<div class="module_position">
 			<div class="module_contents">
 				<form method="post" action="action{U_POLL_ACTION}">
-					<table class="module_table" style="width:92%">
+					<table class="module_table" style="width:75%">
 						<tr>
 							<th>{L_POLL}: {QUESTION}</th>
 						</tr>
