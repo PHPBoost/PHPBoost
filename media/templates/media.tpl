@@ -23,7 +23,7 @@
 			<div class="module_top_r"></div>
 			<div class="module_top">
 				<div class="module_top_title">
-					<a href="${relative_url(SyndicationUrlBuilder::rss('media'))}" title="Syndication"><img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/rss.png" alt="Syndication" title="Syndication" /></a>
+					<a href="${relative_url(SyndicationUrlBuilder::rss('media', ID_CAT))}" title="Syndication"><img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/rss.png" alt="Syndication" title="Syndication" /></a>
 					{TITLE}
 				</div>
 				<div class="module_top_com">

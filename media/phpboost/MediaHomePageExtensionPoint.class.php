@@ -108,7 +108,8 @@ class MediaHomePageExtensionPoint implements HomePageExtensionPoint
 			'L_ADD_FILE' => $MEDIA_LANG['add_media'],
 			'C_DESCRIPTION' => !empty($MEDIA_CATS[$id_cat]['desc']),
 			'DESCRIPTION' => FormatingHelper::second_parse($MEDIA_CATS[$id_cat]['desc']),
-			'C_SUB_CATS' => $i > 1
+			'C_SUB_CATS' => $i > 1,
+			'ID_CAT' => $id_cat
 		));
 	
 		//Contenu de la catégorie
@@ -140,7 +141,7 @@ class MediaHomePageExtensionPoint implements HomePageExtensionPoint
 					$selected_fields['note'] = ' selected="selected"';
 					break;
 				case 'com':
-					$sort = 'nbr_com';
+					$sort = 'com.number_comments';
 					$selected_fields['com'] = ' selected="selected"';
 					break;
 			}
@@ -190,10 +191,11 @@ class MediaHomePageExtensionPoint implements HomePageExtensionPoint
 				'TARGET_ON_CHANGE_ORDER' => ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? 'media-0-' . $id_cat . '.php?' : 'media.php?cat=' . $id_cat . '&'
 			));
 	
-			$result = $this->sql_querier->query_while("SELECT v.id, v.iduser, v.name, v.timestamp, v.counter, v.infos, v.contents, mb.login, mb.level, notes.average_notes
+			$result = $this->sql_querier->query_while("SELECT v.id, v.iduser, v.name, v.timestamp, v.counter, v.infos, v.contents, mb.login, mb.level, notes.average_notes, com.number_comments
 				FROM " . PREFIX . "media AS v
 				LEFT JOIN " . DB_TABLE_MEMBER . " AS mb ON v.iduser = mb.user_id
 				LEFT JOIN " . DB_TABLE_AVERAGE_NOTES . " notes ON v.id = notes.id_in_module
+				LEFT JOIN " . DB_TABLE_COMMENTS_TOPIC . " com ON v.id = com.id_in_module AND com.module_id = 'web'
 				WHERE idcat = '" . $id_cat . "' AND infos = '" . MEDIA_STATUS_APROBED . "'
 				ORDER BY " . $sort . " " . $mode .
 				$this->sql_querier->limit($Pagination->get_first_msg($MEDIA_CONFIG['pagin'], 'p'), $MEDIA_CONFIG['pagin']), __LINE__, __FILE__);
