@@ -157,7 +157,7 @@ elseif (!empty($idcat) && empty($idweb)) //Catégories.
 		$sort = 'average_notes';
 		break;		
 		case 'com' :
-		$sort = 'nbr_com';
+		$sort = 'com.number_comments';
 		break;
 		default :
 		$sort = 'timestamp';
@@ -175,9 +175,10 @@ elseif (!empty($idcat) && empty($idweb)) //Catégories.
 		'PAGINATION' => $Pagination->display('web' . url('.php' . (!empty($unget) ? $unget . '&amp;' : '?') . 'cat=' . $idcat . '&amp;p=%d', '-' . $idcat . '-0-%d.php' . (!empty($unget) ? '?' . $unget : '')), $nbr_web, 'p', $web_config->get_max_nbr_weblinks(), 3)
 	));
 
-	$result = $Sql->query_while("SELECT w.id, w.title, w.timestamp, w.compt, notes.average_notes
+	$result = $Sql->query_while("SELECT w.id, w.title, w.timestamp, w.compt, notes.average_notes, com.number_comments
 	FROM " . PREFIX . "web w
 	LEFT JOIN " . DB_TABLE_AVERAGE_NOTES . " notes ON w.id = notes.id_in_module AND notes.module_name = 'web'
+	LEFT JOIN " . DB_TABLE_COMMENTS_TOPIC . " com ON w.id = com.id_in_module AND com.module_id = 'web'
 	WHERE aprob = 1 AND idcat = '" . $idcat . "'
 	ORDER BY " . $sort . " " . $mode . 
 	$Sql->limit($Pagination->get_first_msg($web_config->get_max_nbr_weblinks(), 'p'), $web_config->get_max_nbr_weblinks()), __LINE__, __FILE__);
