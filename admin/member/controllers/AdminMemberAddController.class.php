@@ -94,7 +94,7 @@ class AdminMemberAddController extends AdminController
 
 	private function save()
 	{
-		$user_authentification = new UserAuthentification($this->form->get_value('login'), $this->form->get_value('password'));
+		$user_authentification = new UserAuthentification(TextHelper::htmlspecialchars($this->form->get_value('login')), $this->form->get_value('password'));
 		$user = new User();
 		$user->set_level($this->form->get_value('rank')->get_raw_value());
 		$user->set_email($this->form->get_value('mail'));
