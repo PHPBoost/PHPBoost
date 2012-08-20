@@ -33,7 +33,7 @@ class FormFieldTextEditor extends AbstractFormField
 {
     private $size = 30;
     private $maxlength = 255;
-    private static $tpl_src = '<input type="text" size="{SIZE}" maxlength="{MAX_LENGTH}" name="${escape(NAME)}" id="${escape(ID)}" value="${escape(VALUE)}"
+    private static $tpl_src = '<input type="text" size="{SIZE}" maxlength="{MAX_LENGTH}" name="${escape(NAME)}" id="${escape(ID)}" value="{VALUE}"
 	class="# IF C_READONLY #low_opacity # ENDIF #${escape(CLASS)}" # IF C_DISABLED # disabled="disabled" # ENDIF # # IF C_READONLY # readonly="readonly" # ENDIF # />';
 
     /**

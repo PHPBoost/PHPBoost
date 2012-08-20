@@ -159,14 +159,14 @@ class AdminExtendedFieldMemberAddController extends AdminController
 	private function save()
 	{
 		$extended_field = new ExtendedField();
-		$extended_field->set_name($this->form->get_value('name'));
+		$extended_field->set_name(TextHelper::htmlspecialchars($this->form->get_value('name')));
 		$extended_field->set_field_name(ExtendedField::rewrite_field_name($this->form->get_value('name')));
 		$extended_field->set_position(PersistenceContext::get_sql()->query("SELECT MAX(position) + 1 FROM " . DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST . "", __LINE__, __FILE__));
-		$extended_field->set_description($this->form->get_value('description'));
+		$extended_field->set_description(TextHelper::htmlspecialchars($this->form->get_value('description')));
 		$field_type = $this->form->get_value('field_type')->get_raw_value();
 		$extended_field->set_field_type($field_type);
-		$extended_field->set_possible_values($this->form->get_value('possible_values', ''));
-		$extended_field->set_default_values($this->form->get_value('default_values', ''));
+		$extended_field->set_possible_values(TextHelper::htmlspecialchars($this->form->get_value('possible_values', '')));
+		$extended_field->set_default_values(TextHelper::htmlspecialchars($this->form->get_value('default_values', '')));
 		$extended_field->set_is_required((bool)$this->form->get_value('field_required')->get_raw_value());
 		$extended_field->set_display((bool)$this->form->get_value('display')->get_raw_value());
 		$regex = 0;

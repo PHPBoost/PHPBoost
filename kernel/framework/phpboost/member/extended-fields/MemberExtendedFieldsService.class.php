@@ -89,7 +89,7 @@ class MemberExtendedFieldsService
 					$member_extended_field->set_value($value);
 					
 					$authorizations = unserialize($extended_field['auth']);
-					if (AppContext::get_current_user()->check_auth($authorizations, ExtendedField::READ_PROFILE_AUTHORIZATION) && !empty($value))
+					if (AppContext::get_current_user()->check_auth($authorizations, ExtendedField::READ_PROFILE_AUTHORIZATION))
 					{
 						MemberExtendedFieldsFactory::display_field_profile($member_extended_field);
 					}

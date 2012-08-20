@@ -176,7 +176,7 @@ class AdminMemberEditController extends AdminController
 		
 		GroupsService::edit_member($user_id, $this->form->get_value('groups'));
 		
-		$this->user->set_pseudo($this->form->get_value('login'));
+		$this->user->set_pseudo(TextHelper::htmlspecialchars($this->form->get_value('login')));
 		$this->user->set_level($this->form->get_value('rank')->get_raw_value());
 		$this->user->set_groups($this->form->get_value('groups'));
 		$this->user->set_email($this->form->get_value('mail'));
