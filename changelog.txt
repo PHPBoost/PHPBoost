@@ -90,10 +90,13 @@
 [*] Possibilité de définir une catégorie principale pour tous les fichiers dans l'ajout d'image par FTP
 
 [b]News :[/b]
-[*] Refonte complète du module, collaboration des utilisateurs possible.
+[*] collaboration des utilisateurs possible.
+[*] Ajout des suggestions de news
+[*] Ajout des sources de news
 
 [b]Articles :[/b]
-[*] Refonte complète du module, collaboration des utilisateurs possible.
+[*] collaboration des utilisateurs possible.
+[*] Ajout des sources de l'article
 
 [b]ShoutBox :[/b]
 [*] Possibilité de gérer les autorisations d'écriture, de lecture et de modération
