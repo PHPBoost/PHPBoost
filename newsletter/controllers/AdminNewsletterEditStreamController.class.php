@@ -114,12 +114,12 @@ class AdminNewsletterEditStreamController extends AdminModuleController
 		)));
 		
 		$auth_settings = new AuthorizationsSettings(array(
-			new ActionAuthorization($this->lang['streams.auth.read'], NewsletterConfig::CAT_AUTH_READ),
-			new ActionAuthorization($this->lang['streams.auth.subscribe'], NewsletterConfig::CAT_AUTH_SUBSCRIBE),
-			new ActionAuthorization($this->lang['streams.auth.subscribers-read'], NewsletterConfig::CAT_AUTH_READ_SUBSCRIBERS),
-			new ActionAuthorization($this->lang['streams.auth.subscribers-moderation'], NewsletterConfig::CAT_AUTH_MODERATION_SUBSCRIBERS),
-			new ActionAuthorization($this->lang['streams.auth.create-newsletter'], NewsletterConfig::CAT_AUTH_CREATE_NEWSLETTER),
-			new ActionAuthorization($this->lang['streams.auth.archives-read'], NewsletterConfig::CAT_AUTH_READ_ARCHIVES)
+			new ActionAuthorization($this->lang['streams.auth.read'], NewsletterConfig::AUTH_READ),
+			new ActionAuthorization($this->lang['streams.auth.subscribe'], NewsletterConfig::AUTH_SUBSCRIBE),
+			new ActionAuthorization($this->lang['streams.auth.subscribers-read'], NewsletterConfig::AUTH_READ_SUBSCRIBERS),
+			new ActionAuthorization($this->lang['streams.auth.subscribers-moderation'], NewsletterConfig::AUTH_MODERATION_SUBSCRIBERS),
+			new ActionAuthorization($this->lang['streams.auth.create-newsletter'], NewsletterConfig::AUTH_CREATE_NEWSLETTER),
+			new ActionAuthorization($this->lang['streams.auth.archives-read'], NewsletterConfig::AUTH_READ_ARCHIVES)
 		));
 		
 		$default_authorizations = is_array($newsletter_stream_cache['authorizations']) ? $newsletter_stream_cache['authorizations'] : NewsletterConfig::load()->get_authorizations();
