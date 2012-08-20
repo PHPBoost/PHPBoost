@@ -82,32 +82,6 @@ class MemberExtendedFieldsFactory
 		$instance_class = new $name_class();
 		return $instance_class->return_value($form, $member_extended_field);
 	}
-
-	/**
-	 * @desc This function parse value
-	 * @param object $member_extended_field MemberExtendedField
-	 * @param string $value string to parse
-	 */
-	public static function parse(MemberExtendedField $member_extended_field, $value)
-	{
-		$name_class = self::name_class($member_extended_field);
-
-		$instance_class = new $name_class();
-		return $instance_class->parse($value);
-	}
-	
-	/**
-	 * @desc This function unparse value
-	 * @param object $member_extended_field MemberExtendedField
-	 * @param string $value string to unparse
-	 */
-	public static function unparse(MemberExtendedField $member_extended_field, $value)
-	{
-		$name_class = self::name_class($member_extended_field);
-
-		$instance_class = new $name_class();
-		return $instance_class->unparse($value);
-	}
 	
 	/**
 	 * @desc This function execute the database request

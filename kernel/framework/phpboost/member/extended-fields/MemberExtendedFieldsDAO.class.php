@@ -32,71 +32,43 @@
  */
 class MemberExtendedFieldsDAO
 {
-	private $db_connection;
-	private $request_insert;
-	private $request_update;
-	private $request_field;
-	private $fields;
+	private $db_querier;
+	private $columns;
 	
 	public function __construct()
 	{
+		$this->db_querier = PersistenceContext::get_querier();
 		$this->db_connection = PersistenceContext::get_sql();
-		$this->request_field = '';
-		$this->request_insert = '';
-		$this->request_update = '';
-		$this->fields = array();
+		$this->columns = array();
 	}
 	
 	public function set_request(MemberExtendedField $member_extended_field)
 	{
-		$this->set_request_update($member_extended_field);
-		$this->set_request_insert($member_extended_field);
-		$this->fields[$member_extended_field->get_field_name()] = $member_extended_field->get_value();
+		$this->columns[$member_extended_field->get_field_name()] = $member_extended_field->get_value();
 	}
 	
-	public function get_request($user_id)
+	public function execute_request($user_id)
 	{
-		$check_member = $this->db_connection->query("SELECT COUNT(*) FROM " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
+		$check_member = $this->db_querier->count(DB_TABLE_MEMBER_EXTENDED_FIELDS, 'WHERE user_id=:user_id', array('user_id' => $user_id));
 		if ($check_member)
 		{
-			$this->get_request_update($user_id);
+			$this->execute_request_update($user_id);
 		}
 		else
 		{
-			$this->get_request_insert($user_id);
+			$this->execute_request_insert($user_id);
 		}
 	}
 	
-	public function set_request_insert(MemberExtendedField $member_extended_field)
+	private function execute_request_insert($user_id)
 	{
-		$this->set_request_field($member_extended_field);
-		$this->request_insert .= '\'' . htmlspecialchars(trim($member_extended_field->get_value(), '|')) . '\', ';
+		$this->columns = array_merge(array('user_id' => $user_id), $this->columns);
+		$this->db_querier->insert(DB_TABLE_MEMBER_EXTENDED_FIELDS, $this->columns);
 	}
-	
-	private function get_request_insert($user_id)
+		
+	private function execute_request_update($user_id)
 	{
-		if (!empty($this->request_field) && !empty($this->request_insert))
-		{
-			$this->db_connection->query_inject("INSERT INTO " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " (user_id, " . trim($this->request_field, ', ') . ") VALUES ('" . $user_id . "', " . trim($this->request_insert, ', ') . ")", __LINE__, __FILE__);
-		}
-	}
-	
-	public function set_request_field(MemberExtendedField $member_extended_field)
-	{
-		$this->request_field .= htmlspecialchars($member_extended_field->get_field_name()) . ', ';
-	}
-	
-	public function set_request_update(MemberExtendedField $member_extended_field)
-	{
-		$this->request_update .= $member_extended_field->get_field_name() . ' = \'' . htmlspecialchars(trim($member_extended_field->get_value(), '|')) . '\', ';
-	}
-	
-	private function get_request_update($user_id)
-	{
-		if (!empty($this->request_update))
-		{
-			$this->db_connection->query_inject("UPDATE " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " SET " . trim($this->request_update, ', ') . " WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
-		}
+		$this->db_querier->update(DB_TABLE_MEMBER_EXTENDED_FIELDS, $this->columns, 'WHERE user_id=:user_id', array('user_id' => $user_id));
 	}
 	
 	/**
@@ -115,7 +87,7 @@ class MemberExtendedFieldsDAO
 	 */
 	public static function extended_fields_displayed()
 	{
-		return (bool)PersistenceContext::get_sql()->query("SELECT COUNT(*) FROM " . DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST . " WHERE display = 1", __LINE__, __FILE__);
+		return (bool)PersistenceContext::get_querier()->count(DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST, 'WHERE display=1');
 	}
 	
 	/**
