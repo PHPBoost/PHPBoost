@@ -41,13 +41,6 @@ class NewsletterConfig extends AbstractConfigData
 	const AUTH_CREATE_NEWSLETTER = 16;
 	const AUTH_READ_ARCHIVES = 32;
 	
-	const CAT_AUTH_READ = 1;
-	const CAT_AUTH_SUBSCRIBE = 2;
-	const CAT_AUTH_READ_SUBSCRIBERS = 4;
-	const CAT_AUTH_MODERATION_SUBSCRIBERS = 8;
-	const CAT_AUTH_CREATE_NEWSLETTER = 16;
-	const CAT_AUTH_READ_ARCHIVES = 32;
-	
 	public function get_mail_sender()
 	{
 		return $this->get_property(self::MAIL_SENDER);
@@ -86,7 +79,7 @@ class NewsletterConfig extends AbstractConfigData
 		return array(
 			self::MAIL_SENDER => MailServiceConfig::load()->get_default_mail_sender(),
 			self::NEWSLETTER_NAME => '',
-			self::AUTHORIZATION => array('r1' => 15, 'r0' => 3, 'r-1' => 3)
+			self::AUTHORIZATION => array('r1' => 63, 'r0' => 35, 'r-1' => 35)
 		);
 	}
 
