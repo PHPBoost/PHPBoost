@@ -78,6 +78,7 @@ class SendMailUnlockAdminController extends AdminController
         $mail->set_sender(MailServiceConfig::load()->get_default_mail_sender(), GeneralConfig::load()->get_site_name());
         $mail->set_subject($subject);
         $mail->set_content($content);
+        $mail->set_is_html(true);
         return AppContext::get_mail_service()->try_to_send($mail);
 	}
 	
