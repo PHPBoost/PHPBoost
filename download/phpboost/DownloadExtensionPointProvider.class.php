@@ -69,7 +69,7 @@ class DownloadExtensionPointProvider extends ExtensionPointProvider
 			'icon' => $row['icon'],
 			'description' => $row['contents'],
 			'num_files' => $row['num_files'],
-			'auth' => unserialize($row['auth'])
+			'auth' => !empty($row['auth']) ? unserialize($row['auth']) : $CONFIG_DOWNLOAD['global_auth']
 			), true)
 			. ';' . "\n";
 		}
