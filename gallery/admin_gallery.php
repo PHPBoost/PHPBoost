@@ -227,7 +227,7 @@ else
 
 		if (!empty($idpics))
 		{
-			$result = $Sql->query_while("SELECT g.id, g.idcat, g.name, g.user_id, g.views, g.width, g.height, g.weight, g.timestamp, g.note, g.nbrnote, g.nbr_com, g.aprob, m.login
+			$result = $Sql->query_while("SELECT g.id, g.idcat, g.name, g.user_id, g.views, g.width, g.height, g.weight, g.timestamp, g.aprob, m.login
 			FROM " . PREFIX . "gallery g
 			LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = g.user_id
 			WHERE g.idcat = '" . $idcat . "' AND g.id = '" . $idpics . "'

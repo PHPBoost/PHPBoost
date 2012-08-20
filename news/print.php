@@ -38,7 +38,7 @@ $id = retrieve(GET, 'id', 0, TINTEGER);
 if ($id > 0) //Si on connait son titre
 {
 	// Récupération de la news
-	$result = $Sql->query_while("SELECT n.contents, n.extend_contents, n.title, n.id, n.idcat, n.timestamp, n.start, n.visible, n.user_id, n.img, n.alt, n.nbr_com, m.login, m.level
+	$result = $Sql->query_while("SELECT n.contents, n.extend_contents, n.title, n.id, n.idcat, n.timestamp, n.start, n.visible, n.user_id, n.img, n.alt, m.login, m.level
 	FROM " . DB_TABLE_NEWS . " n LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = n.user_id
 	WHERE n.id = '" . $id . "'", __LINE__, __FILE__);
 	$news = $Sql->fetch_assoc($result);
