@@ -58,10 +58,11 @@ if (!empty($encoded_title)) //Si on connait son titre
 		$ex_title = $article_infos['title'];
 		$id_redirection = $article_infos['id'];
 		
-		$result = $Sql->query_while("SELECT a.id, a.is_cat, a.hits, a.redirect, a.id_cat, a.title, a.encoded_title, a.is_cat, a.nbr_com, a.defined_status, f.id AS id_favorite, a.undefined_status, a.auth, c.menu, c.content
+		$result = $Sql->query_while("SELECT a.id, a.is_cat, a.hits, a.redirect, a.id_cat, a.title, a.encoded_title, a.is_cat, com_topic.number_comments, a.defined_status, f.id AS id_favorite, a.undefined_status, a.auth, c.menu, c.content
 		FROM " . PREFIX . "wiki_articles a
 		LEFT JOIN " . PREFIX . "wiki_contents c ON c.id_contents = a.id_contents
 		LEFT JOIN " . PREFIX . "wiki_favorites f ON f.id_article = a.id
+		LEFT JOIN " . DB_TABLE_COMMENTS_TOPIC . " com_topic ON a.id = com_topic.id_in_module AND com_topic.module_id = 'wiki'
 		WHERE a.id = '" . $article_infos['redirect'] . "'
 		GROUP BY a.id", __LINE__, __FILE__);
 		$article_infos = $Sql->fetch_assoc($result);
@@ -73,10 +74,11 @@ if (!empty($encoded_title)) //Si on connait son titre
 //Sinon on cherche dans les archives
 elseif (!empty($id_contents))
 {
-	$result = $Sql->query_while("SELECT a.title, a.encoded_title, a.id, c.id_contents, a.id_cat, a.is_cat, a.defined_status, a.undefined_status, a.nbr_com, f.id AS id_favorite, c.menu, c.content
+	$result = $Sql->query_while("SELECT a.title, a.encoded_title, a.id, c.id_contents, a.id_cat, a.is_cat, a.defined_status, a.undefined_status, com_topic.number_comments, f.id AS id_favorite, c.menu, c.content
 	FROM " . PREFIX . "wiki_contents c
 	LEFT JOIN " . PREFIX . "wiki_articles a ON a.id = c.id_article
 	LEFT JOIN " . PREFIX . "wiki_favorites f ON f.id_article = a.id
+	LEFT JOIN " . DB_TABLE_COMMENTS_TOPIC . " com_topic ON a.id = com_topic.id_in_module AND com_topic.module_id = 'wiki'
 	WHERE c.id_contents = '" . $id_contents . "'", __LINE__, __FILE__);
 	$article_infos = $Sql->fetch_assoc($result);
 	$Sql->query_close($result);
