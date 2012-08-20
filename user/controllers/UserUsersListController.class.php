@@ -52,7 +52,7 @@ class UserUsersListController extends AbstractController
 		$sort = $request->get_value('sort', 'top');
 		$page = $request->get_int('page', 1);
 		
-		$mode = ($sort == 'top') ? 'ASC' : 'DESC';
+		$mode = ($sort == 'top') ? 'DESC' : 'ASC';
 		
 		switch ($field)
 		{
