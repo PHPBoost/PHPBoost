@@ -85,11 +85,11 @@ class MemberExtendedFieldsService
 					$member_extended_field->set_name($extended_field['name']);
 					$member_extended_field->set_field_name($extended_field['field_name']);
 					$member_extended_field->set_field_type($extended_field['field_type']);
-					$value = !empty($extended_field[$extended_field['field_name']]) ? MemberExtendedFieldsFactory::unparse($member_extended_field, $extended_field[$extended_field['field_name']]) : $extended_field['default_values'];
+					$value = !empty($extended_field[$extended_field['field_name']]) ? $extended_field[$extended_field['field_name']] : $extended_field['default_values'];
 					$member_extended_field->set_value($value);
 					
 					$authorizations = unserialize($extended_field['auth']);
-					if (AppContext::get_current_user()->check_auth($authorizations, ExtendedField::READ_PROFILE_AUTHORIZATION))
+					if (AppContext::get_current_user()->check_auth($authorizations, ExtendedField::READ_PROFILE_AUTHORIZATION) && !empty($value))
 					{
 						MemberExtendedFieldsFactory::display_field_profile($member_extended_field);
 					}
@@ -123,8 +123,7 @@ class MemberExtendedFieldsService
 						
 						try {
 							$value = MemberExtendedFieldsFactory::return_value($form, $member_extended_field);
-							$value_rewrite = MemberExtendedFieldsFactory::parse($member_extended_field, $value);
-							$member_extended_field->set_value($value_rewrite);
+							$member_extended_field->set_value($value);
 							
 							$authorizations = $extended_field['auth'];
 							if (AppContext::get_current_user()->check_auth($authorizations, ExtendedField::READ_EDIT_AND_ADD_AUTHORIZATION))
@@ -136,7 +135,7 @@ class MemberExtendedFieldsService
 						}
 					}
 				}
-				$member_extended_fields_dao->get_request($user_id);
+				$member_extended_fields_dao->execute_request($user_id);
 			}
 		}
 	}
@@ -185,7 +184,7 @@ class MemberExtendedFieldsService
 		while ($extended_field = PersistenceContext::get_sql()->fetch_assoc($result))
 		{
 			$member_extended_field->set_field_type($extended_field['field_type']);
-			$value = !empty($extended_field[$extended_field['field_name']]) ? MemberExtendedFieldsFactory::unparse($member_extended_field, $extended_field[$extended_field['field_name']]) : $extended_field['default_values'];
+			$value = !empty($extended_field[$extended_field['field_name']]) ? $extended_field[$extended_field['field_name']] : $extended_field['default_values'];
 			
 			$member_extended_field->set_name($extended_field['name']);
 			$member_extended_field->set_field_name($extended_field['field_name']);
