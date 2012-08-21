@@ -127,7 +127,7 @@ class UserRegistrationController extends AbstractController
 		$agreement_fieldset->add_field($agreement);
 
 		$agreement = new FormFieldHTML('agreement', 
-			'<div style="width:auto;height:auto;overflow-y:scroll;border:1px solid #DFDFDF;background-color:#F1F4F1;margin-bottom:10px;">' . $this->user_accounts_config->get_registration_agreement() . '</div>'
+			'<div style="width:auto;height:250px;overflow-y:scroll;border:1px solid #DFDFDF;background-color:#F1F4F1;margin-bottom:10px;">' . $this->user_accounts_config->get_registration_agreement() . '</div>'
 		);
 		$agreement_fieldset->add_field($agreement);
 		
