@@ -51,7 +51,7 @@ class NewsletterSitemapExtensionPoint implements SitemapExtensionPoint
 		{			
 			if ($auth_mode == Sitemap::AUTH_PUBLIC)
 			{
-				$is_authorized = is_array($properties['authorizations']) ? Authorizations::check_auth(RANK_TYPE, GUEST_LEVEL, $properties['authorizations'], NewsletterAuthorizationsService::AUTH_READ) : Authorizations::check_auth(RANK_TYPE, GUEST_LEVEL, $config->get_authorizations(), NewsletterAuthorizationsService::AUTH_READ);
+				$is_authorized = is_array($properties['authorizations']) ? Authorizations::check_auth(RANK_TYPE, User::VISITOR_LEVEL, $properties['authorizations'], NewsletterAuthorizationsService::AUTH_READ) : Authorizations::check_auth(RANK_TYPE, User::VISITOR_LEVEL, $config->get_authorizations(), NewsletterAuthorizationsService::AUTH_READ);
 			}
 			else
 			{

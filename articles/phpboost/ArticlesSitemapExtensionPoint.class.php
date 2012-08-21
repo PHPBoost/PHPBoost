@@ -58,7 +58,7 @@ class ArticlesSitemapExtensionPoint implements SitemapExtensionPoint
 
 			if ($auth_mode == Sitemap::AUTH_PUBLIC)
 			{
-				$this_auth = is_array($properties['auth']) ? Authorizations::check_auth(RANK_TYPE, GUEST_LEVEL, $properties['auth'], AUTH_ARTICLES_READ) : Authorizations::check_auth(RANK_TYPE, GUEST_LEVEL, $CONFIG_ARTICLES['global_auth'], AUTH_ARTICLES_READ);
+				$this_auth = is_array($properties['auth']) ? Authorizations::check_auth(RANK_TYPE, User::VISITOR_LEVEL, $properties['auth'], AUTH_ARTICLES_READ) : Authorizations::check_auth(RANK_TYPE, User::VISITOR_LEVEL, $CONFIG_ARTICLES['global_auth'], AUTH_ARTICLES_READ);
 			}
 			else
 			{

@@ -42,7 +42,7 @@ if ($menu == null)
 if ($post)
 {   // Edit a Menu authorizations
     $menu->enabled(retrieve(POST, 'activ', Menu::MENU_NOT_ENABLED));
-    $menu->set_auth(Authorizations::build_auth_array_from_form(AUTH_MENUS));
+    $menu->set_auth(Authorizations::build_auth_array_from_form(Menu::MENU_AUTH_BIT));
     
     //Filters
     MenuAdminService::set_retrieved_filters($menu);
@@ -87,7 +87,7 @@ $tpl->put_all(array(
 $tpl->put_all(array(
     'IDMENU' => $id,
     'NAME' => $menu->get_title(),
-    'AUTH_MENUS' => Authorizations::generate_select(AUTH_MENUS, $menu->get_auth()),
+    'AUTH_MENUS' => Authorizations::generate_select(Menu::MENU_AUTH_BIT, $menu->get_auth()),
     'C_ENABLED' => $menu->is_enabled(),
 ));
 

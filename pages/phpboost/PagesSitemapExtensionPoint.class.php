@@ -63,7 +63,7 @@ class PagesSitemapExtensionPoint implements SitemapExtensionPoint
 			$properties = $_PAGES_CATS[$id];
 			if ($auth_mode == Sitemap::AUTH_PUBLIC)
 			{
-				$this_auth = is_array($properties['auth']) ? Authorizations::check_auth(RANK_TYPE, GUEST_LEVEL, $properties['auth'], READ_PAGE) : Authorizations::check_auth(RANK_TYPE, GUEST_LEVEL, $config_authorizations, READ_PAGE);
+				$this_auth = is_array($properties['auth']) ? Authorizations::check_auth(RANK_TYPE, User::VISITOR_LEVEL, $properties['auth'], READ_PAGE) : Authorizations::check_auth(RANK_TYPE, User::VISITOR_LEVEL, $config_authorizations, READ_PAGE);
 			}
 			elseif ($auth_mode == Sitemap::AUTH_USER)
 			{
@@ -105,7 +105,7 @@ class PagesSitemapExtensionPoint implements SitemapExtensionPoint
 			$properties = $_PAGES_CATS[$id];
 			if ($auth_mode == Sitemap::AUTH_PUBLIC)
 			{
-				$this_auth = is_array($properties['auth']) ? Authorizations::check_auth(RANK_TYPE, GUEST_LEVEL, $properties['auth'], READ_PAGE) : Authorizations::check_auth(RANK_TYPE, GUEST_LEVEL, $config_authorizations, READ_PAGE);
+				$this_auth = is_array($properties['auth']) ? Authorizations::check_auth(RANK_TYPE, User::VISITOR_LEVEL, $properties['auth'], READ_PAGE) : Authorizations::check_auth(RANK_TYPE, User::VISITOR_LEVEL, $config_authorizations, READ_PAGE);
 			}
 			elseif ($auth_mode == Sitemap::AUTH_USER)
 			{

@@ -68,7 +68,7 @@ if ($action_post == 'save')
 	{
 		$menu->set_block(retrieve(POST, 'location', Menu::BLOCK_POSITION__NOT_ENABLED));
 	}
-	$menu->set_auth(Authorizations::build_auth_array_from_form(AUTH_MENUS));
+	$menu->set_auth(Authorizations::build_auth_array_from_form(Menu::MENU_AUTH_BIT));
 	
     //Filters
     MenuAdminService::set_retrieved_filters($menu);
@@ -136,7 +136,7 @@ if ($edit)
 	$tpl->put_all(array(
 		'IDMENU' => $id,
 		'NAME' => $menu->get_title(),
-		'AUTH_MENUS' => Authorizations::generate_select(AUTH_MENUS, $menu->get_auth()),
+		'AUTH_MENUS' => Authorizations::generate_select(Menu::MENU_AUTH_BIT, $menu->get_auth()),
         'C_ENABLED' => $menu->is_enabled(),
    	    'C_EDIT' => true,
 	));
@@ -146,7 +146,7 @@ else
 	$tpl->put_all(array(
    	    'C_NEW' => true,
         'C_ENABLED' => true,
-        'AUTH_MENUS' => Authorizations::generate_select(AUTH_MENUS, array(), array(-1 => true, 0 => true, 1 => true, 2 => true))
+        'AUTH_MENUS' => Authorizations::generate_select(Menu::MENU_AUTH_BIT, array(), array(-1 => true, 0 => true, 1 => true, 2 => true))
 	));
 	
    // Create a new generic menu

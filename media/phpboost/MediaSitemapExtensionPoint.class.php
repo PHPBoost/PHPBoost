@@ -58,7 +58,7 @@ class MediaSitemapExtensionPoint implements SitemapExtensionPoint
 
 			if ($auth_mode == Sitemap::AUTH_PUBLIC)
 			{
-				$this_auth = is_array($properties['auth']) ? Authorizations::check_auth(RANK_TYPE, GUEST_LEVEL, $properties['auth'], MEDIA_AUTH_READ) : Authorizations::check_auth(RANK_TYPE, GUEST_LEVEL, $MEDIA_CONFIG['auth'], MEDIA_AUTH_READ);
+				$this_auth = is_array($properties['auth']) ? Authorizations::check_auth(RANK_TYPE, User::VISITOR_LEVEL, $properties['auth'], MEDIA_AUTH_READ) : Authorizations::check_auth(RANK_TYPE, User::VISITOR_LEVEL, $MEDIA_CONFIG['auth'], MEDIA_AUTH_READ);
 			}
 			else
 			{

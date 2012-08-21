@@ -146,7 +146,7 @@ abstract class LinksMenuElement extends Menu
 		if ($mode)
 		{
 			$template->put_all(array(
-  				'AUTH_FORM' => Authorizations::generate_select(AUTH_MENUS, $this->get_auth(), array(), 'menu_element_' . $this->uid . '_auth')
+  				'AUTH_FORM' => Authorizations::generate_select(Menu::MENU_AUTH_BIT, $this->get_auth(), array(), 'menu_element_' . $this->uid . '_auth')
 			));
 		}
 	}

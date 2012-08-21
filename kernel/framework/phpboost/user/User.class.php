@@ -35,6 +35,7 @@ define('USER_TYPE', 3);
  */
 class User
 {
+	const VISITOR_LEVEL = -1;
 	const MEMBER_LEVEL = 0;
 	const MODERATOR_LEVEL = 1;
 	const ADMIN_LEVEL = 2;
