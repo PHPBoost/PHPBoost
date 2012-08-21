@@ -100,9 +100,9 @@ class UpdateDBConfigController extends UpdateController
 		$fieldset_schema->add_field($tables_prefix);
 
 		$action_fieldset = new FormFieldsetSubmit('actions');
-		$back = new FormButtonLink($this->lang['step.previous'], InstallUrlBuilder::server_configuration(), 'templates/images/left.png');
+		$back = new FormButtonLink($this->lang['step.previous'], UpdateUrlBuilder::server_configuration(), 'templates/images/left.png');
 		$action_fieldset->add_element($back);
-		$check_request = new AjaxRequest(InstallUrlBuilder::check_database(), 'function(response){
+		$check_request = new AjaxRequest(UpdateUrlBuilder::check_database(), 'function(response){
 		alert(response.responseJSON.message);
 		}');
 		$check = new FormButtonAjax($this->lang['db.config.check'], $check_request, 'templates/images/refresh.png',
