@@ -190,7 +190,7 @@ $tpl->put_all(array(
     'L_ADD' => $LANG['add'],
     'J_AUTH_FORM' => str_replace(array('&quot;'), array('"'),
 		TextHelper::to_js_string(Authorizations::generate_select(
-        AUTH_MENUS, array('r-1' => AUTH_MENUS, 'r0' => AUTH_MENUS, 'r1' =>AUTH_MENUS),
+        Menu::MENU_AUTH_BIT, array('r-1' => Menu::MENU_AUTH_BIT, 'r0' => Menu::MENU_AUTH_BIT, 'r1' => Menu::MENU_AUTH_BIT),
         array(), 'menu_element_##UID##_auth'
      ))),
     'JL_AUTHORIZATIONS' => TextHelper::to_js_string($LANG['authorizations']),

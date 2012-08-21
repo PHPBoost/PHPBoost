@@ -58,7 +58,7 @@ class DownloadSitemapExtensionPoint implements SitemapExtensionPoint
 
 			if ($auth_mode == Sitemap::AUTH_PUBLIC)
 			{
-				$this_auth = is_array($properties['auth']) ? Authorizations::check_auth(RANK_TYPE, GUEST_LEVEL, $properties['auth'], DOWNLOAD_READ_CAT_AUTH_BIT) : Authorizations::check_auth(RANK_TYPE, GUEST_LEVEL, $CONFIG_DOWNLOAD['global_auth'], DOWNLOAD_READ_CAT_AUTH_BIT);
+				$this_auth = is_array($properties['auth']) ? Authorizations::check_auth(RANK_TYPE, User::VISITOR_LEVEL, $properties['auth'], DOWNLOAD_READ_CAT_AUTH_BIT) : Authorizations::check_auth(RANK_TYPE, User::VISITOR_LEVEL, $CONFIG_DOWNLOAD['global_auth'], DOWNLOAD_READ_CAT_AUTH_BIT);
 			}
 			else
 			{

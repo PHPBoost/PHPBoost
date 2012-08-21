@@ -175,9 +175,6 @@ class Environment
 
 	public static function load_static_constants()
 	{
-		### Common constants ###
-		define('GUEST_LEVEL', 		-1);
-
 		//Path from the server root
 		define('SCRIPT', 			$_SERVER['PHP_SELF']);
 		define('REWRITED_SCRIPT', 	$_SERVER['REQUEST_URI']);
@@ -192,9 +189,7 @@ class Environment
 		define('HTML_UNPROTECT', 	false);
 
 		### Authorizations ###
-		define('AUTH_MENUS', 		0x01);
 		define('AUTH_FILES', 		0x01);
-		define('ACCESS_MODULE', 	0x01);
 		define('AUTH_FLOOD', 		'auth_flood');
 		define('PM_GROUP_LIMIT', 	'pm_group_limit');
 		define('DATA_GROUP_LIMIT', 	'data_group_limit');

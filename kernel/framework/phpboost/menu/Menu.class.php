@@ -201,7 +201,7 @@ abstract class Menu
 	/**
 	 * @return array the authorization array $auth
 	 */
-    public function get_auth() { return is_array($this->auth) ? $this->auth : array('r-1' => AUTH_MENUS, 'r0' => AUTH_MENUS, 'r1' => AUTH_MENUS); }
+    public function get_auth() { return is_array($this->auth) ? $this->auth : array('r-1' => self::MENU_AUTH_BIT, 'r0' => self::MENU_AUTH_BIT, 'r1' => self::MENU_AUTH_BIT); }
     /**
 	 * @return int the $id of the menu in the database
 	 */

@@ -106,7 +106,7 @@ class DownloadExtensionPointProvider extends ExtensionPointProvider
 
         if ($id_cat == 0)
         {
-            if (Authorizations::check_auth(RANK_TYPE, GUEST_LEVEL, $CONFIG_DOWNLOAD['global_auth'], DOWNLOAD_READ_CAT_AUTH_BIT))
+            if (Authorizations::check_auth(RANK_TYPE, User::VISITOR_LEVEL, $CONFIG_DOWNLOAD['global_auth'], DOWNLOAD_READ_CAT_AUTH_BIT))
                 $list[] = 0;
             else
                 return;
@@ -116,7 +116,7 @@ class DownloadExtensionPointProvider extends ExtensionPointProvider
 			if (!empty($DOWNLOAD_CATS[$id_cat]))
 			{
 				$auth = !empty($DOWNLOAD_CATS[$id_cat]['auth']) ? $DOWNLOAD_CATS[$id_cat]['auth'] : $CONFIG_DOWNLOAD['global_auth'];
-				if (Authorizations::check_auth(RANK_TYPE, GUEST_LEVEL, $auth, DOWNLOAD_READ_CAT_AUTH_BIT))
+				if (Authorizations::check_auth(RANK_TYPE, User::VISITOR_LEVEL, $auth, DOWNLOAD_READ_CAT_AUTH_BIT))
 					$list[] = $id_cat;
             }
 			else
@@ -134,7 +134,7 @@ class DownloadExtensionPointProvider extends ExtensionPointProvider
 
             if ($properties['id_parent'] == $id_cat)
             {
-                $this_auth = is_array($properties['auth']) ? Authorizations::check_auth(RANK_TYPE, GUEST_LEVEL, $properties['auth'], DOWNLOAD_READ_CAT_AUTH_BIT) :  Authorizations::check_auth(RANK_TYPE, GUEST_LEVEL, $CONFIG_DOWNLOAD['global_auth'], DOWNLOAD_READ_CAT_AUTH_BIT);
+                $this_auth = is_array($properties['auth']) ? Authorizations::check_auth(RANK_TYPE, User::VISITOR_LEVEL, $properties['auth'], DOWNLOAD_READ_CAT_AUTH_BIT) :  Authorizations::check_auth(RANK_TYPE, User::VISITOR_LEVEL, $CONFIG_DOWNLOAD['global_auth'], DOWNLOAD_READ_CAT_AUTH_BIT);
 
                 if ($this_auth)
                 {

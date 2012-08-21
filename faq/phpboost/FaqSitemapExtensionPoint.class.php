@@ -63,7 +63,7 @@ class FaqSitemapExtensionPoint implements SitemapExtensionPoint
 			$properties = $FAQ_CATS[$id];
 			if ($auth_mode == Sitemap::AUTH_PUBLIC)
 			{
-				$this_auth = is_array($properties['auth']) ? Authorizations::check_auth(RANK_TYPE, GUEST_LEVEL, $properties['auth'], AUTH_READ) : Authorizations::check_auth(RANK_TYPE, GUEST_LEVEL, $faq_config->get_authorizations(), AUTH_READ);
+				$this_auth = is_array($properties['auth']) ? Authorizations::check_auth(RANK_TYPE, User::VISITOR_LEVEL, $properties['auth'], AUTH_READ) : Authorizations::check_auth(RANK_TYPE, User::VISITOR_LEVEL, $faq_config->get_authorizations(), AUTH_READ);
 			}
 			else
 			{
@@ -98,7 +98,7 @@ class FaqSitemapExtensionPoint implements SitemapExtensionPoint
 			$properties = $FAQ_CATS[$id];
 			if ($auth_mode == Sitemap::AUTH_PUBLIC)
 			{
-				$this_auth = is_array($properties['auth']) ? Authorizations::check_auth(RANK_TYPE, GUEST_LEVEL, $properties['auth'], AUTH_READ) : Authorizations::check_auth(RANK_TYPE, GUEST_LEVEL, $faq_config->get_authorizations(), AUTH_READ);
+				$this_auth = is_array($properties['auth']) ? Authorizations::check_auth(RANK_TYPE, User::VISITOR_LEVEL, $properties['auth'], AUTH_READ) : Authorizations::check_auth(RANK_TYPE, User::VISITOR_LEVEL, $faq_config->get_authorizations(), AUTH_READ);
 			}
 			else
 			{
