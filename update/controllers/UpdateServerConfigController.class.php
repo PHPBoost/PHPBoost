@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-class UpdateServerConfigController extends InstallController
+class UpdateServerConfigController extends UpdateController
 {
 	/**
 	 * @var Template
