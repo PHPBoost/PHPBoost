@@ -157,12 +157,10 @@ class AdminModuleUpdateController extends AdminController
 			{
 				if (ModulesManager::is_module_installed($file->get_name_without_extension()))
 				{
-					Debug::dump($file);
 					$upload = new Upload($modules_folder);
 					$upload->disableContentCheck();
 					if ($upload->file('upload_module_file', '`([a-z0-9()_-])+\.(gzip|zip)+$`i'))
 					{
-						Debug::dump($file);
 						$archive_path = $modules_folder . $upload->get_filename();
 						if ($upload->get_extension() == 'gzip')
 						{

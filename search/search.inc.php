@@ -43,7 +43,6 @@ function execute_search($search, &$search_modules, &$modules_args, &$results)
     {
         if (!$search->is_in_cache($module_id))
         {
-        	Debug::dump($module_id);
             $modules_args[$module_id]['weight'] = $config->get_weightings()->get_module_weighting($module_id);
             // On rajoute l'identifiant de recherche comme parametre pour faciliter la requete
             $modules_args[$module_id]['id_search'] = !empty($search->id_search[$module_id]) ? $search->id_search[$module_id] : 0;
