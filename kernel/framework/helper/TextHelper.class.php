@@ -148,7 +148,7 @@ class TextHelper
 	
 	public static function htmlspecialchars($string, $flags = null)
 	{
-		if ($flags == null)
+		if ($flags === null)
 		{
 			return htmlspecialchars($string, ENT_COMPAT, 'ISO-8859-1');
 		}
@@ -157,7 +157,7 @@ class TextHelper
 	
 	public static function htmlspecialchars_decode($string, $flags = null)
 	{
-		if ($flags == null)
+		if ($flags === null)
 		{
 			return htmlspecialchars_decode($string, ENT_COMPAT);
 		}
@@ -166,7 +166,7 @@ class TextHelper
 	
 	public static function htmlentities($string, $flags = null)
 	{
-		if ($flags == null)
+		if ($flags === null)
 		{
 			return htmlentities($string, ENT_COMPAT, 'ISO-8859-1');
 		}
@@ -175,7 +175,7 @@ class TextHelper
 	
 	public static function html_entity_decode($string, $flags = null)
 	{
-		if ($flags == null)
+		if ($flags === null)
 		{
 			return html_entity_decode($string, ENT_COMPAT, 'ISO-8859-1');
 		}
