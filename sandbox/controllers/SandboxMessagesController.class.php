@@ -35,7 +35,8 @@ class SandboxMessagesController extends ModuleController
 			MessageHelper::display('Ceci est un message de succès', MessageHelper::SUCCESS),
 			MessageHelper::display('Ceci est un message d\'information', MessageHelper::NOTICE),
 			MessageHelper::display('Ceci est un message d\'avertissement', MessageHelper::WARNING),
-			MessageHelper::display('Ceci est un message d\'erreur', MessageHelper::ERROR)
+			MessageHelper::display('Ceci est un message d\'erreur', MessageHelper::ERROR),
+			MessageHelper::display('Ceci est une question', MessageHelper::QUESTION)
 		);
 		
 		foreach ($messages as $message)

@@ -36,6 +36,7 @@ class MessageHelper
 	const NOTICE = 'notice';
 	const WARNING = 'warning';
 	const ERROR = 'error';
+	const QUESTION = 'question';
 	
 	public static function display($content, $type, $timeout = 0)
 	{
@@ -67,6 +68,11 @@ class MessageHelper
 			case self::ERROR:
 				$css_class = 'error';
 				$image = 'error_fatal';
+			break;
+			case self::QUESTION:
+				$css_class = 'question';
+				$image = 'error_question';
+			break;
 		}
 		
 		$tpl->put_all(array(
