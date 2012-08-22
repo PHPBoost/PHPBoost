@@ -185,10 +185,6 @@ a.forum_mbrmsg_links { /* Couleur des liens pour les messages du membre */
 	clear:both;
 }
 
-.module_position{
-    width:auto;
-}
-
 .module_bottom_l{ /* Barre inférieure des modules */
 	float:left;
 	width:5px;
@@ -216,4 +212,8 @@ a.forum_mbrmsg_links { /* Couleur des liens pour les messages du membre */
 .module_bottom a{
 	color:#334455;
 	font-size:13px;
+}
+
+.msg_position{
+	width:94%;	
 }
