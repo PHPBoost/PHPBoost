@@ -147,6 +147,7 @@ class NewsSetup extends DefaultModuleSetup
 			'end' => 0,
 			'img' => '',
 			'alt' => '',
+			'user_id' => 1,
 			'compt' => 0,
 			'sources' => serialize(array())
 		));
