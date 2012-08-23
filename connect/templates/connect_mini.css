@@ -19,7 +19,7 @@
  
 div.connect_align {
 	text-align:right;
-	margin-right:8px;
+	margin:7px 8px 0px 0px;
 }
 
 div.connect_align a {
@@ -55,3 +55,4 @@ div.connect_align a {
 .connect_vertical input#login, .connect_vertical input#password {
 	width:120px;
 }
+

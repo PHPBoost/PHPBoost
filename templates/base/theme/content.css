@@ -118,7 +118,7 @@ input, textarea, optgroup, select, .xmlhttprequest_preview{
 	border-bottom:1px solid #CCCCCC;
 	background-color:#FFFFFF;	
 	color:#2E3B5F;
-	padding:1px 2px;
+	padding:0px 2px;
 	font-family: "Trebuchet MS", Verdana, 'Bitstream Vera Sans', Times, serif;
 }
 
@@ -140,13 +140,13 @@ fieldset textarea.post {
 textarea {
     display:block;
     width:94%;
-    margin:auto;
+    margin:5px auto;
 	-moz-border-radius:5px;
 	-khtml-border-radius:5px;
 	-webkit-border-radius:5px;
 }
 input.text{
-	padding:2px;	
+	padding:0px;	
 	-moz-border-radius:3px;
 	-khtml-border-radius:3px;
 	-webkit-border-radius:3px;
@@ -161,7 +161,7 @@ input.submit, button.submit{
 	background: url(images/bouton.png) repeat-x;
     border: 1px solid #bac5ca;
     border-radius:4px;
-    margin-top:5px;
+    vertical-align: top;
 }
 
 input.submit:hover, button.submit:hover{
