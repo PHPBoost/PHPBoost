@@ -85,6 +85,7 @@ class UserCommentsController extends AbstractController
 		$user_accounts_config = UserAccountsConfig::load();
 		$comments_authorizations = new CommentsAuthorizations();
 		
+		$number_comment = 0;
 		while ($row = $result->fetch())
 		{
 			$id = $row['id_comment'];
@@ -124,7 +125,11 @@ class UserCommentsController extends AbstractController
 				'MODULE_ID' => $row['module_id'],
 				'ID_IN_MODULE' => $row['id_in_module']
 			));
+			$number_comment++;
 		}
+		
+		$this->tpl->put('C_NO_COMMENT', $number_comment == 0);
+		
 		$comments_tpl = new FileTemplate('framework/content/comments/comments.tpl');
 		$comments_tpl->put_all(array(
 			'COMMENTS_LIST' => $template,
