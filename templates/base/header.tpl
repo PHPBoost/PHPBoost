@@ -33,8 +33,6 @@
 		<link rel="shortcut icon" href="{FAVICON}" type="{FAVICON_TYPE}" />
 		# ENDIF #
 		
-		<link rel="alternate" href="{PATH_TO_ROOT}/syndication.php?m=news" type="application/rss+xml" title="RSS {SITE_NAME}" />
-		
 		<script type="text/javascript">
 		<!--
 			var PATH_TO_ROOT = "{PATH_TO_ROOT}";
@@ -55,8 +53,6 @@
 				}
 			</style>
 		# ENDIF #
-		
-		
 	</head>
 	<body>
 	
