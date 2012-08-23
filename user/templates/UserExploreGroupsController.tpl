@@ -31,14 +31,13 @@
 			{@level}
 		</td>
 	</tr>
-	
 	# START members_list #
 	<tr>
 		<td class="row1">
 			<img class="valign_middle" src="{members_list.U_AVATAR}" alt=""	/>
 		</td>
 		<td class="row1">
-			<a href="{members_list.PROFILE_LINK}">
+			<a href="{members_list.U_PROFILE}" class="{members_list.LEVEL_CLASS}" # IF members_list.C_GROUP_COLOR # style="color:{members_list.GROUP_COLOR}" # ENDIF #>
 				{members_list.PSEUDO}
 			</a>
 		</td>
@@ -47,4 +46,11 @@
 		</td>
 	</tr>	
 	# END members_list #
+	# IF C_NOT_MEMBERS #
+	<tr style="text-align:center;">
+		<td colspan="4" class="row2">
+			<span style="margin-left:auto;margin-right:auto;" class="text_strong" >{@no_member}</span>
+		</td>
+	</tr>
+	# ENDIF #
 </table>

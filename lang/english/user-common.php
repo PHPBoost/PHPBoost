@@ -73,8 +73,10 @@ $lang['private_message'] = 'Private message';
 $lang['delete-account'] = 'Delete account';
 $lang['avatar'] = 'Avatar';
 
+//User
 $lang['groups'] = 'Groups';
 $lang['groups.select'] = 'Group select';
+$lang['no_member'] = 'No member in this group';
 
 //Other
 $lang['caution'] = 'Caution';
