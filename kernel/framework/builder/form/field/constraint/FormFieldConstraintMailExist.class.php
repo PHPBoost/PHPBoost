@@ -68,8 +68,7 @@ class FormFieldConstraintMailExist extends AbstractFormFieldConstraint
  
 	public function get_js_validation(FormField $field)
 	{
-		return '';
-		//TODO return 'MailExistValidator(' . TextHelper::to_js_string($field->get_id()) .', '. $this->error_message . ')';
+		return 'MailExistValidator(' . TextHelper::to_js_string($field->get_id()) .', '. $this->error_message . ')';
 	}
 }
 ?>
