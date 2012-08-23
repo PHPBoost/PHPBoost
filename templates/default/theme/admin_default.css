@@ -47,18 +47,18 @@ Css par défaut commun à tout les thèmes, permet les ajouts nécessaires au framew
 	color:#0E2A48;
 	position:fixed;
 	z-index:101;
-	width:180px;
-	bottom:5px;
+	/*width:180px;*/
+	top: 75%;
+	/*bottom:5px;*/
 	right:0px;
 	margin-right:5px;
 	padding:6px;
-	border:1px solid #8e727f;
-	background:#e5e5e5;
-   	-moz-border-radius:4px;
-    -khtml-border-radius:4px;
-    -webkit-border-radius:4px;
-    border-radius:4px;
+	border:1px solid #D6DEE7;
+	background:#F4F4F4 url(../images/check.png) top center no-repeat;
+	padding-top:48px;
+
 }
+
 .menu_block_libelle {
 	color:#0E2A48;
 	width:165px;
