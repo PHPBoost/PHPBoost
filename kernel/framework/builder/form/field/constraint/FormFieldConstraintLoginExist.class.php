@@ -68,8 +68,7 @@ class FormFieldConstraintLoginExist extends AbstractFormFieldConstraint
  
 	public function get_js_validation(FormField $field)
 	{
-		return '';
-		//TODO return 'LoginExistValidator(' . TextHelper::to_js_string($field->get_id()) .', '. $this->error_message . ')';
+		return 'LoginExistValidator(' . TextHelper::to_js_string($field->get_id()) .', '. $this->error_message . ')';
 	}
 }
  
