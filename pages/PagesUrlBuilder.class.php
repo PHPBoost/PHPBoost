@@ -27,26 +27,26 @@
 
 class PagesUrlBuilder
 {
-	const PREFIX = '/pages/pages';
+	const PREFIX = '/pages/';
 
 	public static function get_link_item($encoded_title)
 	{
 		return PATH_TO_ROOT . self::PREFIX.url(
-			'.php?title=' . $encoded_title,
-			'-'.$encoded_title);
+			'pages.php?title=' . $encoded_title,
+			$encoded_title);
 	}
 	
 	public static function get_link_error($error=null)
 	{
 		if (!empty($error))
 			$error = '?error='.$error;
-		return PATH_TO_ROOT . self::PREFIX.url('.php'.$error);
+		return PATH_TO_ROOT . self::PREFIX.url('pages.php'.$error);
 	}
 	
 	public static function get_link_item_com($id,$com=0)
 	{
 		return PATH_TO_ROOT . self::PREFIX.url(
-			'.php?id='.$id.'&amp;com='.$com);
+			'pages.php?id='.$id.'&amp;com='.$com);
 	}
 
 }
