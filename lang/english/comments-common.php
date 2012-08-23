@@ -26,25 +26,25 @@
  ###################################################*/
 
  ####################################################
- #                     French                       #
+ #                     English                      #
  ####################################################
 
-$lang['comments'] = 'Commentaires';
-$lang['comment'] = 'Commentaire';
-$lang['comments.not-authorized.post'] = 'Vous n\'êtes pas autorisé à poster un commentaire';
-$lang['comments.not-authorized.read'] = 'Vous n\'êtes pas autorisé à voir les commentaires';
+$lang['comments'] = 'Comments';
+$lang['comment'] = 'Comment';
+$lang['comments.not-authorized.post'] = 'You are not authorized to post a comment';
+$lang['comments.not-authorized.read'] = 'You are not authorized to view comments';
 
-$lang['comment.locked'] = 'Commentaires bloqué, vous ne pouvez pas poster de commentaire';
+$lang['comment.locked'] = 'Comments blocked, you can not post comments';
 
-$lang['comment.add'] = 'Ajouter un commentaire';
-$lang['comment.edit'] = 'Editer un commentaire';
+$lang['comment.add'] = 'Add a comment';
+$lang['comment.edit'] = 'Edit a comment';
 
-$lang['lock'] = 'Vérrouiller';
-$lang['unlock'] = 'Dévérrouiller';
+$lang['lock'] = 'Lock';
+$lang['unlock'] = 'Unlock';
 
-$lang['allComments'] = 'Voir les autres commentaires';
+$lang['allComments'] = 'See other comments';
 
-$lang['comments.user.read-only'] = 'Vous êtes actuellement en lecture seule, vous ne pouvez pas poster de commentaire pour le moment';
+$lang['comments.user.read-only'] = 'You are currently read-only, you can not post comments for the moment';
 
-$lang['module.choice'] = 'Choisissez un module';
+$lang['module.choice'] = 'Select a module';
 ?>
