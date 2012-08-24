@@ -249,7 +249,7 @@ else
 $tpl->put_all(array(
 	'IDMENU' => $menu_id,
 	'AUTH_MENUS' => Authorizations::generate_select(
-        AUTH_MENUS, $menu->get_auth(), array(), 'menu_element_' . $menu->get_uid() . '_auth'
+        Menu::MENU_AUTH_BIT, $menu->get_auth(), array(), 'menu_element_' . $menu->get_uid() . '_auth'
     ),
     'C_ENABLED' => !empty($menu_id) ? $menu->is_enabled() : true,
 	'MENU_ID' => $menu->get_id(),
