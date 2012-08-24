@@ -51,24 +51,29 @@ class FormFieldConstraintLoginExist extends AbstractFormFieldConstraint
  
 	public function validate(FormField $field)
 	{
-		return $this->exist_login($field);
+		return $this->login_exists($field);
 	}
  
-	public function exist_login(FormField $field)
+	public function login_exists(FormField $field)
 	{
 		if (!empty($this->user_id))
 		{
-			return PersistenceContext::get_querier()->count(DB_TABLE_MEMBER, "WHERE login = '" . $field->get_value() . "' AND user_id != '" . $this->user_id . "'") > 0 ? false : true;
+			return PersistenceContext::get_querier()->count(DB_TABLE_MEMBER, 'WHERE login=:login AND user_id != :user_id', array(
+				'login' => $field->get_value(), 
+				'user_id' => $this->user_id
+			)) > 0 ? false : true;
 		}
 		else
 		{
-			return PersistenceContext::get_querier()->count(DB_TABLE_MEMBER, "WHERE login = '" . $field->get_value() . "'") > 0 ? false : true;
+			return PersistenceContext::get_querier()->count(DB_TABLE_MEMBER, 'WHERE login=:login', array(
+				'login' => $field->get_value()
+			)) > 0 ? false : true;
 		}
 	}
  
 	public function get_js_validation(FormField $field)
 	{
-		return 'LoginExistValidator(' . TextHelper::to_js_string($field->get_id()) .', '. $this->error_message . ')';
+		return 'LoginExistValidator(' . TextHelper::to_js_string($field->get_id()) .', '. $this->error_message . ', ' . $this->user_id . ')';
 	}
 }
  

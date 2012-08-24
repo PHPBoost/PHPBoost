@@ -165,7 +165,7 @@ class UserRegistrationController extends AbstractController
 		$activation_key = $this->user_accounts_config->get_member_accounts_validation_method() == UserAccountsConfig::MAIL_USER_ACCOUNTS_VALIDATION ? KeyGenerator::generate_key(15) : '';
 		$user_aprobation = $this->user_accounts_config->get_member_accounts_validation_method() == UserAccountsConfig::AUTOMATIC_USER_ACCOUNTS_VALIDATION ? '1' : '0';
 
-		$user_authentification = new UserAuthentification(TextHelper::htmlspecialchars($this->form->get_value('login')), $this->form->get_value('password'));
+		$user_authentification = new UserAuthentification($this->form->get_value('login'), $this->form->get_value('password'));
 		$user = new User();
 		$user->set_level(User::MEMBER_LEVEL);
 		$user->set_email($this->form->get_value('email'));

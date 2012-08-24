@@ -33,11 +33,14 @@ require_once(PATH_TO_ROOT . '/kernel/header_no_display.php');
 
 $login = substr(retrieve(POST, 'login', ''), 0, 25);
 $email = retrieve(POST, 'mail', '');
+$user_id = retrieve(POST, 'user_id', '');
 
 $db_querier = PersistenceContext::get_querier();
 
-if (!empty($login) && !empty($email))
-	echo $db_querier->count(DB_TABLE_MEMBER, 'WHERE user_mail=:email AND login=:login', array('email' => $email, 'login' => $login));
+if (!empty($login) && !empty($user_id))
+	echo $db_querier->count(DB_TABLE_MEMBER, 'WHERE login=:login AND user_id != :user_id', array('login' => $login, 'user_id' => $user_id));
+elseif (!empty($email) && !empty($user_id))
+	echo $db_querier->count(DB_TABLE_MEMBER, 'WHERE user_mail=:email AND user_id != :user_id', array('email' => $email, 'user_id' => $user_id));
 elseif (!empty($login))
 	echo $db_querier->count(DB_TABLE_MEMBER, 'WHERE login=:login', array('login' => $login));
 elseif (!empty($email))
