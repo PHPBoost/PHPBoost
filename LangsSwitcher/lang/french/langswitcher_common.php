@@ -27,10 +27,9 @@
 
 
  ####################################################
-#                     French                                                                              #
+#                     French                        #
  ####################################################
 
 $LANG['switch_lang'] = 'Changer de langue';
 $LANG['default_lang'] = 'Langue par défaut';
-
 ?>

@@ -30,11 +30,8 @@
 */
 
 define('PATH_TO_ROOT', '../../..');
-
 require_once(PATH_TO_ROOT . '/kernel/begin.php');
-
 define('NO_SESSION_LOCATION', true);
-
 require_once(PATH_TO_ROOT . '/kernel/header_no_display.php');
 
 //On vérifie la validité du jeton
@@ -44,8 +41,6 @@ if (!AppContext::get_current_user()->check_level(User::ADMIN_LEVEL))
 {
     exit;
 }
-
-
 
 $change_status = retrieve(GET, 'change_status', 0);
 $id_to_delete = retrieve(GET, 'delete', 0);
@@ -90,5 +85,4 @@ elseif ($id_to_delete > 0)
 }
 
 require_once(PATH_TO_ROOT . '/kernel/footer_no_display.php');
-
 ?>

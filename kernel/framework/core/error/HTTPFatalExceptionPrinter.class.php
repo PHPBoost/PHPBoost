@@ -211,5 +211,4 @@ class HTTPFatalExceptionPrinter
 		'</tr>' ;
 	}
 }
-
 ?>

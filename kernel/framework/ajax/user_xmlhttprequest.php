@@ -47,5 +47,4 @@ elseif (!empty($email))
 	echo $db_querier->count(DB_TABLE_MEMBER, 'WHERE user_mail=:email', array('email' => $email));
 else
 	echo -1;
-
 ?>

@@ -94,5 +94,4 @@ abstract class AbstractContentFormattingFactory implements ContentFormattingFact
 		return $this->html_auth;
 	}
 }
-
 ?>

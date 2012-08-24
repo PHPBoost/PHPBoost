@@ -119,5 +119,4 @@ elseif (!empty($_GET['rename_file'])) //Renomme un fichier d'un dossier dans la 
         echo 0;
     }
 }
-
 ?>

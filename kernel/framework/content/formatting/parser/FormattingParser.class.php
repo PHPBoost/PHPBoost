@@ -68,5 +68,4 @@ interface FormattingParser
      */
     function get_page_path();
 }
-
 ?>

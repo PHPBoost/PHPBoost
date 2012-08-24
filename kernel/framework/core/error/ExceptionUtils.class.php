@@ -118,5 +118,4 @@ public static function get_file($call)
 		return $trace;
 	}
 }
-
 ?>

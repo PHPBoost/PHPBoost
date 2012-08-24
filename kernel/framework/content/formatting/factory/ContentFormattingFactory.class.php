@@ -82,5 +82,4 @@ interface ContentFormattingFactory
 	
 	function get_html_auth();
 }
-
 ?>

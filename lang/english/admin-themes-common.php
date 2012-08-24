@@ -77,5 +77,4 @@ $lang['themes.not_compatible'] = 'The theme is apparently incompatible with your
 
 //Delete theme
 $lang['themes.delete.drop_files'] = 'Delete all files in the theme';
-
 ?>

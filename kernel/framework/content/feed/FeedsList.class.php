@@ -52,7 +52,5 @@ class FeedsList
     {
         return $this->list;
     }
-
 }
-
 ?>

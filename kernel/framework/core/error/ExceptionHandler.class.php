@@ -123,3 +123,4 @@ class ExceptionHandler
 		$response->send();
 	}
 }
+?>

@@ -72,6 +72,5 @@ class NewsletterMailFactory
 				return 'TextNewsletterMail';
 		}
 	}
-
 }
 ?>

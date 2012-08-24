@@ -39,5 +39,4 @@ class ContactController extends ModuleController
 		return $response;
 	}
 }
-
 ?>

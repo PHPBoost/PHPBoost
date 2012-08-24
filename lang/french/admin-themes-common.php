@@ -77,5 +77,4 @@ $lang['themes.not_compatible'] = 'Le thème est apparament incompatible avec votr
 
 //Delete theme
 $lang['themes.delete.drop_files'] = 'Supprimer tous les fichiers du thème';
-
 ?>

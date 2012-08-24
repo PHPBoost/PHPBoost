@@ -144,5 +144,4 @@ class BreadCrumb
     	return $this->graphical_environment->get_page_title();
     }
 }
-
 ?>

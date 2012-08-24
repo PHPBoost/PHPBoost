@@ -44,3 +44,4 @@ class IntegratedErrorHandler extends ErrorHandler
 		die(ErrorHandler::FATAL_MESSAGE);
 	}
 }
+?>

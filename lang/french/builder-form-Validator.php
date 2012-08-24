@@ -41,5 +41,4 @@ $lang = array(
 	'fields_must_be_equal' => 'Les champs ":field1" et ":field2" doivent être égaux',
 	'fields_must_not_be_equal' => 'Les champs ":field1" et ":field2" doivent avoir des valeurs différentes'
 );
-
 ?>

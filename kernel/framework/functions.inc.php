@@ -132,5 +132,4 @@ function include_file($file, $once = true)
 		return (include(PATH_TO_ROOT . $file)) !== false;
 	}
 }
-
 ?>

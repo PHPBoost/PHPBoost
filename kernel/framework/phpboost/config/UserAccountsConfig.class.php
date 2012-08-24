@@ -577,3 +577,4 @@ class UserAccountsConfig extends AbstractConfigData
 		ConfigManager::save('kernel', self::load(), 'user-accounts');
 	}
 }
+?>

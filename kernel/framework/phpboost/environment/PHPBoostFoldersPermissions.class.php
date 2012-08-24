@@ -61,5 +61,4 @@ abstract class PHPBoostFoldersPermissions
 		return $permissions;
 	}
 }
-
 ?>

@@ -106,5 +106,4 @@ class AdminContactController extends AdminController
 		return $response;
 	}
 }
-
 ?>

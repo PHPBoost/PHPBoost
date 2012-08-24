@@ -32,5 +32,4 @@
 
 $LANG['switch_theme'] = 'Switch theme';
 $LANG['defaut_theme'] = 'Default theme';
-
 ?>

@@ -126,5 +126,4 @@ class PersistenceContext
 		return self::$sql_querier;
 	}
 }
-
 ?>

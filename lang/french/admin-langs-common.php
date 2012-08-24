@@ -50,7 +50,6 @@ $lang['langs.default_lang_explain'] = 'La langue par défaut ne peut pas être dés
 $lang['langs.upload'] = 'Uploader une langue';
 $lang['langs.upload.description'] = 'L\'archive uploadée doit être au format zip ou gzip';
 
-
 $lang['langs.not_installed'] = 'Langues non installées';
 $lang['langs.name'] = 'Nom';
 $lang['langs.authorisations'] = 'Autorisations';

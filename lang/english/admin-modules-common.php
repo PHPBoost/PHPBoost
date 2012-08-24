@@ -84,6 +84,4 @@ $lang['modules.no_module_to_install'] = 'No module to install !';
 $lang['modules.drop_files'] = 'Delete all files in the module';
 $lang['modules.yes'] = 'Yes';
 $lang['modules.no'] = 'No';
-
-
 ?>

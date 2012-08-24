@@ -52,5 +52,4 @@ $lang['comments.config.max-links-comment'] = 'Number of links allowed in a comme
 $lang['comments.config.forbidden-tags'] = 'Types of formatting allowed';
 
 $lang['number-required'] = 'The value entered must be a number';
-
 ?>

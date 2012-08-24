@@ -34,5 +34,4 @@ interface HomePageExtensionPoint
 	 */
 	function get_home_page();
 }
-
 ?>

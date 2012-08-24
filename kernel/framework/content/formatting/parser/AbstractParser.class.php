@@ -124,5 +124,4 @@ abstract class AbstractParser implements FormattingParser
 		}
 	}
 }
-
 ?>

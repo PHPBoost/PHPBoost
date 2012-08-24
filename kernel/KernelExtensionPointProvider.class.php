@@ -42,7 +42,6 @@ class KernelExtensionPointProvider extends ExtensionPointProvider
 		return new UrlMappings(array(
 			new DispatcherUrlMapping('/install/index.php'),
 			new DispatcherUrlMapping('/update/index.php'),
-			
 			new DispatcherUrlMapping('/admin/config/index.php'),
             new DispatcherUrlMapping('/admin/cache/index.php'),
             new DispatcherUrlMapping('/admin/errors/index.php'),

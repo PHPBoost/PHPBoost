@@ -266,5 +266,4 @@ class AppContext
 		return self::$content_formatting_service;
 	}
 }
-
 ?>

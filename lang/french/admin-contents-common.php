@@ -55,5 +55,4 @@ $lang['comments.config.approbation.moderator'] = 'Modérateur';
 $lang['comments.config.approbation.administrator'] = 'Administrateur';
 
 $lang['number-required'] = 'La valeur saisi doit être un nombre';
-
 ?>

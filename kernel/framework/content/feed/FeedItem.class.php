@@ -105,5 +105,4 @@ class FeedItem
     public function get_image_url() { return $this->image_url; }
     public function get_auth() { return $this->auth; }
 }
-
 ?>

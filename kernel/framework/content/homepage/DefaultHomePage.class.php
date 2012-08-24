@@ -46,3 +46,4 @@ class DefaultHomePage implements HomePage
 		return $this->view;
 	}
 }
+?>

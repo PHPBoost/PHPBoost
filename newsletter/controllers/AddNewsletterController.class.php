@@ -171,6 +171,5 @@ class AddNewsletterController extends ModuleController
 			);
 		}
 	}
-	
 }
 ?>

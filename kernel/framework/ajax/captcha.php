@@ -39,9 +39,7 @@ $height = retrieve(GET, 'height', 50);
 $font = retrieve(GET, 'font', PATH_TO_ROOT . '/kernel/data/fonts/impact.ttf');
 $difficulty = retrieve(GET, 'difficulty', 4);
 
-
 $Captcha = new Captcha();
-
 $Captcha->set_instance($instance);
 $Captcha->set_width($width);
 $Captcha->set_height($height);

@@ -407,5 +407,4 @@ $stats_array_lang = array(
    'ws' => array('Samoa', 'ws.png'),
    'other' => array('Others', '../other.png')
 );
-
 ?>

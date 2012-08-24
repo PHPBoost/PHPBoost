@@ -37,5 +37,4 @@ interface HomePage
 	 */
 	function get_view();
 }
-
 ?>

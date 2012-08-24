@@ -126,5 +126,4 @@ elseif (!empty($_GET['warning_user']) || !empty($_GET['punish_user']) || !empty(
 }
 
 include_once(PATH_TO_ROOT . '/kernel/footer_no_display.php');
-
 ?>

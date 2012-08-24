@@ -139,5 +139,4 @@ $lang['field-install.msn-explain'] = '';
 
 $lang['field-install.yahoo'] = 'Yahoo';
 $lang['field-install.yahoo-explain'] = '';
-
 ?>

@@ -157,5 +157,4 @@ class FeedData
     }
 
 }
-
 ?>
