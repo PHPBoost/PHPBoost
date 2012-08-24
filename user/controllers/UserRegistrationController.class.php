@@ -123,18 +123,23 @@ class UserRegistrationController extends AbstractController
 		$agreement_fieldset = new FormFieldsetHTML('agreement_fieldset', $this->lang['agreement']);
     	$form->add_fieldset($agreement_fieldset);
     	
-		$agreement = new FormFieldHTML('agreement.required', $this->lang['agreement.agree.required'] . '<br /><br />');
-		$agreement_fieldset->add_field($agreement);
-
-		$agreement = new FormFieldHTML('agreement', 
-			'<div style="width:auto;height:250px;overflow-y:scroll;border:1px solid #DFDFDF;background-color:#F1F4F1;margin-bottom:10px;">' . $this->user_accounts_config->get_registration_agreement() . '</div>'
-		);
-		$agreement_fieldset->add_field($agreement);
-		
-		$agreement_fieldset->add_field(new FormFieldCheckbox('agree', $this->lang['agreement.agree'], 
-			FormFieldCheckbox::UNCHECKED, 
-			array('required' => $this->lang['agreement.agree.required'])
-		));
+    	$agreement_text = $this->user_accounts_config->get_registration_agreement();
+    	
+    	if (!empty($agreement))
+    	{
+			$agreement = new FormFieldHTML('agreement.required', $this->lang['agreement.agree.required'] . '<br /><br />');
+			$agreement_fieldset->add_field($agreement);
+	
+			$agreement = new FormFieldHTML('agreement', 
+				'<div style="width:auto;height:250px;overflow-y:scroll;border:1px solid #DFDFDF;background-color:#F1F4F1;margin-bottom:10px;">' . $agreement_text . '</div>'
+			);
+			$agreement_fieldset->add_field($agreement);
+			
+			$agreement_fieldset->add_field(new FormFieldCheckbox('agree', $this->lang['agreement.agree'], 
+				FormFieldCheckbox::UNCHECKED, 
+				array('required' => $this->lang['agreement.agree.required'])
+			));
+    	}
     	
 		$form->add_button(new FormButtonReset());
 		$this->submit_button = new FormButtonDefaultSubmit();
