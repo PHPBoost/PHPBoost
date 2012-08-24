@@ -216,7 +216,6 @@ class CommentsService
 					$user_avatar = Url::to_rel($row['user_avatar']);
 				
 				$timestamp = new Date(DATE_TIMESTAMP, TIMEZONE_SITE, $row['comment_timestamp']);
-
 				
 				$group_color = User::get_group_color($row['user_groups'], $row['level']);
 				

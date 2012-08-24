@@ -102,7 +102,7 @@ class CommentsDAO
 			'pseudo' => TextHelper::htmlspecialchars($pseudo),
 			'user_ip' => TextHelper::htmlspecialchars($user_ip),
 			'timestamp' => time(),
-			'message' => TextHelper::htmlspecialchars($message)
+			'message' => $message
 		);
 		$result = self::$db_querier->insert(DB_TABLE_COMMENTS, $columns);
 		return $result->get_last_inserted_id();
@@ -111,7 +111,7 @@ class CommentsDAO
 	public static function edit_comment($comment_id, $message)
 	{
 		$columns = array(
-			'message' => TextHelper::htmlspecialchars($message)
+			'message' => $message
 		);
 		$condition = "WHERE id = :id";
 		$parameters = array(
