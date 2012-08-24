@@ -35,11 +35,13 @@ Event.observe(window, 'load', function() {
 # INCLUDE KEEP_MESSAGE #
 
 # IF C_MODERATE #
-	# IF C_IS_LOCKED #
-	<a href="{U_UNLOCK}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/unlock.png"> {@unlock}</a>
-	# ELSE #
-	<a href="{U_LOCK}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/lock.png"> {@lock}</a>
-	# ENDIF #
+	<div class="comment-moderate">
+		# IF C_IS_LOCKED #
+		<a href="{U_UNLOCK}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/unlock.png"> {@unlock}</a>
+		# ELSE #
+		<a href="{U_LOCK}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/lock.png"> {@lock}</a>
+		# ENDIF #
+	</div>
 # ENDIF #
 
 <div class="spacer">&nbsp;</div>

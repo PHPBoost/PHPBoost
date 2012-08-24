@@ -10,23 +10,27 @@
 					</a>
 				# ENDIF #
 			</div>
+			
+			<img src="{comments.U_AVATAR}" class="comment-avatar" />
 			<div class="comment-level">{comments.L_LEVEL}</div>
-			<img src="{comments.U_AVATAR}">
 		</div>
 		<div class="comment-content">
 			<div class="comment-date">
+				<div style="float:right;">
+					<a href="\#com{comments.ID_COMMENT}">\#{comments.ID_COMMENT}</a>
+					# IF comments.C_MODERATOR #
+						<a href="{comments.U_EDIT}">
+							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="{L_UPDATE}" title="{L_UPDATE}" class="valign_middle" />
+						</a> 
+						<a href="{comments.U_DELETE}">
+							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" class="valign_middle" />
+						</a>
+					# ENDIF #
+				</div>
 				{comments.DATE}
-				# IF comments.C_MODERATOR #
-				<a href="{comments.U_EDIT}">
-					<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="{L_UPDATE}" title="{L_UPDATE}" class="valign_middle" />
-				</a> 
-				<a href="{comments.U_DELETE}">
-					<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" class="valign_middle" />
-				</a>
-				# ENDIF #
 			</div>
-			<div class="comment-message">
-				{comments.MESSAGE}
+			<div class="comment-message" >
+				<div class="message-containt">{comments.MESSAGE}</div>
 				<!-- 
 				<div id="comment-rating">
 					<div class="positive_vote_button">+</div>
