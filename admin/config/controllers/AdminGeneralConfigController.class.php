@@ -107,11 +107,12 @@ class AdminGeneralConfigController extends AdminController
 		$fieldset->add_field(new FormFieldThemesSelect('default_theme', $this->lang['general-config.default_theme'], $this->user_accounts_config->get_default_theme(),
 			array('required' => true, 'events' => array('change' => $this->construct_javascript_picture_theme() .
 			' var theme_id = HTMLForms.getField("default_theme").getValue();
-			document.images[\'img_theme\'].src = theme[theme_id];'))
+			document.images[\'img_theme\'].src = theme[theme_id];
+			$(\'preview_theme\').href = theme[theme_id];'))
 		));
 		
 		$fieldset->add_field(new FormFieldFree('picture_theme', $this->lang['general-config.theme_picture'],
-			'<a href="'. $this->get_picture_theme() .'" rel="lightbox">
+			'<a href="'. $this->get_picture_theme() .'" rel="lightbox" id="preview_theme">
 				<img id="img_theme" src="'. $this->get_picture_theme() .'" alt="" style="max-height:180px;max-width:180px;" /></br>
 				('. $this->lang['general-config.theme_preview_click'] .')
 			</a>'
