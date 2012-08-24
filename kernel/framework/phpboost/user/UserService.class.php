@@ -41,7 +41,7 @@ class UserService
 	public static function create(UserAuthentification $user_authentification, User $user)
 	{
 		$result = self::$querier->insert(DB_TABLE_MEMBER, array(
-			'login' => $user_authentification->get_login(),
+			'login' => TextHelper::htmlspecialchars($user_authentification->get_login()),
 			'password' => $user_authentification->get_password_hashed(),
 			'level' => $user->get_level(),
 			'user_mail' => $user->get_email(),
@@ -65,7 +65,7 @@ class UserService
 	public static function update(User $user, $condition, $parameters)
 	{
 		self::$querier->update(DB_TABLE_MEMBER, array(
-			'login' => $user->get_pseudo(),
+			'login' => TextHelper::htmlspecialchars($user->get_pseudo()),
  			'level' => $user->get_level(),
 			'user_mail' => $user->get_email(),
 			'user_show_mail' => (int)$user->get_show_email(),

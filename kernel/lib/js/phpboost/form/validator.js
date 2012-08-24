@@ -83,7 +83,7 @@ function lengthFormFieldValidator(field_id, lbound, rbound, message)
 	return '';
 }
 
-function LoginExistValidator(field_id, message)
+function LoginExistValidator(field_id, message, user_id)
 {
     var field = HTMLForms.getField(field_id);
     if (field)
@@ -95,7 +95,7 @@ function LoginExistValidator(field_id, message)
             {
                 method: 'post',
                 asynchronous: false,
-                parameters: {login : value, token : TOKEN},
+                parameters: {login : value, user_id : user_id, token : TOKEN},
                 onSuccess: function(transport) {
                     if (transport.responseText == '1')
                     {
@@ -113,7 +113,7 @@ function LoginExistValidator(field_id, message)
     return '';
 }
 
-function MailExistValidator(field_id, message)
+function MailExistValidator(field_id, message, user_id)
 {
     var field = HTMLForms.getField(field_id);
     if (field)
@@ -125,7 +125,7 @@ function MailExistValidator(field_id, message)
             {
                 method: 'post',
                 asynchronous: false,
-                parameters: {mail : value, token : TOKEN},
+                parameters: {mail : value, user_id : user_id, token : TOKEN},
                 onSuccess: function(transport) {
                     if (transport.responseText == '1')
                     {
