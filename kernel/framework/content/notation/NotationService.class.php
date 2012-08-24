@@ -345,30 +345,30 @@ class NotationService
 	private static function delete_average_notes_by_id_in_module($module_name, $id_in_module)
 	{
 		self::$db_querier->delete(DB_TABLE_AVERAGE_NOTES, 'WHERE module_name=:module_name AND id_in_module=:id_in_module', array(
-			'module_name' => $notation->get_module_name(), 
-			'id_in_module' => $notation->get_id_in_module()
+			'module_name' => $module_name, 
+			'id_in_module' => $id_in_module
 		));
 	}
 	
 	private static function delete_notes_by_id_in_module($module_name, $id_in_module)
 	{
 		self::$db_querier->delete(DB_TABLE_NOTE, 'WHERE module_name=:module_name AND id_in_module=:id_in_module', array(
-			'module_name' => $notation->get_module_name(), 
-			'id_in_module' => $notation->get_id_in_module()
+			'module_name' => $module_name, 
+			'id_in_module' => $id_in_module
 		));
 	}
 	
 	private static function delete_all_average_notes_by_module($module_name)
 	{
 		return self::$db_querier->delete(DB_TABLE_AVERAGE_NOTES, 'WHERE module_name=:module_name', array(
-			'module_name' => $notation->get_module_name()
+			'module_name' => $module_name
 		));
 	}
 	
 	private static function delete_all_notes_by_module($module_name)
 	{
 		return self::$db_querier->delete(DB_TABLE_NOTE, 'WHERE module_name=:module_name', array(
-			'module_name' => $notation->get_module_name()
+			'module_name' => $module_name
 		));
 	}
 }
