@@ -40,7 +40,7 @@ class NewsletterDAO
 		$columns = array(
 			'stream_id' => $stream_id,
 			'subject' => TextHelper::htmlspecialchars($subject),
-			'contents' => TextHelper::htmlspecialchars($contents),
+			'contents' => $contents,
 			'timestamp' => time(),
 			'language_type' => $language_type,
 			'nbr_subscribers' => count($stream_cache['subscribers'])
