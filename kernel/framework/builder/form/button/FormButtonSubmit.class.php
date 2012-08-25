@@ -43,5 +43,4 @@ class FormButtonSubmit extends AbstractFormButton
         return !empty($button_attribute);
     }
 }
-
 ?>

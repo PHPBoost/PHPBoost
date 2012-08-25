@@ -53,6 +53,8 @@
 <div id="global">
 	<div id="header_container">
 		<div id="header">
+			<div id="logo"></div>
+			<div id="site_name">{SITE_NAME}</div>
 		</div>
 		<div class="spacer"></div>
 	</div>
