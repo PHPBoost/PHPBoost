@@ -63,6 +63,8 @@ class UserLoginController extends AbstractController
 	private function init_vars_template()
 	{
 		$this->view->put_all(array(
+			'C_REGISTRATION_ENABLED' => UserAccountsConfig::load()->is_registration_enabled(),
+			'C_MAINTAIN_ENABLED' => MaintenanceConfig::load()->is_maintenance_enabled(),
 			'U_REGISTER' => UserUrlBuilder::registration()->absolute(),
 			'U_FORGET_PASSWORD' => UserUrlBuilder::forget_password()->absolute(),
 			'L_FORGET_PASSWORD' => $this->lang['forget-password'],
