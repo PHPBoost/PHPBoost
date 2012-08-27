@@ -32,12 +32,6 @@ require_once('../kernel/header.php');
 $shout_id = retrieve(GET, 'id', 0);
 $add = retrieve(GET, 'add', false);
 
-if (!$User->check_auth($config_shoutbox->get_authorization(), ShoutboxConfig::AUTHORIZATION_READ)) //Autorisation de lecture
-{
-	$error_controller = PHPBoostErrors::unexisting_page();
-	DispatchManager::redirect($error_controller);
-}
-
 if ($add && empty($shout_id)) //Insertion
 {		
 	//Membre en lecture seule?

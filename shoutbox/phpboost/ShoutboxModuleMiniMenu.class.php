@@ -44,7 +44,7 @@ class ShoutboxModuleMiniMenu extends ModuleMiniMenu
 	    $config_shoutbox = ShoutboxConfig::load();
 	
 	    //Mini Shoutbox non activée si sur la page archive shoutbox.
-	    if (strpos(SCRIPT, '/shoutbox/shoutbox.php') === false && $User->check_auth($config_shoutbox->get_authorization(), ShoutboxConfig::AUTHORIZATION_READ))
+	    if (strpos(SCRIPT, '/shoutbox/shoutbox.php') === false)
 	    {
 	    	load_module_lang('shoutbox');
 	

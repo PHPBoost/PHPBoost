@@ -51,19 +51,19 @@ class ShoutboxConfigUpdateVersion extends ConfigUpdateVersion
 	{
 		switch ($old_auth) {
 			case -1:
-				return array ('r-1' => 3, 'r0' => 3, 'r1' => 7);
+				return array ('r-1' => 2, 'r0' => 2, 'r1' => 6);
 			break;
 			case 0:
-				return array('r-1' => 1, 'r0' => 3, 'r1' => 7);
+				return array('r0' => 2, 'r1' => 6);
 			break;
 			case 1:
-				return array('r-1' => 1, 'r0' => 1, 'r1' => 7);
+				return array('r1' => 6);
 			break;
 			case 2:
-				return array('r-1' => 1, 'r0' => 1, 'r1' => 1, 'r2' => 7);
+				return array('r2' => 6);
 			break;
 			default:
-				return array ('r-1' => 3, 'r0' => 3, 'r1' => 7);
+				return array ('r-1' => 2, 'r0' => 2, 'r1' => 6);
 			break;
 		}
 	}
