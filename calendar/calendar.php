@@ -32,13 +32,6 @@ require_once('calendar_constants.php');
 
 if ($delete)
     $Session->csrf_get_protect();
-	
-if (!$User->check_auth($calendar_config->get_authorizations(), AUTH_CALENDAR_READ)) //Autorisation de poster?
-	{
-	$error_controller = PHPBoostErrors::unexisting_page();
-	DispatchManager::redirect($error_controller);
-}
-
 
 $comments_topic = new CalendarCommentsTopic();
 

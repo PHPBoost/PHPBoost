@@ -28,14 +28,6 @@
 					<legend>{L_CALENDAR_CONFIG}</legend>
 					<dl>
 						<dt>
-							<label for="calendar_auth">{L_AUTH_READ}</label>
-						</dt>
-						<dd>
-							{AUTH_READ}
-						</dd>
-					</dl>
-					<dl>
-						<dt>
 							<label for="calendar_auth">{L_AUTH_WRITE}</label>
 						</dt>
 						<dd>

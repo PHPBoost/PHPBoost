@@ -47,19 +47,19 @@ class CalendarConfigUpdateVersion extends ConfigUpdateVersion
 	{
 		switch ($old_auth) {
 			case -1:
-				return array('r-1' => 1, 'r0' => 1, 'r1' => 5);
+				return array('r-1' => 2, 'r0' => 2, 'r1' => 6);
 			break;
 			case 0:
-				return array('r0' => 1, 'r1' => 5);
+				return array('r0' => 2, 'r1' => 6);
 			break;
 			case 1:
-				return array('r1' => 5);
+				return array('r1' => 6);
 			break;
 			case 2:
-				return array('r-2' => 7);
+				return array('r2' => 6);
 			break;
 			default:
-				return array('r-1' => 1, 'r0' => 1, 'r1' => 5);
+				return array('r-1' => 2, 'r0' => 2, 'r1' => 6);
 			break;
 		}
 	}

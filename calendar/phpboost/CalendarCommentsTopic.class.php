@@ -34,10 +34,7 @@ class CalendarCommentsTopic extends CommentsTopic
 	
 	public function get_authorizations()
 	{
-		require_once(PATH_TO_ROOT .'/'. $this->get_module_id() . '/calendar_constants.php');
-		
 		$authorizations = new CommentsAuthorizations();
-		$authorizations->set_authorized_access_module(AppContext::get_current_user()->check_auth(CalendarConfig::load()->get_authorizations(), AUTH_CALENDAR_READ));
 		return $authorizations;
 	}
 	
