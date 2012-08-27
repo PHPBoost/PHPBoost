@@ -159,6 +159,6 @@ $lang['errors.not_authorized_create_newsletters'] = 'Vous n\'avez pas les autori
 $lang['errors.not_authorized_read_archives'] = 'Vous n\'avez pas les autorisations nécessaires pour voir les archives';
 
 //Register extended field
-$lang['extended_fields.newsletter.name'] = 'S\'abonner aux newsletters';
-$lang['extended_fields.newsletter.description'] = 'Séléctionner le(s) newsletter(s) dont vous souhaitez être inscrit';
+$lang['extended_fields.newsletter.name'] = 'Newsletters(s) suscrite(s)';
+$lang['extended_fields.newsletter.description'] = 'Sélectionner le(s) newsletter(s) dont vous souhaitez être inscrit';
 ?>

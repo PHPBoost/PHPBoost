@@ -39,8 +39,8 @@ $lang['comment.locked'] = 'Commentaires bloqué, vous ne pouvez pas poster de com
 $lang['comment.add'] = 'Ajouter un commentaire';
 $lang['comment.edit'] = 'Editer un commentaire';
 
-$lang['lock'] = 'Vérrouiller';
-$lang['unlock'] = 'Dévérrouiller';
+$lang['lock'] = 'Verrouiller';
+$lang['unlock'] = 'Déverrouiller';
 
 $lang['allComments'] = 'Voir les autres commentaires';
 
