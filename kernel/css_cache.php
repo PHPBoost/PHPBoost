@@ -40,7 +40,7 @@ if (!empty($files) && !empty($name))
 	$css_cache->set_cache_file_location(PATH_TO_ROOT . '/cache/css/css-cache-' . $name .'.css');
 	$css_cache->execute(CSSCacheConfig::load()->get_optimization_level());
 	
-	header("Content-type: text/css; charset=iso-8859-1");
+	AppContext::get_response()->set_header('content-type', 'text/css');
 	echo file_get_contents($css_cache->get_cache_file_location());
 }
 ?>
