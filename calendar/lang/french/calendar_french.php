@@ -35,7 +35,6 @@ $LANG['title_calendar'] = 'Calendrier';
 $LANG['calendar_config'] = 'Configuration du calendrier';
 $LANG['rank_post'] = 'Autorisation pour pouvoir poster des événements';
 $LANG['rank_modo'] = 'Autorisation pour pouvoir supprimer ou modifier des événements';
-$LANG['rank_read'] = 'Autorisation de lecture du calendrier';
 
 //Calendrier
 $LANG['calendar'] = 'Calendrier';

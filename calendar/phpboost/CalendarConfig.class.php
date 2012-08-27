@@ -45,7 +45,7 @@ class CalendarConfig extends AbstractConfigData
 	public function get_default_values()
 	{
 		return array(
-			self::AUTHORIZATIONS => array('r-1' => 1, 'r0' => 1, 'r1' => 5)
+			self::AUTHORIZATIONS => array('r0' => 2, 'r1' => 6)
 		);
 	}
 	
