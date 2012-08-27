@@ -36,7 +36,6 @@ class ShoutboxConfig extends AbstractConfigData
 	const MAX_LINKS_NUMBER_PER_MESSAGE = 'max_links_number_per_message';
 	const REFRESH_DELAY = 'refresh_delay';
 	
-	const AUTHORIZATION_READ = 1;
 	const AUTHORIZATION_WRITE = 2;
 	const AUTHORIZATION_MODERATION = 4;
 	
@@ -97,7 +96,7 @@ class ShoutboxConfig extends AbstractConfigData
 	{
 		return array(
 			self::MAX_MESSAGES_NUMBER => 100,
-			self::AUTHORIZATION => array ('r-1' => 3, 'r0' => 3, 'r1' => 7),
+			self::AUTHORIZATION => array ('r0' => 2, 'r1' => 6),
 			self::FORBIDDEN_FORMATTING_TAGS => array(
 				'title', 'style', 'url', 'img','quote',
 				'hide', 'list', 'color', 'bgcolor', 'font',
