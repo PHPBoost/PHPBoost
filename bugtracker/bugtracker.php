@@ -356,7 +356,7 @@ else if (!empty($_POST['valid_edit']) && is_numeric($id_post))
 			if ($field == 'assigned_to_id')
 			{
 				$result_assigned = $Sql->query_array(DB_TABLE_MEMBER, "login, level", "WHERE user_id = " . $$field, __LINE__, __FILE__);
-				$comment = $LANG['bugs.labels.fields.assigned_to_id'] . ' <a href="' . PATH_TO_ROOT . '/member/member.php?id=' . $$field . '" class="' . level_to_status($result_assigned['level']) . '">' . $result_assigned['login'] . '</a>';
+				$comment = $LANG['bugs.labels.fields.assigned_to_id'] . ' <a href="' . UserUrlBuilder::profile($field)->absolute() . '" class="' . level_to_status($result_assigned['level']) . '">' . $result_assigned['login'] . '</a>';
 			}
 			else if ($field == 'title' || $field == 'severity' || $field == 'priority' || $field == 'type' || $field == 'category' || $field == 'detected_in' || $field == 'fixed_in')
 			{
@@ -434,7 +434,7 @@ else if (isset($_GET['edit']) && is_numeric($id)) // edition d'un bug
 			'REPRODUCTIBLE_ENABLED' 	=> ($result['reproductible']) ? 'checked="checked"' : '',
 			'REPRODUCTIBLE_DISABLED' 	=> (!$result['reproductible']) ? 'checked="checked"' : '',
 			'REPRODUCTION_METHOD' 		=> FormatingHelper::unparse($result['reproduction_method']),
-			'AUTHOR' 					=> !empty($result['login']) ? '<a href="' . PATH_TO_ROOT . '/member/member.php?id=' . $result['user_id'] . '" class="' . level_to_status($result['level']) . '">' . $result['login'] . '</a>': $LANG['guest'],
+			'AUTHOR' 					=> !empty($result['login']) ? '<a href="' . UserUrlBuilder::profile($result['user_id'])->absolute() . '" class="' . level_to_status($result['level']) . '">' . $result['login'] . '</a>': $LANG['guest'],
 			'ASSIGNED_TO'				=> $assigned_to,
 			'DATE' 						=> gmdate_format('date_format', $result['submit_date'])
 		));
@@ -669,8 +669,8 @@ else if (isset($_GET['history']) && is_numeric($id)) // Affichage de l'historiqu
 			case 'assigned_to_id': 
 			$old_user = !empty($row['old_value']) ? $Sql->query_array(DB_TABLE_MEMBER, 'login, level', "WHERE user_id = '" . $row['old_value'] . "'", __LINE__, __FILE__) : '';
 			$new_user = !empty($row['new_value']) ? $Sql->query_array(DB_TABLE_MEMBER, 'login, level', "WHERE user_id = '" . $row['new_value'] . "'", __LINE__, __FILE__) : '';
-			$old_value = !empty($old_user) ? '<a href="' . PATH_TO_ROOT . '/member/member.php?id=' . $row['old_value'] . '" class="' . level_to_status($old_user['level']) . '">' . $old_user['login'] . '</a>' : $LANG['bugs.notice.no_one'];
-			$new_value = !empty($new_user) ? '<a href="' . PATH_TO_ROOT . '/member/member.php?id=' . $row['new_value'] . '" class="' . level_to_status($new_user['level']) . '">' . $new_user['login'] . '</a>' : $LANG['bugs.notice.no_one'];
+			$old_value = !empty($old_user) ? '<a href="' . UserUrlBuilder::profile($row['old_value'])->absolute() . '" class="' . level_to_status($old_user['level']) . '">' . $old_user['login'] . '</a>' : $LANG['bugs.notice.no_one'];
+			$new_value = !empty($new_user) ? '<a href="' . UserUrlBuilder::profile($row['new_value'])->absolute() . '" class="' . level_to_status($new_user['level']) . '">' . $new_user['login'] . '</a>' : $LANG['bugs.notice.no_one'];
 			break;
 			
 			default:
@@ -684,7 +684,7 @@ else if (isset($_GET['history']) && is_numeric($id)) // Affichage de l'historiqu
 			'OLD_VALUE'		=> stripslashes($old_value),
 			'NEW_VALUE'		=> stripslashes($new_value),
 			'COMMENT'		=> $row['change_comment'],
-			'UPDATER' 		=> !empty($row['login']) ? '<a href="' . PATH_TO_ROOT . '/member/member.php?id=' . $row['user_id'] . '" class="' . level_to_status($row['level']) . '">' . $row['login'] . '</a>': $LANG['guest'],
+			'UPDATER' 		=> !empty($row['login']) ? '<a href="' . UserUrlBuilder::profile($row['user_id'])->absolute() . '" class="' . level_to_status($row['level']) . '">' . $row['login'] . '</a>': $LANG['guest'],
 			'DATE' 			=> gmdate_format('date_format', $row['update_date'])
 		));
 	}
@@ -781,7 +781,7 @@ else if (isset($_GET['view']) && is_numeric($id)) // Visualisation d'une fiche B
 	
 	if (!empty($result['assigned_to_id'])) {
 		$result_assigned = $Sql->query_array(DB_TABLE_MEMBER, "login, level", "WHERE user_id = " . $result['assigned_to_id'], __LINE__, __FILE__);
-		$user_assigned = '<a href="' . PATH_TO_ROOT . '/member/member.php?id=' . $result['assigned_to_id'] . '" class="' . level_to_status($result_assigned['level']) . '">' . $result_assigned['login'] . '</a>';
+		$user_assigned = '<a href="' . UserUrlBuilder::profile($result['assigned_to_id'])->absolute() . '" class="' . level_to_status($result_assigned['level']) . '">' . $result_assigned['login'] . '</a>';
 	}
 	else
 		$user_assigned = $LANG['bugs.notice.no_one'];
@@ -801,7 +801,7 @@ else if (isset($_GET['view']) && is_numeric($id)) // Visualisation d'une fiche B
 		'DETECTED_IN' 			=> !empty($result['detected_in']) ? $result['detected_in'] : $LANG['bugs.notice.not_defined'],
 		'FIXED_IN' 				=> !empty($result['fixed_in']) ? $result['fixed_in'] : $LANG['bugs.notice.not_defined'],
 		'USER_ASSIGNED'			=> $user_assigned,
-		'AUTHOR' 				=> !empty($result['login']) ? '<a href="' . PATH_TO_ROOT . '/member/member.php?id=' . $result['user_id'] . '" class="' . level_to_status($result['level']) . '">' . $result['login'] . '</a>': $LANG['guest'],
+		'AUTHOR' 				=> !empty($result['login']) ? '<a href="' . UserUrlBuilder::profile($result['user_id'])->absolute() . '" class="' . level_to_status($result['level']) . '">' . $result['login'] . '</a>': $LANG['guest'],
 		'SUBMIT_DATE'			=> gmdate_format('date_format', $result['submit_date'])
 	));
 	
