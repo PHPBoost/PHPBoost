@@ -34,7 +34,6 @@
 $LANG['guestbook_config'] = 'Configuration du livre d\'or';
 $LANG['rank_post'] = 'Autorisation d\'écriture';
 $LANG['rank_modo'] = 'Autorisation suppression ou modification d\'un message';
-$LANG['rank_read'] = 'Autorisation de lecture du Livre d\'or';
 
 //Titre
 $LANG['title_guestbook'] = 'Livre d\'or';

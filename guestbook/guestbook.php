@@ -34,12 +34,6 @@ $guestbook = retrieve(POST, 'guestbookForm', false);
 $guestbook_config = GuestbookConfig::load();
 $authorizations = $guestbook_config->get_authorizations();
 
-if (!$User->check_auth($authorizations, GuestbookConfig::AUTH_READ)) //Autorisation de lire ?
-{
-	$error_controller = PHPBoostErrors::user_not_authorized();
-	DispatchManager::redirect($error_controller);
-}
-
 $del = retrieve(GET, 'del', false);
 if ($del && !empty($id_get)) //Suppression.
 {
