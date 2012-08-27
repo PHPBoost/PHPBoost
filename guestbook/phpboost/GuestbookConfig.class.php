@@ -36,7 +36,6 @@ class GuestbookConfig extends AbstractConfigData
 	const MAXIMUM_LINKS_MESSAGE = 'maximum_links_message';
 	const AUTHORIZATIONS = 'authorizations';
 	
-	const AUTH_READ = 1;
 	const AUTH_WRITE = 2;
 	const AUTH_MODO = 4;
 	
@@ -100,7 +99,7 @@ class GuestbookConfig extends AbstractConfigData
 			self::CAPTCHA_DIFFICULTY => 2,
 			self::FORBIDDEN_TAGS => array('swf', 'movie', 'sound', 'code', 'math', 'mail', 'html', 'feed'),
 			self::MAXIMUM_LINKS_MESSAGE => -1,
-			self::AUTHORIZATIONS => array('r-1' => 3, 'r0' => 3, 'r1' => 7) 
+			self::AUTHORIZATIONS => array('r-1' => 2, 'r0' => 2, 'r1' => 6)
 		);
 	}
 

@@ -77,14 +77,6 @@
 					<br>
 					<dl>
 						<dt>
-							<label for="guestbook_auth">{L_AUTH_READ}</label>
-						</dt>
-						<dd>
-							{AUTH_READ}
-						</dd>
-					</dl>
-					<dl>
-						<dt>
 							<label for="guestbook_auth">{L_AUTH_WRITE}</label>
 						</dt>
 						<dd>
