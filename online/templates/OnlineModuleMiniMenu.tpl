@@ -10,6 +10,7 @@
 		# END users #
 		
 		# IF C_MORE_USERS #
+		<br />
 		<a href="${Url::to_absolute(OnlineUrlBuilder::home())}">{TOTAL_USERS_CONNECTED} {L_USERS_ONLINE}</a>
 		# ENDIF #
 		

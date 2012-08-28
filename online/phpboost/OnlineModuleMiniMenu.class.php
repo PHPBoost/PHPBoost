@@ -48,7 +48,8 @@ class OnlineModuleMiniMenu extends ModuleMiniMenu
 			$lang = LangLoader::get('online_common', 'online');
 			$tpl->add_lang($lang);
 			
-			$condition = 'WHERE s.session_time > :time ORDER BY '. OnlineConfig::load()->get_display_order_request();
+			$online_config = OnlineConfig::load();
+			$condition = 'WHERE s.session_time > :time ORDER BY '. $online_config->get_display_order_request();
 			$parameters = array(
 				'time' => (time() - SessionsConfig::load()->get_active_session_duration())
 			);
@@ -56,21 +57,25 @@ class OnlineModuleMiniMenu extends ModuleMiniMenu
 			$users = OnlineService::get_online_users($condition, $parameters);
 			foreach ($users as $user)
 			{
-				$group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
-				
 				$this->incremente_level($user);
-				$tpl->assign_block_vars('users', array(
-					'U_PROFILE' => UserUrlBuilder::profile($user->get_id())->absolute(),
-					'PSEUDO' => TextHelper::wordwrap_html($user->get_pseudo(), 19),
-					'LEVEL_CLASS' => UserService::get_level_class($user->get_level()),
-					'C_GROUP_COLOR' => !empty($group_color),
-					'GROUP_COLOR' => $group_color,
-				));
+				
+				if ($this->total_users <= $online_config->get_number_member_displayed())
+				{
+					$group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
+					
+					$tpl->assign_block_vars('users', array(
+						'U_PROFILE' => UserUrlBuilder::profile($user->get_id())->absolute(),
+						'PSEUDO' => TextHelper::wordwrap_html($user->get_pseudo(), 19),
+						'LEVEL_CLASS' => UserService::get_level_class($user->get_level()),
+						'C_GROUP_COLOR' => !empty($group_color),
+						'GROUP_COLOR' => $group_color,
+					));
+				}
 			}
 			
 			$main_lang = LangLoader::get('main');
 			$tpl->put_all(array(
-				'C_MORE_USERS' => $this->total_users > OnlineConfig::load()->get_number_member_displayed(),
+				'C_MORE_USERS' => $this->total_users > $online_config->get_number_member_displayed(),
 				'L_VISITOR' => $this->number_visitor > 1 ? $main_lang['guest_s'] : $main_lang['guest'],
 				'L_MEMBER' => $this->number_member > 1 ? $main_lang['member_s'] : $main_lang['member'],
 				'L_MODO' => $this->number_moderator > 1 ? $main_lang['modo_s'] : $main_lang['modo'],
