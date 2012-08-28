@@ -146,7 +146,7 @@ class ContentFormattingService
      */
     public function get_available_tags()
     {
-        $bbcode_lang = LangLoader::get('bbcode-common');
+        $bbcode_lang = LangLoader::get('editor-common');
         return array(
         	'b' => $bbcode_lang['format_bold'],
         	'i' => $bbcode_lang['format_italic'],

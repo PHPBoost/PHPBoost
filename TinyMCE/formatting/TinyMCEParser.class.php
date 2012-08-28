@@ -659,10 +659,8 @@ class TinyMCEParser extends ContentFormattingParser
 	 */
 	private function parse_wikipedia_links($matches)
 	{
-		global $LANG;
-
 		//Langue
-		$lang = $LANG['wikipedia_subdomain'];
+		$lang = LangLoader::get_message('wikipedia_subdomain', 'editor-common');
 		if (!empty($matches[2]))
 		{
 			$lang = $matches[2];

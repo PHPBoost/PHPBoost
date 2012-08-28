@@ -63,7 +63,7 @@ class BBCodeEditor extends ContentEditor
 
         $smileys_cache = SmileysCache::load();
 
-        $bbcode_lang = LangLoader::get('bbcode-common');
+        $bbcode_lang = LangLoader::get('editor-common');
         
         $template->put_all(array(
         	'PAGE_PATH' => $_SERVER['PHP_SELF'],
