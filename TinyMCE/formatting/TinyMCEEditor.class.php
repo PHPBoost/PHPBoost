@@ -71,7 +71,7 @@ class TinyMCEEditor extends ContentEditor
 			'TINYMCE_TRIGGER' => 'tinyMCE.triggerSave();',
 			'IDENTIFIER' => $this->identifier,
 			'L_REQUIRE_TEXT' => $LANG['require_text'],
-			'L_BB_UPLOAD' => LangLoader::get_message('bb_upload',  'bbcode-common')
+			'L_BB_UPLOAD' => LangLoader::get_message('bb_upload',  'editor-common')
         ));
 
         self::$js_included = true;
