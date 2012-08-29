@@ -52,7 +52,7 @@ function wiki_parse($var)
 function wiki_unparse($var)
 {
 	//Unparse de la balise link
-	$var = preg_replace('`<a href="(?:/wiki/)?([a-z0-9+#-_]+)">(.*)</a>`sU', "[link=$1]$2[/link]", $var);
+	$var = preg_replace('`<a href="/wiki/([a-z0-9+#-_]+)">(.*)</a>`sU', "[link=$1]$2[/link]", $var);
 	
 	//On force le langage de formatage à BBCode
 	$content_manager = new BBCodeFormattingFactory();
