@@ -208,7 +208,7 @@ class CommentsService
 			while ($row = $result->fetch())
 			{
 				$id = $row['id_comment'];
-				$path = PATH_TO_ROOT . $row['path'];
+				$path = $row['path'];
 				
 				if (empty($row['user_avatar']))
 					$user_avatar = $user_accounts_config->is_default_avatar_enabled() == '1' ? Url::to_rel('/templates/' . get_utheme() . '/images/' .  $user_accounts_config->get_default_avatar_name()) : '';
