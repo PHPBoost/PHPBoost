@@ -10,9 +10,8 @@
 					</a>
 				# ENDIF #
 			</div>
-			
-			<img src="{comments.U_AVATAR}" class="comment-avatar" />
 			<div class="comment-level">{comments.L_LEVEL}</div>
+			<img src="{comments.U_AVATAR}" class="comment-avatar" />
 		</div>
 		<div class="comment-content">
 			<div class="comment-date">

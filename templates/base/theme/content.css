@@ -683,6 +683,7 @@ div#comment-rating .negative {
 	border: 1px solid #D6DEE7;
 	color: #333;
 	background:#ECEFFA;
+	min-height: 80px;
 	-webkit-border-radius: 4px;
 	-moz-border-radius: 4px;
 	border-radius: 4px;
@@ -721,9 +722,7 @@ div#comment-rating .negative {
 	overflow:auto;	
 }
 
-div#comment-pseudo a{
-	font-size:14px;	
-}
+div#comment-pseudo a {}
 
 .comment-user_infos img{
 	padding:10px 0px;	
