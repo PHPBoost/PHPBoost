@@ -150,7 +150,7 @@ function pages_second_parse($contents)
 function link_unparse($contents)
 {
 	$contents = is_array($contents) ? $contents[0] : $contents;
-	return preg_replace('`<a href="(?:/pages/)?([a-z0-9+#-]+)">(.*)</a>`sU', "[link=$1]$2[/link]", $contents);
+	return preg_replace('`<a href="/pages/([a-z0-9+#-]+)">(.*)</a>`sU', "[link=$1]$2[/link]", $contents);
 }
 
 ?>
