@@ -71,11 +71,19 @@ class CommentsDAO
 	{
 		if ($user_id !== '-1')
 		{
-			return self::$db_querier->inject("SELECT MAX(timestamp) as timestamp FROM " . DB_TABLE_COMMENTS . " WHERE user_id = '" . AppContext::get_current_user()->get_id() . "'");
+			$query_result = self::$db_querier->select("SELECT MAX(timestamp) as timestamp FROM ". DB_TABLE_COMMENTS ." WHERE user_id=:user_id", array(
+				'user_id' => $user_id
+			), SelectQueryResult::FETCH_NUM);
+			$result = $query_result->fetch();
+			return $result[0];
 		}
 		else
 		{
-			return 0;
+			$query_result = self::$db_querier->select("SELECT MAX(timestamp) as timestamp FROM ". DB_TABLE_COMMENTS ." WHERE user_ip=:user_ip", array(
+				'user_ip' => USER_IP
+			), SelectQueryResult::FETCH_NUM);
+			$result = $query_result->fetch();
+			return $result[0];
 		}
 	}
 
