@@ -128,7 +128,7 @@
 						{list.bug.STATUS}
 					</td>
 					<td class="row2" {list.bug.COLOR}> 
-						{list.bug.PRIORITY}
+						{list.bug.COMMENTS}
 					</td>
 					<td class="row2" {list.bug.COLOR}>
 						{list.bug.DATE}

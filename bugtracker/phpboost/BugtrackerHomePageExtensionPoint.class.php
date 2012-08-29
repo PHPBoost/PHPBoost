@@ -184,7 +184,7 @@ class BugtrackerHomePageExtensionPoint implements HomePageExtensionPoint
 				'STATUS'		=> $LANG['bugs.status.' . $row['status']],
 				'COLOR' 		=> $color,
 				'SEVERITY_COLOR'=> $severity_color,
-				'COMMENTS'		=> '<a href="bugtracker' . url('.php?view=true&id=' . $row['id'] . '&com=0#anchor_bugtracker') . '">' . empty($nbr_coms) ? 0 : $nbr_coms . '</a>',
+				'COMMENTS'		=> '<a href="bugtracker' . url('.php?view=true&id=' . $row['id'] . '&com=0#anchor_bugtracker') . '">' . (empty($nbr_coms) ? 0 : $nbr_coms) . '</a>',
 				'DATE' 			=> gmdate_format('date_format', $row['submit_date'])
 			));
 		}
