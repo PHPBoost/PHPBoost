@@ -70,7 +70,7 @@ class AdminContactController extends AdminController
 		$form->add_fieldset($fieldset);
 		$fieldset->add_field(new FormFieldCheckbox('enable_captcha', $this->lang['enable_captcha'], $config->is_captcha_enabled(),
 			array('events' => array('click' => 'if (HTMLForms.getField("enable_captcha").getValue()) { HTMLForms.getField("captcha_difficulty_level").enable(); } else { HTMLForms.getField("captcha_difficulty_level").disable(); }'))));
-		$fieldset->add_field(new FormFieldTextEditor('captcha_difficulty_level', $this->lang['captcha_difficulty'], $config->get_captcha_difficulty_level(),
+		$fieldset->add_field(new FormFieldSimpleSelectChoice('captcha_difficulty_level', $this->lang['captcha_difficulty'], $config->get_captcha_difficulty_level(), $this->generate_difficulty_level_options(),
 			array('disabled' => !$config->is_captcha_enabled(), 'required' => true),
 			array(new FormFieldConstraintIntegerRange(0, 4))));
 
@@ -81,6 +81,16 @@ class AdminContactController extends AdminController
 		$this->form = $form;
 	}
 
+	private function generate_difficulty_level_options()
+	{
+		$options = array();
+		for ($i = 0; $i <= 4; $i++)
+		{
+			$options[] = new FormFieldSelectChoiceOption($i, $i);
+		}
+		return $options;
+	}
+	
 	private function save()
 	{
 		$config = ContactConfig::load();
