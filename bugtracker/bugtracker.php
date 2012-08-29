@@ -318,7 +318,7 @@ else if (!empty($_POST['valid_edit']) && is_numeric($id_post))
 					sprintf($LANG['bugs.pm.assigned.title'], $LANG['bugs.module_title'], $id_post), 
 					sprintf($LANG['bugs.pm.assigned.contents'], '[url]' . HOST . DIR . '/bugtracker/bugtracker.php?view=true&id=' . $id_post . '[/url]'), 
 					'-1', 
-					SYSTEM_PM
+					PrivateMsg::SYSTEM_PM
 				);
 			}
 		}
@@ -810,7 +810,7 @@ else if (isset($_GET['view']) && is_numeric($id)) // Visualisation d'une fiche B
 	{
 		$comments_topic = new BugtrackerCommentsTopic();
 		$comments_topic->set_id_in_module($id);
-		$comments_topic->set_url(new Url('/bugtracker/bugtracker?view=true&amp;id=' . $id . '&com=0'));
+		$comments_topic->set_url(new Url('/bugtracker/bugtracker.php?view=true&amp;id=' . $id . '&com=0'));
 		$Template->put_all(array(
 			'COMMENTS' => CommentsService::display($comments_topic)->render()
 		));
