@@ -151,7 +151,7 @@ div#admin_quick_menu li a.quick_link {
 }
 
 /* Tableaux de l'administration */
-.module_table,.block_container {
+.block_container {
     width:98%;
     margin-top:15px;
 }
