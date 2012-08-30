@@ -332,3 +332,24 @@ label img {
 fieldset dl dd label:hover {
     color:#183A4F;
 }
+
+.label {
+    font-weight:bold;
+    font-size:11px;
+    color:#476a7f;
+}
+
+/* Tableau global, utilisé dans les différents modules */
+.module_table {
+    width:98%;
+    margin:auto;
+	border-spacing:0px;
+	border-collapse:separate;
+	padding:0px;
+	border:1px solid #D6DEE7;
+    background:#f2f8ff;
+    margin-top:15px;
+}
+*+html .module_table { /* Hack ie7 */
+	border-collapse:collapse;
+}
