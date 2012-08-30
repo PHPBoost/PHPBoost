@@ -1,20 +1,53 @@
 /* --------------------------------------
-		admin.css
-Contient les classes supplémentaires pour l'administration.
---------------------------------------*/ /* Entête de la page */
+		admin_design.css
+Contient les conteneur, fortement dépendant du design.
+--------------------------------------*/ 
+
+* { margin:0; padding:0; font-size:100%; }
+html, body{	height: 100%; }
+
+body {
+    background:#E8EDF3 url(images/global.png) repeat-x;
+    font-size:12px;
+    font-family:"Trebuchet MS", Verdana, 'Bitstream Vera Sans', Times, serif;
+    color:#3F5164;
+    margin:0;
+    padding:0;
+}
+
+div#global {
+	width:1000px;
+    margin:auto;
+    min-height: 95%;
+}
+
+/* ##### Entête de la page ###### */
 div#header_admin_container {
+    background-position:20px 0px;
+	margin-bottom:8px;
+	height:170px;
 }
 
-
-div#header_admin {
+div#logo {
+	float: left;
+	margin: 20px 20px 0px 35px;
+	background: url('images/logo.png') no-repeat;
+	height: 90px;
+	width: 90px;
 }
 
-/* Menu de lien horizontal */
-div#sub_header_admin {
-    height:35px;
+div#site_name {
+	float:left;
+	max-width: 600px;
+	font-size: 40px;
+    margin-top: 50px;
+    text-shadow: #e8edf3 1px 1px 20px;
+    font-family:"Trebuchet MS";
 }
 
-/* Lien du subheader */
+div#header_admin { height:139px; }
+div#sub_header_admin { height: 32px; margin-top: 6px; }
+
 div#sub_header_admin .dynamic_menu {
 	width:auto;
 	height:35px;
@@ -22,6 +55,21 @@ div#sub_header_admin .dynamic_menu {
 	padding-left:15px;
 	float:left;
 }
+
+div#sub_header_admin .dynamic_menu h5 {
+    color:#FFFFFF;
+	margin-right:2px;
+	background:none;
+	border:none;
+	font-weight:normal;
+}
+
+div#sub_header_admin .dynamic_menu h5:hover, div#sub_header_admin .dynamic_menu h5:active {
+    color:#366393;
+    background:#e8edf3;
+    border-bottom:1px solid #99B1CB;
+}
+
 div#admin_extend_link{
 	float:right;
 	margin-right:15px;
@@ -133,81 +181,17 @@ a.admin_extend_link {
     font-weight:bold;
 }
 
-/* Styles */
-.success_test {
-    text-align:center;
-    width:20%;
-    background:#81c3a6;
-    display:block;
-    margin:auto;
-    margin-top:4px;
-    color:green;
-    font-weight:bold;
-    padding:1px;
+/* ##### Pied de page ###### */
+div#footer {
+	height:40px;
+	clear:both;
+    margin-top:0px;
+    padding:10px 20px 0px 0px;
+    text-align:right;
+    border-top:#336397 2px solid;
+	background:#212121;
+	min-width:1000px;
 }
 
-.failure_test {
-    text-align:center;
-    width:20%;
-    background:#ee8d8d;
-    display:block;
-    margin:auto;
-    margin-top:4px;
-    color:red;
-    font-weight:bold;
-    padding:1px;
-}
-
-.unspecified_test {
-    text-align:center;
-    width:20%;
-    background:#5189bb;
-    display:block;
-    margin:auto;
-    margin-top:4px;
-    color:#133554;
-    font-weight:bold;
-    padding:1px;
-}
-
-/* phpinfo */
-h1,h2 {
-    font-family:sans-serif;
-}
-
-h1 {
-    font-size:150%;
-}
-
-h2 {
-    font-size:125%;
-}
-
-.center {
-    text-align:center;
-}
-
-.em {
-    color:#666666;
-    background-color:#cccccc;
-}
-
-pre {
-    margin:0px;
-    font-family:monospace;
-    color:#000;
-}
-
-div#sub_header_admin .dynamic_menu h5 {
-    color:#FFFFFF;
-	margin-right:2px;
-	background:none;
-	border:none;
-	font-weight:normal;
-}
-
-div#sub_header_admin .dynamic_menu h5:hover, div#sub_header_admin .dynamic_menu h5:active {
-    color:#366393;
-    background:#e8edf3;
-    border-bottom:1px solid #99B1CB;
-}
+div#footer span { color:#FFF; font-size:10px; }
+div#footer span a { color:#FFF; font-size:10px; }
