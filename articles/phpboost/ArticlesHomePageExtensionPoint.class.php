@@ -302,7 +302,7 @@ class ArticlesHomePageExtensionPoint implements HomePageExtensionPoint
 				));
 
 
-				$result = $this->sql_querier->query_while("SELECT a.id, a.title, a.icon, a.timestamp, a.views, a.user_id, m.user_id, m.login, m.level, note.average_notes, note.number_notes, com.number_comments
+				$result = $this->sql_querier->query_while("SELECT a.id, a.title, a.icon, a.timestamp, a.views, a.user_id, a.description, m.user_id, m.login, m.level, note.average_notes, note.number_notes, com.number_comments
 				FROM " . DB_TABLE_ARTICLES . " a
 				LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = a.user_id
 				LEFT JOIN " . DB_TABLE_COMMENTS_TOPIC . " com ON com.id_in_module = a.id AND com.module_id = 'articles'

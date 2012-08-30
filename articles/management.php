@@ -147,13 +147,13 @@ elseif(retrieve(POST,'submit',false))
 				// Start.
 				$articles['start'] += ($articles['start_hour'] * 60 + $articles['start_min']) * 60;
 				if ($articles['start'] <= $now->get_timestamp())
-				$articles['start'] = 0;
+					$articles['start'] = 0;
 				// End.
 				$articles['end'] += ($articles['end_hour'] * 60 + $articles['end_min']) * 60;
 				if ($articles['end'] <= $now->get_timestamp())
-				$articles['end'] = 0;
-
-				$articles['visible'] = 1;
+					$articles['end'] = 0;
+					
+				$articles['visible'] = 0;
 			}
 			else
 				$articles['start'] = $articles['end'] = 0;
@@ -223,25 +223,22 @@ elseif(retrieve(POST,'submit',false))
 				VALUES('" . $articles['idcat'] . "', '" . $articles['title'] . "', '" . $articles['desc'] . "', '" . $articles['release'] . "', '" . $articles['visible'] . "', '" . $articles['start'] . "', '" . $articles['end'] . "', '" . $User->get_attribute('user_id') . "', '" . $img . "', '".$articles['sources']."', '".$articles['description']."')", __LINE__, __FILE__);
 				$articles['id'] = $Sql->insert_id("SELECT MAX(id) FROM " . DB_TABLE_ARTICLES);
 
-				$articles_cat_info= $Sql->query_array(DB_TABLE_ARTICLES_CAT, "id", "nbr_articles_visible", "nbr_articles_unvisible","WHERE id = '".$articles['idcat']."'", __LINE__, __FILE__);
+				$articles_cat_info = $Sql->query_array(DB_TABLE_ARTICLES_CAT, "id", "nbr_articles_visible", "nbr_articles_unvisible","WHERE id = '".$articles['idcat']."'", __LINE__, __FILE__);
 
 				if($articles['visible'] == 1)
 				{
-					$nb=$articles_cat_info['nbr_articles_visible'] + 1;
+					$nb = $articles_cat_info['nbr_articles_visible'] + 1;
 					$Sql->query_inject("UPDATE " . DB_TABLE_ARTICLES_CAT. " SET nbr_articles_visible = '" . $nb. "' WHERE id = '" . $articles['idcat'] . "'", __LINE__, __FILE__);
 				}
 				else
 				{
-					$nb=$articles_cat_info['nbr_articles_unvisible'] + 1;
+					$nb = $articles_cat_info['nbr_articles_unvisible'] + 1;
 					$Sql->query_inject("UPDATE " . DB_TABLE_ARTICLES_CAT. " SET nbr_articles_unvisible = '" . $nb. "' WHERE id = '" . $articles['idcat'] . "'", __LINE__, __FILE__);
 				}
 
 				//If the poster couldn't write, it's a contribution and we put it in the contribution panel, it must be approved
 				if ($auth_contrib)
 				{
-					//Importing the contribution classes
-					
-					
 					$articles_contribution = new Contribution();
 
 					//The id of the file in the module. It's useful when the module wants to search a contribution (we will need it in the file edition)
