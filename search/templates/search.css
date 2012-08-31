@@ -79,7 +79,7 @@ input#TxTsearched {
 	background:#FFFFFF url(../search_mini.png) no-repeat;
 	background-position:2px 1px;
 	padding-left:22px;
-	height:14px;
+	height:18px;
 	width:100%;
 }
 #forms_selection a{
@@ -96,7 +96,7 @@ select.list_modules {
 
 div.resultsChoices {
     position:relative;
-    top:-18px;
+    top:-20px;
     width:100%;
     text-align:right;
 }
