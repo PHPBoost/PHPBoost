@@ -65,6 +65,10 @@
     z-index:100;
 }
 
+.calendar_block .row3{
+	border:none;	
+}
+
 /* Déplacement des fichiers*/
 .upload_selected_cat {
     background:#f5fbff;

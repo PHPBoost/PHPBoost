@@ -82,7 +82,8 @@ class CalendarHomePageExtensionPoint implements HomePageExtensionPoint
 			'C_CALENDAR_DISPLAY' => true,
 			'ADMIN_CALENDAR' => ($User->check_level(User::ADMIN_LEVEL)) ? '<a href="' . PATH_TO_ROOT . '/calendar/admin_calendar.php" title="' . $LANG['edit'] . '"><img src="'. PATH_TO_ROOT .'/templates/' . get_utheme() . '/images/' . get_ulang() . '/edit.png" alt ="" style="vertical-align:middle;" /></a>' : '',
 			'ADD' => $User->check_auth($calendar_config->get_authorizations(), AUTH_CALENDAR_WRITE) ? '<a href="'. PATH_TO_ROOT .'/calendar/calendar' . url('.php?add=1') . '" title="' . $LANG['add_event'] . '"><img src="'. PATH_TO_ROOT .'/templates/' . get_utheme() . '/images/' . get_ulang() . '/add.png" class="valign_middle" alt="" /></a><br />' : '',
-			'DATE' => $day . ' ' . $array_l_month[$month - 1] . ' ' . $year,
+			'DATE' => $array_l_month[$month - 1] . ' ' . $year,
+			'DATE2' => $day . ' ' . $array_l_month[$month - 1] . ' ' . $year,
 			'U_PREVIOUS' => ($month == 1) ? url('.php?d=' . $day . '&amp;m=12&amp;y=' . ($year - 1), '-' . $day . '-12-' . ($year - 1) . '.php') :  url('.php?d=1&amp;m=' . ($month - 1) . '&amp;y=' . $year, '-1-' . ($month - 1) . '-' . $year . '.php'),
 			'U_NEXT' => ($month == 12) ? url('.php?d=' . $day . '&amp;m=1&amp;y=' . ($year + 1), '-' . $day . '-1-' . ($year + 1) . '.php') :  url('.php?d=1&amp;m=' . ($month + 1) . '&amp;y=' . $year, '-1-' . ($month + 1) . '-' . $year . '.php'),
 			'U_PREVIOUS_EVENT' => ( $get_event != 'fd' ) ? '<a href="'. PATH_TO_ROOT .'/calendar/calendar' . url('.php?e=down&amp;d=' . $day . '&amp;m=' . $month . '&amp;y=' . $year, '-' . $day . '-' . $month . '-' . $year . '.php?e=down') . '#act" title="">&laquo;</a>' : '',
@@ -123,12 +124,12 @@ class CalendarHomePageExtensionPoint implements HomePageExtensionPoint
 		$this->sql_querier->query_close($result);
 		
 		//Génération des jours du calendrier.
-		$array_l_days =  array($LANG['monday'], $LANG['tuesday'], $LANG['wenesday'], $LANG['thursday'], $LANG['friday'], $LANG['saturday'],
+		$array_l_days =  array("",$LANG['monday'], $LANG['tuesday'], $LANG['wenesday'], $LANG['thursday'], $LANG['friday'], $LANG['saturday'],
 		$LANG['sunday']);
 		foreach ($array_l_days as $l_day)
 		{
 			$tpl->assign_block_vars('day', array(
-				'L_DAY' => '<td class="row3"><span class="text_small">' . $l_day . '</span></td>'
+				'L_DAY' => '<td><span class="text_month">' . $l_day . '</span></td>'
 			));
 		}
 		
@@ -140,30 +141,52 @@ class CalendarHomePageExtensionPoint implements HomePageExtensionPoint
 		//Génération du calendrier.
 		$j = 1;
 		$last_day = ($month_day + $first_day);
-		for ($i = 1; $i <= 42; $i++)
+		for ($i = 1; $i <= 56; $i++)
 		{
-			if ($i >= $first_day && $i < $last_day)
+
+			if ( (($i % 8) == 1) && $i < $last_day)
 			{
-				$action = $j;
-				if ( !empty($array_action[$j]) )
-				{
-					$action = '<a href="'. PATH_TO_ROOT .'/calendar/calendar' . url('.php?d=' . $j . '&amp;m=' . $month . '&amp;y=' . $year, '-' . $j . '-' . $month . '-' . $year . '.php') . '#act">' . $j . '</a>';
-					$class = 'calendar_event';
-				}
-				elseif ($day == $j)
-					$class = 'calendar_today';
-				else
-					$class = 'calendar_other';
-				
-				$contents = '<td class="' . $class . '">' . $action . '</td>';
-				$j++;
+				$contents = '<td class="c_row calendar_week">'.(date('W', mktime(0, 0, 0, $month, $j, $year)) * 1).'</td>';
+				$last_day++;
 			}
 			else
-				$contents = '<td class="calendar_none">&nbsp;</td>';
+			{
+				if (($i >= $first_day +1) && $i < $last_day)
+				{
+					$action = $j;
+					if ( !empty($array_action[$j]) )
+					{
+						$class = 'calendar_event';
+					}
+					elseif (($j == Date("j")) && ($month==Date("m")) && ($year==Date("Y")) )
+						$class = 'calendar_today';
+					else
+						if ( (($i % 8) == 7) || (($i % 8) == 0))
+							$class = 'calendar_weekend';
+						else
+							$class = 'calendar_other';
+							
+					$action = '<a href="'. PATH_TO_ROOT .'/calendar/calendar' . url('.php?d=' . $j . '&amp;m=' . $month . '&amp;y=' . $year, '-' . $j . '-' . $month . '-' . $year . '.php') . '#act">' . $j . '</a>';
+					$contents = '<td class="c_row ' . $class . '">' . $action . '</td>';
+					$j++;
+				}
+				else
+				{
+					if ( (($i % 8) == 7) || (($i % 8) == 0))
+						$contents = '<td class="c_row calendar_weekend">&nbsp;</td>';
+					else
+						$contents = '<td class="c_row calendar_none">&nbsp;</td>';
+				}
+			}
+			if (($j > $month_day) && ($i % 8) == 0)
+			{
+				$i = 56;
+			}
 
+			
 			$tpl->assign_block_vars('calendar', array(
 				'DAY' => $contents,
-				'TR' => (($i % 7) == 0 && $i != 42) ? '</tr><tr style="text-align:center;">' : ''
+				'TR' => (($i % 8) == 0 && $i != 56) ? '</tr><tr class="tr_row">' : ''
 			));
 		}
 		
@@ -225,11 +248,13 @@ class CalendarHomePageExtensionPoint implements HomePageExtensionPoint
 					'DATE' => gmdate_format('date_format_short', mktime(0, 0, 0, $month, $day, $year)),
 					'CONTENTS' => '<p style="text-align:center;">' . $LANG['no_current_action'] . '</p>'
 				));
+				$check_action = false;
 			}
 			
 			$tpl->put_all(array(
 				'JAVA' => $java,
-				'L_ON' => $LANG['on']
+				'L_ON' => $LANG['on'],
+				'C_ACTION' => $check_action
 			));
 		}
 		
