@@ -36,42 +36,41 @@
 					
 					<br /><br />
 					<span id="act"></span>
-					<table class="module_table" style="border-spacing:1px;border-collapse:separate">
-						<tr>
-							<td class="row3">
-								<a href="{PATH_TO_ROOT}/calendar/calendar{U_PREVIOUS}" title="">&laquo;</a>
-							</td> 
-							<td colspan="5" class="row3">
-								{DATE} 
-							</td> 
-							<td class="row3">
-								<a href="{PATH_TO_ROOT}/calendar/calendar{U_NEXT}" title="">&raquo;</a>
-							</td> 
-						</tr>
-						<tr style="text-align:center;">
-							# START day #
-							{day.L_DAY}
-							# END day #
-						</tr>
-						<tr style="text-align:center;">
-							# START calendar #
-							{calendar.DAY}
-							{calendar.TR}
-							# END calendar #
-						</tr>
-						<tr>
-							<td class="row3">
-								{U_PREVIOUS_EVENT}
-							</td>
-							<td  colspan="5" class="row3">
-								{L_EVENTS} 
-							</td>
-							<td class="row3">
-								{U_NEXT_EVENT}
-							</td> 
-						</tr>
-					</table>
+					
+					
+					<div class="calendar_container">
+						<div class="calendar_top_l">
+							<a href="{PATH_TO_ROOT}/calendar/calendar{U_PREVIOUS}" title="">&laquo;</a>
+						</div>		
+						<div class="calendar_top_r">
+							<a href="{PATH_TO_ROOT}/calendar/calendar{U_NEXT}" title="">&raquo;</a>
+						</div>
+						<div class="calendar_top">
+							{DATE} 
+						</div>
+						
+						<div class="calendar_containt">
+							<table class="module_table calendar_table">
+								<tr>
+									# START day #
+									{day.L_DAY}
+									# END day #
+								</tr>
+								<tr class="tr_row">
+									# START calendar #
+									{calendar.DAY}
+									{calendar.TR}
+									# END calendar #
+								</tr>
+								<tr>
+									<td></td>
+									<td class="c_row_last" colspan="7"></td>
+								</tr>
+							</table>
+						</div>
+					</div>
 				</div>
+				
 				<div class="module_bottom_l"></div>		
 				<div class="module_bottom_r"></div>
 				<div class="module_bottom"></div>
@@ -89,37 +88,62 @@
 		# ENDIF #
 		<br /><br />
 		
-		# START action #
-		<div class="module_position">					
-			<div class="module_top_l"></div>		
-			<div class="module_top_r"></div>
-			<div class="module_top">
-				<span class="text_strong" style="float:left;">{action.TITLE}</span>
-				<span style="float:right;">{action.COM}{action.EDIT}{action.DEL}</span>
+
+		<div class="event_container">
+			<div class="event_top_title">
+				<strong>{U_PREVIOUS_EVENT} &nbsp {L_EVENTS} &nbsp {U_NEXT_EVENT}</strong>
 			</div>
-			<div class="module_contents">
-				{action.CONTENTS}
-				<br /><br /><br />
-			</div>
-			<div class="module_bottom_l"></div>		
-			<div class="module_bottom_r"></div>
-			<div class="module_bottom">
-				<div style="float:left;padding-top:4px;padding-bottom:4px;">
-					{action.LOGIN}
-				</div>				
-				<div class="text_small" style="padding:4px;text-align: right;">
-					{L_ON}:&nbsp;&nbsp;{action.DATE}
+			<div class="event_date">{DATE2}</div>
+
+			
+			
+			# IF C_ACTION #
+				# START action #
+				
+				
+				<div class="module_position">					
+					<div class="module_top_l"></div>		
+					<div class="module_top_r"></div>
+					<div class="module_top">
+						<span class="text_strong" style="float:left;">{action.TITLE}</span>
+						<span style="float:right;">{action.COM}{action.EDIT}{action.DEL}</span>
+					</div>
+					<div class="module_contents">
+						{action.CONTENTS}
+						<br /><br /><br />
+					</div>
+					<div class="module_bottom_l"></div>		
+					<div class="module_bottom_r"></div>
+					<div class="module_bottom">
+						<div style="float:left;padding-top:4px;padding-bottom:4px;">
+							{action.LOGIN}
+						</div>				
+						<div class="text_small" style="padding:4px;text-align: right;">
+							{L_ON}:&nbsp;&nbsp;{action.DATE}
+						</div>
+					</div>
 				</div>
-			</div>
+				<br /><br />
+		
+				{COMMENTS}
+				
+				# END action #
+			# ELSE #
+			
+				# START action #
+				<div class="module_position">
+					<div class="module_contents">
+						{action.CONTENTS}
+						<br /><br /><br />
+					</div>
+				</div>
+				# END action #
+				
+			# ENDIF #
+			
+			
 		</div>
-		<br /><br />
-
-		{COMMENTS}
-		
-		# END action #
 		# ENDIF #
-
-		
 
 		# IF C_CALENDAR_FORM #
 		<script type="text/javascript">
