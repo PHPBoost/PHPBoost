@@ -65,12 +65,12 @@ class NewsletterDeleteSubscriberController extends ModuleController
 			
 			NewsletterStreamsCache::invalidate();
 			
-			$controller = new UserErrorController(LangLoader::get_message('success', 'errors'), LangLoader::get_message('success-delete-subscriber', 'newsletter_common', 'newsletter'), UserErrorController::SUCCESS);
+			$controller = new UserErrorController(LangLoader::get_message('success', 'errors-common'), LangLoader::get_message('success-delete-subscriber', 'newsletter_common', 'newsletter'), UserErrorController::SUCCESS);
 			DispatchManager::redirect($controller);
 		}
 		else
 		{
-			$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), LangLoader::get_message('error-subscriber-not-existed', 'newsletter_common', 'newsletter'));
+			$controller = new UserErrorController(LangLoader::get_message('error', 'errors-common'), LangLoader::get_message('error-subscriber-not-existed', 'newsletter_common', 'newsletter'));
 			DispatchManager::redirect($controller);
 		}
 	}
