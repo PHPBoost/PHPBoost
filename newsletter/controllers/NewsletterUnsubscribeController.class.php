@@ -142,7 +142,7 @@ class NewsletterUnSubscribeController extends ModuleController
 		else
 		{
 			$streams = $this->form->get_value('newsletter_choice');
-			if (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL) &&  $streams !== '')
+			if (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL) && $streams !== '')
 			{
 				NewsletterService::update_subscribtions_member_registered($streams, AppContext::get_current_user()->get_attribute('user_id'));
 			}

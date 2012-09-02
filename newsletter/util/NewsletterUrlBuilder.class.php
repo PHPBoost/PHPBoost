@@ -116,9 +116,9 @@ class NewsletterUrlBuilder
 	/**
 	 * @return Url
 	 */
-    public static function delete_subscriber($id)
+    public static function delete_subscriber($id, $stream_id = null)
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/subscriber/' . $id . '/delete/');
+		return DispatchManager::get_url(self::$dispatcher, '/subscriber/' . $id . '/delete/' . (!empty($stream_id) ? $stream_id : ''));
 	}
 
 	/**

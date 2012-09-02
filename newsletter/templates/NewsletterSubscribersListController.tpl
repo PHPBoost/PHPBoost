@@ -28,7 +28,9 @@ function Confirm(level) {
 	<tr style="text-align:center;">
 		<td class="row1"> 
 			# IF subscribers_list.C_AUTH_MODO #
+				# IF subscribers_list.C_EDIT_LINK #
 				<a href="{subscribers_list.EDIT_LINK}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" /></a>
+				# ENDIF #
 				<a href="{subscribers_list.DELETE_LINK}" onclick="javascript:Confirm();"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" /></a>
 			# ENDIF #
 		</td>

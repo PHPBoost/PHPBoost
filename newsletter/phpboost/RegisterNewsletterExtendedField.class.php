@@ -52,7 +52,7 @@ class RegisterNewsletterExtendedField extends AbstractMemberExtendedField
 		$streams = $this->get_streams();
 		if (!empty($streams))
 		{
-			$newsletter_subscribe = AppContext::get_current_user()->check_level(User::MEMBER_LEVEL) ? NewsletterService::get_id_streams_member(AppContext::get_current_user()->get_attribute('user_id')) : array();
+			$newsletter_subscribe = NewsletterService::get_id_streams_member(AppContext::get_current_user()->get_attribute('user_id'));
 			$fieldset->add_field(new FormFieldMultipleSelectChoice($member_extended_field->get_field_name(), $member_extended_field->get_name(), $newsletter_subscribe, $streams, array('description' => $member_extended_field->get_description())));
 		}
 	}

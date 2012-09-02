@@ -104,9 +104,10 @@ class NewsletterSubscribersListController extends ModuleController
 				$moderation_auth = NewsletterAuthorizationsService::id_stream($this->id_stream)->moderation_subscribers();
 				$pseudo = $row['user_id'] > 0 ? '<a href="'. UserUrlBuilder::profile($row['user_id'])->absolute() .'">'. $row['login'] .'</a>' : $this->lang['newsletter.visitor'];
 				$this->view->assign_block_vars('subscribers_list', array(
-					'C_AUTH_MODO' => $moderation_auth && $row['user_id'] > 0,
-					'EDIT_LINK' => empty($row['user_id']) ? NewsletterUrlBuilder::edit_subscriber($row['id'])->absolute() : '',
-					'DELETE_LINK' => NewsletterUrlBuilder::delete_subscriber($row['id'])->absolute(),
+					'C_AUTH_MODO' => $moderation_auth,
+					'C_EDIT_LINK' => $row['user_id'] == User::VISITOR_LEVEL,
+					'EDIT_LINK' => $row['user_id'] == User::VISITOR_LEVEL ? NewsletterUrlBuilder::edit_subscriber($row['id'])->absolute() : '',
+					'DELETE_LINK' => NewsletterUrlBuilder::delete_subscriber($row['id'], $this->stream_cache['id'])->absolute(),
 					'PSEUDO' => $pseudo,
 					'MAIL' => $row['user_id'] > 0 ? $row['user_mail'] : $row['mail']
 				));

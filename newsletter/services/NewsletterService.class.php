@@ -104,9 +104,15 @@ class NewsletterService
 		$newsletter_streams_cache = NewsletterStreamsCache::load()->get_streams();
 		foreach ($newsletter_streams_cache as $id => $value)
 		{
-			if (array_key_exists($user_id, $value['subscribers']))
+			if (is_array($value['subscribers']))
 			{
-				$streams[] = (string)$id;
+				foreach ($value['subscribers'] as $value)
+				{
+					if ($value['user_id'] == $user_id)
+					{
+						$streams[] = (string)$id;
+					}
+				}
 			}
 		}
 		return $streams;
