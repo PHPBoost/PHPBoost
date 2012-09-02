@@ -69,7 +69,7 @@ if ($action == 'save')
     	}
         
         $menu->set_auth(Authorizations::build_auth_array_from_form(
-            AUTH_MENUS, 'menu_element_' . $menu_element_id . '_auth')
+            Menu::MENU_AUTH_BIT, 'menu_element_' . $menu_element_id . '_auth')
         );
     	return $menu;
     }
