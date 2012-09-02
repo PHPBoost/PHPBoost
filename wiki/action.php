@@ -203,7 +203,6 @@ elseif ($id_to_rename > 0 && !empty($new_title)) //Renommer un article
 				$Cache->Generate_module_file('wiki');
 			}
     		 // Feeds Regeneration
-             
              Feed::clear_cache('wiki');
 		   AppContext::get_response()->redirect('/wiki/' . url('wiki.php?title=' . Url::encode_rewrite($new_title), Url::encode_rewrite($new_title), '&'));
 		}
@@ -211,8 +210,8 @@ elseif ($id_to_rename > 0 && !empty($new_title)) //Renommer un article
 		{
             $Sql->query_inject("UPDATE " . PREFIX . "wiki_articles SET title = '" . $new_title . "', encoded_title = '" . Url::encode_rewrite($new_title) . "' WHERE id = '" . $id_to_rename . "'", __LINE__, __FILE__);
 			
-            //Feeds Regeneration
-            
+            //Cache Regeneration
+            $Cache->Generate_module_file('wiki');
             Feed::clear_cache('wiki');
             
             AppContext::get_response()->redirect('/wiki/' . url('wiki.php?title=' . Url::encode_rewrite($new_title), Url::encode_rewrite($new_title), '&'));
