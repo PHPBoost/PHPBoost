@@ -46,7 +46,7 @@ class NewsletterEditSubscriberController extends ModuleController
 		$id = $request->get_getint('id', 0);
 		$this->init();
 		
-		$verificate_is_edit = PersistenceContext::get_querier()->count(NewsletterSetup::$newsletter_table_subscribers, "WHERE id = '". $id ."' AND user_id = 0") > 0 ? true : false;
+		$verificate_is_edit = PersistenceContext::get_querier()->count(NewsletterSetup::$newsletter_table_subscribers, "WHERE id = '". $id ."' AND user_id = -1") > 0 ? true : false;
 		if (!$this->subscriber_exist($id) || !$verificate_is_edit)
 		{
 			$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), LangLoader::get_message('error-subscriber-not-existed', 'newsletter_common', 'newsletter'));
@@ -79,7 +79,7 @@ class NewsletterEditSubscriberController extends ModuleController
 		$form = new HTMLForm('subscriber');
 		
 		$columns = array('*');
-		$condition = "WHERE id = '". $id ."' AND user_id = 0";
+		$condition = "WHERE id = '". $id ."' AND user_id = -1";
 		$row = PersistenceContext::get_querier()->select_single_row(NewsletterSetup::$newsletter_table_subscribers, $columns, $condition);
 
 		$fieldset = new FormFieldsetHTML('edit-subscriber', $this->lang['subscriber.edit']);
