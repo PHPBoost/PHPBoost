@@ -42,9 +42,9 @@ class BBCodeNewsletterMail extends AbstractNewsletterMail
 		$mail->set_is_html(true);
 		$mail->set_subject($subject);
 		
-		$contents = '<html><head><title>' . $subject . '</title></head><body>';
-		$contents .= $this->parse_contents($contents). $this->add_unsubscribe_link();
-		$contents .= '</body></html>';
+		$mail_contents = '<html><head><title>' . $subject . '</title></head><body>';
+		$mail_contents .= $this->parse_contents($contents). $this->add_unsubscribe_link();
+		$mail_contents .= '</body></html>';
 		
 		foreach ($subscribers as $id => $values)
 		{
@@ -52,7 +52,7 @@ class BBCodeNewsletterMail extends AbstractNewsletterMail
 			$mail->clear_recipients();
 			$mail->add_recipient($mail_subscriber);
 			
-			$mail->set_content($contents);
+			$mail->set_content($mail_contents);
 			
 			//TODO gestion des erreurs
 			AppContext::get_mail_service()->try_to_send($mail);
@@ -66,7 +66,6 @@ class BBCodeNewsletterMail extends AbstractNewsletterMail
 	
 	public function parse_contents($contents)
 	{
-		$contents = stripslashes(FormatingHelper::strparse(addslashes($contents)));
 		return ContentSecondParser::export_html_text($contents);
 	}
 }

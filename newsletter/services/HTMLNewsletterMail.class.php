@@ -44,9 +44,9 @@ class HTMLNewsletterMail extends AbstractNewsletterMail
 			$mail->clear_recipients();
 			$mail->add_recipient($mail_subscriber);
 			$mail->set_content($contents);
-			
+
 			//TODO gestion des erreurs
-			AppContext::get_mail_service()->try_to_send($mail);
+			Debug::dump(AppContext::get_mail_service()->try_to_send($mail));
 		}
 	}
 	
