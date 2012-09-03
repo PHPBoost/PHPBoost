@@ -85,7 +85,7 @@ $lang['streams.no_cats'] = 'Aucun flux';
 
 //Subscribe
 $lang['subscribe.mail'] = 'Mail';
-$lang['subscribe.newsletter_choice'] = 'Choisissez les newsletters auxquelles vous souhaitez vous abonner';
+$lang['subscribe.newsletter_choice'] = 'Choisissez les newsletters auxquelles vous souhaitez être abonné';
 
 //Subscribers
 $lang['subscribers.list'] = 'Liste des inscrits';
@@ -97,7 +97,7 @@ $lang['subscribers.no_users'] = 'Aucun inscrit';
 // Unsubcribe
 $lang['newsletter.delete_all_streams'] = 'Se désinscrire de tous les flux';
 $lang['unsubscribe.newsletter'] = 'Se désinscrire des newsletters';
-$lang['unsubscribe.newsletter_choice'] = 'Choisissez les newsletters ou vous souhaitez rester abonner';
+$lang['unsubscribe.newsletter_choice'] = 'Choisissez les newsletters ou vous souhaitez rester abonné';
 
 //Archives
 $lang['archives.stream_name'] = 'Nom du flux';
@@ -107,7 +107,7 @@ $lang['archives.nbr_subscribers'] = 'Nombre d\'inscrit';
 $lang['archives.not_archives'] = 'Aucune archive n\'est disponible';
 
 //Add newsletter
-$lang['add.choice_streams'] = 'Choisissez le ou les flux ou vous souhaitez envoyer cette newsletter';
+$lang['add.choice_streams'] = 'Choisissez le ou les flux où vous souhaitez envoyer cette newsletter';
 $lang['add.send_test'] = 'Envoyer un mail de test';
 $lang['add.add_newsletter'] = 'Ajouter une newsletter';
 
