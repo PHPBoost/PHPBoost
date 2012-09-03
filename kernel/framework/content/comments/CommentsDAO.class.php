@@ -53,6 +53,13 @@ class CommentsDAO
 		$parameters = array('module_id' => $module_id, 'id_in_module' => $id_in_module);
 		self::$db_querier->delete(DB_TABLE_COMMENTS, $condition, $parameters);
 	}
+	
+	public static function delete_comments_module($module_id)
+	{
+		$condition = "WHERE module_id=:module_id";
+		$parameters = array('module_id' => $module_id);
+		self::$db_querier->delete(DB_TABLE_COMMENTS, $condition, $parameters);
+	}
 
 	public static function delete_comment($comment_id)
 	{
