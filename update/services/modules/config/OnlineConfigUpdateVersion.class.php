@@ -36,8 +36,25 @@ class OnlineConfigUpdateVersion extends ConfigUpdateVersion
 	{
 		$config = $this->get_old_config();
 		
+		switch ($config['display_order_online'])
+		{
+				case 's.level DESC':
+				$display_order = 'level_display_order';
+			break;
+			
+				case 's.session_time DESC':
+				$display_order = 'session_time_display_order';
+			break;
+			
+				case 's.level DESC, s.session_time DESC':
+				$display_order = 'level_and_session_time_display_order';
+			break;
+			default:
+				$display_order = 'level_and_session_time_display_order';
+		}
+		
 		$online_config = OnlineConfig::load();
-		$online_config->set_display_order($config['display_order_online']);
+		$online_config->set_display_order($display_order);
 		$online_config->set_number_member_displayed($config['online_displayed']);
 		OnlineConfig::save();
 
