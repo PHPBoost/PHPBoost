@@ -40,7 +40,7 @@ class PollConfigUpdateVersion extends ConfigUpdateVersion
 		$poll_config->set_authorizations($config['poll_auth']);
 		$poll_config->set_displayed_in_mini_module_list($config['poll_mini']);
 		$poll_config->set_cookie_name($config['poll_cookie']);
-		$poll_config->set_cookie_lenght($config['poll_cookie_lenght']);
+		$poll_config->set_cookie_lenght(($config['poll_cookie_lenght'] / (3600 * 24)));
 		PollConfig::save();
 
 		return true;

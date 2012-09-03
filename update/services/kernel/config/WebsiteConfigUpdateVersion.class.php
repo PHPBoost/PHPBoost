@@ -72,8 +72,8 @@ class WebsiteConfigUpdateVersion extends ConfigUpdateVersion
 		UserAccountsConfig::save();
 		
 		$mail_config = MailServiceConfig::load();
-		$mail_config->set_default_mail_sender($config['mail']);
-		$mail_config->set_administrators_mails(explode(',', $config['mail_exp']));
+		$mail_config->set_default_mail_sender($config['mail_exp']);
+		$mail_config->set_administrators_mails(explode(';', $config['mail']));
 		$mail_config->set_mail_signature($config['sign']);
 		MailServiceConfig::save();
 		
@@ -91,6 +91,8 @@ class WebsiteConfigUpdateVersion extends ConfigUpdateVersion
 		$maintenance_config = MaintenanceConfig::load();
 		$maintenance_config->disable_maintenance();
 		$maintenance_config->set_message($config['maintain_text']);
+		$maintenance_config->set_display_duration((boolean)$config['maintain_delay']);
+		$maintenance_config->set_display_duration_for_admin((boolean)$config['maintain_display_admin']);
 		MaintenanceConfig::save();
 		
 		$search_config = SearchConfig::load();
@@ -98,15 +100,14 @@ class WebsiteConfigUpdateVersion extends ConfigUpdateVersion
 		$search_config->set_cache_max_uses($config['search_max_use']);
 		SearchConfig::save();
 		
-		/*if ($config['debug_mode'])
+		if ($config['debug_mode'])
 		{
-			Debug::enabled_debug_mode(array());
+			Debug::enabled_debug_mode();
 		}
 		else
 		{
 			Debug::disable_debug_mode();
 		}
-		*/
         
 		return true;
 	}
