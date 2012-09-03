@@ -6,10 +6,6 @@
 				# INCLUDE wiki_tools #
 				<br /><br />
 				{INDEX_TEXT}
-				<br /><br /><br />
-				<div style="text-align:center;" class="row3">
-					<a href="{U_EXPLORER}"><img src="{PICTURES_DATA_PATH}/images/explorer.png" alt="{L_EXPLORER}" class="valign_middle" /></a> &nbsp; <a href="{U_EXPLORER}">{L_EXPLORER}</a>
-				</div>
 				<br />
 				# START cat_list #
 					<hr /><br />
@@ -20,7 +16,11 @@
 					# END cat_list.list #
 					{L_NO_CAT}
 				# END cat_list #
-				
+				<br /><br />
+				<div style="text-align:center;" class="row3">
+					<a href="{U_EXPLORER}"><img src="{PICTURES_DATA_PATH}/images/explorer.png" alt="{L_EXPLORER}" class="valign_middle" /></a> &nbsp; <a href="{U_EXPLORER}">{L_EXPLORER}</a>
+				</div>
+				<br />
 				# START last_articles #				
 				<hr /><br />
 				<table class="module_table">
