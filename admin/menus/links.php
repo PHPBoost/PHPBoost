@@ -124,7 +124,7 @@ if ($action == 'save')
     $menu->enabled(retrieve(POST, 'menu_element_' . $menu_uid . '_enabled', Menu::MENU_NOT_ENABLED));
     $menu->set_block(retrieve(POST, 'menu_element_' . $menu_uid . '_location', Menu::BLOCK_POSITION__NOT_ENABLED));
     $menu->set_auth(Authorizations::build_auth_array_from_form(
-        AUTH_MENUS, 'menu_element_' . $menu_uid . '_auth'
+        Menu::MENU_AUTH_BIT, 'menu_element_' . $menu_uid . '_auth'
     ));
     
     //Filters
