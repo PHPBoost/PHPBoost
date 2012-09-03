@@ -1,7 +1,6 @@
 ###################################### PHPBoost 4.0 ##################################
 
 ## AUTRES ##
-- Corriger bbcode.css (bloc masquables + wikipédia) (publishing notamment)
 - Remplacement des icônes de base par le pack famfamfam
 
 
@@ -15,7 +14,6 @@
 #################################################################################
 
 ------------------------------------- NOYAU ------------------------------------
-+ Terminer commentaires
 - Filtres d'exclusion pour les menus
 
 ------------------------------------ MODULES -----------------------------------
@@ -107,15 +105,9 @@
 - [color=red]Nouveauté:[/color] Possibilité d'ajouter des évenements sur plusieurs jours.
 - Possibilité d'afficher les évenements sur une période donnée.
 
-[b]Newsletter:[/b]
-- Refonte des catégories avec le nouveau système. 
-
 [b]Contact:[/b]
 - Possibilité de choisir à quel groupe d'utilisateurs envoyer le mail.
 - Possibilité de rajouter des champs dans le formulaire d'envoi.
-
-[b]Nouveau module:[/b]
-- [color=red]Nouveauté:[/color] Module blogs, proposez à tous vos membres un système de gestion de blog complet.
 
 [b]Nouveau module:[/b]
 - [color=red]Nouveauté:[/color] Module mini-calendrier, module mini attenant au module du calendrier.
