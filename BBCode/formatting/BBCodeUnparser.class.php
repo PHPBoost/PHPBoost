@@ -186,7 +186,7 @@ class BBCodeUnparser extends ContentFormattingUnparser
 			
 		##Callbacks
 		//Image
-		$this->content = preg_replace_callback('`<img src="([^"]+)" alt="([^"]*)?"(?: title="([^"]*)")?(?: style="([^"]+)")? />`iU', array($this, 'unparse_img'), $this->content);
+		$this->content = preg_replace_callback('`<img src="([^"]+)" alt="([^"]*)?"(?: title="([^"]*)")?(?: style="([^"]+)")?(?: class="[^"]+")? />`iU', array($this, 'unparse_img'), $this->content);
 
 		//Fieldset
 		while (preg_match('`<fieldset class="bb_fieldset" style="([^"]*)"><legend>(.*)</legend>(.+)</fieldset>`sU', $this->content))
