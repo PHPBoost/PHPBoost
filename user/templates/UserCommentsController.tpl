@@ -7,4 +7,7 @@
 	</div>
 	<div class="spacer"></div>
 # ENDIF #
+	<div style="text-align:center;">
+		{PAGINATION}
+	</div>
 </div>

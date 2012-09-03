@@ -129,7 +129,7 @@ if (!empty($idart) && isset($cat) )
 		'PAGE_NAME' => (isset($array_page[1][($page-1)]) && $array_page[1][($page-1)] != '&nbsp;') ? $array_page[1][($page-1)] : '',
 		'PAGE_PREVIOUS_ARTICLES' => ($page > 1 && $page <= $nbr_page && $nbr_page > 1) ? '<a href="' . url('articles.php?cat=' . $idartcat . '&amp;id=' . $idart . '&amp;p=' . ($page - 1), 'articles-' . $idartcat . '-' . $idart . '-' . ($page - 1) . '+' . Url::encode_rewrite($articles['title']) . '.php') . '">&laquo; ' . $LANG['previous_page'] . '</a><br />' . $array_page[1][($page-2)] : '',
 		'PAGE_NEXT_ARTICLES' => ($page > 0 && $page < $nbr_page && $nbr_page > 1) ? '<a href="' . url('articles.php?cat=' . $idartcat . '&amp;id=' . $idart . '&amp;p=' . ($page + 1), 'articles-' . $idartcat . '-' . $idart . '-' . ($page + 1) . '+' . Url::encode_rewrite($articles['title']) . '.php') . '">' . $LANG['next_page'] . ' &raquo;</a><br />' . $array_page[1][$page] : '',
-		'COM' => '<a href="'. PATH_TO_ROOT .'/articles/articles' . url('.php?cat=' . $idartcat . '&amp;id=' . $idart . '&amp;com=0', '-' . $idartcat . '-' . $idart . '+' . Url::encode_rewrite($articles['title']) . '.php?com=0') .'">'. CommentsService::get_number_and_lang_comments('articles', $idart) . '</a>',
+		'COM' => '<a href="'. PATH_TO_ROOT .'/articles/articles' . url('.php?cat=' . $idartcat . '&amp;id=' . $idart . '&amp;com=0', '-' . $idartcat . '-' . $idart . '+' . Url::encode_rewrite($articles['title']) . '.php?com=0') .'#comments_list">'. CommentsService::get_number_and_lang_comments('articles', $idart) . '</a>',
 		'KERNEL_NOTATION' => NotationService::display_active_image($notation),
 		'L_DELETE' => $LANG['delete'],
 		'L_EDIT' => $LANG['edit'],

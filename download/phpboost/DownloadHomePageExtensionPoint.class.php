@@ -218,7 +218,7 @@ class DownloadHomePageExtensionPoint implements HomePageExtensionPoint
 					'U_DOWNLOAD_LINK' => url(PATH_TO_ROOT . '/download/download.php?id=' . $row['id'], 'download-' . $row['id'] . '+' . Url::encode_rewrite($row['title']) . '.php'),
 					'U_ADMIN_EDIT_FILE' => url(PATH_TO_ROOT . '/download/management.php?edit=' . $row['id']),
 					'U_ADMIN_DELETE_FILE' => url(PATH_TO_ROOT . '/download/management.php?del=' . $row['id'] . '&amp;token=' . $Session->get_token()),
-					'U_COM_LINK' => '<a href="'. PATH_TO_ROOT .'/download/download' . url('.php?id=' . $row['id'] . '&amp;com=0', '-' . $row['id'] . '+' . Url::encode_rewrite($row['title']) . '.php?com=0') .'">'. CommentsService::get_number_and_lang_comments('download', $row['id']) . '</a>'
+					'U_COM_LINK' => '<a href="'. PATH_TO_ROOT .'/download/download' . url('.php?id=' . $row['id'] . '&amp;com=0', '-' . $row['id'] . '+' . Url::encode_rewrite($row['title']) . '.php?com=0') .'#comments_list">'. CommentsService::get_number_and_lang_comments('download', $row['id']) . '</a>'
 				));
 			}
 			$this->sql_querier->query_close($result);

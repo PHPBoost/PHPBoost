@@ -134,13 +134,13 @@ class UserUrlBuilder
 		return DispatchManager::get_url(self::$dispatcher, '/messages/'. $user_id);
 	}
 	
-	public static function comments($module = '', $user_id = null)
+	public static function comments($module = '', $user_id = null, $page = '')
 	{
 		if (!empty($user_id))
 		{
-			return DispatchManager::get_url(self::$dispatcher, '/messages/'. $user_id . '/comments/' . $module);
+			return DispatchManager::get_url(self::$dispatcher, '/messages/'. $user_id . '/comments/' . (!empty($module) ? $module . '/' : '') . $page);
 		}
-		return DispatchManager::get_url(self::$dispatcher, '/messages/comments/' . $module);
+		return DispatchManager::get_url(self::$dispatcher, '/messages/comments/' . (!empty($module) ? $module . '/' : '')  . $page);
 	}
 	
 	public static function group($id)
