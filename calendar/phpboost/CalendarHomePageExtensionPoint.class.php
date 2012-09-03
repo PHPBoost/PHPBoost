@@ -229,7 +229,7 @@ class CalendarHomePageExtensionPoint implements HomePageExtensionPoint
 					'TITLE' => $row['title'],
 					'CONTENTS' => FormatingHelper::second_parse($row['contents']),
 					'LOGIN' => '<a class="com" href="'. UserUrlBuilder::profile($row['user_id'])->absolute() . '">' . $row['login'] . '</a>',
-					'COM' => '<a href="'. PATH_TO_ROOT .'/calendar/calendar' . url('.php?d=' . $day . '&amp;m=' . $month . '&amp;y=' . $year . '&amp;e=' . $row['id'] . '&amp;com=0', 
+					'COM' => '<a href="'. PATH_TO_ROOT .'/calendar/calendar' . url('.php?d=' . $day . '&amp;m=' . $month . '&amp;y=' . $year . '&amp;e=' . $row['id'] . '&amp;com=0#comments_list', 
 						'-' . $day . '-' . $month . '-' . $year . '-' . $row['id'] . '.php?com=0') .'">'. CommentsService::get_number_and_lang_comments('calendar', $row['id']) . '</a>',
 					'EDIT' => $edit,
 					'DEL' => $del,

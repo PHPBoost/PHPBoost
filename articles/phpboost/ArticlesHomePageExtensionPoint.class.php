@@ -286,7 +286,7 @@ class ArticlesHomePageExtensionPoint implements HomePageExtensionPoint
 					'DESCRIPTION' => FormatingHelper::second_parse($row['description']),
 					'U_ARTICLES_PSEUDO' => '<a href="' . UserUrlBuilder::profile($row['user_id'])->absolute() . '" class="' . $array_class[$row['level']] . '"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . TextHelper::wordwrap_html($row['login'], 19) . '</a>',
 					'U_ARTICLES_LINK' => url('.php?id=' . $row['id'] . '&amp;cat=' . $idartcat, '-' . $idartcat . '-' . $row['id'] . '+' . Url::encode_rewrite($fichier) . '.php'),
-					'U_ARTICLES_LINK_COM' => url('.php?cat=' . $idartcat . '&amp;id=' . $row['id'] . '&amp;com=%s', '-' . $idartcat . '-' . $row['id'] . '.php?com=0'),
+					'U_ARTICLES_LINK_COM' => url('.php?cat=' . $idartcat . '&amp;id=' . $row['id'] . '&amp;com=0', '-' . $idartcat . '-' . $row['id'] . '.php?com=0') . '#comments_list',
 					'U_ADMIN_EDIT_ARTICLES' => url('management.php?edit=' . $row['id']),
 					'U_ADMIN_DELETE_ARTICLES' => url('management.php?del=' . $row['id'] . '&amp;token=' . $Session->get_token()),
 				));

@@ -63,7 +63,7 @@ if ($file_id > 0) //Contenu
 		'U_IMG' => $download_info['image'],
 		'IMAGE_ALT' => str_replace('"', '\"', $download_info['title']),
 		'LANG' => get_ulang(),
-		'U_COM' => '<a href="'. PATH_TO_ROOT .'/download/download' . url('.php?id=' . $file_id . '&amp;com=0', '-' . $file_id . '+' . Url::encode_rewrite($download_info['title']) . '.php?com=0') .'">'. CommentsService::get_number_and_lang_comments('download', $file_id) . '</a>',
+		'U_COM' => '<a href="'. PATH_TO_ROOT .'/download/download' . url('.php?id=' . $file_id . '&amp;com=0', '-' . $file_id . '+' . Url::encode_rewrite($download_info['title']) . '.php?com=0') .'#comments_list">'. CommentsService::get_number_and_lang_comments('download', $file_id) . '</a>',
 		'L_DATE' => $LANG['date'],
 		'L_SIZE' => $LANG['size'],
 		'L_DOWNLOAD' => $DOWNLOAD_LANG['download'],

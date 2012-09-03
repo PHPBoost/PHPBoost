@@ -36,6 +36,7 @@ class UserCommentsController extends AbstractController
 	{
 		$module_id = $request->get_getstring('module_id', '');
 		$user_id = $request->get_getint('user_id', 0);
+		
 		if (!empty($user_id))
 		{
 			try {
@@ -51,23 +52,32 @@ class UserCommentsController extends AbstractController
 			$this->module = ModulesManager::get_module($module_id);
 		}
 		
-		$this->init();
+		$this->init($request);
 
 		return $this->build_response();
 	}
 	
-	private function init()
+	private function init($request)
 	{
 		$this->tpl = new FileTemplate('user/UserCommentsController.tpl');
 		$this->lang = LangLoader::get('comments-common');
 		$this->tpl->add_lang($this->lang);
 		$this->tpl->put('MODULE_CHOICE_FORM', $this->build_modules_choice_form()->display());
-		$this->tpl->put('COMMENTS', $this->build_view());
+		$this->tpl->put('COMMENTS', $this->build_view($request));
 	}
 	
-	private function build_view()
+	private function build_view($request)
 	{
 		$template = new FileTemplate('framework/content/comments/comments_list.tpl');
+		$page = $request->get_getint('page', 1);
+		
+		$id_module = $this->module === null ? null : $this->module->get_id();
+		$user_id = $this->user === null ? null : $this->user->get_id();
+		$pagination = new UserCommentsListPagination($page, $id_module, $user_id);
+		
+		$this->tpl->put_all(array(
+			'PAGINATION' => '&nbsp;<strong>' . LangLoader::get_message('page', 'main') . ' :</strong> ' . $pagination->display()->render()
+		));
 		
 		$result = PersistenceContext::get_querier()->select('
 			SELECT comments.*, comments.timestamp AS comment_timestamp, comments.id AS id_comment,
@@ -79,8 +89,12 @@ class UserCommentsController extends AbstractController
 			LEFT JOIN ' . DB_TABLE_MEMBER . ' member ON member.user_id = comments.user_id
 			LEFT JOIN ' . DB_TABLE_MEMBER_EXTENDED_FIELDS . ' ext_field ON ext_field.user_id = comments.user_id
 			'. $this->build_where_request() .'
-			ORDER BY comments.timestamp ' . CommentsConfig::load()->get_order_display_comments()
-		);
+			ORDER BY comments.timestamp ' . CommentsConfig::load()->get_order_display_comments() .'
+			LIMIT :number_comments_per_page OFFSET :display_from'
+		, array(
+			'number_comments_per_page' => $pagination->get_number_comments_per_page(),
+			'display_from' => $pagination->get_display_from()
+		));
 		
 		$user_accounts_config = UserAccountsConfig::load();
 		$comments_authorizations = new CommentsAuthorizations();
@@ -142,10 +156,13 @@ class UserCommentsController extends AbstractController
 	private function build_where_request()
 	{
 		$where = 'WHERE ';
-		if ($this->module !== null)
+		if ($this->module !== null && $this->user !== null)
+		{
+			$where .= 'topic.module_id = \'' . $this->module->get_id() . '\' AND comments.user_id = \'' . $this->user->get_id() . '\'';
+		}
+		elseif ($this->module !== null)
 		{
 			$where .= 'topic.module_id = \'' . $this->module->get_id() . '\'';
-			$where .= ' AND';
 		}
 		elseif ($this->user !== null)
 		{
@@ -155,7 +172,7 @@ class UserCommentsController extends AbstractController
 		{
 			$where .= '1';
 		}
-		return rtrim($where, ' AND');
+		return $where;
 	}
 	
 	private function build_modules_choice_form()

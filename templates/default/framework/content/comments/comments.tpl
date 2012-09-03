@@ -26,27 +26,27 @@ Event.observe(window, 'load', function() {
 </script>
 
 <div id="comments_list">
-# IF C_DISPLAY_FORM #
-	<div id="comment_form">
-		# INCLUDE COMMENT_FORM #
-	</div>
-# ENDIF #
-
-# INCLUDE KEEP_MESSAGE #
-
-# IF C_MODERATE #
-	<div class="comment-moderate">
-		# IF C_IS_LOCKED #
-		<a href="{U_UNLOCK}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/unlock.png"> {@unlock}</a>
-		# ELSE #
-		<a href="{U_LOCK}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/lock.png"> {@lock}</a>
-		# ENDIF #
-	</div>
-# ENDIF #
-
-<div class="spacer">&nbsp;</div>
-
-# INCLUDE COMMENTS_LIST #
+	# IF C_DISPLAY_FORM #
+		<div id="comment_form">
+			# INCLUDE COMMENT_FORM #
+		</div>
+	# ENDIF #
+	
+	# INCLUDE KEEP_MESSAGE #
+	
+	# IF C_MODERATE #
+		<div class="comment-moderate">
+			# IF C_IS_LOCKED #
+			<a href="{U_UNLOCK}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/unlock.png"> {@unlock}</a>
+			# ELSE #
+			<a href="{U_LOCK}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/lock.png"> {@lock}</a>
+			# ENDIF #
+		</div>
+	# ENDIF #
+	
+	<div class="spacer">&nbsp;</div>
+	
+	# INCLUDE COMMENTS_LIST #
 </div>
 
 # IF C_DISPLAY_VIEW_ALL_COMMENTS #
