@@ -89,7 +89,7 @@ class UserCommentsController extends AbstractController
 			LEFT JOIN ' . DB_TABLE_MEMBER . ' member ON member.user_id = comments.user_id
 			LEFT JOIN ' . DB_TABLE_MEMBER_EXTENDED_FIELDS . ' ext_field ON ext_field.user_id = comments.user_id
 			'. $this->build_where_request() .'
-			ORDER BY comments.timestamp ' . CommentsConfig::load()->get_order_display_comments() .'
+			ORDER BY comments.timestamp DESC
 			LIMIT :number_comments_per_page OFFSET :display_from'
 		, array(
 			'number_comments_per_page' => $pagination->get_number_comments_per_page(),
@@ -117,7 +117,9 @@ class UserCommentsController extends AbstractController
 			$template->assign_block_vars('comments', array(
 				'C_MODERATOR' => $comments_authorizations->is_authorized_moderation(),
 				'C_VISITOR' => empty($row['login']),
+				'C_VIEW_TOPIC' => true,
 			
+				'U_TOPIC' => $path,
 				'U_EDIT' => CommentsUrlBuilder::edit($path, $id)->absolute(),
 				'U_DELETE' => CommentsUrlBuilder::delete($path, $id)->absolute(),
 				'U_PROFILE' => UserUrlBuilder::profile($row['user_id'])->absolute(),
@@ -132,12 +134,13 @@ class UserCommentsController extends AbstractController
 				'PSEUDO' => empty($row['login']) ? $row['pseudo'] : $row['login'],
 				'LEVEL_CLASS' => UserService::get_level_class($row['level']),
 				
-				'L_LEVEL' => UserService::get_level_lang(!empty($row['level']) ? $row['level'] : '-1'),
+				'L_LEVEL' => UserService::get_level_lang(!empty($row['level']) ? $row['level'] : '-1')
 			));
 			
 			$template->put_all(array(
 				'MODULE_ID' => $row['module_id'],
-				'ID_IN_MODULE' => $row['id_in_module']
+				'ID_IN_MODULE' => $row['id_in_module'],
+				'L_VIEW_TOPIC' => $this->lang['view-topic']
 			));
 			$number_comment++;
 		}

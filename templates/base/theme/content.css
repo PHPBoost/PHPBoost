@@ -676,6 +676,10 @@ div#comment-rating .negative {
 	margin-left:180px;
 }
 
+.view-topic {
+	margin-top: 10px;
+}
+
 .comment-message {
 	position: relative;
 	padding: 15px;

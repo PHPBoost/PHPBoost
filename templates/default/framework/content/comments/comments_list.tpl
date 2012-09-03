@@ -30,6 +30,14 @@
 			</div>
 			<div class="comment-message" >
 				<div class="message-containt">{comments.MESSAGE}</div>
+				# IF comments.C_VIEW_TOPIC #
+					<div class="view-topic">
+						<a href="{comments.U_TOPIC}&refresh_all=1\#com{comments.ID_COMMENT}">
+						{L_VIEW_TOPIC}
+						<img src="{PATH_TO_ROOT}/templates/{THEME}/images/right.png" class="valign_middle">
+					</a>
+					</div>
+				# ENDIF #
 				<!-- 
 				<div id="comment-rating">
 					<div class="positive_vote_button">+</div>

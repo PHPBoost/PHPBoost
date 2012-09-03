@@ -48,4 +48,5 @@ $lang['comments.user.read-only'] = 'Vous êtes actuellement en lecture seule, vou
 
 $lang['module.choice'] = 'Choisissez un module';
 $lang['no_comment'] = 'Aucun commentaire';
+$lang['view-topic'] = 'Voir le topic';
 ?>
