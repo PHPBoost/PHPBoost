@@ -235,7 +235,7 @@ class NewsHomePageExtensionPoint implements HomePageExtensionPoint
 							'U_NEWS' => PATH_TO_ROOT .'/news/news' . url('.php?id=' . $row['id'], '-' . $row['idcat'] . '-' . $row['id'] . '+' . Url::encode_rewrite($row['title']) . '.php'),
 							'TITLE' => $row['title'],
 							'C_COM' => $NEWS_CONFIG['activ_com'] ? true : false,
-							'COM' => $row['number_comments']
+							'COM' => !empty($row['number_comments']) ? $row['number_comments'] : 0
 						));
 					}
 				}
