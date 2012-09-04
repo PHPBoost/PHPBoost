@@ -86,6 +86,8 @@ class NewsletterArchivesController extends ModuleController
 		$pagination->set_url_sprintf_pattern(NewsletterUrlBuilder::archives($this->id_stream .'/'. $field .'/'. $sort .'/%d')->absolute());
 		$this->view->put_all(array(
 			'C_ARCHIVES' => (float)$nbr_archives,
+			'C_SPECIFIC_STREAM' => !empty($this->id_stream),
+			'NUMBER_COLUMN' => empty($this->id_stream) && !empty($nbr_archives) ? 4 : 3,
 			'SORT_STREAM_TOP' => NewsletterUrlBuilder::archives($this->id_stream .'/stream/top/'. $current_page)->absolute(),
 			'SORT_STREAM_BOTTOM' => NewsletterUrlBuilder::archives($this->id_stream .'/stream/bottom/'. $current_page)->absolute(),
 			'SORT_SUBJECT_TOP' => NewsletterUrlBuilder::archives($this->id_stream .'/subject/top/'. $current_page)->absolute(),
