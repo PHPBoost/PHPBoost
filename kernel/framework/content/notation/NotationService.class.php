@@ -141,7 +141,7 @@ class NotationService
 				));
 			}
 
-			$count_notes = self::get_count_notes_by_id_in_module($notation);
+			$count_notes = NotationDAO::get_count_notes_by_id_in_module($notation);
 			$template->put_all(array(
 				'C_VOTES' => $count_notes > 0 ? true : false,
 				'C_MORE_1_VOTES' => $count_notes > 1 ? true : false,
@@ -151,7 +151,7 @@ class NotationService
 				'NUMBER_PIXEL' => $notation->get_notation_scale() * 16,
 				'NUMBER_VOTES' => $count_notes,
 				'AVERAGE_NOTES' => $average_notes,
-				'ALREADY_VOTE' => self::get_member_already_notation($notation),
+				'ALREADY_VOTE' => NotationDAO::get_member_already_notation($notation),
 				'L_NO_NOTE' => self::$lang['no_note'],
 				'L_AUTH_ERROR' => LangLoader::get_message('e_auth', 'errors'),
 				'L_ALREADY_VOTE' => self::$lang['already_vote'],
@@ -182,8 +182,8 @@ class NotationService
 	public static function delete_notes_id_in_module($module_name, $id_in_module)
 	{
 		try {
-			self::delete_average_notes_by_id_in_module($module_name, $id_in_module);
-			self::delete_notes_by_id_in_module($module_name, $id_in_module);
+			NotationDAO::delete_average_notes_by_id_in_module($module_name, $id_in_module);
+			NotationDAO::delete_notes_by_id_in_module($module_name, $id_in_module);
 		} catch (Exception $e) {
 		}
 	}
@@ -196,8 +196,8 @@ class NotationService
 	public static function delete_notes_module($module_name)
 	{
 		try {
-			self::delete_all_notes_by_module($module_name);
-			self::delete_all_average_notes_by_module($module_name);
+			NotationDAO::delete_all_notes_by_module($module_name);
+			NotationDAO::delete_all_average_notes_by_module($module_name);
 		} catch (Exception $e) {
 		}
 	}
@@ -232,19 +232,19 @@ class NotationService
 		if (self::$user->check_level(User::MEMBER_LEVEL))
 		{
 			$note_is_valid = $notation->get_note() >= 0 && $notation->get_note() <= $notation->get_notation_scale() ? true : false;
-			$member_already_notation = self::get_member_already_notation($notation);
+			$member_already_notation = NotationDAO::get_member_already_notation($notation);
 			
 			if (!$member_already_notation && $note_is_valid)
 			{
-				self::insert_note($notation);
+				NotationDAO::insert_note($notation);
 				$nbr_notes = self::get_count_average_notes_by_id_in_module($notation);
 				if ($nbr_notes == 0)
 				{
-					self::insert_average_notes($notation);
+					NotationDAO::insert_average_notes($notation);
 				}
 				else
 				{
-					self::update_average_notes($notation);
+					NotationDAO::update_average_notes($notation);
 				}
 			}
 			else
@@ -256,120 +256,6 @@ class NotationService
 		{
 			DispatchManager::redirect(PHPBoostErrors::user_not_authorized());
 		}
-	}
-	
-	private static function insert_note(Notation $notation)
-	{
-		self::$db_querier->insert(DB_TABLE_NOTE, array(
-			'module_name' => $notation->get_module_name(),
-			'id_in_module' => $notation->get_id_in_module(),
-			'user_id' => $notation->get_user_id(),
-			'note' => $notation->get_note()
-		));
-	}
-	
-	private static function insert_average_notes(Notation $notation)
-	{
-		self::$db_querier->insert(DB_TABLE_AVERAGE_NOTES, array(
-			'module_name' => $notation->get_module_name(),
-			'id_in_module' => $notation->get_id_in_module(),
-			'average_notes' => self::calculates_average_notes($notation),
-			'number_notes' => 1
-		));
-	}
-	
-	private static function update_average_notes(Notation $notation)
-	{
-		$former_nbr_notes = self::get_former_number_notes($notation);
-		self::$db_querier->update(DB_TABLE_AVERAGE_NOTES, array(
-			'average_notes' => self::calculates_average_notes($notation),
-			'number_notes' => $former_nbr_notes + 1
-		), 'WHERE module_name=:module_name AND id_in_module=:id_in_module', array(
-			'module_name' => $notation->get_module_name(),
-			'id_in_module' => $notation->get_id_in_module()
-		));
-	}
-
-	private static function calculates_average_notes(Notation $notation)
-	{
-		try {
-			$result = self::$db_querier->select_rows(DB_TABLE_NOTE, array('note'), 'WHERE module_name=:module_name AND id_in_module=:id_in_module', 
-			array('module_name' => $notation->get_module_name(), 'id_in_module' => $notation->get_id_in_module()));
-			
-			$notes = 0;
-			$nbr_notes = 0;
-			while ($row = $result->fetch())
-			{
-				$notes += $row['note'];
-				$nbr_notes++;
-			}
-
-			return (round(($notes / $nbr_notes) / 0.25) * 0.25);
-		} catch (Exception $e) {
-			return 0;
-		}
-	}
-
-	private static function get_count_notes_by_id_in_module(Notation $notation)
-	{
-		return self::$db_querier->count(DB_TABLE_NOTE, 'WHERE module_name=:module_name AND id_in_module=:id_in_module', array(
-			'module_name' => $notation->get_module_name(), 
-			'id_in_module' => $notation->get_id_in_module()
-		));
-	}
-	
-	private static function get_count_average_notes_by_id_in_module(Notation $notation)
-	{
-		return self::$db_querier->count(DB_TABLE_AVERAGE_NOTES, 'WHERE module_name=:module_name AND id_in_module=:id_in_module', array(
-			'module_name' => $notation->get_module_name(), 
-			'id_in_module' => $notation->get_id_in_module()
-		));
-	}
-	
-	private static function get_count_average_notes_by_module(Notation $notation)
-	{
-		return self::$db_querier->count(DB_TABLE_AVERAGE_NOTES, 'WHERE module_name=:module_name', array(
-			'module_name' => $notation->get_module_name()
-		));
-	}
-	
-	private static function get_member_already_notation(Notation $notation)
-	{
-		return self::$db_querier->count(DB_TABLE_NOTE, 'WHERE user_id=:user_id AND module_name=:module_name AND id_in_module=:id_in_module', array(
-			'module_name' => $notation->get_module_name(), 
-			'id_in_module' => $notation->get_id_in_module(),
-			'user_id' => $notation->get_user_id()
-		));
-	}
-	
-	private static function delete_average_notes_by_id_in_module($module_name, $id_in_module)
-	{
-		self::$db_querier->delete(DB_TABLE_AVERAGE_NOTES, 'WHERE module_name=:module_name AND id_in_module=:id_in_module', array(
-			'module_name' => $module_name, 
-			'id_in_module' => $id_in_module
-		));
-	}
-	
-	private static function delete_notes_by_id_in_module($module_name, $id_in_module)
-	{
-		self::$db_querier->delete(DB_TABLE_NOTE, 'WHERE module_name=:module_name AND id_in_module=:id_in_module', array(
-			'module_name' => $module_name, 
-			'id_in_module' => $id_in_module
-		));
-	}
-	
-	private static function delete_all_average_notes_by_module($module_name)
-	{
-		return self::$db_querier->delete(DB_TABLE_AVERAGE_NOTES, 'WHERE module_name=:module_name', array(
-			'module_name' => $module_name
-		));
-	}
-	
-	private static function delete_all_notes_by_module($module_name)
-	{
-		return self::$db_querier->delete(DB_TABLE_NOTE, 'WHERE module_name=:module_name', array(
-			'module_name' => $module_name
-		));
 	}
 }
 ?>
