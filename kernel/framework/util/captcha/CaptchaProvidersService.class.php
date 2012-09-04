@@ -35,7 +35,7 @@ class CaptchaProvidersService
 	public static function get_captcha($identifier)
 	{
 		$captchas = self::get_captchas();
-		if (array_key_exists($id, $captchas))
+		if (array_key_exists($identifier, $captchas))
 		{
 			return $captchas[$identifier];
 		}
@@ -53,7 +53,7 @@ class CaptchaProvidersService
 	
 	public static function get_extensions_point()
 	{
-		return AppContext::get_extension_provider_service()->get_extension_point(CaptchaExtensionPoint::EXTENSION_POINT);
+		return AppContext::get_extension_provider_service()->get_extension_point(Captcha::EXTENSION_POINT);
 	}
 }
 ?>
