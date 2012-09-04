@@ -48,7 +48,7 @@ class AdminMembersUrlBuilder
 	/*
 	 * @ return Url
 	 */
-	public static function delete_module($id)
+	public static function delete($id)
 	{
 		return DispatchManager::get_url(self::$dispatcher, $id. '/delete/');
 	}
