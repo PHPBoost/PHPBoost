@@ -92,7 +92,7 @@ class UserRegistrationController extends AbstractController
 		
 		if ($this->user_accounts_config->is_registration_captcha_enabled())
 		{
-			$captcha = new Captcha();
+			$captcha = new PHPBoostCaptcha();
 			$captcha->set_difficulty($this->user_accounts_config->get_registration_captcha_difficulty());
 			$fieldset->add_field(new FormFieldCaptcha('captcha', $captcha));
 		}

@@ -128,7 +128,7 @@ class AddCommentBuildForm extends AbstractCommentsBuildForm
 	
 	private function get_captcha()
 	{
-		$captcha = new Captcha();
+		$captcha = new PHPBoostCaptcha();
 		$captcha->set_difficulty($this->comments_configuration->get_captcha_difficulty());
 		return $captcha;
 	}

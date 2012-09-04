@@ -39,7 +39,7 @@ class FormFieldCaptcha extends AbstractFormField
     /**
      * @param Captcha $captcha The captcha to use. If not given, a default captcha will be used.
      */
-    public function __construct($name = 'captcha', Captcha $captcha = null)
+    public function __construct($name = 'captcha', PHPBoostCaptcha $captcha = null)
     {
         global $LANG;
         parent::__construct($name, $LANG['verif_code'], false, array('required' => true));
@@ -49,7 +49,7 @@ class FormFieldCaptcha extends AbstractFormField
         }
         else
         {
-            $this->captcha = new Captcha();
+            $this->captcha = new PHPBoostCaptcha();
         }
     }
 

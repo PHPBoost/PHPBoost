@@ -100,7 +100,7 @@ class GuestbookHomePageExtensionPoint implements HomePageExtensionPoint
 			
 			if ($is_guest && !$is_edition_mode && $guestbook_config->get_display_captcha()) //Code de v�rification, anti-bots.
 			{
-				$captcha = new Captcha();
+				$captcha = new PHPBoostCaptcha();
 				$captcha->set_difficulty($guestbook_config->get_captcha_difficulty());
 				$fieldset->add_field(new FormFieldCaptcha('captcha', $captcha));
 			}
