@@ -89,7 +89,7 @@ class ContactModuleHomePage implements ModuleHomePage
 		$config = ContactConfig::load();
 		if ($config->is_captcha_enabled())
 		{
-			$captcha = new Captcha();
+			$captcha = new PHPBoostCaptcha();
 			$captcha->set_difficulty($config->get_captcha_difficulty_level());
 			$fieldset->add_field(new FormFieldCaptcha('captcha', $captcha));
 		}

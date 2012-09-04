@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                               Captcha.class.php
+ *                               PHPBoostCaptcha.class.php
  *                            -------------------
  *   begin                : Februar, 06 2007
  *   copyright            : (C) 2007 Viarre Régis
@@ -31,7 +31,7 @@
  * @desc This class provide you an easy way to prevent spam by bot in public formular.
  * @package {@package}
  */
-class Captcha
+class PHPBoostCaptcha
 {
 	const CAPTCHA_VERY_EASY = 0;
 	const CAPTCHA_EASY = 1;
@@ -185,7 +185,7 @@ class Captcha
 
 		//Choix aléatoire de couleur, et suppression du tableau pour éviter une réutilisation pour le texte.
 		$bg_bis_index_color = array_rand($array_color);
-		list($r, $g, $b) = Captcha::image_color_allocate_dark($array_color[$bg_bis_index_color], 150, 0.70); //Assombrissement de la couleur de fond.
+		list($r, $g, $b) = self::image_color_allocate_dark($array_color[$bg_bis_index_color], 150, 0.70); //Assombrissement de la couleur de fond.
 		$bg_img = @imagecolorallocate($img, $r, $g, $b);
 		if ($this->difficulty < 3)
 		{
@@ -251,7 +251,7 @@ class Captcha
 			$index_color = array_rand($array_color);
 			list($r, $g, $b) = $array_color[$index_color];
 			$text_color = @imagecolorallocate($img, $r, $g, $b);
-			list($r, $g, $b) = Captcha::image_color_allocate_dark($array_color[$index_color]);
+			list($r, $g, $b) = self::image_color_allocate_dark($array_color[$index_color]);
 			$text_color_dark = @imagecolorallocate($img, $r, $g, $b);
 			$font_size = rand($global_font_size - 4, $global_font_size);
 			$angle = rand(-15, 15);
@@ -265,7 +265,7 @@ class Captcha
 			//Ajout de l'ombre.
 			if ($this->difficulty == 4)
 			{
-				list($r, $g, $b) = Captcha::image_color_allocate_dark($array_color[$index_color], 90, 0.50);
+				list($r, $g, $b) = self::image_color_allocate_dark($array_color[$index_color], 90, 0.50);
 				$text_color_dark = @imagecolorallocate($img, $r, $g, $b);
 			}
 			imagettftext($img, $font_size, $angle, ($text_x + 1), ($move_y + 1), $text_color_dark, $this->font, $letter);
