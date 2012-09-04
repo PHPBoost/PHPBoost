@@ -36,7 +36,7 @@ $idart = retrieve(GET, 'id', 0);
 
 if (!empty($idart) && isset($cat) )
 {		
-	$result = $Sql->query_while("SELECT a.contents, a.title, a.id, a.idcat, a.timestamp, a.sources, a.start, a.visible, a.user_id, a.icon, m.login, m.level
+	$result = $Sql->query_while("SELECT a.contents, a.title, a.id, a.idcat, a.timestamp, a.sources, a.start, a.visible, a.user_id, a.icon, m.login, m.level, m.user_groups
 		FROM " . DB_TABLE_ARTICLES . " a 
 		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = a.user_id
 		WHERE a.id = '" . $idart . "'", __LINE__, __FILE__);
@@ -113,14 +113,19 @@ if (!empty($idart) && isset($cat) )
 	$notation->set_id_in_module($articles['id']);
 	$notation->set_notation_scale($CONFIG_ARTICLES['note_max']);
 	
+	$group_color = User::get_group_color($articles['user_groups'], $articles['level']);
+	
 	$tpl->put_all(array(
 		'C_IS_MODERATE' => ($User->check_auth($ARTICLES_CAT[$idartcat]['auth'], AUTH_ARTICLES_MODERATE)),
 		'C_DISPLAY_ARTICLE' => true,
 		'C_SOURCES' => $i > 0,
+		'C_GROUP_COLOR' => !empty($group_color),
 		'IDART' => $articles['id'],
 		'IDCAT' => $idartcat,
 		'NAME' => $articles['title'],
-		'PSEUDO' => $Sql->query("SELECT login FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $articles['user_id'] . "'", __LINE__, __FILE__),		
+		'GROUP_COLOR' => $group_color,
+		'PSEUDO' => $articles['login'],	
+		'LEVEL_CLASS' => UserService::get_level_class($articles['level']),
 		'CONTENTS' => isset($array_contents[$page]) ? FormatingHelper::second_parse($array_contents[$page]) : '',
 		'CAT' => $ARTICLES_CAT[$idartcat]['name'],
 		'DATE' => gmdate_format('date_format_short', $articles['timestamp']),

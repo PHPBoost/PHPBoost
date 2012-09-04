@@ -77,7 +77,7 @@
 				{KERNEL_NOTATION}
 			</div>
 			<div style="float:right" class="text_small">
-				{L_WRITTEN}: <a class="small_link" href="{U_PROFILE}">{PSEUDO}</a>
+				{L_WRITTEN}: <a href="{U_PROFILE}" class="{LEVEL_CLASS}" # IF C_GROUP_COLOR # style="color:{GROUP_COLOR}" # ENDIF #>{PSEUDO}</a>
 				{L_ON}: {DATE}
 			</div>
 			<div class="spacer"></div>
