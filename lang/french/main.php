@@ -328,7 +328,7 @@ $LANG['no_member_online'] = 'Aucun membre connecté';
 $LANG['del_member'] = 'Suppression du compte <span class="text_small">(Définitif!)</span>';
 $LANG['choose_lang'] = 'Langue par défaut';
 $LANG['choose_theme'] = 'Thème par défaut';
-$LANG['choose_editor'] = 'Editeur texte par défaut';
+$LANG['choose_editor'] = 'Editeur de texte par défaut';
 $LANG['theme_s'] = 'Thèmes';
 $LANG['select_group'] = 'Sélectionnez un groupe';
 $LANG['search_member'] = 'Chercher un membre';
