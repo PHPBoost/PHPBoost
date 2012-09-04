@@ -65,7 +65,6 @@ class CommentsService
 			
 			try {
 				$lock = AppContext::get_request()->get_getbool('lock');
-				
 				if ($authorizations->is_authorized_moderation())
 				{
 					if ($lock)
@@ -193,16 +192,16 @@ class CommentsService
 			
 			$condition = !$display_from_number_comments ? ' LIMIT '. $number_comments_display : ' LIMIT ' . $number_comments_display . ',18446744073709551615';
 			$result = PersistenceContext::get_querier()->select("
-					SELECT comments.*, comments.timestamp AS comment_timestamp, comments.id AS id_comment,
-					topic.is_locked, topic.path,
-					member.user_id, member.login, member.level, member.user_groups, 
-					ext_field.user_avatar
-					FROM " . DB_TABLE_COMMENTS . " comments
-					LEFT JOIN " . DB_TABLE_COMMENTS_TOPIC . " topic ON comments.id_topic = topic.id_topic
-					LEFT JOIN " . DB_TABLE_MEMBER . " member ON member.user_id = comments.user_id
-					LEFT JOIN " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " ext_field ON ext_field.user_id = comments.user_id
-					WHERE topic.module_id = '". $module_id ."' AND topic.id_in_module = '". $id_in_module ."' AND topic.topic_identifier = '". $topic_identifier ."'
-					ORDER BY comments.timestamp " . CommentsConfig::load()->get_order_display_comments() . " " . $condition
+				SELECT comments.*, comments.timestamp AS comment_timestamp, comments.id AS id_comment,
+				topic.is_locked, topic.path,
+				member.user_id, member.login, member.level, member.user_groups, 
+				ext_field.user_avatar
+				FROM " . DB_TABLE_COMMENTS . " comments
+				LEFT JOIN " . DB_TABLE_COMMENTS_TOPIC . " topic ON comments.id_topic = topic.id_topic
+				LEFT JOIN " . DB_TABLE_MEMBER . " member ON member.user_id = comments.user_id
+				LEFT JOIN " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " ext_field ON ext_field.user_id = comments.user_id
+				WHERE topic.module_id = '". $module_id ."' AND topic.id_in_module = '". $id_in_module ."' AND topic.topic_identifier = '". $topic_identifier ."'
+				ORDER BY comments.timestamp " . CommentsConfig::load()->get_order_display_comments() . " " . $condition
 			);
 			
 			while ($row = $result->fetch())
@@ -216,27 +215,21 @@ class CommentsService
 					$user_avatar = Url::to_rel($row['user_avatar']);
 				
 				$timestamp = new Date(DATE_TIMESTAMP, TIMEZONE_SITE, $row['comment_timestamp']);
-				
 				$group_color = User::get_group_color($row['user_groups'], $row['level']);
 				
 				$template->assign_block_vars('comments', array(
 					'C_MODERATOR' => self::is_authorized_edit_or_delete_comment($authorizations, $id),
 					'C_VISITOR' => empty($row['login']),
-				
 					'U_EDIT' => CommentsUrlBuilder::edit($path, $id)->absolute(),
 					'U_DELETE' => CommentsUrlBuilder::delete($path, $id)->absolute(),
 					'U_PROFILE' => UserUrlBuilder::profile($row['user_id'])->absolute(),
 					'U_AVATAR' => $user_avatar,
-					
 					'ID_COMMENT' => $id,
 					'DATE' => $timestamp->format(DATE_FORMAT, TIMEZONE_AUTO),
 					'MESSAGE' => FormatingHelper::second_parse($row['message']),
-						
-					// User
 					'USER_ID' => $row['user_id'],
 					'PSEUDO' => empty($row['login']) ? $row['pseudo'] : $row['login'],
 					'LEVEL_CLASS' => UserService::get_level_class($row['level']),
-					
 					'L_LEVEL' => UserService::get_level_lang(!empty($row['level']) ? $row['level'] : '-1'),
 				));
 				
