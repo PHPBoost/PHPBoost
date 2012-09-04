@@ -29,12 +29,26 @@
  * @package {@package}
  * @author Kevin MASSY <kevin.massy@phpboost.com>
  */
-interface Captcha
+abstract class Captcha implements ExtensionPoint
 {
-	function is_available();
+	const EXTENSION_POINT = 'captcha';
 	
-	function is_valid();
+	protected $html_id = '';
+
+	abstract public function get_name();
+		
+	abstract public function is_available();
 	
-	function display();
+	abstract public function is_valid();
+	
+	abstract public function display();
+	
+	public function get_error()
+	{
+		return;
+	}
+	
+	public function set_html_id($html_id) {	$this->html_id = $html_id; }
+	public function get_html_id() { return $this->html_id; }
 }
 ?>
