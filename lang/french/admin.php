@@ -44,8 +44,8 @@ $LANG['default_theme'] = 'Thème (par défaut) du site';
 $LANG['default_language'] = 'Langue (par défaut) du site';
 $LANG['start_page'] = 'Page de démarrage du site';
 $LANG['cookie_name'] = 'Nom du cookie des sessions';
-$LANG['session_time'] = 'Durée de la session';
-$LANG['session invit'] = 'Durée utilisateurs actifs';
+$LANG['session_time'] = 'Durée de la session (en seconde)';
+$LANG['session invit'] = 'Durée utilisateurs actifs (en seconde)';
 
 //Form
 $LANG['add'] = 'Ajouter';
@@ -261,7 +261,7 @@ $LANG['kernel_version'] = 'Version du noyau';
 $LANG['output_gz'] = 'Compression des pages';
 $LANG['directories_auth'] = 'Autorisation des répertoires';
 $LANG['system_report_summerization'] = 'Récapitulatif';
-$LANG['system_report_summerization_explain'] = 'Ceci est le récapitulatif du rapport. Cela vous sera particulièrement utile lorsque pour du support on vous demandera la configuration de votre système';
+$LANG['system_report_summerization_explain'] = 'Ceci est le récapitulatif du rapport. Cela vous sera particulièrement utile lorsqu\'on vous demandera la configuration de votre système pour du support';
 
 //Gestion de l'upload
 $LANG['explain_upload_img'] = 'L\'image uploadée doit être au format jpg, gif, png ou bmp';
