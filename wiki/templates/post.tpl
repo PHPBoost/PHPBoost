@@ -15,7 +15,6 @@
 			}
 		-->
 		</script>
-		<script type="text/javascript" src="{PICTURES_DATA_PATH}/images/templates/wiki.js"></script>
 
 		# START preview #
 		<div class="module_position">					
