@@ -119,7 +119,7 @@ function XMLHttpRequest_preview(field)
 		{}
 		],
 		titles: [
-			{value:'', label:${escapejs(L_TITLE)}},
+			{value:'', label:${escapejs(L_BB_TITLE)}},
 			{value:1, label:${escapejs(L_TITLE)}+1},
 			{value:2, label:${escapejs(L_TITLE)}+2},
 			{value:3, label:${escapejs(L_TITLE)}+3},
