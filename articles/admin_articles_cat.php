@@ -129,7 +129,6 @@ elseif ($new_cat XOR $id_edit > 0)
 		'L_AUTH_CONTRIBUTION' => $ARTICLES_LANG['auth_contribute'],
 		'L_REQUIRE_TITLE' => $LANG['required_field'].' : '.$ARTICLES_LANG['category_name'],
 		'L_OR_DIRECT_PATH' => $ARTICLES_LANG['or_direct_path'],
-		'L_ARTICLES_MODELS'=>$ARTICLES_LANG['articles_models'],
 		'L_CAT_ICON'=>$ARTICLES_LANG['cat_icon'],
 	));
 
