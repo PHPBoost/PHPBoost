@@ -153,7 +153,7 @@ class AdminMemberEditController extends AdminController
 	private function save()
 	{
 		$user_id = $this->user->get_id();
-		$old_approbation = $this->user->get_approbation();
+		$old_approbation = (int)$this->user->get_approbation();
 		
 		$this->user->set_pseudo($this->form->get_value('login'));
 		$this->user->set_level($this->form->get_value('rank')->get_raw_value());
@@ -168,7 +168,7 @@ class AdminMemberEditController extends AdminController
 		$this->user->set_editor($this->form->get_value('text-editor')->get_raw_value());
 		UserService::update($this->user, 'WHERE user_id=:id', array('id' => $user_id));
 		
-		if ($old_approbation != $this->user->get_approbation() && $old_approbation)
+		if ($old_approbation != $this->user->get_approbation() && $old_approbation == 0)
 		{
 			//Recherche de l'alerte correspondante
 			$matching_alerts = AdministratorAlertService::find_by_criteria($user_id, 'member_account_to_approbate');
@@ -182,7 +182,7 @@ class AdminMemberEditController extends AdminController
 				
 				$site_name = GeneralConfig::load()->get_site_name();
 				$subject = StringVars::replace_vars($this->user_lang['registration.subject-mail'], array('site_name' => $site_name));
-				$content = StringVars::replace_vars(self::$lang['registration.email.mail-administrator-validation'], array(
+				$content = StringVars::replace_vars($this->user_lang['registration.email.mail-administrator-validation'], array(
 					'pseudo' => $this->user->get_pseudo(),
 					'site_name' => $site_name,
 					'signature' => MailServiceConfig::load()->get_mail_signature()
@@ -203,9 +203,7 @@ class AdminMemberEditController extends AdminController
 		}
 		
 		GroupsService::edit_member($user_id, $this->form->get_value('groups'));
-		
-		
-				
+						
 		if ($this->form->get_value('delete_account'))
 		{
 			UserService::delete_account('WHERE user_id=:user_id', array('user_id' => $user_id));
