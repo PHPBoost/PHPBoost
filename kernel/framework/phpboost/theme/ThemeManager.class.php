@@ -97,10 +97,12 @@ class ThemeManager
 	{
 		if (!empty($theme_id) && self::get_theme_existed($theme_id))
 		{
-			$default_theme = UserAccountsConfig::load()->get_default_theme();
+			$default_theme = self::get_default_theme();
 			if (self::get_theme($theme_id)->get_id() !== $default_theme)
 			{
-				AppContext::get_current_user()->update_theme($default_theme);
+				PersistenceContext::get_querier()->update(DB_TABLE_MEMBER, array('user_theme' => $default_theme), 
+					'WHERE user_theme=:old_user_theme', array('old_user_theme' => $theme_id
+				));
 				
 				ThemesConfig::load()->remove_theme_by_id($theme_id);
 				ThemesConfig::save();
