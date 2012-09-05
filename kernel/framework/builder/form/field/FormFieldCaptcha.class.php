@@ -42,7 +42,8 @@ class FormFieldCaptcha extends AbstractFormField
     public function __construct($name = 'captcha', PHPBoostCaptcha $captcha = null)
     {
         global $LANG;
-        parent::__construct($name, $LANG['verif_code'], false, array('required' => true));
+        $field_options = $this->is_enabled() ? array('required' => true) : array();
+        parent::__construct($name, $LANG['verif_code'], false, $field_options);
         if ($captcha !== null)
         {
             $this->captcha = $captcha;
