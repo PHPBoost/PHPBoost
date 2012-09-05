@@ -125,6 +125,13 @@ $lang['registration.success.mail-validation'] = 'You have registered successfull
 $lang['registration.email.automatic-validation'] = 'You can now connect to your account directly on the site.';
 $lang['registration.email.mail-validation'] = 'You have to click on this link to activate your account: :validation_link';
 $lang['registration.email.administrator-validation'] = 'Warning: Your account must be activated by an administrator. Thanks for your patience.';
+$lang['registration.email.mail-administrator-validation'] = 'Cher(e) :pseudo,
+
+We are pleased to inform you that your account :site_name has been validated by an administrator.
+
+You can now login to the site using the credentials provided in the previous email.
+
+:signature';
 
 $lang['registration.pending-approval'] = 'A new member has registered. His account must be approved before they can be used.';
 $lang['registration.subject-mail'] = 'Confirmation of registration :site_name';

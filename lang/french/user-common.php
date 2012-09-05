@@ -126,6 +126,13 @@ $lang['registration.success.mail-validation'] = 'Vous vous êtes enregistré avec 
 $lang['registration.email.automatic-validation'] = 'Vous pouvez désormais vous connecter à votre compte directement sur le site.';
 $lang['registration.email.mail-validation'] = 'Vous devez activer votre compte avant de pouvoir vous connecter en cliquant sur ce lien : :validation_link';
 $lang['registration.email.administrator-validation'] = 'Attention : Votre compte devra être activé par un administrateur avant de pouvoir vous connecter. Merci de votre patience.';
+$lang['registration.email.mail-administrator-validation'] = 'Cher(e) :pseudo,
+
+Nous avons le plaisir de vous informer que votre compte sur :site_name vient d\'être validé par un administrateur.
+
+Vous pouvez dès à présent vous connecter au site à l\'aide des identifiants fournis dans le précédent email.
+
+:signature';
 
 $lang['registration.pending-approval'] = 'Un nouveau membre s\'est inscrit. Son compte doit être approuvé avant de pouvoir être utilisé.';
 $lang['registration.subject-mail'] = 'Confirmation d\'inscription sur :site_name';
