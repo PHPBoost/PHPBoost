@@ -44,12 +44,12 @@ class AdminNewsletterDeleteStreamController extends AdminModuleController
 			
 			NewsletterStreamsCache::invalidate();
 			
-			$controller = new UserErrorController(LangLoader::get_message('success', 'errors'), LangLoader::get_message('admin.success-delete-stream', 'newsletter_common', 'newsletter'));
+			$controller = new UserErrorController(LangLoader::get_message('success', 'errors-common'), LangLoader::get_message('admin.success-delete-stream', 'newsletter_common', 'newsletter'));
 			DispatchManager::redirect($controller);
 		}
 		else
 		{
-			$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), LangLoader::get_message('admin.stream-not-existed', 'newsletter_common', 'newsletter'));
+			$controller = new UserErrorController(LangLoader::get_message('error', 'errors-common'), LangLoader::get_message('admin.stream-not-existed', 'newsletter_common', 'newsletter'));
 			DispatchManager::redirect($controller);
 		}
 	}

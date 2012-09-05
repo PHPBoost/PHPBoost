@@ -56,7 +56,7 @@ class NewsletterArchivesController extends ModuleController
 		
 		if (!NewsletterStreamsCache::load()->get_existed_stream($this->id_stream))
 		{
-			$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), LangLoader::get_message('admin.stream-not-existed', 'newsletter_common', 'newsletter'));
+			$controller = new UserErrorController(LangLoader::get_message('error', 'errors-common'), LangLoader::get_message('admin.stream-not-existed', 'newsletter_common', 'newsletter'));
 			DispatchManager::redirect($controller);
 		}
 		

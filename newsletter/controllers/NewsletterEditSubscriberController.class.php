@@ -49,7 +49,7 @@ class NewsletterEditSubscriberController extends ModuleController
 		$verificate_is_edit = PersistenceContext::get_querier()->count(NewsletterSetup::$newsletter_table_subscribers, "WHERE id = '". $id ."' AND user_id = -1") > 0 ? true : false;
 		if (!$this->subscriber_exist($id) || !$verificate_is_edit)
 		{
-			$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), LangLoader::get_message('error-subscriber-not-existed', 'newsletter_common', 'newsletter'));
+			$controller = new UserErrorController(LangLoader::get_message('error', 'errors-common'), LangLoader::get_message('error-subscriber-not-existed', 'newsletter_common', 'newsletter'));
 			DispatchManager::redirect($controller);
 		}
 
