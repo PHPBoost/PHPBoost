@@ -80,11 +80,11 @@ class ContactModuleHomePage implements ModuleHomePage
 		$fieldset = new FormFieldsetHTML('send_a_mail', $this->lang['contact_mail']);
 		$form->add_fieldset($fieldset);
 		$fieldset->add_field(new FormFieldMailEditor('sender_mail', $this->lang['your_mail_address'], AppContext::get_current_user()->get_attribute('user_mail'),
-			array('description' => $this->lang['your_mail_address_explain'])));
+			array('description' => $this->lang['your_mail_address_explain'], 'required' => true)));
 
-		$fieldset->add_field(new FormFieldTextEditor('subject', $this->lang['contact_subject'], '', array('description' => $this->lang['contact_subject_explain']), array(new FormFieldConstraintNotEmpty())));
+		$fieldset->add_field(new FormFieldTextEditor('subject', $this->lang['contact_subject'], '', array('description' => $this->lang['contact_subject_explain'], 'required' => true), array(new FormFieldConstraintNotEmpty())));
 
-		$fieldset->add_field(new FormFieldMultiLineTextEditor('message', $this->lang['message'], '', array(), array(new FormFieldConstraintNotEmpty())));
+		$fieldset->add_field(new FormFieldMultiLineTextEditor('message', $this->lang['message'], '', array('required' => true), array(new FormFieldConstraintNotEmpty())));
 
 		$config = ContactConfig::load();
 		if ($config->is_captcha_enabled())
