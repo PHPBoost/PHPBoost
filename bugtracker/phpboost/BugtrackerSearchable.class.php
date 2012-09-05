@@ -45,8 +45,8 @@ class BugtrackerSearchable extends AbstractSearchableExtensionPoint
         $weight = isset($args['weight']) && is_numeric($args['weight']) ? $args['weight'] : 1;
         
         $request = "SELECT " . $args['id_search'] . " AS id_search,
-		id AS `id_content`,	title, contents,
-		( 2 * FT_SEARCH_RELEVANCE(title, '" . $args['search'] . "') + FT_SEARCH_RELEVANCE(contents, '" . $args['search'] . "') ) / 3 * " . $weight . " AS relevance, "
+		id AS id_content, title,
+		( 2 * FT_SEARCH_RELEVANCE(title, '" . $args['search'] . "') + FT_SEARCH_RELEVANCE(title, '" . $args['search'] . "') ) / 3 * " . $weight . " AS relevance, "
 		. $this->sql_querier->concat("'../bugtracker/bugtracker.php?view=true&amp;id='","id") . " AS `link`
 		FROM " . PREFIX . "bugtracker
 		WHERE ( FT_SEARCH(title, '" . $args['search'] . "') OR FT_SEARCH(contents, '" . $args['search'] . "') )"
