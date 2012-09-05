@@ -95,10 +95,12 @@ class LangManager
 	{
 		if (!empty($id) && self::get_lang_existed($id))
 		{
-			$default_lang = UserAccountsConfig::load()->get_default_lang();
+			$default_lang = self::get_default_lang();
 			if (self::get_lang($id)->get_id() !== $default_lang)
 			{
-				AppContext::get_current_user()->update_lang($default_lang);
+				PersistenceContext::get_querier()->update(DB_TABLE_MEMBER, array('user_lang' => $default_lang), 
+					'WHERE user_lang=:old_user_lang', array('old_user_lang' => $id
+				));
 				
 				LangsConfig::load()->remove_lang_by_id($id);
 				LangsConfig::save();
