@@ -37,6 +37,7 @@ $LANG['bugs.notice.no_one'] = 'No one';
 $LANG['bugs.notice.none'] = 'None';
 $LANG['bugs.notice.none_e'] = 'None';
 $LANG['bugs.notice.no_bug'] = 'No bug declared';
+$LANG['bugs.notice.no_bug_solved'] = 'No bug solved';
 $LANG['bugs.notice.no_bug_fixed'] = 'No bug fixed in this version';
 $LANG['bugs.notice.no_version'] = 'No version';
 $LANG['bugs.notice.no_type'] = 'No type declared';
@@ -73,6 +74,7 @@ $LANG['bugs.titles.view_bug'] = 'Bug view';
 $LANG['bugs.titles.bugs_list'] = 'Bugs list';
 $LANG['bugs.titles.roadmap'] = 'Roadmap';
 $LANG['bugs.titles.bugs_infos'] = 'Bug\'s informations';
+$LANG['bugs.titles.bugs_stats'] = 'Statistics';
 $LANG['bugs.titles.bugs_treatment_state'] = 'Bug\'s treatment state';
 $LANG['bugs.titles.disponible_versions'] = 'Disponible versions';
 $LANG['bugs.titles.disponible_types'] = 'Disponible types';
@@ -83,6 +85,8 @@ $LANG['bugs.titles.edit_type'] = 'Type edition';
 $LANG['bugs.titles.edit_category'] = 'Category edition';
 $LANG['bugs.titles.edit_version'] = 'Version edition';
 $LANG['bugs.titles.choose_version'] = 'Version to display';
+$LANG['bugs.titles.solved_bug'] = 'List of bugs fixed';
+$LANG['bugs.titles.unsolved_bug'] = 'List of unresolved bugs';
 
 //Labels
 $LANG['bugs.labels.fields.id'] = 'ID';
@@ -111,6 +115,8 @@ $LANG['bugs.labels.fields.version_detected_in'] = 'Display in the list "Detected
 $LANG['bugs.labels.fields.version_fixed_in'] = 'Display in the list "Fixed in version"';
 $LANG['bugs.labels.fields.version_detected'] = 'Detected version';
 $LANG['bugs.labels.fields.version_fixed'] = 'Fixed version';
+$LANG['bugs.labels.number'] = 'Bugs number';
+$LANG['bugs.labels.top_10_posters'] = 'Top 10: posters';
 
 //Priorities
 $LANG['bugs.priority.none'] = 'None';
@@ -193,4 +199,5 @@ $LANG['bugs.error.e_edit_type_success'] = 'The type has successfully been update
 $LANG['bugs.error.e_edit_category_success'] = 'The category has successfully been updated';
 $LANG['bugs.error.e_edit_version_success'] = 'The version has successfully been updated';
 $LANG['bugs.error.e_unexist_bug'] = 'This bug does not exist';
+
 ?>

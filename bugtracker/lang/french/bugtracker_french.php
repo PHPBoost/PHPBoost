@@ -37,6 +37,7 @@ $LANG['bugs.notice.no_one'] = 'Personne';
 $LANG['bugs.notice.none'] = 'Aucun';
 $LANG['bugs.notice.none_e'] = 'Aucune';
 $LANG['bugs.notice.no_bug'] = 'Aucun bug n\'a été déclaré';
+$LANG['bugs.notice.no_bug_solved'] = 'Aucun bug n\'a été corrigé';
 $LANG['bugs.notice.no_bug_fixed'] = 'Aucun bug n\'a été corrigé dans cette version';
 $LANG['bugs.notice.no_version'] = 'Aucune version existante';
 $LANG['bugs.notice.no_type'] = 'Aucun type n\'a été déclaré';
@@ -71,8 +72,9 @@ $LANG['bugs.titles.edit_bug'] = 'Edition du bug';
 $LANG['bugs.titles.history_bug'] = 'Historique du bug';
 $LANG['bugs.titles.view_bug'] = 'Affichage du bug';
 $LANG['bugs.titles.bugs_list'] = 'Liste des bugs';
-$LANG['bugs.titles.roadmap'] = 'Roadmap';
+$LANG['bugs.titles.roadmap'] = 'Feuille de route';
 $LANG['bugs.titles.bugs_infos'] = 'Informations sur le bug';
+$LANG['bugs.titles.bugs_stats'] = 'Statistiques';
 $LANG['bugs.titles.bugs_treatment_state'] = 'Etat du traitement du bug';
 $LANG['bugs.titles.disponible_versions'] = 'Versions disponibles';
 $LANG['bugs.titles.disponible_types'] = 'Types disponibles';
@@ -83,6 +85,8 @@ $LANG['bugs.titles.edit_type'] = 'Edition d\'un type';
 $LANG['bugs.titles.edit_category'] = 'Edition d\'une catégorie';
 $LANG['bugs.titles.edit_version'] = 'Edition d\'une version';
 $LANG['bugs.titles.choose_version'] = 'Version à afficher';
+$LANG['bugs.titles.solved_bug'] = 'Liste des bugs résolus';
+$LANG['bugs.titles.unsolved_bug'] = 'Liste des bugs non-résolus';
 
 //Libellés
 $LANG['bugs.labels.fields.id'] = 'ID';
@@ -111,6 +115,8 @@ $LANG['bugs.labels.fields.version_detected_in'] = 'Afficher dans la liste "Détec
 $LANG['bugs.labels.fields.version_fixed_in'] = 'Afficher dans la liste "Corrigé dans la version"';
 $LANG['bugs.labels.fields.version_detected'] = 'Version détectée';
 $LANG['bugs.labels.fields.version_fixed'] = 'Version corrigée';
+$LANG['bugs.labels.number'] = 'Nombre de bugs';
+$LANG['bugs.labels.top_10_posters'] = 'Top 10 : posteurs';
 
 //Priorités
 $LANG['bugs.priority.none'] = 'Aucune';
@@ -193,4 +199,5 @@ $LANG['bugs.error.e_edit_type_success'] = 'Le type a été modifié avec succès';
 $LANG['bugs.error.e_edit_category_success'] = 'La catégorie a été modifiée avec succès';
 $LANG['bugs.error.e_edit_version_success'] = 'La version a été modifié avec succès';
 $LANG['bugs.error.e_unexist_bug'] = 'Ce bug n\'existe pas';
+
 ?>
