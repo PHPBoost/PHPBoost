@@ -98,13 +98,27 @@
 		function insert_link()
 		{	
 			var link_name = prompt(enter_text, title_link);
-			if( link_name == "" )
+			if (link_name)
 			{
-				alert(enter_text);
-				return false;
+				var textarea = $('contents');
+				var start = textarea.selectionStart;
+				var end = textarea.selectionEnd;
+
+				if (start == end)
+				{
+					var insert_value = '[link=' + url_encode_rewrite(link_name) + '][/link]';
+					textarea.value = textarea.value.substr(0, start) + insert_value + textarea.value.substr(end);
+				}
+				else
+				{
+					var value = textarea.value;
+					var insert_value = '[link=' + value.substring(start, end) + '][/link]';
+					textarea.value = textarea.value.substr(0, start) + insert_value + textarea.value.substr(end);
+				}
+
+				textarea.selectionStart = start + insert_value.length;
+				textarea.selectionEnd = start + insert_value.length;
 			}
-			
-			insertbbcode('[link=' + url_encode_rewrite(link_name) + ']', '[/link]', 'contents');
 		}
 		function url_encode_rewrite(link_name)
 		{
