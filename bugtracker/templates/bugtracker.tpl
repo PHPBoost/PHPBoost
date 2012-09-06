@@ -148,6 +148,11 @@
 			<br /><br />
 			<p style="text-align: center;">{PAGINATION}</p>
 		</div>
+		<span class="warning" style="text-align:center;">
+			<a href="{PATH_TO_ROOT}/bugtracker/bugtracker.php?solved">{L_SOLVED}</a>
+			<br /><br />
+			<a href="{PATH_TO_ROOT}/bugtracker/bugtracker.php?stats">{L_STATS}</a>
+		</span>
 		<div class="module_bottom_l"></div>
 		<div class="module_bottom_r"></div>
 		<div class="module_bottom">
@@ -156,6 +161,221 @@
 		</div>
 	</div>
 # END list #
+
+# START solved #
+	<div class="module_position">
+		<div class="module_top_l"></div>		
+		<div class="module_top_r"></div>
+		<div class="module_top">
+			<div style="float:left">
+				<a href="bugtracker.php{SID}">{L_BUGS_LIST}</a> {ADD_BUG}
+			</div>
+		</div>
+		<div class="module_contents">
+			# IF C_ERROR_HANDLER #
+			<div class="error_handler_position">
+				<span id="errorh"></span>
+				<div class="{ERRORH_CLASS}" style="width:500px;margin:auto;padding:15px;">
+					<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
+					<br />	
+				</div>
+			</div>
+			<br />
+			# ENDIF #
+			
+			<table  class="module_table">
+				<tr style="text-align:center;">
+					<th style="width:45px;text-align:center;">
+						{L_ID}<br />
+						<a href="{PATH_TO_ROOT}/bugtracker/bugtracker{U_BUG_ID_TOP}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
+						<a href="{PATH_TO_ROOT}/bugtracker/bugtracker{U_BUG_ID_BOTTOM}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
+					</th>
+					<th style="text-align:center;">
+						{L_TITLE}<br />
+						<a href="{PATH_TO_ROOT}/bugtracker/bugtracker{U_BUG_TITLE_TOP}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
+						<a href="{PATH_TO_ROOT}/bugtracker/bugtracker{U_BUG_TITLE_BOTTOM}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
+					</th>
+					# IF C_DISPLAY_TYPES #
+					<th style="width:66px;text-align:center;">
+						{L_TYPE}<br />
+						<a href="{PATH_TO_ROOT}/bugtracker/bugtracker{U_BUG_TYPE_TOP}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
+						<a href="{PATH_TO_ROOT}/bugtracker/bugtracker{U_BUG_TYPE_BOTTOM}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
+					</th>
+					# ENDIF #
+					<th style="width:70px;text-align:center;">
+						{L_SEVERITY}<br />
+						<a href="{PATH_TO_ROOT}/bugtracker/bugtracker{U_BUG_SEVERITY_TOP}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
+						<a href="{PATH_TO_ROOT}/bugtracker/bugtracker{U_BUG_SEVERITY_BOTTOM}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
+					</th>
+					<th style="width:60px;text-align:center;">
+						{L_STATUS}<br />
+						<a href="{PATH_TO_ROOT}/bugtracker/bugtracker{U_BUG_STATUS_TOP}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
+						<a href="{PATH_TO_ROOT}/bugtracker/bugtracker{U_BUG_STATUS_BOTTOM}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
+					</th>
+					<th style="width:84px;text-align:center;">
+						{L_COMMENTS}<br />
+						<a href="{PATH_TO_ROOT}/bugtracker/bugtracker{U_BUG_COMMENTS_TOP}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
+						<a href="{PATH_TO_ROOT}/bugtracker/bugtracker{U_BUG_COMMENTS_BOTTOM}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
+					</th>
+					<th style="width:63px;text-align:center;">
+						{L_DATE}<br />
+						<a href="{PATH_TO_ROOT}/bugtracker/bugtracker{U_BUG_DATE_TOP}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
+						<a href="{PATH_TO_ROOT}/bugtracker/bugtracker{U_BUG_DATE_BOTTOM}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
+					</th>
+					# IF C_IS_ADMIN #
+					<th style="width:56px;text-align:center;">
+						{L_ACTIONS}<br /><br />
+					</th>
+					# ENDIF #
+				</tr>
+				# IF C_NO_BUGS #
+				<tr style="text-align:center;"> 
+					<td colspan="# IF C_DISPLAY_TYPES ## IF C_IS_ADMIN #8# ELSE #7# ENDIF ## ELSE ## IF C_IS_ADMIN #7# ELSE #6# ENDIF ## ENDIF #" class="row2">
+						{L_NO_SOLVED_BUG}
+					</td>
+				</tr>
+				# ELSE #
+					# START solved.bugclosed #
+					<tr style="text-align:center;"> 
+						<td class="row2" {solved.bugclosed.COLOR}>
+							<a href="{PATH_TO_ROOT}/bugtracker/bugtracker.php?view=true&amp;id={solved.bugclosed.ID}">\#{solved.bugclosed.ID}</a>
+						</td>
+						<td class="row2" {solved.bugclosed.COLOR}>
+							{solved.bugclosed.TITLE}
+						</td>
+						# IF C_DISPLAY_TYPES #
+						<td class="row2" {solved.bugclosed.COLOR}>
+							{solved.bugclosed.TYPE}
+						</td>
+						# ENDIF #
+						<td class="row2" {solved.bugclosed.SEVERITY_COLOR}> 
+							<b>{solved.bugclosed.SEVERITY}</b>
+						</td>
+						<td class="row2" {solved.bugclosed.COLOR}> 
+							{solved.bugclosed.STATUS}
+						</td>
+						<td class="row2" {solved.bugclosed.COLOR}>
+							{solved.bugclosed.COMMENTS}
+						</td>
+						<td class="row2" {solved.bugclosed.COLOR}>
+							{solved.bugclosed.DATE}
+						</td>
+						# IF C_IS_ADMIN #
+						<td class="row2" {solved.bugclosed.COLOR}> 
+							<a href="bugtracker.php?edit=true&amp;id={solved.bugclosed.ID}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="{L_UPDATE}" title="{L_UPDATE}" /></a>
+							<a href="bugtracker.php?history=true&amp;id={solved.bugclosed.ID}"><img src="{PATH_TO_ROOT}/bugtracker/templates/images/history.png" alt="{L_HISTORY}" title="{L_HISTORY}" /></a>
+							<a href="bugtracker.php?delete=true&amp;id={solved.bugclosed.ID}&amp;token={TOKEN}" onclick="javascript:return Confirm();"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" /></a>
+						</td>
+						# ENDIF #
+					</tr>
+					# END solved.bugclosed #
+				# ENDIF #
+			</table>
+			<br /><br />
+			<p style="text-align: center;">{PAGINATION}</p>
+		</div>
+		<span class="warning" style="text-align:center;">
+			<a href="{PATH_TO_ROOT}/bugtracker/bugtracker.php">{L_UNSOLVED}</a>
+			<br /><br />
+			<a href="{PATH_TO_ROOT}/bugtracker/bugtracker.php?stats">{L_STATS}</a>
+		</span>
+		<div class="module_bottom_l"></div>
+		<div class="module_bottom_r"></div>
+		<div class="module_bottom" style="text-align:center;">
+			<div style="float:left" class="text_small"></div>
+			<div style="float:right" class="text_small"></div>
+		</div>
+		
+	</div>
+# END solved #
+
+# START stats #
+	<div class="module_position">
+		<div class="module_top_l"></div>		
+		<div class="module_top_r"></div>
+		<div class="module_top">
+			<div style="float:left">
+				<a href="bugtracker.php{SID}">{L_BUGS_STATS}</a>
+			</div>
+		</div>
+		<div class="module_contents">
+			# IF C_ERROR_HANDLER #
+			<div class="error_handler_position">
+				<span id="errorh"></span>
+				<div class="{ERRORH_CLASS}" style="width:500px;margin:auto;padding:15px;">
+					<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
+					<br />	
+				</div>
+			</div>
+			<br />
+			# ENDIF #
+			
+			<table  class="module_table">
+				<tr style="text-align:center;">
+					<th style="width:45px;text-align:center;">
+						{L_STATUS}
+					</th>
+					<th style="text-align:center;">
+						{L_NUMBER}
+					</th>
+				</tr>
+				# START stats.status #
+				<tr style="text-align:center;"> 
+					<td class="row2"> 
+						<b>{stats.status.NAME}</b>
+					</td>
+					<td class="row2"> 
+						{stats.status.NUMBER}
+					</td>
+				</tr>
+				# END stats.status #
+			</table>
+			<br /><br />
+			<table class="module_table">
+				<tr>
+					<th colspan="3">	
+						{L_TOP_TEN_POSTERS}
+					</th>
+				</tr>
+				<tr>
+					<td class="row1" style="text-align:center;">
+						N&deg;
+					</td>
+					<td class="row1" style="text-align:center;">
+						{L_PSEUDO}
+					</td>
+					<td class="row1" style="text-align:center;">
+						{L_NUMBER}
+					</td>
+				</tr>			
+				# START stats.top_poster #			
+				<tr>
+					<td class="row2" style="text-align:center;">
+						{stats.top_poster.ID}
+					</td>
+					<td class="row2" style="text-align:center;">
+						<a href="{stats.top_poster.U_USER_PROFILE}">{stats.top_poster.LOGIN}</a>
+					</td>
+					<td class="row2" style="text-align:center;">
+						{stats.top_poster.USER_BUGS}
+					</td>
+				</tr>			
+				# END stats.top_poster #
+			</table>
+		</div>
+		<span class="warning" style="text-align:center;">
+			<a href="{PATH_TO_ROOT}/bugtracker/bugtracker.php">{L_UNSOLVED}</a>
+			<br /><br />
+			<a href="{PATH_TO_ROOT}/bugtracker/bugtracker.php?solved">{L_SOLVED}</a>
+		</span>
+		<div class="module_bottom_l"></div>
+		<div class="module_bottom_r"></div>
+		<div class="module_bottom" style="text-align:center;">
+			<div style="float:left" class="text_small"></div>
+			<div style="float:right" class="text_small"></div>
+		</div>
+	</div>
+# END stats #
 
 # START add #
 	<script type="text/javascript">
@@ -219,8 +439,13 @@
 						<dd><label><input type="text" size="40" maxlength="100" id="title" name="title" class="text" /></label></dd>
 					</dl>
 					<label for="contents">* {L_CONTENT}</label>
+					<div style="position:relative;display:none;" id="loading_previewcontents">
+						<div style="margin:auto;margin-top:90px;width:100%;text-align:center;position:absolute;"><img src="{PATH_TO_ROOT}/templates/base/images/loading.gif" alt="" /></div>
+					</div>
+					<div style="display:none;" class="xmlhttprequest_preview" id="xmlhttprequest_previewcontents"></div>
 					{CONTENTS_KERNEL_EDITOR}
 					<label><textarea rows="20" cols="86" id="contents" name="contents">{CONTENTS}</textarea></label>
+					<div style="text-align:center;"><input type="button" value="{L_PREVIEW}" onclick="XMLHttpRequest_preview('contents');" class="submit" /></div>
 					<br />
 					# IF C_DISPLAY_TYPES #
 					<dl>
@@ -290,8 +515,13 @@
 					</dl>
 					<div id="reproduction">
 						<label for="reproduction_method">{L_REPRODUCTION_METHOD}</label>
+						<div style="position:relative;display:none;" id="loading_previewreproduction_method">
+							<div style="margin:auto;margin-top:90px;width:100%;text-align:center;position:absolute;"><img src="{PATH_TO_ROOT}/templates/base/images/loading.gif" alt="" /></div>
+						</div>
+						<div style="display:none;" class="xmlhttprequest_preview" id="xmlhttprequest_previewreproduction_method"></div>
 						{METHOD_KERNEL_EDITOR}
 						<label><textarea rows="20" cols="86" id="reproduction_method" name="reproduction_method">{REPRODUCTION_METHOD}</textarea></label>
+						<div style="text-align:center;"><input type="button" value="{L_PREVIEW}" onclick="XMLHttpRequest_preview('reproduction_method');" class="submit" /></div>
 						<br />
 					</div>
 					<br />
@@ -300,15 +530,7 @@
 				<fieldset class="fieldset_submit">
 					<legend>{L_SUBMIT}</legend>
 					<input type="submit" name="valid_add" value="{L_SUBMIT}" class="submit" />
-					&nbsp;&nbsp; 
-					<input value="{L_PREVIEW}" type="submit" name="previs" id="previs_add" class="submit" />
-					<script type="text/javascript">
-					<!--				
-					document.getElementById('previs_add').style.display = 'none';
-					document.write('<input value="{L_PREVIEW}" onclick="XMLHttpRequest_preview();" type="button" class="submit" />');
-					-->
-					</script>
-					&nbsp;&nbsp; 
+					&nbsp;
 					<input type="reset" value="{L_RESET}" class="reset" />				
 				</fieldset>	
 			</form>
@@ -417,8 +639,14 @@
 						<dd><label><input type="text" size="40" maxlength="100" id="title" name="title" value="{edit.TITLE}" class="text" /></label></dd>
 					</dl>
 					<label for="contents">* {L_CONTENT}</label>
-					{KERNEL_EDITOR}
+					<label for="contents">* {L_CONTENT}</label>
+					<div style="position:relative;display:none;" id="loading_previewcontents">
+						<div style="margin:auto;margin-top:90px;width:100%;text-align:center;position:absolute;"><img src="{PATH_TO_ROOT}/templates/base/images/loading.gif" alt="" /></div>
+					</div>
+					<div style="display:none;" class="xmlhttprequest_preview" id="xmlhttprequest_previewcontents"></div>
+					{CONTENTS_KERNEL_EDITOR}
 					<label><textarea rows="20" cols="86" id="contents" name="contents">{edit.CONTENTS}</textarea></label>
+					<div style="text-align:center;"><input type="button" value="{L_PREVIEW}" onclick="XMLHttpRequest_preview('contents');" class="submit" /></div>
 					<br />
 					# IF edit.C_IS_ASSIGNED #
 					<dl>
@@ -529,8 +757,13 @@
 					</dl>
 					<div id="reproduction" # IF NOT C_REPRODUCTIBLE #style="display:none;"# ENDIF #>
 						<label for="reproduction_method">{L_REPRODUCTION_METHOD}</label>
-						{KERNEL_EDITOR}
+						<div style="position:relative;display:none;" id="loading_previewreproduction_method">
+							<div style="margin:auto;margin-top:90px;width:100%;text-align:center;position:absolute;"><img src="{PATH_TO_ROOT}/templates/base/images/loading.gif" alt="" /></div>
+						</div>
+						<div style="display:none;" class="xmlhttprequest_preview" id="xmlhttprequest_previewreproduction_method"></div>
+						{METHOD_KERNEL_EDITOR}
 						<label><textarea rows="20" cols="86" id="reproduction_method" name="reproduction_method">{edit.REPRODUCTION_METHOD}</textarea></label>
+						<div style="text-align:center;"><input type="button" value="{L_PREVIEW}" onclick="XMLHttpRequest_preview('reproduction_method');" class="submit" /></div>
 						<br />
 					</div>
 					<br />
@@ -540,15 +773,7 @@
 					<legend>{L_UPDATE}</legend>
 					<input type="hidden" name="id" value="{edit.ID}" class="submit" />
 					<input type="submit" name="valid_edit" value="{L_UPDATE}" class="submit" />
-					&nbsp;&nbsp; 
-					<input value="{L_PREVIEW}" type="submit" name="previs" id="previs_edit" class="submit" />
-					<script type="text/javascript">
-					<!--				
-					document.getElementById('previs_edit').style.display = 'none';
-					document.write('<input value="{L_PREVIEW}" onclick="XMLHttpRequest_preview();" type="button" class="submit" />');
-					-->
-					</script>
-					&nbsp;&nbsp; 
+					&nbsp;
 					<input type="reset" value="{L_RESET}" class="reset" />				
 				</fieldset>	
 			</form>

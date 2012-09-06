@@ -136,6 +136,8 @@ class BugtrackerHomePageExtensionPoint implements HomePageExtensionPoint
 			'L_UPDATE' 				=> $LANG['update'],
 			'L_HISTORY' 			=> $LANG['bugs.actions.history'],
 			'L_DELETE' 				=> $LANG['delete'],
+			'L_SOLVED' 				=> $LANG['bugs.titles.solved_bug'],
+			'L_STATS' 				=> $LANG['bugs.titles.bugs_stats'],
 			'U_BUG_ID_TOP' 			=> url('.php?sort=id&amp;mode=desc'),
 			'U_BUG_ID_BOTTOM' 		=> url('.php?sort=id&amp;mode=asc'),
 			'U_BUG_TITLE_TOP' 		=> url('.php?sort=title&amp;mode=desc'),
@@ -156,6 +158,7 @@ class BugtrackerHomePageExtensionPoint implements HomePageExtensionPoint
 		
 		$result = $this->sql_querier->query_while("SELECT *
 		FROM " . PREFIX . "bugtracker
+		WHERE status <> 'closed' AND status != 'rejected'
 		ORDER BY " . $sort . " " . $mode .
 		$this->sql_querier->limit($Pagination->get_first_msg($BUGS_CONFIG['items_per_page'], 'p'), $BUGS_CONFIG['items_per_page']), __LINE__, __FILE__); //Bugs enregistrés.
 		while ($row = $this->sql_querier->fetch_assoc($result))

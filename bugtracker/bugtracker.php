@@ -135,8 +135,8 @@ else if (isset($_GET['add'])) // ajout d'un bug
 		'REPRODUCTIBLE_ENABLED' => 'checked="checked"',
 		'REPRODUCTIBLE_DISABLED'=> '',
 		'REPRODUCTION_METHOD' 	=> '',
-		'CONTENTS_KERNEL_EDITOR' 	=> $contents_editor->display(),
-		'METHOD_KERNEL_EDITOR' 		=> $reproduction_method_editor->display(),
+		'CONTENTS_KERNEL_EDITOR'=> $contents_editor->display(),
+		'METHOD_KERNEL_EDITOR' 	=> $reproduction_method_editor->display(),
 		'TOKEN'					=> $Session->get_token()
 	));
 	
@@ -489,8 +489,8 @@ else if (isset($_GET['edit']) && is_numeric($id)) // edition d'un bug
 		'L_YES' 				=> $LANG['yes'],
 		'L_NO'	 				=> $LANG['no'],
 		'L_JOKER' 				=> $LANG['bugs.notice.joker'],
-		'CONTENTS_KERNEL_EDITOR' 	=> $contents_editor->display(),
-		'METHOD_KERNEL_EDITOR' 		=> $reproduction_method_editor->display(),
+		'CONTENTS_KERNEL_EDITOR'=> $contents_editor->display(),
+		'METHOD_KERNEL_EDITOR' 	=> $reproduction_method_editor->display(),
 		'TOKEN'					=> $Session->get_token()
 	));
 	
@@ -738,8 +738,8 @@ else if (isset($_GET['view']) && is_numeric($id)) // Visualisation d'une fiche B
 	if (($User->get_id() == $result['author_id'] && $result['author_id'] != '-1') || $User->is_admin() || (!empty($result['assigned_to_id']) && $User->get_attribute('user_id') == $result['assigned_to_id']))
 	{
 		$Template->assign_vars(array(
-			'C_EDIT_BUG'	 		=> true,
-			'L_UPDATE'	 			=> $LANG['update']
+			'C_EDIT_BUG'	=> true,
+			'L_UPDATE'	 	=> $LANG['update']
 		));
 	}
 	
@@ -815,6 +815,226 @@ else if (isset($_GET['view']) && is_numeric($id)) // Visualisation d'une fiche B
 			'COMMENTS' => CommentsService::display($comments_topic)->render()
 		));
 	}      
+}
+else if (isset($_GET['solved'])) // liste des bugs corrigés
+{
+	//checking authorization
+	if (!$auth_read)
+	{
+		$error_controller = PHPBoostErrors::unexisting_page();
+		DispatchManager::redirect($error_controller);
+	}
+
+  	$Template->set_filenames(array(
+		'bugtracker' => 'bugtracker/bugtracker.tpl'
+	));
+	
+	//Nombre de bugs
+	$nbr_bugs = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "bugtracker WHERE status = 'closed' OR status = 'rejected'", __LINE__, __FILE__);
+	
+	$Pagination = new DeprecatedPagination();
+	
+	$get_sort = retrieve(GET, 'sort', '');
+	switch ($get_sort)
+	{
+		case 'id' :
+			$sort = 'id';
+			break;
+		case 'title' :
+			$sort = 'title';
+			break;
+		case 'type' :
+			$sort = 'type';
+			break;
+		case 'severity' :
+			$sort = 'severity';
+			break;
+		case 'status' :
+			$sort = 'status';
+			break;
+		case 'comments' :
+			$sort = 'nbr_com';
+			break;
+		case 'date' :
+			$sort = 'submit_date';
+			break;
+		default :
+			$sort = 'submit_date';
+	}
+	
+	$get_mode = retrieve(GET, 'mode', '');
+	$mode = ($get_mode == 'asc') ? 'ASC' : 'DESC';
+	
+	if ($auth_create || $User->is_admin())
+	{
+		$Template->assign_vars(array(
+			'ADD_BUG' 		=> '&raquo; <a href="bugtracker' . url('.php?add=true') . '"><img src="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/' . get_ulang() . '/add.png" alt="' . $LANG['bugs.actions.add'] . '" title="' . $LANG['bugs.actions.add'] . '" class="valign_middle" /></a>'
+		));
+	}
+	
+	//Activation de la colonne "Actions" si administrateur
+	if ($User->is_admin() || $auth_moderate)
+	{
+		$Template->assign_vars(array(
+			'C_IS_ADMIN'	=> true
+		));
+	}
+	
+	$Template->assign_vars(array(
+		'C_DISPLAY_TYPES' 		=> $display_types,
+		'C_NO_BUGS' 			=> empty($nbr_bugs) ? true : false,
+		'PAGINATION' 			=> $Pagination->display('bugtracker' . url('.php?solved&amp;p=%d' . (!empty($get_sort) ? '&amp;sort=' . $get_sort : '') . (!empty($get_mode) ? '&amp;mode=' . $get_mode : '')), $nbr_bugs, 'p', $BUGS_CONFIG['items_per_page'], 3),
+		'L_CONFIRM_DEL_BUG' 	=> $LANG['bugs.actions.confirm.del_bug'],
+		'L_BUGS_LIST' 			=> $LANG['bugs.titles.bugs_list'],
+		'L_ID' 					=> $LANG['bugs.labels.fields.id'],
+		'L_TITLE'				=> $LANG['bugs.labels.fields.title'],
+		'L_TYPE'				=> $LANG['bugs.labels.fields.type'],
+		'L_SEVERITY'			=> $LANG['bugs.labels.fields.severity'],
+		'L_STATUS'				=> $LANG['bugs.labels.fields.status'],
+		'L_DATE'				=> $LANG['bugs.labels.fields.submit_date'],
+		'L_COMMENTS'			=> $LANG['title_com'],
+		'L_NO_BUG' 				=> $LANG['bugs.notice.no_bug'],
+		'L_NO_SOLVED_BUG'		=> $LANG['bugs.notice.no_bug_solved'],
+		'L_ACTIONS' 			=> $LANG['bugs.actions'],
+		'L_UPDATE' 				=> $LANG['update'],
+		'L_HISTORY' 			=> $LANG['bugs.actions.history'],
+		'L_DELETE' 				=> $LANG['delete'],
+		'L_UNSOLVED' 			=> $LANG['bugs.titles.unsolved_bug'],
+		'L_STATS' 				=> $LANG['bugs.titles.bugs_stats'],
+		'U_BUG_ID_TOP' 			=> url('.php?solved&amp;sort=id&amp;mode=desc'),
+		'U_BUG_ID_BOTTOM' 		=> url('.php?solved&amp;sort=id&amp;mode=asc'),
+		'U_BUG_TITLE_TOP' 		=> url('.php?solved&amp;sort=title&amp;mode=desc'),
+		'U_BUG_TITLE_BOTTOM' 	=> url('.php?solved&amp;sort=title&amp;mode=asc'),
+		'U_BUG_TYPE_TOP' 		=> url('.php?solved&amp;sort=type&amp;mode=desc'),
+		'U_BUG_TYPE_BOTTOM' 	=> url('.php?solved&amp;sort=type&amp;mode=asc'),
+		'U_BUG_SEVERITY_TOP' 	=> url('.php?solved&amp;sort=severity&amp;mode=desc'),
+		'U_BUG_SEVERITY_BOTTOM'	=> url('.php?solved&amp;sort=severity&amp;mode=asc'),
+		'U_BUG_STATUS_TOP'	 	=> url('.php?solved&amp;sort=status&amp;mode=desc'),
+		'U_BUG_STATUS_BOTTOM'	=> url('.php?solved&amp;sort=status&amp;mode=asc'),
+		'U_BUG_COMMENTS_TOP' 	=> url('.php?solved&amp;sort=comments&amp;mode=desc'),
+		'U_BUG_COMMENTS_BOTTOM'	=> url('.php?solved&amp;sort=comments&amp;mode=asc'),
+		'U_BUG_DATE_TOP' 		=> url('.php?solved&amp;sort=date&amp;mode=desc'),
+		'U_BUG_DATE_BOTTOM' 	=> url('.php?solved&amp;sort=date&amp;mode=asc')
+	));
+	
+	$Template->assign_block_vars('solved', array());
+	
+	$result = $Sql->query_while("SELECT *
+	FROM " . PREFIX . "bugtracker
+	WHERE status = 'closed' OR status = 'rejected'
+	ORDER BY " . $sort . " " . $mode .
+	$Sql->limit($Pagination->get_first_msg($BUGS_CONFIG['items_per_page'], 'p'), $BUGS_CONFIG['items_per_page']), __LINE__, __FILE__); //Bugs enregistrés.
+	while ($row = $Sql->fetch_assoc($result))
+	{
+		switch ($row['status'])
+		{
+		case 'closed' :
+			$color = $severity_color = 'style="background-color:#' . $BUGS_CONFIG['closed_bug_color'] . ';"';
+			break;
+		case 'rejected' :
+			$color = $severity_color = 'style="background-color:#' . $BUGS_CONFIG['rejected_bug_color'] . ';"';
+			break;
+		default :
+			$color = '';
+			$severity_color = 'style="background-color:#' . $BUGS_CONFIG['severity_' . $row['severity'] . '_color'] . ';"';
+		}
+		
+		//Nombre de commentaires
+		$nbr_coms = $Sql->query("SELECT number_comments FROM " . PREFIX . "comments_topic WHERE module_id = 'bugtracker' AND id_in_module = '" . $row['id'] . "'", __LINE__, __FILE__);
+
+		$Template->assign_block_vars('solved.bugclosed', array(
+			'ID'				=> $row['id'],
+			'TITLE'				=> $row['title'],
+			'TYPE'				=> !empty($row['type']) ? stripslashes($row['type']) : $LANG['bugs.notice.none'],
+			'SEVERITY'			=> $LANG['bugs.severity.' . $row['severity']],
+			'STATUS'			=> $LANG['bugs.status.' . $row['status']],
+			'COLOR' 			=> $color,
+			'SEVERITY_COLOR'	=> $severity_color,
+			'COMMENTS'			=> '<a href="bugtracker' . url('.php?view=true&id=' . $row['id'] . '&com=0#anchor_bugtracker') . '">' . (empty($nbr_coms) ? 0 : $nbr_coms) . '</a>',
+			'DATE' 				=> gmdate_format('date_format', $row['submit_date'])
+		));
+
+	}
+	$Sql->query_close($result);
+	
+	//Gestion erreur.
+	$get_error = retrieve(GET, 'error', '');
+	switch ($get_error)
+	{
+		case 'edit_success':
+		$errstr = $LANG['bugs.error.e_edit_success'];
+		$errtyp = E_USER_SUCCESS;
+		break;
+		case 'unexist_bug':
+		$errstr = $LANG['bugs.error.e_unexist_bug'];
+		$errtyp = E_USER_WARNING;
+		break;
+		default:
+		$errstr = '';
+		$errtyp = E_USER_NOTICE;
+	}
+	if (!empty($errstr))
+		$Template->put('message_helper', MessageHelper::display($errstr, $errtyp));
+}
+else if (isset($_GET['stats'])) // Statistiques
+{
+	//checking authorization
+	if (!$auth_read)
+	{
+		$error_controller = PHPBoostErrors::unexisting_page();
+		DispatchManager::redirect($error_controller);
+	}
+
+  	$Template->set_filenames(array(
+		'bugtracker' => 'bugtracker/bugtracker.tpl'
+	));
+	
+	$Template->assign_vars(array(
+		'L_BUGS_STATS' 		=> $LANG['bugs.titles.bugs_stats'],
+		'L_UNSOLVED' 		=> $LANG['bugs.titles.unsolved_bug'],
+		'L_SOLVED' 			=> $LANG['bugs.titles.solved_bug'],
+		'L_STATUS'			=> $LANG['bugs.labels.fields.status'],
+		'L_NUMBER'			=> $LANG['bugs.labels.number'],
+		'L_TOP_TEN_POSTERS'	=> $LANG['bugs.labels.top_10_posters'],
+		'L_PSEUDO'			=> $LANG['pseudo']
+	));
+	
+	$Template->assign_block_vars('stats', array());
+	
+	$result = $Sql->query_while("SELECT status, COUNT(*) as nb_bugs
+	FROM " . PREFIX . "bugtracker
+	GROUP BY status
+	ORDER BY status ASC
+	", __LINE__, __FILE__);
+	while ($row = $Sql->fetch_assoc($result))
+	{
+		$Template->assign_block_vars('stats.status', array(
+			'NAME'		=> $LANG['bugs.status.' . $row['status']],
+			'NUMBER'	=> $row['nb_bugs']
+		));
+	}
+	$Sql->query_close($result);
+	
+	$i = 1;
+	$result = $Sql->query_while("SELECT user_id, login, COUNT(*) as nb_bugs
+	FROM " . PREFIX . "bugtracker b
+	JOIN " . DB_TABLE_MEMBER . " a ON (a.user_id = b.author_id)
+	WHERE status != 'rejected'
+	GROUP BY author_id
+	ORDER BY nb_bugs DESC
+	" . $Sql->limit(0, 10), __LINE__, __FILE__);
+	while ($row = $Sql->fetch_assoc($result))
+	{
+		$Template->assign_block_vars('stats.top_poster', array(
+			'ID' => $i,
+			'U_USER_PROFILE' => UserUrlBuilder::profile($row['user_id'])->absolute(),
+			'LOGIN' => $row['login'],
+			'USER_BUGS' => $row['nb_bugs']
+		));
+
+		$i++;
+	}
+	$Sql->query_close($result);
 }
 else // Affichage de la liste
 {

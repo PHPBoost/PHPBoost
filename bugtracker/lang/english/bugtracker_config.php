@@ -33,9 +33,18 @@ $lang = array();
 
 //Types
 $lang['bugtracker.config.types.anomaly'] = 'Anomaly';
-$lang['bugtracker.config.types.bugtracker.config.types.evolution_demand'] = 'Evolution demand';
+$lang['bugtracker.config.types.evolution_demand'] = 'Evolution demand';
 $lang['bugtracker.config.categories.kernel'] = 'Kernel';
 $lang['bugtracker.config.categories.module'] = 'Module';
-$lang['bugtracker.config.categories.graphisme'] = 'Graphism';
+$lang['bugtracker.config.categories.graphism'] = 'Graphism';
 $lang['bugtracker.config.categories.installation'] = 'Installation';
+$LANG['bugtracker.config.explain.default_content'] = 'Please fill the informations below, they will be useful to treat the bug
+Operating system :
+Web navigator :
+Test version (test site, zip archive) :
+Local installation or on a web server ? :
+Link :
+----------------------------------------------------------------------
+';
+
 ?>
