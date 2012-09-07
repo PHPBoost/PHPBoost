@@ -35,7 +35,7 @@ $lang['customization'] = 'Personnalisation';
 $lang['interface'] = 'Interface';
 $lang['customization.interface'] = 'Personnalisation de l\'interface';
 $lang['customization.interface.all-themes'] = 'Tous les thèmes';
-$lang['customization.interface.select-theme'] = 'Séléctionnez le thème auquel vous souhaitez attribuer les changements';
+$lang['customization.interface.select-theme'] = 'Sélectionnez le thème auquel vous souhaitez attribuer les changements';
 $lang['customization.interface.theme-choise'] = 'Choix du thème';
 $lang['customization.interface.logo.current.change'] = 'Changer le logo';
 $lang['customization.interface.logo.current'] = 'Logo actuel';
@@ -53,6 +53,6 @@ $lang['customization.favicon.current.erased'] = '<span style="color:#B22222;font
 $lang['customization.favicon.error'] = 'Le favicon n\'a pas pû être changé';
 
 $lang['customization.editor.css-files'] = 'Editeur de fichiers CSS';
-$lang['customization.editor.css-files.select'] = 'Séléctionnez le fichier que vous souhaitez éditer';
+$lang['customization.editor.css-files.select'] = 'Sélectionnez le fichier que vous souhaitez éditer';
 $lang['customization.editor.css-files.content'] = 'Contenu du fichier';
 ?>
