@@ -75,6 +75,7 @@ $Template->put_all(array(
 	'DESCRIPTION' => wiki_unparse($_WIKI_CONFIG['index_text']),
 	'L_UPDATE' => $LANG['update'],
 	'L_RESET' => $LANG['reset'],
+	'L_PREVIEW' => $LANG['preview'],
 	'L_WIKI_MANAGEMENT' => $LANG['wiki_management'],
 	'L_WIKI_GROUPS' => $LANG['wiki_groups_config'],
 	'L_CONFIG_WIKI' => $LANG['wiki_config'],
