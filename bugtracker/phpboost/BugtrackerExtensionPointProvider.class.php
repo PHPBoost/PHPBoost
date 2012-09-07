@@ -29,6 +29,8 @@ define('BUGTRACKER_MAX_SEARCH_RESULTS', 50);
 
 class BugtrackerExtensionPointProvider extends ExtensionPointProvider
 {
+	private $sql_querier;
+	
     public function __construct() //Constructeur de la classe
     {
 		$this->sql_querier = PersistenceContext::get_sql();
@@ -40,17 +42,14 @@ class BugtrackerExtensionPointProvider extends ExtensionPointProvider
 	*/
 	function get_cache()
 	{
-		global $Sql;
-		
+		$BUGS_CONFIG = BugtrackerConfig::load();
 		$config_bugs = 'global $BUGS_CONFIG;' . "\n";
 		
-		//Récupération du tableau linéarisé dans la bdd.
-		$BUGS_CONFIG = unserialize($Sql->query("SELECT value FROM " . DB_TABLE_CONFIGS . " WHERE name = 'bugtracker'", __LINE__, __FILE__));
 		$BUGS_CONFIG = is_array($BUGS_CONFIG) ? $BUGS_CONFIG : array();
 		
 		$config_bugs .= '$BUGS_CONFIG = ' . var_export($BUGS_CONFIG, true) . ';' . "\n\n";
 		
-		return $config_bugs;	
+		return $config_bugs;
 	}
 	
 	public function home_page()

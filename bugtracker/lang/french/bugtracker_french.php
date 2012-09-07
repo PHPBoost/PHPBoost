@@ -87,6 +87,8 @@ $LANG['bugs.titles.edit_version'] = 'Edition d\'une version';
 $LANG['bugs.titles.choose_version'] = 'Version à afficher';
 $LANG['bugs.titles.solved_bug'] = 'Liste des bugs résolus';
 $LANG['bugs.titles.unsolved_bug'] = 'Liste des bugs non-résolus';
+$LANG['bugs.titles.contents_value_title'] = 'Description par défaut d\'un bug';
+$LANG['bugs.titles.contents_value'] = 'Description par défaut';
 
 //Libellés
 $LANG['bugs.labels.fields.id'] = 'ID';
@@ -170,6 +172,7 @@ Installation locale ou sur un serveur web ? :
 Lien :
 ----------------------------------------------------------------------
 ';
+$LANG['bugs.explain.contents_value'] = 'Entrez ci-dessous la description par défaut à afficher lors de l\'ouverture d\'un nouveau bug. Laissez vide pour que la description ne soit pas pré-remplie.';
 
 //MP
 $LANG['bugs.pm.assigned.title'] = '[%s] Le bug #%d vous a été assigné';

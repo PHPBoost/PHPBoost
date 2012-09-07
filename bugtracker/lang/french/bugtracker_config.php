@@ -38,7 +38,9 @@ $lang['bugtracker.config.categories.kernel'] = 'Noyau';
 $lang['bugtracker.config.categories.module'] = 'Module';
 $lang['bugtracker.config.categories.graphism'] = 'Graphisme';
 $lang['bugtracker.config.categories.installation'] = 'Installation';
-$lang['bugtracker.config.explain.default_content'] = 'Merci de nous donner les informations demandées ci-dessous, elles nous seront utiles pour la résolution du bug :
+
+//Message de contenu par défaut
+$lang['bugtracker.config.contents_value'] = 'Merci de nous donner les informations demandées ci-dessous, elles nous seront utiles pour la résolution du bug :
 Système d\'exploitation :
 Navigateur Web :
 Version de test (Site de test, archive zip) :

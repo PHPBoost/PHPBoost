@@ -48,19 +48,26 @@ class BugtrackerHomePageExtensionPoint implements HomePageExtensionPoint
 	
 	private function get_view()
 	{
-		global $User, $Cache, $Bread_crumb, $Errorh, $BUGS_CONFIG, $LANG, $Session;
+		global $User, $Cache, $Bread_crumb, $Errorh, $LANG, $Session;
+		
+		$bugtracker_config = BugtrackerConfig::load();
 		
 		//Configuration des authorisations
-		$authorizations = $BUGS_CONFIG['auth'];
+		$authorizations = $bugtracker_config->get_authorizations();
+		$items_per_page = $bugtracker_config->get_items_per_page();
+		$comments_activated = $bugtracker_config->get_comments_activated();
+		$types = $bugtracker_config->get_types();
+		$rejected_bug_color = $bugtracker_config->get_rejected_bug_color();
+		$closed_bug_color = $bugtracker_config->get_closed_bug_color();
 		
-		$display_types = sizeof($BUGS_CONFIG['types']) > 1 ? true : false;
+		$display_types = sizeof($types) > 1 ? true : false;
 		
 		require_once(PATH_TO_ROOT . '/bugtracker/bugtracker_begin.php');
 
 		$tpl = new FileTemplate('bugtracker/bugtracker.tpl');
         
 		//checking authorization
-		if (!$User->check_auth($authorizations, BUG_READ_AUTH_BIT))
+		if (!$User->check_auth($authorizations, BugtrackerConfig::BUG_READ_AUTH_BIT))
 		{
 			$error_controller = PHPBoostErrors::unexisting_page();
 			DispatchManager::redirect($error_controller);
@@ -102,26 +109,31 @@ class BugtrackerHomePageExtensionPoint implements HomePageExtensionPoint
 		$get_mode = retrieve(GET, 'mode', '');
 		$mode = ($get_mode == 'asc') ? 'ASC' : 'DESC';
 		
-		if ($User->check_auth($authorizations, BUG_CREATE_AUTH_BIT) || $User->check_level(User::ADMIN_LEVEL))
+		if ($User->check_auth($authorizations, BugtrackerConfig::BUG_CREATE_AUTH_BIT) || $User->check_level(User::ADMIN_LEVEL))
 		{
 			$tpl->put_all(array(
 				'ADD_BUG' 	=> '&raquo; <a href="bugtracker' . url('.php?add=true') . '"><img src="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/' . get_ulang() . '/add.png" alt="' . $LANG['bugs.actions.add'] . '" title="' . $LANG['bugs.actions.add'] . '" class="valign_middle" /></a>'
 			));
 		}
 		
+		$no_bugs_colspan = 6;
 		//Activation de la colonne "Actions" si administrateur
-		if ($User->check_level(User::ADMIN_LEVEL) || $User->check_auth($authorizations, BUG_MODERATE_AUTH_BIT))
+		if ($User->check_level(User::ADMIN_LEVEL) || $User->check_auth($authorizations, BugtrackerConfig::BUG_MODERATE_AUTH_BIT))
 		{
 			$tpl->put_all(array(
 				'C_IS_ADMIN'	=> true
 			));
+			$no_bugs_colspan = $no_bugs_colspan + 1;
 		}
 		
-		$types = $BUGS_CONFIG['types'];
+		if ($comments_activated == true) $no_bugs_colspan = $no_bugs_colspan + 1;
+		
 		$tpl->put_all(array(
 			'C_DISPLAY_TYPES' 		=> $display_types,
 			'C_NO_BUGS' 			=> empty($nbr_bugs) ? true : false,
-			'PAGINATION' 			=> $Pagination->display('bugtracker' . url('.php?p=%d' . (!empty($get_sort) ? '&amp;sort=' . $get_sort : '') . (!empty($get_mode) ? '&amp;mode=' . $get_mode : '')), $nbr_bugs, 'p', $BUGS_CONFIG['items_per_page'], 3),
+			'NO_BUGS_COLSPAN' 		=> $no_bugs_colspan,
+			'C_COM' 				=> ($comments_activated == true) ? true : false,
+			'PAGINATION' 			=> $Pagination->display('bugtracker' . url('.php?p=%d' . (!empty($get_sort) ? '&amp;sort=' . $get_sort : '') . (!empty($get_mode) ? '&amp;mode=' . $get_mode : '')), $nbr_bugs, 'p', $items_per_page, 3),
 			'L_CONFIRM_DEL_BUG' 	=> $LANG['bugs.actions.confirm.del_bug'],
 			'L_BUGS_LIST' 			=> $LANG['bugs.titles.bugs_list'],
 			'L_ID' 					=> $LANG['bugs.labels.fields.id'],
@@ -160,20 +172,20 @@ class BugtrackerHomePageExtensionPoint implements HomePageExtensionPoint
 		FROM " . PREFIX . "bugtracker
 		WHERE status <> 'closed' AND status != 'rejected'
 		ORDER BY " . $sort . " " . $mode .
-		$this->sql_querier->limit($Pagination->get_first_msg($BUGS_CONFIG['items_per_page'], 'p'), $BUGS_CONFIG['items_per_page']), __LINE__, __FILE__); //Bugs enregistrés.
+		$this->sql_querier->limit($Pagination->get_first_msg($items_per_page, 'p'), $items_per_page), __LINE__, __FILE__); //Bugs enregistrés.
 		while ($row = $this->sql_querier->fetch_assoc($result))
 		{
 			switch ($row['status'])
 			{
 			case 'closed' :
-				$color = $severity_color = 'style="background-color:#' . $BUGS_CONFIG['closed_bug_color'] . ';"';
+				$color = $severity_color = 'style="background-color:#' . $closed_bug_color . ';"';
 				break;
 			case 'rejected' :
-				$color = $severity_color = 'style="background-color:#' . $BUGS_CONFIG['rejected_bug_color'] . ';"';
+				$color = $severity_color = 'style="background-color:#' . $rejected_bug_color . ';"';
 				break;
 			default :
 				$color = '';
-				$severity_color = 'style="background-color:#' . $BUGS_CONFIG['severity_' . $row['severity'] . '_color'] . ';"';
+				$severity_color = 'style="background-color:#' . $bugtracker_config->get_severity_color($row['severity']) . ';"';
 			}
 			
 			//Nombre de commentaires

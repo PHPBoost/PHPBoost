@@ -28,7 +28,6 @@
 if (defined('PHPBOOST') !== true)
     exit;
 
-require_once('bugtracker_constants.php');
 load_module_lang('bugtracker'); //Chargement de la langue du module.
 
 $Bread_crumb->add($LANG['bugs.module_title'], url('bugtracker.php'));
@@ -54,6 +53,14 @@ elseif (isset($_GET['history']) && is_numeric($id))
 elseif (isset($_GET['view']) && is_numeric($id))
 {
 	$Bread_crumb->add($LANG['bugs.titles.view_bug'] . ' #' . $id, url('bugtracker.php?view=true&amp;id=' . $id));
+}
+elseif (isset($_GET['solved']))
+{
+	$Bread_crumb->add($LANG['bugs.titles.solved_bug'], url('bugtracker.php?solved'));
+}
+elseif (isset($_GET['stats']))
+{
+	$Bread_crumb->add($LANG['bugs.titles.bugs_stats'], url('bugtracker.php?stats'));
 }
 
 //Chargement du cache

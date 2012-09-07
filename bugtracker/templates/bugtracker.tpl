@@ -85,11 +85,13 @@
 						<a href="{PATH_TO_ROOT}/bugtracker/bugtracker{U_BUG_STATUS_TOP}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
 						<a href="{PATH_TO_ROOT}/bugtracker/bugtracker{U_BUG_STATUS_BOTTOM}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
 					</th>
+					# IF C_COM #
 					<th style="width:84px;text-align:center;">
 						{L_COMMENTS}<br />
 						<a href="{PATH_TO_ROOT}/bugtracker/bugtracker{U_BUG_COMMENTS_TOP}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
 						<a href="{PATH_TO_ROOT}/bugtracker/bugtracker{U_BUG_COMMENTS_BOTTOM}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
 					</th>
+					# ENDIF #
 					<th style="width:63px;text-align:center;">
 						{L_DATE}<br />
 						<a href="{PATH_TO_ROOT}/bugtracker/bugtracker{U_BUG_DATE_TOP}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
@@ -103,7 +105,7 @@
 				</tr>
 				# IF C_NO_BUGS #
 				<tr style="text-align:center;"> 
-					<td colspan="# IF C_DISPLAY_TYPES ## IF C_IS_ADMIN #8# ELSE #7# ENDIF ## ELSE ## IF C_IS_ADMIN #7# ELSE #6# ENDIF ## ENDIF #" class="row2">
+					<td colspan="{NO_BUGS_COLSPAN}" class="row2">
 						{L_NO_BUG}
 					</td>
 				</tr>
@@ -127,9 +129,11 @@
 					<td class="row2" {list.bug.COLOR}> 
 						{list.bug.STATUS}
 					</td>
+					# IF C_COM #
 					<td class="row2" {list.bug.COLOR}> 
 						{list.bug.COMMENTS}
 					</td>
+					# ENDIF #
 					<td class="row2" {list.bug.COLOR}>
 						{list.bug.DATE}
 					</td>
@@ -212,11 +216,13 @@
 						<a href="{PATH_TO_ROOT}/bugtracker/bugtracker{U_BUG_STATUS_TOP}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
 						<a href="{PATH_TO_ROOT}/bugtracker/bugtracker{U_BUG_STATUS_BOTTOM}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
 					</th>
+					# IF C_COM #
 					<th style="width:84px;text-align:center;">
 						{L_COMMENTS}<br />
 						<a href="{PATH_TO_ROOT}/bugtracker/bugtracker{U_BUG_COMMENTS_TOP}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
 						<a href="{PATH_TO_ROOT}/bugtracker/bugtracker{U_BUG_COMMENTS_BOTTOM}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
 					</th>
+					# ENDIF #
 					<th style="width:63px;text-align:center;">
 						{L_DATE}<br />
 						<a href="{PATH_TO_ROOT}/bugtracker/bugtracker{U_BUG_DATE_TOP}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
@@ -230,7 +236,7 @@
 				</tr>
 				# IF C_NO_BUGS #
 				<tr style="text-align:center;"> 
-					<td colspan="# IF C_DISPLAY_TYPES ## IF C_IS_ADMIN #8# ELSE #7# ENDIF ## ELSE ## IF C_IS_ADMIN #7# ELSE #6# ENDIF ## ENDIF #" class="row2">
+					<td colspan="{NO_BUGS_COLSPAN}" class="row2">
 						{L_NO_SOLVED_BUG}
 					</td>
 				</tr>
@@ -254,9 +260,11 @@
 						<td class="row2" {solved.bugclosed.COLOR}> 
 							{solved.bugclosed.STATUS}
 						</td>
+						# IF C_COM #
 						<td class="row2" {solved.bugclosed.COLOR}>
 							{solved.bugclosed.COMMENTS}
 						</td>
+						# ENDIF #
 						<td class="row2" {solved.bugclosed.COLOR}>
 							{solved.bugclosed.DATE}
 						</td>
@@ -319,16 +327,24 @@
 						{L_NUMBER}
 					</th>
 				</tr>
-				# START stats.status #
+				# IF C_NO_BUGS #
 				<tr style="text-align:center;"> 
-					<td class="row2"> 
-						<b>{stats.status.NAME}</b>
-					</td>
-					<td class="row2"> 
-						{stats.status.NUMBER}
+					<td colspan="2" class="row2">
+						{L_NO_BUG}
 					</td>
 				</tr>
-				# END stats.status #
+				# ELSE #
+					# START stats.status #
+					<tr style="text-align:center;"> 
+						<td class="row2"> 
+							<b>{stats.status.NAME}</b>
+						</td>
+						<td class="row2"> 
+							{stats.status.NUMBER}
+						</td>
+					</tr>
+					# END stats.status #
+				# ENDIF #
 			</table>
 			<br /><br />
 			<table class="module_table">
@@ -347,20 +363,28 @@
 					<td class="row1" style="text-align:center;">
 						{L_NUMBER}
 					</td>
-				</tr>			
-				# START stats.top_poster #			
-				<tr>
-					<td class="row2" style="text-align:center;">
-						{stats.top_poster.ID}
+				</tr>
+				# IF C_NO_BUGS_NOT_REJECTED #
+				<tr style="text-align:center;"> 
+					<td colspan="3" class="row2">
+						{L_NO_BUG}
 					</td>
-					<td class="row2" style="text-align:center;">
-						<a href="{stats.top_poster.U_USER_PROFILE}">{stats.top_poster.LOGIN}</a>
-					</td>
-					<td class="row2" style="text-align:center;">
-						{stats.top_poster.USER_BUGS}
-					</td>
-				</tr>			
-				# END stats.top_poster #
+				</tr>
+				# ELSE #
+					# START stats.top_poster #			
+					<tr>
+						<td class="row2" style="text-align:center;">
+							{stats.top_poster.ID}
+						</td>
+						<td class="row2" style="text-align:center;">
+							<a href="{stats.top_poster.U_USER_PROFILE}">{stats.top_poster.LOGIN}</a>
+						</td>
+						<td class="row2" style="text-align:center;">
+							{stats.top_poster.USER_BUGS}
+						</td>
+					</tr>			
+					# END stats.top_poster #
+				# ENDIF #
 			</table>
 		</div>
 		<span class="warning" style="text-align:center;">

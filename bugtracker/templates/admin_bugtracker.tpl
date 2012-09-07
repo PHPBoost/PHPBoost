@@ -9,7 +9,7 @@
 			</ul>
 		</div>
 		
-		# START list #
+		# START config #
 		<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/lib/js/phpboost/bbcode.js"></script>
 		<script type="text/javascript">
 		<!--
@@ -157,11 +157,25 @@
 						</dd>
 					</dl>
 					<dl>
-						<dt><label for="activ_com">{L_ACTIV_COM}</label></dt>
+						<dt><label for="comments_activated">{L_ACTIV_COM}</label></dt>
 						<dd> 
-							<input type="checkbox" name="activ_com" {COM_CHECKED} />
+							<input type="checkbox" name="comments_activated" {COM_CHECKED} />
 						</dd>
 					</dl>
+				</fieldset>
+				
+				<fieldset>
+					<legend>{L_CONTENT_VALUE_TITLE}</legend>
+					<span>{L_CONTENT_VALUE_EXPLAIN}</span><br /><br />
+					<label for="contents_value">{L_CONTENT_VALUE}</label>
+					<div style="position:relative;display:none;" id="loading_previewcontents_value">
+						<div style="margin:auto;margin-top:90px;width:100%;text-align:center;position:absolute;"><img src="{PATH_TO_ROOT}/templates/base/images/loading.gif" alt="" /></div>
+					</div>
+					<div style="display:none;" class="xmlhttprequest_preview" id="xmlhttprequest_previewcontents_value"></div>
+					{CONTENTS_KERNEL_EDITOR}
+					<label><textarea rows="8" cols="86" id="contents_value" name="contents_value">{CONTENTS_VALUE}</textarea></label>
+					<div style="text-align:center;"><input type="button" value="{L_PREVIEW}" onclick="XMLHttpRequest_preview('contents_value');" class="submit" /></div>
+					<br />
 				</fieldset>
 				
 				<fieldset>
@@ -366,7 +380,7 @@
 				</fieldset>
 			</form>
 		</div>
-		# END list #
+		# END config #
 		
 		# START edit_type #
 		<div id="admin_contents">
