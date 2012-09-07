@@ -29,28 +29,24 @@ require_once('../admin/admin_begin.php');
 load_module_lang('bugtracker'); //Chargement de la langue du module.
 define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
-include_once('bugtracker_constants.php');
 
-//Chargement du cache
-$Cache->load('bugtracker');
+$bugtracker_config = BugtrackerConfig::load();
+
+$types = $bugtracker_config->get_types();
+$categories = $bugtracker_config->get_categories();
+$versions = $bugtracker_config->get_versions();
 
 $id = retrieve(GET, 'id', 0, TINTEGER);
 $id_post = retrieve(POST, 'id', 0, TINTEGER);
 
 if (!empty($_POST['valid_add_type']))
 {
-	$type = retrieve(POST, 'type', '');
-	
-	$config_bugs = $BUGS_CONFIG;
-	
-	if (!empty($type))
+	if (!empty($_POST['type']))
 	{
-		$config_bugs['types'][] = $type;
-
-		$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($config_bugs)) . "' WHERE name = 'bugtracker'", __LINE__, __FILE__);
+		$types[] = retrieve(POST, 'type', '');
+		$bugtracker_config->set_types($types);
 		
-		###### Régénération du cache #######
-		$Cache->Generate_module_file('bugtracker');
+		BugtrackerConfig::save();
 		
 		AppContext::get_response()->redirect(HOST . SCRIPT . '?error=success#message_helper');
 	}
@@ -65,14 +61,12 @@ else if (!empty($_POST['valid_edit_type']) && is_numeric($id_post))
 	if (!empty($type))
 	{
 		//Modification du type en question dans la liste des bugs
-		$Sql->query_inject("UPDATE " . PREFIX . "bugtracker SET type = '" . addslashes($type) . "' WHERE type = '" . addslashes($BUGS_CONFIG['types'][$id_post]) . "'", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE " . PREFIX . "bugtracker SET type = '" . addslashes($type) . "' WHERE type = '" . addslashes($types[$id_post]) . "'", __LINE__, __FILE__);
 		
-		$BUGS_CONFIG['types'][$id_post] = $type;
+		$types[$id_post] = $type;
+		$bugtracker_config->set_types($types);
 		
-		$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($BUGS_CONFIG)) . "' WHERE name = 'bugtracker'", __LINE__, __FILE__);
-		
-		###### Régénération du cache #######
-		$Cache->Generate_module_file('bugtracker');
+		BugtrackerConfig::save();
 
 		AppContext::get_response()->redirect(HOST . SCRIPT . '?error=edit_type_success#message_helper');
 	}
@@ -81,13 +75,11 @@ else if (!empty($_POST['valid_edit_type']) && is_numeric($id_post))
 }
 else if (isset($_GET['edit_type']) && is_numeric($id)) // edition d'un type
 {
-	$Template->set_filenames(array(
-		'admin_bugtracker'=> 'bugtracker/admin_bugtracker.tpl'
-	));
+	$Template = new FileTemplate('bugtracker/admin_bugtracker.tpl');
 	
 	$Template->assign_block_vars('edit_type', array(
 		'ID'	=> $id,
-		'TYPE'	=> stripslashes($BUGS_CONFIG['types'][$id])
+		'TYPE'	=> stripslashes($types[$id])
 	));	
 	
 	$Template->assign_vars(array(
@@ -99,7 +91,6 @@ else if (isset($_GET['edit_type']) && is_numeric($id)) // edition d'un type
 		'L_TYPE'				=> $LANG['bugs.labels.fields.type'],
 		'L_UPDATE' 				=> $LANG['update'],
 		'L_RESET' 				=> $LANG['reset'],
-		'TOKEN'					=> $Session->get_token()
 	));
 	
 	//Gestion erreur.
@@ -115,39 +106,31 @@ else if (isset($_GET['edit_type']) && is_numeric($id)) // edition d'un type
 	if (!empty($errstr))
 	$Template->put('message_helper', MessageHelper::display($errstr, E_USER_NOTICE));
 	
-	$Template->pparse('admin_bugtracker');
+	$Template->display(); // traitement du modele
 }
 else if (isset($_GET['delete_type']) && is_numeric($id)) //Suppression d'un type
 {
 	$Session->csrf_get_protect(); //Protection csrf
 	
 	//Suppression du type en question dans la liste des bugs
-	$Sql->query_inject("UPDATE " . PREFIX . "bugtracker SET type = '' WHERE type = '" . addslashes($BUGS_CONFIG['types'][$id]) . "'", __LINE__, __FILE__);
+	$Sql->query_inject("UPDATE " . PREFIX . "bugtracker SET type = '' WHERE type = '" . addslashes($types[$id]) . "'", __LINE__, __FILE__);
 	
-	//On supprime le type de la liste
-	unset($BUGS_CONFIG['types'][$id]);
+	//On supprime la catégorie de la liste
+	unset($types[$id]);
+	$bugtracker_config->set_types($types);
 	
-	$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($BUGS_CONFIG)) . "' WHERE name = 'bugtracker'", __LINE__, __FILE__);
-	
-	//Mise à jour de la liste des bugs dans le cache de la configuration.
-	$Cache->Generate_module_file('bugtracker');
+	BugtrackerConfig::save();
 
 	AppContext::get_response()->redirect(HOST . SCRIPT . '?error=success#message_helper');
 }
 else if (!empty($_POST['valid_add_category']))
 {
-	$category = retrieve(POST, 'category', '');
-	
-	$config_bugs = $BUGS_CONFIG;
-	
-	if (!empty($category))
+	if (!empty($_POST['category']))
 	{
-		$config_bugs['categories'][] = $category;
-
-		$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($config_bugs)) . "' WHERE name = 'bugtracker'", __LINE__, __FILE__);
+		$categories[] = retrieve(POST, 'category', '');
+		$bugtracker_config->set_categories($categories);
 		
-		###### Régénération du cache #######
-		$Cache->Generate_module_file('bugtracker');
+		BugtrackerConfig::save();
 		
 		AppContext::get_response()->redirect(HOST . SCRIPT . '?error=success#message_helper');
 	}
@@ -162,14 +145,12 @@ else if (!empty($_POST['valid_edit_category']) && is_numeric($id_post))
 	if (!empty($category))
 	{
 		//Modification de la categorie en question dans la liste des bugs
-		$Sql->query_inject("UPDATE " . PREFIX . "bugtracker SET category = '" . addslashes($category) . "' WHERE category = '" . addslashes($BUGS_CONFIG['categories'][$id_post]) . "'", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE " . PREFIX . "bugtracker SET category = '" . addslashes($category) . "' WHERE category = '" . addslashes($categories[$id_post]) . "'", __LINE__, __FILE__);
 		
-		$BUGS_CONFIG['categories'][$id_post] = $category;
+		$categories[$id_post] = $category;
+		$bugtracker_config->set_categories($categories);
 		
-		$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($BUGS_CONFIG)) . "' WHERE name = 'bugtracker'", __LINE__, __FILE__);
-		
-		###### Régénération du cache #######
-		$Cache->Generate_module_file('bugtracker');
+		BugtrackerConfig::save();
 
 		AppContext::get_response()->redirect(HOST . SCRIPT . '?error=edit_category_success#message_helper');
 	}
@@ -178,13 +159,11 @@ else if (!empty($_POST['valid_edit_category']) && is_numeric($id_post))
 }
 else if (isset($_GET['edit_category']) && is_numeric($id)) // edition d'une catégorie
 {
-	$Template->set_filenames(array(
-		'admin_bugtracker'=> 'bugtracker/admin_bugtracker.tpl'
-	));
+	$Template = new FileTemplate('bugtracker/admin_bugtracker.tpl');
 	
 	$Template->assign_block_vars('edit_category', array(
 		'ID'		=> $id,
-		'CATEGORY'	=> stripslashes($BUGS_CONFIG['categories'][$id])
+		'CATEGORY'	=> stripslashes($categories[$id])
 	));	
 	
 	$Template->assign_vars(array(
@@ -195,8 +174,7 @@ else if (isset($_GET['edit_category']) && is_numeric($id)) // edition d'une caté
 		'L_REQUIRE_CATEGORY' 	=> $LANG['bugs.notice.require_category'],
 		'L_CATEGORY'			=> $LANG['bugs.labels.fields.category'],
 		'L_UPDATE' 				=> $LANG['update'],
-		'L_RESET' 				=> $LANG['reset'],
-		'TOKEN'					=> $Session->get_token()
+		'L_RESET' 				=> $LANG['reset']
 	));
 	
 	//Gestion erreur.
@@ -212,43 +190,35 @@ else if (isset($_GET['edit_category']) && is_numeric($id)) // edition d'une caté
 	if (!empty($errstr))
 	$Template->put('message_helper', MessageHelper::display($errstr, E_USER_NOTICE));
 	
-	$Template->pparse('admin_bugtracker');
+	$Template->display(); // traitement du modele
 }
 else if (isset($_GET['delete_category']) && is_numeric($id)) //Suppression d'une catégorie
 {
 	$Session->csrf_get_protect(); //Protection csrf
 	
 	//Suppression de la catégorie en question dans la liste des bugs
-	$Sql->query_inject("UPDATE " . PREFIX . "bugtracker SET category = '' WHERE category = '" . addslashes($BUGS_CONFIG['categories'][$id]) . "'", __LINE__, __FILE__);
+	$Sql->query_inject("UPDATE " . PREFIX . "bugtracker SET category = '' WHERE category = '" . addslashes($categories[$id]) . "'", __LINE__, __FILE__);
 	
 	//On supprime la catégorie de la liste
-	unset($BUGS_CONFIG['categories'][$id]);
+	unset($categories[$id]);
+	$bugtracker_config->set_categories($categories);
 	
-	$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($BUGS_CONFIG)) . "' WHERE name = 'bugtracker'", __LINE__, __FILE__);
-	
-	//Mise à jour de la liste des bugs dans le cache de la configuration.
-	$Cache->Generate_module_file('bugtracker');
+	BugtrackerConfig::save();
 
 	AppContext::get_response()->redirect(HOST . SCRIPT . '?error=success#message_helper');
 }
 else if (!empty($_POST['valid_add_version']))
 {
-	$version = retrieve(POST, 'version', '');
-	$detected_in = (retrieve(POST, 'detected_in', '') == 'on') ? 1 : 0;
-	$fixed_in = (retrieve(POST, 'fixed_in', '') == 'on') ? 1 : 0;
-	
-	if (!empty($version))
+	if (!empty($_POST['version']))
 	{
-		$BUGS_CONFIG['versions'][] = array(
-			'name'			=> $version,
-			'detected_in' 	=> $detected_in,
-			'fixed_in' 		=> $fixed_in
+		$versions[] = array(
+			'name'			=> retrieve(POST, 'version', ''),
+			'detected_in' 	=> retrieve(POST, 'detected_in', false),
+			'fixed_in' 		=> retrieve(POST, 'fixed_in', false)
 		);
-
-		$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($BUGS_CONFIG)) . "' WHERE name = 'bugtracker'", __LINE__, __FILE__);
+		$bugtracker_config->set_versions($versions);
 		
-		###### Régénération du cache #######
-		$Cache->Generate_module_file('bugtracker');
+		BugtrackerConfig::save();
 		
 		AppContext::get_response()->redirect(HOST . SCRIPT . '?error=success#message_helper');
 	}
@@ -258,26 +228,22 @@ else if (!empty($_POST['valid_add_version']))
 else if (!empty($_POST['valid_edit_version']) && is_numeric($id_post))
 {
 	$version = retrieve(POST, 'version', '');
-	$detected_in = (retrieve(POST, 'detected_in', '') == 'on') ? 1 : 0;
-	$fixed_in = (retrieve(POST, 'fixed_in', '') == 'on') ? 1 : 0;
 	
 	//On met à jour
 	if (!empty($version))
 	{
 		//Modification de la version en question dans la liste des bugs
-		$Sql->query_inject("UPDATE " . PREFIX . "bugtracker SET detected_in = '" . addslashes($version) . "' WHERE detected_in = '" . addslashes($BUGS_CONFIG['versions'][$id_post]['name']) . "'", __LINE__, __FILE__);
-		$Sql->query_inject("UPDATE " . PREFIX . "bugtracker SET fixed_in = '" . addslashes($version) . "' WHERE fixed_in = '" . addslashes($BUGS_CONFIG['versions'][$id_post]['name']) . "'", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE " . PREFIX . "bugtracker SET detected_in = '" . addslashes($version) . "' WHERE detected_in = '" . addslashes($versions[$id_post]['name']) . "'", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE " . PREFIX . "bugtracker SET fixed_in = '" . addslashes($version) . "' WHERE fixed_in = '" . addslashes($versions[$id_post]['name']) . "'", __LINE__, __FILE__);
 		
-		$BUGS_CONFIG['versions'][$id_post] = array(
+		$versions[$id_post] = array(
 			'name' 			=> $version,
-			'detected_in' 	=> $detected_in,
-			'fixed_in' 		=> $fixed_in
+			'detected_in' 	=> retrieve(POST, 'detected_in', false),
+			'fixed_in' 		=> retrieve(POST, 'fixed_in', false)
 		);
+		$bugtracker_config->set_versions($versions);
 		
-		$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($BUGS_CONFIG)) . "' WHERE name = 'bugtracker'", __LINE__, __FILE__);
-		
-		###### Régénération du cache #######
-		$Cache->Generate_module_file('bugtracker');
+		BugtrackerConfig::save();
 
 		AppContext::get_response()->redirect(HOST . SCRIPT . '?error=edit_version_success#message_helper');
 	}
@@ -286,15 +252,13 @@ else if (!empty($_POST['valid_edit_version']) && is_numeric($id_post))
 }
 else if (isset($_GET['edit_version']) && is_numeric($id)) // edition d'une version
 {
-	$Template->set_filenames(array(
-		'admin_bugtracker'=> 'bugtracker/admin_bugtracker.tpl'
-	));
+	$Template = new FileTemplate('bugtracker/admin_bugtracker.tpl');
 	
 	$Template->assign_block_vars('edit_version', array(
-		'ID'		=> $id,
-		'VERSION'		=> stripslashes($BUGS_CONFIG['versions'][$id]['name']),
-		'DETECTED_IN'	=> ($BUGS_CONFIG['versions'][$id]['detected_in'] == true) ? 'checked=checked' : '',
-		'FIXED_IN'		=> ($BUGS_CONFIG['versions'][$id]['fixed_in'] == true) ? 'checked=checked' : '',
+		'ID'			=> $id,
+		'VERSION'		=> stripslashes($versions[$id]['name']),
+		'DETECTED_IN'	=> ($versions[$id]['detected_in'] == true) ? 'checked=checked' : '',
+		'FIXED_IN'		=> ($versions[$id]['fixed_in'] == true) ? 'checked=checked' : '',
 	));	
 	
 	$Template->assign_vars(array(
@@ -307,8 +271,7 @@ else if (isset($_GET['edit_version']) && is_numeric($id)) // edition d'une versi
 		'L_VERSION_DETECTED_IN'	=> $LANG['bugs.labels.fields.version_detected_in'],
 		'L_VERSION_FIXED_IN'	=> $LANG['bugs.labels.fields.version_fixed_in'],
 		'L_UPDATE' 				=> $LANG['update'],
-		'L_RESET' 				=> $LANG['reset'],
-		'TOKEN'					=> $Session->get_token()
+		'L_RESET' 				=> $LANG['reset']
 	));
 	
 	//Gestion erreur.
@@ -324,78 +287,63 @@ else if (isset($_GET['edit_version']) && is_numeric($id)) // edition d'une versi
 	if (!empty($errstr))
 	$Template->put('message_helper', MessageHelper::display($errstr, E_USER_NOTICE));
 	
-	$Template->pparse('admin_bugtracker');
+	$Template->display(); // traitement du modele	
 }
 else if (isset($_GET['delete_version']) && is_numeric($id)) //Suppression d'une version
 {
 	$Session->csrf_get_protect(); //Protection csrf
 	
 	//Suppression de la version en question dans la liste des bugs
-	$Sql->query_inject("UPDATE " . PREFIX . "bugtracker SET detected_in = '' WHERE detected_in = '" . addslashes($BUGS_CONFIG['versions'][$id]['name']) . "'", __LINE__, __FILE__);
-	$Sql->query_inject("UPDATE " . PREFIX . "bugtracker SET fixed_in = '' WHERE fixed_in = '" . addslashes($BUGS_CONFIG['versions'][$id]['name']) . "'", __LINE__, __FILE__);
+	$Sql->query_inject("UPDATE " . PREFIX . "bugtracker SET detected_in = '' WHERE detected_in = '" . addslashes($versions[$id]['name']) . "'", __LINE__, __FILE__);
+	$Sql->query_inject("UPDATE " . PREFIX . "bugtracker SET fixed_in = '' WHERE fixed_in = '" . addslashes($versions[$id]['name']) . "'", __LINE__, __FILE__);
 	
 	//On supprime la version de la liste
-	unset($BUGS_CONFIG['versions'][$id]);
+	unset($versions[$id]);
+	$bugtracker_config->set_versions($versions);
 	
-	$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($BUGS_CONFIG)) . "' WHERE name = 'bugtracker'", __LINE__, __FILE__);
-	
-	//Mise à jour de la liste des bugs dans le cache de la configuration.
-	$Cache->Generate_module_file('bugtracker');
+	BugtrackerConfig::save();
 
 	AppContext::get_response()->redirect(HOST . SCRIPT . '?error=success#message_helper');
 }
 else if (!empty($_POST['valid']))
 {
-	$config_bugs = array();
+	if (!empty($_POST['items_per_page'])) {
+		$bugtracker_config = BugtrackerConfig::load();
 	
-	$fields = array('items_per_page', 'severity_minor_color', 'severity_major_color', 'severity_critical_color', 'rejected_bug_color', 'closed_bug_color', 'activ_com');
-	
-	foreach ($fields as $field)
-	{
-		$config_bugs[$field] = retrieve(POST, $field, '');
-		if ($field == 'activ_com' && $config_bugs[$field] == 'on')
-			$config_bugs[$field] = 1;
-		else if ($field == 'activ_com' && $config_bugs[$field] == 'off')
-			$config_bugs[$field] = 0;
-	}
-	
-	$config_bugs['types'] = $BUGS_CONFIG['types'];
-	$config_bugs['versions'] = $BUGS_CONFIG['versions'];
-	$config_bugs['categories'] = $BUGS_CONFIG['categories'];
-	$config_bugs['auth'] = Authorizations::build_auth_array_from_form(BUG_READ_AUTH_BIT, BUG_CREATE_AUTH_BIT, BUG_CREATE_ADVANCED_AUTH_BIT, BUG_MODERATE_AUTH_BIT);
-	
-	if ($config_bugs == $BUGS_CONFIG)
-		AppContext::get_response()->redirect(HOST . SCRIPT);
+		$bugtracker_config->set_items_per_page(retrieve(POST, 'items_per_page', 0));
+		$bugtracker_config->set_severity_minor_color(retrieve(POST, 'severity_minor_color', ''));
+		$bugtracker_config->set_severity_major_color(retrieve(POST, 'severity_major_color', ''));
+		$bugtracker_config->set_severity_critical_color(retrieve(POST, 'severity_critical_color', ''));
+		$bugtracker_config->set_rejected_bug_color(retrieve(POST, 'rejected_bug_color', ''));
+		$bugtracker_config->set_closed_bug_color(retrieve(POST, 'closed_bug_color', ''));
+		$bugtracker_config->set_comments_activated(retrieve(POST, 'comments_activated', false));
+		$bugtracker_config->set_versions(retrieve(POST, 'versions', $bugtracker_config->get_versions()));
+		$bugtracker_config->set_types(retrieve(POST, 'types', $bugtracker_config->get_types()));
+		$bugtracker_config->set_categories(retrieve(POST, 'categories', $bugtracker_config->get_categories()));
+		$bugtracker_config->set_contents_value(retrieve(POST, 'contents_value', '', TSTRING_AS_RECEIVED));
+		$bugtracker_config->set_authorizations(Authorizations::build_auth_array_from_form(BugtrackerConfig::BUG_READ_AUTH_BIT, BugtrackerConfig::BUG_CREATE_AUTH_BIT, BugtrackerConfig::BUG_CREATE_ADVANCED_AUTH_BIT, BugtrackerConfig::BUG_MODERATE_AUTH_BIT));
+
+		BugtrackerConfig::save();
 		
-	if (!empty($config_bugs['items_per_page']))
-	{
-		$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($config_bugs)) . "' WHERE name = 'bugtracker'", __LINE__, __FILE__);
-		
-		###### Régénération du cache #######
-		$Cache->Generate_module_file('bugtracker');
-		
-		AppContext::get_response()->redirect(HOST . SCRIPT . '?error=success#message_helper');
+		AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT . '?error=success#message_helper');
 	}
 	else
-	AppContext::get_response()->redirect(HOST . SCRIPT . '?error=require_items_per_page#message_helper');
+		AppContext::get_response()->redirect(HOST . SCRIPT . '?error=require_items_per_page#message_helper');
 }
 //Sinon on rempli le formulaire
 else	
-{		
-	$Template->set_filenames(array(
-		'admin_bugtracker'=> 'bugtracker/admin_bugtracker.tpl'
-	));
+{	
+	$Template = new FileTemplate('bugtracker/admin_bugtracker.tpl');
 	
-	$Template->assign_block_vars('list', array());
+	$authorizations = $bugtracker_config->get_authorizations();
 	
-	$Cache->load('bugtracker');
+	$contents_editor = AppContext::get_content_formatting_service()->get_default_editor();
+	$contents_editor->set_identifier('contents_value');
 	
-	$BUGS_CONFIG['auth'] = isset($BUGS_CONFIG['auth']) && is_array($BUGS_CONFIG['auth']) ? $BUGS_CONFIG['auth'] : array();
-	
-	$Template->assign_vars(array(
-		'C_NO_VERSION' 					=> empty($BUGS_CONFIG['versions']) ? true : false,
-		'C_NO_TYPE' 					=> empty($BUGS_CONFIG['types']) ? true : false,
-		'C_NO_CATEGORY' 				=> empty($BUGS_CONFIG['categories']) ? true : false,
+	$Template->put_all(array(
+		'C_NO_VERSION' 					=> empty($versions) ? true : false,
+		'C_NO_TYPE' 					=> empty($types) ? true : false,
+		'C_NO_CATEGORY' 				=> empty($categories) ? true : false,
 		'L_CONFIRM_DEL_VERSION' 		=> $LANG['bugs.actions.confirm.del_version'],
 		'L_CONFIRM_DEL_TYPE' 			=> $LANG['bugs.actions.confirm.del_type'],
 		'L_CONFIRM_DEL_CATEGORY' 		=> $LANG['bugs.actions.confirm.del_category'],
@@ -416,9 +364,12 @@ else
 		'L_BUGS_DISPONIBLE_VERSIONS'	=> $LANG['bugs.titles.disponible_versions'],
 		'L_BUGS_DISPONIBLE_TYPES'		=> $LANG['bugs.titles.disponible_types'],
 		'L_BUGS_DISPONIBLE_CATEGORIES'	=> $LANG['bugs.titles.disponible_categories'],
+		'L_CONTENT_VALUE_TITLE'			=> $LANG['bugs.titles.contents_value_title'],
+		'L_CONTENT_VALUE'				=> $LANG['bugs.titles.contents_value'],
 		'L_BUGS_TYPE_EXPLAIN'			=> $LANG['bugs.explain.type'],
 		'L_BUGS_CATEGORY_EXPLAIN'		=> $LANG['bugs.explain.category'],
 		'L_BUGS_VERSION_EXPLAIN'		=> $LANG['bugs.explain.version'],
+		'L_CONTENT_VALUE_EXPLAIN'		=> $LANG['bugs.explain.contents_value'],
 		'L_VERSION'						=> $LANG['bugs.labels.fields.version'],
 		'L_VERSION_DETECTED_IN'			=> $LANG['bugs.labels.fields.version_detected_in'],
 		'L_VERSION_FIXED_IN'			=> $LANG['bugs.labels.fields.version_fixed_in'],
@@ -442,22 +393,26 @@ else
 		'L_ADD' 						=> $LANG['add'],
 		'L_UPDATE' 						=> $LANG['update'],
 		'L_DELETE' 						=> $LANG['delete'],
-		'ITEMS_PER_PAGE'				=> $BUGS_CONFIG['items_per_page'],
-		'SEVERITY_MINOR_COLOR'			=> $BUGS_CONFIG['severity_minor_color'],
-		'SEVERITY_MAJOR_COLOR'			=> $BUGS_CONFIG['severity_major_color'],
-		'SEVERITY_CRITICAL_COLOR'		=> $BUGS_CONFIG['severity_critical_color'],
-		'REJECTED_BUG_COLOR'			=> $BUGS_CONFIG['rejected_bug_color'],
-		'CLOSED_BUG_COLOR'				=> $BUGS_CONFIG['closed_bug_color'],
-		'COM_CHECKED'					=> ($BUGS_CONFIG['activ_com'] == true) ? 'checked=checked' : '',
-		'DETECTED_IN'					=> 'checked=checked',
-		'FIXED_IN'						=> 'checked=checked',
-		'BUG_READ_AUTH'					=> Authorizations::generate_select(BUG_READ_AUTH_BIT, $BUGS_CONFIG['auth']),
-		'BUG_CREATE_AUTH'				=> Authorizations::generate_select(BUG_CREATE_AUTH_BIT, $BUGS_CONFIG['auth']),
-		'BUG_CREATE_ADVANCED_AUTH'		=> Authorizations::generate_select(BUG_CREATE_ADVANCED_AUTH_BIT, $BUGS_CONFIG['auth']),
-		'BUG_MODERATE_AUTH'				=> Authorizations::generate_select(BUG_MODERATE_AUTH_BIT, $BUGS_CONFIG['auth'])
+		'L_PREVIEW' 					=> $LANG['preview'],
+		'ITEMS_PER_PAGE'				=> $bugtracker_config->get_items_per_page(),
+		'SEVERITY_MINOR_COLOR'			=> $bugtracker_config->get_severity_minor_color(),
+		'SEVERITY_MAJOR_COLOR'			=> $bugtracker_config->get_severity_major_color(),
+		'SEVERITY_CRITICAL_COLOR'		=> $bugtracker_config->get_severity_critical_color(),
+		'REJECTED_BUG_COLOR'			=> $bugtracker_config->get_rejected_bug_color(),
+		'CLOSED_BUG_COLOR'				=> $bugtracker_config->get_closed_bug_color(),
+		'COM_CHECKED'					=> ($bugtracker_config->get_comments_activated() == true) ? 'checked=checked' : '',
+		'CONTENTS_VALUE'				=> FormatingHelper::unparse($bugtracker_config->get_contents_value()),
+		'CONTENTS_KERNEL_EDITOR'		=> $contents_editor->display(),
+		'BUG_READ_AUTH'					=> Authorizations::generate_select(BugtrackerConfig::BUG_READ_AUTH_BIT, $authorizations),
+		'BUG_CREATE_AUTH'				=> Authorizations::generate_select(BugtrackerConfig::BUG_CREATE_AUTH_BIT, $authorizations),
+		'BUG_CREATE_ADVANCED_AUTH'		=> Authorizations::generate_select(BugtrackerConfig::BUG_CREATE_ADVANCED_AUTH_BIT, $authorizations),
+		'BUG_MODERATE_AUTH'				=> Authorizations::generate_select(BugtrackerConfig::BUG_MODERATE_AUTH_BIT, $authorizations)
 	));
 	
-	foreach ($BUGS_CONFIG['types'] as $key => $type)
+	$Template->assign_block_vars('config', array());
+
+	
+	foreach ($types as $key => $type)
 	{
 		$Template->assign_block_vars('types', array(
 			'ID'				=> $key,
@@ -465,7 +420,7 @@ else
 		));	
 	}	
 	
-	foreach ($BUGS_CONFIG['categories'] as $key => $category)
+	foreach ($categories as $key => $category)
 	{
 		$Template->assign_block_vars('categories', array(
 			'ID'				=> $key,
@@ -473,7 +428,7 @@ else
 		));	
 	}
 	
-	foreach ($BUGS_CONFIG['versions'] as $key => $version)
+	foreach ($versions as $key => $version)
 	{
 		$Template->assign_block_vars('versions', array(
 			'ID'			=> $key,
@@ -482,6 +437,7 @@ else
 			'FIXED_IN'		=> ($version['fixed_in'] == true) ? 'checked=checked' : '',
 		));	
 	}
+	
 	//Gestion erreur.
 	$get_error = retrieve(GET, 'error', '');
 	switch ($get_error)
@@ -517,7 +473,7 @@ else
 	if (!empty($errstr))
 		$Template->put('message_helper', MessageHelper::display($errstr, $errtyp));
 		
-	$Template->pparse('admin_bugtracker');	
+	$Template->display(); // traitement du modele	
 }
 
 require_once('../admin/admin_footer.php');

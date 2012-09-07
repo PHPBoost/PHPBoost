@@ -38,7 +38,9 @@ $lang['bugtracker.config.categories.kernel'] = 'Kernel';
 $lang['bugtracker.config.categories.module'] = 'Module';
 $lang['bugtracker.config.categories.graphism'] = 'Graphism';
 $lang['bugtracker.config.categories.installation'] = 'Installation';
-$LANG['bugtracker.config.explain.default_content'] = 'Please fill the informations below, they will be useful to treat the bug
+
+//Default content message
+$lang['bugtracker.config.contents_value'] = 'Please fill the informations below, they will be useful to treat the bug
 Operating system :
 Web navigator :
 Test version (test site, zip archive) :

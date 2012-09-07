@@ -34,12 +34,11 @@ class BugtrackerCommentsTopic extends CommentsTopic
 	
 	public function get_authorizations()
 	{
-		global $BUGS_CONFIG;
-		
-		require_once(PATH_TO_ROOT .'/'. $this->get_module_id() . '/bugtracker_constants.php');
+		$bugtracker_config = BugtrackerConfig::load();
+		$config_authorizations = $bugtracker_config->get_authorizations();
 		
 		$authorizations = new CommentsAuthorizations();
-		$authorizations->set_authorized_access_module(AppContext::get_current_user()->check_auth($BUGS_CONFIG['auth'], BUG_READ_AUTH_BIT));
+		$authorizations->set_authorized_access_module(AppContext::get_current_user()->check_auth($config_authorizations, BugtrackerConfig::BUG_READ_AUTH_BIT));
 		return $authorizations;
 	}
 	

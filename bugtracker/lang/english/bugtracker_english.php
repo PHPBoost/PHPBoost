@@ -87,6 +87,8 @@ $LANG['bugs.titles.edit_version'] = 'Version edition';
 $LANG['bugs.titles.choose_version'] = 'Version to display';
 $LANG['bugs.titles.solved_bug'] = 'List of bugs fixed';
 $LANG['bugs.titles.unsolved_bug'] = 'List of unresolved bugs';
+$LANG['bugs.titles.contents_value_title'] = 'Bug default description';
+$LANG['bugs.titles.contents_value'] = 'Default description';
 
 //Labels
 $LANG['bugs.labels.fields.id'] = 'ID';
@@ -162,14 +164,7 @@ $LANG['bugs.explain.version'] = 'Liste des versions du produit.<br />
 Remarks :<br />
 - If the table is empty, the option "Detected in version" will not be visible on the post bug page<br />
 - If the table contains only one type, will not be visible too and will automatically be assigned to the bug<br /><br />';
-$LANG['bugs.explain.default_content'] = 'Please fill the informations below, they will be useful to treat the bug
-Operating system :
-Web navigator :
-Test version (test site, zip archive) :
-Local installation or on a web server ? :
-Link :
-----------------------------------------------------------------------
-';
+$LANG['bugs.explain.contents_value'] = 'Enter the default description to display for a new bug below. Leave empty if you don\'t want to fill the description.';
 
 //PM
 $LANG['bugs.pm.assigned.title'] = '[%s] The bug #%d has been assigned to you';
