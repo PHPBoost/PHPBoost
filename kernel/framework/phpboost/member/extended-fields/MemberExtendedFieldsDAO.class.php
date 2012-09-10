@@ -38,7 +38,6 @@ class MemberExtendedFieldsDAO
 	public function __construct()
 	{
 		$this->db_querier = PersistenceContext::get_querier();
-		$this->db_connection = PersistenceContext::get_sql();
 		$this->columns = array();
 	}
 	
