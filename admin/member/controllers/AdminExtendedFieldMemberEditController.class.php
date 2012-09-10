@@ -106,7 +106,7 @@ class AdminExtendedFieldMemberEditController extends AdminController
 		$form->add_fieldset($fieldset);
 		
 		$fieldset->add_field(new FormFieldTextEditor('name', $this->lang['field.name'], $extended_field_cache['name'], array(
-			'class' => 'text', 'maxlength' => 25, 'required' => true)
+			'class' => 'text', 'required' => true)
 		));
 		
 		$fieldset->add_field(new FormFieldShortMultiLineTextEditor('description', $this->lang['field.description'], $extended_field_cache['description'],
