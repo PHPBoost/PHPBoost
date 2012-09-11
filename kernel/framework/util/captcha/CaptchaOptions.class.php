@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                    Captcha.class.php
+ *                           CaptchaOptions.class.php
  *                            -------------------
- *   begin                : September 04, 2012
+ *   begin                : September 11, 2012
  *   copyright            : (C) 2012 Kevin MASSY
  *   email                : kevin.massy@phpboost.com
  *
@@ -26,32 +26,10 @@
  ###################################################*/
 
 /**
- * @package {@package}
  * @author Kevin MASSY <kevin.massy@phpboost.com>
  */
-abstract class Captcha implements ExtensionPoint
+interface CaptchaOptions
 {
-	const EXTENSION_POINT = 'captcha';
-	
-	private $html_id = '';
-	private $options;
-
-	abstract public function get_name();
-		
-	abstract public function is_available();
-	
-	abstract public function is_valid();
-	
-	abstract public function display();
-	
-	public function get_error()
-	{
-		return;
-	}
-	
-	public function set_html_id($html_id) {	$this->html_id = $html_id; }
-	public function get_html_id() { return $this->html_id; }
-	public function set_options(CaptchaOptions $options) { $this->options = $options; }
-	public function get_options() { return $this->options; }
+    
 }
 ?>
