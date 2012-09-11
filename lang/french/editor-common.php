@@ -122,4 +122,8 @@ $lang['format_html'] = 'Code HTML';
 $lang['format_feed'] = 'Flux';
 $lang['format_youtube'] = 'Youtube';
 $lang['format_lightbox'] = 'LightBox';
+
+//Errors
+$lang['is_default_editor'] = 'L\'éditeur est défini par défaut, veuillez d\'abord séléctionner un autre éditeur par défaut';
+$lang['last_editor_installed'] = 'Dernier éditeur, vous ne pouvez le supprimer !';
 ?>

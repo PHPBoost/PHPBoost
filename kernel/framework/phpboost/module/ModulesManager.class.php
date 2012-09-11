@@ -253,70 +253,73 @@ class ModulesManager
 
 		if (!empty($module_id))
 		{
-			self::execute_module_uninstallation($module_id);
-
-			// @deprecated
-			//Récupération des infos de config.
-			$info_module = load_ini_file(PATH_TO_ROOT . '/' . $module_id . '/lang/', get_ulang());
-
-			//Suppression du fichier cache
-			$Cache->delete_file($module_id);
-
-			NotationService::delete_notes_module($module_id);
-
-			CommentsService::delete_comments_module($module_id);
-
-			PersistenceContext::get_querier()->inject("DELETE FROM ".DB_TABLE_CONFIGS." 
-					WHERE name = :name", array('name' => $module_id));
-
-			$dir_db_module = get_ulang();
-			$dir = PATH_TO_ROOT . '/' . $module_id . '/db';
-
-			if (!file_exists($dir . '/' . $dir_db_module) && file_exists($dir))
+			$error = self::execute_module_uninstallation($module_id);
+			if ($error === null)
 			{
-				//Si le dossier de base de données de la LANG n'existe pas on prend le suivant exisant.
-				$folder_path = new Folder($dir);
-				foreach ($folder_path->get_folders('`^[a-z0-9_ -]+$`i') as $dir)
+				// @deprecated
+				//Récupération des infos de config.
+				$info_module = load_ini_file(PATH_TO_ROOT . '/' . $module_id . '/lang/', get_ulang());
+	
+				//Suppression du fichier cache
+				$Cache->delete_file($module_id);
+	
+				NotationService::delete_notes_module($module_id);
+	
+				CommentsService::delete_comments_module($module_id);
+	
+				PersistenceContext::get_querier()->inject("DELETE FROM ".DB_TABLE_CONFIGS." 
+						WHERE name = :name", array('name' => $module_id));
+	
+				$dir_db_module = get_ulang();
+				$dir = PATH_TO_ROOT . '/' . $module_id . '/db';
+	
+				if (!file_exists($dir . '/' . $dir_db_module) && file_exists($dir))
 				{
-					$dir_db_module = $dir->get_name();
-					break;
+					//Si le dossier de base de données de la LANG n'existe pas on prend le suivant exisant.
+					$folder_path = new Folder($dir);
+					foreach ($folder_path->get_folders('`^[a-z0-9_ -]+$`i') as $dir)
+					{
+						$dir_db_module = $dir->get_name();
+						break;
+					}
 				}
+	
+				//Régénération des feeds.
+				Feed::clear_cache($module_id);
+	
+				try {
+					if (ServerEnvironmentConfig::load()->is_url_rewriting_enabled() && self::module_contains_rewrited_rules($module_id))
+					{
+						HtaccessFileCache::regenerate();
+					}
+				} catch (IOException $ex) {
+				}
+	
+				MenuService::delete_mini_module($module_id);
+				MenuService::delete_module_feeds_menus($module_id);
+				MenuService::generate_cache();
+	
+				ModulesConfig::load()->remove_module_by_id($module_id);
+				ModulesConfig::save();
+	
+				//Suppression des fichiers du module
+				if ($drop_files)
+				{
+					$folder = new Folder(PATH_TO_ROOT . '/' . $module_id);
+					try
+					{
+						$folder->delete();
+						self::update_class_list();
+					}
+					catch (IOException $ex)
+					{
+						return self::MODULE_FILES_COULD_NOT_BE_DROPPED;
+					}
+				}
+				
+				return self::MODULE_UNINSTALLED;
 			}
-
-			//Régénération des feeds.
-			Feed::clear_cache($module_id);
-
-			try {
-				if (ServerEnvironmentConfig::load()->is_url_rewriting_enabled() && self::module_contains_rewrited_rules($module_id))
-				{
-					HtaccessFileCache::regenerate();
-				}
-			} catch (IOException $ex) {
-			}
-
-			MenuService::delete_mini_module($module_id);
-			MenuService::delete_module_feeds_menus($module_id);
-			MenuService::generate_cache();
-
-			ModulesConfig::load()->remove_module_by_id($module_id);
-			ModulesConfig::save();
-
-			//Suppression des fichiers du module
-			if ($drop_files)
-			{
-				$folder = new Folder(PATH_TO_ROOT . '/' . $module_id);
-				try
-				{
-					$folder->delete();
-					self::update_class_list();
-				}
-				catch (IOException $ex)
-				{
-					return self::MODULE_FILES_COULD_NOT_BE_DROPPED;
-				}
-			}
-
-			return self::MODULE_UNINSTALLED;
+			return $error;
 		}
 		else
 		{
@@ -424,7 +427,7 @@ class ModulesManager
 	private static function execute_module_uninstallation($module_id)
 	{
 		$module_setup = self::get_module_setup($module_id);
-		$module_setup->uninstall();
+		return $module_setup->uninstall();
 	}
 	
 	private static function execute_module_upgrade($module_id, $installed_version)
