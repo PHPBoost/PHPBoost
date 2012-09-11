@@ -43,7 +43,9 @@ class NotationService
 	}
         
 	/*
-	 * This function required object Notation containing the module_name, id in module and notation_scale.
+	 * @desc This function required object Notation containing the module_name, id in module and notation_scale.
+	 * @param object $notation Notation
+	 * @param boolean $average_notes
 	 */
 	public static function display_static_image(Notation $notation, $average_notes = false)
 	{
@@ -96,7 +98,8 @@ class NotationService
 	}
 	
 	/*
-	 * This function required object Notation containing the module_name, id_in_module, user_id, note and notation_scale.
+	 * @desc This function required object Notation containing the module_name, id_in_module, user_id, note and notation_scale.
+	 * @param object $notation Notation
 	 */
 	public static function display_active_image(Notation $notation)
 	{
@@ -164,6 +167,12 @@ class NotationService
 		}
 	}
 	
+	/*
+	 * @desc This fonction update notation scale by module_name
+	 * @param string $module_name 
+	 * @param string $old_notation_scale
+	 * @param string $new_notation_scale
+	 */
 	public static function update_notation_scale($module_name, $old_notation_scale, $new_notation_scale)
 	{
 		if ($old_notation_scale !== $new_notation_scale)

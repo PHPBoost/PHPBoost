@@ -57,6 +57,18 @@ class FacebookLikeShare extends AbstractShare
 		$this->assign_vars();
 	}
 	
+	public static function display($width = 450, $show_faces = true, $layout = 'standard', $action = 'like', $color_scheme = 'like', $send_button = false)
+	{
+		$class = new self();
+		$class->set_width($width);
+		$class->set_show_faces($show_faces);
+		$class->set_layout($layout);
+		$class->set_action($action);
+		$class->set_color_scheme($color_scheme);
+		$class->set_send_button($send_button);
+		return $class->display();
+	}
+	
 	public function set_manual_url($manual_url)
 	{
 		$this->manual_url = manual_url;

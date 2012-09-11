@@ -48,6 +48,13 @@ class GooglePlusOneShare extends AbstractShare
 		$this->assign_vars();
 	}
 	
+	public static function display($size = 'standard')
+	{
+		$class = new self();
+		$class->set_size($size);
+		return $class->display();
+	}
+	
 	public function set_manual_lang($lang)
 	{
 		$this->lang = $lang;
