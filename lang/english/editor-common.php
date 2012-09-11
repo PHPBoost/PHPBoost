@@ -122,4 +122,8 @@ $lang['format_html'] = 'HTML code';
 $lang['format_feed'] = 'Feed';
 $lang['format_youtube'] = 'Youtube';
 $lang['format_lightbox'] = 'LightBox';
+
+//Errors
+$lang['is_default_editor'] = 'The editor is the default, you must first select another default editor';
+$lang['last_editor_installed'] = 'Last editor, you can not delete it!';
 ?>
