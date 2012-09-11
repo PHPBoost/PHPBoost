@@ -48,6 +48,14 @@ class TwitterTweeterShare extends AbstractShare
 		$this->assign_vars();
 	}
 	
+	public static function display($layout = 'horizontal', $manual_content_tweet = '')
+	{
+		$class = new self();
+		$class->set_layout($layout);
+		$class->set_manual_content_tweet($manual_content_tweet);
+		return $class->display();
+	}
+	
 	public function set_manual_lang($lang)
 	{
 		$this->lang = $lang;
