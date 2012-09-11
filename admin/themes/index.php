@@ -32,7 +32,7 @@ require_once PATH_TO_ROOT . '/kernel/init.php';
 $url_controller_mappers = array(
 	new UrlControllerMapper('AdminThemesInstalledListController', '`^(?:/installed)?/?$`'),
 	new UrlControllerMapper('AdminThemesNotInstalledListController', '`^/add/?$`'),
-	new UrlControllerMapper('AdminThemeDeleteController', '`^/([a-z9-0-_]+)/delete/?$`', array('id')),
+	new UrlControllerMapper('AdminThemeDeleteController', '`^/([a-z]+)/delete/?$`', array('id')),
 );
 DispatchManager::dispatch($url_controller_mappers);
 ?>
