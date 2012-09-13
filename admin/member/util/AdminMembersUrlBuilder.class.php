@@ -60,13 +60,5 @@ class AdminMembersUrlBuilder
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/config/');
 	}
-	
-	/*
-	 * @ return Url
-	*/
-	public static function rules()
-	{
-		return DispatchManager::get_url(self::$dispatcher, '/rules/');
-	}
 }
 ?>

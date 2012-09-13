@@ -152,7 +152,6 @@
 					<li><a href="{PATH_TO_ROOT}/admin/admin_ranks_add.php" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/ranks_mini.png);">{L_ADD}</a></li>
 				</ul>
 			</li>
-			<li><a href="${relative_url(AdminMembersUrlBuilder::rules())}" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/terms_mini.png);">{L_TERMS}</a></li>
 			# IF C_ADMIN_LINKS_4 #
 			<li class="separator"></li>
 				# START admin_links_4 #
