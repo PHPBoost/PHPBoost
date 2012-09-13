@@ -130,7 +130,7 @@ class WikiHomePageExtensionPoint implements HomePageExtensionPoint
 		$page_type = 'index';
 		include(PATH_TO_ROOT . '/wiki/wiki_tools.php');
 
-		return new StringTemplate($Template->pparse('index'));
+		return new StringTemplate($Template->get_data()->get('index')->render());
 	}
 }
 ?>
