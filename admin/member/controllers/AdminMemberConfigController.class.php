@@ -159,8 +159,7 @@ class AdminMemberConfigController extends AdminController
 		$fieldset = new FormFieldsetHTML('welcome_message', $this->lang['members.config.welcome-message']);
 		$form->add_fieldset($fieldset);
 		
-		$welcome_message_contents = FormatingHelper::unparse($user_account_config->get_welcome_message());
-		$fieldset->add_field(new FormFieldRichTextEditor('welcome_message_contents', $this->lang['members.config.welcome-message-content'], $welcome_message_contents, array(
+		$fieldset->add_field(new FormFieldRichTextEditor('welcome_message_contents', $this->lang['members.config.welcome-message-content'], $user_account_config->get_welcome_message(), array(
 			'class' => 'text', 'rows' => 8, 'cols' => 47)
 		));
 		
@@ -169,7 +168,7 @@ class AdminMemberConfigController extends AdminController
 		$form->add_fieldset($fieldset);
 		
 		$fieldset->add_field(new FormFieldRichTextEditor('registration_agreement', $this->lang['members.rules.registration-agreement'], 
-			FormatingHelper::unparse(UserAccountsConfig::load()->get_registration_agreement()), 
+			UserAccountsConfig::load()->get_registration_agreement(), 
 			array('class' => 'text', 'rows' => 8, 'cols' => 47)
 		));
 		
