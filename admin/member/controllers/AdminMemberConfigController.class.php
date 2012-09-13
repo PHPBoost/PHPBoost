@@ -164,6 +164,15 @@ class AdminMemberConfigController extends AdminController
 			'class' => 'text', 'rows' => 8, 'cols' => 47)
 		));
 		
+		$fieldset = new FormFieldsetHTML('members_rules', $this->lang['members.rules']);
+		$fieldset->set_description($this->lang['members.rules.registration-agreement-description']);
+		$form->add_fieldset($fieldset);
+		
+		$fieldset->add_field(new FormFieldRichTextEditor('registration_agreement', $this->lang['members.rules.registration-agreement'], 
+			FormatingHelper::unparse(UserAccountsConfig::load()->get_registration_agreement()), 
+			array('class' => 'text', 'rows' => 8, 'cols' => 47)
+		));
+		
 		$form->add_button(new FormButtonReset());
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_button($this->submit_button);
@@ -198,7 +207,8 @@ class AdminMemberConfigController extends AdminController
 		$user_account_config->set_max_avatar_height($this->form->get_value('maximal_height_avatar'));
 		$user_account_config->set_max_avatar_weight($this->form->get_value('maximal_weight_avatar'));
 		$user_account_config->set_auth_read_members($this->form->get_value('authorizations')->build_auth_array());
-		$user_account_config->set_welcome_message(FormatingHelper::strparse($this->form->get_value('welcome_message_contents')));
+		$user_account_config->set_welcome_message($this->form->get_value('welcome_message_contents'));
+		$user_account_config->set_registration_agreement($this->form->get_value('registration_agreement'));
 		UserAccountsConfig::save();
 	}
 }
