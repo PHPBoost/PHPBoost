@@ -96,5 +96,4 @@ class ContentMenu extends Menu
      */
     public function get_content() { return $this->content; }
 }
-
 ?>

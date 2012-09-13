@@ -248,5 +248,4 @@ class LinksMenu extends LinksMenuElement
 	*/
     public function get_children() { return $this->elements; }
 }
-
 ?>

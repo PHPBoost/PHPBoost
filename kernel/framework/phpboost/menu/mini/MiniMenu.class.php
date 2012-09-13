@@ -62,5 +62,4 @@ class MiniMenu extends Menu
 		return ucfirst(substr($this->title, 0, strpos($this->title, '/')));
     }
 }
-
 ?>
