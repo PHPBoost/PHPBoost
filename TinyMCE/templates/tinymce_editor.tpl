@@ -56,7 +56,7 @@ function insertTinyMceContent(content)
 <div style="position:relative;display:none;" id="loading_preview{FIELD}"><div style="margin:auto;margin-top:90px;width:100%;text-align:center;position:absolute;"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/loading.gif" alt="" /></div></div>
 <div style="display:none;" class="xmlhttprequest_preview" id="xmlhttprequest_preview{FIELD}"></div>
 
-# IF NOT C_JS_INCLUDED #
+# IF NOT C_NOT_JS_INCLUDED #
 	<script type="text/javascript" src="{PATH_TO_ROOT}/TinyMCE/templates/js/tinymce/tiny_mce.js"></script>
 # ENDIF #
 	
