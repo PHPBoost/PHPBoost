@@ -70,17 +70,27 @@
 [*] Refonte du système de commentaire : 
 	- Refonte graphique
 	- Gestion de la pagination en AJAX
-	- Possibilité de noter un commentaire (+1 ou -1)
-	- Possibilité d'approuver les commentaires avant publication par un administration ou un modérateur.
-	- Ajout d'autorisations de lecture, de modération, d'ajout et de notation.
+	- Ajout d'autorisations de lecture, de modération et d'ajout
 
 =================================== Modules =====================================
-[b]BugTracker :[/b]
+[b]Nouveau module BugTracker[/b]
 [*] [color=red]Nouveauté:[/color] Nouveau module de gestion des bugs.
+[*] Possibilité de voir les statistiques
+[*] Possibilité de filtrer les bugs résolus et non résolus
+
+[b]Nouveau module Sitemap[/b]
+[*] [color=red]Nouveauté:[/color] Nouveau module permettant la gestion du plan du site mais aussi du sitemap.xml permettant un meilleure référencement du site
+
+[b]Nouveau module personnalisation[/b]
+[*] [color=red]Nouveauté:[/color] Nouveau module permettant personnaliser son logo par thème et le favicon du site ainsi que les fichiers CSS de chaque thème
 
 [b]BBCode :[/b]
+[*] Déplacement de l'éditeur dans un module à part entière
 [*] [color=red]Nouveauté:[/color] Ajout de la balise YouTube
 [*] [color=red]Nouveauté:[/color] Ajout de la balise LightBox
+
+[b]TinyMCE[/b]
+[*] Déplacement de l'éditeur dans un module à part entière
 
 [b]Galerie :[/b]
 - Voir les images plus vues/mieux notées, affichage sur l'ensemble de la galerie et non sur une catégorie.
