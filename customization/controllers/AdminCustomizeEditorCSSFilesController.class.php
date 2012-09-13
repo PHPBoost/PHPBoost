@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-class AdminCustomizeEditorCSSFilesController extends AdminController
+class AdminCustomizeEditorCSSFilesController extends AdminModuleController
 {
 	private $lang;
 	/**
@@ -70,7 +70,7 @@ class AdminCustomizeEditorCSSFilesController extends AdminController
 
 	private function load_lang()
 	{
-		$this->lang = LangLoader::get('admin-customization-common');
+		$this->lang = LangLoader::get('common', 'customization');
 	}
 	
 	private function build_form($theme_selected, $file_selected)

@@ -102,14 +102,6 @@
 					<li><a href="{PATH_TO_ROOT}/admin/admin_system_report.php" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/system_report_mini.png);">{L_SYSTEM_REPORT}</a></li>
 				</ul>
 			</li>
-			<li class="extend" onmouseover="show_menu(34, 1);" onmouseout="hide_menu(1);">
-				<a href="${relative_url(AdminCustomizeUrlBuilder::customize_interface())}" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/themes_mini.png);">{L_CUSTOMIZATION}</a>
-				<ul id="ssmenu34">
-					<li><a href="${relative_url(AdminCustomizeUrlBuilder::customize_interface())}" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/themes_mini.png);">{L_CUSTOMIZE_INTERFACE}</a></li>
-					<li><a href="${relative_url(AdminCustomizeUrlBuilder::customize_favicon())}" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/themes_mini.png);">{L_CUSTOMIZE_FAVICON}</a></li>
-					<li><a href="${relative_url(AdminCustomizeUrlBuilder::editor_file())}" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/themes_mini.png);">{L_CUSTOMIZE_CSS_FILES}</a></li>
-				</ul>
-			</li>
 			# IF C_ADMIN_LINKS_3 #
 			<li class="separator"></li>
 				# START admin_links_3 #
