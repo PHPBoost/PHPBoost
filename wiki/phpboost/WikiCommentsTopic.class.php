@@ -34,36 +34,14 @@ class WikiCommentsTopic extends CommentsTopic
 	
 	public function get_authorizations()
 	{
-		global $_WIKI_CONFIG;
-		
-		$cache = new Cache();
-		$cache->load($this->get_module_id());
-		
-		require_once(PATH_TO_ROOT .'/'. $this->get_module_id() . '/wiki_auth.php');
-		
-		$article = $this->get_articles();
-		
-		$cat_authorizations = $article['auth'];
-		if (!is_array($cat_authorizations))
-		{
-			$cat_authorizations = $_WIKI_CONFIG['auth'];
-		}
 		$authorizations = new CommentsAuthorizations();
-		$authorizations->set_authorized_access_module(AppContext::get_current_user()->check_auth($cat_authorizations, AUTH_NEWS_READ));
+		$authorizations->set_authorized_access_module(true);
 		return $authorizations;
 	}
 	
 	public function is_display()
 	{
 		return true;
-	}
-
-	private function get_articles()
-	{
-		$columns = array('*');
-		$condition = 'WHERE id = :id_in_module';
-		$parameters = array('id_in_module' => $this->get_id_in_module());
-		return PersistenceContext::get_querier()->select_single_row(PREFIX . 'wiki_articles', $columns, $condition, $parameters);
 	}
 }
 ?>
