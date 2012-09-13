@@ -71,7 +71,7 @@
 	- Refonte graphique
 	- Gestion de la pagination en AJAX
 	- Ajout d'autorisations de lecture, de modération et d'ajout
-
+[*] Déplacement du réglement à l'inscription dans la configuration des membres pour plus de cohérence
 =================================== Modules =====================================
 [b]Nouveau module BugTracker[/b]
 [*] [color=red]Nouveauté:[/color] Nouveau module de gestion des bugs.
@@ -88,9 +88,13 @@
 [*] Déplacement de l'éditeur dans un module à part entière
 [*] [color=red]Nouveauté:[/color] Ajout de la balise YouTube
 [*] [color=red]Nouveauté:[/color] Ajout de la balise LightBox
+[*] [color=red]Nouveauté:[/color] Ajout de la balise feed
+[*] [color=red]Nouveauté:[/color] Ajout de paramètre dans la balise img (comme style par exemple)
 
 [b]TinyMCE[/b]
 [*] Déplacement de l'éditeur dans un module à part entière
+[*] Mise à jour de TinyMCE
+[*] Corrections de bugs
 
 [b]Galerie :[/b]
 - Voir les images plus vues/mieux notées, affichage sur l'ensemble de la galerie et non sur une catégorie.
@@ -100,19 +104,23 @@
 [*] Possibilité de définir une catégorie principale pour tous les fichiers dans l'ajout d'image par FTP
 
 [b]News :[/b]
-[*] collaboration des utilisateurs possible.
+[*] Mise à jour du module
+[*] Collaboration des utilisateurs possible.
 [*] Ajout des suggestions de news
 [*] Ajout des sources de news
+[*] Possibilité de voir les news non approuvées
 
 [b]Articles :[/b]
-[*] collaboration des utilisateurs possible.
+[*] Mise à jour du module
+[*] Collaboration des utilisateurs possible.
 [*] Ajout des sources de l'article
+[*] Possibilité de voir les articles non approuvés
 
 [b]ShoutBox :[/b]
-[*] Possibilité de gérer les autorisations d'écriture, de lecture et de modération
+[*] Possibilité de gérer les autorisations d'écriture et de modération (édition et suppression).
 
 [b]Livre d'or :[/b]
-[*] Possibilité de gérer les autorisations d'écriture, de lecture et de modération (édition et suppression).
+[*] Possibilité de gérer les autorisations d'écriture et de modération (édition et suppression).
 
 [b]Pages :[/b]
 [*] Possibilité de cacher le lien d'impression pour chacune des pages.
@@ -132,9 +140,9 @@
 
 [b]Compatibilité des thèmes 3.0 :[/b]
 [*] Ajout d'une variable js THEME dans header.tpl
-- Modification de la classe xmlhttprequest_preview (border-radius en plus).
+[*] Modification de la classe xmlhttprequest_preview (border-radius en plus).
 [*] Ajout d'une image images/form/justify.png dans les thèmes 
-- Changement mineurs dans bbcode.css (bloc masquables + balise wikipédia)
+[*] Changement mineurs dans bbcode.css (bloc masquables + balise wikipédia)
 
 [b]Newsletter[/b]
 [*] Refonte du module en MVC.
