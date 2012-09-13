@@ -125,5 +125,4 @@ class FeedMenu extends Menu
 	}
 
 }
-
 ?>

@@ -228,5 +228,4 @@ abstract class LinksMenuElement extends Menu
 		return $this->_get_url($this->image, $compute_relative_url);
 	}
 }
-
 ?>

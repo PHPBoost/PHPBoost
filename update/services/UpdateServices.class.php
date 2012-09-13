@@ -37,7 +37,6 @@ class UpdateServices
 	private static $directory = '/update/services';
 	private static $configuration_pattern = '`ConfigUpdateVersion\.class\.php$`';
 	private static $module_pattern = '`ModuleUpdateVersion\.class\.php$`';
-	private static $kernel_pattern = '`UpdateVersion\.class\.php$`';
 	
 	/**
 	 * @var File
@@ -186,7 +185,17 @@ class UpdateServices
 	
 	public function update_kernel()
 	{
-		$update_kernel_class = $this->get_class(PATH_TO_ROOT . self::$directory . '/kernel/', self::$kernel_pattern);
+		$update_kernel_class = array(
+			'CommentsKernelUpdateVersion',
+			'Errors404KernelUpdateVersion',
+			'ExtendedFieldsKernelUpdateVersion',
+			'LangsConfigurationKernelUpdateVersion',
+			'MembersKernelUpdateVersion',
+			'ModuleMiniMenusKernelUpdateVersion',
+			'ModulesKernelUpdateVersion',
+			'NotationsKernelUpdateVersion',
+			'ThemesConfigurationKernelUpdateVersion',
+		);
 		foreach ($update_kernel_class as $class_name)
 		{
 			try {

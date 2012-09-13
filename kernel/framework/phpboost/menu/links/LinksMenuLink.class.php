@@ -80,5 +80,4 @@ class LinksMenuLink extends LinksMenuElement
 		return parent::cache_export_begin() . $template->render() . parent::cache_export_end();
 	}
 }
-
 ?>
