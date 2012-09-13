@@ -31,7 +31,7 @@ class AdminCustomizationDisplayResponse extends AdminMenuDisplayResponse
 	{
         parent::__construct($view);
 
-		$lang = LangLoader::get('admin-customization-common');
+		$lang = LangLoader::get('common', 'customization');
 		
 		$picture = '/templates/' . get_utheme() . '/images/admin/configuration.png';
 		$this->set_title($lang['customization']);

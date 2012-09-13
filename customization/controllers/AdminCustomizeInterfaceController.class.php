@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-class AdminCustomizeInterfaceController extends AdminController
+class AdminCustomizeInterfaceController extends AdminModuleController
 {
 	private $lang;
 	/**
@@ -91,7 +91,7 @@ class AdminCustomizeInterfaceController extends AdminController
 
 	private function load_lang()
 	{
-		$this->lang = LangLoader::get('admin-customization-common');
+		$this->lang = LangLoader::get('common', 'customization');
 	}
 	
 	private function load_config()

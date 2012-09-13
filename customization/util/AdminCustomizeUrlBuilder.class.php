@@ -3,7 +3,7 @@
  *                          AdminCustomizeUrlBuilder.class.php
  *                            -------------------
  *   begin                : September 19, 2011
- *   copyright            : (C) 2011 Kévin MASSY
+ *   copyright            : (C) 2011 Kevin MASSY
  *   email                : soldier.weasel@gmail.com
  *
  *
@@ -31,7 +31,7 @@
  */
 class AdminCustomizeUrlBuilder
 {
-    private static $dispatcher = '/admin/customize';
+    private static $dispatcher = '/customization';
     
 	/**
 	 * @return Url

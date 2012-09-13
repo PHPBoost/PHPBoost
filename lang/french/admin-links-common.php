@@ -69,12 +69,6 @@ $lang['tools.server'] = 'Serveur';
 $lang['tools.server.phpinfo'] = 'PHP info';
 $lang['tools.server.system-report'] = 'Rapport système';
 
-$lang['tools.personalization'] = 'Personnalisation';
-$lang['tools.personalization.interface'] = 'Interface';
-$lang['tools.personalization.favicon'] = 'Favicon';
-$lang['tools.personalization.css-files'] = 'Fichiers CSS';
-
-
 $lang['users'] = 'Utilisateurs';
 $lang['users.punishement'] = 'Sanction';
 

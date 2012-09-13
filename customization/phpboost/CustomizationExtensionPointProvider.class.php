@@ -1,10 +1,10 @@
 <?php
 /*##################################################
- *                           index.php
+ *                              CustomizationExtensionPointProvider.class.php
  *                            -------------------
- *   begin                : August 29, 2011
+ *   begin                : July 7, 2011
  *   copyright            : (C) 2011 Kevin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   email                : kevin.massy@phpboost.com
  *
  *
  ###################################################
@@ -25,15 +25,16 @@
  *
  ###################################################*/
 
-defined('PATH_TO_ROOT') or define('PATH_TO_ROOT', '../..');
-
-require_once PATH_TO_ROOT . '/kernel/init.php';
-
-$url_controller_mappers = array(
-	new UrlControllerMapper('AdminCustomizeInterfaceController', '`^/interface(?:/([A-Za-z0-9-_]+))?/?$`', array('theme')),
-	new UrlControllerMapper('AdminCustomizeFaviconController', '`^/favicon/?$`'),
-	new UrlControllerMapper('AdminCustomizeEditorCSSFilesController', '`^/editor(?:/([A-Za-z0-9-_]+))?/?(.+)?/?$`', array('id_theme', 'file_name'))
-);
-DispatchManager::dispatch($url_controller_mappers);
-
+class CustomizationExtensionPointProvider extends ExtensionPointProvider
+{
+    public function __construct()
+    {
+        parent::__construct('customization');
+    }
+	
+	public function url_mappings()
+	{
+		return new UrlMappings(array(new DispatcherUrlMapping('/customization/index.php')));
+	}
+}
 ?>
