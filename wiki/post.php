@@ -281,7 +281,7 @@ else
 }
 
 //On travaille uniquement en BBCode, on force le langage de l'éditeur
-$content_editor = new BBCodeFormattingFactory();
+$content_editor = AppContext::get_content_formatting_service()->create_factory('bbcode');
 $editor = $content_editor->get_editor();
 $editor->set_identifier('contents');
 
