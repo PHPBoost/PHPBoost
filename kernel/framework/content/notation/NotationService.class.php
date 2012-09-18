@@ -246,7 +246,7 @@ class NotationService
 			if (!$member_already_notation && $note_is_valid)
 			{
 				NotationDAO::insert_note($notation);
-				$nbr_notes = self::get_count_average_notes_by_id_in_module($notation);
+				$nbr_notes = NotationDAO::get_count_average_notes_by_id_in_module($notation);
 				if ($nbr_notes == 0)
 				{
 					NotationDAO::insert_average_notes($notation);
