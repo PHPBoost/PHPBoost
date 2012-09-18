@@ -127,6 +127,7 @@ $stats_array_browsers = array(
 //Système d'exploitation.
 $stats_array_os = array(
    'linux' => array('Linux', 'linux.png'),
+   'windows8' => array('Windows 8', 'windows8.png'),
    'windowsseven' => array('Windows Seven', 'windowsseven.png'),
    'windowsvista' => array('Windows Vista', 'windowsvista.png'),
    'windowsserver2003' => array('Windows Server 2003', 'windowsxp.png'),
