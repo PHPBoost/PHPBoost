@@ -17,6 +17,9 @@ syntax: regexp
 \.orig$
 
 syntax: regexp
+\.htaccess$
+
+syntax: regexp
 ^images/avatars/*
 
 syntax: regexp
@@ -26,13 +29,10 @@ syntax: regexp
 ^images/customization/*
 
 syntax: regexp
-^templates/vita*
-
-syntax: regexp
 gallery/pics/*
 
 syntax: regexp
 ^upload/*
 
 syntax: regexp
-^shop/*
+^update/update_followed\.txt$
