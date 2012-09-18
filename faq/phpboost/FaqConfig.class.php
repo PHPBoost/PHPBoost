@@ -106,7 +106,7 @@ class FaqConfig extends AbstractConfigData
 	public function get_default_values()
 	{
 		return array(
-			self::AUTHORIZATIONS => array('r-1' => 1, 'r0' => 1),
+			self::AUTHORIZATIONS => array('r-1' => 1, 'r0' => 1, 'r1' => 3),
 			self::FAQ_NAME => LangLoader::get_message('faq.config.faq_name', 'faq_config', 'faq'),
 			self::NUMBER_COLUMNS => 4,
 			self::DISPLAY_MODE => self::DISPLAY_MODE_INLINE,
