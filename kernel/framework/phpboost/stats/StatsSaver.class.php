@@ -159,6 +159,7 @@ class StatsSaver
 		
 		########### Détection des systèmes d'exploitation ###########
 		$array_os = array(
+			'windows nt 6.2' => 'windows8',
 			'windows nt 6.1|seven' => 'windowsseven',
 			'windows nt 6.0|vista' => 'windowsvista',
 			'windows nt 5.1|windows xp' => 'windowsxp',
