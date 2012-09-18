@@ -61,7 +61,7 @@ $lang['tools.cache'] = 'Cache';
 $lang['tools.cache.syndication'] = 'Syndication';
 $lang['tools.cache.css'] = 'CSS';
 
-$lang['tools.errors-archived'] = 'Errors archived';
+$lang['tools.errors-archived'] = 'Archived errors';
 
 $lang['tools.server'] = 'Server';
 $lang['tools.server.phpinfo'] = 'PHP info';

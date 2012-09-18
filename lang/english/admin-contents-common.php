@@ -38,7 +38,7 @@ $lang['comments.management'] = 'Comments management';
 $lang['comments.config.display-captcha'] = 'Visual verification code';
 $lang['comments.config.captcha-difficulty'] = 'Difficulty of the verification code';
 $lang['comments.config.number-comments-display'] = 'Number of comments to display by default';
-$lang['comments.config.order-display-comments'] = 'Ordre display comments';
+$lang['comments.config.order-display-comments'] = 'Ordre comments display';
 $lang['comments.config.order-display-comments.asc'] = 'Oldest to newest';
 $lang['comments.config.order-display-comments.desc'] = 'Newest to oldest';
 
@@ -46,8 +46,8 @@ $lang['comments.config.order-display-comments.desc'] = 'Newest to oldest';
 $lang['comments.config.authorization'] = 'Authorizations';
 $lang['comments.config.authorization-read'] = 'Authorization to see the comments';
 $lang['comments.config.authorization-post'] = 'Authorization to post a comment';
-$lang['comments.config.authorization-moderation'] = 'Authorization to management a comments';
-$lang['comments.config.authorization-note'] = 'Authorization to note a comments';
+$lang['comments.config.authorization-moderation'] = 'Authorization to management comments';
+$lang['comments.config.authorization-note'] = 'Authorization to note a comment';
 $lang['comments.config.max-links-comment'] = 'Number of links allowed in a comment';
 $lang['comments.config.forbidden-tags'] = 'Types of formatting allowed';
 

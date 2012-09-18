@@ -46,8 +46,8 @@ $lang['members.config.unactivated-accounts-timeout'] = 'Number of days after whi
 $lang['members.config.unactivated-accounts-timeout-explain'] = 'Leave blank to skip this option (not included if validated by administrator)';
 $lang['members.config.captcha-activation'] = 'Visual verification code';
 $lang['members.config.captcha-difficulty'] = 'Difficulty of the verification code';
-$lang['members.config.theme-choice-permission'] = 'Allowed members to choose their theme';
-$lang['members.config.upload-avatar-server-authorization'] = 'Allow upload an avatar on the server';
+$lang['members.config.theme-choice-permission'] = 'Allow members to choose their theme';
+$lang['members.config.upload-avatar-server-authorization'] = 'Allow avatar upload on the server';
 $lang['members.config.activation-resize-avatar'] = 'Enable automatic image resizing';
 $lang['members.activation-resize-avatar-explain'] = 'Warning your server must have the GD extension loaded';
 $lang['members.config.maximal-width-avatar'] = 'Maximum width of the avatar';
@@ -57,9 +57,9 @@ $lang['members.config.maximal-height-avatar-explain'] = 'Default 120';
 $lang['members.config.maximal-weight-avatar'] = 'Maximum weight of the avatar in KB';
 $lang['members.config.maximal-weight-avatar-explain'] = 'Default 20';
 $lang['members.config.default-avatar-activation'] = 'Enable default avatar';
-$lang['members.config.default-avatar-activation-explain'] = 'Met an avatar to members who do not';
+$lang['members.config.default-avatar-activation-explain'] = 'Put an avatar to members who do not have one';
 $lang['members.config.default-avatar-link'] = 'Address of the default avatar';
-$lang['members.default-avatar-link-explain'] = 'Put in the images folder of your theme';
+$lang['members.default-avatar-link-explain'] = 'Put it in the images folder of your theme';
 $lang['members.config.authorization-read-member-profile'] = 'Here you define the permissions to read the list of members as well as some personal information such as their emails.';
 $lang['members.config.welcome-message'] = 'Message to all members';
 $lang['members.config.welcome-message-content'] = 'Welcome message displayed in the panel member';
@@ -69,16 +69,16 @@ $lang['members.config.avatars-management'] = 'Avatars management';
 $lang['members.config.authorization'] = 'Authorizations';
 
 //Other fieldset add and edit title
-$lang['members.member-management'] = 'Member mangement';
+$lang['members.member-management'] = 'Member management';
 $lang['members.punishment-management'] = 'Punishment management';
 
 //Activation type
-$lang['members.config.type-activation.auto'] = 'Automatique';
+$lang['members.config.type-activation.auto'] = 'Automatic';
 $lang['members.config.type-activation.mail'] = 'Mail';
 $lang['members.config.type-activation.admin'] = 'Administrator';
 
 //Rules
-$lang['members.rules.registration-agreement-description'] = 'Enter below the settlement to display when the registration of members, they will accept to register. Leave blank for no regulation.';
+$lang['members.rules.registration-agreement-description'] = 'Enter below the settlement to display when members register, they have to accept it to register. Leave blank for no regulation.';
 $lang['members.rules.registration-agreement'] = 'Registration agreement';
 
 //Other
