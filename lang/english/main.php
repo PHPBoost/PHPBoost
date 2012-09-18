@@ -340,7 +340,8 @@ $LANG['banned'] = 'Banned';
 $LANG['go_msg'] = 'Go to message';
 $LANG['display'] = 'Display';
 $LANG['site_config_msg_mbr'] = 'Welcome on the website. You are member of the site and you can access all parts of the website requiring a member account.';
-$LANG['register_agreement'] = 'You are just going to register yourself on the site. We ask you yo be polite and respectful.<br /><br />Thanks, the site team.';
+$LANG['register_agreement'] = 'You are just going to register yourself on the site. We ask you yo be polite and respectful.
+Thanks, the site team.';
 
 //Mp
 $LANG['pm_box'] = 'Private message box';
