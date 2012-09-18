@@ -35,8 +35,8 @@ $lang['extended-field-add'] = 'Add member field';
 $lang['extended-field-edit'] = 'Edit member field';
 $lang['extended-field'] = 'Member fields';
 $lang['extended-fields-management'] = 'Member field management';
-$lang['extended-fields-error-already-exist'] = 'The extended field are already exist.';
-$lang['extended-fields-error-phpboost-config'] = 'The fields used by default PHPBoost can not multiple created, please choose another type field.';
+$lang['extended-fields-error-already-exist'] = 'The extended field already exists.';
+$lang['extended-fields-error-phpboost-config'] = 'The fields used by default PHPBoost can not be created more than one time, please choose another type of field.';
 
 
 //Type 
@@ -87,7 +87,7 @@ $lang['field.yes'] = 'Yes';
 $lang['field.no'] = 'No';
 
 $lang['field.success'] = 'Success';
-$lang['field.delete_field'] = 'Would you really want to delete this field ?';
+$lang['field.delete_field'] = 'Do you really want to delete this field ?';
 $lang['field.position'] = 'Position';
 
 $lang['field.is-required'] = 'Required';
@@ -102,7 +102,7 @@ $lang['field-install.default-theme'] = 'Default theme';
 $lang['field-install.default-theme-explain'] = 'Select the theme you want to use';
 
 $lang['field-install.default-editor'] = 'Default text editor';
-$lang['field-install.default-editor-explain'] = 'Select the editor which with you want to format text';
+$lang['field-install.default-editor-explain'] = 'Select the default editor you want to use on your website to format text';
 
 $lang['field-install.timezone'] = 'Timezone';
 $lang['field-install.timezone-explain'] = 'Select the timezone corresponding to the place you live';

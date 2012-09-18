@@ -48,7 +48,6 @@ $lang['modules.compatibility'] = 'Compatibilité';
 $lang['modules.php_version'] = 'Version PHP';
 $lang['modules.url_rewrite_rules'] = 'Règles de réécriture d\'URL';
 $lang['modules.page_admin'] = 'Administration';
-$lang['modules.compatibility'] = 'Compatibilité';
 $lang['modules.modules_available'] = 'Modules disponibles';
 $lang['modules.no_modules_available'] = 'Aucun module installé ou activé';
 $lang['modules.no_deactivated_modules_available'] = 'Aucun module désactivé';
