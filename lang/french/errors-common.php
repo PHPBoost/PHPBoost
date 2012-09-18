@@ -31,6 +31,6 @@ $lang['success'] = 'Succès';
 $lang['error'] = 'Erreur';
 
 //Process
-$lang['process.success'] = 'L\'opération s\'est déroulé avec succès';
+$lang['process.success'] = 'L\'opération s\'est déroulée avec succès';
 $lang['process.error'] = 'Une erreur s\'est produite lors de l\'opération';
 ?>

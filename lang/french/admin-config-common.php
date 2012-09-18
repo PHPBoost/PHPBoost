@@ -97,7 +97,7 @@ $lang = array(
 	
 	'advanced-config.sessions-config' => 'Connexion utilisateurs',
 	'advanced-config.cookie-name' => 'Nom du cookie des sessions',
-	'advanced-config.cookie-name.style-wrong' => 'Le nom du cookie doit être obligatoirement une suite de lettre et de chiffre',
+	'advanced-config.cookie-name.style-wrong' => 'Le nom du cookie doit obligatoirement être une suite de lettres et de chiffres',
 	'advanced-config.cookie-duration' => 'Durée de la session',
 	'advanced-config.cookie-duration.explain' => '3600 secondes conseillé',
 	'advanced-config.active-session-duration' => 'Durée utilisateurs actifs',

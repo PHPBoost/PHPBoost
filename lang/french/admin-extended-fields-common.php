@@ -61,7 +61,7 @@ $lang['field.name'] = 'Nom';
 $lang['field.description'] = 'Description';
 $lang['field.type'] = 'Type de champ';
 $lang['field.regex'] = 'Contrôle de la forme de l\'entrée';
-$lang['field.regex-explain'] = 'Permet d\'effectuer un contrôle sur la forme de ce que l\'utilisateur a entré. Par exemple, si il s\'agit d\'une adresse mail, on peut contrôler que sa forme est correcte. <br />Vous pouvez effectuer un contrôle personnalié en tapant une expression régulière (utilisateurs expérimentés seulement).';
+$lang['field.regex-explain'] = 'Permet d\'effectuer un contrôle sur la forme de ce que l\'utilisateur a entré. Par exemple, si il s\'agit d\'une adresse mail, on peut contrôler que sa forme est correcte. <br />Vous pouvez effectuer un contrôle personnalisé en tapant une expression régulière (utilisateurs expérimentés seulement).';
 $lang['field.predefined-regex'] = 'Forme prédéfinie';
 $lang['field.required'] = 'Champ requis';
 $lang['field.required_explain'] = 'Obligatoire dans le profil du membre et à son inscription.';
@@ -94,14 +94,14 @@ $lang['field.is-not-required'] = 'Non requis';
 
 
 //Install
-$lang['field-install.default-lang'] = 'Langue par defaut';
-$lang['field-install.default-lang-explain'] = 'Séléctionner la langue que vous souhaitez utiliser';
+$lang['field-install.default-lang'] = 'Langue par défaut';
+$lang['field-install.default-lang-explain'] = 'Sélectionner la langue que vous souhaitez utiliser';
 
-$lang['field-install.default-theme'] = 'Theme par defaut';
-$lang['field-install.default-theme-explain'] = 'Séléctionner le thème que vous souhaitez utiliser';
+$lang['field-install.default-theme'] = 'Thème par défaut';
+$lang['field-install.default-theme-explain'] = 'Sélectionner le thème que vous souhaitez utiliser';
 
 $lang['field-install.default-editor'] = 'Editeur de texte par défaut';
-$lang['field-install.default-editor-explain'] = 'Séléctionner l\'éditeur de texte que vous souhaitez utiliser';
+$lang['field-install.default-editor-explain'] = 'Sélectionner l\'éditeur de texte que vous souhaitez utiliser';
 
 $lang['field-install.timezone'] = 'Choix du fuseau horaire';
 $lang['field-install.timezone-explain'] = 'Vous permet d\'ajuster l\'heure en fonction de votre localisation';

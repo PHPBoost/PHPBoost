@@ -62,7 +62,6 @@ $lang['lang'] = 'Langue';
 $lang['timezone.'] = 'Fuseau horaire';
 $lang['timezone.choice'] = 'Choix du fuseau horaire';
 $lang['timezone.choice.explain'] = 'Permet d\'ajuster l\'heure à votre localisation';
-$lang['email.hide'] = 'Cache l\'email';
 $lang['level'] = 'Rang';
 $lang['approbation'] = 'Approbation';
 
@@ -75,7 +74,7 @@ $lang['avatar'] = 'Avatar';
 
 //Groups
 $lang['groups'] = 'Groupes';
-$lang['groups.select'] = 'Séléctionner un groupe';
+$lang['groups.select'] = 'Sélectionner un groupe';
 $lang['no_member'] = 'Aucun membre dans ce groupe';
 
 //Other
@@ -96,7 +95,7 @@ $lang['administrator'] = 'Administrateur';
 $lang['forget-password'] = 'Mot de passe oublié';
 $lang['forget-password.select'] = 'Sélectionnez le champ que vous voulez renseigner (email ou pseudo)';
 $lang['forget-password.success'] = 'Un email vous a été envoyé avec un lien pour changer votre mot de passe';
-$lang['forget-password.error'] = 'Les informations fournis ne sont pas correct, veuillez les rectifier et réessayer';
+$lang['forget-password.error'] = 'Les informations fournies ne sont pas correctes, veuillez les rectifier et réessayer';
 $lang['change-password'] = 'Changement de mot de passe';
 $lang['forget-password.mail.content'] = 'Cher(e) :pseudo,
 
@@ -152,7 +151,7 @@ Mot de passe : :password
 
 :signature';
 
-$lang['agreement'] = 'Réglement';
+$lang['agreement'] = 'Règlement';
 $lang['agreement.agree'] = 'J\'accepte les conditions';
-$lang['agreement.agree.required'] = 'Vous devez accepter le réglement pour vous inscrire';
+$lang['agreement.agree.required'] = 'Vous devez accepter le règlement pour vous inscrire';
 ?>

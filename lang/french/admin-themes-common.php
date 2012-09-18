@@ -49,12 +49,12 @@ $lang['themes.author'] = 'Auteur';
 $lang['themes.compatibility'] = 'Compatibilité';
 $lang['themes.html_version'] = 'Version HTML';
 $lang['themes.css_version'] = 'Version CSS';
-$lang['themes.main_color'] = 'Couleurs dominante';
+$lang['themes.main_color'] = 'Couleurs dominantes';
 $lang['themes.variable-width'] = 'Extensible';
 $lang['themes.width'] = 'Largeur';
 $lang['themes.bot_informed'] = 'Non renseigné';
 $lang['themes.view_real_preview'] = 'Voir en taille réelle';
-$lang['themes.default_theme_explain'] = 'Le thème par défaut ne peut pas être désinstallé, désactivé, ou réservé';
+$lang['themes.default_theme_explain'] = 'Le thème par défaut ne peut pas être désinstallé, désactivé ou réservé';
 
 //Others
 $lang['themes.yes'] = 'Oui';
@@ -73,7 +73,7 @@ $lang['themes.upload.description'] = 'L\'archive uploadée doit être au format zi
 $lang['themes.already_exist'] = 'Le thème existe déjà';
 $lang['themes.upload.invalid_format'] = 'Le format de l\'archive n\'est pas valide';
 $lang['themes.upload.error'] = 'Erreur avec l\'upload du fichier';
-$lang['themes.not_compatible'] = 'Le thème est apparament incompatible avec votre version actuelle de PHPBoost, il a tout de même été installé. Si un problème subvient veuillez contacter l\'auteur du thème.';
+$lang['themes.not_compatible'] = 'Le thème est apparemment incompatible avec votre version actuelle de PHPBoost, il a tout de même été installé. Si un problème subvient veuillez contacter l\'auteur du thème.';
 
 //Delete theme
 $lang['themes.delete.drop_files'] = 'Supprimer tous les fichiers du thème';

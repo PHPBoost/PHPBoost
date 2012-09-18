@@ -34,7 +34,7 @@ $lang['comment'] = 'Commentaire';
 $lang['comments.not-authorized.post'] = 'Vous n\'êtes pas autorisé à poster un commentaire';
 $lang['comments.not-authorized.read'] = 'Vous n\'êtes pas autorisé à voir les commentaires';
 
-$lang['comment.locked'] = 'Commentaires bloqué, vous ne pouvez pas poster de commentaire';
+$lang['comment.locked'] = 'Commentaires bloqués, vous ne pouvez pas poster de commentaire';
 
 $lang['comment.add'] = 'Ajouter un commentaire';
 $lang['comment.edit'] = 'Editer un commentaire';

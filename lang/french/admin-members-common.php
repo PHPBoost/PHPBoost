@@ -37,7 +37,7 @@ $lang['members.members-management'] = 'Gestion des membres';
 $lang['members.add-member'] = 'Ajouter un membre';
 $lang['members.members-punishment'] = 'Gestion des sanctions';
 $lang['members.edit-member'] = 'Edition d\'un membre';
-$lang['members.rules'] = 'Réglement';
+$lang['members.rules'] = 'Règlement';
 
 //Configuration
 $lang['members.config.registration-activation'] = 'Activer l\'inscription des membres';
@@ -79,7 +79,7 @@ $lang['members.config.type-activation.admin'] = 'Administrateur';
 
 //Rules
 $lang['members.rules.registration-agreement-description'] = 'Entrez ci-dessous le règlement à afficher lors de l\'enregistrement des membres, ils devront l\'accepter pour s\'enregistrer. Laissez vide pour aucun règlement.';
-$lang['members.rules.registration-agreement'] = 'Contenu du réglement';
+$lang['members.rules.registration-agreement'] = 'Contenu du règlement';
 
 //Other
 $lang['members.valid'] = 'Valide';

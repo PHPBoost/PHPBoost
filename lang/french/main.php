@@ -114,7 +114,7 @@ $LANG['private_messaging'] = 'Messagerie privée';
 $LANG['my_private_profile'] = 'Mon profil';
 
 //Maintain
-$LANG['maintain'] = 'Le site est actuellement en maintenance merci de votre patience, seul(s) le(s) administrateur(s) du site peuvent y accèder.';
+$LANG['maintain'] = 'Le site est actuellement en maintenance. Merci de votre patience, seul(s) le(s) administrateur(s) du site peuvent y accéder.';
 $LANG['maintain_delay'] = 'Délai estimé avant réouverture du site :';
 $LANG['title_maintain'] = 'Site en maintenance';
 $LANG['loading'] = 'Chargement';
@@ -164,7 +164,7 @@ $LANG['written_by'] = 'Ecrit par';
 $LANG['valid'] = 'Valide';
 $LANG['info'] = 'Informations';
 $LANG['asc'] = 'Croissant';
-$LANG['desc'] = 'Decroissant';
+$LANG['desc'] = 'Décroissant';
 $LANG['list'] = 'Liste';
 $LANG['welcome'] = 'Bienvenue';
 $LANG['currently'] = 'Actuellement';
@@ -355,9 +355,9 @@ $LANG['no_pm'] = 'Aucun message';
 $LANG['quote_last_msg'] = 'Reprise du message précédent';
 
 //Gestion des fichiers
-$LANG['confim_del_file'] = 'Supprimer ce fichier?';
-$LANG['confirm_del_folder'] = 'Supprimer ce dossier, et tout son contenu?';
-$LANG['confirm_empty_folder'] = 'Vider tout le contenu de ce dossier?';
+$LANG['confim_del_file'] = 'Supprimer ce fichier ?';
+$LANG['confirm_del_folder'] = 'Supprimer ce dossier, et tout son contenu ?';
+$LANG['confirm_empty_folder'] = 'Vider tout le contenu de ce dossier ?';
 $LANG['file_forbidden_chars'] = 'Le nom du fichier ne peut contenir aucun des caractères suivants : \\\ / . | ? < > \"';
 $LANG['folder_forbidden_chars'] = 'Le nom du dossier ne peut contenir aucun des caractères suivants : \\\ / . | ? < > \"';
 $LANG['files_management'] = 'Gestion des fichiers';
@@ -368,13 +368,13 @@ $LANG['folders'] = 'Répertoires';
 $LANG['folders_up'] = 'Répertoire parent';
 $LANG['folder_new'] = 'Nouveau dossier';
 $LANG['empty_folder'] = 'Ce dossier est vide';
-$LANG['empty_member_folder'] = 'Vider ce dossier?';
-$LANG['del_folder'] = 'Supprimer ce dossier?';
-$LANG['folder_already_exist'] = 'Le dossier existe déjà!';
+$LANG['empty_member_folder'] = 'Vider ce dossier ?';
+$LANG['del_folder'] = 'Supprimer ce dossier ?';
+$LANG['folder_already_exist'] = 'Le dossier existe déjà !';
 $LANG['empty'] = 'Vider';
 $LANG['root'] = 'Racine';
 $LANG['files'] = 'Fichiers';
-$LANG['files_del_failed'] = 'Echec suppression des fichiers, veuillez le faire manuellement';
+$LANG['files_del_failed'] = 'La suppression des fichiers a échouée, veuillez le faire manuellement';
 $LANG['folder_size'] = 'Taille du dossier';
 $LANG['file_type'] = 'Fichier %s';
 $LANG['image_type'] = 'Image %s';
@@ -392,8 +392,8 @@ $LANG['cats_managment_could_not_be_moved'] = 'Une erreur est survenue, la catégo
 $LANG['cats_managment_visibility_could_not_be_changed'] = 'Une erreur est survenue, la visibilité de la catégorie n\'a pas pu être changée';
 $LANG['cats_managment_no_category_existing'] = 'Aucune catégorie n\'existe';
 $LANG['cats_management_confirm_delete'] = 'Etes-vous sur de vouloir supprimer cette catégorie ?';
-$LANG['cats_management_hide_cat'] = 'Rendre invisible la catégorie';
-$LANG['cats_management_show_cat'] = 'Rendre visible la catégorie';
+$LANG['cats_management_hide_cat'] = 'Rendre la catégorie invisible';
+$LANG['cats_management_show_cat'] = 'Rendre la catégorie visible';
 
 ##########Panneau de modération##########
 $LANG['moderation_panel'] = 'Panneau de modération';
@@ -468,7 +468,7 @@ $LANG['contribution_list'] = 'Liste des contributions';
 $LANG['contribute'] = 'Contribuer';
 $LANG['contribute_in_modules_explain'] = 'Les modules suivants permettent aux utilisateurs de contribuer. Cliquez sur un module pour vous rendre dans son interface de contribution.';
 $LANG['contribute_in_module_name'] = 'Contribuer dans le module %s';
-$LANG['no_module_to_contribute'] = 'Aucun module dans lequel vous pouvez contribuer n\'est installé.';
+$LANG['no_module_to_contribute'] = 'Aucun module supportant la contribution n\'est installé.';
 
 //Barre de chargement.
 $LANG['query_loading'] = 'Chargement de la requête au serveur';
@@ -497,7 +497,7 @@ $LANG['_code_dictionnary'] = array('image', 'php', 'requete', 'azerty', 'exit', 
 'editer', 'banni', 'niveau', 'dossier', 'fichier', 'racine', 'vider', 'archive', 'boite');
 $LANG['verif_code'] = 'Code de vérification';
 $LANG['verif_code_explain'] = 'Recopier le code sur l\'image, attention aux majuscules';
-$LANG['require_verif_code'] = 'Veuillez saisir le code de vérification!';
+$LANG['require_verif_code'] = 'Veuillez saisir le code de vérification !';
 
 $LANG['csrf_attack'] = 'Jeton de session invalide. Veuillez réessayer car l\'opération n\'a pas pu être effectuée.';
 
