@@ -32,8 +32,9 @@
  */
 class Mail
 {
-	// TODO remove
-	const CRLF = "\r\n";
+	const SENDER_ADMIN = 'admin';
+	
+	const SENDER_USER = 'user';
 
 	/**
 	 * @var sting object of the mail
@@ -81,13 +82,18 @@ class Mail
 	/**
 	 * @desc Sets the mail sender.
 	 * @param string $sender The mail sender address.
-	 * @param string $sender_name 'admin' if the mail is sent by the administrator, 'user' otherwise.
+	 * @param string $sender_name SENDER_ADMIN constante if the mail is sent by the administrator, SENDER_USER constante for user or string for other name
 	 */
-	public function set_sender($sender, $sender_name = 'admin')
+	public function set_sender($sender, $sender_name = self::SENDER_ADMIN)
 	{
 		global $LANG;
 		$site_name = GeneralConfig::load()->get_site_name();
-		$this->sender_name = str_replace('"', '', $site_name . ' - ' . ($sender_name == 'admin' ? $LANG['admin'] : $LANG['user']));
+		
+		if ($sender_name == self::SENDER_ADMIN || $sender_name == self::SENDER_USER)
+		{
+			$sender_name = $sender_name == self::SENDER_ADMIN ? $LANG['admin'] : $LANG['user'];
+		}
+		$this->sender_name = str_replace('"', '', $site_name . ' - ' . $sender_name);
 
 		$this->sender_mail = $sender;
 	}

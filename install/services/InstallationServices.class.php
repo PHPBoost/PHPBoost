@@ -487,7 +487,7 @@ class InstallationServices
 	{
 		$general_config = GeneralConfig::load();
 		$mail = new Mail();
-		$mail->set_sender($email, 'admin');
+		$mail->set_sender($email, Mail::SENDER_ADMIN);
 		$mail->add_recipient($email);
 		$mail->set_subject($this->messages['admin.created.email.object']);
 		$mail->set_content(sprintf($this->messages['admin.created.email.unlockCode'], stripslashes($login),
