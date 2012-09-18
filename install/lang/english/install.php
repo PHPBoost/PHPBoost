@@ -228,7 +228,7 @@ The PHPBoost Team.',
                             <legend>Thanks</legend>
                             <h2>Members</h2>
                             <p>Thanks to all the members of the community who cheer us on daily and contribute to the software quality by reporting bugs and suggestion improvements, which allows to lead to a stable and powerful version 4.0.</p>
-                            <p>Thanks to the members of our teams and particulary to <strong>soupaloignon</strong> for communication team, <strong>Ptithom</strong>, <strong>aiglobulles</strong>, <strong>55 Escape</strong> and <strong>Micman</strong> for the documentation writing, <strong>Schyzo</strong> for the graphics, <strong>DaaX</strong>, <strong>Alain91</strong> and <strong>julienseth78</strong> for the modules development and <strong>benflovideo</strong> for the moderation of the community.</p>
+                            <p>Thanks to the members of our teams and particulary to <strong>soupaloignon</strong> for communication team, <strong>Ptithom</strong>, <strong>aiglobulles</strong>, <strong>55 Escape</strong> and <strong>Micman</strong> for the documentation writing, <strong>Schyzo</strong>, <strong>elenwe</strong> and <strong>alyha</strong> for the graphics, <strong>DaaX</strong>, <strong>Alain91</strong> and <strong>julienseth78</strong> for the modules development and <strong>benflovideo</strong> for the moderation of the community.</p>
                             <h2>Other projects</h2>
                             <p>PHPBoost uses different tools allowing it to enlarge its features panel enough implying the development time rising. Most of these tools are under GNU/GPL license.</p>
                             <ul>
