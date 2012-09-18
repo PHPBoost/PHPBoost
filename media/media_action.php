@@ -329,14 +329,14 @@ elseif (!empty($_POST['submit']))
 		else
 		{
 			$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
-                $LANG['media_unknow_mime']);
+                $LANG['e_mime_unknow_media']);
             DispatchManager::redirect($controller);
 		}
 	}
 	else
 	{
 		$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
-            $LANG['media_empty_link']);
+            $LANG['e_link_empty_media']);
         DispatchManager::redirect($controller);
 	}
 
