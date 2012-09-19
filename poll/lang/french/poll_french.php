@@ -43,7 +43,7 @@ $LANG['polls'] = 'Sondage(s)';
 $LANG['single'] = 'Unique';
 $LANG['multiple'] = 'Multiple';
 $LANG['number_vote'] = 'Nombre de votes';
-$LANG['add_answer'] = 'Ajouter une reponse';
+$LANG['add_answer'] = 'Ajouter une réponse';
 $LANG['displayed_in_mini_module_list'] = 'Mini-sondage';
 $LANG['displayed_in_mini_module_list_explain'] = 'Affichage aléatoire si plus d\'un sondage sélectionné';
 $LANG['cookie_name'] = 'Nom du cookie';
@@ -53,10 +53,10 @@ $LANG['poll_date'] = 'Date du sondage';
 $LANG['poll_date_explain'] = '(jj/mm/aa) Laisser vide pour mettre la date d\'aujourd\'hui';
 
 //Requis
-$LANG['require_poll_entry'] = 'Veuillez entrer un nombre d\'entrées pour le sondage!';
-$LANG['require_question'] = 'Veuillez entrer une question pour le sondage!';
+$LANG['require_poll_entry'] = 'Veuillez entrer un nombre d\'entrées pour le sondage !';
+$LANG['require_question'] = 'Veuillez entrer une question pour le sondage !';
 $LANG['require_answer'] = 'Veuillez entrer une réponse';
-$LANG['require_answer_type'] = 'Veuillez entrer le type de réponse du sondage!';
+$LANG['require_answer_type'] = 'Veuillez entrer le type de réponse du sondage !';
 
 //Erreurs
 $LANG['e_unexist_poll'] = 'Le sondage que vous avez demandé n\'existe pas';

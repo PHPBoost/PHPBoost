@@ -34,8 +34,8 @@ $lang = array();
 $lang['cat.name'] = 'Test';
 $lang['cat.description'] = 'Catégorie de test';
 $lang['news.title'] = 'PHPBoost 4';
-$lang['news.content'] = 'Votre site boosté par PHPBoost 4 est bien installé. Afin de vous aider à prendre votre site en main, <br />
-l\'accueil de chaque module contient un message pour vous guider pour vos premiers pas. Voici également quelques recommandations supplémentaires que nous vous proposons de lire avec attention : <br />
+$lang['news.content'] = 'Votre site boosté par PHPBoost 4 est bien installé. Afin de vous aider à le prendre en main, <br />
+l\'accueil de chaque module contient un message pour vous guider vos premiers pas. Voici également quelques recommandations supplémentaires que nous vous proposons de lire avec attention : <br />
 <br />
 <br />
 <br /><h4 class="stitle1">N\'oubliez pas de supprimer le répertoire "install"</h4><br /><br />
@@ -64,6 +64,6 @@ comme vous le souhaitez!  Pour cela : <br />
 <br />
 <br /><h4 class="stitle1">Que faire si vous rencontrez un problème ?</h4><br /><br />
 <br />
-N\'hésitez pas à consulter <a href="http://www.phpboost.com/wiki/wiki.php">la documentation de PHPBoost</a> ou de poser vos question sur le <a href="http://www.phpboost.com/forum/index.php">forum d\'entraide</a>.<br /> <br />
-<p class="float_right">Toute l\'équipe de PHPBoost vous remercie d\'utiliser son logiciel pour créer votre site web!</p>';
+N\'hésitez pas à consulter <a href="http://www.phpboost.com/wiki/wiki.php">la documentation de PHPBoost</a> ou à poser vos question sur le <a href="http://www.phpboost.com/forum/index.php">forum d\'entraide</a>.<br /> <br />
+<p class="float_right">Toute l\'équipe de PHPBoost vous remercie d\'utiliser son logiciel pour créer votre site web !</p>';
 ?>

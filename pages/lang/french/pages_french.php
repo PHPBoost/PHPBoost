@@ -68,7 +68,7 @@ $LANG['explain_select_multiple'] = 'Maintenez ctrl puis cliquez dans la liste po
 $LANG['pages_previewing'] = 'Prévisualisation :';
 $LANG['pages_contents_part'] = 'Contenu de la page';
 $LANG['pages_delete_success'] = 'La page a été supprimée avec succès';
-$LANG['pages_delete_failure'] = 'La page n\'a pu être supprimée avec succès';
+$LANG['pages_delete_failure'] = 'La page n\'a pas pu être supprimée';
 $LANG['pages_confirm_delete'] = 'Etes-vous sur de vouloir supprimer cette page ?';
 
 //Divers
@@ -83,7 +83,7 @@ $LANG['pages_page_com'] = 'Commentaires de la page %s';
 
 //Accueil
 $LANG['pages_explain'] = 'Vous êtes sur le panneau de contrôle des pages. Vous pouvez ici gérer l\'ensemble de vos pages.
-<div class="question"><p>Vous utilisez l\'éditeur que vous avez choisi dans votre profil pour mettre en forme les pages. Pour insérer du code HTML, utilisez la balise BBCode <span style="font-family:courier new;">[html]code html[/html]</span>, que vous soyez en BBCode ou avez TinyMCE.</p>
+<div class="question"><p>Vous utilisez l\'éditeur que vous avez choisi dans votre profil pour mettre en forme les pages. Pour insérer du code HTML, utilisez la balise BBCode <span style="font-family:courier new;">[html]code html[/html]</span>, que vous utilisiez l\'éditeur BBCode ou TinyMCE.</p>
 <p>Pour des raisons de sécurité il est interdit d\'insérer du code PHP dans les pages.</p>
 <p>Pour faire des liens entre les différentes pages il suffit d\'utiliser la balise BBCode [link] qui n\'existe que sur ce module et qui s\'utilise de la façon suivante : <span style="font-family:courier new;">[link=titre-de-la-page]Lien vers la page[/link]</span>.</p></div>';
 $LANG['pages_redirections'] = 'Gestion des redirections';
@@ -98,8 +98,8 @@ $LANG['pages_redirection_management'] = 'Gestion des redirections';
 $LANG['pages_rename_page'] = 'Renommer la page <em>%s</em>';
 $LANG['pages_new_title'] = 'Nouveau titre de la page';
 $LANG['pages_create_redirection'] = 'Créer une redirection depuis l\'ancien titre vers le nouveau';
-$LANG['pages_explain_rename'] = 'Vous êtes sur le point de renommer la page. Vous devez savoir que tous les liens qui mènent vers cet article seront rompus. C\'est pourquoi vous avez la possibilité de créer une redirection depuis l\'ancien nom vers le nouveau afin de ne pas rompre ces liens';
-$LANG['pages_confirm_delete_redirection'] = addslashes('Etes-vous sur de vouloir supprimer cette redirection ?');
+$LANG['pages_explain_rename'] = 'Vous êtes sur le point de renommer la page. Vous devez savoir que tous les liens qui mènent vers cet article seront rompus. C\'est pourquoi vous avez la possibilité de créer une redirection depuis l\'ancien nom vers le nouveau afin de pouvoir continuer à utiliser ces liens';
+$LANG['pages_confirm_delete_redirection'] = 'Etes-vous sur de vouloir supprimer cette redirection ?';
 $LANG['pages_delete_redirection'] = 'Supprimer cette redirection';
 $LANG['pages_redirected_from'] = 'Redirigé depuis <em>%s</em>';
 $LANG['pages_redirection_title'] = 'Titre de la redirection';
@@ -126,7 +126,7 @@ $LANG['pages_error_auth_com'] = 'Vous n\'avez pas l\'autorisation de lire les co
 $LANG['pages_error_unactiv_com'] = 'Les commentaires ont été désactivés pour cette page';
 $LANG['page_alert_title'] = 'Vous devez entrer un titre';
 $LANG['page_alert_contents'] = 'Vous devez entrer le contenu de votre page';
-$LANG['pages_already_exists'] = 'Le titre que vous avez choisi pour la page existe déjà. Vous devez choisir un autre, car chaque page étant repérée uniquement par son titre, il doit y avoir unicité de ces derniers.';
+$LANG['pages_already_exists'] = 'Le titre que vous avez choisi pour la page existe déjà. Vous devez en choisir un autre, chaque page étant repérée uniquement par son titre, celui-ci doit être unique.';
 $LANG['pages_cat_contains_cat'] = 'La catégorie que vous avez sélectionnée pour placer cette catégorie est contenue par cette même catégorie, ce qui n\'est pas possible. Merci de choisir une autre catégorie';
 $LANG['pages_notice_previewing'] = 'Vous êtes en train de prévisualiser ce que vous avez entré. Aucune modification n\'a été apportée dans la base de données, vous devez valider votre page afin que les modifications soient prises en compte';
 

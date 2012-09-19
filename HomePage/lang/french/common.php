@@ -28,10 +28,10 @@
 $lang = array();
 $lang['home_page'] = 'Page d\'accueil';
 $lang['config'] = 'Configuration';
-$lang['title'] = 'Title';
+$lang['title'] = 'Titre';
 $lang['enabled'] = 'Activé';
 $lang['authorizations'] = 'Autorisations';
-$lang['number_columns'] = 'Nombre de colonne';
+$lang['number_columns'] = 'Nombre de colonnes';
 $lang['column'] = 'Colonne';
 
 $lang['plugin.add'] = 'Ajouter un plugin';

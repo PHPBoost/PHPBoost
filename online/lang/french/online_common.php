@@ -40,7 +40,7 @@ $lang['online.last_update'] = 'Dernière mise à jour';
 
 //Admin
 $lang['admin.online-config'] = 'Configuration En ligne';
-$lang['admin.nbr-displayed'] = 'Nombre d\'utilisateurs en ligne affichées';
+$lang['admin.nbr-displayed'] = 'Nombre d\'utilisateurs en ligne affichés';
 $lang['admin.nbr-members-per-page'] = 'Nombre d\'utilisateurs affichés par page';
 $lang['admin.display-order'] = 'Ordre d\'affichage';
 

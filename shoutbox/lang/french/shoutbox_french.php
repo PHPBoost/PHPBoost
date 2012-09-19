@@ -47,5 +47,5 @@ $LANG['e_flood'] = 'Vous ne pouvez pas encore poster, réessayez dans quelques in
 $LANG['e_l_flood'] = 'Nombre maximum de lien(s) internet autorisé(s) dans votre message : %d';
 $LANG['e_link_pseudo'] = 'Vous ne pouvez pas mettre de lien dans votre pseudo';
 $LANG['e_incomplete'] = 'Tous les champs obligatoires doivent être remplis !';
-$LANG['e_readonly'] = 'Vous ne pouvez exécuter cette action, car vous avez été placé en lecture seule !';
+$LANG['e_readonly'] = 'Vous ne pouvez exécuter cette action car vous avez été placé en lecture seule !';
 ?>

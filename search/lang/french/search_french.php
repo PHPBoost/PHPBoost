@@ -33,7 +33,7 @@
 //Généralités
 $LANG['title_search'] = 'Recherche';
 $LANG['search_results'] = 'Résultats de la recherche';
-$LANG['warning_length_string_searched'] = 'La chaine recherchée doit faire au moins 4 caractères!';
+$LANG['warning_length_string_searched'] = 'La chaine recherchée doit faire au moins 4 caractères !';
 $LANG['search_keywords'] = 'Mots clés';
 $LANG['search_min_length'] = '4 caractères minimum';
 $LANG['search_in_modules'] = 'Rechercher dans les modules suivants';
@@ -57,7 +57,7 @@ $LANG['search_no_options'] = 'Aucune option de recherche spécifique à ce module'
 $LANG['search_management'] = 'Gestion de la recherche';
 $LANG['search_config'] = 'Configuration';
 $LANG['search_config_weighting'] = 'Pondération des résultats';
-$LANG['search_config_weighting_explain'] = 'La pondération des résultats vous permet de donner plus d\'importance à certains modules dans les résultats de la recherche qu\'à d\'autres.';
+$LANG['search_config_weighting_explain'] = 'La pondération des résultats vous permet de donner plus d\'importance à certains modules qu\'à d\'autres dans les résultats de la recherche.';
 $LANG['search_weights'] = 'Pondérations';
 $LANG['search_cache'] = 'Cache des résultats des recherches';
 $LANG['cache_time'] = 'Durée de vie du cache';
@@ -70,3 +70,5 @@ $LANG['unauthorized_modules'] = 'Modules interdits';
 $LANG['unauthorized_modules_explain'] = 'Sélectionnez les modules dans lesquels vous ne souhaitez pas autoriser la recherche';
 $LANG['update'] = 'Modifier';
 $LANG['reset'] = 'Défaut';
+
+?>

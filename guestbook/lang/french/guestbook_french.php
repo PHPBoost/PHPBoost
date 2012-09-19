@@ -33,11 +33,11 @@
 //Admin
 $LANG['guestbook_config'] = 'Configuration du livre d\'or';
 $LANG['rank_post'] = 'Autorisation d\'écriture';
-$LANG['rank_modo'] = 'Autorisation suppression ou modification d\'un message';
+$LANG['rank_modo'] = 'Autorisation de suppression ou modification d\'un message';
 
 //Titre
 $LANG['title_guestbook'] = 'Livre d\'or';
 $LANG['guestbook_more_contents'] = '[Suite...]';
-$LANG['no_message_guestbook'] = 'Aucun messages';
+$LANG['no_message_guestbook'] = 'Aucun message';
 
 ?>

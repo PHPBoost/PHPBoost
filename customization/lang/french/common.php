@@ -41,7 +41,7 @@ $lang['customization.interface.logo.current.change'] = 'Changer le logo';
 $lang['customization.interface.logo.current'] = 'Logo actuel';
 $lang['customization.interface.logo.current.null'] = 'Vous n\'avez aucun logo actuellement';
 $lang['customization.interface.logo.current.erased'] = '<span style="color:#B22222;font-weight:bold;">Le logo que vous avez enregistré est visiblement supprimé du serveur, veuillez le remplacer par un autre</span>';
-$lang['customization.interface.logo.error'] = 'Le logo n\'a pas pû être changé';
+$lang['customization.interface.logo.error'] = 'Le logo n\'a pas pu être changé';
 $lang['customization.interface.logo.use-default'] = 'Supprimer l\'image courante et utiliser le logo par défaut';
 
 $lang['favicon'] = 'Favicon';
@@ -50,7 +50,7 @@ $lang['customization.favicon.current'] = 'Favicon actuel';
 $lang['customization.favicon.current.null'] = 'Vous n\'avez pas de favicon actuellement';
 $lang['customization.favicon.current.change'] = 'Changer votre favicon';
 $lang['customization.favicon.current.erased'] = '<span style="color:#B22222;font-weight:bold;">Le favicon que vous avez enregistré est visiblement supprimé du serveur, veuillez le remplacer par un autre</span>';
-$lang['customization.favicon.error'] = 'Le favicon n\'a pas pû être changé';
+$lang['customization.favicon.error'] = 'Le favicon n\'a pas pu être changé';
 
 $lang['customization.editor.css-files'] = 'Editeur de fichiers CSS';
 $lang['customization.editor.css-files.select'] = 'Sélectionnez le fichier que vous souhaitez éditer';
