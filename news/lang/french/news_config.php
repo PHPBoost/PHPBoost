@@ -35,5 +35,5 @@ $lang = array();
 //Edito
 $lang['news.config.edito_title'] = 'Bienvenue sur votre site !';
 $lang['news.config.edito_content'] = 'Vous désirez un site dynamique capable de s\'adapter à vos besoins ? PHPBoost est fait pour vous !
-<br /><br />Vous pourrez à travers une administration intuitive personnaliser entièrement votre site sans connaissances particulières. En effet ce logiciel a été conçu avec la volonté de le rendre utilisable simplement par le plus grand nombre. Prenez le temps de découvrir toutes les fonctionnalités qui vous sont offertes. En cas de problème une communauté grandissante sera toujours là pour vous épauler !<br /><br />Bienvenue sur votre site !';
+<br /><br />Vous pourrez entièrement personnaliser votre site à travers une administration intuitive sans connaissances particulières. En effet ce logiciel a été conçu avec la volonté de le rendre utilisable simplement par le plus grand nombre. Prenez le temps de découvrir toutes les fonctionnalités qui vous sont offertes. En cas de problème une communauté grandissante sera toujours là pour vous épauler !<br /><br />Bienvenue sur votre site !';
 ?>

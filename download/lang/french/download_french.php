@@ -63,7 +63,7 @@ $DOWNLOAD_LANG['approved'] = 'Approuvé';
 $DOWNLOAD_LANG['hidden'] = 'Caché';
 $DOWNLOAD_LANG['number_of_hits'] = 'Nombre de téléchargements';
 $DOWNLOAD_LANG['download_method'] = 'Méthode de téléchargement';
-$DOWNLOAD_LANG['download_method_explain'] = 'Choisissez de faire une redirection vers le fichier sauf si le fichier s\'affiche dans le navigateur au lieu d\'être téléchargé par le téléchargement et que ce fichier est <strong>sur votre serveur</strong>, dans ce cas, choisissez de forcer le téléchargement';
+$DOWNLOAD_LANG['download_method_explain'] = 'Choisissez de faire une redirection vers le fichier sauf si le fichier s\'affiche dans le navigateur au lieu d\'être téléchargé et que ce fichier est <strong>sur votre serveur</strong>, dans ce cas, choisissez de forcer le téléchargement';
 $DOWNLOAD_LANG['force_download'] = 'Forcer le téléchargement';
 $DOWNLOAD_LANG['redirection_up_to_file'] = 'Rediriger vers le fichier';
 $DOWNLOAD_LANG['deadlink'] = 'Signaler un lien mort';
@@ -105,7 +105,7 @@ $DOWNLOAD_LANG['read_feed'] = 'Téléchager';
 //Catégories
 $DOWNLOAD_LANG['add_category'] = 'Ajouter une catégorie';
 $DOWNLOAD_LANG['removing_category'] = 'Suppression d\'une catégorie';
-$DOWNLOAD_LANG['explain_removing_category'] = 'Vous êtes sur le point de supprimer la catégorie. Deux solutions s\'offrent à vous. Vous pouvez soit déplacer l\'ensemble de son contenu (fichiers et sous catégories) dans une autre catégorie soit supprimer l\'ensemble de son catégorie. <strong>Attention, cette action est irréversible !</strong>';
+$DOWNLOAD_LANG['explain_removing_category'] = 'Vous êtes sur le point de supprimer la catégorie. Deux solutions s\'offrent à vous. Vous pouvez soit déplacer l\'ensemble de son contenu (fichiers et sous catégories) dans une autre catégorie soit supprimer l\'ensemble de la catégorie. <strong>Attention, cette action est irréversible !</strong>';
 $DOWNLOAD_LANG['delete_category_and_its_content'] = 'Supprimer la catégorie et tout son contenu';
 $DOWNLOAD_LANG['move_category_content'] = 'Déplacer son contenu dans :';
 $DOWNLOAD_LANG['required_fields'] = 'Les champs marqués * sont obligatoires !';
@@ -129,7 +129,7 @@ $DOWNLOAD_LANG['global_auth'] = 'Permissions globales';
 $DOWNLOAD_LANG['global_auth_explain'] = 'Vous définissez ici les permissions globales au module. Vous pourrez changer ces permissions localement sur chaque catégorie';
 
 //Erreurs
-$DOWNLOAD_LANG['successful_operation'] = 'L\'opération que vous avez demandée a été effectuée avec succès';
+$DOWNLOAD_LANG['successful_operation'] = 'L\'opération que vous avez demandé a été effectuée avec succès';
 $DOWNLOAD_LANG['required_fields_empty'] = 'Des champs requis n\'ont pas été renseignés, merci de renouveler l\'opération correctement';
 $DOWNLOAD_LANG['unexisting_category'] = 'La catégorie que vous avez sélectionnée n\'existe pas';
 $DOWNLOAD_LANG['new_cat_does_not_exist'] = 'La catégorie cible n\'existe pas';

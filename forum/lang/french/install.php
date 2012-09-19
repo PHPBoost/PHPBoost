@@ -31,8 +31,8 @@
  ####################################################
 
 $lang = array(
-    'default.category.name' => 'Cat&eacute;gorie de test',
-	'default.category.subname' => 'Cat&eacute;gorie de test',
+    'default.category.name' => 'Catégorie de test',
+	'default.category.subname' => 'Catégorie de test',
     'default.board.name' => 'Forum de test',
 	'default.board.subname' => 'Forum de test',
 	'sample.thread.title' => 'Test',

@@ -46,7 +46,7 @@ $lang['subscriber.edit'] = 'Editer un inscrit';
 $lang['archives.list'] = 'Liste des archives';
 $lang['newsletter-add'] = 'Ajouter une newsletter';
 $lang['newsletter.subscribe_newsletters'] = 'S\'abonner à une newsletter';
-$lang['newsletter.unsubscribe_newsletters'] = 'Se désabonner à une newsletter';
+$lang['newsletter.unsubscribe_newsletters'] = 'Se désabonner d\'une newsletter';
 $lang['streams.add'] = 'Ajouter un flux';
 $lang['streams.edit'] = 'Modifier un flux';
 $lang['newsletter.list_newsletters'] = 'Liste des newsletters';
@@ -62,7 +62,7 @@ $lang['admin.newsletter-authorizations'] = 'Autorisations';
 $lang['auth.read'] = 'Autorisations d\'accès aux flux';
 $lang['auth.archives-read'] = 'Autorisations de lecture des archives';
 $lang['auth.subscribers-read'] = 'Autorisations de lecture de la liste des inscrits';
-$lang['auth.subscribers-moderation'] = 'Autorisations de modérer les inscrits';
+$lang['auth.subscribers-moderation'] = 'Autorisations de modéreration des inscrits';
 $lang['auth.subscribe'] = 'Autorisations de s\'enregistrer aux newsletters';
 $lang['auth.create-newsletter'] = 'Autorisations de créer une newsletter';
 
@@ -97,13 +97,13 @@ $lang['subscribers.no_users'] = 'Aucun inscrit';
 // Unsubcribe
 $lang['newsletter.delete_all_streams'] = 'Se désinscrire de tous les flux';
 $lang['unsubscribe.newsletter'] = 'Se désinscrire des newsletters';
-$lang['unsubscribe.newsletter_choice'] = 'Choisissez les newsletters ou vous souhaitez rester abonné';
+$lang['unsubscribe.newsletter_choice'] = 'Choisissez les newsletters auxquelles vous souhaitez rester abonné';
 
 //Archives
 $lang['archives.stream_name'] = 'Nom du flux';
 $lang['archives.name'] = 'Nom de la newsletter';
 $lang['archives.date'] = 'Date de publication';
-$lang['archives.nbr_subscribers'] = 'Nombre d\'inscrit';
+$lang['archives.nbr_subscribers'] = 'Nombre d\'inscrits';
 $lang['archives.not_archives'] = 'Aucune archive n\'est disponible';
 
 //Add newsletter
@@ -112,19 +112,19 @@ $lang['add.send_test'] = 'Envoyer un mail de test';
 $lang['add.add_newsletter'] = 'Ajouter une newsletter';
 
 //Types newsletters
-$lang['newsletter.types.choice'] = 'Veuillez séléctionner un type de message';
+$lang['newsletter.types.choice'] = 'Veuillez sélectionner un type de message';
 $lang['newsletter.types.null'] = '--';
 $lang['newsletter.types.text'] = 'Texte';
 $lang['newsletter.types.text_explain'] = '<span style="color:green;"><strong>Pour tous</strong></span><br />Vous ne pourrez procéder à aucune mise en forme du message.';
 $lang['newsletter.types.bbcode'] = 'BBCode';
-$lang['newsletter.types.bbcode_explain'] = '<span style="color:green;"><strong>Pour tous</strong></span><br />Vous pouvez formater le texte grâce au BBCode, le langage de mise en forme simplifiée adopté sur tout le portail.';
+$lang['newsletter.types.bbcode_explain'] = '<span style="color:green;"><strong>Pour tous</strong></span><br />Vous pouvez formater le texte grâce au BBCode, le langage de mise en forme simplifié adopté sur tout le portail.';
 $lang['newsletter.types.html'] = 'HTML';
 $lang['newsletter.types.html_explain'] = '<span style="color:red;"><strong>Utilisateurs expérimentés seulement</strong></span><br />Vous pouvez mettre en forme le texte à votre guise, mais vous devez connaître le langage html.';
 $lang['newsletter.types.next'] = 'Suivant';
 
 //Other
 $lang['newsletter.page'] = 'Page';
-$lang['newsletter.no_newsletters'] = 'Aucune newsletter de disponible';
+$lang['newsletter.no_newsletters'] = 'Aucune newsletter disponible';
 $lang['unsubscribe_newsletter'] = 'Se désabonner de cette newsletter';
 $lang['newsletter.view_archives'] = 'Voir les archives';
 $lang['newsletter.view_subscribers'] = 'Voir les inscrits';
@@ -134,19 +134,18 @@ $lang['newsletter.visitor'] = 'Visiteur';
 $lang['newsletter.submit'] = 'OK';
 
 //Errors
-$lang['admin.success-saving-config'] = 'Vous avez modifié avec succès la configuration';
+$lang['admin.success-saving-config'] = 'Vous avez modifié la configuration avec succès';
 $lang['admin.success-add-stream'] = 'Catégorie ajoutée avec succès';
 $lang['admin.stream-not-existed'] = 'La catégorie demandée n\'existe pas';
-$lang['admin.success-add-stream'] = 'La catégorie a bien été ajouté';
-$lang['admin.success-edit-stream'] = 'La catégorie a bien été modifié';
-$lang['admin.success-delete-stream'] = 'La catégorie a bien été supprimé';
+$lang['admin.success-edit-stream'] = 'La catégorie a bien été modifiée';
+$lang['admin.success-delete-stream'] = 'La catégorie a bien été supprimée';
 $lang['success-subscribe'] = 'Vous vous êtes inscrit au(x) newsletter(s) avec succès';
 $lang['success-unsubscribe'] = 'Vous vous êtes désinscrit des newsletters avec succès';
 $lang['success-delete-subscriber'] = 'Vous avez supprimé la personne inscrite avec succès';
 $lang['success-edit-subscriber'] = 'Vous avez édité la personne inscrite avec succès';
 $lang['error-subscriber-not-existed'] = 'L\'incrit n\'existe pas';
 $lang['error-archive-not-existed'] = 'L\'archive n\'existe pas';
-$lang['newsletter.success-add'] = 'La newsletter a bien été ajouté et envoyé';
+$lang['newsletter.success-add'] = 'La newsletter a bien été ajoutée et envoyée';
 $lang['newsletter.success-send-test'] = 'Le mail de test a bien été envoyé';
 
 //Authorizations
@@ -160,5 +159,5 @@ $lang['errors.not_authorized_read_archives'] = 'Vous n\'avez pas les autorisatio
 
 //Register extended field
 $lang['extended_fields.newsletter.name'] = 'Newsletter(s) souscrite(s)';
-$lang['extended_fields.newsletter.description'] = 'Sélectionner le(s) newsletter(s) dont vous souhaitez être inscrit';
+$lang['extended_fields.newsletter.description'] = 'Sélectionnez la(les) newsletter(s) auxquelles vous souhaitez être inscrit';
 ?>

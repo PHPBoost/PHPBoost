@@ -117,10 +117,10 @@ $LANG['wiki_current_version'] = 'Version courante';
 //Statut de l'article
 $LANG['wiki_status_management'] = 'Gestion des statuts des articles';
 $LANG['wiki_status_management_article'] = 'Gestion des statuts de l\' article %s';
-$LANG['wiki_defined_status'] = 'Statut préféfini';
+$LANG['wiki_defined_status'] = 'Statut prédéfini';
 $LANG['wiki_undefined_status'] = 'Statut personnalisé';
 $LANG['wiki_no_status'] = 'Aucun statut';
-$LANG['wiki_status_explain'] = 'Vous pouvez ici sélectionner le type d\'article. Plusieurs status différents permettent de classer vos articles, et mettre en évidence quelque chose qui leur est remarquable.<br />Pour cela vous pouvez soit utiliser des statuts prédéfinis soit créer vos propres statuts. Pour utiliser un statut prédéfini veuillez laisser le champ statut personnalisé vide.';
+$LANG['wiki_status_explain'] = 'Vous pouvez ici sélectionner le type d\'article. Plusieurs statuts différents permettent de classer vos articles, et mettre en évidence quelque chose qui leur est remarquable.<br />Pour cela vous pouvez soit utiliser des statuts prédéfinis soit créer vos propres statuts. Pour utiliser un statut prédéfini veuillez laisser le champ statut personnalisé vide.';
 $LANG['wiki_current_status'] = 'Statut courant';
 
 $LANG['wiki_status_list'] = array(
@@ -154,7 +154,7 @@ $LANG['wiki_edit_redirection'] = 'Edition d\'une redirection';
 $LANG['wiki_redirections_to_this_article'] = 'Redirections menant à l\'article : <em>%s</em>';
 $LANG['wiki_redirection_name'] = 'Titre de la redirection';
 $LANG['wiki_redirection_delete'] = 'Supprimer la redirection';
-$LANG['wiki_alert_delete_redirection'] = 'Etes-vous sur de vouloir supprimer cette redirection?';
+$LANG['wiki_alert_delete_redirection'] = 'Etes-vous sur de vouloir supprimer cette redirection ?';
 $LANG['wiki_no_redirection'] = 'Il n\'y a aucune redirection vers cette page';
 $LANG['wiki_create_redirection'] = 'Créer une redirection vers cet article';
 $LANG['wiki_create_redirection_to_this'] = 'Créer une redirection vers l\'article <em>%s</em>';
@@ -175,16 +175,16 @@ $LANG['wiki_article_com'] = 'Discussion sur l\'article';
 $LANG['wiki_article_com_article'] = 'Discussion';
 
 //Suppression
-$LANG['wiki_confirm_delete_archive'] = 'Etes-vous sûr de vouloir supprimer cette version de l\'article?';
+$LANG['wiki_confirm_delete_archive'] = 'Etes-vous sûr de vouloir supprimer cette version de l\'article ?';
 $LANG['wiki_remove_cat'] = 'Suppression d\'une catégorie';
 $LANG['wiki_remove_this_cat'] = 'Suppression de la catégorie : <em>%s</em>';
 $LANG['wiki_explain_remove_cat'] = 'Vous souhaitez supprimer cette catégorie. Vous pouvez supprimer tout son contenu ou transférer son contenu ailleurs. L\'article associé à cette catégorie sera quant à lui obligatoirement supprimé.';
 $LANG['wiki_remove_all_contents'] = 'Supprimer tout son contenu (action irréversible)';
 $LANG['wiki_move_all_contents'] = 'Déplacer tout son contenu dans le dossier suivant :';
 $LANG['wiki_future_cat'] = 'Catégorie dans laquelle vous souhaitez déplacer ses éléments';
-$LANG['wiki_alert_removing_cat'] = 'Etes-vous sûr de vouloir supprimer cette catégorie (définitif)';
-$LANG['wiki_confirm_remove_article'] = 'Etes-vous sur de vouloir supprimer cet article?';
-$LANG['wiki_not_a_cat'] = 'Vous n\'avez pas sélectionné de catégorie valide!';
+$LANG['wiki_alert_removing_cat'] = 'Etes-vous sûr de vouloir supprimer cette catégorie (définitif) ?';
+$LANG['wiki_confirm_remove_article'] = 'Etes-vous sur de vouloir supprimer cet article ?';
+$LANG['wiki_not_a_cat'] = 'Vous n\'avez pas sélectionné de catégorie valide !';
 
 //RSS
 $LANG['wiki_rss'] = 'Flux RSS';
@@ -200,7 +200,7 @@ $LANG['wiki_followed_articles'] = 'Favoris';
 $LANG['wiki_already_favorite'] = 'Le sujet que vous désirez mettre en favoris est déjà en favoris';
 $LANG['wiki_article_is_not_a_favorite'] = 'L\'article que vous souhaitez supprimer de vos favoris ne figure pas parmi vos favoris';
 $LANG['wiki_no_favorite'] = 'Aucun article en favoris';
-$LANG['wiki_confirm_unwatch_this_topic'] = 'Etes-vous certain de vouloir supprimer cet article de vos favoris?';
+$LANG['wiki_confirm_unwatch_this_topic'] = 'Etes-vous certain de vouloir supprimer cet article de vos favoris ?';
 
 //Administration
 $LANG['wiki_groups_config'] = 'Configuration des groupes';
