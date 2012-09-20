@@ -68,6 +68,14 @@ class CommentsTopic
 		return CommentsConfig::load()->get_number_comments_display();
 	}
 	
+	/**
+	 * @return class CommentsTopicEvents
+	 */
+	public function get_events()
+	{
+		return new CommentsTopicEvents($this);
+	}
+	
 	public function display()
 	{
 		return CommentsService::display($this);

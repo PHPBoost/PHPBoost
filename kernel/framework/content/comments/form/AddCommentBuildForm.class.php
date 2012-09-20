@@ -39,15 +39,11 @@ class AddCommentBuildForm extends AbstractCommentsBuildForm
 	private $id_in_module;
 	private $topic_identifier;
 	private $topic_path;
+	private $comments_topic;
 	
-	public static function create(CommentsTopic $topic)
+	public static function create(CommentsTopic $comments_topic)
 	{
-		$instance = new self(
-			$topic->get_module_id(), 
-			$topic->get_id_in_module(), 
-			$topic->get_topic_identifier(), 
-			$topic->get_path()
-		);
+		$instance = new self($comments_topic);
 		
 		$instance->create_form();
 		
@@ -59,12 +55,13 @@ class AddCommentBuildForm extends AbstractCommentsBuildForm
 		return $instance;
 	}
 	
-	public function __construct($module_id, $id_in_module, $topic_identifier, $topic_path)
+	public function __construct(CommentsTopic $comments_topic)
 	{
-		$this->module_id = $module_id;
-		$this->id_in_module = $id_in_module;
-		$this->topic_identifier = $topic_identifier;
-		$this->topic_path = $topic_path;
+		$this->module_id = $comments_topic->get_module_id();
+		$this->id_in_module = $comments_topic->get_id_in_module();
+		$this->topic_identifier = $comments_topic->get_topic_identifier();
+		$this->topic_path = $comments_topic->get_path();
+		$this->comments_topic = $comments_topic;
 		$this->user = AppContext::get_current_user();
 		$this->lang = LangLoader::get('main');
 		$this->comments_lang = LangLoader::get('comments-common');
@@ -115,6 +112,8 @@ class AddCommentBuildForm extends AbstractCommentsBuildForm
 		{
 			$id_comment = CommentsManager::add_comment($this->module_id, $this->id_in_module, $this->topic_identifier, $this->topic_path, $form->get_value('message'));
 		}
+		
+		$this->comments_topic->get_events()->execute_add_comment_event();
 		
 		AppContext::get_response()->redirect(CommentsUrlBuilder::comment_added($this->topic_path, $id_comment));
 	}
