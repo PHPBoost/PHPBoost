@@ -120,7 +120,7 @@ class MemberUserAvatarExtendedField extends AbstractMemberExtendedField
 		$avatar = $form->get_value('upload_avatar');
 		if ($form->get_value('link_avatar'))
 		{
-			if (preg_match('`([A-Za-z0-9()_-])+\.(jpg|gif|png)+$`i', $avatar->get_name()))
+			if (preg_match('`([A-Za-z0-9()_-])+\.(jpg|gif|png)+$`i', $form->get_value('link_avatar')))
 			{
 				return $form->get_value('link_avatar');
 			}

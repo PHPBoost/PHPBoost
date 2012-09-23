@@ -31,6 +31,11 @@ class PollModuleMiniMenu extends ModuleMiniMenu
     {
     	return self::BLOCK_POSITION__RIGHT;
     }
+    
+	public function admin_display()
+    {
+        return '';
+    }
 
 	public function display($tpl = false)
     {
