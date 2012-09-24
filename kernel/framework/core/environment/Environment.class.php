@@ -627,7 +627,7 @@ class Environment
 	/**
 	 * @return GraphicalEnvironment
 	 */
-	private static function get_graphical_environment()
+	public static function get_graphical_environment()
 	{
 		if (self::$graphical_environment === null)
 		{
