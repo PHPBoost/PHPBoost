@@ -59,7 +59,7 @@ class UserUsersListController extends AbstractController
 			case 'registered' :
 				$field_bdd = 'timestamp';
 			break;
-			case 'connect' :
+			case 'lastconnect' :
 				$field_bdd = 'last_connect';
 			break;
 			case 'messages' :
@@ -81,8 +81,8 @@ class UserUsersListController extends AbstractController
 			'SORT_REGISTERED_BOTTOM' => UserUrlBuilder::users('registered', 'bottom', $page)->absolute(),
 			'SORT_MSG_TOP' => UserUrlBuilder::users('messages', 'top', $page)->absolute(),
 			'SORT_MSG_BOTTOM' => UserUrlBuilder::users('messages', 'bottom', $page)->absolute(),
-			'SORT_LAST_CONNECT_TOP' => UserUrlBuilder::users('connect', 'top', $page)->absolute(),
-			'SORT_LAST_CONNECT_BOTTOM' => UserUrlBuilder::users('connect', 'bottom', $page)->absolute(),
+			'SORT_LAST_CONNECT_TOP' => UserUrlBuilder::users('lastconnect', 'top', $page)->absolute(),
+			'SORT_LAST_CONNECT_BOTTOM' => UserUrlBuilder::users('lastconnect', 'bottom', $page)->absolute(),
 			'PAGINATION' => '&nbsp;<strong>' . LangLoader::get_message('page', 'main') . ' :</strong> ' . $pagination->display()->render()
 		));
 
