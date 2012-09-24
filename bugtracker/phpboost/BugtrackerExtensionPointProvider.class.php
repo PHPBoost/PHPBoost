@@ -57,6 +57,13 @@ class BugtrackerExtensionPointProvider extends ExtensionPointProvider
 		return new BugtrackerHomePageExtensionPoint();
 	}
 	
+	public function css_files()
+	{
+		$module_css_files = new ModuleCssFiles();
+		$module_css_files->set_css_files_running_module_displayed(array('bugtracker.css'));
+		return $module_css_files;
+	}
+
 	public function search()
 	{
 		return new BugtrackerSearchable();

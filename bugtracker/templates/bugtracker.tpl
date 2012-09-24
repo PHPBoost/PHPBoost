@@ -40,9 +40,17 @@
 		<div class="module_top_l"></div>		
 		<div class="module_top_r"></div>
 		<div class="module_top">
-			<div style="float:left">
-				<a href="bugtracker.php{SID}">{L_BUGS_LIST}</a> {ADD_BUG}
-			</div>
+			<ul style="list-style-type:none;">
+				<li class="bt_current" style="float:left;">
+					<a href="bugtracker.php{SID}">{L_BUGS_LIST}</a> 
+				</li>
+				<li class="bt_no_current" style="float:left;">
+					<a href="{PATH_TO_ROOT}/bugtracker/bugtracker.php?stats">{L_STATS}</a>
+				</li>
+				<li class="bt_no_current" style="float:left;">
+					<a href="{PATH_TO_ROOT}/bugtracker/bugtracker.php?solved">{L_SOLVED}</a>
+				</li>
+			</ul>
 		</div>
 		<div class="module_contents">
 			# IF C_ERROR_HANDLER #
@@ -58,12 +66,12 @@
 			
 			<table  class="module_table">
 				<tr style="text-align:center;">
-					<th style="width:45px;text-align:center;">
+					<th style="width:52px;text-align:center;">
 						{L_ID}<br />
 						<a href="{PATH_TO_ROOT}/bugtracker/bugtracker{U_BUG_ID_TOP}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
 						<a href="{PATH_TO_ROOT}/bugtracker/bugtracker{U_BUG_ID_BOTTOM}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
 					</th>
-					<th style="text-align:center;">
+					<th style="width:52px;text-align:center;">
 						{L_TITLE}<br />
 						<a href="{PATH_TO_ROOT}/bugtracker/bugtracker{U_BUG_TITLE_TOP}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
 						<a href="{PATH_TO_ROOT}/bugtracker/bugtracker{U_BUG_TITLE_BOTTOM}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
@@ -152,16 +160,12 @@
 			<br /><br />
 			<p style="text-align: center;">{PAGINATION}</p>
 		</div>
-		<span class="warning" style="text-align:center;">
-			<a href="{PATH_TO_ROOT}/bugtracker/bugtracker.php?solved">{L_SOLVED}</a>
-			<br /><br />
-			<a href="{PATH_TO_ROOT}/bugtracker/bugtracker.php?stats">{L_STATS}</a>
-		</span>
 		<div class="module_bottom_l"></div>
 		<div class="module_bottom_r"></div>
 		<div class="module_bottom">
 			<div style="float:left" class="text_small"></div>
 			<div style="float:right" class="text_small"></div>
+			{ADD_BUG}
 		</div>
 	</div>
 # END list #
@@ -171,9 +175,17 @@
 		<div class="module_top_l"></div>		
 		<div class="module_top_r"></div>
 		<div class="module_top">
-			<div style="float:left">
-				<a href="bugtracker.php{SID}">{L_BUGS_LIST}</a> {ADD_BUG}
-			</div>
+			<ul style="list-style-type:none;">
+				<li class="bt_no_current" style="float:left;">
+					<a href="bugtracker.php{SID}">{L_BUGS_LIST}</a> 
+				</li>
+				<li class="bt_no_current" style="float:left;">
+					<a href="{PATH_TO_ROOT}/bugtracker/bugtracker.php?stats">{L_STATS}</a>
+				</li>
+				<li class="bt_current" style="float:left;">
+					<a href="{PATH_TO_ROOT}/bugtracker/bugtracker.php?solved">{L_SOLVED}</a>
+				</li>
+			</ul>
 		</div>
 		<div class="module_contents">
 			# IF C_ERROR_HANDLER #
@@ -282,11 +294,6 @@
 			<br /><br />
 			<p style="text-align: center;">{PAGINATION}</p>
 		</div>
-		<span class="warning" style="text-align:center;">
-			<a href="{PATH_TO_ROOT}/bugtracker/bugtracker.php">{L_UNSOLVED}</a>
-			<br /><br />
-			<a href="{PATH_TO_ROOT}/bugtracker/bugtracker.php?stats">{L_STATS}</a>
-		</span>
 		<div class="module_bottom_l"></div>
 		<div class="module_bottom_r"></div>
 		<div class="module_bottom" style="text-align:center;">
@@ -302,9 +309,17 @@
 		<div class="module_top_l"></div>		
 		<div class="module_top_r"></div>
 		<div class="module_top">
-			<div style="float:left">
-				<a href="bugtracker.php{SID}">{L_BUGS_STATS}</a>
-			</div>
+			<ul style="list-style-type:none;">
+				<li class="bt_no_current" style="float:left;">
+					<a href="bugtracker.php{SID}">{L_BUGS_LIST}</a> 
+				</li>
+				<li class="bt_current" style="float:left;">
+					<a href="{PATH_TO_ROOT}/bugtracker/bugtracker.php?stats">{L_STATS}</a>
+				</li>
+				<li class="bt_no_current" style="float:left;">
+					<a href="{PATH_TO_ROOT}/bugtracker/bugtracker.php?solved">{L_SOLVED}</a>
+				</li>
+			</ul>
 		</div>
 		<div class="module_contents">
 			# IF C_ERROR_HANDLER #
@@ -387,11 +402,6 @@
 				# ENDIF #
 			</table>
 		</div>
-		<span class="warning" style="text-align:center;">
-			<a href="{PATH_TO_ROOT}/bugtracker/bugtracker.php">{L_UNSOLVED}</a>
-			<br /><br />
-			<a href="{PATH_TO_ROOT}/bugtracker/bugtracker.php?solved">{L_SOLVED}</a>
-		</span>
 		<div class="module_bottom_l"></div>
 		<div class="module_bottom_r"></div>
 		<div class="module_bottom" style="text-align:center;">

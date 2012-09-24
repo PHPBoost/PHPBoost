@@ -882,7 +882,7 @@ else if (isset($_GET['solved'])) // liste des bugs corrigés
 	if ($auth_create || $User->is_admin())
 	{
 		$Template->assign_vars(array(
-			'ADD_BUG' 		=> '&raquo; <a href="bugtracker' . url('.php?add=true') . '"><img src="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/' . get_ulang() . '/add.png" alt="' . $LANG['bugs.actions.add'] . '" title="' . $LANG['bugs.actions.add'] . '" class="valign_middle" /></a>'
+			'ADD_BUG' 		=> '<a href="bugtracker' . url('.php?add=true') . '"><img src="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/' . get_ulang() . '/add.png" alt="' . $LANG['bugs.actions.add'] . '" title="' . $LANG['bugs.actions.add'] . '" class="valign_middle" /></a>'
 		));
 	}
 	
@@ -920,6 +920,7 @@ else if (isset($_GET['solved'])) // liste des bugs corrigés
 		'L_HISTORY' 			=> $LANG['bugs.actions.history'],
 		'L_DELETE' 				=> $LANG['delete'],
 		'L_UNSOLVED' 			=> $LANG['bugs.titles.unsolved_bug'],
+		'L_SOLVED' 				=> $LANG['bugs.titles.solved_bug'],
 		'L_STATS' 				=> $LANG['bugs.titles.bugs_stats'],
 		'U_BUG_ID_TOP' 			=> url('.php?solved&amp;sort=id&amp;mode=desc'),
 		'U_BUG_ID_BOTTOM' 		=> url('.php?solved&amp;sort=id&amp;mode=asc'),
@@ -1017,8 +1018,10 @@ else if (isset($_GET['stats'])) // Statistiques
 		'C_NO_BUGS' 			=> empty($nbr_bugs) ? true : false,
 		'C_NO_BUGS_NOT_REJECTED'=> empty($nbr_bugs_not_rejected) ? true : false,
 		'L_BUGS_STATS' 			=> $LANG['bugs.titles.bugs_stats'],
+		'L_BUGS_LIST' 			=> $LANG['bugs.titles.bugs_list'],
 		'L_UNSOLVED' 			=> $LANG['bugs.titles.unsolved_bug'],
 		'L_SOLVED' 				=> $LANG['bugs.titles.solved_bug'],
+		'L_STATS' 				=> $LANG['bugs.titles.bugs_stats'],
 		'L_STATUS'				=> $LANG['bugs.labels.fields.status'],
 		'L_NUMBER'				=> $LANG['bugs.labels.number'],
 		'L_NO_BUG' 				=> $LANG['bugs.notice.no_bug'],
