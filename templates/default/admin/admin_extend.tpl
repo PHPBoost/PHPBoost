@@ -85,12 +85,7 @@
 				<a href="{PATH_TO_ROOT}/admin/admin_ranks.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/ranks.png" alt="" /></a>		
 				<br />
 				<a href="{PATH_TO_ROOT}/admin/admin_ranks.php">{L_RANKS}</a>	
-			</td>
-			<td class="row2" style="width:20%;">
-				<a href="${relative_url(AdminMembersUrlBuilder::rules())}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/terms.png" alt="" /></a>		
-				<br />
-				<a href="${relative_url(AdminMembersUrlBuilder::rules())}">{L_TERMS}</a>
-			</td>			
+			</td>	
 		</tr>	
 		<tr style="text-align:center;">		
 			<td class="row2" style="width:20%;">

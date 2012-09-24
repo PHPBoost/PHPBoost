@@ -181,7 +181,7 @@ class UserRegistrationController extends AbstractController
 		$user->set_approbation_pass($activation_key);
 		$user_id = UserService::create($user_authentification, $user);
 		
-		if (!$this->form->field_is_disabled('theme'))
+		if ($this->form->has_field('theme'))
 		{
 			$user->set_theme($this->form->get_value('theme')->get_raw_value());
 		}

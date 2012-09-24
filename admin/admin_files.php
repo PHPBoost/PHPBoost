@@ -490,5 +490,4 @@ else
 }
 	
 require_once('../admin/admin_footer.php');
-
 ?>

@@ -121,5 +121,4 @@ else //Sinon on rempli le formulaire
 }
 
 require_once('../admin/admin_footer.php');
-
 ?>

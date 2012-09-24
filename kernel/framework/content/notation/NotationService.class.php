@@ -42,7 +42,7 @@ class NotationService
 		self::$lang = LangLoader::get('main');
 	}
         
-	/*
+	/**
 	 * @desc This function required object Notation containing the module_name, id in module and notation_scale.
 	 * @param object $notation Notation
 	 * @param boolean $average_notes
@@ -97,7 +97,7 @@ class NotationService
 		}
 	}
 	
-	/*
+	/**
 	 * @desc This function required object Notation containing the module_name, id_in_module, user_id, note and notation_scale.
 	 * @param object $notation Notation
 	 */
@@ -167,7 +167,7 @@ class NotationService
 		}
 	}
 	
-	/*
+	/**
 	 * @desc This fonction update notation scale by module_name
 	 * @param string $module_name 
 	 * @param string $old_notation_scale
@@ -183,7 +183,7 @@ class NotationService
 		}
 	}
 	
-	/*
+	/**
 	 * @desc This fonction delete all notes by id module and id in module element
 	 * @param string $module_name 
 	 * @param string $id_in_module
@@ -197,7 +197,7 @@ class NotationService
 		}
 	}
 	
-	/*
+	/**
 	 * @desc This fonction delete all notes by module
 	 * @param string $module_name 
 	 * @param string $id_in_module
@@ -211,7 +211,7 @@ class NotationService
 		}
 	}
 	
-	/*
+	/**
 	 * This function required object Notation containing the module_name and id_in_module.
 	 */
 	public static function get_former_number_notes(Notation $notation)
@@ -223,7 +223,7 @@ class NotationService
 		}
 	}
 	
-	/*
+	/**
 	 * This function required object Notation containing the module_name and id_in_module.
 	 */
 	public static function get_average_notes(Notation $notation)

@@ -27,6 +27,7 @@
 
 /**
  * @author Kevin MASSY <soldier.weasel@gmail.com>
+ * @desc This class manage users
  * @package {@package}
  */
 class UserService
@@ -38,6 +39,12 @@ class UserService
 		self::$querier = PersistenceContext::get_querier();
 	}
 	
+	/**
+	 * @desc Create a user
+	 * @param UserAuthentification $user_authentification
+	 * @param User $user
+	 * @return InjectQueryResult
+	 */
 	public static function create(UserAuthentification $user_authentification, User $user)
 	{
 		$result = self::$querier->insert(DB_TABLE_MEMBER, array(
@@ -62,7 +69,13 @@ class UserService
 		return $result->get_last_inserted_id();
 	}
 	
-	public static function update(User $user, $condition, $parameters)
+	/**
+	 * @desc Update user
+	 * @param User $user 
+	 * @param string $condition the SQL condition update user
+	 * @param array $parameters 
+	 */
+	public static function update(User $user, $condition, Array $parameters)
 	{
 		self::$querier->update(DB_TABLE_MEMBER, array(
 			'login' => TextHelper::htmlspecialchars($user->get_pseudo()),
@@ -78,7 +91,7 @@ class UserService
 		), $condition, $parameters);
 	}
 	
-	public static function update_punishment(User $user, $condition, $parameters)
+	public static function update_punishment(User $user, $condition, Array $parameters)
 	{
 		self::$querier->update(DB_TABLE_MEMBER, array(
 			'user_warning' => $user->get_warning_percentage(),
@@ -87,7 +100,7 @@ class UserService
 		), $condition, $parameters);
 	}
 	
-	public static function update_authentification($condition, $parameters, UserAuthentification $user_authentification)
+	public static function update_authentification($condition, Array $parameters, UserAuthentification $user_authentification)
 	{
 		if ($user_authentification->get_password_hashed() !== null)
 		{
@@ -104,7 +117,13 @@ class UserService
 		}
 	}
 	
-	public static function get_user($condition, $parameters)
+	/**
+	 * @desc Returns a user
+	 * @param unknown_type $condition
+	 * @param array $parameters
+	 * @return User
+	 */
+	public static function get_user($condition, Array $parameters)
 	{
 		$row = self::$querier->select_single_row(PREFIX . 'member', array('*'), $condition, $parameters);
 		$user = new User();
@@ -125,23 +144,23 @@ class UserService
 		return $user;
 	}
 	
-	public static function get_user_authentification($condition, $parameters)
+	public static function get_user_authentification($condition, Array $parameters)
 	{
 		$row = self::$querier->select_single_row(PREFIX . 'member', array('*'), $condition, $parameters);
 		return new UserAuthentification($row['login'], $row['password'], true);
 	}
 	
-	public static function delete_account($condition, $parameters)
+	public static function delete_account($condition, Array $parameters)
 	{
 		self::$querier->delete(DB_TABLE_MEMBER, $condition, $parameters);
 	}
 	
-	public static function change_password($password, $condition, $parameters)
+	public static function change_password($password, $condition, Array $parameters)
  	{
  		self::$querier->update(DB_TABLE_MEMBER, array('password' => $password), $condition, $parameters);
  	}
         
-	public static function user_exists($condition, $parameters)
+	public static function user_exists($condition, Array $parameters)
 	{
 		return self::$querier->count(DB_TABLE_MEMBER, $condition, $parameters) > 0 ? true : false;
 	}

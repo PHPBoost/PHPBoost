@@ -28,6 +28,7 @@
 
  /**
  * @author Kevin MASSY <soldier.weasel@gmail.com>
+ * @desc This class represente a lang
  * @package {@package}
  */
 class Lang

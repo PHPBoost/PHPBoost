@@ -43,10 +43,8 @@ $tpl->put_all(array(
 
 $app = null;
 
-
 if (($update = AdministratorAlertService::find_by_identifier($identifier, 'updates')) !== null)
 {
-    
     $app = unserialize($update->get_properties());
 }
 
@@ -127,5 +125,4 @@ else $tpl->put_all((array('C_UNEXISTING_UPDATE' => true, 'L_UNEXISTING_UPDATE' =
     
 $tpl->display();
 require_once(PATH_TO_ROOT . '/admin/admin_footer.php');
-
 ?>

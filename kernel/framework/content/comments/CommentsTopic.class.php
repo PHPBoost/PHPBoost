@@ -25,8 +25,10 @@
  *
  ###################################################*/
 
- /**
+/**
  * @author Kevin MASSY <soldier.weasel@gmail.com>
+ * @desc This class represents the comments topic
+ * @abstract Do not use this class, but one of its children like for your module
  * @package {@package}
  */
 class CommentsTopic

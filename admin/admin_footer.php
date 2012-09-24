@@ -32,7 +32,5 @@ if (defined('PHPBOOST') !== true)
 }
 
 Environment::display_footer();
-
 Environment::destroy();
-
 ?>

@@ -25,14 +25,14 @@
  *
  ###################################################*/
 
- /*
+ /**
  * @author Kevin MASSY <soldier.weasel@gmail.com>
  * @desc This class allows you to resize images easily.
  * @package {@package}
  */
 class ImageResizer
 {
-	/*
+	/**
 	 * @throws GDNotAvailableException if the GD extension is not loaded
 	 */
 	public function resize(Image $image, $width, $height, $directory = '')
@@ -147,7 +147,7 @@ class ImageResizer
 		}
 	}
 	
-	/*
+	/**
 	 * @throws GDNotAvailableException if the GD extension is not loaded
 	 */
 	private function assert_gd_extension_is_loaded()

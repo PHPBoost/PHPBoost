@@ -29,9 +29,6 @@ require_once('../admin/admin_begin.php');
 define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
 
-//Gestion des alertes.
-
-
 //Enregistrement du bloc note
 $writingpad = retrieve(POST, 'writingpad', '');
 if (!empty($writingpad))
@@ -153,5 +150,4 @@ $Sql->query_close($result);
 $Template->pparse('admin_index'); // traitement du modele
 
 require_once('../admin/admin_footer.php');
-
 ?>

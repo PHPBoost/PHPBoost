@@ -25,8 +25,9 @@
  *
  ###################################################*/
 
- /**
+/**
  * @author Kevin MASSY <soldier.weasel@gmail.com>
+ * @desc This class represents the rating system and its parameters
  * @package {@package}
  */
 class Notation

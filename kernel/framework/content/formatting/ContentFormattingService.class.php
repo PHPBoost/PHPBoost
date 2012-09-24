@@ -27,7 +27,7 @@
 
 /**
  * @package {@package}
- * @author Beno�t Sautel <ben.popeye@phpboost.com>
+ * @author Benoit Sautel <ben.popeye@phpboost.com>
  * @desc This class contains the default content formatting factory that must be used if you want
  * a formatting factory having the default settings.
  */

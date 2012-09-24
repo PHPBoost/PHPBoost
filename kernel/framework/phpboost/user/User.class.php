@@ -31,6 +31,7 @@ define('USER_TYPE', 3);
 
 /**
  * @author Kevin MASSY <soldier.weasel@gmail.com>
+ * @desc This class represente a user
  * @package {@package}
  */
 class User

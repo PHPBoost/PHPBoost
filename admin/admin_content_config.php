@@ -115,5 +115,4 @@ else
 }
 
 require_once(PATH_TO_ROOT.'/admin/admin_footer.php');
-
 ?>

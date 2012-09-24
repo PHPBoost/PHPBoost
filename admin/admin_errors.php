@@ -137,5 +137,4 @@ if (is_file($file_path) && is_readable($file_path)) //Fichier accessible en lect
 $tpl->display();
 
 require_once('../admin/admin_footer.php');
-
 ?>

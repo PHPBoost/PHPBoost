@@ -27,6 +27,7 @@
 
 /**
  * @author Kevin MASSY <soldier.weasel@gmail.com>
+ * @desc This class represente the current user
  * @package {@package}
  */
 class CurrentUser extends User
@@ -71,19 +72,19 @@ class CurrentUser extends User
 	
 	public function check_auth($array_auth_groups, $authorization_bit)
 	{
-		//Si il s'agit d'un administrateur, ï¿½tant donnï¿½ qu'il a tous les droits, on renvoie systï¿½matiquement vrai
+		//Si il s'agit d'un administrateur, étant donné qu'il a tous les droits, on renvoie systématiquement vrai
 		if ($this->check_level(User::ADMIN_LEVEL))
 		{
 			return true;
 		}
 
-		//Si le tableau d'autorisation n'est pas valide, on renvoie faux pour des raisons de sï¿½curitï¿½
+		//Si le tableau d'autorisation n'est pas valide, on renvoie faux pour des raisons de sécurité
 		if (!is_array($array_auth_groups))
 		{
 			return false;
 		}
 
-		//Enfin, on regarde si le rang, le groupe ou son identifiant lui donnent l'autorisation sur le bit demandï¿½
+		//Enfin, on regarde si le rang, le groupe ou son identifiant lui donnent l'autorisation sur le bit demandé
 		return (bool)($this->sum_auth_groups($array_auth_groups) & (int)$authorization_bit);
 	}
 	
@@ -94,7 +95,7 @@ class CurrentUser extends User
 			return false;
 		}
 
-		//Rï¿½cupï¿½re les autorisations de tout les groupes dont le membre fait partie.
+		//Récupére les autorisations de tout les groupes dont le membre fait partie.
 		$array_user_auth_groups = $this->array_group_intersect($this->groups_auth);
 		$max_auth = $max_value_compare;
 		foreach ($array_user_auth_groups as $idgroup => $group_auth)
