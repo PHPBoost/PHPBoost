@@ -55,7 +55,6 @@ $template->put_all(array(
 	'L_LANG' => $admin_links_lang['administration.langs'],
 	'L_ADMINISTRATOR_ALERTS' => $admin_links_lang['administration.alerts'],
 	'L_SERVER' => $admin_links_lang['tools.server.system-report'],
-	'L_TERMS' => $admin_links_lang['users.rules'],
 	'U_INDEX_SITE' => Environment::get_home_page(),
     'L_WEBSITE_UPDATES' => $admin_links_lang['updates']
 ));
@@ -72,11 +71,11 @@ foreach ($modules as $module)
 	if (!empty($admin_home_page))
 	{
 		$template->assign_block_vars('modules_extend', array(
-		'NAME' => $name,
-		'IMG' => PATH_TO_ROOT .'/' . $module->get_id() . '/' . $module->get_id() . '.png',
-		'START_TR' => ((($i - 1) % 5) == 0 || $i == 1)? '<tr style="text-align:center;">' : '',
-		'END_TR' => ((($i % 5) == 0 && $i != 1) || $i == $nbr_modules ) ? '</tr>' : '',			
-		'U_ADMIN_MODULE' => PATH_TO_ROOT .'/' . $module->get_id() . '/' . $admin_home_page
+			'NAME' => $name,
+			'IMG' => PATH_TO_ROOT .'/' . $module->get_id() . '/' . $module->get_id() . '.png',
+			'START_TR' => ((($i - 1) % 5) == 0 || $i == 1)? '<tr style="text-align:center;">' : '',
+			'END_TR' => ((($i % 5) == 0 && $i != 1) || $i == $nbr_modules ) ? '</tr>' : '',			
+			'U_ADMIN_MODULE' => PATH_TO_ROOT .'/' . $module->get_id() . '/' . $admin_home_page
 		));
 		$i++;
 	}
@@ -89,13 +88,12 @@ if ($i != 0)
 	{
 		$template->assign_block_vars('modules_extend.td', array(
 			'TD' => '<td class="row2" style="width:20%;">&nbsp;</td>'
-			));
-			$i++;
+		));
+		$i++;
 	}
 }
 
 $template->display();
 
 require_once('../admin/admin_footer.php');
-
 ?>

@@ -27,6 +27,10 @@
  *###################################################
  */
 
+/**
+ * @author Loic Rouchon <loic.rouchon@phpboost.com>
+ * @package {@package}
+ */
 class ModuleConfigurationManager
 {
 	/**

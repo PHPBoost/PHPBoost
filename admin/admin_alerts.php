@@ -124,5 +124,4 @@ $template->put_all(array(
 $template->display();
 
 require_once('../admin/admin_footer.php');
-
 ?>

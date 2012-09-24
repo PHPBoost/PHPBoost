@@ -35,7 +35,5 @@ $url_controller_mappers = array(
 	new UrlControllerMapper('AdminModuleUpdateController', '`^/update(?:/([a-zA-Z]+))?/?$`', array('id_module')),
 	new UrlControllerMapper('AdminModuleDeleteController', '`^/delete(?:/([a-zA-Z]+))?/?$`', array('id_module'))
 );
-
 DispatchManager::dispatch($url_controller_mappers);
-
 ?>

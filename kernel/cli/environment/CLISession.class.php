@@ -175,5 +175,4 @@ class CLISession extends Session
 		return false;
 	}
 }
-
 ?>

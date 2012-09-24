@@ -182,7 +182,7 @@ class InstallationServices
 		$general_config->set_site_name($site_name);
 		$general_config->set_site_description($site_description);
 		$general_config->set_site_keywords($site_keywords);
-		$general_config->set_other_home_page($this->distribution_config['start_page']);
+		$general_config->set_module_home_page($this->distribution_config['module_home_page']);
 		$general_config->set_phpboost_major_version(self::$phpboost_major_version);
 		$general_config->set_site_install_date(new Date());
 		$general_config->set_site_timezone((int)$site_timezone);

@@ -44,5 +44,4 @@ $url_controller_mappers = array(
 	//new UrlControllerMapper('AdminViewAllMembersController', '`^/members(?:/([a-z	²]+))?/?([a-z]+)?/?([0-9]+)?/?$`', array('field', 'sort', 'page')),
 );
 DispatchManager::dispatch($url_controller_mappers);
-
 ?>

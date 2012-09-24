@@ -27,6 +27,7 @@
 
  /**
  * @author Kevin MASSY <soldier.weasel@gmail.com>
+ * @desc This class manage comments with different functions
  * @package {@package}
  */
 class CommentsManager

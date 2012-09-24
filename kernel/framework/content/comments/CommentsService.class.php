@@ -27,6 +27,7 @@
  
  /**
  * @author Kevin MASSY <soldier.weasel@gmail.com>
+ * @desc This class allows you to use a comments system
  * @package {@package}
  */
 class CommentsService
@@ -47,6 +48,11 @@ class CommentsService
 		self::$template->add_lang(self::$comments_lang);
 	}
 	
+	/**
+	 * @desc This function display the comments
+	 * @param class CommentsTopic $topic
+	 * @return Template is a template object
+	 */
 	public static function display(CommentsTopic $topic)
 	{
 		$module_id = $topic->get_module_id();
@@ -144,6 +150,13 @@ class CommentsService
 		return self::$template;
 	}
 	
+	/**
+	 * @desc Returns number comments and lang (example : Comments (number_comments)
+	 * @param string $module_id the module identifier
+	 * @param integer $id_in_module id in module used in comments system
+	 * @param string $topic_identifier topic identifier (use if you have several comments system)
+	 * @return string number comments (example : Comments (number_comments)
+	 */
 	public static function get_number_and_lang_comments($module_id, $id_in_module, $topic_identifier = CommentsTopic::DEFAULT_TOPIC_IDENTIFIER)
 	{
 		$number_comments = CommentsManager::get_number_comments($module_id, $id_in_module, $topic_identifier);
@@ -152,9 +165,10 @@ class CommentsService
 		return !empty($number_comments) ? $lang . ' (' . $number_comments . ')' : self::$lang['post_com'];
 	}
 
-	/*
-	 * Required Instance Comments class and setter function module id.
-	*/
+	/**
+	 * @desc Delete all comments module
+	 * @param string $module_id the module identifier
+	 */
 	public static function delete_comments_module($module_id)
 	{
 		try {
@@ -163,9 +177,11 @@ class CommentsService
 		}
 	}
 	
-	/*
-	 * Required Instance Comments class and setter function module id and id in module.
-	*/
+	/**
+	 * @desc Delete comments topic according to module identifier and id in module
+	 * @param string $module_id the module identifier
+	 * @param integer $id_in_module id in module used in comments system
+	 */
 	public static function delete_comments_topic_module($module_id, $id_in_module)
 	{
 		try {
@@ -174,14 +190,25 @@ class CommentsService
 		}
 	}
 	
-	/*
-	 * Required Instance Comments class and setter function module name, and module id.
-	*/
+	/**
+	 * @desc Returns number comments
+	 * @param string $module_id the module identifier
+	 * @param integer $id_in_module id in module used in comments system
+	 * @param string $topic_identifier topic identifier (use if you have several comments system)
+	 * @return string number comments
+	 */
 	public static function get_number_comments($module_id, $id_in_module, $topic_identifier = CommentsTopic::DEFAULT_TOPIC_IDENTIFIER)
 	{
 		return CommentsManager::get_number_comments($module_id, $id_in_module, $topic_identifier);
 	}
 
+	/**
+	 * @desc Do not use, this is used for ajax display comments
+	 * @param string $module_id the module identifier
+	 * @param integer $id_in_module id in module used in comments system
+	 * @param string $topic_identifier topic identifier (use if you have several comments system)
+	 * @return object View is a view
+	 */
 	public static function display_comments($module_id, $id_in_module, $topic_identifier, $number_comments_display, $authorizations, $display_from_number_comments = false)
 	{
 		$template = new FileTemplate('framework/content/comments/comments_list.tpl');

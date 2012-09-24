@@ -34,5 +34,4 @@ $url_controller_mappers = array(
 	new UrlControllerMapper('AdminCommentsManagementController', '`^/comments(?:/management)?$`'),
 );
 DispatchManager::dispatch($url_controller_mappers);
-
 ?>

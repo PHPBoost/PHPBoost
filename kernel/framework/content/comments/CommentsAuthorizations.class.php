@@ -27,6 +27,7 @@
 
  /**
  * @author Kevin MASSY <soldier.weasel@gmail.com>
+ * @desc This class could be used to specified comments authorizations (access, read, post, moderation)
  * @package {@package}
  */
 class CommentsAuthorizations

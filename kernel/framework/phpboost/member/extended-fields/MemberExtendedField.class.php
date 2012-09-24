@@ -27,6 +27,7 @@
 
  /**
  * @author Kevin MASSY <soldier.weasel@gmail.com>
+ * @desc This class represente a member extended field
  * @package {@package}
  */
 class MemberExtendedField
