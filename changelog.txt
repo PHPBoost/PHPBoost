@@ -71,7 +71,10 @@
 	- Refonte graphique
 	- Gestion de la pagination en AJAX
 	- Ajout d'autorisations de lecture, de modération et d'ajout
+	- Possibilité de définir des tâches dans une classe lors d'un ajout de commentaire
 [*] Déplacement du réglement à l'inscription dans la configuration des membres pour plus de cohérence
+[*] Inscription : Envoi d'un email au membre lorsqu'il est approuvé par un administrateur
+
 =================================== Modules =====================================
 [b]Nouveau module BugTracker[/b]
 [*] [color=red]Nouveauté:[/color] Nouveau module de gestion des bugs.
@@ -137,6 +140,9 @@
 
 [b]Shoutbox[/b]
 [*] Menu adaptable automatiquement à la largeur du site en positionnement horizontal
+
+[b]Statistiques[/b]
+[*] Ajout de Windows 8 dans les statistiques
 
 [b]Compatibilité des thèmes 3.0 :[/b]
 [*] Ajout d'une variable js THEME dans header.tpl
