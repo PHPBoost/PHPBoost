@@ -439,12 +439,12 @@ else
 				//Image svg
 				case 'svg':
 				$bbcode = '[img]/upload/' . $row['path'] . '[/img]';
-				$link = 'javascript:popup_upload(\'' . $row['id'] . '\', 0, 0, \'no\')';
+				$link = 'javascript:popup_upload(\'' . Url::to_rel('/upload/' . $row['path']) . '\', 0, 0, \'no\')';
 				break;
 				//Sons
 				case 'mp3':
 				$bbcode = '[sound]/upload/' . $row['path'] . '[/sound]';
-				$link = 'javascript:popup_upload(\'' . $row['id'] . '\', 220, 10, \'no\')';
+				$link = 'javascript:popup_upload(\'' . Url::to_rel('/upload/' . $row['path']) . '\', 220, 10, \'no\')';
 				break;
 				default:
 				$bbcode = '[url=/upload/' . $row['path'] . ']' . $row['name'] . '[/url]';				
