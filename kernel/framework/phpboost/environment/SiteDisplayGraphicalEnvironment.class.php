@@ -33,22 +33,19 @@
 class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironment
 {
 	/**
-	 * @var bool
-	 */
-	private $display_left_menus = true;
-	/**
-	 * @var bool
-	 */
-	private $display_right_menus = true;
-	/**
 	 * @var BreadCrumb The page breadcrumb
 	 */
 	private $breadcrumb = null;
-
+	/**
+	 * @var ColumnsDisabled
+	 */
+	private $columns_disabled = null;
+	
 	public function __construct()
 	{
 		parent::__construct();
 		$this->set_breadcrumb(new BreadCrumb());
+		$this->set_columns_disabled(ThemeManager::get_theme(get_utheme())->get_columns_disabled());
 	}
 
 	/**
@@ -139,8 +136,8 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 		
 		$enable_header_is_activated = !$columns_disabled->header_is_disabled() && !empty($MENUS[Menu::BLOCK_POSITION__HEADER]);
 		$enable_sub_header_is_activated = !$columns_disabled->sub_header_is_disabled() && !empty($MENUS[Menu::BLOCK_POSITION__SUB_HEADER]);
-		$enable_left_column_is_activated = !$columns_disabled->left_columns_is_disabled() && $this->are_left_menus_enabled() && !empty($MENUS[Menu::BLOCK_POSITION__LEFT]);
-		$enable_right_column_is_activated = !$columns_disabled->right_columns_is_disabled() && $this->are_right_menus_enabled() && !empty($MENUS[Menu::BLOCK_POSITION__RIGHT]);
+		$enable_left_column_is_activated = !$columns_disabled->left_columns_is_disabled() && !empty($MENUS[Menu::BLOCK_POSITION__LEFT]);
+		$enable_right_column_is_activated = !$columns_disabled->right_columns_is_disabled() && !empty($MENUS[Menu::BLOCK_POSITION__RIGHT]);
 		$enable_top_central_is_activated = !$columns_disabled->top_central_is_disabled() && !empty($MENUS[Menu::BLOCK_POSITION__TOP_CENTRAL]);
 		
 		$header_content = $enable_header_is_activated ? $MENUS[Menu::BLOCK_POSITION__HEADER] : '';
@@ -243,36 +240,6 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 		return $template;
 	}
 
-	public function enable_left_menus()
-	{
-		$this->display_left_menus = true;
-	}
-
-	public function disable_left_menus()
-	{
-		$this->display_left_menus = false;
-	}
-
-	public function enable_right_menus()
-	{
-		$this->display_right_menus = true;
-	}
-
-	public function disable_right_menus()
-	{
-		$this->display_right_menus = false;
-	}
-
-	public function are_left_menus_enabled()
-	{
-		return $this->display_left_menus;
-	}
-
-	public function are_right_menus_enabled()
-	{
-		return $this->display_right_menus;
-	}
-
 	/**
 	 * {@inheritdoc}
 	 */
@@ -347,6 +314,16 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 	{
 		$this->breadcrumb = $breadcrumb;
 		$this->breadcrumb->set_graphical_environment($this);
+	}
+	
+	public function get_columns_disabled()
+	{
+		return $this->columns_disabled;
+	}
+	
+	public function set_columns_disabled($columns_disabled)
+	{
+		$this->columns_disabled = $columns_disabled;
 	}
 }
 ?>
