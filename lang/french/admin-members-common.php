@@ -62,7 +62,7 @@ $lang['members.config.default-avatar-link'] = 'Adresse de l\'avatar par défaut';
 $lang['members.default-avatar-link-explain'] = 'Mettre dans le dossier images de votre thème';
 $lang['members.config.authorization-read-member-profile'] = 'Vous définissez ici les permissions de lecture de la liste des membres ainsi que certaines informations personnelles comme leurs emails.';
 $lang['members.config.welcome-message'] = 'Message à tous les membres';
-$lang['members.config.welcome-message-content'] = 'Message de bienvenue affiché dans le panel du membre';
+$lang['members.config.welcome-message-content'] = 'Message de bienvenue affiché dans le profil du membre';
 
 //Other fieldset configuration title
 $lang['members.config.avatars-management'] = 'Gestion des avatars';
