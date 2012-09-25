@@ -132,7 +132,7 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 			}
 		}
 
-		$columns_disabled = $this->get_columns_disabled();
+		$columns_disabled = ThemeManager::get_theme(get_utheme())->get_columns_disabled();
 		
 		$enable_header_is_activated = !$columns_disabled->header_is_disabled() && !empty($MENUS[Menu::BLOCK_POSITION__HEADER]);
 		$enable_sub_header_is_activated = !$columns_disabled->sub_header_is_disabled() && !empty($MENUS[Menu::BLOCK_POSITION__SUB_HEADER]);
@@ -249,7 +249,7 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 		$template = new FileTemplate('footer.tpl');
 
 		$theme_configuration = ThemeManager::get_theme(get_utheme())->get_configuration();
-		$columns_disabled = ThemeManager::get_theme(get_utheme())->get_columns_disabled();
+		$columns_disabled = $this->get_columns_disabled();
 		
 		$bottom_top_central_is_activated = !$columns_disabled->bottom_central_is_disabled() && !empty($MENUS[Menu::BLOCK_POSITION__BOTTOM_CENTRAL]);
 		$top_footer_is_activated = !$columns_disabled->top_footer_is_disabled() && !empty($MENUS[Menu::BLOCK_POSITION__TOP_FOOTER]);
