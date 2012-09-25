@@ -96,7 +96,7 @@ class AdminContactController extends AdminController
 		if ($this->form->get_value('enable_captcha'))
 		{
 			$config->enable_captcha();
-			$config->set_captcha_difficulty_level($this->form->get_value('captcha_difficulty_level'));
+			$config->set_captcha_difficulty_level($this->form->get_value('captcha_difficulty_level')->get_raw_value());
 		}
 		else
 		{
