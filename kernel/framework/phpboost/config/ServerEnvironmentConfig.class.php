@@ -74,7 +74,7 @@ class ServerEnvironmentConfig extends AbstractConfigData
 	{
 		return array(
 			self::URL_REWRITING_ENABLED => false,
-			self::HTACCESS_MANUAL_CONTENT => '',
+			self::HTACCESS_MANUAL_CONTENT => LangLoader::get_message('advanced-config.htaccess-manual-content.content', 'admin-config-common'),
 			self::OUTPUT_GZIPING_ENABLED => false,
 		);
 	}
