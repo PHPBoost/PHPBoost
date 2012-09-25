@@ -97,7 +97,17 @@ $lang = array(
 	'advanced-config.htaccess-manual-content' => 'Content of the .htaccess file',
 	'advanced-config.htaccess-manual-content.explain' => 'In this field you can type the instructions you would like to integrate into the .htaccess file 
 		which is at the root of the website. For instance, if you want to force special settings on your Apache web server.',
-	
+	'advanced-config.htaccess-manual-content.content' => 'Options -indexes
+	#
+	#  OVH - To enable PHP5 remove the # from the following line
+	#SetEnv PHP_VER 5
+	#
+	#  FREE - To enable PHP5 remove the # from the following line
+	#php 1
+	#
+	#  1 and 1 - To enable PHP5 remove the # from the following line
+	#AddType x-mapp-php5 .php',
+
 	'advanced-config.sessions-config' => 'Users connection',
 	'advanced-config.cookie-name' => 'Sessions cookie name',
 	'advanced-config.cookie-name.style-wrong' => 'Cookie name must be alphanumeric (letters and numbers)',
