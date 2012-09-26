@@ -33,8 +33,6 @@
 		<link rel="shortcut icon" href="{FAVICON}" type="{FAVICON_TYPE}" />
 		# ENDIF #
 		
-		<link rel="alternate" href="{PATH_TO_ROOT}/syndication.php?m=news" type="application/rss+xml" title="RSS {SITE_NAME}" />
-		
 		<script type="text/javascript">
 		<!--
 			var PATH_TO_ROOT = "{PATH_TO_ROOT}";
@@ -49,11 +47,11 @@
 		<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/lib/js/lightbox/lightbox.js"></script>
 		
 		# IF C_HEADER_LOGO #
-		<style type="text/css">
-			div#header_container {
-   				background: url('{HEADER_LOGO}') no-repeat;
-			}
-		</style>
+			<style type="text/css">
+				div#logo {
+	   				background: url('{HEADER_LOGO}') no-repeat;
+				}
+			</style>
 		# ENDIF #
 	</head>
 	<body>
@@ -63,7 +61,8 @@
 <div id="global">
 	<div id="header_container">
 		<div id="header">
-			<h1 style="display:none;font-size:9px;">{SITE_NAME}</h1>
+			<div id="logo"></div>
+			<div id="site_name">{SITE_NAME}</div>
 			# IF C_MENUS_HEADER_CONTENT #
 			{MENUS_HEADER_CONTENT}
 			# ENDIF #
@@ -95,14 +94,13 @@
 		{MENUS_RIGHT_CONTENT}
 	</div>
 	# ENDIF #
-
+	
 	<div id="main">
 		# IF C_MENUS_TOPCENTRAL_CONTENT #
 		<div id="top_contents">
 			{MENUS_TOPCENTRAL_CONTENT}
 		</div>
 		# ENDIF #
-		
 		<div id="links">
 			&nbsp;&nbsp;<a class="small_link" href="{START_PAGE}" title="{L_INDEX}">{L_INDEX}</a>
 			# START link_bread_crumb #
