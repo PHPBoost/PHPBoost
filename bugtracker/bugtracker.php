@@ -51,6 +51,9 @@ $auth_moderate = $User->check_auth($authorizations, BugtrackerConfig::BUG_MODERA
 $display_types = sizeof($types) > 1 ? true : false;
 $display_categories = sizeof($categories) > 1 ? true : false;
 $display_versions = sizeof($versions) > 1 ? true : false;
+$default_type = isset($types[0]) ? $types[0] : '';
+$default_category = isset($categories[0]) ? $categories[0] : '';
+$default_version = isset($versions[0]['name']) ? $versions[0]['name'] : '';
 
 $now = new Date(DATE_NOW, TIMEZONE_AUTO);
 
@@ -71,17 +74,17 @@ if ( !empty($_POST['valid_add']) )
 	//checking authorization
 	if (!$auth_create)
 	{
-		$error_controller = PHPBoostErrors::unexisting_page();
+		$error_controller = PHPBoostErrors::user_not_authorized();
 		DispatchManager::redirect($error_controller);
 	}
 	
 	$title = retrieve(POST, 'title', '');
 	$contents = retrieve(POST, 'contents', '', TSTRING_PARSE);
-	$type = $display_types ? retrieve(POST, 'type', '') : $types[0];
-	$category = $display_categories ? retrieve(POST, 'category', '') : $categories[0];
+	$type = $display_types ? retrieve(POST, 'type', '') : $default_type;
+	$category = $display_categories ? retrieve(POST, 'category', '') : $default_category;
 	$severity = $auth_create_advanced ? retrieve(POST, 'severity', '') : 'minor';
 	$priority = $auth_create_advanced ? retrieve(POST, 'priority', '') : 'normal';
-	$detected_in = $display_versions ? retrieve(POST, 'detected_in', '') : $versions[0]['name'];
+	$detected_in = $display_versions ? retrieve(POST, 'detected_in', '') : $default_version;
 	$reproductible = retrieve(POST, 'reproductible', '', TBOOL);
 	$reproduction_method = retrieve(POST, 'reproduction_method', '', TSTRING_PARSE);
 	
@@ -107,7 +110,7 @@ else if (isset($_GET['add'])) // ajout d'un bug
 	//checking authorization
 	if (!$auth_create)
 	{
-		$error_controller = PHPBoostErrors::unexisting_page();
+		$error_controller = PHPBoostErrors::user_not_authorized();
 		DispatchManager::redirect($error_controller);
 	}
 	
@@ -122,36 +125,36 @@ else if (isset($_GET['add'])) // ajout d'un bug
 	$reproduction_method_editor->set_identifier('reproduction_method');
 	
 	$Template->assign_vars(array(
-		'C_DISPLAY_TYPES' 		=> $display_types,
+		'C_DISPLAY_TYPES' 	=> $display_types,
 		'C_DISPLAY_CATEGORIES' 	=> $display_categories,
 		'C_DISPLAY_VERSIONS' 	=> $display_versions,
 		'C_DISPLAY_ADVANCED' 	=> $auth_create_advanced ? true : false,
-		'L_ADD_BUG'				=> $LANG['bugs.titles.add_bug'],
-		'L_TITLE'				=> $LANG['bugs.labels.fields.title'],
-		'L_CONTENT'				=> $LANG['bugs.labels.fields.contents'],
-		'L_REQUIRE' 			=> $LANG['require'],
-		'L_REQUIRE_TITLE' 		=> $LANG['require_title'],
-		'L_REQUIRE_CONTENT'		=> $LANG['require_text'],
+		'L_ADD_BUG'		=> $LANG['bugs.titles.add_bug'],
+		'L_TITLE'		=> $LANG['bugs.labels.fields.title'],
+		'L_CONTENT'		=> $LANG['bugs.labels.fields.contents'],
+		'L_REQUIRE' 		=> $LANG['require'],
+		'L_REQUIRE_TITLE' 	=> $LANG['require_title'],
+		'L_REQUIRE_CONTENT'	=> $LANG['require_text'],
 		'L_REQUIRE_CATEGORY'	=> $LANG['bugs.notice.require_category'],
-		'L_TYPE'				=> $LANG['bugs.labels.fields.type'],
-		'L_CATEGORY'			=> $LANG['bugs.labels.fields.category'],
-		'L_PRIORITY'			=> $LANG['bugs.labels.fields.priority'],
-		'L_SEVERITY'			=> $LANG['bugs.labels.fields.severity'],
-		'L_DETECTED_IN'			=> $LANG['bugs.labels.fields.detected_in'],
-		'L_REPRODUCTIBLE'		=> $LANG['bugs.labels.fields.reproductible'],
+		'L_TYPE'		=> $LANG['bugs.labels.fields.type'],
+		'L_CATEGORY'		=> $LANG['bugs.labels.fields.category'],
+		'L_PRIORITY'		=> $LANG['bugs.labels.fields.priority'],
+		'L_SEVERITY'		=> $LANG['bugs.labels.fields.severity'],
+		'L_DETECTED_IN'		=> $LANG['bugs.labels.fields.detected_in'],
+		'L_REPRODUCTIBLE'	=> $LANG['bugs.labels.fields.reproductible'],
 		'L_REPRODUCTION_METHOD'	=> $LANG['bugs.labels.fields.reproduction_method'],
-		'L_SUBMIT' 				=> $LANG['submit'],
-		'L_PREVIEW' 			=> $LANG['preview'],
-		'L_RESET' 				=> $LANG['reset'],
-		'L_YES' 				=> $LANG['yes'],
-		'L_NO'	 				=> $LANG['no'],
-		'CONTENTS'	 			=> FormatingHelper::unparse($bugtracker_config->get_contents_value()),
+		'L_SUBMIT' 		=> $LANG['submit'],
+		'L_PREVIEW' 		=> $LANG['preview'],
+		'L_RESET' 		=> $LANG['reset'],
+		'L_YES' 		=> $LANG['yes'],
+		'L_NO'	 		=> $LANG['no'],
+		'CONTENTS'	 	=> FormatingHelper::unparse($bugtracker_config->get_contents_value()),
 		'REPRODUCTIBLE_ENABLED' => 'checked="checked"',
 		'REPRODUCTIBLE_DISABLED'=> '',
 		'REPRODUCTION_METHOD' 	=> '',
 		'CONTENTS_KERNEL_EDITOR'=> $contents_editor->display(),
 		'METHOD_KERNEL_EDITOR' 	=> $reproduction_method_editor->display(),
-		'TOKEN'					=> $Session->get_token()
+		'TOKEN'			=> $Session->get_token()
 	));
 	
 	$Template->assign_block_vars('add', array());
@@ -227,7 +230,7 @@ else if (isset($_GET['delete']) && is_numeric($id)) //Suppression du bug.
 	//checking authorization
 	if (!$User->is_admin())
 	{
-		$error_controller = PHPBoostErrors::unexisting_page();
+		$error_controller = PHPBoostErrors::user_not_authorized();
 		DispatchManager::redirect($error_controller);
 	}
 	
@@ -250,7 +253,7 @@ else if (!empty($_POST['valid_edit']) && is_numeric($id_post))
 	//checking authorization
 	if (!$auth_create)
 	{
-		$error_controller = PHPBoostErrors::unexisting_page();
+		$error_controller = PHPBoostErrors::user_not_authorized();
 		DispatchManager::redirect($error_controller);
 	}
 	
@@ -285,29 +288,29 @@ else if (!empty($_POST['valid_edit']) && is_numeric($id_post))
 		if ($User->is_admin() || $auth_moderate || (!empty($old_values['assigned_to_id']) && $User->get_attribute('user_id') == $old_values['assigned_to_id']))
 		{
 			if ($status == 'assigned' && empty($assigned_to)) // Erreur si le statut est "Assigné" et aucun utilisateur n'est sélectionné
-				AppContext::get_response()->redirect(PATH_TO_ROOT . '/bugtracker/bugtracker.php?edit=true&id=' . $id_post . '&error=no_user_assigned#message_helper');
+				AppContext::get_response()->redirect(PATH_TO_ROOT . '/bugtracker/bugtracker.php?edit&id=' . $id_post . '&error=no_user_assigned#message_helper');
 			
 			// if ($status == 'closed' && empty($fixed_in)) // Erreur si le statut est "Fermé" et aucune version de correction n'est sélectionnée
-				// AppContext::get_response()->redirect(PATH_TO_ROOT . '/bugtracker/bugtracker.php?edit=true&id=' . $id_post . '&error=no_closed_version#message_helper');
+				// AppContext::get_response()->redirect(PATH_TO_ROOT . '/bugtracker/bugtracker.php?edit&id=' . $id_post . '&error=no_closed_version#message_helper');
 			
 			$assigned_to_id = (!empty($assigned_to)) ? $Sql->query("SELECT user_id FROM " . DB_TABLE_MEMBER . " WHERE login = '" . $assigned_to . "'", __LINE__, __FILE__) : 0;
 			
 			if (!empty($assigned_to) && empty($assigned_to_id)) // Erreur si l'utilisateur sélectionné n'existe pas
-				AppContext::get_response()->redirect(PATH_TO_ROOT . '/bugtracker/bugtracker.php?edit=true&id=' . $id_post . '&error=unexist_user#message_helper');
+				AppContext::get_response()->redirect(PATH_TO_ROOT . '/bugtracker/bugtracker.php?edit&id=' . $id_post . '&error=unexist_user#message_helper');
 			
 			$new_values = array(
-				'title'					=> $title,
-				'contents' 				=> $contents,
-				'type' 					=> $type,
-				'category' 				=> $category,
-				'severity' 				=> $severity,
-				'priority' 				=> $priority,		
-				'detected_in' 			=> $detected_in,
-				'reproductible' 		=> $reproductible,
+				'title'			=> $title,
+				'contents' 		=> $contents,
+				'type' 			=> $type,
+				'category' 		=> $category,
+				'severity' 		=> $severity,
+				'priority' 		=> $priority,		
+				'detected_in' 		=> $detected_in,
+				'reproductible' 	=> $reproductible,
 				'reproduction_method' 	=> $reproduction_method,
-				'status' 				=> $status,
-				'assigned_to_id'		=> $assigned_to_id,		
-				'fixed_in' 				=> $fixed_in
+				'status' 		=> $status,
+				'assigned_to_id'	=> $assigned_to_id,		
+				'fixed_in' 		=> $fixed_in
 			);
 			
 			$fields = array('title', 'contents', 'type', 'category', 'severity', 'priority', 'detected_in', 'reproductible', 'reproduction_method', 'status', 'fixed_in', 'assigned_to_id');
@@ -319,7 +322,7 @@ else if (!empty($_POST['valid_edit']) && is_numeric($id_post))
 					$modification = true;
 			}
 			if ($modification == false)
-				AppContext::get_response()->redirect(PATH_TO_ROOT . '/bugtracker/bugtracker.php?edit=true&id=' . $id_post);
+				AppContext::get_response()->redirect(PATH_TO_ROOT . '/bugtracker/bugtracker.php?edit&id=' . $id_post);
 			
 			$Sql->query_inject("UPDATE " . PREFIX . "bugtracker SET title = '" . $title . "', contents = '" . $contents . "', status = '" . $status . "', type = '" . $type . "', category = '" . $category . "', severity = '" . $severity . "', priority = '" . $priority . "', assigned_to_id = '" . $assigned_to_id . "', detected_in = '" . $detected_in . "', fixed_in = '" . $fixed_in . "', reproductible = '" . $reproductible . "', reproduction_method = '" . $reproduction_method . "'
 			WHERE id = '" . $id_post . "'", __LINE__, __FILE__);
@@ -330,7 +333,7 @@ else if (!empty($_POST['valid_edit']) && is_numeric($id_post))
 				$Privatemsg->start_conversation(
 					$assigned_to_id, 
 					sprintf($LANG['bugs.pm.assigned.title'], $LANG['bugs.module_title'], $id_post), 
-					sprintf($LANG['bugs.pm.assigned.contents'], '[url]' . HOST . DIR . '/bugtracker/bugtracker.php?view=true&id=' . $id_post . '[/url]'), 
+					sprintf($LANG['bugs.pm.assigned.contents'], '[url]' . HOST . DIR . '/bugtracker/bugtracker.php?view&id=' . $id_post . '[/url]'), 
 					'-1', 
 					PrivateMsg::SYSTEM_PM
 				);
@@ -339,14 +342,14 @@ else if (!empty($_POST['valid_edit']) && is_numeric($id_post))
 		else
 		{
 			$new_values = array(
-				'title'					=> $title,
-				'contents' 				=> $contents,
-				'type' 					=> $type,
-				'category' 				=> $category,
-				'severity' 				=> $severity,
-				'priority' 				=> $priority,
-				'detected_in' 			=> $detected_in,	
-				'reproductible' 		=> $reproductible,			
+				'title'			=> $title,
+				'contents' 		=> $contents,
+				'type' 			=> $type,
+				'category' 		=> $category,
+				'severity' 		=> $severity,
+				'priority' 		=> $priority,
+				'detected_in' 		=> $detected_in,	
+				'reproductible' 	=> $reproductible,			
 				'reproduction_method' 	=> $reproduction_method
 			);
 			
@@ -359,7 +362,7 @@ else if (!empty($_POST['valid_edit']) && is_numeric($id_post))
 					$modification = true;
 			}
 			if ($modification == false)
-				AppContext::get_response()->redirect(PATH_TO_ROOT . '/bugtracker/bugtracker.php?edit=true&id=' . $id_post);
+				AppContext::get_response()->redirect(PATH_TO_ROOT . '/bugtracker/bugtracker.php?edit&id=' . $id_post);
 			
 			$Sql->query_inject("UPDATE " . PREFIX . "bugtracker SET title = '" . $title . "', contents = '" . $contents . "', type = '" . $type . "', category = '" . $category . "', severity = '" . $severity . "', priority = '" . $priority . "', detected_in = '" . $detected_in . "', reproductible = '" . $reproductible . "'
 			WHERE id = '" . $id_post . "'", __LINE__, __FILE__);
@@ -403,14 +406,14 @@ else if (!empty($_POST['valid_edit']) && is_numeric($id_post))
 		AppContext::get_response()->redirect(HOST . DIR . '/bugtracker/bugtracker.php?error=edit_success#message_helper');
 	}
 	else
-	AppContext::get_response()->redirect(HOST . DIR . '/bugtracker/bugtracker.php?edit=true&id= ' . $id_post . '&error=incomplete#message_helper');
+	AppContext::get_response()->redirect(HOST . DIR . '/bugtracker/bugtracker.php?edit&id= ' . $id_post . '&error=incomplete#message_helper');
 }
 else if (isset($_GET['edit']) && is_numeric($id)) // edition d'un bug
 {
 	//checking authorization
 	if (!$auth_create)
 	{
-		$error_controller = PHPBoostErrors::unexisting_page();
+		$error_controller = PHPBoostErrors::user_not_authorized();
 		DispatchManager::redirect($error_controller);
 	}
 	
@@ -441,24 +444,24 @@ else if (isset($_GET['edit']) && is_numeric($id)) // edition d'un bug
 	{
 		$assigned_to = !empty($result['assigned_to_id']) ? $Sql->query("SELECT login FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $result['assigned_to_id'] . "'", __LINE__, __FILE__) : '';
 		$Template->assign_block_vars('edit', array(
-			'C_IS_ASSIGNED'				=> true,
-			'ID' 						=> $id,
-			'TITLE' 					=> $result['title'],
-			'CONTENTS' 					=> FormatingHelper::unparse($result['contents']),
+			'C_IS_ASSIGNED'			=> true,
+			'ID' 				=> $id,
+			'TITLE' 			=> $result['title'],
+			'CONTENTS' 			=> FormatingHelper::unparse($result['contents']),
 			'REPRODUCTIBLE_ENABLED' 	=> ($result['reproductible']) ? 'checked="checked"' : '',
 			'REPRODUCTIBLE_DISABLED' 	=> (!$result['reproductible']) ? 'checked="checked"' : '',
 			'REPRODUCTION_METHOD' 		=> FormatingHelper::unparse($result['reproduction_method']),
-			'AUTHOR' 					=> !empty($result['login']) ? '<a href="' . UserUrlBuilder::profile($result['user_id'])->absolute() . '" class="' . UserService::get_level_class($result['level']) . '">' . $result['login'] . '</a>': $LANG['guest'],
-			'ASSIGNED_TO'				=> $assigned_to,
-			'DATE' 						=> gmdate_format('date_format', $result['submit_date'])
+			'AUTHOR' 			=> !empty($result['login']) ? '<a href="' . UserUrlBuilder::profile($result['user_id'])->absolute() . '" class="' . UserService::get_level_class($result['level']) . '">' . $result['login'] . '</a>': $LANG['guest'],
+			'ASSIGNED_TO'			=> $assigned_to,
+			'DATE' 				=> gmdate_format('date_format', $result['submit_date'])
 		));
 	}
 	else
 	{
 		$Template->assign_block_vars('edit', array(
-			'ID' 						=> $id,
-			'TITLE' 					=> $result['title'],
-			'CONTENTS' 					=> FormatingHelper::unparse($result['contents']),
+			'ID' 				=> $id,
+			'TITLE' 			=> $result['title'],
+			'CONTENTS' 			=> FormatingHelper::unparse($result['contents']),
 			'REPRODUCTIBLE_ENABLED' 	=> ($result['reproductible']) ? 'checked="checked"' : '',
 			'REPRODUCTIBLE_DISABLED' 	=> (!$result['reproductible']) ? 'checked="checked"' : ''
 		));
@@ -471,41 +474,41 @@ else if (isset($_GET['edit']) && is_numeric($id)) // edition d'un bug
 	$reproduction_method_editor->set_identifier('reproduction_method');
 	
 	$Template->assign_vars(array(
-		'C_DISPLAY_TYPES' 		=> $display_types,
+		'C_DISPLAY_TYPES' 	=> $display_types,
 		'C_DISPLAY_CATEGORIES' 	=> $display_categories,
 		'C_DISPLAY_VERSIONS' 	=> $display_versions,
 		'C_DISPLAY_ADVANCED' 	=> $auth_create_advanced ? true : false,
-		'C_REPRODUCTIBLE' 		=> ($result['reproductible'] == true) ? true : false,
-		'L_EDIT_BUG'			=> $LANG['bugs.titles.edit_bug'],
-		'L_TITLE'				=> $LANG['bugs.labels.fields.title'],
-		'L_CONTENT'				=> $LANG['bugs.labels.fields.contents'],
-		'L_REQUIRE' 			=> $LANG['require'],
-		'L_REQUIRE_LOGIN' 		=> $LANG['bugs.notice.require_login'],
-		'L_REQUIRE_TITLE' 		=> $LANG['require_title'],
-		'L_REQUIRE_CONTENT'		=> $LANG['require_text'],
+		'C_REPRODUCTIBLE' 	=> ($result['reproductible'] == true) ? true : false,
+		'L_EDIT_BUG'		=> $LANG['bugs.titles.edit_bug'],
+		'L_TITLE'		=> $LANG['bugs.labels.fields.title'],
+		'L_CONTENT'		=> $LANG['bugs.labels.fields.contents'],
+		'L_REQUIRE' 		=> $LANG['require'],
+		'L_REQUIRE_LOGIN' 	=> $LANG['bugs.notice.require_login'],
+		'L_REQUIRE_TITLE' 	=> $LANG['require_title'],
+		'L_REQUIRE_CONTENT'	=> $LANG['require_text'],
 		'L_REQUIRE_CATEGORY'	=> $LANG['bugs.notice.require_category'],
-		'L_STATUS'				=> $LANG['bugs.labels.fields.status'],
-		'L_TYPE'				=> $LANG['bugs.labels.fields.type'],
-		'L_CATEGORY'			=> $LANG['bugs.labels.fields.category'],
-		'L_AUTHOR'				=> $LANG['bugs.labels.fields.author_id'],
-		'L_ASSIGNED_TO'			=> $LANG['bugs.labels.fields.assigned_to_id'],
-		'L_DATE'				=> $LANG['bugs.labels.fields.submit_date'],
-		'L_PRIORITY'			=> $LANG['bugs.labels.fields.priority'],
-		'L_SEVERITY'			=> $LANG['bugs.labels.fields.severity'],
-		'L_DETECTED_IN'			=> $LANG['bugs.labels.fields.detected_in'],
-		'L_FIXED_IN'			=> $LANG['bugs.labels.fields.fixed_in'],
-		'L_REPRODUCTIBLE'		=> $LANG['bugs.labels.fields.reproductible'],
+		'L_STATUS'		=> $LANG['bugs.labels.fields.status'],
+		'L_TYPE'		=> $LANG['bugs.labels.fields.type'],
+		'L_CATEGORY'		=> $LANG['bugs.labels.fields.category'],
+		'L_AUTHOR'		=> $LANG['bugs.labels.fields.author_id'],
+		'L_ASSIGNED_TO'		=> $LANG['bugs.labels.fields.assigned_to_id'],
+		'L_DATE'		=> $LANG['bugs.labels.fields.submit_date'],
+		'L_PRIORITY'		=> $LANG['bugs.labels.fields.priority'],
+		'L_SEVERITY'		=> $LANG['bugs.labels.fields.severity'],
+		'L_DETECTED_IN'		=> $LANG['bugs.labels.fields.detected_in'],
+		'L_FIXED_IN'		=> $LANG['bugs.labels.fields.fixed_in'],
+		'L_REPRODUCTIBLE'	=> $LANG['bugs.labels.fields.reproductible'],
 		'L_REPRODUCTION_METHOD'	=> $LANG['bugs.labels.fields.reproduction_method'],
-		'L_SEARCH' 				=> $LANG['search'],
-		'L_UPDATE' 				=> $LANG['update'],
-		'L_PREVIEW' 			=> $LANG['preview'],
-		'L_RESET' 				=> $LANG['reset'],
-		'L_YES' 				=> $LANG['yes'],
-		'L_NO'	 				=> $LANG['no'],
-		'L_JOKER' 				=> $LANG['bugs.notice.joker'],
+		'L_SEARCH' 		=> $LANG['search'],
+		'L_UPDATE' 		=> $LANG['update'],
+		'L_PREVIEW' 		=> $LANG['preview'],
+		'L_RESET' 		=> $LANG['reset'],
+		'L_YES' 		=> $LANG['yes'],
+		'L_NO'	 		=> $LANG['no'],
+		'L_JOKER' 		=> $LANG['bugs.notice.joker'],
 		'CONTENTS_KERNEL_EDITOR'=> $contents_editor->display(),
 		'METHOD_KERNEL_EDITOR' 	=> $reproduction_method_editor->display(),
-		'TOKEN'					=> $Session->get_token()
+		'TOKEN'			=> $Session->get_token()
 	));
 	
 	//Types
@@ -626,7 +629,7 @@ else if (isset($_GET['history']) && is_numeric($id)) // Affichage de l'historiqu
 	//checking authorization
 	if (!$auth_read)
 	{
-		$error_controller = PHPBoostErrors::unexisting_page();
+		$error_controller = PHPBoostErrors::user_not_authorized();
 		DispatchManager::redirect($error_controller);
 	}
 	
@@ -693,29 +696,29 @@ else if (isset($_GET['history']) && is_numeric($id)) // Affichage de l'historiqu
 		}
 		
 		$Template->assign_block_vars('history.bug', array(
-			'TOKEN' 		=> $Session->get_token(),
+			'TOKEN' 	=> $Session->get_token(),
 			'UPDATED_FIELD'	=> $LANG['bugs.labels.fields.' . $row['updated_field']],
-			'OLD_VALUE'		=> stripslashes($old_value),
-			'NEW_VALUE'		=> stripslashes($new_value),
-			'COMMENT'		=> $row['change_comment'],
-			'UPDATER' 		=> !empty($row['login']) ? '<a href="' . UserUrlBuilder::profile($row['user_id'])->absolute() . '" class="' . UserService::get_level_class($row['level']) . '">' . $row['login'] . '</a>': $LANG['guest'],
-			'DATE' 			=> gmdate_format('date_format', $row['update_date'])
+			'OLD_VALUE'	=> stripslashes($old_value),
+			'NEW_VALUE'	=> stripslashes($new_value),
+			'COMMENT'	=> $row['change_comment'],
+			'UPDATER' 	=> !empty($row['login']) ? '<a href="' . UserUrlBuilder::profile($row['user_id'])->absolute() . '" class="' . UserService::get_level_class($row['level']) . '">' . $row['login'] . '</a>': $LANG['guest'],
+			'DATE' 		=> gmdate_format('date_format', $row['update_date'])
 		));
 	}
 	$Sql->query_close($result);
 	
 	$Template->assign_vars(array(
-		'C_NO_HISTORY' 			=> empty($nbr_history) ? true : false,
-		'L_HISTORY_BUG'			=> $LANG['bugs.titles.history_bug'],
-		'L_NO_HISTORY'			=> $LANG['bugs.notice.no_history'],
-		'L_ID' 					=> $LANG['bugs.labels.fields.id'],
-		'L_UPDATED_FIELD' 		=> $LANG['bugs.labels.fields.updated_field'],
-		'L_OLD_VALUE'			=> $LANG['bugs.labels.fields.old_value'],
-		'L_NEW_VALUE'			=> $LANG['bugs.labels.fields.new_value'],
-		'L_COMMENT'				=> $LANG['bugs.labels.fields.change_comment'],
-		'L_UPDATER'				=> $LANG['bugs.labels.fields.updater_id'],
-		'L_DATE'				=> $LANG['bugs.labels.fields.update_date'],
-		'ID' 					=> $id,
+		'C_NO_HISTORY' 		=> empty($nbr_history) ? true : false,
+		'L_HISTORY_BUG'		=> $LANG['bugs.titles.history_bug'],
+		'L_NO_HISTORY'		=> $LANG['bugs.notice.no_history'],
+		'L_ID' 			=> $LANG['bugs.labels.fields.id'],
+		'L_UPDATED_FIELD'	=> $LANG['bugs.labels.fields.updated_field'],
+		'L_OLD_VALUE'		=> $LANG['bugs.labels.fields.old_value'],
+		'L_NEW_VALUE'		=> $LANG['bugs.labels.fields.new_value'],
+		'L_COMMENT'		=> $LANG['bugs.labels.fields.change_comment'],
+		'L_UPDATER'		=> $LANG['bugs.labels.fields.updater_id'],
+		'L_DATE'		=> $LANG['bugs.labels.fields.update_date'],
+		'ID' 			=> $id,
 	));
 }
 else if (isset($_GET['view']) && is_numeric($id)) // Visualisation d'une fiche Bug
@@ -723,7 +726,7 @@ else if (isset($_GET['view']) && is_numeric($id)) // Visualisation d'une fiche B
 	//checking authorization
 	if (!$auth_read)
 	{
-		$error_controller = PHPBoostErrors::unexisting_page();
+		$error_controller = PHPBoostErrors::user_not_authorized();
 		DispatchManager::redirect($error_controller);
 	}
 	
@@ -753,7 +756,7 @@ else if (isset($_GET['view']) && is_numeric($id)) // Visualisation d'une fiche B
 	{
 		$Template->assign_vars(array(
 			'C_EDIT_BUG'	=> true,
-			'L_UPDATE'	 	=> $LANG['update']
+			'L_UPDATE'	=> $LANG['update']
 		));
 	}
 	
@@ -761,36 +764,35 @@ else if (isset($_GET['view']) && is_numeric($id)) // Visualisation d'une fiche B
 	{
 		$Template->assign_vars(array(
 			'C_DELETE_BUG'		=> true,
-			'L_CONFIRM_DEL_BUG' => $LANG['bugs.actions.confirm.del_bug'],
-			'L_DELETE' 			=> $LANG['delete']
+			'L_CONFIRM_DEL_BUG'	=> $LANG['bugs.actions.confirm.del_bug'],
+			'L_DELETE' 		=> $LANG['delete']
 		));
 	}
 	
 	$Template->assign_vars(array(
-		'C_EMPTY_TYPES' 		=> empty($types) ? true : false,
+		'C_EMPTY_TYPES' 	=> empty($types) ? true : false,
 		'C_EMPTY_CATEGORIES' 	=> empty($categories) ? true : false,
-		'C_EMPTY_VERSIONS' 		=> empty($versions) ? true : false,
-		'C_REPRODUCTIBLE' 		=> ($result['reproductible'] == true && !empty($result['reproduction_method'])) ? true : false,
-		'L_VIEW_BUG' 			=> $LANG['bugs.titles.view_bug'],
-		'L_BUG_INFOS' 			=> $LANG['bugs.titles.bugs_infos'],
+		'C_EMPTY_VERSIONS' 	=> empty($versions) ? true : false,
+		'C_REPRODUCTIBLE' 	=> ($result['reproductible'] == true && !empty($result['reproduction_method'])) ? true : false,
+		'L_VIEW_BUG' 		=> $LANG['bugs.titles.view_bug'],
+		'L_BUG_INFOS' 		=> $LANG['bugs.titles.bugs_infos'],
 		'L_BUG_TREATMENT_STATE'	=> $LANG['bugs.titles.bugs_treatment_state'],
-		'L_ID' 					=> $LANG['bugs.labels.fields.id'],
-		'L_DETECTED_IN'			=> $LANG['bugs.labels.fields.detected_in'],
-		'L_FIXED_IN'			=> $LANG['bugs.labels.fields.fixed_in'],
-		'L_STATUS'				=> $LANG['bugs.labels.fields.status'],
-		'L_TYPE'				=> $LANG['bugs.labels.fields.type'],
-		'L_CATEGORY'			=> $LANG['bugs.labels.fields.category'],
-		'L_SEVERITY'			=> $LANG['bugs.labels.fields.severity'],
-		'L_PRIORITY'			=> $LANG['bugs.labels.fields.priority'],
-		'L_REPRODUCTIBLE'		=> $LANG['bugs.labels.fields.reproductible'],
+		'L_ID' 			=> $LANG['bugs.labels.fields.id'],
+		'L_DETECTED_IN'		=> $LANG['bugs.labels.fields.detected_in'],
+		'L_FIXED_IN'		=> $LANG['bugs.labels.fields.fixed_in'],
+		'L_STATUS'		=> $LANG['bugs.labels.fields.status'],
+		'L_TYPE'		=> $LANG['bugs.labels.fields.type'],
+		'L_CATEGORY'		=> $LANG['bugs.labels.fields.category'],
+		'L_SEVERITY'		=> $LANG['bugs.labels.fields.severity'],
+		'L_PRIORITY'		=> $LANG['bugs.labels.fields.priority'],
+		'L_REPRODUCTIBLE'	=> $LANG['bugs.labels.fields.reproductible'],
 		'L_REPRODUCTION_METHOD'	=> $LANG['bugs.labels.fields.reproduction_method'],
-		'L_ASSIGNED_TO'			=> $LANG['bugs.labels.fields.assigned_to_id'],
-		'L_DETECTED_BY' 		=> $LANG['bugs.labels.fields.author_id'],
-		'C_HISTORY_BUG'			=> true,
-		'L_HISTORY'	 			=> $LANG['bugs.actions.history'],
-		'L_ON' 					=> $LANG['on'],
-		'C_COM' 				=> ($comments_activated == true) ? true : false,
-		'U_COM' 				=> '<a href="' . PATH_TO_ROOT . '/bugtracker/bugtracker' . url('.php?view=true&amp;id=' . $id . '&amp;com=0', '-' . $id . '.php?com=0') .'">'. CommentsService::get_number_and_lang_comments('bugtracker', $id) . '</a>'
+		'L_ASSIGNED_TO'		=> $LANG['bugs.labels.fields.assigned_to_id'],
+		'L_DETECTED_BY' 	=> $LANG['bugs.labels.fields.author_id'],
+		'C_HISTORY_BUG'		=> true,
+		'L_HISTORY'	 	=> $LANG['bugs.actions.history'],
+		'L_ON' 			=> $LANG['on'],
+		'U_COM' 		=> $comments_activated ? '<a href="' . PATH_TO_ROOT . '/bugtracker/bugtracker' . url('.php?view&amp;id=' . $id . '&amp;com=0', '-' . $id . '.php?com=0') . '">' . CommentsService::get_number_and_lang_comments('bugtracker', $id) . '</a>' : ''
 	));
 	
 	if (!empty($result['assigned_to_id'])) {
@@ -801,22 +803,22 @@ else if (isset($_GET['view']) && is_numeric($id)) // Visualisation d'une fiche B
 		$user_assigned = $LANG['bugs.notice.no_one'];
 		
 	$Template->assign_block_vars('view', array(
-		'TOKEN' 				=> $Session->get_token(),
-		'ID' 					=> $id,
-		'TITLE' 				=> $result['title'],
-		'CONTENTS' 				=> FormatingHelper::second_parse($result['contents']),
-		'STATUS' 				=> $LANG['bugs.status.' . $result['status']],
-		'TYPE'					=> !empty($result['type']) ? stripslashes($result['type']) : $LANG['bugs.notice.none'],
-		'CATEGORY'				=> !empty($result['category']) ? stripslashes($result['category']) : $LANG['bugs.notice.none_e'],
-		'PRIORITY' 				=> $LANG['bugs.priority.' . $result['priority']],
-		'SEVERITY' 				=> $LANG['bugs.severity.' . $result['severity']],
-		'REPRODUCTIBLE'			=> ($result['reproductible'] == true) ? $LANG['yes'] : $LANG['no'],
+		'TOKEN' 		=> $Session->get_token(),
+		'ID' 			=> $id,
+		'TITLE' 		=> $result['title'],
+		'CONTENTS' 		=> FormatingHelper::second_parse($result['contents']),
+		'STATUS' 		=> $LANG['bugs.status.' . $result['status']],
+		'TYPE'			=> !empty($result['type']) ? stripslashes($result['type']) : $LANG['bugs.notice.none'],
+		'CATEGORY'		=> !empty($result['category']) ? stripslashes($result['category']) : $LANG['bugs.notice.none_e'],
+		'PRIORITY' 		=> $LANG['bugs.priority.' . $result['priority']],
+		'SEVERITY' 		=> $LANG['bugs.severity.' . $result['severity']],
+		'REPRODUCTIBLE'		=> ($result['reproductible'] == true) ? $LANG['yes'] : $LANG['no'],
 		'REPRODUCTION_METHOD'	=> FormatingHelper::second_parse($result['reproduction_method']),
-		'DETECTED_IN' 			=> !empty($result['detected_in']) ? $result['detected_in'] : $LANG['bugs.notice.not_defined'],
-		'FIXED_IN' 				=> !empty($result['fixed_in']) ? $result['fixed_in'] : $LANG['bugs.notice.not_defined'],
-		'USER_ASSIGNED'			=> $user_assigned,
-		'AUTHOR' 				=> !empty($result['login']) ? '<a href="' . UserUrlBuilder::profile($result['user_id'])->absolute() . '" class="' . UserService::get_level_class($result['level']) . '">' . $result['login'] . '</a>': $LANG['guest'],
-		'SUBMIT_DATE'			=> gmdate_format('date_format', $result['submit_date'])
+		'DETECTED_IN' 		=> !empty($result['detected_in']) ? $result['detected_in'] : $LANG['bugs.notice.not_defined'],
+		'FIXED_IN' 		=> !empty($result['fixed_in']) ? $result['fixed_in'] : $LANG['bugs.notice.not_defined'],
+		'USER_ASSIGNED'		=> $user_assigned,
+		'AUTHOR' 		=> !empty($result['login']) ? '<a href="' . UserUrlBuilder::profile($result['user_id'])->absolute() . '" class="' . UserService::get_level_class($result['level']) . '">' . $result['login'] . '</a>': $LANG['guest'],
+		'SUBMIT_DATE'		=> gmdate_format('date_format', $result['submit_date'])
 	));
 	
 	//Affichage des commentaires
@@ -824,7 +826,7 @@ else if (isset($_GET['view']) && is_numeric($id)) // Visualisation d'une fiche B
 	{
 		$comments_topic = new BugtrackerCommentsTopic();
 		$comments_topic->set_id_in_module($id);
-		$comments_topic->set_url(new Url('/bugtracker/bugtracker.php?view=true&amp;id=' . $id . '&com=0'));
+		$comments_topic->set_url(new Url('/bugtracker/bugtracker.php?view&amp;id=' . $id . '&com=0'));
 		$Template->put_all(array(
 			'COMMENTS' => CommentsService::display($comments_topic)->render()
 		));
@@ -835,7 +837,7 @@ else if (isset($_GET['solved'])) // liste des bugs corrigés
 	//checking authorization
 	if (!$auth_read)
 	{
-		$error_controller = PHPBoostErrors::unexisting_page();
+		$error_controller = PHPBoostErrors::user_not_authorized();
 		DispatchManager::redirect($error_controller);
 	}
 
@@ -882,7 +884,7 @@ else if (isset($_GET['solved'])) // liste des bugs corrigés
 	if ($auth_create || $User->is_admin())
 	{
 		$Template->assign_vars(array(
-			'ADD_BUG' 		=> '<a href="bugtracker' . url('.php?add=true') . '"><img src="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/' . get_ulang() . '/add.png" alt="' . $LANG['bugs.actions.add'] . '" title="' . $LANG['bugs.actions.add'] . '" class="valign_middle" /></a>'
+			'ADD_BUG' 	=> '<a href="bugtracker' . url('.php?add') . '">' . $LANG['bugs.actions.add'] . '</a>'
 		));
 	}
 	
@@ -899,42 +901,42 @@ else if (isset($_GET['solved'])) // liste des bugs corrigés
 	if ($comments_activated == true) $no_bugs_colspan = $no_bugs_colspan + 1;
 	
 	$Template->assign_vars(array(
-		'C_DISPLAY_TYPES' 		=> $display_types,
-		'C_NO_BUGS' 			=> empty($nbr_bugs) ? true : false,
-		'NO_BUGS_COLSPAN' 		=> $no_bugs_colspan,
-		'C_COM' 				=> ($comments_activated == true) ? true : false,
-		'PAGINATION' 			=> $Pagination->display('bugtracker' . url('.php?solved&amp;p=%d' . (!empty($get_sort) ? '&amp;sort=' . $get_sort : '') . (!empty($get_mode) ? '&amp;mode=' . $get_mode : '')), $nbr_bugs, 'p', $items_per_page, 3),
+		'C_DISPLAY_TYPES' 	=> $display_types,
+		'C_NO_BUGS' 		=> empty($nbr_bugs) ? true : false,
+		'NO_BUGS_COLSPAN' 	=> $no_bugs_colspan,
+		'C_COM' 		=> ($comments_activated == true) ? true : false,
+		'PAGINATION' 		=> $Pagination->display('bugtracker' . url('.php?solved&amp;p=%d' . (!empty($get_sort) ? '&amp;sort=' . $get_sort : '') . (!empty($get_mode) ? '&amp;mode=' . $get_mode : '')), $nbr_bugs, 'p', $items_per_page, 3),
 		'L_CONFIRM_DEL_BUG' 	=> $LANG['bugs.actions.confirm.del_bug'],
-		'L_BUGS_LIST' 			=> $LANG['bugs.titles.bugs_list'],
-		'L_ID' 					=> $LANG['bugs.labels.fields.id'],
-		'L_TITLE'				=> $LANG['bugs.labels.fields.title'],
-		'L_TYPE'				=> $LANG['bugs.labels.fields.type'],
-		'L_SEVERITY'			=> $LANG['bugs.labels.fields.severity'],
-		'L_STATUS'				=> $LANG['bugs.labels.fields.status'],
-		'L_DATE'				=> $LANG['bugs.labels.fields.submit_date'],
-		'L_COMMENTS'			=> $LANG['title_com'],
-		'L_NO_BUG' 				=> $LANG['bugs.notice.no_bug'],
-		'L_NO_SOLVED_BUG'		=> $LANG['bugs.notice.no_bug_solved'],
-		'L_ACTIONS' 			=> $LANG['bugs.actions'],
-		'L_UPDATE' 				=> $LANG['update'],
-		'L_HISTORY' 			=> $LANG['bugs.actions.history'],
-		'L_DELETE' 				=> $LANG['delete'],
-		'L_UNSOLVED' 			=> $LANG['bugs.titles.unsolved_bug'],
-		'L_SOLVED' 				=> $LANG['bugs.titles.solved_bug'],
-		'L_STATS' 				=> $LANG['bugs.titles.bugs_stats'],
-		'U_BUG_ID_TOP' 			=> url('.php?solved&amp;sort=id&amp;mode=desc'),
-		'U_BUG_ID_BOTTOM' 		=> url('.php?solved&amp;sort=id&amp;mode=asc'),
-		'U_BUG_TITLE_TOP' 		=> url('.php?solved&amp;sort=title&amp;mode=desc'),
+		'L_BUGS_LIST' 		=> $LANG['bugs.titles.bugs_list'],
+		'L_ID' 			=> $LANG['bugs.labels.fields.id'],
+		'L_TITLE'		=> $LANG['bugs.labels.fields.title'],
+		'L_TYPE'		=> $LANG['bugs.labels.fields.type'],
+		'L_SEVERITY'		=> $LANG['bugs.labels.fields.severity'],
+		'L_STATUS'		=> $LANG['bugs.labels.fields.status'],
+		'L_DATE'		=> $LANG['bugs.labels.fields.submit_date'],
+		'L_COMMENTS'		=> $LANG['title_com'],
+		'L_NO_BUG' 		=> $LANG['bugs.notice.no_bug'],
+		'L_NO_SOLVED_BUG'	=> $LANG['bugs.notice.no_bug_solved'],
+		'L_ACTIONS' 		=> $LANG['bugs.actions'],
+		'L_UPDATE' 		=> $LANG['update'],
+		'L_HISTORY' 		=> $LANG['bugs.actions.history'],
+		'L_DELETE' 		=> $LANG['delete'],
+		'L_UNSOLVED' 		=> $LANG['bugs.titles.unsolved_bug'],
+		'L_SOLVED' 		=> $LANG['bugs.titles.solved_bug'],
+		'L_STATS' 		=> $LANG['bugs.titles.bugs_stats'],
+		'U_BUG_ID_TOP' 		=> url('.php?solved&amp;sort=id&amp;mode=desc'),
+		'U_BUG_ID_BOTTOM' 	=> url('.php?solved&amp;sort=id&amp;mode=asc'),
+		'U_BUG_TITLE_TOP' 	=> url('.php?solved&amp;sort=title&amp;mode=desc'),
 		'U_BUG_TITLE_BOTTOM' 	=> url('.php?solved&amp;sort=title&amp;mode=asc'),
-		'U_BUG_TYPE_TOP' 		=> url('.php?solved&amp;sort=type&amp;mode=desc'),
+		'U_BUG_TYPE_TOP' 	=> url('.php?solved&amp;sort=type&amp;mode=desc'),
 		'U_BUG_TYPE_BOTTOM' 	=> url('.php?solved&amp;sort=type&amp;mode=asc'),
 		'U_BUG_SEVERITY_TOP' 	=> url('.php?solved&amp;sort=severity&amp;mode=desc'),
 		'U_BUG_SEVERITY_BOTTOM'	=> url('.php?solved&amp;sort=severity&amp;mode=asc'),
-		'U_BUG_STATUS_TOP'	 	=> url('.php?solved&amp;sort=status&amp;mode=desc'),
+		'U_BUG_STATUS_TOP'	=> url('.php?solved&amp;sort=status&amp;mode=desc'),
 		'U_BUG_STATUS_BOTTOM'	=> url('.php?solved&amp;sort=status&amp;mode=asc'),
 		'U_BUG_COMMENTS_TOP' 	=> url('.php?solved&amp;sort=comments&amp;mode=desc'),
 		'U_BUG_COMMENTS_BOTTOM'	=> url('.php?solved&amp;sort=comments&amp;mode=asc'),
-		'U_BUG_DATE_TOP' 		=> url('.php?solved&amp;sort=date&amp;mode=desc'),
+		'U_BUG_DATE_TOP' 	=> url('.php?solved&amp;sort=date&amp;mode=desc'),
 		'U_BUG_DATE_BOTTOM' 	=> url('.php?solved&amp;sort=date&amp;mode=asc')
 	));
 	
@@ -964,15 +966,15 @@ else if (isset($_GET['solved'])) // liste des bugs corrigés
 		$nbr_coms = $Sql->query("SELECT number_comments FROM " . PREFIX . "comments_topic WHERE module_id = 'bugtracker' AND id_in_module = '" . $row['id'] . "'", __LINE__, __FILE__);
 
 		$Template->assign_block_vars('solved.bugclosed', array(
-			'ID'				=> $row['id'],
-			'TITLE'				=> $row['title'],
-			'TYPE'				=> !empty($row['type']) ? stripslashes($row['type']) : $LANG['bugs.notice.none'],
-			'SEVERITY'			=> $LANG['bugs.severity.' . $row['severity']],
-			'STATUS'			=> $LANG['bugs.status.' . $row['status']],
-			'COLOR' 			=> $color,
+			'ID'			=> $row['id'],
+			'TITLE'			=> $row['title'],
+			'TYPE'			=> !empty($row['type']) ? stripslashes($row['type']) : $LANG['bugs.notice.none'],
+			'SEVERITY'		=> $LANG['bugs.severity.' . $row['severity']],
+			'STATUS'		=> $LANG['bugs.status.' . $row['status']],
+			'COLOR' 		=> $color,
 			'SEVERITY_COLOR'	=> $severity_color,
-			'COMMENTS'			=> '<a href="bugtracker' . url('.php?view=true&id=' . $row['id'] . '&com=0#anchor_bugtracker') . '">' . (empty($nbr_coms) ? 0 : $nbr_coms) . '</a>',
-			'DATE' 				=> gmdate_format('date_format', $row['submit_date'])
+			'COMMENTS'		=> '<a href="bugtracker' . url('.php?view&id=' . $row['id'] . '&com=0#anchor_bugtracker') . '">' . (empty($nbr_coms) ? 0 : $nbr_coms) . '</a>',
+			'DATE' 			=> gmdate_format('date_format', $row['submit_date'])
 		));
 
 	}
@@ -1002,7 +1004,7 @@ else if (isset($_GET['stats'])) // Statistiques
 	//checking authorization
 	if (!$auth_read)
 	{
-		$error_controller = PHPBoostErrors::unexisting_page();
+		$error_controller = PHPBoostErrors::user_not_authorized();
 		DispatchManager::redirect($error_controller);
 	}
 
@@ -1014,19 +1016,26 @@ else if (isset($_GET['stats'])) // Statistiques
 	$nbr_bugs = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "bugtracker", __LINE__, __FILE__);
 	$nbr_bugs_not_rejected = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "bugtracker WHERE status != 'rejected'", __LINE__, __FILE__);
 	
+	if ($auth_create || $User->is_admin())
+	{
+		$Template->assign_vars(array(
+			'ADD_BUG' 	=> '<a href="bugtracker' . url('.php?add') . '">' . $LANG['bugs.actions.add'] . '</a>'
+		));
+	}
+	
 	$Template->assign_vars(array(
-		'C_NO_BUGS' 			=> empty($nbr_bugs) ? true : false,
+		'C_NO_BUGS' 		=> empty($nbr_bugs) ? true : false,
 		'C_NO_BUGS_NOT_REJECTED'=> empty($nbr_bugs_not_rejected) ? true : false,
-		'L_BUGS_STATS' 			=> $LANG['bugs.titles.bugs_stats'],
-		'L_BUGS_LIST' 			=> $LANG['bugs.titles.bugs_list'],
-		'L_UNSOLVED' 			=> $LANG['bugs.titles.unsolved_bug'],
-		'L_SOLVED' 				=> $LANG['bugs.titles.solved_bug'],
-		'L_STATS' 				=> $LANG['bugs.titles.bugs_stats'],
-		'L_STATUS'				=> $LANG['bugs.labels.fields.status'],
-		'L_NUMBER'				=> $LANG['bugs.labels.number'],
-		'L_NO_BUG' 				=> $LANG['bugs.notice.no_bug'],
-		'L_TOP_TEN_POSTERS'		=> $LANG['bugs.labels.top_10_posters'],
-		'L_PSEUDO'				=> $LANG['pseudo']
+		'L_BUGS_STATS' 		=> $LANG['bugs.titles.bugs_stats'],
+		'L_BUGS_LIST' 		=> $LANG['bugs.titles.bugs_list'],
+		'L_UNSOLVED' 		=> $LANG['bugs.titles.unsolved_bug'],
+		'L_SOLVED' 		=> $LANG['bugs.titles.solved_bug'],
+		'L_STATS' 		=> $LANG['bugs.titles.bugs_stats'],
+		'L_STATUS'		=> $LANG['bugs.labels.fields.status'],
+		'L_NUMBER'		=> $LANG['bugs.labels.number'],
+		'L_NO_BUG' 		=> $LANG['bugs.notice.no_bug'],
+		'L_TOP_TEN_POSTERS'	=> $LANG['bugs.labels.top_10_posters'],
+		'L_PSEUDO'		=> $LANG['pseudo']
 	));
 	
 	$Template->assign_block_vars('stats', array());
@@ -1056,10 +1065,10 @@ else if (isset($_GET['stats'])) // Statistiques
 	while ($row = $Sql->fetch_assoc($result))
 	{
 		$Template->assign_block_vars('stats.top_poster', array(
-			'ID' => $i,
-			'U_USER_PROFILE' => UserUrlBuilder::profile($row['user_id'])->absolute(),
-			'LOGIN' => !empty($row['login']) ? '<a href="' . UserUrlBuilder::profile($row['user_id'])->absolute() . '" class="' . UserService::get_level_class($row['level']) . '">' . $row['login'] . '</a>': $LANG['guest'],
-			'USER_BUGS' => $row['nb_bugs']
+			'ID' 		=> $i,
+			'U_USER_PROFILE'=> UserUrlBuilder::profile($row['user_id'])->absolute(),
+			'LOGIN' 	=> !empty($row['login']) ? '<a href="' . UserUrlBuilder::profile($row['user_id'])->absolute() . '" class="' . UserService::get_level_class($row['level']) . '">' . $row['login'] . '</a>': $LANG['guest'],
+			'USER_BUGS' 	=> $row['nb_bugs']
 		));
 
 		$i++;

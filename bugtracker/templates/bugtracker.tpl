@@ -45,11 +45,16 @@
 					<a href="bugtracker.php{SID}">{L_BUGS_LIST}</a> 
 				</li>
 				<li class="bt_no_current" style="float:left;">
-					<a href="{PATH_TO_ROOT}/bugtracker/bugtracker.php?stats">{L_STATS}</a>
-				</li>
-				<li class="bt_no_current" style="float:left;">
 					<a href="{PATH_TO_ROOT}/bugtracker/bugtracker.php?solved">{L_SOLVED}</a>
 				</li>
+				<li class="bt_no_current" style="float:left;">
+					<a href="{PATH_TO_ROOT}/bugtracker/bugtracker.php?stats">{L_STATS}</a>
+				</li>
+				# IF ADD_BUG #
+				<li class="bt_add" style="float:left;">
+					<a href="{PATH_TO_ROOT}/bugtracker/bugtracker.php?add">{ADD_BUG}</a>
+				</li>
+				# ENDIF #
 			</ul>
 		</div>
 		<div class="module_contents">
@@ -121,7 +126,7 @@
 				# START list.bug #
 				<tr style="text-align:center;"> 
 					<td class="row2" {list.bug.COLOR}>
-						<a href="{PATH_TO_ROOT}/bugtracker/bugtracker.php?view=true&amp;id={list.bug.ID}">\#{list.bug.ID}</a>
+						<a href="{PATH_TO_ROOT}/bugtracker/bugtracker.php?view&amp;id={list.bug.ID}">\#{list.bug.ID}</a>
 					</td>
 					<td class="row2" {list.bug.COLOR}>
 						{list.bug.TITLE}
@@ -147,9 +152,9 @@
 					</td>
 					# IF C_IS_ADMIN #
 					<td class="row2" {list.bug.COLOR}> 
-						<a href="bugtracker.php?edit=true&amp;id={list.bug.ID}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="{L_UPDATE}" title="{L_UPDATE}" /></a>
-						<a href="bugtracker.php?history=true&amp;id={list.bug.ID}"><img src="{PATH_TO_ROOT}/bugtracker/templates/images/history.png" alt="{L_HISTORY}" title="{L_HISTORY}" /></a>
-						<a href="bugtracker.php?delete=true&amp;id={list.bug.ID}&amp;token={TOKEN}" onclick="javascript:return Confirm();"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" /></a>
+						<a href="bugtracker.php?edit&amp;id={list.bug.ID}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="{L_UPDATE}" title="{L_UPDATE}" /></a>
+						<a href="bugtracker.php?history&amp;id={list.bug.ID}"><img src="{PATH_TO_ROOT}/bugtracker/templates/images/history.png" alt="{L_HISTORY}" title="{L_HISTORY}" /></a>
+						<a href="bugtracker.php?delete&amp;id={list.bug.ID}&amp;token={TOKEN}" onclick="javascript:return Confirm();"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" /></a>
 					</td>
 					# ENDIF #
 				</tr>
@@ -165,7 +170,6 @@
 		<div class="module_bottom">
 			<div style="float:left" class="text_small"></div>
 			<div style="float:right" class="text_small"></div>
-			{ADD_BUG}
 		</div>
 	</div>
 # END list #
@@ -179,12 +183,17 @@
 				<li class="bt_no_current" style="float:left;">
 					<a href="bugtracker.php{SID}">{L_BUGS_LIST}</a> 
 				</li>
-				<li class="bt_no_current" style="float:left;">
-					<a href="{PATH_TO_ROOT}/bugtracker/bugtracker.php?stats">{L_STATS}</a>
-				</li>
 				<li class="bt_current" style="float:left;">
 					<a href="{PATH_TO_ROOT}/bugtracker/bugtracker.php?solved">{L_SOLVED}</a>
 				</li>
+				<li class="bt_no_current" style="float:left;">
+					<a href="{PATH_TO_ROOT}/bugtracker/bugtracker.php?stats">{L_STATS}</a>
+				</li>
+				# IF ADD_BUG #
+				<li class="bt_add" style="float:left;">
+					<a href="{PATH_TO_ROOT}/bugtracker/bugtracker.php?add">{ADD_BUG}</a>
+				</li>
+				# ENDIF #
 			</ul>
 		</div>
 		<div class="module_contents">
@@ -256,7 +265,7 @@
 					# START solved.bugclosed #
 					<tr style="text-align:center;"> 
 						<td class="row2" {solved.bugclosed.COLOR}>
-							<a href="{PATH_TO_ROOT}/bugtracker/bugtracker.php?view=true&amp;id={solved.bugclosed.ID}">\#{solved.bugclosed.ID}</a>
+							<a href="{PATH_TO_ROOT}/bugtracker/bugtracker.php?view&amp;id={solved.bugclosed.ID}">\#{solved.bugclosed.ID}</a>
 						</td>
 						<td class="row2" {solved.bugclosed.COLOR}>
 							{solved.bugclosed.TITLE}
@@ -282,9 +291,9 @@
 						</td>
 						# IF C_IS_ADMIN #
 						<td class="row2" {solved.bugclosed.COLOR}> 
-							<a href="bugtracker.php?edit=true&amp;id={solved.bugclosed.ID}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="{L_UPDATE}" title="{L_UPDATE}" /></a>
-							<a href="bugtracker.php?history=true&amp;id={solved.bugclosed.ID}"><img src="{PATH_TO_ROOT}/bugtracker/templates/images/history.png" alt="{L_HISTORY}" title="{L_HISTORY}" /></a>
-							<a href="bugtracker.php?delete=true&amp;id={solved.bugclosed.ID}&amp;token={TOKEN}" onclick="javascript:return Confirm();"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" /></a>
+							<a href="bugtracker.php?edit&amp;id={solved.bugclosed.ID}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="{L_UPDATE}" title="{L_UPDATE}" /></a>
+							<a href="bugtracker.php?history&amp;id={solved.bugclosed.ID}"><img src="{PATH_TO_ROOT}/bugtracker/templates/images/history.png" alt="{L_HISTORY}" title="{L_HISTORY}" /></a>
+							<a href="bugtracker.php?delete&amp;id={solved.bugclosed.ID}&amp;token={TOKEN}" onclick="javascript:return Confirm();"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" /></a>
 						</td>
 						# ENDIF #
 					</tr>
@@ -313,12 +322,17 @@
 				<li class="bt_no_current" style="float:left;">
 					<a href="bugtracker.php{SID}">{L_BUGS_LIST}</a> 
 				</li>
-				<li class="bt_current" style="float:left;">
-					<a href="{PATH_TO_ROOT}/bugtracker/bugtracker.php?stats">{L_STATS}</a>
-				</li>
 				<li class="bt_no_current" style="float:left;">
 					<a href="{PATH_TO_ROOT}/bugtracker/bugtracker.php?solved">{L_SOLVED}</a>
 				</li>
+				<li class="bt_current" style="float:left;">
+					<a href="{PATH_TO_ROOT}/bugtracker/bugtracker.php?stats">{L_STATS}</a>
+				</li>
+				# IF ADD_BUG #
+				<li class="bt_add" style="float:left;">
+					<a href="{PATH_TO_ROOT}/bugtracker/bugtracker.php?add">{ADD_BUG}</a>
+				</li>
+				# ENDIF #
 			</ul>
 		</div>
 		<div class="module_contents">
@@ -450,7 +464,7 @@
 		<div class="module_top_l"></div>		
 		<div class="module_top_r"></div>
 		<div class="module_top">
-			<div style="float:left">
+			<div class="module_top_title">
 				{L_ADD_BUG}
 			</div>
 		</div>
@@ -470,7 +484,7 @@
 					<p>{L_REQUIRE}</p>
 					<dl>
 						<dt><label for="title">* {L_TITLE}</label></dt>
-						<dd><label><input type="text" size="40" maxlength="100" id="title" name="title" class="text" /></label></dd>
+						<dd><label><input type="text" size="40" maxlength="200" id="title" name="title" class="text" /></label></dd>
 					</dl>
 					<label for="contents">* {L_CONTENT}</label>
 					<div style="position:relative;display:none;" id="loading_previewcontents">
@@ -650,7 +664,7 @@
 		<div class="module_top_l"></div>		
 		<div class="module_top_r"></div>
 		<div class="module_top">
-			<div style="float:left">
+			<div class="module_top_title">
 				{L_EDIT_BUG} : \#{edit.ID}
 			</div>
 		</div>
@@ -670,7 +684,7 @@
 					<p>{L_REQUIRE}</p>
 					<dl>
 						<dt><label for="title">* {L_TITLE}</label></dt>
-						<dd><label><input type="text" size="40" maxlength="100" id="title" name="title" value="{edit.TITLE}" class="text" /></label></dd>
+						<dd><label><input type="text" size="40" maxlength="200" id="title" name="title" value="{edit.TITLE}" class="text" /></label></dd>
 					</dl>
 					<label for="contents">* {L_CONTENT}</label>
 					<label for="contents">* {L_CONTENT}</label>
@@ -826,16 +840,30 @@
 		<div class="module_top_l"></div>		
 		<div class="module_top_r"></div>
 		<div class="module_top">
-			<div style="float:left">
-				{L_VIEW_BUG} \#{view.ID}
+			<div class="module_top_title">{L_VIEW_BUG} \#{view.ID}</div>
+			<div class="module_top_com">
+				# IF U_COM #
+					<img src="{PATH_TO_ROOT}/templates/{THEME}/images/com_mini.png" alt="" />
+					{U_COM}
+				# ENDIF #
+				# IF C_EDIT_BUG #
+					<a href="bugtracker.php?edit&amp;id={view.ID}">
+						<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="{L_UPDATE}" title="{L_UPDATE}" />
+					</a>
+				# ENDIF #
+				# IF C_HISTORY_BUG #
+					<a href="bugtracker.php?history&amp;id={view.ID}">
+						<img src="{PATH_TO_ROOT}/bugtracker/templates/images/history.png" alt="{L_HISTORY}" title="{L_HISTORY}" />
+					</a>
+				# ENDIF #
+				# IF C_DELETE_BUG #
+					<a href="admin_bugtracker.php?delete&amp;id={view.ID}&amp;token={TOKEN}" onclick="javascript:return Confirm();">
+						<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" />
+					</a>
+				# ENDIF #
 			</div>
-			<div style="float:right">
-				# IF C_COM #{U_COM}# ENDIF #
-				# IF C_EDIT_BUG #&nbsp;<a href="bugtracker.php?edit=true&amp;id={view.ID}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="{L_UPDATE}" title="{L_UPDATE}" /></a># ENDIF #
-				# IF C_HISTORY_BUG #&nbsp;<a href="bugtracker.php?history=true&amp;id={view.ID}"><img src="{PATH_TO_ROOT}/bugtracker/templates/images/history.png" alt="{L_HISTORY}" title="{L_HISTORY}" /></a># ENDIF #
-				# IF C_DELETE_BUG #&nbsp;<a href="admin_bugtracker.php?delete=true&amp;id={view.ID}&amp;token={TOKEN}" onclick="javascript:return Confirm();"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" /></a># ENDIF #
-			</div>
-		</div>
+			<div class="spacer"></div>
+           	</div>
 		<div class="module_contents">
 			<fieldset>
 				<legend>{view.TITLE}</legend>
@@ -928,7 +956,7 @@
 		<div class="module_top_l"></div>		
 		<div class="module_top_r"></div>
 		<div class="module_top">
-			<div style="float:left">
+			<div class="module_top_title">
 				{L_HISTORY_BUG} : \#{ID}
 			</div>
 		</div>
