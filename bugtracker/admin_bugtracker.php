@@ -51,7 +51,7 @@ if (!empty($_POST['valid_add_type']))
 		AppContext::get_response()->redirect(HOST . SCRIPT . '?error=success#message_helper');
 	}
 	else
-	AppContext::get_response()->redirect(HOST . SCRIPT . '?error=incomplete#message_helper');
+		AppContext::get_response()->redirect(HOST . SCRIPT . '?error=incomplete#message_helper');
 }
 else if (!empty($_POST['valid_edit_type']) && is_numeric($id_post))
 {
@@ -71,7 +71,7 @@ else if (!empty($_POST['valid_edit_type']) && is_numeric($id_post))
 		AppContext::get_response()->redirect(HOST . SCRIPT . '?error=edit_type_success#message_helper');
 	}
 	else
-	AppContext::get_response()->redirect(HOST . SCRIPT . '?edit_type=true&id= ' . $id_post . '&error=incomplete#message_helper');
+		AppContext::get_response()->redirect(HOST . SCRIPT . '?edit_type=true&id= ' . $id_post . '&error=incomplete#message_helper');
 }
 else if (isset($_GET['edit_type']) && is_numeric($id)) // edition d'un type
 {
@@ -83,14 +83,14 @@ else if (isset($_GET['edit_type']) && is_numeric($id)) // edition d'un type
 	));	
 	
 	$Template->assign_vars(array(
-		'L_BUGS_MANAGEMENT'		=> $LANG['bugs.titles.admin.management'],
-		'L_BUGS_CONFIG' 		=> $LANG['bugs.titles.admin.config'],
-		'L_EDIT_TYPE'			=> $LANG['bugs.titles.edit_type'],
-		'L_REQUIRE' 			=> $LANG['require'],
-		'L_REQUIRE_TYPE' 		=> $LANG['bugs.notice.require_type'],
-		'L_TYPE'				=> $LANG['bugs.labels.fields.type'],
-		'L_UPDATE' 				=> $LANG['update'],
-		'L_RESET' 				=> $LANG['reset'],
+		'L_BUGS_MANAGEMENT'	=> $LANG['bugs.titles.admin.management'],
+		'L_BUGS_CONFIG' 	=> $LANG['bugs.titles.admin.config'],
+		'L_EDIT_TYPE'		=> $LANG['bugs.titles.edit_type'],
+		'L_REQUIRE' 		=> $LANG['require'],
+		'L_REQUIRE_TYPE' 	=> $LANG['bugs.notice.require_type'],
+		'L_TYPE'			=> $LANG['bugs.labels.fields.type'],
+		'L_UPDATE' 			=> $LANG['update'],
+		'L_RESET' 			=> $LANG['reset'],
 	));
 	
 	//Gestion erreur.
@@ -98,13 +98,13 @@ else if (isset($_GET['edit_type']) && is_numeric($id)) // edition d'un type
 	switch ($get_error)
 	{
 		case 'incomplete':
-		$errstr = $LANG['e_incomplete'];
-		break;
+			$errstr = $LANG['e_incomplete'];
+			break;
 		default:
-		$errstr = '';
+			$errstr = '';
 	}
 	if (!empty($errstr))
-	$Template->put('message_helper', MessageHelper::display($errstr, E_USER_NOTICE));
+		$Template->put('message_helper', MessageHelper::display($errstr, E_USER_NOTICE));
 	
 	$Template->display(); // traitement du modele
 }
@@ -135,7 +135,7 @@ else if (!empty($_POST['valid_add_category']))
 		AppContext::get_response()->redirect(HOST . SCRIPT . '?error=success#message_helper');
 	}
 	else
-	AppContext::get_response()->redirect(HOST . SCRIPT . '?error=incomplete#message_helper');
+		AppContext::get_response()->redirect(HOST . SCRIPT . '?error=incomplete#message_helper');
 }
 else if (!empty($_POST['valid_edit_category']) && is_numeric($id_post))
 {
@@ -155,7 +155,7 @@ else if (!empty($_POST['valid_edit_category']) && is_numeric($id_post))
 		AppContext::get_response()->redirect(HOST . SCRIPT . '?error=edit_category_success#message_helper');
 	}
 	else
-	AppContext::get_response()->redirect(HOST . SCRIPT . '?edit_category=true&id= ' . $id_post . '&error=incomplete#message_helper');
+		AppContext::get_response()->redirect(HOST . SCRIPT . '?edit_category=true&id= ' . $id_post . '&error=incomplete#message_helper');
 }
 else if (isset($_GET['edit_category']) && is_numeric($id)) // edition d'une catégorie
 {
@@ -182,13 +182,13 @@ else if (isset($_GET['edit_category']) && is_numeric($id)) // edition d'une caté
 	switch ($get_error)
 	{
 		case 'incomplete':
-		$errstr = $LANG['e_incomplete'];
-		break;
+			$errstr = $LANG['e_incomplete'];
+			break;
 		default:
-		$errstr = '';
+			$errstr = '';
 	}
 	if (!empty($errstr))
-	$Template->put('message_helper', MessageHelper::display($errstr, E_USER_NOTICE));
+		$Template->put('message_helper', MessageHelper::display($errstr, E_USER_NOTICE));
 	
 	$Template->display(); // traitement du modele
 }
@@ -223,7 +223,7 @@ else if (!empty($_POST['valid_add_version']))
 		AppContext::get_response()->redirect(HOST . SCRIPT . '?error=success#message_helper');
 	}
 	else
-	AppContext::get_response()->redirect(HOST . SCRIPT . '?error=incomplete#message_helper');
+		AppContext::get_response()->redirect(HOST . SCRIPT . '?error=incomplete#message_helper');
 }
 else if (!empty($_POST['valid_edit_version']) && is_numeric($id_post))
 {
@@ -248,7 +248,7 @@ else if (!empty($_POST['valid_edit_version']) && is_numeric($id_post))
 		AppContext::get_response()->redirect(HOST . SCRIPT . '?error=edit_version_success#message_helper');
 	}
 	else
-	AppContext::get_response()->redirect(HOST . SCRIPT . '?edit_version=true&id= ' . $id_post . '&error=incomplete#message_helper');
+		AppContext::get_response()->redirect(HOST . SCRIPT . '?edit_version=true&id= ' . $id_post . '&error=incomplete#message_helper');
 }
 else if (isset($_GET['edit_version']) && is_numeric($id)) // edition d'une version
 {
@@ -279,13 +279,13 @@ else if (isset($_GET['edit_version']) && is_numeric($id)) // edition d'une versi
 	switch ($get_error)
 	{
 		case 'incomplete':
-		$errstr = $LANG['e_incomplete'];
-		break;
+			$errstr = $LANG['e_incomplete'];
+			break;
 		default:
-		$errstr = '';
+			$errstr = '';
 	}
 	if (!empty($errstr))
-	$Template->put('message_helper', MessageHelper::display($errstr, E_USER_NOTICE));
+		$Template->put('message_helper', MessageHelper::display($errstr, E_USER_NOTICE));
 	
 	$Template->display(); // traitement du modele	
 }
@@ -415,16 +415,16 @@ else
 	foreach ($types as $key => $type)
 	{
 		$Template->assign_block_vars('types', array(
-			'ID'				=> $key,
-			'TYPE'				=> stripslashes($type)
+			'ID'	=> $key,
+			'TYPE'	=> stripslashes($type)
 		));	
 	}	
 	
 	foreach ($categories as $key => $category)
 	{
 		$Template->assign_block_vars('categories', array(
-			'ID'				=> $key,
-			'CATEGORY'			=> stripslashes($category)
+			'ID'		=> $key,
+			'CATEGORY'	=> stripslashes($category)
 		));	
 	}
 	
@@ -443,32 +443,32 @@ else
 	switch ($get_error)
 	{
 		case 'require_items_per_page':
-		$errstr = $LANG['bugs.error.require_items_per_page'];
-		$errtyp = E_USER_NOTICE;
-		break;
+			$errstr = $LANG['bugs.error.require_items_per_page'];
+			$errtyp = E_USER_NOTICE;
+			break;
 		case 'incomplete':
-		$errstr = $LANG['e_incomplete'];
-		$errtyp = E_USER_NOTICE;
-		break;
+			$errstr = $LANG['e_incomplete'];
+			$errtyp = E_USER_NOTICE;
+			break;
 		case 'success':
-		$errstr = $LANG['bugs.error.e_config_success'];
-		$errtyp = E_USER_SUCCESS;
-		break;
+			$errstr = $LANG['bugs.error.e_config_success'];
+			$errtyp = E_USER_SUCCESS;
+			break;
 		case 'edit_type_success':
-		$errstr = $LANG['bugs.error.e_edit_type_success'];
-		$errtyp = E_USER_SUCCESS;
-		break;
+			$errstr = $LANG['bugs.error.e_edit_type_success'];
+			$errtyp = E_USER_SUCCESS;
+			break;
 		case 'edit_category_success':
-		$errstr = $LANG['bugs.error.e_edit_category_success'];
-		$errtyp = E_USER_SUCCESS;
-		break;
+			$errstr = $LANG['bugs.error.e_edit_category_success'];
+			$errtyp = E_USER_SUCCESS;
+			break;
 		case 'edit_version_success':
-		$errstr = $LANG['bugs.error.e_edit_version_success'];
-		$errtyp = E_USER_SUCCESS;
-		break;
+			$errstr = $LANG['bugs.error.e_edit_version_success'];
+			$errtyp = E_USER_SUCCESS;
+			break;
 		default:
-		$errstr = '';
-		$errtyp = E_USER_NOTICE;
+			$errstr = '';
+			$errtyp = E_USER_NOTICE;
 	}
 	if (!empty($errstr))
 		$Template->put('message_helper', MessageHelper::display($errstr, $errtyp));

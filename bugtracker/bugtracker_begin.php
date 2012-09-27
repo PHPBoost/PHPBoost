@@ -56,11 +56,15 @@ elseif (isset($_GET['view']) && is_numeric($id))
 }
 elseif (isset($_GET['solved']))
 {
-	$Bread_crumb->add($LANG['bugs.titles.solved_bug'], url('bugtracker.php?solved'));
+	$Bread_crumb->add($LANG['bugs.titles.solved_bugs'], url('bugtracker.php?solved'));
 }
 elseif (isset($_GET['stats']))
 {
 	$Bread_crumb->add($LANG['bugs.titles.bugs_stats'], url('bugtracker.php?stats'));
+}
+else
+{
+	$Bread_crumb->add($LANG['bugs.titles.unsolved_bugs'], url('bugtracker.php'));
 }
 
 //Chargement du cache

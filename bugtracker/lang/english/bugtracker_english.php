@@ -54,7 +54,7 @@ $LANG['bugs.notice.joker'] = 'Use * for a joker';
 
 //Actions
 $LANG['bugs.actions'] = 'Actions';
-$LANG['bugs.actions.add'] = 'Post a new bug';
+$LANG['bugs.actions.add'] = 'New bug';
 $LANG['bugs.actions.delete'] = 'Delete bug';
 $LANG['bugs.actions.edit'] = 'Edit bug';
 $LANG['bugs.actions.history'] = 'Bug\'s history';
@@ -64,14 +64,13 @@ $LANG['bugs.actions.confirm.del_type'] = 'Delete this type?';
 $LANG['bugs.actions.confirm.del_category'] = 'Delete this category?';
 
 //Titles
-$LANG['bugs.titles.add_bug'] = 'Post a new bug';
+$LANG['bugs.titles.add_bug'] = 'New bug';
 $LANG['bugs.titles.add_version'] = 'Add a new version';
 $LANG['bugs.titles.add_type'] = 'Add a new type';
 $LANG['bugs.titles.add_category'] = 'Add a new category';
 $LANG['bugs.titles.edit_bug'] = 'Bug edition';
 $LANG['bugs.titles.history_bug'] = 'Bug history';
 $LANG['bugs.titles.view_bug'] = 'Bug view';
-$LANG['bugs.titles.bugs_list'] = 'Bugs list';
 $LANG['bugs.titles.roadmap'] = 'Roadmap';
 $LANG['bugs.titles.bugs_infos'] = 'Bug\'s informations';
 $LANG['bugs.titles.bugs_stats'] = 'Statistics';
@@ -85,8 +84,8 @@ $LANG['bugs.titles.edit_type'] = 'Type edition';
 $LANG['bugs.titles.edit_category'] = 'Category edition';
 $LANG['bugs.titles.edit_version'] = 'Version edition';
 $LANG['bugs.titles.choose_version'] = 'Version to display';
-$LANG['bugs.titles.solved_bug'] = 'List of bugs fixed';
-$LANG['bugs.titles.unsolved_bug'] = 'List of unresolved bugs';
+$LANG['bugs.titles.solved_bugs'] = 'Fixed bugs';
+$LANG['bugs.titles.unsolved_bugs'] = 'Unresolved bugs';
 $LANG['bugs.titles.contents_value_title'] = 'Bug default description';
 $LANG['bugs.titles.contents_value'] = 'Default description';
 

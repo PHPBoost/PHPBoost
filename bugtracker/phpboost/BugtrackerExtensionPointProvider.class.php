@@ -43,13 +43,8 @@ class BugtrackerExtensionPointProvider extends ExtensionPointProvider
 	function get_cache()
 	{
 		$BUGS_CONFIG = BugtrackerConfig::load();
-		$config_bugs = 'global $BUGS_CONFIG;' . "\n";
 		
-		$BUGS_CONFIG = is_array($BUGS_CONFIG) ? $BUGS_CONFIG : array();
-		
-		$config_bugs .= '$BUGS_CONFIG = ' . var_export($BUGS_CONFIG, true) . ';' . "\n\n";
-		
-		return $config_bugs;
+		return 'global $BUGS_CONFIG;' . "\n" . '$BUGS_CONFIG = ' . var_export(is_array($BUGS_CONFIG) ? $BUGS_CONFIG : array(), true) . ';' . "\n\n";
 	}
 	
 	public function home_page()

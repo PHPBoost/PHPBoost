@@ -52,7 +52,7 @@ class BugtrackerHomePageExtensionPoint implements HomePageExtensionPoint
 		
 		$bugtracker_config = BugtrackerConfig::load();
 		
-		//Configuration des authorisations
+		//Récupération des paramètres de configuration
 		$authorizations = $bugtracker_config->get_authorizations();
 		$items_per_page = $bugtracker_config->get_items_per_page();
 		$comments_activated = $bugtracker_config->get_comments_activated();
@@ -109,16 +109,17 @@ class BugtrackerHomePageExtensionPoint implements HomePageExtensionPoint
 		$get_mode = retrieve(GET, 'mode', '');
 		$mode = ($get_mode == 'asc') ? 'ASC' : 'DESC';
 		
-		if ($User->check_auth($authorizations, BugtrackerConfig::BUG_CREATE_AUTH_BIT) || $User->check_level(User::ADMIN_LEVEL))
+		if ($User->check_auth($authorizations, BugtrackerConfig::BUG_CREATE_AUTH_BIT))
 		{
 			$tpl->put_all(array(
-				'ADD_BUG' 	=> '<a href="bugtracker' . url('.php?add') . '">' . $LANG['bugs.actions.add'] . '</a>'
+				'C_ADD' 	=> true,
+				'L_ADD' 	=> $LANG['bugs.actions.add']
 			));
 		}
 		
 		$no_bugs_colspan = 6;
 		//Activation de la colonne "Actions" si administrateur
-		if ($User->check_level(User::ADMIN_LEVEL) || $User->check_auth($authorizations, BugtrackerConfig::BUG_MODERATE_AUTH_BIT))
+		if ($User->check_auth($authorizations, BugtrackerConfig::BUG_MODERATE_AUTH_BIT))
 		{
 			$tpl->put_all(array(
 				'C_IS_ADMIN'	=> true
@@ -129,40 +130,40 @@ class BugtrackerHomePageExtensionPoint implements HomePageExtensionPoint
 		if ($comments_activated == true) $no_bugs_colspan = $no_bugs_colspan + 1;
 		
 		$tpl->put_all(array(
-			'C_DISPLAY_TYPES' 	=> $display_types,
-			'C_NO_BUGS' 		=> empty($nbr_bugs) ? true : false,
-			'NO_BUGS_COLSPAN' 	=> $no_bugs_colspan,
-			'C_COM' 		=> ($comments_activated == true) ? true : false,
-			'PAGINATION' 		=> $Pagination->display('bugtracker' . url('.php?p=%d' . (!empty($get_sort) ? '&amp;sort=' . $get_sort : '') . (!empty($get_mode) ? '&amp;mode=' . $get_mode : '')), $nbr_bugs, 'p', $items_per_page, 3),
+			'C_DISPLAY_TYPES' 		=> $display_types,
+			'C_NO_BUGS' 			=> empty($nbr_bugs) ? true : false,
+			'NO_BUGS_COLSPAN' 		=> $no_bugs_colspan,
+			'C_COM' 				=> ($comments_activated == true) ? true : false,
+			'PAGINATION' 			=> $Pagination->display('bugtracker' . url('.php?p=%d' . (!empty($get_sort) ? '&amp;sort=' . $get_sort : '') . (!empty($get_mode) ? '&amp;mode=' . $get_mode : '')), $nbr_bugs, 'p', $items_per_page, 3),
 			'L_CONFIRM_DEL_BUG' 	=> $LANG['bugs.actions.confirm.del_bug'],
-			'L_BUGS_LIST' 		=> $LANG['bugs.titles.bugs_list'],
-			'L_ID' 			=> $LANG['bugs.labels.fields.id'],
-			'L_TITLE'		=> $LANG['bugs.labels.fields.title'],
-			'L_TYPE'		=> $LANG['bugs.labels.fields.type'],
-			'L_SEVERITY'		=> $LANG['bugs.labels.fields.severity'],
-			'L_STATUS'		=> $LANG['bugs.labels.fields.status'],
-			'L_DATE'		=> $LANG['bugs.labels.fields.submit_date'],
-			'L_COMMENTS'		=> $LANG['title_com'],
-			'L_NO_BUG' 		=> $LANG['bugs.notice.no_bug'],
-			'L_ACTIONS' 		=> $LANG['bugs.actions'],
-			'L_UPDATE' 		=> $LANG['update'],
-			'L_HISTORY' 		=> $LANG['bugs.actions.history'],
-			'L_DELETE' 		=> $LANG['delete'],
-			'L_SOLVED' 		=> $LANG['bugs.titles.solved_bug'],
-			'L_STATS' 		=> $LANG['bugs.titles.bugs_stats'],
-			'U_BUG_ID_TOP' 		=> url('.php?sort=id&amp;mode=desc'),
-			'U_BUG_ID_BOTTOM' 	=> url('.php?sort=id&amp;mode=asc'),
-			'U_BUG_TITLE_TOP' 	=> url('.php?sort=title&amp;mode=desc'),
+			'L_ID' 					=> $LANG['bugs.labels.fields.id'],
+			'L_TITLE'				=> $LANG['bugs.labels.fields.title'],
+			'L_TYPE'				=> $LANG['bugs.labels.fields.type'],
+			'L_SEVERITY'			=> $LANG['bugs.labels.fields.severity'],
+			'L_STATUS'				=> $LANG['bugs.labels.fields.status'],
+			'L_DATE'				=> $LANG['bugs.labels.fields.submit_date'],
+			'L_COMMENTS'			=> $LANG['title_com'],
+			'L_NO_BUG' 				=> $LANG['bugs.notice.no_bug'],
+			'L_ACTIONS' 			=> $LANG['bugs.actions'],
+			'L_UPDATE' 				=> $LANG['update'],
+			'L_HISTORY' 			=> $LANG['bugs.actions.history'],
+			'L_DELETE' 				=> $LANG['delete'],
+			'L_UNSOLVED' 			=> $LANG['bugs.titles.unsolved_bugs'],
+			'L_SOLVED' 				=> $LANG['bugs.titles.solved_bugs'],
+			'L_STATS' 				=> $LANG['bugs.titles.bugs_stats'],
+			'U_BUG_ID_TOP' 			=> url('.php?sort=id&amp;mode=desc'),
+			'U_BUG_ID_BOTTOM' 		=> url('.php?sort=id&amp;mode=asc'),
+			'U_BUG_TITLE_TOP' 		=> url('.php?sort=title&amp;mode=desc'),
 			'U_BUG_TITLE_BOTTOM' 	=> url('.php?sort=title&amp;mode=asc'),
-			'U_BUG_TYPE_TOP' 	=> url('.php?sort=type&amp;mode=desc'),
+			'U_BUG_TYPE_TOP' 		=> url('.php?sort=type&amp;mode=desc'),
 			'U_BUG_TYPE_BOTTOM' 	=> url('.php?sort=type&amp;mode=asc'),
 			'U_BUG_SEVERITY_TOP' 	=> url('.php?sort=severity&amp;mode=desc'),
 			'U_BUG_SEVERITY_BOTTOM'	=> url('.php?sort=severity&amp;mode=asc'),
-			'U_BUG_STATUS_TOP'	=> url('.php?sort=status&amp;mode=desc'),
+			'U_BUG_STATUS_TOP'		=> url('.php?sort=status&amp;mode=desc'),
 			'U_BUG_STATUS_BOTTOM'	=> url('.php?sort=status&amp;mode=asc'),
 			'U_BUG_COMMENTS_TOP' 	=> url('.php?sort=comments&amp;mode=desc'),
 			'U_BUG_COMMENTS_BOTTOM'	=> url('.php?sort=comments&amp;mode=asc'),
-			'U_BUG_DATE_TOP' 	=> url('.php?sort=date&amp;mode=desc'),
+			'U_BUG_DATE_TOP' 		=> url('.php?sort=date&amp;mode=desc'),
 			'U_BUG_DATE_BOTTOM' 	=> url('.php?sort=date&amp;mode=asc')
 		));
 		
@@ -177,15 +178,15 @@ class BugtrackerHomePageExtensionPoint implements HomePageExtensionPoint
 		{
 			switch ($row['status'])
 			{
-			case 'closed' :
-				$color = $severity_color = 'style="background-color:#' . $closed_bug_color . ';"';
-				break;
-			case 'rejected' :
-				$color = $severity_color = 'style="background-color:#' . $rejected_bug_color . ';"';
-				break;
-			default :
-				$color = '';
-				$severity_color = 'style="background-color:#' . $bugtracker_config->get_severity_color($row['severity']) . ';"';
+				case 'closed' :
+					$color = $severity_color = 'style="background-color:#' . $closed_bug_color . ';"';
+					break;
+				case 'rejected' :
+					$color = $severity_color = 'style="background-color:#' . $rejected_bug_color . ';"';
+					break;
+				default :
+					$color = '';
+					$severity_color = 'style="background-color:#' . $bugtracker_config->get_severity_color($row['severity']) . ';"';
 			}
 			
 			//Nombre de commentaires
@@ -198,8 +199,8 @@ class BugtrackerHomePageExtensionPoint implements HomePageExtensionPoint
 				'SEVERITY'		=> $LANG['bugs.severity.' . $row['severity']],
 				'STATUS'		=> $LANG['bugs.status.' . $row['status']],
 				'COLOR' 		=> $color,
-				'SEVERITY_COLOR'	=> $severity_color,
-				'COMMENTS'		=> '<a href="bugtracker' . url('.php?view&id=' . $row['id'] . '&com=0#anchor_bugtracker') . '">' . (empty($nbr_coms) ? 0 : $nbr_coms) . '</a>',
+				'SEVERITY_COLOR'=> $severity_color,
+				'COMMENTS'		=> '<a href="bugtracker' . url('.php?view&id=' . $row['id'] . '&com=0#comments_list') . '">' . (empty($nbr_coms) ? 0 : $nbr_coms) . '</a>',
 				'DATE' 			=> gmdate_format('date_format', $row['submit_date'])
 			));
 		}
@@ -210,16 +211,16 @@ class BugtrackerHomePageExtensionPoint implements HomePageExtensionPoint
 		switch ($get_error)
 		{
 			case 'edit_success':
-			$errstr = $LANG['bugs.error.e_edit_success'];
-			$errtyp = E_USER_SUCCESS;
-			break;
+				$errstr = $LANG['bugs.error.e_edit_success'];
+				$errtyp = E_USER_SUCCESS;
+				break;
 			case 'unexist_bug':
-			$errstr = $LANG['bugs.error.e_unexist_bug'];
-			$errtyp = E_USER_WARNING;
-			break;
+				$errstr = $LANG['bugs.error.e_unexist_bug'];
+				$errtyp = E_USER_WARNING;
+				break;
 			default:
-			$errstr = '';
-			$errtyp = E_USER_NOTICE;
+				$errstr = '';
+				$errtyp = E_USER_NOTICE;
 		}
 		if (!empty($errstr))
 			$tpl->put('message_helper', MessageHelper::display($errstr, $errtyp));
