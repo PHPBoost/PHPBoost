@@ -63,7 +63,7 @@ include_once('faq_bread_crumb.php');
 //checking authorization
 if (!$auth_write)
 {
-	$error_controller = PHPBoostErrors::unexisting_page();
+	$error_controller = PHPBoostErrors::user_not_authorized();
 	DispatchManager::redirect($error_controller);
 }
 

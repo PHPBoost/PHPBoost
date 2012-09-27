@@ -99,7 +99,7 @@ elseif (!empty($id))
 	{
 		if (!$User->check_auth($calendar_config->get_authorizations(), AUTH_CALENDAR_MODO)) //Autorisation de supprimer ?
 		{
-			$error_controller = PHPBoostErrors::unexisting_page();
+			$error_controller = PHPBoostErrors::user_not_authorized();
 			DispatchManager::redirect($error_controller);
 		}
 		
@@ -113,7 +113,7 @@ elseif (!empty($id))
 	{
 		if (!$User->check_auth($calendar_config->get_authorizations(), AUTH_CALENDAR_MODO)) //Autorisation de modifier ?
 		{
-			$error_controller = PHPBoostErrors::unexisting_page();
+			$error_controller = PHPBoostErrors::user_not_authorized();
 			DispatchManager::redirect($error_controller);
 		}
 		
@@ -208,9 +208,9 @@ elseif ($add) //Ajout d'un évenement
 {
 	if (!$User->check_auth($calendar_config->get_authorizations(), AUTH_CALENDAR_WRITE)) //Autorisation de poster?
 	{
-	$error_controller = PHPBoostErrors::unexisting_page();
-	DispatchManager::redirect($error_controller);
-}
+		$error_controller = PHPBoostErrors::user_not_authorized();
+		DispatchManager::redirect($error_controller);
+	}
 
 	if (!empty($_POST['valid'])) //Enregistrement
 	{

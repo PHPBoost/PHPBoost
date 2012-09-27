@@ -64,7 +64,7 @@ elseif ($id_media > 0)
 	}
 	elseif (!$User->check_auth($MEDIA_CATS[$media['idcat']]['auth'], MEDIA_AUTH_READ))
 	{
-		$error_controller = PHPBoostErrors::unexisting_page();
+		$error_controller = PHPBoostErrors::user_not_authorized();
         DispatchManager::redirect($error_controller);
 	}
 

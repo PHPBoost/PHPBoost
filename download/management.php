@@ -129,7 +129,7 @@ elseif ($edit_file_id > 0)
 	
 	if (!$auth_write)
 	{
-		$error_controller = PHPBoostErrors::unexisting_page();
+		$error_controller = PHPBoostErrors::user_not_authorized();
 		DispatchManager::redirect($error_controller);
 	}
 }
@@ -140,7 +140,7 @@ else
 	
 	if (!($auth_write = $User->check_auth($CONFIG_DOWNLOAD['global_auth'], DOWNLOAD_WRITE_CAT_AUTH_BIT)) && !($auth_contribute = $User->check_auth($CONFIG_DOWNLOAD['global_auth'], DOWNLOAD_CONTRIBUTION_CAT_AUTH_BIT)))
 	{
-		$error_controller = PHPBoostErrors::unexisting_page();
+		$error_controller = PHPBoostErrors::user_not_authorized();
 		DispatchManager::redirect($error_controller);
 	}
 }

@@ -52,7 +52,7 @@ if ($delete > 0)
 	}
 	elseif (!$User->check_auth($ARTICLES_CAT[$articles['idcat']]['auth'], AUTH_ARTICLES_MODERATE))
 	{
-		$error_controller = PHPBoostErrors::unexisting_page();
+		$error_controller = PHPBoostErrors::user_not_authorized();
 		DispatchManager::redirect($error_controller);
 	}
 
@@ -290,7 +290,7 @@ elseif(retrieve(POST,'submit',false))
 	}
 	else
 	{
-		$error_controller = PHPBoostErrors::unexisting_page();
+		$error_controller = PHPBoostErrors::user_not_authorized();
 		DispatchManager::redirect($error_controller);
 	}
 }
@@ -391,7 +391,7 @@ else
 		}
 		else
 		{
-			$error_controller = PHPBoostErrors::unexisting_page();
+			$error_controller = PHPBoostErrors::user_not_authorized();
 			DispatchManager::redirect($error_controller);
 		}
 	}
@@ -399,7 +399,7 @@ else
 	{
 		if (!$User->check_auth($ARTICLES_CAT[$cat]['auth'], AUTH_ARTICLES_CONTRIBUTE) && !$User->check_auth($ARTICLES_CAT[$cat]['auth'], AUTH_ARTICLES_WRITE))
 		{
-			$error_controller = PHPBoostErrors::unexisting_page();
+			$error_controller = PHPBoostErrors::user_not_authorized();
 			DispatchManager::redirect($error_controller);
 		}
 		else
@@ -412,7 +412,7 @@ else
 			{
 				$auth_contrib = !$User->check_auth($CONFIG_ARTICLES['global_auth'], AUTH_ARTICLES_WRITE);
 			}
-						
+			
 			$Bread_crumb->add($ARTICLES_LANG['articles_add'],url('management.php?new=1&amp;cat=' . $cat));
 			
 			//Images disponibles
