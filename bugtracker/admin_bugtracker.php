@@ -401,7 +401,7 @@ else
 		'REJECTED_BUG_COLOR'			=> $bugtracker_config->get_rejected_bug_color(),
 		'CLOSED_BUG_COLOR'				=> $bugtracker_config->get_closed_bug_color(),
 		'COM_CHECKED'					=> ($bugtracker_config->get_comments_activated() == true) ? 'checked=checked' : '',
-		'CONTENTS_VALUE'				=> FormatingHelper::unparse($bugtracker_config->get_contents_value()),
+		'CONTENTS_VALUE'				=> TextHelper::strprotect($bugtracker_config->get_contents_value(), TextHelper::HTML_PROTECT, TextHelper::ADDSLASHES_NONE),
 		'CONTENTS_KERNEL_EDITOR'		=> $contents_editor->display(),
 		'BUG_READ_AUTH'					=> Authorizations::generate_select(BugtrackerConfig::BUG_READ_AUTH_BIT, $authorizations),
 		'BUG_CREATE_AUTH'				=> Authorizations::generate_select(BugtrackerConfig::BUG_CREATE_AUTH_BIT, $authorizations),
