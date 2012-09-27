@@ -36,7 +36,7 @@ class BugtrackerExtensionPointProvider extends ExtensionPointProvider
 		$this->sql_querier = PersistenceContext::get_sql();
         parent::__construct('bugtracker');
     }
-		
+	
 	/**
 	* @method Recuperation du cache
 	*/
