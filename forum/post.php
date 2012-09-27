@@ -476,7 +476,7 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 
 			if (!$check_auth)
 			{
-				$error_controller = PHPBoostErrors::unexisting_page();
+				$error_controller = PHPBoostErrors::user_not_authorized();
 				DispatchManager::redirect($error_controller);
 			}
 
@@ -779,7 +779,7 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 
 			if (!$check_auth) //Non autorisé!
 			{
-				$error_controller = PHPBoostErrors::unexisting_page();
+				$error_controller = PHPBoostErrors::user_not_authorized();
 				DispatchManager::redirect($error_controller);
 			}
 
@@ -1004,7 +1004,7 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 }
 else
 {
-	$error_controller = PHPBoostErrors::unexisting_page();
+	$error_controller = PHPBoostErrors::user_not_authorized();
 	DispatchManager::redirect($error_controller);
 }
 

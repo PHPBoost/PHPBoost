@@ -60,7 +60,7 @@ if (is_array($CAT_FORUM))
 
 if (!$User->check_level(User::MODERATOR_LEVEL) && $check_auth_by_group !== true) //Si il n'est pas modérateur (total ou partiel)
 {
-	$error_controller = PHPBoostErrors::unexisting_page();
+	$error_controller = PHPBoostErrors::user_not_authorized();
 	DispatchManager::redirect($error_controller);
 }
 

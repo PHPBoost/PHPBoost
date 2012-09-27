@@ -52,7 +52,7 @@ if (!empty($id_get)) //Déplacement du sujet.
 	$topic = $Sql->query_array(PREFIX . 'forum_topics', 'idcat', 'title', "WHERE id = '" . $id_get . "'", __LINE__, __FILE__);
 	if (!$User->check_auth($CAT_FORUM[$topic['idcat']]['auth'], EDIT_CAT_FORUM)) //Accès en édition
 	{
-		$error_controller = PHPBoostErrors::unexisting_page();
+		$error_controller = PHPBoostErrors::user_not_authorized();
 		DispatchManager::redirect($error_controller);
 	}
 
@@ -143,7 +143,7 @@ elseif (!empty($id_post)) //Déplacement du topic
 	}
 	else
 	{ 
-		$error_controller = PHPBoostErrors::unexisting_page();
+		$error_controller = PHPBoostErrors::user_not_authorized();
 		DispatchManager::redirect($error_controller);
 	}
 }
@@ -161,7 +161,7 @@ elseif ((!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic)) //C
 
 	if (!$User->check_auth($CAT_FORUM[$topic['idcat']]['auth'], EDIT_CAT_FORUM)) //Accès en édition
 	{
-	   $error_controller = PHPBoostErrors::unexisting_page();
+		$error_controller = PHPBoostErrors::user_not_authorized();
     	DispatchManager::redirect($error_controller);
     }
 
@@ -360,7 +360,7 @@ elseif (!empty($id_post_msg) && !empty($post_topic)) //Scindage du topic
 
 	if (!$User->check_auth($CAT_FORUM[$topic['idcat']]['auth'], EDIT_CAT_FORUM)) //Accès en édition
 	{
-		$error_controller = PHPBoostErrors::unexisting_page();
+		$error_controller = PHPBoostErrors::user_not_authorized();
 		DispatchManager::redirect($error_controller);
 	}
 

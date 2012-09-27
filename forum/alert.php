@@ -49,7 +49,7 @@ if (empty($alert) && empty($alert_post) || empty($topic['idcat']))
 
 if (!$User->check_level(User::MEMBER_LEVEL)) //Si c'est un invité
 {
-	$error_controller = PHPBoostErrors::unexisting_page();
+	$error_controller = PHPBoostErrors::user_not_authorized();
 	DispatchManager::redirect($error_controller);
 }
 

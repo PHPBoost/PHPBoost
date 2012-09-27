@@ -35,7 +35,7 @@ if (!empty($idweb) && !empty($CAT_WEB[$idcat]['name']) && !empty($idcat)) //Cont
 {	
 	if (!$User->check_level($CAT_WEB[$idcat]['secure']))
 	{
-		$error_controller = PHPBoostErrors::unexisting_page();
+		$error_controller = PHPBoostErrors::user_not_authorized();
 		DispatchManager::redirect($error_controller);
 	} 
 	
@@ -108,7 +108,7 @@ elseif (!empty($idcat) && empty($idweb)) //Catégories.
 {
 	if (!$User->check_level($CAT_WEB[$idcat]['secure']))
 	{
-		$error_controller = PHPBoostErrors::unexisting_page();
+		$error_controller = PHPBoostErrors::user_not_authorized();
 		DispatchManager::redirect($error_controller);
 	} 
 	

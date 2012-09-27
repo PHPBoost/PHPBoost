@@ -39,7 +39,7 @@ $now = new Date(DATE_NOW, TIMEZONE_AUTO);
 
 if(!$User->check_auth($NEWS_CONFIG['global_auth'], AUTH_NEWS_READ))
 {
-    $error_controller = PHPBoostErrors::unexisting_page();
+    $error_controller = PHPBoostErrors::user_not_authorized();
     DispatchManager::redirect($error_controller);
 }
 

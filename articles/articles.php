@@ -45,8 +45,14 @@ if (!empty($idart) && isset($cat) )
 	
 	$articles['auth'] = $ARTICLES_CAT[$articles['idcat']]['auth'];
 
-	//Niveau d'autorisation de la cat�gorie
-	if (!isset($ARTICLES_CAT[$idartcat]) || (!$User->check_auth($ARTICLES_CAT[$idartcat]['auth'], AUTH_ARTICLES_READ) && !$User->check_auth($articles['auth'], AUTH_ARTICLES_READ))|| $ARTICLES_CAT[$idartcat]['visible'] == 0 ) 
+	//checking authorization
+	if (!$User->check_auth($ARTICLES_CAT[$idartcat]['auth'], AUTH_ARTICLES_READ))
+	{
+		$error_controller = PHPBoostErrors::user_not_authorized();
+		DispatchManager::redirect($error_controller);
+	}
+	
+	if (!isset($ARTICLES_CAT[$idartcat]) || $ARTICLES_CAT[$idartcat]['visible'] == 0 ) 
 	{
 		$error_controller = PHPBoostErrors::unexisting_page();
 		DispatchManager::redirect($error_controller);
@@ -81,7 +87,7 @@ if (!empty($idart) && isset($cat) )
 	//Pagination des articles.
 	$array_contents = preg_split('`\[page\].+\[/page\](.*)`Us', $articles['contents'], -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
 
-	//R�cup�ration de la liste des pages.
+	//Récupération de la liste des pages.
 	preg_match_all('`\[page\]([^[]+)\[/page\]`U', $articles['contents'], $array_page);
 	$page_list = '<option value="1">' . $ARTICLES_LANG['select_page'] . '</option>';
 	$page_list .= '<option value="1"></option>';

@@ -56,7 +56,7 @@ if ($id_auth > 0)
 {
 	if (!$User->check_auth($_WIKI_CONFIG['auth'], WIKI_RESTRICTION))
 	{
-	   $error_controller = PHPBoostErrors::unexisting_page();
+		$error_controller = PHPBoostErrors::user_not_authorized();
 		DispatchManager::redirect($error_controller);
 	} 
 
@@ -102,7 +102,7 @@ if ($id_change_status > 0)
 	
 	if (!((!$general_auth || $User->check_auth($_WIKI_CONFIG['auth'], WIKI_STATUS)) && ($general_auth || $User->check_auth($article_auth , WIKI_STATUS))))
 	{
-		$error_controller = PHPBoostErrors::unexisting_page();
+		$error_controller = PHPBoostErrors::user_not_authorized();
 		DispatchManager::redirect($error_controller);
 	} 
 
@@ -125,7 +125,7 @@ elseif ($move > 0) //Déplacement d'un article
 	
 	if (!((!$general_auth || $User->check_auth($_WIKI_CONFIG['auth'], WIKI_MOVE)) && ($general_auth || $User->check_auth($article_auth , WIKI_MOVE))))
 	{
-		$error_controller = PHPBoostErrors::unexisting_page();
+		$error_controller = PHPBoostErrors::user_not_authorized();
 		DispatchManager::redirect($error_controller);
 	} 
 	
@@ -167,7 +167,7 @@ elseif ($id_to_rename > 0 && !empty($new_title)) //Renommer un article
 
 	if (!((!$general_auth || $User->check_auth($_WIKI_CONFIG['auth'], WIKI_RENAME)) && ($general_auth || $User->check_auth($article_auth , WIKI_RENAME))))
 	{
-		$error_controller = PHPBoostErrors::unexisting_page();
+		$error_controller = PHPBoostErrors::user_not_authorized();
 		DispatchManager::redirect($error_controller);
 	} 
 	
@@ -233,9 +233,9 @@ elseif ($del_redirection > 0)//Supprimer une redirection
 	
 		if (!((!$general_auth || $User->check_auth($_WIKI_CONFIG['auth'], WIKI_REDIRECT)) && ($general_auth || $User->check_auth($article_auth , WIKI_REDIRECT))))
 		{
-		$error_controller = PHPBoostErrors::unexisting_page();
-		DispatchManager::redirect($error_controller);
-	} 
+			$error_controller = PHPBoostErrors::user_not_authorized();
+			DispatchManager::redirect($error_controller);
+		} 
 		
 		$Sql->query_inject("DELETE FROM " . PREFIX . "wiki_articles WHERE id = '" . $del_redirection . "'", __LINE__, __FILE__);
 		AppContext::get_response()->redirect('/wiki/' . url('wiki.php?title=' . $article_infos['encoded_title'], $article_infos['encoded_title'], '&'));
@@ -250,7 +250,7 @@ elseif ($create_redirection > 0 && !empty($redirection_title))
 
 	if (!((!$general_auth || $User->check_auth($_WIKI_CONFIG['auth'], WIKI_REDIRECT)) && ($general_auth || $User->check_auth($article_auth , WIKI_REDIRECT))))
 	{
-		$error_controller = PHPBoostErrors::unexisting_page();
+		$error_controller = PHPBoostErrors::user_not_authorized();
 		DispatchManager::redirect($error_controller);
 	} 
 	
@@ -282,7 +282,7 @@ elseif (!empty($restore)) //on restaure un ancien article
 	
 		if (!((!$general_auth || $User->check_auth($_WIKI_CONFIG['auth'], WIKI_DELETE_ARCHIVE)) && ($general_auth || $User->check_auth($article_auth , WIKI_DELETE_ARCHIVE))))
 		{
-			$error_controller = PHPBoostErrors::unexisting_page();
+			$error_controller = PHPBoostErrors::user_not_authorized();
 			DispatchManager::redirect($error_controller);
 		} 
 		
@@ -310,7 +310,7 @@ elseif ($del_archive > 0)
 
 	if (!((!$general_auth || $User->check_auth($_WIKI_CONFIG['auth'], WIKI_DELETE_ARCHIVE)) && ($general_auth || $User->check_auth($article_auth , WIKI_DELETE_ARCHIVE))))
 	{
-		$error_controller = PHPBoostErrors::unexisting_page();
+		$error_controller = PHPBoostErrors::user_not_authorized();
 		DispatchManager::redirect($error_controller);
 	} 
 	
@@ -331,7 +331,7 @@ elseif ($del_article > 0) //Suppression d'un article
 
 	if (!((!$general_auth || $User->check_auth($_WIKI_CONFIG['auth'], WIKI_DELETE)) && ($general_auth || $User->check_auth($article_auth , WIKI_DELETE))))
 	{
-		$error_controller = PHPBoostErrors::unexisting_page();
+		$error_controller = PHPBoostErrors::user_not_authorized();
 		DispatchManager::redirect($error_controller);
 	} 
 	
@@ -361,7 +361,7 @@ elseif ($del_to_remove > 0 && $report_cat >= 0) //Suppression d'une catégorie
 
 	if (!((!$general_auth || $User->check_auth($_WIKI_CONFIG['auth'], WIKI_DELETE)) && ($general_auth || $User->check_auth($article_auth , WIKI_DELETE))))
 	{
-		$error_controller = PHPBoostErrors::unexisting_page();
+		$error_controller = PHPBoostErrors::user_not_authorized();
 		DispatchManager::redirect($error_controller);
 	} 
 	

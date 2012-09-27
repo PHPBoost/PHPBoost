@@ -54,6 +54,13 @@ class ArticlesHomePageExtensionPoint implements HomePageExtensionPoint
 		
 		require_once(PATH_TO_ROOT . '/articles/articles_begin.php'); 
 		
+		//checking authorization
+		if (!$User->check_auth($ARTICLES_CAT[$idartcat]['auth'], AUTH_ARTICLES_READ))
+		{
+			$error_controller = PHPBoostErrors::user_not_authorized();
+			DispatchManager::redirect($error_controller);
+		}
+		
 		$now = new Date(DATE_NOW, TIMEZONE_AUTO);
 		$Pagination = new DeprecatedPagination();
 		
@@ -76,12 +83,6 @@ class ArticlesHomePageExtensionPoint implements HomePageExtensionPoint
 		}
 
 		$tpl = new FileTemplate('articles/articles_cat.tpl');
-
-		if (!isset($ARTICLES_CAT[$idartcat]) || !$User->check_auth($ARTICLES_CAT[$idartcat]['auth'], AUTH_ARTICLES_READ))
-		{
-			$error_controller = PHPBoostErrors::unexisting_page();
-			DispatchManager::redirect($error_controller);
-		}
 
 		$nbr_articles = $this->sql_querier->query("SELECT COUNT(*) FROM " . DB_TABLE_ARTICLES . " WHERE visible = 1 AND idcat = '" . $idartcat . "' AND start <= '" . $now->get_timestamp() . "' AND (end >= '" . $now->get_timestamp() . "' OR end = 0)", __LINE__, __FILE__);
 		$nbr_articles_invisible = $this->sql_querier->query("SELECT COUNT(*) FROM " . DB_TABLE_ARTICLES . " WHERE visible = 0 AND idcat = '" . $idartcat . "' AND user_id != -1 AND start > '" . $now->get_timestamp() . "' AND (end <= '" . $now->get_timestamp() . "' OR start = 0)", __LINE__, __FILE__);

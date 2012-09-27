@@ -61,7 +61,7 @@ if ($delete > 0)
 	}
 	else
 	{
-		$error_controller = PHPBoostErrors::unexisting_page();
+		$error_controller = PHPBoostErrors::user_not_authorized();
 		DispatchManager::redirect($error_controller);
 	}
 }
@@ -240,7 +240,7 @@ elseif (!empty($_POST['submit']))
 	}
 	else
 	{
-	   $error_controller = PHPBoostErrors::unexisting_page();
+	   $error_controller = PHPBoostErrors::user_not_authorized();
 	   DispatchManager::redirect($error_controller);
 	}
 }
@@ -326,7 +326,7 @@ else
 		}
 		else
 		{
-	       $error_controller = PHPBoostErrors::unexisting_page();
+	       $error_controller = PHPBoostErrors::user_not_authorized();
 	       DispatchManager::redirect($error_controller);
 		}
 	}
@@ -334,7 +334,7 @@ else
 	{
 		if (!$User->check_auth($NEWS_CONFIG['global_auth'], AUTH_NEWS_CONTRIBUTE) && !$User->check_auth($NEWS_CONFIG['global_auth'], AUTH_NEWS_WRITE))
 		{
-	       $error_controller = PHPBoostErrors::unexisting_page();
+	       $error_controller = PHPBoostErrors::user_not_authorized();
 	       DispatchManager::redirect($error_controller);
 		}
 		else

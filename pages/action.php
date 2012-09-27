@@ -142,7 +142,7 @@ elseif ($del_cat_post > 0 && $report_cat >= 0)
 	$array_auth = !empty($page_infos['auth']) ? unserialize($page_infos['auth']) : array();
 	if (!((!$general_auth || $User->check_auth($config_authorizations, EDIT_PAGE)) && ($general_auth || $User->check_auth($array_auth , EDIT_PAGE))))
 	{
-		$error_controller = PHPBoostErrors::unexisting_page();
+		$error_controller = PHPBoostErrors::user_not_authorized();
 		DispatchManager::redirect($error_controller);
 	}
 

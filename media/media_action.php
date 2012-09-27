@@ -53,7 +53,7 @@ if ($unvisible > 0)
 	}
 	elseif (!$User->check_level(User::MODERATOR_LEVEL))
 	{
-		$error_controller = PHPBoostErrors::unexisting_page();
+		$error_controller = PHPBoostErrors::user_not_authorized();
         DispatchManager::redirect($error_controller);
 	}
 
@@ -86,7 +86,7 @@ elseif ($delete > 0)
 	}
 	elseif (!$User->check_level(User::MODERATOR_LEVEL))
 	{
-		$error_controller = PHPBoostErrors::unexisting_page();
+		$error_controller = PHPBoostErrors::user_not_authorized();
         DispatchManager::redirect($error_controller);
 	}
 
@@ -204,7 +204,7 @@ elseif ($add >= 0 && empty($_POST['submit']) || $edit > 0)
 	}
 	else
 	{
-		$error_controller = PHPBoostErrors::unexisting_page();
+		$error_controller = PHPBoostErrors::user_not_authorized();
         DispatchManager::redirect($error_controller);
 	}
 
@@ -402,7 +402,7 @@ elseif (!empty($_POST['submit']))
 	}
 	else
 	{
-		$error_controller = PHPBoostErrors::unexisting_page();
+		$error_controller = PHPBoostErrors::user_not_authorized();
         DispatchManager::redirect($error_controller);
 	}
 }
