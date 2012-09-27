@@ -169,7 +169,7 @@
 					<span>{L_CONTENT_VALUE_EXPLAIN}</span><br /><br />
 					<label for="contents_value">{L_CONTENT_VALUE}</label>
 					<div style="position:relative;display:none;" id="loading_previewcontents_value">
-						<div style="margin:auto;margin-top:90px;width:100%;text-align:center;position:absolute;"><img src="{PATH_TO_ROOT}/templates/base/images/loading.gif" alt="" /></div>
+						<div style="margin:auto;margin-top:90px;width:100%;text-align:center;position:absolute;"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/loading.gif" alt="" /></div>
 					</div>
 					<div style="display:none;" class="xmlhttprequest_preview" id="xmlhttprequest_previewcontents_value"></div>
 					{CONTENTS_KERNEL_EDITOR}

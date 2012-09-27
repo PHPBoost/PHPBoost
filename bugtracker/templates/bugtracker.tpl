@@ -42,7 +42,7 @@
 		<div class="module_top">
 			<ul style="list-style-type:none;">
 				<li class="bt_current" style="float:left;">
-					<a href="bugtracker.php{SID}">{L_BUGS_LIST}</a> 
+					<a href="bugtracker.php{SID}">{L_UNSOLVED}</a> 
 				</li>
 				<li class="bt_no_current" style="float:left;">
 					<a href="{PATH_TO_ROOT}/bugtracker/bugtracker.php?solved">{L_SOLVED}</a>
@@ -50,9 +50,9 @@
 				<li class="bt_no_current" style="float:left;">
 					<a href="{PATH_TO_ROOT}/bugtracker/bugtracker.php?stats">{L_STATS}</a>
 				</li>
-				# IF ADD_BUG #
+				# IF C_ADD #
 				<li class="bt_add" style="float:left;">
-					<a href="{PATH_TO_ROOT}/bugtracker/bugtracker.php?add">{ADD_BUG}</a>
+					<a href="{PATH_TO_ROOT}/bugtracker/bugtracker.php?add"><img src="{PATH_TO_ROOT}/bugtracker/templates/images/plus.png" alt="" title="{L_ADD}" class="valign_middle" /> {L_ADD}</a>
 				</li>
 				# ENDIF #
 			</ul>
@@ -181,7 +181,7 @@
 		<div class="module_top">
 			<ul style="list-style-type:none;">
 				<li class="bt_no_current" style="float:left;">
-					<a href="bugtracker.php{SID}">{L_BUGS_LIST}</a> 
+					<a href="bugtracker.php{SID}">{L_UNSOLVED}</a> 
 				</li>
 				<li class="bt_current" style="float:left;">
 					<a href="{PATH_TO_ROOT}/bugtracker/bugtracker.php?solved">{L_SOLVED}</a>
@@ -189,9 +189,9 @@
 				<li class="bt_no_current" style="float:left;">
 					<a href="{PATH_TO_ROOT}/bugtracker/bugtracker.php?stats">{L_STATS}</a>
 				</li>
-				# IF ADD_BUG #
+				# IF C_ADD #
 				<li class="bt_add" style="float:left;">
-					<a href="{PATH_TO_ROOT}/bugtracker/bugtracker.php?add">{ADD_BUG}</a>
+					<a href="{PATH_TO_ROOT}/bugtracker/bugtracker.php?add"><img src="{PATH_TO_ROOT}/bugtracker/templates/images/plus.png" alt="" title="{L_ADD}" class="valign_middle" /> {L_ADD}</a>
 				</li>
 				# ENDIF #
 			</ul>
@@ -320,7 +320,7 @@
 		<div class="module_top">
 			<ul style="list-style-type:none;">
 				<li class="bt_no_current" style="float:left;">
-					<a href="bugtracker.php{SID}">{L_BUGS_LIST}</a> 
+					<a href="bugtracker.php{SID}">{L_UNSOLVED}</a> 
 				</li>
 				<li class="bt_no_current" style="float:left;">
 					<a href="{PATH_TO_ROOT}/bugtracker/bugtracker.php?solved">{L_SOLVED}</a>
@@ -328,9 +328,9 @@
 				<li class="bt_current" style="float:left;">
 					<a href="{PATH_TO_ROOT}/bugtracker/bugtracker.php?stats">{L_STATS}</a>
 				</li>
-				# IF ADD_BUG #
+				# IF C_ADD #
 				<li class="bt_add" style="float:left;">
-					<a href="{PATH_TO_ROOT}/bugtracker/bugtracker.php?add">{ADD_BUG}</a>
+					<a href="{PATH_TO_ROOT}/bugtracker/bugtracker.php?add"><img src="{PATH_TO_ROOT}/bugtracker/templates/images/plus.png" alt="" title="{L_ADD}" class="valign_middle" /> {L_ADD}</a>
 				</li>
 				# ENDIF #
 			</ul>
@@ -488,7 +488,7 @@
 					</dl>
 					<label for="contents">* {L_CONTENT}</label>
 					<div style="position:relative;display:none;" id="loading_previewcontents">
-						<div style="margin:auto;margin-top:90px;width:100%;text-align:center;position:absolute;"><img src="{PATH_TO_ROOT}/templates/base/images/loading.gif" alt="" /></div>
+						<div style="margin:auto;margin-top:90px;width:100%;text-align:center;position:absolute;"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/loading.gif" alt="" /></div>
 					</div>
 					<div style="display:none;" class="xmlhttprequest_preview" id="xmlhttprequest_previewcontents"></div>
 					{CONTENTS_KERNEL_EDITOR}
@@ -564,7 +564,7 @@
 					<div id="reproduction">
 						<label for="reproduction_method">{L_REPRODUCTION_METHOD}</label>
 						<div style="position:relative;display:none;" id="loading_previewreproduction_method">
-							<div style="margin:auto;margin-top:90px;width:100%;text-align:center;position:absolute;"><img src="{PATH_TO_ROOT}/templates/base/images/loading.gif" alt="" /></div>
+							<div style="margin:auto;margin-top:90px;width:100%;text-align:center;position:absolute;"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/loading.gif" alt="" /></div>
 						</div>
 						<div style="display:none;" class="xmlhttprequest_preview" id="xmlhttprequest_previewreproduction_method"></div>
 						{METHOD_KERNEL_EDITOR}
@@ -689,7 +689,7 @@
 					<label for="contents">* {L_CONTENT}</label>
 					<label for="contents">* {L_CONTENT}</label>
 					<div style="position:relative;display:none;" id="loading_previewcontents">
-						<div style="margin:auto;margin-top:90px;width:100%;text-align:center;position:absolute;"><img src="{PATH_TO_ROOT}/templates/base/images/loading.gif" alt="" /></div>
+						<div style="margin:auto;margin-top:90px;width:100%;text-align:center;position:absolute;"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/loading.gif" alt="" /></div>
 					</div>
 					<div style="display:none;" class="xmlhttprequest_preview" id="xmlhttprequest_previewcontents"></div>
 					{CONTENTS_KERNEL_EDITOR}
@@ -806,7 +806,7 @@
 					<div id="reproduction" # IF NOT C_REPRODUCTIBLE #style="display:none;"# ENDIF #>
 						<label for="reproduction_method">{L_REPRODUCTION_METHOD}</label>
 						<div style="position:relative;display:none;" id="loading_previewreproduction_method">
-							<div style="margin:auto;margin-top:90px;width:100%;text-align:center;position:absolute;"><img src="{PATH_TO_ROOT}/templates/base/images/loading.gif" alt="" /></div>
+							<div style="margin:auto;margin-top:90px;width:100%;text-align:center;position:absolute;"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/loading.gif" alt="" /></div>
 						</div>
 						<div style="display:none;" class="xmlhttprequest_preview" id="xmlhttprequest_previewreproduction_method"></div>
 						{METHOD_KERNEL_EDITOR}

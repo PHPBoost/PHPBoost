@@ -43,7 +43,7 @@ li.bt_no_current a:hover {
 }
 
 li.bt_no_current:hover {
-	background:#2F5B8A;	
+	background:#2F5B8A;
 }
 
 .bt_add {
@@ -56,4 +56,9 @@ li.bt_no_current:hover {
 
 .bt_add a:hover {
 	text-decoration:none;
+	color:#FFFFFF;	
+}
+
+.bt_add:hover {
+	background:#2BA219;	
 }
