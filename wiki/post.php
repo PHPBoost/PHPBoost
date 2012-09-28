@@ -298,6 +298,7 @@ $Template->put_all(array(
 	'L_CONTENTS' => $LANG['wiki_contents'],
 	'L_ALERT_CONTENTS' => $LANG['require_text'],
 	'L_ALERT_TITLE' => $LANG['require_title'],
+	'L_REQUIRE' => $LANG['require'],
 	'L_RESET' => $LANG['reset'],
 	'L_PREVIEW' => $LANG['preview'],
 	'L_SUBMIT' => $l_action_submit,
