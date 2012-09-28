@@ -44,7 +44,7 @@
 	
 	# IF C_HEADER_LOGO #
 		<style type="text/css">
-			div#header_container {
+			div#logo {
    				background: url('{HEADER_LOGO}') no-repeat;
 			}
 		</style>
