@@ -32,7 +32,7 @@ class BugtrackerSearchable extends AbstractSearchableExtensionPoint
 	public function __construct()
 	{
 		$this->sql_querier = PersistenceContext::get_sql();
-		parent::__construct(true, true);
+		parent::__construct(true, false);
 	}
 	
 	public function get_search_form($args=null)
@@ -101,8 +101,8 @@ class BugtrackerSearchable extends AbstractSearchableExtensionPoint
 			$args['id_search']." AS `id_search`,
 			id AS `id_content`,
 			title,
-			( 4 * FT_SEARCH_RELEVANCE(title, '".$args['search']."') +
-			FT_SEARCH_RELEVANCE(contents, '".$args['search']."') ) / 5 * " . $weight . " AS `relevance`,
+			( 2 * FT_SEARCH_RELEVANCE(title, '".$args['search']."') +
+			FT_SEARCH_RELEVANCE(contents, '".$args['search']."') ) / 3 * " . $weight . " AS `relevance`,
 			CONCAT('" . PATH_TO_ROOT . "/bugtracker/bugtracker.php?view&amp;id=',id) AS `link`
 			FROM " . PREFIX . "bugtracker
 			WHERE ( FT_SEARCH(title, '".$args['search']."') OR MATCH(contents, '".$args['search']."') )
