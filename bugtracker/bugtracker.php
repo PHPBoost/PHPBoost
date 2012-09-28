@@ -148,7 +148,7 @@ else if (isset($_GET['add'])) // ajout d'un bug
 		'L_RESET' 				=> $LANG['reset'],
 		'L_YES' 				=> $LANG['yes'],
 		'L_NO'	 				=> $LANG['no'],
-		'CONTENTS'	 			=> TextHelper::strprotect($bugtracker_config->get_contents_value(), TextHelper::HTML_PROTECT, TextHelper::ADDSLASHES_NONE),
+		'CONTENTS'	 			=> FormatingHelper::unparse($bugtracker_config->get_contents_value()),
 		'REPRODUCTIBLE_ENABLED' => 'checked="checked"',
 		'REPRODUCTIBLE_DISABLED'=> '',
 		'REPRODUCTION_METHOD' 	=> '',
