@@ -1,64 +1,46 @@
-.module_top{
-	margin-top:30px;		
+/* Sur Class */
+div.module_top{
+	margin-top:30px;
+	height: 22px;
+	padding-bottom: 0px;		
 }
 
-.bt_current, .bt_no_current, .bt_add {
+/* Class générales */
+li { text-indent: 0px; }
+
+li.bt_current, li.bt_no_current, li.bt_add {
 	-webkit-border-top-left-radius: 10px;
 	-moz-border-radius-topleft: 10px;
 	border-top-left-radius: 10px;	
 	-webkit-border-top-right-radius: 10px;
 	-moz-border-radius-topright: 10px;
 	border-top-right-radius: 10px;	
-	padding:0px 10px;
 	text-align:center;
 	margin:0px 10px;
 }
 
-.bt_current {
-	background:#2F5B8A;
+li.bt_current a, li.bt_no_current a, li.bt_add a{ 
+	display:block;
+	height:20px;
+	padding:2px 10px 0px 10px; 
 }
 
-.bt_current a {
-	color:#FFFFFF;
-}
+/* lien Actif*/
+li.bt_current { background:#2F5B8A; }
 
-.bt_current a:hover {
-	text-decoration:none;
-}
+li.bt_current a { color:#FFFFFF; }
+li.bt_current a:hover { text-decoration:none; }
 
-li {
-	text-indent: 0px;	
-}
+/* Liens non actifs*/
+li.bt_no_current { background:#E0E9EF; }
+li.bt_no_current:hover {  background:#2F5B8A; color:#FFFFFF; }
 
-li.bt_no_current a {
-	color:#2F5B8A;	
-}
+li.bt_no_current a { color:#2F5B8A; width:75px;	}
+li.bt_no_current a:hover { color:#FFFFFF; }
 
-li.bt_no_current {
-	background:#E0E9EF;
-}
+/* Lien Ajouter Bug */ 
+li.bt_add { background:#ADCF4F; }
+li.bt_add:hover { background:#2BA219;	}
 
-li.bt_no_current a:hover {
-	color:#FFFFFF;	
-}
-
-li.bt_no_current:hover {
-	background:#2F5B8A;
-}
-
-.bt_add {
-	background:#ADCF4F;
-}
-
-.bt_add a {
-	color:#FFFFFF;
-}
-
-.bt_add a:hover {
-	text-decoration:none;
-	color:#FFFFFF;	
-}
-
-.bt_add:hover {
-	background:#2BA219;	
-}
+li.bt_add a { color:#FFFFFF; }
+li.bt_add a:hover { text-decoration:none; color:#FFFFFF; }
