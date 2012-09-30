@@ -1,6 +1,6 @@
 .newsletter_form{
     width: 250px;
-    height: 20px;
+    height: 22px;
     color: #ffffff;
     background-color: transparent;
     background-image: url(images/newsletter_form.png);
@@ -42,7 +42,7 @@
     margin-left:-3px;
     border:none;
 	width:35px;
-	height:20px;
+	height:22px;
 	background: url('images/newsletter_submit.png') no-repeat;
 	cursor:  pointer;
 	vertical-align: top;
