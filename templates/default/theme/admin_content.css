@@ -1,0 +1,355 @@
+/* --------------------------------------
+		content.css
+Contient les formulaires, les modules (et modules minis), et messages.
+--------------------------------------*/ 
+
+table {
+	border-spacing:0px;
+	border-collapse:collapse;
+}
+
+/* Conteneur */
+div.block_container {
+	width:auto;
+	margin:10px auto;
+	border: 1px solid #CCCCCC;
+	border-top:2px solid #366393;
+	border-bottom: 1px solid #99B1CB;
+	background:#F2F8FF;
+}
+div.block_contents {
+	width:auto;
+	padding:10px;
+	border:none;
+	text-align:justify;
+} 
+/* Entï¿½te de conteneur et des tableaux */
+div.block_top, table tr:first-child th {
+    padding:5px 6px;
+    color:#FFFFFF;
+    background:#366393;
+    text-align:left;
+    font-size:11px;
+    font-weight:normal;
+    text-transform:uppercase;
+}
+.block_top {
+	margin-top:-1px;
+}
+
+table caption {
+	font-size: 14px;
+	margin-bottom: 10px;	
+}
+
+table caption a {
+	font-size: inherit;	
+}
+
+table th:first-child{ }
+
+table th:last-child{ }
+
+table th.row1 a {
+	vertical-align: middle;
+}
+
+hr {
+    background:#C4CED6;
+    border:none;
+    margin:1px auto;
+    height:1px;
+    width:99%;
+}
+
+ul.list {
+	text-align:left;
+	margin-left:20px;
+	list-style-image: url(images/li.png)
+}
+
+/* Titres */
+h1 {
+    color:#5C5C5C;
+    font-size:18px;
+}
+
+h2.title {
+    font-size:16px;
+    font-weight:bold;
+}
+
+/* Titres */
+h3.title {
+    font-size:12px;
+    font-weight:bold;
+    display:inline;
+}
+
+/* Sous-Titres */
+h5.sub_title { /* Titre des menu */
+    font-size:13px;
+    color:#515C68;
+}
+
+h6.sub_title2 { /* Sous titre dans les menu */
+    font-size:12px;
+    font-weight:bold;
+    padding-top:4px;
+    text-indent:10px;
+    width:155px;
+    height:32px;
+    color:#515C68;
+}
+
+/* Formulaires 
+--------------------------------------*/
+.fieldset_mini {
+    width:540px;
+    margin:auto;
+    margin-top:20px;
+}
+
+input, textarea, optgroup, select, .xmlhttprequest_preview{
+	font-size:11px;
+	border-left:1px solid #99b1cb;
+	border-top:1px solid #99b1cb;
+	border-right:1px solid #CCCCCC;
+	border-bottom:1px solid #CCCCCC;
+	background-color:#FFFFFF;	
+	color:#2E3B5F;
+	padding:0px 2px;
+	font-family: "Trebuchet MS", Verdana, 'Bitstream Vera Sans', Times, serif;
+}
+
+input:hover, textarea:hover{
+	border:1px solid #336397;
+	background-color:#FFFFFF; 
+}
+
+input:focus, textarea:focus{
+	border:1px solid #0B6ABF;
+	background-color:#f5fbff;
+}
+
+fieldset textarea.post {
+	width:90%;
+	display:inline;		
+}
+
+textarea {
+    display:block;
+    width:94%;
+    margin:5px auto;
+	-moz-border-radius:5px;
+	-khtml-border-radius:5px;
+	-webkit-border-radius:5px;
+}
+input.text{
+	padding:0px;	
+	-moz-border-radius:3px;
+	-khtml-border-radius:3px;
+	-webkit-border-radius:3px;
+}
+
+input.submit, button.submit{
+	height: 20px;
+	padding:0px 5px;
+	color:#0E2A48;	
+	font-weight:bold;
+	font-size:10px;
+	background: url(images/bouton.png) repeat-x;
+    border: 1px solid #bac5ca;
+    border-radius:4px;
+    vertical-align: top;
+}
+
+input.submit:hover, button.submit:hover{
+	cursor:pointer;
+	background:#e8edf3;
+}
+
+input[type=checkbox] { 
+	border:none;
+	background:none;
+}
+
+input.file{
+	border:1px solid #515C68;	
+	border-top:1px solid #8498ae;	
+	color:#2E3B5F;	
+	padding:1px;
+	font-weight:bold;
+	font-size:10px;
+}
+
+input.reset, button.reset{
+	height: 20px;
+	padding:0px 5px;
+	background: url(images/bouton.png) repeat-x;
+    border: 1px solid #c9c9c9;
+    border-radius:4px;
+    color: #cc0000;
+	font-weight:bold;
+	font-size:10px;
+	
+}
+
+input.reset:hover, button.reset:hover{
+	cursor:pointer;
+	background:#e8edf3;
+}
+
+optgroup, select{
+	cursor:pointer;
+	vertical-align:middle;
+	width:auto;		
+	-moz-border-radius:3px;
+	-khtml-border-radius:3px;
+	-webkit-border-radius:3px;
+}
+
+optgroup {
+    font-weight:bold;
+    border:none;
+    border-bottom:1px solid #5B5A5A;
+}
+
+option {
+    padding:0px 3px;
+}
+
+legend {
+	padding:1px 0;
+	font-size:0.85em;
+	font-weight:bold;
+	background:#d7dfe9;
+	border:1px solid #bbcde0;
+	padding:2px 10px;
+	margin-top:-0.4em;
+	margin-left:0.5em;
+	position:relative;
+	text-transform:none;
+	line-height:1.5em;
+	color:#333333;
+	top:0;
+	vertical-align:middle;
+	text-transform:uppercase;
+}
+* html legend {
+    margin:0 0 -10px -7px;
+    line-height:1em;
+    font-size:.85em;
+}
+
+fieldset{
+	margin:20px 0;
+	padding:6px;
+	border:1px solid #d6dee7;
+	color:#445766;
+	background:#ECEFFA;
+	position:relative;
+}
+fieldset.fieldset_submit{
+	margin-top:-10px;
+	padding-bottom:15px;
+	width:99%;
+	text-align:center;
+	background:none;
+	border:none;
+}
+
+fieldset.fieldset_submit legend {
+    display:none;
+}
+
+fieldset dl {
+    height:1%;
+    overflow:hidden;
+    margin-bottom:16px;
+    font-size:11px;
+}
+
+fieldset dl.overflow_visible {
+    overflow:visible;
+}
+
+html>body fieldset dl {
+    height:auto;
+    min-height:20px;
+}
+
+fieldset dt {
+    width:45%;
+    text-align:left;
+    padding-top:3px;
+}
+
+fieldset dd {
+    margin:0 0 0 45%;
+    padding:0 0 0 5px;
+    border:none;
+    vertical-align:top;
+    font-size:11px;
+}
+
+dt {
+    float:left;
+    width:auto;
+}
+
+dt span {
+    padding:0 5px 0 0;
+}
+
+label {
+    cursor:pointer;
+}
+
+fieldset label {
+    font-size:11px;
+    text-align:left;
+    font-weight:bold;
+    color:#334455;
+}
+
+dd label {
+    white-space:nowrap;
+    margin:0 10px 0 0;
+    font-weight:normal;
+    color:#476A7F;
+}
+
+dt span {
+    font-size:10px;
+    color:#0E2A48;
+}
+
+label img {
+    vertical-align:middle;
+}
+
+fieldset dl dd label:hover {
+    color:#183A4F;
+}
+
+.label {
+    font-weight:bold;
+    font-size:11px;
+    color:#476a7f;
+}
+
+/* Tableau global, utilisé dans les différents modules */
+.module_table {
+    width:98%;
+    margin:auto;
+	border-spacing:0px;
+	border-collapse:separate;
+	padding:0px;
+	border:1px solid #D6DEE7;
+    background:#f2f8ff;
+    margin-top:15px;
+}
+*+html .module_table { /* Hack ie7 */
+	border-collapse:collapse;
+}
