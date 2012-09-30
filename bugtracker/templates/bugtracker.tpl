@@ -41,18 +41,18 @@
 		<div class="module_top_r"></div>
 		<div class="module_top">
 			<ul style="list-style-type:none;">
-				<li class="bt_current" style="float:left;">
+				<li class="bt_current">
 					<a href="bugtracker.php{SID}">{L_UNSOLVED}</a> 
 				</li>
-				<li class="bt_no_current" style="float:left;">
+				<li class="bt_no_current">
 					<a href="{PATH_TO_ROOT}/bugtracker/bugtracker.php?solved">{L_SOLVED}</a>
 				</li>
-				<li class="bt_no_current" style="float:left;">
+				<li class="bt_no_current">
 					<a href="{PATH_TO_ROOT}/bugtracker/bugtracker.php?stats">{L_STATS}</a>
 				</li>
 				# IF C_ADD #
-				<li class="bt_add" style="float:left;">
-					<a href="{PATH_TO_ROOT}/bugtracker/bugtracker.php?add"><img src="{PATH_TO_ROOT}/bugtracker/templates/images/plus.png" alt="" title="{L_ADD}" class="valign_middle" /> {L_ADD}</a>
+				<li class="bt_add">
+					<a href="{PATH_TO_ROOT}/bugtracker/bugtracker.php?add"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/add.png" alt="" title="{L_ADD}" class="valign_middle" /></a>
 				</li>
 				# ENDIF #
 			</ul>
@@ -180,18 +180,18 @@
 		<div class="module_top_r"></div>
 		<div class="module_top">
 			<ul style="list-style-type:none;">
-				<li class="bt_no_current" style="float:left;">
+				<li class="bt_no_current">
 					<a href="bugtracker.php{SID}">{L_UNSOLVED}</a> 
 				</li>
-				<li class="bt_current" style="float:left;">
+				<li class="bt_current">
 					<a href="{PATH_TO_ROOT}/bugtracker/bugtracker.php?solved">{L_SOLVED}</a>
 				</li>
-				<li class="bt_no_current" style="float:left;">
+				<li class="bt_no_current">
 					<a href="{PATH_TO_ROOT}/bugtracker/bugtracker.php?stats">{L_STATS}</a>
 				</li>
 				# IF C_ADD #
-				<li class="bt_add" style="float:left;">
-					<a href="{PATH_TO_ROOT}/bugtracker/bugtracker.php?add"><img src="{PATH_TO_ROOT}/bugtracker/templates/images/plus.png" alt="" title="{L_ADD}" class="valign_middle" /> {L_ADD}</a>
+				<li class="bt_add">
+					<a href="{PATH_TO_ROOT}/bugtracker/bugtracker.php?add"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/add.png" alt="" title="{L_ADD}" class="valign_middle" /></a>
 				</li>
 				# ENDIF #
 			</ul>
@@ -319,18 +319,18 @@
 		<div class="module_top_r"></div>
 		<div class="module_top">
 			<ul style="list-style-type:none;">
-				<li class="bt_no_current" style="float:left;">
+				<li class="bt_no_current">
 					<a href="bugtracker.php{SID}">{L_UNSOLVED}</a> 
 				</li>
-				<li class="bt_no_current" style="float:left;">
+				<li class="bt_no_current">
 					<a href="{PATH_TO_ROOT}/bugtracker/bugtracker.php?solved">{L_SOLVED}</a>
 				</li>
-				<li class="bt_current" style="float:left;">
+				<li class="bt_current">
 					<a href="{PATH_TO_ROOT}/bugtracker/bugtracker.php?stats">{L_STATS}</a>
 				</li>
 				# IF C_ADD #
-				<li class="bt_add" style="float:left;">
-					<a href="{PATH_TO_ROOT}/bugtracker/bugtracker.php?add"><img src="{PATH_TO_ROOT}/bugtracker/templates/images/plus.png" alt="" title="{L_ADD}" class="valign_middle" /> {L_ADD}</a>
+				<li class="bt_add">
+					<a href="{PATH_TO_ROOT}/bugtracker/bugtracker.php?add"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/add.png" alt="" title="{L_ADD}" class="valign_middle" /></a>
 				</li>
 				# ENDIF #
 			</ul>
