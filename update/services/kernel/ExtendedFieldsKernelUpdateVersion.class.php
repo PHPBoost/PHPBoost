@@ -39,6 +39,7 @@ class ExtendedFieldsKernelUpdateVersion extends KernelUpdateVersion
 	{
 		$this->rename_tables();
 		$this->change_rows();
+		$this->convert_fields_type();
 	}
 	
 	private function rename_tables()
@@ -75,6 +76,47 @@ class ExtendedFieldsKernelUpdateVersion extends KernelUpdateVersion
 		$db_utils->add_column(PREFIX .'member_extended_fields_list', 'auth', array('type' => 'text', 'length' => 65000));
 		$db_utils->add_column(PREFIX .'member_extended_fields_list', 'freeze', array('type' => 'boolean', 'length' => 1, 'notnull' => 1, 'default' => 0));
 		$this->querier->update(PREFIX .'member_extended_fields_list', array('auth' => serialize(array('r1' => 3, 'r0' => 3, 'r-1' => 1))), 'WHERE 1');
+	}
+	
+	private function convert_fields_type()
+	{
+		$result = $this->querier->select_rows(PREFIX .'member_extended_fields_list', array('id', 'field_type'));
+		while ($row = $result->fetch())
+		{
+			$this->querier->update(PREFIX .'member_extended_fields_list', array(
+					'field_type' => $this->convert_field_type($row['field_type']),
+				), 'WHERE id=:id', array('id' => $row['id']));
+		}
+	}
+	
+	private function convert_field_type($old_field_type)
+	{
+		switch ($old_field_type) {
+			case '0':
+				return 'MemberHiddenExtendedField';
+			break;
+			case '1':
+				return 'MemberShortTextExtendedField';
+			break;
+			case '2':
+				return 'MemberLongTextExtendedField';
+			break;
+			case '3':
+				return 'MemberSimpleSelectExtendedField';
+			break;
+			case '4':
+				return 'MemberMultipleSelectExtendedField';
+			break;
+			case '5':
+				return 'MemberSimpleChoiceExtendedField';
+			break;
+			case '6':
+				return 'MemberMultipleChoiceExtendedField';
+			break;
+			default:
+				return 'MemberHiddenExtendedField';
+			break;
+		}
 	}
 }
 ?>
