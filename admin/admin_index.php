@@ -51,7 +51,8 @@ $result = PersistenceContext::get_querier()->select("
 	FROM " . DB_TABLE_COMMENTS . " comments
 	LEFT JOIN " . DB_TABLE_COMMENTS_TOPIC . " topic ON comments.id_topic = topic.id_topic
 	LEFT JOIN " . DB_TABLE_MEMBER . " member ON member.user_id = comments.user_id
-	ORDER BY comments.timestamp DESC"
+	ORDER BY comments.timestamp DESC
+	LIMIT 30"
 );
 $i = 0;
 while ($row = $result->fetch())
