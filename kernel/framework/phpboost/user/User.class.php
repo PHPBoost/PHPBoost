@@ -250,8 +250,12 @@ class User
 		{
 			if ($i++ == 0)
 			{
-				$group = $groups_cache->get_group($idgroup);
-				return (!empty($group['color']) && $level == 0) ? '#' . $group['color'] : '';
+				if ($groups_cache->group_exists($idgroup))
+				{
+					$group = $groups_cache->get_group($idgroup);
+					return (!empty($group['color']) && $level == 0) ? '#' . $group['color'] : '';
+				}
+				return '';
 			}
 		}
 	}
