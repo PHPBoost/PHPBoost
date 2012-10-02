@@ -31,25 +31,10 @@ require_once('../kernel/begin.php');
 include_once('../articles/articles_begin.php');
 require_once('../kernel/header_no_display.php');
 
-$note=retrieve(GET,'note',0);
-//Notation.
-if (!empty($note) && $User->check_level(User::MEMBER_LEVEL)) //connected user
-{
-	$id = retrieve(POST, 'id', 0);
-	$note = retrieve(POST, 'note', 0);
-
-	// intialize management system class
-
-	$Note = new Note('articles', $id, '', $CONFIG_ARTICLES['note_max'], '', NOTE_DISPLAY_NOTE);
-
-	if (!empty($note) && !empty($id))
-	echo $Note->add($note); //add a note
-}
-elseif (retrieve(GET,'img_preview',false)) // image preview
+if (retrieve(GET,'img_preview',false)) // image preview
 	echo FormatingHelper::second_parse_url(retrieve(GET, 'img_preview', '/articles/articles.png', TSTRING));
 elseif (retrieve(POST,'preview',false))
 {
-
 	$level = array('', ' class="modo"', ' class="admin"');
 	$preview = new FileTemplate('articles/articles.tpl');
 	$Cache->load('articles');
@@ -60,12 +45,13 @@ elseif (retrieve(POST,'preview',false))
 		'id' => retrieve(POST, 'id', 0, TINTEGER),
 		'idcat' => retrieve(POST, 'idcat', 0, TINTEGER),
 		'title' => utf8_decode(retrieve(POST, 'title', '', TSTRING)),
-		'contents' => retrieve(POST, 'contents', '', TSTRING_PARSE),
+		'contents' => utf8_decode(retrieve(POST, 'contents', '', TSTRING_PARSE)),
 		'user_id' => retrieve(POST, 'user_id', 0, TINTEGER),
 		'date' => retrieve(POST, 'date', 0, TSTRING_UNCHANGE),
 		'hour' => retrieve(POST, 'hour', 0, TINTEGER),
 		'min' => retrieve(POST, 'min', 0, TINTEGER),
-		'description' => retrieve(POST, 'description', '', TSTRING_PARSE),	);
+		'description' => utf8_decode(retrieve(POST, 'description', '', TSTRING_PARSE))
+	);
 
 	$user = $Sql->query_array(DB_TABLE_MEMBER, 'level', 'login', "WHERE user_id = '" . $articles['user_id'] . "'", __LINE__, __FILE__);
 
@@ -84,7 +70,7 @@ elseif (retrieve(POST,'preview',false))
 		'C_TAB'=>false,
 		'ID' => $articles['id'],
 		'IDCAT' => $articles['idcat'],
-		'DESCRIPTION'=>$articles['description'],
+		'DESCRIPTION' => $articles['description'],
 		'NAME' => stripslashes($articles['title']),
 		'CONTENTS' => FormatingHelper::second_parse(stripslashes($articles['contents'])),
 		'PSEUDO' => !empty($user['login']) ? $user['login'] : $LANG['guest'],
@@ -95,68 +81,6 @@ elseif (retrieve(POST,'preview',false))
 	));
 
 	echo $preview->render();
-}
-elseif (retrieve(POST,'model_extend_field',false))
-{
-	$id_model = retrieve(POST, 'models', 1, TINTEGER);
-	$id_art = retrieve(POST, 'id_art', 0, TINTEGER);
-
-	$tpl_model = new FileTemplate('articles/extend_field.tpl');
-
-	$model = $Sql->query_array(DB_TABLE_ARTICLES_MODEL, '*', "WHERE id = '" . $id_model . "'", __LINE__, __FILE__);
-
-	if($id_art != 0)
-	{
-		$articles = $Sql->query_array(DB_TABLE_ARTICLES, '*', "WHERE id = '" . $id_art . "'", __LINE__, __FILE__);
-		if(unserialize($model['extend_field']))
-		{
-			$extend_field_articles = unserialize($articles['extend_field']);
-			$model_extend_tab=unserialize($model['extend_field']);
-			$extend_field_tab = !empty($extend_field_articles) ? $extend_field_articles : $model_extend_tab;
-		}
-		else
-			$extend_field_tab='';
-	}
-	else
-	{
-		$model_extend_tab=unserialize($model['extend_field']);
-		$extend_field_tab=unserialize($model['extend_field']);
-	}
-
-	if(!empty($extend_field_tab))
-	{
-		foreach ($model_extend_tab as $field)
-		{
-			$tpl_model->assign_block_vars('extend_field', array(
-				'NAME' => $field['name'],
-				'CONTENTS'=>!empty($extend_field_articles[$field['name']]['contents']) ? $extend_field_articles[$field['name']]['contents']: '',
-			));
-		}
-	}
-
-	$tpl_model->put_all(array(
-		'C_EXTEND_FIELD'=>	!empty($extend_field_tab),
-		'MODEL_DESCRIPTION'=>FormatingHelper::second_parse($model['description']),
-		'L_MODELS_DESCRIPTION'=>$ARTICLES_LANG['model_desc'],
-	));
-
-	echo $tpl_model->render();
-}
-elseif (retrieve(POST,'model_desc',false))
-{
-	$id_model = retrieve(POST, 'models', 1, TINTEGER);
-
-	$tpl_model = new FileTemplate('articles/extend_field.tpl');
-
-	$model = $Sql->query_array(DB_TABLE_ARTICLES_MODEL, 'description', "WHERE id = '" . $id_model . "'", __LINE__, __FILE__);
-
-	$tpl_model->put_all(array(
-		'C_EXTEND_FIELD'=>	false,
-		'MODEL_DESCRIPTION'=>FormatingHelper::second_parse($model['description']),
-		'L_MODELS_DESCRIPTION'=>$ARTICLES_LANG['model_desc'],
-	));
-
-	echo $tpl_model->render();
 }
 else
 	echo -2;
