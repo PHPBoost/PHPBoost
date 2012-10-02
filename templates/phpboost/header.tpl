@@ -67,15 +67,16 @@
 			{MENUS_HEADER_CONTENT}
 			# ENDIF #
 		</div>
+		
 		<div id="sub_header">
-			# IF C_MENUS_SUB_HEADER_CONTENT #
-			<ul>
+			<ul class="menu_link">
 				<li class="current"><a href="#" class="title">Accueil</a></li>
 				<li><a href="#" class="title">Actualités</a></li>
 				<li><a href="#" class="title">Documentation</a></li>
 				<li><a href="#" class="title">Support</a></li>
 				<li><a href="#" class="title">Télechargement</a></li>
 			</ul>
+			# IF C_MENUS_SUB_HEADER_CONTENT #
 			{MENUS_SUB_HEADER_CONTENT}
 			# ENDIF #
 		</div>
