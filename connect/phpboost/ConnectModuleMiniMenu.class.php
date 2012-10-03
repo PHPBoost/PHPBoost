@@ -97,6 +97,7 @@ class ConnectModuleMiniMenu extends ModuleMiniMenu
 	    		'NUM_UNREAD_CONTRIBUTIONS' => $contribution_number,
 	    		'NUMBER_UNREAD_ALERTS' => AdministratorAlertService::get_number_unread_alerts(),
 	    		'IMG_PM' => $user->get_attribute('user_pm') > 0 ? 'new_pm.gif' : 'pm_mini.png',
+	    		'PSEUDO' => $user->get_pseudo(),
 	    		'U_CONTRIBUTION' => UserUrlBuilder::contribution_panel()->absolute(),
 	    		'U_ADMINISTRATION' => UserUrlBuilder::administration()->absolute(),
 	    		'U_HOME_PROFILE' => UserUrlBuilder::home_profile()->absolute(),
