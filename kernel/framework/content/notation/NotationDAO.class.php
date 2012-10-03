@@ -60,7 +60,7 @@ class NotationDAO
 	
 	public static function update_average_notes(Notation $notation)
 	{
-		$former_nbr_notes = self::get_former_number_notes($notation);
+		$former_nbr_notes = NotationService::get_number_notes($notation);
 		self::$db_querier->update(DB_TABLE_AVERAGE_NOTES, array(
 			'average_notes' => self::calculates_average_notes($notation),
 			'number_notes' => $former_nbr_notes + 1

@@ -78,7 +78,7 @@ elseif ($id_media > 0)
 	$Sql->query_inject("UPDATE " . LOW_PRIORITY . " " . PREFIX . "media SET counter = counter + 1 WHERE id = " . $id_media, __LINE__, __FILE__);
 
 	$notation->set_id_in_module($id_media);
-	$nbr_notes = NotationService::get_former_number_notes($notation);
+	$nbr_notes = NotationService::get_number_notes($notation);
 	
 	$tpl->put_all(array(
 		'C_DISPLAY_MEDIA' => true,
