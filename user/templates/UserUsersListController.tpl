@@ -1,3 +1,13 @@
+# IF C_ARE_GROUPS #
+<table class="module_table" style="width:98%;">	
+	<tr>
+		<td style="vertical-align:top;" class="row2">
+			# INCLUDE SELECT_GROUP #
+		</td>
+	</tr>
+</table>	
+<br /><br />
+# ENDIF #
 <table class="module_table" style="width: 98%;">	
 	<tr>
 		<th colspan="8">
