@@ -41,11 +41,19 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 	 */
 	private $columns_disabled = null;
 	
+	private static $main_lang;
+	
 	public function __construct()
 	{
 		parent::__construct();
+		$this->load_langs();
 		$this->set_breadcrumb(new BreadCrumb());
 		$this->set_columns_disabled(ThemeManager::get_theme(get_utheme())->get_columns_disabled());
+	}
+	
+	private function load_langs()
+	{
+		self::$main_lang = LangLoader::get('main');
 	}
 
 	/**
@@ -56,8 +64,6 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 		self::set_page_localization($this->get_page_title());
 
 		$template = new FileTemplate('header.tpl');
-
-		$general_config = GeneralConfig::load();
 		
 		$theme = ThemeManager::get_theme(get_utheme());
 		$customize_interface = $theme->get_customize_interface();
@@ -68,7 +74,7 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 		$template->put_all(array(
 			'C_BBCODE_TINYMCE_MODE' => AppContext::get_current_user()->get_attribute('user_editor') == 'tinymce',
 			'C_CSS_CACHE_ENABLED' => CSSCacheConfig::load()->is_enabled(),
-			'SITE_NAME' => $general_config->get_site_name(),
+			'SITE_NAME' => GeneralConfig::load()->get_site_name(),
 			'MAINTAIN' => $this->display_site_maintenance(),
 			'C_COMPTEUR' => false,
 			'C_FAVICON' => $customization_config->favicon_exists(),
@@ -77,12 +83,12 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 			'C_HEADER_LOGO' => !empty($header_logo_path),
 			'HEADER_LOGO' => Url::to_rel($header_logo_path),
 			'TITLE' => $this->get_page_title(),
-			'SITE_DESCRIPTION' => $general_config->get_site_description(),
-			'SITE_KEYWORD' => $general_config->get_site_keywords(),
+			'SITE_DESCRIPTION' => $this->get_seo_meta_data()->get_description(),
+			'SITE_KEYWORD' => $this->get_seo_meta_data()->get_keywords(),
 			'MODULES_CSS' => $this->get_modules_css_files_html_code(),
-			'L_XML_LANGUAGE' => LangLoader::get_message('xml_lang', 'main'),
-			'L_VISIT' => LangLoader::get_message('guest_s', 'main'),
-			'L_TODAY' => LangLoader::get_message('today', 'main'),
+			'L_XML_LANGUAGE' => self::$main_lang['xml_lang'],
+			'L_VISIT' => self::$main_lang['guest_s'],
+			'L_TODAY' => self::$main_lang['today'],
 		));
 
 		$this->display_counter($template);
@@ -229,12 +235,12 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 				'DELAY' => isset($array_delay[$key_delay]) ? $array_delay[$key_delay] : '0',
 				'MAINTAIN_RELEASE_FORMAT' => implode(',', $array_release),
 				'MAINTAIN_NOW_FORMAT' => implode(',', $array_now),
-				'L_MAINTAIN_DELAY' => LangLoader::get_message('maintain_delay', 'main'),
-				'L_LOADING' => LangLoader::get_message('loading', 'main'),
-				'L_DAYS' => LangLoader::get_message('days', 'main'),
-				'L_HOURS' => LangLoader::get_message('hours', 'main'),
-				'L_MIN' => LangLoader::get_message('minutes', 'main'),
-				'L_SEC' => LangLoader::get_message('seconds', 'main'),
+				'L_MAINTAIN_DELAY' => self::$main_lang['maintain_delay'],
+				'L_LOADING' => self::$main_lang['loading'],
+				'L_DAYS' => self::$main_lang['days'],
+				'L_HOURS' => self::$main_lang['hours'],
+				'L_MIN' => self::$main_lang['minutes'],
+				'L_SEC' => self::$main_lang['seconds'],
 			));
 		}
 		return $template;
@@ -268,11 +274,11 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 			'C_MENUS_FOOTER_CONTENT' => $footer_is_activated,
 			'MENUS_FOOTER_CONTENT' => $footer_content,
 			'C_DISPLAY_AUTHOR_THEME' => GraphicalEnvironmentConfig::load()->get_display_theme_author(),
-			'L_POWERED_BY' => LangLoader::get_message('powered_by', 'main'),
-			'L_PHPBOOST_RIGHT' => LangLoader::get_message('phpboost_right', 'main'),
-			'L_THEME' => LangLoader::get_message('theme', 'main'),
+			'L_POWERED_BY' => self::$main_lang['powered_by'],
+			'L_PHPBOOST_RIGHT' => self::$main_lang['phpboost_right'],
+			'L_THEME' => self::$main_lang['theme'],
 			'L_THEME_NAME' => $theme_configuration->get_name(),
-			'L_BY' => strtolower(LangLoader::get_message('by', 'main')),
+			'L_BY' => strtolower(self::$main_lang['by']),
 			'L_THEME_AUTHOR' => $theme_configuration->get_author_name(),
 			'U_THEME_AUTHOR_LINK' => $theme_configuration->get_author_link(),
 		    'PHPBOOST_VERSION' => GeneralConfig::load()->get_phpboost_major_version()
@@ -288,9 +294,9 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 				'BENCH' => AppContext::get_bench()->to_string(),
 				'REQ' => PersistenceContext::get_querier()->get_executed_requests_count() +
 			PersistenceContext::get_sql()->get_executed_requests_number(),
-				'L_REQ' => LangLoader::get_message('sql_req', 'main'),
-				'L_ACHIEVED' => LangLoader::get_message('achieved', 'main'),
-				'L_UNIT_SECOND' => LangLoader::get_message('unit_seconds_short', 'main')
+				'L_REQ' => self::$main_lang['sql_req'],
+				'L_ACHIEVED' => self::$main_lang['achieved'],
+				'L_UNIT_SECOND' => self::$main_lang['unit_seconds_short']
 			));
 		}
 
