@@ -69,7 +69,7 @@ div.connect_align a {
 
 /* Ajout Thème PHPBoost */
 
-input.submit{ margin:12px 12px 0px 0px; }
+.connect_align input.submit{ margin:12px 12px 0px 0px; }
 
 
 .connect_align ul, .connect_align li, .connect_align a {
