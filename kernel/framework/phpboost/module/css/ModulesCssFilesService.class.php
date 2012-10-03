@@ -50,11 +50,12 @@ class ModulesCssFilesService
 		$css_files = self::$css_files[$theme_id][self::CSS_FILES_RUNNING_MODULE_DISPLAYED];
 		$running_module_id = Environment::get_running_module_name();
 		$module_home_page = GeneralConfig::load()->get_module_home_page();
+
 		if (array_key_exists($running_module_id, $css_files))
 		{
 			return $css_files[$running_module_id];
 		}
-		else if (array_key_exists($module_home_page, $css_files))
+		else if (array_key_exists($module_home_page, $css_files) && empty($running_module_id))
 		{
 			return $css_files[$module_home_page];
 		}
