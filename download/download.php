@@ -59,7 +59,7 @@ if ($file_id > 0) //Contenu
 		'THEME' => get_utheme(),
 		'KERNEL_NOTATION' => NotationService::display_active_image($notation),
 		'HITS' => sprintf($DOWNLOAD_LANG['n_times'], (int)$download_info['count']),
-		'NUM_NOTES' => sprintf($DOWNLOAD_LANG['num_notes'], (int)NotationService::get_former_number_notes($notation)),
+		'NUM_NOTES' => sprintf($DOWNLOAD_LANG['num_notes'], (int)NotationService::get_number_notes($notation)),
 		'U_IMG' => $download_info['image'],
 		'IMAGE_ALT' => str_replace('"', '\"', $download_info['title']),
 		'LANG' => get_ulang(),

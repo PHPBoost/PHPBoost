@@ -144,7 +144,7 @@ class NotationService
 				));
 			}
 
-			$count_notes = NotationDAO::get_count_notes_by_id_in_module($notation);
+			$count_notes = NotationService::get_number_notes($notation);
 			$template->put_all(array(
 				'C_VOTES' => $count_notes > 0 ? true : false,
 				'C_MORE_1_VOTES' => $count_notes > 1 ? true : false,
@@ -214,7 +214,7 @@ class NotationService
 	/**
 	 * This function required object Notation containing the module_name and id_in_module.
 	 */
-	public static function get_former_number_notes(Notation $notation)
+	public static function get_number_notes(Notation $notation)
 	{
 		try {
 			return self::$db_querier->get_column_value(DB_TABLE_AVERAGE_NOTES, 'number_notes', 'WHERE module_name = :module_name AND id_in_module = :id_in_module', 
