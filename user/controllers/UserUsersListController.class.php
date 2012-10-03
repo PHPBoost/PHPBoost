@@ -29,12 +29,14 @@ class UserUsersListController extends AbstractController
 {
 	private $lang;
 	private $view;
+	private $groups_cache;
 	private $nbr_members_per_page = 25;
 
 	public function execute(HTTPRequestCustom $request)
 	{
 		$this->init();
-		$this->build_form($request);
+		$this->build_select_group_form();
+		$this->build_view($request);
 
 		return $this->build_response($this->view);
 	}
@@ -44,9 +46,10 @@ class UserUsersListController extends AbstractController
 		$this->lang = LangLoader::get('user-common');
 		$this->view = new FileTemplate('user/UserUsersListController.tpl');
 		$this->view->add_lang($this->lang);
+		$this->groups_cache = GroupsCache::load();
 	}
 
-	private function build_form($request)
+	private function build_view($request)
 	{
 		$field = $request->get_value('field', 'login');
 		$sort = $request->get_value('sort', 'top');
@@ -108,6 +111,36 @@ class UserUsersListController extends AbstractController
 				'U_USER_PM' => UserUrlBuilder::personnal_message($row['user_id'])->absolute()
 			));
 		}
+	}
+	
+	private function build_select_group_form()
+	{
+		$form = new HTMLForm('groups');
+
+		$fieldset = new FormFieldsetHorizontal('show_group');
+		$form->add_fieldset($fieldset);
+		
+		$fieldset->add_field(new FormFieldSimpleSelectChoice('groups_select', $this->lang['groups.select'] . ' : ', '', $this->build_select_groups(), 
+			array('events' => array('change' => 'document.location = "'. UserUrlBuilder::groups()->absolute() .'" + HTMLForms.getField("groups_select").getValue();')
+		)));
+
+		$groups = $this->groups_cache->get_groups();
+		$this->view->put_all(array(
+			'C_ARE_GROUPS' => !empty($groups),
+			'SELECT_GROUP' => $form->display()
+		));
+	}
+	
+	private function build_select_groups()
+	{
+		$groups = array();
+		$list_lang = LangLoader::get_message('list', 'main');
+		$groups[] = new FormFieldSelectChoiceOption('-- '. $list_lang .' --', '');
+		foreach ($this->groups_cache->get_groups() as $id => $row)
+		{
+			$groups[] = new FormFieldSelectChoiceOption($row['name'], $id);
+		}
+		return $groups;
 	}
 
 	private function build_response()
