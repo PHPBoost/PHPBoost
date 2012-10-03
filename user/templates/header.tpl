@@ -3,7 +3,7 @@
 	<head>
 		<title>{SITE_NAME} : {TITLE}</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-		<meta name="description" content="{SITE_DESCRIPTION} {TITLE}" />
+		<meta name="description" content="{SITE_DESCRIPTION}" />
 		<meta name="keywords" content="{SITE_KEYWORD}" />
 		<meta http-equiv="Content-Language" content="{L_XML_LANGUAGE}" />
 
