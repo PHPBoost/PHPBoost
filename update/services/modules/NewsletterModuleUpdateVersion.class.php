@@ -44,6 +44,7 @@ class NewsletterModuleUpdateVersion extends ModuleUpdateVersion
 		$this->insert_default_stream();
 		$this->update_archives_table();
 		$this->update_subscribers_table();
+		$this->create_field_member();
 	}
 	
 	private function rename_tables()
@@ -122,6 +123,19 @@ class NewsletterModuleUpdateVersion extends ModuleUpdateVersion
 				'subscriber_id' => $row['id']
 			));
 		}
+	}
+	
+	private function create_field_member()
+	{
+		$lang = LangLoader::get('newsletter_common', 'newsletter');
+		
+		$extended_field = new ExtendedField();
+		$extended_field->set_name($lang['extended_fields.newsletter.name']);
+		$extended_field->set_field_name('register_newsletter');
+		$extended_field->set_description($lang['extended_fields.newsletter.description']);
+		$extended_field->set_field_type('RegisterNewsletterExtendedField');
+		$extended_field->set_display(true);
+		ExtendedFieldsService::add($extended_field);
 	}
 }
 ?>
