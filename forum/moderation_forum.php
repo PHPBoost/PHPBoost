@@ -651,13 +651,11 @@ else //Panneau de modération
 	}
 	$Sql->query_close($result);
 
-	if ($i == 0)
-	{
-		$Template->put_all(array(
-			'C_FORUM_NO_ACTION' => true,
-			'L_NO_ACTION' => $LANG['no_action']
-		));
-	}
+	$Template->put_all(array(
+		'C_DISPLAY_LINK_MORE_ACTION' => $i == $end,
+		'C_FORUM_NO_ACTION' => $i == 0,
+		'L_NO_ACTION' => $LANG['no_action']
+	));
 }
 
 //Listes les utilisateurs en lignes.

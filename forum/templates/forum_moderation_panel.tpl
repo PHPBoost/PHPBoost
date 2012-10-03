@@ -83,7 +83,9 @@
 								# IF C_FORUM_ADMIN #
 								<span style="float:left"><input type="submit" name="valid" value="{L_DELETE}" class="submit" /></span> 
 								# ENDIF #
+								# IF C_DISPLAY_LINK_MORE_ACTION #
 								<a href="moderation_forum{U_MORE_ACTION}">{L_MORE_ACTION}</a>
+								# ENDIF #
 							</td>
 						</tr>
 					</table>
