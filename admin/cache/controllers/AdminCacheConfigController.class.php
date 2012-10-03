@@ -54,8 +54,8 @@ class AdminCacheConfigController extends AbstractAdminFormPageController
 		$fieldset->add_field(new FormFieldCheckbox('enable_css_cache', $this->lang['enable_css_cache'], $this->css_cache_config->is_enabled()));
 		
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('level_css_cache', $this->lang['level_css_cache'], $this->css_cache_config->get_optimization_level(), array(
-			new FormFieldSelectChoiceOption($this->lang['low_level_css_cache'], 'low'),
-			new FormFieldSelectChoiceOption($this->lang['high_level_css_cache'], 'high')
+			new FormFieldSelectChoiceOption($this->lang['low_level_css_cache'], CSSFileOptimizer::LOW_OPTIMIZATION),
+			new FormFieldSelectChoiceOption($this->lang['high_level_css_cache'], CSSFileOptimizer::HIGH_OPTIMIZATION)
 		), array('description' => $this->lang['level_css_cache'])));
 
 		$button = new FormButtonDefaultSubmit();
