@@ -68,21 +68,30 @@ class UserExploreGroupsController extends AbstractController
 		$number_member = 0;
 		foreach ($this->get_members_group($group_id) as $user_id)
 		{
-			try {
-				$user = PersistenceContext::get_querier()->select_single_row(DB_TABLE_MEMBER, array('*'), 'WHERE user_aprob = 1 AND user_id = :user_id', array('user_id' => $user_id));
-				$group_color = User::get_group_color($user['user_groups'], $user['level']);
-				$this->view->assign_block_vars('members_list', array(
-					'U_PROFILE' => UserUrlBuilder::profile($user_id)->absolute(),
-					'PSEUDO' => $user['login'],
-					'U_AVATAR' => empty($user['user_avatar']) && $this->user_account_config->is_default_avatar_enabled() ? 
-						TPL_PATH_TO_ROOT .'/templates/' . get_utheme() . '/images/' .  $this->user_account_config->get_default_avatar_name() : Url::to_rel($user['user_avatar']),
-					'LEVEL_CLASS' => UserService::get_level_class($user['level']),
-					'C_GROUP_COLOR' => !empty($group_color),
-					'GROUP_COLOR' => $group_color,
-				));
-				$number_member++;
-			} catch (RowNotFoundException $e) {
-				
+			if (!empty($user_id))
+			{
+				$user = PersistenceContext::get_querier()->select('SELECT 
+					member.login, member.level, member.user_groups,
+					ext_field.user_avatar
+					FROM ' . DB_TABLE_MEMBER . ' member
+					LEFT JOIN ' . DB_TABLE_MEMBER_EXTENDED_FIELDS . ' ext_field ON ext_field.user_id = member.user_id
+					WHERE user_aprob = 1 AND member.user_id = :user_id
+				', array('user_id' => $user_id))->fetch();
+
+				if (!empty($user))
+				{
+					$group_color = User::get_group_color($user['user_groups'], $user['level']);
+					$this->view->assign_block_vars('members_list', array(
+						'U_PROFILE' => UserUrlBuilder::profile($user_id)->absolute(),
+						'PSEUDO' => $user['login'],
+						'U_AVATAR' => empty($user['user_avatar']) && $this->user_account_config->is_default_avatar_enabled() ? 
+							TPL_PATH_TO_ROOT .'/templates/' . get_utheme() . '/images/' .  $this->user_account_config->get_default_avatar_name() : Url::to_rel($user['user_avatar']),
+						'LEVEL_CLASS' => UserService::get_level_class($user['level']),
+						'C_GROUP_COLOR' => !empty($group_color),
+						'GROUP_COLOR' => $group_color,
+					));
+					$number_member++;
+				}
 			}
 		}
 
