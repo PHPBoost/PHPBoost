@@ -259,7 +259,7 @@ class Uploads
 			{
 				$array_child_folder[] = $key;
 				//On rappelle la fonction pour la catégorie fille
-				$this->Find_subfolder($array_folders, $key, $array_child_folder);
+				self::Find_subfolder($array_folders, $key, $array_child_folder);
 			}
 		}
 	}
@@ -270,7 +270,7 @@ class Uploads
 		$parent_folder = self::$sql_querier->query_array(PREFIX . "upload_cat", "id_parent", "name", "user_id", "WHERE id = '" . $id_folder . "'", __LINE__, __FILE__);
 		if (!empty($parent_folder['id_parent']))
 		{	
-			$pwd .= $this->get_admin_url($parent_folder['id_parent'], $pwd, $member_link);	
+			$pwd .= self::get_admin_url($parent_folder['id_parent'], $pwd, $member_link);	
 			return $pwd . '/<a href="admin_files.php?f=' . $id_folder . '">' . $parent_folder['name'] . '</a>';
 		}
 		else
@@ -283,7 +283,7 @@ class Uploads
 		$parent_folder = self::$sql_querier->query_array(PREFIX . "upload_cat", "id_parent", "name", "WHERE id = '" . $id_folder . "' AND user_id <> -1", __LINE__, __FILE__);
 		if (!empty($parent_folder['id_parent']))
 		{	
-			$pwd .= $this->get_url($parent_folder['id_parent'], $pwd, $popup);	
+			$pwd .= self::get_url($parent_folder['id_parent'], $pwd, $popup);	
 			return $pwd . '/<a href="' . url('upload.php?f=' . $id_folder . $popup) . '">' . $parent_folder['name'] . '</a>';
 		}
 		else
