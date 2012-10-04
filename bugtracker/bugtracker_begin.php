@@ -40,19 +40,19 @@ if (!defined('TITLE'))
 $id = retrieve(GET, 'id', 0, TINTEGER);
 if (isset($_GET['add']))
 {
-	$Bread_crumb->add($LANG['bugs.titles.add_bug'], url('bugtracker.php?add=true'));
+	$Bread_crumb->add($LANG['bugs.titles.add_bug'], url('bugtracker.php?add'));
 }
 else if (isset($_GET['edit']) && is_numeric($id))
 {
-	$Bread_crumb->add($LANG['bugs.titles.edit_bug'] . ' #' . $id, url('bugtracker.php?edit=true&amp;id=' . $id));
+	$Bread_crumb->add($LANG['bugs.titles.edit_bug'] . ' #' . $id, url('bugtracker.php?edit&amp;id=' . $id));
 }
 elseif (isset($_GET['history']) && is_numeric($id))
 {
-	$Bread_crumb->add($LANG['bugs.titles.history_bug'] . ' #' . $id, url('bugtracker.php?history=true&amp;id=' . $id));
+	$Bread_crumb->add($LANG['bugs.titles.history_bug'] . ' #' . $id, url('bugtracker.php?history&amp;id=' . $id));
 }
 elseif (isset($_GET['view']) && is_numeric($id))
 {
-	$Bread_crumb->add($LANG['bugs.titles.view_bug'] . ' #' . $id, url('bugtracker.php?view=true&amp;id=' . $id));
+	$Bread_crumb->add($LANG['bugs.titles.view_bug'] . ' #' . $id, url('bugtracker.php?view&amp;id=' . $id));
 }
 elseif (isset($_GET['solved']))
 {
