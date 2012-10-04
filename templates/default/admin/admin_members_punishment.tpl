@@ -120,7 +120,7 @@
 						{list.U_ACTION_USER}
 					</td>
 					<td class="row1" style="text-align:center;width:25%;">
-						<a href="{PATH_TO_ROOT}/member/pm{list.U_PM}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/pm.png" alt="" /></a>
+						<a href="{PATH_TO_ROOT}/user/pm{list.U_PM}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/pm.png" alt="" /></a>
 					</td>
 				</tr>
 				# END list #
@@ -167,7 +167,7 @@
 						{L_PM}
 					</td>
 					<td class="row2">
-						<a href="{PATH_TO_ROOT}/member/pm{U_PM}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/pm.png" alt="PM" /></a>
+						<a href="{PATH_TO_ROOT}/user/pm{U_PM}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/pm.png" alt="PM" /></a>
 					</td>
 				</tr>
 				<tr>
@@ -213,7 +213,7 @@
 						{L_PM}
 					</td>
 					<td class="row2">
-						<a href="{PATH_TO_ROOT}/member/pm{U_PM}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/pm.png" alt="" /></a>
+						<a href="{PATH_TO_ROOT}/user/pm{U_PM}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/pm.png" alt="" /></a>
 					</td>
 				</tr>
 				<tr>
