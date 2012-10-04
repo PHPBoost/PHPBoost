@@ -201,7 +201,7 @@ elseif (!empty($move_folder) || !empty($move_file))
 		$template->put('message_helper', MessageHelper::display($LANG['upload_folder_contains_folder'], E_USER_WARNING));
 	
 	//liste des fichiers disponibles
-	include_once(PATH_TO_ROOT .'/member/upload_functions.php');
+	include_once(PATH_TO_ROOT .'/user/upload_functions.php');
 	$cats = array();
 	
 	if (empty($folder_member))
