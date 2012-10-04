@@ -551,7 +551,7 @@ var BBcodeEditor_Core = Class.create(
 		var url = prompt(question, '');
 		if( url != null && url != '' )
 			this.textarea.insert('[url=' + url + ']', '[/url]', this.element);
-		else
+		else if ( url != null )
 			this.textarea.insert('[url]', '[/url]', this.element);
 	},
 	
@@ -560,7 +560,7 @@ var BBcodeEditor_Core = Class.create(
 		var url = prompt(question, '');
 		if( url != null && url != '' )
 			this.textarea.insert('[img]' + url, '[/img]', this.element);
-		else
+		else if ( url != null )
 			this.textarea.insert('[img]', '[/img]', this.element);
 	},
 
