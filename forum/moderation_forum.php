@@ -179,7 +179,7 @@ if ($action == 'alert') //Gestion des alertes
 			if ($row['status'] == 0)
 				$status = $LANG['alert_not_solved'];
 			else
-				$status = $LANG['alert_solved'] . '<a href="'. UserUrlBuilder::profile($row['id_modo'])->absolute() .'">' . $row['login_modo'] . '</a>';
+				$status = $LANG['alert_solved'] . '<a href="'. UserUrlBuilder::profile($row['idmodo'])->absolute() .'">' . $row['login_modo'] . '</a>';
 
 			$Template->assign_block_vars('alert_list', array(
 				'TITLE' => '<a href="moderation_forum' . url('.php?action=alert&amp;id=' . $row['id']) . '">' . $row['title'] . '</a>',
