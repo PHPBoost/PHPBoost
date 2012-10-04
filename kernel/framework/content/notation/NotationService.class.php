@@ -256,10 +256,6 @@ class NotationService
 					NotationDAO::update_average_notes($notation);
 				}
 			}
-			else
-			{
-				throw new Exception('Already post note');
-			}
 		}
 		else
 		{

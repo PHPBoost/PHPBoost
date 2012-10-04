@@ -142,7 +142,7 @@ switch ($action)
 					'INFO' => gmdate_format('date_format', $row['user_readonly']),
 					'U_PROFILE' => UserUrlBuilder::profile($row['user_id'])->absolute(),
 					'U_ACTION_USER' => '<a href="'. UserUrlBuilder::moderation_panel('punish', $row['user_id'])->absolute() .'"><img src="../templates/' . get_utheme() . '/images/readonly.png" alt="" /></a>',
-					'U_PM' => UserUrlBuilder::personnal_message($row['user_id']),
+					'U_PM' => UserUrlBuilder::personnal_message($row['user_id'])->absolute(),
 				));
 				
 				$i++;
@@ -289,7 +289,7 @@ switch ($action)
 					'INFO' => ($row['user_warning'] != 100) ? gmdate_format('date_format', $row['user_ban']) : $LANG['illimited'],
 					'U_PROFILE' => UserUrlBuilder::profile($row['user_id'])->absolute(),
 					'U_ACTION_USER' => '<a href="'. UserUrlBuilder::moderation_panel('ban', $row['user_id'])->absolute()  .'"><img src="../templates/' . get_utheme() . '/images/admin/forbidden.png" alt="" /></a>',
-					'U_PM' => UserUrlBuilder::personnal_message($row['user_id']),
+					'U_PM' => UserUrlBuilder::personnal_message($row['user_id'])->absolute(),
 				));
 				
 				$i++;
