@@ -94,16 +94,6 @@ $lang = array(
 
 	'advanced-config.htaccess-manual-content' => 'Contenu du fichier .htaccess',
 	'advanced-config.htaccess-manual-content.explain' => 'Vous pouvez dans ce champ mettre les instructions que vous souhaitez intégrer au fichier .htaccess qui se trouve à la racine du site, par exemple pour forcer une configuration du serveur web Apache.',
-	'advanced-config.htaccess-manual-content.content' => 'Options -indexes
-	#
-	#  OVH - Pour activer PHP5 enlever le # de la ligne suivante
-	#SetEnv PHP_VER 5
-	#
-	#  FREE - Pour activer PHP5 enlever le # de la ligne suivante
-	#php 1
-	#
-	#  1 and 1 - Pour activer PHP5 enlever le # de la ligne suivante
-	#AddType x-mapp-php5 .php',
 
 	'advanced-config.sessions-config' => 'Connexion utilisateurs',
 	'advanced-config.cookie-name' => 'Nom du cookie des sessions',
