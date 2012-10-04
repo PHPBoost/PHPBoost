@@ -41,15 +41,14 @@
 	</div>
 	# ELSE #
 	
-	<div class="welcome" >
-		Bienvenue, <a href='#'>MasterMasterMasterMaster</a>
-	</div>
+	
 	
 	<div class="connect_align">
+	
 		<ul>
-			<li class="submenu"><a href='#'>Mon Profil</a>
+			<li class="submenu"><a href='{U_HOME_PROFILE}'>Votre Profil</a>
 				<ul>
-					<img src="{PATH_TO_ROOT}/templates/{THEME}/modules/connect/images/avatar.png" alt="avatar" title="Avatar" class="connect_avatar"/>
+					<img src="{U_AVATAR_IMG}" alt="avatar" title="Avatar" width="90px" class="connect_avatar"/>
 					<li>
 		         		<img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/members_mini.png" alt="" class="valign_middle" /> <a href="{U_HOME_PROFILE}" class="small_link">{L_PRIVATE_PROFIL}</a>
 					</li>
@@ -87,5 +86,6 @@
 			</li>
 		</ul>
 	</div>
+	<div class="welcome" >Bienvenue, <a href='#'>{PSEUDO}</a></div>
 	# ENDIF #
 # ENDIF #
