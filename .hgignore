@@ -36,3 +36,7 @@ syntax: regexp
 
 syntax: regexp
 ^update/update_followed\.txt$
+syntax: regexp
+^templates/bluedream$
+syntax: regexp
+^HomeCustom$
