@@ -1,0 +1,172 @@
+.connect_form {
+	background:url('images/form.png') no-repeat right bottom;
+	border:none;
+	padding-left:4px;
+	padding-top:3px;
+	margin:10px 9px 0px 0px;
+	height:18px;
+	width:115px;
+	font-size:12px;
+	color: #E9ECEF;
+
+}
+
+
+.connect_form:hover {
+	background:url('images/form.png') no-repeat right bottom;
+	border:none;
+}
+.connect_form:focus {
+	background:url('images/form.png') no-repeat right bottom;
+	border:none;
+}
+ 
+div.connect_align {
+	text-align:right;
+	margin:0px 8px 0px 0px;
+}
+
+div.connect_align a {
+	color:#FFF;
+}
+ 
+.connect_align form {
+	text-align:right;
+	display:inline;
+}
+ 
+.connect_inline {
+	display:inline;
+}
+ 
+.connect_content {
+	text-align:left;
+}
+ 
+.connect_content ul{
+	margin:0;
+	padding:0;
+	padding-left:4px;
+	list-style-type:none;
+	line-height:18px;
+}
+ 
+.connect_register {
+	margin:0;
+	margin-top:5px;
+}
+ 
+.connect_vertical input#login, .connect_vertical input#password {
+	width:120px;
+}
+
+
+
+
+
+
+
+
+/* Ajout Thème PHPBoost */
+
+.connect_align input.submit{ margin:12px 12px 0px 0px; }
+
+
+.connect_align ul, .connect_align li, .connect_align a {
+  position: relative;
+}
+
+.connect_align {
+  height: 44px;
+  float:right;
+}
+
+.left {
+  height: 44px;
+  float:left;
+}
+
+.connect_align > ul > li > a {
+  color: #ffffff;
+  display: inline-block;
+  font-size: 12px;
+  height: 32px;
+  padding: 12px 12px 0px 12px;
+  text-decoration: none;
+}
+.connect_align > ul > li > a:hover { font-size:12px; }
+
+.connect_align > ul > li.submenu > a { background: url('images/green.png') repeat-x; }
+
+.connect_align ul { list-style: none; }
+.connect_align > ul > li { float: left; }
+
+.connect_align .submenu {  height: 44px; z-index: 1; }
+.connect_align .submenu:hover > ul { display: block; }
+.connect_align > ul > li.submenu:hover > a{ height: 32px; }
+
+img.connect_avatar{
+	float:left;
+	padding:5px;	
+}
+
+.connect_align .submenu ul {
+	display: none;
+	position: absolute;
+	width:285px;
+	border-top:3px solid #2e5c35;
+	border-bottom:2px solid #99B1CB;
+	background: #353535;
+	height:133px;
+}
+.connect_align .connect ul {
+	display:none;
+	position: absolute;
+	width:140px;
+	border-top:3px solid #2e5c35;
+	border-bottom:2px solid #99B1CB;
+	background: #353535;
+	height:110px;
+}
+
+.connect_align .submenu ul li{ 
+	padding-top:3px;
+	text-align:left; 
+}
+.connect_align .submenu ul li:last-child{ margin-top:8px; padding:5px 0px; text-align:center; border-top:1px solid #3b3b3b;}
+
+.connect_align .submenu ul li a {
+	font-size: 11px;
+	line-height: 20px;
+	text-align:left;
+	border-bottom:1px solid #383838;
+}
+.connect_align .submenu ul li a:last-child { border-bottom:none; }
+
+div.welcome{
+	float:left;
+	width:217px; 
+	overflow:hidden;
+	text-align:right;
+	color:#646464;
+	font-size:10px;
+	font-style:Italic;
+	padding-top:12px;
+	margin-right:10px;
+}
+div.welcome a, div.welcome a:hover{
+	color:#969595;
+	font-size:11px;
+	font-style:normal;
+	font-weight:bold;
+}
+div.welcome a:hover{ color:#bbbaba; }
+
+li.disconnect, li.subscribe{ margin:0px 3px; }
+li.disconnect:hover, li.subscribe:hover{ height:41px; border-bottom:2px solid #336397; }
+
+li.disconnect a, li.subscribe a { 
+	font-size:11px !important; 
+	color:#969595 !important; 
+}
+li.disconnect a:hover, li.subscribe a:hovers{ color:#bbbaba !important; text-decoration:none; }
