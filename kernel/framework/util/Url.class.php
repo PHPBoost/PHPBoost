@@ -555,9 +555,21 @@ class Url
         return $url->absolute();
     }
 	
-	public static function is_current_url($url)
+    /**
+     * @desc Returns true if $check_url is current url
+     * @param string $check_url check url
+     * @param bool $real_url true if check real url or false for verificate $check_url is containing in current url
+     */
+	public static function is_current_url($check_url, $real_url = false)
 	{
-		return strpos(REWRITED_SCRIPT, $url) !== false;
+		$site_path = GeneralConfig::load()->get_default_site_path();
+		$current_url = str_replace($site_path, '', REWRITED_SCRIPT);
+		
+		if ($real_url)
+		{
+			return $current_url == $check_url;
+		}
+		return strpos($current_url, $check_url) !== false;
 	}
 }
 ?>
