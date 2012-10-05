@@ -210,7 +210,7 @@ elseif (!empty($table) && $action == 'update') //Mise à jour.
 				'FIELD_TYPE' => $table_structure['fields'][$i]['type'],
 				'FIELD_NULL' => $table_structure['fields'][$i]['null'] ? $LANG['yes'] : $LANG['no'],
 				'FIELD_VALUE' => TextHelper::strprotect($field_value, TextHelper::HTML_PROTECT, TextHelper::ADDSLASHES_NONE),
-				'C_FIELD_FORM_EXTEND' => ($table_structure['fields'][$i]['type'] == 'text') ? true : false
+				'C_FIELD_FORM_EXTEND' => ($table_structure['fields'][$i]['type'] == 'text' || $table_structure['fields'][$i]['type'] == 'mediumtext') ? true : false
 			));
 			$i++;
 		}
@@ -274,7 +274,7 @@ elseif (!empty($table) && $action == 'insert') //Mise à jour.
 				'FIELD_TYPE' => $fields_info['type'],
 				'FIELD_NULL' => $fields_info['null'] ? $LANG['yes'] : $LANG['no'],
 				'FIELD_VALUE' => TextHelper::strprotect($fields_info['default']),
-				'C_FIELD_FORM_EXTEND' => ($fields_info['type'] == 'text') ? true : false
+				'C_FIELD_FORM_EXTEND' => ($fields_info['type'] == 'text' || $fields_info['type'] == 'mediumtext') ? true : false
 			));
 		}
 	}
