@@ -20,19 +20,20 @@
 
 	<div class="connect_align">
 		<ul>
-			<li class="subscribe">
-				<a href='{U_REGISTER}'>{L_REGISTER}</a>
-			</li>
-			<li class="submenu connect"><a href='#'>{L_CONNECT}</a>
+			<li class="submenu connect">{L_CONNECT}
 				<ul>
 					<form action="{U_CONNECT}" method="post" onsubmit="return check_connect();" class="connect_align">
 						<input type="text" id="login" name="login" value="{L_PSEUDO}" class="connect_form" onfocus="if( this.value == '{L_PSEUDO}' ) this.value = '';" maxlength="25" />
-						<input type="password" id="password" name="password" class="connect_form" value="******" onfocus="if( this.value == '******' ) this.value = '';" maxlength="30" />
-						<input checked="checked" type="checkbox" name="auto" class="submit" />
+						<br /><input type="password" id="password" name="password" class="connect_form" value="******" onfocus="if( this.value == '******' ) this.value = '';" maxlength="30" />
+						<br />
+						<p class="auto_connect">{L_AUTOCONNECT} <input checked="checked" type="checkbox" name="auto" class="submit" /> </p>
 						<input type="hidden" name="redirect" value="{REWRITED_SCRIPT}" />
 						<input type="submit" name="connect" value="{L_CONNECT}" class="submit" />
 					</form>
 				</ul>
+			</li>
+			<li class="subscribe">
+				<a href='{U_REGISTER}'>{L_REGISTER}</a>
 			</li>
 		</ul>
 
@@ -46,7 +47,7 @@
 	<div class="connect_align">
 	
 		<ul>
-			<li class="submenu"><a href='{U_HOME_PROFILE}'>Votre Profil</a>
+			<li class="submenu">Votre Profil
 				<ul>
 					<img src="{U_AVATAR_IMG}" alt="avatar" title="Avatar" width="90px" class="connect_avatar"/>
 					<li>
@@ -86,6 +87,6 @@
 			</li>
 		</ul>
 	</div>
-	<div class="welcome" >Bienvenue, <a href='#'>{PSEUDO}</a></div>
+	<div class="welcome" >Bienvenue, <a href='{U_HOME_PROFILE}'>{PSEUDO}</a></div>
 	# ENDIF #
 # ENDIF #
