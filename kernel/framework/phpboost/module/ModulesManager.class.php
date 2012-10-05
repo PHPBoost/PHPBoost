@@ -453,7 +453,7 @@ class ModulesManager
 
 	private static function module_setup_exists($module_setup_classname)
 	{
-		return class_exists($module_setup_classname, false);
+		return in_array($module_setup_classname, get_declared_classes());
 	}
 
 	private static function update_class_list()

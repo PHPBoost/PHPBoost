@@ -41,7 +41,7 @@ class ClassLoader
 	    '/test/PHPUnit',
 	);
 
-	private static $exclude_folders_names = array('.svn', 'templates', 'lang');
+	private static $exclude_folders_names = array('templates', 'lang');
 
 	/**
 	 * @desc initializes the autoload class list
