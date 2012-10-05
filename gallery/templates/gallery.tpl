@@ -84,15 +84,25 @@
 			{
 				if( xhr_object.readyState == 4 && xhr_object.status == 200 && xhr_object.responseText != '-1' )
 				{	
-					var img_aprob;
+					var img_aprob, title_aprob;
 					if( xhr_object.responseText == 0 )
+					{
 						img_aprob = 'unvisible.png';
+						title_aprob = '{L_UNAPROB}';
+					}
 					else
+					{
 						img_aprob = 'visible.png';
+						title_aprob = '{L_APROB}';
+					}
 					
 					document.getElementById('img' + id_file).innerHTML = '';
 					if( document.getElementById('img_aprob' + id_file) )
+					{
 						document.getElementById('img_aprob' + id_file).src = '{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/' + img_aprob;
+						document.getElementById('img_aprob' + id_file).title = '' + title_aprob;
+						document.getElementById('img_aprob' + id_file).alt = '' + title_aprob;
+					}
 				}
 				else if( xhr_object.readyState == 4 && xhr_object.responseText == '-1' )
 					document.getElementById('img' + id_file).innerHTML = '';
@@ -367,7 +377,7 @@
 										<a href="javascript:pics_display_block({ID});" onmouseover="pics_hide_block({ID}, 1);" onmouseout="pics_hide_block({ID}, 0);" class="bbcode_hover" title="{L_MOVETO}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/upload/move.png" alt="" class="valign_middle" /></a>
 										
 										
-										<a href="javascript:pics_aprob({ID});" title="{L_APROB_IMG}"><img id="img_aprob{ID}" src="{PATH_TO_ROOT}/templates/{THEME}/images/{IMG_APROB}" alt="{L_APROB_IMG}" title="{L_APROB_IMG}" class="valign_middle" /></a>
+										<a href="javascript:pics_aprob({ID});"><img id="img_aprob{ID}" src="{PATH_TO_ROOT}/templates/{THEME}/images/{IMG_APROB}" alt="{L_APROB_IMG}" title="{L_APROB_IMG}" class="valign_middle" /></a>
 										&nbsp;<span id="img{ID}"></span>
 									</td>
 								</tr>
