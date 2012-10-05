@@ -175,6 +175,8 @@ class ModulesManager
 	 */
 	public static function install_module($module_identifier, $enable_module = true, $generate_cache = true)
 	{
+		self::update_class_list();
+		
 		if (empty($module_identifier) || !is_dir(PATH_TO_ROOT . '/' . $module_identifier))
 		{
 			return self::UNEXISTING_MODULE;
@@ -218,7 +220,8 @@ class ModulesManager
 		ModulesConfig::load()->add_module($module);
 		ModulesConfig::save();
 		
-		self::update_class_list();
+		// TODO Force initialization ExtensionProviderService for PHPBoost installation
+		AppContext::init_extension_provider_service();
 		
 		MenuService::add_mini_module($module_identifier);
 
@@ -310,6 +313,7 @@ class ModulesManager
 					{
 						$folder->delete();
 						self::update_class_list();
+						AppContext::init_extension_provider_service();
 					}
 					catch (IOException $ex)
 					{
@@ -453,13 +457,12 @@ class ModulesManager
 
 	private static function module_setup_exists($module_setup_classname)
 	{
-		return in_array($module_setup_classname, get_declared_classes());
+		return ClassLoader::is_class_registered_and_valid($module_setup_classname);
 	}
 
 	private static function update_class_list()
 	{
 		ClassLoader::generate_classlist();
-		AppContext::init_extension_provider_service();
 	}
 	
 	private static function module_contains_rewrited_rules($module_identifier)
