@@ -569,7 +569,7 @@ class Url
 		{
 			return $current_url == $check_url;
 		}
-		return strpos($check_url, $current_url) !== false;
+		return strpos($current_url, $check_url) !== false;
 	}
 }
 ?>

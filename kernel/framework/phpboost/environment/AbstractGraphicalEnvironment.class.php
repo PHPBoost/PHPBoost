@@ -46,10 +46,10 @@ abstract class AbstractGraphicalEnvironment implements GraphicalEnvironment
 			$maintenance_config = MaintenanceConfig::load();
 			if (!$this->user->check_auth($maintenance_config->get_auth(), 1))
 			{
-				$maintain_url = UserUrlBuilder::maintain()->absolute();
-				if (!Url::is_current_url($maintain_url))
+				$maintain_url = UserUrlBuilder::maintain();
+				if (!Url::is_current_url($maintain_url->relative()))
 				{
-					AppContext::get_response()->redirect($maintain_url);
+					AppContext::get_response()->redirect($maintain_url->absolute());
 				}
 			}
 		}
