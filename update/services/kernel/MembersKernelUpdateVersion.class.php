@@ -50,11 +50,12 @@ class MembersKernelUpdateVersion extends KernelUpdateVersion
 		$result = $this->querier->select_rows(PREFIX .'member', array('user_id', 'user_avatar', 'user_local', 'user_msn', 'user_yahoo', 'user_web', 'user_occupation', 'user_hobbies', 'user_desc', 'user_sex', 'user_born', 'user_sign'));
 		while ($row = $result->fetch())
 		{
+			$date = new Date(DATE_FROM_STRING, TIMEZONE_SYSTEM, str_replace('-', '/', $row['user_born']), 'y/m/d');
 			try {
 				$this->querier->insert(PREFIX .'member_extended_fields', array(
 					'user_id' => $row['user_id'],
 					'user_sex' => $row['user_sex'], 
-					'user_born' => $row['user_born'], 
+					'user_born' => $date->get_timestamp(), 
 					'user_location' => $row['user_local'], 
 					'user_website' => $row['user_web'],  
 					'user_job' => $row['user_occupation'],  
@@ -68,7 +69,7 @@ class MembersKernelUpdateVersion extends KernelUpdateVersion
 			} catch (Exception $e) {
 				$this->querier->update(PREFIX .'member_extended_fields', array(
 					'user_sex' => $row['user_sex'], 
-					'user_born' => $row['user_born'], 
+					'user_born' => $date->get_timestamp(), 
 					'user_location' => $row['user_local'], 
 					'user_website' => $row['user_web'],  
 					'user_job' => $row['user_occupation'],  
