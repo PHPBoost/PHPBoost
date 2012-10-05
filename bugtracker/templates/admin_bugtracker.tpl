@@ -6,6 +6,12 @@
 					<br />
 					<a href="admin_bugtracker.php" class="quick_link">{L_BUGS_CONFIG}</a>
 				</li>
+				
+				<li>
+					<a href="admin_bugtracker_authorizations.php"><img src="bugtracker.png" alt="" /></a>
+					<br />
+					<a href="admin_bugtracker_authorizations.php" class="quick_link">{L_AUTH}</a>
+				</li>
 			</ul>
 		</div>
 		
@@ -88,15 +94,7 @@
 		</script>
 	
 		<div id="admin_contents">
-			# IF C_ERROR_HANDLER #
-				<div class="error_handler_position">
-					<span id="errorh"></span>
-					<div class="{ERRORH_CLASS}" style="width:500px;margin:auto;padding:15px;">
-						<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
-						<br />	
-					</div>
-				</div>
-			# ENDIF #
+			# INCLUDE message_helper #
 			
 			<form action="admin_bugtracker.php?token={TOKEN}" method="post" onsubmit="return check_form();" class="fieldset_content">
 				<fieldset>
@@ -267,6 +265,8 @@
 				<fieldset>
 					<legend>{L_BUGS_DISPONIBLE_VERSIONS}</legend>
 					<span>{L_BUGS_VERSION_EXPLAIN}</span>
+					
+					
 					<table class="module_table">
 						<tr style="text-align:center;">
 							<th>
@@ -334,46 +334,6 @@
 					</dl>
 				</fieldset>
 				
-				<fieldset>
-					<legend>
-						{L_AUTH}
-					</legend>
-					<dl>
-						<dt>
-							<label>{L_READ_AUTH}</label>
-						</dt>
-						<dd>
-							{BUG_READ_AUTH}
-						</dd>
-					</dl>
-					<dl>
-						<dt>
-							<label>{L_CREATE_AUTH}</label>
-						</dt>
-						<dd>
-							{BUG_CREATE_AUTH}
-						</dd>
-					</dl>
-					<dl>
-						<dt>
-							<label>{L_CREATE_ADVANCED_AUTH}</label>
-							<br />
-							<span>{L_CREATE_ADVANCED_AUTH_EXPLAIN}</lspan>
-						</dt>
-						<dd>
-							{BUG_CREATE_ADVANCED_AUTH}
-						</dd>
-					</dl>
-					<dl>
-						<dt>
-							<label>{L_MODERATE_AUTH}</label>
-						</dt>
-						<dd>
-							{BUG_MODERATE_AUTH}
-						</dd>
-					</dl>
-				</fieldset>
-				
 				<fieldset class="fieldset_submit">
 					<legend>{L_UPDATE}</legend>
 					<input type="submit" name="valid" value="{L_UPDATE}" class="submit" />			
@@ -396,15 +356,7 @@
 		}
 		-->
 		</script>
-			# IF C_ERROR_HANDLER #
-			<div class="error_handler_position">
-				<span id="errorh"></span>
-				<div class="{ERRORH_CLASS}" style="width:500px;margin:auto;padding:15px;">
-					<img src="../templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
-					<br />	
-				</div>
-			</div>
-			# ENDIF #	
+			# INCLUDE message_helper #
 			
 			<form action="admin_bugtracker.php?token={TOKEN}" name="form" method="post" style="margin:auto;" onsubmit="return check_form();" class="fieldset_content">
 				<fieldset>
@@ -441,15 +393,7 @@
 		}
 		-->
 		</script>
-			# IF C_ERROR_HANDLER #
-			<div class="error_handler_position">
-				<span id="errorh"></span>
-				<div class="{ERRORH_CLASS}" style="width:500px;margin:auto;padding:15px;">
-					<img src="../templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
-					<br />	
-				</div>
-			</div>
-			# ENDIF #	
+			# INCLUDE message_helper #
 			
 			<form action="admin_bugtracker.php?token={TOKEN}" name="form" method="post" style="margin:auto;" onsubmit="return check_form();" class="fieldset_content">
 				<fieldset>
@@ -486,15 +430,7 @@
 		}
 		-->
 		</script>
-			# IF C_ERROR_HANDLER #
-			<div class="error_handler_position">
-				<span id="errorh"></span>
-				<div class="{ERRORH_CLASS}" style="width:500px;margin:auto;padding:15px;">
-					<img src="../templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
-					<br />	
-				</div>
-			</div>
-			# ENDIF #	
+			# INCLUDE message_helper #
 			
 			<form action="admin_bugtracker.php?token={TOKEN}" name="form" method="post" style="margin:auto;" onsubmit="return check_form();" class="fieldset_content">
 				<fieldset>

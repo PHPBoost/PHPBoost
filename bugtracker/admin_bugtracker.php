@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                              admin_bugtracker_config.php
+ *                              admin_bugtracker.php
  *                            -------------------
  *   begin                : February 03, 2012
  *   copyright            : (C) 2012 Julien BRISWALTER
@@ -85,6 +85,7 @@ else if (isset($_GET['edit_type']) && is_numeric($id)) // edition d'un type
 	$Template->assign_vars(array(
 		'L_BUGS_MANAGEMENT'	=> $LANG['bugs.titles.admin.management'],
 		'L_BUGS_CONFIG' 	=> $LANG['bugs.titles.admin.config'],
+		'L_AUTH'		 	=> $LANG['bugs.config.auth'],
 		'L_EDIT_TYPE'		=> $LANG['bugs.titles.edit_type'],
 		'L_REQUIRE' 		=> $LANG['require'],
 		'L_REQUIRE_TYPE' 	=> $LANG['bugs.notice.require_type'],
@@ -169,6 +170,7 @@ else if (isset($_GET['edit_category']) && is_numeric($id)) // edition d'une caté
 	$Template->assign_vars(array(
 		'L_BUGS_MANAGEMENT'		=> $LANG['bugs.titles.admin.management'],
 		'L_BUGS_CONFIG' 		=> $LANG['bugs.titles.admin.config'],
+		'L_AUTH'		 		=> $LANG['bugs.config.auth'],
 		'L_EDIT_CATEGORY'		=> $LANG['bugs.titles.edit_category'],
 		'L_REQUIRE' 			=> $LANG['require'],
 		'L_REQUIRE_CATEGORY' 	=> $LANG['bugs.notice.require_category'],
@@ -264,6 +266,7 @@ else if (isset($_GET['edit_version']) && is_numeric($id)) // edition d'une versi
 	$Template->assign_vars(array(
 		'L_BUGS_MANAGEMENT'		=> $LANG['bugs.titles.admin.management'],
 		'L_BUGS_CONFIG' 		=> $LANG['bugs.titles.admin.config'],
+		'L_AUTH'		 		=> $LANG['bugs.config.auth'],
 		'L_EDIT_VERSION'		=> $LANG['bugs.titles.edit_version'],
 		'L_REQUIRE' 			=> $LANG['require'],
 		'L_REQUIRE_VERSION' 	=> $LANG['bugs.notice.require_version'],
@@ -321,11 +324,10 @@ else if (!empty($_POST['valid']))
 		$bugtracker_config->set_types(retrieve(POST, 'types', $bugtracker_config->get_types()));
 		$bugtracker_config->set_categories(retrieve(POST, 'categories', $bugtracker_config->get_categories()));
 		$bugtracker_config->set_contents_value(retrieve(POST, 'contents_value', '', TSTRING_AS_RECEIVED));
-		$bugtracker_config->set_authorizations(Authorizations::build_auth_array_from_form(BugtrackerConfig::BUG_READ_AUTH_BIT, BugtrackerConfig::BUG_CREATE_AUTH_BIT, BugtrackerConfig::BUG_CREATE_ADVANCED_AUTH_BIT, BugtrackerConfig::BUG_MODERATE_AUTH_BIT));
 
 		BugtrackerConfig::save();
 		
-		AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT . '?error=success#message_helper');
+		AppContext::get_response()->redirect(HOST . SCRIPT . '?error=success#message_helper');
 	}
 	else
 		AppContext::get_response()->redirect(HOST . SCRIPT . '?error=require_items_per_page#message_helper');
@@ -334,8 +336,6 @@ else if (!empty($_POST['valid']))
 else	
 {	
 	$Template = new FileTemplate('bugtracker/admin_bugtracker.tpl');
-	
-	$authorizations = $bugtracker_config->get_authorizations();
 	
 	$contents_editor = AppContext::get_content_formatting_service()->get_default_editor();
 	$contents_editor->set_identifier('contents_value');
@@ -385,11 +385,6 @@ else
 		'L_NO_CATEGORY'					=> $LANG['bugs.notice.no_category'],
 		'L_ACTIONS' 					=> $LANG['bugs.actions'],
 		'L_AUTH'		 				=> $LANG['bugs.config.auth'],
-		'L_READ_AUTH' 					=> $LANG['bugs.config.auth.read'],
-		'L_CREATE_AUTH' 				=> $LANG['bugs.config.auth.create'],
-		'L_CREATE_ADVANCED_AUTH'		=> $LANG['bugs.config.auth.create_advanced'],
-		'L_CREATE_ADVANCED_AUTH_EXPLAIN'=> $LANG['bugs.config.auth.create_advanced_explain'],
-		'L_MODERATE_AUTH'				=> $LANG['bugs.config.auth.moderate'],
 		'L_ADD' 						=> $LANG['add'],
 		'L_UPDATE' 						=> $LANG['update'],
 		'L_DELETE' 						=> $LANG['delete'],
@@ -402,11 +397,7 @@ else
 		'CLOSED_BUG_COLOR'				=> $bugtracker_config->get_closed_bug_color(),
 		'COM_CHECKED'					=> ($bugtracker_config->get_comments_activated() == true) ? 'checked=checked' : '',
 		'CONTENTS_VALUE'				=> FormatingHelper::unparse($bugtracker_config->get_contents_value()),
-		'CONTENTS_KERNEL_EDITOR'		=> $contents_editor->display(),
-		'BUG_READ_AUTH'					=> Authorizations::generate_select(BugtrackerConfig::BUG_READ_AUTH_BIT, $authorizations),
-		'BUG_CREATE_AUTH'				=> Authorizations::generate_select(BugtrackerConfig::BUG_CREATE_AUTH_BIT, $authorizations),
-		'BUG_CREATE_ADVANCED_AUTH'		=> Authorizations::generate_select(BugtrackerConfig::BUG_CREATE_ADVANCED_AUTH_BIT, $authorizations),
-		'BUG_MODERATE_AUTH'				=> Authorizations::generate_select(BugtrackerConfig::BUG_MODERATE_AUTH_BIT, $authorizations)
+		'CONTENTS_KERNEL_EDITOR'		=> $contents_editor->display()
 	));
 	
 	$Template->assign_block_vars('config', array());
