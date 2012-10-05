@@ -141,9 +141,12 @@ else
 		'L_GALLERY' => $LANG['gallery'],
 		'L_CATEGORIES' => ($CAT_GALLERY[$idcat]['level'] >= 0) ? $LANG['sub_album'] : $LANG['album'],
 		'L_NAME' => $LANG['name'],
+		'L_APROB' => $LANG['aprob'],
+		'L_UNAPROB' => $LANG['unaprob'],
 		'L_EDIT' => $LANG['edit'],
 		'L_MOVETO' => $LANG['moveto'],
 		'L_DELETE' => $LANG['delete'],
+		'L_APROB_IMG' => ($CAT_GALLERY[$idcat]['aprob'] == 1) ? $LANG['unaprob'] : $LANG['aprob'],
 		'L_SUBMIT' => $LANG['submit'],
 		'U_GALLERY_CAT_LINKS' => $cat_links
 	));
@@ -202,7 +205,7 @@ else
 	if ($nbr_pics > 0)
 	{
 		$Template->assign_block_vars('pics', array(
-			'EDIT' => '<a href="admin_gallery_cat.php' . (!empty($idcat) ? '?id=' . $idcat : '') . '"><img class="valign_middle" src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/edit.png" alt="" /></a>',
+			'EDIT' => '<a href="admin_gallery_cat.php' . (!empty($idcat) ? '?id=' . $idcat : '') . '" title="' . $LANG['edit'] . '" ><img class="valign_middle" src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/edit.png" alt="' . $LANG['edit'] . '" title="' . $LANG['edit'] . '" /></a>',
 			'PICS_MAX' => !empty($idpics) ? '<img src="show_pics.php?id=' . $idpics . '&amp;cat=' . $idcat . '" alt="" / >' : ''
 		));
 
@@ -396,7 +399,7 @@ else
 					'PATH' => $row['path'],
 					'NAME' => stripslashes($name_cut),
 					'TITLE' => stripslashes($row['name']),
-					'RENAME_FILE' => '<span id="fihref' . $row['id'] . '"><a href="javascript:display_rename_file(\'' . $row['id'] . '\', \'' . addslashes($row['name']) . '\', \'' . addslashes($name_cut) . '\');"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/edit.png" alt="' . $LANG['edit'] . '" class="valign_middle" /></a></span>',
+					'RENAME_FILE' => '<span id="fihref' . $row['id'] . '"><a href="javascript:display_rename_file(\'' . $row['id'] . '\', \'' . addslashes($row['name']) . '\', \'' . addslashes($name_cut) . '\');" title="' . $LANG['edit'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/edit.png" alt="' . $LANG['edit'] . '" title="' . $LANG['edit'] . '" class="valign_middle" /></a></span>',
 					'IMG_APROB' => ($row['aprob'] == 1) ? 'unvisible.png' : 'visible.png',
 					'TR_START' => $tr_start,
 					'TR_END' => $tr_end,
