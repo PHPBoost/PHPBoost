@@ -150,6 +150,8 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 			'MODULE_DATA_PATH' => $module_data_path,
 			'ADD_PICS' => $User->check_auth($CAT_GALLERY[$g_idcat]['auth'], WRITE_CAT_GALLERY) ? '<a href="' . GalleryUrlBuilder::get_link_cat_add($g_idcat) . '"><img src="'. PATH_TO_ROOT.'/templates/' . get_utheme() . '/images/' . get_ulang() . '/add.png" alt="" class="valign_middle" title="' . $LANG['gallery_pics_add'] .'"/></a>' : '',
 			'L_CONFIRM_DEL_FILE' => $LANG['confim_del_file'],
+			'L_APROB' => $LANG['aprob'],
+			'L_UNAPROB' => $LANG['unaprob'],
 			'L_FILE_FORBIDDEN_CHARS' => $LANG['file_forbidden_chars'],
 			'L_TOTAL_IMG' => sprintf($LANG['total_img_cat'], $nbr_pics),
 			'L_ADD_IMG' => $LANG['add_pic'],
