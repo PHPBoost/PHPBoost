@@ -16,11 +16,13 @@
 		<div id="footer_columns_container">
 			<div class="footer_columns">
 				<div class="footer_columns_title"> Les parternaires </div>
+				<p style="font-size:9px;color:#dfa959;line-height:0px;margin-bottom: 0px;font-weight:bold;">Hebergement de site web</p>
 				<img src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/nuxit.png" align="center" />
+				<p style="font-size:9px;font-style:italic;color:#8bb9ff;">Qualité, fiabilité, Support</p>
 			</div>
 			<div class="footer_columns phpboost">
 				<div class="footer_columns_title"> Le projet PHPBoost </div>
-				<img src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/logo.png" align="center"  width="75px" /> 
+				<!--  <img src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/logo.png" align="center"  width="60px" />  -->
 				<ul>
 					<li><a href="#">Fonctionnalités</a></li>
 					<li><a href="#">Telecharger</a></li>
