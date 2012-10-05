@@ -70,11 +70,11 @@
 		
 		<div id="sub_header">
 			<ul class="menu_link">
-				<li class="current"><a href="{PATH_TO_ROOT}" class="title">Accueil</a></li>
-				<li><a href="{PATH_TO_ROOT}/news" class="title">Actualités</a></li>
-				<li><a href="{PATH_TO_ROOT}/wiki" class="title">Documentation</a></li>
-				<li><a href="{PATH_TO_ROOT}/forum" class="title">Support</a></li>
-				<li><a href="{PATH_TO_ROOT}/download" class="title">Télechargement</a></li>
+				<li # IF Url::is_current_url('/', true) # class="current" # ENDIF # # IF Url::is_current_url('/index.php', true) # class="current" # ENDIF # ><a href="{PATH_TO_ROOT}" class="title">Accueil</a></li>
+				<li # IF Url::is_current_url('/news') # class="current" # ENDIF #><a href="{PATH_TO_ROOT}/news" class="title">Actualités</a></li>
+				<li # IF Url::is_current_url('/wiki') # class="current" # ENDIF #><a href="{PATH_TO_ROOT}/wiki" class="title">Documentation</a></li>
+				<li # IF Url::is_current_url('/forum') # class="current" # ENDIF #><a href="{PATH_TO_ROOT}/forum" class="title">Support</a></li>
+				<li # IF Url::is_current_url('/download') # class="current" # ENDIF #><a href="{PATH_TO_ROOT}/download" class="title">Télechargement</a></li>
 			</ul>
 			# IF C_MENUS_SUB_HEADER_CONTENT #
 			{MENUS_SUB_HEADER_CONTENT}
