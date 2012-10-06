@@ -79,7 +79,7 @@ $LANG['bugs.titles.disponible_versions'] = 'Versions disponibles';
 $LANG['bugs.titles.disponible_types'] = 'Types disponibles';
 $LANG['bugs.titles.disponible_categories'] = 'Catégories disponibles';
 $LANG['bugs.titles.admin.management'] = 'Gestion bugtracker';
-$LANG['bugs.titles.admin.config'] = 'Configuration Bugtracker';
+$LANG['bugs.titles.admin.config'] = 'Configuration';
 $LANG['bugs.titles.edit_type'] = 'Edition d\'un type';
 $LANG['bugs.titles.edit_category'] = 'Edition d\'une catégorie';
 $LANG['bugs.titles.edit_version'] = 'Edition d\'une version';
@@ -197,9 +197,6 @@ $LANG['bugs.error.e_no_user_assigned'] = 'Ce bug n\'a été assigné à aucun utilis
 $LANG['bugs.error.e_no_closed_version'] = 'Veuillez sélectionner la version de correction avant de passer à l\'état "' . $LANG['bugs.status.closed'] . '"';
 $LANG['bugs.error.e_config_success'] = 'La configuration a été modifiée avec succès';
 $LANG['bugs.error.e_edit_success'] = 'Le bug a été modifié avec succès';
-$LANG['bugs.error.e_edit_type_success'] = 'Le type a été modifié avec succès';
-$LANG['bugs.error.e_edit_category_success'] = 'La catégorie a été modifiée avec succès';
-$LANG['bugs.error.e_edit_version_success'] = 'La version a été modifié avec succès';
 $LANG['bugs.error.e_unexist_bug'] = 'Ce bug n\'existe pas';
 
 ?>

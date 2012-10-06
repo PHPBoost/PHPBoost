@@ -79,7 +79,7 @@ $LANG['bugs.titles.disponible_versions'] = 'Disponible versions';
 $LANG['bugs.titles.disponible_types'] = 'Disponible types';
 $LANG['bugs.titles.disponible_categories'] = 'Disponible categories';
 $LANG['bugs.titles.admin.management'] = 'Bugtracker management';
-$LANG['bugs.titles.admin.config'] = 'Configuration Bugtracker';
+$LANG['bugs.titles.admin.config'] = 'Configuration';
 $LANG['bugs.titles.edit_type'] = 'Type edition';
 $LANG['bugs.titles.edit_category'] = 'Category edition';
 $LANG['bugs.titles.edit_version'] = 'Version edition';
@@ -189,9 +189,6 @@ $LANG['bugs.error.e_no_user_assigned'] = 'There is no user assigned for this bug
 $LANG['bugs.error.e_no_closed_version'] = 'Please select the correction version before choosing the status "' . $LANG['bugs.status.closed'] . '"';
 $LANG['bugs.error.e_config_success'] = 'The configuration has successfully been modified';
 $LANG['bugs.error.e_edit_success'] = 'The bug has successfully been updated';
-$LANG['bugs.error.e_edit_type_success'] = 'The type has successfully been updated';
-$LANG['bugs.error.e_edit_category_success'] = 'The category has successfully been updated';
-$LANG['bugs.error.e_edit_version_success'] = 'The version has successfully been updated';
 $LANG['bugs.error.e_unexist_bug'] = 'This bug does not exist';
 
 ?>
