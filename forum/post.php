@@ -161,7 +161,7 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 			if ($is_modo)
 				$check_status = 1;
 
-			$contents = retrieve(POST, 'contents', '', TSTRING);
+			$contents = retrieve(POST, 'contents', '', TSTRING_UNCHANGE);
 			$title = retrieve(POST, 'title', '');
 			$subtitle = retrieve(POST, 'desc', '');
 
