@@ -46,7 +46,7 @@ if (!$User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 	DispatchManager::redirect($error_controller);
 }
 
-if (empty($CAT_FORUM[$id_get]['url']))
+if (!empty($CAT_FORUM[$id_get]['url']))
 {
 	$error_controller = PHPBoostErrors::unexisting_page();
 	DispatchManager::redirect($error_controller);
