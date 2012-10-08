@@ -126,7 +126,7 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 		foreach ($array_order as $type => $name)
 		{
 			$Template->assign_block_vars('order', array(
-				'ORDER_BY' => '<a href="gallery' . url('.php?sort=' . $type . '_desc&amp;cat=' . $g_idcat, '-' . $g_idcat . '+' . $rewrite_title . '.php?sort=' . $type . '_desc') . '" style="background-image:url(' . $module_data_path . '/images/' . $type . '.png);">' . $name . '</a>'
+				'ORDER_BY' => '<a href="/gallery/gallery' . url('.php?sort=' . $type . '_desc&amp;cat=' . $g_idcat, '-' . $g_idcat . '+' . $rewrite_title . '.php?sort=' . $type . '_desc') . '" style="background-image:url(' . $module_data_path . '/images/' . $type . '.png);">' . $name . '</a>'
 			));
 		}
 	
