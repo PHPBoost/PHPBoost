@@ -61,7 +61,8 @@
 					<dt><label for="auto">{@autoconnect}</label></dt>
 					<dd><label><input type="checkbox" checked="checked" name="auto" id="auto" /></label></dd>
 				</dl>
-			</fieldset>			
+			</fieldset>
+			<input type="hidden" name="redirect" value="{REWRITED_SCRIPT}" />
 			<fieldset class="fieldset_submit">
 				<input type="submit" name="connect" value="{@connect}" class="submit" />		
 			</fieldset>	
