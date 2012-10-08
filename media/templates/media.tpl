@@ -7,7 +7,7 @@
 				</a>
 			# END IF #
 			# IF C_MODO #
-				<a href="moderation_media.php" class="img_link" title="{L_MODO_PANEL}">
+				<a href="{PATH_TO_ROOT}/media/moderation_media.php" class="img_link" title="{L_MODO_PANEL}">
 					<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/moderation_panel.png" style="width:16px;height:16px;" alt="">
 				</a>
 			# END IF #

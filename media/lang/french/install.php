@@ -35,7 +35,7 @@ $lang = array(
 	'media_contents' => 'Il est important de réaliser régulièrement des sauvegardes de sa base de données.<br /><br />Voici une petite vidéo vous montrant comment sauvegarder et restaurer sa base de donnée à l\'aide de l\'utilitaire de PHPBoost.<br /><br />Bonne visualisation  <img src="/images/smileys/sourire.gif" alt=":)" class="smiley" /> .',
 	'media_url' => 'http://www.ptithom.net/documents/phpboost/videos/bdd/sauv_restau_bdd.flv', 
 	
-    'media_name_cat' => 'Vidéos de PHPboost',
+    'media_name_cat' => 'Vidéos de PHPBoost',
     'media_contents_cat' => 'Cette catégorie contient des tutoriels vidéos afin de vous montrer certaines actions dont vous pourriez avoir besoin durant l\'utilisation de <a href="http://www.phpboost.com/pages/videos-de-demonstration">PHPboost</a>. Ces vidéos sont en streaming.',
 	'media_icon_cat' => '../media/templates/images/video.png'
 );
