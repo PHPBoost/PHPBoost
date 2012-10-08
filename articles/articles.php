@@ -46,7 +46,7 @@ if (!empty($idart) && isset($cat) )
 	$articles['auth'] = $ARTICLES_CAT[$articles['idcat']]['auth'];
 
 	//checking authorization
-	if (!$User->check_auth($ARTICLES_CAT[$idartcat]['auth'], AUTH_ARTICLES_READ))
+	if (!$User->check_auth($ARTICLES_CAT[$idartcat]['auth'], AUTH_ARTICLES_READ) && !$User->check_auth($articles['auth'], AUTH_ARTICLES_READ))
 	{
 		$error_controller = PHPBoostErrors::user_not_authorized();
 		DispatchManager::redirect($error_controller);
