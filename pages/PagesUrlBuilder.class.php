@@ -48,6 +48,5 @@ class PagesUrlBuilder
 		return PATH_TO_ROOT . self::PREFIX.url(
 			'pages.php?id='.$id.'&amp;com='.$com);
 	}
-
 }
 ?>

@@ -73,12 +73,12 @@ class PagesHomePageExtensionPoint implements HomePageExtensionPoint
 		));
 		
 		$tools = array(
-			$LANG['pages_create'] => url('post.php'),
-			$LANG['pages_redirections'] => url('action.php'),
-			$LANG['pages_explorer'] => url('explorer.php'),
+			$LANG['pages_create'] => url('/pages/post.php'),
+			$LANG['pages_redirections'] => url('/pages/action.php'),
+			$LANG['pages_explorer'] => url('/pages/explorer.php'),
 		);
 		if ($User->check_level(User::ADMIN_LEVEL))
-			$tools[$LANG['pages_config']] = url('admin_pages.php');
+			$tools[$LANG['pages_config']] = url('/pages/admin_pages.php');
 		
 		foreach ($tools as $tool => $url)
 			$tpl->assign_block_vars('tools', array(
