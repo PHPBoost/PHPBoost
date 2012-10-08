@@ -15,7 +15,6 @@
 			</ul>
 		</div>
 		
-		# START config #
 		<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/lib/js/phpboost/bbcode.js"></script>
 		<script type="text/javascript">
 		<!--
@@ -181,11 +180,11 @@
 					<span>{L_BUGS_TYPE_EXPLAIN}</span>
 					<table id="versions_list" class="module_table">
 						<tr style="text-align:center;">
-							<th style="width:80%">
+							<th style="width:90%">
 								{L_TYPE}
 							</th>
 							<th>
-								{L_ACTIONS}
+								{L_DELETE}
 							</th>
 						</tr>
 						# IF C_NO_TYPE #
@@ -198,11 +197,10 @@
 						# START types #
 						<tr id="version_{types.ID}" style="text-align:center;"> 
 							<td class="row2">
-								{types.TYPE}
+								<input type="text" maxlength="100" size="40" name="type{types.ID}" value="{types.TYPE}" class="text" />
 							</td>
 							<td class="row2"> 
-								<a href="admin_bugtracker.php?edit_type=true&amp;id={types.ID}"><img src="../templates/{THEME}/images/{LANG}/edit.png" alt="{L_UPDATE}" title="{L_UPDATE}" /></a>
-								<a href="admin_bugtracker.php?delete_type=true&amp;id={types.ID}&amp;token={TOKEN}" onclick="javascript:return Confirm_del_type();"><img src="../templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" /></a>
+								<a href="admin_bugtracker.php?delete_type&amp;id={types.ID}&amp;token={TOKEN}" onclick="javascript:return Confirm_del_type();"><img src="../templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" /></a>
 							</td>
 						</tr>
 						# END types #
@@ -224,11 +222,11 @@
 					<span>{L_BUGS_CATEGORY_EXPLAIN}</span>
 					<table class="module_table">
 						<tr style="text-align:center;">
-							<th style="width:80%">
+							<th style="width:90%">
 								{L_CATEGORY}
 							</th>
 							<th>
-								{L_ACTIONS}
+								{L_DELETE}
 							</th>
 						</tr>
 						# IF C_NO_CATEGORY #
@@ -241,11 +239,10 @@
 						# START categories #
 						<tr style="text-align:center;"> 
 							<td class="row2">
-								{categories.CATEGORY}
+								<input type="text" maxlength="100" size="40" name="category{categories.ID}" value="{categories.CATEGORY}" class="text" />
 							</td>
 							<td class="row2"> 
-								<a href="admin_bugtracker.php?edit_category=true&amp;id={categories.ID}"><img src="../templates/{THEME}/images/{LANG}/edit.png" alt="{L_UPDATE}" title="{L_UPDATE}" /></a>
-								<a href="admin_bugtracker.php?delete_category=true&amp;id={categories.ID}&amp;token={TOKEN}" onclick="javascript:return Confirm_del_category();"><img src="../templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" /></a>
+								<a href="admin_bugtracker.php?delete_category&amp;id={categories.ID}&amp;token={TOKEN}" onclick="javascript:return Confirm_del_category();"><img src="../templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" /></a>
 							</td>
 						</tr>
 						# END categories #
@@ -278,8 +275,8 @@
 							<th>
 								{L_VERSION_FIXED}
 							</th>
-							<th>
-								{L_ACTIONS}
+							<th style="width:10%">
+								{L_DELETE}
 							</th>
 						</tr>
 						# IF C_NO_VERSION #
@@ -292,17 +289,16 @@
 						# START versions #
 						<tr style="text-align:center;"> 
 							<td class="row2">
-								{versions.VERSION}
+								<input type="text" maxlength="100" size="40" name="version{versions.ID}" value="{versions.VERSION}" class="text" />
 							</td> 
 							<td class="row2">
-								<input type="checkbox" {versions.DETECTED_IN} disabled=disabled />
+								<input type="checkbox" name="detected_in{versions.ID}" {versions.DETECTED_IN} />
 							</td> 
 							<td class="row2">
-								<input type="checkbox" {versions.FIXED_IN} disabled=disabled />
+								<input type="checkbox" name="fixed_in{versions.ID}" {versions.FIXED_IN} />
 							</td> 
 							<td class="row2"> 
-								<a href="admin_bugtracker.php?edit_version=true&amp;id={versions.ID}"><img src="../templates/{THEME}/images/{LANG}/edit.png" alt="{L_UPDATE}" title="{L_UPDATE}" /></a>
-								<a href="admin_bugtracker.php?delete_version=true&amp;id={versions.ID}&amp;token={TOKEN}" onclick="javascript:return Confirm_del_version();"><img src="../templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" /></a>
+								<a href="admin_bugtracker.php?delete_version&amp;id={versions.ID}&amp;token={TOKEN}" onclick="javascript:return Confirm_del_version();"><img src="../templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" /></a>
 							</td>
 						</tr>
 						# END versions #
@@ -340,127 +336,3 @@
 				</fieldset>
 			</form>
 		</div>
-		# END config #
-		
-		# START edit_type #
-		<div id="admin_contents">
-		<script type="text/javascript">
-		<!--
-		function check_form()
-		{
-			if(document.getElementById('type').value == "") {
-				alert("{L_REQUIRE_TYPE}");
-				return false;
-			}
-			return true;
-		}
-		-->
-		</script>
-			# INCLUDE message_helper #
-			
-			<form action="admin_bugtracker.php?token={TOKEN}" name="form" method="post" style="margin:auto;" onsubmit="return check_form();" class="fieldset_content">
-				<fieldset>
-					<legend>{L_EDIT_TYPE}</legend>
-					<p>{L_REQUIRE}</p>
-					<dl>
-						<dt><label for="type">* {L_TYPE}</label></dt>
-						<dd><label><input type="text" size="40" maxlength="100" id="type" name="type" value="{edit_type.TYPE}" class="text" /></label></dd>
-					</dl>
-				</fieldset>	
-				
-				<fieldset class="fieldset_submit">
-					<legend>{L_UPDATE}</legend>
-					<input type="hidden" name="id" value="{edit_type.ID}" class="submit" />
-					<input type="submit" name="valid_edit_type" value="{L_UPDATE}" class="submit" />
-					&nbsp;&nbsp; 
-					<input type="reset" value="{L_RESET}" class="reset" />				
-				</fieldset>	
-			</form>
-		</div>
-		# END edit_type #
-		
-		# START edit_category #
-		<div id="admin_contents">
-		<script type="text/javascript">
-		<!--
-		function check_form()
-		{
-			if(document.getElementById('category').value == "") {
-				alert("{L_REQUIRE_CATEGORY}");
-				return false;
-			}
-			return true;
-		}
-		-->
-		</script>
-			# INCLUDE message_helper #
-			
-			<form action="admin_bugtracker.php?token={TOKEN}" name="form" method="post" style="margin:auto;" onsubmit="return check_form();" class="fieldset_content">
-				<fieldset>
-					<legend>{L_EDIT_CATEGORY}</legend>
-					<p>{L_REQUIRE}</p>
-					<dl>
-						<dt><label for="category">* {L_CATEGORY}</label></dt>
-						<dd><label><input type="text" size="40" maxlength="100" id="category" name="category" value="{edit_category.CATEGORY}" class="text" /></label></dd>
-					</dl>
-				</fieldset>	
-				
-				<fieldset class="fieldset_submit">
-					<legend>{L_UPDATE}</legend>
-					<input type="hidden" name="id" value="{edit_category.ID}" class="submit" />
-					<input type="submit" name="valid_edit_category" value="{L_UPDATE}" class="submit" />
-					&nbsp;&nbsp; 
-					<input type="reset" value="{L_RESET}" class="reset" />				
-				</fieldset>	
-			</form>
-		</div>
-		# END edit_category #
-		
-		# START edit_version #
-		<div id="admin_contents">
-		<script type="text/javascript">
-		<!--
-		function check_form()
-		{
-			if(document.getElementById('version').value == "") {
-				alert("{L_REQUIRE_VERSION}");
-				return false;
-			}
-			return true;
-		}
-		-->
-		</script>
-			# INCLUDE message_helper #
-			
-			<form action="admin_bugtracker.php?token={TOKEN}" name="form" method="post" style="margin:auto;" onsubmit="return check_form();" class="fieldset_content">
-				<fieldset>
-					<legend>{L_EDIT_VERSION}</legend>
-					<p>{L_REQUIRE}</p>
-					<dl>
-						<dt><label for="version">* {L_VERSION}</label></dt>
-						<dd><label><input type="text" size="40" maxlength="100" id="version" name="version" value="{edit_version.VERSION}" class="text" /></label></dd>
-					</dl>
-					<dl>
-						<dt><label for="detected_in">{L_VERSION_DETECTED_IN}</label></dt>
-						<dd> 
-							<input type="checkbox" name="detected_in" {edit_version.DETECTED_IN} />
-						</dd>
-					</dl>
-					<dl>
-						<dt><label for="fixed_in">{L_VERSION_FIXED_IN}</label></dt>
-						<dd> 
-							<input type="checkbox" name="fixed_in" {edit_version.FIXED_IN} />
-						</dd>
-					</dl>
-				</fieldset>	
-				
-				<fieldset class="fieldset_submit">
-					<legend>{L_UPDATE}</legend>
-					<input type="hidden" name="id" value="{edit_version.ID}" class="submit" />
-					<input type="submit" name="valid_edit_version" value="{L_UPDATE}" class="submit" />
-					&nbsp;&nbsp; 
-					<input type="reset" value="{L_RESET}" class="reset" />				
-				</fieldset>	
-			</form>
-		</div>
-		# END edit_version #
