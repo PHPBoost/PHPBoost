@@ -33,6 +33,10 @@ load_module_lang('articles');
 
 $Cache->load('articles');
 
+$idartcat = retrieve(GET, 'cat', 0);
+$idart = retrieve(GET, 'id', 0);
+$invisible = retrieve(GET, 'invisible', false, TBOOL);
+
 if (isset($ARTICLES_CAT[$idartcat]) )
 {
 	$articles_categories = new ArticlesCats();

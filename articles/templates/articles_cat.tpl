@@ -44,7 +44,7 @@
 		# IF C_ARTICLES_CAT #
 		<p style="text-align:center;" class="text_strong">
 			{L_CATEGORIES}
-			# IF C_MODERATE # <a href="admin_articles_cat.php"><img class="valign_middle" src="../templates/{THEME}/images/{LANG}/edit.png" alt="" /></a> # ENDIF #
+			# IF C_MODERATE # <a href="{PATH_TO_ROOT}/articles/admin_articles_cat.php"><img class="valign_middle" src="../templates/{THEME}/images/{LANG}/edit.png" alt="" /></a> # ENDIF #
 		</p>
 		<hr style="margin-bottom:20px;" />
 		# START cat_list #
