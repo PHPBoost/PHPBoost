@@ -6,42 +6,42 @@
 			</tr>
 			<tr style="text-align:center;">
 				<td style="width:20%;padding:15px;" class="row2">
-					<a href="stats{U_STATS_SITE}#stats"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/stats/site.png" alt="" /></a>
-					<br /><a href="stats{U_STATS_SITE}#stats">{L_SITE}</a>
+					<a href="{PATH_TO_ROOT}/stats/stats{U_STATS_SITE}#stats"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/stats/site.png" alt="" /></a>
+					<br /><a href="{PATH_TO_ROOT}/stats/stats{U_STATS_SITE}#stats">{L_SITE}</a>
 				</td>
 				<td style="width:20%;padding:15px;" class="row2">
-					<a href="stats{U_STATS_USERS}#stats"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/upload/member.png" alt="" /></a>
-					<br /><a href="stats{U_STATS_USERS}#stats">{L_USERS}</a>
+					<a href="{PATH_TO_ROOT}/stats/stats{U_STATS_USERS}#stats"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/upload/member.png" alt="" /></a>
+					<br /><a href="{PATH_TO_ROOT}/stats/stats{U_STATS_USERS}#stats">{L_USERS}</a>
 				</td>
 				<td style="width:20%;" class="row2">
-					<a href="stats{U_STATS_VISIT}#stats"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/stats/visitors.png" alt="" /></a>
-					<br /><a href="stats{U_STATS_VISIT}#stats">{L_VISITS}</a>
+					<a href="{PATH_TO_ROOT}/stats/stats{U_STATS_VISIT}#stats"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/stats/visitors.png" alt="" /></a>
+					<br /><a href="{PATH_TO_ROOT}/stats/stats{U_STATS_VISIT}#stats">{L_VISITS}</a>
 				</td>
 				<td style="width:20%;padding:15px;" class="row2">
-					<a href="stats{U_STATS_PAGES}#stats"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/stats/pages.png" alt="" /></a>
-					<br /><a href="stats{U_STATS_PAGES}#stats">{L_PAGES}</a>
+					<a href="{PATH_TO_ROOT}/stats/stats{U_STATS_PAGES}#stats"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/stats/pages.png" alt="" /></a>
+					<br /><a href="{PATH_TO_ROOT}/stats/stats{U_STATS_PAGES}#stats">{L_PAGES}</a>
 				</td>
 				<td style="width:20%;padding:15px;" class="row2">
-					<a href="stats{U_STATS_BROWSER}#stats"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/stats/browsers.png" alt="" /></a>
-					<br /><a href="stats{U_STATS_BROWSER}#stats">{L_BROWSERS}</a>
+					<a href="{PATH_TO_ROOT}/stats/stats{U_STATS_BROWSER}#stats"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/stats/browsers.png" alt="" /></a>
+					<br /><a href="{PATH_TO_ROOT}/stats/stats{U_STATS_BROWSER}#stats">{L_BROWSERS}</a>
 				</td>
 			</tr>
 			<tr style="text-align:center;">				
 				<td style="width:20%;" class="row2">	
-					<a href="stats{U_STATS_OS}#stats"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/stats/os.png" alt="" /></a>
-					<br /><a href="stats{U_STATS_OS}#stats">{L_OS}</a>		
+					<a href="{PATH_TO_ROOT}/stats/stats{U_STATS_OS}#stats"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/stats/os.png" alt="" /></a>
+					<br /><a href="{PATH_TO_ROOT}/stats/stats{U_STATS_OS}#stats">{L_OS}</a>		
 				</td>		
 				<td style="width:20%;padding:15px;" class="row2">
-					<a href="stats{U_STATS_LANG}#stats"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/stats/countries.png" alt="" /></a>
-					<br /><a href="stats{U_STATS_LANG}#stats">{L_LANG}</a>
+					<a href="{PATH_TO_ROOT}/stats/stats{U_STATS_LANG}#stats"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/stats/countries.png" alt="" /></a>
+					<br /><a href="{PATH_TO_ROOT}/stats/stats{U_STATS_LANG}#stats">{L_LANG}</a>
 				</td>
 				<td style="width:20%;padding:15px;" class="row2">
-					<a href="stats{U_STATS_REFERER}#stats"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/stats/referer.png" alt="" /></a>
-					<br /><a href="stats{U_STATS_REFERER}#stats">{L_REFERER}</a>
+					<a href="{PATH_TO_ROOT}/stats/stats{U_STATS_REFERER}#stats"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/stats/referer.png" alt="" /></a>
+					<br /><a href="{PATH_TO_ROOT}/stats/stats{U_STATS_REFERER}#stats">{L_REFERER}</a>
 				</td>
 				<td style="width:20%;padding:15px;" class="row2">
-					<a href="stats{U_STATS_KEYWORD}#stats"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/stats/keyword.png" alt="" /></a>
-					<br /><a href="stats{U_STATS_KEYWORD}#stats">{L_KEYWORD}</a>
+					<a href="{PATH_TO_ROOT}/stats/stats{U_STATS_KEYWORD}#stats"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/stats/keyword.png" alt="" /></a>
+					<br /><a href="{PATH_TO_ROOT}/stats/stats{U_STATS_KEYWORD}#stats">{L_KEYWORD}</a>
 				</td>
 				<td style="width:20%;padding:15px;" class="row2">
 					&nbsp;
