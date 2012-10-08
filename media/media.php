@@ -29,17 +29,15 @@
 require_once('../kernel/begin.php');
 require_once('media_begin.php');
 
-$id_media = retrieve(GET, 'id', 0);
-$id_cat = retrieve(GET, 'cat', 0);
-$level = array('', ' class="modo"', ' class="admin"');
-
-$notation = new Notation();
-$notation->set_module_name('media');
-$notation->set_notation_scale($MEDIA_CONFIG['note_max']);
-
 // Display caterories and media files.
 if (empty($id_media) && $id_cat >= 0)
 {
+	bread_crumb($id_cat);
+	
+	define('TITLE', $MEDIA_CATS[$id_cat]['name']);
+
+	require_once('../kernel/header.php');
+		
 	$modulesLoader = AppContext::get_extension_provider_service();
 	$module = $modulesLoader->get_provider('media');
 	if ($module->has_extension_point(HomePageExtensionPoint::EXTENSION_POINT))

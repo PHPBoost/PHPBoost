@@ -34,6 +34,10 @@ if (defined('PHPBOOST') !== true)
 $Cache->load('media');
 load_module_lang('media');
 
+$id_media = retrieve(GET, 'id', 0);
+$id_cat = retrieve(GET, 'cat', 0);
+$level = array('', ' class="modo"', ' class="admin"');
+
 require_once('media_constant.php');
 
 $notation = new Notation();

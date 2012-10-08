@@ -41,9 +41,11 @@ class MediaHomePageExtensionPoint implements HomePageExtensionPoint
 	
 	private function get_title()
 	{
-		global $MEDIA_LANG;
+		global $Cache, $MEDIA_CATS;
 		
-		return $MEDIA_LANG['media'];
+		$Cache->load('media');
+		
+		return $MEDIA_CATS[0]['name'];
 	}
 	
 	private function get_view()
@@ -60,12 +62,6 @@ class MediaHomePageExtensionPoint implements HomePageExtensionPoint
 			$controller = PHPBoostErrors::unexisting_category();
 	        DispatchManager::redirect($controller);
 		}
-	
-		bread_crumb($id_cat);
-	
-		define('TITLE', $MEDIA_CATS[$id_cat]['name']);
-	
-		require_once('../kernel/header.php');
 	
 		$i = 1;
 		//List of children categories
@@ -85,8 +81,8 @@ class MediaHomePageExtensionPoint implements HomePageExtensionPoint
 					'SRC' => !empty($array['image']) ? $array['image'] : 'media_mini.png',
 					'IMG_NAME' => addslashes($array['name']),
 					'NUM_MEDIA' => ($array['active'] & MEDIA_NBR) !== 0 ? sprintf(($array['num_media'] > 1 ? $MEDIA_LANG['num_medias'] : $MEDIA_LANG['num_media']), $array['num_media']) : '',
-					'U_CAT' => url('media.php?cat=' . $id, 'media-0-' . $id . '+' . Url::encode_rewrite($array['name']) . '.php'),
-					'U_ADMIN_CAT' => url('admin_media_cats.php?edit=' . $id)
+					'U_CAT' => url('/media/media.php?cat=' . $id, '/media/media-0-' . $id . '+' . Url::encode_rewrite($array['name']) . '.php'),
+					'U_ADMIN_CAT' => url('/media/admin_media_cats.php?edit=' . $id)
 				));
 	
 				$i++;
@@ -102,9 +98,9 @@ class MediaHomePageExtensionPoint implements HomePageExtensionPoint
 			'TITLE' => $MEDIA_CATS[$id_cat]['name'],
 			'C_ADMIN' => $User->check_level(User::ADMIN_LEVEL),
 			'C_MODO' => $User->check_level(User::MODERATOR_LEVEL),
-			'U_ADMIN_CAT' => $id_cat == 0 ? 'admin_media_config.php' : 'admin_media_cats.php?edit=' . $id_cat,
+			'U_ADMIN_CAT' => $id_cat == 0 ? '/media/admin_media_config.php' : '/media/admin_media_cats.php?edit=' . $id_cat,
 			'C_ADD_FILE' => $User->check_auth($MEDIA_CATS[$id_cat]['auth'], MEDIA_AUTH_WRITE) || $User->check_auth($MEDIA_CATS[$id_cat]['auth'], MEDIA_AUTH_CONTRIBUTION),
-			'U_ADD_FILE' => 'media_action.php?add=' . $id_cat,
+			'U_ADD_FILE' => '/media/media_action.php?add=' . $id_cat,
 			'L_ADD_FILE' => $MEDIA_LANG['add_media'],
 			'C_DESCRIPTION' => !empty($MEDIA_CATS[$id_cat]['desc']),
 			'DESCRIPTION' => FormatingHelper::second_parse($MEDIA_CATS[$id_cat]['desc']),
@@ -186,7 +182,7 @@ class MediaHomePageExtensionPoint implements HomePageExtensionPoint
 			$Pagination = new DeprecatedPagination();
 	
 			$tpl->put_all(array(
-				'PAGINATION' => $Pagination->display(url('media.php' . (!empty($unget) ? $unget . '&amp;' : '?') . 'cat=' . $id_cat . '&amp;p=%d', 'media-0-' . $id_cat . '-%d' . '+' . Url::encode_rewrite($MEDIA_CATS[$id_cat]['name']) . '.php' . $unget), $MEDIA_CATS[$id_cat]['num_media'], 'p', $MEDIA_CONFIG['pagin'], 3),
+				'PAGINATION' => $Pagination->display(url('/media/media.php' . (!empty($unget) ? $unget . '&amp;' : '?') . 'cat=' . $id_cat . '&amp;p=%d', 'media-0-' . $id_cat . '-%d' . '+' . Url::encode_rewrite($MEDIA_CATS[$id_cat]['name']) . '.php' . $unget), $MEDIA_CATS[$id_cat]['num_media'], 'p', $MEDIA_CONFIG['pagin'], 3),
 				'C_FILES' => true,
 				'TARGET_ON_CHANGE_ORDER' => ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? 'media-0-' . $id_cat . '.php?' : 'media.php?cat=' . $id_cat . '&'
 			));
@@ -217,10 +213,10 @@ class MediaHomePageExtensionPoint implements HomePageExtensionPoint
 					'DATE' => sprintf($MEDIA_LANG['add_on_date'], gmdate_format('date_format_short', $row['timestamp'])),
 					'COUNT' => sprintf($MEDIA_LANG['view_n_times'], $row['counter']),
 					'NOTE' => NotationService::display_static_image($notation),
-					'U_MEDIA_LINK' => url('media.php?id=' . $row['id'], 'media-' . $row['id'] . '-' . $id_cat . '+' . Url::encode_rewrite($row['name']) . '.php'),
-					'U_ADMIN_UNVISIBLE_MEDIA' => url('media_action.php?unvisible=' . $row['id'] . '&amp;token=' . $Session->get_token()),
-					'U_ADMIN_EDIT_MEDIA' => url('media_action.php?edit=' . $row['id']),
-					'U_ADMIN_DELETE_MEDIA' => url('media_action.php?del=' . $row['id'] . '&amp;token=' . $Session->get_token()),
+					'U_MEDIA_LINK' => url('/media/media.php?id=' . $row['id'], 'media-' . $row['id'] . '-' . $id_cat . '+' . Url::encode_rewrite($row['name']) . '.php'),
+					'U_ADMIN_UNVISIBLE_MEDIA' => url('/media/media_action.php?unvisible=' . $row['id'] . '&amp;token=' . $Session->get_token()),
+					'U_ADMIN_EDIT_MEDIA' => url('/media/media_action.php?edit=' . $row['id']),
+					'U_ADMIN_DELETE_MEDIA' => url('/media/media_action.php?del=' . $row['id'] . '&amp;token=' . $Session->get_token()),
 					'U_COM_LINK' => '<a href="'. PATH_TO_ROOT .'/media/media' . url('.php?id=' . $row['id'] . '&amp;com=0', '-' . $row['id'] . '-' . $id_cat . '+' . Url::encode_rewrite($row['name']) . '.php?com=0') .'">'. CommentsService::get_number_and_lang_comments('media', $row['id']) . '</a>'
 				));
 			}
