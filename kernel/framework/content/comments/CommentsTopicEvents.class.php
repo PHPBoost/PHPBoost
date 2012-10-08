@@ -43,7 +43,7 @@ class CommentsTopicEvents
 		
 	}
 	
-	private function get_comments_topic()
+	protected function get_comments_topic()
 	{
 		return $this->comments_topic;
 	}
