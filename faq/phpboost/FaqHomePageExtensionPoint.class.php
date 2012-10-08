@@ -41,11 +41,7 @@ class FaqHomePageExtensionPoint implements HomePageExtensionPoint
 	
 	private function get_title()
 	{
-		global $FAQ_LANG;
-		
-		load_module_lang('faq');
-		
-		return $FAQ_LANG['faq'];
+		return FaqConfig::load()->get_faq_name();
 	}
 	
 	private function get_view()
@@ -105,7 +101,7 @@ class FaqHomePageExtensionPoint implements HomePageExtensionPoint
 						'IMG_NAME' => addslashes($value['name']),
 						'NUM_QUESTIONS' => sprintf(((int)$value['num_questions'] > 1 ? $FAQ_LANG['num_questions_plural'] : $FAQ_LANG['num_questions_singular']), (int)$value['num_questions']),
 						'U_CAT' => FaqUrlBuilder::get_link_cat($id,$value['name']),
-						'U_ADMIN_CAT' => url('admin_faq_cats.php?edit=' . $id)
+						'U_ADMIN_CAT' => url('/faq/admin_faq_cats.php?edit=' . $id)
 					));
 					
 					if (!empty($value['image']))
@@ -156,12 +152,12 @@ class FaqHomePageExtensionPoint implements HomePageExtensionPoint
 						'ID_QUESTION' => $row['id'],
 						'QUESTION' => $row['question'],
 						'ANSWER' => FormatingHelper::second_parse($row['answer']),
-						'U_QUESTION' => FaqUrlBuilder::get_link_question($id_faq,$row['id']),
-						'U_DEL' => url('action.php?del=' . $row['id'] . '&amp;token=' . $Session->get_token()),
-						'U_DOWN' => url('action.php?down=' . $row['id']),
-						'U_UP' => url('action.php?up=' . $row['id']),
-						'U_MOVE' => url('management.php?move=' . $row['id']),
-						'U_EDIT' => url('management.php?edit=' . $row['id']),
+						'U_QUESTION' => FaqUrlBuilder::get_link_question($id_faq, $row['id']),
+						'U_DEL' => url('/faq/action.php?del=' . $row['id'] . '&amp;token=' . $Session->get_token()),
+						'U_DOWN' => url('/faq/action.php?down=' . $row['id']),
+						'U_UP' => url('/faq/action.php?up=' . $row['id']),
+						'U_MOVE' => url('/faq/management.php?move=' . $row['id']),
+						'U_EDIT' => url('/faq/management.php?edit=' . $row['id']),
 						'C_HIDE_ANSWER' => $row['id'] != $id_question,
 						'C_SHOW_ANSWER' => $row['id'] == $id_question
 					));
@@ -180,11 +176,11 @@ class FaqHomePageExtensionPoint implements HomePageExtensionPoint
 						'ANSWER' => FormatingHelper::second_parse($row['answer']),
 						'QUESTION' => $row['question'],
 						'ID' => $row['id'],
-						'U_DEL' => url('action.php?del=' . $row['id'] . '&amp;token=' . $Session->get_token()),
-						'U_DOWN' => url('action.php?down=' . $row['id']),
-						'U_UP' => url('action.php?up=' . $row['id']),
-						'U_EDIT' => url('management.php?edit=' . $row['id']),
-						'U_MOVE' => url('management.php?move=' . $row['id']),
+						'U_DEL' => url('/faq/action.php?del=' . $row['id'] . '&amp;token=' . $Session->get_token()),
+						'U_DOWN' => url('/faq/action.php?down=' . $row['id']),
+						'U_UP' => url('/faq/action.php?up=' . $row['id']),
+						'U_EDIT' => url('/faq/management.php?edit=' . $row['id']),
+						'U_MOVE' => url('/faq/management.php?move=' . $row['id']),
 						'U_QUESTION' => FaqUrlBuilder::get_link_question($id_faq,$row['id'])
 					));
 					
@@ -201,7 +197,7 @@ class FaqHomePageExtensionPoint implements HomePageExtensionPoint
 		}
 
 		$tpl->put_all(array(
-			'TITLE' => TITLE,
+			'TITLE' => $faq_config->get_faq_name() . ($id_faq > 0 ? ' - ' . FaqUrlBuilder::get_title($id_faq) : ''),
 			'L_NO_QUESTION_THIS_CATEGORY' => $FAQ_LANG['faq_no_question_here'],
 			'L_CAT_MANAGEMENT' => $FAQ_LANG['category_manage'],
 			'L_EDIT' => $FAQ_LANG['update'],
@@ -214,8 +210,8 @@ class FaqHomePageExtensionPoint implements HomePageExtensionPoint
 			'LANG' => get_ulang(),
 			'THEME' => get_utheme(),
 			'C_ADMIN' => $User->check_level(User::ADMIN_LEVEL),
-			'U_MANAGEMENT' => url('management.php?faq=' . $id_faq),
-			'U_ADMIN_CAT' => $id_faq > 0 ? url('admin_faq_cats.php?edit=' . $id_faq) : url('admin_faq_cats.php'),
+			'U_MANAGEMENT' => url('/faq/management.php?faq=' . $id_faq),
+			'U_ADMIN_CAT' => $id_faq > 0 ? url('/faq/admin_faq_cats.php?edit=' . $id_faq) : url('admin_faq_cats.php'),
 			'ID_FAQ' => $id_faq,
 		));
 

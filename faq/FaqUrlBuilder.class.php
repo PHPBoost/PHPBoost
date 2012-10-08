@@ -42,17 +42,17 @@ class FaqUrlBuilder
 	public static function get_link_cat($id_faq, $name)
 	{
 		return url(
-			'faq.php?id=' . $id_faq,
-			'faq-' . $id_faq . '+' . Url::encode_rewrite($name) . '.php');
+			'/faq/faq.php?id=' . $id_faq,
+			'/faq/faq-' . $id_faq . '+' . Url::encode_rewrite($name) . '.php');
 	}
 
-	public static function get_link_question($id_faq,$id,$name='')
+	public static function get_link_question($id_faq, $id, $name='')
 	{
 		if (empty($name))
 			$name = self::get_title($id_faq);
 		return url(
-			'faq.php?id=' . $id_faq . '&amp;question=' . $id,
-			'faq-' . $id_faq . '+' . Url::encode_rewrite($name) . '.php?question=' . $id . '#q' . $id);
+			'/faq/faq.php?id=' . $id_faq . '&amp;question=' . $id,
+			'/faq/faq-' . $id_faq . '+' . Url::encode_rewrite($name) . '.php?question=' . $id . '#q' . $id);
 	}
 }
 ?>
