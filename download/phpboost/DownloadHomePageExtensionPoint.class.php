@@ -67,7 +67,7 @@ class DownloadHomePageExtensionPoint implements HomePageExtensionPoint
 			'TITLE' => sprintf($DOWNLOAD_LANG['title_download'] . ($category_id > 0 ? ' - ' . $DOWNLOAD_CATS[$category_id]['name'] : '')),
 			'DESCRIPTION' => $category_id > 0 ? FormatingHelper::second_parse($DOWNLOAD_CATS[$category_id]['contents']) : FormatingHelper::second_parse($CONFIG_DOWNLOAD['root_contents']),
 			'L_ADD_FILE' => $DOWNLOAD_LANG['add_file'],
-			'U_ADMIN_CAT' => $category_id > 0 ? url(PATH_TO_ROOT . '/download/admin_download_cat.php?edit=' . $category_id) : url('admin_download_cat.php'),
+			'U_ADMIN_CAT' => $category_id > 0 ? url(PATH_TO_ROOT . '/download/admin_download_cat.php?edit=' . $category_id) : url('/download/admin_download_cat.php'),
 			'U_ADD_FILE' => url(PATH_TO_ROOT . '/download/management.php?new=1&amp;idcat=' . $category_id)
 		));
 		
