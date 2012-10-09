@@ -36,9 +36,6 @@ class FaqModuleMiniMenu extends ModuleMiniMenu
     {
     	global $Cache, $Template, $FAQ_LANG, $FAQ_CATS, $RANDOM_QUESTIONS, $User;
 
-	    load_module_lang('faq');
-	    $Cache->load('faq'); //Chargement du cache
-	
 	    include_once(PATH_TO_ROOT . '/faq/faq_begin.php');
 	
 	    $tpl = new FileTemplate('faq/faq_mini.tpl');
