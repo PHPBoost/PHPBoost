@@ -827,7 +827,7 @@ else if (isset($_GET['view']) && is_numeric($id)) // Visualisation d'une fiche B
 	{
 		$comments_topic = new BugtrackerCommentsTopic();
 		$comments_topic->set_id_in_module($id);
-		$comments_topic->set_url(new Url('/bugtracker/bugtracker.php?view&amp;id=' . $id . '&com=0'));
+		$comments_topic->set_url(new Url('/bugtracker/bugtracker.php?view&id=' . $id . '&com=0'));
 		$Template->put_all(array(
 			'COMMENTS' => CommentsService::display($comments_topic)->render()
 		));
