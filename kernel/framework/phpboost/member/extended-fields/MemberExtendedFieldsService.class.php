@@ -73,8 +73,8 @@ class MemberExtendedFieldsService
 				$template = $member_extended_field->get_template();
 				$fieldset = new FormFieldsetHTML('other', LangLoader::get_message('other', 'main'));
 				$member_extended_field->set_fieldset($fieldset);
-				$template->add_fieldset($fieldset);
 
+				$nbr_field = 0;
 				$result = PersistenceContext::get_sql()->query_while("SELECT exc.name, exc.field_name, exc.default_values, exc.auth, exc.field_type, ex.*
 				FROM " . DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST . " exc
 				LEFT JOIN " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " ex ON ex.user_id = '" . $user_id . "'
@@ -92,8 +92,15 @@ class MemberExtendedFieldsService
 					if (AppContext::get_current_user()->check_auth($authorizations, ExtendedField::READ_PROFILE_AUTHORIZATION))
 					{
 						MemberExtendedFieldsFactory::display_field_profile($member_extended_field);
+						$nbr_field++;
 					}
 				}
+				
+				if ($nbr_field > 0)
+				{
+					$template->add_fieldset($fieldset);
+				}
+				
 				PersistenceContext::get_sql()->query_close($result);
 			}
 		}
