@@ -338,9 +338,9 @@ class Contribution extends Event
 	{
 		if (!empty($this->module))
 		{
-			$module_ini = load_ini_file(PATH_TO_ROOT . '/' . $this->module . '/lang/', get_ulang());
-
-			return isset($module_ini['name']) ? $module_ini['name'] : '';
+			$module = ModulesManager::get_module($this->module);
+			
+			return $module ? $module->get_configuration()->get_name() : '';
 		}
 		else
 		{
