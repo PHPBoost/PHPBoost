@@ -157,7 +157,7 @@ class ArticlesHomePageExtensionPoint implements HomePageExtensionPoint
 			'SELECTED_AUTHOR' => $selected_fields['author'],
 			'SELECTED_ASC' => $selected_fields['asc'],
 			'SELECTED_DESC' => $selected_fields['desc'],
-			'TARGET_ON_CHANGE_ORDER' => ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? $invisible ? 'category-' . $idartcat . '.php?invisible=1&' : 'category-' . $idartcat . '.php?' : $invisible ? 'articles.php?cat=' . $idartcat . '&invisible=1&' : 'articles.php?cat=' . $idartcat . '&',
+			'TARGET_ON_CHANGE_ORDER' => PATH_TO_ROOT . '/articles/' . url('articles.php?cat=' . $idartcat . ($invisible ? '&invisible=1&' : '&'), 'articles-' . $idartcat . '.php?' . ($invisible ? 'invisible=1&' : '')),
 			'L_CAT_NAME' => $idartcat > 0 ? $ARTICLES_CAT[$idartcat]['name'] : $ARTICLES_LANG['title_articles'],
 			'L_DATE' => $LANG['date'],
 			'L_VIEW' => $LANG['views'],
