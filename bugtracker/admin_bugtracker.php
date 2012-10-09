@@ -172,7 +172,7 @@ else if (!empty($_POST['valid']))
 		$bugtracker_config->set_versions($versions);
 		$bugtracker_config->set_types($types);
 		$bugtracker_config->set_categories($categories);
-		$bugtracker_config->set_contents_value(retrieve(POST, 'contents_value', '', TSTRING_AS_RECEIVED));
+		$bugtracker_config->set_contents_value(retrieve(POST, 'contents_value', '', TSTRING_UNCHANGE));
 
 		BugtrackerConfig::save();
 		
