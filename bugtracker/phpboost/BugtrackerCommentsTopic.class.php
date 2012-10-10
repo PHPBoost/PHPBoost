@@ -42,6 +42,11 @@ class BugtrackerCommentsTopic extends CommentsTopic
 		return $authorizations;
 	}
 	
+	public function get_events()
+	{
+		return new BugtrackerCommentsTopicEvents($this);
+	}
+
 	public function is_display()
 	{
 		return true;
