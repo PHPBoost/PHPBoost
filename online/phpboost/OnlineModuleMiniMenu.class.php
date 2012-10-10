@@ -101,7 +101,7 @@ class OnlineModuleMiniMenu extends ModuleMiniMenu
 		$this->incremente_user();
 		switch ($user->get_level())
 		{
-			case '-1':
+			case User::VISITOR_LEVEL:
 				$this->incremente_visitor();
 			break;
 			case User::MEMBER_LEVEL:

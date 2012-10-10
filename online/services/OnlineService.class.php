@@ -43,9 +43,11 @@ class OnlineService
 	{
 		$users = array();
 		
-		$result = self::$querier->select("SELECT s.user_id as id, s.level, s.session_time, s.session_script, s.session_script_get, s.session_script_title, m.login, m.user_groups
-		FROM " . DB_TABLE_SESSIONS . " s
-		JOIN " . DB_TABLE_MEMBER . " m ON (m.user_id = s.user_id) "
+		$result = self::$querier->select("SELECT 
+		s.user_id, s.level, s.session_time, s.session_script, s.session_script_get, s.session_script_title,
+		m.login, m.user_groups
+        FROM " . DB_TABLE_SESSIONS . " s
+        LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = s.user_id "
 		. $condition, $parameters);
 		
 		while ($row = $result->fetch())
