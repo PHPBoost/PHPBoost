@@ -47,6 +47,11 @@
 				<li class="bt_no_current">
 					<a href="{PATH_TO_ROOT}/bugtracker/bugtracker.php?solved">{L_SOLVED}</a>
 				</li>
+				# IF C_ROADMAP #
+				<li class="bt_no_current">
+					<a href="{PATH_TO_ROOT}/bugtracker/bugtracker.php?roadmap">{L_ROADMAP}</a>
+				</li>
+				# ENDIF #
 				<li class="bt_no_current">
 					<a href="{PATH_TO_ROOT}/bugtracker/bugtracker.php?stats">{L_STATS}</a>
 				</li>
@@ -79,11 +84,13 @@
 						<a href="{PATH_TO_ROOT}/bugtracker/bugtracker{U_BUG_TYPE_BOTTOM}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
 					</th>
 					# ENDIF #
+					# IF C_DISPLAY_SEVERITIES #
 					<th style="width:70px;text-align:center;">
 						{L_SEVERITY}<br />
 						<a href="{PATH_TO_ROOT}/bugtracker/bugtracker{U_BUG_SEVERITY_TOP}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
 						<a href="{PATH_TO_ROOT}/bugtracker/bugtracker{U_BUG_SEVERITY_BOTTOM}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
 					</th>
+					# ENDIF #
 					<th style="width:60px;text-align:center;">
 						{L_STATUS}<br />
 						<a href="{PATH_TO_ROOT}/bugtracker/bugtracker{U_BUG_STATUS_TOP}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
@@ -116,33 +123,36 @@
 				# ELSE #
 				# START list.bug #
 				<tr style="text-align:center;"> 
-					<td class="row2" {list.bug.COLOR}>
+					<td class="row2" {list.bug.LINE_COLOR}>
 						<a href="{PATH_TO_ROOT}/bugtracker/bugtracker.php?view&amp;id={list.bug.ID}">\#{list.bug.ID}</a>
 					</td>
-					<td class="row2" {list.bug.COLOR}>
+					<td class="row2" {list.bug.LINE_COLOR}>
 						{list.bug.TITLE}
 					</td>
 					# IF C_DISPLAY_TYPES #
-					<td class="row2" {list.bug.COLOR}>
+					<td class="row2" {list.bug.LINE_COLOR}>
 						{list.bug.TYPE}
 					</td>
 					# ENDIF #
+					# IF C_DISPLAY_SEVERITIES #
 					<td class="row2" {list.bug.SEVERITY_COLOR}> 
 						<b>{list.bug.SEVERITY}</b>
 					</td>
-					<td class="row2" {list.bug.COLOR}> 
+					# ENDIF #
+					<td class="row2" {list.bug.LINE_COLOR}> 
 						{list.bug.STATUS}
 					</td>
 					# IF C_COM #
-					<td class="row2" {list.bug.COLOR}> 
+					<td class="row2" {list.bug.LINE_COLOR}> 
 						{list.bug.COMMENTS}
 					</td>
 					# ENDIF #
-					<td class="row2" {list.bug.COLOR}>
+					<td class="row2" {list.bug.LINE_COLOR}>
 						{list.bug.DATE}
 					</td>
 					# IF C_IS_ADMIN #
-					<td class="row2" {list.bug.COLOR}> 
+					<td class="row2" {list.bug.LINE_COLOR}> 
+						<a href="bugtracker.php?reject&amp;id={list.bug.ID}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/unvisible.png" alt="{L_REJECT}" title="{L_REJECT}" /></a>
 						<a href="bugtracker.php?edit&amp;id={list.bug.ID}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="{L_UPDATE}" title="{L_UPDATE}" /></a>
 						<a href="bugtracker.php?history&amp;id={list.bug.ID}"><img src="{PATH_TO_ROOT}/bugtracker/templates/images/history.png" alt="{L_HISTORY}" title="{L_HISTORY}" /></a>
 						<a href="bugtracker.php?delete&amp;id={list.bug.ID}&amp;token={TOKEN}" onclick="javascript:return Confirm();"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" /></a>
@@ -177,6 +187,11 @@
 				<li class="bt_current">
 					<a href="{PATH_TO_ROOT}/bugtracker/bugtracker.php?solved">{L_SOLVED}</a>
 				</li>
+				# IF C_ROADMAP #
+				<li class="bt_no_current">
+					<a href="{PATH_TO_ROOT}/bugtracker/bugtracker.php?roadmap">{L_ROADMAP}</a>
+				</li>
+				# ENDIF #
 				<li class="bt_no_current">
 					<a href="{PATH_TO_ROOT}/bugtracker/bugtracker.php?stats">{L_STATS}</a>
 				</li>
@@ -209,11 +224,13 @@
 						<a href="{PATH_TO_ROOT}/bugtracker/bugtracker{U_BUG_TYPE_BOTTOM}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
 					</th>
 					# ENDIF #
+					# IF C_DISPLAY_SEVERITIES #
 					<th style="width:70px;text-align:center;">
 						{L_SEVERITY}<br />
 						<a href="{PATH_TO_ROOT}/bugtracker/bugtracker{U_BUG_SEVERITY_TOP}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
 						<a href="{PATH_TO_ROOT}/bugtracker/bugtracker{U_BUG_SEVERITY_BOTTOM}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
 					</th>
+					# ENDIF #
 					<th style="width:60px;text-align:center;">
 						{L_STATUS}<br />
 						<a href="{PATH_TO_ROOT}/bugtracker/bugtracker{U_BUG_STATUS_TOP}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
@@ -246,33 +263,36 @@
 				# ELSE #
 					# START solved.bugclosed #
 					<tr style="text-align:center;"> 
-						<td class="row2" {solved.bugclosed.COLOR}>
+						<td class="row2" {solved.bugclosed.LINE_COLOR}>
 							<a href="{PATH_TO_ROOT}/bugtracker/bugtracker.php?view&amp;id={solved.bugclosed.ID}">\#{solved.bugclosed.ID}</a>
 						</td>
-						<td class="row2" {solved.bugclosed.COLOR}>
+						<td class="row2" {solved.bugclosed.LINE_COLOR}>
 							{solved.bugclosed.TITLE}
 						</td>
 						# IF C_DISPLAY_TYPES #
-						<td class="row2" {solved.bugclosed.COLOR}>
+						<td class="row2" {solved.bugclosed.LINE_COLOR}>
 							{solved.bugclosed.TYPE}
 						</td>
 						# ENDIF #
-						<td class="row2" {solved.bugclosed.SEVERITY_COLOR}> 
+						# IF C_DISPLAY_SEVERITIES #
+						<td class="row2" {solved.bugclosed.LINE_COLOR}> 
 							<b>{solved.bugclosed.SEVERITY}</b>
 						</td>
-						<td class="row2" {solved.bugclosed.COLOR}> 
+						# ENDIF #
+						<td class="row2" {solved.bugclosed.LINE_COLOR}> 
 							{solved.bugclosed.STATUS}
 						</td>
 						# IF C_COM #
-						<td class="row2" {solved.bugclosed.COLOR}>
+						<td class="row2" {solved.bugclosed.LINE_COLOR}>
 							{solved.bugclosed.COMMENTS}
 						</td>
 						# ENDIF #
-						<td class="row2" {solved.bugclosed.COLOR}>
+						<td class="row2" {solved.bugclosed.LINE_COLOR}>
 							{solved.bugclosed.DATE}
 						</td>
 						# IF C_IS_ADMIN #
-						<td class="row2" {solved.bugclosed.COLOR}> 
+						<td class="row2" {solved.bugclosed.LINE_COLOR}> 
+							<a href="bugtracker.php?reopen&amp;id={solved.bugclosed.ID}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/visible.png" alt="{L_REOPEN}" title="{L_REOPEN}" /></a>
 							<a href="bugtracker.php?edit&amp;id={solved.bugclosed.ID}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="{L_UPDATE}" title="{L_UPDATE}" /></a>
 							<a href="bugtracker.php?history&amp;id={solved.bugclosed.ID}"><img src="{PATH_TO_ROOT}/bugtracker/templates/images/history.png" alt="{L_HISTORY}" title="{L_HISTORY}" /></a>
 							<a href="bugtracker.php?delete&amp;id={solved.bugclosed.ID}&amp;token={TOKEN}" onclick="javascript:return Confirm();"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" /></a>
@@ -295,6 +315,156 @@
 	</div>
 # END solved #
 
+# START roadmap #
+	<div class="module_position">
+		<div class="module_top_l"></div>		
+		<div class="module_top_r"></div>
+		<div class="module_top">
+			<ul style="list-style-type:none;">
+				<li class="bt_no_current">
+					<a href="bugtracker.php{SID}">{L_UNSOLVED}</a> 
+				</li>
+				<li class="bt_no_current">
+					<a href="{PATH_TO_ROOT}/bugtracker/bugtracker.php?solved">{L_SOLVED}</a>
+				</li>
+				<li class="bt_current">
+					<a href="{PATH_TO_ROOT}/bugtracker/bugtracker.php?roadmap">{L_ROADMAP}</a>
+				</li>
+				<li class="bt_no_current">
+					<a href="{PATH_TO_ROOT}/bugtracker/bugtracker.php?stats">{L_STATS}</a>
+				</li>
+				# IF C_ADD #
+				<li class="bt_add">
+					<a href="{PATH_TO_ROOT}/bugtracker/bugtracker.php?add"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/add.png" alt="" title="{L_ADD}" class="valign_middle" /></a>
+				</li>
+				# ENDIF #
+			</ul>
+		</div>
+		<div class="module_contents">
+			# IF C_DISPLAY_VERSIONS #
+			<form action="bugtracker.php?roadmap&amp;token={TOKEN}" name="form" method="post" style="margin:auto;" class="fieldset_content">
+				<fieldset>
+					<legend>{L_CHOOSE_VERSION}</legend>
+					<dl>
+						<dt><label for="roadmap_version">{L_VERSION}</label></dt>
+						<dd><label>
+							<select id="roadmap_version" name="roadmap_version">				
+							# START select_version #				
+								{select_version.VERSION}
+							# END select_version #				
+							</select>
+						</label>
+						&nbsp;&nbsp;
+						<input type="submit" name="valid" value="{L_SUBMIT}" class="submit" />
+						</dd>
+					</dl>
+				</fieldset>	
+			</form>
+			# ENDIF #
+			
+			<table  class="module_table">
+				<tr style="text-align:center;">
+					<th style="width:52px;text-align:center;">
+						{L_ID}<br />
+						<a href="{PATH_TO_ROOT}/bugtracker/bugtracker{U_BUG_ID_TOP}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
+						<a href="{PATH_TO_ROOT}/bugtracker/bugtracker{U_BUG_ID_BOTTOM}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
+					</th>
+					<th style="width:52px;text-align:center;">
+						{L_TITLE}<br />
+						<a href="{PATH_TO_ROOT}/bugtracker/bugtracker{U_BUG_TITLE_TOP}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
+						<a href="{PATH_TO_ROOT}/bugtracker/bugtracker{U_BUG_TITLE_BOTTOM}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
+					</th>
+					# IF C_DISPLAY_TYPES #
+					<th style="width:66px;text-align:center;">
+						{L_TYPE}<br />
+						<a href="{PATH_TO_ROOT}/bugtracker/bugtracker{U_BUG_TYPE_TOP}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
+						<a href="{PATH_TO_ROOT}/bugtracker/bugtracker{U_BUG_TYPE_BOTTOM}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
+					</th>
+					# ENDIF #
+					# IF C_DISPLAY_SEVERITIES #
+					<th style="width:70px;text-align:center;">
+						{L_SEVERITY}<br />
+						<a href="{PATH_TO_ROOT}/bugtracker/bugtracker{U_BUG_SEVERITY_TOP}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
+						<a href="{PATH_TO_ROOT}/bugtracker/bugtracker{U_BUG_SEVERITY_BOTTOM}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
+					</th>
+					# ENDIF #
+					<th style="width:60px;text-align:center;">
+						{L_STATUS}<br />
+						<a href="{PATH_TO_ROOT}/bugtracker/bugtracker{U_BUG_STATUS_TOP}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
+						<a href="{PATH_TO_ROOT}/bugtracker/bugtracker{U_BUG_STATUS_BOTTOM}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
+					</th>
+					# IF C_COM #
+					<th style="width:84px;text-align:center;">
+						{L_COMMENTS}<br />
+						<a href="{PATH_TO_ROOT}/bugtracker/bugtracker{U_BUG_COMMENTS_TOP}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
+						<a href="{PATH_TO_ROOT}/bugtracker/bugtracker{U_BUG_COMMENTS_BOTTOM}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
+					</th>
+					# ENDIF #
+					<th style="width:63px;text-align:center;">
+						{L_DATE}<br />
+						<a href="{PATH_TO_ROOT}/bugtracker/bugtracker{U_BUG_DATE_TOP}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
+						<a href="{PATH_TO_ROOT}/bugtracker/bugtracker{U_BUG_DATE_BOTTOM}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
+					</th>
+					<th style="width:56px;text-align:center;">
+						{L_HISTORY}<br /><br />
+					</th>
+				</tr>
+				# IF C_NO_BUGS #
+				<tr style="text-align:center;"> 
+					<td colspan="{NO_BUGS_COLSPAN}" class="row2">
+						{L_NO_BUG_FIXED}
+					</td>
+				</tr>
+				# ELSE #
+				# START roadmap.bug #
+				<tr style="text-align:center;"> 
+					<td class="row2" {roadmap.bug.LINE_COLOR}>
+						<a href="{PATH_TO_ROOT}/bugtracker/bugtracker.php?view&amp;id={roadmap.bug.ID}" style="text-decoration:line-through;">\#{roadmap.bug.ID}</a>
+					</td>
+					<td class="row2" {roadmap.bug.LINE_COLOR}>
+						{roadmap.bug.TITLE}
+					</td>
+					# IF C_DISPLAY_TYPES #
+					<td class="row2" {roadmap.bug.LINE_COLOR}>
+						{roadmap.bug.TYPE}
+					</td>
+					# ENDIF #
+					# IF C_DISPLAY_SEVERITIES #
+					<td class="row2" {roadmap.bug.LINE_COLOR}> 
+						<b>{roadmap.bug.SEVERITY}</b>
+					</td>
+					# ENDIF #
+					<td class="row2" {roadmap.bug.LINE_COLOR}> 
+						{roadmap.bug.STATUS}
+					</td>
+					# IF C_COM #
+					<td class="row2" {roadmap.bug.LINE_COLOR}> 
+						{roadmap.bug.COMMENTS}
+					</td>
+					# ENDIF #
+					<td class="row2" {roadmap.bug.LINE_COLOR}>
+						{roadmap.bug.DATE}
+					</td>
+					<td class="row2" {roadmap.bug.LINE_COLOR}>
+						<a href="bugtracker.php?history&amp;id={roadmap.bug.ID}"><img src="{PATH_TO_ROOT}/bugtracker/templates/images/history.png" alt="{L_HISTORY}" title="{L_HISTORY}" /></a>
+					</td>
+				</tr>
+				# END roadmap.bug #
+				# ENDIF #
+			</table>
+			<br /><br />
+			<p style="text-align: center;">{PAGINATION}</p>
+		</div>
+		<div class="module_bottom_l"></div>
+		<div class="module_bottom_r"></div>
+		<div class="module_bottom" style="text-align:center;">
+			<div style="float:left" class="text_small"></div>
+			<div style="float:right" class="text_small"></div>
+		</div>
+		
+	</div>
+# END roadmap #
+
 # START stats #
 	<div class="module_position">
 		<div class="module_top_l"></div>		
@@ -307,6 +477,11 @@
 				<li class="bt_no_current">
 					<a href="{PATH_TO_ROOT}/bugtracker/bugtracker.php?solved">{L_SOLVED}</a>
 				</li>
+				# IF C_ROADMAP #
+				<li class="bt_no_current">
+					<a href="{PATH_TO_ROOT}/bugtracker/bugtracker.php?roadmap">{L_ROADMAP}</a>
+				</li>
+				# ENDIF #
 				<li class="bt_current">
 					<a href="{PATH_TO_ROOT}/bugtracker/bugtracker.php?stats">{L_STATS}</a>
 				</li>
@@ -349,6 +524,37 @@
 				# ENDIF #
 			</table>
 			<br /><br />
+			# IF C_DISPLAY_VERSIONS #
+			<table  class="module_table">
+				<tr style="text-align:center;">
+					<th style="width:45px;text-align:center;">
+						{L_VERSION}
+					</th>
+					<th style="text-align:center;">
+						{L_NUMBER_CORRECTED}
+					</th>
+				</tr>
+				# IF C_NO_FIXED_BUGS #
+				<tr style="text-align:center;"> 
+					<td colspan="2" class="row2">
+						{L_NO_BUG_SOLVED}
+					</td>
+				</tr>
+				# ELSE #
+					# START stats.fixed_version #
+					<tr style="text-align:center;"> 
+						<td class="row2"> 
+							<b>{stats.fixed_version.NAME}</b>
+						</td>
+						<td class="row2"> 
+							{stats.fixed_version.NUMBER}
+						</td>
+					</tr>
+					# END stats.fixed_version #
+				# ENDIF #
+			</table>
+			<br /><br />
+			# ENDIF #
 			<table class="module_table">
 				<tr>
 					<th colspan="3">	
@@ -495,6 +701,7 @@
 							</select>
 						</label></dd>
 					</dl>
+					# IF C_DISPLAY_PRIORITIES #
 					<dl>
 						<dt><label for="priority">{L_PRIORITY}</label></dt>
 						<dd><label>
@@ -505,6 +712,7 @@
 							</select>
 						</label></dd>
 					</dl>
+					# ENDIF #
 					# ENDIF #
 					# IF C_DISPLAY_VERSIONS #
 					<dl>
@@ -638,26 +846,8 @@
 			
 			<form action="bugtracker.php?token={TOKEN}" name="form" method="post" style="margin:auto;" onsubmit="return check_form();" class="fieldset_content">
 				<fieldset>
-					<p>{L_REQUIRE}</p>
-					<dl>
-						<dt><label for="title">* {L_TITLE}</label></dt>
-						<dd><label><input type="text" size="40" maxlength="200" id="title" name="title" value="{edit.TITLE}" class="text" /></label></dd>
-					</dl>
-					<label for="contents">* {L_CONTENT}</label>
-					<label for="contents">* {L_CONTENT}</label>
-					<div style="position:relative;display:none;" id="loading_previewcontents">
-						<div style="margin:auto;margin-top:90px;width:100%;text-align:center;position:absolute;"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/loading.gif" alt="" /></div>
-					</div>
-					<div style="display:none;" class="xmlhttprequest_preview" id="xmlhttprequest_previewcontents"></div>
-					{CONTENTS_KERNEL_EDITOR}
-					<label><textarea rows="20" cols="86" id="contents" name="contents">{edit.CONTENTS}</textarea></label>
-					<div style="text-align:center;"><input type="button" value="{L_PREVIEW}" onclick="XMLHttpRequest_preview('contents');" class="submit" /></div>
-					<br />
+				<legend>{L_BUG_TREATMENT}</legend>
 					# IF edit.C_IS_ASSIGNED #
-					<dl>
-						<dt><label for="author">{L_AUTHOR}</label></dt>
-						<dd><label>{edit.AUTHOR}</label></dd>
-					</dl>
 					<dl>
 						<dt><label for="status">{L_STATUS}</label><br /><span>{L_STATUS_EXPLAIN}</span></dt>
 						<dd><label>
@@ -681,7 +871,42 @@
 							<div id="xmlhttprequest_result_search" style="display:none;" class="xmlhttprequest_result_search"></div>
 						</dd>
 					</dl>
+					# IF C_DISPLAY_VERSIONS #
+					<dl>
+						<dt><label for="fixed_in"># IF C_ROADMAP #* # ENDIF #{L_FIXED_IN}</label></dt>
+						<dd><label>
+							<select id="fixed_in" name="fixed_in">				
+							# START edit.select_fixed_in #				
+								{edit.select_fixed_in.VERSION}				
+							# END edit.select_fixed_in #				
+							</select>
+						</label></dd>
+					</dl>
 					# ENDIF #
+					# ENDIF #
+				</fieldset>
+				
+				<fieldset>
+				<legend>{L_BUG_INFOS}</legend>
+					<p>{L_REQUIRE}</p>
+					<dl>
+						<dt><label for="author">{L_AUTHOR}</label></dt>
+						<dd><label>{edit.AUTHOR}</label></dd>
+					</dl>
+					<dl>
+						<dt><label for="title">* {L_TITLE}</label></dt>
+						<dd><label><input type="text" size="40" maxlength="200" id="title" name="title" value="{edit.TITLE}" class="text" /></label></dd>
+					</dl>
+					<label for="contents">* {L_CONTENT}</label>
+					<label for="contents">* {L_CONTENT}</label>
+					<div style="position:relative;display:none;" id="loading_previewcontents">
+						<div style="margin:auto;margin-top:90px;width:100%;text-align:center;position:absolute;"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/loading.gif" alt="" /></div>
+					</div>
+					<div style="display:none;" class="xmlhttprequest_preview" id="xmlhttprequest_previewcontents"></div>
+					{CONTENTS_KERNEL_EDITOR}
+					<label><textarea rows="20" cols="86" id="contents" name="contents">{edit.CONTENTS}</textarea></label>
+					<div style="text-align:center;"><input type="button" value="{L_PREVIEW}" onclick="XMLHttpRequest_preview('contents');" class="submit" /></div>
+					<br />
 					# IF C_DISPLAY_TYPES #
 					<dl>
 						<dt><label for="type">{L_TYPE}</label></dt>
@@ -717,6 +942,7 @@
 							</select>
 						</label></dd>
 					</dl>
+					# IF C_DISPLAY_PRIORITIES #
 					<dl>
 						<dt><label for="priority">{L_PRIORITY}</label></dt>
 						<dd><label>
@@ -728,7 +954,8 @@
 						</label></dd>
 					</dl>
 					# ENDIF #
-					# IF C_DISPLAY_VERSIONS #
+					# ENDIF #
+					# IF C_DISPLAY_VERSIONS_DETECTED_IN #
 					<dl>
 						<dt><label for="detected_in">{L_DETECTED_IN}</label></dt>
 						<dd><label>
@@ -739,18 +966,6 @@
 							</select>
 						</label></dd>
 					</dl>
-					# IF edit.C_IS_ASSIGNED #
-					<dl>
-						<dt><label for="fixed_in">{L_FIXED_IN}</label></dt>
-						<dd><label>
-							<select id="fixed_in" name="fixed_in">				
-							# START edit.select_fixed_in #				
-								{edit.select_fixed_in.VERSION}				
-							# END edit.select_fixed_in #				
-							</select>
-						</label></dd>
-					</dl>
-					# ENDIF #
 					# ENDIF #
 					<dl>
 						<dt><label for="reproductible">{L_REPRODUCTIBLE}</label></dt>
@@ -803,6 +1018,16 @@
 					<img src="{PATH_TO_ROOT}/templates/{THEME}/images/com_mini.png" alt="" />
 					{U_COM}
 				# ENDIF #
+				# IF C_REOPEN_BUG #
+					<a href="bugtracker.php?reopen&amp;id={view.ID}">
+						<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/visible.png" alt="{L_REOPEN}" title="{L_REOPEN}" />
+					</a>
+				# ENDIF #
+				# IF C_REJECT_BUG #
+					<a href="bugtracker.php?reject&amp;id={view.ID}">
+						<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/unvisible.png" alt="{L_REJECT}" title="{L_REJECT}" />
+					</a>
+				# ENDIF #
 				# IF C_EDIT_BUG #
 					<a href="bugtracker.php?edit&amp;id={view.ID}">
 						<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="{L_UPDATE}" title="{L_UPDATE}" />
@@ -822,6 +1047,25 @@
 			<div class="spacer"></div>
            	</div>
 		<div class="module_contents">
+			<fieldset>
+				<legend>{L_BUG_TREATMENT_STATE}</legend>
+				<br />
+				<dl>
+					<dt>{L_STATUS}</dt>
+					<dd>{view.STATUS}</dd>
+				</dl>
+				<dl>
+					<dt>{L_ASSIGNED_TO}</dt>
+					<dd>{view.USER_ASSIGNED}</dd>
+				</dl>
+				# IF NOT C_EMPTY_VERSIONS #
+				<dl>
+					<dt>{L_FIXED_IN}</dt>
+					<dd>{view.FIXED_IN}</dd>
+				</dl>
+				# ENDIF #
+			</fieldset>
+			
 			<fieldset>
 				<legend>{view.TITLE}</legend>
 				<br />
@@ -848,10 +1092,12 @@
 					<dt>{L_SEVERITY}</dt>
 					<dd>{view.SEVERITY}</dd>
 				</dl>
+				# IF NOT C_EMPTY_PRIORITIES #
 				<dl>
 					<dt>{L_PRIORITY}</dt>
 					<dd>{view.PRIORITY}</dd>
 				</dl>
+				# ENDIF #
 				# IF NOT C_EMPTY_VERSIONS #
 				<dl>
 					<dt>{L_DETECTED_IN}</dt>
@@ -872,25 +1118,6 @@
 				<br /><br />
 			</fieldset>
 			# ENDIF #
-			
-			<fieldset>
-				<legend>{L_BUG_TREATMENT_STATE}</legend>
-				<br />
-				<dl>
-					<dt>{L_STATUS}</dt>
-					<dd>{view.STATUS}</dd>
-				</dl>
-				# IF NOT C_EMPTY_VERSIONS #
-				<dl>
-					<dt>{L_FIXED_IN}</dt>
-					<dd>{view.FIXED_IN}</dd>
-				</dl>
-				# ENDIF #
-				<dl>
-					<dt>{L_ASSIGNED_TO}</dt>
-					<dd>{view.USER_ASSIGNED}</dd>
-				</dl>
-			</fieldset>
 		</div>
 		<div class="module_bottom_l"></div>
 		<div class="module_bottom_r"></div>

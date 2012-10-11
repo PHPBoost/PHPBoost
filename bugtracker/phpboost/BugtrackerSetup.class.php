@@ -73,14 +73,14 @@ class BugtrackerSetup extends DefaultModuleSetup
 			'author_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'submit_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'status' => array('type' => 'string', 'length' => 255, 'default' => "''"),
-			'severity' => array('type' => 'string', 'length' => 255, 'default' => "''"),
-			'priority' => array('type' => 'string', 'length' => 255, 'default' => "''"),
-			'type' => array('type' => 'string', 'length' => 255, 'default' => "''"),
-			'category' => array('type' => 'string', 'length' => 255, 'default' => "''"),
+			'severity' => array('type' => 'integer', 'length' => 11, 'default' => 0),
+			'priority' => array('type' => 'integer', 'length' => 11, 'default' => 0),
+			'type' => array('type' => 'integer', 'length' => 11, 'default' => 0),
+			'category' => array('type' => 'integer', 'length' => 11, 'default' => 0),
 			'reproductible' => array('type' => 'integer', 'length' => 1, 'notnull' => 1, 'default' => 1),
 			'reproduction_method' => array('type' => 'text', 'length' => 65000),
-			'detected_in' => array('type' => 'string', 'length' => 255, 'default' => "''"),
-			'fixed_in' => array('type' => 'string', 'length' => 255, 'default' => "''"),
+			'detected_in' => array('type' => 'integer', 'length' => 11, 'default' => 0),
+			'fixed_in' => array('type' => 'integer', 'length' => 11, 'default' => 0),
 			'assigned_to_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0)
 		);
 		$options = array(

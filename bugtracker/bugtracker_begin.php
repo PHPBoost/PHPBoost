@@ -58,6 +58,10 @@ elseif (isset($_GET['solved']))
 {
 	$Bread_crumb->add($LANG['bugs.titles.solved_bugs'], url('bugtracker.php?solved'));
 }
+elseif (isset($_GET['roadmap']))
+{
+	$Bread_crumb->add($LANG['bugs.titles.roadmap'], url('bugtracker.php?roadmap'));
+}
 elseif (isset($_GET['stats']))
 {
 	$Bread_crumb->add($LANG['bugs.titles.bugs_stats'], url('bugtracker.php?stats'));

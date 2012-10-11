@@ -34,10 +34,24 @@ $lang = array();
 //Types
 $lang['bugtracker.config.types.anomaly'] = 'Anomalie';
 $lang['bugtracker.config.types.evolution_demand'] = 'Demande d\'évolution';
+
+//Catégories
 $lang['bugtracker.config.categories.kernel'] = 'Noyau';
 $lang['bugtracker.config.categories.module'] = 'Module';
 $lang['bugtracker.config.categories.graphism'] = 'Graphisme';
 $lang['bugtracker.config.categories.installation'] = 'Installation';
+
+//Importance
+$lang['bugtracker.config.severities.minor'] = 'Mineur';
+$lang['bugtracker.config.severities.major'] = 'Majeur';
+$lang['bugtracker.config.severities.critical'] = 'Bloquant';
+
+//Priorités
+$lang['bugtracker.config.priorities.none'] = 'Aucune';
+$lang['bugtracker.config.priorities.low'] = 'Basse';
+$lang['bugtracker.config.priorities.normal'] = 'Normale';
+$lang['bugtracker.config.priorities.high'] = 'Elevée';
+$lang['bugtracker.config.priorities.urgent'] = 'Urgente';
 
 //Message de contenu par défaut
 $lang['bugtracker.config.contents_value'] = 'Merci de nous donner les informations demandées ci-dessous, elles nous seront utiles pour la résolution du bug :
