@@ -28,11 +28,8 @@
 class BugtrackerConfig extends AbstractConfigData
 {
 	const ITEMS_PER_PAGE = 'items_per_page';
-	const SEVERITY_MINOR_COLOR = 'severity_minor_color';
-	const SEVERITY_MAJOR_COLOR = 'severity_major_color';
-	const SEVERITY_CRITICAL_COLOR = 'severity_critical_color';
 	const REJECTED_BUG_COLOR = 'rejected_bug_color';
-	const CLOSED_BUG_COLOR = 'closed_bug_color';
+	const FIXED_BUG_COLOR = 'fixed_bug_color';
 	const COMMENTS_ACTIVATED = 'comments_activated';
 	const VERSIONS = 'versions';
 	const TYPES = 'types';
@@ -41,6 +38,8 @@ class BugtrackerConfig extends AbstractConfigData
 	const SEVERITIES = 'severities';
 	const PRIORITIES = 'priorities';
 	const STATUS_LIST = 'status_list';
+	const ROADMAP_ACTIVATED = 'roadmap_activated';
+	const CAT_IN_TITLE_ACTIVATED = 'cat_in_title_activated';
 	const AUTHORIZATIONS = 'authorizations';
 	
 	// Authorizations
@@ -59,36 +58,6 @@ class BugtrackerConfig extends AbstractConfigData
 		$this->set_property(self::ITEMS_PER_PAGE, $value);
 	}
 	
-	public function get_severity_minor_color()
-	{
-		return $this->get_property(self::SEVERITY_MINOR_COLOR);
-	}
-	
-	public function set_severity_minor_color($value) 
-	{
-		$this->set_property(self::SEVERITY_MINOR_COLOR, $value);
-	}
-	
-	public function get_severity_major_color()
-	{
-		return $this->get_property(self::SEVERITY_MAJOR_COLOR);
-	}
-	
-	public function set_severity_major_color($value) 
-	{
-		$this->set_property(self::SEVERITY_MAJOR_COLOR, $value);
-	}
-	
-	public function get_severity_critical_color()
-	{
-		return $this->get_property(self::SEVERITY_CRITICAL_COLOR);
-	}
-	
-	public function set_severity_critical_color($value) 
-	{
-		$this->set_property(self::SEVERITY_CRITICAL_COLOR, $value);
-	}
-	
 	public function get_rejected_bug_color()
 	{
 		return $this->get_property(self::REJECTED_BUG_COLOR);
@@ -99,14 +68,14 @@ class BugtrackerConfig extends AbstractConfigData
 		$this->set_property(self::REJECTED_BUG_COLOR, $value);
 	}
 	
-	public function get_closed_bug_color()
+	public function get_fixed_bug_color()
 	{
-		return $this->get_property(self::CLOSED_BUG_COLOR);
+		return $this->get_property(self::FIXED_BUG_COLOR);
 	}
 	
-	public function set_closed_bug_color($value) 
+	public function set_fixed_bug_color($value) 
 	{
-		$this->set_property(self::CLOSED_BUG_COLOR, $value);
+		$this->set_property(self::FIXED_BUG_COLOR, $value);
 	}
 	
 	public function get_comments_activated()
@@ -189,6 +158,26 @@ class BugtrackerConfig extends AbstractConfigData
 		$this->set_property(self::STATUS_LIST, $array);
 	}
 	
+	public function get_roadmap_activated()
+	{
+		return $this->get_property(self::ROADMAP_ACTIVATED);
+	}
+	
+	public function set_roadmap_activated($value) 
+	{
+		$this->set_property(self::ROADMAP_ACTIVATED, $value);
+	}
+	
+	public function get_cat_in_title_activated()
+	{
+		return $this->get_property(self::CAT_IN_TITLE_ACTIVATED);
+	}
+	
+	public function set_cat_in_title_activated($value) 
+	{
+		$this->set_property(self::CAT_IN_TITLE_ACTIVATED, $value);
+	}
+	
 	public function get_authorizations()
 	{
 		return $this->get_property(self::AUTHORIZATIONS);
@@ -199,42 +188,22 @@ class BugtrackerConfig extends AbstractConfigData
 		$this->set_property(self::AUTHORIZATIONS, $array);
 	}
 	
-	public function get_severity_color($value)
-	{
-		switch ($value)
-		{
-			case 'minor' :
-				$color = self::SEVERITY_MINOR_COLOR;
-				break;
-			case 'major' :
-				$color = self::SEVERITY_MAJOR_COLOR;
-				break;
-			case 'critical' :
-				$color = self::SEVERITY_CRITICAL_COLOR;
-				break;
-			default :
-				$color = self::SEVERITY_MINOR_COLOR;
-		}
-		return $this->get_property($color);
-	}
-	
 	public function get_default_values()
 	{
 		return array(
 			self::ITEMS_PER_PAGE => 20,
-			self::SEVERITY_MINOR_COLOR => 'e8ffa2',
-			self::SEVERITY_MAJOR_COLOR => 'feebbc',
-			self::SEVERITY_CRITICAL_COLOR => 'ffa2a2',
 			self::REJECTED_BUG_COLOR => 'f8465e',
-			self::CLOSED_BUG_COLOR => 'afffa2',
+			self::FIXED_BUG_COLOR => 'afffa2',
 			self::COMMENTS_ACTIVATED => true,
+			self::ROADMAP_ACTIVATED => false,
+			self::CAT_IN_TITLE_ACTIVATED => false,
 			self::VERSIONS => array(),
-			self::TYPES => array(LangLoader::get_message('bugtracker.config.types.anomaly', 'bugtracker_config', 'bugtracker'), LangLoader::get_message('bugtracker.config.types.evolution_demand', 'bugtracker_config', 'bugtracker')),
-			self::CATEGORIES => array(LangLoader::get_message('bugtracker.config.categories.kernel', 'bugtracker_config', 'bugtracker'), LangLoader::get_message('bugtracker.config.categories.module', 'bugtracker_config', 'bugtracker'), LangLoader::get_message('bugtracker.config.categories.graphism', 'bugtracker_config', 'bugtracker'), LangLoader::get_message('bugtracker.config.categories.installation', 'bugtracker_config', 'bugtracker')),
+			self::TYPES => array(1 => LangLoader::get_message('bugtracker.config.types.anomaly', 'bugtracker_config', 'bugtracker'), LangLoader::get_message('bugtracker.config.types.evolution_demand', 'bugtracker_config', 'bugtracker')),
+			self::CATEGORIES => array(1 => LangLoader::get_message('bugtracker.config.categories.kernel', 'bugtracker_config', 'bugtracker'), LangLoader::get_message('bugtracker.config.categories.module', 'bugtracker_config', 'bugtracker'), LangLoader::get_message('bugtracker.config.categories.graphism', 'bugtracker_config', 'bugtracker'), LangLoader::get_message('bugtracker.config.categories.installation', 'bugtracker_config', 'bugtracker')),
 			self::CONTENTS_VALUE => LangLoader::get_message('bugtracker.config.contents_value', 'bugtracker_config', 'bugtracker'),
-			self::SEVERITIES => array('minor', 'major', 'critical'),
-			self::PRIORITIES => array('none', 'low', 'normal', 'high', 'urgent', 'immediate'),
-			self::STATUS_LIST => array('new', 'assigned', 'fixed', 'closed', 'reopen', 'rejected'),
+			self::SEVERITIES => array(1 => array('name' => LangLoader::get_message('bugtracker.config.severities.minor', 'bugtracker_config', 'bugtracker'), 'color' => 'e8ffa2'), array('name' => LangLoader::get_message('bugtracker.config.severities.major', 'bugtracker_config', 'bugtracker'), 'color' => 'feebbc'), array('name' => LangLoader::get_message('bugtracker.config.severities.critical', 'bugtracker_config', 'bugtracker'), 'color' => 'ffa2a2')),
+			self::PRIORITIES => array(1 => LangLoader::get_message('bugtracker.config.priorities.none', 'bugtracker_config', 'bugtracker'), LangLoader::get_message('bugtracker.config.priorities.low', 'bugtracker_config', 'bugtracker'), LangLoader::get_message('bugtracker.config.priorities.normal', 'bugtracker_config', 'bugtracker'), LangLoader::get_message('bugtracker.config.priorities.high', 'bugtracker_config', 'bugtracker'), LangLoader::get_message('bugtracker.config.priorities.urgent', 'bugtracker_config', 'bugtracker')),
+			self::STATUS_LIST => array('new', 'assigned', 'fixed', 'reopen', 'rejected'),
 			self::AUTHORIZATIONS => array('r0' => 3, 'r1' => 15)
 		);
 	}
