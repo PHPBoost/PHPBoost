@@ -103,7 +103,8 @@ if (!empty($_POST['submit']))
 			foreach ($delete as $key)
 			{
 				$Sql->query_inject("DELETE FROM " . PREFIX . "media WHERE id = '" . $key . "'", __LINE__, __FILE__);
-				$Sql->query_inject("DELETE FROM " . PREFIX . "com WHERE idprov = '" . $delete . "' AND script = 'media'", __LINE__, __FILE__);
+				CommentsService::delete_comments_topic_module('media', $key);
+				NotationService::delete_notes_id_in_module('media', $key);
 			}
 		}
 
