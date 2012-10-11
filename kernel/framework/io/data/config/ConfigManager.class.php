@@ -146,7 +146,7 @@ class ConfigManager
 	}
 	
 	/**
-	 * Delete in the data base (DB_TABLE_CONFIGS table) the data.
+	 * Delete an configuration in the database and the cache
 	 * @param string $module_name Name of the module owning this entry
 	 * @param string $entry_name The name of the entry if the module uses several entries
 	 */
@@ -158,6 +158,8 @@ class ConfigManager
 			PersistenceContext::get_querier()->delete(DB_TABLE_CONFIGS, 'WHERE name=:name', array('name' => $name));
 		} catch (MySQLQuerierException $e) {
 		}
+		
+		CacheManager::invalidate($module_name, $entry_name);
 	}
 	
 	private static function save_in_db($name, ConfigData $data)
