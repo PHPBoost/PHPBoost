@@ -43,9 +43,10 @@ class BugtrackerCommentsTopicEvents extends CommentsTopicEvents
 		$bug_id = $this->comments_topic->get_id_in_module();
 		
 		//Récupération de l'id de l'auteur du bug
-		$author_id = $this->sql_querier->select_single_row(PREFIX . 'bugtracker', array('author_id'), 'WHERE id=:id', array(
+		$result = $this->sql_querier->select_single_row(PREFIX . 'bugtracker', array('author_id'), 'WHERE id=:id', array(
 			'id' => $bug_id
 		));
+		$author_id = $result['author_id'];
 		
 		//Récupération de l'id des personnes qui ont mis à jour le bug
 		$updaters_ids = array($author_id);
