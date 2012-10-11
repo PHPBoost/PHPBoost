@@ -46,8 +46,8 @@ if (!empty($_POST['valid_add_type']))
 	if (!empty($_POST['type']))
 	{
 		$nb_types = sizeof($types);
-		$begin = empty($nb_types) ? 1 : ($nb_types + 1);
-		$types[$begin] = retrieve(POST, 'type', '');
+		$array_id = empty($nb_types) ? 1 : ($nb_types + 1);
+		$types[$array_id] = retrieve(POST, 'type', '');
 		$bugtracker_config->set_types($types);
 		
 		BugtrackerConfig::save();
@@ -77,8 +77,8 @@ else if (!empty($_POST['valid_add_category']))
 	if (!empty($_POST['category']))
 	{
 		$nb_categories = sizeof($categories);
-		$begin = empty($nb_categories) ? 1 : ($nb_categories + 1);
-		$categories[$begin] = retrieve(POST, 'category', '');
+		$array_id = empty($nb_categories) ? 1 : ($nb_categories + 1);
+		$categories[$array_id] = retrieve(POST, 'category', '');
 		$bugtracker_config->set_categories($categories);
 		
 		BugtrackerConfig::save();
@@ -108,8 +108,8 @@ else if (!empty($_POST['valid_add_priority']))
 	if (!empty($_POST['priority']))
 	{
 		$nb_priorities = sizeof($priorities);
-		$begin = empty($nb_priorities) ? 1 : ($nb_priorities + 1);
-		$priorities[$begin] = retrieve(POST, 'priority', '');
+		$array_id = empty($nb_priorities) ? 1 : ($nb_priorities + 1);
+		$priorities[$array_id] = retrieve(POST, 'priority', '');
 		$bugtracker_config->set_priorities($priorities);
 		
 		BugtrackerConfig::save();
@@ -139,8 +139,8 @@ else if (!empty($_POST['valid_add_version']))
 	if (!empty($_POST['version']))
 	{
 		$nb_versions = sizeof($versions);
-		$begin = empty($nb_versions) ? 1 : ($nb_versions + 1);
-		$versions[$begin] = array(
+		$array_id = empty($nb_versions) ? 1 : ($nb_versions + 1);
+		$versions[$array_id] = array(
 			'name'			=> retrieve(POST, 'version', ''),
 			'detected_in' 	=> retrieve(POST, 'detected_in', false)
 		);
@@ -174,8 +174,8 @@ else if (!empty($_POST['valid_add_severity']))
 	if (!empty($_POST['severity']))
 	{
 		$nb_severities = sizeof($severities);
-		$begin = empty($nb_severities) ? 1 : ($nb_severities + 1);
-		$severities[$begin] = array(
+		$array_id = empty($nb_severities) ? 1 : ($nb_severities + 1);
+		$severities[$array_id] = array(
 			'name'		=> retrieve(POST, 'severity', ''),
 			'color' 	=> retrieve(POST, 's_color', '')
 		);
