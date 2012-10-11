@@ -152,34 +152,34 @@ $other_tools = array();
 //Création d'un article
 if ($User->check_auth($_WIKI_CONFIG['auth'], WIKI_CREATE_ARTICLE))
 {
-	$other_tools[ $LANG['wiki_create_article']] = array(url('/wiki/post.php'), 'create_article');
+	$other_tools[ $LANG['wiki_create_article']] = array(PATH_TO_ROOT . url('/wiki/post.php'), 'create_article');
 }
 //Création d'une catégorie
 if ($User->check_auth($_WIKI_CONFIG['auth'], WIKI_CREATE_CAT))
 {
-	$other_tools[$LANG['wiki_create_cat']] = array(url('/wiki/post.php?type=cat'), 'create_cat');
+	$other_tools[$LANG['wiki_create_cat']] = array(PATH_TO_ROOT . url('/wiki/post.php?type=cat'), 'create_cat');
 }
 //Page au hasard
 {
-	$other_tools[$LANG['wiki_random_page']] = array(url('/wiki/property.php?random=1'), 'random_page');
+	$other_tools[$LANG['wiki_random_page']] = array(PATH_TO_ROOT . url('/wiki/property.php?random=1'), 'random_page');
 }
 //Recherche
-$other_tools[$LANG['wiki_search']] = array(url('/wiki/search.php'), 'search');
+$other_tools[$LANG['wiki_search']] = array(PATH_TO_ROOT . url('/wiki/search.php'), 'search');
 //Sujets suivis (membres seulement)
 if ($User->check_level(User::MEMBER_LEVEL))
 {
-	$other_tools[$LANG['wiki_followed_articles']] = array(url('/wiki/favorites.php'), 'followed-articles');
+	$other_tools[$LANG['wiki_followed_articles']] = array(PATH_TO_ROOT . url('/wiki/favorites.php'), 'followed-articles');
 	//Suivre ce sujet (articles)
 	if ($page_type == 'article' || $page_type == 'cat')
 	{
 		if ($article_infos['id_favorite'] > 0)
 		{
-			$other_tools[$LANG['wiki_unwatch_this_topic']] = array(url('/wiki/favorites.php?del=' . $id_article . '&amp;token=' . $Session->get_token()), 'follow-article');
+			$other_tools[$LANG['wiki_unwatch_this_topic']] = array(PATH_TO_ROOT . url('/wiki/favorites.php?del=' . $id_article . '&amp;token=' . $Session->get_token()), 'follow-article');
 			$confirm_others[$LANG['wiki_unwatch_this_topic']] = 'return confirm(\'' . str_replace('\'', '\\\'', $LANG['wiki_confirm_unwatch_this_topic']) . '\');';
 		}
 		else
 		{
-			$other_tools[$LANG['wiki_watch']] = array(url('/wiki/favorites.php?add=' . $id_article), 'follow-article');
+			$other_tools[$LANG['wiki_watch']] = array(PATH_TO_ROOT . url('/wiki/favorites.php?add=' . $id_article), 'follow-article');
 		}
 	}
 }
@@ -194,7 +194,7 @@ if (($page_type == 'article' || $page_type == 'cat') && (!$general_auth || $User
 }
 
 //Explorateur du wiki
-$other_tools[$LANG['wiki_explorer_short']] = array(url('/wiki/explorer.php'), 'explorer');
+$other_tools[$LANG['wiki_explorer_short']] = array(PATH_TO_ROOT . url('/wiki/explorer.php'), 'explorer');
 
 //Flux RSS du wiki
 if ($page_type == 'index')
