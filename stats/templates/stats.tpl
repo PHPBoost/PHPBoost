@@ -104,6 +104,11 @@
 				</th>
 			</tr>
 			<tr>
+				<td style="text-align:center;padding-top:30px;vertical-align:top" class="row1">
+					{GRAPH_RESULT_THEME}
+				</td>
+			</tr>
+			<tr>
 				<td style="width:50%;padding-top:30px;vertical-align:top" class="row1">
 					<table class="module_table">						
 						<tr>
@@ -132,9 +137,6 @@
 						# END templates #		
 					</table>
 				</td>
-				<td style="text-align:center;padding-top:30px;vertical-align:top" class="row1">
-					{GRAPH_RESULT_THEME}
-				</td>
 			</tr>
 		</table>
 		<br /><br />
@@ -143,6 +145,11 @@
 				<th colspan="2">	
 					{L_SEX}
 				</th>
+			</tr>
+			<tr>
+				<td style="text-align:center;padding-top:30px;vertical-align:top" class="row1">
+					{GRAPH_RESULT_SEX}
+				</td>
 			</tr>
 			<tr>
 				<td style="width:50%;padding-top:30px;vertical-align:top" class="row1">
@@ -172,9 +179,6 @@
 						</tr>
 						# END sex #		
 					</table>
-				</td>
-				<td style="text-align:center;padding-top:30px;vertical-align:top" class="row1">
-					{GRAPH_RESULT_SEX}
 				</td>
 			</tr>
 		</table>
@@ -342,6 +346,11 @@
 				</th>
 			</tr>
 			<tr>
+				<td class="row2" style="text-align:center;padding-top:30px;vertical-align:top">
+					{GRAPH_RESULT}
+				</td>
+			</tr>
+			<tr>
 				<td class="row2" style="width:50%;padding-top:30px;vertical-align:top">
 					<table class="module_table">
 						# START list #			
@@ -359,9 +368,6 @@
 						# END list #
 					</table>
 				</td>
-				<td class="row2" style="text-align:center;padding-top:30px;vertical-align:top">
-					{GRAPH_RESULT}
-				</td>
 			</tr>
 		</table>
 		# ENDIF #
@@ -373,6 +379,11 @@
 				<th colspan="2">
 					{L_OS}
 				</th>
+			</tr>
+			<tr>
+				<td class="row2" style="text-align:center;padding-top:30px;vertical-align:top">
+					{GRAPH_RESULT}
+				</td>
 			</tr>
 			<tr style="height:35px;">
 				<td class="row2" style="width:50%;padding-top:30px;vertical-align:top">
@@ -392,20 +403,22 @@
 						# END list #
 					</table>
 				</td>
-				<td class="row2" style="text-align:center;padding-top:30px;vertical-align:top">
-					{GRAPH_RESULT}
-				</td>
 			</tr>
 		</table>
 		# ENDIF #
 
-				
+		
 		# IF C_STATS_LANG #
 		<table class="module_table">
 			<tr>
 				<th colspan="2">
 					{L_LANG}
 				</th>
+			</tr>
+			<tr>
+				<td class="row2" style="text-align:center;padding-top:30px;vertical-align:top">
+					{GRAPH_RESULT}
+				</td>
 			</tr>
 			<tr style="height:35px;">
 				<td class="row2" style="width:50%;padding-top:30px;vertical-align:top">
@@ -424,9 +437,6 @@
 						</tr>
 						# END list #
 					</table>
-				</td>
-				<td class="row2" style="text-align:center;padding-top:30px;vertical-align:top">
-					{GRAPH_RESULT}
 				</td>
 			</tr>
 			<tr>
