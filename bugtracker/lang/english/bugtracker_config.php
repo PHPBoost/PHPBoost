@@ -33,7 +33,7 @@ $lang = array();
 
 //Types
 $lang['bugtracker.config.types.anomaly'] = 'Anomaly';
-$lang['bugtracker.config.types.evolution_demand'] = 'Evolution demand';
+$lang['bugtracker.config.types.evolution_demand'] = 'Evolution request';
 
 //Categories
 $lang['bugtracker.config.categories.kernel'] = 'Kernel';

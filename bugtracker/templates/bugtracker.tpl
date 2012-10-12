@@ -621,9 +621,33 @@
 			alert("{L_REQUIRE_TEXT}");
 			return false;
 		}
-		# IF C_DISPLAY_CATEGORIES #
+		# IF C_TYPE_MANDATORY #
+		if(document.getElementById('type').value == "") {
+			alert("{L_REQUIRE_TYPE}");
+			return false;
+		}
+		# ENDIF #
+		# IF C_CATEGORY_MANDATORY #
 		if(document.getElementById('category').value == "") {
 			alert("{L_REQUIRE_CATEGORY}");
+			return false;
+		}
+		# ENDIF #
+		# IF C_SEVERITY_MANDATORY #
+		if(document.getElementById('severity').value == "") {
+			alert("{L_REQUIRE_SEVERITY}");
+			return false;
+		}
+		# ENDIF #
+		# IF C_PRIORITY_MANDATORY #
+		if(document.getElementById('priority').value == "") {
+			alert("{L_REQUIRE_PRIORITY}");
+			return false;
+		}
+		# ENDIF #
+		# IF C_DETECTED_IN_MANDATORY #
+		if(document.getElementById('detected_in').value == "") {
+			alert("{L_REQUIRE_DETECTED_IN}");
 			return false;
 		}
 		# ENDIF #
@@ -668,7 +692,7 @@
 					<br />
 					# IF C_DISPLAY_TYPES #
 					<dl>
-						<dt><label for="type">{L_TYPE}</label></dt>
+						<dt><label for="type"># IF C_TYPE_MANDATORY #* # ENDIF #{L_TYPE}</label></dt>
 						<dd><label>
 							<select id="type" name="type">				
 							# START select_type #				
@@ -680,7 +704,7 @@
 					# ENDIF #
 					# IF C_DISPLAY_CATEGORIES #
 					<dl>
-						<dt><label for="category">* {L_CATEGORY}</label></dt>
+						<dt><label for="category"># IF C_CATEGORY_MANDATORY #* # ENDIF #{L_CATEGORY}</label></dt>
 						<dd><label>
 							<select id="category" name="category">				
 							# START select_category #				
@@ -691,8 +715,9 @@
 					</dl>
 					# ENDIF #
 					# IF C_DISPLAY_ADVANCED #
+					# IF C_DISPLAY_SEVERITIES #
 					<dl>
-						<dt><label for="severity">{L_SEVERITY}</label></dt>
+						<dt><label for="severity"># IF C_SEVERITY_MANDATORY #* # ENDIF #{L_SEVERITY}</label></dt>
 						<dd><label>
 							<select id="severity" name="severity">				
 							# START select_severity #				
@@ -701,9 +726,10 @@
 							</select>
 						</label></dd>
 					</dl>
+					# ENDIF #
 					# IF C_DISPLAY_PRIORITIES #
 					<dl>
-						<dt><label for="priority">{L_PRIORITY}</label></dt>
+						<dt><label for="priority"># IF C_PRIORITY_MANDATORY #* # ENDIF #{L_PRIORITY}</label></dt>
 						<dd><label>
 							<select id="priority" name="priority">				
 							# START select_priority #				
@@ -716,7 +742,7 @@
 					# ENDIF #
 					# IF C_DISPLAY_VERSIONS #
 					<dl>
-						<dt><label for="detected_in">{L_DETECTED_IN}</label></dt>
+						<dt><label for="detected_in"># IF C_DETECTED_IN_MANDATORY #* # ENDIF #{L_DETECTED_IN}</label></dt>
 						<dd><label>
 							<select id="detected_in" name="detected_in">				
 							# START select_detected_in #				
@@ -782,9 +808,33 @@
 			alert("{L_REQUIRE_CONTENT}");
 			return false;
 		}
-		# IF C_DISPLAY_CATEGORIES #
+		# IF C_TYPE_MANDATORY #
+		if(document.getElementById('type').value == "") {
+			alert("{L_REQUIRE_TYPE}");
+			return false;
+		}
+		# ENDIF #
+		# IF C_CATEGORY_MANDATORY #
 		if(document.getElementById('category').value == "") {
 			alert("{L_REQUIRE_CATEGORY}");
+			return false;
+		}
+		# ENDIF #
+		# IF C_SEVERITY_MANDATORY #
+		if(document.getElementById('severity').value == "") {
+			alert("{L_REQUIRE_SEVERITY}");
+			return false;
+		}
+		# ENDIF #
+		# IF C_PRIORITY_MANDATORY #
+		if(document.getElementById('priority').value == "") {
+			alert("{L_REQUIRE_PRIORITY}");
+			return false;
+		}
+		# ENDIF #
+		# IF C_DETECTED_IN_MANDATORY #
+		if(document.getElementById('detected_in').value == "") {
+			alert("{L_REQUIRE_DETECTED_IN}");
 			return false;
 		}
 		# ENDIF #
@@ -909,7 +959,7 @@
 					<br />
 					# IF C_DISPLAY_TYPES #
 					<dl>
-						<dt><label for="type">{L_TYPE}</label></dt>
+						<dt><label for="type"># IF C_TYPE_MANDATORY #* # ENDIF #{L_TYPE}</label></dt>
 						<dd><label>
 							<select id="type" name="type">				
 							# START edit.select_type #				
@@ -921,7 +971,7 @@
 					# ENDIF #
 					# IF C_DISPLAY_CATEGORIES #
 					<dl>
-						<dt><label for="category">* {L_CATEGORY}</label></dt>
+						<dt><label for="category"># IF C_CATEGORY_MANDATORY #* # ENDIF #{L_CATEGORY}</label></dt>
 						<dd><label>
 							<select id="category" name="category">				
 							# START edit.select_category #				
@@ -932,8 +982,9 @@
 					</dl>
 					# ENDIF #
 					# IF C_DISPLAY_ADVANCED #
+					# IF C_DISPLAY_SEVERITIES #
 					<dl>
-						<dt><label for="severity">{L_SEVERITY}</label></dt>
+						<dt><label for="severity"># IF C_SEVERITY_MANDATORY #* # ENDIF #{L_SEVERITY}</label></dt>
 						<dd><label>
 							<select id="severity" name="severity">				
 							# START edit.select_severity #				
@@ -942,9 +993,10 @@
 							</select>
 						</label></dd>
 					</dl>
+					# ENDIF #
 					# IF C_DISPLAY_PRIORITIES #
 					<dl>
-						<dt><label for="priority">{L_PRIORITY}</label></dt>
+						<dt><label for="priority"># IF C_PRIORITY_MANDATORY #* # ENDIF #{L_PRIORITY}</label></dt>
 						<dd><label>
 							<select id="priority" name="priority">				
 							# START edit.select_priority #				
@@ -957,7 +1009,7 @@
 					# ENDIF #
 					# IF C_DISPLAY_VERSIONS_DETECTED_IN #
 					<dl>
-						<dt><label for="detected_in">{L_DETECTED_IN}</label></dt>
+						<dt><label for="detected_in"># IF C_DETECTED_IN_MANDATORY #* # ENDIF #{L_DETECTED_IN}</label></dt>
 						<dd><label>
 							<select id="detected_in" name="detected_in">				
 							# START edit.select_detected_in #				
