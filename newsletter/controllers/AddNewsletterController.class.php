@@ -59,8 +59,7 @@ class AddNewsletterController extends ModuleController
 			$this->send_mail($type);
 			$tpl->put('MSG', MessageHelper::display($this->lang['newsletter.success-add'], E_USER_SUCCESS, 4));
 		}
-		
-		if ($this->send_test_button->has_been_submited() && $this->form->validate())
+		else if ($this->send_test_button->has_been_submited() && $this->form->validate())
 		{
 			$this->send_test($type);
 			$tpl->put('MSG', MessageHelper::display($this->lang['newsletter.success-send-test'], E_USER_SUCCESS, 4));
@@ -112,10 +111,12 @@ class AddNewsletterController extends ModuleController
 	
 	private function send_test($type)
 	{
+		$newsletter_config = NewsletterConfig::load();
+		$subscribers[] = array('mail' => $newsletter_config->get_mail_sender());
 		NewsletterMailFactory::send_mail(
-			array(NewsletterConfig::load()->get_mail_sender()), 
+			$subscribers, 
 			$type, 
-			NewsletterConfig::load()->get_mail_sender(), 
+			$newsletter_config->get_mail_sender(), 
 			$this->form->get_value('title'), 
 			$this->form->get_value('contents')
 		);
