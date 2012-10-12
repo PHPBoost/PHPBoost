@@ -30,10 +30,10 @@
 					$(this.id).hide();
 				},
 				change_picture_more : function () {
-					$(this.id_click).update('<img src="' + PATH_TO_ROOT + '/templates/' + THEME + '/images/admin/plus.png" alt="" class="valign_middle" style="width: 25px; height: auto;" />');
+					$(this.id_click).update('<img src="' + PATH_TO_ROOT + '/templates/' + THEME + '/images/admin/plus.png" alt="" class="valign_middle" style="cursor: pointer; width: 25px; height: auto;" />');
 				},
 				change_picture_less : function () {
-					$(this.id_click).update('<img src="' + PATH_TO_ROOT + '/templates/' + THEME + '/images/admin/minus.png" alt="" class="valign_middle" style="width: 25px; height: auto;" />');
+					$(this.id_click).update('<img src="' + PATH_TO_ROOT + '/templates/' + THEME + '/images/admin/minus.png" alt="" class="valign_middle" style="cursor: pointer; width: 25px; height: auto;" />');
 				},
 				get_already_click : function () {
 					return this.already_click;
@@ -82,23 +82,23 @@
 							<strong>{modules_not_activated.NAME}</strong> <em>({modules_not_activated.VERSION})</em>
 						</td>
 						<td class="row2">
-							<div id="desc_explain{modules_not_activated.ID}">
+							<div id="desc_explain{modules_not_activated.ID}" style="display: none;">
 								<strong>{@modules.name} :</strong> {modules_not_activated.AUTHOR} {modules_not_activated.AUTHOR_WEBSITE}<br />
 								<strong>{@modules.description} :</strong> {modules_not_activated.DESCRIPTION}<br />
 								<strong>{@modules.compatibility} :</strong> PHPBoost {modules_not_activated.COMPATIBILITY}<br />
 								<strong>{@modules.php_version} :</strong> {modules_not_activated.PHP_VERSION}
 							</div>
-							<div id="picture_desc{modules_not_activated.ID}" style="text-align: center;" "></div>
+							<div id="picture_desc{modules_not_activated.ID}" style="text-align: center;" "><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/plus.png" alt="" class="valign_middle" style="cursor: pointer; width: 25px; height: auto;" /></div>
 						</td>
 						<td class="row2">								
 							<label><input type="radio" name="activated-{modules_not_activated.ID}" value="1" # IF modules_not_activated.C_MODULE_ACTIVE # checked="checked" # ENDIF # /> {@modules.yes}</label>
 							<label><input type="radio" name="activated-{modules_not_activated.ID}" value="0" # IF NOT modules_not_activated.C_MODULE_ACTIVE # checked="checked" # ENDIF # /> {@modules.no}</label>
 						</td>
 						<td class="row2">
-							<div id="auth_explain{modules_not_activated.ID}">
+							<div id="auth_explain{modules_not_activated.ID}" style="display: none;">
 								{modules_not_activated.AUTHORIZATIONS}
 							</div>
-							<div id="picture_auth{modules_not_activated.ID}" style="text-align: center;"></div>
+							<div id="picture_auth{modules_not_activated.ID}" style="text-align: center;"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/plus.png" alt="" class="valign_middle" style="cursor: pointer; width: 25px; height: auto;" /></div>
 						</td>
 						<td class="row2">
 							<a href="{modules_not_activated.U_DELETE_LINK}">	
@@ -171,7 +171,7 @@
 								<strong>{@modules.compatibility} :</strong> PHPBoost {modules_activated.COMPATIBILITY}<br />
 								<strong>{@modules.php_version} :</strong> {modules_activated.PHP_VERSION}
 							</div>
-							<div id="picture_desc{modules_activated.ID}" style="text-align: center;"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/plus.png" alt="" class="valign_middle" style="width: 25px; height: auto;" /></div>
+							<div id="picture_desc{modules_activated.ID}" style="text-align: center;"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/plus.png" alt="" class="valign_middle" style="cursor: pointer; width: 25px; height: auto;" /></div>
 						</td>
 						<td class="row2">								
 							<label><input type="radio" name="activated-{modules_activated.ID}" value="1" # IF modules_activated.C_MODULE_ACTIVE # checked="checked" # ENDIF # /> {@modules.yes}</label>
@@ -181,7 +181,7 @@
 							<div id="auth_explain{modules_activated.ID}" style="display: none;">
 								{modules_activated.AUTHORIZATIONS}
 							</div>
-							<div id="picture_auth{modules_activated.ID}" style="text-align: center;"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/plus.png" alt="" class="valign_middle" style="width: 25px; height: auto;" /></div>
+							<div id="picture_auth{modules_activated.ID}" style="text-align: center;"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/plus.png" alt="" class="valign_middle" style="cursor: pointer; width: 25px; height: auto;" /></div>
 						</td>
 						<td class="row2">
 							<a href="{modules_activated.U_DELETE_LINK}">	
