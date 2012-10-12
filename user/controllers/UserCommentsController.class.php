@@ -103,7 +103,7 @@ class UserCommentsController extends AbstractController
 		while ($row = $result->fetch())
 		{
 			$id = $row['id_comment'];
-			$path = Url::to_rel($row['path']);
+			$path = $row['path'];
 			
 			if (empty($row['user_avatar']))
 				$user_avatar = $user_accounts_config->is_default_avatar_enabled() == '1' ? Url::to_rel(PATH_TO_ROOT .'/templates/' . get_utheme() . '/images/' .  $user_accounts_config->get_default_avatar_name()) : '';
@@ -119,7 +119,7 @@ class UserCommentsController extends AbstractController
 				'C_VISITOR' => empty($row['login']),
 				'C_VIEW_TOPIC' => true,
 			
-				'U_TOPIC' => $path,
+				'U_TOPIC' => Url::to_rel($path),
 				'U_EDIT' => CommentsUrlBuilder::edit($path, $id)->absolute(),
 				'U_DELETE' => CommentsUrlBuilder::delete($path, $id)->absolute(),
 				'U_PROFILE' => UserUrlBuilder::profile($row['user_id'])->absolute(),
