@@ -113,6 +113,17 @@
 			}
 			document.getElementById(field + '_list').innerHTML = contents + '</tr></table>';
 		}
+		
+		function display_default_version_radio(version_id)
+		{
+			if (document.getElementById('detected_in' + version_id).checked)
+				document.getElementById('default_version' + version_id).style.display = ""
+			else
+			{
+				document.getElementById('default_version' + version_id).style.display = "none";
+				document.getElementById('default_version' + version_id).checked = "";
+			}
+		}
 		-->
 		</script>
 	
@@ -168,6 +179,15 @@
 							<input type="checkbox" name="roadmap_activated" {ROADMAP_CHECKED} />
 						</dd>
 					</dl>
+					<dl>
+						<dt>
+							<label for="pm_activated">{L_ACTIV_PM}</label><br />
+							<span>{L_PM_EXPLAIN}</span>
+						</dt>
+						<dd> 
+							<input type="checkbox" name="pm_activated" {PM_CHECKED} />
+						</dd>
+					</dl>
 				</fieldset>
 				
 				<fieldset>
@@ -187,10 +207,24 @@
 				<fieldset>
 					<legend>{L_DISPONIBLE_TYPES}</legend>
 					<span>{L_TYPE_EXPLAIN}</span>
+					# IF C_DISPLAY_TYPES #
+					<dl>
+						<dt>
+							<label for="type_mandatory">{L_TYPE_MANDATORY}</label><br />
+						</dt>
+						<dd>
+							<span><input type="radio" name="type_mandatory" value="1" # IF C_TYPE_MANDATORY #checked=checked# ENDIF # /> {L_YES}</span>
+							<span style="margin-left:30px;"><input type="radio" name="type_mandatory" value="0" # IF NOT C_TYPE_MANDATORY #checked=checked# ENDIF # /> {L_NO}</span>
+						</dd>
+					</dl>
+					# ENDIF #
 					<table id="versions_list" class="module_table">
 						<tr style="text-align:center;">
-							<th style="width:90%">
-								{L_TYPE}
+							<th>
+								{L_DEFAULT}
+							</th>
+							<th style="width:80%">
+								{L_NAME}
 							</th>
 							<th>
 								{L_DELETE}
@@ -204,7 +238,10 @@
 						</tr>
 						# ELSE #
 						# START types #
-						<tr id="version_{types.ID}" style="text-align:center;"> 
+						<tr id="version_{types.ID}" style="text-align:center;">
+							<td class="row2">
+								<input type="radio" name="default_type" value="{types.ID}" {types.IS_DEFAULT} />
+							</td>
 							<td class="row2">
 								<input type="text" maxlength="100" size="40" name="type{types.ID}" value="{types.NAME}" class="text" />
 							</td>
@@ -213,6 +250,13 @@
 							</td>
 						</tr>
 						# END types #
+						# IF C_DISPLAY_DEFAULT_TYPE_DELETE_BUTTON #
+						<tr>
+							<td colspan="3" class="row3">
+								<div style="float:left;"><input type="submit" name="delete_default_type" value="{L_DELETE_DEFAULT_VALUE}" class="submit" /></div>
+							</td>
+						</tr>
+						# ENDIF #
 						# ENDIF #
 					</table>
 					<br />
@@ -229,10 +273,24 @@
 				<fieldset>
 					<legend>{L_DISPONIBLE_CATEGORIES}</legend>
 					<span>{L_CATEGORY_EXPLAIN}</span>
+					# IF C_DISPLAY_CATEGORIES #
+					<dl>
+						<dt>
+							<label for="category_mandatory">{L_CATEGORY_MANDATORY}</label><br />
+						</dt>
+						<dd>
+							<span><input type="radio" name="category_mandatory" value="1" # IF C_CATEGORY_MANDATORY #checked=checked# ENDIF # /> {L_YES}</span>
+							<span style="margin-left:30px;"><input type="radio" name="category_mandatory" value="0" # IF NOT C_CATEGORY_MANDATORY #checked=checked# ENDIF # /> {L_NO}</span>
+						</dd>
+					</dl>
+					# ENDIF #
 					<table class="module_table">
 						<tr style="text-align:center;">
-							<th style="width:90%">
-								{L_CATEGORY}
+							<th>
+								{L_DEFAULT}
+							</th>
+							<th style="width:80%">
+								{L_NAME}
 							</th>
 							<th>
 								{L_DELETE}
@@ -246,7 +304,10 @@
 						</tr>
 						# ELSE #
 						# START categories #
-						<tr style="text-align:center;"> 
+						<tr style="text-align:center;">
+							<td class="row2">
+								<input type="radio" name="default_category" value="{categories.ID}" {categories.IS_DEFAULT} />
+							</td>
 							<td class="row2">
 								<input type="text" maxlength="100" size="40" name="category{categories.ID}" value="{categories.NAME}" class="text" />
 							</td>
@@ -255,6 +316,13 @@
 							</td>
 						</tr>
 						# END categories #
+						# IF C_DISPLAY_DEFAULT_CATEGORY_DELETE_BUTTON #
+						<tr>
+							<td colspan="3" class="row3">
+								<div style="float:left;"><input type="submit" name="delete_default_category" value="{L_DELETE_DEFAULT_VALUE}" class="submit" /></div>
+							</td>
+						</tr>
+						# ENDIF #
 						# ENDIF #
 					</table>
 					<br />
@@ -269,54 +337,26 @@
 				</fieldset>
 				
 				<fieldset>
-					<legend>{L_DISPONIBLE_PRIORITIES}</legend>
-					<span>{L_PRIORITY_EXPLAIN}</span>
-					<table class="module_table">
-						<tr style="text-align:center;">
-							<th style="width:90%">
-								{L_PRIORITY}
-							</th>
-							<th>
-								{L_DELETE}
-							</th>
-						</tr>
-						# IF C_NO_PRIORITY #
-						<tr style="text-align:center;"> 
-							<td colspan="2" class="row2">
-								{L_NO_PRIORITY}
-							</td>
-						</tr>
-						# ELSE #
-						# START priorities #
-						<tr style="text-align:center;"> 
-							<td class="row2">
-								<input type="text" maxlength="100" size="40" name="priority{priorities.ID}" value="{priorities.NAME}" class="text" />
-							</td>
-							<td class="row2">
-								<a href="admin_bugtracker.php?delete_priority&amp;id={priorities.ID}&amp;token={TOKEN}" onclick="javascript:return Confirm_del_priority();"><img src="../templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" /></a>
-							</td>
-						</tr>
-						# END priorities #
-						# ENDIF #
-					</table>
-					<br />
-					<dl>
-						<dt><label for="priority">{L_ADD_PRIORITY}</label></dt>
-						<dd>
-							<input type="text" size="40" maxlength="100" name="priority" id="priority" value="{PRIORITY}" class="text" />
-							&nbsp;&nbsp; 
-							<input type="submit" name="valid_add_priority" onclick="return check_priority();" value="{L_ADD}" class="submit" />
-						</dd>
-					</dl>
-				</fieldset>
-				
-				<fieldset>
 					<legend>{L_DISPONIBLE_SEVERITIES}</legend>
 					<span>{L_SEVERITY_EXPLAIN}</span>
+					# IF C_DISPLAY_SEVERITIES #
+					<dl>
+						<dt>
+							<label for="severity_mandatory">{L_SEVERITY_MANDATORY}</label><br />
+						</dt>
+						<dd>
+							<span><input type="radio" name="severity_mandatory" value="1" # IF C_SEVERITY_MANDATORY #checked=checked# ENDIF # /> {L_YES}</span>
+							<span style="margin-left:30px;"><input type="radio" name="severity_mandatory" value="0" # IF NOT C_SEVERITY_MANDATORY #checked=checked# ENDIF # /> {L_NO}</span>
+						</dd>
+					</dl>
+					# ENDIF #
 					<table class="module_table">
 						<tr style="text-align:center;">
+							<th style="width:12%">
+								{L_DEFAULT}
+							</th>
 							<th>
-								{L_SEVERITY}
+								{L_NAME}
 							</th>
 							<th style="width:15%">
 								{L_COLOR}
@@ -333,7 +373,10 @@
 						</tr>
 						# ELSE #
 						# START severities #
-						<tr style="text-align:center;"> 
+						<tr style="text-align:center;">
+							<td class="row2">
+								<input type="radio" name="default_severity" value="{severities.ID}" {severities.IS_DEFAULT} />
+							</td>
 							<td class="row2">
 								<input type="text" maxlength="100" size="40" name="severity{severities.ID}" value="{severities.NAME}" class="text" />
 							</td> 
@@ -350,6 +393,13 @@
 							</td>
 						</tr>
 						# END severities #
+						# IF C_DISPLAY_DEFAULT_SEVERITY_DELETE_BUTTON #
+						<tr>
+							<td colspan="3" class="row3">
+								<div style="float:left;"><input type="submit" name="delete_default_severity" value="{L_DELETE_DEFAULT_VALUE}" class="submit" /></div>
+							</td>
+						</tr>
+						# ENDIF #
 						# ENDIF #
 					</table>
 					<br />
@@ -378,12 +428,92 @@
 				</fieldset>
 				
 				<fieldset>
-					<legend>{L_DISPONIBLE_VERSIONS}</legend>
-					<span>{L_VERSION_EXPLAIN}</span>
+					<legend>{L_DISPONIBLE_PRIORITIES}</legend>
+					<span>{L_PRIORITY_EXPLAIN}</span>
+					# IF C_DISPLAY_PRIORITIES #
+					<dl>
+						<dt>
+							<label for="priority_mandatory">{L_PRIORITY_MANDATORY}</label><br />
+						</dt>
+						<dd>
+							<span><input type="radio" name="priority_mandatory" value="1" # IF C_PRIORITY_MANDATORY #checked=checked# ENDIF # /> {L_YES}</span>
+							<span style="margin-left:30px;"><input type="radio" name="priority_mandatory" value="0" # IF NOT C_PRIORITY_MANDATORY #checked=checked# ENDIF # /> {L_NO}</span>
+						</dd>
+					</dl>
+					# ENDIF #
 					<table class="module_table">
 						<tr style="text-align:center;">
 							<th>
-								{L_VERSION}
+								{L_DEFAULT}
+							</th>
+							<th style="width:80%">
+								{L_NAME}
+							</th>
+							<th>
+								{L_DELETE}
+							</th>
+						</tr>
+						# IF C_NO_PRIORITY #
+						<tr style="text-align:center;"> 
+							<td colspan="2" class="row2">
+								{L_NO_PRIORITY}
+							</td>
+						</tr>
+						# ELSE #
+						# START priorities #
+						<tr style="text-align:center;">
+							<td class="row2">
+								<input type="radio" name="default_priority" value="{priorities.ID}" {priorities.IS_DEFAULT} />
+							</td>
+							<td class="row2">
+								<input type="text" maxlength="100" size="40" name="priority{priorities.ID}" value="{priorities.NAME}" class="text" />
+							</td>
+							<td class="row2">
+								<a href="admin_bugtracker.php?delete_priority&amp;id={priorities.ID}&amp;token={TOKEN}" onclick="javascript:return Confirm_del_priority();"><img src="../templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" /></a>
+							</td>
+						</tr>
+						# END priorities #
+						# IF C_DISPLAY_DEFAULT_PRIORITY_DELETE_BUTTON #
+						<tr>
+							<td colspan="3" class="row3">
+								<div style="float:left;"><input type="submit" name="delete_default_priority" value="{L_DELETE_DEFAULT_VALUE}" class="submit" /></div>
+							</td>
+						</tr>
+						# ENDIF #
+						# ENDIF #
+					</table>
+					<br />
+					<dl>
+						<dt><label for="priority">{L_ADD_PRIORITY}</label></dt>
+						<dd>
+							<input type="text" size="40" maxlength="100" name="priority" id="priority" value="{PRIORITY}" class="text" />
+							&nbsp;&nbsp; 
+							<input type="submit" name="valid_add_priority" onclick="return check_priority();" value="{L_ADD}" class="submit" />
+						</dd>
+					</dl>
+				</fieldset>
+				
+				<fieldset>
+					<legend>{L_DISPONIBLE_VERSIONS}</legend>
+					<span>{L_VERSION_EXPLAIN}</span>
+					# IF C_DISPLAY_VERSIONS #
+					<dl>
+						<dt>
+							<label for="detected_in_mandatory">{L_DETECTED_IN_MANDATORY}</label><br />
+						</dt>
+						<dd>
+							<span><input type="radio" name="detected_in_mandatory" value="1" # IF C_DETECTED_IN_MANDATORY #checked=checked# ENDIF # /> {L_YES}</span>
+							<span style="margin-left:30px;"><input type="radio" name="detected_in_mandatory" value="0" # IF NOT C_DETECTED_IN_MANDATORY #checked=checked# ENDIF # /> {L_NO}</span>
+						</dd>
+					</dl>
+					# ENDIF #
+					<table class="module_table">
+						<tr style="text-align:center;">
+							<th style="width:12%">
+								{L_DEFAULT}
+							</th>
+							<th>
+								{L_NAME}
 							</th>
 							<th style="width:10%">
 								{L_VERSION_DETECTED}
@@ -400,18 +530,28 @@
 						</tr>
 						# ELSE #
 						# START versions #
-						<tr style="text-align:center;"> 
+						<tr style="text-align:center;">
+							<td class="row2">
+								<input type="radio" id="default_version{versions.ID}" name="default_version" value="{versions.ID}" {versions.IS_DEFAULT} {versions.DISPLAY_DEFAULT}/>
+							</td>
 							<td class="row2">
 								<input type="text" maxlength="100" size="40" name="version{versions.ID}" value="{versions.NAME}" class="text" />
 							</td> 
 							<td class="row2">
-								<input type="checkbox" name="detected_in{versions.ID}" {versions.DETECTED_IN} />
+								<input type="checkbox" id="detected_in{versions.ID}" name="detected_in{versions.ID}" onclick="javascript:display_default_version_radio('{versions.ID}');" {versions.DETECTED_IN} />
 							</td> 
 							<td class="row2">
 								<a href="admin_bugtracker.php?delete_version&amp;id={versions.ID}&amp;token={TOKEN}" onclick="javascript:return Confirm_del_version();"><img src="../templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" /></a>
 							</td>
 						</tr>
 						# END versions #
+						# IF C_DISPLAY_DEFAULT_VERSION_DELETE_BUTTON #
+						<tr>
+							<td colspan="3" class="row3">
+								<div style="float:left;"><input type="submit" name="delete_default_version" value="{L_DELETE_DEFAULT_VALUE}" class="submit" /></div>
+							</td>
+						</tr>
+						# ENDIF #
 						# ENDIF #
 					</table>
 					<br />

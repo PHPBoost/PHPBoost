@@ -227,6 +227,10 @@ class BugtrackerHomePageExtensionPoint implements HomePageExtensionPoint
 				$errstr = $LANG['bugs.error.e_edit_success'];
 				$errtyp = E_USER_SUCCESS;
 				break;
+			case 'delete_success':
+				$errstr = $LANG['bugs.error.e_delete_success'];
+				$errtyp = E_USER_SUCCESS;
+				break;
 			case 'reject_success':
 				$errstr = $LANG['bugs.error.e_reject_success'];
 				$errtyp = E_USER_SUCCESS;

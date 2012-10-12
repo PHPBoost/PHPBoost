@@ -50,11 +50,16 @@ $LANG['bugs.notice.new_comment'] = 'Nouveau commentaire';
 $LANG['bugs.notice.reproduction_method_update'] = 'Mise à jour de la méthode de reproduction';
 $LANG['bugs.notice.not_defined'] = 'Non défini';
 $LANG['bugs.notice.require_login'] = 'Veuillez saisir un pseudo !';
-$LANG['bugs.notice.require_type'] = 'Veuillez saisir un type !';
-$LANG['bugs.notice.require_category'] = 'Veuillez saisir une catégorie !';
-$LANG['bugs.notice.require_priority'] = 'Veuillez saisir une priorité !';
-$LANG['bugs.notice.require_severity'] = 'Veuillez saisir un niveau !';
-$LANG['bugs.notice.require_version'] = 'Veuillez saisir une version !';
+$LANG['bugs.notice.require_type'] = 'Veuillez saisir un nom pour le nouveau type !';
+$LANG['bugs.notice.require_category'] = 'Veuillez saisir un nom pour la nouvelle catégorie !';
+$LANG['bugs.notice.require_priority'] = 'Veuillez saisir un nom pour la nouvelle priorité !';
+$LANG['bugs.notice.require_severity'] = 'Veuillez saisir un nom pour le nouveau niveau !';
+$LANG['bugs.notice.require_version'] = 'Veuillez saisir un nom pour la nouvelle version !';
+$LANG['bugs.notice.require_choose_type'] = 'Veuillez choisir le type votre bug !';
+$LANG['bugs.notice.require_choose_category'] = 'Veuillez choisir la catégorie votre bug !';
+$LANG['bugs.notice.require_choose_priority'] = 'Veuillez choisir la priorité de votre bug !';
+$LANG['bugs.notice.require_choose_severity'] = 'Veuillez choisir le niveau de votre bug !';
+$LANG['bugs.notice.require_choose_detected_in'] = 'Veuillez choisir la version dans laquelle votre bug a été détecté !';
 $LANG['bugs.notice.joker'] = 'Utilisez * pour joker';
 
 //Actions
@@ -131,6 +136,13 @@ $LANG['bugs.labels.color'] = 'Couleur';
 $LANG['bugs.labels.number'] = 'Nombre de bugs';
 $LANG['bugs.labels.number_corrected'] = 'Nombre de bugs corrigés';
 $LANG['bugs.labels.top_10_posters'] = 'Top 10 : posteurs';
+$LANG['bugs.labels.default'] = 'Par défaut';
+$LANG['bugs.labels.del_default_value'] = 'Supprimer la valeur par défaut';
+$LANG['bugs.labels.type_mandatory'] = 'Section "Type" obligatoire ?';
+$LANG['bugs.labels.category_mandatory'] = 'Section "Catégorie" obligatoire ?';
+$LANG['bugs.labels.severity_mandatory'] = 'Section "Niveau" obligatoire ?';
+$LANG['bugs.labels.priority_mandatory'] = 'Section "Priorité" obligatoire ?';
+$LANG['bugs.labels.detected_in_mandatory'] = 'Section "Détecté dans la version" obligatoire ?';
 
 //Etats
 $LANG['bugs.status.new'] = 'Nouveau';
@@ -139,40 +151,22 @@ $LANG['bugs.status.fixed'] = 'Corrigé';
 $LANG['bugs.status.reopen'] = 'Ré-ouvert';
 $LANG['bugs.status.rejected'] = 'Rejeté';
 
-//Configuration
-$LANG['bugs.config.items_per_page'] = 'Nombre de bugs par page'; 
-$LANG['bugs.config.rejected_bug_color_label'] = 'Couleur de la ligne d\'un bug "Rejeté"';
-$LANG['bugs.config.fixed_bug_color_label'] = 'Couleur de la ligne d\'un bug "Fermé"';
-$LANG['bugs.config.activ_com'] = 'Activer les commentaires';
-$LANG['bugs.config.activ_roadmap'] = 'Activer la feuille de route';
-$LANG['bugs.config.activ_cat_in_title'] = 'Afficher la catégorie dans le titre du bug';
-
 //Explications
 $LANG['bugs.explain.roadmap'] = 'Permet d\'afficher la liste des bugs corrigés pour chaque version';
-$LANG['bugs.explain.type'] = 'Types des demandes. Exemples : Anomalie, Demande d\'évolution...<br />
-<br />
-Remarques : <br />
+$LANG['bugs.explain.pm'] = 'Permet d\'envoyer un MP dans les cas suivants :<br />
+- Commentaire sur un bug<br />
+- Edition d\'un bug<br />
+- Suppression d\'un bug<br />
+- Assignation d\'un bug<br />
+- Rejet d\'un bug<br />
+- Réouverture d\'un bug<br />';
+$LANG['bugs.explain.type'] = 'Types des demandes. Exemples : Anomalie, Demande d\'évolution...';
+$LANG['bugs.explain.category'] = 'Catégorie des demandes. Exemples : Noyau, Module...';
+$LANG['bugs.explain.severity'] = 'Niveau des demandes. Exemples : Mineur, Majeur, Critique...';
+$LANG['bugs.explain.priority'] = 'Priorité des demandes. Exemples : Basse, Normale, Elevée...';
+$LANG['bugs.explain.version'] = 'Liste des versions du produit.';
+$LANG['bugs.explain.remarks'] = 'Remarques : <br />
 - Si la liste est vide, cette option ne sera pas visible lors de la signalisation d\'un bug<br />
-- Si la liste ne contient qu\'une seule valeur, cette option ne sera pas non plus visible et sera attribuée par défaut au bug<br /><br />';
-$LANG['bugs.explain.category'] = 'Catégorie des demandes. Exemples : Noyau, Module...<br />
-<br />
-Remarques : <br />
-- Si la liste est vide, cette option ne sera pas visible lors de la signalisation d\'un bug<br />
-- Si la liste ne contient qu\'une seule valeur, cette option ne sera pas non plus visible et sera attribuée par défaut au bug<br /><br />';
-$LANG['bugs.explain.priority'] = 'Priorité des demandes. Exemples : Basse, Normale, Elevée...<br />
-<br />
-Remarques : <br />
-- Si la liste est vide, cette option ne sera pas visible lors de la signalisation d\'un bug<br />
-- Si la liste ne contient qu\'une seule valeur, cette option ne sera pas non plus visible et sera attribuée par défaut au bug<br /><br />';
-$LANG['bugs.explain.severity'] = 'Niveau des demandes. Exemples : Mineur, Majeur, Critique...<br />
-<br />
-Remarques : <br />
-- Si la liste est vide, cette option ne sera pas visible lors de la signalisation d\'un bug<br />
-- Si la liste ne contient qu\'une seule valeur, cette option ne sera pas non plus visible et sera attribuée par défaut au bug<br /><br />';
-$LANG['bugs.explain.version'] = 'Liste des versions du produit.<br />
-<br />
-Remarques :<br />
-- Si la liste est vide, l\'option "Détecté dans la version" ne sera pas visible lors de la signalisation d\'un bug<br />
 - Si la liste ne contient qu\'une seule valeur, cette option ne sera pas non plus visible et sera attribuée par défaut au bug<br /><br />';
 $LANG['bugs.explain.default_content'] = 'Merci de nous donner les informations demandées ci-dessous, elles nous seront utiles pour la résolution du bug :
 Système d\'exploitation :
@@ -202,11 +196,32 @@ $LANG['bugs.pm.edit.contents'] = '%s a modifié les champs suivants dans le bug #
 
 Lien vers le bug :
 %s';
+$LANG['bugs.pm.reopen.title'] = '[%s] Le bug #%d a été ré-ouvert par %s';
+$LANG['bugs.pm.reopen.contents'] = '%s a ré-ouvert le bug #%d.
+Lien vers le bug :
+%s';
+$LANG['bugs.pm.reject.title'] = '[%s] Le bug #%d a été rejeté par %s';
+$LANG['bugs.pm.reject.contents'] = '%s a rejeté le bug #%d.
+Lien vers le bug :
+%s';
+$LANG['bugs.pm.delete.title'] = '[%s] Le bug #%d a été supprimé par %s';
+$LANG['bugs.pm.delete.contents'] = '%s a supprimé le bug #%d.
+Lien vers le bug :
+%s';
 
 //Recherche
 $LANG['bugs.search.where'] = 'Où ?';
 $LANG['bugs.search.where.title'] = 'Titre';
 $LANG['bugs.search.where.contents'] = 'Contenu';
+
+//Configuration
+$LANG['bugs.config.items_per_page'] = 'Nombre de bugs par page'; 
+$LANG['bugs.config.rejected_bug_color_label'] = 'Couleur de la ligne d\'un bug "Rejeté"';
+$LANG['bugs.config.fixed_bug_color_label'] = 'Couleur de la ligne d\'un bug "Fermé"';
+$LANG['bugs.config.activ_com'] = 'Activer les commentaires';
+$LANG['bugs.config.activ_roadmap'] = 'Activer la feuille de route';
+$LANG['bugs.config.activ_cat_in_title'] = 'Afficher la catégorie dans le titre du bug';
+$LANG['bugs.config.activ_pm'] = 'Activer l\'envoi de MP';
 
 //Autorisations
 $LANG['bugs.config.auth'] = 'Autorisations';
@@ -222,6 +237,7 @@ $LANG['bugs.error.e_no_user_assigned'] = 'Ce bug n\'a été assigné à aucun utilis
 $LANG['bugs.error.e_no_fixed_version'] = 'Veuillez sélectionner la version de correction avant de passer à l\'état "' . $LANG['bugs.status.fixed'] . '"';
 $LANG['bugs.error.e_config_success'] = 'La configuration a été modifiée avec succès';
 $LANG['bugs.error.e_edit_success'] = 'Le bug a été modifié avec succès';
+$LANG['bugs.error.e_delete_success'] = 'Le bug a été supprimé avec succès';
 $LANG['bugs.error.e_reject_success'] = 'Le bug a été rejeté';
 $LANG['bugs.error.e_reopen_success'] = 'Le bug a été ré-ouvert';
 $LANG['bugs.error.e_unexist_bug'] = 'Ce bug n\'existe pas';
