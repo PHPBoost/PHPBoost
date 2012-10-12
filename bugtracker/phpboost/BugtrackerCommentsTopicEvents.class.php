@@ -27,14 +27,14 @@
 
 class BugtrackerCommentsTopicEvents extends CommentsTopicEvents
 {	
-	private $sql_querier;
-	
 	public function execute_add_comment_event()
 	{
 		global $LANG;
-		$this->sql_querier = PersistenceContext::get_querier();
-		$User = AppContext::get_current_user();
+		$sql_querier = PersistenceContext::get_querier();
+		$current_user = AppContext::get_current_user();
 		$now = new Date(DATE_NOW, TIMEZONE_AUTO);
+		$bugtracker_config = BugtrackerConfig::load();
+		$pm_activated = $bugtracker_config->get_pm_activated();
 		
 		// Récupéreration du contenu du commentaire
 		$comment = AppContext::get_request()->get_poststring('comments_message', '');
@@ -42,28 +42,29 @@ class BugtrackerCommentsTopicEvents extends CommentsTopicEvents
 		//Récupération de l'id du bug
 		$bug_id = $this->comments_topic->get_id_in_module();
 		
-		//Récupération de l'id de l'auteur du bug
-		$result = $this->sql_querier->select_single_row(PREFIX . 'bugtracker', array('author_id'), 'WHERE id=:id', array(
+		//Récupération de l'id de l'auteur et de la personne a qui est assigné le bug
+		$result = $this->sql_querier->select_single_row(PREFIX . 'bugtracker', array('author_id', 'assigned_to_id'), 'WHERE id=:id', array(
 			'id' => $bug_id
 		));
-		$author_id = $result['author_id'];
 		
 		//Récupération de l'id des personnes qui ont mis à jour le bug
-		$updaters_ids = array($author_id);
+		$updaters_ids = array($result['author_id']);
+		if (!empty($result['assigned_to_id']) && $result['assigned_to_id'] != $result['author_id'])
+			$updaters_ids[] = $result['assigned_to_id'];
 		
-		$result = $this->sql_querier->select('SELECT updater_id FROM ' . PREFIX . 'bugtracker_history WHERE bug_id=:id GROUP BY updater_id', array(
+		$result = $sql_querier->select('SELECT updater_id FROM ' . PREFIX . 'bugtracker_history WHERE bug_id=:id GROUP BY updater_id', array(
 			'id' => $bug_id
-		), SelectQueryResult::FETCH_ASSOC .'ou'. SelectQueryResult::FETCH_NUM);
+		), SelectQueryResult::FETCH_ASSOC);
 		while ($row = $result->fetch())
 		{
-			if ($row['updater_id'] != $author_id)
+			if ($row['updater_id'] != $result['author_id'] && $row['updater_id'] != $result['assigned_to_id'])
 				$updaters_ids[] = $row['updater_id'];
 		}
 		
 		//Ajout d'une ligne dans l'historique du bug
-		$this->sql_querier->insert(PREFIX . 'bugtracker_history', array(
+		$sql_querier->insert(PREFIX . 'bugtracker_history', array(
 			'bug_id' => $bug_id, 
-			'updater_id' => $User->get_id(),
+			'updater_id' => $current_user->get_id(),
 			'update_date' => $now->get_timestamp(),
 			'change_comment' => $LANG['bugs.notice.new_comment'],
 		));
@@ -72,13 +73,13 @@ class BugtrackerCommentsTopicEvents extends CommentsTopicEvents
 		foreach ($updaters_ids as $updater_id)
 		{
 			
-			if ($User->get_attribute('user_id') != $updater_id)
+			if (($pm_activated == true) && $current_user->get_attribute('user_id') != $updater_id)
 			{
 				$Privatemsg = new PrivateMsg();
 				$Privatemsg->start_conversation(
 					$updater_id, 
-					sprintf($LANG['bugs.pm.comment.title'], $LANG['bugs.module_title'], $bug_id, $User->get_login()), 
-					sprintf($LANG['bugs.pm.comment.contents'], '[url="' . UserUrlBuilder::profile($row['old_value'])->absolute() . '"]' . $User->get_login() . '[/url]', $bug_id, $comment, '[url]' . HOST . DIR . '/bugtracker/bugtracker.php?view&id=' . $bug_id . '&com=0#comments_list[/url]'), 
+					sprintf($LANG['bugs.pm.comment.title'], $LANG['bugs.module_title'], $bug_id, $current_user->get_login()), 
+					sprintf($LANG['bugs.pm.comment.contents'], $current_user->get_login(), $bug_id, $comment, '[url]' . HOST . DIR . '/bugtracker/bugtracker.php?view&id=' . $bug_id . '&com=0#comments_list[/url]'), 
 					'-1', 
 					PrivateMsg::SYSTEM_PM
 				);
