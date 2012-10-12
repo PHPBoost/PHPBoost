@@ -29,7 +29,18 @@ if (defined('PHPBOOST') !== true)
 	exit;
 	
 load_module_lang('calendar'); //Chargement de la langue du module.
-define('TITLE', $LANG['title_calendar']);
+
+$Bread_crumb->add($LANG['calendar'], url('calendar.php'));
+$Bread_crumb->reverse();
+
+if (isset($_GET['add']))
+{
+	define('TITLE', $LANG['add_event']);
+	$Bread_crumb->add($LANG['add_event'], url('calendar.php?add=1'));
+}
+else
+	define('TITLE', $LANG['title_calendar']);
+
 $calendar_config = CalendarConfig::load();
 
 $date = new Date();
