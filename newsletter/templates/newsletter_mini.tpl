@@ -18,7 +18,7 @@
 				<input type="submit" value="{L_SUBMIT}" class="submit" />	
 			</p>
 			<p class="newsletter_link">
-				<a href="{PATH_TO_ROOT}/newsletter/newsletter.php{SID}" class="small_link">{L_ARCHIVES}</a>
+				<a href="${relative_url(NewsletterUrlBuilder::archives())}" class="small_link">{L_ARCHIVES}</a>
 			</p>
 		</div>
 		<div class="module_mini_bottom">

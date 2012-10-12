@@ -3,7 +3,7 @@
  *                          NewsletterUrlBuilder.class.php
  *                            -------------------
  *   begin                : September 19, 2011
- *   copyright            : (C) 2011 Kévin MASSY
+ *   copyright            : (C) 2011 Kevin MASSY
  *   email                : soldier.weasel@gmail.com
  *
  *
@@ -26,7 +26,7 @@
  ###################################################*/
 
 /**
- * @author Kévin MASSY <soldier.weasel@gmail.com>
+ * @author Kevin MASSY <soldier.weasel@gmail.com>
  * @desc
  */
 class NewsletterUrlBuilder
