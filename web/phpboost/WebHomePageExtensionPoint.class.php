@@ -66,12 +66,10 @@ class WebHomePageExtensionPoint implements HomePageExtensionPoint
 		//On créé une pagination si le nombre de catégories est trop important.
 		 
 		$Pagination = new DeprecatedPagination();
-
-		$nbr_column = $web_config->get_number_columns();
-		if ($total_cat < $web_config->get_number_columns($nbr_column))
-		{
-			$nbr_column = $total_cat;
-		}
+		
+		$nbr_column_config = $web_config->get_number_columns();
+		$nbr_column = ($total_cat > $nbr_column_config) ? $nbr_column_config : $total_cat;
+        $nbr_column = !empty($nbr_column) ? $nbr_column : 1;
 		
 		$tpl->put_all(array(
 			'C_WEB_CAT' => true,
