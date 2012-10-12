@@ -208,7 +208,7 @@ elseif (!empty($_POST['valid']) && !empty($id_post)) //inject
 	if (!empty($title) && !empty($url) && !empty($idcat))
 	{
 		$Sql->query_inject("UPDATE " . PREFIX . "web SET title = '" . $title . "', contents = '" . $contents . "', url = '" . $url . "', idcat = '" . $idcat . "', compt = '" . $compt . "', aprob = '" . $aprob . "' WHERE id = '" . $id_post . "'", __LINE__, __FILE__);	
-		AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);
+		AppContext::get_response()->redirect(HOST . SCRIPT);
 	}
 	else
 		AppContext::get_response()->redirect('/web/admin_web.php?id= ' . $id_post . '&error=incomplete#message_helper');

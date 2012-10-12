@@ -61,7 +61,7 @@ if ($del && !empty($id)) //Suppresion poll
 		
 		$Cache->Generate_module_file('poll');
 	}
-	AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);
+	AppContext::get_response()->redirect('/poll/admin_poll.php');
 }
 elseif (!empty($_POST['valid']) && !empty($id_post)) //inject
 {
