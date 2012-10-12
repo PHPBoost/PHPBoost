@@ -116,7 +116,7 @@ elseif ($new_cat XOR $id_edit > 0)
 		'L_REQUIRE' => $LANG['require'],
 		'L_PREVIEW' => $LANG['preview'],
 		'L_RESET' => $LANG['reset'],
-		'L_SUBMIT' => $id_edit > 0 ? $LANG['edit'] : $LANG['add'],
+		'L_SUBMIT' => $id_edit > 0 ? $LANG['submit'] : $LANG['add'],
 		'L_NAME' => $ARTICLES_LANG['category_name'],
 		'L_LOCATION' => $ARTICLES_LANG['category_location'],
 		'L_DESCRIPTION' => $ARTICLES_LANG['category_desc'],

@@ -47,7 +47,7 @@ if (!empty($_POST['valid']) && !empty($id_post)) //Mise à jour.
 		###### Régénération du cache des smileys #######
 		SmileysCache::invalidate();
 		
-		AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);
+		AppContext::get_response()->redirect('/admin/admin_smileys.php');
 	}
 	else
 		AppContext::get_response()->redirect('/admin/admin_smileys.php?id=' . $id_post . '&edit=1&error=incomplete#message_helper');
