@@ -192,7 +192,6 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 		$customization_config = CustomizationConfig::load();
 		
 		$header_tpl->put_all(array(
-			'C_BBCODE_TINYMCE_MODE' => AppContext::get_current_user()->get_attribute('user_editor') == 'tinymce',
 			'C_FAVICON' => $customization_config->favicon_exists(),
 			'C_CSS_CACHE_ENABLED' => CSSCacheConfig::load()->is_enabled(),
 			'FAVICON' => Url::to_rel($customization_config->get_favicon_path()),

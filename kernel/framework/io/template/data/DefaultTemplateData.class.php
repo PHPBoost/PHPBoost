@@ -72,7 +72,8 @@ class DefaultTemplateData implements TemplateData
 			'REWRITED_SCRIPT' => REWRITED_SCRIPT,
 		// @deprecated
 			'C_USER_CONNECTED' => $is_connected,
-			'C_USER_NOTCONNECTED' => !$is_connected
+			'C_USER_NOTCONNECTED' => !$is_connected,
+			'C_BBCODE_TINYMCE_MODE' => AppContext::get_current_user()->get_editor() == 'tinymce'
 		));
 	}
 
