@@ -54,7 +54,7 @@ class OnlineService
 		{
 			$row['session_script_get'] = !empty($row['session_script_get']) ? '?' . $row['session_script_get'] : '';
 			$user = new OnlineUser();
-			$user->set_id($row['id']);
+			$user->set_id($row['user_id']);
 			$user->set_pseudo($row['login']);
 			$user->set_level($row['level']);
 			$user->set_groups(explode('|', $row['user_groups']));
