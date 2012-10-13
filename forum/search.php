@@ -155,7 +155,7 @@ if (!empty($valid_search) && !empty($search))
 		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = msg.user_id
 		JOIN " . PREFIX . "forum_topics t ON t.id = msg.idtopic
 		JOIN " . PREFIX . "forum_cats c	ON c.id = t.idcat AND c.level > 0 AND c.aprob = 1
-		WHERE (FT_SEARCH(t.title, '" . $search . "') OR FT_SEARCHmsg.contents, '" . $search . "')) AND msg.timestamp > '" . (time() - $time) . "'
+		WHERE (FT_SEARCH(t.title, '" . $search . "') OR FT_SEARCH(msg.contents, '" . $search . "')) AND msg.timestamp > '" . (time() - $time) . "'
 		" . (!empty($idcat) ? " AND c.id_left BETWEEN '" . $CAT_FORUM[$idcat]['id_left'] . "' AND '" . $CAT_FORUM[$idcat]['id_right'] . "'" : '') . $auth_cats . "
 		GROUP BY t.id
 		ORDER BY relevance DESC
