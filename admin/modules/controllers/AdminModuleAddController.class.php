@@ -39,7 +39,18 @@ class AdminModuleAddController extends AdminController
 		$this->upload_form();
 		
 		$this->build_view();
-		$this->install_module($request);
+		
+		foreach ($this->get_modules_not_installed() as $name => $module)
+		{
+			try {
+				if ($request->get_string('add-' . $module->get_id()))
+				{
+					$activate = $request->get_bool('activated-' . $module->get_id(), false);
+					$this->install_module($module->get_id(), $activate);
+				}
+			}
+			catch (UnexistingHTTPParameterException $e)	{}
+		}
 		
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
@@ -132,35 +143,25 @@ class AdminModuleAddController extends AdminController
 		return $modules_not_installed;
 	}
 	
-	private function install_module(HTTPRequestCustom $request)
+	private function install_module($module_id, $activate)
 	{
-		foreach ($this->get_modules_not_installed() as $name => $module)
+		switch(ModulesManager::install_module($module_id, $activate))
 		{
-			try {
-				if ($request->get_string('add-' . $module->get_id()))
-				{
-					$activated = $request->get_bool('activated-' . $module->get_id(), false);
-					switch(ModulesManager::install_module($module->get_id(), $activated, ModulesManager::GENERATE_CACHE_AFTER_THE_OPERATION))
-					{
-						case ModulesManager::CONFIG_CONFLICT:
-							$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('e_config_conflict', 'errors'), MessageHelper::WARNING, 10));
-							break;
-						case ModulesManager::UNEXISTING_MODULE:
-							$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('e_unexist_module', 'errors'), MessageHelper::WARNING, 10));
-							break;
-						case ModulesManager::MODULE_ALREADY_INSTALLED:
-							$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('e_already_installed_module', 'errors'), MessageHelper::WARNING, 10));
-							break;
-						case ModulesManager::PHP_VERSION_CONFLICT:
-							$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('e_php_version_conflict', 'errors'), MessageHelper::WARNING, 10));
-							break;
-						case ModulesManager::MODULE_INSTALLED:
-						default: 
-							$this->view->put('MSG', MessageHelper::display($this->lang['modules.install_success'], MessageHelper::SUCCESS, 10));
-					}
-				}
-			}
-			catch (UnexistingHTTPParameterException $e)	{}
+			case ModulesManager::CONFIG_CONFLICT:
+				$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('e_config_conflict', 'errors'), MessageHelper::WARNING, 10));
+				break;
+			case ModulesManager::UNEXISTING_MODULE:
+				$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('e_unexist_module', 'errors'), MessageHelper::WARNING, 10));
+				break;
+			case ModulesManager::MODULE_ALREADY_INSTALLED:
+				$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('e_already_installed_module', 'errors'), MessageHelper::WARNING, 10));
+				break;
+			case ModulesManager::PHP_VERSION_CONFLICT:
+				$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('e_php_version_conflict', 'errors'), MessageHelper::WARNING, 10));
+				break;
+			case ModulesManager::MODULE_INSTALLED:
+			default: 
+				$this->view->put('MSG', MessageHelper::display($this->lang['modules.install_success'], MessageHelper::SUCCESS, 10));
 		}
 	}
 	
@@ -185,7 +186,7 @@ class AdminModuleAddController extends AdminController
 				{
 					$upload = new Upload($modules_folder);
 					$upload->disableContentCheck();
-					if ($upload->file('upload_module_file', '`([a-z0-9()_-])+\.(gzip|zip)+$`i'))
+					if ($upload->file('upload_module_file', '`([A-Za-z0-9-_]+)\.(gzip|zip)+$`i'))
 					{
 						$archive_path = $modules_folder . $upload->get_filename();
 						if ($upload->get_extension() == 'gzip')
@@ -210,24 +211,7 @@ class AdminModuleAddController extends AdminController
 							$this->view->put('MSG', MessageHelper::display($this->lang['modules.upload_invalid_format'], MessageHelper::NOTICE, 4));
 						}
 						
-						switch(ModulesManager::install_module($file->get_name_without_extension()))
-						{
-							case ModulesManager::CONFIG_CONFLICT:
-								$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('e_config_conflict', 'errors'), MessageHelper::WARNING, 10));
-								break;
-							case ModulesManager::UNEXISTING_MODULE:
-								$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('e_unexist_module', 'errors'), MessageHelper::WARNING, 10));
-								break;
-							case ModulesManager::MODULE_ALREADY_INSTALLED:
-								$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('e_already_installed_module', 'errors'), MessageHelper::WARNING, 10));
-								break;
-							case ModulesManager::PHP_VERSION_CONFLICT:
-								$this->view->put('MSG', MessageHelper::display(LangLoader::get_message('e_php_version_conflict', 'errors'), MessageHelper::WARNING, 10));
-								break;
-							case ModulesManager::MODULE_INSTALLED:
-							default: 
-								$this->view->put('MSG', MessageHelper::display($this->lang['modules.install_success'], MessageHelper::SUCCESS, 10));
-						}
+						$this->install_module($file->get_name_without_extension(), true);
 					}
 					else
 					{
