@@ -37,9 +37,7 @@ class CaptchaService
 	{
 		if ($this->default_factory === null)
 		{
-			//TODO captcha in configuration
-			$captcha = '';
-			$this->default_factory = $this->create_factory($captcha);
+			$this->default_factory = $this->create_factory($this->get_default_captcha());
 		}
 		return $this->default_factory;
 	}
@@ -48,6 +46,12 @@ class CaptchaService
 	{
 		$captcha = $this->get_existing_captcha($identifier);
 		return CaptchaProvidersService::create_factory($captcha);
+	}
+	
+	public function get_default_captcha()
+	{
+		// PHPBoost, ReCaptcha, ... for use
+		return '';
 	}
 
 	public function is_available()
@@ -73,8 +77,7 @@ class CaptchaService
         }
         else
         {
-        	// TODO default captcha => PHPBoost
-            return '';
+            return $this->get_default_captcha();
         }
     }
     
