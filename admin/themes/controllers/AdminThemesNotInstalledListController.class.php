@@ -37,9 +37,20 @@ class AdminThemesNotInstalledListController extends AdminController
 		$this->init();
 		
 		$this->upload_form();
-		
 		$this->build_view();
-		$this->save($request);
+		
+		foreach ($this->get_not_installed_themes() as $id_theme)
+		{
+			try {
+				if ($request->get_string('add-' . $id_theme))
+				{
+					$activated = $request->get_bool('activated-' . $id_theme, false);
+					$authorizations = Authorizations::auth_array_simple(Theme::ACCES_THEME, $id_theme);
+					$this->install_theme($id_theme, $authorizations, $activated);
+				}
+			} catch (UnexistingHTTPParameterException $e) {
+			}
+		}
 		
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
@@ -121,29 +132,18 @@ class AdminThemesNotInstalledListController extends AdminController
 		sort($themes_not_installed);
 		return $themes_not_installed;
 	}
-	
-	private function save(HTTPRequestCustom $request)
+
+	private function install_theme($id_theme, $authorizations = array(), $activate = true)
 	{
-		foreach ($this->get_not_installed_themes() as $id_theme)
+		ThemeManager::install($id_theme, $authorizations, $activate);
+		$error = ThemeManager::get_error();
+		if ($error !== null)
 		{
-			try {
-				if ($request->get_string('add-' . $id_theme))
-				{
-					$activated = $request->get_bool('activated-' . $id_theme, false);
-					$authorizations = Authorizations::auth_array_simple(Theme::ACCES_THEME, $id_theme);
-					ThemeManager::install($id_theme, $authorizations, $activated);
-					$error = ThemeManager::get_error();
-					if ($error !== null)
-					{
-						$this->view->put('MSG', MessageHelper::display($error, MessageHelper::NOTICE, 10));
-					}
-					else
-					{
-						AppContext::get_response()->redirect(AdminThemeUrlBuilder::list_installed_theme());
-					}
-				}
-			} catch (Exception $e) {
-			}
+			$this->view->put('MSG', MessageHelper::display($error, MessageHelper::NOTICE, 10));
+		}
+		else
+		{
+			AppContext::get_response()->redirect(AdminThemeUrlBuilder::list_installed_theme());
 		}
 	}
 	
@@ -183,7 +183,7 @@ class AdminThemesNotInstalledListController extends AdminController
 				if (!ThemeManager::get_theme_existed($file->get_name_without_extension()))
 				{
 					$upload = new Upload($folder_phpboost_themes);
-					if ($upload->file('upload_theme_file', '`([a-z0-9()_-])+\.(gzip|zip)+$`i'))
+					if ($upload->file('upload_theme_file', '`([A-Za-z0-9-_]+)\.(gzip|zip)+$`i'))
 					{
 						$archive = $folder_phpboost_themes . $upload->get_filename();
 						
@@ -209,8 +209,7 @@ class AdminThemesNotInstalledListController extends AdminController
 							$this->view->put('MSG', MessageHelper::display($this->lang['themes.upload.invalid_format'], MessageHelper::NOTICE, 4));
 						}
 						
-						ThemeManager::install($file->get_name_without_extension());
-						AppContext::get_response()->redirect(AdminThemeUrlBuilder::list_installed_theme());
+						$this->install_theme($file->get_name_without_extension());
 					}
 				}
 				else

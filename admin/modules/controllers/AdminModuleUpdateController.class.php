@@ -38,7 +38,7 @@ class AdminModuleUpdateController extends AdminController
 		$this->upload_form();
 		
 		$this->build_view();
-		$this->upgrade_module($request);
+		$this->upgrade_module($request->get_string('module_id', ''));
 		
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
@@ -111,10 +111,8 @@ class AdminModuleUpdateController extends AdminController
 		));
 	}
 	
-	private function upgrade_module(HTTPRequestCustom $request)
+	private function upgrade_module($module_id)
 	{
-		$module_id = $request->get_string('module_id', '') ;
-		
 		if (!empty($module_id))
 		{
 			switch (ModulesManager::upgrade_module($module_id))
@@ -155,11 +153,12 @@ class AdminModuleUpdateController extends AdminController
 			$file = $this->form->get_value('file');
 			if ($file !== null)
 			{
-				if (ModulesManager::is_module_installed($file->get_name_without_extension()))
+				$modules_id = $file->get_name_without_extension();
+				if (ModulesManager::is_module_installed($modules_id))
 				{
 					$upload = new Upload($modules_folder);
 					$upload->disableContentCheck();
-					if ($upload->file('upload_module_file', '`([a-z0-9()_-])+\.(gzip|zip)+$`i'))
+					if ($upload->file('upload_module_file', '`([A-Za-z0-9-_]+)\.(gzip|zip)+$`i', false, 100000000, false))
 					{
 						$archive_path = $modules_folder . $upload->get_filename();
 						if ($upload->get_extension() == 'gzip')
@@ -183,7 +182,8 @@ class AdminModuleUpdateController extends AdminController
 						{
 							$this->view->put('MSG', MessageHelper::display($this->lang['modules.upload_invalid_format'], MessageHelper::NOTICE, 4));
 						}
-						AppContext::get_response()->redirect(AdminModulesUrlBuilder::update_module());
+						
+						$this->upgrade_module($modules_id);
 					}
 					else
 					{
