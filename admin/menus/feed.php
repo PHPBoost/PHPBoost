@@ -187,30 +187,29 @@ foreach ($feeds_modules as $module)
 {
 	$list = $module->get_extension_point(FeedProvider::EXTENSION_POINT);
 	$list = $list->get_feeds_list();
-
+	
 	foreach ($list->get_feeds_list() as $feed_type => $object)
 	{
 		$urls = get_feeds($object, $module->get_id(), $feed_type, $feed_url);
 		
-		$root = array(
-			'name' => $module->get_id() . ' : ' . $object->get_category_name(),
+		$root[0] = array(
+			'name' => $object->get_category_name(),
 			'url' => $object->get_url($feed_type),
+			'level' => 0,
+			'feed_name' => null,
 			'selected' => $feed_url == $object->get_url($feed_type)
 		);
 	}
-
-	$tpl->assign_block_vars('modules', array(
-		'NAME' => ucfirst($root['name']), 
-		'URL' => $root['url'],
-		'SELECTED' => $root['selected'] ? ' selected="selected"' : ''
-	));
+	
+	$urls = array_merge($root, $urls);
+	$tpl->assign_block_vars('modules', array('NAME' => ucfirst($module->get_id())));
 	
 	foreach ($urls as $url)
 	{
 		$tpl->assign_block_vars('modules.feeds_urls', array(
 			'URL' => $url['url'],
 			'NAME' => $url['name'],
-			'SPACE' => str_repeat('----', $url['level']),
+			'SPACE' => str_repeat('--', $url['level']),
 			'FEED_NAME' => $url['feed_name'] != 'master' ? $url['feed_name'] : null,
 			'SELECTED' => $url['selected'] ? ' selected="selected"' : ''
 		));
