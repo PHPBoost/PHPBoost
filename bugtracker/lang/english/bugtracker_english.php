@@ -143,6 +143,8 @@ $LANG['bugs.labels.category_mandatory'] = 'Section "Category" mandatory?';
 $LANG['bugs.labels.severity_mandatory'] = 'Section "Severity" mandatory?';
 $LANG['bugs.labels.priority_mandatory'] = 'Section "Priority" mandatory?';
 $LANG['bugs.labels.detected_in_mandatory'] = 'Section "Detected in version" mandatory?';
+$LANG['bugs.labels.date_format'] = 'Date display format';
+$LANG['bugs.labels.date_time'] = 'Date and time';
 
 //Status
 $LANG['bugs.status.new'] = 'New';

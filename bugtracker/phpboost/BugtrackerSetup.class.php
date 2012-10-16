@@ -47,7 +47,7 @@ class BugtrackerSetup extends DefaultModuleSetup
 		$this->drop_tables();
 		$this->delete_configuration();
 	}
-
+	
 	private function drop_tables()
 	{
 		PersistenceContext::get_dbms_utils()->drop(array(self::$bugtracker_table, self::$bugtracker_history_table));
@@ -81,6 +81,8 @@ class BugtrackerSetup extends DefaultModuleSetup
 			'reproduction_method' => array('type' => 'text', 'length' => 65000),
 			'detected_in' => array('type' => 'integer', 'length' => 11, 'default' => 0),
 			'fixed_in' => array('type' => 'integer', 'length' => 11, 'default' => 0),
+			'progess' => array('type' => 'integer', 'length' => 11, 'default' => 0),
+			'estimated_fix_duration' => array('type' => 'integer', 'length' => 11, 'default' => 0),
 			'assigned_to_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0)
 		);
 		$options = array(
