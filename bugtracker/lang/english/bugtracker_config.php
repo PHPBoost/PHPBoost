@@ -54,13 +54,13 @@ $lang['bugtracker.config.priorities.high'] = 'High';
 $lang['bugtracker.config.priorities.urgent'] = 'Urgent';
 
 //Default content message
-$lang['bugtracker.config.contents_value'] = 'Please fill the informations below, they will be useful to treat the bug
-Operating system :
-Web navigator :
-Test version (test site, zip archive) :
-Local installation or on a web server ? :
-Link :
-----------------------------------------------------------------------
+$lang['bugtracker.config.contents_value'] = 'Please fill the informations below, they will be useful to treat the bug<br />
+Operating system :<br />
+Web navigator :<br />
+Test version (test site, zip archive) :<br />
+Local installation or on a web server ? :<br />
+Link :<br />
+----------------------------------------------------------------------<br />
 ';
 
 ?>

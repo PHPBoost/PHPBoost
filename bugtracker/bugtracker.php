@@ -34,6 +34,7 @@ $bugtracker_config = BugtrackerConfig::load();
 //Récupération des paramètres de configuration
 $authorizations = $bugtracker_config->get_authorizations();
 $items_per_page = $bugtracker_config->get_items_per_page();
+$date_format = $bugtracker_config->get_date_format();
 $comments_activated = $bugtracker_config->get_comments_activated();
 $roadmap_activated = $bugtracker_config->get_roadmap_activated();
 $cat_in_title_activated = $bugtracker_config->get_cat_in_title_activated();
@@ -82,19 +83,23 @@ $now = new Date(DATE_NOW, TIMEZONE_AUTO);
 
 $id = retrieve(GET, 'id', 0, TINTEGER);
 $id_post = retrieve(POST, 'id', 0, TINTEGER);
+$id = (!empty($id) ? $id : (!empty($id_post) ? $id_post : ''));
+
+$back = retrieve(GET, 'back', '');
+$back_post = retrieve(POST, 'back', '');
+$back = (!empty($back) ? $back : (!empty($back_post) ? $back_post : ''));
+$back = in_array($back, array('view', 'solved', 'roadmap')) ? $back : '';
 
 //Inversion de la liste des versions pour avoir la plus récente en premier
 $versions = array_reverse($versions, true);
 
 $nbr_versions = array_keys($versions);
 
-if (!empty($id) || !empty($id_post))
+if (!empty($id) || !empty($id))
 {
-	$id_tmp = !empty($id) ? $id : $id_post;
-	
-	$bug_exist = $Sql->query_array(PREFIX . 'bugtracker', '*', "WHERE id = '" . $id_tmp . "'", __LINE__, __FILE__);
+	$bug_exist = $Sql->query_array(PREFIX . 'bugtracker', '*', "WHERE id = '" . $id . "'", __LINE__, __FILE__);
 	if (empty($bug_exist))
-		AppContext::get_response()->redirect(HOST . DIR . '/bugtracker/bugtracker.php?error=unexist_bug#message_helper');
+		AppContext::get_response()->redirect(HOST . DIR . '/bugtracker/bugtracker.php?' . (!empty($back) ? $back . '&' : '') . 'error=unexist_bug');
 }
 
 if ( !empty($_POST['valid_add']) )
@@ -129,7 +134,7 @@ if ( !empty($_POST['valid_add']) )
 		AppContext::get_response()->redirect(HOST . SCRIPT);
 	}
 	else
-	AppContext::get_response()->redirect(HOST . DIR . '/bugtracker/bugtracker.php?add&error=incomplete#message_helper');
+	AppContext::get_response()->redirect(HOST . DIR . '/bugtracker/bugtracker.php?add&error=incomplete');
 }
 else if (isset($_GET['add'])) // ajout d'un bug
 {	
@@ -342,7 +347,7 @@ else if (isset($_GET['delete']) && is_numeric($id)) //Suppression du bug.
 		}
 	}
 	
-	AppContext::get_response()->redirect(HOST . SCRIPT);
+	AppContext::get_response()->redirect(HOST . SCRIPT . (!empty($back) ? '?' . $back . (!empty($id) ? '&id=' . $id : '') : ''));
 }
 else if (isset($_GET['reject']) && is_numeric($id)) //Rejeter un bug
 {
@@ -399,7 +404,7 @@ else if (isset($_GET['reject']) && is_numeric($id)) //Rejeter un bug
 		}
 	}
 	
-	AppContext::get_response()->redirect(HOST . DIR . '/bugtracker/bugtracker.php?error=reject_success#message_helper');
+	AppContext::get_response()->redirect(HOST . DIR . '/bugtracker/bugtracker.php?' . (!empty($back) ? $back . '&' . (!empty($id) ? 'id=' . $id . '&' : '') : '') . 'error=reject_success');
 }
 else if (isset($_GET['reopen']) && is_numeric($id)) //Ré-ouvrir un bug
 {
@@ -456,9 +461,9 @@ else if (isset($_GET['reopen']) && is_numeric($id)) //Ré-ouvrir un bug
 		}
 	}
 	
-	AppContext::get_response()->redirect(HOST . DIR . '/bugtracker/bugtracker.php?error=reopen_success#message_helper');
+	AppContext::get_response()->redirect(HOST . DIR . '/bugtracker/bugtracker.php?' . (!empty($back) ? $back . '&' . (!empty($id) ? 'id=' . $id . '&' : '') : '') . 'error=reopen_success');
 }
-else if (!empty($_POST['valid_edit']) && is_numeric($id_post))
+else if (!empty($_POST['valid_edit']) && is_numeric($id))
 {
 	//checking authorization
 	if (!$auth_create)
@@ -469,23 +474,22 @@ else if (!empty($_POST['valid_edit']) && is_numeric($id_post))
 	
 	$old_values = $Sql->query_array(PREFIX . 'bugtracker b', '*', "
 	JOIN " . DB_TABLE_MEMBER . " a ON (a.user_id = b.author_id)
-	WHERE b.id = '" . $id_post . "'", __LINE__, __FILE__);
+	WHERE b.id = '" . $id . "'", __LINE__, __FILE__);
 	
 	$title = retrieve(POST, 'title', $old_values['title']);
 	$contents = retrieve(POST, 'contents', $old_values['contents'], TSTRING_PARSE);
-	$category = retrieve(POST, 'category', $old_values['category']);
-
+	$type = retrieve(POST, 'type', 0);
+	$category = retrieve(POST, 'category', 0);
+	$severity = retrieve(POST, 'severity', 0);
+	$priority = retrieve(POST, 'priority', 0);
+	$detected_in = retrieve(POST, 'detected_in', 0);
+	
 	$something_is_missing = ($type_mandatory && empty($type) || $category_mandatory && empty($category) || $severity_mandatory && empty($severity) || $priority_mandatory && empty($priority) || $detected_in_mandatory && empty($detected_in)) ? true : false;
 	
 	//On met à jour
 	if (!empty($title) && !empty($contents) && !$something_is_missing)
 	{
-		$detected_in = retrieve(POST, 'detected_in', 0);
 		$fixed_in = retrieve(POST, 'fixed_in', 0);
-		
-		$type = retrieve(POST, 'type', $old_values['type']);
-		$severity = retrieve(POST, 'severity', $old_values['severity']);
-		$priority = retrieve(POST, 'priority', $old_values['priority']);
 		$status = retrieve(POST, 'status', $old_values['status']);
 		$reproductible = retrieve(POST, 'reproductible', $old_values['reproductible'], TBOOL);
 		$reproduction_method = retrieve(POST, 'reproduction_method', $old_values['reproduction_method'], TSTRING_PARSE);
@@ -499,13 +503,13 @@ else if (!empty($_POST['valid_edit']) && is_numeric($id_post))
 		if ($auth_moderate || (!empty($old_values['assigned_to_id']) && $User->get_attribute('user_id') == $old_values['assigned_to_id']))
 		{
 			if ($status == 'assigned' && empty($assigned_to)) // Erreur si le statut est "Assigné" et aucun utilisateur n'est sélectionné
-				AppContext::get_response()->redirect(PATH_TO_ROOT . '/bugtracker/bugtracker.php?edit&id=' . $id_post . '&error=no_user_assigned#message_helper');
+				AppContext::get_response()->redirect(PATH_TO_ROOT . '/bugtracker/bugtracker.php?edit&id=' . $id . (!empty($back) ? 'back=' . $back . '&' : '') . '&error=no_user_assigned');
 			
 			if ($display_versions && $roadmap_activated == true && $status == 'fixed' && empty($fixed_in)) // Erreur si le statut est "Corrigé" et aucune version de correction n'est sélectionnée quand la roadmap est activée
-				AppContext::get_response()->redirect(PATH_TO_ROOT . '/bugtracker/bugtracker.php?edit&id=' . $id_post . '&error=no_fixed_version#message_helper');
+				AppContext::get_response()->redirect(PATH_TO_ROOT . '/bugtracker/bugtracker.php?edit&id=' . $id . (!empty($back) ? 'back=' . $back . '&' : '') . '&error=no_fixed_version');
 			
 			if (!empty($assigned_to) && empty($assigned_to_id)) // Erreur si l'utilisateur sélectionné n'existe pas
-				AppContext::get_response()->redirect(PATH_TO_ROOT . '/bugtracker/bugtracker.php?edit&id=' . $id_post . '&error=unexist_user#message_helper');
+				AppContext::get_response()->redirect(PATH_TO_ROOT . '/bugtracker/bugtracker.php?edit&id=' . $id . (!empty($back) ? 'back=' . $back . '&' : '') . '&error=unexist_user');
 			
 			$new_values = array(
 				'title'					=> $title,
@@ -597,13 +601,13 @@ else if (!empty($_POST['valid_edit']) && is_numeric($id_post))
 			}
 		}
 		if ($modification == false)
-			AppContext::get_response()->redirect(PATH_TO_ROOT . '/bugtracker/bugtracker.php');
+			AppContext::get_response()->redirect(HOST . SCRIPT . (!empty($back) ? '?' . $back . (!empty($id) ? '&id=' . $id : '') : ''));
 			
 		//Champs supplémentaires pour l'administrateur
 		if ($auth_moderate || (!empty($old_values['assigned_to_id']) && $User->get_attribute('user_id') == $old_values['assigned_to_id']))
 		{
 			$Sql->query_inject("UPDATE " . PREFIX . "bugtracker SET title = '" . $title . "', contents = '" . $contents . "', status = '" . $status . "', type = '" . $type . "', category = '" . $category . "', severity = '" . $severity . "', priority = '" . $priority . "', assigned_to_id = '" . $assigned_to_id . "', detected_in = '" . $detected_in . "', fixed_in = '" . $fixed_in . "', reproductible = '" . $reproductible . "', reproduction_method = '" . $reproduction_method . "'
-			WHERE id = '" . $id_post . "'", __LINE__, __FILE__);
+			WHERE id = '" . $id . "'", __LINE__, __FILE__);
 			
 			// Envoi d'un MP à l'utilisateur auquel a été affecté le bug
 			if (($pm_activated == true) && !empty($assigned_to_id) && ($old_values['assigned_to_id'] != $assigned_to_id) && ($User->get_attribute('user_id') != $assigned_to_id))
@@ -611,8 +615,8 @@ else if (!empty($_POST['valid_edit']) && is_numeric($id_post))
 				$Privatemsg = new PrivateMsg();
 				$Privatemsg->start_conversation(
 					$assigned_to_id, 
-					sprintf($LANG['bugs.pm.assigned.title'], $LANG['bugs.module_title'], $id_post), 
-					sprintf($LANG['bugs.pm.assigned.contents'], '[url]' . HOST . DIR . '/bugtracker/bugtracker.php?view&id=' . $id_post . '[/url]'), 
+					sprintf($LANG['bugs.pm.assigned.title'], $LANG['bugs.module_title'], $id), 
+					sprintf($LANG['bugs.pm.assigned.contents'], '[url]' . HOST . DIR . '/bugtracker/bugtracker.php?view&id=' . $id . '[/url]'), 
 					'-1', 
 					PrivateMsg::SYSTEM_PM
 				);
@@ -621,7 +625,7 @@ else if (!empty($_POST['valid_edit']) && is_numeric($id_post))
 		else
 		{
 			$Sql->query_inject("UPDATE " . PREFIX . "bugtracker SET title = '" . $title . "', contents = '" . $contents . "', type = '" . $type . "', category = '" . $category . "', severity = '" . $severity . "', priority = '" . $priority . "', detected_in = '" . $detected_in . "', reproductible = '" . $reproductible . "'
-			WHERE id = '" . $id_post . "'", __LINE__, __FILE__);
+			WHERE id = '" . $id . "'", __LINE__, __FILE__);
 		}
 		
 		//Insertion des modification dans l'historique du bug
@@ -654,7 +658,7 @@ else if (!empty($_POST['valid_edit']) && is_numeric($id_post))
 			if ($old_values[$field] != $new_values[$field])
 			{
 				$Sql->query_inject("INSERT INTO " . PREFIX . "bugtracker_history (bug_id, updater_id, update_date, updated_field, old_value, new_value, change_comment)
-				VALUES('" . $id_post . "', '" . $User->get_id() . "', '" . $now->get_timestamp() . "', '" . $field . "', '" . $old_values[$field] . "', '" . $new_values[$field] . "', '" . $comment . "')", __LINE__, __FILE__);
+				VALUES('" . $id . "', '" . $User->get_id() . "', '" . $now->get_timestamp() . "', '" . $field . "', '" . $old_values[$field] . "', '" . $new_values[$field] . "', '" . $comment . "')", __LINE__, __FILE__);
 			}
 		}
 		
@@ -670,7 +674,7 @@ else if (!empty($_POST['valid_edit']) && is_numeric($id_post))
 			
 			$result = $Sql->query_while("SELECT updater_id
 			FROM " . PREFIX . "bugtracker_history
-			WHERE bug_id = '" . $id_post . "'
+			WHERE bug_id = '" . $id . "'
 			GROUP BY updater_id
 			", __LINE__, __FILE__);
 			while ($row = $Sql->fetch_assoc($result))
@@ -687,8 +691,8 @@ else if (!empty($_POST['valid_edit']) && is_numeric($id_post))
 					$Privatemsg = new PrivateMsg();
 					$Privatemsg->start_conversation(
 						$updater_id, 
-						sprintf($LANG['bugs.pm.edit.title'], $LANG['bugs.module_title'], $id_post, $User->get_login()), 
-						sprintf($LANG['bugs.pm.edit.contents'], $User->get_login(), $id_post, $mp_comment, '[url]' . HOST . DIR . '/bugtracker/bugtracker.php?view&id=' . $id_post . '[/url]'), 
+						sprintf($LANG['bugs.pm.edit.title'], $LANG['bugs.module_title'], $id, $User->get_login()), 
+						sprintf($LANG['bugs.pm.edit.contents'], $User->get_login(), $id, $mp_comment, '[url]' . HOST . DIR . '/bugtracker/bugtracker.php?view&id=' . $id . '[/url]'), 
 						'-1', 
 						PrivateMsg::SYSTEM_PM
 					);
@@ -699,10 +703,10 @@ else if (!empty($_POST['valid_edit']) && is_numeric($id_post))
 		###### Régénération du cache #######
 		$Cache->Generate_module_file('bugtracker');
 		
-		AppContext::get_response()->redirect(HOST . DIR . '/bugtracker/bugtracker.php?error=edit_success#message_helper');
+		AppContext::get_response()->redirect(HOST . DIR . '/bugtracker/bugtracker.php?' . (!empty($back) ? $back . '&' . (!empty($id) ? 'id=' . $id . '&' : '') : '') . 'error=edit_success');
 	}
 	else
-		AppContext::get_response()->redirect(HOST . DIR . '/bugtracker/bugtracker.php?edit&id=' . $id_post . '&error=incomplete#message_helper');
+		AppContext::get_response()->redirect(HOST . DIR . '/bugtracker/bugtracker.php?edit&id=' . $id . (!empty($back) ? 'back=' . $back . '&' : '') . '&error=incomplete');
 }
 else if (isset($_GET['edit']) && is_numeric($id)) // edition d'un bug
 {
@@ -714,7 +718,7 @@ else if (isset($_GET['edit']) && is_numeric($id)) // edition d'un bug
 	}
 	
 	if (empty($id))
-		AppContext::get_response()->redirect(HOST . DIR . '/bugtracker/bugtracker.php?error=unexist_bug#message_helper');
+		AppContext::get_response()->redirect(HOST . DIR . '/bugtracker/bugtracker.php?error=unexist_bug');
 	
 	$Template->set_filenames(array(
 		'bugtracker' => 'bugtracker/bugtracker.tpl'
@@ -742,21 +746,20 @@ else if (isset($_GET['edit']) && is_numeric($id)) // edition d'un bug
 		$Template->assign_block_vars('edit', array(
 			'C_IS_ASSIGNED'				=> true,
 			'ID' 						=> $id,
-			'TITLE' 					=> ($cat_in_title_activated == true) ? '[' . $result['category'] . '] ' . $result['title'] : $result['title'],
+			'TITLE' 					=> $result['title'],
 			'CONTENTS' 					=> FormatingHelper::unparse($result['contents']),
 			'REPRODUCTIBLE_ENABLED' 	=> ($result['reproductible']) ? 'checked="checked"' : '',
 			'REPRODUCTIBLE_DISABLED' 	=> (!$result['reproductible']) ? 'checked="checked"' : '',
 			'REPRODUCTION_METHOD' 		=> FormatingHelper::unparse($result['reproduction_method']),
 			'AUTHOR' 					=> !empty($result['login']) ? '<a href="' . UserUrlBuilder::profile($result['user_id'])->absolute() . '" class="' . UserService::get_level_class($result['level']) . '">' . $result['login'] . '</a>': $LANG['guest'],
-			'ASSIGNED_TO'				=> $assigned_to,
-			'DATE' 						=> gmdate_format('date_format', $result['submit_date'])
+			'ASSIGNED_TO'				=> $assigned_to
 		));
 	}
 	else
 	{
 		$Template->assign_block_vars('edit', array(
 			'ID' 						=> $id,
-			'TITLE' 					=> ($cat_in_title_activated == true) ? '[' . $result['category'] . '] ' . $result['title'] : $result['title'],
+			'TITLE' 					=> $result['title'],
 			'CONTENTS' 					=> FormatingHelper::unparse($result['contents']),
 			'REPRODUCTIBLE_ENABLED' 	=> ($result['reproductible']) ? 'checked="checked"' : '',
 			'REPRODUCTIBLE_DISABLED' 	=> (!$result['reproductible']) ? 'checked="checked"' : '',
@@ -785,6 +788,7 @@ else if (isset($_GET['edit']) && is_numeric($id)) // edition d'un bug
 		'C_DISPLAY_ADVANCED' 				=> $auth_create_advanced ? true : false,
 		'C_ROADMAP' 						=> $roadmap_activated ? true : false,
 		'C_REPRODUCTIBLE' 					=> ($result['reproductible'] == true) ? true : false,
+		'C_BACK' 							=> !empty($back) ? true : false,
 		'L_EDIT_BUG'						=> $LANG['bugs.titles.edit_bug'],
 		'L_BUG_INFOS' 						=> $LANG['bugs.titles.bugs_infos'],
 		'L_BUG_TREATMENT'					=> $LANG['bugs.titles.bugs_treatment'],
@@ -818,6 +822,7 @@ else if (isset($_GET['edit']) && is_numeric($id)) // edition d'un bug
 		'L_YES' 							=> $LANG['yes'],
 		'L_NO'	 							=> $LANG['no'],
 		'L_JOKER' 							=> $LANG['bugs.notice.joker'],
+		'BACK'								=> $back,
 		'CONTENTS_KERNEL_EDITOR'			=> $contents_editor->display(),
 		'METHOD_KERNEL_EDITOR' 				=> $reproduction_method_editor->display(),
 		'TOKEN'								=> $Session->get_token()
@@ -965,7 +970,7 @@ else if (isset($_GET['history']) && is_numeric($id)) // Affichage de l'historiqu
 	}
 	
 	if (empty($id))
-		AppContext::get_response()->redirect(HOST . DIR . '/bugtracker/bugtracker.php?error=unexist_bug#message_helper');
+		AppContext::get_response()->redirect(HOST . DIR . '/bugtracker/bugtracker.php?error=unexist_bug');
 	
 	$Template->set_filenames(array(
 		'bugtracker' => 'bugtracker/bugtracker.tpl'
@@ -1044,7 +1049,7 @@ else if (isset($_GET['history']) && is_numeric($id)) // Affichage de l'historiqu
 			'NEW_VALUE'		=> stripslashes($new_value),
 			'COMMENT'		=> $row['change_comment'],
 			'UPDATER' 		=> !empty($row['login']) ? '<a href="' . UserUrlBuilder::profile($row['user_id'])->absolute() . '" class="' . UserService::get_level_class($row['level']) . '">' . $row['login'] . '</a>': $LANG['guest'],
-			'DATE' 			=> gmdate_format('date_format', $row['update_date'])
+			'DATE' 			=> gmdate_format($date_format, $row['update_date'])
 		));
 	}
 	$Sql->query_close($result);
@@ -1073,7 +1078,7 @@ else if (isset($_GET['view']) && is_numeric($id)) // Visualisation d'une fiche B
 	}
 	
 	if (empty($id))
-		AppContext::get_response()->redirect(HOST . DIR . '/bugtracker/bugtracker.php?error=unexist_bug#message_helper');
+		AppContext::get_response()->redirect(HOST . DIR . '/bugtracker/bugtracker.php?error=unexist_bug');
 	
   	$Template->set_filenames(array(
 		'bugtracker' => 'bugtracker/bugtracker.tpl'
@@ -1171,7 +1176,7 @@ else if (isset($_GET['view']) && is_numeric($id)) // Visualisation d'une fiche B
 	$Template->assign_block_vars('view', array(
 		'TOKEN' 				=> $Session->get_token(),
 		'ID' 					=> $id,
-		'TITLE' 				=> ($cat_in_title_activated == true) ? '[' . $result['category'] . '] ' . $result['title'] : $result['title'],
+		'TITLE' 				=> ($cat_in_title_activated == true && $display_categories) ? '[' . $categories[$result['category']] . '] ' . $result['title'] : $result['title'],
 		'CONTENTS' 				=> FormatingHelper::second_parse($result['contents']),
 		'STATUS' 				=> $LANG['bugs.status.' . $result['status']],
 		'TYPE'					=> !empty($result['type']) ? stripslashes($types[$result['type']]) : $LANG['bugs.notice.none'],
@@ -1184,7 +1189,7 @@ else if (isset($_GET['view']) && is_numeric($id)) // Visualisation d'une fiche B
 		'FIXED_IN' 				=> !empty($result['fixed_in']) ? stripslashes($versions[$result['fixed_in']]['name']) : $LANG['bugs.notice.not_defined'],
 		'USER_ASSIGNED'			=> $user_assigned,
 		'AUTHOR' 				=> !empty($result['login']) ? '<a href="' . UserUrlBuilder::profile($result['user_id'])->absolute() . '" class="' . UserService::get_level_class($result['level']) . '">' . $result['login'] . '</a>': $LANG['guest'],
-		'SUBMIT_DATE'			=> gmdate_format('date_format', $result['submit_date'])
+		'SUBMIT_DATE'			=> gmdate_format($date_format, $result['submit_date'])
 	));
 	
 	//Affichage des commentaires
@@ -1338,13 +1343,13 @@ else if (isset($_GET['solved'])) // liste des bugs corrigés
 
 		$Template->assign_block_vars('solved.bugclosed', array(
 			'ID'			=> $row['id'],
-			'TITLE'			=> ($cat_in_title_activated == true) ? '[' . $row['category'] . '] ' . $row['title'] : $row['title'],
+			'TITLE'			=> ($cat_in_title_activated == true && $display_categories) ? '[' . $categories[$row['category']] . '] ' . $row['title'] : $row['title'],
 			'TYPE'			=> !empty($row['type']) ? stripslashes($types[$row['type']]) : $LANG['bugs.notice.none'],
 			'SEVERITY'		=> !empty($row['severity']) ? stripslashes($severities[$row['severity']]['name']) : $LANG['bugs.notice.none'],
 			'STATUS'		=> $LANG['bugs.status.' . $row['status']],
 			'LINE_COLOR'	=> $line_color,
 			'COMMENTS'		=> '<a href="bugtracker' . url('.php?view&id=' . $row['id'] . '&com=0#anchor_bugtracker') . '">' . (empty($nbr_coms) ? 0 : $nbr_coms) . '</a>',
-			'DATE' 			=> gmdate_format('date_format', $row['submit_date'])
+			'DATE' 			=> gmdate_format($date_format, $row['submit_date'])
 		));
 
 	}
@@ -1617,13 +1622,13 @@ else if (isset($_GET['roadmap'])) // roadmap
 		
 		$Template->assign_block_vars('roadmap.bug', array(
 			'ID'			=> $row['id'],
-			'TITLE'			=> ($cat_in_title_activated == true) ? '[' . $row['category'] . '] ' . $row['title'] : $row['title'],
+			'TITLE'			=> ($cat_in_title_activated == true && $display_categories) ? '[' . $categories[$row['category']] . '] ' . $row['title'] : $row['title'],
 			'TYPE'			=> !empty($row['type']) ? stripslashes($types[$row['type']]) : $LANG['bugs.notice.none'],
 			'SEVERITY'		=> !empty($row['severity']) ? stripslashes($severities[$row['severity']]['name']) : $LANG['bugs.notice.none'],
 			'STATUS'		=> $LANG['bugs.status.' . $row['status']],
 			'LINE_COLOR'	=> $line_color,
 			'COMMENTS'		=> '<a href="bugtracker' . url('.php?view&id=' . $row['id'] . '&com=0#anchor_bugtracker') . '">' . (empty($nbr_coms) ? 0 : $nbr_coms) . '</a>',
-			'DATE' 			=> gmdate_format('date_format', $row['submit_date'])
+			'DATE' 			=> gmdate_format($date_format, $row['submit_date'])
 		));
 	}
 	$Sql->query_close($result);
@@ -1638,6 +1643,37 @@ else // Affichage de la liste
 	}
 }
 
+//Gestion erreur.
+$get_error = retrieve(GET, 'error', '');
+switch ($get_error)
+{
+	case 'edit_success':
+		$errstr = $LANG['bugs.error.e_edit_success'];
+		$errtyp = E_USER_SUCCESS;
+		break;
+	case 'delete_success':
+		$errstr = $LANG['bugs.error.e_delete_success'];
+		$errtyp = E_USER_SUCCESS;
+		break;
+	case 'reject_success':
+		$errstr = $LANG['bugs.error.e_reject_success'];
+		$errtyp = E_USER_SUCCESS;
+		break;
+	case 'reopen_success':
+		$errstr = $LANG['bugs.error.e_reopen_success'];
+		$errtyp = E_USER_SUCCESS;
+		break;
+	case 'unexist_bug':
+		$errstr = $LANG['bugs.error.e_unexist_bug'];
+		$errtyp = E_USER_WARNING;
+		break;
+	default:
+		$errstr = '';
+		$errtyp = E_USER_NOTICE;
+}
+if (!empty($errstr))
+	$Template->put('message_helper', MessageHelper::display($errstr, $errtyp));
+	
 $Template->pparse('bugtracker');
 
 include_once('../kernel/footer.php');

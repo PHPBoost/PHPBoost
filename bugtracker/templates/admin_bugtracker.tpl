@@ -159,6 +159,15 @@
 						</dd>
 					</dl>
 					<dl>
+						<dt>
+							<label for="date_format">{L_DATE_FORMAT}</label><br />
+						</dt>
+						<dd>
+							<span><input type="radio" name="date_format" value="date_format_short" # IF NOT C_DATE_FORMAT #checked=checked# ENDIF # /> {L_DATE}</span>
+							<span style="margin-left:30px;"><input type="radio" name="date_format" value="date_format" # IF C_DATE_FORMAT #checked=checked# ENDIF # /> {L_DATE_TIME}</span>
+						</dd>
+					</dl>
+					<dl>
 						<dt><label for="comments_activated">{L_ACTIV_COM}</label></dt>
 						<dd> 
 							<input type="checkbox" name="comments_activated" {COM_CHECKED} />

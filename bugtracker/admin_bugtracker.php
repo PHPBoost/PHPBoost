@@ -318,6 +318,7 @@ else if (isset($_POST['valid']))
 		$bugtracker_config->set_items_per_page(retrieve(POST, 'items_per_page', 0));
 		$bugtracker_config->set_rejected_bug_color(retrieve(POST, 'rejected_bug_color', ''));
 		$bugtracker_config->set_fixed_bug_color(retrieve(POST, 'fixed_bug_color', ''));
+		$bugtracker_config->set_date_format(retrieve(POST, 'date_format', 'date_format'));
 		$bugtracker_config->set_comments_activated(retrieve(POST, 'comments_activated', false));
 		$bugtracker_config->set_roadmap_activated(retrieve(POST, 'roadmap_activated', false));
 		$bugtracker_config->set_cat_in_title_activated(retrieve(POST, 'cat_in_title_activated', false));
@@ -375,6 +376,7 @@ else
 		'C_SEVERITY_MANDATORY'						=> $severity_mandatory ? true : false,
 		'C_PRIORITY_MANDATORY'						=> $priority_mandatory ? true : false,
 		'C_DETECTED_IN_MANDATORY'					=> $detected_in_mandatory ? true : false,
+		'C_DATE_FORMAT'								=> ($bugtracker_config->get_date_format() == 'date_format') ? true : false,
 		'L_DELETE_DEFAULT_VALUE' 					=> $LANG['bugs.labels.del_default_value'],
 		'L_CONFIRM_DEL_VERSION' 					=> $LANG['bugs.actions.confirm.del_version'],
 		'L_CONFIRM_DEL_TYPE' 						=> $LANG['bugs.actions.confirm.del_type'],
@@ -432,6 +434,9 @@ else
 		'L_AUTH'		 							=> $LANG['bugs.config.auth'],
 		'L_COLOR' 									=> $LANG['bugs.labels.color'],
 		'L_DEFAULT'									=> $LANG['bugs.labels.default'],
+		'L_DATE_FORMAT'								=> $LANG['bugs.labels.date_format'],
+		'L_DATE_TIME'								=> $LANG['bugs.labels.date_time'],
+		'L_DATE'									=> $LANG['date'],
 		'L_NAME' 									=> $LANG['name'],
 		'L_ADD' 									=> $LANG['add'],
 		'L_UPDATE' 									=> $LANG['update'],

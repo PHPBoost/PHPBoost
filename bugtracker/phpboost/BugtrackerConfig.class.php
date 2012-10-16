@@ -30,6 +30,7 @@ class BugtrackerConfig extends AbstractConfigData
 	const ITEMS_PER_PAGE = 'items_per_page';
 	const REJECTED_BUG_COLOR = 'rejected_bug_color';
 	const FIXED_BUG_COLOR = 'fixed_bug_color';
+	const DATE_FORMAT = 'date_format';
 	const COMMENTS_ACTIVATED = 'comments_activated';
 	const VERSIONS = 'versions';
 	const TYPES = 'types';
@@ -87,6 +88,16 @@ class BugtrackerConfig extends AbstractConfigData
 	public function set_fixed_bug_color($value) 
 	{
 		$this->set_property(self::FIXED_BUG_COLOR, $value);
+	}
+	
+	public function get_date_format()
+	{
+		return $this->get_property(self::DATE_FORMAT);
+	}
+	
+	public function set_date_format($value) 
+	{
+		$this->set_property(self::DATE_FORMAT, $value);
 	}
 	
 	public function get_comments_activated()
@@ -315,6 +326,7 @@ class BugtrackerConfig extends AbstractConfigData
 			self::ITEMS_PER_PAGE => 20,
 			self::REJECTED_BUG_COLOR => 'f8465e',
 			self::FIXED_BUG_COLOR => 'afffa2',
+			self::DATE_FORMAT => 'date_format',
 			self::COMMENTS_ACTIVATED => true,
 			self::ROADMAP_ACTIVATED => false,
 			self::CAT_IN_TITLE_ACTIVATED => false,

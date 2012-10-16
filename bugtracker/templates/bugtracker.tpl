@@ -292,10 +292,10 @@
 						</td>
 						# IF C_IS_ADMIN #
 						<td class="row2" {solved.bugclosed.LINE_COLOR}> 
-							<a href="bugtracker.php?reopen&amp;id={solved.bugclosed.ID}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/visible.png" alt="{L_REOPEN}" title="{L_REOPEN}" /></a>
+							<a href="bugtracker.php?reopen&amp;id={solved.bugclosed.ID}&amp;back=solved"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/visible.png" alt="{L_REOPEN}" title="{L_REOPEN}" /></a>
 							<a href="bugtracker.php?edit&amp;id={solved.bugclosed.ID}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="{L_UPDATE}" title="{L_UPDATE}" /></a>
-							<a href="bugtracker.php?history&amp;id={solved.bugclosed.ID}"><img src="{PATH_TO_ROOT}/bugtracker/templates/images/history.png" alt="{L_HISTORY}" title="{L_HISTORY}" /></a>
-							<a href="bugtracker.php?delete&amp;id={solved.bugclosed.ID}&amp;token={TOKEN}" onclick="javascript:return Confirm();"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" /></a>
+							<a href="bugtracker.php?history&amp;id={solved.bugclosed.ID}&amp;back=solved"><img src="{PATH_TO_ROOT}/bugtracker/templates/images/history.png" alt="{L_HISTORY}" title="{L_HISTORY}" /></a>
+							<a href="bugtracker.php?delete&amp;id={solved.bugclosed.ID}&amp;token={TOKEN}&amp;back=solved" onclick="javascript:return Confirm();"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" /></a>
 						</td>
 						# ENDIF #
 					</tr>
@@ -341,6 +341,8 @@
 			</ul>
 		</div>
 		<div class="module_contents">
+			# INCLUDE message_helper #
+			
 			# IF C_DISPLAY_VERSIONS #
 			<form action="bugtracker.php?roadmap&amp;token={TOKEN}" name="form" method="post" style="margin:auto;" class="fieldset_content">
 				<fieldset>
@@ -446,7 +448,7 @@
 						{roadmap.bug.DATE}
 					</td>
 					<td class="row2" {roadmap.bug.LINE_COLOR}>
-						<a href="bugtracker.php?history&amp;id={roadmap.bug.ID}"><img src="{PATH_TO_ROOT}/bugtracker/templates/images/history.png" alt="{L_HISTORY}" title="{L_HISTORY}" /></a>
+						<a href="bugtracker.php?history&amp;id={roadmap.bug.ID}&amp;back=roadmap"><img src="{PATH_TO_ROOT}/bugtracker/templates/images/history.png" alt="{L_HISTORY}" title="{L_HISTORY}" /></a>
 					</td>
 				</tr>
 				# END roadmap.bug #
@@ -948,7 +950,6 @@
 						<dd><label><input type="text" size="40" maxlength="200" id="title" name="title" value="{edit.TITLE}" class="text" /></label></dd>
 					</dl>
 					<label for="contents">* {L_CONTENT}</label>
-					<label for="contents">* {L_CONTENT}</label>
 					<div style="position:relative;display:none;" id="loading_previewcontents">
 						<div style="margin:auto;margin-top:90px;width:100%;text-align:center;position:absolute;"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/loading.gif" alt="" /></div>
 					</div>
@@ -1044,6 +1045,7 @@
 				<fieldset class="fieldset_submit">
 					<legend>{L_UPDATE}</legend>
 					<input type="hidden" name="id" value="{edit.ID}" class="submit" />
+					# IF C_BACK #<input type="hidden" name="back" value="{BACK}" class="submit" /># ENDIF #
 					<input type="submit" name="valid_edit" value="{L_UPDATE}" class="submit" />
 					&nbsp;
 					<input type="reset" value="{L_RESET}" class="reset" />				
@@ -1071,17 +1073,17 @@
 					{U_COM}
 				# ENDIF #
 				# IF C_REOPEN_BUG #
-					<a href="bugtracker.php?reopen&amp;id={view.ID}">
+					<a href="bugtracker.php?reopen&amp;id={view.ID}&amp;back=view">
 						<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/visible.png" alt="{L_REOPEN}" title="{L_REOPEN}" />
 					</a>
 				# ENDIF #
 				# IF C_REJECT_BUG #
-					<a href="bugtracker.php?reject&amp;id={view.ID}">
+					<a href="bugtracker.php?reject&amp;id={view.ID}&amp;back=view">
 						<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/unvisible.png" alt="{L_REJECT}" title="{L_REJECT}" />
 					</a>
 				# ENDIF #
 				# IF C_EDIT_BUG #
-					<a href="bugtracker.php?edit&amp;id={view.ID}">
+					<a href="bugtracker.php?edit&amp;id={view.ID}&amp;back=view">
 						<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="{L_UPDATE}" title="{L_UPDATE}" />
 					</a>
 				# ENDIF #
@@ -1099,6 +1101,8 @@
 			<div class="spacer"></div>
            	</div>
 		<div class="module_contents">
+			# INCLUDE message_helper #
+			
 			<fieldset>
 				<legend>{L_BUG_TREATMENT_STATE}</legend>
 				<br />
