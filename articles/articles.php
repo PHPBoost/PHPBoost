@@ -108,7 +108,7 @@ if (!empty($idart) && isset($cat) )
 		$tpl->assign_block_vars('sources', array(
 			'I' => $i,
 			'SOURCE' => stripslashes($sources['sources']),
-			'URL' => substr($sources['url'],0,7) != "http://" ? "http://".$sources['url'] : $sources['url'],
+			'URL' => stripslashes($sources['url']),
 			'INDENT'=> $i < (count($array_sources)-1) ? '-' : '',
 		));
 		$i++;
