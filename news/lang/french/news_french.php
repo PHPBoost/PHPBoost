@@ -124,7 +124,7 @@ $NEWS_LANG = array(
 
 	'sources' => 'Sources',
 	'add_sources' => 'Ajouter des sources',
-	'name_sources' => 'Nom de la sources',
+	'name_sources' => 'Nom de la source',
 	'url_sources' => 'Url de la source',
 );
 
