@@ -140,10 +140,10 @@ class UserRegistrationController extends AbstractController
 			));
     	}
     	
-		$form->add_button(new FormButtonReset());
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_constraint(new FormConstraintFieldsEquality($password, $password_bis));
 		$form->add_button($this->submit_button);
+		$form->add_button(new FormButtonReset());
 
 		$this->form = $form;
 	}

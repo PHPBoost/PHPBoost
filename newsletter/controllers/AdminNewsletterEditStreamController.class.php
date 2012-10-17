@@ -127,9 +127,9 @@ class AdminNewsletterEditStreamController extends AdminModuleController
 		$auth_setter = new FormFieldAuthorizationsSetter('advanced_authorizations', $auth_settings, array('hidden' => !$active_authorizations));
 		$fieldset_authorizations->add_field($auth_setter);
 		
-		$form->add_button(new FormButtonReset());
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_button($this->submit_button);
+		$form->add_button(new FormButtonReset());
 
 		$this->form = $form;
 	}

@@ -117,10 +117,10 @@ class AdminNewsletterAddStreamController extends AdminModuleController
 		$auth_settings->build_from_auth_array($default_authorizations);
 		$fieldset_authorizations->add_field($auth_setter);
 		
-		$form->add_button(new FormButtonReset());
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_button($this->submit_button);
-
+		$form->add_button(new FormButtonReset());
+		
 		$this->form = $form;
 	}
 
