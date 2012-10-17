@@ -179,6 +179,7 @@
 							<input type="checkbox" name="cat_in_title_activated" {CAT_IN_TITLE_CHECKED} />
 						</dd>
 					</dl>
+					# IF C_DISPLAY_VERSIONS_FIXED #
 					<dl>
 						<dt>
 							<label for="roadmap_activated">{L_ACTIV_ROADMAP}</label><br />
@@ -188,6 +189,9 @@
 							<input type="checkbox" name="roadmap_activated" {ROADMAP_CHECKED} />
 						</dd>
 					</dl>
+					# ELSE #
+						<input type="hidden" name="roadmap_activated" value="{ROADMAP_ACTIVATED}" />
+					# ENDIF #
 					<dl>
 						<dt>
 							<label for="pm_activated">{L_ACTIV_PM}</label><br />

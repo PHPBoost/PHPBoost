@@ -49,6 +49,7 @@ $display_types = sizeof($types) > 1 ? true : false;
 $display_categories = sizeof($categories) > 1 ? true : false;
 $display_priorities = sizeof($priorities) > 1 ? true : false;
 $display_severities = sizeof($severities) > 1 ? true : false;
+$display_versions = sizeof($versions) > 1 ? true : false;
 $display_versions_detected_in = sizeof($versions_detected_in) > 1 ? true : false;
 
 $default_type = $bugtracker_config->get_default_type();
@@ -366,6 +367,7 @@ else
 		'C_DISPLAY_SEVERITIES' 						=> $display_severities,
 		'C_DISPLAY_PRIORITIES' 						=> $display_priorities,
 		'C_DISPLAY_VERSIONS' 						=> $display_versions_detected_in,
+		'C_DISPLAY_VERSIONS_FIXED' 					=> !empty($versions) ? true : false,
 		'C_DISPLAY_DEFAULT_TYPE_DELETE_BUTTON' 		=> !empty($default_type) ? true : false,
 		'C_DISPLAY_DEFAULT_CATEGORY_DELETE_BUTTON' 	=> !empty($default_category) ? true : false,
 		'C_DISPLAY_DEFAULT_SEVERITY_DELETE_BUTTON' 	=> !empty($default_severity) ? true : false,
@@ -448,6 +450,7 @@ else
 		'REJECTED_BUG_COLOR'						=> $bugtracker_config->get_rejected_bug_color(),
 		'FIXED_BUG_COLOR'							=> $bugtracker_config->get_fixed_bug_color(),
 		'COM_CHECKED'								=> ($bugtracker_config->get_comments_activated() == true) ? 'checked=checked' : '',
+		'ROADMAP_ACTIVATED'							=> ($bugtracker_config->get_roadmap_activated() == true) ? 1 : 0,
 		'ROADMAP_CHECKED'							=> ($bugtracker_config->get_roadmap_activated() == true) ? 'checked=checked' : '',
 		'CAT_IN_TITLE_CHECKED'						=> ($bugtracker_config->get_cat_in_title_activated() == true) ? 'checked=checked' : '',
 		'PM_CHECKED'								=> ($bugtracker_config->get_pm_activated() == true) ? 'checked=checked' : '',

@@ -52,10 +52,10 @@ class BugtrackerCommentsTopicEvents extends CommentsTopicEvents
 		if (!empty($result['assigned_to_id']) && $result['assigned_to_id'] != $result['author_id'])
 			$updaters_ids[] = $result['assigned_to_id'];
 		
-		$result = $sql_querier->select('SELECT updater_id FROM ' . PREFIX . 'bugtracker_history WHERE bug_id=:id GROUP BY updater_id', array(
+		$result_uid = $sql_querier->select('SELECT updater_id FROM ' . PREFIX . 'bugtracker_history WHERE bug_id=:id GROUP BY updater_id', array(
 			'id' => $bug_id
 		), SelectQueryResult::FETCH_ASSOC);
-		while ($row = $result->fetch())
+		while ($row = $result_uid->fetch())
 		{
 			if ($row['updater_id'] != $result['author_id'] && $row['updater_id'] != $result['assigned_to_id'])
 				$updaters_ids[] = $row['updater_id'];

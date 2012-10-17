@@ -95,7 +95,7 @@ $versions = array_reverse($versions, true);
 
 $nbr_versions = array_keys($versions);
 
-if (!empty($id) || !empty($id))
+if (!empty($id))
 {
 	$bug_exist = $Sql->query_array(PREFIX . 'bugtracker', '*', "WHERE id = '" . $id . "'", __LINE__, __FILE__);
 	if (empty($bug_exist))
@@ -503,13 +503,13 @@ else if (!empty($_POST['valid_edit']) && is_numeric($id))
 		if ($auth_moderate || (!empty($old_values['assigned_to_id']) && $User->get_attribute('user_id') == $old_values['assigned_to_id']))
 		{
 			if ($status == 'assigned' && empty($assigned_to)) // Erreur si le statut est "Assigné" et aucun utilisateur n'est sélectionné
-				AppContext::get_response()->redirect(PATH_TO_ROOT . '/bugtracker/bugtracker.php?edit&id=' . $id . (!empty($back) ? 'back=' . $back . '&' : '') . '&error=no_user_assigned');
+				AppContext::get_response()->redirect(HOST . DIR . '/bugtracker/bugtracker.php?edit&id=' . $id . (!empty($back) ? 'back=' . $back . '&' : '') . '&error=no_user_assigned');
 			
 			if ($display_versions && $roadmap_activated == true && $status == 'fixed' && empty($fixed_in)) // Erreur si le statut est "Corrigé" et aucune version de correction n'est sélectionnée quand la roadmap est activée
-				AppContext::get_response()->redirect(PATH_TO_ROOT . '/bugtracker/bugtracker.php?edit&id=' . $id . (!empty($back) ? 'back=' . $back . '&' : '') . '&error=no_fixed_version');
+				AppContext::get_response()->redirect(HOST . DIR . '/bugtracker/bugtracker.php?edit&id=' . $id . (!empty($back) ? 'back=' . $back . '&' : '') . '&error=no_fixed_version');
 			
 			if (!empty($assigned_to) && empty($assigned_to_id)) // Erreur si l'utilisateur sélectionné n'existe pas
-				AppContext::get_response()->redirect(PATH_TO_ROOT . '/bugtracker/bugtracker.php?edit&id=' . $id . (!empty($back) ? 'back=' . $back . '&' : '') . '&error=unexist_user');
+				AppContext::get_response()->redirect(HOST . DIR . '/bugtracker/bugtracker.php?edit&id=' . $id . (!empty($back) ? 'back=' . $back . '&' : '') . '&error=unexist_user');
 			
 			$new_values = array(
 				'title'					=> $title,
@@ -1197,7 +1197,7 @@ else if (isset($_GET['view']) && is_numeric($id)) // Visualisation d'une fiche B
 	{
 		$comments_topic = new BugtrackerCommentsTopic();
 		$comments_topic->set_id_in_module($id);
-		$comments_topic->set_url(new Url('/bugtracker/bugtracker.php?view&id=' . $id . '&com=0'));
+		$comments_topic->set_url(new Url(PATH_TO_ROOT . '/bugtracker/bugtracker.php?view&id=' . $id . '&com=0'));
 		$Template->put_all(array(
 			'COMMENTS' => CommentsService::display($comments_topic)->render()
 		));
@@ -1240,7 +1240,7 @@ else if (isset($_GET['solved'])) // liste des bugs corrigés
 			$sort = 'status';
 			break;
 		case 'comments' :
-			$sort = 'nbr_com';
+			$sort = 'number_comments';
 			break;
 		case 'date' :
 			$sort = 'submit_date';
@@ -1281,7 +1281,7 @@ else if (isset($_GET['solved'])) // liste des bugs corrigés
 		'NO_BUGS_COLSPAN' 		=> $no_bugs_colspan,
 		'C_COM' 				=> ($comments_activated == true) ? true : false,
 		'C_ROADMAP' 			=> ($roadmap_activated == true && !empty($nbr_versions)) ? true : false,
-		'PAGINATION' 			=> $Pagination->display('bugtracker' . url('.php?solved&amp;p=%d' . (!empty($get_sort) ? '&amp;sort=' . $get_sort : '') . (!empty($get_mode) ? '&amp;mode=' . $get_mode : '')), $nbr_bugs, 'p', $items_per_page, 3),
+		'PAGINATION' 			=> $Pagination->display(PATH_TO_ROOT . '/bugtracker/bugtracker' . url('.php?solved&amp;p=%d' . (!empty($get_sort) ? '&amp;sort=' . $get_sort : '') . (!empty($get_mode) ? '&amp;mode=' . $get_mode : '')), $nbr_bugs, 'p', $items_per_page, 3),
 		'L_CONFIRM_DEL_BUG' 	=> $LANG['bugs.actions.confirm.del_bug'],
 		'L_ID' 					=> $LANG['bugs.labels.fields.id'],
 		'L_TITLE'				=> $LANG['bugs.labels.fields.title'],
@@ -1301,26 +1301,27 @@ else if (isset($_GET['solved'])) // liste des bugs corrigés
 		'L_UNSOLVED' 			=> $LANG['bugs.titles.unsolved_bugs'],
 		'L_SOLVED' 				=> $LANG['bugs.titles.solved_bugs'],
 		'L_STATS' 				=> $LANG['bugs.titles.bugs_stats'],
-		'U_BUG_ID_TOP' 			=> url('.php?solved&amp;sort=id&amp;mode=desc'),
-		'U_BUG_ID_BOTTOM' 		=> url('.php?solved&amp;sort=id&amp;mode=asc'),
-		'U_BUG_TITLE_TOP' 		=> url('.php?solved&amp;sort=title&amp;mode=desc'),
-		'U_BUG_TITLE_BOTTOM' 	=> url('.php?solved&amp;sort=title&amp;mode=asc'),
-		'U_BUG_TYPE_TOP' 		=> url('.php?solved&amp;sort=type&amp;mode=desc'),
-		'U_BUG_TYPE_BOTTOM' 	=> url('.php?solved&amp;sort=type&amp;mode=asc'),
-		'U_BUG_SEVERITY_TOP' 	=> url('.php?solved&amp;sort=severity&amp;mode=desc'),
-		'U_BUG_SEVERITY_BOTTOM'	=> url('.php?solved&amp;sort=severity&amp;mode=asc'),
-		'U_BUG_STATUS_TOP'		=> url('.php?solved&amp;sort=status&amp;mode=desc'),
-		'U_BUG_STATUS_BOTTOM'	=> url('.php?solved&amp;sort=status&amp;mode=asc'),
-		'U_BUG_COMMENTS_TOP' 	=> url('.php?solved&amp;sort=comments&amp;mode=desc'),
-		'U_BUG_COMMENTS_BOTTOM'	=> url('.php?solved&amp;sort=comments&amp;mode=asc'),
-		'U_BUG_DATE_TOP' 		=> url('.php?solved&amp;sort=date&amp;mode=desc'),
-		'U_BUG_DATE_BOTTOM' 	=> url('.php?solved&amp;sort=date&amp;mode=asc')
+		'U_BUG_ID_TOP' 			=> PATH_TO_ROOT . '/bugtracker/bugtracker' . url('.php?solved&amp;sort=id&amp;mode=desc'),
+		'U_BUG_ID_BOTTOM' 		=> PATH_TO_ROOT . '/bugtracker/bugtracker' . url('.php?solved&amp;sort=id&amp;mode=asc'),
+		'U_BUG_TITLE_TOP' 		=> PATH_TO_ROOT . '/bugtracker/bugtracker' . url('.php?solved&amp;sort=title&amp;mode=desc'),
+		'U_BUG_TITLE_BOTTOM' 	=> PATH_TO_ROOT . '/bugtracker/bugtracker' . url('.php?solved&amp;sort=title&amp;mode=asc'),
+		'U_BUG_TYPE_TOP' 		=> PATH_TO_ROOT . '/bugtracker/bugtracker' . url('.php?solved&amp;sort=type&amp;mode=desc'),
+		'U_BUG_TYPE_BOTTOM' 	=> PATH_TO_ROOT . '/bugtracker/bugtracker' . url('.php?solved&amp;sort=type&amp;mode=asc'),
+		'U_BUG_SEVERITY_TOP' 	=> PATH_TO_ROOT . '/bugtracker/bugtracker' . url('.php?solved&amp;sort=severity&amp;mode=desc'),
+		'U_BUG_SEVERITY_BOTTOM'	=> PATH_TO_ROOT . '/bugtracker/bugtracker' . url('.php?solved&amp;sort=severity&amp;mode=asc'),
+		'U_BUG_STATUS_TOP'		=> PATH_TO_ROOT . '/bugtracker/bugtracker' . url('.php?solved&amp;sort=status&amp;mode=desc'),
+		'U_BUG_STATUS_BOTTOM'	=> PATH_TO_ROOT . '/bugtracker/bugtracker' . url('.php?solved&amp;sort=status&amp;mode=asc'),
+		'U_BUG_COMMENTS_TOP' 	=> PATH_TO_ROOT . '/bugtracker/bugtracker' . url('.php?solved&amp;sort=comments&amp;mode=desc'),
+		'U_BUG_COMMENTS_BOTTOM'	=> PATH_TO_ROOT . '/bugtracker/bugtracker' . url('.php?solved&amp;sort=comments&amp;mode=asc'),
+		'U_BUG_DATE_TOP' 		=> PATH_TO_ROOT . '/bugtracker/bugtracker' . url('.php?solved&amp;sort=date&amp;mode=desc'),
+		'U_BUG_DATE_BOTTOM' 	=> PATH_TO_ROOT . '/bugtracker/bugtracker' . url('.php?solved&amp;sort=date&amp;mode=asc')
 	));
 	
 	$Template->assign_block_vars('solved', array());
 	
 	$result = $Sql->query_while("SELECT *
-	FROM " . PREFIX . "bugtracker
+	FROM " . PREFIX . "bugtracker b
+	LEFT JOIN " . PREFIX . "comments_topic c ON (b.id = c.id_in_module)
 	WHERE status = 'fixed' OR status = 'rejected'
 	ORDER BY " . $sort . " " . $mode .
 	$Sql->limit($Pagination->get_first_msg($items_per_page, 'p'), $items_per_page), __LINE__, __FILE__); //Bugs enregistrés.
@@ -1343,12 +1344,13 @@ else if (isset($_GET['solved'])) // liste des bugs corrigés
 
 		$Template->assign_block_vars('solved.bugclosed', array(
 			'ID'			=> $row['id'],
+			'U_BUG_VIEW'	=> PATH_TO_ROOT .'/bugtracker/bugtracker' . url('.php?view&amp;id=' . $row['id'], '-' . $row['id'] . '+' . Url::encode_rewrite($row['title']) . '.php'),
 			'TITLE'			=> ($cat_in_title_activated == true && $display_categories) ? '[' . $categories[$row['category']] . '] ' . $row['title'] : $row['title'],
 			'TYPE'			=> !empty($row['type']) ? stripslashes($types[$row['type']]) : $LANG['bugs.notice.none'],
 			'SEVERITY'		=> !empty($row['severity']) ? stripslashes($severities[$row['severity']]['name']) : $LANG['bugs.notice.none'],
 			'STATUS'		=> $LANG['bugs.status.' . $row['status']],
 			'LINE_COLOR'	=> $line_color,
-			'COMMENTS'		=> '<a href="bugtracker' . url('.php?view&id=' . $row['id'] . '&com=0#anchor_bugtracker') . '">' . (empty($nbr_coms) ? 0 : $nbr_coms) . '</a>',
+			'COMMENTS'		=> '<a href="' . PATH_TO_ROOT . '/bugtracker/bugtracker' . url('.php?view&id=' . $row['id'] . '&com=0#comments_list') . '">' . (empty($nbr_coms) ? 0 : $nbr_coms) . '</a>',
 			'DATE' 			=> gmdate_format($date_format, $row['submit_date'])
 		));
 
@@ -1496,7 +1498,10 @@ else if (isset($_GET['roadmap'])) // roadmap
 	));
 	
 	$last_version = key($versions);
-	$roadmap_version = retrieve(POST, 'roadmap_version', $last_version, TINTEGER);
+	$r_version = retrieve(GET, 'roadmap_version', 0, TINTEGER);
+	$r_version_post = retrieve(POST, 'roadmap_version', 0, TINTEGER);
+	$r_version = (!empty($r_version) ? $r_version : (!empty($r_version_post) ? $r_version_post : 0));
+	$roadmap_version = !empty($r_version) ? $r_version : $last_version;
 	
 	//Nombre de bugs
 	$nbr_bugs = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "bugtracker WHERE fixed_in = '" . $roadmap_version . "'", __LINE__, __FILE__);
@@ -1521,7 +1526,7 @@ else if (isset($_GET['roadmap'])) // roadmap
 			$sort = 'status';
 			break;
 		case 'comments' :
-			$sort = 'nbr_com';
+			$sort = 'number_comments';
 			break;
 		case 'date' :
 			$sort = 'submit_date';
@@ -1554,7 +1559,7 @@ else if (isset($_GET['roadmap'])) // roadmap
 		'C_NO_BUGS' 			=> empty($nbr_bugs) ? true : false,
 		'NO_BUGS_COLSPAN' 		=> $no_bugs_colspan,
 		'C_COM' 				=> ($comments_activated == true) ? true : false,
-		'PAGINATION' 			=> $Pagination->display('bugtracker' . url('.php?solved&amp;p=%d' . (!empty($get_sort) ? '&amp;sort=' . $get_sort : '') . (!empty($get_mode) ? '&amp;mode=' . $get_mode : '')), $nbr_bugs, 'p', $items_per_page, 3),
+		'PAGINATION' 			=> $Pagination->display(PATH_TO_ROOT . '/bugtracker/bugtracker' . url('.php?solved&amp;p=%d' . (!empty($get_sort) ? '&amp;sort=' . $get_sort : '') . (!empty($get_mode) ? '&amp;mode=' . $get_mode : '')), $nbr_bugs, 'p', $items_per_page, 3),
 		'L_ROADMAP' 			=> $LANG['bugs.titles.roadmap'],
 		'L_SELECTED_VERSION'	=> $LANG['bugs.labels.fields.version'] . ' ' . $versions[$roadmap_version]['name'],
 		'L_ID' 					=> $LANG['bugs.labels.fields.id'],
@@ -1574,20 +1579,20 @@ else if (isset($_GET['roadmap'])) // roadmap
 		'L_SOLVED' 				=> $LANG['bugs.titles.solved_bugs'],
 		'L_STATS' 				=> $LANG['bugs.titles.bugs_stats'],
 		'L_SUBMIT' 				=> $LANG['submit'],
-		'U_BUG_ID_TOP' 			=> url('.php?roadmap&amp;sort=id&amp;mode=desc'),
-		'U_BUG_ID_BOTTOM' 		=> url('.php?roadmap&amp;sort=id&amp;mode=asc'),
-		'U_BUG_TITLE_TOP' 		=> url('.php?roadmap&amp;sort=title&amp;mode=desc'),
-		'U_BUG_TITLE_BOTTOM' 	=> url('.php?roadmap&amp;sort=title&amp;mode=asc'),
-		'U_BUG_TYPE_TOP' 		=> url('.php?roadmap&amp;sort=type&amp;mode=desc'),
-		'U_BUG_TYPE_BOTTOM' 	=> url('.php?roadmap&amp;sort=type&amp;mode=asc'),
-		'U_BUG_SEVERITY_TOP' 	=> url('.php?roadmap&amp;sort=severity&amp;mode=desc'),
-		'U_BUG_SEVERITY_BOTTOM'	=> url('.php?roadmap&amp;sort=severity&amp;mode=asc'),
-		'U_BUG_STATUS_TOP'		=> url('.php?roadmap&amp;sort=status&amp;mode=desc'),
-		'U_BUG_STATUS_BOTTOM'	=> url('.php?roadmap&amp;sort=status&amp;mode=asc'),
-		'U_BUG_COMMENTS_TOP' 	=> url('.php?roadmap&amp;sort=comments&amp;mode=desc'),
-		'U_BUG_COMMENTS_BOTTOM'	=> url('.php?roadmap&amp;sort=comments&amp;mode=asc'),
-		'U_BUG_DATE_TOP' 		=> url('.php?roadmap&amp;sort=date&amp;mode=desc'),
-		'U_BUG_DATE_BOTTOM' 	=> url('.php?roadmap&amp;sort=date&amp;mode=asc')
+		'U_BUG_ID_TOP' 			=> PATH_TO_ROOT . '/bugtracker/bugtracker' . url('.php?roadmap' . (!empty($r_version) ? '&amp;roadmap_version=' . $r_version : '') . '&amp;sort=id&amp;mode=desc'),
+		'U_BUG_ID_BOTTOM' 		=> PATH_TO_ROOT . '/bugtracker/bugtracker' . url('.php?roadmap' . (!empty($r_version) ? '&amp;roadmap_version=' . $r_version : '') . '&amp;sort=id&amp;mode=asc'),
+		'U_BUG_TITLE_TOP' 		=> PATH_TO_ROOT . '/bugtracker/bugtracker' . url('.php?roadmap' . (!empty($r_version) ? '&amp;roadmap_version=' . $r_version : '') . '&amp;sort=title&amp;mode=desc'),
+		'U_BUG_TITLE_BOTTOM' 	=> PATH_TO_ROOT . '/bugtracker/bugtracker' . url('.php?roadmap' . (!empty($r_version) ? '&amp;roadmap_version=' . $r_version : '') . '&amp;sort=title&amp;mode=asc'),
+		'U_BUG_TYPE_TOP' 		=> PATH_TO_ROOT . '/bugtracker/bugtracker' . url('.php?roadmap' . (!empty($r_version) ? '&amp;roadmap_version=' . $r_version : '') . '&amp;sort=type&amp;mode=desc'),
+		'U_BUG_TYPE_BOTTOM' 	=> PATH_TO_ROOT . '/bugtracker/bugtracker' . url('.php?roadmap' . (!empty($r_version) ? '&amp;roadmap_version=' . $r_version : '') . '&amp;sort=type&amp;mode=asc'),
+		'U_BUG_SEVERITY_TOP' 	=> PATH_TO_ROOT . '/bugtracker/bugtracker' . url('.php?roadmap' . (!empty($r_version) ? '&amp;roadmap_version=' . $r_version : '') . '&amp;sort=severity&amp;mode=desc'),
+		'U_BUG_SEVERITY_BOTTOM'	=> PATH_TO_ROOT . '/bugtracker/bugtracker' . url('.php?roadmap' . (!empty($r_version) ? '&amp;roadmap_version=' . $r_version : '') . '&amp;sort=severity&amp;mode=asc'),
+		'U_BUG_STATUS_TOP'		=> PATH_TO_ROOT . '/bugtracker/bugtracker' . url('.php?roadmap' . (!empty($r_version) ? '&amp;roadmap_version=' . $r_version : '') . '&amp;sort=status&amp;mode=desc'),
+		'U_BUG_STATUS_BOTTOM'	=> PATH_TO_ROOT . '/bugtracker/bugtracker' . url('.php?roadmap' . (!empty($r_version) ? '&amp;roadmap_version=' . $r_version : '') . '&amp;sort=status&amp;mode=asc'),
+		'U_BUG_COMMENTS_TOP' 	=> PATH_TO_ROOT . '/bugtracker/bugtracker' . url('.php?roadmap' . (!empty($r_version) ? '&amp;roadmap_version=' . $r_version : '') . '&amp;sort=comments&amp;mode=desc'),
+		'U_BUG_COMMENTS_BOTTOM'	=> PATH_TO_ROOT . '/bugtracker/bugtracker' . url('.php?roadmap' . (!empty($r_version) ? '&amp;roadmap_version=' . $r_version : '') . '&amp;sort=comments&amp;mode=asc'),
+		'U_BUG_DATE_TOP' 		=> PATH_TO_ROOT . '/bugtracker/bugtracker' . url('.php?roadmap' . (!empty($r_version) ? '&amp;roadmap_version=' . $r_version : '') . '&amp;sort=date&amp;mode=desc'),
+		'U_BUG_DATE_BOTTOM' 	=> PATH_TO_ROOT . '/bugtracker/bugtracker' . url('.php?roadmap' . (!empty($r_version) ? '&amp;roadmap_version=' . $r_version : '') . '&amp;sort=date&amp;mode=asc')
 	));
 	
 	$Template->assign_block_vars('roadmap', array());
@@ -1602,7 +1607,8 @@ else if (isset($_GET['roadmap'])) // roadmap
 	}
 
 	$result = $Sql->query_while("SELECT *
-	FROM " . PREFIX . "bugtracker
+	FROM " . PREFIX . "bugtracker b
+	LEFT JOIN " . PREFIX . "comments_topic c ON (b.id = c.id_in_module)
 	WHERE fixed_in = '" . $roadmap_version . "'
 	ORDER BY " . $sort . " " . $mode .
 	$Sql->limit($Pagination->get_first_msg($items_per_page, 'p'), $items_per_page), __LINE__, __FILE__); //Bugs enregistrés.
@@ -1622,12 +1628,13 @@ else if (isset($_GET['roadmap'])) // roadmap
 		
 		$Template->assign_block_vars('roadmap.bug', array(
 			'ID'			=> $row['id'],
+			'U_BUG_VIEW'	=> PATH_TO_ROOT .'/bugtracker/bugtracker' . url('.php?view&amp;id=' . $row['id'], '-' . $row['id'] . '+' . Url::encode_rewrite($row['title']) . '.php'),
 			'TITLE'			=> ($cat_in_title_activated == true && $display_categories) ? '[' . $categories[$row['category']] . '] ' . $row['title'] : $row['title'],
 			'TYPE'			=> !empty($row['type']) ? stripslashes($types[$row['type']]) : $LANG['bugs.notice.none'],
 			'SEVERITY'		=> !empty($row['severity']) ? stripslashes($severities[$row['severity']]['name']) : $LANG['bugs.notice.none'],
 			'STATUS'		=> $LANG['bugs.status.' . $row['status']],
 			'LINE_COLOR'	=> $line_color,
-			'COMMENTS'		=> '<a href="bugtracker' . url('.php?view&id=' . $row['id'] . '&com=0#anchor_bugtracker') . '">' . (empty($nbr_coms) ? 0 : $nbr_coms) . '</a>',
+			'COMMENTS'		=> '<a href="' . PATH_TO_ROOT . '/bugtracker/bugtracker' . url('.php?view&id=' . $row['id'] . '&com=0#comments_list') . '">' . (empty($nbr_coms) ? 0 : $nbr_coms) . '</a>',
 			'DATE' 			=> gmdate_format($date_format, $row['submit_date'])
 		));
 	}
