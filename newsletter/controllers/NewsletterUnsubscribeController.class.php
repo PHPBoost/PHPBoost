@@ -89,10 +89,10 @@ class NewsletterUnSubscribeController extends ModuleController
 		$newsletter_subscribe = AppContext::get_current_user()->check_level(User::MEMBER_LEVEL) ? NewsletterService::get_id_streams_member(AppContext::get_current_user()->get_attribute('user_id')) : array();
 		$fieldset->add_field(new FormFieldMultipleSelectChoice('newsletter_choice', $this->lang['subscribe.newsletter_choice'], $newsletter_subscribe, $this->get_streams()));
 		
-		$form->add_button(new FormButtonReset());
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_button($this->submit_button);
-
+		$form->add_button(new FormButtonReset());
+		
 		$this->form = $form;
 	}
 	

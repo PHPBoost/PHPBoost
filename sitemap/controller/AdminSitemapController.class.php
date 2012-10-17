@@ -71,9 +71,9 @@ class AdminSitemapController extends AdminModuleController
 			array('required' => true, 'size' => 2, 'maxlength' => 2, 'description' => $this->lang['xml_file_life_time_explain'], 'hidden' => !SitemapXMLFileService::is_xml_file_generation_enabled()),
 			array(new FormFieldConstraintIntegerRange(1, 50))));
 		
-		$this->form->add_button(new FormButtonReset());
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$this->form->add_button($this->submit_button);
+		$this->form->add_button(new FormButtonReset());
 	}
 
 	private function handle_form()

@@ -31,7 +31,6 @@ class UserViewProfileController extends AbstractController
 	private $form;
 	private $user;
 	private $tpl;
-	private $submit_button;
 
 	public function execute(HTTPRequestCustom $request)
 	{

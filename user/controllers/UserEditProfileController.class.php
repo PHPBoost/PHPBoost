@@ -130,10 +130,10 @@ class UserEditProfileController extends AbstractController
 		$member_extended_field->set_user_id($this->user->get_id());
 		MemberExtendedFieldsService::display_form_fields($member_extended_field);
 		
-		$form->add_button(new FormButtonReset());
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_constraint(new FormConstraintFieldsEquality($new_password, $new_password_bis));
 		$form->add_button($this->submit_button);
+		$form->add_button(new FormButtonReset());
 
 		$this->form = $form;
 	}

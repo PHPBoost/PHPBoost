@@ -172,10 +172,10 @@ class AdminMemberConfigController extends AdminController
 			array('class' => 'text', 'rows' => 8, 'cols' => 47)
 		));
 		
-		$form->add_button(new FormButtonReset());
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_button($this->submit_button);
-
+		$form->add_button(new FormButtonReset());
+		
 		$this->form = $form;
 	}
 

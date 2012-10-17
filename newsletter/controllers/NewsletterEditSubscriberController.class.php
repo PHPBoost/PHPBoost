@@ -90,10 +90,10 @@ class NewsletterEditSubscriberController extends ModuleController
 			array(new FormFieldConstraintMailAddress())
 		));
 
-		$form->add_button(new FormButtonReset());
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_button($this->submit_button);
-
+		$form->add_button(new FormButtonReset());
+		
 		$this->form = $form;
 	}
 

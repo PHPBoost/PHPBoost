@@ -73,10 +73,10 @@ class AdminContactController extends AdminController
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('captcha_difficulty_level', $this->lang['captcha_difficulty'], $config->get_captcha_difficulty_level(), $this->generate_difficulty_level_options(),
 			array('hidden' => !$config->is_captcha_enabled(), 'required' => true)));
 
-		$form->add_button(new FormButtonReset());
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_button($this->submit_button);
-
+		$form->add_button(new FormButtonReset());
+		
 		$this->form = $form;
 	}
 
