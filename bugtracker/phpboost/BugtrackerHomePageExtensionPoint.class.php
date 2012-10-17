@@ -107,7 +107,7 @@ class BugtrackerHomePageExtensionPoint implements HomePageExtensionPoint
 				$sort = 'status';
 				break;
 			case 'comments' :
-				$sort = 'nbr_com';
+				$sort = 'number_comments';
 				break;
 			case 'date' :
 				$sort = 'submit_date';
@@ -148,7 +148,7 @@ class BugtrackerHomePageExtensionPoint implements HomePageExtensionPoint
 			'NO_BUGS_COLSPAN' 		=> $no_bugs_colspan,
 			'C_COM' 				=> ($comments_activated == true) ? true : false,
 			'C_ROADMAP' 			=> ($roadmap_activated == true && !empty($nbr_versions)) ? true : false,
-			'PAGINATION' 			=> $Pagination->display('bugtracker' . url('.php?p=%d' . (!empty($get_sort) ? '&amp;sort=' . $get_sort : '') . (!empty($get_mode) ? '&amp;mode=' . $get_mode : '')), $nbr_bugs, 'p', $items_per_page, 3),
+			'PAGINATION' 			=> $Pagination->display(PATH_TO_ROOT .'/bugtracker/bugtracker' . url('.php?p=%d' . (!empty($get_sort) ? '&amp;sort=' . $get_sort : '') . (!empty($get_mode) ? '&amp;mode=' . $get_mode : '')), $nbr_bugs, 'p', $items_per_page, 3),
 			'L_CONFIRM_DEL_BUG' 	=> $LANG['bugs.actions.confirm.del_bug'],
 			'L_ID' 					=> $LANG['bugs.labels.fields.id'],
 			'L_TITLE'				=> $LANG['bugs.labels.fields.title'],
@@ -167,26 +167,27 @@ class BugtrackerHomePageExtensionPoint implements HomePageExtensionPoint
 			'L_UNSOLVED' 			=> $LANG['bugs.titles.unsolved_bugs'],
 			'L_SOLVED' 				=> $LANG['bugs.titles.solved_bugs'],
 			'L_STATS' 				=> $LANG['bugs.titles.bugs_stats'],
-			'U_BUG_ID_TOP' 			=> url('.php?sort=id&amp;mode=desc'),
-			'U_BUG_ID_BOTTOM' 		=> url('.php?sort=id&amp;mode=asc'),
-			'U_BUG_TITLE_TOP' 		=> url('.php?sort=title&amp;mode=desc'),
-			'U_BUG_TITLE_BOTTOM' 	=> url('.php?sort=title&amp;mode=asc'),
-			'U_BUG_TYPE_TOP' 		=> url('.php?sort=type&amp;mode=desc'),
-			'U_BUG_TYPE_BOTTOM' 	=> url('.php?sort=type&amp;mode=asc'),
-			'U_BUG_SEVERITY_TOP' 	=> url('.php?sort=severity&amp;mode=desc'),
-			'U_BUG_SEVERITY_BOTTOM'	=> url('.php?sort=severity&amp;mode=asc'),
-			'U_BUG_STATUS_TOP'		=> url('.php?sort=status&amp;mode=desc'),
-			'U_BUG_STATUS_BOTTOM'	=> url('.php?sort=status&amp;mode=asc'),
-			'U_BUG_COMMENTS_TOP' 	=> url('.php?sort=comments&amp;mode=desc'),
-			'U_BUG_COMMENTS_BOTTOM'	=> url('.php?sort=comments&amp;mode=asc'),
-			'U_BUG_DATE_TOP' 		=> url('.php?sort=date&amp;mode=desc'),
-			'U_BUG_DATE_BOTTOM' 	=> url('.php?sort=date&amp;mode=asc')
+			'U_BUG_ID_TOP' 			=> PATH_TO_ROOT . '/bugtracker/bugtracker' . url('.php?sort=id&amp;mode=desc'),
+			'U_BUG_ID_BOTTOM' 		=> PATH_TO_ROOT . '/bugtracker/bugtracker' . url('.php?sort=id&amp;mode=asc'),
+			'U_BUG_TITLE_TOP' 		=> PATH_TO_ROOT . '/bugtracker/bugtracker' . url('.php?sort=title&amp;mode=desc'),
+			'U_BUG_TITLE_BOTTOM' 	=> PATH_TO_ROOT . '/bugtracker/bugtracker' . url('.php?sort=title&amp;mode=asc'),
+			'U_BUG_TYPE_TOP' 		=> PATH_TO_ROOT . '/bugtracker/bugtracker' . url('.php?sort=type&amp;mode=desc'),
+			'U_BUG_TYPE_BOTTOM' 	=> PATH_TO_ROOT . '/bugtracker/bugtracker' . url('.php?sort=type&amp;mode=asc'),
+			'U_BUG_SEVERITY_TOP' 	=> PATH_TO_ROOT . '/bugtracker/bugtracker' . url('.php?sort=severity&amp;mode=desc'),
+			'U_BUG_SEVERITY_BOTTOM'	=> PATH_TO_ROOT . '/bugtracker/bugtracker' . url('.php?sort=severity&amp;mode=asc'),
+			'U_BUG_STATUS_TOP'		=> PATH_TO_ROOT . '/bugtracker/bugtracker' . url('.php?sort=status&amp;mode=desc'),
+			'U_BUG_STATUS_BOTTOM'	=> PATH_TO_ROOT . '/bugtracker/bugtracker' . url('.php?sort=status&amp;mode=asc'),
+			'U_BUG_COMMENTS_TOP' 	=> PATH_TO_ROOT . '/bugtracker/bugtracker' . url('.php?sort=comments&amp;mode=desc'),
+			'U_BUG_COMMENTS_BOTTOM'	=> PATH_TO_ROOT . '/bugtracker/bugtracker' . url('.php?sort=comments&amp;mode=asc'),
+			'U_BUG_DATE_TOP' 		=> PATH_TO_ROOT . '/bugtracker/bugtracker' . url('.php?sort=date&amp;mode=desc'),
+			'U_BUG_DATE_BOTTOM' 	=> PATH_TO_ROOT . '/bugtracker/bugtracker' . url('.php?sort=date&amp;mode=asc')
 		));
 		
 		$tpl->assign_block_vars('list', array());
 		
 		$result = $this->sql_querier->query_while("SELECT *
-		FROM " . PREFIX . "bugtracker
+		FROM " . PREFIX . "bugtracker b
+		LEFT JOIN " . PREFIX . "comments_topic c ON (b.id = c.id_in_module)
 		WHERE status <> 'fixed' AND status <> 'rejected'
 		ORDER BY " . $sort . " " . $mode .
 		$this->sql_querier->limit($Pagination->get_first_msg($items_per_page, 'p'), $items_per_page), __LINE__, __FILE__); //Bugs enregistrés.
@@ -209,13 +210,14 @@ class BugtrackerHomePageExtensionPoint implements HomePageExtensionPoint
 
 			$tpl->assign_block_vars('list.bug', array(
 				'ID'			=> $row['id'],
+				'U_BUG_VIEW'	=> PATH_TO_ROOT .'/bugtracker/bugtracker' . url('.php?view&amp;id=' . $row['id'], '-' . $row['id'] . '+' . Url::encode_rewrite($row['title']) . '.php'),
 				'TITLE'			=> ($cat_in_title_activated == true && $display_categories) ? '[' . $categories[$row['category']] . '] ' . $row['title'] : $row['title'],
 				'TYPE'			=> !empty($row['type']) ? stripslashes($types[$row['type']]) : $LANG['bugs.notice.none'],
 				'SEVERITY'		=> !empty($row['severity']) ? stripslashes($severities[$row['severity']]['name']) : $LANG['bugs.notice.none'],
 				'STATUS'		=> $LANG['bugs.status.' . $row['status']],
 				'LINE_COLOR' 	=> $line_color,
 				'SEVERITY_COLOR'=> !empty($row['severity']) ? 'style="background-color:#' . stripslashes($severities[$row['severity']]['color']) . ';"' : '',
-				'COMMENTS'		=> '<a href="bugtracker' . url('.php?view&id=' . $row['id'] . '&com=0#comments_list') . '">' . (empty($nbr_coms) ? 0 : $nbr_coms) . '</a>',
+				'COMMENTS'		=> '<a href="' . PATH_TO_ROOT .'/bugtracker/bugtracker' . url('.php?view&id=' . $row['id'] . '&com=0#comments_list') . '">' . (empty($nbr_coms) ? 0 : $nbr_coms) . '</a>',
 				'DATE' 			=> gmdate_format($bugtracker_config->get_date_format(), $row['submit_date'])
 			));
 		}

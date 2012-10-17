@@ -69,44 +69,44 @@
 				<tr style="text-align:center;">
 					<th style="width:52px;text-align:center;">
 						{L_ID}<br />
-						<a href="{PATH_TO_ROOT}/bugtracker/bugtracker{U_BUG_ID_TOP}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
-						<a href="{PATH_TO_ROOT}/bugtracker/bugtracker{U_BUG_ID_BOTTOM}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
+						<a href="{U_BUG_ID_TOP}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
+						<a href="{U_BUG_ID_BOTTOM}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
 					</th>
 					<th style="width:52px;text-align:center;">
 						{L_TITLE}<br />
-						<a href="{PATH_TO_ROOT}/bugtracker/bugtracker{U_BUG_TITLE_TOP}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
-						<a href="{PATH_TO_ROOT}/bugtracker/bugtracker{U_BUG_TITLE_BOTTOM}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
+						<a href="{U_BUG_TITLE_TOP}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
+						<a href="{U_BUG_TITLE_BOTTOM}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
 					</th>
 					# IF C_DISPLAY_TYPES #
 					<th style="width:66px;text-align:center;">
 						{L_TYPE}<br />
-						<a href="{PATH_TO_ROOT}/bugtracker/bugtracker{U_BUG_TYPE_TOP}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
-						<a href="{PATH_TO_ROOT}/bugtracker/bugtracker{U_BUG_TYPE_BOTTOM}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
+						<a href="{U_BUG_TYPE_TOP}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
+						<a href="{U_BUG_TYPE_BOTTOM}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
 					</th>
 					# ENDIF #
 					# IF C_DISPLAY_SEVERITIES #
 					<th style="width:70px;text-align:center;">
 						{L_SEVERITY}<br />
-						<a href="{PATH_TO_ROOT}/bugtracker/bugtracker{U_BUG_SEVERITY_TOP}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
-						<a href="{PATH_TO_ROOT}/bugtracker/bugtracker{U_BUG_SEVERITY_BOTTOM}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
+						<a href="{U_BUG_SEVERITY_TOP}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
+						<a href="{U_BUG_SEVERITY_BOTTOM}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
 					</th>
 					# ENDIF #
 					<th style="width:60px;text-align:center;">
 						{L_STATUS}<br />
-						<a href="{PATH_TO_ROOT}/bugtracker/bugtracker{U_BUG_STATUS_TOP}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
-						<a href="{PATH_TO_ROOT}/bugtracker/bugtracker{U_BUG_STATUS_BOTTOM}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
+						<a href="{U_BUG_STATUS_TOP}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
+						<a href="{U_BUG_STATUS_BOTTOM}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
 					</th>
 					# IF C_COM #
 					<th style="width:84px;text-align:center;">
 						{L_COMMENTS}<br />
-						<a href="{PATH_TO_ROOT}/bugtracker/bugtracker{U_BUG_COMMENTS_TOP}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
-						<a href="{PATH_TO_ROOT}/bugtracker/bugtracker{U_BUG_COMMENTS_BOTTOM}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
+						<a href="{U_BUG_COMMENTS_TOP}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
+						<a href="{U_BUG_COMMENTS_BOTTOM}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
 					</th>
 					# ENDIF #
 					<th style="width:63px;text-align:center;">
 						{L_DATE}<br />
-						<a href="{PATH_TO_ROOT}/bugtracker/bugtracker{U_BUG_DATE_TOP}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
-						<a href="{PATH_TO_ROOT}/bugtracker/bugtracker{U_BUG_DATE_BOTTOM}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
+						<a href="{U_BUG_DATE_TOP}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
+						<a href="{U_BUG_DATE_BOTTOM}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
 					</th>
 					# IF C_IS_ADMIN #
 					<th style="width:56px;text-align:center;">
@@ -124,7 +124,7 @@
 				# START list.bug #
 				<tr style="text-align:center;"> 
 					<td class="row2" {list.bug.LINE_COLOR}>
-						<a href="{PATH_TO_ROOT}/bugtracker/bugtracker.php?view&amp;id={list.bug.ID}">\#{list.bug.ID}</a>
+						<a href="{list.bug.U_BUG_VIEW}">\#{list.bug.ID}</a>
 					</td>
 					<td class="row2" {list.bug.LINE_COLOR}>
 						{list.bug.TITLE}
@@ -209,44 +209,44 @@
 				<tr style="text-align:center;">
 					<th style="width:45px;text-align:center;">
 						{L_ID}<br />
-						<a href="{PATH_TO_ROOT}/bugtracker/bugtracker{U_BUG_ID_TOP}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
-						<a href="{PATH_TO_ROOT}/bugtracker/bugtracker{U_BUG_ID_BOTTOM}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
+						<a href="{U_BUG_ID_TOP}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
+						<a href="{U_BUG_ID_BOTTOM}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
 					</th>
 					<th style="text-align:center;">
 						{L_TITLE}<br />
-						<a href="{PATH_TO_ROOT}/bugtracker/bugtracker{U_BUG_TITLE_TOP}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
-						<a href="{PATH_TO_ROOT}/bugtracker/bugtracker{U_BUG_TITLE_BOTTOM}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
+						<a href="{U_BUG_TITLE_TOP}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
+						<a href="{U_BUG_TITLE_BOTTOM}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
 					</th>
 					# IF C_DISPLAY_TYPES #
 					<th style="width:66px;text-align:center;">
 						{L_TYPE}<br />
-						<a href="{PATH_TO_ROOT}/bugtracker/bugtracker{U_BUG_TYPE_TOP}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
-						<a href="{PATH_TO_ROOT}/bugtracker/bugtracker{U_BUG_TYPE_BOTTOM}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
+						<a href="{U_BUG_TYPE_TOP}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
+						<a href="{U_BUG_TYPE_BOTTOM}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
 					</th>
 					# ENDIF #
 					# IF C_DISPLAY_SEVERITIES #
 					<th style="width:70px;text-align:center;">
 						{L_SEVERITY}<br />
-						<a href="{PATH_TO_ROOT}/bugtracker/bugtracker{U_BUG_SEVERITY_TOP}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
-						<a href="{PATH_TO_ROOT}/bugtracker/bugtracker{U_BUG_SEVERITY_BOTTOM}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
+						<a href="{U_BUG_SEVERITY_TOP}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
+						<a href="{U_BUG_SEVERITY_BOTTOM}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
 					</th>
 					# ENDIF #
 					<th style="width:60px;text-align:center;">
 						{L_STATUS}<br />
-						<a href="{PATH_TO_ROOT}/bugtracker/bugtracker{U_BUG_STATUS_TOP}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
-						<a href="{PATH_TO_ROOT}/bugtracker/bugtracker{U_BUG_STATUS_BOTTOM}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
+						<a href="{U_BUG_STATUS_TOP}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
+						<a href="{U_BUG_STATUS_BOTTOM}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
 					</th>
 					# IF C_COM #
 					<th style="width:84px;text-align:center;">
 						{L_COMMENTS}<br />
-						<a href="{PATH_TO_ROOT}/bugtracker/bugtracker{U_BUG_COMMENTS_TOP}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
-						<a href="{PATH_TO_ROOT}/bugtracker/bugtracker{U_BUG_COMMENTS_BOTTOM}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
+						<a href="{U_BUG_COMMENTS_TOP}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
+						<a href="{U_BUG_COMMENTS_BOTTOM}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
 					</th>
 					# ENDIF #
 					<th style="width:63px;text-align:center;">
 						{L_DATE}<br />
-						<a href="{PATH_TO_ROOT}/bugtracker/bugtracker{U_BUG_DATE_TOP}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
-						<a href="{PATH_TO_ROOT}/bugtracker/bugtracker{U_BUG_DATE_BOTTOM}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
+						<a href="{U_BUG_DATE_TOP}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
+						<a href="{U_BUG_DATE_BOTTOM}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
 					</th>
 					# IF C_IS_ADMIN #
 					<th style="width:56px;text-align:center;">
@@ -264,7 +264,7 @@
 					# START solved.bugclosed #
 					<tr style="text-align:center;"> 
 						<td class="row2" {solved.bugclosed.LINE_COLOR}>
-							<a href="{PATH_TO_ROOT}/bugtracker/bugtracker.php?view&amp;id={solved.bugclosed.ID}">\#{solved.bugclosed.ID}</a>
+							<a href="{solved.bugclosed.U_BUG_VIEW}">\#{solved.bugclosed.ID}</a>
 						</td>
 						<td class="row2" {solved.bugclosed.LINE_COLOR}>
 							{solved.bugclosed.TITLE}
@@ -368,44 +368,44 @@
 				<tr style="text-align:center;">
 					<th style="width:52px;text-align:center;">
 						{L_ID}<br />
-						<a href="{PATH_TO_ROOT}/bugtracker/bugtracker{U_BUG_ID_TOP}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
-						<a href="{PATH_TO_ROOT}/bugtracker/bugtracker{U_BUG_ID_BOTTOM}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
+						<a href="{U_BUG_ID_TOP}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
+						<a href="{U_BUG_ID_BOTTOM}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
 					</th>
 					<th style="width:52px;text-align:center;">
 						{L_TITLE}<br />
-						<a href="{PATH_TO_ROOT}/bugtracker/bugtracker{U_BUG_TITLE_TOP}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
-						<a href="{PATH_TO_ROOT}/bugtracker/bugtracker{U_BUG_TITLE_BOTTOM}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
+						<a href="{U_BUG_TITLE_TOP}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
+						<a href="{U_BUG_TITLE_BOTTOM}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
 					</th>
 					# IF C_DISPLAY_TYPES #
 					<th style="width:66px;text-align:center;">
 						{L_TYPE}<br />
-						<a href="{PATH_TO_ROOT}/bugtracker/bugtracker{U_BUG_TYPE_TOP}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
-						<a href="{PATH_TO_ROOT}/bugtracker/bugtracker{U_BUG_TYPE_BOTTOM}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
+						<a href="{U_BUG_TYPE_TOP}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
+						<a href="{U_BUG_TYPE_BOTTOM}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
 					</th>
 					# ENDIF #
 					# IF C_DISPLAY_SEVERITIES #
 					<th style="width:70px;text-align:center;">
 						{L_SEVERITY}<br />
-						<a href="{PATH_TO_ROOT}/bugtracker/bugtracker{U_BUG_SEVERITY_TOP}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
-						<a href="{PATH_TO_ROOT}/bugtracker/bugtracker{U_BUG_SEVERITY_BOTTOM}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
+						<a href="{U_BUG_SEVERITY_TOP}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
+						<a href="{U_BUG_SEVERITY_BOTTOM}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
 					</th>
 					# ENDIF #
 					<th style="width:60px;text-align:center;">
 						{L_STATUS}<br />
-						<a href="{PATH_TO_ROOT}/bugtracker/bugtracker{U_BUG_STATUS_TOP}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
-						<a href="{PATH_TO_ROOT}/bugtracker/bugtracker{U_BUG_STATUS_BOTTOM}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
+						<a href="{U_BUG_STATUS_TOP}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
+						<a href="{U_BUG_STATUS_BOTTOM}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
 					</th>
 					# IF C_COM #
 					<th style="width:84px;text-align:center;">
 						{L_COMMENTS}<br />
-						<a href="{PATH_TO_ROOT}/bugtracker/bugtracker{U_BUG_COMMENTS_TOP}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
-						<a href="{PATH_TO_ROOT}/bugtracker/bugtracker{U_BUG_COMMENTS_BOTTOM}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
+						<a href="{U_BUG_COMMENTS_TOP}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
+						<a href="{U_BUG_COMMENTS_BOTTOM}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
 					</th>
 					# ENDIF #
 					<th style="width:63px;text-align:center;">
 						{L_DATE}<br />
-						<a href="{PATH_TO_ROOT}/bugtracker/bugtracker{U_BUG_DATE_TOP}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
-						<a href="{PATH_TO_ROOT}/bugtracker/bugtracker{U_BUG_DATE_BOTTOM}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
+						<a href="{U_BUG_DATE_TOP}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
+						<a href="{U_BUG_DATE_BOTTOM}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
 					</th>
 					<th style="width:56px;text-align:center;">
 						{L_HISTORY}<br /><br />
@@ -421,7 +421,7 @@
 				# START roadmap.bug #
 				<tr style="text-align:center;"> 
 					<td class="row2" {roadmap.bug.LINE_COLOR}>
-						<a href="{PATH_TO_ROOT}/bugtracker/bugtracker.php?view&amp;id={roadmap.bug.ID}" style="text-decoration:line-through;">\#{roadmap.bug.ID}</a>
+						<a href="{roadmap.bug.U_BUG_VIEW}" style="text-decoration:line-through;">\#{roadmap.bug.ID}</a>
 					</td>
 					<td class="row2" {roadmap.bug.LINE_COLOR}>
 						{roadmap.bug.TITLE}
