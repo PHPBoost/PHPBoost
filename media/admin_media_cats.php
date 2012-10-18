@@ -122,7 +122,7 @@ elseif (!empty($_POST['submit']))
 		}
 		else
 		{
-			$error_string = $media_categories->add($id_parent, $name, $description, $image, $new_auth, $mime_type, $activ);
+			$error_string = $media_categories->add_category($id_parent, $name, $description, $image, $new_auth, $mime_type, $activ);
 		}
 	}
 
