@@ -193,7 +193,7 @@
 				<a href="${relative_url(UserUrlBuilder::comments())}" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/com_mini.png);">{L_COMMENTS}</a>
 				<ul id="ssmenu53">
 					<li><a href="${relative_url(UserUrlBuilder::comments())}" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/com_mini.png);">{L_MANAGEMENT}</a></li>
-					<li><a href="{PATH_TO_ROOT}/admin/contents/?url=/comments/config/" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/com_mini.png);">{L_CONFIGURATION}</a></li>
+					<li><a href="{PATH_TO_ROOT}/admin/content/?url=/comments/config/" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/com_mini.png);">{L_CONFIGURATION}</a></li>
 				</ul>
 			</li>
 			# IF C_ADMIN_LINKS_5 #
