@@ -34,7 +34,7 @@ class AdminCommentsDisplayResponse extends AdminMenuDisplayResponse
 		$lang = LangLoader::get('admin-contents-common');
 		$picture = '/templates/' . get_utheme() . '/images/com.png';
 		$this->set_title($lang['comments']);
-		$this->add_link($lang['comments.config'], DispatchManager::get_url('/admin/contents/', '/comments/config/'), $picture);
+		$this->add_link($lang['comments.config'], DispatchManager::get_url('/admin/content/', '/comments/config/'), $picture);
 		$this->add_link($lang['comments.management'], UserUrlBuilder::comments(), $picture);
 
 		$env = $this->get_graphical_environment();
