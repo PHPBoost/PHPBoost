@@ -2,15 +2,15 @@
 			<ul>
 				<li class="title_menu">{L_BUGS_MANAGEMENT}</li>
 				<li>
-					<a href="admin_bugtracker.php"><img src="bugtracker.png" alt="" /></a>
+					<a href="{U_BUG_CONFIGURATION}"><img src="bugtracker.png" alt="" /></a>
 					<br />
-					<a href="admin_bugtracker.php" class="quick_link">{L_BUGS_CONFIG}</a>
+					<a href="{U_BUG_CONFIGURATION}" class="quick_link">{L_BUGS_CONFIG}</a>
 				</li>
 				
 				<li>
-					<a href="admin_bugtracker_authorizations.php"><img src="bugtracker.png" alt="" /></a>
+					<a href="{U_BUG_AUTHORIZATIONS}"><img src="bugtracker.png" alt="" /></a>
 					<br />
-					<a href="admin_bugtracker_authorizations.php" class="quick_link">{L_AUTH}</a>
+					<a href="{U_BUG_AUTHORIZATIONS}" class="quick_link">{L_AUTH}</a>
 				</li>
 			</ul>
 		</div>
@@ -102,14 +102,14 @@
 			'#800000', '#ffa500', '#808000', '#008000', '#008080', '#0000ff', '#666699', '#808080',
 			'#F04343', '#FF9900', '#99CC00', '#339966', '#33CCCC', '#3366FF', '#800080', '#ACA899',
 			'#ffc0cb', '#FFCC00', '#ffff00', '#00FF00', '#00FFFF', '#00CCFF', '#993366', '#C0C0C0',
-			'#FF99CC', '#FFCC99', '#FFFF99', '#CCFFCC', '#CCFFFF', '#CC99FF', '#CC99FF', '#FFFFFF');							
+			'#FF99CC', '#FFCC99', '#FFFF99', '#CCFFCC', '#CCFFFF', '#CC99FF', '#CC99FF', '#FFFFFF');
 			
 			contents = '<table style="border-collapse:collapse;margin:auto;"><tr>';
 			for(i = 0; i < 40; i++)
 			{
 				br = (i+1) % 8;
 				br = (br == 0 && i != 0 && i < 39) ? '</tr><tr>' : '';
-				contents += '<td style="padding:2px;"><a onclick="javascript:insert_color(\'' + color[i] + '\', \'' + field + '\');" class="bbcode_hover"><span style="background:' + color[i] + ';padding:0px 4px;border:1px solid #ACA899;">&nbsp;</span></a></td>' + br;								
+				contents += '<td style="padding:2px;"><a onclick="javascript:insert_color(\'' + color[i] + '\', \'' + field + '\');" class="bbcode_hover"><span style="background:' + color[i] + ';padding:0px 4px;border:1px solid #ACA899;">&nbsp;</span></a></td>' + br;
 			}
 			document.getElementById(field + '_list').innerHTML = contents + '</tr></table>';
 		}
@@ -130,7 +130,7 @@
 		<div id="admin_contents">
 			# INCLUDE message_helper #
 			
-			<form action="admin_bugtracker.php?token={TOKEN}" method="post" onsubmit="return check_form();" class="fieldset_content">
+			<form action="{U_FORM}" method="post" onsubmit="return check_form();" class="fieldset_content">
 				<fieldset>
 					<legend>{L_BUGS_CONFIG}</legend>
 					<p>{L_REQUIRE}</p>
@@ -141,7 +141,7 @@
 					<dl class="overflow_visible">
 						<dt><label for="rejected_bug_color">{L_REJECTED_BUG_COLOR}</label></dt>
 						<dd>#<input type="text" size="7" name="rejected_bug_color" id="rejected_bug_color" value="{REJECTED_BUG_COLOR}" style="background-color:\#{REJECTED_BUG_COLOR};" class="text" />
-							<a href="javascript:bbcode_color('rejected_bug_color');bb_display_block('1', '');" onmouseout="bb_hide_block('1', '', 0);" class="bbcode_hover"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/color.png" alt="" class="valign_middle" /></a>	
+							<a href="javascript:bbcode_color('rejected_bug_color');bb_display_block('1', '');" onmouseout="bb_hide_block('1', '', 0);" class="bbcode_hover"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/color.png" alt="" class="valign_middle" /></a>
 							<div style="position:relative;z-index:100;display:none;" id="bb_block1">
 								<div id="rejected_bug_color_list" class="bbcode_block" style="background:white;width:150px;" onmouseover="bb_hide_block('1', '', 1);" onmouseout="bb_hide_block('1', '', 0);">
 								</div>
@@ -151,7 +151,7 @@
 					<dl class="overflow_visible">
 						<dt><label for="fixed_bug_color">{L_FIXED_BUG_COLOR}</label></dt>
 						<dd>#<input type="text" size="7" name="fixed_bug_color" id="fixed_bug_color" value="{FIXED_BUG_COLOR}" style="background-color:\#{FIXED_BUG_COLOR};" class="text" />
-							<a href="javascript:bbcode_color('fixed_bug_color');bb_display_block('2', '');" onmouseout="bb_hide_block('2', '', 0);" class="bbcode_hover"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/color.png" alt="" class="valign_middle" /></a>	
+							<a href="javascript:bbcode_color('fixed_bug_color');bb_display_block('2', '');" onmouseout="bb_hide_block('2', '', 0);" class="bbcode_hover"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/color.png" alt="" class="valign_middle" /></a>
 							<div style="position:relative;z-index:100;display:none;" id="bb_block2">
 								<div id="fixed_bug_color_list" class="bbcode_block" style="background:white;width:150px;" onmouseover="bb_hide_block('2', '', 1);" onmouseout="bb_hide_block('2', '', 0);">
 								</div>
@@ -259,7 +259,7 @@
 								<input type="text" maxlength="100" size="40" name="type{types.ID}" value="{types.NAME}" class="text" />
 							</td>
 							<td class="row2">
-								<a href="admin_bugtracker.php?delete_type&amp;id={types.ID}&amp;token={TOKEN}" onclick="javascript:return Confirm_del_type();"><img src="../templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" /></a>
+								<a href="{types.U_DELETE_TYPE}" onclick="javascript:return Confirm_del_type();"><img src="../templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" /></a>
 							</td>
 						</tr>
 						# END types #
@@ -325,7 +325,7 @@
 								<input type="text" maxlength="100" size="40" name="category{categories.ID}" value="{categories.NAME}" class="text" />
 							</td>
 							<td class="row2">
-								<a href="admin_bugtracker.php?delete_category&amp;id={categories.ID}&amp;token={TOKEN}" onclick="javascript:return Confirm_del_category();"><img src="../templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" /></a>
+								<a href="{categories.U_DELETE_CATEGORY}" onclick="javascript:return Confirm_del_category();"><img src="../templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" /></a>
 							</td>
 						</tr>
 						# END categories #
@@ -395,20 +395,20 @@
 							</td> 
 							<td class="row2">
 								\#<input type="text" size="7" name="s_color{severities.ID}" id="s_color{severities.ID}" value="{severities.COLOR}" style="background-color:\#{severities.COLOR};" class="text" />
-								<a href="javascript:bbcode_color('s_color{severities.ID}');bb_display_block('{severities.ID_BBCODE_COLOR}', '');" onmouseout="bb_hide_block('{severities.ID_BBCODE_COLOR}', '', 0);" class="bbcode_hover"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/color.png" alt="" class="valign_middle" /></a>	
+								<a href="javascript:bbcode_color('s_color{severities.ID}');bb_display_block('{severities.ID_BBCODE_COLOR}', '');" onmouseout="bb_hide_block('{severities.ID_BBCODE_COLOR}', '', 0);" class="bbcode_hover"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/color.png" alt="" class="valign_middle" /></a>
 								<div style="position:relative;z-index:100;display:none;" id="bb_block{severities.ID_BBCODE_COLOR}">
 									<div id="s_color{severities.ID}_list" class="bbcode_block" style="background:white;width:150px;" onmouseover="bb_hide_block('{severities.ID_BBCODE_COLOR}', '', 1);" onmouseout="bb_hide_block('{severities.ID_BBCODE_COLOR}', '', 0);">
 									</div>
 								</div>
 							</td>
 							<td class="row2"> 
-								<a href="admin_bugtracker.php?delete_severity&amp;id={severities.ID}&amp;token={TOKEN}" onclick="javascript:return Confirm_del_severity();"><img src="../templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" /></a>
+								<a href="{severities.U_DELETE_SEVERITY}" onclick="javascript:return Confirm_del_severity();"><img src="../templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" /></a>
 							</td>
 						</tr>
 						# END severities #
 						# IF C_DISPLAY_DEFAULT_SEVERITY_DELETE_BUTTON #
 						<tr>
-							<td colspan="3" class="row3">
+							<td colspan="4" class="row3">
 								<div style="float:left;"><input type="submit" name="delete_default_severity" value="{L_DELETE_DEFAULT_VALUE}" class="submit" /></div>
 							</td>
 						</tr>
@@ -482,7 +482,7 @@
 								<input type="text" maxlength="100" size="40" name="priority{priorities.ID}" value="{priorities.NAME}" class="text" />
 							</td>
 							<td class="row2">
-								<a href="admin_bugtracker.php?delete_priority&amp;id={priorities.ID}&amp;token={TOKEN}" onclick="javascript:return Confirm_del_priority();"><img src="../templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" /></a>
+								<a href="{priorities.U_DELETE_PRIORITY}" onclick="javascript:return Confirm_del_priority();"><img src="../templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" /></a>
 							</td>
 						</tr>
 						# END priorities #
@@ -554,13 +554,13 @@
 								<input type="checkbox" id="detected_in{versions.ID}" name="detected_in{versions.ID}" onclick="javascript:display_default_version_radio('{versions.ID}');" {versions.DETECTED_IN} />
 							</td> 
 							<td class="row2">
-								<a href="admin_bugtracker.php?delete_version&amp;id={versions.ID}&amp;token={TOKEN}" onclick="javascript:return Confirm_del_version();"><img src="../templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" /></a>
+								<a href="{versions.U_DELETE_VERSION}" onclick="javascript:return Confirm_del_version();"><img src="../templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" /></a>
 							</td>
 						</tr>
 						# END versions #
 						# IF C_DISPLAY_DEFAULT_VERSION_DELETE_BUTTON #
 						<tr>
-							<td colspan="3" class="row3">
+							<td colspan="4" class="row3">
 								<div style="float:left;"><input type="submit" name="delete_default_version" value="{L_DELETE_DEFAULT_VALUE}" class="submit" /></div>
 							</td>
 						</tr>
@@ -589,7 +589,9 @@
 				
 				<fieldset class="fieldset_submit">
 					<legend>{L_UPDATE}</legend>
-					<input type="submit" name="valid" value="{L_UPDATE}" class="submit" />			
+					<input type="submit" name="valid" value="{L_UPDATE}" class="submit" />
+					&nbsp;&nbsp; 
+					<input type="reset" value="{L_RESET}" class="reset" />
 				</fieldset>
 			</form>
 		</div>

@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                           index.php
+ *                           AdminBugtrackerDisplayResponse.class.php
  *                            -------------------
- *   begin                : January 30, 2012
+ *   begin                : October 18, 2012
  *   copyright            : (C) 2012 Julien BRISWALTER
  *   email                : julien.briswalter@gmail.com
  *
@@ -25,13 +25,20 @@
  *
  ###################################################*/
 
-define('PATH_TO_ROOT', '..');
+class AdminBugtrackerDisplayResponse extends AdminMenuDisplayResponse
+{
+	public function __construct($view, $title_page)
+	{
+		parent::__construct($view);
 
-require_once PATH_TO_ROOT . '/kernel/init.php';
+		$lang = LangLoader::get('bugtracker_common', 'bugtracker');
+		$picture = '/bugtracker/bugtracker.png';
+		$this->set_title($lang['bugs.module_title']);
+		$this->add_link($lang['bugs.titles.admin.config'], BugtrackerUrlBuilder::configuration(), $picture);
+		$this->add_link($lang['bugs.titles.admin.authorizations'], BugtrackerUrlBuilder::authorizations(), $picture);
 
-$url_controller_mappers = array(
-	new UrlControllerMapper('AdminBugtrackerConfigController', '`^/admin(?:/config)?/?$`'),
-	new UrlControllerMapper('AdminBugtrackerAuthorizationsController', '`^/admin/authorizations/?$`'),
-);
-DispatchManager::dispatch($url_controller_mappers);
+		$env = $this->get_graphical_environment();
+		$env->set_page_title($title_page);
+	}
+}
 ?>

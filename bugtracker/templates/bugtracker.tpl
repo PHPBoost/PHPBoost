@@ -37,27 +37,27 @@
 </script>
 # START list #
 	<div class="module_position">
-		<div class="module_top_l"></div>		
+		<div class="module_top_l"></div>
 		<div class="module_top_r"></div>
 		<div class="module_top">
 			<ul style="list-style-type:none;">
 				<li class="bt_current">
-					<a href="bugtracker.php{SID}">{L_UNSOLVED}</a> 
+					<a href="{U_BUG_LIST}">{L_UNSOLVED}</a> 
 				</li>
 				<li class="bt_no_current">
-					<a href="{PATH_TO_ROOT}/bugtracker/bugtracker.php?solved">{L_SOLVED}</a>
+					<a href="{U_BUG_SOLVED}">{L_SOLVED}</a>
 				</li>
 				# IF C_ROADMAP #
 				<li class="bt_no_current">
-					<a href="{PATH_TO_ROOT}/bugtracker/bugtracker.php?roadmap">{L_ROADMAP}</a>
+					<a href="{U_BUG_ROADMAP}">{L_ROADMAP}</a>
 				</li>
 				# ENDIF #
 				<li class="bt_no_current">
-					<a href="{PATH_TO_ROOT}/bugtracker/bugtracker.php?stats">{L_STATS}</a>
+					<a href="{U_BUG_STATS}">{L_STATS}</a>
 				</li>
 				# IF C_ADD #
 				<li class="bt_add">
-					<a href="{PATH_TO_ROOT}/bugtracker/bugtracker.php?add"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/add.png" alt="" title="{L_ADD}" class="valign_middle" /></a>
+					<a href="{U_BUG_ADD}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/add.png" alt="" title="{L_ADD}" class="valign_middle" /></a>
 				</li>
 				# ENDIF #
 			</ul>
@@ -152,10 +152,10 @@
 					</td>
 					# IF C_IS_ADMIN #
 					<td class="row2" {list.bug.LINE_COLOR}> 
-						<a href="bugtracker.php?reject&amp;id={list.bug.ID}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/unvisible.png" alt="{L_REJECT}" title="{L_REJECT}" /></a>
-						<a href="bugtracker.php?edit&amp;id={list.bug.ID}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="{L_UPDATE}" title="{L_UPDATE}" /></a>
-						<a href="bugtracker.php?history&amp;id={list.bug.ID}"><img src="{PATH_TO_ROOT}/bugtracker/templates/images/history.png" alt="{L_HISTORY}" title="{L_HISTORY}" /></a>
-						<a href="bugtracker.php?delete&amp;id={list.bug.ID}&amp;token={TOKEN}" onclick="javascript:return Confirm();"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" /></a>
+						<a href="{list.bug.U_BUG_REJECT}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/unvisible.png" alt="{L_REJECT}" title="{L_REJECT}" /></a>
+						<a href="{list.bug.U_BUG_EDIT}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="{L_UPDATE}" title="{L_UPDATE}" /></a>
+						<a href="{list.bug.U_BUG_HISTORY}"><img src="{PATH_TO_ROOT}/bugtracker/templates/images/history.png" alt="{L_HISTORY}" title="{L_HISTORY}" /></a>
+						<a href="{list.bug.U_BUG_DELETE}" onclick="javascript:return Confirm();"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" /></a>
 					</td>
 					# ENDIF #
 				</tr>
@@ -177,27 +177,27 @@
 
 # START solved #
 	<div class="module_position">
-		<div class="module_top_l"></div>		
+		<div class="module_top_l"></div>
 		<div class="module_top_r"></div>
 		<div class="module_top">
 			<ul style="list-style-type:none;">
 				<li class="bt_no_current">
-					<a href="bugtracker.php{SID}">{L_UNSOLVED}</a> 
+					<a href="{U_BUG_LIST}">{L_UNSOLVED}</a> 
 				</li>
 				<li class="bt_current">
-					<a href="{PATH_TO_ROOT}/bugtracker/bugtracker.php?solved">{L_SOLVED}</a>
+					<a href="{U_BUG_SOLVED}">{L_SOLVED}</a>
 				</li>
 				# IF C_ROADMAP #
 				<li class="bt_no_current">
-					<a href="{PATH_TO_ROOT}/bugtracker/bugtracker.php?roadmap">{L_ROADMAP}</a>
+					<a href="{U_BUG_ROADMAP}">{L_ROADMAP}</a>
 				</li>
 				# ENDIF #
 				<li class="bt_no_current">
-					<a href="{PATH_TO_ROOT}/bugtracker/bugtracker.php?stats">{L_STATS}</a>
+					<a href="{U_BUG_STATS}">{L_STATS}</a>
 				</li>
 				# IF C_ADD #
 				<li class="bt_add">
-					<a href="{PATH_TO_ROOT}/bugtracker/bugtracker.php?add"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/add.png" alt="" title="{L_ADD}" class="valign_middle" /></a>
+					<a href="{U_BUG_ADD}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/add.png" alt="" title="{L_ADD}" class="valign_middle" /></a>
 				</li>
 				# ENDIF #
 			</ul>
@@ -292,10 +292,10 @@
 						</td>
 						# IF C_IS_ADMIN #
 						<td class="row2" {solved.bugclosed.LINE_COLOR}> 
-							<a href="bugtracker.php?reopen&amp;id={solved.bugclosed.ID}&amp;back=solved"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/visible.png" alt="{L_REOPEN}" title="{L_REOPEN}" /></a>
-							<a href="bugtracker.php?edit&amp;id={solved.bugclosed.ID}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="{L_UPDATE}" title="{L_UPDATE}" /></a>
-							<a href="bugtracker.php?history&amp;id={solved.bugclosed.ID}&amp;back=solved"><img src="{PATH_TO_ROOT}/bugtracker/templates/images/history.png" alt="{L_HISTORY}" title="{L_HISTORY}" /></a>
-							<a href="bugtracker.php?delete&amp;id={solved.bugclosed.ID}&amp;token={TOKEN}&amp;back=solved" onclick="javascript:return Confirm();"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" /></a>
+							<a href="{solved.bugclosed.U_BUG_REOPEN}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/visible.png" alt="{L_REOPEN}" title="{L_REOPEN}" /></a>
+							<a href="{solved.bugclosed.U_BUG_EDIT}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="{L_UPDATE}" title="{L_UPDATE}" /></a>
+							<a href="{solved.bugclosed.U_BUG_HISTORY}"><img src="{PATH_TO_ROOT}/bugtracker/templates/images/history.png" alt="{L_HISTORY}" title="{L_HISTORY}" /></a>
+							<a href="{solved.bugclosed.U_BUG_DELETE}" onclick="javascript:return Confirm();"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" /></a>
 						</td>
 						# ENDIF #
 					</tr>
@@ -317,25 +317,25 @@
 
 # START roadmap #
 	<div class="module_position">
-		<div class="module_top_l"></div>		
+		<div class="module_top_l"></div>
 		<div class="module_top_r"></div>
 		<div class="module_top">
 			<ul style="list-style-type:none;">
 				<li class="bt_no_current">
-					<a href="bugtracker.php{SID}">{L_UNSOLVED}</a> 
+					<a href="{U_BUG_LIST}">{L_UNSOLVED}</a> 
 				</li>
 				<li class="bt_no_current">
-					<a href="{PATH_TO_ROOT}/bugtracker/bugtracker.php?solved">{L_SOLVED}</a>
+					<a href="{U_BUG_SOLVED}">{L_SOLVED}</a>
 				</li>
 				<li class="bt_current">
-					<a href="{PATH_TO_ROOT}/bugtracker/bugtracker.php?roadmap">{L_ROADMAP}</a>
+					<a href="{U_BUG_ROADMAP}">{L_ROADMAP}</a>
 				</li>
 				<li class="bt_no_current">
-					<a href="{PATH_TO_ROOT}/bugtracker/bugtracker.php?stats">{L_STATS}</a>
+					<a href="{U_BUG_STATS}">{L_STATS}</a>
 				</li>
 				# IF C_ADD #
 				<li class="bt_add">
-					<a href="{PATH_TO_ROOT}/bugtracker/bugtracker.php?add"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/add.png" alt="" title="{L_ADD}" class="valign_middle" /></a>
+					<a href="{U_BUG_ADD}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/add.png" alt="" title="{L_ADD}" class="valign_middle" /></a>
 				</li>
 				# ENDIF #
 			</ul>
@@ -344,16 +344,16 @@
 			# INCLUDE message_helper #
 			
 			# IF C_DISPLAY_VERSIONS #
-			<form action="bugtracker.php?roadmap&amp;token={TOKEN}" name="form" method="post" style="margin:auto;" class="fieldset_content">
+			<form action="{U_FORM}" name="form" method="post" class="fieldset_content" id="form">
 				<fieldset>
 					<legend>{L_CHOOSE_VERSION}</legend>
 					<dl>
 						<dt><label for="roadmap_version">{L_VERSION}</label></dt>
 						<dd><label>
-							<select id="roadmap_version" name="roadmap_version">				
-							# START select_version #				
+							<select id="roadmap_version" name="roadmap_version">
+							# START select_version #
 								{select_version.VERSION}
-							# END select_version #				
+							# END select_version #
 							</select>
 						</label>
 						&nbsp;&nbsp;
@@ -448,7 +448,7 @@
 						{roadmap.bug.DATE}
 					</td>
 					<td class="row2" {roadmap.bug.LINE_COLOR}>
-						<a href="bugtracker.php?history&amp;id={roadmap.bug.ID}&amp;back=roadmap"><img src="{PATH_TO_ROOT}/bugtracker/templates/images/history.png" alt="{L_HISTORY}" title="{L_HISTORY}" /></a>
+						<a href="{roadmap.bug.U_BUG_HISTORY}"><img src="{PATH_TO_ROOT}/bugtracker/templates/images/history.png" alt="{L_HISTORY}" title="{L_HISTORY}" /></a>
 					</td>
 				</tr>
 				# END roadmap.bug #
@@ -469,27 +469,27 @@
 
 # START stats #
 	<div class="module_position">
-		<div class="module_top_l"></div>		
+		<div class="module_top_l"></div>
 		<div class="module_top_r"></div>
 		<div class="module_top">
 			<ul style="list-style-type:none;">
 				<li class="bt_no_current">
-					<a href="bugtracker.php{SID}">{L_UNSOLVED}</a> 
+					<a href="{U_BUG_LIST}">{L_UNSOLVED}</a> 
 				</li>
 				<li class="bt_no_current">
-					<a href="{PATH_TO_ROOT}/bugtracker/bugtracker.php?solved">{L_SOLVED}</a>
+					<a href="{U_BUG_SOLVED}">{L_SOLVED}</a>
 				</li>
 				# IF C_ROADMAP #
 				<li class="bt_no_current">
-					<a href="{PATH_TO_ROOT}/bugtracker/bugtracker.php?roadmap">{L_ROADMAP}</a>
+					<a href="{U_BUG_ROADMAP}">{L_ROADMAP}</a>
 				</li>
 				# ENDIF #
 				<li class="bt_current">
-					<a href="{PATH_TO_ROOT}/bugtracker/bugtracker.php?stats">{L_STATS}</a>
+					<a href="{U_BUG_STATS}">{L_STATS}</a>
 				</li>
 				# IF C_ADD #
 				<li class="bt_add">
-					<a href="{PATH_TO_ROOT}/bugtracker/bugtracker.php?add"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/add.png" alt="" title="{L_ADD}" class="valign_middle" /></a>
+					<a href="{U_BUG_ADD}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/add.png" alt="" title="{L_ADD}" class="valign_middle" /></a>
 				</li>
 				# ENDIF #
 			</ul>
@@ -559,7 +559,7 @@
 			# ENDIF #
 			<table class="module_table">
 				<tr>
-					<th colspan="3">	
+					<th colspan="3">
 						{L_TOP_TEN_POSTERS}
 					</th>
 				</tr>
@@ -581,7 +581,7 @@
 					</td>
 				</tr>
 				# ELSE #
-					# START stats.top_poster #			
+					# START stats.top_poster #
 					<tr>
 						<td class="row2" style="text-align:center;">
 							{stats.top_poster.ID}
@@ -592,7 +592,7 @@
 						<td class="row2" style="text-align:center;">
 							{stats.top_poster.USER_BUGS}
 						</td>
-					</tr>			
+					</tr>
 					# END stats.top_poster #
 				# ENDIF #
 			</table>
@@ -664,133 +664,116 @@
 	}
 	-->
 	</script>
-
-	<div class="module_position">
-		<div class="module_top_l"></div>		
-		<div class="module_top_r"></div>
-		<div class="module_top">
-			<div class="module_top_title">
-				{L_ADD_BUG}
-			</div>
-		</div>
-		<div class="module_contents">
-			# INCLUDE message_helper #
-			
-			<form action="bugtracker.php?token={TOKEN}" name="form" method="post" style="margin:auto;" onsubmit="return check_form();" class="fieldset_content">
-				<fieldset>
-					<p>{L_REQUIRE}</p>
-					<dl>
-						<dt><label for="title">* {L_TITLE}</label></dt>
-						<dd><label><input type="text" size="40" maxlength="200" id="title" name="title" class="text" /></label></dd>
-					</dl>
-					<label for="contents">* {L_CONTENT}</label>
-					<div style="position:relative;display:none;" id="loading_previewcontents">
+		# INCLUDE message_helper #
+		
+		<form action="{U_FORM}" name="form" method="post" onsubmit="return check_form();" class="fieldset_content" id="form">
+			<fieldset>
+				<legend>{L_ADD_BUG}</legend>
+				<p>{L_REQUIRE}</p>
+				<dl>
+					<dt><label for="title">* {L_TITLE}</label></dt>
+					<dd><label><input type="text" size="40" maxlength="200" id="title" name="title" class="text" /></label></dd>
+				</dl>
+				<label for="contents">* {L_CONTENT}</label>
+				<div style="position:relative;display:none;" id="loading_previewcontents">
+					<div style="margin:auto;margin-top:90px;width:100%;text-align:center;position:absolute;"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/loading.gif" alt="" /></div>
+				</div>
+				<div style="display:none;" class="xmlhttprequest_preview" id="xmlhttprequest_previewcontents"></div>
+				{CONTENTS_KERNEL_EDITOR}
+				<label><textarea rows="20" cols="86" id="contents" name="contents">{CONTENTS}</textarea></label>
+				<div style="text-align:center;"><input type="button" value="{L_PREVIEW}" onclick="XMLHttpRequest_preview('contents');" class="submit" /></div>
+				<br />
+				# IF C_DISPLAY_TYPES #
+				<dl>
+					<dt><label for="type"># IF C_TYPE_MANDATORY #* # ENDIF #{L_TYPE}</label></dt>
+					<dd><label>
+						<select id="type" name="type">
+						# START select_type #
+							{select_type.TYPE}
+						# END select_type #
+						</select>
+					</label></dd>
+				</dl>
+				# ENDIF #
+				# IF C_DISPLAY_CATEGORIES #
+				<dl>
+					<dt><label for="category"># IF C_CATEGORY_MANDATORY #* # ENDIF #{L_CATEGORY}</label></dt>
+					<dd><label>
+						<select id="category" name="category">
+						# START select_category #
+							{select_category.CATEGORY}
+						# END select_category #
+						</select>
+					</label></dd>
+				</dl>
+				# ENDIF #
+				# IF C_DISPLAY_ADVANCED #
+				# IF C_DISPLAY_SEVERITIES #
+				<dl>
+					<dt><label for="severity"># IF C_SEVERITY_MANDATORY #* # ENDIF #{L_SEVERITY}</label></dt>
+					<dd><label>
+						<select id="severity" name="severity">
+						# START select_severity #
+							{select_severity.SEVERITY}
+						# END select_severity #
+						</select>
+					</label></dd>
+				</dl>
+				# ENDIF #
+				# IF C_DISPLAY_PRIORITIES #
+				<dl>
+					<dt><label for="priority"># IF C_PRIORITY_MANDATORY #* # ENDIF #{L_PRIORITY}</label></dt>
+					<dd><label>
+						<select id="priority" name="priority">
+						# START select_priority #
+							{select_priority.PRIORITY}
+						# END select_priority #
+						</select>
+					</label></dd>
+				</dl>
+				# ENDIF #
+				# ENDIF #
+				# IF C_DISPLAY_VERSIONS #
+				<dl>
+					<dt><label for="detected_in"># IF C_DETECTED_IN_MANDATORY #* # ENDIF #{L_DETECTED_IN}</label></dt>
+					<dd><label>
+						<select id="detected_in" name="detected_in">
+						# START select_detected_in #
+							{select_detected_in.VERSION}
+						# END select_detected_in #
+						</select>
+					</label></dd>
+				</dl>
+				# ENDIF #
+				<dl>
+					<dt><label for="reproductible">{L_REPRODUCTIBLE}</label></dt>
+					<dd>
+						<label><input type="radio" {REPRODUCTIBLE_ENABLED} name="reproductible" id="reproductible" onclick="javascript:showdiv('reproduction');" value="1" /> {L_YES}</label>
+						&nbsp;&nbsp;
+						<label><input type="radio" {REPRODUCTIBLE_DISABLED} name="reproductible" onclick="javascript:hidediv('reproduction');" value="0" /> {L_NO}</label>
+					</dd>
+				</dl>
+				<div id="reproduction">
+					<label for="reproduction_method">{L_REPRODUCTION_METHOD}</label>
+					<div style="position:relative;display:none;" id="loading_previewreproduction_method">
 						<div style="margin:auto;margin-top:90px;width:100%;text-align:center;position:absolute;"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/loading.gif" alt="" /></div>
 					</div>
-					<div style="display:none;" class="xmlhttprequest_preview" id="xmlhttprequest_previewcontents"></div>
-					{CONTENTS_KERNEL_EDITOR}
-					<label><textarea rows="20" cols="86" id="contents" name="contents">{CONTENTS}</textarea></label>
-					<div style="text-align:center;"><input type="button" value="{L_PREVIEW}" onclick="XMLHttpRequest_preview('contents');" class="submit" /></div>
+					<div style="display:none;" class="xmlhttprequest_preview" id="xmlhttprequest_previewreproduction_method"></div>
+					{METHOD_KERNEL_EDITOR}
+					<label><textarea rows="20" cols="86" id="reproduction_method" name="reproduction_method">{REPRODUCTION_METHOD}</textarea></label>
+					<div style="text-align:center;"><input type="button" value="{L_PREVIEW}" onclick="XMLHttpRequest_preview('reproduction_method');" class="submit" /></div>
 					<br />
-					# IF C_DISPLAY_TYPES #
-					<dl>
-						<dt><label for="type"># IF C_TYPE_MANDATORY #* # ENDIF #{L_TYPE}</label></dt>
-						<dd><label>
-							<select id="type" name="type">				
-							# START select_type #				
-								{select_type.TYPE}				
-							# END select_type #				
-							</select>
-						</label></dd>
-					</dl>
-					# ENDIF #
-					# IF C_DISPLAY_CATEGORIES #
-					<dl>
-						<dt><label for="category"># IF C_CATEGORY_MANDATORY #* # ENDIF #{L_CATEGORY}</label></dt>
-						<dd><label>
-							<select id="category" name="category">				
-							# START select_category #				
-								{select_category.CATEGORY}				
-							# END select_category #				
-							</select>
-						</label></dd>
-					</dl>
-					# ENDIF #
-					# IF C_DISPLAY_ADVANCED #
-					# IF C_DISPLAY_SEVERITIES #
-					<dl>
-						<dt><label for="severity"># IF C_SEVERITY_MANDATORY #* # ENDIF #{L_SEVERITY}</label></dt>
-						<dd><label>
-							<select id="severity" name="severity">				
-							# START select_severity #				
-								{select_severity.SEVERITY}				
-							# END select_severity #				
-							</select>
-						</label></dd>
-					</dl>
-					# ENDIF #
-					# IF C_DISPLAY_PRIORITIES #
-					<dl>
-						<dt><label for="priority"># IF C_PRIORITY_MANDATORY #* # ENDIF #{L_PRIORITY}</label></dt>
-						<dd><label>
-							<select id="priority" name="priority">				
-							# START select_priority #				
-								{select_priority.PRIORITY}				
-							# END select_priority #				
-							</select>
-						</label></dd>
-					</dl>
-					# ENDIF #
-					# ENDIF #
-					# IF C_DISPLAY_VERSIONS #
-					<dl>
-						<dt><label for="detected_in"># IF C_DETECTED_IN_MANDATORY #* # ENDIF #{L_DETECTED_IN}</label></dt>
-						<dd><label>
-							<select id="detected_in" name="detected_in">				
-							# START select_detected_in #				
-								{select_detected_in.VERSION}				
-							# END select_detected_in #				
-							</select>
-						</label></dd>
-					</dl>
-					# ENDIF #
-					<dl>
-						<dt><label for="reproductible">{L_REPRODUCTIBLE}</label></dt>
-						<dd>
-							<label><input type="radio" {REPRODUCTIBLE_ENABLED} name="reproductible" id="reproductible" onclick="javascript:showdiv('reproduction');" value="1" /> {L_YES}</label>
-							&nbsp;&nbsp;
-							<label><input type="radio" {REPRODUCTIBLE_DISABLED} name="reproductible" onclick="javascript:hidediv('reproduction');" value="0" /> {L_NO}</label>
-						</dd>
-					</dl>
-					<div id="reproduction">
-						<label for="reproduction_method">{L_REPRODUCTION_METHOD}</label>
-						<div style="position:relative;display:none;" id="loading_previewreproduction_method">
-							<div style="margin:auto;margin-top:90px;width:100%;text-align:center;position:absolute;"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/loading.gif" alt="" /></div>
-						</div>
-						<div style="display:none;" class="xmlhttprequest_preview" id="xmlhttprequest_previewreproduction_method"></div>
-						{METHOD_KERNEL_EDITOR}
-						<label><textarea rows="20" cols="86" id="reproduction_method" name="reproduction_method">{REPRODUCTION_METHOD}</textarea></label>
-						<div style="text-align:center;"><input type="button" value="{L_PREVIEW}" onclick="XMLHttpRequest_preview('reproduction_method');" class="submit" /></div>
-						<br />
-					</div>
-					<br />
-				</fieldset>	
-				
-				<fieldset class="fieldset_submit">
-					<legend>{L_SUBMIT}</legend>
-					<input type="submit" name="valid_add" value="{L_SUBMIT}" class="submit" />
-					&nbsp;
-					<input type="reset" value="{L_RESET}" class="reset" />				
-				</fieldset>	
-			</form>
-		</div>
-		<div class="module_bottom_l"></div>
-		<div class="module_bottom_r"></div>
-		<div class="module_bottom">
-			<div style="float:left" class="text_small"></div>
-			<div style="float:right" class="text_small"></div>
-		</div>
-	</div>
+				</div>
+				<br />
+			</fieldset>	
+			
+			<fieldset class="fieldset_submit">
+				<legend>{L_SUBMIT}</legend>
+				<input type="submit" name="valid_add" value="{L_SUBMIT}" class="submit" />
+				&nbsp;
+				<input type="reset" value="{L_RESET}" class="reset" />
+			</fieldset>	
+		</form>
 # END add #
 
 # START edit #
@@ -885,185 +868,169 @@
 	-->
 	</script>
 
-	<div class="module_position">
-		<div class="module_top_l"></div>		
-		<div class="module_top_r"></div>
-		<div class="module_top">
-			<div class="module_top_title">
-				{L_EDIT_BUG} : \#{edit.ID}
-			</div>
-		</div>
-		<div class="module_contents">
-			# INCLUDE message_helper #
+		# INCLUDE message_helper #
+		
+		<form action="{U_FORM}" name="form" method="post" onsubmit="return check_form();" class="fieldset_content" id="form">
+			<fieldset>
+			<legend>{L_BUG_TREATMENT}</legend>
+				# IF edit.C_IS_ASSIGNED #
+				<dl>
+					<dt><label for="status">{L_STATUS}</label><br /><span>{L_STATUS_EXPLAIN}</span></dt>
+					<dd><label>
+						<select id="status" name="status">
+						# START edit.select_status #
+							{edit.select_status.STATUS}
+						# END edit.select_status #
+						</select>
+					</label></dd>
+				</dl>
+				<dl>
+					<dt><label for="assigned_to">{L_ASSIGNED_TO}</label><br /><span>{L_JOKER}</span></dt>
+					<dd>
+						<input type="text" size="20" maxlength="25" id="login" value="{edit.ASSIGNED_TO}" name="assigned_to" class="text" /> 
+						<span id="loading_members"></span>
+						<script type="text/javascript">
+						<!--
+							document.write('<input value="{L_SEARCH}" onclick="XMLHttpRequest_search();" type="button" class="submit">');
+						-->
+						</script>
+						<div id="xmlhttprequest_result_search" style="display:none;" class="xmlhttprequest_result_search"></div>
+					</dd>
+				</dl>
+				# IF C_DISPLAY_VERSIONS #
+				<dl>
+					<dt><label for="fixed_in"># IF C_ROADMAP #* # ENDIF #{L_FIXED_IN}</label></dt>
+					<dd><label>
+						<select id="fixed_in" name="fixed_in">
+						# START edit.select_fixed_in #
+							{edit.select_fixed_in.VERSION}
+						# END edit.select_fixed_in #
+						</select>
+					</label></dd>
+				</dl>
+				# ENDIF #
+				# ENDIF #
+			</fieldset>
 			
-			<form action="bugtracker.php?token={TOKEN}" name="form" method="post" style="margin:auto;" onsubmit="return check_form();" class="fieldset_content">
-				<fieldset>
-				<legend>{L_BUG_TREATMENT}</legend>
-					# IF edit.C_IS_ASSIGNED #
-					<dl>
-						<dt><label for="status">{L_STATUS}</label><br /><span>{L_STATUS_EXPLAIN}</span></dt>
-						<dd><label>
-							<select id="status" name="status">				
-							# START edit.select_status #				
-								{edit.select_status.STATUS}				
-							# END edit.select_status #				
-							</select>
-						</label></dd>
-					</dl>
-					<dl>
-						<dt><label for="assigned_to">{L_ASSIGNED_TO}</label><br /><span>{L_JOKER}</span></dt>
-						<dd>
-							<input type="text" size="20" maxlength="25" id="login" value="{edit.ASSIGNED_TO}" name="assigned_to" class="text" /> 
-							<span id="loading_members"></span>
-							<script type="text/javascript">
-							<!--								
-								document.write('<input value="{L_SEARCH}" onclick="XMLHttpRequest_search();" type="button" class="submit">');
-							-->
-							</script>
-							<div id="xmlhttprequest_result_search" style="display:none;" class="xmlhttprequest_result_search"></div>
-						</dd>
-					</dl>
-					# IF C_DISPLAY_VERSIONS #
-					<dl>
-						<dt><label for="fixed_in"># IF C_ROADMAP #* # ENDIF #{L_FIXED_IN}</label></dt>
-						<dd><label>
-							<select id="fixed_in" name="fixed_in">				
-							# START edit.select_fixed_in #				
-								{edit.select_fixed_in.VERSION}				
-							# END edit.select_fixed_in #				
-							</select>
-						</label></dd>
-					</dl>
-					# ENDIF #
-					# ENDIF #
-				</fieldset>
-				
-				<fieldset>
-				<legend>{L_BUG_INFOS}</legend>
-					<p>{L_REQUIRE}</p>
-					<dl>
-						<dt><label for="author">{L_AUTHOR}</label></dt>
-						<dd><label>{edit.AUTHOR}</label></dd>
-					</dl>
-					<dl>
-						<dt><label for="title">* {L_TITLE}</label></dt>
-						<dd><label><input type="text" size="40" maxlength="200" id="title" name="title" value="{edit.TITLE}" class="text" /></label></dd>
-					</dl>
-					<label for="contents">* {L_CONTENT}</label>
-					<div style="position:relative;display:none;" id="loading_previewcontents">
+			<fieldset>
+			<legend>{L_BUG_INFOS}</legend>
+				<p>{L_REQUIRE}</p>
+				<dl>
+					<dt><label for="author">{L_AUTHOR}</label></dt>
+					<dd><label>{edit.AUTHOR}</label></dd>
+				</dl>
+				<dl>
+					<dt><label for="title">* {L_TITLE}</label></dt>
+					<dd><label><input type="text" size="40" maxlength="200" id="title" name="title" value="{edit.TITLE}" class="text" /></label></dd>
+				</dl>
+				<label for="contents">* {L_CONTENT}</label>
+				<div style="position:relative;display:none;" id="loading_previewcontents">
+					<div style="margin:auto;margin-top:90px;width:100%;text-align:center;position:absolute;"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/loading.gif" alt="" /></div>
+				</div>
+				<div style="display:none;" class="xmlhttprequest_preview" id="xmlhttprequest_previewcontents"></div>
+				{CONTENTS_KERNEL_EDITOR}
+				<label><textarea rows="20" cols="86" id="contents" name="contents">{edit.CONTENTS}</textarea></label>
+				<div style="text-align:center;"><input type="button" value="{L_PREVIEW}" onclick="XMLHttpRequest_preview('contents');" class="submit" /></div>
+				<br />
+				# IF C_DISPLAY_TYPES #
+				<dl>
+					<dt><label for="type"># IF C_TYPE_MANDATORY #* # ENDIF #{L_TYPE}</label></dt>
+					<dd><label>
+						<select id="type" name="type">
+						# START edit.select_type #
+							{edit.select_type.TYPE}
+						# END edit.select_type #
+						</select>
+					</label></dd>
+				</dl>
+				# ENDIF #
+				# IF C_DISPLAY_CATEGORIES #
+				<dl>
+					<dt><label for="category"># IF C_CATEGORY_MANDATORY #* # ENDIF #{L_CATEGORY}</label></dt>
+					<dd><label>
+						<select id="category" name="category">
+						# START edit.select_category #
+							{edit.select_category.CATEGORY}
+						# END edit.select_category #
+						</select>
+					</label></dd>
+				</dl>
+				# ENDIF #
+				# IF C_DISPLAY_ADVANCED #
+				# IF C_DISPLAY_SEVERITIES #
+				<dl>
+					<dt><label for="severity"># IF C_SEVERITY_MANDATORY #* # ENDIF #{L_SEVERITY}</label></dt>
+					<dd><label>
+						<select id="severity" name="severity">
+						# START edit.select_severity #
+							{edit.select_severity.SEVERITY}
+						# END edit.select_severity #
+						</select>
+					</label></dd>
+				</dl>
+				# ENDIF #
+				# IF C_DISPLAY_PRIORITIES #
+				<dl>
+					<dt><label for="priority"># IF C_PRIORITY_MANDATORY #* # ENDIF #{L_PRIORITY}</label></dt>
+					<dd><label>
+						<select id="priority" name="priority">
+						# START edit.select_priority #
+							{edit.select_priority.PRIORITY}
+						# END edit.select_priority #
+						</select>
+					</label></dd>
+				</dl>
+				# ENDIF #
+				# ENDIF #
+				# IF C_DISPLAY_VERSIONS_DETECTED_IN #
+				<dl>
+					<dt><label for="detected_in"># IF C_DETECTED_IN_MANDATORY #* # ENDIF #{L_DETECTED_IN}</label></dt>
+					<dd><label>
+						<select id="detected_in" name="detected_in">
+						# START edit.select_detected_in #
+							{edit.select_detected_in.VERSION}
+						# END edit.select_detected_in #
+						</select>
+					</label></dd>
+				</dl>
+				# ENDIF #
+				<dl>
+					<dt><label for="reproductible">{L_REPRODUCTIBLE}</label></dt>
+					<dd>
+						<label><input type="radio" {edit.REPRODUCTIBLE_ENABLED} name="reproductible" id="reproductible" onclick="javascript:showdiv('reproduction');" value="1" /> {L_YES}</label>
+						&nbsp;&nbsp;
+						<label><input type="radio" {edit.REPRODUCTIBLE_DISABLED} name="reproductible" onclick="javascript:hidediv('reproduction');" value="0" /> {L_NO}</label>
+					</dd>
+				</dl>
+				<div id="reproduction" # IF NOT C_REPRODUCTIBLE #style="display:none;"# ENDIF #>
+					<label for="reproduction_method">{L_REPRODUCTION_METHOD}</label>
+					<div style="position:relative;display:none;" id="loading_previewreproduction_method">
 						<div style="margin:auto;margin-top:90px;width:100%;text-align:center;position:absolute;"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/loading.gif" alt="" /></div>
 					</div>
-					<div style="display:none;" class="xmlhttprequest_preview" id="xmlhttprequest_previewcontents"></div>
-					{CONTENTS_KERNEL_EDITOR}
-					<label><textarea rows="20" cols="86" id="contents" name="contents">{edit.CONTENTS}</textarea></label>
-					<div style="text-align:center;"><input type="button" value="{L_PREVIEW}" onclick="XMLHttpRequest_preview('contents');" class="submit" /></div>
+					<div style="display:none;" class="xmlhttprequest_preview" id="xmlhttprequest_previewreproduction_method"></div>
+					{METHOD_KERNEL_EDITOR}
+					<label><textarea rows="20" cols="86" id="reproduction_method" name="reproduction_method">{edit.REPRODUCTION_METHOD}</textarea></label>
+					<div style="text-align:center;"><input type="button" value="{L_PREVIEW}" onclick="XMLHttpRequest_preview('reproduction_method');" class="submit" /></div>
 					<br />
-					# IF C_DISPLAY_TYPES #
-					<dl>
-						<dt><label for="type"># IF C_TYPE_MANDATORY #* # ENDIF #{L_TYPE}</label></dt>
-						<dd><label>
-							<select id="type" name="type">				
-							# START edit.select_type #				
-								{edit.select_type.TYPE}				
-							# END edit.select_type #				
-							</select>
-						</label></dd>
-					</dl>
-					# ENDIF #
-					# IF C_DISPLAY_CATEGORIES #
-					<dl>
-						<dt><label for="category"># IF C_CATEGORY_MANDATORY #* # ENDIF #{L_CATEGORY}</label></dt>
-						<dd><label>
-							<select id="category" name="category">				
-							# START edit.select_category #				
-								{edit.select_category.CATEGORY}				
-							# END edit.select_category #				
-							</select>
-						</label></dd>
-					</dl>
-					# ENDIF #
-					# IF C_DISPLAY_ADVANCED #
-					# IF C_DISPLAY_SEVERITIES #
-					<dl>
-						<dt><label for="severity"># IF C_SEVERITY_MANDATORY #* # ENDIF #{L_SEVERITY}</label></dt>
-						<dd><label>
-							<select id="severity" name="severity">				
-							# START edit.select_severity #				
-								{edit.select_severity.SEVERITY}				
-							# END edit.select_severity #				
-							</select>
-						</label></dd>
-					</dl>
-					# ENDIF #
-					# IF C_DISPLAY_PRIORITIES #
-					<dl>
-						<dt><label for="priority"># IF C_PRIORITY_MANDATORY #* # ENDIF #{L_PRIORITY}</label></dt>
-						<dd><label>
-							<select id="priority" name="priority">				
-							# START edit.select_priority #				
-								{edit.select_priority.PRIORITY}				
-							# END edit.select_priority #				
-							</select>
-						</label></dd>
-					</dl>
-					# ENDIF #
-					# ENDIF #
-					# IF C_DISPLAY_VERSIONS_DETECTED_IN #
-					<dl>
-						<dt><label for="detected_in"># IF C_DETECTED_IN_MANDATORY #* # ENDIF #{L_DETECTED_IN}</label></dt>
-						<dd><label>
-							<select id="detected_in" name="detected_in">				
-							# START edit.select_detected_in #				
-								{edit.select_detected_in.VERSION}				
-							# END edit.select_detected_in #				
-							</select>
-						</label></dd>
-					</dl>
-					# ENDIF #
-					<dl>
-						<dt><label for="reproductible">{L_REPRODUCTIBLE}</label></dt>
-						<dd>
-							<label><input type="radio" {edit.REPRODUCTIBLE_ENABLED} name="reproductible" id="reproductible" onclick="javascript:showdiv('reproduction');" value="1" /> {L_YES}</label>
-							&nbsp;&nbsp;
-							<label><input type="radio" {edit.REPRODUCTIBLE_DISABLED} name="reproductible" onclick="javascript:hidediv('reproduction');" value="0" /> {L_NO}</label>
-						</dd>
-					</dl>
-					<div id="reproduction" # IF NOT C_REPRODUCTIBLE #style="display:none;"# ENDIF #>
-						<label for="reproduction_method">{L_REPRODUCTION_METHOD}</label>
-						<div style="position:relative;display:none;" id="loading_previewreproduction_method">
-							<div style="margin:auto;margin-top:90px;width:100%;text-align:center;position:absolute;"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/loading.gif" alt="" /></div>
-						</div>
-						<div style="display:none;" class="xmlhttprequest_preview" id="xmlhttprequest_previewreproduction_method"></div>
-						{METHOD_KERNEL_EDITOR}
-						<label><textarea rows="20" cols="86" id="reproduction_method" name="reproduction_method">{edit.REPRODUCTION_METHOD}</textarea></label>
-						<div style="text-align:center;"><input type="button" value="{L_PREVIEW}" onclick="XMLHttpRequest_preview('reproduction_method');" class="submit" /></div>
-						<br />
-					</div>
-					<br />
-				</fieldset>	
-				
-				<fieldset class="fieldset_submit">
-					<legend>{L_UPDATE}</legend>
-					<input type="hidden" name="id" value="{edit.ID}" class="submit" />
-					# IF C_BACK #<input type="hidden" name="back" value="{BACK}" class="submit" /># ENDIF #
-					<input type="submit" name="valid_edit" value="{L_UPDATE}" class="submit" />
-					&nbsp;
-					<input type="reset" value="{L_RESET}" class="reset" />				
-				</fieldset>	
-			</form>
+				</div>
+				<br />
+			</fieldset>	
+			
+			<fieldset class="fieldset_submit">
+				<legend>{L_UPDATE}</legend>
+				<input type="hidden" name="id" value="{edit.ID}" class="submit" />
+				# IF C_BACK #<input type="hidden" name="back" value="{BACK}" class="submit" /># ENDIF #
+				<input type="submit" name="valid_edit" value="{L_UPDATE}" class="submit" />
+				&nbsp;
+				<input type="reset" value="{L_RESET}" class="reset" />
+			</fieldset>
+		</form>
 		</div>
-		<div class="module_bottom_l"></div>
-		<div class="module_bottom_r"></div>
-		<div class="module_bottom">
-			<div style="float:left" class="text_small"></div>
-			<div style="float:right" class="text_small"></div>
-		</div>
-	</div>
 # END edit #
 
 # START view #
 	<div class="module_position">
-		<div class="module_top_l"></div>		
+		<div class="module_top_l"></div>
 		<div class="module_top_r"></div>
 		<div class="module_top">
 			<div class="module_top_title">{L_VIEW_BUG} \#{view.ID}</div>
@@ -1073,27 +1040,27 @@
 					{U_COM}
 				# ENDIF #
 				# IF C_REOPEN_BUG #
-					<a href="bugtracker.php?reopen&amp;id={view.ID}&amp;back=view">
+					<a href="{U_BUG_REOPEN}">
 						<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/visible.png" alt="{L_REOPEN}" title="{L_REOPEN}" />
 					</a>
 				# ENDIF #
 				# IF C_REJECT_BUG #
-					<a href="bugtracker.php?reject&amp;id={view.ID}&amp;back=view">
+					<a href="{U_BUG_REJECT}">
 						<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/unvisible.png" alt="{L_REJECT}" title="{L_REJECT}" />
 					</a>
 				# ENDIF #
 				# IF C_EDIT_BUG #
-					<a href="bugtracker.php?edit&amp;id={view.ID}&amp;back=view">
+					<a href="{U_BUG_EDIT}">
 						<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="{L_UPDATE}" title="{L_UPDATE}" />
 					</a>
 				# ENDIF #
 				# IF C_HISTORY_BUG #
-					<a href="bugtracker.php?history&amp;id={view.ID}">
+					<a href="{U_BUG_HISTORY}">
 						<img src="{PATH_TO_ROOT}/bugtracker/templates/images/history.png" alt="{L_HISTORY}" title="{L_HISTORY}" />
 					</a>
 				# ENDIF #
 				# IF C_DELETE_BUG #
-					<a href="admin_bugtracker.php?delete&amp;id={view.ID}&amp;token={TOKEN}" onclick="javascript:return Confirm();">
+					<a href="{U_BUG_DELETE}" onclick="javascript:return Confirm();">
 						<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" />
 					</a>
 				# ENDIF #
@@ -1193,7 +1160,7 @@
 
 # START history #
 	<div class="module_position">
-		<div class="module_top_l"></div>		
+		<div class="module_top_l"></div>
 		<div class="module_top_r"></div>
 		<div class="module_top">
 			<div class="module_top_title">

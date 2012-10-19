@@ -86,7 +86,7 @@ $LANG['bugs.titles.add_priority'] = 'Ajout d\'une nouvelle priorité';
 $LANG['bugs.titles.add_severity'] = 'Ajout d\'un nouveau niveau';
 $LANG['bugs.titles.edit_bug'] = 'Edition du bug';
 $LANG['bugs.titles.history_bug'] = 'Historique du bug';
-$LANG['bugs.titles.view_bug'] = 'Affichage du bug';
+$LANG['bugs.titles.view_bug'] = 'Bug';
 $LANG['bugs.titles.roadmap'] = 'Feuille de route';
 $LANG['bugs.titles.bugs_infos'] = 'Informations sur le bug';
 $LANG['bugs.titles.bugs_stats'] = 'Statistiques';
@@ -170,14 +170,6 @@ $LANG['bugs.explain.version'] = 'Liste des versions du produit.';
 $LANG['bugs.explain.remarks'] = 'Remarques : <br />
 - Si la liste est vide, cette option ne sera pas visible lors de la signalisation d\'un bug<br />
 - Si la liste ne contient qu\'une seule valeur, cette option ne sera pas non plus visible et sera attribuée par défaut au bug<br /><br />';
-$LANG['bugs.explain.default_content'] = 'Merci de nous donner les informations demandées ci-dessous, elles nous seront utiles pour la résolution du bug :
-Système d\'exploitation :
-Navigateur Web :
-Version de test (Site de test, archive zip) :
-Installation locale ou sur un serveur web ? :
-Lien :
-----------------------------------------------------------------------
-';
 $LANG['bugs.explain.contents_value'] = 'Entrez ci-dessous la description par défaut à afficher lors de l\'ouverture d\'un nouveau bug. Laissez vide pour que la description ne soit pas pré-remplie.';
 
 //MP

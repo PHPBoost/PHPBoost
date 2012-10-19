@@ -26,10 +26,10 @@
  ###################################################*/
 
 class BugtrackerCommentsTopicEvents extends CommentsTopicEvents
-{	
+{
 	public function execute_add_comment_event()
 	{
-		global $LANG;
+		$lang = LangLoader::get('bugtracker_common', 'bugtracker');
 		$sql_querier = PersistenceContext::get_querier();
 		$current_user = AppContext::get_current_user();
 		$now = new Date(DATE_NOW, TIMEZONE_AUTO);
@@ -66,7 +66,7 @@ class BugtrackerCommentsTopicEvents extends CommentsTopicEvents
 			'bug_id' => $bug_id, 
 			'updater_id' => $current_user->get_id(),
 			'update_date' => $now->get_timestamp(),
-			'change_comment' => $LANG['bugs.notice.new_comment'],
+			'change_comment' => $lang['bugs.notice.new_comment'],
 		));
 		
 		// Envoi d'un MP à chaque utilisateur qui a contribué au bug lorsqu'un commentaire est posté
@@ -78,8 +78,8 @@ class BugtrackerCommentsTopicEvents extends CommentsTopicEvents
 				$Privatemsg = new PrivateMsg();
 				$Privatemsg->start_conversation(
 					$updater_id, 
-					sprintf($LANG['bugs.pm.comment.title'], $LANG['bugs.module_title'], $bug_id, $current_user->get_login()), 
-					sprintf($LANG['bugs.pm.comment.contents'], $current_user->get_login(), $bug_id, $comment, '[url]' . HOST . DIR . '/bugtracker/bugtracker.php?view&id=' . $bug_id . '&com=0#comments_list[/url]'), 
+					sprintf($lang['bugs.pm.comment.title'], $lang['bugs.module_title'], $bug_id, $current_user->get_login()), 
+					sprintf($lang['bugs.pm.comment.contents'], $current_user->get_login(), $bug_id, $comment, '[url]' . HOST . DIR . '/bugtracker/bugtracker.php?view&id=' . $bug_id . '&com=0#comments_list[/url]'), 
 					'-1', 
 					PrivateMsg::SYSTEM_PM
 				);

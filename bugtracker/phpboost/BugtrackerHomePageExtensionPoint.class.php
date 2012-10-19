@@ -29,9 +29,9 @@ class BugtrackerHomePageExtensionPoint implements HomePageExtensionPoint
 {
 	private $sql_querier;
 
-    public function __construct()
-    {
-        $this->sql_querier = PersistenceContext::get_sql();
+	public function __construct()
+	{
+		$this->sql_querier = PersistenceContext::get_sql();
 	}
 	
 	public function get_home_page()
@@ -75,7 +75,7 @@ class BugtrackerHomePageExtensionPoint implements HomePageExtensionPoint
 		require_once(PATH_TO_ROOT . '/bugtracker/bugtracker_begin.php');
 
 		$tpl = new FileTemplate('bugtracker/bugtracker.tpl');
-        
+		
 		//checking authorization
 		if (!$User->check_auth($authorizations, BugtrackerConfig::BUG_READ_AUTH_BIT))
 		{
@@ -167,6 +167,11 @@ class BugtrackerHomePageExtensionPoint implements HomePageExtensionPoint
 			'L_UNSOLVED' 			=> $LANG['bugs.titles.unsolved_bugs'],
 			'L_SOLVED' 				=> $LANG['bugs.titles.solved_bugs'],
 			'L_STATS' 				=> $LANG['bugs.titles.bugs_stats'],
+			'U_BUG_LIST'			=> PATH_TO_ROOT . '/bugtracker/bugtracker.php',
+			'U_BUG_SOLVED'			=> PATH_TO_ROOT . '/bugtracker/bugtracker.php?solved',
+			'U_BUG_ROADMAP'			=> PATH_TO_ROOT . '/bugtracker/bugtracker.php?roadmap',
+			'U_BUG_STATS'			=> PATH_TO_ROOT . '/bugtracker/bugtracker.php?stats',
+			'U_BUG_ADD'				=> PATH_TO_ROOT . '/bugtracker/bugtracker.php?add',
 			'U_BUG_ID_TOP' 			=> PATH_TO_ROOT . '/bugtracker/bugtracker' . url('.php?sort=id&amp;mode=desc'),
 			'U_BUG_ID_BOTTOM' 		=> PATH_TO_ROOT . '/bugtracker/bugtracker' . url('.php?sort=id&amp;mode=asc'),
 			'U_BUG_TITLE_TOP' 		=> PATH_TO_ROOT . '/bugtracker/bugtracker' . url('.php?sort=title&amp;mode=desc'),
@@ -212,13 +217,17 @@ class BugtrackerHomePageExtensionPoint implements HomePageExtensionPoint
 				'ID'			=> $row['id'],
 				'U_BUG_VIEW'	=> PATH_TO_ROOT .'/bugtracker/bugtracker' . url('.php?view&amp;id=' . $row['id'], '-' . $row['id'] . '+' . Url::encode_rewrite($row['title']) . '.php'),
 				'TITLE'			=> ($cat_in_title_activated == true && $display_categories) ? '[' . $categories[$row['category']] . '] ' . $row['title'] : $row['title'],
-				'TYPE'			=> !empty($row['type']) ? stripslashes($types[$row['type']]) : $LANG['bugs.notice.none'],
-				'SEVERITY'		=> !empty($row['severity']) ? stripslashes($severities[$row['severity']]['name']) : $LANG['bugs.notice.none'],
+				'TYPE'			=> (!empty($row['type']) && isset($types[$row['type']])) ? stripslashes($types[$row['type']]) : $LANG['bugs.notice.none'],
+				'SEVERITY'		=> (!empty($row['severity']) && isset($severities[$row['severity']])) ? stripslashes($severities[$row['severity']]['name']) : $LANG['bugs.notice.none'],
 				'STATUS'		=> $LANG['bugs.status.' . $row['status']],
 				'LINE_COLOR' 	=> $line_color,
-				'SEVERITY_COLOR'=> !empty($row['severity']) ? 'style="background-color:#' . stripslashes($severities[$row['severity']]['color']) . ';"' : '',
+				'SEVERITY_COLOR'=> (!empty($row['severity']) && isset($severities[$row['severity']])) ? 'style="background-color:#' . stripslashes($severities[$row['severity']]['color']) . ';"' : '',
 				'COMMENTS'		=> '<a href="' . PATH_TO_ROOT .'/bugtracker/bugtracker' . url('.php?view&id=' . $row['id'] . '&com=0#comments_list') . '">' . (empty($nbr_coms) ? 0 : $nbr_coms) . '</a>',
-				'DATE' 			=> gmdate_format($bugtracker_config->get_date_format(), $row['submit_date'])
+				'DATE' 			=> gmdate_format($bugtracker_config->get_date_format(), $row['submit_date']),
+				'U_BUG_REJECT'	=> PATH_TO_ROOT . '/bugtracker/bugtracker' . url('.php?reject&amp;id=' . $row['id']),
+				'U_BUG_EDIT'	=> PATH_TO_ROOT . '/bugtracker/bugtracker' . url('.php?edit&amp;id=' . $row['id']),
+				'U_BUG_HISTORY'	=> PATH_TO_ROOT . '/bugtracker/bugtracker' . url('.php?history&amp;id=' . $row['id']),
+				'U_BUG_DELETE'	=> PATH_TO_ROOT . '/bugtracker/bugtracker' . url('.php?delete&amp;id=' . $row['id'] . '&amp;token=' . $Session->get_token())
 			));
 		}
 		$this->sql_querier->query_close($result);
