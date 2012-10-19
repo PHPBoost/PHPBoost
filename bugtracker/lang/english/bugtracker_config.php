@@ -57,7 +57,7 @@ $lang['bugtracker.config.priorities.urgent'] = 'Urgent';
 $lang['bugtracker.config.contents_value'] = 'Please fill the informations below, they will be useful to treat the bug<br />
 Operating system :<br />
 Web navigator :<br />
-Test version (test site, zip archive) :<br />
+Product version :<br />
 Local installation or on a web server ? :<br />
 Link :<br />
 ----------------------------------------------------------------------<br />

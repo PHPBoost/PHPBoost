@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                           index.php
+ *                          BugtrackerUrlBuilder.class.php
  *                            -------------------
  *   begin                : January 30, 2012
  *   copyright            : (C) 2012 Julien BRISWALTER
@@ -25,13 +25,36 @@
  *
  ###################################################*/
 
-define('PATH_TO_ROOT', '..');
+/**
+ * @author Julien BRISWALTER <julien.briswalter@gmail.com>
+ * @desc
+ */
+class BugtrackerUrlBuilder
+{
+    private static $dispatcher = '/bugtracker';
+    
+	/**
+	 * @return Url
+	 */
+    public static function configuration()
+	{
+		return DispatchManager::get_url(self::$dispatcher, '/admin/config/');
+	}
+	
+	/**
+	 * @return Url
+	 */
+    public static function authorizations()
+	{
+		return DispatchManager::get_url(self::$dispatcher, '/admin/authorizations/');
+	}
 
-require_once PATH_TO_ROOT . '/kernel/init.php';
-
-$url_controller_mappers = array(
-	new UrlControllerMapper('AdminBugtrackerConfigController', '`^/admin(?:/config)?/?$`'),
-	new UrlControllerMapper('AdminBugtrackerAuthorizationsController', '`^/admin/authorizations/?$`'),
-);
-DispatchManager::dispatch($url_controller_mappers);
+	/**
+	 * @return Url
+	 */
+    public static function home($page = '')
+	{
+		return DispatchManager::get_url(self::$dispatcher, '/' . $page);
+	}
+}
 ?>

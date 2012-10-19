@@ -196,7 +196,7 @@ else if (isset($_GET['add'])) // ajout d'un bug
 		'REPRODUCTION_METHOD' 		=> '',
 		'CONTENTS_KERNEL_EDITOR'	=> $contents_editor->display(),
 		'METHOD_KERNEL_EDITOR' 		=> $reproduction_method_editor->display(),
-		'TOKEN'						=> $Session->get_token()
+		'U_FORM'					=> PATH_TO_ROOT . '/bugtracker/bugtracker' . url('.php?token=' . $Session->get_token())
 	));
 	
 	$Template->assign_block_vars('add', array());
@@ -825,6 +825,7 @@ else if (isset($_GET['edit']) && is_numeric($id)) // edition d'un bug
 		'BACK'								=> $back,
 		'CONTENTS_KERNEL_EDITOR'			=> $contents_editor->display(),
 		'METHOD_KERNEL_EDITOR' 				=> $reproduction_method_editor->display(),
+		'U_FORM'							=> PATH_TO_ROOT . '/bugtracker/bugtracker' . url('.php?token=' . $Session->get_token()),
 		'TOKEN'								=> $Session->get_token()
 	));
 	
@@ -1179,17 +1180,22 @@ else if (isset($_GET['view']) && is_numeric($id)) // Visualisation d'une fiche B
 		'TITLE' 				=> ($cat_in_title_activated == true && $display_categories) ? '[' . $categories[$result['category']] . '] ' . $result['title'] : $result['title'],
 		'CONTENTS' 				=> FormatingHelper::second_parse($result['contents']),
 		'STATUS' 				=> $LANG['bugs.status.' . $result['status']],
-		'TYPE'					=> !empty($result['type']) ? stripslashes($types[$result['type']]) : $LANG['bugs.notice.none'],
-		'CATEGORY'				=> !empty($result['category']) ? stripslashes($categories[$result['category']]) : $LANG['bugs.notice.none_e'],
-		'PRIORITY' 				=> !empty($result['priority']) ? stripslashes($priorities[$result['priority']]) : $LANG['bugs.notice.none_e'],
-		'SEVERITY' 				=> !empty($result['severity']) ? stripslashes($severities[$result['severity']]['name']) : $LANG['bugs.notice.none'],
+		'TYPE'					=> (!empty($result['type']) && isset($types[$result['type']])) ? stripslashes($types[$result['type']]) : $LANG['bugs.notice.none'],
+		'CATEGORY'				=> (!empty($result['category']) && isset($categories[$result['category']])) ? stripslashes($categories[$result['category']]) : $LANG['bugs.notice.none_e'],
+		'PRIORITY' 				=> (!empty($result['priority']) && isset($priorities[$result['priority']])) ? stripslashes($priorities[$result['priority']]) : $LANG['bugs.notice.none_e'],
+		'SEVERITY' 				=> (!empty($result['severity']) && isset($severities[$result['severity']])) ? stripslashes($severities[$result['severity']]['name']) : $LANG['bugs.notice.none'],
 		'REPRODUCTIBLE'			=> ($result['reproductible'] == true) ? $LANG['yes'] : $LANG['no'],
 		'REPRODUCTION_METHOD'	=> FormatingHelper::second_parse($result['reproduction_method']),
-		'DETECTED_IN' 			=> !empty($result['detected_in']) ? stripslashes($versions[$result['detected_in']]['name']) : $LANG['bugs.notice.not_defined'],
-		'FIXED_IN' 				=> !empty($result['fixed_in']) ? stripslashes($versions[$result['fixed_in']]['name']) : $LANG['bugs.notice.not_defined'],
+		'DETECTED_IN' 			=> (!empty($result['detected_in']) && isset($versions[$result['detected_in']])) ? stripslashes($versions[$result['detected_in']]['name']) : $LANG['bugs.notice.not_defined'],
+		'FIXED_IN' 				=> (!empty($result['fixed_in']) && isset($versions[$result['fixed_in']])) ? stripslashes($versions[$result['fixed_in']]['name']) : $LANG['bugs.notice.not_defined'],
 		'USER_ASSIGNED'			=> $user_assigned,
 		'AUTHOR' 				=> !empty($result['login']) ? '<a href="' . UserUrlBuilder::profile($result['user_id'])->absolute() . '" class="' . UserService::get_level_class($result['level']) . '">' . $result['login'] . '</a>': $LANG['guest'],
-		'SUBMIT_DATE'			=> gmdate_format($date_format, $result['submit_date'])
+		'SUBMIT_DATE'			=> gmdate_format($date_format, $result['submit_date']),
+		'U_BUG_REJECT'			=> PATH_TO_ROOT . '/bugtracker/bugtracker' . url('.php?reject&amp;id=' . $row['id'] . '&amp;back=view'),
+		'U_BUG_REOPEN'			=> PATH_TO_ROOT . '/bugtracker/bugtracker' . url('.php?reopen&amp;id=' . $row['id'] . '&amp;back=view'),
+		'U_BUG_EDIT'			=> PATH_TO_ROOT . '/bugtracker/bugtracker' . url('.php?edit&amp;id=' . $row['id'] . '&amp;back=view'),
+		'U_BUG_HISTORY'			=> PATH_TO_ROOT . '/bugtracker/bugtracker' . url('.php?history&amp;id=' . $row['id'] . '&amp;back=view'),
+		'U_BUG_DELETE'			=> PATH_TO_ROOT . '/bugtracker/bugtracker' . url('.php?delete&amp;id=' . $row['id'] . '&amp;back=view&amp;token=' . $Session->get_token())
 	));
 	
 	//Affichage des commentaires
@@ -1301,6 +1307,11 @@ else if (isset($_GET['solved'])) // liste des bugs corrigés
 		'L_UNSOLVED' 			=> $LANG['bugs.titles.unsolved_bugs'],
 		'L_SOLVED' 				=> $LANG['bugs.titles.solved_bugs'],
 		'L_STATS' 				=> $LANG['bugs.titles.bugs_stats'],
+		'U_BUG_LIST'			=> PATH_TO_ROOT . '/bugtracker/bugtracker.php',
+		'U_BUG_SOLVED'			=> PATH_TO_ROOT . '/bugtracker/bugtracker.php?solved',
+		'U_BUG_ROADMAP'			=> PATH_TO_ROOT . '/bugtracker/bugtracker.php?roadmap',
+		'U_BUG_STATS'			=> PATH_TO_ROOT . '/bugtracker/bugtracker.php?stats',
+		'U_BUG_ADD'				=> PATH_TO_ROOT . '/bugtracker/bugtracker.php?add',
 		'U_BUG_ID_TOP' 			=> PATH_TO_ROOT . '/bugtracker/bugtracker' . url('.php?solved&amp;sort=id&amp;mode=desc'),
 		'U_BUG_ID_BOTTOM' 		=> PATH_TO_ROOT . '/bugtracker/bugtracker' . url('.php?solved&amp;sort=id&amp;mode=asc'),
 		'U_BUG_TITLE_TOP' 		=> PATH_TO_ROOT . '/bugtracker/bugtracker' . url('.php?solved&amp;sort=title&amp;mode=desc'),
@@ -1346,12 +1357,16 @@ else if (isset($_GET['solved'])) // liste des bugs corrigés
 			'ID'			=> $row['id'],
 			'U_BUG_VIEW'	=> PATH_TO_ROOT .'/bugtracker/bugtracker' . url('.php?view&amp;id=' . $row['id'], '-' . $row['id'] . '+' . Url::encode_rewrite($row['title']) . '.php'),
 			'TITLE'			=> ($cat_in_title_activated == true && $display_categories) ? '[' . $categories[$row['category']] . '] ' . $row['title'] : $row['title'],
-			'TYPE'			=> !empty($row['type']) ? stripslashes($types[$row['type']]) : $LANG['bugs.notice.none'],
-			'SEVERITY'		=> !empty($row['severity']) ? stripslashes($severities[$row['severity']]['name']) : $LANG['bugs.notice.none'],
+			'TYPE'			=> (!empty($row['type']) && isset($types[$row['type']])) ? stripslashes($types[$row['type']]) : $LANG['bugs.notice.none'],
+			'SEVERITY'		=> (!empty($row['severity']) && isset($severities[$row['severity']])) ? stripslashes($severities[$row['severity']]['name']) : $LANG['bugs.notice.none'],
 			'STATUS'		=> $LANG['bugs.status.' . $row['status']],
 			'LINE_COLOR'	=> $line_color,
 			'COMMENTS'		=> '<a href="' . PATH_TO_ROOT . '/bugtracker/bugtracker' . url('.php?view&id=' . $row['id'] . '&com=0#comments_list') . '">' . (empty($nbr_coms) ? 0 : $nbr_coms) . '</a>',
-			'DATE' 			=> gmdate_format($date_format, $row['submit_date'])
+			'DATE' 			=> gmdate_format($date_format, $row['submit_date']),
+			'U_BUG_REOPEN'	=> PATH_TO_ROOT . '/bugtracker/bugtracker' . url('.php?reopen&amp;id=' . $row['id'] . '&amp;back=solved'),
+			'U_BUG_EDIT'	=> PATH_TO_ROOT . '/bugtracker/bugtracker' . url('.php?edit&amp;id=' . $row['id'] . '&amp;back=solved'),
+			'U_BUG_HISTORY'	=> PATH_TO_ROOT . '/bugtracker/bugtracker' . url('.php?history&amp;id=' . $row['id'] . '&amp;back=solved'),
+			'U_BUG_DELETE'	=> PATH_TO_ROOT . '/bugtracker/bugtracker' . url('.php?delete&amp;id=' . $row['id'] . '&amp;back=solved&amp;token=' . $Session->get_token())
 		));
 
 	}
@@ -1419,7 +1434,12 @@ else if (isset($_GET['stats'])) // Statistiques
 		'L_NO_BUG' 				=> $LANG['bugs.notice.no_bug'],
 		'L_NO_BUG_SOLVED' 		=> $LANG['bugs.notice.no_bug_solved'],
 		'L_TOP_TEN_POSTERS'		=> $LANG['bugs.labels.top_10_posters'],
-		'L_PSEUDO'				=> $LANG['pseudo']
+		'L_PSEUDO'				=> $LANG['pseudo'],
+		'U_BUG_LIST'			=> PATH_TO_ROOT . '/bugtracker/bugtracker.php',
+		'U_BUG_SOLVED'			=> PATH_TO_ROOT . '/bugtracker/bugtracker.php?solved',
+		'U_BUG_ROADMAP'			=> PATH_TO_ROOT . '/bugtracker/bugtracker.php?roadmap',
+		'U_BUG_STATS'			=> PATH_TO_ROOT . '/bugtracker/bugtracker.php?stats',
+		'U_BUG_ADD'				=> PATH_TO_ROOT . '/bugtracker/bugtracker.php?add'
 	));
 	
 	$Template->assign_block_vars('stats', array());
@@ -1447,7 +1467,7 @@ else if (isset($_GET['stats'])) // Statistiques
 		", __LINE__, __FILE__);
 		while ($row = $Sql->fetch_assoc($result))
 		{
-			if (!empty($row['fixed_in']))
+			if (!empty($row['fixed_in']) && isset($versions[$row['fixed_in']]))
 				$Template->assign_block_vars('stats.fixed_version', array(
 					'NAME'		=> stripslashes($versions[$row['fixed_in']]['name']),
 					'NUMBER'	=> $row['nb_bugs']
@@ -1579,6 +1599,12 @@ else if (isset($_GET['roadmap'])) // roadmap
 		'L_SOLVED' 				=> $LANG['bugs.titles.solved_bugs'],
 		'L_STATS' 				=> $LANG['bugs.titles.bugs_stats'],
 		'L_SUBMIT' 				=> $LANG['submit'],
+		'U_BUG_LIST'			=> PATH_TO_ROOT . '/bugtracker/bugtracker.php',
+		'U_BUG_SOLVED'			=> PATH_TO_ROOT . '/bugtracker/bugtracker.php?solved',
+		'U_BUG_ROADMAP'			=> PATH_TO_ROOT . '/bugtracker/bugtracker.php?roadmap',
+		'U_BUG_STATS'			=> PATH_TO_ROOT . '/bugtracker/bugtracker.php?stats',
+		'U_BUG_ADD'				=> PATH_TO_ROOT . '/bugtracker/bugtracker.php?add',
+		'U_FORM'				=> PATH_TO_ROOT . '/bugtracker/bugtracker' . url('.php?roadmap&amp;token=' . $Session->get_token()),
 		'U_BUG_ID_TOP' 			=> PATH_TO_ROOT . '/bugtracker/bugtracker' . url('.php?roadmap' . (!empty($r_version) ? '&amp;roadmap_version=' . $r_version : '') . '&amp;sort=id&amp;mode=desc'),
 		'U_BUG_ID_BOTTOM' 		=> PATH_TO_ROOT . '/bugtracker/bugtracker' . url('.php?roadmap' . (!empty($r_version) ? '&amp;roadmap_version=' . $r_version : '') . '&amp;sort=id&amp;mode=asc'),
 		'U_BUG_TITLE_TOP' 		=> PATH_TO_ROOT . '/bugtracker/bugtracker' . url('.php?roadmap' . (!empty($r_version) ? '&amp;roadmap_version=' . $r_version : '') . '&amp;sort=title&amp;mode=desc'),
@@ -1630,12 +1656,13 @@ else if (isset($_GET['roadmap'])) // roadmap
 			'ID'			=> $row['id'],
 			'U_BUG_VIEW'	=> PATH_TO_ROOT .'/bugtracker/bugtracker' . url('.php?view&amp;id=' . $row['id'], '-' . $row['id'] . '+' . Url::encode_rewrite($row['title']) . '.php'),
 			'TITLE'			=> ($cat_in_title_activated == true && $display_categories) ? '[' . $categories[$row['category']] . '] ' . $row['title'] : $row['title'],
-			'TYPE'			=> !empty($row['type']) ? stripslashes($types[$row['type']]) : $LANG['bugs.notice.none'],
-			'SEVERITY'		=> !empty($row['severity']) ? stripslashes($severities[$row['severity']]['name']) : $LANG['bugs.notice.none'],
+			'TYPE'			=> (!empty($row['type']) && isset($types[$row['type']])) ? stripslashes($types[$row['type']]) : $LANG['bugs.notice.none'],
+			'SEVERITY'		=> (!empty($row['severity']) && isset($severities[$row['severity']])) ? stripslashes($severities[$row['severity']]['name']) : $LANG['bugs.notice.none'],
 			'STATUS'		=> $LANG['bugs.status.' . $row['status']],
 			'LINE_COLOR'	=> $line_color,
 			'COMMENTS'		=> '<a href="' . PATH_TO_ROOT . '/bugtracker/bugtracker' . url('.php?view&id=' . $row['id'] . '&com=0#comments_list') . '">' . (empty($nbr_coms) ? 0 : $nbr_coms) . '</a>',
-			'DATE' 			=> gmdate_format($date_format, $row['submit_date'])
+			'DATE' 			=> gmdate_format($date_format, $row['submit_date']),
+			'U_BUG_HISTORY'	=> PATH_TO_ROOT . '/bugtracker/bugtracker' . url('.php?history&amp;id=' . $row['id'] . '&amp;back=roadmap')
 		));
 	}
 	$Sql->query_close($result);

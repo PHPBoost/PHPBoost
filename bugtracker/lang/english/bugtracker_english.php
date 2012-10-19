@@ -86,7 +86,7 @@ $LANG['bugs.titles.add_priority'] = 'Add a new priority';
 $LANG['bugs.titles.add_severity'] = 'Add a new severity';
 $LANG['bugs.titles.edit_bug'] = 'Bug edition';
 $LANG['bugs.titles.history_bug'] = 'Bug history';
-$LANG['bugs.titles.view_bug'] = 'Bug view';
+$LANG['bugs.titles.view_bug'] = 'Bug';
 $LANG['bugs.titles.roadmap'] = 'Roadmap';
 $LANG['bugs.titles.bugs_infos'] = 'Bug\'s informations';
 $LANG['bugs.titles.bugs_stats'] = 'Statistics';
@@ -155,7 +155,7 @@ $LANG['bugs.status.rejected'] = 'Rejected';
 
 //Explainations
 $LANG['bugs.explain.roadmap'] = 'Displays the fixed bug list for each version';
-$LANG['bugs.explain.pm'] = 'A PM wiil be send in the following situations :<br />
+$LANG['bugs.explain.pm'] = 'A PM will be send in the following situations :<br />
 - New bug comment<br />
 - Bug edition<br />
 - A bug is deleted<br />

@@ -82,7 +82,6 @@ class BugtrackerSetup extends DefaultModuleSetup
 			'detected_in' => array('type' => 'integer', 'length' => 11, 'default' => 0),
 			'fixed_in' => array('type' => 'integer', 'length' => 11, 'default' => 0),
 			'progess' => array('type' => 'integer', 'length' => 11, 'default' => 0),
-			'estimated_fix_duration' => array('type' => 'integer', 'length' => 11, 'default' => 0),
 			'assigned_to_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0)
 		);
 		$options = array(
