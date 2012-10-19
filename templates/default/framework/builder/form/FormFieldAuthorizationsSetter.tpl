@@ -5,7 +5,7 @@
 		<label>
 			{actions.LABEL}
 		</label>
-		# IF C_DESCRIPTION #
+		# IF actions.DESCRIPTION #
 		<br />
 		<span class="text_small">{actions.DESCRIPTION}</span>
 		# ENDIF #
