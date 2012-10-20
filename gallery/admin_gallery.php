@@ -89,6 +89,7 @@ else
 		$clause_cat = " WHERE level = '0'";
 		$CAT_GALLERY[0]['name'] = $LANG['root'];
 		$CAT_GALLERY[0]['level'] = -1;
+		$CAT_GALLERY[0]['aprob'] = 1;
 	}
 
 	$nbr_pics = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "gallery WHERE idcat = '" . $idcat . "'", __LINE__, __FILE__);
