@@ -56,7 +56,9 @@ class HtaccessFileCache implements CacheData
 			$this->add_robots_protection();
 		}
 
-		$this->add_404_error_redirection();
+		$this->add_error_redirection();
+		
+		$this->add_hide_directory_listings();
 
 		$this->add_manual_content();
 
@@ -155,7 +157,7 @@ class HtaccessFileCache implements CacheData
 			$this->add_section('Bandwith protection');
 			$this->add_line('RewriteCond %{HTTP_REFERER} !^$');
 			$this->add_line('RewriteCond %{HTTP_REFERER} !^' . $this->general_config->get_site_url());
-			$this->add_line('ReWriteRule .*upload/.*$ - [F]');
+			$this->add_line('RewriteRule .*upload/.*$ - [F]');
 		}
 	}
 
@@ -167,12 +169,20 @@ class HtaccessFileCache implements CacheData
 		$this->add_line('RewriteRule .* - [F,L]');
 	}
 
-	private function add_404_error_redirection()
+	private function add_error_redirection()
 	{
 		//Error page
 		$this->add_empty_line();
-		$this->add_line('# Error page #');
+		$this->add_line('# Error pages #');
+		$this->add_line('ErrorDocument 403 ' . $this->general_config->get_site_path() . UserUrlBuilder::error_403()->relative());
 		$this->add_line('ErrorDocument 404 ' . $this->general_config->get_site_path() . UserUrlBuilder::error_404()->relative());
+	}
+	
+	private function add_hide_directory_listings()
+	{
+		$this->add_empty_line();
+		$this->add_line('# Hide directory listings #');
+		$this->add_line('Options -Indexes');
 	}
 
 	private function add_manual_content()
