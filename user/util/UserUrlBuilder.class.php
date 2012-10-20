@@ -119,6 +119,11 @@ class UserUrlBuilder
 		return DispatchManager::get_url(self::$dispatcher, '');
 	}
 	
+	public static function error_403()
+	{
+		return DispatchManager::get_url(self::$dispatcher, '/error/403/');
+	}
+	
 	public static function error_404()
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/error/404/');

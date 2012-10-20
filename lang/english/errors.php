@@ -44,6 +44,7 @@ $LANG['e_readonly'] = 'You can\'t perform this action because you have been set 
 $LANG['e_unexist_cat'] = 'This category doesn\'t exist !';
 $LANG['e_unexist_file'] = 'This file doesn\'t exist !';
 $LANG['e_unexist_page'] = 'This page doesn\'t exist !';
+$LANG['e_forbidden'] = 'This folder access is forbidden !';
 $LANG['e_mail_format'] = 'Invalid e-mail address !';
 $LANG['e_unexist_member'] = 'This login doesn\'t exist !';
 $LANG['e_unauthorized'] = 'You aren\'t authorized to post !';
