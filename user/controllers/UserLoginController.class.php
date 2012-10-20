@@ -147,6 +147,9 @@ class UserLoginController extends AbstractController
 			case 'unexisting':
 				$this->display_error_message($errors_lang['e_unexist_member']);				
 			break;
+			case 'not_authorized':
+				$this->display_error_message($errors_lang['e_auth']);				
+			break;
 		}
 	}
 	

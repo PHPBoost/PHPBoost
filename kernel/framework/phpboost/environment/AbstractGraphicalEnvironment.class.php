@@ -46,10 +46,17 @@ abstract class AbstractGraphicalEnvironment implements GraphicalEnvironment
 			$maintenance_config = MaintenanceConfig::load();
 			if (!$this->user->check_auth($maintenance_config->get_auth(), 1))
 			{
+				// Redirect if user not authorized the site for maintenance
+				if ($this->user->check_level(User::MEMBER_LEVEL))
+				{
+					AppContext::get_session()->end();
+					AppContext::get_response()->redirect(UserUrlBuilder::connect('not_authorized'));
+				}
+				
 				$maintain_url = UserUrlBuilder::maintain();
 				if (!Url::is_current_url($maintain_url->relative()))
 				{
-					AppContext::get_response()->redirect($maintain_url->absolute());
+					AppContext::get_response()->redirect($maintain_url);
 				}
 			}
 		}
