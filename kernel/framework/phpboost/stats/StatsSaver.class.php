@@ -315,7 +315,7 @@ class StatsSaver
 	 */
 	public static function retrieve_stats($file_path)
 	{
-		$file = @fopen(PATH_TO_ROOT . '/cache/' . $file_path . '.txt', 'r');
+		$file = @fopen(PATH_TO_ROOT . '/stats/cache/' . $file_path . '.txt', 'r');
 		$stats_array = @fgets($file);
 		$stats_array = !empty($stats_array) ? unserialize($stats_array) : array();
 		@fclose($file);
@@ -328,7 +328,7 @@ class StatsSaver
 	 */
 	private static function write_stats($file_path, $stats_item)
 	{
-		$file_path = PATH_TO_ROOT . '/cache/' . $file_path . '.txt';
+		$file_path = PATH_TO_ROOT . '/stats/cache/' . $file_path . '.txt';
 		if (!file_exists($file_path)) 
 		{
 			$file = @fopen($file_path, 'w+');
