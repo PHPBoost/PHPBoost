@@ -50,6 +50,7 @@ class AdminCacheController extends AbstractAdminFormPageController
 	protected function handle_submit()
 	{
 		AppContext::get_cache_service()->clear_cache();
+		HtaccessFileCache::regenerate();
 	}
 
 	protected function generate_response(View $view)
