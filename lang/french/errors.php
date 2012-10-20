@@ -44,6 +44,7 @@ $LANG['e_readonly'] = 'Vous ne pouvez exécuter cette action, car vous avez été p
 $LANG['e_unexist_cat'] = 'La catégorie que vous demandez n\'existe pas !';
 $LANG['e_unexist_file'] = 'Le fichier que vous avez demandé n\'existe pas !';
 $LANG['e_unexist_page'] = 'La page que vous demandez n\'existe pas !';
+$LANG['e_forbidden'] = 'L\'accès à ce dossier est interdit !';
 $LANG['e_mail_format'] = 'Mail invalide !';
 $LANG['e_unexist_member'] = 'Ce pseudo n\'existe pas !';
 $LANG['e_unauthorized'] = 'Vous n\'êtes pas autorisé à poster !';
