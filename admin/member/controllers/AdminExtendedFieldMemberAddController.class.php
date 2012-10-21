@@ -145,7 +145,7 @@ class AdminExtendedFieldMemberAddController extends AdminController
 		));
 
 		$auth_settings = new AuthorizationsSettings(array(new ActionAuthorization($this->lang['field.read_authorizations'], ExtendedField::READ_PROFILE_AUTHORIZATION), new ActionAuthorization($this->lang['field.actions_authorizations'], ExtendedField::READ_EDIT_AND_ADD_AUTHORIZATION)));
-		$auth_settings->build_from_auth_array(array('r1' => 3, 'r0' => 3, 'r-1' => 1));
+		$auth_settings->build_from_auth_array(array('r1' => 3, 'r0' => 3, 'r-1' => 3));
 		$auth_setter = new FormFieldAuthorizationsSetter('authorizations', $auth_settings);
 		$fieldset->add_field($auth_setter);
 
