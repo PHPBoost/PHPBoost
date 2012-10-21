@@ -155,6 +155,8 @@ class AdminMemberEditController extends AdminController
 		$user_id = $this->user->get_id();
 		$old_approbation = (int)$this->user->get_approbation();
 		
+		GroupsService::edit_member($user_id, $this->form->get_value('groups'));
+		
 		$this->user->set_pseudo($this->form->get_value('login'));
 		$this->user->set_level($this->form->get_value('rank')->get_raw_value());
 		$this->user->set_groups($this->form->get_value('groups'));
@@ -201,9 +203,7 @@ class AdminMemberEditController extends AdminController
 		} catch (MemberExtendedFieldErrorsMessageException $e) {
 			$this->tpl->put('MSG', MessageHelper::display($e->getMessage(), MessageHelper::NOTICE));
 		}
-		
-		GroupsService::edit_member($user_id, $this->form->get_value('groups'));
-						
+			
 		if ($this->form->get_value('delete_account'))
 		{
 			UserService::delete_account('WHERE user_id=:user_id', array('user_id' => $user_id));
