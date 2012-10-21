@@ -202,6 +202,9 @@ class SandboxFormController extends ModuleController
 		// DATE TIME
 		$fieldset2->add_field(new FormFieldDateTime('date_time', 'Heure', new Date()));
 
+		// COLOR PICKER
+		$fieldset2->add_field(new FormFieldColorPicker('color', 'Couleur', '#CC99FF'));
+		
 		// FILE PICKER
 		$fieldset2->add_field(new FormFieldFilePicker('file', 'Fichier'));
 		
