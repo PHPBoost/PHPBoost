@@ -42,6 +42,11 @@ class AdminNewsletterDeleteStreamController extends AdminModuleController
 			$parameters = array('stream_id' => $id);
 			PersistenceContext::get_querier()->delete(NewsletterSetup::$newsletter_table_subscribtions, $condition, $parameters);
 			
+			//Delete archives
+			$condition = "WHERE stream_id = :stream_id";
+			$parameters = array('stream_id' => $id);
+			PersistenceContext::get_querier()->delete(NewsletterSetup::$newsletter_table_archives, $condition, $parameters);
+			
 			NewsletterStreamsCache::invalidate();
 			
 			AppContext::get_response()->redirect(NewsletterUrlBuilder::streams());
