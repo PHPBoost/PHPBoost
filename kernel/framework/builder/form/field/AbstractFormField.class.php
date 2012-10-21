@@ -70,7 +70,8 @@ abstract class AbstractFormField implements FormField
 	/**
 	 * @var string
 	 */
-	protected $css_class = '';/**
+	protected $css_class = '';
+	/**
 	 * @var string
 	 */
 	protected $css_field_class = '';

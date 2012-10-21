@@ -70,5 +70,4 @@ class FormFieldDate extends AbstractFormField
         return new FileTemplate('framework/builder/form/FormFieldDate.tpl');
     }
 }
-
 ?>
