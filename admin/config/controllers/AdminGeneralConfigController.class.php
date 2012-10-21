@@ -88,7 +88,7 @@ class AdminGeneralConfigController extends AdminController
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldTextEditor('site_name', $this->lang['general-config.site_name'], $this->general_config->get_site_name(),
-			array('class' => 'text', 'maxlength' => 25, 'size' => 25, 'required' => true)
+			array('class' => 'text', 'required' => true)
 		));
 
 		$fieldset->add_field(new FormFieldShortMultiLineTextEditor('site_description', $this->lang['general-config.site_description'], $this->general_config->get_site_description(),
