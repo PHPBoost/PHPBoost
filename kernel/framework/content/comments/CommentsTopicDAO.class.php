@@ -48,7 +48,7 @@ class CommentsTopicDAO
 		return self::$db_querier->count(DB_TABLE_COMMENTS_TOPIC, "WHERE module_id = :module_id", $parameters) > 0 ? true : false;
 	}
 	
-	public static function get_id_topic_module($module_id, $id_in_module, $topic_identifier)
+	public static function get_id_topic_module($module_id, $id_in_module, $topic_identifier = CommentsTopic::DEFAULT_TOPIC_IDENTIFIER)
 	{
 		$condition = "WHERE id_in_module = :id_in_module AND module_id = :module_id AND topic_identifier=:topic_identifier";
 		$parameters = array(
@@ -95,7 +95,7 @@ class CommentsTopicDAO
 	{
 		$condition = "WHERE module_id = :module_id AND id_in_module = :id_in_module";
 		$parameters = array('module_id' => $module_id, 'id_in_module' => $id_in_module);
-		self::$db_querier->delete(DB_TABLE_COMMENTS_TOPIC, $condition, $parameters);
+		Debug::dump(self::$db_querier->delete(DB_TABLE_COMMENTS_TOPIC, $condition, $parameters));
 	}
 	
 	public static function incremente_number_comments_topic($id_topic)
