@@ -319,7 +319,7 @@ else if (isset($_GET['delete']) && is_numeric($id)) //Suppression du bug.
 	$updaters_ids = array($result['author_id']);
 	if (!empty($result['assigned_to_id']) && $result['author_id'] != $result['assigned_to_id'])
 		$updaters_ids[] = $result['assigned_to_id'];
-	print_r($updaters_ids );die();
+	
 	$result_uid = $Sql->query_while("SELECT updater_id
 	FROM " . PREFIX . "bugtracker_history
 	WHERE bug_id = '" . $id . "'
@@ -1191,11 +1191,11 @@ else if (isset($_GET['view']) && is_numeric($id)) // Visualisation d'une fiche B
 		'USER_ASSIGNED'			=> $user_assigned,
 		'AUTHOR' 				=> !empty($result['login']) ? '<a href="' . UserUrlBuilder::profile($result['user_id'])->absolute() . '" class="' . UserService::get_level_class($result['level']) . '">' . $result['login'] . '</a>': $LANG['guest'],
 		'SUBMIT_DATE'			=> gmdate_format($date_format, $result['submit_date']),
-		'U_BUG_REJECT'			=> PATH_TO_ROOT . '/bugtracker/bugtracker' . url('.php?reject&amp;id=' . $row['id'] . '&amp;back=view'),
-		'U_BUG_REOPEN'			=> PATH_TO_ROOT . '/bugtracker/bugtracker' . url('.php?reopen&amp;id=' . $row['id'] . '&amp;back=view'),
-		'U_BUG_EDIT'			=> PATH_TO_ROOT . '/bugtracker/bugtracker' . url('.php?edit&amp;id=' . $row['id'] . '&amp;back=view'),
-		'U_BUG_HISTORY'			=> PATH_TO_ROOT . '/bugtracker/bugtracker' . url('.php?history&amp;id=' . $row['id'] . '&amp;back=view'),
-		'U_BUG_DELETE'			=> PATH_TO_ROOT . '/bugtracker/bugtracker' . url('.php?delete&amp;id=' . $row['id'] . '&amp;back=view&amp;token=' . $Session->get_token())
+		'U_BUG_REJECT'			=> PATH_TO_ROOT . '/bugtracker/bugtracker' . url('.php?reject&amp;id=' . $id . '&amp;back=view'),
+		'U_BUG_REOPEN'			=> PATH_TO_ROOT . '/bugtracker/bugtracker' . url('.php?reopen&amp;id=' . $id . '&amp;back=view'),
+		'U_BUG_EDIT'			=> PATH_TO_ROOT . '/bugtracker/bugtracker' . url('.php?edit&amp;id=' . $id . '&amp;back=view'),
+		'U_BUG_HISTORY'			=> PATH_TO_ROOT . '/bugtracker/bugtracker' . url('.php?history&amp;id=' . $id . '&amp;back=view'),
+		'U_BUG_DELETE'			=> PATH_TO_ROOT . '/bugtracker/bugtracker' . url('.php?delete&amp;id=' . $id . '&amp;back=view&amp;token=' . $Session->get_token())
 	));
 	
 	//Affichage des commentaires
