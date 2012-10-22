@@ -47,7 +47,12 @@ class FormFieldColorPicker extends AbstractFormField
         $template->assign_block_vars('fieldelements', array(
 			'ELEMENT' => $this->get_html_code()->render()
         ));
-
+		
+		$template->put_all(array(
+			'C_HAS_FIELD_CLASS' => true,
+			'FIELD_CLASS' => 'overflow_visible'
+		));
+		
         return $template;
     }
 
