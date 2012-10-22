@@ -109,9 +109,9 @@ class UpdateDisplayResponse extends AbstractResponse
 			array('name' => $this->lang['step.list.execute'], 'img' => 'database.png'),
 			array('name' => $this->lang['step.list.end'], 'img' => 'end.png')
 		);
-		$this->nb_steps = count($steps);
+		$this->nb_steps = count($steps) - 1;
 
-		for ($i = 0; $i < $this->nb_steps; $i++)
+		for ($i = 0; $i < $this->nb_steps + 1; $i++)
 		{
 			if ($i < $this->current_step)
 			{
