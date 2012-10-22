@@ -42,7 +42,7 @@ class UpdateIntroductionController extends UpdateController
 	private function create_response(Template $view)
 	{
         $step_title = $this->lang['step.introduction.title'];
-		$response = new UpdateDisplayResponse(1, $step_title, $view);
+		$response = new UpdateDisplayResponse(0, $step_title, $view);
 		return $response;
 	}
 

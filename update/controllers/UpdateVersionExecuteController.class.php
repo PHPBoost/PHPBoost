@@ -55,7 +55,7 @@ class UpdateVersionExecuteController extends UpdateController
 	private function create_response(Template $view)
 	{
         $step_title = $this->lang['step.execute.title'];
-		$response = new UpdateDisplayResponse(4, $step_title, $view);
+		$response = new UpdateDisplayResponse(3, $step_title, $view);
 		return $response;
 	}
 
