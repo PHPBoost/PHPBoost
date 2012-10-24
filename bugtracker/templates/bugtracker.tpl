@@ -871,6 +871,7 @@
 		# INCLUDE message_helper #
 		
 		<form action="{U_FORM}" name="form" method="post" onsubmit="return check_form();" class="fieldset_content" id="form">
+			# IF C_IS_ADMIN #
 			<fieldset>
 			<legend>{L_BUG_TREATMENT}</legend>
 				# IF edit.C_IS_ASSIGNED #
@@ -911,14 +912,17 @@
 				# ENDIF #
 				# ENDIF #
 			</fieldset>
+			# ENDIF #
 			
 			<fieldset>
 			<legend>{L_BUG_INFOS}</legend>
 				<p>{L_REQUIRE}</p>
+				# IF C_IS_ADMIN #
 				<dl>
 					<dt><label for="author">{L_AUTHOR}</label></dt>
 					<dd><label>{edit.AUTHOR}</label></dd>
 				</dl>
+				# ENDIF #
 				<dl>
 					<dt><label for="title">* {L_TITLE}</label></dt>
 					<dd><label><input type="text" size="40" maxlength="200" id="title" name="title" value="{edit.TITLE}" class="text" /></label></dd>
