@@ -774,6 +774,7 @@ else if (isset($_GET['edit']) && is_numeric($id)) // edition d'un bug
 	$reproduction_method_editor->set_identifier('reproduction_method');
 	
 	$Template->assign_vars(array(
+		'C_IS_ADMIN'						=> $auth_moderate ? true : false,
 		'C_DISPLAY_TYPES' 					=> $display_types,
 		'C_DISPLAY_CATEGORIES' 				=> $display_categories,
 		'C_DISPLAY_SEVERITIES' 				=> $display_severities,
@@ -1100,24 +1101,6 @@ else if (isset($_GET['view']) && is_numeric($id)) // Visualisation d'une fiche B
 		WHERE b.id = '" . $id . "'", __LINE__, __FILE__);
 	}
 	
-	//Autorisations supplémentaires
-	if ($auth_moderate || ($User->get_id() == $result['author_id'] && $result['author_id'] != '-1') || (!empty($result['assigned_to_id']) && $User->get_attribute('user_id') == $result['assigned_to_id']))
-	{
-		$Template->assign_vars(array(
-			'C_EDIT_BUG'=> true,
-			'L_UPDATE'	=> $LANG['update']
-		));
-	}
-	
-	if ($auth_moderate)
-	{
-		$Template->assign_vars(array(
-			'C_DELETE_BUG'		=> true,
-			'L_CONFIRM_DEL_BUG'	=> $LANG['bugs.actions.confirm.del_bug'],
-			'L_DELETE' 			=> $LANG['delete']
-		));
-	}
-	
 	switch ($result['status'])
 	{
 		case 'new' :
@@ -1134,6 +1117,27 @@ else if (isset($_GET['view']) && is_numeric($id)) // Visualisation d'une fiche B
 		default :
 			$c_reopen = false;
 			$c_reject = true;
+	}
+	
+	//Autorisations supplémentaires
+	if ($auth_moderate || ($User->get_id() == $result['author_id'] && $result['author_id'] != '-1') || (!empty($result['assigned_to_id']) && $User->get_attribute('user_id') == $result['assigned_to_id']))
+	{
+		$Template->assign_vars(array(
+			'C_EDIT_BUG'=> true,
+			'L_UPDATE'	=> $LANG['update']
+		));
+	}
+	
+	if ($auth_moderate)
+	{
+		$Template->assign_vars(array(
+			'C_REOPEN_BUG'		=> $c_reopen,
+			'C_REJECT_BUG'		=> $c_reject,
+			'C_HISTORY_BUG'		=> true,
+			'C_DELETE_BUG'		=> true,
+			'L_CONFIRM_DEL_BUG'	=> $LANG['bugs.actions.confirm.del_bug'],
+			'L_DELETE' 			=> $LANG['delete']
+		));
 	}
 	
 	$Template->assign_vars(array(
@@ -1159,12 +1163,14 @@ else if (isset($_GET['view']) && is_numeric($id)) // Visualisation d'une fiche B
 		'L_DETECTED_BY' 		=> $LANG['bugs.labels.fields.author_id'],
 		'L_REOPEN' 				=> $LANG['bugs.actions.reopen'],
 		'L_REJECT' 				=> $LANG['bugs.actions.reject'],
-		'C_REOPEN_BUG'			=> $c_reopen,
-		'C_REJECT_BUG'			=> $c_reject,
-		'C_HISTORY_BUG'			=> true,
 		'L_HISTORY'	 			=> $LANG['bugs.actions.history'],
 		'L_ON' 					=> $LANG['on'],
-		'U_COM' 				=> $comments_activated ? '<a href="' . PATH_TO_ROOT . '/bugtracker/bugtracker' . url('.php?view&amp;id=' . $id . '&amp;com=0#comments_list', '-' . $id . '.php?com=0#comments_list') . '">' . CommentsService::get_number_and_lang_comments('bugtracker', $id) . '</a>' : ''
+		'U_COM' 				=> $comments_activated ? '<a href="' . PATH_TO_ROOT . '/bugtracker/bugtracker' . url('.php?view&amp;id=' . $id . '&amp;com=0#comments_list', '-' . $id . '.php?com=0#comments_list') . '">' . CommentsService::get_number_and_lang_comments('bugtracker', $id) . '</a>' : '',
+		'U_BUG_REJECT'			=> PATH_TO_ROOT . '/bugtracker/bugtracker' . url('.php?reject&amp;id=' . $id . '&amp;back=view'),
+		'U_BUG_REOPEN'			=> PATH_TO_ROOT . '/bugtracker/bugtracker' . url('.php?reopen&amp;id=' . $id . '&amp;back=view'),
+		'U_BUG_EDIT'			=> PATH_TO_ROOT . '/bugtracker/bugtracker' . url('.php?edit&amp;id=' . $id . '&amp;back=view'),
+		'U_BUG_HISTORY'			=> PATH_TO_ROOT . '/bugtracker/bugtracker' . url('.php?history&amp;id=' . $id . '&amp;back=view'),
+		'U_BUG_DELETE'			=> PATH_TO_ROOT . '/bugtracker/bugtracker' . url('.php?delete&amp;id=' . $id . '&amp;back=view&amp;token=' . $Session->get_token())
 	));
 	
 	if (!empty($result['assigned_to_id'])) {
@@ -1175,7 +1181,6 @@ else if (isset($_GET['view']) && is_numeric($id)) // Visualisation d'une fiche B
 		$user_assigned = $LANG['bugs.notice.no_one'];
 		
 	$Template->assign_block_vars('view', array(
-		'TOKEN' 				=> $Session->get_token(),
 		'ID' 					=> $id,
 		'TITLE' 				=> ($cat_in_title_activated == true && $display_categories) ? '[' . $categories[$result['category']] . '] ' . $result['title'] : $result['title'],
 		'CONTENTS' 				=> FormatingHelper::second_parse($result['contents']),
@@ -1190,12 +1195,7 @@ else if (isset($_GET['view']) && is_numeric($id)) // Visualisation d'une fiche B
 		'FIXED_IN' 				=> (!empty($result['fixed_in']) && isset($versions[$result['fixed_in']])) ? stripslashes($versions[$result['fixed_in']]['name']) : $LANG['bugs.notice.not_defined'],
 		'USER_ASSIGNED'			=> $user_assigned,
 		'AUTHOR' 				=> !empty($result['login']) ? '<a href="' . UserUrlBuilder::profile($result['user_id'])->absolute() . '" class="' . UserService::get_level_class($result['level']) . '">' . $result['login'] . '</a>': $LANG['guest'],
-		'SUBMIT_DATE'			=> gmdate_format($date_format, $result['submit_date']),
-		'U_BUG_REJECT'			=> PATH_TO_ROOT . '/bugtracker/bugtracker' . url('.php?reject&amp;id=' . $id . '&amp;back=view'),
-		'U_BUG_REOPEN'			=> PATH_TO_ROOT . '/bugtracker/bugtracker' . url('.php?reopen&amp;id=' . $id . '&amp;back=view'),
-		'U_BUG_EDIT'			=> PATH_TO_ROOT . '/bugtracker/bugtracker' . url('.php?edit&amp;id=' . $id . '&amp;back=view'),
-		'U_BUG_HISTORY'			=> PATH_TO_ROOT . '/bugtracker/bugtracker' . url('.php?history&amp;id=' . $id . '&amp;back=view'),
-		'U_BUG_DELETE'			=> PATH_TO_ROOT . '/bugtracker/bugtracker' . url('.php?delete&amp;id=' . $id . '&amp;back=view&amp;token=' . $Session->get_token())
+		'SUBMIT_DATE'			=> gmdate_format($date_format, $result['submit_date'])
 	));
 	
 	//Affichage des commentaires
