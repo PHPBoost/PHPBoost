@@ -73,5 +73,4 @@ class ArticlesSearchable extends AbstractSearchableExtensionPoint
 				ORDER BY relevance DESC " . $this->sql_querier->limit(0, $CONFIG_ARTICLES['nbr_articles_max']);
 	}
 }
-
 ?>

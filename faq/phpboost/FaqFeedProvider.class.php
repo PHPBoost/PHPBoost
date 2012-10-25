@@ -36,7 +36,7 @@ class FaqFeedProvider implements FeedProvider
 
 	function get_feed_data_struct($idcat = 0, $name = '')
 	{
-		global $Cache,$LANG,$FAQ_CATS,$FAQ_LANG;
+		global $Cache, $LANG, $FAQ_CATS, $FAQ_LANG, $User;
 		
 		$querier = PersistenceContext::get_querier();
 		if (empty($FAQ_LANG))
