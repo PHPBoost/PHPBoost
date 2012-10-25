@@ -205,12 +205,13 @@ class ForumSearchable extends AbstractSearchableExtensionPoint
             msg.timestamp AS date,
             t.title AS title,
             m.login AS login,
-            m.user_avatar AS avatar,
+            ext_field.user_avatar AS avatar,
             s.user_id AS connect,
             msg.contents AS contents
         FROM " . PREFIX . "forum_msg msg
         LEFT JOIN " . DB_TABLE_SESSIONS . " s ON s.user_id = msg.user_id AND s.session_time > '" . (time() - SessionsConfig::load()->get_active_session_duration()) . "' AND s.user_id != -1
         LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = msg.user_id
+        LEFT JOIN " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " ext_field ON ext_field.user_id = msg.user_id
         JOIN " . PREFIX . "forum_topics t ON t.id = msg.idtopic
         WHERE msg.id IN (".implode(',', $ids).")
         GROUP BY t.id";

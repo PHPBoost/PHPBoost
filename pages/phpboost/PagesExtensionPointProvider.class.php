@@ -80,7 +80,9 @@ class PagesExtensionPointProvider extends ExtensionPointProvider
 	
 	public function css_files()
 	{
-		return new PagesCssFilesExtensionPoint();
+		$module_css_files = new ModuleCssFiles();
+		$module_css_files->set_css_files_running_module_displayed(array('pages.css'));
+		return $module_css_files;
 	}
 	
 	public function search()

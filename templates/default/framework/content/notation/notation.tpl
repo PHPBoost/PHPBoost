@@ -1,7 +1,7 @@
 		<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/lib/js/phpboost/notation.js"></script>
 		<script type="text/javascript">
 		<!--
-			var Note{ID_IN_MODULE} = new Note('{ID_IN_MODULE}', '{NOTATION_SCALE}', {NUMBER_VOTES});
+			var Note{ID_IN_MODULE} = new Note('{ID_IN_MODULE}', '{NOTATION_SCALE}', {NUMBER_NOTES});
 			Note{ID_IN_MODULE}.set_default_note('{AVERAGE_NOTES}');
 			Note{ID_IN_MODULE}.set_already_post(${escapejs(ALREADY_VOTE)});
 			Note{ID_IN_MODULE}.set_user_connected(${escapejs(IS_USER_CONNECTED)});

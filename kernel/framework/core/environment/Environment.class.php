@@ -328,14 +328,6 @@ class Environment
 		$current_date->set_seconds(0);
 		if ($last_use_date->is_anterior_to($current_date))
 		{
-			$lock_file = new File(PATH_TO_ROOT . '/cache/changeday_lock');
-			if (!$lock_file->exists())
-			{
-				$lock_file->write('');
-				$lock_file->flush();
-			}
-			$lock_file->open(File::WRITE);
-			$lock_file->lock(false);
 			$yesterday_timestamp = self::get_yesterday_timestamp();
 
 			$condition = 'WHERE stats_year=:stats_years AND stats_month=:stats_month AND stats_day=:stats_day';
@@ -353,7 +345,6 @@ class Environment
 
 				self::perform_changeday();
 			}
-			$lock_file->close();
 		}
 	}
 

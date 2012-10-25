@@ -62,7 +62,6 @@ class AdminMemberEditController extends AdminController
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save();
-			AppContext::get_response()->redirect(PATH_TO_ROOT . '/admin/admin_members.php');
 		}
 
 		$tpl->put('FORM', $this->form->display());
@@ -152,6 +151,8 @@ class AdminMemberEditController extends AdminController
 
 	private function save()
 	{
+		$redirect = true;
+		
 		$user_id = $this->user->get_id();
 		$old_approbation = (int)$this->user->get_approbation();
 		
@@ -201,6 +202,7 @@ class AdminMemberEditController extends AdminController
 		try {
 			MemberExtendedFieldsService::register_fields($this->form, $user_id);
 		} catch (MemberExtendedFieldErrorsMessageException $e) {
+			$redirect = false;
 			$this->tpl->put('MSG', MessageHelper::display($e->getMessage(), MessageHelper::NOTICE));
 		}
 			
@@ -209,9 +211,10 @@ class AdminMemberEditController extends AdminController
 			UserService::delete_account('WHERE user_id=:user_id', array('user_id' => $user_id));
 		}
 		
-		if ($this->form->get_value('password') !== '')
+		$password = $this->form->get_value('password');
+		if (!empty($password) && !empty($this->form->get_value('password_bis')))
 		{
-			UserService::change_password($this->form->get_value('password'), 'WHERE user_id=:user_id', array('user_id' => $user_id));
+			UserService::change_password(KeyGenerator::string_hash($password), 'WHERE user_id=:user_id', array('user_id' => $user_id));
 		}
 		
 		$user_warning = $this->form->get_value('user_warning')->get_raw_value();
@@ -241,6 +244,11 @@ class AdminMemberEditController extends AdminController
 		}
 		
 		StatsCache::invalidate();
+		
+		if ($redirect)
+		{
+			AppContext::get_response()->redirect(PATH_TO_ROOT . '/admin/admin_members.php');
+		}
 	}
 	
 	private function build_javascript_picture_themes()

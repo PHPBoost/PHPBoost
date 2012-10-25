@@ -110,3 +110,4 @@ class DownloadSearchable extends AbstractSearchableExtensionPoint
         return $tpl->render();
     }
 }
+?>

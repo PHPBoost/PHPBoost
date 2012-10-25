@@ -152,7 +152,7 @@ class NotationService
 				'ID_IN_MODULE' => $notation->get_id_in_module(),
 				'NOTATION_SCALE' => $notation->get_notation_scale(),
 				'NUMBER_PIXEL' => $notation->get_notation_scale() * 16,
-				'NUMBER_VOTES' => $count_notes,
+				'NUMBER_NOTES' => $count_notes,
 				'AVERAGE_NOTES' => $average_notes,
 				'ALREADY_VOTE' => NotationDAO::get_member_already_notation($notation),
 				'L_NO_NOTE' => self::$lang['no_note'],
@@ -220,6 +220,7 @@ class NotationService
 			return self::$db_querier->get_column_value(DB_TABLE_AVERAGE_NOTES, 'number_notes', 'WHERE module_name = :module_name AND id_in_module = :id_in_module', 
 			array('module_name' => $notation->get_module_name(), 'id_in_module' => $notation->get_id_in_module()));
 		} catch (RowNotFoundException $e) {
+			return 0;
 		}
 	}
 	
@@ -232,7 +233,7 @@ class NotationService
 			return self::$db_querier->get_column_value(DB_TABLE_AVERAGE_NOTES, 'average_notes', 'WHERE module_name = :module_name AND id_in_module = :id_in_module', 
 			array('module_name' => $notation->get_module_name(), 'id_in_module' => $notation->get_id_in_module()));
 		} catch (RowNotFoundException $e) {
-			return '0';
+			return 0;
 		}
 	}
 	
