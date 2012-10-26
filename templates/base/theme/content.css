@@ -23,7 +23,7 @@ div.block_contents {
 	border:none;
 	text-align:justify;
 } 
-/* Ent�te de conteneur et des tableaux */
+/* Entete de conteneur et des tableaux */
 div.block_top, table tr:first-child th {
     padding:5px 6px;
     color:#FFFFFF;
@@ -369,7 +369,7 @@ a.msg_link_pseudo:hover {
     background: #FCFCFD;
 }
 
-/* Barre sup�rieur des messages */
+/* Barre superieur des messages */
 .msg_top_l{
 	margin-right:0px !important;
 	margin-right:-3px;
@@ -436,6 +436,10 @@ a.msg_link_pseudo:hover {
     float:left;
     font-size:10px;
     border-right:1px dotted #C4CED6;
+}
+
+.msg_info_mbr img {
+	max-width: 120px;
 }
 
 .msg_contents_container {
