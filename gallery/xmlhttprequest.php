@@ -64,6 +64,12 @@ else
 		$id_file = retrieve(POST, 'id_file', 0);
 		$id_cat = $Sql->query("SELECT idcat FROM " . PREFIX . "gallery WHERE id = " .$id_file. " ", __LINE__, __FILE__);
 		
+		if (empty($id_cat))
+		{
+			$CAT_GALLERY[0]['auth'] = $CONFIG_GALLERY['auth_root'];
+			$CAT_GALLERY[0]['aprob'] = 1;
+		}
+		
 		if ($User->check_auth($CAT_GALLERY[$id_cat]['auth'], EDIT_CAT_GALLERY)) //Modo
 		{	
 			//Initialisation  de la class de gestion des fichiers.
@@ -84,6 +90,12 @@ else
 	{
 		$id_file = retrieve(POST, 'id_file', 0);
 		$id_cat = $Sql->query("SELECT idcat FROM " . PREFIX . "gallery WHERE id = " .$id_file. " ", __LINE__, __FILE__);
+		
+		if (empty($id_cat))
+		{
+			$CAT_GALLERY[0]['auth'] = $CONFIG_GALLERY['auth_root'];
+			$CAT_GALLERY[0]['aprob'] = 1;
+		}
 		
 		if ($User->check_auth($CAT_GALLERY[$id_cat]['auth'], EDIT_CAT_GALLERY)) //Modo
 		{
