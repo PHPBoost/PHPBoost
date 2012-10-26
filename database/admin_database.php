@@ -57,7 +57,7 @@ if ($action == 'backup_table' && !empty($table)) //Sauvegarde pour une table uni
 }
 
 $Template->set_filenames(array(
-	'admin_database_management'=> 'database/admin_database_management.tpl'
+	'admin_database_management' => 'database/admin_database_management.tpl'
 ));
 
 $Template->put_all(array(
@@ -96,36 +96,55 @@ if (!empty($_GET['query']))
 		if (strtolower(substr($query, 0, 6)) == 'select') //il s'agit d'une requête de sélection
 		{
 			//On éxécute la requête
-			$result = $Sql->query_while (str_replace('phpboost_', PREFIX, $query), __LINE__, __FILE__);			
-			$i = 1;
-			while ($row = $Sql->fetch_assoc($result))
-			{
-				$Template->assign_block_vars('line', array());
-				//Premier passage: on liste le nom des champs sélectionnés
-				if ($i == 1)
+			try {
+				$result = $Sql->query_while (str_replace('phpboost_', PREFIX, $query), __LINE__, __FILE__);			
+				$i = 1;
+				while ($row = $Sql->fetch_assoc($result))
 				{
-					foreach ($row as $field_name => $field_value)
-						$Template->assign_block_vars('line.field', array(
-							'FIELD' => '<strong>' . $field_name . '</strong>',
-							'CLASS' => 'row3'
-						));
 					$Template->assign_block_vars('line', array());
+					//Premier passage: on liste le nom des champs sélectionnés
+					if ($i == 1)
+					{
+						foreach ($row as $field_name => $field_value)
+							$Template->assign_block_vars('line.field', array(
+								'FIELD' => '<strong>' . $field_name . '</strong>',
+								'CLASS' => 'row3'
+							));
+						$Template->assign_block_vars('line', array());
+					}
+					//On parse les valeurs de sortie
+					foreach ($row as $field_name => $field_value)
+					$Template->assign_block_vars('line.field', array(
+						'FIELD' => TextHelper::strprotect($field_value),
+						'CLASS' => 'row1',
+						'STYLE' => is_numeric($field_value) ? 'text-align:right;' : ''
+					));
+					
+					$i++;
 				}
-				//On parse les valeurs de sortie
-				foreach ($row as $field_name => $field_value)
+			} catch (MySQLQuerierException $e) {
+				$Template->assign_block_vars('line', array());
 				$Template->assign_block_vars('line.field', array(
-					'FIELD' => TextHelper::strprotect($field_value),
+					'FIELD' => $e->GetMessage(),
 					'CLASS' => 'row1',
-					'STYLE' => is_numeric($field_value) ? 'text-align:right;' : ''
+					'STYLE' => ''
 				));
-				
-				$i++;
 			}
+			
 		}
 		elseif (substr($lower_query, 0, 11) == 'insert into' || substr($lower_query, 0, 6) == 'update' || substr($lower_query, 0, 11) == 'delete from' || substr($lower_query, 0, 11) == 'alter table'  || substr($lower_query, 0, 8) == 'truncate' || substr($lower_query, 0, 10) == 'drop table') //Requêtes d'autres types
 		{
-			$result = $Sql->query_inject($query, __LINE__, __FILE__);
-			$affected_rows = @$Sql->affected_rows($result, "");			
+			try {
+				$result = $Sql->query_inject($query, __LINE__, __FILE__);
+				$affected_rows = @$Sql->affected_rows($result, "");
+			} catch (MySQLQuerierException $e) {
+				$Template->assign_block_vars('line', array());
+				$Template->assign_block_vars('line.field', array(
+					'FIELD' => $e->GetMessage(),
+					'CLASS' => 'row1',
+					'STYLE' => ''
+				));
+			}	
 		}
 	}	
 	
