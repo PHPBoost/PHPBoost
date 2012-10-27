@@ -29,7 +29,10 @@ class BugtrackerCommentsTopicEvents extends CommentsTopicEvents
 {
 	public function execute_add_comment_event()
 	{
-		$lang = LangLoader::get('bugtracker_common', 'bugtracker');
+		global $LANG;
+		$lang = $LANG;
+		//$lang = LangLoader::get('bugtracker_common', 'bugtracker');
+		
 		$sql_querier = PersistenceContext::get_querier();
 		$current_user = AppContext::get_current_user();
 		$now = new Date(DATE_NOW, TIMEZONE_AUTO);

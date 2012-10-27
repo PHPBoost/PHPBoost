@@ -490,11 +490,12 @@ else if (!empty($_POST['valid_edit']) && is_numeric($id))
 	if (!empty($title) && !empty($contents) && !$something_is_missing)
 	{
 		$fixed_in = retrieve(POST, 'fixed_in', 0);
-		$status = retrieve(POST, 'status', $old_values['status']);
 		$reproductible = retrieve(POST, 'reproductible', $old_values['reproductible'], TBOOL);
 		$reproduction_method = retrieve(POST, 'reproduction_method', $old_values['reproduction_method'], TSTRING_PARSE);
 		$assigned_to = retrieve(POST, 'assigned_to', '');
 		$assigned_to_id = (!empty($assigned_to)) ? $Sql->query("SELECT user_id FROM " . DB_TABLE_MEMBER . " WHERE login = '" . $assigned_to . "'", __LINE__, __FILE__) : (!empty($old_values['assigned_to_id']) ? $old_values['assigned_to_id'] : 0);
+		$status_tmp = retrieve(POST, 'status', $old_values['status']);
+		$status = (!empty($assigned_to_id) && ($status_tmp != 'fixed') && ($status_tmp != 'rejected')) ? 'assigned' : $status_tmp;
 		
 		$mp_comment = '';
 		$modification = false;
@@ -517,12 +518,12 @@ else if (!empty($_POST['valid_edit']) && is_numeric($id))
 				'type' 					=> $type,
 				'category' 				=> $category,
 				'severity' 				=> $severity,
-				'priority' 				=> $priority,		
+				'priority' 				=> $priority,
 				'detected_in' 			=> $detected_in,
 				'reproductible' 		=> $reproductible,
 				'reproduction_method' 	=> $reproduction_method,
 				'status' 				=> $status,
-				'assigned_to_id'		=> $assigned_to_id,		
+				'assigned_to_id'		=> $assigned_to_id,
 				'fixed_in' 				=> $fixed_in
 			);
 			
@@ -537,8 +538,8 @@ else if (!empty($_POST['valid_edit']) && is_numeric($id))
 				'category' 				=> $category,
 				'severity' 				=> $severity,
 				'priority' 				=> $priority,
-				'detected_in' 			=> $detected_in,	
-				'reproductible' 		=> $reproductible,			
+				'detected_in' 			=> $detected_in,
+				'reproductible' 		=> $reproductible,
 				'reproduction_method' 	=> $reproduction_method
 			);
 			
@@ -596,7 +597,7 @@ else if (!empty($_POST['valid_edit']) && is_numeric($id))
 					default:
 						$new_value = $new_values[$field];
 				}
-				$mp_comment .= ($field != 'contents' && $field != 'reproduction_method') ? $LANG['bugs.labels.fields.' . $field] . ' : ' . $new_value . '
+				$mp_comment .= ($field != 'contents' && $field != 'reproduction_method' && $field != 'assigned_to_id') ? $LANG['bugs.labels.fields.' . $field] . ' : ' . $new_value . '
 ' : '';
 			}
 		}
@@ -615,7 +616,7 @@ else if (!empty($_POST['valid_edit']) && is_numeric($id))
 				$Privatemsg = new PrivateMsg();
 				$Privatemsg->start_conversation(
 					$assigned_to_id, 
-					sprintf($LANG['bugs.pm.assigned.title'], $LANG['bugs.module_title'], $id), 
+					sprintf($LANG['bugs.pm.assigned.title'], $LANG['bugs.module_title'], $id, $User->get_login()), 
 					sprintf($LANG['bugs.pm.assigned.contents'], '[url]' . HOST . DIR . '/bugtracker/bugtracker.php?view&id=' . $id . '[/url]'), 
 					'-1', 
 					PrivateMsg::SYSTEM_PM
@@ -744,13 +745,17 @@ else if (isset($_GET['edit']) && is_numeric($id)) // edition d'un bug
 	{
 		$assigned_to = !empty($result['assigned_to_id']) ? $Sql->query("SELECT login FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $result['assigned_to_id'] . "'", __LINE__, __FILE__) : '';
 		$Template->assign_block_vars('edit', array(
-			'C_IS_ASSIGNED'				=> true,
+			'C_IS_ADMIN'				=> true,
+			'C_IS_FIXED'				=> ($result['status'] == 'fixed') ? true : false,
 			'ID' 						=> $id,
 			'TITLE' 					=> $result['title'],
+			'SEVERITY' 					=> $result['severity'],
+			'PRIORITY' 					=> $result['priority'],
 			'CONTENTS' 					=> FormatingHelper::unparse($result['contents']),
 			'REPRODUCTIBLE_ENABLED' 	=> ($result['reproductible']) ? 'checked="checked"' : '',
 			'REPRODUCTIBLE_DISABLED' 	=> (!$result['reproductible']) ? 'checked="checked"' : '',
 			'REPRODUCTION_METHOD' 		=> FormatingHelper::unparse($result['reproduction_method']),
+			'STATUS'					=> ($result['status'] != 'fixed') ? $result['status'] : 'reopen',
 			'AUTHOR' 					=> !empty($result['login']) ? '<a href="' . UserUrlBuilder::profile($result['user_id'])->absolute() . '" class="' . UserService::get_level_class($result['level']) . '">' . $result['login'] . '</a>': $LANG['guest'],
 			'ASSIGNED_TO'				=> $assigned_to
 		));
@@ -760,6 +765,8 @@ else if (isset($_GET['edit']) && is_numeric($id)) // edition d'un bug
 		$Template->assign_block_vars('edit', array(
 			'ID' 						=> $id,
 			'TITLE' 					=> $result['title'],
+			'SEVERITY' 					=> $result['severity'],
+			'PRIORITY' 					=> $result['priority'],
 			'CONTENTS' 					=> FormatingHelper::unparse($result['contents']),
 			'REPRODUCTIBLE_ENABLED' 	=> ($result['reproductible']) ? 'checked="checked"' : '',
 			'REPRODUCTIBLE_DISABLED' 	=> (!$result['reproductible']) ? 'checked="checked"' : '',
@@ -774,7 +781,6 @@ else if (isset($_GET['edit']) && is_numeric($id)) // edition d'un bug
 	$reproduction_method_editor->set_identifier('reproduction_method');
 	
 	$Template->assign_vars(array(
-		'C_IS_ADMIN'						=> $auth_moderate ? true : false,
 		'C_DISPLAY_TYPES' 					=> $display_types,
 		'C_DISPLAY_CATEGORIES' 				=> $display_categories,
 		'C_DISPLAY_SEVERITIES' 				=> $display_severities,
@@ -804,7 +810,6 @@ else if (isset($_GET['edit']) && is_numeric($id)) // edition d'un bug
 		'L_REQUIRE_SEVERITY'				=> $LANG['bugs.notice.require_choose_severity'],
 		'L_REQUIRE_PRIORITY'				=> $LANG['bugs.notice.require_choose_priority'],
 		'L_REQUIRE_DETECTED_IN'				=> $LANG['bugs.notice.require_choose_detected_in'],
-		'L_STATUS'							=> $LANG['bugs.labels.fields.status'],
 		'L_TYPE'							=> $LANG['bugs.labels.fields.type'],
 		'L_CATEGORY'						=> $LANG['bugs.labels.fields.category'],
 		'L_AUTHOR'							=> $LANG['bugs.labels.fields.author_id'],
@@ -816,6 +821,7 @@ else if (isset($_GET['edit']) && is_numeric($id)) // edition d'un bug
 		'L_FIXED_IN'						=> $LANG['bugs.labels.fields.fixed_in'],
 		'L_REPRODUCTIBLE'					=> $LANG['bugs.labels.fields.reproductible'],
 		'L_REPRODUCTION_METHOD'				=> $LANG['bugs.labels.fields.reproduction_method'],
+		'L_FIXED'							=> $LANG['bugs.labels.fixed'],
 		'L_SEARCH' 							=> $LANG['search'],
 		'L_UPDATE' 							=> $LANG['update'],
 		'L_PREVIEW' 						=> $LANG['preview'],
@@ -824,6 +830,7 @@ else if (isset($_GET['edit']) && is_numeric($id)) // edition d'un bug
 		'L_NO'	 							=> $LANG['no'],
 		'L_JOKER' 							=> $LANG['bugs.notice.joker'],
 		'BACK'								=> $back,
+		'ROADMAP_CHECKED'					=> ($bugtracker_config->get_roadmap_activated() == true) ? 'checked=checked' : '',
 		'CONTENTS_KERNEL_EDITOR'			=> $contents_editor->display(),
 		'METHOD_KERNEL_EDITOR' 				=> $reproduction_method_editor->display(),
 		'U_FORM'							=> PATH_TO_ROOT . '/bugtracker/bugtracker' . url('.php?token=' . $Session->get_token()),
@@ -1341,10 +1348,10 @@ else if (isset($_GET['solved'])) // liste des bugs corrigés
 		switch ($row['status'])
 		{
 		case 'fixed' :
-			$line_color = 'style="background-color:#' . $fixed_bug_color . ';"';
+			$line_color = 'style="background-color:' . $fixed_bug_color . ';"';
 			break;
 		case 'rejected' :
-			$line_color = 'style="background-color:#' . $rejected_bug_color . ';"';
+			$line_color = 'style="background-color:' . $rejected_bug_color . ';"';
 			break;
 		default :
 			$line_color = '';
@@ -1643,10 +1650,10 @@ else if (isset($_GET['roadmap'])) // roadmap
 		switch ($row['status'])
 		{
 		case 'fixed' :
-			$line_color = 'style="background-color:#' . $fixed_bug_color . ';"';
+			$line_color = 'style="background-color:' . $fixed_bug_color . ';"';
 			break;
 		case 'rejected' :
-			$line_color = 'style="background-color:#' . $rejected_bug_color . ';"';
+			$line_color = 'style="background-color:' . $rejected_bug_color . ';"';
 			break;
 		default :
 			$line_color = '';

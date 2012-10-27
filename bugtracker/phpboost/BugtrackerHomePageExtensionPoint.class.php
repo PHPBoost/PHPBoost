@@ -201,10 +201,10 @@ class BugtrackerHomePageExtensionPoint implements HomePageExtensionPoint
 			switch ($row['status'])
 			{
 				case 'fixed' :
-					$line_color = 'style="background-color:#' . $fixed_bug_color . ';"';
+					$line_color = 'style="background-color:' . $fixed_bug_color . ';"';
 					break;
 				case 'rejected' :
-					$line_color = 'style="background-color:#' . $rejected_bug_color . ';"';
+					$line_color = 'style="background-color:' . $rejected_bug_color . ';"';
 					break;
 				default :
 					$line_color = '';
@@ -221,7 +221,7 @@ class BugtrackerHomePageExtensionPoint implements HomePageExtensionPoint
 				'SEVERITY'		=> (!empty($row['severity']) && isset($severities[$row['severity']])) ? stripslashes($severities[$row['severity']]['name']) : $LANG['bugs.notice.none'],
 				'STATUS'		=> $LANG['bugs.status.' . $row['status']],
 				'LINE_COLOR' 	=> $line_color,
-				'SEVERITY_COLOR'=> (!empty($row['severity']) && isset($severities[$row['severity']])) ? 'style="background-color:#' . stripslashes($severities[$row['severity']]['color']) . ';"' : '',
+				'SEVERITY_COLOR'=> (!empty($row['severity']) && isset($severities[$row['severity']])) ? 'style="background-color:' . stripslashes($severities[$row['severity']]['color']) . ';"' : '',
 				'COMMENTS'		=> '<a href="' . PATH_TO_ROOT .'/bugtracker/bugtracker' . url('.php?view&id=' . $row['id'] . '&com=0#comments_list') . '">' . (empty($nbr_coms) ? 0 : $nbr_coms) . '</a>',
 				'DATE' 			=> gmdate_format($bugtracker_config->get_date_format(), $row['submit_date']),
 				'U_BUG_REJECT'	=> PATH_TO_ROOT . '/bugtracker/bugtracker' . url('.php?reject&amp;id=' . $row['id']),

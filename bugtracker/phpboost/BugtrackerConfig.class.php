@@ -324,8 +324,8 @@ class BugtrackerConfig extends AbstractConfigData
 	{
 		return array(
 			self::ITEMS_PER_PAGE => 20,
-			self::REJECTED_BUG_COLOR => 'f8465e',
-			self::FIXED_BUG_COLOR => 'afffa2',
+			self::REJECTED_BUG_COLOR => '#f8465e',
+			self::FIXED_BUG_COLOR => '#afffa2',
 			self::DATE_FORMAT => 'date_format',
 			self::COMMENTS_ACTIVATED => true,
 			self::ROADMAP_ACTIVATED => false,
@@ -336,7 +336,7 @@ class BugtrackerConfig extends AbstractConfigData
 			self::TYPES => array(1 => LangLoader::get_message('bugtracker.config.types.anomaly', 'bugtracker_config', 'bugtracker'), LangLoader::get_message('bugtracker.config.types.evolution_demand', 'bugtracker_config', 'bugtracker')),
 			self::CATEGORIES => array(1 => LangLoader::get_message('bugtracker.config.categories.kernel', 'bugtracker_config', 'bugtracker'), LangLoader::get_message('bugtracker.config.categories.module', 'bugtracker_config', 'bugtracker'), LangLoader::get_message('bugtracker.config.categories.graphism', 'bugtracker_config', 'bugtracker'), LangLoader::get_message('bugtracker.config.categories.installation', 'bugtracker_config', 'bugtracker')),
 			self::CONTENTS_VALUE => LangLoader::get_message('bugtracker.config.contents_value', 'bugtracker_config', 'bugtracker'),
-			self::SEVERITIES => array(1 => array('name' => LangLoader::get_message('bugtracker.config.severities.minor', 'bugtracker_config', 'bugtracker'), 'color' => 'e8ffa2'), array('name' => LangLoader::get_message('bugtracker.config.severities.major', 'bugtracker_config', 'bugtracker'), 'color' => 'feebbc'), array('name' => LangLoader::get_message('bugtracker.config.severities.critical', 'bugtracker_config', 'bugtracker'), 'color' => 'ffa2a2')),
+			self::SEVERITIES => array(1 => array('name' => LangLoader::get_message('bugtracker.config.severities.minor', 'bugtracker_config', 'bugtracker'), 'color' => '#e8ffa2'), array('name' => LangLoader::get_message('bugtracker.config.severities.major', 'bugtracker_config', 'bugtracker'), 'color' => '#feebbc'), array('name' => LangLoader::get_message('bugtracker.config.severities.critical', 'bugtracker_config', 'bugtracker'), 'color' => '#ffa2a2')),
 			self::PRIORITIES => array(1 => LangLoader::get_message('bugtracker.config.priorities.none', 'bugtracker_config', 'bugtracker'), LangLoader::get_message('bugtracker.config.priorities.low', 'bugtracker_config', 'bugtracker'), LangLoader::get_message('bugtracker.config.priorities.normal', 'bugtracker_config', 'bugtracker'), LangLoader::get_message('bugtracker.config.priorities.high', 'bugtracker_config', 'bugtracker'), LangLoader::get_message('bugtracker.config.priorities.urgent', 'bugtracker_config', 'bugtracker')),
 			self::DEFAULT_TYPE => 1,
 			self::DEFAULT_CATEGORY => 0,
