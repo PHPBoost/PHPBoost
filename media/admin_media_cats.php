@@ -145,7 +145,7 @@ elseif ($new_cat XOR $id_edit > 0)
 		'L_CAT_IMAGE' => $MEDIA_LANG['cat_image'],
 		'L_PREVIEW' => $LANG['preview'],
 		'L_RESET' => $LANG['reset'],
-		'L_SUBMIT' => $id_edit > 0 ? $LANG['edit'] : $LANG['add'],
+		'L_SUBMIT' => $id_edit > 0 ? $LANG['update'] : $LANG['add'],
 		'L_REQUIRE_TITLE' => $LANG['require_title'],
 		'L_MIME_TYPE' => $MEDIA_LANG['mime_type'],
 		'L_TYPE_BOTH' => $MEDIA_LANG['type_both'],
