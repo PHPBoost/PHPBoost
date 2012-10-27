@@ -166,8 +166,8 @@ $MEDIA_LANG = array(
 'visible' => 'Approuvés',
 );
 
-$LANG['e_mime_disable_media'] = 'Le type du fichier multimédia que vous souhaitez proposer est désactivé !';
-$LANG['e_mime_unknow_media'] = 'Impossible de déterminer le mime type de ce fichier !';
+$LANG['e_mime_disable_media'] = 'Le type de fichier multimédia que vous souhaitez proposer est désactivé !';
+$LANG['e_mime_unknow_media'] = 'Impossible de déterminer le type de ce fichier !';
 $LANG['e_link_empty_media'] = 'Veuillez renseigner le lien de votre fichier multimédia !';
 $LANG['e_unexist_media'] = 'Le fichier multimédia demandé n\'existe pas !';
 
