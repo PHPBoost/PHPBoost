@@ -871,19 +871,17 @@
 		# INCLUDE message_helper #
 		
 		<form action="{U_FORM}" name="form" method="post" onsubmit="return check_form();" class="fieldset_content" id="form">
-			# IF C_IS_ADMIN #
+			# IF edit.C_IS_ADMIN #
 			<fieldset>
 			<legend>{L_BUG_TREATMENT}</legend>
-				# IF edit.C_IS_ASSIGNED #
 				<dl>
-					<dt><label for="status">{L_STATUS}</label><br /><span>{L_STATUS_EXPLAIN}</span></dt>
-					<dd><label>
-						<select id="status" name="status">
-						# START edit.select_status #
-							{edit.select_status.STATUS}
-						# END edit.select_status #
-						</select>
-					</label></dd>
+					<dt>
+						<label for="status">{L_FIXED}</label><br />
+					</dt>
+					<dd>
+						<span><input type="radio" name="status" value="fixed" # IF edit.C_IS_FIXED #checked=checked# ENDIF # /> {L_YES}</span>
+						<span style="margin-left:30px;"><input type="radio" name="status" value="{edit.STATUS}" # IF NOT edit.C_IS_FIXED #checked=checked# ENDIF # /> {L_NO}</span>
+					</dd>
 				</dl>
 				<dl>
 					<dt><label for="assigned_to">{L_ASSIGNED_TO}</label><br /><span>{L_JOKER}</span></dt>
@@ -910,14 +908,13 @@
 					</label></dd>
 				</dl>
 				# ENDIF #
-				# ENDIF #
 			</fieldset>
 			# ENDIF #
 			
 			<fieldset>
 			<legend>{L_BUG_INFOS}</legend>
 				<p>{L_REQUIRE}</p>
-				# IF C_IS_ADMIN #
+				# IF edit.C_IS_ADMIN #
 				<dl>
 					<dt><label for="author">{L_AUTHOR}</label></dt>
 					<dd><label>{edit.AUTHOR}</label></dd>
@@ -1022,8 +1019,12 @@
 			
 			<fieldset class="fieldset_submit">
 				<legend>{L_UPDATE}</legend>
-				<input type="hidden" name="id" value="{edit.ID}" class="submit" />
-				# IF C_BACK #<input type="hidden" name="back" value="{BACK}" class="submit" /># ENDIF #
+				<input type="hidden" name="id" value="{edit.ID}" />
+				# IF C_BACK #<input type="hidden" name="back" value="{BACK}" /># ENDIF #
+				# IF NOT C_DISPLAY_ADVANCED #
+					<input type="hidden" name="severity" value="{edit.SEVERITY}" />
+					<input type="hidden" name="priority" value="{edit.PRIORITY}" />
+				# ENDIF #
 				<input type="submit" name="valid_edit" value="{L_UPDATE}" class="submit" />
 				&nbsp;
 				<input type="reset" value="{L_RESET}" class="reset" />

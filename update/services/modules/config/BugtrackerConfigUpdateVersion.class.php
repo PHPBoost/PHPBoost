@@ -38,7 +38,7 @@ class BugtrackerConfigUpdateVersion extends ConfigUpdateVersion
 		
 		$config = $this->get_old_config();
 		
-		$severities = array(1 => array('name' => $lang['bugtracker.config.severities.minor'], 'color' => $config['severity_minor_color']), array('name' => $lang['bugtracker.config.severities.major'], 'color' => $config['severity_major_color']), array('name' => $lang['bugtracker.config.severities.critical'], 'color' => $config['severity_critical_color']));
+		$severities = array(1 => array('name' => $lang['bugtracker.config.severities.minor'], 'color' => '#' . $config['severity_minor_color']), array('name' => $lang['bugtracker.config.severities.major'], 'color' => '#' . $config['severity_major_color']), array('name' => $lang['bugtracker.config.severities.critical'], 'color' => '#' . $config['severity_critical_color']));
 		
 		$types = array();
 		foreach ($config['types'] as $type)
@@ -70,8 +70,8 @@ class BugtrackerConfigUpdateVersion extends ConfigUpdateVersion
 		$bugtracker_config = BugtrackerConfig::load();
 		$bugtracker_config->set_authorizations(unserialize($config['auth']));
 		$bugtracker_config->set_items_per_page($config['items_per_page']);
-		$bugtracker_config->set_rejected_bug_color($config['rejected_bug_color']);
-		$bugtracker_config->set_fixed_bug_color($config['closed_bug_color']);
+		$bugtracker_config->set_rejected_bug_color('#' . $config['rejected_bug_color']);
+		$bugtracker_config->set_fixed_bug_color('#' . $config['closed_bug_color']);
 		$bugtracker_config->set_comments_activated($config['activ_com']);
 		$bugtracker_config->set_versions($versions);
 		$bugtracker_config->set_types($types);

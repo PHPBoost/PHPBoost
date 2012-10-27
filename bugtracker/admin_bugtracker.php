@@ -349,7 +349,7 @@ else if (isset($_POST['valid']))
 		AppContext::get_response()->redirect(HOST . SCRIPT . '?error=require_items_per_page#message_helper');
 }
 //Sinon on rempli le formulaire
-else	
+else
 {	
 	$Template = new FileTemplate('bugtracker/admin_bugtracker.tpl');
 	
@@ -387,6 +387,7 @@ else
 		'L_CONFIRM_DEL_SEVERITY' 					=> $LANG['bugs.actions.confirm.del_severity'],
 		'L_BUGS_MANAGEMENT'							=> $LANG['bugs.titles.admin.management'],
 		'L_BUGS_CONFIG' 							=> $LANG['bugs.titles.admin.config'],
+		'L_BUGS_AUTHORIZATIONS' 					=> $LANG['bugs.titles.admin.authorizations'],
 		'L_ITEMS_PER_PAGE'							=> $LANG['bugs.config.items_per_page'],
 		'L_REQUIRE'									=> $LANG['require'],
 		'L_REQUIRE_ITEMS_PER_PAGE'					=> $LANG['bugs.error.require_items_per_page'],
@@ -401,11 +402,11 @@ else
 		'L_ACTIV_ROADMAP'							=> $LANG['bugs.config.activ_roadmap'],
 		'L_ACTIV_CAT_IN_TITLE'						=> $LANG['bugs.config.activ_cat_in_title'],
 		'L_ACTIV_PM'								=> $LANG['bugs.config.activ_pm'],
-		'L_DISPONIBLE_VERSIONS'						=> $LANG['bugs.titles.disponible_versions'],
-		'L_DISPONIBLE_TYPES'						=> $LANG['bugs.titles.disponible_types'],
-		'L_DISPONIBLE_CATEGORIES'					=> $LANG['bugs.titles.disponible_categories'],
-		'L_DISPONIBLE_PRIORITIES'					=> $LANG['bugs.titles.disponible_priorities'],
-		'L_DISPONIBLE_SEVERITIES'					=> $LANG['bugs.titles.disponible_severities'],
+		'L_VERSIONS'								=> $LANG['bugs.titles.versions'],
+		'L_TYPES'									=> $LANG['bugs.titles.types'],
+		'L_CATEGORIES'								=> $LANG['bugs.titles.categories'],
+		'L_PRIORITIES'								=> $LANG['bugs.titles.priorities'],
+		'L_SEVERITIES'								=> $LANG['bugs.titles.severities'],
 		'L_CONTENT_VALUE_TITLE'						=> $LANG['bugs.titles.contents_value_title'],
 		'L_CONTENT_VALUE'							=> $LANG['bugs.titles.contents_value'],
 		'L_ROADMAP_EXPLAIN'							=> $LANG['bugs.explain.roadmap'],
@@ -433,7 +434,7 @@ else
 		'L_NO_CATEGORY'								=> $LANG['bugs.notice.no_category'],
 		'L_NO_PRIORITY'								=> $LANG['bugs.notice.no_priority'],
 		'L_NO_SEVERITY'								=> $LANG['bugs.notice.no_severity'],
-		'L_AUTH'		 							=> $LANG['bugs.config.auth'],
+		'L_AUTHORIZATIONS'		 					=> $LANG['bugs.config.auth'],
 		'L_COLOR' 									=> $LANG['bugs.labels.color'],
 		'L_DEFAULT'									=> $LANG['bugs.labels.default'],
 		'L_DATE_FORMAT'								=> $LANG['bugs.labels.date_format'],
@@ -447,9 +448,6 @@ else
 		'L_PREVIEW' 								=> $LANG['preview'],
 		'L_YES'		 								=> $LANG['yes'],
 		'L_NO' 										=> $LANG['no'],
-		'U_BUG_CONFIGURATION'						=> PATH_TO_ROOT . '/bugtracker/?url=/admin/config',
-		'U_BUG_AUTHORIZATIONS'						=> PATH_TO_ROOT . '/bugtracker/?url=/admin/authorizations',
-		'U_FORM'									=> PATH_TO_ROOT . '/bugtracker/admin_bugtracker' . url('.php?token=' . $Session->get_token()),
 		'ITEMS_PER_PAGE'							=> $bugtracker_config->get_items_per_page(),
 		'REJECTED_BUG_COLOR'						=> $bugtracker_config->get_rejected_bug_color(),
 		'FIXED_BUG_COLOR'							=> $bugtracker_config->get_fixed_bug_color(),
@@ -459,7 +457,10 @@ else
 		'CAT_IN_TITLE_CHECKED'						=> ($bugtracker_config->get_cat_in_title_activated() == true) ? 'checked=checked' : '',
 		'PM_CHECKED'								=> ($bugtracker_config->get_pm_activated() == true) ? 'checked=checked' : '',
 		'CONTENTS_VALUE'							=> FormatingHelper::unparse($bugtracker_config->get_contents_value()),
-		'CONTENTS_KERNEL_EDITOR'					=> $contents_editor->display()
+		'CONTENTS_KERNEL_EDITOR'					=> $contents_editor->display(),
+		'U_CONFIGURATION'							=> PATH_TO_ROOT . '/bugtracker/admin_bugtracker.php',
+		'U_AUTHORIZATIONS'							=> PATH_TO_ROOT . '/bugtracker/admin_bugtracker_authorizations.php',
+		'U_FORM'									=> PATH_TO_ROOT . '/bugtracker/admin_bugtracker' . url('.php?token=' . $Session->get_token())
 	));
 	
 	foreach ($types as $key => $type)
@@ -468,27 +469,27 @@ else
 			'ID'			=> $key,
 			'NAME'			=> stripslashes($type),
 			'IS_DEFAULT'	=> ($default_type == $key) ? 'checked=checked' : '',
-			'U_DELETE_TYPE'	=> PATH_TO_ROOT . '/bugtracker/admin_bugtracker' . url('.php?delete_type&amp;id=' . $key . '&amp;token=' . $Session->get_token())
+			'U_DELETE'		=> PATH_TO_ROOT . '/bugtracker/admin_bugtracker' . url('.php?delete_type&amp;id=' . $key . '&amp;token=' . $Session->get_token())
 		));	
 	}
 	
 	foreach ($categories as $key => $category)
 	{
 		$Template->assign_block_vars('categories', array(
-			'ID'				=> $key,
-			'NAME'				=> stripslashes($category),
-			'IS_DEFAULT'		=> ($default_category == $key) ? 'checked=checked' : '',
-			'U_DELETE_CATEGORY'	=> PATH_TO_ROOT . '/bugtracker/admin_bugtracker' . url('.php?delete_category&amp;id=' . $key . '&amp;token=' . $Session->get_token())
+			'ID'			=> $key,
+			'NAME'			=> stripslashes($category),
+			'IS_DEFAULT'	=> ($default_category == $key) ? 'checked=checked' : '',
+			'U_DELETE'		=> PATH_TO_ROOT . '/bugtracker/admin_bugtracker' . url('.php?delete_category&amp;id=' . $key . '&amp;token=' . $Session->get_token())
 		));	
 	}
 	
 	foreach ($priorities as $key => $priority)
 	{
 		$Template->assign_block_vars('priorities', array(
-			'ID'				=> $key,
-			'NAME'				=> stripslashes($priority),
-			'IS_DEFAULT'		=> ($default_priority == $key) ? 'checked=checked' : '',
-			'U_DELETE_PRIORITY'	=> PATH_TO_ROOT . '/bugtracker/admin_bugtracker' . url('.php?delete_priority&amp;id=' . $key . '&amp;token=' . $Session->get_token())
+			'ID'			=> $key,
+			'NAME'			=> stripslashes($priority),
+			'IS_DEFAULT'	=> ($default_priority == $key) ? 'checked=checked' : '',
+			'U_DELETE'		=> PATH_TO_ROOT . '/bugtracker/admin_bugtracker' . url('.php?delete_priority&amp;id=' . $key . '&amp;token=' . $Session->get_token())
 		));	
 	}
 	
@@ -500,7 +501,7 @@ else
 			'NAME'				=> stripslashes($severity['name']),
 			'COLOR'				=> $severity['color'],
 			'IS_DEFAULT'		=> ($default_severity == $key) ? 'checked=checked' : '',
-			'U_DELETE_SEVERITY'	=> PATH_TO_ROOT . '/bugtracker/admin_bugtracker' . url('.php?delete_severity&amp;id=' . $key . '&amp;token=' . $Session->get_token())
+			'U_DELETE'			=> PATH_TO_ROOT . '/bugtracker/admin_bugtracker' . url('.php?delete_severity&amp;id=' . $key . '&amp;token=' . $Session->get_token())
 		));	
 	}
 	
@@ -512,7 +513,7 @@ else
 			'DETECTED_IN'		=> ($version['detected_in'] == true) ? 'checked=checked' : '',
 			'DISPLAY_DEFAULT'	=> ($version['detected_in'] != true) ? 'style="display:none"' : '',
 			'IS_DEFAULT'		=> ($default_version == $key) ? 'checked=checked' : '',
-			'U_DELETE_VERSION'	=> PATH_TO_ROOT . '/bugtracker/admin_bugtracker' . url('.php?delete_version&amp;id=' . $key . '&amp;token=' . $Session->get_token())
+			'U_DELETE'			=> PATH_TO_ROOT . '/bugtracker/admin_bugtracker' . url('.php?delete_version&amp;id=' . $key . '&amp;token=' . $Session->get_token())
 		));	
 	}
 	
@@ -539,7 +540,7 @@ else
 	if (!empty($errstr))
 		$Template->put('message_helper', MessageHelper::display($errstr, $errtyp));
 		
-	$Template->display(); // traitement du modele	
+	$Template->display(); // traitement du modele
 }
 
 require_once('../admin/admin_footer.php');
