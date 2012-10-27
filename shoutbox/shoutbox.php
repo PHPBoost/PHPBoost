@@ -118,21 +118,25 @@ elseif (!empty($shout_id)) //Edition + suppression!
 					'class' => 'text', 'required' => true, 'maxlength' => 25)
 				));
 			}
+			else
+			{
+				$fieldset->add_field(new FormFieldHidden('shoutbox_pseudo', $row['login']));
+			}
 			$fieldset->add_field(new FormFieldRichTextEditor('shoutbox_contents', $LANG['message'], $row['contents'], array(
 				'formatter' => $formatter, 
 				'rows' => 10, 'cols' => 47, 'required' => true)
 			));
 			$form->add_fieldset($fieldset);
+			$form->add_button(new FormButtonSubmit($LANG['update'], $LANG['update']));
 			$form->add_button(new FormButtonReset());
-            $form->add_button(new FormButtonSubmit($LANG['update'], $LANG['update']));
-			
-            $Template->put('SHOUTBOX_FORM', $form->display());
+
+			$Template->put('SHOUTBOX_FORM', $form->display());
 			
 			$Template->pparse('shoutbox'); 
 		}
 		elseif ($update_message)
 		{
-			$shout_contents = retrieve(POST, 'shoutboxform_shoutbox_contents', '', TSTRING_PARSE);			
+			$shout_contents = retrieve(POST, 'shoutboxform_shoutbox_contents', '', TSTRING_PARSE);
 			$shout_pseudo = retrieve(POST, 'shoutboxform_shoutbox_pseudo', $LANG['guest']);
 			$shout_pseudo = empty($shout_pseudo) && $User->check_level(User::MEMBER_LEVEL) ? $User->get_attribute('login') : $shout_pseudo;
 			if (!empty($shout_contents) && !empty($shout_pseudo))

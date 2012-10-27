@@ -127,9 +127,10 @@ class ShoutboxModuleMiniMenu extends ModuleMiniMenu
 	    	));
 	
 	    	$array_class = array('member', 'modo', 'admin');
-	    	$result = $Sql->query_while("SELECT id, login, user_id, level, contents
-	    	FROM " . PREFIX . "shoutbox
-	    	ORDER BY timestamp DESC
+	    	$result = $Sql->query_while("SELECT s.id, s.login, s.user_id, s.level, s.contents, m.login as mlogin
+	    	FROM " . PREFIX . "shoutbox s
+			LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = s.user_id
+	    	ORDER BY s.timestamp DESC
 	    	" . $Sql->limit(0, 25), __LINE__, __FILE__);
 	    	while ($row = $Sql->fetch_assoc($result))
 	    	{
@@ -142,7 +143,7 @@ class ShoutboxModuleMiniMenu extends ModuleMiniMenu
 	    			$del_message = '';
 	
 	    		if ($row['user_id'] !== -1)
-	    			$row['login'] = $del_message . ' <a style="font-size:10px;" class="' . $array_class[$row['level']] . '" href="' . UserUrlBuilder::profile($row['user_id'])->absolute() . '">' . (!empty($row['login']) ? TextHelper::wordwrap_html($row['login'], 16) : $LANG['guest'])  . '</a>';
+	    			$row['login'] = $del_message . ' <a style="font-size:10px;" class="' . $array_class[$row['level']] . '" href="' . UserUrlBuilder::profile($row['user_id'])->absolute() . '">' . (!empty($row['mlogin']) ? TextHelper::wordwrap_html($row['mlogin'], 16) : $LANG['guest'])  . '</a>';
 	    		else
 	    			$row['login'] = $del_message . ' <span class="text_small" style="font-style: italic;">' . (!empty($row['login']) ? TextHelper::wordwrap_html($row['login'], 16) : $LANG['guest']) . '</span>';
 	

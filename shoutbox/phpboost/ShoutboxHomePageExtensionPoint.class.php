@@ -112,8 +112,8 @@ class ShoutboxHomePageExtensionPoint implements HomePageExtensionPoint
 		));
 		
 		$form->add_fieldset($fieldset);
-		$form->add_button(new FormButtonReset());
 		$form->add_button(new FormButtonDefaultSubmit());
+		$form->add_button(new FormButtonReset());
 		
 		$tpl->put('SHOUTBOX_FORM', $form->display());
 		
