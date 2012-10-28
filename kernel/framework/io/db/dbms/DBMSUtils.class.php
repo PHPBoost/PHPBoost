@@ -47,7 +47,7 @@ interface DBMSUtils
 
 	function list_tables();
 
-	function list_and_desc_tables();
+	function list_and_desc_tables($with_prefix = false);
 
 	function desc_table($table);
 
