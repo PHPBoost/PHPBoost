@@ -89,11 +89,12 @@ class MySQLDBMSUtils implements DBMSUtils
 		return $tables;
 	}
 
-	public function list_and_desc_tables()
+	public function list_and_desc_tables($with_prefix = false)
 	{
 		$tables = array();
-		$results = $this->select('SHOW TABLE STATUS FROM `' . $this->get_database_name() .
-			'`;');
+		$like_prefix = $with_prefix ? ' LIKE \'' . PREFIX . '%\'' : '';
+		$results = $this->select('SHOW TABLE STATUS FROM `' . $this->get_database_name() . '`' .
+			$like_prefix . ';');
 		foreach ($results as $table)
 		{
 			$tables[$table['Name']] = array(

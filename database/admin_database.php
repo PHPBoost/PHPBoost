@@ -396,7 +396,7 @@ else
 		$i = 0;
 		
 		list($nbr_rows, $nbr_data, $nbr_free) = array(0, 0, 0);
-		foreach (PersistenceContext::get_dbms_utils()->list_and_desc_tables() as $key => $table_info)
+		foreach (PersistenceContext::get_dbms_utils()->list_and_desc_tables(true) as $key => $table_info)
 		{	
 			$free = NumberHelper::round($table_info['data_free']/1024, 1);
 			$data = NumberHelper::round(($table_info['data_length'] + $table_info['index_length'])/1024, 1);
