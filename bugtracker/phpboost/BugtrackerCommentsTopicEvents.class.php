@@ -78,11 +78,10 @@ class BugtrackerCommentsTopicEvents extends CommentsTopicEvents
 			
 			if (($pm_activated == true) && $current_user->get_attribute('user_id') != $updater_id)
 			{
-				$Privatemsg = new PrivateMsg();
-				$Privatemsg->start_conversation(
+				PrivateMsg::start_conversation(
 					$updater_id, 
 					sprintf($lang['bugs.pm.comment.title'], $lang['bugs.module_title'], $bug_id, $current_user->get_login()), 
-					sprintf($lang['bugs.pm.comment.contents'], $current_user->get_login(), $bug_id, $comment, '[url]' . HOST . DIR . '/bugtracker/bugtracker.php?view&id=' . $bug_id . '&com=0#comments_list[/url]'), 
+					nl2br(sprintf($lang['bugs.pm.comment.contents'], $current_user->get_login(), $bug_id, $comment, '<a href="' . HOST . DIR . '/bugtracker/bugtracker.php?view&id=' . $bug_id . '&com=0#comments_list">' . HOST . DIR . '/bugtracker/bugtracker.php?view&id=' . $bug_id . '&com=0#comments_list</a>')), 
 					'-1', 
 					PrivateMsg::SYSTEM_PM
 				);

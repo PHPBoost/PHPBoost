@@ -290,10 +290,8 @@ elseif ($action == 'punish') //Gestion des utilisateurs
 			{
 				if (!empty($readonly_contents) && !empty($readonly))
 				{
-
-
 					//Envoi du message.
-					PrivateMsg::start_conversation($info_mbr['user_id'], addslashes($LANG['read_only_title']), str_replace('%date', gmdate_format('date_format', $readonly), $readonly_contents), '-1', PrivateMsg::SYSTEM_PM);
+					PrivateMsg::start_conversation($info_mbr['user_id'], addslashes($LANG['read_only_title']), nl2br(str_replace('%date', gmdate_format('date_format', $readonly), $readonly_contents)), '-1', PrivateMsg::SYSTEM_PM);
 				}
 			}
 
@@ -461,11 +459,8 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 				{
 					if (!empty($warning_contents))
 					{
-
-						$PrivateMsg = new PrivateMsg();
-
 						//Envoi du message.
-						PrivateMsg::start_conversation($info_mbr['user_id'], addslashes($LANG['warning_title']), $warning_contents, '-1', PrivateMsg::SYSTEM_PM);
+						PrivateMsg::start_conversation($info_mbr['user_id'], addslashes($LANG['warning_title']), nl2br($warning_contents), '-1', PrivateMsg::SYSTEM_PM);
 					}
 				}
 

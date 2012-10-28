@@ -336,11 +336,10 @@ else if (isset($_GET['delete']) && is_numeric($id)) //Suppression du bug.
 	{
 		if (($pm_activated == true) && $User->get_attribute('user_id') != $updater_id)
 		{
-			$Privatemsg = new PrivateMsg();
-			$Privatemsg->start_conversation(
+			PrivateMsg::start_conversation(
 				$updater_id, 
 				sprintf($LANG['bugs.pm.delete.title'], $LANG['bugs.module_title'], $id, $User->get_login()), 
-				sprintf($LANG['bugs.pm.delete.contents'], $User->get_login(), $id, '[url]' . HOST . DIR . '/bugtracker/bugtracker.php?view&id=' . $id . '[/url]'), 
+				nl2br(sprintf($LANG['bugs.pm.delete.contents'], $User->get_login(), $id, '<a href="' . HOST . DIR . '/bugtracker/bugtracker.php?view&id=' . $id . '">' . HOST . DIR . '/bugtracker/bugtracker.php?view&id=' . $id . '</a>')), 
 				'-1', 
 				PrivateMsg::SYSTEM_PM
 			);
@@ -393,11 +392,10 @@ else if (isset($_GET['reject']) && is_numeric($id)) //Rejeter un bug
 	{
 		if (($pm_activated == true) && $User->get_attribute('user_id') != $updater_id)
 		{
-			$Privatemsg = new PrivateMsg();
-			$Privatemsg->start_conversation(
+			PrivateMsg::start_conversation(
 				$updater_id, 
 				sprintf($LANG['bugs.pm.reject.title'], $LANG['bugs.module_title'], $id, $User->get_login()), 
-				sprintf($LANG['bugs.pm.reject.contents'], $User->get_login(), $id, '[url]' . HOST . DIR . '/bugtracker/bugtracker.php?view&id=' . $id . '[/url]'), 
+				nl2br(sprintf($LANG['bugs.pm.reject.contents'], $User->get_login(), $id, '<a href="' . HOST . DIR . '/bugtracker/bugtracker.php?view&id=' . $id . '">' . HOST . DIR . '/bugtracker/bugtracker.php?view&id=' . $id . '</a>')), 
 				'-1', 
 				PrivateMsg::SYSTEM_PM
 			);
@@ -450,11 +448,10 @@ else if (isset($_GET['reopen']) && is_numeric($id)) //Ré-ouvrir un bug
 	{
 		if (($pm_activated == true) && $User->get_attribute('user_id') != $updater_id)
 		{
-			$Privatemsg = new PrivateMsg();
-			$Privatemsg->start_conversation(
+			PrivateMsg::start_conversation(
 				$updater_id, 
 				sprintf($LANG['bugs.pm.reopen.title'], $LANG['bugs.module_title'], $id, $User->get_login()), 
-				sprintf($LANG['bugs.pm.reopen.contents'], $User->get_login(), $id, '[url]' . HOST . DIR . '/bugtracker/bugtracker.php?view&id=' . $id . '[/url]'), 
+				nl2br(sprintf($LANG['bugs.pm.reopen.contents'], $User->get_login(), $id, '<a href="' . HOST . DIR . '/bugtracker/bugtracker.php?view&id=' . $id . '">' . HOST . DIR . '/bugtracker/bugtracker.php?view&id=' . $id . '</a>')), 
 				'-1', 
 				PrivateMsg::SYSTEM_PM
 			);
@@ -613,11 +610,10 @@ else if (!empty($_POST['valid_edit']) && is_numeric($id))
 			// Envoi d'un MP à l'utilisateur auquel a été affecté le bug
 			if (($pm_activated == true) && !empty($assigned_to_id) && ($old_values['assigned_to_id'] != $assigned_to_id) && ($User->get_attribute('user_id') != $assigned_to_id))
 			{
-				$Privatemsg = new PrivateMsg();
-				$Privatemsg->start_conversation(
+				PrivateMsg::start_conversation(
 					$assigned_to_id, 
 					sprintf($LANG['bugs.pm.assigned.title'], $LANG['bugs.module_title'], $id, $User->get_login()), 
-					sprintf($LANG['bugs.pm.assigned.contents'], '[url]' . HOST . DIR . '/bugtracker/bugtracker.php?view&id=' . $id . '[/url]'), 
+					nl2br(sprintf($LANG['bugs.pm.assigned.contents'], '<a href="' . HOST . DIR . '/bugtracker/bugtracker.php?view&id=' . $id . '">' . HOST . DIR . '/bugtracker/bugtracker.php?view&id=' . $id . '</a>')), 
 					'-1', 
 					PrivateMsg::SYSTEM_PM
 				);
@@ -689,11 +685,10 @@ else if (!empty($_POST['valid_edit']) && is_numeric($id))
 			{
 				if (($pm_activated == true) && $User->get_attribute('user_id') != $updater_id)
 				{
-					$Privatemsg = new PrivateMsg();
-					$Privatemsg->start_conversation(
+					PrivateMsg::start_conversation(
 						$updater_id, 
 						sprintf($LANG['bugs.pm.edit.title'], $LANG['bugs.module_title'], $id, $User->get_login()), 
-						sprintf($LANG['bugs.pm.edit.contents'], $User->get_login(), $id, $mp_comment, '[url]' . HOST . DIR . '/bugtracker/bugtracker.php?view&id=' . $id . '[/url]'), 
+						nl2br(sprintf($LANG['bugs.pm.edit.contents'], $User->get_login(), $id, $mp_comment, '<a href="' . HOST . DIR . '/bugtracker/bugtracker.php?view&id=' . $id . '">' . HOST . DIR . '/bugtracker/bugtracker.php?view&id=' . $id . '</a>')), 
 						'-1', 
 						PrivateMsg::SYSTEM_PM
 					);
