@@ -124,7 +124,7 @@ class PrivateMsg
         }
 		
 		//Insertion du message.
-		self::$sql_querier->query_inject("INSERT INTO " . DB_TABLE_PM_MSG . " (idconvers, user_id, contents, timestamp, view_status) VALUES('" . $pm_idconvers . "', '" . $pm_from . "', '" . FormatingHelper::strparse($pm_contents) . "', '" . time() . "', 0)", __LINE__, __FILE__);
+		self::$sql_querier->query_inject("INSERT INTO " . DB_TABLE_PM_MSG . " (idconvers, user_id, contents, timestamp, view_status) VALUES('" . $pm_idconvers . "', '" . $pm_from . "', '" . addslashes($pm_contents) . "', '" . time() . "', 0)", __LINE__, __FILE__);
 		$pm_msg_id = self::$sql_querier->insert_id("SELECT MAX(id) FROM " . PREFIX . "pm_msg");
 		
 		//On modifie le statut de la conversation.

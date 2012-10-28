@@ -66,11 +66,11 @@ class Forum
 			$previous_msg_id = $Sql->query("SELECT MAX(id) FROM " . PREFIX . "forum_msg WHERE idtopic = '" . $idtopic . "' AND id < '" . $last_msg_id . "'", __LINE__, __FILE__);
 
 			$title_subject = TextHelper::html_entity_decode($title);
-			$title_subject_pm = '[url=' . HOST . DIR . '/forum/topic' . url('.php?id=' . $idtopic . $last_page, '-' . $idtopic . $last_page_rewrite . '.php') . '#m' . $previous_msg_id . ']' . $title_subject . '[/url]';
+			$title_subject_pm = '<a href="' . HOST . DIR . '/forum/topic' . url('.php?id=' . $idtopic . $last_page, '-' . $idtopic . $last_page_rewrite . '.php') . '#m' . $previous_msg_id . '">' . $title_subject . '</a>';
 			if ($User->get_attribute('user_id') > 0)
 			{
 				$pseudo = $Sql->query("SELECT login FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__);
-				$pseudo_pm = '[url='. UserUrlBuilder::profile($User->get_attribute('user_id'))->absolute() .']' . $pseudo . '[/url]';
+				$pseudo_pm = '<a href="'. UserUrlBuilder::profile($User->get_attribute('user_id'))->absolute() .'">' . $pseudo . '</a>';
 			}
 			else
 			{
@@ -103,10 +103,16 @@ class Forum
 				//Envoi un MP à ceux dont le last_view_id est le message précedent.
 				if ($row['last_view_id'] == $previous_msg_id && $row['pm'] == '1')
 				{
+					$content = sprintf($LANG['forum_mail_new_post'], $row['login'], $title_subject_pm, $User->get_attribute('login'), $preview_contents, '<a href="'.$next_msg_link.'">'.$next_msg_link.'</a>', '<a href="' . HOST . DIR . '/forum/action.php?ut=' . $idtopic . '&trt=2>' . HOST . DIR . '/forum/action.php?ut=' . $idtopic . '&trt=2</a>'); 
+					if (!MAGIC_QUOTES)
+					{
+						$content = addslashes($content);
+					}
+					
 					PrivateMsg::start_conversation(
 						$row['user_id'], 
-						addslashes($LANG['forum_mail_title_new_post']), 
-						sprintf($LANG['forum_mail_new_post'], $row['login'], $title_subject_pm, $User->get_attribute('login'), $preview_contents, '[url]'.$next_msg_link.'[/url]', '[url]' . HOST . DIR . '/forum/action.php?ut=' . $idtopic . '&trt=2[/url]'), 
+						$LANG['forum_mail_title_new_post'], 
+						nl2br($content), 
 						'-1', 
 						PrivateMsg::SYSTEM_PM
 					);

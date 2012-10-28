@@ -178,7 +178,7 @@ class MemberSanctionManager
 	
 	private static function send_mp($user_id, $title, $content)
 	{
-		PrivateMsg::start_conversation($user_id, addslashes($title), $content, '-1', PrivateMsg::SYSTEM_PM);
+		PrivateMsg::start_conversation($user_id, addslashes($title), nl2br($content), '-1', PrivateMsg::SYSTEM_PM);
 	}
 	
 	private static function send_mail($user_id, $title, $content)
