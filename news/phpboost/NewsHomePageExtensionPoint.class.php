@@ -127,7 +127,8 @@ class NewsHomePageExtensionPoint implements HomePageExtensionPoint
 			}
 			$tpl->put_all(array('PAGINATION' => $show_pagin));
 
-			if($NEWS_CONFIG['type'] ==1 || $NEWS_CONFIG['type'] ==0)
+			// News en bloc => news_cat.tpl
+			if($NEWS_CONFIG['type'] == 1)
 			{
 				if ($NEWS_CONFIG['nbr_column'] > 1)
 				{
@@ -136,15 +137,11 @@ class NewsHomePageExtensionPoint implements HomePageExtensionPoint
 					$column_width = floor(100 / $NEWS_CONFIG['nbr_column']);
 
 					$tpl->put_all(array(
-						'C_NEWS_LINK_COLUMN' => true,
+						'C_NEWS_BLOCK_COLUMN' => true,
 						'COLUMN_WIDTH' => $column_width
 					));
 				}
-			}
-			// News en bloc => news_cat.tpl
-			if($NEWS_CONFIG['type'] == 1)
-			{
-
+				
 				$result = $this->sql_querier->query_while("SELECT n.contents, n.extend_contents, n.title, n.id, n.idcat, n.timestamp, n.start, n.user_id, n.img, n.alt, m.login, m.level
 					FROM " . DB_TABLE_NEWS . " n
 					LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = n.user_id
@@ -202,7 +199,18 @@ class NewsHomePageExtensionPoint implements HomePageExtensionPoint
 			// News en list => news_list.tpl
 			else
 			{
+				if ($NEWS_CONFIG['nbr_column'] > 1)
+				{
+					$i = 0;
+					$NEWS_CONFIG['nbr_column'] = !empty($NEWS_CONFIG['nbr_column']) ? $NEWS_CONFIG['nbr_column'] : 1;
+					$column_width = floor(100 / $NEWS_CONFIG['nbr_column']);
 
+					$tpl->put_all(array(
+						'C_NEWS_LINK_COLUMN' => true,
+						'COLUMN_WIDTH' => $column_width
+					));
+				}
+				
 				$result = $this->sql_querier->query_while("SELECT n.id, n.idcat, n.title, n.timestamp, n.start, com.number_comments
 					FROM " . DB_TABLE_NEWS . " n 
 					LEFT JOIN " . DB_TABLE_COMMENTS_TOPIC . " com ON com.id_in_module = n.id AND com.module_id = 'news'" . $where . "

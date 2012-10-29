@@ -83,6 +83,7 @@
            	<div class="module_bottom"></div>
 		</div>
 		# ELSE #
+			<div style="overflow:hidden;">
 			# START news #
 			# IF news.C_NEWS_ROW #
 				<div class="spacer"></div>
@@ -133,6 +134,6 @@
 	    		</div>
 			</div>
 			# END news #
-
+			</div>
 			# IF PAGINATION #<div class="text_center">{PAGINATION}</div># ENDIF #
 		# ENDIF #
