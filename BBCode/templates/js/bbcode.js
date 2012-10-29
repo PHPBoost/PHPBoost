@@ -540,7 +540,7 @@ var BBcodeEditor_Core = Class.create(
 			{
 				menu.observe('mouseleave', function(e) {
 					if(this.id)
-						Element.fade.delay(0.5, this, {duration: 0.1});
+						Element.fade.delay(1.5, this, {duration: 0.1});
 				});
 			}
 		}.bind(this));
@@ -586,8 +586,7 @@ var BBcodeEditor_Core = Class.create(
 			'position':'relative',
 			'zIndex':100,
 			'float':'left',
-			'display':'none',
-			'marginLeft':'-50px'
+			'display':'none'
 		});
 				
 		var elt = new Element('div', {'class':'bbcode_block'});
@@ -641,7 +640,7 @@ var BBcodeEditor_Core = Class.create(
 			'position':'relative',
 			'zIndex':100,
 			'float':'left',
-			'display':'none'
+			'display':'none',
 		});
 				
 		var elt = new Element('div', {
@@ -753,7 +752,7 @@ var BBcodeEditor_Core = Class.create(
 		});
 				
 		var elt = new Element('div', {'class':'bbcode_block'});
-		elt.setStyle({'marginLeft':'360px'});
+		elt.setStyle({'marginLeft':'160px'});
 		var sel = new Element('select', {'id': index+this.element});
 		var fn = this.callbackChangeSelect(index, index);
 		sel.observe('change', fn);
