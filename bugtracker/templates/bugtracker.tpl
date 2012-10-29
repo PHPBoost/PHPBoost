@@ -672,9 +672,10 @@
 				<p>{L_REQUIRE}</p>
 				<dl>
 					<dt><label for="title">* {L_TITLE}</label></dt>
-					<dd><label><input type="text" size="40" maxlength="200" id="title" name="title" class="text" /></label></dd>
+					<dd><label><input type="text" size="50" maxlength="200" id="title" name="title" class="text" /></label></dd>
 				</dl>
 				<label for="contents">* {L_CONTENT}</label>
+				<br /><span>{L_CONTENT_EXPLAIN}</span>
 				<div style="position:relative;display:none;" id="loading_previewcontents">
 					<div style="margin:auto;margin-top:90px;width:100%;text-align:center;position:absolute;"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/loading.gif" alt="" /></div>
 				</div>
@@ -922,9 +923,10 @@
 				# ENDIF #
 				<dl>
 					<dt><label for="title">* {L_TITLE}</label></dt>
-					<dd><label><input type="text" size="40" maxlength="200" id="title" name="title" value="{edit.TITLE}" class="text" /></label></dd>
+					<dd><label><input type="text" size="50" maxlength="200" id="title" name="title" value="{edit.TITLE}" class="text" /></label></dd>
 				</dl>
 				<label for="contents">* {L_CONTENT}</label>
+				<br /><span>{L_CONTENT_EXPLAIN}</span>
 				<div style="position:relative;display:none;" id="loading_previewcontents">
 					<div style="margin:auto;margin-top:90px;width:100%;text-align:center;position:absolute;"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/loading.gif" alt="" /></div>
 				</div>

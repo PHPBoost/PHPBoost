@@ -54,7 +54,7 @@ $lang['bugtracker.config.priorities.high'] = 'Elevée';
 $lang['bugtracker.config.priorities.urgent'] = 'Urgente';
 
 //Message de contenu par défaut
-$lang['bugtracker.config.contents_value'] = 'Merci de nous donner les informations demandées ci-dessous, elles nous seront utiles pour la résolution du bug :<br />
+$lang['bugtracker.config.contents_value'] = '
 Système d\'exploitation :<br />
 Navigateur Web :<br />
 Version de phpboost :<br />

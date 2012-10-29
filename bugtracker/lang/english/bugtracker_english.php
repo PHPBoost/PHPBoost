@@ -158,6 +158,7 @@ $LANG['bugs.status.reopen'] = 'Reopen';
 $LANG['bugs.status.rejected'] = 'Rejected';
 
 //Explainations
+$LANG['bugs.explain.contents'] = 'Useful details to treat the bug';
 $LANG['bugs.explain.roadmap'] = 'Displays the fixed bug list for each version';
 $LANG['bugs.explain.pm'] = 'A PM will be send in the following situations :<br />
 - New bug comment<br />
