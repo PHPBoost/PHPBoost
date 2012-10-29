@@ -211,7 +211,7 @@ class FaqHomePageExtensionPoint implements HomePageExtensionPoint
 			'THEME' => get_utheme(),
 			'C_ADMIN' => $User->check_level(User::ADMIN_LEVEL),
 			'U_MANAGEMENT' => PATH_TO_ROOT . url('/faq/management.php?faq=' . $id_faq),
-			'U_ADMIN_CAT' => $id_faq > 0 ? url('/faq/admin_faq_cats.php?edit=' . $id_faq) : url('admin_faq_cats.php'),
+			'U_ADMIN_CAT' => $id_faq > 0 ? url(PATH_TO_ROOT . '/faq/admin_faq_cats.php?edit=' . $id_faq) : url('admin_faq_cats.php'),
 			'ID_FAQ' => $id_faq,
 		));
 
