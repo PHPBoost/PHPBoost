@@ -15,14 +15,21 @@
 	<div id="footer">
 		<div id="footer_columns_container">
 			<div class="footer_columns">
-				<div class="footer_columns_title"> Les parternaires </div>
-				<p style="font-size:9px;color:#dfa959;line-height:0px;margin-bottom: 0px;font-weight:bold;">Hebergement de site web</p>
-				<img src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/nuxit.png" align="center" />
-				<p style="font-size:9px;font-style:italic;color:#8bb9ff;">Qualité, fiabilité, Support</p>
+				<div class="footer_columns_title">
+					<img src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/partners.png" align="center"  width="25px" />
+					Les parternaires
+				</div>
+				<div class="footer_columns_partners">
+					<p style="font-size:9px;color:#dfa959;line-height:0px;margin-bottom: 0px;font-weight:bold;">Hebergement de site web</p>
+					<img src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/nuxit.png" align="center" />
+					<p style="font-size:9px;font-style:italic;color:#8bb9ff;">Qualité, fiabilité, Support</p>
+				</div>
 			</div>
-			<div class="footer_columns phpboost">
-				<div class="footer_columns_title"> Le projet PHPBoost </div>
-				<!--  <img src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/logo.png" align="center"  width="60px" />  -->
+			<div class="footer_columns">
+				<div class="footer_columns_title"> 
+					<img src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/logo.png" align="center"  width="25px" />
+					Le projet PHPBoost
+				</div>
 				<ul>
 					<li><a href="#">Fonctionnalités</a></li>
 					<li><a href="#">Telecharger</a></li>
@@ -31,7 +38,10 @@
 				</ul>
 			</div>	
 			<div class="footer_columns">
-				<div class="footer_columns_title"> Participer au Projet </div>
+				<div class="footer_columns_title">
+					<img src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/community.png" align="center"  width="25px" />
+					Participer au Projet
+				</div>
 				<ul>
 					<li><a href="#">Créer un Thème</a></li>
 					<li><a href="#">Créer un Module</a></li>
@@ -40,7 +50,10 @@
 				</ul>
 			</div>	
 			<div class="footer_columns">
-				<div class="footer_columns_title"> Support PHPBoost </div>
+				<div class="footer_columns_title">
+					<img src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/support.png" align="center"  width="25px" />
+					Support PHPBoost
+				</div>
 				<ul>
 					<li><a href="#">FAQ</a></li>
 					<li><a href="#">Forum</a></li>
