@@ -32,9 +32,9 @@
 				</div>
 				<ul>
 					<li><a href="#">Fonctionnalités</a></li>
-					<li><a href="#">Telecharger</a></li>
+					<li><a href="#">Télécharger</a></li>
 					<li><a href="#">Demonstration</a></li>
-					<li><a href="#">Soutenir</a></li>
+					<li><a href="#">Soutenir le projet</a></li>
 				</ul>
 			</div>	
 			<div class="footer_columns">
@@ -45,7 +45,7 @@
 				<ul>
 					<li><a href="#">Créer un Thème</a></li>
 					<li><a href="#">Créer un Module</a></li>
-					<li><a href="#">API</a></li>
+					<li><a href="#">A.P.I.</a></li>
 					<li><a href="#">La documentation</a></li>
 				</ul>
 			</div>	
@@ -55,9 +55,9 @@
 					Support PHPBoost
 				</div>
 				<ul>
-					<li><a href="#">FAQ</a></li>
-					<li><a href="#">Forum</a></li>
-					<li><a href="#">news</a></li>
+					<li><a href="#">Foire aux Questions</a></li>
+					<li><a href="#">Le Forum</a></li>
+					<li><a href="#">Les news</a></li>
 				</ul>
 			</div>	
 		</div>
