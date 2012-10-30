@@ -48,8 +48,6 @@ class NewsFeedProvider implements FeedProvider
 
 		$idcat = !empty($NEWS_CAT[$idcat]) ? $idcat : 0;
 
-		$now = new Date(DATE_NOW, TIMEZONE_AUTO);
-
 		load_module_lang('news');
 
 		$site_name = GeneralConfig::load()->get_site_name();
@@ -69,7 +67,7 @@ class NewsFeedProvider implements FeedProvider
 
 		// Build array with the children categories.
 		$array_cat = array();
-		$news_cat->build_children_id_list($idcat, $array_cat, RECURSIVE_EXPLORATION, ($idcat == 0 ? DO_NOT_ADD_THIS_CATEGORY_IN_LIST : ADD_THIS_CATEGORY_IN_LIST));
+		$news_cat->build_children_id_list($idcat, $array_cat, RECURSIVE_EXPLORATION, ADD_THIS_CATEGORY_IN_LIST);
 
 		if (!empty($array_cat))
 		{
@@ -78,7 +76,6 @@ class NewsFeedProvider implements FeedProvider
                  FROM ' . DB_TABLE_NEWS . '
                  WHERE visible = 1 AND idcat IN :cats_ids
                  ORDER BY timestamp DESC LIMIT :limit OFFSET 0', array(
-                     'timestamp' => $now->get_timestamp(),
 			         'cats_ids' => $array_cat,
 			         'limit' => 2 * $NEWS_CONFIG['pagination_news']));
 
