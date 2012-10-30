@@ -175,7 +175,7 @@ class User
 	
 	public function get_timezone()
 	{
-		if (!empty($this->timezone))
+		if ($this->timezone === null)
 		{
 			return $this->timezone;
 		}
