@@ -94,8 +94,13 @@
 					<li><a href="${relative_url(AdminCacheUrlBuilder::configuration())}" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/config_mini.png);">{L_CONFIGURATION}</a></li>
 				</ul>
 			</li>		
-			<li><a href="{PATH_TO_ROOT}/admin/admin_errors.php" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/errors_mini.png);">{L_ERRORS}</a></li>
-			<li class="extend" onmouseover="show_menu(33, 1);" onmouseout="hide_menu(1);">
+			<li class="extend" onmouseover="show_menu(34, 1);" onmouseout="hide_menu(1);">
+				<a href="${relative_url(AdminErrorsUrlBuilder::logged_errors())}" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/errors_mini.png);">{L_ERRORS}</a>
+				<ul id="ssmenu34">
+					<li><a href="${relative_url(AdminErrorsUrlBuilder::logged_errors())}" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/errors_mini.png);">{L_ERRORS}</a></li>
+					<li><a href="${relative_url(AdminErrorsUrlBuilder::list_404_errors())}" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/errors_mini.png);">{L_404_ERRORS}</a></li>
+				</ul>
+			</li><li class="extend" onmouseover="show_menu(33, 1);" onmouseout="hide_menu(1);">
 				<a href="{PATH_TO_ROOT}/admin/admin_system_report.php" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/server_mini.png);">{L_SERVER}</a>
 				<ul id="ssmenu33">
 					<li><a href="{PATH_TO_ROOT}/admin/admin_phpinfo.php" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/phpinfo_mini.png);">{L_PHPINFO}</a></li>

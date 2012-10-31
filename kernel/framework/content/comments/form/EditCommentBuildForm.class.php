@@ -92,7 +92,7 @@ class EditCommentBuildForm extends AbstractCommentsBuildForm
 	
 	private function get_formatter()
 	{
-		$formatter = AppContext::get_content_formatting_service()->create_factory();
+		$formatter = AppContext::get_content_formatting_service()->get_default_factory();
 		$formatter->set_forbidden_tags($this->comments_configuration->get_forbidden_tags());
 		return $formatter;
 	}
