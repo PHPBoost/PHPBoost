@@ -240,6 +240,7 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 			'L_SYNDICATION_CACHE' => $subheader_lang['tools.cache.syndication'],
 			'L_CSS_CACHE_CONFIG' => $subheader_lang['tools.cache.css'],
 			'L_ERRORS' => $subheader_lang['tools.errors-archived'],
+			'L_404_ERRORS' => $subheader_lang['tools.404-errors-archived'],
 			'L_SERVER' => $subheader_lang['tools.server'],
 			'L_PHPINFO' => $subheader_lang['tools.server.phpinfo'],
 			'L_SYSTEM_REPORT' => $subheader_lang['tools.server.system-report'],

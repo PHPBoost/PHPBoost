@@ -82,7 +82,7 @@ class GuestbookHomePageExtensionPoint implements HomePageExtensionPoint
 			
 			$is_guest = $is_edition_mode ? $user_id == -1 : !$User->check_level(User::MEMBER_LEVEL);
 
-			$formatter = AppContext::get_content_formatting_service()->create_factory();
+			$formatter = AppContext::get_content_formatting_service()->get_default_factory();
 			$formatter->set_forbidden_tags($guestbook_config->get_forbidden_tags());
 				
 			//Post form

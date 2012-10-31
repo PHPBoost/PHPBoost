@@ -212,7 +212,8 @@ class AdminMemberEditController extends AdminController
 		}
 		
 		$password = $this->form->get_value('password');
-		if (!empty($password) && !empty($this->form->get_value('password_bis')))
+		$password_bis = $this->form->get_value('password_bis');
+		if (!empty($password) && !empty($password_bis))
 		{
 			UserService::change_password(KeyGenerator::string_hash($password), 'WHERE user_id=:user_id', array('user_id' => $user_id));
 		}
