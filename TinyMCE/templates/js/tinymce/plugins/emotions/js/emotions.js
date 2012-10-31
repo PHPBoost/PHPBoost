@@ -31,8 +31,8 @@ var EmotionsDialog = {
 
 		tinyMCEPopup.execCommand('mceInsertContent', false, dom.createHTML('img', {
 			src : '../images/smileys/' + file,
-			alt : ed.getLang(title),
-			title : ed.getLang(title),
+			alt : title,
+			title : title,
 			border : 0
 		}));
 
