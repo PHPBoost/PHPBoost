@@ -121,6 +121,7 @@ class NewsletterSetup extends DefaultModuleSetup
 	private function create_newsletter_subscribtions_table()
 	{
 		$fields = array(
+			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
 			'stream_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1),
 			'subscriber_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1)
 		);
