@@ -44,25 +44,6 @@ $LANG['action'] = 'Action';
 $LANG['no_current_action'] = 'Aucun évenement pour cette date';
 $LANG['edit_event'] = 'Editer l\'événement';
 $LANG['add_event'] = 'Ajouter un évènement';
-$LANG['january'] = 'Janvier';
-$LANG['february'] = 'Février';
-$LANG['march'] = 'Mars';
-$LANG['april'] = 'Avril';
-$LANG['may'] = 'Mai';
-$LANG['june'] = 'Juin';
-$LANG['july'] = 'Juillet';
-$LANG['august'] = 'Août';
-$LANG['september'] = 'Septembre';
-$LANG['october'] = 'Octobre';
-$LANG['november'] = 'Novembre';
-$LANG['december'] = 'Décembre';
-$LANG['monday'] = 'Lun';
-$LANG['tuesday'] = 'Mar';
-$LANG['wenesday'] = 'Mer';
-$LANG['thursday'] = 'Jeu';
-$LANG['friday'] = 'Ven';
-$LANG['saturday'] = 'Sam';
-$LANG['sunday']	= 'Dim';
 
 //Erreurs
 $LANG['e_invalid_date'] = 'Date entrée invalide';
