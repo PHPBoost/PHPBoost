@@ -47,7 +47,10 @@ class Countries
 	
 	public static function __static()
 	{
-		self::build_contries();
+		if (empty(self::$countries))
+		{
+			self::build_contries();
+		}
 	}
 	
 	public static function get_contries()
