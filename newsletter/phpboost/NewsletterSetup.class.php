@@ -130,7 +130,7 @@ class NewsletterSetup extends DefaultModuleSetup
 			'primary' => array('id')
 		);
 		
-		PersistenceContext::get_dbms_utils()->create_table(self::$newsletter_table_subscribtions, $options);
+		PersistenceContext::get_dbms_utils()->create_table(self::$newsletter_table_subscribtions, $fields, $options);
 	}
 	
 	private function create_field_member()
