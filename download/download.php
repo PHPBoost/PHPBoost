@@ -60,7 +60,7 @@ if ($file_id > 0) //Contenu
 		'KERNEL_NOTATION' => NotationService::display_active_image($notation),
 		'HITS' => sprintf($DOWNLOAD_LANG['n_times'], (int)$download_info['count']),
 		'NUM_NOTES' => sprintf($DOWNLOAD_LANG['num_notes'], (int)NotationService::get_number_notes($notation)),
-		'U_IMG' => $download_info['image'],
+		'U_IMG' => Url::to_absolute($download_info['image']),
 		'IMAGE_ALT' => str_replace('"', '\"', $download_info['title']),
 		'LANG' => get_ulang(),
 		'U_COM' => '<a href="'. PATH_TO_ROOT .'/download/download' . url('.php?id=' . $file_id . '&amp;com=0', '-' . $file_id . '+' . Url::encode_rewrite($download_info['title']) . '.php?com=0') .'#comments_list">'. CommentsService::get_number_and_lang_comments('download', $file_id) . '</a>',
