@@ -37,6 +37,8 @@ $LANG['date_format_tiny'] = 'm/d';
 $LANG['date_format_short'] = 'm/d/y';
 $LANG['date_format'] = 'm/d/y \a\t H\hi';
 $LANG['date_format_long'] = 'm/d/y \a\t H\hi\m\i\ns\s';
+$LANG['date_format_text_short'] = 'j F Y';
+$LANG['date_format_text_long'] = 'l j F Y';
 $LANG['from_date'] = 'from';
 $LANG['to_date'] = 'to';
 $LANG['now'] = 'Now';
@@ -261,27 +263,6 @@ $LANG['select_all'] = 'Select all';
 $LANG['select_none'] = 'Unselect all';
 $LANG['add_member'] = 'Add a member';
 $LANG['alert_member_already_auth'] = 'The member is already in the list';
-
-//Calendar
-$LANG['january'] = 'January';
-$LANG['february'] = 'February';
-$LANG['march'] = 'March';
-$LANG['april'] = 'April';
-$LANG['may'] = 'May';
-$LANG['june'] = 'June';
-$LANG['july'] = 'July';
-$LANG['august'] = 'August';
-$LANG['september'] = 'September';
-$LANG['october'] = 'October';
-$LANG['november'] = 'November';
-$LANG['december'] = 'December';
-$LANG['monday'] = 'Mon';
-$LANG['tuesday'] = 'Tue';
-$LANG['wenesday'] = 'Wed';
-$LANG['thursday'] = 'Thu';
-$LANG['friday'] = 'Fri';
-$LANG['saturday'] = 'Sat';
-$LANG['sunday'] = 'Sun';
 
 //Members
 $LANG['member_area'] = 'Member Area';

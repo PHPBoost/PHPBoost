@@ -62,29 +62,6 @@ $LANG['top_10_posters'] = 'Top 10: posters';
 $LANG['version'] = 'Version';
 $LANG['colors'] = 'Colors';
 
-//Calendrier
-$LANG['calendar'] = 'Calendar';
-$LANG['events'] = 'Events';
-$LANG['january'] = 'January';
-$LANG['february'] = 'February';
-$LANG['march'] = 'March';
-$LANG['april'] = 'April';
-$LANG['may'] = 'May';
-$LANG['june'] = 'June';
-$LANG['july'] = 'July';
-$LANG['august'] = 'August';
-$LANG['september'] = 'September';
-$LANG['october'] = 'October';
-$LANG['november'] = 'November';
-$LANG['december'] = 'December';
-$LANG['monday'] = 'Mon';
-$LANG['tuesday'] = 'Tue';
-$LANG['wenesday'] = 'Wed';
-$LANG['thursday'] = 'Thu';
-$LANG['friday'] = 'Fri';
-$LANG['saturday'] = 'Sat';
-$LANG['sunday'] = 'Sun';
-
 //Sites référents.
 $LANG['total_visit'] = 'Total visits';
 $LANG['average_visit'] = 'Average visits';

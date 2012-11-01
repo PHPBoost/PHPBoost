@@ -47,6 +47,8 @@ $Template = new FileTemplate('framework/util/mini_calendar_response.tpl');
 //Type date.
 if ($calendar_type == 'date')
 {
+	$date_lang = LangLoader::get('date-common');
+	
     $year = gmdate_format('Y');
     $month = gmdate_format('n');
     $day = gmdate_format('j');
@@ -61,8 +63,8 @@ if ($calendar_type == 'date')
     $bissextile = (date("L", mktime(0, 0, 0, 1, 1, $year)) == 1) ? 29 : 28;
 
     $array_month = array(31, $bissextile, 31, 30, 31, 30 , 31, 31, 30, 31, 30, 31);
-    $array_l_month = array($LANG['january'], $LANG['february'], $LANG['march'], $LANG['april'], $LANG['may'], $LANG['june'],
-    $LANG['july'], $LANG['august'], $LANG['september'], $LANG['october'], $LANG['november'], $LANG['december']);
+    $array_l_month = array($date_lang['january'], $date_lang['february'], $date_lang['march'], $date_lang['april'], $date_lang['may'], $date_lang['june'],
+    $date_lang['july'], $date_lang['august'], $date_lang['september'], $date_lang['october'], $date_lang['november'], $date_lang['december']);
     $month_day = $array_month[$month - 1];
     	
     $Template->put_all(array(
@@ -92,8 +94,8 @@ if ($calendar_type == 'date')
     }
     	
     //Génération des jours du calendrier.
-    $array_l_days =  array($LANG['monday'], $LANG['tuesday'], $LANG['wenesday'], $LANG['thursday'], $LANG['friday'], $LANG['saturday'],
-    $LANG['sunday']);
+    $array_l_days =  array($date_lang['monday_short'], $date_lang['tuesday_short'], $date_lang['wednesday_short'], $date_lang['thursday_short'], $date_lang['friday_short'], $date_lang['saturday_short'],
+    $date_lang['sunday_short']);
     foreach ($array_l_days as $l_day)
     {
         $Template->assign_block_vars('day', array(

@@ -515,25 +515,6 @@ $LANG['version'] = 'Version';
 $LANG['colors'] = 'Couleurs';
 $LANG['calendar'] = 'Calendrier';
 $LANG['events'] = 'Evénements';
-$LANG['january'] = 'Janvier';
-$LANG['february'] = 'Février';
-$LANG['march'] = 'Mars';
-$LANG['april'] = 'Avril';
-$LANG['may'] = 'Mai';
-$LANG['june'] = 'Juin';
-$LANG['july'] = 'Juillet';
-$LANG['august'] = 'Août';
-$LANG['september'] = 'Septembre';
-$LANG['october'] = 'Octobre';
-$LANG['november'] = 'Novembre';
-$LANG['december'] = 'Décembre';
-$LANG['monday'] = 'Lun';
-$LANG['tuesday'] = 'Mar';
-$LANG['wenesday'] = 'Mer';
-$LANG['thursday'] = 'Jeu';
-$LANG['friday'] = 'Ven';
-$LANG['saturday'] = 'Sam';
-$LANG['sunday']	= 'Dim';
 
 // Updates
 $LANG['website_updates'] = 'Mises à jour';
