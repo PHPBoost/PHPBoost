@@ -266,13 +266,7 @@ $LANG['alert_member_already_auth'] = 'Le membre est déjà dans la liste';
 //Membres
 $LANG['member_area'] = 'Zone membre';
 $LANG['profile'] = 'Profil';
-$LANG['profile_edition'] = 'Edition du profil';
-$LANG['previous_password'] = 'Ancien mot de passe';
 $LANG['fill_only_if_modified'] = 'Remplir seulement en cas de modification';
-$LANG['new_password'] = 'Nouveau mot de passe';
-$LANG['confirm_password'] = 'Retapez votre mot de passe';
-$LANG['hide_mail'] = 'Cacher votre email';
-$LANG['hide_mail_who'] = 'Aux autres utilisateurs';
 $LANG['mail_track_topic'] = 'Etre averti par email lors d\'une réponse dans un sujet que vous suivez';
 $LANG['web_site'] = 'Site web';
 $LANG['localisation'] = 'Localisation';

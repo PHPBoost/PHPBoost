@@ -410,54 +410,11 @@ $LANG['days'] = 'jours';
 $LANG['week'] = 'semaine';
 $LANG['month'] = 'mois';
 $LANG['life'] = 'A vie';
-$LANG['confirm_password'] = 'Confirmer le mot de passe';
-$LANG['confirm_password_explain'] = 'Remplir seulement en cas de modification';
-$LANG['hide_mail'] = 'Cacher l\'email';
-$LANG['hide_mail_explain'] = 'Aux autres utilisateurs';
-$LANG['website_explain'] = 'Valide sinon non pris en compte';
-$LANG['member_sign'] = 'Signature';
-$LANG['member_sign_explain'] = 'Apparaît sous chacun de vos messages';
-$LANG['avatar_management'] = 'Gestion avatar';
-$LANG['activ_up_avatar'] = 'Autoriser l\'upload d\'avatar sur le serveur';
-$LANG['enable_auto_resizing_avatar'] = 'Activer le redimensionnement automatique des images';
-$LANG['enable_auto_resizing_avatar_explain'] = 'Attention votre serveur doit avoir l\'extension GD chargée';
-$LANG['current_avatar'] = 'Avatar actuel';
-$LANG['upload_avatar'] = 'Uploader avatar';
-$LANG['upload_avatar_where'] = 'Avatar directement hébergé sur le serveur';
-$LANG['avatar_link'] = 'Lien avatar';
-$LANG['avatar_link_where'] = 'Adresse directe de l\'avatar';
-$LANG['avatar_del'] = 'Supprimer l\'avatar courant';
-$LANG['no_avatar'] = 'Aucun avatar';
-$LANG['weight_max'] = 'Poids maximum';
-$LANG['height_max'] = 'Hauteur maximale';
-$LANG['width_max'] = 'Largeur maximale';
-$LANG['sex'] = 'Sexe';
-$LANG['male'] = 'Homme';
-$LANG['female'] = 'Femme';
-$LANG['verif_code'] = 'Code de vérification visuel';
-$LANG['verif_code_explain'] = 'Bloque les robots';
-$LANG['delay_activ_max'] = 'Durée après laquelle les membres non activés sont effacés';
-$LANG['delay_activ_max_explain'] = 'Laisser vide pour ignorer cette option (Non pris en compte si validation par administrateur)';
-$LANG['activ_mbr'] = 'Mode d\'activation du compte membre';
-$LANG['no_activ_mbr'] = 'Automatique';
-$LANG['allow_theme_mbr'] = 'Permission aux membres de choisir leur thème';
-$LANG['width_max_avatar'] = 'Largeur maximale de l\'avatar';
-$LANG['width_max_avatar_explain'] = 'Par défaut 120';
-$LANG['height_max_avatar'] = 'Hauteur maximale de l\'avatar';
-$LANG['height_max_avatar_explain'] = 'Par défaut 120';
-$LANG['weight_max_avatar'] = 'Poids maximal de l\'avatar en ko';
-$LANG['weight_max_avatar_explain'] = 'Par défaut 20';
-$LANG['avatar_management'] = 'Gestion des avatars';
-$LANG['activ_defaut_avatar'] = 'Activer l\'avatar par défaut';
-$LANG['activ_defaut_avatar_explain'] = 'Met un avatar aux membres qui n\'en ont pas';
-$LANG['url_defaut_avatar'] = 'Adresse de l\'avatar par défaut';
-$LANG['url_defaut_avatar_explain'] = 'Mettre dans le dossier images de votre thème ';
 $LANG['user_punish_until'] = 'Sanction jusqu\'au';
 $LANG['user_readonly_explain'] = 'Membre en lecture seule, celui-ci peut lire mais ne peut plus poster sur le site entier (commentaires, etc...)';
 $LANG['weeks'] = 'semaines';
 $LANG['life'] = 'A vie';
 $LANG['readonly_user'] = 'Membre en lecture seule';
-$LANG['activ_register'] = 'Activer l\'inscription des membres';
 
 //Règlement
 $LANG['explain_terms'] = 'Entrez ci-dessous le règlement à afficher lors de l\'enregistrement des membres, ils devront l\'accepter pour s\'enregistrer. Laissez vide pour aucun règlement.';
@@ -488,10 +445,6 @@ $LANG['robot'] = 'Robot';
 $LANG['robots'] = 'Robots';
 $LANG['erase_rapport'] = 'Effacer le rapport';
 $LANG['number_r_visit'] = 'Nombre de visite(s)';
-
-//Divers
-$LANG['select_type_bbcode'] = 'BBCode';
-$LANG['select_type_html'] = 'HTML';
 
 //Statistiques
 $LANG['stats'] = 'Statistiques';
