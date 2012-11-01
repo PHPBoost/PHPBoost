@@ -336,7 +336,7 @@ if ($edit_file_id > 0)
 			'THEME' => get_utheme(),
 			'HITS' => sprintf($DOWNLOAD_LANG['n_times'], (int)$file_hits),
 			'NUM_NOTES' => sprintf($DOWNLOAD_LANG['num_notes'], 0),
-			'U_IMG' => $file_image,
+			'U_IMG' => Url::to_absolute($file_image),
 			'IMAGE_ALT' => str_replace('"', '\"', $file_title),
 			'LANG' => get_ulang(),
 		    'FORCE_DOWNLOAD_SELECTED' => $file_download_method == 'force_download' ? ' selected="selected"' : '',
