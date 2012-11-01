@@ -153,13 +153,7 @@ class AddNewsletterController extends ModuleController
 	
 	public function return_editor($type)
 	{
-		if ($type == 'html')
-		{
-			return new FormFieldMultiLineTextEditor('contents', $this->lang['newsletter.contents'], '', array(
-				'rows' => 10, 'cols' => 47, 'required' => true)
-			);
-		}
-		else if ($type == 'bbcode')
+		if ($type == 'bbcode')
 		{
 			return new FormFieldRichTextEditor('contents', $this->lang['newsletter.contents'], '', array(
 				'rows' => 10, 'cols' => 47, 'required' => true)
