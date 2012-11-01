@@ -38,8 +38,9 @@ class NewsletterSubscribersListController extends ModuleController
 	public function execute(HTTPRequestCustom $request)
 	{
 		$this->id_stream = $request->get_int('id_stream', 0);
+		$this->stream_cache = NewsletterStreamsCache::load()->get_stream($this->id_stream);
 		
-		if ($this->id_stream == 0)
+		if ($this->id_stream == 0 || empty($this->stream_cache))
 		{
 			AppContext::get_response()->redirect(NewsletterUrlBuilder::home()->absolute());
 		}
@@ -117,7 +118,6 @@ class NewsletterSubscribersListController extends ModuleController
 	
 	private function init()
 	{
-		$this->stream_cache = NewsletterStreamsCache::load()->get_stream($this->id_stream);
 		$this->lang = LangLoader::get('newsletter_common', 'newsletter');
 		$this->view = new FileTemplate('newsletter/NewsletterSubscribersListController.tpl');
 		$this->view->add_lang($this->lang);
