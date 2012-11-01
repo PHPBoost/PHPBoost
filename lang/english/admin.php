@@ -412,54 +412,11 @@ $LANG['days'] = 'days';
 $LANG['week'] = 'week';
 $LANG['month'] = 'month';
 $LANG['life'] = 'Life';
-$LANG['confirm_password'] = 'Confirm password';
-$LANG['confirm_password_explain'] = 'Fill only in the event of modification';
-$LANG['hide_mail'] = 'Hide mail';
-$LANG['hide_mail_explain'] = 'To the other member';
-$LANG['website_explain'] = 'Valid if not considered';
-$LANG['member_sign'] = 'Sign';
-$LANG['member_sign_explain'] = 'Under each one of your messages';
-$LANG['avatar_management'] = 'Avatar management';
-$LANG['activ_up_avatar'] = 'Authorized upload avatars on the server';
-$LANG['enable_auto_resizing_avatar'] = 'Enable automatic avatar resizing';
-$LANG['enable_auto_resizing_avatar_explain'] = 'Warning, your  server must have the GD extension loaded.';
-$LANG['current_avatar'] = 'Current avatar';
-$LANG['upload_avatar'] = 'Upload avatar';
-$LANG['upload_avatar_where'] = 'Avatar on the server';
-$LANG['avatar_link'] = 'Avatar link';
-$LANG['avatar_link_where'] = 'Avatar url';
-$LANG['avatar_del'] = 'Delete current avatar';
-$LANG['no_avatar'] = 'No avatar';
-$LANG['weight_max'] = 'Maximum weight';
-$LANG['height_max'] = 'Maximum height';
-$LANG['width_max'] = 'Maximum width';
-$LANG['sex'] = 'Sex';
-$LANG['male'] = 'Male';
-$LANG['female'] = 'Female';
-$LANG['verif_code'] = 'Visual verification code';
-$LANG['verif_code_explain'] = 'Block the bots';
-$LANG['delay_activ_max'] = 'Delay for inactive members. After this delay, they will be deleted';
-$LANG['delay_activ_max_explain'] = 'Leave empty to ignore this option (ignored if validated by an administrator!)';
-$LANG['activ_mbr'] = 'Activation mode of the member account';
-$LANG['no_activ_mbr'] = 'Automatic';
-$LANG['allow_theme_mbr'] = 'Allow members to choose their own theme';
-$LANG['width_max_avatar'] = 'Maximum avatar width';
-$LANG['width_max_avatar_explain'] = 'Default 120px';
-$LANG['height_max_avatar'] = 'Maximum avatar height';
-$LANG['height_max_avatar_explain'] = 'Default 120px';
-$LANG['weight_max_avatar'] = 'Maximum avatar file size(Kb)';
-$LANG['weight_max_avatar_explain'] = 'Default 20 Kb';
-$LANG['avatar_management'] = 'Avatar management';
-$LANG['activ_defaut_avatar'] = 'Enable default avatar';
-$LANG['activ_defaut_avatar_explain'] = 'Give one to the members who do not have an avatar';
-$LANG['url_defaut_avatar'] = 'URL of the default avatar';
-$LANG['url_defaut_avatar_explain'] = 'Put this avatar in your theme\'s images directory';
 $LANG['no_punish'] = 'No members punished';
 $LANG['user_readonly_explain'] = 'User is in read only, he can read but can\'t post on the whole website (comments, etc...)';
 $LANG['weeks'] = 'weeks';
 $LANG['life'] = 'Life';
 $LANG['readonly_user'] = 'Member on read only';
-$LANG['activ_register'] = 'Enable member registration';
 
 //Règlement
 $LANG['explain_terms'] = 'Write registration terms which prospective members have to accept before they register. Leave the field empty for no registeration terms.';
@@ -490,10 +447,6 @@ $LANG['robot'] = 'Robot';
 $LANG['robots'] = 'Robots';
 $LANG['erase_rapport'] = 'Erase rapport';
 $LANG['number_r_visit'] = 'Number of views';
-
-//Miscellaneous
-$LANG['select_type_bbcode'] = 'BBCode';
-$LANG['select_type_html'] = 'HTML';
 
 //Stats
 $LANG['stats'] = 'Stats';

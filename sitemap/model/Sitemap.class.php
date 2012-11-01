@@ -224,7 +224,7 @@ class Sitemap
 				UserUrlBuilder::profile($User->get_id())));
 					
 				//Profile edition
-				$member_space_section->add(new SitemapLink($LANG['profile_edition'],
+				$member_space_section->add(new SitemapLink(LangLoader::get_message('profile.edit', 'user-common'),
 				UserUrlBuilder::edit_profile($User->get_id())));
 					
 				//Private messaging
