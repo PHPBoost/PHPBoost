@@ -72,7 +72,7 @@ class NewsHomePageExtensionPoint implements HomePageExtensionPoint
 		// Couleurs du login
 		$level = array('', ' modo', ' admin');
 
-		$filetpl = $NEWS_CONFIG['type'] ? 'news/news_cat.tpl' :'news/news_list.tpl';
+		$filetpl = $NEWS_CONFIG['type'] ? 'news/news_block.tpl' :'news/news_list.tpl';
 
 		$tpl = new FileTemplate($filetpl);
 
@@ -127,7 +127,7 @@ class NewsHomePageExtensionPoint implements HomePageExtensionPoint
 			}
 			$tpl->put_all(array('PAGINATION' => $show_pagin));
 
-			// News en bloc => news_cat.tpl
+			// News en bloc => news_block.tpl
 			if($NEWS_CONFIG['type'] == 1)
 			{
 				if ($NEWS_CONFIG['nbr_column'] > 1)

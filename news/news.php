@@ -186,7 +186,7 @@ elseif ($user)
 	define('TITLE', $NEWS_LANG['news']);
 	require_once('../kernel/header.php');
 
-	$tpl = new FileTemplate('news/news_cat.tpl');
+	$tpl = new FileTemplate('news/news_block.tpl');
 	$i = 0;
 
 	// Build array with the children categories.
