@@ -37,6 +37,8 @@ define('DATE_FORMAT', 			3);
 define('DATE_FORMAT_LONG', 		4);
 define('DATE_RFC822_F', 		5);
 define('DATE_RFC3339_F', 		6);
+define('DATE_FORMAT_TEXT_SHORT',7);
+define('DATE_FORMAT_TEXT_LONG', 8);
 
 define('DATE_RFC822_FORMAT', 	'D, d M Y H:i:s O');
 define('DATE_RFC3339_FORMAT', 	'Y-m-d\TH:i:s');
@@ -281,6 +283,14 @@ class Date
 				return date(DATE_RFC3339_FORMAT, $timestamp) . (GeneralConfig::load()->get_site_timezone() < 0 ? '-' : '+') . sprintf('%02d:00', GeneralConfig::load()->get_site_timezone());
 				break;
 
+			case DATE_FORMAT_TEXT_SHORT:
+				return self::transform_date(date(LangLoader::get_message('date_format_text_short', 'main'), $timestamp));
+				break;
+				
+			case DATE_FORMAT_TEXT_LONG:
+				return self::transform_date(date(LangLoader::get_message('date_format_text_long', 'main'), $timestamp));
+				break;
+				
 			default:
 				return '';
 		}
@@ -495,6 +505,22 @@ class Date
 	{
 		$default = @date_default_timezone_get();
         @date_default_timezone_set($default);
+	}
+	
+	private static function transform_date($date)
+	{
+		$date_lang = LangLoader::get('date-common');
+		
+		$search = array(
+			'january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december',
+			'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'
+		);
+		$replace = array(
+			$date_lang['january'], $date_lang['february'], $date_lang['march'], $date_lang['april'], $date_lang['may'], $date_lang['june'],
+			$date_lang['july'], $date_lang['august'], $date_lang['september'], $date_lang['october'], $date_lang['november'], $date_lang['december'],
+			$date_lang['monday'], $date_lang['tuesday'], $date_lang['wednesday'], $date_lang['thursday'], $date_lang['friday'], $date_lang['saturday'], $date_lang['sunday'], 
+		);
+		return str_replace($search, $replace, strtolower($date));
 	}
 }
 ?>

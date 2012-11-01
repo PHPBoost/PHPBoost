@@ -121,6 +121,7 @@ class Feed
                     'DATE' => $this->data->get_date(),
                     'DATE_RFC822' => $this->data->get_date_rfc822(),
                     'DATE_RFC3339' => $this->data->get_date_rfc3339(),
+					'DATE_TEXT' => $this->data->get_date_text(),
                     'TITLE' => $this->data->get_title(),
                     'U_LINK' => $this->data->get_link(),
                     'HOST' => $this->data->get_host(),
@@ -142,6 +143,7 @@ class Feed
                         'DATE' => $item->get_date(),
                         'DATE_RFC822' => $item->get_date_rfc822(),
                         'DATE_RFC3339' => $item->get_date_rfc3339(),
+						'DATE_TEXT' => $item->get_date_text(),
                         'C_IMG' => ($item->get_image_url() != '') ? true : false,
                         'U_IMG' => $item->get_image_url()
 					));
