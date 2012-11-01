@@ -180,7 +180,7 @@ class NewsHomePageExtensionPoint implements HomePageExtensionPoint
 							'C_IMG' => !empty($row['img']),
 							'IMG' => FormatingHelper::second_parse_url($row['img']),
 							'IMG_DESC' => $row['alt'],
-							'C_ICON' => $NEWS_CONFIG['activ_icon'],
+							'C_ICON' => $NEWS_CONFIG['activ_icon'] && !empty($row['idcat']),
 							'U_CAT' => !empty($row['idcat']) ? PATH_TO_ROOT . '/news/news' . url('.php?cat=' . $row['idcat'], '-' . $row['idcat'] . '+' . Url::encode_rewrite($NEWS_CAT[$row['idcat']]['name']) . '.php') : '',
 							'ICON' => !empty($row['idcat']) ? FormatingHelper::second_parse_url($NEWS_CAT[$row['idcat']]['image']) : '',
 							'CONTENTS' => FormatingHelper::second_parse($row['contents']),
