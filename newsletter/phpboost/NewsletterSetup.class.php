@@ -125,8 +125,12 @@ class NewsletterSetup extends DefaultModuleSetup
 			'stream_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1),
 			'subscriber_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1)
 		);
-
-		PersistenceContext::get_dbms_utils()->create_table(self::$newsletter_table_subscribtions, $fields);
+		
+		$options = array(
+			'primary' => array('id')
+		);
+		
+		PersistenceContext::get_dbms_utils()->create_table(self::$newsletter_table_subscribtions, $options);
 	}
 	
 	private function create_field_member()
