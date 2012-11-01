@@ -186,7 +186,8 @@ class Authorizations
         }
 
         //Liste des groupes.
-        foreach (GroupsService::get_groups_names() as $idgroup => $group_name)
+        $groups_name = GroupsService::get_groups_names();
+        foreach ($groups_name as $idgroup => $group_name)
         {
             $selected = '';
             if (array_key_exists($idgroup, $array_auth) && ((int)$array_auth[$idgroup] & (int)$auth_bit) !== 0 && empty($disabled))
@@ -220,7 +221,8 @@ class Authorizations
 
 		$tpl->put_all(array(
 			'ADVANCED_AUTH_STYLE' => ($advanced_auth ? 'display:block;' : 'display:none;'),
-			'C_ADVANCED_AUTH_OPEN' => $advanced_auth
+			'C_ADVANCED_AUTH_OPEN' => $advanced_auth,
+			'C_NO_GROUP' => count($groups_name) == 0
 		));
 
 		//Listing des membres autorisés.

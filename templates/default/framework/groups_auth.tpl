@@ -10,7 +10,9 @@
 		# START groups_list #
 			<option {groups_list.DISABLED} value="{groups_list.IDGROUP}" {groups_list.SELECTED}>{groups_list.GROUP_NAME}</option>
 		# END groups_list #
+			# IF C_NO_GROUP #
 			<option></option>
+			# ENDIF #
 		</optgroup>
 	</select>
 </div>
