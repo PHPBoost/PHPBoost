@@ -45,7 +45,6 @@ if(!$User->check_auth($NEWS_CONFIG['global_auth'], AUTH_NEWS_READ))
 
 if (!empty($idnews)) // On affiche la news correspondant à l'id envoyé.
 {
-
 	// Récupération de la news
 	$result = $Sql->query_while("SELECT n.contents, n.extend_contents, n.title, n.id, n.idcat, n.timestamp, n.start, n.visible, n.user_id, n.img, n.alt, m.login, m.level, n.sources
 	FROM " . DB_TABLE_NEWS . " n LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = n.user_id
@@ -136,7 +135,7 @@ if (!empty($idnews)) // On affiche la news correspondant à l'id envoyé.
 			'C_PREVIOUS_NEWS' => !empty($previous_news['id']),
 			'C_NEWS_SUGGESTED' => $nbr_suggested > 0 ? 1 : 0,
 			'C_IMG' => !empty($news['img']),
-			'C_ICON' => $NEWS_CONFIG['activ_icon'],
+			'C_ICON' => $NEWS_CONFIG['activ_icon'] && !empty($row['idcat']),
 			'C_SOURCES' => $i > 0 ? true : false,
 			'ID' => $news['id'],
 			'TITLE' => $news['title'],
@@ -144,7 +143,7 @@ if (!empty($idnews)) // On affiche la news correspondant à l'id envoyé.
 			'EXTEND_CONTENTS' => FormatingHelper::second_parse($news['extend_contents']),
 			'IMG' => FormatingHelper::second_parse_url($news['img']),
 			'IMG_DESC' => $news['alt'],
-			'ICON' => $news['idcat'] > 0 ? FormatingHelper::second_parse_url($NEWS_CAT[$news['idcat']]['image']) : '',
+			'ICON' => !empty($row['idcat']) ? FormatingHelper::second_parse_url($NEWS_CAT[$news['idcat']]['image']) : '',
 			'DATE' => $NEWS_CONFIG['display_date'] ? sprintf($NEWS_LANG['on'], $timestamp->format(DATE_FORMAT_SHORT, TIMEZONE_AUTO)) : '',
 			'LEVEL' =>	isset($news['level']) ? $level[$news['level']] : '',
 			'PSEUDO' => $NEWS_CONFIG['display_author'] && !empty($news['login']) ? $news['login'] : false,
@@ -152,7 +151,7 @@ if (!empty($idnews)) // On affiche la news correspondant à l'id envoyé.
 			'NEXT_NEWS' => $next_news['title'],
 			'PREVIOUS_NEWS' => $previous_news['title'],
 			'FEED_MENU' => Feed::get_feed_menu(FEED_URL . '&amp;cat=' . $news['idcat']),
-			'U_CAT' => $news['idcat'] > 0 ? 'news' . url('.php?cat=' . $news['idcat'], '-' . $news['idcat'] . '+'  . Url::encode_rewrite($NEWS_CAT[$news['idcat']]['name']) . '.php') : '',
+			'U_CAT' => !empty($row['idcat']) ? 'news' . url('.php?cat=' . $news['idcat'], '-' . $news['idcat'] . '+'  . Url::encode_rewrite($NEWS_CAT[$news['idcat']]['name']) . '.php') : '',
 			'U_LINK' => 'news' . url('.php?id=' . $news['id'], '-' . $news['idcat'] . '-' . $news['id'] . '+' . Url::encode_rewrite($news['title']) . '.php'),
 			'U_COM' => $NEWS_CONFIG['activ_com'] ? '<a href="'. PATH_TO_ROOT .'/news/news' . url('.php?id=' . $idnews . '&amp;com=0', '-' . $news['idcat'] . '-' . $idnews . '+' . Url::encode_rewrite($news['title']) . '.php?com=0') .'#comments_list">'. CommentsService::get_number_and_lang_comments('news', $idnews) . '</a>' : '',
 			'U_USER_ID' => UserUrlBuilder::profile($news['user_id'])->absolute(),
@@ -212,9 +211,9 @@ elseif ($user)
 			'C_IMG' => !empty($row['img']),
 			'IMG' => FormatingHelper::second_parse_url($row['img']),
 			'IMG_DESC' => $row['alt'],
-			'C_ICON' => $NEWS_CONFIG['activ_icon'],
-			'U_CAT' => $row['idcat'] > 0 ? 'news' . url('.php?cat=' . $row['idcat'], '-' . $row['idcat'] . '+' . Url::encode_rewrite($NEWS_CAT[$row['idcat']]['name']) . '.php') : '',
-			'ICON' => $row['idcat'] > 0 ? FormatingHelper::second_parse_url($NEWS_CAT[$row['idcat']]['image']) : '',
+			'C_ICON' => $NEWS_CONFIG['activ_icon'] && !empty($row['idcat']),
+			'U_CAT' => !empty($row['idcat']) ? 'news' . url('.php?cat=' . $row['idcat'], '-' . $row['idcat'] . '+' . Url::encode_rewrite($NEWS_CAT[$row['idcat']]['name']) . '.php') : '',
+			'ICON' => !empty($row['idcat']) ? FormatingHelper::second_parse_url($NEWS_CAT[$row['idcat']]['image']) : '',
 			'CONTENTS' => FormatingHelper::second_parse($row['contents']),
 			'EXTEND_CONTENTS' => !empty($row['extend_contents']) ? '<a style="font-size:10px" href="' . PATH_TO_ROOT . '/news/news' . url('.php?id=' . $row['id'], '-0-' . $row['id'] . '.php') . '">[' . $NEWS_LANG['extend_contents'] . ']</a><br /><br />' : '',
 			'PSEUDO' => $NEWS_CONFIG['display_author'] && !empty($row['login']) ? $row['login'] : '',
@@ -242,7 +241,6 @@ elseif ($user)
 	}
 
 	$tpl->display();
-
 }
 else
 {
