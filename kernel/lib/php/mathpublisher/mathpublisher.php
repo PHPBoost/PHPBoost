@@ -975,6 +975,7 @@ $largeur=1;
 $hauteur=1;
 $dessus=1;
 $dessous=1;
+$img=array();
 for($i = 0; $i < count($this->noeuds); $i++)
 	{
 	if ($this->noeuds[$i]->texte != '(' && $this->noeuds[$i]->texte != ')')
