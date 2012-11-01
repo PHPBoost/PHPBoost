@@ -76,6 +76,8 @@ $Template->put_all(array(
 	'L_ROBOTS' => $LANG['robots']
 ));
 
+$date_lang = LangLoader::get('date-common');
+
 if (!empty($members))
 {
 	$last_user = $Sql->query_array(DB_TABLE_MEMBER, 'user_id', 'login', "ORDER BY user_id DESC " . $Sql->limit(0, 1), __LINE__, __FILE__);
@@ -201,8 +203,8 @@ elseif ($visit || $visit_year) //Visites par jour classées par mois.
 	$year = $visit_year;
 
 	//Gestion des mois pour s'adapter au array défini dans lang/main.php
-	$array_l_months = array($LANG['january'], $LANG['february'], $LANG['march'], $LANG['april'], $LANG['may'], $LANG['june'],
-	$LANG['july'], $LANG['august'], $LANG['september'], $LANG['october'], $LANG['november'], $LANG['december']);
+	$array_l_months = array($date_lang['january'], $date_lang['february'], $date_lang['march'], $date_lang['april'], $date_lang['may'], $date_lang['june'],
+	$date_lang['july'], $date_lang['august'], $date_lang['september'], $date_lang['october'], $date_lang['november'], $date_lang['december']);
 
 	if (!empty($visit_year)) //Visites par mois classées par ans.
 	{
@@ -552,8 +554,8 @@ elseif ($pages || $pages_year) //Pages par jour classées par mois.
 	));
 
 	//Gestion des mois pour s'adapter au array défini dans lang/main.php
-	$array_l_months = array($LANG['january'], $LANG['february'], $LANG['march'], $LANG['april'], $LANG['may'], $LANG['june'],
-	$LANG['july'], $LANG['august'], $LANG['september'], $LANG['october'], $LANG['november'], $LANG['december']);
+	$array_l_months = array($date_lang['january'], $date_lang['february'], $date_lang['march'], $date_lang['april'], $date_lang['may'], $date_lang['june'],
+	$date_lang['july'], $date_lang['august'], $date_lang['september'], $date_lang['october'], $date_lang['november'], $date_lang['december']);
 
 	if (!empty($pages_year)) //Visites par mois classées par ans.
 	{

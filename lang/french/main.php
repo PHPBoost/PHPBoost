@@ -36,6 +36,8 @@ $LANG['date_format_tiny'] = 'd/m';
 $LANG['date_format_short'] = 'd/m/y';
 $LANG['date_format'] = 'd/m/y \à H\hi';
 $LANG['date_format_long'] = 'd/m/y \à H\hi\m\i\ns\s';
+$LANG['date_format_text_short'] = 'j F Y';
+$LANG['date_format_text_long'] = 'l j F Y';
 $LANG['from_date'] = 'du';
 $LANG['to_date'] = 'au';
 $LANG['now'] = 'Maintenant';
@@ -260,27 +262,6 @@ $LANG['select_all'] = 'Tout sélectionner';
 $LANG['select_none'] = 'Tout désélectionner';
 $LANG['add_member'] = 'Ajouter un membre';
 $LANG['alert_member_already_auth'] = 'Le membre est déjà dans la liste';
-
-//Calendar
-$LANG['january'] = 'Janvier';
-$LANG['february'] = 'Février';
-$LANG['march'] = 'Mars';
-$LANG['april'] = 'Avril';
-$LANG['may'] = 'Mai';
-$LANG['june'] = 'Juin';
-$LANG['july'] = 'Juillet';
-$LANG['august'] = 'Août';
-$LANG['september'] = 'Septembre';
-$LANG['october'] = 'Octobre';
-$LANG['november'] = 'Novembre';
-$LANG['december'] = 'Décembre';
-$LANG['monday'] = 'Lun';
-$LANG['tuesday'] = 'Mar';
-$LANG['wenesday'] = 'Mer';
-$LANG['thursday'] = 'Jeu';
-$LANG['friday'] = 'Ven';
-$LANG['saturday'] = 'Sam';
-$LANG['sunday']	= 'Dim';
 
 //Membres
 $LANG['member_area'] = 'Zone membre';
