@@ -95,9 +95,10 @@ class BugtrackerModuleUpdateVersion extends ModuleUpdateVersion
 
 	private function rename_status()
 	{
-		$this->querier->inject('UPDATE ' . PREFIX . 'bugtracker SET status = fixed WHERE status = closed', __LINE__, __FILE__);
-		$this->querier->inject('UPDATE ' . PREFIX . 'bugtracker_history SET old_value = fixed WHERE old_value = closed', __LINE__, __FILE__);
-		$this->querier->inject('UPDATE ' . PREFIX . 'bugtracker_history SET new_value = fixed WHERE new_value = closed', __LINE__, __FILE__);
+		// Suppression du statut closed (remplacé par statut fixed)
+		$this->querier->update(PREFIX . 'bugtracker', array('status' => 'fixed'), "WHERE status='closed'");
+		$this->querier->update(PREFIX . 'bugtracker_history', array('old_value' => 'fixed'), "WHERE old_value='closed'");
+		$this->querier->update(PREFIX . 'bugtracker_history', array('new_value' => 'fixed'), "WHERE new_value='closed'");
 	}
 	
 	private function rename_types()
@@ -109,9 +110,9 @@ class BugtrackerModuleUpdateVersion extends ModuleUpdateVersion
 		
 		foreach ($rows_change as $old_name => $new_name)
 		{
-			$this->querier->inject('UPDATE ' . PREFIX . 'bugtracker SET severity = '. $new_name .' WHERE severity = ' . $old_name, __LINE__, __FILE__);
-			$this->querier->inject('UPDATE ' . PREFIX . 'bugtracker_history SET old_value = '. $new_name .' WHERE old_value = ' . $old_name, __LINE__, __FILE__);
-			$this->querier->inject('UPDATE ' . PREFIX . 'bugtracker_history SET new_value = '. $new_name .' WHERE new_value = ' . $old_name, __LINE__, __FILE__);
+			$this->querier->update(PREFIX . 'bugtracker', array('severity' => $new_name), "WHERE severity='" . $old_name . "'");
+			$this->querier->update(PREFIX . 'bugtracker_history', array('old_value' => $new_name), "WHERE old_value='" . $old_name . "'");
+			$this->querier->update(PREFIX . 'bugtracker_history', array('new_value' => $new_name), "WHERE new_value='" . $old_name . "'");
 		}
 	}
 	
@@ -126,9 +127,9 @@ class BugtrackerModuleUpdateVersion extends ModuleUpdateVersion
 		
 		foreach ($rows_change as $old_name => $new_name)
 		{
-			$this->querier->inject('UPDATE ' . PREFIX . 'bugtracker SET severity = '. $new_name .' WHERE severity = ' . $old_name, __LINE__, __FILE__);
-			$this->querier->inject('UPDATE ' . PREFIX . 'bugtracker_history SET old_value = '. $new_name .' WHERE old_value = ' . $old_name, __LINE__, __FILE__);
-			$this->querier->inject('UPDATE ' . PREFIX . 'bugtracker_history SET new_value = '. $new_name .' WHERE new_value = ' . $old_name, __LINE__, __FILE__);
+			$this->querier->update(PREFIX . 'bugtracker', array('category' => $new_name), 'WHERE category=:category', array('category' => $old_name));
+			$this->querier->update(PREFIX . 'bugtracker_history', array('old_value' => $new_name), "WHERE old_value='" . $old_name . "'");
+			$this->querier->update(PREFIX . 'bugtracker_history', array('new_value' => $new_name), "WHERE new_value='" . $old_name . "'");
 		}
 	}
 	
@@ -145,9 +146,9 @@ class BugtrackerModuleUpdateVersion extends ModuleUpdateVersion
 		
 		foreach ($rows_change as $old_name => $new_name)
 		{
-			$this->querier->inject('UPDATE ' . PREFIX . 'bugtracker SET priority = '. $new_name .' WHERE priority = ' . $old_name, __LINE__, __FILE__);
-			$this->querier->inject('UPDATE ' . PREFIX . 'bugtracker_history SET old_value = '. $new_name .' WHERE old_value = ' . $old_name, __LINE__, __FILE__);
-			$this->querier->inject('UPDATE ' . PREFIX . 'bugtracker_history SET new_value = '. $new_name .' WHERE new_value = ' . $old_name, __LINE__, __FILE__);
+			$this->querier->update(PREFIX . 'bugtracker', array('priority' => $new_name), 'WHERE priority=:priority', array('priority' => $old_name));
+			$this->querier->update(PREFIX . 'bugtracker_history', array('old_value' => $new_name), "WHERE old_value='" . $old_name . "'");
+			$this->querier->update(PREFIX . 'bugtracker_history', array('new_value' => $new_name), "WHERE new_value='" . $old_name . "'");
 		}
 	}
 	
@@ -161,20 +162,17 @@ class BugtrackerModuleUpdateVersion extends ModuleUpdateVersion
 		
 		foreach ($rows_change as $old_name => $new_name)
 		{
-			$this->querier->inject('UPDATE ' . PREFIX . 'bugtracker SET severity = '. $new_name .' WHERE severity = ' . $old_name, __LINE__, __FILE__);
-			$this->querier->inject('UPDATE ' . PREFIX . 'bugtracker_history SET old_value = '. $new_name .' WHERE old_value = ' . $old_name, __LINE__, __FILE__);
-			$this->querier->inject('UPDATE ' . PREFIX . 'bugtracker_history SET new_value = '. $new_name .' WHERE new_value = ' . $old_name, __LINE__, __FILE__);
+			$this->querier->update(PREFIX . 'bugtracker', array('severity' => $new_name), 'WHERE severity=:severity', array('severity' => $old_name));
+			$this->querier->update(PREFIX . 'bugtracker_history', array('old_value' => $new_name),  "WHERE old_value='" . $old_name . "'");
+			$this->querier->update(PREFIX . 'bugtracker_history', array('new_value' => $new_name),  "WHERE new_value='" . $old_name . "'");
 		}
 	}
 	
 	private function rename_versions()
 	{
-		$this->querier->inject("UPDATE " . PREFIX . "bugtracker SET detected_in = 0", __LINE__, __FILE__);
-		$this->querier->inject("UPDATE " . PREFIX . "bugtracker SET fixed_in = 0", __LINE__, __FILE__);
-		$this->querier->inject("UPDATE " . PREFIX . "bugtracker_history SET old_value = 0 WHERE updated_field = 'detected_in'", __LINE__, __FILE__);
-		$this->querier->inject("UPDATE " . PREFIX . "bugtracker_history SET new_value = 0 WHERE updated_field = 'detected_in'", __LINE__, __FILE__);
-		$this->querier->inject("UPDATE " . PREFIX . "bugtracker_history SET old_value = 0 WHERE updated_field = 'fixed_in'", __LINE__, __FILE__);
-		$this->querier->inject("UPDATE " . PREFIX . "bugtracker_history SET new_value = 0 WHERE updated_field = 'fixed_in'", __LINE__, __FILE__);
+		$this->querier->update(PREFIX . 'bugtracker', array('detected_in' => 0, 'fixed_in' => 0), 'WHERE 1');
+		$this->querier->update(PREFIX . 'bugtracker_history', array('old_value' => 0, 'new_value' => 0), "WHERE updated_field='detected_in'");
+		$this->querier->update(PREFIX . 'bugtracker_history', array('old_value' => 0, 'new_value' => 0), "WHERE updated_field='fixed_in'");
 	}
 	
 	private function rename_fields()

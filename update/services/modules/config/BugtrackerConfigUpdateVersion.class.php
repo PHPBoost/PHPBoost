@@ -68,7 +68,7 @@ class BugtrackerConfigUpdateVersion extends ConfigUpdateVersion
 		}
 		
 		$bugtracker_config = BugtrackerConfig::load();
-		$bugtracker_config->set_authorizations(unserialize($config['auth']));
+		$bugtracker_config->set_authorizations($config['auth']);
 		$bugtracker_config->set_items_per_page($config['items_per_page']);
 		$bugtracker_config->set_rejected_bug_color('#' . $config['rejected_bug_color']);
 		$bugtracker_config->set_fixed_bug_color('#' . $config['closed_bug_color']);
