@@ -76,5 +76,5 @@ $lang['themes.upload.error'] = 'Error with the upload file';
 $lang['themes.not_compatible'] = 'The theme is apparently incompatible with your current version of PHPBoost, he was anyhow installed. If a problem comes please contact the author of the theme.';
 
 //Delete theme
-$lang['themes.delete.drop_files'] = 'Delete all files in the theme';
+$lang['themes.delete.drop_files'] = 'Delete all the theme\'s files';
 ?>

@@ -35,19 +35,18 @@ $lang['profile'] = 'Profile';
 $lang['profile.edit'] = 'Edit profile';
 $lang['messages'] = 'User messages';
 $lang['maintain'] = 'Maintain';
-$lang['groups'] = 'Groups';
 
-$lang['profile.edit.password.error'] = 'The password you entered is not correct';
+$lang['profile.edit.password.error'] = 'The new password is not correct';
 
 //Contribution
 $lang['contribution.confirmed'] = 'Your contribution has been saved.';
-$lang['contribution.confirmed.messages'] = '<p>You can follow her into the <a href="' . UserUrlBuilder::contribution_panel()->absolute() . '">panel contribution</a> 
+$lang['contribution.confirmed.messages'] = '<p>You can follow it into the <a href="' . UserUrlBuilder::contribution_panel()->absolute() . '">contribution panel</a> 
 and possibly discuss with the validators if their choice is not straightforward.</p><p>Thank you for participating in the life of the site!</p>';
 
 
 //User fields
-$lang['pseudo'] = 'Pseudo';
-$lang['pseudo.explain'] = 'Minimum length of the pseudo: 3 characters';
+$lang['pseudo'] = 'Login';
+$lang['pseudo.explain'] = 'Minimum length of the login: 3 characters';
 $lang['password'] = 'Password';
 $lang['password.new'] = 'New password';
 $lang['password.old'] = 'Old password';
@@ -68,12 +67,12 @@ $lang['approbation'] = 'Approbation';
 
 $lang['registration_date'] = 'Registration date';
 $lang['last_connection'] = 'Last connection';
-$lang['number-messages'] = 'Number messages';
+$lang['number-messages'] = 'Messages number';
 $lang['private_message'] = 'Private message';
 $lang['delete-account'] = 'Delete account';
 $lang['avatar'] = 'Avatar';
 
-//User
+//Groups
 $lang['groups'] = 'Groups';
 $lang['groups.select'] = 'Group select';
 $lang['no_member'] = 'No member in this group';
@@ -82,7 +81,8 @@ $lang['no_member'] = 'No member in this group';
 $lang['caution'] = 'Caution';
 $lang['readonly'] = 'Read only';
 $lang['banned'] = 'Banned';
-$lang['connect'] = 'Login';
+$lang['connect'] = 'Connect';
+$lang['autoconnect'] = 'Auto connect';
 
 // Ranks
 $lang['rank'] = 'Rank';
@@ -92,14 +92,14 @@ $lang['moderator'] = 'Moderator';
 $lang['administrator'] = 'Administrator';
 
 //Forget password
-$lang['forget-password'] = 'Forget password';
-$lang['forget-password.select'] = 'Select the field you want information (email or username)';
+$lang['forget-password'] = 'Forgotten password';
+$lang['forget-password.select'] = 'Select the field you want to informat (email or login)';
 $lang['forget-password.success'] = 'An email has been sent with a link to change your password';
-$lang['forget-password.error'] = 'The information provided is not correct, please correct and try again';
+$lang['forget-password.error'] = 'Information provided are not correct, please correct it and try again';
 $lang['change-password'] = 'Change password';
-$lang['forget-password.mail.content'] = 'Cher(e) :pseudo,
+$lang['forget-password.mail.content'] = 'Dear(e) :pseudo,
 
-You are receiving this email because you (or someone claiming to be) have requested a new password will be sent to your account :host. 
+You are receiving this email because you (or someone claiming to be) have requested a new password to be sent to your account :host. 
 If you have not asked to change your password, please ignore it. If you continue to receive it, please contact the site administrator.
 
 To change your password, click on the link below and follow the directions on the site.
@@ -113,19 +113,19 @@ If you have problems, please contact the site administrator.
 //Registration 
 $lang['registration'] = 'Registration';
 
-$lang['registration.validation.mail.explain'] = 'You will need to activate your account in the email sent to you before you can log';
-$lang['registration.validation.administrator.explain'] = 'An administrator will activate your account before you can log';
+$lang['registration.validation.mail.explain'] = 'You will need to activate your account in the email sent to you before beeing able to connect to the site';
+$lang['registration.validation.administrator.explain'] = 'An administrator will need to activate your account before beeing able to connect to the site';
 
-$lang['registration.confirm.success'] = 'Your account has been successfully validated';
+$lang['registration.confirm.success'] = 'Your account has successfully been validated';
 $lang['registration.confirm.error'] = 'A problem occurred during your activation, make sure your key is valid';
 
-$lang['registration.success.administrator-validation'] = 'You have registered successfully. However, an administrator must validate your account before you can use';
+$lang['registration.success.administrator-validation'] = 'You have registered successfully. However, an administrator must validate your account before you can use it';
 $lang['registration.success.mail-validation'] = 'You have registered successfully. However you must click the activation link in the email you were sent';
 
 $lang['registration.email.automatic-validation'] = 'You can now connect to your account directly on the site.';
 $lang['registration.email.mail-validation'] = 'You have to click on this link to activate your account: :validation_link';
 $lang['registration.email.administrator-validation'] = 'Warning: Your account must be activated by an administrator. Thanks for your patience.';
-$lang['registration.email.mail-administrator-validation'] = 'Cher(e) :pseudo,
+$lang['registration.email.mail-administrator-validation'] = 'Dear(e) :pseudo,
 
 We are pleased to inform you that your account :site_name has been validated by an administrator.
 
@@ -133,16 +133,16 @@ You can now login to the site using the credentials provided in the previous ema
 
 :signature';
 
-$lang['registration.pending-approval'] = 'A new member has registered. His account must be approved before they can be used.';
+$lang['registration.pending-approval'] = 'A new member has registered. His account must be approved before it can be used.';
 $lang['registration.subject-mail'] = 'Confirmation of registration :site_name';
-$lang['registration.content-mail'] = 'Cher(e) :pseudo,
+$lang['registration.content-mail'] = 'Dear(e) :pseudo,
 
-First of all, thank you for being part of :site_name. Now you are part of the site members.
+First of all, thank you for being registered on :site_name. Now you are part of the site members.
 By registering on :site_name, you get access to the member area that offers several advantages. You can, among other things, be automatically recognized throughout the site to post messages, change the language and / or the default theme, edit your profile, access to classes for members only ... In short you access to all the community site.
 
-To connect, you will retain your username and password.
+To connect, you must retain your username and password.
 
-Please remember your login.
+Here are your identifiers.
 
 Login : :login
 Password : :password

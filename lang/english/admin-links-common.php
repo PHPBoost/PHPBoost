@@ -40,6 +40,7 @@ $lang['index'] = 'Index';
 $lang['index.site'] = 'Site';
 $lang['index.disconnect'] = 'Disconnect';
 
+
 $lang['administration'] = 'Administration';
 
 $lang['administration.configuration.general'] = 'General configuration';
@@ -53,7 +54,8 @@ $lang['administration.alerts'] = 'Alerts';
 
 
 $lang['tools'] = 'Tools';
-$lang['tools.updates.kernel'] = 'kernel';
+
+$lang['tools.updates.kernel'] = 'Kernel';
 
 $lang['tools.maintain'] = 'Maintain';
 
