@@ -39,12 +39,12 @@ $lang['langs.uninstall'] = 'Remove language';
 $lang['langs.install'] = 'Install';
 
 //Errors
-$lang['langs.already_exist'] = 'Language already exists';
-$lang['langs.not_compatible'] = 'The language is not compatible with your version of PHPBoost';
+$lang['langs.already_exist'] = 'This language already exists';
+$lang['langs.not_compatible'] = 'This language is not compliant with your version of PHPBoost';
 $lang['themes.add.not_lang'] = 'No language to add';
 
 //Uninstall
-$lang['langs.uninstall.drop_files'] = 'Delete all files in the language';
+$lang['langs.uninstall.drop_files'] = 'Delete all the language\'s files';
 $lang['langs.default_lang_explain'] = 'The default language can not be uninstalled, disabled or reserved';
 
 $lang['langs.upload'] = 'Upload a language';
@@ -55,7 +55,7 @@ $lang['langs.name'] = 'Name';
 $lang['langs.authorisations'] = 'Authorizations';
 $lang['langs.activated'] = 'Activated';
 $lang['langs.compatibility'] = 'Compatibility';
-$lang['langs.author'] = 'Autor';
+$lang['langs.author'] = 'Author';
 $lang['langs.description'] = 'Description';
 
 $lang['langs.no'] = 'No';

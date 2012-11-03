@@ -41,11 +41,11 @@ $lang['members.rules'] = 'Rules';
 
 //Configuration
 $lang['members.config.registration-activation'] = 'Enable the registration of members';
-$lang['members.config.type-activation'] = 'User account activation Member';
-$lang['members.config.unactivated-accounts-timeout'] = 'Number of days after which the members are cleared unactivated';
+$lang['members.config.type-activation'] = 'User account activation type';
+$lang['members.config.unactivated-accounts-timeout'] = 'Number of days after which the unactivated members are cleared';
 $lang['members.config.unactivated-accounts-timeout-explain'] = 'Leave blank to skip this option (not included if validated by administrator)';
 $lang['members.config.captcha-activation'] = 'Visual verification code';
-$lang['members.config.captcha-difficulty'] = 'Difficulty of the verification code';
+$lang['members.config.captcha-difficulty'] = 'Verification code difficulty';
 $lang['members.config.theme-choice-permission'] = 'Allow members to choose their theme';
 $lang['members.config.upload-avatar-server-authorization'] = 'Allow avatar upload on the server';
 $lang['members.config.activation-resize-avatar'] = 'Enable automatic image resizing';
@@ -78,7 +78,7 @@ $lang['members.config.type-activation.mail'] = 'Mail';
 $lang['members.config.type-activation.admin'] = 'Administrator';
 
 //Rules
-$lang['members.rules.registration-agreement-description'] = 'Enter below the settlement to display when members register, they have to accept it to register. Leave blank for no regulation.';
+$lang['members.rules.registration-agreement-description'] = 'Enter below the agreement to display when members register, they have to accept it to register. Leave blank for no agreement.';
 $lang['members.rules.registration-agreement'] = 'Registration agreement';
 
 //Other

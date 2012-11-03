@@ -54,7 +54,7 @@ $lang['bb_container'] = 'Container';
 $lang['bb_block'] = 'Block';
 $lang['bb_fieldset'] = 'Fieldset';
 $lang['bb_style'] = 'Style [style=x]text[/style]';
-$lang['bb_hide'] = 'Hide text, shown on click [hide]text[/hide]';
+$lang['bb_hide'] = 'Hide text, show on click [hide]text[/hide]';
 $lang['bb_float_left'] = 'Float object on left [float=left]text[/float]';
 $lang['bb_float_right'] = 'Float object on right [float=right]text[/float]';
 $lang['bb_list'] = 'List [list][*]text1[*]text2[/list]';
@@ -100,7 +100,7 @@ $lang['format_bgcolor'] = 'Background color';
 $lang['format_font'] = 'Font';
 $lang['format_size'] = 'Size';
 $lang['format_align'] = 'Alignment';
-$lang['format_float'] = 'Floatting element';
+$lang['format_float'] = 'Floating element';
 $lang['format_sup'] = 'Superscript';
 $lang['format_sub'] = 'Subscript';
 $lang['format_indent'] = 'Indentation';
@@ -124,6 +124,6 @@ $lang['format_youtube'] = 'Youtube';
 $lang['format_lightbox'] = 'LightBox';
 
 //Errors
-$lang['is_default_editor'] = 'The editor that you want to uninstall is set by default, you must first select another default editor';
-$lang['last_editor_installed'] = 'Last text editor, you can not delete it. Please first install another.';
+$lang['is_default_editor'] = 'The editor you want to uninstall is set by default, you must select another default editor first';
+$lang['last_editor_installed'] = 'Last text editor, you can not delete it. Please install another one first.';
 ?>

@@ -38,7 +38,6 @@ $lang['extended-fields-management'] = 'Member field management';
 $lang['extended-fields-error-already-exist'] = 'The extended field already exists.';
 $lang['extended-fields-error-phpboost-config'] = 'The fields used by default PHPBoost can not be created more than one time, please choose another type of field.';
 
-
 //Type 
 $lang['type.short-text'] = 'Short text (max 255 characters)';
 $lang['type.long-text'] = 'Long text (unlimited)';
@@ -71,8 +70,8 @@ $lang['field.possible-values-explain'] = 'Separate each value with |';
 $lang['field.default-values'] = 'Default values';
 $lang['field.default-values-explain'] = 'Separate each value with |';
 $lang['field.default-possible-values'] = 'Yes|No';
-$lang['field.read_authorizations'] = 'Read permissions field in the profile';
-$lang['field.actions_authorizations'] = 'Read permissions for the field in creating or editing a profile';
+$lang['field.read_authorizations'] = 'Read permissions of the field in the profile';
+$lang['field.actions_authorizations'] = 'Read permissions of the field when creating or editing a profile';
 
 // Regex
 $lang['regex.figures'] = 'Numbers';
@@ -87,7 +86,7 @@ $lang['field.yes'] = 'Yes';
 $lang['field.no'] = 'No';
 
 $lang['field.success'] = 'Success';
-$lang['field.delete_field'] = 'Do you really want to delete this field ?';
+$lang['field.delete_field'] = 'Do you really want to delete this field?';
 $lang['field.position'] = 'Position';
 
 $lang['field.is-required'] = 'Required';
@@ -102,7 +101,7 @@ $lang['field-install.default-theme'] = 'Default theme';
 $lang['field-install.default-theme-explain'] = 'Select the theme you want to use';
 
 $lang['field-install.default-editor'] = 'Default text editor';
-$lang['field-install.default-editor-explain'] = 'Select the default editor you want to use on your website to format text';
+$lang['field-install.default-editor-explain'] = 'Select the text editor you want to use on your website';
 
 $lang['field-install.timezone'] = 'Timezone';
 $lang['field-install.timezone-explain'] = 'Select the timezone corresponding to the place you live';
@@ -119,7 +118,7 @@ $lang['field-install.avatar-explain'] = '';
 $lang['field-install.website'] = 'Website';
 $lang['field-install.website-explain'] = 'Please enter a valid url (ex : http://www.phpboost.com)';
 
-$lang['field-install.location'] = 'Localization';
+$lang['field-install.location'] = 'Location';
 $lang['field-install.location-explain'] = '';
 
 $lang['field-install.job'] = 'Job';

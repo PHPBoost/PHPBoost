@@ -1,10 +1,10 @@
 <?php
 /*##################################################
- *                           comments-common.php
+ *                        AdminLoginController.php
  *                            -------------------
- *   begin                : September 25, 2011
- *   copyright            : (C) 2011 Kevin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   begin                : November 3, 2012
+ *   copyright            : (C) 2012 Julien BRISWALTER
+ *   email                : julien.briswalter@gmail.com
  *
  *
  ###################################################
@@ -26,27 +26,22 @@
  ###################################################*/
 
  ####################################################
- #                     English                      #
+#                     English                       #
  ####################################################
 
-$lang['comments'] = 'Comments';
-$lang['comment'] = 'Comment';
-$lang['comments.not-authorized.post'] = 'You are not authorized to post a comment';
-$lang['comments.not-authorized.read'] = 'You are not authorized to view comments';
+$lang = array(
+    'xml_lang' => 'en',
+    'site_name' => 'Site name',
+	'require_pseudo' => 'Please enter a login!',
+	'require_password' => 'Please enter a password!',
+	'connect' => 'Connect',
+	'admin' => 'Administrator',
+	'pseudo' => 'Login',
+	'password' => 'Password',
+	'autoconnect' => 'Auto connect',
+	'flood_block' => 'You still have :remaining_tries attempt(s) remaining. After that you will have to wait 5 minutes to obtain 2 new attempts (10mins for 5) !',
+    'flood_max' => 'You have used all your log in attempts and your account is locked for 5 minutes',
+	'unlock_admin_panel' => 'Administration unlock'
+);
 
-$lang['comment.locked'] = 'Comments blocked, you can not post comments';
-
-$lang['comment.add'] = 'Add a comment';
-$lang['comment.edit'] = 'Edit a comment';
-
-$lang['lock'] = 'Lock';
-$lang['unlock'] = 'Unlock';
-
-$lang['allComments'] = 'See other comments';
-
-$lang['comments.user.read-only'] = 'You are currently read-only, you can not post comments for the moment';
-
-$lang['module.choice'] = 'Select a module';
-$lang['no_comment'] = 'No comment';
-$lang['view-topic'] = 'View topic';
 ?>

@@ -95,8 +95,8 @@ $lang = array(
 	'advanced-config.config.unknown' => '<span style="color:#004b80;font-weight:bold;">Unknown sur votre serveur</span>',
 
 	'advanced-config.htaccess-manual-content' => 'Content of the .htaccess file',
-	'advanced-config.htaccess-manual-content.explain' => 'In this field you can type the instructions you would like to integrate into the .htaccess file 
-		which is at the root of the website. For instance, if you want to force special settings on your Apache web server.',
+	'advanced-config.htaccess-manual-content.explain' => 'In this field you can put the instructions you would like to integrate into the .htaccess file 
+		which is at the root of the website. For instance, you can force special settings on your Apache web server.',
 
 	'advanced-config.sessions-config' => 'Users connection',
 	'advanced-config.cookie-name' => 'Sessions cookie name',
@@ -123,10 +123,10 @@ $lang = array(
 	'advanced-config.unlock-code.content' => 'Keep this code (it will never be redelivered): :unlock_code
 		<br /><br />
 		This code can unlock the administration panel in case of intrusion attempt.
-		It will be asked of you in the direct administration connection form : :host_dir/admin/admin_index.php)
+		It will be asked in the direct administration connection form : :host_dir/admin/admin_index.php)
 		<br/><br/>
 		:signature',
-	'advanced-config.code_sent_success' => 'The unlock code has been succesfully sent',
+	'advanced-config.code_sent_success' => 'The unlock code has been successfully sent',
 	'advanced-config.code_sent_fail' => 'The sending of the unlock code failed',
 	'advanced-config.confirm_mail_sending' => 'Do you really want to send the unlock code?'
 );
