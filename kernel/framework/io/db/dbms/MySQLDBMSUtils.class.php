@@ -78,10 +78,11 @@ class MySQLDBMSUtils implements DBMSUtils
 		return $result['DATABASE()'];
 	}
 
-	public function list_tables()
+	public function list_tables($with_prefix = false)
 	{
 		$tables = array();
-		$results = $this->select('SHOW TABLES;', array(), SelectQueryResult::FETCH_NUM);
+		$like_prefix = $with_prefix ? ' LIKE \'' . PREFIX . '%\'' : '';
+		$results = $this->select('SHOW TABLES ' . $like_prefix . ';', array(), SelectQueryResult::FETCH_NUM);
 		foreach ($results as $result)
 		{
 			$tables[] = $result[0];
