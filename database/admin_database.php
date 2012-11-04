@@ -329,7 +329,7 @@ else
 
 	if ($tables_backup) //Liste des tables pour les sauvegarder
 	{
-		$tables = PersistenceContext::get_dbms_utils()->list_tables();
+		$tables = PersistenceContext::get_dbms_utils()->list_tables(true);
 		$Template->put_all(array(
 			'C_DATABASE_BACKUP' => true,
 			'NBR_TABLES' => count($tables),
