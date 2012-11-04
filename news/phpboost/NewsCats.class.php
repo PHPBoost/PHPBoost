@@ -38,7 +38,21 @@ class NewsCats extends CategoriesManager
 
 		parent::__construct('news_cat', 'news', $NEWS_CAT);
 	}
-
+	
+	//Method which checks if the category exists
+	function check_category_exists($id)
+	{
+		global $Sql;
+		
+		if (!empty($id))
+		{
+			$exist = $Sql->query_array(PREFIX . 'news_cat', '*', "WHERE id = '" . $id . "'", __LINE__, __FILE__);
+			return !empty($exist) ? true : false;
+		}
+		else
+			return false;
+	}
+	
 	//Method which removes all subcategories and their content
 	function delete_category_recursively($id)
 	{

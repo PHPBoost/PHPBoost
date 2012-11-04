@@ -43,6 +43,12 @@ if(!$User->check_auth($NEWS_CONFIG['global_auth'], AUTH_NEWS_READ))
     DispatchManager::redirect($error_controller);
 }
 
+if(!empty($idcat) && !$news_cat->check_category_exists($idcat))
+{
+    $controller = new UserErrorController(LangLoader::get_message('error', 'errors'), $LANG['e_unexist_cat_news']);
+    DispatchManager::redirect($controller);
+}
+
 if (!empty($idnews)) // On affiche la news correspondant à l'id envoyé.
 {
 	// Récupération de la news
