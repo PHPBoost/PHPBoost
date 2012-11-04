@@ -40,6 +40,8 @@ $MEDIA_LANG = array(
 'hide_media' => 'Cacher ce fichier multimédia',
 'recount_per_cat' => 'Recompter le nombre de fichiers multimédias par catégorie',
 'show_media' => 'Montrer ce fichier multimédia',
+'width_max' => 'Largeur maximale',
+'height_max' => 'Hauteur maximale',
 
 // admin_media_cats.php
 'auth_read' => 'Permissions de lecture',
