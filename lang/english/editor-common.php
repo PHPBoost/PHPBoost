@@ -124,6 +124,6 @@ $lang['format_youtube'] = 'Youtube';
 $lang['format_lightbox'] = 'LightBox';
 
 //Errors
-$lang['is_default_editor'] = 'The editor you want to uninstall is set by default, you must select another default editor first';
-$lang['last_editor_installed'] = 'Last text editor, you can not delete it. Please install another one first.';
+$lang['is_default_editor'] = 'The editor you want to uninstall or disable is set by default, you must select another default editor first';
+$lang['last_editor_installed'] = 'Last text editor, you can not delete or disable it. Please install another one first.';
 ?>

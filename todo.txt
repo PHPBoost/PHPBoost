@@ -79,6 +79,7 @@
 + [color=red]Nouveauté:[/color] Interface de personnalisation de la page de démarrage du site.
 - Possibilité de désactiver l'affichage d'un lien dans les menus
 - [color=red]Nouveauté:[/color] Système d'alertes (javascript) utilisateur évolué.
+- Supprimer les autorisations d'accès dans la gestion des modules pour plus de cohérence
 
 [b]Messages privés[/b]
 - Possibilité d'envoyer des messages privés à tous les membres d'un groupe ou à tous les membres pour l'administrateur.
