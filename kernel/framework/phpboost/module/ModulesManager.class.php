@@ -305,6 +305,15 @@ class ModulesManager
 				ModulesConfig::load()->remove_module_by_id($module_id);
 				ModulesConfig::save();
 	
+				//Module home page ?
+				$general_config = GeneralConfig::load();
+				$module_home_page_selected = $general_config->get_module_home_page();
+				if ($module_home_page_selected == $module_id)
+				{
+					$general_config->set_module_home_page('');
+					$general_config->set_other_home_page('index.php');
+				}
+				
 				//Suppression des fichiers du module
 				if ($drop_files)
 				{
@@ -407,11 +416,47 @@ class ModulesManager
 	
 	public static function update_module_authorizations($module_id, $activated, array $authorizations)
 	{
-		$module = self::get_module($module_id);
-		$module->set_activated($activated);
-		$module->set_authorizations($authorizations);
-		ModulesConfig::load()->update($module);
-		ModulesConfig::save();
+		$error = '';
+		if (!$activated)
+		{
+			//Module home page
+			$general_config = GeneralConfig::load();
+			$module_home_page_selected = $general_config->get_module_home_page();
+			if ($module_home_page_selected == $module_id)
+			{
+				$general_config->set_module_home_page('');
+				$general_config->set_other_home_page('index.php');
+			}
+			
+			$editors = AppContext::get_content_formatting_service()->get_available_editors();
+			if (in_array($module_id, $editors))
+			{
+				if (count($editors) > 1)
+				{
+					$default_editor = ContentFormattingConfig::load()->get_default_editor();
+					if ($default_editor !== $module_id)
+					{
+						PersistenceContext::get_querier()->update(DB_TABLE_MEMBER, array('user_editor' => $default_editor), 
+							'WHERE user_editor=:old_user_editor', array('old_user_editor' => 'bbcode'
+						));
+					}
+					else
+						$error = LangLoader::get_message('is_default_editor', 'editor-common');
+				}
+				else
+					$error = LangLoader::get_message('last_editor_installed', 'editor-common');
+			}
+		}
+
+		if (empty($error))
+		{
+			$module = self::get_module($module_id);
+			$module->set_activated($activated);
+			$module->set_authorizations($authorizations);
+			ModulesConfig::load()->update($module);
+			ModulesConfig::save();
+		}
+		return $error;
 	}
 
 	private static function execute_module_installation($module_id)

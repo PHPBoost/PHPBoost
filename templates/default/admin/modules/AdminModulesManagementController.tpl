@@ -48,6 +48,11 @@
 						{@modules.installed_not_activated_modules}
 					</th>
 				</tr>
+				# START errors #
+				<tr>
+					# INCLUDE errors.MSG #
+				</tr>
+				# END errors #
 				# IF C_MODULES_NOT_ACTIVATED #
 				<tr>
 					<td class="row2" style="width:100px;text-align:center;">

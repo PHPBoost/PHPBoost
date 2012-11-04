@@ -110,16 +110,33 @@ class AdminModulesManagementController extends AdminController
 	{
 		if ($request->get_bool('update', false))
 		{
+			$errors = array();
 			foreach (ModulesManager::get_installed_modules_map() as $module)
 			{
 				$request = AppContext::get_request();
 				$module_id = $module->get_id();
 				$activated = $request->get_bool('activated-' . $module_id, false);
 				$authorizations = Authorizations::auth_array_simple(Module::ACCESS_AUTHORIZATION, $module_id);
-				ModulesManager::update_module_authorizations($module_id, $activated, $authorizations);
+				$error = ModulesManager::update_module_authorizations($module_id, $activated, $authorizations);
+				
+				if (!empty($error))
+					$errors[$module->get_configuration()->get_name()] = $error;
 			}
 			MenuService::generate_cache();
-			AppContext::get_response()->redirect(AdminModulesUrlBuilder::list_installed_modules());
+			
+			if (empty($errors))
+			{
+				AppContext::get_response()->redirect(AdminModulesUrlBuilder::list_installed_modules());
+			}
+			else
+			{
+				foreach ($errors as $module_name => $error)
+				{
+					$this->view->assign_block_vars('errors', array(
+						'MSG' => MessageHelper::display($module_name . ' : ' . $error, MessageHelper::WARNING, 10)
+					));
+				}
+			}
 		}	
 	}
 }
