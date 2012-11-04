@@ -41,6 +41,8 @@ $MEDIA_LANG = array(
 'hide_media' => 'Hide this multimedia file',
 'recount_per_cat' => 'Recount the number of multimedia files per category',
 'show_media' => 'Show this multimedia file',
+'width_max' => 'Maximum width',
+'height_max' => 'Maximum height',
 
 // admin_media_cats.php
 'auth_read' => 'Read permissions',
