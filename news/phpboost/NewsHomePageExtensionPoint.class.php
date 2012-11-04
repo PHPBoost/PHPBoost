@@ -151,7 +151,6 @@ class NewsHomePageExtensionPoint implements HomePageExtensionPoint
 
 				while ($row = $this->sql_querier->fetch_assoc($result))
 				{
-
 					if($User->check_auth($NEWS_CAT[$row['idcat']]['auth'], AUTH_NEWS_READ))
 					{
 						// Séparation des news en colonnes si activé.

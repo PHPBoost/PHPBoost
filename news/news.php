@@ -37,16 +37,22 @@ $user = retrieve(GET, 'user', false, TBOOL);
 $level = array('', ' modo', ' admin');
 $now = new Date(DATE_NOW, TIMEZONE_AUTO);
 
-if(!$User->check_auth($NEWS_CONFIG['global_auth'], AUTH_NEWS_READ))
+if (!$User->check_auth($NEWS_CONFIG['global_auth'], AUTH_NEWS_READ))
 {
     $error_controller = PHPBoostErrors::user_not_authorized();
     DispatchManager::redirect($error_controller);
 }
 
-if(!empty($idcat) && !$news_cat->check_category_exists($idcat))
+if (!empty($idcat) && !$news_cat->check_category_exists($idcat))
 {
     $controller = new UserErrorController(LangLoader::get_message('error', 'errors'), $LANG['e_unexist_cat_news']);
     DispatchManager::redirect($controller);
+}
+
+if (!$User->check_auth($NEWS_CAT[$idcat]['auth'], AUTH_NEWS_READ))
+{
+	$error_controller = PHPBoostErrors::user_not_authorized();
+    DispatchManager::redirect($error_controller);
 }
 
 if (!empty($idnews)) // On affiche la news correspondant à l'id envoyé.
