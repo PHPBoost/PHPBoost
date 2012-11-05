@@ -202,10 +202,12 @@ else
 			$nbr_column_pics = ($nbr_pics > $CONFIG_GALLERY['nbr_column']) ? $CONFIG_GALLERY['nbr_column'] : $nbr_pics;
 			$nbr_column_pics = !empty($nbr_column_pics) ? $nbr_column_pics : 1;
 			$column_width_pics = floor(100/$nbr_column_pics);
+			$selectbox_width = floor(100-(10*$nbr_column_pics));
 
 			$Template->put_all(array(
 				'NBR_PICS' => $nbr_pics,
 				'COLUMN_WIDTH_PICS' => $column_width_pics,
+				'SELECTBOX_WIDTH' => $selectbox_width,
 				'CATEGORIES' => $cat_list_unselect
 			));
 
