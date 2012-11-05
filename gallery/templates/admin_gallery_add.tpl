@@ -142,7 +142,7 @@
 										<tr>
 											<td class="row2">
 												<span class="text_small">{L_CAT}:</span> 
-												<select name="{list.ID}cat" id="{list.ID}cat" class="valign_middle">
+												<select name="{list.ID}cat" id="{list.ID}cat" class="valign_middle" style="width:{SELECTBOX_WIDTH}%">
 													{list.CATEGORIES}
 												</select>
 											</td>
