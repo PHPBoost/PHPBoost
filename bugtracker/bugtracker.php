@@ -99,7 +99,10 @@ if (!empty($id))
 {
 	$bug_exist = $Sql->query_array(PREFIX . 'bugtracker', '*', "WHERE id = '" . $id . "'", __LINE__, __FILE__);
 	if (empty($bug_exist))
-		AppContext::get_response()->redirect(HOST . DIR . '/bugtracker/bugtracker.php?' . (!empty($back) ? $back . '&' : '') . 'error=unexist_bug');
+	{
+		$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), $LANG['bugs.error.e_unexist_bug']);
+		DispatchManager::redirect($controller);
+	}
 }
 
 if ( !empty($_POST['valid_add']) )
@@ -605,7 +608,7 @@ else if (!empty($_POST['valid_edit']) && is_numeric($id))
 		//Champs supplémentaires pour l'administrateur
 		if ($auth_moderate || (!empty($old_values['assigned_to_id']) && $User->get_attribute('user_id') == $old_values['assigned_to_id']))
 		{
-			$Sql->query_inject("UPDATE " . PREFIX . "bugtracker SET title = '" . $title . "', contents = '" . $contents . "', status = '" . $status . "', type = '" . $type . "', category = '" . $category . "', severity = '" . $severity . "', priority = '" . $priority . "', assigned_to_id = '" . $assigned_to_id . "', detected_in = '" . $detected_in . "', fixed_in = '" . $fixed_in . "', reproductible = '" . $reproductible . "', reproduction_method = '" . $reproduction_method . "'
+			$Sql->query_inject("UPDATE " . PREFIX . "bugtracker SET title = '" . $title . "', contents = '" . $contents . "', status = '" . $status . "', " . ($status == 'fixed' ? "fix_date = '" . $now->get_timestamp() . "', " : '') . "type = '" . $type . "', category = '" . $category . "', severity = '" . $severity . "', priority = '" . $priority . "', assigned_to_id = '" . $assigned_to_id . "', detected_in = '" . $detected_in . "', fixed_in = '" . $fixed_in . "', reproductible = '" . $reproductible . "', reproduction_method = '" . $reproduction_method . "'
 			WHERE id = '" . $id . "'", __LINE__, __FILE__);
 			
 			// Envoi d'un MP à l'utilisateur auquel a été affecté le bug
@@ -1253,10 +1256,10 @@ else if (isset($_GET['solved'])) // liste des bugs corrigés
 			$sort = 'number_comments';
 			break;
 		case 'date' :
-			$sort = 'submit_date';
+			$sort = 'fix_date';
 			break;
 		default :
-			$sort = 'submit_date';
+			$sort = 'fix_date';
 	}
 	
 	$get_mode = retrieve(GET, 'mode', '');
@@ -1298,7 +1301,7 @@ else if (isset($_GET['solved'])) // liste des bugs corrigés
 		'L_TYPE'				=> $LANG['bugs.labels.fields.type'],
 		'L_SEVERITY'			=> $LANG['bugs.labels.fields.severity'],
 		'L_STATUS'				=> $LANG['bugs.labels.fields.status'],
-		'L_DATE'				=> $LANG['bugs.labels.fields.submit_date'],
+		'L_DATE'				=> $LANG['bugs.labels.fields.fix_date'],
 		'L_COMMENTS'			=> $LANG['title_com'],
 		'L_ROADMAP' 			=> $LANG['bugs.titles.roadmap'],
 		'L_NO_BUG' 				=> $LANG['bugs.notice.no_bug'],
@@ -1366,7 +1369,7 @@ else if (isset($_GET['solved'])) // liste des bugs corrigés
 			'STATUS'		=> $LANG['bugs.status.' . $row['status']],
 			'LINE_COLOR'	=> $line_color,
 			'COMMENTS'		=> '<a href="' . PATH_TO_ROOT . '/bugtracker/bugtracker' . url('.php?view&id=' . $row['id'] . '&com=0#comments_list') . '">' . (empty($nbr_coms) ? 0 : $nbr_coms) . '</a>',
-			'DATE' 			=> gmdate_format($date_format, $row['submit_date']),
+			'DATE' 			=> gmdate_format($date_format, $row['fix_date']),
 			'U_BUG_REOPEN'	=> PATH_TO_ROOT . '/bugtracker/bugtracker' . url('.php?reopen&amp;id=' . $row['id'] . '&amp;back=solved'),
 			'U_BUG_EDIT'	=> PATH_TO_ROOT . '/bugtracker/bugtracker' . url('.php?edit&amp;id=' . $row['id'] . '&amp;back=solved'),
 			'U_BUG_HISTORY'	=> PATH_TO_ROOT . '/bugtracker/bugtracker' . url('.php?history&amp;id=' . $row['id'] . '&amp;back=solved'),
@@ -1553,10 +1556,10 @@ else if (isset($_GET['roadmap'])) // roadmap
 			$sort = 'number_comments';
 			break;
 		case 'date' :
-			$sort = 'submit_date';
+			$sort = 'fix_date';
 			break;
 		default :
-			$sort = 'submit_date';
+			$sort = 'fix_date';
 	}
 	
 	$get_mode = retrieve(GET, 'mode', '');
@@ -1591,7 +1594,7 @@ else if (isset($_GET['roadmap'])) // roadmap
 		'L_TYPE'				=> $LANG['bugs.labels.fields.type'],
 		'L_SEVERITY'			=> $LANG['bugs.labels.fields.severity'],
 		'L_STATUS'				=> $LANG['bugs.labels.fields.status'],
-		'L_DATE'				=> $LANG['bugs.labels.fields.submit_date'],
+		'L_DATE'				=> $LANG['bugs.labels.fields.fix_date'],
 		'L_COMMENTS'			=> $LANG['title_com'],
 		'L_NO_BUG' 				=> $LANG['bugs.notice.no_bug'],
 		'L_NO_SOLVED_BUG'		=> $LANG['bugs.notice.no_bug_solved'],
@@ -1665,7 +1668,7 @@ else if (isset($_GET['roadmap'])) // roadmap
 			'STATUS'		=> $LANG['bugs.status.' . $row['status']],
 			'LINE_COLOR'	=> $line_color,
 			'COMMENTS'		=> '<a href="' . PATH_TO_ROOT . '/bugtracker/bugtracker' . url('.php?view&id=' . $row['id'] . '&com=0#comments_list') . '">' . (empty($nbr_coms) ? 0 : $nbr_coms) . '</a>',
-			'DATE' 			=> gmdate_format($date_format, $row['submit_date']),
+			'DATE' 			=> gmdate_format($date_format, $row['fix_date']),
 			'U_BUG_HISTORY'	=> PATH_TO_ROOT . '/bugtracker/bugtracker' . url('.php?history&amp;id=' . $row['id'] . '&amp;back=roadmap')
 		));
 	}
