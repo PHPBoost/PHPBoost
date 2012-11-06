@@ -252,10 +252,6 @@ class BugtrackerHomePageExtensionPoint implements HomePageExtensionPoint
 				$errstr = $LANG['bugs.error.e_reopen_success'];
 				$errtyp = E_USER_SUCCESS;
 				break;
-			case 'unexist_bug':
-				$errstr = $LANG['bugs.error.e_unexist_bug'];
-				$errtyp = E_USER_WARNING;
-				break;
 			default:
 				$errstr = '';
 				$errtyp = E_USER_NOTICE;

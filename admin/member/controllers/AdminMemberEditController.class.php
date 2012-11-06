@@ -245,6 +245,7 @@ class AdminMemberEditController extends AdminController
 		}
 		
 		StatsCache::invalidate();
+		GroupsCache::invalidate(); //On régénère le fichier de cache des groupes
 		
 		if ($redirect)
 		{

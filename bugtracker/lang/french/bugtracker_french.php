@@ -113,6 +113,7 @@ $LANG['bugs.labels.fields.title'] = 'Titre';
 $LANG['bugs.labels.fields.contents'] = 'Description';
 $LANG['bugs.labels.fields.author_id'] = 'Détecté par';
 $LANG['bugs.labels.fields.submit_date'] = 'Détecté le';
+$LANG['bugs.labels.fields.fix_date'] = 'Corrigé le';
 $LANG['bugs.labels.fields.status'] = 'Etat';
 $LANG['bugs.labels.fields.type'] = 'Type';
 $LANG['bugs.labels.fields.category'] = 'Catégorie';
