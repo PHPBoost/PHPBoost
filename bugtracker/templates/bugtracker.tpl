@@ -833,39 +833,6 @@
 		if( page != null && page != '' )
 			insertbbcode('[page]' + page, '[/page]', 'contents');
 	}
-	
-	# IF edit.C_IS_ASSIGNED #
-	function XMLHttpRequest_search()
-	{
-		var login = document.getElementById("login").value;
-		if( login != "" )
-		{
-			if( document.getElementById('loading_members') )
-				document.getElementById('loading_members').innerHTML = '<img src="{PATH_TO_ROOT}/templates/{THEME}/images/loading_mini.gif" alt="" class="valign_middle" />';
-			
-			data = 'login=' + login;
-			var xhr_object = xmlhttprequest_init('{PATH_TO_ROOT}/kernel/framework/ajax/member_xmlhttprequest.php?token={TOKEN}&insert_member=1');
-			xhr_object.onreadystatechange = function() 
-			{
-				if( xhr_object.readyState == 4 && xhr_object.status == 200 && xhr_object.responseText != '' )
-				{
-					document.getElementById("xmlhttprequest_result_search").innerHTML = xhr_object.responseText;
-					show_div("xmlhttprequest_result_search");
-					if( document.getElementById('loading_members') )
-						document.getElementById('loading_members').innerHTML = '';
-				}
-				else if( xhr_object.readyState == 4 && xhr_object.responseText == '' )
-				{	
-					if( document.getElementById('loading_members') )
-						document.getElementById('loading_members').innerHTML = '';
-				}
-			}
-			xmlhttprequest_sender(xhr_object, data);
-		}	
-		else
-			alert("{L_REQUIRE_LOGIN}");
-	}
-	# ENDIF #
 	-->
 	</script>
 
@@ -888,12 +855,7 @@
 					<dt><label for="assigned_to">{L_ASSIGNED_TO}</label><br /><span>{L_JOKER}</span></dt>
 					<dd>
 						<input type="text" size="20" maxlength="25" id="login" value="{edit.ASSIGNED_TO}" name="assigned_to" class="text" /> 
-						<span id="loading_members"></span>
-						<script type="text/javascript">
-						<!--
-							document.write('<input value="{L_SEARCH}" onclick="XMLHttpRequest_search();" type="button" class="submit">');
-						-->
-						</script>
+						<span id="search_img"></span> <input value="{L_SEARCH}" onclick="XMLHttpRequest_search_members('', '{THEME}', 'insert_member', '{L_REQUIRE_LOGIN}');" type="button" class="submit" />								
 						<div id="xmlhttprequest_result_search" style="display:none;" class="xmlhttprequest_result_search"></div>
 					</dd>
 				</dl>

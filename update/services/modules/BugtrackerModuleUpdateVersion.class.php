@@ -91,6 +91,7 @@ class BugtrackerModuleUpdateVersion extends ModuleUpdateVersion
 		$this->db_utils->drop_column(PREFIX . 'bugtracker', 'lock_com');
 		
 		$this->db_utils->add_column(PREFIX . 'bugtracker', 'progess', array('type' => 'integer', 'length' => 11, 'default' => 0));
+		$this->db_utils->add_column(PREFIX . 'bugtracker', 'fix_date', array('type' => 'integer', 'length' => 11, 'default' => 0));
 	}
 
 	private function rename_status()

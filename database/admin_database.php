@@ -283,13 +283,9 @@ elseif ($action == 'restore')
 		{
 			while (($file = readdir($dh)) !== false)
 			{
-				if (strpos($file, '.sql') !== false)					
+				if (strpos($file, '.sql') !== false)
 				{
-					$Template->assign_block_vars('file', array(
-						'FILE_NAME' => $file,
-						'WEIGHT' => NumberHelper::round(filesize($dir . '/' . $file)/1048576, 1) . ' Mo',
-						'FILE_DATE' => gmdate_format('date_format_short', filemtime($dir . '/' . $file))
-					));
+					$filelist[filemtime($dir . '/' . $file)] = array('file_name' => $file, 'weight' => NumberHelper::round(filesize($dir . '/' . $file)/1048576, 1) . ' Mo', 'file_date' => gmdate_format('date_format_short', filemtime($dir . '/' . $file)));
 					$i++;
 				}
 			}
@@ -297,14 +293,31 @@ elseif ($action == 'restore')
 		}
 	}
 	
+	if(sizeof($filelist) > 0) {
+		krsort($filelist);
+	}
+	
 	if ($i == 0)
+	{
 		$Template->put_all(array(
 			'L_INFO' => $LANG['db_empty_dir'],
 		));
+	}
 	else
+	{
 		$Template->put_all(array(
 			'L_INFO' => $LANG['db_restore_file'],
 		));
+		
+		foreach ($filelist as $file)
+		{
+			$Template->assign_block_vars('file', array(
+				'FILE_NAME' => $file['file_name'],
+				'WEIGHT' => $file['weight'],
+				'FILE_DATE' => $file['file_date']
+			));
+		}
+	}
 }
 else
 {
