@@ -52,7 +52,7 @@ class SearchConfig extends AbstractConfigData
 	 */
 	public function set_weightings(SearchWeightings $search_weightings)
 	{
-		$this->set_property($search_weightings->get_weightings(), $weightings);
+		$this->set_property(self::weightings, $search_weightings->get_weightings());
 	}
 
 	/**
