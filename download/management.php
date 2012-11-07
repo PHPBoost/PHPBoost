@@ -91,6 +91,8 @@ if ($delete_file > 0)
         
         // Feeds Regeneration
         Feed::clear_cache('download');
+        
+        $download_categories->recount_sub_files();
 	}
 	else
 	{
