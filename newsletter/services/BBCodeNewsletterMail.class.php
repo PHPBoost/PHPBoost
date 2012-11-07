@@ -66,7 +66,7 @@ class BBCodeNewsletterMail extends AbstractNewsletterMail
 	
 	public function parse_contents($contents)
 	{
-		return ContentSecondParser::export_html_text($contents);
+		return ContentSecondParser::export_html_text(FormatingHelper::second_parse($contents));
 	}
 }
 ?>
