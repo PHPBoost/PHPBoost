@@ -591,7 +591,7 @@ a.msg_link_pseudo:hover {
     background:#ffffff;
     border-spacing:1px;
     padding:5px;
-
+	clear:both;
 }
 
 .module_mini_top {
