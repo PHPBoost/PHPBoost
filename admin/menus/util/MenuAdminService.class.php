@@ -65,10 +65,14 @@ class MenuAdminService
 		foreach (ModulesManager::get_activated_modules_map_sorted_by_localized_name() as $module)
 		{
 			$configuration = $module->get_configuration();
+			$home_page = $configuration->get_home_page();
 			
-			$tpl_filter->assign_block_vars('modules', array(
-				'ID' => $module->get_id(),
-			));
+			if (!empty($home_page))
+			{
+				$tpl_filter->assign_block_vars('modules', array(
+					'ID' => $module->get_id(),
+				));
+			}
 		}
 		
 		//Ajout du menu
@@ -98,11 +102,15 @@ class MenuAdminService
 			foreach (ModulesManager::get_activated_modules_map_sorted_by_localized_name() as $module)
 			{
 				$configuration = $module->get_configuration();
+				$home_page = $configuration->get_home_page();
 			
-				$tpl_filter->assign_block_vars('filters.modules', array(
-					'ID' => $module->get_id(),
-					'SELECTED' => $module_name == $module->get_id() ? ' selected="selected"' : ''
-				));
+				if (!empty($home_page))
+				{
+					$tpl_filter->assign_block_vars('filters.modules', array(
+						'ID' => $module->get_id(),
+						'SELECTED' => $module_name == $module->get_id() ? ' selected="selected"' : ''
+					));
+				}
 			}
 		}
 		
