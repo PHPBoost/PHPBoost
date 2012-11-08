@@ -118,15 +118,15 @@
 				<span id="own_auth_display" style="{DISPLAY}">
 					<dl>
 						<dt><label>{L_READ_PAGE}</label></dt>
-						<dd><label>{SELECT_READ_PAGE}</label></dd>					
+						<dd>{SELECT_READ_PAGE}</dd>					
 					</dl>
 					<dl>
 						<dt><label>{L_EDIT_PAGE}</label></dt>
-						<dd><label>{SELECT_EDIT_PAGE}</label></dd>					
+						<dd>{SELECT_EDIT_PAGE}</dd>					
 					</dl>
 					<dl>
 						<dt><label>{L_READ_COM}</label></dt>
-						<dd><label>{SELECT_READ_COM}</label></dd>					
+						<dd>{SELECT_READ_COM}</dd>					
 					</dl>
 				</span>
 			</fieldset>

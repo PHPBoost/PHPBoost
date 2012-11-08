@@ -110,15 +110,15 @@
 					</dl>
 					<dl>
 						<dt><label>{L_AUTH_READ}</label></dt>
-						<dd><label>{AUTH_READ}</label></dd>
+						<dd>{AUTH_READ}</dd>
 					</dl>
 					<dl id="write_auth">
 						<dt><label>{L_AUTH_WRITE}</label></dt>
-						<dd><label>{AUTH_WRITE}</label></dd>
+						<dd>{AUTH_WRITE}</dd>
 					</dl>
 					<dl id="edit_auth">
 						<dt><label>{L_AUTH_EDIT}</label></dt>
-						<dd><label>{AUTH_EDIT}</label></dd>
+						<dd>{AUTH_EDIT}</dd>
 					</dl>
 				</fieldset>
 								

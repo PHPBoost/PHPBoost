@@ -40,15 +40,15 @@
 					<p>{EXPLAIN_FORUM_GROUPS}</p>
 					<dl>
 						<dt><label>{L_FLOOD}</label></dt>
-						<dd><label>{FLOOD_AUTH}</label></dd>
+						<dd>{FLOOD_AUTH}</dd>
 					</dl>
 					<dl>
 						<dt><label>{L_EDIT_MARK}</label></dt>
-						<dd><label>{EDIT_MARK_AUTH}</label></dd>
+						<dd>{EDIT_MARK_AUTH}</dd>
 					</dl>
 					<dl>
 						<dt><label>{L_TRACK_TOPIC}</label></dt>
-						<dd><label>{TRACK_TOPIC_AUTH}</label></dd>
+						<dd>{TRACK_TOPIC_AUTH}</dd>
 					</dl>
 				</fieldset>
 								
