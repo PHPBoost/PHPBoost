@@ -59,11 +59,11 @@
 					
 					<dl>
 						<dt><label for="category">{L_CATEGORY}</label></dt>
-						<dd><label>
+						<dd>
 							<select name="idcat_post" id="category">
 								{CATEGORIES}
 							</select>
-						</label></dd>
+						</dd>
 					</dl>
 					<dl>
 						<dt><label for="name">{L_NAME}</label></dt>
