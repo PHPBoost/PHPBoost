@@ -122,7 +122,6 @@ class AdminModulesManagementController extends AdminController
 				if (!empty($error))
 					$errors[$module->get_configuration()->get_name()] = $error;
 			}
-			MenuService::generate_cache();
 			
 			if (empty($errors))
 			{
