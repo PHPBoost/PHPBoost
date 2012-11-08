@@ -455,7 +455,16 @@ class ModulesManager
 			$module->set_authorizations($authorizations);
 			ModulesConfig::load()->update($module);
 			ModulesConfig::save();
-		}
+			
+			MenuService::generate_cache();
+			Feed::clear_cache($module_id);
+			
+			if (ServerEnvironmentConfig::load()->is_url_rewriting_enabled() && self::module_contains_rewrited_rules($module_id))
+			{
+				HtaccessFileCache::regenerate();
+			}
+		}	
+		
 		return $error;
 	}
 
