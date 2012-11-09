@@ -227,7 +227,7 @@ class DownloadHomePageExtensionPoint implements HomePageExtensionPoint
 		{
 			$tpl->put_all(array(
 				'L_NO_FILE_THIS_CATEGORY' => $DOWNLOAD_LANG['none_download'],
-				'C_NO_FILE' => true
+				'C_NO_FILE' => $category_id > 0 ? true : false
 			));
 		}
 			

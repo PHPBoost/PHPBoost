@@ -193,7 +193,7 @@ class FaqHomePageExtensionPoint implements HomePageExtensionPoint
 		}
 		else
 		{
-			$tpl->assign_block_vars('no_question', array());
+			$id_faq > 0 ? $tpl->assign_block_vars('no_question', array()) : '';
 		}
 
 		$tpl->put_all(array(
