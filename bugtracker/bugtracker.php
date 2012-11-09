@@ -370,7 +370,7 @@ else if (isset($_GET['reject']) && is_numeric($id)) //Rejeter un bug
 		VALUES('" . $id . "', '" . $User->get_id() . "', '" . $now->get_timestamp() . "', 'status', '" . $result['status'] . "', 'rejected', '')", __LINE__, __FILE__);
 	
 	//On change le statut dans la bdd.
-	$Sql->query_inject("UPDATE " . PREFIX . "bugtracker SET status = 'rejected' WHERE id = '" . $id . "'", __LINE__, __FILE__);
+	$Sql->query_inject("UPDATE " . PREFIX . "bugtracker SET status = 'rejected', fix_date='" . $now->get_timestamp() . "' WHERE id = '" . $id . "'", __LINE__, __FILE__);
 
 	//Mise à jour de la liste des bugs dans le cache de la configuration.
 	$Cache->Generate_module_file('bugtracker');
@@ -426,7 +426,7 @@ else if (isset($_GET['reopen']) && is_numeric($id)) //Ré-ouvrir un bug
 		VALUES('" . $id . "', '" . $User->get_id() . "', '" . $now->get_timestamp() . "', 'status', '" . $result['status'] . "', 'reopen', '')", __LINE__, __FILE__);
 	
 	//On change le statut dans la bdd.
-	$Sql->query_inject("UPDATE " . PREFIX . "bugtracker SET status = 'reopen', fixed_in = '' WHERE id = '" . $id . "'", __LINE__, __FILE__);
+	$Sql->query_inject("UPDATE " . PREFIX . "bugtracker SET status = 'reopen', fixed_in = '', fix_date=''  WHERE id = '" . $id . "'", __LINE__, __FILE__);
 	
 	//Mise à jour de la liste des bugs dans le cache de la configuration.
 	$Cache->Generate_module_file('bugtracker');
@@ -1362,7 +1362,7 @@ else if (isset($_GET['solved'])) // liste des bugs corrigés
 
 		$Template->assign_block_vars('solved.bugclosed', array(
 			'ID'			=> $row['id'],
-			'U_BUG_VIEW'	=> PATH_TO_ROOT .'/bugtracker/bugtracker' . url('.php?view&amp;id=' . $row['id'], '-' . $row['id'] . '+' . Url::encode_rewrite($row['title']) . '.php'),
+			'U_BUG_VIEW'	=> PATH_TO_ROOT .'/bugtracker/bugtracker' . url('.php?view&amp;com=0&amp;id=' . $row['id'], '-' . $row['id'] . '+' . Url::encode_rewrite($row['title']) . '.php'),
 			'TITLE'			=> ($cat_in_title_activated == true && $display_categories) ? '[' . $categories[$row['category']] . '] ' . $row['title'] : $row['title'],
 			'TYPE'			=> (!empty($row['type']) && isset($types[$row['type']])) ? stripslashes($types[$row['type']]) : $LANG['bugs.notice.none'],
 			'SEVERITY'		=> (!empty($row['severity']) && isset($severities[$row['severity']])) ? stripslashes($severities[$row['severity']]['name']) : $LANG['bugs.notice.none'],
@@ -1661,7 +1661,7 @@ else if (isset($_GET['roadmap'])) // roadmap
 		
 		$Template->assign_block_vars('roadmap.bug', array(
 			'ID'			=> $row['id'],
-			'U_BUG_VIEW'	=> PATH_TO_ROOT .'/bugtracker/bugtracker' . url('.php?view&amp;id=' . $row['id'], '-' . $row['id'] . '+' . Url::encode_rewrite($row['title']) . '.php'),
+			'U_BUG_VIEW'	=> PATH_TO_ROOT .'/bugtracker/bugtracker' . url('.php?view&amp;com=0&amp;id=' . $row['id'], '-' . $row['id'] . '+' . Url::encode_rewrite($row['title']) . '.php'),
 			'TITLE'			=> ($cat_in_title_activated == true && $display_categories) ? '[' . $categories[$row['category']] . '] ' . $row['title'] : $row['title'],
 			'TYPE'			=> (!empty($row['type']) && isset($types[$row['type']])) ? stripslashes($types[$row['type']]) : $LANG['bugs.notice.none'],
 			'SEVERITY'		=> (!empty($row['severity']) && isset($severities[$row['severity']])) ? stripslashes($severities[$row['severity']]['name']) : $LANG['bugs.notice.none'],

@@ -48,6 +48,7 @@ class BugtrackerModuleUpdateVersion extends ModuleUpdateVersion
 		$this->rename_severities();
 		$this->rename_versions();
 		$this->rename_fields();
+		$this->retrieve_bugs_fix_date();
 	}
 	
 	private function update_comments()
@@ -93,7 +94,7 @@ class BugtrackerModuleUpdateVersion extends ModuleUpdateVersion
 		$this->db_utils->add_column(PREFIX . 'bugtracker', 'progess', array('type' => 'integer', 'length' => 11, 'default' => 0));
 		$this->db_utils->add_column(PREFIX . 'bugtracker', 'fix_date', array('type' => 'integer', 'length' => 11, 'default' => 0));
 	}
-
+	
 	private function rename_status()
 	{
 		// Suppression du statut closed (remplacé par statut fixed)
@@ -111,7 +112,7 @@ class BugtrackerModuleUpdateVersion extends ModuleUpdateVersion
 		
 		foreach ($rows_change as $old_name => $new_name)
 		{
-			$this->querier->update(PREFIX . 'bugtracker', array('severity' => $new_name), "WHERE severity='" . $old_name . "'");
+			$this->querier->update(PREFIX . 'bugtracker', array('severity' => $new_name), "WHERE type='" . $old_name . "'");
 			$this->querier->update(PREFIX . 'bugtracker_history', array('old_value' => $new_name), "WHERE old_value='" . $old_name . "'");
 			$this->querier->update(PREFIX . 'bugtracker_history', array('new_value' => $new_name), "WHERE new_value='" . $old_name . "'");
 		}
@@ -128,7 +129,7 @@ class BugtrackerModuleUpdateVersion extends ModuleUpdateVersion
 		
 		foreach ($rows_change as $old_name => $new_name)
 		{
-			$this->querier->update(PREFIX . 'bugtracker', array('category' => $new_name), 'WHERE category=:category', array('category' => $old_name));
+			$this->querier->update(PREFIX . 'bugtracker', array('category' => $new_name), "WHERE category='" . $old_name . "'");
 			$this->querier->update(PREFIX . 'bugtracker_history', array('old_value' => $new_name), "WHERE old_value='" . $old_name . "'");
 			$this->querier->update(PREFIX . 'bugtracker_history', array('new_value' => $new_name), "WHERE new_value='" . $old_name . "'");
 		}
@@ -147,7 +148,7 @@ class BugtrackerModuleUpdateVersion extends ModuleUpdateVersion
 		
 		foreach ($rows_change as $old_name => $new_name)
 		{
-			$this->querier->update(PREFIX . 'bugtracker', array('priority' => $new_name), 'WHERE priority=:priority', array('priority' => $old_name));
+			$this->querier->update(PREFIX . 'bugtracker', array('priority' => $new_name), "WHERE priority='" . $old_name . "'");
 			$this->querier->update(PREFIX . 'bugtracker_history', array('old_value' => $new_name), "WHERE old_value='" . $old_name . "'");
 			$this->querier->update(PREFIX . 'bugtracker_history', array('new_value' => $new_name), "WHERE new_value='" . $old_name . "'");
 		}
@@ -163,7 +164,7 @@ class BugtrackerModuleUpdateVersion extends ModuleUpdateVersion
 		
 		foreach ($rows_change as $old_name => $new_name)
 		{
-			$this->querier->update(PREFIX . 'bugtracker', array('severity' => $new_name), 'WHERE severity=:severity', array('severity' => $old_name));
+			$this->querier->update(PREFIX . 'bugtracker', array('severity' => $new_name), "WHERE severity='" . $old_name . "'");
 			$this->querier->update(PREFIX . 'bugtracker_history', array('old_value' => $new_name),  "WHERE old_value='" . $old_name . "'");
 			$this->querier->update(PREFIX . 'bugtracker_history', array('new_value' => $new_name),  "WHERE new_value='" . $old_name . "'");
 		}
@@ -190,6 +191,22 @@ class BugtrackerModuleUpdateVersion extends ModuleUpdateVersion
 		foreach ($rows_change as $old_name => $new_name)
 		{
 			$this->querier->inject('ALTER TABLE ' . PREFIX . 'bugtracker CHANGE '. $old_name .' '. $new_name);
+		}
+	}
+	
+	private function retrieve_bugs_fix_date()
+	{
+		$result = $this->querier->select('SELECT id FROM ' . PREFIX . 'bugtracker');
+		
+		while ($row = $result->fetch())
+		{
+			$bug_fix_date = $this->querier->select_single_row(PREFIX . 'bugtracker_history', array('MAX(update_date) as fix_date'), "WHERE bug_id=:id AND updated_field='status' AND (new_value='fixed' OR new_value='rejected')", array(
+				'id' => $row['id']
+			));
+			
+			$this->querier->update(PREFIX . 'bugtracker', array('fix_date' => $bug_fix_date['fix_date']), "WHERE id=:id", array(
+				'id' => $row['id']
+			));
 		}
 	}
 }
