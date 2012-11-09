@@ -220,8 +220,8 @@ The PHPBoost Team.',
                             <legend>PHPBoost is now installed and ready to run !</legend>
                             <p class="success">The installation of PHPBoost has been powered successfully. The PHPBoost Team thanks you for using its software and is proud to count you among its users.</p>
                             <p>Keep yourself informed about the evolution of PHPBoost by visiting our website, <a href="http://www.phpboost.org">www.phpboost.org</a>. You will be warned in the administration panel when updates are available. We strongly recommend to keep your website up to date so you can take advantage of the latest features and correct any flaws or errors.</p>
-                            <p class="warning">For security reasons we also recommand you to delete the installation folder and all its contents, hackers could manage to run the installation script and you could lose data !</p>
-                            <p>Don\'t forget the <a href="http://www.phpboost.org/wiki/">documentation</a> which will help you for using PHPBoost and the <a href="http://www.phpboost.org/faq/faq.php"><acronym title="Frequently Asked Questions">FAQ</acronym></a>.</p>
+                            <p class="warning">For security reasons we also recommand you to delete the installation and update folders and all their contents. Hackers could manage to run the installation or the update script and you could lose data !</p>
+                            <p>Don\'t forget to consult the <a href="http://www.phpboost.org/wiki/">documentation</a> which will help you for using PHPBoost and the <a href="http://www.phpboost.org/faq/faq.php"><acronym title="Frequently Asked Questions">FAQ</acronym></a>.</p>
                             <p>If you have any problem please go to the <a href="http://www.phpboost.org/forum/">support forum of PHPBoost</a>.</p>
                         </fieldset>
                         <fieldset>
