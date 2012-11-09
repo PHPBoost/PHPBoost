@@ -131,7 +131,7 @@
 
 		<form action="management.php?token={TOKEN}" name="form" method="post" onsubmit="return check_form();" class="fieldset_content" id="form">
 			<fieldset>
-				<legend>{L_ADD_NEWS}</legend>
+				<legend>{L_ADD_EDIT_NEWS}</legend>
 				<p>{L_REQUIRE}</p>
 				<dl>
 					<dt><label for="title">* {L_TITLE_NEWS}</label></dt>

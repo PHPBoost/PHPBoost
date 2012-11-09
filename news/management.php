@@ -410,7 +410,7 @@ else
 		'L_NAME_SOURCES' => $NEWS_LANG['name_sources'],
 		'L_URL_SOURCES' => $NEWS_LANG['url_sources'],
 		'L_ADD_SOURCES' => $NEWS_LANG['add_sources'],
-		'L_ADD_NEWS' => $NEWS_LANG['add_news'],
+		'L_ADD_EDIT_NEWS' => $edit > 0 ? $NEWS_LANG['edit_news'] : $NEWS_LANG['add_news'],
 		'L_REQUIRE' => $LANG['require'],
 		'L_TITLE_NEWS' => $NEWS_LANG['title_news'],
 		'L_CATEGORY' => $NEWS_LANG['cat_news'],
