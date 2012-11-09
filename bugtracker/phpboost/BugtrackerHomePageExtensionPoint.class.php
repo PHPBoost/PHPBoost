@@ -215,7 +215,7 @@ class BugtrackerHomePageExtensionPoint implements HomePageExtensionPoint
 
 			$tpl->assign_block_vars('list.bug', array(
 				'ID'			=> $row['id'],
-				'U_BUG_VIEW'	=> PATH_TO_ROOT .'/bugtracker/bugtracker' . url('.php?view&amp;id=' . $row['id'], '-' . $row['id'] . '+' . Url::encode_rewrite($row['title']) . '.php'),
+				'U_BUG_VIEW'	=> PATH_TO_ROOT .'/bugtracker/bugtracker' . url('.php?view&amp;com=0&amp;id=' . $row['id'], '-' . $row['id'] . '+' . Url::encode_rewrite($row['title']) . '.php'),
 				'TITLE'			=> ($cat_in_title_activated == true && $display_categories) ? '[' . $categories[$row['category']] . '] ' . $row['title'] : $row['title'],
 				'TYPE'			=> (!empty($row['type']) && isset($types[$row['type']])) ? stripslashes($types[$row['type']]) : $LANG['bugs.notice.none'],
 				'SEVERITY'		=> (!empty($row['severity']) && isset($severities[$row['severity']])) ? stripslashes($severities[$row['severity']]['name']) : $LANG['bugs.notice.none'],
