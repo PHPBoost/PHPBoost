@@ -97,7 +97,7 @@
 				</div>
 				<div class="module_top_com">
 					# IF C_ADMIN #
-					<a href="{U_ADMIN}" title="{L_ADMIN}" class="img_link">
+					<a href="{PATH_TO_ROOT}/news/admin_news.php" title="{L_ADMIN}" class="img_link">
 						<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="{L_ADMIN}" />
 					</a>
 					# ENDIF #
