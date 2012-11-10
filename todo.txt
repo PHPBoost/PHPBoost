@@ -39,14 +39,7 @@
 #################################################################################
 
 ------------------------------------ MODULES -----------------------------------
-[b]Bugtracker:[/b] (pas encore sûr de tout pour v4.0 finale, peut-être 4.1)
-- Fonction pour l'envoi de MP/Mail
-- Pouvoir suivre un bug par MP/Mail
-- Séparer les pages
-- Passage en MVC
-- Faire en sorte versions, types et catégories, priorities, severities triable dans admin
-- Statut d'avancement sous forme de %
-- Ajout de filtres pour n'afficher par exemple que certaines catégories ?
+
 
 #################################################################################
 
@@ -84,6 +77,15 @@
 [b]Messages privés[/b]
 - Possibilité d'envoyer des messages privés à tous les membres d'un groupe ou à tous les membres pour l'administrateur.
 - Possibilité de demander l'envoi d'un mail lors de l'envoi d'un mp.
+
+[b]Bugtracker:[/b]
+- Fonction pour l'envoi de MP/Mail
+- Pouvoir suivre un bug par MP/Mail
+- Séparer les pages
+- Passage en MVC
+- Faire en sorte versions, types et catégories, priorities, severities triable dans admin
+- Statut d'avancement sous forme de %
+- Ajout de filtres pour n'afficher par exemple que certaines catégories ?
 
 [b]Forum[/b]
 - [color=red]Nouveauté:[/color] Nouveaux droits globaux aux groupes dans le forum, suppression/édition des messages/sujets appartenant au membre.
