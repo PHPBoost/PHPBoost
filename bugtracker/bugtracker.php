@@ -331,7 +331,7 @@ else if (isset($_GET['delete']) && is_numeric($id)) //Suppression du bug.
 			PrivateMsg::start_conversation(
 				$updater_id, 
 				sprintf($LANG['bugs.pm.delete.title'], $LANG['bugs.module_title'], $id, $User->get_login()), 
-				nl2br(sprintf($LANG['bugs.pm.delete.contents'], $User->get_login(), $id, '<a href="' . HOST . DIR . '/bugtracker/bugtracker.php?view&id=' . $id . '">' . HOST . DIR . '/bugtracker/bugtracker.php?view&id=' . $id . '</a>')), 
+				nl2br(sprintf($LANG['bugs.pm.delete.contents'], $User->get_login(), $id)), 
 				'-1', 
 				PrivateMsg::SYSTEM_PM
 			);
