@@ -205,9 +205,7 @@ $LANG['bugs.pm.reject.contents'] = '%s a rejeté le bug #%d.
 Lien vers le bug :
 %s';
 $LANG['bugs.pm.delete.title'] = '[%s] Le bug #%d a été supprimé par %s';
-$LANG['bugs.pm.delete.contents'] = '%s a supprimé le bug #%d.
-Lien vers le bug :
-%s';
+$LANG['bugs.pm.delete.contents'] = '%s a supprimé le bug #%d.';
 
 //Recherche
 $LANG['bugs.search.where'] = 'Où ?';
