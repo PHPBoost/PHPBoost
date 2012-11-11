@@ -307,18 +307,6 @@ else if (isset($_GET['delete']) && is_numeric($id)) //Suppression du bug.
 	$result = $Sql->query_array(PREFIX . 'bugtracker', 'author_id, assigned_to_id', "
 	WHERE id = '" . $id . "'", __LINE__, __FILE__);
 	
-	//On supprime dans la table bugtracker_history.
-	$Sql->query_inject("DELETE FROM " . PREFIX . "bugtracker_history WHERE bug_id = '" . $id . "'", __LINE__, __FILE__);
-	
-	//On supprime dans la bdd.
-	$Sql->query_inject("DELETE FROM " . PREFIX . "bugtracker WHERE id = '" . $id . "'", __LINE__, __FILE__);
-	
-	//On supprimes les éventuels commentaires associés.
-	CommentsService::delete_comments_topic_module('bugtracker', $id);
-	
-	//Mise à jour de la liste des bugs dans le cache de la configuration.
-	$Cache->Generate_module_file('bugtracker');
-	
 	//Envoi d'un MP aux personnes qui ont mis à jour le bug
 	$updaters_ids = array($result['author_id']);
 	if (!empty($result['assigned_to_id']) && $result['author_id'] != $result['assigned_to_id'])
@@ -349,6 +337,18 @@ else if (isset($_GET['delete']) && is_numeric($id)) //Suppression du bug.
 			);
 		}
 	}
+	
+	//On supprime dans la table bugtracker_history.
+	$Sql->query_inject("DELETE FROM " . PREFIX . "bugtracker_history WHERE bug_id = '" . $id . "'", __LINE__, __FILE__);
+	
+	//On supprime dans la bdd.
+	$Sql->query_inject("DELETE FROM " . PREFIX . "bugtracker WHERE id = '" . $id . "'", __LINE__, __FILE__);
+	
+	//On supprimes les éventuels commentaires associés.
+	CommentsService::delete_comments_topic_module('bugtracker', $id);
+	
+	//Mise à jour de la liste des bugs dans le cache de la configuration.
+	$Cache->Generate_module_file('bugtracker');
 	
 	AppContext::get_response()->redirect(HOST . SCRIPT . (!empty($back) ? '?' . $back . (!empty($id) ? '&id=' . $id : '') : ''));
 }
