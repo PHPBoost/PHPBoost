@@ -129,10 +129,11 @@ class ForumHomePageExtensionPoint implements HomePageExtensionPoint
 		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = t.last_user_id
 		WHERE c.aprob = 1 " . $display_sub_cat . " " . $unauth_cats . "
 		ORDER BY c.id_left", __LINE__, __FILE__);
+		$display_sub_cats = false;
 		while ($row = $this->sql_querier->fetch_assoc($result))
 		{
 			$tpl->assign_block_vars('forums_list', array());
-			if ($CAT_FORUM[$row['cid']]['level'] == 0 && $i > 0) //Fermeture de la catégorie racine.
+			if ($CAT_FORUM[$row['cid']]['level'] == 0 && $i > 0 && $display_sub_cats) //Fermeture de la catégorie racine.
 			{
 				$tpl->assign_block_vars('forums_list.endcats', array(
 				));
@@ -146,96 +147,102 @@ class ForumHomePageExtensionPoint implements HomePageExtensionPoint
 					'NAME' => $row['name'],
 					'U_FORUM_VARS' => url(PATH_TO_ROOT . '/forum/index.php?id=' . $row['cid'], 'cat-' . $row['cid'] . '+' . Url::encode_rewrite($row['name']) . '.php')
 				));
+				$display_sub_cats = (bool)$row['status'];
 			}
 			else //On liste les sous-catégories
 			{
-				if ($display_cat) //Affichage des forums d'une catégorie, ajout de la catégorie.
+				if ($display_sub_cats)
 				{
-					$tpl->assign_block_vars('forums_list.cats', array(
-						'IDCAT' => $id_get,
-						'NAME' => $CAT_FORUM[$id_get]['name'],
-						'U_FORUM_VARS' => url(PATH_TO_ROOT . '/forum/index.php?id=' . $id_get, 'cat-' . $id_get . '+' . Url::encode_rewrite($CAT_FORUM[$id_get]['name']) . '.php')
-					));
-					$display_cat = false;
-				}
-
-				$subforums = '';
-				$tpl->put_all(array(
-					'C_FORUM_ROOT_CAT' => false,
-					'C_FORUM_CHILD_CAT' => true,
-					'C_END_S_CATS' => false
-				));
-				if ($CAT_FORUM[$row['cid']]['id_right'] - $CAT_FORUM[$row['cid']]['id_left'] > 1)
-				{
-					foreach ($CAT_FORUM as $idcat => $key) //Listage des sous forums.
+					if ($display_cat) //Affichage des forums d'une catégorie, ajout de la catégorie.
 					{
-						if ($CAT_FORUM[$idcat]['id_left'] > $CAT_FORUM[$row['cid']]['id_left'] && $CAT_FORUM[$idcat]['id_right'] < $CAT_FORUM[$row['cid']]['id_right'])
+						$tpl->assign_block_vars('forums_list.cats', array(
+							'IDCAT' => $id_get,
+							'NAME' => $CAT_FORUM[$id_get]['name'],
+							'U_FORUM_VARS' => url(PATH_TO_ROOT . '/forum/index.php?id=' . $id_get, 'cat-' . $id_get . '+' . Url::encode_rewrite($CAT_FORUM[$id_get]['name']) . '.php')
+						));
+						$display_cat = false;
+					}
+	
+					$subforums = '';
+					$tpl->put_all(array(
+						'C_FORUM_ROOT_CAT' => false,
+						'C_FORUM_CHILD_CAT' => true,
+						'C_END_S_CATS' => false
+					));
+					if ($CAT_FORUM[$row['cid']]['id_right'] - $CAT_FORUM[$row['cid']]['id_left'] > 1)
+					{
+						foreach ($CAT_FORUM as $idcat => $key) //Listage des sous forums.
 						{
-							if ($CAT_FORUM[$idcat]['level'] == ($CAT_FORUM[$row['cid']]['level'] + 1)) //Sous forum distant d'un niveau au plus.
+							if ($CAT_FORUM[$idcat]['id_left'] > $CAT_FORUM[$row['cid']]['id_left'] && $CAT_FORUM[$idcat]['id_right'] < $CAT_FORUM[$row['cid']]['id_right'])
 							{
-								if ($AUTH_READ_FORUM[$row['cid']]) //Autorisation en lecture.
+								if ($CAT_FORUM[$idcat]['level'] == ($CAT_FORUM[$row['cid']]['level'] + 1)) //Sous forum distant d'un niveau au plus.
 								{
-									$link = !empty($CAT_FORUM[$idcat]['url']) ? '<a href="' . $CAT_FORUM[$idcat]['url'] . '" class="small_link">' : '<a href="forum' . url('.php?id=' . $idcat, '-' . $idcat . '+' . Url::encode_rewrite($CAT_FORUM[$idcat]['name']) . '.php') . '" class="small_link">';
-									$subforums .= !empty($subforums) ? ', ' . $link . $CAT_FORUM[$idcat]['name'] . '</a>' : $link . $CAT_FORUM[$idcat]['name'] . '</a>';
+									if ($AUTH_READ_FORUM[$row['cid']]) //Autorisation en lecture.
+									{
+										$link = !empty($CAT_FORUM[$idcat]['url']) ? '<a href="' . $CAT_FORUM[$idcat]['url'] . '" class="small_link">' : '<a href="forum' . url('.php?id=' . $idcat, '-' . $idcat . '+' . Url::encode_rewrite($CAT_FORUM[$idcat]['name']) . '.php') . '" class="small_link">';
+										$subforums .= !empty($subforums) ? ', ' . $link . $CAT_FORUM[$idcat]['name'] . '</a>' : $link . $CAT_FORUM[$idcat]['name'] . '</a>';
+									}
 								}
 							}
 						}
+						$subforums = '<strong>' . $LANG['subforum_s'] . '</strong>: ' . $subforums;
 					}
-					$subforums = '<strong>' . $LANG['subforum_s'] . '</strong>: ' . $subforums;
-				}
-
-				if (!empty($row['last_topic_id']))
-				{
-					//Si le dernier message lu est présent on redirige vers lui, sinon on redirige vers le dernier posté.
-					if (!empty($row['last_view_id'])) //Calcul de la page du last_view_id réalisé dans topic.php
+	
+					if (!empty($row['last_topic_id']))
 					{
-						$last_msg_id = $row['last_view_id'];
-						$last_page = 'idm=' . $row['last_view_id'] . '&amp;';
-						$last_page_rewrite = '-0-' . $row['last_view_id'];
+						//Si le dernier message lu est présent on redirige vers lui, sinon on redirige vers le dernier posté.
+						if (!empty($row['last_view_id'])) //Calcul de la page du last_view_id réalisé dans topic.php
+						{
+							$last_msg_id = $row['last_view_id'];
+							$last_page = 'idm=' . $row['last_view_id'] . '&amp;';
+							$last_page_rewrite = '-0-' . $row['last_view_id'];
+						}
+						else
+						{
+							$last_msg_id = $row['last_msg_id'];
+							$last_page = ceil($row['t_nbr_msg'] / $CONFIG_FORUM['pagination_msg']);
+							$last_page_rewrite = ($last_page > 1) ? '-' . $last_page : '';
+							$last_page = ($last_page > 1) ? 'pt=' . $last_page . '&amp;' : '';
+						}
+	
+						$last_topic_title = (($CONFIG_FORUM['activ_display_msg'] && $row['display_msg']) ? $CONFIG_FORUM['display_msg'] : '') . ' ' . ucfirst($row['title']);
+						$last_topic_title = (strlen(TextHelper::html_entity_decode($last_topic_title)) > 20) ? TextHelper::substr_html($last_topic_title, 0, 20) . '...' : $last_topic_title;
+						$row['login'] = !empty($row['login']) ? $row['login'] : $LANG['guest'];
+	
+						$last = '<a href="'. PATH_TO_ROOT . '/forum/topic' . url('.php?id=' . $row['tid'], '-' . $row['tid'] . '+' . Url::encode_rewrite($row['title'])  . '.php') . '" class="small_link">' . $last_topic_title . '</a><br />
+						<a href="'. PATH_TO_ROOT . '/forum/topic' . url('.php?' . $last_page .  'id=' . $row['tid'], '-' . $row['tid'] . $last_page_rewrite . '+' . Url::encode_rewrite($row['title'])  . '.php') . '#m' .  $last_msg_id . '"><img src="'. PATH_TO_ROOT .'/templates/' . get_utheme() . '/images/ancre.png" alt="" /></a> ' . $LANG['on'] . ' ' . gmdate_format('date_format', $row['last_timestamp']) . '<br />' . $LANG['by'] . ' ' . ($row['last_user_id'] != '-1' ? '<a href="'. UserUrlBuilder::profile($row['last_user_id'])->absolute() . '" class="small_link">' . $row['login'] . '</a>' : '<em>' . $LANG['guest'] . '</em>');
 					}
 					else
 					{
-						$last_msg_id = $row['last_msg_id'];
-						$last_page = ceil($row['t_nbr_msg'] / $CONFIG_FORUM['pagination_msg']);
-						$last_page_rewrite = ($last_page > 1) ? '-' . $last_page : '';
-						$last_page = ($last_page > 1) ? 'pt=' . $last_page . '&amp;' : '';
+						$row['last_timestamp'] = '';
+						$last = '<br />' . $LANG['no_message'] . '<br /><br />';
 					}
-
-					$last_topic_title = (($CONFIG_FORUM['activ_display_msg'] && $row['display_msg']) ? $CONFIG_FORUM['display_msg'] : '') . ' ' . ucfirst($row['title']);
-					$last_topic_title = (strlen(TextHelper::html_entity_decode($last_topic_title)) > 20) ? TextHelper::substr_html($last_topic_title, 0, 20) . '...' : $last_topic_title;
-					$row['login'] = !empty($row['login']) ? $row['login'] : $LANG['guest'];
-
-					$last = '<a href="'. PATH_TO_ROOT . '/forum/topic' . url('.php?id=' . $row['tid'], '-' . $row['tid'] . '+' . Url::encode_rewrite($row['title'])  . '.php') . '" class="small_link">' . $last_topic_title . '</a><br />
-					<a href="'. PATH_TO_ROOT . '/forum/topic' . url('.php?' . $last_page .  'id=' . $row['tid'], '-' . $row['tid'] . $last_page_rewrite . '+' . Url::encode_rewrite($row['title'])  . '.php') . '#m' .  $last_msg_id . '"><img src="'. PATH_TO_ROOT .'/templates/' . get_utheme() . '/images/ancre.png" alt="" /></a> ' . $LANG['on'] . ' ' . gmdate_format('date_format', $row['last_timestamp']) . '<br />' . $LANG['by'] . ' ' . ($row['last_user_id'] != '-1' ? '<a href="'. UserUrlBuilder::profile($row['last_user_id'])->absolute() . '" class="small_link">' . $row['login'] . '</a>' : '<em>' . $LANG['guest'] . '</em>');
+	
+					//Vérifications des topics Lu/non Lus.
+					$img_announce = 'announce';
+					if (!$is_guest)
+					{
+						if ($row['last_view_id'] != $row['last_msg_id'] && $row['last_timestamp'] >= $max_time_msg) //Nouveau message (non lu).
+							$img_announce =  'new_' . $img_announce; //Image affiché aux visiteurs.
+					}
+					$img_announce .= ($row['status'] == '0') ? '_lock' : '';
+	
+					$total_topic += $row['nbr_topic'];
+					$total_msg += $row['nbr_msg'];
+					
+	
+					$tpl->assign_block_vars('forums_list.subcats', array(
+						'IMG_ANNOUNCE' => $img_announce,
+						'NAME' => $row['name'],
+						'DESC' => FormatingHelper::second_parse($row['subname']),
+						'SUBFORUMS' => !empty($subforums) && !empty($row['subname']) ? '<br />' . $subforums : $subforums,
+						'NBR_TOPIC' => $row['nbr_topic'],
+						'NBR_MSG' => $row['nbr_msg'],
+						'U_FORUM_URL' => $row['url'],
+						'U_FORUM_VARS' => url(PATH_TO_ROOT .'/forum/forum.php?id=' . $row['cid'], 'forum-' . $row['cid'] . '+' . Url::encode_rewrite($row['name']) . '.php'),
+						'U_LAST_TOPIC' => $last
+					));
 				}
-				else
-				{
-					$row['last_timestamp'] = '';
-					$last = '<br />' . $LANG['no_message'] . '<br /><br />';
-				}
-
-				//Vérifications des topics Lu/non Lus.
-				$img_announce = 'announce';
-				if (!$is_guest)
-				{
-					if ($row['last_view_id'] != $row['last_msg_id'] && $row['last_timestamp'] >= $max_time_msg) //Nouveau message (non lu).
-						$img_announce =  'new_' . $img_announce; //Image affiché aux visiteurs.
-				}
-				$img_announce .= ($row['status'] == '0') ? '_lock' : '';
-
-				$total_topic += $row['nbr_topic'];
-				$total_msg += $row['nbr_msg'];
-				$tpl->assign_block_vars('forums_list.subcats', array(
-					'IMG_ANNOUNCE' => $img_announce,
-					'NAME' => $row['name'],
-					'DESC' => FormatingHelper::second_parse($row['subname']),
-					'SUBFORUMS' => !empty($subforums) && !empty($row['subname']) ? '<br />' . $subforums : $subforums,
-					'NBR_TOPIC' => $row['nbr_topic'],
-					'NBR_MSG' => $row['nbr_msg'],
-					'U_FORUM_URL' => $row['url'],
-					'U_FORUM_VARS' => url(PATH_TO_ROOT .'/forum/forum.php?id=' . $row['cid'], 'forum-' . $row['cid'] . '+' . Url::encode_rewrite($row['name']) . '.php'),
-					'U_LAST_TOPIC' => $last
-				));
 			}
 		}
 		$this->sql_querier->query_close($result);
