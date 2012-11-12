@@ -103,6 +103,26 @@ Css par défaut commun à tout les thèmes, permet les ajouts nécessaires au framew
 .menus_block_top { margin-bottom:5px; }
 .menus_block_title { color:#515C68; }
 
+.menus_block_move {
+	float:right;
+	background:none;
+	height:16px;
+	width:16px;
+}
+
+.menus_block_move a{
+	display:block;
+	height:16px;
+	width:16px;	
+}
+
+.menus_block_container:hover > div.menus_block_move_top { 
+	background:url('../images/move_top.png');
+}
+.menus_block_container:hover > div.menus_block_move_bot { 
+	background:url('../images/move_bot.png');
+}
+
 .menu_spacer {
 	width:99%;
 	padding:0px 5px;
