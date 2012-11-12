@@ -1,8 +1,11 @@
 <div class="menus_block_container" id="menu_{IDMENU}">
+	<div class="menus_block_move menus_block_move_top"><a href="{U_EDIT}" title="{L_EDIT}"></a></div>
 	<div class="menus_block_top">
+		
+		
 		<span id="m{IDMENU}"></span>
 		<h5 class="menus_block_title">{NAME}</h5>
-	
+		
 		<img src="{PATH_TO_ROOT}/templates/default/images/drag.png" alt="{L_EDIT}" class="valign_middle" />
 		# IF C_EDIT #
 			<a href="{U_EDIT}" title="{L_EDIT}">
@@ -25,4 +28,5 @@
 	</div>
 	
 	{CONTENTS}
+	<div class="menus_block_move menus_block_move_bot"><a href="{U_EDIT}" title="{L_EDIT}"></a></div>
 </div>
