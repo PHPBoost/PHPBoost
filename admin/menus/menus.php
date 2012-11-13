@@ -60,6 +60,12 @@ function menu_admin_link($menu, $mode)
             else
             	return '';
             break;
+		case 'up':
+			$link = 'menus.php?action=up&amp;';
+		break;
+		case 'down':
+			$link = 'menus.php?action=down&amp;';
+		break;
     }
     global $Session;
     return $link . 'id=' . $menu->get_id() . '&amp;token=' . $Session->get_token();
@@ -85,6 +91,14 @@ if (!empty($id))
         case 'delete':
             MenuService::delete($id);
             break;
+		case 'up':
+		case 'down':
+			// Move up or down a Menu in a block
+			if ($action == 'up')
+			MenuService::change_position($menu, MenuService::MOVE_UP);
+			else
+			MenuService::change_position($menu, MenuService::MOVE_DOWN);
+		break;
         default:
             if (!empty($move))
             {   // Move a Menu
