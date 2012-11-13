@@ -1,5 +1,5 @@
 <div class="menus_block_container" id="menu_{IDMENU}">
-	<div class="menus_block_move menus_block_move_top"><a href="{U_EDIT}" title="{L_EDIT}"></a></div>
+	<div class="menus_block_move menus_block_move_top"><a href="{U_UP}" alt=""></a></div>
 	<div class="menus_block_top">
 		
 		
@@ -28,5 +28,5 @@
 	</div>
 	
 	{CONTENTS}
-	<div class="menus_block_move menus_block_move_bot"><a href="{U_EDIT}" title="{L_EDIT}"></a></div>
+	<div class="menus_block_move menus_block_move_bot"><a href="{U_DOWN}" alt=""></a></div>
 </div>

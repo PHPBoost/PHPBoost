@@ -160,8 +160,7 @@ class ColumnsDisabled
 				case 'right':
 					$this->disable_right_columns = true;
 					unset($disable_columns['right']);
-					break;	
-				
+					break;
 			}
 		}
 	}
