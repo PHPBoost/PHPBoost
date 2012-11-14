@@ -353,9 +353,7 @@ class HTMLForm
 	 */
 	public function set_html_id($html_id)
 	{
-		$html_id = strtolower($html_id);
-		$html_id = Url::encode_rewrite($html_id);
-		$this->html_id = str_replace('-', '_', $html_id);
+		$this->html_id = $html_id;
 	}
 	
 	public function get_html_id()
