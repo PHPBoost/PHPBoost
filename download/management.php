@@ -87,12 +87,12 @@ if ($delete_file > 0)
 
 		NotationService::delete_notes_id_in_module('download', $delete_file);
 	
-		AppContext::get_response()->redirect(HOST. DIR . '/download/' . ($file_infos['idcat'] > 0 ? url('download.php?cat=' . $file_infos['idcat'], 'category-' . $file_infos['idcat'] . '+' . Url::encode_rewrite($DOWNLOAD_CATS[$file_infos['idcat']]['name']) . '.php') : url('download.php')));
-        
-        // Feeds Regeneration
+		// Feeds Regeneration
         Feed::clear_cache('download');
         
         $download_categories->recount_sub_files();
+        
+		AppContext::get_response()->redirect(HOST. DIR . '/download/' . ($file_infos['idcat'] > 0 ? url('download.php?cat=' . $file_infos['idcat'], 'category-' . $file_infos['idcat'] . '+' . Url::encode_rewrite($DOWNLOAD_CATS[$file_infos['idcat']]['name']) . '.php') : url('download.php')));
 	}
 	else
 	{
