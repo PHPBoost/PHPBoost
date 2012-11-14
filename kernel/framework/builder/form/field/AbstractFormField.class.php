@@ -137,9 +137,7 @@ abstract class AbstractFormField implements FormField
 	 */
 	public function get_id()
 	{
-		$id = strtolower($this->id);
-		$id = Url::encode_rewrite($id);
-		return str_replace('-', '_', $id);
+		return $this->id;
 	}
 
 	/**
@@ -285,10 +283,7 @@ abstract class AbstractFormField implements FormField
 	 */
 	public function get_html_id()
 	{
-		$html_id = $this->form_id . '_' . $this->get_id();
-		$html_id = strtolower($html_id);
-		$html_id = Url::encode_rewrite($html_id);
-		return str_replace('-', '_', $html_id);
+		return $this->form_id . '_' . $this->get_id();
 	}
 
 	/**
