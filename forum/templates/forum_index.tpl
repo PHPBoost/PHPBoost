@@ -7,7 +7,7 @@
 			<div class="module_bottom_r"></div>
 			<div class="module_bottom"></div>
 		</div>
-	</div>	
+
 		# END forums_list.endcats #	
 			
 		# START forums_list.cats #		
