@@ -182,9 +182,7 @@ class SandboxFormController extends ModuleController
 		
 		$fieldset->add_field(new FormFieldTimezone('timezone', 'TimeZone', 'UTC+0'));
 		
-		$fieldset->add_field(new FormFieldAjaxCompleter('completer', 'auto completition', '', 
-			array('file' => PATH_TO_ROOT . '/kernel/framework/ajax/dispatcher.php?url=/users_autocomplete')
-		));
+		$fieldset->add_field(new FormFieldAjaxUserAutoComplete('user_completition', 'auto completition', ''));
 		
 		$fieldset->add_element(new FormButtonButton('Envoyer'));
 
