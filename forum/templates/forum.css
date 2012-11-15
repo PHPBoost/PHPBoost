@@ -106,6 +106,7 @@ a.forum_link_pseudo:hover {
 /* Cadre des liens:alerter les modérateurs et suivre le sujet */
 .forum_action{	
 	margin-top:5px;
+	text-align: center;
 }
 
 /* Les des catégories de niveau 0 */
@@ -127,6 +128,17 @@ a.forum_link_cat{
 	border-right:1px solid #D1D4DF;
 	background:#ECEFFA;
 }
+.forum_online_select_cat{
+	float:left;
+	text-align:right;
+	clear:both;
+	padding:5px;	
+}
+.forum_online_select{
+	min-width:160px;
+	max-width:530px;	
+}
+
 /* Fond des catégories dans l'administration */
 .forum_cat_admin{
 	width:100%;
@@ -152,27 +164,15 @@ a.forum_mbrmsg_links { /* Couleur des liens pour les messages du membre */
 }
 
 .module_top_l{ /* Barre supérieur des modules */
-	float:left;
-	width:5px;
-	height:40px;
-	border-top:1px solid #D1D4DF;
-	border-left:1px solid #D1D4DF;
-	border-bottom:1px solid #D1D4DF;
 }
 .module_top_r{
-	float:right;
-	width:5px;
-	height:40px;
-	border-top:1px solid #D1D4DF;
-	border-right:1px solid #D1D4DF;
-	border-bottom:1px solid #D1D4DF;
 }
 .module_top{
-	height:30px;
-	padding:10px 5px 0px 5px;
+	min-height:20px;
+	height:auto;
+	padding:10px 5px 10px 5px;
 	background:#ECEFFA;
-	border-top:1px solid #D1D4DF;
-	border-bottom:1px solid #D1D4DF;
+	border:1px solid #D1D4DF;
 	color:#334455;
 	font-weight:normal;
 	text-indent:0px;
@@ -186,25 +186,15 @@ a.forum_mbrmsg_links { /* Couleur des liens pour les messages du membre */
 }
 
 .module_bottom_l{ /* Barre inférieure des modules */
-	float:left;
-	width:5px;
-	height:25px;
-	border-top:1px solid #D1D4DF;
-	border-left:1px solid #D1D4DF;
 }
 .module_bottom_r{
-	float:right;
-	width:5px;
-	height:25px;
-	border-top:1px solid #D1D4DF;
-	border-right:1px solid #D1D4DF;
 }
 .module_bottom{
-	height:20px;
-	padding:5px 5px 0px 5px;
+	min-height:20px;
+	height:auto;
+	padding:10px 5px 10px 5px;
 	background:#ECEFFA;
-	border-bottom:1px solid #D1D4DF;
-	border-top:1px solid #D1D4DF;
+	border:1px solid #D1D4DF;
 	color:#334455;
 	font-weight:normal;
 	text-indent:0px;
@@ -212,6 +202,10 @@ a.forum_mbrmsg_links { /* Couleur des liens pour les messages du membre */
 .module_bottom a{
 	color:#334455;
 	font-size:13px;
+}
+
+.desc_forum{
+	font-size: 10px;
 }
 
 .msg_position{

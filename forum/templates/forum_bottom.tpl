@@ -40,11 +40,11 @@
 					<br />
 					{L_USER} {L_ONLINE}: {USERS_ONLINE}
 				</span>
-				<div style="float:right;text-align:right">
+				<div class="forum_online_select_cat">
 					# IF SELECT_CAT #
 					<form action="{U_CHANGE_CAT}" method="post">
                         <div>
-                            <select name="change_cat" onchange="if(this.options[this.selectedIndex].text.substring(0, 4) == '----') document.location = 'forum{U_ONCHANGE}'; else document.location = '{U_ONCHANGE_CAT}';">
+                            <select name="change_cat" onchange="if(this.options[this.selectedIndex].text.substring(0, 4) == '----') document.location = 'forum{U_ONCHANGE}'; else document.location = '{U_ONCHANGE_CAT}';" class="forum_online_select">
                                 {SELECT_CAT}
                             </select>
                             <noscript>
