@@ -76,7 +76,7 @@ if (!empty($idnews)) // On affiche la news correspondant à l'id envoyé.
 		$Bread_crumb->add($news['title'], 'news' . url('.php?id=' . $news['id'], '-' . $news['idcat'] . '-' . $news['id'] . '+' . Url::encode_rewrite($news['title']) . '.php'));
 
 		// Titre de la page.
-		define('TITLE', $NEWS_LANG['news'] . ' - ' . addslashes($news['title']));
+		define('TITLE', $NEWS_LANG['news'] . ' - ' . stripslashes($news['title']));
 		require_once('../kernel/header.php');
 
 		$tpl = new FileTemplate('news/news.tpl');
