@@ -48,7 +48,6 @@ class KernelSetup
 	private static $member_extended_fields_table;
 	private static $member_extended_fields_list;
 	private static $menus_table;
-	private static $menu_configuration_table;
 	private static $pm_msg_table;
 	private static $pm_topic_table;
 	private static $ranks_table;
@@ -80,7 +79,6 @@ class KernelSetup
 		self::$member_extended_fields_table = PREFIX . 'member_extended_fields';
 		self::$member_extended_fields_list = PREFIX . 'member_extended_fields_list';
 		self::$menus_table = PREFIX . 'menus';
-		self::$menu_configuration_table = PREFIX . 'menu_configuration';
 		self::$pm_msg_table = PREFIX . 'pm_msg';
 		self::$pm_topic_table = PREFIX . 'pm_topic';
 		self::$ranks_table = PREFIX . 'ranks';
@@ -118,7 +116,6 @@ class KernelSetup
 			self::$member_extended_fields_table,
 			self::$member_extended_fields_list,
 			self::$menus_table,
-			self::$menu_configuration_table,
 			self::$pm_msg_table,
 			self::$pm_topic_table,
 			self::$ranks_table,
@@ -149,7 +146,6 @@ class KernelSetup
 		$this->create_member_extended_fields_table();
 		$this->create_member_extended_fields_list_table();
 		$this->create_menus_table();
-		$this->create_menu_configuration_table();
 		$this->create_pm_msg_table();
 		$this->create_pm_topic_table();
 		$this->create_ranks_table();
@@ -417,23 +413,6 @@ class KernelSetup
 		self::$db_utils->create_table(self::$menus_table, $fields, $options);
 	}
 
-	private function create_menu_configuration_table()
-	{
-		$fields = array(
-			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
-			'name' => array('type' => 'string', 'length' => 100, 'notnull' => 1),
-			'match_regex' => array('type' => 'text', 'length' => 65000),
-			'priority' => array('type' => 'integer', 'length' => 11, 'notnull' => 1)
-		);
-
-		$options = array(
-			'primary' => array('id'),
-			'indexes' => array(
-				'priority' => array('type' => 'key', 'fields' => 'priority')
-		));
-		self::$db_utils->create_table(self::$menu_configuration_table, $fields, $options);
-	}
-
 	private function create_pm_msg_table()
 	{
 		$fields = array(
@@ -664,7 +643,6 @@ class KernelSetup
 	{
 		$this->messages = LangLoader::get('install', 'install');
 		$this->insert_visit_counter_data();
-		$this->insert_menu_configuration_data();
 		$this->insert_ranks_data();
 		$this->insert_member_data();
 		$this->insert_smileys_data();
@@ -677,16 +655,6 @@ class KernelSetup
 			'ip' => '',
 			'time' => time(),
 			'total' => 0
-		));
-	}
-
-	private function insert_menu_configuration_data()
-	{
-		self::$db_querier->insert(self::$menu_configuration_table, array(
-			'id' => 1,
-			'name' => 'default',
-			'match_regex' => '`.*`',
-			'priority' => 1
 		));
 	}
 
