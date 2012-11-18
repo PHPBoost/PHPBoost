@@ -87,7 +87,7 @@ class ConnectModuleMiniMenu extends ModuleMiniMenu
 			{
 				$user_avatar = '/templates/'. get_utheme() .'/images/'. $user_accounts_config->get_default_avatar_name();
 			}
-
+			
 	    	$tpl->put_all(array(
 	    		'C_ADMIN_AUTH' => $user->check_level(User::ADMIN_LEVEL),
 	    		'C_MODERATOR_AUTH' => $user->check_level(User::MODERATOR_LEVEL),
@@ -107,11 +107,13 @@ class ConnectModuleMiniMenu extends ModuleMiniMenu
 	    		'U_AVATAR_IMG' => Url::to_rel($user_avatar),
 	    		'L_NBR_PM' => ($user->get_attribute('user_pm') > 0 ? ($user->get_attribute('user_pm') . ' ' . (($user->get_attribute('user_pm') > 1) ? $LANG['message_s'] : $LANG['message'])) : $LANG['private_messaging']),
 	    		'L_PROFIL' => $LANG['profile'],
+	    		'L_MY_PROFIL' => $LANG['my_private_profile'],
 	    		'L_ADMIN_PANEL' => $LANG['admin_panel'],
 	    		'L_MODO_PANEL' => $LANG['modo_panel'],
 	    		'L_PRIVATE_PROFIL' => $LANG['my_private_profile'],
 	    		'L_DISCONNECT' => $LANG['disconnect'],
-	    		'L_CONTRIBUTION_PANEL' => $LANG['contribution_panel']
+	    		'L_CONTRIBUTION_PANEL' => $LANG['contribution_panel'],
+	    		'U_ALERT'=>($user->get_attribute('user_pm') > 0 ? "1" : ($contribution_number > 0 ? "1" :(AdministratorAlertService::get_number_unread_alerts() > 0 ? "1":"")))
 	    	));
 	    }
 	    else

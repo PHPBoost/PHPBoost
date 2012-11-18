@@ -1,6 +1,7 @@
 .connect_form {
 	background:#858585;
 	border:1px solid #727272;
+	border-radius:5px;
 	-moz-border-radius:5px;
 	-khtml-border-radius:5px;
 	-webkit-border-radius:5px;
@@ -14,13 +15,9 @@
 }
 
 
-.connect_form:hover {
+.connect_form:hover, .connect_form:focus {
 	background:#898989;
 	border-color:#858585;
-}
-.connect_form:focus {
-	background:url('images/form.png') no-repeat right bottom;
-	border:none;
 }
  
 div.connect_align {
@@ -112,10 +109,11 @@ p.auto_connect input.submit{ margin:0px 2px; }
 }
 
 .connect_align > ul > li.submenu { background: url('images/green.png') repeat-x; }
+.connect_align > ul > li.submenu_alert { background: url('images/red.png') repeat-x; }
 
 .connect_align ul { list-style: none; }
 
-.connect_align .submenu {  height: 32px; z-index: 200; }
+.connect_align .submenu { height: 32px; z-index: 200; }
 .connect_align .submenu:hover > ul { display: block; }
 .connect_align > ul > li.submenu:hover > a{ height: 32px; }
 
@@ -125,8 +123,8 @@ img.connect_avatar{
 }
 
 .connect_align .submenu ul {
-	display: none;
 	position: absolute;
+	display:none;
 	left:-72px;
 	top: 43px;
 	width:290px;
@@ -136,6 +134,8 @@ img.connect_avatar{
 	height:133px;
 	z-index:200;
 }
+.connect_align .submenu_alert ul { border-top:3px solid #602b1b; }
+
 .connect_align .connect ul {
 	left:0px;
 	width:187px;
