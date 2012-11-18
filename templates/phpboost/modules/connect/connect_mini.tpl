@@ -47,7 +47,11 @@
 	<div class="connect_align">
 	
 		<ul>
-			<li class="submenu">Votre Profil
+			# IF U_ALERT #	
+				<li class="submenu submenu_alert">{L_MY_PROFIL}  <img src="{PATH_TO_ROOT}/templates/{THEME}/images/important.png" alt="alerte" title="Message" width="16px" style="vertical-align:top;"/>
+			# ELSE #
+				<li class="submenu">{L_MY_PROFIL}
+			# ENDIF #
 				<ul>
 					<img src="{U_AVATAR_IMG}" alt="avatar" title="Avatar" width="90px" class="connect_avatar"/>
 					<li>
