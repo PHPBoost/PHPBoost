@@ -88,6 +88,7 @@ class ConnectModuleMiniMenu extends ModuleMiniMenu
 				$user_avatar = '/templates/'. get_utheme() .'/images/'. $user_accounts_config->get_default_avatar_name();
 			}
 			
+			$total_alert = $user->get_attribute('user_pm') + $contribution_number + AdministratorAlertService::get_number_unread_alerts();
 	    	$tpl->put_all(array(
 	    		'C_ADMIN_AUTH' => $user->check_level(User::ADMIN_LEVEL),
 	    		'C_MODERATOR_AUTH' => $user->check_level(User::MODERATOR_LEVEL),
@@ -98,6 +99,7 @@ class ConnectModuleMiniMenu extends ModuleMiniMenu
 	    		'NUMBER_UNREAD_ALERTS' => AdministratorAlertService::get_number_unread_alerts(),
 	    		'IMG_PM' => $user->get_attribute('user_pm') > 0 ? 'new_pm.gif' : 'pm_mini.png',
 	    		'PSEUDO' => $user->get_pseudo(),
+	    		'NUMBER_TOTAL_ALERT' => $total_alert,
 	    		'U_CONTRIBUTION' => UserUrlBuilder::contribution_panel()->absolute(),
 	    		'U_ADMINISTRATION' => UserUrlBuilder::administration()->absolute(),
 	    		'U_HOME_PROFILE' => UserUrlBuilder::home_profile()->absolute(),
@@ -113,7 +115,7 @@ class ConnectModuleMiniMenu extends ModuleMiniMenu
 	    		'L_PRIVATE_PROFIL' => $LANG['my_private_profile'],
 	    		'L_DISCONNECT' => $LANG['disconnect'],
 	    		'L_CONTRIBUTION_PANEL' => $LANG['contribution_panel'],
-	    		'U_ALERT'=>($user->get_attribute('user_pm') > 0 ? "1" : ($contribution_number > 0 ? "1" :(AdministratorAlertService::get_number_unread_alerts() > 0 ? "1":"")))
+	    		'U_ALERT' => $total_alert
 	    	));
 	    }
 	    else
