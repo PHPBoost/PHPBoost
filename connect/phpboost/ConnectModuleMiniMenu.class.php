@@ -115,7 +115,7 @@ class ConnectModuleMiniMenu extends ModuleMiniMenu
 	    		'L_PRIVATE_PROFIL' => $LANG['my_private_profile'],
 	    		'L_DISCONNECT' => $LANG['disconnect'],
 	    		'L_CONTRIBUTION_PANEL' => $LANG['contribution_panel'],
-	    		'U_ALERT' => $total_alert
+	    		'U_ALERT' => !empty($total_alert)
 	    	));
 	    }
 	    else
