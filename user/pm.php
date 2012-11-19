@@ -103,7 +103,7 @@ if ($convers && empty($pm_edit) && empty($pm_del)) //Envoi de conversation.
 		if (!empty($user_id_dest) && $user_id_dest != $User->get_attribute('user_id'))
 		{
 			//Envoi de la conversation, vérification de la boite si pleine => erreur
-			list($pm_convers_id, $pm_msg_id) = PrivateMsg::start_conversation($user_id_dest, $title, FormatingHelper::strparse($contents), $User->get_attribute('user_id'));
+			list($pm_convers_id, $pm_msg_id) = PrivateMsg::start_conversation($user_id_dest, $title, FormatingHelper::strparse($contents, array(), false), $User->get_attribute('user_id'));
 			//Succès redirection vers la conversation.
 			AppContext::get_response()->redirect('/user/pm' . url('.php?id=' . $pm_convers_id, '-0-' . $pm_convers_id . '.php', '&') . '#m' . $pm_msg_id);
 		}
@@ -276,7 +276,7 @@ elseif (!empty($_POST['pm']) && !empty($pm_id_get) && empty($pm_edit) && empty($
 				$status = 2;
 			
 			//Envoi du message privé.
-			$pm_msg_id = PrivateMsg::send($user_id_dest, $pm_id_get, FormatingHelper::strparse($contents), $User->get_attribute('user_id'), $status);
+			$pm_msg_id = PrivateMsg::send($user_id_dest, $pm_id_get, FormatingHelper::strparse($contents, array(), false), $User->get_attribute('user_id'), $status);
 
 			//Calcul de la page vers laquelle on redirige.
 			$last_page = ceil( ($convers['nbr_msg'] + 1) / 25);
