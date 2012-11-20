@@ -118,5 +118,4 @@ class FormFieldCaptcha extends AbstractFormField
         return new FileTemplate('framework/builder/form/FormFieldCaptcha.tpl');
     }
 }
-
 ?>
