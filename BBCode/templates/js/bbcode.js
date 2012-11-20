@@ -167,7 +167,7 @@ var BBcodeEditor_Core = Class.create(
 		xtd10.insert(xtable1);
 		xtd10.insert(xtable2);
 		var xtd11 = new Element('td', {'id': 'bbcode-td-'+element});
-		xtd11.setStyle({'verticalAlign':'top', 'padding':'5px 5px'});
+		xtd11.setStyle({'verticalAlign':'top'});
 		xtd11.update('&nbsp;');
 		var xtr10 = new Element('tr');
 		xtr10.insert(xtd10);
@@ -408,6 +408,7 @@ var BBcodeEditor_Core = Class.create(
 		};
 		a.observe('click', fn);
 		var img = new Element('img', {'src':this.path+'images/upload/files_add.png', 'alt':''});
+		img.setStyle({'margin':'5px 0 0 5px'});
 		a.insert(img);
 		
 		var elt = $$('td#bbcode-td-'+this.element);
