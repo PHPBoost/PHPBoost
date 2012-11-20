@@ -143,7 +143,7 @@ elseif (!empty($del)) //Suppression de la catï¿½gorie/sous-catï¿½gorie.
 			forum_generate_feeds();
 			AppContext::get_response()->redirect(HOST . SCRIPT);
 		}
-		else //Sinon on propose de dï¿½placer les topics existants dans une autre catï¿½gorie.
+		else //Sinon on propose de déplacer les topics existants dans une autre catï¿½gorie.
 		{
 			if (empty($_POST['del_cat']))
 			{

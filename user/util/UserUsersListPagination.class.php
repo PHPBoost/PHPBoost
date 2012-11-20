@@ -44,6 +44,7 @@ class UserUsersListPagination
 	{
 		$this->pagination->set_url_sprintf_pattern(UserUrlBuilder::users($field, $sort, '%d')->absolute());
 	}
+	
 	public function display()
 	{
 		return $this->pagination->export();

@@ -87,7 +87,7 @@ class CommentsDAO
 		else
 		{
 			$query_result = self::$db_querier->select("SELECT MAX(timestamp) as timestamp FROM ". DB_TABLE_COMMENTS ." WHERE user_ip=:user_ip", array(
-				'user_ip' => USER_IP
+				'user_ip' => AppContext::get_current_user()->get_ip()
 			), SelectQueryResult::FETCH_NUM);
 			$result = $query_result->fetch();
 			return $result[0];
