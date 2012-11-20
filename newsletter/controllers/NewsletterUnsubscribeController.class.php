@@ -87,7 +87,7 @@ class NewsletterUnSubscribeController extends ModuleController
 		)));
 
 		$newsletter_subscribe = AppContext::get_current_user()->check_level(User::MEMBER_LEVEL) ? NewsletterService::get_id_streams_member(AppContext::get_current_user()->get_attribute('user_id')) : array();
-		$fieldset->add_field(new FormFieldMultipleSelectChoice('newsletter_choice', $this->lang['subscribe.newsletter_choice'], $newsletter_subscribe, $this->get_streams()));
+		$fieldset->add_field(new FormFieldMultipleSelectChoice('choice', $this->lang['subscribe.newsletter_choice'], $newsletter_subscribe, $this->get_streams()));
 		
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_button($this->submit_button);
@@ -141,7 +141,7 @@ class NewsletterUnSubscribeController extends ModuleController
 		}
 		else
 		{
-			$streams = $this->form->get_value('newsletter_choice');
+			$streams = $this->form->get_value('choice');
 			if (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL) && $streams !== '')
 			{
 				NewsletterService::update_subscribtions_member_registered($streams, AppContext::get_current_user()->get_attribute('user_id'));
