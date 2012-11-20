@@ -97,9 +97,13 @@ Event.observe(window, 'load', function() {
 						<img id="loading_{list_extended_fields.ID}" alt="" class="valign_middle" />
 						<a href="{list_extended_fields.EDIT_LINK}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="{L_UPDATE}" title="{L_UPDATE}" class="valign_middle" /></a>
 						# IF NOT list_extended_fields.FREEZE #
-						<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" id="delete_{list_extended_fields.ID}" class="valign_middle" />
+						<a href="#">
+							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" id="delete_{list_extended_fields.ID}" class="valign_middle" />
+						</a>
 						# ENDIF #
-						<img src="{PATH_TO_ROOT}/templates/{THEME}/images/not_processed_mini.png" id="change_display_{list_extended_fields.ID}" class="valign_middle" />
+						<a href="#">
+							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/not_processed_mini.png" alt="{L_PROCESSED_OR_NOT}" title="{L_PROCESSED_OR_NOT}" id="change_display_{list_extended_fields.ID}" class="valign_middle" />
+						</a>
 					</div>
 					<div class="spacer"></div>
 				</div>
