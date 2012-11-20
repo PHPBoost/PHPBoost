@@ -74,7 +74,7 @@ class Countries
 	
 	private static function build_contries()
 	{
-		$lang = LangLoader::get('counstries');
+		$lang = LangLoader::get('countries');
 		foreach (self::$countries_identifier as $country_identifier)
 		{
 			self::$countries[$country_identifier] = array(

@@ -219,9 +219,6 @@ class Environment
 
 		define('USE_DEFAULT_IF_EMPTY', 1);
 
-		### User IP address ###
-		define('USER_IP', self::get_user_ip());
-
 		### Regex options ###
 		define('REGEX_MULTIPLICITY_NOT_USED', 0x01);
 		define('REGEX_MULTIPLICITY_OPTIONNAL', 0x02);
@@ -405,7 +402,7 @@ class Environment
 				"', total = 1 WHERE id = 1", __LINE__, __FILE__);
 		//We insert this visitor as a today visitor
 		PersistenceContext::get_sql()->query_inject("INSERT INTO " . DB_TABLE_VISIT_COUNTER .
-			" (ip, time, total) VALUES('" . USER_IP . "', '" . gmdate_format('Y-m-d', time(),
+			" (ip, time, total) VALUES('" . AppContext::get_current_user()->get_ip() . "', '" . gmdate_format('Y-m-d', time(),
 		TIMEZONE_SYSTEM) . "', '0')", __LINE__, __FILE__);
 
 		//We update the stats table: the number of visits today
@@ -570,49 +567,6 @@ class Environment
 	private static function get_one_week_ago_timestamp()
 	{
 		return time() - 3600 * 24 * 7;
-	}
-
-	private static function get_user_ip()
-	{
-		if ($_SERVER)
-		{
-			if (isset($_SERVER['HTTP_X_FORWARDED_FOR']))
-			{
-				$ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
-			}
-			elseif (isset($_SERVER['HTTP_CLIENT_IP']))
-			{
-				$ip = $_SERVER['HTTP_CLIENT_IP'];
-			}
-			else
-			{
-				$ip = $_SERVER['REMOTE_ADDR'];
-			}
-		}
-		else
-		{
-			if (getenv('HTTP_X_FORWARDED_FOR'))
-			{
-				$ip = getenv('HTTP_X_FORWARDED_FOR');
-			}
-			elseif (getenv('HTTP_CLIENT_IP'))
-			{
-				$ip = getenv('HTTP_CLIENT_IP');
-			}
-			else
-			{
-				$ip = getenv('REMOTE_ADDR');
-			}
-		}
-
-		if (preg_match('`^[a-z0-9:.]{7,}$`', $ip))
-		{
-			return $ip;
-		}
-		else
-		{
-			return '0.0.0.0';
-		}
 	}
 
 	/**

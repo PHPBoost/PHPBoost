@@ -52,11 +52,11 @@ class CommentsManager
 		
 		if(self::$user->check_level(User::MEMBER_LEVEL))
 		{
-			$id_comment = CommentsDAO::add_comment($id_topic, $message, self::$user->get_id(), self::$user->get_pseudo(), USER_IP);
+			$id_comment = CommentsDAO::add_comment($id_topic, $message, self::$user->get_id(), self::$user->get_pseudo(), self::$user->get_ip());
 		}
 		else
 		{
-			$id_comment = CommentsDAO::add_comment($id_topic, $message, self::$user->get_id(), $pseudo, USER_IP);
+			$id_comment = CommentsDAO::add_comment($id_topic, $message, self::$user->get_id(), $pseudo, self::$user->get_ip());
 		}
 
 		CommentsTopicDAO::incremente_number_comments_topic($id_topic);

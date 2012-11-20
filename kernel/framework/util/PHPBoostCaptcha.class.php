@@ -368,7 +368,7 @@ class PHPBoostCaptcha
 	 * @desc return a hash computed from the user ip and instance identifier.
 	 */
 	private function get_user_id() {
-		return substr(KeyGenerator::string_hash(USER_IP), 0, 13) . $this->instance;
+		return substr(KeyGenerator::string_hash(AppContext::get_current_user()->get_ip()), 0, 13) . $this->instance;
 	}
 
 	/**

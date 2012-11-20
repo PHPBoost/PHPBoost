@@ -321,18 +321,18 @@ class Admin_forum
 		return true;
 	}
 	
-	//Dï¿½placement d'une catï¿½gorie.
+	//Déplacement d'une catégorie.
 	function move_cat($id, $to)
 	{
 		global $Sql, $CAT_FORUM, $Cache;
 		
-		//On vï¿½rifie si la catï¿½gorie contient des sous forums.
+		//On vérifie si la catégorie contient des sous forums.
 		$nbr_cat = (($CAT_FORUM[$id]['id_right'] - $CAT_FORUM[$id]['id_left'] - 1) / 2) + 1;
 		
-		$list_cats = $this->get_child_list($id); //Sous forums du forum ï¿½ supprimer..
-		$list_parent_cats = $this->get_parent_list($id);  //Forums parent du forum ï¿½ supprimer.
+		$list_cats = $this->get_child_list($id); //Sous forums du forum à supprimer..
+		$list_parent_cats = $this->get_parent_list($id);  //Forums parent du forum à supprimer.
 		
-		//Prï¿½caution pour ï¿½viter erreur fatale, cas impossible si cohï¿½rence de l'arbre respectï¿½e.
+		//Préaution pour éviter erreur fatale, cas impossible si cohérence de l'arbre respectï¿½e.
 		if (empty($list_cats))
 			AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);
 
@@ -347,9 +347,9 @@ class Admin_forum
 		$Sql->query_inject("UPDATE " . PREFIX . "forum_cats SET id_left = id_left - '" . ($nbr_cat*2) . "', id_right = id_right - '" . ($nbr_cat*2) . "' WHERE id_left > '" . $CAT_FORUM[$id]['id_right'] . "'", __LINE__, __FILE__);
 		
 		########## Ajout ##########
-		if (!empty($to)) //Forum cible diffï¿½rent de la racine.
+		if (!empty($to)) //Forum cible différent de la racine.
 		{
-			//On augmente la taille de l'arbre du nombre de forum supprimï¿½s ï¿½ partir de la position du forum cible.
+			//On augmente la taille de l'arbre du nombre de forum supprimés à partir de la position du forum cible.
 			$array_parents_cats = explode(', ', $list_parent_cats);
 			if ($CAT_FORUM[$id]['id_left'] > $CAT_FORUM[$to]['id_left'] && !in_array($to, $array_parents_cats)) //Direction forum source -> forum cible, et source non incluse dans la cible.
 			{	
@@ -388,21 +388,21 @@ class Admin_forum
 			//On modifie les bornes droites des parents de la cible.
 			$Sql->query_inject("UPDATE " . PREFIX . "forum_cats SET id_right = id_right + '" . ($nbr_cat*2) . "' WHERE " . $clause_parent_cats_to, __LINE__, __FILE__);
 			
-			//On met ï¿½ jour le nouveau forum.
+			//On met à jour le nouveau forum.
 			$Sql->query_inject("UPDATE " . PREFIX . "forum_cats SET level = level - '" . (($CAT_FORUM[$id]['level'] - $CAT_FORUM[$to]['level']) - 1) . "' WHERE id IN (" . $list_cats . ")", __LINE__, __FILE__);
 			
 			$Cache->Generate_module_file('forum');
 			$Cache->load('forum', RELOAD_CACHE); //Rechargement du cache
 			
-			$this->update_last_topic_id($id); //On met ï¿½ jour l'id du dernier topic.
-			$this->update_last_topic_id($to); //On met ï¿½ jour l'id du dernier topic.
+			$this->update_last_topic_id($id); //On met à jour l'id du dernier topic.
+			$this->update_last_topic_id($to); //On met à jour l'id du dernier topic.
 			
 			return true;
 		}
 		else //Racine
 		{
 			$max_id = $Sql->query("SELECT MAX(id_right) FROM " . PREFIX . "forum_cats", __LINE__, __FILE__);
-			//On replace les forums supprimï¿½s virtuellement.
+			//On replace les forums supprimés virtuellement.
 			$array_sub_cats = explode(', ', $list_cats);
 			$z = 0;
 			$limit = $max_id + 1;
@@ -421,7 +421,7 @@ class Admin_forum
 		return true;
 	}
 	
-	//Rï¿½cupï¿½re la liste des parents d'une catï¿½gorie.
+	//Recupere la liste des parents d'une categorie.
 	function get_parent_list($idcat, $cat_include = false)
 	{
 		global $Sql, $CAT_FORUM;
@@ -441,7 +441,7 @@ class Admin_forum
 		return $list_parent_cats;
 	}
 	
-	//Rï¿½cupï¿½re les enfants d'une catï¿½gorie
+	//Récupère les enfants d'une catégorie
 	function get_child_list($id, $cat_include = true)
 	{
 		global $Sql, $CAT_FORUM;
@@ -463,7 +463,7 @@ class Admin_forum
 		return $list_cats;
 	}
 	
-	//Met ï¿½ jour chaque catï¿½gories quelque soit le niveau de profondeur de la catï¿½gorie source. Cas le plus favorable et courant seulement 3 requï¿½tes.
+	//Met à jour chaque catégories quelque soit le niveau de profondeur de la catégorie source. Cas le plus favorable et courant seulement 3 requêtes.
 	function update_last_topic_id($idcat)
 	{
 		global $Sql, $CAT_FORUM;
@@ -486,7 +486,7 @@ class Admin_forum
 			$clause = !empty($list_cats) ? "idcat IN (" . trim($list_cats, ', ') . ")" : "1";
 		}
 		
-		//Rï¿½cupï¿½ration du timestamp du dernier message de la catï¿½gorie.		
+		//Récupération du timestamp du dernier message de la catégorie.		
 		$last_timestamp = $Sql->query("SELECT MAX(last_timestamp) FROM " . PREFIX . "forum_topics WHERE " . $clause, __LINE__, __FILE__);
 		$last_topic_id = $Sql->query("SELECT id FROM " . PREFIX . "forum_topics WHERE last_timestamp = '" . $last_timestamp . "'", __LINE__, __FILE__);
 		if (!empty($last_topic_id))
