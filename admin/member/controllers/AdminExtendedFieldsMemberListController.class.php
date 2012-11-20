@@ -54,14 +54,18 @@ class AdminExtendedFieldsMemberListController extends AdminController
 			}
 		}
 		
+		$main_lang = LangLoader::get('main');
 		$this->view->put_all(array(
 			'L_MANAGEMENT_EXTENDED_FIELDS' => $this->lang['extended-fields-management'],
 			'L_NAME' => $this->lang['field.name'],
 			'L_POSITION' => $this->lang['field.position'],
 			'L_REQUIRED' => $this->lang['field.required'],
-			'L_DISPLAY' => LangLoader::get_message('display', 'main'),
+			'L_DISPLAY' => $main_lang['display'],
 			'L_ALERT_DELETE_FIELD' => $this->lang['field.delete_field'],
-			'L_VALID' => LangLoader::get_message('update', 'main')
+			'L_VALID' => $main_lang['update'],
+			'L_UPDATE' => $main_lang['update'],
+			'L_DELETE' => $main_lang['delete'],
+			'L_PROCESSED_OR_NOT' => $main_lang['display']
 		));
 
 		return new AdminExtendedFieldsDisplayResponse($this->view, $this->lang['extended-fields-management']);
