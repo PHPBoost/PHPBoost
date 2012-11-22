@@ -147,17 +147,17 @@ class NotationService
 			$count_notes = NotationService::get_number_notes($notation);
 			$template->put_all(array(
 				'C_VOTES' => $count_notes > 0 ? true : false,
-				'C_MORE_1_VOTES' => $count_notes > 1 ? true : false,
+				'C_MORE_1_NOTES' => $count_notes > 1 ? true : false,
 				'CURRENT_URL' => REWRITED_SCRIPT,
 				'ID_IN_MODULE' => $notation->get_id_in_module(),
 				'NOTATION_SCALE' => $notation->get_notation_scale(),
 				'NUMBER_PIXEL' => $notation->get_notation_scale() * 16,
 				'NUMBER_NOTES' => $count_notes,
 				'AVERAGE_NOTES' => $average_notes,
-				'ALREADY_VOTE' => NotationDAO::get_member_already_notation($notation),
+				'ALREADY_NOTE' => NotationDAO::get_member_already_notation($notation),
 				'L_NO_NOTE' => self::$lang['no_note'],
 				'L_AUTH_ERROR' => LangLoader::get_message('e_auth', 'errors'),
-				'L_ALREADY_VOTE' => self::$lang['already_vote'],
+				'L_ALREADY_NOTE' => self::$lang['already_vote'],
 				'L_NOTES' => self::$lang['notes'],
 				'L_NOTE' => self::$lang['note'],
 				'L_VALID_NOTE' => self::$lang['valid_note']
