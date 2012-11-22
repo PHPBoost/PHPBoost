@@ -232,7 +232,7 @@
 
 		# INCLUDE message_helper #
 		<div class="module_actions">
-			{EDIT_CAT} {EDIT}
+			 {EDIT}
 			{ADD_PICS}
 		</div>
 		<div class="spacer"></div>
@@ -243,7 +243,7 @@
 			<div class="module_top">
 				<div class="module_top_title">
 					<a href="${relative_url(SyndicationUrlBuilder::rss('gallery', CAT_ID))}" title="Rss"><img style="vertical-align:middle;margin-top:-2px;" src="{PATH_TO_ROOT}/templates/{THEME}/images/rss.png" alt="Rss" title="Rss" /></a>
-					{L_GALLERY} {U_GALLERY_CAT_LINKS} 
+					{L_GALLERY} {U_GALLERY_CAT_LINKS} {EDIT_CAT}
 				</div>
 				<div class="module_top_com">
 					{PAGINATION}
