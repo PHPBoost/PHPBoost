@@ -1,5 +1,5 @@
-<div id="${escape(ID)}" # IF C_HIDDEN # style="display:none;" # ENDIF #>
-	<dl class="overflow_visible" id="${escape(ID)}_field" >
+<div id="${escape(ID)}_field" # IF C_HIDDEN # style="display:none;" # ENDIF #>
+	<dl class="overflow_visible">
 		<dt>
 			<label for="${escape(ID)}">
 				# IF C_REQUIRED # * # ENDIF #
