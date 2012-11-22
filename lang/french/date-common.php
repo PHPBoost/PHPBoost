@@ -42,13 +42,21 @@ $lang['october'] = 'Octobre';
 $lang['november'] = 'Novembre';
 $lang['december'] = 'Décembre';
 
+$lang['monday_mini'] = 'Lu';
+$lang['tuesday_mini'] = 'Ma';
+$lang['wednesday_mini'] = 'Me';
+$lang['thursday_mini'] = 'Je';
+$lang['friday_mini'] = 'Ve';
+$lang['saturday_mini'] = 'Sa';
+$lang['sunday_mini'] = 'Di';
+
 $lang['monday_short'] = 'Lun';
 $lang['tuesday_short'] = 'Mar';
 $lang['wednesday_short'] = 'Mer';
 $lang['thursday_short'] = 'Jeu';
 $lang['friday_short'] = 'Ven';
 $lang['saturday_short'] = 'Sam';
-$lang['sunday_short']	= 'Dim';
+$lang['sunday_short'] = 'Dim';
 
 $lang['monday'] = 'Lundi';
 $lang['tuesday'] = 'Mardi';

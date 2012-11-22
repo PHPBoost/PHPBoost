@@ -42,6 +42,14 @@ $lang['october'] = 'October';
 $lang['november'] = 'November';
 $lang['december'] = 'December';
 
+$lang['monday_mini'] = 'Mo';
+$lang['tuesday_mini'] = 'Tu';
+$lang['wednesday_mini'] = 'We';
+$lang['thursday_mini'] = 'Th';
+$lang['friday_mini'] = 'Fr';
+$lang['saturday_mini'] = 'Sa';
+$lang['sunday_mini'] = 'Su';
+
 $lang['monday_short'] = 'Mon';
 $lang['tuesday_short'] = 'Tue';
 $lang['wednesday_short'] = 'Wed';
