@@ -100,7 +100,7 @@ $LANG['bugs.titles.priorities'] = 'Priorités';
 $LANG['bugs.titles.severities'] = 'Niveaux';
 $LANG['bugs.titles.admin.management'] = 'Gestion bugtracker';
 $LANG['bugs.titles.admin.config'] = 'Configuration';
-$LANG['bugs.titles.admin.authorizations'] = 'Authorisations';
+$LANG['bugs.titles.admin.authorizations'] = 'Autorisations';
 $LANG['bugs.titles.choose_version'] = 'Version à afficher';
 $LANG['bugs.titles.solved_bugs'] = 'Bugs résolus';
 $LANG['bugs.titles.unsolved_bugs'] = 'Bugs non-résolus';
@@ -225,7 +225,7 @@ $LANG['bugs.config.activ_pm'] = 'Activer l\'envoi de MP';
 $LANG['bugs.config.auth'] = 'Autorisations';
 $LANG['bugs.config.auth.read'] = 'Autorisation d\'afficher la liste des bugs';
 $LANG['bugs.config.auth.create'] = 'Autorisation de signaler un bug';
-$LANG['bugs.config.auth.create_advanced'] = 'Autorisation avancées pour signaler un bug';
+$LANG['bugs.config.auth.create_advanced'] = 'Autorisation avancée pour signaler un bug';
 $LANG['bugs.config.auth.create_advanced_explain'] = 'Permet de choisir le niveau et la priorité du bug';
 $LANG['bugs.config.auth.moderate'] = 'Autorisation de modération des bugs';
 
