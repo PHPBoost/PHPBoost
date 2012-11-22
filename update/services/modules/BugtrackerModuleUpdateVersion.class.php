@@ -53,11 +53,10 @@ class BugtrackerModuleUpdateVersion extends ModuleUpdateVersion
 	
 	private function update_comments()
 	{
-		$result = $this->querier->select('SELECT b.id, b.nbr_com, b.lock_com, com.*
-		FROM ' . PREFIX . 'bugtracker b
-		JOIN ' . PREFIX . 'com com ON com.idprov = b.id
-		WHERE com.script = \'b\'
-		ORDER BY id ASC');
+		$result = $this->querier->select('SELECT bugtracker.id, bugtracker.nbr_com, bugtracker.lock_com, com.*
+		FROM ' . PREFIX . 'bugtracker bugtracker
+		JOIN ' . PREFIX . 'com com ON com.idprov = bugtracker.id
+		WHERE com.script = \'bugtracker\'');
 		$id_in_module = 0;
 		$id_topic = 0;
 		while ($row = $result->fetch())
