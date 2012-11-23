@@ -80,7 +80,8 @@ class ArticlesModuleUpdateVersion extends ModuleUpdateVersion
 		$result = $this->querier->select('SELECT articles.id, articles.idcat, articles.nbr_com, articles.lock_com, com.*
 		FROM ' . PREFIX . 'articles articles
 		JOIN ' . PREFIX . 'com com ON com.idprov = articles.id
-		WHERE com.script = \'articles\'');
+		WHERE com.script = \'articles\'
+		ORDER BY id ASC');
 		$id_in_module = 0;
 		$id_topic = 0;
 		while ($row = $result->fetch())

@@ -56,7 +56,8 @@ class BugtrackerModuleUpdateVersion extends ModuleUpdateVersion
 		$result = $this->querier->select('SELECT bugtracker.id, bugtracker.nbr_com, bugtracker.lock_com, com.*
 		FROM ' . PREFIX . 'bugtracker bugtracker
 		JOIN ' . PREFIX . 'com com ON com.idprov = bugtracker.id
-		WHERE com.script = \'bugtracker\'');
+		WHERE com.script = \'bugtracker\'
+		ORDER BY id ASC');
 		$id_in_module = 0;
 		$id_topic = 0;
 		while ($row = $result->fetch())
