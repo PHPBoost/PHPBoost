@@ -277,6 +277,7 @@ elseif ($action == 'restore')
 		
 	$dir = PATH_TO_ROOT .'/cache/backup';
 	$i = 0;
+	$filelist = array();
 	if (is_dir($dir))
 	{
 	   if ($dh = opendir($dir))
