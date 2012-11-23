@@ -64,3 +64,4 @@ class ModulesKernelUpdateVersion extends KernelUpdateVersion
 		PersistenceContext::get_dbms_utils()->drop(array(PREFIX . 'modules'));
 	}
 }
+?>
