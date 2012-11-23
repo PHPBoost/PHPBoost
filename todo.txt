@@ -74,6 +74,19 @@
 - [color=red]Nouveauté:[/color] Système d'alertes (javascript) utilisateur évolué.
 - Supprimer les autorisations d'accès dans la gestion des modules pour plus de cohérence
 
+[b]Installateur[/b]
+- Ajout d'une option pour supprimer le dossier à la fin de l'installation
+- Possibilité de choisir les modules, thèmes et langues à installer
+
+[b]Script de migration[/b]
+- Vérification automatique de la présence de la nouvelle version par le noyau, et redirection vers le script d'update + mise en maintenance automatique et déblocage par administrateur
+
+[b]Administration[/b]
+- Refonte de la partie Rapport système avec ajout de différentes informations concernant la sécurité, les options APC, des conseils, etc...
+
+[b]Upload[/b]
+- Refonte de l'interface, ajout d'API, ... 
+
 [b]Messages privés[/b]
 - Possibilité d'envoyer des messages privés à tous les membres d'un groupe ou à tous les membres pour l'administrateur.
 - Possibilité de demander l'envoi d'un mail lors de l'envoi d'un mp.
