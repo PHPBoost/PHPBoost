@@ -705,5 +705,4 @@ class Forum
 		return $result;
 	}
 }
-
 ?>
