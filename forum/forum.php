@@ -380,5 +380,4 @@ else
 	AppContext::get_response()->redirect('/forum/index.php' . SID2);
 
 include('../kernel/footer.php');
-
 ?>

@@ -137,7 +137,6 @@ function forum_history_collector($type, $user_id_action = '', $url_action = '')
 //Gestion du rss du forum.
 function forum_generate_feeds()
 {
-    
     Feed::clear_cache('forum');
 }
 
@@ -155,5 +154,4 @@ function token_colorate($matches)
     else
         return $matches[0];
 }
-
 ?>

@@ -95,5 +95,4 @@ $Template->put_all(array(
 	'L_SEARCH' => $LANG['search'],
 	'L_ADVANCED_SEARCH' => $LANG['advanced_search']
 ));
-
 ?>
