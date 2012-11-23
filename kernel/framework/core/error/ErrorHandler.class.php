@@ -173,7 +173,7 @@ class ErrorHandler
 	{
 		echo '<span id="message_helper"></span>
             <div class="' . $this->errclass . '" style="width:auto;max-width:750px;margin:15px auto;padding:15px;">
-                <img src="' . PATH_TO_ROOT . '/templates/default/images/' . $this->errimg . '.png"
+                <img src="' . TPL_PATH_TO_ROOT . '/templates/default/images/' . $this->errimg . '.png"
                     alt="" style="float:left;padding-right:6px;" />
                 <strong>' . $this->errdesc . ' : </strong>' . $this->exception->getMessage() . '<br /><br /><br />
                 <em>' . $this->get_stackstrace_as_string(6) . '</em></div>';
