@@ -421,13 +421,13 @@ a.msg_link_pseudo:hover {
     color:#e8eaeb;
     border-top:1px solid #325889;
     border-bottom:1px solid #325889;
-    padding-top:4px;
-    padding-left:127px;
+    padding:4px 5px 0px 127px;
     overflow:hidden !important;
     height:auto !important;
     overflow:visible;
     height:1%;
 }
+.msg_top_row span.text_strong a.small_link{ color: #F2FBFF; }
 
 .msg_info_mbr { /* Case des informations du membre */
     background:#f0f3ff;
@@ -511,7 +511,7 @@ a.msg_link_pseudo:hover {
 .module_top_r {}
 
 .module_top {
-    height:18px;
+    min-height:18px;
     font-size:16px;
     font-weight:bold;
     color:#6d6d6d;
@@ -519,11 +519,10 @@ a.msg_link_pseudo:hover {
     padding-bottom: 2px;
 }
 
-.module_top a {}
+.module_top a { font-size:16px; }
 
 .module_top_title {
 	float:left;
-    font-size:16px;
 	margin-left:3px;
 	font-weight:bold;
 }
@@ -532,10 +531,8 @@ a.msg_link_pseudo:hover {
 	margin-bottom:5px;
 }
 
-.module_top_com {
-	float: right;
-	font-size: 12px;
-}
+.module_top_com { float: right; }
+.module_top_com a{ font-size: 12px; }
 
 .module_actions {
 	text-align: center;
@@ -586,7 +583,7 @@ a.msg_link_pseudo:hover {
     background:#ffffff;
     border-spacing:1px;
     padding:5px;
-
+	clear:both;
 }
 
 .module_mini_top {
