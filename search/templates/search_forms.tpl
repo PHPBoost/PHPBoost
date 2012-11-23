@@ -10,13 +10,13 @@
                 hide_div(FORM + LastSpecializedFormUsed);
                 show_div(FORM + module);
 
-                document.getElementById(SPECIALIZED_FORM_LINK + LastSpecializedFormUsed).style.fontSize = '10px';
-                document.getElementById(SPECIALIZED_FORM_LINK + LastSpecializedFormUsed).className = 'small_link';
+                
+                document.getElementById(SPECIALIZED_FORM_LINK + LastSpecializedFormUsed).className = 'small_link SpecializedFormLink SFL_no_current';
 
                 LastSpecializedFormUsed = module;
                 document.getElementById('search_in').value = module;
-                document.getElementById(SPECIALIZED_FORM_LINK + module).style.fontSize = '12px';
-                document.getElementById(SPECIALIZED_FORM_LINK + module).className = 'small_link SpecializedFormLink';
+                
+                document.getElementById(SPECIALIZED_FORM_LINK + module).className = 'small_link SpecializedFormLink SFL_current';
             }
             
             function check_search_form_post()
@@ -51,7 +51,7 @@
                         <p id="forms_selection">
                             <a id="specialize_form_link_all" href="javascript:ChangeForm('all');" class="small_link">{L_SEARCH_ALL}</a>
                             # START forms #
-                                <a id="specialize_form_link_{forms.MODULE_NAME}" href="javascript:ChangeForm('{forms.MODULE_NAME}');" class="small_link">{forms.L_MODULE_NAME}</a>
+                                <a id="specialize_form_link_{forms.MODULE_NAME}" href="javascript:ChangeForm('{forms.MODULE_NAME}');" class="small_link SpecializedFormLink SFL_no_current">{forms.L_MODULE_NAME}</a>
                             # END forms #
                         </p>
                     </div>
