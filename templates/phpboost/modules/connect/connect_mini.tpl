@@ -36,12 +36,19 @@
 				<a href='{U_REGISTER}'>{L_REGISTER}</a>
 			</li>
 		</ul>
+
+
+
 	</div>
 	# ELSE #
+	
+	
+	
 	<div class="connect_align">
+	
 		<ul>
 			# IF U_ALERT #	
-				<li class="submenu submenu_alert">{L_MY_PROFIL}  <img src="{PATH_TO_ROOT}/templates/{THEME}/images/important.png" alt="alerte" title="Message" width="16px" style="vertical-align:top;"/>
+				<li class="submenu submenu_alert">{L_MY_PROFIL}  <span style="font-size:10px;vertical-align:top;">({NUMBER_TOTAL_ALERT})</span> 
 			# ELSE #
 				<li class="submenu">{L_MY_PROFIL}
 			# ENDIF #
