@@ -17,12 +17,14 @@
 			<div class="footer_columns">
 				<div class="footer_columns_title">
 					<img src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/partners.png" align="center"  width="25px" />
-					Les parternaires
+					Les partenaires
 				</div>
 				<div class="footer_columns_partners">
-					<p style="font-size:9px;color:#dfa959;line-height:0px;margin-bottom: 0px;font-weight:bold;">Hebergement de site web</p>
-					<img src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/nuxit.png" align="center" />
-					<p style="font-size:9px;font-style:italic;color:#8bb9ff;">Qualité, fiabilité, Support</p>
+					<a href="http://www.nuxit.com/" style="text-decoration:none; ">
+						<p style="font-size:9px;color:#dfa959;line-height:0px;margin-bottom: 0px;font-weight:bold;">Hébergement de site web</p>
+						<img src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/nuxit.png" align="center" />
+						<p style="font-size:9px;font-style:italic;color:#8bb9ff;">Qualité, fiabilité, Support</p>
+					</a>
 				</div>
 			</div>
 			<div class="footer_columns">
@@ -33,8 +35,8 @@
 				<ul>
 					<li><a href="#">Fonctionnalités</a></li>
 					<li><a href="#">Télécharger</a></li>
-					<li><a href="http://demo.phpboost.com">Demonstration</a></li>
-					<li><a href="/pages/aider-phpboost">Soutenir le projet</a></li>
+					<li><a href="http://demo.phpboost.com">Démonstration</a></li>
+					<li><a href="{PATH_TO_ROOT}/pages/aider-phpboost">Soutenir le projet</a></li>
 				</ul>
 			</div>	
 			<div class="footer_columns">
@@ -43,10 +45,10 @@
 					Participer au Projet
 				</div>
 				<ul>
-					<li><a href="/wiki/creer-un-theme">Créer un Thème</a></li>
-					<li><a href="/wiki/creer-un-module">Créer un Module</a></li>
-					<li><a href="/doc/">A.P.I.</a></li>
-					<li><a href="/wiki/">La documentation</a></li>
+					<li><a href="{PATH_TO_ROOT}/wiki/creer-un-theme">Créer un Thème</a></li>
+					<li><a href="{PATH_TO_ROOT}/wiki/creer-un-module">Créer un Module</a></li>
+					<li><a href="{PATH_TO_ROOT}/doc/">A.P.I.</a></li>
+					<li><a href="{PATH_TO_ROOT}/wiki/">Documentation</a></li>
 				</ul>
 			</div>	
 			<div class="footer_columns">
@@ -55,9 +57,10 @@
 					Support PHPBoost
 				</div>
 				<ul>
-					<li><a href="/faq/">Foire aux Questions</a></li>
-					<li><a href="/forum/">Le Forum</a></li>
-					<li><a href="/news/">Les news</a></li>
+					<li><a href="{PATH_TO_ROOT}/faq/">Foire aux Questions</a></li>
+					<li><a href="{PATH_TO_ROOT}/forum/">Forum</a></li>
+					<li><a href="{PATH_TO_ROOT}/bugtracker/">Rapport de bugs</a></li>
+					<li><a href="{PATH_TO_ROOT}/news/">News</a></li>
 				</ul>
 			</div>	
 		</div>
