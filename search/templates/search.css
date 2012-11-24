@@ -4,8 +4,6 @@ div.search_mini input {
 }
 
 fieldset.searchFieldset {
-    /* background:#ffffff; */
-    border:none;
     background-color: #fcfcfc;
 }
 
@@ -53,21 +51,45 @@ select#FormsChoice {
     width:300px;
 }
 
-div.SpecializedForm {
-	background-color: #fcfcfc;
-    margin-top:-9px;
-    margin-bottom:10px;
-    padding:5px;
-    border:1px #738B9B dotted;
+p#forms_selection{
+	line-height:1 em;
+	border-bottom: 2px solid #336397;
 }
 
-a.SpecializedFormLink {
-    background-color:inherit;
-    padding-left:5px;
-    padding-right:5px;
-    border:1px #738B9B dotted;
-    border-bottom:3px #ffffff solid;
-    /*border-top:2px #ffffff dotted;*/
+div.SpecializedForm {
+    padding:0px 5px;
+}
+
+a.SpecializedFormLink{
+    -webkit-border-top-left-radius: 10px;
+	-moz-border-radius-topleft: 10px;
+	border-top-left-radius: 10px;	
+	-webkit-border-top-right-radius: 10px;
+	-moz-border-radius-topright: 10px;
+	border-top-right-radius: 10px;	
+	text-align:center;
+	margin:0px 3px;
+	padding:3px 5px 0px 5px;
+} 
+
+a.SFL_current {
+    background:#2F5B8A;
+    font-size:12px;
+    color:#FFFFFF;
+}
+a.SFL_current:hover{
+	font-size:12px;
+	text-decoration:none;
+}
+
+a.SFL_no_current {
+    background:#E0E9EF;
+    color:#2F5B8A;
+    font-size:11px;
+}
+a.SFL_no_current:hover {  
+	background:#2F5B8A; 
+	color:#FFFFFF; 
 }
 
 div.search_field {
@@ -96,7 +118,8 @@ select.list_modules {
 
 div.resultsChoices {
     position:relative;
-    top:-20px;
+   	float:right;
+    top:5px;
     width:100%;
     text-align:right;
 }
