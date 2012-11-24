@@ -215,14 +215,14 @@ class BugtrackerHomePageExtensionPoint implements HomePageExtensionPoint
 
 			$tpl->assign_block_vars('list.bug', array(
 				'ID'			=> $row['id'],
-				'U_BUG_VIEW'	=> PATH_TO_ROOT .'/bugtracker/bugtracker' . url('.php?view&amp;com=0&amp;id=' . $row['id'], '-' . $row['id'] . '+' . Url::encode_rewrite($row['title']) . '.php'),
+				'U_BUG_VIEW'	=> PATH_TO_ROOT .'/bugtracker/bugtracker' . url('.php?view&amp;id=' . $row['id'], '-' . $row['id'] . '+' . Url::encode_rewrite($row['title']) . '.php'),
 				'TITLE'			=> ($cat_in_title_activated == true && $display_categories) ? '[' . $categories[$row['category']] . '] ' . $row['title'] : $row['title'],
 				'TYPE'			=> (!empty($row['type']) && isset($types[$row['type']])) ? stripslashes($types[$row['type']]) : $LANG['bugs.notice.none'],
 				'SEVERITY'		=> (!empty($row['severity']) && isset($severities[$row['severity']])) ? stripslashes($severities[$row['severity']]['name']) : $LANG['bugs.notice.none'],
 				'STATUS'		=> $LANG['bugs.status.' . $row['status']],
 				'LINE_COLOR' 	=> $line_color,
 				'SEVERITY_COLOR'=> (!empty($row['severity']) && isset($severities[$row['severity']])) ? 'style="background-color:' . stripslashes($severities[$row['severity']]['color']) . ';"' : '',
-				'COMMENTS'		=> '<a href="' . PATH_TO_ROOT .'/bugtracker/bugtracker' . url('.php?view&id=' . $row['id'] . '&com=0#comments_list') . '">' . (empty($nbr_coms) ? 0 : $nbr_coms) . '</a>',
+				'COMMENTS'		=> '<a href="' . PATH_TO_ROOT .'/bugtracker/bugtracker' . url('.php?view&id=' . $row['id'] . '#comments_list') . '">' . (empty($nbr_coms) ? 0 : $nbr_coms) . '</a>',
 				'DATE' 			=> gmdate_format($bugtracker_config->get_date_format(), $row['submit_date']),
 				'U_BUG_REJECT'	=> PATH_TO_ROOT . '/bugtracker/bugtracker' . url('.php?reject&amp;id=' . $row['id']),
 				'U_BUG_EDIT'	=> PATH_TO_ROOT . '/bugtracker/bugtracker' . url('.php?edit&amp;id=' . $row['id']),

@@ -1172,7 +1172,6 @@ else if (isset($_GET['view']) && is_numeric($id)) // Visualisation d'une fiche B
 		'L_REJECT' 				=> $LANG['bugs.actions.reject'],
 		'L_HISTORY'	 			=> $LANG['bugs.actions.history'],
 		'L_ON' 					=> $LANG['on'],
-		'U_COM' 				=> $comments_activated ? '<a href="' . PATH_TO_ROOT . '/bugtracker/bugtracker' . url('.php?view&amp;id=' . $id . '&amp;com=0#comments_list', '-' . $id . '.php?com=0#comments_list') . '">' . CommentsService::get_number_and_lang_comments('bugtracker', $id) . '</a>' : '',
 		'U_BUG_REJECT'			=> PATH_TO_ROOT . '/bugtracker/bugtracker' . url('.php?reject&amp;id=' . $id . '&amp;back=view'),
 		'U_BUG_REOPEN'			=> PATH_TO_ROOT . '/bugtracker/bugtracker' . url('.php?reopen&amp;id=' . $id . '&amp;back=view'),
 		'U_BUG_EDIT'			=> PATH_TO_ROOT . '/bugtracker/bugtracker' . url('.php?edit&amp;id=' . $id . '&amp;back=view'),
@@ -1206,11 +1205,11 @@ else if (isset($_GET['view']) && is_numeric($id)) // Visualisation d'une fiche B
 	));
 	
 	//Affichage des commentaires
-	if (isset($_GET['com']) && is_numeric($id))
+	if ($comments_activated && is_numeric($id))
 	{
 		$comments_topic = new BugtrackerCommentsTopic();
 		$comments_topic->set_id_in_module($id);
-		$comments_topic->set_url(new Url(PATH_TO_ROOT . '/bugtracker/bugtracker.php?view&id=' . $id . '&com=0'));
+		$comments_topic->set_url(new Url(PATH_TO_ROOT . '/bugtracker/bugtracker.php?view&id=' . $id));
 		$Template->put_all(array(
 			'COMMENTS' => CommentsService::display($comments_topic)->render()
 		));
@@ -1362,13 +1361,13 @@ else if (isset($_GET['solved'])) // liste des bugs corrigés
 
 		$Template->assign_block_vars('solved.bugclosed', array(
 			'ID'			=> $row['id'],
-			'U_BUG_VIEW'	=> PATH_TO_ROOT .'/bugtracker/bugtracker' . url('.php?view&amp;com=0&amp;id=' . $row['id'], '-' . $row['id'] . '+' . Url::encode_rewrite($row['title']) . '.php'),
+			'U_BUG_VIEW'	=> PATH_TO_ROOT .'/bugtracker/bugtracker' . url('.php?view&amp;id=' . $row['id'], '-' . $row['id'] . '+' . Url::encode_rewrite($row['title']) . '.php'),
 			'TITLE'			=> ($cat_in_title_activated == true && $display_categories) ? '[' . $categories[$row['category']] . '] ' . $row['title'] : $row['title'],
 			'TYPE'			=> (!empty($row['type']) && isset($types[$row['type']])) ? stripslashes($types[$row['type']]) : $LANG['bugs.notice.none'],
 			'SEVERITY'		=> (!empty($row['severity']) && isset($severities[$row['severity']])) ? stripslashes($severities[$row['severity']]['name']) : $LANG['bugs.notice.none'],
 			'STATUS'		=> $LANG['bugs.status.' . $row['status']],
 			'LINE_COLOR'	=> $line_color,
-			'COMMENTS'		=> '<a href="' . PATH_TO_ROOT . '/bugtracker/bugtracker' . url('.php?view&id=' . $row['id'] . '&com=0#comments_list') . '">' . (empty($nbr_coms) ? 0 : $nbr_coms) . '</a>',
+			'COMMENTS'		=> '<a href="' . PATH_TO_ROOT . '/bugtracker/bugtracker' . url('.php?view&id=' . $row['id'] . '#comments_list') . '">' . (empty($nbr_coms) ? 0 : $nbr_coms) . '</a>',
 			'DATE' 			=> gmdate_format($date_format, $row['fix_date']),
 			'U_BUG_REOPEN'	=> PATH_TO_ROOT . '/bugtracker/bugtracker' . url('.php?reopen&amp;id=' . $row['id'] . '&amp;back=solved'),
 			'U_BUG_EDIT'	=> PATH_TO_ROOT . '/bugtracker/bugtracker' . url('.php?edit&amp;id=' . $row['id'] . '&amp;back=solved'),
@@ -1661,13 +1660,13 @@ else if (isset($_GET['roadmap'])) // roadmap
 		
 		$Template->assign_block_vars('roadmap.bug', array(
 			'ID'			=> $row['id'],
-			'U_BUG_VIEW'	=> PATH_TO_ROOT .'/bugtracker/bugtracker' . url('.php?view&amp;com=0&amp;id=' . $row['id'], '-' . $row['id'] . '+' . Url::encode_rewrite($row['title']) . '.php'),
+			'U_BUG_VIEW'	=> PATH_TO_ROOT .'/bugtracker/bugtracker' . url('.php?view&amp;id=' . $row['id'], '-' . $row['id'] . '+' . Url::encode_rewrite($row['title']) . '.php'),
 			'TITLE'			=> ($cat_in_title_activated == true && $display_categories) ? '[' . $categories[$row['category']] . '] ' . $row['title'] : $row['title'],
 			'TYPE'			=> (!empty($row['type']) && isset($types[$row['type']])) ? stripslashes($types[$row['type']]) : $LANG['bugs.notice.none'],
 			'SEVERITY'		=> (!empty($row['severity']) && isset($severities[$row['severity']])) ? stripslashes($severities[$row['severity']]['name']) : $LANG['bugs.notice.none'],
 			'STATUS'		=> $LANG['bugs.status.' . $row['status']],
 			'LINE_COLOR'	=> $line_color,
-			'COMMENTS'		=> '<a href="' . PATH_TO_ROOT . '/bugtracker/bugtracker' . url('.php?view&id=' . $row['id'] . '&com=0#comments_list') . '">' . (empty($nbr_coms) ? 0 : $nbr_coms) . '</a>',
+			'COMMENTS'		=> '<a href="' . PATH_TO_ROOT . '/bugtracker/bugtracker' . url('.php?view&id=' . $row['id'] . '#comments_list') . '">' . (empty($nbr_coms) ? 0 : $nbr_coms) . '</a>',
 			'DATE' 			=> gmdate_format($date_format, $row['fix_date']),
 			'U_BUG_HISTORY'	=> PATH_TO_ROOT . '/bugtracker/bugtracker' . url('.php?history&amp;id=' . $row['id'] . '&amp;back=roadmap')
 		));

@@ -207,12 +207,12 @@
 			
 			<table  class="module_table">
 				<tr style="text-align:center;">
-					<th style="width:45px;text-align:center;">
+					<th style="width:52px;text-align:center;">
 						{L_ID}<br />
 						<a href="{U_BUG_ID_TOP}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
 						<a href="{U_BUG_ID_BOTTOM}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
 					</th>
-					<th style="text-align:center;">
+					<th style="width:52px;text-align:center;">
 						{L_TITLE}<br />
 						<a href="{U_BUG_TITLE_TOP}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
 						<a href="{U_BUG_TITLE_BOTTOM}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
@@ -1004,10 +1004,6 @@
 		<div class="module_top">
 			<div class="module_top_title">{L_VIEW_BUG} \#{view.ID}</div>
 			<div class="module_top_com">
-				# IF U_COM #
-					<img src="{PATH_TO_ROOT}/templates/{THEME}/images/com_mini.png" alt="" />
-					{U_COM}
-				# ENDIF #
 				# IF C_REOPEN_BUG #
 					<a href="{U_BUG_REOPEN}">
 						<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/visible.png" alt="{L_REOPEN}" title="{L_REOPEN}" />
