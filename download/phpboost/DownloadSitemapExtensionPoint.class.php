@@ -39,9 +39,12 @@ class DownloadSitemapExtensionPoint implements SitemapExtensionPoint
 
 	private function get_module_map($auth_mode)
 	{
-		global $DOWNLOAD_CATS, $DOWNLOAD_LANG, $LANG, $User, $CONFIG_DOWNLOAD, $Cache, $Bread_crumb;
+		global $DOWNLOAD_CATS, $DOWNLOAD_LANG, $LANG, $User, $CONFIG_DOWNLOAD, $Cache;
 
-		require_once PATH_TO_ROOT . '/download/download_begin.php';
+		load_module_lang('download');
+		$Cache->load('download');
+		
+		require_once PATH_TO_ROOT . '/download/download_auth.php';
 
 		$download_link = new SitemapLink($DOWNLOAD_LANG['download'], new Url('/download/download.php'), Sitemap::FREQ_DAILY, Sitemap::PRIORITY_MAX);
 

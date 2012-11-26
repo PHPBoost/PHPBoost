@@ -59,6 +59,7 @@ class DownloadExtensionPointProvider extends ExtensionPointProvider
 		ORDER BY id_parent, c_order", __LINE__, __FILE__);
 		while ($row = $this->sql_querier->fetch_assoc($result))
 		{
+			$auth = unserialize($row['auth']);
 			$code .= '$DOWNLOAD_CATS[' . $row['id'] . '] = ' .
 			var_export(array(
 			'id_parent' => $row['id_parent'],
@@ -69,7 +70,7 @@ class DownloadExtensionPointProvider extends ExtensionPointProvider
 			'icon' => $row['icon'],
 			'description' => $row['contents'],
 			'num_files' => $row['num_files'],
-			'auth' => unserialize($row['auth'])
+			'auth' => empty($auth) ? $CONFIG_DOWNLOAD['global_auth'] : $auth
 			), true)
 			. ';' . "\n";
 		}
