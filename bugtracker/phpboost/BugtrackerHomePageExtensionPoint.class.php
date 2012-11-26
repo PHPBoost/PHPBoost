@@ -43,6 +43,8 @@ class BugtrackerHomePageExtensionPoint implements HomePageExtensionPoint
 	{
 		global $BUGTRACKER_LANG;
 		
+		load_module_lang('bugtracker');
+		
 		return $BUGTRACKER_LANG['bugs.module_title'];
 	}
 	
