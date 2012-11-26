@@ -150,7 +150,7 @@ function token_colorate($matches)
     $close_tag += substr_count($matches[1], '>');
     
     if ($open_tag == $close_tag)
-        return $matches[1] . '<span style="background:yellow;color:#366393;">' . $matches[2] . '</span>' . $matches[3];
+        return $matches[1] . '<span class="forum_search_word">' . $matches[2] . '</span>' . $matches[3];
     else
         return $matches[0];
 }

@@ -163,6 +163,11 @@ a.forum_mbrmsg_links { /* Couleur des liens pour les messages du membre */
 	color:#FFFFFF;
 }
 
+.forum_search_word{
+	background:yellow;
+	color:black;	
+}
+
 .module_top_l{ /* Barre supérieur des modules */
 }
 .module_top_r{
