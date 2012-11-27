@@ -45,11 +45,11 @@ class ModuleCssFiles implements CssFilesExtensionPoint
 	
 	/**
 	 * @desc Adding css files to the module to display only the pages of the module
-	 * @param string[] $css_files_always_displayed Array containing css file name
+	 * @param string $css_file containing css file name
 	 */
-	public function set_css_files_always_displayed(Array $css_files_always_displayed)
+	public function adding_always_displayed_file($css_file)
 	{
-		$this->css_files_always_displayed = $css_files_always_displayed;
+		$this->css_files_always_displayed[] = $css_file;
 	}
 	
 	public function get_css_files_always_displayed()
@@ -59,11 +59,11 @@ class ModuleCssFiles implements CssFilesExtensionPoint
 
 	/**
 	 * @desc Adding css files to display on all pages
-	 * @param string[] $css_files_running_module_displayed Array containing css file name
+	 * @param string $css_file containing css file name
 	 */
-	public function set_css_files_running_module_displayed(Array $css_files_running_module_displayed)
+	public function adding_running_module_displayed_file($css_file)
 	{
-		$this->css_files_running_module_displayed = $css_files_running_module_displayed;
+		$this->css_files_running_module_displayed[] = $css_file;
 	}
 	
 	public function get_css_files_running_module_displayed()

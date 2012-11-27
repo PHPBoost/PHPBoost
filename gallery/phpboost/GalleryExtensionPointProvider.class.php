@@ -110,7 +110,7 @@ class GalleryExtensionPointProvider extends ExtensionPointProvider
 	public function css_files()
 	{
 		$module_css_files = new ModuleCssFiles();
-		$module_css_files->set_css_files_running_module_displayed(array('gallery.css'));
+		$module_css_files->adding_running_module_displayed_file('gallery.css');
 		return $module_css_files;
 	}
 	

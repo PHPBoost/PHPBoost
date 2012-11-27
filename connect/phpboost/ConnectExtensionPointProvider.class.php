@@ -35,7 +35,7 @@ class ConnectExtensionPointProvider extends ExtensionPointProvider
 	public function css_files()
 	{
 		$module_css_files = new ModuleCssFiles();
-		$module_css_files->set_css_files_always_displayed(array('connect_mini.css'));
+		$module_css_files->adding_always_displayed_file('connect_mini.css');
 		return $module_css_files;
 	}
 	
