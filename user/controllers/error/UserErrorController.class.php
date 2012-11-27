@@ -53,12 +53,10 @@ class UserErrorController extends AbstractController
 
 	public function __construct($title, $message, $error_type = self::QUESTION)
 	{
-		global $LANG;
-		
 		$this->title = $title;
 		$this->message = $message;
 		$this->error_type = $error_type;
-	    $this->link_name = $LANG['back'];
+	    $this->link_name = LangLoader::get_message('back', 'main');
 	}
 
 	public function set_correction_link($link_name, $link = self::PREVIOUS_PAGE)

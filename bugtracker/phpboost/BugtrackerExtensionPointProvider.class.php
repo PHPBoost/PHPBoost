@@ -55,7 +55,7 @@ class BugtrackerExtensionPointProvider extends ExtensionPointProvider
 	public function css_files()
 	{
 		$module_css_files = new ModuleCssFiles();
-		$module_css_files->set_css_files_running_module_displayed(array('bugtracker.css'));
+		$module_css_files->adding_running_module_displayed_file('bugtracker.css');
 		return $module_css_files;
 	}
 
