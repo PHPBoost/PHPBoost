@@ -34,21 +34,31 @@ class NewslettersubscribeController extends ModuleController
 	
 	public function execute(HTTPRequestCustom $request)
 	{
-		$this->init();
-		$this->build_form();
+		$nbr_streams = PersistenceContext::get_sql()->count_table(NewsletterSetup::$newsletter_table_streams, __LINE__, __FILE__);
 		
-		$tpl = new StringTemplate('# INCLUDE MSG ## INCLUDE FORM #');
-		$tpl->add_lang($this->lang);
-
-		if ($this->submit_button->has_been_submited() && $this->form->validate())
+		if ($nbr_streams == 0)
 		{
-			$this->save();
-			$tpl->put('MSG', MessageHelper::display($this->lang['success-subscribe'], E_USER_SUCCESS, 4));
+			$newsletter_home_page = NewsletterUrlBuilder::home()->absolute();
+			AppContext::get_response()->redirect($newsletter_home_page);
 		}
-		
-		$tpl->put('FORM', $this->form->display());
-		
-		return $this->build_response($tpl);
+		else 
+		{
+			$this->init();
+			$this->build_form();
+			
+			$tpl = new StringTemplate('# INCLUDE MSG ## INCLUDE FORM #');
+			$tpl->add_lang($this->lang);
+	
+			if ($this->submit_button->has_been_submited() && $this->form->validate())
+			{
+				$this->save();
+				$tpl->put('MSG', MessageHelper::display($this->lang['success-subscribe'], E_USER_SUCCESS, 4));
+			}
+			
+			$tpl->put('FORM', $this->form->display());
+			
+			return $this->build_response($tpl);
+		}
 	}
 	
 	private function init()
