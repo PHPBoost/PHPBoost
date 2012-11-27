@@ -58,27 +58,27 @@ class NewsletterService
 		return NewsletterMailFactory::display_mail($row['language_type'], $row['subject'], $row['contents']);
 	}
 	
-	public static function update_subscribtions_member_registered(Array $streams, $user_id)
+	public static function update_subscriptions_member_registered(Array $streams, $user_id)
 	{
 		if (NewsletterDAO::user_id_existed($user_id))
 		{
-			NewsletterDAO::update_subscribtions_member_registered($user_id, $streams);
+			NewsletterDAO::update_subscriptions_member_registered($user_id, $streams);
 		}
 		else
 		{
-			NewsletterDAO::insert_subscribtions_member_registered($user_id, $streams);
+			NewsletterDAO::insert_subscriptions_member_registered($user_id, $streams);
 		}
 	}
 	
-	public static function update_subscribtions_visitor(Array $streams, $mail)
+	public static function update_subscriptions_visitor(Array $streams, $mail)
 	{
 		if (NewsletterDAO::mail_existed($mail))
 		{
-			NewsletterDAO::update_subscribtions_visitor($mail, $streams);	
+			NewsletterDAO::update_subscriptions_visitor($mail, $streams);	
 		}
 		else
 		{
-			NewsletterDAO::insert_subscribtions_visitor($mail, $streams);
+			NewsletterDAO::insert_subscriptions_visitor($mail, $streams);
 		}
 	}
 	
