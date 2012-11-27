@@ -103,7 +103,7 @@ class AdminCustomizeInterfaceController extends AdminModuleController
 	{
 		$form = new HTMLForm('customize-interface');
 		
-		$theme_choise_fieldset = new FormFieldsetHTML('theme-choise', $this->lang['customization.interface.theme-choise']);
+		$theme_choise_fieldset = new FormFieldsetHTML('theme-choice', $this->lang['customization.interface.theme-choice']);
 		$form->add_fieldset($theme_choise_fieldset);
 		
 		$theme_choise_fieldset->add_field(
@@ -136,7 +136,9 @@ class AdminCustomizeInterfaceController extends AdminModuleController
 			$customize_interface_fieldset->add_field(new FormFieldFree('current_logo', $this->lang['customization.interface.logo.current'], $this->lang['customization.interface.logo.current.null']));
 		}
 
-		$customize_interface_fieldset->add_field(new FormFieldFilePicker('header_logo', $this->lang['customization.interface.logo.current.change']));
+		$customize_interface_fieldset->add_field(new FormFieldFilePicker('header_logo', $this->lang['customization.interface.logo.current.change'],
+			array('class' => 'text', 'description' => $this->lang['customization.interface.logo.current.change-explain'])
+		));
 		
 		$customize_interface_fieldset->add_field(new FormFieldCheckbox('use_default_logo', $this->lang['customization.interface.logo.use-default'], FormFieldCheckbox::UNCHECKED));
 		
