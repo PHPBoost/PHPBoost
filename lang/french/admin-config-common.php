@@ -113,7 +113,7 @@ $lang = array(
 	'advanced-config.debug-mode.explain' => 'Ce mode est particulièrement utile pour les développeurs car les erreurs sont affichées explicitement. Il est déconseillé d\'utiliser ce mode sur un site en production.',
 	'advanced-config.debug-mode.type' => 'Sélection du mode debug',
 	'advanced-config.debug-mode.type.normal' => 'Normal',
-	'advanced-config.debug-mode.type.strict' => 'Stricte',
+	'advanced-config.debug-mode.type.strict' => 'Strict',
 
 	'advanced-config.unlock-code.title' => 'Mail à conserver',
 	'advanced-config.unlock-code.content' => 'Code à conserver (Il ne vous sera plus délivré) : :unlock_code
