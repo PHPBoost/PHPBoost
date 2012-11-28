@@ -41,13 +41,13 @@ $LANG['calendar'] = 'Calendrier';
 $LANG['date_calendar'] = 'Date <span class="text_small">(jj/mm/aa)</span>';
 $LANG['events'] = 'Evénements';
 $LANG['action'] = 'Action';
-$LANG['no_current_action'] = 'Aucun évenement pour cette date';
+$LANG['no_current_action'] = 'Aucun événement pour cette date';
 $LANG['edit_event'] = 'Editer l\'événement';
-$LANG['add_event'] = 'Ajouter un évènement';
+$LANG['add_event'] = 'Ajouter un événement';
 
 //Erreurs
 $LANG['e_invalid_date'] = 'Date entrée invalide';
 
 //Alertes
-$LANG['alert_delete_event'] = 'Supprimer l\'évènement ?';
+$LANG['alert_delete_event'] = 'Supprimer l\'événement ?';
 ?>
