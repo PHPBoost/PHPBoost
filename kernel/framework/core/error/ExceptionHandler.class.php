@@ -65,7 +65,6 @@ class ExceptionHandler
 
 	private function display()
 	{
-
 		if (Debug::is_debug_mode_enabled())
 		{
 			$this->raw_display();
