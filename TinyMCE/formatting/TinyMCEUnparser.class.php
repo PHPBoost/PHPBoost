@@ -436,5 +436,4 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 		return $matches[2];
 	}
 }
-
 ?>

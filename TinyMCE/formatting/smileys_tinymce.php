@@ -125,5 +125,4 @@ foreach($smileys_cache->get_smileys() as $code_smile => $infos)
 }
 
 $tpl_smileys->display();
-
 ?>
