@@ -240,22 +240,22 @@ class ErrorHandler
 		{
 			//Redirection utilisateur.
 			case E_USER_REDIRECT:
-				return 'error_fatal';
+				return 'stop';
 				//Notice utilisateur.
 			case E_USER_NOTICE:
 			case E_NOTICE:
-				return 'error_notice';
+				return 'notice';
 				//Warning utilisateur.
 			case E_USER_WARNING:
             case E_WARNING:
-                return 'error_warning';
+                return 'important';
                 //Erreur fatale.
             case E_USER_ERROR:
             case E_ERROR:
             case E_RECOVERABLE_ERROR:
-                return 'error_fatal';
+                return 'error';
             default: //Erreur inconnue.
-                return 'error_unknow';
+                return 'unknow';
          }
 	}
 }
