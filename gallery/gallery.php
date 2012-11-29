@@ -101,7 +101,7 @@ elseif (isset($_FILES['gallery'])) //Upload
 
 	$idpic = 0;
 	$idcat_post = retrieve(POST, 'cat', '');
-	$name_post = retrieve(POST, 'name', '');
+	$name_post = retrieve(POST, 'name', '', TSTRING_AS_RECEIVED);
 
 	$Upload->file('gallery', '`([a-z0-9()_-])+\.(jpg|jpeg|gif|png)+$`i', Upload::UNIQ_NAME, $CONFIG_GALLERY['weight_max']);
 	if ($Upload->get_error() != '') //Erreur, on arrête ici

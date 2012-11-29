@@ -62,7 +62,7 @@ foreach ($CAT_FORUM as $idcat => $array_info_cat)
 if (!empty($CAT_FORUM[$id_get]['name'])) //Nom de la catégorie courante.
 	$Bread_crumb->add($CAT_FORUM[$id_get]['name'], '');
 if (!empty($id_get))
-	define('TITLE', $LANG['title_forum'] . ' - ' . addslashes($CAT_FORUM[$id_get]['name']));
+	define('TITLE', $LANG['title_forum'] . ' - ' . $CAT_FORUM[$id_get]['name']);
 else
 	define('TITLE', $LANG['title_forum']);	
 require_once('../kernel/header.php'); 
