@@ -155,7 +155,7 @@ class UserErrorController extends AbstractController
 				$css_class_name = 'warning';
 				break;
 			case self::FATAL:
-				$css_class_name = 'fatal';
+				$css_class_name = 'error';
 				break;
 			case self::SUCCESS:
 				$css_class_name = 'success';

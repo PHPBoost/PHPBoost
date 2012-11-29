@@ -94,11 +94,11 @@ if (is_file($file_path) && is_readable($file_path)) //Fichier accessible en lect
 		}
 		@fclose($handle);
 		
-		$images = array(
-			'error_unknow' => 'question',
-			'error_notice' => 'notice',
-			'error_warning' => 'important',
-			'error_fatal' => 'stop'
+		$types = array(
+			'question' => 'e_unknow',
+			'notice' => 'e_notice',
+			'important' => 'e_warning',
+			'error' => 'e_fatal' 
 		);
 		
 		//Tri en sens inverse car enregistrement à la suite dans le fichier de log
@@ -107,10 +107,9 @@ if (is_file($file_path) && is_readable($file_path)) //Fichier accessible en lect
 		foreach ($array_errinfo as $key => $errinfo)
 		{
 			$tpl->assign_block_vars('errors', array(
-				'IMG' => $images[$errinfo['errclass']],
 				'DATE' => $errinfo['errdate'],
 				'CLASS' => $errinfo['errclass'],
-				'ERROR_TYPE' => LangLoader::get_message(str_replace('error_', 'e_', $errinfo['errclass']), 'errors'),
+				'ERROR_TYPE' => LangLoader::get_message($types[$errinfo['errclass']], 'errors'),
 				'ERROR_MESSAGE' => strip_tags($errinfo['errmsg'], '<br>'),
 				'ERROR_STACKTRACE' => strip_tags($errinfo['errstacktrace'], '<br>')
 			));
