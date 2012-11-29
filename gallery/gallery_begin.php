@@ -49,6 +49,6 @@ if (!empty($g_idcat))
 else
 	$Bread_crumb->add($LANG['title_gallery'], '');
 	
-$title_gallery = !empty($CAT_GALLERY[$g_idcat]['name']) ? addslashes($CAT_GALLERY[$g_idcat]['name']) : '';
+$title_gallery = !empty($CAT_GALLERY[$g_idcat]['name']) ? $CAT_GALLERY[$g_idcat]['name'] : '';
 define('TITLE', (!empty($title_gallery) ? $LANG['title_gallery'] . ' - ' . $title_gallery : $LANG['title_gallery']));
 ?>

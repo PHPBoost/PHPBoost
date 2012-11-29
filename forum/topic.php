@@ -59,7 +59,7 @@ if (!empty($CAT_FORUM[$topic['idcat']]['name'])) //Nom de la catégorie courante.
 	$Bread_crumb->add($CAT_FORUM[$topic['idcat']]['name'], 'forum' . url('.php?id=' . $topic['idcat'], '-' . $topic['idcat'] . '+' . Url::encode_rewrite($CAT_FORUM[$topic['idcat']]['name']) . '.php'));
 $Bread_crumb->add($topic['title'], '');
 
-define('TITLE', $LANG['title_topic'] . ' - ' . addslashes($topic['title']));
+define('TITLE', $LANG['title_topic'] . ' - ' . $topic['title']);
 require_once('../kernel/header.php'); 
 
 $rewrited_cat_title = ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? '+' . Url::encode_rewrite($CAT_FORUM[$topic['idcat']]['name']) : ''; //On encode l'url pour un éventuel rewriting.
