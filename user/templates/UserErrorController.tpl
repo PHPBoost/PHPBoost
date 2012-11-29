@@ -6,8 +6,7 @@
 	<div style="margin:10px;margin-bottom:20px;padding-bottom:5px;border-bottom:1px solid #aaaaaa;">
 		<strong>${escape(TITLE)}</strong>
 	</div>
-	<div class="error_{ERROR_TYPE}" style="width:500px;margin:auto;padding:15px;">
-        <img src="{PATH_TO_ROOT}/templates/{THEME}/images/{ERROR_IMG}.png" alt="" style="float:left;padding-right:6px;">
+	<div class="{ERROR_TYPE}" style="width:500px;margin:auto;">
 		{MESSAGE}
 	</div>
     # IF HAS_LINK #

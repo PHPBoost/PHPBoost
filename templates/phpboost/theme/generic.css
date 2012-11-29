@@ -74,40 +74,46 @@ p {
     margin:auto;
 }
 
-.error_unknow {
-    background:#b2bc99;
+.question{
+    color:#FFFFFF;
+    background:#98c0ea url(../images/question.png) no-repeat;
+    border:1px solid #7796b8;
 }
-
-.error_success {
-    background:#8AC77F;
+.notice{
+    color:#334455;
+    background:#dadfe5 url(../images/notice.png) no-repeat;
+    border:1px solid #aaaeb3;
 }
-
-.error_notice {
-    background:#ACA899;
+.warning{
+    color:#FFFFFF;
+    background:#e5ad54 url(../images/important.png) no-repeat;
+    border:1px solid #b38742;
 }
-
-.error_warning {
-    background:#FF9900;
+.error{
+    color:#FFFFFF;
+    background:#C43C35 url(../images/stop.png) no-repeat;
+    border:1px solid #802722;
 }
-
-.error_fatal {
-    background:#d92e00;
+.success{
+    color:#FFFFFF;
+    background:#57A957 url(../images/success.png) no-repeat;
+  	border:1px solid #418041;
 }
-
-.error_unknow,.error_success,.error_notice,.error_warning,.error_fatal {
+.question, .notice, .warning, .error, .success{
+    display:block;
     height:35px;
-    width:440px;
-    color:#000000;
-    border:1px solid #7C7D6A;
-    margin:auto;
-    padding:0.75em;
-    text-align:left;
+    padding-top:4px;
+    padding-bottom:10px;
+    padding-left:40px;
+    padding-right:5px;
+    margin:4px 25px;  
+    background-position:4px 4px;
+    border-radius:6px;
 }
-
-html>body .error_unknow,html>body .error_success,html>body .error_notice,html>body .error_warning,html>body .error_fatal
-    {
+html>body .question, html>body .notice, html>body .warning, html>body .error, html>body .success
+{
     height:auto;
-    min-height:35px;
+    min-height:25px;
 }
 
 .error_handler_position {

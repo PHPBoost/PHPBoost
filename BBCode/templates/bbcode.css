@@ -111,48 +111,6 @@ h4.stitle2{
 .bb_ol{
 	margin-left:35px;
 }
-/** Styles **/
-.question{
-    color:#FFFFFF;
-    background:#98c0ea url(../images/question.png) no-repeat;
-    border:1px solid #7796b8;
-}
-.notice{
-    color:#334455;
-    background:#dadfe5 url(../images/notice.png) no-repeat;
-    border:1px solid #aaaeb3;
-}
-.warning{
-    color:#FFFFFF;
-    background:#e5ad54 url(../images/important.png) no-repeat;
-    border:1px solid #b38742;
-}
-.error{
-    color:#FFFFFF;
-    background:#C43C35 url(../images/stop.png) no-repeat;
-    border:1px solid #802722;
-}
-.success{
-    color:#FFFFFF;
-    background:#57A957 url(../images/success.png) no-repeat;
-  	border:1px solid #418041;
-}
-.question, .notice, .warning, .error, .success{
-    display:block;
-    height:35px;
-    padding-top:4px;
-    padding-bottom:10px;
-    padding-left:40px;
-    padding-right:5px;
-    margin:4px 25px;  
-    background-position:4px 4px;
-    border-radius:6px;
-}
-html>body .question, html>body .notice, html>body .warning, html>body .error, html>body .success
-{
-    height:auto;
-    min-height:25px;
-}
 
 /* Affichage balise quote, code, hide */
 .text_blockquote, .text_code, .text_hide{
