@@ -216,7 +216,7 @@ class ArticlesHomePageExtensionPoint implements HomePageExtensionPoint
 		$result = $this->sql_querier->query_while("SELECT ac.id, ac.name, ac.auth, ac.description, ac.image, ac.nbr_articles_visible AS nbr_articles
 		FROM " . DB_TABLE_ARTICLES_CAT . " ac
 		" . $clause_cat . $clause_unauth_cats . "
-		ORDER BY ac.id_parent
+		ORDER BY ac.id_parent, ac.c_order
 		" . $this->sql_querier->limit($Pagination->get_first_msg($CONFIG_ARTICLES['nbr_cat_max'], 'pcat'), $CONFIG_ARTICLES['nbr_cat_max']), __LINE__, __FILE__);
 
 		$total_cat = 0;
