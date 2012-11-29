@@ -853,5 +853,4 @@ class TinyMCEParser extends ContentFormattingParser
         );
 	}
 }
-
 ?>

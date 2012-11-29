@@ -36,7 +36,7 @@
 					<li><a href="#">Fonctionnalités</a></li>
 					<li><a href="#">Télécharger</a></li>
 					<li><a href="http://demo.phpboost.com">Démonstration</a></li>
-					<li><a href="{PATH_TO_ROOT}/pages/aider-phpboost">Soutenir le projet</a></li>
+					<li><a href="{PATH_TO_ROOT}/pages/aider-phpboost">Contribuer au projet</a></li>
 				</ul>
 			</div>	
 			<div class="footer_columns">
@@ -48,7 +48,8 @@
 					<li><a href="{PATH_TO_ROOT}/wiki/creer-un-theme">Créer un Thème</a></li>
 					<li><a href="{PATH_TO_ROOT}/wiki/creer-un-module">Créer un Module</a></li>
 					<li><a href="{PATH_TO_ROOT}/doc/">A.P.I.</a></li>
-					<li><a href="{PATH_TO_ROOT}/wiki/">Documentation</a></li>
+					<li><a href="{PATH_TO_ROOT}/bugtracker/">Rapport de bugs</a></li>
+					
 				</ul>
 			</div>	
 			<div class="footer_columns">
@@ -59,8 +60,8 @@
 				<ul>
 					<li><a href="{PATH_TO_ROOT}/faq/">Foire aux Questions</a></li>
 					<li><a href="{PATH_TO_ROOT}/forum/">Forum</a></li>
-					<li><a href="{PATH_TO_ROOT}/bugtracker/">Rapport de bugs</a></li>
 					<li><a href="{PATH_TO_ROOT}/news/">News</a></li>
+					<li><a href="{PATH_TO_ROOT}/wiki/">Documentation</a></li>
 				</ul>
 			</div>	
 		</div>
