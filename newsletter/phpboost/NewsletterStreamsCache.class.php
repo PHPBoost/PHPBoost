@@ -140,7 +140,7 @@ class NewsletterStreamsCache implements CacheData
 		$list_subscribers = array();
 		$result = $this->querier->select("SELECT 
 		subscribtion.stream_id, subscribtion.subscriber_id, subscriber.id, subscriber.user_id, subscriber.mail
-		FROM " . NewsletterSetup::$newsletter_table_subscribtions . " subscribtion
+		FROM " . NewsletterSetup::$newsletter_table_subscriptions . " subscribtion
 		LEFT JOIN " . NewsletterSetup::$newsletter_table_subscribers . " subscriber ON subscribtion.subscriber_id = subscriber.id
 		WHERE subscribtion.stream_id = :stream_id
 		",

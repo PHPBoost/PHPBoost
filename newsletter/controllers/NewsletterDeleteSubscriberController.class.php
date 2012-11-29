@@ -46,14 +46,14 @@ class NewsletterDeleteSubscriberController extends ModuleController
 				'id' => $id,
 				'id_stream' => $id_stream
 			);
-			$db_querier->delete(NewsletterSetup::$newsletter_table_subscribtions, $condition, $parameters);
+			$db_querier->delete(NewsletterSetup::$newsletter_table_subscriptions, $condition, $parameters);
 			
 			$condition = "WHERE subscriber_id = :id";
 			$parameters = array(
 				'id' => $id,
 			);
 			
-			$is_last = PersistenceContext::get_querier()->count(NewsletterSetup::$newsletter_table_subscribtions, $condition, $parameters) == 0 ? true :false;
+			$is_last = PersistenceContext::get_querier()->count(NewsletterSetup::$newsletter_table_subscriptions, $condition, $parameters) == 0 ? true :false;
 			if ($is_last)
 			{
 				$condition = "WHERE id = :id";
