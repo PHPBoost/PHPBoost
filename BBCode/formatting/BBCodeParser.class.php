@@ -506,5 +506,4 @@ class BBCodeParser extends ContentFormattingParser
 		return str_replace("<br />", "", $matches[0]);
 	}
 }
-
 ?>
