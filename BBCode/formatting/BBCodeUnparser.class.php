@@ -314,5 +314,4 @@ class BBCodeUnparser extends ContentFormattingUnparser
 		return '[wikipedia' . (!empty($page_name) ? ' page="' . $page_name . '"' : '') . (!empty($lang) ? ' lang="' . $lang . '"' : '') . ']' . $matches[3] . '[/wikipedia]';
 	}
 }
-
 ?>

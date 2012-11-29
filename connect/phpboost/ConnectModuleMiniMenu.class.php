@@ -106,7 +106,7 @@ class ConnectModuleMiniMenu extends ModuleMiniMenu
 	    		'U_USER_PM' => UserUrlBuilder::personnal_message($user->get_attribute('user_id'))->absolute(),
 	    		'U_USER_ID' => UserUrlBuilder::home_profile()->absolute(),
 	    		'U_DISCONNECT' => UserUrlBuilder::disconnect()->absolute(),
-	    		'U_AVATAR_IMG' => Url::to_rel($user_avatar),
+	    		'U_AVATAR_IMG' => Url::to_absolute($user_avatar),
 	    		'L_NBR_PM' => ($user->get_attribute('user_pm') > 0 ? ($user->get_attribute('user_pm') . ' ' . (($user->get_attribute('user_pm') > 1) ? $LANG['message_s'] : $LANG['message'])) : $LANG['private_messaging']),
 	    		'L_PROFIL' => $LANG['profile'],
 	    		'L_MY_PROFIL' => $LANG['my_private_profile'],

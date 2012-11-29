@@ -221,5 +221,4 @@ class BBCodeEditor extends ContentEditor
         return $template->render();
     }
 }
-
 ?>
