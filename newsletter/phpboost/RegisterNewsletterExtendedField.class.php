@@ -77,7 +77,7 @@ class RegisterNewsletterExtendedField extends AbstractMemberExtendedField
 		$streams = $form->get_value($member_extended_field->get_field_name());
 		if (is_array($streams))
 		{
-			NewsletterService::update_subscribtions_member_registered($streams, $member_extended_field->get_user_id());
+			NewsletterService::update_subscriptions_member_registered($streams, $member_extended_field->get_user_id());
 		}
 	}
 	

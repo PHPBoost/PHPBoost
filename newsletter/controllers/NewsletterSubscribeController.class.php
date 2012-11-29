@@ -34,9 +34,8 @@ class NewslettersubscribeController extends ModuleController
 	
 	public function execute(HTTPRequestCustom $request)
 	{
-		$nbr_streams = PersistenceContext::get_sql()->count_table(NewsletterSetup::$newsletter_table_streams, __LINE__, __FILE__);
-		
-		if ($nbr_streams == 0)
+		$nbr_streams = NewsletterStreamsCache::load()->get_number_streams();		
+		if (empty($nbr_streams))
 		{
 			$newsletter_home_page = NewsletterUrlBuilder::home()->absolute();
 			AppContext::get_response()->redirect($newsletter_home_page);
@@ -132,11 +131,11 @@ class NewslettersubscribeController extends ModuleController
 		$streams = $this->form->get_value('newsletter_choice');
 		if (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL))
 		{
-			NewsletterService::update_subscribtions_member_registered($streams, AppContext::get_current_user()->get_attribute('user_id'));
+			NewsletterService::update_subscriptions_member_registered($streams, AppContext::get_current_user()->get_attribute('user_id'));
 		}
 		else
 		{
-			NewsletterService::update_subscribtions_visitor($streams, $this->form->get_value('mail'));
+			NewsletterService::update_subscriptions_visitor($streams, $this->form->get_value('mail'));
 		}
 	}
 }

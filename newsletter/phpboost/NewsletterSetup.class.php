@@ -30,14 +30,14 @@ class NewsletterSetup extends DefaultModuleSetup
 	public static $newsletter_table_subscribers;
 	public static $newsletter_table_archives;
 	public static $newsletter_table_streams;
-	public static $newsletter_table_subscribtions;
+	public static $newsletter_table_subscriptions;
 
 	public static function __static()
 	{
 		self::$newsletter_table_subscribers = PREFIX . 'newsletter_subscribers';
 		self::$newsletter_table_archives = PREFIX . 'newsletter_archives';
 		self::$newsletter_table_streams = PREFIX . 'newsletter_streams';
-		self::$newsletter_table_subscribtions = PREFIX . 'newsletter_subscribtions';
+		self::$newsletter_table_subscriptions = PREFIX . 'newsletter_subscriptions';
 	}
 
 	public function install()
@@ -56,7 +56,7 @@ class NewsletterSetup extends DefaultModuleSetup
 
 	private function drop_tables()
 	{
-		PersistenceContext::get_dbms_utils()->drop(array(self::$newsletter_table_subscribers, self::$newsletter_table_streams, self::$newsletter_table_archives, self::$newsletter_table_subscribtions));
+		PersistenceContext::get_dbms_utils()->drop(array(self::$newsletter_table_subscribers, self::$newsletter_table_streams, self::$newsletter_table_archives, self::$newsletter_table_subscriptions));
 	}
 	
 	private function delete_configuration()
@@ -69,7 +69,7 @@ class NewsletterSetup extends DefaultModuleSetup
 		$this->create_newsletter_subscribers_table();
 		$this->create_newsletter_archives_table();
 		$this->create_newsletter_streams_table();
-		$this->create_newsletter_subscribtions_table();
+		$this->create_newsletter_subscriptions_table();
 	}
 
 	private function create_newsletter_subscribers_table()
@@ -118,7 +118,7 @@ class NewsletterSetup extends DefaultModuleSetup
 		PersistenceContext::get_dbms_utils()->create_table(self::$newsletter_table_archives, $fields, $options);
 	}
 	
-	private function create_newsletter_subscribtions_table()
+	private function create_newsletter_subscriptions_table()
 	{
 		$fields = array(
 			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
@@ -130,7 +130,7 @@ class NewsletterSetup extends DefaultModuleSetup
 			'primary' => array('id')
 		);
 		
-		PersistenceContext::get_dbms_utils()->create_table(self::$newsletter_table_subscribtions, $fields, $options);
+		PersistenceContext::get_dbms_utils()->create_table(self::$newsletter_table_subscriptions, $fields, $options);
 	}
 	
 	private function create_field_member()
