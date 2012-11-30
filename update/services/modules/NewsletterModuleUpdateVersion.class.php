@@ -75,7 +75,7 @@ class NewsletterModuleUpdateVersion extends ModuleUpdateVersion
 			'subscriber_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1)
 		);
 
-		$this->db_utils->create_table(PREFIX . 'newsletter_subscribtions', $fields);
+		$this->db_utils->create_table(PREFIX . 'newsletter_subscriptions', $fields);
 	}
 	
 	private function insert_default_stream()

@@ -14,14 +14,12 @@
 		/templates/default/theme/admin_design.css;
 		/templates/default/theme/admin_global.css;
 		/templates/default/theme/admin_content.css;
-		/templates/default/theme/admin_generic.css;
-		/templates/default/theme/admin_bbcode.css" type="text/css" media="screen, print, handheld" />
+		/templates/default/theme/admin_generic.css" type="text/css" media="screen, print, handheld" />
 		# ELSE #
 		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/default/theme/admin_design.css" type="text/css" media="screen" />
 		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/default/theme/admin_global.css" type="text/css" media="screen" />
 		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/default/theme/admin_content.css" type="text/css" media="screen" />
 		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/default/theme/admin_generic.css" type="text/css" media="screen" />
-		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/default/theme/admin_bbcode.css" type="text/css" media="screen" />
 		# ENDIF #
 		
 		<!-- Modules CSS -->
