@@ -81,9 +81,9 @@
 						<img src="{PATH_TO_ROOT}/templates/{THEME}/images/contribution_panel_mini.png" alt="" class="valign_middle" /> <a href="{U_CONTRIBUTION}" class="small_link">{L_CONTRIBUTION_PANEL}</a>
 					</li>
 					# ENDIF #	
-					<li>
+					<p class="connect_disconnect">
 						<img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/home_mini.png" alt="" class="valign_middle" /> <a href="{U_DISCONNECT}" class="small_link">{L_DISCONNECT}</a>	         
-					</li>
+					</p>
 				</ul>
 			</li>
 			<li class="disconnect">
