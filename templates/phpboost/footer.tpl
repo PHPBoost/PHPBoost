@@ -1,17 +1,18 @@
+			</div>
+			# IF C_MENUS_BOTTOM_CENTRAL_CONTENT #
+	        <div id="bottom_contents">
+				{MENUS_BOTTOMCENTRAL_CONTENT}
+			</div>
+			# ENDIF #
 		</div>
-		# IF C_MENUS_BOTTOM_CENTRAL_CONTENT #
-        <div id="bottom_contents">
-			{MENUS_BOTTOMCENTRAL_CONTENT}
+		# IF C_MENUS_TOP_FOOTER_CONTENT #
+		<div id="top_footer">
+			{MENUS_TOP_FOOTER_CONTENT}
+			<div class="spacer"></div>
 		</div>
 		# ENDIF #
 	</div>
-	# IF C_MENUS_TOP_FOOTER_CONTENT #
-	<div id="top_footer">
-		{MENUS_TOP_FOOTER_CONTENT}
-		<div class="spacer"></div>
-	</div>
-	# ENDIF #
-</div>
+	
 	<div id="footer">
 		<div id="footer_columns_container">
 			<div class="footer_columns">
@@ -52,7 +53,7 @@
 					
 				</ul>
 			</div>	
-			<div class="footer_columns">
+			<div class="footer_columns footer_columns_last">
 				<div class="footer_columns_title">
 					<img src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/support.png" align="center"  width="25px" />
 					Support PHPBoost
@@ -64,8 +65,9 @@
 					<li><a href="{PATH_TO_ROOT}/wiki/">Documentation</a></li>
 				</ul>
 			</div>	
+			<div class="spacer"></div>
 		</div>
-		<div class="spacer"></div>
+		
 		<div id="footer_links">
 			# IF C_MENUS_FOOTER_CONTENT #
 			{MENUS_FOOTER_CONTENT}
@@ -85,6 +87,8 @@
 			</span>
 			# ENDIF #
 		</div>
+		<div class="spacer"></div>
 	</div>
+	
 	</body>
 </html>

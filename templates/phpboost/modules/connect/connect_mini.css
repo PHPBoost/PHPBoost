@@ -22,7 +22,7 @@
  
 div.connect_align {
 	text-align:right;
-	margin:0px 8px 0px 0px;
+	
 }
 
 div.connect_align a {
@@ -164,6 +164,7 @@ img.connect_avatar{
 
 div.welcome{
 	overflow:hidden;
+	float:right;
 	text-align:right;
 	color:#bbbaba;
 	font-size:10px;
