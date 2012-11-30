@@ -67,7 +67,13 @@ p.auto_connect{
 
 p.auto_connect input.submit{ margin:0px 2px; }
 
-
+p.connect_disconnect{
+	clear:both;
+	margin-top:8px; 
+	padding:5px 0px; 
+	text-align:center; 
+	border-top:1px solid #3b3b3b;
+}
 
 
 /* Ajout Thème PHPBoost */
@@ -147,7 +153,6 @@ img.connect_avatar{
 	height: auto;
 	text-align:left; 
 }
-.connect_align .submenu ul li:last-child{ margin-top:8px; padding:5px 0px; text-align:center; border-top:1px solid #3b3b3b;}
 
 .connect_align .submenu ul li a {
 	font-size: 11px;
@@ -160,10 +165,10 @@ img.connect_avatar{
 div.welcome{
 	overflow:hidden;
 	text-align:right;
-	color:#646464;
+	color:#bbbaba;
 	font-size:10px;
 	font-style:Italic;
-	padding:12px 10px 0px 0px;
+	padding:13px 10px 0px 0px;
 }
 div.welcome a, div.welcome a:hover{
 	color:#969595;
