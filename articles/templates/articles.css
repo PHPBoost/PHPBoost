@@ -1,0 +1,178 @@
+/* Fond des catégories dans l'administration */
+.articles_cat_admin {
+	width: 100%;
+	height: 20px;
+	margin-bottom: 2px;
+	padding: 4px 0px;
+}
+
+#tabs {
+	margin-left: 0px;
+	margin-top: 10px;
+	padding: 0;
+	background: transparent;
+	voice-family: "\"}\"";
+	voice-family: inherit;
+	padding-left: 7px;
+	height: 24px;
+}
+
+#tabs ul {
+	font: bold 11px Arial, Verdana, sans-serif;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+#tabs li {
+	display: inline;
+	margin: 0 0px 0 0;
+	padding: 0;
+	text-transform: uppercase;
+	margin-right: 7px;
+}
+
+#tabs .tab_a {
+	float: left;
+	color: #FFFFFF;
+	background: #FFFFFF url('images/msg_top_row.png') repeat-x;
+	width: 93px;
+	border-top: 1px #5D7C94 solid;
+	border-left: 1px #5D7C94 solid;
+	border-right: 1px #5D7C94 solid;
+	-moz-border-radius-topleft: 4px;
+	-khtml-border-radius-topleft: 5px;
+	-webkit-border-top-left-radius: 5px;
+	-moz-border-radius-topright: 4px;
+	-khtml-border-radius-topright: 5px;
+	-webkit-border-top-right-radius: 5px;
+	border-radius: 5px;
+	margin: 0 2px 0 0;
+	padding: 0 0 1px 3px;
+	text-decoration: none;
+	height: 24px;
+}
+
+#tabs .tab_a:hover {
+	float: left;
+	color: #000000;
+	background: #FFFFFF url('images/contentbg.png') repeat-x;
+}
+
+#tabs a span {
+	float: left;
+	display: block;
+	background: transparent url('images/tabs_right.gif') no-repeat right top
+		;
+	padding: 4px 9px 2px 6px;
+}
+
+#tabs a span {
+	float: none;
+}
+
+/*  #tabs a:hover{background-color: #cccccc;color: white;}
+#tabs a:hover span{margin-left:-4px;padding-bottom:-2px;background-color: #cccccc;}
+*/
+#tabHeaderActive span,#tabHeaderActive .tab_a {
+	background: #FFFFFF url('images/contentbg.png') repeat-x;
+	background-color: #EAEAEA;
+	color: #000000;
+}
+
+.tabContent {
+	clear: both;
+	margin-top: -5px;
+	padding-top: 1px;
+	background-color: #FFF;
+	padding-left: 5px;
+
+}
+
+.carouseljs ol,.carouseljs ul {
+	width: 670px;
+}
+
+.carouseljs ol li,.carouseljs ul li {
+	width: 93px;
+	height: 24px;
+}
+
+.carouseljs .cjs-left {
+	background: url('images/carrouselle_left.png') no-repeat #fff;
+	height: 24px;
+	height: 100%;
+	cursor: pointer;
+	width: 25px;
+}
+
+.carouseljs .cjs-right {
+	background: url('images/carrouselle_right.png') no-repeat #fff;
+	height: 24px;
+	height: 100%;
+	cursor: pointer;
+	width: 25px;
+}
+
+.carouseljs .cjs-disabled {
+	background-position: 0 0px;
+	cursor: default;
+	height: 25px;
+	border: 0px;
+	border-bottom: 1px #5D7C94 solid;
+}
+
+.carouseljs .cjs-enabled {
+	background-position: 0 -24px;
+	cursor: pointer;
+	width: 25px;
+	height: 24px;
+	border: 0px;
+	border-bottom: 1px #5D7C94 solid;
+}
+
+/* Only edit these rules if you know what you're doing */
+.carouseljs {
+	overflow: hidden;
+	position: relative;
+}
+
+.carouseljs a.cjs-left,.carouseljs a.cjs-right {
+	float: left;
+	overflow: hidden;
+	text-indent: -9999em;
+}
+
+.carouseljs ol,.carouseljs ul {
+	float: left;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.carouseljs ol li,.carouseljs ul li {
+	float: left;
+	display: inline;
+}
+
+/* extend field */
+.tab_extend_field{
+	margin:10px;
+	text-align:center;
+	border:1px solid #CCCCCC;
+	border-spacing:0;
+}
+
+.extend_field_left{
+	text-align:left;
+	font-weight:bold;
+}
+.extend_field_right{
+	text-align:left;
+}
+
+/* info table */
+.info_row{
+	text-align:left;
+	font-weight:bold;
+}
