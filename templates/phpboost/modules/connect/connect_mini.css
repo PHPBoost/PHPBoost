@@ -96,13 +96,11 @@ p.connect_disconnect{
 }
 
 .connect_align > ul > li > a {
-  color: #ffffff;
   display: inline-block;
-  font-size: 12px;
   height: 32px;
   text-decoration: none;
 }
-.connect_align > ul > li > a:hover { font-size:12px; }
+
 
 .connect_align ul li {
   color: #ffffff;
@@ -120,7 +118,15 @@ p.connect_disconnect{
 .connect_align ul { list-style: none; }
 
 .connect_align .submenu { height: 32px; z-index: 200; }
-.connect_align .submenu:hover > ul { display: block; }
+.connect_align .submenu:hover > ul { 
+	visibility:visible;
+	opacity:1;
+	transition:visibility 0s ease-out, opacity 0.3s ease-out ;
+	-webkit-transition:visibility 0s ease-out, opacity 0.3s ease-out ;
+	-moz-transition:visibility 0s ease-out, opacity 0.3s ease-out ;
+	-o-transition:visibility 0s ease-out, opacity 0.3s ease-out ;
+}
+
 .connect_align > ul > li.submenu:hover > a{ height: 32px; }
 
 img.connect_avatar{
@@ -130,16 +136,22 @@ img.connect_avatar{
 
 .connect_align .submenu ul {
 	position: absolute;
-	display:none;
+	background: #353535;
 	left:-72px;
 	top: 43px;
+	height:133px;
 	width:290px;
+	z-index:200;
 	border-top:3px solid #2e5c35;
 	border-bottom:2px solid #99B1CB;
-	background: #353535;
-	height:133px;
-	z-index:200;
+	visibility:hidden;
+	opacity:0;
+	transition:visibility 1s ease-out, opacity 1s ease-out ;
+	-webkit-transition:visibility 1s ease-out, opacity 1s ease-out ;
+	-moz-transition:visibility 1s ease-out, opacity 1s ease-out ;
+	-o-transition:visibility 1s ease-out, opacity 1s ease-out ;
 }
+
 .connect_align .submenu_alert ul { border-top:3px solid #602b1b; }
 
 .connect_align .connect ul {
@@ -180,11 +192,37 @@ div.welcome a, div.welcome a:hover{
 }
 div.welcome a:hover{ color:#bbbaba; }
 
-li.disconnect, li.subscribe{ margin:0px 3px; }
-li.disconnect:hover, li.subscribe:hover{ height:29px; border-bottom:2px solid #336397; }
+li.disconnect, li.subscribe{ 
+	margin:0px 3px;
+	height:29px !important; 
+	border-bottom:2px solid #353535;
+	transition: border 2s ease-out;
+    -webkit-transition: border 2s ease-out;
+    -moz-transition: border 2s ease-out;
+    -o-transition: border 2s ease-out;
+}
+li.disconnect:hover, li.subscribe:hover{ 
+	border-bottom:2px solid #336397;
+	transition: border 0.5s ease-out;
+    -webkit-transition: border 0.5s ease-out;
+    -moz-transition: border 0.5s ease-out;
+    -o-transition: border 0.5s ease-out;
+}
 
 li.disconnect a, li.subscribe a { 
-	font-size:11px !important; 
-	color:#969595 !important; 
+	font-size:11px; 
+	color:#969595;
+	transition: color 2s ease-out;
+	-webkit-transition: color 2s ease-out;
+    -moz-transition: color 2s ease-out;
+    -o-transition: color 2s ease-out;
 }
-li.disconnect a:hover, li.subscribe a:hovers{ color:#bbbaba !important; text-decoration:none; }
+li.disconnect a:hover, li.subscribe a:hovers{ 
+	font-size:11px;
+	color:#bbbaba; 
+	text-decoration:none; 
+	transition: color 0.5s ease-out;
+	-webkit-transition: color 0.5s ease-out;
+    -moz-transition: color 0.5s ease-out;
+    -o-transition: color 0.5s ease-out;
+}
