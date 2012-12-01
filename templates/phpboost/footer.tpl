@@ -67,33 +67,31 @@
 			</div>	
 			<div class="spacer"></div>
 		</div>
-		<div id="footer_social">
-			<a href="http://www.facebook.com/pages/PHPBoost-CMS/229132847163144">
-				<img src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/facebook_logo.png" class="footer_social_img" />
-			</a>
-		</div>	
 		<div id="footer_links">
-		
-			# IF C_MENUS_FOOTER_CONTENT #
-			{MENUS_FOOTER_CONTENT}
-			# ENDIF #
-			<span>
-				{L_POWERED_BY} <a href="http://www.phpboost.com" title="PHPBoost">PHPBoost {PHPBOOST_VERSION}</a> {L_PHPBOOST_RIGHT}
-			</span>	
-			# IF C_DISPLAY_BENCH #
-			<span>
-				&nbsp;|&nbsp;		
-				{L_ACHIEVED} {BENCH}{L_UNIT_SECOND} - {REQ} {L_REQ}
-			</span>	
-			# ENDIF #
-			# IF C_DISPLAY_AUTHOR_THEME #
-			<span>
-				| {L_THEME} {L_THEME_NAME} {L_BY} <a href="{U_THEME_AUTHOR_LINK}" title="PHPBoost">{L_THEME_AUTHOR}</a>
-			</span>
-			# ENDIF #
-			<span>
-				| <a href="{PATH_TO_ROOT}/contact/">Contactez-nous</a>
-			</span>
+			<div id="footer_social">			
+				<a href="http://www.facebook.com/pages/PHPBoost-CMS/229132847163144"></a>
+			</div>
+			
+				# IF C_MENUS_FOOTER_CONTENT #
+				{MENUS_FOOTER_CONTENT}
+				# ENDIF #
+				<span>
+					{L_POWERED_BY} <a href="http://www.phpboost.com" title="PHPBoost">PHPBoost {PHPBOOST_VERSION}</a> {L_PHPBOOST_RIGHT}
+				</span>	
+				# IF C_DISPLAY_BENCH #
+				<span>
+					&nbsp;|&nbsp;		
+					{L_ACHIEVED} {BENCH}{L_UNIT_SECOND} - {REQ} {L_REQ}
+				</span>	
+				# ENDIF #
+				# IF C_DISPLAY_AUTHOR_THEME #
+				<span>
+					| {L_THEME} {L_THEME_NAME} {L_BY} <a href="{U_THEME_AUTHOR_LINK}" title="PHPBoost">{L_THEME_AUTHOR}</a>
+				</span>
+				# ENDIF #
+				<span>
+					| <a href="{PATH_TO_ROOT}/contact/">Contactez-nous</a>
+				</span>
 
 		</div>
 		
