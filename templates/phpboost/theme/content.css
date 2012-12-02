@@ -506,9 +506,9 @@ a.msg_link_pseudo:hover {
     width:96%;
     margin:auto;
 }
-
-.module_top_l { /* Barre supérieure des modules */}
-.module_top_r {}
+/* Barre supérieure des modules */
+.module_top_l { float:left; }
+.module_top_r { float:right; }
 
 .module_top {
     min-height:18px;

@@ -1,0 +1,142 @@
+.download_entete {
+    margin:auto;
+}
+
+.download_entete_content {
+    text-align:justify;
+    margin-bottom:10px;
+}
+
+img.download_entete_img{
+	float:left;
+	padding:0px 10px 10px 0px;	
+}
+
+p.download_entete_title{
+	color:#5f5f5f;
+	font-size:20px;
+	font-family:"Trebuchet MS", Verdana, 'Bitstream Vera Sans', Times, serif;
+	font-weight: bold;
+}
+
+span.download_entete_desc{
+	font-style:italic;	
+}
+
+
+div.download_content{
+	padding:10px;
+	text-align:center;	
+}
+
+div.d_button{
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 2px;
+	border-radius: 2px;
+	cursor: default !important;
+	display: inline-block;
+	font-weight: bold;
+	line-height: 29px;
+}
+div.d_button:hover{ box-shadow:0px 0px 1px #212121; }
+
+div.d_button_ddl{ 
+	background-color:#336397;
+	background-image:-webkit-linear-gradient(bottom,#336397,#3e79af);
+	background-image:-moz-linear-gradient(bottom,#336397,#3e79af);
+	background-image:-ms-linear-gradient(bottom,#336397,#3e79af);
+	background-image:-o-linear-gradient(bottom,#336397,#3e79af);
+	background-image:linear-gradient(bottom,#336397,#3e79af);
+	border:1px solid #284565;
+	margin-right:10px;
+}
+div.d_button_ddl:hover{ 
+	background-color:#2F5F93;
+	background-image:-webkit-linear-gradient(bottom,#2F5F93,#3A75AB);
+	background-image:-moz-linear-gradient(bottom,#2F5F93,#3A75AB);
+	background-image:-ms-linear-gradient(bottom,#2F5F93,#3A75AB);
+	background-image:-o-linear-gradient(bottom,#2F5F93,#3A75AB);
+	background-image:linear-gradient(bottom,#2F5F93,#3A75AB);
+	border-color:#1F3C5B;
+}
+
+div.d_button_try{ 
+	background-color:#407635;
+	background-image:-webkit-linear-gradient(bottom,#407635,#5b914f);
+	background-image:-moz-linear-gradient(bottom,#407635,#5b914f);
+	background-image:-ms-linear-gradient(bottom,#407635,#5b914f);
+	background-image:-o-linear-gradient(bottom,#407635,#5b914f);
+	background-image:linear-gradient(bottom,#407635,#5b914f);
+	border:1px solid #26521d;
+	margin-left:10px;
+}
+div.d_button_try:hover{ 
+	background-color:#3C7231;
+	background-image:-webkit-linear-gradient(bottom,#3C7231,#578C4B);
+	background-image:-moz-linear-gradient(bottom,#3C7231,#578C4B);
+	background-image:-ms-linear-gradient(bottom,#3C7231,#578C4B);
+	background-image:-o-linear-gradient(bottom,#3C7231,#578C4B);
+	background-image:linear-gradient(bottom,#3C7231,#578C4B);
+	border-color:#1D4914;
+}
+
+div.d_button_sea{
+	background-color:#F1F1F1;
+	background-image:-webkit-linear-gradient(bottom,#F1F1F1,#FFFFFF);
+	background-image:-moz-linear-gradient(bottom,#F1F1F1,#FFFFFF);
+	background-image:-ms-linear-gradient(bottom,#F1F1F1,#FFFFFF);
+	background-image:-o-linear-gradient(bottom,#F1F1F1,#FFFFFF);
+	background-image:linear-gradient(bottom,#F1F1F1,#FFFFFF);
+	border:1px solid #d9d9d9;
+	margin-left:10px; 
+}
+div.d_button_sea:hover{
+	background-color:#ECECEC;
+	background-image:-webkit-linear-gradient(bottom,#ECECEC,#FBFBFB);
+	background-image:-moz-linear-gradient(bottom,#ECECEC,#FBFBFB);
+	background-image:-ms-linear-gradient(bottom,#ECECEC,#FBFBFB);
+	background-image:-o-linear-gradient(bottom,#ECECEC,#FBFBFB);
+	background-image:linear-gradient(bottom,#ECECEC,#FBFBFB);
+	border:1px solid #D0D0D0;
+	box-shadow:0px 0px 1px #CCCCCC;
+}
+
+p.d_button_title{
+	padding:2px 0px 0px 0px;
+	color:#FFFFFF; 
+	font-size:20px;
+	margin-bottom:0px;
+}
+div.d_button_sea p.d_button_title{ color:#444444;font-size:15px; }
+
+p.d_button_com{
+	padding-top:2px;
+	font-size:11px;
+	margin-bottom:0px;
+	text-align:left;	
+}
+div.d_button_ddl p.d_button_com{ color:#C4994D; padding-left:60px; }
+div.d_button_try p.d_button_com{ color:#b3aeae; padding-left:50px; }
+div.d_button_sea p.d_button_com{ color:#b3aeae; text-align:center;}
+
+
+a.d_button_a{
+	display:block;
+	height:52px;
+	padding:5px 10px;
+}
+a.d_button_a:hover{ text-decoration:none; }
+
+div.d_button_ddl a.d_button_a{ width:310px; }
+div.d_button_try a.d_button_a{ width:250px; }
+div.d_button_sea a.d_button_a{ height:40px; width:175px; }
+
+img.d_button_img{
+	float:left;
+	width:40px;
+}
+
+div.d_upgrade_container, div.d_other_container{
+	margin-top:10px;
+	text-align:justify;	
+}
