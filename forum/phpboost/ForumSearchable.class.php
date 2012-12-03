@@ -144,7 +144,7 @@ class ForumSearchable extends AbstractSearchableExtensionPoint
             FROM " . PREFIX . "forum_msg msg
             JOIN " . PREFIX . "forum_topics t ON t.id = msg.idtopic
             JOIN " . PREFIX . "forum_cats c ON c.level != 0 AND c.aprob = 1 AND c.id = t.idcat
-            WHERE ( FT_SEARCH(t.title, '" . $search."') OR FT_SEARCH(msg.contents, '" . $search."') )
+            WHERE ( FT_SEARCH(t.title, '" . $search."') OR FT_SEARCH(msg.contents, '" . $search."') ) AND msg.timestamp > '" . (time() - $time) . "'
             ".($idcat != -1 ? " AND c.id_left BETWEEN '" . $CAT_FORUM[$idcat]['id_left'] . "' AND '" . $CAT_FORUM[$idcat]['id_right'] . "'" : '')." " . $auth_cats."
             GROUP BY t.id
             ORDER BY relevance DESC" . $this->sql_querier->limit(0, FORUM_MAX_SEARCH_RESULTS);
@@ -159,7 +159,7 @@ class ForumSearchable extends AbstractSearchableExtensionPoint
             FROM " . PREFIX . "forum_msg msg
             JOIN " . PREFIX . "forum_topics t ON t.id = msg.idtopic
             JOIN " . PREFIX . "forum_cats c ON c.level != 0 AND c.aprob = 1 AND c.id = t.idcat
-            WHERE FT_SEARCH(msg.contents, '" . $search."')
+            WHERE FT_SEARCH(msg.contents, '" . $search."') AND msg.timestamp > '" . (time() - $time) . "'
             ".($idcat != -1 ? " AND c.id_left BETWEEN '" . $CAT_FORUM[$idcat]['id_left'] . "' AND '" . $CAT_FORUM[$idcat]['id_right'] . "'" : '')." " . $auth_cats."
             GROUP BY t.id
             ORDER BY relevance DESC" . $this->sql_querier->limit(0, FORUM_MAX_SEARCH_RESULTS);
@@ -173,7 +173,7 @@ class ForumSearchable extends AbstractSearchableExtensionPoint
             FROM " . PREFIX . "forum_msg msg
             JOIN " . PREFIX . "forum_topics t ON t.id = msg.idtopic
             JOIN " . PREFIX . "forum_cats c ON c.level != 0 AND c.aprob = 1 AND c.id = t.idcat
-            WHERE FT_SEARCH(t.title, '" . $search."')
+            WHERE FT_SEARCH(t.title, '" . $search."') AND msg.timestamp > '" . (time() - $time) . "'
             ".($idcat != -1 ? " AND c.id_left BETWEEN '" . $CAT_FORUM[$idcat]['id_left'] . "' AND '" . $CAT_FORUM[$idcat]['id_right'] . "'" : '')." " . $auth_cats."
             GROUP BY t.id
             ORDER BY relevance DESC" . $this->sql_querier->limit(0, FORUM_MAX_SEARCH_RESULTS);
