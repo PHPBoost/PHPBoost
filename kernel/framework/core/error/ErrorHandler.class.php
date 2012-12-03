@@ -248,7 +248,7 @@ class ErrorHandler
 				//Warning utilisateur.
 			case E_USER_WARNING:
             case E_WARNING:
-                return 'important';
+                return 'warning';
                 //Erreur fatale.
             case E_USER_ERROR:
             case E_ERROR:

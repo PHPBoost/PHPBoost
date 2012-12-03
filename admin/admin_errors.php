@@ -97,7 +97,7 @@ if (is_file($file_path) && is_readable($file_path)) //Fichier accessible en lect
 		$types = array(
 			'question' => 'e_unknow',
 			'notice' => 'e_notice',
-			'important' => 'e_warning',
+			'warning' => 'e_warning',
 			'error' => 'e_fatal' 
 		);
 		

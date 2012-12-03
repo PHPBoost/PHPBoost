@@ -81,9 +81,10 @@ class MembersKernelUpdateVersion extends KernelUpdateVersion
 					'user_avatar' => $row['user_avatar'], 
 				), 'WHERE user_id=:user_id', array('user_id' => $row['user_id']));
 			}
-			
+
 			$this->querier->update(PREFIX .'member', array(
 					'user_theme' => 'base',
+					'user_editor' => $row['user_editor'] == 'bbcode' ? 'BBCode' : 'TinyMCE'
 			), 'WHERE user_id=:user_id', array('user_id' => $row['user_id']));
 		}
 	}
