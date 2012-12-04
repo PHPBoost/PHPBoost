@@ -281,7 +281,7 @@ elseif ($get_theme)
 		$stats_array[$id] = PersistenceContext::get_querier()->count(DB_TABLE_MEMBER, "WHERE user_theme = '" . $id . "'");
 	}
 
-    $Stats->load_data($array_stats, 'ellipse', 5);
+    $Stats->load_data($stats_array, 'ellipse', 5);
     $Stats->draw_ellipse(210, 100, PATH_TO_ROOT . '/cache/theme.png');
 }
 elseif ($get_sex)

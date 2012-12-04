@@ -387,7 +387,7 @@ class Environment
 
 		//We delete the file containing the displayed pages
 
-		$pages_file = new File(PATH_TO_ROOT . '/cache/pages.txt');
+		$pages_file = new File(PATH_TO_ROOT . '/stats/cache/pages.txt');
 		$pages_file->delete();
 
 		//How much visitors were there today?
