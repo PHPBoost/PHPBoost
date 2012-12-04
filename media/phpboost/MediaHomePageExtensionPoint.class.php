@@ -213,7 +213,7 @@ class MediaHomePageExtensionPoint implements HomePageExtensionPoint
 					'DATE' => sprintf($MEDIA_LANG['add_on_date'], gmdate_format('date_format_short', $row['timestamp'])),
 					'COUNT' => sprintf($MEDIA_LANG['view_n_times'], $row['counter']),
 					'NOTE' => NotationService::display_static_image($notation),
-					'U_MEDIA_LINK' => PATH_TO_ROOT . url('/media/media.php?id=' . $row['id'], 'media-' . $row['id'] . '-' . $id_cat . '+' . Url::encode_rewrite($row['name']) . '.php'),
+					'U_MEDIA_LINK' => PATH_TO_ROOT . '/media/' . url('media.php?id=' . $row['id'], 'media-' . $row['id'] . '-' . $id_cat . '+' . Url::encode_rewrite($row['name']) . '.php'),
 					'U_ADMIN_UNVISIBLE_MEDIA' => PATH_TO_ROOT . url('/media/media_action.php?unvisible=' . $row['id'] . '&amp;token=' . $Session->get_token()),
 					'U_ADMIN_EDIT_MEDIA' => PATH_TO_ROOT . url('/media/media_action.php?edit=' . $row['id']),
 					'U_ADMIN_DELETE_MEDIA' => PATH_TO_ROOT . url('/media/media_action.php?del=' . $row['id'] . '&amp;token=' . $Session->get_token()),
