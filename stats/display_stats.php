@@ -319,7 +319,20 @@ elseif ($get_sex)
 }
 elseif ($get_bot)
 {
-    $Stats->load_data(StatsSaver::retrieve_stats('robots'), 'ellipse', 5);
+	$array_robot = StatsSaver::retrieve_stats('robots');
+	$stats_array = array();
+	if (is_array($array_robot))
+	{
+		foreach ($array_robot as $key => $value)
+		{
+			$array_info = explode('/', $value);
+			if (isset($array_info[0]) && isset($array_info[1]))
+			{
+				$stats_array[$array_info[0]] = $array_info[1];
+			}
+		}
+	}
+    $Stats->load_data($stats_array, 'ellipse', 5);
     $Stats->draw_ellipse(210, 100, PATH_TO_ROOT . '/cache/bot.png');
 }
 
