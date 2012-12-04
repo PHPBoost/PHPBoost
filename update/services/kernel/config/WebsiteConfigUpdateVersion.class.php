@@ -77,8 +77,9 @@ class WebsiteConfigUpdateVersion extends ConfigUpdateVersion
 		$mail_config->set_mail_signature($config['sign']);
 		MailServiceConfig::save();
 		
+		$editor = $config['editor'] == 'bbcode' ? 'BBCode' : 'TinyMCE';
 		$content_formatting_config = ContentFormattingConfig::load();
-		$content_formatting_config->set_default_editor($config['editor']);
+		$content_formatting_config->set_default_editor($editor);
 		$content_formatting_config->set_html_tag_auth($config['html_auth']);
 		$content_formatting_config->set_forbidden_tags(isset($config['forbidden_tags']) ? $config['forbidden_tags'] : array());
 		ContentFormattingConfig::save();

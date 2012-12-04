@@ -1,4 +1,1 @@
-<FilesMatch "\.(png)$">
-Allow from all
-</FilesMatch> 
 Deny from all
