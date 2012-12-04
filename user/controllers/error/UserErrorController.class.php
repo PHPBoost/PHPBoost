@@ -145,7 +145,7 @@ class UserErrorController extends AbstractController
 	
 	private function get_error_type()
 	{
-		$css_class_name = 'unknow';
+		$css_class_name = 'question';
 		switch ($this->error_type)
 		{
 			case self::NOTICE:
