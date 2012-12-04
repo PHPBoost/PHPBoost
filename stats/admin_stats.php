@@ -1141,15 +1141,24 @@ elseif ($bot)
 	));
 
 
+	$array_robot = StatsSaver::retrieve_stats('robots');
+	$stats_array = array();
+	if (is_array($array_robot))
+	{
+		foreach ($array_robot as $key => $value)
+		{
+			$array_info = explode('/', $value);
+			if (isset($array_info[0]) && isset($array_info[1]))
+			{
+				$stats_array[$array_info[0]] = $array_info[1];
+			}
+		}
+	}
+	
 	$Stats = new ImagesStats();
-
-	$Stats->load_data(StatsSaver::retrieve_stats('robots'), 'ellipse');
-
-	$stats_info = array('google bot', 'yahoo Slurp', 'bing bot', 'voila', 'gigablast', 'ia archiver', 'exalead');
+	$Stats->load_data($stats_array, 'ellipse');
 	foreach ($Stats->data_stats as $key => $angle_value)
 	{
-		if (in_array($key, $stats_info))
-		{
 			$array_color = $Stats->array_allocated_color[$Stats->image_color_allocate_dark(false, NO_ALLOCATE_COLOR)];
 			$name = ucfirst($key);
 			$Template->assign_block_vars('list', array(
@@ -1158,7 +1167,6 @@ elseif ($bot)
 				'PERCENT' => NumberHelper::round(($angle_value/3.6), 1),
 				'L_NAME' => ($name == 'Other') ? $LANG['other'] : $name
 			));
-		}
 	}
 }
 else
