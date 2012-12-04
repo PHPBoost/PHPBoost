@@ -47,7 +47,7 @@ class MembersKernelUpdateVersion extends KernelUpdateVersion
 	
 	private function move_member_data()
 	{
-		$result = $this->querier->select_rows(PREFIX .'member', array('user_id', 'user_avatar', 'user_local', 'user_msn', 'user_yahoo', 'user_web', 'user_occupation', 'user_hobbies', 'user_desc', 'user_sex', 'user_born', 'user_sign'));
+		$result = $this->querier->select_rows(PREFIX .'member', array('user_id', 'user_avatar', 'user_local', 'user_msn', 'user_yahoo', 'user_web', 'user_occupation', 'user_hobbies', 'user_desc', 'user_sex', 'user_born', 'user_sign', 'user_editor'));
 		while ($row = $result->fetch())
 		{
 			$date = new Date(DATE_FROM_STRING, TIMEZONE_SYSTEM, str_replace('-', '/', $row['user_born']), 'y/m/d');
