@@ -380,7 +380,7 @@ class Environment
 			" SET today_visit = 0, nbr_day = nbr_day + 1", __LINE__, __FILE__);
 		//We delete the referer entries older than one week
 		PersistenceContext::get_sql()->query_inject("DELETE FROM " . DB_TABLE_STATS_REFERER .
-		" WHERE last_update < '" . (self::get_yesterday_timestamp()) . "'", __LINE__, __FILE__);
+		" WHERE last_update < '" . (time() - 604800) . "'", __LINE__, __FILE__);
 
 		//We retrieve the number of pages seen until now
 		$pages_displayed = StatsSaver::retrieve_stats('pages');
