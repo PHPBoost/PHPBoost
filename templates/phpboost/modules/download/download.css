@@ -17,6 +17,7 @@ p.download_entete_title{
 	font-size:20px;
 	font-family:"Trebuchet MS", Verdana, 'Bitstream Vera Sans', Times, serif;
 	font-weight: bold;
+	margin-bottom: 0px;
 }
 
 span.download_entete_desc{
@@ -26,14 +27,20 @@ span.download_entete_desc{
 
 div.download_content{
 	padding:10px;
+	margin:20px auto;
 	text-align:center;	
 }
 
+div.d_button_container{
+	margin:30px auto;	
+}
+
 div.d_button{
-	-moz-border-radius: 2px;
-	-webkit-border-radius: 2px;
-	border-radius: 2px;
-	cursor: default !important;
+	border-radius:2px;
+	-moz-border-radius:2px;
+	-webkit-border-radius:2px;
+	-o-border-radius:2px;
+
 	display: inline-block;
 	font-weight: bold;
 	line-height: 29px;
@@ -128,7 +135,7 @@ a.d_button_a{
 a.d_button_a:hover{ text-decoration:none; }
 
 div.d_button_ddl a.d_button_a{ width:310px; }
-div.d_button_try a.d_button_a{ width:250px; }
+div.d_button_try a.d_button_a{ width:200px; }
 div.d_button_sea a.d_button_a{ height:40px; width:175px; }
 
 img.d_button_img{
@@ -136,7 +143,8 @@ img.d_button_img{
 	width:40px;
 }
 
-div.d_upgrade_container, div.d_other_container{
-	margin-top:10px;
+div.d_link_container, div.d_other_container{
+	margin-top:20px;
+	padding:0px 0px 0px 20px;
 	text-align:justify;	
 }
