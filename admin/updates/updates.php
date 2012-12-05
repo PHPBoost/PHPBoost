@@ -33,7 +33,7 @@ require_once(PATH_TO_ROOT . '/admin/admin_header.php');
 
 $check_updates = retrieve(GET, 'check', false);
 $update_type = retrieve(GET, 'type', '');
-if (!in_array($update_type, array('', 'kernel', 'module', 'theme')))
+if (!in_array($update_type, array('', 'kernel', 'module', 'template')))
 {    
     $update_type = '';
 }

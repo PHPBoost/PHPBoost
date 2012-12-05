@@ -17,9 +17,9 @@
             <a href="updates.php?type=module" class="quick_link">{L_MODULES}</a>
         </li>
         <li>
-            <a href="updates.php?type=theme"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/themes.png" alt="" /></a>
+            <a href="updates.php?type=template"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/themes.png" alt="" /></a>
             <br />
-            <a href="updates.php?type=theme" class="quick_link">{L_THEMES}</a>
+            <a href="updates.php?type=template" class="quick_link">{L_THEMES}</a>
         </li>
     </ul>
 </div>
