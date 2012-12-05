@@ -137,19 +137,19 @@ img.connect_avatar{
 .connect_align .submenu ul {
 	position: absolute;
 	background: #353535;
-	left:-72px;
+	left:-82px;
 	top: 43px;
 	height:133px;
-	width:290px;
+	width:300px;
 	z-index:200;
 	border-top:3px solid #2e5c35;
 	border-bottom:2px solid #99B1CB;
 	visibility:hidden;
 	opacity:0;
-	transition:visibility 1s ease-out, opacity 1s ease-out ;
-	-webkit-transition:visibility 1s ease-out, opacity 1s ease-out ;
-	-moz-transition:visibility 1s ease-out, opacity 1s ease-out ;
-	-o-transition:visibility 1s ease-out, opacity 1s ease-out ;
+	transition:visibility 1s ease-out, opacity 0.4s ease-out ;
+	-webkit-transition:visibility 1s ease-out, opacity 0.4s ease-out ;
+	-moz-transition:visibility 1s ease-out, opacity 0.4s ease-out ;
+	-o-transition:visibility 1s ease-out, opacity 0.4s ease-out ;
 }
 
 .connect_align .submenu_alert ul { border-top:3px solid #602b1b; }
@@ -196,33 +196,33 @@ li.disconnect, li.subscribe{
 	margin:0px 3px;
 	height:29px !important; 
 	border-bottom:2px solid #353535;
-	transition: border 2s ease-out;
-    -webkit-transition: border 2s ease-out;
-    -moz-transition: border 2s ease-out;
-    -o-transition: border 2s ease-out;
+	transition: border 1s ease-out;
+    -webkit-transition: border 1s ease-out;
+    -moz-transition: border 1s ease-out;
+    -o-transition: border 1s ease-out;
 }
 li.disconnect:hover, li.subscribe:hover{ 
 	border-bottom:2px solid #336397;
-	transition: border 0.5s ease-out;
-    -webkit-transition: border 0.5s ease-out;
-    -moz-transition: border 0.5s ease-out;
-    -o-transition: border 0.5s ease-out;
+	transition: border 0.3s ease-out;
+    -webkit-transition: border 0.3s ease-out;
+    -moz-transition: border 0.3s ease-out;
+    -o-transition: border 0.3s ease-out;
 }
 
 li.disconnect a, li.subscribe a { 
 	font-size:11px; 
 	color:#969595;
-	transition: color 2s ease-out;
-	-webkit-transition: color 2s ease-out;
-    -moz-transition: color 2s ease-out;
-    -o-transition: color 2s ease-out;
+	transition: color 1s ease-out;
+	-webkit-transition: color 1s ease-out;
+    -moz-transition: color 1s ease-out;
+    -o-transition: color 1s ease-out;
 }
 li.disconnect a:hover, li.subscribe a:hovers{ 
 	font-size:11px;
 	color:#bbbaba; 
 	text-decoration:none; 
-	transition: color 0.5s ease-out;
-	-webkit-transition: color 0.5s ease-out;
-    -moz-transition: color 0.5s ease-out;
-    -o-transition: color 0.5s ease-out;
+	transition: color 0.3s ease-out;
+	-webkit-transition: color 0.3s ease-out;
+    -moz-transition: color 0.3s ease-out;
+    -o-transition: color 0.3s ease-out;
 }
