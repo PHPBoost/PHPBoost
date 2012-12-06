@@ -37,28 +37,33 @@ $idartcat = retrieve(GET, 'cat', 0);
 $idart = retrieve(GET, 'id', 0);
 $invisible = retrieve(GET, 'invisible', false, TBOOL);
 
-if (isset($ARTICLES_CAT[$idartcat]) )
+if (isset($ARTICLES_CAT[$idartcat]))
 {
 	$articles_categories = new ArticlesCats();
 	$articles_categories->bread_crumb($idartcat);
 
 	if (!empty($idart))
 	{
-		$articles = $Sql->query_array(DB_TABLE_ARTICLES, '*', "WHERE visible = 1 AND id = '" . $idart . "' AND idcat = " . $idartcat, __LINE__, __FILE__);
+		$articles = $Sql->query_array(DB_TABLE_ARTICLES, '*', "WHERE id = '" . $idart . "'", __LINE__, __FILE__);
 		$idartcat = $articles['idcat'];
 
 		define('TITLE', $ARTICLES_LANG['title_articles'] . ' - ' . $articles['title']);
 
 		$Bread_crumb->add($articles['title'], 'articles' . url('.php?cat=' . $idartcat . '&amp;id=' . $idart, '-' . $idartcat . '-' . $idart . '+' . Url::encode_rewrite($articles['title']) . '.php'));
 
-		if (!empty($get_note))
-		$Bread_crumb->add($LANG['note'], '');
-		elseif (!empty($_GET['i']))
-		$Bread_crumb->add($LANG['com'], '');
-			
+		if (isset($_GET['com']))
+			$Bread_crumb->add($LANG['com_s'], '');
 	}
 	else
-		define('TITLE', $ARTICLES_LANG['title_articles'] . ' - ' . $ARTICLES_CAT[$idartcat]['name']);
+	{
+		if (isset($_GET['invisible']))
+			$Bread_crumb->add($ARTICLES_LANG['waiting_articles'], REWRITED_SCRIPT);
+			
+		if (isset($_GET['invisible']))
+			define('TITLE', $ARTICLES_LANG['title_articles'] . ' - ' . $ARTICLES_LANG['waiting_articles']);
+		else
+			define('TITLE', $ARTICLES_LANG['title_articles'] . ' - ' . $ARTICLES_CAT[$idartcat]['name']);
+	}
 }
 else
 {
@@ -66,5 +71,4 @@ else
 	if (!defined('TITLE'))
 		define('TITLE', $ARTICLES_LANG['title_articles']);
 }
-
 ?>

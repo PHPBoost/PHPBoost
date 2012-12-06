@@ -85,8 +85,7 @@ class ArticlesHomePageExtensionPoint implements HomePageExtensionPoint
 		$tpl = new FileTemplate('articles/articles_cat.tpl');
 
 		$nbr_articles = $this->sql_querier->query("SELECT COUNT(*) FROM " . DB_TABLE_ARTICLES . " WHERE visible = 1 AND idcat = '" . $idartcat . "' AND start <= '" . $now->get_timestamp() . "' AND (end >= '" . $now->get_timestamp() . "' OR end = 0)", __LINE__, __FILE__);
-		$nbr_articles_invisible = $this->sql_querier->query("SELECT COUNT(*) FROM " . DB_TABLE_ARTICLES . " WHERE visible = 0 AND idcat = '" . $idartcat . "' AND user_id != -1 AND start > '" . $now->get_timestamp() . "' AND (end <= '" . $now->get_timestamp() . "' OR start = 0)", __LINE__, __FILE__);
-
+		$nbr_articles_invisible = $this->sql_querier->query("SELECT COUNT(*) FROM " . DB_TABLE_ARTICLES . " WHERE idcat = '" . $idartcat . "' AND user_id != -1 AND (visible = 0 OR (start > '" . $now->get_timestamp() . "' AND (end <= '" . $now->get_timestamp() . "' OR start = 0)))", __LINE__, __FILE__);
 		$rewrite_title = Url::encode_rewrite($ARTICLES_CAT[$idartcat]['name']);
 
 		$get_sort = retrieve(GET, 'sort', '');
@@ -180,7 +179,7 @@ class ArticlesHomePageExtensionPoint implements HomePageExtensionPoint
 			'L_ARTICLES_WAITING' => $ARTICLES_LANG['waiting_articles'],
 			'L_CATEGORIES' => ($ARTICLES_CAT[$idartcat]['order'] >= 0) ? $ARTICLES_LANG['sub_categories'] : $LANG['categories'],
 			'U_ADD' => PATH_TO_ROOT . url('/articles/management.php?new=1&amp;cat=' . $idartcat),
-			'U_EDIT'=> PATH_TO_ROOT . url('/articles/admin_articles_cat.php?edit='.$idartcat),
+			'U_EDIT'=> !empty($idartcat) ? PATH_TO_ROOT . url('/articles/admin_articles_cat.php?edit='.$idartcat) : PATH_TO_ROOT . url('/articles/admin_articles_config.php'),
 			'U_ARTICLES_WAITING'=> PATH_TO_ROOT . '/articles/articles.php?invisible=1&amp;cat='.$idartcat,
 			'L_ARTICLES_WAINTING' => $ARTICLES_LANG['waiting_articles'],
 			'U_ARTICLES_ALPHA_TOP' => url('.php?sort=alpha&amp;mode=desc&amp;cat=' . $idartcat, '-' . $idartcat . '+' . $rewrite_title . '.php?sort=alpha&amp;mode=desc'),

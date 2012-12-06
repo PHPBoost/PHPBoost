@@ -41,27 +41,28 @@
 		</div>
 	</div>
 	<div class="module_contents">
-		# IF C_ARTICLES_CAT #
-		<p style="text-align:center;" class="text_strong">
-			{L_CATEGORIES}
-			# IF C_MODERATE # <a href="{PATH_TO_ROOT}/articles/admin_articles_cat.php"><img class="valign_middle" src="../templates/{THEME}/images/{LANG}/edit.png" alt="" /></a> # ENDIF #
-		</p>
-		<hr style="margin-bottom:20px;" />
-		# START cat_list #
-		<div style="float:left;text-align:center;width:{COLUMN_WIDTH_CAT}%;margin-bottom:20px;">
-			{cat_list.ICON_CAT}
-			<a href="../articles/articles{cat_list.U_CAT}">{cat_list.CAT}</a> {cat_list.EDIT}
-			<br />
-			<span class="text_small">{cat_list.DESC}</span> 
-			<br />
-			<span class="text_small">{cat_list.L_NBR_ARTICLES}</span> 
-		</div>
-		# END cat_list #
-		<div class="spacer">&nbsp;</div>				
-		<p style="text-align:center;">{PAGINATION_CAT}</p>
-		<hr />
+		# IF NOT C_INVISIBLE #
+			# IF C_ARTICLES_CAT #
+			<p style="text-align:center;" class="text_strong">
+				{L_CATEGORIES}
+				# IF C_MODERATE # <a href="{PATH_TO_ROOT}/articles/admin_articles_cat.php"><img class="valign_middle" src="../templates/{THEME}/images/{LANG}/edit.png" alt="" /></a> # ENDIF #
+			</p>
+			<hr style="margin-bottom:20px;" />
+			# START cat_list #
+			<div style="float:left;text-align:center;width:{COLUMN_WIDTH_CAT}%;margin-bottom:20px;">
+				{cat_list.ICON_CAT}
+				<a href="../articles/articles{cat_list.U_CAT}">{cat_list.CAT}</a> {cat_list.EDIT}
+				<br />
+				<span class="text_small">{cat_list.DESC}</span> 
+				<br />
+				<span class="text_small">{cat_list.L_NBR_ARTICLES}</span> 
+			</div>
+			# END cat_list #
+			<div class="spacer">&nbsp;</div>				
+			<p style="text-align:center;">{PAGINATION_CAT}</p>
+			<hr />
+			# ENDIF #
 		# ENDIF #
-		
 		# IF C_ARTICLES_LINK #				
 		<div class="spacer">&nbsp;</div>
 		<div style="float:right;" class="row3" id="form">
@@ -88,9 +89,9 @@
 			</select>
 		</div>
 		<div class="spacer">&nbsp;</div>
+			<h2># IF C_INVISIBLE # {L_ARTICLES_WAITING} # ELSE # {L_ARTICLES} # ENDIF #</h2>
+			<hr />
 			# IF C_INVISIBLE #
-				<h2>{L_WAITING_ARTICLES}</h2>
-				<hr />
 				# START articles_invisible #
 				<div class="block_container" style="margin-bottom:20px;">
 					<div class="block_contents">
@@ -132,59 +133,58 @@
 					</div>
 				</div>
 				# END articles_invisible #
-			<p style="text-align:center;padding-top:10px;" class="text_small">	{L_NO_ARTICLES_WAITING}</p>
-			<h2>Articles</h2>
-			<hr />
-			# ENDIF #
-			# START articles #
-				<div class="block_container" style="margin-bottom:20px;">
-					<div class="block_contents">
-						<div style="float:left;width:70%">
-							<p style="margin-bottom:10px">
-								<a href="../articles/articles{articles.U_ARTICLES_LINK}" class="big_link">{articles.NAME}</a>
-								# IF C_MODERATE #
-									<a href="{articles.U_ADMIN_EDIT_ARTICLES}">
-										<img class="valign_middle" src="../templates/{THEME}/images/{LANG}/edit.png" alt="" />
-									</a>
-									<a href="{articles.U_ADMIN_DELETE_ARTICLES}" onclick="return Confirm_del_article();">
-										<img class="valign_middle" src="../templates/{THEME}/images/{LANG}/delete.png" alt="" />
-									</a>
-								# ENDIF #
-							</p>
-							<p style="margin-bottom:10px">
-								{articles.DESCRIPTION}
-							</p>
-							<div class="text_small">
-								{L_DATE} : {articles.DATE}
-								<br />
-								{L_VIEW} : {articles.COMPT}
-								<br />
-								{L_COM} : <a href="../articles/articles{articles.U_ARTICLES_LINK_COM}">{articles.COM} </a>
-								<br />
-								{L_NOTE} {articles.NOTE}
-								<br />
-							{L_WRITTEN} : {articles.U_ARTICLES_PSEUDO}
+				<p style="text-align:center;padding-top:10px;" class="text_small">	{L_NO_ARTICLES_WAITING}</p>
+			# ELSE #
+				# START articles #
+					<div class="block_container" style="margin-bottom:20px;">
+						<div class="block_contents">
+							<div style="float:left;width:70%">
+								<p style="margin-bottom:10px">
+									<a href="../articles/articles{articles.U_ARTICLES_LINK}" class="big_link">{articles.NAME}</a>
+									# IF C_MODERATE #
+										<a href="{articles.U_ADMIN_EDIT_ARTICLES}">
+											<img class="valign_middle" src="../templates/{THEME}/images/{LANG}/edit.png" alt="" />
+										</a>
+										<a href="{articles.U_ADMIN_DELETE_ARTICLES}" onclick="return Confirm_del_article();">
+											<img class="valign_middle" src="../templates/{THEME}/images/{LANG}/delete.png" alt="" />
+										</a>
+									# ENDIF #
+								</p>
+								<p style="margin-bottom:10px">
+									{articles.DESCRIPTION}
+								</p>
+								<div class="text_small">
+									{L_DATE} : {articles.DATE}
+									<br />
+									{L_VIEW} : {articles.COMPT}
+									<br />
+									{L_COM} : <a href="../articles/articles{articles.U_ARTICLES_LINK_COM}">{articles.COM} </a>
+									<br />
+									{L_NOTE} {articles.NOTE}
+									<br />
+								{L_WRITTEN} : {articles.U_ARTICLES_PSEUDO}
+								</div>
 							</div>
-						</div>
-						<div class="float:right;">	
-							<div style="text-align:right;margin-top:15px;">								
-								<a href="../articles/articles{articles.U_ARTICLES_LINK}">
-									{articles.ICON}
-								</a>	
+							<div class="float:right;">	
+								<div style="text-align:right;margin-top:15px;">								
+									<a href="../articles/articles{articles.U_ARTICLES_LINK}">
+										{articles.ICON}
+									</a>	
+								</div>
 							</div>
+							<div class="spacer"></div>		
 						</div>
-						<div class="spacer"></div>		
 					</div>
-				</div>
-			# END articles #
+				# END articles #
 
-			{PAGINATION}
-			<br />
-		# ENDIF #			
-		<p style="text-align:center;padding-top:10px;" class="text_small">
-			{L_NO_ARTICLES} {L_TOTAL_ARTICLE}
-		</p>
-		&nbsp;
+				{PAGINATION}
+				<br />
+				<p style="text-align:center;padding-top:10px;" class="text_small">
+					{L_NO_ARTICLES} {L_TOTAL_ARTICLE}
+				</p>
+				&nbsp;
+			# ENDIF #
+		# ENDIF #
 	</div>
 	<div class="module_bottom_l"></div>		
 	<div class="module_bottom_r"></div>
