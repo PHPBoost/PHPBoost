@@ -44,7 +44,6 @@ class ErrorHandler
 	protected $errline;
 	protected $errdesc;
 	protected $errclass;
-	protected $errimg;
 	protected $fatal;
 	protected $stacktrace;
 	protected $exception;
@@ -83,7 +82,6 @@ class ErrorHandler
 		$this->stacktrace = '';
 		$this->errdesc = '';
 		$this->errclass = '';
-		$this->errimg = '';
 		$this->fatal = false;
 
 	}
@@ -104,21 +102,18 @@ class ErrorHandler
 			case E_USER_NOTICE:
 			case E_NOTICE:
 				$this->errdesc = 'Notice';
-				$this->errimg =  'notice';
-				$this->errclass =  'error_notice';
+				$this->errclass =  'notice';
 				break;
 				//Warning utilisateur.
 			case E_USER_WARNING:
 			case E_WARNING:
 				$this->errdesc = 'Warning';
-				$this->errimg =  'important';
-				$this->errclass =  'error_warning';
+				$this->errclass =  'warning';
 				break;
 				//Strict standards
 			case E_STRICT:
 				$this->errdesc = 'Strict Standards';
-				$this->errimg =  'notice';
-				$this->errclass =  'error_notice';
+				$this->errclass =  'notice';
 				break;
 				//Erreur fatale.
 			case E_USER_ERROR:
@@ -126,13 +121,11 @@ class ErrorHandler
 			case E_RECOVERABLE_ERROR:
 				$this->fatal = true;
 				$this->errdesc = 'Fatal Error';
-				$this->errimg =  'stop';
-				$this->errclass =  'error_fatal';
+				$this->errclass =  'error';
 				break;
 			default:
 				$this->errdesc = 'Unknown Error';
-				$this->errimg =  'question';
-				$this->errclass =  'error_unknow';
+				$this->errclass =  'question';
 				break;
 		}
 	}
@@ -172,9 +165,7 @@ class ErrorHandler
 	protected function display_debug()
 	{
 		echo '<span id="message_helper"></span>
-            <div class="' . $this->errclass . '" style="width:auto;max-width:750px;margin:15px auto;padding:15px;">
-                <img src="' . TPL_PATH_TO_ROOT . '/templates/default/images/' . $this->errimg . '.png"
-                    alt="" style="float:left;padding-right:6px;" />
+            <div class="' . $this->errclass . '" style="width:auto;max-width:750px;margin:15px auto;">
                 <strong>' . $this->errdesc . ' : </strong>' . $this->exception->getMessage() . '<br /><br /><br />
                 <em>' . $this->get_stackstrace_as_string(6) . '</em></div>';
 	}
@@ -240,7 +231,7 @@ class ErrorHandler
 		{
 			//Redirection utilisateur.
 			case E_USER_REDIRECT:
-				return 'stop';
+				return 'error';
 				//Notice utilisateur.
 			case E_USER_NOTICE:
 			case E_NOTICE:
@@ -255,7 +246,7 @@ class ErrorHandler
             case E_RECOVERABLE_ERROR:
                 return 'error';
             default: //Erreur inconnue.
-                return 'unknow';
+                return 'question';
          }
 	}
 }

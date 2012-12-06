@@ -34,7 +34,7 @@ $page = retrieve(GET, 'p', 1, TUNSIGNED_INT);
 $cat = retrieve(GET, 'cat', 0);
 $idart = retrieve(GET, 'id', 0);	
 
-if (!empty($idart) && isset($cat) )
+if (!empty($idart) && isset($cat))
 {		
 	$result = $Sql->query_while("SELECT a.contents, a.title, a.id, a.idcat, a.timestamp, a.sources, a.start, a.visible, a.user_id, a.icon, m.login, m.level, m.user_groups
 		FROM " . DB_TABLE_ARTICLES . " a 
@@ -42,19 +42,19 @@ if (!empty($idart) && isset($cat) )
 		WHERE a.id = '" . $idart . "'", __LINE__, __FILE__);
 	$articles = $Sql->fetch_assoc($result);
 	$Sql->query_close($result);
-	
+
 	$articles['auth'] = $ARTICLES_CAT[$articles['idcat']]['auth'];
 
-	//checking authorization
-	if (!$User->check_auth($ARTICLES_CAT[$idartcat]['auth'], AUTH_ARTICLES_READ) && !$User->check_auth($articles['auth'], AUTH_ARTICLES_READ))
-	{
-		$error_controller = PHPBoostErrors::user_not_authorized();
-		DispatchManager::redirect($error_controller);
-	}
-	
-	if (!isset($ARTICLES_CAT[$idartcat]) || $ARTICLES_CAT[$idartcat]['visible'] == 0 ) 
+	if (!isset($ARTICLES_CAT[$cat]) || !$ARTICLES_CAT[$cat]['visible'])
 	{
 		$error_controller = PHPBoostErrors::unexisting_page();
+		DispatchManager::redirect($error_controller);
+	}
+
+	//checking authorization
+	if ((!$User->check_auth($ARTICLES_CAT[$cat]['auth'], AUTH_ARTICLES_READ) && !$User->check_auth($articles['auth'], AUTH_ARTICLES_READ)) || ($articles['visible'] == 0 && $articles['user_id'] != $User->get_attribute('user_id')))
+	{
+		$error_controller = PHPBoostErrors::user_not_authorized();
 		DispatchManager::redirect($error_controller);
 	}
 	
@@ -122,25 +122,25 @@ if (!empty($idart) && isset($cat) )
 	$group_color = User::get_group_color($articles['user_groups'], $articles['level']);
 	
 	$tpl->put_all(array(
-		'C_IS_MODERATE' => ($User->check_auth($ARTICLES_CAT[$idartcat]['auth'], AUTH_ARTICLES_MODERATE)),
+		'C_IS_MODERATE' => ($User->check_auth($ARTICLES_CAT[$cat]['auth'], AUTH_ARTICLES_MODERATE)),
 		'C_DISPLAY_ARTICLE' => true,
 		'C_SOURCES' => $i > 0,
 		'C_GROUP_COLOR' => !empty($group_color),
 		'IDART' => $articles['id'],
-		'IDCAT' => $idartcat,
+		'IDCAT' => $cat,
 		'NAME' => $articles['title'],
 		'GROUP_COLOR' => $group_color,
 		'PSEUDO' => $articles['login'],	
 		'LEVEL_CLASS' => UserService::get_level_class($articles['level']),
 		'CONTENTS' => isset($array_contents[$page]) ? FormatingHelper::second_parse($array_contents[$page]) : '',
-		'CAT' => $ARTICLES_CAT[$idartcat]['name'],
+		'CAT' => $ARTICLES_CAT[$cat]['name'],
 		'DATE' => gmdate_format('date_format_short', $articles['timestamp']),
 		'PAGES_LIST' => $page_list,
-		'PAGINATION_ARTICLES' => $Pagination->display('articles' . url('.php?cat=' . $idartcat . '&amp;id='. $idart . '&amp;p=%d', '-' . $idartcat . '-'. $idart . '-%d+' . Url::encode_rewrite($articles['title']) . '.php'), $nbr_page, 'p', 1, 3, 11, NO_PREVIOUS_NEXT_LINKS),
+		'PAGINATION_ARTICLES' => $Pagination->display('articles' . url('.php?cat=' . $cat . '&amp;id='. $idart . '&amp;p=%d', '-' . $cat . '-'. $idart . '-%d+' . Url::encode_rewrite($articles['title']) . '.php'), $nbr_page, 'p', 1, 3, 11, NO_PREVIOUS_NEXT_LINKS),
 		'PAGE_NAME' => (isset($array_page[1][($page-1)]) && $array_page[1][($page-1)] != '&nbsp;') ? $array_page[1][($page-1)] : '',
-		'PAGE_PREVIOUS_ARTICLES' => ($page > 1 && $page <= $nbr_page && $nbr_page > 1) ? '<a href="' . url('articles.php?cat=' . $idartcat . '&amp;id=' . $idart . '&amp;p=' . ($page - 1), 'articles-' . $idartcat . '-' . $idart . '-' . ($page - 1) . '+' . Url::encode_rewrite($articles['title']) . '.php') . '">&laquo; ' . $LANG['previous_page'] . '</a><br />' . $array_page[1][($page-2)] : '',
-		'PAGE_NEXT_ARTICLES' => ($page > 0 && $page < $nbr_page && $nbr_page > 1) ? '<a href="' . url('articles.php?cat=' . $idartcat . '&amp;id=' . $idart . '&amp;p=' . ($page + 1), 'articles-' . $idartcat . '-' . $idart . '-' . ($page + 1) . '+' . Url::encode_rewrite($articles['title']) . '.php') . '">' . $LANG['next_page'] . ' &raquo;</a><br />' . $array_page[1][$page] : '',
-		'COM' => '<a href="'. PATH_TO_ROOT .'/articles/articles' . url('.php?cat=' . $idartcat . '&amp;id=' . $idart . '&amp;com=0', '-' . $idartcat . '-' . $idart . '+' . Url::encode_rewrite($articles['title']) . '.php?com=0') .'#comments_list">'. CommentsService::get_number_and_lang_comments('articles', $idart) . '</a>',
+		'PAGE_PREVIOUS_ARTICLES' => ($page > 1 && $page <= $nbr_page && $nbr_page > 1) ? '<a href="' . url('articles.php?cat=' . $cat . '&amp;id=' . $idart . '&amp;p=' . ($page - 1), 'articles-' . $cat . '-' . $idart . '-' . ($page - 1) . '+' . Url::encode_rewrite($articles['title']) . '.php') . '">&laquo; ' . $LANG['previous_page'] . '</a><br />' . $array_page[1][($page-2)] : '',
+		'PAGE_NEXT_ARTICLES' => ($page > 0 && $page < $nbr_page && $nbr_page > 1) ? '<a href="' . url('articles.php?cat=' . $cat . '&amp;id=' . $idart . '&amp;p=' . ($page + 1), 'articles-' . $cat . '-' . $idart . '-' . ($page + 1) . '+' . Url::encode_rewrite($articles['title']) . '.php') . '">' . $LANG['next_page'] . ' &raquo;</a><br />' . $array_page[1][$page] : '',
+		'COM' => '<a href="'. PATH_TO_ROOT .'/articles/articles' . url('.php?cat=' . $cat . '&amp;id=' . $idart . '&amp;com=0', '-' . $cat . '-' . $idart . '+' . Url::encode_rewrite($articles['title']) . '.php?com=0') .'#comments_list">'. CommentsService::get_number_and_lang_comments('articles', $idart) . '</a>',
 		'KERNEL_NOTATION' => NotationService::display_active_image($notation),
 		'L_DELETE' => $LANG['delete'],
 		'L_EDIT' => $LANG['edit'],
@@ -156,11 +156,11 @@ if (!empty($idart) && isset($cat) )
 		'L_ERASE' => $LANG['erase'],
 		'L_INFO' => $LANG['info'],
 		'U_PROFILE' => UserUrlBuilder::profile($articles['user_id'])->absolute(),
-		'U_ARTICLES_LINK' => url('articles.php?cat=' . $idartcat . '&amp;id=' . $idart, 'articles-' . $idartcat . '-' . $idart .  Url::encode_rewrite($articles['title']) . '.php' . "'"),
-		'U_ONCHANGE_ARTICLE' => "'" . url('articles.php?cat=' . $idartcat . '&amp;id=' . $idart . '&amp;p=\' + this.options[this.selectedIndex].value', 'articles-' . $idartcat . '-' . $idart . '-\'+ this.options[this.selectedIndex].value + \'+' . Url::encode_rewrite($articles['title']) . '.php' . "'"),
+		'U_ARTICLES_LINK' => url('articles.php?cat=' . $cat . '&amp;id=' . $idart, 'articles-' . $cat . '-' . $idart .  Url::encode_rewrite($articles['title']) . '.php' . "'"),
+		'U_ONCHANGE_ARTICLE' => "'" . url('articles.php?cat=' . $cat . '&amp;id=' . $idart . '&amp;p=\' + this.options[this.selectedIndex].value', 'articles-' . $idartcat . '-' . $idart . '-\'+ this.options[this.selectedIndex].value + \'+' . Url::encode_rewrite($articles['title']) . '.php' . "'"),
 		'U_PRINT_ARTICLE' => url('print.php?id=' . $idart),
-		'U_ARTICLES_EDIT' =>url('management.php?edit=' . $idart),
-		'U_ARTICLES_DEL' =>url('management.php?del=' . $idart . '&amp;token=' . $Session->get_token()),
+		'U_ARTICLES_EDIT' => url('management.php?edit=' . $idart),
+		'U_ARTICLES_DEL' => url('management.php?del=' . $idart . '&amp;token=' . $Session->get_token()),
 	));
 
 	//Affichage commentaires.
@@ -168,7 +168,7 @@ if (!empty($idart) && isset($cat) )
 	{
 		$comments_topic = new ArticlesCommentsTopic();
 		$comments_topic->set_id_in_module($idart);
-		$comments_topic->set_url(new Url('/articles/articles.php?cat=' . $idartcat . '&id=' . $idart . '&com=0'));
+		$comments_topic->set_url(new Url('/articles/articles.php?cat=' . $cat . '&id=' . $idart . '&com=0'));
 		$tpl->put_all(array(
 			'COMMENTS' => CommentsService::display($comments_topic)->render()
 		));
