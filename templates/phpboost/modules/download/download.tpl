@@ -12,13 +12,13 @@
 				# IF C_ADMIN #
 					<div style="float:right;padding-right:5px;">
 						<a href="{U_ADMIN_CAT}">
-							<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="" />
+							<img class="valign_mibluee" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="" />
 						</a>
 					</div>
 				# ENDIF #
 			</div>
 			<div class="module_top">
-				<a href="${relative_url(SyndicationUrlBuilder::rss('download',IDCAT))}" title="Rss"><img style="vertical-align:middle;margin-top:-2px;" src="{PATH_TO_ROOT}/templates/{THEME}/images/rss.png" alt="Rss" title="Rss" /></a>
+				<a href="${relative_url(SyndicationUrlBuilder::rss('download',IDCAT))}" title="Rss"><img style="vertical-align:mibluee;margin-top:-2px;" src="{PATH_TO_ROOT}/templates/{THEME}/images/rss.png" alt="Rss" title="Rss" /></a>
 				{TITLE}
 			</div>
 			<div class="module_contents">
@@ -61,7 +61,7 @@
 						</div>
 						
 						<div class="d_button_container">
-							<div class="d_button d_button_ddl">
+							<div class="d_button d_button_blue">
 								<a href="#" class="d_button_a">
 									<img class="d_button_img" src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/logo.png" alt="" />
 									<p class="d_button_title">Télécharger PHPBoost 4.0</p>
@@ -69,11 +69,11 @@
 								</a>
 							</div>
 							
-							<div class="d_button d_button_try">
+							<div class="d_button d_button_green">
 								<a href="#" class="d_button_a">
 									<img class="d_button_img" src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/logo.png" alt="" />
 									<p class="d_button_title">Mises à jour 4.0</p>
-									<p class="d_button_com d_button_com_try">Mises à jour et migration</p>
+									<p class="d_button_com d_button_com_green">Mises à jour et migration</p>
 								</a>
 							</div>
 						</div>
@@ -105,7 +105,7 @@
 
 						
 						<div class="d_button_container">
-							<div class="d_button d_button_ddl">
+							<div class="d_button d_button_blue">
 								<a href="#" class="d_button_a">
 									<img class="d_button_img" src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/logo.png" alt="" />
 									<p class="d_button_title">Télécharger PHPBoost 3.0</p>
@@ -113,11 +113,11 @@
 								</a>
 							</div>
 							
-							<div class="d_button d_button_try">
+							<div class="d_button d_button_green">
 								<a href="#" class="d_button_a">
 									<img class="d_button_img" src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/logo.png" alt="" />
 									<p class="d_button_title">Mises à jour 3.0</p>
-									<p class="d_button_com d_button_com_try">Mises à jour et migration</p>
+									<p class="d_button_com d_button_com_green">Mises à jour et migration</p>
 								</a>
 							</div>
 						</div>
@@ -144,7 +144,7 @@
 					<hr style="margin:20px auto 30px auto;" />
 					
 					<div style="text-align:center;">	
-						<div class="d_button d_button_sea">
+						<div class="d_button d_button_gray">
 							<a href="#" class="d_button_a">
 								<p class="d_button_title">Parcourir l'arborescence</p>
 							</a>
