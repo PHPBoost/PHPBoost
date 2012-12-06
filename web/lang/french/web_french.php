@@ -53,6 +53,7 @@ $LANG['no_note'] = 'Aucune note';
 $LANG['actual_note'] = 'Note actuelle';
 $LANG['vote'] = 'Voter';
 $LANG['delete_link'] = 'Supprimer le lien ?';
+$LANG['visit_link'] = 'Visiter';
 
 //Ajout lien web.
 $MAIL['new_link_website'] = 'Nouveau lien sur votre site web';

@@ -152,7 +152,9 @@
 					<span class="spacer">&nbsp;</span>
 				</p>
 				<p class="text_center">					
-					<a href="{URL}" title="{NAME}" onclick="document.location = 'count.php?id={IDWEB}';"><img src="{PICTURES_DATA_PATH}/images/{LANG}/bouton_url.gif" alt="" /></a>
+					<button type="button" name="{NAME}" class="visit" onclick="document.location = 'count.php?id={IDWEB}';" value="true">
+						{L_VISIT}<img src="{PATH_TO_ROOT}/web/templates/images/web.png" class="valign_middle"/>
+					</button>
 				</p>
 			</div>
 			<div class="module_bottom_l"></div>		
