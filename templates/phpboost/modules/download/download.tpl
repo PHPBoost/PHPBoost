@@ -31,15 +31,15 @@
 					<div class="download_entete_content">
 						<p class="download_entete_title">PHPBOOST</p>
 						<span class="download_entete_desc">
-						Bienvenue sur la page de téléchargement de PHPBoost 3.0 Tornade, la dernière version en date du CMS sortie le 28 juillet 2009.
-						<BR /><BR />PHPBoost est un logiciel libre distribué sous licence GNU/GPL.
-						<BR /><BR />PHPBoost 3 innove dans sa façon d'être distribué. En effet Tornade est la première version de PHPBoost à être distribuée de différentes façons pour être à même de s'adapter très rapidement aux besoins de chacun. Aujourd'hui, quatre distributions existent, et vous sont présentées dans la liste ci-dessous. Vous pourrez les télécharger en cliquant sur leur lien associé.</span>
+						Bienvenue sur la page de téléchargement de PHPBoost.
+						<br /><br />PHPBoost est un logiciel libre distribué sous licence GNU/GPL.
+						<br /><br />PHPBoost 3 innove dans sa façon d'être distribué. En effet Tornade est la première version de PHPBoost à être distribuée de différentes façons pour être à même de s'adapter très rapidement aux besoins de chacun. Aujourd'hui, quatre distributions existent, et vous sont présentées dans la liste ci-dessous. Vous pourrez les télécharger en cliquant sur leur lien associé.</span>
 					</div>
 				</div>
 				<hr style="margin:25px 0px;" />
 				
 				Cette page vous proposera de télécharger différentes version de PHPBoost, des mises à jours, ou d'acceder à nos sites de test.
-				<BR /><BR />
+				<br /><br />
 				<ul class="bb_ul">
 					<li class="bb_li">PHPBoost 4.0 est la dernière version du CMS (Stable)</li>
 					<li class="bb_li">PHPBoost 3.x est la version du CMS ayant fait ces preuves, mais ne possédant pas les nombreux avantages de la version 4.0</li>
@@ -54,9 +54,9 @@
 					<div class="download_content block_container">
 					
 						<div class="download_entete_content">
-							<p class="download_entete_title">Télécharger PHPBoost V4.x </p>
+							<p class="download_entete_title">Télécharger PHPBoost 4.0</p>
 							<span class="download_entete_desc">
-							C'est la versions conseiller pour tous les nouveaux membres et ceux qui souhaitent bénéficier de toute la puissance de PHPBoost.
+							C'est la versions conseillée pour tous les nouveaux membres et ceux qui souhaitent bénéficier de toute la puissance de PHPBoost.
 							</span>
 						</div>
 						
@@ -64,31 +64,31 @@
 							<div class="d_button d_button_ddl">
 								<a href="#" class="d_button_a">
 									<img class="d_button_img" src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/logo.png" alt="" />
-									<p class="d_button_title">Télécharger PHPBoost V4</p>
-									<p class="d_button_com">Rév. 4.0.01 | Req. PHP 4.2 | Ver. Full .Zip </p>
+									<p class="d_button_title">Télécharger PHPBoost 4.0</p>
+									<p class="d_button_com">Rév. 4.0.0 | PHP 5.1.2 | Ver. Complète | Zip </p>
 								</a>
 							</div>
 							
 							<div class="d_button d_button_try">
 								<a href="#" class="d_button_a">
 									<img class="d_button_img" src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/logo.png" alt="" />
-									<p class="d_button_title">Mise à jour V4</p>
-									<p class="d_button_com d_button_com_try">Rév. 4.0.01 to Rév. 4.0.02</p>
+									<p class="d_button_title">Mises à jour 4.0</p>
+									<p class="d_button_com d_button_com_try">Mises à jour et migration</p>
 								</a>
 							</div>
 						</div>
 						
 						<div class="d_link_container">
-							<a href="#"><h2 class="title" >Télécharger des modules pour PHPBoost V4</h2></a>
-							<span class="download_entete_desc">Les derniers modules pour la révision 4.x</span>
+							<a href="#"><h2 class="title" >Télécharger des modules pour PHPBoost 4.0</h2></a>
+							<span class="download_entete_desc">Les derniers modules pour la révision 4.0</span>
 							<ul class="bb_ul" style="padding-left:20px;">
 								<li class="bb_li"><a href="#">Calendrier</a></li>
 								<li class="bb_li"><a href="#">Forum</a></li>
 							</ul>
 						</div>
 						<div class="d_link_container">
-							<a href="#"><h2 class="title" >Télécharger des themes  pour PHPBoost V4</h2></a>
-							<span class="download_entete_desc">Les derniers thèmes pour la révision 4.x</span>
+							<a href="#"><h2 class="title" >Télécharger des themes  pour PHPBoost 4.0</h2></a>
+							<span class="download_entete_desc">Les derniers thèmes pour la révision 4.0</span>
 							<ul class="bb_ul" style="padding-left:20px;">
 								<li class="bb_li"><a href="#">lorem</a></li>
 								<li class="bb_li"><a href="#">Sangoten</a></li>
@@ -99,8 +99,8 @@
 															
 					<div class="download_content block_container">
 						<div class="download_entete_content">
-							<p class="download_entete_title">Télécharger PHPBoost V3.x </p>
-							<span class="download_entete_desc">Dernière révision stable de la V3</span>
+							<p class="download_entete_title">Télécharger PHPBoost 3.0</p>
+							<span class="download_entete_desc">Dernière révision stable de la 3.0</span>
 						</div>
 
 						
@@ -108,31 +108,31 @@
 							<div class="d_button d_button_ddl">
 								<a href="#" class="d_button_a">
 									<img class="d_button_img" src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/logo.png" alt="" />
-									<p class="d_button_title">Télécharger PHPBoost V3</p>
-									<p class="d_button_com">Rév. 3.11.01 | Req. PHP 4 | Ver. Full .Zip </p>
+									<p class="d_button_title">Télécharger PHPBoost 3.0</p>
+									<p class="d_button_com">Rév. 3.0.11 | PHP 4 | Ver. Complète | Zip </p>
 								</a>
 							</div>
 							
 							<div class="d_button d_button_try">
 								<a href="#" class="d_button_a">
 									<img class="d_button_img" src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/logo.png" alt="" />
-									<p class="d_button_title">Mise à jour V3</p>
-									<p class="d_button_com d_button_com_try">Rév. 3.10.01 to Rév. 3.11.02</p>
+									<p class="d_button_title">Mises à jour 3.0</p>
+									<p class="d_button_com d_button_com_try">Mises à jour et migration</p>
 								</a>
 							</div>
 						</div>
 						
 						<div class="d_link_container">
-							<a href="#"><h2 class="title" >Télécharger des modules pour PHPBoost V3</h2></a>
-							<span class="download_entete_desc">Les derniers modules pour la révision 3.x</span>
+							<a href="#"><h2 class="title" >Télécharger des modules pour PHPBoost 3.0</h2></a>
+							<span class="download_entete_desc">Les derniers modules pour la révision 3.0</span>
 							<ul class="bb_ul" style="padding-left:20px;">
 								<li class="bb_li"><a href="#">Calendrier</a></li>
 								<li class="bb_li"><a href="#">Forum</a></li>
 							</ul>
 						</div>
 						<div class="d_link_container">
-							<a href="#"><h2 class="title" >Télécharger des themes  pour PHPBoost V3</h2></a>
-							<span class="download_entete_desc">Les derniers thèmes pour la révision 3.x</span>
+							<a href="#"><h2 class="title" >Télécharger des themes  pour PHPBoost 3.0</h2></a>
+							<span class="download_entete_desc">Les derniers thèmes pour la révision 3.0</span>
 							<ul class="bb_ul" style="padding-left:20px;">
 								<li class="bb_li"><a href="#">lorem</a></li>
 								<li class="bb_li"><a href="#">Sangoten</a></li>
@@ -147,7 +147,6 @@
 						<div class="d_button d_button_sea">
 							<a href="#" class="d_button_a">
 								<p class="d_button_title">Parcourir l'arborescence</p>
-								<p class="d_button_com">Toutes les révisions </p>
 							</a>
 						</div>
 					</div>
