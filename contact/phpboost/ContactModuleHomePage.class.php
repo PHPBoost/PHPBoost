@@ -93,10 +93,10 @@ class ContactModuleHomePage implements ModuleHomePage
 			$captcha->set_difficulty($config->get_captcha_difficulty_level());
 			$fieldset->add_field(new FormFieldCaptcha('captcha', $captcha));
 		}
-
-		$form->add_button(new FormButtonReset());
+		
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_button($this->submit_button);
+		$form->add_button(new FormButtonReset());
 
 		$this->form = $form;
 	}
