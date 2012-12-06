@@ -34,8 +34,8 @@
 					Le projet PHPBoost
 				</div>
 				<ul>
-					<li><a href="#">Fonctionnalités</a></li>
-					<li><a href="#">Télécharger</a></li>
+					<li><a href="{PATH_TO_ROOT}/pages/fonctionnalites-de-phpboost">Fonctionnalités</a></li>
+					<li><a href="{PATH_TO_ROOT}/download/">Télécharger</a></li>
 					<li><a href="http://demo.phpboost.com">Démonstration</a></li>
 					<li><a href="{PATH_TO_ROOT}/pages/aider-phpboost">Contribuer au projet</a></li>
 				</ul>
@@ -59,7 +59,7 @@
 					Support PHPBoost
 				</div>
 				<ul>
-					<li><a href="{PATH_TO_ROOT}/faq/">Foire aux Questions</a></li>
+					<li><a href="{PATH_TO_ROOT}/faq/">Foire Aux Questions</a></li>
 					<li><a href="{PATH_TO_ROOT}/forum/">Forum</a></li>
 					<li><a href="{PATH_TO_ROOT}/news/">News</a></li>
 					<li><a href="{PATH_TO_ROOT}/wiki/">Documentation</a></li>
@@ -74,8 +74,6 @@
 			<div class="footer_social footer_social_facebook">			
 				<a href="http://www.facebook.com/pages/PHPBoost-CMS/229132847163144"></a>
 			</div>
-
-			
 				# IF C_MENUS_FOOTER_CONTENT #
 				{MENUS_FOOTER_CONTENT}
 				# ENDIF #
@@ -96,9 +94,7 @@
 				<span>
 					| <a href="{PATH_TO_ROOT}/contact/">Contactez-nous</a>
 				</span>
-
 		</div>
-		
 	</div>
 	
 	</body>
