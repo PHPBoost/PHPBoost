@@ -153,7 +153,7 @@
 				</p>
 				<p class="text_center">					
 					<button type="button" name="{NAME}" class="visit" onclick="document.location = 'count.php?id={IDWEB}';" value="true">
-						{L_VISIT}<img src="{PATH_TO_ROOT}/web/templates/images/web.png" class="valign_middle"/>
+						{L_VISIT}<img src="{PATH_TO_ROOT}/web/templates/images/web.png" class="valign_middle button_img"/>
 					</button>
 				</p>
 			</div>
