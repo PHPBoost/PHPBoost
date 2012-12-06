@@ -17,7 +17,7 @@
 		<div id="footer_columns_container">
 			<div class="footer_columns">
 				<div class="footer_columns_title">
-					<img src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/partners.png" align="center"  width="25px" />
+					<img src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/footer_partners.png" align="center" />
 					Les partenaires
 				</div>
 				<div class="footer_columns_partners">
@@ -30,7 +30,7 @@
 			</div>
 			<div class="footer_columns">
 				<div class="footer_columns_title"> 
-					<img src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/logo.png" align="center"  width="25px" />
+					<img src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/footer_phpboost.png" align="center" />
 					Le projet PHPBoost
 				</div>
 				<ul>
@@ -42,7 +42,7 @@
 			</div>	
 			<div class="footer_columns">
 				<div class="footer_columns_title">
-					<img src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/community.png" align="center"  width="25px" />
+					<img src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/footer_community.png" align="center" />
 					Participer au Projet
 				</div>
 				<ul>
@@ -55,7 +55,7 @@
 			</div>	
 			<div class="footer_columns footer_columns_last">
 				<div class="footer_columns_title">
-					<img src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/support.png" align="center"  width="25px" />
+					<img src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/footer_support.png" align="center" />
 					Support PHPBoost
 				</div>
 				<ul>
