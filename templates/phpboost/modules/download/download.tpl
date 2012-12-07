@@ -12,13 +12,13 @@
 				# IF C_ADMIN #
 					<div style="float:right;padding-right:5px;">
 						<a href="{U_ADMIN_CAT}">
-							<img class="valign_mibluee" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="" />
+							<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="" />
 						</a>
 					</div>
 				# ENDIF #
 			</div>
 			<div class="module_top">
-				<a href="${relative_url(SyndicationUrlBuilder::rss('download',IDCAT))}" title="Rss"><img style="vertical-align:mibluee;margin-top:-2px;" src="{PATH_TO_ROOT}/templates/{THEME}/images/rss.png" alt="Rss" title="Rss" /></a>
+				<a href="${relative_url(SyndicationUrlBuilder::rss('download',IDCAT))}" title="Rss"><img style="vertical-align:middle;margin-top:-2px;" src="{PATH_TO_ROOT}/templates/{THEME}/images/rss.png" alt="Rss" title="Rss" /></a>
 				{TITLE}
 			</div>
 			<div class="module_contents">
