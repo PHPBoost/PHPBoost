@@ -42,14 +42,18 @@ class PHPBoostIndexController extends AbstractController
 		}
 		else
 		{
-			$module = AppContext::get_extension_provider_service()->get_provider($general_config->get_module_home_page());
-			if ($module->has_extension_point(HomePageExtensionPoint::EXTENSION_POINT))
-			{
-				$home_page = $module->get_extension_point(HomePageExtensionPoint::EXTENSION_POINT)->get_home_page();
-				return $this->build_response($home_page->get_view(), $home_page->get_title());
-			}
-			else
-			{
+			try {
+				$module = AppContext::get_extension_provider_service()->get_provider($general_config->get_module_home_page());
+				if ($module->has_extension_point(HomePageExtensionPoint::EXTENSION_POINT))
+				{
+					$home_page = $module->get_extension_point(HomePageExtensionPoint::EXTENSION_POINT)->get_home_page();
+					return $this->build_response($home_page->get_view(), $home_page->get_title());
+				}
+				else
+				{
+					AppContext::get_response()->redirect(UserUrlBuilder::home());
+				}
+			} catch (UnexistingExtensionPointProviderException $e) {
 				AppContext::get_response()->redirect(UserUrlBuilder::home());
 			}
 		}
