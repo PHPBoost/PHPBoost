@@ -4,7 +4,18 @@
 
 .download_entete_content {
     text-align:justify;
-    margin-bottom:10px;
+    margin-bottom:30px;
+}
+
+.d_custom_content{margin:20px auto 20px auto;}
+
+.d_custom_title{
+	text-align:justify;
+	color:#5f5f5f;
+	font-size:16px;
+	font-family:"Trebuchet MS", Verdana, 'Bitstream Vera Sans', Times, serif;
+	font-weight: bold;
+	margin-bottom: 10px;	
 }
 
 img.download_entete_img{
@@ -17,12 +28,10 @@ p.download_entete_title{
 	font-size:20px;
 	font-family:"Trebuchet MS", Verdana, 'Bitstream Vera Sans', Times, serif;
 	font-weight: bold;
-	margin-bottom: 0px;
+	margin-bottom: 10px;
 }
 
-span.download_entete_desc{
-	font-style:italic;	
-}
+span.download_entete_desc{ font-style:italic; }
 
 
 div.download_content{
@@ -31,16 +40,15 @@ div.download_content{
 	text-align:center;	
 }
 
-div.d_button_container{
-	margin:30px auto;	
-}
+div.d_button_container, div.d_dev_container{ margin:auto; }
+
+div.d_dev_container{ width:380px;text-align:left;padding-top:5px; }
 
 div.d_button{
 	border-radius:2px;
 	-moz-border-radius:2px;
 	-webkit-border-radius:2px;
 	-o-border-radius:2px;
-
 	display: inline-block;
 	font-weight: bold;
 	line-height: 29px;
@@ -129,18 +137,59 @@ div.d_button_gray p.d_button_com{ color:#b3aeae; text-align:center;}
 
 a.d_button_a{
 	display:block;
-	height:52px;
+	height:50px;
 	padding:5px 10px;
 }
 a.d_button_a:hover{ text-decoration:none; }
 
-div.d_button_blue a.d_button_a{ width:310px; }
-div.d_button_green a.d_button_a{ width:200px; }
+div.d_button_blue a.d_button_a{ width:290px; }
+div.d_button_green a.d_button_a{ width:175px; }
 div.d_button_gray a.d_button_a{ height:40px; width:175px; }
 
 img.d_button_img{
 	float:left;
 	width:40px;
+	filter: alpha(opacity=70);
+	-ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=70);
+	-moz-opacity: 0.70;
+	opacity: 0.70;
+    -webkit-transition: all 0.3s ease-out;
+    -moz-transition: all 0.3s ease-out;
+    -o-transition: all 0.3s ease-out;
+    transition: all 0.3s ease-out;
+}
+
+a.d_button_a:hover img.d_button_img{
+	filter: alpha(opacity=100);
+	-ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
+	-moz-opacity: 1;
+	opacity: 1;
+}
+
+h2.d_custom_subtitle{
+	text-align:left;
+	padding-left:56px;
+}
+
+h2.d_custom_subtitle a{
+	font-size:16px;
+	font-family:"Trebuchet MS", Verdana, 'Bitstream Vera Sans', Times, serif;
+	font-weight: bold;	
+}
+
+p.d_custom_exemple{
+	text-align:left;
+	padding-left:56px;
+}
+p.d_custom_exemple a, a.d_dev{
+	font-style:italic;
+	color:#3F5164;
+	font-weight:normal;	
+}
+p.d_custom_exemple a:hover, a.d_dev:hover{ color:#25466C; text-decoration:none;}
+
+img.d_custom_img{
+	float:left;	
 }
 
 div.d_link_container, div.d_other_container{
