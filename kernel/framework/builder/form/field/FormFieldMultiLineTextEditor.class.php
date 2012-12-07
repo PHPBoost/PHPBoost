@@ -99,5 +99,4 @@ class FormFieldMultiLineTextEditor extends AbstractFormField
         return new FileTemplate('framework/builder/form/FormFieldMultiLineTextEditor.tpl');
     }
 }
-
 ?>
