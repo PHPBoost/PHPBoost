@@ -112,7 +112,7 @@ class AdminAdvancedConfigController extends AdminController
 		$htaccess_manual_content_fieldset = new FormFieldsetHTML('htaccess_manual_content', $this->lang['advanced-config.htaccess-manual-content']);
 		$form->add_fieldset($htaccess_manual_content_fieldset);
 		
-		$htaccess_manual_content_fieldset->add_field(new FormFieldMultiLineTextEditor('htaccess-manual-content', $this->lang['advanced-config.htaccess-manual-content'], $this->server_environment_config->get_htaccess_manual_content(),
+		$htaccess_manual_content_fieldset->add_field(new FormFieldMultiLineTextEditor('htaccess_manual_content', $this->lang['advanced-config.htaccess-manual-content'], $this->server_environment_config->get_htaccess_manual_content(),
 			array('rows' => 7, 'description' => $this->lang['advanced-config.htaccess-manual-content.explain'])
 		));
 		
