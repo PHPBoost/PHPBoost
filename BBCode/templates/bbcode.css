@@ -1,0 +1,38 @@
+/** BBcode **/
+/* Tableau du bbcode */
+.bbcode, .bbcode2{
+	text-align: center;
+    width: 486px !important;
+	background:#336397;
+	border:1px solid #BEBEBE;
+	border-collapse:collapse;
+	border-spacing:0px;
+	height:32px;
+	color:#FFFFFF;
+}
+
+.bbcode td, .bbcode2 td{
+	 
+}
+
+.bbcode img, .bbcode2 img{
+	vertical-align:middle; 
+}
+
+.bbcode2{
+	width:485px;
+}
+/* Curseur de la souris au passage sur les icônes */
+.bbcode_hover{
+	cursor:pointer;
+}
+/* Menu caché du BBcode */
+.bbcode_block{
+	position:absolute;
+	text-align:center;
+	padding:6px 4px;
+	background:#87A6BE;
+	border:1px solid #2C5169;
+	bottom:2px; 
+	z-index:100;
+}
