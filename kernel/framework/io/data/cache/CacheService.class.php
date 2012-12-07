@@ -27,7 +27,7 @@
 
 class CacheService
 {
-	private static $all_files_regex_with_extensions = '`^[^.]+\.`i';
+	private static $all_files_regex_with_extensions = '`^\.|.*\.log`i';
 
 	private static $cache_folder;
 	private static $tpl_cache_folder;
@@ -73,7 +73,7 @@ class CacheService
 
 	private function delete_files(Folder $folder, $regex = '')
 	{
-		$files_to_delete = $folder->get_files($regex);
+		$files_to_delete = $folder->get_files($regex, true);
 		foreach ($files_to_delete as $file)
 		{
 			$file->delete();
