@@ -68,12 +68,17 @@
 			<div class="spacer"></div>
 		</div>
 		<div id="footer_links">
+			<div class="footer_social footer_social_gplus">			
+				<a href="#"></a>
+			</div>
 			<div class="footer_social footer_social_twitter">			
 				<a href="#"></a>
 			</div>
 			<div class="footer_social footer_social_facebook">			
 				<a href="http://www.facebook.com/pages/PHPBoost-CMS/229132847163144"></a>
 			</div>
+			
+			
 				# IF C_MENUS_FOOTER_CONTENT #
 				{MENUS_FOOTER_CONTENT}
 				# ENDIF #

@@ -54,7 +54,7 @@
 					<div class="download_content block_container">
 					
 						<div class="download_entete_content">
-							<p class="download_entete_title">Télécharger PHPBoost 4.0</p>
+							<p class="download_entete_title">Télécharger PHPBoost 4.0 - Sirocco</p>
 							<span class="download_entete_desc">
 							C'est la versions conseillée pour tous les nouveaux membres et ceux qui souhaitent bénéficier de toute la puissance de PHPBoost.
 							</span>
@@ -65,80 +65,101 @@
 								<a href="#" class="d_button_a">
 									<img class="d_button_img" src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/logo.png" alt="" />
 									<p class="d_button_title">Télécharger PHPBoost 4.0</p>
-									<p class="d_button_com">Rév. 4.0.0 | PHP 5.1.2 | Ver. Complète | Zip </p>
+									<p class="d_button_com">Rev : 4.0.1 | Req : PHP 5.1.2 | .zip </p>
 								</a>
 							</div>
-							
 							<div class="d_button d_button_green">
 								<a href="#" class="d_button_a">
 									<img class="d_button_img" src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/logo.png" alt="" />
-									<p class="d_button_title">Mises à jour 4.0</p>
-									<p class="d_button_com d_button_com_green">Mises à jour et migration</p>
+									<p class="d_button_title">Mises à jour</p>
+									<p class="d_button_com d_button_com_green">Mise à jour et migration</p>
 								</a>
 							</div>
 						</div>
-						
-						<div class="d_link_container">
-							<a href="#"><h2 class="title" >Télécharger des modules pour PHPBoost 4.0</h2></a>
-							<span class="download_entete_desc">Les derniers modules pour la révision 4.0</span>
-							<ul class="bb_ul" style="padding-left:20px;">
-								<li class="bb_li"><a href="#">Calendrier</a></li>
-								<li class="bb_li"><a href="#">Forum</a></li>
-							</ul>
+						<div class="d_dev_container">
+							<a href="#" class="d_dev">Télécharger la version de développement </a>
 						</div>
-						<div class="d_link_container">
-							<a href="#"><h2 class="title" >Télécharger des themes  pour PHPBoost 4.0</h2></a>
-							<span class="download_entete_desc">Les derniers thèmes pour la révision 4.0</span>
-							<ul class="bb_ul" style="padding-left:20px;">
-								<li class="bb_li"><a href="#">lorem</a></li>
-								<li class="bb_li"><a href="#">Sangoten</a></li>
-							</ul>
-						</div>	
-																	
+						
+						
+						<hr style="margin:40px auto 0px auto;" />
+						
+						<div class="d_custom_content">
+							<div style="width: 90%;margin:auto;">
+								<div style="float:left; width: 47%;padding-right:15px;">
+									<img src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/img_modules.png" class="valign_middle d_custom_img" />
+									<h2 class="title d_custom_subtitle" ><a href="#">Les modules Compatibles V4.0</a></h2>
+									<p class="d_custom_exemple">
+										<a href="#">Calendrier</a>-
+										<a href="#">Forum</a>-
+										<a href="#">News</a>
+									</p>
+								</div>
+								<div style="float:left; width: 47%;padding-left:15px;">
+									<img src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/img_themes.png" class="valign_middle d_custom_img" />
+									<h2 class="title d_custom_subtitle" ><a href="#">Les thèmes Compatibles V4.0</a></h2>
+									<p class="d_custom_exemple">
+										<a href="#">Loren</a>-
+										<a href="#">Pikatchu</a>-
+										<a href="#">Sengoten</a>
+									</p>
+								</div>
+							</div>
+							
+							<div class="spacer"></div>
+						</div>										
 					</div>
 															
 					<div class="download_content block_container">
+					
 						<div class="download_entete_content">
-							<p class="download_entete_title">Télécharger PHPBoost 3.0</p>
-							<span class="download_entete_desc">Dernière révision stable de la 3.0</span>
+							<p class="download_entete_title">Télécharger PHPBoost 3.0 - Tornade</p>
+							<span class="download_entete_desc">Nous vous conseillons la version 4.0 pour tout nouveau site. 
+							</span>
 						</div>
-
 						
 						<div class="d_button_container">
 							<div class="d_button d_button_blue">
 								<a href="#" class="d_button_a">
 									<img class="d_button_img" src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/logo.png" alt="" />
 									<p class="d_button_title">Télécharger PHPBoost 3.0</p>
-									<p class="d_button_com">Rév. 3.0.11 | PHP 4 | Ver. Complète | Zip </p>
+									<p class="d_button_com">Rev : 3.0.11 | Req : PHP 4.0.1 | .zip </p>
 								</a>
 							</div>
-							
 							<div class="d_button d_button_green">
 								<a href="#" class="d_button_a">
 									<img class="d_button_img" src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/logo.png" alt="" />
-									<p class="d_button_title">Mises à jour 3.0</p>
-									<p class="d_button_com d_button_com_green">Mises à jour et migration</p>
+									<p class="d_button_title">Mises à jour</p>
+									<p class="d_button_com d_button_com_green">Mise à jour et migration</p>
 								</a>
 							</div>
-						</div>
+						</div>						
 						
-						<div class="d_link_container">
-							<a href="#"><h2 class="title" >Télécharger des modules pour PHPBoost 3.0</h2></a>
-							<span class="download_entete_desc">Les derniers modules pour la révision 3.0</span>
-							<ul class="bb_ul" style="padding-left:20px;">
-								<li class="bb_li"><a href="#">Calendrier</a></li>
-								<li class="bb_li"><a href="#">Forum</a></li>
-							</ul>
-						</div>
-						<div class="d_link_container">
-							<a href="#"><h2 class="title" >Télécharger des themes  pour PHPBoost 3.0</h2></a>
-							<span class="download_entete_desc">Les derniers thèmes pour la révision 3.0</span>
-							<ul class="bb_ul" style="padding-left:20px;">
-								<li class="bb_li"><a href="#">lorem</a></li>
-								<li class="bb_li"><a href="#">Sangoten</a></li>
-							</ul>
-						</div>	
+						<hr style="margin:40px auto 0px auto;" />
 						
+						<div class="d_custom_content">
+							<div style="width: 90%;margin:auto;">
+								<div style="float:left; width: 47%;padding-right:15px;">
+									<img src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/img_modules.png" class="valign_middle d_custom_img" />
+									<h2 class="title d_custom_subtitle" ><a href="#">Les modules Compatibles V3.0</a></h2>
+									<p class="d_custom_exemple">
+										<a href="#">Calendrier</a>-
+										<a href="#">Forum</a>-
+										<a href="#">News</a>
+									</p>
+								</div>
+								<div style="float:left; width: 47%;padding-left:15px;">
+									<img src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/img_themes.png" class="valign_middle d_custom_img" />
+									<h2 class="title d_custom_subtitle" ><a href="#">Les thèmes Compatibles V3.0</a></h2>
+									<p class="d_custom_exemple">
+										<a href="#">Loren</a>-
+										<a href="#">Pikatchu</a>-
+										<a href="#">Sengoten</a>
+									</p>
+								</div>
+							</div>
+							
+							<div class="spacer"></div>
+						</div>										
 					</div>
 					
 					<hr style="margin:20px auto 30px auto;" />
