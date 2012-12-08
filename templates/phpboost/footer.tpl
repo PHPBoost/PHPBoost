@@ -67,16 +67,22 @@
 			</div>	
 			<div class="spacer"></div>
 		</div>
-		<div id="footer_links">
+		<div style="margin:auto;width:920px;">
+			<div class="footer_social footer_social_guestbook">
+				<a href="#" title="Livre d'Or"></a>
+			</div>
 			<div class="footer_social footer_social_gplus">			
-				<a href="#"></a>
+				<a href="#" title="Google +"></a>
 			</div>
 			<div class="footer_social footer_social_twitter">			
-				<a href="#"></a>
+				<a href="#" title="Twitter"></a>
 			</div>
 			<div class="footer_social footer_social_facebook">			
-				<a href="http://www.facebook.com/pages/PHPBoost-CMS/229132847163144"></a>
+				<a href="http://www.facebook.com/pages/PHPBoost-CMS/229132847163144" title="Facebook"></a>
 			</div>
+		</div>	
+		<div id="footer_links">
+
 			
 			
 				# IF C_MENUS_FOOTER_CONTENT #
