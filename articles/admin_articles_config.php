@@ -76,47 +76,6 @@ if (retrieve(POST,'valid',false))
 }
 elseif (retrieve(POST,'articles_count',false)) //Recompte le nombre d'articles de chaque catégories
 {
-	$Cache->load('articles');
-
-	$result = $Sql->query_while ("SELECT idcat, COUNT(*) as nbr_articles_visible
-	FROM " . DB_TABLE_ARTICLES . "
-	WHERE visible = 1 AND idcat > 0
-	GROUP BY idcat", __LINE__, __FILE__);
-
-	$info_cat = array();
-	while ($row = $Sql->fetch_assoc($result))
-		$info_cat[$row['idcat']]['visible'] = $row['nbr_articles_visible'];
-
-	$Sql->query_close($result);
-
-	$result = $Sql->query_while ("SELECT idcat, COUNT(*) as nbr_articles_unvisible
-	FROM " . DB_TABLE_ARTICLES . " 
-	WHERE visible = 0 AND idcat > 0
-	GROUP BY idcat", __LINE__, __FILE__);
-
-	while ($row = $Sql->fetch_assoc($result))
-		$info_cat[$row['idcat']]['unvisible'] = $row['nbr_articles_unvisible'];
-
-	$Sql->query_close($result);
-
-	$result = $Sql->query_while("SELECT id, id_parent
-	FROM " . DB_TABLE_ARTICLES_CAT, __LINE__, __FILE__);
-	while ($row = $Sql->fetch_assoc($result))
-	{
-		$nbr_articles_visible = 0;
-		$nbr_articles_unvisible = 0;
-		foreach ($info_cat as $key => $value)
-		{
-			if ($key == $row['id'])
-			{
-				$nbr_articles_visible += isset($info_cat[$key]['visible']) ? $info_cat[$key]['visible'] : 0;
-				$nbr_articles_unvisible += isset($info_cat[$key]['unvisible']) ? $info_cat[$key]['unvisible'] : 0;
-			}
-		}
-		$Sql->query_inject("UPDATE " . DB_TABLE_ARTICLES_CAT. " SET nbr_articles_visible = '" . $nbr_articles_visible . "', nbr_articles_unvisible = '" . $nbr_articles_unvisible . "' WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
-	}
-	$Sql->query_close($result);
-
 	$Cache->Generate_module_file('articles');
 	AppContext::get_response()->redirect(HOST . DIR . '/articles/admin_articles_config.php');
 }
