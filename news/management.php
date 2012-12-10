@@ -109,11 +109,11 @@ elseif (!empty($_POST['submit']))
 		// Errors.
 		if (empty($news['title']))
 		{
-			$Template->put('message_helper', MessageHelper::display('e_require_title', E_USER_REDIRECT));
+			$Template->put('message_helper', MessageHelper::display($LANG['e_require_title'], E_USER_REDIRECT));
 		}
 		elseif (empty($news['desc']))
 		{
-			$Template->put('message_helper', MessageHelper::display('e_require_desc', E_USER_REDIRECT));
+			$Template->put('message_helper', MessageHelper::display($LANG['e_require_desc'], E_USER_REDIRECT));
 		}
 		else
 		{

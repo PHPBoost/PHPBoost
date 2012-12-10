@@ -1,133 +1,133 @@
-<script type="text/javascript">
-		<!--
-		var theme = '{THEME}';
-
-		function check_form()
+	<script type="text/javascript">
+	<!--
+	function check_form()
+	{
+		# IF C_BBCODE_TINYMCE_MODE #
+		tinyMCE.triggerSave();
+		# ENDIF #
+	
+		if (document.getElementById('title').value == "")
 		{
-			# IF C_BBCODE_TINYMCE_MODE #
-			tinyMCE.triggerSave();
-			# ENDIF #
-
-			if (document.getElementById('title').value == "")
-			{
-				alert("{L_REQUIRE_TITLE}");
-				new Effect.ScrollTo('title',{duration:1.2});
-				return false;
-			}
-			if (document.getElementById('contents').value == "")
-			{
-				alert("{L_REQUIRE_TEXT}");
-				new Effect.ScrollTo('scroll_contents',{duration:1.2});
-				return false;
-			}
-			return true;
-		}
-
-		function ajax_img_preview()
-		{
- 			document.getElementById('img_preview').innerHTML = '<img src="../templates/{THEME}/images/loading_mini.gif" alt="" class="valign_middle" />';
-			var img = document.getElementById('img_field').value;
-			var xhr_object_url = xmlhttprequest_init('xmlhttprequest.php?img_url=' + img + '&token={TOKEN}');
-
-			xhr_object_url.onreadystatechange = function()
-			{
-				//Transfert finished and successful
-				if( xhr_object_url.readyState == 4 && xhr_object_url.status == 200 && xhr_object_url.responseText != '' )
-				{
-					document.getElementById('img_field').value = xhr_object_url.responseText;
-					var xhr_object = xmlhttprequest_init('xmlhttprequest.php?img_preview=' + xhr_object_url.responseText + '&token={TOKEN}');
-
-					xhr_object.onreadystatechange = function()
-					{
-						//Transfert finished and successful
-						if( xhr_object.readyState == 4 && xhr_object.status == 200 && xhr_object.responseText != '' )
-						{
-							document.getElementById('img_preview').innerHTML = '<img src="' + xhr_object.responseText + '" alt="" class="valign_middle" />';
-						}
-						else
-						{
-							document.getElementById('img_preview').innerHTML = "";
-						}
-					}
-					xmlhttprequest_sender(xhr_object, null);
-				}
-				else
-				{
-					document.getElementById('img_preview').innerHTML = "";
-				}
-			}
-			xmlhttprequest_sender(xhr_object_url, null);
-		}
-
-		function ajax_preview()
-		{
-			if({JS_CONTRIBUTION} && document.getElementById('counterpart').value != '')
-			{
-				XMLHttpRequest_preview('counterpart');
-			}
-
-			if( check_form() )
-			{
-				document.getElementById('preview').innerHTML = '<img src="{PHP_PATH_TO_ROOT}/templates/{THEME}/images/loading_mini.gif" alt="" class="valign_middle" />';
-
-				new Ajax.Request(
-					'xmlhttprequest.php',
-					{
-						method: 'post',
-						parameters: {
-							preview: true,
-							token: '{TOKEN}',
-							id: document.getElementById('id').value,
-							title: document.getElementById('title').value,
-							idcat: document.getElementById('idcat').value,
-							desc: document.getElementById('contents').value,
-							extend_desc: document.getElementById('extend_contents').value,
-							user_id: document.getElementById('user_id').value,
-							date: document.getElementById('{RELEASE_CALENDAR_ID}').value,
-							hour: document.getElementById('release_hour').value,
-							min: document.getElementById('release_min').value,
-							img: document.getElementById('img_field').value,
-							alt: document.getElementById('alt').value
-						 },
-						onSuccess: function(response)
-						{
-							document.getElementById('preview').innerHTML = response.responseText;
-						}
-					}
-				);
-			}
+			alert("{L_REQUIRE_TITLE}");
+			new Effect.ScrollTo('title',{duration:1.2});
 			return false;
 		}
-		
-		function add_fields_sources(i, i_max) 
+		if (document.getElementById('contents').value == "")
 		{
-			var i2 = i + 1;
-
-			if( document.getElementById('name'+i) )
-				document.getElementById('name'+i).innerHTML = '<label><input type="text" size="40" name="name'+i+'" value="" class="text" /></label><br /><span id="name'+i2+'"></span>';	
-			if( document.getElementById('url'+i) )
-				document.getElementById('url'+i).innerHTML = '<label><input type="text" size="40" name="url'+i+'" value="" class="text" /></label><br /><span id="url'+i2+'"></span>';	
-			if( document.getElementById('s'+i) )
-				document.getElementById('s'+i).innerHTML = (i < i_max) ? '<div style="height:22px;text-align:center;line-height:22px;" id="s'+i2+'"><a href="javascript:add_fields_sources('+i2+', '+i_max+')"><img style="vertical-align:bottom;" src="../templates/{THEME}/images/form/plus.png" alt="+" />&nbsp;&nbsp;{L_ADD_SOURCES}</a></span>' : '';
-				
+			alert("{L_REQUIRE_TEXT}");
+			new Effect.ScrollTo('scroll_contents',{duration:1.2});
+			return false;
 		}
-		
-		# IF C_ADD #
-		function value_now(id_date, id_hour, id_min)
+		return true;
+	}
+	
+	function ajax_img_preview()
+	{
+	 	document.getElementById('img_preview').innerHTML = '<img src="../templates/{THEME}/images/loading_mini.gif" alt="" class="valign_middle" />';
+		var img = document.getElementById('img_field').value;
+		var xhr_object_url = xmlhttprequest_init('xmlhttprequest.php?img_url=' + img + '&token={TOKEN}');
+	
+		xhr_object_url.onreadystatechange = function()
 		{
-			var date = "{NOW_DATE}";
-			var hour = "{NOW_HOUR}";
-			var min = "{NOW_MIN}";
-
-			document.getElementById(id_date).value = date;
-			document.getElementById(id_hour).value = hour;
-			document.getElementById(id_min).value = min;
-
-			return true;
+				//Transfert finished and successful
+			if( xhr_object_url.readyState == 4 && xhr_object_url.status == 200 && xhr_object_url.responseText != '' )
+			{
+				document.getElementById('img_field').value = xhr_object_url.responseText;
+				var xhr_object = xmlhttprequest_init('xmlhttprequest.php?img_preview=' + xhr_object_url.responseText + '&token={TOKEN}');
+	
+				xhr_object.onreadystatechange = function()
+				{
+					//Transfert finished and successful
+					if( xhr_object.readyState == 4 && xhr_object.status == 200 && xhr_object.responseText != '' )
+					{
+						document.getElementById('img_preview').innerHTML = '<img src="' + xhr_object.responseText + '" alt="" class="valign_middle" />';
+					}
+					else
+					{
+						document.getElementById('img_preview').innerHTML = "";
+					}
+				}
+				xmlhttprequest_sender(xhr_object, null);
+			}
+			else
+			{
+				document.getElementById('img_preview').innerHTML = "";
+			}
 		}
-		# ENDIF #
-		-->
-		</script>
+		xmlhttprequest_sender(xhr_object_url, null);
+	}
+	
+	function ajax_preview()
+	{
+		if({JS_CONTRIBUTION} && document.getElementById('counterpart').value != '')
+		{
+			XMLHttpRequest_preview('counterpart');
+		}
+	
+		if( check_form() )
+		{
+			document.getElementById('preview').innerHTML = '<img src="{PHP_PATH_TO_ROOT}/templates/{THEME}/images/loading_mini.gif" alt="" class="valign_middle" />';
+	
+			new Ajax.Request(
+				'xmlhttprequest.php',
+				{
+					method: 'post',
+					parameters: {
+						preview: true,
+						token: '{TOKEN}',
+						id: document.getElementById('id').value,
+						title: document.getElementById('title').value,
+						idcat: document.getElementById('idcat').value,
+						desc: document.getElementById('contents').value,
+						extend_desc: document.getElementById('extend_contents').value,
+						user_id: document.getElementById('user_id').value,
+						date: document.getElementById('{RELEASE_CALENDAR_ID}').value,
+						hour: document.getElementById('release_hour').value,
+						min: document.getElementById('release_min').value,
+						img: document.getElementById('img_field').value,
+						alt: document.getElementById('alt').value
+					 },
+					onSuccess: function(response)
+					{
+						document.getElementById('preview').innerHTML = response.responseText;
+					}
+				}
+			);
+		}
+		return false;
+	}
+			
+	function add_fields_sources(i, i_max) 
+	{
+		var i2 = i + 1;
+	
+		if( document.getElementById('name'+i) )
+			document.getElementById('name'+i).innerHTML = '<label><input type="text" size="40" name="name'+i+'" value="" class="text" /></label><br /><span id="name'+i2+'"></span>';	
+		if( document.getElementById('url'+i) )
+			document.getElementById('url'+i).innerHTML = '<label><input type="text" size="40" name="url'+i+'" value="" class="text" /></label><br /><span id="url'+i2+'"></span>';	
+		if( document.getElementById('s'+i) )
+			document.getElementById('s'+i).innerHTML = (i < i_max) ? '<div style="height:22px;text-align:center;line-height:22px;" id="s'+i2+'"><a href="javascript:add_fields_sources('+i2+', '+i_max+')"><img style="vertical-align:bottom;" src="../templates/{THEME}/images/form/plus.png" alt="+" />&nbsp;&nbsp;{L_ADD_SOURCES}</a></span>' : '';
+			
+	}
+			
+	# IF C_ADD #
+	function value_now(id_date, id_hour, id_min)
+	{
+		var date = "{NOW_DATE}";
+		var hour = "{NOW_HOUR}";
+		var min = "{NOW_MIN}";
+	
+		document.getElementById(id_date).value = date;
+		document.getElementById(id_hour).value = hour;
+		document.getElementById(id_min).value = min;
+	
+		return true;
+	}
+	# ENDIF #
+	-->
+	</script>
+	
+	# INCLUDE message_helper #
 
 <form action="management.php?token={TOKEN}" name="form" method="post" onsubmit="return check_form();" class="fieldset_content" id="form">
 	<fieldset>
