@@ -270,14 +270,13 @@ class ArticlesHomePageExtensionPoint implements HomePageExtensionPoint
 
 			while ($row = $this->sql_querier->fetch_assoc($result))
 			{
-				//On reccourci le lien si il est trop long.
-				$fichier = (strlen($row['title']) > 45 ) ? substr(TextHelper::html_entity_decode($row['title']), 0, 45) . '...' : $row['title'];
+				$shorten_title = (strlen($row['title']) > 45 ) ? substr(TextHelper::html_entity_decode($row['title']), 0, 45) . '...' : $row['title'];
 				
 				$notation->set_id_in_module($row['id']);
 				
 				$tpl->assign_block_vars('articles', array(
 					'NAME' => $row['title'],
-					'ICON' => !empty($row['icon']) ? '<a href="articles' . url('.php?id=' . $row['id'] . '&amp;cat=' . $idartcat, '-' . $idartcat . '-' . $row['id'] . '+' . Url::encode_rewrite($fichier) . '.php') . '"><img src="' . $row['icon'] . '" alt="" class="valign_middle" /></a>' : '',
+					'ICON' => !empty($row['icon']) ? '<a href="articles' . url('.php?id=' . $row['id'] . '&amp;cat=' . $idartcat, '-' . $idartcat . '-' . $row['id'] . '+' . Url::encode_rewrite($shorten_title) . '.php') . '"><img src="' . $row['icon'] . '" alt="" class="valign_middle" /></a>' : '',
 					'CAT' => $ARTICLES_CAT[$idartcat]['name'],
 					'DATE' => gmdate_format('date_format_short', $row['timestamp']),
 					'COMPT' => $row['views'],
@@ -285,7 +284,7 @@ class ArticlesHomePageExtensionPoint implements HomePageExtensionPoint
 					'COM' => empty($row['number_comments']) ? '0' : $row['number_comments'],
 					'DESCRIPTION' => FormatingHelper::second_parse($row['description']),
 					'U_ARTICLES_PSEUDO' => '<a href="' . UserUrlBuilder::profile($row['user_id'])->absolute() . '" class="' . $array_class[$row['level']] . '"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . TextHelper::wordwrap_html($row['login'], 19) . '</a>',
-					'U_ARTICLES_LINK' => url('.php?id=' . $row['id'] . '&amp;cat=' . $idartcat, '-' . $idartcat . '-' . $row['id'] . '+' . Url::encode_rewrite($fichier) . '.php'),
+					'U_ARTICLES_LINK' => url('.php?id=' . $row['id'] . '&amp;cat=' . $idartcat, '-' . $idartcat . '-' . $row['id'] . '+' . Url::encode_rewrite($shorten_title) . '.php'),
 					'U_ARTICLES_LINK_COM' => url('.php?cat=' . $idartcat . '&amp;id=' . $row['id'] . '&amp;com=0', '-' . $idartcat . '-' . $row['id'] . '.php?com=0') . '#comments_list',
 					'U_ADMIN_EDIT_ARTICLES' => url('management.php?edit=' . $row['id']),
 					'U_ADMIN_DELETE_ARTICLES' => url('management.php?del=' . $row['id'] . '&amp;token=' . $Session->get_token()),
@@ -301,7 +300,6 @@ class ArticlesHomePageExtensionPoint implements HomePageExtensionPoint
 					'U_ARTICLES_WAITING' => 'articles.php?cat='.$idartcat,
 				));
 
-
 				$result = $this->sql_querier->query_while("SELECT a.id, a.title, a.icon, a.timestamp, a.views, a.user_id, a.description, m.user_id, m.login, m.level, note.average_notes, note.number_notes, com.number_comments
 				FROM " . DB_TABLE_ARTICLES . " a
 				LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = a.user_id
@@ -313,14 +311,13 @@ class ArticlesHomePageExtensionPoint implements HomePageExtensionPoint
 
 				while ($row = $this->sql_querier->fetch_assoc($result))
 				{
-					//On reccourci le lien si il est trop long.
-					$fichier = (strlen($row['title']) > 45 ) ? substr(TextHelper::html_entity_decode($row['title']), 0, 45) . '...' : $row['title'];
+					$shorten_title = (strlen($row['title']) > 45 ) ? substr(TextHelper::html_entity_decode($row['title']), 0, 45) . '...' : $row['title'];
 					
 					$notation->set_id_in_module($row['id']);
 					
 					$tpl->assign_block_vars('articles_invisible', array(
 						'NAME' => $row['title'],
-						'ICON' => !empty($row['icon']) ? '<a href="articles' . url('.php?id=' . $row['id'] . '&amp;cat=' . $idartcat, '-' . $idartcat . '-' . $row['id'] . '+' . Url::encode_rewrite($fichier) . '.php') . '"><img src="' . $row['icon'] . '" alt="" class="valign_middle" /></a>' : '',
+						'ICON' => !empty($row['icon']) ? '<a href="articles' . url('.php?id=' . $row['id'] . '&amp;cat=' . $idartcat, '-' . $idartcat . '-' . $row['id'] . '+' . Url::encode_rewrite($shorten_title) . '.php') . '"><img src="' . $row['icon'] . '" alt="" class="valign_middle" /></a>' : '',
 						'CAT' => $ARTICLES_CAT[$idartcat]['name'],
 						'DATE' => gmdate_format('date_format_short', $row['timestamp']),
 						'COMPT' => $row['views'],
@@ -328,7 +325,7 @@ class ArticlesHomePageExtensionPoint implements HomePageExtensionPoint
 						'COM' => empty($row['number_comments']) ? '0' : $row['number_comments'],
 						'DESCRIPTION' => FormatingHelper::second_parse($row['description']),
 						'U_ARTICLES_PSEUDO'=>'<a href="' . UserUrlBuilder::profile($row['user_id'])->absolute() . '" class="' . $array_class[$row['level']] . '"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . TextHelper::wordwrap_html($row['login'], 19) . '</a>',
-						'U_ARTICLES_LINK' => url('.php?id=' . $row['id'] . '&amp;cat=' . $idartcat, '-' . $idartcat . '-' . $row['id'] . '+' . Url::encode_rewrite($fichier) . '.php'),
+						'U_ARTICLES_LINK' => url('.php?id=' . $row['id'] . '&amp;cat=' . $idartcat, '-' . $idartcat . '-' . $row['id'] . '+' . Url::encode_rewrite($$shorten_title) . '.php'),
 						'U_ARTICLES_LINK_COM' => url('.php?cat=' . $idartcat . '&amp;id=' . $row['id'] . '&amp;com=%s', '-' . $idartcat . '-' . $row['id'] . '.php?com=0'),
 						'U_ADMIN_EDIT_ARTICLES' => url('management.php?edit=' . $row['id']),
 						'U_ADMIN_DELETE_ARTICLES' => url('management.php?del=' . $row['id'] . '&amp;token=' . $Session->get_token()),
