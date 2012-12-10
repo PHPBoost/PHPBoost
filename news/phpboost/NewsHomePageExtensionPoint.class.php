@@ -83,7 +83,7 @@ class NewsHomePageExtensionPoint implements HomePageExtensionPoint
 				
 			$news_cat->build_children_id_list($cat, $array_cat, RECURSIVE_EXPLORATION, DO_NOT_ADD_THIS_CATEGORY_IN_LIST, AUTH_NEWS_READ);
 		}
-		$where = " WHERE '" . $now->get_timestamp() . "' >= n.start AND ('" . $now->get_timestamp() . "' <= n.end OR n.end = 0) AND n.visible = 1 AND n.idcat IN (" . implode(', ', $array_cat) .")";
+		$where = " WHERE ('" . $now->get_timestamp() . "' >= n.start AND n.start > 0 AND ('" . $now->get_timestamp() . "' <= n.end OR n.end = 0) OR n.visible = 1) AND n.idcat IN (" . implode(', ', $array_cat) .")";
 
 		$nbr_news = $this->sql_querier->query("SELECT COUNT(*) FROM " . DB_TABLE_NEWS . " n" . $where, __LINE__, __FILE__);
 
