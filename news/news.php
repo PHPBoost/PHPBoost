@@ -34,7 +34,6 @@ $idnews = retrieve(GET, 'id', 0);
 $idcat = retrieve(GET, 'cat', 0);
 $arch = retrieve(GET, 'arch', false);
 $user = retrieve(GET, 'user', false, TBOOL);
-$level = array('', ' modo', ' admin');
 $now = new Date(DATE_NOW, TIMEZONE_AUTO);
 
 if (!$User->check_auth($NEWS_CONFIG['global_auth'], AUTH_NEWS_READ))
@@ -157,7 +156,7 @@ if (!empty($idnews)) // On affiche la news correspondant à l'id envoyé.
 			'IMG_DESC' => $news['alt'],
 			'ICON' => !empty($row['idcat']) ? FormatingHelper::second_parse_url($NEWS_CAT[$news['idcat']]['image']) : '',
 			'DATE' => $NEWS_CONFIG['display_date'] ? sprintf($NEWS_LANG['on'], $timestamp->format(DATE_FORMAT_SHORT, TIMEZONE_AUTO)) : '',
-			'LEVEL' =>	isset($news['level']) ? $level[$news['level']] : '',
+			'LEVEL' =>	isset($news['level']) ? UserService::get_level_class($news['level']) : '',
 			'PSEUDO' => $NEWS_CONFIG['display_author'] && !empty($news['login']) ? $news['login'] : false,
 			'COMMENTS' => isset($_GET['com']) && $NEWS_CONFIG['activ_com'] == 1 ? CommentsService::display($comments_topic)->render() : '',
 			'NEXT_NEWS' => $next_news['title'],
@@ -230,7 +229,7 @@ elseif ($user)
 			'EXTEND_CONTENTS' => !empty($row['extend_contents']) ? '<a style="font-size:10px" href="' . PATH_TO_ROOT . '/news/news' . url('.php?id=' . $row['id'], '-0-' . $row['id'] . '.php') . '">[' . $NEWS_LANG['extend_contents'] . ']</a><br /><br />' : '',
 			'PSEUDO' => $NEWS_CONFIG['display_author'] && !empty($row['login']) ? $row['login'] : '',
 			'U_USER_ID' => UserUrlBuilder::profile($row['user_id'])->absolute(),
-			'LEVEL' =>	isset($row['level']) ? $level[$row['level']] : '',
+			'LEVEL' =>	isset($row['level']) ? UserService::get_level_class($row['level']) : '',
 			'DATE' => $NEWS_CONFIG['display_date'] ? sprintf($NEWS_LANG['on'], $timestamp->format(DATE_FORMAT_SHORT, TIMEZONE_AUTO)) : '',
 			'FEED_MENU' => Feed::get_feed_menu(FEED_URL)
 		));
