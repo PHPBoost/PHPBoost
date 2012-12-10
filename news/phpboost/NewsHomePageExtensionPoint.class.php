@@ -207,22 +207,22 @@ class NewsHomePageExtensionPoint implements HomePageExtensionPoint
 
 		// Var commune
 		$tpl->put_all(array(
-			'L_ALERT_DELETE_NEWS' => $NEWS_LANG['alert_delete_news'],
-			'U_SYNDICATION' => SyndicationUrlBuilder::rss('news', $cat)->rel(),
-			'L_SYNDICATION' => $LANG['syndication'],
+			'C_WRITER' => $c_writer,
 			'C_ADD_OR_WRITER' => $c_add || $c_writer,
 			'C_ADD' => $c_add,
-			'U_ADD' => url(PATH_TO_ROOT . '/news/management.php?new=1'),
+			'FEED_MENU' => Feed::get_feed_menu(FEED_URL),
+			'L_ALERT_DELETE_NEWS' => $NEWS_LANG['alert_delete_news'],
+			'L_SYNDICATION' => $LANG['syndication'],
 			'L_ADD' => $NEWS_LANG['add_news'],
-			'C_WRITER' => $c_writer,
 			'L_NEWS_WAITING' => $NEWS_LANG['waiting_news'],
 			'C_ADMIN' => $User->check_level(User::ADMIN_LEVEL),
-			'U_ADMIN' => $cat > 0 ? url(PATH_TO_ROOT . '/news/admin_news_cat.php?edit=' . $cat) : url(PATH_TO_ROOT . '/news/admin_news_config.php#preview_description'),
 			'L_ADMIN' => $LANG['edit'],
 			'L_EDIT' => $LANG['edit'],
 			'L_DELETE' => $LANG['delete'],
 			'L_LAST_NEWS' => $NEWS_LANG['last_news'],
-			'FEED_MENU' => Feed::get_feed_menu(FEED_URL)
+			'U_ADD' => url(PATH_TO_ROOT . '/news/management.php?new=1&cat=' . $cat),
+			'U_ADMIN' => $cat > 0 ? url(PATH_TO_ROOT . '/news/admin_news_cat.php?edit=' . $cat) : url(PATH_TO_ROOT . '/news/admin_news_config.php#preview_description'),
+			'U_SYNDICATION' => SyndicationUrlBuilder::rss('news', $cat)->rel(),
 		));
 
 		// Affichage de l'édito
