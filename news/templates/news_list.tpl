@@ -56,7 +56,7 @@
 		# ENDIF #
 
 		# IF C_NEWS_NO_AVAILABLE #
-		<div class="module_position">
+		<div class="module_position edito">
 			<div class="module_top_l"></div>
 			<div class="module_top_r"></div>
 			<div class="module_top">
@@ -105,20 +105,20 @@
 				<div class="spacer"></div>
 			</div>
 			<div class="module_contents">
-				# START list #
-				# IF list.C_NEWS_ROW #<div class="spacer"></div># ENDIF #
+				# START news #
+				# IF news.C_NEWS_ROW #<div class="spacer"></div># ENDIF #
 				# IF C_NEWS_LINK_COLUMN #<div style="float:left;width:{COLUMN_WIDTH}%"># ELSE #<div># ENDIF #
 					<ul style="margin:0;padding:0;list-style-type:none;">
 						<li>
 							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/li.png" alt="" />
-							# IF list.ICON #<a href="{list.U_CAT}"><img class="valign_middle" src="{list.ICON}" alt="" /></a># ENDIF #
-							# IF list.DATE #<span class="text_small">{list.DATE} : </span># ENDIF #
-							<a href="{list.U_NEWS}">{list.TITLE}</a>
-							# IF list.C_COM #({list.COM})# ENDIF #
+							# IF news.C_ICON # <a href="{news.U_CAT}"><img class="valign_middle" src="{news.ICON}" alt="" /></a> # ENDIF #
+							# IF news.C_DATE #<span class="text_small">{list.DATE} : </span># ENDIF #
+							<a href="{list.U_LINK}">{news.TITLE}</a>
+							# IF news.C_COM #({news.NUMBER_COM})# ENDIF #
 						</li>
 					</ul>
 				</div>
-				# END list #
+				# END news #
 				<div class="spacer"></div>
 				# IF PAGINATION #<div class="text_center">{PAGINATION}</div># ENDIF #
 			</div>

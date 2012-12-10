@@ -52,7 +52,7 @@
 			<div class="module_bottom_l"></div>
            	<div class="module_bottom_r"></div>
            	<div class="module_bottom">
-               	<div style="float:left"># IF PSEUDO #<a class="small_link{LEVEL}" href="{U_USER_ID}">{PSEUDO}</a>, # ENDIF # {DATE}</div>
+               	<div style="float:left"># IF PSEUDO #<a class="small_link {LEVEL}" href="{U_USER_ID}">{PSEUDO}</a>, # ENDIF # {DATE}</div>
 				<div class="spacer">
            	</div>
 		</div>

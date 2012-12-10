@@ -37,7 +37,7 @@
 				</div>
         		<div class="module_top_com">
 					# IF C_ADMIN #
-					<a href="{U_ADMIN}" title="{L_ADMIN}">
+					<a href="{U_ADMIN}" title="{L_ADMIN}" class="img_link">
 						<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="{L_ADMIN}" />
 					</a>
 					# ENDIF #
@@ -101,8 +101,8 @@
 	        			<a href="{news.U_LINK}">{news.TITLE}</a>
 	        		</div>
 	        		<div class="module_top_com">
-						# IF news.U_COM #
-						<img src="{PATH_TO_ROOT}/templates/{THEME}/images/com_mini.png" alt="" class="valign_middle" /> {news.U_COM}
+						# IF news.C_COM #
+						<img src="{PATH_TO_ROOT}/templates/{THEME}/images/com_mini.png" alt="" class="valign_middle" /> <a href="{news.U_COM}">{news.COM}</a>
 						# ENDIF #
 						# IF news.C_EDIT #
 						<a href="{PATH_TO_ROOT}/news/management.php?edit={news.ID}" title="{L_EDIT}" class="img_link">
@@ -121,15 +121,18 @@
 	        		# IF news.C_IMG #<img src="{news.IMG}" alt="{news.IMG_DESC}" title="{news.IMG_DESC}" class="img_right" /># ENDIF #
 					# IF news.C_ICON #<a href="{news.U_CAT}"><img class="valign_middle" src="{news.ICON}" alt="" /></a># ENDIF #
 					{news.CONTENTS}
-					<br /><br />
-	        		{news.EXTEND_CONTENTS}
+					
+					# IF news.C_EXTEND_CONTENTS #
+						<br /><br />
+		        		{news.EXTEND_CONTENTS}
+	        		# ENDIF #
 					<br /><br />
 					<div class="spacer"></div>
 	    		</div>
 	    		<div class="module_bottom_l"></div>
 				<div class="module_bottom_r"></div>
 				<div class="module_bottom">
-					<div style="float:left"># IF news.PSEUDO #<a class="small_link{news.LEVEL}" href="{news.U_USER_ID}">{news.PSEUDO}</a>, # ENDIF # {news.DATE}</div>
+					<div style="float:left"># IF news.PSEUDO #<a class="small_link {news.LEVEL}" href="{news.U_USER_ID}">{news.PSEUDO}</a>, # ENDIF # # IF news.C_DATE # {news.DATE} # ENDIF #</div>
 					<div class="spacer"></div>
 	    		</div>
 			</div>

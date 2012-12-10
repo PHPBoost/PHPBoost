@@ -45,7 +45,6 @@ if (!empty($_POST['submit']))
 		'pagination_news' => retrieve(POST, 'pagination_news', 6),
 		'pagination_arch' => retrieve(POST, 'pagination_arch', 15),
 		'nbr_column' => retrieve(POST, 'nbr_column', 1),
-		'nbr_news' => $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_NEWS . " WHERE visible = 1", __LINE__, __FILE__),
 		'global_auth' => Authorizations::build_auth_array_from_form(AUTH_NEWS_READ, AUTH_NEWS_CONTRIBUTE, AUTH_NEWS_WRITE, AUTH_NEWS_MODERATE),
 		'edito_title' => stripslashes(retrieve(POST, 'edito_title', '')),
 		'edito' => stripslashes(retrieve(POST, 'edito', '', TSTRING_PARSE))

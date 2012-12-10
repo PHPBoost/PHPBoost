@@ -184,16 +184,16 @@ class UserService
 		$lang = LangLoader::get('user-common');
 		switch ($level) 
 		{
-			case -1:
+			case User::VISITOR_LEVEL:
 				return $lang['visitor'];
 			break;
-			case 0:
+			case User::MEMBER_LEVEL:
 				return $lang['member'];
 			break;
-			case 1:
+			case User::MODERATOR_LEVEL:
 			 	return $lang['moderator'];
 			break;
-			case 2:
+			case User::ADMIN_LEVEL:
 				return $lang['administrator'];
 			break;
 		}
@@ -212,6 +212,8 @@ class UserService
 			case User::ADMIN_LEVEL:
 				return 'admin';
 			break;
+			default:
+				return '';
 		}
 	}
 }
