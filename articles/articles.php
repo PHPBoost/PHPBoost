@@ -33,13 +33,14 @@ $articles_categories = new ArticlesCats();
 $page = retrieve(GET, 'p', 1, TUNSIGNED_INT);
 $cat = retrieve(GET, 'cat', 0);
 $idart = retrieve(GET, 'id', 0);	
+$now = new Date(DATE_NOW, TIMEZONE_AUTO);
 
 if (!empty($idart) && isset($cat))
 {		
 	$result = $Sql->query_while("SELECT a.contents, a.title, a.id, a.idcat, a.timestamp, a.sources, a.start, a.visible, a.user_id, a.icon, m.login, m.level, m.user_groups
 		FROM " . DB_TABLE_ARTICLES . " a 
 		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = a.user_id
-		WHERE a.id = '" . $idart . "'", __LINE__, __FILE__);
+		WHERE a.id = '" . $idart . "' AND (visible = 1 OR start <= '" . $now->get_timestamp() . "' AND start > 0 AND (end >= '" . $now->get_timestamp() . "' OR end = 0))", __LINE__, __FILE__);
 	$articles = $Sql->fetch_assoc($result);
 	$Sql->query_close($result);
 
@@ -50,19 +51,19 @@ if (!empty($idart) && isset($cat))
 		$error_controller = PHPBoostErrors::unexisting_page();
 		DispatchManager::redirect($error_controller);
 	}
-
-	//checking authorization
-	if ((!$User->check_auth($ARTICLES_CAT[$cat]['auth'], AUTH_ARTICLES_READ) && !$User->check_auth($articles['auth'], AUTH_ARTICLES_READ)) || ($articles['visible'] == 0 && $articles['user_id'] != $User->get_attribute('user_id')))
-	{
-		$error_controller = PHPBoostErrors::user_not_authorized();
-		DispatchManager::redirect($error_controller);
-	}
 	
 	if (empty($articles['id']))
 	{
 		$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
             $LANG['e_unexist_articles']);
         DispatchManager::redirect($controller);
+	}
+	
+	//checking authorization
+	if ((!$User->check_auth($ARTICLES_CAT[$cat]['auth'], AUTH_ARTICLES_READ) && !$User->check_auth($articles['auth'], AUTH_ARTICLES_READ)) || ($articles['visible'] == 0 && $articles['user_id'] != $User->get_attribute('user_id')))
+	{
+		$error_controller = PHPBoostErrors::user_not_authorized();
+		DispatchManager::redirect($error_controller);
 	}
 
 	$tpl = new FileTemplate('articles/articles.tpl');

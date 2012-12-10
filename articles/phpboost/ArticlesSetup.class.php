@@ -100,8 +100,6 @@ class ArticlesSetup extends DefaultModuleSetup
 			'c_order' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'name' => array('type' => 'string', 'length' => 150, 'notnull' => 1),
 			'description' => array('type' => 'text', 'length' => 65000),
-			'nbr_articles_visible' => array('type' => 'integer', 'length' => 9, 'notnull' => 1, 'default' => 0),
-			'nbr_articles_unvisible' => array('type' => 'integer', 'length' => 9, 'notnull' => 1, 'default' => 0),
 			'image' => array('type' => 'string', 'length' => 255, 'default' => "''"),
 			'visible' => array('type' => 'boolean', 'notnull' => 1, 'default' => 0),
 			'auth' => array('type' => 'text', 'default' => "''")
@@ -128,8 +126,6 @@ class ArticlesSetup extends DefaultModuleSetup
 			'c_order' => 1,
 			'name' => $this->messages['default.category.name'],
 			'description' => $this->messages['default.category.description'],
-			'nbr_articles_visible' => 1,
-			'nbr_articles_unvisible' => 0,
 			'image' => 'articles.png',
 			'visible' => 1,
 			'auth' => ''

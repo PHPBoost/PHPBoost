@@ -72,20 +72,16 @@ class ArticlesHomePageExtensionPoint implements HomePageExtensionPoint
 				DispatchManager::redirect($error_controller);
 			}
 
-			$cat_links = '';
-			//$cat_links .= ' <a href="articles' . url('.php?cat=' . $idartcat, '-' . $idartcat . '.php') . '">' . $ARTICLES_CAT[$idartcat]['name'] . '</a>';
 			$clause_cat = " WHERE ac.id_parent = '" . $idartcat . "' AND ac.visible = 1";
 		}
 		else //Racine.
 		{
-			//$cat_links = ' <a href="articles.php">' . $ARTICLES_LANG['title_articles'] . '</a>';
 			$clause_cat = " WHERE ac.id_parent = '0' AND ac.visible = 1";
 		}
 
 		$tpl = new FileTemplate('articles/articles_cat.tpl');
 
-		$nbr_articles = $this->sql_querier->query("SELECT COUNT(*) FROM " . DB_TABLE_ARTICLES . " WHERE visible = 1 AND idcat = '" . $idartcat . "' AND start <= '" . $now->get_timestamp() . "' AND (end >= '" . $now->get_timestamp() . "' OR end = 0)", __LINE__, __FILE__);
-		$nbr_articles_invisible = $this->sql_querier->query("SELECT COUNT(*) FROM " . DB_TABLE_ARTICLES . " WHERE idcat = '" . $idartcat . "' AND user_id != -1 AND (visible = 0 OR (start > '" . $now->get_timestamp() . "' AND (end <= '" . $now->get_timestamp() . "' OR start = 0)))", __LINE__, __FILE__);
+		$nbr_articles = $this->sql_querier->query("SELECT COUNT(*) FROM " . DB_TABLE_ARTICLES . " WHERE idcat = '" . $idartcat . "' AND (visible = 1 OR start <= '" . $now->get_timestamp() . "' AND start > 0 AND (end >= '" . $now->get_timestamp() . "' OR end = 0))", __LINE__, __FILE__);
 		$rewrite_title = Url::encode_rewrite($ARTICLES_CAT[$idartcat]['name']);
 
 		$get_sort = retrieve(GET, 'sort', '');
@@ -211,10 +207,10 @@ class ArticlesHomePageExtensionPoint implements HomePageExtensionPoint
 		$clause_unauth_cats = ($nbr_unauth_cats > 0) ? " AND ac.id NOT IN (" . implode(', ', $unauth_cats_sql) . ")" : '';
 
 		##### Catégories disponibles #####
-		
-		$result = $this->sql_querier->query_while("SELECT ac.id, ac.name, ac.auth, ac.description, ac.image, ac.nbr_articles_visible AS nbr_articles
+		$result = $this->sql_querier->query_while("SELECT ac.id, ac.name, ac.auth, ac.description, ac.image, a.idcat, COUNT(*) as nbr_articles
 		FROM " . DB_TABLE_ARTICLES_CAT . " ac
-		" . $clause_cat . $clause_unauth_cats . "
+		LEFT JOIN " . DB_TABLE_ARTICLES . " a ON ac.id = a.idcat
+		" . $clause_cat . $clause_unauth_cats . " AND (a.visible = 1 OR a.start <= '" . $now->get_timestamp() . "' AND a.start > 0 AND (a.end >= '" . $now->get_timestamp() . "' OR a.end = 0))
 		ORDER BY ac.id_parent, ac.c_order
 		" . $this->sql_querier->limit($Pagination->get_first_msg($CONFIG_ARTICLES['nbr_cat_max'], 'pcat'), $CONFIG_ARTICLES['nbr_cat_max']), __LINE__, __FILE__);
 
@@ -229,7 +225,11 @@ class ArticlesHomePageExtensionPoint implements HomePageExtensionPoint
 				'U_CAT' => url('.php?cat=' . $row['id'], '-' . $row['id'] . '+' . Url::encode_rewrite($row['name']) . '.php'),
 				'L_NBR_ARTICLES' => sprintf($ARTICLES_LANG['nbr_articles_info'], $row['nbr_articles']),
 			));
-			$total_cat++;
+			
+			if (!empty($row['id']))
+			{
+				$total_cat++;
+			}
 		}
 		
 		if ($total_cat > 0)
@@ -264,10 +264,11 @@ class ArticlesHomePageExtensionPoint implements HomePageExtensionPoint
 			LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = a.user_id
 			LEFT JOIN " . DB_TABLE_COMMENTS_TOPIC . " com ON com.id_in_module = a.id AND com.module_id = 'articles'
 			LEFT JOIN " . DB_TABLE_AVERAGE_NOTES . " note ON note.id_in_module = a.id AND note.module_name = 'articles'
-			WHERE a.visible = 1 AND a.idcat = '" . $idartcat .	"' AND a.start <= '" . $now->get_timestamp() . "' AND (a.end >= '" . $now->get_timestamp() . "' OR a.end = 0)
+			WHERE a.idcat = '" . $idartcat . "' AND (a.visible = 1 OR a.start <= '" . $now->get_timestamp() . "' AND a.start > 0 AND (a.end >= '" . $now->get_timestamp() . "' OR a.end = 0))
 			ORDER BY " . $sort . " " . $mode .
 			$this->sql_querier->limit($Pagination->get_first_msg($CONFIG_ARTICLES['nbr_articles_max'], 'p'), $CONFIG_ARTICLES['nbr_articles_max']), __LINE__, __FILE__);
 
+			$nbr_articles_invisible = 0;
 			while ($row = $this->sql_querier->fetch_assoc($result))
 			{
 				$shorten_title = (strlen($row['title']) > 45 ) ? substr(TextHelper::html_entity_decode($row['title']), 0, 45) . '...' : $row['title'];
@@ -289,6 +290,7 @@ class ArticlesHomePageExtensionPoint implements HomePageExtensionPoint
 					'U_ADMIN_EDIT_ARTICLES' => url('management.php?edit=' . $row['id']),
 					'U_ADMIN_DELETE_ARTICLES' => url('management.php?del=' . $row['id'] . '&amp;token=' . $Session->get_token()),
 				));
+				$nbr_articles_invisible++;
 			}
 
 			if($invisible && ($User->check_auth($ARTICLES_CAT[$idartcat]['auth'], AUTH_ARTICLES_MODERATE)))
@@ -305,7 +307,7 @@ class ArticlesHomePageExtensionPoint implements HomePageExtensionPoint
 				LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = a.user_id
 				LEFT JOIN " . DB_TABLE_COMMENTS_TOPIC . " com ON com.id_in_module = a.id AND com.module_id = 'articles'
 				LEFT JOIN " . DB_TABLE_AVERAGE_NOTES . " note ON note.id_in_module = a.id AND note.module_name = 'articles'
-				WHERE a.visible = 0 OR (a.start > '" . $now->get_timestamp() . "' AND (a.end <= '" . $now->get_timestamp() . "' OR a.start = 0)) AND a.idcat = '" . $idartcat .	"'  AND a.user_id != -1
+				WHERE a.visible = 0 AND (a.start = 0 AND a.end = 0) AND a.idcat = '" . $idartcat .	"'  AND a.user_id != -1
 				ORDER BY " . $sort . " " . $mode .
 				$this->sql_querier->limit($Pagination->get_first_msg($CONFIG_ARTICLES['nbr_articles_max'], 'p'), $CONFIG_ARTICLES['nbr_articles_max']), __LINE__, __FILE__);
 
@@ -325,7 +327,7 @@ class ArticlesHomePageExtensionPoint implements HomePageExtensionPoint
 						'COM' => empty($row['number_comments']) ? '0' : $row['number_comments'],
 						'DESCRIPTION' => FormatingHelper::second_parse($row['description']),
 						'U_ARTICLES_PSEUDO'=>'<a href="' . UserUrlBuilder::profile($row['user_id'])->absolute() . '" class="' . $array_class[$row['level']] . '"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . TextHelper::wordwrap_html($row['login'], 19) . '</a>',
-						'U_ARTICLES_LINK' => url('.php?id=' . $row['id'] . '&amp;cat=' . $idartcat, '-' . $idartcat . '-' . $row['id'] . '+' . Url::encode_rewrite($$shorten_title) . '.php'),
+						'U_ARTICLES_LINK' => url('.php?id=' . $row['id'] . '&amp;cat=' . $idartcat, '-' . $idartcat . '-' . $row['id'] . '+' . Url::encode_rewrite($shorten_title) . '.php'),
 						'U_ARTICLES_LINK_COM' => url('.php?cat=' . $idartcat . '&amp;id=' . $row['id'] . '&amp;com=%s', '-' . $idartcat . '-' . $row['id'] . '.php?com=0'),
 						'U_ADMIN_EDIT_ARTICLES' => url('management.php?edit=' . $row['id']),
 						'U_ADMIN_DELETE_ARTICLES' => url('management.php?del=' . $row['id'] . '&amp;token=' . $Session->get_token()),

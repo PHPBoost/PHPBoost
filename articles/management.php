@@ -58,19 +58,6 @@ if ($delete > 0)
 
 	$Sql->query_inject("DELETE FROM " . DB_TABLE_ARTICLES . " WHERE id = '" . $articles['id'] . "'", __LINE__, __FILE__);
 	$Sql->query_inject("DELETE FROM " . DB_TABLE_EVENTS . " WHERE module = 'articles' AND id_in_module = '" . $articles['id'] . "'", __LINE__, __FILE__);
-
-	$articles_cat_info = $Sql->query_array(DB_TABLE_ARTICLES_CAT, "id", "nbr_articles_visible", "nbr_articles_unvisible","WHERE id = '".$articles['idcat']."'", __LINE__, __FILE__);
-	
-	if($articles['visible'] == 1)
-	{
-		$nb = $articles_cat_info['nbr_articles_visible'] - 1;
-		$Sql->query_inject("UPDATE " . DB_TABLE_ARTICLES_CAT. " SET nbr_articles_visible = '" . $nb. "' WHERE id = '" . $articles['idcat'] . "'", __LINE__, __FILE__);
-	}
-	else
-	{
-		$nb = $articles_cat_info['nbr_articles_unvisible'] - 1;
-		$Sql->query_inject("UPDATE " . DB_TABLE_ARTICLES_CAT. " SET nbr_articles_unvisible = '" . $nb. "' WHERE id = '" . $articles['idcat'] . "'", __LINE__, __FILE__);
-	}
 	
 	CommentsService::delete_comments_topic_module('articles', $articles['id']);
 	NotationService::delete_notes_id_in_module('articles', $articles['id']);
@@ -127,17 +114,11 @@ elseif(retrieve(POST,'submit',false))
 		// Errors.
 		if (empty($articles['title']))
 		{
-			//TODO à dégager, géré par le formBuilder
-			$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
-                $LANG['e_require_title']);
-            DispatchManager::redirect($controller);
+			$Template->put('message_helper', MessageHelper::display($LANG['e_require_title'], E_USER_REDIRECT));
 		}
 		elseif (empty($articles['desc']))
 		{
-			//TODO à dégager, géré par le formBuilder
-			$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
-                $LANG['e_require_desc']);
-            DispatchManager::redirect($controller);
+			$Template->put('message_helper', MessageHelper::display($LANG['e_require_desc'], E_USER_REDIRECT));
 		}
 		else
 		{
@@ -168,44 +149,15 @@ elseif(retrieve(POST,'submit',false))
 
 			if ($articles['id'] > 0)
 			{
-				$visible = 1;
-				$date_now = new Date(DATE_NOW);
-
-				switch ($articles['visible'])
-				{
-					//If it's a time interval
-					case 2:
-						if ($begining_date->get_timestamp() < $date_now->get_timestamp() &&  $end_date->get_timestamp() > $date_now->get_timestamp())
-						{
-							$start_timestamp = $begining_date->get_timestamp();
-							$end_timestamp = $end_date->get_timestamp();
-						}
-						else
-						$visible = 0;
-
-						break;
-						//If it's always visible
-					case 1:
-						list($start_timestamp, $end_timestamp) = array(0, 0);
-						break;
-					default:
-						list($visible, $start_timestamp, $end_timestamp) = array(0, 0, 0);
-				}
-				$articles_properties = $Sql->query_array(PREFIX . "articles", "visible", "WHERE id = '" . $articles['id'] . "'", __LINE__, __FILE__);
-			
 				$Sql->query_inject("UPDATE " . DB_TABLE_ARTICLES . " SET idcat = '" . $articles['idcat'] . "', title = '" . $articles['title'] . "', contents = '" . $articles['desc'] . "',  icon = '" . $img . "',  visible = '" . $visible . "', start = '" .  $articles['start'] . "', end = '" . $articles['end'] . "', timestamp = '" . $articles['release'] . "', sources = '".$articles['sources']."', description = '".$articles['description']."'
 				WHERE id = '" . $articles['id'] . "'", __LINE__, __FILE__);
 
 				//If it wasn't approved and now it's, we try to consider the corresponding contribution as processed
-				if ($file_approved && !$articles_properties['visible'])
+				if ($file_approved)
 				{
 					$corresponding_contributions = ContributionService::find_by_criteria('articles', $articles['id']);
 					if (count($corresponding_contributions) > 0)
 					{
-						$articles_cat_info = $Sql->query_array(DB_TABLE_ARTICLES_CAT, "id", "nbr_articles_visible", "nbr_articles_unvisible","WHERE id = '".$articles['idcat']."'", __LINE__, __FILE__);
-						$nb_visible = $articles_cat_info['nbr_articles_visible'] + 1 ;
-						$nb_unvisible = $articles_cat_info['nbr_articles_unvisible'] - 1;
-						$Sql->query_inject("UPDATE " . DB_TABLE_ARTICLES_CAT. " SET nbr_articles_visible = '" . $nb_visible. "',nbr_articles_unvisible = '".$nb_unvisible."' WHERE id = '" . $articles['idcat'] . "'", __LINE__, __FILE__);
 						$file_contribution = $corresponding_contributions[0];
 						//The contribution is now processed
 						$file_contribution->set_status(Event::EVENT_STATUS_PROCESSED);
@@ -222,19 +174,6 @@ elseif(retrieve(POST,'submit',false))
 				$Sql->query_inject("INSERT INTO " . DB_TABLE_ARTICLES . " (idcat, title, contents,timestamp, visible, start, end, user_id, icon, sources, description)
 				VALUES('" . $articles['idcat'] . "', '" . $articles['title'] . "', '" . $articles['desc'] . "', '" . $articles['release'] . "', '" . $articles['visible'] . "', '" . $articles['start'] . "', '" . $articles['end'] . "', '" . $User->get_attribute('user_id') . "', '" . $img . "', '".$articles['sources']."', '".$articles['description']."')", __LINE__, __FILE__);
 				$articles['id'] = $Sql->insert_id("SELECT MAX(id) FROM " . DB_TABLE_ARTICLES);
-
-				$articles_cat_info = $Sql->query_array(DB_TABLE_ARTICLES_CAT, "id", "nbr_articles_visible", "nbr_articles_unvisible","WHERE id = '".$articles['idcat']."'", __LINE__, __FILE__);
-
-				if($articles['visible'] == 1)
-				{
-					$nb = $articles_cat_info['nbr_articles_visible'] + 1;
-					$Sql->query_inject("UPDATE " . DB_TABLE_ARTICLES_CAT. " SET nbr_articles_visible = '" . $nb. "' WHERE id = '" . $articles['idcat'] . "'", __LINE__, __FILE__);
-				}
-				else
-				{
-					$nb = $articles_cat_info['nbr_articles_unvisible'] + 1;
-					$Sql->query_inject("UPDATE " . DB_TABLE_ARTICLES_CAT. " SET nbr_articles_unvisible = '" . $nb. "' WHERE id = '" . $articles['idcat'] . "'", __LINE__, __FILE__);
-				}
 
 				//If the poster couldn't write, it's a contribution and we put it in the contribution panel, it must be approved
 				if ($auth_contrib)
@@ -283,9 +222,9 @@ elseif(retrieve(POST,'submit',false))
 			Feed::clear_cache('articles');
 
 			if ($articles['visible'])
-			AppContext::get_response()->redirect('./articles' . url('.php?id=' . $articles['id'].'&cat='.$articles['idcat'] , '-' . $articles['idcat'] . '-' . $articles['id'] . '+' . Url::encode_rewrite($articles['title']) . '.php'));
+				AppContext::get_response()->redirect('./articles' . url('.php?id=' . $articles['id'].'&cat='.$articles['idcat'] , '-' . $articles['idcat'] . '-' . $articles['id'] . '+' . Url::encode_rewrite($articles['title']) . '.php'));
 			else
-			AppContext::get_response()->redirect(url('articles.php'));
+				AppContext::get_response()->redirect(url('articles.php'));
 		}
 	}
 	else
