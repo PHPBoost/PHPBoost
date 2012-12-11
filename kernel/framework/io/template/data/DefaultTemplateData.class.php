@@ -73,7 +73,7 @@ class DefaultTemplateData implements TemplateData
 		// @deprecated
 			'C_USER_CONNECTED' => $is_connected,
 			'C_USER_NOTCONNECTED' => !$is_connected,
-			'C_BBCODE_TINYMCE_MODE' => AppContext::get_current_user()->get_editor() == 'tinymce'
+			'C_BBCODE_TINYMCE_MODE' => AppContext::get_current_user()->get_editor() == 'TinyMCE'
 		));
 	}
 
