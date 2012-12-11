@@ -181,12 +181,12 @@ p.d_custom_exemple{
 	text-align:left;
 	padding-left:56px;
 }
-p.d_custom_exemple a, a.d_dev{
+p.d_custom_exemple, a.d_dev{
 	font-style:italic;
 	color:#3F5164;
 	font-weight:normal;	
 }
-p.d_custom_exemple a:hover, a.d_dev:hover{ color:#25466C; text-decoration:none;}
+a.d_dev:hover{ color:#25466C; text-decoration:none;}
 
 img.d_custom_img{
 	float:left;	

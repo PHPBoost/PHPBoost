@@ -63,7 +63,7 @@ class UpdateServerConfigController extends UpdateController
 
 	private function build_form()
 	{
-		$this->form = new HTMLForm('continueForm', '#error');
+		$this->form = new HTMLForm('continueForm');
 		$action_fieldset = new FormFieldsetSubmit('actions');
 		$back = new FormButtonLink($this->lang['step.previous'], UpdateUrlBuilder::introduction(), 'templates/images/left.png');
 		$action_fieldset->add_element($back);

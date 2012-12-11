@@ -69,22 +69,19 @@
 		</div>
 		<div style="margin:auto;width:920px;">
 			<div class="footer_social footer_social_guestbook">
-				<a href="#" title="Livre d'Or"></a>
+				<a href="{PATH_TO_ROOT}/guestbook/" title="Livre d'Or"></a>
 			</div>
 			<div class="footer_social footer_social_gplus">			
-				<a href="#" title="Google +"></a>
+				<a href="https://plus.google.com/103112963627704533252" rel="publisher" title="Google +"></a>
 			</div>
 			<div class="footer_social footer_social_twitter">			
-				<a href="#" title="Twitter"></a>
+				<a href="http://twitter.com/PHPBoostCMS" title="Twitter"></a>
 			</div>
 			<div class="footer_social footer_social_facebook">			
 				<a href="http://www.facebook.com/pages/PHPBoost-CMS/229132847163144" title="Facebook"></a>
 			</div>
 		</div>	
 		<div id="footer_links">
-
-			
-			
 				# IF C_MENUS_FOOTER_CONTENT #
 				{MENUS_FOOTER_CONTENT}
 				# ENDIF #
