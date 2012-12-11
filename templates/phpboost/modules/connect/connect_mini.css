@@ -1,0 +1,228 @@
+.connect_form {
+	background:#858585;
+	border:1px solid #727272;
+	border-radius:5px;
+	-moz-border-radius:5px;
+	-khtml-border-radius:5px;
+	-webkit-border-radius:5px;
+	padding-left:4px;
+	padding-top:3px;
+	margin:10px 30px 0px 0px;
+	height:18px;
+	width:115px;
+	font-size:12px;
+	color: #E9ECEF;
+}
+
+
+.connect_form:hover, .connect_form:focus {
+	background:#898989;
+	border-color:#858585;
+}
+ 
+div.connect_align {
+	text-align:right;
+	
+}
+
+div.connect_align a {
+	color:#FFF;
+}
+ 
+.connect_align form {
+	text-align:left;
+	display:inline;
+}
+ 
+.connect_inline {
+	display:inline;
+}
+ 
+.connect_content {
+	text-align:left;
+}
+ 
+.connect_content ul{
+	margin:0;
+	padding:0;
+	padding-left:4px;
+	list-style-type:none;
+	line-height:18px;
+}
+ 
+.connect_register {
+	margin:0;
+	margin-top:5px;
+}
+ 
+.connect_vertical input#login, .connect_vertical input#password {
+	width:120px;
+}
+
+
+p.auto_connect{ 
+	margin:10px 0px 5px 10px;
+	color:#969595;
+}
+
+p.auto_connect input.submit{ margin:0px 2px; }
+
+p.connect_disconnect{
+	clear:both;
+	margin-top:8px; 
+	padding:5px 0px; 
+	text-align:center; 
+	border-top:1px solid #3b3b3b;
+}
+
+
+/* Ajout Thème PHPBoost */
+
+.connect_align input.submit{ margin-left:23px; }
+
+
+.connect_align ul, .connect_align li, .connect_align a {
+  position: relative;
+}
+
+.connect_align {
+  height: 44px;
+  float:right;
+}
+
+.left {
+  height: 44px;
+  float:left;
+}
+
+.connect_align > ul > li > a {
+  display: inline-block;
+  height: 32px;
+  text-decoration: none;
+}
+
+
+.connect_align ul li {
+  color: #ffffff;
+  display: inline-block;
+  font-size: 12px;
+  height: 32px;
+  padding: 12px 12px 0px 12px;
+  text-decoration: none;
+  float: left;
+}
+
+.connect_align > ul > li.submenu { background: url('images/green.png') repeat-x; }
+.connect_align > ul > li.submenu_alert { background: url('images/red.png') repeat-x; }
+
+.connect_align ul { list-style: none; }
+
+.connect_align .submenu { height: 32px; z-index: 200; }
+.connect_align .submenu:hover > ul { 
+	visibility:visible;
+	opacity:1;
+	transition:visibility 0s ease-out, opacity 0.3s ease-out ;
+	-webkit-transition:visibility 0s ease-out, opacity 0.3s ease-out ;
+	-moz-transition:visibility 0s ease-out, opacity 0.3s ease-out ;
+	-o-transition:visibility 0s ease-out, opacity 0.3s ease-out ;
+}
+
+.connect_align > ul > li.submenu:hover > a{ height: 32px; }
+
+img.connect_avatar{
+	float:left;
+	padding:5px;	
+}
+
+.connect_align .submenu ul {
+	position: absolute;
+	background: #353535;
+	left:-101px;
+	top: 43px;
+	height:133px;
+	width:300px;
+	z-index:200;
+	border-top:3px solid #2e5c35;
+	border-bottom:2px solid #99B1CB;
+	visibility:hidden;
+	opacity:0;
+	transition:visibility 1s ease-out, opacity 0.4s ease-out ;
+	-webkit-transition:visibility 1s ease-out, opacity 0.4s ease-out ;
+	-moz-transition:visibility 1s ease-out, opacity 0.4s ease-out ;
+	-o-transition:visibility 1s ease-out, opacity 0.4s ease-out ;
+}
+
+.connect_align .submenu_alert ul { border-top:3px solid #602b1b; }
+
+.connect_align .connect ul {
+	left:0px;
+	width:187px;
+	height:135px;
+}
+
+.connect_align .submenu ul li{ 
+	padding-top:3px;
+	height: auto;
+	text-align:left; 
+}
+
+.connect_align .submenu ul li a {
+	font-size: 11px;
+	line-height: 20px;
+	text-align:left;
+	border-bottom:1px solid #383838;
+}
+.connect_align .submenu ul li a:last-child { border-bottom:none; }
+
+div.welcome{
+	overflow:hidden;
+	float:right;
+	text-align:right;
+	color:#bbbaba;
+	font-size:10px;
+	font-style:Italic;
+	padding:13px 10px 0px 0px;
+}
+div.welcome a, div.welcome a:hover{
+	color:#969595;
+	text-transform : capitalize;
+	font-size:11px;
+	font-style:normal;
+	font-weight:bold;
+}
+div.welcome a:hover{ color:#bbbaba; }
+
+li.disconnect, li.subscribe{ 
+	margin:0px 3px;
+	height:29px !important; 
+	border-bottom:2px solid #353535;
+	transition: border 1s ease-out;
+    -webkit-transition: border 1s ease-out;
+    -moz-transition: border 1s ease-out;
+    -o-transition: border 1s ease-out;
+}
+li.disconnect:hover, li.subscribe:hover{ 
+	border-bottom:2px solid #336397;
+	transition: border 0.3s ease-out;
+    -webkit-transition: border 0.3s ease-out;
+    -moz-transition: border 0.3s ease-out;
+    -o-transition: border 0.3s ease-out;
+}
+
+li.disconnect a, li.subscribe a { 
+	font-size:11px; 
+	color:#969595;
+	transition: color 1s ease-out;
+	-webkit-transition: color 1s ease-out;
+    -moz-transition: color 1s ease-out;
+    -o-transition: color 1s ease-out;
+}
+li.disconnect a:hover, li.subscribe a:hovers{ 
+	font-size:11px;
+	color:#bbbaba; 
+	text-decoration:none; 
+	transition: color 0.3s ease-out;
+	-webkit-transition: color 0.3s ease-out;
+    -moz-transition: color 0.3s ease-out;
+    -o-transition: color 0.3s ease-out;
+}
