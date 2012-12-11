@@ -88,18 +88,4 @@
 					<input type="reset" value="{L_RESET}" class="reset" />				
 				</fieldset>	
 			</form>
-
-			<form action="admin_articles_config.php?token={TOKEN}" name="form" method="post" class="fieldset_content">
-				<fieldset>
-					<legend>{L_RECOUNT}</legend>
-					<img src="../templates/{THEME}/images/admin/maintain.png" alt="" class="valign_middle" />
-							{L_EXPLAIN_ARTICLES_COUNT}
-							<br /><br />
-				</fieldset>			
-				<fieldset class="fieldset_submit">
-					<legend>{L_RECOUNT}</legend>
-					<input type="submit" name="articles_count" value="{L_RECOUNT}" class="submit" /> 				
-				</fieldset>	
-			</form>
 		</div>
-		

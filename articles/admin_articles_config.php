@@ -74,11 +74,6 @@ if (retrieve(POST,'valid',false))
 	$Cache->Generate_module_file('articles');
 	AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);
 }
-elseif (retrieve(POST,'articles_count',false)) //Recompte le nombre d'articles de chaque catégories
-{
-	$Cache->Generate_module_file('articles');
-	AppContext::get_response()->redirect(HOST . DIR . '/articles/admin_articles_config.php');
-}
 //Sinon on rempli le formulaire
 else
 {

@@ -37,8 +37,6 @@ global $ARTICLES_LANG;
 // contribution
 $ARTICLES_LANG = array(
 	'articles_management' => 'Articles management',
-	'recount' => 'Recount',
-	'explain_articles_count' => 'Recount the number of articles per category',
 	'nbr_articles_max' => 'Maximum number of displayed articles',
 	'alert_delete_article' => 'Delete this article ?',
 	'select_page' => 'Select a page',
