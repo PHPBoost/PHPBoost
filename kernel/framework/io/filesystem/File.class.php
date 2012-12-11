@@ -200,10 +200,12 @@ class File extends FileSystemElement
 		}
 		$this->open(self::WRITE);
 		$success = @flock($this->file_descriptor, LOCK_EX, $blocking);
+		/*
 		if (!$success)
 		{
 			throw new IOException('The file ' . $this->get_path() . ' couldn\'t been locked');
 		}
+		*/
 	}
 
 	/**
@@ -218,10 +220,11 @@ class File extends FileSystemElement
 		}
 		$this->open(self::WRITE);
 		$succeed = @flock($this->file_descriptor, LOCK_UN);
-		if (!$succeed)
+		/*if (!$succeed)
 		{
 			throw new IOException('The file ' . $this->get_path() . ' couldn\'t been unlocked');
 		}
+		*/
 	}
 
 	/**

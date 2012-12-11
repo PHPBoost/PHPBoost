@@ -45,7 +45,8 @@ $notation->set_notation_scale($CONFIG_DOWNLOAD['note_max']);
 
 if (!empty($file_id))
 {
-	$download_info = $Sql->query_array(PREFIX . 'download', '*', "WHERE visible = 1 AND approved = 1 AND id = '" . $file_id . "'", __LINE__, __FILE__);
+	$now = new Date(DATE_NOW, TIMEZONE_AUTO);
+	$download_info = $Sql->query_array(PREFIX . 'download', '*', "WHERE approved = 1 AND id = '" . $file_id . "' AND (visible = 1 OR start <= '" . $now->get_timestamp() . "' AND start > 0 AND (end >= '" . $now->get_timestamp() . "' OR end = 0))", __LINE__, __FILE__);
 
 	if (empty($download_info['id']))
 	{

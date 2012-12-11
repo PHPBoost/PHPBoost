@@ -115,7 +115,7 @@ class DownloadHomePageExtensionPoint implements HomePageExtensionPoint
 		}
 		
 		//Contenu de la catégorie	
-		$nbr_files = (int)$this->sql_querier->query("SELECT COUNT(*) FROM " . PREFIX . "download WHERE visible = 1 AND approved = 1 AND idcat = '" . $category_id . "' AND start <= '" . $now->get_timestamp() . "' AND (end >= '" . $now->get_timestamp() . "' OR end = 0)", __LINE__, __FILE__);
+		$nbr_files = (int)$this->sql_querier->query("SELECT COUNT(*) FROM " . PREFIX . "download WHERE idcat = '" . $category_id . "' AND approved = 1 AND (visible = 1 OR start <= '" . $now->get_timestamp() . "' AND start > 0 AND (end >= '" . $now->get_timestamp() . "' OR end = 0))", __LINE__, __FILE__);
 		if ($nbr_files > 0)
 		{
 			$get_sort = retrieve(GET, 'sort', '');	
@@ -198,7 +198,7 @@ class DownloadHomePageExtensionPoint implements HomePageExtensionPoint
 			$result = $this->sql_querier->query_while("SELECT d.id, d.title, d.timestamp, d.size, d.count, d.image, d.short_contents, notes.average_notes
 			FROM " . PREFIX . "download d
 			LEFT JOIN " . DB_TABLE_AVERAGE_NOTES . " notes ON d.id = notes.id_in_module AND module_name = 'download'
-			WHERE visible = 1 AND approved = 1 AND idcat = '" . $category_id . "' AND start <= '" . $now->get_timestamp() . "' AND (end >= '" . $now->get_timestamp() . "' OR end = 0)
+			WHERE approved = 1 AND idcat = '" . $category_id . "' AND (visible = 1 OR start <= '" . $now->get_timestamp() . "' AND start > 0 AND (end >= '" . $now->get_timestamp() . "' OR end = 0))
 			ORDER BY " . $sort . " " . $mode . 
 			$this->sql_querier->limit($Pagination->get_first_msg($CONFIG_DOWNLOAD['nbr_file_max'], 'p'), $CONFIG_DOWNLOAD['nbr_file_max']), __LINE__, __FILE__);
 			while ($row = $this->sql_querier->fetch_assoc($result))
