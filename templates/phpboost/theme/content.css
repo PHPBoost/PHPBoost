@@ -544,8 +544,6 @@ a.msg_link_pseudo:hover {
     clear:both;
     text-align:justify;
 	word-wrap:break-word;
-	overflow:auto;
-
 }
 
 .module_bottom_l { /* Barre inférieure des modules */}

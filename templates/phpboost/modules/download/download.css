@@ -190,6 +190,7 @@ a.d_dev:hover{ color:#25466C; text-decoration:none;}
 
 img.d_custom_img{
 	float:left;	
+	overflow:none;
 }
 
 div.d_link_container, div.d_other_container{
