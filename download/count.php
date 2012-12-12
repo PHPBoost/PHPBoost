@@ -31,6 +31,8 @@ require_once('download_auth.php');
 
 $idurl = retrieve(GET, 'id', 0);
 
+load_module_lang('download');
+
 if (!empty($idurl))
 {
 	$Sql->query_inject("UPDATE " . PREFIX . "download SET count = count + 1 WHERE id = '" . $idurl . "'", __LINE__, __FILE__); //MAJ du counteur.
