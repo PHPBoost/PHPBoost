@@ -62,7 +62,7 @@
 					
 					<div class="d_button_container">
 						<div class="d_button d_button_blue">
-							<a href="#" class="d_button_a">
+							<a href="{PATH_TO_ROOT}/download/file-229+phpboost-4-0.php" class="d_button_a">
 								<img class="d_button_img" src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/logo.png" alt="" />
 								<p class="d_button_title">Télécharger PHPBoost 4.0</p>
 								<p class="d_button_com">Rev : 4.0.1 | Req : PHP 5.1.2 | .zip </p>
@@ -77,7 +77,7 @@
 						</div>
 					</div>
 					<div class="d_dev_container">
-						<a href="#" class="d_dev">Télécharger la version de développement </a>
+						<a href="#" class="d_dev">Télécharger la version de développement</a>
 					</div>
 					
 					<hr style="margin:10px auto 0px auto;" />
@@ -118,7 +118,7 @@
 					
 					<div class="d_button_container">
 						<div class="d_button d_button_blue">
-							<a href="http://dl.phpboost.com/fr/phpboost/3.0/phpboost-full.zip" class="d_button_a">
+							<a href="{PATH_TO_ROOT}/download/file-111+phpboost-3-0-complete.php" class="d_button_a">
 								<img class="d_button_img" src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/logo.png" alt="" />
 								<p class="d_button_title">Télécharger PHPBoost 3.0</p>
 								<p class="d_button_com">Rev : 3.0.11 | Req : PHP 4.0.1 | .zip </p>
