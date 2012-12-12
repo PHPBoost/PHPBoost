@@ -208,7 +208,7 @@
 					<dt><label for="release_date">* {L_RELEASE_DATE}</label></dt>
 					<dd>
 						<div onclick="document.getElementById('start_end_date').checked = true;">
-							<input type="radio" value="2" name="visible" id="start_end_date"# IF VISIBLE_WAITING # checked="checked"# ENDIF # />
+							<input type="radio" value="2" name="visible" id="start_end_date"# IF C_VISIBLE_WAITING # checked="checked"# ENDIF # />
 							{L_FROM_DATE}
 							{START_CALENDAR}
 							{L_AT}
@@ -222,9 +222,9 @@
 							&nbsp;{L_UNIT_HOUR}&nbsp;
 							<input type="text" size="2" maxlength="2" name="end_min" value="{END_MIN}" class="text" />
 						</div>
-						<input type="radio" value="1" name="visible"# IF VISIBLE_ENABLED # checked="checked"# ENDIF # id="release_date" /> {L_IMMEDIATE}
+						<input type="radio" value="1" name="visible"# IF C_VISIBLE_ENABLED # checked="checked"# ENDIF # id="release_date" /> {L_IMMEDIATE}
 						<br />
-						<input type="radio" value="0" name="visible"# IF VISIBLE_UNAPROB # checked="checked"# ENDIF # /> {L_UNAPROB}
+						<input type="radio" value="0" name="visible"# IF C_VISIBLE_UNAPROB # checked="checked"# ENDIF # /> {L_UNAPROB}
 					</dd>
 				</dl>
 				# ENDIF #

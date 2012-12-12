@@ -134,7 +134,7 @@ elseif (!empty($_POST['submit']))
 					$news['end'] = 0;
 				}
 
-				$news['visible'] = 1;
+				$news['visible'] = 0;
 			}
 			else
 			{
