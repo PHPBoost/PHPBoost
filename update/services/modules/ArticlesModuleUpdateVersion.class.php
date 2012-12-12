@@ -135,7 +135,9 @@ class ArticlesModuleUpdateVersion extends ModuleUpdateVersion
 	{
 		$this->db_utils->drop_column(PREFIX .'articles_cats', 'id_left');
 		$this->db_utils->drop_column(PREFIX .'articles_cats', 'id_right');
-		$this->db_utils->drop_column(PREFIX .'articles_cats', 'level');
+		$this->db_utils->drop_column(PREFIX .'articles_cats', 'id_left');
+		$this->db_utils->drop_column(PREFIX .'articles_cats', 'nbr_articles_visible');
+		$this->db_utils->drop_column(PREFIX .'articles_cats', 'nbr_articles_unvisible');
 		
 		$this->db_utils->add_column(PREFIX .'articles_cats', 'id_parent', array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0));
 		$this->db_utils->add_column(PREFIX .'articles_cats', 'c_order', array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0));
