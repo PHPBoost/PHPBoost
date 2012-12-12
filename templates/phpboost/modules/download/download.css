@@ -131,24 +131,23 @@ p.d_button_com{
 	text-align:left;	
 }
 div.d_button_blue p.d_button_com{ color:#C4994D; padding-left:60px; }
-div.d_button_green p.d_button_com{ color:#b3aeae; padding-left:50px; }
+div.d_button_green p.d_button_com{ color:#b3aeae; padding-left:55px; }
 div.d_button_gray p.d_button_com{ color:#b3aeae; text-align:center;}
 
 
 a.d_button_a{
 	display:block;
 	height:50px;
-	padding:5px 10px;
+	padding:6px 6px;
 }
 a.d_button_a:hover{ text-decoration:none; }
 
-div.d_button_blue a.d_button_a{ width:290px; }
-div.d_button_green a.d_button_a{ width:175px; }
+div.d_button_blue a.d_button_a{ width:305px; }
+div.d_button_green a.d_button_a{ width:180px; }
 div.d_button_gray a.d_button_a{ height:40px; width:175px; }
 
 img.d_button_img{
 	float:left;
-	width:40px;
 	filter: alpha(opacity=70);
 	-ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=70);
 	-moz-opacity: 0.70;
@@ -157,6 +156,7 @@ img.d_button_img{
     -moz-transition: all 0.3s ease-out;
     -o-transition: all 0.3s ease-out;
     transition: all 0.3s ease-out;
+    overflow:hidden;
 }
 
 a.d_button_a:hover img.d_button_img{
@@ -164,6 +164,7 @@ a.d_button_a:hover img.d_button_img{
 	-ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
 	-moz-opacity: 1;
 	opacity: 1;
+	overflow:hidden;
 }
 
 h2.d_custom_subtitle{
@@ -190,7 +191,7 @@ a.d_dev:hover{ color:#25466C; text-decoration:none;}
 
 img.d_custom_img{
 	float:left;	
-	overflow:none;
+	overflow:hidden;
 }
 
 div.d_link_container, div.d_other_container{

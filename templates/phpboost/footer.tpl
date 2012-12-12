@@ -80,6 +80,9 @@
 			<div class="footer_social footer_social_facebook">			
 				<a href="http://www.facebook.com/pages/PHPBoost-CMS/229132847163144" title="Facebook"></a>
 			</div>
+			<div class="footer_social footer_social_rss">
+				<a href="{PATH_TO_ROOT}/xxx/" title="Flux RSS"></a>
+			</div>
 		</div>	
 		<div id="footer_links">
 				# IF C_MENUS_FOOTER_CONTENT #
