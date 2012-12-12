@@ -598,7 +598,6 @@ class MenuService
 		foreach ($modules as $module)
 		{
 			$configuration = $module->get_configuration();
-			$start_page = $configuration->get_home_page();
 			if (!empty($start_page))
 			{
 				$img = '';
@@ -613,7 +612,7 @@ class MenuService
 						break;
 					}
 				}
-				$modules_menu->add(new LinksMenuLink($configuration->get_name(), '/' . $module->get_id() . '/' . $start_page, $img));
+				$modules_menu->add(new LinksMenuLink($configuration->get_name(), '/' . $module->get_id() . '/', $img));
 			}
 		}
 		return $modules_menu;
