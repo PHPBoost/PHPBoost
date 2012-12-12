@@ -93,13 +93,16 @@ class Folder extends FileSystemElement
 					}
 
 					$file = $path . '/' . $fse_name;
-					if (is_dir($file))
+					if (!is_link($file))
 					{
-						$this->folders[] = new Folder($file);
-					}
-					else
-					{
-						$this->files[] = new File($file);
+						if (is_dir($file))
+						{
+							$this->folders[] = new Folder($file);
+						}
+						else
+						{
+							$this->files[] = new File($file);
+						}
 					}
 				}
 				closedir($dh);
