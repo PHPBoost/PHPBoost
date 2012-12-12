@@ -64,5 +64,4 @@ class FormFieldHidden extends AbstractFormField
         return new StringTemplate(self::$tpl_src);
     }
 }
-
 ?>

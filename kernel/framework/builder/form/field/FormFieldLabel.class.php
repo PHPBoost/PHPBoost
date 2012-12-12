@@ -65,5 +65,4 @@ class FormFieldLabel extends AbstractFormField
 			'field.getValue = function() { return ""; };';
 	}
 }
-
 ?>

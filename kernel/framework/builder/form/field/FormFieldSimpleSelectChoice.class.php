@@ -108,5 +108,4 @@ class FormFieldSimpleSelectChoice extends AbstractFormFieldChoice
         return new FileTemplate('framework/builder/form/FormField.tpl');
     }
 }
-
 ?>

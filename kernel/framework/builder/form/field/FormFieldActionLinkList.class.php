@@ -70,5 +70,4 @@ class FormFieldActionLinkList extends AbstractFormField
 		return new FileTemplate('framework/builder/form/FormFieldActionLinkList.tpl');
 	}
 }
-
 ?>

@@ -109,5 +109,4 @@ class FormFieldCheckbox extends AbstractFormField
         return new FileTemplate('framework/builder/form/FormField.tpl');
     }
 }
-
 ?>
