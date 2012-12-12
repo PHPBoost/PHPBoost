@@ -63,14 +63,14 @@
 					<div class="d_button_container">
 						<div class="d_button d_button_blue">
 							<a href="{PATH_TO_ROOT}/download/file-229+phpboost-4-0.php" class="d_button_a">
-								<img class="d_button_img" src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/logo.png" alt="" />
+								<img class="d_button_img" src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/img_phpboost.png" alt="" />
 								<p class="d_button_title">Télécharger PHPBoost 4.0</p>
 								<p class="d_button_com">Rev : 4.0.1 | Req : PHP 5.1.2 | .zip </p>
 							</a>
 						</div>
 						<div class="d_button d_button_green">
 							<a href="{PATH_TO_ROOT}/download/category-36+mises-jour.php" class="d_button_a">
-								<img class="d_button_img" src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/logo.png" alt="" />
+								<img class="d_button_img" src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/img_phpboost.png" alt="" />
 								<p class="d_button_title">Mises à jour</p>
 								<p class="d_button_com d_button_com_green">Mise à jour et migration</p>
 							</a>
@@ -119,14 +119,14 @@
 					<div class="d_button_container">
 						<div class="d_button d_button_blue">
 							<a href="{PATH_TO_ROOT}/download/file-111+phpboost-3-0-complete.php" class="d_button_a">
-								<img class="d_button_img" src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/logo.png" alt="" />
+								<img class="d_button_img" src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/img_phpboost.png" alt="" />
 								<p class="d_button_title">Télécharger PHPBoost 3.0</p>
 								<p class="d_button_com">Rev : 3.0.11 | Req : PHP 4.0.1 | .zip </p>
 							</a>
 						</div>
 						<div class="d_button d_button_green">
 							<a href="{PATH_TO_ROOT}/download/category-39+mises-jour.php" class="d_button_a">
-								<img class="d_button_img" src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/logo.png" alt="" />
+								<img class="d_button_img" src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/img_phpboost.png" alt="" />
 								<p class="d_button_title">Mises à jour</p>
 								<p class="d_button_com d_button_com_green">Mise à jour et migration</p>
 							</a>
