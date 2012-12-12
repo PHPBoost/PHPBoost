@@ -252,7 +252,7 @@ else
 
 			// Calendrier.
 			$start_calendar = new MiniCalendar('start');
-			$start = new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, ($articles['start'] > 0 ? $articles['start'] : $now->get_timestamp()));
+			$start = new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, ($articles['start'] > 0 ? $articles['start'] : ''));
 			$start_calendar->set_date($start);
 			
 			$end_calendar = new MiniCalendar('end');
@@ -301,14 +301,14 @@ else
 			$tpl->put_all(array(
 				'C_ADD' => true,
 				'C_CONTRIBUTION' => false,
+				'C_VISIBLE_WAITING' => !empty($articles['start']) || !empty($articles['end']),
+				'C_VISIBLE_ENABLED' => $articles['visible'] && empty($articles['start']) && empty($articles['end']),
+				'C_VISIBLE_UNAPROB' => !$articles['visible'] && empty($articles['start']) && empty($articles['end']),
 				'JS_CONTRIBUTION' => 'false',
 				'RELEASE_CALENDAR_ID' => $release_calendar->get_html_id(),
 				'TITLE_ART' => $articles['title'],
 				'CONTENTS' => FormatingHelper::unparse($articles['contents']),
 				'DESCRIPTION' => FormatingHelper::unparse($articles['description']),
-				'VISIBLE_WAITING' => $articles['visible'] && (!empty($articles['start']) || !empty($articles['end'])),
-				'VISIBLE_ENABLED' => $articles['visible'] && empty($articles['start']) && empty($articles['end']),
-				'VISIBLE_UNAPROB' => !$articles['visible'],
 				'START_CALENDAR' => $start_calendar->display(),
 				'START_HOUR' => !empty($articles['start']) ? $start->get_hours() : '',
 				'START_MIN' => !empty($articles['start']) ? $start->get_minutes() : '',
