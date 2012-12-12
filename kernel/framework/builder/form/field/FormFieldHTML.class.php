@@ -60,5 +60,4 @@ class FormFieldHTML extends AbstractFormField
 		return new StringTemplate('{HTML}');
 	}
 }
-
 ?>

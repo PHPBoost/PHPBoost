@@ -36,5 +36,4 @@ class FormFieldCSRFToken extends FormFieldHidden
         parent::__construct('token', AppContext::get_session()->get_token());
     }
 }
-
 ?>

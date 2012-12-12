@@ -77,5 +77,4 @@ class FormFieldActionLinkElement
     	return $url instanceof Url ? $url : new Url($url);
     }
 }
-
 ?>

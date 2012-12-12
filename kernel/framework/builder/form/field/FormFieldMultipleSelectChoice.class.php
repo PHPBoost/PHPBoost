@@ -37,6 +37,7 @@ class FormFieldMultipleSelectChoice extends AbstractFormField
 {
 	private $selected_options;
 	private $options = array();
+	private $size = 4;
 	
     /**
      * @desc Constructs a FormFieldMultipleSelectChoice.
@@ -117,6 +118,7 @@ class FormFieldMultipleSelectChoice extends AbstractFormField
         $tpl->put_all(array(
 			'NAME' => $this->get_html_id(),
 			'ID' => $this->get_html_id(),
+        	'SIZE' => $this->size,
 			'CSS_CLASS' => $this->get_css_class(),
 			'C_DISABLED' => $this->is_disabled(),
 			'L_SELECT_ALL' => $lang['select_all'],
@@ -152,6 +154,22 @@ class FormFieldMultipleSelectChoice extends AbstractFormField
             ));
         }
         return $tpl;
+    }
+    
+	protected function compute_options(array &$field_options)
+    {
+        foreach($field_options as $attribute => $value)
+        {
+            $attribute = strtolower($attribute);
+            switch ($attribute)
+            {
+                case 'size':
+                    $this->size = $value;
+                    unset($field_options['size']);
+                    break;
+            }
+        }
+        parent::compute_options($field_options);
     }
 	
 	private function is_selected($option)
