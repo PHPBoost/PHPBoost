@@ -43,7 +43,7 @@
 			<div class="footer_columns">
 				<div class="footer_columns_title">
 					<img src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/footer_community.png" align="center" />
-					Participer au Projet
+					Contribuer au Projet
 				</div>
 				<ul>
 					<li><a href="{PATH_TO_ROOT}/wiki/creer-un-theme">Créer un Thème</a></li>
