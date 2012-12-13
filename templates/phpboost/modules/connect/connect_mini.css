@@ -139,9 +139,10 @@ img.connect_avatar{
 	background: #353535;
 	left:-101px;
 	top: 43px;
-	height:133px;
+	height:115px;
 	width:300px;
 	z-index:200;
+	padding-top: 10px;
 	border-top:3px solid #2e5c35;
 	border-bottom:2px solid #99B1CB;
 	visibility:hidden;
@@ -166,6 +167,13 @@ img.connect_avatar{
 	text-align:left; 
 }
 
+.connect_align ul li ul li{
+  display: list-item;
+  float: none;	
+  padding-left:100px;
+}
+	
+	
 .connect_align .submenu ul li a {
 	font-size: 11px;
 	line-height: 20px;
