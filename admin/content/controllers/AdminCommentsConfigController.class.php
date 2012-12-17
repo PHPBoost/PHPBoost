@@ -109,7 +109,7 @@ class AdminCommentsConfigController extends AdminController
 		));
 		
 		$fieldset->add_field(new FormFieldMultipleSelectChoice('forbidden_tags', $this->lang['comments.config.forbidden-tags'], $this->configuration->get_forbidden_tags(),
-			$this->generate_forbidden_tags_option()
+			$this->generate_forbidden_tags_option(), array('size' => 10)
 		));
 
 		$fieldset = new FormFieldsetHTML('authorization', $this->lang['comments.config.authorization']);

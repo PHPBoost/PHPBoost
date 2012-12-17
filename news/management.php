@@ -67,10 +67,6 @@ if ($delete > 0)
 }
 elseif (!empty($_POST['submit']))
 {
-	$start = MiniCalendar::retrieve_date('start');
-	$end = MiniCalendar::retrieve_date('end');
-	$release = MiniCalendar::retrieve_date('release');
-
 	$sources = array();
 	for ($i = 0; $i < 50; $i++)
 	{	
@@ -81,6 +77,8 @@ elseif (!empty($_POST['submit']))
 		}
 	}
 	
+	$release = MiniCalendar::retrieve_date('release');
+	
 	$news = array(
 		'id' => retrieve(POST, 'id', 0, TINTEGER),
 		'idcat' => retrieve(POST, 'idcat', 0, TINTEGER),
@@ -90,12 +88,6 @@ elseif (!empty($_POST['submit']))
 		'extend_desc' => retrieve(POST, 'extend_contents', '', TSTRING_PARSE),
 		'counterpart' => retrieve(POST, 'counterpart', '', TSTRING_PARSE),
 		'visible' => retrieve(POST, 'visible', 0, TINTEGER),
-		'start' => $start->get_timestamp(),
-		'start_hour' => retrieve(POST, 'start_hour', 0, TINTEGER),
-		'start_min' => retrieve(POST, 'start_min', 0, TINTEGER),
-		'end' => $end->get_timestamp(),
-		'end_hour' => retrieve(POST, 'end_hour', 0, TINTEGER),
-		'end_min' => retrieve(POST, 'end_min', 0, TINTEGER),
 		'release' => $release->get_timestamp(),
 		'release_hour' => retrieve(POST, 'release_hour', 0, TINTEGER),
 		'release_min' => retrieve(POST, 'release_min', 0, TINTEGER),
@@ -103,6 +95,18 @@ elseif (!empty($_POST['submit']))
 		'alt' => retrieve(POST, 'alt', '', TSTRING),
 		'sources' => addslashes(serialize($sources))
 	);
+	
+	$start = MiniCalendar::retrieve_date('start');
+	$start->set_hours(retrieve(POST, 'start_hour', 0, TINTEGER));
+	$start->set_minutes(retrieve(POST, 'start_min', 0, TINTEGER));
+	
+	$end = MiniCalendar::retrieve_date('end');
+	$end->set_hours(retrieve(POST, 'end_hour', 0, TINTEGER));
+	$end->set_minutes(retrieve(POST, 'end_min', 0, TINTEGER));
+	
+	$news['start'] = $start->get_timestamp();
+	$news['end'] = $end->get_timestamp();
+	
 
 	if (($news['id'] > 0 && ($User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_MODERATE) || $User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_WRITE) || $User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_CONTRIBUTE))) || ($news['id'] == 0 && ($User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_WRITE) || $User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_CONTRIBUTE))))
 	{
@@ -121,20 +125,21 @@ elseif (!empty($_POST['submit']))
 			if ($news['visible'] == 2)
 			{
 				// Start.
-				$news['start'] += ($news['start_hour'] * 60 + $news['start_min']) * 60;
-				if ($news['start'] <= $now->get_timestamp())
+				if ($news['start'] <= $now->get_timestamp() && $news['end'] <= $now->get_timestamp())
 				{
-					$news['start'] = 0;
+					$news['start'] = $news['end'] = 0;
+					$news['visible'] = 1;
 				}
-
-				// End.
-				$news['end'] += ($news['end_hour'] * 60 + $news['end_min']) * 60;
-				if ($news['end'] <= $now->get_timestamp())
+				else
 				{
-					$news['end'] = 0;
+					// End.
+					if ($news['end'] <= $now->get_timestamp())
+					{
+						$news['end'] = 0;
+					}
+	
+					$news['visible'] = 0;
 				}
-
-				$news['visible'] = 0;
 			}
 			else
 			{
