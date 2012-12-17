@@ -1,4 +1,4 @@
-# IF C_ROOT #
+# IF C_ROOT_AND_EXPLORE #
 	<div class="module_position">			
 		<div class="module_top_l"></div>		
 		<div class="module_top_r">
@@ -165,7 +165,7 @@
 				
 				<div style="text-align:center;">	
 					<div class="d_button d_button_gray">
-						<a href="#" class="d_button_a">
+						<a href="{PATH_TO_ROOT}/download/download.php?explore=1" class="d_button_a">
 							<p class="d_button_title">Parcourir l'arborescence</p>
 						</a>
 					</div>
