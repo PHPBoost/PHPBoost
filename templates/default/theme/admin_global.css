@@ -26,14 +26,6 @@
 	background:#F2F7FB;
     border-color:#C4CED6;
     padding:8px 6px;
-	border-top:1px solid #CCCCCC;
-	border-bottom:1px solid #CCCCCC;
-	-moz-border-radius:0px 0px 5px 5px;
-	-khtml-border-bottom-right-radius:5px;
-	-khtml-border-bottom-left-radius:5px;
-	-webkit-border-bottom-right-radius:5px;
-	-webkit-border-bottom-left-radius:5px;
-    border-radius:5px;
 }
 
 .block_contents3 {
@@ -55,12 +47,10 @@
 
 /*Affichage du mini calendrier */
 .calendar_block {
-    position:absolute;
     text-align:center;
     padding:6px 4px;
     background:#f5fbff;
     border:1px solid #2C5169;
-    bottom:28px;
     width:204px;
     z-index:100;
 }
