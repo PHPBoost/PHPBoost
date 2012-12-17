@@ -69,13 +69,11 @@ if ($delete > 0)
 }
 elseif(retrieve(POST,'submit',false))
 {
-	$begining_date  = MiniCalendar::retrieve_date('start');
-	$end_date = MiniCalendar::retrieve_date('end');
 	$release = MiniCalendar::retrieve_date('release');
-	$icon=retrieve(POST, 'icon', '', TSTRING);
+	$icon = retrieve(POST, 'icon', '', TSTRING);
 
-	if(retrieve(POST,'icon_path',false))
-	$icon=retrieve(POST,'icon_path','');
+	if (retrieve(POST,'icon_path',false))
+		$icon = retrieve(POST,'icon_path','');
 
 	$sources = array();
 	for ($i = 0;$i < 100; $i++)
@@ -95,12 +93,6 @@ elseif(retrieve(POST,'submit',false))
 		'desc' => retrieve(POST, 'contents', '', TSTRING_PARSE),
 		'counterpart' => retrieve(POST, 'counterpart', '', TSTRING_PARSE),
 		'visible' => retrieve(POST, 'visible', 0, TINTEGER),
-		'start' => $begining_date->get_timestamp(),
-		'start_hour' => retrieve(POST, 'start_hour', 0, TINTEGER),
-		'start_min' => retrieve(POST, 'start_min', 0, TINTEGER),
-		'end' => $end_date->get_timestamp(),
-		'end_hour' => retrieve(POST, 'end_hour', 0, TINTEGER),
-		'end_min' => retrieve(POST, 'end_min', 0, TINTEGER),
 		'release' => $release->get_timestamp(),
 		'release_hour' => retrieve(POST, 'release_hour', 0, TINTEGER),
 		'release_min' => retrieve(POST, 'release_min', 0, TINTEGER),
@@ -108,6 +100,17 @@ elseif(retrieve(POST,'submit',false))
 		'sources' => addslashes(serialize($sources)),
 		'description' => retrieve(POST, 'description', '', TSTRING_PARSE)
 	);
+	
+	$begining_date = MiniCalendar::retrieve_date('start');
+	$begining_date->set_hours(retrieve(POST, 'start_hour', 0, TINTEGER));
+	$begining_date->set_minutes(retrieve(POST, 'start_min', 0, TINTEGER));
+	
+	$end_date = MiniCalendar::retrieve_date('end');
+	$end_date->set_hours(retrieve(POST, 'end_hour', 0, TINTEGER));
+	$end_date->set_minutes(retrieve(POST, 'end_min', 0, TINTEGER));
+	
+	$articles['start'] = $begining_date->get_timestamp();
+	$articles['end'] = $end_date->get_timestamp();
 
 	if ($articles['id'] == 0 && ($User->check_auth($ARTICLES_CAT[$articles['idcat']]['auth'], AUTH_ARTICLES_WRITE) || $User->check_auth($ARTICLES_CAT[$articles['idcat']]['auth'], AUTH_ARTICLES_CONTRIBUTE)) || $articles['id'] > 0 && ($User->check_auth($ARTICLES_CAT[$articles['idcat']]['auth'], AUTH_ARTICLES_MODERATE) || $User->check_auth($ARTICLES_CAT[$articles['idcat']]['auth'], AUTH_ARTICLES_WRITE) && $articles['user_id'] == $User->get_attribute('user_id')))
 	{
@@ -126,15 +129,21 @@ elseif(retrieve(POST,'submit',false))
 			if ($articles['visible'] == 2)
 			{
 				// Start.
-				$articles['start'] += ($articles['start_hour'] * 60 + $articles['start_min']) * 60;
-				if ($articles['start'] <= $now->get_timestamp())
-					$articles['start'] = 0;
-				// End.
-				$articles['end'] += ($articles['end_hour'] * 60 + $articles['end_min']) * 60;
-				if ($articles['end'] <= $now->get_timestamp())
-					$articles['end'] = 0;
-					
-				$articles['visible'] = 0;
+				if ($articles['start'] <= $now->get_timestamp() && $articles['end'] <= $now->get_timestamp())
+				{
+					$articles['start'] = $articles['end'] = 0;
+					$articles['visible'] = 1;
+				}
+				else
+				{
+					// End.
+					if ($articles['end'] <= $now->get_timestamp())
+					{
+						$articles['end'] = 0;
+					}
+	
+					$articles['visible'] = 0;
+				}
 			}
 			else
 				$articles['start'] = $articles['end'] = 0;
@@ -386,9 +395,9 @@ else
 				'CONTENTS' => '',
 				'DESCRIPTION'=>'',
 				'EXTEND_CONTENTS' => '',
-				'VISIBLE_WAITING' => 0,
-				'VISIBLE_ENABLED' => 1,
-				'VISIBLE_UNAPROB' => 0,
+				'C_VISIBLE_WAITING' => false,
+				'C_VISIBLE_ENABLED' => true,
+				'C_VISIBLE_UNAPROB' => false,
 				'START_CALENDAR' => $start_calendar->display(),
 				'START_HOUR' => '',
 				'START_MIN' => '',

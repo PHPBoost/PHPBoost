@@ -98,6 +98,16 @@ class TemplateFunctions
         return TextHelper::to_js_string($string, $add_quotes);
     }
     
+    /**
+     * @desc Escape characters for use javascript script.
+     * @param string $string string for conversion
+     * @return string String escaped
+     */
+    public function escapejscharacters($string)
+    {
+    	return strtr(Url::encode_rewrite($string), '-', '_');
+    }
+    
     public function set($string, array $parameters)
     {
     	return StringVars::replace_vars($string, $parameters);

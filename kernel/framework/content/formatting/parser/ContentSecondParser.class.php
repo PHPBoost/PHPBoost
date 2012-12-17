@@ -322,12 +322,12 @@ class ContentSecondParser extends AbstractParser
 		
 		if (!empty($result))
 		{
-			return $result;			
+			return $result;
 		}
 		else
 		{
 			global $LANG;
-			$error = StringVars::replace_vars($LANG['feed_tag_error'], array('module' => $module));
+			$error = StringVars::replace_vars(LangLoader::get_message('feed_tag_error', 'editor-common'), array('module' => $module));
 			return '<div class="error">' . $error . '</div>';
 		}
 	}

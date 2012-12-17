@@ -170,6 +170,10 @@ class AppContext
 	 */
 	public static function get_session()
 	{
+		if (self::$session === null)
+		{
+			self::$session = new Session();
+		}
 		return self::$session;
 	}
 
