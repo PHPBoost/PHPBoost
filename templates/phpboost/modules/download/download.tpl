@@ -32,19 +32,17 @@
 					<p class="download_entete_title">PHPBOOST</p>
 					<span class="download_entete_desc">
 					Bienvenue sur la page de téléchargement de PHPBoost.
-					<br /><br />PHPBoost est un logiciel libre distribué sous licence GNU/GPL.
-					<br /><br />PHPBoost 3 innove dans sa façon d'être distribué. En effet Tornade est la première version de PHPBoost à être distribuée de différentes façons pour être à même de s'adapter très rapidement aux besoins de chacun. Aujourd'hui, quatre distributions existent, et vous sont présentées dans la liste ci-dessous. Vous pourrez les télécharger en cliquant sur leur lien associé.</span>
 				</div>
 			</div>
 			<hr style="margin:25px 0px;" />
 			
-			Cette page vous proposera de télécharger différentes version de PHPBoost, des mises à jours, ou d'acceder à nos sites de test.
+			Vous trouverez sur cette page :
 			<br /><br />
 			<ul class="bb_ul">
-				<li class="bb_li">PHPBoost 4.0 est la dernière version du CMS (Stable)</li>
-				<li class="bb_li">PHPBoost 3.x est la version du CMS ayant fait ces preuves, mais ne possédant pas les nombreux avantages de la version 4.0</li>
-				<li class="bb_li">PHPBoost Archives regroupera toutes les version antérieurs à la 3.0 Uniquement pour les nostalgiques</li>
-				<li class="bb_li">Vous trouverez aussi des versions "En cours / Unstable" permettant au developpeurs de tester et de contribuer au projet.</li>
+				<li class="bb_li">La dernière version stable : PHPBoost 4.0 Sirocco et 4.0 Sirocco PDK (Version destinée aux developpeurs)</li>
+				<li class="bb_li">PHPBoost 3.0 Tornade</li>
+				<li class="bb_li">Mise à jour des versions 3.0 et 4.0</li>
+				<li class="bb_li">Migration de PHPBoost 3.0 à PHPBoost 4.0</li>
 			</ul>
 			<hr style="margin:25px auto 25px auto;" />
 			
@@ -56,7 +54,7 @@
 					<div class="download_entete_content">
 						<p class="download_entete_title">Télécharger PHPBoost 4.0 - Sirocco</p>
 						<span class="download_entete_desc">
-						C'est la versions conseillée pour tous les nouveaux membres et ceux qui souhaitent bénéficier de toute la puissance de PHPBoost.
+							La version stable de PHPBoost. A utiliser pour bénéficier de toutes les dernières fonctionnalités implantées.
 						</span>
 					</div>
 					
@@ -112,7 +110,8 @@
 				
 					<div class="download_entete_content">
 						<p class="download_entete_title">Télécharger PHPBoost 3.0 - Tornade</p>
-						<span class="download_entete_desc">Nous vous conseillons la version 4.0 pour tout nouveau site. 
+						<span class="download_entete_desc">
+							Pour les nostalgiques, ou pour les personnes ayant besoin de réparer une version 3.0 encore en production.
 						</span>
 					</div>
 					
