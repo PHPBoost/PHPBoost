@@ -3,7 +3,7 @@
 		# ENDIF #
 		
 		<input type="text" size="8" maxlength="8" id="{CALENDAR_ID}" name="{FORM_NAME}" value="{DEFAULT_DATE}" class="text" />
-		<div style="position:relative;z-index:100;top:220px;left:90px;float:left;display:none;{CALENDAR_STYLE}" id="calendar{CALENDAR_NUMBER}">
+		<div style="position:relative;z-index:100;float:left;display:none;{CALENDAR_STYLE}" id="calendar{CALENDAR_NUMBER}">
 			<div id="{CALENDAR_ID}_date" class="calendar_block" onmouseover="hide_calendar({CALENDAR_NUMBER}, 1);" onmouseout="hide_calendar({CALENDAR_NUMBER}, 0);">
 			</div>
 		</div>
