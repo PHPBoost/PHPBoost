@@ -47,6 +47,7 @@
 
 /*Affichage du mini calendrier */
 .calendar_block {
+	position:absolute;
     text-align:center;
     padding:6px 4px;
     background:#f5fbff;
