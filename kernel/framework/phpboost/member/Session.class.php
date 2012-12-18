@@ -321,10 +321,10 @@ class Session
 			}
 		}
 
-		$this->data['user_id'] = isset($userdata['m_user_id']) ? (int)$userdata['m_user_id'] : -1;
+		$this->data['user_id'] = isset($userdata['m_user_id']) ? (int)$userdata['m_user_id'] : User::VISITOR_LEVEL;
 		$this->data['token'] = isset($userdata['token']) ? $userdata['token'] : '';
 		$this->data['login'] = isset($userdata['login']) ? $userdata['login'] : '';
-		$this->data['level'] = isset($userdata['level']) ? (int)$userdata['level'] : -1;
+		$this->data['level'] = isset($userdata['level']) ? (int)$userdata['level'] : User::VISITOR_LEVEL;
 		$this->data['user_groups'] = isset($userdata['user_groups']) ? $userdata['user_groups'] : '';
 		$this->data['user_lang'] = !empty($userdata['user_lang']) ? $userdata['user_lang'] : UserAccountsConfig::load()->get_default_lang(); //Langue membre
 		$this->data['user_theme'] = !empty($userdata['user_theme']) ? $userdata['user_theme'] : UserAccountsConfig::load()->get_default_theme(); //Thème membre
@@ -524,9 +524,9 @@ class Session
 		$this->data = array();
 
 		$this->data['session_id'] = '';
-		$this->data['user_id'] = -1;
+		$this->data['user_id'] = User::VISITOR_LEVEL;
 		$this->autoconnect['session_id'] = '';
-		$this->autoconnect['user_id'] = -1;
+		$this->autoconnect['user_id'] = User::VISITOR_LEVEL;
 
 		$this->session_mod = 0;
 		$sid = retrieve(GET, 'sid', '');

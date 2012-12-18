@@ -73,9 +73,9 @@ class SessionsConfig extends AbstractConfigData
 	public function get_default_values()
 	{
 		return array(
-		self::COOKIE_NAME => 'session',
-		self::SESSION_DURATION => 3600,
-		self::ACTIVE_SESSION_DURATION => 360
+			self::COOKIE_NAME => 'session',
+			self::SESSION_DURATION => 3600,
+			self::ACTIVE_SESSION_DURATION => 300
 		);
 	}
 
