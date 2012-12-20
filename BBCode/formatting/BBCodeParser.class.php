@@ -276,7 +276,7 @@ class BBCodeParser extends ContentFormattingParser
             //Image tag
             if (!in_array('img', $this->forbidden_tags))
             {
-            	$this->content = preg_replace_callback('`\[img(?: alt="([^"]+)")?(?: title="([^"]+)")?(?: style="([^"]+)")?\]((?:[./]+|(?:https?|ftps?)://(?:[a-z0-9-]+\.)*[a-z0-9-]+(?:\.[a-z]{2,4})?(?::[0-9]{1,5})?/?)[^,\n\r\t\f]+\.(jpg|jpeg|bmp|gif|png|tiff|svg))\[/img\]`iU', array($this, 'parse_img'), $this->content);
+            	$this->content = preg_replace_callback('`\[img(?: alt="([^"]+)")?(?: title="([^"]+)")?(?: style="([^"]+)")?(?: class="([^"]+)")?\]((?:[./]+|(?:https?|ftps?)://(?:[a-z0-9-]+\.)*[a-z0-9-]+(?:\.[a-z]{2,4})?(?::[0-9]{1,5})?/?)[^,\n\r\t\f]+\.(jpg|jpeg|bmp|gif|png|tiff|svg))\[/img\]`iU', array($this, 'parse_img'), $this->content);
             }
 
             //Wikipedia tag
@@ -472,8 +472,9 @@ class BBCodeParser extends ContentFormattingParser
 		$alt = !empty($matches[1]) ? $matches[1] : '';
 		$title = !empty($matches[2]) ? ' title="' . $matches[2] . '"' : '';
 		$style = !empty($matches[3]) ? ' style="' . $matches[3] . '"' : '';
+		$class = !empty($matches[4]) ? ' class="' . $matches[4] . '"' : '';
 		
-		return '<img src="' . $matches[4] . '" alt="' . $alt . '"' . $title . $style .' />';
+		return '<img src="' . $matches[5] . '" alt="' . $alt . '"' . $class . $title . $style .' />';
 	}
 
 

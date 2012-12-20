@@ -186,7 +186,7 @@ class BBCodeUnparser extends ContentFormattingUnparser
 			
 		##Callbacks
 		//Image
-		$this->content = preg_replace_callback('`<img src="([^"]+)" alt="([^"]*)?"(?: title="([^"]*)")?(?: style="([^"]+)")?(?: class="[^"]+")? />`iU', array($this, 'unparse_img'), $this->content);
+		$this->content = preg_replace_callback('`<img src="([^"]+)"(?: alt="([^"]+)")?(?: title="([^"]*)")?(?: style="([^"]+)")?(?: class="[^"]+")? />`iU', array($this, 'unparse_img'), $this->content);
 
 		//Fieldset
 		while (preg_match('`<fieldset class="bb_fieldset" style="([^"]*)"><legend>(.*)</legend>(.+)</fieldset>`sU', $this->content))
@@ -206,8 +206,9 @@ class BBCodeUnparser extends ContentFormattingUnparser
 		$alt = !empty($matches[2]) ? ' alt="' . $matches[2] . '"' : '';
         $title = !empty($matches[3]) ? ' title="' . $matches[3] . '"' : '';
         $style = !empty($matches[4]) ? ' style="' . $matches[4] . '"' : '';
+        $class = !empty($matches[5]) ? ' class="' . $matches[5] . '"' : '';
 
-		return '[img' . $alt . $title . $style . ']' . $matches[1] . '[/img]';
+		return '[img' . $alt . $title . $style . $class. ']' . $matches[1] . '[/img]';
 	}
 
 	/**
