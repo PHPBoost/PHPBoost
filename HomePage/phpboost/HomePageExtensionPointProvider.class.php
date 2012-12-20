@@ -39,7 +39,7 @@ class HomePageExtensionPointProvider extends ExtensionPointProvider
 	
 	public function url_mappings()
 	{
-		return new UrlMappings(array(new DispatcherUrlMapping('/homepage/index.php')));
+		return new UrlMappings(array(new DispatcherUrlMapping('/HomePage/index.php')));
 	}
 	
 	public function plugins_home_page()

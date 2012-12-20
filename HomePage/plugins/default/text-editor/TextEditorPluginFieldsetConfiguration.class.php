@@ -30,7 +30,7 @@ class TextEditorPluginFieldsetConfiguration extends PluginFieldsetConfiguration
 	protected function create_fieldset()
 	{
 		$fieldset = new FormFieldsetHTML('config', 'config');
-		$fieldset->add_field(new FormFieldTextEditor('contents', 'contents', $this->get_plugin_configuration()->get_content()));
+		$fieldset->add_field(new FormFieldRichTextEditor('contents', 'contents', $this->get_plugin_configuration()->get_content()));
 		$this->set_fieldset($fieldset);
 		return $fieldset;
 	}
