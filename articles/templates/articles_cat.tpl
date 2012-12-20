@@ -91,6 +91,7 @@
 		<div class="spacer">&nbsp;</div>
 			<h2># IF C_INVISIBLE # {L_ARTICLES_WAITING} # ELSE # {L_ARTICLES} # ENDIF #</h2>
 			<hr />
+		# ENDIF #
 			# IF C_INVISIBLE #
 				# START articles_invisible #
 				<div class="block_container" style="margin-bottom:20px;">
@@ -184,7 +185,6 @@
 				</p>
 				&nbsp;
 			# ENDIF #
-		# ENDIF #
 	</div>
 	<div class="module_bottom_l"></div>		
 	<div class="module_bottom_r"></div>

@@ -207,10 +207,13 @@ class ArticlesHomePageExtensionPoint implements HomePageExtensionPoint
 		$clause_unauth_cats = ($nbr_unauth_cats > 0) ? " AND ac.id NOT IN (" . implode(', ', $unauth_cats_sql) . ")" : '';
 
 		##### Catégories disponibles #####
-		$result = $this->sql_querier->query_while("SELECT ac.id, ac.name, ac.auth, ac.description, ac.image, a.idcat, COUNT(*) as nbr_articles
+		$result = $this->sql_querier->query_while("SELECT @id_cat:= ac.id, ac.id, ac.name, ac.auth, ac.description, ac.image, 
+		(		SELECT  COUNT(*)
+				FROM " . DB_TABLE_ARTICLES . " a
+				WHERE idcat = @id_cat AND (a.visible = 1 OR a.start <= '" . $now->get_timestamp() . "' AND a.start > 0 AND (a.end >= '" . $now->get_timestamp() . "' OR a.end = 0))
+        )		AS      nbr_articles
 		FROM " . DB_TABLE_ARTICLES_CAT . " ac
-		LEFT JOIN " . DB_TABLE_ARTICLES . " a ON ac.id = a.idcat
-		" . $clause_cat . $clause_unauth_cats . " AND (a.visible = 1 OR a.start <= '" . $now->get_timestamp() . "' AND a.start > 0 AND (a.end >= '" . $now->get_timestamp() . "' OR a.end = 0))
+		" . $clause_cat . $clause_unauth_cats . "
 		ORDER BY ac.id_parent, ac.c_order
 		" . $this->sql_querier->limit($Pagination->get_first_msg($CONFIG_ARTICLES['nbr_cat_max'], 'pcat'), $CONFIG_ARTICLES['nbr_cat_max']), __LINE__, __FILE__);
 

@@ -158,7 +158,7 @@ elseif(retrieve(POST,'submit',false))
 
 			if ($articles['id'] > 0)
 			{
-				$Sql->query_inject("UPDATE " . DB_TABLE_ARTICLES . " SET idcat = '" . $articles['idcat'] . "', title = '" . $articles['title'] . "', contents = '" . $articles['desc'] . "',  icon = '" . $img . "',  visible = '" . $visible . "', start = '" .  $articles['start'] . "', end = '" . $articles['end'] . "', timestamp = '" . $articles['release'] . "', sources = '".$articles['sources']."', description = '".$articles['description']."'
+				$Sql->query_inject("UPDATE " . DB_TABLE_ARTICLES . " SET idcat = '" . $articles['idcat'] . "', title = '" . $articles['title'] . "', contents = '" . $articles['desc'] . "',  icon = '" . $img . "',  visible = '" . $articles['visible'] . "', start = '" .  $articles['start'] . "', end = '" . $articles['end'] . "', timestamp = '" . $articles['release'] . "', sources = '".$articles['sources']."', description = '".$articles['description']."'
 				WHERE id = '" . $articles['id'] . "'", __LINE__, __FILE__);
 
 				//If it wasn't approved and now it's, we try to consider the corresponding contribution as processed
