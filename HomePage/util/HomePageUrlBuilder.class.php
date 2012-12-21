@@ -31,7 +31,7 @@
  */
 class HomePageUrlBuilder
 {
-    private static $dispatcher = '/homepage';
+    private static $dispatcher = '/HomePage';
     
 	/**
 	 * @return Url
