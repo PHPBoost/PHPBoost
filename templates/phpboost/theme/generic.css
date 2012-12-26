@@ -199,6 +199,9 @@ h4.stitle2{
 .bb_ol{
 	margin-left:35px;
 }
+.bb_li{
+	text-align:left;
+}
 
 /* Affichage balise quote, code, hide */
 .text_blockquote, .text_code, .text_hide{
