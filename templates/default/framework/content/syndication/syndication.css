@@ -24,4 +24,5 @@ ul.rss_feed {
 
 ul.rss_feed li {
     list-style-image:url(../../../images/li.png);
+    text-align: left;
 }
