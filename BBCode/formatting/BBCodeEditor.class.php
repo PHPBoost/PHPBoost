@@ -121,7 +121,7 @@ class BBCodeEditor extends ContentEditor
 			'L_WARNING' => $LANG['warning'],
 			'L_ERROR' => $LANG['error'],
 			'L_SUCCESS' => $LANG['success'],
-			'L_SIZE' => $bbcode_lang['bb_size'],
+			'L_SIZE' => $bbcode_lang['format_size'],
 			'L_CODE' => $bbcode_lang['bb_code'],
 			'L_TEXT' => $bbcode_lang['bb_text'],
 			'L_SCRIPT' => $bbcode_lang['bb_script'],
