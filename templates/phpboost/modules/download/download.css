@@ -1,0 +1,20 @@
+
+div.pbt_dev_container{ 
+	width:380px;
+	text-align:left;
+	padding-top:5px;
+	margin:auto;
+}
+
+p.pbt_custom_desc{
+	text-align:left;
+	padding-left:56px;
+}
+p.pbt_custom_desc, a.pbt_dev{
+	font-style:italic;
+	color:#3F5164;
+	font-weight:normal;	
+}
+a.pbt_dev:hover{ color:#25466C; text-decoration:none;}
+
+.pbt_custom_content{ margin:20px auto 20px auto; }
