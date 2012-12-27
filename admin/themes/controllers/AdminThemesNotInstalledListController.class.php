@@ -192,8 +192,8 @@ class AdminThemesNotInstalledListController extends AdminController
 							import('php/pcl/pcltar', LIB_IMPORT);
 							PclTarExtract($upload->get_filename(), $folder_phpboost_themes);
 							
-							$file = new File($archive);
-							$file->delete();
+							$uploaded_file = new File($archive);
+							$uploaded_file->delete();
 						}
 						else if ($upload->get_extension() == 'zip')
 						{
@@ -201,14 +201,14 @@ class AdminThemesNotInstalledListController extends AdminController
 							$zip = new PclZip($archive);
 							$zip->extract(PCLZIP_OPT_PATH, $folder_phpboost_themes, PCLZIP_OPT_SET_CHMOD, 0755);
 							
-							$file = new File($archive);
-							$file->delete();
+							$uploaded_file = new File($archive);
+							$uploaded_file->delete();
 						}
 						else
 						{
 							$this->view->put('MSG', MessageHelper::display($this->lang['themes.upload.invalid_format'], MessageHelper::NOTICE, 4));
 						}
-						
+					
 						$this->install_theme($file->get_name_without_extension());
 					}
 				}
