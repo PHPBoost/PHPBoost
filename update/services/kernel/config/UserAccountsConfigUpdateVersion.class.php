@@ -41,7 +41,6 @@ class UserAccountsConfigUpdateVersion extends ConfigUpdateVersion
 		$user_account_config->set_member_accounts_validation_method($config['activ_mbr']);
 		$user_account_config->set_registration_captcha_enabled($config['verif_code']);
 		$user_account_config->set_registration_captcha_difficulty($config['verif_code_difficulty']);
-		$user_account_config->set_force_theme_enabled($config['force_theme']);
 		$user_account_config->set_avatar_upload_enabled($config['activ_up_avatar']);
 		$user_account_config->set_unactivated_accounts_timeout($config['delay_unactiv_max']);
 		$user_account_config->set_default_avatar_name_enabled($config['activ_avatar']);

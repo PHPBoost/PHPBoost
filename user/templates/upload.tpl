@@ -3,6 +3,10 @@
 	<!--
 	function insert_popup(code) 
 	{
+		# IF C_BBCODE_TINYMCE_MODE #
+		window.opener.insertTinyMceContent(code); //insertion pour tinymce.
+		# ENDIF #
+		
 		var textarea = opener.document.getElementById("{FIELD}");
 		textarea.focus();
 		textarea.value += ' ' + code;

@@ -78,8 +78,7 @@ class NewsHomePageExtensionPoint implements HomePageExtensionPoint
 			$array_cat[] = $cat;
 		else
 		{
-			if ($User->check_auth($NEWS_CONFIG['global_auth'], AUTH_NEWS_READ))
-				$array_cat[] = '0';
+			$array_cat[] = '0';
 				
 			$news_cat->build_children_id_list($cat, $array_cat, RECURSIVE_EXPLORATION, DO_NOT_ADD_THIS_CATEGORY_IN_LIST, AUTH_NEWS_READ);
 		}

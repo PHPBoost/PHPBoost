@@ -298,6 +298,8 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 				'L_UNIT_SECOND' => self::$main_lang['unit_seconds_short']
 			));
 		}
+		
+		$this->display_counter($template);
 
 		$template->display();
 	}

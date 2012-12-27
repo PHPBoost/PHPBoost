@@ -104,7 +104,7 @@ class UserRegistrationController extends AbstractController
 		
 		$options_fieldset->add_field(new FormFieldTimezone('timezone', $this->lang['timezone.choice'], GeneralConfig::load()->get_site_timezone(), array('description' => $this->lang['timezone.choice.explain'])));
 		
-		if (!$this->user_accounts_config->is_users_theme_forced())
+		if (count(ThemeManager::get_activated_and_authorized_themes_map()) > 1)
 		{
 			$options_fieldset->add_field(new FormFieldThemesSelect('theme', $this->lang['theme'], $this->user_accounts_config->get_default_theme(),
 				array('check_authorizations' => true, 'events' => array('change' => $this->build_javascript_picture_themes()))

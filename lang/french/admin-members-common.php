@@ -46,7 +46,6 @@ $lang['members.config.unactivated-accounts-timeout'] = 'Nombre de jours après le
 $lang['members.config.unactivated-accounts-timeout-explain'] = 'Laisser vide pour ignorer cette option (Non pris en compte si validation par administrateur)';
 $lang['members.config.captcha-activation'] = 'Code de vérification visuel';
 $lang['members.config.captcha-difficulty'] = 'Difficulté du code de vérification';
-$lang['members.config.theme-choice-permission'] = 'Permission aux membres de choisir leur thème';
 $lang['members.config.upload-avatar-server-authorization'] = 'Autoriser l\'upload d\'avatar sur le serveur';
 $lang['members.config.activation-resize-avatar'] = 'Activer le redimensionnement automatique des images';
 $lang['members.activation-resize-avatar-explain'] = 'Attention votre serveur doit avoir l\'extension GD chargée';

@@ -115,11 +115,14 @@ class AdminMemberEditController extends AdminController
 			$this->user->get_timezone(), array('description' => $this->user_lang['timezone.choice.explain'])
 		));
 		
-		$options_fieldset->add_field(new FormFieldThemesSelect('theme', $this->user_lang['theme'], $this->user->get_theme(),
-				array('check_authorizations' => true, 'events' => array('change' => $this->build_javascript_picture_themes()))
-		));
-		$options_fieldset->add_field(new FormFieldFree('preview_theme', $this->user_lang['theme.preview'], '<img id="img_theme" src="'. $this->get_picture_theme($this->user->get_theme()) .'" alt="" style="vertical-align:top; max-height:180px;" />'));
-	
+		if (count(ThemeManager::get_activated_and_authorized_themes_map()) > 1)
+		{
+			$options_fieldset->add_field(new FormFieldThemesSelect('theme', $this->user_lang['theme'], $this->user->get_theme(),
+					array('check_authorizations' => true, 'events' => array('change' => $this->build_javascript_picture_themes()))
+			));
+			$options_fieldset->add_field(new FormFieldFree('preview_theme', $this->user_lang['theme.preview'], '<img id="img_theme" src="'. $this->get_picture_theme($this->user->get_theme()) .'" alt="" style="vertical-align:top; max-height:180px;" />'));
+		}
+		
 		$options_fieldset->add_field(new FormFieldEditors('text-editor', $this->user_lang['text-editor'], $this->user->get_editor()));
 		
 		$options_fieldset->add_field(new FormFieldLangsSelect('lang',$this->user_lang['lang'], $this->user->get_locale(), array('check_authorizations' => true)));

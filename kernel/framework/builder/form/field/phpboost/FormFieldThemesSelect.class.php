@@ -31,7 +31,7 @@
  */
 class FormFieldThemesSelect extends FormFieldSimpleSelectChoice
 {
-	private $check_authorizations = false;
+	private $check_authorizations = true;
 	
     /**
      * @desc Constructs a FormFieldThemesSelect.
@@ -55,7 +55,7 @@ class FormFieldThemesSelect extends FormFieldSimpleSelectChoice
 			{
 				if ($theme->check_auth())
 				{
-					$options[] = new FormFieldSelectChoiceOption($lang->get_configuration()->get_name(), $theme->get_id());
+					$options[] = new FormFieldSelectChoiceOption($theme->get_configuration()->get_name(), $theme->get_id());
 				}
 			}
 			else

@@ -267,7 +267,7 @@ class Environment
 		
 		if ($user_theme !== null)
 		{
-			if (($user_accounts_config->is_users_theme_forced() || !$user_theme->check_auth() || !$user_theme->is_activated()) && $user_theme->get_id() !== $default_theme)
+			if ((!$user_theme->check_auth() || !$user_theme->is_activated()) && $user_theme->get_id() !== $default_theme)
 			{
 				AppContext::get_current_user()->update_theme($default_theme);
 			}
