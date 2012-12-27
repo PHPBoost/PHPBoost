@@ -98,6 +98,7 @@
 		<div id="top_contents">
 			{MENUS_TOPCENTRAL_CONTENT}
 		</div>
+		<div class="spacer"></div>
 		# ENDIF #
 		<div id="main_content">&nbsp;
 			<div id="links">
