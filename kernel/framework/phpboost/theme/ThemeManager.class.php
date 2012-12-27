@@ -51,6 +51,17 @@ class ThemeManager
 		return $activated_themes;
 	}
 	
+	public static function get_activated_and_authorized_themes_map()
+	{
+		$themes = array();
+		foreach (ThemesConfig::load()->get_themes() as $theme) {
+			if ($theme->is_activated() && $theme->check_auth()) {
+				$themes[$theme->get_id()] = $theme;
+			}
+		}
+		return $themes;
+	}
+	
 	public static function get_default_theme()
 	{
 		return UserAccountsConfig::load()->get_default_theme();

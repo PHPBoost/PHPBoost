@@ -111,8 +111,6 @@ class AdminMemberConfigController extends AdminController
 			), array('hidden' => !$user_account_config->is_registration_captcha_enabled())
 		));
 
-		$fieldset->add_field(new FormFieldCheckbox('theme_choice_permission', $this->lang['members.config.theme-choice-permission'], !$user_account_config->is_users_theme_forced()));
-		
 		$fieldset = new FormFieldsetHTML('avatar_management', $this->lang['members.config.avatars-management']);
 		$form->add_fieldset($fieldset);
 				
@@ -196,7 +194,6 @@ class AdminMemberConfigController extends AdminController
 			$user_account_config->set_registration_captcha_difficulty($this->form->get_value('captcha_difficulty')->get_raw_value());
 		}
 		
-		$user_account_config->set_force_theme_enabled(!$this->form->get_value('theme_choice_permission'));
 		$user_account_config->set_avatar_upload_enabled($this->form->get_value('upload_avatar_server'));
 		$user_account_config->set_unactivated_accounts_timeout($this->form->get_value('unactivated_accounts_timeout'));
 		$user_account_config->set_default_avatar_name_enabled($this->form->get_value('default_avatar_activation'));
