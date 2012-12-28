@@ -45,18 +45,32 @@ $height_max = 50;
 $width_max = 50;
 $smile_by_line = 4;
 
+$user_theme = AppContext::get_current_user()->get_theme();
+$module_id = 'BBCode';
+$css_file = 'bbcode.css';
+if (file_exists(PATH_TO_ROOT . '/templates/' . $user_theme . '/modules/' . $module_id . '/' . $css_file))
+{
+	$css_file = '/templates/' . $user_theme . '/modules/' . $module_id . '/' . $css_file;
+}
+else
+{
+	$css_file = '/' . $module_id . '/templates/' . $css_file;
+}
+
 $field = retrieve(GET, 'field', 'contents');
 $tpl_smileys->put_all(array(
+		'U_CSS_FILE' => $css_file,
         'PATH_TO_ROOT' => TPL_PATH_TO_ROOT,
         'TITLE' => stripslashes(TITLE),
-        'THEME' => UserAccountsConfig::load()->get_default_theme(),
-        'FIELD' => $field ,
+        'FIELD' => $field,
         'COLSPAN' => $smile_by_line + 1,
         'L_XML_LANGUAGE' => $LANG['xml_lang'],
         'L_SMILEY' => $LANG['smiley'],
         'L_CLOSE' => $LANG['close'],
         'L_REQUIRE_TEXT' => $LANG['require_text']
 ));
+
+
 
 $nbr_smile = count($smileys_cache->get_smileys());
 $j = 0;
