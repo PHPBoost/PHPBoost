@@ -56,14 +56,14 @@
 				<div class="pbt_button_container">
 					<div class="pbt_button pbt_button_blue">
 							<a href="{PATH_TO_ROOT}/download/file-229+phpboost-4-0.php" class="pbt_button_a">
-								<img class="pbt_button_img" src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/img_phpboost.png" alt="" />
+								<img src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/img_phpboost.png" alt="" class="valign_middle pbt_custom_img left"/>
 								<p class="pbt_button_title">Télécharger PHPBoost 4.0</p>
 								<p class="pbt_button_com">Rev : 4.0.1 | Req : PHP 5.1.2 | .zip </p>
 							</a>
 						</div>
 						<div class="pbt_button pbt_button_green">
 							<a href="{PATH_TO_ROOT}/download/category-36+mises-jour.php" class="pbt_button_a">
-								<img class="pbt_button_img" src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/img_phpboost.png" alt="" />
+								<img src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/img_phpboost.png" alt="" class="valign_middle pbt_custom_img left" />
 								<p class="pbt_button_title">Mises à jour</p>
 								<p class="pbt_button_com pbt_button_com_green">Mise à jour et migration</p>
 							</a>
@@ -78,14 +78,14 @@
 					<div class="pbt_custom_content">
 						<div style="width: 90%;margin:auto;">
 							<div style="float:left; width: 47%;padding-right:15px;">
-								<img src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/img_modules.png" class="valign_middle pbt_custom_img" />
+								<img src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/img_modules.png" class="valign_middle pbt_custom_img left" />
 								<h2 class="title pbt_custom_subtitle" >
 									<a href="{PATH_TO_ROOT}/download/category-38+modules.php">Modules compatibles</a>
 								</h2>
 								<p class="pbt_custom_desc">Donnez de nouvelles fonctionnalités à votre site.</p>
 							</div>
 							<div style="float:left; width: 47%;padding-left:15px;">
-								<img src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/img_themes.png" class="valign_middle pbt_custom_img" />
+								<img src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/img_themes.png" class="valign_middle pbt_custom_img left" />
 								<h2 class="title pbt_custom_subtitle" >
 									<a href="{PATH_TO_ROOT}/download/category-37+themes.php">Thèmes compatibles</a>
 								</h2>
@@ -109,14 +109,14 @@
 					<div class="pbt_button_container">
 						<div class="pbt_button pbt_button_blue">
 							<a href="{PATH_TO_ROOT}/download/file-111+phpboost-3-0-complete.php" class="pbt_button_a">
-								<img class="pbt_button_img" src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/img_phpboost.png" alt="" />
+								<img src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/img_phpboost.png" alt="" class="pbt_button_img left" />
 								<p class="pbt_button_title">Télécharger PHPBoost 3.0</p>
 								<p class="pbt_button_com">Rev : 3.0.11 | Req : PHP 4.0.1 | .zip </p>
 							</a>
 						</div>
 						<div class="pbt_button pbt_button_green">
 							<a href="{PATH_TO_ROOT}/download/category-39+mises-jour.php" class="pbt_button_a">
-								<img class="pbt_button_img" src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/img_phpboost.png" alt="" />
+								<img  src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/img_phpboost.png" alt="" class="pbt_button_img left" />
 								<p class="pbt_button_title">Mises à jour</p>
 								<p class="pbt_button_com pbt_button_com_green">Mise à jour et migration</p>
 							</a>
@@ -128,7 +128,7 @@
 					<div class="pbt_custom_content">
 						<div style="width: 90%;margin:auto;">
 							<div style="float:left; width: 47%;padding-right:15px;">
-								<img src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/img_modules.png" class="valign_middle pbt_custom_img" />
+								<img src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/img_modules.png" class="valign_middle pbt_custom_img left" />
 								<h2 class="title pbt_custom_subtitle" >
 									<a href="{PATH_TO_ROOT}/download/category-29+modules.php">Modules compatibles</a>
 								</h2>
@@ -137,7 +137,7 @@
 								</p>
 							</div>
 							<div style="float:left; width: 47%;padding-left:15px;">
-								<img src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/img_themes.png" class="valign_middle pbt_custom_img" />
+								<img src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/img_themes.png" class="valign_middle pbt_custom_img left" />
 								<h2 class="title pbt_custom_subtitle" >
 									<a href="{PATH_TO_ROOT}/download/category-30+themes.php">Thèmes compatibles</a>
 								</h2>

@@ -18,3 +18,5 @@ p.pbt_custom_desc, a.pbt_dev{
 a.pbt_dev:hover{ color:#25466C; text-decoration:none;}
 
 .pbt_custom_content{ margin:20px auto 20px auto; }
+
+img.left{ float:left; }
