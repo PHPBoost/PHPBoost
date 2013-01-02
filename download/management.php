@@ -577,7 +577,7 @@ else
 			'C_IMG' => !empty($file_image),
 			'C_EDIT_AUTH' => false,
 			'NAME' => stripslashes($file_title),
-			'CONTENTS' => FormatingHelper::second_parse(stripslashes(FormatingHelper::strparse($file_contents))),
+			'CONTENTS' => stripslashes($file_contents),
 			'CREATION_DATE' => $file_creation_date->format(DATE_FORMAT_SHORT) ,
 			'RELEASE_DATE' => $file_release_date->get_timestamp() > 0 ? $file_release_date->format(DATE_FORMAT_SHORT) : $DOWNLOAD_LANG['unknown_date'],
 			'SIZE' => $size_tpl,
@@ -589,7 +589,7 @@ else
 			'IMAGE_ALT' => str_replace('"', '\"', $file_title),
 			'LANG' => get_ulang(),
 			'CONTRIBUTION_COUNTERPART' => $contribution_counterpart_source,
-			'CONTRIBUTION_COUNTERPART_PREVIEW' => FormatingHelper::second_parse(stripslashes($contribution_counterpart)),
+			'CONTRIBUTION_COUNTERPART_PREVIEW' => stripslashes($contribution_counterpart),
 		    'FORCE_DOWNLOAD_SELECTED' => $file_download_method == 'force_download' ? ' selected="selected"' : '',
 			'REDIRECTION_SELECTED' => $file_download_method != 'force_download' ? ' selected="selected"' : '',
 			// Those langs are required by the template inclusion
@@ -610,8 +610,8 @@ else
 			'C_CONTRIBUTION' => !$auth_write,
 			'TITLE' => stripslashes($file_title),
 			'COUNT' => $file_hits,
-			'DESCRIPTION' => TextHelper::htmlspecialchars(stripslashes($file_contents)),
-			'SHORT_DESCRIPTION' => TextHelper::htmlspecialchars(stripslashes($file_short_contents)),
+			'DESCRIPTION' => stripslashes(retrieve(POST, 'contents', '')),
+			'SHORT_DESCRIPTION' => stripslashes(retrieve(POST, 'short_contents', '')),
 			'FILE_IMAGE' => $file_image,
 			'URL' => $file_url,
 			'SIZE_FORM' => $file_size,
@@ -619,7 +619,7 @@ else
 			'CATEGORIES_TREE' => $auth_write ?
 									$download_categories->build_select_form($file_cat_id, 'idcat', 'idcat', 0, DOWNLOAD_WRITE_CAT_AUTH_BIT, $CONFIG_DOWNLOAD['global_auth'], IGNORE_AND_CONTINUE_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH) :
 									$download_categories->build_select_form($file_cat_id, 'idcat', 'idcat', 0, DOWNLOAD_CONTRIBUTION_CAT_AUTH_BIT, $CONFIG_DOWNLOAD['global_auth'], IGNORE_AND_CONTINUE_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH),
-			'SHORT_DESCRIPTION_PREVIEW' => FormatingHelper::second_parse(stripslashes(FormatingHelper::strparse($file_short_contents))),
+			'SHORT_DESCRIPTION_PREVIEW' => stripslashes($file_short_contents),
 			'VISIBLE_WAITING' => $file_visibility == 2 ? ' checked="checked"' : '',
 			'VISIBLE_ENABLED' => $file_visibility == 1 ? ' checked="checked"' : '',
 			'VISIBLE_HIDDEN' => $file_visibility == 0 ? ' checked="checked"' : '',
