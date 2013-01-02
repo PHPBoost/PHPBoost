@@ -54,6 +54,7 @@ if (!empty($_POST['valid']))
 			else
 			{
 				$maintenance_config->disable_maintenance();
+				$maintenance_config->set_end_date(new Date());
 			}
 		break;
 		case 2:
@@ -66,6 +67,7 @@ if (!empty($_POST['valid']))
 		break;
 		default:
 			$maintenance_config->disable_maintenance();
+			$maintenance_config->set_end_date(new Date());
 	}
 	
 	$maintenance_config->set_auth(Authorizations::build_auth_array_from_form(1));
