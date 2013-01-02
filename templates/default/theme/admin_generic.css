@@ -6,7 +6,7 @@
 img { border:none; overflow:scroll; }
 hr { color:#061729; height:1px; }
 ul { margin:0; line-height:normal; }
-p { margin-bottom:0.7em; line-height:1.40em; font-size:1em; }
+p { margin-bottom:0.7em; line-height:normal; font-size:1em; }
 
 /* Classes textes */
 .text_center { text-align:center; }
