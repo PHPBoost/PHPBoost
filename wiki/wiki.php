@@ -154,6 +154,7 @@ if ((!empty($encoded_title) || !empty($id_contents)) && $num_rows > 0)
 	));
 	
 	$Template->put_all(array(
+		'ID_CAT' => $article_infos['id_cat'],
 		'TITLE' => $article_infos['title'],
 		'CONTENTS' => FormatingHelper::second_parse(wiki_no_rewrite($article_infos['content'])),
 		'HITS' => ($_WIKI_CONFIG['count_hits'] != 0 && $id_contents == 0) ? sprintf($LANG['wiki_article_hits'], (int)$article_infos['hits']) : '',
