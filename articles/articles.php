@@ -44,8 +44,6 @@ if (!empty($idart) && isset($cat))
 	$articles = $Sql->fetch_assoc($result);
 	$Sql->query_close($result);
 
-	$articles['auth'] = $ARTICLES_CAT[$articles['idcat']]['auth'];
-
 	if (!isset($ARTICLES_CAT[$cat]) || !$ARTICLES_CAT[$cat]['visible'])
 	{
 		$error_controller = PHPBoostErrors::unexisting_page();
@@ -58,6 +56,8 @@ if (!empty($idart) && isset($cat))
             $LANG['e_unexist_articles']);
         DispatchManager::redirect($controller);
 	}
+	
+	$articles['auth'] = $ARTICLES_CAT[$articles['idcat']]['auth'];
 	
 	//checking authorization
 	if ((!$User->check_auth($ARTICLES_CAT[$cat]['auth'], AUTH_ARTICLES_READ) && !$User->check_auth($articles['auth'], AUTH_ARTICLES_READ)) || ($articles['visible'] == 0 && $articles['user_id'] != $User->get_attribute('user_id')))
