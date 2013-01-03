@@ -27,7 +27,7 @@
 		</tr>
 		# START themes_installed #
 			<tr> 	
-				<td class="row2" style="text-align:center; # IF themes_installed.C_IS_DEFAULT_THEME # background-color: #E1E1E1 # ENDIF #">					
+				<td class="row2 # IF themes_installed.C_IS_DEFAULT_THEME # row_disabled # ENDIF #" style="text-align:center;">					
 					<span id="theme-{themes_installed.ID}"></span>
 					<strong>{themes_installed.NAME}</strong> <em>({themes_installed.VERSION})</em>
 					<br /><br />
@@ -43,7 +43,7 @@
 					# ENDIF #
 					
 				</td>
-				<td class="row2" # IF themes_installed.C_IS_DEFAULT_THEME # style="background-color: #E1E1E1" # ENDIF #>
+				<td class="row2 # IF themes_installed.C_IS_DEFAULT_THEME # row_disabled # ENDIF #">
 					<div id="desc_explain{themes_installed.ID}">
 						<strong>{@themes.author}:</strong> 
 						<a href="mailto:{themes_installed.AUTHOR_EMAIL}">
@@ -63,7 +63,7 @@
 						<strong>{@themes.width}:</strong> {themes_installed.WIDTH}<br />
 					</div>
 				</td>
-				<td class="row2" # IF themes_installed.C_IS_DEFAULT_THEME # style="background-color: #E1E1E1" # ENDIF #>
+				<td class="row2 # IF themes_installed.C_IS_DEFAULT_THEME # row_disabled # ENDIF #">
 					# IF NOT themes_installed.C_IS_DEFAULT_THEME #
 						<div id="authorizations_explain-{themes_installed.ID}">
 							{themes_installed.AUTHORIZATIONS}
@@ -74,7 +74,7 @@
 						</div>
 					# ENDIF #
 				</td>
-				<td class="row2" style="text-align:center; # IF themes_installed.C_IS_DEFAULT_THEME # background-color: #E1E1E1 # ENDIF #">
+				<td class="row2 # IF themes_installed.C_IS_DEFAULT_THEME # row_disabled # ENDIF #" style="text-align:center;">
 					# IF NOT themes_installed.C_IS_DEFAULT_THEME #
 						<label><input type="radio" name="activated-{themes_installed.ID}" value="1" # IF themes_installed.C_IS_ACTIVATED # checked="checked" # ENDIF # /> {@themes.yes}</label>
 						<label><input type="radio" name="activated-{themes_installed.ID}" value="0" # IF NOT themes_installed.C_IS_ACTIVATED # checked="checked" # ENDIF # /> {@themes.no}</label>

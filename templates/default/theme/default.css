@@ -29,6 +29,11 @@ Css par défaut commun * tout les thèmes, permet les ajouts nécessaires au framew
     background:#FFFFFF !important;
 }
 
+.row_disabled {
+    text-align:center;
+    background:#E1E1E1 !important;
+}
+
 .button {    
     cursor:pointer;
 }
