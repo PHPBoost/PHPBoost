@@ -61,8 +61,8 @@ class UserService
 			'timestamp' => time(),
 			'user_aprob' => (int)$user->get_approbation(),
 			'user_warning' => $user->get_warning_percentage(),
-			'user_readonly' => $user->get_is_readonly(),
-			'user_ban' => $user->get_is_banned(),
+			'user_readonly' => $user->get_delay_readonly(),
+			'user_ban' => $user->get_delay_banned(),
 			'approbation_pass' => $user->get_approbation_pass()
 		));
 		
@@ -95,8 +95,8 @@ class UserService
 	{
 		self::$querier->update(DB_TABLE_MEMBER, array(
 			'user_warning' => $user->get_warning_percentage(),
-			'user_readonly' => $user->get_is_readonly(),
-			'user_ban' => $user->get_is_banned(),
+			'user_readonly' => $user->get_delay_readonly(),
+			'user_ban' => $user->get_delay_banned(),
 		), $condition, $parameters);
 	}
 	
@@ -139,8 +139,8 @@ class UserService
 		$user->set_timezone($row['user_timezone']);
 		$user->set_editor($row['user_editor']);
 		$user->set_warning_percentage($row['user_warning']);
-		$user->set_is_banned($row['user_ban']);
-		$user->set_is_readonly($row['user_readonly']);
+		$user->set_delay_banned($row['user_ban']);
+		$user->set_delay_readonly($row['user_readonly']);
 		return $user;
 	}
 	

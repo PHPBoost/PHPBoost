@@ -83,6 +83,13 @@ class UserViewProfileController extends AbstractController
 		$fieldset->add_field(new FormFieldFree('nbr_msg', $this->lang['number-messages'], $user_informations['user_msg'] . '<br>' . '<a href="' . UserUrlBuilder::messages($user_id)->absolute() . '">'. $this->lang['messages'] .'</a>'));
 		$fieldset->add_field(new FormFieldFree('last_connect', $this->lang['last_connection'], gmdate_format('date_format_short', $user_informations['last_connect'])));
 		
+		if (AppContext::get_current_user()->check_auth(UserAccountsConfig::load()->get_auth_read_members(), AUTH_READ_MEMBERS))
+		{
+			$link_email = '<a href="mailto:'. $user_informations['user_mail'] .'">
+			<img src="' . TPL_PATH_TO_ROOT . '/templates/'. get_utheme().'/images/'. get_ulang().'/email.png" alt="'.$this->lang['email'].'" /></a>';
+			$fieldset->add_field(new FormFieldFree('email', $this->lang['email'], $link_email));
+		}
+		
 		if (!$this->same_user_view_profile($user_id))
 		{
 			$link_mp = '<a href="'. UserUrlBuilder::personnal_message($user_id)->absolute() .'">

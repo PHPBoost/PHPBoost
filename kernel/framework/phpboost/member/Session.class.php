@@ -290,7 +290,7 @@ class Session
 		if ($this->data['user_id'] > 0 && !empty($this->data['session_id']))
 		{
 			//Récupère également les champs membres supplémentaires
-			$result = $this->sql->query_while("SELECT m.user_id AS m_user_id, m.login, m.level, m.user_groups, m.user_lang, m.user_theme, m.user_mail, m.user_pm, m.user_editor, m.user_timezone, m.user_readonly, s.modules_parameters, s.token AS token, me.*
+			$result = $this->sql->query_while("SELECT m.user_id AS m_user_id, m.login, m.level, m.user_groups, m.user_lang, m.user_theme, m.user_mail, m.user_pm, m.user_editor, m.user_timezone, m.user_readonly, m.user_ban, m.user_warning, s.modules_parameters, s.token AS token, me.*
 			FROM " . DB_TABLE_MEMBER . " m
             JOIN " . DB_TABLE_SESSIONS . " s ON s.user_id = '" . $this->data['user_id'] . "' AND s.session_id = '" . $this->data['session_id'] . "'
 			LEFT JOIN " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " me ON me.user_id = '" . $this->data['user_id'] . "'
@@ -332,6 +332,8 @@ class Session
 		$this->data['user_show_mail'] = isset($userdata['user_show_mail']) ? $userdata['user_show_mail'] : false;
 		$this->data['user_pm'] = isset($userdata['user_pm']) ? $userdata['user_pm'] : '0';
 		$this->data['user_readonly'] = isset($userdata['user_readonly']) ? $userdata['user_readonly'] : '0';
+		$this->data['user_ban'] = isset($userdata['user_ban']) ? $userdata['user_ban'] : '0';
+		$this->data['user_warning'] = isset($userdata['user_warning']) ? $userdata['user_warning'] : '0';
 		$this->data['user_editor'] = !empty($userdata['user_editor']) ? $userdata['user_editor'] : ContentFormattingConfig::load()->get_default_editor();
 		$this->data['user_timezone'] = isset($userdata['user_timezone']) ? $userdata['user_timezone'] : GeneralConfig::load()->get_site_timezone();
 		$this->data['modules_parameters'] = isset($userdata['modules_parameters']) ? $userdata['modules_parameters'] : '';
