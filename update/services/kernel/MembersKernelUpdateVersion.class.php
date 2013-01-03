@@ -64,7 +64,7 @@ class MembersKernelUpdateVersion extends KernelUpdateVersion
 					'user_biography' => $row['user_desc'], 
 					'user_msn' => $row['user_msn'], 
 					'user_yahoo' => $row['user_yahoo'],  
-					'user_avatar' => $row['user_avatar'], 
+					'user_avatar' => ltrim($row['user_avatar'], '..'), 
 				));
 			} catch (Exception $e) {
 				$this->querier->update(PREFIX .'member_extended_fields', array(
@@ -78,7 +78,7 @@ class MembersKernelUpdateVersion extends KernelUpdateVersion
 					'user_biography' => $row['user_desc'], 
 					'user_msn' => $row['user_msn'], 
 					'user_yahoo' => $row['user_yahoo'],  
-					'user_avatar' => $row['user_avatar'], 
+					'user_avatar' => ltrim($row['user_avatar'], '..'), 
 				), 'WHERE user_id=:user_id', array('user_id' => $row['user_id']));
 			}
 
