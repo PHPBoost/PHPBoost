@@ -117,7 +117,7 @@ class UserViewProfileController extends AbstractController
 	
 	private function get_level_lang($user_informations)
 	{
-		if ($user_informations['user_warning'] < '100' || (time() - $user_informations['user_ban']) < 0)
+		if ($user_informations['user_warning'] < '100' || (time() - $user_informations['user_ban']) > 0)
 		{
 			return UserService::get_level_lang($user_informations['level']);
 		}
