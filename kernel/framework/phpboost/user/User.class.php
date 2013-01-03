@@ -55,8 +55,8 @@ class User
 	protected $timezone;
 	protected $editor;
 	
-	protected $is_banned = 0;
-	protected $is_readonly = 0;
+	protected $delay_banned = 0;
+	protected $delay_readonly = 0;
 	protected $warning_percentage = 0;
 	
 	protected $approbation_pass = '';
@@ -99,7 +99,7 @@ class User
 	{
 		return $this->level == self::ADMIN_LEVEL;
 	}
-	
+
 	public function set_groups(Array $groups)
 	{
 		$this->groups = $groups;
@@ -206,24 +206,34 @@ class User
 		return $this->warning_percentage;
 	}
 	
-	public function set_is_banned($is_banned)
+	public function set_delay_banned($delay_banned)
 	{
-		$this->is_banned = $is_banned;
+		$this->delay_banned = $delay_banned;
 	}
 	
-	public function get_is_banned()
+	public function get_delay_banned()
 	{
-		return $this->is_banned;
+		return $this->delay_banned;
 	}
 	
-	public function set_is_readonly($is_readonly)
+	public function is_banned()
 	{
-		$this->is_readonly = $is_readonly;
+		return (time() - $this->is_banned) <= 0 || $this->warning_percentage >= '100';
 	}
 	
-	public function get_is_readonly()
+	public function set_delay_readonly($delay_readonly)
 	{
-		return $this->is_readonly;
+		$this->delay_readonly = $delay_readonly;
+	}
+	
+	public function get_delay_readonly()
+	{
+		return $this->delay_readonly;
+	}
+	
+	public function is_readonly()
+	{
+		return (time() - $this->delay_readonly) <= 0;
 	}
 	
 	public function set_approbation_pass($approbation_pass)

@@ -48,6 +48,10 @@ class CurrentUser extends User
 		$this->set_timezone($this->user_data['user_timezone']);
 		$this->set_editor($this->user_data['user_editor']);
 		
+		$this->set_delay_banned($this->user_data['user_ban']);
+		$this->set_delay_readonly($this->user_data['user_readonly']);
+		$this->set_warning_percentage($this->user_data['user_warning']);
+		
 		$this->login = $this->user_data['login'];
 		$this->pseudo = $this->user_data['login'];
 		$this->build_groups();
