@@ -39,7 +39,7 @@ class ArticlesSitemapExtensionPoint implements SitemapExtensionPoint
 
 	private function get_module_map($auth_mode)
 	{
-		global $ARTICLES_CAT, $ARTICLES_LANG, $LANG, $User, $CONFIG_ARTICLES, $Cache, $Bread_crumb, $idartcat;
+		global $ARTICLES_CAT, $ARTICLES_LANG, $LANG, $User, $CONFIG_ARTICLES, $Cache, $Bread_crumb, $idartcat, $Sql;
 
 		require_once PATH_TO_ROOT . '/articles/articles_begin.php';
 
