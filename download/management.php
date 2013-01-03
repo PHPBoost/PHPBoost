@@ -284,7 +284,7 @@ if ($edit_file_id > 0)
             //If we cannot see the file, we redirect in its category
             if (!$visible || !$file_approved)
             {
-            	if ($$file_cat_id > 0)
+            	if ($file_cat_id > 0)
 					AppContext::get_response()->redirect('/download/' . url('download.php?cat=' . $file_cat_id, 'category-' . $file_cat_id . '+' . Url::encode_rewrite($DOWNLOAD_CATS[$file_cat_id]['name']) . '.php'));
 				else
 					AppContext::get_response()->redirect('/download/' . url('download.php'));
