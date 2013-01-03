@@ -72,6 +72,11 @@ function wiki_no_rewrite($var)
 		return $var;
 }
 
+function remove_chapter_number_in_rewrited_title($title)
+{
+	return Url::encode_rewrite(preg_replace('`((?:[0-9 ]+)|(?:[IVXCL ]+))[\.-](.*)`iU', '$2', $title));
+}
+
 //Fonction de décomposition récursive (passage par référence pour la variable content qui passe de chaîne à tableau de chaînes (5 niveaux maximum)
 function wiki_explode_menu(&$content)
 {

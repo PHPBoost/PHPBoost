@@ -178,6 +178,10 @@ elseif ($id_to_rename > 0 && !empty($new_title)) //Renommer un article
 	elseif (Url::encode_rewrite($new_title) == $article_infos['encoded_title'])//Si seul le titre change mais pas le titre encodé
 	{
 		$Sql->query_inject("UPDATE " . PREFIX . "wiki_articles SET title = '" . $new_title . "' WHERE id = '" . $id_to_rename . "'", __LINE__, __FILE__);
+		
+		$Cache->Generate_module_file('wiki');
+		Feed::clear_cache('wiki');
+		
 		AppContext::get_response()->redirect('/wiki/' . url('wiki.php?title=' . $article_infos['encoded_title'], $article_infos['encoded_title'], '&'));
 	}
 	elseif ($already_exists > 0) //Si le titre existe déjà erreur, on le signale
@@ -200,8 +204,8 @@ elseif ($id_to_rename > 0 && !empty($new_title)) //Renommer un article
 			if ($article_infos['is_cat'] == 1)
 			{
 				$Sql->query_inject("UPDATE " . PREFIX . "wiki_cats SET article_id = '" . $new_id_article . "' WHERE id = '" . $article_infos['id_cat'] . "'", __LINE__, __FILE__);
-				$Cache->Generate_module_file('wiki');
 			}
+			$Cache->Generate_module_file('wiki');
     		 // Feeds Regeneration
              Feed::clear_cache('wiki');
 		   AppContext::get_response()->redirect('/wiki/' . url('wiki.php?title=' . Url::encode_rewrite($new_title), Url::encode_rewrite($new_title), '&'));
