@@ -50,7 +50,7 @@ class ArticlesHomePageExtensionPoint implements HomePageExtensionPoint
 	
 	private function get_view()
 	{
-		global $idartcat, $Session, $User, $invisible, $Cache, $ARTICLES_CAT, $CONFIG_ARTICLES, $LANG, $ARTICLES_LANG, $Bread_crumb;
+		global $idartcat, $Session, $User, $invisible, $Cache, $ARTICLES_CAT, $CONFIG_ARTICLES, $LANG, $ARTICLES_LANG, $Bread_crumb, $Sql;
 		
 		require_once(PATH_TO_ROOT . '/articles/articles_begin.php'); 
 		
