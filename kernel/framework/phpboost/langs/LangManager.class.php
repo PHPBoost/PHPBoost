@@ -50,6 +50,17 @@ class LangManager
 		return $activated_langs;
 	}
 	
+	public static function get_activated_and_authorized_langs_map()
+	{
+		$langs = array();
+		foreach (LangsConfig::load()->get_langs() as $lang) {
+			if ($lang->is_activated() && $lang->check_auth()) {
+				$langs[$lang->get_id()] = $lang;
+			}
+		}
+		return $langs;
+	}
+	
 	public static function get_default_lang()
 	{
 		return UserAccountsConfig::load()->get_default_lang();
