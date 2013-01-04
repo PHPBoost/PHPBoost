@@ -43,7 +43,7 @@ class NewsletterAuthorizationsService
 	
 	public function __construct($id_stream = null)
 	{
-		if ($id_stream !== null)
+		if (!empty($id_stream))
 		{
 			$this->id_stream = $id_stream;
 			$this->stream_authorizations = NewsletterStreamsCache::load()->get_authorizations_by_stream($this->id_stream);
@@ -153,7 +153,7 @@ class NewsletterAuthorizationsService
 	
 	private function get_authorizations()
 	{
-		if (is_array($this->stream_authorizations) && $this->id_stream !== null && $this->id_stream !== 0)
+		if (is_array($this->stream_authorizations) && !empty($this->id_stream))
 		{
 			return $this->stream_authorizations;
 		}
