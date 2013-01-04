@@ -101,7 +101,7 @@ class NewsletterStreamsCache implements CacheData
 	public function get_authorizations_by_stream($id_stream)
 	{
 		$stream = $this->get_stream($id_stream);
-		if ($stream !== null)
+		if (!empty($stream))
 		{
 			return $stream['authorizations'];
 		}
