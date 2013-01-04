@@ -48,7 +48,7 @@ class ThemesSwitcherModuleMiniMenu extends ModuleMiniMenu
 	        $theme = ThemeManager::get_theme($theme_id);
 			if ($theme !== null)
 			{
-				if ($theme->check_auth())
+				if ($theme->is_activated() && $theme->check_auth())
 				{
 					$user->update_theme($theme->get_id());
 				}
@@ -61,17 +61,14 @@ class ThemesSwitcherModuleMiniMenu extends ModuleMiniMenu
 	
 	    MenuService::assign_positions_conditions($tpl, $this->get_block());
 	
-	    foreach (ThemeManager::get_activated_themes_map() as $id => $value)
+	    foreach (ThemeManager::get_activated_and_authorized_themes_map() as $id => $theme)
 		{
-	    	if ($value->check_auth())
-	    	{
-				$selected = ($user->get_theme() == $id) ? ' selected="selected"' : '';
-	    		$tpl->assign_block_vars('themes', array(
-	    			'NAME' => $value->get_configuration()->get_name(),
-	    			'IDNAME' => $id,
-	    			'SELECTED' => $selected
-	    		));
-	    	}
+			$selected = ($user->get_theme() == $id) ? ' selected="selected"' : '';
+    		$tpl->assign_block_vars('themes', array(
+    			'NAME' => $theme->get_configuration()->get_name(),
+    			'IDNAME' => $id,
+    			'SELECTED' => $selected
+    		));
 	    }
 	
 	    $tpl->put_all(array(

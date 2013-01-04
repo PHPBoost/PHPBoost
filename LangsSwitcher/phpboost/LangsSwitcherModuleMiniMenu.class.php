@@ -48,7 +48,7 @@ class LangsSwitcherModuleMiniMenu extends ModuleMiniMenu
 	        $lang = LangManager::get_lang($lang_id);
 			if ($lang !== null)
 			{
-				if ($lang->check_auth())
+				if ($lang->is_activated() && $lang->check_auth())
 				{
 					$user->update_lang($lang->get_id());
 				}
@@ -61,17 +61,14 @@ class LangsSwitcherModuleMiniMenu extends ModuleMiniMenu
 	
 	    MenuService::assign_positions_conditions($tpl, $this->get_block());
 
-	    foreach(LangManager::get_activated_langs_map() as $id => $lang)
+	    foreach(LangManager::get_activated_and_authorized_langs_map() as $id => $lang)
 	    {
-	    	if ($lang->check_auth())
-	    	{
-				$selected = ($user->get_locale() == $id) ? ' selected="selected"' : '';
-	    		$tpl->assign_block_vars('langs', array(
-	    			'NAME' => $lang->get_configuration()->get_name(),
-	    			'IDNAME' => $id,
-	    			'SELECTED' => $selected
-	    		));
-	    	}
+			$selected = ($user->get_locale() == $id) ? ' selected="selected"' : '';
+    		$tpl->assign_block_vars('langs', array(
+    			'NAME' => $lang->get_configuration()->get_name(),
+    			'IDNAME' => $id,
+    			'SELECTED' => $selected
+    		));
 	    }
 	
 	    $lang_identifier = str_replace('en', 'uk', LangLoader::get_message('xml_lang', 'main'));
