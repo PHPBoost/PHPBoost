@@ -185,7 +185,7 @@ class NewsHomePageExtensionPoint implements HomePageExtensionPoint
 						'NUMBER_COM' => !empty($row['number_comments']) ? $row['number_comments'] : 0,
 						'TITLE' => $row['title'],
 						'CONTENTS' => FormatingHelper::second_parse($row['contents']),
-						'EXTEND_CONTENTS' => '<a style="font-size:10px" href="' . PATH_TO_ROOT . '/news/news' . url('.php?id=' . $row['id'], '-0-' . $row['id'] . '.php') . '" onclick="document.location = \'count.php?id='. $row['id'] .'\';">[' . $NEWS_LANG['extend_contents'] . ']</a><br /><br />',
+						'EXTEND_CONTENTS' => '<a style="font-size:10px" href="' . PATH_TO_ROOT . '/news/news' . url('.php?id=' . $row['id'], '-0-' . $row['id'] . '.php') . '">[' . $NEWS_LANG['extend_contents'] . ']</a><br /><br />',
 						'IMG' => FormatingHelper::second_parse_url($row['img']),
 						'IMG_DESC' => $row['alt'],
 						'ICON' => FormatingHelper::second_parse_url($NEWS_CAT[$row['idcat']]['image']),

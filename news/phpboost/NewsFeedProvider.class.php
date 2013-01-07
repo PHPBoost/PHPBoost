@@ -82,7 +82,7 @@ class NewsFeedProvider implements FeedProvider
 			foreach ($results as $row)
 			{
 				// Rewriting
-				$link = new Url('/news/news' . url('.php?id=' . $row['id'], '-0-' . $row['id'] .  '+' . Url::encode_rewrite($row['title']) . '.php'));
+				$link = new Url('/news/news' . url('.php?id=' . $row['id'], '-'. $row['idcat'] .'-' . $row['id'] .  '+' . Url::encode_rewrite($row['title']) . '.php'));
 
 				$item = new FeedItem();
 				$item->set_title($row['title']);
