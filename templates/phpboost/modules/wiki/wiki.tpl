@@ -40,54 +40,61 @@
 				<hr style="margin:5px 0px;" />
 				
 				# START cat #
-				<div class="pbt_container block_container">
 					
 					# IF cat.list_cats #
-					<div class="pbt_content">
-						<p class="pbt_title">Catégories :</p>
-					</div>
-					
-					<ul class="bb_ul" style="list-style:none;margin-bottom:15px;line-height: 1.8em;">
-						# START cat.list_cats #
-						<li class="bb_li">
-							<img src="{PICTURES_DATA_PATH}/images/cat.png" class="valign_middle" alt="" />
-							&nbsp;
-							<a href="{cat.list_cats.U_CAT}">{cat.list_cats.NAME}</a>
-						</li>
-						# END cat.list_cats #
-					</ul>
+					<div class="pbt_container block_container">
+						<div class="pbt_content">
+							<p class="pbt_title">Catégories :</p>
+						</div>
+						
+						<ul class="bb_ul no_list">
+							# START cat.list_cats #
+							<li class="bb_li">
+								<img src="{PICTURES_DATA_PATH}/images/cat.png" class="valign_middle" alt="" />
+								&nbsp;
+								<a href="{cat.list_cats.U_CAT}">{cat.list_cats.NAME}</a>
+							</li>
+							# END cat.list_cats #
+						</ul>
+					# ELSE #
+					# IF cat.list_art #
+					<div class="pbt_container block_container">
+					# END IF #
 					# END IF #
 
 					# IF cat.list_art #
-					<div class="pbt_content">
-						<p class="pbt_title">
-							<p class="pbt_title"><a href=${relative_url(SyndicationUrlBuilder::rss('wiki', ID_CAT))} title="Flux RSS">Articles</a></p>
-						</p>
+						<div class="pbt_content">
+							<p class="pbt_title">
+								<p class="pbt_title"><a href=${relative_url(SyndicationUrlBuilder::rss('wiki', ID_CAT))} title="Flux RSS">Articles</a></p>
+							</p>
+						</div>
+		
+						<ul class="bb_ul no_list">
+							# START cat.list_art #
+							<li class="bb_li">
+								<img src="{PICTURES_DATA_PATH}/images/article.png"  class="valign_middle" alt="" />
+								&nbsp;
+								<a href="{cat.list_art.U_ARTICLE}">{cat.list_art.TITLE}</a>
+							</li>
+							# END cat.list_art #
+						</ul>
 					</div>
-
-					<ul class="bb_ul" style="list-style:none;margin-bottom:15px;line-height: 1.8em;">
-						# START cat.list_art #
-						<li class="bb_li">
-							<img src="{PICTURES_DATA_PATH}/images/article.png"  class="valign_middle" alt="" />
-							&nbsp;
-							<a href="{cat.list_art.U_ARTICLE}">{cat.list_art.TITLE}</a>
-						</li>
-						# END cat.list_art #
-					</ul>
+					# ELSE #
+					# IF cat.list_cats #
+					</div>
 					# END IF #
-							
-				</div>
-				
+					# END IF #
+
 				# START cat.no_sub_article #
-				<div style="margin:10px;text-align: center;">
+				<div class="no_article">
 					{cat.no_sub_article.NO_SUB_ARTICLE}
 				</div>
-				
 				# END cat.no_sub_article #
 				
 				# END cat #
 				<div class="spacer" style="margin-top:30px;">&nbsp;</div>
 			</div>
+			
 			<hr style="margin:5px 0px;" />
 			<div class="module_bottom_l"></div>		
 			<div class="module_bottom_r"></div>
