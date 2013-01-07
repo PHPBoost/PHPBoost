@@ -363,16 +363,18 @@ class Environment
 	private static function perform_stats_changeday()
 	{
 		$yesterday_timestamp = self::get_yesterday_timestamp();
-
-		//We insert today's entry in the stats table
-		PersistenceContext::get_sql()->query_inject("INSERT INTO " . DB_TABLE_STATS . " (stats_year, stats_month, " .
-		"stats_day, nbr, pages, pages_detail) VALUES ('" . gmdate_format('Y',
-		$yesterday_timestamp, TIMEZONE_SYSTEM) . "', '" . gmdate_format('m', $yesterday_timestamp,
-		TIMEZONE_SYSTEM) . "', '" . gmdate_format('d', $yesterday_timestamp, TIMEZONE_SYSTEM) .
-		"', 0, 0, '')", __LINE__, __FILE__);
+		
+		$result = PersistenceContext::get_querier()->insert(DB_TABLE_STATS, array(
+			'stats_years' => gmdate_format('Y', $yesterday_timestamp, TIMEZONE_SYSTEM),
+			'stats_month' => gmdate_format('m',	$yesterday_timestamp, TIMEZONE_SYSTEM),
+			'stats_day' => gmdate_format('d', $yesterday_timestamp, TIMEZONE_SYSTEM),
+			'nbr' => 0, 
+			'pages' => 0, 
+			'pages_detail' => ''
+		));
 
 		//We retrieve the id we just come to create
-		$last_stats = PersistenceContext::get_sql()->insert_id("SELECT MAX(id) FROM " . PREFIX . "stats");
+		$last_stats = $result->get_last_inserted_id();
 
 		PersistenceContext::get_sql()->query_inject("UPDATE " . DB_TABLE_STATS_REFERER .
 			" SET yesterday_visit = today_visit", __LINE__, __FILE__);
