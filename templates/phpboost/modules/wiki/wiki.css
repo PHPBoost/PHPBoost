@@ -88,3 +88,33 @@
  img.pbt_button_img{
  	padding-right:5px;
  }
+ 
+ div.pbt_content_about{
+ 	float:left;
+ 	width:45%;
+ 	text-align:center;
+ 	padding-left:34px;
+ }
+ 
+ div.pbt_desc_container{
+ 	padding:10px 20px;
+ }
+ 
+ li.bb_li span.pbt_desc{
+ 	font-size:11px;
+ }
+ 
+ div.pbt_desc_container p.pbt_desc{
+ 	font-weight:bold;
+ }
+ 
+ div.no_article{
+ 	margin:20px;
+ 	text-align:center;
+ 	font-style:italic;
+ 	font-size:10px;
+ }
+ 
+.row2 {
+	padding: 3px 6px;
+}
