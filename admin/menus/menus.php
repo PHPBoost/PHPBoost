@@ -95,9 +95,9 @@ if (!empty($id))
 		case 'down':
 			// Move up or down a Menu in a block
 			if ($action == 'up')
-			MenuService::change_position($menu, MenuService::MOVE_UP);
+				MenuService::change_position($menu, MenuService::MOVE_UP);
 			else
-			MenuService::change_position($menu, MenuService::MOVE_DOWN);
+				MenuService::change_position($menu, MenuService::MOVE_DOWN);
 		break;
         default:
             if (!empty($move))

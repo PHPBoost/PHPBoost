@@ -327,9 +327,9 @@ class Environment
 		{
 			$yesterday_timestamp = self::get_yesterday_timestamp();
 
-			$condition = 'WHERE stats_year=:stats_years AND stats_month=:stats_month AND stats_day=:stats_day';
+			$condition = 'WHERE stats_year=:stats_year AND stats_month=:stats_month AND stats_day=:stats_day';
 			$parameters = array(
-				'stats_years' => gmdate_format('Y', $yesterday_timestamp, TIMEZONE_SYSTEM),
+				'stats_year' => gmdate_format('Y', $yesterday_timestamp, TIMEZONE_SYSTEM),
 				'stats_month' => gmdate_format('m',	$yesterday_timestamp, TIMEZONE_SYSTEM),
 				'stats_day' => gmdate_format('d', $yesterday_timestamp, TIMEZONE_SYSTEM)
 			);
@@ -365,7 +365,7 @@ class Environment
 		$yesterday_timestamp = self::get_yesterday_timestamp();
 		
 		$result = PersistenceContext::get_querier()->insert(DB_TABLE_STATS, array(
-			'stats_years' => gmdate_format('Y', $yesterday_timestamp, TIMEZONE_SYSTEM),
+			'stats_year' => gmdate_format('Y', $yesterday_timestamp, TIMEZONE_SYSTEM),
 			'stats_month' => gmdate_format('m',	$yesterday_timestamp, TIMEZONE_SYSTEM),
 			'stats_day' => gmdate_format('d', $yesterday_timestamp, TIMEZONE_SYSTEM),
 			'nbr' => 0, 
