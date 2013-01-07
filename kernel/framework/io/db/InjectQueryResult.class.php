@@ -46,5 +46,4 @@ interface InjectQueryResult extends QueryResult
      */
     function get_last_inserted_id();
 }
-
 ?>
