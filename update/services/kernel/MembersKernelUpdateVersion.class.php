@@ -51,6 +51,13 @@ class MembersKernelUpdateVersion extends KernelUpdateVersion
 		while ($row = $result->fetch())
 		{
 			$date = new Date(DATE_FROM_STRING, TIMEZONE_SYSTEM, str_replace('-', '/', $row['user_born']), 'y/m/d');
+			
+			$avatar = $row['user_avatar'];
+			if (!strpos($avatar, '://'))
+			{
+				$avatar = preg_replace('`../images/avatars/(.*)`iU', '/images/avatars/$1', $avatar);
+			}
+			
 			try {
 				$this->querier->insert(PREFIX .'member_extended_fields', array(
 					'user_id' => $row['user_id'],
@@ -64,7 +71,7 @@ class MembersKernelUpdateVersion extends KernelUpdateVersion
 					'user_biography' => $row['user_desc'], 
 					'user_msn' => $row['user_msn'], 
 					'user_yahoo' => $row['user_yahoo'],  
-					'user_avatar' => ltrim($row['user_avatar'], '..'), 
+					'user_avatar' => $avatar, 
 				));
 			} catch (Exception $e) {
 				$this->querier->update(PREFIX .'member_extended_fields', array(
@@ -78,7 +85,7 @@ class MembersKernelUpdateVersion extends KernelUpdateVersion
 					'user_biography' => $row['user_desc'], 
 					'user_msn' => $row['user_msn'], 
 					'user_yahoo' => $row['user_yahoo'],  
-					'user_avatar' => ltrim($row['user_avatar'], '..'), 
+					'user_avatar' => $avatar, 
 				), 'WHERE user_id=:user_id', array('user_id' => $row['user_id']));
 			}
 
