@@ -168,7 +168,11 @@ class AdminMemberEditController extends AdminController
 		$this->user->set_show_email(!$this->form->get_value('user_hide_mail'));
 		$this->user->set_approbation($this->form->get_value('approbation'));
 		
-		$this->user->set_theme($this->form->get_value('theme')->get_raw_value());
+		if ($this->form->has_field('theme'))
+		{
+			$this->user->set_theme($this->form->get_value('theme')->get_raw_value());
+		}
+		
 		$this->user->set_locale($this->form->get_value('lang')->get_raw_value());
 		$this->user->set_timezone($this->form->get_value('timezone')->get_raw_value());
 		$this->user->set_editor($this->form->get_value('text-editor')->get_raw_value());
