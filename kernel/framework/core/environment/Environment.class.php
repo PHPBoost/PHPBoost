@@ -294,7 +294,7 @@ class Environment
 
 	public static function init_output_bufferization()
 	{
-		if (ServerEnvironmentConfig::load()->is_output_gziping_enabled())
+		if (ServerEnvironmentConfig::load()->is_output_gziping_enabled() && !in_array('ob_gzhandler', ob_list_handlers()))
 		{
 			ob_start('ob_gzhandler');
 		}
