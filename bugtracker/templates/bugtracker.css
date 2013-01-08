@@ -2,7 +2,11 @@
 div.module_top{
 	margin-top:30px;
 	height: 22px;
-	padding-bottom: 0px;		
+	padding-bottom: 0px;	
+}
+
+div.module_top a{
+	font-size:14px;		
 }
 
 /* Class générales */
