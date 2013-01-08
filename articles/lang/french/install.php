@@ -3,8 +3,8 @@
  *                           install.php
  *                            -------------------
  *   begin                : February 23, 2012
- *   copyright            : (C) 2012 Kévin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   copyright            : (C) 2012 Kevin MASSY
+ *   email                : kevin.massy@phpboost.com
  *
  *
  ###################################################

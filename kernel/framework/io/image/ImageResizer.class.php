@@ -4,7 +4,7 @@
  *                            -------------------
  *   begin                : July 11, 2010
  *   copyright            : (C) 2010 Kevin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   email                : kevin.massy@phpboost.com
  *
  *
  ###################################################
@@ -26,7 +26,7 @@
  ###################################################*/
 
  /**
- * @author Kevin MASSY <soldier.weasel@gmail.com>
+ * @author Kevin MASSY <kevin.massy@phpboost.com>
  * @desc This class allows you to resize images easily.
  * @package {@package}
  */

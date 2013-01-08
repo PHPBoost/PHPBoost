@@ -4,7 +4,7 @@
  *                            -------------------
  *   begin                : April 1, 2010
  *   copyright            : (C) 2010 Kevin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   email                : kevin.massy@phpboost.com
  *
  *
  ###################################################
@@ -26,7 +26,7 @@
  ###################################################*/
 
  /**
- * @author Kevin MASSY <soldier.weasel@gmail.com>
+ * @author Kevin MASSY <kevin.massy@phpboost.com>
  * @desc This class could be used to specified comments authorizations (access, read, post, moderation)
  * @package {@package}
  */

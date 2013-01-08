@@ -4,7 +4,7 @@
  *                            -------------------
  *   begin                : December 27, 2010
  *   copyright            : (C) 2010 K�vin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   email                : kevin.massy@phpboost.com
  *
  *
  ###################################################

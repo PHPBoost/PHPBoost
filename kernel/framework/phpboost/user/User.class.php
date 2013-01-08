@@ -4,7 +4,7 @@
  *                            -------------------
  *   begin                : March 31, 2012
  *   copyright            : (C) 2012 Kevin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   email                : kevin.massy@phpboost.com
  *
  *
  ###################################################
@@ -30,7 +30,7 @@ define('GROUP_TYPE', 2);
 define('USER_TYPE', 3);
 
 /**
- * @author Kevin MASSY <soldier.weasel@gmail.com>
+ * @author Kevin MASSY <kevin.massy@phpboost.com>
  * @desc This class represente a user
  * @package {@package}
  */
