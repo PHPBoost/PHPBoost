@@ -73,8 +73,6 @@ class UserDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 			'SITE_DESCRIPTION' => $this->get_seo_meta_data()->get_description(),
 			'SITE_KEYWORD' => $this->get_seo_meta_data()->get_keywords(),
 			'L_XML_LANGUAGE' => self::$main_lang['xml_lang'],
-			'L_VISIT' => self::$main_lang['guest_s'],
-			'L_TODAY' => self::$main_lang['today'],
 		));
 		
 		$template->display();
