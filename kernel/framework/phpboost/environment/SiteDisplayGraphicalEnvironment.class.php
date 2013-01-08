@@ -86,8 +86,6 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 			'SITE_KEYWORD' => $this->get_seo_meta_data()->get_keywords(),
 			'MODULES_CSS' => $this->get_modules_css_files_html_code(),
 			'L_XML_LANGUAGE' => self::$main_lang['xml_lang'],
-			'L_VISIT' => self::$main_lang['guest_s'],
-			'L_TODAY' => self::$main_lang['today'],
 		));
 
 		$this->display_counter($template);
@@ -112,6 +110,8 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 			$compteur_day = !empty($compteur['total']) ? $compteur['total'] : '1';
 
 			$template->put_all(array(
+				'L_VISIT' => self::$main_lang['guest_s'],
+				'L_TODAY' => self::$main_lang['today'],
 				'C_COMPTEUR' => true,
 				'COMPTEUR_TOTAL' => $compteur_total,
 				'COMPTEUR_DAY' => $compteur_day
