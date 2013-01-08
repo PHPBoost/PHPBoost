@@ -3,8 +3,8 @@
  *                             newsletter_common.php
  *                            -------------------
  *   begin                :  March 11, 2011
- *   copyright            : (C) 2011 MASSY Kévin
- *   email                : soldier.weasel@gmail.com
+ *   copyright            : (C) 2011 MASSY Kevin
+ *   email                : kevin.massy@phpboost.com
  *
  *  
  ###################################################

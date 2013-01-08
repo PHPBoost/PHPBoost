@@ -3,8 +3,8 @@
  *                                server_migration.php
 *                            -------------------
 *   begin                : May 14, 2012
-*   copyright            : (C) 2012 Kévin MASSY
-*   email                : soldier.weasel@gmail.com
+*   copyright            : (C) 2012 Kevin MASSY
+*   email                : kevin.massy@phpboost.com
 *
 *
 ###################################################

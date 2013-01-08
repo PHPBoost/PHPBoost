@@ -3,8 +3,8 @@
  *                      	 NewsletterStreamsCache.class.php
  *                            -------------------
  *   begin                :  March 15 , 2011
- *   copyright            : (C) 2011 MASSY Kévin
- *   email                : soldier.weasel@gmail.com
+ *   copyright            : (C) 2011 MASSY Kevin
+ *   email                : kevin.massy@phpboost.com
  *
  *
  ###################################################
@@ -26,7 +26,7 @@
  ###################################################*/
 
 /**
- * @author Kevin MASSY <soldier.weasel@gmail.com>
+ * @author Kevin MASSY <kevin.massy@phpboost.com>
  */
 class NewsletterStreamsCache implements CacheData
 {

@@ -4,7 +4,7 @@
  *                            -------------------
  *   begin                : September 25, 2011
  *   copyright            : (C) 2011 Kevin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   email                : kevin.massy@phpboost.com
  *
  *
  ###################################################
@@ -26,7 +26,7 @@
  ###################################################*/
 
  /**
- * @author Kevin MASSY <soldier.weasel@gmail.com>
+ * @author Kevin MASSY <kevin.massy@phpboost.com>
  * @package {@package}
  */
 class CommentsTopicDAO

@@ -4,7 +4,7 @@
  *                            -------------------
  *   begin                : August 14, 2010
  *   copyright            : (C) 2010 Kevin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   email                : kevin.massy@phpboost.com
  *
  *
  ###################################################
@@ -26,7 +26,7 @@
  ###################################################*/
 
  /**
- * @author Kevin MASSY <soldier.weasel@gmail.com>
+ * @author Kevin MASSY <kevin.massy@phpboost.com>
  * @desc This class is responsible of all database accesses implied by the extended fields management. 
  * Indeed, for instance when a field is created, the data base structure must be updated throw an ALTER request.
  * @package {@package}

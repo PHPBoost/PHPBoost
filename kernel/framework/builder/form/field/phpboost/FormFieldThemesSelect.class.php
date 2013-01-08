@@ -4,7 +4,7 @@
  *                            -------------------
  *   begin                : February 09, 2012
  *   copyright            : (C) 2012 Kevin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   email                : kevin.massy@phpboost.com
  *
  ###################################################
  *
@@ -25,7 +25,7 @@
  ###################################################*/
 
 /**
- * @author Kevin MASSY <soldier.weasel@gmail.com>
+ * @author Kevin MASSY <kevin.massy@phpboost.com>
  * @desc
  * @package {@package}
  */

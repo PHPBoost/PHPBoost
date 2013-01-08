@@ -3,7 +3,7 @@
  *                         user_xmlhttprequest.php
  *                            -------------------
  *   begin                : August 23, 2012
- *   copyright            : (C) 2012 Kévin MASSY
+ *   copyright            : (C) 2012 Kevin MASSY
  *   email                : kevin.massy@phpboost.com
  *
  *

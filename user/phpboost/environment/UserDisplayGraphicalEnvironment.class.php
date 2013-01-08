@@ -1,10 +1,10 @@
 <?php
 /*##################################################
- *                   MaintainDisplayGraphicalEnvironment.class.php
+ *                   UserDisplayGraphicalEnvironment.class.php
  *                            -------------------
  *   begin                : October 07, 2011
  *   copyright            : (C) 2011 Kevin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   email                : kevin.massy@phpboost.com
  *
  *
  ###################################################
@@ -28,7 +28,7 @@
 /**
  * @package {@package}
  * @desc
- * @author Benoit Sautel <ben.popeye@phpboost.com>
+ * @author Kevin MASSY <kevin.massy@phpboost.com>
  */
 class UserDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironment
 {

@@ -3,8 +3,8 @@
  *                      	 CommentsCache.class.php
  *                            -------------------
  *   begin                : September 24, 2011
- *   copyright            : (C) 2011 Kévin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   copyright            : (C) 2011 Kevin MASSY
+ *   email                : kevin.massy@phpboost.com
  *
  *
  ###################################################
@@ -26,7 +26,7 @@
  ###################################################*/
 
 /**
- * @author Kévin MASSY <soldier.weasel@gmail.com>
+ * @author Kevin MASSY <kevin.massy@phpboost.com>
  */
 class CommentsCache implements CacheData
 {

@@ -4,7 +4,7 @@
  *                            -------------------
  *   begin                : July 25, 2011
  *   copyright            : (C) 2011 Patrick DUBEAU, Kevin MASSY
- *   email                : daaxwizeman@gmail.com, soldier.weasel@gmail.com
+ *   email                : daaxwizeman@gmail.com, kevin.massy@phpboost.com
  *
  *
  ###################################################
