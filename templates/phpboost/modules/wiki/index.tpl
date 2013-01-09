@@ -20,7 +20,6 @@
 				<div class="pbt_container block_container">
 					<div class="pbt_content">
 						<span class="pbt_title">A propos de PHPBoost</span>
-						<span class="pbt_desc">Les liens les plus utiles</span>
 					</div>
 					
 					
@@ -29,17 +28,22 @@
 							<li class="bb_li">
 								<img src="{PICTURES_DATA_PATH}/images/article.png"  class="valign_middle" alt="" />
 								&nbsp;
-								<a href="{PATH_TO_ROOT}/wiki/wiki.php?title=presentation-de-phpboost">Présentation de PHPBoost</a>
+								<a href="{PATH_TO_ROOT}/wiki/presentation-de-phpboost">Présentation de PHPBoost</a>
 							</li>
 							<li class="bb_li">
 								<img src="{PICTURES_DATA_PATH}/images/article.png"  class="valign_middle" alt="" />
 								&nbsp;
-								<a href="{PATH_TO_ROOT}/wiki/wiki.php?title=presentation-de-phpboost">Installation de PHPBoost</a>
+								<a href="{PATH_TO_ROOT}/download/">Télécharger PHPBoost</a>
 							</li>
 							<li class="bb_li">
 								<img src="{PICTURES_DATA_PATH}/images/article.png"  class="valign_middle" alt="" />
 								&nbsp;
-								<a href="{PATH_TO_ROOT}/wiki/wiki.php?title=presentation-de-phpboost">Comment migrer vers une nouvelle version</a>
+								<a href="{PATH_TO_ROOT}/wiki/installation-de-phpboost">Installation de PHPBoost</a>
+							</li>
+							<li class="bb_li">
+								<img src="{PICTURES_DATA_PATH}/images/article.png"  class="valign_middle" alt="" />
+								&nbsp;
+								<a href="{PATH_TO_ROOT}/wiki/migrer-son-site-vers-une-nouvelle-version">Comment migrer vers une nouvelle version</a>
 							</li>
 						</ul>
 					</div>	
@@ -49,17 +53,22 @@
 							<li class="bb_li">
 								<img src="{PICTURES_DATA_PATH}/images/article.png"  class="valign_middle" alt="" />
 								&nbsp;
-								<a href="{PATH_TO_ROOT}/wiki/wiki.php?title=presentation-de-phpboost">Rapport de bugs</a>
+								<a href="{PATH_TO_ROOT}/forum/">Forum</a>
 							</li>
 							<li class="bb_li">
 								<img src="{PICTURES_DATA_PATH}/images/article.png"  class="valign_middle" alt="" />
 								&nbsp;
-								<a href="{PATH_TO_ROOT}/wiki/wiki.php?title=presentation-de-phpboost">Créer un thème</a>
+								<a href="{PATH_TO_ROOT}/bugtracker/">Rapportez un bug</a>
 							</li>
 							<li class="bb_li">
 								<img src="{PICTURES_DATA_PATH}/images/article.png"  class="valign_middle" alt="" />
 								&nbsp;
-								<a href="{PATH_TO_ROOT}/wiki/wiki.php?title=presentation-de-phpboost">Créer un module</a>
+								<a href="{PATH_TO_ROOT}/wiki/creer-un-theme">Créer un thème</a>
+							</li>
+							<li class="bb_li">
+								<img src="{PICTURES_DATA_PATH}/images/article.png"  class="valign_middle" alt="" />
+								&nbsp;
+								<a href="{PATH_TO_ROOT}/wiki/creer-un-module">Créer un module</a>
 							</li>
 						</ul>
 					</div>
@@ -70,68 +79,74 @@
 				<div class="pbt_container" style="margin-bottom:30px;">
 					<div class="pbt_content">
 						<p class="pbt_title">
-							<a href="{PATH_TO_ROOT}/wiki/wiki.php?title=design-et-interface">Présentation de PHPBoost</a>
-							<span class="pbt_desc">Cette catégorie présente le CMS PHPBoost</span>
+							<a href="{PATH_TO_ROOT}/wiki/presentation-de-phpboost">Présentation de PHPBoost</a>
+							<span class="pbt_desc">Pour tout savoir sur le projet</span>
 						</p>
 					</div>
 						
 					<hr style="margin:5px 0px;" />
-						
-					<div class="pbt_desc_container">
-						<p class="pbt_desc">Les catégories<p>
-						<ul class="bb_ul no_list">
-							<li class="bb_li" >
-								<img src="{PICTURES_DATA_PATH}/images/cat.png"  class="valign_middle" alt="" />&nbsp;
-								<a href="{PATH_TO_ROOT}/wiki/wiki.php?title=phpboost-4-0">PHPBoost V4.x</a>
-							</li>
-							<li class="bb_li" >
-								<img src="{PICTURES_DATA_PATH}/images/cat.png"  class="valign_middle" alt="" />&nbsp;
-								<a href="{PATH_TO_ROOT}/wiki/wiki.php?title=phpboost-3-0">PHPBoost V3.x</a>
-							</li>
-						</ul>
-						<div class="spacer"></div>
-					</div>
+					
 					<div class="pbt_desc_container">
 						<p class="pbt_desc">Les articles<p>
 						<ul class="bb_ul no_list">
 							<li class="bb_li" >
 								<img src="{PICTURES_DATA_PATH}/images/article.png"  class="valign_middle" alt="" />&nbsp;
-								<a href="{PATH_TO_ROOT}/wiki/wiki.php?title=presentation-de-phpboost">Présentation de PHPBoost</a>
-								<span class="pbt_desc">Le commencement</span>
+								<a href="{PATH_TO_ROOT}/wiki/presentation-de-phpboost">Présentation de PHPBoost</a>
+								<span class="pbt_desc"> - Pour tout savoir sur le projet</span>
+							</li>
+							<li class="bb_li" >
+								<img src="{PICTURES_DATA_PATH}/images/article.png"  class="valign_middle" alt="" />&nbsp;
+								<a href="{PATH_TO_ROOT}/wiki/phpboost-4-0">PHPBoost 4.0</a>
+								<span class="pbt_desc"> - Les nouveautés de la version 4.0 de PHPBoost</span>
+							</li>
+							<li class="bb_li" >
+								<img src="{PICTURES_DATA_PATH}/images/article.png"  class="valign_middle" alt="" />&nbsp;
+								<a href="{PATH_TO_ROOT}/wiki/phpboost-3-0">PHPBoost 3.0</a>
+								<span class="pbt_desc"> - Les nouveautés de la version 3.0 de PHPBoost</span>
 							</li>
 						</ul>
 						<div class="spacer"></div>
 					</div>
-				
 				</div>	
 
 				<div class="pbt_container" style="margin-bottom:30px;">
 					<div class="pbt_content">
 						<p class="pbt_title">
-							<a href="{PATH_TO_ROOT}/wiki/wiki.php?title=installation-de-phpboost">Installation de PHPBoost</a>
-							<span class="pbt_desc">Explication pour une installation rapide et sans soucis</span>
+							<a href="{PATH_TO_ROOT}/wiki/installation-et-migration-de-phpboost">Installation et migration de PHPBoost</a>
+							<span class="pbt_desc">Installez et migrer PHPBoost très facilement</span>
 						</p>
 					</div>
 						
 					<hr style="margin:5px 0px;" />
-						
+					
+					<div class="pbt_desc_container">
+						<p class="pbt_desc">Les catégories<p>
+						<ul class="bb_ul no_list">
+							<li class="bb_li" >
+								<img src="{PICTURES_DATA_PATH}/images/cat.png"  class="valign_middle" alt="" />&nbsp;
+								<a href="{PATH_TO_ROOT}/wiki/installation-de-phpboost">Installation de PHPBoost</a>
+								<span class="pbt_desc"> - Obtenez une documentation détaillée sur l'installation de PHPBoost</span>
+							</li>
+							<li class="bb_li" >
+								<img src="{PICTURES_DATA_PATH}/images/cat.png"  class="valign_middle" alt="" />&nbsp;
+								<a href="{PATH_TO_ROOT}/wiki/changement-d-hebergement-ou-de-serveur">Changement d'hébergement ou de serveur</a>
+								<span class="pbt_desc"> - Changez de serveur sans aucun problème</span>
+							</li>
+							<li class="bb_li" >
+								<img src="{PICTURES_DATA_PATH}/images/cat.png"  class="valign_middle" alt="" />&nbsp;
+								<a href="{PATH_TO_ROOT}/wiki/migrer-son-site-vers-une-nouvelle-version">Migrer son site vers une nouvelle version</a>
+								<span class="pbt_desc"> - Passez aux nouvelles versions majeures pour obtenir plus de fonctionnalités</span>
+							</li>
+						</ul>
+						<div class="spacer"></div>
+					</div>
+					
 					<div class="pbt_desc_container">
 						<p class="pbt_desc">Les articles<p>
 						<ul class="bb_ul no_list">
 							<li class="bb_li" >
 								<img src="{PICTURES_DATA_PATH}/images/article.png"  class="valign_middle" alt="" />&nbsp;
-								<a href="{PATH_TO_ROOT}/">Avant d'installer PHPBoost</a>
-							</li>
-							<li class="bb_li" >
-								<img src="{PICTURES_DATA_PATH}/images/article.png"  class="valign_middle" alt="" />&nbsp;
-								<a href="{PATH_TO_ROOT}/">Avant d'installer PHPBoost</a>
-							</li>
-							<li class="bb_li" >
-								<img src="{PICTURES_DATA_PATH}/images/article.png"  class="valign_middle" alt="" />&nbsp;
-								<a href="{PATH_TO_ROOT}/">Avant d'installer PHPBoost</a>
-							</li>
-							<li class="bb_li" >
-								<a href="{PATH_TO_ROOT}/"><span class="pbt_desc">(Plus d'articles...)</span></a>
+								<a href="{PATH_TO_ROOT}/wiki/liste-des-modules-supportes-et-contenus-dans-votre-distribution">Liste des modules supportés et contenus dans votre distribution</a>
 							</li>
 						</ul>
 						<div class="spacer"></div>
@@ -139,12 +154,10 @@
 				
 				</div>
 			
-				
-				
 				<div class="pbt_container" style="margin-bottom:30px;">
 					<div class="pbt_content">
 						<p class="pbt_title">
-							<a href="{PATH_TO_ROOT}/wiki/wiki.php?title=utilisation-de-phpboost">Utilisation de PHPBoost</a>
+							<a href="{PATH_TO_ROOT}/wiki/utilisation-de-phpboost">Utilisation de PHPBoost</a>
 							<span class="pbt_desc">Bien commencer avec PHPBoost</span>
 						</p>
 					</div>
@@ -156,23 +169,23 @@
 						<ul class="bb_ul no_list">
 							<li class="bb_li" >
 								<img src="{PICTURES_DATA_PATH}/images/cat.png"  class="valign_middle" alt="" />&nbsp;
-								<a href="{PATH_TO_ROOT}/wiki/wiki.php?title=modules">Modules</a>
-								<span class="pbt_desc">Comprendre les modules</span>
+								<a href="{PATH_TO_ROOT}/wiki/panneau-d-administration">Panneau d'administration</a>
+								<span class="pbt_desc"> - Documentation relative à l'administration et à son utilisation</span>
 							</li>
 							<li class="bb_li" >
 								<img src="{PICTURES_DATA_PATH}/images/cat.png"  class="valign_middle" alt="" />&nbsp;
-								<a href="{PATH_TO_ROOT}/wiki/wiki.php?title=modules">Modules</a>
-								<span class="pbt_desc">Comprendre les modules</span>
+								<a href="{PATH_TO_ROOT}/wiki/panneau-de-contribution">Panneau de contribution</a>
+								<span class="pbt_desc"> - Laissez vos membres intéragir avec votre site</span>
 							</li>
 							<li class="bb_li" >
 								<img src="{PICTURES_DATA_PATH}/images/cat.png"  class="valign_middle" alt="" />&nbsp;
-								<a href="{PATH_TO_ROOT}/wiki/wiki.php?title=modules">Modules</a>
-								<span class="pbt_desc">Comprendre les modules</span>
+								<a href="{PATH_TO_ROOT}/wiki/panneau-de-moderation">Panneau de modération</a>
+								<span class="pbt_desc"> - Tout savoir sur la modération sur PHPBoost</span>
 							</li>
 							<li class="bb_li" >
 								<img src="{PICTURES_DATA_PATH}/images/cat.png"  class="valign_middle" alt="" />&nbsp;
-								<a href="{PATH_TO_ROOT}/wiki/wiki.php?title=modules">Modules</a>
-								<span class="pbt_desc">Comprendre les modules</span>
+								<a href="{PATH_TO_ROOT}/wiki/modules">Modules</a>
+								<span class="pbt_desc"> - Documentation sur les modules officiels de PHPBoost</span>
 							</li>
 						</ul>
 						<div class="spacer"></div>
@@ -183,7 +196,7 @@
 				<div class="pbt_container" style="margin-bottom:30px;">
 					<div class="pbt_content">
 						<p class="pbt_title">
-							<a href="{PATH_TO_ROOT}/wiki/wiki.php?title=design-et-interface">Design et Interface</a>
+							<a href="{PATH_TO_ROOT}/wiki/design-et-interface">Design et Interface</a>
 							<span class="pbt_desc">Personnaliser l'aspect de votre site</span>
 						</p>
 					</div>
@@ -195,40 +208,28 @@
 						<ul class="bb_ul no_list">
 							<li class="bb_li" >
 								<img src="{PICTURES_DATA_PATH}/images/cat.png"  class="valign_middle" alt="" />&nbsp;
-								<a href="{PATH_TO_ROOT}/wiki/wiki.php?title=creer-un-theme">Créer un thème</a>
-								<span class="pbt_desc">A partir de rien</span>
+								<a href="{PATH_TO_ROOT}/wiki/creer-un-theme">Créer un thème</a>
+								<span class="pbt_desc"> - A partir de rien</span>
 							</li>
 							<li class="bb_li" >
 								<img src="{PICTURES_DATA_PATH}/images/cat.png"  class="valign_middle" alt="" />&nbsp;
-								<a href="{PATH_TO_ROOT}/wiki/wiki.php?title=creer-un-theme">Personnaliser un thème</a>
-								<span class="pbt_desc">Modifier un thème existant</span>
+								<a href="{PATH_TO_ROOT}/wiki/personnaliser-un-theme">Personnaliser un thème</a>
+								<span class="pbt_desc"> - Modifier un thème existant</span>
+							</li>
+							<li class="bb_li" >
+								<img src="{PICTURES_DATA_PATH}/images/cat.png"  class="valign_middle" alt="" />&nbsp;
+								<a href="{PATH_TO_ROOT}/wiki/migration-d-un-theme-vers-une-nouvelle-version">Migration d'un thème vers une nouvelle version</a>
+								<span class="pbt_desc"> - Modifiez votre thème pour passer à la nouvelle version</span>
 							</li>
 						</ul>
 						<div class="spacer"></div>
 					</div>
-					<div class="pbt_desc_container">
-						<p class="pbt_desc">Les articles<p>
-						<ul class="bb_ul no_list">
-							<li class="bb_li" >
-								<img src="{PICTURES_DATA_PATH}/images/article.png"  class="valign_middle" alt="" />&nbsp;
-								<a href="{PATH_TO_ROOT}/wiki/wiki.php?title=creer-un-theme">Mettre à jour un thème</a>
-								<span class="pbt_desc">Good Boy</span>
-							</li>
-							<li class="bb_li" >
-								<img src="{PICTURES_DATA_PATH}/images/article.png"  class="valign_middle" alt="" />&nbsp;
-								<a href="{PATH_TO_ROOT}/wiki/wiki.php?title=creer-un-theme">Faire un thème moche</a>
-								<span class="pbt_desc">Like ...</span>
-							</li>
-						</ul>
-						<div class="spacer"></div>
-					</div>
-				
 				</div>			
 
 				<div class="pbt_container" style="margin-bottom:30px;">
 					<div class="pbt_content">
 						<p class="pbt_title">
-							<a href="{PATH_TO_ROOT}/wiki/wiki.php?title=developper-avec-phpboost">Developper avec PHPBoost</a>
+							<a href="{PATH_TO_ROOT}/wiki/developper-avec-phpboost">Developper avec PHPBoost</a>
 							<span class="pbt_desc">Créer des modules et du contenu dynamique</span>
 						</p>
 					</div>
@@ -240,13 +241,18 @@
 						<ul class="bb_ul no_list">
 							<li class="bb_li" >
 								<img src="{PICTURES_DATA_PATH}/images/cat.png"  class="valign_middle" alt="" />&nbsp;
-								<a href="{PATH_TO_ROOT}/wiki/wiki.php?title=creer-un-theme">Créer un menu</a>
-								<span class="pbt_desc">A partir de rien</span>
+								<a href="{PATH_TO_ROOT}/wiki/creer-un-module">Créer un module</a>
+								<span class="pbt_desc"> - Tout savoir sur la création d'un module</span>
 							</li>
 							<li class="bb_li" >
 								<img src="{PICTURES_DATA_PATH}/images/cat.png"  class="valign_middle" alt="" />&nbsp;
-								<a href="{PATH_TO_ROOT}/wiki/wiki.php?title=creer-un-theme">Créer un module</a>
-								<span class="pbt_desc">Modifier un thème existant</span>
+								<a href="{PATH_TO_ROOT}/wiki/creer-un-menu">Créer un menu</a>
+								<span class="pbt_desc"> - Tout savoir sur la création d'un menu</span>
+							</li>
+							<li class="bb_li" >
+								<img src="{PICTURES_DATA_PATH}/images/cat.png"  class="valign_middle" alt="" />&nbsp;
+								<a href="{PATH_TO_ROOT}/wiki/migration-d-un-module-vers-une-nouvelle-version">Migration d'un module vers une nouvelle version</a>
+								<span class="pbt_desc"> - Faites évoluer votre module vers les nouvelles versions</span>
 							</li>
 						</ul>
 						<div class="spacer"></div>
@@ -256,13 +262,22 @@
 						<ul class="bb_ul no_list">
 							<li class="bb_li" >
 								<img src="{PICTURES_DATA_PATH}/images/article.png"  class="valign_middle" alt="" />&nbsp;
-								<a href="{PATH_TO_ROOT}/wiki/wiki.php?title=creer-un-theme">Débogage dans PHPBoost</a>
-								<span class="pbt_desc">Mode Boulet</span>
+								<a href="{PATH_TO_ROOT}/wiki/conventions-de-developpement">Conventions de développement</a>
+								<span class="pbt_desc"> - Style de développement adopté sur le projet PHPBoost</span>
 							</li>
 							<li class="bb_li" >
 								<img src="{PICTURES_DATA_PATH}/images/article.png"  class="valign_middle" alt="" />&nbsp;
-								<a href="{PATH_TO_ROOT}/wiki/wiki.php?title=creer-un-theme">Conventions de développement</a>
-								<span class="pbt_desc">On écoute le dictateur</span>
+								<a href="{PATH_TO_ROOT}/wiki/debogage-dans-phpboost">Débogage dans PHPBoost</a>
+								<span class="pbt_desc"> - Les outils mis à disposition pour déboger votre code</span>
+							</li>
+							<li class="bb_li" >
+								<img src="{PICTURES_DATA_PATH}/images/article.png"  class="valign_middle" alt="" />&nbsp;
+								<a href="{PATH_TO_ROOT}/wiki/constantes-chargees-avec-l-environnement-phpboost">Constantes chargées avec l'environnement PHPBoost</a>
+							</li>
+							<li class="bb_li" >
+								<img src="{PICTURES_DATA_PATH}/images/article.png"  class="valign_middle" alt="" />&nbsp;
+								<a href="{PATH_TO_ROOT}/wiki/utilisateur-courant">Utilisateur courant</a>
+								<span class="pbt_desc"> - Obtenez des renseignements et son niveau d'autorisation sur l'utilisateur courant</span>
 							</li>
 						</ul>
 						<div class="spacer"></div>
