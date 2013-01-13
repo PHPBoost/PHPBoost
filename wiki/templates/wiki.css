@@ -41,6 +41,7 @@
 	font-size:12px;
 	font-style:italic;
 }
+
 .wiki_list_1
 {
 	list-style-type:upper-roman;
@@ -76,11 +77,13 @@
 	padding:4px 2px;
 	cursor:pointer;
 }
- .wiki_selected_cat
- {
+
+.wiki_selected_cat
+{
 	background:#A7C7DF;
 	border:1px solid #5B6974;
- }
- ol{
+}
+
+ol{
 	margin-left:25px;
- }
+}
