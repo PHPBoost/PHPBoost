@@ -2,7 +2,6 @@
 /* Tableau du bbcode */
 .bbcode, .bbcode2{
 	text-align: center;
-    width: 486px !important;
 	background:#336397;
 	border:1px solid #BEBEBE;
 	border-collapse:collapse;
@@ -19,9 +18,6 @@
 	vertical-align:middle; 
 }
 
-.bbcode2{
-	width:485px;
-}
 /* Curseur de la souris au passage sur les icônes */
 .bbcode_hover{
 	cursor:pointer;
