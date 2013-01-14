@@ -36,8 +36,7 @@ class PagesCommentsTopic extends CommentsTopic
 	{
 		require_once(PATH_TO_ROOT .'/'. $this->get_module_id() . '/pages_defines.php');
 		
-		$authorizations = PagesConfig::load()->get_authorizations();
-		$page_authorizations = $this->get_page_authorizations();
+		$page_authorizations = unserialize($this->get_page_authorizations());
 		
 		$authorizations = new CommentsAuthorizations();
 		if (!empty($page_authorizations))
@@ -47,7 +46,7 @@ class PagesCommentsTopic extends CommentsTopic
 		}
 		else
 		{
-			$authorizations->set_authorized_access_module(AppContext::get_current_user()->check_auth($authorizations, READ_PAGE));
+			$authorizations->set_authorized_access_module(AppContext::get_current_user()->check_auth(PagesConfig::load()->get_authorizations(), READ_PAGE));
 		
 		}
 		return $authorizations;
