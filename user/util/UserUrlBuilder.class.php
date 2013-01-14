@@ -32,9 +32,9 @@ class UserUrlBuilder
 {
     private static $dispatcher = '/user';
 
-	public static function maintain()
+	public static function maintain($parameters = '')
     {
-    	return DispatchManager::get_url(self::$dispatcher, '/maintain/');
+    	return DispatchManager::get_url(self::$dispatcher, '/maintain/' . $parameters);
     }
     
     public static function forget_password()

@@ -64,7 +64,6 @@ class UserLoginController extends AbstractController
 	{
 		$this->view->put_all(array(
 			'C_REGISTRATION_ENABLED' => UserAccountsConfig::load()->is_registration_enabled(),
-			'C_MAINTAIN_ENABLED' => MaintenanceConfig::load()->is_maintenance_enabled(),
 			'U_REGISTER' => UserUrlBuilder::registration()->absolute(),
 			'U_FORGET_PASSWORD' => UserUrlBuilder::forget_password()->absolute(),
 			'L_FORGET_PASSWORD' => $this->lang['forget-password'],
@@ -89,7 +88,7 @@ class UserLoginController extends AbstractController
 				if (!empty($error_value))
 				{
 					$flood = ($error_value > 0 && $error_value <= 5) ? $error_value : 0;
-					$this->display_error_message(sprintf($errors_lang['e_test_connect'], $flood));
+					$this->display_error_message($errors_lang['e_wrong_password'] . '. ' . sprintf($errors_lang['e_test_connect'], $flood));
 				}
 				else
 				{
@@ -160,7 +159,7 @@ class UserLoginController extends AbstractController
 
 	private function build_view()
 	{
-		$response = new UserSiteDisplayResponse($this->view);
+		$response = new SiteDisplayResponse($this->view);
 		$graphical_environment = $response->get_graphical_environment();
 		$graphical_environment->set_page_title($this->lang['connect']);
 		return $response;
