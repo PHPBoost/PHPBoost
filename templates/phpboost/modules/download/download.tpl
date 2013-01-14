@@ -70,7 +70,7 @@
 						</div>
 					</div>
 					<div class="pbt_dev_container">
-						<a href="#" class="pbt_dev">Télécharger la version de développement</a>
+						<a href="#" class="pbt_dev">Télécharger la version pour développeurs (PDK)</a>
 					</div>
 					
 					<hr style="margin:10px auto 0px auto;" />

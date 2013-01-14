@@ -7,11 +7,9 @@
 				<div class="entete">
 					<img class="pbt_entete_img" src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/logo.png" alt="" />
 					<div class="pbt_entete_content">
-						<p class="pbt_entete_title">PHPBOOST</p>
+						<p class="pbt_entete_title">Bienvenue dans la documentation de PHPBoost.</p>
 						<span class="pbt_entete_desc">
-						Bienvenue dans la Documentation de PHPBoost.
-						<br /><br />Cette documentation vous permettra de découvrir tous les secrets du CMS. De la réalisation d'un thème, à la création d'un module
-						<br /><br />Cette documentation est faites pour vous apporter des conseils en cas de bloquage.</span>
+						<br />Que vous soyez un utilisateur débutant ou confirmé, nous espérons que vous trouverez sur ces pages toutes les informations dont vous avez besoin. Dans le cas contraire, utilisez le <a href="{PATH_TO_ROOT}/forum/">Forum du projet</a> pour votre demande d'information.</span>
 					</div>
 				</div>
 				
@@ -58,7 +56,7 @@
 							<li class="bb_li">
 								<img src="{PICTURES_DATA_PATH}/images/article.png"  class="valign_middle" alt="" />
 								&nbsp;
-								<a href="{PATH_TO_ROOT}/bugtracker/">Rapportez un bug</a>
+								<a href="{PATH_TO_ROOT}/bugtracker/">Rapporter un bug</a>
 							</li>
 							<li class="bb_li">
 								<img src="{PICTURES_DATA_PATH}/images/article.png"  class="valign_middle" alt="" />
@@ -80,7 +78,7 @@
 					<div class="pbt_content">
 						<p class="pbt_title">
 							<a href="{PATH_TO_ROOT}/wiki/presentation-de-phpboost">Présentation de PHPBoost</a>
-							<span class="pbt_desc">Pour tout savoir sur le projet</span>
+							<span class="pbt_desc">Tout savoir sur le projet</span>
 						</p>
 					</div>
 						
@@ -92,7 +90,7 @@
 							<li class="bb_li" >
 								<img src="{PICTURES_DATA_PATH}/images/article.png"  class="valign_middle" alt="" />&nbsp;
 								<a href="{PATH_TO_ROOT}/wiki/presentation-de-phpboost">Présentation de PHPBoost</a>
-								<span class="pbt_desc"> - Pour tout savoir sur le projet</span>
+								<span class="pbt_desc"> - Tout savoir sur le projet</span>
 							</li>
 							<li class="bb_li" >
 								<img src="{PICTURES_DATA_PATH}/images/article.png"  class="valign_middle" alt="" />&nbsp;
@@ -113,7 +111,7 @@
 					<div class="pbt_content">
 						<p class="pbt_title">
 							<a href="{PATH_TO_ROOT}/wiki/installation-et-migration-de-phpboost">Installation et migration de PHPBoost</a>
-							<span class="pbt_desc">Installez et migrer PHPBoost très facilement</span>
+							<span class="pbt_desc">Installer et migrer PHPBoost très facilement</span>
 						</p>
 					</div>
 						
@@ -125,17 +123,17 @@
 							<li class="bb_li" >
 								<img src="{PICTURES_DATA_PATH}/images/cat.png"  class="valign_middle" alt="" />&nbsp;
 								<a href="{PATH_TO_ROOT}/wiki/installation-de-phpboost">Installation de PHPBoost</a>
-								<span class="pbt_desc"> - Obtenez une documentation détaillée sur l'installation de PHPBoost</span>
+								<span class="pbt_desc"> - Obtenir une documentation détaillée sur l'installation de PHPBoost</span>
 							</li>
 							<li class="bb_li" >
 								<img src="{PICTURES_DATA_PATH}/images/cat.png"  class="valign_middle" alt="" />&nbsp;
 								<a href="{PATH_TO_ROOT}/wiki/changement-d-hebergement-ou-de-serveur">Changement d'hébergement ou de serveur</a>
-								<span class="pbt_desc"> - Changez de serveur sans aucun problème</span>
+								<span class="pbt_desc"> - Changer de serveur sans aucun problème</span>
 							</li>
 							<li class="bb_li" >
 								<img src="{PICTURES_DATA_PATH}/images/cat.png"  class="valign_middle" alt="" />&nbsp;
 								<a href="{PATH_TO_ROOT}/wiki/migrer-son-site-vers-une-nouvelle-version">Migrer son site vers une nouvelle version</a>
-								<span class="pbt_desc"> - Passez aux nouvelles versions majeures pour obtenir plus de fonctionnalités</span>
+								<span class="pbt_desc"> - Passer aux nouvelles versions majeures pour obtenir plus de fonctionnalités</span>
 							</li>
 						</ul>
 						<div class="spacer"></div>
@@ -175,17 +173,17 @@
 							<li class="bb_li" >
 								<img src="{PICTURES_DATA_PATH}/images/cat.png"  class="valign_middle" alt="" />&nbsp;
 								<a href="{PATH_TO_ROOT}/wiki/panneau-de-contribution">Panneau de contribution</a>
-								<span class="pbt_desc"> - Laissez vos membres intéragir avec votre site</span>
+								<span class="pbt_desc"> - Laisser vos membres intéragir avec votre site</span>
 							</li>
 							<li class="bb_li" >
 								<img src="{PICTURES_DATA_PATH}/images/cat.png"  class="valign_middle" alt="" />&nbsp;
 								<a href="{PATH_TO_ROOT}/wiki/panneau-de-moderation">Panneau de modération</a>
-								<span class="pbt_desc"> - Tout savoir sur la modération sur PHPBoost</span>
+								<span class="pbt_desc"> - Tout savoir sur la modération de PHPBoost</span>
 							</li>
 							<li class="bb_li" >
 								<img src="{PICTURES_DATA_PATH}/images/cat.png"  class="valign_middle" alt="" />&nbsp;
 								<a href="{PATH_TO_ROOT}/wiki/modules">Modules</a>
-								<span class="pbt_desc"> - Documentation sur les modules officiels de PHPBoost</span>
+								<span class="pbt_desc"> - Documentation des modules officiels de PHPBoost</span>
 							</li>
 						</ul>
 						<div class="spacer"></div>
@@ -209,7 +207,7 @@
 							<li class="bb_li" >
 								<img src="{PICTURES_DATA_PATH}/images/cat.png"  class="valign_middle" alt="" />&nbsp;
 								<a href="{PATH_TO_ROOT}/wiki/creer-un-theme">Créer un thème</a>
-								<span class="pbt_desc"> - A partir de rien</span>
+								<span class="pbt_desc"> - De A à Z</span>
 							</li>
 							<li class="bb_li" >
 								<img src="{PICTURES_DATA_PATH}/images/cat.png"  class="valign_middle" alt="" />&nbsp;
@@ -218,8 +216,8 @@
 							</li>
 							<li class="bb_li" >
 								<img src="{PICTURES_DATA_PATH}/images/cat.png"  class="valign_middle" alt="" />&nbsp;
-								<a href="{PATH_TO_ROOT}/wiki/migration-d-un-theme-vers-une-nouvelle-version">Migration d'un thème vers une nouvelle version</a>
-								<span class="pbt_desc"> - Modifiez votre thème pour passer à la nouvelle version</span>
+								<a href="{PATH_TO_ROOT}/wiki/migrer-un-theme-vers-une-nouvelle-version">Migrer un thème vers une nouvelle version</a>
+								<span class="pbt_desc"> - Faire évoluer votre thème</span>
 							</li>
 						</ul>
 						<div class="spacer"></div>
@@ -229,7 +227,7 @@
 				<div class="pbt_container" style="margin-bottom:30px;">
 					<div class="pbt_content">
 						<p class="pbt_title">
-							<a href="{PATH_TO_ROOT}/wiki/developper-avec-phpboost">Developper avec PHPBoost</a>
+							<a href="{PATH_TO_ROOT}/wiki/developper-avec-phpboost">Développer avec PHPBoost</a>
 							<span class="pbt_desc">Créer des modules et du contenu dynamique</span>
 						</p>
 					</div>
@@ -251,8 +249,8 @@
 							</li>
 							<li class="bb_li" >
 								<img src="{PICTURES_DATA_PATH}/images/cat.png"  class="valign_middle" alt="" />&nbsp;
-								<a href="{PATH_TO_ROOT}/wiki/migration-d-un-module-vers-une-nouvelle-version">Migration d'un module vers une nouvelle version</a>
-								<span class="pbt_desc"> - Faites évoluer votre module vers les nouvelles versions</span>
+								<a href="{PATH_TO_ROOT}/wiki/migrer-un-module-vers-une-nouvelle-version">Migrer un module vers une nouvelle version</a>
+								<span class="pbt_desc"> - Faire évoluer votre module</span>
 							</li>
 						</ul>
 						<div class="spacer"></div>
@@ -263,7 +261,7 @@
 							<li class="bb_li" >
 								<img src="{PICTURES_DATA_PATH}/images/article.png"  class="valign_middle" alt="" />&nbsp;
 								<a href="{PATH_TO_ROOT}/wiki/conventions-de-developpement">Conventions de développement</a>
-								<span class="pbt_desc"> - Style de développement adopté sur le projet PHPBoost</span>
+								<span class="pbt_desc"> - Styles de développement adoptés sur le projet PHPBoost</span>
 							</li>
 							<li class="bb_li" >
 								<img src="{PICTURES_DATA_PATH}/images/article.png"  class="valign_middle" alt="" />&nbsp;
@@ -277,7 +275,7 @@
 							<li class="bb_li" >
 								<img src="{PICTURES_DATA_PATH}/images/article.png"  class="valign_middle" alt="" />&nbsp;
 								<a href="{PATH_TO_ROOT}/wiki/utilisateur-courant">Utilisateur courant</a>
-								<span class="pbt_desc"> - Obtenez des renseignements et son niveau d'autorisation sur l'utilisateur courant</span>
+								<span class="pbt_desc"> - Obtenir des renseignements et son niveau d'autorisation sur l'utilisateur courant</span>
 							</li>
 						</ul>
 						<div class="spacer"></div>
@@ -295,7 +293,6 @@
 						</a>
 					</div>
 				</div>
-					
 				
 				<br />
 				# START last_articles #	
