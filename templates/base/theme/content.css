@@ -553,7 +553,7 @@ a.msg_link_pseudo:hover {
     text-align:justify;
 	word-wrap:break-word;
 	overflow:auto;
-
+	min-height: 100px;
 }
 
 .module_bottom_l { /* Barre inférieure des modules */}
