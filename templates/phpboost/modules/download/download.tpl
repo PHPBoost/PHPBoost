@@ -336,9 +336,7 @@
 						# ENDIF #
 					</td>
 					<td>
-						<p class="text_justify">
-							{CONTENTS}
-						</p>
+						{CONTENTS}
 					</td>
 				</tr>
 			</table>
