@@ -257,7 +257,7 @@ class CommentsService
 					'USER_ID' => $row['user_id'],
 					'PSEUDO' => empty($row['login']) ? $row['pseudo'] : $row['login'],
 					'LEVEL_CLASS' => UserService::get_level_class($row['level']),
-					'L_LEVEL' => UserService::get_level_lang(!empty($row['level']) ? $row['level'] : '-1'),
+					'L_LEVEL' => UserService::get_level_lang($row['level'] !== null ? $row['level'] : '-1'),
 				));
 				
 				self::$template->put_all(array(
