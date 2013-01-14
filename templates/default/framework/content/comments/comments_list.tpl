@@ -28,7 +28,7 @@
 				</div>
 				{comments.DATE}
 			</div>
-			<div class="comment-message" >
+			<div class="comment-message">
 				<div class="message-containt">{comments.MESSAGE}</div>
 				# IF comments.C_VIEW_TOPIC #
 					<div class="view-topic">
