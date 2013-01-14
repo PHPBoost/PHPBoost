@@ -1,0 +1,281 @@
+/* --------------------------------------
+		generic.css
+ Contient les classes génériques, ne devant pas être modifiée pour chaque thême.
+--------------------------------------*/ 
+/* Balises */
+img {
+    border:none;
+	overflow:scroll;
+}
+
+hr {
+    color:#061729;
+    height:1px;
+}
+
+ul {
+    margin:0;
+    line-height:normal;
+}
+
+p {
+    margin-bottom:0.7em;
+    line-height:normal;
+    font-size:1em;
+}
+
+/* Classes textes */
+.text_center {
+    text-align:center;
+}
+
+.text_small {
+    font-size:10px;
+    font-weight:normal;
+}
+
+.text_strong {
+    font-weight:bold;
+}
+
+.text_justify {
+    text-align:justify;
+}
+
+.img_right {
+    float:right;
+    margin:6px;
+}
+
+.img_left {
+    float:left;
+    margin:6px;
+}
+
+.valign_top {
+    vertical-align:top;
+}
+
+.valign_middle {
+    vertical-align:middle;
+}
+
+.valign_bottom {
+    vertical-align:bottom;
+}
+
+.spacer {
+    clear:both;
+}
+
+/* Erreurs
+--------------------------------------*/
+#error_handler {
+    margin:auto;
+}
+
+.question{
+    color:#FFFFFF;
+    background:#98c0ea url(../images/question.png) no-repeat;
+    border:1px solid #7796b8;
+}
+.notice{
+    color:#334455;
+    background:#dadfe5 url(../images/notice.png) no-repeat;
+    border:1px solid #aaaeb3;
+}
+.warning{
+    color:#FFFFFF;
+    background:#e5ad54 url(../images/important.png) no-repeat;
+    border:1px solid #b38742;
+}
+.error{
+    color:#FFFFFF;
+    background:#C43C35 url(../images/stop.png) no-repeat;
+    border:1px solid #802722;
+}
+.success{
+    color:#FFFFFF;
+    background:#57A957 url(../images/success.png) no-repeat;
+  	border:1px solid #418041;
+}
+.question, .notice, .warning, .error, .success{
+    display:block;
+    height:35px;
+    padding-top:4px;
+    padding-bottom:10px;
+    padding-left:40px;
+    padding-right:5px;
+    margin:4px 25px;  
+    background-position:4px 4px;
+    border-radius:6px;
+}
+html>body .question, html>body .notice, html>body .warning, html>body .error, html>body .success
+{
+    height:auto;
+    min-height:25px;
+}
+
+.error_handler_position {
+	margin-top:5px;
+	margin-bottom:15px;
+}
+
+/* Mise en forme
+-------------------------------------------*/
+
+/* Affichage des smiley */
+.smiley{
+	vertical-align:middle;
+}
+/** Titres **/
+
+/* Titre 1 */
+h3.title1{
+	color:#3E4D5C;
+	border-bottom:2px solid #366393;
+	font-size:15px;
+	font-weight:bold;
+	padding:0px 5px;
+}
+/* Titre 2 */
+h3.title2{
+	font-size:14px;
+	text-decoration:underline;
+	font-weight:bold;
+	color:#3E4D5C;
+	padding:0px 5px;
+}
+
+/* Sous titre 1 */
+h4.stitle1, h4.stitle2{
+	display:inline;
+	color:#3E4D5C;
+	font-size:12px;
+	font-weight:bold;
+	margin-left:35px;
+	padding:4px 5px;
+	font-weight:bold;
+	background:#ECEFFA;	
+	border-radius:8px;
+}
+/* Sous titre 1 */
+h4.stitle1{
+	border:1px solid #336397;
+	border-left:4px solid #336397;
+	border-right:4px solid #336397;
+}
+/* Sous titre 2 */
+h4.stitle2{
+	margin-left:50px;
+	background:none;
+	border-bottom:3px solid #336397;
+}
+.float_left
+{
+	float:left;
+	margin:5px;
+}
+.float_right
+{
+	float:right;
+	margin:5px;
+}
+/* Tableaux */
+.bb_table{
+	border:1px solid #2C5169;
+	border-spacing:0px;
+	border-collapse:collapse;
+	margin:2px;
+}
+.bb_table_col{
+	border:1px solid #2C5169;
+	padding:6px;
+}
+/* Listes */
+.bb_ul{
+	margin-left:20px;
+}
+.bb_ol{
+	margin-left:35px;
+}
+.bb_li{
+	text-align:left;
+}
+
+/* Affichage balise quote, code, hide */
+.text_blockquote, .text_code, .text_hide{
+	display:block;
+	width:93%;
+	padding-bottom:2px;
+	font-weight:bold;
+	margin:auto;
+}
+.blockquote, .code, .hide {
+	overflow:auto;
+	max-height:500px;
+	background:#f8f8f8;
+	border:1px solid #366393;
+	border-left:2px solid #366393;
+	border-right:2px solid #366393;
+	border-radius:4px;
+	color:#000000;
+	padding:8px;
+	margin:0px 25px;
+}
+.hide{
+	cursor:pointer;
+	height:10px;
+	overflow:auto;
+}
+.hide2{
+	visibility:hidden;
+}
+.indent{
+	margin-left:30px;
+}
+.bb_acronym{
+	cursor:help;
+}
+
+.bb_block{
+	margin:5px 20px;
+	padding:5px;
+	border:1px solid #C4CED6;
+}
+
+.bb_fieldset{
+	margin:10px;
+}
+
+/* Prévisualisation AJAX. */
+.xmlhttprequest_preview{
+	overflow:auto;
+	height:220px;
+	width:94%;
+	font-size:11px;
+	margin:auto;
+	margin-top:4px;
+	margin-bottom:3px;			
+	padding:1px 2px;
+    -moz-border-radius:4px;
+    -khtml-border-radius:4px;
+    -webkit-border-radius:4px;
+    border-radius:4px;
+}
+
+/* Code avec numérotation des listes */
+.code ol{
+	margin-left:3em;
+}
+
+/*Lien vers Wikipédia*/
+a.wikipedia_link:before{
+   content:url('../images/wikipedia_icon.png');
+   vertical-align:middle;
+   padding-right:2px;
+}
+
+a.wikipedia_link{
+	border-bottom:1px dotted;
+}

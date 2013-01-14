@@ -1,0 +1,740 @@
+/* --------------------------------------
+		content.css
+Contient les formulaires, les modules (et modules minis), et messages.
+--------------------------------------*/ 
+
+table {
+	border-spacing:0px;
+	border-collapse:collapse;
+}
+
+/* Conteneur */
+div.block_container {
+	width:auto;
+	margin:10px auto;
+	border: 1px solid #CCCCCC;
+	border-top:2px solid #366393;
+	border-bottom: 1px solid #99B1CB;
+	background:#F2F8FF;
+}
+div.block_contents {
+	width:auto;
+	padding:10px;
+	border:none;
+	text-align:justify;
+} 
+/* Entï¿½te de conteneur et des tableaux */
+div.block_top, table tr:first-child th {
+    padding:5px 6px;
+    color:#FFFFFF;
+    background:#366393;
+    text-align:left;
+    font-size:11px;
+    font-weight:normal;
+    text-transform:uppercase;
+}
+.block_top {
+	margin-top:-1px;
+}
+
+table caption {
+	font-size: 14px;
+	margin-bottom: 10px;	
+}
+
+table caption a {
+	font-size: inherit;	
+}
+
+table th:first-child{ }
+
+table th:last-child{ }
+
+table th.row1 a {
+	vertical-align: middle;
+}
+
+hr {
+    background:#C4CED6;
+    border:none;
+    margin:1px auto;
+    height:1px;
+    width:99%;
+}
+
+ul.list {
+	text-align:left;
+	margin-left:20px;
+	list-style-image: url(images/li.png)
+}
+
+/* Titres */
+h1 {
+    color:#5C5C5C;
+    font-size:18px;
+}
+
+h2.title {
+    font-size:16px;
+    font-weight:bold;
+}
+
+/* Titres */
+h3.title {
+    font-size:12px;
+    font-weight:bold;
+    display:inline;
+}
+
+/* Sous-Titres */
+h5.sub_title { /* Titre des menu */
+    font-size:13px;
+    color:#515C68;
+}
+
+h6.sub_title2 { /* Sous titre dans les menu */
+    font-size:12px;
+    font-weight:bold;
+    padding-top:4px;
+    text-indent:10px;
+    width:155px;
+    height:32px;
+    color:#515C68;
+}
+
+/* Formulaires 
+--------------------------------------*/
+.fieldset_mini {
+    width:540px;
+    margin:auto;
+    margin-top:20px;
+}
+
+input, textarea, optgroup, select, .xmlhttprequest_preview{
+	font-size:11px;
+	border-left:1px solid #99b1cb;
+	border-top:1px solid #99b1cb;
+	border-right:1px solid #CCCCCC;
+	border-bottom:1px solid #CCCCCC;
+	background-color:#FFFFFF;	
+	color:#2E3B5F;
+	padding:0px 2px;
+	font-family: "Trebuchet MS", Verdana, 'Bitstream Vera Sans', Times, serif;
+}
+
+input:hover, textarea:hover{
+	border:1px solid #336397;
+	background-color:#FFFFFF; 
+}
+
+input:focus, textarea:focus{
+	border:1px solid #0B6ABF;
+	background-color:#f5fbff;
+}
+
+fieldset textarea.post {
+	width:90%;
+	display:inline;		
+}
+
+textarea {
+    display:block;
+    width:94%;
+    margin:5px auto;
+	-moz-border-radius:5px;
+	-khtml-border-radius:5px;
+	-webkit-border-radius:5px;
+}
+input.text{
+	padding:1px 2px 1px 2px;	
+	-moz-border-radius:3px;
+	-khtml-border-radius:3px;
+	-webkit-border-radius:3px;
+}
+
+input.submit, button.submit{
+	height: 20px;
+	padding:0px 5px;
+	color:#0E2A48;	
+	font-weight:bold;
+	font-size:10px;
+	background: url(images/bouton.png) repeat-x;
+    border: 1px solid #bac5ca;
+    border-radius:4px;
+    vertical-align: top;
+}
+
+input.submit:hover, button.submit:hover{
+	cursor:pointer;
+	background:#e8edf3;
+}
+
+input[type=checkbox] { 
+	border:none;
+	background:none;
+}
+
+input.file{
+	border:1px solid #515C68;	
+	border-top:1px solid #8498ae;	
+	color:#2E3B5F;	
+	padding:1px;
+	font-weight:bold;
+	font-size:10px;
+}
+
+input.reset, button.reset{
+	height: 20px;
+	padding:0px 5px;
+	background: url(images/bouton.png) repeat-x;
+    border: 1px solid #c9c9c9;
+    border-radius:4px;
+    color: #cc0000;
+	font-weight:bold;
+	font-size:10px;
+	
+}
+
+input.reset:hover, button.reset:hover{
+	cursor:pointer;
+	background:#e8edf3;
+}
+
+optgroup, select{
+	cursor:pointer;
+	vertical-align:middle;
+	width:auto;		
+	-moz-border-radius:3px;
+	-khtml-border-radius:3px;
+	-webkit-border-radius:3px;
+}
+
+optgroup {
+    font-weight:bold;
+    border:none;
+    border-bottom:1px solid #5B5A5A;
+}
+
+option {
+    padding:0px 3px;
+}
+
+legend {
+	padding:1px 0;
+	font-size:0.85em;
+	font-weight:bold;
+	background:#d7dfe9;
+	border:1px solid #bbcde0;
+	padding:2px 10px;
+	margin-top:-0.4em;
+	margin-left:0.5em;
+	position:relative;
+	text-transform:none;
+	line-height:1.5em;
+	color:#333333;
+	top:0;
+	vertical-align:middle;
+	text-transform:uppercase;
+}
+* html legend {
+    margin:0 0 -10px -7px;
+    line-height:1em;
+    font-size:.85em;
+}
+
+fieldset{
+	margin:20px 0;
+	padding:6px;
+	border:1px solid #d6dee7;
+	color:#445766;
+	background:#ECEFFA;
+	position:relative;
+}
+fieldset.fieldset_submit{
+	margin-top:-10px;
+	padding-bottom:15px;
+	width:99%;
+	text-align:center;
+	background:none;
+	border:none;
+}
+
+fieldset.fieldset_submit legend {
+    display:none;
+}
+
+fieldset dl {
+    height:1%;
+    overflow:hidden;
+    margin-bottom:16px;
+    font-size:11px;
+}
+
+fieldset dl.overflow_visible {
+    overflow:visible;
+}
+
+html>body fieldset dl {
+    height:auto;
+    min-height:20px;
+}
+
+fieldset dt {
+    width:45%;
+    text-align:left;
+    padding-top:3px;
+}
+
+fieldset dd {
+    margin:0 0 0 45%;
+    padding:0 0 0 5px;
+    border:none;
+    vertical-align:top;
+    font-size:11px;
+}
+
+dt {
+    float:left;
+    width:auto;
+}
+
+dt span {
+    padding:0 5px 0 0;
+}
+
+label {
+    cursor:pointer;
+}
+
+fieldset label {
+    font-size:11px;
+    text-align:left;
+    font-weight:bold;
+    color:#334455;
+}
+
+dd label {
+    white-space:nowrap;
+    margin:0 10px 0 0;
+    font-weight:normal;
+    color:#476A7F;
+}
+
+dt span {
+    font-size:10px;
+    color:#0E2A48;
+}
+
+label img {
+    vertical-align:middle;
+}
+
+fieldset dl dd label:hover {
+    color:#183A4F;
+}
+
+/* Messages postés par les membres (messages privés, etc...) 
+--------------------------------------*/
+    /* Classe du lien du pseudo des messages */
+a.msg_link_pseudo {
+	font-size:11px;
+    color:#e8eaeb;
+    font-weight:bold;
+}
+
+a.msg_link_pseudo:hover {
+    color:#f2fbff;
+    font-weight:bold;
+}
+
+.msg_position { /* Conteneur des messages */
+    width:98%;
+    margin:5px auto;
+    background:#f0f3ff;
+    border: 1px solid #D1D4DF;
+}
+
+.msg_container,.msg_container2 {
+    /* Case contenant l'ensemble du message */
+    background: #FCFCFD;
+    overflow:hidden !important;
+    height:auto !important;
+    overflow:visible;
+    height:1%;
+    clear:both;
+}
+
+.msg_container2 {
+    /*  Case contenant l'ensemble du message => Couleur alternative */
+    background: #FCFCFD;
+}
+
+/* Barre supï¿½rieur des messages */
+.msg_top_l{
+	margin-right:0px !important;
+	margin-right:-3px;
+	height:34px;
+	width:29px;
+	background:#ECEFFA;
+	float:left;
+}
+
+.msg_top_r{
+	margin-left:0px !important;
+	margin-left:-3px;
+	height:34px;
+	width:21px;
+	background:#ECEFFA;
+	float:right;
+}
+
+.msg_top {
+	height:25px;
+	background:#ECEFFA;
+	padding-left:6px;
+	margin-left:20px;
+	margin-right:15px;
+	padding-top:9px;
+}
+
+.msg_top a {
+    color:#3F5164;
+}
+
+.msg_pseudo_mbr { /* Pseudo du membre */
+    width:127px;
+    background:#366393;
+    padding:2px 4px;
+    float:left;
+    margin-right:0px !important;
+    margin-right:-3px;
+    margin-left:-127px !important;
+    margin-left:-64px;
+    margin-top:-4px;
+}
+
+.msg_top_row {
+    /* Case au dessus du message, indique la date et les boutons d'administration */
+    height:16px;
+    background:#366393;
+    font-size:11px;
+    color:#e8eaeb;
+    border-top:1px solid #325889;
+    border-bottom:1px solid #325889;
+    padding:4px 5px 0px 127px;
+    overflow:hidden !important;
+    height:auto !important;
+    overflow:visible;
+    height:1%;
+}
+.msg_top_row span.text_strong a.small_link{ color: #F2FBFF; }
+
+.msg_info_mbr { /* Case des informations du membre */
+    background:#f0f3ff;
+    width:127px;
+    padding:4px;
+    float:left;
+    font-size:10px;
+    border-right:1px dotted #C4CED6;
+}
+
+.msg_contents_container {
+    /* Case contenant l'ensemble du message, infos membre + contenu */
+    background:#f0f3ff;
+}
+
+.msg_contents,.msg_contents2 { /* Case du message */
+    margin-left:135px;
+    background: #FCFCFD;
+    padding:0px 5px;
+    border-left:1px dotted #C4CED6;
+}
+
+.msg_contents2 { /* Case du message => Couleur alternative */
+    background: #FCFCFD;
+}
+
+.msg_contents_overflow {
+    /* Case du contents du message, évite que les images trop grandes dï¿½forme */
+    width:99%;
+    height:auto;
+    min-height:80px;
+    overflow:auto;
+    padding:10px 0px;
+    word-wrap:break-word;
+}
+
+.msg_sign,.msg_sign2 { /* Signature du membre */
+   	background: #FCFCFD;
+    padding:4px;
+    font-size:11px;
+    margin-left:135px;
+    border-left:1px dotted #C4CED6;
+}
+
+.msg_sign2 { /* Signature du membre => Couleur alternative */
+    background: #FCFCFD;
+}
+
+.msg_sign_overflow { /* Signature du membre, fixe la hauteur maximale */
+    height:auto !important;
+    height:80px;
+    width:99%;
+    max-height:80px;
+    max-width:99%;
+    overflow:hidden;
+}
+
+.msg_bottom_l { /* Barre inférieure des messages */
+    
+}
+
+.msg_bottom_r {
+    
+}
+
+.msg_bottom {
+    height:23px;
+    padding:6px 6px 0px 6px;
+    border:none;
+    background:none;
+}
+
+/* Modules
+--------------------------------------*/ /* Conteneur des modules */
+.module_position {
+    width:96%;
+    margin:auto;
+}
+/* Barre supérieure des modules */
+.module_top_l { float:left; }
+.module_top_r { float:right; }
+
+.module_top {
+    min-height:21px;
+    font-size:16px;
+    font-weight:bold;
+    color:#6d6d6d;
+    border-bottom:1px solid #cccccc;
+    padding-bottom: 2px;
+}
+
+.module_top a { font-size:16px; }
+
+.module_top_title {
+	float:left;
+	margin-left:3px;
+	font-weight:bold;
+}
+
+.module_top_title img {
+	margin-bottom:5px;
+}
+
+.module_top_com { float: right; }
+.module_top_com a{ font-size: 12px; }
+
+.module_actions {
+	text-align: center;
+}
+
+.module_contents { /* Contenu des modules */
+    padding:20px 15px;
+    padding-bottom:15px;
+    clear:both;
+    text-align:justify;
+	word-wrap:break-word;
+}
+
+.module_bottom_l { /* Barre inférieure des modules */}
+.module_bottom_r {}
+
+.module_bottom {
+    height:22px;
+    padding:2px 0 15px 6px;
+    font-size:10px;
+}
+
+
+/* Tableau global, utilisé dans les différents modules */
+.module_table {
+    width:98%;
+    margin:auto;
+	border-spacing:0px;
+	border-collapse:separate;
+	padding:0px;
+	border:1px solid #D6DEE7;
+    background:#f2f8ff;
+}
+*+html .module_table { /* Hack ie7 */
+	border-collapse:collapse;
+}
+
+/* Modules minis
+--------------------------------------*/
+.module_mini_container { /*Placement des mini modules */
+    width:180px;
+    margin:0px;
+    margin-bottom:10px;
+    border:1px #bebebe solid;
+    border-bottom:2px #99b1cb solid;
+    background:#ffffff;
+    border-spacing:1px;
+    padding:5px;
+	clear:both;
+}
+
+.module_mini_top {
+    height:24px;
+    font-weight:bold;
+    text-align:center;
+    border-bottom:2px #336397 solid;
+}
+
+.module_mini_contents {
+    border-top:none;
+    border-bottom:none;
+    text-align:center;
+    padding:4px;
+    padding-top:5px;
+    padding-bottom:0px;
+}
+
+.module_mini_bottom { /* Bordure inférieure des modules minis */
+    height:15px;
+}
+
+.label {
+    font-weight:bold;
+    font-size:11px;
+    color:#476a7f;
+}
+
+/* Commentaires */
+
+
+/*div#comment-rating {
+	width:48px;
+	height:22px;
+	margin-top: 10px;
+}
+
+div#comment-rating div {
+	width:50%;
+	color:#FFF;
+	cursor: pointer;
+	text-align:center;
+	font-weight:900;
+	font-size: 16px;
+}
+
+.positive_vote_button {
+	background:#CCC;
+	border-top-left-radius:2px;
+	border-bottom-left-radius:2px;
+	float:left;
+}
+
+.negative_vote_button {
+	background:#e0e0e0;
+	border-top-right-radius:2px;
+	border-bottom-right-radius:2px;
+	float:right;
+}
+
+div#comment-rating .positive {
+	background:#ab0119;
+}
+
+div#comment-rating .negative {
+	background:#39ab01;
+}
+*/
+.comment {
+	width:98%;
+	margin-bottom:20px;
+	overflow:auto;
+}
+
+.comment-date {
+	margin-left: 10px;
+}
+
+.comment-user_infos {
+	text-align:center;
+	width:150px;
+	float:left;
+}
+
+.comment-content {
+	margin-left:180px;
+}
+
+.view-topic {
+	margin-top: 10px;
+}
+
+.comment-message {
+	position: relative;
+	padding: 15px;
+	margin-top: 5px;
+	border: 1px solid #D6DEE7;
+	color: #333;
+	background:#ECEFFA;
+	min-height: 80px;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+}
+.comment-message::before {
+	content: "";
+	top: 15px;
+	bottom: auto;
+	left: -25px;
+	position: absolute;
+	border-width: 15px 25px 15px 0;
+	border-color: transparent #D6DEE7;	
+	border-style: solid;
+	display: block;
+	width: 0;
+}
+
+.comment-message::after {
+	content: "";
+	top: 16px;
+	bottom: auto;
+	left: -24px;
+	position: absolute;
+	border-width: 14px 24px 14px 0;
+	border-color: transparent #ECEFFA;	
+	border-style: solid;
+	display: block;
+	width: 0;
+}
+
+.comment-avatar{
+	width:80px;
+}
+
+.message-containt{
+	overflow:auto;	
+}
+
+div#comment-pseudo a {}
+
+.comment-user_infos img{
+	padding:10px 0px;	
+}
+
+.comment-moderate{
+	background:#ECEFFA;
+	border: 1px solid #D6DEE7;
+	border-radius:4px;
+	padding-top:4px;
+	width: 98%;
+	text-align:center;
+	vertical-align:middle;
+}
+.comment-moderate a{
+	vertical-align:top;
+}
