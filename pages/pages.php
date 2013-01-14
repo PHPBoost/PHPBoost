@@ -157,7 +157,7 @@ if (!empty($encoded_title) && $num_rows == 1)
 			'DM_A_CLASS' => $value[1],
 			'U_ACTION' => $value[0],
 			'L_ACTION' => $key,
-			'ONCLICK' => array_key_exists(2, $value) ? $value[2] : ''
+			'ONCLICK' => array_key_exists(2, $value) ? $value[2] : '',
 		));
 		$i++;
 	}
@@ -179,7 +179,8 @@ if (!empty($encoded_title) && $num_rows == 1)
 		$Template->put_all(array(
 			'C_ACTIV_COM' => true,
 			'U_COM' => PagesUrlBuilder::get_link_item_com($page_infos['id']),
-			'L_COM' => $number_comments > 0 ? sprintf($LANG['pages_display_coms'], $number_comments) : $LANG['pages_post_com']
+			'L_COM' => $number_comments > 0 ? sprintf($LANG['pages_display_coms'], $number_comments) : $LANG['pages_post_com'],
+			'L_PAGE_OUTILS' => $LANG['pages_links_list']
 		));
 	}
 	

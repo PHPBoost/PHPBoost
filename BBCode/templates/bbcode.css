@@ -2,13 +2,13 @@
 /* Tableau du bbcode */
 .bbcode, .bbcode2{
 	text-align: center;
-    width: 491px !important;
 	background:#336397;
 	border:1px solid #BEBEBE;
 	border-collapse:collapse;
 	border-spacing:0px;
 	height:32px;
 	color:#FFFFFF;
+	font-size:12px;
 }
 
 .bbcode td, .bbcode2 td{
