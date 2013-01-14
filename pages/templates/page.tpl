@@ -23,7 +23,7 @@
 				</noscript>
 
 				<div style="margin-bottom:10px;">
-					<div class="dynamic_menu" style="float:right;margin-right:60px;">
+					<div class="dynamic_menu" style="float:right;margin-right:70px;">
 						<ul>
 						# IF C_ACTIV_COM #
 							<li>
