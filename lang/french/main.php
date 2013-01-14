@@ -116,7 +116,7 @@ $LANG['private_messaging'] = 'Messagerie privée';
 $LANG['my_private_profile'] = 'Mon profil';
 
 //Maintain
-$LANG['maintain'] = 'Le site est actuellement en maintenance. Merci de votre patience, seul(s) le(s) administrateur(s) du site peuvent y accéder.';
+$LANG['maintain'] = 'Le site est actuellement en maintenance. Merci de votre patience.';
 $LANG['maintain_delay'] = 'Délai estimé avant réouverture du site :';
 $LANG['title_maintain'] = 'Site en maintenance';
 $LANG['loading'] = 'Chargement';

@@ -117,7 +117,7 @@ $LANG['private_messaging'] = 'Private message';
 $LANG['my_private_profile'] = 'My profile';
 
 //Maintain
-$LANG['maintain'] = 'The website is under maintenance, only the administrators are authorized to log in.';
+$LANG['maintain'] = 'The website is under maintenance.';
 $LANG['maintain_delay'] = 'Time remaining:';
 $LANG['title_maintain'] = 'Website in maintenance';
 $LANG['loading'] = 'Loading';
