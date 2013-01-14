@@ -58,11 +58,11 @@ class DownloadSearchable extends AbstractSearchableExtensionPoint
         for ($i = 0; $i < $nb_results; $i++)
             $ids[] = $results[$i]['id_content'];
 
-        $request = "SELECT d.id, d.idcat, d.title, d.short_contents, d.url, d.image, d.count, d.timestamp, notes.average_notes, com.number_comments
+        $request = "SELECT d.id, d.idcat, d.title, d.short_contents, d.url, d.image, d.count, d.timestamp, d.approved, d.visible, notes.average_notes, com.number_comments
             FROM " . PREFIX . "download d
             LEFT JOIN " . DB_TABLE_COMMENTS_TOPIC . " com ON d.id = com.id_in_module AND com.module_id = 'download'
             LEFT JOIN " . DB_TABLE_AVERAGE_NOTES . " notes ON d.id = notes.id_in_module AND module_name = 'download'
-            WHERE d.id IN (" . implode(',', $ids) . ")";
+            WHERE d.id IN (" . implode(',', $ids) . ") AND d.visible = 1 AND d.approved = 1";
 
         $request_results = $this->sql_querier->query_while ($request, __LINE__, __FILE__);
         while ($row = $this->sql_querier->fetch_assoc($request_results))
