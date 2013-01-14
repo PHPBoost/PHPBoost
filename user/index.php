@@ -39,7 +39,7 @@ $url_controller_mappers = array(
 	new UrlControllerMapper('UserEditProfileController', '`^/profile(?:/([0-9]+))/edit/?$`', array('user_id')),
 	new UrlControllerMapper('UserMessagesController', '`^/messages(?:/([0-9]+))?/?$`', array('user_id')),
 	new UrlControllerMapper('UserCommentsController', '`^/messages(?:/([0-9]+))?/?comments?/?([A-Za-z]+)?/?([0-9]+)?/?$`', array('user_id', 'module_id', 'page')),
-	new UrlControllerMapper('UserMaintainController', '`^/maintain/?$`'),
+	new UrlControllerMapper('UserMaintainController', '`^/maintain(?:/([a-z_]+))?/?([A-Za-z0-9]+)?$`', array('error_type', 'error_value')),
 	new UrlControllerMapper('UserLostPasswordController', '`^/password/lost/?$`'),
 	new UrlControllerMapper('UserChangeLostPasswordController', '`^/password/change(?:/([a-z0-9]+))?/?$`', array('key')),
 	new UrlControllerMapper('UserError403Controller', '`^/error/403/?$`'),

@@ -83,11 +83,7 @@ class Session
 			$delay_connect = (time() - $info_connect['last_connect']); //Délai entre deux essais de connexion.
 			$delay_ban = (time() - $info_connect['user_ban']); //Vérification si le membre est banni.
 
-			if ($info_connect['password'] !== KeyGenerator::string_hash($password))
-			{
-				AppContext::get_response()->redirect(UserUrlBuilder::connect('wrong_password')->absolute());
-			}
-			elseif ($delay_ban >= 0 && $info_connect['user_aprob'] == '1' && $info_connect['user_warning'] < '100') //Utilisateur non (plus) banni.
+			if ($delay_ban >= 0 && $info_connect['user_aprob'] == '1' && $info_connect['user_warning'] < '100') //Utilisateur non (plus) banni.
 			{
 				if ($delay_connect >= 600) //5 nouveau essais, 10 minutes après.
 				{
@@ -127,7 +123,7 @@ class Session
 				$this->sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET last_connect='" . time() . "', test_connect = test_connect + 1 WHERE user_id='" . $user_id . "'", __LINE__, __FILE__);
 				$info_connect['test_connect']++;
 				$info_connect['test_connect'] = 5 - $info_connect['test_connect'];
-				AppContext::get_response()->redirect(UserUrlBuilder::connect('flood', $info_connect['test_connect'])->absolute());	
+				AppContext::get_response()->redirect(UserUrlBuilder::connect('flood/'. $info_connect['test_connect'])->absolute());	
 			}
 			elseif ($info_connect['test_connect'] > 0) //Succès redonne tous les essais.
 			{
