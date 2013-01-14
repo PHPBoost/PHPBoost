@@ -48,7 +48,7 @@ if (!empty($search)) //Moteur de recherche des members
 		while ($row = $Sql->fetch_assoc($result)) //On execute la requête dans une boucle pour afficher tout les résultats.
 		{ 
 			$template->assign_block_vars('search', array(
-				'RESULT' => '<a href="'. PATH_TO_ROOT .'/admin/admin_members.php?id=' . $row['user_id'] . '">' . $row['login'] . '</a><br />'
+				'RESULT' => '<a href="'. AdminMembersUrlBuilder::edit($row['user_id'])->absolute() . '">' . $row['login'] . '</a><br />'
 			));
 			$template->put_all(array(
 				'C_DISPLAY_SEARCH_RESULT' => true
