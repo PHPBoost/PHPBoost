@@ -132,6 +132,7 @@ class ForumHomePageExtensionPoint implements HomePageExtensionPoint
 		$display_sub_cats = false;
 		while ($row = $this->sql_querier->fetch_assoc($result))
 		{
+			
 			$tpl->assign_block_vars('forums_list', array());
 			if ($CAT_FORUM[$row['cid']]['level'] == 0 && $i > 0 && $display_sub_cats) //Fermeture de la catégorie racine.
 			{
@@ -151,7 +152,7 @@ class ForumHomePageExtensionPoint implements HomePageExtensionPoint
 			}
 			else //On liste les sous-catégories
 			{
-				if ($display_sub_cats)
+				if ($display_sub_cats || !empty($id_get))
 				{
 					if ($display_cat) //Affichage des forums d'une catégorie, ajout de la catégorie.
 					{
