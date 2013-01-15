@@ -89,7 +89,7 @@
 								<h2 class="title pbt_custom_subtitle" >
 									<a href="{PATH_TO_ROOT}/download/category-37+themes.php">Thèmes compatibles</a>
 								</h2>
-								<p class="pbt_custom_desc">Trouvez la bonne entitée graphique pour votre site.</p>
+								<p class="pbt_custom_desc">Trouvez la bonne entité graphique pour votre site.</p>
 							</div>
 						</div>
 						
@@ -142,7 +142,7 @@
 									<a href="{PATH_TO_ROOT}/download/category-30+themes.php">Thèmes compatibles</a>
 								</h2>
 								<p class="pbt_custom_desc">
-									Trouvez la bonne entitée graphique pour votre site.
+									Trouvez la bonne entité graphique pour votre site.
 								</p>
 							</div>
 						</div>

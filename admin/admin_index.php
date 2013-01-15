@@ -142,7 +142,7 @@ while ($row = $Sql->fetch_assoc($result))
 	$Template->assign_block_vars('user', array(
 		'USER' => !empty($login) ? $login : $LANG['guest'],
 		'USER_IP' => $row['session_ip'],
-		'WHERE' => '<a href="' . HOST . $row['session_script'] . $row['session_script_get'] . '">' . stripslashes($row['session_script_title']) . '</a>',
+		'WHERE' => '<a href="' . HOST . $row['session_script'] . $row['session_script_get'] . '">' . !empty($row['session_script_title']) ? stripslashes($row['session_script_title']) : $LANG['unknow'] . '</a>',
 		'TIME' => gmdate_format('date_format_long', $row['session_time'])
 	));
 }
