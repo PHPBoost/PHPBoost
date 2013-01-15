@@ -635,8 +635,8 @@ else if (!empty($_POST['valid_edit']) && is_numeric($id))
 			switch ($field)
 			{
 				case 'assigned_to_id' :
-					$result_assigned = $Sql->query_array(DB_TABLE_MEMBER, "login, level", "WHERE user_id = " . $field, __LINE__, __FILE__);
-					$comment = $LANG['bugs.labels.fields.assigned_to_id'] . ' <a href="' . UserUrlBuilder::profile($field)->absolute() . '" class="' . UserService::get_level_class($result_assigned['level']) . '">' . $result_assigned['login'] . '</a>';
+					$result_assigned = $Sql->query_array(DB_TABLE_MEMBER, "login, level", "WHERE user_id = " . $new_values[$field], __LINE__, __FILE__);
+$comment = $LANG['bugs.labels.fields.assigned_to_id'] . ' <a href="' . UserUrlBuilder::profile($new_values[$field])->absolute() . '" class="' . UserService::get_level_class($result_assigned['level']) . '">' . $result_assigned['login'] . '</a>';
 					break;
 				case 'title' :
 					$old_values[$field] = addslashes($old_values[$field]);
