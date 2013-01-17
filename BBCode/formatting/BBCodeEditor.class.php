@@ -68,7 +68,6 @@ class BBCodeEditor extends ContentEditor
         $template->put_all(array(
         	'PAGE_PATH' => $_SERVER['PHP_SELF'],
 			'C_EDITOR_NOT_ALREADY_INCLUDED' => !self::$editor_already_included,
-			'EDITOR_NAME' => 'bbcode',
 			'FIELD' => $this->identifier,
 			'FORBIDDEN_TAGS' => !empty($this->forbidden_tags) ? implode(',', $this->forbidden_tags) : '',
 			'C_UPLOAD_MANAGEMENT' => AppContext::get_current_user()->check_auth(FileUploadConfig::load()->get_authorization_enable_interface_files(), AUTH_FILES),
