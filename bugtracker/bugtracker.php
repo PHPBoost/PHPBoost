@@ -1637,9 +1637,9 @@ else if (isset($_GET['roadmap'])) // roadmap
 		));
 	}
 
-	$result = $Sql->query_while("SELECT *
+	$result = $Sql->query_while("SELECT b.*, com.number_comments
 	FROM " . PREFIX . "bugtracker b
-	LEFT JOIN " . PREFIX . "comments_topic c ON (b.id = c.id_in_module)
+	LEFT JOIN " . DB_TABLE_COMMENTS_TOPIC . " com ON com.id_in_module = b.id AND com.module_id = 'bugtracker'
 	WHERE fixed_in = '" . $roadmap_version . "'
 	ORDER BY " . $sort . " " . $mode .
 	$Sql->limit($Pagination->get_first_msg($items_per_page, 'p'), $items_per_page), __LINE__, __FILE__); //Bugs enregistrés.
