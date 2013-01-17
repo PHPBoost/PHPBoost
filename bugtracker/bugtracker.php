@@ -1336,9 +1336,9 @@ else if (isset($_GET['solved'])) // liste des bugs corrigés
 	
 	$Template->assign_block_vars('solved', array());
 	
-	$result = $Sql->query_while("SELECT *
+	$result = $Sql->query_while("SELECT b.*, com.number_comments
 	FROM " . PREFIX . "bugtracker b
-	LEFT JOIN " . PREFIX . "comments_topic c ON (b.id = c.id_in_module)
+	LEFT JOIN " . DB_TABLE_COMMENTS_TOPIC . " com ON com.id_in_module = b.id AND com.module_id = 'bugtracker'
 	WHERE status = 'fixed' OR status = 'rejected'
 	ORDER BY " . $sort . " " . $mode .
 	$Sql->limit($Pagination->get_first_msg($items_per_page, 'p'), $items_per_page), __LINE__, __FILE__); //Bugs enregistrés.
@@ -1357,8 +1357,7 @@ else if (isset($_GET['solved'])) // liste des bugs corrigés
 		}
 		
 		//Nombre de commentaires
-		$nbr_coms = $Sql->query("SELECT number_comments FROM " . PREFIX . "comments_topic WHERE module_id = 'bugtracker' AND id_in_module = '" . $row['id'] . "'", __LINE__, __FILE__);
-
+		$nbr_coms = $row['number_comments'];
 		$Template->assign_block_vars('solved.bugclosed', array(
 			'ID'			=> $row['id'],
 			'U_BUG_VIEW'	=> PATH_TO_ROOT .'/bugtracker/bugtracker' . url('.php?view&amp;id=' . $row['id'], '-' . $row['id'] . '+' . Url::encode_rewrite($row['title']) . '.php'),
@@ -1658,6 +1657,7 @@ else if (isset($_GET['roadmap'])) // roadmap
 			$line_color = '';
 		}
 		
+		$nbr_coms = $row['number_comments'];
 		$Template->assign_block_vars('roadmap.bug', array(
 			'ID'			=> $row['id'],
 			'U_BUG_VIEW'	=> PATH_TO_ROOT .'/bugtracker/bugtracker' . url('.php?view&amp;id=' . $row['id'], '-' . $row['id'] . '+' . Url::encode_rewrite($row['title']) . '.php'),
