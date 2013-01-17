@@ -179,8 +179,7 @@ if (!empty($encoded_title) && $num_rows == 1)
 		$Template->put_all(array(
 			'C_ACTIV_COM' => true,
 			'U_COM' => PagesUrlBuilder::get_link_item_com($page_infos['id']),
-			'L_COM' => $number_comments > 0 ? sprintf($LANG['pages_display_coms'], $number_comments) : $LANG['pages_post_com'],
-			'L_PAGE_OUTILS' => $LANG['pages_links_list']
+			'L_COM' => $number_comments > 0 ? sprintf($LANG['pages_display_coms'], $number_comments) : $LANG['pages_post_com']
 		));
 	}
 	
@@ -192,7 +191,8 @@ if (!empty($encoded_title) && $num_rows == 1)
 		'TITLE' => $page_infos['title'],
 		'CONTENTS' => pages_second_parse($page_infos['contents']),
 		'COUNT_HITS' => $page_infos['count_hits'] ? sprintf($LANG['page_hits'], $page_infos['hits'] + 1) : '&nbsp;',
-		'L_LINKS' => $LANG['pages_links_list']
+		'L_LINKS' => $LANG['pages_links_list'],
+		'L_PAGE_OUTILS' => $LANG['pages_links_list']
 	));
 	
 	$Template->display();
