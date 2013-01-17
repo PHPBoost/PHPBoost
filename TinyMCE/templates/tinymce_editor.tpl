@@ -7,7 +7,8 @@ function XMLHttpRequest_preview(field)
 	if( XMLHttpRequest_preview.arguments.length == 0 )
 		field = ${escapejs(FIELD)};
 
-	{TINYMCE_TRIGGER}
+	tinyMCE.triggerSave();
+		
 	var contents = $(field).value;
 	var preview_field = 'xmlhttprequest_preview' + field;
 	
@@ -28,7 +29,7 @@ function XMLHttpRequest_preview(field)
 				parameters: {
 					token: '{TOKEN}',
 					path_to_root: '{PHP_PATH_TO_ROOT}',
-					editor: '{EDITOR_NAME}',
+					editor: 'TinyMCE',
 					page_path: '{PAGE_PATH}',  
 						contents: contents,
 						ftags: '{FORBIDDEN_TAGS}'
