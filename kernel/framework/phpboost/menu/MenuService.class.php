@@ -486,6 +486,7 @@ class MenuService
 					$default_block = $menu->get_default_block();
 					$menu->set_title($module_id . '/' . $title);
 					$menu->set_block($default_block);
+					$menu->enabled($menu->default_is_enabled());
 					self::save($menu);
 				}
 			}

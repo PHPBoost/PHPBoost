@@ -68,5 +68,7 @@ class ModuleMiniMenu extends Menu
         $cache_str = '$__menu.= $class->display(); $__menu.= \'';
         return $this->cache_export_begin() . $load_class . $cache_str . parent::cache_export_end();
     }
+    
+	public function default_is_enabled() { return false; }
 }
 ?>
