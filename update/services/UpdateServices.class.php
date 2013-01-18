@@ -191,7 +191,7 @@ class UpdateServices
 			'ExtendedFieldsKernelUpdateVersion',
 			'LangsConfigurationKernelUpdateVersion',
 			'MembersKernelUpdateVersion',
-			'ModuleMiniMenusKernelUpdateVersion',
+			'MenusKernelUpdateVersion',
 			'ModulesKernelUpdateVersion',
 			'NotationsKernelUpdateVersion',
 			'ThemesConfigurationKernelUpdateVersion',
