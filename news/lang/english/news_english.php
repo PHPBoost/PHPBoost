@@ -46,7 +46,7 @@ $NEWS_LANG = array(
 	'alert_delete_news' => 'Delete this piece of news?',
 	'archive' => 'Archives',
 	'auth_contribute' => 'Contribution permissions',
-	'auth_moderate' => 'Moderating contributions permissions',
+	'auth_moderate' => 'Moderating permissions',
 	'auth_read' => 'Reading permissions',
 	'auth_write' => 'Writing permissions',
 
