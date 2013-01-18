@@ -87,7 +87,7 @@ class AdminModulesManagementController extends AdminController
 					'ID' => $module->get_id(),
 					'NAME' => ucfirst($configuration->get_name()),
 					'ICON' => $module->get_id(),
-					'VERSION' => $configuration->get_version(),
+					'VERSION' => $module->get_installed_version(),
 					'AUTHOR' => !empty($author) ? '<a href="mailto:' . $author_email. '">' . $author . '</a>' : $author,
 					'AUTHOR_WEBSITE' => !empty($author_website) ? '<a href="' . $author_website . '"><img src="' . TPL_PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/' . get_ulang() . '/user_web.png" alt="" /></a>' : '',
 					'DESCRIPTION' => $configuration->get_description(),
