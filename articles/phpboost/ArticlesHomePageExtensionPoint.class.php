@@ -50,10 +50,16 @@ class ArticlesHomePageExtensionPoint implements HomePageExtensionPoint
 	
 	private function get_view()
 	{
-		global $idartcat, $Session, $User, $invisible, $Cache, $ARTICLES_CAT, $CONFIG_ARTICLES, $LANG, $ARTICLES_LANG, $Bread_crumb, $Sql;
+		global $idartcat, $Session, $User, $invisible, $Cache, $ARTICLES_CAT, $CONFIG_ARTICLES, $LANG, $ARTICLES_LANG, $Bread_crumb, $Sql, $articles_categories;
 		
 		require_once(PATH_TO_ROOT . '/articles/articles_begin.php'); 
 		
+		if (!isset($ARTICLES_CAT[$idartcat]) || $ARTICLES_CAT[$idartcat]['visible'] == 0)
+		{
+			$error_controller = PHPBoostErrors::unexisting_page();
+			DispatchManager::redirect($error_controller);
+		}
+			
 		//checking authorization
 		if (!$User->check_auth($ARTICLES_CAT[$idartcat]['auth'], AUTH_ARTICLES_READ))
 		{
@@ -66,12 +72,6 @@ class ArticlesHomePageExtensionPoint implements HomePageExtensionPoint
 		
 		if ($idartcat > 0)
 		{
-			if (!isset($ARTICLES_CAT[$idartcat]) || $ARTICLES_CAT[$idartcat]['visible'] == 0)
-			{
-				$error_controller = PHPBoostErrors::unexisting_page();
-				DispatchManager::redirect($error_controller);
-			}
-
 			$clause_cat = " WHERE ac.id_parent = '" . $idartcat . "' AND ac.visible = 1";
 		}
 		else //Racine.
@@ -305,12 +305,20 @@ class ArticlesHomePageExtensionPoint implements HomePageExtensionPoint
 					'U_ARTICLES_WAITING' => 'articles.php?cat='.$idartcat,
 				));
 
+				$array_cat = array();
+				$articles_categories->build_children_id_list($idartcat, $array_cat, RECURSIVE_EXPLORATION, DO_NOT_ADD_THIS_CATEGORY_IN_LIST, AUTH_ARTICLES_MODERATE);
+				if ($User->check_auth($CONFIG_ARTICLES['global_auth'], AUTH_ARTICLES_MODERATE))
+				{
+					$array_cat[] = '0';
+				}
+				$where = !empty($array_cat) ? " AND a.idcat IN(" . implode(", ", $array_cat) . ") OR a.user_id = '" . $User->get_attribute('user_id') . "'" : "AND a.user_id = '" . $User->get_attribute('user_id') . "'";
+
 				$result = $this->sql_querier->query_while("SELECT a.id, a.title, a.icon, a.timestamp, a.views, a.user_id, a.description, m.user_id, m.login, m.level, note.average_notes, note.number_notes, com.number_comments
 				FROM " . DB_TABLE_ARTICLES . " a
 				LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = a.user_id
 				LEFT JOIN " . DB_TABLE_COMMENTS_TOPIC . " com ON com.id_in_module = a.id AND com.module_id = 'articles'
 				LEFT JOIN " . DB_TABLE_AVERAGE_NOTES . " note ON note.id_in_module = a.id AND note.module_name = 'articles'
-				WHERE a.visible = 0 AND (a.start = 0 AND a.end = 0) AND a.idcat = '" . $idartcat .	"'  AND a.user_id != -1
+				WHERE a.visible = 0 AND a.start <= '" . $now->get_timestamp() . "' AND (a.end >= '" . $now->get_timestamp() . "' OR a.end = 0) ". $where ."
 				ORDER BY " . $sort . " " . $mode .
 				$this->sql_querier->limit($Pagination->get_first_msg($CONFIG_ARTICLES['nbr_articles_max'], 'p'), $CONFIG_ARTICLES['nbr_articles_max']), __LINE__, __FILE__);
 
