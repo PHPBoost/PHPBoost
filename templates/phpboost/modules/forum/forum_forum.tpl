@@ -72,14 +72,23 @@
 		</div>
 		# ENDIF #
 
+		# IF C_POST_NEW_SUBJECT #
+		<div class="module_position forum_position_cat">
+			<div class="pbt_button pbt_button_gray">
+				<a href="{U_POST_NEW_SUBJECT}" title="{L_POST_NEW_SUBJECT}" class="pbt_button_a pbt_button_add">
+					<img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/extendfield_mini.png" alt="Add" class="pbt_button_img valign_middle" />
+					Créer un nouveau sujet
+				</a>
+			</div>
+		</div>
+		<div class="spacer"></div>
+		# ENDIF #
+
 		<div class="module_position forum_position_cat">
 			<div class="module_top_l"></div>
 			<div class="module_top_r"></div>
 			<div class="module_top forum_top_cat">
 				<a href="${relative_url(SyndicationUrlBuilder::rss('forum',IDCAT))}" title="Rss"><img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/rss.png" alt="Rss" title="Rss" /></a> &bull; {U_FORUM_CAT}
-				# IF C_POST_NEW_SUBJECT #
-					&raquo; <a href="{U_POST_NEW_SUBJECT}" title="{L_POST_NEW_SUBJECT}"><img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/post.png" alt="{L_POST_NEW_SUBJECT}" title="{L_POST_NEW_SUBJECT}" /></a>
-				# ENDIF #
 				<span style="float:right;">
 					# IF IDCAT #
 					<a href="unread.php?cat={IDCAT}" title="{L_DISPLAY_UNREAD_MSG}"><img src="{PICTURES_DATA_PATH}/images/new_mini.png" alt="" class="valign_middle" /></a>
@@ -158,6 +167,19 @@
 		<div class="module_position forum_position_subcat">
 			<div class="forum_position_subcat-bottom"></div>
 		</div>
+		
+		# IF C_POST_NEW_SUBJECT #
+		<div class="module_position forum_position_cat">
+			<div class="pbt_button pbt_button_gray">
+				<a href="{U_POST_NEW_SUBJECT}" title="{L_POST_NEW_SUBJECT}" class="pbt_button_a pbt_button_add">
+					<img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/extendfield_mini.png" alt="Add" class="pbt_button_img valign_middle" />
+					Créer un nouveau sujet
+				</a>
+			</div>
+		</div>
+		<div class="spacer"></div>
+		# ENDIF #
+		
 		<div class="module_position">
 			<div class="module_bottom_l"></div>
 			<div class="module_bottom_r"></div>
