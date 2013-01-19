@@ -15,20 +15,15 @@
 					<a href="${relative_url(SyndicationUrlBuilder::rss('forum',IDCAT))}" title="Rss"><img style="vertical-align:middle;margin-top:-2px;" src="{PATH_TO_ROOT}/templates/{THEME}/images/rss.png" alt="Rss" title="Rss" /></a>
 					&nbsp;&nbsp;<strong>{L_SUBFORUMS}</strong>
 				</div>
-				<div class="module_contents forum_contents">
-					<table class="module_table forum_table">
-						<tr>
-							<td class="forum_text_column" style="min-width:175px;">{L_FORUM}</td>
-							<td class="forum_text_column" style="width:60px;">{L_TOPIC}</td>
-							<td class="forum_text_column" style="width:60px;">{L_MESSAGE}</td>
-							<td class="forum_text_column" style="width:150px;">{L_LAST_MESSAGE}</td>
-						</tr>
-					</table>
-				</div>
 			</div>
+
+			<div class="module_position forum_position_subcat">
+				<div class="forum_position_subcat-top"></div>
+			</div>			
+
 			# START subcats #
-			<div class="module_position">
-				<div class="module_contents forum_contents">
+			<div class="module_position forum_position_subcat">
+				<div class="module_contents forum_contents forum_contents_subcat">
 					<table class="module_table forum_table">
 						<tr>
 							# IF subcats.U_FORUM_URL #
@@ -50,21 +45,25 @@
 								<span class="text_small">{subcats.DESC}</span>
 								<span class="text_small">{subcats.SUBFORUMS}</span>
 							</td>
-							<td class="forum_sous_cat_compteur">
-								{subcats.NBR_TOPIC}
+							<td class="forum_sous_cat_compteur_nbr forum_sous_cat_compteur">
+								{subcats.NBR_TOPIC}<BR />{subcats.NBR_MSG}
 							</td>
-							<td class="forum_sous_cat_compteur">
-								{subcats.NBR_MSG}
+							<td class="forum_sous_cat_compteur_text forum_sous_cat_compteur">
+								{L_TOPIC}<BR />{L_MESSAGE}
 							</td>
 							<td class="forum_sous_cat_last">
 								{subcats.U_LAST_TOPIC}
 							</td>
+
 							# ENDIF #
 						</tr>
 					</table>
 				</div>
 			</div>
 			# END subcats #
+			<div class="module_position forum_position_subcat">
+				<div class="forum_position_subcat-bottom"></div>
+			</div>
 			<div class="module_position">
 				<div class="module_bottom_l"></div>
 				<div class="module_bottom_r"></div>
@@ -133,9 +132,7 @@
 							<span class="text_small">Par </span>{topics.AUTHOR}
 						</td>
 						<td class="forum_sous_cat_compteur_nbr forum_sous_cat_compteur">
-							{topics.MSG}
-							<BR />
-							{topics.VUS}
+							{topics.MSG}<BR />{topics.VUS}
 						</td>
 						<td class="forum_sous_cat_compteur_text forum_sous_cat_compteur">
 							{L_ANSWERS}
