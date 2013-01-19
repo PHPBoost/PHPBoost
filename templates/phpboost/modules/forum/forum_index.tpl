@@ -56,9 +56,7 @@
 							<span class="text_small">{forums_list.subcats.SUBFORUMS}</span>
 						</td>
 						<td class="forum_sous_cat_compteur_nbr forum_sous_cat_compteur" >
-							{forums_list.subcats.NBR_TOPIC}
-							<br />
-							{forums_list.subcats.NBR_MSG}
+							{forums_list.subcats.NBR_TOPIC}<BR />{forums_list.subcats.NBR_MSG}
 						</td>
 						<td class="forum_sous_cat_compteur_text forum_sous_cat_compteur" >
 							{L_TOPIC}
@@ -74,7 +72,7 @@
 			</div>
 		</div>	
 		# END forums_list.subcats #		
-		
+
 	# END forums_list #
 		
 		# INCLUDE forum_bottom #
