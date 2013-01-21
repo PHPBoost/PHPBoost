@@ -96,7 +96,7 @@ class InstallDBConfigController extends InstallController
 		$schema->add_event('change', '$FFS(\'overwriteFieldset\').disable()');
 		$fieldset_schema->add_field($schema);
 		$tables_prefix = new FormFieldTextEditor('tablesPrefix', $this->lang['schema.tablePrefix'], 'phpboost_',
-		array('description' => $this->lang['schema.tablePrefix.explanation']));
+		array('description' => $this->lang['schema.tablePrefix.explanation'], 'required' => true));
 		$fieldset_schema->add_field($tables_prefix);
 
 		$this->overwrite_fieldset = new FormFieldsetHTML('overwriteFieldset', $this->lang['phpboost.alreadyInstalled']);

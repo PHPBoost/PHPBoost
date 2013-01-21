@@ -104,7 +104,7 @@ class InstallationServices
 		defined('PREFIX') or define('PREFIX', $tables_prefix);
 		$db_connection_data = array(
 			'dbms' => DBFactory::MYSQL,
-			'dsn' => 'mysql:host=' . $host . ';port=' . $port . 'dbname=' . $database,
+			'dsn' => 'mysql:host=' . $host . ';port=' . $port . ';dbname=' . $database,
 			'driver_options' => array(),
 			'host' => $host,
 			'login' => $login,
