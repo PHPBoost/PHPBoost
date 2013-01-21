@@ -151,6 +151,8 @@ class NewsletterUnSubscribeController extends ModuleController
 				NewsletterService::update_subscriptions_visitor($streams, $this->form->get_value('mail'));
 			}
 		}
+		
+		NewsletterStreamsCache::invalidate();
 	}
 }
 ?>
