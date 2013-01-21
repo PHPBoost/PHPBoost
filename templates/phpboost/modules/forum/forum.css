@@ -272,7 +272,7 @@ a.forum_mbrmsg_links { /* Couleur des liens pour les messages du membre */
 }
 
 .forum_title input#search{
-	background:url('search.png') no-repeat;
+	background:url('images/search.png') no-repeat;
 	padding:3px 0px 0px 25px;	
 	border:none;
 	color:#F8F8F8;
