@@ -289,36 +289,38 @@
 	
 				<hr style="margin:5px 0px 25px 0px;" />
 				
-				<div style="text-align:center;">	
-					<div class="pbt_button pbt_button_gray">
-						<a href="{PATH_TO_ROOT}/wiki/{U_EXPLORER}" class="pbt_button_a">
-							<img src="{PICTURES_DATA_PATH}/images/explorer.png" alt="{L_EXPLORER}" class="pbt_button_img valign_middle" />
-							{L_EXPLORER}
-						</a>
+				# IF IS_MODERATOR #
+					<div style="text-align:center;">	
+						<div class="pbt_button pbt_button_gray">
+							<a href="{PATH_TO_ROOT}/wiki/{U_EXPLORER}" class="pbt_button_a">
+								<img src="{PICTURES_DATA_PATH}/images/explorer.png" alt="{L_EXPLORER}" class="pbt_button_img valign_middle" />
+								{L_EXPLORER}
+							</a>
+						</div>
 					</div>
-				</div>
-				
-				<br />
-				# START last_articles #	
-				<hr style="margin:0px 0px 25px 0px;" />			
-				<br />
-				<table class="module_table">
-					<tr>
-						<th colspan="2">
-							<strong><em>{last_articles.L_ARTICLES}</em></strong> {last_articles.RSS}
-						</th>
-					</tr>
-					<tr>
-						# START last_articles.list #
-						{last_articles.list.TR}
-							<td class="row2" style="width:50%">
-								<img src="{PICTURES_DATA_PATH}/images/article.png" class="valign_middle" alt="" />&nbsp;<a href="{PATH_TO_ROOT}/wiki/{last_articles.list.U_ARTICLE}">{last_articles.list.ARTICLE}</a>
-							</td>
-						# END last_articles.list #
-						{L_NO_ARTICLE}
-					</tr>
-				</table>
-				# END last_articles #
+					
+					<br />
+					# START last_articles #	
+					<hr style="margin:0px 0px 25px 0px;" />			
+					<br />
+					<table class="module_table">
+						<tr>
+							<th colspan="2">
+								<strong><em>{last_articles.L_ARTICLES}</em></strong> {last_articles.RSS}
+							</th>
+						</tr>
+						<tr>
+							# START last_articles.list #
+							{last_articles.list.TR}
+								<td class="row2" style="width:50%">
+									<img src="{PICTURES_DATA_PATH}/images/article.png" class="valign_middle" alt="" />&nbsp;<a href="{PATH_TO_ROOT}/wiki/{last_articles.list.U_ARTICLE}">{last_articles.list.ARTICLE}</a>
+								</td>
+							# END last_articles.list #
+							{L_NO_ARTICLE}
+						</tr>
+					</table>
+					# END last_articles #
+				# ENDIF #
 			</div>
 			<div class="module_bottom_l"></div>		
 			<div class="module_bottom_r"></div>
