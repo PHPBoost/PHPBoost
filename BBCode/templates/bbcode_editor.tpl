@@ -267,7 +267,7 @@ function XMLHttpRequest_preview(field)
 			</td>
 			<td style="vertical-align:top;padding-left:8px;padding-top:5px;">
 				# IF C_UPLOAD_MANAGEMENT #
-				<a title="{L_BB_UPLOAD}" href="#" onclick="window.open('{PATH_TO_ROOT}/user/upload.php?popup=1&amp;fd={FIELD}&amp;edt={EDITOR_NAME}', '', 'height=500,width=720,resizable=yes,scrollbars=yes');return false;"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/upload/files_add.png" alt="" /></a>
+				<a title="{L_BB_UPLOAD}" href="#" onclick="window.open('{PATH_TO_ROOT}/user/upload.php?popup=1&amp;fd={FIELD}&amp;edt={EDITOR_NAME}', '', 'height=550,width=720,resizable=yes,scrollbars=yes');return false;"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/upload/files_add.png" alt="" /></a>
 				# ENDIF #
 			</td>
 		</tr>
