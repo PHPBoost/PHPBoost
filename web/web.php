@@ -72,6 +72,7 @@ if (!empty($idweb) && !empty($CAT_WEB[$idcat]['name']) && !empty($idcat)) //Cont
 		'DEL' => $del
 	));
 	
+	$module_data_path = $tpl->get_pictures_data_path();
 	$comments_topic = new WebCommentsTopic();
 	$tpl->put_all(array(
 		'C_DISPLAY_WEB' => true,
@@ -86,6 +87,7 @@ if (!empty($idweb) && !empty($CAT_WEB[$idcat]['name']) && !empty($idcat)) //Cont
 		'LANG' => get_ulang(),
 		'COM' => '<a href="'. PATH_TO_ROOT .'/web/web' . url('.php?cat=' . $idcat . '&amp;id=' . $idweb . '&amp;com=0', '-' . $idcat . '-' . $idweb . '.php?com=0') .'#comments_list">'. CommentsService::get_number_and_lang_comments('web', $idweb) . '</a>',
 		'KERNEL_NOTATION' => NotationService::display_active_image($notation),
+		'MODULE_DATA_PATH' => $module_data_path,
 		'U_WEB_CAT' => url('.php?cat=' . $idcat, '-' . $idcat . '.php'),
 		'L_VISIT' =>$LANG['visit_link'],
 		'L_DESC' => $LANG['description'],
