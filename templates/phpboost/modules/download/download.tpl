@@ -70,7 +70,7 @@
 						</div>
 					</div>
 					<div class="pbt_dev_container">
-						<a href="#" class="pbt_dev">Télécharger la version pour développeurs (PDK)</a>
+						<a href="{PATH_TO_ROOT}/download/download-232+phpboost-4-0-pdk.php" class="pbt_dev">Télécharger la version pour développeurs (PDK)</a>
 					</div>
 					
 					<hr style="margin:10px auto 0px auto;" />
