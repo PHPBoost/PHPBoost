@@ -165,14 +165,16 @@
 			</div>
 		</div>
 		<div class="module_position forum_position_subcat">
-			<div class="forum_position_subcat-bottom"></div>
+			<div class="forum_position_subcat-bottom">
+				<div style="text-align:right;padding:5px;">{PAGINATION}</div>
+			</div>
 		</div>
 				
 		<div class="module_position">
 			<div class="module_bottom_l"></div>
 			<div class="module_bottom_r"></div>
 			<div class="module_bottom">
-				<span style="float:right;">{PAGINATION}</span>&nbsp;
+				
 			</div>
 		</div>
 
