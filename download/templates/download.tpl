@@ -154,7 +154,7 @@
 			<div class="module_contents">
 				<table>
 					<tr>
-						<td style="text-align:center;padding-right:20px;">
+						<td style="text-align:center;padding-right:20px;vertical-align:top;">
 							# IF C_IMG #
 								<img src="{U_IMG}" alt="{IMAGE_ALT}" />
 								<br /><br />
