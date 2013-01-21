@@ -94,15 +94,18 @@ class MenusKernelUpdateVersion extends KernelUpdateVersion
 		{
 			if ($row['class'] == 'contentmenu')
 			{
-				$this->querier->update(PREFIX .'menus', array('class' => 'ContentMenu'), 'WHERE id=:id', array('id' => $row['id']));
+				$object = str_replace('contentmenu', 'ContentMenu', $row['object']);
+				$this->querier->update(PREFIX .'menus', array('class' => 'ContentMenu', 'object' => $object), 'WHERE id=:id', array('id' => $row['id']));
 			}
 			elseif ($row['class'] == 'linksmenu')
 			{
-				$this->querier->update(PREFIX .'menus', array('class' => 'LinksMenu'), 'WHERE id=:id', array('id' => $row['id']));
+				$object = str_replace('linksmenu', 'LinksMenu', $row['object']);
+				$this->querier->update(PREFIX .'menus', array('class' => 'LinksMenu', 'object' => $object), 'WHERE id=:id', array('id' => $row['id']));
 			}
 			elseif ($row['class'] == 'feedmenu')
 			{
-				$this->querier->update(PREFIX .'menus', array('class' => 'FeedMenu'), 'WHERE id=:id', array('id' => $row['id']));
+				$object = str_replace('feedmenu', 'FeedMenu', $row['object']);
+				$this->querier->update(PREFIX .'menus', array('class' => 'FeedMenu', 'object' => $object), 'WHERE id=:id', array('id' => $row['id']));
 			}
 			elseif($row['class'] == 'moduleminimenu')
 			{
