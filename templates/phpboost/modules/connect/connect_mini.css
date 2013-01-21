@@ -117,7 +117,7 @@ p.connect_disconnect{
 
 .connect_align ul { list-style: none; }
 
-.connect_align .submenu { height: 32px; z-index: 200; }
+.connect_align .submenu { height: 32px; z-index: 102; }
 .connect_align .submenu:hover > ul { 
 	visibility:visible;
 	opacity:1;
@@ -141,7 +141,7 @@ img.connect_avatar{
 	top: 43px;
 	height:115px;
 	width:300px;
-	z-index:200;
+	z-index:102;
 	padding-top: 10px;
 	border-top:3px solid #2e5c35;
 	border-bottom:2px solid #99B1CB;

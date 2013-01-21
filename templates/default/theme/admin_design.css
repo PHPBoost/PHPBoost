@@ -41,8 +41,9 @@ div#site_name {
 	max-width: 600px;
 	font-size: 40px;
     margin-top: 50px;
-    text-shadow: #e8edf3 1px 1px 20px;
     font-family:"Trebuchet MS";
+	text-shadow: -2px 0 #54687b, 0 2px #54687b, 2px 0 #54687b, 0 -2px #54687b;
+	color: #243c56;
 }
 
 div#header_admin { height:139px; }

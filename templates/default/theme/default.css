@@ -387,7 +387,7 @@ button.image{
 }
 
 /* Lightbox*/
-#lightbox{  position:absolute;  left:0; width:100%; z-index:102; text-align:center; line-height:0;}
+#lightbox{  position:absolute;  left:0; width:100%; z-index:103; text-align:center; line-height:0;}
 #lightbox img{ width:auto; height:auto;}
 #lightbox a img{ border:none; }
 
