@@ -20,23 +20,25 @@
 					</span>
 					<span style="float:right;">{PAGINATION}</span>
 				</div>
-				<div class="module_contents forum_contents">
-					<div class="row2 text_small">{L_EXPLAIN_TRACK}</div>
-					<table class="module_table forum_table">
-						<tr class="forum_text_column">			
-							<td>{L_TOPIC}</td>
-							<td style="width:100px;">{L_AUTHOR}</td>
-							<td style="width:120px;"></td>
-							<td style="width:40px;"><input type="checkbox" class="valign_middle" onclick="check_convers(this.checked, 'p');" /> {L_PM}</td>
-							<td style="width:50px;"><input type="checkbox" class="valign_middle" onclick="check_convers(this.checked, 'm');" /> {L_MAIL}</td>
-							<td style="width:85px;"><input type="checkbox" class="valign_middle" onclick="check_convers(this.checked, 'd');" /> {L_DELETE}</td>
-							<td style="width:150px;">{L_LAST_MESSAGE}</td>
-						</tr>
-					</table>
+				<div class="forum_position_subcat">
+					<div class="module_contents forum_contents forum_contents_subcat">
+						<div class="row2 text_small">{L_EXPLAIN_TRACK}</div>
+						<table class="module_table forum_table">
+							<tr class="forum_text_column">			
+								<td>{L_TOPIC}</td>
+								<td style="width:100px;">{L_AUTHOR}</td>
+								<td style="width:120px;"></td>
+								<td style="width:40px;"><input type="checkbox" class="valign_middle" onclick="check_convers(this.checked, 'p');" /> {L_PM}</td>
+								<td style="width:50px;"><input type="checkbox" class="valign_middle" onclick="check_convers(this.checked, 'm');" /> {L_MAIL}</td>
+								<td style="width:85px;"><input type="checkbox" class="valign_middle" onclick="check_convers(this.checked, 'd');" /> {L_DELETE}</td>
+								<td style="width:150px;">{L_LAST_MESSAGE}</td>
+							</tr>
+						</table>
+					</div>
 				</div>			
 			</div>	
-			<div class="module_position">
-				<div class="module_contents forum_contents">
+			<div class="module_position forum_position_subcat">
+				<div class="module_contents forum_contents forum_contents_subcat">
 					<table class="module_table forum_table">
 						# IF C_NO_TRACKED_TOPICS #
 						<tr>
@@ -91,6 +93,11 @@
 					</table>
 				</div>
 			</div>
+			<div class="module_position forum_position_subcat">
+				<div class="forum_position_subcat-bottom" style="border-top:none;">
+					<div style="text-align:right;padding:5px;">{PAGINATION}</div>
+				</div>
+			</div>
 			<div style="text-align:center;margin-top:10px;">
 				<input type="submit" name="valid" value="{L_SUBMIT}" class="submit" />
 			</div>
@@ -100,7 +107,6 @@
 			<div class="module_bottom_l"></div>		
 			<div class="module_bottom_r"></div>
 			<div class="module_bottom">
-				<span style="float:right;">{PAGINATION}</span>&nbsp;
 			</div>
 		</div>		
 		
