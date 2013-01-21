@@ -536,6 +536,7 @@ a.msg_link_pseudo:hover {
 
 .module_actions {
 	text-align: center;
+	margin-bottom: 20px;
 }
 
 .module_contents { /* Contenu des modules */
