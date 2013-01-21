@@ -116,39 +116,39 @@
 					# START topics #
 					<tr>
 						# IF C_MASS_MODO_CHECK #
-						<td class="forum_sous_cat" style="width:25px;text-align:center;">
+						<td class="forum_sous_cat forum_sous_cat_pbt" style="width:25px;text-align:center;">
 							<input type="checkbox" name="ck{topics.ID}" />
 						</td>
 						# ENDIF #
-						<td class="forum_sous_cat" style="width:25px;text-align:center;">
+						<td class="forum_sous_cat forum_sous_cat_pbt" style="width:25px;text-align:center;">
 							# IF NOT topics.C_HOT_TOPIC #
 							<img src="{PICTURES_DATA_PATH}/images/{topics.IMG_ANNOUNCE}.png" alt="" />
 							# ELSE #
 							<img src="{PICTURES_DATA_PATH}/images/{topics.IMG_ANNOUNCE}_hot.gif" alt="" />
 							# ENDIF #
 						</td>
-						<td class="forum_sous_cat" style="width:35px;text-align:center;">
+						<td class="forum_sous_cat forum_sous_cat_pbt" style="width:35px;text-align:center;">
 							# IF topics.C_DISPLAY_MSG # <img src="{PICTURES_DATA_PATH}/images/msg_display_mini.png" alt="" class="valign_middle" /> # ENDIF #
 							# IF topics.C_IMG_POLL # <img src="{PICTURES_DATA_PATH}/images/poll_mini.png" class="valign_middle" alt="" /> # ENDIF #
 							# IF topics.C_IMG_TRACK # <img src="{PICTURES_DATA_PATH}/images/track_mini.png" class="valign_middle" alt="" /> # ENDIF #
 						</td>
-						<td class="forum_sous_cat" style="min-width:115px;">
+						<td class="forum_sous_cat forum_sous_cat_pbt" style="min-width:115px;">
 							{topics.ANCRE} <strong>{topics.TYPE}</strong> <a href="topic{topics.U_TOPIC_VARS}">{topics.L_DISPLAY_MSG} {topics.TITLE}</a>
 							<br />
 							<span class="text_small">{topics.DESC}</span> &nbsp;<span class="pagin_forum">{topics.PAGINATION_TOPICS}</span>
 						</td>
-						<td class="forum_sous_cat_compteur" style="width:100px;">
+						<td class="forum_sous_cat_compteur forum_sous_cat_pbt" style="width:100px;">
 							<span class="text_small">Par </span>{topics.AUTHOR}
 						</td>
-						<td class="forum_sous_cat_compteur_nbr forum_sous_cat_compteur">
+						<td class="forum_sous_cat_compteur_nbr forum_sous_cat_compteur forum_sous_cat_pbt">
 							{topics.MSG}<BR />{topics.VUS}
 						</td>
-						<td class="forum_sous_cat_compteur_text forum_sous_cat_compteur">
+						<td class="forum_sous_cat_compteur_text forum_sous_cat_compteur forum_sous_cat_pbt">
 							{L_ANSWERS}
 							<BR />
 							{L_VIEW}
 						</td>
-						<td class="forum_sous_cat_last">
+						<td class="forum_sous_cat_last forum_sous_cat_pbt">
 							{topics.U_LAST_MSG}
 						</td>
 					</tr>
@@ -167,7 +167,15 @@
 		<div class="module_position forum_position_subcat">
 			<div class="forum_position_subcat-bottom"></div>
 		</div>
-		
+				
+		<div class="module_position">
+			<div class="module_bottom_l"></div>
+			<div class="module_bottom_r"></div>
+			<div class="module_bottom">
+				<span style="float:right;">{PAGINATION}</span>&nbsp;
+			</div>
+		</div>
+
 		# IF C_POST_NEW_SUBJECT #
 		<div class="module_position forum_position_cat">
 			<div class="pbt_button pbt_button_gray">
@@ -179,13 +187,5 @@
 		</div>
 		<div class="spacer"></div>
 		# ENDIF #
-		
-		<div class="module_position">
-			<div class="module_bottom_l"></div>
-			<div class="module_bottom_r"></div>
-			<div class="module_bottom">
-				<span style="float:right;">{PAGINATION}</span>&nbsp;
-			</div>
-		</div>
 
 		# INCLUDE forum_bottom #
