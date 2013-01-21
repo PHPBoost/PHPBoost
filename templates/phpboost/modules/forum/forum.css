@@ -71,7 +71,7 @@ a.forum_link_pseudo:hover {
 	color:#363636;
 }
 .forum_links a:hover{ /* Couleur des liens */
-	color:#CCCCCC;
+	color:#445766;
 	text-decoration:none;
 }
 
@@ -315,7 +315,7 @@ span.forum_nbr{
 .forum_title_search{
 	float:right;
 	text-align:right;
-	margin:0px 10px 0px 0px;
+	margin:3px 10px 0px 0px;
 }
 
 .forum_breadcrumb_topic{
@@ -343,4 +343,8 @@ span.forum_nbr{
 
 a.pbt_button_add{
 	width:auto;	
+}
+
+.forum_sous_cat_pbt{
+	border-bottom: 1px solid #e0e6e9;
 }

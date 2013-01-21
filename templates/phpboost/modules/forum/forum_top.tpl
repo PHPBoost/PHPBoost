@@ -79,18 +79,7 @@
 		}
 		-->
 		</script>
-								
-		# IF C_MODERATION_PANEL #
-			<div class="forum_moderation_link" >
-				# IF C_FORUM_CONNEXION # <span style="color:#000000;">&bull;</span> # ENDIF #
-				<a class="small_link" href="{PATH_TO_ROOT}/forum/moderation_forum.php">
-					<img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/modo_mini.png" class="valign_middle" alt="" /> 
-					{L_MODERATION_PANEL}
-				</a>
-			</div>	
-			<div class="spacer"></div>
-		# ENDIF #
-			
+											
 		<div class="module_position forum_position_title" >
 			<div class="forum_title_l"></div>
 			<div class="forum_title_r"></div>
@@ -110,7 +99,7 @@
 				</div>
 				
 				<h2>{FORUM_NAME}</h2>
-				<div style="margin-top:4px;">
+				<div>
 				# IF C_FORUM_CONNEXION #
 					# IF C_USER_NOTCONNECTED #
 						<a class="small_link" href="${relative_url(UserUrlBuilder::connect())}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/connect_mini.png" alt="" class="valign_middle" /> {L_CONNECT}</a> <span style="color:#000000;">&bull;</span> <a class="small_link" href="${relative_url(UserUrlBuilder::registration())}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/register_mini.png" alt="" class="valign_middle" /> {L_REGISTER}</a>
@@ -120,6 +109,16 @@
 					# ENDIF # 						
 				# ENDIF #
 				</div>
+			# IF C_MODERATION_PANEL #
+			
+				# IF C_FORUM_CONNEXION # <span style="color:#000000;">&bull;</span> # ENDIF #
+				<a class="small_link" href="{PATH_TO_ROOT}/forum/moderation_forum.php">
+					<img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/modo_mini.png" class="valign_middle" alt="" /> 
+					{L_MODERATION_PANEL}
+				</a>
+			
+			<div class="spacer"></div>
+		# ENDIF #
 			</div>
 			
 		<div class="forum_links forum_links_top">

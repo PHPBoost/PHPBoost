@@ -277,10 +277,14 @@
 								<a href="{PATH_TO_ROOT}/wiki/utilisateur-courant">Utilisateur courant</a>
 								<span class="pbt_desc"> - Obtenir des renseignements et son niveau d'autorisation sur l'utilisateur courant</span>
 							</li>
+							<li class="bb_li" >
+								<a href="{PATH_TO_ROOT}/wiki/developper-avec-phpboost">
+									<span class="pbt_desc" style="font-style:normal;">[+ d'articles]</span>
+								</a>
+							</li>
 						</ul>
 						<div class="spacer"></div>
 					</div>
-				
 				</div>	
 	
 				<hr style="margin:5px 0px 25px 0px;" />
