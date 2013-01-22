@@ -25,11 +25,9 @@
 *
  ###################################################*/
 
-//Name of the distribution (localized)
-define('DISTRIBUTION_NAME', 'Full pack');
-
-//Description of the distribution (localized)
-define('DISTRIBUTION_DESCRIPTION', '<img src="distribution/publication.png" alt="" style="float:right;padding-right:35px"/>
-<p>You are going to install the <strong>full pack</strong> distribution of PHPBoost.</p>
-<p>This distribution contains all the official modules developed by the PHPBoost team. It will enable you to make many different things thanks to the large number of modules.</p>');
+$lang = array(
+	'distribution.name' => 'Full pack',
+	'distribution.description' => '<p>You are going to install the <strong>full pack</strong> distribution of PHPBoost.</p>
+<p>This distribution contains all the official modules developed by the PHPBoost team. It will enable you to make many different things thanks to the large number of modules.</p>'
+);
 ?>

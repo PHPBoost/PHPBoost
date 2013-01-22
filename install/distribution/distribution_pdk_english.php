@@ -25,10 +25,9 @@
 *
  ###################################################*/
 
-//Name of the distribution (localized)
-define('DISTRIBUTION_NAME', 'PDK');
-
-//Description of the distribution (localized)
-define('DISTRIBUTION_DESCRIPTION', '<p>You are going to install the <strong><acronym title="PHPBoost Development Kit">PDK</acronym></strong> distribution of PHPBoost.</p>
-<p>This distribution fits very well to developers who want to create and integrate a module in PHPBoost. It contains tools enabling you to manage the database and the PHPBoost framework documentation.</p>');
+$lang = array(
+	'distribution.name' => 'PDK',
+	'distribution.description' => '<p>You are going to install the <strong><acronym title="PHPBoost Development Kit">PDK</acronym></strong> distribution of PHPBoost.</p>
+<p>This distribution fits very well to developers who want to create and integrate a module in PHPBoost. It contains tools enabling you to manage the database and the PHPBoost framework documentation.</p>'
+);
 ?>
