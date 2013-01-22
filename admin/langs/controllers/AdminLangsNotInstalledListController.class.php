@@ -186,7 +186,7 @@ class AdminLangsNotInstalledListController extends AdminController
 							$this->view->put('MSG', MessageHelper::display($this->lang['langs.upload.invalid_format'], MessageHelper::NOTICE, 4));
 						}
 						
-						LangManager::install($file->get_name_without_extension());
+						LangManager::install($file->get_name_without_extension(), array('r-1' => 1, 'r0' => 1, 'r1' => 1));
 						AppContext::get_response()->redirect(AdminLangsUrlBuilder::list_installed_langs());
 					}
 				}
