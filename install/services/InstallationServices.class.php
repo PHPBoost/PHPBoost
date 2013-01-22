@@ -198,7 +198,10 @@ class InstallationServices
 
 	private function init_debug_mode()
 	{
-		Debug::enabled_debug_mode();
+		if ($this->distribution_config['debug'])
+		{
+			Debug::enabled_debug_mode();
+		}
 	}
 
 	private function init_user_accounts_config($locale)
