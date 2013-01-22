@@ -37,7 +37,7 @@
 			Vous trouverez sur cette page :
 			<br /><br />
 			<ul class="bb_ul">
-				<li class="bb_li">La dernière version stable : PHPBoost 4.0 Sirocco et 4.0 Sirocco PDK (Version destinée aux developpeurs)</li>
+				<li class="bb_li">La dernière version stable : PHPBoost 4.0 Sirocco et 4.0 Sirocco PDK (Version destinée aux développeurs)</li>
 				<li class="bb_li">PHPBoost 3.0 Tornade</li>
 				<li class="bb_li">Mise à jour des versions 3.0 et 4.0</li>
 				<li class="bb_li">Migration de PHPBoost 3.0 à PHPBoost 4.0</li>
@@ -58,7 +58,7 @@
 							<a href="{PATH_TO_ROOT}/download/file-229+phpboost-4-0.php" class="pbt_button_a">
 								<img src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/img_phpboost.png" alt="" class="valign_middle pbt_custom_img left"/>
 								<p class="pbt_button_title">Télécharger PHPBoost 4.0</p>
-								<p class="pbt_button_com">Rev : 4.0.1 | Req : PHP 5.1.2 | .zip </p>
+								<p class="pbt_button_com">Rev : 4.0.0 | Req : PHP 5.1.2 | .zip </p>
 							</a>
 						</div>
 						<div class="pbt_button pbt_button_green">
@@ -242,7 +242,7 @@
 				<div class="spacer">&nbsp;</div>
 				
 				# START file #
-					<div class="block_container" style="margin-bottom:20px;">
+					<div class="block_container" style="margin-bottom:20px;vertical-align:top;">
 						<div class="block_contents">
 							# IF file.C_IMG #
 								<div class="float_right">
@@ -319,7 +319,7 @@
 		<div class="module_contents">
 			<table>
 				<tr>
-					<td style="text-align:center;padding-right:20px;">
+					<td style="text-align:center;padding-right:20px;vertical-align:top;">
 						# IF C_IMG #
 							<img src="{U_IMG}" alt="{IMAGE_ALT}" />
 							<br /><br />

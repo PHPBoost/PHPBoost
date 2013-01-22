@@ -44,47 +44,8 @@ class MenusKernelUpdateVersion extends KernelUpdateVersion
 	
 	private function update_menus()
 	{
-		try {
-			$old_menu = $this->querier->select_single_row(PREFIX .'menus', array('*'), 'WHERE title=:title', array('title' => 'themeswitcher/themeswitcher'));
-			$this->querier->delete(PREFIX .'menus', 'WHERE id=:id', array('id' => $old_menu['id']));
-			
-			ModulesManager::install_module('ThemesSwitcher', true, false);
-		
-			$menu = $this->querier->select_single_row(PREFIX .'menus', array('*'), 'WHERE title=:title', array('title' => 'ThemesSwitcherModuleMiniMenu'));
-			$object = unserialize($menu['object']);
-			$object->enabled((bool)$old_menu['enabled']);
-			$object->set_block($old_menu['block']);
-			$object->set_block_position($old_menu['position']);
-			
-			$this->querier->update(PREFIX .'menus', array(
-				'object' => serialize($object), 
-				'block' => $old_menu['block'], 
-				'position' => $old_menu['position']
-			), 'WHERE id=:id', array('id' => $menu['id']));
-		} catch (RowNotFoundException $e) {
-			
-		}
-
-		try {
-			$old_menu = $this->querier->select_single_row(PREFIX .'menus', array('*'), 'WHERE class=:class', array('class' => 'langswitcher/langswitcher'));
-			$this->querier->delete(PREFIX .'menus', 'WHERE id=:id', array('id' => $old_menu['id']));
-			
-			ModulesManager::install_module('LangsSwitcher', true, false);
-		
-			$menu = $this->querier->select_single_row(PREFIX .'menus', array('*'), 'WHERE class=:class', array('class' => 'LangsSwitcherModuleMiniMenu'));
-			$object = unserialize($menu['object']);
-			$object->enabled((bool)$old_menu['enabled']);
-			$object->set_block($old_menu['block']);
-			$object->set_block_position($old_menu['position']);
-			
-			$this->querier->update(PREFIX .'menus', array(
-				'object' => serialize($object), 
-				'block' => $old_menu['block'], 
-				'position' => $old_menu['position']
-			), 'WHERE id=:id', array('id' => $menu['id']));
-		} catch (RowNotFoundException $e) {
-			
-		}	
+		$this->querier->delete(PREFIX .'menus', 'WHERE title=:title', array('title' => 'themeswitcher/themeswitcher'));
+		$this->querier->delete(PREFIX .'menus', 'WHERE class=:class', array('class' => 'langswitcher/langswitcher'));
 	}
 	
 	private function update_mini_module()

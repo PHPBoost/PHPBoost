@@ -98,7 +98,7 @@ class ShoutboxHomePageExtensionPoint implements HomePageExtensionPoint
 		$formatter = AppContext::get_content_formatting_service()->create_factory();
 		$formatter->set_forbidden_tags($shoutbox_config->get_forbidden_formatting_tags());
 		
-		$form = new HTMLForm('shoutboxForm', 'shoutbox.php?add=1&amp;token=' . $Session->get_token());
+		$form = new HTMLForm('shoutboxform', 'shoutbox.php?add=1&amp;token=' . $Session->get_token());
 		$fieldset = new FormFieldsetHTML('add_msg', $LANG['add_msg']);
 		if (!$User->check_level(User::MEMBER_LEVEL)) //Visiteur
 		{
