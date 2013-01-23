@@ -39,7 +39,7 @@ class ContentSecondParser extends AbstractParser
 	/**
 	 * Maximal number of characters that can be inserted in the [code] tag. After that, GeSHi has many difficulties to highligth and has the PHP execution stop (error 500).
 	 */
-	const MAX_CODE_LENGTH = 10000;
+	const MAX_CODE_LENGTH = 40000;
 	/**
 	 * @desc Builds a ContentSecondParser object
 	 */
@@ -191,7 +191,7 @@ class ContentSecondParser extends AbstractParser
 		
 		if (strlen($content_to_highlight) > self::MAX_CODE_LENGTH)
 		{
-			return '<div class="error">' . LangLoader::get_message('code_too_long_error', 'editor-common') . '</div><pre>' . $content_to_highlight . '</pre>';
+			return '<div class="error">' . LangLoader::get_message('code_too_long_error', 'editor-common') . '</div>';
 		
 		}
 
