@@ -134,7 +134,7 @@ elseif ($cat_of_new_question >= 0 && $new)
 }
 elseif ($id_move > 0)
 {
-	$faq_cats = new Faqcats();
+	$faq_cats = new FaqCats();
 	
 	$Template->assign_block_vars('move_question', array(
 		'CATEGORIES_TREE' => $faq_cats->build_select_form(0, 'target', 'target', 0, AUTH_WRITE, $faq_config->get_authorizations(), IGNORE_AND_CONTINUE_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH),
