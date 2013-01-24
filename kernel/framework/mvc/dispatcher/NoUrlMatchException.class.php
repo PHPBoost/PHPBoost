@@ -37,5 +37,4 @@ class NoUrlMatchException extends DispatcherException
 		parent::__construct('No pattern matching this url "' . $url . '" in the dispatcher\'s list');
 	}
 }
-
 ?>
