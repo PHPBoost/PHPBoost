@@ -169,6 +169,19 @@ class DBQuerier implements SQLQuerier
 		}
 		return $result;
 	}
+	
+	/**
+	 * @desc Returns true if a or multiple rows match the given condition.
+	 * @param string $table_name the name of the table on which work will be done
+	 * @param string $condition the condition beginning just after the where clause.
+	 * For example, <code>"WHERE length > 50 and weight < 100"</code>
+	 * @param string[string] $parameters the query_var map
+	 * @return bool true if a or multiple rows match the given condition.
+	 */
+	public function row_exists($table_name, $condition, array $parameters = array())
+	{
+		return $this->count($table_name, $condition, $parameters) > 0;
+	}
 
 	/**
 	 * @desc retrieve a single value of the <code>$column</code> column of a single row from the
