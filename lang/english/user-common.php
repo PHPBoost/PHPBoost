@@ -32,6 +32,7 @@
 $lang['user'] = 'User';
 $lang['users'] = 'Users';
 $lang['profile'] = 'Profile';
+$lang['profile_of'] = 'Profile of :name';
 $lang['profile.edit'] = 'Edit profile';
 $lang['messages'] = 'User messages';
 $lang['maintain'] = 'Maintain';
