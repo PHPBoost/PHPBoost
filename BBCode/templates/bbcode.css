@@ -1,7 +1,6 @@
 /** BBcode **/
 /* Tableau du bbcode */
 .bbcode, .bbcode2{
-	text-align: center;
 	background:#336397;
 	border:1px solid #BEBEBE;
 	border-collapse:collapse;
@@ -9,6 +8,7 @@
 	height:32px;
 	color:#FFFFFF;
 	font-size:12px;
+	width: 491px;
 }
 
 .bbcode td, .bbcode2 td{
