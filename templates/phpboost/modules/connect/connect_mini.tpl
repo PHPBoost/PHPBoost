@@ -20,7 +20,7 @@
 
 	<div class="connect_align">
 		<ul>
-			<li class="submenu connect">{L_CONNECT}
+			<li class="submenu connect"><a href='/user/?url=/connect'>{L_CONNECT}</a>
 				<ul>
 					<form action="{U_CONNECT}" method="post" onsubmit="return check_connect();" class="connect_align">
 						<input type="text" id="login" name="login" value="{L_PSEUDO}" class="connect_form" onfocus="if( this.value == '{L_PSEUDO}' ) this.value = '';" maxlength="25" />
@@ -48,9 +48,9 @@
 	
 		<ul>
 			# IF U_ALERT #	
-				<li class="submenu submenu_alert">{L_MY_PROFIL}  <span style="font-size:10px;vertical-align:top;">({NUMBER_TOTAL_ALERT})</span> 
+				<li class="submenu submenu_alert"><a href='{U_HOME_PROFILE}'>{L_MY_PROFIL}</a><span style="font-size:10px;vertical-align:top;">({NUMBER_TOTAL_ALERT})</span> 
 			# ELSE #
-				<li class="submenu">{L_MY_PROFIL}
+				<li class="submenu"><a href='{U_HOME_PROFILE}'>{L_MY_PROFIL}</a>
 			# ENDIF #
 				<ul>
 					<img src="{U_AVATAR_IMG}" alt="avatar" title="Avatar" width="90px" class="connect_avatar"/>
