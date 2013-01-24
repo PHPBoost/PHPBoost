@@ -29,7 +29,7 @@
 			<div class="pbt_entete">
 				<img class="pbt_entete_img" src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/logo.png" alt="" />
 				<div class="pbt_content">
-					<p class="pbt_title">PHPBOOST</p>
+					<p class="pbt_title">Télécharger PHPBoost</p>
 					<span class="pbt_desc">Bienvenue sur la page de téléchargement de PHPBoost.</span>
 				</div>
 			</div>

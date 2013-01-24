@@ -89,6 +89,9 @@
 			{MENUS_FOOTER_CONTENT}
 			# ENDIF #
 			<span>
+				<a href="{PATH_TO_ROOT}/sitemap/">Plan du site</a> |
+			</span>
+			<span>
 				{L_POWERED_BY} <a href="http://www.phpboost.com" title="PHPBoost">PHPBoost {PHPBOOST_VERSION}</a> {L_PHPBOOST_RIGHT}
 			</span>	
 			# IF C_DISPLAY_BENCH #
