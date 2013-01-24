@@ -40,3 +40,19 @@ syntax: regexp
 ^templates/bluedream$
 syntax: regexp
 ^HomeCustom$
+syntax: regexp
+^templates/around_the_world$
+syntax: regexp
+^templates/Cameleon$
+syntax: regexp
+^templates/Hiver$
+syntax: regexp
+^templates/steel_blue$
+syntax: regexp
+^templates/Summerday$
+syntax: regexp
+^templates/Enigma$
+syntax: regexp
+^templates/CrazyRider$
+syntax: regexp
+^templates/test$
