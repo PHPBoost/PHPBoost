@@ -111,6 +111,8 @@
 								</td>
 							</tr>
 							# END cat #
+						</td>
+					</tr>
 				</table>
 				
 				<br /><br />

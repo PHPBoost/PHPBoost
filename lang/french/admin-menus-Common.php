@@ -35,5 +35,4 @@ $lang = array(
     'links_menus_filters_explain' => "Les filtres permettent de définir sur quelles pages doit apparaitre ce menu.
 		Ils peuvent être définis sur un module complet, ou des pages de ce module. A noter que par défaut le menu est visible partout"
 );
-
 ?>

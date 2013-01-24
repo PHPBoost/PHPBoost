@@ -3,8 +3,8 @@
  *                          FormFieldAjaxCompleter.class.php
  *                            -------------------
  *   begin                : January 9, 2010
- *   copyright            : (C) 2010 Kévin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   copyright            : (C) 2010 Kevin MASSY
+ *   email                : kevin.massy@phpboost.com
  *
  ###################################################
  *
@@ -25,7 +25,7 @@
  ###################################################*/
 
 /**
- * @author Kévin MASSY <soldier.weasel@gmail.com>
+ * @author Kevin MASSY <kevin.massy@phpboost.com>
  * @desc This class represents a ajax completer field
  * @package {@package}
  */
@@ -35,10 +35,10 @@ class FormFieldAjaxCompleter extends FormFieldTextEditor
     private $maxlength = 255;
 	private $method = 'post';
 	private $file;
-	private $name_parameter = 'name';
+	private $name_parameter = 'value';
 	private static $tpl_src = '<input type="text" size="{SIZE}" maxlength="{MAX_LENGTH}" name="${escape(NAME)}" id="${escape(ID)}" value="${escape(VALUE)}"
 	class="${escape(CLASS)}" # IF C_DISABLED # disabled="disabled" # ENDIF # autocomplete="off" /><div id="${escape(ID)}_completer" class="form_autocompleter"></div>
-	<script type="text/javascript">new Ajax.Autocompleter(${escapejs(ID)}, "${escape(ID)}_completer", ${escapejs(FILE)}, { method: ${escapejs(METHOD)}, paramName: ${escapejs(NAME_PARAMETER)} : HTMLForms.getField(${escape(ID)})});</script>';	
+	<script type="text/javascript">new Ajax.Autocompleter(${escapejs(ID)}, "${escape(ID)}_completer", ${escapejs(FILE)}, { method: ${escapejs(METHOD)}, paramName: ${escapejs(NAME_PARAMETER)}});</script>';	
 
 	
     /**

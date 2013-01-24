@@ -112,20 +112,20 @@ class Feed
 			$tpl = clone $template;
 		}
 
-		global $MODULES;
-		if (AppContext::get_current_user()->check_auth($MODULES[$this->module_id]['auth'], ACCESS_MODULE))
+		if (ModulesManager::get_module($this->module_id)->check_auth())
 		{
 			if (!empty($this->data))
 			{
-				$desc = FormatingHelper::second_parse($this->data->get_desc());
+				$desc = TextHelper::htmlspecialchars($this->data->get_desc());
 				$tpl->put_all(array(
                     'DATE' => $this->data->get_date(),
                     'DATE_RFC822' => $this->data->get_date_rfc822(),
                     'DATE_RFC3339' => $this->data->get_date_rfc3339(),
+					'DATE_TEXT' => $this->data->get_date_text(),
                     'TITLE' => $this->data->get_title(),
                     'U_LINK' => $this->data->get_link(),
                     'HOST' => $this->data->get_host(),
-                    'DESC' => htmlspecialchars(ContentSecondParser::export_html_text($desc)),
+                    'DESC' => ContentSecondParser::export_html_text($desc),
                     'RAW_DESC' => $desc,
                     'LANG' => $this->data->get_lang()
 				));
@@ -133,16 +133,17 @@ class Feed
 				$items = $this->data->subitems($number, $begin_at);
 				foreach ($items as $item)
 				{
-					$desc = FormatingHelper::second_parse($item->get_desc());
+					$desc = TextHelper::htmlspecialchars($item->get_desc());
 					$tpl->assign_block_vars('item', array(
                         'TITLE' => $item->get_title(),
                         'U_LINK' => $item->get_link(),
                         'U_GUID' => $item->get_guid(),
-                        'DESC' => htmlspecialchars(ContentSecondParser::export_html_text($desc)),
+                        'DESC' => ContentSecondParser::export_html_text($desc),
                         'RAW_DESC' => $desc,
                         'DATE' => $item->get_date(),
                         'DATE_RFC822' => $item->get_date_rfc822(),
                         'DATE_RFC3339' => $item->get_date_rfc3339(),
+						'DATE_TEXT' => $item->get_date_text(),
                         'C_IMG' => ($item->get_image_url() != '') ? true : false,
                         'U_IMG' => $item->get_image_url()
 					));

@@ -31,6 +31,7 @@
  */
 class User
 {
+	const VISITOR_LEVEL = -1;
 	const MEMBER_LEVEL = 0;
 	const MODERATOR_LEVEL = 1;
 	const ADMIN_LEVEL = 2;
@@ -217,6 +218,30 @@ class User
 	public function get_editor()
 	{
 		return $this->editor;
+	}
+	
+	public static function get_group_color($user_groups, $level = 0, $is_array = false)
+	{
+		if (!$is_array)
+			$user_groups = explode('|', $user_groups);
+			
+		array_pop($user_groups); //Supprime l'élément vide en fin de tableau.
+		$i = 0;
+
+		$groups_cache = GroupsCache::load();
+
+		foreach ($user_groups as $idgroup) //Récupération du premier groupe.
+		{
+			if ($i++ == 0)
+			{
+				if ($groups_cache->group_exists($idgroup))
+				{
+					$group = $groups_cache->get_group($idgroup);
+					return (!empty($group['color']) && $level == 0) ? '#' . $group['color'] : '';
+				}
+				return '';
+			}
+		}
 	}
 }
 ?>

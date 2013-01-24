@@ -3,6 +3,11 @@
 			var path = '{PICTURES_DATA_PATH}';
 			var selected_cat = {SELECTED_CAT};
 			function check_form_post(){
+				
+				# IF C_BBCODE_TINYMCE_MODE #
+				tinyMCE.triggerSave();
+				# ENDIF #
+				
 				if(document.getElementById('title').value == "") {
 					alert("{L_ALERT_TITLE}");
 					return false;
@@ -15,7 +20,6 @@
 			}
 		-->
 		</script>
-		<script type="text/javascript" src="{PICTURES_DATA_PATH}/images/templates/wiki.js"></script>
 
 		# START preview #
 		<div class="module_position">					
@@ -42,10 +46,11 @@
 		
 		<form action="{TARGET}" method="post" onsubmit="return check_form_post();" class="fieldset_content">					
 			<fieldset>
+				<p>{L_REQUIRE}</p>
 				<legend>{TITLE}</legend>
 				# START create #
 				<dl>
-					<dt><label for="title">{L_TITLE_FIELD}</label></dt>
+					<dt><label for="title">* {L_TITLE_FIELD}</label></dt>
 					<dd><label><input type="text" class="text" id="title" name="title" size="70" maxlength="250" value="{ARTICLE_TITLE}" /></label></dd>					
 				</dl>
 				<dl>
@@ -70,7 +75,7 @@
 				</dl>
 				# END create #	
 				<br />
-				<label for="contents">{L_CONTENTS}</label>
+				<label for="contents">* {L_CONTENTS}</label>
 				# INCLUDE post_js_tools #
 				{KERNEL_EDITOR}
 				<label><textarea rows="25" cols="66" id="contents" name="contents">{CONTENTS}</textarea></label>

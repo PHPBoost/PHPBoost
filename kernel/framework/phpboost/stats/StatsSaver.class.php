@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-include_once(PATH_TO_ROOT . '/lang/' . UserAccountsConfig::load()->get_default_lang() . '/stats.php');
+include_once(PATH_TO_ROOT . '/lang/' . get_ulang() . '/stats.php');
 
 /**
  * @author Viarre Régis crowkait@phpboost.com
@@ -159,6 +159,7 @@ class StatsSaver
 		
 		########### Détection des systèmes d'exploitation ###########
 		$array_os = array(
+			'windows nt 6.2' => 'windows8',
 			'windows nt 6.1|seven' => 'windowsseven',
 			'windows nt 6.0|vista' => 'windowsvista',
 			'windows nt 5.1|windows xp' => 'windowsxp',
@@ -279,7 +280,7 @@ class StatsSaver
 		);
 		
 		//Ip de l'utilisateur au format numérique.
-		$user_ip = !empty($user_ip) ? $user_ip : USER_IP;
+		$user_ip = !empty($user_ip) ? $user_ip : AppContext::get_request()->get_ip_address();
 		$user_ip = ip2long($user_ip);
 
 		//On explore le tableau pour identifier les robots
@@ -314,7 +315,7 @@ class StatsSaver
 	 */
 	public static function retrieve_stats($file_path)
 	{
-		$file = @fopen(PATH_TO_ROOT . '/cache/' . $file_path . '.txt', 'r');
+		$file = @fopen(PATH_TO_ROOT . '/stats/cache/' . $file_path . '.txt', 'r');
 		$stats_array = @fgets($file);
 		$stats_array = !empty($stats_array) ? unserialize($stats_array) : array();
 		@fclose($file);
@@ -327,7 +328,7 @@ class StatsSaver
 	 */
 	private static function write_stats($file_path, $stats_item)
 	{
-		$file_path = PATH_TO_ROOT . '/cache/' . $file_path . '.txt';
+		$file_path = PATH_TO_ROOT . '/stats/cache/' . $file_path . '.txt';
 		if (!file_exists($file_path)) 
 		{
 			$file = @fopen($file_path, 'w+');
@@ -349,5 +350,4 @@ class StatsSaver
 		}
 	}
 }
-
 ?>

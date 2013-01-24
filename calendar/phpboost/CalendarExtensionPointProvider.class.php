@@ -32,14 +32,23 @@ class CalendarExtensionPointProvider extends ExtensionPointProvider
         parent::__construct('calendar');
     }
     
-    public function comments()
+	public function home_page()
+	{
+		return new CalendarHomePageExtensionPoint();
+	}
+	
+	public function comments()
     {
-    	return new CalendarComments();
+    	return new CommentsTopics(array(
+			new CalendarCommentsTopic()
+		));
     }
-    
+	
 	public function css_files()
 	{
-		return new CalendarCssFilesExtensionPoint();
+		$module_css_files = new ModuleCssFiles();
+		$module_css_files->adding_running_module_displayed_file('calendar.css');
+		return $module_css_files;
 	}
 }
 ?>

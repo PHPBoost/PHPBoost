@@ -96,7 +96,7 @@ class ForumFeedProvider implements FeedProvider
                     );
             $item->set_title(
                 (($CONFIG_FORUM['activ_display_msg'] && !empty($row['display_msg'])) ?
-                html_entity_decode($CONFIG_FORUM['display_msg'], ENT_NOQUOTES) . ' ' : '') .
+                TextHelper::html_entity_decode($CONFIG_FORUM['display_msg'], ENT_NOQUOTES) . ' ' : '') .
                 ucfirst($row['title'])
             );
             $item->set_link($link);

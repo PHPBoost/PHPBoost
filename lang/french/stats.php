@@ -61,29 +61,6 @@ $LANG['top_10_posters'] = 'Top 10 : posteurs';
 $LANG['version'] = 'Version';
 $LANG['colors'] = 'Couleurs';
 
-//Calendrier
-$LANG['calendar'] = 'Calendrier';
-$LANG['events'] = 'Evènements';
-$LANG['january'] = 'Janvier';
-$LANG['february'] = 'Février';
-$LANG['march'] = 'Mars';
-$LANG['april'] = 'Avril';
-$LANG['may'] = 'Mai';
-$LANG['june'] = 'Juin';
-$LANG['july'] = 'Juillet';
-$LANG['august'] = 'Août';
-$LANG['september'] = 'Septembre';
-$LANG['october'] = 'Octobre';
-$LANG['november'] = 'Novembre';
-$LANG['december'] = 'Décembre';
-$LANG['monday'] = 'Lun';
-$LANG['tuesday'] = 'Mar';
-$LANG['wenesday'] = 'Mer';
-$LANG['thursday'] = 'Jeu';
-$LANG['friday'] = 'Ven';
-$LANG['saturday'] = 'Sam';
-$LANG['sunday']	= 'Dim';
-
 //Sites référents.
 $LANG['total_visit'] = 'Total des visites';
 $LANG['average_visit'] = 'Visites moyennes';
@@ -126,6 +103,7 @@ $stats_array_browsers = array(
 //Système d'exploitation.
 $stats_array_os = array(
 	'linux' => array('Linux', 'linux.png'),
+	'windows8' => array('Windows 8', 'windows8.png'),
 	'windowsseven' => array('Windows Seven', 'windowsseven.png'),
 	'windowsvista' => array('Windows Vista', 'windowsvista.png'),
 	'windowsserver2003' => array('Windows Serveur 2003', 'windowsxp.png'),
@@ -406,5 +384,4 @@ $stats_array_lang = array(
 	'ws' => array('Western Samoa', 'ws.png'),
 	'other' => array('Autres', '../other.png')
 );
-
 ?>

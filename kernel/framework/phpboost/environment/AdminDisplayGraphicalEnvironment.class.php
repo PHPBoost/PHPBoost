@@ -185,8 +185,6 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 		$header_tpl = new FileTemplate('admin/admin_header.tpl');
 		$header_tpl->add_lang(self::$lang);
 
-		$include_tinymce_js = AppContext::get_current_user()->get_editor() == 'tinymce';
-
 		$theme = ThemeManager::get_theme(get_utheme());
 		$customize_interface = $theme->get_customize_interface();
 		$header_logo_path = $customize_interface->get_header_logo_path();
@@ -194,8 +192,8 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 		$customization_config = CustomizationConfig::load();
 		
 		$header_tpl->put_all(array(
-			'C_BBCODE_TINYMCE_MODE' => $include_tinymce_js,
 			'C_FAVICON' => $customization_config->favicon_exists(),
+			'C_CSS_CACHE_ENABLED' => CSSCacheConfig::load()->is_enabled(),
 			'FAVICON' => Url::to_rel($customization_config->get_favicon_path()),
 			'FAVICON_TYPE' => $customization_config->favicon_type(),
 			'C_HEADER_LOGO' => !empty($header_logo_path),
@@ -203,7 +201,6 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 			'SITE_NAME' => GeneralConfig::load()->get_site_name(),
 			'TITLE' => $this->get_page_title(),
 			'PATH_TO_ROOT' => TPL_PATH_TO_ROOT,
-			'THEME_CSS' => $this->get_theme_css_files_html_code(),
 			'MODULES_CSS' => $this->get_modules_css_files_html_code(),
 			'L_XML_LANGUAGE' => self::$lang['xml_lang'],
 			'L_EXTEND_MENU' => self::$lang_admin['extend_menu'],
@@ -243,19 +240,15 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 			'L_SYNDICATION_CACHE' => $subheader_lang['tools.cache.syndication'],
 			'L_CSS_CACHE_CONFIG' => $subheader_lang['tools.cache.css'],
 			'L_ERRORS' => $subheader_lang['tools.errors-archived'],
+			'L_404_ERRORS' => $subheader_lang['tools.404-errors-archived'],
 			'L_SERVER' => $subheader_lang['tools.server'],
 			'L_PHPINFO' => $subheader_lang['tools.server.phpinfo'],
 			'L_SYSTEM_REPORT' => $subheader_lang['tools.server.system-report'],
-			'L_CUSTOMIZATION' => $subheader_lang['tools.personalization'],
-			'L_CUSTOMIZE_INTERFACE' => $subheader_lang['tools.personalization.interface'],
-			'L_CUSTOMIZE_FAVICON' => $subheader_lang['tools.personalization.favicon'],
-			'L_CUSTOMIZE_CSS_FILES' => $subheader_lang['tools.personalization.css-files'],
 			'L_USER' => $subheader_lang['users'],
 			'L_PUNISHEMENT' => $subheader_lang['users.punishement'],
 			'L_GROUP' => $subheader_lang['users.groups'],
 			'L_EXTEND_FIELD' => $subheader_lang['users.extended-fields'],
 			'L_RANKS' => $subheader_lang['users.ranks'],
-			'L_TERMS' => $subheader_lang['users.rules'],
 			'L_CONTENT' => $subheader_lang['content'],
 			'L_CONTENT_CONFIG' => $subheader_lang['content'],
 			'L_MENUS' => $subheader_lang['content.menus'],
@@ -344,13 +337,17 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 				}
 				else
 				{
-					$subheader_tpl->assign_block_vars('admin_links_' . $menu_pos, array(
+					$admin_main_page = $configuration->get_admin_main_page();
+					if (!empty($admin_main_page))
+					{
+						$subheader_tpl->assign_block_vars('admin_links_' . $menu_pos, array(
 							'C_ADMIN_LINKS_EXTEND' => false,
 							'IDMENU' => $menu_pos,
 							'NAME' => $configuration->get_name(),
 							'U_ADMIN_MODULE' => TPL_PATH_TO_ROOT . '/' . $module_id . '/' . $configuration->get_admin_main_page(),
 							'IMG' => TPL_PATH_TO_ROOT . '/' . $module_id . '/' . $module_id . '_mini.png'
-							));
+						));
+					}
 				}
 			}
 		}

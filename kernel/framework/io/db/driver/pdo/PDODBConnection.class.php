@@ -83,5 +83,4 @@ class PDODBConnection implements DBConnection
 		$this->pdo->rollBack();
 	}
 }
-
 ?>

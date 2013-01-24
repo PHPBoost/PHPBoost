@@ -64,11 +64,6 @@ class UserAccountsConfig extends AbstractConfigData
 	 * which hasn't been activated will be automatically removed.
 	 */
 	const UNACTIVATED_ACCOUNTS_TIMEOUT_PROPERTY = 'unactivated_accounts_timeout';
-	/**
-	 * Name of the property indicating if the users can choose their theme (value is false)
-	 * or if the have to use the site default one (value is true).
-	 */
-	const FORCE_USERS_THEME_PROPERTY = 'force_users_theme';
 
 	/**
 	 * Name of the property indicating if users can upload on the server their avatar
@@ -138,10 +133,6 @@ class UserAccountsConfig extends AbstractConfigData
 	 */
 	public function set_member_accounts_validation_method($method)
 	{
-		if ($method > 2 || $method < 0)
-		{
-			$method = 0;
-		}
 		$this->set_property(self::MEMBER_ACCOUNTS_VALIDATION_METHOD_PROPERTY, $method);
 	}
 
@@ -270,40 +261,6 @@ class UserAccountsConfig extends AbstractConfigData
 			$level = 2;
 		}
 		$this->set_property(self::REGISTRATION_CAPTCHA_DIFFICULTY_PROPERTY, $level);
-	}
-
-	/**
-	 * Tells whether users theme is forced or if they can choose
-	 * @return bool true if they cannot choose, false if they can
-	 */
-	public function is_users_theme_forced()
-	{
-		return $this->get_property(self::FORCE_USERS_THEME_PROPERTY);
-	}
-
-	/**
-	 * Sets the boolean indicating if the theme is forced
-	 * @param true $enabled true if enabled, false otherwise
-	 */
-	public function set_force_theme_enabled($enabled)
-	{
-		$this->set_property(self::FORCE_USERS_THEME_PROPERTY, $enabled);
-	}
-
-	/**
-	 * Forces users theme as the site default one
-	 */
-	public function force_users_theme()
-	{
-		$this->set_force_theme_enabled(true);
-	}
-
-	/**
-	 * Lets users choose the theme they wanna use
-	 */
-	public function dont_force_users_theme()
-	{
-		$this->set_force_theme_enabled(false);
 	}
 
 	/**
@@ -543,13 +500,12 @@ class UserAccountsConfig extends AbstractConfigData
 		
 		return array(
 			self::REGISTRATION_ENABLED_PROPERTY => FormFieldCheckbox::CHECKED,
-			self::MEMBER_ACCOUNTS_VALIDATION_METHOD_PROPERTY => 1,
+			self::MEMBER_ACCOUNTS_VALIDATION_METHOD_PROPERTY => self::AUTOMATIC_USER_ACCOUNTS_VALIDATION,
 			self::WELCOME_MESSAGE_PROPERTY => LangLoader::get_message('site_config_msg_mbr', 'main'),
 			self::REGISTRATION_AGREEMENT_PROPERTY => LangLoader::get_message('register_agreement', 'main'),
 			self::REGISTRATION_CAPTCHA_ENABLED_PROPERTY => FormFieldCheckbox::CHECKED,
 			self::REGISTRATION_CAPTCHA_DIFFICULTY_PROPERTY => 2,
 			self::UNACTIVATED_ACCOUNTS_TIMEOUT_PROPERTY => 20,
-			self::FORCE_USERS_THEME_PROPERTY => FormFieldCheckbox::UNCHECKED,
 			self::ENABLE_AVATAR_UPLOAD_PROPERTY => FormFieldCheckbox::CHECKED,
 			self::ENABLE_AVATAR_AUTO_RESIZING => $server_configuration->has_gd_library() ? FormFieldCheckbox::CHECKED : FormFieldCheckbox::UNCHECKED,
 			self::DEFAULT_AVATAR_ENABLED_PROPERTY => FormFieldCheckbox::CHECKED,
@@ -581,3 +537,4 @@ class UserAccountsConfig extends AbstractConfigData
 		ConfigManager::save('kernel', self::load(), 'user-accounts');
 	}
 }
+?>

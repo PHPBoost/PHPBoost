@@ -3,8 +3,8 @@
  *                       AjaxCommentsNotation.class.php
  *                            -------------------
  *   begin                : August 30, 2011
- *   copyright            : (C) 2011 Kévin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   copyright            : (C) 2011 Kevin MASSY
+ *   email                : kevin.massy@phpboost.com
  *
  *
  ###################################################
@@ -30,7 +30,7 @@ class AjaxCommentsNotationController extends AbstractCommentsController
 	const LESS_NOTE = 'less';
 	const PLUS_NOTE = 'plus';
 	
-	public function execute(HTTPRequest $request)
+	public function execute(HTTPRequestCustom $request)
 	{
 		parent::execute($request);
 		

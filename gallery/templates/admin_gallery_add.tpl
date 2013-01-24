@@ -59,11 +59,11 @@
 					
 					<dl>
 						<dt><label for="category">{L_CATEGORY}</label></dt>
-						<dd><label>
+						<dd>
 							<select name="idcat_post" id="category">
 								{CATEGORIES}
 							</select>
-						</label></dd>
+						</dd>
 					</dl>
 					<dl>
 						<dt><label for="name">{L_NAME}</label></dt>
@@ -99,8 +99,25 @@
 							{L_SELECT_IMG_ADD}
 						</td>
 					</tr>
+					<tr> 
+						<td class="row1" colspan="2">
+							<span class="text_small">{L_CAT}:</span> 
+							<select name="root_cat" id="root_cat" class="valign_middle">
+								{CATEGORIES}
+							</select>
+							<script type="text/javascript">
+							$('root_cat').observe('change', function() {
+								root_value = $('root_cat').value;
+								# START list #
+								$('{list.ID}cat').value = root_value;
+								# END list #
+							});
+							</script>
+						</td>
+					</tr>
 					<tr> 	
 						<td>
+							
 							# START list #
 								<div style="text-align:center;width:{COLUMN_WIDTH_PICS}%;float:left;">
 									<table class="module_table" style="width:100%;">
@@ -125,7 +142,7 @@
 										<tr>
 											<td class="row2">
 												<span class="text_small">{L_CAT}:</span> 
-												<select name="{list.ID}cat" class="valign_middle">
+												<select name="{list.ID}cat" id="{list.ID}cat" class="valign_middle" style="width:{SELECTBOX_WIDTH}%">
 													{list.CATEGORIES}
 												</select>
 											</td>

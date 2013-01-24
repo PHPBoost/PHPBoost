@@ -27,7 +27,7 @@
 
 class AdminErrorsController404Clear extends AdminController
 {
-	public function execute(HTTPRequest $request)
+	public function execute(HTTPRequestCustom $request)
 	{
 		AppContext::get_session()->csrf_get_protect();
 		AdminError404Service::clear_404_errors_list();

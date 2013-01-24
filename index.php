@@ -27,37 +27,29 @@
 
 define('PATH_TO_ROOT', '.');
 
-require_once PATH_TO_ROOT . '/kernel/framework/core/environment/Environment.class.php';
-
-try
+if (!file_exists(PATH_TO_ROOT . '/kernel/db/config.php'))
 {
-	Environment::load_imports();
-}
-catch (IOException $ex)
-{
-	if (!file_exists(PATH_TO_ROOT . '/kernel/db/config.php'))
-	{
-		header('Location:install/index.php');
-		exit;
-	}
-	else
-	{
-		Debug::fatal($ex);
-	}
-}
-
-$Cache = new Cache();
-
-Environment::init();
-
-$start_page = Environment::get_home_page();
-if ($start_page != HOST . DIR . '/index.php' && $start_page != './index.php') //Empêche une boucle de redirection.
-{
-	AppContext::get_response()->redirect($start_page);
+	header('Location:install/index.php');
+	exit;
 }
 else
 {
-	AppContext::get_response()->redirect(UserUrlBuilder::home()->absolute());
+	require_once PATH_TO_ROOT . '/kernel/framework/core/environment/Environment.class.php';
+	
+	try
+	{
+		Environment::load_imports();
+	}
+	catch (IOException $ex)
+	{
+		Debug::fatal($ex);
+	}
+	
+	require_once PATH_TO_ROOT . '/kernel/init.php';
+	
+	$url_controller_mappers = array(
+		new UrlControllerMapper('PHPBoostIndexController', '`^/?$`')
+	);
+	DispatchManager::dispatch($url_controller_mappers);
 }
-
 ?>

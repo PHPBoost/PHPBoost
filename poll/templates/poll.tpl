@@ -1,15 +1,22 @@
 	# IF C_POLL_MAIN #
-		<div class="module_position">					
+		<div class="module_position">		
 			<div class="module_top_l"></div>		
 			<div class="module_top_r"></div>
-			<div class="module_top"><strong>{L_POLL} {EDIT}</strong></div>
+			<div class="module_top">
+				<div class="module_top_title">
+					{L_POLL}
+				</div>
+				<div class="module_top_com">
+					{EDIT}
+				</div>
+			</div>
 			<div class="module_contents" style="text-align:center;">
 				{L_POLL_MAIN}
 				<br /><br />		
 				# START list #					
-				<a href="poll{list.U_POLL_ID}">{list.QUESTION}
+				<a href="{PATH_TO_ROOT}/poll/poll{list.U_POLL_ID}">{list.QUESTION}
 				<br />  
-				<a href="poll{list.U_POLL_ID}"><img src="poll.png" alt="" /></a> 
+				<a href="{PATH_TO_ROOT}/poll/poll{list.U_POLL_ID}"><img src="{PATH_TO_ROOT}/poll/poll.png" alt="" title="{list.QUESTION}" /></a> 
 				<br /><br />
 				# END list #
 				
@@ -30,16 +37,20 @@
 		}
 		-->
 		</script>
-		<form method="post" action="poll{U_POLL_ACTION}">
+		<form method="post" action="{PATH_TO_ROOT}/poll/poll{U_POLL_ACTION}">
 			<div class="module_position">					
 				<div class="module_top_l"></div>		
 				<div class="module_top_r"></div>
 				<div class="module_top">
-					{QUESTION}
-					# IF C_IS_ADMIN #
-					<a href="../poll/admin_poll.php?id={IDPOLL}" title="{L_EDIT}"><img src="../templates/{THEME}/images/{LANG}/edit.png" class="valign_middle" alt="" /></a>
-					&nbsp;&nbsp;<a href="../poll/admin_poll.php?delete=1&amp;id={IDPOLL}&amp;token={TOKEN}" title="{L_DELETE}" onclick="javascript:return Confirm();"><img src="../templates/{THEME}/images/{LANG}/delete.png" class="valign_middle" alt="" /></a>
-					# ENDIF #
+					<div class="module_top_title">
+						{QUESTION}
+					</div>
+					<div class="module_top_com">
+						# IF C_IS_ADMIN #
+						<a href="{PATH_TO_ROOT}/poll/admin_poll.php?id={IDPOLL}" title="{L_EDIT}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" class="valign_middle" alt="" /></a>
+						<a href="{PATH_TO_ROOT}/poll/admin_poll.php?delete=1&amp;id={IDPOLL}&amp;token={TOKEN}" title="{L_DELETE}" onclick="javascript:return Confirm();"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" class="valign_middle" alt="" /></a>
+						# ENDIF #
+					</div>
 				</div>
 				<div class="module_contents">
 					# INCLUDE message_helper #
@@ -59,7 +70,7 @@
 								
 								<p class="text_center">
 									<input class="submit" name="valid_poll" type="submit" value="{L_VOTE}" /><br />
-									<a class="small_link" href="../poll/poll{U_POLL_RESULT}">{L_RESULT}</a>
+									<a class="small_link" href="{PATH_TO_ROOT}/poll/poll{U_POLL_RESULT}">{L_RESULT}</a>
 								</p>
 							</div>							
 							# ENDIF #														
@@ -67,7 +78,7 @@
 							# START result #
 							<div class="row1 text_small">
 								<p>{result.ANSWERS}</p>
-								<img src="../templates/{THEME}/images/poll_left.png" height="10px" width="" alt="{result.PERCENT}%" title="{result.PERCENT}%" /><img src="../templates/{THEME}/images/poll.png" height="10px" width="{result.WIDTH}" alt="{result.PERCENT}%" title="{result.PERCENT}%" /><img src="../templates/{THEME}/images/poll_right.png" height="10px" width="" alt="{result.PERCENT}%" title="{result.PERCENT}%" /> {result.PERCENT}% [{result.NBRVOTE} {L_VOTE}]
+								<img src="{PATH_TO_ROOT}/templates/{THEME}/images/poll_left.png" height="10px" width="" alt="{result.PERCENT}%" title="{result.PERCENT}%" /><img src="{PATH_TO_ROOT}/templates/{THEME}/images/poll.png" height="10px" width="{result.WIDTH}" alt="{result.PERCENT}%" title="{result.PERCENT}%" /><img src="../templates/{THEME}/images/poll_right.png" height="10px" width="" alt="{result.PERCENT}%" title="{result.PERCENT}%" /> {result.PERCENT}% [{result.NBRVOTE} {L_VOTE}]
 							</div>
 							# END result #	
 							<div class="row2">
@@ -80,7 +91,7 @@
 				</div>
 				<div class="module_bottom_l"></div>		
 				<div class="module_bottom_r"></div>
-				<div class="module_bottom"><a href="poll.php">{L_BACK_POLL}</a></div>
+				<div class="module_bottom"><a href="{PATH_TO_ROOT}/poll/poll.php{SID}">{L_BACK_POLL}</a></div>
 			</div>
 		</form>
 	# ENDIF #
@@ -107,15 +118,15 @@
 				<div class="block_container">
 					<div class="block_top">{list.QUESTION} 
 					# IF C_IS_ADMIN #
-					<a href="../poll/admin_poll.php?id={list.ID}" title="{L_EDIT}"><img src="../templates/{THEME}/images/{LANG}/edit.png" class="valign_middle" /></a>
-					&nbsp;&nbsp;<a href="../poll/admin_poll.php?delete=1&amp;id={list.ID}&amp;token={TOKEN}" title="{L_DELETE}" onclick="javascript:return Confirm();"><img src="../templates/{THEME}/images/{LANG}/delete.png" class="valign_middle" /></a>
+					<a href="{PATH_TO_ROOT}/poll/admin_poll.php?id={list.ID}" title="{L_EDIT}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" class="valign_middle" /></a>
+					&nbsp;&nbsp;<a href="{PATH_TO_ROOT}/poll/admin_poll.php?delete=1&amp;id={list.ID}&amp;token={TOKEN}" title="{L_DELETE}" onclick="javascript:return Confirm();"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" class="valign_middle" /></a>
 					# ENDIF #
 					</div>
 					<div class="block_contents">
 						# START list.result #
 						<div class="row1 text_small">
 							<p>{list.result.ANSWERS}</p>
-							<img src="../templates/{THEME}/images/poll_left.png" height="10px" width="" alt="{list.result.PERCENT}%" title="{list.result.PERCENT}%" /><img src="../templates/{THEME}/images/poll.png" height="10px" width="{list.result.WIDTH}" alt="{list.result.PERCENT}%" title="{list.result.PERCENT}%" /><img src="../templates/{THEME}/images/poll_right.png" height="10px" width="" alt="{list.result.PERCENT}%" title="{list.result.PERCENT}%" /> {list.result.PERCENT}% [{list.result.NBRVOTE} {list.result.L_VOTE}]
+							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/poll_left.png" height="10px" width="" alt="{list.result.PERCENT}%" title="{list.result.PERCENT}%" /><img src="{PATH_TO_ROOT}/templates/{THEME}/images/poll.png" height="10px" width="{list.result.WIDTH}" alt="{list.result.PERCENT}%" title="{list.result.PERCENT}%" /><img src="../templates/{THEME}/images/poll_right.png" height="10px" width="" alt="{list.result.PERCENT}%" title="{list.result.PERCENT}%" /> {list.result.PERCENT}% [{list.result.NBRVOTE} {list.result.L_VOTE}]
 						</div>
 						# END list.result #	
 						<div class="row2">
@@ -130,7 +141,7 @@
 			<div class="module_bottom_l"></div>		
 			<div class="module_bottom_r"></div>
 			<div class="module_bottom">
-				<span style="float:left;"><a href="poll.php">{L_BACK_POLL}</a></span>
+				<span style="float:left;"><a href="poll.php{SID}">{L_BACK_POLL}</a></span>
 				&nbsp;<span style="float:right;">{PAGINATION}</span>
 			</div>
 		</div>

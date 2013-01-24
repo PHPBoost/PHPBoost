@@ -84,5 +84,4 @@ class PDOInjectQueryResult extends AbstractQueryResult implements InjectQueryRes
 		}
 	}
 }
-
 ?>

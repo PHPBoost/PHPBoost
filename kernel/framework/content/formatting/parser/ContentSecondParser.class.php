@@ -39,7 +39,7 @@ class ContentSecondParser extends AbstractParser
 	/**
 	 * Maximal number of characters that can be inserted in the [code] tag. After that, GeSHi has many difficulties to highligth and has the PHP execution stop (error 500).
 	 */
-	const MAX_CODE_LENGTH = 10000;
+	const MAX_CODE_LENGTH = 40000;
 	/**
 	 * @desc Builds a ContentSecondParser object
 	 */
@@ -118,7 +118,7 @@ class ContentSecondParser extends AbstractParser
 	 */
 	private static function highlight_code($contents, $language, $line_number, $inline_code)
 	{
-		$contents = htmlspecialchars_decode($contents);
+		$contents = TextHelper::htmlspecialchars_decode($contents);
 		
 		//BBCode PHPBoost
 		if (strtolower($language) == 'bbcode')
@@ -191,7 +191,7 @@ class ContentSecondParser extends AbstractParser
 		
 		if (strlen($content_to_highlight) > self::MAX_CODE_LENGTH)
 		{
-			return '<div class="error">' . $LANG['code_too_long_error'] . '</div><pre>' . $content_to_highlight . '</pre>';
+			return '<div class="error">' . LangLoader::get_message('code_too_long_error', 'editor-common') . '</div>';
 		
 		}
 
@@ -233,6 +233,8 @@ class ContentSecondParser extends AbstractParser
 		$this->content = preg_replace_callback('`\[\[MEDIA\]\]insertMoviePlayer\(\'([^\']+)\', ([0-9]+), ([0-9]+)\);\[\[/MEDIA\]\]`isU', array('ContentSecondParser', 'process_movie_tag'), $this->content);
 		//Sound
 		$this->content = preg_replace_callback('`\[\[MEDIA\]\]insertSoundPlayer\(\'([^\']+)\'\);\[\[/MEDIA\]\]`isU', array('ContentSecondParser', 'process_sound_tag'), $this->content);
+		//Youtube
+		$this->content = preg_replace_callback('`\[\[MEDIA\]\]insertYoutubePlayer\(\'([^\']+)\', ([0-9]+), ([0-9]+)\);\[\[/MEDIA\]\]`isU', array('ContentSecondParser', 'process_youtube_tag'), $this->content);
 	}
 
 	/**
@@ -288,6 +290,12 @@ class ContentSecondParser extends AbstractParser
             </object>';
 	}
 	
+	private static function process_youtube_tag($matches)
+	{
+		$matches[1] = str_replace(array('/watch?v=', '/embed/'), '/v/', $matches[1]);
+		return self::process_swf_tag($matches);
+	}
+	
 	private function parse_feed_tag()
 	{
 		$this->content = preg_replace_callback('`\[\[FEED((?: [a-z]+="[^"]+")*)\]\]([a-z]+)\[\[/FEED\]\]`U', array(__CLASS__, 'inject_feed'), $this->content);
@@ -314,12 +322,12 @@ class ContentSecondParser extends AbstractParser
 		
 		if (!empty($result))
 		{
-			return $result;			
+			return $result;
 		}
 		else
 		{
 			global $LANG;
-			$error = StringVars::replace_vars($LANG['feed_tag_error'], array('module' => $module));
+			$error = StringVars::replace_vars(LangLoader::get_message('feed_tag_error', 'editor-common'), array('module' => $module));
 			return '<div class="error">' . $error . '</div>';
 		}
 	}

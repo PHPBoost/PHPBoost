@@ -27,6 +27,10 @@
  *###################################################
  */
 
+/**
+ * @author Loic Rouchon <loic.rouchon@phpboost.com>
+ * @package {@package}
+ */
 class ModuleConfiguration
 {
 	private $name;
@@ -44,7 +48,6 @@ class ModuleConfiguration
 	private $admin_links;
 	private $home_page;
 	private $contribution_interface;
-	private $mini_modules;
 	private $url_rewrite_rules;
 
 	public function __construct($config_ini_file, $desc_ini_file)
@@ -155,7 +158,6 @@ class ModuleConfiguration
 		$this->admin_menu = !empty($config['admin_menu']) ? $config['admin_menu'] : '';
 		$this->home_page = !empty($config['home_page']) ? $config['home_page'] : '';
 		$this->contribution_interface = !empty($config['contribution_interface']) ? $config['contribution_interface'] : '';
-        $this->mini_modules = !empty($config['mini_modules']) ? self::parse_ini_array($config['mini_modules']) : array();
 		$this->url_rewrite_rules = !empty($config['rewrite_rules']) ? $config['rewrite_rules'] : array();
 	}
 
@@ -172,7 +174,7 @@ class ModuleConfiguration
 	{
 		if ($parse_result === false)
 		{
-			throw new Exception('Parse ini file ' . $ini_file . ' failed');
+			throw new IOException('Parse ini file ' . $ini_file . ' failed');
 		}
 	}
 

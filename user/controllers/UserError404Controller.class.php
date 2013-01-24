@@ -3,8 +3,8 @@
  *                       UserError404Controller.class.php
  *                            -------------------
  *   begin                : October 07, 2011
- *   copyright            : (C) 2011 Kévin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   copyright            : (C) 2011 Kevin MASSY
+ *   email                : kevin.massy@phpboost.com
  *
  *
  ###################################################
@@ -35,7 +35,7 @@ class UserError404Controller extends UserErrorController
 		parent::__construct($error. ' 404', $message, self::WARNING);
 	}
 	
-	public function execute(HTTPRequest $request)
+	public function execute(HTTPRequestCustom $request)
 	{
 		AdminError404Service::register_404();
 		return parent::execute($request);

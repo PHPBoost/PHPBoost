@@ -37,6 +37,8 @@ $LANG['date_format_tiny'] = 'm/d';
 $LANG['date_format_short'] = 'm/d/y';
 $LANG['date_format'] = 'm/d/y \a\t H\hi';
 $LANG['date_format_long'] = 'm/d/y \a\t H\hi\m\i\ns\s';
+$LANG['date_format_text_short'] = 'j F Y';
+$LANG['date_format_text_long'] = 'l j F Y';
 $LANG['from_date'] = 'from';
 $LANG['to_date'] = 'to';
 $LANG['now'] = 'Now';
@@ -115,7 +117,7 @@ $LANG['private_messaging'] = 'Private message';
 $LANG['my_private_profile'] = 'My profile';
 
 //Maintain
-$LANG['maintain'] = 'The website is under maintenance, only the administrators are authorized to log in.';
+$LANG['maintain'] = 'The website is under maintenance.';
 $LANG['maintain_delay'] = 'Time remaining:';
 $LANG['title_maintain'] = 'Website in maintenance';
 $LANG['loading'] = 'Loading';
@@ -262,37 +264,10 @@ $LANG['select_none'] = 'Unselect all';
 $LANG['add_member'] = 'Add a member';
 $LANG['alert_member_already_auth'] = 'The member is already in the list';
 
-//Calendar
-$LANG['january'] = 'January';
-$LANG['february'] = 'February';
-$LANG['march'] = 'March';
-$LANG['april'] = 'April';
-$LANG['may'] = 'May';
-$LANG['june'] = 'June';
-$LANG['july'] = 'July';
-$LANG['august'] = 'August';
-$LANG['september'] = 'September';
-$LANG['october'] = 'October';
-$LANG['november'] = 'November';
-$LANG['december'] = 'December';
-$LANG['monday'] = 'Mon';
-$LANG['tuesday'] = 'Tue';
-$LANG['wenesday'] = 'Wed';
-$LANG['thursday'] = 'Thu';
-$LANG['friday'] = 'Fri';
-$LANG['saturday'] = 'Sat';
-$LANG['sunday'] = 'Sun';
-
 //Members
 $LANG['member_area'] = 'Member Area';
 $LANG['profile'] = 'Profile';
-$LANG['profile_edition'] = 'Edit my profile';
-$LANG['previous_password'] = 'Previous password';
 $LANG['fill_only_if_modified'] = 'Fill only in case of modification';
-$LANG['new_password'] = 'New password';
-$LANG['confirm_password'] = 'Confirm your password';
-$LANG['hide_mail'] = 'Hide your email address';
-$LANG['hide_mail_who'] = 'To the other users';
 $LANG['mail_track_topic'] = 'Send me an email when a reply is posted in a tracked topic';
 $LANG['web_site'] = 'Web site';
 $LANG['localisation'] = 'Location';
@@ -340,7 +315,8 @@ $LANG['banned'] = 'Banned';
 $LANG['go_msg'] = 'Go to message';
 $LANG['display'] = 'Display';
 $LANG['site_config_msg_mbr'] = 'Welcome on the website. You are member of the site and you can access all parts of the website requiring a member account.';
-$LANG['register_agreement'] = 'You are just going to register yourself on the site. We ask you yo be polite and respectful.<br /><br />Thanks, the site team.';
+$LANG['register_agreement'] = 'You are just going to register yourself on the site. We ask you yo be polite and respectful.
+Thanks, the site team.';
 
 //Mp
 $LANG['pm_box'] = 'Private message box';
@@ -494,6 +470,9 @@ $LANG['disabled'] = 'Disabled';
 
 //Dictionnaire pour le captcha.
 $LANG['_code_dictionnary'] = array('image', 'php', 'query', 'azerty', 'exit', 'verif', 'gender', 'search', 'design', 'exec', 'web', 'inter', 'extern', 'cache', 'media', 'cms', 'cesar', 'watt', 'data', 'site', 'mail', 'email', 'spam', 'index', 'rand', 'text', 'inner', 'over', 'under', 'users', 'visitor', 'member', 'home', 'date', 'today', 'month', 'year', 'name', 'picture', 'notes', 'next', 'subject', 'content', 'options', 'title', 'valid', 'list', 'place', 'quote', 'hide', 'default', 'type', 'status', 'replies', 'back', 'close', 'smiley', 'total', 'average', 'page', 'minute', 'week', 'group', 'size', 'theme', 'online', 'modules', 'result', 'during', 'until', 'lock', 'style', 'notice', 'warning', 'success', 'unknow', 'other', 'final', 'code');
+$LANG['verif_code'] = 'Verification code';
+$LANG['verif_code_explain'] = 'Enter the image code, warning for capital letter';
+$LANG['require_verif_code'] = 'Please enter the verification code!';
 
 $LANG['csrf_attack'] = 'Invalid session token. Please retry because the operation has not been performed.';
 

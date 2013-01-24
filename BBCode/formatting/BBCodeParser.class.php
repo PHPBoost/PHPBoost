@@ -99,7 +99,7 @@ class BBCodeParser extends ContentFormattingParser
 		//On réinsère les fragments de code qui ont été prévelevés pour ne pas les considérer
 		if (!empty($this->array_tags['code']))
 		{
-			$this->array_tags['code'] = array_map(create_function('$string', 'return preg_replace(\'`^\[code(=.+)?\](.+)\[/code\]$`isU\', \'[[CODE$1]]$2[[/CODE]]\', htmlspecialchars($string, ENT_NOQUOTES));'), $this->array_tags['code']);
+			$this->array_tags['code'] = array_map(create_function('$string', 'return preg_replace(\'`^\[code(=.+)?\](.+)\[/code\]$`isU\', \'[[CODE$1]]$2[[/CODE]]\', TextHelper::htmlspecialchars($string, ENT_NOQUOTES));'), $this->array_tags['code']);
 			$this->reimplant_tag('code');
 		}
 	}
@@ -115,7 +115,7 @@ class BBCodeParser extends ContentFormattingParser
 	protected function protect_content()
 	{
 		//Breaking the HTML code
-		$this->content = htmlspecialchars($this->content, ENT_NOQUOTES);
+		$this->content = TextHelper::htmlspecialchars($this->content, ENT_NOQUOTES);
 		$this->content = strip_tags($this->content);
 
 		//While we aren't in UTF8 encoding, we have to use HTML entities to display some special chars, we accept them.
@@ -189,10 +189,13 @@ class BBCodeParser extends ContentFormattingParser
 			'url1' => '`\[url\]((?!javascript:)' . Url::get_wellformness_regex() . ')\[/url\]`isU',
 			'url2' => '`\[url=((?!javascript:)' . Url::get_wellformness_regex() . ')\]([^\n\r\t\f]+)\[/url\]`isU',
 			'url3' => '`(\s+)(' . Url::get_wellformness_regex(REGEX_MULTIPLICITY_REQUIRED) . ')(\s|<+)`isU',
-			'url4' => '`(\s+)(www\.' . Url::get_wellformness_regex(REGEX_MULTIPLICITY_NOT_USED) . ')(\s|<+)`isU'
-			);
+			'url4' => '`(\s+)(www\.' . Url::get_wellformness_regex(REGEX_MULTIPLICITY_NOT_USED) . ')(\s|<+)`isU',
+			'youtube1' => '`\[youtube=([0-9]{1,3}),([0-9]{1,3})\](((?:[./]+|(?:https?|ftps?)://([a-z0-9-]+\.)*[a-z0-9-]+\.[a-z]{2,4})+(?:[a-z0-9~_-]+/)*[a-z0-9_+.:?/=#%@&;,-]*))\[/youtube\]`iU',
+			'youtube2' => '`\[youtube\](((?:[./]+|(?:https?|ftps?)://([a-z0-9-]+\.)*[a-z0-9-]+\.[a-z]{2,4})+(?:[a-z0-9~_-]+/)*[a-z0-9_+.:?/=#%@&;,-]*))\[/youtube\]`iU',
+			'lightbox' => '`\[lightbox=((?!javascript:)' . Url::get_wellformness_regex() . ')\]([^\n\r\t\f]+)\[/lightbox\]`isU',
+		);
 
-			$array_preg_replace = array(
+		$array_preg_replace = array(
 			'b' => "<strong>$1</strong>",
 			'i' => "<em>$1</em>",
 			'u' => "<span style=\"text-decoration: underline;\">$1</span>",
@@ -218,8 +221,11 @@ class BBCodeParser extends ContentFormattingParser
 			'url1' => '<a href="$1">$1</a>',
 			'url2' => '<a href="$1">$2</a>',
             'url3' => '$1<a href="$2">$2</a>$3',
-            'url4' => '$1<a href="$2">$2</a>$3'
-            );
+            'url4' => '$1<a href="$2">$2</a>$3',
+			'youtube1' => '[[MEDIA]]insertYoutubePlayer(\'$3\', $1, $2);[[/MEDIA]]',
+			'youtube2' => '[[MEDIA]]insertYoutubePlayer(\'$1\', 560, 315);[[/MEDIA]]',
+			'lightbox' => '<a href="$1" rel="lightbox">$2</a>',
+		);
 
             $parse_line = true;
 
@@ -270,7 +276,7 @@ class BBCodeParser extends ContentFormattingParser
             //Image tag
             if (!in_array('img', $this->forbidden_tags))
             {
-            	$this->content = preg_replace_callback('`\[img(?: alt="([^"]+)")?(?: title="([^"]+)")?(?: style="([^"]+)")?\]((?:[./]+|(?:https?|ftps?)://(?:[a-z0-9-]+\.)*[a-z0-9-]+(?:\.[a-z]{2,4})?(?::[0-9]{1,5})?/?)[^,\n\r\t\f]+\.(jpg|jpeg|bmp|gif|png|tiff|svg))\[/img\]`iU', array($this, 'parse_img'), $this->content);
+            	$this->content = preg_replace_callback('`\[img(?: alt="([^"]+)")?(?: title="([^"]+)")?(?: style="([^"]+)")?(?: class="([^"]+)")?\]((?:[./]+|(?:https?|ftps?)://(?:[a-z0-9-]+\.)*[a-z0-9-]+(?:\.[a-z]{2,4})?(?::[0-9]{1,5})?/?)[^,\n\r\t\f]+\.(jpg|jpeg|bmp|gif|png|tiff|svg))\[/img\]`iU', array($this, 'parse_img'), $this->content);
             }
 
             //Wikipedia tag
@@ -283,33 +289,33 @@ class BBCodeParser extends ContentFormattingParser
             //Quote tag
             if (!in_array('quote', $this->forbidden_tags))
             {
-            	$this->_parse_imbricated('[quote]', '`\[quote\](.+)\[/quote\]`sU', '<span class="text_blockquote">' . $LANG['quotation'] . ':</span><div class="blockquote">$1</div>', $this->content);
-            	$this->_parse_imbricated('[quote=', '`\[quote=([^\]]+)\](.+)\[/quote\]`sU', '<span class="text_blockquote">$1:</span><div class="blockquote">$2</div>', $this->content);
+            	$this->_parse_imbricated('[quote]', '`\[quote\](.+)\[/quote\]`sU', '<span class="text_blockquote">' . $LANG['quotation'] . ':</span><div class="blockquote">$1</div>');
+            	$this->_parse_imbricated('[quote=', '`\[quote=([^\]]+)\](.+)\[/quote\]`sU', '<span class="text_blockquote">$1:</span><div class="blockquote">$2</div>');
             }
 
             //Hide tag
             if (!in_array('hide', $this->forbidden_tags))
             {
-            	$this->_parse_imbricated('[hide]', '`\[hide\](.+)\[/hide\]`sU', '<span class="text_hide">' . $LANG['hide'] . ':</span><div class="hide" onclick="bb_hide(this)"><div class="hide2">$1</div></div>', $this->content);
+            	$this->_parse_imbricated('[hide]', '`\[hide\](.+)\[/hide\]`sU', '<span class="text_hide">' . $LANG['hide'] . ':</span><div class="hide" onclick="bb_hide(this)"><div class="hide2">$1</div></div>');
             }
 
             //Indent tag
             if (!in_array('indent', $this->forbidden_tags))
             {
-            	$this->_parse_imbricated('[indent]', '`\[indent\](.+)\[/indent\]`sU', '<div class="indent">$1</div>', $this->content);
+            	$this->_parse_imbricated('[indent]', '`\[indent\](.+)\[/indent\]`sU', '<div class="indent">$1</div>');
             }
 
             //Block tag
             if (!in_array('block', $this->forbidden_tags))
             {
-            	$this->_parse_imbricated('[block]', '`\[block\](.+)\[/block\]`sU', '<div class="bb_block">$1</div>', $this->content);
-            	$this->_parse_imbricated('[block style=', '`\[block style="([^"]+)"\](.+)\[/block\]`sU', '<div class="bb_block" style="$1">$2</div>', $this->content);
+            	$this->_parse_imbricated('[block]', '`\[block\](.+)\[/block\]`sU', '<div class="bb_block">$1</div>');
+            	$this->_parse_imbricated('[block style=', '`\[block style="([^"]+)"\](.+)\[/block\]`sU', '<div class="bb_block" style="$1">$2</div>');
             }
 
             //Fieldset tag
             if (!in_array('fieldset', $this->forbidden_tags))
             {
-            	$this->_parse_imbricated('[fieldset', '`\[fieldset(?: legend="(.*)")?(?: style="([^"]*)")?\](.+)\[/fieldset\]`sU', '<fieldset class="bb_fieldset" style="$2"><legend>$1</legend>$3</fieldset>', $this->content);
+            	$this->_parse_imbricated('[fieldset', '`\[fieldset(?: legend="(.*)")?(?: style="([^"]*)")?\](.+)\[/fieldset\]`sU', '<fieldset class="bb_fieldset" style="$2"><legend>$1</legend>$3</fieldset>');
             }
 
             // Feed tag
@@ -466,8 +472,9 @@ class BBCodeParser extends ContentFormattingParser
 		$alt = !empty($matches[1]) ? $matches[1] : '';
 		$title = !empty($matches[2]) ? ' title="' . $matches[2] . '"' : '';
 		$style = !empty($matches[3]) ? ' style="' . $matches[3] . '"' : '';
+		$class = !empty($matches[4]) ? ' class="' . $matches[4] . '"' : '';
 		
-		return '<img src="' . $matches[4] . '" alt="' . $alt . '"' . $title . $style .' />';
+		return '<img src="' . $matches[5] . '" alt="' . $alt . '"' . $class . $title . $style .' />';
 	}
 
 
@@ -481,7 +488,7 @@ class BBCodeParser extends ContentFormattingParser
 		global $LANG;
 
 		//Langue
-		$lang = $LANG['wikipedia_subdomain'];
+		$lang = LangLoader::get_message('wikipedia_subdomain', 'editor-common');
 		if (!empty($matches[2]))
 		$lang = $matches[2];
 
@@ -500,5 +507,4 @@ class BBCodeParser extends ContentFormattingParser
 		return str_replace("<br />", "", $matches[0]);
 	}
 }
-
 ?>

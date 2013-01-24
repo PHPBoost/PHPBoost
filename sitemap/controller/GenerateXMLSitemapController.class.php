@@ -27,10 +27,11 @@
 
 class GenerateXMLSitemapController extends AdminController
 {
-	public function execute(HTTPRequest $request)
+	public function execute(HTTPRequestCustom $request)
 	{
 		$view = new FileTemplate('sitemap/GenerateXMLSitemapController.tpl');
-		$view->add_lang(LangLoader::get('common', 'sitemap'));
+		$lang = LangLoader::get('common', 'sitemap');
+		$view->add_lang($lang);
 		
 		try
 		{
@@ -47,6 +48,9 @@ class GenerateXMLSitemapController extends AdminController
 			'U_GENERATE' => SitemapUrlBuilder::get_xml_file_generation()->absolute()
 		));
 
-		return new AdminSitemapResponse($view);
+		$response = new AdminSitemapResponse($view);
+		$response->get_graphical_environment()->set_page_title($lang['generate_xml_file']);
+		return $response;
 	}
 }
+?>

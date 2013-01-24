@@ -6,7 +6,6 @@
 	    <link href="{PATH_TO_ROOT}/templates/{THEME}/theme/design.css" rel="stylesheet" type="text/css" media="screen" />
 	    <link href="{PATH_TO_ROOT}/templates/{THEME}/theme/global.css" rel="stylesheet" type="text/css" media="screen" />
 	    <link href="{PATH_TO_ROOT}/templates/{THEME}/theme/generic.css" rel="stylesheet" type="text/css" media="screen" />
-	    <link href="{PATH_TO_ROOT}/templates/{THEME}/theme/bbcode.css" rel="stylesheet" type="text/css" media="screen" />
 	    <link href="{PATH_TO_ROOT}/templates/{THEME}/theme/content.css" rel="stylesheet" type="text/css" media="screen" />
 	    <link rel="shortcut" href="{PATH_TO_ROOT}/favicon.ico" />
 	</head>

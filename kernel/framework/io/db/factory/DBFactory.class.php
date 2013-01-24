@@ -108,7 +108,6 @@ class DBFactory
 	public static function set_db_connection(DBConnection $connection)
 	{
 		self::$db_connection = $connection;
-		PersistenceContext::get_querier()->set_connection($connection);
 	}
 
 	/**
@@ -156,5 +155,4 @@ class DBFactory
 		return self::$factory;
 	}
 }
-
 ?>

@@ -3,8 +3,8 @@
  *                          PollModuleMiniMenu.class.php
  *                            -------------------
  *   begin                : October 08, 2011
- *   copyright            : (C) 2011 Kévin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   copyright            : (C) 2011 Kevin MASSY
+ *   email                : kevin.massy@phpboost.com
  *
  *
  ###################################################
@@ -31,32 +31,38 @@ class PollModuleMiniMenu extends ModuleMiniMenu
     {
     	return self::BLOCK_POSITION__RIGHT;
     }
+    
+	public function admin_display()
+    {
+        return '';
+    }
 
 	public function display($tpl = false)
     {
     	global $Cache, $LANG, $_array_poll;
 	    $Cache->load('poll'); //Mini sondages en cache => $_array_poll.
-	    $poll_config = PollConfig::load();
-	    
-	    if ($poll_config->get_mini_poll_selected() != '' && strpos(SCRIPT, '/poll/poll.php') === false)
+		$poll_config = PollConfig::load();
+		$config_cookie_name = $poll_config->get_cookie_name();
+		
+	    if (!empty($_array_poll) && $_array_poll != array() && !Url::is_current_url('/poll/poll.php'))
 	    {
 	    	//Chargement de la langue du module.
 	    	load_module_lang('poll');
 			$rand = array_rand($_array_poll);
-			if (in_array($rand, $_array_poll))
+			if (array_key_exists($rand, $_array_poll))
 			{
 				$poll_mini = $_array_poll[$rand]; //Sondage aléatoire.
 	
 				$tpl = new FileTemplate('poll/poll_mini.tpl');
 	
-				MenuService::assign_positions_conditions($tpl, $block);
+				MenuService::assign_positions_conditions($tpl, $this->get_block());
 	
 				#####################Résultats######################
 				//Si le cookie existe, on redirige vers les resulats, sinon on prend en compte le vote (vérification par ip plus tard).
 				$array_cookie = array();
-				if (AppContext::get_request()->has_cookieparameter($poll_config->get_poll_cookie_name()))
+				if (AppContext::get_request()->has_cookieparameter($config_cookie_name))
 				{
-					$array_cookie = explode('/', AppContext::get_request()->get_cookie($poll_config->get_poll_cookie_name()));
+					$array_cookie = explode('/', AppContext::get_request()->get_cookie($config_cookie_name));
 				}
 				if (in_array($poll_mini['id'], $array_cookie))
 				{

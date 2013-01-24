@@ -3,8 +3,8 @@
  *                          CLIHtaccessContentCommand.class.php
  *                            -------------------
  *   begin                : October 11, 2011
- *   copyright            : (C) 2011 Kévin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   copyright            : (C) 2011 Kevin MASSY
+ *   email                : kevin.massy@phpboost.com
  *
  *
  ###################################################

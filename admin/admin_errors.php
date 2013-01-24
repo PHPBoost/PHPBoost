@@ -50,7 +50,7 @@ if (!empty($_POST['erase']))
 
 $tpl->add_lang(LangLoader::get('admin-errors-Common'));
 $tpl->put_all(array(
-	'L_ERRORS' => $LANG['errors'],
+	'L_ERRORS' => LangLoader::get_message('logged_errors', 'admin-errors-Common'),
 	'L_DESC' => $LANG['description'],
 	'L_DATE' => $LANG['date'],
 	'L_ERASE_RAPPORT' => $LANG['erase_rapport'],
@@ -94,11 +94,11 @@ if (is_file($file_path) && is_readable($file_path)) //Fichier accessible en lect
 		}
 		@fclose($handle);
 		
-		$images = array(
-			'error_unknow' => 'question',
-			'error_notice' => 'notice',
-			'error_warning' => 'important',
-			'error_fatal' => 'stop'
+		$types = array(
+			'question' => 'e_unknow',
+			'notice' => 'e_notice',
+			'warning' => 'e_warning',
+			'error' => 'e_fatal' 
 		);
 		
 		//Tri en sens inverse car enregistrement à la suite dans le fichier de log
@@ -107,10 +107,9 @@ if (is_file($file_path) && is_readable($file_path)) //Fichier accessible en lect
 		foreach ($array_errinfo as $key => $errinfo)
 		{
 			$tpl->assign_block_vars('errors', array(
-				'IMG' => $images[$errinfo['errclass']],
 				'DATE' => $errinfo['errdate'],
 				'CLASS' => $errinfo['errclass'],
-				'ERROR_TYPE' => LangLoader::get_message(str_replace('error_', 'e_', $errinfo['errclass']), 'errors'),
+				'ERROR_TYPE' => LangLoader::get_message($types[$errinfo['errclass']], 'errors'),
 				'ERROR_MESSAGE' => strip_tags($errinfo['errmsg'], '<br>'),
 				'ERROR_STACKTRACE' => strip_tags($errinfo['errstacktrace'], '<br>')
 			));
@@ -137,5 +136,4 @@ if (is_file($file_path) && is_readable($file_path)) //Fichier accessible en lect
 $tpl->display();
 
 require_once('../admin/admin_footer.php');
-
 ?>

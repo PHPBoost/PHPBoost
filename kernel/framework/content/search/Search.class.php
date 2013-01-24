@@ -25,8 +25,8 @@
  *
  ###################################################*/
 
-define('CACHE_TIME', SearchConfig::load()->get_cache_life_time());
-define('CACHE_TIMES_USED', SearchConfig::load()->get_cache_max_use_times());
+define('CACHE_TIME', SearchConfig::load()->get_cache_lifetime());
+define('CACHE_TIMES_USED', SearchConfig::load()->get_cache_max_uses());
 
 /**
  * @author Loic Rouchon <loic.rouchon@phpboost.com>
@@ -35,7 +35,7 @@ define('CACHE_TIMES_USED', SearchConfig::load()->get_cache_max_use_times());
  */
 class Search
 {
-	private $id_search;
+	public $id_search = array();
     private $search;
     private $modules;
     private $modules_conditions;
@@ -63,7 +63,7 @@ class Search
         $this->id_search = array();
         $this->cache = array();
 
-        $this->id_user = AppContext::get_current_user()->get_id();
+        $this->id_user = AppContext::get_current_user()->get_attribute('user_id');
         $this->modules_conditions = $this->get_modules_conditions($this->modules);
 
         $this->sql_querier = PersistenceContext::get_sql();
@@ -450,4 +450,3 @@ class Search
     }
 }
 ?>
-

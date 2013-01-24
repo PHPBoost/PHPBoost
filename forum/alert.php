@@ -36,7 +36,7 @@ $topic = $Sql->query_array(PREFIX . 'forum_topics', 'idcat', 'title', 'subtitle'
 
 $cat_name = !empty($CAT_FORUM[$topic['idcat']]['name']) ? $CAT_FORUM[$topic['idcat']]['name'] : '';
 $topic_name = !empty($topic['title']) ? $topic['title'] : '';
-$Bread_crumb->add($CONFIG_FORUM['forum_name'], 'index.php');
+$Bread_crumb->add($CONFIG_FORUM['forum_name'], 'index.php' . SID);
 $Bread_crumb->add($cat_name, 'forum' . url('.php?id=' . $topic['idcat'], '-' . $topic['idcat'] . '+' . Url::encode_rewrite($cat_name) . '.php'));
 $Bread_crumb->add($topic['title'], 'topic' . url('.php?id=' . $alert, '-' . $alert . '-' . Url::encode_rewrite($topic_name) . '.php'));
 $Bread_crumb->add($LANG['alert_topic'], '');
@@ -49,7 +49,7 @@ if (empty($alert) && empty($alert_post) || empty($topic['idcat']))
 
 if (!$User->check_level(User::MEMBER_LEVEL)) //Si c'est un invité
 {
-	$error_controller = PHPBoostErrors::unexisting_page();
+	$error_controller = PHPBoostErrors::user_not_authorized();
 	DispatchManager::redirect($error_controller);
 }
 
@@ -138,6 +138,7 @@ list($users_list, $total_admin, $total_modo, $total_member, $total_visit, $total
 
 $Template->put_all(array(
 	'FORUM_NAME' => $CONFIG_FORUM['forum_name'] . ' : ' . $LANG['alert_topic'],
+	'SID' => SID,
 	'DESC' => $topic['subtitle'],
 	'TOTAL_ONLINE' => $total_online,
 	'USERS_ONLINE' => (($total_online - $total_visit) == 0) ? '<em>' . $LANG['no_member_online'] . '</em>' : $users_list,

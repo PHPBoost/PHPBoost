@@ -74,5 +74,4 @@ class ServerConfiguration
 		throw new UnsupportedOperationException('can\'t check url rewriting availabilty');
 	}
 }
-
 ?>

@@ -34,7 +34,6 @@
 $LANG['shoutbox_max_msg'] = 'Maximum number of message to keep';
 $LANG['shoutbox_max_msg_explain'] = 'Delete each days, set to -1 to deactivate';
 $LANG['shoutbox_config'] = 'Shoutbox configuration';
-$LANG['auth_read'] = 'Read permission';
 $LANG['rank_post'] = 'Write permission';
 $LANG['auth_moderation'] = 'Moderation permission';
 $LANG['shoutbox_refresh_delay'] = 'Delay between discussion automatic refresh';

@@ -36,12 +36,11 @@ class ClassLoader
 	private static $already_reloaded = false;
 	private static $exclude_paths = array(
 		'/cache', '/images', '/lang', '/upload', '/templates',
-		'/kernel/data', '/kernel/lib/js', '/kernel/framework/content/tinymce',
-		'/kernel/framework/content/geshi', '/kernel/framework/io/db/dbms/Doctrine',
-	    '/test/PHPUnit',
+		'/kernel/data', '/kernel/lib/js', '/kernel/framework/content/geshi', 
+		'/kernel/framework/io/db/dbms/Doctrine', '/test/PHPUnit',
 	);
 
-	private static $exclude_folders_names = array('.svn', 'templates', 'lang');
+	private static $exclude_folders_names = array('templates', 'lang');
 
 	/**
 	 * @desc initializes the autoload class list

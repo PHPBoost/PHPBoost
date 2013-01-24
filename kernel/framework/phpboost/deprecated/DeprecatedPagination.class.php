@@ -167,6 +167,11 @@ class DeprecatedPagination
 			return 1;
 		}
 	}
+	
+	public function get_page()
+	{
+		return $this->page;
+	}
 
 	/**
 	 * @desc Checks the validity of the page required, otherwise redirect to an error page.
@@ -189,5 +194,4 @@ class DeprecatedPagination
 		return $this->page;
 	}
 }
-
 ?>

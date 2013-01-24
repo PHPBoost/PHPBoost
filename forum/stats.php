@@ -29,7 +29,7 @@ require_once('../kernel/begin.php');
 require_once('../forum/forum_begin.php');
 require_once('../forum/forum_tools.php');
 
-$Bread_crumb->add($CONFIG_FORUM['forum_name'], 'index.php');
+$Bread_crumb->add($CONFIG_FORUM['forum_name'], 'index.php' . SID);
 $Bread_crumb->add($LANG['stats'], '');
 define('TITLE', $LANG['title_forum'] . ' - ' . $LANG['stats']);
 require_once('../kernel/header.php'); 
@@ -55,6 +55,7 @@ $nbr_msg_today = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "forum_msg WHERE
 
 $Template->put_all(array(
 	'FORUM_NAME' => $CONFIG_FORUM['forum_name'],
+	'SID' => SID,
 	'NBR_TOPICS' => $sum['total_topics'],
 	'NBR_MSG' => $sum['total_msg'],
 	'NBR_TOPICS_DAY' => $nbr_topics_day,
@@ -135,7 +136,7 @@ while ($row = $Sql->fetch_assoc($result))
 $Sql->query_close($result);
 	
 //Listes les utilisateurs en lignes.
-list($users_list, $total_admin, $total_modo, $total_member, $total_visit, $total_online) = forum_list_user_online("AND s.session_script LIKE '/forum/%'");
+list($users_list, $total_admin, $total_modo, $total_member, $total_visit, $total_online) = forum_list_user_online("AND s.session_script = '". GeneralConfig::get_default_site_path() ."/forum/stats.php'");
 
 $Template->put_all(array(
 	'TOTAL_ONLINE' => $total_online,

@@ -29,7 +29,7 @@ class SendMailUnlockAdminController extends AdminController
 {
 	private $lang;
 	
-	public function execute(HTTPRequest $request)
+	public function execute(HTTPRequestCustom $request)
 	{
 		$this->init();
 		
@@ -75,9 +75,10 @@ class SendMailUnlockAdminController extends AdminController
         	$mail->add_recipient($mail_address);
         }
 		
-        $mail->set_sender(MailServiceConfig::load()->get_default_mail_sender(), GeneralConfig::load()->get_site_name());
+        $mail->set_sender(MailServiceConfig::load()->get_default_mail_sender());
         $mail->set_subject($subject);
         $mail->set_content($content);
+        $mail->set_is_html(true);
         return AppContext::get_mail_service()->try_to_send($mail);
 	}
 	

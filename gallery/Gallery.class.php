@@ -268,7 +268,7 @@ class Gallery
 		$Sql->query_inject("UPDATE " . PREFIX . "gallery_cats SET nbr_pics_aprob = nbr_pics_aprob + 1 WHERE " . $clause_parent_cats_to, __LINE__, __FILE__);		
 		
 		list($width, $height, $weight, $ext) = $this->Arg_pics('pics/' . $path);	
-		$Sql->query_inject("INSERT INTO " . PREFIX . "gallery (idcat, name, path, width, height, weight, user_id, aprob, views, timestamp, users_note, nbrnote, note, nbr_com) VALUES('" . $idcat . "', '" .TextHelper::strprotect($name, TextHelper::HTML_PROTECT, TextHelper::ADDSLASHES_FORCE). "', '" . $path . "', '" . $width . "', '" . $height . "', '" . $weight ."', '" . $user_id . "', 1, 0, '" . time() . "', '', 0, 0, 0)", __LINE__, __FILE__);
+		$Sql->query_inject("INSERT INTO " . PREFIX . "gallery (idcat, name, path, width, height, weight, user_id, aprob, views, timestamp) VALUES('" . $idcat . "', '" .TextHelper::strprotect($name, TextHelper::HTML_PROTECT, TextHelper::ADDSLASHES_FORCE). "', '" . $path . "', '" . $width . "', '" . $height . "', '" . $weight ."', '" . $user_id . "', 1, 0, '" . time() . "')", __LINE__, __FILE__);
 		
 		return $Sql->insert_id("SELECT MAX(id) FROM " . PREFIX . "gallery");
 	}
@@ -308,23 +308,17 @@ class Gallery
 			else
 				$Sql->query_inject("UPDATE " . PREFIX . "gallery_cats SET nbr_pics_unaprob = nbr_pics_unaprob - 1 WHERE " . $clause_parent_cats_to, __LINE__, __FILE__);
 		}
-		
+
 		//Suppression physique.
-		$file = new File('pics/' . $uniq);
+		$file = new File(PATH_TO_ROOT . '/gallery/pics/' . $info_pics['path']);
 		$file->delete();
 				
-		$file = new File('pics/thumbnails/' . $info_pics['path']);
+		$file = new File(PATH_TO_ROOT . '/gallery/pics/thumbnails/' . $info_pics['path']);
 		$file->delete();
+
+		NotationService::delete_notes_id_in_module('gallery', $id_pics);
 		
-		$notation = new Notation();
-		$notation->set_module_name('gallery');
-		$notation->set_id_in_module($id_pics);
-		NotationService::delete_notes_id_in_module($notation);
-		
-		$comments_topic = new CommentsTopic();
-		$comments_topic->set_module_id('gallery');
-		$comments_topic->set_id_in_module($id_pics);
-		CommentsService::delete_comments_id_in_module($comments_topic);
+		CommentsService::delete_comments_topic_module('gallery', $id_pics);
 	}
 	
 	//Renomme une image.
@@ -333,7 +327,7 @@ class Gallery
 		global $Sql;
 		
 		$Sql->query_inject("UPDATE " . PREFIX . "gallery SET name = '" . TextHelper::strprotect($name, TextHelper::HTML_PROTECT, TextHelper::ADDSLASHES_FORCE). "' WHERE id = '" . $id_pics . "'", __LINE__, __FILE__);
-		return stripslashes((strlen(html_entity_decode($name)) > 22) ? htmlentities(substr(html_entity_decode($name), 0, 22)) . PATH_TO_ROOT . '.' : $name);
+		return stripslashes((strlen(TextHelper::html_entity_decode($name)) > 22) ? TextHelper::htmlentities(substr(TextHelper::html_entity_decode($name), 0, 22)) . PATH_TO_ROOT . '.' : $name);
 	}
 	
 	//Approuve une image.

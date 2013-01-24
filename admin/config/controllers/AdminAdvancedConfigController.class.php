@@ -3,8 +3,8 @@
  *                       AdminAdvancedConfigController.class.php
  *                            -------------------
  *   begin                : July 1, 2011
- *   copyright            : (C) 2011 Kévin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   copyright            : (C) 2011 Kevin MASSY
+ *   email                : kevin.massy@phpboost.com
  *
  *
  ###################################################
@@ -34,22 +34,21 @@ class AdminAdvancedConfigController extends AdminController
 	private $form;
 	private $submit_button;
 
-	public function execute(HTTPRequest $request)
+	public function execute(HTTPRequestCustom $request)
 	{
 		$this->load_lang();
 		$this->load_config();
 		
 		$this->build_form();
 
-		$tpl = new StringTemplate('# INCLUDE MSG # # INCLUDE FORM #');
+		$tpl = new StringTemplate('# INCLUDE FORM #');
 		
 		$tpl->add_lang($this->lang);
 
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save();
-
-			$tpl->put('MSG', MessageHelper::display($this->lang['advanced-config.success'], E_USER_SUCCESS, 4));
+			AppContext::get_response()->redirect(AdminConfigUrlBuilder::advanced_config());
 		}
 
 		$tpl->put('FORM', $this->form->display());
@@ -77,7 +76,7 @@ class AdminAdvancedConfigController extends AdminController
 		$form->add_fieldset($fieldset);
 		
 		$fieldset->add_field(new FormFieldTextEditor('site_url', $this->lang['advanced-config.site_url'], $this->general_config->get_site_url(), array(
-			'class' => 'text', 'description' => $this->lang['advanced-config.site_url-explain'], 'maxlength' => 25, 'size' => 25, 'required' => true),
+			'class' => 'text', 'description' => $this->lang['advanced-config.site_url-explain'], 'size' => 25, 'required' => true),
 			array(new FormFieldConstraintUrl())
 		));
 		
@@ -93,7 +92,6 @@ class AdminAdvancedConfigController extends AdminController
 		
 		$url_rewriting_fieldset->set_description($this->lang['advanced-config.url-rewriting.explain']);
 		
-		$disable_url_rewriting_field = new FormFieldCheckbox('url_rewriting_enabled', $this->lang['advanced-config.url-rewriting'], FormFieldCheckbox::UNCHECKED, array('disabled' => true, 'description' => $this->lang['advanced-config.config.not-available']));
 		$server_configuration = new ServerConfiguration();
 		try 
 		{
@@ -103,18 +101,18 @@ class AdminAdvancedConfigController extends AdminController
 			}
 			else
 			{
-				$url_rewriting_fieldset->add_field($disable_url_rewriting_field);
+				$url_rewriting_fieldset->add_field(new FormFieldCheckbox('url_rewriting_enabled', $this->lang['advanced-config.url-rewriting'], FormFieldCheckbox::UNCHECKED, array('disabled' => true, 'description' => $this->lang['advanced-config.config.not-available'])));
 			}
 		} 
 		catch (UnsupportedOperationException $ex) 
 		{
-			$url_rewriting_fieldset->add_field($disable_url_rewriting_field);
+			$url_rewriting_fieldset->add_field(new FormFieldCheckbox('url_rewriting_enabled', $this->lang['advanced-config.url-rewriting'], $this->server_environment_config->is_url_rewriting_enabled(), array('description' => $this->lang['advanced-config.config.unknown'])));
 		}
 		
 		$htaccess_manual_content_fieldset = new FormFieldsetHTML('htaccess_manual_content', $this->lang['advanced-config.htaccess-manual-content']);
 		$form->add_fieldset($htaccess_manual_content_fieldset);
 		
-		$htaccess_manual_content_fieldset->add_field(new FormFieldMultiLineTextEditor('htaccess-manual-content', $this->lang['advanced-config.htaccess-manual-content'], $this->server_environment_config->get_htaccess_manual_content(),
+		$htaccess_manual_content_fieldset->add_field(new FormFieldMultiLineTextEditor('htaccess_manual_content', $this->lang['advanced-config.htaccess-manual-content'], $this->server_environment_config->get_htaccess_manual_content(),
 			array('rows' => 7, 'description' => $this->lang['advanced-config.htaccess-manual-content.explain'])
 		));
 		
@@ -122,17 +120,17 @@ class AdminAdvancedConfigController extends AdminController
 		$form->add_fieldset($sessions_config_fieldset);
 		
 		$sessions_config_fieldset->add_field(new FormFieldTextEditor('cookie_name', $this->lang['advanced-config.cookie-name'], $this->sessions_config->get_cookie_name(), array(
-			'class' => 'text','maxlength' => 25, 'size' => 25, 'required' => true),
+			'class' => 'text', 'maxlength' => 25, 'size' => 25, 'required' => true),
 			array(new FormFieldConstraintRegex('`^[A-Za-z0-9]+$`i', '', $this->lang['advanced-config.cookie-name.style-wrong']))
 		));
 		
 		$sessions_config_fieldset->add_field(new FormFieldTextEditor('session_duration', $this->lang['advanced-config.cookie-duration'], $this->sessions_config->get_session_duration(), array(
-			'class' => 'text','maxlength' => 25, 'description' => $this->lang['advanced-config.cookie-duration.explain'], 'size' => 8, 'required' => true),
+			'class' => 'text', 'maxlength' => 25, 'description' => $this->lang['advanced-config.cookie-duration.explain'], 'size' => 8, 'required' => true),
 			array(new FormFieldConstraintRegex('`^[0-9]+$`i', '', $this->lang['advanced-config.integer-required']))
 		));
 		
 		$sessions_config_fieldset->add_field(new FormFieldTextEditor('active_session_duration', $this->lang['advanced-config.active-session-duration'], $this->sessions_config->get_active_session_duration(), array(
-			'class' => 'text','maxlength' => 25, 'description' => $this->lang['advanced-config.active-session-duration.explain'], 'size' => 8, 'required' => true),
+			'class' => 'text', 'maxlength' => 25, 'description' => $this->lang['advanced-config.active-session-duration.explain'], 'size' => 8, 'required' => true),
 			array(new FormFieldConstraintRegex('`^[0-9]+$`i', '', $this->lang['advanced-config.integer-required']))
 		));
 		
@@ -147,7 +145,7 @@ class AdminAdvancedConfigController extends AdminController
 		else
 		{
 			$miscellaneous_fieldset->add_field(new FormFieldCheckbox('output_gziping_enabled', $this->lang['advanced-config.output-gziping-enabled'], FormFieldCheckbox::UNCHECKED, 
-			array('description' => $this->lang['config.not-available'], 'disabled' => true)));
+			array('description' => $this->lang['advanced-config.config.not-available'], 'disabled' => true)));
 		}
 		
 		$miscellaneous_fieldset->add_field(new FormFieldFree('unlock_administration', $this->lang['advanced-config.unlock-administration'], '<a href="'. AdminConfigUrlBuilder::unlock_administration()->absolute() .'" onclick="return confirm(\'' . $this->lang['advanced-config.confirm_mail_sending'] .'\');">'. $this->lang['advanced-config.unlock-administration.request'] .'</a>', 
@@ -181,7 +179,7 @@ class AdminAdvancedConfigController extends AdminController
 	{
 		$this->general_config->set_site_url($this->form->get_value('site_url'));
 		$this->general_config->set_site_path($this->form->get_value('site_path'));
-		$this->general_config->set_site_timezone($this->form->get_value('site_timezone')->get_label());
+		$this->general_config->set_site_timezone($this->form->get_value('site_timezone')->get_raw_value());
 		GeneralConfig::save();
 		
 		$this->sessions_config->set_cookie_name($this->form->get_value('cookie_name'));
@@ -215,13 +213,14 @@ class AdminAdvancedConfigController extends AdminController
 		else
 		{
 			Debug::disable_debug_mode();
-		}		
+		}
+		
+		HtaccessFileCache::regenerate();
 	}
 	
 	private function clear_cache()
 	{
 		AppContext::get_cache_service()->clear_cache();
-		HtaccessFileCache::regenerate();
 	}
 }
 ?>

@@ -7,9 +7,20 @@
 		<!-- Default CSS -->
 		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/default/theme/admin_default.css" type="text/css" media="screen" />
 		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/default/theme/default.css" type="text/css" media="screen" />
-
+		
 		<!-- Theme CSS -->
-		{THEME_CSS}
+		# IF C_CSS_CACHE_ENABLED #
+		<link rel="stylesheet" href="{PATH_TO_ROOT}/kernel/css_cache.php?name=admin-theme-{THEME}&files=
+		/templates/default/theme/admin_design.css;
+		/templates/default/theme/admin_global.css;
+		/templates/default/theme/admin_content.css;
+		/templates/default/theme/admin_generic.css" type="text/css" media="screen, print, handheld" />
+		# ELSE #
+		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/default/theme/admin_design.css" type="text/css" media="screen" />
+		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/default/theme/admin_global.css" type="text/css" media="screen" />
+		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/default/theme/admin_content.css" type="text/css" media="screen" />
+		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/default/theme/admin_generic.css" type="text/css" media="screen" />
+		# ENDIF #
 		
 		<!-- Modules CSS -->
 		{MODULES_CSS}
@@ -23,19 +34,21 @@
 			var PATH_TO_ROOT = "{PATH_TO_ROOT}";
 			var TOKEN = "{TOKEN}";
 			var THEME = "{THEME}";
+			var LANG = "{LANG}";
 		-->
 		</script>
 
 		<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/lib/js/scriptaculous/prototype.js"></script>
 		<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/lib/js/scriptaculous/scriptaculous.js"></script>
-		<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/lib/js/phpboost/global.js"></script>	
+		<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/lib/js/phpboost/global.js"></script>
+		<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/lib/js/lightbox/lightbox.js"></script>
 
 	</head>
 	<body>
 	
 	# IF C_HEADER_LOGO #
 		<style type="text/css">
-			div#header_admin_container {
+			div#logo {
    				background: url('{HEADER_LOGO}') no-repeat;
 			}
 		</style>
@@ -43,7 +56,10 @@
 	
 	<div id="global">
 		<div id="header_admin_container">
-			<div id="header_admin">&nbsp;</div>
+			<div id="header_admin">
+				<div id="logo"></div>
+				<div id="site_name">{SITE_NAME}</div>
+			</div>
 			<div id="sub_header_admin">
 				<div class="dynamic_menu">
 					# INCLUDE subheader_menu #

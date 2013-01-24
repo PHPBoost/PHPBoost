@@ -295,5 +295,4 @@ class ContributionService
 		return $array_result;
 	}
 }
-
 ?>

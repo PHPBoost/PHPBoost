@@ -85,7 +85,7 @@ class ErrorController extends AbstractController
 		$this->exception = $exception;
 	}
 	
-	public function execute(HTTPRequest $request)
+	public function execute(HTTPRequestCustom $request)
 	{
 		$this->create_view($request);
 		$this->load_env();
@@ -120,7 +120,7 @@ class ErrorController extends AbstractController
 		return $this->response = $response;
 	}
 
-	private function create_view(HTTPRequest $request)
+	private function create_view(HTTPRequestCustom $request)
 	{
 		$view_builder = new ErrorViewBuilder();
 		$this->view = $view_builder->build($this->level, $this->title, $this->code, $this->message,

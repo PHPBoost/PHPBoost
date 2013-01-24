@@ -3,8 +3,8 @@
  *                      AdminThemeDeleteController.class.php
  *                            -------------------
  *   begin                : April 21, 2011
- *   copyright            : (C) 2011 Kévin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   copyright            : (C) 2011 Kevin MASSY
+ *   email                : kevin.massy@phpboost.com
  *
  *
  ###################################################
@@ -33,7 +33,7 @@ class AdminThemeDeleteController extends AdminController
 	private $theme_id;
 	private $tpl;
 	
-	public function execute(HTTPRequest $request)
+	public function execute(HTTPRequestCustom $request)
 	{
 		$this->init();
 		$this->theme_id = $request->get_value('id', null);
@@ -46,7 +46,7 @@ class AdminThemeDeleteController extends AdminController
 				$drop_files = $this->form->get_value('drop_files')->get_raw_value();
 				$this->delete_theme($drop_files);
 
-				$this->tpl->put('MSG', MessageHelper::display($this->lang['themes.delete.success'], MessageHelper::SUCCESS, 4));
+				AppContext::get_response()->redirect(AdminThemeUrlBuilder::list_installed_theme());
 			}
 			
 			$this->tpl->put('FORM', $this->form->display());
@@ -63,7 +63,7 @@ class AdminThemeDeleteController extends AdminController
 	private function init()
 	{
 		$this->lang = LangLoader::get('admin-themes-common');
-		$this->tpl = new StringTemplate('# INCLUDE MSG # # INCLUDE FORM #');
+		$this->tpl = new StringTemplate('# INCLUDE FORM #');
 		$this->tpl->add_lang($this->lang);
 	}
 	
@@ -120,5 +120,4 @@ class AdminThemeDeleteController extends AdminController
 		}
 	}
 }
-
 ?>

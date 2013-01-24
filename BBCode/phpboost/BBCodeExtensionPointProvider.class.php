@@ -3,8 +3,8 @@
  *                              BBCodeExtensionPointProvider.class.php
  *                            -------------------
  *   begin                : October 11, 2011
- *   copyright            : (C) 2011 Kévin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   copyright            : (C) 2011 Kevin MASSY
+ *   email                : kevin.massy@phpboost.com
  *
  *
  ###################################################
@@ -29,12 +29,19 @@ class BBCodeExtensionPointProvider extends ExtensionPointProvider
 {
    	public function __construct()
     {
-        parent::__construct('bbcode');
+        parent::__construct('BBCode');
     }
     
 	public function content_formatting()
 	{
 		return new BBCodeContentFormattingExtensionPoint();
+	}
+	
+	public function css_files()
+	{
+		$module_css_files = new ModuleCssFiles();
+		$module_css_files->adding_always_displayed_file('bbcode.css');
+		return $module_css_files;
 	}
 }
 ?>

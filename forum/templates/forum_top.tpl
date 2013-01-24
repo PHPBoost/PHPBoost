@@ -39,7 +39,7 @@
 			xmlhttprequest_sender(xhr_object, null);
 		}
 		
-		var delay_forum = 1000; //D�lai apr�s lequel le bloc est automatiquement masqu�, apr�s le d�part de la souris.
+		var delay_forum = 1000;
 		var timeout_forum;
 		var displayed_forum = false;
 		var previous_forumblock;
@@ -90,7 +90,7 @@
 						<div style="margin-top:4px;">
 							# IF C_FORUM_CONNEXION #
 								# IF C_USER_NOTCONNECTED #
-								<a class="small_link" href="{PATH_TO_ROOT}/member/error.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/connect_mini.png" alt="" class="valign_middle" /> {L_CONNECT}</a> <span style="color:#000000;">&bull;</span> <a class="small_link" href="{PATH_TO_ROOT}/member/index.php?url=/register"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/register_mini.png" alt="" class="valign_middle" /> {L_REGISTER}</a>
+								<a class="small_link" href="${relative_url(UserUrlBuilder::connect())}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/connect_mini.png" alt="" class="valign_middle" /> {L_CONNECT}</a> <span style="color:#000000;">&bull;</span> <a class="small_link" href="${relative_url(UserUrlBuilder::registration())}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/register_mini.png" alt="" class="valign_middle" /> {L_REGISTER}</a>
 								# ENDIF #
 								# IF C_USER_CONNECTED #
 									<a class="small_link" href="?disconnect=true&amp;token={TOKEN}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/home_mini.png" alt="" class="valign_middle" /> {L_DISCONNECT}</a> 
@@ -99,16 +99,16 @@
 							
 							# IF C_MODERATION_PANEL #
 								# IF C_FORUM_CONNEXION # <span style="color:#000000;">&bull;</span> # ENDIF #
-								<a class="small_link" href="./moderation_forum.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/modo_mini.png" class="valign_middle" alt="" /> {L_MODERATION_PANEL}</a>
+								<a class="small_link" href="{PATH_TO_ROOT}/forum/moderation_forum.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/modo_mini.png" class="valign_middle" alt="" /> {L_MODERATION_PANEL}</a>
 							# ENDIF #
 						</div>
 					</div>
 					<div style="float:right;text-align:right">
-						<form action="search.php?token={TOKEN}" method="post">
+						<form action="{PATH_TO_ROOT}/forum/search.php?token={TOKEN}" method="post">
                             <div>
-                                <label><input type="text" size="14" id="search" name="search" value="{L_SEARCH}{PATH_TO_ROOT}." class="text" style="background:#FFFFFF url({PATH_TO_ROOT}/templates/{THEME}/images/search.png) no-repeat;background-position:2px 1px;padding-left:22px;" onclick="if(this.value=='{L_SEARCH}{PATH_TO_ROOT}.')this.value='';" onblur="if(this.value=='')this.value='{L_SEARCH}{PATH_TO_ROOT}.';" /></label>
+                                <label><input type="text" size="14" id="search" name="search" value="{L_SEARCH}..." class="text" style="background:#FFFFFF url({PATH_TO_ROOT}/templates/{THEME}/images/search.png) no-repeat;background-position:2px 1px;padding-left:22px;" onclick="if(this.value=='{L_SEARCH}...')this.value='';" onblur="if(this.value=='')this.value='{L_SEARCH}...';" /></label>
                                 <input class="submit" value="{L_SEARCH}" type="submit" name="valid_search" style="padding:1px" /><br />
-                                <a href="search.php" title="{L_ADVANCED_SEARCH}" class="small_link">{L_ADVANCED_SEARCH}</a>
+                                <a href="{PATH_TO_ROOT}/forum/search.php{SID}" title="{L_ADVANCED_SEARCH}" class="small_link">{L_ADVANCED_SEARCH}</a>
                                 
                                 <input type="hidden" name="time" value="30000" />
                                 <input type="hidden" name="where" value="contents" />
@@ -121,22 +121,24 @@
 			</div>
 			<div class="forum_links" style="border-top:none;">
 				<div style="float:left;">
-					&bull; <a href="index.php?">{L_FORUM_INDEX}</a>
+					&bull; <a href="index.php?{SID}">{L_FORUM_INDEX}</a>
 				</div>
-				<div style="float:right;">
-					<img src="{PICTURES_DATA_PATH}/images/track_mini.png" alt="" class="valign_middle" /> {U_TOPIC_TRACK} &bull;
-					<img src="{PICTURES_DATA_PATH}/images/last_mini.png" alt="" class="valign_middle" /> {U_LAST_MSG_READ} &bull;
-					<img src="{PICTURES_DATA_PATH}/images/new_mini.png" alt="" class="valign_middle" /> <span id="nbr_unread_topics">{U_MSG_NOT_READ}</span>
-					
-					<div style="position:relative;float:left;">
-						<div style="position:absolute;z-index:100;float:left;margin-left:130px;display:none;" id="forum_blockforum_unread">
+				# IF C_USER_CONNECTED #
+					<div style="float:right;">
+						<img src="{PICTURES_DATA_PATH}/images/track_mini.png" alt="" class="valign_middle" /> {U_TOPIC_TRACK} &bull;
+						<img src="{PICTURES_DATA_PATH}/images/last_mini.png" alt="" class="valign_middle" /> {U_LAST_MSG_READ} &bull;
+						<img src="{PICTURES_DATA_PATH}/images/new_mini.png" alt="" class="valign_middle" /> <span id="nbr_unread_topics">{U_MSG_NOT_READ}</span>
+						
+						<div style="position:relative;float:left;">
+							<div style="position:absolute;z-index:100;float:left;margin-left:130px;display:none;" id="forum_blockforum_unread">
+							</div>
 						</div>
+						<a href="javascript:XMLHttpRequest_unread_topics('');" onmouseover="forum_hide_block('forum_unread', 1);" onmouseout="forum_hide_block('forum_unread', 0);"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/refresh_mini.png" alt="" id="refresh_unread2" class="valign_middle" /></a>
+						
+						&bull;
+						<img src="{PATH_TO_ROOT}/templates/{THEME}/images/read_mini.png" alt="" class="valign_middle" /> {U_MSG_SET_VIEW}
 					</div>
-					<a href="javascript:XMLHttpRequest_unread_topics('');" onmouseover="forum_hide_block('forum_unread', 1);" onmouseout="forum_hide_block('forum_unread', 0);"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/refresh_mini.png" alt="" id="refresh_unread" class="valign_middle" /></a>
-
-					&bull;					
-					<img src="{PATH_TO_ROOT}/templates/{THEME}/images/read_mini.png" alt="" class="valign_middle" /> {U_MSG_SET_VIEW}
-				</div>
+				# ENDIF #
 				<div class="spacer"></div>
 			</div>
 		</div>

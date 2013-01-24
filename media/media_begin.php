@@ -34,9 +34,15 @@ if (defined('PHPBOOST') !== true)
 $Cache->load('media');
 load_module_lang('media');
 
+$id_media = retrieve(GET, 'id', 0);
+$id_cat = retrieve(GET, 'cat', 0);
+$level = array('', ' class="modo"', ' class="admin"');
+
 require_once('media_constant.php');
 
-define('FEED_URL', SyndicationUrlBuilder::rss('media')->absolute());
+$notation = new Notation();
+$notation->set_module_name('media');
+$notation->set_notation_scale($MEDIA_CONFIG['note_max']);
 
 function bread_crumb($id)
 {

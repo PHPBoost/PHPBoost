@@ -1,5 +1,3 @@
-		<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/lib/js/lightbox/lightbox.js"></script>
-
 		<script type="text/javascript">
 		<!--		
 		function Confirm_file() {
@@ -55,7 +53,7 @@
 				document.getElementById('img' + id_file).innerHTML = '<img src="{PATH_TO_ROOT}/templates/{THEME}/images/loading_mini.gif" alt="" class="valign_middle" />';
 
 				data = "id_file=" + id_file + "&name=" + name.replace(/&/g, "%26") + "&previous_name=" + previous_cut_name.replace(/&/g, "%26");
-				var xhr_object = xmlhttprequest_init('xmlhttprequest.php?token={TOKEN}&rename_pics=1&token={TOKEN}');
+				var xhr_object = xmlhttprequest_init('{PATH_TO_ROOT}/gallery/xmlhttprequest.php?token={TOKEN}&rename_pics=1&token={TOKEN}');
 				xhr_object.onreadystatechange = function() 
 				{
 					if( xhr_object.readyState == 4 && xhr_object.status == 200 && xhr_object.responseText != '0' )
@@ -81,20 +79,30 @@
 			document.getElementById('img' + id_file).innerHTML = '<img src="{PATH_TO_ROOT}/templates/{THEME}/images/loading_mini.gif" alt="" class="valign_middle" />';
 
 			data = 'id_file=' + id_file;
-			var xhr_object = xmlhttprequest_init('xmlhttprequest.php?token={TOKEN}&aprob_pics=1&token={TOKEN}');
+			var xhr_object = xmlhttprequest_init('{PATH_TO_ROOT}/gallery/xmlhttprequest.php?token={TOKEN}&aprob_pics=1&token={TOKEN}');
 			xhr_object.onreadystatechange = function() 
 			{
 				if( xhr_object.readyState == 4 && xhr_object.status == 200 && xhr_object.responseText != '-1' )
 				{	
-					var img_aprob;
+					var img_aprob, title_aprob;
 					if( xhr_object.responseText == 0 )
+					{
 						img_aprob = 'unvisible.png';
+						title_aprob = '{L_UNAPROB}';
+					}
 					else
+					{
 						img_aprob = 'visible.png';
+						title_aprob = '{L_APROB}';
+					}
 					
 					document.getElementById('img' + id_file).innerHTML = '';
 					if( document.getElementById('img_aprob' + id_file) )
+					{
 						document.getElementById('img_aprob' + id_file).src = '{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/' + img_aprob;
+						document.getElementById('img_aprob' + id_file).title = '' + title_aprob;
+						document.getElementById('img_aprob' + id_file).alt = '' + title_aprob;
+					}
 				}
 				else if( xhr_object.readyState == 4 && xhr_object.responseText == '-1' )
 					document.getElementById('img' + id_file).innerHTML = '';
@@ -179,12 +187,12 @@
 					var key_right = start_thumb + j;
 					if( direction == 'left' && array_pics[key_left] )							
 					{	
-						document.getElementById('thumb' + i).innerHTML = '<a href="gallery' + array_pics[key_left]['link'] + '"><img src="pics/thumbnails/' + array_pics[key_left]['path'] + '" alt="" /></a>';
+						document.getElementById('thumb' + i).innerHTML = '<a href="{PATH_TO_ROOT}/gallery/gallery' + array_pics[key_left]['link'] + '"><img src="{PATH_TO_ROOT}/gallery/pics/thumbnails/' + array_pics[key_left]['path'] + '" alt="" /></a>';
 						j++;
 					}
 					else if( direction == 'right' && array_pics[key_right] ) 
 					{
-						document.getElementById('thumb' + i).innerHTML = '<a href="gallery' + array_pics[key_right]['link'] + '"><img 	src="pics/thumbnails/' + array_pics[key_right]['path'] + '" alt="" /></a>';				
+						document.getElementById('thumb' + i).innerHTML = '<a href="{PATH_TO_ROOT}/gallery/gallery' + array_pics[key_right]['link'] + '"><img 	src="{PATH_TO_ROOT}/gallery/pics/thumbnails/' + array_pics[key_right]['path'] + '" alt="" /></a>';				
 						j++;
 					}
 				}
@@ -204,7 +212,7 @@
 					if (already_view && ({DISPLAY_MODE} == 3 || {DISPLAY_MODE} == 1))
 					{
 						data = '';
-						var xhr_object = xmlhttprequest_init('xmlhttprequest.php?token={TOKEN}&id=' + idpics + '&cat={CAT_ID}&increment_view=1');
+						var xhr_object = xmlhttprequest_init('{PATH_TO_ROOT}/gallery/xmlhttprequest.php?token={TOKEN}&id=' + idpics + '&cat={CAT_ID}&increment_view=1');
 						xmlhttprequest_sender(xhr_object, data);
 					}
 
@@ -223,31 +231,37 @@
 		</script> 
 
 		# INCLUDE message_helper #
-
+		<div class="module_actions">
+			 {EDIT}
+			{ADD_PICS}
+		</div>
+		<div class="spacer"></div>
+		
 		<div class="module_position">					
 			<div class="module_top_l"></div>		
 			<div class="module_top_r"></div>
 			<div class="module_top">
-				<div style="float:left">
-					<a href="gallery.php">{L_GALLERY}</a> &raquo; {U_GALLERY_CAT_LINKS} {ADD_PICS}
+				<div class="module_top_title">
+					<a href="${relative_url(SyndicationUrlBuilder::rss('gallery', CAT_ID))}" title="Rss"><img style="vertical-align:middle;margin-top:-2px;" src="{PATH_TO_ROOT}/templates/{THEME}/images/rss.png" alt="Rss" title="Rss" /></a>
+					{L_GALLERY} {U_GALLERY_CAT_LINKS} {EDIT_CAT}
 				</div>
-				<div style="float:right">
+				<div class="module_top_com">
 					{PAGINATION}
 				</div>
 			</div>
 			<div class="module_contents">
 				<div style="margin-bottom:50px;">
-					<div class="dynamic_menu" style="float:right;margin-right:55px;">
+					<div class="dynamic_menu" style="float:right;margin-right:85px;">
 						<ul>
 							<li onmouseover="show_menu(1, 0);" onmouseout="hide_menu(0);">
-								<h5 style="margin-right:20px;"><img src="{PATH_TO_ROOT}/wiki/templates/images/contribuate.png" class="valign_middle" alt="" /> {L_DISPLAY}</h5>
+								<h5 style="margin-right:20px;"><img src="{PATH_TO_ROOT}/gallery/templates/images/contribuate.png" class="valign_middle" alt="" /> {L_DISPLAY}</h5>
 								<ul id="smenu1">
 									<li>{U_BEST_VIEWS}</li>
 									<li>{U_BEST_NOTES}</li>
 								</ul>
 							</li>
 							<li onmouseover="show_menu(2, 0);" onmouseout="hide_menu(0);">
-								<h5 style="margin-right:20px;"><img src="{PATH_TO_ROOT}/wiki/templates/images/tools.png" class="valign_middle" alt="" /> {L_ORDER_BY}</h5>
+								<h5 style="margin-right:20px;"><img src="{PATH_TO_ROOT}/gallery/templates/images/tools.png" class="valign_middle" alt="" /> {L_ORDER_BY}</h5>
 								<ul id="smenu2">
 									# START order #
 									<li>{order.ORDER_BY}</li>
@@ -255,7 +269,7 @@
 								</ul>
 							</li>
 							<li onmouseover="show_menu(3, 0);" onmouseout="hide_menu(0);">
-								<h5 style="margin-right:5px;"><img src="{PATH_TO_ROOT}/wiki/templates/images/tools.png" class="valign_middle" alt="" /> {L_DIRECTION}</h5>
+								<h5 style="margin-right:5px;"><img src="{PATH_TO_ROOT}/gallery/templates/images/tools.png" class="valign_middle" alt="" /> {L_DIRECTION}</h5>
 								<ul id="smenu3">
 									<li>{U_ASC}</li>
 									<li>{U_DESC}</li>	
@@ -267,15 +281,15 @@
 				
 				# IF C_GALLERY_CATS #
 				<div class="block_container">
-					<div class="block_top">{L_CATEGORIES} {EDIT_CAT}</div>
+					<div class="block_top">{L_CATEGORIES}</div>
 					<div class="block_contents">
 						<table style="width:100%">
 							# START cat_list #
 							{cat_list.OPEN_TR}								
 							<td style="vertical-align:bottom;text-align:center;width:{COLUMN_WIDTH_CATS}%;margin:15px 0px;">
-								<a href="gallery{cat_list.U_CAT}">{cat_list.IMG}</a>
+								<a href="{cat_list.U_CAT}">{cat_list.IMG}</a>
 								<br />
-								<a href="gallery{cat_list.U_CAT}">{cat_list.CAT}</a> {cat_list.EDIT}
+								<a href="{cat_list.U_CAT}">{cat_list.CAT}</a> {cat_list.EDIT}
 								<br />
 								<span class="text_small">{cat_list.DESC}</span> 
 								<br />
@@ -296,7 +310,7 @@
 				
 				# IF C_GALLERY_PICS #
 				<div class="block_container">
-					<div class="block_top">{GALLERY} {EDIT}</div>
+					<div class="block_top">{GALLERY}</div>
 					<div class="block_contents">
 						<p style="text-align:center" id="pics_max">{PAGINATION_PICS}</p>				
 						
@@ -350,7 +364,7 @@
 								<tr>										
 									<td colspan="2" class="row2 text_small" style="border:none;padding:4px;">
 										&nbsp;&nbsp;&nbsp;<span id="fihref{ID}"><a href="javascript:display_rename_file('{ID}', '{RENAME}', '{RENAME_CUT}');"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="{L_EDIT}" class="valign_middle" /></a></span>									
-										<a href="gallery{U_DEL}" onclick="javascript:return Confirm_file();" title="{L_DELETE}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" class="valign_middle" /></a> 						
+										<a href="{U_DEL}" onclick="javascript:return Confirm_file();" title="{L_DELETE}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" class="valign_middle" /></a> 						
 										<div style="position:absolute;z-index:100;margin-top:95px;float:left;display:none;" id="move{ID}">
 											<div class="bbcode_block" style="width:190px;overflow:auto;" onmouseover="pics_hide_block({ID}, 1);" onmouseout="pics_hide_block({ID}, 0);">
 												<div style="margin-bottom:4px;"><strong>{L_MOVETO}</strong>:</div>
@@ -363,7 +377,7 @@
 										<a href="javascript:pics_display_block({ID});" onmouseover="pics_hide_block({ID}, 1);" onmouseout="pics_hide_block({ID}, 0);" class="bbcode_hover" title="{L_MOVETO}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/upload/move.png" alt="" class="valign_middle" /></a>
 										
 										
-										<a href="javascript:pics_aprob({ID});" title="{L_APROB_IMG}"><img id="img_aprob{ID}" src="{PATH_TO_ROOT}/templates/{THEME}/images/{IMG_APROB}" alt="{L_APROB_IMG}" title="{L_APROB_IMG}" class="valign_middle" /></a>
+										<a href="javascript:pics_aprob({ID});"><img id="img_aprob{ID}" src="{PATH_TO_ROOT}/templates/{THEME}/images/{IMG_APROB}" alt="{L_APROB_IMG}" title="{L_APROB_IMG}" class="valign_middle" /></a>
 										&nbsp;<span id="img{ID}"></span>
 									</td>
 								</tr>
@@ -407,12 +421,12 @@
 									<div style="width:180px;margin:auto;">										
 										# IF C_GALLERY_MODO #
 										<span id="fihref{pics_list.ID}"><a href="javascript:display_rename_file('{pics_list.ID}', '{pics_list.RENAME}', '{pics_list.RENAME_CUT}');" title="{L_EDIT}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="{L_EDIT}" class="valign_middle" /></a></span>									
-										<a href="gallery{pics_list.U_DEL}" onclick="javascript:return Confirm_file();" title="{L_DELETE}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" class="valign_middle" /></a>									
+										<a href="{pics_list.U_DEL}" onclick="javascript:return Confirm_file();" title="{L_DELETE}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" class="valign_middle" /></a>									
 										<div style="position:relative;margin:auto;width:170px;display:none;float:right" onmouseover="pics_hide_block({pics_list.ID}, 1);" onmouseout="pics_hide_block({pics_list.ID}, 0);" id="move{pics_list.ID}">
 											<div style="position:absolute;z-index:100;margin-top:90px;">
 												<div class="bbcode_block" style="width:170px;overflow:auto;">
 													<div style="margin-bottom:4px;" class="text_small"><strong>{L_MOVETO}</strong>:</div>
-													<select class="valign_middle" name="{pics_list.ID}cat" onchange="document.location = 'gallery{pics_list.U_MOVE}">
+													<select class="valign_middle" name="{pics_list.ID}cat" onchange="document.location = '{pics_list.U_MOVE}">
 														{pics_list.CAT}
 													</select>
 													<br /><br />
@@ -445,9 +459,6 @@
 			<div class="module_bottom_l"></div>		
 			<div class="module_bottom_r"></div>
 			<div class="module_bottom">
-				<div style="float:left" class="text_strong">
-					<a href="gallery.php">{L_GALLERY}</a> &raquo; {U_GALLERY_CAT_LINKS} {ADD_PICS}
-				</div>
 				<div style="float:right">
 					{PAGINATION}
 				</div>

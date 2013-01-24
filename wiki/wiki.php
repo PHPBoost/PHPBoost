@@ -41,10 +41,11 @@ $parse_redirection = false;
 //Requêtes préliminaires utiles par la suite
 if (!empty($encoded_title)) //Si on connait son titre
 {
-	$result = $Sql->query_while("SELECT a.id, a.is_cat, a.hits, a.redirect, a.id_cat, a.title, a.encoded_title, a.is_cat, a.defined_status, a.nbr_com, f.id AS id_favorite, a.undefined_status, a.auth, c.menu, c.content
+	$result = $Sql->query_while("SELECT a.id, a.is_cat, a.hits, a.redirect, a.id_cat, a.title, a.encoded_title, a.is_cat, a.defined_status, com_topic.number_comments, f.id AS id_favorite, a.undefined_status, a.auth, c.menu, c.content
 	FROM " . PREFIX . "wiki_articles a
 	LEFT JOIN " . PREFIX . "wiki_contents c ON c.id_contents = a.id_contents
 	LEFT JOIN " . PREFIX . "wiki_favorites f ON f.id_article = a.id
+	LEFT JOIN " . DB_TABLE_COMMENTS_TOPIC . " com_topic ON a.id = com_topic.id_in_module AND com_topic.module_id = 'wiki'
 	WHERE a.encoded_title = '" . $encoded_title . "'
 	GROUP BY a.id", __LINE__, __FILE__);
 	$num_rows = $Sql->num_rows($result, "SELECT COUNT(*) FROM " . PREFIX . "wiki_articles WHERE encoded_title = '" . $encoded_title . "'", __LINE__, __FILE__);
@@ -57,10 +58,11 @@ if (!empty($encoded_title)) //Si on connait son titre
 		$ex_title = $article_infos['title'];
 		$id_redirection = $article_infos['id'];
 		
-		$result = $Sql->query_while("SELECT a.id, a.is_cat, a.hits, a.redirect, a.id_cat, a.title, a.encoded_title, a.is_cat, a.nbr_com, a.defined_status, f.id AS id_favorite, a.undefined_status, a.auth, c.menu, c.content
+		$result = $Sql->query_while("SELECT a.id, a.is_cat, a.hits, a.redirect, a.id_cat, a.title, a.encoded_title, a.is_cat, com_topic.number_comments, a.defined_status, f.id AS id_favorite, a.undefined_status, a.auth, c.menu, c.content
 		FROM " . PREFIX . "wiki_articles a
 		LEFT JOIN " . PREFIX . "wiki_contents c ON c.id_contents = a.id_contents
 		LEFT JOIN " . PREFIX . "wiki_favorites f ON f.id_article = a.id
+		LEFT JOIN " . DB_TABLE_COMMENTS_TOPIC . " com_topic ON a.id = com_topic.id_in_module AND com_topic.module_id = 'wiki'
 		WHERE a.id = '" . $article_infos['redirect'] . "'
 		GROUP BY a.id", __LINE__, __FILE__);
 		$article_infos = $Sql->fetch_assoc($result);
@@ -72,10 +74,11 @@ if (!empty($encoded_title)) //Si on connait son titre
 //Sinon on cherche dans les archives
 elseif (!empty($id_contents))
 {
-	$result = $Sql->query_while("SELECT a.title, a.encoded_title, a.id, c.id_contents, a.id_cat, a.is_cat, a.defined_status, a.undefined_status, a.nbr_com, f.id AS id_favorite, c.menu, c.content
+	$result = $Sql->query_while("SELECT a.title, a.encoded_title, a.id, c.id_contents, a.id_cat, a.is_cat, a.defined_status, a.undefined_status, com_topic.number_comments, f.id AS id_favorite, c.menu, c.content
 	FROM " . PREFIX . "wiki_contents c
 	LEFT JOIN " . PREFIX . "wiki_articles a ON a.id = c.id_article
 	LEFT JOIN " . PREFIX . "wiki_favorites f ON f.id_article = a.id
+	LEFT JOIN " . DB_TABLE_COMMENTS_TOPIC . " com_topic ON a.id = com_topic.id_in_module AND com_topic.module_id = 'wiki'
 	WHERE c.id_contents = '" . $id_contents . "'", __LINE__, __FILE__);
 	$article_infos = $Sql->fetch_assoc($result);
 	$Sql->query_close($result);
@@ -151,6 +154,7 @@ if ((!empty($encoded_title) || !empty($id_contents)) && $num_rows > 0)
 	));
 	
 	$Template->put_all(array(
+		'ID_CAT' => $article_infos['id_cat'],
 		'TITLE' => $article_infos['title'],
 		'CONTENTS' => FormatingHelper::second_parse(wiki_no_rewrite($article_infos['content'])),
 		'HITS' => ($_WIKI_CONFIG['count_hits'] != 0 && $id_contents == 0) ? sprintf($LANG['wiki_article_hits'], (int)$article_infos['hits']) : '',
@@ -217,77 +221,19 @@ elseif (!empty($encoded_title) && $num_rows == 0)
 //Sinon c'est l'accueil
 else
 {
-	if ($_WIKI_CONFIG['last_articles'] > 1)
-    {
-    	$result = $Sql->query_while("SELECT a.title, a.encoded_title, a.id
-			FROM " . PREFIX . "wiki_articles a
-			LEFT JOIN " . PREFIX . "wiki_contents c ON c.id_contents = a.id_contents
-			WHERE a.redirect = 0
-			ORDER BY c.timestamp DESC
-			LIMIT 0, " . $_WIKI_CONFIG['last_articles'], __LINE__, __FILE__);              
-		$articles_number = $Sql->num_rows($result, "SELECT COUNT(*) FROM " . PREFIX . "wiki_articles WHERE encoded_title = '" . $encoded_title . "'", __LINE__, __FILE__);
-		
-		$Template->assign_block_vars('last_articles', array(
-			'L_ARTICLES' => $LANG['wiki_last_articles_list'],
-			'RSS' => $articles_number > 0 ? '<a href="' . SyndicationUrlBuilder::rss('wiki')->rel() . '"><img src="../templates/' . get_utheme() . '/images/rss.png" alt="RSS" /></a>' : ''
-		));
-		
-		$i = 0;
-		while ($row = $Sql->fetch_assoc($result))
-		{
-			$Template->assign_block_vars('last_articles.list', array(
-				'ARTICLE' => $row['title'],
-				'TR' => ($i > 0 && ($i%2 == 0)) ? '</tr><tr>' : '',
-				'U_ARTICLE' => url('wiki.php?title=' . $row['encoded_title'], $row['encoded_title'])
-			));
-			$i++;
-		}
-		
-		if ($articles_number == 0)
-		{
-			$Template->put_all(array(
-				'L_NO_ARTICLE' => '<td style="text-align:center;" class="row2">' . $LANG['wiki_no_article'] . '</td>',
-			));
-		}
-	}
-	//Affichage de toutes les catégories si c'est activé
-	if ($_WIKI_CONFIG['display_cats'] != 0)
+	$modulesLoader = AppContext::get_extension_provider_service();
+	$module_name = 'wiki';
+	$module = $modulesLoader->get_provider($module_name);
+	if ($module->has_extension_point(HomePageExtensionPoint::EXTENSION_POINT))
 	{
-		$Template->assign_block_vars('cat_list', array(
-			'L_CATS' => $LANG['wiki_cats_list']
-		));
-		$i = 0;
-		foreach ($_WIKI_CATS as $id => $infos)
-		{
-			//Si c'est une catégorie mère
-			if ($infos['id_parent'] == 0)
-			{
-				$Template->assign_block_vars('cat_list.list', array(
-					'CAT' => $infos['name'],
-					'U_CAT' => url('wiki.php?title=' . Url::encode_rewrite($infos['name']), Url::encode_rewrite($infos['name']))
-				));
-				$i++;
-			}
-		}
-		if ($i == 0)
-		{
-			$Template->put_all(array(
-				'L_NO_CAT' => $LANG['wiki_no_cat'],
-			));
-		}
+		echo $module->get_extension_point(HomePageExtensionPoint::EXTENSION_POINT)->get_home_page()->get_view()->display();
 	}
-	
-	$Template->put_all(array(
-		'TITLE' => !empty($_WIKI_CONFIG['wiki_name']) ? $_WIKI_CONFIG['wiki_name'] : $LANG['wiki'],
-		'INDEX_TEXT' => !empty($_WIKI_CONFIG['index_text']) ? FormatingHelper::second_parse(wiki_no_rewrite($_WIKI_CONFIG['index_text'])) : $LANG['wiki_empty_index'],
-		'L_EXPLORER' => $LANG['wiki_explorer'],
-		'U_EXPLORER' => url('explorer.php'),
-        ));
-
-	$page_type = 'index';
-	include('../wiki/wiki_tools.php');
-	
-	$Template->pparse('index');
+	elseif (!$no_alert_on_error)
+	{
+		$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
+            'Le module <strong>' . $module_name . '</strong> n\'a pas de fonction get_home_page!', UserErrorController::FATAL);
+        DispatchManager::redirect($controller);
+	}
 }
 
 require_once('../kernel/footer.php');

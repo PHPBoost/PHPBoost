@@ -76,7 +76,7 @@ class AutoConnectData
 
 	public static function change_key($user_id)
 	{
-		$data = new AutoConnectData($user_id, Random::hexa64uid());
+		$data = new AutoConnectData($user_id, KeyGenerator::generate_key(64));
 		$data->save_in_db();
 		return $data;
 	}

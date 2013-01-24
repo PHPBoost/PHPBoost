@@ -51,11 +51,17 @@ class FaqSetup extends DefaultModuleSetup
 	public function uninstall()
 	{
 		$this->drop_tables();
+		$this->delete_configuration();
 	}
 
 	private function drop_tables()
 	{
 		PersistenceContext::get_dbms_utils()->drop(array(self::$faq_table, self::$faq_cats_table));
+	}
+	
+	private function delete_configuration()
+	{
+		ConfigManager::delete('faq', 'config');
 	}
 
 	private function create_tables()

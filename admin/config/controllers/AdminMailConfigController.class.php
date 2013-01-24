@@ -37,7 +37,7 @@ class AdminMailConfigController extends AbstractAdminFormPageController
 	public function __construct()
 	{
 		$this->load_lang();
-		parent::__construct($this->lang['mail-config.mail_config_saved']);
+		parent::__construct(LangLoader::get_message('process.success', 'errors-common'));
 		$this->load_config();
 	}
 
@@ -53,7 +53,7 @@ class AdminMailConfigController extends AbstractAdminFormPageController
 
 	protected function create_form()
 	{
-		$form = new HTMLForm('mail-config.mail_sending_config');
+		$form = new HTMLForm('mail_config_mail_sending_config');
 
 		$fieldset = new FormFieldsetHTML('general_config', $this->lang['mail-config.general_mail_config']);
 		$form->add_fieldset($fieldset);

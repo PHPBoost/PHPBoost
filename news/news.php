@@ -34,28 +34,38 @@ $idnews = retrieve(GET, 'id', 0);
 $idcat = retrieve(GET, 'cat', 0);
 $arch = retrieve(GET, 'arch', false);
 $user = retrieve(GET, 'user', false, TBOOL);
-$level = array('', ' modo', ' admin');
 $now = new Date(DATE_NOW, TIMEZONE_AUTO);
 
-if(!$User->check_auth($NEWS_CONFIG['global_auth'], AUTH_NEWS_READ))
+if (!$User->check_auth($NEWS_CONFIG['global_auth'], AUTH_NEWS_READ))
 {
-    $error_controller = PHPBoostErrors::unexisting_page();
+    $error_controller = PHPBoostErrors::user_not_authorized();
+    DispatchManager::redirect($error_controller);
+}
+
+if (!empty($idcat) && !$news_cat->check_category_exists($idcat))
+{
+    $controller = new UserErrorController(LangLoader::get_message('error', 'errors'), $LANG['e_unexist_cat_news']);
+    DispatchManager::redirect($controller);
+}
+
+if (!$User->check_auth($NEWS_CAT[$idcat]['auth'], AUTH_NEWS_READ))
+{
+	$error_controller = PHPBoostErrors::user_not_authorized();
     DispatchManager::redirect($error_controller);
 }
 
 if (!empty($idnews)) // On affiche la news correspondant à l'id envoyé.
 {
-
 	// Récupération de la news
 	$result = $Sql->query_while("SELECT n.contents, n.extend_contents, n.title, n.id, n.idcat, n.timestamp, n.start, n.visible, n.user_id, n.img, n.alt, m.login, m.level, n.sources
 	FROM " . DB_TABLE_NEWS . " n LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = n.user_id
-	WHERE n.id = '" . $idnews . "'", __LINE__, __FILE__);
+	WHERE n.id = '" . $idnews . "' AND ('" . $now->get_timestamp() . "' >= n.start AND n.start > 0 AND ('" . $now->get_timestamp() . "' <= n.end OR n.end = 0) OR n.visible = 1)", __LINE__, __FILE__);
 	$news = $Sql->fetch_assoc($result);
 	$Sql->query_close($result);
 
 	if (!empty($news['id']) && !empty($NEWS_CAT[$news['idcat']]) && $User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_READ)
 		&& ($User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_MODERATE) || ($news['visible'] && $news['start'] < $now->get_timestamp())
-		|| $User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_WRITE) && $news['user_id'] == $User->get_id()))
+		|| $User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_WRITE) && $news['user_id'] == $User->get_attribute('user_id')))
 	{	
 		
 		$Sql->query_inject("UPDATE " . DB_TABLE_NEWS . " SET compt = compt + 1 WHERE id = '" . $idnews . "'", __LINE__, __LINE__); //MAJ du compteur.
@@ -65,7 +75,7 @@ if (!empty($idnews)) // On affiche la news correspondant à l'id envoyé.
 		$Bread_crumb->add($news['title'], 'news' . url('.php?id=' . $news['id'], '-' . $news['idcat'] . '-' . $news['id'] . '+' . Url::encode_rewrite($news['title']) . '.php'));
 
 		// Titre de la page.
-		define('TITLE', $NEWS_LANG['news'] . ' - ' . addslashes($news['title']));
+		define('TITLE', $NEWS_LANG['news'] . ' - ' . $news['title']);
 		require_once('../kernel/header.php');
 
 		$tpl = new FileTemplate('news/news.tpl');
@@ -96,7 +106,7 @@ if (!empty($idnews)) // On affiche la news correspondant à l'id envoyé.
 		FT_SEARCH(contents, '" . $news_content . "') OR
 		FT_SEARCH(extend_contents, '" . $news_content . "') 
 		) AND id <> '" . $news['id'] . "'
-		ORDER BY relevance DESC LIMIT 0, 100", __LINE__, __FILE__);
+		ORDER BY relevance DESC LIMIT 0, 10", __LINE__, __FILE__);
 		while ($row = $Sql->fetch_assoc($result))
 		{
 			$tpl->assign_block_vars('suggested', array(
@@ -119,15 +129,15 @@ if (!empty($idnews)) // On affiche la news correspondant à l'id envoyé.
 			$i++;
 		}	
 		
-		$auth_edit = $news['idcat'] > 0 ? $User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_MODERATE) || $User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_WRITE) && $news['user_id'] == $User->get_id()
-		: $User->check_auth($NEWS_CONFIG['global_auth'], AUTH_NEWS_MODERATE) || $User->check_auth($NEWS_CONFIG['global_auth'], AUTH_NEWS_WRITE) && $news['user_id'] == $User->get_id();
+		$auth_edit = $news['idcat'] > 0 ? $User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_MODERATE) || $User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_WRITE) && $news['user_id'] == $User->get_attribute('user_id')
+		: $User->check_auth($NEWS_CONFIG['global_auth'], AUTH_NEWS_MODERATE) || $User->check_auth($NEWS_CONFIG['global_auth'], AUTH_NEWS_WRITE) && $news['user_id'] == $User->get_attribute('user_id');
 		
 		$auth_delete = $news['idcat'] > 0 ? $User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_MODERATE) : $User->check_auth($NEWS_CONFIG['global_auth'], AUTH_NEWS_MODERATE);
 		
-		$comments_topic = new CommentsTopic();
-		$comments_topic->set_module_id('news');
+		$comments_topic = new NewsCommentsTopic();
 		$comments_topic->set_id_in_module($idnews);
-
+		$comments_topic->set_url(new Url('/news/news.php?cat='. $news['idcat'] .'&id=' . $news['id'] . '&com=0'));
+		
 		$tpl->put_all(array(
 			'C_NEXT_NEWS' => !empty($next_news['id']),
 			'C_EDIT' => $auth_edit,
@@ -136,7 +146,7 @@ if (!empty($idnews)) // On affiche la news correspondant à l'id envoyé.
 			'C_PREVIOUS_NEWS' => !empty($previous_news['id']),
 			'C_NEWS_SUGGESTED' => $nbr_suggested > 0 ? 1 : 0,
 			'C_IMG' => !empty($news['img']),
-			'C_ICON' => $NEWS_CONFIG['activ_icon'],
+			'C_ICON' => $NEWS_CONFIG['activ_icon'] && !empty($row['idcat']),
 			'C_SOURCES' => $i > 0 ? true : false,
 			'ID' => $news['id'],
 			'TITLE' => $news['title'],
@@ -144,17 +154,17 @@ if (!empty($idnews)) // On affiche la news correspondant à l'id envoyé.
 			'EXTEND_CONTENTS' => FormatingHelper::second_parse($news['extend_contents']),
 			'IMG' => FormatingHelper::second_parse_url($news['img']),
 			'IMG_DESC' => $news['alt'],
-			'ICON' => $news['idcat'] > 0 ? FormatingHelper::second_parse_url($NEWS_CAT[$news['idcat']]['image']) : '',
+			'ICON' => !empty($row['idcat']) ? FormatingHelper::second_parse_url($NEWS_CAT[$news['idcat']]['image']) : '',
 			'DATE' => $NEWS_CONFIG['display_date'] ? sprintf($NEWS_LANG['on'], $timestamp->format(DATE_FORMAT_SHORT, TIMEZONE_AUTO)) : '',
-			'LEVEL' =>	isset($news['level']) ? $level[$news['level']] : '',
+			'LEVEL' =>	isset($news['level']) ? UserService::get_level_class($news['level']) : '',
 			'PSEUDO' => $NEWS_CONFIG['display_author'] && !empty($news['login']) ? $news['login'] : false,
 			'COMMENTS' => isset($_GET['com']) && $NEWS_CONFIG['activ_com'] == 1 ? CommentsService::display($comments_topic)->render() : '',
 			'NEXT_NEWS' => $next_news['title'],
 			'PREVIOUS_NEWS' => $previous_news['title'],
 			'FEED_MENU' => Feed::get_feed_menu(FEED_URL . '&amp;cat=' . $news['idcat']),
-			'U_CAT' => $news['idcat'] > 0 ? 'news' . url('.php?cat=' . $news['idcat'], '-' . $news['idcat'] . '+'  . Url::encode_rewrite($NEWS_CAT[$news['idcat']]['name']) . '.php') : '',
+			'U_CAT' => !empty($row['idcat']) ? 'news' . url('.php?cat=' . $news['idcat'], '-' . $news['idcat'] . '+'  . Url::encode_rewrite($NEWS_CAT[$news['idcat']]['name']) . '.php') : '',
 			'U_LINK' => 'news' . url('.php?id=' . $news['id'], '-' . $news['idcat'] . '-' . $news['id'] . '+' . Url::encode_rewrite($news['title']) . '.php'),
-			'U_COM' => $NEWS_CONFIG['activ_com'] ? '<a href="'. PATH_TO_ROOT .'/news/news' . url('.php?id=' . $idnews . '&amp;com=0', '-' . $row['idcat'] . '-' . $idnews . '+' . Url::encode_rewrite($news['title']) . '.php?com=0') .'">'. CommentsService::get_number_and_lang_comments($comments_topic) . '</a>' : '',
+			'U_COM' => $NEWS_CONFIG['activ_com'] ? '<a href="'. PATH_TO_ROOT .'/news/news' . url('.php?id=' . $idnews . '&amp;com=0', '-' . $news['idcat'] . '-' . $idnews . '+' . Url::encode_rewrite($news['title']) . '.php?com=0') .'#comments_list">'. CommentsService::get_number_and_lang_comments('news', $idnews) . '</a>' : '',
 			'U_USER_ID' => UserUrlBuilder::profile($news['user_id'])->absolute(),
 			'U_SYNDICATION' => SyndicationUrlBuilder::rss('news', $news['idcat'])->rel(),
 			'U_PREVIOUS_NEWS' => 'news' . url('.php?id=' . $previous_news['id'], '-0-' . $previous_news['id'] . '+' . Url::encode_rewrite($previous_news['title']) . '.php'),
@@ -180,23 +190,30 @@ elseif ($user)
 {
 	// Bread crumb.
 	$Bread_crumb->add($NEWS_LANG['news'], url('news.php'));
-	$Bread_crumb->add($User->get_display_name(), url('news.php?user=1'));
+	$Bread_crumb->add($User->get_attribute('login'), url('news.php?user=1'));
 
 	// Title of page
 	define('TITLE', $NEWS_LANG['news']);
 	require_once('../kernel/header.php');
 
-	$tpl = new FileTemplate('news/news_cat.tpl');
+	$tpl = new FileTemplate('news/news_block.tpl');
 	$i = 0;
 
 	// Build array with the children categories.
 	$array_cat = array();
-	$news_cat->build_children_id_list(0, $array_cat, RECURSIVE_EXPLORATION, DO_NOT_ADD_THIS_CATEGORY_IN_LIST, AUTH_NEWS_WRITE);
-		
+	$news_cat->build_children_id_list(0, $array_cat, RECURSIVE_EXPLORATION, DO_NOT_ADD_THIS_CATEGORY_IN_LIST, AUTH_NEWS_MODERATE);
+	
+	if ($User->check_auth($NEWS_CONFIG['global_auth'], AUTH_NEWS_MODERATE))
+	{
+		$array_cat[] = '0';
+	}
+	
+	$where = !empty($array_cat) ? " AND n.idcat IN(" . implode(", ", $array_cat) . ") OR n.user_id = '" . $User->get_attribute('user_id') . "'" : "AND n.user_id = '" . $User->get_attribute('user_id') . "'";
+
 	$result = $Sql->query_while("SELECT n.contents, n.extend_contents, n.title, n.id, n.idcat, n.timestamp, n.user_id, n.img, n.alt, m.login, m.level
 	FROM " . DB_TABLE_NEWS . " n
 	LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = n.user_id
-	WHERE n.visible = 0 AND n.start <= '" . $now->get_timestamp() . "' AND (n.end >= '" . $now->get_timestamp() . "' OR n.end = 0) AND n.user_id = '" . $User->get_id() . "'
+	WHERE n.visible = 0 AND n.start <= '" . $now->get_timestamp() . "' AND (n.end >= '" . $now->get_timestamp() . "' OR n.end = 0) ". $where ."
 	ORDER BY n.timestamp DESC", __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))
 	{
@@ -212,14 +229,14 @@ elseif ($user)
 			'C_IMG' => !empty($row['img']),
 			'IMG' => FormatingHelper::second_parse_url($row['img']),
 			'IMG_DESC' => $row['alt'],
-			'C_ICON' => $NEWS_CONFIG['activ_icon'],
-			'U_CAT' => $row['idcat'] > 0 ? 'news' . url('.php?cat=' . $row['idcat'], '-' . $row['idcat'] . '+' . Url::encode_rewrite($NEWS_CAT[$row['idcat']]['name']) . '.php') : '',
-			'ICON' => $row['idcat'] > 0 ? FormatingHelper::second_parse_url($NEWS_CAT[$row['idcat']]['image']) : '',
+			'C_ICON' => $NEWS_CONFIG['activ_icon'] && !empty($row['idcat']),
+			'U_CAT' => !empty($row['idcat']) ? 'news' . url('.php?cat=' . $row['idcat'], '-' . $row['idcat'] . '+' . Url::encode_rewrite($NEWS_CAT[$row['idcat']]['name']) . '.php') : '',
+			'ICON' => !empty($row['idcat']) ? FormatingHelper::second_parse_url($NEWS_CAT[$row['idcat']]['image']) : '',
 			'CONTENTS' => FormatingHelper::second_parse($row['contents']),
 			'EXTEND_CONTENTS' => !empty($row['extend_contents']) ? '<a style="font-size:10px" href="' . PATH_TO_ROOT . '/news/news' . url('.php?id=' . $row['id'], '-0-' . $row['id'] . '.php') . '">[' . $NEWS_LANG['extend_contents'] . ']</a><br /><br />' : '',
 			'PSEUDO' => $NEWS_CONFIG['display_author'] && !empty($row['login']) ? $row['login'] : '',
 			'U_USER_ID' => UserUrlBuilder::profile($row['user_id'])->absolute(),
-			'LEVEL' =>	isset($row['level']) ? $level[$row['level']] : '',
+			'LEVEL' =>	isset($row['level']) ? UserService::get_level_class($row['level']) : '',
 			'DATE' => $NEWS_CONFIG['display_date'] ? sprintf($NEWS_LANG['on'], $timestamp->format(DATE_FORMAT_SHORT, TIMEZONE_AUTO)) : '',
 			'FEED_MENU' => Feed::get_feed_menu(FEED_URL)
 		));
@@ -242,7 +259,6 @@ elseif ($user)
 	}
 
 	$tpl->display();
-
 }
 else
 {
@@ -253,13 +269,12 @@ else
 	$modulesLoader = AppContext::get_extension_provider_service();
 	$module_name = 'news';
 	$module = $modulesLoader->get_provider($module_name);
-	if ($module->has_extension_point('get_home_page'))
+	if ($module->has_extension_point(HomePageExtensionPoint::EXTENSION_POINT))
 	{
-		echo $module->get_extension_point('get_home_page', $idcat);
+		echo $module->get_extension_point(HomePageExtensionPoint::EXTENSION_POINT)->get_home_page()->get_view()->display();
 	}
 	elseif (!$no_alert_on_error)
 	{
-		//TODO Gestion de la langue
 		$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
             'Le module <strong>' . $module_name . '</strong> n\'a pas de fonction get_home_page!', UserErrorController::FATAL);
         DispatchManager::redirect($controller);

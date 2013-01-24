@@ -3,7 +3,7 @@
 			var theme = '{THEME}';
 		-->
 		</script>
-		<script type="text/javascript" src="../kernel/lib/js/form/calendar.js"></script>
+		<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/lib/js/phpboost/calendar.js"></script>
 		<script type="text/javascript">
 		<!--
 		function check_form(){
@@ -73,7 +73,7 @@
 					<dl>
 						<dt><label for="type">* {L_ANSWER_TYPE}</label></dt>
 						<dd>
-							<label><input type="radio" name="type" id="type" {TYPE_UNIQUE} value="1" checked="checked" /> {L_SINGLE}</label>
+							<label><input type="radio" name="type" id="type" {TYPE_UNIQUE} value="1" /> {L_SINGLE}</label>
 							&nbsp;&nbsp; 
 							<label><input type="radio" name="type" {TYPE_MULTIPLE} value="0" /> {L_MULTIPLE}</label>
 						</dd>
@@ -83,12 +83,12 @@
 						<dd>
 							<label><input type="radio" name="archive" {ARCHIVES_ENABLED} value="1" /> {L_YES}</label>
 							&nbsp;&nbsp; 
-							<label><input type="radio" name="archive" {ARCHIVES_DISABLED} id="archive" value="0" checked="checked" /> {L_NO}</label>
+							<label><input type="radio" name="archive" {ARCHIVES_DISABLED} id="archive" value="0" /> {L_NO}</label>
 						</dd>
 					</dl>
 					<dl>
 						<dt><label>* {L_ANSWERS}</label></dt>
-						<dd><label>
+						<dd>
 							<table style="border:none;border-spacing:0">
 								<tr>
 									<th style="text-align:center;">
@@ -124,7 +124,7 @@
 									</td>
 								</tr>
 							</table>
-						</label></dd>
+						</dd>
 					</dl>
 				</fieldset>		
 

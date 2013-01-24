@@ -3,8 +3,8 @@
  *                              NewsSearchable.class.php
  *                            -------------------
  *   begin                : May, 29 2010
- *   copyright            : (C) 2010 Kévin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   copyright            : (C) 2010 Kevin MASSY
+ *   email                : kevin.massy@phpboost.com
  *
  *
  ###################################################
@@ -27,12 +27,13 @@
 
 class NewsSearchable extends AbstractSearchableExtensionPoint
 {
-	public function __construct()
-	{
-		$has_special_options = true;
-		parent::__construct($has_special_options);
-	}
+	private $sql_querier;
 
+    public function __construct()
+    {
+        $this->sql_querier = PersistenceContext::get_sql();
+	}
+	
 	public function get_search_request($args)
 	{
 		$now = new Date(DATE_NOW, TIMEZONE_AUTO);
@@ -46,7 +47,7 @@ class NewsSearchable extends AbstractSearchableExtensionPoint
 
 		$weight = isset($args['weight']) && is_numeric($args['weight']) ? $args['weight'] : 1;
 
-		$request = "SELECT " . $args['id_search'] . " AS id_search,
+		return "SELECT " . $args['id_search'] . " AS id_search,
             n.id AS id_content,
             n.title AS title,
             ( 2 * FT_SEARCH_RELEVANCE(n.title, '" . $args['search'] . "') + (FT_SEARCH_RELEVANCE(n.contents, '" . $args['search'] . "') +
@@ -57,8 +58,6 @@ class NewsSearchable extends AbstractSearchableExtensionPoint
             FT_SEARCH_RELEVANCE(n.extend_contents, '" . $args['search'] . "') )
                 AND n.start <= '" . $now->get_timestamp() . "' AND n.visible = 1" . $where . "
             ORDER BY relevance DESC " . $this->sql_querier->limit(0, NEWS_MAX_SEARCH_RESULTS);
-
-            return $request;
 	}
 }
 ?>

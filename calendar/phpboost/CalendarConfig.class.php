@@ -3,8 +3,8 @@
  *		             CalendarConfig.class.php
  *                            -------------------
  *   begin                : August 10, 2010
- *   copyright            : (C) 2010 Kévin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   copyright            : (C) 2010 Kevin MASSY
+ *   email                : kevin.massy@phpboost.com
  *
  *
  ###################################################
@@ -26,26 +26,26 @@
  ###################################################*/
 
 /**
- * @author Kévin MASSY <soldier.weasel@gmail.com>
+ * @author Kevin MASSY <kevin.massy@phpboost.com>
  */
 class CalendarConfig extends AbstractConfigData
 {
-	const AUTHORIZATION = 'authorization';
+	const AUTHORIZATIONS = 'authorizations';
 	
-	public function get_authorization()
+	public function get_authorizations()
 	{
-		return $this->get_property(self::AUTHORIZATION);
+		return $this->get_property(self::AUTHORIZATIONS);
 	}
 	
-	public function set_authorization(Array $array)
+	public function set_authorizations(Array $array)
 	{
-		$this->set_property(self::AUTHORIZATION, $array);
+		$this->set_property(self::AUTHORIZATIONS, $array);
 	}
 	
 	public function get_default_values()
 	{
 		return array(
-			self::AUTHORIZATION => array('r-1' => 1, 'r0' => 1, 'r1' => 5)
+			self::AUTHORIZATIONS => array('r0' => 2, 'r1' => 6)
 		);
 	}
 	
@@ -55,7 +55,7 @@ class CalendarConfig extends AbstractConfigData
 	 */
 	public static function load()
 	{
-		return ConfigManager::load(__CLASS__, 'calendar', 'main');
+		return ConfigManager::load(__CLASS__, 'calendar', 'config');
 	}
 
 	/**
@@ -63,7 +63,7 @@ class CalendarConfig extends AbstractConfigData
 	 */
 	public static function save()
 	{
-		ConfigManager::save('calendar', self::load(), 'main');
+		ConfigManager::save('calendar', self::load(), 'config');
 	}
 }
 ?>

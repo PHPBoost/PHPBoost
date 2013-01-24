@@ -3,8 +3,8 @@
  *                          NewsletterUrlBuilder.class.php
  *                            -------------------
  *   begin                : September 19, 2011
- *   copyright            : (C) 2011 Kévin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   copyright            : (C) 2011 Kevin MASSY
+ *   email                : kevin.massy@phpboost.com
  *
  *
  ###################################################
@@ -26,13 +26,12 @@
  ###################################################*/
 
 /**
- * @author Kévin MASSY <soldier.weasel@gmail.com>
+ * @author Kevin MASSY <kevin.massy@phpboost.com>
  * @desc
  */
 class NewsletterUrlBuilder
 {
     private static $dispatcher = '/newsletter';
-    
 
 	/**
 	 * @return Url
@@ -117,9 +116,9 @@ class NewsletterUrlBuilder
 	/**
 	 * @return Url
 	 */
-    public static function delete_subscriber($id)
+    public static function delete_subscriber($id, $stream_id = null)
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/subscriber/' . $id . '/delete/');
+		return DispatchManager::get_url(self::$dispatcher, '/subscriber/' . $id . '/delete/' . (!empty($stream_id) ? $stream_id : ''));
 	}
 
 	/**
@@ -144,6 +143,14 @@ class NewsletterUrlBuilder
     public static function home($page = '')
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/' . $page);
+	}
+	
+	/**
+	 * @return Url
+	 */
+    public static function image_preview()
+	{
+		return DispatchManager::get_url(self::$dispatcher, '/ajax/image/preview/');
 	}
 }
 ?>

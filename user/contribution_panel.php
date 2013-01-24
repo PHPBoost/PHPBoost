@@ -154,9 +154,9 @@ if ($contribution_id > 0)
 		'C_CONSULT_CONTRIBUTION' => true
 	));
 
-	$comments_topic = new CommentsTopic();
-	$comments_topic->set_module_id('events');
+	$comments_topic = new EventsCommentsTopic();
 	$comments_topic->set_id_in_module($contribution_id);
+	$comments_topic->set_url(new Url('/user/contribution_panel.php?id='. $contribution_id));
 
 	//For PHP 4 :(
 	$contribution_creation_date = $contribution->get_creation_date();

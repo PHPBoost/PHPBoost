@@ -3,8 +3,8 @@
  *                              TinyMCEExtensionPointProvider.class.php
  *                            -------------------
  *   begin                : October 11, 2011
- *   copyright            : (C) 2011 Kévin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   copyright            : (C) 2011 Kevin MASSY
+ *   email                : kevin.massy@phpboost.com
  *
  *
  ###################################################
@@ -29,7 +29,7 @@ class TinyMCEExtensionPointProvider extends ExtensionPointProvider
 {
    public function __construct()
     {
-        parent::__construct('tinymce');
+        parent::__construct('TinyMCE');
     }
     
 	public function content_formatting()

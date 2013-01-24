@@ -148,7 +148,7 @@ elseif (!empty($entitled) && !empty($answer))
 		{
 			//shifting right all questions which will be after this
 			$Sql->query_inject("UPDATE " . PREFIX . "faq SET q_order = q_order + 1 WHERE idcat = '" . $new_id_cat . "' AND q_order > '" . $id_after . "'", __LINE__, __FILE__);
-			$Sql->query_inject("INSERT INTO " . PREFIX . "faq (idcat, q_order, question, answer, user_id, timestamp) VALUES ('" . $new_id_cat . "', '" . ($id_after + 1 ) . "', '" . $entitled . "', '" . $answer . "', '" . $User->get_id() . "', '" . time() . "')", __LINE__, __FILE__);
+			$Sql->query_inject("INSERT INTO " . PREFIX . "faq (idcat, q_order, question, answer, user_id, timestamp) VALUES ('" . $new_id_cat . "', '" . ($id_after + 1 ) . "', '" . $entitled . "', '" . $answer . "', '" . $User->get_attribute('user_id') . "', '" . time() . "')", __LINE__, __FILE__);
 			
 			$new_question_id = $Sql->insert_id("SELECT MAX(id) FROM " . PREFIX . "faq");
 			
@@ -217,7 +217,7 @@ elseif ($id_question > 0 && $move_question && $target >= 0)
 	{
 		$question_infos = $Sql->query_array(PREFIX . "faq", "*", "WHERE id = '" . $id_question . "'", __LINE__, __FILE__);
 		$id_cat_for_bread_crumb = $question_infos['idcat'];
-		$auth_write = $User->check_auth($faq_config->get_authorization(), AUTH_WRITE);
+		$auth_write = $User->check_auth($faq_config->get_authorizations(), AUTH_WRITE);
 		while ($id_cat_for_bread_crumb > 0)
 		{
 			$id_cat_for_bread_crumb = (int)$FAQ_CATS[$id_cat_for_bread_crumb]['id_parent'];

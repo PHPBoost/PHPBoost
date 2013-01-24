@@ -358,7 +358,12 @@ class ImagesStats
 			$space_bar = NumberHelper::round(($w_histo_content - 4)/count($this->data_stats), 0);
 			$margin_bar = $space_bar*18/100;
 			$width_bar = $space_bar - (2*$margin_bar);
-			$max_height = ($h_histo_content * 80)/100;
+			if ($max_element == 1)
+				$max_height = ($h_histo_content * 33)/100;
+			else if ($max_element == 2)
+				$max_height = ($h_histo_content * 66)/100;
+			else
+				$max_height = ($h_histo_content * 80)/100;
 			$i = 0;
 			foreach ($this->data_stats as $name_value => $value)
 			{
@@ -575,5 +580,4 @@ class ImagesStats
 		imagedestroy($thumbtail);
 	}
 }
-
 ?>

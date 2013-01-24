@@ -66,7 +66,7 @@ while ($row = $Sql->fetch_assoc($result))
 	$visible = '';
 	$timestamp = new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, $row['timestamp']);
 	// On reccourci le lien si il est trop long pour éviter de déformer l'administration.
-	$title = html_entity_decode($row['title']);
+	$title = TextHelper::html_entity_decode($row['title']);
 	$title = strlen($title) > 45 ? substr($title, 0, 45) . '...' : $title;
 
 	if ($row['end'] > 0 && $row['start'] > 0)

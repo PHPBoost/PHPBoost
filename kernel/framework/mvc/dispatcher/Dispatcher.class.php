@@ -73,5 +73,4 @@ class Dispatcher
 		throw new NoUrlMatchException($url);
 	}
 }
-
 ?>

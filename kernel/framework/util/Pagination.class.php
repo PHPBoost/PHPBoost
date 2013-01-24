@@ -131,5 +131,4 @@ class Pagination
 		throw new Exception('No url builder mode defined for pagination links');
 	}
 }
-
 ?>

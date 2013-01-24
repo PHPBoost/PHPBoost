@@ -3,8 +3,8 @@
  *		             ShoutboxConfig.class.php
  *                            -------------------
  *   begin                : August 10, 2010
- *   copyright            : (C) 2010 Kévin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   copyright            : (C) 2010 Kevin MASSY
+ *   email                : kevin.massy@phpboost.com
  *
  *
  ###################################################
@@ -26,7 +26,7 @@
  ###################################################*/
 
 /**
- * @author Kévin MASSY <soldier.weasel@gmail.com>
+ * @author Kevin MASSY <kevin.massy@phpboost.com>
  */
 class ShoutboxConfig extends AbstractConfigData
 {
@@ -36,7 +36,6 @@ class ShoutboxConfig extends AbstractConfigData
 	const MAX_LINKS_NUMBER_PER_MESSAGE = 'max_links_number_per_message';
 	const REFRESH_DELAY = 'refresh_delay';
 	
-	const AUTHORIZATION_READ = 1;
 	const AUTHORIZATION_WRITE = 2;
 	const AUTHORIZATION_MODERATION = 4;
 	
@@ -97,7 +96,7 @@ class ShoutboxConfig extends AbstractConfigData
 	{
 		return array(
 			self::MAX_MESSAGES_NUMBER => 100,
-			self::AUTHORIZATION => array ('r-1' => 3, 'r0' => 3, 'r1' => 7),
+			self::AUTHORIZATION => array ('r0' => 2, 'r1' => 6),
 			self::FORBIDDEN_FORMATTING_TAGS => array(
 				'title', 'style', 'url', 'img','quote',
 				'hide', 'list', 'color', 'bgcolor', 'font',
@@ -116,7 +115,7 @@ class ShoutboxConfig extends AbstractConfigData
 	 */
 	public static function load()
 	{
-		return ConfigManager::load(__CLASS__, 'shoutbox', 'main');
+		return ConfigManager::load(__CLASS__, 'shoutbox', 'config');
 	}
 
 	/**
@@ -124,7 +123,7 @@ class ShoutboxConfig extends AbstractConfigData
 	 */
 	public static function save()
 	{
-		ConfigManager::save('shoutbox', self::load(), 'main');
+		ConfigManager::save('shoutbox', self::load(), 'config');
 	}
 }
 ?>

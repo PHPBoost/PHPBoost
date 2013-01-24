@@ -30,7 +30,7 @@ require_once('../kernel/begin.php');
 
 if (!$User->check_level(User::MODERATOR_LEVEL))
 {
-	$error_controller = PHPBoostErrors::unexisting_page();
+	$error_controller = PHPBoostErrors::user_not_authorized();
 	DispatchManager::redirect($error_controller);
 }
 
@@ -103,7 +103,8 @@ if (!empty($_POST['submit']))
 			foreach ($delete as $key)
 			{
 				$Sql->query_inject("DELETE FROM " . PREFIX . "media WHERE id = '" . $key . "'", __LINE__, __FILE__);
-				$Sql->query_inject("DELETE FROM " . PREFIX . "com WHERE idprov = '" . $delete . "' AND script = 'media'", __LINE__, __FILE__);
+				CommentsService::delete_comments_topic_module('media', $key);
+				NotationService::delete_notes_id_in_module('media', $key);
 			}
 		}
 
@@ -219,6 +220,7 @@ else
 		'L_UNVISIBLE' => $MEDIA_LANG['hide_media_short'],
 		'L_UNAPROBED' => $MEDIA_LANG['unaprobed_media_short'],
 		'L_DELETE' => $LANG['delete'],
+		'L_EDIT' => $LANG['edit'],
 		'C_NO_MODERATION' => $nbr_media > 0 ? 0 : 1,
 		'L_NO_MODERATION' => $MEDIA_LANG['no_media_moderate'],
 		'L_CONFIRM_DELETE' => str_replace('\'', '\\\'', $MEDIA_LANG['confirm_delete_media']),

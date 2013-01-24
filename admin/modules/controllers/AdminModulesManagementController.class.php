@@ -30,7 +30,7 @@ class AdminModulesManagementController extends AdminController
 	private $lang;
 	private $view;
 	
-	public function execute(HTTPRequest $request)
+	public function execute(HTTPRequestCustom $request)
 	{
 		$this->init();		
 		$this->build_view();
@@ -72,12 +72,12 @@ class AdminModulesManagementController extends AdminController
 					'ICON' => $module->get_id(),
 					'VERSION' => $configuration->get_version(),
 					'AUTHOR' => !empty($author) ? '<a href="mailto:' . $author_email. '">' . $author . '</a>' : $author,
-					'AUTHOR_WEBSITE' => !empty($author_website) ? '<a href="' . $author_website . '"><img src="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/' . get_ulang() . '/user_web.png" alt="" /></a>' : '',
+					'AUTHOR_WEBSITE' => !empty($author_website) ? '<a href="' . $author_website . '"><img src="' . TPL_PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/' . get_ulang() . '/user_web.png" alt="" /></a>' : '',
 					'DESCRIPTION' => $configuration->get_description(),
 					'COMPATIBILITY' => $configuration->get_compatibility(),
 					'PHP_VERSION' => $configuration->get_php_version(),
 					'C_MODULE_ACTIVE' => $module->is_activated(),
-					'AUTHORIZATIONS' => Authorizations::generate_select(ACCESS_MODULE, $array_auth, array(2 => true), $module->get_id()),
+					'AUTHORIZATIONS' => Authorizations::generate_select(Module::ACCESS_AUTHORIZATION, $array_auth, array(2 => true), $module->get_id()),
 					'U_DELETE_LINK' => AdminModulesUrlBuilder::delete_module($module->get_id())->absolute()
 				));	
 			}
@@ -87,14 +87,14 @@ class AdminModulesManagementController extends AdminController
 					'ID' => $module->get_id(),
 					'NAME' => ucfirst($configuration->get_name()),
 					'ICON' => $module->get_id(),
-					'VERSION' => $configuration->get_version(),
+					'VERSION' => $module->get_installed_version(),
 					'AUTHOR' => !empty($author) ? '<a href="mailto:' . $author_email. '">' . $author . '</a>' : $author,
-					'AUTHOR_WEBSITE' => !empty($author_website) ? '<a href="' . $author_website . '"><img src="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/' . get_ulang() . '/user_web.png" alt="" /></a>' : '',
+					'AUTHOR_WEBSITE' => !empty($author_website) ? '<a href="' . $author_website . '"><img src="' . TPL_PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/' . get_ulang() . '/user_web.png" alt="" /></a>' : '',
 					'DESCRIPTION' => $configuration->get_description(),
 					'COMPATIBILITY' => $configuration->get_compatibility(),
 					'PHP_VERSION' => $configuration->get_php_version(),
 					'C_MODULE_ACTIVE' => $module->is_activated(),
-					'AUTHORIZATIONS' => Authorizations::generate_select(ACCESS_MODULE, $array_auth, array(2 => true), $module->get_id()),
+					'AUTHORIZATIONS' => Authorizations::generate_select(Module::ACCESS_AUTHORIZATION, $array_auth, array(2 => true), $module->get_id()),
 					'U_DELETE_LINK' => AdminModulesUrlBuilder::delete_module($module->get_id())->absolute()
 				));
 			}
@@ -106,20 +106,36 @@ class AdminModulesManagementController extends AdminController
 		));
 	}
 	
-	private function save(HTTPRequest $request)
+	private function save(HTTPRequestCustom $request)
 	{
 		if ($request->get_bool('update', false))
 		{
+			$errors = array();
 			foreach (ModulesManager::get_installed_modules_map() as $module)
 			{
 				$request = AppContext::get_request();
 				$module_id = $module->get_id();
 				$activated = $request->get_bool('activated-' . $module_id, false);
-				$authorizations = Authorizations::auth_array_simple(ACCESS_MODULE, $module_id);
-				ModulesManager::update_module_authorizations($module_id, $activated, $authorizations);
+				$authorizations = Authorizations::auth_array_simple(Module::ACCESS_AUTHORIZATION, $module_id);
+				$error = ModulesManager::update_module_authorizations($module_id, $activated, $authorizations);
+				
+				if (!empty($error))
+					$errors[$module->get_configuration()->get_name()] = $error;
 			}
-			MenuService::generate_cache();
-			AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);
+			
+			if (empty($errors))
+			{
+				AppContext::get_response()->redirect(AdminModulesUrlBuilder::list_installed_modules());
+			}
+			else
+			{
+				foreach ($errors as $module_name => $error)
+				{
+					$this->view->assign_block_vars('errors', array(
+						'MSG' => MessageHelper::display($module_name . ' : ' . $error, MessageHelper::WARNING, 10)
+					));
+				}
+			}
 		}	
 	}
 }

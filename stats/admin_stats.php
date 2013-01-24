@@ -76,6 +76,8 @@ $Template->put_all(array(
 	'L_ROBOTS' => $LANG['robots']
 ));
 
+$date_lang = LangLoader::get('date-common');
+
 if (!empty($members))
 {
 	$last_user = $Sql->query_array(DB_TABLE_MEMBER, 'user_id', 'login', "ORDER BY user_id DESC " . $Sql->limit(0, 1), __LINE__, __FILE__);
@@ -119,9 +121,10 @@ if (!empty($members))
 	}
 
 	$stats_array = array();
-	$result = $Sql->query_while ("SELECT count(user_sex) as compt, user_sex
-	FROM " . PREFIX . "member
-	GROUP BY user_sex
+	$result = $Sql->query_while ("SELECT member.user_id, count(ext_field.user_sex) as compt, ext_field.user_sex
+	FROM " . PREFIX . "member member
+	LEFT JOIN " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " ext_field ON ext_field.user_id = member.user_id
+	GROUP BY ext_field.user_sex
 	ORDER BY compt", __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))
 	{
@@ -200,8 +203,8 @@ elseif ($visit || $visit_year) //Visites par jour classées par mois.
 	$year = $visit_year;
 
 	//Gestion des mois pour s'adapter au array défini dans lang/main.php
-	$array_l_months = array($LANG['january'], $LANG['february'], $LANG['march'], $LANG['april'], $LANG['may'], $LANG['june'],
-	$LANG['july'], $LANG['august'], $LANG['september'], $LANG['october'], $LANG['november'], $LANG['december']);
+	$array_l_months = array($date_lang['january'], $date_lang['february'], $date_lang['march'], $date_lang['april'], $date_lang['may'], $date_lang['june'],
+	$date_lang['july'], $date_lang['august'], $date_lang['september'], $date_lang['october'], $date_lang['november'], $date_lang['december']);
 
 	if (!empty($visit_year)) //Visites par mois classées par ans.
 	{
@@ -551,8 +554,8 @@ elseif ($pages || $pages_year) //Pages par jour classées par mois.
 	));
 
 	//Gestion des mois pour s'adapter au array défini dans lang/main.php
-	$array_l_months = array($LANG['january'], $LANG['february'], $LANG['march'], $LANG['april'], $LANG['may'], $LANG['june'],
-	$LANG['july'], $LANG['august'], $LANG['september'], $LANG['october'], $LANG['november'], $LANG['december']);
+	$array_l_months = array($date_lang['january'], $date_lang['february'], $date_lang['march'], $date_lang['april'], $date_lang['may'], $date_lang['june'],
+	$date_lang['july'], $date_lang['august'], $date_lang['september'], $date_lang['october'], $date_lang['november'], $date_lang['december']);
 
 	if (!empty($pages_year)) //Visites par mois classées par ans.
 	{
@@ -1138,15 +1141,24 @@ elseif ($bot)
 	));
 
 
+	$array_robot = StatsSaver::retrieve_stats('robots');
+	$stats_array = array();
+	if (is_array($array_robot))
+	{
+		foreach ($array_robot as $key => $value)
+		{
+			$array_info = explode('/', $value);
+			if (isset($array_info[0]) && isset($array_info[1]))
+			{
+				$stats_array[$array_info[0]] = $array_info[1];
+			}
+		}
+	}
+	
 	$Stats = new ImagesStats();
-
-	$Stats->load_data(StatsSaver::retrieve_stats('robots'), 'ellipse');
-
-	$stats_info = array('google bot', 'yahoo Slurp', 'bing bot', 'voila', 'gigablast', 'ia archiver', 'exalead');
+	$Stats->load_data($stats_array, 'ellipse');
 	foreach ($Stats->data_stats as $key => $angle_value)
 	{
-		if (in_array($key, $stats_info))
-		{
 			$array_color = $Stats->array_allocated_color[$Stats->image_color_allocate_dark(false, NO_ALLOCATE_COLOR)];
 			$name = ucfirst($key);
 			$Template->assign_block_vars('list', array(
@@ -1155,7 +1167,6 @@ elseif ($bot)
 				'PERCENT' => NumberHelper::round(($angle_value/3.6), 1),
 				'L_NAME' => ($name == 'Other') ? $LANG['other'] : $name
 			));
-		}
 	}
 }
 else

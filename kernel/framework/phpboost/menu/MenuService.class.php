@@ -232,6 +232,60 @@ class MenuService
 	}
 	
 	/**
+	 * @desc Change the menu position in a block
+	 * @param Menu $menu The menu to move
+	 * @param int $diff the direction to move it. positives integers move down, negatives, up.
+	*/
+	public static function change_position($menu, $direction = self::MOVE_UP)
+    {
+        global $Sql;
+        
+        $block_position = $menu->get_block_position();
+        $new_block_position = $block_position;
+        $update_query = '';
+        
+        if ($direction > 0)
+        {   // Moving the menu down
+            $max_position_query = "SELECT MAX(position) FROM " . DB_TABLE_MENUS . " WHERE block='" . $menu->get_block() . "' AND enabled='1'";
+            $max_position = $Sql->query($max_position_query, __LINE__, __FILE__);
+            // Getting the max diff
+            if (($new_block_position = ($menu->get_block_position() + $direction)) > $max_position)
+                $new_block_position = $max_position;
+            
+            $update_query = "
+                UPDATE " . DB_TABLE_MENUS . " SET position=position - 1
+                WHERE
+                    block='" . $menu->get_block() . "' AND
+                    position BETWEEN '" . ($block_position + 1) . "' AND '" . $new_block_position . "'
+            ";
+        }
+        else if ($direction < 0)
+        {   // Moving the menu up
+            
+            // Getting the max diff
+            if (($new_block_position = ($menu->get_block_position() + $direction)) < 0)
+                $new_block_position = 0;
+                            
+            // Updating other menus
+            $update_query = "
+                UPDATE " . DB_TABLE_MENUS . " SET position=position + 1
+                WHERE
+                    block='" . $menu->get_block() . "' AND
+                    position BETWEEN '" . $new_block_position . "' AND '" . ($block_position - 1) . "'
+            ";
+        }
+        
+        if ($block_position != $new_block_position)
+        {   // Updating other menus
+            $Sql->query_inject($update_query, __LINE__, __FILE__);
+            
+            // Updating the current menu
+            $menu->set_block_position($new_block_position);
+            MenuService::save($menu);
+        }
+	}
+	
+	/**
 	 * @desc Enables or disables all menus
 	 * @param bool $enable if true enables all menus otherwise, disables them
 	 */
@@ -271,20 +325,6 @@ class MenuService
 		$cache_str .= 'global $User;' . "\n";
 		
 		$menus_map = MenuService::get_menus_map();
-//        unset($menus_map[1][0]);
-//        unset($menus_map[2][0]);
-//        unset($menus_map[5][0]);
-//        unset($menus_map[7][0]);
-//        unset($menus_map[7][1]);
-//        unset($menus_map[7][2]);
-//        unset($menus_map[7][3]);
-//        unset($menus_map[8][0]);
-//        unset($menus_map[8][1]);
-//        unset($menus_map[8][2]);
-//        unset($menus_map[8][3]);
-//        unset($menus_map[8][4]);
-//        Debug::dump($menus_map);
-		
 		foreach ($menus_map as $block => $block_menus)
 		{
 			if ($block != Menu::BLOCK_POSITION__NOT_ENABLED)
@@ -446,6 +486,7 @@ class MenuService
 					$default_block = $menu->get_default_block();
 					$menu->set_title($module_id . '/' . $title);
 					$menu->set_block($default_block);
+					$menu->enabled($menu->default_is_enabled());
 					self::save($menu);
 				}
 			}
@@ -465,10 +506,9 @@ class MenuService
 	 */
 	public static function delete_mini_module($module)
 	{
-		$conditions = 'WHERE class=:class AND title LIKE :like_title';
+		$conditions = 'WHERE class=:class';
 		$parameters = array(
-			'class' => strtolower(ModuleMiniMenu::MODULE_MINI_MENU__CLASS),
-			'like_title' => strtolower($module) . '/%'
+			'class' => ucfirst($module) . ModuleMiniMenu::MODULE_MINI_MENU__CLASS,
 		);
 		$results = self::$querier->select_rows(DB_TABLE_MENUS, self::$columns, $conditions, $parameters);
 		foreach ($results as $row)

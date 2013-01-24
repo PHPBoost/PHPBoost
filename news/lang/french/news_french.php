@@ -43,10 +43,10 @@ $NEWS_LANG = array(
 	'activ_pagination' => 'Activer la pagination',
 	'add_category' => 'Ajouter une catégorie',
 	'add_news' => 'Ajouter une news',
-	'alert_delete_news' => 'Supprimer cette News ?',
+	'alert_delete_news' => 'Supprimer cette news ?',
 	'archive' => 'Archives',
 	'auth_contribute' => 'Permissions de contribution',
-	'auth_moderate' => 'Permissions de modération des contributions',
+	'auth_moderate' => 'Permissions de modération',
 	'auth_read' => 'Permissions de lecture',
 	'auth_write' => 'Permissions d\'écriture',
 
@@ -71,7 +71,7 @@ $NEWS_LANG = array(
 
 	'edit_news' => 'Éditer la news',
 	'edito_where' => 'Message visible de tous en haut de l\'accueil',
-	'explain_removing_category' => 'Vous êtes sur le point de supprimer la catégorie. Deux solutions s\'offrent à vous. Vous pouvez soit déplacer l\'ensemble de son contenu (fichiers et sous catégories) dans une autre catégorie soit supprimer l\'ensemble de son catégorie. <strong>Attention, cette action est irréversible !</strong>',
+	'explain_removing_category' => 'Vous êtes sur le point de supprimer la catégorie. Deux solutions s\'offrent à vous. Vous pouvez soit déplacer l\'ensemble de son contenu (fichiers et sous catégories) dans une autre catégorie soit supprimer l\'ensemble de la catégorie. <strong>Attention, cette action est irréversible !</strong>',
 	'extend_contents' => 'Lire la suite...',
 
 	'global_auth' => 'Permissions globales',
@@ -124,8 +124,8 @@ $NEWS_LANG = array(
 
 	'sources' => 'Sources',
 	'add_sources' => 'Ajouter des sources',
-	'name_sources' => 'Nom de la sources',
-	'url_sources' => 'Url de la sources',
+	'name_sources' => 'Nom de la source',
+	'url_sources' => 'Url de la source',
 );
 
 ?>

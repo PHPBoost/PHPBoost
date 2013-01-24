@@ -3,8 +3,8 @@
  *                               GooglePlusOneShare.class.php
  *                            -------------------
  *   begin                : July 06, 2011
- *   copyright            : (C) 2011 Kévin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   copyright            : (C) 2011 Kevin MASSY
+ *   email                : kevin.massy@phpboost.com
  *
  *
  ###################################################
@@ -46,6 +46,13 @@ class GooglePlusOneShare extends AbstractShare
 		'));
 		
 		$this->assign_vars();
+	}
+	
+	public static function display($size = 'standard')
+	{
+		$class = new self();
+		$class->set_size($size);
+		return $class->display();
 	}
 	
 	public function set_manual_lang($lang)

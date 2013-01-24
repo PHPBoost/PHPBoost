@@ -63,12 +63,11 @@ class BBCodeEditor extends ContentEditor
 
         $smileys_cache = SmileysCache::load();
 
-        $bbcode_lang = LangLoader::get('bbcode-common');
+        $bbcode_lang = LangLoader::get('editor-common');
         
         $template->put_all(array(
         	'PAGE_PATH' => $_SERVER['PHP_SELF'],
 			'C_EDITOR_NOT_ALREADY_INCLUDED' => !self::$editor_already_included,
-			'EDITOR_NAME' => 'bbcode',
 			'FIELD' => $this->identifier,
 			'FORBIDDEN_TAGS' => !empty($this->forbidden_tags) ? implode(',', $this->forbidden_tags) : '',
 			'C_UPLOAD_MANAGEMENT' => AppContext::get_current_user()->check_auth(FileUploadConfig::load()->get_authorization_enable_interface_files(), AUTH_FILES),
@@ -84,7 +83,7 @@ class BBCodeEditor extends ContentEditor
 			'L_BB_HTML' => $bbcode_lang['bb_html'],
 			'L_BB_STYLE' => $bbcode_lang['bb_style'],
 			'L_BB_URL' => $bbcode_lang['bb_link'],
-			'L_BB_IMG' => $bbcode_lang['bb_picture'],
+			'L_BB_IMAGE' => $bbcode_lang['bb_picture'],
 			'L_BB_QUOTE' => $bbcode_lang['bb_quote'],
 			'L_BB_HIDE' => $bbcode_lang['bb_hide'],
 			'L_BB_COLOR' => $bbcode_lang['bb_color'],
@@ -102,7 +101,7 @@ class BBCodeEditor extends ContentEditor
 			'L_BB_INDENT' => $bbcode_lang['bb_indent'],
 			'L_BB_LIST' => $bbcode_lang['bb_list'],
 			'L_BB_TABLE' => $bbcode_lang['bb_table'],
-			'L_BB_SWF' => $bbcode_lang['bb_swf'],
+			'L_BB_FLASH' => $bbcode_lang['bb_swf'],
 			'L_BB_MOVIE' => $bbcode_lang['bb_movie'],
 			'L_BB_SOUND' => $bbcode_lang['bb_sound'],
 			'L_BB_CODE' => $bbcode_lang['bb_code'],
@@ -110,7 +109,8 @@ class BBCodeEditor extends ContentEditor
 			'L_BB_ANCHOR' => $bbcode_lang['bb_anchor'],
 			'L_BB_HELP' => $bbcode_lang['bb_help'],
 			'L_URL_PROMPT' => $bbcode_lang['bb_url_prompt'],
-			'L_TITLE' => $bbcode_lang['bb_title'],
+        	'L_IMAGE_PROMPT' => $bbcode_lang['bb_image_prompt'],
+			'L_TITLE' => $bbcode_lang['format_title'],
 			'L_CONTAINER' => $bbcode_lang['bb_container'],
 			'L_BLOCK' => $bbcode_lang['bb_block'],
 			'L_FIELDSET' => $bbcode_lang['bb_fieldset'],
@@ -120,7 +120,7 @@ class BBCodeEditor extends ContentEditor
 			'L_WARNING' => $LANG['warning'],
 			'L_ERROR' => $LANG['error'],
 			'L_SUCCESS' => $LANG['success'],
-			'L_SIZE' => $bbcode_lang['bb_size'],
+			'L_SIZE' => $bbcode_lang['format_size'],
 			'L_CODE' => $bbcode_lang['bb_code'],
 			'L_TEXT' => $bbcode_lang['bb_text'],
 			'L_SCRIPT' => $bbcode_lang['bb_script'],
@@ -143,7 +143,7 @@ class BBCodeEditor extends ContentEditor
 
         	$template->put_all(array(
 				'AUTH_' . strtoupper($forbidden_tag) => 'style="opacity:0.3;filter:alpha(opacity=30);cursor:default;"',
-				'DISABLED_' . strtoupper($forbidden_tag) => 'if (false) '
+				'DISABLED_' . strtoupper($forbidden_tag) => 'true'
 			));
         }
 
@@ -166,7 +166,7 @@ class BBCodeEditor extends ContentEditor
             $smiley_height = 18;
             $smiley_width = 18;
 
-            $smiley = new Image(Url::to_absolute('/images/smileys/' . $infos['url_smiley']));
+            $smiley = new Image(TPL_PATH_TO_ROOT . '/images/smileys/' . $infos['url_smiley']);
 			$smiley_height = $smiley->get_height();
 			$smiley_width = $smiley->get_width();
 			
@@ -220,5 +220,4 @@ class BBCodeEditor extends ContentEditor
         return $template->render();
     }
 }
-
 ?>

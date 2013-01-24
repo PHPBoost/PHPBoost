@@ -19,7 +19,7 @@ if ($("${escape(HTML_ID)}") != null)
 		HTMLForms.get("${escape(FORM_ID)}").getField("${escape(ID)}").enableValidationMessage();
 		HTMLForms.get("${escape(FORM_ID)}").getField("${escape(ID)}").liveValidate();
 		# START related_field #
-		HTMLForms.get("${escape(FORM_ID)}").getField("{related_field.E_ID}").liveValidate();
+		HTMLForms.get("${escape(FORM_ID)}").getField("{related_field.ID}").liveValidate();
 		# END related_field #
 	});
 

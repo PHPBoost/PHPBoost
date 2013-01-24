@@ -51,5 +51,4 @@ class AdminSitemapResponse extends AdminMenuDisplayResponse
 		$this->add_link($label, $url->relative(), '/sitemap/sitemap.png');
 	}
 }
-
 ?>

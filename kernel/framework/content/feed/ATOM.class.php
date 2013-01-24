@@ -86,5 +86,4 @@ class ATOM extends Feed
         return false;
     }
 }
-
 ?>

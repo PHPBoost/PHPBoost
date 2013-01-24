@@ -89,6 +89,7 @@ else
 		$clause_cat = " WHERE level = '0'";
 		$CAT_GALLERY[0]['name'] = $LANG['root'];
 		$CAT_GALLERY[0]['level'] = -1;
+		$CAT_GALLERY[0]['aprob'] = 1;
 	}
 
 	$nbr_pics = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "gallery WHERE idcat = '" . $idcat . "'", __LINE__, __FILE__);
@@ -141,9 +142,12 @@ else
 		'L_GALLERY' => $LANG['gallery'],
 		'L_CATEGORIES' => ($CAT_GALLERY[$idcat]['level'] >= 0) ? $LANG['sub_album'] : $LANG['album'],
 		'L_NAME' => $LANG['name'],
+		'L_APROB' => $LANG['aprob'],
+		'L_UNAPROB' => $LANG['unaprob'],
 		'L_EDIT' => $LANG['edit'],
 		'L_MOVETO' => $LANG['moveto'],
 		'L_DELETE' => $LANG['delete'],
+		'L_APROB_IMG' => ($CAT_GALLERY[$idcat]['aprob'] == 1) ? $LANG['unaprob'] : $LANG['aprob'],
 		'L_SUBMIT' => $LANG['submit'],
 		'U_GALLERY_CAT_LINKS' => $cat_links
 	));
@@ -202,7 +206,7 @@ else
 	if ($nbr_pics > 0)
 	{
 		$Template->assign_block_vars('pics', array(
-			'EDIT' => '<a href="admin_gallery_cat.php' . (!empty($idcat) ? '?id=' . $idcat : '') . '"><img class="valign_middle" src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/edit.png" alt="" /></a>',
+			'EDIT' => '<a href="admin_gallery_cat.php' . (!empty($idcat) ? '?id=' . $idcat : '') . '" title="' . $LANG['edit'] . '" ><img class="valign_middle" src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/edit.png" alt="' . $LANG['edit'] . '" title="' . $LANG['edit'] . '" /></a>',
 			'PICS_MAX' => !empty($idpics) ? '<img src="show_pics.php?id=' . $idpics . '&amp;cat=' . $idcat . '" alt="" / >' : ''
 		));
 
@@ -227,7 +231,7 @@ else
 
 		if (!empty($idpics))
 		{
-			$result = $Sql->query_while("SELECT g.id, g.idcat, g.name, g.user_id, g.views, g.width, g.height, g.weight, g.timestamp, g.note, g.nbrnote, g.nbr_com, g.aprob, m.login
+			$result = $Sql->query_while("SELECT g.id, g.idcat, g.name, g.user_id, g.views, g.width, g.height, g.weight, g.timestamp, g.aprob, m.login
 			FROM " . PREFIX . "gallery g
 			LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = g.user_id
 			WHERE g.idcat = '" . $idcat . "' AND g.id = '" . $idpics . "'
@@ -316,7 +320,7 @@ else
 				$Template->assign_block_vars('pics.pics_max', array(
 					'ID' => $info_pics['id'],
 					'IMG' => '<img src="show_pics.php?id=' . $idpics . '&amp;cat=' . $idcat . '" alt="" / >',
-					'NAME' => '<span id="fi_' . $info_pics['id'] . '">' . $info_pics['name'] . '</span> <span id="fi' . $info_pics['id'] . '"></span>',
+					'NAME' => '<span id="fi_' . $info_pics['id'] . '">' . stripslashes($info_pics['name']) . '</span> <span id="fi' . $info_pics['id'] . '"></span>',
 					'POSTOR' => '<a class="com" href="'. UserUrlBuilder::profile($info_pics['user_id'])->absolute() .'</a>',
 					'DATE' => gmdate_format('date_format_short', $info_pics['timestamp']),
 					'VIEWS' => ($info_pics['views'] + 1),
@@ -364,10 +368,10 @@ else
 				if (!file_exists('pics/thumbnails/' . $row['path']))
 					$Gallery->Resize_pics('pics/' . $row['path']); //Redimensionnement + création miniature
 
-				$name_cut = (strlen(html_entity_decode($row['name'])) > 22) ? htmlentities(substr(html_entity_decode($row['name']), 0, 22)) . '...' : $row['name'];
+				$name_cut = (strlen(TextHelper::html_entity_decode($row['name'])) > 22) ? TextHelper::htmlentities(substr(TextHelper::html_entity_decode($row['name']), 0, 22)) . '...' : $row['name'];
 
 				//On reccourci le nom s'il est trop long pour éviter de déformer l'administration.
-				$name = html_entity_decode($row['name']);
+				$name = TextHelper::html_entity_decode($row['name']);
 				$name = strlen($name) > 20 ? substr($name, 0, 20) . '...' : $name;
 
 				//On genère le tableau pour x colonnes
@@ -394,9 +398,9 @@ else
 					'ID' => $row['id'],
 					'IMG' => '<img src="pics/thumbnails/' . $row['path'] . '" alt="' . $name . '" />',
 					'PATH' => $row['path'],
-					'NAME' => $name_cut,
-					'TITLE' => str_replace('"', '\"', $row['name']),
-					'RENAME_FILE' => '<span id="fihref' . $row['id'] . '"><a href="javascript:display_rename_file(\'' . $row['id'] . '\', \'' . addslashes($row['name']) . '\', \'' . addslashes($name_cut) . '\');"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/edit.png" alt="' . $LANG['edit'] . '" class="valign_middle" /></a></span>',
+					'NAME' => stripslashes($name_cut),
+					'TITLE' => stripslashes($row['name']),
+					'RENAME_FILE' => '<span id="fihref' . $row['id'] . '"><a href="javascript:display_rename_file(\'' . $row['id'] . '\', \'' . addslashes($row['name']) . '\', \'' . addslashes($name_cut) . '\');" title="' . $LANG['edit'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/edit.png" alt="' . $LANG['edit'] . '" title="' . $LANG['edit'] . '" class="valign_middle" /></a></span>',
 					'IMG_APROB' => ($row['aprob'] == 1) ? 'unvisible.png' : 'visible.png',
 					'TR_START' => $tr_start,
 					'TR_END' => $tr_end,

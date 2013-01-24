@@ -3,8 +3,8 @@
  *                         AddNewsletterController.class.php
  *                            -------------------
  *   begin                : February 8, 2011
- *   copyright            : (C) 2011 Kévin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   copyright            : (C) 2011 Kevin MASSY
+ *   email                : kevin.massy@phpboost.com
  *
  *
  ###################################################
@@ -39,7 +39,7 @@ class AddNewsletterController extends ModuleController
 	
 	private $send_test_button;
 	
-	public function execute(HTTPRequest $request)
+	public function execute(HTTPRequestCustom $request)
 	{
 		if (!NewsletterAuthorizationsService::default_authorizations()->create_newsletters())
 		{
@@ -59,8 +59,7 @@ class AddNewsletterController extends ModuleController
 			$this->send_mail($type);
 			$tpl->put('MSG', MessageHelper::display($this->lang['newsletter.success-add'], E_USER_SUCCESS, 4));
 		}
-		
-		if ($this->send_test_button->has_been_submited() && $this->form->validate())
+		else if ($this->send_test_button->has_been_submited() && $this->form->validate())
 		{
 			$this->send_test($type);
 			$tpl->put('MSG', MessageHelper::display($this->lang['newsletter.success-send-test'], E_USER_SUCCESS, 4));
@@ -68,7 +67,7 @@ class AddNewsletterController extends ModuleController
 		
 		$tpl->put('FORM', $this->form->display());
 		
-		return $this->build_response($tpl);
+		return $this->build_response($tpl, $type);
 	}
 	
 	private function init()
@@ -83,7 +82,7 @@ class AddNewsletterController extends ModuleController
 		$fieldset = new FormFieldsetHTML('add-newsletter', $this->lang['newsletter-add']);
 		$form->add_fieldset($fieldset);
 		
-		$fieldset->add_field(new FormFieldMultipleSelectChoice('newsletter_choice', $this->lang['add.choice_streams'], array(), $this->get_streams()));
+		$fieldset->add_field(new FormFieldMultipleSelectChoice('newsletter_choice', $this->lang['add.choice_streams'], array(), $this->get_streams(), array('required' => true)));
 		
 		$fieldset->add_field(new FormFieldTextEditor('title', $this->lang['newsletter.title'], NewsletterConfig::load()->get_newsletter_name(), array(
 			'class' => 'text', 'required' => true)
@@ -112,21 +111,27 @@ class AddNewsletterController extends ModuleController
 	
 	private function send_test($type)
 	{
+		$newsletter_config = NewsletterConfig::load();
+		$subscribers[] = array('mail' => $newsletter_config->get_mail_sender());
 		NewsletterMailFactory::send_mail(
-			array(NewsletterConfig::load()->get_mail_sender()), 
+			$subscribers, 
 			$type, 
-			NewsletterConfig::load()->get_mail_sender(), 
+			$newsletter_config->get_mail_sender(), 
 			$this->form->get_value('title'), 
 			$this->form->get_value('contents')
 		);
 	}
 	
-	private function build_response(View $view)
+	private function build_response(View $view, $type)
 	{
-		$response = new SiteDisplayResponse($view);
+		$body_view = new FileTemplate('newsletter/NewsletterBody.tpl');
+		$body_view->add_lang($this->lang);
+		$body_view->put('TEMPLATE', $view);
+		$response = new SiteDisplayResponse($body_view);
 		$breadcrumb = $response->get_graphical_environment()->get_breadcrumb();
 		$breadcrumb->add($this->lang['newsletter'], NewsletterUrlBuilder::home()->absolute());
 		$breadcrumb->add($this->lang['newsletter-add'], NewsletterUrlBuilder::add_newsletter()->absolute());
+		$breadcrumb->add($this->lang['newsletter.types.' . $type], NewsletterUrlBuilder::add_newsletter($type)->absolute());
 		$response->get_graphical_environment()->set_page_title($this->lang['newsletter-add']);
 		return $response;
 	}
@@ -148,13 +153,7 @@ class AddNewsletterController extends ModuleController
 	
 	public function return_editor($type)
 	{
-		if ($type == 'html')
-		{
-			return new FormFieldMultiLineTextEditor('contents', $this->lang['newsletter.contents'], '', array(
-				'rows' => 10, 'cols' => 47, 'required' => true)
-			);
-		}
-		else if ($type == 'bbcode')
+		if ($type == 'bbcode')
 		{
 			return new FormFieldRichTextEditor('contents', $this->lang['newsletter.contents'], '', array(
 				'rows' => 10, 'cols' => 47, 'required' => true)
@@ -167,7 +166,5 @@ class AddNewsletterController extends ModuleController
 			);
 		}
 	}
-	
 }
-
 ?>

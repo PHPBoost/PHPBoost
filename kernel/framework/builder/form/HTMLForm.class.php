@@ -42,7 +42,7 @@ class HTMLForm
 	const NORMAL_CSS_CLASS = 'fieldset_content';
 
 	private static $instance_id = 0;
-
+	
 	/**
 	 * @var FormConstraint[]
 	 */
@@ -85,12 +85,6 @@ class HTMLForm
 	private $template = null;
 
 	/**
-	 * @desc If true, message "fields with * are required" will not be displayed
-	 * @var boolean
-	 */
-	private $disable_required_fields_message = false;
-
-	/**
 	 * @desc Constructs a HTMLForm object
 	 * @param string $html_id The HTML name of the form
      * @param string $target The url where the form sends data
@@ -106,7 +100,7 @@ class HTMLForm
 		}
 		self::$instance_id++;
 	}
-
+	
 	private function add_csrf_protection()
 	{
 		$csrf_protection_field = new FormFieldCSRFToken();
@@ -169,7 +163,7 @@ class HTMLForm
 			return $field->get_value();
 		}
 	}
-
+	
 	/**
 	 * @desc Returns true if field is disabled
 	 * @param string $field_id The HTML id of the field and string $default_value The default value
@@ -197,13 +191,13 @@ class HTMLForm
 	 */
 	public function has_field($field_id) {
 		try {
-			$this->get_field_by_id($field_id);
+			$this->field_is_disabled($field_id);
 		} catch (FormBuilderException $ex) {
 			return false;
 		}
 		return true;
 	}
-
+	
 	private function get_field_by_id($field_id)
 	{
 		foreach ($this->fieldsets as $fieldset)
@@ -230,19 +224,13 @@ class HTMLForm
 	}
 
 	/**
-	 * @desc message "fields with * are required" will not be displayed
-	 */
-	public function disable_required_fields_message()
-	{
-		$this->disable_required_fields_message = true;
-	}
-
-	/**
 	 * @desc Displays the form
 	 * @return Template The template containing all the form elements which is ready to be displayed.
 	 */
 	public function display()
 	{
+		global $LANG;
+
 		$template = $this->get_template_to_use();
 
 		$template->put_all(array(
@@ -251,7 +239,7 @@ class HTMLForm
 			'FORMCLASS' => $this->css_class,
 			'TARGET' => $this->target,
 			'HTML_ID' => $this->html_id,
-			'L_REQUIRED_FIELDS' => LangLoader::get_message('require', 'main'),
+			'L_REQUIRED_FIELDS' => $LANG['require'],
 			'C_VALIDATION_ERROR' => count($this->validation_error_messages),
 			'TITLE_VALIDATION_ERROR_MESSAGE' => LangLoader::get_message('validation_error', 'builder-form-Validator'),
 			'METHOD' => $this->method
@@ -259,7 +247,7 @@ class HTMLForm
 
 		foreach ($this->validation_error_messages as $error_message)
 		{
-			if (!empty($error_message))
+			if (!empty($error_message)) 
 			{
 				$template->assign_block_vars('validation_error_messages', array(
 					'ERROR_MESSAGE' => $error_message
@@ -320,10 +308,6 @@ class HTMLForm
 
 	private function has_required_fields()
 	{
-		if ($this->disable_required_fields_message)
-		{
-			return false;
-		}
 		foreach ($this->fieldsets as $fieldset)
 		{
 			foreach($fieldset->get_fields() as $field)
@@ -360,17 +344,6 @@ class HTMLForm
 				$validation_result = false;
 			}
 		}
-		foreach ($this->constraints as $constraint)
-		{
-			if (!$constraint->validate())
-			{
-				$validation_result = false;
-			}
-		}
-		if (!$validation_result)
-		{
-			$this->validation_error_messages[] = LangLoader::get_message('validation_error', 'builder-form-Validator');
-		}
 		return $validation_result;
 	}
 
@@ -380,9 +353,12 @@ class HTMLForm
 	 */
 	public function set_html_id($html_id)
 	{
-		$html_id = strtolower($html_id);
-		$html_id = Url::encode_rewrite($html_id);
-		$this->html_id = str_replace('-', '_', $html_id);
+		$this->html_id = $html_id;
+	}
+	
+	public function get_html_id()
+	{
+		return $this->html_id;
 	}
 
 	/**

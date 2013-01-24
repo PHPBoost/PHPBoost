@@ -60,5 +60,4 @@ interface SelectQueryResult extends QueryResult, iterator
      */
     function dispose();
 }
-
 ?>

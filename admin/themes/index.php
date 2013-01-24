@@ -3,8 +3,8 @@
  *                           index.php
  *                            -------------------
  *   begin                : April 20, 2011
- *   copyright            : (C) 2011 Kévin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   copyright            : (C) 2011 Kevin MASSY
+ *   email                : kevin.massy@phpboost.com
  *
  *
  ###################################################
@@ -32,7 +32,7 @@ require_once PATH_TO_ROOT . '/kernel/init.php';
 $url_controller_mappers = array(
 	new UrlControllerMapper('AdminThemesInstalledListController', '`^(?:/installed)?/?$`'),
 	new UrlControllerMapper('AdminThemesNotInstalledListController', '`^/add/?$`'),
-	new UrlControllerMapper('AdminThemeDeleteController', '`^/([a-z]+)/delete/?$`', array('id')),
+	new UrlControllerMapper('AdminThemeDeleteController', '`^/([A-Za-z0-9-_]+)/delete/?$`', array('id')),
 );
 DispatchManager::dispatch($url_controller_mappers);
 ?>

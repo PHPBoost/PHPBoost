@@ -35,11 +35,11 @@ if (!empty($_POST['valid']))
 {
 	$Session->csrf_get_protect();
 
-	// Paramètre afichage.
+	// Paramï¿½tre afichage.
 	$display_array = retrieve(POST, 'activ', 0, TARRAY);
 	$activ = is_array($display_array) ? array_sum($display_array) : 0;
 
-	// Génère le tableau de configuration.
+	// Gï¿½nï¿½re le tableau de configuration.
 	$config_media = array (
 		'pagin' => max(1, retrieve(POST, 'pagin', $MEDIA_CONFIG['pagin'], TINTEGER)),
 		'nbr_column' => max(1, retrieve(POST, 'num_cols', $MEDIA_CONFIG['nbr_column'], TINTEGER)),
@@ -60,10 +60,10 @@ if (!empty($_POST['valid']))
 		)
 	);
 
-	// Met à jour les notes des fichiers.
+	// Met ï¿½ jour les notes des fichiers.
 	if ($MEDIA_CONFIG['note_max'] != $config_media['note_max'] && !empty($MEDIA_CONFIG))
 	{
-		$Sql->Query_inject("UPDATE ".PREFIX."media SET note = note * " . ($config_media['note_max']/$MEDIA_CONFIG['note_max']), __LINE__, __FILE__);
+		NotationService::update_notation_scale('media', $MEDIA_CONFIG['note_max'], $config_media['note_max']);
 	}
 
 	$Sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($config_media)) . "' WHERE name = 'media'", __LINE__, __FILE__);
@@ -94,9 +94,9 @@ else
 		'PAGINATION' => $MEDIA_CONFIG['pagin'],
 		'L_NOTE' => $MEDIA_LANG['note'],
 		'NOTE' => $MEDIA_CONFIG['note_max'],
-		'L_WIDTH_MAX' => $LANG['width_max'],
+		'L_WIDTH_MAX' => $MEDIA_LANG['width_max'],
 		'WIDTH_MAX' => $MEDIA_CONFIG['width'],
-		'L_HEIGHT_MAX' => $LANG['height_max'],
+		'L_HEIGHT_MAX' => $MEDIA_LANG['height_max'],
 		'HEIGHT_MAX' => $MEDIA_CONFIG['height'],
 		'L_MIME_TYPE' => $MEDIA_LANG['mime_type'],
 		'L_TYPE_BOTH' => $MEDIA_LANG['type_both'],

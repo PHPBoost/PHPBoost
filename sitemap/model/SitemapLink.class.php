@@ -239,7 +239,7 @@ class SitemapLink extends SitemapElement
 
 		$template->put_all(array(
 			'LOC' => $this->get_url(),
-			'TEXT' => htmlspecialchars($this->name, ENT_QUOTES),
+			'TEXT' => TextHelper::htmlspecialchars($this->name, ENT_QUOTES),
 			'C_DISPLAY_DATE' => $display_date,
 			'DATE' => $display_date ? $this->last_modification_date->to_date() : '',
 			'ACTUALIZATION_FREQUENCY' => $this->change_freq,
@@ -250,5 +250,4 @@ class SitemapLink extends SitemapElement
 		return $template;
 	}
 }
-
 ?>

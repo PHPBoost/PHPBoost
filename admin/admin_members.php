@@ -48,7 +48,7 @@ if (!empty($search)) //Moteur de recherche des members
 		while ($row = $Sql->fetch_assoc($result)) //On execute la requête dans une boucle pour afficher tout les résultats.
 		{ 
 			$template->assign_block_vars('search', array(
-				'RESULT' => '<a href="'. PATH_TO_ROOT .'/admin/admin_members.php?id=' . $row['user_id'] . '">' . $row['login'] . '</a><br />'
+				'RESULT' => '<a href="'. AdminMembersUrlBuilder::edit($row['user_id'])->absolute() . '">' . $row['login'] . '</a><br />'
 			));
 			$template->put_all(array(
 				'C_DISPLAY_SEARCH_RESULT' => true
@@ -158,6 +158,7 @@ while ($row = $Sql->fetch_assoc($result))
 	$user_web = !empty($row['user_web']) ? '<a href="' . $row['user_web'] . '"><img src="'. PATH_TO_ROOT .'/templates/' . get_utheme() . '/images/' . get_ulang() . '/user_web.png" alt="' . $row['user_web'] . '" title="' . $row['user_web'] . '" /></a>' : '';
 	
 	$template->assign_block_vars('member', array(
+		'U_PROFILE' => UserUrlBuilder::profile($row['user_id'])->absolute(),
 		'IDMBR' => $row['user_id'],
 		'NAME' => $row['login'],
 		'RANK' => $rank,
@@ -173,5 +174,4 @@ $Sql->query_close($result);
 $template->display(); 
 	
 require_once('../admin/admin_footer.php');
-
 ?>

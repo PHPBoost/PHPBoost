@@ -3,7 +3,7 @@
 			var theme = '{THEME}';
 		-->
 		</script>
-		<script type="text/javascript" src="../kernel/lib/js/form/calendar.js"></script>
+		<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/lib/js/phpboost/calendar.js"></script>
 		<script type="text/javascript">
 		<!--
 		function check_form(){
@@ -84,7 +84,7 @@
 					</dl>
 					<dl>
 						<dt><label for="a0">* {L_ANSWERS}</label></dt>
-						<dd><label>
+						<dd>
 							<table style="border:none;border-spacing:0">
 								<tr>
 									<th style="text-align:center;">
@@ -142,7 +142,7 @@
 									</td>
 								</tr>
 							</table>
-						</label></dd>
+						</dd>
 					</dl>
 				</fieldset>		
 

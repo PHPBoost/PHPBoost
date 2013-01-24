@@ -43,11 +43,11 @@ if (!defined('TITLE'))
 //Menus display configuration
 if (defined('NO_LEFT_COLUMN') && NO_LEFT_COLUMN)
 {
-	$env->disable_left_menus();
+	$env->get_columns_disabled()->set_disable_left_columns(true);
 }
 if (defined('NO_RIGHT_COLUMN') && NO_RIGHT_COLUMN)
 {
-	$env->disable_right_menus();
+	$env->get_columns_disabled()->set_disable_right_columns(true);
 }
 
 $env->set_page_title(TITLE);

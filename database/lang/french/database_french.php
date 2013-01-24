@@ -34,7 +34,7 @@
 $LANG['database'] = 'Base de données';
 $LANG['creation_date'] = 'Date de création';
 $LANG['database_management'] = 'Gestion base de données';
-$LANG['db_explain_actions'] = 'Ce panneau vous permet de gérer votre base de données. Vous pouvez y voir la liste des tables utilisées par PHPBoost, leurs propriétés. Aussi divers outils vous permettront de faire quelques opérations basiques sur certaines tables. Vous pouvez aussi effectuer une sauvegarde de votre base de données, ou de seulement quelques tables que vous sélectionnerez ici.
+$LANG['db_explain_actions'] = 'Ce panneau vous permet de gérer votre base de données. Vous pouvez y voir la liste des tables utilisées par PHPBoost, leurs propriétés, ainsi que divers outils qui vous permettront de faire quelques opérations basiques sur certaines tables. Vous pouvez aussi effectuer une sauvegarde de votre base de données, ou de seulement quelques tables que vous sélectionnerez ici.
 <br /><br />
 <div class="question">L\'optimisation de la base de données permet de réorganiser la structure de la table afin de faciliter les opérations au serveur SQL. Cette opération est effectuée automatiquement sur chaque table une fois par jour. Vous pouvez optimiser les tables manuellement via ce panneau d\'administration.
 <br />
@@ -87,7 +87,7 @@ $LANG['db_query_result'] = 'Résultat de la requête suivante';
 $LANG['db_executed_query'] = 'Requête SQL';
 $LANG['db_confirm_query'] = 'Voulez-vous vraiment exécuter la requête suivante : ';
 $LANG['db_file_list'] = 'Liste des fichiers';
-$LANG['db_confirm_restore'] = 'Etes-vous sûr de vouloir restaurer votre base de données à partir de la sauvegarde sélectionnée?';
+$LANG['db_confirm_restore'] = 'Etes-vous sûr de vouloir restaurer votre base de données à partir de la sauvegarde sélectionnée ?';
 $LANG['db_restore_file'] = 'Cliquez sur le fichier que vous voulez restaurer.';
 $LANG['db_restore_success'] = 'La restauration de la base de données a été effectuée avec succès';
 $LANG['db_restore_failure'] = 'Une erreur est survenue pendant la restauration de la base de données';

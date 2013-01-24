@@ -3,8 +3,8 @@
  *                       UserChangeLostPasswordController.class.php
  *                            -------------------
  *   begin                : October 07, 2011
- *   copyright            : (C) 2011 Kévin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   copyright            : (C) 2011 Kevin MASSY
+ *   email                : kevin.massy@phpboost.com
  *
  *
  ###################################################
@@ -32,7 +32,7 @@ class UserChangeLostPasswordController extends AbstractController
 	private $form;
 	private $submit_button;
 
-	public function execute(HTTPRequest $request)
+	public function execute(HTTPRequestCustom $request)
 	{
 		$this->init();
 
@@ -88,10 +88,12 @@ class UserChangeLostPasswordController extends AbstractController
 	private function change_password($change_password_pass, $password)
 	{
 		$password = KeyGenerator::string_hash($password);
-		$user_id = UserLostPasswordService::get_user_id_by_change_password_pass($change_password_pass);
-		UserService::change_password($user_id, $password);
-		UserLostPasswordService::clear_activation_key($user_id);
-		UserLostPasswordService::connect_user($user_id, $password);
+		UserService::change_password($password, 'WHERE change_password_pass =:change_password_pass', array('change_password_pass' => $change_password_pass));
+		$user = UserService::get_user('WHERE change_password_pass =:change_password_pass', array('change_password_pass' => $change_password_pass));
+		UserLostPasswordService::clear_activation_key($user->get_id());
+		UserLostPasswordService::connect_user($user->get_id(), $password, $user->get_level());
+		
+		AppContext::get_response()->redirect(Environment::get_home_page());
 	}
 	
 	private function build_response(View $view, $key)

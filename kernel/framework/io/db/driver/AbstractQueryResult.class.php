@@ -53,5 +53,4 @@ abstract class AbstractQueryResult implements QueryResult
 		return $this->parameters;
 	}
 }
-
 ?>

@@ -3,8 +3,8 @@
  *                      AdminNewsletterDeleteStreamController.class.php
  *                            -------------------
  *   begin                : March 11, 2011
- *   copyright            : (C) 2011 Kévin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   copyright            : (C) 2011 Kevin MASSY
+ *   email                : kevin.massy@phpboost.com
  *
  *
  ###################################################
@@ -27,7 +27,7 @@
 
 class AdminNewsletterDeleteStreamController extends AdminModuleController
 {
-	public function execute(HTTPRequest $request)
+	public function execute(HTTPRequestCustom $request)
 	{
 		$id = $request->get_int('id', 0);
 		
@@ -40,16 +40,21 @@ class AdminNewsletterDeleteStreamController extends AdminModuleController
 			//Delete for subscribers
 			$condition = "WHERE stream_id = :stream_id";
 			$parameters = array('stream_id' => $id);
-			PersistenceContext::get_querier()->delete(NewsletterSetup::$newsletter_table_subscribtions, $condition, $parameters);
+			PersistenceContext::get_querier()->delete(NewsletterSetup::$newsletter_table_subscriptions, $condition, $parameters);
+			
+			//Delete archives
+			$condition = "WHERE stream_id = :stream_id";
+			$parameters = array('stream_id' => $id);
+			PersistenceContext::get_querier()->delete(NewsletterSetup::$newsletter_table_archives, $condition, $parameters);
 			
 			NewsletterStreamsCache::invalidate();
 			
-			$controller = new UserErrorController(LangLoader::get_message('success', 'errors'), LangLoader::get_message('admin.success-delete-stream', 'newsletter_common', 'newsletter'));
-			DispatchManager::redirect($controller);
+			AppContext::get_response()->redirect(NewsletterUrlBuilder::streams());
 		}
 		else
 		{
-			$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), LangLoader::get_message('admin.stream-not-existed', 'newsletter_common', 'newsletter'));
+			$controller = new UserErrorController(LangLoader::get_message('error', 'errors-common'), LangLoader::get_message('admin.stream-not-existed', 'newsletter_common', 'newsletter'));
+			$controller->set_response_classname(UserErrorController::ADMIN_RESPONSE);
 			DispatchManager::redirect($controller);
 		}
 	}
@@ -59,5 +64,4 @@ class AdminNewsletterDeleteStreamController extends AdminModuleController
 		return NewsletterStreamsCache::load()->get_existed_stream($id);
 	}
 }
-
 ?>

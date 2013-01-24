@@ -3,8 +3,8 @@
  *                          ShoutboxModuleMiniMenu.class.php
  *                            -------------------
  *   begin                : October 08, 2011
- *   copyright            : (C) 2011 Kévin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   copyright            : (C) 2011 Kevin MASSY
+ *   email                : kevin.massy@phpboost.com
  *
  *
  ###################################################
@@ -31,6 +31,11 @@ class ShoutboxModuleMiniMenu extends ModuleMiniMenu
     {
     	return self::BLOCK_POSITION__RIGHT;
     }
+    
+	public function admin_display()
+    {
+        return '';
+    }
 
 	public function display($tpl = false)
     {
@@ -39,7 +44,7 @@ class ShoutboxModuleMiniMenu extends ModuleMiniMenu
 	    $config_shoutbox = ShoutboxConfig::load();
 	
 	    //Mini Shoutbox non activée si sur la page archive shoutbox.
-	    if (strpos(SCRIPT, '/shoutbox/shoutbox.php') === false || $User->check_auth($config_shoutbox->get_authorization(), ShoutboxConfig::AUTHORIZATION_READ))
+	    if (strpos(SCRIPT, '/shoutbox/shoutbox.php') === false)
 	    {
 	    	load_module_lang('shoutbox');
 	
@@ -122,9 +127,10 @@ class ShoutboxModuleMiniMenu extends ModuleMiniMenu
 	    	));
 	
 	    	$array_class = array('member', 'modo', 'admin');
-	    	$result = $Sql->query_while("SELECT id, login, user_id, level, contents
-	    	FROM " . PREFIX . "shoutbox
-	    	ORDER BY timestamp DESC
+	    	$result = $Sql->query_while("SELECT s.id, s.login, s.user_id, s.level, s.contents, m.display_name as mlogin
+	    	FROM " . PREFIX . "shoutbox s
+			LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = s.user_id
+	    	ORDER BY s.timestamp DESC
 	    	" . $Sql->limit(0, 25), __LINE__, __FILE__);
 	    	while ($row = $Sql->fetch_assoc($result))
 	    	{
@@ -132,19 +138,19 @@ class ShoutboxModuleMiniMenu extends ModuleMiniMenu
 	    		if ($User->check_auth($config_shoutbox->get_authorization(), ShoutboxConfig::AUTHORIZATION_MODERATION) || ($row['user_id'] === $User->get_attribute('user_id') && $User->get_attribute('user_id') !== -1))
 	    			$del_message = '<script type="text/javascript"><!--
 	    			document.write(\'<a href="javascript:Confirm_del_shout(' . $row['id'] . ');" title="' . $LANG['delete'] . '"><img src="' . TPL_PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/delete_mini.png" alt="" /></a>\');
-	    			--></script><ins><noscript><p><a href="' . TPL_PATH_TO_ROOT . '/shoutbox/shoutbox' . url('.php?del=true&amp;id=' . $row['id']) . '"><img src="' . TPL_PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/delete_mini.png" alt="" /></a></p></noscript></ins>';
+	    			--></script><ins><noscript><p><a href="' . PATH_TO_ROOT . '/shoutbox/shoutbox' . url('.php?del=true&amp;id=' . $row['id']) . '"><img src="' . TPL_PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/delete_mini.png" alt="" /></a></p></noscript></ins>';
 	    		else
 	    			$del_message = '';
 	
 	    		if ($row['user_id'] !== -1)
-	    			$row['login'] = $del_message . ' <a style="font-size:10px;" class="' . $array_class[$row['level']] . '" href="' . UserUrlBuilder::profile($row['user_id'])->absolute() . '">' . (!empty($row['login']) ? TextHelper::wordwrap_html($row['login'], 16) : $LANG['guest'])  . '</a>';
+	    			$row['login'] = $del_message . ' <a style="font-size:10px;" class="' . $array_class[$row['level']] . '" href="' . UserUrlBuilder::profile($row['user_id'])->absolute() . '">' . (!empty($row['mlogin']) ? TextHelper::wordwrap_html($row['mlogin'], 16) : $LANG['guest'])  . '</a>';
 	    		else
 	    			$row['login'] = $del_message . ' <span class="text_small" style="font-style: italic;">' . (!empty($row['login']) ? TextHelper::wordwrap_html($row['login'], 16) : $LANG['guest']) . '</span>';
 	
 	    		$tpl->assign_block_vars('shout', array(
 	    			'IDMSG' => $row['id'],
 	    			'PSEUDO' => $row['login'],
-	    			'CONTENTS' => ucfirst(FormatingHelper::second_parse($row['contents'])) //Majuscule premier caractère.
+	    			'CONTENTS' => ucfirst(FormatingHelper::second_parse(stripslashes($row['contents']))) //Majuscule premier caractère.
 	    		));
 	    	}
 	    	$Sql->query_close($result);

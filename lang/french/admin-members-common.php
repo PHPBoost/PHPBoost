@@ -3,8 +3,8 @@
  *                           admin-members-common.php
  *                            -------------------
  *   begin                : December 17, 2010
- *   copyright            : (C) 2010 Kévin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   copyright            : (C) 2010 Kevin MASSY
+ *   email                : kevin.massy@phpboost.com
  *
  *
  ###################################################
@@ -31,28 +31,21 @@
  
 $lang = array();
 
-//Messages 
-$lang['members.config.success-saving'] = 'La configuration a été enregistrée avec succès';
-$lang['members.add-member.success'] = 'Le membre a été ajouté avec succès';
-$lang['members.member-edit.success'] = 'Le membre a bien été modifié';
-$lang['members.rules.success-saving'] = 'Le réglement a bien été mise à jour';
-
 // Title 
 $lang['members.config-members'] = 'Configuration des membres';
 $lang['members.members-management'] = 'Gestion des membres';
 $lang['members.add-member'] = 'Ajouter un membre';
 $lang['members.members-punishment'] = 'Gestion des sanctions';
 $lang['members.edit-member'] = 'Edition d\'un membre';
-$lang['members.rules'] = 'Réglement';
+$lang['members.rules'] = 'Règlement';
 
 //Configuration
 $lang['members.config.registration-activation'] = 'Activer l\'inscription des membres';
 $lang['members.config.type-activation'] = 'Mode d\'activation du compte membre';
-$lang['members.config.unactivated-accounts-timeout'] = 'Durée après laquelle les membres non activés sont effacés';
+$lang['members.config.unactivated-accounts-timeout'] = 'Nombre de jours après lequel les membres non activés sont effacés';
 $lang['members.config.unactivated-accounts-timeout-explain'] = 'Laisser vide pour ignorer cette option (Non pris en compte si validation par administrateur)';
 $lang['members.config.captcha-activation'] = 'Code de vérification visuel';
 $lang['members.config.captcha-difficulty'] = 'Difficulté du code de vérification';
-$lang['members.config.theme-choice-permission'] = 'Permission aux membres de choisir leur thème';
 $lang['members.config.upload-avatar-server-authorization'] = 'Autoriser l\'upload d\'avatar sur le serveur';
 $lang['members.config.activation-resize-avatar'] = 'Activer le redimensionnement automatique des images';
 $lang['members.activation-resize-avatar-explain'] = 'Attention votre serveur doit avoir l\'extension GD chargée';
@@ -68,27 +61,11 @@ $lang['members.config.default-avatar-link'] = 'Adresse de l\'avatar par défaut';
 $lang['members.default-avatar-link-explain'] = 'Mettre dans le dossier images de votre thème';
 $lang['members.config.authorization-read-member-profile'] = 'Vous définissez ici les permissions de lecture de la liste des membres ainsi que certaines informations personnelles comme leurs emails.';
 $lang['members.config.welcome-message'] = 'Message à tous les membres';
-$lang['members.config.welcome-message-content'] = 'Message de bienvenue affiché dans le panel du membre';
+$lang['members.config.welcome-message-content'] = 'Message de bienvenue affiché dans le profil du membre';
 
 //Other fieldset configuration title
 $lang['members.config.avatars-management'] = 'Gestion des avatars';
 $lang['members.config.authorization'] = 'Autorisations';
-
-//Add and edit member
-$lang['members.pseudo'] = 'Pseudo';
-$lang['members.mail'] = 'Adresse email';
-$lang['members.hide-mail'] = 'Cacher l\'email';
-$lang['members.password'] = 'Mot de passe';
-$lang['members.confirm-password'] = 'Confirmer le mot de passe';
-$lang['members.rank'] = 'Rang';
-$lang['members.rank.member'] = 'Membre';
-$lang['members.rank.modo'] = 'Modérateur';
-$lang['members.rank.admin'] = 'Administrateur';
-$lang['members.approbation'] = 'Approbation';
-$lang['members.groups'] = 'Groupes';
-$lang['members.caution'] = 'Avertissement';
-$lang['members.readonly'] = 'Lecture seule';
-$lang['members.bannish'] = 'Banni';
 
 //Other fieldset add and edit title
 $lang['members.member-management'] = 'Gestion du membre';
@@ -101,7 +78,7 @@ $lang['members.config.type-activation.admin'] = 'Administrateur';
 
 //Rules
 $lang['members.rules.registration-agreement-description'] = 'Entrez ci-dessous le règlement à afficher lors de l\'enregistrement des membres, ils devront l\'accepter pour s\'enregistrer. Laissez vide pour aucun règlement.';
-$lang['members.rules.registration-agreement'] = 'Contenu du réglement';
+$lang['members.rules.registration-agreement'] = 'Contenu du règlement';
 
 //Other
 $lang['members.valid'] = 'Valide';

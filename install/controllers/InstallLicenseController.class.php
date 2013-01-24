@@ -36,11 +36,11 @@ class InstallLicenseController extends InstallController
 	 */
 	private $submit;
 
-	public function execute(HTTPRequest $request)
+	public function execute(HTTPRequestCustom $request)
 	{
         parent::load_lang($request);
 		$this->build_form();
-		if ($this->submit->has_been_submitted())
+		if ($this->submit->has_been_submited())
 		{
 			$this->handle_form();
 		}
@@ -63,7 +63,7 @@ class InstallLicenseController extends InstallController
     	$agreement = new FormFieldHTML('agreementExplanation', $this->lang['step.license.require.agreement'] . '<br /><br />');
     	$fieldset->add_field($agreement);
     	$license_content = file_get_contents_emulate('gpl-license.txt');
-    	$license_block = '<div style="width:auto;height:340px;overflow-y:scroll;border:1px solid #DFDFDF;background-color:#F1F4F1">' . $license_content . '</div>';
+    	$license_block = '<div style="width:auto;height:340px;overflow-y:scroll;border:1px solid #DFDFDF;background-color:#F1F1F1;">' . $license_content . '</div>';
     	$license = new FormFieldHTML('licenseContent', $license_block);
     	$fieldset->add_field($license);
     	$agree_checkbox = new FormFieldCheckbox('agree', $this->lang['step.license.please_agree'], FormFieldCheckbox::UNCHECKED,

@@ -3,8 +3,8 @@
  *                               MemberExtendedField.class.php
  *                            -------------------
  *   begin                : December 08, 2010
- *   copyright            : (C) 2010 Kévin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   copyright            : (C) 2010 Kevin MASSY
+ *   email                : kevin.massy@phpboost.com
  *
  *
  ###################################################
@@ -26,7 +26,7 @@
  ###################################################*/
  
 /**
- * @author Kévin MASSY <soldier.weasel@gmail.com>
+ * @author Kevin MASSY <kevin.massy@phpboost.com>
  * @desc Abstract class that proposes a default implementation for the MemberExtendedFieldType interface.
  * @package {@package}
  */
@@ -36,8 +36,6 @@ abstract class AbstractMemberExtendedField implements MemberExtendedFieldType
 	protected $form;
 	protected $field_used_once;
 	protected $field_used_phpboost_config;
-	protected $parse_field;
-	protected $unparse_field;
 	protected $disable_fields_configuration = array();
 	protected $name;
 	
@@ -49,8 +47,6 @@ abstract class AbstractMemberExtendedField implements MemberExtendedFieldType
 		$this->lang = LangLoader::get('main');
 		$this->field_used_once = false;
 		$this->field_used_phpboost_config = false;
-		$this->parse_field = false;
-		$this->unparse_field = false;
 		$this->name = 'ExtendedField';
 	}
 	
@@ -91,37 +87,7 @@ abstract class AbstractMemberExtendedField implements MemberExtendedFieldType
 	public function return_value(HTMLForm $form, MemberExtendedField $member_extended_field)
 	{
 		$field_name = $member_extended_field->get_field_name();
-		return $form->get_value($field_name);
-	}
-	
-	/**
-	 * {@inheritdoc}
-	 */
-	public function parse($value)
-	{
-		if($this->parse_field == true)
-		{
-			return FormatingHelper::strparse($value);
-		}
-		else
-		{
-			return $value;
-		}
-	}
-	
-	/**
-	 * {@inheritdoc}
-	 */
-	public function unparse($value)
-	{
-		if($this->unparse_field == true)
-		{
-			return FormatingHelper::unparse($value);
-		}
-		else
-		{
-			return $value;
-		}
+		return TextHelper::htmlspecialchars($form->get_value($field_name));
 	}
 	
 	/**

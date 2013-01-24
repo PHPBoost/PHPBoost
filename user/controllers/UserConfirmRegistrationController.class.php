@@ -3,8 +3,8 @@
  *                      UserConfirmRegistrationController.class.php
  *                            -------------------
  *   begin                : October 07, 2011
- *   copyright            : (C) 2011 Kévin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   copyright            : (C) 2011 Kevin MASSY
+ *   email                : kevin.massy@phpboost.com
  *
  *
  ###################################################
@@ -29,7 +29,7 @@ class UserConfirmRegistrationController extends AbstractController
 {
 	private $lang;
 	
-	public function execute(HTTPRequest $request)
+	public function execute(HTTPRequestCustom $request)
 	{
 		$this->init();
 		$key = $request->get_value('key', '');
@@ -43,18 +43,23 @@ class UserConfirmRegistrationController extends AbstractController
 
 	private function check_activation($key)
 	{
-		if (UserService::activation_passkey_exists($key) && !empty($key))
+		if (UserService::approbation_pass_exists($key) && !empty($key))
 		{
-			UserService::update_approbation_passkey($key);
-			
+			$condition = 'WHERE approbation_pass = :new_approbation_pass';
+			$parameters = array('new_approbation_pass' => $key);
+			$user = UserService::get_user($condition, $parameters);
+			$user_authentification = UserService::get_user_authentification($condition, $parameters);
+	
+			UserService::update_approbation_pass($key);
 			StatsCache::invalidate();
 			
-			$controller = new UserErrorController($this->lang['profile'], $this->lang['registration.confirm.success'], UserErrorController::SUCCESS);
-			DispatchManager::redirect($controller);
+			AppContext::get_session()->start($user->get_id(), $user_authentification->get_password_hashed(), $user->get_level(), SCRIPT, QUERY_STRING, $this->lang['registration'], 1, true);
+			
+			AppContext::get_response()->redirect(Environment::get_home_page());
 		}
 		else
 		{
-			$controller = new UserErrorController($this->lang['profile'], $this->lang['registration.confirm.error'], UserErrorController::WARNING);
+			$controller = new UserErrorController($this->lang['profile'], LangLoader::get_message('process.error', 'errors-common'), UserErrorController::WARNING);
 			DispatchManager::redirect($controller);
 		}
 	}

@@ -36,6 +36,8 @@ $LANG['date_format_tiny'] = 'd/m';
 $LANG['date_format_short'] = 'd/m/y';
 $LANG['date_format'] = 'd/m/y \à H\hi';
 $LANG['date_format_long'] = 'd/m/y \à H\hi\m\i\ns\s';
+$LANG['date_format_text_short'] = 'j F Y';
+$LANG['date_format_text_long'] = 'l j F Y';
 $LANG['from_date'] = 'du';
 $LANG['to_date'] = 'au';
 $LANG['now'] = 'Maintenant';
@@ -114,7 +116,7 @@ $LANG['private_messaging'] = 'Messagerie privée';
 $LANG['my_private_profile'] = 'Mon profil';
 
 //Maintain
-$LANG['maintain'] = 'Le site est actuellement en maintenance merci de votre patience, seul(s) le(s) administrateur(s) du site peuvent y accèder.';
+$LANG['maintain'] = 'Le site est actuellement en maintenance. Merci de votre patience.';
 $LANG['maintain_delay'] = 'Délai estimé avant réouverture du site :';
 $LANG['title_maintain'] = 'Site en maintenance';
 $LANG['loading'] = 'Chargement';
@@ -164,7 +166,7 @@ $LANG['written_by'] = 'Ecrit par';
 $LANG['valid'] = 'Valide';
 $LANG['info'] = 'Informations';
 $LANG['asc'] = 'Croissant';
-$LANG['desc'] = 'Decroissant';
+$LANG['desc'] = 'Décroissant';
 $LANG['list'] = 'Liste';
 $LANG['welcome'] = 'Bienvenue';
 $LANG['currently'] = 'Actuellement';
@@ -261,37 +263,10 @@ $LANG['select_none'] = 'Tout désélectionner';
 $LANG['add_member'] = 'Ajouter un membre';
 $LANG['alert_member_already_auth'] = 'Le membre est déjà dans la liste';
 
-//Calendar
-$LANG['january'] = 'Janvier';
-$LANG['february'] = 'Février';
-$LANG['march'] = 'Mars';
-$LANG['april'] = 'Avril';
-$LANG['may'] = 'Mai';
-$LANG['june'] = 'Juin';
-$LANG['july'] = 'Juillet';
-$LANG['august'] = 'Août';
-$LANG['september'] = 'Septembre';
-$LANG['october'] = 'Octobre';
-$LANG['november'] = 'Novembre';
-$LANG['december'] = 'Décembre';
-$LANG['monday'] = 'Lun';
-$LANG['tuesday'] = 'Mar';
-$LANG['wenesday'] = 'Mer';
-$LANG['thursday'] = 'Jeu';
-$LANG['friday'] = 'Ven';
-$LANG['saturday'] = 'Sam';
-$LANG['sunday']	= 'Dim';
-
 //Membres
 $LANG['member_area'] = 'Zone membre';
 $LANG['profile'] = 'Profil';
-$LANG['profile_edition'] = 'Edition du profil';
-$LANG['previous_password'] = 'Ancien mot de passe';
 $LANG['fill_only_if_modified'] = 'Remplir seulement en cas de modification';
-$LANG['new_password'] = 'Nouveau mot de passe';
-$LANG['confirm_password'] = 'Retapez votre mot de passe';
-$LANG['hide_mail'] = 'Cacher votre email';
-$LANG['hide_mail_who'] = 'Aux autres utilisateurs';
 $LANG['mail_track_topic'] = 'Etre averti par email lors d\'une réponse dans un sujet que vous suivez';
 $LANG['web_site'] = 'Site web';
 $LANG['localisation'] = 'Localisation';
@@ -328,7 +303,7 @@ $LANG['no_member_online'] = 'Aucun membre connecté';
 $LANG['del_member'] = 'Suppression du compte <span class="text_small">(Définitif!)</span>';
 $LANG['choose_lang'] = 'Langue par défaut';
 $LANG['choose_theme'] = 'Thème par défaut';
-$LANG['choose_editor'] = 'Editeur texte par défaut';
+$LANG['choose_editor'] = 'Editeur de texte par défaut';
 $LANG['theme_s'] = 'Thèmes';
 $LANG['select_group'] = 'Sélectionnez un groupe';
 $LANG['search_member'] = 'Chercher un membre';
@@ -339,7 +314,8 @@ $LANG['banned'] = 'Banni';
 $LANG['go_msg'] = 'Aller au message';
 $LANG['display'] = 'Afficher';
 $LANG['site_config_msg_mbr'] = 'Bienvenue sur le site. Vous êtes membre du site, vous pouvez accéder à tous les espaces nécessitant un compte utilisateur, éditer votre profil et voir vos contributions.';
-$LANG['register_agreement'] = 'Vous vous apprêtez à vous enregistrer sur le site. Nous vous demandons d\'être poli et courtois dans vos interventions.<br /><br />Merci, l\'équipe du site.';
+$LANG['register_agreement'] = 'Vous vous apprêtez à vous enregistrer sur le site. Nous vous demandons d\'être poli et courtois dans vos interventions.
+Merci, l\'équipe du site.';
 
 //Mp
 $LANG['pm_box'] = 'Boîte de réception';
@@ -355,9 +331,9 @@ $LANG['no_pm'] = 'Aucun message';
 $LANG['quote_last_msg'] = 'Reprise du message précédent';
 
 //Gestion des fichiers
-$LANG['confim_del_file'] = 'Supprimer ce fichier?';
-$LANG['confirm_del_folder'] = 'Supprimer ce dossier, et tout son contenu?';
-$LANG['confirm_empty_folder'] = 'Vider tout le contenu de ce dossier?';
+$LANG['confim_del_file'] = 'Supprimer ce fichier ?';
+$LANG['confirm_del_folder'] = 'Supprimer ce dossier, et tout son contenu ?';
+$LANG['confirm_empty_folder'] = 'Vider tout le contenu de ce dossier ?';
 $LANG['file_forbidden_chars'] = 'Le nom du fichier ne peut contenir aucun des caractères suivants : \\\ / . | ? < > \"';
 $LANG['folder_forbidden_chars'] = 'Le nom du dossier ne peut contenir aucun des caractères suivants : \\\ / . | ? < > \"';
 $LANG['files_management'] = 'Gestion des fichiers';
@@ -368,13 +344,13 @@ $LANG['folders'] = 'Répertoires';
 $LANG['folders_up'] = 'Répertoire parent';
 $LANG['folder_new'] = 'Nouveau dossier';
 $LANG['empty_folder'] = 'Ce dossier est vide';
-$LANG['empty_member_folder'] = 'Vider ce dossier?';
-$LANG['del_folder'] = 'Supprimer ce dossier?';
-$LANG['folder_already_exist'] = 'Le dossier existe déjà!';
+$LANG['empty_member_folder'] = 'Vider ce dossier ?';
+$LANG['del_folder'] = 'Supprimer ce dossier ?';
+$LANG['folder_already_exist'] = 'Le dossier existe déjà !';
 $LANG['empty'] = 'Vider';
 $LANG['root'] = 'Racine';
 $LANG['files'] = 'Fichiers';
-$LANG['files_del_failed'] = 'Echec suppression des fichiers, veuillez le faire manuellement';
+$LANG['files_del_failed'] = 'La suppression des fichiers a échouée, veuillez le faire manuellement';
 $LANG['folder_size'] = 'Taille du dossier';
 $LANG['file_type'] = 'Fichier %s';
 $LANG['image_type'] = 'Image %s';
@@ -392,8 +368,8 @@ $LANG['cats_managment_could_not_be_moved'] = 'Une erreur est survenue, la catégo
 $LANG['cats_managment_visibility_could_not_be_changed'] = 'Une erreur est survenue, la visibilité de la catégorie n\'a pas pu être changée';
 $LANG['cats_managment_no_category_existing'] = 'Aucune catégorie n\'existe';
 $LANG['cats_management_confirm_delete'] = 'Etes-vous sur de vouloir supprimer cette catégorie ?';
-$LANG['cats_management_hide_cat'] = 'Rendre invisible la catégorie';
-$LANG['cats_management_show_cat'] = 'Rendre visible la catégorie';
+$LANG['cats_management_hide_cat'] = 'Rendre la catégorie invisible';
+$LANG['cats_management_show_cat'] = 'Rendre la catégorie visible';
 
 ##########Panneau de modération##########
 $LANG['moderation_panel'] = 'Panneau de modération';
@@ -404,7 +380,7 @@ $LANG['user_alternative_pm'] = 'Message privé envoyé au membre <span class="text
 $LANG['punishment'] = 'Sanctions';
 $LANG['punishment_management'] = 'Gestion des sanctions';
 $LANG['user_punish_until'] = 'Sanction jusqu\'au';
-$LANG['no_punish'] = 'Aucun membre sanctionné';
+$LANG['no_punish'] = 'Il n\'y a aucun utilisateur sanctionné.';
 $LANG['user_readonly_explain'] = 'Membre en lecture seule, celui-ci peut lire mais plus poster sur le site entier (commentaires, etc...)';
 $LANG['weeks'] = 'semaines';
 $LANG['life'] = 'A vie';
@@ -468,7 +444,7 @@ $LANG['contribution_list'] = 'Liste des contributions';
 $LANG['contribute'] = 'Contribuer';
 $LANG['contribute_in_modules_explain'] = 'Les modules suivants permettent aux utilisateurs de contribuer. Cliquez sur un module pour vous rendre dans son interface de contribution.';
 $LANG['contribute_in_module_name'] = 'Contribuer dans le module %s';
-$LANG['no_module_to_contribute'] = 'Aucun module dans lequel vous pouvez contribuer n\'est installé.';
+$LANG['no_module_to_contribute'] = 'Aucun module supportant la contribution n\'est installé.';
 
 //Barre de chargement.
 $LANG['query_loading'] = 'Chargement de la requête au serveur';
@@ -495,6 +471,9 @@ $LANG['disabled'] = 'Désactivé';
 $LANG['_code_dictionnary'] = array('image', 'php', 'requete', 'azerty', 'exit', 'genre', 'design', 'web', 'inter', 'cache', 'media', 'cms', 'cesar', 'watt', 'site', 'mail', 'email', 'spam', 'index', 'membre',
 'date', 'jour', 'mois', 'nom', 'noter', 'objet', 'options', 'titre', 'valide', 'liste', 'citer', 'fermer', 'minute', 'heure', 'semaine', 'groupe', 'taille', 'modules', 'pendant', 'style', 'divers', 'autre', 'erreur',
 'editer', 'banni', 'niveau', 'dossier', 'fichier', 'racine', 'vider', 'archive', 'boite');
+$LANG['verif_code'] = 'Code de vérification';
+$LANG['verif_code_explain'] = 'Recopier le code sur l\'image, attention aux majuscules';
+$LANG['require_verif_code'] = 'Veuillez saisir le code de vérification !';
 
 $LANG['csrf_attack'] = 'Jeton de session invalide. Veuillez réessayer car l\'opération n\'a pas pu être effectuée.';
 

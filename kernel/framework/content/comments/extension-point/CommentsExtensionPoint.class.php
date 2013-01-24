@@ -3,8 +3,8 @@
  *                           CommentsExtensionPoint.class.php
  *                            -------------------
  *   begin                : September 23, 2011
- *   copyright            : (C) 2011 Kévin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   copyright            : (C) 2011 Kevin MASSY
+ *   email                : kevin.massy@phpboost.com
  *
  *
  ###################################################
@@ -29,33 +29,11 @@ interface CommentsExtensionPoint extends ExtensionPoint
 {
 	const EXTENSION_POINT = 'comments';
 
-	/**
-	 * @param string $module_id
-	 * @param int $id_in_module
-	 * @return class CommentsAuthorizations
-	 */
-	function get_authorizations($module_id, $id_in_module);
+	function __construct(Array $comments_topics);
 	
 	/**
-	 * @param string $module_id
-	 * @param int $id_in_module
-	 * @return boolean display
+	 * @return class CommentsTopics
 	 */
-	function is_display($module_id, $id_in_module);
-	
-	/**
-	 * @param string $module_id
-	 * @param int $id_in_module
-	 * @return int number comments display default
-	 */
-	function get_number_comments_display($module_id, $id_in_module);
-	
-	/**
-	 * @param string $module_id
-	 * @param int $id_in_module
-	 * @param array $parameters containing name and value parameters
-	 * @return class Url
-	 */
-	function get_url_built($module_id, $id_in_module, Array $parameters);
+	function get_comments_topics();
 }
 ?>

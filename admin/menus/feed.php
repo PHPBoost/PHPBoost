@@ -68,7 +68,7 @@ if ($action_post == 'save')
 	{
 		$menu->set_block(retrieve(POST, 'location', Menu::BLOCK_POSITION__NOT_ENABLED));
 	}
-	$menu->set_auth(Authorizations::build_auth_array_from_form(AUTH_MENUS));
+	$menu->set_auth(Authorizations::build_auth_array_from_form(Menu::MENU_AUTH_BIT));
 	
     //Filters
     MenuAdminService::set_retrieved_filters($menu);
@@ -136,7 +136,7 @@ if ($edit)
 	$tpl->put_all(array(
 		'IDMENU' => $id,
 		'NAME' => $menu->get_title(),
-		'AUTH_MENUS' => Authorizations::generate_select(AUTH_MENUS, $menu->get_auth()),
+		'AUTH_MENUS' => Authorizations::generate_select(Menu::MENU_AUTH_BIT, $menu->get_auth()),
         'C_ENABLED' => $menu->is_enabled(),
    	    'C_EDIT' => true,
 	));
@@ -146,7 +146,7 @@ else
 	$tpl->put_all(array(
    	    'C_NEW' => true,
         'C_ENABLED' => true,
-        'AUTH_MENUS' => Authorizations::generate_select(AUTH_MENUS, array(), array(-1 => true, 0 => true, 1 => true, 2 => true))
+        'AUTH_MENUS' => Authorizations::generate_select(Menu::MENU_AUTH_BIT, array(), array(-1 => true, 0 => true, 1 => true, 2 => true))
 	));
 	
    // Create a new generic menu
@@ -187,30 +187,29 @@ foreach ($feeds_modules as $module)
 {
 	$list = $module->get_extension_point(FeedProvider::EXTENSION_POINT);
 	$list = $list->get_feeds_list();
-
+	
 	foreach ($list->get_feeds_list() as $feed_type => $object)
 	{
 		$urls = get_feeds($object, $module->get_id(), $feed_type, $feed_url);
 		
-		$root = array(
-			'name' => $module->get_id() . ' : ' . $object->get_category_name(),
+		$root[0] = array(
+			'name' => $object->get_category_name(),
 			'url' => $object->get_url($feed_type),
+			'level' => 0,
+			'feed_name' => null,
 			'selected' => $feed_url == $object->get_url($feed_type)
 		);
 	}
-
-	$tpl->assign_block_vars('modules', array(
-		'NAME' => ucfirst($root['name']), 
-		'URL' => $root['url'],
-		'SELECTED' => $root['selected'] ? ' selected="selected"' : ''
-	));
+	
+	$urls = array_merge($root, $urls);
+	$tpl->assign_block_vars('modules', array('NAME' => ucfirst($module->get_id())));
 	
 	foreach ($urls as $url)
 	{
 		$tpl->assign_block_vars('modules.feeds_urls', array(
 			'URL' => $url['url'],
 			'NAME' => $url['name'],
-			'SPACE' => str_repeat('----', $url['level']),
+			'SPACE' => str_repeat('--', $url['level']),
 			'FEED_NAME' => $url['feed_name'] != 'master' ? $url['feed_name'] : null,
 			'SELECTED' => $url['selected'] ? ' selected="selected"' : ''
 		));

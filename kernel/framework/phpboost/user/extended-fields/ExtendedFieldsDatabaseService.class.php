@@ -3,8 +3,8 @@
  *      ExtendedFieldsDatabaseService.class.php
  *                            -------------------
  *   begin                : August 14, 2010
- *   copyright            : (C) 2010 Kévin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   copyright            : (C) 2010 Kevin MASSY
+ *   email                : kevin.massy@phpboost.com
  *
  *
  ###################################################
@@ -26,7 +26,7 @@
  ###################################################*/
 
  /**
- * @author Kévin MASSY <soldier.weasel@gmail.com>
+ * @author Kevin MASSY <kevin.massy@phpboost.com>
  * @desc This class is responsible of all database accesses implied by the extended fields management. 
  * Indeed, for instance when a field is created, the data base structure must be updated throw an ALTER request.
  * @package {@package}
@@ -47,16 +47,16 @@ class ExtendedFieldsDatabaseService
 		self::$db_querier->inject(
 			"INSERT INTO " . DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST . " (name, position, field_name, description, field_type, possible_values, default_values, required, display, regex, freeze, auth)
 			VALUES (:name, :position, :field_name, :description, :field_type, :possible_values, :default_values, :required, :display, :regex, :freeze, :auth)", array(
-                'name' => htmlspecialchars($extended_field->get_name()),
+                'name' => TextHelper::htmlspecialchars($extended_field->get_name()),
                 'position' => $extended_field->get_position(),
 				'field_name' => $extended_field->get_field_name(),
-				'description' => htmlspecialchars($extended_field->get_description()),
+				'description' => TextHelper::htmlspecialchars($extended_field->get_description()),
 				'field_type' => $extended_field->get_field_type(),
-				'possible_values' => htmlspecialchars($extended_field->get_possible_values()),
-				'default_values' => htmlspecialchars($extended_field->get_default_values()),
+				'possible_values' => TextHelper::htmlspecialchars(trim($extended_field->get_possible_values(), '|')),
+				'default_values' => TextHelper::htmlspecialchars(trim($extended_field->get_default_values(), '|')),
 				'required' => (string)$extended_field->get_required(),
 				'display' => (string)$extended_field->get_display(),
-				'regex' => htmlspecialchars($extended_field->get_regex()),
+				'regex' => TextHelper::htmlspecialchars($extended_field->get_regex()),
 				'freeze' => (string)$extended_field->get_is_freeze(),
 				'auth' => serialize($extended_field->get_authorization()),
 		));
@@ -75,15 +75,15 @@ class ExtendedFieldsDatabaseService
 			name = :name, field_name = :field_name, description = :description, field_type = :field_type, possible_values = :possible_values, default_values = :default_values, required = :required, display = :display, regex = :regex, freeze = :freeze, auth = :auth
 			WHERE id = :id"
 			, array(
-                'name' => htmlspecialchars($extended_field->get_name()),
+                'name' => TextHelper::htmlspecialchars($extended_field->get_name()),
 				'field_name' => $extended_field->get_field_name(),
-				'description' => htmlspecialchars($extended_field->get_description()),
+				'description' => TextHelper::htmlspecialchars($extended_field->get_description()),
 				'field_type' => $extended_field->get_field_type(),
-				'possible_values' => htmlspecialchars($extended_field->get_possible_values()),
-				'default_values' => htmlspecialchars($extended_field->get_default_values()),
+				'possible_values' => TextHelper::htmlspecialchars(trim($extended_field->get_possible_values(), '|')),
+				'default_values' => TextHelper::htmlspecialchars(trim($extended_field->get_default_values(), '|')),
 				'required' => (string)$extended_field->get_required(),
 				'display' => (string)$extended_field->get_display(),
-				'regex' => htmlspecialchars($extended_field->get_regex()),
+				'regex' => TextHelper::htmlspecialchars($extended_field->get_regex()),
 				'freeze' => (string)$extended_field->get_is_freeze(),
 				'auth' => serialize($extended_field->get_authorization()),
 				'id' => $extended_field->get_id(),

@@ -3,8 +3,8 @@
  *		                   NewsletterAuthorizationsService.class.php
  *                            -------------------
  *   begin                : March 17, 2011
- *   copyright            : (C) 2011 Kévin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   copyright            : (C) 2011 Kevin MASSY
+ *   email                : kevin.massy@phpboost.com
  *
  *
  ###################################################
@@ -26,7 +26,7 @@
  ###################################################*/
 
 /**
- * @author Kévin MASSY <soldier.weasel@gmail.com>
+ * @author Kevin MASSY <kevin.massy@phpboost.com>
  */
 class NewsletterAuthorizationsService
 {
@@ -41,10 +41,11 @@ class NewsletterAuthorizationsService
 	const AUTH_CREATE_NEWSLETTERS = 16;
 	const AUTH_READ_ARCHIVES = 32;
 	
-	public function __construct()
+	public function __construct($id_stream = null)
 	{
-		if ($this->id_stream !== null)
+		if (!empty($id_stream))
 		{
+			$this->id_stream = $id_stream;
 			$this->stream_authorizations = NewsletterStreamsCache::load()->get_authorizations_by_stream($this->id_stream);
 		}
 	}
@@ -55,8 +56,7 @@ class NewsletterAuthorizationsService
 	 */
 	public static function id_stream($id_stream = null)
 	{
-		$instance = new NewsletterAuthorizationsService();
-		$instance->id_stream = $id_stream;
+		$instance = new NewsletterAuthorizationsService($id_stream);
 		return $instance;
 	}
 	
@@ -153,7 +153,7 @@ class NewsletterAuthorizationsService
 	
 	private function get_authorizations()
 	{
-		if (is_array($this->stream_authorizations) && $this->id_stream !== null && $this->id_stream !== 0)
+		if (is_array($this->stream_authorizations) && !empty($this->id_stream))
 		{
 			return $this->stream_authorizations;
 		}
@@ -195,7 +195,9 @@ class NewsletterAuthorizationsService
 				$error_message = $lang['errors.not_authorized_read_archives'];
 				break;
 		}
-		return new UserErrorController(LangLoader::get_message('error', 'errors'), $error_message);
+		$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), $error_message);
+		DispatchManager::redirect($controller);
+		return;
 	}
 }
 ?>

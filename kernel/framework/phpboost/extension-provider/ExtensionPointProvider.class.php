@@ -115,5 +115,4 @@ abstract class ExtensionPointProvider
 		return array_values(array_diff($module_methods, $generics_methods));
 	}
 }
-
 ?>

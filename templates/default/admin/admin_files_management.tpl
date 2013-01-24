@@ -1,4 +1,3 @@
-		<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/lib/js/lightbox/lightbox.js"></script>
 		<script type="text/javascript">
 		<!--
 		function Confirm_file() {
@@ -10,13 +9,13 @@
 		function Confirm_member() {
 			return confirm("{L_CONFIRM_EMPTY_FOLDER}");
 		}
-		function popup_upload(id, width, height, scrollbars)
+		function popup_upload(path, width, height, scrollbars)
 		{
 			if( height == '0' )
 				height = screen.height - 150;
 			if( width == '0' )
 				width = screen.width - 200;
-			window.open('{PATH_TO_ROOT}/member/upload_popup.php?id=' + id, "", "width="+width+", height="+height+ ",location=no,status=no,toolbar=no,scrollbars=" + scrollbars + ",resizable=yes");
+			window.open(path, "", "width="+width+", height="+height+ ",location=no,status=no,toolbar=no,scrollbars=" + scrollbars + ",resizable=yes");
 		}
 		var hide_folder = false;
 		var empty_folder = 0;

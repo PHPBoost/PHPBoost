@@ -3,8 +3,8 @@
  *                              AddCommentBuildForm.class.php
  *                            -------------------
  *   begin                : September 25, 2011
- *   copyright            : (C) 2011 Kévin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   copyright            : (C) 2011 Kevin MASSY
+ *   email                : kevin.massy@phpboost.com
  *
  *
  ###################################################
@@ -26,7 +26,7 @@
  ###################################################*/
 
  /**
- * @author Kévin MASSY <soldier.weasel@gmail.com>
+ * @author Kevin MASSY <kevin.massy@phpboost.com>
  * @package {@package}
  */
 class AddCommentBuildForm extends AbstractCommentsBuildForm
@@ -37,10 +37,13 @@ class AddCommentBuildForm extends AbstractCommentsBuildForm
 	private $comments_configuration;
 	private $module_id;
 	private $id_in_module;
+	private $topic_identifier;
+	private $topic_path;
+	private $comments_topic;
 	
-	public static function create($module_id, $id_in_module)
+	public static function create(CommentsTopic $comments_topic)
 	{
-		$instance = new self($module_id, $id_in_module);
+		$instance = new self($comments_topic);
 		
 		$instance->create_form();
 		
@@ -52,10 +55,13 @@ class AddCommentBuildForm extends AbstractCommentsBuildForm
 		return $instance;
 	}
 	
-	public function __construct($module_id, $id_in_module)
+	public function __construct(CommentsTopic $comments_topic)
 	{
-		$this->module_id = $module_id;
-		$this->id_in_module = $id_in_module;
+		$this->module_id = $comments_topic->get_module_id();
+		$this->id_in_module = $comments_topic->get_id_in_module();
+		$this->topic_identifier = $comments_topic->get_topic_identifier();
+		$this->topic_path = $comments_topic->get_path();
+		$this->comments_topic = $comments_topic;
 		$this->user = AppContext::get_current_user();
 		$this->lang = LangLoader::get('main');
 		$this->comments_lang = LangLoader::get('comments-common');
@@ -64,7 +70,7 @@ class AddCommentBuildForm extends AbstractCommentsBuildForm
 	
 	protected function create_form()
 	{
-		$form = new HTMLForm('comments');
+		$form = new HTMLForm('comments', REWRITED_SCRIPT . '#comments_list');
 		$fieldset = new FormFieldsetHTML('add_comment', $this->comments_lang['comment.add']);
 		$form->add_fieldset($fieldset);
 		
@@ -77,12 +83,11 @@ class AddCommentBuildForm extends AbstractCommentsBuildForm
 			'formatter' => $this->get_formatter(),
 			'rows' => 10, 'cols' => 47, 'required' => $this->lang['require_text']),
 			array(new FormFieldConstraintMaxLinks($this->comments_configuration->get_max_links_comment()),
-				new FormFieldConstraintAntiFlood(CommentsManager::get_last_comment_added($this->module_id, $this->id_in_module, $this->user->get_id())),
-				new FormFieldConstraintAntiFlood(time())
+				new FormFieldConstraintAntiFlood(CommentsManager::get_last_comment_added($this->user->get_id()))
 			)
 		));
 		
-		if ($this->comments_configuration->get_display_captcha())
+		if ($this->comments_configuration->get_display_captcha() && !$this->user->check_level(User::MEMBER_LEVEL))
 		{
 			$fieldset->add_field(new FormFieldCaptcha('captcha', $this->get_captcha()));
 		}
@@ -101,26 +106,28 @@ class AddCommentBuildForm extends AbstractCommentsBuildForm
 		$form = $this->get_form();
 		if ($form->has_field('name'))
 		{
-			CommentsManager::add_comment($this->module_id, $this->id_in_module, $form->get_value('message'), $form->get_value('name'));
+			$id_comment = CommentsManager::add_comment($this->module_id, $this->id_in_module, $this->topic_identifier, $this->topic_path, $form->get_value('message'), $form->get_value('name'));
 		}
 		else
 		{
-			CommentsManager::add_comment($this->module_id, $this->id_in_module, $form->get_value('message'));
+			$id_comment = CommentsManager::add_comment($this->module_id, $this->id_in_module, $this->topic_identifier, $this->topic_path, $form->get_value('message'));
 		}
 		
-		$this->set_message_response(MessageHelper::display($this->comments_lang['comment.add.success'], MessageHelper::SUCCESS, 4));
+		$this->comments_topic->get_events()->execute_add_comment_event();
+		
+		AppContext::get_response()->redirect(CommentsUrlBuilder::comment_added($this->topic_path, $id_comment));
 	}
 	
 	private function get_formatter()
 	{
-		$formatter = AppContext::get_content_formatting_service()->create_factory();
+		$formatter = AppContext::get_content_formatting_service()->get_default_factory();
 		$formatter->set_forbidden_tags($this->comments_configuration->get_forbidden_tags());
 		return $formatter;
 	}
 	
 	private function get_captcha()
 	{
-		$captcha = new Captcha();
+		$captcha = new PHPBoostCaptcha();
 		$captcha->set_difficulty($this->comments_configuration->get_captcha_difficulty());
 		return $captcha;
 	}

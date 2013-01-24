@@ -46,11 +46,13 @@ function minimize_container(input, containerName)
 
 	if(input.checked == false)
 	{
-		container.style.display = 'none';
+		container.style.opacity = 0.5;
+		container.style.filter='alpha(opacity=50)';
 	}
 	else
 	{
-		container.style.display = 'block';
+		container.style.opacity = 1;
+		container.style.filter='alpha(opacity=100)';
 	}
 }
 
@@ -86,7 +88,8 @@ function createSortableMenu()
 				containment:['mod_header','mod_subheader','mod_left','mod_right','mod_topcentral','mod_central','mod_bottomcentral','mod_topfooter','mod_footer'],
 				constraint:false,
 				scroll:window,
-				format:/^menu_([0-9]+)$/
+				format:/^menu_([0-9]+)$/,
+				dropOnEmpty: true
 			}
 		);   
 	}
@@ -113,8 +116,8 @@ function createSortableMenu()
 			<tr>
 				<td id="container_header" colspan="3">
 					<div style="width:165px;margin:auto;">
-						<div style="position:relative;float:left;">
-							<div style="position:absolute;z-index:99;margin-top:125px;margin-left:0px;float:left;display:none;" id="moveaddmenu1">
+						<div style="position:relative;float:left;z-index:99;">
+							<div style="position:absolute;margin-top:125px;margin-left:0px;float:left;display:none;" id="moveaddmenu1">
 								<div style="position:absolute;bottom:13px;z-index:100;" onmouseover="menu_hide_block('addmenu1', 1);" onmouseout="menu_hide_block('addmenu1', 0);">
 								    <p class="menus_block_add menus_block_add_links" style="margin:0px;margin-top:-1px;">
 										<a href="{PATH_TO_ROOT}/admin/menus/links.php?s=1" class="small_link">{L_ADD_LINKS_MENUS}</a>
@@ -141,7 +144,8 @@ function createSortableMenu()
 						# IF C_HEADER_COLUMN #
 							<script type="text/javascript">
 							<!--
-							$('mod_header').style.display = 'none';
+							$('mod_header').style.opacity = 0.5;
+							$('mod_header').style.filter='alpha(opacity=50)';
 							-->
 							</script>
 						# ENDIF #
@@ -152,8 +156,8 @@ function createSortableMenu()
 			<tr>
 				<td id="container_subheader" colspan="3">
 					<div style="width:165px;margin:auto;">
-						<div style="position:relative;float:left;">
-							<div style="position:absolute;z-index:99;margin-top:125px;margin-left:0px;float:left;display:none;" id="moveaddmenu2">
+						<div style="position:relative;float:left;z-index:99;">
+							<div style="position:absolute;margin-top:125px;margin-left:0px;float:left;display:none;" id="moveaddmenu2">
 								<div style="position:absolute;bottom:13px;z-index:100;" onmouseover="menu_hide_block('addmenu2', 1);" onmouseout="menu_hide_block('addmenu2', 0);">
 									<p class="menus_block_add menus_block_add_links" style="margin:0px;margin-top:-1px;">
 										<a href="{PATH_TO_ROOT}/admin/menus/links.php?s=2" class="small_link">{L_ADD_LINKS_MENUS}</a>
@@ -180,7 +184,8 @@ function createSortableMenu()
 						# IF C_SUB_HEADER_COLUMN #
 							<script type="text/javascript">
 							<!--
-							$('mod_subheader').style.display = 'none';
+							$('mod_subheader').style.opacity = 0.5;
+							$('mod_subheader').style.filter='alpha(opacity=50)';
 							-->
 							</script>
 						# ENDIF #
@@ -191,8 +196,8 @@ function createSortableMenu()
 			<tr>				
 				<td id="container_leftmenu">
 					<div style="width:165px;margin:auto;">
-						<div style="position:relative;float:left;">
-							<div style="position:absolute;z-index:99;margin-top:125px;margin-left:0px;float:left;display:none;" id="moveaddmenu3">
+						<div style="position:relative;float:left;z-index:99;">
+							<div style="position:absolute;margin-top:125px;margin-left:0px;float:left;display:none;" id="moveaddmenu3">
 								<div style="position:absolute;bottom:13px;z-index:100;" onmouseover="menu_hide_block('addmenu3', 1);" onmouseout="menu_hide_block('addmenu3', 0);">
 									<p class="menus_block_add menus_block_add_links" style="margin:0px;margin-top:-1px;">
 										<a href="{PATH_TO_ROOT}/admin/menus/links.php?s=7" class="small_link">{L_ADD_LINKS_MENUS}</a>
@@ -220,7 +225,8 @@ function createSortableMenu()
 						# IF C_LEFT_COLUMN #
 							<script type="text/javascript">
 							<!--
-							$('mod_left').style.display = 'none';
+							$('mod_left').style.opacity = 0.5;
+							$('mod_left').style.filter='alpha(opacity=50)';
 							-->
 							</script>
 						# ENDIF #
@@ -232,8 +238,8 @@ function createSortableMenu()
 						<tr>
 							<td id="container_topcentral">
 								<div style="width:165px;margin:auto;">
-									<div style="position:relative;float:left;">
-										<div style="position:absolute;z-index:99;margin-top:125px;margin-left:0px;float:left;display:none;" id="moveaddmenu4">
+									<div style="position:relative;float:left;z-index:99;">
+										<div style="position:absolute;margin-top:125px;margin-left:0px;float:left;display:none;" id="moveaddmenu4">
 											<div style="position:absolute;bottom:13px;z-index:100;" onmouseover="menu_hide_block('addmenu4', 1);" onmouseout="menu_hide_block('addmenu4', 0);">
 												<p class="menus_block_add menus_block_add_links" style="margin:0px;margin-top:-1px;">
 													<a href="{PATH_TO_ROOT}/admin/menus/links.php?s=3" class="small_link">{L_ADD_LINKS_MENUS}</a>
@@ -260,7 +266,8 @@ function createSortableMenu()
 									# IF C_TOP_CENTRAL_COLUMN #
 										<script type="text/javascript">
 										<!--
-										$('mod_topcentral').style.display = 'none';
+										$('mod_topcentral').style.opacity = 0.5;
+										$('mod_topcentral').style.filter='alpha(opacity=50)';
 										-->
 										</script>
 									# ENDIF #
@@ -271,7 +278,7 @@ function createSortableMenu()
 						<tr>
 							<td id="container_central">
 								<div style="width:165px;margin:auto;">
-									<div style="position:relative;float:left;margin-top:10px;">
+									<div style="position:relative;float:left;margin-top:5px;z-index:99;">
 										<p class="menu_block_libelle">{L_MENUS_AVAILABLE}</p>
 										<p class="menus_block_add" style="height:3px;"></p>
 									</div>
@@ -290,8 +297,8 @@ function createSortableMenu()
 						<tr>
 							<td id="container_bottomcentral">
 								<div style="width:165px;margin:auto;">
-									<div style="position:relative;float:left;">
-										<div style="position:absolute;z-index:99;margin-top:125px;margin-left:0px;float:left;display:none;" id="moveaddmenu5">
+									<div style="position:relative;float:left;z-index:99;">
+										<div style="position:absolute;margin-top:125px;margin-left:0px;float:left;display:none;" id="moveaddmenu5">
 											<div style="position:absolute;bottom:13px;z-index:100;" onmouseover="menu_hide_block('addmenu5', 1);" onmouseout="menu_hide_block('addmenu5', 0);">
 												<p class="menus_block_add menus_block_add_links" style="margin:0px;margin-top:-1px;">
 													<a href="{PATH_TO_ROOT}/admin/menus/links.php?s=4" class="small_link">{L_ADD_LINKS_MENUS}</a>
@@ -318,7 +325,8 @@ function createSortableMenu()
 									# IF C_BOTTOM_CENTRAL_COLUMN #
 										<script type="text/javascript">
 										<!--
-										$('mod_bottomcentral').style.display = 'none';
+										$('mod_bottomcentral').style.opacity = 0.5;
+										$('mod_bottomcentral').style.filter='alpha(opacity=50)';
 										-->
 										</script>
 									# ENDIF #
@@ -330,8 +338,8 @@ function createSortableMenu()
 				</td>
 				<td id="container_rightmenu">
 					<div style="width:165px;margin:auto;">
-						<div style="position:relative;float:left;">
-							<div style="position:absolute;z-index:99;margin-top:125px;margin-left:0px;float:left;display:none;" id="moveaddmenu6">
+						<div style="position:relative;float:left;z-index:99;">
+							<div style="position:absolute;margin-top:125px;margin-left:0px;float:left;display:none;" id="moveaddmenu6">
 								<div style="position:absolute;bottom:13px;z-index:100;" onmouseover="menu_hide_block('addmenu6', 1);" onmouseout="menu_hide_block('addmenu6', 0);">
 									<p class="menus_block_add menus_block_add_links" style="margin:0px;margin-top:-1px;">
 										<a href="{PATH_TO_ROOT}/admin/menus/links.php?s=8" class="small_link">{L_ADD_LINKS_MENUS}</a>
@@ -359,7 +367,8 @@ function createSortableMenu()
 						# IF C_RIGHT_COLUMN #
 							<script type="text/javascript">
 							<!--
-							$('mod_right').style.display = 'none';
+							$('mod_right').style.opacity = 0.5;
+							$('mod_right').style.filter='alpha(opacity=50)';
 							-->
 							</script>
 						# ENDIF #
@@ -370,8 +379,8 @@ function createSortableMenu()
 			<tr>
 				<td colspan="3" id="container_topfooter">
 					<div style="width:165px;margin:auto;">
-						<div style="position:relative;float:left;">
-							<div style="position:absolute;z-index:99;margin-top:125px;margin-left:0px;float:left;display:none;" id="moveaddmenu7">
+						<div style="position:relative;float:left;z-index:99;">
+							<div style="position:absolute;margin-top:125px;margin-left:0px;float:left;display:none;" id="moveaddmenu7">
 								<div style="position:absolute;bottom:13px;z-index:100;" onmouseover="menu_hide_block('addmenu7', 1);" onmouseout="menu_hide_block('addmenu7', 0);">
 									<p class="menus_block_add menus_block_add_links" style="margin:0px;margin-top:-1px;">
 										<a href="{PATH_TO_ROOT}/admin/menus/links.php?s=5" class="small_link">{L_ADD_LINKS_MENUS}</a>
@@ -398,7 +407,8 @@ function createSortableMenu()
 						# IF C_TOP_FOOTER_COLUMN #
 							<script type="text/javascript">
 							<!--
-							$('mod_topfooter').style.display = 'none';
+							$('mod_topfooter').style.opacity = 0.5;
+							$('mod_topfooter').style.filter='alpha(opacity=50)';
 							-->
 							</script>
 						# ENDIF #
@@ -409,8 +419,8 @@ function createSortableMenu()
 			<tr>
 				<td colspan="3" id="container_footer">
 					<div style="width:165px;margin:auto;">
-						<div style="position:relative;float:left;">
-							<div style="position:absolute;z-index:99;margin-top:125px;margin-left:0px;float:left;display:none;" id="moveaddmenu8">
+						<div style="position:relative;float:left;z-index:99;">
+							<div style="position:absolute;margin-top:125px;margin-left:0px;float:left;display:none;" id="moveaddmenu8">
 								<div style="position:absolute;bottom:13px;z-index:100;" onmouseover="menu_hide_block('addmenu8', 1);" onmouseout="menu_hide_block('addmenu8', 0);">
 									<p class="menus_block_add menus_block_add_links" style="margin:0px;margin-top:-1px;">
 										<a href="{PATH_TO_ROOT}/admin/menus/links.php?s=6" class="small_link">{L_ADD_LINKS_MENUS}</a>
@@ -436,7 +446,8 @@ function createSortableMenu()
 						# IF C_FOOTER_COLUMN #
 							<script type="text/javascript">
 							<!--
-							$('mod_footer').style.display = 'none';
+							$('mod_footer').style.opacity = 0.5;
+							$('mod_footer').style.filter='alpha(opacity=50)';
 							-->
 							</script>
 						# ENDIF #
@@ -460,4 +471,3 @@ function createSortableMenu()
 		<input type="hidden" name="menu_tree" id="menu_tree" value="" />
 	</form>
 </div>
-

@@ -95,31 +95,6 @@ class CurrentUser extends User
 	}
 
 	/**
-	 * @desc Get the user group associated color.
-	 * @param string $user_groups The list of user groups separated by pipe.
-	 * @param int $level The user level. Only member have special color.
-	 * @return string The group color (hexadecimal format)
-	 * @static
-	 */
-	public static function get_group_color($user_groups, $level = 0)
-	{
-		$user_groups = explode('|', $user_groups);
-		array_pop($user_groups); //Supprime l'élément vide en fin de tableau.
-		$i = 0;
-
-		$groups_cache = GroupsCache::load();
-
-		foreach ($user_groups as $idgroup) //Récupération du premier groupe.
-		{
-			if ($i++ == 0)
-			{
-				$group = $groups_cache->get_group($idgroup);
-				return (!empty($group['color']) && $level == 0) ? '#' . $group['color'] : '';
-			}
-		}
-	}
-
-	/**
 	 * @desc Check the authorization level
 	 * @param int $level Constant of level authorization to check (User::MEMBER_LEVEL, User::MODERATOR_LEVEL, User::ADMIN_LEVEL).
 	 * @return boolean True if authorized, false otherwise.

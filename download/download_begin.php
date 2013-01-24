@@ -39,9 +39,14 @@ $file_id = retrieve(GET, 'id', 0);
 $deadlink = retrieve(GET, 'deadlink', 0);
 $id_cat_for_download = 0;
 
+$notation = new Notation();
+$notation->set_module_name('download');
+$notation->set_notation_scale($CONFIG_DOWNLOAD['note_max']);
+
 if (!empty($file_id))
 {
-	$download_info = $Sql->query_array(PREFIX . 'download', '*', "WHERE visible = 1 AND approved = 1 AND id = '" . $file_id . "'", __LINE__, __FILE__);
+	$now = new Date(DATE_NOW, TIMEZONE_AUTO);
+	$download_info = $Sql->query_array(PREFIX . 'download', '*', "WHERE approved = 1 AND id = '" . $file_id . "' AND (visible = 1 OR start <= '" . $now->get_timestamp() . "' AND start > 0 AND (end >= '" . $now->get_timestamp() . "' OR end = 0))", __LINE__, __FILE__);
 
 	if (empty($download_info['id']))
 	{
@@ -67,7 +72,8 @@ elseif (!empty($category_id))
 	define('TITLE', $DOWNLOAD_LANG['title_download'] . ' - ' . $DOWNLOAD_CATS[$category_id]['name']);
 }
 else
-	define('TITLE', $DOWNLOAD_LANG['title_download']);
+	if (!defined('TITLE'))
+		define('TITLE', $DOWNLOAD_LANG['title_download']);
 
 $l_com_note = !empty($idurl) ? (!empty($get_note) ? $LANG['note'] : (!empty($_GET['i']) ? $LANG['com'] : '') ) : '';
 
@@ -99,5 +105,4 @@ if (!$auth_read)
 	$error_controller = PHPBoostErrors::user_not_authorized();
 	DispatchManager::redirect($error_controller);
 }
-
 ?>

@@ -70,7 +70,7 @@ class BBCodeHighlighter extends AbstractParser
 	public function parse($inline_code = self::BBCODE_HIGHLIGHTER_BLOCK_CODE)
 	{
 		//Protection of html code
-		$this->content = htmlspecialchars($this->content);
+		$this->content = TextHelper::htmlspecialchars($this->content);
 
 		//Line tag
 		$this->content = str_replace('[line]', '<span style="color:' . self::$bbcode_tag_color . ';">[line]</span>', $this->content);

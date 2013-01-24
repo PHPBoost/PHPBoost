@@ -30,9 +30,9 @@
  ####################################################
 
 $lang = array(
-    'download_title' => 'Affiche PHPboost 3.0',
+    'download_title' => 'Affiche PHPBoost',
     'download_short_contents' => '',
-    'download_contents' => 'Présentation de l\'affiche de la version 3.0 de PHPBoost.',
+    'download_contents' => 'Présentation de l\'affiche de PHPBoost.',
     'download_cats_title' => 'Catégorie de test',
     'download_cats_desc' => 'Test des téléchargements'
 );

@@ -36,7 +36,6 @@ if (!empty($_POST['add']))
 	$name = retrieve(POST, 'name', '');
 	$msg = retrieve(POST, 'msg', 0);    
 	$icon = retrieve(POST, 'icon', ''); 
-	$icon = retrieve(POST, 'icon', ''); 
 	
 	if (!empty($name) && $msg >= 0)
 	{	
@@ -96,7 +95,7 @@ else //Sinon on rempli le formulaire
 	foreach ($image_folder_path->get_files('`\.(png|jpg|bmp|gif)$`i') as $image)
 	{
 		$file = $image->get_name();
-		$rank_options .= '<option value="' . PATH_TO_ROOT . '/templates/' . get_utheme()  . '/images/ranks/' . $file . '">' . $file . '</option>';
+		$rank_options .= '<option value="' . $file . '">' . $file . '</option>';
 	}
 	
 	$template->put_all(array(
@@ -122,5 +121,4 @@ else //Sinon on rempli le formulaire
 }
 
 require_once('../admin/admin_footer.php');
-
 ?>

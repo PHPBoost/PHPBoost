@@ -3,8 +3,8 @@
  *                           index.php
  *                            -------------------
  *   begin                : July 16, 2011
- *   copyright            : (C) 2011 Kévin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   copyright            : (C) 2011 Kevin MASSY
+ *   email                : kevin.massy@phpboost.com
  *
  ###################################################
  *
@@ -26,13 +26,13 @@
 
 define('PATH_TO_ROOT', '..');
 
-require_once PATH_TO_ROOT . '/kernel/begin.php';
+require_once PATH_TO_ROOT . '/kernel/init.php';
 
 $url_controller_mappers = array(
-	new UrlControllerMapper('DisplayRssSyndicationController', '`^/rss(?:/([a-z0-9]+))?/?([0-9]+)?/?([a-z0-9]+)?/?$`', array('module_id', 'module_category_id', 'feed_name')),
-	new UrlControllerMapper('DisplayAtomSyndicationController', '`^/atom(?:/([a-z0-9]+))?/?([0-9]+)?/?([a-z0-9]+)?/?$`', array('module_id', 'module_category_id', 'feed_name')),
+	new UrlControllerMapper('DisplayRssSyndicationController', '`^/rss(?:/([A-Za-z0-9]+))?/?([0-9]+)?/?([A-Za-z0-9]+)?/?$`', array('module_id', 'module_category_id', 'feed_name')),
+	new UrlControllerMapper('DisplayAtomSyndicationController', '`^/atom(?:/([A-Za-z0-9]+))?/?([0-9]+)?/?([A-Za-z0-9]+)?/?$`', array('module_id', 'module_category_id', 'feed_name')),
 );
 
-header("Content-Type: application/xml; charset=iso-8859-1");
+AppContext::get_response()->set_header('content-type', 'application/xml');
 DispatchManager::dispatch($url_controller_mappers);
 ?>

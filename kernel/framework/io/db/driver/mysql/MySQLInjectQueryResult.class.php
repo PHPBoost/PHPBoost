@@ -87,5 +87,4 @@ class MySQLInjectQueryResult extends AbstractQueryResult implements InjectQueryR
 		}
 	}
 }
-
 ?>

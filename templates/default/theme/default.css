@@ -29,6 +29,11 @@ Css par défaut commun * tout les thèmes, permet les ajouts nécessaires au framew
     background:#FFFFFF !important;
 }
 
+.row_disabled {
+    text-align:center;
+    background:#E1E1E1 !important;
+}
+
 .button {    
     cursor:pointer;
 }
@@ -241,6 +246,11 @@ ul.horizontal_scrolling_menu li {
     padding-right:5px;
 }
 
+.horizontal_scrolling_menu .dynamic_menu li {
+    width:163px;
+    padding-left:1px;
+}
+
 ul.horizontal_scrolling_menu li.first_level {
     padding-left:20px;
 }
@@ -377,7 +387,7 @@ button.image{
 }
 
 /* Lightbox*/
-#lightbox{  position:absolute;  left:0; width:100%; z-index:100; text-align:center; line-height:0;}
+#lightbox{  position:absolute;  left:0; width:100%; z-index:103; text-align:center; line-height:0;}
 #lightbox img{ width:auto; height:auto;}
 #lightbox a img{ border:none; }
 
@@ -403,7 +413,7 @@ button.image{
 #imageData #numberDisplay{ display:block; clear:left; padding-bottom:1.0em; }           
 #imageData #bottomNavClose{ width:66px; float:right;  padding-bottom:0.7em; outline:none;}      
 
-#overlay{ position:absolute; top:0; left:0; z-index:90; width:100%; height:500px; background-color:#000; }
+#overlay{ position:absolute; top:0; left:0; z-index:101; width:100%; height:500px; background-color:#000; }
 
 div.form_autocompleter {
   position: absolute;

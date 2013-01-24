@@ -3,8 +3,8 @@
  *                      NewsletterSubscribersListController.class.php
  *                            -------------------
  *   begin                : March 11, 2011
- *   copyright            : (C) 2011 Kévin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   copyright            : (C) 2011 Kevin MASSY
+ *   email                : kevin.massy@phpboost.com
  *
  *
  ###################################################
@@ -35,11 +35,12 @@ class NewsletterSubscribersListController extends ModuleController
 	
 	private $nbr_subscribers_per_page = 25;
 
-	public function execute(HTTPRequest $request)
+	public function execute(HTTPRequestCustom $request)
 	{
 		$this->id_stream = $request->get_int('id_stream', 0);
+		$this->stream_cache = NewsletterStreamsCache::load()->get_stream($this->id_stream);
 		
-		if ($this->id_stream == 0)
+		if ($this->id_stream == 0 || empty($this->stream_cache))
 		{
 			AppContext::get_response()->redirect(NewsletterUrlBuilder::home()->absolute());
 		}
@@ -104,9 +105,10 @@ class NewsletterSubscribersListController extends ModuleController
 				$moderation_auth = NewsletterAuthorizationsService::id_stream($this->id_stream)->moderation_subscribers();
 				$pseudo = $row['user_id'] > 0 ? '<a href="'. UserUrlBuilder::profile($row['user_id'])->absolute() .'">'. $row['login'] .'</a>' : $this->lang['newsletter.visitor'];
 				$this->view->assign_block_vars('subscribers_list', array(
-					'C_AUTH_MODO' => $moderation_auth && $row['user_id'] > 0,
-					'EDIT_LINK' => empty($row['user_id']) ? NewsletterUrlBuilder::edit_subscriber($row['id'])->absolute() : '',
-					'DELETE_LINK' => NewsletterUrlBuilder::delete_subscribe($row['id'])->absolute(),
+					'C_AUTH_MODO' => $moderation_auth,
+					'C_EDIT_LINK' => $row['user_id'] == User::VISITOR_LEVEL,
+					'EDIT_LINK' => $row['user_id'] == User::VISITOR_LEVEL ? NewsletterUrlBuilder::edit_subscriber($row['id'])->absolute() : '',
+					'DELETE_LINK' => NewsletterUrlBuilder::delete_subscriber($row['id'], $this->stream_cache['id'])->absolute(),
 					'PSEUDO' => $pseudo,
 					'MAIL' => $row['user_id'] > 0 ? $row['user_mail'] : $row['mail']
 				));
@@ -116,7 +118,6 @@ class NewsletterSubscribersListController extends ModuleController
 	
 	private function init()
 	{
-		$this->stream_cache = NewsletterStreamsCache::load()->get_stream($this->id_stream);
 		$this->lang = LangLoader::get('newsletter_common', 'newsletter');
 		$this->view = new FileTemplate('newsletter/NewsletterSubscribersListController.tpl');
 		$this->view->add_lang($this->lang);
@@ -125,7 +126,10 @@ class NewsletterSubscribersListController extends ModuleController
 
 	private function build_response(View $view)
 	{
-		$response = new SiteDisplayResponse($view);
+		$body_view = new FileTemplate('newsletter/NewsletterBody.tpl');
+		$body_view->add_lang($this->lang);
+		$body_view->put('TEMPLATE', $view);
+		$response = new SiteDisplayResponse($body_view);
 		$breadcrumb = $response->get_graphical_environment()->get_breadcrumb();
 		$breadcrumb->add($this->lang['newsletter'], NewsletterUrlBuilder::home()->absolute());
 		$name_page = $this->lang['newsletter.subscribers'] . ' : ' . $this->stream_cache['name'];
@@ -134,5 +138,4 @@ class NewsletterSubscribersListController extends ModuleController
 		return $response;
 	}
 }
-
 ?>

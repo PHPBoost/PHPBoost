@@ -28,16 +28,16 @@
 require_once('../admin/admin_begin.php');
 load_module_lang('poll'); //Chargement de la langue du module.
 define('TITLE', $LANG['administration']);
-$poll_config = PollConfig::load();
 require_once('../admin/admin_header.php');
+$poll_config = PollConfig::load();
 
 if (!empty($_POST['valid']))
 {
-	$poll_config->set_min_rank_poll(retrieve(POST, 'poll_auth', -1));
-	$poll_config->set_mini_poll_selected(($_POST['poll_mini']) ? $_POST['poll_mini'] : array());
-	$poll_config->set_poll_cookie_name(retrieve(POST, 'poll_cookie', 'poll', TSTRING_UNCHANGE));
-	$poll_config->set_poll_cookie_lenght(!empty($_POST['poll_cookie_lenght']) ? (NumberHelper::numeric($_POST['poll_cookie_lenght']) * 3600 * 24) : 30*24*3600);
-	
+	$poll_config->set_authorizations(retrieve(POST, 'authorizations', '-1'));
+	$poll_config->set_displayed_in_mini_module_list(!empty($_POST['displayed_in_mini_module_list']) ? $_POST['displayed_in_mini_module_list'] : array());
+	$poll_config->set_cookie_name(retrieve(POST, 'cookie_name', 'poll', TSTRING_UNCHANGE));
+	$poll_config->set_cookie_lenght(!empty($_POST['cookie_lenght']) ? NumberHelper::numeric($_POST['cookie_lenght']) : 30);
+
 	PollConfig::save();
 	
 	###### Régénération du cache des sondages #######
@@ -53,36 +53,37 @@ else
 
 	$Cache->load('poll');
 	
+	$config_authorizations = $poll_config->get_authorizations();
+	
 	$i = 0;
-	//Mini poll courant	
-	$mini_poll_list = '';
+	//Liste des sondages
+	$poll_list = '';
 	$result = $Sql->query_while("SELECT id, question 
 	FROM " . PREFIX . "poll
 	WHERE archive = 0 AND visible = 1
 	ORDER BY timestamp", __LINE__, __FILE__);
-	
 	while ($row = $Sql->fetch_assoc($result))
 	{
-		$selected = in_array($row['id'], $poll_config->get_mini_poll_selected()) ? 'selected="selected"' : '';
-		$mini_poll_list .= '<option value="' . $row['id'] . '" ' . $selected . ' id="poll_mini' . $i++ . '">' . $row['question'] . '</option>';
+		$selected = in_array($row['id'], $poll_config->get_displayed_in_mini_module_list()) ? 'selected="selected"' : '';
+		$poll_list .= '<option value="' . $row['id'] . '" ' . $selected . ' id="displayed_in_mini_module_list' . $i++ . '">' . $row['question'] . '</option>';
 	}
 	$Sql->query_close($result); 
 	
 	$Template->put_all(array(
-		'COOKIE_NAME' => $poll_config->get_poll_cookie_name() != '' ? $poll_config->get_poll_cookie_name() : 'poll',
-		'COOKIE_LENGHT' => $poll_config->get_poll_cookie_lenght() != '' ? number_format($poll_config->get_poll_cookie_lenght()/86400) : 500,		
-		'MINI_POLL_LIST' => $mini_poll_list,		
-		'NBR_MINI_POLL' => $i,		
+		'COOKIE_NAME' => $poll_config->get_cookie_name(),
+		'COOKIE_LENGHT' => $poll_config->get_cookie_lenght(),		
+		'POLL_LIST' => $poll_list,		
+		'NBR_POLL' => $i,		
 		'L_POLL_MANAGEMENT' => $LANG['poll_management'],
 		'L_POLL_ADD' => $LANG['poll_add'],
 		'L_POLL_CONFIG' => $LANG['poll_config'],
 		'L_POLL_CONFIG_MINI' => $LANG['poll_config_mini'],
 		'L_POLL_CONFIG_ADVANCED' => $LANG['poll_config_advanced'],
-		'L_POLL_MINI' => $LANG['pool_mini'],
-		'L_POLL_MINI_EXPLAIN' => $LANG['pool_mini_explain'],
+		'L_DISPLAYED_IN_MINI_MODULE_LIST' => $LANG['displayed_in_mini_module_list'],
+		'L_DISPLAYED_IN_MINI_MODULE_LIST_EXPLAIN' => $LANG['displayed_in_mini_module_list_explain'],
 		'L_RANK' => $LANG['rank_vote'],
 		'L_COOKIE_NAME' => $LANG['cookie_name'],
-		'L_COOKIE_LENGHT' => $LANG['poll_cookie_lenght'],
+		'L_COOKIE_LENGHT' => $LANG['cookie_lenght'],
 		'L_SELECT_ALL' => $LANG['select_all'],
 		'L_SELECT_NONE' => $LANG['select_none'],
 		'L_DAYS' => $LANG['days'],
@@ -90,15 +91,7 @@ else
 		'L_RESET' => $LANG['reset']
 	));
 	
-	Debug::dump($poll_config->get_mini_poll_selected() != '' ? $poll_config->get_mini_poll_selected() : 'vide');
-	//Debug::dump(is_array($poll_config->get_mini_poll_selected()));
-	foreach ($poll_config->get_mini_poll_selected() as $key => $idpoll)
-	{
-		Debug::dump($key . '-' . $idpoll);
-	}
-	
 	//Rang d'autorisation.
-	
 	for ($i = -1; $i <= 2; $i++)
 	{
 		switch ($i) 
@@ -117,8 +110,8 @@ else
 			break;					
 			default: -1;
 		} 
-		$selected = ($poll_config->get_min_rank_poll() == $i) ? 'selected="selected"' : '' ;
-		$Template->assign_block_vars('select_auth', array(
+		$selected = ($config_authorizations == $i) ? 'selected="selected"' : '' ;
+		$Template->assign_block_vars('select_authorizations', array(
 			'RANK' => '<option value="' . $i . '" ' . $selected . '>' . $rank . '</option>'
 		));
 	} 

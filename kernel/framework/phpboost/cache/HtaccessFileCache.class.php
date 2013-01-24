@@ -56,7 +56,9 @@ class HtaccessFileCache implements CacheData
 			$this->add_robots_protection();
 		}
 
-		$this->add_404_error_redirection();
+		$this->add_error_redirection();
+		
+		$this->add_hide_directory_listings();
 
 		$this->add_manual_content();
 
@@ -90,13 +92,17 @@ class HtaccessFileCache implements CacheData
 	{
 		$this->add_section('Core');
 
-		$this->add_rewrite_rule('^user/pm-?([0-9]+)-?([0-9]{0,})-?([0-9]{0,})-?([0-9]{0,})-?([a-z_]{0,})\.php$', 'user/pm.php?pm=$2&id=$3&p=$4&quote=$5');
+		$this->add_rewrite_rule('^user/pm-?([0-9]+)-?([0-9]{0,})-?([0-9]{0,})-?([0-9]{0,})-?([a-z_]{0,})\.php$', 'user/pm.php?pm=$1&id=$2&p=$3&quote=$4');
 
         $eps = AppContext::get_extension_provider_service();
-        $mappings = $eps->get_extension_point(UrlMappingsExtensionPoint::EXTENSION_POINT, array('kernel'));
-		foreach ($mappings as $mapping_list)
+        $mappings = $eps->get_extension_point(UrlMappingsExtensionPoint::EXTENSION_POINT);
+        $authorized_extension_point = array('kernel', 'user');
+		foreach ($mappings as $id => $mapping_list)
 		{
-            $this->add_url_mapping($mapping_list);
+			if (in_array($id, $authorized_extension_point))
+			{
+				$this->add_url_mapping($mapping_list);
+			}
 		}
 	}
 
@@ -151,7 +157,7 @@ class HtaccessFileCache implements CacheData
 			$this->add_section('Bandwith protection');
 			$this->add_line('RewriteCond %{HTTP_REFERER} !^$');
 			$this->add_line('RewriteCond %{HTTP_REFERER} !^' . $this->general_config->get_site_url());
-			$this->add_line('ReWriteRule .*upload/.*$ - [F]');
+			$this->add_line('RewriteRule .*upload/.*$ - [F]');
 		}
 	}
 
@@ -163,12 +169,20 @@ class HtaccessFileCache implements CacheData
 		$this->add_line('RewriteRule .* - [F,L]');
 	}
 
-	private function add_404_error_redirection()
+	private function add_error_redirection()
 	{
 		//Error page
 		$this->add_empty_line();
-		$this->add_line('# Error page #');
+		$this->add_line('# Error pages #');
+		$this->add_line('ErrorDocument 403 ' . $this->general_config->get_site_path() . UserUrlBuilder::error_403()->relative());
 		$this->add_line('ErrorDocument 404 ' . $this->general_config->get_site_path() . UserUrlBuilder::error_404()->relative());
+	}
+	
+	private function add_hide_directory_listings()
+	{
+		$this->add_empty_line();
+		$this->add_line('# Hide directory listings #');
+		$this->add_line('Options -Indexes');
 	}
 
 	private function add_manual_content()
@@ -245,3 +259,4 @@ class HtaccessFileCache implements CacheData
 		return self::load()->get_htaccess_file_content();
 	}
 }
+?>

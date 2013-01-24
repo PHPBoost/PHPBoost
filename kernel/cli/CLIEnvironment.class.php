@@ -57,11 +57,14 @@ class CLIEnvironment extends Environment
 		self::fit_to_php_configuration();
 		self::load_static_constants();
 		self::load_dynamic_constants();
-		AppContext::set_request(new HTTPRequest());
-        AppContext::set_session(SessionData::admin_session());
-        AppContext::set_user(new AdminUser());
+		AppContext::set_request(new HTTPRequestCustom());
+        AppContext::init_session();
+        AppContext::set_session(new CLISession());
+        AppContext::get_session()->load();
+        AppContext::get_session()->act();
+        AppContext::set_current_user(new AdminUser());
         AppContext::init_extension_provider_service();
-        AppContext::set_response(new HTTPResponse());
+        AppContext::set_response(new HTTPResponseCustom());
 	}
 
 	public static function load_dynamic_constants()
@@ -70,6 +73,7 @@ class CLIEnvironment extends Environment
 		$server_path = !empty($_SERVER['PHP_SELF']) ? $_SERVER['PHP_SELF'] : getenv('PHP_SELF');
 		define('FILE', $server_path);
 		define('DIR', str_replace('/install/install-cli.php', '', $server_path));
+		define('SID', '');
 		define('TPL_PATH_TO_ROOT', PATH_TO_ROOT);
 	}
 }

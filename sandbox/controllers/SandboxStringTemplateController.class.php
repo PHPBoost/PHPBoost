@@ -38,7 +38,7 @@ class SandboxStringTemplateController extends ModuleController
 
 	private $result_tpl = 'Non cached: {NON_CACHED_TIME} s - Cached: {CACHED_TIME} s<br />lenght of the parsed string: {STRING_LENGTH} chars';
 
-	public function execute(HTTPRequest $request)
+	public function execute(HTTPRequestCustom $request)
 	{
 		$tpl = new StringTemplate($this->result_tpl);
 

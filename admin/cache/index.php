@@ -36,5 +36,4 @@ $url_controller_mappers = array(
 	new UrlControllerMapper('AdminCSSCacheController', '`^/css/?$`')
 );
 DispatchManager::dispatch($url_controller_mappers);
-
 ?>

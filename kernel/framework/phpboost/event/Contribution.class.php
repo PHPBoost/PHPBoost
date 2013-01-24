@@ -174,7 +174,7 @@ class Contribution extends Event
 				//If the fixer id is not defined, we define it
 				if ($this->fixer_id == 0)
 				{
-					$this->fixer_id = AppContext::get_current_user()->get_id();
+					$this->fixer_id = AppContext::get_current_user()->get_attribute('user_id');
 				}
 			}
 
@@ -338,9 +338,9 @@ class Contribution extends Event
 	{
 		if (!empty($this->module))
 		{
-			$module_ini = load_ini_file(PATH_TO_ROOT . '/' . $this->module . '/lang/', get_ulang());
-
-			return isset($module_ini['name']) ? $module_ini['name'] : '';
+			$module = ModulesManager::get_module($this->module);
+			
+			return $module ? $module->get_configuration()->get_name() : '';
 		}
 		else
 		{
@@ -348,5 +348,4 @@ class Contribution extends Event
 		}
 	}
 }
-
 ?>

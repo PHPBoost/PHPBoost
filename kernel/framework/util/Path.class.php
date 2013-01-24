@@ -78,7 +78,7 @@ class Path
 	 */
 	public static function get_classname($class_file)
 	{
-		$class_file = Path::uniformize_path($class_file);
+		$class_file = self::uniformize_path($class_file);
 		if (($i = strpos($class_file, '.')) !== false)
 		{
 			$class_file = substr($class_file, 0, $i);
@@ -111,5 +111,4 @@ class Path
 		return str_replace('\\', '/', $path);
 	}
 }
-
 ?>

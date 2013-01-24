@@ -3,8 +3,8 @@
  *                                install.php
  *                            -------------------
  *   begin                : May 30, 2010
- *   copyright            : (C) 2010 Kévin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   copyright            : (C) 2010 Kevin MASSY
+ *   email                : kevin.massy@phpboost.com
  *
  *
  ###################################################
@@ -70,6 +70,7 @@ $lang = array(
     'step.next' => 'Etape suivante',
     'yes' => 'Oui',
     'no' => 'Non',
+	'unknown' => 'Inconnu',
 	'generatedBy' => 'Généré par %s',
 	'poweredBy' => 'Boosté par',
 	'phpboost.rights' => '',
@@ -219,15 +220,15 @@ Cordialement l\'équipe PHPBoost.',
                             <legend>PHPBoost est désormais installé !</legend>
                             <p class="success">L\'installation de PHPBoost s\'est déroulée avec succès. L\'équipe PHPBoost vous remercie de lui avoir fait confiance et est heureuse de vous compter parmi ses utilisateurs.</p>
                             <p>Nous vous conseillons de vous tenir au courant de l\'évolution de PHPBoost via le site de la communauté francophone, <a href="http://www.phpboost.com">www.phpboost.com</a>. Vous serez automatiquement averti dans le panneau d\'administration de l\'arrivée de nouvelles mises à jour. Il est fortement conseillé de tenir votre système à jour afin de profiter des dernières nouveautés et de corriger les éventuelles failles ou erreurs.</p>
-                            <p class="warning">Par mesure de sécurité nous vous conseillons fortement de supprimer le dossier install et tout ce qu\'il contient, des personnes mal intentionnées pourraient relancer le script d\'installation et écraser certaines de vos données !</p>
-                            <p>N\'oubliez pas la <a href="http://www.phpboost.com/wiki/wiki.php">documentation</a> qui vous guidera dans l\'utilisation de PHPBoost ainsi que la <a href="http://www.phpboost.com/faq/faq.php"><acronym title="Foire Aux Questions">FAQ</acronym></a> qui répond aux questions les plus fréquentes.</p>
+                            <p class="warning">Par mesure de sécurité nous vous conseillons fortement de supprimer le dossier install et le dossier update et tout ce qu\'il contient. Des personnes mal intentionnées pourraient relancer le script d\'installation ou le script de mise à jour et écraser certaines de vos données !</p>
+                            <p>N\'oubliez pas de consulter la <a href="http://www.phpboost.com/wiki/wiki.php">documentation</a> qui vous guidera dans l\'utilisation de PHPBoost ainsi que la <a href="http://www.phpboost.com/faq/faq.php"><acronym title="Foire Aux Questions">FAQ</acronym></a> qui répond aux questions les plus fréquentes.</p>
                             <p>En cas de problème, rendez-vous sur le <a href="http://www.phpboost.com/forum/index.php">forum du support de PHPBoost</a>.</p>
                         </fieldset>
                         <fieldset>
                             <legend>Remerciements</legend>
                             <h2>Membres de la communauté</h2>
                             <p>Merci à tous les membres de la communauté qui nous encouragent au quotidien et contribuent à la qualité du logiciel que ce soit en suggérant des nouvelles fonctionnalités ou en signalant des dysfonctionnements, ce qui permet d\'aboutir entre autres à une version 4.0 stable et efficace.</p>
-                            <p>Merci aux membres des équipes de PHPBoost et particulièrement à <strong>Ptithom</strong> et <strong>giliam</strong> de l\'équipe rédaction pour la documentation, <strong>KONA</strong>, <strong>Frenchbulldog</strong>, <strong>Grenouille</strong>, <strong>EnimSay</strong>, <strong>swan</strong> pour les graphismes, <strong>Gsgsd</strong>, <strong>Alain91</strong> et <strong>Crunchfamily</strong> de l\'équipe de développement de modules, <strong>Forensic</strong>, <strong>PiJean</strong> et <strong>Beowulf</strong> pour la traduction anglaise et <strong>Shadow</strong> et <strong>Kak Miortvi Pengvin</strong> pour la modération de la communauté.</p>
+                            <p>Merci aux membres des équipes de PHPBoost et particulièrement à <strong>soupaloignon</strong> de l\'équipe communication, <strong>Ptithom</strong>, <strong>aiglobulles</strong>, <strong>55 Escape</strong> et <strong>Micman</strong> pour la documentation, <strong>Schyzo</strong>, <strong>elenwe</strong> et <strong>alyha</strong> pour les graphismes, <strong>DaaX</strong>, <strong>Alain91</strong> et <strong>julienseth78</strong> de l\'équipe de développement de modules et <strong>benflovideo</strong> pour la modération de la communauté.</p>
                             <h2>Projets</h2>
                             <p>PHPBoost utilise différents outils afin d\'élargir ses fonctionnalités sans augmenter trop le temps de développement. Ces outils sont tous libres, distribués sous la licence GNU/GPL pour la plupart.</p>
                             <ul>
@@ -246,9 +247,10 @@ Cordialement l\'équipe PHPBoost.',
                         <fieldset>
                             <legend>Crédits</legend>
                             <ul>
-                                <li><strong>Régis VIARRE</strong> <em>(alias CrowkaiT)</em>, fondateur du projet PHPBoost et développeur</li>
-                                <li><strong>Benoît SAUTEL</strong> <em>(alias ben.popeye)</em>, développeur</li>
-                                <li><strong>Loic ROUCHON</strong> <em>(alias horn)</em>, développeur</li>
+                                <li><strong>Régis VIARRE</strong> <em>(alias CrowkaiT)</em>, fondateur du projet PHPBoost et développeur retraité</li>
+                                <li><strong>Benoît SAUTEL</strong> <em>(alias ben.popeye)</em>, développeur retraité</li>
+                                <li><strong>Loic ROUCHON</strong> <em>(alias horn)</em>, développeur retraité</li>
+                                <li><strong>Kevin MASSY</strong> <em>(alias ReidLos)</em>, développeur</li>
                             </ul>
                         </fieldset>',
 	'site.index' => 'Aller à l\'accueil du site',

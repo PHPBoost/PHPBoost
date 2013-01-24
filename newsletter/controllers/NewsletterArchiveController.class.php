@@ -3,8 +3,8 @@
  *                      NewsletterArchiveController.class.php
  *                            -------------------
  *   begin                : March 21, 2011
- *   copyright            : (C) 2011 Kévin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   copyright            : (C) 2011 Kevin MASSY
+ *   email                : kevin.massy@phpboost.com
  *
  *
  ###################################################
@@ -31,7 +31,7 @@ class NewsletterArchiveController extends ModuleController
 	private $view;
 	private $contents;
 
-	public function execute(HTTPRequest $request)
+	public function execute(HTTPRequestCustom $request)
 	{
 		$this->init($request);
 		return $this->build_response($this->view);
@@ -44,7 +44,7 @@ class NewsletterArchiveController extends ModuleController
 		$archive_exist = PersistenceContext::get_querier()->count(NewsletterSetup::$newsletter_table_archives, "WHERE id = '" . $id . "'") > 0 ? true : false;
 		if (!$archive_exist)
 		{
-			$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), $this->lang['error-archive-not-existed']);
+			$controller = new UserErrorController(LangLoader::get_message('error', 'errors-common'), $this->lang['error-archive-not-existed']);
 			DispatchManager::redirect($controller);
 		}
 		
@@ -70,5 +70,4 @@ class NewsletterArchiveController extends ModuleController
 		return new SiteNodisplayResponse($view);
 	}
 }
-
 ?>

@@ -32,29 +32,32 @@
  */
 class ContactConfig extends AbstractConfigData
 {
+	const CAPTCHA_ENABLED = 'captcha_enabled';
+	const CAPTCHA_DIFFICULTY_LEVEL = 'captcha_difficulty_level';
+	
 	public function enable_captcha()
 	{
-		$this->set_property('captcha_enabled', true);
+		$this->set_property(self::CAPTCHA_ENABLED, true);
 	}
 	
 	public function disable_captcha()
 	{
-		$this->set_property('captcha_enabled', false);
+		$this->set_property(self::CAPTCHA_ENABLED, false);
 	}
 	
 	public function is_captcha_enabled()
 	{
-		return $this->get_property('captcha_enabled');
+		return $this->get_property(self::CAPTCHA_ENABLED);
 	}
 	
 	public function get_captcha_difficulty_level()
 	{
-		return $this->get_property('captcha_difficulty');
+		return $this->get_property(self::CAPTCHA_DIFFICULTY_LEVEL);
 	}
 	
 	public function set_captcha_difficulty_level($difficulty) 
 	{
-		$this->set_property('captcha_difficulty', $difficulty);
+		$this->set_property(self::CAPTCHA_DIFFICULTY_LEVEL, $difficulty);
 	}
 
 	/**
@@ -63,8 +66,8 @@ class ContactConfig extends AbstractConfigData
 	public function get_default_values()
 	{
 		return array(
-			'captcha_enabled' => true,
-			'captcha_difficulty' => 2
+			self::CAPTCHA_ENABLED => true,
+			self::CAPTCHA_DIFFICULTY_LEVEL => 2
 		);
 	}
 	
@@ -74,7 +77,7 @@ class ContactConfig extends AbstractConfigData
 	 */
 	public static function load()
 	{
-		return ConfigManager::load(__CLASS__, 'contact', 'main');
+		return ConfigManager::load(__CLASS__, 'contact', 'config');
 	}
 
 	/**
@@ -82,7 +85,7 @@ class ContactConfig extends AbstractConfigData
 	 */
 	public static function save()
 	{
-		ConfigManager::save('contact', self::load(), 'main');
+		ConfigManager::save('contact', self::load(), 'config');
 	}
 }
 ?>

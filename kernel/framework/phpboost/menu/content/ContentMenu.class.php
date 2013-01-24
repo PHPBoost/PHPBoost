@@ -37,12 +37,12 @@ class ContentMenu extends Menu
     /**
      * @var string the menu's content
      */
-    private $content = '';
+    public $content = '';
 
     /**
      * @var bool If true, the content menu title will be displayed
      */
-    private $display_title = true;
+    public $display_title = true;
 
     public function __construct($title)
     {
@@ -96,5 +96,4 @@ class ContentMenu extends Menu
      */
     public function get_content() { return $this->content; }
 }
-
 ?>

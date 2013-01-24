@@ -1,16 +1,1 @@
-tinyMCE.addI18n('fr.searchreplace_dlg',{
-searchnext_desc:"Chercher à nouveau",
-notfound:"La recherche a été effectuée. La chaîne recherchée n'a pas pu être trouvée.",
-search_title:"Chercher",
-replace_title:"Chercher/Remplacer",
-allreplaced:"Toutes les occurences de la recherche ont été remplacées.",
-findwhat:"Rechercher",
-replacewith:"Replacer par",
-direction:"Sens",
-up:"Haut",
-down:"Bas",
-mcase:"Tenir compte de la casse",
-findnext:"Chercher",
-replace:"Remplacer",
-replaceall:"Remplacer tout"
-});
+tinyMCE.addI18n('fr.searchreplace_dlg',{findwhat:"Rechercher ceci",replacewith:"Remplacer par",direction:"Direction",up:"Vers le haut",down:"Vers le bas",mcase:"Sensible \u00e0 la casse",findnext:"Rechercher le suivant",allreplaced:"Toutes les occurrences de la cha\u00eene recherch\u00e9e ont \u00e9t\u00e9 remplac\u00e9es.","searchnext_desc":"Suivant",notfound:"La recherche est termin\u00e9e. La cha\u00eene recherch\u00e9e n\'a pas \u00e9t\u00e9 trouv\u00e9e.","search_title":"Rechercher","replace_title":"Rechercher / remplacer",replaceall:"Tout remplacer",replace:"Remplacer"});

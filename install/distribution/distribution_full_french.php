@@ -25,30 +25,9 @@
 *
  ###################################################*/
 
-//Nom de la distribution
-define('DISTRIBUTION_NAME', 'Pack complet');
-
-//Description de la distribution
-define('DISTRIBUTION_DESCRIPTION', '<img src="distribution/publication.png" alt="" style="float:right;padding-right:35px"/>
-<p>Vous allez installer la distribution <strong>Pack complet</strong> de PHPBoost.</p>
-<p>Cette distribution contient l\'ensemble des modules officiels publiés par l\'équipe de développement de PHPBoost. Elle devrait répondre à une grande variété de besoins grâce à la diversité de ses modules.</p>');
-
-//Thème de la distribution
-define('DISTRIBUTION_THEME', 'base');
-
-//Page de démarrage de la distribution (commencer à la racine du site avec /)
-define('DISTRIBUTION_START_PAGE', '/news/news.php');
-
-//Espace membre activé ? (Est-ce que les membres peuvent s'inscrire et participer au site ?)
-define('DISTRIBUTION_ENABLE_USER', true);
-
-//Mode debug ?
-define('DISTRIBUTION_ENABLE_DEBUG_MODE', false);
-
-//Bench activé?
-define('DISTRIBUTION_ENABLE_BENCH', false);
-
-//Liste des modules
-$DISTRIBUTION_MODULES = array('BBCode', 'TinyMCE', 'articles', 'calendar', 'contact', 'connect', 'database', 'download', 'faq', 'forum', 'gallery', 'guestbook', 'media', 'news', 'newsletter', 'online', 'pages', 'poll', 'search', 'shoutbox', 'stats', 'web', 'wiki');
-
+$lang = array(
+	'distribution.name' => 'Pack complet',
+	'distribution.description' => '<p>Vous allez installer la distribution <strong>Pack complet</strong> de PHPBoost.</p>
+<p>Cette distribution contient l\'ensemble des modules officiels publiés par l\'équipe de développement de PHPBoost. Elle devrait répondre à une grande variété de besoins grâce à la diversité de ses modules.</p>'
+);
 ?>

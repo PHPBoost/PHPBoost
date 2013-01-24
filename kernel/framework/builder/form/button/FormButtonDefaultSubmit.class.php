@@ -31,10 +31,14 @@
  */
 class FormButtonDefaultSubmit extends FormButtonSubmit
 {
-    public function __construct()
+    public function __construct($value = '')
     {
         global $LANG;
-        parent::__construct($LANG['submit'], 'submit');
+        
+	    if (empty($value))
+	    	$value = $LANG['submit'];
+	    
+        parent::__construct($value, 'submit');
     }
 }
 ?>

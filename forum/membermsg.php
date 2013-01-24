@@ -29,7 +29,7 @@ require_once('../kernel/begin.php');
 require_once('../forum/forum_begin.php');
 require_once('../forum/forum_tools.php');
 
-$Bread_crumb->add($CONFIG_FORUM['forum_name'], 'index.php');
+$Bread_crumb->add($CONFIG_FORUM['forum_name'], 'index.php' . SID);
 define('TITLE', $LANG['title_forum']);
 require_once('../kernel/header.php'); 
 
@@ -60,6 +60,7 @@ if (!empty($view_msg)) //Affichage de tous les messages du membre
 	WHERE msg.user_id = '" . $view_msg . "'", __LINE__, __FILE__);
 
 	$Template->put_all(array(
+		'SID' => SID,
 		'THEME' => get_utheme(),
 		'LANG' => get_ulang(),
 		'FORUM_NAME' => $CONFIG_FORUM['forum_name'] . ' : ' . $LANG['show_member_msg'],
@@ -70,7 +71,7 @@ if (!empty($view_msg)) //Affichage de tous les messages du membre
 		'U_FORUM_VIEW_MSG' => url('.php?id=' . $view_msg)
 	));
 	
-	$result = $Sql->query_while("SELECT msg.id, msg.user_id, msg.idtopic, msg.timestamp, msg.timestamp_edit, m.user_groups, t.title, t.status, t.idcat, c.name, m.login, m.level, m.user_mail, m.user_show_mail, m.timestamp AS registered, m.user_avatar, m.user_msg, m.user_local, m.user_web, m.user_sex, m.user_msn, m.user_yahoo, m.user_sign, m.user_warning, m.user_ban, s.user_id AS connect, msg.contents
+	$result = $Sql->query_while("SELECT msg.id, msg.user_id, msg.idtopic, msg.timestamp, msg.timestamp_edit, m.user_groups, t.title, t.status, t.idcat, c.name, m.login, m.level, m.user_mail, m.user_show_mail, m.timestamp AS registered, m.user_msg, m.user_warning, m.user_ban, s.user_id AS connect, msg.contents
 	FROM " . PREFIX . "forum_msg msg
 	LEFT JOIN " . PREFIX . "forum_topics t ON msg.idtopic = t.id
 	JOIN " . PREFIX . "forum_cats c ON t.idcat = c.id AND c.aprob = 1
@@ -97,7 +98,7 @@ if (!empty($view_msg)) //Affichage de tous les messages du membre
 			'DATE' => $LANG['on'] . ' ' . gmdate_format('date_format', $row['timestamp']),
 			'ID' => $row['id'],
 			'USER_ONLINE' => '<img src="../templates/' . get_utheme() . '/images/' . (!empty($row['connect']) ? 'online' : 'offline') . '.png" alt="" class="valign_middle" />',
-			'USER_PSEUDO' => !empty($row['login']) ? wordwrap(html_entity_decode($row['login']), 13, '<br />', 1) : $LANG['guest'],			
+			'USER_PSEUDO' => !empty($row['login']) ? wordwrap(TextHelper::html_entity_decode($row['login']), 13, '<br />', 1) : $LANG['guest'],			
 			'U_USER_PROFILE' => UserUrlBuilder::profile($row['user_id'])->absolute(),
 			'U_VARS_ANCRE' => url('.php?id=' . $row['idtopic'], '-' . $row['idtopic'] . $rewrited_title . '.php'),
 			'U_FORUM_CAT' => '<a class="forum_mbrmsg_links" href="../forum/forum' . url('.php?id=' . $row['idcat'], '-' . $row['idcat'] . $rewrited_cat_title . '.php') . '">' . $row['name'] . '</a>',
@@ -107,7 +108,7 @@ if (!empty($view_msg)) //Affichage de tous les messages du membre
 	$Sql->query_close($result);
 	
 	//Listes les utilisateurs en lignes.
-	list($users_list, $total_admin, $total_modo, $total_member, $total_visit, $total_online) = forum_list_user_online("AND s.session_script LIKE '" . DIR . "/forum/%'");
+	list($users_list, $total_admin, $total_modo, $total_member, $total_visit, $total_online) = forum_list_user_online("AND s.session_script = '". GeneralConfig::get_default_site_path() ."/forum/membermsg.php'");
 
 	$Template->put_all(array(
 		'TOTAL_ONLINE' => $total_online,

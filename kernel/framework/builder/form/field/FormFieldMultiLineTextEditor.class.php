@@ -70,9 +70,7 @@ class FormFieldMultiLineTextEditor extends AbstractFormField
     {
         $template->put_all(array(
 			'ROWS' => $this->rows,
-			'COLS' => $this->cols,
-			'DISABLED' => $this->is_disabled(),
-			'READONLY' => ($this->is_readonly() ? 'readonly="readonly" ' : '')
+			'COLS' => $this->cols
         ));
     }
 
@@ -101,5 +99,4 @@ class FormFieldMultiLineTextEditor extends AbstractFormField
         return new FileTemplate('framework/builder/form/FormFieldMultiLineTextEditor.tpl');
     }
 }
-
 ?>

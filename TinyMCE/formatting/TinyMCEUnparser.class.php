@@ -104,7 +104,7 @@ class TinyMCEUnparser extends ContentFormattingUnparser
     		//Unparsing tags unsupported by TinyMCE, those are in BBCode
     		$this->unparse_bbcode_tags();
 
-    		$this->content = htmlspecialchars($this->content);
+    		$this->content = TextHelper::htmlspecialchars($this->content);
     		 
     		//If we don't protect the HTML code inserted into the tags code and HTML TinyMCE will parse it!
     		if (!empty($this->array_tags['html_unparse']))
@@ -265,7 +265,7 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 	private function clear_html_and_code_tag($var)
 	{
 		$var = str_replace("\n", '<br />', $var);
-		return htmlentities($var, ENT_NOQUOTES);
+		return TextHelper::htmlentities($var, ENT_NOQUOTES);
 	}
 
 	/**
@@ -307,10 +307,8 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 	 */
 	private function unparse_wikipedia_link($matches)
 	{
-		global $LANG;
-
 		//On est dans la langue par défaut
-		if ($matches[1] == $LANG['wikipedia_subdomain'])
+		if ($matches[1] == LangLoader::get_message('wikipedia_subdomain', 'editor-common'))
 		{
 			$lang = '';
 		}
@@ -438,5 +436,4 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 		return $matches[2];
 	}
 }
-
 ?>

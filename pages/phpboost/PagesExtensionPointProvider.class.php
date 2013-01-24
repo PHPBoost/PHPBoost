@@ -25,12 +25,11 @@
  *
  ###################################################*/
  
-
 define('PAGES_MAX_SEARCH_RESULTS', 100);
 
 class PagesExtensionPointProvider extends ExtensionPointProvider
 {
-    public function __construct() //Constructeur de la classe WikiInterface
+    public function __construct() //Constructeur de la classe
     {
 		$this->sql_querier = PersistenceContext::get_sql();
         parent::__construct('pages');
@@ -39,44 +38,36 @@ class PagesExtensionPointProvider extends ExtensionPointProvider
 	//Récupération du cache.
 	public function get_cache()
 	{
+		$pages_config = PagesConfig::load();
+		
 		//Catégories des pages
-		$config = 'global $_PAGES_CATS;' . "\n";
-		$config .= '$_PAGES_CATS = array();' . "\n";
+		$code = 'global $_PAGES_CATS;' . "\n";
+		$code .= '$_PAGES_CATS = array();' . "\n\n";
+
 		$result = $this->sql_querier->query_while("SELECT c.id, c.id_parent, c.id_page, p.title, p.auth
 		FROM " . PREFIX . "pages_cats c
 		LEFT JOIN " . PREFIX . "pages p ON p.id = c.id_page
 		ORDER BY p.title", __LINE__, __FILE__);
 		while ($row = $this->sql_querier->fetch_assoc($result))
 		{
-			$config .= '$_PAGES_CATS[\'' . $row['id'] . '\'] = ' . var_export(array(
-				'id_parent' => !empty($row['id_parent']) ? $row['id_parent'] : '0',
-				'name' => $row['title'],
-				'auth' => unserialize($row['auth'])
-			), true) . ';' . "\n";
+			$code .= '$_PAGES_CATS[' . $row['id'] . '] = ' .
+			var_export(array(
+			'id_parent' => !empty($row['id_parent']) ? $row['id_parent'] : '0',
+			'name' => $row['title'],
+			'auth' => unserialize($row['auth'])
+			), true)
+			. ';' . "\n";
 		}
-
-		//Configuration du module de pages
-		$code = 'global $_PAGES_CONFIG;' . "\n";
-		$CONFIG_PAGES = unserialize($this->sql_querier->query("SELECT value FROM " . DB_TABLE_CONFIGS . " WHERE name = 'pages'", __LINE__, __FILE__));
-								
-		if (is_array($CONFIG_PAGES))
-			$CONFIG_PAGES['auth'] = unserialize($CONFIG_PAGES['auth']);
-		else
-			$CONFIG_PAGES = array(
-			'count_hits' => 1,
-			'activ_com' => 1,
-			'auth' => array (
-				'r-1' => 5,
-				'r0' => 5,
-				'r1' => 7,
-				'r2' => 7,
-			));
+		$this->sql_querier->query_close($result);
 		
-		$code .=  '$_PAGES_CONFIG = ' . var_export($CONFIG_PAGES, true) . ';' . "\n";
-		
-		return $config . "\n\r" . $code;	
+		return $code;
 	}
     
+	public function home_page()
+	{
+		return new PagesHomePageExtensionPoint();
+	}
+	
 	public function sitemap()
 	{
 		return new PagesSitemapExtensionPoint();
@@ -89,7 +80,21 @@ class PagesExtensionPointProvider extends ExtensionPointProvider
 	
 	public function css_files()
 	{
-		return new PagesCssFilesExtensionPoint();
+		$module_css_files = new ModuleCssFiles();
+		$module_css_files->adding_running_module_displayed_file('pages.css');
+		return $module_css_files;
+	}
+	
+	public function search()
+	{
+		return new PagesSearchable();
+	}
+	
+	public function comments()
+	{
+		return new CommentsTopics(array(
+			new PagesCommentsTopic()
+		));
 	}
 }
 ?>

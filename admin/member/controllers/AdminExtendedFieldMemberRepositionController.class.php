@@ -3,8 +3,8 @@
  *                       AdminExtendedFieldMemberRepositionController.class.php
  *                            -------------------
  *   begin                : December 17, 2010
- *   copyright            : (C) 2010 Kévin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   copyright            : (C) 2010 Kevin MASSY
+ *   email                : kevin.massy@phpboost.com
  *
  *
  ###################################################
@@ -27,7 +27,7 @@
 
 class AdminExtendedFieldMemberRepositionController extends AdminController
 {
-	public function execute(HTTPRequest $request)
+	public function execute(HTTPRequestCustom $request)
 	{
 		$type = $request->get_getstring('type');
 		

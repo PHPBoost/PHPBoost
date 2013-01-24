@@ -50,7 +50,7 @@ if (!empty($_GET['member']) || !empty($_GET['insert_member']) || !empty($_GET['a
         {
             if (!empty($_GET['member']))
             {
-                echo '<a href="member' . url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '">' . $row['login'] . '</a><br />';
+                echo '<a href="' . UserUrlBuilder::profile($row['user_id'])->absolute() . '">' . $row['login'] . '</a><br />';
             }
             elseif (!empty($_GET['insert_member']))
             {
@@ -62,7 +62,7 @@ if (!empty($_GET['member']) || !empty($_GET['insert_member']) || !empty($_GET['a
             }
             elseif (!empty($_GET['admin_member']))
             {
-                echo '<a href="../admin/admin_members.php?id=' . $row['user_id'] . '#search">' . addslashes($row['login']) . '</a><br />';
+                echo '<a href="' . AdminMembersUrlBuilder::edit($row['user_id'])->absolute() . '">' . addslashes($row['login']) . '</a><br />';
             }
             if (!empty($_GET['warning_member']))
             {
@@ -126,5 +126,4 @@ elseif (!empty($_GET['warning_user']) || !empty($_GET['punish_user']) || !empty(
 }
 
 include_once(PATH_TO_ROOT . '/kernel/footer_no_display.php');
-
 ?>

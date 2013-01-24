@@ -40,8 +40,6 @@ elseif (isset($_GET['img_url']))
 }
 elseif (isset($_POST['preview']))
 {
-
-	$level = array('', ' class="modo"', ' class="admin"');
 	$preview = new FileTemplate('news/news.tpl');
 	$Cache->load('news');
 	//Chargement de la langue du module.
@@ -80,7 +78,7 @@ elseif (isset($_POST['preview']))
 
 	$preview->put_all(array('C_NEWS_BLOCK' => true));
 
-	$preview->assign_block_vars('news', array(
+	$preview->assign_vars(array(
 		'C_NEWS_ROW' => false,
 		'C_IMG' => !empty($news['img']),
 		'C_ICON' => $NEWS_CONFIG['activ_icon'],
@@ -93,7 +91,7 @@ elseif (isset($_POST['preview']))
 		'IMG' => FormatingHelper::second_parse_url($news['img']),
 		'IMG_DESC' => $news['alt'],
 		'PSEUDO' => $NEWS_CONFIG['display_author'] && !empty($user['login']) ? $user['login'] : $LANG['guest'],
-		'LEVEL' =>	$level[$user['level']],
+		'LEVEL' =>	UserService::get_level_class($user['level']),
 		'DATE' => $NEWS_CONFIG['display_date'] ? sprintf($NEWS_LANG['on'], $date->format(DATE_FORMAT_SHORT, TIMEZONE_AUTO)) : '',
 		'U_USER_ID' => UserUrlBuilder::profile($news['user_id'])->absolute(),
 		'U_CAT' => 'news' . url('.php?cat=' . $news['idcat'], '-' . $news['idcat'] . '+' . Url::encode_rewrite($NEWS_CAT[$news['idcat']]['name']) . '.php'),

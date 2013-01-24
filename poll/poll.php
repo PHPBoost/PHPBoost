@@ -31,9 +31,12 @@ require_once('../kernel/header.php');
 
 $poll = array();
 $poll_id = retrieve(GET, 'id', 0);
+
+$now = new Date(DATE_NOW, TIMEZONE_AUTO);
+
 if (!empty($poll_id))
 {
-	$poll = $Sql->query_array(PREFIX . 'poll', 'id', 'question', 'votes', 'answers', 'type', 'timestamp', "WHERE id = '" . $poll_id . "' AND archive = 0 AND visible = 1", __LINE__, __FILE__);
+	$poll = $Sql->query_array(PREFIX . 'poll', 'id', 'question', 'votes', 'answers', 'type', 'timestamp', "WHERE id = '" . $poll_id . "' AND archive = 0 AND visible = 1 AND start <= '" . $now->get_timestamp() . "' AND (end >= '" . $now->get_timestamp() . "' OR end = 0)", __LINE__, __FILE__);
 	
 	//Pas de sondage trouvé => erreur.
 	if (empty($poll['id']))
@@ -45,17 +48,24 @@ if (!empty($poll_id))
 }	
 	
 $archives = retrieve(GET, 'archives', false); //On vérifie si on est sur les archives
-$show_result = retrieve(GET, 'r', false); //Affichage des résulats.
+$show_result = retrieve(GET, 'r', false); //Affichage des résultats.
+$now = new Date(DATE_NOW, TIMEZONE_AUTO);
+
+//Récupération des éléments de configuration
+$config_cookie_name = $poll_config->get_cookie_name();
+$config_cookie_lenght = $poll_config->get_cookie_lenght();
+$config_displayed_in_mini_module_list = $poll_config->get_displayed_in_mini_module_list();
+$config_authorizations = $poll_config->get_authorizations();
 
 if (!empty($_POST['valid_poll']) && !empty($poll['id']) && !$archives)
 {
 	//Niveau d'autorisation.
-	if ($User->check_level($poll_config->get_min_rank_poll()))
+	if ($User->check_level($config_authorizations))
 	{
 		//On note le passage du visiteur par un cookie.
-		if (AppContext::get_request()->has_cookieparameter($poll_config->get_poll_cookie_name())) //Recherche dans le cookie existant.
+		if (AppContext::get_request()->has_cookieparameter($config_cookie_name)) //Recherche dans le cookie existant.
 		{
-			$array_cookie = explode('/', AppContext::get_request()->get_cookie($poll_config->get_poll_cookie_name()));
+			$array_cookie = explode('/', AppContext::get_request()->get_cookie($config_cookie_name));
 			if (in_array($poll['id'], $array_cookie))
 				$check_cookie = true;
 			else
@@ -65,42 +75,42 @@ if (!empty($_POST['valid_poll']) && !empty($poll['id']) && !$archives)
 				$array_cookie[] = $poll['id']; //Ajout nouvelle valeur.
 				$value_cookie = implode('/', $array_cookie); //On retransforme le tableau en chaîne.
 	
-				AppContext::get_response()->set_cookie(new HTTPCookie($poll_config->get_poll_cookie_name(), $value_cookie, time() + $poll_config->get_poll_cookie_lenght()));
+				AppContext::get_response()->set_cookie(new HTTPCookie($config_cookie_name, $value_cookie, time() + $config_cookie_lenght));
 			}
 		}
 		else //Génération d'un cookie.
 		{	
 			$check_cookie = false;
-			AppContext::get_response()->set_cookie(new HTTPCookie($poll_config->get_poll_cookie_name(), $poll['id'], time() + $poll_config->get_poll_cookie_lenght()));
+			AppContext::get_response()->set_cookie(new HTTPCookie($config_cookie_name, $poll['id'], time() + $config_cookie_lenght));
 		}
 		
 		$check_bdd = true;
-		if ($poll_config->get_min_rank_poll() == -1) //Autorisé aux visiteurs, on filtre par ip => fiabilité moyenne.
+		if ($config_authorizations == -1) //Autorisé aux visiteurs, on filtre par ip => fiabilité moyenne.
 		{
 			//Injection de l'adresse ip du visiteur dans la bdd.	
-			$ip = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "poll_ip WHERE ip = '" . USER_IP . "' AND idpoll = '" . $poll['id'] . "'",  __LINE__, __FILE__);		
+			$ip = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "poll_ip WHERE ip = '" . AppContext::get_request()->get_ip_address() . "' AND idpoll = '" . $poll['id'] . "'",  __LINE__, __FILE__);		
 			if (empty($ip))
 			{
 				//Insertion de l'adresse ip.
-				$Sql->query_inject("INSERT INTO " . PREFIX . "poll_ip (ip, user_id, idpoll, timestamp) VALUES('" . USER_IP . "', -1, '" . $poll['id'] . "', '" . time() . "')", __LINE__, __FILE__);
+				$Sql->query_inject("INSERT INTO " . PREFIX . "poll_ip (ip, user_id, idpoll, timestamp) VALUES('" . AppContext::get_request()->get_ip_address() . "', -1, '" . $poll['id'] . "', '" . time() . "')", __LINE__, __FILE__);
 				$check_bdd = false;
 			}
 		}
 		else //Autorisé aux membres, on filtre par le user_id => fiabilité 100%.
 		{
 			//Injection de l'adresse ip du visiteur dans la bdd.	
-			$user_id = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "poll_ip WHERE user_id = '" . $User->get_id() . "' AND idpoll = '" . $poll['id'] . "'",  __LINE__, __FILE__);		
+			$user_id = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "poll_ip WHERE user_id = '" . $User->get_attribute('user_id') . "' AND idpoll = '" . $poll['id'] . "'",  __LINE__, __FILE__);		
 			if (empty($user_id))
 			{
 				//Insertion de l'adresse ip.
-				$Sql->query_inject("INSERT INTO " . PREFIX . "poll_ip (ip, user_id, idpoll, timestamp) VALUES('" . USER_IP . "', '" . $User->get_id() . "', '" . $poll['id'] . "', '" . time() . "')", __LINE__, __FILE__);
+				$Sql->query_inject("INSERT INTO " . PREFIX . "poll_ip (ip, user_id, idpoll, timestamp) VALUES('" . AppContext::get_request()->get_ip_address() . "', '" . $User->get_attribute('user_id') . "', '" . $poll['id'] . "', '" . time() . "')", __LINE__, __FILE__);
 				$check_bdd = false;
 			}
 		}
 		
 		//Si le cookie n'existe pas et l'ip n'est pas connue on enregistre.
 		if ($check_bdd || $check_cookie)
-			AppContext::get_response()->redirect('/poll/poll' . url('.php?id=' . $poll['id'] . '&error=e_already_vote', '-' . $poll['id'] . '.php?error=e_already_vote', '&') . '#message_helper');
+			AppContext::get_response()->redirect(PATH_TO_ROOT . '/poll/poll' . url('.php?id=' . $poll['id'] . '&error=e_already_vote', '-' . $poll['id'] . '.php?error=e_already_vote', '&') . '#message_helper');
 		
 		//Récupération du vote.
 		$check_answer = false;
@@ -133,16 +143,16 @@ if (!empty($_POST['valid_poll']) && !empty($poll['id']) && !$archives)
 			$Sql->query_inject("UPDATE " . PREFIX . "poll SET votes = '" . implode('|', $array_votes) . "' WHERE id = '" . $poll['id'] . "'", __LINE__, __FILE__);
 			
 			//Tout s'est bien déroulé, on redirige vers la page des resultats.
-			redirect_confirm(HOST . DIR . '/poll/poll' . url('.php?id=' . $poll['id'], '-' . $poll['id'] . '.php'), $LANG['confirm_vote'], 2);
+			redirect_confirm(PATH_TO_ROOT . '/poll/poll' . url('.php?id=' . $poll['id'], '-' . $poll['id'] . '.php'), $LANG['confirm_vote'], 2);
 			
-			if (in_array($poll['id'], $poll_config->get_mini_poll_selected())) //Vote effectué du mini poll => mise à jour du cache du mini poll.
+			if (in_array($poll['id'], $config_displayed_in_mini_module_list) ) //Vote effectué du mini poll => mise à jour du cache du mini poll.
 				$Cache->Generate_module_file('poll');
 		}	
 		else //Vote blanc
-			redirect_confirm(HOST . DIR . '/poll/poll' . url('.php?id=' . $poll['id'], '-' . $poll['id'] . '.php'), $LANG['no_vote'], 2);
+			redirect_confirm(PATH_TO_ROOT . '/poll/poll' . url('.php?id=' . $poll['id'], '-' . $poll['id'] . '.php'), $LANG['no_vote'], 2);
 	}
 	else
-		AppContext::get_response()->redirect('/poll/poll' . url('.php?id=' . $poll['id'] . '&error=e_unauth_poll', '-' . $poll['id'] . '.php?error=e_unauth_poll', '&') . '#message_helper');
+		AppContext::get_response()->redirect(PATH_TO_ROOT . '/poll/poll' . url('.php?id=' . $poll['id'] . '&error=e_unauth_poll', '-' . $poll['id'] . '.php?error=e_unauth_poll', '&') . '#message_helper');
 }
 elseif (!empty($poll['id']) && !$archives) //Affichage du sondage.
 {
@@ -152,17 +162,17 @@ elseif (!empty($poll['id']) && !$archives) //Affichage du sondage.
 
 	//Résultats
 	$check_bdd = false;
-	if ($poll_config->get_min_rank_poll() == -1) //Autorisé aux visiteurs, on filtre par ip => fiabilité moyenne.
+	if ($config_authorizations == -1) //Autorisé aux visiteurs, on filtre par ip => fiabilité moyenne.
 	{
 		//Injection de l'adresse ip du visiteur dans la bdd.	
-		$ip = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "poll_ip WHERE ip = '" . USER_IP . "' AND idpoll = '" . $poll['id'] . "'",  __LINE__, __FILE__);		
+		$ip = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "poll_ip WHERE ip = '" . AppContext::get_request()->get_ip_address() . "' AND idpoll = '" . $poll['id'] . "'",  __LINE__, __FILE__);		
 		if (!empty($ip))
 			$check_bdd = true;
 	}
 	else //Autorisé aux membres, on filtre par le user_id => fiabilité 100%.
 	{
 		//Injection de l'adresse ip du visiteur dans la bdd.	
-		$user_id = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "poll_ip WHERE user_id = '" . $User->get_id() . "' AND idpoll = '" . $poll['id'] . "'",  __LINE__, __FILE__);		
+		$user_id = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "poll_ip WHERE user_id = '" . $User->get_attribute('user_id') . "' AND idpoll = '" . $poll['id'] . "'",  __LINE__, __FILE__);		
 		if (!empty($user_id))
 			$check_bdd = true;
 	}
@@ -187,9 +197,9 @@ elseif (!empty($poll['id']) && !$archives) //Affichage du sondage.
 	
 	//Si le cookie existe, ou l'ip est connue on redirige vers les resulats, sinon on prend en compte le vote.
 	$array_cookie = array();
-    if (AppContext::get_request()->has_cookieparameter($poll_config->get_poll_cookie_name()))
+    if (AppContext::get_request()->has_cookieparameter($config_cookie_name))
     {
-    	$array_cookie = explode('/', AppContext::get_request()->get_cookie($poll_config->get_poll_cookie_name()));
+    	$array_cookie = explode('/', AppContext::get_request()->get_cookie($config_cookie_name));
     }
 	if ($show_result || in_array($poll['id'], $array_cookie) === true || $check_bdd) //Résultats
 	{		
@@ -282,42 +292,6 @@ elseif (!empty($poll['id']) && !$archives) //Affichage du sondage.
 		$Template->pparse('poll');
 	}
 }
-elseif (!$archives) //Menu principal.
-{
-	$Template->set_filenames(array(
-		'poll'=> 'poll/poll.tpl'
-	));
-
-	$show_archives = $Sql->query("SELECT COUNT(*) as compt FROM " . PREFIX . "poll WHERE archive = 1 AND visible = 1", __LINE__, __FILE__);
-	$show_archives = !empty($show_archives) ? '<a href="poll' . url('.php?archives=1', '.php?archives=1') . '">' . $LANG['archives'] . '</a>' : '';
-	
-	$edit = '';	
-	if ($User->check_level(User::ADMIN_LEVEL))
-		$edit = '<a href="../poll/admin_poll.php" title="' . $LANG['edit'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/edit.png" class="valign_middle" /></a>';
-	
-	$Template->put_all(array(
-		'C_POLL_MAIN' => true,
-		'EDIT' => $edit,
-		'U_ARCHIVE' => $show_archives,
-		'L_POLL' => $LANG['poll'],
-		'L_POLL_MAIN' => $LANG['poll_main']		
-	));
-	
-	$result = $Sql->query_while("SELECT id, question 
-	FROM " . PREFIX . "poll 
-	WHERE archive = 0 AND visible = 1
-	ORDER BY id DESC", __LINE__, __FILE__);
-	while ($row = $Sql->fetch_assoc($result))
-	{
-		$Template->assign_block_vars('list', array(
-			'U_POLL_ID' => url('.php?id=' . $row['id'], '-' . $row['id'] . '.php'),
-			'QUESTION' => $row['question']
-		));
-	}
-	$Sql->query_close($result);
-	
-	$Template->pparse('poll');	
-}
 elseif ($archives) //Archives.
 {
 	$Template->set_filenames(array(
@@ -330,6 +304,7 @@ elseif ($archives) //Archives.
 	
 	$Template->put_all(array(
 		'C_POLL_ARCHIVES' => true,
+		'SID' => SID,
 		'THEME' => get_utheme(),		
 		'C_IS_ADMIN' => $User->check_level(User::ADMIN_LEVEL),
 		'PAGINATION' => $Pagination->display('poll' . url('.php?p=%d', '-0-0-%d.php'), $nbrarchives, 'p', 10, 3),
@@ -358,8 +333,8 @@ elseif ($archives) //Archives.
 		$Template->assign_block_vars('list', array(
 			'ID' => $row['id'],
 			'QUESTION' => $row['question'],
-			'EDIT' => '<a href="../poll/admin_poll' . url('.php?id=' . $row['id']) . '" title="' . $LANG['edit'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/edit.png" class="valign_middle" /></a>',
-			'DEL' => '&nbsp;&nbsp;<a href="../poll/admin_poll' . url('.php?delete=1&amp;id=' . $row['id']) . '" title="' . $LANG['delete'] . '" onclick="javascript:return Confirm();"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/delete.png" class="valign_middle" /></a>',
+			'EDIT' => '<a href="' . PATH_TO_ROOT . '/poll/admin_poll' . url('.php?id=' . $row['id']) . '" title="' . $LANG['edit'] . '"><img src="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/' . get_ulang() . '/edit.png" class="valign_middle" /></a>',
+			'DEL' => '&nbsp;&nbsp;<a href="' . PATH_TO_ROOT . '/poll/admin_poll' . url('.php?delete=1&amp;id=' . $row['id']) . '" title="' . $LANG['delete'] . '" onclick="javascript:return Confirm();"><img src="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/' . get_ulang() . '/delete.png" class="valign_middle" /></a>',
 			'VOTE' => $sum_vote,
 			'DATE' => gmdate_format('date_format'),			
 			'L_VOTE' => (($sum_vote > 1 ) ? $LANG['poll_vote_s'] : $LANG['poll_vote'])
@@ -383,8 +358,12 @@ elseif ($archives) //Archives.
 }
 else
 {
-	$error_controller = PHPBoostErrors::unexisting_page();
-    DispatchManager::redirect($error_controller);
+	$modulesLoader = AppContext::get_extension_provider_service();
+	$module = $modulesLoader->get_provider('poll');
+	if ($module->has_extension_point(HomePageExtensionPoint::EXTENSION_POINT))
+	{
+		echo $module->get_extension_point(HomePageExtensionPoint::EXTENSION_POINT)->get_home_page()->get_view()->display();
+	}
 }
 	
 require_once('../kernel/footer.php');

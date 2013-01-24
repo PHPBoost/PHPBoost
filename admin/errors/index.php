@@ -30,9 +30,9 @@ defined('PATH_TO_ROOT') or define('PATH_TO_ROOT', '../..');
 require_once PATH_TO_ROOT . '/kernel/init.php';
 
 $url_controller_mappers = array(
-new UrlControllerMapper('AdminErrorsController404List', '`^/404(?:/list)?/?$`'),
-new UrlControllerMapper('AdminErrorsController404Clear', '`^/404/clear/?$`'),
-new UrlControllerMapper('AdminErrorsController404Delete', '`^/404/([0-9]+)/delete/?$`', array('id')),
+	new UrlControllerMapper('AdminErrorsController404List', '`^/404(?:/list)?/?$`'),
+	new UrlControllerMapper('AdminErrorsController404Clear', '`^/404/clear/?$`'),
+	new UrlControllerMapper('AdminErrorsController404Delete', '`^/404/([0-9]+)/delete/?$`', array('id')),
 );
 DispatchManager::dispatch($url_controller_mappers);
 

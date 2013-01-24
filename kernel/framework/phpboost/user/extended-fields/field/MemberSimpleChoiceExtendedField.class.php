@@ -3,8 +3,8 @@
  *                               MemberSimpleChoiceExtendedField.class.php
  *                            -------------------
  *   begin                : December 08, 2010
- *   copyright            : (C) 2010 Kévin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   copyright            : (C) 2010 Kevin MASSY
+ *   email                : kevin.massy@phpboost.com
  *
  *
  ###################################################
@@ -41,6 +41,7 @@ class MemberSimpleChoiceExtendedField extends AbstractMemberExtendedField
 		$field = array();
 		$array_values = $this->possible_values($member_extended_field);
 		$i = 0;
+		$default = '';
 		foreach ($array_values as $values)
 		{
 			$field[] = new FormFieldRadioChoiceOption($values, $member_extended_field->get_field_name() . '_' . $i);
@@ -61,6 +62,7 @@ class MemberSimpleChoiceExtendedField extends AbstractMemberExtendedField
 		$field = array();
 		$array_values = $this->possible_values($member_extended_field);
 		$i = 0;
+		$default = '';
 		foreach ($array_values as $values)
 		{
 			$field[] = new FormFieldRadioChoiceOption($values, $member_extended_field->get_field_name() . '_' . $i);

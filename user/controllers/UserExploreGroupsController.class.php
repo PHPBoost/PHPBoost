@@ -3,8 +3,8 @@
  *                      UserExploreGroupsController.class.php
  *                            -------------------
  *   begin                : October 09, 2011
- *   copyright            : (C) 2011 Kévin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   copyright            : (C) 2011 Kevin MASSY
+ *   email                : kevin.massy@phpboost.com
  *
  *
  ###################################################
@@ -32,7 +32,7 @@ class UserExploreGroupsController extends AbstractController
 	private $user_account_config;
 	private $view;
 
-	public function execute(HTTPRequest $request)
+	public function execute(HTTPRequestCustom $request)
 	{
 		$group_id = $request->get_getint('id', 0);
 		$this->init();
@@ -54,7 +54,7 @@ class UserExploreGroupsController extends AbstractController
 			$group = $this->groups_cache->get_group($group_id);
 			$this->view->put_all(array(
 				'C_ADMIN' => AppContext::get_current_user()->check_level(User::ADMIN_LEVEL),
-				'U_ADMIN_GROUPS' => PATH_TO_ROOT .'/admin/admin_groups.php?id=' . $group_id,
+				'U_ADMIN_GROUPS' => TPL_PATH_TO_ROOT .'/admin/admin_groups.php?id=' . $group_id,
 				'GROUP_NAME' => $group['name']
 			));
 		}
@@ -65,21 +65,40 @@ class UserExploreGroupsController extends AbstractController
 			));
 		}
 		
-		$this->view->put_all(array(
-			'SELECT_GROUP' => $this->build_form($group_id)->display(),
-		));
-		
+		$number_member = 0;
 		foreach ($this->get_members_group($group_id) as $user_id)
 		{
-			$user = PersistenceContext::get_querier()->select_single_row(DB_TABLE_MEMBER, array('*'), 'WHERE user_aprob = 1 AND user_id = :user_id', array('user_id' => $user_id));
-			$this->view->assign_block_vars('members_list', array(
-				'PROFILE_LINK' => UserUrlBuilder::profile($user_id)->absolute(),
-				'PSEUDO' => $user['login'],
-				'U_AVATAR' => empty($user['user_avatar']) && $this->user_account_config->is_default_avatar_enabled() ? 
-					PATH_TO_ROOT .'/templates/' . get_utheme() . '/images/' .  $this->user_account_config->get_default_avatar_name() : $user['user_avatar'],
-				'STATUS' => UserService::get_level_lang($user['level'])
-			));
+			if (!empty($user_id))
+			{
+				$user = PersistenceContext::get_querier()->select('SELECT 
+					member.login, member.level, member.user_groups,
+					ext_field.user_avatar
+					FROM ' . DB_TABLE_MEMBER . ' member
+					LEFT JOIN ' . DB_TABLE_MEMBER_EXTENDED_FIELDS . ' ext_field ON ext_field.user_id = member.user_id
+					WHERE user_aprob = 1 AND member.user_id = :user_id
+				', array('user_id' => $user_id))->fetch();
+
+				if (!empty($user))
+				{
+					$group_color = User::get_group_color($user['user_groups'], $user['level']);
+					$this->view->assign_block_vars('members_list', array(
+						'U_PROFILE' => UserUrlBuilder::profile($user_id)->absolute(),
+						'PSEUDO' => $user['login'],
+						'U_AVATAR' => empty($user['user_avatar']) && $this->user_account_config->is_default_avatar_enabled() ? 
+							TPL_PATH_TO_ROOT .'/templates/' . get_utheme() . '/images/' .  $this->user_account_config->get_default_avatar_name() : Url::to_rel($user['user_avatar']),
+						'LEVEL_CLASS' => UserService::get_level_class($user['level']),
+						'C_GROUP_COLOR' => !empty($group_color),
+						'GROUP_COLOR' => $group_color,
+					));
+					$number_member++;
+				}
+			}
 		}
+
+		$this->view->put_all(array(
+			'C_NOT_MEMBERS' => $number_member == 0,
+			'SELECT_GROUP' => $this->build_form($group_id)->display(),
+		));
 	}
 	
 	private function get_members_group($group_id_selected)

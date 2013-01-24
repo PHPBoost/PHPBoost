@@ -70,8 +70,8 @@ class SessionData
 		}
 		else
 		{
-			$data = new SessionData($user_id, Random::hexa64uid());
-			$data->token = Random::hexa64uid(16);
+			$data = new SessionData($user_id, KeyGenerator::generate_key(64));
+			$data->token = KeyGenerator::generate_key(16);
 			$data->timestamp = time();
 			$data->ip = AppContext::get_request()->get_ip_address();
 			self::fill_user_cached_data($data);
@@ -80,10 +80,10 @@ class SessionData
 		return $data;
 	}
 	
-	public static function update_location_title($title_page)
+	public static function update_location($title_page)
 	{
 		$data = AppContext::get_session();
-		$columns = array('location_title' => $title_page);
+		$columns = array('timestamp' => $data->timestamp, 'location_title' => $title_page, 'location_script' => REWRITED_SCRIPT);
 		$condition = 'WHERE user_id=:user_id AND session_id=:session_id';
 		$parameters = array('user_id' => $data->user_id, 'session_id' => $data->session_id);
 		PersistenceContext::get_querier()->update(DB_TABLE_SESSIONS, $columns, $condition, $parameters);
@@ -149,7 +149,8 @@ class SessionData
 			$parameters = array('user_id' => $user_id, 'session_id' => $session_id);
 			$row = PersistenceContext::get_querier()->select_single_row(DB_TABLE_SESSIONS, $columns, $condition, $parameters);
 			$data = self::init_from_row($user_id, $session_id, $row);
-			return self::update($data);
+			$data->timestamp = time();
+			return $data;
 		}
 		catch (RowNotFoundException $ex)
 		{
@@ -167,16 +168,6 @@ class SessionData
 		$data->location_title = $row['location_title'];
 		$data->cached_data = unserialize($row['cached_data']);
 		$data->data = unserialize($row['data']);
-		return $data;
-	}
-
-	private static function update(SessionData $data)
-	{
-		$data->timestamp = time();
-		$columns = array('timestamp' => $data->timestamp, 'location_script' => REWRITED_SCRIPT);
-		$condition = 'WHERE user_id=:user_id AND session_id=:session_id';
-		$parameters = array('user_id' => $data->user_id, 'session_id' => $data->session_id);
-		PersistenceContext::get_querier()->update(DB_TABLE_SESSIONS, $columns, $condition, $parameters);
 		return $data;
 	}
 

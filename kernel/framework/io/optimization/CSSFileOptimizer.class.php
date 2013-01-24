@@ -3,8 +3,8 @@
  *                               CSSFileOptimizer.class.php
  *                            -------------------
  *   begin                : March 29, 2011
- *   copyright            : (C) 2011 Kévin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   copyright            : (C) 2011 Kevin MASSY
+ *   email                : kevin.massy@phpboost.com
  *
  *
  ###################################################
@@ -26,7 +26,7 @@
  ###################################################*/
 
 /**
- * @author Kévin MASSY <soldier.weasel@gmail.com>
+ * @author Kevin MASSY <kevin.massy@phpboost.com>
  * @package {@package}
 */
 class CSSFileOptimizer
@@ -34,7 +34,7 @@ class CSSFileOptimizer
 	protected $files = array();
 	protected $scripts = array();
 	protected $content = '';
-	protected $extension_required = '';
+	protected $extension_required = '.css';
 	protected $regex_search_files_path = '';
 	protected $replace_value_files_path = '';
 
@@ -50,8 +50,7 @@ class CSSFileOptimizer
 
 	public function __construct()
 	{
-		$this->extension_required = '.css';
-		$this->regex_search_files_path = '`url\(\'?([a-z0-9._/-]+)\'?\)`';
+		$this->regex_search_files_path = '`url\([\'\"]?([a-z0-9._/-]+)[\'\"]?\)`';
 		$this->replace_value_files_path = 'url(\':path/'. str_replace('\'', '', '$1') .'\')';
 	}
 
@@ -103,7 +102,7 @@ class CSSFileOptimizer
 		else
 		{
 			$cleared_file_content = $this->delete_comments($this->content);
-			$content = str_replace(array("\r\n", "\n", "\r", "\t", "  "), '', $cleared_file_content);
+			$content = str_replace(array("\r\n", "\n", "\r", "\t", "  "), ' ', $cleared_file_content);
 			$content = preg_replace(array('`\s*{\s*`', '`\s*}\s*`', '`\s*:\s*`', '`\s*;\s*`'), array('{', '}', ':', ';'), $content);
 		}
 

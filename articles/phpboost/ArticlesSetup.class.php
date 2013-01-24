@@ -29,13 +29,17 @@ class ArticlesSetup extends DefaultModuleSetup
 {
 	private static $articles_table;
 	private static $articles_cat_table;
-	private static $articles_model_table;
-
+	private $messages;
+	
 	public static function __static()
 	{
 		self::$articles_table = PREFIX . 'articles';
 		self::$articles_cat_table = PREFIX . 'articles_cats';
-		self::$articles_model_table = PREFIX . 'articles_models';
+	}
+	
+	public function __construct()
+	{
+		$this->querier = PersistenceContext::get_querier();
 	}
 
 	public function install()
@@ -52,14 +56,13 @@ class ArticlesSetup extends DefaultModuleSetup
 
 	private function drop_tables()
 	{
-		PersistenceContext::get_dbms_utils()->drop(array(self::$articles_table, self::$articles_cat_table, self::$articles_model_table));
+		PersistenceContext::get_dbms_utils()->drop(array(self::$articles_table, self::$articles_cat_table));
 	}
 
 	private function create_tables()
 	{
 		$this->create_articles_table();
 		$this->create_articles_cats_table();
-		$this->create_articles_models_table();
 	}
 
 	private function create_articles_table()
@@ -67,7 +70,6 @@ class ArticlesSetup extends DefaultModuleSetup
 		$fields = array(
 			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
 			'idcat' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'id_models' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 1),
 			'title' => array('type' => 'string', 'length' => 255, 'notnull' => 1),
 			'description' => array('type' => 'text', 'length' => 65000),
 			'contents' => array('type' => 'text', 'length' => 65000),
@@ -78,14 +80,7 @@ class ArticlesSetup extends DefaultModuleSetup
 			'end' => array('type' => 'integer', 'length' => 11, 'default' => 0),
 			'user_id' => array('type' => 'integer', 'length' => 11, 'default' => 0),
 			'views' => array('type' => 'integer', 'length' => 11, 'default' => 0),
-			'users_note' => array('type' => 'text', 'length' => 65000),
-			'nbrnote' => array('type' => 'integer', 'length' => 11, 'default' => 0),
-			'visible' => array('type' => 'boolean', 'notnull' => 1, 'default' => 0),
-			'note' => array('type' => 'decimal', 'default' => 0),
-			'nbr_com' => array('type' => 'integer', 'length' => 11, 'default' => 0),
-			'lock_com' => array('type' => 'integer', 'length' => 11, 'default' => 0),
-			'auth' => array('type' => 'text', 'length' => 65000),
-			'extend_field' => array('type' => 'text', 'length' => 65000)
+			'visible' => array('type' => 'boolean', 'notnull' => 1, 'default' => 0)
 		);
 		$options = array(
 			'primary' => array('id'),
@@ -93,8 +88,7 @@ class ArticlesSetup extends DefaultModuleSetup
 				'idcat' => array('type' => 'key', 'fields' => 'idcat'),
 				'title' => array('type' => 'fulltext', 'fields' => 'title'),
 				'contents' => array('type' => 'fulltext', 'fields' => 'contents')
-		)
-		);
+		));
 		PersistenceContext::get_dbms_utils()->create_table(self::$articles_table, $fields, $options);
 	}
 
@@ -103,17 +97,12 @@ class ArticlesSetup extends DefaultModuleSetup
 		$fields = array(
 			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
 			'id_parent' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'id_models' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 1),
 			'c_order' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'auth' => array('type' => 'text', 'length' => 65000),
 			'name' => array('type' => 'string', 'length' => 150, 'notnull' => 1),
 			'description' => array('type' => 'text', 'length' => 65000),
-			'nbr_articles_visible' => array('type' => 'integer', 'length' => 9, 'notnull' => 1, 'default' => 0),
-			'nbr_articles_unvisible' => array('type' => 'integer', 'length' => 9, 'notnull' => 1, 'default' => 0),
 			'image' => array('type' => 'string', 'length' => 255, 'default' => "''"),
 			'visible' => array('type' => 'boolean', 'notnull' => 1, 'default' => 0),
-			'auth' => array('type' => 'text', 'default' => "''"),
-			'tpl_cat' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "'articles_cat.tpl'")
+			'auth' => array('type' => 'text', 'default' => "''")
 		);
 		$options = array(
 			'primary' => array('id'),
@@ -122,27 +111,44 @@ class ArticlesSetup extends DefaultModuleSetup
 		PersistenceContext::get_dbms_utils()->create_table(self::$articles_cat_table, $fields, $options);
 	}
 
-	private function create_articles_models_table()
-	{
-		$fields = array(
-			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
-			'name' => array('type' => 'string', 'length' => 150, 'notnull' => 1),
-			'model_default' => array('type' => 'boolean', 'notnull' => 1, 'default' => 1),
-			'description' => array('type' => 'text', 'length' => 65000),
-			'pagination_tab' => array('type' => 'boolean', 'notnull' => 1, 'default' => 1),
-			'extend_field' => array('type' => 'text', 'length' => 65000),
-			'options' => array('type' => 'text', 'length' => 65000),
-			'tpl_articles' => array('type' => 'string', 'length' => 150, 'notnull' => 1, 'default' => "'articles.tpl'")
-		);
-		$options = array(
-			'primary' => array('id'),
-		);
-		PersistenceContext::get_dbms_utils()->create_table(self::$articles_model_table, $fields, $options);
-	}
-
 	private function insert_data()
 	{
+		$this->messages = LangLoader::get('install', 'articles');
+		$this->insert_categories_data();
+		$this->insert_articles_data();
+	}
+	
+	private function insert_categories_data()
+	{
+		$this->querier->insert(self::$articles_cat_table, array(
+			'id' => 1,
+			'id_parent' => 0,
+			'c_order' => 1,
+			'name' => $this->messages['default.category.name'],
+			'description' => $this->messages['default.category.description'],
+			'image' => 'articles.png',
+			'visible' => 1,
+			'auth' => ''
+		));
+	}
+	
+	private function insert_articles_data()
+	{
+		$this->querier->insert(self::$articles_table, array(
+			'id' => 1,
+			'idcat' => 1,
+			'title' => $this->messages['default.article.name'],
+			'description' => $this->messages['default.article.description'],
+			'contents' => $this->messages['default.article.contents'],
+			'sources' => serialize(array()),
+			'icon' => 'articles.png',
+			'timestamp' => time(),
+			'start' => 0,
+			'end' => 0,
+			'user_id' => 1,
+			'views' => 0,
+			'visible' => 1
+		));
 	}
 }
-
 ?>

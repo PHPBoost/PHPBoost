@@ -45,11 +45,9 @@ if (!empty($popup)) //Popup.
 
 <title>' . $LANG['files_management'] . '</title>
 <link rel="stylesheet" href="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/theme/design.css" type="text/css" media="screen" />
-<link rel="stylesheet" href="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/theme/bbcode.css" type="text/css" media="screen, print, handheld" />
 <link rel="stylesheet" href="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/theme/global.css" type="text/css" media="screen, print, handheld" />
 <link rel="stylesheet" href="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/theme/content.css" type="text/css" media="screen, print, handheld" />
 <link rel="stylesheet" href="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/theme/generic.css" type="text/css" media="screen, print, handheld" />
-<link rel="stylesheet" href="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/theme/bbcode.css" type="text/css" media="screen, print, handheld" />
 <script type="text/javascript">
 <!--
 	var PATH_TO_ROOT = "' . PATH_TO_ROOT . '";
@@ -429,7 +427,7 @@ else
 	ORDER BY name", __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))
 	{
-		$name_cut = (strlen(html_entity_decode($row['name'])) > 22) ? htmlentities(substr(html_entity_decode($row['name']), 0, 22)) . '...' : $row['name'];
+		$name_cut = (strlen(TextHelper::html_entity_decode($row['name'])) > 22) ? TextHelper::htmlentities(substr(TextHelper::html_entity_decode($row['name']), 0, 22)) . '...' : $row['name'];
 		
 		$Template->assign_block_vars('folder', array(
 			'ID' => $row['id'],
@@ -452,7 +450,7 @@ else
 	ORDER BY up.name", __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))
 	{
-		$name_cut = (strlen(html_entity_decode($row['name'])) > 22) ? htmlentities(substr(html_entity_decode($row['name']), 0, 22)) . '...' : $row['name'];
+		$name_cut = (strlen(TextHelper::html_entity_decode($row['name'])) > 22) ? TextHelper::htmlentities(substr(TextHelper::html_entity_decode($row['name']), 0, 22)) . '...' : $row['name'];
 		
 		$get_img_mimetype = Uploads::get_img_mimetype($row['type']);
 		$size_img = '';
@@ -475,13 +473,13 @@ else
 			case 'svg':
 			$bbcode = '[img]/upload/' . $row['path'] . '[/img]';
 			$tinymce = '<img src="' . PATH_TO_ROOT . '/upload/' . $row['path'] . '" alt="" />';
-			$link = 'javascript:popup_upload(\'' . $row['id'] . '\', 0, 0, \'no\')';
+			$link = 'javascript:popup_upload(\'' . PATH_TO_ROOT . '/upload/' . $row['path'] . '\', 0, 0, \'no\')';
 			break;
 			//Sons
 			case 'mp3':
 			$bbcode = '[sound]/upload/' . $row['path'] . '[/sound]';
 			$tinymce = '<a href="' . PATH_TO_ROOT . '/upload/' . $row['path'] . '">' . $row['name'] . '</a>';
-			$link = 'javascript:popup_upload(\'' . $row['id'] . '\', 220, 10, \'no\')';
+			$link = 'javascript:popup_upload(\'' . PATH_TO_ROOT . '/upload/' . $row['path'] . '\', 220, 10, \'no\')';
 			break;
 			default:
 			$bbcode = '[url=/upload/' . $row['path'] . ']' . $row['name'] . '[/url]';
@@ -489,9 +487,9 @@ else
 			$link = PATH_TO_ROOT . '/upload/' . $row['path'];
 		}
 		
-		$is_bbcode_editor = ($editor == ContentFormattingService::BBCODE_LANGUAGE);
+		$is_bbcode_editor = ($editor == 'BBCode');
 		$displayed_code = $is_bbcode_editor ? $bbcode : '/upload/' . $row['path'];
-		$inserted_code = !empty($parse) ? $link : ($is_bbcode_editor ? addslashes($bbcode) : htmlentities($tinymce));
+		$inserted_code = !empty($parse) ? $link : ($is_bbcode_editor ? addslashes($bbcode) : TextHelper::htmlentities($tinymce));
 		$Template->assign_block_vars('files', array(
 			'ID' => $row['id'],
 			'IMG' => $get_img_mimetype['img'],

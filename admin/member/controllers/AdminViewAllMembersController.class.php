@@ -3,8 +3,8 @@
  *                      AdminViewAllMembersController.class.php
  *                            -------------------
  *   begin                : February 28, 2010
- *   copyright            : (C) 2010 Kévin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   copyright            : (C) 2010 Kevin MASSY
+ *   email                : kevin.massy@phpboost.com
  *
  *
  ###################################################
@@ -33,7 +33,7 @@ class AdminViewAllMembersController extends AdminController
 	
 	private $nbr_members_per_page = 25;
 
-	public function execute(HTTPRequest $request)
+	public function execute(HTTPRequestCustom $request)
 	{
 		$this->init();
 		$this->build_view($request);

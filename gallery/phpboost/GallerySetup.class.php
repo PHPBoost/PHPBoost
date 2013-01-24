@@ -3,8 +3,8 @@
  *                             GallerySetup.class.php
  *                            -------------------
  *   begin                : January 17, 2010
- *   copyright            : (C) 2010 Kévin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   copyright            : (C) 2010 Kevin MASSY
+ *   email                : kevin.massy@phpboost.com
  *
  *
  ###################################################
@@ -72,9 +72,7 @@ class GallerySetup extends DefaultModuleSetup
 			'user_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'aprob' => array('type' => 'boolean', 'notnull' => 1, 'default' => 0),
 			'views' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'timestamp' => array('type' => 'integer', 'length' => 11, 'default' => 0),
-			'nbr_com' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'lock_com' => array('type' => 'boolean', 'notnull' => 1, 'default' => 0)
+			'timestamp' => array('type' => 'integer', 'length' => 11, 'default' => 0)
 		);
 		$options = array(
 			'primary' => array('id'),
@@ -129,9 +127,7 @@ class GallerySetup extends DefaultModuleSetup
 			'user_id' => 1,
 			'aprob' => 1,
 			'views' => 0,
-			'timestamp' => time(),
-			'nbr_com' => 0,
-			'lock_com' => 0
+			'timestamp' => time()
 		));
 	}
 	

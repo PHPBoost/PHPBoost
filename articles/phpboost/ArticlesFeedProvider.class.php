@@ -28,13 +28,13 @@
 
 class ArticlesFeedProvider implements FeedProvider
 {
-	function get_feeds_list()
+	public function get_feeds_list()
 	{
 		$articles_cats = new ArticlesCats();
 		return $articles_cats->get_feeds_list();
 	}
 
-	function get_feed_data_struct($idcat = 0, $name = '')
+	public function get_feed_data_struct($idcat = 0, $name = '')
 	{
 		$querier = PersistenceContext::get_querier();
 		global $Cache, $LANG, $CONFIG_ARTICLES, $ARTICLES_CAT,$ARTICLES_LANG;

@@ -134,7 +134,9 @@ class BBCodeUnparser extends ContentFormattingUnparser
 			'`<object type="application/x-shockwave-flash" data="([^"]+)" width="([^"]+)" height="([^"]+)">(.*)</object>`isU',
 			'`<script type="text/javascript"><!--\s{1,5}insertSwfPlayer\("([^"]+)", (\d{1,3}), (\d{1,3})\);\s{1,5}--></script>`sU',
 			'`\[\[MEDIA\]\]insertSwfPlayer\(\'([^\']+)\', (\d{1,3}), (\d{1,3})\);\[\[/MEDIA\]\]`sU',
-			'`\[\[MATH\]\](.+)\[\[/MATH\]\]`sU'
+			'`\[\[MEDIA\]\]insertYoutubePlayer\(\'([^\']+)\', (\d{1,3}), (\d{1,3})\);\[\[/MEDIA\]\]`sU',
+			'`\[\[MATH\]\](.+)\[\[/MATH\]\]`sU',
+			'`<a href="([^"]+)" rel="lightbox">(.*)</a>`isU',
 		);
 
 		$array_preg_replace = array(
@@ -162,7 +164,9 @@ class BBCodeUnparser extends ContentFormattingUnparser
 			"[swf=$2,$3]$1[/swf]",
 			"[swf=$2,$3]$1[/swf]",
 			"[swf=$2,$3]$1[/swf]",
-			"[math]$1[/math]"
+			"[youtube=$2,$3]$1[/youtube]",
+			"[math]$1[/math]",
+			"[lightbox=$1]$2[/lightbox]"
 		);
 		$this->content = preg_replace($array_preg, $array_preg_replace, $this->content);
 			
@@ -182,7 +186,7 @@ class BBCodeUnparser extends ContentFormattingUnparser
 			
 		##Callbacks
 		//Image
-		$this->content = preg_replace_callback('`<img src="([^"]+)" alt="([^"]*)?"(?: title="([^"]*)")?(?: style="([^"]+)")? />`iU', array($this, 'unparse_img'), $this->content);
+		$this->content = preg_replace_callback('`<img src="([^"]+)" alt="([^"]*)?"(?: title="([^"]*)")?(?: style="([^"]+)")?(?: class="[^"]+")? />`iU', array($this, 'unparse_img'), $this->content);
 
 		//Fieldset
 		while (preg_match('`<fieldset class="bb_fieldset" style="([^"]*)"><legend>(.*)</legend>(.+)</fieldset>`sU', $this->content))
@@ -202,8 +206,9 @@ class BBCodeUnparser extends ContentFormattingUnparser
 		$alt = !empty($matches[2]) ? ' alt="' . $matches[2] . '"' : '';
         $title = !empty($matches[3]) ? ' title="' . $matches[3] . '"' : '';
         $style = !empty($matches[4]) ? ' style="' . $matches[4] . '"' : '';
+        $class = !empty($matches[5]) ? ' class="' . $matches[5] . '"' : '';
 
-		return '[img' . $alt . $title . $style . ']' . $matches[1] . '[/img]';
+		return '[img' . $alt . $title . $style . $class. ']' . $matches[1] . '[/img]';
 	}
 
 	/**
@@ -287,10 +292,8 @@ class BBCodeUnparser extends ContentFormattingUnparser
 	 */
 	protected function unparse_wikipedia_link($matches)
 	{
-		global $LANG;
-
 		//On est dans la langue par défaut
-		if ($matches[1] == $LANG['wikipedia_subdomain'])
+		if ($matches[1] == LangLoader::get_message('wikipedia_subdomain', 'editor-common'))
 		{
 			$lang = '';
 		}
@@ -312,5 +315,4 @@ class BBCodeUnparser extends ContentFormattingUnparser
 		return '[wikipedia' . (!empty($page_name) ? ' page="' . $page_name . '"' : '') . (!empty($lang) ? ' lang="' . $lang . '"' : '') . ']' . $matches[3] . '[/wikipedia]';
 	}
 }
-
 ?>

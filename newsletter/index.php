@@ -3,8 +3,8 @@
  *                           index.php
  *                            -------------------
  *   begin                : March 11, 2011
- *   copyright            : (C) 2010 Kévin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   copyright            : (C) 2010 Kevin MASSY
+ *   email                : kevin.massy@phpboost.com
  *
  *
  ###################################################
@@ -44,13 +44,13 @@ $url_controller_mappers = array(
 	new UrlControllerMapper('NewsletterSubscribeController', '`^/subscribe/?$`'),
 	new UrlControllerMapper('NewsletterUnsubscribeController', '`^/unsubscribe/?$`'),
 	new UrlControllerMapper('NewsletterEditSubscriberController', '`^/subscriber/([0-9]+)/edit/?$`', array('id')),
-	new UrlControllerMapper('NewsletterDeleteSubscriberController', '`^/subscriber/([0-9]+)/delete?/?([0-9]+)/?$`', array('id', 'id_stream')),
+	new UrlControllerMapper('NewsletterDeleteSubscriberController', '`^/subscriber/([0-9]+)/delete(?:/([0-9]+))?/?$`', array('id', 'id_stream')),
 
 	new UrlControllerMapper('NewsletterArchivesController', '`^/archives(?:/([0-9]+))?/?([a-z]+)?/?([a-z]+)?/?([0-9]+)?/?$`', array('id_stream', 'field', 'sort', 'page')),
 	new UrlControllerMapper('NewsletterArchiveController', '`^/archive/([0-9]+)?/?$`', array('id')),
 	
-	new UrlControllerMapper('NewsletterHomeController', '`^(?:/([a-z]+))?/?$`', array('page')),
+	new UrlControllerMapper('AjaxImagePreviewController', '`^/ajax/image/preview/?$`'),
+	new UrlControllerMapper('NewsletterHomeController', '`^(?:/([0-9]+))?/?$`', array('page')),
 );
 DispatchManager::dispatch($url_controller_mappers);
-
 ?>

@@ -31,10 +31,9 @@ require_once(PATH_TO_ROOT . '/admin/admin_begin.php');
 define('TITLE', $LANG['administration']);
 require_once(PATH_TO_ROOT . '/admin/admin_header.php');
 
-
 $check_updates = retrieve(GET, 'check', false);
 $update_type = retrieve(GET, 'type', '');
-if (!in_array($update_type, array('', 'kernel', 'module', 'theme')))
+if (!in_array($update_type, array('', 'kernel', 'module', 'template')))
 {    
     $update_type = '';
 }
@@ -49,10 +48,7 @@ $tpl = new FileTemplate('admin/updates/updates.tpl');
 $updates_availables = 0;
 
 if (ServerConfiguration::get_phpversion() > Updates::PHP_MIN_VERSION_UPDATES)
-{
-    // Retrieves all the update alerts from the database
-    
-    
+{ 
     $update_alerts = AdministratorAlertService::find_by_criteria(null, 'updates');
     $updates = array();
     foreach ($update_alerts as $update_alert)
@@ -156,5 +152,4 @@ $tpl->put_all(array(
 $tpl->display();
 
 require_once(PATH_TO_ROOT . '/admin/admin_footer.php');
-
 ?>

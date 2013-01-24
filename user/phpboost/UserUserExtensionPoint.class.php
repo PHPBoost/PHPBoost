@@ -3,8 +3,8 @@
  *                        UserUserExtensionPoint.php
  *                            -------------------
  *   begin                : October 09, 2011
- *   copyright            : (C) 2011 Kévin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   copyright            : (C) 2011 Kevin MASSY
+ *   email                : kevin.massy@phpboost.com
  *
  *
  ###################################################
@@ -29,7 +29,7 @@ class UserUserExtensionPoint implements UserExtensionPoint
 {
 	public function get_messages_list_url($user_id)
 	{
-		return Url::to_rel('/user/?url=/comments/' . $user_id);
+		return UserUrlBuilder::comments('', $user_id)->absolute();
 	}
 
 	public function get_messages_list_link_name()
@@ -39,7 +39,7 @@ class UserUserExtensionPoint implements UserExtensionPoint
 
 	public function get_messages_list_link_img()
 	{
-		return PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/com_mini.png';
+		return TPL_PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/com_mini.png';
 	}
 	
 	public function get_number_messages($user_id)

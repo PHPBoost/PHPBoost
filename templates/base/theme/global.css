@@ -16,13 +16,6 @@
 
 .row2,.block_contents2 {
 	padding:8px 6px;
-	border-top:1px solid #CCCCCC;
-	-moz-border-radius:0px 0px 5px 5px;
-	-khtml-border-bottom-right-radius:5px;
-	-khtml-border-bottom-left-radius:5px;
-	-webkit-border-bottom-right-radius:5px;
-	-webkit-border-bottom-left-radius:5px;
-    border-radius:5px;
 }
 
 .block_contents2 {
@@ -30,10 +23,11 @@
 }
 
 .row3,.block_contents3 {
-    background:#F2F7FB;
+	background:#F2F7FB;
     border-color:#C4CED6;
     padding:8px 6px;
 	border-top:1px solid #CCCCCC;
+	border-bottom:1px solid #CCCCCC;
 	-moz-border-radius:0px 0px 5px 5px;
 	-khtml-border-bottom-right-radius:5px;
 	-khtml-border-bottom-left-radius:5px;
@@ -71,6 +65,10 @@
     z-index:100;
 }
 
+.calendar_block .row3{
+	border:none;	
+}
+
 /* Déplacement des fichiers*/
 .upload_selected_cat {
     background:#f5fbff;
@@ -80,28 +78,30 @@
 /* Lien du site
 --------------------------------------*/
 a {
-	color:#445766;
+	color:#2F5B8A;
     text-decoration:none;
-    font-size:11px;
+    font-size:12px;
     font-weight:bold;
-    font-family:Verdana, Arial, Helvetica, sans-serif;
 }
 
 a:hover {
-    color:#2F404D;
+    color:#718396;
     text-decoration:underline;
     font-weight:bold;
-    font-family:Verdana, Arial, Helvetica, sans-serif;
+}
+
+.img_link, .img_link:hover{
+	text-decoration:none;
 }
 
 
 /* Liens petite taille */
 a.small_link {
-    font-size:10px;
+    font-size:11px;
 }
 
 a.small_link:hover {
-    font-size:10px;
+    font-size:11px;
 }
 
 /* Liens grande taille */
@@ -160,13 +160,6 @@ a.membre {
     background:#F2F7FB;
     border:1px solid #C4CED6;
 	margin-right:2px;
-	-moz-border-radius-topleft:12px;
-    -khtml-border-radius-topleft:12px;
-    -webkit-border-top-left-radius:12px;
-    -moz-border-radius-bottomright:12px;
-    -khtml-border-radius-bottomright:12px;
-    -webkit-border-bottom-right-radius:12px;
-    border-radius:12px;
 }
 
 .dynamic_menu h5:hover {
@@ -176,7 +169,7 @@ a.membre {
 
 /* Séparateur */
 .dynamic_menu ul li.separator {
-    background:#849AAC;
+    background:#e8edf3;
 }
 
 .dynamic_menu ul li.extend {
@@ -185,7 +178,9 @@ a.membre {
 
 /* Case du menu */
 .dynamic_menu li ul {
-    border:1px solid #849AAC;
+    border:none;
+    border:1px solid #C4CED6;
+    border-bottom:1px solid #99B1CB;
 }
 
 .dynamic_menu li li {
@@ -199,5 +194,9 @@ a.membre {
 
 .dynamic_menu li li a:hover {
     background-color:#D2E3F1;
-    border:1px solid #8BBFE8;
+    
+}
+
+h3.menu_vertical_0{
+	margin-top:0px;
 }

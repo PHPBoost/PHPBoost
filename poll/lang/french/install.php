@@ -4,8 +4,8 @@
  *                              install.php
  *                            -------------------
  *   begin                : January 17, 2010
- *   copyright            : (C) 2010 Kévin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   copyright            : (C) 2010 Kevin MASSY
+ *   email                : kevin.massy@phpboost.com
  *
  *
  ###################################################
@@ -32,7 +32,7 @@
 
 $lang = array(
 
-	'poll_question' => 'PHPBoost 3.0',
+	'poll_question' => 'Comment trouvez-vous notre site ?',
 	'poll_answers' => 'Super site!|Pas mal|Plutôt moyen|Bof',
 	'poll_votes' => '|||'
 );

@@ -3,8 +3,8 @@
  *                      	 AdministratorAlertCache.class.php
  *                            -------------------
  *   begin                : August 10, 2010
- *   copyright            : (C) 2010 Kévin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   copyright            : (C) 2010 Kevin MASSY
+ *   email                : kevin.massy@phpboost.com
  *
  *
  ###################################################
@@ -26,7 +26,7 @@
  ###################################################*/
 
 /**
- * @author Kévin MASSY <soldier.weasel@gmail.com>
+ * @author Kevin MASSY <kevin.massy@phpboost.com>
  */
 class AdministratorAlertCache implements CacheData
 {
@@ -78,3 +78,4 @@ class AdministratorAlertCache implements CacheData
 		CacheManager::invalidate('kernel', 'administrator-alert');
 	}
 }
+?>

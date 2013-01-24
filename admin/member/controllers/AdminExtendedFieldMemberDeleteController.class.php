@@ -3,8 +3,8 @@
  *                       AdminExtendedFieldMemberDeleteController.class.php
  *                            -------------------
  *   begin                : December 17, 2010
- *   copyright            : (C) 2010 Kévin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   copyright            : (C) 2010 Kevin MASSY
+ *   email                : kevin.massy@phpboost.com
  *
  *
  ###################################################
@@ -27,7 +27,7 @@
 
 class AdminExtendedFieldMemberDeleteController extends AdminController
 {
-	public function execute(HTTPRequest $request)
+	public function execute(HTTPRequestCustom $request)
 	{
 		AppContext::get_session()->csrf_post_protect();
 		

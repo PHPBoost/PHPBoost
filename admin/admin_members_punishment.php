@@ -13,7 +13,7 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- *
+ * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -30,8 +30,9 @@ define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
 
 $template = new FileTemplate('admin/admin_members_punishment.tpl');
-
+	
 $template->put_all(array(
+	'SID' => SID,
 	'LANG' => get_ulang(),
 	'THEME' => get_utheme(),
 	'L_USERS_MANAGEMENT' => $LANG['members_management'],
@@ -44,7 +45,7 @@ $template->put_all(array(
 	'L_USERS_BAN' => $LANG['ban_management'],
 	'L_JOKER' => $LANG['joker']
 ));
-
+	
 $action = retrieve(GET, 'action', '');
 $id_get = retrieve(GET, 'id', 0);
 
@@ -59,7 +60,7 @@ if ($action == 'punish') //Gestion des utilisateurs
 	if (!empty($id_get) && !empty($_POST['valid_user'])) //On met à  jour le niveau d'avertissement
 	{
 		//Envoi d'un MP au membre pour lui signaler, si le membre en question n'est pas lui-même.
-		if ($id_get != $User->get_id())
+		if ($id_get != $User->get_attribute('user_id'))
 		{
 			if (!empty($readonly_contents))
 			{
@@ -70,17 +71,17 @@ if ($action == 'punish') //Gestion des utilisateurs
 		{
 			MemberSanctionManager::remove_write_permissions($id_get, $readonly, MemberSanctionManager::NO_SEND_CONFIRMATION, str_replace('%date', gmdate_format('date_format', $readonly), $readonly_contents));
 		}
-
+		
 		AppContext::get_response()->redirect('/admin/admin_members_punishment.php?action=punish');
 	}
-
+	
 	$template->put_all(array(
 		'L_LOGIN' => $LANG['pseudo'],
 		'L_INFO_MANAGEMENT' => $LANG['punishment_management'],
 		'U_XMLHTTPREQUEST' => 'punish_user',
 		'U_ACTION' => '.php?action=punish&amp;token=' . $Session->get_token()
 	));
-
+	
 	if (empty($id_get)) //On liste les membres qui ont déjà un avertissement
 	{
 		if (!empty($_POST['search_member']))
@@ -91,8 +92,8 @@ if ($action == 'punish') //Gestion des utilisateurs
 				AppContext::get_response()->redirect('/admin/admin_members_punishment.php?action=punish&id=' . $user_id);
 			else
 				AppContext::get_response()->redirect('/admin/admin_members_punishment.php?action=punish');
-		}
-
+		}	
+		
 		$template->put_all(array(
 			'C_USER_LIST' => true,
 			'L_PM' => $LANG['user_contact_pm'],
@@ -102,8 +103,8 @@ if ($action == 'punish') //Gestion des utilisateurs
 			'L_SEARCH_USER' => $LANG['search_member'],
 			'L_SEARCH' => $LANG['search'],
 			'L_REQUIRE_LOGIN' => $LANG['require_pseudo']
-		));
-
+		));	
+			
 		$i = 0;
 		$result = $Sql->query_while("SELECT user_id, login, user_readonly
 		FROM " . PREFIX . "member
@@ -118,38 +119,38 @@ if ($action == 'punish') //Gestion des utilisateurs
 				'U_ACTION_USER' => '<a href="admin_members_punishment.php?action=punish&amp;id=' . $row['user_id'] . '"><img src="'. PATH_TO_ROOT .'/templates/' . get_utheme() . '/images/readonly.png" alt="" /></a>',
 				'U_PM' => url('.php?pm='. $row['user_id'], '-' . $row['user_id'] . '.php'),
 			));
-
+			
 			$i++;
 		}
-
+		
 		if ($i === 0)
 		{
 			$template->put_all(array(
 				'C_NO_USER' => true,
-				'L_NO_USER' => $LANG['no_ban'],
+				'L_NO_USER' => $LANG['no_punish'],
 			));
 		}
 	}
 	else //On affiche les infos sur l'utilisateur
 	{
 		$member = $Sql->query_array(DB_TABLE_MEMBER, 'login', 'user_readonly', "WHERE user_id = '" . $id_get . "'", __LINE__, __FILE__);
-
+				
 		//On crée le formulaire select
 		$select = '';
 		//Durée de la sanction.
-		$array_time = array(0, 60, 300, 900, 1800, 3600, 7200, 86400, 172800, 604800, 1209600, 2419200, 4838400);
-		$array_sanction = array($LANG['no'], '1 ' . $LANG['minute'], '5 ' . $LANG['minutes'], '15 ' . $LANG['minutes'], '30 ' . $LANG['minutes'], '1 ' . $LANG['hour'], '2 ' . $LANG['hours'], '1 ' . $LANG['day'], '2 ' . $LANG['days'], '1 ' . $LANG['week'], '2 ' . $LANG['weeks'], '1 ' . $LANG['month'], '2 ' . $LANG['month']);
+		$array_time = array(0, 60, 300, 900, 1800, 3600, 7200, 86400, 172800, 604800, 1209600, 2419200, 4838400); 	
+		$array_sanction = array($LANG['no'], '1 ' . $LANG['minute'], '5 ' . $LANG['minutes'], '15 ' . $LANG['minutes'], '30 ' . $LANG['minutes'], '1 ' . $LANG['hour'], '2 ' . $LANG['hours'], '1 ' . $LANG['day'], '2 ' . $LANG['days'], '1 ' . $LANG['week'], '2 ' . $LANG['weeks'], '1 ' . $LANG['month'], '2 ' . $LANG['month']); 
 
-		$diff = ($member['user_readonly'] - time());
+		$diff = ($member['user_readonly'] - time());	
 		$key_sanction = 0;
 		if ($diff > 0)
 		{
-			//Retourne la sanction la plus proche correspondant au temp de bannissement.
+			//Retourne la sanction la plus proche correspondant au temp de bannissement. 
 			for ($i = 12; $i > 0; $i--)
-			{
+			{					
 				$avg = ceil(($array_time[$i] + $array_time[$i-1])/2);
-				if (($diff - $array_time[$i]) > $avg)
-				{
+				if (($diff - $array_time[$i]) > $avg) 
+				{	
 					$key_sanction = $i + 1;
 					break;
 				}
@@ -160,8 +161,8 @@ if ($action == 'punish') //Gestion des utilisateurs
 		{
 			$selected = ($key_sanction == $key) ? 'selected="selected"' : '' ;
 			$select .= '<option value="' . $time . '" ' . $selected . '>' . strtolower($array_sanction[$key]) . '</option>';
-		}
-
+		}	
+		
 		array_pop($array_sanction);
 		$template->put_all(array(
 			'C_USER_INFO' => true,
@@ -199,8 +200,8 @@ if ($action == 'punish') //Gestion des utilisateurs
 			'L_LOGIN' => $LANG['pseudo'],
 			'L_PM' => $LANG['user_contact_pm'],
 			'L_CHANGE_INFO' => $LANG['submit']
-		));
-	}
+		));		
+	}	
 }
 elseif ($action == 'warning') //Gestion des utilisateurs
 {
@@ -211,9 +212,9 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 		if ($new_warning_level < 100) //Ne peux pas mettre des avertissements supérieurs à 100.
 		{
 			//Envoi d'un MP au membre pour lui signaler, si le membre en question n'est pas lui-même.
-			if ($id_get != $User->get_id())
+			if ($id_get != $User->get_attribute('user_id'))
 			{
-				MemberSanctionManager::caution($id_get, $new_warning_level, MemberSanctionManager::SEND_MP, $warning_contents);
+				MemberSanctionManager::caution($id_get, $new_warning_level, MemberSanctionManager::SEND_MP, $warning_contents);				
 			}
 			else
 			{
@@ -223,14 +224,14 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 
 		AppContext::get_response()->redirect('/admin/admin_members_punishment.php?action=warning');
 	}
-
+	
 	$template->put_all(array(
 		'L_LOGIN' => $LANG['pseudo'],
 		'L_INFO_MANAGEMENT' => $LANG['warning_management'],
-		'U_XMLHTTPREQUEST' => 'warning_user',
+		'U_XMLHTTPREQUEST' => 'warning_user',		
 		'U_ACTION' => '.php?action=warning&amp;token=' . $Session->get_token()
 	));
-
+	
 	if (empty($id_get)) //On liste les membres qui ont déjà un avertissement
 	{
 		if (!empty($_POST['search_member']))
@@ -241,8 +242,8 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 				AppContext::get_response()->redirect('/admin/admin_members_punishment.php?action=warning&id=' . $user_id);
 			else
 				AppContext::get_response()->redirect('/admin/admin_members_punishment.php?action=warning');
-		}
-
+		}		
+		
 		$template->put_all(array(
 			'C_USER_LIST' => true,
 			'L_PM' => $LANG['user_contact_pm'],
@@ -253,7 +254,7 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 			'L_SEARCH' => $LANG['search'],
 			'L_REQUIRE_LOGIN' => $LANG['require_pseudo']
 		));
-
+		
 		$i = 0;
 		$result = $Sql->query_while("SELECT user_id, login, user_warning
 		FROM " . PREFIX . "member
@@ -268,15 +269,15 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 				'U_PROFILE' => UserUrlBuilder::profile($row['user_id'])->absolute(),
 				'U_PM' => url('.php?pm='. $row['user_id'], '-' . $row['user_id'] . '.php'),
 			));
-
+			
 			$i++;
 		}
-
+		
 		if ($i === 0)
 		{
 			$template->put_all(array(
 				'C_NO_USER' => true,
-				'L_NO_USER' => $LANG['no_ban'],
+				'L_NO_USER' => $LANG['no_user_warning'],
 			));
 		}
 	}
@@ -289,12 +290,12 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 		$j = 0;
 		for ($j = 0; $j <=10; $j++)
 		{
-			if (10 * $j == $member['user_warning'])
+			if (10 * $j == $member['user_warning']) 
 				$select .= '<option value="' . 10 * $j . '" selected="selected">' . 10 * $j . '%</option>';
 			else
 				$select .= '<option value="' . 10 * $j . '">' . 10 * $j . '%</option>';
 		}
-
+		
 		$template->put_all(array(
 			'C_USER_INFO' => true,
 			'KERNEL_EDITOR' => $editor->display(),
@@ -312,34 +313,34 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 			'L_INFO' => $LANG['user_warning_level'],
 			'L_PM' => $LANG['user_contact_pm'],
 			'L_CHANGE_INFO' => $LANG['change_user_warning']
-		));
-	}
+		));	
+	}	
 }
 elseif ($action == 'ban') //Gestion des utilisateurs
 {
 	$user_ban = retrieve(POST, 'user_ban', 0);
 	$user_ban = $user_ban > 0 ? (time() + $user_ban) : 0;
 	if (!empty($_POST['valid_user']) && !empty($id_get)) //On banni le membre
-	{
+	{	
 		$info_mbr = $Sql->query_array(DB_TABLE_MEMBER, 'user_id', 'level', 'user_warning', 'user_mail', "WHERE user_id = '" . $id_get . "'", __LINE__, __FILE__);
 
 		MemberSanctionManager::banish($id_get, $user_ban, MemberSanctionManager::SEND_MAIL);
 
 		if ($user_ban == 0 && $info_mbr['user_warning'] == 100)
 		{
-			MemberSanctionManager::remove_write_permissions($id_get, 90, MemberSanctionManager::NO_SEND_CONFIRMATION);
+			MemberSanctionManager::remove_write_permissions($id_get, 90, MemberSanctionManager::NO_SEND_CONFIRMATION);			
 		}
-
+		
 		AppContext::get_response()->redirect('/admin/admin_members_punishment.php?action=ban');
 	}
-
+	
 	$template->put_all(array(
 		'L_LOGIN' => $LANG['pseudo'],
 		'L_INFO_MANAGEMENT' => $LANG['ban_management'],
 		'U_XMLHTTPREQUEST' => 'ban_user',
 		'U_ACTION' => '.php?action=ban&amp;token=' . $Session->get_token()
 	));
-
+	
 	if (empty($id_get)) //On liste les membres qui ont déjà un avertissement
 	{
 		if (!empty($_POST['search_member']))
@@ -350,8 +351,8 @@ elseif ($action == 'ban') //Gestion des utilisateurs
 				AppContext::get_response()->redirect('/admin/admin_members_punishment.php?action=ban&id=' . $user_id);
 			else
 				AppContext::get_response()->redirect('/admin/admin_members_punishment.php?action=ban');
-		}
-
+		}	
+		
 		$template->put_all(array(
 			'C_USER_LIST' => true,
 			'L_PM' => $LANG['user_contact_pm'],
@@ -361,8 +362,8 @@ elseif ($action == 'ban') //Gestion des utilisateurs
 			'L_SEARCH_USER' => $LANG['search_member'],
 			'L_SEARCH' => $LANG['search'],
 			'L_REQUIRE_LOGIN' => $LANG['require_pseudo']
-		));
-
+		));	
+			
 		$i = 0;
 		$result = $Sql->query_while("SELECT user_id, login, user_ban, user_warning
 		FROM " . PREFIX . "member
@@ -377,10 +378,10 @@ elseif ($action == 'ban') //Gestion des utilisateurs
 				'U_ACTION_USER' => '<a href="admin_members_punishment.php?action=ban&amp;id=' . $row['user_id'] . '"><img src="'. PATH_TO_ROOT .'/templates/' . get_utheme() . '/images/admin/forbidden.png" alt="" /></a>',
 				'U_PM' => url('.php?pm='. $row['user_id'], '-' . $row['user_id'] . '.php'),
 			));
-
+			
 			$i++;
 		}
-
+		
 		if ($i === 0)
 		{
 			$template->put_all(array(
@@ -392,54 +393,53 @@ elseif ($action == 'ban') //Gestion des utilisateurs
 	else //On affiche les infos sur l'utilisateur
 	{
 		$mbr = $Sql->query_array(DB_TABLE_MEMBER, 'login', 'user_ban', 'user_warning', "WHERE user_id = '" . $id_get . "'", __LINE__, __FILE__);
-
+				
 		//Temps de bannissement.
 		$array_time = array(0, 60, 300, 900, 1800, 3600, 7200, 86400, 172800, 604800, 1209600, 2419200, 326592000);
-		$array_sanction = array($LANG['no'], '1 ' . $LANG['minute'], '5 ' . $LANG['minutes'], '15 ' . $LANG['minutes'], '30 ' . $LANG['minutes'], '1 ' . $LANG['hour'], '2 ' . $LANG['hours'], '1 ' . $LANG['day'], '2 ' . $LANG['days'], '1 ' . $LANG['week'], '2 ' . $LANG['weeks'], '1 ' . $LANG['month'], $LANG['illimited']);
-
-		$diff = ($mbr['user_ban'] - time());
+		$array_sanction = array($LANG['no'], '1 ' . $LANG['minute'], '5 ' . $LANG['minutes'], '15 ' . $LANG['minutes'], '30 ' . $LANG['minutes'], '1 ' . $LANG['hour'], '2 ' . $LANG['hours'], '1 ' . $LANG['day'], '2 ' . $LANG['days'], '1 ' . $LANG['week'], '2 ' . $LANG['weeks'], '1 ' . $LANG['month'], $LANG['illimited']); 
+		
+		$diff = ($mbr['user_ban'] - time());	
 		$key_sanction = 0;
 		if ($diff > 0)
 		{
-			//Retourne la sanction la plus proche correspondant au temp de bannissement.
+			//Retourne la sanction la plus proche correspondant au temp de bannissement. 
 			for ($i = 12; $i > 0; $i--)
-			{
+			{					
 				$avg = ceil(($array_time[$i] + $array_time[$i-1])/2);
-				if (($diff - $array_time[$i]) > $avg)
-				{
+				if (($diff - $array_time[$i]) > $avg)  
+				{	
 					$key_sanction = $i + 1;
 					break;
 				}
 			}
-		}
+		}	
 		if ($mbr['user_warning'] == 100)
 			$key_sanction = 12;
-
-		$ban_options = '';
+		
+		$ban_options = '';		
 		//Affichge des sanctions
 		foreach ($array_time as $key => $time)
 		{
 			$selected = ($key_sanction == $key) ? 'selected="selected"' : '' ;
 			$ban_options .= '<option value="' . $time . '" ' . $selected . '>' . $array_sanction[$key] . '</option>';
 		}
-
+		
 		$template->put_all(array(
 			'C_USER_BAN' => true,
 			'KERNEL_EDITOR' => $editor->display(),
 			'BAN_OPTIONS' => $ban_options,
-			'LOGIN' => '<a href="'. UserUrlBuilder::profile(id_get)->absolute() .'">' . $mbr['login'] . '</a>',
+			'LOGIN' => '<a href="'. UserUrlBuilder::profile($id_get)->absolute() .'">' . $mbr['login'] . '</a>',
 			'U_PM' => url('.php?pm='. $id_get, '-' . $id_get . '.php'),
 			'U_ACTION_INFO' => '.php?action=ban&amp;id=' . $id_get . '&amp;token=' . $Session->get_token(),
 			'L_PM' => $LANG['user_contact_pm'],
 			'L_LOGIN' => $LANG['pseudo'],
 			'L_BAN' => $LANG['ban_user'],
 			'L_DELAY_BAN' => $LANG['user_ban_delay'],
-		));
+		));	
 	}
 }
 
 $template->display();
-
+	
 require_once('../admin/admin_footer.php');
-
 ?>

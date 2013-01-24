@@ -51,7 +51,6 @@ class FaqSitemapExtensionPoint implements SitemapExtensionPoint
 		$faq_link = new SitemapLink($FAQ_LANG['faq'], new Url('/faq/faq.php'), Sitemap::FREQ_DEFAULT, Sitemap::PRIORITY_MAX);
 
 		$module_map = new ModuleMap($faq_link, 'faq');
-		$module_map->set_description($FAQ_CATS[0]['description']);
 
 		$id_cat = 0;
 		$keys = array_keys($FAQ_CATS);
@@ -63,11 +62,11 @@ class FaqSitemapExtensionPoint implements SitemapExtensionPoint
 			$properties = $FAQ_CATS[$id];
 			if ($auth_mode == Sitemap::AUTH_PUBLIC)
 			{
-				$this_auth = is_array($properties['auth']) ? Authorizations::check_auth(RANK_TYPE, GUEST_LEVEL, $properties['auth'], AUTH_READ) : Authorizations::check_auth(RANK_TYPE, GUEST_LEVEL, $faq_config->get_authorization(), AUTH_READ);
+				$this_auth = is_array($properties['auth']) ? Authorizations::check_auth(RANK_TYPE, User::VISITOR_LEVEL, $properties['auth'], AUTH_READ) : Authorizations::check_auth(RANK_TYPE, User::VISITOR_LEVEL, $faq_config->get_authorizations(), AUTH_READ);
 			}
 			else
 			{
-				$this_auth = is_array($properties['auth']) ? $User->check_auth($properties['auth'], AUTH_READ) : $User->check_auth($faq_config->get_authorization(), AUTH_READ);
+				$this_auth = is_array($properties['auth']) ? $User->check_auth($properties['auth'], AUTH_READ) : $User->check_auth($faq_config->get_authorizations(), AUTH_READ);
 			}
 			if ($this_auth && $id != 0 && $properties['visible'] && $properties['id_parent'] == $id_cat)
 			{
@@ -98,11 +97,11 @@ class FaqSitemapExtensionPoint implements SitemapExtensionPoint
 			$properties = $FAQ_CATS[$id];
 			if ($auth_mode == Sitemap::AUTH_PUBLIC)
 			{
-				$this_auth = is_array($properties['auth']) ? Authorizations::check_auth(RANK_TYPE, GUEST_LEVEL, $properties['auth'], AUTH_READ) : Authorizations::check_auth(RANK_TYPE, GUEST_LEVEL, $faq_config->get_authorization(), AUTH_READ);
+				$this_auth = is_array($properties['auth']) ? Authorizations::check_auth(RANK_TYPE, User::VISITOR_LEVEL, $properties['auth'], AUTH_READ) : Authorizations::check_auth(RANK_TYPE, User::VISITOR_LEVEL, $faq_config->get_authorizations(), AUTH_READ);
 			}
 			else
 			{
-				$this_auth = is_array($properties['auth']) ? $User->check_auth($properties['auth'], AUTH_READ) : $User->check_auth($faq_config->get_authorization(), AUTH_READ);
+				$this_auth = is_array($properties['auth']) ? $User->check_auth($properties['auth'], AUTH_READ) : $User->check_auth($faq_config->get_authorizations(), AUTH_READ);
 			}
 			if ($this_auth && $id != 0 && $properties['visible'] && $properties['id_parent'] == $id_cat)
 			{

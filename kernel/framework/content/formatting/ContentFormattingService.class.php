@@ -27,7 +27,7 @@
 
 /**
  * @package {@package}
- * @author Beno�t Sautel <ben.popeye@phpboost.com>
+ * @author Benoit Sautel <ben.popeye@phpboost.com>
  * @desc This class contains the default content formatting factory that must be used if you want
  * a formatting factory having the default settings.
  */
@@ -39,7 +39,7 @@ class ContentFormattingService
 	private $default_factory;
 
 	/**
-	 * @desc Returns the content formatting factory corresponding to the default configuration
+	 * @desc Returns the content formatting factory corresponding to the default configuration 
 	 * @return ContentFormattingFactory
 	 */
 	public function get_default_factory()
@@ -123,7 +123,7 @@ class ContentFormattingService
             return ContentFormattingConfig::load()->get_default_editor();
         }
     }
-
+    
     public function get_editors_identifier()
     {
     	return array_keys(ContentFormattingProvidersService::get_editors());
@@ -146,7 +146,7 @@ class ContentFormattingService
      */
     public function get_available_tags()
     {
-        $bbcode_lang = LangLoader::get('bbcode-common');
+        $bbcode_lang = LangLoader::get('editor-common');
         return array(
         	'b' => $bbcode_lang['format_bold'],
         	'i' => $bbcode_lang['format_italic'],
@@ -183,7 +183,9 @@ class ContentFormattingService
         	'line' => $bbcode_lang['format_line'],
         	'wikipedia' => $bbcode_lang['format_wikipedia'],
         	'html' => $bbcode_lang['format_html'],
-        	'feed' => $bbcode_lang['format_feed']
+        	'feed' => $bbcode_lang['format_feed'],
+        	'youtube' => $bbcode_lang['format_youtube'],
+        	'lightbox' => $bbcode_lang['format_lightbox']
         );
     }
 }

@@ -67,5 +67,4 @@ class MySQLQueryTranslator implements SQLQueryTranslator
 		return 'CONCAT(' . implode(',', $parameters) .')';
 	}
 }
-
 ?>

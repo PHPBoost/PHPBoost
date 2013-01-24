@@ -33,22 +33,27 @@
 class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironment
 {
 	/**
-	 * @var bool
-	 */
-	private $display_left_menus = true;
-	/**
-	 * @var bool
-	 */
-	private $display_right_menus = true;
-	/**
 	 * @var BreadCrumb The page breadcrumb
 	 */
 	private $breadcrumb = null;
-
+	/**
+	 * @var ColumnsDisabled
+	 */
+	private $columns_disabled = null;
+	
+	private static $main_lang;
+	
 	public function __construct()
 	{
 		parent::__construct();
+		$this->load_langs();
 		$this->set_breadcrumb(new BreadCrumb());
+		$this->set_columns_disabled(ThemeManager::get_theme(get_utheme())->get_columns_disabled());
+	}
+	
+	private function load_langs()
+	{
+		self::$main_lang = LangLoader::get('main');
 	}
 
 	/**
@@ -59,8 +64,6 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 		self::set_page_localization($this->get_page_title());
 
 		$template = new FileTemplate('header.tpl');
-
-		$general_config = GeneralConfig::load();
 		
 		$theme = ThemeManager::get_theme(get_utheme());
 		$customize_interface = $theme->get_customize_interface();
@@ -69,8 +72,8 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 		$customization_config = CustomizationConfig::load();
 		
 		$template->put_all(array(
-			'C_BBCODE_TINYMCE_MODE' => AppContext::get_current_user()->get_editor() == 'tinymce',
-			'SITE_NAME' => $general_config->get_site_name(),
+			'C_CSS_CACHE_ENABLED' => CSSCacheConfig::load()->is_enabled(),
+			'SITE_NAME' => GeneralConfig::load()->get_site_name(),
 			'MAINTAIN' => $this->display_site_maintenance(),
 			'C_COMPTEUR' => false,
 			'C_FAVICON' => $customization_config->favicon_exists(),
@@ -79,13 +82,10 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 			'C_HEADER_LOGO' => !empty($header_logo_path),
 			'HEADER_LOGO' => Url::to_rel($header_logo_path),
 			'TITLE' => $this->get_page_title(),
-			'SITE_DESCRIPTION' => $general_config->get_site_description(),
-			'SITE_KEYWORD' => $general_config->get_site_keywords(),
-			'THEME_CSS' => $this->get_theme_css_files_html_code(),
+			'SITE_DESCRIPTION' => $this->get_seo_meta_data()->get_description(),
+			'SITE_KEYWORD' => $this->get_seo_meta_data()->get_keywords(),
 			'MODULES_CSS' => $this->get_modules_css_files_html_code(),
-			'L_XML_LANGUAGE' => LangLoader::get_message('xml_lang', 'main'),
-			'L_VISIT' => LangLoader::get_message('guest_s', 'main'),
-			'L_TODAY' => LangLoader::get_message('today', 'main'),
+			'L_XML_LANGUAGE' => self::$main_lang['xml_lang'],
 		));
 
 		$this->display_counter($template);
@@ -110,6 +110,8 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 			$compteur_day = !empty($compteur['total']) ? $compteur['total'] : '1';
 
 			$template->put_all(array(
+				'L_VISIT' => self::$main_lang['guest_s'],
+				'L_TODAY' => self::$main_lang['today'],
 				'C_COMPTEUR' => true,
 				'COMPTEUR_TOTAL' => $compteur_total,
 				'COMPTEUR_DAY' => $compteur_day
@@ -119,16 +121,15 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 
 	protected function display_menus(Template $template)
 	{
-		global $MENUS;
+		global $MENUS, $Cache;
 
-		if (!include_file(PATH_TO_ROOT . '/cache/menus.php'))
+		if (!@include_once(PATH_TO_ROOT . '/cache/menus.php'))
 		{
-			global $Cache;
 			//En cas d'échec, on régénère le cache
 			$Cache->Generate_file('menus');
 
 			//On inclut une nouvelle fois
-			if (!include_once(PATH_TO_ROOT . '/cache/menus.php'))
+			if (!@include_once(PATH_TO_ROOT . '/cache/menus.php'))
 			{
 				$controller = new UserErrorController(LangLoader::get_message('error', 'errors'),
                     $LANG['e_cache_modules'], UserErrorController::FATAL);
@@ -136,24 +137,31 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 			}
 		}
 
-		$columns_disabled = ThemeManager::get_theme(get_utheme())->get_columns_disabled();
+		$columns_disabled = $this->get_columns_disabled();
 		
 		$enable_header_is_activated = !$columns_disabled->header_is_disabled() && !empty($MENUS[Menu::BLOCK_POSITION__HEADER]);
 		$enable_sub_header_is_activated = !$columns_disabled->sub_header_is_disabled() && !empty($MENUS[Menu::BLOCK_POSITION__SUB_HEADER]);
-		$enable_left_column_is_activated = !$columns_disabled->left_columns_is_disabled() && $this->are_left_menus_enabled() && !empty($MENUS[Menu::BLOCK_POSITION__LEFT]);
-		$enable_right_column_is_activated = !$columns_disabled->right_columns_is_disabled() && $this->are_right_menus_enabled() && !empty($MENUS[Menu::BLOCK_POSITION__RIGHT]);
+		$enable_left_column_is_activated = !$columns_disabled->left_columns_is_disabled() && !empty($MENUS[Menu::BLOCK_POSITION__LEFT]);
+		$enable_right_column_is_activated = !$columns_disabled->right_columns_is_disabled() && !empty($MENUS[Menu::BLOCK_POSITION__RIGHT]);
 		$enable_top_central_is_activated = !$columns_disabled->top_central_is_disabled() && !empty($MENUS[Menu::BLOCK_POSITION__TOP_CENTRAL]);
+		
+		$header_content = $enable_header_is_activated ? $MENUS[Menu::BLOCK_POSITION__HEADER] : '';
+		$sub_header_content = $enable_sub_header_is_activated ? $MENUS[Menu::BLOCK_POSITION__SUB_HEADER] : '';
+		$left_content = $enable_left_column_is_activated ? $MENUS[Menu::BLOCK_POSITION__LEFT] : '';
+		$right_content = $enable_right_column_is_activated ? $MENUS[Menu::BLOCK_POSITION__RIGHT] : '';
+		$top_central_content = $enable_top_central_is_activated ? $MENUS[Menu::BLOCK_POSITION__TOP_CENTRAL] : '';
+		
 		$template->put_all(array(
 			'C_MENUS_HEADER_CONTENT' => $enable_header_is_activated,
-		    'MENUS_HEADER_CONTENT' => $MENUS[Menu::BLOCK_POSITION__HEADER],
+		    'MENUS_HEADER_CONTENT' => $header_content,
 			'C_MENUS_SUB_HEADER_CONTENT' => $enable_sub_header_is_activated,
-			'MENUS_SUB_HEADER_CONTENT' => $MENUS[Menu::BLOCK_POSITION__SUB_HEADER],
+			'MENUS_SUB_HEADER_CONTENT' => $sub_header_content,
 			'C_MENUS_LEFT_CONTENT' => $enable_left_column_is_activated,
-			'MENUS_LEFT_CONTENT' => $MENUS[Menu::BLOCK_POSITION__LEFT],
+			'MENUS_LEFT_CONTENT' => $left_content,
 			'C_MENUS_RIGHT_CONTENT' => $enable_right_column_is_activated,
-			'MENUS_RIGHT_CONTENT' => $MENUS[Menu::BLOCK_POSITION__RIGHT],
+			'MENUS_RIGHT_CONTENT' => $right_content,
 			'C_MENUS_TOPCENTRAL_CONTENT' => $enable_top_central_is_activated,
-			'MENUS_TOPCENTRAL_CONTENT' => $MENUS[Menu::BLOCK_POSITION__TOP_CENTRAL]
+			'MENUS_TOPCENTRAL_CONTENT' => $top_central_content
 		));
 	}
 
@@ -226,45 +234,15 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 				'DELAY' => isset($array_delay[$key_delay]) ? $array_delay[$key_delay] : '0',
 				'MAINTAIN_RELEASE_FORMAT' => implode(',', $array_release),
 				'MAINTAIN_NOW_FORMAT' => implode(',', $array_now),
-				'L_MAINTAIN_DELAY' => LangLoader::get_message('maintain_delay', 'main'),
-				'L_LOADING' => LangLoader::get_message('loading', 'main'),
-				'L_DAYS' => LangLoader::get_message('days', 'main'),
-				'L_HOURS' => LangLoader::get_message('hours', 'main'),
-				'L_MIN' => LangLoader::get_message('minutes', 'main'),
-				'L_SEC' => LangLoader::get_message('seconds', 'main'),
+				'L_MAINTAIN_DELAY' => self::$main_lang['maintain_delay'],
+				'L_LOADING' => self::$main_lang['loading'],
+				'L_DAYS' => self::$main_lang['days'],
+				'L_HOURS' => self::$main_lang['hours'],
+				'L_MIN' => self::$main_lang['minutes'],
+				'L_SEC' => self::$main_lang['seconds'],
 			));
 		}
 		return $template;
-	}
-
-	public function enable_left_menus()
-	{
-		$this->display_left_menus = true;
-	}
-
-	public function disable_left_menus()
-	{
-		$this->display_left_menus = false;
-	}
-
-	public function enable_right_menus()
-	{
-		$this->display_right_menus = true;
-	}
-
-	public function disable_right_menus()
-	{
-		$this->display_right_menus = false;
-	}
-
-	public function are_left_menus_enabled()
-	{
-		return $this->display_left_menus;
-	}
-
-	public function are_right_menus_enabled()
-	{
-		return $this->display_right_menus;
 	}
 
 	/**
@@ -276,26 +254,30 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 		$template = new FileTemplate('footer.tpl');
 
 		$theme_configuration = ThemeManager::get_theme(get_utheme())->get_configuration();
-		$columns_disabled = ThemeManager::get_theme(get_utheme())->get_columns_disabled();
+		$columns_disabled = $this->get_columns_disabled();
 		
 		$bottom_top_central_is_activated = !$columns_disabled->bottom_central_is_disabled() && !empty($MENUS[Menu::BLOCK_POSITION__BOTTOM_CENTRAL]);
 		$top_footer_is_activated = !$columns_disabled->top_footer_is_disabled() && !empty($MENUS[Menu::BLOCK_POSITION__TOP_FOOTER]);
 		$footer_is_activated = !$columns_disabled->footer_is_disabled() && !empty($MENUS[Menu::BLOCK_POSITION__FOOTER]);
 	
+		$bottom_top_central_content = $bottom_top_central_is_activated ? $MENUS[Menu::BLOCK_POSITION__BOTTOM_CENTRAL] : '';
+		$top_footer_content = $top_footer_is_activated ? $MENUS[Menu::BLOCK_POSITION__TOP_FOOTER] : '';
+		$footer_content = $footer_is_activated ? $MENUS[Menu::BLOCK_POSITION__FOOTER] : '';
+		
 		$template->put_all(array(
 			'THEME' => get_utheme(),
 			'C_MENUS_BOTTOM_CENTRAL_CONTENT' => $bottom_top_central_is_activated,
-			'MENUS_BOTTOMCENTRAL_CONTENT' => $MENUS[Menu::BLOCK_POSITION__BOTTOM_CENTRAL],
+			'MENUS_BOTTOMCENTRAL_CONTENT' => $bottom_top_central_content,
 			'C_MENUS_TOP_FOOTER_CONTENT' => $top_footer_is_activated,
-			'MENUS_TOP_FOOTER_CONTENT' => $MENUS[Menu::BLOCK_POSITION__TOP_FOOTER],
+			'MENUS_TOP_FOOTER_CONTENT' => $top_footer_content,
 			'C_MENUS_FOOTER_CONTENT' => $footer_is_activated,
-			'MENUS_FOOTER_CONTENT' => $MENUS[Menu::BLOCK_POSITION__FOOTER],
+			'MENUS_FOOTER_CONTENT' => $footer_content,
 			'C_DISPLAY_AUTHOR_THEME' => GraphicalEnvironmentConfig::load()->get_display_theme_author(),
-			'L_POWERED_BY' => LangLoader::get_message('powered_by', 'main'),
-			'L_PHPBOOST_RIGHT' => LangLoader::get_message('phpboost_right', 'main'),
-			'L_THEME' => LangLoader::get_message('theme', 'main'),
+			'L_POWERED_BY' => self::$main_lang['powered_by'],
+			'L_PHPBOOST_RIGHT' => self::$main_lang['phpboost_right'],
+			'L_THEME' => self::$main_lang['theme'],
 			'L_THEME_NAME' => $theme_configuration->get_name(),
-			'L_BY' => strtolower(LangLoader::get_message('by', 'main')),
+			'L_BY' => strtolower(self::$main_lang['by']),
 			'L_THEME_AUTHOR' => $theme_configuration->get_author_name(),
 			'U_THEME_AUTHOR_LINK' => $theme_configuration->get_author_link(),
 		    'PHPBOOST_VERSION' => GeneralConfig::load()->get_phpboost_major_version()
@@ -311,11 +293,13 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 				'BENCH' => AppContext::get_bench()->to_string(),
 				'REQ' => PersistenceContext::get_querier()->get_executed_requests_count() +
 			PersistenceContext::get_sql()->get_executed_requests_number(),
-				'L_REQ' => LangLoader::get_message('sql_req', 'main'),
-				'L_ACHIEVED' => LangLoader::get_message('achieved', 'main'),
-				'L_UNIT_SECOND' => LangLoader::get_message('unit_seconds_short', 'main')
+				'L_REQ' => self::$main_lang['sql_req'],
+				'L_ACHIEVED' => self::$main_lang['achieved'],
+				'L_UNIT_SECOND' => self::$main_lang['unit_seconds_short']
 			));
 		}
+		
+		$this->display_counter($template);
 
 		$template->display();
 	}
@@ -338,6 +322,15 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 		$this->breadcrumb = $breadcrumb;
 		$this->breadcrumb->set_graphical_environment($this);
 	}
+	
+	public function get_columns_disabled()
+	{
+		return $this->columns_disabled;
+	}
+	
+	public function set_columns_disabled($columns_disabled)
+	{
+		$this->columns_disabled = $columns_disabled;
+	}
 }
-
 ?>

@@ -27,6 +27,10 @@
  *###################################################
  */
 
+/**
+ * @author Loic Rouchon <loic.rouchon@phpboost.com>
+ * @package {@package}
+ */
 interface ModuleSetup
 {
 	/**
@@ -42,6 +46,7 @@ interface ModuleSetup
 
 	/**
 	 * @desc Uninstall the module
+	 * @return string error if module uninstall failled
 	 */
 	function uninstall();
 	

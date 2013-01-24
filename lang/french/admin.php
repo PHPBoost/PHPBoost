@@ -32,7 +32,7 @@
 
 $LANG['xml_lang'] = 'fr';
 $LANG['administration'] = 'Administration';
-$LANG['no_administration'] = 'Aucune administration associée avec ce module!';
+$LANG['no_administration'] = 'Aucune administration n\'est associée à ce module !';
 
 $LANG['extend_menu'] = 'Menu étendu';
 $LANG['phpinfo'] = 'PHP info';
@@ -44,56 +44,56 @@ $LANG['default_theme'] = 'Thème (par défaut) du site';
 $LANG['default_language'] = 'Langue (par défaut) du site';
 $LANG['start_page'] = 'Page de démarrage du site';
 $LANG['cookie_name'] = 'Nom du cookie des sessions';
-$LANG['session_time'] = 'Durée de la session';
-$LANG['session invit'] = 'Durée utilisateurs actifs';
+$LANG['session_time'] = 'Durée de la session (en secondes)';
+$LANG['session invit'] = 'Durée utilisateurs actifs (en secondes)';
 
 //Form
 $LANG['add'] = 'Ajouter';
 
 //Alertes formulaires
-$LANG['alert_same_pass'] = 'Les mots de passe ne sont pas identiques!';
+$LANG['alert_same_pass'] = 'Les mots de passe ne sont pas identiques !';
 $LANG['alert_max_dim'] = 'Le fichier dépasse les largeurs et hauteurs maximales spécifiées !';
-$LANG['alert_error_avatar'] = 'Erreur d\'enregistrement de l\'avatar!';
-$LANG['alert_error_img'] = 'Erreur d\'enregistrement de l\'image!';
-$LANG['alert_invalid_file'] = 'Le fichier image n\'est pas valide (jpg, gif, png!)';
+$LANG['alert_error_avatar'] = 'Erreur d\'enregistrement de l\'avatar !';
+$LANG['alert_error_img'] = 'Erreur d\'enregistrement de l\'image !';
+$LANG['alert_invalid_file'] = 'Le fichier image n\'est pas valide (jpg, gif ou png) !';
 $LANG['alert_max_weight'] = 'Image trop lourde';
-$LANG['alert_s_already_use'] = 'Code du smiley déjà utilisé!';
+$LANG['alert_s_already_use'] = 'Code du smiley déjà utilisé !';
 $LANG['alert_no_cat'] = 'Aucun nom/catégorie saisi';
-$LANG['alert_fct_unlink'] = 'Suppression des miniatures impossible. Vous devez supprimer manuellement sur le ftp!';
-$LANG['alert_no_login'] = 'Le pseudo entré n\'existe pas!';
+$LANG['alert_fct_unlink'] = 'Suppression des miniatures impossible. Vous devez les supprimer manuellement sur le ftp !';
+$LANG['alert_no_login'] = 'Le pseudo entré n\'existe pas !';
 
 //Requis
-$LANG['require'] = 'Les Champs marqués * sont obligatoires!';
+$LANG['require'] = 'Les Champs marqués * sont obligatoires !';
 $LANG['require_title'] = 'Veuillez entrer un titre !';
-$LANG['require_text'] = 'Veuillez entrer un texte!';
-$LANG['require_password'] = 'Veuillez entrer un mot de passe!';
-$LANG['require_cat'] = 'Veuillez entrer une catégorie!';
+$LANG['require_text'] = 'Veuillez entrer un texte !';
+$LANG['require_password'] = 'Veuillez entrer un mot de passe !';
+$LANG['require_cat'] = 'Veuillez entrer une catégorie !';
 $LANG['require_cat_create'] = 'Aucune catégorie trouvée, veuillez d\'abord en créer une';
-$LANG['require_serv'] = 'Veuillez entrer un nom pour le serveur!';
-$LANG['require_name'] = 'Veuillez entrer un nom!';
-$LANG['require_cookie_name'] = 'Veuillez entrer un nom de cookie!';
-$LANG['require_session_time'] = 'Veuillez entrer une durée pour la session!';
-$LANG['require_session_invit'] = 'Veuillez entrer une durée pour la session invité!';
-$LANG['require_pass'] = 'Veuillez entrer un mot de passe!';
-$LANG['require_rank'] = 'Veuillez entrer un rang!';
-$LANG['require_code'] = 'Veuillez entrer un code pour le smiley!';
-$LANG['require_max_width'] = 'Veuillez entrer une largeur maximale pour les avatars!';
-$LANG['require_height'] = 'Veuillez entrer une hauteur maximale pour les avatars!';
-$LANG['require_weight'] = 'Veuillez entrer un poids maximum pour les avatars!';
-$LANG['require_rank_name'] = 'Veuillez entrer un nom pour le rang!';
-$LANG['require_nbr_msg_rank'] = 'Veuillez entrer un nombre de messages pour le rang!';
-$LANG['require_subcat'] = 'Veuillez sélectionner une sous-catégorie!';
-$LANG['require_file_name'] = 'Vous devez saisir un nom de fichier';
+$LANG['require_serv'] = 'Veuillez entrer un nom pour le serveur !';
+$LANG['require_name'] = 'Veuillez entrer un nom !';
+$LANG['require_cookie_name'] = 'Veuillez entrer un nom de cookie !';
+$LANG['require_session_time'] = 'Veuillez entrer une durée pour la session !';
+$LANG['require_session_invit'] = 'Veuillez entrer une durée pour la session invité !';
+$LANG['require_pass'] = 'Veuillez entrer un mot de passe !';
+$LANG['require_rank'] = 'Veuillez entrer un rang !';
+$LANG['require_code'] = 'Veuillez entrer un code pour le smiley !';
+$LANG['require_max_width'] = 'Veuillez entrer une largeur maximale pour les avatars !';
+$LANG['require_height'] = 'Veuillez entrer une hauteur maximale pour les avatars !';
+$LANG['require_weight'] = 'Veuillez entrer un poids maximum pour les avatars !';
+$LANG['require_rank_name'] = 'Veuillez entrer un nom pour le rang !';
+$LANG['require_nbr_msg_rank'] = 'Veuillez entrer un nombre de messages pour le rang !';
+$LANG['require_subcat'] = 'Veuillez sélectionner une sous-catégorie !';
+$LANG['require_file_name'] = 'Vous devez saisir un nom de fichier !';
 
 //Confirmations.
 $LANG['redirect'] = 'Redirection en cours...';
-$LANG['del_entry'] = 'Supprimer l\'entrée?';
-$LANG['confirm_del_member'] = 'Supprimer le membre? (définitif !)';
-$LANG['confirm_del_admin'] = 'Supprimer un admin? (irréversible !)';
-$LANG['confirm_theme'] = 'Supprimer le thème?';
-$LANG['confirm_del_smiley'] = 'Supprimer le smiley?';
+$LANG['del_entry'] = 'Supprimer l\'entrée ?';
+$LANG['confirm_del_member'] = 'Supprimer le membre ? (définitif)';
+$LANG['confirm_del_admin'] = 'Supprimer l\'admin ? (irréversible)';
+$LANG['confirm_theme'] = 'Supprimer le thème ?';
+$LANG['confirm_del_smiley'] = 'Supprimer le smiley ?';
 $LANG['confirm_del_cat'] = 'Supprimer cette catégorie ?';
-$LANG['confirm_del_article'] = 'Supprimer cet article?';
+$LANG['confirm_del_article'] = 'Supprimer cet article ?';
 $LANG['confirm_del_rank'] = 'Supprimer ce rang ?';
 $LANG['confirm_del_group'] = 'Supprimer ce groupe ?';
 $LANG['confirm_del_member_group'] = 'Supprimer ce membre du groupe ?';
@@ -184,7 +184,7 @@ $LANG['captcha_difficulty'] = 'Difficulté du code de vérification';
 
 //Connexion
 $LANG['unlock_admin_panel'] = 'Déverrouillage de l\'administration';
-$LANG['flood_block'] = 'Il vous reste %d essai(s) après cela il vous faudra attendre 5 minutes pour obtenir 2 nouveaux essais (10min pour 5)!';
+$LANG['flood_block'] = 'Il vous reste %d essai(s). Après cela il vous faudra attendre 5 minutes pour obtenir 2 nouveaux essais (10min pour 5) !';
 $LANG['flood_max'] = 'Vous avez épuisé tous vos essais de connexion, votre compte est verrouillé pendant 5 minutes';
 
 //Rang
@@ -207,11 +207,11 @@ $LANG['admin'] = 'Administrateur';
 
 //Index
 $LANG['update_available'] = 'Mises à jour disponibles';
-$LANG['core_update_available'] = 'Nouvelle version <strong>%s</strong> du noyau disponible, pensez à mettre à jour PHPBoost! <a href="http://www.phpboost.com">Plus d\'informations</a>';
-$LANG['no_core_update_available'] = 'Aucune nouvelle version disponible, le système est à jour!';
-$LANG['module_update_available'] = 'Des mises à jour des modules sont disponibles!';
-$LANG['no_module_update_available'] = 'Aucune mise à jour des modules, vous êtes à jour!';
-$LANG['unknow_update'] = 'Impossible de déterminer si une mise à jour est disponible!';
+$LANG['core_update_available'] = 'Nouvelle version <strong>%s</strong> du noyau disponible, pensez à mettre à jour PHPBoost ! <a href="http://www.phpboost.com">Plus d\'informations</a>';
+$LANG['no_core_update_available'] = 'Aucune nouvelle version disponible, le système est à jour !';
+$LANG['module_update_available'] = 'Des mises à jour des modules sont disponibles !';
+$LANG['no_module_update_available'] = 'Aucune mise à jour des modules, vous êtes à jour !';
+$LANG['unknow_update'] = 'Impossible de déterminer si une mise à jour est disponible !';
 $LANG['user_online'] = 'Utilisateur(s) en ligne';
 $LANG['last_update'] = 'Dernière mise à jour';
 $LANG['quick_links'] = 'Liens rapides';
@@ -261,7 +261,7 @@ $LANG['kernel_version'] = 'Version du noyau';
 $LANG['output_gz'] = 'Compression des pages';
 $LANG['directories_auth'] = 'Autorisation des répertoires';
 $LANG['system_report_summerization'] = 'Récapitulatif';
-$LANG['system_report_summerization_explain'] = 'Ceci est le récapitulatif du rapport. Cela vous sera particulièrement utile lorsque pour du support on vous demandera la configuration de votre système';
+$LANG['system_report_summerization_explain'] = 'Ceci est le récapitulatif du rapport. Cela vous sera particulièrement utile lorsqu\'on vous demandera la configuration de votre système pour du support';
 
 //Gestion de l'upload
 $LANG['explain_upload_img'] = 'L\'image uploadée doit être au format jpg, gif, png ou bmp';
@@ -291,8 +291,8 @@ $LANG['anti_flood_explain'] = 'Empêche les messages trop rapprochés, sauf si les
 $LANG['int_flood_explain'] = '7 secondes par défaut';
 
 //Gestion des menus
-$LANG['confirm_del_menu'] = 'Supprimer ce menu?';
-$LANG['confirm_delete_element'] = 'Voulez vous vraiment supprimer cet élément?';
+$LANG['confirm_del_menu'] = 'Supprimer ce menu ?';
+$LANG['confirm_delete_element'] = 'Voulez vous vraiment supprimer cet élément ?';
 $LANG['menus_management'] = 'Gestion des menus';
 $LANG['menus_content_add'] = 'Menu de contenu';
 $LANG['menus_links_add'] = 'Menu de liens';
@@ -361,7 +361,7 @@ $LANG['e_smiley_already_exist'] = 'Le smiley existe déjà';
 //Thèmes
 $LANG['upload_theme'] = 'Uploader un thème';
 $LANG['theme_on_serv'] = 'Thèmes disponibles sur le serveur';
-$LANG['no_theme_on_serv'] = 'Aucun thème <strong>compatible</strong> disponible sur le serveur';
+$LANG['no_theme_on_serv'] = 'Aucun thème <strong>compatible</strong> n\'est disponible sur le serveur';
 $LANG['theme_management'] = 'Gestion des thèmes';
 $LANG['theme_add'] = 'Ajouter un thème';
 $LANG['theme'] = 'Thème';
@@ -373,7 +373,7 @@ $LANG['width'] = 'Largeur';
 $LANG['exensible'] = 'Extensible';
 $LANG['del_theme'] = 'Suppression du thème';
 $LANG['del_theme_files'] = 'Supprimer tous les fichiers du thème';
-$LANG['explain_default_theme'] = 'Le thème par défaut ne peut pas être désinstallé, désactivé, ou réservé';
+$LANG['explain_default_theme'] = 'Le thème par défaut ne peut pas être désinstallé, désactivé ou réservé';
 $LANG['activ_left_column'] = 'Activer la colonne de gauche';
 $LANG['activ_right_column'] = 'Activer la colonne de droite';
 $LANG['manage_theme_columns'] = 'Gérer les colonnes du thème';
@@ -410,54 +410,11 @@ $LANG['days'] = 'jours';
 $LANG['week'] = 'semaine';
 $LANG['month'] = 'mois';
 $LANG['life'] = 'A vie';
-$LANG['confirm_password'] = 'Confirmer le mot de passe';
-$LANG['confirm_password_explain'] = 'Remplir seulement en cas de modification';
-$LANG['hide_mail'] = 'Cacher l\'email';
-$LANG['hide_mail_explain'] = 'Aux autres utilisateurs';
-$LANG['website_explain'] = 'Valide sinon non pris en compte';
-$LANG['member_sign'] = 'Signature';
-$LANG['member_sign_explain'] = 'Apparaît sous chacun de vos messages';
-$LANG['avatar_management'] = 'Gestion avatar';
-$LANG['activ_up_avatar'] = 'Autoriser l\'upload d\'avatar sur le serveur';
-$LANG['enable_auto_resizing_avatar'] = 'Activer le redimensionnement automatique des images';
-$LANG['enable_auto_resizing_avatar_explain'] = 'Attention votre serveur doit avoir l\'extension GD chargée';
-$LANG['current_avatar'] = 'Avatar actuel';
-$LANG['upload_avatar'] = 'Uploader avatar';
-$LANG['upload_avatar_where'] = 'Avatar directement hébergé sur le serveur';
-$LANG['avatar_link'] = 'Lien avatar';
-$LANG['avatar_link_where'] = 'Adresse directe de l\'avatar';
-$LANG['avatar_del'] = 'Supprimer l\'avatar courant';
-$LANG['no_avatar'] = 'Aucun avatar';
-$LANG['weight_max'] = 'Poids maximum';
-$LANG['height_max'] = 'Hauteur maximale';
-$LANG['width_max'] = 'Largeur maximale';
-$LANG['sex'] = 'Sexe';
-$LANG['male'] = 'Homme';
-$LANG['female'] = 'Femme';
-$LANG['verif_code'] = 'Code de vérification visuel';
-$LANG['verif_code_explain'] = 'Bloque les robots';
-$LANG['delay_activ_max'] = 'Durée après laquelle les membres non activés sont effacés';
-$LANG['delay_activ_max_explain'] = 'Laisser vide pour ignorer cette option (Non pris en compte si validation par administrateur)';
-$LANG['activ_mbr'] = 'Mode d\'activation du compte membre';
-$LANG['no_activ_mbr'] = 'Automatique';
-$LANG['allow_theme_mbr'] = 'Permission aux membres de choisir leur thème';
-$LANG['width_max_avatar'] = 'Largeur maximale de l\'avatar';
-$LANG['width_max_avatar_explain'] = 'Par défaut 120';
-$LANG['height_max_avatar'] = 'Hauteur maximale de l\'avatar';
-$LANG['height_max_avatar_explain'] = 'Par défaut 120';
-$LANG['weight_max_avatar'] = 'Poids maximal de l\'avatar en ko';
-$LANG['weight_max_avatar_explain'] = 'Par défaut 20';
-$LANG['avatar_management'] = 'Gestion des avatars';
-$LANG['activ_defaut_avatar'] = 'Activer l\'avatar par défaut';
-$LANG['activ_defaut_avatar_explain'] = 'Met un avatar aux membres qui n\'en ont pas';
-$LANG['url_defaut_avatar'] = 'Adresse de l\'avatar par défaut';
-$LANG['url_defaut_avatar_explain'] = 'Mettre dans le dossier images de votre thème ';
 $LANG['user_punish_until'] = 'Sanction jusqu\'au';
 $LANG['user_readonly_explain'] = 'Membre en lecture seule, celui-ci peut lire mais ne peut plus poster sur le site entier (commentaires, etc...)';
 $LANG['weeks'] = 'semaines';
 $LANG['life'] = 'A vie';
 $LANG['readonly_user'] = 'Membre en lecture seule';
-$LANG['activ_register'] = 'Activer l\'inscription des membres';
 
 //Règlement
 $LANG['explain_terms'] = 'Entrez ci-dessous le règlement à afficher lors de l\'enregistrement des membres, ils devront l\'accepter pour s\'enregistrer. Laissez vide pour aucun règlement.';
@@ -489,10 +446,6 @@ $LANG['robots'] = 'Robots';
 $LANG['erase_rapport'] = 'Effacer le rapport';
 $LANG['number_r_visit'] = 'Nombre de visite(s)';
 
-//Divers
-$LANG['select_type_bbcode'] = 'BBCode';
-$LANG['select_type_html'] = 'HTML';
-
 //Statistiques
 $LANG['stats'] = 'Statistiques';
 $LANG['more_stats'] = 'Plus de stats';
@@ -515,25 +468,6 @@ $LANG['version'] = 'Version';
 $LANG['colors'] = 'Couleurs';
 $LANG['calendar'] = 'Calendrier';
 $LANG['events'] = 'Evénements';
-$LANG['january'] = 'Janvier';
-$LANG['february'] = 'Février';
-$LANG['march'] = 'Mars';
-$LANG['april'] = 'Avril';
-$LANG['may'] = 'Mai';
-$LANG['june'] = 'Juin';
-$LANG['july'] = 'Juillet';
-$LANG['august'] = 'Août';
-$LANG['september'] = 'Septembre';
-$LANG['october'] = 'Octobre';
-$LANG['november'] = 'Novembre';
-$LANG['december'] = 'Décembre';
-$LANG['monday'] = 'Lun';
-$LANG['tuesday'] = 'Mar';
-$LANG['wenesday'] = 'Mer';
-$LANG['thursday'] = 'Jeu';
-$LANG['friday'] = 'Ven';
-$LANG['saturday'] = 'Sam';
-$LANG['sunday']	= 'Dim';
 
 // Updates
 $LANG['website_updates'] = 'Mises à jour';
@@ -562,5 +496,4 @@ $LANG['incompatible_php_version'] = 'Impossible de vérifier la présence de mise 
 Veuillez utiliser la version %s ou ultérieure de PHP.<br />Si vous ne pouvez utiliser PHP5,
 veuillez vérifier la présence de ces mises à jour sur notre <a href="http://www.phpboost.com">site officiel</a>.';
 $LANG['check_for_updates_now'] = 'Vérifier la présence de mises à jour';
-
 ?>

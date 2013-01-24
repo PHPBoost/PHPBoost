@@ -68,8 +68,8 @@ if (!empty($_POST['valid']))
 	$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($config_gallery)) . "' WHERE name = 'gallery'", __LINE__, __FILE__);
 
 	if ($CONFIG_GALLERY['note_max'] != $config_gallery['note_max'])
-		$Sql->query_inject("UPDATE " . PREFIX . "gallery SET note = note * " . ($config_gallery['note_max']/$CONFIG_GALLERY['note_max']), __LINE__, __FILE__);
-
+		NotationService::update_notation_scale('gallery', $CONFIG_GALLERY['note_max'], $config_gallery['note_max']);
+		
 	###### Régénération du cache de la gallery #######
 	$Cache->Generate_module_file('gallery');
 
@@ -177,7 +177,7 @@ else
 		'L_GALLERY_CAT_MANAGEMENT' => $LANG['gallery_cats_management'],
 		'L_GALLERY_CAT_ADD' => $LANG['gallery_cats_add'],
 		'L_GALLERY_CONFIG' => $LANG['gallery_config'],
-		'L_CONFIG_CONFIG' => $LANG['config_main'],
+		'L_CONFIG_CONFIG' => LangLoader::get_message('general-config', 'admin-config-common'),
 		'L_REQUIRE' => $LANG['require'],
 		'L_HEIGHT_MAX' => $LANG['height_max'],
 		'L_HEIGHT_MAX_EXPLAIN' => $LANG['height_max_explain'],
@@ -236,7 +236,7 @@ else
 		'L_SPEED_MINI_PICS' => $LANG['speed_mini_pics'],
 		'L_SPEED_MINI_PICS_EXPLAIN' => $LANG['speed_mini_pics_explain'],
 		'L_SCROLL_TYPE' => $LANG['scrool_type'],
-		'L_CACHE' => $LANG['cache'],
+		'L_CACHE' => LangLoader::get_message('cache_configuration', 'admin-cache-common'),
 		'L_EXPLAIN_GALLERY_CACHE' => $LANG['explain_gallery_cache'],
 		'L_UNIT_PX' => $LANG['unit_pixels'],
 		'L_UNIT_KO' => $LANG['unit_kilobytes'],

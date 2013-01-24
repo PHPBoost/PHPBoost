@@ -3,7 +3,7 @@
  *                               admin_news_config.php
  *                            -------------------
  *   begin                : June 20, 2005
- *   copyright            : (C) 2005 Viarre Régis, Roguelon Geoffrey
+ *   copyright            : (C) 2005 Viarre Rï¿½gis, Roguelon Geoffrey
  *   email                : crowkait@phpboost.com, liaght@gmail.com
  *
  *
@@ -45,7 +45,6 @@ if (!empty($_POST['submit']))
 		'pagination_news' => retrieve(POST, 'pagination_news', 6),
 		'pagination_arch' => retrieve(POST, 'pagination_arch', 15),
 		'nbr_column' => retrieve(POST, 'nbr_column', 1),
-		'nbr_news' => $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_NEWS . " WHERE visible = 1", __LINE__, __FILE__),
 		'global_auth' => Authorizations::build_auth_array_from_form(AUTH_NEWS_READ, AUTH_NEWS_CONTRIBUTE, AUTH_NEWS_WRITE, AUTH_NEWS_MODERATE),
 		'edito_title' => stripslashes(retrieve(POST, 'edito_title', '')),
 		'edito' => stripslashes(retrieve(POST, 'edito', '', TSTRING_PARSE))
@@ -53,7 +52,7 @@ if (!empty($_POST['submit']))
 
 	$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($config_news)) . "' WHERE name = 'news'", __LINE__, __FILE__);
 
-	###### Régénération du cache des news #######
+	###### Rï¿½gï¿½nï¿½ration du cache des news #######
 	$Cache->Generate_module_file('news');
 
 	AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);

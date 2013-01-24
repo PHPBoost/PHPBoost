@@ -27,11 +27,11 @@
 
 class ExceptionUtils
 {
-public static function get_file($call)
+	public static function get_file($call)
 	{
 		if (!empty($call['file']))
 		{
-			return Path::get_path_from_root($call['file']) ;
+			return Path::get_path_from_root($call['file']);
 		}
 		return 'Internal';
 	}
@@ -112,11 +112,10 @@ public static function get_file($call)
 		$trace = '<ul>';
 		foreach ($args as $arg)
 		{
-			$trace .= '<li><pre>' . htmlspecialchars(print_r($arg, true)) . '</pre></li>';
+			$trace .= '<li><pre>' . TextHelper::htmlspecialchars(print_r($arg, true)) . '</pre></li>';
 		}
 		$trace .= '</ul>';
 		return $trace;
 	}
 }
-
 ?>

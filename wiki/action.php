@@ -56,7 +56,7 @@ if ($id_auth > 0)
 {
 	if (!$User->check_auth($_WIKI_CONFIG['auth'], WIKI_RESTRICTION))
 	{
-	   $error_controller = PHPBoostErrors::unexisting_page();
+		$error_controller = PHPBoostErrors::user_not_authorized();
 		DispatchManager::redirect($error_controller);
 	} 
 
@@ -102,7 +102,7 @@ if ($id_change_status > 0)
 	
 	if (!((!$general_auth || $User->check_auth($_WIKI_CONFIG['auth'], WIKI_STATUS)) && ($general_auth || $User->check_auth($article_auth , WIKI_STATUS))))
 	{
-		$error_controller = PHPBoostErrors::unexisting_page();
+		$error_controller = PHPBoostErrors::user_not_authorized();
 		DispatchManager::redirect($error_controller);
 	} 
 
@@ -125,7 +125,7 @@ elseif ($move > 0) //Déplacement d'un article
 	
 	if (!((!$general_auth || $User->check_auth($_WIKI_CONFIG['auth'], WIKI_MOVE)) && ($general_auth || $User->check_auth($article_auth , WIKI_MOVE))))
 	{
-		$error_controller = PHPBoostErrors::unexisting_page();
+		$error_controller = PHPBoostErrors::user_not_authorized();
 		DispatchManager::redirect($error_controller);
 	} 
 	
@@ -167,7 +167,7 @@ elseif ($id_to_rename > 0 && !empty($new_title)) //Renommer un article
 
 	if (!((!$general_auth || $User->check_auth($_WIKI_CONFIG['auth'], WIKI_RENAME)) && ($general_auth || $User->check_auth($article_auth , WIKI_RENAME))))
 	{
-		$error_controller = PHPBoostErrors::unexisting_page();
+		$error_controller = PHPBoostErrors::user_not_authorized();
 		DispatchManager::redirect($error_controller);
 	} 
 	
@@ -178,6 +178,10 @@ elseif ($id_to_rename > 0 && !empty($new_title)) //Renommer un article
 	elseif (Url::encode_rewrite($new_title) == $article_infos['encoded_title'])//Si seul le titre change mais pas le titre encodé
 	{
 		$Sql->query_inject("UPDATE " . PREFIX . "wiki_articles SET title = '" . $new_title . "' WHERE id = '" . $id_to_rename . "'", __LINE__, __FILE__);
+		
+		$Cache->Generate_module_file('wiki');
+		Feed::clear_cache('wiki');
+		
 		AppContext::get_response()->redirect('/wiki/' . url('wiki.php?title=' . $article_infos['encoded_title'], $article_infos['encoded_title'], '&'));
 	}
 	elseif ($already_exists > 0) //Si le titre existe déjà erreur, on le signale
@@ -200,10 +204,9 @@ elseif ($id_to_rename > 0 && !empty($new_title)) //Renommer un article
 			if ($article_infos['is_cat'] == 1)
 			{
 				$Sql->query_inject("UPDATE " . PREFIX . "wiki_cats SET article_id = '" . $new_id_article . "' WHERE id = '" . $article_infos['id_cat'] . "'", __LINE__, __FILE__);
-				$Cache->Generate_module_file('wiki');
 			}
+			$Cache->Generate_module_file('wiki');
     		 // Feeds Regeneration
-             
              Feed::clear_cache('wiki');
 		   AppContext::get_response()->redirect('/wiki/' . url('wiki.php?title=' . Url::encode_rewrite($new_title), Url::encode_rewrite($new_title), '&'));
 		}
@@ -211,8 +214,8 @@ elseif ($id_to_rename > 0 && !empty($new_title)) //Renommer un article
 		{
             $Sql->query_inject("UPDATE " . PREFIX . "wiki_articles SET title = '" . $new_title . "', encoded_title = '" . Url::encode_rewrite($new_title) . "' WHERE id = '" . $id_to_rename . "'", __LINE__, __FILE__);
 			
-            //Feeds Regeneration
-            
+            //Cache Regeneration
+            $Cache->Generate_module_file('wiki');
             Feed::clear_cache('wiki');
             
             AppContext::get_response()->redirect('/wiki/' . url('wiki.php?title=' . Url::encode_rewrite($new_title), Url::encode_rewrite($new_title), '&'));
@@ -234,9 +237,9 @@ elseif ($del_redirection > 0)//Supprimer une redirection
 	
 		if (!((!$general_auth || $User->check_auth($_WIKI_CONFIG['auth'], WIKI_REDIRECT)) && ($general_auth || $User->check_auth($article_auth , WIKI_REDIRECT))))
 		{
-		$error_controller = PHPBoostErrors::unexisting_page();
-		DispatchManager::redirect($error_controller);
-	} 
+			$error_controller = PHPBoostErrors::user_not_authorized();
+			DispatchManager::redirect($error_controller);
+		} 
 		
 		$Sql->query_inject("DELETE FROM " . PREFIX . "wiki_articles WHERE id = '" . $del_redirection . "'", __LINE__, __FILE__);
 		AppContext::get_response()->redirect('/wiki/' . url('wiki.php?title=' . $article_infos['encoded_title'], $article_infos['encoded_title'], '&'));
@@ -251,7 +254,7 @@ elseif ($create_redirection > 0 && !empty($redirection_title))
 
 	if (!((!$general_auth || $User->check_auth($_WIKI_CONFIG['auth'], WIKI_REDIRECT)) && ($general_auth || $User->check_auth($article_auth , WIKI_REDIRECT))))
 	{
-		$error_controller = PHPBoostErrors::unexisting_page();
+		$error_controller = PHPBoostErrors::user_not_authorized();
 		DispatchManager::redirect($error_controller);
 	} 
 	
@@ -283,7 +286,7 @@ elseif (!empty($restore)) //on restaure un ancien article
 	
 		if (!((!$general_auth || $User->check_auth($_WIKI_CONFIG['auth'], WIKI_DELETE_ARCHIVE)) && ($general_auth || $User->check_auth($article_auth , WIKI_DELETE_ARCHIVE))))
 		{
-			$error_controller = PHPBoostErrors::unexisting_page();
+			$error_controller = PHPBoostErrors::user_not_authorized();
 			DispatchManager::redirect($error_controller);
 		} 
 		
@@ -311,7 +314,7 @@ elseif ($del_archive > 0)
 
 	if (!((!$general_auth || $User->check_auth($_WIKI_CONFIG['auth'], WIKI_DELETE_ARCHIVE)) && ($general_auth || $User->check_auth($article_auth , WIKI_DELETE_ARCHIVE))))
 	{
-		$error_controller = PHPBoostErrors::unexisting_page();
+		$error_controller = PHPBoostErrors::user_not_authorized();
 		DispatchManager::redirect($error_controller);
 	} 
 	
@@ -332,15 +335,16 @@ elseif ($del_article > 0) //Suppression d'un article
 
 	if (!((!$general_auth || $User->check_auth($_WIKI_CONFIG['auth'], WIKI_DELETE)) && ($general_auth || $User->check_auth($article_auth , WIKI_DELETE))))
 	{
-		$error_controller = PHPBoostErrors::unexisting_page();
+		$error_controller = PHPBoostErrors::user_not_authorized();
 		DispatchManager::redirect($error_controller);
 	} 
 	
 	//On rippe l'article
 	$Sql->query_inject("DELETE FROM " . PREFIX . "wiki_articles WHERE id = '" . $del_article . "'", __LINE__, __FILE__);
 	$Sql->query_inject("DELETE FROM " . PREFIX . "wiki_contents WHERE id_article = '" . $del_article . "'", __LINE__, __FILE__);
-	$Sql->query_inject("DELETE FROM " . DB_TABLE_COM . " WHERE script = 'wiki' AND idprov = '" . $del_article . "'", __LINE__, __FILE__); 
 	
+	CommentsService::delete_comments_topic_module('wiki', $del_article);
+
 	 // Feeds Regeneration
      
      Feed::clear_cache('wiki');
@@ -361,7 +365,7 @@ elseif ($del_to_remove > 0 && $report_cat >= 0) //Suppression d'une catégorie
 
 	if (!((!$general_auth || $User->check_auth($_WIKI_CONFIG['auth'], WIKI_DELETE)) && ($general_auth || $User->check_auth($article_auth , WIKI_DELETE))))
 	{
-		$error_controller = PHPBoostErrors::unexisting_page();
+		$error_controller = PHPBoostErrors::user_not_authorized();
 		DispatchManager::redirect($error_controller);
 	} 
 	
@@ -389,7 +393,7 @@ elseif ($del_to_remove > 0 && $report_cat >= 0) //Suppression d'une catégorie
 	$Sql->query_inject("DELETE FROM " . PREFIX . "wiki_articles WHERE id = '" . $del_to_remove . "'", __LINE__, __FILE__);
 	
 	$Sql->query_inject("DELETE FROM " . PREFIX . "wiki_cats WHERE id = '" . $article_infos['id_cat'] . "'", __LINE__, __FILE__);
-	$Sql->query_inject("DELETE FROM " . DB_TABLE_COM . " WHERE script = 'wiki' AND idprov = '" . $del_to_remove . "'", __LINE__, __FILE__);
+	CommentsService::delete_comments_topic_module('wiki', $del_to_remove);
 	
 	if ($remove_action == 'remove_all') //On supprime le contenu de la catégorie
 	{
@@ -399,7 +403,7 @@ elseif ($del_to_remove > 0 && $report_cat >= 0) //Suppression d'une catégorie
 			while ($row = $Sql->fetch_assoc($result)) //On supprime toutes les archives de chaque article avant de le supprimer lui-même
 			{
 				$Sql->query_inject("DELETE FROM " . PREFIX . "wiki_contents WHERE id_article = '" . $row['id'] . "'", __LINE__, __FILE__);
-				$Sql->query_inject("DELETE FROM " . DB_TABLE_COM . " WHERE script = 'wiki' AND idprov = '" . $row['id'] . "'", __LINE__);
+				CommentsService::delete_comments_topic_module('wiki', $row['id']);
 			}
 				
 			$Sql->query_close($result);

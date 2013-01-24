@@ -1,5 +1,4 @@
 		<link href="{PICTURES_DATA_PATH}/gallery.css" rel="stylesheet" type="text/css" media="screen, handheld">
-		<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/lib/js/lightbox/lightbox.js"></script>
 		<script type="text/javascript">
 		<!--
 		function Confirm_file() {
@@ -50,7 +49,7 @@
 			{
 				document.getElementById('img' + id_file).innerHTML = '<img src="{PATH_TO_ROOT}/templates/{THEME}/images/loading_mini.gif" alt="" class="valign_middle" />';
 				data = "id_file=" + id_file + "&name=" + name.replace(/&/g, "%26") + "&previous_name=" + previous_cut_name.replace(/&/g, "%26");
-				var xhr_object = xmlhttprequest_init('xmlhttprequest.php?token={TOKEN}&rename_pics=1&token={TOKEN}');
+				var xhr_object = xmlhttprequest_init('xmlhttprequest.php?rename_pics=1&token={TOKEN}');
 				xhr_object.onreadystatechange = function() 
 				{
 					if( xhr_object.readyState == 4 && xhr_object.status == 200 && xhr_object.responseText != '0' )
@@ -62,7 +61,7 @@
 						html_protected_name = name.replace(/\'/g, "\\\'").replace(/\"/g, "&quot;");
 						html_protected_name2 = xhr_object.responseText.replace(/\'/g, "\\\'").replace(/\"/g, "&quot;");
 						
-						document.getElementById('fihref' + id_file).innerHTML = '<a href="javascript:display_rename_file(\'' + id_file + '\', \'' + html_protected_name + '\', \'' + html_protected_name2 + '\');"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="" class="valign_middle" /></a>';
+						document.getElementById('fihref' + id_file).innerHTML = '<a href="javascript:display_rename_file(\'' + id_file + '\', \'' + html_protected_name + '\', \'' + html_protected_name2 + '\');"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="{L_EDIT} title="{L_EDIT} class="valign_middle" /></a>';
 						document.getElementById('img' + id_file).innerHTML = '';
 					}
 					else if( xhr_object.readyState == 4 && xhr_object.responseText == '0' )
@@ -83,15 +82,25 @@
 			{
 				if( xhr_object.readyState == 4 && xhr_object.status == 200 && xhr_object.responseText != '-1' )
 				{	
-					var img_aprob;
+					var img_aprob, title_aprob;
 					if( xhr_object.responseText == 0 )
+					{
 						img_aprob = 'unvisible.png';
+						title_aprob = '{L_UNAPROB}';
+					}
 					else
+					{
 						img_aprob = 'visible.png';
-						
+						title_aprob = '{L_APROB}';
+					}
+					
 					document.getElementById('img' + id_file).innerHTML = '';
 					if( document.getElementById('img_aprob' + id_file) )
+					{
 						document.getElementById('img_aprob' + id_file).src = '{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/' + img_aprob;
+						document.getElementById('img_aprob' + id_file).title = '' + title_aprob;
+						document.getElementById('img_aprob' + id_file).alt = '' + title_aprob;
+					}
 				}
 				else if( xhr_object.readyState == 4 && xhr_object.responseText == '-1' )
 					document.getElementById('img' + id_file).innerHTML = '';
@@ -258,7 +267,7 @@
 									<a href="admin_gallery.php?cat={cat.list.IDCAT}">{cat.list.IMG}</a>
 									
 									<br />
-									<a href="admin_gallery.php?cat={cat.list.IDCAT}">{cat.list.CAT}</a> <a href="admin_gallery_cat.php?id={cat.list.IDCAT}"><img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="" /></a> 
+									<a href="admin_gallery.php?cat={cat.list.IDCAT}">{cat.list.CAT}</a> <a href="admin_gallery_cat.php?id={cat.list.IDCAT}" title="{L_EDIT}"><img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="{L_EDIT}" title="{L_EDIT}" /></a> 
 									<br />
 									{cat.list.LOCK} <span class="text_small">{cat.list.L_NBR_PICS}</span> 
 								</td>	
@@ -337,7 +346,7 @@
 										</tr>
 										<tr>										
 											<td colspan="2" class="row2 text_small" style="border:none;padding:4px;">
-												&nbsp;&nbsp;&nbsp;<span id="fihref{pics.pics_max.ID}"><a href="javascript:display_rename_file('{pics.pics_max.ID}', '{pics.pics_max.RENAME}', '{pics.pics_max.RENAME_CUT}');"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="{L_EDIT}" class="valign_middle" /></a></span>
+												&nbsp;&nbsp;&nbsp;<span id="fihref{pics.pics_max.ID}"><a href="javascript:display_rename_file('{pics.pics_max.ID}', '{pics.pics_max.RENAME}', '{pics.pics_max.RENAME_CUT}');" title="{L_EDIT}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="{L_EDIT}" title="{L_EDIT}" class="valign_middle" /></a><
 												
 												<a href="gallery{pics.pics_max.U_DEL}" onclick="javascript:return Confirm_file();" title="{L_DELETE}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" class="valign_middle" /></a> 
 									
@@ -394,12 +403,12 @@
 									<table style="border:0;margin:auto;">
 										<tr>
 											<td style="height:{HEIGHT_MAX}px;">
-												<span id="pics{pics.list.ID}"><a class="com" href="{pics.list.U_DISPLAY}" title="{pics.list.TITLE}" rel="lightbox">{pics.list.IMG}</a></span>
+												<span id="pics{pics.list.ID}"><a class="com" href="{pics.list.U_DISPLAY}" title="{pics.list.TITLE}" rel="lightbox[2]">{pics.list.IMG}</a></span>
 											</td>
 										</tr>
 										<tr>
 											<td style="text-align:center;" class="text_small">
-												<a class="com" href="{pics.list.U_DISPLAY}" title="{pics.list.TITLE}" rel="lightbox"><span id="fi_{pics.list.ID}">{pics.list.NAME}</span></a> <span id="fi{pics.list.ID}"></span>
+												<a class="com" href="{pics.list.U_DISPLAY}" title="{pics.list.TITLE}" rel="lightbox[2]"><span id="fi_{pics.list.ID}">{pics.list.NAME}</span></a> <span id="fi{pics.list.ID}"></span>
 												<br />
 												{pics.list.U_POSTOR}
 											</td>

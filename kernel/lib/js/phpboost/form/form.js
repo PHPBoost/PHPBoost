@@ -46,7 +46,7 @@ var $FFS = HTMLForms.getFieldset;
 var $FF = HTMLForms.getField;
 
 // This represents a HTML form.
-var HTMLForm = Class.create( {
+var HTMLForm = Class.create({
 	fieldsets : new Array(),
 	id : "",
 	initialize : function(id) {
@@ -141,7 +141,7 @@ var HTMLForm = Class.create( {
 });
 
 // This represents a fieldset
-var FormFieldset = Class.create( {
+var FormFieldset = Class.create({
 	fields : new Array(),
 	id : "",
 	disabled : false,
@@ -208,137 +208,135 @@ var FormFieldset = Class.create( {
 
 // This represents a field. It can be overloaded to fit to different fields
 // types
-var FormField = Class
-		.create( {
-			id : 0,
-			validationMessageEnabled : false,
-			formId : "",
-			initialize : function(id) {
-				this.id = id;
-			},
-			getId : function() {
-				return this.id;
-			},
-			getHTMLId : function() {
-				return this.formId + "_" + this.id;
-			},
-			setFormId : function(formId) {
-				this.formId = formId;
-			},
-			HTMLFieldExists : function() {
-				return $(this.getHTMLId()) != null;
-			},
-			enable : function() {
-				if (this.HTMLFieldExists()) {
-					Field.enable(this.getHTMLId());
-				}
-				Effect.Appear(this.getHTMLId() + "_field");
-				this.liveValidate();
-			},
-			disable : function() {
-				if (this.HTMLFieldExists()) {
-					Field.disable(this.getHTMLId());
-				}
-				Effect.Fade(this.getHTMLId() + "_field");
-				this.clearErrorMessage();
-			},
-			isDisabled : function() {
-				if (this.HTMLFieldExists()) {
-					var element = $(this.getHTMLId());
-					return element.disabled != "disabled"
-							&& element.disabled != false;
-				} else {
-					var display = $(this.getHTMLId()).style;
-					if (display != null) {
-						return display == "none";
-					} else {
-						return false;
-					}
-				}
-			},
-			getValue : function() {
-				return $F(this.getHTMLId());
-			},
-			setValue : function(value) {
-				Form.Element.setValue($(this.getHTMLId()), value);
-			},
-			enableValidationMessage : function() {
-				this.validationMessageEnabled = true;
-			},
-			displayErrorMessage : function(message) {
-				if (!this.validationMessageEnabled) {
-					return;
-				}
-				if ($('onblurContainerResponse' + this.getHTMLId())
-						&& $('onblurMesssageResponse' + this.getHTMLId())) {
-					$('onblurContainerResponse' + this.getHTMLId()).innerHTML = '<img src="'
-							+ PATH_TO_ROOT
-							+ '/templates/'
-							+ THEME
-							+ '/images/forbidden_mini.png" alt="" class="valign_middle" />';
-					$('onblurMesssageResponse' + this.getHTMLId()).innerHTML = message;
-
-					Effect.Appear('onblurContainerResponse' + this.getHTMLId(),
-					{
-						duration : 0.5
-					});
-					Effect.Appear('onblurMesssageResponse' + this.getHTMLId(),
-					{
-						duration : 0.5
-					});
-				}
-			},
-			displaySuccessMessage : function() {
-				if (!this.validationMessageEnabled) {
-					return;
-				}
-				if ($('onblurContainerResponse' + this.getHTMLId())) {
-					$('onblurContainerResponse' + this.getHTMLId()).innerHTML = '<img src="'
-							+ PATH_TO_ROOT
-							+ '/templates/'
-							+ THEME
-							+ '/images/processed_mini.png" alt="" class="valign_middle" />';
-					Effect.Appear('onblurContainerResponse' + this.getHTMLId(),
-					{
-						duration : 0.2
-					});
-
-					Effect.Fade('onblurMesssageResponse' + this.getHTMLId(), {
-						duration : 0.2
-					});
-				}
-			},
-			clearErrorMessage : function() {
-				if ($('onblurContainerResponse' + this.getHTMLId())) {
-					$('onblurContainerResponse' + this.getHTMLId()).innerHTML = '';
-
-					Effect.Appear('onblurContainerResponse' + this.getHTMLId(),
-					{
-						duration : 0.2
-					});
-
-					Effect.Fade('onblurMesssageResponse' + this.getHTMLId(), {
-						duration : 0.2
-					});
-				}
-			},
-			liveValidate : function() {
-				if (!this.isDisabled()) {
-					var errorMessage = this.doValidate();
-					if (errorMessage != "") {
-						this.displayErrorMessage(errorMessage);
-					} else {
-						this.displaySuccessMessage();
-					}
-				}
-			},
-			validate : function() {
-				if (!this.isDisabled()) {
-					return this.doValidate();
-				}
-				return "";
-			},
-			doValidate : function() {
-				return '';
+var FormField = Class.create({
+	id : 0,
+	validationMessageEnabled : false,
+	formId : "",
+	initialize : function(id) {
+		this.id = id;
+	},
+	getId : function() {
+		return this.id;
+	},
+	getHTMLId : function() {
+		return this.formId + "_" + this.id;
+	},
+	setFormId : function(formId) {
+		this.formId = formId;
+	},
+	HTMLFieldExists : function() {
+		return $(this.getHTMLId()) != null;
+	},
+	enable : function() {
+		if (this.HTMLFieldExists()) {
+			Field.enable(this.getHTMLId());
+		}
+		Effect.Appear(this.getHTMLId() + "_field");
+		this.liveValidate();
+	},
+	disable : function() {
+		if (this.HTMLFieldExists()) {
+			Field.disable(this.getHTMLId());
+		}
+		Effect.Fade(this.getHTMLId() + "_field");
+		this.clearErrorMessage();
+	},
+	isDisabled : function() {
+		if (this.HTMLFieldExists()) {
+			var element = $(this.getHTMLId());
+			return element.disabled != "disabled" && element.disabled != false;
+		} else {
+			var display = $(this.getHTMLId()).style;
+			if (display != null) {
+				return display == "none";
+			} else {
+				return false;
 			}
-		});
+		}
+	},
+	getValue : function() {
+		return $F(this.getHTMLId());
+	},
+	setValue : function(value) {
+		Form.Element.setValue($(this.getHTMLId()), value);
+	},
+	enableValidationMessage : function() {
+		this.validationMessageEnabled = true;
+	},
+	displayErrorMessage : function(message) {
+		if (!this.validationMessageEnabled) {
+			return;
+		}
+		if ($('onblurContainerResponse' + this.getHTMLId())
+				&& $('onblurMesssageResponse' + this.getHTMLId())) {
+			$('onblurContainerResponse' + this.getHTMLId()).innerHTML = '<img src="'
+					+ PATH_TO_ROOT
+					+ '/templates/'
+					+ THEME
+					+ '/images/forbidden_mini.png" alt="" class="valign_middle" />';
+			$('onblurMesssageResponse' + this.getHTMLId()).innerHTML = message;
+
+			Effect.Appear('onblurContainerResponse' + this.getHTMLId(),
+			{
+				duration : 0.5
+			});
+			Effect.Appear('onblurMesssageResponse' + this.getHTMLId(),
+			{
+				duration : 0.5
+			});
+		}
+	},
+	displaySuccessMessage : function() {
+		if (!this.validationMessageEnabled) {
+			return;
+		}
+		if ($('onblurContainerResponse' + this.getHTMLId())) {
+			$('onblurContainerResponse' + this.getHTMLId()).innerHTML = '<img src="'
+					+ PATH_TO_ROOT
+					+ '/templates/'
+					+ THEME
+					+ '/images/processed_mini.png" alt="" class="valign_middle" />';
+			Effect.Appear('onblurContainerResponse' + this.getHTMLId(),
+			{
+				duration : 0.2
+			});
+
+			Effect.Fade('onblurMesssageResponse' + this.getHTMLId(), {
+				duration : 0.2
+			});
+		}
+	},
+	clearErrorMessage : function() {
+		if ($('onblurContainerResponse' + this.getHTMLId())) {
+			$('onblurContainerResponse' + this.getHTMLId()).innerHTML = '';
+
+			Effect.Appear('onblurContainerResponse' + this.getHTMLId(),
+			{
+				duration : 0.2
+			});
+
+			Effect.Fade('onblurMesssageResponse' + this.getHTMLId(), {
+				duration : 0.2
+			});
+		}
+	},
+	liveValidate : function() {
+		if (!this.isDisabled()) {
+			var errorMessage = this.doValidate();
+			if (errorMessage != "") {
+				this.displayErrorMessage(errorMessage);
+			} else {
+				this.displaySuccessMessage();
+			}
+		}
+	},
+	validate : function() {
+		if (!this.isDisabled()) {
+			return this.doValidate();
+		}
+		return "";
+	},
+	doValidate : function() {
+		return '';
+	}
+});

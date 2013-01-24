@@ -139,5 +139,4 @@ interface FormField extends FormElement
 	 */
 	function get_js_validations();
 }
-
 ?>

@@ -3,8 +3,8 @@
  *                             FormFieldMultipleFilePicker.class.php
  *                            -------------------
  *   begin                : March 10, 2011
- *   copyright            : (C) 2011 MASSY Kévin
- *   email                : soldier.weasel@gmail.com
+ *   copyright            : (C) 2011 MASSY Kevin
+ *   email                : kevin.massy@phpboost.com
  *
  ###################################################
  *
@@ -25,7 +25,7 @@
  ###################################################*/
 
 /**
- * @author MASSY Kévin <soldier.weasel@gmail.com>
+ * @author MASSY Kevin <kevin.massy@phpboost.com>
  * @desc This class manage multiple file input fields.
  * It provides you additionnal field options :
  * <ul>

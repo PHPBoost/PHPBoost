@@ -31,7 +31,12 @@ class SitemapExtensionPointProvider extends ExtensionPointProvider
 	{
 		parent::__construct('sitemap');
 	}
-
+	
+	public function home_page()
+	{
+		return new SitemapHomePageExtensionPoint();
+	}
+	
 	public function scheduled_jobs()
 	{
 		return new SitemapScheduledJobs();
@@ -45,6 +50,13 @@ class SitemapExtensionPointProvider extends ExtensionPointProvider
 	public function url_mappings()
 	{
 		return new UrlMappings(array(new DispatcherUrlMapping('/sitemap/index.php')));
+	}
+	
+	public function css_files()
+	{
+		$module_css_files = new ModuleCssFiles();
+		$module_css_files->adding_running_module_displayed_file('sitemap.css');
+		return $module_css_files;
 	}
 }
 ?>

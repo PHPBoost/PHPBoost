@@ -4,8 +4,8 @@
  *                         ThemeConfiguration.class.php
  *                            -------------------
  *   begin                : April 10, 2011
- *   copyright            : (C) 2011 Kévin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   copyright            : (C) 2011 Kevin MASSY
+ *   email                : kevin.massy@phpboost.com
  *
  *
  *###################################################
@@ -28,7 +28,7 @@
  */
 
  /**
- * @author Kévin MASSY <soldier.weasel@gmail.com>
+ * @author Kevin MASSY <kevin.massy@phpboost.com>
  * @package {@package}
  */
 class ThemeConfiguration
@@ -131,6 +131,15 @@ class ThemeConfiguration
 		return $this->pictures;
 	}
 	
+	public function get_first_pictures()
+	{
+		if (isset($this->pictures[0]))
+		{
+			return $this->pictures[0];
+		}
+		return '';
+	}
+	
 	public function get_repository()
 	{
 		return $this->repository;
@@ -142,7 +151,7 @@ class ThemeConfiguration
 		
 		if ($config === false)
 		{
-			throw new Exception('Load ini file "'. $config_ini_file .'" failed');
+			throw new IOException('Load ini file "'. $config_ini_file .'" failed');
 		}
 		
 		$this->check_parse_ini_file($config, $config_ini_file);

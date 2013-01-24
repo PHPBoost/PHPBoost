@@ -200,37 +200,7 @@ class Application
 	 */
 	public function check_compatibility()
 	{
-		$current_version = '0';
-		switch ($this->type)
-		{
-			case self::KERNEL_TYPE:
-				$current_version = Environment::get_phpboost_version();
-				break;
-			case self::MODULE_TYPE:
-				$kModules = array_keys($MODULES);
-				foreach ($kModules as $module)
-				{
-					if ($module == $this->name)
-					{
-						$infos = load_ini_file(PATH_TO_ROOT . '/' . $module . '/lang/', get_ulang());
-						$current_version = $infos['version'];
-						break;
-					}
-				}
-				break;
-			case self::TEMPLATE_TYPE:
-				foreach (ThemeManager::get_activated_themes_map() as $id => $value)
-				{
-					if ($id == $this->name)
-					{
-						$current_version = $value->get_configuration()->get_version();
-						break;
-					}
-				}
-				break;
-			default:
-				return false;
-		}
+		$current_version = $this->get_installed_version();
 		
         if ($current_version == '0')
         {
@@ -363,11 +333,17 @@ class Application
 			case self::KERNEL_TYPE:
 				return GeneralConfig::load()->get_phpboost_major_version();
 			case self::MODULE_TYPE:
-				$infos = get_ini_config(PATH_TO_ROOT . '/' . $this->id . '/lang/', get_ulang());
-				return !empty($infos['version']) ? $infos['version'] : '0';
+				if (ModulesManager::is_module_installed($this->id))
+				{
+					return ModulesManager::get_module($this->id)->get_configuration()->get_version();
+				}
+				return '0';
 			case self::TEMPLATE_TYPE:
-				$infos = get_ini_config(PATH_TO_ROOT . '/templates/' . $this->id . '/config/', get_ulang());
-				return !empty($infos['version']) ? $infos['version'] : '0';
+				if (ThemeManager::get_theme_existed($this->id))
+				{
+					return ThemeManager::get_theme($this->id)->get_configuration()->get_version();
+				}
+				return '0';
 			default:
 				return '0';
 		}

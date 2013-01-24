@@ -3,8 +3,8 @@
  *                              CommentsTopic.class.php
  *                            -------------------
  *   begin                : March 31, 2011
- *   copyright            : (C) 2011 Kévin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   copyright            : (C) 2011 Kevin MASSY
+ *   email                : kevin.massy@phpboost.com
  *
  *
  ###################################################
@@ -25,20 +25,69 @@
  *
  ###################################################*/
 
- /**
- * @author Kévin MASSY <soldier.weasel@gmail.com>
+/**
+ * @author Kevin MASSY <kevin.massy@phpboost.com>
+ * @desc This class represents the comments topic
+ * @abstract Do not use this class, but one of its children like for your module
  * @package {@package}
  */
 class CommentsTopic
 {
-	private $module_id;
-	private $id_in_module;
-
-	public function set_module_id($identifier)
+	protected $module_id;
+	protected $topic_identifier = '';
+	protected $id_in_module;
+	protected $url;
+	
+	const DEFAULT_TOPIC_IDENTIFIER = 'default';
+	
+	public function __construct($module_id, $topic_identifier = self::DEFAULT_TOPIC_IDENTIFIER)
 	{
-		$this->module_id = $identifier;
+		$this->module_id = $module_id;
+		$this->topic_identifier = $topic_identifier;
 	}
 	
+	/**
+	 * @return class CommentsAuthorizations
+	 */
+	public function get_authorizations()
+	{
+		return new CommentsAuthorizations();
+	}
+	
+	/**
+	 * @return boolean display
+	 */
+	public function is_display()
+	{
+		return false;
+	}
+	
+	/**
+	 * @return int number comments display default
+	 */
+	public function get_number_comments_display()
+	{
+		return CommentsConfig::load()->get_number_comments_display();
+	}
+	
+	/**
+	 * @return class CommentsTopicEvents
+	 */
+	public function get_events()
+	{
+		return new CommentsTopicEvents($this);
+	}
+	
+	public function display()
+	{
+		return CommentsService::display($this);
+	}
+		
+	public function get_topic_identifier()
+	{
+		return $this->topic_identifier;
+	}
+
 	public function get_module_id()
 	{
 		return $this->module_id;
@@ -52,6 +101,16 @@ class CommentsTopic
 	public function get_id_in_module()
 	{
 		return $this->id_in_module;
+	}
+	
+	public function set_url(Url $url)
+	{
+		$this->url = $url;
+	}
+	
+	public function get_path()
+	{
+		return $this->url->relative();
 	}
 }
 ?>

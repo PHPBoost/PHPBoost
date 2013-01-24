@@ -79,5 +79,4 @@ abstract class SitemapElement
 	 */
 	public abstract function export(SitemapExportConfig  $export_config);
 }
-
 ?>

@@ -22,12 +22,17 @@
 			<div class="module_top_l"></div>		
 			<div class="module_top_r"></div>
 			<div class="module_top">
-				{TITLE}
+				<div class="module_top_title">
+					<a href="${relative_url(SyndicationUrlBuilder::rss('faq', ID_FAQ))}" title="Rss"><img style="vertical-align:middle;margin-top:-2px;" src="{PATH_TO_ROOT}/templates/{THEME}/images/rss.png" alt="Rss" title="Rss" /></a>
+					{TITLE}
+				</div>
+			<div class="module_top_com">
 				# IF C_ADMIN #
-				<a href="{U_ADMIN_CAT}">
+				<a href="{U_ADMIN_CAT}" alt="" title="{L_EDIT}">
 					<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="" />
 				</a>
 				# END IF #
+			</div>
 			</div>
 			<div class="module_contents">
 			

@@ -46,11 +46,11 @@ class AdminSitemapController extends AdminModuleController
 		$this->lang = LangLoader::get('common', 'sitemap');
 	}
 
-	public function execute(HTTPRequest $request)
+	public function execute(HTTPRequestCustom $request)
 	{
 		$this->build_form();
 
-		if ($this->submit_button->has_been_submitted() && $this->form->validate())
+		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->handle_form();
 		}
@@ -68,12 +68,12 @@ class AdminSitemapController extends AdminModuleController
 			array('events' => array('click' => 'if ($FF("enable_sitemap_xml").getValue()) { $FF("file_life_time").enable(); } else { $FF("file_life_time").disable(); }'))));
 
 		$fieldset->add_field(new FormFieldTextEditor('file_life_time', $this->lang['xml_file_life_time'], SitemapXMLFileService::get_life_time(),
-			array('required' => true, 'size' => 2, 'maxlength' => 2, 'description' => $this->lang['xml_file_life_time_explain'], 'disabled' => !SitemapXMLFileService::is_xml_file_generation_enabled()),
+			array('required' => true, 'size' => 2, 'maxlength' => 2, 'description' => $this->lang['xml_file_life_time_explain'], 'hidden' => !SitemapXMLFileService::is_xml_file_generation_enabled()),
 			array(new FormFieldConstraintIntegerRange(1, 50))));
 		
-		$this->form->add_button(new FormButtonReset());
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$this->form->add_button($this->submit_button);
+		$this->form->add_button(new FormButtonReset());
 	}
 
 	private function handle_form()

@@ -3,8 +3,8 @@
  *                       AjaxCommentsDisplayController.class.php
  *                            -------------------
  *   begin                : September 23, 2011
- *   copyright            : (C) 2011 Kévin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   copyright            : (C) 2011 Kevin MASSY
+ *   email                : kevin.massy@phpboost.com
  *
  *
  ###################################################
@@ -27,11 +27,11 @@
 
 class AjaxCommentsDisplayController extends AbstractCommentsController
 {
-	public function execute(HTTPRequest $request)
+	public function execute(HTTPRequestCustom $request)
 	{
 		parent::execute($request);
 		
-		$view = CommentsService::display_comments($this->get_module_id(), $this->get_id_in_module(), 
+		$view = CommentsService::display_comments($this->get_module_id(), $this->get_id_in_module(), $this->get_topic_identifier(),
 		$this->get_number_comments_display(), $this->get_authorizations(), true);
 		
 		return new SiteNodisplayResponse($view);
@@ -39,7 +39,7 @@ class AjaxCommentsDisplayController extends AbstractCommentsController
 	
 	private function get_number_comments_display()
 	{
-		return CommentsProvidersService::get_number_comments_display($this->get_module_id(), $this->get_id_in_module());
+		return $this->provider->get_number_comments_display();
 	}
 }
 ?>

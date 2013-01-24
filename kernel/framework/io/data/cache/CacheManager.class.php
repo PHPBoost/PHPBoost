@@ -238,5 +238,4 @@ class CacheManager
 		self::get_fs_cache()->delete(self::get_file_name($name));
 	}
 }
-
 ?>

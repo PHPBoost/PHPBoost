@@ -39,13 +39,19 @@ $Cache->load('web'); //$CAT_WEB et $CONFIG_WEB en global.
 
 $CAT_WEB[$idcat]['name'] = !empty($CAT_WEB[$idcat]['name']) ? $CAT_WEB[$idcat]['name'] : '';
 $web['title'] = '';
+
+$notation = new Notation();
+$notation->set_module_name('web');
+$notation->set_id_in_module($idweb);
+$notation->set_notation_scale($web_config->get_note_max());
+
 if (!empty($idweb) && !empty($idcat))
 { 
 	$web = $Sql->query_array(PREFIX . 'web' , '*', "WHERE aprob = 1 AND id = '" . $idweb . "' AND idcat = '" . $idcat . "'", __LINE__, __FILE__);
-	define('TITLE', $LANG['title_web'] . ' - ' . addslashes($web['title']));
+	define('TITLE', $LANG['title_web'] . ' - ' . $web['title']);
 }
 elseif (!empty($idcat))
-	define('TITLE', $LANG['title_web'] . ' - ' . addslashes($CAT_WEB[$idcat]['name']));
+	define('TITLE', $LANG['title_web'] . ' - ' . $CAT_WEB[$idcat]['name']);
 else
 	define('TITLE', $LANG['title_web']);
 	

@@ -177,9 +177,10 @@ class ForumSetup extends DefaultModuleSetup
 		);
 		$options = array(
 			'primary' => array('id'),
-			'idtopic' => array('type' => 'key', 'fields' => 'idtopic'),
-			'contenu' => array('type' => 'fulltext', 'fields' => 'contents')
-		);
+			'indexes' => array(
+				'idtopic' => array('type' => 'key', 'fields' => 'idtopic'),
+				'contenu' => array('type' => 'fulltext', 'fields' => 'contents')			
+		));
 		PersistenceContext::get_dbms_utils()->create_table(self::$forum_message_table, $fields, $options);
 	}
 
@@ -222,9 +223,11 @@ class ForumSetup extends DefaultModuleSetup
 		);
 		$options = array(
 			'primary' => array('id'),
-			'idcat' => array('type' => 'key', 'fields' => array('idcat', 'last_user_id', 'last_timestamp', 'type')),
-			'title' => array('type' => 'fulltext', 'fields' => 'title')
-		);
+			'indexes' => array(
+				'idcat' => array('type' => 'key', 'fields' => array('idcat', 'last_user_id', 'last_timestamp', 'type')),
+				'title' => array('type' => 'fulltext', 'fields' => 'title')
+			
+		));
 		PersistenceContext::get_dbms_utils()->create_table(self::$forum_topics_table, $fields, $options);
 	}
 
@@ -263,9 +266,7 @@ class ForumSetup extends DefaultModuleSetup
 
 	private function delete_member_extended_last_view_forum()
 	{
-		$extended_field = new ExtendedField();
-		$extended_field->set_field_name(self::$member_extended_field_last_view_forum_column);
-		ExtendedFieldsService::delete($extended_field, ExtendedFieldsService::BY_FIELD_NAME);
+		PersistenceContext::get_dbms_utils()->drop_column(DB_TABLE_MEMBER_EXTENDED_FIELDS, self::$member_extended_field_last_view_forum_column);
 	}
 
 	private function insert_data()

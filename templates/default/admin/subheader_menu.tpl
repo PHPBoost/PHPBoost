@@ -30,7 +30,7 @@
 				<a href="${relative_url(AdminConfigUrlBuilder::general_config())}" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/config_mini.png);">{L_CONFIGURATION}</a>
 				<ul id="ssmenu21">
 					<li><a href="${relative_url(AdminConfigUrlBuilder::general_config())}" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/config_mini.png);">{L_CONFIG_GENERAL}</a></li>
-					<li><a href="${relative_url(AdminConfigUrlBuilder::advanced_config())}" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/config_mini.png);">{L_CONFIG_ADVANCED}</a></li>
+					<li><a href="{PATH_TO_ROOT}/admin/config/?url=/advanced/" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/config_mini.png);">{L_CONFIG_ADVANCED}</a></li>
 					<li><a href="${relative_url(AdminConfigUrlBuilder::mail_config())}" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/config_mini.png);">{L_MAIL_CONFIG}</a></li>
 				</ul>
 			</li>
@@ -42,10 +42,10 @@
 				</ul>
 			</li>
 			<li class="extend" onmouseover="show_menu(23, 1);" onmouseout="hide_menu(1);">
-				<a href="{PATH_TO_ROOT}/admin/admin_lang.php" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/languages_mini.png);">{L_LANGS}</a>
+				<a href="${relative_url(AdminLangsUrlBuilder::list_installed_langs())}" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/languages_mini.png);">{L_LANGS}</a>
 				<ul id="ssmenu23">
-					<li><a href="{PATH_TO_ROOT}/admin/admin_lang.php" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/languages_mini.png);">{L_MANAGEMENT}</a></li>
-					<li><a href="{PATH_TO_ROOT}/admin/admin_lang_add.php" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/languages_mini.png);">{L_ADD}</a></li>
+					<li><a href="${relative_url(AdminLangsUrlBuilder::list_installed_langs())}" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/languages_mini.png);">{L_MANAGEMENT}</a></li>
+					<li><a href="${relative_url(AdminLangsUrlBuilder::install())}" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/languages_mini.png);">{L_ADD}</a></li>
 				</ul>
 			</li>
 			<li class="extend" onmouseover="show_menu(24, 1);" onmouseout="hide_menu(1);">
@@ -94,20 +94,17 @@
 					<li><a href="${relative_url(AdminCacheUrlBuilder::configuration())}" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/config_mini.png);">{L_CONFIGURATION}</a></li>
 				</ul>
 			</li>		
-			<li><a href="{PATH_TO_ROOT}/admin/admin_errors.php" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/errors_mini.png);">{L_ERRORS}</a></li>
-			<li class="extend" onmouseover="show_menu(33, 1);" onmouseout="hide_menu(1);">
+			<li class="extend" onmouseover="show_menu(34, 1);" onmouseout="hide_menu(1);">
+				<a href="${relative_url(AdminErrorsUrlBuilder::logged_errors())}" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/errors_mini.png);">{L_ERRORS}</a>
+				<ul id="ssmenu34">
+					<li><a href="${relative_url(AdminErrorsUrlBuilder::logged_errors())}" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/errors_mini.png);">{L_ERRORS}</a></li>
+					<li><a href="${relative_url(AdminErrorsUrlBuilder::list_404_errors())}" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/errors_mini.png);">{L_404_ERRORS}</a></li>
+				</ul>
+			</li><li class="extend" onmouseover="show_menu(33, 1);" onmouseout="hide_menu(1);">
 				<a href="{PATH_TO_ROOT}/admin/admin_system_report.php" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/server_mini.png);">{L_SERVER}</a>
 				<ul id="ssmenu33">
 					<li><a href="{PATH_TO_ROOT}/admin/admin_phpinfo.php" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/phpinfo_mini.png);">{L_PHPINFO}</a></li>
 					<li><a href="{PATH_TO_ROOT}/admin/admin_system_report.php" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/system_report_mini.png);">{L_SYSTEM_REPORT}</a></li>
-				</ul>
-			</li>
-			<li class="extend" onmouseover="show_menu(34, 1);" onmouseout="hide_menu(1);">
-				<a href="{PATH_TO_ROOT}/admin/customize/?url=/interface" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/themes_mini.png);">{L_CUSTOMIZATION}</a>
-				<ul id="ssmenu34">
-					<li><a href="${relative_url(AdminCustomizeUrlBuilder::customize_interface())}" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/themes_mini.png);">{L_CUSTOMIZE_INTERFACE}</a></li>
-					<li><a href="${relative_url(AdminCustomizeUrlBuilder::customize_favicon())}" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/themes_mini.png);">{L_CUSTOMIZE_FAVICON}</a></li>
-					<li><a href="${relative_url(AdminCustomizeUrlBuilder::editor_file())}" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/themes_mini.png);">{L_CUSTOMIZE_CSS_FILES}</a></li>
 				</ul>
 			</li>
 			# IF C_ADMIN_LINKS_3 #
@@ -134,8 +131,8 @@
 				<a href="{PATH_TO_ROOT}/admin/admin_members.php" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/members_mini.png);">{L_USER}</a>
 				<ul id="ssmenu41">
 					<li><a href="{PATH_TO_ROOT}/admin/admin_members.php" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/members_mini.png);">{L_MANAGEMENT}</a></li>
-					<li><a href="{PATH_TO_ROOT}/admin/member/?url=/add/" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/members_mini.png);">{L_ADD}</a></li>
-					<li><a href="{PATH_TO_ROOT}/admin/member/?url=/config/" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/members_mini.png);">{L_CONFIGURATION}</a></li>
+					<li><a href="${relative_url(AdminMembersUrlBuilder::add())}" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/members_mini.png);">{L_ADD}</a></li>
+					<li><a href="${relative_url(AdminMembersUrlBuilder::configuration())}" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/members_mini.png);">{L_CONFIGURATION}</a></li>
 					<li><a href="{PATH_TO_ROOT}/admin/admin_members_punishment.php" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/members_mini.png);">{L_PUNISHEMENT}</a></li>
 				</ul>
 			</li>								
@@ -160,7 +157,6 @@
 					<li><a href="{PATH_TO_ROOT}/admin/admin_ranks_add.php" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/ranks_mini.png);">{L_ADD}</a></li>
 				</ul>
 			</li>
-			<li><a href="{PATH_TO_ROOT}/admin/member/?url=/rules/" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/terms_mini.png);">{L_TERMS}</a></li>
 			# IF C_ADMIN_LINKS_4 #
 			<li class="separator"></li>
 				# START admin_links_4 #
@@ -199,10 +195,10 @@
 				</ul>
 			</li>								
 			<li class="extend" onmouseover="show_menu(53, 1);" onmouseout="hide_menu(1);">
-				<a href="{PATH_TO_ROOT}/admin/admin_com.php" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/com_mini.png);">{L_COMMENTS}</a>
+				<a href="${relative_url(UserUrlBuilder::comments())}" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/com_mini.png);">{L_COMMENTS}</a>
 				<ul id="ssmenu53">
-					<li><a href="{PATH_TO_ROOT}/admin/admin_com.php" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/com_mini.png);">{L_MANAGEMENT}</a></li>
-					<li><a href="{PATH_TO_ROOT}/admin/contents/?url=/comments/config/" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/com_mini.png);">{L_CONFIGURATION}</a></li>
+					<li><a href="${relative_url(UserUrlBuilder::comments())}" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/com_mini.png);">{L_MANAGEMENT}</a></li>
+					<li><a href="{PATH_TO_ROOT}/admin/content/?url=/comments/config/" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/com_mini.png);">{L_CONFIGURATION}</a></li>
 				</ul>
 			</li>
 			# IF C_ADMIN_LINKS_5 #

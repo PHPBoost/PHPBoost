@@ -3,8 +3,8 @@
  *                           user-common.php
  *                            -------------------
  *   begin                : October 07, 2011
- *   copyright            : (C) 2011 Kévin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   copyright            : (C) 2011 Kevin MASSY
+ *   email                : kevin.massy@phpboost.com
  *
  *
  ###################################################
@@ -32,12 +32,11 @@
 $lang['user'] = 'Utilisateur';
 $lang['users'] = 'Utilisateurs';
 $lang['profile'] = 'Profil';
+$lang['profile_of'] = 'Profil de :name';
 $lang['profile.edit'] = 'Edition du profil';
 $lang['messages'] = 'Messages de l\'utilisateur';
 $lang['maintain'] = 'Maintenance';
-$lang['groups'] = 'Groupes';
 
-$lang['profile.edit.success'] = 'Le profil a bien été modifié';
 $lang['profile.edit.password.error'] = 'Le mot de passe que vous avez entré n\'est pas correct';
 
 //Contribution
@@ -56,7 +55,7 @@ $lang['password.old.explain'] = 'Remplir seulement en cas de modification';
 $lang['password.confirm'] = 'Confirmer le mot de passe';
 $lang['password.explain'] = 'Longueur minimale du mot de passe : 6 caractères';
 $lang['email'] = 'Email';
-$lang['email.hide'] = 'Cache l\'email';
+$lang['email.hide'] = 'Cacher l\'email';
 $lang['theme'] = 'Thème';
 $lang['theme.preview'] = 'Prévisualiser le thème';
 $lang['text-editor'] = 'Editeur de texte';
@@ -64,8 +63,8 @@ $lang['lang'] = 'Langue';
 $lang['timezone.'] = 'Fuseau horaire';
 $lang['timezone.choice'] = 'Choix du fuseau horaire';
 $lang['timezone.choice.explain'] = 'Permet d\'ajuster l\'heure à votre localisation';
-$lang['email.hide'] = 'Cache l\'email';
 $lang['level'] = 'Rang';
+$lang['approbation'] = 'Approbation';
 
 $lang['registration_date'] = 'Date d\'inscription';
 $lang['last_connection'] = 'Dernière connexion';
@@ -74,14 +73,20 @@ $lang['private_message'] = 'Message privé';
 $lang['delete-account'] = 'Supprimer le compte';
 $lang['avatar'] = 'Avatar';
 
+//Groups
 $lang['groups'] = 'Groupes';
-$lang['groups.select'] = 'Séléctionner un groupe';
+$lang['groups.select'] = 'Sélectionner un groupe';
+$lang['no_member'] = 'Aucun membre dans ce groupe';
 
 //Other
+$lang['caution'] = 'Avertissement';
+$lang['readonly'] = 'Lecture seule';
 $lang['banned'] = 'Banni';
 $lang['connect'] = 'Se connecter';
+$lang['autoconnect'] = 'Connexion auto';
 
 // Ranks
+$lang['rank'] = 'Rang';
 $lang['visitor'] = 'Visiteur';
 $lang['member'] = 'Membre';
 $lang['moderator'] = 'Modérateur';
@@ -91,7 +96,7 @@ $lang['administrator'] = 'Administrateur';
 $lang['forget-password'] = 'Mot de passe oublié';
 $lang['forget-password.select'] = 'Sélectionnez le champ que vous voulez renseigner (email ou pseudo)';
 $lang['forget-password.success'] = 'Un email vous a été envoyé avec un lien pour changer votre mot de passe';
-$lang['forget-password.error'] = 'Les informations fournisent ne sont pas correct, veuillez les rectifier et réessayer';
+$lang['forget-password.error'] = 'Les informations fournies ne sont pas correctes, veuillez les rectifier et réessayer';
 $lang['change-password'] = 'Changement de mot de passe';
 $lang['forget-password.mail.content'] = 'Cher(e) :pseudo,
 
@@ -108,13 +113,27 @@ Si vous rencontrez des difficultés, veuillez contacter l\'administrateur du site
 
 //Registration 
 $lang['registration'] = 'Inscription';
+
 $lang['registration.validation.mail.explain'] = 'Vous devrez activer votre compte dans l\'email qui vous sera envoyé avant de pouvoir vous connecter';
 $lang['registration.validation.administrator.explain'] = 'Un administrateur devra activer votre compte avant de pouvoir vous connecter';
-$lang['registration.confirm.success'] = 'Votre a été validé avec succès';
+
+$lang['registration.confirm.success'] = 'Votre compte a été validé avec succès';
 $lang['registration.confirm.error'] = 'Un problème est survenue lors de votre activation, vérifier que votre clé est bien valide';
-$lang['registration.success'] = 'Vous vous êtes bien enregistré et êtes dès à présent connecté';
+
 $lang['registration.success.administrator-validation'] = 'Vous vous êtes enregistré avec succès. Cependant un administrateur doit valider votre compte avant de pouvoir l\'utiliser';
 $lang['registration.success.mail-validation'] = 'Vous vous êtes enregistré avec succès. Cependant il vous faudra cliquer sur le lien d\'activation contenu dans le mail qui vous a été envoyé';
+
+$lang['registration.email.automatic-validation'] = 'Vous pouvez désormais vous connecter à votre compte directement sur le site.';
+$lang['registration.email.mail-validation'] = 'Vous devez activer votre compte avant de pouvoir vous connecter en cliquant sur ce lien : :validation_link';
+$lang['registration.email.administrator-validation'] = 'Attention : Votre compte devra être activé par un administrateur avant de pouvoir vous connecter. Merci de votre patience.';
+$lang['registration.email.mail-administrator-validation'] = 'Cher(e) :pseudo,
+
+Nous avons le plaisir de vous informer que votre compte sur :site_name vient d\'être validé par un administrateur.
+
+Vous pouvez dès à présent vous connecter au site à l\'aide des identifiants fournis dans le précédent email.
+
+:signature';
+
 $lang['registration.pending-approval'] = 'Un nouveau membre s\'est inscrit. Son compte doit être approuvé avant de pouvoir être utilisé.';
 $lang['registration.subject-mail'] = 'Confirmation d\'inscription sur :site_name';
 $lang['registration.content-mail'] = 'Cher(e) :pseudo,
@@ -132,4 +151,8 @@ Mot de passe : :password
 :accounts_validation_explain
 
 :signature';
+
+$lang['agreement'] = 'Règlement';
+$lang['agreement.agree'] = 'J\'accepte les conditions';
+$lang['agreement.agree.required'] = 'Vous devez accepter le règlement pour vous inscrire';
 ?>

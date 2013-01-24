@@ -36,5 +36,4 @@ class UnsupportedOperationException extends Exception
         parent::__construct($msg);
     }
 }
-
 ?>

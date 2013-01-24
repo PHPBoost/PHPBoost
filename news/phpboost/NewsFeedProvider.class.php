@@ -48,8 +48,6 @@ class NewsFeedProvider implements FeedProvider
 
 		$idcat = !empty($NEWS_CAT[$idcat]) ? $idcat : 0;
 
-		$now = new Date(DATE_NOW, TIMEZONE_AUTO);
-
 		load_module_lang('news');
 
 		$site_name = GeneralConfig::load()->get_site_name();
@@ -69,7 +67,7 @@ class NewsFeedProvider implements FeedProvider
 
 		// Build array with the children categories.
 		$array_cat = array();
-		$news_cat->build_children_id_list($idcat, $array_cat, RECURSIVE_EXPLORATION, ($idcat == 0 ? DO_NOT_ADD_THIS_CATEGORY_IN_LIST : ADD_THIS_CATEGORY_IN_LIST));
+		$news_cat->build_children_id_list($idcat, $array_cat, RECURSIVE_EXPLORATION, ADD_THIS_CATEGORY_IN_LIST);
 
 		if (!empty($array_cat))
 		{
@@ -78,20 +76,19 @@ class NewsFeedProvider implements FeedProvider
                  FROM ' . DB_TABLE_NEWS . '
                  WHERE visible = 1 AND idcat IN :cats_ids
                  ORDER BY timestamp DESC LIMIT :limit OFFSET 0', array(
-                     'timestamp' => $now->get_timestamp(),
 			         'cats_ids' => $array_cat,
 			         'limit' => 2 * $NEWS_CONFIG['pagination_news']));
 
 			foreach ($results as $row)
 			{
 				// Rewriting
-				$link = new Url('/news/news' . url('.php?id=' . $row['id'], '-0-' . $row['id'] .  '+' . Url::encode_rewrite($row['title']) . '.php'));
+				$link = new Url('/news/news' . url('.php?id=' . $row['id'], '-'. $row['idcat'] .'-' . $row['id'] .  '+' . Url::encode_rewrite($row['title']) . '.php'));
 
 				$item = new FeedItem();
 				$item->set_title($row['title']);
 				$item->set_link($link);
 				$item->set_guid($link);
-				$item->set_desc($row['contents'] . (!empty($row['extend_contents']) ? '<br /><br /><a href="' . $link->absolute() . '">' . $NEWS_LANG['extend_contents'] . '</a><br /><br />' : ''));
+				$item->set_desc(FormatingHelper::second_parse($row['contents']) . (!empty($row['extend_contents']) ? '<br /><br /><a href="' . $link->absolute() . '">' . $NEWS_LANG['extend_contents'] . '</a><br /><br />' : ''));
 				$item->set_date(new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $row['timestamp']));
 				$item->set_image_url($row['img']);
 				$item->set_auth($news_cat->compute_heritated_auth($row['idcat'], AUTH_NEWS_READ, Authorizations::AUTH_PARENT_PRIORITY));

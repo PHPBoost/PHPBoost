@@ -104,7 +104,7 @@ class InstallationServices
 		defined('PREFIX') or define('PREFIX', $tables_prefix);
 		$db_connection_data = array(
 			'dbms' => DBFactory::MYSQL,
-			'dsn' => 'mysql:host=' . $host . ';port=' . $port . 'dbname=' . $database,
+			'dsn' => 'mysql:host=' . $host . ';port=' . $port . ';dbname=' . $database,
 			'driver_options' => array(),
 			'host' => $host,
 			'login' => $login,
@@ -147,10 +147,10 @@ class InstallationServices
 		return true;
 	}
 
-	public function create_admin($username, $password, $email, $create_session = true, $auto_connect = true)
+	public function create_admin($login, $password, $email, $create_session = true, $auto_connect = true)
 	{
 		$this->get_installation_token();
-		$this->create_first_admin($username, $password, $email, $create_session, $auto_connect);
+		$this->create_first_admin($login, $password, $email, $create_session, $auto_connect);
 		$this->delete_installation_token();
 		return true;
 	}
@@ -164,7 +164,7 @@ class InstallationServices
 	{
 		$locale = LangLoader::get_locale();
 		$user = new AdminUser();
-		$user->set_user_lang($locale);
+		$user->set_locale($locale);
 		AppContext::set_current_user($user);
 		$this->save_general_config($server_url, $server_path, $site_name, $site_desc, $site_keyword, $site_timezone);
 		$this->init_graphical_config();
@@ -182,7 +182,7 @@ class InstallationServices
 		$general_config->set_site_name($site_name);
 		$general_config->set_site_description($site_description);
 		$general_config->set_site_keywords($site_keywords);
-		$general_config->set_home_page($this->distribution_config['start_page']);
+		$general_config->set_module_home_page($this->distribution_config['module_home_page']);
 		$general_config->set_phpboost_major_version(self::$phpboost_major_version);
 		$general_config->set_site_install_date(new Date());
 		$general_config->set_site_timezone((int)$site_timezone);
@@ -198,7 +198,10 @@ class InstallationServices
 
 	private function init_debug_mode()
 	{
-		Debug::enabled_debug_mode();
+		if ($this->distribution_config['debug'])
+		{
+			Debug::enabled_debug_mode();
+		}
 	}
 
 	private function init_user_accounts_config($locale)
@@ -211,8 +214,7 @@ class InstallationServices
 
 	private function install_locale($locale)
 	{
-		PersistenceContext::get_querier()->inject("INSERT INTO " . DB_TABLE_LANG . " (lang, activ, secure) VALUES (:config_lang, 1, -1)", array(
-			'config_lang' => $locale));
+		LangManager::install($locale);
 	}
 
 	private function configure_theme($theme, $locale)
@@ -240,7 +242,7 @@ class InstallationServices
 	private function add_extended_fields()
 	{
 		$lang = LangLoader::get('admin-extended-fields-common');
-
+		
 		//Sex
 		$extended_field = new ExtendedField();
 		$extended_field->set_name($lang['field-install.sex']);
@@ -251,7 +253,7 @@ class InstallationServices
 		$extended_field->set_display(true);
 		$extended_field->set_is_freeze(true);
 		ExtendedFieldsService::add($extended_field);
-
+		
 		//Date Birth
 		$extended_field = new ExtendedField();
 		$extended_field->set_name($lang['field-install.date-birth']);
@@ -262,7 +264,7 @@ class InstallationServices
 		$extended_field->set_display(true);
 		$extended_field->set_is_freeze(true);
 		ExtendedFieldsService::add($extended_field);
-
+		
 		//Location
 		$extended_field = new ExtendedField();
 		$extended_field->set_name($lang['field-install.location']);
@@ -273,7 +275,7 @@ class InstallationServices
 		$extended_field->set_display(true);
 		$extended_field->set_is_freeze(true);
 		ExtendedFieldsService::add($extended_field);
-
+		
 		//Website
 		$extended_field = new ExtendedField();
 		$extended_field->set_name($lang['field-install.website']);
@@ -285,7 +287,7 @@ class InstallationServices
 		$extended_field->set_is_freeze(true);
 		$extended_field->set_regex(5);
 		ExtendedFieldsService::add($extended_field);
-
+		
 		//Job
 		$extended_field = new ExtendedField();
 		$extended_field->set_name($lang['field-install.job']);
@@ -296,7 +298,7 @@ class InstallationServices
 		$extended_field->set_display(true);
 		$extended_field->set_is_freeze(true);
 		ExtendedFieldsService::add($extended_field);
-
+		
 		//Entertainement
 		$extended_field = new ExtendedField();
 		$extended_field->set_name($lang['field-install.entertainement']);
@@ -307,7 +309,7 @@ class InstallationServices
 		$extended_field->set_display(true);
 		$extended_field->set_is_freeze(true);
 		ExtendedFieldsService::add($extended_field);
-
+		
 		//Sign
 		$extended_field = new ExtendedField();
 		$extended_field->set_name($lang['field-install.signing']);
@@ -318,7 +320,7 @@ class InstallationServices
 		$extended_field->set_display(true);
 		$extended_field->set_is_freeze(true);
 		ExtendedFieldsService::add($extended_field);
-
+		
 		//Biography
 		$extended_field = new ExtendedField();
 		$extended_field->set_name($lang['field-install.biography']);
@@ -329,7 +331,7 @@ class InstallationServices
 		$extended_field->set_display(true);
 		$extended_field->set_is_freeze(true);
 		ExtendedFieldsService::add($extended_field);
-
+		
 		//MSN
 		$extended_field = new ExtendedField();
 		$extended_field->set_name($lang['field-install.msn']);
@@ -341,7 +343,7 @@ class InstallationServices
 		$extended_field->set_is_freeze(true);
 		$extended_field->set_regex(4);
 		ExtendedFieldsService::add($extended_field);
-
+		
 		//Yahoo
 		$extended_field = new ExtendedField();
 		$extended_field->set_name($lang['field-install.yahoo']);
@@ -353,7 +355,7 @@ class InstallationServices
 		$extended_field->set_is_freeze(true);
 		$extended_field->set_regex(4);
 		ExtendedFieldsService::add($extended_field);
-
+		
 		//Avatar
 		$extended_field = new ExtendedField();
 		$extended_field->set_name($lang['field-install.avatar']);
@@ -365,7 +367,7 @@ class InstallationServices
 		$extended_field->set_is_freeze(true);
 		ExtendedFieldsService::add($extended_field);
 	}
-
+	
 	private function generate_cache()
 	{
 		AppContext::get_cache_service()->clear_cache();
@@ -427,15 +429,13 @@ class InstallationServices
 		$db_config_file->close();
 	}
 
-	private function create_first_admin($username, $password, $email, $create_session, $auto_connect)
+	private function create_first_admin($login, $password, $email, $create_session, $auto_connect)
 	{
-		global $Cache;
-		$Cache = new Cache();
 		$admin_unlock_code = $this->generate_admin_unlock_code();
-		$user_id = $this->create_first_admin_account($username, $password, $email, LangLoader::get_locale(), $this->distribution_config['theme'], GeneralConfig::load()->get_site_timezone());
+		$user_id = $this->create_first_admin_account($login, $password, $email, LangLoader::get_locale(), $this->distribution_config['theme'], GeneralConfig::load()->get_site_timezone());
 		$this->configure_mail_sender_system($email);
 		$this->configure_accounts_policy();
-		$this->send_installation_mail($username, $password, $email, $admin_unlock_code);
+		$this->send_installation_mail($login, $password, $email, $admin_unlock_code);
 		if ($create_session)
 		{
 			$this->connect_admin($user_id, $auto_connect);
@@ -481,12 +481,13 @@ class InstallationServices
 
 	private function send_installation_mail($login, $password, $email, $unlock_admin)
 	{
+		$general_config = GeneralConfig::load();
 		$mail = new Mail();
-		$mail->set_sender($email, 'admin');
+		$mail->set_sender($email, Mail::SENDER_ADMIN);
 		$mail->add_recipient($email);
 		$mail->set_subject($this->messages['admin.created.email.object']);
 		$mail->set_content(sprintf($this->messages['admin.created.email.unlockCode'], stripslashes($login),
-		stripslashes($login), $password, $unlock_admin, HOST . DIR));
+		stripslashes($login), $password, $unlock_admin, $general_config->get_site_url() . $general_config->get_site_path()));
 		AppContext::get_mail_service()->try_to_send($mail);
 	}
 

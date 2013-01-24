@@ -1,21 +1,15 @@
 	{HEADER}
-	<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/lib/js/lightbox/lightbox.js"></script>
 	<script type="text/javascript">
 	<!--
 	function insert_popup(code) 
 	{
-		var area = opener.document.getElementById("{FIELD}");
-		var nav = navigator.appName; //Recupère le nom du navigateur
-
+		# IF C_BBCODE_TINYMCE_MODE #
 		window.opener.insertTinyMceContent(code); //insertion pour tinymce.
+		# ENDIF #
 		
-		area.focus();
-		if( nav == 'Microsoft Internet Explorer' ) // Internet Explorer
-			ie_sel(area, code, 'smile');
-		else if( nav == 'Netscape' || nav == 'Opera' ) //Netscape ou opera
-			netscape_sel(area, code, 'smile');
-		else //insertion normale (autres navigateurs)
-			opener.document.getElementById("{FIELD}").value += ' ' + code;
+		var textarea = opener.document.getElementById("{FIELD}");
+		textarea.focus();
+		textarea.value += ' ' + code;
 	}	
 	function close_popup()
 	{
@@ -31,13 +25,13 @@
 	function Confirm_member() {
 		return confirm("{L_CONFIRM_EMPTY_FOLDER}");
 	}
-	function popup_upload(id, width, height, scrollbars)
+	function popup_upload(path, width, height, scrollbars)
 	{
 		if( height == '0' )
 			height = screen.height - 150;
 		if( width == '0' )
 			width = screen.width - 200;
-		window.open('../user/upload_popup.php?id=' + id, "", "width="+width+", height="+height+ ",location=no,status=no,toolbar=no,scrollbars=" + scrollbars + ",resizable=yes");
+		window.open(path, "", "width="+width+", height="+height+ ",location=no,status=no,toolbar=no,scrollbars=" + scrollbars + ",resizable=yes");
 	}
 	var hide_folder = false;
 	var empty_folder = 0;

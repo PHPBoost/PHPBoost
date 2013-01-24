@@ -36,5 +36,4 @@ class MySQLQuerierException extends SQLQuerierException
         parent::__construct($message . '. (ERRNO ' . mysql_errno() . ') ' . mysql_error() . '<hr />query: ' . $query);
     }
 }
-
 ?>

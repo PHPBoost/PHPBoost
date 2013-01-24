@@ -39,7 +39,7 @@ $lang = array(
 	'pseudo' => 'Pseudo',
 	'password' => 'Mot de passe',
 	'autoconnect' => 'Connexion automatique',
-	'flood_block' => 'Il vous reste :remaining_tries essai(s) après cela il vous faudra attendre 5 minutes pour obtenir 2 nouveaux essais (10min pour 5)!',
+	'flood_block' => 'Il vous reste :remaining_tries essai(s). Après cela il vous faudra attendre 5 minutes pour obtenir 2 nouveaux essais (10min pour 5)!',
     'flood_max' => 'Vous avez épuisé tous vos essais de connexion, votre compte est verrouillé pendant 5 minutes',
 	'unlock_admin_panel' => 'Déverrouillage de l\'administration'
 );

@@ -3,8 +3,8 @@
  *                      NewsletterArchivesController.class.php
  *                            -------------------
  *   begin                : March 21, 2011
- *   copyright            : (C) 2011 Kévin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   copyright            : (C) 2011 Kevin MASSY
+ *   email                : kevin.massy@phpboost.com
  *
  *
  ###################################################
@@ -33,7 +33,7 @@ class NewsletterArchivesController extends ModuleController
 	
 	private $nbr_archives_per_page = 25;
 
-	public function execute(HTTPRequest $request)
+	public function execute(HTTPRequestCustom $request)
 	{
 		$this->id_stream = $request->get_int('id_stream', 0);
 		$this->init();
@@ -56,7 +56,7 @@ class NewsletterArchivesController extends ModuleController
 		
 		if (!NewsletterStreamsCache::load()->get_existed_stream($this->id_stream))
 		{
-			$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), LangLoader::get_message('admin.stream-not-existed', 'newsletter_common', 'newsletter'));
+			$controller = new UserErrorController(LangLoader::get_message('error', 'errors-common'), LangLoader::get_message('admin.stream-not-existed', 'newsletter_common', 'newsletter'));
 			DispatchManager::redirect($controller);
 		}
 		
@@ -86,6 +86,8 @@ class NewsletterArchivesController extends ModuleController
 		$pagination->set_url_sprintf_pattern(NewsletterUrlBuilder::archives($this->id_stream .'/'. $field .'/'. $sort .'/%d')->absolute());
 		$this->view->put_all(array(
 			'C_ARCHIVES' => (float)$nbr_archives,
+			'C_SPECIFIC_STREAM' => !empty($this->id_stream),
+			'NUMBER_COLUMN' => empty($this->id_stream) && !empty($nbr_archives) ? 4 : 3,
 			'SORT_STREAM_TOP' => NewsletterUrlBuilder::archives($this->id_stream .'/stream/top/'. $current_page)->absolute(),
 			'SORT_STREAM_BOTTOM' => NewsletterUrlBuilder::archives($this->id_stream .'/stream/bottom/'. $current_page)->absolute(),
 			'SORT_SUBJECT_TOP' => NewsletterUrlBuilder::archives($this->id_stream .'/subject/top/'. $current_page)->absolute(),
@@ -132,7 +134,10 @@ class NewsletterArchivesController extends ModuleController
 
 	private function build_response(View $view)
 	{
-		$response = new SiteDisplayResponse($view);
+		$body_view = new FileTemplate('newsletter/NewsletterBody.tpl');
+		$body_view->add_lang($this->lang);
+		$body_view->put('TEMPLATE', $view);
+		$response = new SiteDisplayResponse($body_view);
 		$breadcrumb = $response->get_graphical_environment()->get_breadcrumb();
 		$breadcrumb->add($this->lang['newsletter'], NewsletterUrlBuilder::home()->absolute());
 		$breadcrumb->add($this->lang['archives.list'], NewsletterUrlBuilder::archives()->absolute());
@@ -147,5 +152,4 @@ class NewsletterArchivesController extends ModuleController
 		return $response;
 	}
 }
-
 ?>

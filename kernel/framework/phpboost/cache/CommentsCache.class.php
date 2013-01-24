@@ -3,8 +3,8 @@
  *                      	 CommentsCache.class.php
  *                            -------------------
  *   begin                : September 24, 2011
- *   copyright            : (C) 2011 Kévin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   copyright            : (C) 2011 Kevin MASSY
+ *   email                : kevin.massy@phpboost.com
  *
  *
  ###################################################
@@ -26,7 +26,7 @@
  ###################################################*/
 
 /**
- * @author Kévin MASSY <soldier.weasel@gmail.com>
+ * @author Kevin MASSY <kevin.massy@phpboost.com>
  */
 class CommentsCache implements CacheData
 {
@@ -40,9 +40,10 @@ class CommentsCache implements CacheData
 		$this->comments = array();
 
 		$result = PersistenceContext::get_querier()->select("
-			SELECT comments.*, topic.*
+			SELECT comments.*, topic.*, member.*
 			FROM " . DB_TABLE_COMMENTS . " comments
 			LEFT JOIN " . DB_TABLE_COMMENTS_TOPIC . " topic ON comments.id_topic = topic.id_topic
+			LEFT JOIN " . DB_TABLE_MEMBER . " member ON member.user_id = comments.user_id
 			ORDER BY comments.timestamp " . CommentsConfig::load()->get_order_display_comments()
 		);
 		
@@ -53,12 +54,12 @@ class CommentsCache implements CacheData
 				'id_topic' => $row['id_topic'],
 				'module_id' => $row['module_id'],
 				'id_in_module' => $row['id_in_module'],
+				'topic_identifier' => $row['topic_identifier'],
 				'message' => $row['message'],
-				'user_id' => $row['user_id'],
-				'name_visitor' => $row['name_visitor'],
-				'ip_visitor' => $row['ip_visitor'],
 				'note' => $row['note'],
-				'timestamp' => $row['timestamp']
+				'timestamp' => $row['timestamp'],
+				'path' => $row['path'],
+				'user_id' => $row['user_id']
 			);
 		}
 	}
@@ -88,12 +89,12 @@ class CommentsCache implements CacheData
 		return null;
 	}
 
-	public function get_comments_by_module($module_id, $id_in_module)
+	public function get_comments_by_module($module_id, $id_in_module, $topic_identifier)
 	{
 		$comments = array();
 		foreach ($this->comments as $id_comment => $informations)
 		{
-			if ($informations['module_id'] == $module_id && $informations['id_in_module'] == $id_in_module)
+			if ($informations['module_id'] == $module_id && $informations['id_in_module'] == $id_in_module && $informations['topic_identifier'] == $topic_identifier)
 			{
 				$comments[$id_comment] = $informations;
 			}
@@ -101,15 +102,9 @@ class CommentsCache implements CacheData
 		return $comments;
 	}
 	
-	public function get_count_comments_by_module($module_id, $id_in_module)
+	public function get_count_comments_by_module($module_id, $id_in_module, $topic_identifier)
 	{
-		return count($this->get_comments_by_module($module_id, $id_in_module));
-	}
-	
-	public function get_comments_sliced($module_id, $id_in_module, $offset, $lenght = 0)
-	{
-		$comments = $this->get_comments_by_module($module_id, $id_in_module);
-		return $this->slice_comments($comments, $offset, $lenght);
+		return count($this->get_comments_by_module($module_id, $id_in_module, $topic_identifier));
 	}
 	
 	public function get_count_comments()

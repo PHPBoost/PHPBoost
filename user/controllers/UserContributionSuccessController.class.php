@@ -3,8 +3,8 @@
  *                       UserContributionSuccessController.class.php
  *                            -------------------
  *   begin                : October 07, 2011
- *   copyright            : (C) 2011 Kévin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   copyright            : (C) 2011 Kevin MASSY
+ *   email                : kevin.massy@phpboost.com
  *
  *
  ###################################################
@@ -34,7 +34,7 @@ class UserContributionSuccessController extends UserErrorController
 		parent::__construct($lang['contribution.confirmed'], $lang['contribution.confirmed.messages'], self::SUCCESS);
 	}
 	
-	public function execute(HTTPRequest $request)
+	public function execute(HTTPRequestCustom $request)
 	{
 		return parent::execute($request);
 	}

@@ -3,8 +3,8 @@
  *                       AdminExtendedFieldMemberEditController.class.php
  *                            -------------------
  *   begin                : December 17, 2010
- *   copyright            : (C) 2010 Kévin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   copyright            : (C) 2010 Kevin MASSY
+ *   email                : kevin.massy@phpboost.com
  *
  *
  ###################################################
@@ -39,7 +39,7 @@ class AdminExtendedFieldMemberEditController extends AdminController
 	 */
 	private $submit_button;
 
-	public function execute(HTTPRequest $request)
+	public function execute(HTTPRequestCustom $request)
 	{
 		$id = $request->get_getint('id');
 		$this->init();
@@ -70,15 +70,18 @@ class AdminExtendedFieldMemberEditController extends AdminController
 			'FIELD_TYPE' => $extended_field_cache['field_type']
 		));
 		
-		$error = ExtendedFieldsService::get_error();
-		if (!empty($error))
-		{
-			$this->tpl->put('MSG', MessageHelper::display($error, E_USER_NOTICE, 6));
-		}
-		elseif ($this->submit_button->has_been_submitted() && $this->form->validate())
+		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save($id);
-			$this->tpl->put('MSG', MessageHelper::display($this->lang['extended-fields-sucess-add'], E_USER_SUCCESS, 6));
+			$error = ExtendedFieldsService::get_error();
+			if (!empty($error))
+			{
+				$this->tpl->put('MSG', MessageHelper::display($error, E_USER_NOTICE, 6));
+			}
+			else
+			{
+				$this->tpl->put('MSG', MessageHelper::display(LangLoader::get_message('process.success', 'errors-common'), MessageHelper::SUCCESS, 6));
+			}
 		}
 
 		$this->tpl->put('FORM', $this->form->display());
@@ -103,13 +106,13 @@ class AdminExtendedFieldMemberEditController extends AdminController
 		$form->add_fieldset($fieldset);
 		
 		$fieldset->add_field(new FormFieldTextEditor('name', $this->lang['field.name'], $extended_field_cache['name'], array(
-			'class' => 'text', 'maxlength' => 25, 'required' => true)
+			'class' => 'text', 'required' => true)
 		));
 		
 		$fieldset->add_field(new FormFieldShortMultiLineTextEditor('description', $this->lang['field.description'], $extended_field_cache['description'],
 		array('rows' => 4, 'cols' => 47)
 		));
-		
+
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('field_type', $this->lang['field.type'], $extended_field_cache['field_type'],
 			$this->get_array_select_type(),
 			array('events' => array('change' => $this->get_events_select_type()))
@@ -166,10 +169,10 @@ class AdminExtendedFieldMemberEditController extends AdminController
 		$auth_setter = new FormFieldAuthorizationsSetter('authorizations', $auth_settings);
 		$fieldset->add_field($auth_setter);
 
-		$form->add_button(new FormButtonReset());
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_button($this->submit_button);
-
+		$form->add_button(new FormButtonReset());
+		
 		$this->form = $form;
 	}
 
@@ -186,14 +189,14 @@ class AdminExtendedFieldMemberEditController extends AdminController
 		}
 		else
 		{
-			$extended_field->set_field_name($extended_field->get_field_name());
+			$extended_field->set_field_name(TextHelper::htmlspecialchars($extended_field->get_field_name()));
 			$extended_field->set_field_type($extended_field->get_field_type());
 		}
 		
 		$extended_field->set_position(PersistenceContext::get_sql()->query("SELECT MAX(position) + 1 FROM " . DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST . "", __LINE__, __FILE__));
-		$extended_field->set_description($this->form->get_value('description', $extended_field->get_description()));
-		$extended_field->set_possible_values($this->form->get_value('possible_values', $extended_field->get_possible_values()));
-		$extended_field->set_default_values($this->form->get_value('default_values', $extended_field->get_default_values()));
+		$extended_field->set_description(TextHelper::htmlspecialchars($this->form->get_value('description', $extended_field->get_description())));
+		$extended_field->set_possible_values(TextHelper::htmlspecialchars($this->form->get_value('possible_values', $extended_field->get_possible_values())));
+		$extended_field->set_default_values(TextHelper::htmlspecialchars($this->form->get_value('default_values', $extended_field->get_default_values())));
 		$extended_field->set_is_required((bool)$this->form->get_value('field_required')->get_raw_value());
 		$extended_field->set_display((bool)$this->form->get_value('display')->get_raw_value());
 		$regex = 0;
@@ -217,20 +220,18 @@ class AdminExtendedFieldMemberEditController extends AdminController
 			if ($module == 'kernel')
 			{
 				$kernel_select = array();
-				foreach ($files as $file)
+				foreach ($files as $field_type)
 				{
-					$field_type = new $file();
-					$kernel_select[] = new FormFieldSelectChoiceOption($field_type->get_name(), $file);
+					$kernel_select[] = new FormFieldSelectChoiceOption($field_type->get_name(), get_class($field_type));
 				}
 				$select[] = new FormFieldSelectChoiceGroupOption($this->lang['default-field'], $kernel_select);
 			}
 			else
 			{
 				$module_select = array();
-				foreach ($files as $file)
+				foreach ($files as $field_type)
 				{
-					$field_type = new $file();
-					$module_select[] = new FormFieldSelectChoiceOption($field_type->get_name(), $file);
+					$module_select[] = new FormFieldSelectChoiceOption($field_type->get_name(), get_class($field_type));
 				}
 
 				$module_name = ModulesManager::get_module($module)->get_configuration()->get_name();
@@ -286,16 +287,15 @@ class AdminExtendedFieldMemberEditController extends AdminController
 		
 		foreach ($this->get_extended_fields_class_name() as $module => $files)
 		{
-			foreach ($files as $file)
+			foreach ($files as $field_type)
 			{
-				$field_type = new $file();
 				$disable_fields_extended_field = $field_type->get_disable_fields_configuration();
 				
 				foreach ($disable_fields_extended_field as $name_disable_field)
 				{
 					if (array_key_exists($name_disable_field, $disable_field))
 					{
-						$disable_field[$name_disable_field][] = $file;
+						$disable_field[$name_disable_field][] = get_class($field_type);
 					}
 				}
 			}

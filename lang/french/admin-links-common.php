@@ -3,8 +3,8 @@
  *                           admin-menu-common.php
  *                            -------------------
  *   begin                : October 03, 2011
- *   copyright            : (C) 2011 Kévin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   copyright            : (C) 2011 Kevin MASSY
+ *   email                : kevin.massy@phpboost.com
  *
  *
  ###################################################
@@ -64,16 +64,11 @@ $lang['tools.cache.syndication'] = 'Syndication';
 $lang['tools.cache.css'] = 'CSS';
 
 $lang['tools.errors-archived'] = 'Erreurs archivées';
+$lang['tools.404-errors-archived'] = 'Erreurs 404';
 
 $lang['tools.server'] = 'Serveur';
 $lang['tools.server.phpinfo'] = 'PHP info';
 $lang['tools.server.system-report'] = 'Rapport système';
-
-$lang['tools.personalization'] = 'Personnalisation';
-$lang['tools.personalization.interface'] = 'Interface';
-$lang['tools.personalization.favicon'] = 'Favicon';
-$lang['tools.personalization.css-files'] = 'Fichiers CSS';
-
 
 $lang['users'] = 'Utilisateurs';
 $lang['users.punishement'] = 'Sanction';
@@ -81,7 +76,6 @@ $lang['users.punishement'] = 'Sanction';
 $lang['users.groups'] = 'Groupes';
 $lang['users.extended-fields'] = 'Champs étendus';
 $lang['users.ranks'] = 'Rangs';
-$lang['users.rules'] = 'Règlement';
 
 
 $lang['content'] = 'Contenu';

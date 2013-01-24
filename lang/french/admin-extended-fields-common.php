@@ -3,8 +3,8 @@
  *                           admin-extended-fields-common.php
  *                            -------------------
  *   begin                : December 17, 2010
- *   copyright            : (C) 2010 Kévin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   copyright            : (C) 2010 Kevin MASSY
+ *   email                : kevin.massy@phpboost.com
  *
  *
  ###################################################
@@ -35,9 +35,6 @@ $lang['extended-field-add'] = 'Ajouter un champ membre';
 $lang['extended-field-edit'] = 'Editer un champ membre';
 $lang['extended-field'] = 'Champs membres';
 $lang['extended-fields-management'] = 'Gestion des champs membres';
-$lang['extended-fields-sucess-edit'] = 'Le champ étendu à été mis à jour avec succès.';
-$lang['extended-fields-sucess-add'] = 'Le champ étendu à été ajouté avec succès.';
-$lang['extended-fields-sucess-delete'] = 'Le champ étendu à été supprimé avec succès.';
 $lang['extended-fields-error-already-exist'] = 'Le champ étendu existe déjà.';
 $lang['extended-fields-error-phpboost-config'] = 'Les champs utilisés par défaut par PHPBoost ne peuvent pas être créés plusieurs fois, veuillez choisir un autre type de champ.';
 
@@ -64,7 +61,7 @@ $lang['field.name'] = 'Nom';
 $lang['field.description'] = 'Description';
 $lang['field.type'] = 'Type de champ';
 $lang['field.regex'] = 'Contrôle de la forme de l\'entrée';
-$lang['field.regex-explain'] = 'Permet d\'effectuer un contrôle sur la forme de ce que l\'utilisateur a entré. Par exemple, si il s\'agit d\'une adresse mail, on peut contrôler que sa forme est correcte. <br />Vous pouvez effectuer un contrôle personnalié en tapant une expression régulière (utilisateurs expérimentés seulement).';
+$lang['field.regex-explain'] = 'Permet d\'effectuer un contrôle sur la forme de ce que l\'utilisateur a entré. Par exemple, si il s\'agit d\'une adresse mail, on peut contrôler que sa forme est correcte. <br />Vous pouvez effectuer un contrôle personnalisé en tapant une expression régulière (utilisateurs expérimentés seulement).';
 $lang['field.predefined-regex'] = 'Forme prédéfinie';
 $lang['field.required'] = 'Champ requis';
 $lang['field.required_explain'] = 'Obligatoire dans le profil du membre et à son inscription.';
@@ -97,14 +94,14 @@ $lang['field.is-not-required'] = 'Non requis';
 
 
 //Install
-$lang['field-install.default-lang'] = 'Langue par defaut';
-$lang['field-install.default-lang-explain'] = 'Séléctionner la langue que vous souhaitez utiliser';
+$lang['field-install.default-lang'] = 'Langue par défaut';
+$lang['field-install.default-lang-explain'] = 'Sélectionner la langue que vous souhaitez utiliser';
 
-$lang['field-install.default-theme'] = 'Theme par defaut';
-$lang['field-install.default-theme-explain'] = 'Séléctionner le thème que vous souhaitez utiliser';
+$lang['field-install.default-theme'] = 'Thème par défaut';
+$lang['field-install.default-theme-explain'] = 'Sélectionner le thème que vous souhaitez utiliser';
 
 $lang['field-install.default-editor'] = 'Editeur de texte par défaut';
-$lang['field-install.default-editor-explain'] = 'Séléctionner l\'éditeur de texte que vous souhaitez utiliser';
+$lang['field-install.default-editor-explain'] = 'Sélectionner l\'éditeur de texte que vous souhaitez utiliser';
 
 $lang['field-install.timezone'] = 'Choix du fuseau horaire';
 $lang['field-install.timezone-explain'] = 'Vous permet d\'ajuster l\'heure en fonction de votre localisation';
@@ -119,7 +116,7 @@ $lang['field-install.avatar'] = 'Avatar';
 $lang['field-install.avatar-explain'] = '';
 
 $lang['field-install.website'] = 'Site web';
-$lang['field-install.website-explain'] = 'Veuillez renseigner un site web valide';
+$lang['field-install.website-explain'] = 'Veuillez renseigner un site web valide (ex : http://www.phpboost.com)';
 
 $lang['field-install.location'] = 'Localisation';
 $lang['field-install.location-explain'] = '';
@@ -141,5 +138,4 @@ $lang['field-install.msn-explain'] = '';
 
 $lang['field-install.yahoo'] = 'Yahoo';
 $lang['field-install.yahoo-explain'] = '';
-
 ?>

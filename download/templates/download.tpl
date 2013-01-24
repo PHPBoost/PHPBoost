@@ -3,7 +3,8 @@
 			<div class="module_top_l"></div>		
 			<div class="module_top_r"></div>
 			<div class="module_top">
-				<a href="${relative_url(SyndicationUrlBuilder::rss('download',IDCAT))}" title="Rss"><img style="vertical-align:middle;margin-top:-2px;" src="{PATH_TO_ROOT}/templates/{THEME}/images/rss.png" alt="Rss" title="Rss" /></a>  {TITLE}
+				<a href="${relative_url(SyndicationUrlBuilder::rss('download',IDCAT))}" title="Rss"><img style="vertical-align:middle;margin-top:-2px;" src="{PATH_TO_ROOT}/templates/{THEME}/images/rss.png" alt="Rss" title="Rss" /></a>
+				{TITLE}
 				# IF C_ADMIN #
 				<a href="{U_ADMIN_CAT}">
 					<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="" />
@@ -76,7 +77,7 @@
 					<div class="spacer">&nbsp;</div>
 					
 					# START file #
-						<div class="block_container" style="margin-bottom:20px;">
+						<div class="block_container" style="margin-bottom:20px;vertical-align:top;">
 							<div class="block_contents">
 								# IF file.C_IMG #
 									<div class="float_right">
@@ -153,7 +154,7 @@
 			<div class="module_contents">
 				<table>
 					<tr>
-						<td style="text-align:center;padding-right:20px;">
+						<td style="text-align:center;padding-right:20px;vertical-align:top;">
 							# IF C_IMG #
 								<img src="{U_IMG}" alt="{IMAGE_ALT}" />
 								<br /><br />
@@ -170,9 +171,7 @@
 							# ENDIF #
 						</td>
 						<td>
-							<p class="text_justify">
-								{CONTENTS}
-							</p>
+							{CONTENTS}
 						</td>
 					</tr>
 				</table>

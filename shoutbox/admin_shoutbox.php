@@ -36,8 +36,8 @@ if (!empty($_POST['valid']) )
 	$config_shoutbox = ShoutboxConfig::load();
 	
 	$config_shoutbox->set_max_messages_number(retrieve(POST, 'shoutbox_max_msg', 10));
-	$config_shoutbox->set_authorization(Authorizations::build_auth_array_from_form(ShoutboxConfig::AUTHORIZATION_READ, ShoutboxConfig::AUTHORIZATION_WRITE, ShoutboxConfig::AUTHORIZATION_MODERATION));
-	$config_shoutbox->set_forbidden_formatting_tags($_POST['shoutbox_forbidden_tags']);
+	$config_shoutbox->set_authorization(Authorizations::build_auth_array_from_form(ShoutboxConfig::AUTHORIZATION_WRITE, ShoutboxConfig::AUTHORIZATION_MODERATION));
+	$config_shoutbox->set_forbidden_formatting_tags(retrieve(POST, 'shoutbox_forbidden_tags', array()));
 	$config_shoutbox->set_max_links_number_per_message(retrieve(POST, 'shoutbox_max_link', -1));
 	$config_shoutbox->set_refresh_delay(NumberHelper::numeric(retrieve(POST, 'shoutbox_refresh_delay', 0)* 60000, 'float'));
 
@@ -62,7 +62,6 @@ else
 	$Template->put_all(array(
 		'NBR_TAGS' => count($array_tags),
 		'SHOUTBOX_MAX_MSG' =>  $config_shoutbox->get_max_messages_number(),
-		'AUTH_READ' => Authorizations::generate_select(ShoutboxConfig::AUTHORIZATION_READ, $config_shoutbox->get_authorization()),
 		'AUTH_WRITE' => Authorizations::generate_select(ShoutboxConfig::AUTHORIZATION_WRITE, $config_shoutbox->get_authorization()),
 		'AUTH_MODERATION' => Authorizations::generate_select(ShoutboxConfig::AUTHORIZATION_MODERATION, $config_shoutbox->get_authorization()),
 		'MAX_LINK' => $config_shoutbox->get_max_links_number_per_message(),
@@ -73,7 +72,6 @@ else
 		'L_SHOUTBOX_MAX_MSG' => $LANG['shoutbox_max_msg'],
 		'L_SHOUTBOX_MAX_MSG_EXPLAIN' => $LANG['shoutbox_max_msg_explain'],
 		'L_AUTH_WRITE' => $LANG['auth_write'],
-		'L_AUTH_READ' => $LANG['auth_read'],
 		'L_AUTH_MODERATION' => $LANG['auth_moderation'],
 		'L_SHOUTBOX_REFRESH_DELAY' => $LANG['shoutbox_refresh_delay'],
 		'L_SHOUTBOX_REFRESH_DELAY_EXPLAIN' => $LANG['shoutbox_refresh_delay_explain'],

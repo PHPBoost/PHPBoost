@@ -3,8 +3,8 @@
  *                      AdminNewsletterStreamsListController.class.php
  *                            -------------------
  *   begin                : March 11, 2011
- *   copyright            : (C) 2011 Kévin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   copyright            : (C) 2011 Kevin MASSY
+ *   email                : kevin.massy@phpboost.com
  *
  *
  ###################################################
@@ -33,7 +33,7 @@ class AdminNewsletterStreamsListController extends AdminModuleController
 	
 	private $nbr_categories_per_page = 25;
 
-	public function execute(HTTPRequest $request)
+	public function execute(HTTPRequestCustom $request)
 	{
 		$this->init();
 		$this->build_form($request);
@@ -113,5 +113,4 @@ class AdminNewsletterStreamsListController extends AdminModuleController
 		$this->user = AppContext::get_current_user();
 	}
 }
-
 ?>

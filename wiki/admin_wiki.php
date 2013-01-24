@@ -61,7 +61,7 @@ $Template->set_filenames(array(
 ));
 
 //On travaille uniquement en BBCode, on force le langage de l'éditeur
-$content_editor = new BBCodeFormattingFactory();
+$content_editor = AppContext::get_content_formatting_service()->get_default_factory();
 $editor = $content_editor->get_editor();
 $editor->set_identifier('contents');
 
@@ -75,6 +75,7 @@ $Template->put_all(array(
 	'DESCRIPTION' => wiki_unparse($_WIKI_CONFIG['index_text']),
 	'L_UPDATE' => $LANG['update'],
 	'L_RESET' => $LANG['reset'],
+	'L_PREVIEW' => $LANG['preview'],
 	'L_WIKI_MANAGEMENT' => $LANG['wiki_management'],
 	'L_WIKI_GROUPS' => $LANG['wiki_groups_config'],
 	'L_CONFIG_WIKI' => $LANG['wiki_config'],

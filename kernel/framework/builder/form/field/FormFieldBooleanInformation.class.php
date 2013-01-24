@@ -57,5 +57,4 @@ class FormFieldBooleanInformation extends FormFieldFree
 		return '<img src="' . TPL_PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/' . $image_name . '" alt="" />';
 	}
 }
-
 ?>

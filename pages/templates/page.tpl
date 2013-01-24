@@ -2,7 +2,7 @@
 			<div class="module_top_l"></div>		
 			<div class="module_top_r"></div>
 			<div class="module_top">{TITLE}</div>
-			<div class="module_contents" style="padding-bottom:65px;">
+			<div class="module_contents" style="padding-bottom:85px;">
 				# START redirect #
 					<div class="row3" style="width:auto; float:left;">
 					{redirect.REDIRECTED_FROM} {redirect.DELETE_REDIRECTION}
@@ -22,17 +22,28 @@
 					</div>
 				</noscript>
 
-				<div style="float:right">
-					# IF C_ACTIV_COM #
-					<img src="{PICTURES_DATA_PATH}/images/com.png" class="valign_middle" alt="" /> <a href="{U_COM}" class="small_link">{L_COM}</a>&nbsp;
-					# ENDIF #
-					# START links_list #
-					{links_list.BULL}
-					<img src="{links_list.DM_A_CLASS}" alt="" class="valign_middle" />
-					<a href="{links_list.U_ACTION}" title="{links_list.L_ACTION}" onclick="{links_list.ONCLICK}" class="small_link">{links_list.L_ACTION}</a>
-					
-					# END links_list #
-				</div>
+				<div style="margin-bottom:10px;">
+					<div class="dynamic_menu" style="float:right;margin-right:70px;">
+						<ul>
+						# IF C_ACTIV_COM #
+							<li>
+								<h5 style="margin-right:20px;">
+									<img src="{PICTURES_DATA_PATH}/images/com.png" class="valign_middle" alt="" /> 
+									<a href="{U_COM}" >{L_COM}</a>
+								</h5>
+							</li>
+						# ENDIF #
+							<li onmouseover="show_menu(1, 0);" onmouseout="hide_menu(0);">
+								<h5 style="margin-right:25px;"><img src="{PICTURES_DATA_PATH}/images/tools.png" class="valign_middle" alt="" />{L_PAGE_OUTILS}</h5>
+								<ul id="smenu1">
+								# START links_list #
+									<li><a href="{links_list.U_ACTION}" title="{links_list.L_ACTION}" onclick="{links_list.ONCLICK}" class="small_link" style="background-image:url({links_list.DM_A_CLASS});background-repeat:no-repeat;background-position:5px;">{links_list.L_ACTION}</a></li>
+								# END links_list #
+								</ul>
+							</li>
+						</ul>
+					</div>	
+				</div>			
 				<div class="spacer">&nbsp;</div>
 					{CONTENTS}
 				<div class="spacer">&nbsp;</div>

@@ -32,11 +32,11 @@ require_once PATH_TO_ROOT . '/kernel/framework/core/environment/Environment.clas
 Environment::load_imports();
 Environment::load_static_constants();
 
-AppContext::set_request(new HTTPRequest());
+AppContext::set_request(new HTTPRequestCustom());
 AppContext::init_session();
 AppContext::get_session()->load();
 AppContext::get_session()->act();
-AppContext::init_user();
+AppContext::init_current_user();
 require_file('/test/PHPUnit/Framework.php');
 
 if (isset($argv))

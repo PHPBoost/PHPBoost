@@ -4,7 +4,7 @@
  *                            -------------------
  *   begin                : December 27, 2010
  *   copyright            : (C) 2010 K�vin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   email                : kevin.massy@phpboost.com
  *
  *
  ###################################################
@@ -37,7 +37,7 @@ class AdminMemberAddController extends AdminController
 	 */
 	private $submit_button;
 
-	public function execute(HTTPRequest $request)
+	public function execute(HTTPRequestCustom $request)
 	{
 		$this->init();
 		$this->build_form();
@@ -45,63 +45,63 @@ class AdminMemberAddController extends AdminController
 		$tpl = new StringTemplate('# INCLUDE MSG # # INCLUDE FORM #');
 		$tpl->add_lang($this->lang);
 
-		if ($this->submit_button->has_been_submitted() && $this->form->validate())
+		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save();
-
-			$tpl->put('MSG', MessageHelper::display($this->lang['members.add-member.success'], E_USER_SUCCESS, 4));
+			AppContext::get_response()->redirect(PATH_TO_ROOT . '/admin/admin_members.php');
 		}
 
 		$tpl->put('FORM', $this->form->display());
 
-		return new AdminMembersDisplayResponse($tpl, $this->lang['members.add-member']);
+		return new AdminMembersDisplayResponse($tpl, LangLoader::get_message('members.add-member', 'admin-members-common'));
 	}
 
 	private function init()
 	{
-		$this->lang = LangLoader::get('admin-members-common');
+		$this->lang = LangLoader::get('user-common');
 	}
 
 	private function build_form()
 	{
 		$form = new HTMLForm('member-add');
 		
-		$fieldset = new FormFieldsetHTML('add_member', $this->lang['members.add-member']);
+		$fieldset = new FormFieldsetHTML('add_member', LangLoader::get_message('members.add-member', 'admin-members-common'));
 		$form->add_fieldset($fieldset);
 		
-		$fieldset->add_field(new FormFieldTextEditor('login', $this->lang['members.pseudo'], '', array(
+		$fieldset->add_field(new FormFieldTextEditor('login', $this->lang['pseudo'], '', array(
 			'class' => 'text', 'maxlength' => 25, 'size' => 25, 'required' => true),
-			array(new FormFieldConstraintLengthRange(3, 25))
+			array(new FormFieldConstraintLengthRange(3, 25), new FormFieldConstraintLoginExist())
 		));		
 		
-		$fieldset->add_field(new FormFieldTextEditor('email', $this->lang['members.mail'], '', array(
-			'class' => 'text', 'maxlength' => 255, 'description' => $this->lang['members.valid'], 'required' => true),
+		$fieldset->add_field(new FormFieldTextEditor('mail', $this->lang['email'], '', array(
+			'class' => 'text', 'maxlength' => 255, 'required' => true),
 			array(new FormFieldConstraintMailAddress(), new FormFieldConstraintMailExist())
 		));
 		
-		$fieldset->add_field($password = new FormFieldPasswordEditor('password', $this->lang['members.password'], '', array('required' => true)));
+		$fieldset->add_field($password = new FormFieldPasswordEditor('password', $this->lang['password'], '', array('required' => true)));
 		
-		$fieldset->add_field($password_bis = new FormFieldPasswordEditor('password_bis', $this->lang['members.confirm-password'], '', array('required' => true)));
+		$fieldset->add_field($password_bis = new FormFieldPasswordEditor('password_bis', $this->lang['password.confirm'], '', array('required' => true)));
 		
-		$fieldset->add_field(new FormFieldRanks('rank', $this->lang['members.rank'], User::MEMBER_LEVEL));
+		$fieldset->add_field(new FormFieldRanksSelect('rank', $this->lang['rank'], FormFieldRanksSelect::MEMBER));
 		
-		$form->add_button(new FormButtonReset());
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_constraint(new FormConstraintFieldsEquality($password, $password_bis));
 		$form->add_button($this->submit_button);
-
+		$form->add_button(new FormButtonReset());
+		
 		$this->form = $form;
 	}
 
 	private function save()
 	{
-		$username = $this->form->get_value('login');
+		$user_authentification = new UserAuthentification($this->form->get_value('login'), $this->form->get_value('password'));
 		$user = new User();
-		$user->set_display_name($username);
-		$user->set_email($this->form->get_value('email'));
 		$user->set_level($this->form->get_value('rank')->get_raw_value());
-		$auth_method = new PHPBoostAuthenticationMethod($username, $this->form->get_value('password'));
-		UserService::create($user, $auth_method);
+		$user->set_email($this->form->get_value('mail'));
+		$user->set_approbation(true);		
+		UserService::create($user_authentification, $user);
+		
+		StatsCache::invalidate();
 	}
 }
 ?>

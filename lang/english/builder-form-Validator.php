@@ -36,10 +36,9 @@ $lang = array(
     'doesnt_match_length_intervall' => 'The entered value does not fit the specified length',
     'doesnt_match_integer_intervall' => 'The entered value does not fit the specified interval (:lower_bound <= value <= :upper_bound)',
     'has_to_be_filled' => 'The field :name has to be filled',
-	'captcha_validation_error' => 'The visual confirmation field has not been properly filled !',
-	'validation_error' => 'Please, correct the form errors',
-	'fields_must_be_equal' => 'Fields ":field1" and ":field2" must ne equal',
+	'captcha_validation_error' => 'The visual confirmation field has not been properly filled!',
+	'validation_error' => 'Please correct the form errors',
+	'fields_must_be_equal' => 'Fields ":field1" and ":field2" must be equal',
 	'fields_must_not_be_equal' => 'Fields ":field1" and ":field2" must have different values'
 );
-
 ?>

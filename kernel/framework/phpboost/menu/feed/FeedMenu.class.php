@@ -37,12 +37,12 @@ class FeedMenu extends Menu
 	/**
 	 * @var string the feed url
 	 */
-	private $url = '';
-	private $module_id = '';
-	private $name = '';
-	private $category = 0;
-	private $number = 10;
-	private $begin_at = 0;
+	public $url = '';
+	public $module_id = '';
+	public $name = '';
+	public $category = 0;
+	public $number = 10;
+	public $begin_at = 0;
 	
 	public function __construct($title, $module_id, $category = 0, $name = Feed::DEFAULT_FEED_NAME, $number = 10, $begin_at = 0)
 	{
@@ -125,5 +125,4 @@ class FeedMenu extends Menu
 	}
 
 }
-
 ?>

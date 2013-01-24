@@ -3,8 +3,8 @@
  *                             KernelSetup.class.php
  *                            -------------------
  *   begin                : May 29, 2010
- *   copyright            : (C) 2010 Kévin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   copyright            : (C) 2010 Kevin MASSY
+ *   email                : kevin.massy@phpboost.com
  *
  *
  ###################################################
@@ -44,14 +44,12 @@ class KernelSetup
 	private static $events_table;
 	private static $errors_404_table;
 	private static $group_table;
-	private static $lang_table;
 	private static $member_table;
 	private static $internal_authentication_table;
 	private static $authentication_method_table;
 	private static $member_extended_fields_table;
 	private static $member_extended_fields_list;
 	private static $menus_table;
-	private static $menu_configuration_table;
 	private static $pm_msg_table;
 	private static $pm_topic_table;
 	private static $ranks_table;
@@ -79,14 +77,12 @@ class KernelSetup
 		self::$events_table = PREFIX . 'events';
 		self::$errors_404_table = PREFIX . 'errors_404';
 		self::$group_table = PREFIX . 'group';
-		self::$lang_table = PREFIX . 'lang';
 		self::$member_table = PREFIX . 'member';
 		self::$internal_authentication_table = PREFIX . 'internal_authentication';
 		self::$authentication_method_table = PREFIX . 'authentication_method';
 		self::$member_extended_fields_table = PREFIX . 'member_extended_fields';
 		self::$member_extended_fields_list = PREFIX . 'member_extended_fields_list';
 		self::$menus_table = PREFIX . 'menus';
-		self::$menu_configuration_table = PREFIX . 'menu_configuration';
 		self::$pm_msg_table = PREFIX . 'pm_msg';
 		self::$pm_topic_table = PREFIX . 'pm_topic';
 		self::$ranks_table = PREFIX . 'ranks';
@@ -120,14 +116,12 @@ class KernelSetup
 			self::$events_table,
 			self::$errors_404_table,
 			self::$group_table,
-			self::$lang_table,
 			self::$member_table,
 			self::$internal_authentication_table,
 			self::$authentication_method_table,
 			self::$member_extended_fields_table,
 			self::$member_extended_fields_list,
 			self::$menus_table,
-			self::$menu_configuration_table,
 			self::$pm_msg_table,
 			self::$pm_topic_table,
 			self::$ranks_table,
@@ -154,14 +148,12 @@ class KernelSetup
 		$this->create_events_table();
 		$this->create_errors_404_table();
 		$this->create_group_table();
-		$this->create_lang_table();
 		$this->create_member_table();
 		$this->create_internal_authentication_table();
 		$this->create_authentication_method_table();
 		$this->create_member_extended_fields_table();
 		$this->create_member_extended_fields_list_table();
 		$this->create_menus_table();
-		$this->create_menu_configuration_table();
 		$this->create_pm_msg_table();
 		$this->create_pm_topic_table();
 		$this->create_ranks_table();
@@ -183,8 +175,8 @@ class KernelSetup
 			'id_topic' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'message' => array('type' => 'text', 'length' => 65000),
 			'user_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'name_visitor' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
-			'ip_visitor' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
+			'pseudo' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
+			'user_ip' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
 			'note' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'timestamp' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0)
 		);
@@ -193,15 +185,17 @@ class KernelSetup
 		);
 		self::$db_utils->create_table(self::$comments_table, $fields, $options);
 	}
-
+	
 	private function create_comments_topic_table()
 	{
 		$fields = array(
 			'id_topic' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true),
 			'module_id' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
+			'topic_identifier' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "'default'"),	
 			'id_in_module' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'is_locked' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'number_comments' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
+			'path' => array('type' => 'string', 'length' => 255, 'notnull' => 1)
 		);
 		$options = array(
 			'primary' => array('id_topic'),
@@ -223,7 +217,7 @@ class KernelSetup
 		);
 		self::$db_utils->create_table(self::$note_table, $fields, $options);
 	}
-
+	
 	private function create_average_notes_table()
 	{
 		$fields = array(
@@ -304,7 +298,7 @@ class KernelSetup
 	private function create_errors_404_table()
 	{
 		$fields = array(
-			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
+			'id' => array('type' => 'integer', 'length' => 10, 'autoincrement' => true, 'notnull' => 1),
 			'requested_url' => array('type' => 'string', 'length' => 255, 'notnull' => 1),
 			'from_url' => array('type' => 'string', 'length' => 255, 'notnull' => 1),
 			'times' => array('type' => 'integer', 'length' => 11, 'notnull' => 1)
@@ -332,20 +326,6 @@ class KernelSetup
 			'primary' => array('id'),
 		);
 		self::$db_utils->create_table(self::$group_table, $fields, $options);
-	}
-
-	private function create_lang_table()
-	{
-		$fields = array(
-			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
-			'lang' => array('type' => 'string', 'length' => 150, 'notnull' => 1, 'default' => "''"),
-			'activ' => array('type' => 'boolean', 'length' => 1, 'notnull' => 1, 'default' => 0),
-			'secure' => array('type' => 'boolean', 'length' => 2, 'notnull' => 1, 'default' => 0)
-		);
-		$options = array(
-			'primary' => array('id'),
-		);
-		self::$db_utils->create_table(self::$lang_table, $fields, $options);
 	}
 
 	private function create_member_table()
@@ -410,7 +390,7 @@ class KernelSetup
 		));
 		self::$db_utils->create_table(self::$authentication_method_table, $fields, $options);
 	}
-
+	
 	private function create_member_extended_fields_table()
 	{
 		$fields = array(
@@ -431,7 +411,7 @@ class KernelSetup
 			'name' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
 			'field_name' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
 			'description' => array('type' => 'text', 'length' => 65000),
-			'field_type' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => 0),
+			'field_type' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
 			'possible_values' => array('type' => 'text', 'length' => 65000),
 			'default_values' => array('type' => 'text', 'length' => 65000),
 			'required' => array('type' => 'boolean', 'length' => 1, 'notnull' => 1, 'default' => 0),
@@ -452,7 +432,7 @@ class KernelSetup
 		$fields = array(
 			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
 			'title' => array('type' => 'string', 'length' => 128, 'notnull' => 1),
-			'object' => array('type' => 'text', 'length' => 65000),
+			'object' => array('type' => 'text', 'length' => 16777215),
 			'class' => array('type' => 'string', 'length' => 67, 'notnull' => 1),
 			'enabled' => array('type' => 'boolean', 'length' => 1, 'notnull' => 1, 'default' => 0),
 			'block' => array('type' => 'boolean', 'length' => 2, 'notnull' => 1, 'default' => 0),
@@ -466,23 +446,6 @@ class KernelSetup
 				'enabled' => array('type' => 'key', 'fields' => 'enabled')
 		));
 		self::$db_utils->create_table(self::$menus_table, $fields, $options);
-	}
-
-	private function create_menu_configuration_table()
-	{
-		$fields = array(
-			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
-			'name' => array('type' => 'string', 'length' => 100, 'notnull' => 1),
-			'match_regex' => array('type' => 'text', 'length' => 65000),
-			'priority' => array('type' => 'integer', 'length' => 11, 'notnull' => 1)
-		);
-
-		$options = array(
-			'primary' => array('id'),
-			'indexes' => array(
-				'priority' => array('type' => 'key', 'fields' => 'priority')
-		));
-		self::$db_utils->create_table(self::$menu_configuration_table, $fields, $options);
 	}
 
 	private function create_pm_msg_table()
@@ -698,7 +661,7 @@ class KernelSetup
 		$fields = array(
 			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
 			'user_id' => array('type' => 'integer', 'length' => 15, 'notnull' => 1, 'default' => 0),
-			'code' => array('type' => 'integer', 'length' => 20, 'notnull' => 1, 'default' => 0),
+			'code' => array('type' => 'string', 'length' => 20, 'notnull' => 1, 'default' => 0),
 			'difficulty' => array('type' => 'boolean', 'length' => 1, 'notnull' => 1),
 			'timestamp' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0)
 		);
@@ -711,20 +674,19 @@ class KernelSetup
 	private function insert_data()
 	{
 		$this->messages = LangLoader::get('install', 'install');
-		$this->insert_menu_configuration_data();
+		$this->insert_visit_counter_data();
 		$this->insert_ranks_data();
 		$this->insert_smileys_data();
 	}
-
-	private function insert_menu_configuration_data()
+	
+	private function insert_visit_counter_data()
 	{
-		self::$db_querier->insert(self::$menu_configuration_table, array(
+		self::$db_querier->insert(self::$visit_counter_table, array(
 			'id' => 1,
-			'name' => 'default',
-			'match_regex' => '`.*`',
-			'priority' => 1
+			'ip' => '',
+			'time' => time(),
+			'total' => 0
 		));
-
 	}
 
 	private function insert_smileys_data()
@@ -953,15 +915,5 @@ class KernelSetup
 		));
 
 	}
-
-	private function insert_configs_data()
-	{
-		self::$db_querier->insert(self::$configs_table, array(
-			'id' => 3,
-			'name' => 'uploads',
-			'value' => 'a:4:{s:10:"size_limit";d:512;s:17:"bandwidth_protect";i:1;s:15:"auth_extensions";a:48:{i:0;s:3:"jpg";i:1;s:4:"jpeg";i:2;s:3:"bmp";i:3;s:3:"gif";i:4;s:3:"png";i:5;s:3:"tif";i:6;s:3:"svg";i:7;s:3:"ico";i:8;s:3:"rar";i:9;s:3:"zip";i:10;s:2:"gz";i:11;s:3:"txt";i:12;s:3:"doc";i:13;s:4:"docx";i:14;s:3:"pdf";i:15;s:3:"ppt";i:16;s:3:"xls";i:17;s:3:"odt";i:18;s:3:"odp";i:19;s:3:"ods";i:20;s:3:"odg";i:21;s:3:"odc";i:22;s:3:"odf";i:23;s:3:"odb";i:24;s:3:"xcf";i:25;s:3:"flv";i:26;s:3:"mp3";i:27;s:3:"ogg";i:28;s:3:"mpg";i:29;s:3:"mov";i:30;s:3:"swf";i:31;s:3:"wav";i:32;s:3:"wmv";i:33;s:4:"midi";i:34;s:3:"mng";i:35;s:2:"qt";i:36;s:1:"c";i:37;s:1:"h";i:38;s:3:"cpp";i:39;s:4:"java";i:40;s:2:"py";i:41;s:3:"css";i:42;s:4:"html";i:43;s:3:"xml";i:44;s:3:"ttf";i:45;s:3:"tex";i:46;s:3:"rtf";i:47;s:3:"psd";}s:10:"auth_files";s:32:"a:2:{s:2:"r0";i:1;s:2:"r1";i:1;}";}'
-		));
-	}
 }
-
 ?>

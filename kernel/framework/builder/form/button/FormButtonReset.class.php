@@ -31,17 +31,27 @@
  */
 class FormButtonReset implements FormButton
 {
+	private $value;
+	
+	public function __construct($value = '')
+    {
+    	global $LANG;
+
+    	$this->value = $value;
+    	
+    	if (empty($value))
+    		$this->value = $LANG['reset'];
+    }
+    
     /**
      * {@inheritdoc}
      */
     public function display()
     {
-        global $LANG;
-
         $template = new StringTemplate('<input type="reset" value="{L_RESET}" class="reset" />');
 
         $template->put_all(array(
-			'L_RESET' => $LANG['reset']
+			'L_RESET' => $this->value
         ));
 
         return $template;

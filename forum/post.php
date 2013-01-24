@@ -38,14 +38,14 @@ if (!isset($CAT_FORUM[$id_get]) || $CAT_FORUM[$id_get]['aprob'] == 0 || $CAT_FOR
     DispatchManager::redirect($controller);
 }
 
-if ($User->is_readonly() > time()) //Lecture seule.
+if ($User->get_attribute('user_readonly') > time()) //Lecture seule.
 {
 	$controller = PHPBoostErrors::user_in_read_only();
     DispatchManager::redirect($controller);
 }
 
 //Récupération de la barre d'arborescence.
-$Bread_crumb->add($CONFIG_FORUM['forum_name'], 'index.php');
+$Bread_crumb->add($CONFIG_FORUM['forum_name'], 'index.php' . SID);
 foreach ($CAT_FORUM as $idcat => $array_info_cat)
 {
 	if ($CAT_FORUM[$id_get]['id_left'] > $array_info_cat['id_left'] && $CAT_FORUM[$id_get]['id_right'] < $array_info_cat['id_right'] && $array_info_cat['level'] < $CAT_FORUM[$id_get]['level'])
@@ -73,7 +73,7 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 	$Forumfct = new Forum();
 
 	//Mod anti-flood
-	$check_time = (ContentManagementConfig::load()->is_anti_flood_enabled() && $User->get_id() != -1) ? $Sql->query("SELECT MAX(timestamp) as timestamp FROM " . PREFIX . "forum_msg WHERE user_id = '" . $User->get_id() . "'", __LINE__, __FILE__) : false;
+	$check_time = (ContentManagementConfig::load()->is_anti_flood_enabled() && $User->get_attribute('user_id') != -1) ? $Sql->query("SELECT MAX(timestamp) as timestamp FROM " . PREFIX . "forum_msg WHERE user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__) : false;
 
 	//Affichage de l'arborescence des catégories.
 	$i = 0;
@@ -97,7 +97,7 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 
 		if (empty($topic['idcat'])) //Topic inexistant.
 		{
-			$controller = new UserErrorController(LangLoader::get_message('error', 'errors'),
+			$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
                 $LANG['e_unexist_topic_forum']);
             DispatchManager::redirect($controller);
 		}
@@ -108,7 +108,7 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 			'forum_bottom'=> 'forum/forum_bottom.tpl'
 		));
 
-		$contents = retrieve(POST, 'contents', '', TSTRING_AS_RECEIVED);
+		$contents = retrieve(POST, 'contents', '', TSTRING);
 		$post_update = retrieve(POST, 'p_update', '', TSTRING_UNCHANGE);
 
 		$update = !empty($post_update) ? $post_update : url('?new=n_msg&amp;idt=' . $idt_get . '&amp;id=' . $id_get . '&amp;token=' . $Session->get_token());
@@ -119,6 +119,7 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 			'LANG' => get_ulang(),
 			'P_UPDATE' => $post_update,
 			'FORUM_NAME' => $CONFIG_FORUM['forum_name'],
+			'SID' => SID,
 			'KERNEL_EDITOR' => $editor->display(),
 			'DESC' => $topic['subtitle'],
 			'CONTENTS' => $contents,
@@ -160,7 +161,7 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 			if ($is_modo)
 				$check_status = 1;
 
-			$contents = retrieve(POST, 'contents', '', TSTRING_AS_RECEIVED);
+			$contents = retrieve(POST, 'contents', '', TSTRING_UNCHANGE);
 			$title = retrieve(POST, 'title', '');
 			$subtitle = retrieve(POST, 'desc', '');
 
@@ -223,7 +224,7 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 
 			$title = retrieve(POST, 'title', '', TSTRING_UNCHANGE);
 			$subtitle = retrieve(POST, 'desc', '', TSTRING_UNCHANGE);
-			$contents = retrieve(POST, 'contents', '', TSTRING_AS_RECEIVED);
+			$contents = retrieve(POST, 'contents', '', TSTRING_UNCHANGE);
 			$question = retrieve(POST, 'question', '', TSTRING_UNCHANGE);
 
 			$is_modo = $User->check_auth($CAT_FORUM[$id_get]['auth'], EDIT_CAT_FORUM);
@@ -275,6 +276,7 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 				'THEME' => get_utheme(),
 				'LANG' => get_ulang(),
 				'FORUM_NAME' => $CONFIG_FORUM['forum_name'],
+				'SID' => SID,
 				'TITLE' => $title,
 				'DESC' => $subtitle,
 				'CONTENTS' => $contents,
@@ -351,6 +353,7 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 
 			$Template->put_all(array(
 				'FORUM_NAME' => $CONFIG_FORUM['forum_name'],
+				'SID' => SID,
 				'TITLE' => '',
 				'DESC' => '',
 				'SELECTED_SIMPLE' => 'checked="ckecked"',
@@ -395,7 +398,7 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 		$topic = $Sql->query_array(PREFIX . 'forum_topics', 'idcat', 'title', 'nbr_msg', 'last_user_id', 'status', "WHERE id = '" . $idt_get . "'", __LINE__, __FILE__);
 		if (empty($topic['idcat']))
 		{
-			$controller = new UserErrorController(LangLoader::get_message('error', 'errors'),
+			$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
                 $LANG['e_topic_lock_forum']);
             DispatchManager::redirect($controller);
 		}
@@ -419,7 +422,7 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 				AppContext::get_response()->redirect( url(HOST . SCRIPT . '?error=flood&id=' . $id_get . '&idt=' . $idt_get, '', '&') . '#message_helper');
 		}
 
-		$contents = retrieve(POST, 'contents', '', TSTRING_AS_RECEIVED);
+		$contents = retrieve(POST, 'contents', '', TSTRING_UNCHANGE);
 
 		//Si le topic n'est pas vérrouilé on ajoute le message.
 		if ($topic['status'] != 0 || $is_modo)
@@ -453,7 +456,7 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 
 		if (empty($id_get) || empty($id_first)) //Topic/message inexistant.
 		{
-            $controller = new UserErrorController(LangLoader::get_message('error', 'errors'),
+            $controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
                 $LANG['e_unexist_topic_forum']);
             DispatchManager::redirect($controller);
 		}
@@ -466,14 +469,14 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 			//User_id du message correspondant à l'utilisateur connecté => autorisation.
 			$user_id_msg = $Sql->query("SELECT user_id FROM " . PREFIX . "forum_msg WHERE id = '" . $id_m . "'",  __LINE__, __FILE__);
 			$check_auth = false;
-			if ($user_id_msg == $User->get_id())
+			if ($user_id_msg == $User->get_attribute('user_id'))
 				$check_auth = true;
 			elseif ($is_modo)
 				$check_auth = true;
 
 			if (!$check_auth)
 			{
-				$error_controller = PHPBoostErrors::unexisting_page();
+				$error_controller = PHPBoostErrors::user_not_authorized();
 				DispatchManager::redirect($error_controller);
 			}
 
@@ -481,7 +484,7 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 			{
 				$title = retrieve(POST, 'title', '');
 				$subtitle = retrieve(POST, 'desc', '');
-				$contents = retrieve(POST, 'contents', '', TSTRING_AS_RECEIVED);
+				$contents = retrieve(POST, 'contents', '', TSTRING_UNCHANGE);
 				$type = $is_modo ? retrieve(POST, 'type', 0) : 0;
 
 				if (!empty($title) && !empty($contents))
@@ -535,7 +538,7 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 
 				$title = retrieve(POST, 'title', '', TSTRING_UNCHANGE);
 				$subtitle = retrieve(POST, 'desc', '', TSTRING_UNCHANGE);
-				$contents = retrieve(POST, 'contents', '', TSTRING_AS_RECEIVED);
+				$contents = retrieve(POST, 'contents', '', TSTRING_UNCHANGE);
 				$question = retrieve(POST, 'question', '', TSTRING_UNCHANGE);
 
 				$type = retrieve(POST, 'type', 0);
@@ -585,6 +588,7 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 					'THEME' => get_utheme(),
 					'LANG' => get_ulang(),
 					'FORUM_NAME' => $CONFIG_FORUM['forum_name'],
+					'SID' => SID,
 					'TITLE' => $title,
 					'DESC' => $subtitle,
 					'CONTENTS' => $contents,
@@ -666,7 +670,7 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 				$module_data_path = $TmpTemplate->get_pictures_data_path();
 
 				//Affichage du lien pour changer le display_msg du topic et autorisation d'édition.
-				if ($CONFIG_FORUM['activ_display_msg'] == 1 && ($is_modo || $User->get_id() == $topic['user_id']))
+				if ($CONFIG_FORUM['activ_display_msg'] == 1 && ($is_modo || $User->get_attribute('user_id') == $topic['user_id']))
 				{
 					$img_display = $topic['display_msg'] ? 'msg_display2.png' : 'msg_display.png';
 					$Template->put_all(array(
@@ -707,6 +711,7 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 
 				$Template->put_all(array(
 					'FORUM_NAME' => $CONFIG_FORUM['forum_name'],
+					'SID' => SID,
 					'TITLE' => $topic['title'],
 					'DESC' => $topic['subtitle'],
 					'CONTENTS' => FormatingHelper::unparse($contents),
@@ -767,20 +772,20 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 			//User_id du message correspondant à l'utilisateur connecté => autorisation.
 			$user_id_msg = $Sql->query("SELECT user_id FROM " . PREFIX . "forum_msg WHERE id = '" . $id_m . "'", __LINE__, __FILE__);
 			$check_auth = false;
-			if ($user_id_msg == $User->get_id())
+			if ($user_id_msg == $User->get_attribute('user_id'))
 				$check_auth = true;
 			elseif ($is_modo)
 				$check_auth = true;
 
 			if (!$check_auth) //Non autorisé!
 			{
-				$error_controller = PHPBoostErrors::unexisting_page();
+				$error_controller = PHPBoostErrors::user_not_authorized();
 				DispatchManager::redirect($error_controller);
 			}
 
 			if ($update && retrieve(POST, 'edit_msg', false))
 			{
-				$contents = retrieve(POST, 'contents', '', TSTRING_AS_RECEIVED);
+				$contents = retrieve(POST, 'contents', '', TSTRING_UNCHANGE);
 				if (!empty($contents))
 				{
 					$nbr_msg_before = $Forumfct->Update_msg($idt_get, $id_m, $contents, $user_id_msg);
@@ -813,6 +818,7 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 				$Template->put_all(array(
 					'P_UPDATE' => url('?update=1&amp;new=msg&amp;id=' . $id_get . '&amp;idt=' . $idt_get . '&amp;idm=' . $id_m),
 					'FORUM_NAME' => $CONFIG_FORUM['forum_name'],
+					'SID' => SID,
 					'DESC' => $topic['subtitle'],
 					'CONTENTS' => FormatingHelper::unparse($contents),
 					'KERNEL_EDITOR' => $editor->display(),
@@ -840,7 +846,7 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 			$topic = $Sql->query_array(PREFIX . 'forum_topics', 'idcat', 'title', 'subtitle', "WHERE id = '" . $idt_get . "'", __LINE__, __FILE__);
 			if (empty($topic['idcat'])) //Topic inexistant.
 			{
-				$controller = new UserErrorController(LangLoader::get_message('error', 'errors'),
+				$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
                     $LANG['e_unexist_topic_forum']);
                 DispatchManager::redirect($controller);
 			}
@@ -875,6 +881,7 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 			$Template->put_all(array(
 				'P_UPDATE' => '',
 				'FORUM_NAME' => $CONFIG_FORUM['forum_name'],
+				'SID' => SID,
 				'DESC' => $topic['subtitle'],
 				'KERNEL_EDITOR' => $editor->display(),
 				'U_ACTION' => 'post.php' . url('?new=n_msg&amp;idt=' . $idt_get . '&amp;id=' . $id_get . '&amp;token=' . $Session->get_token()),
@@ -949,6 +956,7 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 
 			$Template->put_all(array(
 				'FORUM_NAME' => $CONFIG_FORUM['forum_name'],
+				'SID' => SID,
 				'TITLE' => '',
 				'SELECTED_SIMPLE' => 'checked="checked"',
 				'IDTOPIC' => 0,
@@ -996,7 +1004,7 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 }
 else
 {
-	$error_controller = PHPBoostErrors::unexisting_page();
+	$error_controller = PHPBoostErrors::user_not_authorized();
 	DispatchManager::redirect($error_controller);
 }
 

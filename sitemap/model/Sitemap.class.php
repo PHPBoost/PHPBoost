@@ -146,7 +146,7 @@ class Sitemap
 
 		$template->put_all(array(
 		    'C_SITE_MAP' => true,
-            'SITE_NAME' => htmlspecialchars($this->site_name, ENT_QUOTES)
+            'SITE_NAME' => TextHelper::htmlspecialchars($this->site_name, ENT_QUOTES)
 		));
 
 		//Let's export all the element it contains
@@ -203,7 +203,7 @@ class Sitemap
 		global $LANG, $User;
 			
 		//We consider the kernel as a module
-		$kernel_map = new ModuleMap(new SitemapLink($LANG['home'], new Url(GeneralConfig::load()->get_home_page())));
+		$kernel_map = new ModuleMap(new SitemapLink($LANG['home'], new Url(Environment::get_home_page())));
 			
 		//The site description
 		$kernel_map->set_description(nl2br(GeneralConfig::load()->get_site_description()));
@@ -211,8 +211,11 @@ class Sitemap
 		//All the links which not need to be present in the search engine results.
 		if ($mode == self::USER_MODE)
 		{
-			$kernel_map->add(new SitemapLink($LANG['members_list'], UserUrlBuilder::users()));
-
+			if (AppContext::get_current_user()->check_auth(UserAccountsConfig::load()->get_auth_read_members(), AUTH_READ_MEMBERS))
+			{
+				$kernel_map->add(new SitemapLink($LANG['members_list'], UserUrlBuilder::users()));
+			}
+			
 			//Member space
 			if ($auth_mode == self::AUTH_USER && $User->check_level(User::MEMBER_LEVEL))
 			{
@@ -221,7 +224,7 @@ class Sitemap
 				UserUrlBuilder::profile($User->get_id())));
 					
 				//Profile edition
-				$member_space_section->add(new SitemapLink($LANG['profile_edition'],
+				$member_space_section->add(new SitemapLink(LangLoader::get_message('profile.edit', 'user-common'),
 				UserUrlBuilder::edit_profile($User->get_id())));
 					
 				//Private messaging
@@ -248,5 +251,4 @@ class Sitemap
 		$this->add($kernel_map);
 	}
 }
-
 ?>

@@ -46,11 +46,17 @@ class PollSetup extends DefaultModuleSetup
 	public function uninstall()
 	{
 		$this->drop_tables();
+		$this->delete_configuration();
 	}
 
 	private function drop_tables()
 	{
 		PersistenceContext::get_dbms_utils()->drop(array(self::$poll_table, self::$poll_ip_table));
+	}
+	
+	private function delete_configuration()
+	{
+		ConfigManager::delete('poll', 'config');
 	}
 
 	private function create_tables()

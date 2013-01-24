@@ -4,8 +4,8 @@
  *                         ColumnsDisabled.class.php
  *                            -------------------
  *   begin                : April 10, 2011
- *   copyright            : (C) 2011 Kévin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   copyright            : (C) 2011 Kevin MASSY
+ *   email                : kevin.massy@phpboost.com
  *
  *
  *###################################################
@@ -28,7 +28,7 @@
  */
 
  /**
- * @author Kévin MASSY <soldier.weasel@gmail.com>
+ * @author Kevin MASSY <kevin.massy@phpboost.com>
  * @package {@package}
  */
 class ColumnsDisabled
@@ -160,8 +160,7 @@ class ColumnsDisabled
 				case 'right':
 					$this->disable_right_columns = true;
 					unset($disable_columns['right']);
-					break;	
-				
+					break;
 			}
 		}
 	}

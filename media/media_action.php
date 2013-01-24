@@ -53,7 +53,7 @@ if ($unvisible > 0)
 	}
 	elseif (!$User->check_level(User::MODERATOR_LEVEL))
 	{
-		$error_controller = PHPBoostErrors::unexisting_page();
+		$error_controller = PHPBoostErrors::user_not_authorized();
         DispatchManager::redirect($error_controller);
 	}
 
@@ -86,21 +86,15 @@ elseif ($delete > 0)
 	}
 	elseif (!$User->check_level(User::MODERATOR_LEVEL))
 	{
-		$error_controller = PHPBoostErrors::unexisting_page();
+		$error_controller = PHPBoostErrors::user_not_authorized();
         DispatchManager::redirect($error_controller);
 	}
 
 	$Sql->query_inject("DELETE FROM " . PREFIX . "media WHERE id = '" . $delete . "'", __LINE__, __FILE__);
 
-	$notation = new Notation();
-	$notation->set_module_name('media');
-	$notation->set_id_in_module($delete);
-	NotationService::delete_notes_id_in_module($notation);
+	NotationService::delete_notes_id_in_module('media', $delete);
 	
-	$comments_topic = new CommentsTopic();
-	$comments_topic->set_module_id('media');
-	$comments_topic->set_id_in_module($delete);
-	CommentsService::delete_comments_id_in_module($comments_topic);
+	CommentsService::delete_comments_topic_module('media', $delete);
 	
 	// Feeds Regeneration
 	Feed::clear_cache('media');
@@ -198,8 +192,8 @@ elseif ($add >= 0 && empty($_POST['submit']) || $edit > 0)
 			'IDEDIT' => 0,
 			'NAME' => '',
 			'CATEGORIES_TREE' => $media_categories->build_select_form($add, 'idcat" onchange="hide_width_height ();', 'idcat', 0, ($write ? MEDIA_AUTH_WRITE : MEDIA_AUTH_CONTRIBUTION), $MEDIA_CATS[0]['auth'], IGNORE_AND_CONTINUE_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH),
-			'WIDTH' => '',
-			'HEIGHT' => '',
+			'WIDTH' => '425',
+			'HEIGHT' => '344',
 			'U_MEDIA' => 'http://',
 			'DESCRIPTION' => '',
 			'APPROVED' => 'checked="checked"',
@@ -210,7 +204,7 @@ elseif ($add >= 0 && empty($_POST['submit']) || $edit > 0)
 	}
 	else
 	{
-		$error_controller = PHPBoostErrors::unexisting_page();
+		$error_controller = PHPBoostErrors::user_not_authorized();
         DispatchManager::redirect($error_controller);
 	}
 
@@ -335,14 +329,14 @@ elseif (!empty($_POST['submit']))
 		else
 		{
 			$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
-                $LANG['media_unknow_mime']);
+                $LANG['e_mime_unknow_media']);
             DispatchManager::redirect($controller);
 		}
 	}
 	else
 	{
 		$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
-            $LANG['media_empty_link']);
+            $LANG['e_link_empty_media']);
         DispatchManager::redirect($controller);
 	}
 
@@ -393,7 +387,7 @@ elseif (!empty($_POST['submit']))
 			$media_contribution->set_description(stripslashes($media['counterpart']));
 			$media_contribution->set_entitled(sprintf($MEDIA_LANG['contribution_entitled'], $media['name']));
 			$media_contribution->set_fixing_url('/media/media_action.php?edit=' . $new_id_media);
-			$media_contribution->set_poster_id($User->get_id());
+			$media_contribution->set_poster_id($User->get_attribute('user_id'));
 			$media_contribution->set_module('media');
 			$media_contribution->set_auth(Authorizations::capture_and_shift_bit_auth(Authorizations::merge_auth($MEDIA_CATS[0]['auth'], $media_categories->compute_heritated_auth($media['idcat'], MEDIA_AUTH_WRITE, Authorizations::AUTH_CHILD_PRIORITY), MEDIA_AUTH_WRITE, Authorizations::AUTH_CHILD_PRIORITY), MEDIA_AUTH_WRITE, Contribution::CONTRIBUTION_AUTH_BIT));
 
@@ -408,7 +402,7 @@ elseif (!empty($_POST['submit']))
 	}
 	else
 	{
-		$error_controller = PHPBoostErrors::unexisting_page();
+		$error_controller = PHPBoostErrors::user_not_authorized();
         DispatchManager::redirect($error_controller);
 	}
 }

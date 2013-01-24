@@ -36,5 +36,4 @@ class RowNotFoundException extends SQLQuerierException
         parent::__construct('no rows have been found');
     }
 }
-
 ?>

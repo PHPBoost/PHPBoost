@@ -156,7 +156,7 @@ function retrieve($var_type, $var_name, $default_value, $force_type = NULL, $fla
  * @param string $ampersand In a redirection you mustn't put the & HTML entity (&amp;). In this case set that parameter to &.
  * @return string The URL to use.
  */
-function url($url, $mod_rewrite = '')
+function url($url, $mod_rewrite = '', $ampersand = '&amp;')
 {
 	$session = AppContext::get_session();
 	if (!is_object($session))
@@ -167,15 +167,6 @@ function url($url, $mod_rewrite = '')
 	{
 		//TODO $session_mod = $session->supports_cookies();
 		$session_mod = 1;
-	}
-
-	if (ServerEnvironmentConfig::load()->is_url_rewriting_enabled() && !empty($mod_rewrite)) //Activation du mod rewrite => cookies activés.
-	{
-		return $mod_rewrite;
-	}
-	else
-	{
-		return $url;
 	}
 
 	if ($session_mod == 0)
@@ -191,7 +182,7 @@ function url($url, $mod_rewrite = '')
 	}
 	elseif ($session_mod == 1)
 	{
-		return $url . ((strpos($url, '?') === false) ? '?' : $ampersand) . 'sid=' . $session->data['session_id'] . $ampersand . 'suid=' . $session->data['user_id'];
+		return $url . ((strpos($url, '?') === false) ? '?' : $ampersand) . 'sid=' . $session->get_session_id() . $ampersand . 'suid=' . $session->get_user_id();
 	}
 }
 
@@ -292,7 +283,7 @@ function gmdate_format($format, $timestamp = false, $timezone_system = 0)
 	}
 	else //Timestamp utilisateur dépendant de la localisation de l'utilisateur par rapport à serveur.
 	{
-		$timezone = AppContext::get_current_user()->get_timezone() - $serveur_hour;
+		$timezone = AppContext::get_current_user()->get_attribute('user_timezone') - $serveur_hour;
 	}
 
 	if ($timezone != 0)
@@ -348,7 +339,7 @@ function strtotimestamp($str, $date_format)
 	}
 
 	$serveur_hour = NumberHelper::round(date('Z')/3600, 0) - date('I'); //Décallage du serveur par rapport au méridien de greenwitch.
-	$timezone = AppContext::get_current_user()->get_timezone('user_timezone') - $serveur_hour;
+	$timezone = AppContext::get_current_user()->get_attribute('user_timezone') - $serveur_hour;
 	if ($timezone != 0)
 	{
 		$timestamp -= $timezone * 3600;
@@ -591,5 +582,4 @@ function find_require_dir($dir_path, $require_dir, $fatal_error = true)
         DispatchManager::redirect($controller);
 	}
 }
-
 ?>

@@ -34,7 +34,12 @@ class ShoutboxExtensionPointProvider extends ExtensionPointProvider
         $this->sql_querier = PersistenceContext::get_sql();
         parent::__construct('shoutbox');
     }
-
+	
+	public function home_page()
+	{
+		return new ShoutboxHomePageExtensionPoint();
+	}
+	
 	public function scheduled_jobs()
 	{
 		return new ShoutboxScheduledJobs();
@@ -42,12 +47,16 @@ class ShoutboxExtensionPointProvider extends ExtensionPointProvider
 	
 	public function css_files()
 	{
-		return new ShoutboxCssFilesExtensionPoint();
+		$module_css_files = new ModuleCssFiles();
+		$module_css_files->adding_always_displayed_file('shoutbox_mini.css');
+		return $module_css_files;
 	}
 	
 	public function menus()
 	{
-		return new ShoutboxMenusExtensionPoint();
+		return new ModuleMenus(array(
+			new ShoutboxModuleMiniMenu()
+		));
 	}
 }
 ?>

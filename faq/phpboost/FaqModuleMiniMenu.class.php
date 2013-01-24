@@ -3,8 +3,8 @@
  *                          FaqModuleMiniMenu.class.php
  *                            -------------------
  *   begin                : October 08, 2011
- *   copyright            : (C) 2011 Kévin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   copyright            : (C) 2011 Kevin MASSY
+ *   email                : kevin.massy@phpboost.com
  *
  *
  ###################################################
@@ -34,11 +34,8 @@ class FaqModuleMiniMenu extends ModuleMiniMenu
 
 	public function display($tpl = false)
     {
-    	global $Cache, $Template, $FAQ_LANG, $FAQ_CATS, $RANDOM_QUESTIONS;
+    	global $Cache, $Template, $FAQ_LANG, $FAQ_CATS, $RANDOM_QUESTIONS, $User;
 
-	    load_module_lang('faq');
-	    $Cache->load('faq'); //Chargement du cache
-	
 	    include_once(PATH_TO_ROOT . '/faq/faq_begin.php');
 	
 	    $tpl = new FileTemplate('faq/faq_mini.tpl');

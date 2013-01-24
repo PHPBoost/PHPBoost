@@ -52,7 +52,7 @@ class TemplateRenderingException extends Exception
 		if ($this->input != null)
 		{
 			$msg .= "\n" . 'line ' . $this->tpl_line . ' offset ' . $this->offset . ' near';
-			$msg .= ' "...' . htmlentities($this->input->to_string(-100, 200)) . '..."';
+			$msg .= ' "...' . TextHelper::htmlentities($this->input->to_string(-100, 200)) . '..."';
 		}
 		return $msg;
 	}

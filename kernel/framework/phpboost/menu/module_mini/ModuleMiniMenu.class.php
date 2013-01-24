@@ -57,11 +57,6 @@ class ModuleMiniMenu extends Menu
     	return self::BLOCK_POSITION__NOT_ENABLED;
     }
     
-	public function admin_display()
-    {
-        return $this->display();
-    }
-    
     /**
 	 * @return string the string the string to write in the cache file
 	 */
@@ -70,9 +65,10 @@ class ModuleMiniMenu extends Menu
     	$load_class = '\'; $class = new '. get_class($this) .'(); 
         $class->set_block(' . $this->block . '); 
         $class->set_block_position(' . $this->position . ');';
-        $cache_str = '$__menu.= $class->display(); $__menu.=\'';
-        return $load_class . parent::cache_export_begin() . $cache_str . parent::cache_export_end();
+        $cache_str = '$__menu.= $class->display(); $__menu.= \'';
+        return $this->cache_export_begin() . $load_class . $cache_str . parent::cache_export_end();
     }
+    
+	public function default_is_enabled() { return false; }
 }
-
 ?>

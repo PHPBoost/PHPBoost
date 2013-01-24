@@ -34,10 +34,9 @@
 $LANG['shoutbox_max_msg'] = 'Nombre de messages maximum à conserver';
 $LANG['shoutbox_max_msg_explain'] = 'Supprimés tous les jours, mettre -1 pour désactiver';
 $LANG['shoutbox_config'] = 'Configuration de la discussion rapide';
-$LANG['auth_read'] = 'Autorisation de lecture';
 $LANG['rank_post'] = 'Autorisation d\'écriture';
 $LANG['auth_moderation'] = 'Autorisation de modération';
-$LANG['shoutbox_refresh_delay'] = 'Delai de rafraichissement automatique de la discussion';
+$LANG['shoutbox_refresh_delay'] = 'Délai de rafraichissement automatique de la discussion';
 $LANG['shoutbox_refresh_delay_explain'] = 'Mettre 0 pour désactiver';
 		
 $LANG['title_shoutbox'] = 'Discussion';
@@ -48,5 +47,5 @@ $LANG['e_flood'] = 'Vous ne pouvez pas encore poster, réessayez dans quelques in
 $LANG['e_l_flood'] = 'Nombre maximum de lien(s) internet autorisé(s) dans votre message : %d';
 $LANG['e_link_pseudo'] = 'Vous ne pouvez pas mettre de lien dans votre pseudo';
 $LANG['e_incomplete'] = 'Tous les champs obligatoires doivent être remplis !';
-$LANG['e_readonly'] = 'Vous ne pouvez exécuter cette action, car vous avez été placé en lecture seule !';
+$LANG['e_readonly'] = 'Vous ne pouvez exécuter cette action car vous avez été placé en lecture seule !';
 ?>

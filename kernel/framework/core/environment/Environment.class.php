@@ -102,8 +102,8 @@ class Environment
 
 	public static function init_http_services()
 	{
-		AppContext::set_request(new HTTPRequest());
-		$response = new HTTPResponse();
+		AppContext::set_request(new HTTPRequestCustom());
+		$response = new HTTPResponseCustom();
 		$response->set_default_attributes();
 		AppContext::set_response($response);
 	}
@@ -174,9 +174,6 @@ class Environment
 
 	public static function load_static_constants()
 	{
-		### Common constants ###
-		define('GUEST_LEVEL', 		-1);
-
 		//Path from the server root
 		define('SCRIPT', 			$_SERVER['PHP_SELF']);
 		define('REWRITED_SCRIPT', 	$_SERVER['REQUEST_URI']);
@@ -191,10 +188,7 @@ class Environment
 		define('HTML_UNPROTECT', 	false);
 
 		### Authorizations ###
-		define('AUTH_MENUS', 		0x01);
 		define('AUTH_FILES', 		0x01);
-		define('ACCESS_MODULE', 	0x01);
-		define('AUTH_THEME', 		0x01);
 		define('AUTH_FLOOD', 		'auth_flood');
 		define('PM_GROUP_LIMIT', 	'pm_group_limit');
 		define('DATA_GROUP_LIMIT', 	'data_group_limit');
@@ -224,9 +218,6 @@ class Environment
 
 		define('USE_DEFAULT_IF_EMPTY', 1);
 
-		### User IP address ###
-		define('USER_IP', AppContext::get_request()->get_ip_address());
-
 		### Regex options ###
 		define('REGEX_MULTIPLICITY_NOT_USED', 0x01);
 		define('REGEX_MULTIPLICITY_OPTIONNAL', 0x02);
@@ -252,33 +243,58 @@ class Environment
 		AppContext::set_session($session_data);
 		AppContext::init_current_user();
 
-		$user_theme = AppContext::get_current_user()->get_theme();
-		//Is that theme authorized for this member? If not, we assign it the default theme
-		$user_theme_properties = ThemeManager::get_theme($user_theme);
-		if (UserAccountsConfig::load()->is_users_theme_forced() || $user_theme_properties == null
-		|| !AppContext::get_current_user()->check_auth($user_theme_properties->get_authorizations(), AUTH_THEME))
+		/*// TODO do we need to keep that feature? It's not supported every where
+		if (AppContext::get_session()->supports_cookies())
 		{
-			$user_theme = UserAccountsConfig::load()->get_default_theme();
+			define('SID', 'sid=' . AppContext::get_current_user()->get_attribute('session_id') .
+				'&amp;suid=' . AppContext::get_current_user()->get_attribute('user_id'));
+			define('SID2', 'sid=' . AppContext::get_current_user()->get_attribute('session_id') .
+				'&suid=' . AppContext::get_current_user()->get_attribute('user_id'));
 		}
-		//If the user's theme doesn't exist, we assign it a default one which exists
-		$user_theme = find_require_dir(PATH_TO_ROOT . '/templates/', $user_theme);
-		AppContext::get_current_user()->set_user_theme($user_theme);
-
-		$user_lang = AppContext::get_current_user()->get_locale();
-		//Is that member authorized to use this lang? If not, we assign it the default lang
-		$langs_cache = LangsCache::load();
-		$lang_properties = $langs_cache->get_lang_properties($user_lang);
-		if ($lang_properties == null || !AppContext::get_current_user()->check_level($lang_properties['auth']))
+		else
 		{
-			$user_lang = UserAccountsConfig::load()->get_default_lang();
+			
 		}
-		$user_lang = find_require_dir(PATH_TO_ROOT . '/lang/', $user_lang);
-		AppContext::get_current_user()->set_user_lang($user_lang);
+		*/
+		define('SID', '');
+			define('SID2', '');
+			
+		$current_user = AppContext::get_current_user();
+		$user_accounts_config = UserAccountsConfig::load();
+		
+		$user_theme = ThemeManager::get_theme($current_user->get_theme());
+		$default_theme = $user_accounts_config->get_default_theme();
+		
+		if ($user_theme !== null)
+		{
+			if ((!$user_theme->check_auth() || !$user_theme->is_activated()) && $user_theme->get_id() !== $default_theme)
+			{
+				AppContext::get_current_user()->update_theme($default_theme);
+			}
+		}
+		else
+		{
+			AppContext::get_current_user()->update_theme($default_theme);
+		}
+		
+		$user_lang = LangManager::get_lang($current_user->get_locale());
+		$default_lang = $user_accounts_config->get_default_lang();
+		if ($user_lang !== null)
+		{
+			if ((!$user_lang->check_auth() || !$user_lang->is_activated()) && $user_lang->get_id() !== $default_lang)
+			{
+				AppContext::get_current_user()->update_lang($default_lang);
+			}
+		}
+		else
+		{
+			AppContext::get_current_user()->update_lang($default_lang);
+		}
 	}
 
 	public static function init_output_bufferization()
 	{
-		if (ServerEnvironmentConfig::load()->is_output_gziping_enabled())
+		if (ServerEnvironmentConfig::load()->is_output_gziping_enabled() && !in_array('ob_gzhandler', ob_list_handlers()))
 		{
 			ob_start('ob_gzhandler');
 		}
@@ -301,7 +317,6 @@ class Environment
 	public static function process_changeday_tasks_if_needed()
 	{
 		//If the day changed compared to the last request, we execute the daily tasks
-
 		$last_use_config = LastUseDateConfig::load();
 		$last_use_date = $last_use_config->get_last_use_date();
 		$current_date = new Date();
@@ -310,43 +325,146 @@ class Environment
 		$current_date->set_seconds(0);
 		if ($last_use_date->is_anterior_to($current_date))
 		{
-
-			$lock_file = new File(PATH_TO_ROOT . '/cache/changeday_lock');
-			if (!$lock_file->exists())
-			{
-				$lock_file->write('');
-				$lock_file->flush();
-			}
-			$lock_file->open(File::WRITE);
-			$lock_file->lock(false);
 			$yesterday_timestamp = self::get_yesterday_timestamp();
 
-			$num_entry_today = PersistenceContext::get_sql()->query("SELECT COUNT(*) FROM " . DB_TABLE_STATS
-			. " WHERE stats_year = '" . gmdate_format('Y', $yesterday_timestamp,
-			TIMEZONE_SYSTEM) . "' AND stats_month = '" . gmdate_format('m',
-			$yesterday_timestamp, TIMEZONE_SYSTEM) . "' AND stats_day = '" . gmdate_format(
-				  'd', $yesterday_timestamp, TIMEZONE_SYSTEM) . "'", __LINE__, __FILE__);
+			$condition = 'WHERE stats_year=:stats_year AND stats_month=:stats_month AND stats_day=:stats_day';
+			$parameters = array(
+				'stats_year' => gmdate_format('Y', $yesterday_timestamp, TIMEZONE_SYSTEM),
+				'stats_month' => gmdate_format('m',	$yesterday_timestamp, TIMEZONE_SYSTEM),
+				'stats_day' => gmdate_format('d', $yesterday_timestamp, TIMEZONE_SYSTEM)
+			);
+			$num_entry_today = PersistenceContext::get_querier()->count(DB_TABLE_STATS, $condition, $parameters);
 
-			if ((int) $num_entry_today == 0)
+			if ($num_entry_today == 0)
 			{
 				$last_use_config->set_last_use_date(new Date());
 				LastUseDateConfig::save();
 
 				self::perform_changeday();
 			}
-			$lock_file->close();
 		}
 	}
 
 	private static function perform_changeday()
 	{
+		self::perform_stats_changeday();
+
+		self::clear_all_temporary_cache_files();
+
+		self::execute_modules_changedays_tasks();
+
+		self::remove_old_unactivated_member_accounts();
+
+		self::remove_captcha_entries();
+
+		self::check_updates();
+	}
+
+	private static function perform_stats_changeday()
+	{
+		$yesterday_timestamp = self::get_yesterday_timestamp();
+		
+		$result = PersistenceContext::get_querier()->insert(DB_TABLE_STATS, array(
+			'stats_year' => gmdate_format('Y', $yesterday_timestamp, TIMEZONE_SYSTEM),
+			'stats_month' => gmdate_format('m',	$yesterday_timestamp, TIMEZONE_SYSTEM),
+			'stats_day' => gmdate_format('d', $yesterday_timestamp, TIMEZONE_SYSTEM),
+			'nbr' => 0, 
+			'pages' => 0, 
+			'pages_detail' => ''
+		));
+
+		//We retrieve the id we just come to create
+		$last_stats = $result->get_last_inserted_id();
+
+		PersistenceContext::get_sql()->query_inject("UPDATE " . DB_TABLE_STATS_REFERER .
+			" SET yesterday_visit = today_visit", __LINE__, __FILE__);
+		PersistenceContext::get_sql()->query_inject("UPDATE " . DB_TABLE_STATS_REFERER .
+			" SET today_visit = 0, nbr_day = nbr_day + 1", __LINE__, __FILE__);
+		//We delete the referer entries older than one week
+		PersistenceContext::get_sql()->query_inject("DELETE FROM " . DB_TABLE_STATS_REFERER .
+		" WHERE last_update < '" . (time() - 604800) . "'", __LINE__, __FILE__);
+
+		//We retrieve the number of pages seen until now
+		$pages_displayed = StatsSaver::retrieve_stats('pages');
+
+		//We delete the file containing the displayed pages
+
+		$pages_file = new File(PATH_TO_ROOT . '/stats/cache/pages.txt');
+		$pages_file->delete();
+
+		//How much visitors were there today?
+		$total_visit = PersistenceContext::get_sql()->query("SELECT total FROM " . DB_TABLE_VISIT_COUNTER .
+			" WHERE id = 1", __LINE__, __FILE__);
+		//We truncate the table containing the visitors of today
+		PersistenceContext::get_sql()->query_inject("DELETE FROM " . DB_TABLE_VISIT_COUNTER .
+			" WHERE id <> 1", __LINE__, __FILE__);
+		//We update the last changeday date
+		PersistenceContext::get_sql()->query_inject("UPDATE " . DB_TABLE_VISIT_COUNTER .
+			" SET time = '" . gmdate_format('Y-m-d', time(), TIMEZONE_SYSTEM) .
+				"', total = 1 WHERE id = 1", __LINE__, __FILE__);
+		//We insert this visitor as a today visitor
+		PersistenceContext::get_sql()->query_inject("INSERT INTO " . DB_TABLE_VISIT_COUNTER .
+			" (ip, time, total) VALUES('" . AppContext::get_request()->get_ip_address() . "', '" . gmdate_format('Y-m-d', time(),
+		TIMEZONE_SYSTEM) . "', '0')", __LINE__, __FILE__);
+
+		//We update the stats table: the number of visits today
+		PersistenceContext::get_sql()->query_inject("UPDATE " . DB_TABLE_STATS . " SET nbr = '" . $total_visit .
+		"', pages = '" . array_sum($pages_displayed) . "', pages_detail = '" .
+		addslashes(serialize($pages_displayed)) . "' WHERE id = '" . $last_stats . "'",
+		__LINE__, __FILE__);
+
+		//Deleting all the invalid sessions
+		AppContext::get_session()->garbage_collector();
+	}
+
+	private static function clear_all_temporary_cache_files()
+	{
+		//We delete all the images generated by the LaTeX formatter
+
+		$cache_image_folder_path = new Folder(PATH_TO_ROOT . '/images/maths/');
+		foreach ($cache_image_folder_path->get_files('`\.png$`') as $image)
+		{
+			if ($image->get_last_modification_date() < self::get_one_week_ago_timestamp())
+			{
+				$image->delete();
+			}
+		}
+	}
+
+	private static function execute_modules_changedays_tasks()
+	{
 		$today = new Date();
-		$yesterday = new Date(); // FIXME set yesterday date
+		$yesterday = new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, self::get_yesterday_timestamp());
 		$jobs = AppContext::get_extension_provider_service()->get_extension_point(ScheduledJobExtensionPoint::EXTENSION_POINT);
 		foreach ($jobs as $job)
 		{
 			$job->on_changeday($yesterday, $today);
 		}
+	}
+
+	private static function remove_old_unactivated_member_accounts()
+	{
+		$user_account_settings = UserAccountsConfig::load();
+
+		$delay_unactiv_max = $user_account_settings->get_unactivated_accounts_timeout() * 3600 * 24;
+		//If the user configured a delay and member accounts must be activated
+		if ($delay_unactiv_max > 0 && $user_account_settings->get_member_accounts_validation_method() != 2)
+		{
+			PersistenceContext::get_querier()->inject("DELETE FROM " . DB_TABLE_MEMBER .
+				" WHERE timestamp < :timestamp AND user_aprob = 0",
+			array('timestamp' => (time() - $delay_unactiv_max)));
+		}
+	}
+
+	private static function remove_captcha_entries()
+	{
+		PersistenceContext::get_querier()->inject("DELETE FROM " . DB_TABLE_VERIF_CODE .
+			" WHERE timestamp < :timestamp", array('timestamp' => self::get_yesterday_timestamp()));
+	}
+
+	private static function check_updates()
+	{
+		new Updates();
 	}
 
 	public static function compute_running_module_name()
@@ -355,8 +473,8 @@ class Environment
 		$path = trim($path, '/');
 		if (strpos($path, '/'))
 		{
-			$module_name = explode('/', $path);
-			self::$running_module_name = $module_name[0];
+         $module_name = explode('/', $path);
+         self::$running_module_name = $module_name[0];
 		}
 		else
 		{
@@ -388,8 +506,12 @@ class Environment
 	 */
 	public static function get_home_page()
 	{
-		$home_page = GeneralConfig::load()->get_home_page();
-		return (substr($home_page, 0, 1) == '/') ? url(HOST . DIR . $home_page) : $home_page;
+		$general_config = GeneralConfig::load();
+		if ($general_config->get_module_home_page())
+		{
+			return Url::to_absolute('/index.php');
+		}
+		return Url::to_absolute($general_config->get_other_home_page());
 	}
 
 	/**
@@ -452,12 +574,10 @@ class Environment
 	/**
 	 * @return GraphicalEnvironment
 	 */
-	private static function get_graphical_environment()
+	public static function get_graphical_environment()
 	{
 		if (self::$graphical_environment === null)
 		{
-			//Default graphical environment
-
 			self::$graphical_environment = new SiteDisplayGraphicalEnvironment();
 		}
 		return self::$graphical_environment;
@@ -473,5 +593,4 @@ class Environment
 		@set_time_limit(600);
 	}
 }
-
 ?>

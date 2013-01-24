@@ -3,8 +3,8 @@
  *		                   Image.class.php
  *                            -------------------
  *   begin                : July 11, 2010
- *   copyright            : (C) 2010 Kévin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   copyright            : (C) 2010 Kevin MASSY
+ *   email                : kevin.massy@phpboost.com
  *
  *
  ###################################################
@@ -26,7 +26,7 @@
  ###################################################*/
 
 /**
- * @author Kévin MASSY <soldier.weasel@gmail.com>
+ * @author Kevin MASSY <kevin.massy@phpboost.com>
  * @desc This class allows you to obtain informations on an image.
  * @package {@package}
  */
@@ -45,7 +45,7 @@ class Image
 	 */
 	private function get_properties()
 	{
-		return getimagesize($this->path);
+		return @getimagesize($this->path);
 	}
 
 	public function get_path()
@@ -88,14 +88,14 @@ class Image
 	
 	public function get_extension()
 	{
-		$explode = explode('.', $this->get_name_and_extension());
-		return array_pop($explode);
+		$filename = $this->get_name_and_extension();
+		return strtolower(substr(strrchr($filename, '.'), 1));
 	}
 	
 	public function get_name()
 	{
-		$explode = explode('.', $this->get_name_and_extension());
-		return array_shift($explode);
+		$filename = $this->get_name_and_extension();
+		return substr($filename, 0, strpos($filename, '.'));
 	}
 	
 	public function get_folder_image()

@@ -39,5 +39,4 @@ class ConfigNotFoundException extends Exception
 		parent::__construct('The configuration "' . $config_name . '" was not found in the database');
 	}
 }
-
 ?>

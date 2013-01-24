@@ -87,5 +87,4 @@ abstract class ContentEditor
         return $this->template;
     }
 }
-
 ?>

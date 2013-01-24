@@ -88,7 +88,7 @@ class WebConfig extends AbstractConfigData
 	 */
 	public static function load()
 	{
-		return ConfigManager::load(__CLASS__, 'web', 'main');
+		return ConfigManager::load(__CLASS__, 'web', 'config');
 	}
 
 	/**
@@ -96,7 +96,7 @@ class WebConfig extends AbstractConfigData
 	 */
 	public static function save()
 	{
-		ConfigManager::save('web', self::load(), 'main');
+		ConfigManager::save('web', self::load(), 'config');
 	}
 }
 ?>

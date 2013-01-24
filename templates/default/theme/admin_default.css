@@ -21,44 +21,30 @@ Css par défaut commun à tout les thèmes, permet les ajouts nécessaires au framew
 	border:1px solid #8F8F8F;
 }
 
-
 .menu_link_element:hover {
     border-color:#aaaaaa;
     cursor:move;
 }
 
-.menu_link_element label {
-    color:#1F507F;
-}
-.menu_link_element:hover label {
-    cursor:move;
-}
-
-.menu_link_element:hover img {
-    cursor:pointer;
-}
-
-.menu_link_element:hover label {
-    cursor:pointer;
-}
+.menu_link_element label { color:#1F507F; }
+.menu_link_element:hover label { cursor:move; }
+.menu_link_element:hover img { cursor:pointer; }
+.menu_link_element:hover label { cursor:pointer; }
 
 /* Interface des menus */
 #valid_position_menus {
 	color:#0E2A48;
 	position:fixed;
 	z-index:101;
-	width:180px;
-	bottom:5px;
+	top: 90%;
 	right:0px;
 	margin-right:5px;
 	padding:6px;
-	border:1px solid #8e727f;
-	background:#e5e5e5;
-   	-moz-border-radius:4px;
-    -khtml-border-radius:4px;
-    -webkit-border-radius:4px;
-    border-radius:4px;
+	border:1px solid #353535;
+	background:#366393;
+	border-radius:5px;
 }
+
 .menu_block_libelle {
 	color:#0E2A48;
 	width:165px;
@@ -114,12 +100,29 @@ Css par défaut commun à tout les thèmes, permet les ajouts nécessaires au framew
 	border-radius:3px;
 	overflow:auto;
 }
-.menus_block_top {
-	margin-bottom:5px;
+.menus_block_top { margin-bottom:5px; }
+.menus_block_title { color:#515C68; }
+
+.menus_block_move {
+	float:right;
+	background:none;
+	height:16px;
+	width:16px;
 }
-.menus_block_title {
-	color:#515C68;
+
+.menus_block_move a{
+	display:block;
+	height:16px;
+	width:16px;	
 }
+
+.menus_block_container:hover > div.menus_block_move_top { 
+	background:url('../images/move_top.png');
+}
+.menus_block_container:hover > div.menus_block_move_bot { 
+	background:url('../images/move_bot.png');
+}
+
 .menu_spacer {
 	width:99%;
 	padding:0px 5px;

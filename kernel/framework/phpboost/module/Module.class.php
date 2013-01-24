@@ -26,12 +26,18 @@
  *###################################################
  */
 
+/**
+ * @author Loic Rouchon <loic.rouchon@phpboost.com>
+ * @package {@package}
+ */
 class Module
 {
     private $module_id;
     private $activated;
     private $authorizations;
 	private $installed_version;
+	
+	const ACCESS_AUTHORIZATION = 1;
 	
 	public function __construct($module_id, $activated = false, array $authorizations = array())
 	{
@@ -86,7 +92,7 @@ class Module
     
     public function check_auth()
     {
-    	return AppContext::get_current_user()->check_auth($this->authorizations, ACCESS_MODULE);
+    	return AppContext::get_current_user()->check_auth($this->authorizations, self::ACCESS_AUTHORIZATION);
     }
 }
 ?>

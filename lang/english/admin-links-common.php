@@ -3,8 +3,8 @@
  *                           admin-menu-common.php
  *                            -------------------
  *   begin                : October 03, 2011
- *   copyright            : (C) 2011 Kévin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   copyright            : (C) 2011 Kevin MASSY
+ *   email                : kevin.massy@phpboost.com
  *
  *
  ###################################################
@@ -40,6 +40,7 @@ $lang['index'] = 'Index';
 $lang['index.site'] = 'Site';
 $lang['index.disconnect'] = 'Disconnect';
 
+
 $lang['administration'] = 'Administration';
 
 $lang['administration.configuration.general'] = 'General configuration';
@@ -53,7 +54,8 @@ $lang['administration.alerts'] = 'Alerts';
 
 
 $lang['tools'] = 'Tools';
-$lang['tools.updates.kernel'] = 'kernel';
+
+$lang['tools.updates.kernel'] = 'Kernel';
 
 $lang['tools.maintain'] = 'Maintain';
 
@@ -61,17 +63,12 @@ $lang['tools.cache'] = 'Cache';
 $lang['tools.cache.syndication'] = 'Syndication';
 $lang['tools.cache.css'] = 'CSS';
 
-$lang['tools.errors-archived'] = 'Errors archived';
+$lang['tools.errors-archived'] = 'Archived errors';
+$lang['tools.404-errors-archived'] = '404 errors';
 
 $lang['tools.server'] = 'Server';
 $lang['tools.server.phpinfo'] = 'PHP info';
 $lang['tools.server.system-report'] = 'System report';
-
-$lang['tools.personalization'] = 'Personnalization';
-$lang['tools.personalization.interface'] = 'Interface';
-$lang['tools.personalization.favicon'] = 'Favicon';
-$lang['tools.personalization.css-files'] = 'CSS Files';
-
 
 $lang['users'] = 'Users';
 $lang['users.punishement'] = 'Punishement';
@@ -79,7 +76,6 @@ $lang['users.punishement'] = 'Punishement';
 $lang['users.groups'] = 'Groups';
 $lang['users.extended-fields'] = 'Extended fields';
 $lang['users.ranks'] = 'Ranks';
-$lang['users.rules'] = 'Rules';
 
 
 $lang['content'] = 'Content';

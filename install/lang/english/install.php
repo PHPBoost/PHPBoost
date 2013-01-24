@@ -3,8 +3,8 @@
  *                                install.php
  *                            -------------------
  *   begin                : May 30, 2010
- *   copyright            : (C) 2010 Kévin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   copyright            : (C) 2010 Kevin MASSY
+ *   email                : kevin.massy@phpboost.com
  *
  *
  ###################################################
@@ -70,6 +70,7 @@ $lang = array(
     'step.next' => 'Next step',
     'yes' => 'Yes',
     'no' => 'No',
+	'unknown' => 'Unknown',
 	'generatedBy' => 'Powered by %s',
 	'poweredBy' => 'Powered by',
 	'phpboost.rights' => '',
@@ -140,7 +141,7 @@ $lang = array(
 	'db.unknown.error' => 'An unknown error has occured.',
 	'phpboost.alreadyInstalled.alert' => 'A PHPBoost installation has been found on this database with the prefix you entered. <span style="font-weight:bold;">If you proceed, all the data in this database will be lost.</span>',
 	'db.required.host' => 'You must enter database hostname!',
-	'db.required.port' => 'Vous devez renseigner le port !',
+	'db.required.port' => 'You must enter database port!',
 	'db.required.login' => 'You must enter database username!',
 	'db.required.schema' => 'You must enter database name!',
 	'phpboost.alreadyInstalled' => 'Existing installation',
@@ -219,15 +220,15 @@ The PHPBoost Team.',
                             <legend>PHPBoost is now installed and ready to run !</legend>
                             <p class="success">The installation of PHPBoost has been powered successfully. The PHPBoost Team thanks you for using its software and is proud to count you among its users.</p>
                             <p>Keep yourself informed about the evolution of PHPBoost by visiting our website, <a href="http://www.phpboost.org">www.phpboost.org</a>. You will be warned in the administration panel when updates are available. We strongly recommend to keep your website up to date so you can take advantage of the latest features and correct any flaws or errors.</p>
-                            <p class="warning">For security reasons we also recommand you to delete the installation folder and all its contents, hackers could manage to run the installation script and you could lose data !</p>
-                            <p>Don\'t forget the <a href="http://www.phpboost.org/wiki/">documentation</a> which will help you for using PHPBoost and the <a href="http://www.phpboost.org/faq/faq.php"><acronym title="Frequently Asked Questions">FAQ</acronym></a>.</p>
+                            <p class="warning">For security reasons we also recommand you to delete the installation and update folders and all their contents. Hackers could manage to run the installation or the update script and you could lose data !</p>
+                            <p>Don\'t forget to consult the <a href="http://www.phpboost.org/wiki/">documentation</a> which will help you for using PHPBoost and the <a href="http://www.phpboost.org/faq/faq.php"><acronym title="Frequently Asked Questions">FAQ</acronym></a>.</p>
                             <p>If you have any problem please go to the <a href="http://www.phpboost.org/forum/">support forum of PHPBoost</a>.</p>
                         </fieldset>
                         <fieldset>
                             <legend>Thanks</legend>
                             <h2>Members</h2>
                             <p>Thanks to all the members of the community who cheer us on daily and contribute to the software quality by reporting bugs and suggestion improvements, which allows to lead to a stable and powerful version 4.0.</p>
-                            <p>Thanks to the members of our teams and particulary to <strong>Ptithom</strong> and <strong>giliam</strong> for the documentation writing, <strong>KONA</strong>, <strong>Frenchbulldog</strong>, <strong>Grenouille</strong>, <strong>EnimSay</strong>, <strong>swan</strong> for the graphics, <strong>Gsgsd</strong>, <strong>Alain91</strong> and <strong>Crunchfamily</strong> for the modules development, <strong>Forensic</strong>, <strong>PiJean</strong> and <strong>Beowulf</strong> for the English translation and <strong>Shadow</strong> and <strong>Kak Miortvi Pengvin</strong> for the moderation of the community.</p>
+                            <p>Thanks to the members of our teams and particulary to <strong>soupaloignon</strong> for communication team, <strong>Ptithom</strong>, <strong>aiglobulles</strong>, <strong>55 Escape</strong> and <strong>Micman</strong> for the documentation writing, <strong>Schyzo</strong>, <strong>elenwe</strong> and <strong>alyha</strong> for the graphics, <strong>DaaX</strong>, <strong>Alain91</strong> and <strong>julienseth78</strong> for the modules development and <strong>benflovideo</strong> for the moderation of the community.</p>
                             <h2>Other projects</h2>
                             <p>PHPBoost uses different tools allowing it to enlarge its features panel enough implying the development time rising. Most of these tools are under GNU/GPL license.</p>
                             <ul>
@@ -246,9 +247,10 @@ The PHPBoost Team.',
                         <fieldset>
                             <legend>Credits</legend>
                             <ul>
-                                <li><strong>Régis VIARRE</strong> <em>(alias CrowkaiT)</em>, founder of PHPBoost project and developer</li>
-                                <li><strong>Benoît SAUTEL</strong> <em>(alias ben.popeye)</em>, developer</li>
-                                <li><strong>Loic ROUCHON</strong> <em>(alias horn)</em>, developer</li>
+                                <li><strong>Régis VIARRE</strong> <em>(alias CrowkaiT)</em>, founder of PHPBoost project and developer retired</li>
+                                <li><strong>Benoît SAUTEL</strong> <em>(alias ben.popeye)</em>, developer retired</li>
+                                <li><strong>Loic ROUCHON</strong> <em>(alias horn)</em>, developer retired</li>
+                                <li><strong>Kevin MASSY</strong> <em>(alias ReidLos)</em>, developer</li>
                             </ul>
                         </fieldset>',
 	'site.index' => 'Go to the website',

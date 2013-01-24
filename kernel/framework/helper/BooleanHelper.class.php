@@ -3,8 +3,8 @@
  *                             BooleanHelper.class.php
  *                            -------------------
  *   begin                : September 09, 2011
- *   copyright            : (C) 2011 Kévin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   copyright            : (C) 2011 Kevin MASSY
+ *   email                : kevin.massy@phpboost.com
  *
  *
  ###################################################
@@ -27,7 +27,7 @@
 
 /**
  * @desc Boolean helper
- * @author Kévin MASSY <soldier.weasel@gmail.com>
+ * @author Kevin MASSY <kevin.massy@phpboost.com>
  * @package {@package}
  */
 class BooleanHelper

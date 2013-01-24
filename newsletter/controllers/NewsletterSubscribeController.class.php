@@ -3,8 +3,8 @@
  *                         NewsletterUnsubscribeController.class.php
  *                            -------------------
  *   begin                : February 8, 2011
- *   copyright            : (C) 2011 Kévin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   copyright            : (C) 2011 Kevin MASSY
+ *   email                : kevin.massy@phpboost.com
  *
  *
  ###################################################
@@ -30,24 +30,34 @@ class NewslettersubscribeController extends ModuleController
 	private $lang;
 	private $view;
 	private $form;
+	private $submit_button;
 	
-	public function execute(HTTPRequest $request)
+	public function execute(HTTPRequestCustom $request)
 	{
-		$this->init();
-		$this->build_form();
-		
-		$tpl = new StringTemplate('# INCLUDE MSG ## INCLUDE FORM #');
-		$tpl->add_lang($this->lang);
-
-		if ($this->submit_button->has_been_submited() && $this->form->validate())
+		$nbr_streams = NewsletterStreamsCache::load()->get_number_streams();		
+		if (empty($nbr_streams))
 		{
-			$this->save();
-			$tpl->put('MSG', MessageHelper::display($this->lang['success-subscribe'], E_USER_SUCCESS, 4));
+			$newsletter_home_page = NewsletterUrlBuilder::home()->absolute();
+			AppContext::get_response()->redirect($newsletter_home_page);
 		}
-		
-		$tpl->put('FORM', $this->form->display());
-		
-		return $this->build_response($tpl);
+		else 
+		{
+			$this->init();
+			$this->build_form();
+			
+			$tpl = new StringTemplate('# INCLUDE MSG ## INCLUDE FORM #');
+			$tpl->add_lang($this->lang);
+	
+			if ($this->submit_button->has_been_submited() && $this->form->validate())
+			{
+				$this->save();
+				$tpl->put('MSG', MessageHelper::display($this->lang['success-subscribe'], E_USER_SUCCESS, 4));
+			}
+			
+			$tpl->put('FORM', $this->form->display());
+			
+			return $this->build_response($tpl);
+		}
 	}
 	
 	private function init()
@@ -80,16 +90,19 @@ class NewslettersubscribeController extends ModuleController
 		$newsletter_subscribe = AppContext::get_current_user()->check_level(User::MEMBER_LEVEL) ? NewsletterService::get_id_streams_member(AppContext::get_current_user()->get_attribute('user_id')) : array();
 		$fieldset->add_field(new FormFieldMultipleSelectChoice('newsletter_choice', $this->lang['subscribe.newsletter_choice'], $newsletter_subscribe, $this->get_streams()));
 		
-		$form->add_button(new FormButtonReset());
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_button($this->submit_button);
-
+		$form->add_button(new FormButtonReset());
+		
 		$this->form = $form;
 	}
 	
 	private function build_response(View $view)
 	{
-		$response = new SiteDisplayResponse($view);
+		$body_view = new FileTemplate('newsletter/NewsletterBody.tpl');
+		$body_view->add_lang($this->lang);
+		$body_view->put('TEMPLATE', $view);
+		$response = new SiteDisplayResponse($body_view);
 		$breadcrumb = $response->get_graphical_environment()->get_breadcrumb();
 		$breadcrumb->add($this->lang['newsletter'], NewsletterUrlBuilder::home()->absolute());
 		$breadcrumb->add($this->lang['subscribe.newsletter'], NewsletterUrlBuilder::subscribe()->absolute());
@@ -118,13 +131,12 @@ class NewslettersubscribeController extends ModuleController
 		$streams = $this->form->get_value('newsletter_choice');
 		if (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL))
 		{
-			NewsletterService::update_subscribtions_member_registered($streams, AppContext::get_current_user()->get_attribute('user_id'));
+			NewsletterService::update_subscriptions_member_registered($streams, AppContext::get_current_user()->get_attribute('user_id'));
 		}
 		else
 		{
-			NewsletterService::update_subscribtions_visitor($streams, $this->form->get_value('mail'));
+			NewsletterService::update_subscriptions_visitor($streams, $this->form->get_value('mail'));
 		}
 	}
 }
-
 ?>

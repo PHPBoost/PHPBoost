@@ -3,8 +3,8 @@
  *                       UserRegistrationService.class.php
  *                            -------------------
  *   begin                : October 07, 2011
- *   copyright            : (C) 2011 Kévin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   copyright            : (C) 2011 Kevin MASSY
+ *   email                : kevin.massy@phpboost.com
  *
  *
  ###################################################
@@ -34,19 +34,17 @@ class UserRegistrationService
 		self::$lang = LangLoader::get('user-common');
 	}
 	
-	public static function create_user(User $user, $password, $registration_pass = '')
+ 	public static function user_registration($login, $password, $level, $email, $locale, $timezone, $theme, $editor, $show_email = '1', $activation_key = '', $user_aprobation = '1')
+ 	{
+ 		return UserService::create($login, $password, $level, $email, $locale, $timezone, $theme, $editor, $show_email, $activation_key, $user_aprobation);
+ 	}
+ 	
+	public static function connect_user($user_id, $password)
 	{
-		$user_id = $this->create_user_account($user, $password, $registration_pass);
-		self::send_email_confirmation($user_id, $user->get_email(), $user->get_display_name(), $user->get_display_name(), $password);
+		AppContext::get_session()->start($user_id, $password, 0, SCRIPT, QUERY_STRING, self::$lang['registration'], 1, true);
 	}
 	
-	public static function create_user_account(User $user, $password, $registration_pass = '')
-	{
-		$auth_method = new PHPBoostAuthenticationMethod($user->get_display_name(), $password);
-		return UserService::create($user, $auth_method, $registration_pass);
-	}
-	
-	private static function send_email_confirmation($user_id, $email, $pseudo, $login, $password)
+	public static function send_email_confirmation($user_id, $email, $pseudo, $login, $password, $activation_key)
 	{
 		$user_accounts_config = UserAccountsConfig::load();
 		$site_name = GeneralConfig::load()->get_site_name();
@@ -59,7 +57,7 @@ class UserRegistrationService
 					'site_name' => $site_name,
 					'login' => $login,
 					'password' => $password,
-					'accounts_validation_explain' => self::$lang['registration.success'],
+					'accounts_validation_explain' => self::$lang['registration.email.automatic-validation'],
 					'signature' => MailServiceConfig::load()->get_mail_signature()
 				);
 				$content = StringVars::replace_vars(self::$lang['registration.content-mail'], $parameters);
@@ -71,10 +69,15 @@ class UserRegistrationService
 					'site_name' => $site_name,
 					'login' => $login,
 					'password' => $password,
-					'accounts_validation_explain' => self::$lang['registration.success'],
+					'accounts_validation_explain' => 
+						StringVars::replace_vars(
+							self::$lang['registration.email.mail-validation'], 
+							array('validation_link' => UserUrlBuilder::confirm_registration($activation_key)->absolute())
+						),
 					'signature' => MailServiceConfig::load()->get_mail_signature()
 				);
-				$content = StringVars::replace_vars(self::$lang['registration.success.mail-validation'], $parameters);
+				$content = StringVars::replace_vars(self::$lang['registration.content-mail'], $parameters);
+				self::send_email_user($email, $login, $subject, $content);
 			break;
 			case UserAccountsConfig::ADMINISTRATOR_USER_ACCOUNTS_VALIDATION:
 				self::add_administrator_alert($user_id);
@@ -84,10 +87,11 @@ class UserRegistrationService
 					'site_name' => $site_name,
 					'login' => $login,
 					'password' => $password,
-					'accounts_validation_explain' => self::$lang['registration.success.administrator-validation'],
+					'accounts_validation_explain' => self::$lang['registration.email.administrator-validation'],
 					'signature' => MailServiceConfig::load()->get_mail_signature()
 				);
 				$content = StringVars::replace_vars(self::$lang['registration.content-mail'], $parameters);
+				self::send_email_user($email, $login, $subject, $content);
 			break;
 		}
 	}
@@ -96,7 +100,7 @@ class UserRegistrationService
 	{
 		$mail = new Mail();
 		$mail->add_recipient($email, $login);
-		$mail->set_sender(MailServiceConfig::load()->get_default_mail_sender(), GeneralConfig::load()->get_site_name());
+		$mail->set_sender(MailServiceConfig::load()->get_default_mail_sender());
 		$mail->set_subject($subject);
 		$mail->set_content($content);
 		AppContext::get_mail_service()->try_to_send($mail);
@@ -106,7 +110,7 @@ class UserRegistrationService
 	{
 		$alert = new AdministratorAlert();
 		$alert->set_entitled(self::$lang['registration.pending-approval']);
-		$alert->set_fixing_url(DispatchManager::get_url('/admin/member', '/members/' . $user_id . '/edit/')->absolute());
+		$alert->set_fixing_url(AdminMembersUrlBuilder::edit($user_id)->relative());
 		$alert->set_priority(AdministratorAlert::ADMIN_ALERT_MEDIUM_PRIORITY);
 		$alert->set_id_in_module($user_id);
 		$alert->set_type('member_account_to_approbate');

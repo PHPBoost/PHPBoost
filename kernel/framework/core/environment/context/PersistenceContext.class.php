@@ -107,6 +107,10 @@ class PersistenceContext
 	public static function close_db_connection()
 	{
 		DBFactory::close_db_connection();
+		self::$sql_querier = null;
+		self::$db_querier = null;
+		self::$dbms_utils = null;
+		self::$sql = null;
 	}
 
 	/**
@@ -122,5 +126,4 @@ class PersistenceContext
 		return self::$sql_querier;
 	}
 }
-
 ?>

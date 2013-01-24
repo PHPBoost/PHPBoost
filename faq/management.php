@@ -63,7 +63,7 @@ include_once('faq_bread_crumb.php');
 //checking authorization
 if (!$auth_write)
 {
-	$error_controller = PHPBoostErrors::unexisting_page();
+	$error_controller = PHPBoostErrors::user_not_authorized();
 	DispatchManager::redirect($error_controller);
 }
 
@@ -134,10 +134,10 @@ elseif ($cat_of_new_question >= 0 && $new)
 }
 elseif ($id_move > 0)
 {
-	$faq_cats = new Faqcats();
+	$faq_cats = new FaqCats();
 	
 	$Template->assign_block_vars('move_question', array(
-		'CATEGORIES_TREE' => $faq_cats->build_select_form(0, 'target', 'target', 0, AUTH_WRITE, $faq_config->get_authorization(), IGNORE_AND_CONTINUE_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH),
+		'CATEGORIES_TREE' => $faq_cats->build_select_form(0, 'target', 'target', 0, AUTH_WRITE, $faq_config->get_authorizations(), IGNORE_AND_CONTINUE_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH),
 		'ID_QUESTION' => $id_move
 	));
 	$Template->put_all(array(
@@ -218,8 +218,8 @@ else
 
 	//Category properties
 	$Template->assign_block_vars('category', array(
-		'READ_AUTH' => 	Authorizations::generate_select(AUTH_READ, !empty($FAQ_CATS[$id_faq]['auth']) ? $FAQ_CATS[$id_faq]['auth'] : $faq_config->get_authorization()),
-		'WRITE_AUTH' => Authorizations::generate_select(AUTH_WRITE, !empty($FAQ_CATS[$id_faq]['auth']) ? $FAQ_CATS[$id_faq]['auth'] : $faq_config->get_authorization()),
+		'READ_AUTH' => 	Authorizations::generate_select(AUTH_READ, !empty($FAQ_CATS[$id_faq]['auth']) ? $FAQ_CATS[$id_faq]['auth'] : $faq_config->get_authorizations()),
+		'WRITE_AUTH' => Authorizations::generate_select(AUTH_WRITE, !empty($FAQ_CATS[$id_faq]['auth']) ? $FAQ_CATS[$id_faq]['auth'] : $faq_config->get_authorizations()),
 		'U_CREATE_BEFORE' => url('management.php?new=1&amp;idcat=' . $id_faq . '&amp;after=0'),
 		'ID_FAQ' => $id_faq
 	));
@@ -230,7 +230,7 @@ else
 			'CAT_TITLE' => $FAQ_CATS[$id_faq]['name'],
 		));
 		$Template->assign_block_vars('category.not_root_auth', array(
-			'WRITE_AUTH' => Authorizations::generate_select(AUTH_WRITE, !empty($FAQ_CATS[$id_faq]['auth']) ? $FAQ_CATS[$id_faq]['auth'] : $faq_config->get_authorization())
+			'WRITE_AUTH' => Authorizations::generate_select(AUTH_WRITE, !empty($FAQ_CATS[$id_faq]['auth']) ? $FAQ_CATS[$id_faq]['auth'] : $faq_config->get_authorizations())
 		));
 	}
 	

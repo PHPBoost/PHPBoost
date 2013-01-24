@@ -34,7 +34,7 @@ if (!empty($_POST['valid']) )
 {
 	$guestbook_config = GuestbookConfig::load();
 	
-	$guestbook_config->set_authorizations(Authorizations::build_auth_array_from_form(GuestbookConfig::AUTH_READ, GuestbookConfig::AUTH_WRITE, GuestbookConfig::AUTH_MODO));
+	$guestbook_config->set_authorizations(Authorizations::build_auth_array_from_form(GuestbookConfig::AUTH_WRITE, GuestbookConfig::AUTH_MODO));
 	if (isset($_POST['guestbook_forbidden_tags'])) {
 		$guestbook_config->set_forbidden_tags($_POST['guestbook_forbidden_tags']);
 	}
@@ -70,11 +70,9 @@ else
 		'MAX_LINK' => $guestbook_config->get_maximum_links_message(),
 		'GUESTBOOK_VERIFCODE_ENABLED' => ($guestbook_config->get_display_captcha() == '1') ? 'checked="checked"' : '',
 		'GUESTBOOK_VERIFCODE_DISABLED' => ($guestbook_config->get_display_captcha() == '0') ? 'checked="checked"' : '',
-		'AUTH_READ' => Authorizations::generate_select(GuestbookConfig::AUTH_READ, $authorizations),
 		'AUTH_WRITE' => Authorizations::generate_select(GuestbookConfig::AUTH_WRITE, $authorizations),
 		'AUTH_MODO' => Authorizations::generate_select(GuestbookConfig::AUTH_MODO, $authorizations),
 		'L_AUTH_WRITE' => $LANG['rank_post'],
-		'L_AUTH_READ' => $LANG['rank_read'],
 		'L_AUTH_MODO' => $LANG['rank_modo'],
 		'L_REQUIRE' => $LANG['require'],	
 		'L_GUESTBOOK' => $LANG['title_guestbook'],

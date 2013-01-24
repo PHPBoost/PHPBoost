@@ -30,13 +30,10 @@ define('PATH_TO_ROOT', '../../..');
 require_once PATH_TO_ROOT . '/kernel/init.php';
 
 $url_controller_mappers = array(
-	//new UrlControllerMapper('', '`^/category/display/?$`'),
-	new UrlControllerMapper('AjaxCommentsNotationController', '`^/comments/notation/?$`'),
+	//new UrlControllerMapper('AjaxCommentsNotationController', '`^/comments/notation/?$`'),
 	new UrlControllerMapper('AjaxCommentsDisplayController', '`^/comments/display/?$`'),
-	new UrlControllerMapper('AjaxLockCommentsTopicController', '`^/comments/lock/?$`'),
-	new UrlControllerMapper('AjaxUnlockCommentsTopicController', '`^/comments/unlock/?$`')
+	new UrlControllerMapper('AjaxUserAutoCompleteController','`^/users_autocomplete/?$`')
 );
 
 DispatchManager::dispatch($url_controller_mappers);
-
 ?>

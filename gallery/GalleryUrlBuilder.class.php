@@ -30,41 +30,41 @@ class GalleryUrlBuilder
 {
 	const PREFIX = '/gallery/gallery';
 	
-	public static function get_link_item($idcat,$id,$com=null,$sort=null)
+	public static function get_link_item($idcat, $id, $com = null, $sort = null)
 	{
-		return self::PREFIX.url(
-			'.php?cat='.$idcat.'&amp;id='.$id.(isset($com)?'&amp;com='.$com:'').(isset($sort)?'&amp;sort='.$sort:'') ,
-			'-'.$idcat.'-'.$id.'.php'.(isset($com)?'?com='.$com:'').(isset($sort)?'&amp;sort='.$sort:''));
+		return Url::to_absolute(self::PREFIX.url(
+			'.php?cat='.$idcat.'&id='.$id.(isset($com)?'&com='.$com:'').(isset($sort)?'&sort='.$sort:'') ,
+			'-'.$idcat.'-'.$id.'.php'.(isset($com)?'?com='.$com:'').(isset($sort)?'&sort='.$sort:'')));
 	}
 	
-	public static function get_link_item_add($idcat,$id)
+	public static function get_link_item_add($idcat, $id)
 	{
-		return self::PREFIX.url(
-			'.php?add=1&amp;cat='.$idcat.'&amp;id='.$id,
+		return Url::to_absolute(self::PREFIX.url(
+			'.php?add=1&cat='.$idcat.'&id='.$id,
 			'-'.$idcat.'-'.$id.'.php?add=1',
-			'&');
+			'&'));
 	}
 	
-	public static function get_link_cat($id,$name=null)
+	public static function get_link_cat($id, $name = null)
 	{
 		if (!empty($name))
-			$name = '+'+Url::encode_rewrite($name);
+			$name = '+' . Url::encode_rewrite($name);
 			
-		return self::PREFIX.url(
+		return Url::to_absolute(self::PREFIX.url(
 			'.php?cat='.$id,
-			'-'.$id.$name.'.php');
+			'-'.$id.$name.'.php'));
 	}
 	
-	public static function get_link_cat_add($id,$error=null,$token=null)
+	public static function get_link_cat_add($id, $error = null, $token = null)
 	{
 		if (!empty($error))
-			$error = '&amp;error='+$error;
+			$error = '&error='. $error;
 		if (!empty($token))
-			$token = '&amp;token='+$token;			
-		return self::PREFIX.url(
-			'.php?add=1&amp;cat='.$id.$error.$token,
-			'-'.$id.'.php?add=1'.$error.$token,
-			'&');
+			$token = '&token='. $token;			
+		return Url::to_absolute(self::PREFIX.url(
+			'.php?add=1&cat='. $id . $error . $token,
+			'-'. $id .'.php?add=1'. $error . $token,
+			'&'));
 	}
 }
 ?>

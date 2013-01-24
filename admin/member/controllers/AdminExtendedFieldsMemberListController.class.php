@@ -3,8 +3,8 @@
  *                       AdminExtendedFieldsMemberListController.class.php
  *                            -------------------
  *   begin                : December 17, 2010
- *   copyright            : (C) 2010 Kévin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   copyright            : (C) 2010 Kevin MASSY
+ *   email                : kevin.massy@phpboost.com
  *
  *
  ###################################################
@@ -31,7 +31,7 @@ class AdminExtendedFieldsMemberListController extends AdminController
 	
 	private $view;
 
-	public function execute(HTTPRequest $request)
+	public function execute(HTTPRequestCustom $request)
 	{
 		$this->update_fields($request);
 		
@@ -41,26 +41,31 @@ class AdminExtendedFieldsMemberListController extends AdminController
 
 		foreach ($extended_field as $id => $row)
 		{
-			$this->view->assign_block_vars('list_extended_fields', array(
-				'ID' => $row['id'],
-				'NAME' => $row['name'],
-				'L_REQUIRED' => $row['required'] ? $this->lang['field.yes'] : $this->lang['field.no'],
-				'EDIT_LINK' => DispatchManager::get_url('/admin/member', '/extended-fields/'.$row['id'].'/edit/')->absolute(),
-				'DISPLAY' => $row['display'],
-				'FREEZE' => $row['freeze']
-			));
+			if ($row['name'] !== 'last_view_forum')
+			{
+				$this->view->assign_block_vars('list_extended_fields', array(
+					'ID' => $row['id'],
+					'NAME' => $row['name'],
+					'L_REQUIRED' => $row['required'] ? $this->lang['field.yes'] : $this->lang['field.no'],
+					'EDIT_LINK' => DispatchManager::get_url('/admin/member', '/extended-fields/'.$row['id'].'/edit/')->absolute(),
+					'DISPLAY' => $row['display'],
+					'FREEZE' => $row['freeze']
+				));
+			}
 		}
 		
+		$main_lang = LangLoader::get('main');
 		$this->view->put_all(array(
 			'L_MANAGEMENT_EXTENDED_FIELDS' => $this->lang['extended-fields-management'],
 			'L_NAME' => $this->lang['field.name'],
 			'L_POSITION' => $this->lang['field.position'],
 			'L_REQUIRED' => $this->lang['field.required'],
-			'L_DISPLAY' => LangLoader::get_message('display', 'main'),
+			'L_DISPLAY' => $main_lang['display'],
 			'L_ALERT_DELETE_FIELD' => $this->lang['field.delete_field'],
-			'L_AUTH_READ_PROFILE' => $this->lang['field.read_authorizations'],
-			'L_AUTH_READ_EDIT_AND_ADD' => $this->lang['field.actions_authorizations'],
-			'L_VALID' => LangLoader::get_message('update', 'main')
+			'L_VALID' => $main_lang['update'],
+			'L_UPDATE' => $main_lang['update'],
+			'L_DELETE' => $main_lang['delete'],
+			'L_PROCESSED_OR_NOT' => $main_lang['display']
 		));
 
 		return new AdminExtendedFieldsDisplayResponse($this->view, $this->lang['extended-fields-management']);
@@ -120,5 +125,4 @@ class AdminExtendedFieldsMemberListController extends AdminController
 		}
 	}
 }
-
 ?>

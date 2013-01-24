@@ -3,8 +3,8 @@
  *		                   AdminNewsletterConfigController.class.php
  *                            -------------------
  *   begin                : February 1, 2011
- *   copyright            : (C) 2011 Kévin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   copyright            : (C) 2011 Kevin MASSY
+ *   email                : kevin.massy@phpboost.com
  *
  ###################################################
  *
@@ -36,7 +36,7 @@ class AdminNewsletterConfigController extends AdminModuleController
 	 */
 	private $submit_button;
 
-	public function execute(HTTPRequest $request)
+	public function execute(HTTPRequestCustom $request)
 	{
 		$this->init();
 		$this->build_form();
@@ -44,7 +44,7 @@ class AdminNewsletterConfigController extends AdminModuleController
 		$tpl = new StringTemplate('# INCLUDE MSG # # INCLUDE FORM #');
 		$tpl->add_lang($this->lang);
 
-		if ($this->submit_button->has_been_submitted() && $this->form->validate())
+		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save();
 			$tpl->put('MSG', MessageHelper::display($this->lang['admin.success-saving-config'], E_USER_SUCCESS, 4));
@@ -69,7 +69,7 @@ class AdminNewsletterConfigController extends AdminModuleController
 		$form->add_fieldset($fieldset_config);
 		
 		$fieldset_config->add_field(new FormFieldTextEditor('mail_sender', $this->lang['admin.mail-sender'], $newsletter_config->get_mail_sender(), array(
-			'class' => 'text', 'maxlength' => 25, 'description' => $this->lang['admin.mail-sender-explain']),
+			'class' => 'text', 'description' => $this->lang['admin.mail-sender-explain']),
 			array(new FormFieldConstraintMailAddress())
 		));
 		
@@ -93,9 +93,9 @@ class AdminNewsletterConfigController extends AdminModuleController
 		$auth_setter = new FormFieldAuthorizationsSetter('authorizations', $auth_settings);
 		$fieldset_authorizations->add_field($auth_setter);
 		
-		$form->add_button(new FormButtonReset());
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_button($this->submit_button);
+		$form->add_button(new FormButtonReset());
 
 		$this->form = $form;
 	}
@@ -109,5 +109,4 @@ class AdminNewsletterConfigController extends AdminModuleController
 		NewsletterConfig::save();
 	}
 }
-
 ?>

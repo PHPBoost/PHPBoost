@@ -44,7 +44,6 @@ class ErrorHandler
 	protected $errline;
 	protected $errdesc;
 	protected $errclass;
-	protected $errimg;
 	protected $fatal;
 	protected $stacktrace;
 	protected $exception;
@@ -83,7 +82,6 @@ class ErrorHandler
 		$this->stacktrace = '';
 		$this->errdesc = '';
 		$this->errclass = '';
-		$this->errimg = '';
 		$this->fatal = false;
 
 	}
@@ -104,21 +102,18 @@ class ErrorHandler
 			case E_USER_NOTICE:
 			case E_NOTICE:
 				$this->errdesc = 'Notice';
-				$this->errimg =  'notice';
-				$this->errclass =  'error_notice';
+				$this->errclass =  'notice';
 				break;
 				//Warning utilisateur.
 			case E_USER_WARNING:
 			case E_WARNING:
 				$this->errdesc = 'Warning';
-				$this->errimg =  'important';
-				$this->errclass =  'error_warning';
+				$this->errclass =  'warning';
 				break;
 				//Strict standards
 			case E_STRICT:
 				$this->errdesc = 'Strict Standards';
-				$this->errimg =  'notice';
-				$this->errclass =  'error_notice';
+				$this->errclass =  'notice';
 				break;
 				//Erreur fatale.
 			case E_USER_ERROR:
@@ -126,22 +121,30 @@ class ErrorHandler
 			case E_RECOVERABLE_ERROR:
 				$this->fatal = true;
 				$this->errdesc = 'Fatal Error';
-				$this->errimg =  'stop';
-				$this->errclass =  'error_fatal';
+				$this->errclass =  'error';
 				break;
 			default:
 				$this->errdesc = 'Unknown Error';
-				$this->errimg =  'question';
-				$this->errclass =  'error_unknow';
+				$this->errclass =  'question';
 				break;
 		}
 	}
 
 	private function display()
 	{
-		if ($this->fatal || (Debug::is_debug_mode_enabled() && Debug::is_strict_mode_enabled()))
+		if ($this->fatal)
 		{
-			$this->display_fatal();
+			AppContext::get_response()->clean_output();
+			if (Debug::is_debug_mode_enabled())
+			{
+				Debug::fatal($this->exception);
+			}
+			else
+			{
+				echo self::FATAL_MESSAGE;
+				Environment::destroy();
+				exit;
+			}
 		}
 		elseif (Debug::is_debug_mode_enabled())
 		{
@@ -149,8 +152,7 @@ class ErrorHandler
 		}
 	}
 
-	protected function get_stackstrace_as_string($start_trace_index)
-	{
+	protected function get_stackstrace_as_string($start_trace_index) {
 		$stack = '[0] ' . Path::get_path_from_root($this->errfile) . ':' . $this->errline;
 		if (count($this->exception->getTrace()) > 2)
 		{
@@ -163,26 +165,14 @@ class ErrorHandler
 	protected function display_debug()
 	{
 		echo '<span id="message_helper"></span>
-            <div class="' . $this->errclass . '" style="width:auto;max-width:750px;margin:15px auto;padding:15px;">
-                <img src="' . PATH_TO_ROOT . '/templates/default/images/' . $this->errimg . '.png"
-                    alt="" style="float:left;padding-right:6px;" />
+            <div class="' . $this->errclass . '" style="width:auto;max-width:750px;margin:15px auto;">
                 <strong>' . $this->errdesc . ' : </strong>' . $this->exception->getMessage() . '<br /><br /><br />
                 <em>' . $this->get_stackstrace_as_string(6) . '</em></div>';
 	}
 
 	protected function display_fatal()
 	{
-		AppContext::get_response()->clean_output();
-		if (Debug::is_debug_mode_enabled())
-		{
-			Debug::fatal($this->exception);
-		}
-		else
-		{
-			echo self::FATAL_MESSAGE;
-			Environment::destroy();
-			exit;
-		}
+		$this->display_debug();
 	}
 
 	private function log()
@@ -221,7 +211,8 @@ class ErrorHandler
 
 	private static function compute_error_log_string($error_msg, $error_stacktrace, $errno = 0)
 	{
-		return gmdate_format('Y-m-d H:i:s', time(), TIMEZONE_SYSTEM) . "\n" . $errno . "\n" .
+		return gmdate_format('Y-m-d H:i:s', time(), TIMEZONE_SYSTEM) . "\n" .
+		$errno . "\n" .
 		self::clean_error_string($error_msg) . "\n" .
 		self::clean_error_string($error_stacktrace) . "\n";
 	}
@@ -240,22 +231,23 @@ class ErrorHandler
 		{
 			//Redirection utilisateur.
 			case E_USER_REDIRECT:
-				return 'error_fatal';
+				return 'error';
 				//Notice utilisateur.
 			case E_USER_NOTICE:
 			case E_NOTICE:
-				return 'error_notice';
+				return 'notice';
 				//Warning utilisateur.
 			case E_USER_WARNING:
             case E_WARNING:
-                return 'error_warning';
+                return 'warning';
                 //Erreur fatale.
             case E_USER_ERROR:
             case E_ERROR:
             case E_RECOVERABLE_ERROR:
-                return 'error_fatal';
+                return 'error';
             default: //Erreur inconnue.
-                return 'error_unknow';
+                return 'question';
          }
 	}
 }
+?>

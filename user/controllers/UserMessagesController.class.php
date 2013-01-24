@@ -3,8 +3,8 @@
  *                       UserMessagesController.class.php
  *                            -------------------
  *   begin                : October 07, 2011
- *   copyright            : (C) 2011 Kévin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   copyright            : (C) 2011 Kevin MASSY
+ *   email                : kevin.massy@phpboost.com
  *
  *
  ###################################################
@@ -31,7 +31,7 @@ class UserMessagesController extends AbstractController
 	private $tpl;
 	private $user;
 
-	public function execute(HTTPRequest $request)
+	public function execute(HTTPRequestCustom $request)
 	{
 		$this->init();
 
@@ -40,7 +40,7 @@ class UserMessagesController extends AbstractController
 		{
 			AppContext::get_response()->redirect(UserUrlBuilder::users()->absolute());
 		}
-		else if (!UserService::user_exists_by_id($user_id))
+		else if (!UserService::user_exists('WHERE user_id=:user_id', array('user_id' => $user_id)))
 		{
 			$error_controller = PHPBoostErrors::unexisting_member();
 			DispatchManager::redirect($error_controller);

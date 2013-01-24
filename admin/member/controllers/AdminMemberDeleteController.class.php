@@ -3,8 +3,8 @@
  *                      AdminMemberDeleteController.class.php
  *                            -------------------
  *   begin                : February 28, 2010
- *   copyright            : (C) 2010 Kévin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   copyright            : (C) 2010 Kevin MASSY
+ *   email                : kevin.massy@phpboost.com
  *
  *
  ###################################################
@@ -27,36 +27,26 @@
 
 class AdminMemberDeleteController extends AdminController
 {
-	public function execute(HTTPRequest $request)
+	public function execute(HTTPRequestCustom $request)
 	{
 		$user_id = $request->get_int('id', null);
 		
-		if (!UserService::user_exists_by_id($user_id) && $user_id !== null)
+		$lang = LangLoader::get('errors-common');
+		try
 		{
-			if (self::verificate_number_admin_user() > 1)
-			{
-				UserService::delete_account($user_id);
-				
-				StatsCache::invalidate();
-				
-				// TODO replace for new delete user function
-				throw new Exception('Ok !');
-			}
-			else
-			{
-				throw new Exception('Is the last admin !');
-			}
+			UserService::delete_account('WHERE user_id=:user_id', array('user_id' => $user_id));
 		}
-		else
-		{
+		catch (RowNotFoundException $ex) {
 			$error_controller = PHPBoostErrors::unexisting_member();
 			DispatchManager::redirect($error_controller);
 		}
-	}
-	
-	private static function verificate_number_admin_user()
-	{
-		return PersistenceContext::get_querier()->count(DB_TABLE_MEMBER, "WHERE user_aprob = 1 AND level = 1");
+		
+		$upload = new Uploads();
+		$upload->Empty_folder_member($user_id);
+		
+		StatsCache::invalidate();
+		
+		AppContext::get_response()->redirect(PATH_TO_ROOT . '/admin/admin_members.php');
 	}
 }
 ?>

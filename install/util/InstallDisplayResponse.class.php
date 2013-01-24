@@ -60,7 +60,8 @@ class InstallDisplayResponse extends AbstractResponse
             'STEP_TITLE' => $step_title,
             'C_HAS_PREVIOUS_STEP' => false,
             'C_HAS_NEXT_STEP' => false,
-            'PROGRESSION' => floor(100 * $this->current_step / $this->nb_steps)
+            'PROGRESSION' => floor(100 * $this->current_step / $this->nb_steps),
+		    'PHPBOOST_VERSION' => GeneralConfig::load()->get_phpboost_major_version()
 		));
 
 		parent::__construct($env, $this->full_view);

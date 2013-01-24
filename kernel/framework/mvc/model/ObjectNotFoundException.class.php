@@ -38,5 +38,4 @@ class ObjectNotFoundException extends Exception
         parent::__construct('object #' . $object_id . ' of class "' . $classname . '" was not found');
     }
 }
-
 ?>

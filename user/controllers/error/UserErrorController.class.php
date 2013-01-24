@@ -53,12 +53,10 @@ class UserErrorController extends AbstractController
 
 	public function __construct($title, $message, $error_type = self::QUESTION)
 	{
-		global $LANG;
-		
 		$this->title = $title;
 		$this->message = $message;
 		$this->error_type = $error_type;
-	    $this->link_name = $LANG['back'];
+	    $this->link_name = LangLoader::get_message('back', 'main');
 	}
 
 	public function set_correction_link($link_name, $link = self::PREVIOUS_PAGE)
@@ -90,7 +88,7 @@ class UserErrorController extends AbstractController
         $this->link = "";
 	}
 	
-	public function execute(HTTPRequest $request)
+	public function execute(HTTPRequestCustom $request)
 	{
 		$this->create_view();
 		$this->fill_view();
@@ -118,7 +116,7 @@ class UserErrorController extends AbstractController
             'TITLE' => $this->title,
             'MESSAGE' => $this->message,
             'U_LINK' => $this->link,
-			'U_TIME' => $this->time,
+			'TIME' => $this->time,
             'LINK_NAME' => $this->link_name,
 		    'HAS_LINK' => !empty($this->link) && !empty($this->link_name),
 			'HAS_TIME' => !empty($this->time) && !empty($this->link),
@@ -147,7 +145,7 @@ class UserErrorController extends AbstractController
 	
 	private function get_error_type()
 	{
-		$css_class_name = 'unknow';
+		$css_class_name = 'question';
 		switch ($this->error_type)
 		{
 			case self::NOTICE:
@@ -157,7 +155,7 @@ class UserErrorController extends AbstractController
 				$css_class_name = 'warning';
 				break;
 			case self::FATAL:
-				$css_class_name = 'fatal';
+				$css_class_name = 'error';
 				break;
 			case self::SUCCESS:
 				$css_class_name = 'success';

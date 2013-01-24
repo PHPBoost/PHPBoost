@@ -42,7 +42,7 @@ class MenuControllerConfigurationEdit extends AdminController
 	 */
 	private $response;
 
-	public function execute(HTTPRequest $request)
+	public function execute(HTTPRequestCustom $request)
 	{
 		try
 		{

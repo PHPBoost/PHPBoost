@@ -10,7 +10,6 @@
 		# START groups_list #
 			<option {groups_list.DISABLED} value="{groups_list.IDGROUP}" {groups_list.SELECTED}>{groups_list.GROUP_NAME}</option>
 		# END groups_list #
-			<option></option>
 		</optgroup>
 	</select>
 </div>
@@ -26,7 +25,6 @@
 			# START members_list #
 			<option value="{members_list.USER_ID}" selected="selected">{members_list.LOGIN}</option>
 			# END members_list #
-			<option></option>
 		</optgroup>
 	</select>
 </div>

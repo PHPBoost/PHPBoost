@@ -145,5 +145,4 @@ elseif (!empty($_GET['stats_keyword'])) //Recherche d'un membre pour envoyer le 
 }
 
 include_once(PATH_TO_ROOT . '/kernel/footer_no_display.php');
-
 ?>

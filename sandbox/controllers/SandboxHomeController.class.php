@@ -34,9 +34,15 @@ class SandboxHomeController extends ModuleController
 	# END parts #
 	</ul>';
 
-	private static $links = array('Form builder' => '?url=/form', 'Table builder' => '?url=/table', 'String template bencher' => '?url=/template', 'Mail sender' => '?url=/mail');
+	private static $links = array(
+		'Form builder' => '?url=/form', 
+		'Messages builder' => '?url=/messages',
+		'Table builder' => '?url=/table', 
+		'String template bencher' => '?url=/template', 
+		'Mail sender' => '?url=/mail'
+	);
 
-	public function execute(HTTPRequest $request)
+	public function execute(HTTPRequestCustom $request)
 	{
 		$tpl = new StringTemplate(self::$tpl_src);
 

@@ -104,5 +104,4 @@ abstract class AbstractConfigData implements ConfigData
 	 */
 	abstract protected function get_default_values();
 }
-
 ?>

@@ -79,7 +79,7 @@ elseif (!empty($_FILES['upload_file']['name']) && isset($_GET['f'])) //Ajout d'u
 		else //Insertion dans la bdd
 		{
 			$check_user_folder = $Sql->query("SELECT user_id FROM " . DB_TABLE_UPLOAD_CAT . " WHERE id = '" . $folder . "'", __LINE__, __FILE__);
-			$user_id = ($check_user_folder <= 0) ? -1 : $User->get_id();
+			$user_id = ($check_user_folder <= 0) ? -1 : $User->get_attribute('user_id');
 			$user_id = max($user_id, $folder_member);
 			
 			$Sql->query_inject("INSERT INTO " . DB_TABLE_UPLOAD . " (idcat, name, path, user_id, size, type, timestamp) VALUES ('" . $folder . "', '" . addslashes($Upload->get_original_filename()) . "', '" . addslashes($Upload->get_filename()) . "', '" . $user_id . "', '" . $Upload->get_human_readable_size() . "', '" . $Upload->get_extension() . "', '" . time() . "')", __LINE__, __FILE__);
@@ -140,7 +140,7 @@ elseif (!empty($move_folder) && $to != -1) //Déplacement d'un dossier
 	Uploads::Find_subfolder($move_list_parent, $move_folder, $array_child_folder);
 	$array_child_folder[] = $move_folder;
 	if (!in_array($to, $array_child_folder)) //Dossier de destination non sous-dossier du dossier source.
-		Uploads::Move_folder($move_folder, $to, $User->get_id(), Uploads::ADMIN_NO_CHECK);
+		Uploads::Move_folder($move_folder, $to, $User->get_attribute('user_id'), Uploads::ADMIN_NO_CHECK);
 	else
 		AppContext::get_response()->redirect('/admin/admin_files.php?movefd=' . $move_folder . '&f=0&error=folder_contains_folder');
 			
@@ -150,7 +150,7 @@ elseif (!empty($move_file) && $to != -1) //Déplacement d'un fichier
 {
 	$Session->csrf_get_protect(); //Protection csrf
 	
-	Uploads::Move_file($move_file, $to, $User->get_id(), Uploads::ADMIN_NO_CHECK);
+	Uploads::Move_file($move_file, $to, $User->get_attribute('user_id'), Uploads::ADMIN_NO_CHECK);
 	
 	AppContext::get_response()->redirect('/admin/admin_files.php?f=' . $to);
 }
@@ -201,7 +201,7 @@ elseif (!empty($move_folder) || !empty($move_file))
 		$template->put('message_helper', MessageHelper::display($LANG['upload_folder_contains_folder'], E_USER_WARNING));
 	
 	//liste des fichiers disponibles
-	include_once(PATH_TO_ROOT .'/member/upload_functions.php');
+	include_once(PATH_TO_ROOT .'/user/upload_functions.php');
 	$cats = array();
 	
 	if (empty($folder_member))
@@ -391,7 +391,7 @@ else
 	$result = $Sql->query_while ($sql_folder, __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))
 	{
-		$name_cut = (strlen(html_entity_decode($row['name'])) > 22) ? htmlentities(substr(html_entity_decode($row['name']), 0, 22)) . '...' : $row['name'];	
+		$name_cut = (strlen(TextHelper::html_entity_decode($row['name'])) > 22) ? TextHelper::htmlentities(substr(TextHelper::html_entity_decode($row['name']), 0, 22)) . '...' : $row['name'];	
 		
 		$template->assign_block_vars('folder', array(
 			'ID' => $row['id'],
@@ -418,7 +418,7 @@ else
 		$result = $Sql->query_while ($sql_files, __LINE__, __FILE__);
 		while ($row = $Sql->fetch_assoc($result))
 		{
-			$name_cut = (strlen(html_entity_decode($row['name'])) > 22) ? htmlentities(substr(html_entity_decode($row['name']), 0, 22)) . '...' : $row['name'];
+			$name_cut = (strlen(TextHelper::html_entity_decode($row['name'])) > 22) ? TextHelper::htmlentities(substr(TextHelper::html_entity_decode($row['name']), 0, 22)) . '...' : $row['name'];
 		
 			$get_img_mimetype = Uploads::get_img_mimetype($row['type']);
 			$size_img = '';
@@ -439,12 +439,12 @@ else
 				//Image svg
 				case 'svg':
 				$bbcode = '[img]/upload/' . $row['path'] . '[/img]';
-				$link = 'javascript:popup_upload(\'' . $row['id'] . '\', 0, 0, \'no\')';
+				$link = 'javascript:popup_upload(\'' . Url::to_rel('/upload/' . $row['path']) . '\', 0, 0, \'no\')';
 				break;
 				//Sons
 				case 'mp3':
 				$bbcode = '[sound]/upload/' . $row['path'] . '[/sound]';
-				$link = 'javascript:popup_upload(\'' . $row['id'] . '\', 220, 10, \'no\')';
+				$link = 'javascript:popup_upload(\'' . Url::to_rel('/upload/' . $row['path']) . '\', 220, 10, \'no\')';
 				break;
 				default:
 				$bbcode = '[url=/upload/' . $row['path'] . ']' . $row['name'] . '[/url]';				
@@ -490,5 +490,4 @@ else
 }
 	
 require_once('../admin/admin_footer.php');
-
 ?>

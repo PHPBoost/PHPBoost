@@ -3,8 +3,8 @@
  *		                   GuestbookConfig.class.php
  *                            -------------------
  *   begin                : February 1, 2011
- *   copyright            : (C) 2011 Kévin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   copyright            : (C) 2011 Kevin MASSY
+ *   email                : kevin.massy@phpboost.com
  *
  *
  ###################################################
@@ -26,7 +26,7 @@
  ###################################################*/
 
 /**
- * @author Kévin MASSY <soldier.weasel@gmail.com>
+ * @author Kevin MASSY <kevin.massy@phpboost.com>
  */
 class GuestbookConfig extends AbstractConfigData
 {
@@ -34,10 +34,9 @@ class GuestbookConfig extends AbstractConfigData
 	const CAPTCHA_DIFFICULTY = 'captcha_difficulty';
 	const FORBIDDEN_TAGS = 'forbidden_tags';
 	const MAXIMUM_LINKS_MESSAGE = 'maximum_links_message';
-	const AUTHORIZATION = 'authorizations';
+	const AUTHORIZATIONS = 'authorizations';
 	
-	const AUTH_READ = 1;
-	const AUTH_WRITE= 2;
+	const AUTH_WRITE = 2;
 	const AUTH_MODO = 4;
 	
 	public function get_display_captcha()
@@ -82,12 +81,12 @@ class GuestbookConfig extends AbstractConfigData
 
 	public function get_authorizations()
 	{
-		return $this->get_property(self::AUTHORIZATION);
+		return $this->get_property(self::AUTHORIZATIONS);
 	}
 
 	public function set_authorizations(Array $auth)
 	{
-		$this->set_property(self::AUTHORIZATION, $auth);
+		$this->set_property(self::AUTHORIZATIONS, $auth);
 	}
 	
 	/**
@@ -100,7 +99,7 @@ class GuestbookConfig extends AbstractConfigData
 			self::CAPTCHA_DIFFICULTY => 2,
 			self::FORBIDDEN_TAGS => array('swf', 'movie', 'sound', 'code', 'math', 'mail', 'html', 'feed'),
 			self::MAXIMUM_LINKS_MESSAGE => -1,
-			self::AUTHORIZATION => array('r-1' => 3, 'r0' => 3, 'r1' => 7) 
+			self::AUTHORIZATIONS => array('r-1' => 2, 'r0' => 2, 'r1' => 6)
 		);
 	}
 
@@ -110,7 +109,7 @@ class GuestbookConfig extends AbstractConfigData
 	 */
 	public static function load()
 	{
-		return ConfigManager::load(__CLASS__, 'module', 'guestbook-config');
+		return ConfigManager::load(__CLASS__, 'guestbook', 'config');
 	}
 
 	/**
@@ -118,7 +117,7 @@ class GuestbookConfig extends AbstractConfigData
 	 */
 	public static function save()
 	{
-		ConfigManager::save('module', self::load(), 'guestbook-config');
+		ConfigManager::save('guestbook', self::load(), 'config');
 	}
 }
 ?>

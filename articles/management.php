@@ -30,9 +30,7 @@ require_once('articles_begin.php');
 
 $articles_categories = new ArticlesCats();
 
-
 $now = new Date(DATE_NOW, TIMEZONE_AUTO);
-
 
 $new = retrieve(GET, 'new', 0);
 $edit = retrieve(GET, 'edit', 0);
@@ -54,47 +52,28 @@ if ($delete > 0)
 	}
 	elseif (!$User->check_auth($ARTICLES_CAT[$articles['idcat']]['auth'], AUTH_ARTICLES_MODERATE))
 	{
-		$error_controller = PHPBoostErrors::unexisting_page();
+		$error_controller = PHPBoostErrors::user_not_authorized();
 		DispatchManager::redirect($error_controller);
 	}
 
 	$Sql->query_inject("DELETE FROM " . DB_TABLE_ARTICLES . " WHERE id = '" . $articles['id'] . "'", __LINE__, __FILE__);
 	$Sql->query_inject("DELETE FROM " . DB_TABLE_EVENTS . " WHERE module = 'articles' AND id_in_module = '" . $articles['id'] . "'", __LINE__, __FILE__);
-
-	$articles_cat_info= $Sql->query_array(DB_TABLE_ARTICLES_CAT, "id", "nbr_articles_visible", "nbr_articles_unvisible","WHERE id = '".$articles['idcat']."'", __LINE__, __FILE__);
 	
-	if($articles['visible'] == 1)
-	{
-		$nb=$articles_cat_info['nbr_articles_visible'] - 1;
-		$Sql->query_inject("UPDATE " . DB_TABLE_ARTICLES_CAT. " SET nbr_articles_visible = '" . $nb. "' WHERE id = '" . $articles['idcat'] . "'", __LINE__, __FILE__);
-	}
-	else
-	{
-		$nb=$articles_cat_info['nbr_articles_unvisible'] - 1;
-		$Sql->query_inject("UPDATE " . DB_TABLE_ARTICLES_CAT. " SET nbr_articles_unvisible = '" . $nb. "' WHERE id = '" . $articles['idcat'] . "'", __LINE__, __FILE__);
-	}
-	if ($articles['nbr_com'] > 0)
-	{
-		
-		$Comments = new CommentsTopic('articles', $articles['id'], url('articles.php?id=' . $articles['id'] . '&amp;com=%s', 'articles-' . $articles['idcat'] . '-' . $articles['id'] . '.php?com=%s'));
-		$Comments->delete_all($delete_articles);
-	}
-
+	CommentsService::delete_comments_topic_module('articles', $articles['id']);
+	NotationService::delete_notes_id_in_module('articles', $articles['id']);
+	
 	// Feeds Regeneration
-	
 	Feed::clear_cache('articles');
 
 	AppContext::get_response()->redirect('articles' . url('.php?cat=' . $articles['idcat'], '-' . $articles['idcat'] . '+' . Url::encode_rewrite($ARTICLES_CAT[$articles['idcat']]['name']) . '.php'));
 }
 elseif(retrieve(POST,'submit',false))
 {
-	$begining_date  = MiniCalendar::retrieve_date('start');
-	$end_date = MiniCalendar::retrieve_date('end');
 	$release = MiniCalendar::retrieve_date('release');
-	$icon=retrieve(POST, 'icon', '', TSTRING);
+	$icon = retrieve(POST, 'icon', '', TSTRING);
 
-	if(retrieve(POST,'icon_path',false))
-	$icon=retrieve(POST,'icon_path','');
+	if (retrieve(POST,'icon_path',false))
+		$icon = retrieve(POST,'icon_path','');
 
 	$sources = array();
 	for ($i = 0;$i < 100; $i++)
@@ -105,62 +84,44 @@ elseif(retrieve(POST,'submit',false))
 			$sources[$i]['url'] = preg_replace('`\?.*`', '', retrieve(POST, 'v'.$i, '',TSTRING_UNCHANGE));
 		}
 	}
-	
-	// models
-	$models = $Sql->query_array(DB_TABLE_ARTICLES_MODEL, '*', "WHERE id = '" . retrieve(POST,'models',1,TINTEGER) . "'", __LINE__, __FILE__);
-	$extend_field_tab=unserialize($models['extend_field']);
-	$extend_field=!empty($extend_field_tab) ? true : false;
-	$extend_field_articles=Array();
-	if($extend_field)
-	{
-		foreach ($extend_field_tab as $field)
-		{	
-			$extend_field_articles[$field['name']]['name']=$field['name'];
-			$extend_field_articles[$field['name']]['contents']=retrieve(POST, 'field_'.addslashes($field['name']), '', TSTRING);
-		}	
-	}
-	
+		
 	$articles = array(
 		'id' => retrieve(POST, 'id', 0, TINTEGER),
 		'idcat' => retrieve(POST, 'idcat', 0),
 		'user_id' => retrieve(POST, 'user_id', 0, TINTEGER),
 		'title' => retrieve(POST, 'title', '', TSTRING),
 		'desc' => retrieve(POST, 'contents', '', TSTRING_PARSE),
-		'models' => retrieve(POST, 'models', 1,TINTEGER),
 		'counterpart' => retrieve(POST, 'counterpart', '', TSTRING_PARSE),
 		'visible' => retrieve(POST, 'visible', 0, TINTEGER),
-		'start' => $begining_date->get_timestamp(),
-		'start_hour' => retrieve(POST, 'start_hour', 0, TINTEGER),
-		'start_min' => retrieve(POST, 'start_min', 0, TINTEGER),
-		'end' => $end_date->get_timestamp(),
-		'end_hour' => retrieve(POST, 'end_hour', 0, TINTEGER),
-		'end_min' => retrieve(POST, 'end_min', 0, TINTEGER),
 		'release' => $release->get_timestamp(),
 		'release_hour' => retrieve(POST, 'release_hour', 0, TINTEGER),
 		'release_min' => retrieve(POST, 'release_min', 0, TINTEGER),
 		'icon' => $icon,		
-		'sources'=>addslashes(serialize($sources)),
-		'description'=>retrieve(POST, 'description', '', TSTRING_PARSE),
-		'auth'=>retrieve(POST,'special_auth',false)  ? addslashes(serialize(Authorizations::build_auth_array_from_form(AUTH_ARTICLES_READ))) : '',
-		'extend_field'=>addslashes(serialize($extend_field_articles)),
+		'sources' => addslashes(serialize($sources)),
+		'description' => retrieve(POST, 'description', '', TSTRING_PARSE)
 	);
+	
+	$begining_date = MiniCalendar::retrieve_date('start');
+	$begining_date->set_hours(retrieve(POST, 'start_hour', 0, TINTEGER));
+	$begining_date->set_minutes(retrieve(POST, 'start_min', 0, TINTEGER));
+	
+	$end_date = MiniCalendar::retrieve_date('end');
+	$end_date->set_hours(retrieve(POST, 'end_hour', 0, TINTEGER));
+	$end_date->set_minutes(retrieve(POST, 'end_min', 0, TINTEGER));
+	
+	$articles['start'] = $begining_date->get_timestamp();
+	$articles['end'] = $end_date->get_timestamp();
 
-	if ($articles['id'] == 0 && ($User->check_auth($ARTICLES_CAT[$articles['idcat']]['auth'], AUTH_ARTICLES_WRITE) || $User->check_auth($ARTICLES_CAT[$articles['idcat']]['auth'], AUTH_ARTICLES_CONTRIBUTE)) || $articles['id'] > 0 && ($User->check_auth($ARTICLES_CAT[$articles['idcat']]['auth'], AUTH_ARTICLES_MODERATE) || $User->check_auth($ARTICLES_CAT[$articles['idcat']]['auth'], AUTH_ARTICLES_WRITE) && $articles['user_id'] == $User->get_id()))
+	if ($articles['id'] == 0 && ($User->check_auth($ARTICLES_CAT[$articles['idcat']]['auth'], AUTH_ARTICLES_WRITE) || $User->check_auth($ARTICLES_CAT[$articles['idcat']]['auth'], AUTH_ARTICLES_CONTRIBUTE)) || $articles['id'] > 0 && ($User->check_auth($ARTICLES_CAT[$articles['idcat']]['auth'], AUTH_ARTICLES_MODERATE) || $User->check_auth($ARTICLES_CAT[$articles['idcat']]['auth'], AUTH_ARTICLES_WRITE) && $articles['user_id'] == $User->get_attribute('user_id')))
 	{
 		// Errors.
 		if (empty($articles['title']))
 		{
-			//TODO à dégager, géré par le formBuilder
-			$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
-                $LANG['e_require_title']);
-            DispatchManager::redirect($controller);
+			$Template->put('message_helper', MessageHelper::display($LANG['e_require_title'], E_USER_REDIRECT));
 		}
 		elseif (empty($articles['desc']))
 		{
-			//TODO à dégager, géré par le formBuilder
-			$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
-                $LANG['e_require_desc']);
-            DispatchManager::redirect($controller);
+			$Template->put('message_helper', MessageHelper::display($LANG['e_require_desc'], E_USER_REDIRECT));
 		}
 		else
 		{
@@ -168,15 +129,21 @@ elseif(retrieve(POST,'submit',false))
 			if ($articles['visible'] == 2)
 			{
 				// Start.
-				$articles['start'] += ($articles['start_hour'] * 60 + $articles['start_min']) * 60;
-				if ($articles['start'] <= $now->get_timestamp())
-				$articles['start'] = 0;
-				// End.
-				$articles['end'] += ($articles['end_hour'] * 60 + $articles['end_min']) * 60;
-				if ($articles['end'] <= $now->get_timestamp())
-				$articles['end'] = 0;
-
-				$articles['visible'] = 1;
+				if ($articles['start'] <= $now->get_timestamp() && $articles['end'] <= $now->get_timestamp())
+				{
+					$articles['start'] = $articles['end'] = 0;
+					$articles['visible'] = 1;
+				}
+				else
+				{
+					// End.
+					if ($articles['end'] <= $now->get_timestamp())
+					{
+						$articles['end'] = 0;
+					}
+	
+					$articles['visible'] = 0;
+				}
 			}
 			else
 				$articles['start'] = $articles['end'] = 0;
@@ -191,47 +158,15 @@ elseif(retrieve(POST,'submit',false))
 
 			if ($articles['id'] > 0)
 			{
-				$visible = 1;
-				$date_now = new Date(DATE_NOW);
-
-				switch ($articles['visible'])
-				{
-					//If it's a time interval
-					case 2:
-						if ($begining_date->get_timestamp() < $date_now->get_timestamp() &&  $end_date->get_timestamp() > $date_now->get_timestamp())
-						{
-							$start_timestamp = $begining_date->get_timestamp();
-							$end_timestamp = $end_date->get_timestamp();
-						}
-						else
-						$visible = 0;
-
-						break;
-						//If it's always visible
-					case 1:
-						list($start_timestamp, $end_timestamp) = array(0, 0);
-						break;
-					default:
-						list($visible, $start_timestamp, $end_timestamp) = array(0, 0, 0);
-				}
-				$articles_properties = $Sql->query_array(PREFIX . "articles", "visible", "WHERE id = '" . $articles['id'] . "'", __LINE__, __FILE__);
-			
-				$Sql->query_inject("UPDATE " . DB_TABLE_ARTICLES . " SET idcat = '" . $articles['idcat'] . "', title = '" . $articles['title'] . "', contents = '" . $articles['desc'] . "',  icon = '" . $img . "',  visible = '" . $visible . "', start = '" .  $articles['start'] . "', end = '" . $articles['end'] . "', timestamp = '" . $articles['release'] . "',sources = '".$articles['sources']."',auth = '".$articles['auth']."',description = '".$articles['description']."',extend_field = '".$articles['extend_field']."',id_models='".$articles['models']."'
+				$Sql->query_inject("UPDATE " . DB_TABLE_ARTICLES . " SET idcat = '" . $articles['idcat'] . "', title = '" . $articles['title'] . "', contents = '" . $articles['desc'] . "',  icon = '" . $img . "',  visible = '" . $articles['visible'] . "', start = '" .  $articles['start'] . "', end = '" . $articles['end'] . "', timestamp = '" . $articles['release'] . "', sources = '".$articles['sources']."', description = '".$articles['description']."'
 				WHERE id = '" . $articles['id'] . "'", __LINE__, __FILE__);
 
 				//If it wasn't approved and now it's, we try to consider the corresponding contribution as processed
-				if ($file_approved && !$articles_properties['visible'])
+				if ($file_approved)
 				{
-					
-					
-						
 					$corresponding_contributions = ContributionService::find_by_criteria('articles', $articles['id']);
 					if (count($corresponding_contributions) > 0)
 					{
-						$articles_cat_info = $Sql->query_array(DB_TABLE_ARTICLES_CAT, "id", "nbr_articles_visible", "nbr_articles_unvisible","WHERE id = '".$articles['idcat']."'", __LINE__, __FILE__);
-						$nb_visible = $articles_cat_info['nbr_articles_visible'] + 1 ;
-						$nb_unvisible = $articles_cat_info['nbr_articles_unvisible'] - 1;
-						$Sql->query_inject("UPDATE " . DB_TABLE_ARTICLES_CAT. " SET nbr_articles_visible = '" . $nb_visible. "',nbr_articles_unvisible = '".$nb_unvisible."' WHERE id = '" . $articles['idcat'] . "'", __LINE__, __FILE__);
 						$file_contribution = $corresponding_contributions[0];
 						//The contribution is now processed
 						$file_contribution->set_status(Event::EVENT_STATUS_PROCESSED);
@@ -245,31 +180,13 @@ elseif(retrieve(POST,'submit',false))
 			{
 				$auth_contrib = !$User->check_auth($ARTICLES_CAT[$articles['idcat']]['auth'], AUTH_ARTICLES_WRITE) && $User->check_auth($ARTICLES_CAT[$articles['idcat']]['auth'], AUTH_ARTICLES_CONTRIBUTE);
 			
-				$auth = $articles['auth'];
-					
-				$Sql->query_inject("INSERT INTO " . DB_TABLE_ARTICLES . " (idcat, title, contents,timestamp, visible, start, end, user_id, icon, nbr_com,sources,auth,description,extend_field,id_models)
-				VALUES('" . $articles['idcat'] . "', '" . $articles['title'] . "', '" . $articles['desc'] . "', '" . $articles['release'] . "', '" . $articles['visible'] . "', '" . $articles['start'] . "', '" . $articles['end'] . "', '" . $User->get_id() . "', '" . $img . "', '0','".$articles['sources']."','".$auth."','".$articles['description']."','".$articles['extend_field']."','".$articles['models']."')", __LINE__, __FILE__);
+				$Sql->query_inject("INSERT INTO " . DB_TABLE_ARTICLES . " (idcat, title, contents,timestamp, visible, start, end, user_id, icon, sources, description)
+				VALUES('" . $articles['idcat'] . "', '" . $articles['title'] . "', '" . $articles['desc'] . "', '" . $articles['release'] . "', '" . $articles['visible'] . "', '" . $articles['start'] . "', '" . $articles['end'] . "', '" . $User->get_attribute('user_id') . "', '" . $img . "', '".$articles['sources']."', '".$articles['description']."')", __LINE__, __FILE__);
 				$articles['id'] = $Sql->insert_id("SELECT MAX(id) FROM " . DB_TABLE_ARTICLES);
-
-				$articles_cat_info= $Sql->query_array(DB_TABLE_ARTICLES_CAT, "id", "nbr_articles_visible", "nbr_articles_unvisible","WHERE id = '".$articles['idcat']."'", __LINE__, __FILE__);
-
-				if($articles['visible'] == 1)
-				{
-					$nb=$articles_cat_info['nbr_articles_visible'] + 1;
-					$Sql->query_inject("UPDATE " . DB_TABLE_ARTICLES_CAT. " SET nbr_articles_visible = '" . $nb. "' WHERE id = '" . $articles['idcat'] . "'", __LINE__, __FILE__);
-				}
-				else
-				{
-					$nb=$articles_cat_info['nbr_articles_unvisible'] + 1;
-					$Sql->query_inject("UPDATE " . DB_TABLE_ARTICLES_CAT. " SET nbr_articles_unvisible = '" . $nb. "' WHERE id = '" . $articles['idcat'] . "'", __LINE__, __FILE__);
-				}
 
 				//If the poster couldn't write, it's a contribution and we put it in the contribution panel, it must be approved
 				if ($auth_contrib)
 				{
-					//Importing the contribution classes
-					
-					
 					$articles_contribution = new Contribution();
 
 					//The id of the file in the module. It's useful when the module wants to search a contribution (we will need it in the file edition)
@@ -281,7 +198,7 @@ elseif(retrieve(POST,'submit',false))
 					//The URL where a validator can treat the contribution (in the file edition panel)
 					$articles_contribution->set_fixing_url('/articles/management.php?edit=' . $articles['id']);
 					//Who is the contributor?
-					$articles_contribution->set_poster_id($User->get_id());
+					$articles_contribution->set_poster_id($User->get_attribute('user_id'));
 					//The module
 					$articles_contribution->set_module('articles');
 					//Assignation des autorisations d'écriture / Writing authorization assignation
@@ -314,14 +231,14 @@ elseif(retrieve(POST,'submit',false))
 			Feed::clear_cache('articles');
 
 			if ($articles['visible'])
-			AppContext::get_response()->redirect('./articles' . url('.php?id=' . $articles['id'].'&cat='.$articles['idcat'] , '-' . $articles['idcat'] . '-' . $articles['id'] . '+' . Url::encode_rewrite($articles['title']) . '.php'));
+				AppContext::get_response()->redirect('./articles' . url('.php?id=' . $articles['id'].'&cat='.$articles['idcat'] , '-' . $articles['idcat'] . '-' . $articles['id'] . '+' . Url::encode_rewrite($articles['title']) . '.php'));
 			else
-			AppContext::get_response()->redirect(url('articles.php'));
+				AppContext::get_response()->redirect(url('articles.php'));
 		}
 	}
 	else
 	{
-		$error_controller = PHPBoostErrors::unexisting_page();
+		$error_controller = PHPBoostErrors::user_not_authorized();
 		DispatchManager::redirect($error_controller);
 	}
 }
@@ -329,45 +246,29 @@ else
 {
 	$tpl = new FileTemplate('articles/management.tpl');
 
-	// models
-	$result = $Sql->query_while("SELECT id, name,description
-	FROM " . DB_TABLE_ARTICLES_MODEL 
-	, __LINE__, __FILE__);
-	
-	$select_models = '--';		
-	while ($row = $Sql->fetch_assoc($result))
-	{
-		if($row['id'] == $articles['id_models'])
-		{
-			$select_models.='<option value="' . $row['id'] . '" selected="selected">' . $row['name']. '</option>';
-			$model_desc=$row['description'];
-		}
-		else
-			$select_models.='<option value="' . $row['id'] . '">' . $row['name']. '</option>';
-	}
-
 	if ($edit > 0)
 	{
 		$articles = $Sql->query_array(DB_TABLE_ARTICLES, '*', "WHERE id = '" . $edit . "'", __LINE__, __FILE__);
 
-		if (!empty($articles['id']) && ($User->check_auth($ARTICLES_CAT[$articles['idcat']]['auth'], AUTH_ARTICLES_MODERATE) || $User->check_auth($ARTICLES_CAT[$articles['idcat']]['auth'], AUTH_ARTICLES_WRITE) && $articles['user_id'] == $User->get_id()))
+		if (!empty($articles['id']) && ($User->check_auth($ARTICLES_CAT[$articles['idcat']]['auth'], AUTH_ARTICLES_MODERATE) || $User->check_auth($ARTICLES_CAT[$articles['idcat']]['auth'], AUTH_ARTICLES_WRITE) && $articles['user_id'] == $User->get_attribute('user_id')))
 		{
 			$articles_categories->bread_crumb($articles['idcat']);
 			$Bread_crumb->remove_last();
 			$Bread_crumb->add($articles['title'], 'articles' . url('.php?id=' . $articles['id'].'&amp;cat='.$articles['idcat'], '-' . $articles['idcat'] . '-' . $articles['id'] . '+' . Url::encode_rewrite($articles['title']) . '.php'));
 			$Bread_crumb->add($ARTICLES_LANG['edit_articles'], url('management.php?edit=' . $articles['id']));
 
-			$special_auth = (unserialize($articles['auth']) !== $ARTICLES_CAT[$articles['idcat']]['auth']) && ($articles['auth'] != '')  ? true : false;
-			$articles['auth'] = $special_auth ? unserialize($articles['auth']) : $ARTICLES_CAT[$articles['idcat']]['auth'];
+			$articles['auth'] = $ARTICLES_CAT[$articles['idcat']]['auth'];
 
 			// Calendrier.
 			$start_calendar = new MiniCalendar('start');
-			$start = new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, ($articles['start'] > 0 ? $articles['start'] : $now->get_timestamp()));
+			$start = new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, ($articles['start'] > 0 ? $articles['start'] : ''));
 			$start_calendar->set_date($start);
+			
 			$end_calendar = new MiniCalendar('end');
-			$end = new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, ($articles['end'] > 0 ? $articles['end'] : $now->get_timestamp()));
+			$end = new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, ($articles['end'] > 0 ? $articles['end'] : ''));
 			$end_calendar->set_date($end);
-			$end_calendar->set_style('margin-left:150px;');
+			$end_calendar->set_style('margin-left:100px;');
+			
 			$release_calendar = new MiniCalendar('release');
 			$release = new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, ($articles['timestamp'] > 0 ? $articles['timestamp'] : $now->get_timestamp()));
 			$release_calendar->set_date($release);
@@ -409,16 +310,14 @@ else
 			$tpl->put_all(array(
 				'C_ADD' => true,
 				'C_CONTRIBUTION' => false,
+				'C_VISIBLE_WAITING' => !empty($articles['start']) || !empty($articles['end']),
+				'C_VISIBLE_ENABLED' => $articles['visible'] && empty($articles['start']) && empty($articles['end']),
+				'C_VISIBLE_UNAPROB' => !$articles['visible'] && empty($articles['start']) && empty($articles['end']),
 				'JS_CONTRIBUTION' => 'false',
 				'RELEASE_CALENDAR_ID' => $release_calendar->get_html_id(),
 				'TITLE_ART' => $articles['title'],
 				'CONTENTS' => FormatingHelper::unparse($articles['contents']),
 				'DESCRIPTION' => FormatingHelper::unparse($articles['description']),
-				'MODELE_DESCRIPTION'=>FormatingHelper::second_parse($model_desc),
-				'MODELS'=>$select_models,
-				'VISIBLE_WAITING' => $articles['visible'] && (!empty($articles['start']) || !empty($articles['end'])),
-				'VISIBLE_ENABLED' => $articles['visible'] && empty($articles['start']) && empty($articles['end']),
-				'VISIBLE_UNAPROB' => !$articles['visible'],
 				'START_CALENDAR' => $start_calendar->display(),
 				'START_HOUR' => !empty($articles['start']) ? $start->get_hours() : '',
 				'START_MIN' => !empty($articles['start']) ? $start->get_minutes() : '',
@@ -430,21 +329,17 @@ else
 				'RELEASE_MIN' => !empty($articles['timestamp']) ? $release->get_minutes() : '',
 				'IMG_PATH' => $img_direct_path ? $articles['icon'] : '',
 				'IMG_ICON' => !empty($articles['icon']) ? '<img src="' . $articles['icon'] . '" alt="" class="valign_middle" />' : '',		
-				'IMG_LIST'=>$image_list,
+				'IMG_LIST' => $image_list,
 				'IDARTICLES' => $articles['id'],
 				'USER_ID' => $articles['user_id'],
-				'NB_SOURCE'=>$i == 0 ? 1 : $i,
-				'JS_SPECIAL_AUTH' => $special_auth ? 'true' : 'false',
-				'DISPLAY_SPECIAL_AUTH' => $special_auth ? 'block' : 'none',
-				'SPECIAL_CHECKED' => $special_auth ? 'checked="checked"' : '',
-				'AUTH_READ' => Authorizations::generate_select(AUTH_ARTICLES_READ, $articles['auth']),
+				'NB_SOURCE' => $i == 0 ? 1 : $i
 			));
 
 			$articles_categories->build_select_form($articles['idcat'], 'idcat', 'idcat', 0, AUTH_ARTICLES_READ, $CONFIG_ARTICLES['global_auth'], IGNORE_AND_CONTINUE_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH, $tpl);
 		}
 		else
 		{
-			$error_controller = PHPBoostErrors::unexisting_page();
+			$error_controller = PHPBoostErrors::user_not_authorized();
 			DispatchManager::redirect($error_controller);
 		}
 	}
@@ -452,12 +347,20 @@ else
 	{
 		if (!$User->check_auth($ARTICLES_CAT[$cat]['auth'], AUTH_ARTICLES_CONTRIBUTE) && !$User->check_auth($ARTICLES_CAT[$cat]['auth'], AUTH_ARTICLES_WRITE))
 		{
-			$error_controller = PHPBoostErrors::unexisting_page();
+			$error_controller = PHPBoostErrors::user_not_authorized();
 			DispatchManager::redirect($error_controller);
 		}
 		else
 		{
-			$auth_contrib = !$User->check_auth($CONFIG_ARTICLES['global_auth'], AUTH_ARTICLES_WRITE) && $User->check_auth($CONFIG_ARTICLES['global_auth'], AUTH_ARTICLES_CONTRIBUTE);			
+			if (!empty($cat))
+			{
+				$auth_contrib = !$User->check_auth($ARTICLES_CAT[$cat]['auth'], AUTH_ARTICLES_WRITE);
+			}
+			else
+			{
+				$auth_contrib = !$User->check_auth($CONFIG_ARTICLES['global_auth'], AUTH_ARTICLES_WRITE);
+			}
+			
 			$Bread_crumb->add($ARTICLES_LANG['articles_add'],url('management.php?new=1&amp;cat=' . $cat));
 			
 			//Images disponibles
@@ -476,28 +379,25 @@ else
 			$start_calendar = new MiniCalendar('start');
 			$start_calendar->set_date(new Date(DATE_NOW, TIMEZONE_AUTO));
 			$end_calendar = new MiniCalendar('end');
+			
 			$end_calendar->set_date(new Date(DATE_NOW, TIMEZONE_AUTO));
-			$end_calendar->set_style('margin-left:150px;');
+			$end_calendar->set_style('margin-left:100px;');
 			$release_calendar = new MiniCalendar('release');
+			
 			$release_calendar->set_date(new Date(DATE_NOW, TIMEZONE_AUTO));
-
-			$result = $Sql->query_while("SELECT id, name,description
-			FROM " . DB_TABLE_ARTICLES_MODEL 
-			, __LINE__, __FILE__);
 
 			$tpl->put_all(array(
 				'C_ADD' => false,
-				'C_CONTRIBUTION' => $auth_contrib ,
+				'C_CONTRIBUTION' => $auth_contrib,
 				'JS_CONTRIBUTION' => $auth_contrib ? 'true' : 'false',
 				'RELEASE_CALENDAR_ID' => $release_calendar->get_html_id(),
 				'TITLE' => '',
 				'CONTENTS' => '',
 				'DESCRIPTION'=>'',
-				'MODELE_DESCRIPTION'=> isset($model_desc) ? FormatingHelper::second_parse($model_desc) : '',
 				'EXTEND_CONTENTS' => '',
-				'VISIBLE_WAITING' => 0,
-				'VISIBLE_ENABLED' => 1,
-				'VISIBLE_UNAPROB' => 0,
+				'C_VISIBLE_WAITING' => false,
+				'C_VISIBLE_ENABLED' => true,
+				'C_VISIBLE_UNAPROB' => false,
 				'START_CALENDAR' => $start_calendar->display(),
 				'START_HOUR' => '',
 				'START_MIN' => '',
@@ -510,22 +410,17 @@ else
 				'IMG' => '',
 				'ALT' => '',
 				'IDARTICLES' => '0',
-				'USER_ID' => $User->get_id(),
+				'USER_ID' => $User->get_attribute('user_id'),
 				'IMG_PATH' => '',
 				'IMG_ICON' => '',	
 				'IMG_LIST' => $image_list,
-				'MODELS'=>$select_models,
-				'NB_SOURCE'=>1,
-				'JS_SPECIAL_AUTH' => 'false',
-				'DISPLAY_SPECIAL_AUTH' => 'none',
-				'SPECIAL_CHECKED' => '',
-				'AUTH_READ' => Authorizations::generate_select(AUTH_ARTICLES_READ, $ARTICLES_CAT[$cat]['auth']),
+				'NB_SOURCE' => 1,
 			));
 				
 			$tpl->assign_block_vars('sources', array(
-				'I'=>0,
-				'SOURCE'=>'',
-				'URL'=>'',
+				'I' => 0,
+				'SOURCE' => '',
+				'URL' => '',
 			));
 			
 			$cat = $cat > 0 && ($User->check_auth($ARTICLES_CAT[$cat]['auth'], AUTH_ARTICLES_CONTRIBUTE) || $User->check_auth($ARTICLES_CAT[$cat]['auth'], AUTH_ARTICLES_WRITE)) ? $cat : 0;
@@ -536,15 +431,15 @@ else
 
 	$user_pseudo = !empty($user_pseudo) ? $user_pseudo : '';
 
-	$editor = AppContext::get_content_formatting_service()->get_default_editor();
-	$editor->set_identifier('contents');
-	
 	$desc_editor = AppContext::get_content_formatting_service()->get_default_editor();
 	$desc_editor->set_identifier('description');
 	
+	$editor = AppContext::get_content_formatting_service()->get_default_editor();
+	$editor->set_identifier('contents');
+	
 	$tpl->put_all(array(
-		'KERNEL_EDITOR' => $editor->display(),
 		'KERNEL_EDITOR_DESC' => $desc_editor->display(),
+		'KERNEL_EDITOR' => $editor->display(),
 		'TITLE' => '',	
 		'NOW_DATE' => $now->format(DATE_FORMAT_SHORT, TIMEZONE_AUTO),
 		'NOW_HOUR' => $now->get_hours(),
@@ -563,9 +458,9 @@ else
 		'L_CONTRIBUTION_COUNTERPART' => $ARTICLES_LANG['contribution_counterpart'],
 		'L_CONTRIBUTION_COUNTERPART_EXPLAIN' => $ARTICLES_LANG['contribution_counterpart_explain'],	
 		'L_OR_DIRECT_PATH' => $ARTICLES_LANG['or_direct_path'],
-		'L_SOURCE'=>$ARTICLES_LANG['source'],
-		'L_ADD_SOURCE'=>$ARTICLES_LANG['add_source'],
-		'L_SOURCE_LINK'=>$ARTICLES_LANG['source_link'],
+		'L_SOURCE' => $ARTICLES_LANG['source'],
+		'L_ADD_SOURCE' => $ARTICLES_LANG['add_source'],
+		'L_SOURCE_LINK' => $ARTICLES_LANG['source_link'],
 		'L_SPECIAL_AUTH' => $ARTICLES_LANG['special_auth'],
 		'L_SPECIAL_AUTH_EXPLAIN_ARTICLES' => $ARTICLES_LANG['special_auth_explain_articles'],
 		'L_AUTH_READ' => $ARTICLES_LANG['auth_read'],
@@ -582,8 +477,10 @@ else
 		'L_REQUIRE_TITLE' => $LANG['require_title'],
 		'L_REQUIRE_TEXT' => $LANG['require_text'],
 		'L_CONTRIBUTION_LEGEND' => $LANG['contribution'],
-		'L_MODELS'=>$ARTICLES_LANG['models'],
-		'L_MODELS_DESCRIPTION'=>$ARTICLES_LANG['model_desc'],
+		'L_UNIT_HOUR' => strtolower($LANG['unit_hour']),
+		'L_TO_DATE' => $LANG['to_date'],
+		'L_FROM_DATE' => $LANG['from_date'],
+		'L_AT' => $LANG['at'],
 	));
 
 	//Gestion erreur.

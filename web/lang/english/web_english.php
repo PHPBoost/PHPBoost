@@ -54,6 +54,7 @@ $LANG['no_note'] = 'No note';
 $LANG['actual_note'] = 'Current rating';
 $LANG['vote'] = 'Rate this link';
 $LANG['delete_link'] = 'Delete this link?';
+$LANG['visit_link'] = 'Visit';
 
 //Add web link.
 $MAIL['new_link_website'] = 'New weblink on your website';

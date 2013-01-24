@@ -3,8 +3,8 @@
  *                      	 NewsletterStreamsCache.class.php
  *                            -------------------
  *   begin                :  March 15 , 2011
- *   copyright            : (C) 2011 MASSY Kévin
- *   email                : soldier.weasel@gmail.com
+ *   copyright            : (C) 2011 MASSY Kevin
+ *   email                : kevin.massy@phpboost.com
  *
  *
  ###################################################
@@ -26,7 +26,7 @@
  ###################################################*/
 
 /**
- * @author Kévin MASSY <soldier.weasel@gmail.com>
+ * @author Kevin MASSY <kevin.massy@phpboost.com>
  */
 class NewsletterStreamsCache implements CacheData
 {
@@ -101,7 +101,7 @@ class NewsletterStreamsCache implements CacheData
 	public function get_authorizations_by_stream($id_stream)
 	{
 		$stream = $this->get_stream($id_stream);
-		if ($stream !== null)
+		if (!empty($stream))
 		{
 			return $stream['authorizations'];
 		}
@@ -140,7 +140,7 @@ class NewsletterStreamsCache implements CacheData
 		$list_subscribers = array();
 		$result = $this->querier->select("SELECT 
 		subscribtion.stream_id, subscribtion.subscriber_id, subscriber.id, subscriber.user_id, subscriber.mail
-		FROM " . NewsletterSetup::$newsletter_table_subscribtions . " subscribtion
+		FROM " . NewsletterSetup::$newsletter_table_subscriptions . " subscribtion
 		LEFT JOIN " . NewsletterSetup::$newsletter_table_subscribers . " subscriber ON subscribtion.subscriber_id = subscriber.id
 		WHERE subscribtion.stream_id = :stream_id
 		",

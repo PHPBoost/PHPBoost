@@ -45,10 +45,10 @@ $LANG['single'] = 'Single';
 $LANG['multiple'] = 'Multiple';
 $LANG['number_vote'] = 'Number of votes';
 $LANG['add_answer'] = 'Add an answer';
-$LANG['config_pool'] = 'Pool management';
-$LANG['pool_mini'] = 'Mini-poll';
-$LANG['pool_mini_explain'] = 'Random display if more than one poll is selected';
-$LANG['poll_cookie_lenght'] = 'Cookie life length';
+$LANG['displayed_in_mini_module_list'] = 'Mini-poll';
+$LANG['displayed_in_mini_module_list'] = 'Random display if more than one poll is selected';
+$LANG['cookie_name'] = 'Cookie name';
+$LANG['cookie_lenght'] = 'Cookie life length';
 $LANG['rank_vote'] = 'Rank to vote';
 $LANG['poll_date'] = 'Poll date';
 $LANG['poll_date_explain'] = '(dd/mm/yy) Leave empty to use today\'s date';
@@ -64,9 +64,6 @@ $LANG['e_unexist_poll'] = 'This poll doesn\'t exist';
 $LANG['e_no_poll'] = 'No poll available';
 $LANG['e_already_vote'] = 'You have already voted';
 $LANG['e_unauth_poll'] = 'You aren\'t authorized to vote !';
-
-//Title 
- $LANG['title_poll'] = 'Polls';
  
 //Poll
 $LANG['poll'] = 'Polls';

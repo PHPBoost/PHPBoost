@@ -3,8 +3,8 @@
  *                           ModulesCssFilesService.class.php
  *                            -------------------
  *   begin                : October 06, 2011
- *   copyright            : (C) 2011 Kévin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   copyright            : (C) 2011 Kevin MASSY
+ *   email                : kevin.massy@phpboost.com
  *
  *
  ###################################################
@@ -48,11 +48,16 @@ class ModulesCssFilesService
 	public static function get_css_files_running_module_displayed($theme_id)
 	{
 		$css_files = self::$css_files[$theme_id][self::CSS_FILES_RUNNING_MODULE_DISPLAYED];
-		
 		$running_module_id = Environment::get_running_module_name();
+		$module_home_page = GeneralConfig::load()->get_module_home_page();
+
 		if (array_key_exists($running_module_id, $css_files))
 		{
 			return $css_files[$running_module_id];
+		}
+		else if (array_key_exists($module_home_page, $css_files) && empty($running_module_id))
+		{
+			return $css_files[$module_home_page];
 		}
 		return array();
 	}

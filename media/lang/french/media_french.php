@@ -40,6 +40,8 @@ $MEDIA_LANG = array(
 'hide_media' => 'Cacher ce fichier multimédia',
 'recount_per_cat' => 'Recompter le nombre de fichiers multimédias par catégorie',
 'show_media' => 'Montrer ce fichier multimédia',
+'width_max' => 'Largeur maximale',
+'height_max' => 'Hauteur maximale',
 
 // admin_media_cats.php
 'auth_read' => 'Permissions de lecture',
@@ -122,7 +124,7 @@ $MEDIA_LANG = array(
 'contribution_entitled' => '[Multimédia] %s',
 'contribute_media' => 'Proposer un fichier multimédia',
 'delete_media' => 'Supprimer un fichier multimédia',
-'deleted_success' => 'Le fichier multimédia a été supprimée avec succès !',
+'deleted_success' => 'Le fichier multimédia a été supprimé avec succès !',
 'edit_success' => 'Le fichier multimédia a été édité avec succès !',
 'edit_media' => 'Éditer un fichier multimédia',
 'media_aprobe' => 'Approbation',
@@ -166,9 +168,9 @@ $MEDIA_LANG = array(
 'visible' => 'Approuvés',
 );
 
-$LANG['e_mime_disable_media'] = 'Le type du fichier multimédia que vous souhaitez proposer est désactivé !';
-$LANG['e_mime_unknow_media'] = 'Impossible de déterminer le mime type de ce fichier !';
+$LANG['e_mime_disable_media'] = 'Le type de fichier multimédia que vous souhaitez proposer est désactivé !';
+$LANG['e_mime_unknow_media'] = 'Impossible de déterminer le type de ce fichier !';
 $LANG['e_link_empty_media'] = 'Veuillez renseigner le lien de votre fichier multimédia !';
-$LANG['e_unexist_media'] = 'Le fichier multimédia demandée n\'existe pas !';
+$LANG['e_unexist_media'] = 'Le fichier multimédia demandé n\'existe pas !';
 
 ?>

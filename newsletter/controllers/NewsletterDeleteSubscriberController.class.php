@@ -3,8 +3,8 @@
  *                      NewsletterDeleteSubscriberController.class.php
  *                            -------------------
  *   begin                : March 16, 2011
- *   copyright            : (C) 2011 Kévin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   copyright            : (C) 2011 Kevin MASSY
+ *   email                : kevin.massy@phpboost.com
  *
  *
  ###################################################
@@ -27,7 +27,7 @@
 
 class NewsletterDeleteSubscriberController extends ModuleController
 {
-	public function execute(HTTPRequest $request)
+	public function execute(HTTPRequestCustom $request)
 	{
 		$id = $request->get_int('id', 0);
 		$id_stream = $request->get_int('id_stream', 0);
@@ -46,14 +46,14 @@ class NewsletterDeleteSubscriberController extends ModuleController
 				'id' => $id,
 				'id_stream' => $id_stream
 			);
-			$db_querier->delete(NewsletterSetup::$newsletter_table_subscribtions, $condition, $parameters);
+			$db_querier->delete(NewsletterSetup::$newsletter_table_subscriptions, $condition, $parameters);
 			
 			$condition = "WHERE subscriber_id = :id";
 			$parameters = array(
 				'id' => $id,
 			);
 			
-			$is_last = PersistenceContext::get_querier()->count(NewsletterSetup::$newsletter_table_subscribtions, $condition, $parameters) == 0 ? true :false;
+			$is_last = PersistenceContext::get_querier()->count(NewsletterSetup::$newsletter_table_subscriptions, $condition, $parameters) == 0 ? true :false;
 			if ($is_last)
 			{
 				$condition = "WHERE id = :id";
@@ -65,12 +65,12 @@ class NewsletterDeleteSubscriberController extends ModuleController
 			
 			NewsletterStreamsCache::invalidate();
 			
-			$controller = new UserErrorController(LangLoader::get_message('success', 'errors'), LangLoader::get_message('success-delete-subscriber', 'newsletter_common', 'newsletter'), UserErrorController::SUCCESS);
+			$controller = new UserErrorController(LangLoader::get_message('success', 'errors-common'), LangLoader::get_message('success-delete-subscriber', 'newsletter_common', 'newsletter'), UserErrorController::SUCCESS);
 			DispatchManager::redirect($controller);
 		}
 		else
 		{
-			$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), LangLoader::get_message('error-subscriber-not-existed', 'newsletter_common', 'newsletter'));
+			$controller = new UserErrorController(LangLoader::get_message('error', 'errors-common'), LangLoader::get_message('error-subscriber-not-existed', 'newsletter_common', 'newsletter'));
 			DispatchManager::redirect($controller);
 		}
 	}
@@ -80,5 +80,4 @@ class NewsletterDeleteSubscriberController extends ModuleController
 		return PersistenceContext::get_querier()->count(NewsletterSetup::$newsletter_table_subscribers, "WHERE id = '" . $id . "'") > 0 ? true : false;
 	}
 }
-
 ?>

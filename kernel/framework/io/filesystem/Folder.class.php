@@ -93,13 +93,16 @@ class Folder extends FileSystemElement
 					}
 
 					$file = $path . '/' . $fse_name;
-					if (is_file($file))
+					if (!is_link($file))
 					{
-						$this->files[] = new File($file);
-					}
-					else
-					{
-						$this->folders[] = new Folder($file);
+						if (is_dir($file))
+						{
+							$this->folders[] = new Folder($file);
+						}
+						else
+						{
+							$this->files[] = new File($file);
+						}
 					}
 				}
 				closedir($dh);
@@ -115,9 +118,10 @@ class Folder extends FileSystemElement
 	/**
 	 * @desc Lists the files contained in this folder.
 	 * @param string $regex PREG which describes the pattern the files you want to list must match. If you want all of them, don't use this parameter.
+	 * @param bool $regex_exclude_files true if the regex to exclude files
 	 * @return File[] The files list.
 	 */
-	public function get_files($regex = '')
+	public function get_files($regex = '', $regex_exclude_files = false)
 	{
 		$this->open();
 		if (empty($regex))
@@ -128,10 +132,21 @@ class Folder extends FileSystemElement
 		$files = array();
 		foreach ($this->files as $file)
 		{
-			if (preg_match($regex, $file->get_name()))
+			if ($regex_exclude_files)
 			{
-				$files[] = $file;
+				if (!preg_match($regex, $file->get_name()))
+				{
+					$files[] = $file;
+				}
 			}
+			else
+			{
+				if (preg_match($regex, $file->get_name()))
+				{
+					$files[] = $file;
+				}
+			}
+			
 		}
 		return $files;
 	}
@@ -205,5 +220,4 @@ class Folder extends FileSystemElement
 		}
 	}
 }
-
 ?>

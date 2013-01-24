@@ -46,7 +46,7 @@ if (!empty($_POST['valid']))
 			}
 			else if ($maintain > 0)
 			{
-				$date = new Date(DATE_TIMESTAMP, TIMEZONE_USER, time() + 5 + $maintain);
+				$date = new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, time() + 5 + $maintain);
 				$maintenance_config->enable_maintenance();
 				$maintenance_config->set_unlimited_maintenance(false);
 				$maintenance_config->set_end_date($date);
@@ -54,18 +54,20 @@ if (!empty($_POST['valid']))
 			else
 			{
 				$maintenance_config->disable_maintenance();
+				$maintenance_config->set_end_date(new Date());
 			}
 		break;
 		case 2:
 			$maintain = retrieve(POST, 'end', '', TSTRING_UNCHANGE);
 			$maintain = strtotimestamp($maintain, $LANG['date_format_short']);
-			$date = new Date(DATE_TIMESTAMP, TIMEZONE_USER, $maintain);
+			$date = new Date(DATE_TIMESTAMP, TIMEZONE_SITE, $maintain);
 			$maintenance_config->enable_maintenance();
 			$maintenance_config->set_unlimited_maintenance(false);
 			$maintenance_config->set_end_date($date);
 		break;
 		default:
 			$maintenance_config->disable_maintenance();
+			$maintenance_config->set_end_date(new Date());
 	}
 	
 	$maintenance_config->set_auth(Authorizations::build_auth_array_from_form(1));
@@ -75,7 +77,7 @@ if (!empty($_POST['valid']))
 	
 	MaintenanceConfig::save();
 	
-	AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);
+	AppContext::get_response()->redirect(HOST . SCRIPT);
 }
 else //Sinon on rempli le formulaire	 
 {		
@@ -95,7 +97,7 @@ else //Sinon on rempli le formulaire
 		$timestamp_end = $maintenance_config->get_end_date()->get_timestamp(TIMEZONE_SYSTEM);
 		for ($i = $array_size; $i >= 1; $i--)
 		{					
-			if (($timestamp_end - $current_time) - $array_time[$i] < 0 && ($timestamp_end - $current_time) - $array_time[$i-1] > 0)
+			if ((($timestamp_end - $current_time) - $array_time[$i]) < 0 && ($timestamp_end - $current_time) - $array_time[$i-1] > 0)
 			{	
 				$key_delay = $i-1;
 				break;
@@ -128,7 +130,7 @@ else //Sinon on rempli le formulaire
 		'DISPLAY_ADMIN_ENABLED' => $maintenance_config->get_display_duration_for_admin() ? 'checked="checked"' : '',
 		'DISPLAY_ADMIN_DISABLED' => !$maintenance_config->get_display_duration_for_admin() ? 'checked="checked"' : '',
 		'MAINTAIN_CHECK_NO' => !$maintenance_config->is_maintenance_enabled() || !$maintenance_config->is_end_date_not_reached() ? ' checked="checked"' : '',
-		'MAINTAIN_CHECK_DELAY' => $maintenance_config->is_maintenance_enabled() && $maintenance_config->is_unlimited_maintenance() || ($maintenance_config->is_end_date_not_reached() && !$maintenance_terminates_after_tomorrow) ? ' checked="checked"' : '',
+		'MAINTAIN_CHECK_DELAY' => $maintenance_config->is_maintenance_enabled() && ($maintenance_config->is_unlimited_maintenance() || ($maintenance_config->is_end_date_not_reached() && !$maintenance_terminates_after_tomorrow)) ? ' checked="checked"' : '',
 		'MAINTAIN_CHECK_UNTIL' => $maintenance_config->is_maintenance_enabled() && $check_until ? ' checked="checked"' : '',
 		'DATE_UNTIL' => $check_until ? gmdate_format('date_format_short', $maintenance_config->get_end_date()->get_timestamp(TIMEZONE_USER)) : '',
 		'L_MAINTAIN' => LangLoader::get_message('maintain', 'user-common'),
@@ -150,5 +152,4 @@ else //Sinon on rempli le formulaire
 }
 
 require_once('../admin/admin_footer.php');
-
 ?>

@@ -34,11 +34,11 @@
 class AppContext
 {
 	/**
-	 * @var HTTPRequest
+	 * @var HTTPRequestCustom
 	 */
 	private static $request;
 	/**
-	 * @var HTTPRequest
+	 * @var HTTPRequestCustom
 	 */
 	private static $response;
 
@@ -51,11 +51,11 @@ class AppContext
 	 */
 	private static $bench;
 	/**
-	 * @var SessionData
+	 * @var Session
 	 */
 	private static $session;
 	/**
-	 * @var User
+	 * @var CurrentUser
 	 */
 	private static $current_user;
 	/**
@@ -87,45 +87,45 @@ class AppContext
 	}
 
 	/**
-	 * @desc set the <code>HTTPRequest</code>
-	 * @param HTTPRequest $request
+	 * @desc set the <code>HTTPRequestCustom</code>
+	 * @param HTTPRequestCustom $request
 	 */
-	public static function set_request(HTTPRequest $request)
+	public static function set_request(HTTPRequestCustom $request)
 	{
 		self::$request = $request;
 	}
 
 	/**
-	 * @desc Returns the <code>HTTPRequest</code> object
-	 * @return HTTPRequest
+	 * @desc Returns the <code>HTTPRequestCustom</code> object
+	 * @return HTTPRequestCustom
 	 */
 	public static function get_request()
 	{
 		if (self::$request == null)
 		{
-			self::$request = new HTTPRequest();
+			self::$request = new HTTPRequestCustom();
 		}
 		return self::$request;
 	}
 
 	/**
-	 * @desc set the <code>HTTPResponse</code>
-	 * @param HTTPResponse $response
+	 * @desc set the <code>HTTPResponseCustom</code>
+	 * @param HTTPResponseCustom $response
 	 */
-	public static function set_response(HTTPResponse $response)
+	public static function set_response(HTTPResponseCustom $response)
 	{
 		self::$response = $response;
 	}
 
 	/**
-	 * @desc Returns the <code>HTTPResponse</code> object
-	 * @return HTTPResponse
+	 * @desc Returns the <code>HTTPResponseCustom</code> object
+	 * @return HTTPResponseCustom
 	 */
 	public static function get_response()
 	{
 		if (self::$response == null)
 		{
-			self::$response = new HTTPResponse();
+			self::$response = new HTTPResponseCustom();
 		}
 		return self::$response;
 	}
@@ -250,5 +250,4 @@ class AppContext
 		return self::$content_formatting_service;
 	}
 }
-
 ?>

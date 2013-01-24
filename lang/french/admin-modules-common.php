@@ -38,7 +38,7 @@ $lang['modules.delete_module'] = 'Suppression ou désactivation d\'un module';
 
 //Upload
 $lang['modules.upload_module'] = 'Installer un module';
-$lang['modules.upload_description'] = 'L\'archive uploadé doit être au format zip ou gzip';
+$lang['modules.upload_description'] = 'L\'archive uploadée doit être au format zip ou gzip';
 
 //Module
 $lang['modules.name'] = 'Nom';
@@ -48,7 +48,6 @@ $lang['modules.compatibility'] = 'Compatibilité';
 $lang['modules.php_version'] = 'Version PHP';
 $lang['modules.url_rewrite_rules'] = 'Règles de réécriture d\'URL';
 $lang['modules.page_admin'] = 'Administration';
-$lang['modules.compatibility'] = 'Compatibilité';
 $lang['modules.modules_available'] = 'Modules disponibles';
 $lang['modules.no_modules_available'] = 'Aucun module installé ou activé';
 $lang['modules.no_deactivated_modules_available'] = 'Aucun module désactivé';
@@ -65,15 +64,15 @@ $lang['modules.update'] = 'Modifier';
 $lang['modules.reset'] = 'Défaut';
 
 //Messages
-$lang['modules.upload_success'] = 'L\'archive a été uploadé avec succès';
+$lang['modules.upload_success'] = 'L\'archive a été uploadée avec succès';
 $lang['modules.upload_invalid_format'] = 'Le format de l\'archive n\'est pas valide';
 $lang['modules.already_installed'] = 'Ce module est déjà installé';
 $lang['modules.upload_error'] = 'Il y a eu une erreur lors de l\'upload';
 $lang['modules.delete_success'] = 'Le module a été supprimé avec succès';
 $lang['modules.uninstalled_success'] = 'Le module a été désinstallé avec succès';
 $lang['modules.update_success'] = 'Le module a été mis à jour avec succès';
-$lang['modules.upgrade_failed'] = 'La mise à jour a échoué';
-$lang['modules.module_not_upgradable'] = 'Ce module ne peut être mis à jour';
+$lang['modules.upgrade_failed'] = 'La mise à jour a échouée';
+$lang['modules.module_not_upgradable'] = 'Ce module ne peut pas être mis à jour';
 $lang['modules.not_installed_module'] = 'Ce module n\'est pas installé';
 $lang['modules.unexisting_module'] = 'Module inexistant';
 $lang['modules.error_id_module'] = 'Aucun module à mettre à jour';
@@ -88,4 +87,6 @@ $lang['modules.drop_files'] = 'Supprimer tous les fichiers du module';
 $lang['modules.yes'] = 'Oui';
 $lang['modules.no'] = 'Non';
 
+//Update
+$lang['modules.upgrade_module'] = 'Mettre à jour';
 ?>

@@ -31,14 +31,14 @@ function forum_list_user_online($sql_condition)
 	global $Sql;
 	
 	list($total_admin, $total_modo, $total_member, $total_visit, $users_list) = array(0, 0, 0, 0, '');
-	$result = $Sql->query_while("SELECT s.user_id, m.level, m.display_name, m.groups
+	$result = $Sql->query_while("SELECT s.user_id, s.level, m.login, m.user_groups
 	FROM " . DB_TABLE_SESSIONS . " s 
 	LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = s.user_id 
-	WHERE s.expiry > '" . (time() - SessionsConfig::load()->get_active_session_duration()) . "' " . $sql_condition . "
-	ORDER BY s.expiry DESC", __LINE__, __FILE__);
+	WHERE s.session_time > '" . (time() - SessionsConfig::load()->get_active_session_duration()) . "' " . $sql_condition . "
+	ORDER BY s.session_time DESC", __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))
 	{
-		$group_color = User::get_group_color($row['groups'], $row['level']);
+		$group_color = User::get_group_color($row['user_groups'], $row['level']);
 		switch ($row['level']) //Coloration du membre suivant son level d'autorisation. 
 		{ 		
 			case -1:
@@ -59,7 +59,7 @@ function forum_list_user_online($sql_condition)
 			break;
 		} 
 		$coma = !empty($users_list) && $row['level'] != -1 ? ', ' : '';
-		$users_list .= (!empty($row['display_name']) && $row['level'] != -1) ?  $coma . '<a href="'. UserUrlBuilder::profile($row['user_id'])->absolute() .'" class="' . $status . '"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . $row['display_name'] . '</a>' : '';
+		$users_list .= (!empty($row['login']) && $row['level'] != -1) ?  $coma . '<a href="'. UserUrlBuilder::profile($row['user_id'])->absolute() .'" class="' . $status . '"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . $row['login'] . '</a>' : '';
 	}
 	$Sql->query_close($result);
 	
@@ -106,18 +106,18 @@ function mark_topic_as_read($idtopic, $last_msg_id, $last_timestamp)
 	$last_view_forum = ($User->get_attribute('last_view_forum') > 0) ? $User->get_attribute('last_view_forum') : 0;
 	$max_time = (time() - $CONFIG_FORUM['view_time']);
 	$max_time_msg = ($last_view_forum > $max_time) ? $last_view_forum : $max_time;
-	if ($User->get_id() !== -1 && $last_timestamp >= $max_time_msg)
+	if ($User->get_attribute('user_id') !== -1 && $last_timestamp >= $max_time_msg)
 	{
-		$check_view_id = $Sql->query("SELECT last_view_id FROM " . PREFIX . "forum_view WHERE user_id = '" . $User->get_id() . "' AND idtopic = '" . $idtopic . "'", __LINE__, __FILE__);
+		$check_view_id = $Sql->query("SELECT last_view_id FROM " . PREFIX . "forum_view WHERE user_id = '" . $User->get_attribute('user_id') . "' AND idtopic = '" . $idtopic . "'", __LINE__, __FILE__);
 		if (!empty($check_view_id) && $check_view_id != $last_msg_id) 
 		{
 			$Sql->query_inject("UPDATE ".LOW_PRIORITY." " . PREFIX . "forum_topics SET nbr_views = nbr_views + 1 WHERE id = '" . $idtopic . "'", __LINE__, __FILE__);
-			$Sql->query_inject("UPDATE ".LOW_PRIORITY." " . PREFIX . "forum_view SET last_view_id = '" . $last_msg_id . "', timestamp = '" . time() . "' WHERE idtopic = '" . $idtopic . "' AND user_id = '" . $User->get_id() . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE ".LOW_PRIORITY." " . PREFIX . "forum_view SET last_view_id = '" . $last_msg_id . "', timestamp = '" . time() . "' WHERE idtopic = '" . $idtopic . "' AND user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__);
 		}
 		elseif (empty($check_view_id))
 		{			
 			$Sql->query_inject("UPDATE ".LOW_PRIORITY." " . PREFIX . "forum_topics SET nbr_views = nbr_views + 1 WHERE id = '" . $idtopic . "'", __LINE__, __FILE__);
-			$Sql->query_inject("INSERT ".LOW_PRIORITY." INTO " . PREFIX . "forum_view (idtopic, last_view_id, user_id, timestamp) VALUES('" . $idtopic . "', '" . $last_msg_id . "', '" . $User->get_id() . "', '" . time() . "')", __LINE__, __FILE__);			
+			$Sql->query_inject("INSERT ".LOW_PRIORITY." INTO " . PREFIX . "forum_view (idtopic, last_view_id, user_id, timestamp) VALUES('" . $idtopic . "', '" . $last_msg_id . "', '" . $User->get_attribute('user_id') . "', '" . time() . "')", __LINE__, __FILE__);			
 		}
 		else
 			$Sql->query_inject("UPDATE ".LOW_PRIORITY." " . PREFIX . "forum_topics SET nbr_views = nbr_views + 1 WHERE id = '" . $idtopic . "'", __LINE__, __FILE__);
@@ -131,13 +131,12 @@ function forum_history_collector($type, $user_id_action = '', $url_action = '')
 {
 	global $Sql, $User;
 	
-	$Sql->query_inject("INSERT INTO " . PREFIX . "forum_history (action, user_id, user_id_action, url, timestamp) VALUES('" . TextHelper::strprotect($type) . "', '" . $User->get_id() . "', '" . NumberHelper::numeric($user_id_action) . "', '" . TextHelper::strprotect($url_action) . "', '" . time() . "')", __LINE__, __FILE__);
+	$Sql->query_inject("INSERT INTO " . PREFIX . "forum_history (action, user_id, user_id_action, url, timestamp) VALUES('" . TextHelper::strprotect($type) . "', '" . $User->get_attribute('user_id') . "', '" . NumberHelper::numeric($user_id_action) . "', '" . TextHelper::strprotect($url_action) . "', '" . time() . "')", __LINE__, __FILE__);
 }
 
 //Gestion du rss du forum.
 function forum_generate_feeds()
 {
-    
     Feed::clear_cache('forum');
 }
 
@@ -151,9 +150,8 @@ function token_colorate($matches)
     $close_tag += substr_count($matches[1], '>');
     
     if ($open_tag == $close_tag)
-        return $matches[1] . '<span style="background:yellow;">' . $matches[2] . '</span>' . $matches[3];
+        return $matches[1] . '<span class="forum_search_word">' . $matches[2] . '</span>' . $matches[3];
     else
         return $matches[0];
 }
-
 ?>

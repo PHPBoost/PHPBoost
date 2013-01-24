@@ -30,7 +30,6 @@ include_once('../wiki/wiki_functions.php');
 load_module_lang('wiki');
 
 define('TITLE', $LANG['wiki'] . ': ' . $LANG['wiki_contribuate']);
-define('ALTERNATIVE_CSS', 'wiki');
 
 $bread_crumb_key = 'wiki_post';
 require_once('../wiki/wiki_bread_crumb.php');
@@ -42,7 +41,7 @@ $id_edit = retrieve(POST, 'id_edit', 0);
 $title = retrieve(POST, 'title', '');
 $encoded_title = retrieve(GET, 'title', '');
 $contents = wiki_parse(retrieve(POST, 'contents', '', TSTRING_AS_RECEIVED));
-$contents_preview = htmlspecialchars(retrieve(POST, 'contents', '', TSTRING_UNCHANGE));
+$contents_preview = TextHelper::htmlspecialchars(retrieve(POST, 'contents', '', TSTRING_UNCHANGE));
 $id_cat = retrieve(GET, 'id_parent', 0);
 $new_id_cat = retrieve(POST, 'id_cat', 0);
 $id_cat = $id_cat > 0 ? $id_cat : $new_id_cat;
@@ -91,7 +90,7 @@ if (!empty($contents)) //On enregistre un article
 			$article_auth = !empty($article_infos['auth']) ? unserialize($article_infos['auth']) : array();
 			if (!((!$general_auth || $User->check_auth($_WIKI_CONFIG['auth'], WIKI_EDIT)) && ($general_auth || $User->check_auth($article_auth , WIKI_EDIT))))
 			{
-				$error_controller = PHPBoostErrors::unexisting_page();
+				$error_controller = PHPBoostErrors::user_not_authorized();
 				DispatchManager::redirect($error_controller);
 			} 
 			
@@ -99,7 +98,7 @@ if (!empty($contents)) //On enregistre un article
 			//On met à jour l'ancien contenu (comme archive)
 			$Sql->query_inject("UPDATE " . PREFIX . "wiki_contents SET activ = 0 WHERE id_contents = '" . $previous_id_contents . "'", __LINE__, __FILE__);
 			//On insère le contenu
-			$Sql->query_inject("INSERT INTO " . PREFIX . "wiki_contents (id_article, menu, content, activ, user_id, user_ip, timestamp) VALUES ('" . $id_edit . "', '" . addslashes($menu) . "', '" . $contents . "', 1, " . $User->get_id() . ", '" . USER_IP . "', " . time() . ")", __LINE__, __FILE__);
+			$Sql->query_inject("INSERT INTO " . PREFIX . "wiki_contents (id_article, menu, content, activ, user_id, user_ip, timestamp) VALUES ('" . $id_edit . "', '" . addslashes($menu) . "', '" . $contents . "', 1, " . $User->get_attribute('user_id') . ", '" . AppContext::get_request()->get_ip_address() . "', " . time() . ")", __LINE__, __FILE__);
 			//Dernier id enregistré
 			$id_contents = $Sql->insert_id("SELECT MAX(id_contents) FROM " . PREFIX . "wiki_contents");
             
@@ -119,12 +118,12 @@ if (!empty($contents)) //On enregistre un article
 			//autorisations
 			if ($is_cat && !$User->check_auth($_WIKI_CONFIG['auth'], WIKI_CREATE_CAT))
 			{
-				$error_controller = PHPBoostErrors::unexisting_page();
+				$error_controller = PHPBoostErrors::user_not_authorized();
 				DispatchManager::redirect($error_controller);
 			} 
 			elseif (!$is_cat && !$User->check_auth($_WIKI_CONFIG['auth'], WIKI_CREATE_ARTICLE))
 			{
-				$error_controller = PHPBoostErrors::unexisting_page();
+				$error_controller = PHPBoostErrors::user_not_authorized();
 				DispatchManager::redirect($error_controller);
 			} 
 			
@@ -141,7 +140,7 @@ if (!empty($contents)) //On enregistre un article
 				//On récupère le numéro de l'article créé
 				$id_article = $Sql->insert_id("SELECT MAX(id) FROM " . PREFIX . "wiki_articles");
 				//On insère le contenu
-				$Sql->query_inject("INSERT INTO " . PREFIX . "wiki_contents (id_article, menu, content, activ, user_id, user_ip, timestamp) VALUES ('" . $id_article . "', '" . addslashes($menu) . "', '" . $contents . "', 1, " . $User->get_id() . ", '" . USER_IP . "', " . time() . ")", __LINE__, __FILE__);
+				$Sql->query_inject("INSERT INTO " . PREFIX . "wiki_contents (id_article, menu, content, activ, user_id, user_ip, timestamp) VALUES ('" . $id_article . "', '" . addslashes($menu) . "', '" . $contents . "', 1, " . $User->get_attribute('user_id') . ", '" . AppContext::get_request()->get_ip_address() . "', " . time() . ")", __LINE__, __FILE__);
 				//On met à jour le numéro du contenu dans la table articles
 				$id_contents = $Sql->insert_id("SELECT MAX(id_contents) FROM " . PREFIX . "wiki_contents");
 				$cat_update = '';
@@ -179,7 +178,7 @@ if ($id_edit > 0)//On édite
 	$article_auth = !empty($article_infos['auth']) ? unserialize($article_infos['auth']) : array();
 	if (!((!$general_auth || $User->check_auth($_WIKI_CONFIG['auth'], WIKI_EDIT)) && ($general_auth || $User->check_auth($article_auth , WIKI_EDIT))))
 	{
-		$error_controller = PHPBoostErrors::unexisting_page();
+		$error_controller = PHPBoostErrors::user_not_authorized();
 		DispatchManager::redirect($error_controller);
 	} 
 	
@@ -207,12 +206,12 @@ else
 	//autorisations
 	if ($is_cat && !$User->check_auth($_WIKI_CONFIG['auth'], WIKI_CREATE_CAT))
 	{
-		$error_controller = PHPBoostErrors::unexisting_page();
+		$error_controller = PHPBoostErrors::user_not_authorized();
 		DispatchManager::redirect($error_controller);
 	} 
 	elseif (!$is_cat && !$User->check_auth($_WIKI_CONFIG['auth'], WIKI_CREATE_ARTICLE))
 	{
-		$error_controller = PHPBoostErrors::unexisting_page();
+		$error_controller = PHPBoostErrors::user_not_authorized();
 		DispatchManager::redirect($error_controller);
 	}
 	
@@ -254,6 +253,7 @@ else
 		ORDER BY title ASC", __LINE__, __FILE__);
 		while ($row = $Sql->fetch_assoc($result))
 		{
+			$module_data_path = PATH_TO_ROOT . '/wiki/templates';
 			$sub_cats_number = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "wiki_cats WHERE id_parent = '" . $row['id'] . "'", __LINE__, __FILE__);
 			if ($sub_cats_number > 0)
 			{	
@@ -281,7 +281,7 @@ else
 }
 
 //On travaille uniquement en BBCode, on force le langage de l'éditeur
-$content_editor = new BBCodeFormattingFactory();
+$content_editor = AppContext::get_content_formatting_service()->get_default_factory();
 $editor = $content_editor->get_editor();
 $editor->set_identifier('contents');
 
@@ -298,6 +298,7 @@ $Template->put_all(array(
 	'L_CONTENTS' => $LANG['wiki_contents'],
 	'L_ALERT_CONTENTS' => $LANG['require_text'],
 	'L_ALERT_TITLE' => $LANG['require_title'],
+	'L_REQUIRE' => $LANG['require'],
 	'L_RESET' => $LANG['reset'],
 	'L_PREVIEW' => $LANG['preview'],
 	'L_SUBMIT' => $l_action_submit,

@@ -3,8 +3,8 @@
  *                             MediaSetup.class.php
  *                            -------------------
  *   begin                : January 17, 2010
- *   copyright            : (C) 2010 Kévin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   copyright            : (C) 2010 Kevin MASSY
+ *   email                : kevin.massy@phpboost.com
  *
  *
  ###################################################
@@ -142,7 +142,7 @@ class MediaSetup extends DefaultModuleSetup
 			'id' => 1,
 			'id_parent' => 0,
 			'c_order' => 1,
-			'auth' => 'a:3:{s:3:"r-1";i:1;s:2:"r0";i:3;s:2:"r1";i:7;}',
+			'auth' => '',
 			'name' => $this->messages['media_name_cat'],
 			'visible' => 1,
 			'mime_type' => 2,

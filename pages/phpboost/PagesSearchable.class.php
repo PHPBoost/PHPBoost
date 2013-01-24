@@ -4,8 +4,8 @@
  *                              PagesSearchable.class.php
  *                            -------------------
  *   begin                : May 29, 2010
- *   copyright            : (C) 2010 Kévin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   copyright            : (C) 2010 Kevin MASSY
+ *   email                : kevin.massy@phpboost.com
  *
  *
  ###################################################
@@ -26,9 +26,16 @@
  *
  ###################################################*/
 
-class PagesSearchable extends AbstractSearchable
+class PagesSearchable extends AbstractSearchableExtensionPoint
 {
-	function get_search_request($args = null)
+	private $sql_querier;
+
+	public function __construct()
+	{
+		$this->sql_querier = PersistenceContext::get_sql();
+	}
+	
+	public function get_search_request($args)
     /**
      *  Renvoie la requête de recherche
      */
@@ -36,7 +43,7 @@ class PagesSearchable extends AbstractSearchable
         $search = $args['search'];
         $weight = isset($args['weight']) && is_numeric($args['weight']) ? $args['weight'] : 1;
         
-        global $_PAGES_CATS, $CONFIG_PAGES, $User, $Cache;
+        global $_PAGES_CATS, $User, $Cache;
         require_once(PATH_TO_ROOT . '/pages/pages_defines.php');
         $Cache->load('pages');
         

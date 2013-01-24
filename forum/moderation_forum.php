@@ -34,12 +34,12 @@ $id_get = retrieve(GET, 'id', 0);
 $new_status = retrieve(GET, 'new_status', '');
 $get_del = retrieve(GET, 'del', '');
 
-$Bread_crumb->add($CONFIG_FORUM['forum_name'], 'index.php');
+$Bread_crumb->add($CONFIG_FORUM['forum_name'], 'index.php' . SID);
 if ($action == 'alert')
 	$Bread_crumb->add($LANG['alert_management'], url('moderation_forum.php?action=alert'));
 elseif ($action == 'users')
 	$Bread_crumb->add($LANG['warning_management'], url('moderation_forum.php?action=warning'));
-$Bread_crumb->add($LANG['moderation_panel'], '../forum/moderation_forum.php');
+$Bread_crumb->add($LANG['moderation_panel'], '../forum/moderation_forum.php' . SID);
 
 define('TITLE', $LANG['title_forum'] . ' - ' . $LANG['moderation_panel']);
 require_once('../kernel/header.php');
@@ -60,7 +60,7 @@ if (is_array($CAT_FORUM))
 
 if (!$User->check_level(User::MODERATOR_LEVEL) && $check_auth_by_group !== true) //Si il n'est pas modérateur (total ou partiel)
 {
-	$error_controller = PHPBoostErrors::unexisting_page();
+	$error_controller = PHPBoostErrors::user_not_authorized();
 	DispatchManager::redirect($error_controller);
 }
 
@@ -70,6 +70,7 @@ $Template->set_filenames(array(
 	'forum_bottom'=> 'forum/forum_bottom.tpl'
 ));
 $Template->put_all(array(
+	'SID' => SID,
 	'LANG' => get_ulang(),
 	'THEME' => get_utheme(),
 	'FORUM_NAME' => $CONFIG_FORUM['forum_name'],
@@ -178,7 +179,7 @@ if ($action == 'alert') //Gestion des alertes
 			if ($row['status'] == 0)
 				$status = $LANG['alert_not_solved'];
 			else
-				$status = $LANG['alert_solved'] . '<a href="'. UserUrlBuilder::profile($row['id_modo'])->absolute() .'">' . $row['login_modo'] . '</a>';
+				$status = $LANG['alert_solved'] . '<a href="'. UserUrlBuilder::profile($row['idmodo'])->absolute() .'">' . $row['login_modo'] . '</a>';
 
 			$Template->assign_block_vars('alert_list', array(
 				'TITLE' => '<a href="moderation_forum' . url('.php?action=alert&amp;id=' . $row['id']) . '">' . $row['title'] . '</a>',
@@ -237,7 +238,7 @@ if ($action == 'alert') //Gestion des alertes
 			if ($row['status'] == 0)
 				$status = $LANG['alert_not_solved'];
 			else
-				$status = $LANG['alert_solved'] . '<a href="'. UserUrlBuilder::profile($row['id_modo'])->absolute() .'">' . $row['login_modo'] . '</a>';
+				$status = $LANG['alert_solved'] . '<a href="'. UserUrlBuilder::profile($row['idmodo'])->absolute() .'">' . $row['login_modo'] . '</a>';
 
 			$Template->put_all(array(
 				'ID' => $id_get,
@@ -285,14 +286,12 @@ elseif ($action == 'punish') //Gestion des utilisateurs
 			$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET user_readonly = '" . $readonly . "' WHERE user_id = '" . $info_mbr['user_id'] . "'", __LINE__, __FILE__);
 
 			//Envoi d'un MP au membre pour lui signaler, si le membre en question n'est pas lui-même.
-			if ($info_mbr['user_id'] != $User->get_id())
+			if ($info_mbr['user_id'] != $User->get_attribute('user_id'))
 			{
 				if (!empty($readonly_contents) && !empty($readonly))
 				{
-
-
 					//Envoi du message.
-					PrivateMsg::start_conversation($info_mbr['user_id'], addslashes($LANG['read_only_title']), str_replace('%date', gmdate_format('date_format', $readonly), $readonly_contents), '-1', PrivateMsg::SYSTEM_PM);
+					PrivateMsg::start_conversation($info_mbr['user_id'], addslashes($LANG['read_only_title']), nl2br(str_replace('%date', gmdate_format('date_format', $readonly), $readonly_contents)), '-1', PrivateMsg::SYSTEM_PM);
 				}
 			}
 
@@ -456,15 +455,12 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 				$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET user_warning = '" . $new_warning_level . "' WHERE user_id = '" . $info_mbr['user_id'] . "'", __LINE__, __FILE__);
 
 				//Envoi d'un MP au membre pour lui signaler, si le membre en question n'est pas lui-même.
-				if ($info_mbr['user_id'] != $User->get_id())
+				if ($info_mbr['user_id'] != $User->get_attribute('user_id'))
 				{
 					if (!empty($warning_contents))
 					{
-
-						$PrivateMsg = new PrivateMsg();
-
 						//Envoi du message.
-						PrivateMsg::start_conversation($info_mbr['user_id'], addslashes($LANG['warning_title']), $warning_contents, '-1', PrivateMsg::SYSTEM_PM);
+						PrivateMsg::start_conversation($info_mbr['user_id'], addslashes($LANG['warning_title']), nl2br($warning_contents), '-1', PrivateMsg::SYSTEM_PM);
 					}
 				}
 
@@ -610,6 +606,7 @@ else //Panneau de modération
 	}
 
 	$Template->put_all(array(
+		'SID' => SID,
 		'L_DEL_HISTORY' => $LANG['alert_history'],
 		'L_MODERATION_PANEL' => $LANG['moderation_panel'],
 		'L_MODERATION_FORUM' => $LANG['moderation_forum'],
@@ -649,17 +646,15 @@ else //Panneau de modération
 	}
 	$Sql->query_close($result);
 
-	if ($i == 0)
-	{
-		$Template->put_all(array(
-			'C_FORUM_NO_ACTION' => true,
-			'L_NO_ACTION' => $LANG['no_action']
-		));
-	}
+	$Template->put_all(array(
+		'C_DISPLAY_LINK_MORE_ACTION' => $i == $end,
+		'C_FORUM_NO_ACTION' => $i == 0,
+		'L_NO_ACTION' => $LANG['no_action']
+	));
 }
 
 //Listes les utilisateurs en lignes.
-list($users_list, $total_admin, $total_modo, $total_member, $total_visit, $total_online) = forum_list_user_online("AND s.session_script = '/forum/moderation_forum.php'");
+list($users_list, $total_admin, $total_modo, $total_member, $total_visit, $total_online) = forum_list_user_online("AND s.session_script LIKE '%". GeneralConfig::get_default_site_path() ."/forum/moderation_forum.php%'");
 
 $Template->put_all(array(
 	'TOTAL_ONLINE' => $total_online,

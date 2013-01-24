@@ -3,8 +3,8 @@
  *		                   AdminNewsletterEditStreamController.class.php
  *                            -------------------
  *   begin                : March 11, 2011
- *   copyright            : (C) 2011 Kévin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   copyright            : (C) 2011 Kevin MASSY
+ *   email                : kevin.massy@phpboost.com
  *
  ###################################################
  *
@@ -36,33 +36,22 @@ class AdminNewsletterEditStreamController extends AdminModuleController
 	 */
 	private $submit_button;
 
-	public function execute(HTTPRequest $request)
+	public function execute(HTTPRequestCustom $request)
 	{
 		$id = $request->get_getint('id', 0);
 		$this->init();
 		
 		if (!$this->categorie_exist($id) || $id == 0)
 		{
-			$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), LangLoader::get_message('admin.stream-not-existed', 'newsletter_common', 'newsletter'));
+			$controller = new UserErrorController(LangLoader::get_message('error', 'errors-common'), LangLoader::get_message('admin.stream-not-existed', 'newsletter_common', 'newsletter'));
 			DispatchManager::redirect($controller);
 		}
 
 		$this->build_form($id);
 
-		$tpl = new StringTemplate('<script type="text/javascript">
-		<!--
-			Event.observe(window, \'load\', function() {
-				if ({ADVANCED_AUTH})
-				{
-					$("newsletter_admin_advanced_authorizations").fade({duration: 0.2});
-				}
-			});
-		-->		
-		</script>
-		# INCLUDE MSG # # INCLUDE FORM #');
+		$tpl = new StringTemplate('# INCLUDE MSG # # INCLUDE FORM #');
 		$tpl->add_lang($this->lang);
 		
-		$tpl->put('ADVANCED_AUTH', is_array(NewsletterStreamsCache::load()->get_authorizations_by_stream($id)) ? false : true);
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save($id);
@@ -71,7 +60,7 @@ class AdminNewsletterEditStreamController extends AdminModuleController
 
 		$tpl->put('FORM', $this->form->display());
 
-		return new AdminNewsletterDisplayResponse($tpl, $this->lang['streams.add']);
+		return new AdminNewsletterDisplayResponse($tpl, $this->lang['streams.edit']);
 	}
 
 	private function init()
@@ -96,11 +85,18 @@ class AdminNewsletterEditStreamController extends AdminModuleController
 		array('rows' => 4, 'cols' => 47)
 		));
 		
+		$image_preview_request = new AjaxRequest(NewsletterUrlBuilder::image_preview(), 'function(response){
+		if (response.responseJSON.image_url) {
+			$(\'preview_picture\').src = response.responseJSON.image_url;
+		}}');
+		$image_preview_request->add_event_callback(AjaxRequest::ON_CREATE, 'function(response){ $(\'preview_picture\').src = PATH_TO_ROOT + \'/templates/'. get_utheme() .'/images/loading_mini.gif\';}');
+		$image_preview_request->add_param('image', 'HTMLForms.getField(\'picture\').getValue()');
+		
 		$fieldset->add_field(new FormFieldTextEditor('picture', $this->lang['streams.picture'], $newsletter_stream_cache['picture'], array(
 			'class' => 'text',
-			'events' => array('change' => '$(\'preview_picture\').src = HTMLForms.getField(\'picture\').getValue();')
+			'events' => array('change' => $image_preview_request->render())
 		)));
-		$fieldset->add_field(new FormFieldFree('preview_picture', $this->lang['streams.picture-preview'], '<img id="preview_picture" src="'. $newsletter_stream_cache['picture'] .'" alt="" style="vertical-align:top" />'));
+		$fieldset->add_field(new FormFieldFree('preview_picture', $this->lang['streams.picture-preview'], '<img id="preview_picture" src="'. Url::to_rel($newsletter_stream_cache['picture']) .'" alt="" style="vertical-align:top" />'));
 		
 		$fieldset->add_field(new FormFieldCheckbox('visible', $this->lang['streams.visible'], $newsletter_stream_cache['visible']));
 		
@@ -118,22 +114,22 @@ class AdminNewsletterEditStreamController extends AdminModuleController
 		)));
 		
 		$auth_settings = new AuthorizationsSettings(array(
-			new ActionAuthorization($this->lang['streams.auth.read'], NewsletterConfig::CAT_AUTH_READ),
-			new ActionAuthorization($this->lang['streams.auth.subscribe'], NewsletterConfig::CAT_AUTH_SUBSCRIBE),
-			new ActionAuthorization($this->lang['streams.auth.subscribers-read'], NewsletterConfig::CAT_AUTH_READ_SUBSCRIBERS),
-			new ActionAuthorization($this->lang['streams.auth.subscribers-moderation'], NewsletterConfig::CAT_AUTH_MODERATION_SUBSCRIBERS),
-			new ActionAuthorization($this->lang['streams.auth.create-newsletter'], NewsletterConfig::CAT_AUTH_CREATE_NEWSLETTER),
-			new ActionAuthorization($this->lang['streams.auth.archives-read'], NewsletterConfig::CAT_AUTH_READ_ARCHIVES)
+			new ActionAuthorization($this->lang['streams.auth.read'], NewsletterConfig::AUTH_READ),
+			new ActionAuthorization($this->lang['streams.auth.subscribe'], NewsletterConfig::AUTH_SUBSCRIBE),
+			new ActionAuthorization($this->lang['streams.auth.subscribers-read'], NewsletterConfig::AUTH_READ_SUBSCRIBERS),
+			new ActionAuthorization($this->lang['streams.auth.subscribers-moderation'], NewsletterConfig::AUTH_MODERATION_SUBSCRIBERS),
+			new ActionAuthorization($this->lang['streams.auth.create-newsletter'], NewsletterConfig::AUTH_CREATE_NEWSLETTER),
+			new ActionAuthorization($this->lang['streams.auth.archives-read'], NewsletterConfig::AUTH_READ_ARCHIVES)
 		));
 		
 		$default_authorizations = is_array($newsletter_stream_cache['authorizations']) ? $newsletter_stream_cache['authorizations'] : NewsletterConfig::load()->get_authorizations();
 		$auth_settings->build_from_auth_array($default_authorizations);
-		$auth_setter = new FormFieldAuthorizationsSetter('advanced_authorizations', $auth_settings);
+		$auth_setter = new FormFieldAuthorizationsSetter('advanced_authorizations', $auth_settings, array('hidden' => !$active_authorizations));
 		$fieldset_authorizations->add_field($auth_setter);
 		
-		$form->add_button(new FormButtonReset());
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_button($this->submit_button);
+		$form->add_button(new FormButtonReset());
 
 		$this->form = $form;
 	}
@@ -145,9 +141,9 @@ class AdminNewsletterEditStreamController extends AdminModuleController
 			"UPDATE ". NewsletterSetup::$newsletter_table_streams ." SET 
 			name = :name, description = :description, picture = :picture, visible = :visible, auth = :auth
 			WHERE id = '". $id ."'", array(
-                'name' => htmlspecialchars($this->form->get_value('name')),
-				'description' => htmlspecialchars($this->form->get_value('description')),
-				'picture' => htmlspecialchars($this->form->get_value('picture')),
+                'name' => TextHelper::htmlspecialchars($this->form->get_value('name')),
+				'description' => TextHelper::htmlspecialchars($this->form->get_value('description')),
+				'picture' => TextHelper::htmlspecialchars($this->form->get_value('picture')),
 				'visible' => (int)$this->form->get_value('visible'),
 				'auth' => $auth
 		));
@@ -160,5 +156,4 @@ class AdminNewsletterEditStreamController extends AdminModuleController
 		return PersistenceContext::get_querier()->count(NewsletterSetup::$newsletter_table_streams, "WHERE id = '". $id ."'");
 	}
 }
-
 ?>

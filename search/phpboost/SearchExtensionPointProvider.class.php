@@ -37,19 +37,19 @@ class SearchExtensionPointProvider extends ExtensionPointProvider
 		return new SearchScheduledJobs();
 	}
 
-	public function url_mappings()
-	{
-		return new UrlMappings(array(new DispatcherUrlMapping('/search/index.php')));
-	}
-	
 	public function css_files()
 	{
-		return new SearchCssFilesExtensionPoint();
+		$module_css_files = new ModuleCssFiles();
+		$module_css_files->adding_always_displayed_file('search_mini.css');
+		$module_css_files->adding_running_module_displayed_file('search.css');
+		return $module_css_files;
 	}
 	
 	public function menus()
 	{
-		return new SearchMenusExtensionPoint();
+		return new ModuleMenus(array(
+			new SearchModuleMiniMenu()
+		));
 	}
 }
 ?>

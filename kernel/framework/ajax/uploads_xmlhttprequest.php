@@ -42,10 +42,10 @@ $user = AppContext::get_current_user();
 if (!empty($_GET['new_folder'])) //Ajout d'un dossier dans la gestion des fichiers.
 {
     $id_parent = !empty($_POST['id_parent']) ? NumberHelper::numeric($_POST['id_parent']) : '0';
-    $user_id = !empty($_POST['user_id']) ? NumberHelper::numeric($_POST['user_id']) : $user->get_id();
+    $user_id = !empty($_POST['user_id']) ? NumberHelper::numeric($_POST['user_id']) : $user->get_attribute('user_id');
     $name = !empty($_POST['name']) ? TextHelper::strprotect(utf8_decode($_POST['name'])) : '';
 
-    if (!empty($user_id) && $user->get_id() != $user_id)
+    if (!empty($user_id) && $user->get_attribute('user_id') != $user_id)
     {
         if ($user->check_level(User::ADMIN_LEVEL))
         {
@@ -53,24 +53,24 @@ if (!empty($_GET['new_folder'])) //Ajout d'un dossier dans la gestion des fichie
         }
         else
         {
-            echo Uploads::Add_folder($id_parent, $user->get_id(), $name);
+            echo Uploads::Add_folder($id_parent, $user->get_attribute('user_id'), $name);
         }
     }
     else
     {
-        echo Uploads::Add_folder($id_parent, $user->get_id(), $name);
+        echo Uploads::Add_folder($id_parent, $user->get_attribute('user_id'), $name);
     }
 }
 elseif (!empty($_GET['rename_folder'])) //Renomme un dossier dans la gestion des fichiers.
 {
     $id_folder = !empty($_POST['id_folder']) ? NumberHelper::numeric($_POST['id_folder']) : '0';
     $name = !empty($_POST['name']) ? TextHelper::strprotect(utf8_decode($_POST['name'])) : '';
-    $user_id = !empty($_POST['user_id']) ? NumberHelper::numeric($_POST['user_id']) : $user->get_id();
+    $user_id = !empty($_POST['user_id']) ? NumberHelper::numeric($_POST['user_id']) : $user->get_attribute('user_id');
     $previous_name = !empty($_POST['previous_name']) ? TextHelper::strprotect(utf8_decode($_POST['previous_name'])) : '';
 
     if (!empty($id_folder) && !empty($name))
     {
-        if ($user->get_id() != $user_id)
+        if ($user->get_attribute('user_id') != $user_id)
         {
             if ($user->check_level(User::ADMIN_LEVEL))
             {
@@ -78,12 +78,12 @@ elseif (!empty($_GET['rename_folder'])) //Renomme un dossier dans la gestion des
             }
             else
             {
-                echo Uploads::Rename_folder($id_folder, $name, $previous_name, $user->get_id(), Uploads::ADMIN_NO_CHECK);
+                echo Uploads::Rename_folder($id_folder, $name, $previous_name, $user->get_attribute('user_id'), Uploads::ADMIN_NO_CHECK);
             }
         }
         else
         {
-            echo Uploads::Rename_folder($id_folder, $name, $previous_name, $user->get_id());
+            echo Uploads::Rename_folder($id_folder, $name, $previous_name, $user->get_attribute('user_id'));
         }
     }
     else
@@ -92,13 +92,13 @@ elseif (!empty($_GET['rename_folder'])) //Renomme un dossier dans la gestion des
 elseif (!empty($_GET['rename_file'])) //Renomme un fichier d'un dossier dans la gestion des fichiers.
 {
     $id_file = !empty($_POST['id_file']) ? NumberHelper::numeric($_POST['id_file']) : '0';
-    $user_id = !empty($_POST['user_id']) ? NumberHelper::numeric($_POST['user_id']) : $user->get_id();
+    $user_id = !empty($_POST['user_id']) ? NumberHelper::numeric($_POST['user_id']) : $user->get_attribute('user_id');
     $name = !empty($_POST['name']) ? TextHelper::strprotect(utf8_decode($_POST['name'])) : '';
     $previous_name = !empty($_POST['previous_name']) ? TextHelper::strprotect(utf8_decode($_POST['previous_name'])) : '';
 
     if (!empty($id_file) && !empty($name))
     {
-        if ($user->get_id() != $user_id)
+        if ($user->get_attribute('user_id') != $user_id)
         {
             if ($user->check_level(User::ADMIN_LEVEL))
             {
@@ -106,12 +106,12 @@ elseif (!empty($_GET['rename_file'])) //Renomme un fichier d'un dossier dans la 
             }
             else
             {
-                echo Uploads::Rename_file($id_file, $name, $previous_name, $user->get_id(), Uploads::ADMIN_NO_CHECK);
+                echo Uploads::Rename_file($id_file, $name, $previous_name, $user->get_attribute('user_id'), Uploads::ADMIN_NO_CHECK);
             }
         }
         else
         {
-            echo Uploads::Rename_file($id_file, $name, $previous_name, $user->get_id());
+            echo Uploads::Rename_file($id_file, $name, $previous_name, $user->get_attribute('user_id'));
         }
     }
     else
@@ -119,5 +119,4 @@ elseif (!empty($_GET['rename_file'])) //Renomme un fichier d'un dossier dans la 
         echo 0;
     }
 }
-
 ?>

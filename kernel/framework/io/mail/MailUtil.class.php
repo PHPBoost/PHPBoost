@@ -62,5 +62,4 @@ class MailUtil
 		return self::$regex;
 	}
 }
-
 ?>

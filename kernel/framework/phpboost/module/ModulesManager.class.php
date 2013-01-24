@@ -176,7 +176,7 @@ class ModulesManager
 	public static function install_module($module_identifier, $enable_module = true, $generate_cache = true)
 	{
 		self::update_class_list();
-
+		
 		if (empty($module_identifier) || !is_dir(PATH_TO_ROOT . '/' . $module_identifier))
 		{
 			return self::UNEXISTING_MODULE;
@@ -228,9 +228,8 @@ class ModulesManager
 		if ($generate_cache)
 		{
 			MenuService::generate_cache();
-
-			$rewrite_rules = $configuration->get_url_rewrite_rules();
-			if (ServerEnvironmentConfig::load()->is_url_rewriting_enabled() && !empty($rewrite_rules))
+			
+			if (ServerEnvironmentConfig::load()->is_url_rewriting_enabled() && self::module_contains_rewrited_rules($module_identifier))
 			{
 				HtaccessFileCache::regenerate();
 			}
@@ -257,79 +256,88 @@ class ModulesManager
 
 		if (!empty($module_id))
 		{
-			self::execute_module_uninstallation($module_id);
-
-			// @deprecated
-			//Récupération des infos de config.
-			$info_module = load_ini_file(PATH_TO_ROOT . '/' . $module_id . '/lang/', get_ulang());
-
-			//Suppression du fichier cache
-			$Cache->delete_file($module_id);
-
-			$notation = new Notation();
-			$notation->set_module_name($module_id);
-			NotationService::delete_notes_module($notation);
-
-			CommentsService::delete_comments_module($module_id);
-
-			PersistenceContext::get_querier()->inject("DELETE FROM ".DB_TABLE_CONFIGS." 
-					WHERE name = :name", array('name' => $module_id));
-
-			$dir_db_module = get_ulang();
-			$dir = PATH_TO_ROOT . '/' . $module_id . '/db';
-
-			if (!file_exists($dir . '/' . $dir_db_module) && file_exists($dir))
+			$error = self::execute_module_uninstallation($module_id);
+			if ($error === null)
 			{
-				//Si le dossier de base de données de la LANG n'existe pas on prend le suivant exisant.
-				$folder_path = new Folder($dir);
-				foreach ($folder_path->get_folders('`^[a-z0-9_ -]+$`i') as $dir)
+				// @deprecated
+				//Récupération des infos de config.
+				$info_module = load_ini_file(PATH_TO_ROOT . '/' . $module_id . '/lang/', get_ulang());
+	
+				//Suppression du fichier cache
+				$Cache->delete_file($module_id);
+	
+				NotationService::delete_notes_module($module_id);
+	
+				CommentsService::delete_comments_module($module_id);
+	
+				PersistenceContext::get_querier()->inject("DELETE FROM ".DB_TABLE_CONFIGS." 
+						WHERE name = :name", array('name' => $module_id));
+	
+				$dir_db_module = get_ulang();
+				$dir = PATH_TO_ROOT . '/' . $module_id . '/db';
+	
+				if (!file_exists($dir . '/' . $dir_db_module) && file_exists($dir))
 				{
-					$dir_db_module = $dir->get_name();
-					break;
+					//Si le dossier de base de données de la LANG n'existe pas on prend le suivant exisant.
+					$folder_path = new Folder($dir);
+					foreach ($folder_path->get_folders('`^[a-z0-9_ -]+$`i') as $dir)
+					{
+						$dir_db_module = $dir->get_name();
+						break;
+					}
 				}
+	
+				//Régénération des feeds.
+				Feed::clear_cache($module_id);
+	
+				try {
+					if (ServerEnvironmentConfig::load()->is_url_rewriting_enabled() && self::module_contains_rewrited_rules($module_id))
+					{
+						HtaccessFileCache::regenerate();
+					}
+				} catch (IOException $ex) {
+				}
+	
+				MenuService::delete_mini_module($module_id);
+				MenuService::delete_module_feeds_menus($module_id);
+				MenuService::generate_cache();
+	
+				ModulesConfig::load()->remove_module_by_id($module_id);
+				ModulesConfig::save();
+	
+				//Module home page ?
+				$general_config = GeneralConfig::load();
+				$module_home_page_selected = $general_config->get_module_home_page();
+				if ($module_home_page_selected == $module_id)
+				{
+					$general_config->set_module_home_page('');
+					$general_config->set_other_home_page('index.php');
+				}
+				
+				//Suppression des fichiers du module
+				if ($drop_files)
+				{
+					$folder = new Folder(PATH_TO_ROOT . '/' . $module_id);
+					try
+					{
+						$folder->delete();
+						self::update_class_list();
+						AppContext::init_extension_provider_service();
+					}
+					catch (IOException $ex)
+					{
+						return self::MODULE_FILES_COULD_NOT_BE_DROPPED;
+					}
+				}
+				
+				return self::MODULE_UNINSTALLED;
 			}
-
-			//Régénération des feeds.
-			Feed::clear_cache($module_id);
-
-			try {
-				$rewrite_rules = self::get_module($module_id)->get_configuration()->get_url_rewrite_rules();
-				if (ServerEnvironmentConfig::load()->is_url_rewriting_enabled() && !empty($rewrite_rules))
-				{
-					HtaccessFileCache::regenerate();
-				}
-			} catch (IOException $ex) {
-			}
-
-			MenuService::delete_mini_module($module_id);
-			MenuService::delete_module_feeds_menus($module_id);
-			MenuService::generate_cache();
-
-			ModulesConfig::load()->remove_module_by_id($module_id);
-			ModulesConfig::save();
-
-			//Suppression des fichiers du module
-			if ($drop_files)
-			{
-				$folder = new Folder(PATH_TO_ROOT . '/' . $module_id);
-				try
-				{
-					$folder->delete();
-				}
-				catch (IOException $ex)
-				{
-					return self::MODULE_FILES_COULD_NOT_BE_DROPPED;
-				}
-			}
-
-			return self::MODULE_UNINSTALLED;
+			return $error;
 		}
 		else
 		{
 			return self::NOT_INSTALLED_MODULE;
 		}
-
-		self::update_class_list();
 	}
 
 	public static function upgrade_module($module_identifier)
@@ -340,7 +348,7 @@ class ModulesManager
 		{
 			if (self::is_module_installed($module_identifier))
 			{
-				if (self::module_is_upgradable())
+				if (self::module_is_upgradable($module_identifier))
 				{
 					$module = self::get_module($module_identifier);
 					
@@ -352,14 +360,10 @@ class ModulesManager
 						ModulesConfig::load()->update($module);
 						ModulesConfig::save();
 						
-						$Cache->Generate_file('modules');
-						$Cache->Generate_file('menus');
-						
-						Feed::clear_cache($module_identifier);
+						AppContext::get_cache_service()->clear_cache();
 						
 						try {
-							$rewrite_rules = self::get_module($module_identifier)->get_configuration()->get_url_rewrite_rules();
-							if (ServerEnvironmentConfig::load()->is_url_rewriting_enabled() && !empty($rewrite_rules))
+							if (ServerEnvironmentConfig::load()->is_url_rewriting_enabled() && self::module_contains_rewrited_rules($module_identifier))
 							{
 								HtaccessFileCache::regenerate();
 							}
@@ -412,11 +416,56 @@ class ModulesManager
 	
 	public static function update_module_authorizations($module_id, $activated, array $authorizations)
 	{
-		$module = self::get_module($module_id);
-		$module->set_activated($activated);
-		$module->set_authorizations($authorizations);
-		ModulesConfig::load()->update($module);
-		ModulesConfig::save();
+		$error = '';
+		if (!$activated)
+		{
+			//Module home page
+			$general_config = GeneralConfig::load();
+			$module_home_page_selected = $general_config->get_module_home_page();
+			if ($module_home_page_selected == $module_id)
+			{
+				$general_config->set_module_home_page('');
+				$general_config->set_other_home_page('index.php');
+			}
+			
+			$editors = AppContext::get_content_formatting_service()->get_available_editors();
+			if (in_array($module_id, $editors))
+			{
+				if (count($editors) > 1)
+				{
+					$default_editor = ContentFormattingConfig::load()->get_default_editor();
+					if ($default_editor !== $module_id)
+					{
+						PersistenceContext::get_querier()->update(DB_TABLE_MEMBER, array('user_editor' => $default_editor), 
+							'WHERE user_editor=:old_user_editor', array('old_user_editor' => 'bbcode'
+						));
+					}
+					else
+						$error = LangLoader::get_message('is_default_editor', 'editor-common');
+				}
+				else
+					$error = LangLoader::get_message('last_editor_installed', 'editor-common');
+			}
+		}
+
+		if (empty($error))
+		{
+			$module = self::get_module($module_id);
+			$module->set_activated($activated);
+			$module->set_authorizations($authorizations);
+			ModulesConfig::load()->update($module);
+			ModulesConfig::save();
+			
+			MenuService::generate_cache();
+			Feed::clear_cache($module_id);
+			
+			if (ServerEnvironmentConfig::load()->is_url_rewriting_enabled() && self::module_contains_rewrited_rules($module_id))
+			{
+				HtaccessFileCache::regenerate();
+			}
+		}	
+		
+		return $error;
 	}
 
 	private static function execute_module_installation($module_id)
@@ -436,7 +485,7 @@ class ModulesManager
 	private static function execute_module_uninstallation($module_id)
 	{
 		$module_setup = self::get_module_setup($module_id);
-		$module_setup->uninstall();
+		return $module_setup->uninstall();
 	}
 	
 	private static function execute_module_upgrade($module_id, $installed_version)
@@ -462,13 +511,26 @@ class ModulesManager
 
 	private static function module_setup_exists($module_setup_classname)
 	{
-		return class_exists($module_setup_classname);
+		return ClassLoader::is_class_registered_and_valid($module_setup_classname);
 	}
 
 	private static function update_class_list()
 	{
 		ClassLoader::generate_classlist();
 	}
+	
+	private static function module_contains_rewrited_rules($module_identifier)
+	{
+		$rewrite_rules = self::get_module($module_identifier)->get_configuration()->get_url_rewrite_rules();
+		if (!empty($rewrite_rules))
+		{
+			return true;
+		}
+		elseif (AppContext::get_extension_provider_service()->provider_exists($module_identifier, UrlMappingsExtensionPoint::EXTENSION_POINT))
+		{
+			return true;
+		}
+		return false;
+	}
 }
-
 ?>

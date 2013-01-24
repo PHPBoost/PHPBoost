@@ -32,7 +32,6 @@
 $lang = array(
     'filters' => 'Filters',
     'add_filter' => 'Add a filter',
-    'links_menus_filters_explain' => "Filters allow you to display this menu according to the url pattern set. By default this menu is visible on all pages."
+    'links_menus_filters_explain' => 'Filters allow you to display this menu according to the url pattern set. By default this menu is visible on all pages.'
 );
-
 ?>

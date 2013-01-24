@@ -5,10 +5,15 @@
 			<div class="module_top_l"></div>		
 			<div class="module_top_r"></div>
 			<div class="module_top">
-				<div style="float:left">
-					<strong>{L_CATEGORIES}</strong> # IF C_IS_ADMIN # &nbsp;&nbsp;<a href="admin_web_cat.php{SID}" title=""><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" class="valign_middle" /></a> # ENDIF #
+				<div class="module_top_title">
+					{L_WEB} - {L_CATEGORIES}
 				</div>
-				<div style="float:right">
+				<div class="module_top_com">
+					# IF C_IS_ADMIN # 
+						<a href="{PATH_TO_ROOT}/web/admin_web_cat.php{SID}" title="{L_EDIT}">
+							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" class="valign_middle" alt="" />
+						</a> 
+					# ENDIF #
 					{PAGINATION}
 				</div>
 			</div>
@@ -43,10 +48,15 @@
 			<div class="module_top_l"></div>		
 			<div class="module_top_r"></div>
 			<div class="module_top">
-				<div style="float:left">
-					<strong>{CAT_NAME}</strong>  # IF C_IS_ADMIN # &nbsp;&nbsp;<a href="admin_web_cat.php{SID}" title=""><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" class="valign_middle" /></a> # ENDIF #
+				<div class="module_top_title">
+					{L_WEB} - {CAT_NAME}
 				</div>
-				<div style="float:right">
+				<div class="module_top_com">
+					# IF C_IS_ADMIN # 
+						<a href="{PATH_TO_ROOT}/web/admin_web_cat.php{SID}" title="{L_EDIT}">
+							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" class="valign_middle" alt="" />
+						</a> 
+					# ENDIF #
 					{PAGINATION}
 				</div>
 			</div>
@@ -82,7 +92,7 @@
 					# START web #
 					<tr>	
 						<td class="row2">
-							&raquo; <a href="web{web.U_WEB_LINK}">{web.NAME}</a>
+							<a href="web{web.U_WEB_LINK}">{web.NAME}</a>
 						</td>
 						<td class="row2" style="text-align: center;">
 							{web.DATE}
@@ -142,7 +152,9 @@
 					<span class="spacer">&nbsp;</span>
 				</p>
 				<p class="text_center">					
-					<a href="{URL}" title="{NAME}" onclick="document.location = 'count.php?id={IDWEB}';"><img src="{PICTURES_DATA_PATH}/images/{LANG}/bouton_url.gif" alt="" /></a>
+					<button type="button" name="{NAME}" class="visit" onclick="document.location = 'count.php?id={IDWEB}';" value="true">
+						{L_VISIT}<img src="{PATH_TO_ROOT}/web/templates/images/web.png" class="valign_middle button_img"/>
+					</button>
 				</p>
 			</div>
 			<div class="module_bottom_l"></div>		
@@ -155,5 +167,4 @@
 		<br /><br />
 		{COMMENTS}
 		# ENDIF #
-		
 		

@@ -3,8 +3,8 @@
  *                              EditCommentBuildForm.class.php
  *                            -------------------
  *   begin                : September 25, 2011
- *   copyright            : (C) 2011 Kévin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   copyright            : (C) 2011 Kevin MASSY
+ *   email                : kevin.massy@phpboost.com
  *
  *
  ###################################################
@@ -26,7 +26,7 @@
  ###################################################*/
 
  /**
- * @author Kévin MASSY <soldier.weasel@gmail.com>
+ * @author Kevin MASSY <kevin.massy@phpboost.com>
  * @package {@package}
  */
 class EditCommentBuildForm extends AbstractCommentsBuildForm
@@ -36,10 +36,11 @@ class EditCommentBuildForm extends AbstractCommentsBuildForm
 	private $lang;
 	private $comments_lang;
 	private $comments_configuration;
+	private $topic_path;
 	
-	public static function create($id_comment)
+	public static function create($id_comment, $topic_path)
 	{
-		$instance = new self($id_comment);
+		$instance = new self($id_comment, $topic_path);
 		
 		$instance->create_form();
 		
@@ -51,18 +52,19 @@ class EditCommentBuildForm extends AbstractCommentsBuildForm
 		return $instance;
 	}
 	
-	public function __construct($id_comment)
+	public function __construct($id_comment, $topic_path)
 	{
 		$this->id_comment = $id_comment;
 		$this->user = AppContext::get_current_user();
 		$this->lang = LangLoader::get('main');
+		$this->topic_path = $topic_path;
 		$this->comments_lang = LangLoader::get('comments-common');
 		$this->comments_configuration = CommentsConfig::load();
 	}
 	
 	protected function create_form()
 	{
-		$form = new HTMLForm('comments');
+		$form = new HTMLForm('comments', REWRITED_SCRIPT . '#comments_list');
 		$fieldset = new FormFieldsetHTML('edit_comment', $this->comments_lang['comment.edit']);
 		$form->add_fieldset($fieldset);
 		
@@ -85,12 +87,12 @@ class EditCommentBuildForm extends AbstractCommentsBuildForm
 	{
 		$form = $this->get_form();
 		CommentsManager::edit_comment($this->id_comment, $form->get_value('message'));
-		$this->set_message_response(MessageHelper::display($this->comments_lang['comment.edit.success'], MessageHelper::SUCCESS, 4));
+		AppContext::get_response()->redirect(CommentsUrlBuilder::comment_added($this->topic_path, $this->id_comment));
 	}
 	
 	private function get_formatter()
 	{
-		$formatter = AppContext::get_content_formatting_service()->create_factory();
+		$formatter = AppContext::get_content_formatting_service()->get_default_factory();
 		$formatter->set_forbidden_tags($this->comments_configuration->get_forbidden_tags());
 		return $formatter;
 	}

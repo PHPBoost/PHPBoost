@@ -76,7 +76,7 @@
 					<tr style="text-align:center;">
 						<td class="row2" style="background:{files.COLOR};padding:5px 0;">
 							<a href="{files.U_FILE}">{files.NAME}</a>
-							<a href="{files.U_EDIT}">
+							<a href="{files.U_EDIT}" title="{L_EDIT}">
 								<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="">
 							</a>
 						</td>

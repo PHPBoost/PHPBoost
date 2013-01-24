@@ -3,8 +3,8 @@
  *                               MemberHalfLongTextExtendedField.class.php
  *                            -------------------
  *   begin                : December 08, 2010
- *   copyright            : (C) 2010 Kévin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   copyright            : (C) 2010 Kevin MASSY
+ *   email                : kevin.massy@phpboost.com
  *
  *
  ###################################################
@@ -32,8 +32,6 @@ class MemberHalfLongTextExtendedField extends AbstractMemberExtendedField
 		parent::__construct();
 		$this->set_disable_fields_configuration(array('possible_values', 'default_values'));
 		$this->set_name(LangLoader::get_message('type.half-text','admin-extended-fields-common'));
-		$this->parse_field = true;
-		$this->unparse_field = true;
 	}
 	
 	public function display_field_create(MemberExtendedField $member_extended_field)

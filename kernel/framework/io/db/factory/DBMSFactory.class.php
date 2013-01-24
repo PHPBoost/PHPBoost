@@ -53,5 +53,4 @@ interface DBMSFactory
 	 */
 	function new_dbms_util(SQLQuerier $querier);
 }
-
 ?>

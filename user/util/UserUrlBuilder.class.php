@@ -3,8 +3,8 @@
  *                          UserUrlBuilder.class.php
  *                            -------------------
  *   begin                : October 07, 2011
- *   copyright            : (C) 2011 Kévin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   copyright            : (C) 2011 Kevin MASSY
+ *   email                : kevin.massy@phpboost.com
  *
  *
  ###################################################
@@ -26,15 +26,15 @@
  ###################################################*/
 
 /**
- * @author Kévin MASSY <soldier.weasel@gmail.com>
+ * @author Kevin MASSY <kevin.massy@phpboost.com>
  */
 class UserUrlBuilder
 {
     private static $dispatcher = '/user';
 
-	public static function maintain()
+	public static function maintain($parameters = '')
     {
-    	return DispatchManager::get_url(self::$dispatcher, '/maintain/');
+    	return DispatchManager::get_url(self::$dispatcher, '/maintain/' . $parameters);
     }
     
     public static function forget_password()
@@ -62,6 +62,11 @@ class UserUrlBuilder
 		return DispatchManager::get_url(self::$dispatcher, '/registration/');
 	}
 	
+	public static function confirm_registration($key)
+	{
+		return DispatchManager::get_url(self::$dispatcher, '/registration/confirm/' . $key);
+	}
+	
 	public static function contribution_success()
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/contribution/success/');
@@ -75,7 +80,7 @@ class UserUrlBuilder
 	
 	public static function moderation_panel($type = '', $user_id = '')
 	{
-		$param = !empty($type) ? '?action=' . $type . '&' . $user_id : '';
+		$param = !empty($type) ? '?action=' . $type . '&id=' . $user_id : '';
 		return new Url(self::$dispatcher . '/moderation_panel.php' . $param);
 	}
 	
@@ -114,9 +119,19 @@ class UserUrlBuilder
 		return DispatchManager::get_url(self::$dispatcher, '');
 	}
 	
+	public static function error_403()
+	{
+		return DispatchManager::get_url(self::$dispatcher, '/error/403/');
+	}
+	
 	public static function error_404()
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/error/404/');
+	}
+	
+	public static function CSRF()
+	{
+		return DispatchManager::get_url(self::$dispatcher, '/error/csrf/');
 	}
 	
 	public static function messages($user_id)
@@ -124,14 +139,23 @@ class UserUrlBuilder
 		return DispatchManager::get_url(self::$dispatcher, '/messages/'. $user_id);
 	}
 	
-	public static function group($id)
+	public static function comments($module = '', $user_id = null, $page = '')
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/group/' . $id);
+		if (!empty($user_id))
+		{
+			return DispatchManager::get_url(self::$dispatcher, '/messages/'. $user_id . '/comments/' . (!empty($module) ? $module . '/' : '') . $page);
+		}
+		return DispatchManager::get_url(self::$dispatcher, '/messages/comments/' . (!empty($module) ? $module . '/' : '')  . $page);
 	}
 	
-	public static function connect()
+	public static function group($id)
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/connect');
+		return DispatchManager::get_url(self::$dispatcher, '/groups/' . $id);
+	}
+	
+	public static function connect($parameters = '')
+	{
+		return DispatchManager::get_url(self::$dispatcher, '/connect/' . $parameters);
 	}
 	
 	public static function disconnect()

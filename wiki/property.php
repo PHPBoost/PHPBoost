@@ -28,7 +28,6 @@
 require_once('../kernel/begin.php'); 
 include_once('../wiki/wiki_functions.php'); 
 load_module_lang('wiki');
-define('ALTERNATIVE_CSS', 'wiki');
 
 require_once('../wiki/wiki_auth.php');
 
@@ -49,7 +48,7 @@ if ($id_auth > 0) //Autorisations de l'article
 	
 	if (!$User->check_auth($_WIKI_CONFIG['auth'], WIKI_RESTRICTION))
 	{
-		$error_controller = PHPBoostErrors::unexisting_page();
+		$error_controller = PHPBoostErrors::user_not_authorized();
 		DispatchManager::redirect($error_controller);
 	} 
 }
@@ -63,7 +62,7 @@ elseif ($wiki_status > 0)//On s'intéresse au statut de l'article
 	
 	if (!((!$general_auth || $User->check_auth($_WIKI_CONFIG['auth'], WIKI_STATUS)) && ($general_auth || $User->check_auth($article_auth , WIKI_STATUS))))
 	{
-		$error_controller = PHPBoostErrors::unexisting_page();
+		$error_controller = PHPBoostErrors::user_not_authorized();
 		DispatchManager::redirect($error_controller);
 	} 
 }
@@ -77,7 +76,7 @@ elseif ($move > 0) //Déplacement d'article
 	
 	if (!((!$general_auth || $User->check_auth($_WIKI_CONFIG['auth'], WIKI_MOVE)) && ($general_auth || $User->check_auth($article_auth , WIKI_MOVE))))
 	{
-		$error_controller = PHPBoostErrors::unexisting_page();
+		$error_controller = PHPBoostErrors::user_not_authorized();
 		DispatchManager::redirect($error_controller);
 	} 
 }
@@ -91,7 +90,7 @@ elseif ($rename > 0) //Renommer l'article
 	
 	if (!((!$general_auth || $User->check_auth($_WIKI_CONFIG['auth'], WIKI_RENAME)) && ($general_auth || $User->check_auth($article_auth , WIKI_RENAME))))
 	{
-		$error_controller = PHPBoostErrors::unexisting_page();
+		$error_controller = PHPBoostErrors::user_not_authorized();
 		DispatchManager::redirect($error_controller);
 	} 
 }
@@ -108,7 +107,7 @@ elseif ($redirect > 0 || $create_redirection > 0)//Redirection
 	
 	if (!((!$general_auth || $User->check_auth($_WIKI_CONFIG['auth'], WIKI_REDIRECT)) && ($general_auth || $User->check_auth($article_auth , WIKI_REDIRECT))))
 	{
-		$error_controller = PHPBoostErrors::unexisting_page();
+		$error_controller = PHPBoostErrors::user_not_authorized();
 		DispatchManager::redirect($error_controller);
 	} 
 }
@@ -121,7 +120,7 @@ elseif (isset($_GET['com']) && $idcom > 0)
 	
 	if (!((!$general_auth || $User->check_auth($_WIKI_CONFIG['auth'], WIKI_COM)) && ($general_auth || $User->check_auth($article_auth , WIKI_COM))))
 	{
-		$error_controller = PHPBoostErrors::unexisting_page();
+		$error_controller = PHPBoostErrors::user_not_authorized();
 		DispatchManager::redirect($error_controller);
 	} 
 }
@@ -134,7 +133,7 @@ elseif ($del_article > 0) //Suppression d'un article ou d'une catégorie
 	$article_auth = !empty($article_infos['auth']) ? unserialize($article_infos['auth']) : array();
 	if (!((!$general_auth || $User->check_auth($_WIKI_CONFIG['auth'], WIKI_DELETE)) && ($general_auth || $User->check_auth($article_auth , WIKI_DELETE))))
 	{
-		$error_controller = PHPBoostErrors::unexisting_page();
+		$error_controller = PHPBoostErrors::user_not_authorized();
 		DispatchManager::redirect($error_controller);
 	} 
 }
@@ -324,9 +323,13 @@ elseif ($create_redirection > 0) //Création d'une redirection
 }
 elseif (isset($_GET['com']) && $idcom > 0) //Affichage des commentaires
 {
+	$comments_topic = new WikiCommentsTopic();
+	$comments_topic->set_id_in_module($idcom);
+	$comments_topic->set_url(new Url('/wiki/property.php?idcom=' . $idcom . '&amp;com=%s'));
+	
 	$Template->put_all(array(
 		'C_COMMENTS' => true,
-		'COMMENTS' => display_comments('wiki_articles', $idcom, url('property.php?idcom=' . $idcom . '&amp;com=%s'), 'wiki')
+		'COMMENTS' => CommentsService::display($comments_topic)->render()
 	));
 }
 elseif ($del_article > 0) //Suppression d'un article ou d'une catégorie
@@ -384,7 +387,7 @@ else
 	AppContext::get_response()->redirect('/wiki/' . url('wiki.php'));
 
 //On travaille uniquement en BBCode, on force le langage de l'éditeur
-$content_editor = new BBCodeFormattingFactory();
+$content_editor = AppContext::get_content_formatting_service()->get_default_factory();
 $editor = $content_editor->get_editor();
 $editor->set_identifier('contents');
 	

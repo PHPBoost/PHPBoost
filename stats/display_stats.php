@@ -276,12 +276,12 @@ elseif ($get_theme)
     include_once(PATH_TO_ROOT . '/kernel/header_no_display.php');
 
     $stats_array = array();
-	foreach (ThemeManager::get_activated_themes_map() as $id)
+	foreach (ThemeManager::get_activated_themes_map() as $id => $theme)
 	{
 		$stats_array[$id] = PersistenceContext::get_querier()->count(DB_TABLE_MEMBER, "WHERE user_theme = '" . $id . "'");
 	}
 
-    $Stats->load_data($array_stats, 'ellipse', 5);
+    $Stats->load_data($stats_array, 'ellipse', 5);
     $Stats->draw_ellipse(210, 100, PATH_TO_ROOT . '/cache/theme.png');
 }
 elseif ($get_sex)
@@ -291,9 +291,10 @@ elseif ($get_sex)
     include_once(PATH_TO_ROOT . '/kernel/header_no_display.php');
 
     $array_stats = array();
-    $result = $Sql->query_while ("SELECT count(user_sex) as compt, user_sex
-	FROM " . PREFIX . "member
-	GROUP BY user_sex
+    $result = $Sql->query_while ("SELECT member.user_id, count(ext_field.user_sex) as compt, ext_field.user_sex
+	FROM " . PREFIX . "member member
+	LEFT JOIN " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " ext_field ON ext_field.user_id = member.user_id
+	GROUP BY ext_field.user_sex
 	ORDER BY compt", __LINE__, __FILE__);
     while ($row = $Sql->fetch_assoc($result))
     {
@@ -318,7 +319,20 @@ elseif ($get_sex)
 }
 elseif ($get_bot)
 {
-    $Stats->load_data(StatsSaver::retrieve_stats('robots'), 'ellipse', 5);
+	$array_robot = StatsSaver::retrieve_stats('robots');
+	$stats_array = array();
+	if (is_array($array_robot))
+	{
+		foreach ($array_robot as $key => $value)
+		{
+			$array_info = explode('/', $value);
+			if (isset($array_info[0]) && isset($array_info[1]))
+			{
+				$stats_array[$array_info[0]] = $array_info[1];
+			}
+		}
+	}
+    $Stats->load_data($stats_array, 'ellipse', 5);
     $Stats->draw_ellipse(210, 100, PATH_TO_ROOT . '/cache/bot.png');
 }
 

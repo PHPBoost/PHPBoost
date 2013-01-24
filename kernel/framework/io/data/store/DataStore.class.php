@@ -69,5 +69,4 @@ interface DataStore
      */
     function clear();
 }
-
 ?>

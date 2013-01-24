@@ -31,12 +31,13 @@ require_once('pages_defines.php');
 
 //Titre de l'article à afficher en version imprimable
 $encoded_title = retrieve(GET, 'title', '', TSTRING);
+$pages_config = PagesConfig::load();
 
 $Cache->load('pages');
 
 if (!empty($encoded_title)) //Si on connait son titre
 {
-	$page_infos = $Sql->query_array(PREFIX . "pages", 'id', 'title', 'auth', 'is_cat', 'id_cat', 'hits', 'count_hits', 'activ_com', 'nbr_com', 'redirect', 'contents', "WHERE encoded_title = '" . $encoded_title . "'", __LINE__, __FILE__);
+	$page_infos = $Sql->query_array(PREFIX . "pages", 'id', 'title', 'auth', 'is_cat', 'id_cat', 'hits', 'count_hits', 'activ_com', 'redirect', 'contents', "WHERE encoded_title = '" . $encoded_title . "'", __LINE__, __FILE__);
 	
 	$num_rows =!empty($page_infos['title']) ? 1 : 0;
 	
@@ -44,7 +45,7 @@ if (!empty($encoded_title)) //Si on connait son titre
 	{
 		$redirect_title = $page_infos['title'];
 		$redirect_id = $page_infos['id'];
-		$page_infos = $Sql->query_array(PREFIX . "pages", 'id', 'title', 'auth', 'is_cat', 'id_cat', 'hits', 'count_hits', 'activ_com', 'nbr_com', 'redirect', 'contents', "WHERE id = '" . $page_infos['redirect'] . "'", __LINE__, __FILE__);
+		$page_infos = $Sql->query_array(PREFIX . "pages", 'id', 'title', 'auth', 'is_cat', 'id_cat', 'hits', 'count_hits', 'activ_com', 'redirect', 'contents', "WHERE id = '" . $page_infos['redirect'] . "'", __LINE__, __FILE__);
 	}
 	else
 		$redirect_title = '';
@@ -54,7 +55,7 @@ if (!empty($encoded_title)) //Si on connait son titre
 	$array_auth = unserialize($page_infos['auth']);
 
 	//Vérification de l'autorisation de voir la page
-	if (($special_auth && !$User->check_auth($array_auth, READ_PAGE)) || (!$special_auth && !$User->check_auth($_PAGES_CONFIG['auth'], READ_PAGE)))
+	if (($special_auth && !$User->check_auth($array_auth, READ_PAGE)) || (!$special_auth && !$User->check_auth($pages_config->get_authorizations(), READ_PAGE)))
 		AppContext::get_response()->redirect(HOST . DIR . url('/pages/pages.php?error=e_auth'));
 }
 

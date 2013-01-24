@@ -3,8 +3,8 @@
  *                           admin-contents-common.php
  *                            -------------------
  *   begin                : August 10, 2011
- *   copyright            : (C) 2011 Kévin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   copyright            : (C) 2011 Kevin MASSY
+ *   email                : kevin.massy@phpboost.com
  *
  *
  ###################################################
@@ -31,8 +31,6 @@
  
 $lang = array();
 
-$lang['comments.config.success-saving'] = 'Configuration enregistré avec succès';
-
 $lang['comments'] = 'Commentaires';
 $lang['comments.config'] = 'Configuration des commentaires';
 $lang['comments.management'] = 'Gestion des commentaires';
@@ -41,8 +39,8 @@ $lang['comments.config.display-captcha'] = 'Code de vérification visuel';
 $lang['comments.config.captcha-difficulty'] = 'Difficulté du code de vérification';
 $lang['comments.config.number-comments-display'] = 'Nombre de commentaires à afficher par défaut';
 $lang['comments.config.order-display-comments'] = 'Ordre d\'affichage des commentaires';
-$lang['comments.config.order-display-comments.asc'] = 'Du plus vieux au plus récent';
-$lang['comments.config.order-display-comments.desc'] = 'Du plus récent au plus vieux';
+$lang['comments.config.order-display-comments.asc'] = 'Du plus ancien au plus récent';
+$lang['comments.config.order-display-comments.desc'] = 'Du plus récent au plus ancien';
 
 $lang['comments.config.authorization'] = 'Autorisations';
 $lang['comments.config.authorization-read'] = 'Autorisation de voir les commentaires';
@@ -56,6 +54,5 @@ $lang['comments.config.approbation.auto'] = 'Automatiquement';
 $lang['comments.config.approbation.moderator'] = 'Modérateur';
 $lang['comments.config.approbation.administrator'] = 'Administrateur';
 
-$lang['number-required'] = 'La valeur saisi doit être un nombre';
-
+$lang['number-required'] = 'La valeur saisie doit être un nombre';
 ?>

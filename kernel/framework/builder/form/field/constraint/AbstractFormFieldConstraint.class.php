@@ -3,8 +3,8 @@
  *                             AbstractFormFieldConstraint.class.php
  *                            -------------------
  *   begin                : March 09, 2011
- *   copyright            : (C) 2009 MASSY Kévin
- *   email                : soldier.weasel@gmail.com
+ *   copyright            : (C) 2009 MASSY Kevin
+ *   email                : kevin.massy@phpboost.com
  *
  ###################################################
  *
@@ -25,7 +25,7 @@
  ###################################################*/
 
 /**
- * @author MASSY Kévin <soldier.weasel@gmail.com>
+ * @author MASSY Kevin <kevin.massy@phpboost.com>
  * @package {@package}
  */ 
 class AbstractFormFieldConstraint implements FormFieldConstraint

@@ -33,7 +33,7 @@ class AdminModuleDeleteController extends AdminController
 	private $module_id;
 	private $tpl;
 	
-	public function execute(HTTPRequest $request)
+	public function execute(HTTPRequestCustom $request)
 	{
 		$this->init();
 		$this->module_id = $request->get_string('id_module', null);
@@ -46,15 +46,6 @@ class AdminModuleDeleteController extends AdminController
 			{	
 				$drop_files = $this->form->get_value('drop_files')->get_raw_value();
 				$this->delete_module($drop_files);
-				
-				if ($drop_files == 1)
-				{
-					$this->tpl->put('MSG', MessageHelper::display($this->lang['modules.delete_success'], MessageHelper::SUCCESS, 4));
-				}
-				else 
-				{
-					$this->tpl->put('MSG', MessageHelper::display($this->lang['modules.uninstalled_success'], MessageHelper::SUCCESS, 4));
-				}
 			}
 			$this->tpl->put('FORM', $this->form->display());
 			return new AdminModulesDisplayResponse($this->tpl, $this->lang['modules.delete_module']);
@@ -109,9 +100,29 @@ class AdminModuleDeleteController extends AdminController
 	
 	private function delete_module($drop_files)
 	{
-		ModulesManager::uninstall_module($this->module_id, $drop_files);
-		AppContext::get_cache_service()->clear_css_cache();
+		$error = ModulesManager::uninstall_module($this->module_id, $drop_files);
+		if (is_int($error))
+		{
+			switch($error)
+			{
+				case ModulesManager::MODULE_FILES_COULD_NOT_BE_DROPPED:
+					$this->tpl->put('MSG', MessageHelper::display(LangLoader::get_message('files_del_failed', 'main'), MessageHelper::WARNING, 10));
+					break;
+				case ModulesManager::NOT_INSTALLED_MODULE:
+					$this->tpl->put('MSG', MessageHelper::display(LangLoader::get_message('e_uninstalled_module', 'errors'), MessageHelper::WARNING, 10));
+					break;
+				case ModulesManager::MODULE_UNINSTALLED:
+					AppContext::get_cache_service()->clear_css_cache();
+					AppContext::get_response()->redirect(AdminModulesUrlBuilder::list_installed_modules());
+					break;
+				default: 
+					$this->tpl->put('MSG', MessageHelper::display(LangLoader::get_message('process.error', 'errors-common'), MessageHelper::WARNING, 10));
+			}
+		}
+		else
+		{
+			$this->tpl->put('MSG', MessageHelper::display($error, MessageHelper::WARNING, 10));
+		}
 	}
 }
-
 ?>

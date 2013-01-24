@@ -3,8 +3,8 @@
  *                       UserViewProfileController.class.php
  *                            -------------------
  *   begin                : October 07, 2011
- *   copyright            : (C) 2011 Kévin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   copyright            : (C) 2011 Kevin MASSY
+ *   email                : kevin.massy@phpboost.com
  *
  *
  ###################################################
@@ -30,19 +30,21 @@ class UserViewProfileController extends AbstractController
 	private $lang;
 	private $form;
 	private $user;
+	private $user_informations;
 	private $tpl;
-	private $submit_button;
 
-	public function execute(HTTPRequest $request)
+	public function execute(HTTPRequestCustom $request)
 	{
 		$this->init();
 
 		$user_id = $request->get_getint('user_id', $this->user->get_attribute('user_id'));
-		if (!UserService::user_exists_by_id($user_id))
+		if (!UserService::user_exists('WHERE user_aprob = 1 AND user_id=:user_id', array('user_id' => $user_id)))
 		{
 			$error_controller = PHPBoostErrors::unexisting_member();
 			DispatchManager::redirect($error_controller);
 		}
+		
+		$this->user_informations = $this->get_user_informations($user_id);
 		
 		$this->build_form($user_id);
 
@@ -65,22 +67,34 @@ class UserViewProfileController extends AbstractController
 
 		$fieldset = new FormFieldsetHTML('profile', $this->lang['profile']);
 		$form->add_fieldset($fieldset);
-		
-		$user_informations = $this->get_user_informations($user_id);
+				
+		if ($this->user->check_level(User::ADMIN_LEVEL))
+		{
+			$link_edit = '<a href="'. AdminMembersUrlBuilder::edit($user_id)->absolute() .'">
+			<img src="' . TPL_PATH_TO_ROOT . '/templates/'. get_utheme().'/images/'. get_ulang().'/edit.png" alt="'.$this->lang['profile.edit'].'" /></a>';
+			$fieldset->add_field(new FormFieldFree('profile_edit', $this->lang['profile.edit'], $link_edit));
+		}
 
-		$fieldset->add_field(new FormFieldFree('pseudo', $this->lang['pseudo'], $user_informations['login']));
+		$fieldset->add_field(new FormFieldFree('pseudo', $this->lang['pseudo'], $this->user_informations['login']));
 		
-		$fieldset->add_field(new FormFieldFree('level', $this->lang['level'], $this->get_level_lang($user_informations)));
+		$fieldset->add_field(new FormFieldFree('level', $this->lang['level'], $this->get_level_lang($this->user_informations)));
 
-		$fieldset->add_field(new FormFieldFree('groups', $this->lang['groups'], $this->build_groups($user_informations['user_groups'])));
-		$fieldset->add_field(new FormFieldFree('registered_on', $this->lang['registration_date'], gmdate_format('date_format_short', $user_informations['timestamp'])));
-		$fieldset->add_field(new FormFieldFree('nbr_msg', $this->lang['number-messages'], $user_informations['user_msg'] . '<br>' . '<a href="' . UserUrlBuilder::messages($user_id)->absolute() . '">'. $this->lang['messages'] .'</a>'));
-		$fieldset->add_field(new FormFieldFree('last_connect', $this->lang['last_connection'], gmdate_format('date_format_short', $user_informations['last_connect'])));
+		$fieldset->add_field(new FormFieldFree('groups', $this->lang['groups'], $this->build_groups($this->user_informations['user_groups'])));
+		$fieldset->add_field(new FormFieldFree('registered_on', $this->lang['registration_date'], gmdate_format('date_format_short', $this->user_informations['timestamp'])));
+		$fieldset->add_field(new FormFieldFree('nbr_msg', $this->lang['number-messages'], $this->user_informations['user_msg'] . '<br>' . '<a href="' . UserUrlBuilder::messages($user_id)->absolute() . '">'. $this->lang['messages'] .'</a>'));
+		$fieldset->add_field(new FormFieldFree('last_connect', $this->lang['last_connection'], gmdate_format('date_format_short', $this->user_informations['last_connect'])));
+		
+		if (AppContext::get_current_user()->check_auth(UserAccountsConfig::load()->get_auth_read_members(), AUTH_READ_MEMBERS))
+		{
+			$link_email = '<a href="mailto:'. $this->user_informations['user_mail'] .'">
+			<img src="' . TPL_PATH_TO_ROOT . '/templates/'. get_utheme().'/images/'. get_ulang().'/email.png" alt="'.$this->lang['email'].'" /></a>';
+			$fieldset->add_field(new FormFieldFree('email', $this->lang['email'], $link_email));
+		}
 		
 		if (!$this->same_user_view_profile($user_id))
 		{
 			$link_mp = '<a href="'. UserUrlBuilder::personnal_message($user_id)->absolute() .'">
-			<img src="' . PATH_TO_ROOT . '/templates/'. get_utheme().'/images/'. get_ulang().'/pm.png" alt="'.$this->lang['profile.edit'].'" /></a>';
+			<img src="' . TPL_PATH_TO_ROOT . '/templates/'. get_utheme().'/images/'. get_ulang().'/pm.png" alt="'.$this->lang['private_message'].'" /></a>';
 			$fieldset->add_field(new FormFieldFree('private_message', $this->lang['private_message'], $link_mp));
 		}
 		
@@ -104,7 +118,7 @@ class UserViewProfileController extends AbstractController
 	
 	private function get_level_lang($user_informations)
 	{
-		if ($user_informations['user_warning'] < '100' || (time() - $user_informations['user_ban']) < 0)
+		if ($user_informations['user_warning'] < '100' || (time() - $user_informations['user_ban']) > 0)
 		{
 			return UserService::get_level_lang($user_informations['level']);
 		}
@@ -123,7 +137,7 @@ class UserViewProfileController extends AbstractController
 				if ($groups_cache->group_exists($group_id))
 				{
 					$group = $groups_cache->get_group($group_id);
-					$group_image = !empty($group['img']) ? '<img src="'. PATH_TO_ROOT .'/images/group/' . $group['img'] . '" alt="' . $group['name'] . '" title="' . $group['name'] . '" class="valign_middle" />' : $group['name'];
+					$group_image = !empty($group['img']) ? '<img src="'. TPL_PATH_TO_ROOT .'/images/group/' . $group['img'] . '" alt="' . $group['name'] . '" title="' . $group['name'] . '" class="valign_middle" />' : $group['name'];
 					$user_groups_html .= '<li><a href="' . UserUrlBuilder::group($group_id)->absolute() . '">' . $group_image . '</a></li>';
 				}
 			}
@@ -134,9 +148,9 @@ class UserViewProfileController extends AbstractController
 	private function build_response(View $view, $user_id)
 	{
 		$response = new UserDisplayResponse();
-		$response->set_page_title($this->lang['profile']);
+		$response->set_page_title(StringVars::replace_vars($this->lang['profile_of'], array('name' => $this->user_informations['login'])));
 		$response->add_breadcrumb($this->lang['user'], UserUrlBuilder::users()->absolute());
-		$response->add_breadcrumb($this->lang['profile'], UserUrlBuilder::profile($user_id)->absolute());
+		$response->add_breadcrumb(StringVars::replace_vars($this->lang['profile_of'], array('name' => $this->user_informations['login'])), UserUrlBuilder::profile($user_id)->absolute());
 		return $response->display($view);
 	}
 }

@@ -208,7 +208,7 @@ elseif (!empty($_POST['valid']) && !empty($id_post)) //inject
 	if (!empty($title) && !empty($url) && !empty($idcat))
 	{
 		$Sql->query_inject("UPDATE " . PREFIX . "web SET title = '" . $title . "', contents = '" . $contents . "', url = '" . $url . "', idcat = '" . $idcat . "', compt = '" . $compt . "', aprob = '" . $aprob . "' WHERE id = '" . $id_post . "'", __LINE__, __FILE__);	
-		AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);
+		AppContext::get_response()->redirect(HOST . SCRIPT);
 	}
 	else
 		AppContext::get_response()->redirect('/web/admin_web.php?id= ' . $id_post . '&error=incomplete#message_helper');
@@ -221,19 +221,13 @@ elseif ($del && !empty($id)) //Suppresion du lien web.
 	$Sql->query_inject("DELETE FROM " . PREFIX . "web WHERE id = '" . $id . "'", __LINE__, __FILE__);	
 
 	//On supprimes les éventuels commentaires associés.
-	$Sql->query_inject("DELETE FROM " . DB_TABLE_COM . " WHERE idprov = '" . $id . "' AND script = 'web'", __LINE__, __FILE__);
+	CommentsService::delete_comments_topic_module('web', $id);
 	
-	$notation = new Notation();
-	$notation->set_module_name('web');
-	$notation->set_id_in_module($id);
-	NotationService::delete_notes_id_in_module($notation);
+	NotationService::delete_notes_id_in_module('web', $id);
 	
-	$comments_topic = new CommentsTopic();
-	$comments_topic->set_module_id('web');
-	$comments_topic->set_id_in_module($id);
-	CommentsService::delete_comments_id_in_module($comments_topic);
+	CommentsService::delete_comments_topic_module('web', $id);
 	
-	AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);
+	AppContext::get_response()->redirect(HOST . SCRIPT);
 }		
 else
 {			

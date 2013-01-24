@@ -7,7 +7,8 @@ function XMLHttpRequest_preview(field)
 	if( XMLHttpRequest_preview.arguments.length == 0 )
 		field = ${escapejs(FIELD)};
 
-	{TINYMCE_TRIGGER}
+	tinyMCE.triggerSave();
+		
 	var contents = $(field).value;
 	var preview_field = 'xmlhttprequest_preview' + field;
 	
@@ -28,7 +29,7 @@ function XMLHttpRequest_preview(field)
 				parameters: {
 					token: '{TOKEN}',
 					path_to_root: '{PHP_PATH_TO_ROOT}',
-					editor: '{EDITOR_NAME}',
+					editor: 'TinyMCE',
 					page_path: '{PAGE_PATH}',  
 						contents: contents,
 						ftags: '{FORBIDDEN_TAGS}'
@@ -56,7 +57,7 @@ function insertTinyMceContent(content)
 <div style="position:relative;display:none;" id="loading_preview{FIELD}"><div style="margin:auto;margin-top:90px;width:100%;text-align:center;position:absolute;"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/loading.gif" alt="" /></div></div>
 <div style="display:none;" class="xmlhttprequest_preview" id="xmlhttprequest_preview{FIELD}"></div>
 
-# IF NOT C_JS_INCLUDED #
+# IF NOT C_NOT_JS_INCLUDED #
 	<script type="text/javascript" src="{PATH_TO_ROOT}/TinyMCE/templates/js/tinymce/tiny_mce.js"></script>
 # ENDIF #
 	
@@ -84,6 +85,6 @@ tinyMCE.init({
 
 # IF C_UPLOAD_MANAGEMENT #
 	<div style="float:right;margin-left:5px;">
-<a style="font-size: 10px;" title="{L_BB_UPLOAD}" href="#" onclick="window.open('{PATH_TO_ROOT}/user/upload.php?popup=1&amp;fd={IDENTIFIER}&amp;edt={EDITOR_NAME}', '', 'height=500,width=720,resizable=yes,scrollbars=yes');return false;"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/upload/files_add.png" alt="" /></a>
+<a style="font-size: 10px;" title="{L_BB_UPLOAD}" href="#" onclick="window.open('{PATH_TO_ROOT}/user/upload.php?popup=1&amp;fd={IDENTIFIER}&amp;edt=TinyMCE', '', 'height=500,width=720,resizable=yes,scrollbars=yes');return false;"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/upload/files_add.png" alt="" /></a>
 	</div>
 # ENDIF #

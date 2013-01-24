@@ -31,5 +31,15 @@ class ContactExtensionPointProvider extends ExtensionPointProvider
     {
         parent::__construct('contact');
     }
+    
+	public function home_page()
+	{
+		return new ContactHomePageExtensionPoint();
+	}
+	
+	public function url_mappings()
+	{
+		return new UrlMappings(array(new DispatcherUrlMapping('/contact/index.php')));
+	}
 }
 ?>

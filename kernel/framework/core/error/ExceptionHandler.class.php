@@ -65,7 +65,6 @@ class ExceptionHandler
 
 	private function display()
 	{
-
 		if (Debug::is_debug_mode_enabled())
 		{
 			$this->raw_display();
@@ -92,8 +91,6 @@ class ExceptionHandler
 		else
 		{
 			echo ErrorHandler::FATAL_MESSAGE;
-			Environment::destroy();
-			exit;
 		}
 	}
 
@@ -125,3 +122,4 @@ class ExceptionHandler
 		$response->send();
 	}
 }
+?>

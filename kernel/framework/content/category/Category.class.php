@@ -34,6 +34,7 @@ class Category
 	private $auth;
 	private $tree_id;
 	private $parent;
+	private $children = array();
 	
 	public function get_id()
 	{
@@ -106,6 +107,19 @@ class Category
 	public function set_parent(Category $parent)
 	{
 		$this->parent = $parent;
+	}
+	
+	/**
+	 * @return Category[string] the Category map (order => Category) of category children
+	 */
+	public function get_children()
+	{
+		return $this->children;
+	}
+	
+	public function add_child(Category $child)
+	{
+		$this->children[$child->get_order()] = $child;
 	}
 	
 	public function get_properties()

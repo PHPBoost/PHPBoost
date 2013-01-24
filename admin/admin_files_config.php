@@ -61,7 +61,7 @@ if (!empty($_POST['valid']) )
 	//Régénération du htaccess.
 	HtaccessFileCache::regenerate();
 	
-	AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);	
+	AppContext::get_response()->redirect('/admin/admin_files_config.php');	
 }
 //Sinon on rempli le formulaire
 else	
@@ -128,5 +128,4 @@ else
 }
 
 require_once('../admin/admin_footer.php');
-
 ?>

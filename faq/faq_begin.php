@@ -34,5 +34,12 @@ $faq_config = FaqConfig::load();
 
 define('AUTH_READ', 0x01);
 define('AUTH_WRITE', 0x02);
+
+$auth_read = $User->check_auth($faq_config->get_authorizations(), AUTH_READ);
+$auth_write = $User->check_auth($faq_config->get_authorizations(), AUTH_WRITE);
+
+$id_faq = retrieve(GET, 'id', 0);
+//For users who have disabled javascript
+$id_question = retrieve(GET, 'question', 0);
 	
 ?>

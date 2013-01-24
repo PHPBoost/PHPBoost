@@ -3,8 +3,8 @@
  *                               MemberExtendedFieldType.class.php
  *                            -------------------
  *   begin                : December 08, 2010
- *   copyright            : (C) 2010 Kévin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   copyright            : (C) 2010 Kevin MASSY
+ *   email                : kevin.massy@phpboost.com
  *
  *
  ###################################################
@@ -26,7 +26,7 @@
  ###################################################*/
 
  /**
- * @author Kévin MASSY <soldier.weasel@gmail.com>
+ * @author Kevin MASSY <kevin.massy@phpboost.com>
  * @package {@package}
  */
 interface MemberExtendedFieldType
@@ -54,18 +54,6 @@ interface MemberExtendedFieldType
 	 * @param instance of HTMLForm $form and instance of MemberExtendedField $member_extended_field.
 	 */
 	public function return_value(HTMLForm $form, MemberExtendedField $member_extended_field);
-
-	/**
-	 * @desc This function parse value
-	 * @param string $value.
-	 */
-	public function parse($value);
-	
-	/**
-	 * @desc This function unparse value
-	 * @param string $value.
-	 */
-	public function unparse($value);
 	
 	/**
 	 * @desc This function execute the database request

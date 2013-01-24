@@ -57,8 +57,7 @@
 				# START errors #
 				<tr>
 					<td class="row2">
-						<p class="{errors.CLASS}" style="width:auto;margin:auto;padding:8px;">
-							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{errors.IMG}.png" style="float:left;padding-right:6px;" alt="" /> 
+						<p class="{errors.CLASS}" style="width:auto;margin:auto;">
 							<strong>{errors.ERROR_TYPE} : </strong>{errors.ERROR_MESSAGE}<br /><br /><br />
                             <em>{errors.ERROR_STACKTRACE}</em>
 						</p>

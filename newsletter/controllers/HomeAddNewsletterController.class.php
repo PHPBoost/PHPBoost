@@ -3,8 +3,8 @@
  *                         HomeAddNewsletterController.class.php
  *                            -------------------
  *   begin                : February 8, 2011
- *   copyright            : (C) 2011 Kévin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   copyright            : (C) 2011 Kevin MASSY
+ *   email                : kevin.massy@phpboost.com
  *
  *
  ###################################################
@@ -29,7 +29,7 @@ class HomeAddNewsletterController extends ModuleController
 {
 	private $lang;
 	
-	public function execute(HTTPRequest $request)
+	public function execute(HTTPRequestCustom $request)
 	{
 		if (!NewsletterAuthorizationsService::default_authorizations()->create_newsletters())
 		{
@@ -58,10 +58,15 @@ class HomeAddNewsletterController extends ModuleController
 	
 	private function build_response(View $view)
 	{
-		$response = new SiteDisplayResponse($view);
+		$body_view = new FileTemplate('newsletter/NewsletterBody.tpl');
+		$body_view->add_lang($this->lang);
+		$body_view->put('TEMPLATE', $view);
+		$response = new SiteDisplayResponse($body_view);
+		$breadcrumb = $response->get_graphical_environment()->get_breadcrumb();
+		$breadcrumb->add($this->lang['newsletter'], NewsletterUrlBuilder::home()->absolute());
+		$breadcrumb->add($this->lang['newsletter-add'], NewsletterUrlBuilder::add_newsletter()->absolute());
 		$response->get_graphical_environment()->set_page_title($this->lang['newsletter-add']);
 		return $response;
 	}	
 }
-
 ?>

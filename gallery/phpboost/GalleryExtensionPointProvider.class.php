@@ -109,12 +109,28 @@ class GalleryExtensionPointProvider extends ExtensionPointProvider
 	
 	public function css_files()
 	{
-		return new GalleryCssFilesExtensionPoint();
+		$module_css_files = new ModuleCssFiles();
+		$module_css_files->adding_running_module_displayed_file('gallery.css');
+		return $module_css_files;
 	}
 	
 	public function menus()
 	{
-		return new GalleryMenusExtensionPoint();
+		return new ModuleMenus(array(
+			new GalleryModuleMiniMenu()
+		));
+	}
+	
+	public function home_page()
+	{
+		return new GalleryHomePageExtensionPoint();
+	}
+	
+	public function comments()
+	{
+		return new CommentsTopics(array(
+			new GalleryCommentsTopic()
+		));
 	}
 }
 ?>

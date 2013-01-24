@@ -79,12 +79,12 @@ class TemplateFunctions
      */
     public function escape($string)
     {
-        return htmlspecialchars($string);
+        return TextHelper::htmlspecialchars($string);
     }
     
     public function html($string)
     {
-        return htmlspecialchars_decode($string);
+        return TextHelper::htmlspecialchars_decode($string);
     }
 
     /**
@@ -96,6 +96,16 @@ class TemplateFunctions
     public function escapejs($string, $add_quotes = true)
     {
         return TextHelper::to_js_string($string, $add_quotes);
+    }
+    
+    /**
+     * @desc Escape characters for use javascript script.
+     * @param string $string string for conversion
+     * @return string String escaped
+     */
+    public function escapejscharacters($string)
+    {
+    	return strtr(Url::encode_rewrite($string), '-', '_');
     }
     
     public function set($string, array $parameters)

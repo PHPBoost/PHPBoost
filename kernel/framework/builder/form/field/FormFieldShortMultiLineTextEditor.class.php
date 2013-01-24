@@ -3,8 +3,8 @@
  *                          FormFieldShortMultiLineTextEditor.class.php
  *                            -------------------
  *   begin                : December 15, 2010
- *   copyright            : (C) 2010 Kévin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   copyright            : (C) 2010 Kevin MASSY
+ *   email                : kevin.massy@phpboost.com
  *
  ###################################################
  *
@@ -25,7 +25,7 @@
  ###################################################*/
 
 /**
- * @author Kévin MASSY <soldier.weasel@gmail.com>
+ * @author Kevin MASSY <kevin.massy@phpboost.com>
  * @desc This class represents a short multi-line text field.
  * @package {@package}
  */

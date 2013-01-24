@@ -78,10 +78,11 @@ class MySQLDBMSUtils implements DBMSUtils
 		return $result['DATABASE()'];
 	}
 
-	public function list_tables()
+	public function list_tables($with_prefix = false)
 	{
 		$tables = array();
-		$results = $this->select('SHOW TABLES;', array(), SelectQueryResult::FETCH_NUM);
+		$like_prefix = $with_prefix ? ' LIKE \'' . PREFIX . '%\'' : '';
+		$results = $this->select('SHOW TABLES ' . $like_prefix . ';', array(), SelectQueryResult::FETCH_NUM);
 		foreach ($results as $result)
 		{
 			$tables[] = $result[0];
@@ -89,11 +90,12 @@ class MySQLDBMSUtils implements DBMSUtils
 		return $tables;
 	}
 
-	public function list_and_desc_tables()
+	public function list_and_desc_tables($with_prefix = false)
 	{
 		$tables = array();
-		$results = $this->select('SHOW TABLE STATUS FROM `' . $this->get_database_name() .
-			'`;');
+		$like_prefix = $with_prefix ? ' LIKE \'' . PREFIX . '%\'' : '';
+		$results = $this->select('SHOW TABLE STATUS FROM `' . $this->get_database_name() . '`' .
+			$like_prefix . ';');
 		foreach ($results as $table)
 		{
 			$tables[$table['Name']] = array(
@@ -134,6 +136,8 @@ class MySQLDBMSUtils implements DBMSUtils
 
 	public function create_table($table_name, array $fields, array $options = array())
 	{
+		// Force charset
+		$options['charset'] = 'latin1';
 		foreach ($this->get_platform()->getCreateTableSql($table_name, $fields, $options) as $query)
 		{
 			$this->inject($query);
@@ -186,13 +190,12 @@ class MySQLDBMSUtils implements DBMSUtils
 	public function drop_column($table_name, $column_name)
 	{
 		$result = $this->select('SELECT column_name  FROM `information_schema`.`COLUMNS` C WHERE TABLE_SCHEMA=:schema
-			AND TABLE_NAME=:member_extend AND COLUMN_NAME=:column_name',
-		array(
+			AND TABLE_NAME=:table_name AND COLUMN_NAME=:column_name',
+			array(
 				'schema' => $this->get_database_name(),
-				'member_extend' => DB_TABLE_MEMBER_EXTENDED_FIELDS,
+				'table_name' => $table_name,
 				'column_name' => $column_name
-		)
-		);
+		));
 		if ($result->get_rows_count() > 0)
 		{
 			$this->inject('ALTER TABLE `' . $table_name . '` DROP `' . $column_name . '`');
@@ -324,8 +327,8 @@ class MySQLDBMSUtils implements DBMSUtils
 					{
 						$query = str_replace('phpboost_', $tableprefix, $query);
 					}
-					$parameter_extractor = new SqlParameterExtractor($query);
-					$this->querier->inject($parameter_extractor->get_query(), $parameter_extractor->get_parameters());
+
+					$this->querier->inject($query);
 					$query = '';
 				}
 				else
@@ -348,5 +351,4 @@ class MySQLDBMSUtils implements DBMSUtils
 		return $this->platform;
 	}
 }
-
 ?>

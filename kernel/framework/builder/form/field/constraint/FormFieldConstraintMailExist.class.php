@@ -3,8 +3,8 @@
  *                         FormFieldConstraintMailExist.class.php
  *                            -------------------
  *   begin                : March 13, 2011
- *   copyright            : (C) 2011 Kévin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   copyright            : (C) 2011 Kevin MASSY
+ *   email                : kevin.massy@phpboost.com
  *
  ###################################################
  *
@@ -25,7 +25,7 @@
  ###################################################*/
  
 /**
- * @author Kévin MASSY <soldier.weasel@gmail.com>
+ * @author Kevin MASSY <kevin.massy@phpboost.com>
  * @desc
  * @package {@package}
  */
@@ -51,25 +51,29 @@ class FormFieldConstraintMailExist extends AbstractFormFieldConstraint
  
 	public function validate(FormField $field)
 	{
-		return $this->exist_mail($field);
+		return $this->email_exists($field);
 	}
  
-	public function exist_mail(FormField $field)
+	public function email_exists(FormField $field)
 	{
 		if (!empty($this->user_id))
 		{
-			return PersistenceContext::get_querier()->count(DB_TABLE_MEMBER, "WHERE email = '" . $field->get_value() . "' AND user_id != '" . $this->user_id . "'") > 0 ? false : true;
+			return PersistenceContext::get_querier()->count(DB_TABLE_MEMBER, 'WHERE user_mail=:user_mail AND user_id != :user_id', array(
+				'user_mail' => $field->get_value(), 
+				'user_id' => $this->user_id
+			)) > 0 ? false : true;
 		}
 		else
 		{
-			return PersistenceContext::get_querier()->count(DB_TABLE_MEMBER, "WHERE email = '" . $field->get_value() . "'") > 0 ? false : true;
+			return PersistenceContext::get_querier()->count(DB_TABLE_MEMBER, 'WHERE user_mail=:user_mail', array(
+				'user_mail' => $field->get_value()
+			)) > 0 ? false : true;
 		}
 	}
  
 	public function get_js_validation(FormField $field)
 	{
-		return '';
-		//TODO return 'MailExistValidator(' . TextHelper::to_js_string($field->get_id()) .', '. $this->error_message . ')';
+		return 'MailExistValidator(' . TextHelper::to_js_string($field->get_id()) .', '. $this->error_message . ', ' . $this->user_id . ')';
 	}
 }
 ?>

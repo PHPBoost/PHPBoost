@@ -122,7 +122,7 @@ elseif (!empty($_POST['submit']))
 		}
 		else
 		{
-			$error_string = $media_categories->add($id_parent, $name, $description, $image, $new_auth, $mime_type, $activ);
+			$error_string = $media_categories->add_category($id_parent, $name, $description, $image, $new_auth, $mime_type, $activ);
 		}
 	}
 
@@ -145,7 +145,7 @@ elseif ($new_cat XOR $id_edit > 0)
 		'L_CAT_IMAGE' => $MEDIA_LANG['cat_image'],
 		'L_PREVIEW' => $LANG['preview'],
 		'L_RESET' => $LANG['reset'],
-		'L_SUBMIT' => $id_edit > 0 ? $LANG['edit'] : $LANG['add'],
+		'L_SUBMIT' => $id_edit > 0 ? $LANG['update'] : $LANG['add'],
 		'L_REQUIRE_TITLE' => $LANG['require_title'],
 		'L_MIME_TYPE' => $MEDIA_LANG['mime_type'],
 		'L_TYPE_BOTH' => $MEDIA_LANG['type_both'],

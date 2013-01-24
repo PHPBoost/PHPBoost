@@ -3,8 +3,8 @@
  *                         FormFieldConstraintAntiFlood.class.php
  *                            -------------------
  *   begin                : March 13, 2011
- *   copyright            : (C) 2011 Kévin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   copyright            : (C) 2011 Kevin MASSY
+ *   email                : kevin.massy@phpboost.com
  *
  ###################################################
  *
@@ -25,7 +25,7 @@
  ###################################################*/
  
 /**
- * @author Kévin MASSY <soldier.weasel@gmail.com>
+ * @author Kevin MASSY <kevin.massy@phpboost.com>
  * @desc
  * @package {@package}
  */
@@ -48,8 +48,9 @@ class FormFieldConstraintAntiFlood extends AbstractFormFieldConstraint
 		
 		if (empty($anti_flood_duration))
 		{
-			$this->anti_flood_duration = $this->content_management_config->get_anti_flood_duration();
+			$anti_flood_duration = $this->content_management_config->get_anti_flood_duration();
 		}
+		$this->anti_flood_duration = $anti_flood_duration;
 		
 		if (empty($error_message))
 		{
@@ -75,12 +76,11 @@ class FormFieldConstraintAntiFlood extends AbstractFormFieldConstraint
 	
 	public function flooding($field)
 	{
-		if ($this->last_posted_timestamp >= (time() + $this->anti_flood_duration))
+		if ($this->last_posted_timestamp >= (time() - $this->anti_flood_duration))
 		{
 			return true;
 		}
 		return false;
 	}
 }
- 
 ?>

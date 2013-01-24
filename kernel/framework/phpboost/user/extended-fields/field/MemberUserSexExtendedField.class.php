@@ -3,8 +3,8 @@
  *                               MemberUserSexExtendedField.class.php
  *                            -------------------
  *   begin                : December 26, 2010
- *   copyright            : (C) 2010 Kévin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   copyright            : (C) 2010 Kevin MASSY
+ *   email                : kevin.massy@phpboost.com
  *
  *
  ###################################################
@@ -85,10 +85,10 @@ class MemberUserSexExtendedField extends AbstractMemberExtendedField
 		switch ($value) 
 		{
 			case 1:
-				return '<img src="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/man.png" />';
+				return '<img src="' . TPL_PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/man.png" />';
 				break;
 			case 2:
-				return '<img src="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/woman.png" />';
+				return '<img src="' . TPL_PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/woman.png" />';
 				break;		
 			default:
 				return '';

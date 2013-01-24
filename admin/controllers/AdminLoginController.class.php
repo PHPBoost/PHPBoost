@@ -22,45 +22,31 @@
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
+ * 
  ###################################################*/
 
 class AdminLoginController extends AbstractController
 {
-	public function execute(HTTPRequest $request)
-	{
-		if ($request->has_postparameter('connect'))
-		{
-			$this->authenticate($request);
-		}
-		return $this->build_form($request);
-	}
-
-	private function authenticate(HTTPRequest $request)
-	{
-		$username = $request->get_string('login', '');
-		$password = $request->get_string('password', '');
-		$autoconnect = $request->get_bool('autoconnect', false);
-		$authentication = new PHPBoostAuthentication($username, $password);
-		if ($authentication->authenticate($autoconnect))
-		{
-			AppContext::get_response()->redirect('/admin');
-		}
-	}
-
-	private function build_form(HTTPRequest $request)
+	public function execute(HTTPRequestCustom $request)
 	{
 		$view = new FileTemplate('admin/AdminLoginController.tpl');
-		$lang = LangLoader::get('admin-login');
-		$view->put('POST_URL', DispatchManager::get_url('/admin/index.php', '/login')->absolute());
-		$flood = $request->get_getint('flood', 5);
+		$lang = LangLoader::get_class(__CLASS__);
+		$view->add_lang($lang);
+
+		$view->put_all(array(
+			'SITE_NAME' => GeneralConfig::load()->get_site_name()
+		));
+			
+		$flood = $request->get_getint('flood', 0); 
 		if ($flood > 0)
 		{
-			$errormsg = ($flood > 0) ? StringVars::replace_vars($lang['flood_block'], array('remaining_tries' => 5 - $flood)) :
-				$lang['flood_max'];
-			$view->put('ERROR', $errormsg);
-			$view->put('C_UNLOCK', $flood == 5);
+			$view->put_all(array(
+				'ERROR' => (($flood > 0) ? StringVars::replace_vars($lang['flood_block'],
+				array('remaining_tries' => 5 - $flood)) : $lang['flood_max']),
+				'C_UNLOCK' => $flood == 5
+			));
 		}
+
 		return new AdminNodisplayResponse($view);
 	}
 }

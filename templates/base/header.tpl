@@ -3,7 +3,7 @@
 	<head>
 		<title>{SITE_NAME} : {TITLE}</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-		<meta name="description" content="{SITE_DESCRIPTION} {TITLE}" />
+		<meta name="description" content="{SITE_DESCRIPTION}" />
 		<meta name="keywords" content="{SITE_KEYWORD}" />
 		<meta http-equiv="Content-Language" content="{L_XML_LANGUAGE}" />
 		<!-- Default CSS -->
@@ -11,7 +11,18 @@
 		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/default/framework/content/syndication/syndication.css" type="text/css" media="screen, print, handheld" />
 		
 		<!-- Theme CSS -->
-		{THEME_CSS}
+		# IF C_CSS_CACHE_ENABLED #
+		<link rel="stylesheet" href="{PATH_TO_ROOT}/kernel/css_cache.php?name=theme-{THEME}&files=
+		/templates/{THEME}/theme/design.css;
+		/templates/{THEME}/theme/global.css;
+		/templates/{THEME}/theme/generic.css;
+		/templates/{THEME}/theme/content.css" type="text/css" media="screen, print, handheld" />
+		# ELSE #
+		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/{THEME}/theme/design.css" type="text/css" media="screen" />
+		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/{THEME}/theme/global.css" type="text/css" media="screen, print, handheld" />
+		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/{THEME}/theme/generic.css" type="text/css" media="screen, print, handheld" />
+		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/{THEME}/theme/content.css" type="text/css" media="screen, print, handheld" />
+		# ENDIF #
 		
 		<!-- Modules CSS -->
 		{MODULES_CSS}
@@ -20,35 +31,36 @@
 		<link rel="shortcut icon" href="{FAVICON}" type="{FAVICON_TYPE}" />
 		# ENDIF #
 		
-		<link rel="alternate" href="{PATH_TO_ROOT}/syndication.php?m=news" type="application/rss+xml" title="RSS {SITE_NAME}" />
-		
 		<script type="text/javascript">
 		<!--
 			var PATH_TO_ROOT = "{PATH_TO_ROOT}";
 			var TOKEN = "{TOKEN}";
 			var THEME = "{THEME}";
+			var LANG = "{LANG}";
 		-->
 		</script>
 		<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/lib/js/scriptaculous/prototype.js"></script>
 		<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/lib/js/scriptaculous/scriptaculous.js"></script>
 		<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/lib/js/phpboost/global.js"></script>
+		<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/lib/js/lightbox/lightbox.js"></script>
+		
+		# IF C_HEADER_LOGO #
+			<style type="text/css">
+				div#logo {
+	   				background: url('{HEADER_LOGO}') no-repeat;
+				}
+			</style>
+		# ENDIF #
 	</head>
 	<body>
-	
-	# IF C_HEADER_LOGO #
-		<style type="text/css">
-			div#header_container {
-   				background: url('{HEADER_LOGO}') no-repeat;
-			}
-		</style>
-	# ENDIF #
 	
 	# INCLUDE MAINTAIN #
 
 <div id="global">
 	<div id="header_container">
 		<div id="header">
-			<h1 style="display:none;font-size:9px;">{SITE_NAME}</h1>
+			<div id="logo"></div>
+			<div id="site_name">{SITE_NAME}</div>
 			# IF C_MENUS_HEADER_CONTENT #
 			{MENUS_HEADER_CONTENT}
 			# ENDIF #
@@ -86,6 +98,7 @@
 		<div id="top_contents">
 			{MENUS_TOPCENTRAL_CONTENT}
 		</div>
+		<div class="spacer"></div>
 		# ENDIF #
 		<div id="main_content">&nbsp;
 			<div id="links">

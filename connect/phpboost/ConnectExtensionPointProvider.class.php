@@ -3,8 +3,8 @@
  *                              ConnectExtensionPointProvider.class.php
  *                            -------------------
  *   begin                : October 06, 2011
- *   copyright            : (C) 2011 Kévin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   copyright            : (C) 2011 Kevin MASSY
+ *   email                : kevin.massy@phpboost.com
  *
  *
  ###################################################
@@ -34,12 +34,16 @@ class ConnectExtensionPointProvider extends ExtensionPointProvider
 
 	public function css_files()
 	{
-		return new ConnectCssFilesExtensionPoint();
+		$module_css_files = new ModuleCssFiles();
+		$module_css_files->adding_always_displayed_file('connect_mini.css');
+		return $module_css_files;
 	}
 	
 	public function menus()
 	{
-		return new ConnectMenusExtensionPoint();
+		return new ModuleMenus(array(
+			new ConnectModuleMiniMenu()
+		));
 	}
 }
 ?>

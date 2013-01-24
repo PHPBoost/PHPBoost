@@ -61,74 +61,6 @@ class WikiExtensionPointProvider extends ExtensionPointProvider
 		return $config . "\n\r" . $code;
 	}
 
-	public function get_search_form($args=null)
-	{
-		require_once(PATH_TO_ROOT . '/kernel/begin.php');
-		load_module_lang('wiki');
-		global $LANG;
-
-		$tpl = new FileTemplate('wiki/wiki_search_form.tpl');
-
-		if ( !isset($args['WikiWhere']) || !in_array($args['WikiWhere'], explode(',','title,contents,all')) )
-		$args['WikiWhere'] = 'title';
-
-		$tpl->put_all(Array(
-            'L_WHERE' => $LANG['wiki_search_where'],
-            'IS_TITLE_SELECTED' => $args['WikiWhere'] == 'title'? ' selected="selected"': '',
-            'IS_CONTENTS_SELECTED' => $args['WikiWhere'] == 'contents'? ' selected="selected"': '',
-            'IS_ALL_SELECTED' => $args['WikiWhere'] == 'all'? ' selected="selected"': '',
-            'L_TITLE' => $LANG['wiki_search_where_title'],
-            'L_CONTENTS' => $LANG['wiki_search_where_contents']
-		));
-
-		return $tpl->render();
-	}
-
-	public function get_search_args()
-	{
-		return Array('WikiWhere');
-	}
-
-	public function get_search_request($args)
-	{
-		$weight = isset($args['weight']) && is_numeric($args['weight']) ? $args['weight'] : 1;
-		if ( !isset($args['WikiWhere']) || !in_array($args['WikiWhere'], explode(',','title,contents,all')) )
-		$args['WikiWhere'] = 'title';
-
-		if ( $args['WikiWhere'] == 'all' )
-		$req = "SELECT ".
-		$args['id_search']." AS `id_search`,
-                a.id AS `id_content`,
-                a.title AS `title`,
-                ( 4 * FT_SEARCH_RELEVANCE(a.title, '".$args['search']."') +
-                FT_SEARCH_RELEVANCE(c.content, '".$args['search']."') ) / 5 * " . $weight . " AS `relevance`,
-                CONCAT('" . PATH_TO_ROOT . "/wiki/wiki.php?title=',a.encoded_title) AS `link`
-                FROM " . PREFIX . "wiki_articles a
-                LEFT JOIN " . PREFIX . "wiki_contents c ON c.id_contents = a.id
-                WHERE ( FT_SEARCH(a.title, '".$args['search']."') OR MATCH(c.content, '".$args['search']."') )";
-		if ( $args['WikiWhere'] == 'contents' )
-		$req = "SELECT ".
-		$args['id_search']." AS `id_search`,
-                a.id AS `id_content`,
-                a.title AS `title`,
-                FT_SEARCH_RELEVANCE(c.content, '".$args['search']."') * " . $weight . " AS `relevance`,
-                CONCAT('" . PATH_TO_ROOT . "/wiki/wiki.php?title=',a.encoded_title) AS `link`
-                FROM " . PREFIX . "wiki_articles a
-                LEFT JOIN " . PREFIX . "wiki_contents c ON c.id_contents = a.id
-                WHERE FT_SEARCH(c.content, '".$args['search']."')";
-		else
-		$req = "SELECT ".
-		$args['id_search']." AS `id_search`,
-                `id` AS `id_content`,
-                `title` AS `title`,
-                ((FT_SEARCH_RELEVANCE(title, '".$args['search']."') )* " . $weight . ") AS `relevance`,
-                CONCAT('" . PATH_TO_ROOT . "/wiki/wiki.php?title=',encoded_title) AS `link`
-                FROM " . PREFIX . "wiki_articles
-                WHERE FT_SEARCH(title, '".$args['search']."')";
-
-		return $req;
-	}
-
 	public static function _build_wiki_cat_children($cats_tree, $cats, $id_parent = 0)
 	{
 		$i = 0;
@@ -161,92 +93,9 @@ class WikiExtensionPointProvider extends ExtensionPointProvider
 		return new WikiFeedProvider();
 	}
 
-	public function get_home_page()
+	public function home_page()
 	{
-		global $User, $Template, $Cache, $Bread_crumb, $_WIKI_CONFIG, $_WIKI_CATS, $LANG;
-
-		load_module_lang('wiki');
-		include_once('../wiki/wiki_functions.php');
-		$bread_crumb_key = 'wiki';
-		require_once('../wiki/wiki_bread_crumb.php');
-
-		unset($Template);
-		$Template = new FileTemplate();
-		$Template->set_filenames(array(
-			'wiki'=> 'wiki/wiki.tpl',
-			'index'=> 'wiki/index.tpl'
-			));
-
-			if ($_WIKI_CONFIG['last_articles'] > 1)
-			{
-				$result = $this->sql_querier->query_while("SELECT a.title, a.encoded_title, a.id
-			FROM " . PREFIX . "wiki_articles a
-			LEFT JOIN " . PREFIX . "wiki_contents c ON c.id_contents = a.id_contents
-			WHERE a.redirect = 0
-			ORDER BY c.timestamp DESC
-			LIMIT 0, " . $_WIKI_CONFIG['last_articles'], __LINE__, __FILE__);
-				$articles_number = $this->sql_querier->num_rows($result, "SELECT COUNT(*) FROM " . PREFIX . "wiki_articles WHERE encoded_title = '" . $encoded_title . "'", __LINE__, __FILE__);
-
-				$Template->assign_block_vars('last_articles', array(
-				'L_ARTICLES' => $LANG['wiki_last_articles_list'],
-				'RSS' => $articles_number > 0 ? '<a href="' . SyndicationUrlBuilder::rss('wiki')->rel() .'"><img src="../templates/' . get_utheme() . '/images/rss.png" alt="RSS" /></a>' : ''
-				));
-
-				$i = 0;
-				while ($row = $this->sql_querier->fetch_assoc($result))
-				{
-					$Template->assign_block_vars('last_articles.list', array(
-					'ARTICLE' => $row['title'],
-					'TR' => ($i > 0 && ($i%2 == 0)) ? '</tr><tr>' : '',
-					'U_ARTICLE' => url('wiki.php?title=' . $row['encoded_title'], $row['encoded_title'])
-					));
-					$i++;
-				}
-
-				if ($articles_number == 0)
-				{
-					$Template->put_all(array(
-					'L_NO_ARTICLE' => '<td style="text-align:center;" class="row2">' . $LANG['wiki_no_article'] . '</td>',
-					));
-				}
-			}
-			//Affichage de toutes les catégories si c'est activé
-			if ($_WIKI_CONFIG['display_cats'] != 0)
-			{
-				$Template->assign_block_vars('cat_list', array(
-				'L_CATS' => $LANG['wiki_cats_list']
-				));
-				$i = 0;
-				foreach ($_WIKI_CATS as $id => $infos)
-				{
-					//Si c'est une catégorie mère
-					if ($infos['id_parent'] == 0)
-					{
-						$Template->assign_block_vars('cat_list.list', array(
-						'CAT' => $infos['name'],
-						'U_CAT' => url('wiki.php?title=' . Url::encode_rewrite($infos['name']), Url::encode_rewrite($infos['name']))
-						));
-						$i++;
-					}
-				}
-				if ($i == 0)
-				$Template->put_all(array(
-				'L_NO_CAT' => $LANG['wiki_no_cat'],
-				));
-			}
-
-			$Template->put_all(array(
-			'TITLE' => !empty($_WIKI_CONFIG['wiki_name']) ? $_WIKI_CONFIG['wiki_name'] : $LANG['wiki'],
-			'INDEX_TEXT' => !empty($_WIKI_CONFIG['index_text']) ? FormatingHelper::second_parse(wiki_no_rewrite($_WIKI_CONFIG['index_text'])) : $LANG['wiki_empty_index'],
-			'L_EXPLORER' => $LANG['wiki_explorer'],
-			'U_EXPLORER' => url('explorer.php'),
-			));
-
-			$page_type = 'index';
-			include('../wiki/wiki_tools.php');
-
-			$tmp = $Template->pparse('wiki', TRUE);
-			return $tmp;
+		return new WikiHomePageExtensionPoint();
 	}
 
 	public function sitemap()
@@ -256,7 +105,21 @@ class WikiExtensionPointProvider extends ExtensionPointProvider
 	
 	public function css_files()
 	{
-		return new WikiCssFilesExtensionPoint();
+		$module_css_files = new ModuleCssFiles();
+		$module_css_files->adding_running_module_displayed_file('wiki.css');
+		return $module_css_files;
+	}
+	
+	public function search()
+	{
+		return new WikiSearchable();
+	}
+	
+	public function comments()
+	{
+		return new CommentsTopics(array(
+			new WikiCommentsTopic()
+		));
 	}
 }
 ?>

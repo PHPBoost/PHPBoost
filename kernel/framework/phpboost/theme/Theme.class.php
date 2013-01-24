@@ -3,8 +3,8 @@
  *                             Theme.class.php
  *                            -------------------
  *   begin                : April 10, 2011
- *   copyright            : (C) 2011 Kévin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   copyright            : (C) 2011 Kevin MASSY
+ *   email                : kevin.massy@phpboost.com
  *
  *
  *###################################################
@@ -27,7 +27,7 @@
  */
 
  /**
- * @author Kévin MASSY <soldier.weasel@gmail.com>
+ * @author Kevin MASSY <kevin.massy@phpboost.com>
  * @package {@package}
  */
 class Theme
@@ -102,6 +102,10 @@ class Theme
     
     public function check_auth()
     {
+    	if ($this->theme_id == UserAccountsConfig::load()->get_default_theme())
+    	{
+    		return true;
+    	}
     	return AppContext::get_current_user()->check_auth($this->authorizations, self::ACCES_THEME);
     }
 }

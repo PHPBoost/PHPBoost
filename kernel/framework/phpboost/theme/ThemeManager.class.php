@@ -4,8 +4,8 @@
  *                         ThemeManager.class.php
  *                            -------------------
  *   begin                : April 10, 2011
- *   copyright            : (C) 2011 Kévin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   copyright            : (C) 2011 Kevin MASSY
+ *   email                : kevin.massy@phpboost.com
  *
  *
  *###################################################
@@ -28,7 +28,7 @@
  */
 
  /**
- * @author Kévin MASSY <soldier.weasel@gmail.com>
+ * @author Kevin MASSY <kevin.massy@phpboost.com>
  * @package {@package}
  */
 class ThemeManager
@@ -49,6 +49,17 @@ class ThemeManager
 			}
 		}
 		return $activated_themes;
+	}
+	
+	public static function get_activated_and_authorized_themes_map()
+	{
+		$themes = array();
+		foreach (ThemesConfig::load()->get_themes() as $theme) {
+			if ($theme->is_activated() && $theme->check_auth()) {
+				$themes[$theme->get_id()] = $theme;
+			}
+		}
+		return $themes;
 	}
 	
 	public static function get_default_theme()
@@ -86,8 +97,6 @@ class ThemeManager
 			
 			ThemesConfig::load()->add_theme($theme);
 			ThemesConfig::save();
-				
-			self::regenerate_cache();
 		}
 		else
 		{
@@ -99,9 +108,12 @@ class ThemeManager
 	{
 		if (!empty($theme_id) && self::get_theme_existed($theme_id))
 		{
-			if (self::get_theme($theme_id)->get_id() !== UserAccountsConfig::load()->get_default_theme())
+			$default_theme = self::get_default_theme();
+			if (self::get_theme($theme_id)->get_id() !== $default_theme)
 			{
-				// TODO change user theme in Database
+				PersistenceContext::get_querier()->update(DB_TABLE_MEMBER, array('user_theme' => $default_theme), 
+					'WHERE user_theme=:old_user_theme', array('old_user_theme' => $theme_id
+				));
 				
 				ThemesConfig::load()->remove_theme_by_id($theme_id);
 				ThemesConfig::save();
@@ -111,7 +123,6 @@ class ThemeManager
 					$folder = new Folder(PATH_TO_ROOT . '/templates/' . $theme_id);
 					$folder->delete();
 				}
-				self::regenerate_cache();
 			}
 		}
 	}
@@ -124,8 +135,6 @@ class ThemeManager
 			$theme->set_activated($visibility);
 			ThemesConfig::load()->update($theme);
 			ThemesConfig::save();
-			
-			self::regenerate_cache();
 		}
 	}
 	
@@ -159,8 +168,6 @@ class ThemeManager
 			
 			ThemesConfig::load()->update($theme);
 			ThemesConfig::save();
-			
-			self::regenerate_cache();
 		}
 	}
 	
@@ -172,8 +179,6 @@ class ThemeManager
 			$theme->set_columns_disabled($columns_disabled);
 			ThemesConfig::load()->update($theme);
 			ThemesConfig::save();
-			
-			self::regenerate_cache();
 		}
 	}
 	
@@ -185,19 +190,12 @@ class ThemeManager
 			$theme->set_customize_interface($customize_interface);
 			ThemesConfig::load()->update($theme);
 			ThemesConfig::save();
-			
-			self::regenerate_cache();
 		}
 	}
 	
 	public static function get_error()
 	{
 		return self::$error;
-	}
-	
-	private static function regenerate_cache()
-	{
-		ThemesCssFilesCache::invalidate();
 	}
 }
 ?>

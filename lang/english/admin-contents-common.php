@@ -3,8 +3,8 @@
  *                           admin-contents-common.php
  *                            -------------------
  *   begin                : August 10, 2011
- *   copyright            : (C) 2011 Kévin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   copyright            : (C) 2011 Kevin MASSY
+ *   email                : kevin.massy@phpboost.com
  *
  *
  ###################################################
@@ -31,28 +31,28 @@
  
 $lang = array();
 
-$lang['comments.config.success-saving'] = 'Configuration saved successfully';
-
 $lang['comments'] = 'Comments';
 $lang['comments.config'] = 'Comments configuration';
 $lang['comments.management'] = 'Comments management';
 
 $lang['comments.config.display-captcha'] = 'Visual verification code';
-$lang['comments.config.captcha-difficulty'] = 'Difficulty of the verification code';
+$lang['comments.config.captcha-difficulty'] = 'Verification code difficulty';
 $lang['comments.config.number-comments-display'] = 'Number of comments to display by default';
-$lang['comments.config.order-display-comments'] = 'Ordre display comments';
+$lang['comments.config.order-display-comments'] = 'Ordre comments display';
 $lang['comments.config.order-display-comments.asc'] = 'Oldest to newest';
 $lang['comments.config.order-display-comments.desc'] = 'Newest to oldest';
-
 
 $lang['comments.config.authorization'] = 'Authorizations';
 $lang['comments.config.authorization-read'] = 'Authorization to see the comments';
 $lang['comments.config.authorization-post'] = 'Authorization to post a comment';
-$lang['comments.config.authorization-moderation'] = 'Authorization to management a comments';
-$lang['comments.config.authorization-note'] = 'Authorization to note a comments';
+$lang['comments.config.authorization-moderation'] = 'Authorization to manage comments';
+$lang['comments.config.authorization-note'] = 'Authorization to note a comment';
 $lang['comments.config.max-links-comment'] = 'Number of links allowed in a comment';
-$lang['comments.config.forbidden-tags'] = 'Types of formatting allowed';
+$lang['comments.config.forbidden-tags'] = 'Forbidden tags';
+$lang['comments.config.approbation'] = 'Comments approbation';
+$lang['comments.config.approbation.auto'] = 'Automatic';
+$lang['comments.config.approbation.moderator'] = 'Moderator';
+$lang['comments.config.approbation.administrator'] = 'Administrator';
 
 $lang['number-required'] = 'The value entered must be a number';
-
 ?>

@@ -3,8 +3,8 @@
  *                      UserUsersListController.class.php
  *                            -------------------
  *   begin                : October 09, 2011
- *   copyright            : (C) 2011 Kévin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   copyright            : (C) 2011 Kevin MASSY
+ *   email                : kevin.massy@phpboost.com
  *
  *
  ###################################################
@@ -29,12 +29,14 @@ class UserUsersListController extends AbstractController
 {
 	private $lang;
 	private $view;
+	private $groups_cache;
 	private $nbr_members_per_page = 25;
 
-	public function execute(HTTPRequest $request)
+	public function execute(HTTPRequestCustom $request)
 	{
 		$this->init();
-		$this->build_form($request);
+		$this->build_select_group_form();
+		$this->build_view($request);
 
 		return $this->build_response($this->view);
 	}
@@ -44,32 +46,33 @@ class UserUsersListController extends AbstractController
 		$this->lang = LangLoader::get('user-common');
 		$this->view = new FileTemplate('user/UserUsersListController.tpl');
 		$this->view->add_lang($this->lang);
+		$this->groups_cache = GroupsCache::load();
 	}
 
-	private function build_form($request)
+	private function build_view($request)
 	{
 		$field = $request->get_value('field', 'login');
 		$sort = $request->get_value('sort', 'top');
 		$page = $request->get_int('page', 1);
 		
-		$mode = ($sort == 'top') ? 'ASC' : 'DESC';
+		$mode = ($sort == 'top') ? 'DESC' : 'ASC';
 		
 		switch ($field)
 		{
 			case 'registered' :
-				$field_bdd = 'registration_date';
+				$field_bdd = 'timestamp';
 			break;
-			case 'connect' :
-				$field_bdd = 'last_connection_date';
+			case 'lastconnect' :
+				$field_bdd = 'last_connect';
 			break;
 			case 'messages' :
 				$field_bdd = 'user_msg';
 			break;
 			case 'login' :
-				$field_bdd = 'display_name';
+				$field_bdd = 'login';
 			break;
 			default :
-				$field_bdd = 'registration_date';
+				$field_bdd = 'timestamp';
 		}
 		
 		$pagination = new UserUsersListPagination($page);
@@ -81,15 +84,13 @@ class UserUsersListController extends AbstractController
 			'SORT_REGISTERED_BOTTOM' => UserUrlBuilder::users('registered', 'bottom', $page)->absolute(),
 			'SORT_MSG_TOP' => UserUrlBuilder::users('messages', 'top', $page)->absolute(),
 			'SORT_MSG_BOTTOM' => UserUrlBuilder::users('messages', 'bottom', $page)->absolute(),
-			'SORT_LAST_CONNECT_TOP' => UserUrlBuilder::users('connect', 'top', $page)->absolute(),
-			'SORT_LAST_CONNECT_BOTTOM' => UserUrlBuilder::users('connect', 'bottom', $page)->absolute(),
+			'SORT_LAST_CONNECT_TOP' => UserUrlBuilder::users('lastconnect', 'top', $page)->absolute(),
+			'SORT_LAST_CONNECT_BOTTOM' => UserUrlBuilder::users('lastconnect', 'bottom', $page)->absolute(),
 			'PAGINATION' => '&nbsp;<strong>' . LangLoader::get_message('page', 'main') . ' :</strong> ' . $pagination->display()->render()
 		));
 
-		$condition = 'WHERE user_aprob = 1 ORDER BY :field :sort LIMIT :number_users_per_page OFFSET :display_from';
+		$condition = 'WHERE user_aprob = 1 ORDER BY '. $field_bdd .' '. $mode .' LIMIT :number_users_per_page OFFSET :display_from';
 		$parameters = array(
-			'field' => $field_bdd,
-			'sort' => $mode,
 			'number_users_per_page' => $pagination->get_number_users_per_page(),
 			'display_from' => $pagination->get_display_from()
 		);
@@ -97,19 +98,49 @@ class UserUsersListController extends AbstractController
 		while ($row = $result->fetch())
 		{
 			$user_msg = !empty($row['user_msg']) ? $row['user_msg'] : '0';
-			$last_connect = !empty($row['last_connection_date']) ? $row['last_connection_date'] : $row['registration_date'];
+			$last_connect = !empty($row['last_connect']) ? $row['last_connect'] : $row['timestamp'];
 		
 			$this->view->assign_block_vars('member_list', array(
-				'C_MAIL' => $row['show_email'] == 1,
-				'PSEUDO' => $row['display_name'],
-				'MAIL' => $row['email'],
+				'C_MAIL' => $row['user_show_mail'] == 1,
+				'PSEUDO' => $row['login'],
+				'MAIL' => $row['user_mail'],
 				'MSG' => $user_msg,
 				'LAST_CONNECT' => gmdate_format('date_format_short', $last_connect),
-				'DATE' => gmdate_format('date_format_short', $row['registration_date']),
+				'DATE' => gmdate_format('date_format_short', $row['timestamp']),
 				'U_USER_ID' => UserUrlBuilder::profile($row['user_id'])->absolute(),
 				'U_USER_PM' => UserUrlBuilder::personnal_message($row['user_id'])->absolute()
 			));
 		}
+	}
+	
+	private function build_select_group_form()
+	{
+		$form = new HTMLForm('groups');
+
+		$fieldset = new FormFieldsetHorizontal('show_group');
+		$form->add_fieldset($fieldset);
+		
+		$fieldset->add_field(new FormFieldSimpleSelectChoice('groups_select', $this->lang['groups.select'] . ' : ', '', $this->build_select_groups(), 
+			array('events' => array('change' => 'document.location = "'. UserUrlBuilder::groups()->absolute() .'" + HTMLForms.getField("groups_select").getValue();')
+		)));
+
+		$groups = $this->groups_cache->get_groups();
+		$this->view->put_all(array(
+			'C_ARE_GROUPS' => !empty($groups),
+			'SELECT_GROUP' => $form->display()
+		));
+	}
+	
+	private function build_select_groups()
+	{
+		$groups = array();
+		$list_lang = LangLoader::get_message('list', 'main');
+		$groups[] = new FormFieldSelectChoiceOption('-- '. $list_lang .' --', '');
+		foreach ($this->groups_cache->get_groups() as $id => $row)
+		{
+			$groups[] = new FormFieldSelectChoiceOption($row['name'], $id);
+		}
+		return $groups;
 	}
 
 	private function build_response()

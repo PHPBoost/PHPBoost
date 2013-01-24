@@ -57,22 +57,23 @@ class DefaultTemplateData implements TemplateData
 	public function auto_load_frequent_vars()
 	{
 		$session = AppContext::get_session();
-		$user = AppContext::get_user();
-		$is_connected = $user->check_level(MEMBER_LEVEL);
+		$user = AppContext::get_current_user();
+		$is_connected = $user->check_level(User::MEMBER_LEVEL);
 		$this->put_all(array(
 			'SID' => SID,
-			'THEME' => get_utheme(),
-			'LANG' => get_ulang(),
+			'THEME' => $user->get_theme(),
+			'LANG' => $user->get_locale(),
 			'IS_USER_CONNECTED' => $is_connected,
-			'IS_ADMIN' => $user->check_level(ADMIN_LEVEL),
-    		'IS_MODERATOR' => $user->check_level(MODERATOR_LEVEL),
+			'IS_ADMIN' => $user->check_level(User::ADMIN_LEVEL),
+    		'IS_MODERATOR' => $user->check_level(User::MODERATOR_LEVEL),
 			'PATH_TO_ROOT' => TPL_PATH_TO_ROOT,
 			'PHP_PATH_TO_ROOT' => PATH_TO_ROOT,
 			'TOKEN' => !empty($session) ? $session->get_token() : '',
 			'REWRITED_SCRIPT' => REWRITED_SCRIPT,
 		// @deprecated
 			'C_USER_CONNECTED' => $is_connected,
-			'C_USER_NOTCONNECTED' => !$is_connected
+			'C_USER_NOTCONNECTED' => !$is_connected,
+			'C_BBCODE_TINYMCE_MODE' => AppContext::get_current_user()->get_editor() == 'TinyMCE'
 		));
 	}
 

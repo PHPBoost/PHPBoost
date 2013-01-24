@@ -79,6 +79,11 @@ class MediaExtensionPointProvider extends ExtensionPointProvider
 		return $string;
 	}
 	
+	public function home_page()
+	{
+		return new MediaHomePageExtensionPoint();
+	}
+	
 	public function feeds()
 	{
 		return new MediaFeedProvider();
@@ -86,7 +91,19 @@ class MediaExtensionPointProvider extends ExtensionPointProvider
 	
 	public function comments()
 	{
-		return new MediaComments();
+		return new CommentsTopics(array(
+			new MediaCommentsTopic()
+		));
+	}
+	
+	public function search()
+	{
+		return new MediaSearchable();
+	}
+	
+	public function sitemap()
+	{
+		return new MediaSitemapExtensionPoint();
 	}
 }
 ?>

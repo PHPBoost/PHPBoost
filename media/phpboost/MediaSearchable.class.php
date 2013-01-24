@@ -4,8 +4,8 @@
  *                              MediaSearchable.class.php
  *                            -------------------
  *   begin                : May 29, 2010
- *   copyright            : (C) 2010 Kévin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   copyright            : (C) 2010 Kevin MASSY
+ *   email                : kevin.massy@phpboost.com
  *
  *
  ###################################################
@@ -26,11 +26,18 @@
  *
  ###################################################*/
 
-class MediaSearchable extends AbstractSearchable
+class MediaSearchable extends AbstractSearchableExtensionPoint
 {
-	function get_search_request($args = null)
+	private $sql_querier;
+
+	public function __construct()
+	{
+		$this->sql_querier = PersistenceContext::get_sql();
+	}
+	
+	public function get_search_request($args)
     /**
-     *  Renvoie la requête de recherche
+     *  Renvoie la requï¿½te de recherche
      */
     {
         global $Cache;

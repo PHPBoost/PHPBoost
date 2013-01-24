@@ -3,8 +3,8 @@
  *                              EventsExtensionPointProviderclass.php
  *                            -------------------
  *   begin                : September 30, 2011
- *   copyright            : (C) 2011 Kévin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   copyright            : (C) 2011 Kevin MASSY
+ *   email                : kevin.massy@phpboost.com
  *
  *
  ###################################################
@@ -34,7 +34,9 @@ class EventsExtensionPointProvider extends ExtensionPointProvider
 
 	public function comments()
 	{
-		return new EventsComments();
+		return new CommentsTopics(array(
+			new EventsCommentsTopic()
+		));
 	}
 }
 ?>

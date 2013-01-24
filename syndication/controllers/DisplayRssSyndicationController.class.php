@@ -3,8 +3,8 @@
  *                       DisplayRssSyndicationController.class.php
  *                            -------------------
  *   begin                : July 16, 2011
- *   copyright            : (C) 2011 Kévin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   copyright            : (C) 2011 Kevin MASSY
+ *   email                : kevin.massy@phpboost.com
  *
  ###################################################
  *
@@ -28,13 +28,13 @@ class DisplayRssSyndicationController extends AbstractController
 {
 	private $tpl;
 	
-	public function execute(HTTPRequest $request)
+	public function execute(HTTPRequestCustom $request)
 	{
 		$module_id = $request->get_getstring('module_id', '');
 		
 		if (empty($module_id))
 		{
-			AppContext::get_response()->redirect(UserUrlBuilder::home()->absolute());
+			AppContext::get_response()->redirect(Environment::get_home_page());
 		}
 		
 		$this->init();

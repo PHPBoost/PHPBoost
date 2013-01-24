@@ -55,10 +55,8 @@ $lang = array(
 	'mail-config.smtp_secure_protocol_none' => 'Aucun',
 	'mail-config.smtp_secure_protocol_tls' => 'TLS',
 	'mail-config.smtp_secure_protocol_ssl' => 'SSL',
-	'mail-config.mail_config_saved' => 'La configuration a bien été enregistrée',
 	
 	//General config
-	'general-config.success' => 'La configuration générale du site a été enregistrée avec succès',
 	'general-config' => 'Configuration générale',
 	'general-config.site_name' => 'Nom du site',
 	'general-config.site_description' => 'Description du site',
@@ -79,7 +77,6 @@ $lang = array(
 	'general-config.display_theme_author-explain' => 'Affiche des informations sur le thème dans le pied de page',
 	
 	//Advanced config
-	'advanced-config.success' => 'La configuration avancée du site a été enregistrée avec succès',
 	'advanced-config' => 'Configuration avancée',
 	'advanced-config.site_url' => 'URL du serveur',
 	'advanced-config.site_url-explain' => 'Ex : http://www.phpboost.com',
@@ -93,13 +90,14 @@ $lang = array(
 	
 	'advanced-config.config.not-available' => '<span style="color:#B22222;font-weight:bold;">Non disponible sur votre serveur</span>',
 	'advanced-config.config.available' => '<span style="color:#008000;font-weight:bold;">Disponible sur votre serveur</span>',
+	'advanced-config.config.unknown' => '<span style="color:#004b80;font-weight:bold;">Inconnu sur votre serveur</span>',
 
 	'advanced-config.htaccess-manual-content' => 'Contenu du fichier .htaccess',
 	'advanced-config.htaccess-manual-content.explain' => 'Vous pouvez dans ce champ mettre les instructions que vous souhaitez intégrer au fichier .htaccess qui se trouve à la racine du site, par exemple pour forcer une configuration du serveur web Apache.',
-	
+
 	'advanced-config.sessions-config' => 'Connexion utilisateurs',
 	'advanced-config.cookie-name' => 'Nom du cookie des sessions',
-	'advanced-config.cookie-name.style-wrong' => 'Le nom du cookie doit être obligatoirement une suite de lettre et de chiffre',
+	'advanced-config.cookie-name.style-wrong' => 'Le nom du cookie doit obligatoirement être une suite de lettres et de chiffres',
 	'advanced-config.cookie-duration' => 'Durée de la session',
 	'advanced-config.cookie-duration.explain' => '3600 secondes conseillé',
 	'advanced-config.active-session-duration' => 'Durée utilisateurs actifs',
@@ -113,9 +111,9 @@ $lang = array(
 	'advanced-config.unlock-administration.request' => 'Renvoyer le code de déverrouillage',
 	'advanced-config.debug-mode' => 'Mode Debug',
 	'advanced-config.debug-mode.explain' => 'Ce mode est particulièrement utile pour les développeurs car les erreurs sont affichées explicitement. Il est déconseillé d\'utiliser ce mode sur un site en production.',
-	'advanced-config.debug-mode.type' => 'Séléction du mode debug',
+	'advanced-config.debug-mode.type' => 'Sélection du mode debug',
 	'advanced-config.debug-mode.type.normal' => 'Normal',
-	'advanced-config.debug-mode.type.strict' => 'Stricte',
+	'advanced-config.debug-mode.type.strict' => 'Strict',
 
 	'advanced-config.unlock-code.title' => 'Mail à conserver',
 	'advanced-config.unlock-code.content' => 'Code à conserver (Il ne vous sera plus délivré) : :unlock_code
@@ -127,6 +125,5 @@ $lang = array(
 	'advanced-config.code_sent_success' => 'Le code a été envoyé avec succès',
 	'advanced-config.code_sent_fail' => 'Une erreur est survenue dans l\'envoi du code',
 	'advanced-config.confirm_mail_sending' => 'Voulez-vous vraiment envoyer le code de déverrouillage ?'
-
 );
 ?>

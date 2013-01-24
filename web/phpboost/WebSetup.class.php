@@ -3,8 +3,8 @@
  *                             WebSetup.class.php
  *                            -------------------
  *   begin                : January 17, 2010
- *   copyright            : (C) 2010 Kévin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   copyright            : (C) 2010 Kevin MASSY
+ *   email                : kevin.massy@phpboost.com
  *
  *
  ###################################################
@@ -51,11 +51,17 @@ class WebSetup extends DefaultModuleSetup
 	public function uninstall()
 	{
 		$this->drop_tables();
+		$this->delete_configuration();
 	}
 
 	private function drop_tables()
 	{
 		PersistenceContext::get_dbms_utils()->drop(array(self::$web_table, self::$web_cats_table));
+	}
+	
+	private function delete_configuration()
+	{
+		ConfigManager::delete('web', 'config');
 	}
 
 	private function create_tables()

@@ -3,8 +3,8 @@
  *		                   NewsletterEditSubscriberController.class.php
  *                            -------------------
  *   begin                : March 16, 2011
- *   copyright            : (C) 2011 Kévin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   copyright            : (C) 2011 Kevin MASSY
+ *   email                : kevin.massy@phpboost.com
  *
  ###################################################
  *
@@ -36,7 +36,7 @@ class NewsletterEditSubscriberController extends ModuleController
 	 */
 	private $submit_button;
 
-	public function execute(HTTPRequest $request)
+	public function execute(HTTPRequestCustom $request)
 	{
 		if (!NewsletterAuthorizationsService::default_authorizations()->moderation_subscribers())
 		{
@@ -46,10 +46,10 @@ class NewsletterEditSubscriberController extends ModuleController
 		$id = $request->get_getint('id', 0);
 		$this->init();
 		
-		$verificate_is_edit = PersistenceContext::get_querier()->count(NewsletterSetup::$newsletter_table_subscribers, "WHERE id = '". $id ."' AND user_id = 0") > 0 ? true : false;
+		$verificate_is_edit = PersistenceContext::get_querier()->count(NewsletterSetup::$newsletter_table_subscribers, "WHERE id = '". $id ."' AND user_id = -1") > 0 ? true : false;
 		if (!$this->subscriber_exist($id) || !$verificate_is_edit)
 		{
-			$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), LangLoader::get_message('error-subscriber-not-existed', 'newsletter_common', 'newsletter'));
+			$controller = new UserErrorController(LangLoader::get_message('error', 'errors-common'), LangLoader::get_message('error-subscriber-not-existed', 'newsletter_common', 'newsletter'));
 			DispatchManager::redirect($controller);
 		}
 
@@ -79,7 +79,7 @@ class NewsletterEditSubscriberController extends ModuleController
 		$form = new HTMLForm('subscriber');
 		
 		$columns = array('*');
-		$condition = "WHERE id = '". $id ."' AND user_id = 0";
+		$condition = "WHERE id = '". $id ."' AND user_id = -1";
 		$row = PersistenceContext::get_querier()->select_single_row(NewsletterSetup::$newsletter_table_subscribers, $columns, $condition);
 
 		$fieldset = new FormFieldsetHTML('edit-subscriber', $this->lang['subscriber.edit']);
@@ -90,10 +90,10 @@ class NewsletterEditSubscriberController extends ModuleController
 			array(new FormFieldConstraintMailAddress())
 		));
 
-		$form->add_button(new FormButtonReset());
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_button($this->submit_button);
-
+		$form->add_button(new FormButtonReset());
+		
 		$this->form = $form;
 	}
 
@@ -109,7 +109,10 @@ class NewsletterEditSubscriberController extends ModuleController
 
 	private function build_response(View $view)
 	{
-		$response = new SiteDisplayResponse($view);
+		$body_view = new FileTemplate('newsletter/NewsletterBody.tpl');
+		$body_view->add_lang($this->lang);
+		$body_view->put('TEMPLATE', $view);
+		$response = new SiteDisplayResponse($body_view);
 		$breadcrumb = $response->get_graphical_environment()->get_breadcrumb();
 		$breadcrumb->add($this->lang['newsletter'], NewsletterUrlBuilder::home()->absolute());
 		$breadcrumb->add($this->lang['subscriber.edit'], '');
@@ -122,5 +125,4 @@ class NewsletterEditSubscriberController extends ModuleController
 		return PersistenceContext::get_querier()->count(NewsletterSetup::$newsletter_table_subscribers, "WHERE id = '" . $id . "'") > 0 ? true : false;
 	}
 }
-
 ?>

@@ -3,8 +3,8 @@
  *                       SyndicationUrlBuilder.class.php
  *                            -------------------
  *   begin                : July 18, 2011
- *   copyright            : (C) 2011 Kévin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   copyright            : (C) 2011 Kevin MASSY
+ *   email                : kevin.massy@phpboost.com
  *
  ###################################################
  *
@@ -42,7 +42,7 @@ class SyndicationUrlBuilder
 	private static function build($id_module, $type = self::RSS_FEED, $id_category = null) 
 	{
 		return DispatchManager::get_url('/syndication', '/' . $type . '/'. $id_module . '/' . 
-			  ($id_category !== null && $id_category !== 0 ? $id_category :  ''));
+			  ($id_category !== null && $id_category !== 0 ? $id_category : ''));
 	}
 }
 ?>

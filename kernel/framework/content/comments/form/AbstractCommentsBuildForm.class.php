@@ -3,8 +3,8 @@
  *                              AbstractCommentsBuildForm.class.php
  *                            -------------------
  *   begin                : September 25, 2011
- *   copyright            : (C) 2011 Kévin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   copyright            : (C) 2011 Kevin MASSY
+ *   email                : kevin.massy@phpboost.com
  *
  *
  ###################################################
@@ -26,7 +26,7 @@
  ###################################################*/
 
  /**
- * @author Kévin MASSY <soldier.weasel@gmail.com>
+ * @author Kevin MASSY <kevin.massy@phpboost.com>
  * @package {@package}
  */
 abstract class AbstractCommentsBuildForm
@@ -62,16 +62,6 @@ abstract class AbstractCommentsBuildForm
 	protected function set_submit_button(FormButtonSubmit $submit_button)
 	{
 		$this->submit_button = $submit_button;
-	}
-	
-	protected function set_message_response($message_helper)
-	{
-		$this->message_response = $message_helper;
-	}
-	
-	public function get_message_response()
-	{
-		return $this->message_response;
 	}
 }
 ?>

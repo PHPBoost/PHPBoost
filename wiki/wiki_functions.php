@@ -33,7 +33,7 @@ define('WIKI_MENU_MAX_DEPTH', 5);
 function wiki_parse($var)
 {
 	//On force le langage de formatage à BBCode
-	$content_manager = new BBCodeFormattingFactory();
+	$content_manager = AppContext::get_content_formatting_service()->get_default_factory();
 	$parser = $content_manager->get_parser();
 	
 	if (MAGIC_QUOTES)
@@ -45,17 +45,17 @@ function wiki_parse($var)
     $parser->parse();
 	
     //Parse la balise link
-	return preg_replace('`\[link=([a-z0-9+#-]+)\](.+)\[/link\]`isU', '<a href="/wiki/$1">$2</a>', addslashes($parser->get_content()));
+	return preg_replace('`\[link=([a-z0-9+#-_]+)\](.+)\[/link\]`isU', '<a href="/wiki/$1">$2</a>', addslashes($parser->get_content()));
 }
 
 //Retour au BBCode en tenant compte de [link]
 function wiki_unparse($var)
 {
 	//Unparse de la balise link
-	$var = preg_replace('`<a href="(?:/wiki/)?([a-z0-9+#-]+)">(.*)</a>`sU', "[link=$1]$2[/link]", $var);
+	$var = preg_replace('`<a href="/wiki/([a-z0-9+#-_]+)">(.*)</a>`sU', "[link=$1]$2[/link]", $var);
 	
 	//On force le langage de formatage à BBCode
-	$content_manager = new BBCodeFormattingFactory();
+	$content_manager = AppContext::get_content_formatting_service()->get_default_factory();
 	$unparser = $content_manager->get_unparser();
     $unparser->set_content($var);
     $unparser->parse();
@@ -70,6 +70,11 @@ function wiki_no_rewrite($var)
 		return preg_replace('`<a href="/wiki/([a-z0-9+#-]+)">(.*)</a>`sU', '<a href="/wiki/wiki.php?title=$1">$2</a>', $var);
 	else
 		return $var;
+}
+
+function remove_chapter_number_in_rewrited_title($title)
+{
+	return Url::encode_rewrite(preg_replace('`((?:[0-9 ]+)|(?:[IVXCL ]+))[\.-](.*)`iU', '$2', $title));
 }
 
 //Fonction de décomposition récursive (passage par référence pour la variable content qui passe de chaîne à tableau de chaînes (5 niveaux maximum)
@@ -92,7 +97,7 @@ function wiki_explode_menu(&$content)
 			//If the line contains a title
 			if (preg_match('`^\s*[\-]{' . $level . '}[\s]+(.+)[\s]+[\-]{' . $level . '}(?:<br />)?\s*$`', $lines[$i], $matches))
 			{
-				$title_name = strip_tags(html_entity_decode($matches[1]));
+				$title_name = strip_tags(TextHelper::html_entity_decode($matches[1]));
 				
 				//We add it to the list
 				$list[] = array($level - 1, $title_name);
@@ -101,7 +106,7 @@ function wiki_explode_menu(&$content)
 				
 				//Réinsertion
 				$class_level = $level - 1;
-				$lines[$i] = '<h' . $class_level . ' class="wiki_paragraph' .  $class_level . '" id="paragraph_' . Url::encode_rewrite($title_name) . '">' . htmlspecialchars($title_name) .'</h' . $class_level . '><br />' . "\n";
+				$lines[$i] = '<h' . $class_level . ' class="wiki_paragraph' .  $class_level . '" id="paragraph_' . Url::encode_rewrite($title_name) . '">' . TextHelper::htmlspecialchars($title_name) .'</h' . $class_level . '><br />' . "\n";
 			}
 		}
 		$i++;
@@ -128,7 +133,7 @@ function wiki_display_menu($menu_list)
 		$current_level = $title[0];
 		
 		$title_name = stripslashes($title[1]);		
-		$title_link = '<a href="#paragraph_' . Url::encode_rewrite($title_name) . '">' . htmlspecialchars($title_name) . '</a>';
+		$title_link = '<a href="#paragraph_' . Url::encode_rewrite($title_name) . '">' . TextHelper::htmlspecialchars($title_name) . '</a>';
 		
 		if ($current_level > $last_level)
 		{
@@ -200,8 +205,7 @@ function show_cat_contents($id_cat, $cats, $id, $display_select_link)
 {
 	global $_WIKI_CATS, $Sql, $Template;
 	
-	$Template = new FileTemplate('wiki/index.tpl');
-	$module_data_path = $Template->get_pictures_data_path();
+	$module_data_path = PATH_TO_ROOT . '/wiki/templates/';
 	$line = '';
 	foreach ($_WIKI_CATS as $key => $value)
 	{

@@ -1,19 +1,22 @@
 /**
- * $Id: editor_plugin_src.js 520 2008-01-07 16:30:32Z spocke $
+ * editor_plugin_src.js
  *
- * @author Moxiecode
- * @copyright Copyright © 2004-2008, Moxiecode Systems AB, All rights reserved.
+ * Copyright 2009, Moxiecode Systems AB
+ * Released under LGPL License.
+ *
+ * License: http://tinymce.moxiecode.com/license
+ * Contributing: http://tinymce.moxiecode.com/contributing
  */
 
-(function() {
+(function(tinymce) {
 	tinymce.create('tinymce.plugins.EmotionsPlugin', {
 		init : function(ed, url) {
 			// Register commands
 			ed.addCommand('mceEmotion', function() {
 				ed.windowManager.open({
-					file : url + '/../../../../../framework/content/formatting/editor/smileys_tinymce.php',
-					width : 480 + parseInt(ed.getLang('emotions.delta_width', 0)),
-					height : 340 + parseInt(ed.getLang('emotions.delta_height', 0)),
+					file : url + '/../../../../../formatting/smileys_tinymce.php',
+					width : 250 + parseInt(ed.getLang('emotions.delta_width', 0)),
+					height : 160 + parseInt(ed.getLang('emotions.delta_height', 0)),
 					inline : 1
 				}, {
 					plugin_url : url
@@ -37,4 +40,4 @@
 
 	// Register plugin
 	tinymce.PluginManager.add('emotions', tinymce.plugins.EmotionsPlugin);
-})();
+})(tinymce);

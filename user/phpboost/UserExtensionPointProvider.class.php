@@ -3,8 +3,8 @@
  *                              UserExtensionPointProvider.class.php
  *                            -------------------
  *   begin                : October 09, 2011
- *   copyright            : (C) 2011 Kévin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   copyright            : (C) 2011 Kevin MASSY
+ *   email                : kevin.massy@phpboost.com
  *
  *
  ###################################################
@@ -40,6 +40,11 @@ class UserExtensionPointProvider extends ExtensionPointProvider
 	public function user()
 	{
 		return new UserUserExtensionPoint();
+	}
+	
+	public function url_mappings()
+	{
+		return new UrlMappings(array(new DispatcherUrlMapping('/user/index.php', '([\w/-_]*)$')));
 	}
 }
 ?>

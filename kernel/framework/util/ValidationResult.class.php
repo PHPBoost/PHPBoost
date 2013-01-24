@@ -78,5 +78,4 @@ class ValidationResult
 		return !empty($this->errors);
 	}
 }
-
 ?>

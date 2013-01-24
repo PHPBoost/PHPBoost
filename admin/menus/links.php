@@ -69,7 +69,7 @@ if ($action == 'save')
     	}
         
         $menu->set_auth(Authorizations::build_auth_array_from_form(
-            AUTH_MENUS, 'menu_element_' . $menu_element_id . '_auth')
+            Menu::MENU_AUTH_BIT, 'menu_element_' . $menu_element_id . '_auth')
         );
     	return $menu;
     }
@@ -124,7 +124,7 @@ if ($action == 'save')
     $menu->enabled(retrieve(POST, 'menu_element_' . $menu_uid . '_enabled', Menu::MENU_NOT_ENABLED));
     $menu->set_block(retrieve(POST, 'menu_element_' . $menu_uid . '_location', Menu::BLOCK_POSITION__NOT_ENABLED));
     $menu->set_auth(Authorizations::build_auth_array_from_form(
-        AUTH_MENUS, 'menu_element_' . $menu_uid . '_auth'
+        Menu::MENU_AUTH_BIT, 'menu_element_' . $menu_uid . '_auth'
     ));
     
     //Filters
@@ -188,10 +188,11 @@ $tpl->put_all(array(
     'L_CONTENT' => $LANG['content'],
     'L_AUTHORIZATIONS' => $LANG['authorizations'],
     'L_ADD' => $LANG['add'],
-    'J_AUTH_FORM' => TextHelper::to_js_string(Authorizations::generate_select(
-        AUTH_MENUS, array('r-1' => AUTH_MENUS, 'r0' => AUTH_MENUS, 'r1' =>AUTH_MENUS),
+    'J_AUTH_FORM' => str_replace(array('&quot;'), array('"'),
+		TextHelper::to_js_string(Authorizations::generate_select(
+        Menu::MENU_AUTH_BIT, array('r-1' => Menu::MENU_AUTH_BIT, 'r0' => Menu::MENU_AUTH_BIT, 'r1' => Menu::MENU_AUTH_BIT),
         array(), 'menu_element_##UID##_auth'
-     )),
+     ))),
     'JL_AUTHORIZATIONS' => TextHelper::to_js_string($LANG['authorizations']),
     'JL_PROPERTIES' => TextHelper::to_js_string($LANG['properties']),
     'JL_NAME' => TextHelper::to_js_string($LANG['name']),
@@ -248,7 +249,7 @@ else
 $tpl->put_all(array(
 	'IDMENU' => $menu_id,
 	'AUTH_MENUS' => Authorizations::generate_select(
-        AUTH_MENUS, $menu->get_auth(), array(), 'menu_element_' . $menu->get_uid() . '_auth'
+        Menu::MENU_AUTH_BIT, $menu->get_auth(), array(), 'menu_element_' . $menu->get_uid() . '_auth'
     ),
     'C_ENABLED' => !empty($menu_id) ? $menu->is_enabled() : true,
 	'MENU_ID' => $menu->get_id(),

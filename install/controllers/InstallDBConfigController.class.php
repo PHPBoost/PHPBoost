@@ -50,11 +50,11 @@ class InstallDBConfigController extends InstallController
 	private $overwrite_field;
 	private $error = null;
 
-	public function execute(HTTPRequest $request)
+	public function execute(HTTPRequestCustom $request)
 	{
 		parent::load_lang($request);
 		$this->build_form();
-		if ($this->submit_button->has_been_submitted() && $this->form->validate())
+		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$host = $this->form->get_value('host');
 			$port = $this->form->get_value('port');
@@ -96,7 +96,7 @@ class InstallDBConfigController extends InstallController
 		$schema->add_event('change', '$FFS(\'overwriteFieldset\').disable()');
 		$fieldset_schema->add_field($schema);
 		$tables_prefix = new FormFieldTextEditor('tablesPrefix', $this->lang['schema.tablePrefix'], 'phpboost_',
-		array('description' => $this->lang['schema.tablePrefix.explanation']));
+		array('description' => $this->lang['schema.tablePrefix.explanation'], 'required' => true));
 		$fieldset_schema->add_field($tables_prefix);
 
 		$this->overwrite_fieldset = new FormFieldsetHTML('overwriteFieldset', $this->lang['phpboost.alreadyInstalled']);

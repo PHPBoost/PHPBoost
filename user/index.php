@@ -3,8 +3,8 @@
  *                           index.php
  *                            -------------------
  *   begin                : October 07, 2011
- *   copyright            : (C) 2011 Kévin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   copyright            : (C) 2011 Kevin MASSY
+ *   email                : kevin.massy@phpboost.com
  *
  *
  ###################################################
@@ -30,7 +30,7 @@ define('PATH_TO_ROOT', '..');
 require_once PATH_TO_ROOT . '/kernel/init.php';
 
 $url_controller_mappers = array(
-	new UrlControllerMapper('LoginController', '`^.login/?$`'),
+	new UrlControllerMapper('UserLoginController', '`^/connect(?:/([a-z_]+))?/?([A-Za-z0-9]+)?$`', array('error_type', 'error_value')),
 	new UrlControllerMapper('UserExploreGroupsController', '`^/groups(?:/([0-9]+))?/?$`', array('id')),
 	new UrlControllerMapper('UserRegistrationController', '`^/registration/?$`'),
 	new UrlControllerMapper('UserConfirmRegistrationController', '`^/registration/confirm(?:/([a-z0-9]+))?/?$`', array('key')),
@@ -38,14 +38,16 @@ $url_controller_mappers = array(
 	new UrlControllerMapper('UserViewProfileController', '`^/profile(?:/([0-9]+))?/?$`', array('user_id')),
 	new UrlControllerMapper('UserEditProfileController', '`^/profile(?:/([0-9]+))/edit/?$`', array('user_id')),
 	new UrlControllerMapper('UserMessagesController', '`^/messages(?:/([0-9]+))?/?$`', array('user_id')),
-	new UrlControllerMapper('UserMaintainController', '`^/maintain/?$`'),
+	new UrlControllerMapper('UserCommentsController', '`^/messages(?:/([0-9]+))?/?comments?/?([A-Za-z]+)?/?([0-9]+)?/?$`', array('user_id', 'module_id', 'page')),
+	new UrlControllerMapper('UserMaintainController', '`^/maintain(?:/([a-z_]+))?/?([A-Za-z0-9]+)?$`', array('error_type', 'error_value')),
 	new UrlControllerMapper('UserLostPasswordController', '`^/password/lost/?$`'),
 	new UrlControllerMapper('UserChangeLostPasswordController', '`^/password/change(?:/([a-z0-9]+))?/?$`', array('key')),
+	new UrlControllerMapper('UserError403Controller', '`^/error/403/?$`'),
 	new UrlControllerMapper('UserError404Controller', '`^/error/404/?$`'),
+	new UrlControllerMapper('UserErrorCSRFController', '`^/error/csrf/?$`'),
 	new UrlControllerMapper('UserContributionSuccessController', '`^/contribution/success/?$`'),
 	new UrlControllerMapper('UserUsersListController', '`^(?:/([a-z]+))?/?([a-z]+)?/?([0-9]+)?/?$`', array('field', 'sort', 'page')),
 );
 
 DispatchManager::dispatch($url_controller_mappers);
-
 ?>

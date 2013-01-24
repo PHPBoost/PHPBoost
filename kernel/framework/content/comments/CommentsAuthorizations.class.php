@@ -3,8 +3,8 @@
  *                              CommentsAuthorizations.class.php
  *                            -------------------
  *   begin                : April 1, 2010
- *   copyright            : (C) 2010 Kévin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   copyright            : (C) 2010 Kevin MASSY
+ *   email                : kevin.massy@phpboost.com
  *
  *
  ###################################################
@@ -26,22 +26,17 @@
  ###################################################*/
 
  /**
- * @author Kévin MASSY <soldier.weasel@gmail.com>
+ * @author Kevin MASSY <kevin.massy@phpboost.com>
+ * @desc This class could be used to specified comments authorizations (access, read, post, moderation)
  * @package {@package}
  */
 class CommentsAuthorizations
 {
 	private $authorized_access_module = true;
 	
-	private $authorized_read = null;
-	private $authorized_post = null;
-	private $authorized_moderation = null;
-	private $authorized_note = null;
-	
 	const READ_AUTHORIZATIONS = 1;
 	const POST_AUTHORIZATIONS = 2;
-	const MODERATION_AUTHORIZATIONS = 4;
-	const NOTE_AUTHORIZATIONS = 8;
+	const MODERATE_AUTHORIZATIONS = 4;
 
 	public function is_authorized_access_module()
 	{
@@ -60,12 +55,7 @@ class CommentsAuthorizations
 	
 	public function is_authorized_moderation()
 	{
-		return $this->check_authorizations(self::MODERATION_AUTHORIZATIONS);
-	}
-	
-	public function is_authorized_note()
-	{
-		return $this->check_authorizations(self::NOTE_AUTHORIZATIONS);
+		return $this->check_authorizations(self::MODERATE_AUTHORIZATIONS);
 	}
 	
 	/**
@@ -76,68 +66,9 @@ class CommentsAuthorizations
 		$this->authorized_access_module = $authorized;
 	}
 	
-	/**
-	 * @param boolean $authorized
-	 */
-	public function set_authorized_read($authorized)
-	{
-		$this->authorized_read = $authorized;
-	}
-	
-	/**
-	 * @param boolean $authorized
-	 */
-	public function set_authorized_post($authorized)
-	{
-		$this->authorized_post = $authorized;
-	}
-	
-	/**
-	 * @param boolean $authorized
-	 */
-	public function set_authorized_moderation($authorized)
-	{
-		$this->authorized_moderation = $authorized;
-	}
-	
-	/**
-	 * @param boolean $authorized
-	 */
-	public function set_authorized_note($authorized)
-	{
-		$this->authorized_note = $authorized;
-	}
-	
 	private function check_authorizations($global_bit)
 	{
-		$manual_authorizations = $this->manual_authorizations($global_bit);
-		if ($manual_authorizations !== null)
-		{
-			return $manual_authorizations;
-		}
-		else
-		{
-			return AppContext::get_current_user()->check_auth(CommentsConfig::load()->get_authorizations(), $global_bit);
-		}
-	}
-	
-	private function manual_authorizations($type)
-	{
-		switch ($type) 
-		{
-			case self::READ_AUTHORIZATIONS:
-				return $this->authorized_read;
-			break;
-			case self::POST_AUTHORIZATIONS:
-				return $this->authorized_post;
-			break;
-			case self::MODERATION_AUTHORIZATIONS:
-				return $this->authorized_post;
-			break;
-			case self::NOTE_AUTHORIZATIONS:
-				return $this->authorized_note;
-			break;
-		}
+		return AppContext::get_current_user()->check_auth(CommentsConfig::load()->get_authorizations(), $global_bit);
 	}
 }
 ?>

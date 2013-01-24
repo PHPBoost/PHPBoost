@@ -73,5 +73,4 @@ interface MailService
 	 */
 	function get_mail_checking_raw_regex();
 }
-
 ?>

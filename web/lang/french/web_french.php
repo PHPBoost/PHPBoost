@@ -48,11 +48,12 @@ $LANG['title_web'] = 'Liens Web';
 $LANG['link'] = 'Lien';
 $LANG['propose_link'] = 'Proposer un lien';
 $LANG['none_link'] = 'Aucun lien dans cette catégorie';
-$LANG['how_link'] = 'Lien(s) dans la base de données!';
+$LANG['how_link'] = 'Lien(s) dans la base de données !';
 $LANG['no_note'] = 'Aucune note';
 $LANG['actual_note'] = 'Note actuelle';
 $LANG['vote'] = 'Voter';
-$LANG['delete_link'] = 'Supprimer le lien?';
+$LANG['delete_link'] = 'Supprimer le lien ?';
+$LANG['visit_link'] = 'Visiter';
 
 //Ajout lien web.
 $MAIL['new_link_website'] = 'Nouveau lien sur votre site web';

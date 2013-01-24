@@ -295,5 +295,4 @@ class Upload
 	public function get_filename() { return $this->filename; }
 	public function get_size() { return $this->size; }
 }
-
 ?>

@@ -3,8 +3,8 @@
  *                                countries.php
  *                            -------------------
  *   begin                : September 27, 2011
- *   copyright            : (C) 2011 Kévin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   copyright            : (C) 2011 Kevin MASSY
+ *   email                : kevin.massy@phpboost.com
  *
  *  
  ###################################################
@@ -47,7 +47,10 @@ class Countries
 	
 	public static function __static()
 	{
-		self::build_contries();
+		if (empty(self::$countries))
+		{
+			self::build_contries();
+		}
 	}
 	
 	public static function get_contries()
@@ -71,7 +74,7 @@ class Countries
 	
 	private static function build_contries()
 	{
-		$lang = LangLoader::get('counstries');
+		$lang = LangLoader::get('countries');
 		foreach (self::$countries_identifier as $country_identifier)
 		{
 			self::$countries[$country_identifier] = array(

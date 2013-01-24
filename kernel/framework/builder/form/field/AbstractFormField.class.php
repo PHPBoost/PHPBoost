@@ -70,7 +70,8 @@ abstract class AbstractFormField implements FormField
 	/**
 	 * @var string
 	 */
-	protected $css_class = '';/**
+	protected $css_class = '';
+	/**
 	 * @var string
 	 */
 	protected $css_field_class = '';
@@ -136,9 +137,7 @@ abstract class AbstractFormField implements FormField
 	 */
 	public function get_id()
 	{
-		$id = strtolower($this->id);
-		$id = Url::encode_rewrite($id);
-		return str_replace('-', '_', $id);
+		return $this->id;
 	}
 
 	/**
@@ -249,7 +248,7 @@ abstract class AbstractFormField implements FormField
 				$validation_error_message = $constraint->get_validation_error_message();
 				if (!empty($validation_error_message))
 				{
-					$this->validation_error_message = $validation_error_message;
+					$this->validation_error_message = $this->get_label() . ' : ' . $validation_error_message;
 				}
 				return false;
 			}
@@ -284,10 +283,7 @@ abstract class AbstractFormField implements FormField
 	 */
 	public function get_html_id()
 	{
-		$html_id = $this->form_id . '_' . $this->get_id();
-		$html_id = strtolower($html_id);
-		$html_id = Url::encode_rewrite($html_id);
-		return str_replace('-', '_', $html_id);
+		return $this->form_id . '_' . $this->get_id();
 	}
 
 	/**

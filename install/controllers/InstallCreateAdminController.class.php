@@ -41,11 +41,11 @@ class InstallCreateAdminController extends InstallController
 	 */
 	private $submit_button;
 
-	public function execute(HTTPRequest $request)
+	public function execute(HTTPRequestCustom $request)
 	{
 		parent::load_lang($request);
 		$this->build_form();
-		if ($this->submit_button->has_been_submitted() && $this->form->validate())
+		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
             $installation_services = new InstallationServices();
 			$installation_services->create_admin(

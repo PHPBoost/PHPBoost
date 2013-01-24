@@ -3,8 +3,8 @@
  *                        AbstractNewsletterMail.class.php
  *                            -------------------
  *   begin                : February 1, 2011
- *   copyright            : (C) 2011 Kévin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   copyright            : (C) 2011 Kevin MASSY
+ *   email                : kevin.massy@phpboost.com
  *
  *  
  ###################################################
@@ -26,7 +26,7 @@
  ###################################################*/
 
 /**
- * @author Kévin MASSY <soldier.weasel@gmail.com>
+ * @author Kevin MASSY <kevin.massy@phpboost.com>
  */
 abstract class AbstractNewsletterMail implements NewsletterMailType
 {
@@ -62,8 +62,7 @@ abstract class AbstractNewsletterMail implements NewsletterMailType
 	 */
 	public function add_unsubscribe_link()
 	{
-		return '<br /><br /><a href="' . NewsletterUrlBuilder::unsubscribe()->relative() . '">' . $this->lang['unsubscribe_newsletter'] . '</a><br /><br />';
+		return '<br /><br /><a href="' . NewsletterUrlBuilder::unsubscribe()->absolute() . '">' . $this->lang['unsubscribe_newsletter'] . '</a><br /><br />';
 	}
 }
-
 ?>

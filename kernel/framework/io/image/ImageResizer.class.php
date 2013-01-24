@@ -3,8 +3,8 @@
  *		                   ImageResizer.class.php
  *                            -------------------
  *   begin                : July 11, 2010
- *   copyright            : (C) 2010 Kévin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   copyright            : (C) 2010 Kevin MASSY
+ *   email                : kevin.massy@phpboost.com
  *
  *
  ###################################################
@@ -24,14 +24,15 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
  ###################################################*/
- /*
- * @author Kévin MASSY <soldier.weasel@gmail.com>
+
+ /**
+ * @author Kevin MASSY <kevin.massy@phpboost.com>
  * @desc This class allows you to resize images easily.
  * @package {@package}
  */
 class ImageResizer
 {
-	/*
+	/**
 	 * @throws GDNotAvailableException if the GD extension is not loaded
 	 */
 	public function resize(Image $image, $width, $height, $directory = '')
@@ -99,10 +100,8 @@ class ImageResizer
 			case 'image/gif':
 					return imagecreatefromgif($Image->get_path());
 				break;
-			case 'image/bmp':
-					return imagecreatefrombmp($Image->get_path());
-				break;
-			// TODO Erreur mime non prise en compte
+			default:
+				throw new MimeTypeNotSupportedException($Image->get_mime_type());
 		}
 	}
 	
@@ -123,7 +122,7 @@ class ImageResizer
 		$explode = explode('/', $directory);
 		$name_and_extension = array_pop($explode);
 		$explode = explode('.', $name_and_extension);
-		return array_pop($explode);
+		return strtolower(array_pop($explode));
 	}
 	
 	private function create_image(Image $image, $create_picture, $directory)
@@ -143,14 +142,12 @@ class ImageResizer
 			case 'gif':
 				return imagegif($create_picture, $directory);
 					break;
-			case 'bmp':
-				return imagebmp($create_picture, $directory);
-					break;
-			// TODO extension non prise en compte
+			default:
+				throw new MimeTypeNotSupportedException($image->get_mime_type());
 		}
 	}
 	
-	/*
+	/**
 	 * @throws GDNotAvailableException if the GD extension is not loaded
 	 */
 	private function assert_gd_extension_is_loaded()

@@ -3,8 +3,8 @@
  *                         NewsletterUnSubscribeController.class.php
  *                            -------------------
  *   begin                : March 13, 2011
- *   copyright            : (C) 2011 Kévin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   copyright            : (C) 2011 Kevin MASSY
+ *   email                : kevin.massy@phpboost.com
  *
  *
  ###################################################
@@ -31,7 +31,7 @@ class NewsletterUnSubscribeController extends ModuleController
 	private $view;
 	private $form;
 	
-	public function execute(HTTPRequest $request)
+	public function execute(HTTPRequestCustom $request)
 	{
 		$this->init();
 		$this->build_form();
@@ -87,18 +87,21 @@ class NewsletterUnSubscribeController extends ModuleController
 		)));
 
 		$newsletter_subscribe = AppContext::get_current_user()->check_level(User::MEMBER_LEVEL) ? NewsletterService::get_id_streams_member(AppContext::get_current_user()->get_attribute('user_id')) : array();
-		$fieldset->add_field(new FormFieldMultipleSelectChoice('newsletter_choice', $this->lang['subscribe.newsletter_choice'], $newsletter_subscribe, $this->get_streams()));
+		$fieldset->add_field(new FormFieldMultipleSelectChoice('choice', $this->lang['unsubscribe.newsletter_choice'], $newsletter_subscribe, $this->get_streams()));
 		
-		$form->add_button(new FormButtonReset());
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_button($this->submit_button);
-
+		$form->add_button(new FormButtonReset());
+		
 		$this->form = $form;
 	}
 	
 	private function build_response(View $view)
 	{
-		$response = new SiteDisplayResponse($view);
+		$body_view = new FileTemplate('newsletter/NewsletterBody.tpl');
+		$body_view->add_lang($this->lang);
+		$body_view->put('TEMPLATE', $view);
+		$response = new SiteDisplayResponse($body_view);
 		$breadcrumb = $response->get_graphical_environment()->get_breadcrumb();
 		$breadcrumb->add($this->lang['newsletter'], NewsletterUrlBuilder::home()->absolute());
 		$breadcrumb->add($this->lang['unsubscribe.newsletter'], NewsletterUrlBuilder::unsubscribe()->absolute());
@@ -138,17 +141,18 @@ class NewsletterUnSubscribeController extends ModuleController
 		}
 		else
 		{
-			$streams = $this->form->get_value('newsletter_choice');
-			if (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL) &&  $streams !== '')
+			$streams = $this->form->get_value('choice');
+			if (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL) && $streams !== '')
 			{
-				NewsletterService::update_subscribtions_member_registered($streams, AppContext::get_current_user()->get_attribute('user_id'));
+				NewsletterService::update_subscriptions_member_registered($streams, AppContext::get_current_user()->get_attribute('user_id'));
 			}
 			else
 			{
-				NewsletterService::update_subscribtions_visitor($streams, $this->form->get_value('mail'));
+				NewsletterService::update_subscriptions_visitor($streams, $this->form->get_value('mail'));
 			}
 		}
+		
+		NewsletterStreamsCache::invalidate();
 	}
 }
-
 ?>

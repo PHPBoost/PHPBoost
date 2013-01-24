@@ -49,11 +49,11 @@ class InstallServerConfigController extends InstallController
 		$this->server_conf = new ServerConfiguration();
 	}
 
-	public function execute(HTTPRequest $request)
+	public function execute(HTTPRequestCustom $request)
 	{
 		parent::load_lang($request);
 		$this->build_form();
-		if ($this->submit->has_been_submitted())
+		if ($this->submit->has_been_submited())
 		{
 			$this->handle_form();
 		}
@@ -63,7 +63,7 @@ class InstallServerConfigController extends InstallController
 
 	private function build_form()
 	{
-		$this->form = new HTMLForm('continueForm', '#error');
+		$this->form = new HTMLForm('continueForm');
 		$action_fieldset = new FormFieldsetSubmit('actions');
 		$back = new FormButtonLink($this->lang['step.previous'], InstallUrlBuilder::license(), 'templates/images/left.png');
 		$action_fieldset->add_element($back);

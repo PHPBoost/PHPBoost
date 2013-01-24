@@ -88,5 +88,4 @@ class RSS extends Feed
         return false;
     }
 }
-
 ?>

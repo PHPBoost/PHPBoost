@@ -77,7 +77,7 @@ abstract class ContentFormattingUnparser extends AbstractParser
 				}
 
 				//On protège le code HTML à l'affichage qui vient non protégé de la base de données
-				$this->array_tags['html_unparse'] = array_map(create_function('$var', 'return htmlspecialchars($var, ENT_NOQUOTES);'), $this->array_tags['html_unparse']);
+				$this->array_tags['html_unparse'] = array_map(create_function('$var', 'return TextHelper::htmlspecialchars($var, ENT_NOQUOTES);'), $this->array_tags['html_unparse']);
 			}
 			return true;
 		}

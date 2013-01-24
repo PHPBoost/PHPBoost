@@ -55,6 +55,7 @@ class MySQLDBConnection implements DBConnection
 		{
 			$this->link = $mysql_link;
 			$this->select_database($db_connection_data['database']);
+			mysql_query("SET NAMES 'latin1'");
 		}
 		else
 		{
@@ -114,5 +115,4 @@ class MySQLDBConnection implements DBConnection
 		}
 	}
 }
-
 ?>

@@ -56,5 +56,4 @@ class SMTPMailService extends AbstractPHPMailerMailService
 		$mailer->Password = $this->configuration->get_password();
 	}
 }
-
 ?>

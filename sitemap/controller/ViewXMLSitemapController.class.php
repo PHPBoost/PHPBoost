@@ -27,7 +27,7 @@
 
 class ViewXMLSitemapController extends ModuleController
 {
-	public function execute(HTTPRequest $request)
+	public function execute(HTTPRequestCustom $request)
 	{
 		$sitemap = SitemapService::get_public_sitemap();
 		AppContext::get_response()->set_header('content-type', 'text/xml');

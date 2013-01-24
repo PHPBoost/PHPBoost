@@ -42,7 +42,7 @@ abstract class AbstractAdminFormPageController extends AdminController
 		$this->success_message = $success_message;
 	}
 
-	public function execute(HTTPRequest $request)
+	public function execute(HTTPRequestCustom $request)
 	{
 		$template = new StringTemplate('# IF C_SUCCESS # <div class="success" id="success_message">{SUCCESS_MESSAGE}</div> # ENDIF #
 		<script type="text/javascript"><!--
@@ -50,7 +50,7 @@ abstract class AbstractAdminFormPageController extends AdminController
 		--></script>
 		# INCLUDE form #');
 		$this->create_form();
-		if ($this->has_been_submitted())
+		if ($this->has_been_submited())
 		{
 			$this->handle_submit();
 			$template->put_all(array(
@@ -64,9 +64,9 @@ abstract class AbstractAdminFormPageController extends AdminController
 
 	protected abstract function create_form();
 
-	private function has_been_submitted()
+	private function has_been_submited()
 	{
-		return $this->submit_button->has_been_submitted() && $this->form->validate();
+		return $this->submit_button->has_been_submited() && $this->form->validate();
 	}
 
 	protected abstract function handle_submit();

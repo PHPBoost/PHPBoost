@@ -2,8 +2,8 @@
  *                              notation.js
  *                            -------------------
  *   begin                : February 15, 2010
- *   copyright            : (C) 2010 Kévin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   copyright            : (C) 2010 Kevin MASSY
+ *   email                : kevin.massy@phpboost.com
  *
  *
  ###################################################
@@ -29,13 +29,15 @@
 	timeout : null,
 	notation_scale : 0,
 	default_note : 0,
+	number_votes : 0,
 	already_post : 1,
 	user_connected : 0,
 	current_url : '',
 	lang : new Array(),
-	initialize : function(id, notation_scale) {
+	initialize : function(id, notation_scale, number_votes) {
 		this.id = id;
 		this.notation_scale = notation_scale;
+		this.number_votes = number_votes;
 	},
 	get_id : function() {
 		return this.id;
@@ -65,7 +67,7 @@
 		return this.lang[name];
 	},
 	send_request : function(note) {
-		var id = Note.get_id();
+		var id = this.id;
 		var user_connected = this.user_connected;
 		var already_post = this.already_post;
 		var auth_error = this.get_lang('auth_error');
@@ -73,6 +75,8 @@
 		
 		$('noteloading' + id).update('<img src="' + PATH_TO_ROOT + '/templates/' + THEME + '/images/loading_mini.gif" alt="" class="valign_middle" />');
 
+		object = this;
+		
 		new Ajax.Request(
 		this.get_current_url(),
 		{
@@ -87,9 +91,10 @@
 					alert(already_vote);
 				}
 				else {
-					Note.set_default_note(note);
-					Note.set_already_post(1);
-					Note.change_picture_status(note);
+					object.set_default_note(note);
+					object.set_already_post(1);
+					object.change_picture_status(note);
+					object.change_nbr_note();
 				}
 			}
 		});
@@ -99,8 +104,12 @@
 		this.timeout = null;
 	},
 	out_event : function () {
-		if(this.timeout == null)
-			this.timeout = setTimeout('Note.change_picture_status(' + this.get_default_note() + ');', '50');
+		if(this.timeout == null) {
+			object = this;
+			this.timeout = window.setTimeout(function() {
+				object.change_picture_status(object.get_default_note()); 
+			}, 50);
+		}
 	},
 	change_picture_status : function (note) {
 		var picture_star;
@@ -125,6 +134,16 @@
 			if($(name_picture_id)) {
 				$(name_picture_id).src = PATH_TO_ROOT + '/templates/' + THEME + '/images/' + picture_star;
 			}
+		}
+	},
+	change_nbr_note : function () {
+		var nbr_note = this.number_votes + 1;
+		if (nbr_note > 1) {
+			console.log(nbr_note);
+			$('note_value' + this.id).innerHTML = nbr_note + ' ' + this.get_lang('notes');
+		}
+		else {
+			$('note_value' + this.id).innerHTML = nbr_note + ' ' + this.get_lang('note');
 		}
 	}
 });

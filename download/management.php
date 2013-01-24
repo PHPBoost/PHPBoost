@@ -47,8 +47,8 @@ if ($delete_file || ($submit && ($add_file || $edit_file_id > 0)))
 //Form variables
 $file_title = retrieve(POST, 'title', '');
 $file_image = retrieve(POST, 'image', '');
-$file_contents = retrieve(POST, 'contents', '', TSTRING_AS_RECEIVED);
-$file_short_contents = retrieve(POST, 'short_contents', '', TSTRING_AS_RECEIVED);
+$file_contents = retrieve(POST, 'contents', '', TSTRING_PARSE);
+$file_short_contents = retrieve(POST, 'short_contents', '', TSTRING_PARSE);
 $file_url = retrieve(POST, 'url', '');
 $file_timestamp = retrieve(POST, 'timestamp', 0);
 $file_size = retrieve(POST, 'size', 0.0, TUNSIGNED_FLOAT);
@@ -82,24 +82,17 @@ if ($delete_file > 0)
 	if ($download_categories->check_auth($file_infos['idcat']))
 	{
 		$Sql->query_inject("DELETE FROM " . PREFIX . "download WHERE id = '" . $delete_file . "'", __LINE__, __FILE__);
-		//Deleting comments if the file has
-		if ($file_infos['nbr_com'] > 0)
-		{
-			
-			$Comments = new CommentsTopic('download', $delete_file, url('download.php?id=' . $delete_file . '&amp;com=%s', 'download-' . $delete_file . '.php?com=%s'));
-			$Comments->delete_all($delete_file);
-		}
 		
-		$notation = new Notation();
-		$notation->set_module_name('download');
-		$notation->set_id_in_module($delete_file);
-		NotationService::delete_notes_id_in_module($notation);
+		CommentsService::delete_comments_topic_module('download', $delete_file);
+
+		NotationService::delete_notes_id_in_module('download', $delete_file);
 	
-		AppContext::get_response()->redirect(HOST. DIR . '/download/' . ($file_infos['idcat'] > 0 ? url('download.php?cat=' . $file_infos['idcat'], 'category-' . $file_infos['idcat'] . '+' . Url::encode_rewrite($DOWNLOAD_CATS[$file_infos['idcat']]['name']) . '.php') : url('download.php')));
-        
-        // Feeds Regeneration
-        
+		// Feeds Regeneration
         Feed::clear_cache('download');
+        
+        $download_categories->recount_sub_files();
+        
+		AppContext::get_response()->redirect(HOST. DIR . '/download/' . ($file_infos['idcat'] > 0 ? url('download.php?cat=' . $file_infos['idcat'], 'category-' . $file_infos['idcat'] . '+' . Url::encode_rewrite($DOWNLOAD_CATS[$file_infos['idcat']]['name']) . '.php') : url('download.php')));
 	}
 	else
 	{
@@ -138,7 +131,7 @@ elseif ($edit_file_id > 0)
 	
 	if (!$auth_write)
 	{
-		$error_controller = PHPBoostErrors::unexisting_page();
+		$error_controller = PHPBoostErrors::user_not_authorized();
 		DispatchManager::redirect($error_controller);
 	}
 }
@@ -149,7 +142,7 @@ else
 	
 	if (!($auth_write = $User->check_auth($CONFIG_DOWNLOAD['global_auth'], DOWNLOAD_WRITE_CAT_AUTH_BIT)) && !($auth_contribute = $User->check_auth($CONFIG_DOWNLOAD['global_auth'], DOWNLOAD_CONTRIBUTION_CAT_AUTH_BIT)))
 	{
-		$error_controller = PHPBoostErrors::unexisting_page();
+		$error_controller = PHPBoostErrors::user_not_authorized();
 		DispatchManager::redirect($error_controller);
 	}
 }
@@ -217,7 +210,7 @@ $Template->put_all(array(
     'L_DOWNLOAD_METHOD_EXPLAIN' => $DOWNLOAD_LANG['download_method_explain'],
     'L_FORCE_DOWNLOAD' => $DOWNLOAD_LANG['force_download'],
     'L_REDIRECTION' => $DOWNLOAD_LANG['redirection_up_to_file'],
-	'L_FILE_ADD' =>	LangLoader::get_message('bb_upload', 'bbcode-common')
+	'L_FILE_ADD' =>	LangLoader::get_message('bb_upload', 'editor-common')
 ));
 
 if ($edit_file_id > 0)
@@ -258,7 +251,7 @@ if ($edit_file_id > 0)
 			$file_relative_url = new Url($file_url);
 			
 			$Sql->query_inject("UPDATE " . PREFIX . "download SET title = '" . $file_title . "', idcat = '" . $file_cat_id . "', url = '" . $file_relative_url->relative() . "', " .
-				"size = '" . $file_size . "', count = '" . $file_hits . "', force_download = '" . ($file_download_method == 'force_download' ? DOWNLOAD_FORCE_DL : DOWNLOAD_REDIRECT) . "', contents = '" . FormatingHelper::strparse($file_contents) . "', short_contents = '" . FormatingHelper::strparse($file_short_contents) . "', " .
+				"size = '" . $file_size . "', count = '" . $file_hits . "', force_download = '" . ($file_download_method == 'force_download' ? DOWNLOAD_FORCE_DL : DOWNLOAD_REDIRECT) . "', contents = '" . $file_contents . "', short_contents = '" . $file_short_contents . "', " .
 				"image = '" . $file_image . "', timestamp = '" . $file_creation_date->get_timestamp() . "', release_timestamp = '" . ($ignore_release_date ? 0 : $file_release_date->get_timestamp()) . "', " .
 				"start = '" . $start_timestamp . "', end = '" . $end_timestamp . "', visible = '" . $visible . "', approved = " . (int)$file_approved . " " .
 				"WHERE id = '" . $edit_file_id . "'", __LINE__, __FILE__);
@@ -291,7 +284,7 @@ if ($edit_file_id > 0)
             //If we cannot see the file, we redirect in its category
             if (!$visible || !$file_approved)
             {
-            	if ($$file_cat_id > 0)
+            	if ($file_cat_id > 0)
 					AppContext::get_response()->redirect('/download/' . url('download.php?cat=' . $file_cat_id, 'category-' . $file_cat_id . '+' . Url::encode_rewrite($DOWNLOAD_CATS[$file_cat_id]['name']) . '.php'));
 				else
 					AppContext::get_response()->redirect('/download/' . url('download.php'));
@@ -337,7 +330,7 @@ if ($edit_file_id > 0)
 			'C_IMG' => !empty($file_image),
 			'C_EDIT_AUTH' => false,
 			'NAME' => stripslashes($file_title),
-			'CONTENTS' => FormatingHelper::second_parse(stripslashes(FormatingHelper::strparse($file_contents))),
+			'CONTENTS' => FormatingHelper::second_parse(stripslashes($file_contents)),
 			'CREATION_DATE' => $file_creation_date->format(DATE_FORMAT_SHORT) ,
 			'RELEASE_DATE' => $file_release_date->get_timestamp() > 0 ? $file_release_date->format(DATE_FORMAT_SHORT) : $DOWNLOAD_LANG['unknown_date'],
 			'SIZE' => $size_tpl,
@@ -345,7 +338,7 @@ if ($edit_file_id > 0)
 			'THEME' => get_utheme(),
 			'HITS' => sprintf($DOWNLOAD_LANG['n_times'], (int)$file_hits),
 			'NUM_NOTES' => sprintf($DOWNLOAD_LANG['num_notes'], 0),
-			'U_IMG' => $file_image,
+			'U_IMG' => Url::to_absolute($file_image),
 			'IMAGE_ALT' => str_replace('"', '\"', $file_title),
 			'LANG' => get_ulang(),
 		    'FORCE_DOWNLOAD_SELECTED' => $file_download_method == 'force_download' ? ' selected="selected"' : '',
@@ -360,6 +353,7 @@ if ($edit_file_id > 0)
 			'L_RELEASE_DATE' => $DOWNLOAD_LANG['release_date'],
 			'L_DOWNLOADED' => $DOWNLOAD_LANG['downloaded'],
 			'L_NOTE' => $LANG['note'],
+			'L_DEADLINK' => $DOWNLOAD_LANG['deadlink'],
 			'U_DOWNLOAD_FILE' => url('count.php?id=' . $edit_file_id, 'file-' . $edit_file_id . '+' . Url::encode_rewrite($file_title) . '.php')
 		));
 
@@ -367,14 +361,14 @@ if ($edit_file_id > 0)
 			'C_CONTRIBUTION' => false,
 			'TITLE' => stripslashes($file_title),
 			'COUNT' => $file_hits,
-			'DESCRIPTION' => htmlspecialchars(stripslashes($file_contents)),
-			'SHORT_DESCRIPTION' => htmlspecialchars(stripslashes($file_short_contents)),
+			'DESCRIPTION' => stripslashes(retrieve(POST, 'contents', '')),
+			'SHORT_DESCRIPTION' => stripslashes(retrieve(POST, 'short_contents', '')),
 			'FILE_IMAGE' => $file_image,
 			'URL' => $file_url,
 			'SIZE_FORM' => $file_size,
 			'DATE' => $file_creation_date->format(DATE_FORMAT_SHORT, TIMEZONE_AUTO),
 			'CATEGORIES_TREE' => $download_categories->build_select_form($file_cat_id, 'idcat', 'idcat', 0, DOWNLOAD_WRITE_CAT_AUTH_BIT, $CONFIG_DOWNLOAD['global_auth'], IGNORE_AND_CONTINUE_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH),
-			'SHORT_DESCRIPTION_PREVIEW' => FormatingHelper::second_parse(stripslashes(FormatingHelper::strparse($file_short_contents))),
+			'SHORT_DESCRIPTION_PREVIEW' => FormatingHelper::second_parse(stripslashes($file_short_contents)),
 			'VISIBLE_WAITING' => $file_visibility == 2 ? ' checked="checked"' : '',
 			'VISIBLE_ENABLED' => $file_visibility == 1 ? ' checked="checked"' : '',
 			'VISIBLE_HIDDEN' => $file_visibility == 0 ? ' checked="checked"' : '',
@@ -486,8 +480,8 @@ else
             
             $file_relative_url = new Url($file_url);
 			
-			$Sql->query_inject("INSERT INTO " . PREFIX . "download (title, idcat, url, size, count, force_download, contents, short_contents, image, timestamp, release_timestamp, start, end, visible, approved) " .
-				"VALUES ('" . $file_title . "', '" . $file_cat_id . "', '" . $file_relative_url->relative() . "', '" . $file_size . "', '" . $file_hits . "', '" . ($file_download_method == 'force_download' ? DOWNLOAD_FORCE_DL : DOWNLOAD_REDIRECT) . "', '" . FormatingHelper::strparse($file_contents) . "', '" . FormatingHelper::strparse($file_short_contents) . "', '" . $file_image . "', '" . $file_creation_date->get_timestamp() . "', '" . ($ignore_release_date ? 0 : $file_release_date->get_timestamp()) . "', '" . $start_timestamp . "', '" . $end_timestamp . "', '" . $visible . "', '" . (int)$auth_write . "')", __LINE__, __FILE__);
+			$Sql->query_inject("INSERT INTO " . PREFIX . "download (title, idcat, url, size, count, force_download, contents, short_contents, image, timestamp, release_timestamp, start, end, visible, approved, user_id) " .
+				"VALUES ('" . $file_title . "', '" . $file_cat_id . "', '" . $file_relative_url->relative() . "', '" . $file_size . "', '" . $file_hits . "', '" . ($file_download_method == 'force_download' ? DOWNLOAD_FORCE_DL : DOWNLOAD_REDIRECT) . "', '" . $file_contents . "', '" . $file_short_contents . "', '" . $file_image . "', '" . $file_creation_date->get_timestamp() . "', '" . ($ignore_release_date ? 0 : $file_release_date->get_timestamp()) . "', '" . $start_timestamp . "', '" . $end_timestamp . "', '" . $visible . "', '" . (int)$auth_write . "', '" . (int)$User->get_id() . "')", __LINE__, __FILE__);
 			
 			$new_id_file = $Sql->insert_id("SELECT MAX(id) FROM " . PREFIX . "download");
 			
@@ -505,7 +499,7 @@ else
 				//The URL where a validator can treat the contribution (in the file edition panel)
 				$download_contribution->set_fixing_url('/download/management.php?edit=' . $new_id_file);
 				//Who is the contributor?
-				$download_contribution->set_poster_id($User->get_id());
+				$download_contribution->set_poster_id($User->get_attribute('user_id'));
 				//The module
 				$download_contribution->set_module('download');
 				
@@ -584,8 +578,8 @@ else
 			'C_IMG' => !empty($file_image),
 			'C_EDIT_AUTH' => false,
 			'NAME' => stripslashes($file_title),
-			'CONTENTS' => FormatingHelper::second_parse(stripslashes(FormatingHelper::strparse($file_contents))),
-			'CREATION_DATE' => $file_creation_date->format(DATE_FORMAT_SHORT) ,
+			'CONTENTS' => stripslashes(FormatingHelper::strparse($file_contents)),
+			'CREATION_DATE' => $file_creation_date->format(DATE_FORMAT_SHORT),
 			'RELEASE_DATE' => $file_release_date->get_timestamp() > 0 ? $file_release_date->format(DATE_FORMAT_SHORT) : $DOWNLOAD_LANG['unknown_date'],
 			'SIZE' => $size_tpl,
 			'COUNT' => $file_hits,
@@ -596,7 +590,7 @@ else
 			'IMAGE_ALT' => str_replace('"', '\"', $file_title),
 			'LANG' => get_ulang(),
 			'CONTRIBUTION_COUNTERPART' => $contribution_counterpart_source,
-			'CONTRIBUTION_COUNTERPART_PREVIEW' => FormatingHelper::second_parse(stripslashes($contribution_counterpart)),
+			'CONTRIBUTION_COUNTERPART_PREVIEW' => stripslashes($contribution_counterpart),
 		    'FORCE_DOWNLOAD_SELECTED' => $file_download_method == 'force_download' ? ' selected="selected"' : '',
 			'REDIRECTION_SELECTED' => $file_download_method != 'force_download' ? ' selected="selected"' : '',
 			// Those langs are required by the template inclusion
@@ -609,6 +603,7 @@ else
 			'L_RELEASE_DATE' => $DOWNLOAD_LANG['release_date'],
 			'L_DOWNLOADED' => $DOWNLOAD_LANG['downloaded'],
 			'L_NOTE' => $LANG['note'],
+			'L_DEADLINK' => $DOWNLOAD_LANG['deadlink'],
 		    'APPROVED' => ' checked="checked"',
 			'U_DOWNLOAD_FILE' => url('count.php?id=' . $edit_file_id, 'file-' . $edit_file_id . '+' . Url::encode_rewrite($file_title) . '.php')
 		));
@@ -617,8 +612,8 @@ else
 			'C_CONTRIBUTION' => !$auth_write,
 			'TITLE' => stripslashes($file_title),
 			'COUNT' => $file_hits,
-			'DESCRIPTION' => htmlspecialchars(stripslashes($file_contents)),
-			'SHORT_DESCRIPTION' => htmlspecialchars(stripslashes($file_short_contents)),
+			'DESCRIPTION' => stripslashes(retrieve(POST, 'contents', '')),
+			'SHORT_DESCRIPTION' => stripslashes(retrieve(POST, 'short_contents', '')),
 			'FILE_IMAGE' => $file_image,
 			'URL' => $file_url,
 			'SIZE_FORM' => $file_size,
@@ -626,7 +621,7 @@ else
 			'CATEGORIES_TREE' => $auth_write ?
 									$download_categories->build_select_form($file_cat_id, 'idcat', 'idcat', 0, DOWNLOAD_WRITE_CAT_AUTH_BIT, $CONFIG_DOWNLOAD['global_auth'], IGNORE_AND_CONTINUE_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH) :
 									$download_categories->build_select_form($file_cat_id, 'idcat', 'idcat', 0, DOWNLOAD_CONTRIBUTION_CAT_AUTH_BIT, $CONFIG_DOWNLOAD['global_auth'], IGNORE_AND_CONTINUE_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH),
-			'SHORT_DESCRIPTION_PREVIEW' => FormatingHelper::second_parse(stripslashes(FormatingHelper::strparse($file_short_contents))),
+			'SHORT_DESCRIPTION_PREVIEW' => stripslashes($file_short_contents),
 			'VISIBLE_WAITING' => $file_visibility == 2 ? ' checked="checked"' : '',
 			'VISIBLE_ENABLED' => $file_visibility == 1 ? ' checked="checked"' : '',
 			'VISIBLE_HIDDEN' => $file_visibility == 0 ? ' checked="checked"' : '',

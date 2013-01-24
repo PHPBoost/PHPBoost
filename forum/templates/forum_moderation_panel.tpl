@@ -3,7 +3,7 @@
 		<div class="module_position">					
 			<div class="module_top_l"></div>		
 			<div class="module_top_r"></div>
-			<div class="module_top">&bull; <a href="index.php">{FORUM_NAME}</a> &raquo; <a href="moderation_forum.php">{L_MODERATION_FORUM}</a> {U_MODERATION_FORUM_ACTION}</div>
+			<div class="module_top">&bull; <a href="index.php{SID}">{FORUM_NAME}</a> &raquo; <a href="moderation_forum.php{SID}">{L_MODERATION_FORUM}</a> {U_MODERATION_FORUM_ACTION}</div>
 			<div class="module_contents">
 				<table class="module_table">
 					<tr>							
@@ -83,7 +83,9 @@
 								# IF C_FORUM_ADMIN #
 								<span style="float:left"><input type="submit" name="valid" value="{L_DELETE}" class="submit" /></span> 
 								# ENDIF #
+								# IF C_DISPLAY_LINK_MORE_ACTION #
 								<a href="moderation_forum{U_MORE_ACTION}">{L_MORE_ACTION}</a>
+								# ENDIF #
 							</td>
 						</tr>
 					</table>
@@ -413,7 +415,7 @@
 			<div class="module_bottom_r"></div>	
 			<div class="module_bottom_l"></div>
 			<div class="module_bottom text_strong">
-				&bull; <a href="index.php">{FORUM_NAME}</a> &raquo; <a href="moderation_forum.php">{L_MODERATION_FORUM}</a> {U_MODERATION_FORUM_ACTION}
+				&bull; <a href="index.php{SID}">{FORUM_NAME}</a> &raquo; <a href="moderation_forum.php{SID}">{L_MODERATION_FORUM}</a> {U_MODERATION_FORUM_ACTION}
 			</div>	
 		</div>
 		

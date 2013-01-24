@@ -42,15 +42,12 @@ if ($delete > 0)
 	$Session->csrf_get_protect();
 	$news = $Sql->query_array(DB_TABLE_NEWS, '*', "WHERE id = '" . $delete . "'", __LINE__, __FILE__);
 
-	if (!empty($news['id']) && ($User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_MODERATE) || $User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_WRITE) && $news['user_id'] == $User->get_id()))
+	if (!empty($news['id']) && ($User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_MODERATE) || $User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_WRITE) && $news['user_id'] == $User->get_attribute('user_id')))
 	{
 		$Sql->query_inject("DELETE FROM " . DB_TABLE_NEWS . " WHERE id = '" . $delete . "'", __LINE__, __FILE__);
 		$Sql->query_inject("DELETE FROM " . DB_TABLE_EVENTS . " WHERE module = 'news' AND id_in_module = '" . $delete . "'", __LINE__, __FILE__);
 
-		$comments_topic = new CommentsTopic();
-		$comments_topic->set_module_id('news');
-		$comments_topic->set_id_in_module($news['id']);
-		CommentsService::delete_comments_id_in_module($comments_topic);
+		CommentsService::delete_comments_topic_module('news', $news['id']);
 	    
 	    Feed::clear_cache('news');
 
@@ -64,16 +61,12 @@ if ($delete > 0)
 	}
 	else
 	{
-		$error_controller = PHPBoostErrors::unexisting_page();
+		$error_controller = PHPBoostErrors::user_not_authorized();
 		DispatchManager::redirect($error_controller);
 	}
 }
 elseif (!empty($_POST['submit']))
 {
-	$start = MiniCalendar::retrieve_date('start');
-	$end = MiniCalendar::retrieve_date('end');
-	$release = MiniCalendar::retrieve_date('release');
-
 	$sources = array();
 	for ($i = 0; $i < 50; $i++)
 	{	
@@ -84,6 +77,8 @@ elseif (!empty($_POST['submit']))
 		}
 	}
 	
+	$release = MiniCalendar::retrieve_date('release');
+	
 	$news = array(
 		'id' => retrieve(POST, 'id', 0, TINTEGER),
 		'idcat' => retrieve(POST, 'idcat', 0, TINTEGER),
@@ -93,12 +88,6 @@ elseif (!empty($_POST['submit']))
 		'extend_desc' => retrieve(POST, 'extend_contents', '', TSTRING_PARSE),
 		'counterpart' => retrieve(POST, 'counterpart', '', TSTRING_PARSE),
 		'visible' => retrieve(POST, 'visible', 0, TINTEGER),
-		'start' => $start->get_timestamp(),
-		'start_hour' => retrieve(POST, 'start_hour', 0, TINTEGER),
-		'start_min' => retrieve(POST, 'start_min', 0, TINTEGER),
-		'end' => $end->get_timestamp(),
-		'end_hour' => retrieve(POST, 'end_hour', 0, TINTEGER),
-		'end_min' => retrieve(POST, 'end_min', 0, TINTEGER),
 		'release' => $release->get_timestamp(),
 		'release_hour' => retrieve(POST, 'release_hour', 0, TINTEGER),
 		'release_min' => retrieve(POST, 'release_min', 0, TINTEGER),
@@ -106,17 +95,29 @@ elseif (!empty($_POST['submit']))
 		'alt' => retrieve(POST, 'alt', '', TSTRING),
 		'sources' => addslashes(serialize($sources))
 	);
+	
+	$start = MiniCalendar::retrieve_date('start');
+	$start->set_hours(retrieve(POST, 'start_hour', 0, TINTEGER));
+	$start->set_minutes(retrieve(POST, 'start_min', 0, TINTEGER));
+	
+	$end = MiniCalendar::retrieve_date('end');
+	$end->set_hours(retrieve(POST, 'end_hour', 0, TINTEGER));
+	$end->set_minutes(retrieve(POST, 'end_min', 0, TINTEGER));
+	
+	$news['start'] = $start->get_timestamp();
+	$news['end'] = $end->get_timestamp();
+	
 
 	if (($news['id'] > 0 && ($User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_MODERATE) || $User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_WRITE) || $User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_CONTRIBUTE))) || ($news['id'] == 0 && ($User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_WRITE) || $User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_CONTRIBUTE))))
 	{
 		// Errors.
 		if (empty($news['title']))
 		{
-			$Template->put('message_helper', MessageHelper::display('e_require_title', E_USER_REDIRECT));
+			$Template->put('message_helper', MessageHelper::display($LANG['e_require_title'], E_USER_REDIRECT));
 		}
 		elseif (empty($news['desc']))
 		{
-			$Template->put('message_helper', MessageHelper::display('e_require_desc', E_USER_REDIRECT));
+			$Template->put('message_helper', MessageHelper::display($LANG['e_require_desc'], E_USER_REDIRECT));
 		}
 		else
 		{
@@ -124,20 +125,21 @@ elseif (!empty($_POST['submit']))
 			if ($news['visible'] == 2)
 			{
 				// Start.
-				$news['start'] += ($news['start_hour'] * 60 + $news['start_min']) * 60;
-				if ($news['start'] <= $now->get_timestamp())
+				if ($news['start'] <= $now->get_timestamp() && $news['end'] <= $now->get_timestamp())
 				{
-					$news['start'] = 0;
+					$news['start'] = $news['end'] = 0;
+					$news['visible'] = 1;
 				}
-
-				// End.
-				$news['end'] += ($news['end_hour'] * 60 + $news['end_min']) * 60;
-				if ($news['end'] <= $now->get_timestamp())
+				else
 				{
-					$news['end'] = 0;
+					// End.
+					if ($news['end'] <= $now->get_timestamp())
+					{
+						$news['end'] = 0;
+					}
+	
+					$news['visible'] = 0;
 				}
-
-				$news['visible'] = 1;
 			}
 			else
 			{
@@ -176,8 +178,10 @@ elseif (!empty($_POST['submit']))
 			{
 				$auth_contrib = !$User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_WRITE) && $User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_CONTRIBUTE);
 
+				$news['visible'] = $auth_contrib ? 0 : $news['visible'];
+				
 				$Sql->query_inject("INSERT INTO " . DB_TABLE_NEWS . " (idcat, title, contents, extend_contents, timestamp, visible, start, end, user_id, img, alt, sources)
-				VALUES('" . $news['idcat'] . "', '" . $news['title'] . "', '" . $news['desc'] . "', '" . $news['extend_desc'] . "', '" . $news['release'] . "', '" . $news['visible'] . "', '" . $news['start'] . "', '" . $news['end'] . "', '" . $User->get_id() . "', '" . $img->relative() . "', '" . $news['alt'] . "', '" . $news['sources'] . "')", __LINE__, __FILE__);
+				VALUES('" . $news['idcat'] . "', '" . $news['title'] . "', '" . $news['desc'] . "', '" . $news['extend_desc'] . "', '" . $news['release'] . "', '" . $news['visible'] . "', '" . $news['start'] . "', '" . $news['end'] . "', '" . $User->get_attribute('user_id') . "', '" . $img->relative() . "', '" . $news['alt'] . "', '" . $news['sources'] . "')", __LINE__, __FILE__);
 
 				$news['id'] = $Sql->insert_id("SELECT MAX(id) FROM " . DB_TABLE_NEWS);
 
@@ -196,7 +200,7 @@ elseif (!empty($_POST['submit']))
 					//The URL where a validator can treat the contribution (in the file edition panel)
 					$news_contribution->set_fixing_url('/news/management.php?edit=' . $news['id']);
 					//Who is the contributor?
-					$news_contribution->set_poster_id($User->get_id());
+					$news_contribution->set_poster_id($User->get_attribute('user_id'));
 					//The module
 					$news_contribution->set_module('news');
 					//Assignation des autorisations d'écriture / Writing authorization assignation
@@ -241,7 +245,7 @@ elseif (!empty($_POST['submit']))
 	}
 	else
 	{
-	   $error_controller = PHPBoostErrors::unexisting_page();
+	   $error_controller = PHPBoostErrors::user_not_authorized();
 	   DispatchManager::redirect($error_controller);
 	}
 }
@@ -253,7 +257,7 @@ else
 	{
 		$news = $Sql->query_array(DB_TABLE_NEWS, '*', "WHERE id = '" . $edit . "'", __LINE__, __FILE__);
 		
-		$auth_edit = $news['idcat'] > 0 ? $User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_MODERATE) || $User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_WRITE) && $news['user_id'] == $User->get_id() : $User->check_auth($NEWS_CONFIG['global_auth'], AUTH_NEWS_MODERATE) || $User->check_auth($NEWS_CONFIG['global_auth'], AUTH_NEWS_WRITE) && $news['user_id'] == $User->get_id();
+		$auth_edit = $news['idcat'] > 0 ? $User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_MODERATE) || $User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_WRITE) && $news['user_id'] == $User->get_attribute('user_id') : $User->check_auth($NEWS_CONFIG['global_auth'], AUTH_NEWS_MODERATE) || $User->check_auth($NEWS_CONFIG['global_auth'], AUTH_NEWS_WRITE) && $news['user_id'] == $User->get_attribute('user_id');
 		
 		if (!empty($news['id']) && $auth_edit)
 		{
@@ -327,7 +331,7 @@ else
 		}
 		else
 		{
-	       $error_controller = PHPBoostErrors::unexisting_page();
+	       $error_controller = PHPBoostErrors::user_not_authorized();
 	       DispatchManager::redirect($error_controller);
 		}
 	}
@@ -335,7 +339,7 @@ else
 	{
 		if (!$User->check_auth($NEWS_CONFIG['global_auth'], AUTH_NEWS_CONTRIBUTE) && !$User->check_auth($NEWS_CONFIG['global_auth'], AUTH_NEWS_WRITE))
 		{
-	       $error_controller = PHPBoostErrors::unexisting_page();
+	       $error_controller = PHPBoostErrors::user_not_authorized();
 	       DispatchManager::redirect($error_controller);
 		}
 		else
@@ -379,7 +383,7 @@ else
 				'IMG' => '',
 				'ALT' => '',
 				'IDNEWS' => '0',
-				'USER_ID' => $User->get_id()
+				'USER_ID' => $User->get_attribute('user_id')
 			));
 
 			$tpl->assign_block_vars('sources', array(
@@ -389,7 +393,7 @@ else
 			));
 
 			
-			$cat = $cat > 0 && ($User->check_auth($NEWS_CAT[$cat]['auth'], AUTH_NEWS_CONTRIBUTE) || $User->check_auth($NEWS_CAT[$cat]['auth'], AUTH_NEWS_WRITE)) ? $cat : 0;
+			$cat = $User->check_auth($NEWS_CAT[$cat]['auth'], AUTH_NEWS_CONTRIBUTE) || $User->check_auth($NEWS_CAT[$cat]['auth'], AUTH_NEWS_WRITE) ? $cat : 0;
 			$news_categories->build_select_form($cat, 'idcat', 'idcat', 0, AUTH_NEWS_READ, $NEWS_CONFIG['global_auth'], IGNORE_AND_CONTINUE_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH, $tpl);
 		}
 	}
@@ -411,7 +415,7 @@ else
 		'L_NAME_SOURCES' => $NEWS_LANG['name_sources'],
 		'L_URL_SOURCES' => $NEWS_LANG['url_sources'],
 		'L_ADD_SOURCES' => $NEWS_LANG['add_sources'],
-		'L_ADD_NEWS' => $NEWS_LANG['add_news'],
+		'L_ADD_EDIT_NEWS' => $edit > 0 ? $NEWS_LANG['edit_news'] : $NEWS_LANG['add_news'],
 		'L_REQUIRE' => $LANG['require'],
 		'L_TITLE_NEWS' => $NEWS_LANG['title_news'],
 		'L_CATEGORY' => $NEWS_LANG['cat_news'],
@@ -422,6 +426,7 @@ else
 		'CONTRIBUTION_COUNTERPART_EDITOR' => $counterpart_editor->display(),
 		'L_TO_DATE' => $LANG['to_date'],
 		'L_FROM_DATE' => $LANG['from_date'],
+		'L_AT' => $LANG['at'],
 		'L_RELEASE_DATE' => $NEWS_LANG['release_date'],
 		'L_NEWS_DATE' => $NEWS_LANG['news_date'],
 		'L_UNIT_HOUR' => strtolower($LANG['unit_hour']),
@@ -432,7 +437,7 @@ else
 		'L_PREVIEW_IMG_EXPLAIN' => $NEWS_LANG['preview_image_explain'],
 		'L_IMG_LINK' => $NEWS_LANG['img_link'],
 		'L_IMG_DESC' => $NEWS_LANG['img_desc'],
-		'L_BB_UPLOAD' => $LANG['bb_upload'],
+		'L_BB_UPLOAD' => LangLoader::get_message('bb_upload', 'editor-common'),
 		'L_CONTRIBUTION_LEGEND' => $LANG['contribution'],
 		'L_NOTICE_CONTRIBUTION' => $NEWS_LANG['notice_contribution'],
 		'L_CONTRIBUTION_COUNTERPART' => $NEWS_LANG['contribution_counterpart'],

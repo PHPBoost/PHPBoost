@@ -3,8 +3,8 @@
  *		     GDNotAvailableException.class.php
  *                            -------------------
  *   begin                : July 29, 2010
- *   copyright            : (C) 2010 Kévin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   copyright            : (C) 2010 Kevin MASSY
+ *   email                : kevin.massy@phpboost.com
  *
  *
  *###################################################

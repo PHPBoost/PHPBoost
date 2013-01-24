@@ -3,8 +3,8 @@
  *                           admin-extended-fields-common.php
  *                            -------------------
  *   begin                : December 17, 2010
- *   copyright            : (C) 2010 Kévin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   copyright            : (C) 2010 Kevin MASSY
+ *   email                : kevin.massy@phpboost.com
  *
  *
  ###################################################
@@ -35,12 +35,8 @@ $lang['extended-field-add'] = 'Add member field';
 $lang['extended-field-edit'] = 'Edit member field';
 $lang['extended-field'] = 'Member fields';
 $lang['extended-fields-management'] = 'Member field management';
-$lang['extended-fields-sucess-edit'] = 'The field is updated successfuly.';
-$lang['extended-fields-sucess-add'] = 'The field is added successfuly.';
-$lang['extended-fields-sucess-delete'] = 'The field is deleted successfuly.';
-$lang['extended-fields-error-already-exist'] = 'The extended field are already exist.';
-$lang['extended-fields-error-phpboost-config'] = 'The fields used by default PHPBoost can not multiple created, please choose another type field.';
-
+$lang['extended-fields-error-already-exist'] = 'The extended field already exists.';
+$lang['extended-fields-error-phpboost-config'] = 'The fields used by default PHPBoost can not be created more than one time, please choose another type of field.';
 
 //Type 
 $lang['type.short-text'] = 'Short text (max 255 characters)';
@@ -74,6 +70,8 @@ $lang['field.possible-values-explain'] = 'Separate each value with |';
 $lang['field.default-values'] = 'Default values';
 $lang['field.default-values-explain'] = 'Separate each value with |';
 $lang['field.default-possible-values'] = 'Yes|No';
+$lang['field.read_authorizations'] = 'Read permissions of the field in the profile';
+$lang['field.actions_authorizations'] = 'Read permissions of the field when creating or editing a profile';
 
 // Regex
 $lang['regex.figures'] = 'Numbers';
@@ -88,7 +86,7 @@ $lang['field.yes'] = 'Yes';
 $lang['field.no'] = 'No';
 
 $lang['field.success'] = 'Success';
-$lang['field.delete_field'] = 'Would you really want to delete this field ?';
+$lang['field.delete_field'] = 'Do you really want to delete this field?';
 $lang['field.position'] = 'Position';
 
 $lang['field.is-required'] = 'Required';
@@ -103,7 +101,7 @@ $lang['field-install.default-theme'] = 'Default theme';
 $lang['field-install.default-theme-explain'] = 'Select the theme you want to use';
 
 $lang['field-install.default-editor'] = 'Default text editor';
-$lang['field-install.default-editor-explain'] = 'Select the editor which with you want to format text';
+$lang['field-install.default-editor-explain'] = 'Select the text editor you want to use on your website';
 
 $lang['field-install.timezone'] = 'Timezone';
 $lang['field-install.timezone-explain'] = 'Select the timezone corresponding to the place you live';
@@ -118,9 +116,9 @@ $lang['field-install.avatar'] = 'Avatar';
 $lang['field-install.avatar-explain'] = '';
 
 $lang['field-install.website'] = 'Website';
-$lang['field-install.website-explain'] = 'Please enter a valid url';
+$lang['field-install.website-explain'] = 'Please enter a valid url (ex : http://www.phpboost.com)';
 
-$lang['field-install.location'] = 'Localization';
+$lang['field-install.location'] = 'Location';
 $lang['field-install.location-explain'] = '';
 
 $lang['field-install.job'] = 'Job';
@@ -140,5 +138,4 @@ $lang['field-install.msn-explain'] = '';
 
 $lang['field-install.yahoo'] = 'Yahoo';
 $lang['field-install.yahoo-explain'] = '';
-
 ?>

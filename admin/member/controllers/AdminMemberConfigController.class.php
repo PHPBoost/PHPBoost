@@ -3,8 +3,8 @@
  *                       AdminMemberConfigController.class.php
  *                            -------------------
  *   begin                : December 17, 2010
- *   copyright            : (C) 2010 Kévin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   copyright            : (C) 2010 Kevin MASSY
+ *   email                : kevin.massy@phpboost.com
  *
  *
  ###################################################
@@ -37,18 +37,18 @@ class AdminMemberConfigController extends AdminController
 	 */
 	private $submit_button;
 
-	public function execute(HTTPRequest $request)
+	public function execute(HTTPRequestCustom $request)
 	{
 		$this->init();
 		$this->build_form();
 
-		$tpl = new StringTemplate('# INCLUDE MSG # # INCLUDE FORM #');
+		$tpl = new StringTemplate('# INCLUDE FORM #');
 		$tpl->add_lang($this->lang);
 
-		if ($this->submit_button->has_been_submitted() && $this->form->validate())
+		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save();
-			$tpl->put('MSG', MessageHelper::display($this->lang['members.config.success-saving'], E_USER_SUCCESS, 4));
+			AppContext::get_response()->redirect(AdminMembersUrlBuilder::configuration());
 		}
 
 		$tpl->put('FORM', $this->form->display());
@@ -110,9 +110,7 @@ class AdminMemberConfigController extends AdminController
 				new FormFieldSelectChoiceOption('4', '4'),
 			), array('hidden' => !$user_account_config->is_registration_captcha_enabled())
 		));
-		
-		$fieldset->add_field(new FormFieldCheckbox('theme_choice_permission', $this->lang['members.config.theme-choice-permission'], $user_account_config->is_users_theme_forced()));
-		
+
 		$fieldset = new FormFieldsetHTML('avatar_management', $this->lang['members.config.avatars-management']);
 		$form->add_fieldset($fieldset);
 				
@@ -143,10 +141,10 @@ class AdminMemberConfigController extends AdminController
 		
 		$default_avatar_link = $user_account_config->get_default_avatar_name();
 		$fieldset->add_field(new FormFieldTextEditor('default_avatar_link', $this->lang['members.config.default-avatar-link'], $default_avatar_link, array(
-			'class' => 'text', 'description' => $this->lang['members.default-avatar-link-explain'], 'events' => array('change' => 'document.images[\'img_avatar\'].src = "' . PATH_TO_ROOT . '/templates/'. get_utheme() .'/images/" + HTMLForms.getField("default-avatar-link").getValue()'))
+			'class' => 'text', 'description' => $this->lang['members.default-avatar-link-explain'], 'events' => array('change' => '$(\'img_avatar\').src = "' . TPL_PATH_TO_ROOT . '/templates/'. get_utheme() .'/images/" + HTMLForms.getField("default_avatar_link").getValue()'))
 		));
 		
-		$fieldset->add_field(new FormFieldFree('preview', LangLoader::get_message('preview', 'main'), '<img id="img_avatar" src="' . PATH_TO_ROOT . '/templates/'. get_utheme() .'/images/'. $default_avatar_link .'" alt="" style="vertical-align:top" />'));
+		$fieldset->add_field(new FormFieldFree('preview', LangLoader::get_message('preview', 'main'), '<img id="img_avatar" src="' . Url::to_rel('/templates/'. get_utheme() .'/images/'. $default_avatar_link) .'" alt="" style="vertical-align:top" />'));
 
 		$fieldset = new FormFieldsetHTML('authorization', $this->lang['members.config.authorization']);
 		$form->add_fieldset($fieldset);
@@ -159,15 +157,23 @@ class AdminMemberConfigController extends AdminController
 		$fieldset = new FormFieldsetHTML('welcome_message', $this->lang['members.config.welcome-message']);
 		$form->add_fieldset($fieldset);
 		
-		$welcome_message_contents = FormatingHelper::unparse($user_account_config->get_welcome_message());
-		$fieldset->add_field(new FormFieldRichTextEditor('welcome_message_contents', $this->lang['members.config.welcome-message-content'], $welcome_message_contents, array(
+		$fieldset->add_field(new FormFieldRichTextEditor('welcome_message_contents', $this->lang['members.config.welcome-message-content'], $user_account_config->get_welcome_message(), array(
 			'class' => 'text', 'rows' => 8, 'cols' => 47)
 		));
 		
-		$form->add_button(new FormButtonReset());
+		$fieldset = new FormFieldsetHTML('members_rules', $this->lang['members.rules']);
+		$fieldset->set_description($this->lang['members.rules.registration-agreement-description']);
+		$form->add_fieldset($fieldset);
+		
+		$fieldset->add_field(new FormFieldRichTextEditor('registration_agreement', $this->lang['members.rules.registration-agreement'], 
+			UserAccountsConfig::load()->get_registration_agreement(), 
+			array('class' => 'text', 'rows' => 8, 'cols' => 47)
+		));
+		
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_button($this->submit_button);
-
+		$form->add_button(new FormButtonReset());
+		
 		$this->form = $form;
 	}
 
@@ -188,7 +194,6 @@ class AdminMemberConfigController extends AdminController
 			$user_account_config->set_registration_captcha_difficulty($this->form->get_value('captcha_difficulty')->get_raw_value());
 		}
 		
-		$user_account_config->set_force_theme_enabled(!$this->form->get_value('theme_choice_permission'));
 		$user_account_config->set_avatar_upload_enabled($this->form->get_value('upload_avatar_server'));
 		$user_account_config->set_unactivated_accounts_timeout($this->form->get_value('unactivated_accounts_timeout'));
 		$user_account_config->set_default_avatar_name_enabled($this->form->get_value('default_avatar_activation'));
@@ -198,7 +203,8 @@ class AdminMemberConfigController extends AdminController
 		$user_account_config->set_max_avatar_height($this->form->get_value('maximal_height_avatar'));
 		$user_account_config->set_max_avatar_weight($this->form->get_value('maximal_weight_avatar'));
 		$user_account_config->set_auth_read_members($this->form->get_value('authorizations')->build_auth_array());
-		$user_account_config->set_welcome_message(FormatingHelper::strparse($this->form->get_value('welcome_message_contents')));
+		$user_account_config->set_welcome_message($this->form->get_value('welcome_message_contents'));
+		$user_account_config->set_registration_agreement($this->form->get_value('registration_agreement'));
 		UserAccountsConfig::save();
 	}
 }

@@ -1,47 +1,50 @@
-# START comments_list #
-<script type="text/javascript">
-<!--
-Event.observe(window, 'load', function() {
-	Event.observe($('positive_note_{comments_list.COMMENT_ID}'), 'click', function() {
-		CommentsService.positive_vote(${escapejs(MODULE_ID)}, ${escapejs(ID_IN_MODULE)}, ${escapejs(comments_list.COMMENT_ID)});
-	});
-	
-	Event.observe($('negative_note_{comments_list.COMMENT_ID}'), 'click', function() {
-		CommentsService.negative_vote(${escapejs(MODULE_ID)}, ${escapejs(ID_IN_MODULE)}, ${escapejs(comments_list.COMMENT_ID)});
-	});
-});
-//-->
-</script>
-<div class="msg_position">
-	<div class="msg_container">
-		<div class="msg_top_row">
-			<div class="msg_pseudo_mbr">
+# START comments #
+	<div id="com{comments.ID_COMMENT}" class="comment">
+		<div class="comment-user_infos">
+			<div id="comment-pseudo">
+				# IF comments.C_VISITOR #
+					{comments.PSEUDO}
+				# ELSE #
+					<a href="{comments.U_PROFILE}" class="{comments.LEVEL_CLASS}" # IF comments.C_GROUP_COLOR # style="color:{comments.GROUP_COLOR}" # ENDIF #>
+						{comments.PSEUDO}
+					</a>
+				# ENDIF #
 			</div>
+			<div class="comment-level">{comments.L_LEVEL}</div>
+			<img src="{comments.U_AVATAR}" class="comment-avatar" />
 		</div>
-		<div class="msg_contents_container">
-			<div class="msg_info_mbr">
-			</div>
-			<a href="{comments_list.EDIT_COMMENT}">
-				<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="{L_UPDATE}" title="{L_UPDATE}" class="valign_middle" />
-			</a> 
-			<a href="{comments_list.DELETE_COMMENT}">
-				<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" class="valign_middle" />
-			</a>
-			<div class="msg_contents">
-				<div class="msg_contents_overflow">
-					{comments_list.MESSAGE}
+		<div class="comment-content">
+			<div class="comment-date">
+				<div style="float:right;">
+					<a href="\#com{comments.ID_COMMENT}">\#{comments.ID_COMMENT}</a>
+					# IF comments.C_MODERATOR #
+						<a href="{comments.U_EDIT}">
+							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="{L_UPDATE}" title="{L_UPDATE}" class="valign_middle" />
+						</a> 
+						<a href="{comments.U_DELETE}">
+							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" class="valign_middle" />
+						</a>
+					# ENDIF #
 				</div>
-				<button type="submit" id="positive_note_{comments_list.COMMENT_ID}" class="submit">+1</button>
-				<button type="submit" id="negative_note_{comments_list.COMMENT_ID}" class="submit">-1</button>
+				{comments.DATE}
+			</div>
+			<div class="comment-message">
+				<div class="message-containt">{comments.MESSAGE}</div>
+				# IF comments.C_VIEW_TOPIC #
+					<div class="view-topic">
+						<a href="{comments.U_TOPIC}&refresh_all=1\#com{comments.ID_COMMENT}">
+						{L_VIEW_TOPIC}
+						<img src="{PATH_TO_ROOT}/templates/{THEME}/images/right.png" class="valign_middle">
+					</a>
+					</div>
+				# ENDIF #
+				<!-- 
+				<div id="comment-rating">
+					<div class="positive_vote_button">+</div>
+					<div class="negative_vote_button">-</div>
+				</div>
+				 -->
 			</div>
 		</div>
-	</div>	
-	<div class="msg_sign">				
-		<div class="msg_sign_overflow">
-		</div>				
-		<hr />
-		<div style="float:right;font-size:10px;">
-		</div>
-	</div>	
-</div>
-# END comments_list #
+	</div>
+# END comments #	

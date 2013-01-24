@@ -3,8 +3,8 @@
  *                      	 StatsCache.class.php
  *                            -------------------
  *   begin                : August 0, 2010
- *   copyright            : (C) 2010 Kévin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   copyright            : (C) 2010 Kevin MASSY
+ *   email                : kevin.massy@phpboost.com
  *
  *
  ###################################################
@@ -26,7 +26,7 @@
  ###################################################*/
 
 /**
- * @author Kévin MASSY <soldier.weasel@gmail.com>
+ * @author Kevin MASSY <kevin.massy@phpboost.com>
  */
 class StatsCache implements CacheData
 {
@@ -39,7 +39,7 @@ class StatsCache implements CacheData
 	{
 		$this->stats = array();
 		$querier = PersistenceContext::get_querier();
-
+			
 		$nbr_members = $querier->count(DB_TABLE_MEMBER);
 		$last_member = $querier->select_single_row(DB_TABLE_MEMBER, array('user_id', 'display_name'),
 			'ORDER BY registration_date DESC LIMIT 1 OFFSET 0');
@@ -55,7 +55,7 @@ class StatsCache implements CacheData
 	{
 		return $this->stats;
 	}
-
+	
 	public function get_stats_properties($identifier)
 	{
 		if (isset($this->stats[$identifier]))
@@ -64,7 +64,7 @@ class StatsCache implements CacheData
 		}
 		return null;
 	}
-
+	
 	/**
 	 * Loads and returns the stats cached data.
 	 * @return StatsCache The cached data
@@ -73,7 +73,7 @@ class StatsCache implements CacheData
 	{
 		return CacheManager::load(__CLASS__, 'kernel', 'stats');
 	}
-
+	
 	/**
 	 * Invalidates the current stats cached data.
 	 */
@@ -82,3 +82,4 @@ class StatsCache implements CacheData
 		CacheManager::invalidate('kernel', 'stats');
 	}
 }
+?>

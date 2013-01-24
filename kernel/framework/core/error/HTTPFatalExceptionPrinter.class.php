@@ -88,7 +88,7 @@ class HTTPFatalExceptionPrinter
 			}
 		}
 		function getOutputBufferContent() {
-			return \'' . str_replace("\n", '\n\' + ' . "\n" . '\'', str_replace("\r", '', addslashes(htmlspecialchars($this->ob_content)))) . '\';
+			return \'' . str_replace("\n", '\n\' + ' . "\n" . '\'', str_replace("\r", '', addslashes(TextHelper::htmlspecialchars($this->ob_content)))) . '\';
 		}
 		function openOutputBufferPopup(content) {
 			var obWindow = window.open(\'\', \'Output Buffer\', \'\');
@@ -118,7 +118,7 @@ class HTTPFatalExceptionPrinter
 		<div id="whyISeeThisPage">
 			You see this page because your site is configured to use the <em>DEBUG</em> mode.<br />
 			If you want to see the related user error page, you have to disable the <em>DEBUG</em> mode
-			from the <a href="' . TPL_PATH_TO_ROOT . '/admin/admin_config.php?adv=1">administration panel</a>.
+			from the <a href="' . TPL_PATH_TO_ROOT . '/admin/config/?url=/advanced/">administration panel</a>.
 		</div>
 		<div id="httpContext">
 			<table cellspacing="0" cellpadding="3 5px"><caption>HTTP Request</caption>
@@ -195,13 +195,13 @@ class HTTPFatalExceptionPrinter
 			$value_to_display = '<ul>';
 			foreach ($value as $a_value)
 			{
-				$value_to_display .= '<li>' . htmlspecialchars($a_value) . '</li>';
+				$value_to_display .= '<li>' . TextHelper::htmlspecialchars($a_value) . '</li>';
 			}
 			$value_to_display .= '</ul>';
 		}
 		else
 		{
-			$value_to_display = htmlspecialchars($value);
+			$value_to_display = TextHelper::htmlspecialchars($value);
 		}
 		$row_class = $this->is_row_odd ? 'oddRow' : 'evenRow';
 		$this->is_row_odd = !$this->is_row_odd;
@@ -211,5 +211,4 @@ class HTTPFatalExceptionPrinter
 		'</tr>' ;
 	}
 }
-
 ?>

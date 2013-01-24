@@ -3,8 +3,8 @@
  *                        TextNewsletterMail.class.php
  *                            -------------------
  *   begin                : February 1, 2011
- *   copyright            : (C) 2011 Kévin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   copyright            : (C) 2011 Kevin MASSY
+ *   email                : kevin.massy@phpboost.com
  *
  *  
  ###################################################
@@ -26,7 +26,7 @@
  ###################################################*/
 
 /**
- * @author Kévin MASSY <soldier.weasel@gmail.com>
+ * @author Kevin MASSY <kevin.massy@phpboost.com>
  */
 class TextNewsletterMail extends AbstractNewsletterMail
 {
@@ -38,7 +38,7 @@ class TextNewsletterMail extends AbstractNewsletterMail
 		$mail->set_subject($subject);
 		$contents = $this->parse_contents($contents) . $this->add_unsubscribe_link();
 		
-		foreach ($subscribers as $id => $values)
+		foreach ($subscribers as $values)
 		{
 			$mail_subscriber = !empty($values['mail']) ? $values['mail'] : NewsletterDAO::get_mail_for_member($values['user_id']);
 			$mail->clear_recipients();
@@ -52,8 +52,7 @@ class TextNewsletterMail extends AbstractNewsletterMail
 	
 	public function parse_contents($contents)
 	{
-		return stripslashes(FormatingHelper::strparse(addslashes($contents)));
+		return stripslashes(FormatingHelper::strparse($contents));
 	}
 }
-
 ?>

@@ -1,11 +1,5 @@
 		<script type="text/javascript">
 		<!--
-		 window.onload = function() {
-			ajax_models_desc();
-		}
-
-		var theme = '{THEME}';
-
 		function check_form()
 		{
 			# IF C_BBCODE_TINYMCE_MODE #
@@ -72,25 +66,6 @@
 			}
 			return false;
 		}
-		function ajax_model_extend_field()
-		{			
-			new Ajax.Request(
-				'xmlhttprequest.php',
-				{
-					method: 'post',
-					parameters: {
-						model_extend_field: true,
-						models: document.getElementById('models').value,
-						id_art: document.getElementById('id').value,
-					 },
-					onSuccess: function(response)
-					{
-				
-						document.getElementById('model_desc').innerHTML = response.responseText;
-					}				
-				}
-			);
-		}
 		function change_icon(img_path)
 		{
 			document.getElementById('icon_img').innerHTML = '<img src="' + img_path + '" alt="" class="valign_middle" />';
@@ -98,8 +73,28 @@
 		function bbcode_page()
 		{
 			var page = prompt("{L_PAGE_PROMPT}");
-			if( page != null && page != '' )
-				insertbbcode('[page]' + page, '[/page]', 'contents');
+
+			if (page)
+			{
+				var textarea = $('contents');
+				var start = textarea.selectionStart;
+				var end = textarea.selectionEnd;
+
+				if (start == end)
+				{
+					var insert_value = '[page]' + page + '[/page]';
+					textarea.value = textarea.value.substr(0, start) + insert_value + textarea.value.substr(end);
+				}
+				else
+				{
+					var value = textarea.value;
+					var insert_value = '[page]' + value.substring(start, end) + '[/page]';
+					textarea.value = textarea.value.substr(0, start) + insert_value + textarea.value.substr(end);
+				}
+
+				textarea.selectionStart = start + insert_value.length;
+				textarea.selectionEnd = start + insert_value.length;
+			}
 		}
 		# IF C_ADD #
 		function value_now(id_date, id_hour, id_min)
@@ -126,17 +121,11 @@
 			if( document.getElementById('s'+i) )
 				document.getElementById('s'+i).innerHTML = (i < i_max) ? '<div style="height:22px;text-align:center;line-height:22px;" id="s'+i2+'"><a href="javascript:add_field('+i2+', '+i_max+')"><img style="vertical-align:bottom;" src="../templates/{THEME}/images/form/plus.png" alt="+" />&nbsp;&nbsp;{L_ADD_SOURCE}</a></span>' : '';					
 		}
-		var global_auth = {JS_SPECIAL_AUTH};
-		function change_status_global_auth()
-		{
-			if( global_auth )
-				hide_div("hide_special_auth");
-			else
-				show_div("hide_special_auth");
-			global_auth = !global_auth;
-		}
 		-->
-		</script>		
+		</script>
+		
+		# INCLUDE message_helper #
+		
 		<form action="management.php?token={TOKEN}" name="form" method="post" onsubmit="return check_form();" class="fieldset_content" id="form">
 			<fieldset>
 				<legend>{L_ARTICLES_ADD}</legend>
@@ -156,18 +145,6 @@
 						</select>
 					</label></dd>
 				</dl>
-				# IF NOT C_CONTRIBUTION #
-				<dl>
-					<dt><label for="special_auth">{L_MODELS}</label>
-					<dd>
-						<select id="models" name="models" onchange="ajax_model_extend_field()">
-							{MODELS}
-						</select>
-					</dd>	
-				</dl>
-				<div id="model_desc" ></div>
-			
-				# ENDIF #
 				<dl>
 					<dt><label for="icon">{L_ARTICLE_ICON}</label></dt>
 						<dd>
@@ -227,34 +204,11 @@
 				</table>
 				<br /><br />
 				# IF NOT C_CONTRIBUTION #
-				<fieldset>
-					<legend>
-						{L_SPECIAL_AUTH}
-					</legend>
-					<dl>
-						<dt><label for="special_auth">{L_SPECIAL_AUTH}</label>
-						<br />
-						<span class="text_small">{L_SPECIAL_AUTH_EXPLAIN_ARTICLES}</span></dt>
-						<dd>
-							<input type="checkbox" name="special_auth" id="special_auth" onclick="javascript: change_status_global_auth();" {SPECIAL_CHECKED} />
-						</dd>					
-					</dl>
-					<div id="hide_special_auth" style="display:{DISPLAY_SPECIAL_AUTH};">
-						<dl>
-							<dt>
-								<label for="auth_read">{L_AUTH_READ}</label>
-							</dt>
-							<dd>
-								{AUTH_READ}
-							</dd>
-						</dl>
-					</div>
-				</fieldset>
 				<dl class="overflow_visible">
 					<dt><label for="release_date">* {L_RELEASE_DATE}</label></dt>
 					<dd>
 						<div onclick="document.getElementById('start_end_date').checked = true;">
-							<input type="radio" value="2" name="visible" id="start_end_date"# IF VISIBLE_WAITING # checked="checked"# ENDIF # />
+							<input type="radio" value="2" name="visible" id="start_end_date"# IF C_VISIBLE_WAITING # checked="checked"# ENDIF # />
 							{L_FROM_DATE}
 							{START_CALENDAR}
 							{L_AT}
@@ -268,9 +222,9 @@
 							&nbsp;{L_UNIT_HOUR}&nbsp;
 							<input type="text" size="2" maxlength="2" name="end_min" value="{END_MIN}" class="text" />
 						</div>
-						<input type="radio" value="1" name="visible"# IF VISIBLE_ENABLED # checked="checked"# ENDIF # id="release_date" /> {L_IMMEDIATE}
+						<input type="radio" value="1" name="visible"# IF C_VISIBLE_ENABLED # checked="checked"# ENDIF # id="release_date" /> {L_IMMEDIATE}
 						<br />
-						<input type="radio" value="0" name="visible"# IF VISIBLE_UNAPROB # checked="checked"# ENDIF # /> {L_UNAPROB}
+						<input type="radio" value="0" name="visible"# IF C_VISIBLE_UNAPROB # checked="checked"# ENDIF # /> {L_UNAPROB}
 					</dd>
 				</dl>
 				# ENDIF #
@@ -316,8 +270,3 @@
 				<input type="reset" value="{L_RESET}" class="reset" />				
 			</fieldset>	
 		</form>
-		<script type="text/javascript">
-		<!--
-			ajax_model_extend_field();
-		-->
-		</script>

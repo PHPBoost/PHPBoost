@@ -38,19 +38,15 @@ function CheckForm() {
 					</option>
 					<option value="null" style="text-align:center;"></option>
 					# START modules #
-						<option
-							value="{modules.URL}"
-							{modules.SELECTED} 
-							style="font-weight:bold; text-transform:uppercase; padding:1px; text-align:center;">
-							{modules.NAME}
-						</option>
+						<optgroup label="{modules.NAME}">
 						# START modules.feeds_urls #
 							 <option value="{modules.feeds_urls.URL}"{modules.feeds_urls.SELECTED}>
 							 	{modules.feeds_urls.SPACE} {modules.feeds_urls.NAME}
 							 	# IF modules.feeds_urls.FEED_NAME #({modules.feeds_urls.FEED_NAME})# ENDIF #
 						 	</option>
 						# END modules.feeds_urls #
-						<option value="null" style="text-align:center;"></option>
+						</optgroup>
+						<option value="null" style="text-align:center;">-----------------------------</option>
 					# END modules #
 				</select></dd>
 			</dl>

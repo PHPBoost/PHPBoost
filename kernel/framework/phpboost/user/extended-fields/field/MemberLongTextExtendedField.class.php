@@ -3,8 +3,8 @@
  *                               MemberLongTextExtendedField.class.php
  *                            -------------------
  *   begin                : December 08, 2010
- *   copyright            : (C) 2010 Kévin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   copyright            : (C) 2010 Kevin MASSY
+ *   email                : kevin.massy@phpboost.com
  *
  *
  ###################################################
@@ -32,8 +32,6 @@ class MemberLongTextExtendedField extends AbstractMemberExtendedField
 		parent::__construct();
 		$this->set_disable_fields_configuration(array('possible_values', 'default_values'));
 		$this->set_name(LangLoader::get_message('type.long-text','admin-extended-fields-common'));
-		$this->parse_field = true;
-		$this->unparse_field = true;
 	}
 	
 	public function display_field_create(MemberExtendedField $member_extended_field)
@@ -54,6 +52,12 @@ class MemberLongTextExtendedField extends AbstractMemberExtendedField
 			'class' => 'text', 'required' => (bool)$member_extended_field->get_required(), 'rows' => 5, 'cols' => 47, 'description' => $member_extended_field->get_description()),
 			array($this->constraint($member_extended_field->get_regex()))
 		));
+	}
+	
+	public function return_value(HTMLForm $form, MemberExtendedField $member_extended_field)
+	{
+		$field_name = $member_extended_field->get_field_name();
+		return $form->get_value($field_name);
 	}
 }
 ?>

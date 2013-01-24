@@ -3,8 +3,8 @@
  *                          ConnectModuleMiniMenu.class.php
  *                            -------------------
  *   begin                : October 08, 2011
- *   copyright            : (C) 2011 Kévin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   copyright            : (C) 2011 Kevin MASSY
+ *   email                : kevin.massy@phpboost.com
  *
  *
  ###################################################
@@ -36,10 +36,9 @@ class ConnectModuleMiniMenu extends ModuleMiniMenu
     {
     	global $LANG;
 
-    	$block = $this->get_block();
-		$tpl = new FileTemplate('connect/connect_mini.tpl');
-		$user = AppContext::get_current_user();
-		MenuService::assign_positions_conditions($tpl, $block);
+	    $tpl = new FileTemplate('connect/connect_mini.tpl');
+	    $user = AppContext::get_current_user();
+	    MenuService::assign_positions_conditions($tpl, $this->get_block());
 	    if ($user->check_level(User::MEMBER_LEVEL)) //Connecté.
 	    {
 	    	$unread_contributions = UnreadContributionsCache::load();
@@ -81,7 +80,15 @@ class ConnectModuleMiniMenu extends ModuleMiniMenu
 	    			}
 	    		}
 	    	}
-	
+	    	
+			$user_accounts_config = UserAccountsConfig::load();
+	    	$user_avatar = MemberExtendedFieldsService::return_field_member('user_avatar', $user->get_id());
+	    	if (empty($user_avatar))
+			{
+				$user_avatar = '/templates/'. get_utheme() .'/images/'. $user_accounts_config->get_default_avatar_name();
+			}
+			
+			$total_alert = $user->get_attribute('user_pm') + $contribution_number + AdministratorAlertService::get_number_unread_alerts();
 	    	$tpl->put_all(array(
 	    		'C_ADMIN_AUTH' => $user->check_level(User::ADMIN_LEVEL),
 	    		'C_MODERATOR_AUTH' => $user->check_level(User::MODERATOR_LEVEL),
@@ -90,55 +97,42 @@ class ConnectModuleMiniMenu extends ModuleMiniMenu
 	    		'C_UNREAD_ALERT' => (bool)AdministratorAlertService::get_number_unread_alerts(),
 	    		'NUM_UNREAD_CONTRIBUTIONS' => $contribution_number,
 	    		'NUMBER_UNREAD_ALERTS' => AdministratorAlertService::get_number_unread_alerts(),
-	    		'IMG_PM' => $user->get_unread_pm() > 0 ? 'new_pm.gif' : 'pm_mini.png',
+	    		'IMG_PM' => $user->get_attribute('user_pm') > 0 ? 'new_pm.gif' : 'pm_mini.png',
+	    		'PSEUDO' => $user->get_display_name(),
+	    		'NUMBER_TOTAL_ALERT' => $total_alert,
 	    		'U_CONTRIBUTION' => UserUrlBuilder::contribution_panel()->absolute(),
 	    		'U_ADMINISTRATION' => UserUrlBuilder::administration()->absolute(),
 	    		'U_HOME_PROFILE' => UserUrlBuilder::home_profile()->absolute(),
-	    		'U_USER_PM' => UserUrlBuilder::personnal_message($user->get_id())->absolute(),
+	    		'U_USER_PM' => UserUrlBuilder::personnal_message($user->get_attribute('user_id'))->absolute(),
 	    		'U_USER_ID' => UserUrlBuilder::home_profile()->absolute(),
 	    		'U_DISCONNECT' => UserUrlBuilder::disconnect()->absolute(),
-	    		'L_NBR_PM' => ($user->get_attribute('user_pm') > 0 ? ($user->get_unread_pm() . ' ' . (($user->get_unread_pm() > 1) ? $LANG['message_s'] : $LANG['message'])) : $LANG['private_messaging']),
+	    		'U_AVATAR_IMG' => TPL_PATH_TO_ROOT . $user_avatar,
+	    		'L_NBR_PM' => ($user->get_attribute('user_pm') > 0 ? ($user->get_attribute('user_pm') . ' ' . (($user->get_attribute('user_pm') > 1) ? $LANG['message_s'] : $LANG['message'])) : $LANG['private_messaging']),
 	    		'L_PROFIL' => $LANG['profile'],
+	    		'L_MY_PROFIL' => $LANG['my_private_profile'],
 	    		'L_ADMIN_PANEL' => $LANG['admin_panel'],
 	    		'L_MODO_PANEL' => $LANG['modo_panel'],
 	    		'L_PRIVATE_PROFIL' => $LANG['my_private_profile'],
 	    		'L_DISCONNECT' => $LANG['disconnect'],
-	    		'L_CONTRIBUTION_PANEL' => $LANG['contribution_panel']
+	    		'L_CONTRIBUTION_PANEL' => $LANG['contribution_panel'],
+	    		'U_ALERT' => !empty($total_alert)
 	    	));
 	    }
 	    else
 	    {
-	    	$redirect_url = AppContext::get_request()->get_value('redirect', AppContext::get_request()->get_current_url()->absolute());
-			$target = DispatchManager::get_url('/user/index.php', '/login?redirect=' . urlencode($redirect_url));
-	    	$lang = LangLoader::get('login');
-	    	$form = new HTMLForm('loginForm', $target);
-			$form->set_css_class('fieldset_content');
-	
-			$fieldset = null;
-			if ($block == Menu::BLOCK_POSITION__LEFT || $block == Menu::BLOCK_POSITION__RIGHT)
-			{
-				$fieldset = new FormFieldsetVertical('loginFieldset');
-			}
-			else
-			{
-				$fieldset = new FormFieldsetHorizontal('loginFieldset');
-			}
-	
-			$login = new FormFieldTextEditor('username', $lang['login'], $lang['login']);
-			$login->add_constraint(new FormFieldConstraintMinLength(3));
-			$fieldset->add_field($login);
-			$password = new FormFieldPasswordEditor('password', $lang['password'], $lang['password']);
-			$password->add_constraint(new FormFieldConstraintMinLength(3));
-			$fieldset->add_field($password);
-			$autoconnect = new FormFieldCheckbox('autoconnect', $lang['autoconnect'], false);
-			$fieldset->add_field($autoconnect);
-	
-			$form->add_fieldset($fieldset);
-	
-			$submit_button = new FormButtonSubmit($lang['connect'], 'authenticate');
-			$form->add_button($submit_button);
-	
-	    	$tpl->put('AUTHENTICATION_FORM', $form->display());
+	    	$tpl->put_all(array(
+	    		'C_USER_REGISTER' => (bool)UserAccountsConfig::load()->is_registration_enabled(),
+	    		'L_REQUIRE_PSEUDO' => $LANG['require_pseudo'],
+				'L_REQUIRE_PASSWORD' => $LANG['require_password'],
+				'L_CONNECT' => $LANG['connect'],
+	    		'L_PSEUDO' => $LANG['pseudo'],
+	    		'L_PASSWORD' => $LANG['password'],
+	    		'L_AUTOCONNECT' => $LANG['autoconnect'],
+	    		'L_FORGOT_PASS' => LangLoader::get_message('forget-password', 'user-common'),
+	    		'L_REGISTER' => $LANG['register'],
+	    		'U_CONNECT' => (QUERY_STRING != '') ? '?' . str_replace('&', '&amp;', QUERY_STRING) . '&amp;' : '',
+	    		'U_REGISTER' => UserUrlBuilder::registration()->absolute()
+	    	));
 	    }
 	
 	    return $tpl->render();

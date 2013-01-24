@@ -36,14 +36,14 @@ class SandboxMailController extends ModuleController
 	 */
 	private $submit_button;
 
-	public function execute(HTTPRequest $request)
+	public function execute(HTTPRequestCustom $request)
 	{
 		$view = new StringTemplate('# IF C_MAIL_SENT # # IF C_SUCCESS # <div class="success">The mail has been sent</div>
 			# ELSE # <div class="error">{ERROR}</div> # ENDIF # # ENDIF #
 			<h1>SMTP</h1> # INCLUDE SMTP_FORM #');
 
 		$this->build_form();
-		if ($this->submit_button->has_been_submitted() && $this->form->validate())
+		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$result = $this->send_mail();
 			$view->put_all(array(

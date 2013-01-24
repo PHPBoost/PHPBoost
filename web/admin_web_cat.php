@@ -63,7 +63,7 @@ if (!empty($_POST['valid']))
 	//Régénération du cache des catégories.
 	$Cache->Generate_module_file('web');
 	
-	AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);
+	AppContext::get_response()->redirect(HOST . SCRIPT);
 }
 elseif (empty($top) && empty($bottom) && $del && !empty($id)) //Suppression du lien.
 {
@@ -76,7 +76,7 @@ elseif (empty($top) && empty($bottom) && $del && !empty($id)) //Suppression du l
 	//Régénération du cache des catégories.
 	$Cache->Generate_module_file('web');
 	
-	AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);
+	AppContext::get_response()->redirect(HOST . SCRIPT);
 }
 elseif ((!empty($top) || !empty($bottom)) && !empty($id)) //Monter/descendre.
 {
@@ -133,7 +133,7 @@ elseif (!empty($_POST['add'])) //Ajout du lien.
 		//Régénération du cache des catégories.
 		$Cache->Generate_module_file('web');
 	
-		AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);
+		AppContext::get_response()->redirect(HOST . SCRIPT);
 	}
 	else
 		AppContext::get_response()->redirect('/web/admin_web_cat.php?error=incomplete#message_helper');
@@ -206,9 +206,9 @@ else
 	while ($row = $Sql->fetch_assoc($result))
 	{
 		//On reccourci le lien si il est trop long pour éviter de déformer l'administration.
-		$row['name'] = html_entity_decode($row['name']);
+		$row['name'] = TextHelper::html_entity_decode($row['name']);
 		$name = strlen($row['name']) > 45 ? substr($row['name'], 0, 45) . '...' : $row['name'];
-		$name = htmlspecialchars($name);
+		$name = TextHelper::htmlspecialchars($name);
 
 		//Activation des catégories.
 		$enabled = $row['aprob'] == '1' ? 'checked="checked"' : '';	
