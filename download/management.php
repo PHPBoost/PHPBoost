@@ -353,6 +353,7 @@ if ($edit_file_id > 0)
 			'L_RELEASE_DATE' => $DOWNLOAD_LANG['release_date'],
 			'L_DOWNLOADED' => $DOWNLOAD_LANG['downloaded'],
 			'L_NOTE' => $LANG['note'],
+			'L_DEADLINK' => $DOWNLOAD_LANG['deadlink'],
 			'U_DOWNLOAD_FILE' => url('count.php?id=' . $edit_file_id, 'file-' . $edit_file_id . '+' . Url::encode_rewrite($file_title) . '.php')
 		));
 
@@ -602,6 +603,7 @@ else
 			'L_RELEASE_DATE' => $DOWNLOAD_LANG['release_date'],
 			'L_DOWNLOADED' => $DOWNLOAD_LANG['downloaded'],
 			'L_NOTE' => $LANG['note'],
+			'L_DEADLINK' => $DOWNLOAD_LANG['deadlink'],
 		    'APPROVED' => ' checked="checked"',
 			'U_DOWNLOAD_FILE' => url('count.php?id=' . $edit_file_id, 'file-' . $edit_file_id . '+' . Url::encode_rewrite($file_title) . '.php')
 		));
