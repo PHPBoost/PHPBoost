@@ -431,8 +431,6 @@ class InstallationServices
 
 	private function create_first_admin($login, $password, $email, $create_session, $auto_connect)
 	{
-		global $Cache;
-		$Cache = new Cache();
 		$admin_unlock_code = $this->generate_admin_unlock_code();
 		$this->update_first_admin_account($login, $password, $email, LangLoader::get_locale(), $this->distribution_config['theme'], GeneralConfig::load()->get_site_timezone());
 		$this->configure_mail_sender_system($email);
