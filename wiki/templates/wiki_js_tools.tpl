@@ -9,7 +9,7 @@
 
 		<script type="text/javascript" src="{PICTURES_DATA_PATH}/images/wiki.js"></script>
 
-		<table class="bbcode" style="margin:4px auto; min-width:410px;">
+		<table class="bbcode" style="margin:4px auto; width:410px;">
 			<tr>
 				<td style="padding: 2px; text-align:center;">
 					<span class="valign_middle">
