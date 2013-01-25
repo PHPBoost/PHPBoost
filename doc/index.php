@@ -1,5 +1,5 @@
 <?php
 
-header('Location:3.0/index.php');
+header('Location:4.0/index.php');
 
 ?>
