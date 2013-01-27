@@ -56,3 +56,5 @@ syntax: regexp
 ^templates/CrazyRider$
 syntax: regexp
 ^templates/test$
+syntax: regexp
+^templates/lorem$
