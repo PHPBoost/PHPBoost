@@ -32,7 +32,7 @@
 .search_submit:hover {
 	border:none;
 	background:url('images/search_submit.png') no-repeat;
-	cursor:  pointer;
+	cursor:pointer;
 }
 .search_submit:focus {
 	border:none;
