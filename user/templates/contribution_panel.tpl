@@ -175,10 +175,18 @@
 		<div class="module_contents">
 			# IF C_WRITE_AUTH #
 				# IF C_UNPROCESSED_CONTRIBUTION #
-				<div style="text-align:center;">
-					<a href="{FIXING_URL}" title="{L_PROCESS_CONTRIBUTION}"><img src="../templates/{THEME}/images/process-contribution.png" alt="{L_PROCESS_CONTRIBUTION}" /></a>
-					<br />
-					<a href="{FIXING_URL}" title="{L_PROCESS_CONTRIBUTION}">{L_PROCESS_CONTRIBUTION}</a>
+				<div style="text-align:center;margin:auto;width:300px">
+					<div style="float:left;width:50%">
+						<a href="{FIXING_URL}" title="{L_PROCESS_CONTRIBUTION}"><img src="../templates/{THEME}/images/process-contribution.png" alt="{L_PROCESS_CONTRIBUTION}" /></a>
+						<br />
+						<a href="{FIXING_URL}" title="{L_PROCESS_CONTRIBUTION}">{L_PROCESS_CONTRIBUTION}</a>
+					</div>
+					<div style="float:left;width:50%">
+						<a href="{U_UPDATE}" title="{L_UPDATE} {L_STATUS}"><img src="../templates/{THEME}/images/success.png" alt="{L_UPDATE} {L_STATUS}" /></a>
+						<br />
+						<a href="{U_UPDATE}" title="{L_UPDATE} {L_STATUS}">{L_UPDATE} {L_STATUS}</a>
+					</div>
+					<div class="spacer"></div>
 				</div>
 				# ENDIF #
 			# ENDIF #
