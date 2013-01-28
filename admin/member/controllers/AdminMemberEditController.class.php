@@ -61,7 +61,7 @@ class AdminMemberEditController extends AdminController
 
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
-			$this->save();
+			$this->save($tpl);
 		}
 
 		$tpl->put('FORM', $this->form->display());
@@ -152,7 +152,7 @@ class AdminMemberEditController extends AdminController
 		$this->form = $form;
 	}
 
-	private function save()
+	private function save($tpl)
 	{
 		$redirect = true;
 		
@@ -210,7 +210,7 @@ class AdminMemberEditController extends AdminController
 			MemberExtendedFieldsService::register_fields($this->form, $user_id);
 		} catch (MemberExtendedFieldErrorsMessageException $e) {
 			$redirect = false;
-			$this->tpl->put('MSG', MessageHelper::display($e->getMessage(), MessageHelper::NOTICE));
+			$tpl->put('MSG', MessageHelper::display($e->getMessage(), MessageHelper::NOTICE));
 		}
 			
 		if ($this->form->get_value('delete_account'))
