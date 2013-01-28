@@ -122,7 +122,7 @@ class MiniCalendar
 		$template = new FileTemplate('framework/util/mini_calendar.tpl');
 
 		$template->put_all(array(
-			'DEFAULT_DATE' => !empty($this->date) ? $this->date->format(DATE_FORMAT_SHORT) : '',
+			'DEFAULT_DATE' => !empty($this->date) ? $this->date->format(DATE_FORMAT_MEDIUM) : '',
 			'CALENDAR_ID' => 'calendar_' . $this->num_instance,
 			'CALENDAR_NUMBER' => (string)$this->num_instance,
 			'DAY' => !empty($this->date) ? $this->date->get_day() : '',
@@ -145,7 +145,7 @@ class MiniCalendar
 	 */
 	public static function retrieve_date($calendar_name)
 	{
-		return new Date(DATE_FROM_STRING, TIMEZONE_AUTO, retrieve(REQUEST, $calendar_name, '', TSTRING_UNCHANGE), LangLoader::get_message('date_format_short', 'main'));
+		return new Date(DATE_FROM_STRING, TIMEZONE_AUTO, retrieve(REQUEST, $calendar_name, '', TSTRING_UNCHANGE), LangLoader::get_message('date_format_medium', 'main'));
 	}
 }
 ?>
