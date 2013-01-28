@@ -168,7 +168,7 @@ class ClassLoader
 
 	private static function inc($file)
 	{
-		return file_exists($file) && include_once $file;
+		return file_exists($file) && @include_once $file;
 	}
 
 	private static function call_static_initializer($classname)
