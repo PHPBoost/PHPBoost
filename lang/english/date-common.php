@@ -60,7 +60,7 @@ $lang['sunday_short'] = 'Sun';
 
 $lang['monday'] = 'Monday';
 $lang['tuesday'] = 'Tuesday';
-$lang['wendesday'] = 'Wednesday';
+$lang['wednesday'] = 'Wednesday';
 $lang['thursday'] = 'Thursday';
 $lang['friday'] = 'Friday';
 $lang['saturday'] = 'Saturday';
