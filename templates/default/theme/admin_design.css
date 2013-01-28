@@ -197,10 +197,3 @@ div#footer {
 
 div#footer span { color:#FFF; font-size:10px; }
 div#footer span a { color:#FFF; font-size:10px; }
-
-/* Gestion des couleurs */
-.bbcode, .bbcode2{
-	background-color:#336397;
-	border-color:#BEBEBE;
-	color:#FFFFFF;
-}

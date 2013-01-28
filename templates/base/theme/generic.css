@@ -265,9 +265,7 @@ h4.stitle2{
 }
 
 /* Code avec numérotation des listes */
-.code ol{
-	margin-left:3em;
-}
+.code ol{ margin-left:3em; }
 
 /*Lien vers Wikipédia*/
 a.wikipedia_link:before{
@@ -276,6 +274,8 @@ a.wikipedia_link:before{
    padding-right:2px;
 }
 
-a.wikipedia_link{
-	border-bottom:1px dotted;
-}
+a.wikipedia_link{ border-bottom:1px dotted; }
+
+/* Gestion des couleurs */
+.bbcode_color{ }
+.bbcode_block_color{ }

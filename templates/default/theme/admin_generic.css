@@ -42,3 +42,7 @@ h2 { font-size:125%; }
 .center { text-align:center; }
 .em { color:#666666; background-color:#cccccc; }
 pre { margin:0px; font-family:monospace; color:#000; }
+
+/* Gestion des couleurs */
+.bbcode_color{ }
+.bbcode_block_color{ }
