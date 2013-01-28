@@ -275,7 +275,3 @@ a.wikipedia_link:before{
 }
 
 a.wikipedia_link{ border-bottom:1px dotted; }
-
-/* Gestion des couleurs */
-.bbcode_color{ }
-.bbcode_block_color{ }
