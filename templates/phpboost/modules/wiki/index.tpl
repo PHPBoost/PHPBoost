@@ -188,6 +188,17 @@
 						</ul>
 						<div class="spacer"></div>
 					</div>
+					
+					<div class="pbt_desc_container">
+						<p class="pbt_desc">Les articles<p>
+						<ul class="bb_ul no_list">
+							<li class="bb_li" >
+								<img src="{PICTURES_DATA_PATH}/images/article.png"  class="valign_middle" alt="" />&nbsp;
+								<a href="{PATH_TO_ROOT}/wiki/utiliser-phpboost-en-ligne-de-commande">Utiliser PHPBoost en ligne de commande</a>
+							</li>
+						</ul>
+						<div class="spacer"></div>
+					</div>
 				
 				</div>
 			
