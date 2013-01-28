@@ -265,7 +265,7 @@ class AdminMemberEditController extends AdminController
 		$text = 'var theme = new Array;' . "\n";
 		foreach (ThemeManager::get_activated_themes_map() as $theme)
 		{
-			$picture = $theme->get_configuration()->get_first_pictures();
+			$picture = $theme->get_configuration()->get_first_picture();
 			$text .= 'theme["' . $theme->get_id() . '"] = "' . TPL_PATH_TO_ROOT .'/templates/' . $theme->get_id() . '/' . $picture . '";' . "\n";
 		}
 		$text .= 'var theme_id = HTMLForms.getField("theme").getValue(); document.images[\'img_theme\'].src = theme[theme_id];';
@@ -274,7 +274,7 @@ class AdminMemberEditController extends AdminController
 	
 	private function get_picture_theme($user_theme)
 	{
-		$picture = ThemeManager::get_theme($user_theme)->get_configuration()->get_first_pictures();
+		$picture = ThemeManager::get_theme($user_theme)->get_configuration()->get_first_picture();
 		return TPL_PATH_TO_ROOT .'/templates/' . $user_theme . '/' . $picture;
 	}
 }

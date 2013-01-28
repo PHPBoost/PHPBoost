@@ -131,7 +131,7 @@ class ThemeConfiguration
 		return $this->pictures;
 	}
 	
-	public function get_first_pictures()
+	public function get_first_picture()
 	{
 		if (isset($this->pictures[0]))
 		{

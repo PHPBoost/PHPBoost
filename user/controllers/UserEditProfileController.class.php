@@ -217,8 +217,8 @@ class UserEditProfileController extends AbstractController
 		$text = 'var theme = new Array;' . "\n";
 		foreach (ThemeManager::get_activated_themes_map() as $theme)
 		{
-			$pictures = $theme->get_configuration()->get_pictures();
-			$text .= 'theme["' . $theme->get_id() . '"] = "' . TPL_PATH_TO_ROOT .'/templates/' . $theme->get_id() . '/' . $pictures[0] . '";' . "\n";
+			$picture = $theme->get_configuration()->get_first_picture();
+			$text .= 'theme["' . $theme->get_id() . '"] = "' . TPL_PATH_TO_ROOT .'/templates/' . $theme->get_id() . '/' . $picture . '";' . "\n";
 		}
 		$text .= 'var theme_id = HTMLForms.getField("theme").getValue(); document.images[\'img_theme\'].src = theme[theme_id];';
 		return $text;
@@ -226,8 +226,8 @@ class UserEditProfileController extends AbstractController
 	
 	private function get_picture_theme($user_theme)
 	{
-		$pictures = ThemeManager::get_theme($user_theme)->get_configuration()->get_pictures();
-		return TPL_PATH_TO_ROOT .'/templates/' . $user_theme . '/' . $pictures[0];
+		$picture = ThemeManager::get_theme($user_theme)->get_configuration()->get_first_picture();
+		return TPL_PATH_TO_ROOT .'/templates/' . $user_theme . '/' . $picture;
 	}
 }
 ?>

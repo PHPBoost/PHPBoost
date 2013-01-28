@@ -193,7 +193,7 @@ class AdminGeneralConfigController extends AdminController
 	private function get_picture_theme($theme_id = null)
     {
         $theme_id = $theme_id !== null ? $theme_id : $this->user_accounts_config->get_default_theme();
-        $picture = ThemeManager::get_theme($theme_id)->get_configuration()->get_first_pictures();
+        $picture = ThemeManager::get_theme($theme_id)->get_configuration()->get_first_picture();
     	return Url::to_rel('/templates/' . $theme_id . '/' . $picture);
     }
 
