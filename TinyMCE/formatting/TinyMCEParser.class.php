@@ -798,7 +798,7 @@ class TinyMCEParser extends ContentFormattingParser
 	 * @param string[] $var The matched elemets
 	 * @return string The clean code.
 	 */
-	private function clear_html_and_code_tag($var)
+	private static function clear_html_and_code_tag($var)
 	{
 		$var = preg_replace('`</p>\s*<p>`i', "\n", $var);
 		$var = str_replace('<br />', "\n", $var);
