@@ -112,8 +112,8 @@
 						<li>
 							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/li.png" alt="" />
 							# IF news.C_ICON # <a href="{news.U_CAT}"><img class="valign_middle" src="{news.ICON}" alt="" /></a> # ENDIF #
-							# IF news.C_DATE #<span class="text_small">{list.DATE} : </span># ENDIF #
-							<a href="{list.U_LINK}">{news.TITLE}</a>
+							# IF news.C_DATE #<span class="text_small">{news.DATE} : </span># ENDIF #
+							<a href="{news.U_LINK}">{news.TITLE}</a>
 							# IF news.C_COM #({news.NUMBER_COM})# ENDIF #
 						</li>
 					</ul>
