@@ -249,8 +249,8 @@ class UserRegistrationController extends AbstractController
 	private function get_picture_theme()
 	{
 		$theme_id = $this->user_accounts_config->get_default_theme();
-		$pictures = ThemeManager::get_theme($theme_id)->get_configuration()->get_pictures();
-		return TPL_PATH_TO_ROOT .'/templates/' . $theme_id . '/' . $pictures[0];
+		$picture = ThemeManager::get_theme($theme_id)->get_configuration()->get_first_picture();
+		return TPL_PATH_TO_ROOT .'/templates/' . $theme_id . '/' . $picture;
 	}
 }
 ?>
