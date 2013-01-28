@@ -131,7 +131,7 @@ if ($calendar_type == 'date')
     }
 
     //Génération du calendrier. 
-    $year = !empty($lyear) ? $year : substr($year, 2, 2);
+   
     $month = ($month < 10 && substr($month, 0, 1) != 0) ? '0' . $month : $month;
     $j = 1;
     $last_day = ($month_day + $first_day);

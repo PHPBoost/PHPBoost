@@ -39,6 +39,7 @@ define('DATE_RFC822_F', 		5);
 define('DATE_RFC3339_F', 		6);
 define('DATE_FORMAT_TEXT_SHORT',7);
 define('DATE_FORMAT_TEXT_LONG', 8);
+define('DATE_FORMAT_MEDIUM', 	9);
 
 define('DATE_RFC822_FORMAT', 	'D, d M Y H:i:s O');
 define('DATE_RFC3339_FORMAT', 	'Y-m-d\TH:i:s');
@@ -205,6 +206,7 @@ class Date
 							break;
 
 						case 'y':
+						case 'Y':
 							$year = (isset($given_times[$i])) ? NumberHelper::numeric($given_times[$i]) : 0;
 							break;
 					}
@@ -249,11 +251,6 @@ class Date
 	{
 		$timestamp = $this->timestamp + self::compute_server_user_difference($referencial_timezone) * 3600;
 
-		if ($timestamp <= 0)
-		{
-			return '';
-		}
-
 		switch ($format)
 		{
 			case DATE_FORMAT_TINY:
@@ -263,6 +260,11 @@ class Date
 			case DATE_FORMAT_SHORT:
 				return date(LangLoader::get_message('date_format_short', 'main'), $timestamp);
 				break;
+				
+			case DATE_FORMAT_MEDIUM:
+				return date(LangLoader::get_message('date_format_medium', 'main'), $timestamp);
+				break;
+				
 			case DATE_FORMAT:
 				return date(LangLoader::get_message('date_format', 'main'), $timestamp);
 				break;

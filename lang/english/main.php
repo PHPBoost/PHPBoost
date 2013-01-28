@@ -35,6 +35,7 @@
 $LANG['xml_lang'] = 'en';
 $LANG['date_format_tiny'] = 'm/d';
 $LANG['date_format_short'] = 'm/d/y';
+$LANG['date_format_medium'] = 'd/m/Y';
 $LANG['date_format'] = 'm/d/y \a\t H\hi';
 $LANG['date_format_long'] = 'm/d/y \a\t H\hi\m\i\ns\s';
 $LANG['date_format_text_short'] = 'j F Y';
