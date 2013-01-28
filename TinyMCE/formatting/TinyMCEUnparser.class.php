@@ -262,7 +262,7 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 	 * @param string $var variable to clear
 	 * @return the clean content
 	 */
-	private function clear_html_and_code_tag($var)
+	private static function clear_html_and_code_tag($var)
 	{
 		$var = str_replace("\n", '<br />', $var);
 		return TextHelper::htmlentities($var, ENT_NOQUOTES);
