@@ -670,7 +670,7 @@ $comment = $LANG['bugs.labels.fields.assigned_to_id'] . ' <a href="' . UserUrlBu
 			
 			//Récupération de l'id des personnes qui ont mis à jour le bug
 			$updaters_ids = array($old_values['author_id']);
-			if (!empty($assigned_to_id) && $result['assigned_to_id'] != $result['author_id'])
+			if (!empty($assigned_to_id) && $assigned_to_id != $old_values['author_id'])
 				$updaters_ids[] = $assigned_to_id;
 			
 			$result = $Sql->query_while("SELECT updater_id
