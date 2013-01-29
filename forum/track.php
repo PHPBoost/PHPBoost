@@ -210,7 +210,7 @@ elseif ($User->check_level(User::MEMBER_LEVEL)) //Affichage des message()s non l
 	));
 	
 	//Listes les utilisateurs en lignes.
-	list($users_list, $total_admin, $total_modo, $total_member, $total_visit, $total_online) = forum_list_user_online("AND s.session_script = '". GeneralConfig::get_default_site_path() ."/forum/track.php'");
+	list($users_list, $total_admin, $total_modo, $total_member, $total_visit, $total_online) = forum_list_user_online("AND s.session_script LIKE '". GeneralConfig::get_default_site_path() ."/forum/track.php'");
 
 	$Template->put_all(array(
 		'TOTAL_ONLINE' => $total_online,
