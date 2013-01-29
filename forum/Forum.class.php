@@ -77,7 +77,7 @@ class Forum
 				$pseudo = $LANG['guest'];
 				$pseudo_pm = $LANG['guest'];
 			}
-			$next_msg_link = HOST . DIR . '/forum/topic' . url('.php?id=' . $idtopic . $last_page, '-' . $idtopic . $last_page_rewrite . '.php') . '#m' . $previous_msg_id;
+			$next_msg_link = '/forum/topic' . url('.php?id=' . $idtopic . $last_page, '-' . $idtopic . $last_page_rewrite . '.php') . '#m' . $previous_msg_id;
 			$preview_contents = substr($contents, 0, 300);
 
 
@@ -96,18 +96,14 @@ class Forum
 					AppContext::get_mail_service()->send_from_properties(
 						$row['user_mail'], 
 						$LANG['forum_mail_title_new_post'], 
-						sprintf($LANG['forum_mail_new_post'], $row['login'], $title_subject, $User->get_attribute('login'), $preview_contents, $next_msg_link, HOST . DIR . '/forum/action.php?ut=' . $idtopic . '&trt=1', 1)
+						sprintf($LANG['forum_mail_new_post'], $row['login'], $title_subject, $User->get_attribute('login'), $preview_contents, HOST . DIR . $next_msg_link, HOST . DIR . '/forum/action.php?ut=' . $idtopic . '&trt=1', 1)
 					);
 				}	
 				
 				//Envoi un MP à ceux dont le last_view_id est le message précedent.
 				if ($row['last_view_id'] == $previous_msg_id && $row['pm'] == '1')
 				{
-					$content = sprintf($LANG['forum_mail_new_post'], $row['login'], $title_subject_pm, $User->get_attribute('login'), $preview_contents, '<a href="'.$next_msg_link.'">'.$next_msg_link.'</a>', '<a href="' . HOST . DIR . '/forum/action.php?ut=' . $idtopic . '&trt=2>' . HOST . DIR . '/forum/action.php?ut=' . $idtopic . '&trt=2</a>'); 
-					if (!MAGIC_QUOTES)
-					{
-						$content = addslashes($content);
-					}
+					$content = sprintf($LANG['forum_mail_new_post'], $row['login'], $title_subject_pm, $User->get_attribute('login'), $preview_contents, '<a href="'.$next_msg_link.'">'.$next_msg_link.'</a>', '<a href="' . '/forum/action.php?ut=' . $idtopic . '&trt=2>' . '/forum/action.php?ut=' . $idtopic . '&trt=2</a>'); 
 					
 					PrivateMsg::start_conversation(
 						$row['user_id'], 
