@@ -31,7 +31,7 @@ require_once PATH_TO_ROOT . '/media/media_constant.php';
 
 define('MEDIA_DO_NOT_GENERATE_CACHE', false);
 
-class MediaCats extends CategoriesManager
+class MediaCats extends DeprecatedCategoriesManager
 {
 	## Public methods ##
 

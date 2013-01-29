@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                        CategoriesManager.class.php
+ *                        DeprecatedCategoriesManager.class.php
  *                            -------------------
  *   begin                : February 06, 2008
  *   copyright            : (C) 2008 Beno�t Sautel
@@ -98,7 +98,7 @@ define('NEW_STATUS_UNKNOWN', 0x100);
  *  </ul>
  * If you need more informations to use this class, we advise you to look at the wiki of PHPBoost, in which there is a tutorial explaining how to use it step by step.
  */
-class CategoriesManager
+class DeprecatedCategoriesManager
 {
 	/**
 	 * @var string table name where are stocked the categories to manage (see the class description for more details).

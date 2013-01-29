@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                          Category.class.php
+ *                          RichCategory.class.php
  *                            -------------------
  *   begin                : January 29, 2013
  *   copyright            : (C) 2013 Kévin MASSY
@@ -25,80 +25,26 @@
  *
  ###################################################*/
 
-class Category
+class RichCategory extends Category
 {
-	protected $id;
-	protected $name;
-	protected $order;
-	protected $visible;
-	protected $auth;
-	protected $id_parent;
+	protected $description;
 	
-	public function get_id()
+	public function set_description($description)
 	{
-		return $this->id;
+		$this->description = $description;
 	}
 	
-	public function set_id($id)
+	public function get_description()
 	{
-		$this->id = $id;
+		return $this->description;
 	}
 	
-	public function get_name()
-	{
-		return $this->name;
-	}
-	
-	public function set_name($name)
-	{
-		$this->name = $name;
-	}
-	
-	public function get_order()
-	{
-		return $this->order;
-	}
-	
-	public function set_order($order)
-	{
-		$this->order = $order;
-	}
-	
-	public function is_visible()
-	{
-		return $this->visible;
-	}
-	
-	public function set_visible($visible)
-	{
-		$this->visible = (boolean)$visible;
-	}
-	
-	public function get_auth()
-	{
-		return $this->auth;
-	}
-	
-	public function set_auth(array $auth)
-	{
-		$this->auth = $auth;
-	}
-	
-	public function get_id_parent()
-	{
-		return $this->id_parent;
-	}
-	
-	public function set_id_parent($id_parent)
-	{
-		$this->id_parent = $id_parent;
-	}
-
 	public function get_properties()
 	{
 		return array(
 			'id' => $this->get_id(),
 			'name' => $this->get_name(),
+			'description' => $this->description(),
 			'order' => $this->get_order(),
 			'visible' => $this->get_visible(),
 			'auth' => serialize($this->get_auth()),
@@ -110,6 +56,7 @@ class Category
 	{
 		$this->set_id($properties['id']);
 		$this->set_name($properties['name']);
+		$this->set_description($properties['description']);
 		$this->set_order($properties['order']);
 		$this->set_visible($properties['visible']);
 		$this->set_auth(!empty($properties['auth']) ? unserialize($properties['auth']) : array());

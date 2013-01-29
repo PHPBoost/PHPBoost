@@ -27,7 +27,7 @@
 
 define('DO_NOT_GENERATE_CACHE', false);
 
-class ArticlesCats extends CategoriesManager
+class ArticlesCats extends DeprecatedCategoriesManager
 {
 	## Public methods ##
 
