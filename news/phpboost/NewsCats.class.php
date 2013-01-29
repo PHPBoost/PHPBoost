@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-class NewsCats extends CategoriesManager
+class NewsCats extends DeprecatedCategoriesManager
 {
 	## Public methods ##
 

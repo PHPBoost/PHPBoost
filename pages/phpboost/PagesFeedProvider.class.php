@@ -33,7 +33,7 @@ class PagesFeedProvider implements FeedProvider
 		global $Cache,$_PAGES_CATS;
 		if (!isset($_PAGES_CATS))
 			$Cache->load('pages');
-		$cat = new CategoriesManager('pages_cats', 'pages', $_PAGES_CATS);
+		$cat = new DeprecatedCategoriesManager('pages_cats', 'pages', $_PAGES_CATS);
 		$list = $cat->get_feeds_list();
 		return $list;
 	}

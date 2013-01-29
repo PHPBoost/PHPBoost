@@ -26,7 +26,7 @@
  ###################################################*/
 
 
-class FaqCats extends CategoriesManager
+class FaqCats extends DeprecatedCategoriesManager
 {
 	public function __construct()
 	{

@@ -32,7 +32,7 @@ $Cache->load('download');
 
 define('NOT_GENERATE_CACHE', true);
 
-class DownloadCats extends CategoriesManager
+class DownloadCats extends DeprecatedCategoriesManager
 {
 	## Public methods ##
 	
