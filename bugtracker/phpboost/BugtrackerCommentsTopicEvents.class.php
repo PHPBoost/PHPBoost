@@ -40,7 +40,7 @@ class BugtrackerCommentsTopicEvents extends CommentsTopicEvents
 		$pm_activated = $bugtracker_config->get_pm_activated();
 		
 		// Récupéreration du contenu du commentaire
-		$comment = AppContext::get_request()->get_poststring('comments_message', '');
+		$comment = FormatingHelper::strparse(AppContext::get_request()->get_poststring('comments_message', ''));
 		
 		//Récupération de l'id du bug
 		$bug_id = $this->comments_topic->get_id_in_module();
