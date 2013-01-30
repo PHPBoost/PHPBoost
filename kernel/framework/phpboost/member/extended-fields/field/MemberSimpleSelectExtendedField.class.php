@@ -52,7 +52,7 @@ class MemberSimpleSelectExtendedField extends AbstractMemberExtendedField
 			$i++;
 		}
 		
-		$fieldset->add_field(new FormFieldSimpleSelectChoice($member_extended_field->get_field_name(), $member_extended_field->get_name(), $default, $field, array('required' => (bool)$member_extended_field->get_required())));
+		$fieldset->add_field(new FormFieldSimpleSelectChoice($member_extended_field->get_field_name(), $member_extended_field->get_name(), $default, $field, array('required' => (bool)$member_extended_field->get_required(), 'description' => $member_extended_field->get_description())));
 	}
 	
 	public function display_field_update(MemberExtendedField $member_extended_field)
@@ -73,7 +73,7 @@ class MemberSimpleSelectExtendedField extends AbstractMemberExtendedField
 			$i++;
 		}
 		
-		$fieldset->add_field(new FormFieldSimpleSelectChoice($member_extended_field->get_field_name(), $member_extended_field->get_name(), $default, $field, array('required' => (bool)$member_extended_field->get_required())));
+		$fieldset->add_field(new FormFieldSimpleSelectChoice($member_extended_field->get_field_name(), $member_extended_field->get_name(), $default, $field, array('required' => (bool)$member_extended_field->get_required(), 'description' => $member_extended_field->get_description())));
 	}
 	
 	public function return_value(HTMLForm $form, MemberExtendedField $member_extended_field)
