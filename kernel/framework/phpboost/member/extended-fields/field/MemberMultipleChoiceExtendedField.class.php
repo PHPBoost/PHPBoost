@@ -47,7 +47,7 @@ class MemberMultipleChoiceExtendedField extends AbstractMemberExtendedField
 			$i++;
 		}
 		
-		$fieldset->add_field(new FormFieldMultipleCheckbox($member_extended_field->get_field_name(), $member_extended_field->get_name(), $this->default_values($member_extended_field->get_default_values()), $field, array('required' => (bool)$member_extended_field->get_required())));
+		$fieldset->add_field(new FormFieldMultipleCheckbox($member_extended_field->get_field_name(), $member_extended_field->get_name(), $this->default_values($member_extended_field->get_default_values()), $field, array('required' => (bool)$member_extended_field->get_required(), 'description' => $member_extended_field->get_description())));
 	}
 	
 	public function display_field_update(MemberExtendedField $member_extended_field)
@@ -62,7 +62,7 @@ class MemberMultipleChoiceExtendedField extends AbstractMemberExtendedField
 			$field[] = new FormFieldMultipleCheckboxOption($member_extended_field->get_field_name() . '_' . $i, $values);
 			$i++;
 		}
-		$fieldset->add_field(new FormFieldMultipleCheckbox($member_extended_field->get_field_name(), $member_extended_field->get_name(), $this->default_values($member_extended_field->get_value()), $field, array('required' => (bool)$member_extended_field->get_required())));
+		$fieldset->add_field(new FormFieldMultipleCheckbox($member_extended_field->get_field_name(), $member_extended_field->get_name(), $this->default_values($member_extended_field->get_value()), $field, array('required' => (bool)$member_extended_field->get_required(), 'description' => $member_extended_field->get_description())));
 	}
 	
 	public function return_value(HTMLForm $form, MemberExtendedField $member_extended_field)
