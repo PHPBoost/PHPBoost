@@ -49,9 +49,7 @@ if (!empty($idart) && isset($cat))
 		$error_controller = PHPBoostErrors::unexisting_page();
 		DispatchManager::redirect($error_controller);
 	}
-	
-	ArticlesCategoriesCache::load();
-	
+
 	if (empty($articles['id']))
 	{
 		$controller = new UserErrorController(LangLoader::get_message('error', 'errors'), 
