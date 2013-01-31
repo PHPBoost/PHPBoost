@@ -171,6 +171,25 @@ class DBQuerier implements SQLQuerier
 	}
 	
 	/**
+	 * @desc retrieve a single row for executes the <code>$query</code> sql request and returns row
+	 * @param string $query the query to execute
+	 * @param string[string] $parameters the query_var map
+	 * @return mixed the value of the returned row
+	 */
+	public function select_single_row_query($query, $parameters = array())
+	{
+		$query_result = self::select($query, $parameters, SelectQueryResult::FETCH_NUM);
+		
+		$query_result->rewind();
+		if (!$query_result->valid())
+		{
+			throw new RowNotFoundException();
+		}
+		$result = $query_result->current();
+		return $result[0];
+	}
+	
+	/**
 	 * @desc Returns true if a or multiple rows match the given condition.
 	 * @param string $table_name the name of the table on which work will be done
 	 * @param string $condition the condition beginning just after the where clause.
