@@ -157,7 +157,7 @@
 					<div class="shout_horizontal">
 						<div id="shout_container">					
 							# START shout #
-							<p id="shout_container_{shout.IDMSG}">{shout.DEL_MSG}<span class="text_small"> {shout.DATE} : </span>{shout.PSEUDO} <span class="text_small">: {shout.CONTENTS}</span></p>						
+							<p id="shout_container_{shout.IDMSG}">{shout.DEL_MSG}<span class="text_small"> {shout.DATE} : </span>{shout.PSEUDO}<span class="text_small"> : {shout.CONTENTS}</span></p>						
 							# END shout #					
 						</div>
 						# IF C_VISIBLE_SHOUT #
