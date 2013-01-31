@@ -33,6 +33,7 @@ require_once('../kernel/header_no_display.php');
 $add = !empty($_GET['add']) ? true : false;
 $del = !empty($_GET['del']) ? true : false;
 $refresh = !empty($_GET['refresh']) ? true : false;
+$display_date = isset($_GET['display_date']) && ($_GET['display_date'] == '1');
 
 $config_shoutbox = ShoutboxConfig::load();
 if ($add)
@@ -75,14 +76,19 @@ if ($add)
 				exit;
 			}
 			
+			
+			
 			$Sql->query_inject("INSERT INTO " . PREFIX . "shoutbox (login, user_id, level, contents, timestamp) VALUES('" . $shout_pseudo . "', '" . $User->get_attribute('user_id') . "', '" . $User->get_attribute('level') . "', '" . $shout_contents . "', '" . time() . "')", __LINE__, __FILE__);
 			$last_msg_id = $Sql->insert_id("SELECT MAX(id) FROM " . PREFIX . "shoutbox"); 
 			
+			$date = new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, time() );
+			$date = $date->format(DATE_YEAR_MONTH_DAY_HOUR_MINUTE_SECOND);
+			
 			$array_class = array('member', 'modo', 'admin');
 			if ($User->get_attribute('user_id') !== -1)
-				$shout_pseudo = '<a href="javascript:Confirm_del_shout(' . $last_msg_id . ');" title="' . $LANG['delete'] . '"><img src="'. TPL_PATH_TO_ROOT .'/templates/' . get_utheme() . '/images/delete_mini.png" alt="" /></a> <a style="font-size:10px;" class="' . $array_class[$User->get_attribute('level')] . '" href="' . UserUrlBuilder::profile($User->get_attribute('user_id'))->absolute() . '">' . (!empty($shout_pseudo) ? TextHelper::wordwrap_html($shout_pseudo, 16) : $LANG['guest'])  . '</a>';
+				$shout_pseudo = ($display_date ? '<span class="text_small">' . $date . ' : </span>' : '') . '<a href="javascript:Confirm_del_shout(' . $last_msg_id . ');" title="' . $LANG['delete'] . '"><img src="'. TPL_PATH_TO_ROOT .'/templates/' . get_utheme() . '/images/delete_mini.png" alt="" /></a> <a style="font-size:10px;" class="' . $array_class[$User->get_attribute('level')] . '" href="' . UserUrlBuilder::profile($User->get_attribute('user_id'))->absolute() . '">' . (!empty($shout_pseudo) ? TextHelper::wordwrap_html($shout_pseudo, 16) : $LANG['guest'])  . '</a> ';
 			else
-				$shout_pseudo = '<span class="text_small" style="font-style: italic;">' . (!empty($shout_pseudo) ? TextHelper::wordwrap_html($shout_pseudo, 16) : $LANG['guest']) . '</span>';
+				$shout_pseudo = ($display_date ? '<span class="text_small">' . $date . ' : </span>' : '') . '<span class="text_small" style="font-style: italic;">' . (!empty($shout_pseudo) ? TextHelper::wordwrap_html($shout_pseudo, 16) : $LANG['guest']) . '</span>';
 			
 			echo "array_shout[0] = '" . $shout_pseudo . "';";
 			echo "array_shout[1] = '" . FormatingHelper::second_parse(str_replace(array("\n", "\r"), array('', ''), ucfirst(stripslashes($shout_contents)))) . "';";
@@ -97,7 +103,7 @@ if ($add)
 elseif ($refresh)
 {
 	$array_class = array('member', 'modo', 'admin');
-	$result = $Sql->query_while("SELECT id, login, user_id, level, contents 
+	$result = $Sql->query_while("SELECT id, login, user_id, level, contents, timestamp
 	FROM " . PREFIX . "shoutbox 
 	ORDER BY timestamp DESC 
 	" . $Sql->limit(0, 25), __LINE__, __FILE__);
@@ -108,13 +114,16 @@ elseif ($refresh)
 			$del = '<a href="javascript:Confirm_del_shout(' . $row['id'] . ');" title="' . $LANG['delete'] . '"><img src="'. TPL_PATH_TO_ROOT .'/templates/' . get_utheme() . '/images/delete_mini.png" alt="" /></a>';
 		else
 			$del = '';
-	
-		if ($row['user_id'] !== -1) 
-			$row['login'] = $del . ' <a style="font-size:10px;" class="' . $array_class[$row['level']] . '" href="'. UserUrlBuilder::profile($row['user_id'])->absolute()  . '">' . (!empty($row['login']) ? TextHelper::wordwrap_html($row['login'], 16) : $LANG['guest'])  . '</a>';
-		else
-			$row['login'] = $del . ' <span class="text_small" style="font-style: italic;">' . (!empty($row['login']) ? TextHelper::wordwrap_html($row['login'], 16) : $LANG['guest']) . '</span>';
+			
+		$date = new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, $row['timestamp']);
+		$date = $date->format(DATE_YEAR_MONTH_DAY_HOUR_MINUTE_SECOND);
 		
-		echo '<p id="shout_container_' . $row['id'] . '">' . $row['login'] . '<span class="text_small">: ' . str_replace(array("\n", "\r"), array('', ''), ucfirst(FormatingHelper::second_parse(stripslashes($row['contents'])))) . '</span></p>' . "\n";
+		if ($row['user_id'] !== -1) 
+			$row['login'] = ($display_date ? '<span class="text_small">' . $date . ' : </span>' : '') . $del . ' <a style="font-size:10px;" class="' . $array_class[$row['level']] . '" href="'. UserUrlBuilder::profile($row['user_id'])->absolute()  . '">' . (!empty($row['login']) ? TextHelper::wordwrap_html($row['login'], 16) : $LANG['guest'])  . '</a>';
+		else
+			$row['login'] = ($display_date ? '<span class="text_small">' . $date . ' : </span>' : '') . $del . ' <span class="text_small" style="font-style: italic;">' . (!empty($row['login']) ? TextHelper::wordwrap_html($row['login'], 16) : $LANG['guest']) . '</span>';
+		
+		echo '<p id="shout_container_' . $row['id'] . '">' . $row['login'] . '<span class="text_small"> : ' . str_replace(array("\n", "\r"), array('', ''), ucfirst(FormatingHelper::second_parse(stripslashes($row['contents'])))) . '</span></p>' . "\n";
 	}
 	$Sql->query_close($result);
 }
