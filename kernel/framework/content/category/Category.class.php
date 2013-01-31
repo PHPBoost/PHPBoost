@@ -34,6 +34,8 @@ class Category
 	protected $auth;
 	protected $id_parent;
 	
+	const ROOT_CATEGORY = '0';
+	
 	public function get_id()
 	{
 		return $this->id;
@@ -62,6 +64,11 @@ class Category
 	public function set_order($order)
 	{
 		$this->order = $order;
+	}
+	
+	public function incremente_order()
+	{
+		$this->order++;
 	}
 	
 	public function is_visible()
@@ -99,7 +106,7 @@ class Category
 		return array(
 			'id' => $this->get_id(),
 			'name' => $this->get_name(),
-			'order' => $this->get_order(),
+			'c_order' => $this->get_order(),
 			'visible' => $this->get_visible(),
 			'auth' => serialize($this->get_auth()),
 			'id_parent' => $this->get_id_parent()
@@ -110,7 +117,7 @@ class Category
 	{
 		$this->set_id($properties['id']);
 		$this->set_name($properties['name']);
-		$this->set_order($properties['order']);
+		$this->set_order($properties['c_order']);
 		$this->set_visible($properties['visible']);
 		$this->set_auth(!empty($properties['auth']) ? unserialize($properties['auth']) : array());
 		$this->set_id_parent($properties['id_parent']);
