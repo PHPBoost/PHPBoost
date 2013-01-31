@@ -51,11 +51,12 @@ class CategoriesManager
 	const RICH_CATEGORY_CLASS = 'RichCategory';
 	
 	/**
+	 * @param string $table_name
 	 * @param CategoriesCache $categories_cache
 	 */
-	public function __construct(CategoriesCache $categories_cache)
+	public function __construct($table_name, CategoriesCache $categories_cache)
 	{
-		$this->table_name = PREFIX . $categories_cache->get_table_name();
+		$this->table_name = PREFIX . $table_name;
 		$this->categories_cache = $categories_cache;
 	
 		$this->db_querier = PersistenceContext::get_querier();
@@ -68,22 +69,28 @@ class CategoriesManager
 	public function add($id_parent, Category $category)
 	{
 		$id_parent = $category->get_id_parent();
-		$max_order = NumberHelper::numeric($this->db_querier->select('SELECT MAX(c_order) FROM :table_name WHERE id_parent=:id_parent', array('table_name' => $this->table_name, 'id_parent' => $id_parent)));
-
+		$max_order = $this->db_querier->select_single_row_query('SELECT MAX(c_order) FROM '. $this->table_name .' WHERE id_parent=:id_parent', array('id_parent' => $id_parent), SelectQueryResult::FETCH_NUM);
+		$max_order = NumberHelper::numeric($max_order);
+		
 		if ($this->get_categories_cache()->category_exists($id_parent))
 		{
 			$order = $category->get_order();
 			if ($order <= 0 || $order > $max_order)
 			{
-				$category->incremente_order();
+				$category->set_order(($max_order + 1));
+				
 				$result = $this->db_querier->insert($this->table_name, $category->get_properties());
 				$this->regenerate_cache();
 				return $result->get_last_inserted_id();
 			}
 			else
 			{
-				// Check the request
-				$this->db_querier->update($this->table_name, array('c_order' => "c_order + 1"), 'WHERE id_parent=:id_parent AND c_order >= :order', array('id_parent' => $id_parent, 'order' => $category->get_order()));
+				$result = PersistenceContext::get_querier()->select_rows($this->table_name, array('id', 'c_order'), 'WHERE id_parent=:id_parent AND c_order >= :order', array('id_parent' => $id_parent, 'order' => $category->get_order()));
+				while ($row = $result->fetch())
+				{
+					$this->db_querier->update($this->table_name, array('c_order' => ($row['c_order'] + 1), 'WHERE id=:id', array('id' => $row['id'])));
+				}
+
 				$result = $this->db_querier->insert($this->table_name, $category->get_properties());
 				$this->regenerate_cache();
 				return $result->get_last_inserted_id();
@@ -131,7 +138,12 @@ class CategoriesManager
 
 		$category = $this->get_categories_cache()->get_category($id);
 		$this->db_querier->delete($this->table_name, 'WHERE id=:id', array('id' => $id));
-		$this->db_querier->update($this->table_name, array('c_order' => "c_order - 1"), 'WHERE id_parent=:id_parent AND c_order > :order', array('id_parent' => $category->get_id_parent(), 'order' => $category->get_order()));
+		
+		$result = PersistenceContext::get_querier()->select_rows($this->table_name, array('id', 'c_order'), 'WHERE id_parent=:id_parent AND c_order > :order', array('id_parent' => $category->get_id_parent(), 'order' => $category->get_order()));
+		while ($row = $result->fetch())
+		{
+			$this->db_querier->update($this->table_name, array('c_order' => ($row['c_order'] - 1), 'WHERE id=:id', array('id' => $row['id'])));
+		}
 		$this->regenerate_cache();
 	}
 

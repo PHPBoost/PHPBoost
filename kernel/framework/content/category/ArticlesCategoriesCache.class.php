@@ -2,9 +2,9 @@
 /*##################################################
  *                        ArticlesCategoriesCache.class.php
  *                            -------------------
- *   begin                : May 8, 2010
- *   copyright            : (C) 2010 Benoit Sautel
- *   email                : benoit.sautel@phpboost.com
+ *   begin                : January 31, 2013
+ *   copyright            : (C) 2013 Kévin MASSY
+ *   email                : kevin.massy@phpboost.com
  *
  *
  ###################################################
@@ -45,7 +45,7 @@ class ArticlesCategoriesCache extends CategoriesCache
 	protected function get_root_category()
 	{
 		$root = new RootCategory();
-		$root->set_auth(array());
+		$root->set_auth(array('test2'));
 		return $root;
 	}
 }
