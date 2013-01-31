@@ -41,26 +41,13 @@ class RichCategory extends Category
 	
 	public function get_properties()
 	{
-		return array(
-			'id' => $this->get_id(),
-			'name' => $this->get_name(),
-			'description' => $this->description(),
-			'c_order' => $this->get_order(),
-			'visible' => $this->get_visible(),
-			'auth' => serialize($this->get_auth()),
-			'id_parent' => $this->get_id_parent()
-		);
+		return array_merge(parent::get_properties(), array('description' => $this->get_description()));
 	}
 	
 	public function set_properties(array $properties)
 	{
-		$this->set_id($properties['id']);
-		$this->set_name($properties['name']);
+		parent::set_properties($properties);
 		$this->set_description($properties['description']);
-		$this->set_order($properties['c_order']);
-		$this->set_visible($properties['visible']);
-		$this->set_auth(!empty($properties['auth']) ? unserialize($properties['auth']) : array());
-		$this->set_id_parent($properties['id_parent']);
 	}
 }
 ?>

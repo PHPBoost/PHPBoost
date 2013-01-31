@@ -91,6 +91,11 @@ class Category
 		$this->auth = $auth;
 	}
 	
+	public function auth_is_empty()
+	{
+		return empty($this->auth);
+	}
+	
 	public function get_id_parent()
 	{
 		return $this->id_parent;
@@ -107,8 +112,8 @@ class Category
 			'id' => $this->get_id(),
 			'name' => $this->get_name(),
 			'c_order' => $this->get_order(),
-			'visible' => $this->get_visible(),
-			'auth' => serialize($this->get_auth()),
+			'visible' => $this->is_visible(),
+			'auth' => !$this->auth_is_empty() ? serialize($this->get_auth()) : '',
 			'id_parent' => $this->get_id_parent()
 		);
 	}

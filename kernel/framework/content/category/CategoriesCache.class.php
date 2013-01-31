@@ -2,9 +2,9 @@
 /*##################################################
  *                        CategoriesCache.class.php
  *                            -------------------
- *   begin                : May 8, 2010
- *   copyright            : (C) 2010 Benoit Sautel
- *   email                : benoit.sautel@phpboost.com
+ *   begin                : January 31, 2013
+ *   copyright            : (C) 2013 Kévin MASSY
+ *   email                : kevin.massy@phpboost.com
  *
  *
  ###################################################
@@ -34,12 +34,17 @@ abstract class CategoriesCache implements CacheData
 		$categories_cache = self::get_class();
 		$category_class = $categories_cache->get_category_class();
 		
-		$this->categories[Category::ROOT_CATEGORY] = $categories_cache->get_root_category();
+		$root_category = $categories_cache->get_root_category();
+		$this->categories[Category::ROOT_CATEGORY] = $root_category;
 		$result = PersistenceContext::get_querier()->select_rows(PREFIX . $categories_cache->get_table_name(), array('*'));
 		while ($row = $result->fetch())
 		{
 			$category = new $category_class();
 			$category->set_properties($row);
+			if ($category->auth_is_empty())
+			{
+				$category->set_auth($root_category->get_auth());
+			}
 			$this->categories[$row['id']] = $category;
 		}
 	}
