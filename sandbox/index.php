@@ -35,6 +35,7 @@ $url_controller_mappers = array(
 	new UrlControllerMapper('SandboxFormController', '`^/form/?`'),
 	new UrlControllerMapper('SandboxMessagesController', '`^/messages/?`'),
 	new UrlControllerMapper('SandboxMailController', '`^/mail/?`'),
+	new UrlControllerMapper('SandboxTestCategoriesController', '`^/cats/?`'),
 	new UrlControllerMapper('SandboxHomeController', '`^.*$`')
 );
 DispatchManager::dispatch($url_controller_mappers);
