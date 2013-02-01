@@ -4,7 +4,7 @@
  *                            -------------------
  *   begin                : February 1, 2011
  *   copyright            : (C) 2011 Kevin MASSY
- *   email                : kevin.massy@phpboost.com
+ *   email                : soldier.weasel@gmail.com
  *
  *
  ###################################################
@@ -26,77 +26,139 @@
  ###################################################*/
 
 /**
- * @author Kevin MASSY <kevin.massy@phpboost.com>
+ * @author Kevin MASSY <soldier.weasel@gmail.com>
+ * @desc Configuration of the guestbook module
  */
 class GuestbookConfig extends AbstractConfigData
 {
-	const DISPLAY_CAPTCHA = 'display_captcha';
-	const CAPTCHA_DIFFICULTY = 'captcha_difficulty';
+	const ITEMS_PER_PAGE = 'items_per_page';
+	const CAPTCHA_ENABLED = 'captcha_enabled';
+	const CAPTCHA_DIFFICULTY_LEVEL = 'captcha_difficulty_level';
 	const FORBIDDEN_TAGS = 'forbidden_tags';
 	const MAXIMUM_LINKS_MESSAGE = 'maximum_links_message';
 	const AUTHORIZATIONS = 'authorizations';
 	
-	const AUTH_WRITE = 2;
-	const AUTH_MODO = 4;
+	const GUESTBOOK_WRITE_AUTH_BIT = 2;
+	const GUESTBOOK_MODO_AUTH_BIT = 4;
 	
-	public function get_display_captcha()
+	 /**
+	 * @method Get items per page
+	 */
+	public function get_items_per_page()
 	{
-		return $this->get_property(self::DISPLAY_CAPTCHA);
-	}
-
-	public function set_display_captcha($display)
-	{
-		$this->set_property(self::DISPLAY_CAPTCHA, $display);
+		return $this->get_property(self::ITEMS_PER_PAGE);
 	}
 	
-	public function get_captcha_difficulty()
+	 /**
+	 * @method Set items per page
+	 * @params int $value Number of items to display per page
+	 */
+	public function set_items_per_page($value) 
 	{
-		return $this->get_property(self::CAPTCHA_DIFFICULTY);
-	}
-
-	public function set_captcha_difficulty($difficulty)
-	{
-		$this->set_property(self::CAPTCHA_DIFFICULTY, $difficulty);
+		$this->set_property(self::ITEMS_PER_PAGE, $value);
 	}
 	
+	 /**
+	 * @method Enable captcha
+	 */
+	public function enable_captcha()
+	{
+		$this->set_property(self::CAPTCHA_ENABLED, true);
+	}
+	
+	 /**
+	 * @method Disable captcha
+	 */
+	public function disable_captcha()
+	{
+		$this->set_property(self::CAPTCHA_ENABLED, false);
+	}
+	
+	 /**
+	 * @method Check if the captcha is enabled
+	 */
+	public function is_captcha_enabled()
+	{
+		return $this->get_property(self::CAPTCHA_ENABLED);
+	}
+	
+	 /**
+	 * @method Get captcha difficulty level
+	 */
+	public function get_captcha_difficulty_level()
+	{
+		return $this->get_property(self::CAPTCHA_DIFFICULTY_LEVEL);
+	}
+	
+	 /**
+	 * @method Set captcha difficulty level
+	 * @params int $value Difficulty level of the captcha
+	 */
+	public function set_captcha_difficulty_level($value) 
+	{
+		$this->set_property(self::CAPTCHA_DIFFICULTY_LEVEL, $value);
+	}
+	
+	 /**
+	 * @method Get forbidden tags
+	 */
 	public function get_forbidden_tags()
 	{
 		return $this->get_property(self::FORBIDDEN_TAGS);
 	}
-
-	public function set_forbidden_tags(Array $tags)
+	
+	 /**
+	 * @method Set forbidden tags
+	 * @params string[] $array Array of forbidden tags
+	 */
+	public function set_forbidden_tags(Array $array)
 	{
-		$this->set_property(self::FORBIDDEN_TAGS, $tags);
+		$this->set_property(self::FORBIDDEN_TAGS, $array);
 	}
 	
+	 /**
+	 * @method Get maximum links number in a message
+	 */
 	public function get_maximum_links_message()
 	{
 		return $this->get_property(self::MAXIMUM_LINKS_MESSAGE);
 	}
-
-	public function set_maximum_links_message($nbr_links)
+	
+	 /**
+	 * @method Set maximum links number in a message
+	 * @params int $value Links number
+	 */
+	public function set_maximum_links_message($value)
 	{
-		$this->set_property(self::MAXIMUM_LINKS_MESSAGE, $nbr_links);
+		$this->set_property(self::MAXIMUM_LINKS_MESSAGE, $value);
 	}
-
+	
+	 /**
+	 * @method Get authorizations
+	 */
 	public function get_authorizations()
 	{
 		return $this->get_property(self::AUTHORIZATIONS);
 	}
-
-	public function set_authorizations(Array $auth)
+	
+	 /**
+	 * @method Set authorizations
+	 * @params string[] $array Array of authorizations
+	 */
+	public function set_authorizations(Array $array)
 	{
-		$this->set_property(self::AUTHORIZATIONS, $auth);
+		$this->set_property(self::AUTHORIZATIONS, $array);
 	}
 	
-	/**
-	 * {@inheritdoc}
+	 /**
+	 * @method Get default values.
 	 */
 	public function get_default_values()
 	{
 		return array(
-			self::DISPLAY_CAPTCHA => 1,
-			self::CAPTCHA_DIFFICULTY => 2,
+			self::ITEMS_PER_PAGE => 10,
+			self::CAPTCHA_ENABLED => true,
+			self::CAPTCHA_DIFFICULTY_LEVEL => 2,
 			self::FORBIDDEN_TAGS => array('swf', 'movie', 'sound', 'code', 'math', 'mail', 'html', 'feed'),
 			self::MAXIMUM_LINKS_MESSAGE => -1,
 			self::AUTHORIZATIONS => array('r-1' => 2, 'r0' => 2, 'r1' => 6)
@@ -104,7 +166,7 @@ class GuestbookConfig extends AbstractConfigData
 	}
 
 	/**
-	 * Returns the configuration.
+	 * @method Load the guestbook configuration.
 	 * @return GuestbookConfig
 	 */
 	public static function load()
@@ -113,7 +175,7 @@ class GuestbookConfig extends AbstractConfigData
 	}
 
 	/**
-	 * Saves the configuration in the database. Has it become persistent.
+	 * Saves the guestbook configuration in the database. Has it become persistent.
 	 */
 	public static function save()
 	{

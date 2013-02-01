@@ -4,7 +4,7 @@
  *                            -------------------
  *   begin                : February 1, 2011
  *   copyright            : (C) 2011 Kevin MASSY
- *   email                : kevin.massy@phpboost.com
+ *   email                : soldier.weasel@gmail.com
  *
  *
  ###################################################
@@ -26,7 +26,7 @@
  ###################################################*/
 
 /**
- * @author Kevin MASSY <kevin.massy@phpboost.com>
+ * @author Kevin MASSY <soldier.weasel@gmail.com>
  */
 class GuestbookMessagesCache implements CacheData
 {
@@ -39,8 +39,7 @@ class GuestbookMessagesCache implements CacheData
 		$result = PersistenceContext::get_querier()->select("SELECT g.id, g.login, g.user_id, g.timestamp, m.login as mlogin, g.contents
 		FROM " . PREFIX . "guestbook g
 		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = g.user_id
-		ORDER BY g.timestamp DESC
-		LIMIT 10 OFFSET 0");
+		ORDER BY g.timestamp DESC");
 
 		foreach ($result as $msg)
 		{
