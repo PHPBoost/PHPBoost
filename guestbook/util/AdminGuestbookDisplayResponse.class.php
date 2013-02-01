@@ -1,10 +1,10 @@
 <?php
 /*##################################################
- *                              guestbook_begin.php
+ *                           AdminGuestbookDisplayResponse.class.php
  *                            -------------------
- *   begin                : November 28, 2007
- *   copyright            : (C) 2007 Viarre régis
- *   email                : crowkait@phpboost.com
+ *   begin                : November 30, 2012
+ *   copyright            : (C) 2012 Julien BRISWALTER
+ *   email                : julien.briswalter@gmail.com
  *
  *
  ###################################################
@@ -13,7 +13,7 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -25,10 +25,23 @@
  *
  ###################################################*/
 
-if (defined('PHPBOOST') !== true)	
-	exit;
-	
-load_module_lang('guestbook'); //Chargement de la langue du module.
-define('TITLE', $LANG['title_guestbook']);
-
+ /**
+ * @author Julien BRISWALTER <julien.briswalter@gmail.com>
+ * @desc AdminMenuDisplayResponse of the guestbook module
+ */
+class AdminGuestbookDisplayResponse extends AdminMenuDisplayResponse
+{
+	public function __construct($view, $title_page)
+	{
+		parent::__construct($view);
+		
+		$lang = LangLoader::get('guestbook_common', 'guestbook');
+		$picture = '/guestbook/guestbook.png';
+		$this->set_title($lang['guestbook.module_title']);
+		$this->add_link($lang['guestbook.titles.admin.config'], GuestbookUrlBuilder::configuration(), $picture);
+		
+		$env = $this->get_graphical_environment();
+		$env->set_page_title($title_page);
+	}
+}
 ?>

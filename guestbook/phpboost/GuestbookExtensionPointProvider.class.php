@@ -31,20 +31,20 @@ class GuestbookExtensionPointProvider extends ExtensionPointProvider
 {
 	private $sql_querier;
 
-    public function __construct()
-    {
-        $this->sql_querier = PersistenceContext::get_sql();
-        parent::__construct('guestbook');
-    }
-    
+	public function __construct()
+	{
+		$this->sql_querier = PersistenceContext::get_sql();
+		parent::__construct('guestbook');
+	}
+	
 	public function home_page()
 	{
 		return new GuestbookHomePageExtensionPoint();
 	}
 	
-    public function menus()
-    {
-    	return new ModuleMenus(array(
+	public function menus()
+	{
+		return new ModuleMenus(array(
 			new GuestbookModuleMiniMenu()
 		));
     }

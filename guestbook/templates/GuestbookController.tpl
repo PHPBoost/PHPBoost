@@ -11,16 +11,6 @@
 		</script>
 
 		# INCLUDE GUESTBOOK_FORM #
-
-		<br />
-		# IF C_ERROR_HANDLER #
-		<span id="errorh"></span>
-		<div class="{ERRORH_CLASS}" style="width:500px;margin:auto;padding:15px;">
-			<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
-			<br />	
-		</div>
-		<br />		
-		# ENDIF #
 		
 		# IF C_ERROR_WRITING_AUTH #
 		<div style="text-align:center;margin:10px;margin-bottom:25px;">
@@ -28,11 +18,13 @@
 		</div>
 		# ENDIF #
 		
+		# IF C_PAGINATION #
 		<div class="msg_position">
-			<div class="msg_top_l"></div>			
+			<div class="msg_top_l"></div>
 			<div class="msg_top_r"></div>
-			<div class="msg_top" style="text-align:center;">{PAGINATION}&nbsp;</div>	
+			<div class="msg_top" style="text-align:center;">{PAGINATION}&nbsp;</div>
 		</div>
+		# ENDIF #
 		# START guestbook #
 		<div class="msg_position">
 			<div class="msg_container{guestbook.CLASS_COLOR}">
@@ -61,11 +53,11 @@
 						</div>
 					</div>
 				</div>
-			</div>	
-			<div class="msg_sign{guestbook.CLASS_COLOR}">				
+			</div>
+			<div class="msg_sign{guestbook.CLASS_COLOR}">
 				<div class="msg_sign_overflow">
-					{guestbook.USER_SIGN}	
-				</div>				
+					{guestbook.USER_SIGN}
+				</div>
 				<hr />
 				<div style="float:left;">
 					{guestbook.U_USER_PM} {guestbook.USER_MAIL} {guestbook.USER_MSN} {guestbook.USER_YAHOO} {guestbook.USER_WEB}
@@ -73,14 +65,16 @@
 				<div style="float:right;font-size:10px;">
 					{guestbook.WARNING} {guestbook.PUNISHMENT}
 				</div>&nbsp;
-			</div>	
-		</div>				
-		# END guestbook #		
-		<div class="msg_position">		
-			<div class="msg_bottom_l"></div>		
+			</div>
+		</div>
+		# END guestbook #
+		# IF C_PAGINATION #
+		<div class="msg_position">
+			<div class="msg_bottom_l"></div>
 			<div class="msg_bottom_r"></div>
 			<div class="msg_bottom" style="text-align:center;">{PAGINATION}&nbsp;</div>
 		</div>
+		# ENDIF #
 	
 	<div class="module_bottom_l"></div>
 	<div class="module_bottom_r"></div>

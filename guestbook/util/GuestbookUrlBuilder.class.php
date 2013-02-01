@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                     GuestbookHomePageExtensionPoint.class.php
+ *                          GuestbookUrlBuilder.class.php
  *                            -------------------
- *   begin                : February 08, 2012
+ *   begin                : November 30, 2012
  *   copyright            : (C) 2012 Julien BRISWALTER
  *   email                : julien.briswalter@gmail.com
  *
@@ -27,32 +27,50 @@
 
 /**
  * @author Julien BRISWALTER <julien.briswalter@gmail.com>
- * @desc Home page of the guestbook module
+ * @desc Url builder of the guestbook module
  */
-class GuestbookHomePageExtensionPoint implements HomePageExtensionPoint
+class GuestbookUrlBuilder
 {
-	 /**
-	 * @method Get the module home page
+	private static $dispatcher = '/guestbook';
+	
+	/**
+	 * @return Url
 	 */
-	public function get_home_page()
+	public static function configuration()
 	{
-		return new DefaultHomePage($this->get_title(), $this->get_view());
+		return DispatchManager::get_url(self::$dispatcher, '/admin/config');
 	}
 	
-	 /**
-	 * @method Get the module title
+	/**
+	 * @return Url
 	 */
-	private function get_title()
+	public static function configuration_success($param = '')
 	{
-		return LangLoader::get_message('guestbook.module_title', 'guestbook_common', 'guestbook');
+		return DispatchManager::get_url(self::$dispatcher, '/admin/config/success/' . $param);
 	}
 	
-	 /**
-	 * @method Get the module view
+	/**
+	 * @return Url
 	 */
-	private function get_view()
+	public static function configuration_error($param = '')
 	{
-		return GuestbookModuleHomePage::get_view();
+		return DispatchManager::get_url(self::$dispatcher, '/admin/config/error/' . $param);
+	}
+	
+	/**
+	 * @return Url
+	 */
+	public static function home($param = '')
+	{
+		return DispatchManager::get_url(self::$dispatcher, '/' . $param);
+	}
+	
+	/**
+	 * @return Url
+	 */
+	public static function delete($param = '')
+	{
+		return DispatchManager::get_url(self::$dispatcher, '/delete/' . $param);
 	}
 }
 ?>

@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                           index.php
+ *                      GuestbookController.class.php
  *                            -------------------
- *   begin                : December 11, 2012
+ *   begin                : December 12, 2012
  *   copyright            : (C) 2012 Julien BRISWALTER
  *   email                : julien.briswalter@gmail.com
  *
@@ -25,18 +25,28 @@
  *
  ###################################################*/
 
-define('PATH_TO_ROOT', '..');
-
-require_once PATH_TO_ROOT . '/kernel/init.php';
-
-$url_controller_mappers = array(
-	new UrlControllerMapper('AdminGuestbookConfigController', '`^/admin(?:/config)?/?$`'),
-	new UrlControllerMapper('AdminGuestbookConfigController', '`^/admin/config/error/([a-z_-]+)?/?$`', array('error')),
-	new UrlControllerMapper('AdminGuestbookConfigController', '`^/admin/config/success/([a-z_-]+)?/?$`', array('success')),
+/**
+ * @author Julien BRISWALTER <julien.briswalter@gmail.com>
+ * @desc Module controller of the guestbook module
+ */
+class GuestbookController extends ModuleController
+{
+	private $lang;
 	
-	new UrlControllerMapper('GuestbookDeleteController', '`^/delete/([0-9]+)?/?([0-9]+)?/?$`', array('id', 'page')),
-	new UrlControllerMapper('GuestbookController', '`^(?:/([0-9]+))?/?([0-9]+)?/?$`', array('page', 'id')),
-	new UrlControllerMapper('UserError404Controller', '`^/([\w/_-]*)?/?$`'),
-);
-DispatchManager::dispatch($url_controller_mappers);
+	public function execute(HTTPRequestCustom $request)
+	{
+		$this->lang = LangLoader::get('guestbook_common', 'guestbook');
+		
+		return $this->build_response(GuestbookModuleHomePage::get_view());
+	}
+	
+	private function build_response(View $view)
+	{
+		$response = new SiteDisplayResponse($view);
+		$breadcrumb = $response->get_graphical_environment()->get_breadcrumb();
+		$breadcrumb->add($this->lang['guestbook.module_title'], GuestbookUrlBuilder::home()->absolute());
+		$response->get_graphical_environment()->set_page_title($this->lang['guestbook.module_title']);
+		return $response;
+	}
+}
 ?>

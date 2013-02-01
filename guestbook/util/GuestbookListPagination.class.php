@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                     GuestbookHomePageExtensionPoint.class.php
+ *                          GuestbookListPagination.class.php
  *                            -------------------
- *   begin                : February 08, 2012
+ *   begin                : November 30, 2012
  *   copyright            : (C) 2012 Julien BRISWALTER
  *   email                : julien.briswalter@gmail.com
  *
@@ -25,34 +25,44 @@
  *
  ###################################################*/
 
-/**
+ /**
  * @author Julien BRISWALTER <julien.briswalter@gmail.com>
- * @desc Home page of the guestbook module
+ * @desc Pagination of the guestbook module
  */
-class GuestbookHomePageExtensionPoint implements HomePageExtensionPoint
+class GuestbookListPagination
 {
-	 /**
-	 * @method Get the module home page
-	 */
-	public function get_home_page()
+	private $pagination;
+	private $current_page;
+	private $nbr_bugs;
+	private $number_items_per_page;
+	
+	public function __construct($current_page, $nbr_bugs)
 	{
-		return new DefaultHomePage($this->get_title(), $this->get_view());
+		$this->current_page = $current_page;
+		$this->nbr_bugs = $nbr_bugs;
+		$this->number_items_per_page = GuestbookConfig::load()->get_items_per_page();
+		$this->pagination = new Pagination($this->get_number_pages(), $this->current_page);
 	}
 	
-	 /**
-	 * @method Get the module title
-	 */
-	private function get_title()
+	public function display()
 	{
-		return LangLoader::get_message('guestbook.module_title', 'guestbook_common', 'guestbook');
+		return $this->pagination->export();
 	}
 	
-	 /**
-	 * @method Get the module view
-	 */
-	private function get_view()
+	public function get_display_from()
 	{
-		return GuestbookModuleHomePage::get_view();
+		$current_page = $this->current_page > 0 ? $this->current_page : 1;
+		return ($current_page - 1) * $this->number_items_per_page;
+	}
+	
+	public function set_url($url)
+	{
+		$this->pagination->set_url_sprintf_pattern($url);
+	}
+	
+	private function get_number_pages()
+	{
+		return ceil($this->nbr_bugs / $this->number_items_per_page);
 	}
 }
 ?>
