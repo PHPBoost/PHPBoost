@@ -272,9 +272,15 @@ a.forum_mbrmsg_links { /* Couleur des liens pour les messages du membre */
 }
 
 .forum_title input#search{
-	background:url('images/search.png') no-repeat;
+	background:#5e8ab6 url('images/search.png') 5% 50% no-repeat;
+	-moz-border-radius:4px;
+	-khtml-border-radius:4px;
+	-webkit-border-radius:4px;
+	border-radius:4px;
+	border:1px solid #2c4866;
+	border-bottom-color:#6d97c0;
+	border-right-color:#6d97c0;
 	padding:3px 0px 0px 25px;	
-	border:none;
 	color:#F8F8F8;
 }
 .forum_nbr_post{ text-align:center; }
