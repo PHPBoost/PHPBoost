@@ -50,7 +50,7 @@ class GuestbookModuleMiniMenu extends ModuleMiniMenu
 			{
 				$tpl->put_all(array(
 					'C_ANY_MESSAGE_GUESTBOOK' => false,
-					'LINK_GUESTBOOK' => GuestbookUrlBuilder::home()
+					'LINK_GUESTBOOK' => GuestbookUrlBuilder::home()->absolute()
 				));
 			}
 			else
@@ -67,7 +67,7 @@ class GuestbookModuleMiniMenu extends ModuleMiniMenu
 					'RAND_MSG_CONTENTS' => (strlen($guestbook_rand['contents']) > 149) ? $guestbook_rand['contents'] . ' <a href="' . GuestbookUrlBuilder::home('/#m' . $guestbook_rand['id']) . '" class="small_link">' . $lang['guestbook.titles.more_contents'] . '</a>' : $guestbook_rand['contents'],
 					'RAND_MSG_LOGIN' => $guestbook_login,
 					'L_BY' => LangLoader::get_message('by', 'main'),
-					'LINK_GUESTBOOK' => GuestbookUrlBuilder::home('/#m' . $guestbook_rand['id'])
+					'LINK_GUESTBOOK' => GuestbookUrlBuilder::home('/#m' . $guestbook_rand['id'])->absolute()
 				));
 			}
 			return $tpl->render();
