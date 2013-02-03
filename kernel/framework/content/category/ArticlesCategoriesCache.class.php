@@ -29,7 +29,7 @@ class ArticlesCategoriesCache extends CategoriesCache
 {	
 	protected function get_table_name()
 	{
-		return 'articles_cats';
+		return PREFIX . 'articles_cats';
 	}
 	
 	protected function get_category_class()
@@ -45,7 +45,7 @@ class ArticlesCategoriesCache extends CategoriesCache
 	protected function get_root_category()
 	{
 		$root = new RootCategory();
-		$root->set_auth(array('test2'));
+		$root->set_auth(unserialize('a:3:{s:3:"r-1";i:1;s:2:"r0";i:3;s:2:"r1";i:7;}'));
 		return $root;
 	}
 }

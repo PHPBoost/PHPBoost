@@ -105,6 +105,11 @@ class Category
 	{
 		$this->id_parent = $id_parent;
 	}
+	
+	public function check_auth($bit)
+    {
+    	return AppContext::get_current_user()->check_auth($this->auth, $bit);
+    }
 
 	public function get_properties()
 	{
@@ -112,7 +117,7 @@ class Category
 			'id' => $this->get_id(),
 			'name' => $this->get_name(),
 			'c_order' => $this->get_order(),
-			'visible' => $this->is_visible(),
+			'visible' => (int)$this->is_visible(),
 			'auth' => !$this->auth_is_empty() ? serialize($this->get_auth()) : '',
 			'id_parent' => $this->get_id_parent()
 		);

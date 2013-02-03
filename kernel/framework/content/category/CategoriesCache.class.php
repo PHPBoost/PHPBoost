@@ -36,7 +36,7 @@ abstract class CategoriesCache implements CacheData
 		
 		$root_category = $categories_cache->get_root_category();
 		$this->categories[Category::ROOT_CATEGORY] = $root_category;
-		$result = PersistenceContext::get_querier()->select_rows(PREFIX . $categories_cache->get_table_name(), array('*'));
+		$result = PersistenceContext::get_querier()->select_rows($categories_cache->get_table_name(), array('*'), 'ORDER BY id_parent, c_order');
 		while ($row = $result->fetch())
 		{
 			$category = new $category_class();
@@ -60,6 +60,19 @@ abstract class CategoriesCache implements CacheData
 	public function get_categories()
 	{
 		return $this->categories;
+	}
+	
+	public function get_childrens($id_category)
+	{
+		$childrens = array();
+		foreach ($this->categories as $id => $category)
+		{
+			if ($category->get_id_parent() == $id_category)
+			{
+				$childrens[$id] = $category;
+			}
+		}
+		return $childrens;
 	}
 	
 	public function category_exists($id)
