@@ -49,11 +49,11 @@ abstract class CategoriesCache implements CacheData
 		}
 	}
 	
-	abstract protected function get_table_name();
+	abstract public function get_table_name();
 	
-	abstract protected function get_category_class();
+	abstract public function get_category_class();
 	
-	abstract protected function get_module_identifier();
+	abstract public function get_module_identifier();
 	
 	abstract protected function get_root_category();
 	

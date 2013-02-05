@@ -60,20 +60,19 @@ class CategoriesManager
 	 * @param string $table_name
 	 * @param CategoriesCache $categories_cache
 	 */
-	public function __construct($module_id, $table_name, CategoriesCache $categories_cache)
+	public function __construct(CategoriesCache $categories_cache)
 	{
-		$this->module_id = $module_id;
-		$this->table_name = $table_name;
+		$this->module_id = $categories_cache->get_module_identifier();
+		$this->table_name = $categories_cache->get_table_name();
 		$this->categories_cache = $categories_cache;
 	
 		$this->db_querier = PersistenceContext::get_querier();
 	}
 	
 	/**
-	 * @param int $id_parent
 	 * @param Category $category
 	 */
-	public function add($id_parent, Category $category)
+	public function add(Category $category)
 	{
 		$id_parent = $category->get_id_parent();
 		$max_order = $this->db_querier->select_single_row_query('SELECT MAX(c_order) FROM '. $this->table_name .' WHERE id_parent=:id_parent', array('id_parent' => $id_parent));
@@ -156,6 +155,39 @@ class CategoriesManager
 		$this->regenerate_cache();
 	}
 	
+	public function get_childrens($id_category, SearchCategoryChildrensOptions $search_category_children_options)
+	{
+		$all_categories = $this->categories_cache->get_categories();
+		$root_category = $all_categories[Category::ROOT_CATEGORY];
+		$categories = array();
+		
+		if (($id_category == Category::ROOT_CATEGORY ? $search_category_children_options->add_category_in_list() : true) && $search_category_children_options->check_authorizations($root_category))
+		{
+			$categories[Category::ROOT_CATEGORY] = $root_category;
+		}
+
+		return $this->build_children_map($id_category, $all_categories, Category::ROOT_CATEGORY, $search_category_children_options, $categories);
+	}
+	
+	public function get_parents($id_category, $add_this = false)
+	{
+		$list = array();
+		if ($add_this)
+			$list[] = $id_category;
+
+		if ($id_category > 0)
+		{
+			while ((int)$this->categories_cache->get_category($id_category)->get_id_parent() != Category::ROOT_CATEGORY)
+			{
+				$id_parent = $this->categories_cache->get_category($id_category)->get_id_parent();
+			    $list[$id_parent] = $this->categories_cache->get_category($id_parent);
+			    $id_category = $id_parent;
+			}
+			$list[Category::ROOT_CATEGORY] = $this->categories_cache->get_category(Category::ROOT_CATEGORY);
+		}
+		return $list;
+	}
+	
 	public function get_select_categories_form_field($id, $label, $value, SearchCategoryChildrensOptions $search_category_children_options, array $field_options = array())
 	{
 		return new FormFieldCategoriesSelect($id, $label, $value, $search_category_children_options, $field_options, $this->get_categories_cache());
@@ -184,5 +216,22 @@ class CategoriesManager
 	 * @return string module identifier.
 	 */
 	public function get_module_id() { return $this->module_id; }
+	
+	
+	private function build_children_map($id_category, $all_categories, $id_parent, $search_category_children_options, &$categories = array(), $node = 1)
+	{
+		foreach ($all_categories as $id => $category)
+		{
+			if ($category->get_id_parent() == $id_parent && $id != Category::ROOT_CATEGORY)
+			{
+				if ($search_category_children_options->check_authorizations($category) && ($id == $id_category ? $search_category_children_options->add_category_in_list() : true))
+					$categories[$id] = $category;
+				
+				if ($search_category_children_options->is_enabled_recursive_exploration())
+					$this->build_children_map($id_category, $all_categories, $id, $search_category_children_options, $categories, ($node+1));
+			}
+		}
+		return $categories;
+	}
 }
 ?>

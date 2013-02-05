@@ -26,18 +26,18 @@
  ###################################################*/
 
 class ArticlesCategoriesCache extends CategoriesCache
-{	
-	protected function get_table_name()
+{
+	public function get_table_name()
 	{
 		return PREFIX . 'articles_cats';
 	}
 	
-	protected function get_category_class()
+	public function get_category_class()
 	{
 		return CategoriesManager::RICH_CATEGORY_CLASS;
 	}
 	
-	protected function get_module_identifier()
+	public function get_module_identifier()
 	{
 		return 'articles';
 	}

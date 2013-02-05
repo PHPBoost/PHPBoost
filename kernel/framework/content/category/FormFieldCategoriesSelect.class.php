@@ -41,33 +41,33 @@ class FormFieldCategoriesSelect extends FormFieldSimpleSelectChoice
     {
     	$this->categories_cache = $categories_cache;
     	$this->search_category_children_options = $search_category_children_options;
-        parent::__construct($id, $label, $value, $this->generate_options(), $field_options);
+        parent::__construct($id, $label, $value, $this->generate_options($value), $field_options);
     }
 
-    private function generate_options()
+    private function generate_options($id_category)
 	{
 		$categories = $this->categories_cache->get_categories();
-		
-		//TODO gérer les authorisations de la racine
 		$root_category = $categories[Category::ROOT_CATEGORY];
-		$this->options[] = new FormFieldSelectChoiceOption($root_category->get_name(), $root_category->get_id());
 		
-		return $this->build_children_map($categories, Category::ROOT_CATEGORY);
+		if (($id_category == Category::ROOT_CATEGORY ? $this->search_category_children_options->add_category_in_list() : true) && $this->search_category_children_options->check_authorizations($root_category))
+		{
+			$this->options[] = new FormFieldSelectChoiceOption($root_category->get_name(), $root_category->get_id());
+		}
+		
+		return $this->build_children_map($id_category, $categories, Category::ROOT_CATEGORY);
 	}
 	
-	private function build_children_map($categories, $id_parent, $node = 1)
+	private function build_children_map($id_category, $categories, $id_parent, $node = 1)
 	{
 		foreach ($categories as $id => $category)
 		{
 			if ($category->get_id_parent() == $id_parent && $id != Category::ROOT_CATEGORY)
 			{
-				if ($this->search_category_children_options->check_authorizations($category))
-				{
+				if ($this->search_category_children_options->check_authorizations($category) && ($id == $id_category ? $this->search_category_children_options->add_category_in_list() : true))
 					$this->options[] = new FormFieldSelectChoiceOption(str_repeat('--', $node) . ' ' . $category->get_name(), $id);
-				}
 				
 				if ($this->search_category_children_options->is_enabled_recursive_exploration())
-					$this->build_children_map($categories, $id, ($node+1));
+					$this->build_children_map($id_category, $categories, $id, ($node+1));
 			}
 		}
 		return $this->options;
