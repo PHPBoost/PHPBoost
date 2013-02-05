@@ -88,7 +88,7 @@ class ConnectModuleMiniMenu extends ModuleMiniMenu
 				$user_avatar = '/templates/'. get_utheme() .'/images/'. $user_accounts_config->get_default_avatar_name();
 			}
 			
-			$total_alert = $user->get_attribute('user_pm') + $contribution_number + AdministratorAlertService::get_number_unread_alerts();
+			$total_alert = $user->get_attribute('user_pm') + $contribution_number + ($user->check_level(User::ADMIN_LEVEL) ? AdministratorAlertService::get_number_unread_alerts() : 0);
 	    	$tpl->put_all(array(
 	    		'C_ADMIN_AUTH' => $user->check_level(User::ADMIN_LEVEL),
 	    		'C_MODERATOR_AUTH' => $user->check_level(User::MODERATOR_LEVEL),
