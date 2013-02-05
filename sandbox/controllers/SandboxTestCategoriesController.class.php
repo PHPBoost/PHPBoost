@@ -43,7 +43,7 @@ class SandboxTestCategoriesController extends ModuleController
 		$fieldset = new FormFieldsetHTML('fieldset_1', 'Fieldset');
 		$form->add_fieldset($fieldset);
 		
-		$cat = new CategoriesManager('articles', PREFIX . 'articles_cats', ArticlesCategoriesCache::load());
+		$cat = new CategoriesManager(ArticlesCategoriesCache::load());
 		
 		$fieldset->add_field($cat->get_select_categories_form_field('test', 'Choix catégorie sans autorisations particulières', '0', new SearchCategoryChildrensOptions()));
 		
@@ -65,6 +65,32 @@ class SandboxTestCategoriesController extends ModuleController
 		$options = new SearchCategoryChildrensOptions();
 		$options->set_enable_recursive_exploration(false);
 		$fieldset->add_field($cat->get_select_categories_form_field('test5', 'Choix catégorie recherche non recursive en partant de root', '0', $options));
+		
+		$options = new SearchCategoryChildrensOptions();
+		$options->set_add_category_in_list(false);
+		$fieldset->add_field($cat->get_select_categories_form_field('test6', 'Choix catégorie recherche recursive en partant de root sans l\'inclure', '0', $options));
+		
+		$options = new SearchCategoryChildrensOptions();
+		$options->add_authorisations_bits(2);
+		$options->add_authorisations_bits(4);
+		$options->set_check_all_bits(true);
+		$options->set_add_category_in_list(false);
+		$cats = $cat->get_childrens(0, $options);
+		
+		$ids = 'ID : ';
+		foreach ($cats as $id => $category)
+		{
+			$ids .= ' '. $id;
+		}
+		$fieldset->add_field(new FormFieldFree('test7', 'Affichage liste des enfants de root sans inclure la racine avec vérifications des autorisations d\'écriture et de contribution', $ids));
+		
+		$cats = $cat->get_parents(3);
+		$ids = 'ID : ';
+		foreach ($cats as $id => $category)
+		{
+			$ids .= ' '. $id;
+		}
+		$fieldset->add_field(new FormFieldFree('test8', 'Affichage liste des parents de test2 (#3)', $ids));
 		
 		return $form;
 	}

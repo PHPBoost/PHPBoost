@@ -30,8 +30,8 @@ class Category
 	protected $id;
 	protected $name;
 	protected $order;
-	protected $visible;
-	protected $auth;
+	protected $visible = true;
+	protected $auth = array();
 	protected $id_parent;
 	
 	const ROOT_CATEGORY = '0';
