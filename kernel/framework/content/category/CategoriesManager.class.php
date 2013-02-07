@@ -104,7 +104,7 @@ class CategoriesManager
 		}
 		else
 		{
-			// TODO Parent category doesn't exists
+			throw new CategoryNotFoundException($id_parent);
 		}
 	}
 	
@@ -129,7 +129,7 @@ class CategoriesManager
 		}
 		else
 		{
-			// TODO Parent category doesn't exists
+			throw new CategoryNotFoundException($id_parent);
 		}
 	}
 	
@@ -139,9 +139,9 @@ class CategoriesManager
 	 */
 	public function delete($id)
 	{
-		if (!$this->get_categories_cache()->category_exists($id))
+		if (!$this->get_categories_cache()->category_exists($id) && $id == Category::ROOT_CATEGORY)
 		{
-			throw new CategoryNotFoundException();
+			throw new CategoryNotFoundException($id);
 		}
 
 		$category = $this->get_categories_cache()->get_category($id);
