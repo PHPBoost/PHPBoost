@@ -86,7 +86,7 @@ abstract class CategoriesCache implements CacheData
 		{
 			return $this->categories[$id];
 		}
-		throw new CategoryNotFoundException();
+		throw new CategoryNotFoundException($id);
 	}
 	
 	/**
