@@ -60,7 +60,7 @@ extends AbstractController
 	
 		$this->build_form();
 		$tpl = new StringTemplate('# INCLUDE FORM #');
-		//$tpl->add_lang($this->lang);
+		$tpl->add_lang($this->lang);
 		
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
@@ -73,18 +73,18 @@ extends AbstractController
 	
 	private function init()
 	{
-		//$this->lang = LangLoader::get('categories');
+		$this->lang = LangLoader::get('categories-common');
 	}
 	
 	private function build_form()
 	{
 		$form = new HTMLForm(__CLASS__);
 		
-		$fieldset = new FormFieldsetHTML('delete_category', 'supprimer catégorie');
-		$fieldset->set_description('Vous êtes sur le point de supprimer la catégorie. Deux solutions s\'offrent à vous. Vous pouvez soit déplacer l\'ensemble de son contenu (articles et sous catégories) dans une autre catégorie soit supprimer l\'ensemble de la catégorie. Attention, cette action est irréversible !');
+		$fieldset = new FormFieldsetHTML('delete_category', $this->lang['delete.category']);
+		$fieldset->set_description($this->lang['delete.description']);
 		$form->add_fieldset($fieldset);
 		
-		$fieldset->add_field(new FormFieldCheckbox('delete_category_and_content', 'Supprimer la catégorie et tout son contenu ', FormFieldCheckbox::UNCHECKED, array('events' => array('click' => '
+		$fieldset->add_field(new FormFieldCheckbox('delete_category_and_content', $this->lang['delete.category_and_content'], FormFieldCheckbox::UNCHECKED, array('events' => array('click' => '
 		if (HTMLForms.getField("delete_category_and_content").getValue()) {
 			HTMLForms.getField("move_in_other_cat").disable();
 		} else { 
@@ -95,7 +95,7 @@ extends AbstractController
 		
 		$options = new SearchCategoryChildrensOptions();
 		$options->add_category_in_excluded_categories($this->get_category()->get_id());
-		$fieldset->add_field($this->get_categories_manager()->get_select_categories_form_field('move_in_other_cat', 'Déplacer son contenu dans :', $this->get_category()->get_id_parent(), $options));
+		$fieldset->add_field($this->get_categories_manager()->get_select_categories_form_field('move_in_other_cat', $this->lang['delete.move_in_other_cat'], $this->get_category()->get_id_parent(), $options));
 		
 		
 		$this->submit_button = new FormButtonDefaultSubmit();

@@ -42,7 +42,7 @@ extends AbstractController
 	 */
 	private $submit_button;
 	
-	private $lang;
+	protected $lang;
 	
 	/**
 	 * @var Category
@@ -55,7 +55,7 @@ extends AbstractController
 		$this->build_form();
 		
 		$tpl = new StringTemplate('# INCLUDE FORM #');
-		//$tpl->add_lang($this->lang);
+		$tpl->add_lang($this->lang);
 		
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
@@ -70,31 +70,31 @@ extends AbstractController
 	
 	private function init()
 	{
-		//$this->lang = LangLoader::get('categories');
+		$this->lang = LangLoader::get('categories-common');
 	}
 	
 	private function build_form()
 	{
 		$form = new HTMLForm(__CLASS__);
 		
-		$fieldset = new FormFieldsetHTML('category', 'Categorie');
+		$fieldset = new FormFieldsetHTML('category', $this->lang['category']);
 		$form->add_fieldset($fieldset);
 		
-		$fieldset->add_field(new FormFieldTextEditor('name', 'Nom', $this->get_category()->get_name(), array('required' => true)));
+		$fieldset->add_field(new FormFieldTextEditor('name', $this->lang['category.form.name'], $this->get_category()->get_name(), array('required' => true)));
 		
 		$search_category_children_options = new SearchCategoryChildrensOptions();
 		// TODO Ne pas afficher la categorie actuelle en édition
-		$fieldset->add_field($this->get_categories_manager()->get_select_categories_form_field('id_parent', 'Parent', $this->get_category()->get_id_parent(), $search_category_children_options));
+		$fieldset->add_field($this->get_categories_manager()->get_select_categories_form_field('id_parent', $this->lang['category.form.parent'], $this->get_category()->get_id_parent(), $search_category_children_options));
 		
-		$fieldset->add_field(new FormFieldCheckbox('visible', 'Visible', $this->get_category()->is_visible()));
+		$fieldset->add_field(new FormFieldCheckbox('visible', $this->lang['category.form.visiblity'], $this->get_category()->is_visible()));
 		
 		$this->build_fieldset_options($form);
 		
-		$fieldset_authorizations = new FormFieldsetHTML('authorizations_fieldset', 'Autorisations');
+		$fieldset_authorizations = new FormFieldsetHTML('authorizations_fieldset', $this->lang['category.form.authorizations']);
 		$form->add_fieldset($fieldset_authorizations);
 		
-		$fieldset_authorizations->add_field(new FormFieldCheckbox('special_authorizations', 'Autorisations spéciales', !$this->get_category()->auth_is_empty(), 
-		array('events' => array('click' => '
+		$fieldset_authorizations->add_field(new FormFieldCheckbox('special_authorizations', $this->lang['category.form.authorizations'], !$this->get_category()->auth_is_empty(), 
+		array('description' => $this->lang['category.form.authorizations.description'], 'events' => array('click' => '
 		if (HTMLForms.getField("special_authorizations").getValue()) {
 			$("'.__CLASS__.'_authorizations").appear();
 		} else { 
@@ -125,7 +125,7 @@ extends AbstractController
 	
 	private function build_fieldset_options(HTMLForm $form)
 	{
-		$fieldset = new FormFieldsetHTML('options_fieldset', 'Options');
+		$fieldset = new FormFieldsetHTML('options_fieldset', $this->lang['category.form.options']);
 		$this->get_options_fields($fieldset);
 		if ($fieldset->get_fields())
 		{
