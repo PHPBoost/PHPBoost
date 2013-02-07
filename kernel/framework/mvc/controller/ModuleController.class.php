@@ -40,10 +40,6 @@ abstract class ModuleController extends AbstractController
 			{
 				return PHPBoostErrors::module_not_activated();
 			}
-			else if(!$module->check_auth())
-			{
-				return PHPBoostErrors::user_not_authorized();
-			}
 		}
 		else
 		{

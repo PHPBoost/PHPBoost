@@ -59,7 +59,6 @@ class AdminModulesManagementController extends AdminController
 		foreach ($modules_installed as $module)
 		{
 			$configuration = $module->get_configuration();
-			$array_auth = $module->get_authorizations();
 			$author = $configuration->get_author();
 			$author_email = $configuration->get_author_email();
 			$author_website = $configuration->get_author_website();
@@ -77,7 +76,6 @@ class AdminModulesManagementController extends AdminController
 					'COMPATIBILITY' => $configuration->get_compatibility(),
 					'PHP_VERSION' => $configuration->get_php_version(),
 					'C_MODULE_ACTIVE' => $module->is_activated(),
-					'AUTHORIZATIONS' => Authorizations::generate_select(Module::ACCESS_AUTHORIZATION, $array_auth, array(2 => true), $module->get_id()),
 					'U_DELETE_LINK' => AdminModulesUrlBuilder::delete_module($module->get_id())->absolute()
 				));	
 			}
@@ -94,7 +92,6 @@ class AdminModulesManagementController extends AdminController
 					'COMPATIBILITY' => $configuration->get_compatibility(),
 					'PHP_VERSION' => $configuration->get_php_version(),
 					'C_MODULE_ACTIVE' => $module->is_activated(),
-					'AUTHORIZATIONS' => Authorizations::generate_select(Module::ACCESS_AUTHORIZATION, $array_auth, array(2 => true), $module->get_id()),
 					'U_DELETE_LINK' => AdminModulesUrlBuilder::delete_module($module->get_id())->absolute()
 				));
 			}
@@ -116,8 +113,7 @@ class AdminModulesManagementController extends AdminController
 				$request = AppContext::get_request();
 				$module_id = $module->get_id();
 				$activated = $request->get_bool('activated-' . $module_id, false);
-				$authorizations = Authorizations::auth_array_simple(Module::ACCESS_AUTHORIZATION, $module_id);
-				$error = ModulesManager::update_module_authorizations($module_id, $activated, $authorizations);
+				$error = ModulesManager::update_module($module_id, $activated);
 				
 				if (!empty($error))
 					$errors[$module->get_configuration()->get_name()] = $error;

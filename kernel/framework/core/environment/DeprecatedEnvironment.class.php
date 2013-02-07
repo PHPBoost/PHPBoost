@@ -45,10 +45,6 @@ class DeprecatedEnvironment
 				{
 					DispatchManager::redirect(PHPBoostErrors::module_not_activated());
 				}
-				else if(!$module->check_auth())
-				{
-					DispatchManager::redirect(PHPBoostErrors::user_not_authorized());
-				}
 			}
 			else
 			{
