@@ -161,12 +161,17 @@ class CategoriesManager
 		$root_category = $all_categories[Category::ROOT_CATEGORY];
 		$categories = array();
 		
-		if (($id_category == Category::ROOT_CATEGORY ? $search_category_children_options->add_category_in_list() : true) && $search_category_children_options->check_authorizations($root_category))
+		if (($search_category_children_options->is_excluded_categories_recursive() && $search_category_children_options->category_is_excluded($root_category)) || !$search_category_children_options->check_authorizations($root_category))
+		{
+			return array();
+		}
+		
+		if (!$search_category_children_options->category_is_excluded($root_category))
 		{
 			$categories[Category::ROOT_CATEGORY] = $root_category;
 		}
 
-		return $this->build_children_map($id_category, $all_categories, Category::ROOT_CATEGORY, $search_category_children_options, $categories);
+		return $this->build_children_map($id_category, $all_categories, $id_category, $search_category_children_options, $categories);
 	}
 	
 	public function get_parents($id_category, $add_this = false)
@@ -224,10 +229,10 @@ class CategoriesManager
 		{
 			if ($category->get_id_parent() == $id_parent && $id != Category::ROOT_CATEGORY)
 			{
-				if ($search_category_children_options->check_authorizations($category) && ($id == $id_category ? $search_category_children_options->add_category_in_list() : true))
+				if ($search_category_children_options->check_authorizations($category) && !$search_category_children_options->category_is_excluded($category))
 					$categories[$id] = $category;
 				
-				if ($search_category_children_options->is_enabled_recursive_exploration())
+				if ($search_category_children_options->check_authorizations($category) && ($search_category_children_options->is_excluded_categories_recursive() ? !$search_category_children_options->category_is_excluded($category) : true) && $search_category_children_options->is_enabled_recursive_exploration())
 					$this->build_children_map($id_category, $all_categories, $id, $search_category_children_options, $categories, ($node+1));
 			}
 		}
