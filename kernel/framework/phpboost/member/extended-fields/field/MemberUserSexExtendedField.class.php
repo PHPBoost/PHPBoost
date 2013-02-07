@@ -77,7 +77,10 @@ class MemberUserSexExtendedField extends AbstractMemberExtendedField
 	public function return_value(HTMLForm $form, MemberExtendedField $member_extended_field)
 	{
 		$field_name = $member_extended_field->get_field_name();
-		return $form->get_value($field_name)->get_raw_value();
+		if ($form->has_field($field_name))
+			return $form->get_value($field_name)->get_raw_value();
+		
+		return '';
 	}
 	
 	private function get_picture_sex($value)

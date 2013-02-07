@@ -189,7 +189,7 @@ class ExtendedField
 	
 	public function get_authorization()
 	{
-		return !empty($this->authorization) ? $this->authorization : array('r1' => 3, 'r0' => 3, 'r-1' => 2);
+		return $this->authorization;
 	}
 	
 	public function set_is_not_installer($is_not_installer)

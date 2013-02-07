@@ -69,9 +69,12 @@ class MemberMultipleChoiceExtendedField extends AbstractMemberExtendedField
 	{
 		$field_name = $member_extended_field->get_field_name();
 		$array = array();
-		foreach ($form->get_value($field_name) as $field => $value)
+		if ($form->has_field($field_name))
 		{
-			$array[] = $value->get_label();
+			foreach ($form->get_value($field_name) as $field => $value)
+			{
+				$array[] = $value->get_label();
+			}
 		}
 		return $this->serialise_value($array);
 	}
@@ -83,7 +86,10 @@ class MemberMultipleChoiceExtendedField extends AbstractMemberExtendedField
 	
 	private function default_values($default_values)
 	{
-		return explode('|', $default_values);
+		if (!empty($default_values))
+			return explode('|', $default_values);
+			
+		return array();
 	}
 	
 	private function serialise_value(Array $array)
