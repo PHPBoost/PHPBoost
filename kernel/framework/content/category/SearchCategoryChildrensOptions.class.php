@@ -34,7 +34,8 @@ class SearchCategoryChildrensOptions
 {
 	private $authorisations_bits = array();
 	private $check_all_bits = false;
-	private $add_category_in_list = true;
+	private $excluded_categories_ids = array();
+	private $excluded_categories_recursive = true;
 	private $enable_recursive_exploration = true;
 	
 	public function add_authorisations_bits($authorisations_bits)
@@ -85,14 +86,29 @@ class SearchCategoryChildrensOptions
 		return $this->check_all_bits;
 	}
 	
-	public function set_add_category_in_list($add_category_in_list)
+	public function add_category_in_excluded_categories($id)
 	{
-		$this->add_category_in_list = $add_category_in_list;
+		$this->excluded_categories_ids[] = $id;
 	}
 	
-	public function add_category_in_list()
+	public function category_is_excluded(Category $category)
 	{
-		return $this->add_category_in_list;
+		return in_array($category->get_id(), $this->excluded_categories_ids);
+	}
+	
+	public function get_excluded_categories()
+	{
+		return $this->excluded_categories_ids;
+	}
+	
+	public function set_excluded_categories_recursive($excluded_categories_recursive)
+	{
+		$this->excluded_categories_recursive = $excluded_categories_recursive;
+	}
+	
+	public function is_excluded_categories_recursive()
+	{
+		return $this->excluded_categories_recursive;
 	}
 	
 	public function set_enable_recursive_exploration($enable_recursive_exploration)

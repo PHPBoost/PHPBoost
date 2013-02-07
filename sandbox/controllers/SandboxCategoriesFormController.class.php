@@ -1,5 +1,5 @@
 <?php
-class SandboxCategoriesFormController extends AbstractCategoriesFormController
+class SandboxCategoriesFormController extends AbstractDeleteCategoryController
 {
 	protected function generate_response(View $view)
 	{
@@ -13,10 +13,10 @@ class SandboxCategoriesFormController extends AbstractCategoriesFormController
 	
 	protected function get_id_category()
 	{
-		return 3;
+		return 4;
 	}
 	
-	protected function get_options_fields(FormFieldset $fieldset)
+	/*protected function get_options_fields(FormFieldset $fieldset)
 	{
 		$fieldset->add_field(new FormFieldRichTextEditor('description', 'description', $this->get_category()->get_description(), array('required' => true)));
 	}
@@ -26,5 +26,6 @@ class SandboxCategoriesFormController extends AbstractCategoriesFormController
 		parent::set_properties();
 		$this->get_category()->set_description($this->form->get_value('description'));
 	}
+	*/
 }
 ?>

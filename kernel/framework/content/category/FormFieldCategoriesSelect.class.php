@@ -48,8 +48,13 @@ class FormFieldCategoriesSelect extends FormFieldSimpleSelectChoice
 	{
 		$categories = $this->categories_cache->get_categories();
 		$root_category = $categories[Category::ROOT_CATEGORY];
+
+		if (($this->search_category_children_options->is_excluded_categories_recursive() && $this->search_category_children_options->category_is_excluded($root_category)) || !$this->search_category_children_options->check_authorizations($root_category))
+		{
+			return array();
+		}
 		
-		if (($id_category == Category::ROOT_CATEGORY ? $this->search_category_children_options->add_category_in_list() : true) && $this->search_category_children_options->check_authorizations($root_category))
+		if (!$this->search_category_children_options->category_is_excluded($root_category))
 		{
 			$this->options[] = new FormFieldSelectChoiceOption($root_category->get_name(), $root_category->get_id());
 		}
@@ -62,11 +67,12 @@ class FormFieldCategoriesSelect extends FormFieldSimpleSelectChoice
 		foreach ($categories as $id => $category)
 		{
 			if ($category->get_id_parent() == $id_parent && $id != Category::ROOT_CATEGORY)
-			{
-				if ($this->search_category_children_options->check_authorizations($category) && ($id == $id_category ? $this->search_category_children_options->add_category_in_list() : true))
+			{		
+				if ($this->search_category_children_options->check_authorizations($category) && !$this->search_category_children_options->category_is_excluded($category))
 					$this->options[] = new FormFieldSelectChoiceOption(str_repeat('--', $node) . ' ' . $category->get_name(), $id);
 				
-				if ($this->search_category_children_options->is_enabled_recursive_exploration())
+					
+				if ($this->search_category_children_options->check_authorizations($category) && ($this->search_category_children_options->is_excluded_categories_recursive() ? !$this->search_category_children_options->category_is_excluded($category) : true) && $this->search_category_children_options->is_enabled_recursive_exploration())
 					$this->build_children_map($id_category, $categories, $id, ($node+1));
 			}
 		}
