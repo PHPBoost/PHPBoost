@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                          packages_manager.class.php
+ *                          ModulesManager.class.php
  *                            -------------------
  *   begin                : October 12, 2008
  *   copyright            :(C) 2008 Benoit Sautel
@@ -141,16 +141,6 @@ class ModulesManager
 	}
 
 	/**
-	 * @desc tells whether the current user is authorized to access the requested module
-	 * @param $module_id the id of the module
-	 * @return bool true if the current user is authorized to access the requested module
-	 */
-	public static function check_module_auth($module_id)
-	{
-		return ModulesConfig::load()->get_module($module_id)->check_auth();
-	}
-
-	/**
 	 * @desc tells whether the requested module is installed (activated or not)
 	 * @return bool true if the requested module is installed
 	 */
@@ -196,8 +186,8 @@ class ModulesManager
 			return self::MODULE_ALREADY_INSTALLED;
 		}
 
-		$authorizations = array('r-1' => 1, 'r0' => 1, 'r1' => 1);
-		$module = new Module($module_identifier, $enable_module, $authorizations);
+		//$authorizations = array('r-1' => 1, 'r0' => 1, 'r1' => 1);
+		$module = new Module($module_identifier, $enable_module/*, $authorizations*/);
 		$configuration = $module->get_configuration();
 
 		$phpversion = ServerConfiguration::get_phpversion();
@@ -423,12 +413,11 @@ class ModulesManager
 		}
 	}
 	
-	public static function update_module_authorizations($module_id, $activated, array $authorizations)
+	public static function update_module($module_id, $activated)
 	{
 		$error = '';
 		if (!$activated)
 		{
-			//Module home page
 			$general_config = GeneralConfig::load();
 			$module_home_page_selected = $general_config->get_module_home_page();
 			if ($module_home_page_selected == $module_id)
@@ -461,7 +450,6 @@ class ModulesManager
 		{
 			$module = self::get_module($module_id);
 			$module->set_activated($activated);
-			$module->set_authorizations($authorizations);
 			ModulesConfig::load()->update($module);
 			ModulesConfig::save();
 			

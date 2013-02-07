@@ -112,44 +112,43 @@ class Feed
 			$tpl = clone $template;
 		}
 
-		if (ModulesManager::get_module($this->module_id)->check_auth())
+		
+		if (!empty($this->data))
 		{
-			if (!empty($this->data))
-			{
-				$desc = TextHelper::htmlspecialchars($this->data->get_desc());
-				$tpl->put_all(array(
-                    'DATE' => $this->data->get_date(),
-                    'DATE_RFC822' => $this->data->get_date_rfc822(),
-                    'DATE_RFC3339' => $this->data->get_date_rfc3339(),
-					'DATE_TEXT' => $this->data->get_date_text(),
-                    'TITLE' => $this->data->get_title(),
-                    'U_LINK' => $this->data->get_link(),
-                    'HOST' => $this->data->get_host(),
-                    'DESC' => ContentSecondParser::export_html_text($desc),
-                    'RAW_DESC' => $desc,
-                    'LANG' => $this->data->get_lang()
-				));
+			$desc = TextHelper::htmlspecialchars($this->data->get_desc());
+			$tpl->put_all(array(
+	            'DATE' => $this->data->get_date(),
+	            'DATE_RFC822' => $this->data->get_date_rfc822(),
+	            'DATE_RFC3339' => $this->data->get_date_rfc3339(),
+				'DATE_TEXT' => $this->data->get_date_text(),
+	            'TITLE' => $this->data->get_title(),
+	            'U_LINK' => $this->data->get_link(),
+	            'HOST' => $this->data->get_host(),
+	            'DESC' => ContentSecondParser::export_html_text($desc),
+	            'RAW_DESC' => $desc,
+	            'LANG' => $this->data->get_lang()
+			));
 
-				$items = $this->data->subitems($number, $begin_at);
-				foreach ($items as $item)
-				{
-					$desc = TextHelper::htmlspecialchars($item->get_desc());
-					$tpl->assign_block_vars('item', array(
-                        'TITLE' => $item->get_title(),
-                        'U_LINK' => $item->get_link(),
-                        'U_GUID' => $item->get_guid(),
-                        'DESC' => ContentSecondParser::export_html_text($desc),
-                        'RAW_DESC' => $desc,
-                        'DATE' => $item->get_date(),
-                        'DATE_RFC822' => $item->get_date_rfc822(),
-                        'DATE_RFC3339' => $item->get_date_rfc3339(),
-						'DATE_TEXT' => $item->get_date_text(),
-                        'C_IMG' => ($item->get_image_url() != '') ? true : false,
-                        'U_IMG' => $item->get_image_url()
-					));
-				}
+			$items = $this->data->subitems($number, $begin_at);
+			foreach ($items as $item)
+			{
+				$desc = TextHelper::htmlspecialchars($item->get_desc());
+				$tpl->assign_block_vars('item', array(
+	                'TITLE' => $item->get_title(),
+	                'U_LINK' => $item->get_link(),
+	                'U_GUID' => $item->get_guid(),
+	                'DESC' => ContentSecondParser::export_html_text($desc),
+	                'RAW_DESC' => $desc,
+	                'DATE' => $item->get_date(),
+	                'DATE_RFC822' => $item->get_date_rfc822(),
+	                'DATE_RFC3339' => $item->get_date_rfc3339(),
+					'DATE_TEXT' => $item->get_date_text(),
+	                'C_IMG' => ($item->get_image_url() != '') ? true : false,
+	                'U_IMG' => $item->get_image_url()
+				));
 			}
 		}
+		
 		return $tpl->render();
 	}
 

@@ -34,17 +34,13 @@ class Module
 {
     private $module_id;
     private $activated;
-    private $authorizations;
 	private $installed_version;
 	
-	const ACCESS_AUTHORIZATION = 1;
-	
-	public function __construct($module_id, $activated = false, array $authorizations = array())
+	public function __construct($module_id, $activated = false)
 	{
         $this->module_id = $module_id;
 		$this->installed_version = $this->get_configuration()->get_version();
         $this->activated = $activated;
-        $this->authorizations = $authorizations;
 	}
 
     public function get_id()
@@ -56,11 +52,6 @@ class Module
     {
         return $this->activated;
     }
-
-    public function get_authorizations()
-    {
-        return $this->authorizations;
-    }
 	
 	public function get_installed_version()
 	{
@@ -70,11 +61,6 @@ class Module
     public function set_activated($activated)
     {
         $this->activated = $activated;
-    }
-
-    public function set_authorizations($authorizations)
-    {
-        $this->authorizations = $authorizations;
     }
 	
 	public function set_installed_version($installed_version)
@@ -88,11 +74,6 @@ class Module
     public function get_configuration()
     {
         return ModuleConfigurationManager::get($this->module_id);
-    }
-    
-    public function check_auth()
-    {
-    	return AppContext::get_current_user()->check_auth($this->authorizations, self::ACCESS_AUTHORIZATION);
     }
 }
 ?>
