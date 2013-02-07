@@ -87,7 +87,7 @@ abstract class AbstractMemberExtendedField implements MemberExtendedFieldType
 	public function return_value(HTMLForm $form, MemberExtendedField $member_extended_field)
 	{
 		$field_name = $member_extended_field->get_field_name();
-		return TextHelper::htmlspecialchars($form->get_value($field_name));
+		return TextHelper::htmlspecialchars($form->get_value($field_name, ''));
 	}
 	
 	/**
