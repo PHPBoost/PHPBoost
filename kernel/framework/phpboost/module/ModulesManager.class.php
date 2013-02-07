@@ -158,6 +158,15 @@ class ModulesManager
 	{
 		return in_array($module_id, self::get_installed_modules_ids_list());
 	}
+	
+	/**
+	 * @desc tells whether the requested module is activated
+	 * @return bool true if the requested module is activated
+	 */
+	public static function is_module_activated($module_id)
+	{
+		return in_array($module_id, self::get_activated_modules_ids_list());
+	}
 
 	/**
 	 * @static
