@@ -38,7 +38,7 @@ class UserAccountsConfigUpdateVersion extends ConfigUpdateVersion
 		
 		$user_account_config = UserAccountsConfig::load();
 		$user_account_config->set_registration_enabled($config['activ_register']);
-		$user_account_config->set_member_accounts_validation_method($config['activ_mbr']);
+		$user_account_config->set_member_accounts_validation_method(($config['activ_mbr']+1));
 		$user_account_config->set_registration_captcha_enabled($config['verif_code']);
 		$user_account_config->set_registration_captcha_difficulty($config['verif_code_difficulty']);
 		$user_account_config->set_avatar_upload_enabled($config['activ_up_avatar']);
