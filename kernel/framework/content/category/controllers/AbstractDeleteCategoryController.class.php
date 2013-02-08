@@ -49,13 +49,16 @@ extends AbstractController
 		$this->init();
 		
 		try {
-			if (!$this->category_contains_childrens())
-			{
-				//$this->get_categories_manager()->delete($this->get_category()->get_id());
-				//TODO redirection
-			}
+			$category = $this->get_category();
 		} catch (CategoryNotFoundException $e) {
-			// TODO redirection
+			// TODO redirection category not found
+		}
+
+		$childrens = $this->get_category_childrens($category);
+		if (empty($childrens))
+		{
+			$this->get_categories_manager()->delete($this->get_category()->get_id());
+			//TODO redirection
 		}
 	
 		$this->build_form();
@@ -64,6 +67,25 @@ extends AbstractController
 		
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
+			if ($this->form->get_value('delete_category_and_content'))
+			{
+				$this->get_categories_manager()->delete($this->get_category()->get_id());
+				foreach ($childrens as $id => $category)
+				{
+					$this->get_categories_manager()->delete($id);
+				}
+			}
+			else
+			{
+				$id_parent = $this->form->get_value('move_in_other_cat')->get_raw_value();
+				$childrens = $this->get_category_childrens($category, false);
+				foreach ($childrens as $id => $category)
+				{
+					$this->get_categories_manager()->move_into_another($category, $id_parent);
+				}
+				$this->get_categories_manager()->delete($this->get_category()->get_id());
+			}
+			// TODO redirect
 		}
 		
 		$tpl->put('FORM', $this->form->display());
@@ -105,14 +127,12 @@ extends AbstractController
 		$this->form = $form;
 	}
 	
-	private function category_contains_childrens()
+	private function get_category_childrens(Category $category, $enable_recursive_exploration = true)
 	{
-		$category = $this->get_category();
 		$options = new SearchCategoryChildrensOptions();
 		$options->add_category_in_excluded_categories($category->get_id());
-		$childrens = $this->get_categories_manager()->get_childrens($category->get_id(), $options);
-
-		return !empty($childrens);
+		$options->set_enable_recursive_exploration($enable_recursive_exploration);
+		return $this->get_categories_manager()->get_childrens($category->get_id(), $options);
 	}
 	
 	private function get_category()
