@@ -578,7 +578,7 @@ else
 			'C_IMG' => !empty($file_image),
 			'C_EDIT_AUTH' => false,
 			'NAME' => stripslashes($file_title),
-			'CONTENTS' => stripslashes(FormatingHelper::strparse($file_contents)),
+			'CONTENTS' => FormatingHelper::second_parse(stripslashes($file_contents)),
 			'CREATION_DATE' => $file_creation_date->format(DATE_FORMAT_SHORT),
 			'RELEASE_DATE' => $file_release_date->get_timestamp() > 0 ? $file_release_date->format(DATE_FORMAT_SHORT) : $DOWNLOAD_LANG['unknown_date'],
 			'SIZE' => $size_tpl,
