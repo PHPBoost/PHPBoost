@@ -13,7 +13,7 @@ class SandboxCategoriesFormController extends AbstractRichCategoriesFormControll
 	
 	protected function get_id_category()
 	{
-		return 3;
+		return 5;
 	}
 }
 ?>

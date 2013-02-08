@@ -70,7 +70,6 @@ class FormFieldCategoriesSelect extends FormFieldSimpleSelectChoice
 			{		
 				if ($this->search_category_children_options->check_authorizations($category) && !$this->search_category_children_options->category_is_excluded($category))
 					$this->options[] = new FormFieldSelectChoiceOption(str_repeat('--', $node) . ' ' . $category->get_name(), $id);
-				
 					
 				if ($this->search_category_children_options->check_authorizations($category) && ($this->search_category_children_options->is_excluded_categories_recursive() ? !$this->search_category_children_options->category_is_excluded($category) : true) && $this->search_category_children_options->is_enabled_recursive_exploration())
 					$this->build_children_map($id_category, $categories, $id, ($node+1));

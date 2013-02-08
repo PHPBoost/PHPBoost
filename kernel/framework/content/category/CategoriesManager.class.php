@@ -120,8 +120,7 @@ class CategoriesManager
 			$last_id_parent = $this->get_categories_cache()->get_category($id)->get_id_parent();
 			if ($id_parent != $last_id_parent)
 			{
-				//TODO
-				//$this->move_into_another($id_cat, $id_parent);
+				$this->move_into_another($category, $id_parent);
 			}
 			
 			$this->db_querier->update($this->table_name, $category->get_properties(), 'WHERE id=:id', array('id' => $id));
@@ -133,10 +132,75 @@ class CategoriesManager
 		}
 	}
 	
+	###############################
+	############################### MOVE CONTENT (  articles  )
+	###############################
+	public function move_into_another(Category $category, $id_parent, $position = 0)
+	{
+		$id = $category->get_id();
+		if (($id == Category::ROOT_CATEGORY || $this->get_categories_cache()->category_exists($id)) && ($id_parent == Category::ROOT_CATEGORY || $this->get_categories_cache()->category_exists($id_parent)))
+		{
+			$options = new SearchCategoryChildrensOptions();
+			$childrens = $this->get_childrens($id, $options);
+			$childrens[$id] = $category;
+			if (!array_key_exists($id_parent, $childrens))
+			{
+				$max_order = $this->db_querier->select_single_row_query('SELECT MAX(c_order) FROM '. $this->table_name .' WHERE id_parent=:id_parent', array('id_parent' => $id_parent));
+				$max_order = NumberHelper::numeric($max_order);
+
+				if ($position <= 0 || $position > $max_order)
+				{
+					$this->db_querier->update($this->table_name, array('id_parent' => $id_parent, 'c_order' => ($max_order + 1)), 'WHERE id=:id', array('id' => $id));
+
+					$result = PersistenceContext::get_querier()->select_rows($this->table_name, array('id', 'c_order'), 'WHERE id_parent=:id_parent AND c_order > :order', array('id_parent' => $category->get_id_parent(), 'order' => $category->get_order()));
+					while ($row = $result->fetch())
+					{
+						$this->db_querier->update($this->table_name, array('c_order' => ($row['c_order'] - 1)), 'WHERE id=:id', array('id' => $row['id']));
+					}		
+				}
+				else
+				{
+					$result = PersistenceContext::get_querier()->select_rows($this->table_name, array('id', 'c_order'), 'WHERE id_parent=:id_parent AND c_order >= :order', array('id_parent' => $id_parent, 'order' => $position));
+					while ($row = $result->fetch())
+					{
+						$this->db_querier->update($this->table_name, array('c_order' => ($row['c_order'] + 1), 'WHERE id=:id', array('id' => $row['id'])));
+					}
+					
+					$this->db_querier->update($this->table_name, array('id_parent' => $id_parent, 'c_order' => $position), 'WHERE id=:id', array('id' => $id));
+					
+					$result = PersistenceContext::get_querier()->select_rows($this->table_name, array('id', 'c_order'), 'WHERE id_parent=:id_parent AND c_order > :order', array('id_parent' => $category->get_id_parent(), 'order' => $category->get_order()));
+					while ($row = $result->fetch())
+					{
+						$this->db_querier->update($this->table_name, array('c_order' => ($row['c_order'] - 1)), 'WHERE id=:id', array('id' => $row['id']));
+					}	
+				}
+
+				$this->regenerate_cache();
+			}
+			else
+			{
+				// TODO error new id parent is it children
+			}
+		}
+		else
+		{
+			if ($id_parent != Category::ROOT_CATEGORY && !$this->get_categories_cache()->category_exists($id_parent))
+			{}
+				//TODO new parent doesn't exists
+				
+			if ($id != Category::ROOT_CATEGORY && !$this->get_categories_cache()->category_exists($id))
+			{}
+				//TODO category doesn't exists
+		}
+	}
+	
 	/**
 	 * @desc Deletes a category.
 	 * @param int $id Id of the category to delete.
 	 */
+	####################
+	#################### DELETE CONTENT (articles)
+	####################
 	public function delete($id)
 	{
 		if (!$this->get_categories_cache()->category_exists($id) && $id == Category::ROOT_CATEGORY)
@@ -166,7 +230,7 @@ class CategoriesManager
 			return array();
 		}
 		
-		if (!$search_category_children_options->category_is_excluded($root_category))
+		if ($id_category == Category::ROOT_CATEGORY && !$search_category_children_options->category_is_excluded($root_category))
 		{
 			$categories[Category::ROOT_CATEGORY] = $root_category;
 		}

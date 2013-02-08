@@ -67,8 +67,8 @@ class SandboxTestCategoriesController extends ModuleController
 		$fieldset->add_field($cat->get_select_categories_form_field('test5', 'Choix catégorie recherche non recursive en partant de root', '0', $options));
 		
 		$options = new SearchCategoryChildrensOptions();
-		$options->add_category_in_excluded_categories('2');
-		$fieldset->add_field($cat->get_select_categories_form_field('test6', 'Choix catégorie recherche recursive en partant de root sans l\'inclure', '0', $options));
+		$options->add_category_in_excluded_categories('4');
+		$fieldset->add_field($cat->get_select_categories_form_field('test6', 'Choix catégorie recherche recursive en partant de #4 sans l\'inclure', '4', $options));
 		
 		$options = new SearchCategoryChildrensOptions();
 		$options->add_authorisations_bits(2);

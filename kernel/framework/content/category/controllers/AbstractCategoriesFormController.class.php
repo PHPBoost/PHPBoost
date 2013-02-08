@@ -83,7 +83,10 @@ extends AbstractController
 		$fieldset->add_field(new FormFieldTextEditor('name', $this->lang['category.form.name'], $this->get_category()->get_name(), array('required' => true)));
 		
 		$search_category_children_options = new SearchCategoryChildrensOptions();
-		// TODO Ne pas afficher la categorie actuelle en édition
+		
+		if ($this->get_category()->get_id())
+			$search_category_children_options->add_category_in_excluded_categories($this->get_category()->get_id());
+			
 		$fieldset->add_field($this->get_categories_manager()->get_select_categories_form_field('id_parent', $this->lang['category.form.parent'], $this->get_category()->get_id_parent(), $search_category_children_options));
 		
 		$fieldset->add_field(new FormFieldCheckbox('visible', $this->lang['category.form.visiblity'], $this->get_category()->is_visible()));
