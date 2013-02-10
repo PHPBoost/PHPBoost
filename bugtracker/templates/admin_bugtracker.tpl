@@ -92,7 +92,7 @@
 			document.getElementById(field).style.backgroundColor = color;
 		}
 		
-		function bbcode_color(field)
+		function bbcode_color_list(field)
 		{
 			var i;
 			var br;
@@ -141,7 +141,7 @@
 					<dl class="overflow_visible">
 						<dt><label for="rejected_bug_color">{L_REJECTED_BUG_COLOR}</label></dt>
 						<dd><input type="text" size="8" maxlength="7" name="rejected_bug_color" id="rejected_bug_color" value="{REJECTED_BUG_COLOR}" style="background-color:{REJECTED_BUG_COLOR};" class="text" />
-							<a href="javascript:bbcode_color('rejected_bug_color');bb_display_block('1', '');" onmouseout="bb_hide_block('1', '', 0);" class="bbcode_hover"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/color.png" alt="" class="valign_middle" /></a>	
+							<a href="javascript:bbcode_color_list('rejected_bug_color');bb_display_block('1', '');" onmouseout="bb_hide_block('1', '', 0);" class="bbcode_hover"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/color.png" alt="" class="valign_middle" /></a>	
 							<div style="position:relative;z-index:100;display:none;margin-left:75px;" id="bb_block1">
 								<div id="rejected_bug_color_list" class="bbcode_block" style="background:white;width:150px;" onmouseover="bb_hide_block('1', '', 1);" onmouseout="bb_hide_block('1', '', 0);">
 								</div>
@@ -151,7 +151,7 @@
 					<dl class="overflow_visible">
 						<dt><label for="fixed_bug_color">{L_FIXED_BUG_COLOR}</label></dt>
 						<dd><input type="text" size="8" maxlength="7" name="fixed_bug_color" id="fixed_bug_color" value="{FIXED_BUG_COLOR}" style="background-color:{FIXED_BUG_COLOR};" class="text" />
-							<a href="javascript:bbcode_color('fixed_bug_color');bb_display_block('2', '');" onmouseout="bb_hide_block('2', '', 0);" class="bbcode_hover"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/color.png" alt="" class="valign_middle" /></a>	
+							<a href="javascript:bbcode_color_list('fixed_bug_color');bb_display_block('2', '');" onmouseout="bb_hide_block('2', '', 0);" class="bbcode_hover"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/color.png" alt="" class="valign_middle" /></a>	
 							<div style="position:relative;z-index:100;display:none;margin-left:75px;" id="bb_block2">
 								<div id="fixed_bug_color_list" class="bbcode_block" style="background:white;width:150px;" onmouseover="bb_hide_block('2', '', 1);" onmouseout="bb_hide_block('2', '', 0);">
 								</div>
@@ -395,8 +395,8 @@
 							</td> 
 							<td class="row2">
 								<input type="text" size="8" maxlength="7" name="s_color{severities.ID}" id="s_color{severities.ID}" value="{severities.COLOR}" style="background-color:{severities.COLOR};" class="text" />
-								<a href="javascript:bbcode_color('s_color{severities.ID}');bb_display_block('{severities.ID_BBCODE_COLOR}', '');" onmouseout="bb_hide_block('{severities.ID_BBCODE_COLOR}', '', 0);" class="bbcode_hover"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/color.png" alt="" class="valign_middle" /></a>	
-								<div style="position:relative;z-index:100;display:none;margin-left:75px;" id="bb_block{severities.ID_BBCODE_COLOR}">
+								<a href="javascript:bbcode_color_list('s_color{severities.ID}');bb_display_block('{severities.ID_BBCODE_COLOR}', '');" onmouseout="bb_hide_block('{severities.ID_BBCODE_COLOR}', '', 0);" class="bbcode_hover"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/color.png" alt="" class="valign_middle" /></a>	
+								<div style="position:relative;z-index:100;display:none;margin-left:5px;" id="bb_block{severities.ID_BBCODE_COLOR}">
 									<div id="s_color{severities.ID}_list" class="bbcode_block" style="background:white;width:150px;" onmouseover="bb_hide_block('{severities.ID_BBCODE_COLOR}', '', 1);" onmouseout="bb_hide_block('{severities.ID_BBCODE_COLOR}', '', 0);">
 									</div>
 								</div>
@@ -426,7 +426,7 @@
 						<dt><label for="s_color">{L_COLOR}</label></dt>
 						<dd> 
 							<input type="text" size="8" maxlength="7" name="s_color" id="s_color" value="{S_COLOR}" style="background-color:{S_COLOR};" class="text" />
-							<a href="javascript:bbcode_color('s_color');bb_display_block('3', '');" onmouseout="bb_hide_block('3', '', 0);" class="bbcode_hover"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/color.png" alt="" class="valign_middle" /></a>	
+							<a href="javascript:bbcode_color_list('s_color');bb_display_block('3', '');" onmouseout="bb_hide_block('3', '', 0);" class="bbcode_hover"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/color.png" alt="" class="valign_middle" /></a>	
 							<div style="position:relative;z-index:100;display:none;margin-left:75px;" id="bb_block3">
 								<div id="s_color_list" class="bbcode_block" style="background:white;width:150px;" onmouseover="bb_hide_block('3', '', 1);" onmouseout="bb_hide_block('3', '', 0);">
 								</div>
