@@ -117,11 +117,11 @@ elseif(retrieve(POST,'submit',false))
 		// Errors.
 		if (empty($articles['title']))
 		{
-			$Template->put('message_helper', MessageHelper::display($LANG['e_require_title'], E_USER_REDIRECT));
+			$Template->put('message_helper', MessageHelper::display($LANG['e_require_title'], E_USER_NOTICE));
 		}
 		elseif (empty($articles['desc']))
 		{
-			$Template->put('message_helper', MessageHelper::display($LANG['e_require_desc'], E_USER_REDIRECT));
+			$Template->put('message_helper', MessageHelper::display($LANG['e_require_desc'], E_USER_NOTICE));
 		}
 		else
 		{
