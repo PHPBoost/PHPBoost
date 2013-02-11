@@ -598,7 +598,7 @@ elseif (!empty($pm_id_get)) //Messages associés à la conversation.
 	LEFT JOIN " . DB_TABLE_SESSIONS . " s ON s.user_id = msg.user_id AND s.session_time > '" . (time() - SessionsConfig::load()->get_active_session_duration()) . "' AND s.user_id <> -1
 	WHERE msg.idconvers = '" . $pm_id_get . "'
 	ORDER BY msg.timestamp
-	" . $Sql->limit($Pagination->get_first_msg($pagination_msg, 'p'), $pagination_msg), __LINE__, __FILE__);
+	" . $Sql->limit(($Pagination->get_first_msg($pagination_msg, 'p') - $quote_last_msg), ($pagination_msg + $quote_last_msg)), __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))
 	{
 		$row['user_id'] = (int)$row['user_id'];
