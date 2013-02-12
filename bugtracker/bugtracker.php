@@ -927,13 +927,10 @@ else if (isset($_GET['edit']) && is_numeric($id)) // edition d'un bug
 	}
 	
 	//Fixed in
-	if (empty($default_version))
-	{
-		$selected = (empty($result['fixed_in'])) ? 'selected="selected"' : '';
-		$Template->assign_block_vars('edit.select_fixed_in', array(
-			'VERSION' => '<option value="" ' . $selected . '></option>'
-		));
-	}
+	$selected = (empty($result['fixed_in'])) ? 'selected="selected"' : '';
+	$Template->assign_block_vars('edit.select_fixed_in', array(
+		'VERSION' => '<option value="" ' . $selected . '></option>'
+	));
 	foreach ($versions as $key => $version)
 	{
 		$selected = ($result['fixed_in'] == $key) ? 'selected="selected"' : '';
