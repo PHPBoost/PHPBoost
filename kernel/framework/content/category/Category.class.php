@@ -96,6 +96,12 @@ class Category
 		return empty($this->auth);
 	}
 	
+	public function auth_is_equals(Array $auth)
+	{
+		$diff = array_diff($this->auth, $auth);
+		return empty($diff);
+	}
+	
 	public function get_id_parent()
 	{
 		return $this->id_parent;

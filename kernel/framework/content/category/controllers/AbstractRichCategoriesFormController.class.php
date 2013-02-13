@@ -34,7 +34,7 @@ abstract class AbstractRichCategoriesFormController extends AbstractCategoriesFo
 {	
 	protected function get_options_fields(FormFieldset $fieldset)
 	{
-		$fieldset->add_field(new FormFieldRichTextEditor('description', $this->lang['category.form.description'], $this->get_category()->get_description(), array('required' => true)));
+		$fieldset->add_field(new FormFieldRichTextEditor('description', $this->lang['category.form.description'], $this->get_category()->get_description()));
 	}
 	
 	protected function set_properties()

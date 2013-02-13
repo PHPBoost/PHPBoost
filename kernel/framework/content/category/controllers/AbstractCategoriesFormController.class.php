@@ -61,6 +61,7 @@ extends AbstractController
 		{
 			$this->set_properties();
 			$this->save();
+			AppContext::get_response()->redirect($this->get_categories_management_url());
 		}
 		
 		$tpl->put('FORM', $this->form->display());
@@ -96,7 +97,9 @@ extends AbstractController
 		$fieldset_authorizations = new FormFieldsetHTML('authorizations_fieldset', $this->lang['category.form.authorizations']);
 		$form->add_fieldset($fieldset_authorizations);
 		
-		$fieldset_authorizations->add_field(new FormFieldCheckbox('special_authorizations', $this->lang['category.form.authorizations'], !$this->get_category()->auth_is_empty(), 
+		$root_auth = $this->get_categories_manager()->get_categories_cache()->get_category(Category::ROOT_CATEGORY)->get_auth();
+		
+		$fieldset_authorizations->add_field(new FormFieldCheckbox('special_authorizations', $this->lang['category.form.authorizations'], (!$this->get_category()->auth_is_empty() && !$this->get_category()->auth_is_equals($root_auth)), 
 		array('description' => $this->lang['category.form.authorizations.description'], 'events' => array('click' => '
 		if (HTMLForms.getField("special_authorizations").getValue()) {
 			$("'.__CLASS__.'_authorizations").appear();
@@ -106,7 +109,7 @@ extends AbstractController
 		)));
 		
 		$auth_settings = $this->get_authorizations_settings();
-		$auth_setter = new FormFieldAuthorizationsSetter('authorizations', $auth_settings, array('hidden' => $this->get_category()->auth_is_empty()));
+		$auth_setter = new FormFieldAuthorizationsSetter('authorizations', $auth_settings, array('hidden' => ($this->get_category()->auth_is_empty() || $this->get_category()->auth_is_equals($root_auth))));
 		$auth_settings->build_from_auth_array($this->get_category()->get_auth());
 		$fieldset_authorizations->add_field($auth_setter);
 		
@@ -209,5 +212,10 @@ extends AbstractController
 	 * @return CategoriesManager
 	 */
 	abstract protected function get_categories_manager();
+	
+	/**
+	 * @return Url
+	 */
+	abstract protected function get_categories_management_url();
 }
 ?>
