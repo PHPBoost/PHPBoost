@@ -168,7 +168,7 @@ extends AbstractController
 		if ($this->category === null)
 		{
 			$id_category = $this->get_id_category();
-			if ($id_category)
+			if (!empty($id_category))
 			{
 				$this->category = $this->get_categories_manager()->get_categories_cache()->get_category($id_category);
 			}
