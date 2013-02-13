@@ -186,8 +186,7 @@ class ModulesManager
 			return self::MODULE_ALREADY_INSTALLED;
 		}
 
-		//$authorizations = array('r-1' => 1, 'r0' => 1, 'r1' => 1);
-		$module = new Module($module_identifier, $enable_module/*, $authorizations*/);
+		$module = new Module($module_identifier, $enable_module);
 		$configuration = $module->get_configuration();
 
 		$phpversion = ServerConfiguration::get_phpversion();

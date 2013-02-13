@@ -99,12 +99,6 @@
 							<label><input type="radio" name="activated-{modules_not_activated.ID}" value="1" # IF modules_not_activated.C_MODULE_ACTIVE # checked="checked" # ENDIF # /> {@modules.yes}</label>
 							<label><input type="radio" name="activated-{modules_not_activated.ID}" value="0" # IF NOT modules_not_activated.C_MODULE_ACTIVE # checked="checked" # ENDIF # /> {@modules.no}</label>
 						</td>
-						<!-- <td class="row2">
-							<div id="auth_explain{modules_not_activated.ID}" style="display: none;">
-								{modules_not_activated.AUTHORIZATIONS}
-							</div>
-							<div id="picture_auth{modules_not_activated.ID}" style="text-align: center;"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/plus.png" alt="" class="valign_middle" style="cursor: pointer; width: 25px; height: auto;" /></div>
-						</td>-->
 						<td class="row2">
 							<a href="{modules_not_activated.U_DELETE_LINK}">	
 								<input name="delete-{modules_not_activated.ID}" value="{@modules.delete}" class="submit" style="width:70px;text-align:center;"/>
@@ -147,9 +141,6 @@
 					<td class="row2" style="width:50px;text-align:center;">
 						{@modules.activated_module}
 					</td>
-					<!-- <td class="row2" style="width:200px;text-align:center;">
-						{@modules.authorization}
-					</td>-->
 					<td class="row2" style="width:80px;text-align:center;">
 						{@modules.delete}
 					</td>
@@ -182,12 +173,6 @@
 							<label><input type="radio" name="activated-{modules_activated.ID}" value="1" # IF modules_activated.C_MODULE_ACTIVE # checked="checked" # ENDIF # /> {@modules.yes}</label>
 							<label><input type="radio" name="activated-{modules_activated.ID}" value="0" # IF NOT modules_activated.C_MODULE_ACTIVE # checked="checked" # ENDIF # /> {@modules.no}</label>
 						</td>
-						<!-- <td class="row2">
-							<div id="auth_explain{modules_activated.ID}" style="display: none;">
-								{modules_activated.AUTHORIZATIONS}
-							</div>
-							<div id="picture_auth{modules_activated.ID}" style="text-align: center;"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/plus.png" alt="" class="valign_middle" style="cursor: pointer; width: 25px; height: auto;" /></div>
-						</td>-->
 						<td class="row2">
 							<a href="{modules_activated.U_DELETE_LINK}">	
 								<input name="delete-{modules_activated.ID}" value="{@modules.delete}" class="submit" style="width:70px;text-align:center;"/>
@@ -222,5 +207,3 @@
 				<input type="reset" value="{@modules.reset}" class="reset" />
 			</fieldset>
 		</form>			
-
-	

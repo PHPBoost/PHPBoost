@@ -48,5 +48,3 @@
 		# END available #
 	</table>			
 </form>
-		
-		
