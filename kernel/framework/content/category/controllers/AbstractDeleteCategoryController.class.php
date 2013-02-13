@@ -51,14 +51,15 @@ extends AbstractController
 		try {
 			$category = $this->get_category();
 		} catch (CategoryNotFoundException $e) {
-			// TODO redirection category not found
+			$controller = new UserErrorController(LangLoader::get_message('error', 'errors-common'), $this->lang['errors.unexisting']);
+			DispatchManager::redirect($controller);
 		}
 
 		$childrens = $this->get_category_childrens($category);
 		if (empty($childrens))
 		{
 			$this->get_categories_manager()->delete($this->get_category()->get_id());
-			//TODO redirection
+			AppContext::get_response()->redirect($this->get_categories_management_url());
 		}
 	
 		$this->build_form();
@@ -85,7 +86,7 @@ extends AbstractController
 				}
 				$this->get_categories_manager()->delete($this->get_category()->get_id());
 			}
-			// TODO redirect
+			AppContext::get_response()->redirect($this->get_categories_management_url());
 		}
 		
 		$tpl->put('FORM', $this->form->display());
@@ -160,5 +161,10 @@ extends AbstractController
 	 * @return CategoriesManager
 	 */
 	abstract protected function get_categories_manager();
+	
+	/**
+	 * @return Url
+	 */
+	abstract protected function get_categories_management_url();
 }
 ?>
