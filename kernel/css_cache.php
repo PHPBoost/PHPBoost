@@ -36,7 +36,11 @@ $files = explode(';', $files);
 if (!empty($files) && !empty($name))
 {
 	$css_cache = new CSSCacheManager();
-	$css_cache->set_files($files);
+	try {
+		$css_cache->set_files($files);
+	} catch (Exception $e) {
+	}
+	
 	$css_cache->set_cache_file_location(PATH_TO_ROOT . '/cache/css/css-cache-' . $name .'.css');
 	$css_cache->execute(CSSCacheConfig::load()->get_optimization_level());
 	
