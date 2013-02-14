@@ -187,7 +187,6 @@ if ($action == 'punish')
 			$select .= '<option value="' . $time . '" ' . $selected . '>' . strtolower($array_sanction[$key]) . '</option>';
 		}	
 		
-		array_pop($array_sanction);
 		$moderation_panel_template->put_all(array(
 			'C_MODO_PANEL_USER_INFO' => true,
 			'KERNEL_EDITOR' => $editor->display(),
@@ -200,7 +199,7 @@ if ($action == 'punish')
 			'array_time = new Array(' . (implode(', ', $array_time)) . ');' . "\n" .
 			'array_sanction = new Array(\'' . implode('\', \'', array_map('addslashes', $array_sanction)) . '\');'. "\n" .
 			'var i;
-			for (i = 0; i <= 11; i++)
+			for (i = 0; i <= 12; i++)
 			{
 				if (array_time[i] == replace_value)
 				{
