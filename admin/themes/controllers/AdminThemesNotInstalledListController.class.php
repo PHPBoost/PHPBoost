@@ -204,12 +204,11 @@ class AdminThemesNotInstalledListController extends AdminController
 							$uploaded_file = new File($archive);
 							$uploaded_file->delete();
 						}
-						else
-						{
-							$this->view->put('MSG', MessageHelper::display($this->lang['themes.upload.invalid_format'], MessageHelper::NOTICE, 4));
-						}
-					
 						$this->install_theme($file->get_name_without_extension(), array('r-1' => 1, 'r0' => 1, 'r1' => 1));
+					}
+					else
+					{
+						$this->view->put('MSG', MessageHelper::display($this->lang['themes.upload.invalid_format'], MessageHelper::NOTICE, 4));
 					}
 				}
 				else
