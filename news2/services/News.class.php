@@ -30,19 +30,24 @@ class News
 	private $id;
 	private $id_cat;
 	private $title;
+	private $rewrited_title;
 	private $contents;
-	private $extend_contents;
+	private $short_contents;
+	private $short_contents_enabled;
 	
-	private $approbation;
+	private $approbation_type;
 	private $start_date;
 	private $end_date;
 	
 	private $creation_date;
-	private $user_id;
+	private $author_user_id;
 
 	private $picture_url;
-	private $tags;
 	private $sources;
+	
+	const NOT_APPROVAL = 0;
+	const APPROVAL_NOW = 1;
+	const APPROVAL_DATE = 2;
 	
 	public function set_id($id)
 	{
@@ -74,6 +79,16 @@ class News
 		return $this->title;
 	}
 	
+	public function set_rewrited_title($rewrited_title)
+	{
+		$this->rewrited_title = $rewrited_title;
+	}
+	
+	public function get_rewrited_title()
+	{
+		return $this->rewrited_title;
+	}
+	
 	public function set_contents($contents)
 	{
 		$this->contents = $contents;
@@ -84,24 +99,34 @@ class News
 		return $this->contents;
 	}
 	
-	public function set_extend_contents($extend_contents)
+	public function set_short_contents($short_contents)
 	{
-		$this->extend_contents = $extend_contents;
+		$this->short_contents = $short_contents;
 	}
 	
-	public function get_extend_contents()
+	public function get_short_contents()
 	{
-		return $this->extend_contents;
+		return $this->short_contents;
 	}
 	
-	public function set_approbation($approbation)
+	public function set_short_contents_enabled($short_contents_enabled)
 	{
-		$this->approbation = $approbation;
+		$this->short_contents_enabled = $short_contents_enabled;
 	}
 	
-	public function get_approbation()
+	public function get_short_contents_enabled()
 	{
-		return $this->approbation;
+		return $this->short_contents_enabled;
+	}
+	
+	public function set_approbation_type($approbation_type)
+	{
+		$this->approbation_type = $approbation_type;
+	}
+	
+	public function get_approbation_type()
+	{
+		return $this->approbation_type;
 	}
 	
 	public function set_start_date(Date $start_date)
@@ -134,14 +159,14 @@ class News
 		return $this->creation_date;
 	}
 	
-	public function set_user_id($user_id)
+	public function set_author_user_id($author_user_id)
 	{
-		$this->user_id = $user_id;
+		$this->author_user_id = $author_user_id;
 	}
 	
-	public function get_user_id()
+	public function get_author_user_id()
 	{
-		return $this->user_id;
+		return $this->author_user_id;
 	}
 	
 	public function set_picture(Url $picture)
@@ -157,16 +182,6 @@ class News
 	public function add_tag($tag)
 	{
 		$this->tags[] = $tag;
-	}
-	
-	public function set_tags($tags)
-	{
-		$this->tags = $tags;
-	}
-	
-	public function get_tags()
-	{
-		return $this->tags;
 	}
 	
 	public function add_source($source)
@@ -190,15 +205,16 @@ class News
 			'id' => $this->get_id(),
 			'id_cat' => $this->get_id_cat(),
 			'title' => $this->get_title(),
+			'rewrited_title' => $this->get_rewrited_title(),
 			'contents' => $this->get_contents(),
-			'extend_contents' => $this->get_extend_contents(),
-			'approbation' => $this->get_approbation(),
+			'short_contents' => $this->get_short_contents(),
+			'short_contents_enabled' => (int)$this->get_short_contents_enabled(),
+			'approbation_type' => $this->get_approbation_type(),
 			'start_date' => $this->get_start_date()->get_timestamp(),
 			'end_date' => $this->get_start_date()->get_timestamp(),
 			'creation_date' => $this->get_creation_date()->get_timestamp(),
-			'user_id' => $this->get_user_id(),
+			'author_user_id' => $this->get_author_user_id(),
 			'picture_url' => $this->get_picture()->absolute(),
-			'tags' => serialize($this->get_tags()),
 			'sources' => serialize($this->get_sources())
 		);
 	}
@@ -208,15 +224,16 @@ class News
 		$this->set_id($properties['id']);
 		$this->set_id_cat($properties['id_cat']);
 		$this->set_title($properties['title']);
+		$this->set_rewrited_title($properties['rewrited_title']);
 		$this->set_contents($properties['contents']);
-		$this->set_extend_contents($properties['extend_contents']);
-		$this->set_approbation($properties['approbation']);
+		$this->set_short_contents($properties['short_contents']);
+		$this->set_short_contents_enabled((bool)$properties['short_contents_enabled']);
+		$this->set_approbation_type($properties['approbation_type']);
 		$this->set_start_date(new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, $properties['start_date']));
 		$this->set_end_date(new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, $properties['end_date']));
 		$this->set_creation_date(new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, $properties['creation_date']));
-		$this->set_user_id($properties['user_id']);
+		$this->set_author_user_id($properties['author_user_id']);
 		$this->set_picture_url(new Url($properties['picture_url']));
-		$this->set_tags(!empty($properties['tags']) ? unserialize($properties['tags']) : array());
 		$this->set_sources(!empty($properties['sources']) ? unserialize($properties['sources']) : array());
 	}
 }

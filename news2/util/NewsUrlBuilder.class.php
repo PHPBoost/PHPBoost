@@ -48,5 +48,10 @@ class NewsUrlBuilder
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/admin/categories/');
 	}
+	
+	public static function home()
+	{
+		return DispatchManager::get_url(self::$dispatcher, '/');
+	}
 }
 ?>
