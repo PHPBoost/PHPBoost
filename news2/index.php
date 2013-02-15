@@ -42,6 +42,7 @@ $url_controller_mappers = array(
 	//Form
 	new UrlControllerMapper('NewsFormController', '`^/add/?$`'),
 	new UrlControllerMapper('NewsFormController', '`^/([0-9]+)/edit/?$`', array('id')),
+	new UrlControllerMapper('NewsFormController', '`^/([0-9]+)/delete/?$`', array('id')),
 );
 DispatchManager::dispatch($url_controller_mappers);
 ?>
