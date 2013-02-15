@@ -2,12 +2,6 @@
 	<tr> 
 		<th colspan="5">
 			{@newsletter.list_newsletters} 
-			# IF C_CREATE_AUTH #
-				&nbsp;&nbsp;
-				<a href="{LINK_CREATE}" style="margin-right:25px;">
-					<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/french/add.png" alt="" />
-				</a>
-			# ENDIF #
 		</th>
 	</tr>
 	<tr style="text-align:center;">
