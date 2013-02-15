@@ -54,8 +54,6 @@ class NewsletterModuleHomePage implements ModuleHomePage
 		$pagination->set_url_sprintf_pattern(DispatchManager::get_url('/newsletter', '')->absolute());
 		$this->view->put_all(array(
 			'C_STREAMS' => (float)$nbr_streams,
-			'C_CREATE_AUTH' => NewsletterAuthorizationsService::default_authorizations()->create_newsletters(),
-			'LINK_CREATE' => NewsletterUrlBuilder::add_newsletter()->absolute(),
 			'LINK_SUBSCRIBE' => NewsletterUrlBuilder::subscribe()->absolute(),
 			'LINK_UNSUBSCRIBE' => NewsletterUrlBuilder::unsubscribe()->absolute(),
 			'PAGINATION' => $pagination->export()->render()
@@ -91,6 +89,10 @@ class NewsletterModuleHomePage implements ModuleHomePage
 		$body_view = new FileTemplate('newsletter/NewsletterBody.tpl');
 		$body_view->add_lang($this->lang);
 		$body_view->put('TEMPLATE', $this->view);
+		$body_view->put_all(array(
+			'C_CREATE_AUTH' => NewsletterAuthorizationsService::default_authorizations()->create_newsletters(),
+			'LINK_CREATE' => NewsletterUrlBuilder::add_newsletter()->absolute()
+		));
 		return $body_view;
 	}
 	
