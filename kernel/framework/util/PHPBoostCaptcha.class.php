@@ -352,7 +352,7 @@ class PHPBoostCaptcha
 		}
 		else
 		{
-		  $this->sql_querier->query_inject("INSERT INTO " . DB_TABLE_VERIF_CODE . " (user_id, code, difficulty, timestamp) VALUES ('" . $this->user_id . "', '" . $this->code . "', '4', '" . time() . "')", __LINE__, __FILE__);
+		  $this->sql_querier->query_inject("INSERT INTO " . DB_TABLE_VERIF_CODE . " (user_id, code, difficulty, timestamp) VALUES ('" . $this->user_id . "', '" . $this->code . "', '" . $this->difficulty . "', '" . time() . "')", __LINE__, __FILE__);
 		}
 	}
 
