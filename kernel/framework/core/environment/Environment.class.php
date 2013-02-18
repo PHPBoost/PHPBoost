@@ -558,7 +558,7 @@ class Environment
 	{
 		PersistenceContext::close_db_connection();
 
-		ob_end_flush();
+		@ob_end_flush();
 	}
 
 	private static function get_yesterday_timestamp()
