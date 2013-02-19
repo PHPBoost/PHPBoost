@@ -137,9 +137,12 @@ class CategoriesManager
 		}
 	}
 	
-	###############################
-	############################### MOVE CONTENT (  articles  )
-	###############################
+	/**
+	 * @desc Moves a category and items into another category. You can specify its future position in its future parent category.
+	 * @param Category $category
+	 * @param int $id_parent
+	 * @param int $position
+	 */
 	public function move_into_another(Category $category, $id_parent, $position = 0)
 	{
 		$id = $category->get_id();
@@ -157,6 +160,9 @@ class CategoriesManager
 				{
 					$this->db_querier->update($this->table_name, array('id_parent' => $id_parent, 'c_order' => ($max_order + 1)), 'WHERE id=:id', array('id' => $id));
 
+					//Update items
+					$this->db_querier->update($this->categories_items_parameters->get_table_name_contains_items(), array($this->categories_items_parameters->get_field_name_id_category() => $id_parent), 'WHERE '.$this->categories_items_parameters->get_field_name_id_category().'=:id_category', array('id_category' => $category->get_id_parent()));
+					
 					$result = PersistenceContext::get_querier()->select_rows($this->table_name, array('id', 'c_order'), 'WHERE id_parent=:id_parent AND c_order > :order', array('id_parent' => $category->get_id_parent(), 'order' => $category->get_order()));
 					while ($row = $result->fetch())
 					{
@@ -172,6 +178,9 @@ class CategoriesManager
 					}
 					
 					$this->db_querier->update($this->table_name, array('id_parent' => $id_parent, 'c_order' => $position), 'WHERE id=:id', array('id' => $id));
+					
+					//Update items
+					$this->db_querier->update($this->categories_items_parameters->get_table_name_contains_items(), array($this->categories_items_parameters->get_field_name_id_category() => $id_parent), 'WHERE '.$this->categories_items_parameters->get_field_name_id_category().'=:id_category', array('id_category' => $category->get_id_parent()));
 					
 					$result = PersistenceContext::get_querier()->select_rows($this->table_name, array('id', 'c_order'), 'WHERE id_parent=:id_parent AND c_order > :order', array('id_parent' => $category->get_id_parent(), 'order' => $category->get_order()));
 					while ($row = $result->fetch())
@@ -200,12 +209,9 @@ class CategoriesManager
 	}
 	
 	/**
-	 * @desc Deletes a category.
+	 * @desc Deletes a category and items.
 	 * @param int $id Id of the category to delete.
 	 */
-	####################
-	#################### DELETE CONTENT (articles)
-	####################
 	public function delete($id)
 	{
 		if (!$this->get_categories_cache()->category_exists($id) && $id == Category::ROOT_CATEGORY)
@@ -215,6 +221,9 @@ class CategoriesManager
 
 		$category = $this->get_categories_cache()->get_category($id);
 		$this->db_querier->delete($this->table_name, 'WHERE id=:id', array('id' => $id));
+		
+		//Delete items
+		$this->db_querier->update($this->categories_items_parameters->get_table_name_contains_items(), 'WHERE '.$this->categories_items_parameters->get_field_name_id_category().'=:id_category', array('id_category' => $id));
 		
 		$result = PersistenceContext::get_querier()->select_rows($this->table_name, array('id', 'c_order'), 'WHERE id_parent=:id_parent AND c_order > :order', array('id_parent' => $category->get_id_parent(), 'order' => $category->get_order()));
 		while ($row = $result->fetch())

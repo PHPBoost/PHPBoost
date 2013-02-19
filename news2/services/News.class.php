@@ -33,7 +33,6 @@ class News
 	private $rewrited_title;
 	private $contents;
 	private $short_contents;
-	private $short_contents_enabled;
 	
 	private $approbation_type;
 	private $start_date;
@@ -108,15 +107,10 @@ class News
 	{
 		return $this->short_contents;
 	}
-	
-	public function set_short_contents_enabled($short_contents_enabled)
-	{
-		$this->short_contents_enabled = $short_contents_enabled;
-	}
-	
+		
 	public function get_short_contents_enabled()
 	{
-		return $this->short_contents_enabled;
+		return !empty($this->short_contents);
 	}
 	
 	public function set_approbation_type($approbation_type)
@@ -208,7 +202,6 @@ class News
 			'rewrited_title' => $this->get_rewrited_title(),
 			'contents' => $this->get_contents(),
 			'short_contents' => $this->get_short_contents(),
-			'short_contents_enabled' => (int)$this->get_short_contents_enabled(),
 			'approbation_type' => $this->get_approbation_type(),
 			'start_date' => $this->get_start_date()->get_timestamp(),
 			'end_date' => $this->get_start_date()->get_timestamp(),
@@ -227,7 +220,6 @@ class News
 		$this->set_rewrited_title($properties['rewrited_title']);
 		$this->set_contents($properties['contents']);
 		$this->set_short_contents($properties['short_contents']);
-		$this->set_short_contents_enabled((bool)$properties['short_contents_enabled']);
 		$this->set_approbation_type($properties['approbation_type']);
 		$this->set_start_date(new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, $properties['start_date']));
 		$this->set_end_date(new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, $properties['end_date']));
