@@ -34,6 +34,11 @@ class Category
 	protected $auth = array();
 	protected $id_parent;
 	
+	const READ_AUTHORIZATIONS = 1;
+	const WRITE_AUTHORIZATIONS = 2;
+	const CONTRIBUTION_AUTHORIZATIONS = 4;
+	const MODERATION_AUTHORIZATIONS = 8;
+	
 	const ROOT_CATEGORY = '0';
 	
 	public function get_id()

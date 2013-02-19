@@ -30,8 +30,7 @@
  * @author Kévin MASSY
  * @desc
  */
-abstract class AbstractCategoriesFormController //extends AdminModuleController
-extends AbstractController
+abstract class AbstractCategoriesFormController extends AdminModuleController
 {
 	/**
 	 * @var HTMLForm
@@ -187,10 +186,10 @@ extends AbstractController
 	public function get_authorizations_settings()
 	{
 		return new AuthorizationsSettings(array(
-			new ActionAuthorization('Lecture', 1),
-			new ActionAuthorization('Ecriture', 2),
-			new ActionAuthorization('Contribution', 4),
-			new ActionAuthorization('Modération', 8),
+			new ActionAuthorization($this->lang['category.form.authorizations.read'], Category::READ_AUTHORIZATIONS),
+			new ActionAuthorization($this->lang['category.form.authorizations.write'], Category::WRITE_AUTHORIZATIONS),
+			new ActionAuthorization($this->lang['category.form.authorizations.contribution'], Category::CONTRIBUTION_AUTHORIZATIONS),
+			new ActionAuthorization($this->lang['category.form.authorizations.moderation'], Category::MODERATION_AUTHORIZATIONS),
 		));
 	}
 	

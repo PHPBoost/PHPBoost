@@ -30,8 +30,7 @@
  * @author Kévin MASSY
  * @desc
  */
-abstract class AbstractDeleteCategoryController //extends AdminModuleController
-extends AbstractController
+abstract class AbstractDeleteCategoryController extends AdminModuleController
 {
 	/**
 	 * @var HTMLForm
