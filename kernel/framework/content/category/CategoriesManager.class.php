@@ -48,6 +48,11 @@ class CategoriesManager
 	private $categories_cache;
 	
 	/**
+	 * @var CategoriesItemsParameters
+	 */
+	private $categories_items_parameters;
+	
+	/**
 	 * @var DBQuerier
 	 */
 	private $db_querier;
@@ -56,15 +61,15 @@ class CategoriesManager
 	const RICH_CATEGORY_CLASS = 'RichCategory';
 	
 	/**
-	 * @param string $id_module
-	 * @param string $table_name
 	 * @param CategoriesCache $categories_cache
+	 * @param CategoriesItemsParameters $categories_items_parameters
 	 */
-	public function __construct(CategoriesCache $categories_cache)
+	public function __construct(CategoriesCache $categories_cache, CategoriesItemsParameters $categories_items_parameters)
 	{
 		$this->module_id = $categories_cache->get_module_identifier();
 		$this->table_name = $categories_cache->get_table_name();
 		$this->categories_cache = $categories_cache;
+		$this->categories_items_parameters = $categories_items_parameters;
 	
 		$this->db_querier = PersistenceContext::get_querier();
 	}

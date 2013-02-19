@@ -65,7 +65,10 @@ class NewsService
 	{
 		if (self::$categories_manager === null)
 		{
-			self::$categories_manager = new CategoriesManager(NewsCategoriesCache::load());
+			$categories_items_parameters = new CategoriesItemsParameters();
+			$categories_items_parameters->set_table_name_contains_items(NewsSetup::$news_table);
+			$categories_items_parameters->set_field_name_id_category('idcat');
+			self::$categories_manager = new CategoriesManager(NewsCategoriesCache::load(), $categories_items_parameters);
 		}
 		return self::$categories_manager;
 	}
