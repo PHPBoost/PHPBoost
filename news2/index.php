@@ -39,10 +39,11 @@ $url_controller_mappers = array(
 	new UrlControllerMapper('NewsCategoriesFormController', '`^/admin/categories/([0-9]+)/edit/?$`', array('id')),
 	new UrlControllerMapper('NewsDeleteCategoryController', '`^/admin/categories/([0-9]+)/delete/?$`', array('id')),
 	
-	//Form
+	//Manage News
 	new UrlControllerMapper('NewsFormController', '`^/add/?$`'),
 	new UrlControllerMapper('NewsFormController', '`^/([0-9]+)/edit/?$`', array('id')),
-	new UrlControllerMapper('NewsFormController', '`^/([0-9]+)/delete/?$`', array('id')),
+	new UrlControllerMapper('NewsDeleteController', '`^/([0-9]+)/delete/?$`', array('id')),
+	new UrlControllerMapper('NewsDisplayNewsController', '`^(.*)/([a-z-_]+)/([a-z-_]+)/?$`', array('categories', 'rewrited_name_category', 'rewrited_name_news')),	
 );
 DispatchManager::dispatch($url_controller_mappers);
 ?>

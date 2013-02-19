@@ -28,6 +28,7 @@
 class NewsDisplayNewsController extends ModuleController
 {	
 	private $lang;
+	private $tpl;
 	
 	private $news;
 	
@@ -36,6 +37,8 @@ class NewsDisplayNewsController extends ModuleController
 		$this->check_authorizations();
 		
 		$this->init();
+		
+		$this->build_view();
 					
 		return $this->generate_response($tpl);
 	}
@@ -43,6 +46,7 @@ class NewsDisplayNewsController extends ModuleController
 	private function init()
 	{
 		$this->lang = LangLoader::get('common', 'news');
+		$this->tpl = new FileTemplate('news/NewsDisplayNewsController.tpl');
 	}
 	
 	private function get_news()
@@ -65,11 +69,16 @@ class NewsDisplayNewsController extends ModuleController
 		return $this->news;
 	}
 	
+	private function build_view()
+	{
+		
+	}
+	
 	private function check_authorizations()
 	{
 		$news = $this->get_news();
 		
-		if (!NewsAuthorizationsService::check_authorizations()->read() && !NewsAuthorizationsService::check_authorizations()->read())
+		if (!NewsAuthorizationsService::check_authorizations($news->get_id_cat())->read() && !NewsAuthorizationsService::check_authorizations()->read())
 		{
 			$error_controller = PHPBoostErrors::user_not_authorized();
    			DispatchManager::redirect($error_controller);
