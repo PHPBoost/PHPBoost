@@ -30,8 +30,7 @@
  * @author Kévin MASSY
  * @desc
  */
-abstract class AbstractCategoriesManageController //extends AdminModuleController
-extends AbstractController
+abstract class AbstractCategoriesManageController extends AdminModuleController
 {	
 	protected $lang;
 	protected $tpl;

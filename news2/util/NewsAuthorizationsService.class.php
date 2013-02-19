@@ -28,12 +28,7 @@
 class NewsAuthorizationsService
 {
 	private $id_category;
-	
-	const AUTHORIZATIONS_READ = 1;
-	const AUTHORIZATIONS_CONTRIBUTION = 2;
-	const AUTHORIZATIONS_WRITE = 4;
-	const AUTHORIZATIONS_MODERATION = 8;
-	
+		
 	public static function check_authorizations($id_category = Category::ROOT_CATEGORY)
 	{
 		$instance = new self();
@@ -43,22 +38,22 @@ class NewsAuthorizationsService
 		
 	public function read()
 	{
-		$this->get_authorizations(self::AUTHORIZATIONS_READ);
+		$this->get_authorizations(Category::READ_AUTHORIZATIONS);
 	}
 	
 	public function contribution()
 	{
-		$this->get_authorizations(self::AUTHORIZATIONS_CONTRIBUTION);
+		$this->get_authorizations(Category::CONTRIBUTION_AUTHORIZATIONS);
 	}
 	
 	public function write()
 	{
-		$this->get_authorizations(self::AUTHORIZATIONS_WRITE);
+		$this->get_authorizations(Category::WRITE_AUTHORIZATIONS);
 	}
 	
 	public function moderation()
 	{
-		$this->get_authorizations(self::AUTHORIZATIONS_MODERATION);
+		$this->get_authorizations(Category::MODERATION_AUTHORIZATIONS);
 	}
 	
 	private function get_authorizations($bit)
