@@ -46,6 +46,11 @@ class FormFieldConstraintNotEmpty extends AbstractFormFieldConstraint
 	{
 		$value = $field->get_value();
 		$this->set_validation_error_message(StringVars::replace_vars($this->error_message, array('name' => strtolower($field->get_label()))));
+		
+		if ($value instanceof FormFieldEnumOption) {
+	    	return $value->get_raw_value() !== null && $value->get_raw_value() != '';
+		}
+		
         return $value !== null && $value != '';
 	}
 
