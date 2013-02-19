@@ -49,5 +49,24 @@ class RichCategory extends Category
 		parent::set_properties($properties);
 		$this->set_description($properties['description']);
 	}
+	
+	public static function create_categories_table($table_name)
+	{
+		$fields = array(
+			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
+			'name' => array('type' => 'string', 'length' => 255, 'notnull' => 1),
+			'description' => array('type' => 'text', 'length' => 65000),
+			'c_order' => array('type' => 'integer', 'length' => 11, 'unsigned' => 1, 'notnull' => 1, 'default' => 0),
+			'visible' => array('type' => 'boolean', 'notnull' => 1, 'default' => 0),
+			'auth' => array('type' => 'text', 'length' => 65000),
+			'image' => array('type' => 'string', 'length' => 255, 'notnull' => 1),
+			'id_parent' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
+		);
+
+		$options = array(
+			'primary' => array('id')
+		);
+		PersistenceContext::get_dbms_utils()->create_table($table_name, $fields, $options);
+	}
 }
 ?>

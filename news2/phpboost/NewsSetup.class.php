@@ -68,48 +68,33 @@ class NewsSetup extends DefaultModuleSetup
 	{
 		$fields = array(
 			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
-			'idcat' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
+			'id_category' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'title' => array('type' => 'string', 'length' => 100, 'notnull' => 1, 'default' => "''"),
+			'rewrited_title' => array('type' => 'string', 'length' => 250, 'default' => "''"),
 			'contents' => array('type' => 'text', 'length' => 65000),
-			'extend_contents' => array('type' => 'text', 'length' => 65000),
-			'timestamp' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'visible' => array('type' => 'boolean', 'notnull' => 1, 'notnull' => 1, 'default' => 0),
-			'start' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'end' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'img' => array('type' => 'string', 'length' => 255, 'notnull' => 1),
-			'alt' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
-			'user_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'compt' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
+			'short_contents' => array('type' => 'text', 'length' => 65000),
+			'creation_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
+			'approbation_type' => array('type' => 'boolean', 'notnull' => 1, 'notnull' => 1, 'default' => 0),
+			'start_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
+			'end_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
+			'picture_url' => array('type' => 'string', 'length' => 255, 'notnull' => 1),
+			'author_user_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'sources' => array('type' => 'text', 'length' => 65000),
 		);
 		$options = array(
 			'primary' => array('id'),
 			'indexes' => array(
-				'idcat' => array('type' => 'key', 'fields' => 'idcat'),
+				'id_category' => array('type' => 'key', 'fields' => 'idcat'),
 				'title' => array('type' => 'fulltext', 'fields' => 'title'),
 				'contents' => array('type' => 'fulltext', 'fields' => 'contents'),
-				'extend_contents' => array('type' => 'fulltext', 'fields' => 'extend_contents')
+				'short_contents' => array('type' => 'fulltext', 'fields' => 'extend_contents')
 		));
 		PersistenceContext::get_dbms_utils()->create_table(self::$news_table, $fields, $options);
 	}
 
 	private function create_news_cats_table()
 	{
-		$fields = array(
-			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
-			'id_parent' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'c_order' => array('type' => 'integer', 'length' => 11, 'unsigned' => 1, 'notnull' => 1, 'default' => 0),
-			'auth' => array('type' => 'text', 'length' => 65000),
-			'name' => array('type' => 'string', 'length' => 255, 'notnull' => 1),
-			'visible' => array('type' => 'boolean', 'notnull' => 1, 'default' => 0),
-			'description' => array('type' => 'text', 'length' => 65000),
-			'image' => array('type' => 'string', 'length' => 255, 'notnull' => 1)
-		);
-
-		$options = array(
-			'primary' => array('id')
-		);
-		PersistenceContext::get_dbms_utils()->create_table(self::$news_cats_table, $fields, $options);
+		RichCategory::create_categories_table(self::$news_cats_table);
 	}
 	
 	private function insert_data()
@@ -137,18 +122,17 @@ class NewsSetup extends DefaultModuleSetup
 	{
 		PersistenceContext::get_querier()->insert(self::$news_table, array(
 			'id' => 1,
-			'idcat' => 1,
+			'id_category' => 1,
 			'title' => $this->messages['news.title'],
+			'rewrited_title' => '',
 			'contents' => $this->messages['news.content'],
-			'extend_contents' => '',
-			'timestamp' => time(),
-			'visible' => (int)true,
+			'short_contents' => '',
+			'creation_date' => time(),
+			'approbation_type' => News::APPROVAL_NOW,
 			'start' => 0,
 			'end' => 0,
 			'img' => '',
-			'alt' => '',
-			'user_id' => 1,
-			'compt' => 0,
+			'author_user_id' => 1,
 			'sources' => serialize(array())
 		));
 	}

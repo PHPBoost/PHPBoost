@@ -56,6 +56,11 @@ class Category
 		$this->name = $name;
 	}
 	
+	public function get_rewrited_name()
+	{
+		return Url::encode_rewrite($this->name);
+	}
+	
 	public function get_order()
 	{
 		return $this->order;
@@ -137,6 +142,23 @@ class Category
 		$this->set_visible($properties['visible']);
 		$this->set_auth(!empty($properties['auth']) ? unserialize($properties['auth']) : array());
 		$this->set_id_parent($properties['id_parent']);
+	}
+	
+	public static function create_categories_table($table_name)
+	{
+		$fields = array(
+			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
+			'name' => array('type' => 'string', 'length' => 255, 'notnull' => 1),
+			'c_order' => array('type' => 'integer', 'length' => 11, 'unsigned' => 1, 'notnull' => 1, 'default' => 0),
+			'visible' => array('type' => 'boolean', 'notnull' => 1, 'default' => 0),
+			'auth' => array('type' => 'text', 'length' => 65000),
+			'id_parent' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
+		);
+
+		$options = array(
+			'primary' => array('id')
+		);
+		PersistenceContext::get_dbms_utils()->create_table($table_name, $fields, $options);
 	}
 }
 ?>
