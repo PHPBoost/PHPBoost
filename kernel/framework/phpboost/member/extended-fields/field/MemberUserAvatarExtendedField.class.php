@@ -102,11 +102,7 @@ class MemberUserAvatarExtendedField extends AbstractMemberExtendedField
 		$delete = $form->get_value('delete_avatar');
 		if ($delete)
 		{
-			$value = MemberExtendedFieldsService::return_field_member($member_extended_field->get_field_name(), $member_extended_field->get_user_id());
-			if (!empty($value) && strpos($value, '/images/avatars/') !== false && is_file($value))
-			{
-				@unlink($value);
-			}
+			$this->delete_old_avatar($member_extended_field);
 			return '';
 		}
 		else
@@ -118,10 +114,27 @@ class MemberUserAvatarExtendedField extends AbstractMemberExtendedField
 	private function upload_avatar($form, $member_extended_field)
 	{
 		$avatar = $form->get_value('upload_avatar');
+		$user_accounts_config = UserAccountsConfig::load();
 		if ($form->get_value('link_avatar'))
 		{
 			if (preg_match('`([A-Za-z0-9()_-])+\.(jpg|gif|png)+$`i', $form->get_value('link_avatar')))
 			{
+				$image = new Image($form->get_value('link_avatar'));
+	
+				if ($image->get_width() > $user_accounts_config->get_max_avatar_width() || $image->get_height() > $user_accounts_config->get_max_avatar_height())
+				{
+					if ($user_accounts_config->is_avatar_auto_resizing_enabled())
+					{
+						$directory = '/images/avatars/' . Url::encode_rewrite($image->get_name() . '_' . $this->key_hash()) . '.' . $image->get_extension();
+						
+						$resizer = new ImageResizer();
+						$resizer->resize_with_max_values($image, $user_accounts_config->get_max_avatar_height(), $user_accounts_config->get_max_avatar_height(), PATH_TO_ROOT . $directory);
+						$this->delete_old_avatar($member_extended_field);
+						return $directory;
+					}
+					throw new MemberExtendedFieldErrorsMessageException(LangLoader::get_message('e_upload_max_dimension', 'errors'));
+				}
+				$this->delete_old_avatar($member_extended_field);
 				return $form->get_value('link_avatar');
 			}
 			else
@@ -133,14 +146,10 @@ class MemberUserAvatarExtendedField extends AbstractMemberExtendedField
 		{
 			if(UserAccountsConfig::load()->is_avatar_upload_enabled())
 			{
-				$user_accounts_config = UserAccountsConfig::load();
 				$dir = '/images/avatars/';
 			
 				if ($user_accounts_config->is_avatar_auto_resizing_enabled())
-				{
-					import('io/image/Image');
-					import('io/image/ImageResizer');
-			
+				{			
 					$image = new Image($avatar->get_temporary_filename());
 					$resizer = new ImageResizer();
 			
@@ -154,7 +163,7 @@ class MemberUserAvatarExtendedField extends AbstractMemberExtendedField
 			
 					try {
 						$resizer->resize_with_max_values($image, $user_accounts_config->get_max_avatar_height(), $user_accounts_config->get_max_avatar_height(), PATH_TO_ROOT . $directory);
-			
+						$this->delete_old_avatar($member_extended_field);
 						return $directory;
 					} catch (MimeTypeNotSupportedException $e) {
 						throw new MemberExtendedFieldErrorsMessageException(LangLoader::get_message('e_upload_invalid_format', 'errors'));
@@ -173,7 +182,10 @@ class MemberUserAvatarExtendedField extends AbstractMemberExtendedField
 					if (!empty($error))
 						throw new MemberExtendedFieldErrorsMessageException(LangLoader::get_message($error, 'errors'));
 					else
+					{
+						$this->delete_old_avatar($member_extended_field);
 						return $dir . $Upload->get_filename();
+					}
 				}
 			}
 		}
@@ -186,6 +198,16 @@ class MemberUserAvatarExtendedField extends AbstractMemberExtendedField
 	private function key_hash()
 	{
 		return KeyGenerator::generate_key(5);
+	}
+	
+	private function delete_old_avatar($member_extended_field)
+	{
+		$value = MemberExtendedFieldsService::return_field_member($member_extended_field->get_field_name(), $member_extended_field->get_user_id());
+
+		if (!empty($value) && strpos($value, '/images/avatars/') !== false && is_file(PATH_TO_ROOT . $value))
+		{
+			@unlink(PATH_TO_ROOT . $value);
+		}
 	}
 }
 ?>
