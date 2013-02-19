@@ -62,7 +62,7 @@ if (!empty($_GET['member']) || !empty($_GET['insert_member']) || !empty($_GET['a
             }
             elseif (!empty($_GET['admin_member']))
             {
-                echo '<a href="' . AdminMembersUrlBuilder::edit($row['user_id'])->absolute() . '">' . addslashes($row['login']) . '</a><br />';
+                echo '<a href="' . UserUrlBuilder::profile($row['user_id'])->absolute() . '">' . addslashes($row['login']) . '</a><br />';
             }
             if (!empty($_GET['warning_member']))
             {
