@@ -42,7 +42,7 @@ class MemberUserSexExtendedField extends AbstractMemberExtendedField
 
 		$fieldset->add_field(new FormFieldSimpleSelectChoice($member_extended_field->get_field_name(), $member_extended_field->get_name(), '0',
 		array(
-			new FormFieldSelectChoiceOption('--', '0'),
+			new FormFieldSelectChoiceOption('--', ''),
 			new FormFieldSelectChoiceOption(LangLoader::get_message('male', 'main'), '1'),
 			new FormFieldSelectChoiceOption(LangLoader::get_message('female', 'main'), '2'),
 		),
@@ -56,7 +56,7 @@ class MemberUserSexExtendedField extends AbstractMemberExtendedField
 
 		$fieldset->add_field(new FormFieldSimpleSelectChoice($member_extended_field->get_field_name(), $member_extended_field->get_name(), $member_extended_field->get_value(),
 		array(
-			new FormFieldSelectChoiceOption('--', '0'),
+			new FormFieldSelectChoiceOption('--', ''),
 			new FormFieldSelectChoiceOption(LangLoader::get_message('male', 'main'), '1'),
 			new FormFieldSelectChoiceOption(LangLoader::get_message('female', 'main'), '2'),
 		),
