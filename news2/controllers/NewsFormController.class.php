@@ -43,6 +43,9 @@ class NewsFormController extends ModuleController
 	public function execute(HTTPRequestCustom $request)
 	{
 		$this->init();
+		
+		$this->check_authorizations();
+		
 		$this->build_form();
 		
 		$tpl = new StringTemplate('# INCLUDE FORM #');
@@ -70,11 +73,11 @@ class NewsFormController extends ModuleController
 		$fieldset = new FormFieldsetHTML('news', $this->lang['news']);
 		$form->add_fieldset($fieldset);
 		
-		$fieldset->add_field(new FormFieldTextEditor('title', $this->lang['news.form.title'], $this->get_news()->get_title(), array('required' => true)));
+		$fieldset->add_field(new FormFieldTextEditor('title', $this->lang['news.form.name'], $this->get_news()->get_name(), array('required' => true)));
 
 		$search_category_children_options = new SearchCategoryChildrensOptions();
-		$search_category_children_options->add_authorisations_bits(NewsAuthorizationsService::AUTHORIZATIONS_READ);
-		$search_category_children_options->add_authorisations_bits(NewsAuthorizationsService::AUTHORIZATIONS_CONTRIBUTION);
+		$search_category_children_options->add_authorisations_bits(Category::READ_AUTHORIZATIONS);
+		$search_category_children_options->add_authorisations_bits(Category::CONTRIBUTION_AUTHORIZATIONS);
 		$fieldset->add_field(NewsService::get_categories_manager()->get_select_categories_form_field('id_cat', $this->lang['news.form.category'], $this->get_news()->get_id_cat(), $search_category_children_options));
 		
 		$fieldset->add_field(new FormFieldRichTextEditor('contents', $this->lang['news.form.contents'], $this->get_news()->get_contents(), array('required' => true)));
@@ -82,38 +85,38 @@ class NewsFormController extends ModuleController
 		$fieldset->add_field(new FormFieldCheckbox('enable_short_contents', $this->lang['news.form.short_contents.enabled'], $this->get_news()->get_short_contents_enabled(), 
 			array('events' => array('click' => '
 			if (HTMLForms.getField("enable_short_contents").getValue()) {
-				$("'.__CLASS__.'_short_contents").appear();
+				HTMLForms.getField("short_contents").enable();
 			} else { 
-				$("'.__CLASS__.'_short_contents").fade();
+				HTMLForms.getField("short_contents").disable();
 			}'))
 		));
 		
 		$fieldset->add_field(new FormFieldRichTextEditor('short_contents', $this->lang['news.form.short_contents'], $this->get_news()->get_short_contents(), array('hidden' => !$this->get_news()->get_short_contents_enabled())));
-		
-		$fieldset->add_field(new FormFieldSimpleSelectChoice('approbation', $this->lang['news.form.approbation'], $this->get_news()->get_approbation(),
+
+		$fieldset->add_field(new FormFieldSimpleSelectChoice('approbation_type', $this->lang['news.form.approbation'], $this->get_news()->get_approbation_type(),
 			array(
 				new FormFieldSelectChoiceOption($this->lang['news.form.approbation.not'], News::NOT_APPROVAL),
 				new FormFieldSelectChoiceOption($this->lang['news.form.approbation.now'], News::APPROVAL_NOW),
 				new FormFieldSelectChoiceOption($this->lang['news.form.approbation.date'], News::APPROVAL_DATE),
 			),
-			array('events' => array('click' => '
-			if (HTMLForms.getField("approbation").getValue()) {
-				$("'.__CLASS__.'_start_date").appear();
-				$("'.__CLASS__.'_end_date").appear();
+			array('events' => array('change' => '
+			if (HTMLForms.getField("approbation_type").getValue() == 2) {
+				$("'.__CLASS__.'_start_date_field").appear();
+				$("'.__CLASS__.'_end_date_field").appear();
 			} else { 
-				$("'.__CLASS__.'_start_date").fade();
-				$("'.__CLASS__.'_end_date").fade();
+				$("'.__CLASS__.'_start_date_field").fade();
+				$("'.__CLASS__.'_end_date_field").fade();
 			}'))
 		));
 		
-		$fieldset->add_field(new FormFieldDateTime('start_date', $this->lang['news.form.date.start'], $this->get_news()->get_start_date(), array('hidden' => ($this->get_news()->get_approbation() !== News::APPROVAL_DATE))));
+		$fieldset->add_field(new FormFieldDateTime('start_date', $this->lang['news.form.date.start'], $this->get_news()->get_start_date(), array('hidden' => ($this->get_news()->get_approbation_type() != News::APPROVAL_DATE))));
 		
-		$fieldset->add_field(new FormFieldDateTime('end_date', $this->lang['news.form.date.end'], $this->get_news()->get_end_date(), array('hidden' => ($this->get_news()->get_approbation() !== News::APPROVAL_DATE))));
+		$fieldset->add_field(new FormFieldDateTime('end_date', $this->lang['news.form.date.end'], $this->get_news()->get_end_date(), array('hidden' => ($this->get_news()->get_approbation_type() != News::APPROVAL_DATE))));
 		
 		$fieldset->add_field(new FormFieldDateTime('creation_date', $this->lang['news.form.date.creation'], $this->get_news()->get_creation_date()));
 		
 		// Contribution fieldset
-		$this->build_contribution_fieldset();
+		$this->build_contribution_fieldset($form);
 		
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_button($this->submit_button);
@@ -122,12 +125,12 @@ class NewsFormController extends ModuleController
 		$this->form = $form;
 	}
 	
-	private function build_contribution_fieldset()
+	private function build_contribution_fieldset($form)
 	{
 		if ($this->is_contributor_member())
 		{
 			$fieldset = new FormFieldsetHTML('contribution', $this->lang['news.form.contribution']);
-			$fieldset->set_description(MessageHelper::display($this->lang['news.form.contribution.explain'], MessageHelper::WARNING));
+			$fieldset->set_description(MessageHelper::display($this->lang['news.form.contribution.explain'], MessageHelper::WARNING)->render());
 			$form->add_fieldset($fieldset);
 			
 			$fieldset->add_field(new FormFieldRichTextEditor('contribution_description', $this->lang['news.form.contribution.description'], '', array('description' => $this->lang['news.form.contribution.description.explain'])));
@@ -136,7 +139,7 @@ class NewsFormController extends ModuleController
 	
 	private function is_contributor_member()
 	{
-		return (empty($this->get_news()->get_id()) && !NewsAuthorizationsService::check_authorizations()->write() && NewsAuthorizationsService::check_authorizations()->contribution());
+		return ($this->get_news()->get_id() === null && !NewsAuthorizationsService::check_authorizations()->write() && NewsAuthorizationsService::check_authorizations()->contribution());
 	}
 	
 	private function get_news()
@@ -153,8 +156,11 @@ class NewsFormController extends ModuleController
    					DispatchManager::redirect($error_controller);
 				}
 			}
-			
-			$this->news = new News();
+			else
+			{
+				$this->news = new News();
+				$this->news->init_default_properties();
+			}
 		}
 		return $this->news;
 	}
@@ -163,7 +169,7 @@ class NewsFormController extends ModuleController
 	{
 		$news = $this->get_news();
 		
-		if (!empty($news->get_id()))
+		if ($news->get_id() === null)
 		{
 			if (!NewsAuthorizationsService::check_authorizations()->write() && !NewsAuthorizationsService::check_authorizations()->contribution())
 			{
@@ -179,6 +185,43 @@ class NewsFormController extends ModuleController
 	   			DispatchManager::redirect($error_controller);
 			}
 		}
+	}
+	
+	private function save()
+	{
+		$news = $this->get_news();
+		
+		$news->set_name($this->form->get_value('name'));
+		$news->set_id_cat($this->form->get_value('id_cat')->get_raw_value());
+		$news->set_contents($this->form->get_value('contents'));
+		$news->set_short_contents(($this->form->get_value('enable_short_contents') ? $this->form->get_value('short_contens') : ''));
+		$news->set_creation_date($this->form->get_value('creation_date'));
+		
+		$approbation_type = !$this->is_contributor_member() ? $this->form->get_value('approbation_type')->get_raw_value() : News::NOT_APPROVAL;
+		$news->set_approbation_type($approbation_type);
+		if ($approbation_type == News::APPROVAL_DATE)
+		{
+			$news->set_start_date($this->form->get_value('start_date'));
+			$news->set_end_date($this->form->get_value('end_date'));
+		}
+		else
+		{
+			$news->clean_start_and_end_date();
+		}
+				
+		if ($news->get_id() === null)
+		{
+			$news->set_author_user_id(AppContext::get_current_user()->get_id());
+			NewsService::add($news);
+		}
+		else
+		{
+			NewsService::update($news);
+		}
+		
+		// TODO generate a contribution
+		
+		Feed::clear_cache('news');
 	}
 	
 	private function generate_response(View $tpl)

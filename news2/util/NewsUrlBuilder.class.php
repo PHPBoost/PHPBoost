@@ -49,6 +49,16 @@ class NewsUrlBuilder
 		return DispatchManager::get_url(self::$dispatcher, '/admin/categories/');
 	}
 	
+	public static function display_news($rewrited_name_category, $rewrited_title)
+	{
+		return DispatchManager::get_url(self::$dispatcher, '/' . $rewrited_name_category . '/' . $rewrited_title . '/');
+	}
+	
+	public static function display_category($rewrited_name)
+	{
+		return DispatchManager::get_url(self::$dispatcher, '/' . $rewrited_name .'/');
+	}
+	
 	public static function home()
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/');

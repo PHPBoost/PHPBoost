@@ -29,8 +29,8 @@ class News
 {
 	private $id;
 	private $id_cat;
-	private $title;
-	private $rewrited_title;
+	private $name;
+	private $rewrited_name;
 	private $contents;
 	private $short_contents;
 	
@@ -68,24 +68,24 @@ class News
 		return $this->id_cat;
 	}
 	
-	public function set_title($title)
+	public function set_name($name)
 	{
-		$this->title = $title;
+		$this->name = $title;
 	}
 	
-	public function get_title()
+	public function get_name()
 	{
-		return $this->title;
+		return $this->name;
 	}
 	
-	public function set_rewrited_title($rewrited_title)
+	public function set_rewrited_name($rewrited_name)
 	{
-		$this->rewrited_title = $rewrited_title;
+		$this->rewrited_name = $rewrited_name;
 	}
 	
-	public function get_rewrited_title()
+	public function get_rewrited_name()
 	{
-		return $this->rewrited_title;
+		return $this->rewrited_name;
 	}
 	
 	public function set_contents($contents)
@@ -173,11 +173,6 @@ class News
 		return $this->picture_url;
 	}
 	
-	public function add_tag($tag)
-	{
-		$this->tags[] = $tag;
-	}
-	
 	public function add_source($source)
 	{
 		$this->sources[] = $source;
@@ -197,14 +192,14 @@ class News
 	{
 		return array(
 			'id' => $this->get_id(),
-			'id_cat' => $this->get_id_cat(),
-			'title' => $this->get_title(),
-			'rewrited_title' => $this->get_rewrited_title(),
+			'id_category' => $this->get_id_cat(),
+			'name' => $this->get_name(),
+			'rewrited_name' => $this->get_rewrited_name(),
 			'contents' => $this->get_contents(),
 			'short_contents' => $this->get_short_contents(),
 			'approbation_type' => $this->get_approbation_type(),
-			'start_date' => $this->get_start_date()->get_timestamp(),
-			'end_date' => $this->get_start_date()->get_timestamp(),
+			'start_date' => $this->get_start_date() !== null ? $this->get_start_date()->get_timestamp() : '',
+			'end_date' => $this->get_end_date() !== null ? $this->get_end_date()->get_timestamp() : '',
 			'creation_date' => $this->get_creation_date()->get_timestamp(),
 			'author_user_id' => $this->get_author_user_id(),
 			'picture_url' => $this->get_picture()->absolute(),
@@ -215,18 +210,34 @@ class News
 	public function set_properties(array $properties)
 	{
 		$this->set_id($properties['id']);
-		$this->set_id_cat($properties['id_cat']);
-		$this->set_title($properties['title']);
-		$this->set_rewrited_title($properties['rewrited_title']);
+		$this->set_id_cat($properties['id_category']);
+		$this->set_name($properties['name']);
+		$this->set_rewrited_name($properties['rewrited_name']);
 		$this->set_contents($properties['contents']);
 		$this->set_short_contents($properties['short_contents']);
 		$this->set_approbation_type($properties['approbation_type']);
-		$this->set_start_date(new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, $properties['start_date']));
-		$this->set_end_date(new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, $properties['end_date']));
+		$this->set_start_date(!empty($properties['start_date']) ? new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, $properties['start_date']) : new Date());
+		$this->set_end_date(!empty($properties['end_date']) ? new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, $properties['end_date']) : new Date());
 		$this->set_creation_date(new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, $properties['creation_date']));
 		$this->set_author_user_id($properties['author_user_id']);
-		$this->set_picture_url(new Url($properties['picture_url']));
+		$this->set_picture(new Url($properties['picture_url']));
 		$this->set_sources(!empty($properties['sources']) ? unserialize($properties['sources']) : array());
+	}
+	
+	public function init_default_properties()
+	{
+		$this->set_id_cat(Category::ROOT_CATEGORY);
+		$this->set_approbation_type(self::APPROVAL_NOW);
+		$this->set_start_date(new Date());
+		$this->set_end_date(new Date());
+		$this->set_creation_date(new Date());
+		$this->set_sources(array());
+	}
+	
+	public function clean_start_and_end_date()
+	{
+		$this->start_date = null;
+		$this->end_date = null;
 	}
 }
 ?>
