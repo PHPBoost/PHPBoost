@@ -40,7 +40,7 @@ class NewsDisplayNewsController extends ModuleController
 		
 		$this->build_view();
 					
-		return $this->generate_response($tpl);
+		return $this->generate_response();
 	}
 	
 	private function init()
@@ -53,18 +53,16 @@ class NewsDisplayNewsController extends ModuleController
 	{
 		if ($this->news === null)
 		{
-			$id = AppContext::get_request()->get_getint('id', 0);
-			if (!empty($id))
+			$rewrited_name = AppContext::get_request()->get_getstring('rewrited_name', '');
+			if (!empty($rewrited_name))
 			{
 				try {
-					$this->news = NewsService::get_news('WHERE id=:id', array('id' => $id));
+					$this->news = NewsService::get_news('WHERE rewrited_name=:rewrited_name', array('rewrited_name' => $rewrited_name));
 				} catch (RowNotFoundException $e) {
 					$error_controller = PHPBoostErrors::unexisting_page();
    					DispatchManager::redirect($error_controller);
 				}
 			}
-			
-			$this->news = new News();
 		}
 		return $this->news;
 	}
@@ -78,42 +76,55 @@ class NewsDisplayNewsController extends ModuleController
 	{
 		$news = $this->get_news();
 		
-		if (!NewsAuthorizationsService::check_authorizations($news->get_id_cat())->read() && !NewsAuthorizationsService::check_authorizations()->read())
-		{
-			$error_controller = PHPBoostErrors::user_not_authorized();
-   			DispatchManager::redirect($error_controller);
-		}
-			
-		if (
-			($news->get_approbation_type() == News::NOT_APPROVAL) && 
-			!NewsAuthorizationsService::check_authorizations($news->get_id_cat())->moderation() && 
-			!(NewsAuthorizationsService::check_authorizations($news->get_id_cat())->write() && $news->get_user_id() == AppContext::get_current_user()->get_id())
-		)
-		{
-			$error_controller = PHPBoostErrors::user_not_authorized();
-   			DispatchManager::redirect($error_controller);
-		}
+		$user_not_read_authorizations = !NewsAuthorizationsService::check_authorizations($news->get_id_cat())->read() && !NewsAuthorizationsService::check_authorizations()->read();
+		$user_not_read_authorizations_not_approval = $user_not_read_authorizations && !NewsAuthorizationsService::check_authorizations($news->get_id_cat())->moderation() && (!NewsAuthorizationsService::check_authorizations($news->get_id_cat())->write() && $news->get_author_user_id() != AppContext::get_current_user()->get_id());
 		
-		$now = new Date();
-		if (
-			($news->get_approbation_type() == News::APPROVAL_DATE) && 
-			!(
-			$news->get_start_date()->is_anterior_to($now)
-			&& 
-			$news->get_end_date()->is_posterior_to($now)
-			)
-		)
-		{
-			$error_controller = PHPBoostErrors::user_not_authorized();
-   			DispatchManager::redirect($error_controller);
+		switch ($news->get_approbation_type()) {
+			case News::APPROVAL_NOW:
+				if ($user_not_read_authorizations)
+				{
+					$error_controller = PHPBoostErrors::user_not_authorized();
+		   			DispatchManager::redirect($error_controller);
+				}
+			break;
+			case News::NOT_APPROVAL:
+				if ($user_not_read_authorizations_not_approval)
+				{
+					$error_controller = PHPBoostErrors::user_not_authorized();
+		   			DispatchManager::redirect($error_controller);
+				}
+			break;
+			case News::APPROVAL_DATE:
+				$now = new Date();
+				if ($news->get_start_date()->is_posterior_to($now) && $news->get_end_date()->is_anterior_to($now) && $user_not_read_authorizations_not_approval)
+				{
+					$error_controller = PHPBoostErrors::user_not_authorized();
+		   			DispatchManager::redirect($error_controller);
+				}
+			break;
+			default:
+				$error_controller = PHPBoostErrors::unexisting_page();
+   				DispatchManager::redirect($error_controller);
+			break;
 		}
 	}
 	
-	private function generate_response(View $tpl)
+	private function generate_response()
 	{
 		$response = new NewsDisplayResponse();
-		$response->set_page_title($this->get_news()->get_title());
-		return $response->display($tpl);
+		$response->set_page_title($this->get_news()->get_name());
+		$response->add_breadcrumb_link($this->lang['news'], NewsUrlBuilder::home());
+		
+		$categories = NewsService::get_categories_manager()->get_parents($this->get_news()->get_id_cat(), true);
+		foreach ($categories as $id => $category)
+		{
+			if ($id != Category::ROOT_CATEGORY)
+				$response->add_breadcrumb_link($category->get_name(), NewsUrlBuilder::display_category($category->get_rewrited_name()));
+		}
+		$category = $categories[$this->get_news()->get_id()];
+		$response->add_breadcrumb_link($this->get_news()->get_name(), NewsUrlBuilder::display_news($category->get_rewrited_name(), $this->get_news()->get_rewrited_name()));
+		
+		return $response->display($this->tpl);
 	}
 }
 ?>

@@ -29,7 +29,7 @@ class NewsCategoriesCache extends CategoriesCache
 {
 	public function get_table_name()
 	{
-		return PREFIX . 'news_cats';
+		return NewsSetup::$news_cats_table;
 	}
 	
 	public function get_category_class()

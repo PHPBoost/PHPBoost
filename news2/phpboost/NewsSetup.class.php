@@ -38,7 +38,7 @@ class NewsSetup extends DefaultModuleSetup
 	public static function __static()
 	{
 		self::$news_table = PREFIX . 'news';
-		self::$news_cats_table = PREFIX . 'news_cat';
+		self::$news_cats_table = PREFIX . 'news_cats';
 	}
 
 	public function install()
@@ -51,6 +51,7 @@ class NewsSetup extends DefaultModuleSetup
 	public function uninstall()
 	{
 		$this->drop_tables();
+		ConfigManager::delete('news', 'categories');
 	}
 
 	private function drop_tables()
@@ -69,8 +70,8 @@ class NewsSetup extends DefaultModuleSetup
 		$fields = array(
 			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
 			'id_category' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'title' => array('type' => 'string', 'length' => 100, 'notnull' => 1, 'default' => "''"),
-			'rewrited_title' => array('type' => 'string', 'length' => 250, 'default' => "''"),
+			'name' => array('type' => 'string', 'length' => 100, 'notnull' => 1, 'default' => "''"),
+			'rewrited_name' => array('type' => 'string', 'length' => 250, 'default' => "''"),
 			'contents' => array('type' => 'text', 'length' => 65000),
 			'short_contents' => array('type' => 'text', 'length' => 65000),
 			'creation_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
@@ -84,10 +85,10 @@ class NewsSetup extends DefaultModuleSetup
 		$options = array(
 			'primary' => array('id'),
 			'indexes' => array(
-				'id_category' => array('type' => 'key', 'fields' => 'idcat'),
-				'title' => array('type' => 'fulltext', 'fields' => 'title'),
+				'id_category' => array('type' => 'key', 'fields' => 'id_category'),
+				'title' => array('type' => 'fulltext', 'fields' => 'name'),
 				'contents' => array('type' => 'fulltext', 'fields' => 'contents'),
-				'short_contents' => array('type' => 'fulltext', 'fields' => 'extend_contents')
+				'short_contents' => array('type' => 'fulltext', 'fields' => 'short_contents')
 		));
 		PersistenceContext::get_dbms_utils()->create_table(self::$news_table, $fields, $options);
 	}
@@ -111,6 +112,7 @@ class NewsSetup extends DefaultModuleSetup
 			'id_parent' => 0,
 			'c_order' => 1,
 			'auth' => '',
+			'rewrited_name' => Url::encode_rewrite($this->messages['cat.name']),
 			'name' => $this->messages['cat.name'],
 			'visible' => (int)true,
 			'description' => $this->messages['cat.description'],
@@ -123,15 +125,15 @@ class NewsSetup extends DefaultModuleSetup
 		PersistenceContext::get_querier()->insert(self::$news_table, array(
 			'id' => 1,
 			'id_category' => 1,
-			'title' => $this->messages['news.title'],
-			'rewrited_title' => '',
+			'name' => $this->messages['news.title'],
+			'rewrited_name' => Url::encode_rewrite($this->messages['news.title']),
 			'contents' => $this->messages['news.content'],
 			'short_contents' => '',
 			'creation_date' => time(),
 			'approbation_type' => News::APPROVAL_NOW,
-			'start' => 0,
-			'end' => 0,
-			'img' => '',
+			'start_date' => 0,
+			'end_date' => 0,
+			'picture_url' => '',
 			'author_user_id' => 1,
 			'sources' => serialize(array())
 		));

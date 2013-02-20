@@ -86,6 +86,16 @@ class NewsConfig extends AbstractConfigData
 		$this->set_property(self::NEWS_SUGGESTIONS_ENABLED, $news_suggestions_enabled);
 	}
 	
+	public function get_display_type()
+	{
+		return $this->get_property(self::DISPLAY_TYPE);
+	}
+
+	public function set_display_type($display_type)
+	{
+		$this->set_property(self::DISPLAY_TYPE, $display_type);
+	}
+	
 	public function get_edito_enabled()
 	{
 		return $this->get_property(self::EDITO_ENABLED);
@@ -115,17 +125,7 @@ class NewsConfig extends AbstractConfigData
 	{
 		$this->set_property(self::EDITO_CONTENTS, $edito_contents);
 	}
-	
-	public function get_display_type()
-	{
-		return $this->get_property(self::DISPLAY_TYPE);
-	}
-
-	public function set_display_type($display_type)
-	{
-		$this->set_property(self::DISPLAY_TYPE, $display_type);
-	}
-	
+		
 	public function get_authorizations()
 	{
 		return $this->get_property(self::AUTHORIZATIONS);

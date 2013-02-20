@@ -32,6 +32,10 @@ class NewsDisplayResponse
 
 	public function add_breadcrumb_link($name, $link)
 	{
+		if ($link instanceof Url)
+		{
+			$link = $link->absolute();
+		}
 		$this->breadcrumb_links[$name] = $link;
 	}
 	
