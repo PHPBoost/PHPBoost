@@ -63,7 +63,12 @@ class Category
 	
 	public function get_rewrited_name()
 	{
-		return Url::encode_rewrite($this->name);
+		return $this->rewrited_name;
+	}
+	
+	public function set_rewrited_name($rewrited_name)
+	{
+		$this->rewrited_name = $rewrited_name;
 	}
 	
 	public function get_order()
@@ -132,6 +137,7 @@ class Category
 		return array(
 			'id' => $this->get_id(),
 			'name' => $this->get_name(),
+			'rewrited_name' => $this->get_rewrited_name(),
 			'c_order' => $this->get_order(),
 			'visible' => (int)$this->is_visible(),
 			'auth' => !$this->auth_is_empty() ? serialize($this->get_auth()) : '',
@@ -143,6 +149,7 @@ class Category
 	{
 		$this->set_id($properties['id']);
 		$this->set_name($properties['name']);
+		$this->set_rewrited_name($properties['rewrited_name']);
 		$this->set_order($properties['c_order']);
 		$this->set_visible($properties['visible']);
 		$this->set_auth(!empty($properties['auth']) ? unserialize($properties['auth']) : array());
@@ -154,6 +161,7 @@ class Category
 		$fields = array(
 			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
 			'name' => array('type' => 'string', 'length' => 255, 'notnull' => 1),
+			'rewrited_name' => array('type' => 'string', 'length' => 250, 'default' => "''"),
 			'c_order' => array('type' => 'integer', 'length' => 11, 'unsigned' => 1, 'notnull' => 1, 'default' => 0),
 			'visible' => array('type' => 'boolean', 'notnull' => 1, 'default' => 0),
 			'auth' => array('type' => 'text', 'length' => 65000),

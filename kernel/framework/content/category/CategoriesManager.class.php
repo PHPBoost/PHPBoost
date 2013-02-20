@@ -223,7 +223,7 @@ class CategoriesManager
 		$this->db_querier->delete($this->table_name, 'WHERE id=:id', array('id' => $id));
 		
 		//Delete items
-		$this->db_querier->update($this->categories_items_parameters->get_table_name_contains_items(), 'WHERE '.$this->categories_items_parameters->get_field_name_id_category().'=:id_category', array('id_category' => $id));
+		$this->db_querier->delete($this->categories_items_parameters->get_table_name_contains_items(), 'WHERE '.$this->categories_items_parameters->get_field_name_id_category().'=:id_category', array('id_category' => $id));
 		
 		$result = PersistenceContext::get_querier()->select_rows($this->table_name, array('id', 'c_order'), 'WHERE id_parent=:id_parent AND c_order > :order', array('id_parent' => $category->get_id_parent(), 'order' => $category->get_order()));
 		while ($row = $result->fetch())
@@ -256,7 +256,7 @@ class CategoriesManager
 	{
 		$list = array();
 		if ($add_this)
-			$list[] = $id_category;
+			$list[$id_category] = $this->categories_cache->get_category($id_category);
 
 		if ($id_category > 0)
 		{
@@ -268,7 +268,7 @@ class CategoriesManager
 			}
 			$list[Category::ROOT_CATEGORY] = $this->categories_cache->get_category(Category::ROOT_CATEGORY);
 		}
-		return $list;
+		return array_reverse($list);
 	}
 	
 	public function get_select_categories_form_field($id, $label, $value, SearchCategoryChildrensOptions $search_category_children_options, array $field_options = array())
@@ -284,7 +284,7 @@ class CategoriesManager
 		return new FeedsCategoriesModule($this);
 	}
 
-	private function regenerate_cache()
+	public function regenerate_cache()
 	{
 		$class = get_class($this->get_categories_cache());
 		call_user_func(array($class, 'invalidate'));
