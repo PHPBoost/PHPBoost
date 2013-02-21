@@ -266,19 +266,49 @@ class CategoriesManager
 	{
 		$list = array();
 		if ($add_this)
-			$list[$id_category] = $this->categories_cache->get_category($id_category);
+			$list[] = $this->categories_cache->get_category($id_category);
 
 		if ($id_category > 0)
 		{
 			while ((int)$this->categories_cache->get_category($id_category)->get_id_parent() != Category::ROOT_CATEGORY)
 			{
 				$id_parent = $this->categories_cache->get_category($id_category)->get_id_parent();
-			    $list[$id_parent] = $this->categories_cache->get_category($id_parent);
+			    $list[] = $this->categories_cache->get_category($id_parent);
 			    $id_category = $id_parent;
 			}
-			$list[Category::ROOT_CATEGORY] = $this->categories_cache->get_category(Category::ROOT_CATEGORY);
+			$list[] = $this->categories_cache->get_category(Category::ROOT_CATEGORY);
 		}
-		return array_reverse($list);
+		return $list;
+	}
+	
+	/**
+	 * @desc Computes the global authorization level of the whole parent categories. The result corresponds to all the category's parents merged.
+	 * @param int $id_category Id of the category for which you want to know what is the global authorization
+	 * @param int $bit The autorization bit you want to check
+	 * @param int $mode Merge mode. If it corresponds to a read autorization, use Authorizations::AUTH_PARENT_PRIORITY which will disallow for example all the subcategories of a category to which you can't access, or Authorizations::AUTH_CHILD_PRIORITY if you want to work in write mode, each child will be able to redifine the authorization.
+	 * @return mixed[] The merged array that you can use only for the bit $bit.
+	 */
+	public function get_heritated_authorizations($id_category, $bit, $mode)
+	{
+		$categories = array_reverse($this->get_parents($id_category, true));
+		$root_authorizations = $this->categories_cache->get_root_category()->get_authorizations();
+
+		$result = array();
+		
+		if (!empty($categories))
+		{
+			// Delete root category
+			array_shift($categories);
+			
+			foreach ($categories as $category)
+			{
+				if (!$category->auth_is_equals($root_authorizations))
+				{
+					$result = Authorizations::merge_auth($result, $category->get_authorizations(), $bit, $mode);
+				}
+			}
+		}
+		return $result;
 	}
 	
 	public function get_select_categories_form_field($id, $label, $value, SearchCategoryChildrensOptions $search_category_children_options, array $field_options = array())
