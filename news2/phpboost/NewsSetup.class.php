@@ -29,6 +29,8 @@ class NewsSetup extends DefaultModuleSetup
 {
 	public static $news_table;
 	public static $news_cats_table;
+	public static $news_keywords_table;
+	public static $news_keywords_relation_table;
 
 	/**
 	 * @var string[string] localized messages
@@ -39,6 +41,8 @@ class NewsSetup extends DefaultModuleSetup
 	{
 		self::$news_table = PREFIX . 'news';
 		self::$news_cats_table = PREFIX . 'news_cats';
+		self::$news_keywords_table = PREFIX . 'news_keywords';
+		self::$news_keywords_relation_table = PREFIX . 'news_keywords_relation';
 	}
 
 	public function install()
@@ -56,13 +60,15 @@ class NewsSetup extends DefaultModuleSetup
 
 	private function drop_tables()
 	{
-		PersistenceContext::get_dbms_utils()->drop(array(self::$news_table, self::$news_cats_table));
+		PersistenceContext::get_dbms_utils()->drop(array(self::$news_table, self::$news_cats_table, self::$news_keywords_table, self::$news_keywords_relation_table));
 	}
 
 	private function create_tables()
 	{
 		$this->create_news_table();
 		$this->create_news_cats_table();
+		$this->create_news_keywords_table();
+		$this->create_news_keywords_relation_table();
 	}
 
 	private function create_news_table()
@@ -96,6 +102,26 @@ class NewsSetup extends DefaultModuleSetup
 	private function create_news_cats_table()
 	{
 		RichCategory::create_categories_table(self::$news_cats_table);
+	}
+	
+	private function create_news_keywords_table()
+	{
+		$fields = array(
+			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
+			'name' => array('type' => 'string', 'length' => 100, 'notnull' => 1, 'default' => "''"),
+			'rewrited_name' => array('type' => 'string', 'length' => 250, 'default' => "''"),
+		);
+		$options = array('primary' => array('id'));
+		PersistenceContext::get_dbms_utils()->create_table(self::$news_keywords_table, $fields, $options);
+	}
+	
+	private function create_news_keywords_relation_table()
+	{
+		$fields = array(
+			'id_news' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
+			'id_keyword' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
+		);
+		PersistenceContext::get_dbms_utils()->create_table(self::$news_keywords_relation_table, $fields);
 	}
 	
 	private function insert_data()

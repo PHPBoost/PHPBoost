@@ -59,7 +59,7 @@ class AdminNewsConfigController extends AdminModuleController
 		
 		$tpl->put('FORM', $this->form->display());
 		
-		return new AdminNewsDisplayResponse($tpl, $this->lang['news.config']);
+		return new AdminNewsDisplayResponse($tpl, $this->lang['admin.config']);
 	}
 	
 	private function init()
@@ -72,49 +72,49 @@ class AdminNewsConfigController extends AdminModuleController
 	{
 		$form = new HTMLForm(__CLASS__);
 		
-		$fieldset = new FormFieldsetHTML('config', $this->lang['config']);
+		$fieldset = new FormFieldsetHTML('config', $this->lang['admin.config']);
 		$form->add_fieldset($fieldset);
 		
-		$fieldset->add_field(new FormFieldTextEditor('number_news_per_page', $this->lang['config.number_news_per_page'], $this->config->get_number_news_per_page(), 
+		$fieldset->add_field(new FormFieldTextEditor('number_news_per_page', $this->lang['admin.config.number_news_per_page'], $this->config->get_number_news_per_page(), 
 			array('size' => 6), array(new FormFieldConstraintRegex('`^[0-9]+$`i'))
 		));
 		
-		$fieldset->add_field(new FormFieldTextEditor('number_columns_display_news', $this->lang['config.number_columns_display_news'], $this->config->get_number_columns_display_news(), 
+		$fieldset->add_field(new FormFieldTextEditor('number_columns_display_news', $this->lang['admin.config.number_columns_display_news'], $this->config->get_number_columns_display_news(), 
 			array('size' => 6), array(new FormFieldConstraintRegex('`^[0-9]+$`i'))
 		));
 		
-		$fieldset->add_field(new FormFieldCheckbox('comments_enabled', $this->lang['config.comments_enabled'], $this->config->get_comments_enabled()));
+		$fieldset->add_field(new FormFieldCheckbox('comments_enabled', $this->lang['admin.config.comments_enabled'], $this->config->get_comments_enabled()));
 		
-		$fieldset->add_field(new FormFieldCheckbox('news_suggestions_enabled', $this->lang['config.news_suggestions_enabled'], $this->config->get_news_suggestions_enabled()));
+		$fieldset->add_field(new FormFieldCheckbox('news_suggestions_enabled', $this->lang['admin.config.news_suggestions_enabled'], $this->config->get_news_suggestions_enabled()));
 		
-		$fieldset->add_field(new FormFieldSimpleSelectChoice('display_type', $this->lang['config.display_type'], $this->config->get_display_type(),
+		$fieldset->add_field(new FormFieldSimpleSelectChoice('display_type', $this->lang['admin.config.display_type'], $this->config->get_display_type(),
 			array(
-				new FormFieldSelectChoiceOption($this->lang['config.display_type.block'], NewsConfig::DISPLAY_BLOCK),
-				new FormFieldSelectChoiceOption($this->lang['config.display_type.list'], NewsConfig::DISPLAY_LIST),
+				new FormFieldSelectChoiceOption($this->lang['admin.config.display_type.block'], NewsConfig::DISPLAY_BLOCK),
+				new FormFieldSelectChoiceOption($this->lang['admin.config.display_type.list'], NewsConfig::DISPLAY_LIST),
 			)
 		));
 				
-		$fieldset_authorizations = new FormFieldsetHTML('authorizations_fieldset', $this->lang['config.authorizations']);
+		$fieldset_authorizations = new FormFieldsetHTML('authorizations_fieldset', $this->lang['admin.config.authorizations']);
 		$form->add_fieldset($fieldset_authorizations);
 		
 		$auth_settings = new AuthorizationsSettings(array(
-			new ActionAuthorization($this->lang['config.authorizations.read'], Category::READ_AUTHORIZATIONS),
-			new ActionAuthorization($this->lang['config.authorizations.write'], Category::WRITE_AUTHORIZATIONS),
-			new ActionAuthorization($this->lang['config.authorizations.contribution'], Category::CONTRIBUTION_AUTHORIZATIONS),
-			new ActionAuthorization($this->lang['config.authorizations.moderation'], Category::MODERATION_AUTHORIZATIONS),
-		));;
+			new ActionAuthorization($this->lang['admin.config.authorizations.read'], Category::READ_AUTHORIZATIONS),
+			new ActionAuthorization($this->lang['admin.config.authorizations.write'], Category::WRITE_AUTHORIZATIONS),
+			new ActionAuthorization($this->lang['admin.config.authorizations.contribution'], Category::CONTRIBUTION_AUTHORIZATIONS),
+			new ActionAuthorization($this->lang['admin.config.authorizations.moderation'], Category::MODERATION_AUTHORIZATIONS),
+		));
 		$auth_setter = new FormFieldAuthorizationsSetter('authorizations', $auth_settings);
 		$auth_settings->build_from_auth_array($this->config->get_authorizations());
 		$fieldset_authorizations->add_field($auth_setter);
 		
-		$edito_fieldset = new FormFieldsetHTML('edito', $this->lang['config.edito']);
+		$edito_fieldset = new FormFieldsetHTML('edito', $this->lang['admin.config.edito']);
 		$form->add_fieldset($edito_fieldset);
 		
-		$edito_fieldset->add_field(new FormFieldCheckbox('edito_enabled', $this->lang['config.edito.enabled'], $this->config->get_edito_enabled()));
+		$edito_fieldset->add_field(new FormFieldCheckbox('edito_enabled', $this->lang['admin.config.edito.enabled'], $this->config->get_edito_enabled()));
 		
-		$edito_fieldset->add_field(new FormFieldTextEditor('edito_title', $this->lang['config.edito.title'], $this->config->get_edito_title()));
+		$edito_fieldset->add_field(new FormFieldTextEditor('edito_title', $this->lang['admin.config.edito.title'], $this->config->get_edito_title()));
 		
-		$edito_fieldset->add_field(new FormFieldRichTextEditor('edito_contents', $this->lang['config.edito.contents'], $this->config->get_edito_contents()));
+		$edito_fieldset->add_field(new FormFieldRichTextEditor('edito_contents', $this->lang['admin.config.edito.contents'], $this->config->get_edito_contents()));
 		
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_button($this->submit_button);

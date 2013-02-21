@@ -44,6 +44,11 @@ class News
 	private $picture_url;
 	private $sources;
 	
+	/**
+	 * @var NewsKeyword[]
+	 */
+	private $keywords;
+	
 	const NOT_APPROVAL = 0;
 	const APPROVAL_NOW = 1;
 	const APPROVAL_DATE = 2;
@@ -70,7 +75,7 @@ class News
 	
 	public function set_name($name)
 	{
-		$this->name = $title;
+		$this->name = $name;
 	}
 	
 	public function get_name()
@@ -186,6 +191,21 @@ class News
 	public function get_sources()
 	{
 		return $this->sources;
+	}
+	
+	public function set_keywords($keywords)
+	{
+		$this->keywords = $keywords;
+	}
+	
+	public function add_keyword(NewsKeyword $keyword)
+	{
+		$this->keywords[] = $keyword;
+	}
+	
+	public function get_keywords()
+	{
+		return $this->keywords;
 	}
 	
 	public function get_properties()

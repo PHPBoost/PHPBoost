@@ -51,7 +51,18 @@ class NewsDisplayCategoryController extends ModuleController
 		
 	private function build_view()
 	{
+		$now = new Date(DATE_NOW, TIMEZONE_AUTO);
 		
+		$result = PersistenceContext::get_querier()->select('SELECT news.*, member.level, member.user_groups
+		FROM '. NewsSetup::$news_table .' news
+		LEFT JOIN '. DB_TABLE_MEMBER .' member ON member.user_id = news.author_user_id
+		WHERE news.approbation_type = 1 OR (news.approbation_type = 2 AND news.start_date < :timestamp_now AND end_date > :timestamp_now)', array(
+			'timestamp_now' => $now->get_timestamp()));
+
+		while ($row = $result->fetch())
+		{
+
+		}
 	}
 	
 	private function get_category()
@@ -63,7 +74,7 @@ class NewsDisplayCategoryController extends ModuleController
 			{
 				try {
 					$row = PersistenceContext::get_querier()->select_single_row(NewsSetup::$news_cats_table, array('*'), 'WHERE rewrited_name=:rewrited_name', array('rewrited_name' => $rewrited_name));
-					
+
 					$category = new RichCategory();
 					$category->set_properties($row);
 					$this->category = $category;
