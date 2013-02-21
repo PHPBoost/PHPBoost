@@ -26,22 +26,19 @@
  ###################################################*/
 
 class ArticlesConfig extends AbstractConfigData
-{
-	const AUTHORIZATIONS = 'authorizations';
+{    
 	const NUMBER_ARTICLES_PER_PAGE = 'number_articles_per_page';
 	const NUMBER_CATEGORIES_PER_PAGE = 'number_categories_per_page';
-	const NUMBER_COLUMNS_DISPLAYED = 'number_columns_displayed';
-	const NOTATION_SCALE = 'notation_scale';
 	
-	public function get_authorizations()
-	{
-		return $this->get_property(self::AUTHORIZATIONS);
-	}
+        const NUMBER_COLUMNS_DISPLAYED = 'number_columns_displayed';
 	
-	public function set_authorizations(Array $array)
-	{
-		$this->set_property(self::AUTHORIZATIONS, $array);
-	}
+        const NOTATION_ENABLED = 'notation_enabled';
+        const NOTATION_SCALE = 'notation_scale';
+        
+        const COMMENTS_ENABLED = 'comments_enable';
+        const AUTHOR_NAME_DISPLAYED_ENABLED = 'author_name_displayed_enabled';
+        
+        const AUTHORIZATIONS = 'authorizations';
 	
 	public function get_number_articles_per_page()
 	{
@@ -73,6 +70,16 @@ class ArticlesConfig extends AbstractConfigData
 		$this->set_property(self::NUMBER_COLUMNS_DISPLAYED, $number);
 	}
 	
+        public function get_notation_enabled()
+	{
+		return $this->get_property(self::NOTATION_ENABLED);
+	}
+	
+	public function set_notation_enabled($notation_enabled) 
+	{
+		$this->set_property(self::NOTATION_ENABLED, $notation_enabled);
+	}
+        
 	public function get_notation_scale()
 	{
 		return $this->get_property(self::NOTATION_SCALE);
@@ -83,14 +90,47 @@ class ArticlesConfig extends AbstractConfigData
 		$this->set_property(self::NOTATION_SCALE, $notation_scale);
 	}
 	
+        public function get_comments_enabled()
+	{
+		return $this->get_property(self::COMMENTS_ENABLED);
+	}
+
+	public function set_comments_enabled($comments_enabled)
+	{
+		$this->set_property(self::COMMENTS_ENABLED, $comments_enabled);
+	}
+        
+        public function get_author_name_displayed_enabled()
+	{
+		return $this->get_property(self::AUTHOR_NAME_DISPLAYED_ENABLED);
+	}
+
+	public function set_author_name_displayed_enabled($author_name_display_enabled)
+	{
+		$this->set_property(self::AUTHOR_NAME_DISPLAYED_ENABLED, $author_name_display_enabled);
+	}
+        
+        public function get_authorizations()
+	{
+		return $this->get_property(self::AUTHORIZATIONS);
+	}
+	
+	public function set_authorizations(Array $array)
+	{
+		$this->set_property(self::AUTHORIZATIONS, $array);
+	}
+        
 	public function get_default_values()
 	{
 		return array(
-			self::AUTHORIZATIONS => array(),
 			self::NUMBER_ARTICLES_PER_PAGE => 10,
 			self::NUMBER_CATEGORIES_PER_PAGE => 10,
 			self::NUMBER_COLUMNS_DISPLAYED => 3,
-			self::NOTATION_SCALE => 5
+                        self::COMMENTS_ENABLED => true,
+                        self::AUTHOR_NAME_DISPLAYED_ENABLED => true,
+                        self::NOTATION_ENABLED => true,
+			self::NOTATION_SCALE => 5,
+                        self::AUTHORIZATIONS => array()
 		);
 	}
 	
@@ -100,7 +140,7 @@ class ArticlesConfig extends AbstractConfigData
 	 */
 	public static function load()
 	{
-		return ConfigManager::load(__CLASS__, 'module', 'articles-config');
+		return ConfigManager::load(__CLASS__, 'articles', 'config');
 	}
 
 	/**
@@ -108,7 +148,7 @@ class ArticlesConfig extends AbstractConfigData
 	 */
 	public static function save()
 	{
-		ConfigManager::save('module', self::load(), 'articles-config');
+		ConfigManager::save('articles', self::load(), 'config');
 	}
 }
 ?>
