@@ -86,6 +86,7 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 			'SITE_KEYWORD' => $this->get_seo_meta_data()->get_keywords(),
 			'MODULES_CSS' => $this->get_modules_css_files_html_code(),
 			'L_XML_LANGUAGE' => self::$main_lang['xml_lang'],
+			'PHPBOOST_VERSION' => GeneralConfig::load()->get_phpboost_major_version()
 		));
 
 		$this->display_counter($template);
