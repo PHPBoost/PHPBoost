@@ -1,10 +1,10 @@
 <?php
 /*##################################################
- *                        ArticlesExtensionPointProvider.class.php
+ *                        ArticlesCategoriesCache.class.php
  *                            -------------------
- *   begin                : April 25, 2011
- *   copyright            : (C) 2011 Kévin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   begin                : February 13, 2013
+ *   copyright            : (C) 2013 Patrick DUBEAU
+ *   email                : daaxwizeman@gmail.com
  *
  *
  ###################################################
@@ -25,16 +25,28 @@
  *
  ###################################################*/
 
-class ArticlesExtensionPointProvider extends ExtensionPointProvider
+class ArticlesCategoriesCache extends CategoriesCache
 {
-    public function __construct()
-    {
-		parent::__construct('articles');
+	public function get_table_name()
+	{
+		return ArticlesSetup::$articles_cats_table;
 	}
 	
-	public function url_mappings()
+	public function get_category_class()
 	{
-		return new UrlMappings(array(new DispatcherUrlMapping('/articles/index.php')));
+		return CategoriesManager::RICH_CATEGORY_CLASS;
+	}
+	
+	public function get_module_identifier()
+	{
+		return 'articles';
+	}
+	
+	protected function get_root_category()
+	{
+		$root = new RootCategory();
+		$root->set_auth(ArticlesConfig::load()->get_authorizations());
+		return $root;
 	}
 }
 ?>
