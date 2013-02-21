@@ -1,10 +1,10 @@
 <?php
 /*##################################################
- *                        ArticlesExtensionPointProvider.class.php
+ *                            install.php
  *                            -------------------
- *   begin                : April 25, 2011
- *   copyright            : (C) 2011 Kévin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   begin                : Ferbruary 21, 2013
+ *   copyright            : (C) 2013 Patrick DUBEAU
+ *   email                : daaxwizeman@gmail.com
  *
  *
  ###################################################
@@ -25,16 +25,13 @@
  *
  ###################################################*/
 
-class ArticlesExtensionPointProvider extends ExtensionPointProvider
-{
-    public function __construct()
-    {
-		parent::__construct('articles');
-	}
-	
-	public function url_mappings()
-	{
-		return new UrlMappings(array(new DispatcherUrlMapping('/articles/index.php')));
-	}
-}
+
+#####################################################
+#                      English			    #
+####################################################
+
+$lang = array();
+
+$lang[''] = '';
+
 ?>
