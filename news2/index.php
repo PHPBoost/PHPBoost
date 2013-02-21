@@ -43,9 +43,15 @@ $url_controller_mappers = array(
 	new UrlControllerMapper('NewsFormController', '`^/add/?$`'),
 	new UrlControllerMapper('NewsFormController', '`^/([0-9]+)/edit/?$`', array('id')),
 	new UrlControllerMapper('NewsDeleteController', '`^/([0-9]+)/delete/?$`', array('id')),
+	
+	new UrlControllerMapper('NewsDisplayNewsTagController', '`^/tag/([a-z0-9-_]+)?/?$`', array('tag')),
+	new UrlControllerMapper('NewsDisplayPendingNewsController', '`^/pending/?$`'),
+	
 	new UrlControllerMapper('NewsDisplayNewsController', '`^/([a-z0-9-_]+)/([a-z0-9-_]+)/?$`', array('rewrited_name_category', 'rewrited_name')),
 	
 	new UrlControllerMapper('NewsDisplayCategoryController', '`^/([a-z0-9-_]+)?/?$`', array('rewrited_name')),
+	
+	
 );
 DispatchManager::dispatch($url_controller_mappers);
 ?>

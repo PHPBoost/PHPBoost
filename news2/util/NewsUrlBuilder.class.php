@@ -59,6 +59,26 @@ class NewsUrlBuilder
 		return DispatchManager::get_url(self::$dispatcher, '/' . $rewrited_name .'/');
 	}
 	
+	public static function display_tag($rewrited_name)
+	{
+		return DispatchManager::get_url(self::$dispatcher, '/tag/'. $rewrited_name);
+	}
+	
+	public static function display_pending_news()
+	{
+		return DispatchManager::get_url(self::$dispatcher, '/pending/');
+	}
+	
+	public static function edit_news($id)
+	{
+		return DispatchManager::get_url(self::$dispatcher, '/' . $id . '/edit/');
+	}
+	
+	public static function delete_news($id)
+	{
+		return DispatchManager::get_url(self::$dispatcher, '/' . $id . '/delete/');
+	}
+	
 	public static function home()
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/');

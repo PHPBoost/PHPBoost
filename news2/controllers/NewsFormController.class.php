@@ -73,17 +73,17 @@ class NewsFormController extends ModuleController
 		$fieldset = new FormFieldsetHTML('news', $this->lang['news']);
 		$form->add_fieldset($fieldset);
 		
-		$fieldset->add_field(new FormFieldTextEditor('title', $this->lang['news.form.name'], $this->get_news()->get_name(), array('required' => true)));
+		$fieldset->add_field(new FormFieldTextEditor('name', $this->lang['news.form.name'], $this->get_news()->get_name(), array('required' => true)));
 
 		$search_category_children_options = new SearchCategoryChildrensOptions();
 		$search_category_children_options->add_authorisations_bits(Category::READ_AUTHORIZATIONS);
 		$search_category_children_options->add_authorisations_bits(Category::CONTRIBUTION_AUTHORIZATIONS);
 		$fieldset->add_field(NewsService::get_categories_manager()->get_select_categories_form_field('id_cat', $this->lang['news.form.category'], $this->get_news()->get_id_cat(), $search_category_children_options));
 		
-		$fieldset->add_field(new FormFieldRichTextEditor('contents', $this->lang['news.form.contents'], $this->get_news()->get_contents(), array('required' => true)));
+		$fieldset->add_field(new FormFieldRichTextEditor('contents', $this->lang['news.form.contents'], $this->get_news()->get_contents(), array('rows' => 15, 'required' => true)));
 		
 		$fieldset->add_field(new FormFieldCheckbox('enable_short_contents', $this->lang['news.form.short_contents.enabled'], $this->get_news()->get_short_contents_enabled(), 
-			array('events' => array('click' => '
+			array('description' => $this->lang['news.form.short_contents.enabled.description'], 'events' => array('click' => '
 			if (HTMLForms.getField("enable_short_contents").getValue()) {
 				HTMLForms.getField("short_contents").enable();
 			} else { 
@@ -114,8 +114,7 @@ class NewsFormController extends ModuleController
 		$fieldset->add_field(new FormFieldDateTime('end_date', $this->lang['news.form.date.end'], $this->get_news()->get_end_date(), array('hidden' => ($this->get_news()->get_approbation_type() != News::APPROVAL_DATE))));
 		
 		$fieldset->add_field(new FormFieldDateTime('creation_date', $this->lang['news.form.date.creation'], $this->get_news()->get_creation_date()));
-		
-		// Contribution fieldset
+
 		$this->build_contribution_fieldset($form);
 		
 		$this->submit_button = new FormButtonDefaultSubmit();
@@ -192,6 +191,8 @@ class NewsFormController extends ModuleController
 		$news = $this->get_news();
 		
 		$news->set_name($this->form->get_value('name'));
+		//TODO rewrited name for edition ?
+		$news->set_rewrited_name(Url::encode_rewrite($this->form->get_value('name')));
 		$news->set_id_cat($this->form->get_value('id_cat')->get_raw_value());
 		$news->set_contents($this->form->get_value('contents'));
 		$news->set_short_contents(($this->form->get_value('enable_short_contents') ? $this->form->get_value('short_contens') : ''));
@@ -219,15 +220,72 @@ class NewsFormController extends ModuleController
 			NewsService::update($news);
 		}
 		
-		// TODO generate a contribution
+		$this->contribution_actions($news);
 		
 		Feed::clear_cache('news');
 	}
 	
+	private function contribution_actions(News $news)
+	{
+		if ($news->get_id() === null)
+		{
+			if ($this->is_contributor_member())
+			{
+				$contribution = new Contribution();
+				$contribution->set_id_in_module($news->get_id());
+				$contribution->set_description(stripslashes($news->get_short_content()));
+				$contribution->set_entitled(sprintf($NEWS_LANG['contribution_entitled'], $news->get_name()));
+				$contribution->set_fixing_url(NewsUrlBuilder::edit_news($news->get_id()));
+				$contribution->set_poster_id(AppContext::get_current_user()->get_attribute('user_id'));
+				$contribution->set_module('news');
+				$contribution->set_auth(
+					Authorizations::capture_and_shift_bit_auth(
+						Authorizations::merge_auth(
+							NewsConfig::load()->get_authorizations(),
+							NewsService::get_categories_manager()->compute_heritated_auth($news->get_id_cat(), Category::MODERATION_AUTHORIZATIONS, Authorizations::AUTH_CHILD_PRIORITY),
+							Category::MODERATION_AUTHORIZATIONS, Authorizations::AUTH_CHILD_PRIORITY
+						),
+						Category::MODERATION_AUTHORIZATIONS, Contribution::CONTRIBUTION_AUTH_BIT
+					)
+				);
+				ContributionService::save_contribution($contribution);
+
+				AppContext::get_response()->redirect(UserUrlBuilder::contribution_success()->absolute());
+			}
+		}
+		else
+		{
+			$corresponding_contributions = ContributionService::find_by_criteria('news', $news->get_id());
+			if (count($corresponding_contributions) > 0)
+			{
+				$news_contribution = $corresponding_contributions[0];
+				$news_contribution->set_status(Event::EVENT_STATUS_PROCESSED);
+
+				ContributionService::save_contribution($news_contribution);
+			}
+		}
+	}
+	
 	private function generate_response(View $tpl)
 	{
+		$news = $this->get_news();
+		$category = NewsService::get_categories_manager()->get_categories_cache()->get_category($news->get_id_cat());
+		
 		$response = new NewsDisplayResponse();
-		$response->set_page_title($this->lang['news.add']);
+		$response->add_breadcrumb_link($this->lang['news'], NewsUrlBuilder::home());
+			
+		if ($this->get_news()->get_id() === null)
+		{
+			$response->set_page_title($this->lang['news.add']);
+		}
+		else
+		{
+			$response->add_breadcrumb_link($category->get_name(), NewsUrlBuilder::display_category($category->get_rewrited_name()));
+			$response->add_breadcrumb_link($news->get_name(), NewsUrlBuilder::display_news($category->get_rewrited_name(), $news->get_rewrited_name()));
+			$response->add_breadcrumb_link($this->lang['news.edit'], NewsUrlBuilder::edit_news($news->get_id()));
+			$response->set_page_title(StringVars::replace_vars($this->lang['news.edit'], array('name' => $news->get_name())));
+		}
+		
 		return $response->display($tpl);
 	}
 }
