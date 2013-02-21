@@ -233,6 +233,11 @@ class CategoriesManager
 		$this->regenerate_cache();
 	}
 	
+	/**
+	 * @desc Category[string] the childrens Categories map (id => category) for category id
+	 * @param int $id_category
+	 * @param SearchCategoryChildrensOptions $search_category_children_options
+	 */
 	public function get_childrens($id_category, SearchCategoryChildrensOptions $search_category_children_options)
 	{
 		$all_categories = $this->categories_cache->get_categories();
@@ -252,6 +257,11 @@ class CategoriesManager
 		return $this->build_children_map($id_category, $all_categories, $id_category, $search_category_children_options, $categories);
 	}
 	
+	/**
+	 * @desc Category[string] the parents Categories map (id => category) for category id
+	 * @param int $id_category
+	 * @param bool $add_this Add category in the map
+	 */
 	public function get_parents($id_category, $add_this = false)
 	{
 		$list = array();

@@ -82,6 +82,20 @@ abstract class AbstractCategoriesFormController extends AdminModuleController
 		
 		$fieldset->add_field(new FormFieldTextEditor('name', $this->lang['category.form.name'], $this->get_category()->get_name(), array('required' => true)));
 		
+		$fieldset->add_field(new FormFieldCheckbox('personalize_rewrited_name', $this->lang['category.form.rewrited_name.personalize'], $this->get_category()->rewrited_name_is_personalized(), array(
+		'events' => array('click' => '
+		if (HTMLForms.getField("personalize_rewrited_name").getValue()) {
+			HTMLForms.getField("rewrited_name").enable();
+		} else { 
+			HTMLForms.getField("rewrited_name").disable();
+		}'
+		))));
+		
+		$fieldset->add_field(new FormFieldTextEditor('rewrited_name', $this->lang['category.form.rewrited_name'], $this->get_category()->get_rewrited_name(), array(
+			'description' => $this->lang['category.form.rewrited_name.description'], 
+			'hidden' => !$this->get_category()->rewrited_name_is_personalized()
+		), array(new FormFieldConstraintRegex('`^[a-z0-9\-]+$`i'))));
+		
 		$search_category_children_options = new SearchCategoryChildrensOptions();
 		
 		if ($this->get_category()->get_id())

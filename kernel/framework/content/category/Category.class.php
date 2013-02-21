@@ -29,6 +29,7 @@ class Category
 {
 	protected $id;
 	protected $name;
+	protected $rewrited_name;
 	protected $order;
 	protected $visible = true;
 	protected $auth = array();
@@ -69,6 +70,11 @@ class Category
 	public function set_rewrited_name($rewrited_name)
 	{
 		$this->rewrited_name = $rewrited_name;
+	}
+	
+	public function rewrited_name_is_personalized()
+	{
+		return $this->rewrited_name != Url::encode_rewrite($this->name);
 	}
 	
 	public function get_order()
