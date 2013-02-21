@@ -164,8 +164,12 @@ class ShoutboxHomePageExtensionPoint implements HomePageExtensionPoint
 			}
 			
 			//Pseudo.
-			if (!$is_guest) 
-				$shout_pseudo = '<a class="msg_link_pseudo" href="'. UserUrlBuilder::profile($row['user_id'])->absolute() . '" title="' . $row['mlogin'] . '"><span style="font-weight: bold;">' . TextHelper::wordwrap_html($row['mlogin'], 13) . '</span></a>';
+			if (!$is_guest)
+			{
+				$group_color = User::get_group_color($row['user_groups'], $row['level']);
+				$style = $group_color ? 'style="color:'.$group_color.'"' : '';
+				$shout_pseudo = '<a class="msg_link_pseudo '. UserService::get_level_class($row['level']) .'" '.$style.' href="'. UserUrlBuilder::profile($row['user_id'])->absolute() . '" title="' . $row['mlogin'] . '"><span style="font-weight: bold;">' . TextHelper::wordwrap_html($row['mlogin'], 13) . '</span></a>';
+			}
 			else
 				$shout_pseudo = '<span style="font-style:italic;">' . (!empty($row['login']) ? TextHelper::wordwrap_html($row['login'], 13) : $LANG['guest']) . '</span>';
 			

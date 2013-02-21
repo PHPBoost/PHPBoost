@@ -251,9 +251,7 @@ class User
 		if (!$is_array)
 			$user_groups = explode('|', $user_groups);
 			
-		array_pop($user_groups); //Supprime l'élément vide en fin de tableau.
 		$i = 0;
-
 		$groups_cache = GroupsCache::load();
 
 		foreach ($user_groups as $idgroup) //Récupération du premier groupe.

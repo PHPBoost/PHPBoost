@@ -151,8 +151,8 @@ class GalleryFeedProvider implements FeedProvider
 			$item->set_title($row['name']);
 			$item->set_link($link);
 			$item->set_guid($link);
+			$item->set_image_url(Url::to_absolute('/gallery/pics/' . $row['path']));
 			$item->set_date(new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $row['timestamp']));
-			$item->set_image_url($row['path']);
 			$item->set_auth($row['idcat'] == 0 ? $CONFIG_GALLERY['auth_root'] : unserialize($row['auth']));
 
 			$data->add_item($item);

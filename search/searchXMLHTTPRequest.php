@@ -102,7 +102,7 @@ if (($id_search >= 0) && ($module_id != ''))
         $search->id_search[$module_id] = $id_search;
     }
     echo   'var resultsAJAX = new Array();';
-    $nb_results = $search->get_results_by_id($results, $search->id_search[$module_id]);;
+    $nb_results = $search->get_results_by_id($results, $search->id_search[$module_id]);
     if ($nb_results > 0)
     {
         //$module = $modules->get_module($module_id);

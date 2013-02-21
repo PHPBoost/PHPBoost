@@ -197,7 +197,7 @@ class CalendarHomePageExtensionPoint implements HomePageExtensionPoint
 		if (!empty($day))
 		{
 			$java = '';
-			$result = $this->sql_querier->query_while("SELECT cl.id, cl.timestamp, cl.title, cl.contents, cl.user_id, m.login
+			$result = $this->sql_querier->query_while("SELECT cl.id, cl.timestamp, cl.title, cl.contents, cl.user_id, m.login, m.user_groups, m.level
 			FROM " . PREFIX . "calendar cl
 			LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id=cl.user_id
 			WHERE cl.timestamp BETWEEN '" . mktime(0, 0, 0, $month, $day, $year) . "' AND '" . mktime(23, 59, 59, $month, $day, $year) . "'
@@ -226,11 +226,13 @@ class CalendarHomePageExtensionPoint implements HomePageExtensionPoint
 				$comments_topic->set_id_in_module($row['id']);
 				$comments_topic->set_url(new Url('/calendar/calendar.php?d=' . $day . '&m=' . $month . '&y=' . $year . '&e=' . $row['id'] . '&com=0'));
 				
+				$group_color = User::get_group_color($row['user_groups'], $row['level']);
+				$style = $group_color ? 'style="color:'.$group_color.'"' : '';
 				$tpl->assign_block_vars('action', array(
 					'DATE' => gmdate_format('date_format', $row['timestamp']),
 					'TITLE' => $row['title'],
 					'CONTENTS' => FormatingHelper::second_parse($row['contents']),
-					'LOGIN' => '<a class="com" href="'. UserUrlBuilder::profile($row['user_id'])->absolute() . '">' . $row['login'] . '</a>',
+					'LOGIN' => '<a class="com '.UserService::get_level_class($row['level']).'" href="'. UserUrlBuilder::profile($row['user_id'])->absolute() . '" '.$style.'>' . $row['login'] . '</a>',
 					'COM' => '<a href="'. PATH_TO_ROOT .'/calendar/calendar' . url('.php?d=' . $day . '&amp;m=' . $month . '&amp;y=' . $year . '&amp;e=' . $row['id'] . '&amp;com=0#comments_list', 
 						'-' . $day . '-' . $month . '-' . $year . '-' . $row['id'] . '.php?com=0') .'">'. CommentsService::get_number_and_lang_comments('calendar', $row['id']) . '</a>',
 					'EDIT' => $edit,
