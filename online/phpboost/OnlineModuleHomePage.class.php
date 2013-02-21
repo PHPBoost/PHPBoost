@@ -63,7 +63,7 @@ class OnlineModuleHomePage implements ModuleHomePage
 			}
 			
 			$group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
-			
+
 			if ($user->get_level() != User::VISITOR_LEVEL) 
 			{
 				$this->view->assign_block_vars('users', array(
