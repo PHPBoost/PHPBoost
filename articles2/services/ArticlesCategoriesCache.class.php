@@ -42,7 +42,7 @@ class ArticlesCategoriesCache extends CategoriesCache
 		return 'articles';
 	}
 	
-	protected function get_root_category()
+	public function get_root_category()
 	{
 		$root = new RootCategory();
 		$root->set_auth(ArticlesConfig::load()->get_authorizations());

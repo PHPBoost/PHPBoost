@@ -296,13 +296,10 @@ class CategoriesManager
 		$result = array();
 		
 		if (!empty($categories))
-		{
-			// Delete root category
-			array_shift($categories);
-			
+		{	
 			foreach ($categories as $category)
 			{
-				if (!$category->auth_is_equals($root_authorizations))
+				if (!$category->auth_is_equals($root_authorizations) || $category->get_id() == Category::ROOT_CATEGORY)
 				{
 					$result = Authorizations::merge_auth($result, $category->get_authorizations(), $bit, $mode);
 				}

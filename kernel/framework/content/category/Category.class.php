@@ -102,12 +102,12 @@ class Category
 		$this->visible = (boolean)$visible;
 	}
 	
-	public function get_auth()
+	public function get_authorizations()
 	{
 		return $this->auth;
 	}
 	
-	public function set_auth(array $auth)
+	public function set_authorizations(array $auth)
 	{
 		$this->auth = $auth;
 	}
@@ -146,7 +146,7 @@ class Category
 			'rewrited_name' => $this->get_rewrited_name(),
 			'c_order' => $this->get_order(),
 			'visible' => (int)$this->is_visible(),
-			'auth' => !$this->auth_is_empty() ? serialize($this->get_auth()) : '',
+			'auth' => !$this->auth_is_empty() ? serialize($this->get_authorizations()) : '',
 			'id_parent' => $this->get_id_parent()
 		);
 	}
@@ -158,7 +158,7 @@ class Category
 		$this->set_rewrited_name($properties['rewrited_name']);
 		$this->set_order($properties['c_order']);
 		$this->set_visible($properties['visible']);
-		$this->set_auth(!empty($properties['auth']) ? unserialize($properties['auth']) : array());
+		$this->set_authorizations(!empty($properties['auth']) ? unserialize($properties['auth']) : array());
 		$this->set_id_parent($properties['id_parent']);
 	}
 	
