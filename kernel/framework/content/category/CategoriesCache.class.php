@@ -55,7 +55,7 @@ abstract class CategoriesCache implements CacheData
 	
 	abstract public function get_module_identifier();
 	
-	abstract protected function get_root_category();
+	abstract public function get_root_category();
 	
 	public function get_categories()
 	{

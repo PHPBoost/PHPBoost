@@ -123,7 +123,7 @@ abstract class AbstractCategoriesFormController extends AdminModuleController
 		
 		$auth_settings = $this->get_authorizations_settings();
 		$auth_setter = new FormFieldAuthorizationsSetter('authorizations', $auth_settings, array('hidden' => ($this->get_category()->auth_is_empty() || $this->get_category()->auth_is_equals($root_auth))));
-		$auth_settings->build_from_auth_array($this->get_category()->get_auth());
+		$auth_settings->build_from_auth_array($this->get_category()->get_authorizations());
 		$fieldset_authorizations->add_field($auth_setter);
 		
 		$this->submit_button = new FormButtonDefaultSubmit();
@@ -141,7 +141,7 @@ abstract class AbstractCategoriesFormController extends AdminModuleController
 		$this->get_category()->set_id_parent($this->form->get_value('id_parent')->get_raw_value());
 		$this->get_category()->set_visible($this->form->get_value('visible'));
 		$authorizations = $this->form->get_value('special_authorizations') ? $this->form->get_value('authorizations')->build_auth_array() : array();
-		$this->get_category()->set_auth($authorizations);
+		$this->get_category()->set_authorizations($authorizations);
 	}
 	
 	private function build_fieldset_options(HTMLForm $form)
