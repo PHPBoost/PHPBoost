@@ -61,6 +61,7 @@ class InstallDBConfigController extends InstallController
 			$login = $this->form->get_value('login');
 			$password = $this->form->get_value('password');
 			$schema = $this->form->get_value('schema');
+			$schema = str_replace(array('/', '\\', '.', ' ', '"', '\''), '_', $schema);
 			$tables_prefix = $this->form->get_value('tablesPrefix');
 			$this->handle_form($host, $port, $login, $password, $schema, $tables_prefix);
 		}

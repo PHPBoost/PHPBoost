@@ -37,7 +37,8 @@ class InstallDBConfigCheckController extends InstallController
 		$port = $request->get_value('port');
 		$login = $request->get_value('login');
 		$password = $request->get_value('password');
-		$schema = $request->get_value('schema');
+		$schema = $this->form->get_value('schema');
+		$schema = str_replace(array('/', '\\', '.', ' ', '"', '\''), '_', $schema);
 		$tables_prefix = $request->get_value('tablesPrefix');
 		$this->check_configuration($host, $port, $login, $password, $schema, $tables_prefix);
 		return $this->build_response($host, $port, $login, $password, $schema, $tables_prefix);
