@@ -103,8 +103,6 @@ abstract class AbstractCategoriesFormController extends AdminModuleController
 			
 		$fieldset->add_field($this->get_categories_manager()->get_select_categories_form_field('id_parent', $this->lang['category.form.parent'], $this->get_category()->get_id_parent(), $search_category_children_options));
 		
-		$fieldset->add_field(new FormFieldCheckbox('visible', $this->lang['category.form.visiblity'], $this->get_category()->is_visible()));
-		
 		$this->build_fieldset_options($form);
 		
 		$fieldset_authorizations = new FormFieldsetHTML('authorizations_fieldset', $this->lang['category.form.authorizations']);
@@ -139,7 +137,6 @@ abstract class AbstractCategoriesFormController extends AdminModuleController
 		$rewrited_name = $this->form->get_value('personalize_rewrited_name') ? $this->form->get_value('rewrited_name') : Url::encode_rewrite($this->get_category()->get_name());
 		$this->get_category()->set_rewrited_name($rewrited_name);
 		$this->get_category()->set_id_parent($this->form->get_value('id_parent')->get_raw_value());
-		$this->get_category()->set_visible($this->form->get_value('visible'));
 		$authorizations = $this->form->get_value('special_authorizations') ? $this->form->get_value('authorizations')->build_auth_array() : array();
 		$this->get_category()->set_authorizations($authorizations);
 	}
