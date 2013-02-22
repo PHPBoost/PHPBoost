@@ -33,7 +33,6 @@ class RootCategory extends Category
 		$this->set_id_parent(self::ROOT_CATEGORY);
 		$this->set_name(LangLoader::get_message('root', 'main'));
 		$this->set_order(0);
-		$this->set_visible(true);
 	}
 }
 ?>
