@@ -42,7 +42,7 @@ class NewsCategoriesCache extends CategoriesCache
 		return 'news';
 	}
 	
-	protected function get_root_category()
+	public function get_root_category()
 	{
 		$root = new RootCategory();
 		$root->set_auth(NewsConfig::load()->get_authorizations());
