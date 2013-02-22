@@ -31,7 +31,6 @@ class Category
 	protected $name;
 	protected $rewrited_name;
 	protected $order;
-	protected $visible = true;
 	protected $auth = array();
 	protected $id_parent;
 	
@@ -92,16 +91,6 @@ class Category
 		$this->order++;
 	}
 	
-	public function is_visible()
-	{
-		return $this->visible;
-	}
-	
-	public function set_visible($visible)
-	{
-		$this->visible = (boolean)$visible;
-	}
-	
 	public function get_authorizations()
 	{
 		return $this->auth;
@@ -145,7 +134,6 @@ class Category
 			'name' => $this->get_name(),
 			'rewrited_name' => $this->get_rewrited_name(),
 			'c_order' => $this->get_order(),
-			'visible' => (int)$this->is_visible(),
 			'auth' => !$this->auth_is_empty() ? serialize($this->get_authorizations()) : '',
 			'id_parent' => $this->get_id_parent()
 		);
@@ -157,7 +145,6 @@ class Category
 		$this->set_name($properties['name']);
 		$this->set_rewrited_name($properties['rewrited_name']);
 		$this->set_order($properties['c_order']);
-		$this->set_visible($properties['visible']);
 		$this->set_authorizations(!empty($properties['auth']) ? unserialize($properties['auth']) : array());
 		$this->set_id_parent($properties['id_parent']);
 	}
@@ -169,7 +156,6 @@ class Category
 			'name' => array('type' => 'string', 'length' => 255, 'notnull' => 1),
 			'rewrited_name' => array('type' => 'string', 'length' => 250, 'default' => "''"),
 			'c_order' => array('type' => 'integer', 'length' => 11, 'unsigned' => 1, 'notnull' => 1, 'default' => 0),
-			'visible' => array('type' => 'boolean', 'notnull' => 1, 'default' => 0),
 			'auth' => array('type' => 'text', 'length' => 65000),
 			'id_parent' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 		);
