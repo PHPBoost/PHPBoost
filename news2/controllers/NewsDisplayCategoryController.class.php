@@ -56,7 +56,7 @@ class NewsDisplayCategoryController extends ModuleController
 		$result = PersistenceContext::get_querier()->select('SELECT news.*, member.level, member.user_groups
 		FROM '. NewsSetup::$news_table .' news
 		LEFT JOIN '. DB_TABLE_MEMBER .' member ON member.user_id = news.author_user_id
-		WHERE news.approbation_type = 1 OR (news.approbation_type = 2 AND news.start_date < :timestamp_now AND end_date > :timestamp_now)', array(
+		WHERE news.approbation_type = 1 OR (news.approbation_type = 2 AND news.start_date < :timestamp_now AND news.end_date > :timestamp_now)', array(
 			'timestamp_now' => $now->get_timestamp()));
 
 		while ($row = $result->fetch())
@@ -103,7 +103,7 @@ class NewsDisplayCategoryController extends ModuleController
 		
 		$response->add_breadcrumb_link($this->lang['news'], NewsUrlBuilder::home());
 		
-		$categories = NewsService::get_categories_manager()->get_parents($this->get_category()->get_id(), true);
+		$categories = array_reverse(NewsService::get_categories_manager()->get_parents($this->get_category()->get_id(), true));
 		foreach ($categories as $id => $category)
 		{
 			if ($id != Category::ROOT_CATEGORY)

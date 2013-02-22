@@ -69,6 +69,11 @@ class NewsUrlBuilder
 		return DispatchManager::get_url(self::$dispatcher, '/pending/');
 	}
 	
+	public static function add_news()
+	{
+		return DispatchManager::get_url(self::$dispatcher, '/add/');
+	}
+	
 	public static function edit_news($id)
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/' . $id . '/edit/');

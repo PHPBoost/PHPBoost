@@ -150,7 +150,7 @@ class NewsConfig extends AbstractConfigData
 			self::EDITO_TITLE => 'titre',
 			self::EDITO_CONTENTS => 'contenu',
 			self::DISPLAY_TYPE => self::DISPLAY_BLOCK,
-			self::AUTHORIZATIONS => array()
+			self::AUTHORIZATIONS => array('r1' => 13, 'r0' => 5, 'r-1' => 1)
 		);
 	}
 
