@@ -38,5 +38,15 @@ class NewsExtensionPointProvider extends ExtensionPointProvider
 			new DispatcherUrlMapping('/news/index.php')
 		));
 	}
+	
+	public function search()
+	{
+		return new NewsSearchable();
+	}
+	
+	public function feeds()
+	{
+		return new NewsFeedProvider();
+	}
 }
 ?>

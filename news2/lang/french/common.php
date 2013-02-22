@@ -31,6 +31,9 @@ $lang['news.edit'] = 'Modifier une news';
 $lang['news.pending'] = 'News en attente';
 
 $lang['news.form.name'] = 'Nom de la news';
+$lang['news.form.rewrited_name'] = 'Nom de votre news dans l\'url';
+$lang['news.form.rewrited_name.description'] = 'Contient uniquement des lettres minuscules, des chiffres et des traits d\'union.';
+$lang['news.form.rewrited_name.personalize'] = 'Personnaliser le nom de la news dans l\'url';
 $lang['news.form.category'] = 'Catégorie de la news';
 $lang['news.form.contents'] = 'Contenu';
 $lang['news.form.short_contents'] = 'Condensé de la news';
@@ -63,4 +66,6 @@ $lang['admin.config.edito.enabled'] = 'Activer l\'édito';
 $lang['admin.config.edito.title'] = 'Titre de l\'édito';
 $lang['admin.config.edito.contents'] = 'Contenu de l\'édito';
 
+//Feed name
+$lang['feed.name'] = 'Actualités';
 ?>

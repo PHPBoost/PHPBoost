@@ -299,6 +299,7 @@ class NewsFormController extends ModuleController
 			
 		if ($this->get_news()->get_id() === null)
 		{
+			$response->add_breadcrumb_link($this->lang['news.add'], NewsUrlBuilder::add_news());
 			$response->set_page_title($this->lang['news.add']);
 		}
 		else
