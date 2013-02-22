@@ -266,17 +266,17 @@ class CategoriesManager
 	{
 		$list = array();
 		if ($add_this)
-			$list[] = $this->categories_cache->get_category($id_category);
+			$list[$id_category] = $this->categories_cache->get_category($id_category);
 
 		if ($id_category > 0)
 		{
 			while ((int)$this->categories_cache->get_category($id_category)->get_id_parent() != Category::ROOT_CATEGORY)
 			{
 				$id_parent = $this->categories_cache->get_category($id_category)->get_id_parent();
-			    $list[] = $this->categories_cache->get_category($id_parent);
+			    $list[$id_parent] = $this->categories_cache->get_category($id_parent);
 			    $id_category = $id_parent;
 			}
-			$list[] = $this->categories_cache->get_category(Category::ROOT_CATEGORY);
+			$list[Category::ROOT_CATEGORY] = $this->categories_cache->get_category(Category::ROOT_CATEGORY);
 		}
 		return $list;
 	}

@@ -60,7 +60,7 @@ class SearchCategoryChildrensOptions
 			$authorized_bits = array();
 			foreach ($this->authorisations_bits as $bit)
 			{
-				if ($category->check_auth($bit) && $category->is_visible())
+				if ($category->check_auth($bit))
 					$authorized_bits[] = $bit;
 			}
 			
