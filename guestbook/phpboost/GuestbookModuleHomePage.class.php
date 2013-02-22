@@ -169,7 +169,7 @@ class GuestbookModuleHomePage implements ModuleHomePage
 
 						GuestbookMessagesCache::invalidate();
 
-						AppContext::get_response()->redirect(GuestbookUrlBuilder::home($current_page . '/#m' . $id_get)->absolute());
+						AppContext::get_response()->redirect(GuestbookUrlBuilder::home($current_page . '#m' . $id_get)->absolute());
 					}
 					else
 					{
@@ -184,7 +184,7 @@ class GuestbookModuleHomePage implements ModuleHomePage
 						
 						GuestbookMessagesCache::invalidate();
 			
-						AppContext::get_response()->redirect(GuestbookUrlBuilder::home($current_page . '/#m' . $last_msg_id)->absolute());
+						AppContext::get_response()->redirect(GuestbookUrlBuilder::home($current_page . '#m' . $last_msg_id)->absolute());
 					}
 				}
 			}
@@ -379,7 +379,7 @@ class GuestbookModuleHomePage implements ModuleHomePage
 				'DEL' => $del,
 				'EDIT' => $edit,
 				'U_USER_PM' => !$is_guest ? '<a href="'. PATH_TO_ROOT.'/user/pm' . url('.php?pm=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '"><img src="'. PATH_TO_ROOT.'/templates/' . get_utheme() . '/images/' . get_ulang() . '/pm.png" alt="" /></a>' : '',
-				'U_ANCHOR' => GuestbookUrlBuilder::home('/' . $current_page . '/#m' . $row['id'])->absolute()
+				'U_ANCHOR' => GuestbookUrlBuilder::home('/' . $current_page . '#m' . $row['id'])->absolute()
 			));
 			$j++;
 		}

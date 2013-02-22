@@ -48,5 +48,10 @@ class GuestbookExtensionPointProvider extends ExtensionPointProvider
 			new GuestbookModuleMiniMenu()
 		));
     }
+	
+	public function url_mappings()
+	{
+		return new UrlMappings(array(new DispatcherUrlMapping('/guestbook/index.php')));
+	}
 }
 ?>
