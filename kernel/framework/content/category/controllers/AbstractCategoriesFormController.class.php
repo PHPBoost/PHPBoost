@@ -108,7 +108,7 @@ abstract class AbstractCategoriesFormController extends AdminModuleController
 		$fieldset_authorizations = new FormFieldsetHTML('authorizations_fieldset', $this->lang['category.form.authorizations']);
 		$form->add_fieldset($fieldset_authorizations);
 		
-		$root_auth = $this->get_categories_manager()->get_categories_cache()->get_category(Category::ROOT_CATEGORY)->get_auth();
+		$root_auth = $this->get_categories_manager()->get_categories_cache()->get_category(Category::ROOT_CATEGORY)->get_authorizations();
 		
 		$fieldset_authorizations->add_field(new FormFieldCheckbox('special_authorizations', $this->lang['category.form.authorizations'], (!$this->get_category()->auth_is_empty() && !$this->get_category()->auth_is_equals($root_auth)), 
 		array('description' => $this->lang['category.form.authorizations.description'], 'events' => array('click' => '
