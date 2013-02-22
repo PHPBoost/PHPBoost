@@ -140,7 +140,6 @@ class NewsSetup extends DefaultModuleSetup
 			'auth' => '',
 			'rewrited_name' => Url::encode_rewrite($this->messages['cat.name']),
 			'name' => $this->messages['cat.name'],
-			'visible' => (int)true,
 			'description' => $this->messages['cat.description'],
 			'image' => '/news/news.png'
 		));
