@@ -53,23 +53,25 @@ class NewsDisplayNewsController extends ModuleController
 	{
 		if ($this->news === null)
 		{
-			$rewrited_name = AppContext::get_request()->get_getstring('rewrited_name', '');
-			if (!empty($rewrited_name))
+			$id = AppContext::get_request()->get_getint('id', 0);
+			if (!empty($id))
 			{
 				try {
-					$this->news = NewsService::get_news('WHERE rewrited_name=:rewrited_name', array('rewrited_name' => $rewrited_name));
+					$this->news = NewsService::get_news('WHERE id=:id', array('id' => $id));
 				} catch (RowNotFoundException $e) {
 					$error_controller = PHPBoostErrors::unexisting_page();
    					DispatchManager::redirect($error_controller);
 				}
 			}
+			else
+				$this->news = new News();
 		}
 		return $this->news;
 	}
 	
 	private function build_view()
 	{
-		
+	
 	}
 	
 	private function check_authorizations()
@@ -96,7 +98,7 @@ class NewsDisplayNewsController extends ModuleController
 			break;
 			case News::APPROVAL_DATE:
 				$now = new Date();
-				if ($news->get_start_date()->is_posterior_to($now) && $news->get_end_date()->is_anterior_to($now) && $user_not_read_authorizations_not_approval)
+				if (!$news->is_visible() && $user_not_read_authorizations_not_approval)
 				{
 					$error_controller = PHPBoostErrors::user_not_authorized();
 		   			DispatchManager::redirect($error_controller);
@@ -115,14 +117,14 @@ class NewsDisplayNewsController extends ModuleController
 		$response->set_page_title($this->get_news()->get_name());
 		$response->add_breadcrumb_link($this->lang['news'], NewsUrlBuilder::home());
 		
-		$categories = NewsService::get_categories_manager()->get_parents($this->get_news()->get_id_cat(), true);
+		$categories = array_reverse(NewsService::get_categories_manager()->get_parents($this->get_news()->get_id_cat(), true));
 		foreach ($categories as $id => $category)
 		{
 			if ($id != Category::ROOT_CATEGORY)
 				$response->add_breadcrumb_link($category->get_name(), NewsUrlBuilder::display_category($category->get_rewrited_name()));
 		}
 		$category = $categories[$this->get_news()->get_id()];
-		$response->add_breadcrumb_link($this->get_news()->get_name(), NewsUrlBuilder::display_news($category->get_rewrited_name(), $this->get_news()->get_rewrited_name()));
+		$response->add_breadcrumb_link($this->get_news()->get_name(), NewsUrlBuilder::display_news($category->get_rewrited_name(), $this->get_news()->get_id(), $this->get_news()->get_rewrited_name()));
 		
 		return $response->display($this->tpl);
 	}
