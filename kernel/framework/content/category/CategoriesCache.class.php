@@ -43,7 +43,7 @@ abstract class CategoriesCache implements CacheData
 			$category->set_properties($row);
 			if ($category->auth_is_empty())
 			{
-				$category->set_auth($root_category->get_auth());
+				$category->set_authorizations($root_category->get_authorizations());
 			}
 			$this->categories[$row['id']] = $category;
 		}

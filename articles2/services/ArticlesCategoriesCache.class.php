@@ -45,7 +45,7 @@ class ArticlesCategoriesCache extends CategoriesCache
 	public function get_root_category()
 	{
 		$root = new RootCategory();
-		$root->set_auth(ArticlesConfig::load()->get_authorizations());
+		$root->set_authorizations(ArticlesConfig::load()->get_authorizations());
 		return $root;
 	}
 }
