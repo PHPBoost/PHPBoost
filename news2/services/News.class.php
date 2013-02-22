@@ -93,6 +93,11 @@ class News
 		return $this->rewrited_name;
 	}
 	
+	public function rewrited_name_is_personalized()
+	{
+		return $this->rewrited_name != Url::encode_rewrite($this->name);
+	}
+	
 	public function set_contents($contents)
 	{
 		$this->contents = $contents;
@@ -126,6 +131,12 @@ class News
 	public function get_approbation_type()
 	{
 		return $this->approbation_type;
+	}
+	
+	public function is_visible()
+	{
+		$now = new Date();
+		return $this->get_approbation_type() == News::APPROVAL_NOW || ($this->get_approbation_type() == News::APPROVAL_DATE && $news->get_start_date()->is_anterior_to($now) && $news->get_end_date()->is_posterior_to($now));
 	}
 	
 	public function set_start_date(Date $start_date)

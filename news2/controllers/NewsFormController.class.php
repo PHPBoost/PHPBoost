@@ -75,6 +75,23 @@ class NewsFormController extends ModuleController
 		
 		$fieldset->add_field(new FormFieldTextEditor('name', $this->lang['news.form.name'], $this->get_news()->get_name(), array('required' => true)));
 
+		if (!$this->is_contributor_member())
+		{
+			$fieldset->add_field(new FormFieldCheckbox('personalize_rewrited_name', $this->lang['news.form.rewrited_name.personalize'], $this->get_news()->rewrited_name_is_personalized(), array(
+			'events' => array('click' => '
+			if (HTMLForms.getField("personalize_rewrited_name").getValue()) {
+				HTMLForms.getField("rewrited_name").enable();
+			} else { 
+				HTMLForms.getField("rewrited_name").disable();
+			}'
+			))));
+			
+			$fieldset->add_field(new FormFieldTextEditor('rewrited_name', $this->lang['news.form.rewrited_name'], $this->get_news()->get_rewrited_name(), array(
+				'description' => $this->lang['news.form.rewrited_name.description'], 
+				'hidden' => !$this->get_news()->rewrited_name_is_personalized()
+			), array(new FormFieldConstraintRegex('`^[a-z0-9\-]+$`i'))));
+		}
+		
 		$search_category_children_options = new SearchCategoryChildrensOptions();
 		$search_category_children_options->add_authorisations_bits(Category::READ_AUTHORIZATIONS);
 		$search_category_children_options->add_authorisations_bits(Category::CONTRIBUTION_AUTHORIZATIONS);
@@ -93,26 +110,28 @@ class NewsFormController extends ModuleController
 		
 		$fieldset->add_field(new FormFieldRichTextEditor('short_contents', $this->lang['news.form.short_contents'], $this->get_news()->get_short_contents(), array('hidden' => !$this->get_news()->get_short_contents_enabled())));
 
-		$fieldset->add_field(new FormFieldSimpleSelectChoice('approbation_type', $this->lang['news.form.approbation'], $this->get_news()->get_approbation_type(),
-			array(
-				new FormFieldSelectChoiceOption($this->lang['news.form.approbation.not'], News::NOT_APPROVAL),
-				new FormFieldSelectChoiceOption($this->lang['news.form.approbation.now'], News::APPROVAL_NOW),
-				new FormFieldSelectChoiceOption($this->lang['news.form.approbation.date'], News::APPROVAL_DATE),
-			),
-			array('events' => array('change' => '
-			if (HTMLForms.getField("approbation_type").getValue() == 2) {
-				$("'.__CLASS__.'_start_date_field").appear();
-				$("'.__CLASS__.'_end_date_field").appear();
-			} else { 
-				$("'.__CLASS__.'_start_date_field").fade();
-				$("'.__CLASS__.'_end_date_field").fade();
-			}'))
-		));
-		
-		$fieldset->add_field(new FormFieldDateTime('start_date', $this->lang['news.form.date.start'], $this->get_news()->get_start_date(), array('hidden' => ($this->get_news()->get_approbation_type() != News::APPROVAL_DATE))));
-		
-		$fieldset->add_field(new FormFieldDateTime('end_date', $this->lang['news.form.date.end'], $this->get_news()->get_end_date(), array('hidden' => ($this->get_news()->get_approbation_type() != News::APPROVAL_DATE))));
-		
+		if (!$this->is_contributor_member())
+		{
+			$fieldset->add_field(new FormFieldSimpleSelectChoice('approbation_type', $this->lang['news.form.approbation'], $this->get_news()->get_approbation_type(),
+				array(
+					new FormFieldSelectChoiceOption($this->lang['news.form.approbation.not'], News::NOT_APPROVAL),
+					new FormFieldSelectChoiceOption($this->lang['news.form.approbation.now'], News::APPROVAL_NOW),
+					new FormFieldSelectChoiceOption($this->lang['news.form.approbation.date'], News::APPROVAL_DATE),
+				),
+				array('events' => array('change' => '
+				if (HTMLForms.getField("approbation_type").getValue() == 2) {
+					$("'.__CLASS__.'_start_date_field").appear();
+					$("'.__CLASS__.'_end_date_field").appear();
+				} else { 
+					$("'.__CLASS__.'_start_date_field").fade();
+					$("'.__CLASS__.'_end_date_field").fade();
+				}'))
+			));
+			
+			$fieldset->add_field(new FormFieldDateTime('start_date', $this->lang['news.form.date.start'], $this->get_news()->get_start_date(), array('hidden' => ($this->get_news()->get_approbation_type() != News::APPROVAL_DATE))));
+			
+			$fieldset->add_field(new FormFieldDateTime('end_date', $this->lang['news.form.date.end'], $this->get_news()->get_end_date(), array('hidden' => ($this->get_news()->get_approbation_type() != News::APPROVAL_DATE))));
+		}
 		$fieldset->add_field(new FormFieldDateTime('creation_date', $this->lang['news.form.date.creation'], $this->get_news()->get_creation_date()));
 
 		$this->build_contribution_fieldset($form);
@@ -191,25 +210,33 @@ class NewsFormController extends ModuleController
 		$news = $this->get_news();
 		
 		$news->set_name($this->form->get_value('name'));
-		//TODO rewrited name for edition ?
-		$news->set_rewrited_name(Url::encode_rewrite($this->form->get_value('name')));
 		$news->set_id_cat($this->form->get_value('id_cat')->get_raw_value());
 		$news->set_contents($this->form->get_value('contents'));
 		$news->set_short_contents(($this->form->get_value('enable_short_contents') ? $this->form->get_value('short_contens') : ''));
 		$news->set_creation_date($this->form->get_value('creation_date'));
 		
-		$approbation_type = !$this->is_contributor_member() ? $this->form->get_value('approbation_type')->get_raw_value() : News::NOT_APPROVAL;
-		$news->set_approbation_type($approbation_type);
-		if ($approbation_type == News::APPROVAL_DATE)
+		if ($this->is_contributor_member())
 		{
-			$news->set_start_date($this->form->get_value('start_date'));
-			$news->set_end_date($this->form->get_value('end_date'));
+			$news->set_rewrited_name(Url::encode_rewrite($news->get_name()));
+			$news->set_approbation_type(News::NOT_APPROVAL);
 		}
 		else
 		{
-			$news->clean_start_and_end_date();
+			$rewrited_name = $this->form->get_value('personalize_rewrited_name') ? $this->form->get_value('rewrited_name') : Url::encode_rewrite($news->get_name());
+			$news->set_rewrited_name($rewrited_name);
+			
+			$news->set_approbation_type($this->form->get_value('approbation_type')->get_raw_value());
+			if ($news->get_approbation_type() == News::APPROVAL_DATE)
+			{
+				$news->set_start_date($this->form->get_value('start_date'));
+				$news->set_end_date($this->form->get_value('end_date'));
+			}
+			else
+			{
+				$news->clean_start_and_end_date();
+			}
 		}
-				
+		
 		if ($news->get_id() === null)
 		{
 			$news->set_author_user_id(AppContext::get_current_user()->get_id());
@@ -240,11 +267,7 @@ class NewsFormController extends ModuleController
 				$contribution->set_module('news');
 				$contribution->set_auth(
 					Authorizations::capture_and_shift_bit_auth(
-						Authorizations::merge_auth(
-							NewsConfig::load()->get_authorizations(),
-							NewsService::get_categories_manager()->compute_heritated_auth($news->get_id_cat(), Category::MODERATION_AUTHORIZATIONS, Authorizations::AUTH_CHILD_PRIORITY),
-							Category::MODERATION_AUTHORIZATIONS, Authorizations::AUTH_CHILD_PRIORITY
-						),
+						NewsService::get_categories_manager()->get_heritated_authorizations($news->get_id_cat(), Category::MODERATION_AUTHORIZATIONS, Authorizations::AUTH_CHILD_PRIORITY),
 						Category::MODERATION_AUTHORIZATIONS, Contribution::CONTRIBUTION_AUTH_BIT
 					)
 				);
@@ -280,10 +303,17 @@ class NewsFormController extends ModuleController
 		}
 		else
 		{
-			$response->add_breadcrumb_link($category->get_name(), NewsUrlBuilder::display_category($category->get_rewrited_name()));
-			$response->add_breadcrumb_link($news->get_name(), NewsUrlBuilder::display_news($category->get_rewrited_name(), $news->get_rewrited_name()));
+			$categories = array_reverse(NewsService::get_categories_manager()->get_parents($this->get_news()->get_id_cat(), true));
+			foreach ($categories as $id => $category)
+			{
+				if ($id != Category::ROOT_CATEGORY)
+					$response->add_breadcrumb_link($category->get_name(), NewsUrlBuilder::display_category($category->get_rewrited_name()));
+			}
+			$category = $categories[$this->get_news()->get_id()];
+			$response->add_breadcrumb_link($this->get_news()->get_name(), NewsUrlBuilder::display_news($category->get_rewrited_name(), $this->get_news()->get_id(), $this->get_news()->get_rewrited_name()));
+			
 			$response->add_breadcrumb_link($this->lang['news.edit'], NewsUrlBuilder::edit_news($news->get_id()));
-			$response->set_page_title(StringVars::replace_vars($this->lang['news.edit'], array('name' => $news->get_name())));
+			$response->set_page_title($this->lang['news.edit']);
 		}
 		
 		return $response->display($tpl);
