@@ -25,7 +25,9 @@
 		<div class="module_position">					
 			<div class="module_top_l"></div>		
 			<div class="module_top_r"></div>
-			<div class="module_top">{L_PREVIEWING}: {preview.TITLE}</div>
+			<div class="module_top">
+				<div class="module_top_title">{L_PREVIEWING}: {preview.TITLE}</div>
+			</div>
 			<div class="module_contents" id="preview">
 				# START preview.menu #
 					<div class="row3" style="width:70%">

@@ -41,7 +41,9 @@
        <div class="module_position">
             <div class="module_top_l"></div>
             <div class="module_top_r"></div>
-            <div class="module_top">{L_TITLE_SEARCH}</div>
+            <div class="module_top">
+            	<div class="module_top_title">{L_TITLE_SEARCH}</div>
+            </div>
             <div class="module_contents">
                 <div class="spacer">&nbsp;</div>
                 <form action="{U_FORM_VALID}" onsubmit="return check_search_form_post();" method="post">
