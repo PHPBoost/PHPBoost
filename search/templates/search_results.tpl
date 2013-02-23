@@ -120,7 +120,8 @@
         <div id="results" class="module_position">
             <div class="module_top_l"></div>
             <div class="module_top_r"></div>
-            <div class="module_top">{L_SEARCH_RESULTS}
+            <div class="module_top">
+            	<div class="module_top_title">{L_SEARCH_RESULTS}</div>
                 # IF C_SIMPLE_SEARCH #
                     <div id="results_choices" class="resultsChoices" style="display:none">
                         <span>{L_PRINT}</span>

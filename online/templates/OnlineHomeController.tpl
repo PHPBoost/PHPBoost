@@ -1,7 +1,9 @@
 <div class="module_position">
 	<div class="module_top_l"></div>
 	<div class="module_top_r"></div>
-	<div class="module_top">{@online} </div>
+	<div class="module_top">
+		<div class="module_top_title">{@online} </div>
+	</div>
 	<div class="module_contents">
 		<table class="module_table">
 			<tr>
