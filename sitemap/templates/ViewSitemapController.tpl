@@ -1,7 +1,9 @@
 <div class="module_position">
 <div class="module_top_l"></div>
 <div class="module_top_r"></div>
-<div class="module_top">{@sitemap} </div>
+<div class="module_top">
+	<div class="module_top_title">{@sitemap} </div>
+</div>
 <div class="module_contents">
 # INCLUDE SITEMAP #
 </div>

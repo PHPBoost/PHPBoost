@@ -3,13 +3,15 @@
 			<div class="module_top_l"></div>		
 			<div class="module_top_r"></div>
 			<div class="module_top">
-				<a href="${relative_url(SyndicationUrlBuilder::rss('download',IDCAT))}" title="Rss"><img style="vertical-align:middle;margin-top:-2px;" src="{PATH_TO_ROOT}/templates/{THEME}/images/rss.png" alt="Rss" title="Rss" /></a>
-				{TITLE}
-				# IF C_ADMIN #
-				<a href="{U_ADMIN_CAT}">
-					<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="" />
-				</a>
-				# END IF #
+				<div class="module_top_title">
+					<a href="${relative_url(SyndicationUrlBuilder::rss('download',IDCAT))}" title="Rss"><img style="vertical-align:middle;margin-top:-2px;" src="{PATH_TO_ROOT}/templates/{THEME}/images/rss.png" alt="Rss" title="Rss" /></a>
+					{TITLE}
+					# IF C_ADMIN #
+					<a href="{U_ADMIN_CAT}">
+						<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="" />
+					</a>
+					# END IF #
+				</div>
 			</div>
 			<div class="module_contents">
 				# IF C_ADD_FILE #
@@ -136,7 +138,7 @@
 			<div class="module_top_l"></div>		
 			<div class="module_top_r"></div>
 			<div class="module_top">
-				<div style="float:left">
+				<div class="module_top_title">
 					{NAME}
 				</div>
 				<div style="float:right">
