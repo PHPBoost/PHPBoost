@@ -3,7 +3,7 @@
 		<div class="module_top_l"></div>		
 		<div class="module_top_r"></div>
 		<div class="module_top">
-			{L_CONTRIBUTION_PANEL}
+			<div class="module_top_title">{L_CONTRIBUTION_PANEL}</div>
 		</div>
 		<div class="module_contents">
 			<h1>{L_CONTRIBUTION_LIST}</h1>
