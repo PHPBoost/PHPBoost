@@ -1,7 +1,9 @@
 <div class="module_position">					
-<div class="module_top_l"></div>		
-<div class="module_top_r"></div>
-<div class="module_top">{L_MESSAGES}</div>
+	<div class="module_top_l"></div>		
+	<div class="module_top_r"></div>
+	<div class="module_top">
+		<div class="module_top_title">{L_MESSAGES}</div>
+	</div>
 	<div class="module_contents">
 		# START available_modules_msg #
 		<p style="text-align:center;margin-bottom:15px;"> 

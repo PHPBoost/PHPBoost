@@ -1,7 +1,9 @@
 		<div class="module_position">
 			<div class="module_top_l"></div>		
 			<div class="module_top_r"></div>
-			<div class="module_top">{L_MODERATION_PANEL}</div>
+			<div class="module_top">
+				<div class="module_top_title">{L_MODERATION_PANEL}</div>
+			</div>
 			<div class="module_contents" style="padding-bottom:75px;">	
 			# IF C_MODO_PANEL_USER #
 				<table class="module_table">

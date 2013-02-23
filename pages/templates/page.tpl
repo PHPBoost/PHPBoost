@@ -1,7 +1,9 @@
 		<div class="module_position">					
 			<div class="module_top_l"></div>		
 			<div class="module_top_r"></div>
-			<div class="module_top">{TITLE}</div>
+			<div class="module_top">
+				<div class="module_top_title">{TITLE}</div>
+			</div>
 			<div class="module_contents" style="padding-bottom:85px;">
 				# START redirect #
 					<div class="row3" style="width:auto; float:left;">

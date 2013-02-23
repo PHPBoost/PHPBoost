@@ -61,3 +61,12 @@
 	</tr>
 	# ENDIF #
 </table>
+
+		<div style="text-align:center;margin-top:10px;">	
+			<div class="pbt_button pbt_button_gray">
+				<a href="{LINK_CREATE}" class="pbt_button_a pbt_button_add">
+					<img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/extendfield_mini.png" alt="Add" class="pbt_button_img valign_middle" />
+					Ajouter
+				</a>
+			</div>
+		</div>
