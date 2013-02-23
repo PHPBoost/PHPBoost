@@ -186,9 +186,9 @@ class GuestbookHomePageExtensionPoint implements HomePageExtensionPoint
 							'user_id' => $User->get_attribute('user_id'),
 							'timestamp' => time()
 						);
-						PersistenceContext::get_querier()->insert(PREFIX . "guestbook", $columns);
+						$result = PersistenceContext::get_querier()->insert(PREFIX . "guestbook", $columns);
 						
-						$last_msg_id = $this->sql_querier->insert_id("SELECT MAX(id) FROM " . PREFIX . "guestbook"); //Dernier message ins�r�.
+						$last_msg_id = $result->get_last_inserted_id(); //Dernier message inséré.
 			
 						GuestbookMessagesCache::invalidate();
 			
