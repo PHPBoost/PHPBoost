@@ -37,7 +37,7 @@ $lang = array(
 	
     'media_name_cat' => 'Vidéos de PHPBoost',
     'media_contents_cat' => 'Cette catégorie contient des tutoriels vidéos afin de vous montrer certaines actions dont vous pourriez avoir besoin durant l\'utilisation de <a href="http://www.phpboost.com/pages/videos-de-demonstration">PHPboost</a>. Ces vidéos sont en streaming.',
-	'media_icon_cat' => '../media/templates/images/video.png'
+	'media_icon_cat' => PATH_TO_ROOT . '/media/templates/images/video.png'
 );
 
 ?>

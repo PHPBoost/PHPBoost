@@ -97,7 +97,7 @@ class FaqHomePageExtensionPoint implements HomePageExtensionPoint
 						'ID' => $id,
 						'NAME' => $value['name'],
 						'WIDTH' => floor(100 / (float)$faq_config->get_number_columns()),
-						'SRC' => $value['image'],
+						'SRC' => ($value['image'] == 'faq.png' || $value['image'] == 'faq_mini.png' ? PATH_TO_ROOT . '/faq/' . $value['image'] : $value['image']),
 						'IMG_NAME' => addslashes($value['name']),
 						'NUM_QUESTIONS' => sprintf(((int)$value['num_questions'] > 1 ? $FAQ_LANG['num_questions_plural'] : $FAQ_LANG['num_questions_singular']), (int)$value['num_questions']),
 						'U_CAT' => PATH_TO_ROOT . FaqUrlBuilder::get_link_cat($id,$value['name']),

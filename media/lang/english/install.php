@@ -37,7 +37,7 @@ $lang = array(
 	
     'media_name_cat' => 'First video category',
     'media_contents_cat' => 'This category contains video files.',
-	'media_icon_cat' => '../media/templates/images/video.png'
+	'media_icon_cat' => PATH_TO_ROOT . '/media/templates/images/video.png'
 );
 
 ?>

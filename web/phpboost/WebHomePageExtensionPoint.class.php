@@ -101,7 +101,7 @@ class WebHomePageExtensionPoint implements HomePageExtensionPoint
 				'TOTAL' => $row['count'],
 				'CAT' => $row['name'],
 				'CONTENTS' => $row['contents'],	
-				'U_IMG_CAT' => !empty($row['icon']) ? '<a href="' . PATH_TO_ROOT . '/web/web' . url('.php?cat=' . $row['id'], '-' . $row['id'] . '.php') . '"><img src="' . $row['icon'] . '" alt="" /></a><br />' : '',
+				'U_IMG_CAT' => !empty($row['icon']) ? '<a href="' . PATH_TO_ROOT . '/web/web' . url('.php?cat=' . $row['id'], '-' . $row['id'] . '.php') . '"><img src="' . ($row['icon'] == 'web.png' || $row['icon'] == 'web_mini.png' ? PATH_TO_ROOT . '/web/' . $row['icon'] : $row['icon']) . '" alt="" /></a><br />' : '',
 				'U_WEB_CAT' => url('.php?cat=' . $row['id'], '-' . $row['id'] . '.php')
 			));
 		}
