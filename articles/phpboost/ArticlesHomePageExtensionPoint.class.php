@@ -224,7 +224,7 @@ class ArticlesHomePageExtensionPoint implements HomePageExtensionPoint
 				'IDCAT' => $row['id'],
 				'CAT' => $row['name'],
 				'DESC' => FormatingHelper::second_parse($row['description']),
-				'ICON_CAT' => !empty($row['image']) ? '<a href="articles' . url('.php?cat=' . $row['id'], '-' . $row['id'] . '+' . Url::encode_rewrite($row['name']) . '.php') . '"><img src="' . $row['image'] . '" alt="" class="valign_middle" /></a><br />' : '',
+				'ICON_CAT' => !empty($row['image']) ? '<a href="' . PATH_TO_ROOT . '/articles/articles' . url('.php?cat=' . $row['id'], '-' . $row['id'] . '+' . Url::encode_rewrite($row['name']) . '.php') . '"><img src="' . ($row['image'] == 'articles.png' || $row['image'] == 'articles_mini.png' ? PATH_TO_ROOT . '/articles/' . $row['image'] : $row['image']) . '" alt="" class="valign_middle" /></a><br />' : '',
 				'U_CAT' => url('.php?cat=' . $row['id'], '-' . $row['id'] . '+' . Url::encode_rewrite($row['name']) . '.php'),
 				'L_NBR_ARTICLES' => sprintf($ARTICLES_LANG['nbr_articles_info'], $row['nbr_articles']),
 			));
