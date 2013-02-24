@@ -78,7 +78,7 @@ class MediaHomePageExtensionPoint implements HomePageExtensionPoint
 					'ID' => $id,
 					'NAME' => $array['name'],
 					'WIDTH' => floor(100 / (float)$MEDIA_CONFIG['nbr_column']),
-					'SRC' => !empty($array['image']) ? $array['image'] : 'media_mini.png',
+					'SRC' => ($array['image'] == 'media.png' || $array['image'] == 'media_mini.png') ? PATH_TO_ROOT . '/media/' . $array['image'] : (!empty($array['image']) ? Url::to_rel($array['image']) : 'media_mini.png'),
 					'IMG_NAME' => addslashes($array['name']),
 					'NUM_MEDIA' => ($array['active'] & MEDIA_NBR) !== 0 ? sprintf(($array['num_media'] > 1 ? $MEDIA_LANG['num_medias'] : $MEDIA_LANG['num_media']), $array['num_media']) : '',
 					'U_CAT' => PATH_TO_ROOT . url('/media/media.php?cat=' . $id, '/media/media-0-' . $id . '+' . Url::encode_rewrite($array['name']) . '.php'),
