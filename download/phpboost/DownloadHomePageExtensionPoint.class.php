@@ -102,7 +102,7 @@ class DownloadHomePageExtensionPoint implements HomePageExtensionPoint
 						'ID' => $id,
 						'NAME' => $value['name'],
 						'WIDTH' => floor(100 / (float)$CONFIG_DOWNLOAD['nbr_column']),
-						'SRC' => $value['icon'],
+						'SRC' => ($value['icon'] == 'download.png' || $value['icon'] == 'download_mini.png' ? PATH_TO_ROOT . '/download/' . $value['icon'] : $value['icon']),
 						'IMG_NAME' => addslashes($value['name']),
 						'NUM_FILES' => sprintf(((int)$value['num_files'] > 1 ? $DOWNLOAD_LANG['num_files_plural'] : $DOWNLOAD_LANG['num_files_singular']), (int)$value['num_files']),
 						'U_CAT' => url(PATH_TO_ROOT . '/download/download.php?cat=' . $id, 'category-' . $id . '+' . Url::encode_rewrite($value['name']) . '.php'),

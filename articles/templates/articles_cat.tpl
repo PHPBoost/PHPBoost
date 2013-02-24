@@ -11,7 +11,7 @@
 <div class="module_actions">
 	# IF IS_ADMIN #
 	<a href="{U_EDIT}" title="{L_EDIT}" class="img_link">
-		<img class="valign_middle" src="../templates/{THEME}/images/{LANG}/edit.png" alt=""/>
+		<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt=""/>
 	</a>
 	# ENDIF #
 	# IF C_ADD #
@@ -35,7 +35,7 @@
 	<div class="module_top">
 		<div class="module_top_title">
 			<a href="{PATH_TO_ROOT}/syndication/?url=/rss/articles/{IDCAT}" title="Rss" class="img_link">
-				<img class="valign_middle" src="../templates/{THEME}/images/rss.png" alt="Rss" title="Rss" />
+				<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/rss.png" alt="Rss" title="Rss" />
 			</a>
 			{L_CAT_NAME}
 		</div>
@@ -45,13 +45,13 @@
 			# IF C_ARTICLES_CAT #
 			<p style="text-align:center;" class="text_strong">
 				{L_CATEGORIES}
-				# IF C_MODERATE # <a href="{PATH_TO_ROOT}/articles/admin_articles_cat.php"><img class="valign_middle" src="../templates/{THEME}/images/{LANG}/edit.png" alt="" /></a> # ENDIF #
+				# IF C_MODERATE # <a href="{PATH_TO_ROOT}/articles/admin_articles_cat.php"><img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="" /></a> # ENDIF #
 			</p>
 			<hr style="margin-bottom:20px;" />
 			# START cat_list #
 			<div style="float:left;text-align:center;width:{COLUMN_WIDTH_CAT}%;margin-bottom:20px;">
 				{cat_list.ICON_CAT}
-				<a href="../articles/articles{cat_list.U_CAT}">{cat_list.CAT}</a> {cat_list.EDIT}
+				<a href="{PATH_TO_ROOT}/articles/articles{cat_list.U_CAT}">{cat_list.CAT}</a> {cat_list.EDIT}
 				<br />
 				<span class="text_small">{cat_list.DESC}</span> 
 				<br />
@@ -98,13 +98,13 @@
 					<div class="block_contents">
 						<div style="float:left;width:70%">
 							<p style="margin-bottom:10px">
-								<a href="../articles/articles{articles_invisible.U_ARTICLES_LINK}" class="big_link">{articles_invisible.NAME}</a>
+								<a href="{PATH_TO_ROOT}/articles/articles{articles_invisible.U_ARTICLES_LINK}" class="big_link">{articles_invisible.NAME}</a>
 								# IF C_MODERATE #
 									<a href="{articles_invisible.U_ADMIN_EDIT_ARTICLES}">
-										<img class="valign_middle" src="../templates/{THEME}/images/{LANG}/edit.png" alt="" />
+										<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="" />
 									</a>
 									<a href="{articles_invisible.U_ADMIN_DELETE_ARTICLES}" onclick="return Confirm_del_article();">
-										<img class="valign_middle" src="../templates/{THEME}/images/{LANG}/delete.png" alt="" />
+										<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="" />
 									</a>
 								# ENDIF #
 							</p>
@@ -116,7 +116,7 @@
 								<br />
 								{L_VIEW} : {articles_invisible.COMPT}
 								<br />
-								{L_COM} : <a href="../articles/articles{articles_invisible.U_ARTICLES_LINK_COM}">{articles_invisible.COM} </a>
+								{L_COM} : <a href="{PATH_TO_ROOT}/articles/articles{articles_invisible.U_ARTICLES_LINK_COM}">{articles_invisible.COM} </a>
 								<br />
 								{L_NOTE} {articles_invisible.NOTE}
 								<br />
@@ -125,7 +125,7 @@
 						</div>
 						<div class="float:right;">	
 							<div style="text-align:right;margin-top:15px;">								
-								<a href="../articles/articles{articles_invisible.U_ARTICLES_LINK}">
+								<a href="{PATH_TO_ROOT}/articles/articles{articles_invisible.U_ARTICLES_LINK}">
 									{articles_invisible.ICON}
 								</a>	
 							</div>
@@ -141,13 +141,13 @@
 						<div class="block_contents">
 							<div style="float:left;width:70%">
 								<p style="margin-bottom:10px">
-									<a href="../articles/articles{articles.U_ARTICLES_LINK}" class="big_link">{articles.NAME}</a>
+									<a href="{PATH_TO_ROOT}/articles/articles{articles.U_ARTICLES_LINK}" class="big_link">{articles.NAME}</a>
 									# IF C_MODERATE #
 										<a href="{articles.U_ADMIN_EDIT_ARTICLES}">
-											<img class="valign_middle" src="../templates/{THEME}/images/{LANG}/edit.png" alt="" />
+											<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="" />
 										</a>
 										<a href="{articles.U_ADMIN_DELETE_ARTICLES}" onclick="return Confirm_del_article();">
-											<img class="valign_middle" src="../templates/{THEME}/images/{LANG}/delete.png" alt="" />
+											<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="" />
 										</a>
 									# ENDIF #
 								</p>
@@ -159,7 +159,7 @@
 									<br />
 									{L_VIEW} : {articles.COMPT}
 									<br />
-									{L_COM} : <a href="../articles/articles{articles.U_ARTICLES_LINK_COM}">{articles.COM} </a>
+									{L_COM} : <a href="{PATH_TO_ROOT}/articles/articles{articles.U_ARTICLES_LINK_COM}">{articles.COM} </a>
 									<br />
 									{L_NOTE} {articles.NOTE}
 									<br />
@@ -168,7 +168,7 @@
 							</div>
 							<div class="float:right;">	
 								<div style="text-align:right;margin-top:15px;">								
-									<a href="../articles/articles{articles.U_ARTICLES_LINK}">
+									<a href="{PATH_TO_ROOT}/articles/articles{articles.U_ARTICLES_LINK}">
 										{articles.ICON}
 									</a>	
 								</div>
@@ -189,6 +189,6 @@
 	<div class="module_bottom_l"></div>		
 	<div class="module_bottom_r"></div>
 	<div class="module_bottom text_strong">
-		<a href="../articles/articles.php{SID}">{L_ARTICLES_INDEX}</a> &raquo; {U_ARTICLES_CAT_LINKS} {EDIT} {ADD_ARTICLES}
+		<a href="{PATH_TO_ROOT}/articles/articles.php{SID}">{L_ARTICLES_INDEX}</a> &raquo; {U_ARTICLES_CAT_LINKS} {EDIT} {ADD_ARTICLES}
 	</div>
 </div>
