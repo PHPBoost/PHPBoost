@@ -182,7 +182,7 @@ if ($contribution_id > 0)
 			'C_CONTRIBUTION_FIXED' => true,
 			'FIXER' => $Sql->query("SELECT login FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $contribution->get_fixer_id() . "'", __LINE__, __FILE__),
 			'FIXING_DATE' => $contribution_fixing_date->format(DATE_FORMAT_SHORT),
-			'U_FIXER_PROFILE' =>UserUrlBuilder::profile($contribution->get_poster_id())->absolute()
+			'U_FIXER_PROFILE' => UserUrlBuilder::profile($contribution->get_fixer_id())->absolute()
 		));
 	
 	$template->put_all(array(
@@ -272,7 +272,7 @@ else
 					'POSTER' => $this_contribution->get_poster_login(),
 					'FIXER' => $this_contribution->get_fixer_login(),
 					'ACTIONS' => '',
-					'U_FIXER_PROFILE' => UserUrlBuilder::profile($this_contribution->get_poster_id())->absolute(),
+					'U_FIXER_PROFILE' => UserUrlBuilder::profile($this_contribution->get_fixer_id())->absolute(),
 					'U_POSTER_PROFILE' => UserUrlBuilder::profile($this_contribution->get_poster_id())->absolute(),
 					'U_CONSULT' => PATH_TO_ROOT . '/user/' . url('contribution_panel.php?id=' . $this_contribution->get_id()),
 					'C_FIXED' => $this_contribution->get_status() == Event::EVENT_STATUS_PROCESSED,
