@@ -207,7 +207,7 @@ class Application
         	return false;
         }
         
-        $phpboost_version = GeneralConfig::load()->get_phpboost_major_version();
+        $phpboost_version = Environment::get_phpboost_version();
         
 		return version_compare($current_version, $this->get_version(), '<') > 0 &&
 		(($phpboost_version >= $this->compatibility_min) && ($this->compatibility_max == null ||
