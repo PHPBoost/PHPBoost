@@ -107,7 +107,7 @@ class NewsDisplayCategoryController extends ModuleController
 		foreach ($categories as $id => $category)
 		{
 			if ($id != Category::ROOT_CATEGORY)
-				$response->add_breadcrumb_link($category->get_name(), NewsUrlBuilder::display_category($category->get_rewrited_name()));
+				$response->add_breadcrumb_link($category->get_name(), NewsUrlBuilder::display_category($id, $category->get_rewrited_name()));
 		}
 	
 		return $response->display($this->tpl);
