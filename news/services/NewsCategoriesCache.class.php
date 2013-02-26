@@ -1,11 +1,10 @@
 <?php
 /*##################################################
- *                               admin_news_menu.php
+ *                        NewsCategoriesCache.class.php
  *                            -------------------
- *   begin               	: August 11, 2009
- *   copyright           	: (C) 2009 Geoffrey ROGUELON
- *   email               	: liaght@gmail.com
- *
+ *   begin                : February 13, 2013
+ *   copyright            : (C) 2013 Kévin MASSY
+ *   email                : kevin.massy@phpboost.com
  *
  *
  ###################################################
@@ -26,18 +25,28 @@
  *
  ###################################################*/
 
-if (defined('PHPBOOST') !== true) exit;
-
-$tpl_menu = new FileTemplate('news/admin_news_menu.tpl');
-
-$tpl_menu->Assign_vars(array(
-	'L_NEWS_MANAGEMENT' => $NEWS_LANG['news_management'],
-	'L_ADD_NEWS' => $NEWS_LANG['add_news'],
-	'L_CONFIG_NEWS' => $NEWS_LANG['configuration_news'],
-	'L_CAT_NEWS' => $NEWS_LANG['category_news'],
-	'L_ADD_CAT' => $NEWS_LANG['add_category']
-));
-
-$admin_menu = $tpl_menu->render();
-
+class NewsCategoriesCache extends CategoriesCache
+{
+	public function get_table_name()
+	{
+		return NewsSetup::$news_cats_table;
+	}
+	
+	public function get_category_class()
+	{
+		return CategoriesManager::RICH_CATEGORY_CLASS;
+	}
+	
+	public function get_module_identifier()
+	{
+		return 'news';
+	}
+	
+	public function get_root_category()
+	{
+		$root = new RootCategory();
+		$root->set_authorizations(NewsConfig::load()->get_authorizations());
+		return $root;
+	}
+}
 ?>
