@@ -5,8 +5,8 @@
 		<img src="/trunk/templates/base/images/form/url.png" alt="plus" class="valign_middle" style="cursor:move"> 
 	</div>
 	<div style="float:right;">
-		<img src="/trunk/templates/base/images/french/edit.png" alt="Plus de détails" class="valign_middle">
-		<img src="/trunk/templates/base/images/french/delete.png" alt="Supprimer" class="valign_middle">
+		<a href="{U_EDIT}"><img src="/trunk/templates/base/images/french/edit.png" alt="Plus de détails" class="valign_middle"></a>
+		<a href="{U_DELETE}"></a><img src="/trunk/templates/base/images/french/delete.png" alt="Supprimer" class="valign_middle"></a>
 	</div>
 	<div class="spacer"></div>
 	
