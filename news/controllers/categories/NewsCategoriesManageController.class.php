@@ -44,7 +44,7 @@ class NewsCategoriesManageController extends AbstractCategoriesManageController
 	
 	protected function get_delete_category_url($id)
 	{
-		NewsUrlBuilder::delete_category($id);
+		return NewsUrlBuilder::delete_category($id);
 	}
 }
 ?>
