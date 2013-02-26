@@ -51,7 +51,7 @@ class NewsExtensionPointProvider extends ExtensionPointProvider
 	
 	public function sitemap()
 	{
-		return NewsService::get_categories_manager()->get_sitemap_categories_module();
+		return new NewsSitemapExtensionPoint();
 	}
 }
 ?>

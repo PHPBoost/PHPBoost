@@ -1,10 +1,10 @@
 <?php
 /*##################################################
- *                            dispatcher.php
+ *                      	AjaxImagePreviewController.class.php
  *                            -------------------
- *   begin                : May 8, 2010
- *   copyright            : (C) 2010 Benoit Sautel
- *   email                : ben.popeye@phpboost.com
+ *   begin                : June 25, 2012
+ *   copyright            : (C) 2012 Kevin MASSY
+ *   email                : kevin.massy@phpboost.com
  *
  *
  ###################################################
@@ -25,16 +25,15 @@
  *
  ###################################################*/
 
-define('PATH_TO_ROOT', '../../..');
-
-require_once PATH_TO_ROOT . '/kernel/init.php';
-
-$url_controller_mappers = array(
-	//new UrlControllerMapper('AjaxCommentsNotationController', '`^/comments/notation/?$`'),
-	new UrlControllerMapper('AjaxCommentsDisplayController', '`^/comments/display/?$`'),
-	new UrlControllerMapper('AjaxUserAutoCompleteController','`^/users_autocomplete/?$`'),
-	new UrlControllerMapper('AjaxImagePreviewController', '`^/image/preview/?$`'),
-);
-
-DispatchManager::dispatch($url_controller_mappers);
+class AjaxImagePreviewController extends AbstractController
+{
+	public function execute(HTTPRequestCustom $request)
+	{
+		$image = $request->get_string('image', '');
+		
+		$object = array('url' => Url::to_rel($image));
+		
+		return new JSONResponse($object);
+	}
+}
 ?>

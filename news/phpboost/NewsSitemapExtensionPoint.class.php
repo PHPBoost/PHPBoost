@@ -2,9 +2,9 @@
 /*##################################################
  *                     NewsSitemapExtensionPoint.class.php
  *                            -------------------
- *   begin                : June 13, 2010
- *   copyright            : (C) 2010 Benoit Sautel
- *   email                : ben.popeye@phpboost.com
+ *   begin                : February 26, 2012
+ *   copyright            : (C) 2013 Kévin MASSY
+ *   email                : kevin.massy@phpboost.com
  *
  *
  ###################################################
@@ -25,83 +25,16 @@
  *
  ###################################################*/
 
-class NewsSitemapExtensionPoint implements SitemapExtensionPoint
+class NewsSitemapExtensionPoint extends SitemapCategoriesModule
 {
-	public function get_public_sitemap()
+	public function __construct()
 	{
-		return $this->get_module_map(Sitemap::AUTH_PUBLIC);
-	}
-
-	public function get_user_sitemap()
-	{
-		return $this->get_module_map(Sitemap::AUTH_USER);
-	}
-
-	private function get_module_map($auth_mode)
-	{
-		global $NEWS_CAT, $NEWS_LANG, $LANG, $User, $NEWS_CONFIG, $Cache;
-
-		require_once PATH_TO_ROOT . '/news/news_begin.php';
-
-		$news_link = new SitemapLink($NEWS_LANG['news'], new Url('/news/news.php'), Sitemap::FREQ_DAILY, Sitemap::PRIORITY_MAX);
-
-		$module_map = new ModuleMap($news_link, 'news');
-
-		$id_cat = 0;
-		$keys = array_keys($NEWS_CAT);
-		$num_cats = count($NEWS_CAT);
-		$properties = array();
-		for ($j = 0; $j < $num_cats; $j++)
-		{
-			$id = $keys[$j];
-			$properties = $NEWS_CAT[$id];
-
-			if ($auth_mode == Sitemap::AUTH_PUBLIC)
-			{
-				$this_auth = is_array($properties['auth']) ? Authorizations::check_auth(RANK_TYPE, User::VISITOR_LEVEL, $properties['auth'], AUTH_NEWS_READ) : Authorizations::check_auth(RANK_TYPE, User::VISITOR_LEVEL, $NEWS_CONFIG['global_auth'], AUTH_NEWS_READ);
-			}
-			else
-			{
-				$this_auth = is_array($properties['auth']) ? $User->check_auth($properties['auth'], AUTH_NEWS_READ) : $User->check_auth($NEWS_CONFIG['global_auth'], AUTH_NEWS_READ);
-			}
-
-			if ($this_auth && $id != 0 && $properties['visible'] && $properties['id_parent'] == $id_cat)
-			{
-				$module_map->add($this->create_module_map_sections($id, $auth_mode));
-			}
-		}
-
-		return $module_map;
+		parent::__construct(NewsService::get_categories_manager());
 	}
 	
-	private function create_module_map_sections($id_cat, $auth_mode)
+	protected function get_category_url($id, $rewrited_name)
 	{
-		global $NEWS_CAT, $LANG, $User, $NEWS_CONFIG;
-		
-		$this_category = new SitemapLink($NEWS_CAT[$id_cat]['name'], new Url('/news/news' . url('.php?cat='.$id_cat, '-' . $id_cat . '+' . Url::encode_rewrite($NEWS_CAT[$id_cat]['name']) . '.php')));
-
-		$category = new SitemapSection($this_category);
-		
-		$i = 0;
-		
-		$keys = array_keys($NEWS_CAT);
-		$num_cats = count($NEWS_CAT);
-		$properties = array();
-		for ($j = 0; $j < $num_cats; $j++)
-		{
-			$id = $keys[$j];
-			$properties = $NEWS_CAT[$id];
-			if ($id != 0 && $properties['id_parent'] == $id_cat)
-			{
-				$category->add($this->create_module_map_sections($id, $auth_mode));
-				$i++;
-			}
-		}
-		
-		if ($i == 0	)
-			$category = $this_category;
-		
-		return $category;
+		return NewsUrlBuilder::display_category($id, $rewrited_name);
 	}
 }
 ?>

@@ -54,9 +54,9 @@ class NewsUrlBuilder
 		return DispatchManager::get_url(self::$dispatcher, '/' . $rewrited_name_category . '/' . $id_news . '/' .$rewrited_title . '/');
 	}
 	
-	public static function display_category($rewrited_name)
+	public static function display_category($id, $rewrited_name)
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/' . $rewrited_name .'/');
+		return DispatchManager::get_url(self::$dispatcher, '/' . $id . '-' . $rewrited_name .'/');
 	}
 	
 	public static function display_tag($rewrited_name)
