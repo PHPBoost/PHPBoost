@@ -27,8 +27,10 @@
 
 class NewsSetup extends DefaultModuleSetup
 {
-	private static $news_table;
-	private static $news_cats_table;
+	public static $news_table;
+	public static $news_cats_table;
+	public static $news_keywords_table;
+	public static $news_keywords_relation_table;
 
 	/**
 	 * @var string[string] localized messages
@@ -38,7 +40,9 @@ class NewsSetup extends DefaultModuleSetup
 	public static function __static()
 	{
 		self::$news_table = PREFIX . 'news';
-		self::$news_cats_table = PREFIX . 'news_cat';
+		self::$news_cats_table = PREFIX . 'news_cats';
+		self::$news_keywords_table = PREFIX . 'news_keywords';
+		self::$news_keywords_relation_table = PREFIX . 'news_keywords_relation';
 	}
 
 	public function install()
@@ -51,65 +55,73 @@ class NewsSetup extends DefaultModuleSetup
 	public function uninstall()
 	{
 		$this->drop_tables();
+		ConfigManager::delete('news', 'categories');
 	}
 
 	private function drop_tables()
 	{
-		PersistenceContext::get_dbms_utils()->drop(array(self::$news_table, self::$news_cats_table));
+		PersistenceContext::get_dbms_utils()->drop(array(self::$news_table, self::$news_cats_table, self::$news_keywords_table, self::$news_keywords_relation_table));
 	}
 
 	private function create_tables()
 	{
 		$this->create_news_table();
 		$this->create_news_cats_table();
+		$this->create_news_keywords_table();
+		$this->create_news_keywords_relation_table();
 	}
 
 	private function create_news_table()
 	{
 		$fields = array(
 			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
-			'idcat' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'title' => array('type' => 'string', 'length' => 100, 'notnull' => 1, 'default' => "''"),
+			'id_category' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
+			'name' => array('type' => 'string', 'length' => 100, 'notnull' => 1, 'default' => "''"),
+			'rewrited_name' => array('type' => 'string', 'length' => 250, 'default' => "''"),
 			'contents' => array('type' => 'text', 'length' => 65000),
-			'extend_contents' => array('type' => 'text', 'length' => 65000),
-			'timestamp' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'visible' => array('type' => 'boolean', 'notnull' => 1, 'notnull' => 1, 'default' => 0),
-			'start' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'end' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'img' => array('type' => 'string', 'length' => 255, 'notnull' => 1),
-			'alt' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
-			'user_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'compt' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
+			'short_contents' => array('type' => 'text', 'length' => 65000),
+			'creation_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
+			'approbation_type' => array('type' => 'boolean', 'notnull' => 1, 'notnull' => 1, 'default' => 0),
+			'start_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
+			'end_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
+			'picture_url' => array('type' => 'string', 'length' => 255, 'notnull' => 1),
+			'author_user_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'sources' => array('type' => 'text', 'length' => 65000),
 		);
 		$options = array(
 			'primary' => array('id'),
 			'indexes' => array(
-				'idcat' => array('type' => 'key', 'fields' => 'idcat'),
-				'title' => array('type' => 'fulltext', 'fields' => 'title'),
+				'id_category' => array('type' => 'key', 'fields' => 'id_category'),
+				'title' => array('type' => 'fulltext', 'fields' => 'name'),
 				'contents' => array('type' => 'fulltext', 'fields' => 'contents'),
-				'extend_contents' => array('type' => 'fulltext', 'fields' => 'extend_contents')
+				'short_contents' => array('type' => 'fulltext', 'fields' => 'short_contents')
 		));
 		PersistenceContext::get_dbms_utils()->create_table(self::$news_table, $fields, $options);
 	}
 
 	private function create_news_cats_table()
 	{
+		RichCategory::create_categories_table(self::$news_cats_table);
+	}
+	
+	private function create_news_keywords_table()
+	{
 		$fields = array(
 			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
-			'id_parent' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'c_order' => array('type' => 'integer', 'length' => 11, 'unsigned' => 1, 'notnull' => 1, 'default' => 0),
-			'auth' => array('type' => 'text', 'length' => 65000),
-			'name' => array('type' => 'string', 'length' => 255, 'notnull' => 1),
-			'visible' => array('type' => 'boolean', 'notnull' => 1, 'default' => 0),
-			'description' => array('type' => 'text', 'length' => 65000),
-			'image' => array('type' => 'string', 'length' => 255, 'notnull' => 1)
+			'name' => array('type' => 'string', 'length' => 100, 'notnull' => 1, 'default' => "''"),
+			'rewrited_name' => array('type' => 'string', 'length' => 250, 'default' => "''"),
 		);
-
-		$options = array(
-			'primary' => array('id')
+		$options = array('primary' => array('id'));
+		PersistenceContext::get_dbms_utils()->create_table(self::$news_keywords_table, $fields, $options);
+	}
+	
+	private function create_news_keywords_relation_table()
+	{
+		$fields = array(
+			'id_news' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
+			'id_keyword' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 		);
-		PersistenceContext::get_dbms_utils()->create_table(self::$news_cats_table, $fields, $options);
+		PersistenceContext::get_dbms_utils()->create_table(self::$news_keywords_relation_table, $fields);
 	}
 	
 	private function insert_data()
@@ -126,8 +138,8 @@ class NewsSetup extends DefaultModuleSetup
 			'id_parent' => 0,
 			'c_order' => 1,
 			'auth' => '',
+			'rewrited_name' => Url::encode_rewrite($this->messages['cat.name']),
 			'name' => $this->messages['cat.name'],
-			'visible' => (int)true,
 			'description' => $this->messages['cat.description'],
 			'image' => '/news/news.png'
 		));
@@ -137,18 +149,17 @@ class NewsSetup extends DefaultModuleSetup
 	{
 		PersistenceContext::get_querier()->insert(self::$news_table, array(
 			'id' => 1,
-			'idcat' => 1,
-			'title' => $this->messages['news.title'],
+			'id_category' => 1,
+			'name' => $this->messages['news.title'],
+			'rewrited_name' => Url::encode_rewrite($this->messages['news.title']),
 			'contents' => $this->messages['news.content'],
-			'extend_contents' => '',
-			'timestamp' => time(),
-			'visible' => (int)true,
-			'start' => 0,
-			'end' => 0,
-			'img' => '',
-			'alt' => '',
-			'user_id' => 1,
-			'compt' => 0,
+			'short_contents' => '',
+			'creation_date' => time(),
+			'approbation_type' => News::APPROVAL_NOW,
+			'start_date' => 0,
+			'end_date' => 0,
+			'picture_url' => '',
+			'author_user_id' => 1,
 			'sources' => serialize(array())
 		));
 	}

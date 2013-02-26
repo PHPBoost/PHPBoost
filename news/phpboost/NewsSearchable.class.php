@@ -2,8 +2,8 @@
 /*##################################################
  *                              NewsSearchable.class.php
  *                            -------------------
- *   begin                : May, 29 2010
- *   copyright            : (C) 2010 Kevin MASSY
+ *   begin                : February 22, 2012
+ *   copyright            : (C) 2013 Kévin MASSY
  *   email                : kevin.massy@phpboost.com
  *
  *
@@ -38,26 +38,30 @@ class NewsSearchable extends AbstractSearchableExtensionPoint
 	{
 		$now = new Date(DATE_NOW, TIMEZONE_AUTO);
 
-		$news_cat = new NewsCats();
-
-		// Build array with the children categories.
-		$array_cat = array();
-		$news_cat->build_children_id_list(0, $array_cat, RECURSIVE_EXPLORATION, DO_NOT_ADD_THIS_CATEGORY_IN_LIST, AUTH_NEWS_READ);
-		$where = !empty($array_cat) ? " AND idcat IN(" . implode(", ", $array_cat) . ")" : " AND idcat = '0'";
+		$search_category_children_options = new SearchCategoryChildrensOptions();
+		$search_category_children_options->add_authorisations_bits(Category::READ_AUTHORIZATIONS);
+		$categories = NewsService::get_categories_manager()->get_childrens(Category::ROOT_CATEGORY, $search_category_children_options);
+		$ids_categories = array_keys($categories);
+		
+		$where = !empty($ids_categories) ? " AND id_category IN(" . implode(", ", $ids_categories) . ")" : " AND id_category = '0'";
 
 		$weight = isset($args['weight']) && is_numeric($args['weight']) ? $args['weight'] : 1;
 
 		return "SELECT " . $args['id_search'] . " AS id_search,
             n.id AS id_content,
-            n.title AS title,
-            ( 2 * FT_SEARCH_RELEVANCE(n.title, '" . $args['search'] . "') + (FT_SEARCH_RELEVANCE(n.contents, '" . $args['search'] . "') +
-            FT_SEARCH_RELEVANCE(n.extend_contents, '" . $args['search'] . "')) / 2 ) / 3 * " . $weight . " AS relevance, "
+            n.name AS title,
+            n.rewrited_name,
+            cat.rewrited_name,
+            ( 2 * FT_SEARCH_RELEVANCE(n.name, '" . $args['search'] . "') + (FT_SEARCH_RELEVANCE(n.contents, '" . $args['search'] . "') +
+            FT_SEARCH_RELEVANCE(n.short_contents, '" . $args['search'] . "')) / 2 ) / 3 * " . $weight . " AS relevance, "
             . $this->sql_querier->concat("'" . PATH_TO_ROOT . "/news/news.php?id='","n.id") . " AS link
-            FROM " . DB_TABLE_NEWS . " n
-            WHERE ( FT_SEARCH(n.title, '" . $args['search'] . "') OR FT_SEARCH(n.contents, '" . $args['search'] . "') OR
-            FT_SEARCH_RELEVANCE(n.extend_contents, '" . $args['search'] . "') )
-                AND n.start <= '" . $now->get_timestamp() . "' AND n.visible = 1" . $where . "
-            ORDER BY relevance DESC " . $this->sql_querier->limit(0, NEWS_MAX_SEARCH_RESULTS);
+            FROM " . NewsSetup::$news_table . " n
+            LEFT JOIN ". NewsSetup::$news_cats_table ." cat ON n.id_category = cat.id
+            WHERE ( FT_SEARCH(n.name, '" . $args['search'] . "') OR FT_SEARCH(n.contents, '" . $args['search'] . "') OR
+            FT_SEARCH_RELEVANCE(n.short_contents, '" . $args['search'] . "') )
+                AND n.approbation_type = 1 OR (n.approbation_type = 2 AND n.start_date < '" . $now->get_timestamp() . "' AND (end_date > '" . $now->get_timestamp() . "' OR end_date = 0))
+			" . $where . "
+            ORDER BY relevance DESC " . $this->sql_querier->limit(0, 100);
 	}
 }
 ?>
