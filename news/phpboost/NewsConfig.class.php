@@ -33,6 +33,9 @@ class NewsConfig extends AbstractConfigData
 	const NUMBER_NEWS_PER_PAGE = 'number_news_per_page';
 	const NUMBER_COLUMNS_DISPLAY_NEWS = 'number_columns_display_news';
 	
+	const DISPLAY_CONDENSED_ENABLED = 'display_condensed_enabled';
+	const NUMBER_CHARACTER_TO_CUT = 'number_character_to_cut';
+	
 	const COMMENTS_ENABLED = 'comments_enabled';
 	const NEWS_SUGGESTIONS_ENABLED = 'news_suggestions_enabled';
 	
@@ -65,6 +68,26 @@ class NewsConfig extends AbstractConfigData
 	{
 		$this->set_property(self::NUMBER_COLUMNS_DISPLAY_NEWS, $number_columns_display_news);
 	}
+	
+	public function get_display_condensed_enabled()
+	{
+		return $this->get_property(self::DISPLAY_CONDENSED_ENABLED);
+	}
+
+	public function set_display_condensed_enabled($display_condensed_enabled)
+	{
+		$this->set_property(self::DISPLAY_CONDENSED_ENABLED, $display_condensed_enabled);
+	}
+	
+	public function get_number_character_to_cut()
+	{
+		return $this->get_property(self::NUMBER_CHARACTER_TO_CUT);
+	}
+
+	public function set_number_character_to_cut($number)
+	{
+		$this->set_property(self::NUMBER_CHARACTER_TO_CUT, $number);
+	}
 
 	public function get_comments_enabled()
 	{
@@ -75,7 +98,7 @@ class NewsConfig extends AbstractConfigData
 	{
 		$this->set_property(self::COMMENTS_ENABLED, $comments_enabled);
 	}
-	
+		
 	public function get_news_suggestions_enabled()
 	{
 		return $this->get_property(self::NEWS_SUGGESTIONS_ENABLED);
@@ -144,6 +167,8 @@ class NewsConfig extends AbstractConfigData
 		return array(
 			self::NUMBER_NEWS_PER_PAGE => 10,
 			self::NUMBER_COLUMNS_DISPLAY_NEWS => 1,
+			self::DISPLAY_CONDENSED_ENABLED => true,
+			self::NUMBER_CHARACTER_TO_CUT => 200,
 			self::COMMENTS_ENABLED => true,
 			self::NEWS_SUGGESTIONS_ENABLED => true,
 			self::EDITO_ENABLED => true,

@@ -29,7 +29,7 @@ class NewsCategoriesManageController extends AbstractCategoriesManageController
 {
 	protected function generate_response(View $view)
 	{
-		return new AdminNewsDisplayResponse($view, 'manage');
+		return new AdminNewsDisplayResponse($view, LangLoader::get_message('admin.categories.manage', 'common', 'news'));
 	}
 	
 	protected function get_categories_manager()

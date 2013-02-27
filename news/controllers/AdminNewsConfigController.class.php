@@ -83,6 +83,20 @@ class AdminNewsConfigController extends AdminModuleController
 			array('size' => 6), array(new FormFieldConstraintRegex('`^[0-9]+$`i'))
 		));
 		
+		$fieldset->add_field(new FormFieldCheckbox('display_condensed', $this->lang['admin.config.display_condensed'], $this->config->get_display_condensed_enabled(), array(
+		'events' => array('click' => '
+			if (HTMLForms.getField("display_condensed").getValue()) {
+				HTMLForms.getField("number_character_to_cut").enable();
+			} else { 
+				HTMLForms.getField("number_character_to_cut").disable();
+			}'
+		))));
+		
+		$fieldset->add_field(new FormFieldTextEditor('number_character_to_cut', $this->lang['admin.config.number_character_to_cut'], $this->config->get_number_character_to_cut(), 
+			array('hidden' => !$this->config->get_display_condensed_enabled(), 'size' => 6), 
+			array(new FormFieldConstraintRegex('`^[0-9]+$`i')
+		)));
+		
 		$fieldset->add_field(new FormFieldCheckbox('comments_enabled', $this->lang['admin.config.comments_enabled'], $this->config->get_comments_enabled()));
 		
 		$fieldset->add_field(new FormFieldCheckbox('news_suggestions_enabled', $this->lang['admin.config.news_suggestions_enabled'], $this->config->get_news_suggestions_enabled()));
@@ -127,6 +141,8 @@ class AdminNewsConfigController extends AdminModuleController
 	{
 		$this->config->set_number_news_per_page($this->form->get_value('number_news_per_page'));
 		$this->config->set_number_columns_display_news($this->form->get_value('number_columns_display_news'));
+		$this->config->set_display_condensed_enabled($this->form->get_value('display_condensed'));
+		$this->config->set_number_character_to_cut($this->form->get_value('number_character_to_cut'));
 		$this->config->set_comments_enabled($this->form->get_value('comments_enabled'));
 		$this->config->set_news_suggestions_enabled($this->form->get_value('news_suggestions_enabled'));
 		$this->config->set_display_type($this->form->get_value('display_type')->get_raw_value());

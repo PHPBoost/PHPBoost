@@ -29,7 +29,8 @@ class NewsCategoriesFormController extends AbstractRichCategoriesFormController
 {
 	protected function generate_response(View $view)
 	{
-		return new AdminNewsDisplayResponse($view, 'form');
+		$page_name = $this->get_id_category() == 0 ? LangLoader::get_message('admin.categories.add', 'common', 'news') : LangLoader::get_message('admin.categories.edit', 'common', 'news');
+		return new AdminNewsDisplayResponse($view, $page_name);
 	}
 	
 	protected function get_categories_manager()

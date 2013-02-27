@@ -38,7 +38,7 @@ $lang['news.form.category'] = 'Catégorie de la news';
 $lang['news.form.contents'] = 'Contenu';
 $lang['news.form.short_contents'] = 'Condensé de la news';
 $lang['news.form.short_contents.enabled'] = 'Personnaliser le condensé de la news';
-$lang['news.form.short_contents.enabled.description'] = 'Ou laisser PHPBoost couper la news à 200 caractères.';
+$lang['news.form.short_contents.enabled.description'] = 'Ou laisser PHPBoost couper la news à :number caractères.';
 $lang['news.form.approbation'] = 'Publication';
 $lang['news.form.approbation.not'] = 'Garder en brouillon';
 $lang['news.form.approbation.now'] = 'Publier maintenant';
@@ -52,10 +52,13 @@ $lang['news.form.keywords'] = 'Mots clés';
 $lang['news.form.keywords.description'] = 'Vous permet d\'ajouter des mots clés à votre news';
 $lang['news.form.picture'] = 'Image de la news';
 $lang['news.form.picture.preview'] = 'Preview de l\'image';
+$lang['news.form.sources'] = 'Sources de la news';
 
 $lang['admin.config'] = 'Configuration';
 $lang['admin.config.number_news_per_page'] = 'Nombre de news par page';
 $lang['admin.config.number_columns_display_news'] = 'Nombre de colonnes pour afficher les news';
+$lang['admin.config.display_condensed'] = 'Afficher le condensé de la news et non la news toute entière';
+$lang['admin.config.number_character_to_cut'] = 'Nombre de caractère pour couper la news';
 $lang['admin.config.comments_enabled'] = 'Activer les commentaires';
 $lang['admin.config.news_suggestions_enabled'] = 'Activer l\'affichage des suggestions';
 $lang['admin.config.display_type'] = 'Type d\'affichage des news';
@@ -71,6 +74,10 @@ $lang['admin.config.edito.enabled'] = 'Activer l\'édito';
 $lang['admin.config.edito.title'] = 'Titre de l\'édito';
 $lang['admin.config.edito.contents'] = 'Contenu de l\'édito';
 
+$lang['admin.categories.manage'] = 'Gérer les catégories';
+$lang['admin.categories.add'] = 'Ajouter une catégorie';
+$lang['admin.categories.edit'] = 'Modifier une catégorie';
+$lang['admin.categories.delete'] = 'Supprimer une catégorie';
 //Feed name
 $lang['feed.name'] = 'Actualités';
 ?>
