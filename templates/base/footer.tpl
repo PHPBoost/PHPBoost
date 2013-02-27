@@ -22,7 +22,7 @@
 		# IF C_DISPLAY_BENCH #
 		<span>
 			&nbsp;|&nbsp;		
-			{L_ACHIEVED} {BENCH}{L_UNIT_SECOND} - {REQ} {L_REQ}
+			{L_ACHIEVED} {BENCH}{L_UNIT_SECOND} - {REQ} {L_REQ} - {MEMORY_USED}
 		</span>	
 		# ENDIF #
 		# IF C_DISPLAY_AUTHOR_THEME #

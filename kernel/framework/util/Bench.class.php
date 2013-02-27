@@ -79,6 +79,16 @@ class Bench
 		$this->start = Bench::get_microtime();
 		$this->started = true;
 	}
+	
+	/**
+	 * @desc Returns the amount of memory, that's currently being allocated to PHP script.
+	 */
+	public function get_memory_php_used()
+	{
+		$size = memory_get_usage(true);
+	    $unit = array('B','KB','MB','GB','TB','PB');
+	    return @round($size/pow(1024,($i = floor(log($size,1024)))), 2) . ' ' . $unit[$i];
+	}
 
 	private function get_delta_duration()
 	{
