@@ -385,6 +385,7 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 				'BENCH' => AppContext::get_bench()->to_string(), //Fin du benchmark
 				'REQ' => PersistenceContext::get_querier()->get_executed_requests_count() +
 			PersistenceContext::get_sql()->get_executed_requests_number(),
+				'MEMORY_USED' => AppContext::get_bench()->get_memory_php_used(),
 				'L_UNIT_SECOND' => HOST,
 				'L_REQ' => self::$lang['sql_req'],
 				'L_ACHIEVED' => self::$lang['achieved'],

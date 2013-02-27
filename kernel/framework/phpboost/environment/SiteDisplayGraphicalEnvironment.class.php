@@ -294,6 +294,7 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 				'BENCH' => AppContext::get_bench()->to_string(),
 				'REQ' => PersistenceContext::get_querier()->get_executed_requests_count() +
 			PersistenceContext::get_sql()->get_executed_requests_number(),
+				'MEMORY_USED' => AppContext::get_bench()->get_memory_php_used(),
 				'L_REQ' => self::$main_lang['sql_req'],
 				'L_ACHIEVED' => self::$main_lang['achieved'],
 				'L_UNIT_SECOND' => self::$main_lang['unit_seconds_short']
