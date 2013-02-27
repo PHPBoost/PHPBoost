@@ -117,7 +117,7 @@ class GeneralConfig extends AbstractConfigData
 			self::SITE_KEYWORDS => '',
 			self::MODULE_HOME_PAGE => '',
 			self::OTHER_HOME_PAGE => '',
-			self::PHPBOOST_VERSION => '4.0',
+			self::PHPBOOST_VERSION => '4.1',
 			self::SITE_INSTALL_DATE => new Date(),
 			self::SITE_TIMEZONE => (int)date('I'),
 			self::ADMIN_UNLOCKING_KEY => ''
