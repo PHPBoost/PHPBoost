@@ -111,7 +111,12 @@ class NewsSetup extends DefaultModuleSetup
 			'name' => array('type' => 'string', 'length' => 100, 'notnull' => 1, 'default' => "''"),
 			'rewrited_name' => array('type' => 'string', 'length' => 250, 'default' => "''"),
 		);
-		$options = array('primary' => array('id'));
+		$options = array(
+			'primary' => array('id'),
+			'indexes' => array(
+				'name' => array('type' => 'unique', 'fields' => 'name',
+				'rewrited_name' => array('type' => 'unique', 'fields' => 'rewrited_name')
+		)));
 		PersistenceContext::get_dbms_utils()->create_table(self::$news_keywords_table, $fields, $options);
 	}
 	

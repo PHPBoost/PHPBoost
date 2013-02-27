@@ -100,7 +100,7 @@ class NewsFormController extends ModuleController
 		$fieldset->add_field(new FormFieldRichTextEditor('contents', $this->lang['news.form.contents'], $this->get_news()->get_contents(), array('rows' => 15, 'required' => true)));
 		
 		$fieldset->add_field(new FormFieldCheckbox('enable_short_contents', $this->lang['news.form.short_contents.enabled'], $this->get_news()->get_short_contents_enabled(), 
-			array('description' => $this->lang['news.form.short_contents.enabled.description'], 'events' => array('click' => '
+			array('description' => StringVars::replace_vars($this->lang['news.form.short_contents.enabled.description'], array('number' => NewsConfig::load()->get_number_character_to_cut())), 'events' => array('click' => '
 			if (HTMLForms.getField("enable_short_contents").getValue()) {
 				HTMLForms.getField("short_contents").enable();
 			} else { 
@@ -125,6 +125,9 @@ class NewsFormController extends ModuleController
 		$other_fieldset->add_field(new FormFieldFree('preview_picture', $this->lang['news.form.picture.preview'], '<img id="preview_picture" src="'. $this->get_news()->get_picture()->rel() .'" alt="" style="vertical-align:top" />'));
 		
 		$other_fieldset->add_field(new FormFieldMultipleAutocompleter('keywords', $this->lang['news.form.keywords'], array(), array('description' => $this->lang['news.form.keywords.description'], 'file' => TPL_PATH_TO_ROOT . '/news/ajax/tag/')));
+		
+		$other_fieldset->add_field(new NewsFormFieldSelectSources('sources', $this->lang['news.form.sources'], $this->get_news()->get_sources()));
+		
 		if (!$this->is_contributor_member())
 		{
 			$publication_fieldset = new FormFieldsetHTML('publication', $this->lang['news.form.approbation']);
@@ -247,6 +250,8 @@ class NewsFormController extends ModuleController
 		if (!empty($picture))
 			$news->set_picture(new Url($picture));
 		
+		$news->set_sources($this->form->get_value('sources'));
+			
 		if ($this->is_contributor_member())
 		{
 			$news->set_rewrited_name(Url::encode_rewrite($news->get_name()));
@@ -282,14 +287,17 @@ class NewsFormController extends ModuleController
 		if ($news->get_id() === null)
 		{
 			$news->set_author_user_id(AppContext::get_current_user()->get_id());
-			NewsService::add($news);
+			$id_news = NewsService::add($news);
 		}
 		else
 		{
+			$id_news = $news->get_id();
 			NewsService::update($news);
 		}
 		
 		$this->contribution_actions($news);
+		
+		$this->put_keywords($id_news);
 		
 		Feed::clear_cache('news');
 	}
@@ -329,6 +337,18 @@ class NewsFormController extends ModuleController
 				ContributionService::save_contribution($news_contribution);
 			}
 		}
+	}
+	
+	private function put_keywords($id_news)
+	{
+		/*$keywords = $this->form->get_value('keywords');
+		
+		foreach ($keywords as $keyword)
+		{
+			$id_keyword = NewsKeywordsService::add($keyword);
+			NewsKeywordsService::put_relation($id_news, $id_keyword);
+		}
+		*/
 	}
 	
 	private function generate_response(View $tpl)
