@@ -9,6 +9,11 @@
 - Revoir la façon dont est stocké les inscrits aux groupes (actuellement c'est stocké dans la table member et groups, faire une table de jointure)
 - Changer de format de stockage des fuseaux horaires
 - Ajout de ReCaptcha
+- Amélioration du référencement :
+	- Modification de la balise description (elle présentera la description de la page ou du site sur la page d'accueil du site)
+	- Ajout des microdonnées : 
+		- Modification du système de notation
+		- Modification du système de commentaire
 
 [b]Menus :[/b]
 - Possibilité de désactiver l'affichage d'un lien dans les menus
@@ -42,6 +47,7 @@
 [*] [FEATURE] Refonte graphique
 [*] [FEATURE] Possibilité de personnaliser l'url d'une news
 [*] [FEATURE] Amélioration du référencement
+- Ajout des microdonnées pour améliorer le référencement
 
 [b]BugTracker[/b]
 [*] [FEATURE] Passage du module en MVC
@@ -61,3 +67,4 @@
 [*] [FEATURE] Passage du module en MVC
 [*] [FEATURE] Gestion des évènements sur plusieurs jours
 [*] [FEATURE] Mini-module
+- Ajout des microdonnées pour améliorer le référencement
