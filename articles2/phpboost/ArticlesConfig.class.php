@@ -2,8 +2,8 @@
 /*##################################################
  *		                   ArticlesConfig.class.php
  *                            -------------------
- *   begin                : October 15, 2011
- *   copyright            : (C) 2011 Patrick DUBEAU
+ *   begin                : February 27, 2013
+ *   copyright            : (C) 2013 Patrick DUBEAU
  *   email                : daaxwizeman@gmail.com
  *
  *
@@ -36,7 +36,7 @@ class ArticlesConfig extends AbstractConfigData
         const NOTATION_SCALE = 'notation_scale';
         
         const COMMENTS_ENABLED = 'comments_enable';
-        const AUTHOR_NAME_DISPLAYED_ENABLED = 'author_name_displayed_enabled';
+        const AUTHOR_NAME_DISPLAY_ENABLED = 'author_name_displayed_enabled';
         
         const AUTHORIZATIONS = 'authorizations';
 	
@@ -100,14 +100,14 @@ class ArticlesConfig extends AbstractConfigData
 		$this->set_property(self::COMMENTS_ENABLED, $comments_enabled);
 	}
         
-        public function get_author_name_displayed_enabled()
+        public function get_author_name_display_enabled()
 	{
-		return $this->get_property(self::AUTHOR_NAME_DISPLAYED_ENABLED);
+		return $this->get_property(self::AUTHOR_NAME_DISPLAY_ENABLED);
 	}
 
-	public function set_author_name_displayed_enabled($author_name_display_enabled)
+	public function set_author_name_display_enabled($author_name_display_enabled)
 	{
-		$this->set_property(self::AUTHOR_NAME_DISPLAYED_ENABLED, $author_name_display_enabled);
+		$this->set_property(self::AUTHOR_NAME_DISPLAY_ENABLED, $author_name_display_enabled);
 	}
         
         public function get_authorizations()
@@ -127,7 +127,7 @@ class ArticlesConfig extends AbstractConfigData
 			self::NUMBER_CATEGORIES_PER_PAGE => 10,
 			self::NUMBER_COLUMNS_DISPLAYED => 3,
                         self::COMMENTS_ENABLED => true,
-                        self::AUTHOR_NAME_DISPLAYED_ENABLED => true,
+                        self::AUTHOR_NAME_DISPLAY_ENABLED => true,
                         self::NOTATION_ENABLED => true,
 			self::NOTATION_SCALE => 5,
                         self::AUTHORIZATIONS => array()

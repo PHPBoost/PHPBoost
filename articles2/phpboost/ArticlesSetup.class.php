@@ -29,6 +29,8 @@ class ArticlesSetup extends DefaultModuleSetup
 {
 	public static $articles_table;
 	public static $articles_cats_table;
+        public static $articles_keywords_table;
+	public static $articles_keywords_relation_table;
         
         /**
 	 * @var string[string] localized messages
@@ -39,6 +41,8 @@ class ArticlesSetup extends DefaultModuleSetup
 	{
 		self::$articles_table = PREFIX . 'articles';
 		self::$articles_cats_table = PREFIX . 'articles_cats';
+                self::$articles_keywords_table = PREFIX . 'news_keywords';
+		self::$articles_keywords_relation_table = PREFIX . 'news_keywords_relation';
 	}
 
 	public function install()
@@ -56,13 +60,15 @@ class ArticlesSetup extends DefaultModuleSetup
 
 	private function drop_tables()
 	{
-		PersistenceContext::get_dbms_utils()->drop(array(self::$articles_table, self::$articles_cats_table));
+		PersistenceContext::get_dbms_utils()->drop(array(self::$articles_table, self::$articles_cats_table, self::$articles_keywords_table, self::$articles_keywords_relation_table));
 	}
 
 	private function create_tables()
 	{
 		$this->create_articles_table();
 		$this->create_articles_cats_table();
+                $this->create_articles_keywords_table();
+		$this->create_articles_keywords_relation_table();
 	}
 
 	private function create_articles_table()
@@ -81,9 +87,7 @@ class ArticlesSetup extends DefaultModuleSetup
 			'published' => array('type' => 'boolean', 'notnull' => 1, 'default' => 0),
 			'publishing_start_date' => array('type' => 'integer', 'length' => 11, 'default' => 0),
 			'publishing_end_date' => array('type' => 'integer', 'length' => 11, 'default' => 0),
-			'authorizations' => array('type' => 'text', 'length' => 65000),
 			'date_created' => array('type' => 'integer', 'length' => 11, 'default' => 0),
-			'date_modified' => array('type' => 'integer', 'length' => 11, 'default' => 0),
                         'sources' => array('type' => 'text', 'length' => 65000),
 		);
 		$options = array(
@@ -101,6 +105,26 @@ class ArticlesSetup extends DefaultModuleSetup
 	{
                 RichCategory::create_categories_table(self::$articles_cats_table);
 	}
+        
+        private function create_articles_keywords_table()
+	{
+		$fields = array(
+			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
+			'name' => array('type' => 'string', 'length' => 100, 'notnull' => 1, 'default' => "''"),
+			'rewrited_name' => array('type' => 'string', 'length' => 250, 'default' => "''"),
+		);
+		$options = array('primary' => array('id'));
+		PersistenceContext::get_dbms_utils()->create_table(self::$articles_keywords_table, $fields, $options);
+	}
+	
+	private function create_articles_keywords_relation_table()
+	{
+		$fields = array(
+			'id_articles' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
+			'id_keyword' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
+		);
+		PersistenceContext::get_dbms_utils()->create_table(self::$articles_keywords_relation_table, $fields);
+	}
 
 	private function insert_data()
 	{
@@ -112,16 +136,37 @@ class ArticlesSetup extends DefaultModuleSetup
         private function insert_articles_data()
         {
                 
-                /*
-                 *  @todo à faire
-                 */
+                PersistenceContext::get_querier()->insert(self::$articles_table, array(
+                        'id' => 1,
+			'id_category' => 1,
+			'picture_url' => '',
+			'title' => $this->messages['default.article.name'],
+			'rewrited_title' => Url::encode_rewrite($this->messages['default.article.name']),
+			'description' => $this->messages['default.article.description'],
+			'content' => $this->messages['default.article.contents'],
+			'number_view' => 0,
+			'author_user_id' => 1,
+			'author_name_visitor' => '',
+			'published' => Articles::PUBLISHED_NOW,
+			'publishing_start_date' => 0,
+			'publishing_end_date' => 0,
+			'date_created' => time(),
+                        'sources' => serialize(array())
+                ));
         }
         
         private function insert_articles_cats_data()
         {
-                /*
-                 *  @todo à faire
-                 */
+                PersistenceContext::get_querier()->insert(self::$articles_cats_table, array(
+                        'id' => 1,
+			'id_parent' => 0,
+			'c_order' => 1,
+			'auth' => '',
+			'rewrited_name' => Url::encode_rewrite($this->messages['default.category.name']),
+			'name' => $this->messages['default.category.name'],
+			'description' => $this->messages['default.category.description'],
+			'image' => '/articles/articles.png'
+                ));
         }
 }
 
