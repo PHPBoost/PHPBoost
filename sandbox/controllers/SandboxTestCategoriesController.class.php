@@ -48,17 +48,17 @@ class SandboxTestCategoriesController extends ModuleController
 		$fieldset->add_field($cat->get_select_categories_form_field('test', 'Choix catégorie sans autorisations particulières', '0', new SearchCategoryChildrensOptions()));
 		
 		$options = new SearchCategoryChildrensOptions();
-		$options->add_authorisations_bits(2);
+		$options->add_authorizations_bits(2);
 		$fieldset->add_field($cat->get_select_categories_form_field('test2', 'Choix catégorie avec autorisations contribution', '0', $options));
 		
 		$options = new SearchCategoryChildrensOptions();
-		$options->add_authorisations_bits(2);
-		$options->add_authorisations_bits(4);
+		$options->add_authorizations_bits(2);
+		$options->add_authorizations_bits(4);
 		$fieldset->add_field($cat->get_select_categories_form_field('test3', 'Choix catégorie avec autorisations écriture et contribution sans vérification des deux bits', '0', $options));
 		
 		$options = new SearchCategoryChildrensOptions();
-		$options->add_authorisations_bits(2);
-		$options->add_authorisations_bits(4);
+		$options->add_authorizations_bits(2);
+		$options->add_authorizations_bits(4);
 		$options->set_check_all_bits(true);
 		$fieldset->add_field($cat->get_select_categories_form_field('test4', 'Choix catégorie avec autorisations écriture et contribution et vérification des deux bits', '0', $options));
 		
@@ -71,8 +71,8 @@ class SandboxTestCategoriesController extends ModuleController
 		$fieldset->add_field($cat->get_select_categories_form_field('test6', 'Choix catégorie recherche recursive en partant de #4 sans l\'inclure', '4', $options));
 		
 		$options = new SearchCategoryChildrensOptions();
-		$options->add_authorisations_bits(2);
-		$options->add_authorisations_bits(4);
+		$options->add_authorizations_bits(2);
+		$options->add_authorizations_bits(4);
 		$options->set_check_all_bits(true);
 		$options->add_category_in_excluded_categories('0');
 		$options->set_excluded_categories_recursive(false);

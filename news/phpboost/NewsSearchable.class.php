@@ -39,7 +39,7 @@ class NewsSearchable extends AbstractSearchableExtensionPoint
 		$now = new Date(DATE_NOW, TIMEZONE_AUTO);
 
 		$search_category_children_options = new SearchCategoryChildrensOptions();
-		$search_category_children_options->add_authorisations_bits(Category::READ_AUTHORIZATIONS);
+		$search_category_children_options->add_authorizations_bits(Category::READ_AUTHORIZATIONS);
 		$categories = NewsService::get_categories_manager()->get_childrens(Category::ROOT_CATEGORY, $search_category_children_options);
 		$ids_categories = array_keys($categories);
 		

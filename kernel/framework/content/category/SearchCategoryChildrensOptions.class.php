@@ -32,25 +32,25 @@
  */
 class SearchCategoryChildrensOptions
 {
-	private $authorisations_bits = array();
+	private $authorizations_bits = array();
 	private $check_all_bits = false;
 	private $excluded_categories_ids = array();
 	private $excluded_categories_recursive = true;
 	private $enable_recursive_exploration = true;
 	
-	public function add_authorisations_bits($authorisations_bits)
+	public function add_authorizations_bits($authorizations_bits)
 	{
-		$this->authorisations_bits[] = $authorisations_bits;
+		$this->authorizations_bits[] = $authorizations_bits;
 	}
 	
-	public function get_authorisations_bits()
+	public function get_authorizations_bits()
 	{
-		return $this->authorisations_bits;
+		return $this->authorizations_bits;
 	}
 	
 	public function check_authorizations(Category $category)
 	{
-		$nbr_bits = count($this->authorisations_bits);
+		$nbr_bits = count($this->authorizations_bits);
 		if ($nbr_bits == 0)
 		{
 			return true;
@@ -58,7 +58,7 @@ class SearchCategoryChildrensOptions
 		else
 		{
 			$authorized_bits = array();
-			foreach ($this->authorisations_bits as $bit)
+			foreach ($this->authorizations_bits as $bit)
 			{
 				if ($category->check_auth($bit))
 					$authorized_bits[] = $bit;
