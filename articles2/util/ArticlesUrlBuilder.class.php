@@ -27,7 +27,7 @@
 
 class ArticlesUrlBuilder
 {
-	private static $dispatcher = '/articles2';
+	private static $dispatcher = '/articles';
 	
 	public static function articles_management($title = '')
 	{

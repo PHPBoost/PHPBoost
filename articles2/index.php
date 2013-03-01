@@ -30,7 +30,7 @@ define('PATH_TO_ROOT', '..');
 require_once PATH_TO_ROOT . '/kernel/init.php';
 
 $url_controller_mappers = array(
-	new UrlControllerMapper('ArticlesAdminConfigController', '`^/admin(?:/config)?/?$`'),
+	new UrlControllerMapper('AdminArticlesConfigController', '`^/admin(?:/config)?/?$`'),
 	new UrlControllerMapper('ArticlesAdminCategoriesManagementController', '`^/admin/categories(?:/management)?/?$`'),
 	new UrlControllerMapper('ArticlesAdminAddCategoryController', '`^/admin/categories/add?/?$`'),
 	new UrlControllerMapper('ArticlesAdminEditCategoryController', '`^/admin/categories/edit(?:/([a-z0-9-]+))?/?$`', array('rewrited_name')),

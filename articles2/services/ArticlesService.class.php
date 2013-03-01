@@ -27,19 +27,27 @@
 
 class ArticlesService
 {
-    public static function add(Article $article)
+        private static $db_querier;
+        private static $categories_manager;
+        
+        public static function __static()
+        {
+                self::$db_querier = PersistenceContext::get_querier();
+        }
+        
+        public static function add(Articles $article)
 	{
-		ArticlesDataBase::add($article);
+		
 	}
 	
-	public static function update(Article $article)
+	public static function update(Articles $article)
 	{
-		ArticlesDataBase::update($article);
+		
 	}
 	
-	public static function delete($id_article)
+	public static function delete()
 	{
-		ArticlesDataBase::delete($id_article);
+		
 	}
 }
 ?>

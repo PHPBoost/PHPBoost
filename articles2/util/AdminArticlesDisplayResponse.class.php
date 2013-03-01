@@ -32,12 +32,12 @@ class AdminArticlesDisplayResponse extends AdminMenuDisplayResponse
 		parent::__construct($view);
 		
 		$lang = LangLoader::get('articles-common', 'articles');
-        $this->set_title($lang['articles']);
-        $img = 'articles.png';
-        $this->add_link($lang['articles_management'], ArticlesUrlBuilder::articles_management(), $img);
-        $this->add_link($lang['add_article'], ArticlesUrlBuilder::add_article(), $img);
-        $this->add_link($lang['categories_management'], ArticlesUrlBuilder::articles_category_management(), $img);
-        $this->add_link($lang['add_category'], ArticlesUrlBuilder::add_category(), $img);
+                $this->set_title($lang['articles']);
+                $img = 'articles.png';
+                $this->add_link($lang['articles_management'], ArticlesUrlBuilder::articles_management(), $img);
+                $this->add_link($lang['add_article'], ArticlesUrlBuilder::add_article(), $img);
+                $this->add_link($lang['categories_management'], ArticlesUrlBuilder::articles_category_management(), $img);
+                $this->add_link($lang['add_category'], ArticlesUrlBuilder::add_category(), $img);
 		$this->add_link($lang['articles_configuration'], ArticlesUrlBuilder::articles_configuration(), $img);
 
 		$env = $this->get_graphical_environment();

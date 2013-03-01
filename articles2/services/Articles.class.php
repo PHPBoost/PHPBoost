@@ -1,10 +1,10 @@
 <?php
 /*##################################################
- *                        Article.class.php
+ *                        Articles.class.php
  *                            -------------------
- *   begin                : April 25, 2011
- *   copyright            : (C) 2011 Kévin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   begin                : February 27, 2013
+ *   copyright            : (C) 2013 Patrick DUBEAU
+ *   email                : daaxwizeman@gmail.com
  *
  *
  ###################################################
@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-class Article
+class Articles
 {
     private $id;
     private $id_category;
@@ -35,15 +35,17 @@ class Article
     private $content;
     private $picture_url;
     private $number_view;
+    
     private $author_user_id;
     private $author_name_visitor;
+    
     private $published;
     private $publishing_start_date;
     private $publishing_end_date;
-    private $authorizations;
     private $date_created;
-    private $date_modified;
+    
     private $sources;
+    private $keywords;
     
     const NOT_PUBLISHED = 0;
     const PUBLISHED_NOW = 1;
@@ -179,16 +181,6 @@ class Article
             return $this->publishing_end_date;
     }
 
-    public function set_authorizations($authorizations)
-    {
-            $this->authorizations = $authorizations;
-    }
-
-    public function get_authorizations()
-    {
-            return $this->authorizations;
-    }
-
     public function set_date_created(Date $date_created)
     {
             $this->date_created = $date_created;
@@ -197,16 +189,6 @@ class Article
     public function get_date_created()
     {
             return $this->date_created;
-    }
-
-    public function set_date_modified(Date $date_modified)
-    {
-            $this->date_modified = $date_modified;
-    }
-
-    public function get_date_modified()
-    {
-            return $this->date_modified;
     }
     
     public function add_source($source)
@@ -223,6 +205,21 @@ class Article
     {
             return $this->sources;
     }
+    
+    public function set_keywords($keywords)
+    {
+            $this->keywords = $keywords;
+    }
+
+    public function add_keyword(NewsKeyword $keyword)
+    {
+            $this->keywords[] = $keyword;
+    }
+
+    public function get_keywords()
+    {
+            return $this->keywords;
+    }
 
     public function get_properties()
     {
@@ -238,11 +235,9 @@ class Article
                 'author_user_id' => $this->get_author_user_id(),
                 'author_name_visitor' => $this->get_author_name_visitor(),
                 'published' => $this->get_publishing_state(),
-                'publishing_start_date' => $this->get_publishing_start_date(),
-                'publishing_end_date' => $this->get_publishing_end_date(),
-                'authorizations' => $this->get_authorizations(),
+                'publishing_start_date' => $this->get_publishing_start_date() !== null ? $this->get_publishing_start_date()->get_timestamp() : '',
+                'publishing_end_date' => $this->get_publishing_end_date() !== null ? $this->get_publishing_end_date()->get_timestamp() : '',
                 'date_created' => $this->get_date_created(),
-                'date_modified' => $this->get_date_modified(),
                 'sources' => serialize($this->get_sources())
             );
     }
@@ -255,17 +250,31 @@ class Article
             $this->set_rewrited_title($properties['rewrited_title']);
             $this->set_description($properties['description']);
             $this->set_content($properties['content']);
-            $this->set_picture($properties['picture_url']);
+            $this->set_picture(new Url($properties['picture_url']));
             $this->set_number_view($properties['number_view']);
             $this->set_author_user_id($properties['author_user_id']);
             $this->set_author_name_visitor($properties['author_name_visitor']);
             $this->set_publishing_state($properties['published']);
-            $this->set_publishing_start_date(new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, $properties['publishing_start_date']));
-            $this->set_publishing_end_date(new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, $properties['publishing_end_date']));
-            $this->set_authorizations($properties['authorizations']);
+            $this->set_publishing_start_date(!empty($properties['publishing_start_date']) ? new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, $properties['publishing_start_date']) : new Date());
+            $this->set_publishing_end_date(!empty($properties['publishing_end_date']) ? new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, $properties['publishing_end_date']) : new Date());
             $this->set_date_created(new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, $properties['date_created']));
-            $this->set_date_modified(new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, $properties['date_modified']));
             $this->set_sources(!empty($properties['sources']) ? unserialize($properties['sources']) : array());
+    }
+    
+    public function init_default_properties()
+    {
+            $this->set_id_category(Category::ROOT_CATEGORY);
+            $this->set_publishing_state(self::NOT_PUBLISHED);
+            $this->set_publishing_start_date(new Date());
+            $this->set_publishing_end_date(new Date());
+            $this->set_date_created(new Date());
+            $this->set_sources(array());
+    }
+    
+    public function clean_publishing_start_and_end_date()
+    {
+            $this->publishing_start_date = null;
+            $this->publishing_end_date = null;
     }
 }
 ?>
