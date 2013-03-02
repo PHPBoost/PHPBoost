@@ -32,7 +32,7 @@ class Articles
     private $title;
     private $rewrited_title;
     private $description;
-    private $content;
+    private $contents;
     private $picture_url;
     private $number_view;
     
@@ -90,6 +90,11 @@ class Articles
     {
             return $this->rewrited_title;
     }
+    
+    public function rewrited_title_is_personalized()
+    {
+            return $this->rewrited_title != Url::encode_rewrite($this->title);
+    }
 
     public function set_description($description)
     {
@@ -101,14 +106,14 @@ class Articles
             return $this->description;
     }
 
-    public function set_content($content)
+    public function set_contents($contents)
     {
-            $this->content = $content;
+            $this->contents = $contents;
     }
 
-    public function get_content()
+    public function get_contents()
     {
-            return $this->content;
+            return $this->contents;
     }
 
     public function set_picture(Url $picture)
@@ -229,7 +234,7 @@ class Articles
                 'title' => $this->get_title(),
                 'rewrited_title' => $this->get_rewrited_title(),
                 'description' => $this->get_description(),
-                'content' => $this->get_content(),
+                'contents' => $this->get_contents(),
                 'picture_url' => $this->get_picture()->absolute(),
                 'number_view' => $this->get_number_view(),
                 'author_user_id' => $this->get_author_user_id(),
@@ -249,7 +254,7 @@ class Articles
             $this->set_title($properties['title']);
             $this->set_rewrited_title($properties['rewrited_title']);
             $this->set_description($properties['description']);
-            $this->set_content($properties['content']);
+            $this->set_contents($properties['contents']);
             $this->set_picture(new Url($properties['picture_url']));
             $this->set_number_view($properties['number_view']);
             $this->set_author_user_id($properties['author_user_id']);

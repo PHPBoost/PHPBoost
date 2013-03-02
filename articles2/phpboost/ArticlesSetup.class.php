@@ -80,7 +80,7 @@ class ArticlesSetup extends DefaultModuleSetup
 			'title' => array('type' => 'string', 'length' => 255, 'notnull' => 1),
 			'rewrited_title' => array('type' => 'string', 'length' => 255, 'notnull' => 1),
 			'description' => array('type' => 'text', 'length' => 65000),
-			'content' => array('type' => 'text', 'length' => 65000),
+			'contents' => array('type' => 'text', 'length' => 65000),
 			'number_view' => array('type' => 'integer', 'length' => 11, 'default' => 0),
 			'author_user_id' => array('type' => 'integer', 'length' => 11, 'default' => 0),
 			'author_name_visitor' => array('type' => 'string', 'length' => 255, 'default' => "''"),
@@ -95,7 +95,7 @@ class ArticlesSetup extends DefaultModuleSetup
 			'indexes' => array(
 				'id_category' => array('type' => 'key', 'fields' => 'id_category'),
 				'title' => array('type' => 'fulltext', 'fields' => 'title'),
-				'content' => array('type' => 'fulltext', 'fields' => 'content')
+				'contents' => array('type' => 'fulltext', 'fields' => 'content')
 			)
 		);
 		PersistenceContext::get_dbms_utils()->create_table(self::$articles_table, $fields, $options);
@@ -143,7 +143,7 @@ class ArticlesSetup extends DefaultModuleSetup
 			'title' => $this->messages['default.article.name'],
 			'rewrited_title' => Url::encode_rewrite($this->messages['default.article.name']),
 			'description' => $this->messages['default.article.description'],
-			'content' => $this->messages['default.article.contents'],
+			'contents' => $this->messages['default.article.contents'],
 			'number_view' => 0,
 			'author_user_id' => 1,
 			'author_name_visitor' => '',

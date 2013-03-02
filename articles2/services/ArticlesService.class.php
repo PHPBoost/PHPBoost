@@ -2,9 +2,9 @@
 /*##################################################
  *                        ArticlesService.class.php
  *                            -------------------
- *   begin                : April 25, 2011
- *   copyright            : (C) 2011 Kévin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   begin                : February 27, 2013
+ *   copyright            : (C) 2013 Patrick DUBEAU
+ *   email                : daaxwizeman@gmail.com
  *
  *
  ###################################################
@@ -37,17 +37,37 @@ class ArticlesService
         
         public static function add(Articles $article)
 	{
-		
+		$result = self::$db_querier->insert(ArticlesSetup::$articles_table, $article->get_properties());
+                return $result->get_last_inserted_id();
 	}
 	
 	public static function update(Articles $article)
 	{
-		
+		self::$db_querier->update(ArticlesSetup::$articles_table, $article->get_properties(), 'WHERE id=:id', array('id', $article->get_id()));
 	}
 	
-	public static function delete()
+	public static function delete($condition, array $parameters)
 	{
-		
+		self::$db_querier->delete(ArticlesSetup::$articles_table, $condition, $parameters);
 	}
+        
+        public static function get_article($condition, array $parameters)
+	{
+		$row = self::$db_querier->select_single_row(ArticlesSetup::$articles_table, array('*'), $condition, $parameters);
+                $article = new Articles();
+                $article->set_properties($row);
+                return $article;
+	}
+        
+        public static function get_categories_manager()
+        {
+                if(self::$categories_manager === null)
+                {
+                        $categories_items_parameters = new CategoriesItemsParameters();
+                        $categories_items_parameters->set_table_name_contains_items(ArticlesSetup::$articles_table);
+                        self::$categories_manager = new CategoriesManager(ArticlesCategoriesCache::load(), $categories_items_parameters);
+                }
+                return self::$categories_manager;
+        }
 }
 ?>
