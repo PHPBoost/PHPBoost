@@ -1,10 +1,10 @@
 <?php
 /*##################################################
- *		                   ArticlesAuthorizationsService.class.php
+ *		   ArticlesAuthorizationsService.class.php
  *                            -------------------
- *   begin                : October 22, 2011
- *   copyright            : (C) 2011 Kévin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   begin                : February 27, 2013
+ *   copyright            : (C) 2013 Patrick DUBEAU
+ *   email                : daaxwizeman@gmail.com
  *
  *
  ###################################################
@@ -25,58 +25,40 @@
  *
  ###################################################*/
 
-/**
- * @author Kévin MASSY <soldier.weasel@gmail.com>
- */
 class ArticlesAuthorizationsService
 {
 	private $id_category;
 	
-	const AUTHORIZATIONS_READ = 1;
-	const AUTHORIZATIONS_CONTRIBUTION = 2;
-	const AUTHORIZATIONS_WRITE = 4;
-	const AUTHORIZATIONS_MODERATION = 8;
-	
-	public static function id_category($identifier)
+	public static function check_authorizations($id_category = Category::ROOT_CATEGORY)
 	{
 		$instance = new self();
-		$instance->id_category = $identifier;
+		$instance->id_category = $id_category;
 		return $instance;
 	}
-	
-	public static function default_autorizations()
-	{
-		return new self();
-	}
 		
-	public function read_articles()
+	public function read()
 	{
-		$this->get_authorizations(self::AUTHORIZATIONS_READ);
+		$this->get_authorizations(Category::READ_AUTHORIZATIONS);
 	}
 	
 	public function contribution()
 	{
-		$this->get_authorizations(self::AUTHORIZATIONS_CONTRIBUTION);
+		$this->get_authorizations(Category::CONTRIBUTION_AUTHORIZATIONS);
 	}
 	
 	public function write()
 	{
-		$this->get_authorizations(self::AUTHORIZATIONS_WRITE);
+		$this->get_authorizations(Category::WRITE_AUTHORIZATIONS);
 	}
 	
 	public function moderation()
 	{
-		$this->get_authorizations(self::AUTHORIZATIONS_MODERATION);
+		$this->get_authorizations(Category::MODERATION_AUTHORIZATIONS);
 	}
 	
 	private function get_authorizations($bit)
 	{
-		$user = AppContext::get_user();
-		if ($this->id_category !== null)
-		{
-			//TODO
-		}
-		return $user->check_auth(ArticlesConfig::load(), $bit);
+		return ArticlesService::get_categories_manager()->get_categories_cache()->get_category($this->id_category)->check_auth($bit);
 	}
 }
 ?>
