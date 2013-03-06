@@ -129,7 +129,7 @@ class AdminGeneralConfigController extends AdminController
 		));
 		
 		$fieldset->add_field(new FormFieldTextEditor('other_start_page', $this->lang['general-config.other_start_page'], $this->general_config->get_other_home_page(),
-			array('class' => 'text', 'required' => false, 'hidden' => $this->general_config->get_other_home_page() == '')
+			array('class' => 'text', 'required' => false, 'hidden' => $this->general_config->get_module_home_page() != 'other')
 		));
 
 		$fieldset->add_field(new FormFieldCheckbox('visit_counter', $this->lang['general-config.visit_counter'], $this->graphical_environment_config->is_visit_counter_enabled()));
@@ -158,15 +158,9 @@ class AdminGeneralConfigController extends AdminController
 		$other_start_page = $this->form->get_value('other_start_page');
 
 		$module_home_page = $this->form->get_value('start_page')->get_raw_value();
-		if ($module_home_page !== 'other')
-		{
-			$this->general_config->set_module_home_page($module_home_page);
-			$this->general_config->set_other_home_page('');
-		}
-		else
-		{
+		$this->general_config->set_module_home_page($module_home_page);
+		if ($module_home_page === 'other')
 			$this->general_config->set_other_home_page($this->form->get_value('other_start_page'));
-		}
 
 		GeneralConfig::save();
 
