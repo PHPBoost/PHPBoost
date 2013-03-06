@@ -77,6 +77,7 @@ $lang['field.actions_authorizations'] = 'Autorisations de lecture du champ dans 
 $lang['regex.figures'] = 'Chiffres';
 $lang['regex.letters'] = 'Lettres';
 $lang['regex.figures-letters'] = 'Chiffres et lettres';
+$lang['regex.word'] = 'Mot';
 $lang['regex.website'] = 'Site web';
 $lang['regex.mail'] = 'Mail';
 $lang['regex.personnal-regex'] = 'Expression régulière personnalisée';
