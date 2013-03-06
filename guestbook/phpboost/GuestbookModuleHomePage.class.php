@@ -89,10 +89,10 @@ class GuestbookModuleHomePage implements ModuleHomePage
 				'formatter' => $formatter, 'rows' => 10, 'cols' => 47, 'required' => $this->main_lang['require_text'])
 			));
 			
-			if ($is_guest && !$is_edition_mode && $guestbook_config->get_display_captcha()) //Code de vérification, anti-bots.
+			if ($is_guest && !$is_edition_mode && $guestbook_config->is_captcha_enabled()) //Code de vérification, anti-bots.
 			{
 				$captcha = new PHPBoostCaptcha();
-				$captcha->set_difficulty($guestbook_config->get_captcha_difficulty());
+				$captcha->set_difficulty($guestbook_config->get_captcha_difficulty_level());
 				$fieldset->add_field(new FormFieldCaptcha('captcha', $captcha));
 			}
 				
