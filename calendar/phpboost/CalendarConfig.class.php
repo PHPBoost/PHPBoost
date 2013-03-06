@@ -4,7 +4,7 @@
  *                            -------------------
  *   begin                : August 10, 2010
  *   copyright            : (C) 2010 Kevin MASSY
- *   email                : kevin.massy@phpboost.com
+ *   email                : soldier.weasel@gmail.com
  *
  *
  ###################################################
@@ -26,40 +26,70 @@
  ###################################################*/
 
 /**
- * @author Kevin MASSY <kevin.massy@phpboost.com>
+ * @author Kevin MASSY <soldier.weasel@gmail.com>
  */
 class CalendarConfig extends AbstractConfigData
 {
+	const MEMBERS_BIRTHDAY_ACTIVATED = 'members_birthday_activated';
+	
 	const AUTHORIZATIONS = 'authorizations';
 	
+	 /**
+	 * @method Check if the members birthday are activated
+	 */
+	public function get_members_birthday_activated()
+	{
+		return $this->get_members_birthday_activated(self::MEMBERS_BIRTHDAY_ACTIVATED);
+	}
+	
+	 /**
+	 * @method Set the activation of the members birthday
+	 * @params bool $value true/false
+	 */
+	public function set_members_birthday_activated($value)
+	{
+		$this->set_property(self::members_birthday_activated, $value);
+	}
+	
+	 /**
+	 * @method Get authorizations
+	 */
 	public function get_authorizations()
 	{
 		return $this->get_property(self::AUTHORIZATIONS);
 	}
 	
-	public function set_authorizations(Array $array)
+	 /**
+	 * @method Set authorizations
+	 * @params string[] $array Array of authorizations
+	 */
+	public function set_authorizations(Array $authorizations)
 	{
-		$this->set_property(self::AUTHORIZATIONS, $array);
+		$this->set_property(self::AUTHORIZATIONS, $authorizations);
 	}
 	
+	/**
+	 * @method Get default values.
+	 */
 	public function get_default_values()
 	{
 		return array(
-			self::AUTHORIZATIONS => array('r0' => 2, 'r1' => 6)
+			self::MEMBERS_BIRTHDAY_ACTIVATED => false,
+			self::AUTHORIZATIONS => array('r1' => 15, 'r0' => 5, 'r-1' => 1)
 		);
 	}
 	
 	/**
-	 * Returns the configuration.
+	 * @method Load the calendar configuration.
 	 * @return CalendarConfig
 	 */
 	public static function load()
 	{
 		return ConfigManager::load(__CLASS__, 'calendar', 'config');
 	}
-
+	
 	/**
-	 * Saves the configuration in the database. Has it become persistent.
+	 * @method Saves the calendar configuration in the database. It becomes persistent.
 	 */
 	public static function save()
 	{

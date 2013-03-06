@@ -1,19 +1,19 @@
 <?php
 /*##################################################
- *                     CalendarHomePageExtensionPoint.class.php
+ *                              CalendarAuthorizationsService.class.php
  *                            -------------------
- *   begin                : February 07, 2012
+ *   begin                : February 25, 2013
  *   copyright            : (C) 2012 Julien BRISWALTER
  *   email                : julien.briswalter@gmail.com
  *
- *
+ *  
  ###################################################
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- *
+ * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -25,30 +25,40 @@
  *
  ###################################################*/
 
-class CalendarHomePageExtensionPoint implements HomePageExtensionPoint
+class CalendarAuthorizationsService
 {
-	 /**
-	 * @method Get the module home page
-	 */
-	public function get_home_page()
+	public $id_category;
+	
+	public static function check_authorizations($id_category = Category::ROOT_CATEGORY)
 	{
-		return new DefaultHomePage($this->get_title(), $this->get_view());
+		$instance = new self();
+		$instance->id_category = $id_category;
+		return $instance;
 	}
 	
-	 /**
-	 * @method Get the module title
-	 */
-	private function get_title()
+	public function read()
 	{
-		return LangLoader::get_message('calendar.module_title', 'calendar_common', 'calendar');
+		return $this->get_authorizations(Category::READ_AUTHORIZATIONS);
 	}
 	
-	 /**
-	 * @method Get the module view
-	 */
-	private function get_view()
+	public function contribution()
 	{
-		return CalendarModuleHomePage::get_view();
+		return $this->get_authorizations(Category::CONTRIBUTION_AUTHORIZATIONS);
+	}
+	
+	public function write()
+	{
+		return $this->get_authorizations(Category::WRITE_AUTHORIZATIONS);
+	}
+	
+	public function moderation()
+	{
+		return $this->get_authorizations(Category::MODERATION_AUTHORIZATIONS);
+	}
+	
+	private function get_authorizations($bit)
+	{
+		return CalendarService::get_categories_manager()->get_categories_cache()->get_category($this->id_category)->check_auth($bit);
 	}
 }
 ?>

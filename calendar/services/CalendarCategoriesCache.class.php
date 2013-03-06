@@ -1,19 +1,19 @@
 <?php
 /*##################################################
- *                           CalendarCommentsTopic.class.php
+ *                        CalendarCategoriesCache.class.php
  *                            -------------------
- *   begin                : May 06, 2011
- *   copyright            : (C) 2011 Kévin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   begin                : February 25, 2013
+ *   copyright            : (C) 2013 Julien BRISWALTER
+ *   email                : julien.briswalter@gmail.com
  *
- *
+ *  
  ###################################################
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- *
+ * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -25,22 +25,32 @@
  *
  ###################################################*/
 
-class CalendarCommentsTopic extends CommentsTopic
+/**
+ * @author Julien BRISWALTER <julien.briswalter@gmail.com>
+ * @desc CategoriesCache of the calendar module
+ */
+class CalendarCategoriesCache extends CategoriesCache
 {
-	public function __construct()
+	public function get_table_name()
 	{
-		parent::__construct('calendar');
+		return CalendarSetup::$calendar_cats_table;
 	}
 	
-	public function get_authorizations()
+	public function get_category_class()
 	{
-		$authorizations = new CommentsAuthorizations();
-		return $authorizations;
+		return new CalendarRichCategory();
 	}
 	
-	public function is_display()
+	public function get_module_identifier()
 	{
-		return true;
+		return 'calendar';
+	}
+	
+	public function get_root_category()
+	{
+		$root = new RootCategory();
+		$root->set_authorizations(CalendarConfig::load()->get_authorizations());
+		return $root;
 	}
 }
 ?>

@@ -1,8 +1,4 @@
-.calendar_container{
-
-}
-
-.calendar_containt{
+.calendar_content{
 	padding:6px;
 	border:1px solid #BEBEBE;
 	border-top:none;
@@ -56,8 +52,10 @@
 	border:none;
 }
 
-.calendar_table td{ height:40px; }
-	
+.calendar_table td{
+	height:40px;
+}
+
 .text_month{
 	font-size:13px;
 	font-weight:bold;
@@ -72,14 +70,15 @@
 	color: #3F5164;
 }
 
-.c_row:first-child{	
+.c_row:first-child{
 	border-top:none;
 	border-right:1px solid #DDDDDD; 
 }
 
 .c_row_last{
 	border-top:1px solid #DDDDDD;
-	height: 10px;
+	height: 1px;
+	padding:none;
 }
 
 .calendar_today {
@@ -95,24 +94,24 @@
 }
 
 .calendar_other {
-	background:#F9F9F9;
+	background:#F1F1F1;
 	padding:2px;
 }
 
 .calendar_none {
+	background:#FFFFFF;
 	padding:2px;
 }
 
 .calendar_weekend{
-	background:#F1F1F1;
+	background:#ECECEC;
 	padding:2px;
 }
 
 .calendar_week{
 	color:#BEBEBE;
-	padding:2px;	
+	padding:2px;
 }
-
 
 div.event_top_title{
 	text-align:center;
@@ -130,4 +129,24 @@ div.event_date{
 	border-bottom: 3px #336397 solid;
 	border-radius: 8px;
 	width:30%;
+}
+
+.mini_calendar_top{
+	text-align:center;
+	font-weight:bold;
+	padding-top:7px;
+}
+
+.mini_calendar_table{
+	background:none;
+	border:none;
+}
+
+.mini_calendar_table td{
+	height:30px;
+}
+
+.mini_calendar_content{
+	padding:6px;
+	border-top:none;
 }

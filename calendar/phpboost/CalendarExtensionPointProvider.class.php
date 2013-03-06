@@ -27,28 +27,55 @@
 
 class CalendarExtensionPointProvider extends ExtensionPointProvider
 {
-    public function __construct()
-    {
-        parent::__construct('calendar');
-    }
-    
+	public function __construct()
+	{
+		parent::__construct('calendar');
+	}
+	
 	public function home_page()
 	{
 		return new CalendarHomePageExtensionPoint();
 	}
 	
 	public function comments()
-    {
-    	return new CommentsTopics(array(
+	{
+		return new CommentsTopics(array(
 			new CalendarCommentsTopic()
 		));
-    }
+	}
+	
+	public function menus()
+	{
+		return new ModuleMenus(array(new CalendarModuleMiniMenu()));
+	}
 	
 	public function css_files()
 	{
 		$module_css_files = new ModuleCssFiles();
 		$module_css_files->adding_running_module_displayed_file('calendar.css');
 		return $module_css_files;
+	}
+	
+	public function url_mappings()
+	{
+		return new UrlMappings(array(
+			new DispatcherUrlMapping('/calendar/index.php')
+		));
+	}
+	
+	public function search()
+	{
+		return new CalendarSearchable();
+	}
+	
+	public function feeds()
+	{
+		return new CalendarFeedProvider();
+	}
+	
+	public function sitemap()
+	{
+		return new CalendarSitemapExtensionPoint();
 	}
 }
 ?>
