@@ -1,19 +1,19 @@
 <?php
 /*##################################################
- *                           CalendarCommentsTopic.class.php
+ *                              CalendarDisplayResponse.class.php
  *                            -------------------
- *   begin                : May 06, 2011
- *   copyright            : (C) 2011 Kévin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   begin                : February 25, 2013
+ *   copyright            : (C) 2012 Julien BRISWALTER
+ *   email                : julien.briswalter@gmail.com
  *
- *
+ *  
  ###################################################
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- *
+ * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -25,22 +25,37 @@
  *
  ###################################################*/
 
-class CalendarCommentsTopic extends CommentsTopic
+class CalendarDisplayResponse
 {
-	public function __construct()
+	private $page_title = '';
+	private $breadcrumb_links = array();
+
+	public function add_breadcrumb_link($name, $link)
 	{
-		parent::__construct('calendar');
+		if ($link instanceof Url)
+		{
+			$link = $link->absolute();
+		}
+		$this->breadcrumb_links[$name] = $link;
 	}
 	
-	public function get_authorizations()
+	public function set_page_title($page_title)
 	{
-		$authorizations = new CommentsAuthorizations();
-		return $authorizations;
+		$this->page_title = $page_title;
 	}
 	
-	public function is_display()
+	public function display($view)
 	{
-		return true;
+		$response = new SiteDisplayResponse($view);
+		$graphical_environment = $response->get_graphical_environment();
+		$graphical_environment->set_page_title($this->page_title);
+		
+		$breadcrumb = $graphical_environment->get_breadcrumb();
+		foreach ($this->breadcrumb_links as $name => $link)
+		{
+			$breadcrumb->add($name, $link);
+		}
+		return $response;
 	}
 }
 ?>

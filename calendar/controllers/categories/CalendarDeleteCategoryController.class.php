@@ -1,19 +1,19 @@
 <?php
 /*##################################################
- *                           CalendarCommentsTopic.class.php
+ *                              CalendarDeleteCategoryController.class.php
  *                            -------------------
- *   begin                : May 06, 2011
- *   copyright            : (C) 2011 Kévin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   begin                : February 25, 2013
+ *   copyright            : (C) 2013 Julien BRISWALTER
+ *   email                : julien.briswalter@gmail.com
  *
- *
+ *  
  ###################################################
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- *
+ * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -25,22 +25,26 @@
  *
  ###################################################*/
 
-class CalendarCommentsTopic extends CommentsTopic
+class CalendarDeleteCategoryController extends AbstractDeleteCategoryController
 {
-	public function __construct()
+	protected function generate_response(View $view)
 	{
-		parent::__construct('calendar');
+		return new AdminCalendarDisplayResponse($view, LangLoader::get_message('calendar.config.category.delete', 'calendar_common', 'calendar'));
 	}
-	
-	public function get_authorizations()
+
+	protected function get_categories_manager()
 	{
-		$authorizations = new CommentsAuthorizations();
-		return $authorizations;
+		return CalendarService::get_categories_manager();
 	}
-	
-	public function is_display()
+
+	protected function get_id_category()
 	{
-		return true;
+		return AppContext::get_request()->get_getint('id', 0);
+	}
+
+	protected function get_categories_management_url()
+	{
+		return CalendarUrlBuilder::manage_categories();
 	}
 }
 ?>

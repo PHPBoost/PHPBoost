@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                     CalendarHomePageExtensionPoint.class.php
+ *                           AdminCalendarDisplayResponse.class.php
  *                            -------------------
- *   begin                : February 07, 2012
+ *   begin                : November 20, 2012
  *   copyright            : (C) 2012 Julien BRISWALTER
  *   email                : julien.briswalter@gmail.com
  *
@@ -25,30 +25,25 @@
  *
  ###################################################*/
 
-class CalendarHomePageExtensionPoint implements HomePageExtensionPoint
+ /**
+ * @author Julien BRISWALTER <julien.briswalter@gmail.com>
+ * @desc AdminMenuDisplayResponse of the calendar module
+ */
+class AdminCalendarDisplayResponse extends AdminMenuDisplayResponse
 {
-	 /**
-	 * @method Get the module home page
-	 */
-	public function get_home_page()
+	public function __construct($view, $title_page)
 	{
-		return new DefaultHomePage($this->get_title(), $this->get_view());
-	}
-	
-	 /**
-	 * @method Get the module title
-	 */
-	private function get_title()
-	{
-		return LangLoader::get_message('calendar.module_title', 'calendar_common', 'calendar');
-	}
-	
-	 /**
-	 * @method Get the module view
-	 */
-	private function get_view()
-	{
-		return CalendarModuleHomePage::get_view();
+		parent::__construct($view);
+		
+		$lang = LangLoader::get('calendar_common', 'calendar');
+		$picture = '/calendar/calendar.png';
+		$this->set_title($lang['calendar.module_title']);
+		$this->add_link($lang['calendar.titles.admin.config'], CalendarUrlBuilder::configuration(), $picture);
+		$this->add_link($lang['calendar.config.category.manage'], CalendarUrlBuilder::manage_categories(), $picture);
+		$this->add_link($lang['calendar.config.category.add'], CalendarUrlBuilder::add_category(), $picture);
+		
+		$env = $this->get_graphical_environment();
+		$env->set_page_title($title_page);
 	}
 }
 ?>
