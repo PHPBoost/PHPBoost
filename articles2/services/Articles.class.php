@@ -36,13 +36,15 @@ class Articles
     private $picture_url;
     private $number_view;
     
+    private $notation_enabled;
+    private $author_name_displayed;
     private $author_user_id;
-    private $author_name_visitor;
     
     private $published;
     private $publishing_start_date;
     private $publishing_end_date;
     private $date_created;
+    private $end_date_enabled;
     
     private $sources;
     private $keywords;
@@ -50,6 +52,12 @@ class Articles
     const NOT_PUBLISHED = 0;
     const PUBLISHED_NOW = 1;
     const PUBLISHED_DATE = 2;
+    
+    const NOTATION_DISABLED = 0;
+    const NOTATION_ENABLED = 1;
+    
+    const AUTHOR_NAME_NOTDISPLAYED = 0;
+    const AUTHOR_NAME_DISPLAYED = 1;
     
     public function set_id($id)
     {
@@ -135,6 +143,26 @@ class Articles
     {
             return $this->number_view;
     }
+    
+    public function get_notation_enabled()
+    {
+            return $this->notation_enabled;
+    }
+
+    public function set_notation_enabled($enabled) 
+    {
+            $this->notation_enabled = $enabled;
+    }
+    
+    public function get_author_name_displayed()
+    {
+            return $this->author_name_displayed;
+    }
+
+    public function set_author_name_displayed($displayed)
+    {
+            $this->author_name_displayed = $displayed;
+    }
 
     public function set_author_user_id($author_user_id)
     {
@@ -144,16 +172,6 @@ class Articles
     public function get_author_user_id()
     {
             return $this->author_user_id;
-    }
-
-    public function set_author_name_visitor($author_name_visitor)
-    {
-            $this->author_name_visitor = $author_name_visitor;
-    }
-
-    public function get_author_name_visitor()
-    {
-            return $this->author_name_visitor;
     }
 
     public function set_publishing_state($published)
@@ -184,6 +202,11 @@ class Articles
     public function get_publishing_end_date()
     {
             return $this->publishing_end_date;
+    }
+    
+    public function end_date_enabled()
+    {
+            return $this->end_date_enabled;
     }
 
     public function set_date_created(Date $date_created)
@@ -216,7 +239,7 @@ class Articles
             $this->keywords = $keywords;
     }
 
-    public function add_keyword(NewsKeyword $keyword)
+    public function add_keyword(ArticlesKeyword $keyword)
     {
             $this->keywords[] = $keyword;
     }
@@ -238,11 +261,12 @@ class Articles
                 'picture_url' => $this->get_picture()->absolute(),
                 'number_view' => $this->get_number_view(),
                 'author_user_id' => $this->get_author_user_id(),
-                'author_name_visitor' => $this->get_author_name_visitor(),
+                'author_name_displayed' => $this->get_author_name_displayed(),
                 'published' => $this->get_publishing_state(),
                 'publishing_start_date' => $this->get_publishing_start_date() !== null ? $this->get_publishing_start_date()->get_timestamp() : '',
                 'publishing_end_date' => $this->get_publishing_end_date() !== null ? $this->get_publishing_end_date()->get_timestamp() : '',
                 'date_created' => $this->get_date_created(),
+                'notation_enabled' => $this->get_notation_enabled(),
                 'sources' => serialize($this->get_sources())
             );
     }
@@ -258,27 +282,35 @@ class Articles
             $this->set_picture(new Url($properties['picture_url']));
             $this->set_number_view($properties['number_view']);
             $this->set_author_user_id($properties['author_user_id']);
-            $this->set_author_name_visitor($properties['author_name_visitor']);
+            $this->set_author_name_displayed($properties['author_name_displayed']);
             $this->set_publishing_state($properties['published']);
             $this->set_publishing_start_date(!empty($properties['publishing_start_date']) ? new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, $properties['publishing_start_date']) : new Date());
             $this->set_publishing_end_date(!empty($properties['publishing_end_date']) ? new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, $properties['publishing_end_date']) : new Date());
             $this->set_date_created(new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, $properties['date_created']));
+            $this->set_notation_enabled($properties['notation_enabled']);
             $this->set_sources(!empty($properties['sources']) ? unserialize($properties['sources']) : array());
     }
     
     public function init_default_properties()
     {
             $this->set_id_category(Category::ROOT_CATEGORY);
+            $this->set_author_name_displayed(self::AUTHOR_NAME_DISPLAYED);
             $this->set_publishing_state(self::NOT_PUBLISHED);
             $this->set_publishing_start_date(new Date());
             $this->set_publishing_end_date(new Date());
             $this->set_date_created(new Date());
+            $this->set_notation_enabled(self::NOTATION_ENABLED);
             $this->set_sources(array());
     }
     
     public function clean_publishing_start_and_end_date()
     {
             $this->publishing_start_date = null;
+            $this->publishing_end_date = null;
+    }
+    
+    public function clean_publishing_end_date()
+    {
             $this->publishing_end_date = null;
     }
 }

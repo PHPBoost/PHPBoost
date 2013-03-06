@@ -1,11 +1,10 @@
 <?php
 /*##################################################
- *                       ArticlesDisplayResponse.class.php
+ *                          AjaxTagsAutoCompleteController.class.php
  *                            -------------------
- *   begin                : March 04, 2013
- *   copyright            : (C) 2013 Patrick DUBEAU
- *   email                : daaxwizeman@gmail.com
- *
+ *   begin                : November 15, 2012
+ *   copyright            : (C) 2012 Kevin MASSY
+ *   email                : kevin.massy@phpboost.com
  *
  ###################################################
  *
@@ -25,37 +24,24 @@
  *
  ###################################################*/
 
-class ArticlesDisplayResponse
+class AjaxTagsAutoCompleteController extends AbstractController
 {
-	private $page_title = '';
-	private $breadcrumb_links = array();
-
-	public function add_breadcrumb_link($name, $link)
+	public function execute(HTTPRequestCustom $request)
 	{
-		if ($link instanceof Url)
-		{
-			$link = $link->absolute();
+		$tpl = new StringTemplate('<ul> # START results # <li>{results.NAME}</li> # END results # </ul>');
+ 
+		try {
+			$result = PersistenceContext::get_querier()->select("SELECT name, rewrited_name FROM " . ArticlesSetup::$articles_keywords_table . " WHERE name LIKE '" . $request->get_value('value', '') . "%'",
+				array(), SelectQueryResult::FETCH_ASSOC);
+	 
+			while($row = $result->fetch())
+			{
+				$tpl->assign_block_vars('results', array('NAME' => $row['name']));
+			}
+		} catch (Exception $e) {
 		}
-                $this->breadcrumb_links[$name] = $link;
-	}
-	
-	public function set_page_title($page_title)
-	{
-		$this->page_title = $page_title;
-	}
-	
-	public function display($view)
-	{
-		$response = new SiteDisplayResponse($view);
-		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($this->page_title);
-		
-		$breadcrumb = $graphical_environment->get_breadcrumb();
-		foreach ($this->breadcrumb_links as $name => $link)
-		{
-			$breadcrumb->add($name, $link);
-		}
-		return $response;
+ 
+		return new SiteNodisplayResponse($tpl);
 	}
 }
 ?>

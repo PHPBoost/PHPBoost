@@ -2,9 +2,9 @@
 /*##################################################
  *                           index.php
  *                            -------------------
- *   begin                : October 14, 2011
- *   copyright            : (C) 2011 Kévin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   begin                : March 04, 2013
+ *   copyright            : (C) 2013 Patrick DUBEAU
+ *   email                : daaxwizeman@gmail.com
  *
  *
  ###################################################
@@ -30,23 +30,33 @@ define('PATH_TO_ROOT', '..');
 require_once PATH_TO_ROOT . '/kernel/init.php';
 
 $url_controller_mappers = array(
-	new UrlControllerMapper('AdminArticlesConfigController', '`^/admin(?:/config)?/?$`'),
-	new UrlControllerMapper('ArticlesAdminCategoriesManagementController', '`^/admin/categories(?:/management)?/?$`'),
-	new UrlControllerMapper('ArticlesAdminAddCategoryController', '`^/admin/categories/add?/?$`'),
-	new UrlControllerMapper('ArticlesAdminEditCategoryController', '`^/admin/categories/edit(?:/([a-z0-9-]+))?/?$`', array('rewrited_name')),
-	new UrlControllerMapper('ArticlesAdminDeleteCategoryController', '`^/admin/categories/delete(?:/([a-z0-9-]+))?/?$`', array('rewrited_name')),
+	//Config
+        new UrlControllerMapper('AdminArticlesConfigController', '`^/admin(?:/config)?/?$`'),
+        
+        //Categories
+	new UrlControllerMapper('ArticlesCategoriesManageController', '`^/admin/categories/?$`'),
+	new UrlControllerMapper('ArticlesCategoriesFormController', '`^/admin/categories/add/?$`'),
+	new UrlControllerMapper('ArticlesCategoriesFormController', '`^/admin/categories/([0-9]+)/edit/?$`', array('id')),
+	new UrlControllerMapper('ArticlesDeleteCategoryController', '`^/admin/categories/([0-9]+)/delete/?$`', array('id')),
 	
-	new UrlControllerMapper('ArticlesExploreCategoryController', '`^/category/([a-z0-9-]+)?/?([a-z]+)?/?([a-z]+)?/?([0-9]+)?/?$`', array('rewrited_name', 'field', 'sort', 'page')),
+        //Manage articles
+	new UrlControllerMapper('ArticlesFormController', '`^/add?/?$`'),
+	new UrlControllerMapper('ArticlesFormController', '`^/([0-9]+)/edit/?$`', array('id')),
+        new UrlControllerMapper('ArticlesDeleteController', '`^/([0-9]+)/delete/?$`', array('id')),
+    
+	//new UrlControllerMapper('ArticlesViewArticleController', '`^/article/([a-z0-9-]+)?/?([a-z0-9-]+)?/?$`', array('rewrited_title', 'rewrited_page_name')),
 	
-	new UrlControllerMapper('ArticlesAddArticleController', '`^/article/add?/?$`'),
-	new UrlControllerMapper('ArticlesDeleteArticleController', '`^/article/delete/([a-z0-9-]+)?/?$`', array('rewrited_title')),
-	new UrlControllerMapper('ArticlesEditArticleController', '`^/article/edit/([a-z0-9-]+)?/?$`', array('rewrited_title')),
-	new UrlControllerMapper('ArticlesViewArticleController', '`^/article/([a-z0-9-]+)?/?([a-z0-9-]+)?/?$`', array('rewrited_title', 'rewrited_page_name')),
-	new UrlControllerMapper('ArticlesPrintArticleController', '`^/print/([a-z0-9-]+)?/?([A-Za-z0-9-]+)?/?$`', array('rewrited_title', 'rewrited_page_name')),
+        //new UrlControllerMapper('ArticlesPrintArticleController', '`^/print/([a-z0-9-]+)?/?([A-Za-z0-9-]+)?/?$`', array('rewrited_title', 'rewrited_page_name')),
 	
-	new UrlControllerMapper('ArticlesPendingController', '`^/pending(?:/([a-z0-9-]+))?/?$`', array('pseudo')),
+	//new UrlControllerMapper('ArticlesPendingController', '`^/pending(?:/([a-z0-9-]+))?/?$`', array('pseudo')),
 
-	new UrlControllerMapper('ArticlesHomePageController', '`^(?:/([a-z]+))?/?([a-z]+)?/?([0-9]+)?/?$`', array('field', 'sort', 'page'))
+	//new UrlControllerMapper('ArticlesHomePageController', '`^(?:/([a-z]+))?/?([a-z]+)?/?([0-9]+)?/?$`', array('field', 'sort', 'page')),
+        
+        new UrlControllerMapper('ArticlesDisplayArticlesController', '`^/([a-z0-9-_]+)/([0-9]+)/([a-z0-9-_]+)/?$`', array('rewrited_name_category', 'id', 'rewrited_title')),
+    
+        new UrlControllerMapper('ArticlesDisplayCategoryController', '`^/([0-9]+)-([a-z0-9-_]+)?/?$`', array('id', 'rewrited_name')),
+    
+        new UrlControllerMapper('AjaxTagsAutoCompleteController','`^/ajax/tag/?$`')
 );
 
 DispatchManager::dispatch($url_controller_mappers);
