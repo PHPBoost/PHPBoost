@@ -106,6 +106,7 @@ class AdminExtendedFieldMemberAddController extends AdminController
 				new FormFieldSelectChoiceOption($this->lang['regex.figures'], '1'),
 				new FormFieldSelectChoiceOption($this->lang['regex.letters'], '2'),
 				new FormFieldSelectChoiceOption($this->lang['regex.figures-letters'], '3'),
+				new FormFieldSelectChoiceOption($this->lang['regex.word'], '7'),
 				new FormFieldSelectChoiceOption($this->lang['regex.mail'], '4'),
 				new FormFieldSelectChoiceOption($this->lang['regex.website'], '5'),
 				new FormFieldSelectChoiceOption($this->lang['regex.personnal-regex'], '6'),

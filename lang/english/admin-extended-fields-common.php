@@ -77,6 +77,7 @@ $lang['field.actions_authorizations'] = 'Read permissions of the field when crea
 $lang['regex.figures'] = 'Numbers';
 $lang['regex.letters'] = 'Letters';
 $lang['regex.figures-letters'] = 'Numbers and letters';
+$lang['regex.word'] = 'Word';
 $lang['regex.website'] = 'Website';
 $lang['regex.mail'] = 'Mail';
 $lang['regex.personnal-regex'] = 'Custom regular expression';

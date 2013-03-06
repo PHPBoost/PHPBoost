@@ -111,17 +111,20 @@ abstract class AbstractMemberExtendedField implements MemberExtendedFieldType
 					return new FormFieldConstraintRegex('`^[0-9]+$`i');
 					break;
 				case 2:
-					return new FormFieldConstraintRegex('`^[a-z]+$`i');
+					return new FormFieldConstraintRegex('`^[a-zA-Z]+$`i');
 					break;
 				case 3:
-					return new FormFieldConstraintRegex('`^[a-z0-9]+$`i');
+					return new FormFieldConstraintRegex('`^[a-zA-Z0-9]+$`i');
 					break;
 				case 4:
 					return new FormFieldConstraintMailAddress();
 					break;
 				case 5:
 					return new FormFieldConstraintUrl();
-					break;		
+					break;
+				case 7:
+					return new FormFieldConstraintRegex('`^[a-zA-Zабвгдезийклмнопртуфхцщъыьэя-]+$`i');
+					break;					
 			}
 		}
 		elseif (is_string($value) && !empty($value))
