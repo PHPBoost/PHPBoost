@@ -1,9 +1,9 @@
 <?php
 /*##################################################
- *                       ArticlesDisplayResponse.class.php
+ *		      ArticlesDeleteCategoryController.class.php
  *                            -------------------
  *   begin                : March 04, 2013
- *   copyright            : (C) 2013 Patrick DUBEAU
+ *   copyright            : (C) 2013 Kevin MASSY
  *   email                : daaxwizeman@gmail.com
  *
  *
@@ -25,37 +25,26 @@
  *
  ###################################################*/
 
-class ArticlesDisplayResponse
+class ArticlesDeleteCategoryController extends AbstractDeleteCategoryController
 {
-	private $page_title = '';
-	private $breadcrumb_links = array();
-
-	public function add_breadcrumb_link($name, $link)
+	protected function generate_response(View $view)
 	{
-		if ($link instanceof Url)
-		{
-			$link = $link->absolute();
-		}
-                $this->breadcrumb_links[$name] = $link;
+		return new AdminNewsDisplayResponse($view, LangLoader::get_message('admin.categories.delete', 'articles-common', 'articles'));
 	}
 	
-	public function set_page_title($page_title)
+	protected function get_categories_manager()
 	{
-		$this->page_title = $page_title;
+		return ArticlesService::get_categories_manager();
 	}
 	
-	public function display($view)
+	protected function get_id_category()
 	{
-		$response = new SiteDisplayResponse($view);
-		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($this->page_title);
-		
-		$breadcrumb = $graphical_environment->get_breadcrumb();
-		foreach ($this->breadcrumb_links as $name => $link)
-		{
-			$breadcrumb->add($name, $link);
-		}
-		return $response;
+		return AppContext::get_request()->get_getint('id', 0);
+	}
+	
+	protected function get_categories_management_url()
+	{
+		return ArticlesUrlBuilder::manage_categories();
 	}
 }
 ?>

@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *		                ArticlesKeyword.class.php
+ *		           ArticlesKeywords.class.php
  *                            -------------------
  *   begin                : February 21, 2013
  *   copyright            : (C) 2013 Patrick DUBEAU
@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-class ArticlesKeyword
+class ArticlesKeywords
 {
 	private $id;
 	private $name;

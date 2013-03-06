@@ -32,11 +32,9 @@ class ArticlesConfig extends AbstractConfigData
 	
         const NUMBER_COLUMNS_DISPLAYED = 'number_columns_displayed';
 	
-        const NOTATION_ENABLED = 'notation_enabled';
         const NOTATION_SCALE = 'notation_scale';
         
         const COMMENTS_ENABLED = 'comments_enable';
-        const AUTHOR_NAME_DISPLAY_ENABLED = 'author_name_displayed_enabled';
         
         const AUTHORIZATIONS = 'authorizations';
 	
@@ -69,16 +67,6 @@ class ArticlesConfig extends AbstractConfigData
 	{
 		$this->set_property(self::NUMBER_COLUMNS_DISPLAYED, $number);
 	}
-	
-        public function get_notation_enabled()
-	{
-		return $this->get_property(self::NOTATION_ENABLED);
-	}
-	
-	public function set_notation_enabled($notation_enabled) 
-	{
-		$this->set_property(self::NOTATION_ENABLED, $notation_enabled);
-	}
         
 	public function get_notation_scale()
 	{
@@ -100,16 +88,6 @@ class ArticlesConfig extends AbstractConfigData
 		$this->set_property(self::COMMENTS_ENABLED, $comments_enabled);
 	}
         
-        public function get_author_name_display_enabled()
-	{
-		return $this->get_property(self::AUTHOR_NAME_DISPLAY_ENABLED);
-	}
-
-	public function set_author_name_display_enabled($author_name_display_enabled)
-	{
-		$this->set_property(self::AUTHOR_NAME_DISPLAY_ENABLED, $author_name_display_enabled);
-	}
-        
         public function get_authorizations()
 	{
 		return $this->get_property(self::AUTHORIZATIONS);
@@ -127,8 +105,6 @@ class ArticlesConfig extends AbstractConfigData
 			self::NUMBER_CATEGORIES_PER_PAGE => 10,
 			self::NUMBER_COLUMNS_DISPLAYED => 3,
                         self::COMMENTS_ENABLED => true,
-                        self::AUTHOR_NAME_DISPLAY_ENABLED => true,
-                        self::NOTATION_ENABLED => true,
 			self::NOTATION_SCALE => 5,
                         self::AUTHORIZATIONS => array()
 		);

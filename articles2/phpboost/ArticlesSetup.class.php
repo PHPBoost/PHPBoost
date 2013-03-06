@@ -2,9 +2,9 @@
 /*##################################################
  *                             ArticlesSetup.class.php
  *                            -------------------
- *   begin                : April 25, 2011
- *   copyright            : (C) 2011 Kévin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   begin                : February 27, 2013
+ *   copyright            : (C) 2013 Patrick DUBEAU
+ *   email                : daaxwizeman@gmail.com
  *
  *
  ###################################################
@@ -83,11 +83,12 @@ class ArticlesSetup extends DefaultModuleSetup
 			'contents' => array('type' => 'text', 'length' => 65000),
 			'number_view' => array('type' => 'integer', 'length' => 11, 'default' => 0),
 			'author_user_id' => array('type' => 'integer', 'length' => 11, 'default' => 0),
-			'author_name_visitor' => array('type' => 'string', 'length' => 255, 'default' => "''"),
+                        'author_name_displayed' => array('type' => 'boolean', 'notnull' => 1, 'default' => 1),
 			'published' => array('type' => 'boolean', 'notnull' => 1, 'default' => 0),
 			'publishing_start_date' => array('type' => 'integer', 'length' => 11, 'default' => 0),
 			'publishing_end_date' => array('type' => 'integer', 'length' => 11, 'default' => 0),
 			'date_created' => array('type' => 'integer', 'length' => 11, 'default' => 0),
+                        'notation_enabled' => array('type' => 'boolean', 'notnull' => 1, 'default' => 1),
                         'sources' => array('type' => 'text', 'length' => 65000),
 		);
 		$options = array(
@@ -120,7 +121,7 @@ class ArticlesSetup extends DefaultModuleSetup
 	private function create_articles_keywords_relation_table()
 	{
 		$fields = array(
-			'id_articles' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
+			'id_article' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'id_keyword' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 		);
 		PersistenceContext::get_dbms_utils()->create_table(self::$articles_keywords_relation_table, $fields);
@@ -146,11 +147,12 @@ class ArticlesSetup extends DefaultModuleSetup
 			'contents' => $this->messages['default.article.contents'],
 			'number_view' => 0,
 			'author_user_id' => 1,
-			'author_name_visitor' => '',
+                        'author_name_displayed' => Articles::AUTHOR_NAME_DISPLAYED,
 			'published' => Articles::PUBLISHED_NOW,
 			'publishing_start_date' => 0,
 			'publishing_end_date' => 0,
 			'date_created' => time(),
+                        'notation_enabled' => Articles::NOTATION_ENABLED,
                         'sources' => serialize(array())
                 ));
         }

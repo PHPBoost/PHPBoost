@@ -85,24 +85,12 @@ class AdminArticlesConfigController extends AdminModuleController
 			array('maxlength' => 3, 'size' => 4, 'required' => true), array(new FormFieldConstraintRegex('`^[0-9]+$`i'))
 		));
 		
-                $fieldset->add_field(new FormFieldCheckbox('notation_enabled', $this->lang['articles_configuration.notation_enabled'], $this->config->get_notation_enabled(),
-                        array('events' => array('click' =>'
-                                                if (HTMLForms.getField("notation_enabled").getValue()) {
-                                                        HTMLForms.getField("notation_scale").enable();
-                                                } else { 
-                                                        HTMLForms.getField("notation_scale").disable();
-                                                }'
-                        ))
-                ));
-		
                 $fieldset->add_field(new FormFieldTextEditor('notation_scale', $this->lang['articles_configuration.notation_scale'], $this->config->get_notation_scale(),
-			array('hidden' => !$this->config->get_notation_enabled(),'maxlength' => 2, 'size' => 4),
+			array('maxlength' => 2, 'size' => 4),
                         array(new FormFieldConstraintRegex('`^[0-9]+$`i'))
 		));
 		
                 $fieldset->add_field(new FormFieldCheckbox('comments_enabled', $this->lang['articles_configuration.comments_enabled'], $this->config->get_comments_enabled()));
-                
-                $fieldset->add_field(new FormFieldCheckbox('author_name_display_enabled', $this->lang['articles_configuration.author_name_display_enabled'], $this->config->get_author_name_display_enabled()));
                 
 		$fieldset_authorizations = new FormFieldsetHTML('authorizations', $this->lang['articles_configuration_authorizations'],
 			array('description' => $this->lang['articles_configuration.authorizations.explain'])
@@ -128,14 +116,16 @@ class AdminArticlesConfigController extends AdminModuleController
 	}
 	
 	private function save()
-	{
-		$this->config->set_authorizations($this->form->get_value('authorizations')->build_auth_array());
+	{	
 		$this->config->set_number_articles_per_page($this->form->get_value('number_articles_per_page'));
 		$this->config->set_number_categories_per_page($this->form->get_value('number_categories_per_page'));
 		$this->config->set_number_columns_displayed($this->form->get_value('number_columns_displayed'));
 		$this->config->set_notation_scale($this->form->get_value('notation_scale'));
+                $this->config->set_comments_enabled($this->form->get_value('comments_enabled'));
+                $this->config->set_authorizations($this->form->get_value('authorizations')->build_auth_array());
 		
 		ArticlesConfig::save();
+                ArticlesService::get_categories_manager()->regenerate_cache();
 	}
 }
 ?>
