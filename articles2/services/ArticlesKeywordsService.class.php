@@ -48,6 +48,14 @@ class ArticlesKeywordsService
                 ));
         }
         
+        public static function delete($id_article)
+	{
+		$query = 'DELETE * '. ArticlesSetup::$articles_keywords_table.'k INNER JOIN '.
+                         ArticlesSetup::$articles_keywords_relation_table.'r ON k.id = r.id_keyword WHERE r.id_article=:id_article';
+                $parameters = array('id_article' => $id_article);
+                self::$db_querier->inject($query, $parameters);
+	}
+        
         public static function get_keywords($id_article)
 	{
 		$query = 'SELECT k.name, k.rewrited_name FROM '. ArticlesSetup::$articles_keywords_table.'k INNER JOIN '.
