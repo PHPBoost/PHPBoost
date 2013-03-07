@@ -222,7 +222,7 @@ class ArticlesFormController extends ModuleController
                 
                 if($article->get_id() === null)
                 {
-                        if (!NewsAuthorizationsService::check_authorizations()->write() && !NewsAuthorizationsService::check_authorizations()->contribution())
+                        if (!ArticlesAuthorizationsService::check_authorizations()->write() && !ArticlesAuthorizationsService::check_authorizations()->contribution())
 			{
 				$error_controller = PHPBoostErrors::user_not_authorized();
 	   			DispatchManager::redirect($error_controller);
@@ -230,7 +230,7 @@ class ArticlesFormController extends ModuleController
                 }
                 else
 		{
-			if (!(NewsAuthorizationsService::check_authorizations($article->get_id_category())->moderation() || (NewsAuthorizationsService::check_authorizations($article->get_id_category())->write() && $news->get_user_id() == AppContext::get_current_user()->get_id())))
+			if (!(ArticlesAuthorizationsService::check_authorizations($article->get_id_category())->moderation() || (ArticlesAuthorizationsService::check_authorizations($article->get_id_category())->write() && $article->get_user_id() == AppContext::get_current_user()->get_id())))
 			{
 				$error_controller = PHPBoostErrors::user_not_authorized();
 	   			DispatchManager::redirect($error_controller);
@@ -354,7 +354,7 @@ class ArticlesFormController extends ModuleController
                 }
         }
 
-	private function build_response(View $view)
+	private function build_response(View $tpl)
 	{
 		$article = $this->get_article();
                 $category = ArticlesService::get_categories_manager()->get_categories_cache()->get_category($article->get_id_category());
