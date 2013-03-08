@@ -93,7 +93,7 @@ if ($add)
 				$shout_pseudo = ($display_date ? '<span class="text_small">' . $date . ' : </span>' : '') . '<span class="text_small" style="font-style: italic;">' . (!empty($shout_pseudo) ? TextHelper::wordwrap_html($shout_pseudo, 16) : $LANG['guest']) . ' </span>';
 			
 			echo "array_shout[0] = '" . $shout_pseudo . "';";
-			echo "array_shout[1] = '" . FormatingHelper::second_parse(str_replace(array("\n", "\r"), array('', ''), ucfirst(stripslashes($shout_contents)))) . "';";
+			echo "array_shout[1] = '" . addslashes(FormatingHelper::second_parse(str_replace(array("\n", "\r"), array('', ''), ucfirst(stripslashes($shout_contents))))) . "';";
 			echo "array_shout[2] = '" . $last_msg_id . "';";
 		}
 		else //utilisateur non autorisé!
