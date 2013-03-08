@@ -219,7 +219,7 @@ class Date
 				}
 				else
 				{
-					$this->timestamp = time();
+					$this->timestamp = 0;
 				}
 				break;
 
