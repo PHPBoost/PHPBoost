@@ -29,6 +29,11 @@ class NewsUrlBuilder
 {
 	private static $dispatcher = '/news';
 	
+	public static function config()
+	{
+		return DispatchManager::get_url(self::$dispatcher, '/admin/config/');
+	}
+	
 	public static function add_category()
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/admin/categories/add/');

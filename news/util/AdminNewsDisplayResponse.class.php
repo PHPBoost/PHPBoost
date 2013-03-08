@@ -32,12 +32,14 @@ class AdminNewsDisplayResponse extends AdminMenuDisplayResponse
 		parent::__construct($view);
 		
 		$lang = LangLoader::get('common', 'news');
-        $this->set_title($lang['news']);
-        $img = 'news.png';
-        
-        //TODO
-        //$this->add_link($lang['articles_management'], ArticlesUrlBuilder::articles_management(), $img);
-
+		$this->set_title($lang['news']);
+		$img = 'news.png';
+		        
+		$this->add_link($lang['news.add'], NewsUrlBuilder::add_news(), $img);
+		$this->add_link($lang['admin.categories.manage'], NewsUrlBuilder::add_category(), $img);
+		$this->add_link($lang['admin.categories.add'], NewsUrlBuilder::manage_categories(), $img);
+		$this->add_link($lang['admin.config'], NewsUrlBuilder::config(), $img);
+		
 		$env = $this->get_graphical_environment();
 		$env->set_page_title($title_page);
 	}
