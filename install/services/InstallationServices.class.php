@@ -202,6 +202,10 @@ class InstallationServices
 		{
 			Debug::enabled_debug_mode();
 		}
+		else
+		{
+			Debug::disable_debug_mode();
+		}
 	}
 
 	private function init_user_accounts_config($locale)
