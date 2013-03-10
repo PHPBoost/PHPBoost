@@ -50,22 +50,28 @@ class ArticlesKeywordsService
         
         public static function delete($id_article)
 	{
-		$query = 'DELETE * '. ArticlesSetup::$articles_keywords_table.'k INNER JOIN '.
-                         ArticlesSetup::$articles_keywords_relation_table.'r ON k.id = r.id_keyword WHERE r.id_article=:id_article';
-                $parameters = array('id_article' => $id_article);
-                self::$db_querier->inject($query, $parameters);
+                $keywords = $this->get_keywords($id_article);
+                
+                foreach($keywords as $keyword)
+                {
+                    self::$db_querier->delete(ArticlesSetup::$articles_keywords_table, 'WHERE id=:id_keyword', array(
+                        'id_keyword' => $keyword['id']
+                    ));
+                }
+            
+                self::$db_querier->delete(ArticlesSetup::$articles_keywords_relation_table, 'WHERE id_article=:id_article',array(
+                    'id_article' => $id_article
+                ));
 	}
         
         public static function get_keywords($id_article)
 	{
-		$query = 'SELECT k.name, k.rewrited_name FROM '. ArticlesSetup::$articles_keywords_table.'k INNER JOIN '.
+		$query = 'SELECT k.id, k.name, k.rewrited_name FROM '. ArticlesSetup::$articles_keywords_table.'k INNER JOIN '.
                          ArticlesSetup::$articles_keywords_relation_table.'r ON k.id = r.id_keyword WHERE r.id_article=:id_article';
                 $parameters = array('id_article' => $id_article);
                 $rows = self::$db_querier->select_rows($query, $parameters, SelectQueryResult::FETCH_ASSOC);
-                
-                $keywords = new ArticlesKeywords();
-                $keywords->set_properties($rows);
-                return $keywords;
+               
+                return $rows;
 	}
 }
 ?>
