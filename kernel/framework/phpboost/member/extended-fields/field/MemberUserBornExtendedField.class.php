@@ -49,7 +49,8 @@ class MemberUserBornExtendedField extends AbstractMemberExtendedField
 	{
 		$fieldset = $member_extended_field->get_fieldset();
 		
-		$fieldset->add_field(new FormFieldDate($member_extended_field->get_field_name(), $member_extended_field->get_name(), new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, $member_extended_field->get_value()), 
+		$value = $member_extended_field->get_value() ? new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, $member_extended_field->get_value()) : null;
+		$fieldset->add_field(new FormFieldDate($member_extended_field->get_field_name(), $member_extended_field->get_name(), $value, 
 			array('description' => $member_extended_field->get_description(), 'required' =>(bool)$member_extended_field->get_required())
 		));
 	}
@@ -70,8 +71,14 @@ class MemberUserBornExtendedField extends AbstractMemberExtendedField
 	{
 		$field_name = $member_extended_field->get_field_name();
 		if ($form->has_field($field_name))
-			return $form->get_value($field_name)->format(DATE_TIMESTAMP);
-		
+		{
+			$value = $form->get_value($field_name)->format(DATE_TIMESTAMP);
+			
+			if (!empty($value))
+				return $value;
+				
+			return '';
+		}
 		return '';
 	}
 }
