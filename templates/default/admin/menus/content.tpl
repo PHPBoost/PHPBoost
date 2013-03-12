@@ -3,12 +3,12 @@
 function CheckForm() {
 	if (document.getElementById('name').value == '') {
 		document.getElementById('name').select();
-		window.alert({JL_REQUIRE_TITLE});
+		window.alert({L_REQUIRE_TITLE});
 		return false;
 	}
 	if (document.getElementById('contents').value == '') {
 		document.getElementById('contents').select();
-		window.alert({JL_REQUIRE_TEXT});
+		window.alert({L_REQUIRE_TEXT});
 		return false;
 	}
 	return true;
