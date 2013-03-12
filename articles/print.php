@@ -39,15 +39,16 @@ if ($idart > 0)
 	$idartcat = $articles['idcat'];
 	
 	//checking authorization
-	if (!$User->check_auth($ARTICLES_CAT[$idartcat]['auth'], AUTH_ARTICLES_READ))
-	{
-		$error_controller = PHPBoostErrors::user_not_authorized();
-		DispatchManager::redirect($error_controller);
-	}
 	
 	if (!isset($ARTICLES_CAT[$idartcat]) || $ARTICLES_CAT[$idartcat]['visible'] == 0)
 	{
 		$error_controller = PHPBoostErrors::unexisting_page();
+		DispatchManager::redirect($error_controller);
+	}
+	
+	if (!$User->check_auth($ARTICLES_CAT[$idartcat]['auth'], AUTH_ARTICLES_READ))
+	{
+		$error_controller = PHPBoostErrors::user_not_authorized();
 		DispatchManager::redirect($error_controller);
 	}
 
