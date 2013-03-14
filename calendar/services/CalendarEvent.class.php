@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                        Event.class.php
+ *                        CalendarEvent.class.php
  *                            -------------------
  *   begin                : February 25, 2013
  *   copyright            : (C) 2013 Julien BRISWALTER
@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-class Event
+class CalendarEvent
 {
 	private $id;
 	private $id_cat;

@@ -90,15 +90,15 @@ class CalendarFormController extends ModuleController
 		
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('repeat_type', $this->lang['calendar.labels.repeat_type'], $this->get_event()->get_repeat_type(),
 			array(
-				new FormFieldSelectChoiceOption($this->lang['calendar.labels.repeat.never'], Event::NEVER),
-				new FormFieldSelectChoiceOption($this->lang['calendar.labels.repeat.daily'], Event::DAILY),
-				new FormFieldSelectChoiceOption($this->lang['calendar.labels.repeat.daily_not_weekend'], Event::DAILY_NOT_WEEKEND),
-				new FormFieldSelectChoiceOption($this->lang['calendar.labels.repeat.weekly'], Event::WEEKLY),
-				new FormFieldSelectChoiceOption($this->lang['calendar.labels.repeat.monthly'], Event::MONTHLY),
-				new FormFieldSelectChoiceOption($this->lang['calendar.labels.repeat.yearly'], Event::YEARLY),
+				new FormFieldSelectChoiceOption($this->lang['calendar.labels.repeat.never'], CalendarEvent::NEVER),
+				new FormFieldSelectChoiceOption($this->lang['calendar.labels.repeat.daily'], CalendarEvent::DAILY),
+				new FormFieldSelectChoiceOption($this->lang['calendar.labels.repeat.daily_not_weekend'], CalendarEvent::DAILY_NOT_WEEKEND),
+				new FormFieldSelectChoiceOption($this->lang['calendar.labels.repeat.weekly'], CalendarEvent::WEEKLY),
+				new FormFieldSelectChoiceOption($this->lang['calendar.labels.repeat.monthly'], CalendarEvent::MONTHLY),
+				new FormFieldSelectChoiceOption($this->lang['calendar.labels.repeat.yearly'], CalendarEvent::YEARLY),
 			),
 			array('events' => array('change' => '
-			if (HTMLForms.getField("repeat_type").getValue() != "' . Event::NEVER . '") {
+			if (HTMLForms.getField("repeat_type").getValue() != "' . CalendarEvent::NEVER . '") {
 				HTMLForms.getField("repeat_number").enable();
 			} else {
 				HTMLForms.getField("repeat_number").disable();
@@ -166,7 +166,7 @@ class CalendarFormController extends ModuleController
 			}
 			else
 			{
-				$this->event = new Event();
+				$this->event = new CalendarEvent();
 				$this->event->init_default_properties();
 			}
 		}
@@ -241,7 +241,7 @@ class CalendarFormController extends ModuleController
 		AppContext::get_response()->redirect(CalendarUrlBuilder::home($array_time[0] . '/'. $array_time[1])->absolute());
 	}
 	
-	private function contribution_actions(Event $event)
+	private function contribution_actions(CalendarEvent $event)
 	{
 		if ($event->get_id() === null)
 		{
@@ -271,7 +271,7 @@ class CalendarFormController extends ModuleController
 			if (count($corresponding_contributions) > 0)
 			{
 				$event_contribution = $corresponding_contributions[0];
-				$event_contribution->set_status(Event::EVENT_STATUS_PROCESSED);
+				$event_contribution->set_status(CalendarEvent::EVENT_STATUS_PROCESSED);
 
 				ContributionService::save_contribution($event_contribution);
 			}
