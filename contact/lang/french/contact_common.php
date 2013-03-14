@@ -27,26 +27,51 @@
 
 
  ####################################################
-#                      French                      #
+ #						French                      #
  ####################################################
 
 //Titre
 $lang['title_contact'] = 'Contact';
 
 //Contact
-$lang['contact_mail'] = 'Contacter les gestionnaires du site';
+$lang['contact_title'] = 'Contacter les gestionnaires du site';
 $lang['your_mail_address'] = 'Votre adresse mail';
 $lang['your_mail_address_explain'] = 'L\'adresse doit être valide pour que vous puissiez obtenir une réponse';
 $lang['contact_subject'] = 'Objet';
-$lang['contact_subject_explain'] = 'Résumez en quelques mot pourquoi vous voulez contacter les gestionnaires du site';
+$lang['contact_subject_explain'] = 'Résumez en quelques mot l\'objet de votre demande';
 $lang['message'] = 'Message';
-$lang['success_mail'] = 'Votre message a été envoyé avec succès aux gestionnaires du site.';
+$lang['success_mail'] = 'Votre message a été envoyé avec succès.';
 $lang['error_mail'] = 'Désolé, votre mail n\'a pas pu être envoyé pour des raisons techniques.';
+$lang['left'] = 'Gauche';
+$lang['top'] = 'Haut';
+$lang['right'] = 'Droite';
+$lang['bottom'] = 'Bas';
 
 //Admin
 $lang['contact_config'] = 'Configuration';
-$lang['enable_captcha'] = 'Activer la protection anti-spam';
-$lang['captcha_difficulty'] = 'Difficulté de l\'anti spam';
-$lang['success_saving_config'] = 'La configuration a été enregistrée avec succès';
+$lang['contact_config.title'] = 'Titre du formulaire';
+$lang['contact_config.informations_bloc'] = 'Zone d\'informations';
+$lang['contact_config.display_informations_bloc'] = 'Afficher la zone d\'informations';
+$lang['contact_config.informations_content'] = 'Contenu';
+$lang['contact_config.informations.explain'] = 'Cette zone permet d\'afficher des informations (exemple un numéro de téléphone, etc.) à gauche, en haut, à droite ou en dessous du formulaire de contact.';
+$lang['contact_config.informations_position'] = 'Position';
+$lang['contact_config.fields.manage'] = 'Gestion des champs';
+$lang['contact_config.fields.add'] = 'Ajouter un champ';
+$lang['contact_config.fields.edit'] = 'Edition d\'un champ';
+$lang['contact_config.no_field'] = 'Aucun champ';
+$lang['contact_config.display_subject_field'] = 'Afficher le champ "Objet" dans le formulaire ?';
+$lang['contact_config.subject_field_mandatory'] = 'Champ "Objet" obligatoire ?';
+$lang['contact_config.subject_field_type'] = 'Type de champ "Objet"';
+$lang['contact_config.text'] = 'Texte';
+$lang['contact_config.select'] = 'Liste';
+$lang['contact_config.default_value'] = 'Valeur par défaut';
+$lang['contact_config.possible_values'] = 'Valeurs possibles';
+$lang['contact_config.anti_spam'] = 'Protection anti-spam';
+$lang['contact_config.enable_captcha'] = 'Activer la protection anti-spam';
+$lang['contact_config.captcha_difficulty'] = 'Difficulté de l\'anti spam';
 
+//Messages
+$lang['contact.message.success_saving_config'] = 'La configuration a été enregistrée avec succès';
+$lang['contact.message.error_empty_title'] = 'Veuillez remplir le titre du formulaire';
+$lang['contact.message.error_default_value'] = 'La valeur par défaut ne fait pas partie de la liste des valeurs possibles';
 ?>
