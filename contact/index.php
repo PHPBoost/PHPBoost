@@ -30,7 +30,17 @@ define('PATH_TO_ROOT', '..');
 require_once PATH_TO_ROOT . '/kernel/init.php';
 
 $url_controller_mappers = array(
-	new UrlControllerMapper('AdminContactController', '`^/admin/?$`'),
+	//Config
+	new UrlControllerMapper('AdminContactConfigController', '`^/admin(?:/config)?/?$`'),
+	
+	//Extended-fields
+	new UrlControllerMapper('AdminContactExtendedFieldsListController', '`^/admin/fields(?:/list)?/?$`'),
+	new UrlControllerMapper('AdminContactExtendedFieldAddController', '`^/admin/fields/add/?$`'),
+	new UrlControllerMapper('AdminContactExtendedFieldEditController', '`^/admin/fields/([0-9]+)/edit/?$`', array('id')),
+	new UrlControllerMapper('AdminContactExtendedFieldDeleteController', '`^/admin/fields/delete?/?$`'),
+	new UrlControllerMapper('AdminContactExtendedFieldRepositionController', '`^/admin/fields/position/([0-9]+)/([a-z]+)/?$`', array('id', 'type')),
+	
+	//Contact form
 	new UrlControllerMapper('ContactController', '`^/?$`')
 );
 
