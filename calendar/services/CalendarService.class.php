@@ -42,9 +42,9 @@ class CalendarService
 	
 	 /**
 	 * @desc Create a new event.
-	 * @param string[] $event new Event
+	 * @param string[] $event new CalendarEvent
 	 */
-	public static function add(Event $event)
+	public static function add(CalendarEvent $event)
 	{
 		$result = self::$db_querier->insert(CalendarSetup::$calendar_table, $event->get_properties());
 		
@@ -53,9 +53,9 @@ class CalendarService
 	
 	 /**
 	 * @desc Update an event.
-	 * @param string[] $event Event to update
+	 * @param string[] $event CalendarEvent to update
 	 */
-	public static function update(Event $event)
+	public static function update(CalendarEvent $event)
 	{
 		self::$db_querier->update(NewsSetup::$news_table, $event->get_properties(), 'WHERE id=:id', array('id' => $event->get_id()));
 	}
@@ -78,7 +78,7 @@ class CalendarService
 	public static function get_event($condition, array $parameters)
 	{
 		$row = self::$db_querier->select_single_row(CalendarSetup::$calendar_table, array('*'), $condition, $parameters);
-		$event = new Event();
+		$event = new CalendarEvent();
 		$event->set_properties($row);
 		return $event;
 	}

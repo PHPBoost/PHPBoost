@@ -95,7 +95,7 @@ class CalendarModuleHomePage implements ModuleHomePage
 			}
 			else
 			{
-				$this->event = new Event();
+				$this->event = new CalendarEvent();
 				$this->event->init_default_properties();
 			}
 		}
