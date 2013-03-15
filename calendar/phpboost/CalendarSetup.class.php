@@ -44,20 +44,20 @@ class CalendarSetup extends DefaultModuleSetup
 		$this->create_tables();
 	}
 	
-	// public function upgrade($installed_version)
-	// {
-		// PersistenceContext::get_querier()->inject('ALTER TABLE '. self::$calendar_table .' CHANGE timestamp start_date INT(11) NOT NULL DEFAULT \'0\'');
-		// PersistenceContext::get_querier()->inject('ALTER TABLE '. self::$calendar_table .' CHANGE user_id author_id INT(11) NOT NULL DEFAULT \'0\'');
-		// PersistenceContext::get_dbms_utils()->add_column(self::$calendar_table, 'location' => array('type' => 'string', 'length' => 255, 'notnull' => 0));
-		// PersistenceContext::get_dbms_utils()->add_column(self::$calendar_table, 'end_date', array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0));
-		// PersistenceContext::get_dbms_utils()->add_column(self::$calendar_table, 'category_id', array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0));
-		// PersistenceContext::get_dbms_utils()->add_column(self::$calendar_table, 'registration_authorized' => array('type' => 'boolean', 'notnull' => 1, 'notnull' => 1, 'default' => 0));
-		// PersistenceContext::get_dbms_utils()->add_column(self::$calendar_table, 'repeat' => array('type' => 'string', 'length' => 25, 'notnull' => 1, 'default' => "'none'"));
-		// PersistenceContext::get_dbms_utils()->add_column(self::$calendar_table, 'repeat_number' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0));
-		// $this->create_calendar_cats_table();
-		// $this->create_calendar_users_relation_table();
-		// return '4.1.0';
-	// }
+	public function upgrade($installed_version)
+	{
+		PersistenceContext::get_querier()->inject('ALTER TABLE '. self::$calendar_table .' CHANGE timestamp start_date INT(11) NOT NULL DEFAULT \'0\'');
+		PersistenceContext::get_querier()->inject('ALTER TABLE '. self::$calendar_table .' CHANGE user_id author_id INT(11) NOT NULL DEFAULT \'0\'');
+		PersistenceContext::get_dbms_utils()->add_column(self::$calendar_table, 'location', array('type' => 'string', 'length' => 255, 'notnull' => 0));
+		PersistenceContext::get_dbms_utils()->add_column(self::$calendar_table, 'end_date', array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0));
+		PersistenceContext::get_dbms_utils()->add_column(self::$calendar_table, 'category_id', array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0));
+		PersistenceContext::get_dbms_utils()->add_column(self::$calendar_table, 'registration_authorized', array('type' => 'boolean', 'notnull' => 1, 'notnull' => 1, 'default' => 0));
+		PersistenceContext::get_dbms_utils()->add_column(self::$calendar_table, 'repeat', array('type' => 'string', 'length' => 25, 'notnull' => 1, 'default' => "'none'"));
+		PersistenceContext::get_dbms_utils()->add_column(self::$calendar_table, 'repeat_number', array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0));
+		$this->create_calendar_cats_table();
+		$this->create_calendar_users_relation_table();
+		return '4.1.0';
+	}
 	
 	public function uninstall()
 	{
