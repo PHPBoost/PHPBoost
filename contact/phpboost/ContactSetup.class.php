@@ -36,22 +36,22 @@ class ContactSetup extends DefaultModuleSetup
 
 	public function install()
 	{
-		$this->drop_tables();
-		$this->create_tables();
+		$this->drop_table();
+		$this->create_table();
 	}
 
 	public function uninstall()
 	{
-		$this->drop_tables();
+		$this->drop_table();
 		ConfigManager::delete('contact', 'config');
 	}
-
-	private function drop_tables()
+	
+	private function drop_table()
 	{
 		PersistenceContext::get_dbms_utils()->drop(array(self::$contact_extended_fields_table));
 	}
 
-	private function create_tables()
+	private function create_table()
 	{
 		$this->create_contact_extended_fields_list_table();
 	}
