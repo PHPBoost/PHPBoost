@@ -39,7 +39,21 @@
 #################################################################################
 
 ------------------------------------ MODULES -----------------------------------
+[b]Calendrier:[/b]
++ [color=red]Nouveauté:[/color] Module mini-calendrier, module mini attenant au module du calendrier.
+- Ajout des microdonnées pour améliorer le référencement
++ Possibilité de créer un évènement de manière récursive ( tous les X jours, X semaines, X mois) / pouvoir dupliquer de la même manière un événement déjà présent dans le calendrier
++ Possibilité de s'inscrire à un évènement et de limiter le nombre des inscrits à un événement
+- Système de filtre par mot-clé dans la liste des événements
+- Possibilité d'afficher la liste des événements d'une ou de plusieurs catégories pour un mois donné
+- Possibilité d'afficher la liste des événements d'une ou de plusieurs catégories pour une année donnée
+- Possibilité d'afficher la liste des événements d'une ou de plusieurs catégories pour un écart entre 2 dates
 
+[b]Contact:[/b]
+- Possibilité de choisir à quel groupe d'utilisateurs envoyer le mail.
+
+[b]BugTracker[/b]
+- Ajout d'une date de parution pour les versions (utilisée dans la roadmap)
 
 #################################################################################
 
@@ -124,27 +138,3 @@ choix du nombre d'affichage de la bannière, du nombre de clics sur la bannière, 
 
 [b]Nouveau module:[/b]
 - [color=red]Nouveauté:[/color] Module tchat, permet de discuter facilement dans une interface prévue à cet effet.
-
-#################################################################################
-##                                   JULIEN                                    ##
-#################################################################################
-
------------------------------------- MODULES -----------------------------------
-[b]Bugtracker:[/b]
-[*] [color=red]Nouveauté :[/color] Passage du module en MVC
-[*] Gestion de l'envoi de MP affinée
-- Versions, types, catégories, priorités, niveaux triables dans l'administration du module
-- Statut d'avancement sous forme de %
-- Ajout de filtres dans les tableaux
-- Choisir les colonnes à afficher dans les tableaux depuis la configuration
-- Ajout d'une date de parution pour les versions (utilisée dans la roadmap)
-
-[b]Calendrier:[/b]
-[*] [color=red]Nouveauté :[/color] Passage du module en MVC
-+ [color=red]Nouveauté:[/color] Module mini-calendrier, module mini attenant au module du calendrier.
-- [color=red]Nouveauté:[/color] Possibilité d'ajouter des évenements sur plusieurs jours.
-- Possibilité d'afficher les évenements sur une période donnée.
-
-[b]Contact:[/b]
-- Possibilité de choisir à quel groupe d'utilisateurs envoyer le mail.
-- Possibilité de rajouter des champs dans le formulaire d'envoi.
