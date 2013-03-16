@@ -158,9 +158,14 @@ class AdminGeneralConfigController extends AdminController
 		$other_start_page = $this->form->get_value('other_start_page');
 
 		$module_home_page = $this->form->get_value('start_page')->get_raw_value();
-		$this->general_config->set_module_home_page($module_home_page);
-		if ($module_home_page === 'other')
+		if ($module_home_page !== 'other')
+		{
+			$this->general_config->set_module_home_page($module_home_page);		
+		}		
+		else		
+		{		
 			$this->general_config->set_other_home_page($this->form->get_value('other_start_page'));
+		}
 
 		GeneralConfig::save();
 
