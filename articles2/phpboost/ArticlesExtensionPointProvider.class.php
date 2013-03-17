@@ -29,12 +29,17 @@ class ArticlesExtensionPointProvider extends ExtensionPointProvider
 {
     public function __construct()
     {
-		parent::__construct('articles');
-	}
+        parent::__construct('articles');
+    }
 	
-	public function url_mappings()
-	{
-		return new UrlMappings(array(new DispatcherUrlMapping('/articles/index.php')));
-	}
+    public function url_mappings()
+    {
+        return new UrlMappings(array(new DispatcherUrlMapping('/articles/index.php')));
+    }
+    
+    public function sitemap()
+    {
+	return new ArticlesSitemapExtensionPoint();
+    }
 }
 ?>

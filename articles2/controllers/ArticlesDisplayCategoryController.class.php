@@ -29,7 +29,7 @@ class ArticlesDisplayCategoryController extends ModuleController
 {	
 	private $lang;
 	private $tpl;
-	
+	private $view;
 	private $category;
 	
 	public function execute(HTTPRequestCustom $request)
@@ -38,7 +38,7 @@ class ArticlesDisplayCategoryController extends ModuleController
 		
 		$this->init();
 		
-		$this->build_view();
+		$this->build_view($request);
 					
 		return $this->generate_response($this->tpl);
 	}
@@ -50,20 +50,77 @@ class ArticlesDisplayCategoryController extends ModuleController
                 $this->tpl->add_lang($this->lang);
 	}
 		
-	private function build_view()
+	private function build_view($request)
 	{
 		$now = new Date(DATE_NOW, TIMEZONE_AUTO);
 		
-		$result = PersistenceContext::get_querier()->select('SELECT news.*, member.level, member.user_groups
-		FROM '. NewsSetup::$news_table .' news
-		LEFT JOIN '. DB_TABLE_MEMBER .' member ON member.user_id = news.author_user_id
-		WHERE news.approbation_type = 1 OR (news.approbation_type = 2 AND news.start_date < :timestamp_now AND (news.end_date > :timestamp_now) OR news.end_date = 0)', array(
-			'timestamp_now' => $now->get_timestamp()));
+		$result = PersistenceContext::get_querier()->select('SELECT articles.*, member.level, member.user_groups, member.login
+		FROM '. ArticlesSetup::$articles_table .' articles
+		LEFT JOIN '. DB_TABLE_MEMBER .' member ON member.user_id = articles.author_user_id
+		WHERE articles.id_category=:id_category AND (articles.published = 1 OR (articles.published = 2 AND (articles.publishing_start_date < :timestamp_now 
+                AND articles.publishing_end_date > :timestamp_now) OR articles.publishing_end_date = 0))', 
+                        array(
+                              'id_category' => $this->category->get_id(),
+                              'timestamp_now' => $now->get_timestamp()
+                        ), SelectQueryResult::FETCH_ASSOC
+                );
+                
+                $number_articles_per_page = ArticlesConfig::load()->get_number_articles_per_page();
+                $number_articles_in_category = $result->get_rows_count();
+                $number_pages = ceil($number_articles_in_category / $number_articles_per_page);
+                $current_page = $request->get_getint('page',1);
+                $pagination = new Pagination($number_pages,$current_page);
+                
+                $pagination->set_url_sprintf_pattern(ArticlesUrlBuilder::display_category($this->category->get_id(), $this->category->get_rewrited_name()));
+                
+                if($number_articles_in_category > 0)
+                {
+                        
+                        
+                        $this->view->put_all(array(
+                            'C_ARTICLES_FILTERS' => true,
+                            'L_NO_ARTICLES' => $number_articles_in_category == 0 ? $this->lang['articles.no_article'] : '',
+                            'PAGINATION' => $pagination->export()->render()
+                        ));
 
-		while ($row = $result->fetch())
-		{
 
-		}
+                        $comments_topic = new ArticlesCommentsTopic();
+
+                        $notation = new Notation();
+                        $notation->set_module_name('articles');
+                        $notation->set_notation_scale(ArticlesConfig::load()->get_notation_scale());
+
+                        while($row = $result->fetch())
+                        {
+                                $moderation_auth = ArticlesAuthorizationsService::check_authorizations($this->category->get_id())->moderation();
+                                /* {
+                                  $edit = '<a href="' . ArticlesUrlBuilder::edit_article($row['id'])->absolute() . '" title="' . LangLoader::get_message('edit', 'main') . 
+                                  '"><img src="'. PATH_TO_ROOT .'/templates/' . get_utheme() . '/images/' . get_ulang() . '/edit.png" class="valign_middle" />
+                                  </a>';
+                                  $del = '<a href="' . ArticlesUrlBuilder::delete_article($row['id'])->absolute() . '" title="' . LangLoader::get_message('delete', 'main') . 
+                                  '" onclick="javascript:return Confirm_del();"><img src="'. PATH_TO_ROOT .'/templates/' . get_utheme() . '/images/' . get_ulang() . 
+                                  '/delete.png" class="valign_middle" alt="" /></a>';
+                                  }*/
+
+
+                                $comments_topic->set_id_in_module($row['id']);
+                                $comments_topic->set_url(new Url(ArticlesUrlBuilder::home()->absolute() . '?cat=' . $this->category->get_id() . '&amp;id=' . $row['id'] . '&amp;com=0#comments_list">' . CommentsService::get_number_and_lang_comments('articles', $idart) . '</a>'));
+                                $notation->set_id_in_module($row['id']);
+                                $number_notes = NotationService::get_number_notes($notation);
+
+
+                                $group_color = User::get_group_color($row['user_group'], $row['level']);
+                                $pseudo = $row['user_id'] > 0 ? '<a href="' . UserUrlBuilder::profile($row['user_id'])->absolute() . '">' . $row['login'] . '</a>' : $this->lang['articles.visitor'];
+
+
+
+                                $this->view->assign_block_vars('articles_list', array(
+                                    'C_IS_MODERATOR' => $moderation_auth,
+                                    'C_GROUP_COLOR' => !empty($group_color),
+                                    ''
+                                ));
+                        }
+                }
 	}
 	
 	private function get_category()
@@ -79,7 +136,9 @@ class ArticlesDisplayCategoryController extends ModuleController
 					$category = new RichCategory();
 					$category->set_properties($row);
 					$this->category = $category;
-				} catch (RowNotFoundException $e) {
+				} 
+                                catch (RowNotFoundException $e) 
+                                {
 					$error_controller = PHPBoostErrors::unexisting_page();
    					DispatchManager::redirect($error_controller);
 				}
@@ -96,7 +155,7 @@ class ArticlesDisplayCategoryController extends ModuleController
 	{
 		$category = $this->get_category();
                 
-                if (!(ArticlesAuthorizationsService::check_authorizations($category)->moderation() || ArticlesAuthorizationsService::check_authorizations($category)->write() || ArticlesAuthorizationsService::check_authorizations($category)->read()))
+                if (!(ArticlesAuthorizationsService::check_authorizations($category->get_id())->read()))
                 {
                         $error_controller = PHPBoostErrors::user_not_authorized();
                         DispatchManager::redirect($error_controller);
