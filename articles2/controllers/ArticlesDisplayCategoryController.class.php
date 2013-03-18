@@ -75,14 +75,19 @@ class ArticlesDisplayCategoryController extends ModuleController
                 
                 if($number_articles_in_category > 0)
                 {
-                        
+                        $moderation_auth = ArticlesAuthorizationsService::check_authorizations($this->category->get_id())->moderation();
+                        $number_articles_not_published = PersistenceContext::get_querier()->count(ArticlesSetup::$articles_table, 'WHERE id_category=:id_category AND published=0', array(
+                                                                                                  'id_category' => $this->category->get_id()
+                                                                                                  )
+                        );
                         
                         $this->view->put_all(array(
                             'C_ARTICLES_FILTERS' => true,
+                            'C_PENDING_ARTICLES' => $number_articles_not_published > 0 && $moderation_auth,
                             'L_NO_ARTICLES' => $number_articles_in_category == 0 ? $this->lang['articles.no_article'] : '',
-                            'PAGINATION' => $pagination->export()->render()
+                            'PAGINATION' => $pagination->export()->render(),
+                            'U_PENDING_ARTICLES_LINK'
                         ));
-
 
                         $comments_topic = new ArticlesCommentsTopic();
 
@@ -92,7 +97,7 @@ class ArticlesDisplayCategoryController extends ModuleController
 
                         while($row = $result->fetch())
                         {
-                                $moderation_auth = ArticlesAuthorizationsService::check_authorizations($this->category->get_id())->moderation();
+                                
                                 /* {
                                   $edit = '<a href="' . ArticlesUrlBuilder::edit_article($row['id'])->absolute() . '" title="' . LangLoader::get_message('edit', 'main') . 
                                   '"><img src="'. PATH_TO_ROOT .'/templates/' . get_utheme() . '/images/' . get_ulang() . '/edit.png" class="valign_middle" />
@@ -101,7 +106,8 @@ class ArticlesDisplayCategoryController extends ModuleController
                                   '" onclick="javascript:return Confirm_del();"><img src="'. PATH_TO_ROOT .'/templates/' . get_utheme() . '/images/' . get_ulang() . 
                                   '/delete.png" class="valign_middle" alt="" /></a>';
                                   }*/
-
+                                //à vérifier si je garde ou pas...
+                                $shorten_title = (strlen($row['title']) > 45 ) ? substr(TextHelper::html_entity_decode($row['title']), 0, 45) . '...' : $row['title'];
 
                                 $comments_topic->set_id_in_module($row['id']);
                                 $comments_topic->set_url(new Url(ArticlesUrlBuilder::home()->absolute() . '?cat=' . $this->category->get_id() . '&amp;id=' . $row['id'] . '&amp;com=0#comments_list">' . CommentsService::get_number_and_lang_comments('articles', $idart) . '</a>'));
@@ -117,7 +123,8 @@ class ArticlesDisplayCategoryController extends ModuleController
                                 $this->view->assign_block_vars('articles_list', array(
                                     'C_IS_MODERATOR' => $moderation_auth,
                                     'C_GROUP_COLOR' => !empty($group_color),
-                                    ''
+                                    'TITLE' => $shorten_title,
+                                    
                                 ));
                         }
                 }
