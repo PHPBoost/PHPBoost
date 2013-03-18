@@ -64,7 +64,7 @@ class RegisterNewsletterExtendedField extends AbstractMemberExtendedField
 		$streams = $this->get_streams();
 		if (!empty($streams))
 		{
-			$value = $form->get_value($field_name);
+			$value = $form->get_value($field_name, array());
 			return $this->serialise_value($value);
 		}
 		return '';
