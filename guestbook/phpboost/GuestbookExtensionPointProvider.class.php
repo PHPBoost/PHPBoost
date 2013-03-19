@@ -49,6 +49,13 @@ class GuestbookExtensionPointProvider extends ExtensionPointProvider
 		));
     }
 	
+	public function css_files()
+	{
+		$module_css_files = new ModuleCssFiles();
+		$module_css_files->adding_running_module_displayed_file('guestbook.css');
+		return $module_css_files;
+	}
+	
 	public function url_mappings()
 	{
 		return new UrlMappings(array(new DispatcherUrlMapping('/guestbook/index.php')));
