@@ -30,7 +30,6 @@ class ArticlesModuleHomePage implements ModuleHomePage
 	private $lang;
 	private $view;
 	
-	
 	public static function get_view()
 	{
 		$object = new self();
