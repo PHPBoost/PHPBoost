@@ -49,14 +49,19 @@ class ArticlesDisplayCategoryController extends ModuleController
 		$this->tpl = new FileTemplate('articles/ArticlesDisplayCategoryController.tpl');
                 $this->tpl->add_lang($this->lang);
 	}
+        
+        private function build_form()
+        {
+                $form = new HTMLForm(__CLASS__);
 		
+		$fieldset = new FormFieldsetHorizontal('filters'); // @todo : voir si je passe une classe en option pour styliser
+		$form->add_fieldset($fieldset);
+        }
 	private function build_view($request)
 	{
 		$now = new Date(DATE_NOW, TIMEZONE_AUTO);
 		
                 $number_articles_per_page = ArticlesConfig::load()->get_number_articles_per_page();
-                $number_articles_in_category = $result->get_rows_count();
-                
                 $number_pages = ceil($number_articles_in_category / $number_articles_per_page);
                 $current_page = $request->get_getint('page',1);
                 
@@ -64,6 +69,8 @@ class ArticlesDisplayCategoryController extends ModuleController
                 $pagination->set_url_sprintf_pattern(ArticlesUrlBuilder::display_category($this->category->get_id(), $this->category->get_rewrited_name()));
                
                 $limit_page = (($limit_page - 1) * $number_articles_per_page);
+                
+                $moderation_auth = ArticlesAuthorizationsService::check_authorizations($this->category->get_id())->moderation();
                 
 		$result = PersistenceContext::get_querier()->select('SELECT articles.*, member.level, member.user_groups, member.login
 		FROM '. ArticlesSetup::$articles_table .' articles
@@ -77,22 +84,32 @@ class ArticlesDisplayCategoryController extends ModuleController
                              ), SelectQueryResult::FETCH_ASSOC
                 );
                 
-                if($number_articles_in_category > 0)
-                {
-                        $moderation_auth = ArticlesAuthorizationsService::check_authorizations($this->category->get_id())->moderation();
-                        $number_articles_not_published = PersistenceContext::get_querier()->count(ArticlesSetup::$articles_table, 'WHERE id_category=:id_category AND published=0', array(
+                $number_articles_in_category = $result->get_rows_count();
+                
+                $number_articles_not_published = PersistenceContext::get_querier()->count(ArticlesSetup::$articles_table, 'WHERE id_category=:id_category AND published=0', array(
                                                                                                   'id_category' => $this->category->get_id()
                                                                                                   )
-                        );
-                        
-                        $this->view->put_all(array(
+                );
+                
+                $this->view->put_all(array(
                             'C_IS_MODERATOR' => $moderation_auth,
-                            'C_ARTICLES_FILTERS' => true,
                             'C_PENDING_ARTICLES' => $number_articles_not_published > 0 && $moderation_auth,
-                            'L_NO_ARTICLES' => $number_articles_in_category == 0 ? $this->lang['articles.no_article'] : '',
-                            'PAGINATION' => $pagination->export()->render(),
+                            'L_CAT' => $this->category->get_name(),
+                            'L_TOTAL_ARTICLES' => $number_articles_in_category > 0 ? spintf($this->lang['articles.total_articles_category'], $number_articles_in_category) : '',
                             'U_PENDING_ARTICLES_LINK' => '', // @todo : link
                             'U_ADD_ARTICLES' => ArticlesUrlBuilder::add_article()->absolute()
+                ));
+                
+                if($number_articles_in_category > 0)
+                {
+                        $add_auth = ArticlesAuthorizationsService::check_authorizations($this->category->get_id())->write() || ArticlesAuthorizationsService::check_authorizations($this->category->get_id())->contribution();
+                        $edit_auth = ArticlesAuthorizationsService::check_authorizations($this->category->get_id())->write() || ArticlesAuthorizationsService::check_authorizations($this->category->get_id())->moderation();
+                           
+                        $this->view->put_all(array(
+                                    'C_ADD' => $add_auth,
+                                    'C_EDIT' => $edit_auth,
+                                    'C_ARTICLES_FILTERS' => true,
+                                    'PAGINATION' => $pagination->export()->render()
                         ));
 
                         $comments_topic = new ArticlesCommentsTopic();
@@ -128,6 +145,12 @@ class ArticlesDisplayCategoryController extends ModuleController
                                     'U_ARTICLES_DELETE' => ArticlesUrlBuilder::delete_article($row['id'])->absolute()
                                 ));
                         }
+                }
+                else 
+                {
+                    $this->view->put_all(array(
+                            'L_NO_ARTICLES' => $this->lang['articles.no_article']
+                    ));
                 }
 	}
 	

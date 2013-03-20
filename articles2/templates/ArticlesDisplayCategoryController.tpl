@@ -1,8 +1,9 @@
 {JAVA} 
+# INCLUDE MSG #
 <script type="text/javascript">
 <!--
 	function Confirm_del_article() {
-	return confirm("{L_ALERT_DELETE_ARTICLE}");
+            return confirm("{L_ALERT_DELETE_ARTICLE}");
 	}
 -->
 </script>
