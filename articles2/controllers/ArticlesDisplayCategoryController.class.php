@@ -54,24 +54,28 @@ class ArticlesDisplayCategoryController extends ModuleController
 	{
 		$now = new Date(DATE_NOW, TIMEZONE_AUTO);
 		
+                $number_articles_per_page = ArticlesConfig::load()->get_number_articles_per_page();
+                $number_articles_in_category = $result->get_rows_count();
+                
+                $number_pages = ceil($number_articles_in_category / $number_articles_per_page);
+                $current_page = $request->get_getint('page',1);
+                
+                $pagination = new Pagination($number_pages,$current_page);
+                $pagination->set_url_sprintf_pattern(ArticlesUrlBuilder::display_category($this->category->get_id(), $this->category->get_rewrited_name()));
+               
+                $limit_page = (($limit_page - 1) * $number_articles_per_page);
+                
 		$result = PersistenceContext::get_querier()->select('SELECT articles.*, member.level, member.user_groups, member.login
 		FROM '. ArticlesSetup::$articles_table .' articles
 		LEFT JOIN '. DB_TABLE_MEMBER .' member ON member.user_id = articles.author_user_id
 		WHERE articles.id_category=:id_category AND (articles.published = 1 OR (articles.published = 2 AND (articles.publishing_start_date < :timestamp_now 
-                AND articles.publishing_end_date > :timestamp_now) OR articles.publishing_end_date = 0))', 
+                AND articles.publishing_end_date > :timestamp_now) OR articles.publishing_end_date = 0)) LIMIT ' . $number_articles_per_page . 'OFFSET :start_limit', 
                         array(
                               'id_category' => $this->category->get_id(),
-                              'timestamp_now' => $now->get_timestamp()
-                        ), SelectQueryResult::FETCH_ASSOC
+                              'timestamp_now' => $now->get_timestamp(),
+                              'start_limit' => $limit_page
+                             ), SelectQueryResult::FETCH_ASSOC
                 );
-                
-                $number_articles_per_page = ArticlesConfig::load()->get_number_articles_per_page();
-                $number_articles_in_category = $result->get_rows_count();
-                $number_pages = ceil($number_articles_in_category / $number_articles_per_page);
-                $current_page = $request->get_getint('page',1);
-                $pagination = new Pagination($number_pages,$current_page);
-                
-                $pagination->set_url_sprintf_pattern(ArticlesUrlBuilder::display_category($this->category->get_id(), $this->category->get_rewrited_name()));
                 
                 if($number_articles_in_category > 0)
                 {
@@ -82,11 +86,13 @@ class ArticlesDisplayCategoryController extends ModuleController
                         );
                         
                         $this->view->put_all(array(
+                            'C_IS_MODERATOR' => $moderation_auth,
                             'C_ARTICLES_FILTERS' => true,
                             'C_PENDING_ARTICLES' => $number_articles_not_published > 0 && $moderation_auth,
                             'L_NO_ARTICLES' => $number_articles_in_category == 0 ? $this->lang['articles.no_article'] : '',
                             'PAGINATION' => $pagination->export()->render(),
-                            'U_PENDING_ARTICLES_LINK'
+                            'U_PENDING_ARTICLES_LINK' => '', // @todo : link
+                            'U_ADD_ARTICLES' => ArticlesUrlBuilder::add_article()->absolute()
                         ));
 
                         $comments_topic = new ArticlesCommentsTopic();
@@ -97,34 +103,29 @@ class ArticlesDisplayCategoryController extends ModuleController
 
                         while($row = $result->fetch())
                         {
-                                
-                                /* {
-                                  $edit = '<a href="' . ArticlesUrlBuilder::edit_article($row['id'])->absolute() . '" title="' . LangLoader::get_message('edit', 'main') . 
-                                  '"><img src="'. PATH_TO_ROOT .'/templates/' . get_utheme() . '/images/' . get_ulang() . '/edit.png" class="valign_middle" />
-                                  </a>';
-                                  $del = '<a href="' . ArticlesUrlBuilder::delete_article($row['id'])->absolute() . '" title="' . LangLoader::get_message('delete', 'main') . 
-                                  '" onclick="javascript:return Confirm_del();"><img src="'. PATH_TO_ROOT .'/templates/' . get_utheme() . '/images/' . get_ulang() . 
-                                  '/delete.png" class="valign_middle" alt="" /></a>';
-                                  }*/
-                                //à vérifier si je garde ou pas...
+                                // @todo : à vérifier si je garde ou pas...
                                 $shorten_title = (strlen($row['title']) > 45 ) ? substr(TextHelper::html_entity_decode($row['title']), 0, 45) . '...' : $row['title'];
 
                                 $comments_topic->set_id_in_module($row['id']);
-                                $comments_topic->set_url(new Url(ArticlesUrlBuilder::home()->absolute() . '?cat=' . $this->category->get_id() . '&amp;id=' . $row['id'] . '&amp;com=0#comments_list">' . CommentsService::get_number_and_lang_comments('articles', $idart) . '</a>'));
+                                $comments_topic->set_url(ArticlesUrlBuilder::home()->absolute());
                                 $notation->set_id_in_module($row['id']);
                                 $number_notes = NotationService::get_number_notes($notation);
-
-
+                                
                                 $group_color = User::get_group_color($row['user_group'], $row['level']);
-                                $pseudo = $row['user_id'] > 0 ? '<a href="' . UserUrlBuilder::profile($row['user_id'])->absolute() . '">' . $row['login'] . '</a>' : $this->lang['articles.visitor'];
-
-
 
                                 $this->view->assign_block_vars('articles_list', array(
-                                    'C_IS_MODERATOR' => $moderation_auth,
                                     'C_GROUP_COLOR' => !empty($group_color),
-                                    'TITLE' => $shorten_title,
-                                    
+                                    'TITLE' => $shorten_title, // @todo : link
+                                    'PICTURE' => $row['picture_url'],// @todo : link
+                                    'DATE' => gmdate_format('date_format_short', $row['date_created']),
+                                    'NUMBER_VIEW' => $row['number_view'],
+                                    'NOTE' => $number_notes > 0 ? NotationService::display_static_image($notation, true) : $this->lang['articles.no_notes'],
+                                    'DESCRIPTION' =>FormatingHelper::second_parse($row['description']),                                    
+                                    'U_ARTICLES_LINK_COM' => '<a href="' . ArticlesUrlBuilder::home($this->category->get_rewrited_name() . '/' . $row['id'] . '#comments_list')->absolute() . '">'. CommentsService::get_number_and_lang_comments('articles', $row['id']) . '</a>',
+                                    'U_AUTHOR' => '<a href="' . UserUrlBuilder::profile($row['user_id'])->absolute() . '" class="' . UserService::get_level_class($row['level']) . '"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . TextHelper::wordwrap_html($row['login'], 19) . '</a>',
+                                    'U_ARTICLES_LINK' => ArticlesUrlBuilder::display_article($this->category->get_rewrited_name(), $row['id'], $row['rewrited_title'])->absolute(),
+                                    'U_ARTICLES_EDIT' => ArticlesUrlBuilder::edit_article($row['id'])->absolute(),
+                                    'U_ARTICLES_DELETE' => ArticlesUrlBuilder::delete_article($row['id'])->absolute()
                                 ));
                         }
                 }
@@ -172,15 +173,15 @@ class ArticlesDisplayCategoryController extends ModuleController
 	private function generate_response(View $view)
 	{
 		$response = new ArticlesDisplayResponse();
-		$response->set_page_title($this->get_category()->get_name());
+		$response->set_page_title($this->category->get_name());
 		
-		$response->add_breadcrumb_link($this->lang['news'], NewsUrlBuilder::home());
+		$response->add_breadcrumb_link($this->lang['articles'], ArticlesUrlBuilder::home());
 		
-		$categories = array_reverse(NewsService::get_categories_manager()->get_parents($this->get_category()->get_id(), true));
+		$categories = array_reverse(ArticlesService::get_categories_manager()->get_parents($this->category->get_id(), true));
 		foreach ($categories as $id => $category)
 		{
 			if ($id != Category::ROOT_CATEGORY)
-				$response->add_breadcrumb_link($category->get_name(), NewsUrlBuilder::display_category($id, $category->get_rewrited_name()));
+				$response->add_breadcrumb_link($category->get_name(), ArticlesUrlBuilder::display_category($id, $category->get_rewrited_name()));
 		}
 	
 		return $response->display($this->tpl);
