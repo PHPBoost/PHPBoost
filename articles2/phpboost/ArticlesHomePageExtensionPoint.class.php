@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                        ArticlesExtensionPointProvider.class.php
+ *                        ArticlesHomePageExtensionPoint.class.php
  *                            -------------------
  *   begin                : March 19, 2013
  *   copyright            : (C) 2013 Patrick DUBEAU
@@ -25,31 +25,21 @@
  *
  ###################################################*/
 
-class ArticlesExtensionPointProvider extends ExtensionPointProvider
+class ArticlesHomePageExtensionPoint extends HomePageExtensionPoint
 {
-        public function __construct()
-        {
-                parent::__construct('articles');
-        }
-    
-        public function home_page()
-        {
-                return new ArticlesHomePageExtensionPoint();
-        }
-        
-        public function comments()
-        {
-            return new CommentsTopics(array(new ArticlesCommentsTopic()));
-        }
+        public function get_home_page()
+	{
+		return new DefaultHomePage($this->get_title(), $this->get_view());
+	}
 
-        public function url_mappings()
-        {
-            return new UrlMappings(array(new DispatcherUrlMapping('/articles/index.php')));
-        }
+	private function get_title()
+	{
+		return LangLoader::get_message('articles', 'articles-common', 'articles');
+	}
 
-        public function sitemap()
-        {
-            return new ArticlesSitemapExtensionPoint();
-        }
+	private function get_view()
+	{
+		return ArticlesModuleHomePage::get_view();
+	}
 }
 ?>
