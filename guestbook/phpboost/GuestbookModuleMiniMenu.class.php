@@ -57,9 +57,9 @@ class GuestbookModuleMiniMenu extends ModuleMiniMenu
 			{
 				//Pseudo.
 				if ($guestbook_rand['user_id'] != -1)
-					$guestbook_login = '<a class="small_link" href="' . UserUrlBuilder::profile($guestbook_rand['user_id'])->absolute() . '" title="' . $guestbook_rand['login'] . '"><span style="font-weight:bold;">' . TextHelper::wordwrap_html($guestbook_rand['login'], 13) . '</span></a>';
+					$guestbook_login = '<a class="small_link" href="' . UserUrlBuilder::profile($guestbook_rand['user_id'])->absolute() . '" title="' . $guestbook_rand['login'] . '"><span class="text_strong">' . TextHelper::wordwrap_html($guestbook_rand['login'], 13) . '</span></a>';
 				else
-					$guestbook_login = '<span style="font-style:italic;">' . (!empty($guestbook_rand['login']) ? TextHelper::wordwrap_html($guestbook_rand['login'], 13) : LangLoader::get_message('guest', 'main')) . '</span>';
+					$guestbook_login = '<span class="text_italic">' . (!empty($guestbook_rand['login']) ? TextHelper::wordwrap_html($guestbook_rand['login'], 13) : LangLoader::get_message('guest', 'main')) . '</span>';
 				
 				$tpl->put_all(array(
 					'C_ANY_MESSAGE_GUESTBOOK' => true,

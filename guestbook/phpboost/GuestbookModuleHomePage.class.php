@@ -106,7 +106,7 @@ class GuestbookModuleHomePage implements ModuleHomePage
 			}
 			$form->add_button($submit_button);
 			$form->add_button(new FormButtonReset());
-				
+			
 			$form->add_fieldset($fieldset);
 			
 			//Post form has been submitted
@@ -139,7 +139,7 @@ class GuestbookModuleHomePage implements ModuleHomePage
 					if ($form->has_field('pseudo')) {
 						$guestbook_login = $form->get_value('pseudo');
 					}
-					$guestbook_login = empty($guestbook_login) ? ($User->check_level(User::MEMBER_LEVEL) ? $User->get_attribute('login') : $LANG['guest']) : $guestbook_login;
+					$guestbook_login = empty($guestbook_login) ? ($this->current_user->check_level(User::MEMBER_LEVEL) ? $this->current_user->get_pseudo() : $this->main_lang['guest']) : $guestbook_login;
 					
 					$guestbook_contents = $form->get_value('contents');
 					
@@ -257,15 +257,15 @@ class GuestbookModuleHomePage implements ModuleHomePage
 			//Pseudo
 			if (!$is_guest)
 			{
-				$guestbook_login = '<a class="msg_link_pseudo" href="'. UserUrlBuilder::profile($row['user_id'])->absolute() .'" title="' . $row['mlogin'] . '"><span style="font-weight: bold;">' . TextHelper::wordwrap_html($row['mlogin'], 13) . '</span></a>';
+				$guestbook_login = '<a class="msg_link_pseudo" href="'. UserUrlBuilder::profile($row['user_id'])->absolute() .'" title="' . $row['mlogin'] . '"><span class="text_strong">' . TextHelper::wordwrap_html($row['mlogin'], 13) . '</span></a>';
 			}
 			else
 			{
-				$guestbook_login = '<span style="font-style:italic;">' . (!empty($row['login']) ? TextHelper::wordwrap_html($row['login'], 13) : $this->main_lang['guest']) . '</span>';
+				$guestbook_login = '<span class="text_italic">' . (!empty($row['login']) ? TextHelper::wordwrap_html($row['login'], 13) : $this->main_lang['guest']) . '</span>';
 			}
 
 			//User rank
-			$user_rank = ($row['level'] === '0') ? $this->main_lang['member'] : $this->main_lang['guest'];
+			$user_rank = ($row['level'] === 0) ? $this->main_lang['member'] : $this->main_lang['guest'];
 			$user_group = $user_rank;
 			$user_rank_icon = '';
 			if ($row['level'] === '2') //special rank (admins).
