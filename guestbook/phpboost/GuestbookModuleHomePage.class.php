@@ -139,8 +139,7 @@ class GuestbookModuleHomePage implements ModuleHomePage
 					if ($form->has_field('pseudo')) {
 						$guestbook_login = $form->get_value('pseudo');
 					}
-					$guestbook_login = $this->current_user->check_level(User::MEMBER_LEVEL) ? $this->current_user->get_pseudo() : $guestbook_login;	
-					$guestbook_login = empty($guestbook_login) ? $this->main_lang['guest'] : $guestbook_login;
+					$guestbook_login = empty($guestbook_login) ? ($User->check_level(User::MEMBER_LEVEL) ? $User->get_attribute('login') : $LANG['guest']) : $guestbook_login;
 					
 					$guestbook_contents = $form->get_value('contents');
 					
