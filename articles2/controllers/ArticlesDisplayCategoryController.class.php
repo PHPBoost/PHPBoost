@@ -56,40 +56,66 @@ class ArticlesDisplayCategoryController extends ModuleController
 		
 		$fieldset = new FormFieldsetHorizontal('filters'); // @todo : voir si je passe une classe en option pour styliser
 		$form->add_fieldset($fieldset);
+                
+                $sort_fields = $this->list_sort_fields();
+                // @todo : link
+                $fieldset->add_field(new FormFieldSimpleSelectChoice('sort_fields', '', $sort_fields[0], $sort_fields,
+			array('events' => array('change' => 'document.location = "'. ArticlesUrlBuilder::home()->absolute() .'" + HTMLForms.getField("sort_fields").getValue();')
+		)));
+                
+                // @todo : link
+                $fieldset->add_field(new FormFieldSimpleSelectChoice('sort_mode', '', 'DESC',
+			array(
+				new FormFieldSelectChoiceOption($this->lang['articles.sort_mode.asc'], 'ASC'),
+				new FormFieldSelectChoiceOption($this->lang['articles.sort_mode.desc'], 'DESC')
+			), 
+			array('events' => array('change' => 'document.location = "' . ArticlesUrlBuilder::home()->absolute() . '" + HTMLForms.getField("sort_mode").getValue()'))
+		));
+                
+                $this->form = $form;
         }
 	private function build_view($request)
 	{
-		$now = new Date(DATE_NOW, TIMEZONE_AUTO);
-		
+		$mode = ($request->get_getstring('mode','') == 'asc') ? 'ASC' : 'DESC';
+                $sort = $request->get_getstring('sort', '');
+                
                 $number_articles_per_page = ArticlesConfig::load()->get_number_articles_per_page();
-                $number_pages = ceil($number_articles_in_category / $number_articles_per_page);
-                $current_page = $request->get_getint('page',1);
-                
-                $pagination = new Pagination($number_pages,$current_page);
-                $pagination->set_url_sprintf_pattern(ArticlesUrlBuilder::display_category($this->category->get_id(), $this->category->get_rewrited_name()));
-               
-                $limit_page = (($limit_page - 1) * $number_articles_per_page);
-                
-                $moderation_auth = ArticlesAuthorizationsService::check_authorizations($this->category->get_id())->moderation();
+                $current_page = ($request->get_getint('page',1) > 0) ? $request->get_getint('page',1) : 1;
+                $limit_page = (($current_page - 1) * $number_articles_per_page);
+                 
+                $now = new Date(DATE_NOW, TIMEZONE_AUTO);
                 
 		$result = PersistenceContext::get_querier()->select('SELECT articles.*, member.level, member.user_groups, member.login
 		FROM '. ArticlesSetup::$articles_table .' articles
 		LEFT JOIN '. DB_TABLE_MEMBER .' member ON member.user_id = articles.author_user_id
-		WHERE articles.id_category=:id_category AND (articles.published = 1 OR (articles.published = 2 AND (articles.publishing_start_date < :timestamp_now 
-                AND articles.publishing_end_date > :timestamp_now) OR articles.publishing_end_date = 0)) LIMIT ' . $number_articles_per_page . 'OFFSET :start_limit', 
+                LEFT JOIN ' . DB_TABLE_COMMENTS_TOPIC . 'com ON com.id_in_module = a.id AND com.module_id = "articles"
+                LEFT JOIN ' . DB_TABLE_AVERAGE_NOTES . 'note ON note.id_in_module = a.id AND note.module_name = "articles"
+		WHERE articles.id_category = :id_category AND (articles.published = 1 OR (articles.published = 2 AND (articles.publishing_start_date < :timestamp_now 
+                AND articles.publishing_end_date > :timestamp_now) OR articles.publishing_end_date = 0)) 
+                ORDER BY :sort :mode LIMIT ' . $number_articles_per_page . 'OFFSET :start_limit', 
                         array(
                               'id_category' => $this->category->get_id(),
                               'timestamp_now' => $now->get_timestamp(),
-                              'start_limit' => $limit_page
+                              'start_limit' => $limit_page,
+                              'sort' => $sort,
+                              'mode' => $mode
                              ), SelectQueryResult::FETCH_ASSOC
                 );
                 
                 $number_articles_in_category = $result->get_rows_count();
+                    
+                $number_pages = ceil($number_articles_in_category / $number_articles_per_page);
+                $pagination = new Pagination($number_pages,$current_page);
+                $pagination->set_url_sprintf_pattern(ArticlesUrlBuilder::display_category($this->category->get_id(), $this->category->get_rewrited_name()));
                 
                 $number_articles_not_published = PersistenceContext::get_querier()->count(ArticlesSetup::$articles_table, 'WHERE id_category=:id_category AND published=0', array(
                                                                                                   'id_category' => $this->category->get_id()
                                                                                                   )
                 );
+                
+                $this->build_form();
+                
+                $moderation_auth = ArticlesAuthorizationsService::check_authorizations($this->category->get_id())->moderation();
                 
                 $this->view->put_all(array(
                             'C_IS_MODERATOR' => $moderation_auth,
@@ -112,8 +138,6 @@ class ArticlesDisplayCategoryController extends ModuleController
                                     'PAGINATION' => $pagination->export()->render()
                         ));
 
-                        $comments_topic = new ArticlesCommentsTopic();
-
                         $notation = new Notation();
                         $notation->set_module_name('articles');
                         $notation->set_notation_scale(ArticlesConfig::load()->get_notation_scale());
@@ -123,22 +147,20 @@ class ArticlesDisplayCategoryController extends ModuleController
                                 // @todo : à vérifier si je garde ou pas...
                                 $shorten_title = (strlen($row['title']) > 45 ) ? substr(TextHelper::html_entity_decode($row['title']), 0, 45) . '...' : $row['title'];
 
-                                $comments_topic->set_id_in_module($row['id']);
-                                $comments_topic->set_url(ArticlesUrlBuilder::home()->absolute());
                                 $notation->set_id_in_module($row['id']);
-                                $number_notes = NotationService::get_number_notes($notation);
                                 
                                 $group_color = User::get_group_color($row['user_group'], $row['level']);
 
-                                $this->view->assign_block_vars('articles_list', array(
+                                $this->view->assign_block_vars('articles', array(
                                     'C_GROUP_COLOR' => !empty($group_color),
                                     'TITLE' => $shorten_title, // @todo : link
                                     'PICTURE' => $row['picture_url'],// @todo : link
                                     'DATE' => gmdate_format('date_format_short', $row['date_created']),
                                     'NUMBER_VIEW' => $row['number_view'],
-                                    'NOTE' => $number_notes > 0 ? NotationService::display_static_image($notation, true) : $this->lang['articles.no_notes'],
+                                    'L_NUMBER_COM' => empty($row['number_comments']) ? '0' : $row['number_comments'],
+                                    'NOTE' => $row['number_notes'] > 0 ? NotationService::display_static_image($notation, $row['average_notes']) : $this->lang['articles.no_notes'],
                                     'DESCRIPTION' =>FormatingHelper::second_parse($row['description']),                                    
-                                    'U_ARTICLES_LINK_COM' => '<a href="' . ArticlesUrlBuilder::home($this->category->get_rewrited_name() . '/' . $row['id'] . '#comments_list')->absolute() . '">'. CommentsService::get_number_and_lang_comments('articles', $row['id']) . '</a>',
+                                    'U_ARTICLES_LINK_COM' => ArticlesUrlBuilder::home($this->category->get_rewrited_name() . '/' . $row['id'] . '#comments_list')->absolute(),
                                     'U_AUTHOR' => '<a href="' . UserUrlBuilder::profile($row['user_id'])->absolute() . '" class="' . UserService::get_level_class($row['level']) . '"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . TextHelper::wordwrap_html($row['login'], 19) . '</a>',
                                     'U_ARTICLES_LINK' => ArticlesUrlBuilder::display_article($this->category->get_rewrited_name(), $row['id'], $row['rewrited_title'])->absolute(),
                                     'U_ARTICLES_EDIT' => ArticlesUrlBuilder::edit_article($row['id'])->absolute(),
@@ -152,6 +174,7 @@ class ArticlesDisplayCategoryController extends ModuleController
                             'L_NO_ARTICLES' => $this->lang['articles.no_article']
                     ));
                 }
+                $this->view->put('FORM', $this->form->display());
 	}
 	
 	private function get_category()
@@ -193,6 +216,19 @@ class ArticlesDisplayCategoryController extends ModuleController
                 }
 	}
 	
+        private function list_sort_fields()
+        {
+                $options = array();
+
+                $option[] = new FormFieldSelectChoiceOption($this->lang['articles.sort_field.date'], 'date_created');
+                $option[] = new FormFieldSelectChoiceOption($this->lang['articles.sort_field.title'], 'title');
+                $option[] = new FormFieldSelectChoiceOption($this->lang['articles.sort_field.views'], 'number_view');
+                $option[] = new FormFieldSelectChoiceOption($this->lang['articles.sort_field.com'], 'com');
+                $option[] = new FormFieldSelectChoiceOption($this->lang['articles.sort_field.note'], 'note');
+                $option[] = new FormFieldSelectChoiceOption($this->lang['articles.sort_field.author'], 'author_user_id');
+            
+                return $options;
+        }
 	private function generate_response(View $view)
 	{
 		$response = new ArticlesDisplayResponse();
@@ -207,7 +243,7 @@ class ArticlesDisplayCategoryController extends ModuleController
 				$response->add_breadcrumb_link($category->get_name(), ArticlesUrlBuilder::display_category($id, $category->get_rewrited_name()));
 		}
 	
-		return $response->display($this->tpl);
+		return $response->display($view);
 	}
 }
 ?>
