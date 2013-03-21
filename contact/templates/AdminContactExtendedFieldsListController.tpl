@@ -87,13 +87,13 @@ Event.observe(window, 'load', function() {
 		<div id="lists">
 			# START list_extended_fields #
 				<div class="menu_link_element" id="list_{list_extended_fields.ID}">
-					<div style="float:left;">
-						<img src="{PATH_TO_ROOT}/templates/default/images/drag.png" alt="drag" class="valign_middle" style="padding-left:5px;padding-right:5px;cursor:move" />
-						<img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/url.png" alt="url" class="valign_middle" style="cursor:move;margin-right:10px;" />
+					<div class="float_left">
+						<img src="{PATH_TO_ROOT}/templates/default/images/drag.png" alt="drag" class="drag_picture" />
+						<img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/url.png" alt="url" class="url_picture" />
 						{L_NAME} : <span class="text_strong" >{list_extended_fields.NAME}</span>
 					</div>
-					<div style="float:right;">
-						{L_REQUIRED} : <span style="margin-right:30px;" class="text_strong" >{list_extended_fields.L_REQUIRED}</span> 
+					<div class="float_right">
+						{L_REQUIRED} : <span class="require" >{list_extended_fields.L_REQUIRED}</span> 
 						<img id="loading_{list_extended_fields.ID}" alt="" class="valign_middle" />
 						<a href="{list_extended_fields.EDIT_LINK}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="{L_UPDATE}" title="{L_UPDATE}" class="valign_middle" /></a>
 						# IF NOT list_extended_fields.FREEZE #

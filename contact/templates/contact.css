@@ -1,3 +1,15 @@
+/* Sur Class */
+.float_left{
+	float:left;
+	margin: 0;
+}
+
+.float_right{
+	float:right;
+	margin: 0;
+}
+
+/* general Class */
 .informations_side{
 	width: 38%;
 	margin: 69px 0;
@@ -5,4 +17,22 @@
 
 .form_side{
 	width: 60%;
+}
+
+img.drag_picture{
+	padding-left:5px;
+	padding-right:5px;
+	cursor:move;
+	vertical-align:middle;
+}
+
+img.url_picture{
+	cursor:move;
+	margin-right:10px;
+	vertical-align:middle;
+}
+
+.require{
+	font-weight:bold;
+	margin-right:30px;
 }
