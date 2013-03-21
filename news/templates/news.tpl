@@ -18,8 +18,9 @@
 					{TITLE}
                	</div>
                	<div class="module_top_com">
-					# IF C_COM #
-						<img src="{PATH_TO_ROOT}/templates/{THEME}/images/com_mini.png" alt="" class="valign_middle" /> <a href="{U_COM}">{COM}</a>
+					# IF U_COM #
+						<img src="{PATH_TO_ROOT}/templates/{THEME}/images/com_mini.png" alt="" class="valign_middle" />
+						{U_COM}
 					# ENDIF #
 					# IF C_EDIT #
 					<a href="{PATH_TO_ROOT}/news/management.php?edit={ID}" title="{L_EDIT}" class="img_link">

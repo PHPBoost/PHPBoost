@@ -57,9 +57,8 @@ if (!$User->check_auth($NEWS_CAT[$idcat]['auth'], AUTH_NEWS_READ))
 if (!empty($idnews)) // On affiche la news correspondant à l'id envoyé.
 {
 	// Récupération de la news
-	$result = $Sql->query_while("SELECT n.contents, n.extend_contents, n.title, n.id, n.idcat, n.timestamp, n.start, n.visible, n.user_id, n.img, n.alt, m.login, m.level, n.sources, com.number_comments
+	$result = $Sql->query_while("SELECT n.contents, n.extend_contents, n.title, n.id, n.idcat, n.timestamp, n.start, n.visible, n.user_id, n.img, n.alt, m.login, m.level, n.sources
 	FROM " . DB_TABLE_NEWS . " n LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = n.user_id
-	LEFT JOIN " . DB_TABLE_COMMENTS_TOPIC . " com ON com.id_in_module = n.id AND com.module_id = 'news'
 	WHERE n.id = '" . $idnews . "' AND ('" . $now->get_timestamp() . "' >= n.start AND n.start > 0 AND ('" . $now->get_timestamp() . "' <= n.end OR n.end = 0) OR n.visible = 1)", __LINE__, __FILE__);
 	$news = $Sql->fetch_assoc($result);
 	$Sql->query_close($result);
@@ -146,13 +145,10 @@ if (!empty($idnews)) // On affiche la news correspondant à l'id envoyé.
 			'C_NEWS_NAVIGATION_LINKS' => !empty($previous_news['id']) || !empty($next_news['id']),
 			'C_PREVIOUS_NEWS' => !empty($previous_news['id']),
 			'C_NEWS_SUGGESTED' => $nbr_suggested > 0 ? 1 : 0,
-			'C_COM' => $NEWS_CONFIG['activ_com'],
 			'C_IMG' => !empty($news['img']),
 			'C_ICON' => $NEWS_CONFIG['activ_icon'] && !empty($row['idcat']),
 			'C_SOURCES' => $i > 0 ? true : false,
 			'ID' => $news['id'],
-			'COM' => CommentsService::get_number_and_lang_comments('news', $news['id']),
-			'NUMBER_COM' => !empty($news['number_comments']) ? $news['number_comments'] : 0,
 			'TITLE' => $news['title'],
 			'CONTENTS' => FormatingHelper::second_parse($news['contents']),
 			'EXTEND_CONTENTS' => FormatingHelper::second_parse($news['extend_contents']),
@@ -168,7 +164,7 @@ if (!empty($idnews)) // On affiche la news correspondant à l'id envoyé.
 			'FEED_MENU' => Feed::get_feed_menu(FEED_URL . '&amp;cat=' . $news['idcat']),
 			'U_CAT' => !empty($row['idcat']) ? 'news' . url('.php?cat=' . $news['idcat'], '-' . $news['idcat'] . '+'  . Url::encode_rewrite($NEWS_CAT[$news['idcat']]['name']) . '.php') : '',
 			'U_LINK' => 'news' . url('.php?id=' . $news['id'], '-' . $news['idcat'] . '-' . $news['id'] . '+' . Url::encode_rewrite($news['title']) . '.php'),
-			'U_COM' => PATH_TO_ROOT .'/news/news' . url('.php?id=' . $idnews . '&amp;com=0', '-' . $news['idcat'] . '-' . $idnews . '+' . Url::encode_rewrite($news['title']) . '.php?com=0') .'#comments_list',
+			'U_COM' => $NEWS_CONFIG['activ_com'] ? '<a href="'. PATH_TO_ROOT .'/news/news' . url('.php?id=' . $idnews . '&amp;com=0', '-' . $news['idcat'] . '-' . $idnews . '+' . Url::encode_rewrite($news['title']) . '.php?com=0') .'#comments_list">'. CommentsService::get_number_and_lang_comments('news', $idnews) . '</a>' : '',
 			'U_USER_ID' => UserUrlBuilder::profile($news['user_id'])->absolute(),
 			'U_SYNDICATION' => SyndicationUrlBuilder::rss('news', $news['idcat'])->rel(),
 			'U_PREVIOUS_NEWS' => 'news' . url('.php?id=' . $previous_news['id'], '-0-' . $previous_news['id'] . '+' . Url::encode_rewrite($previous_news['title']) . '.php'),
