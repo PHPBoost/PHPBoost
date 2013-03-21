@@ -145,9 +145,10 @@ class NewsHomePageExtensionPoint implements HomePageExtensionPoint
 				}
 			}
 			
-			$result = $this->sql_querier->query_while("SELECT n.contents, n.extend_contents, n.title, n.id, n.idcat, n.timestamp, n.start, n.user_id, n.img, n.alt, m.login, m.level
+			$result = $this->sql_querier->query_while("SELECT n.contents, n.extend_contents, n.title, n.id, n.idcat, n.timestamp, n.start, n.user_id, n.img, n.alt, m.login, m.level, com.number_comments
 				FROM " . DB_TABLE_NEWS . " n
 				LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = n.user_id
+				LEFT JOIN " . DB_TABLE_COMMENTS_TOPIC . " com ON com.id_in_module = n.id AND com.module_id = 'news'
 				".$where."
 				ORDER BY n.timestamp DESC
 				" . $this->sql_querier->limit($first_msg, $NEWS_CONFIG['pagination_news']), __LINE__, __FILE__);
