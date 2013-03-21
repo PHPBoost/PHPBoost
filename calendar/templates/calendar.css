@@ -150,3 +150,30 @@ div.event_date{
 	padding:6px;
 	border-top:none;
 }
+
+.width_auto {
+	width: auto;
+}
+
+.float_left{
+	float:left;
+	margin:0;
+}
+
+.float_right{
+	float:right;
+	margin:0;
+}
+
+div.event_display_author{
+	float:left;
+	padding-top:4px;
+	padding-bottom:4px;
+}
+
+div.event_display_dates{
+	font-size:10px;
+	font-weight:normal;
+	padding:4px;
+	float:right;
+}

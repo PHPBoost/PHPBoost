@@ -33,7 +33,7 @@
 </script>
 
 <link rel="stylesheet" href="{PATH_TO_ROOT}/calendar/templates/calendar.css" type="text/css" />
-<div class="module_mini_container" # IF NOT C_VERTICAL #style="width: auto;"# ENDIF #>
+<div class="module_mini_container # IF NOT C_VERTICAL #width_auto# ENDIF #">
 	<div class="module_mini_top">
 		<h5 class="sub_title">{@calendar.module_title}</h5>
 	</div>

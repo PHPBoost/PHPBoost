@@ -24,7 +24,7 @@
 					<strong>{@calendar.module_title}</strong>
 				</div>
 			</div>
-			<div class="module_contents" style="text-align:center;">
+			<div class="module_contents text_center">
 				# INCLUDE FORM #
 				
 				<span id="act"></span>
@@ -81,8 +81,8 @@
 					<div class="module_top_l"></div>
 					<div class="module_top_r"></div>
 					<div class="module_top">
-						<span class="text_strong" style="float:left;">{action.TITLE}</span>
-						<span style="float:right;">{action.COM}{action.EDIT}{action.DEL}</span>
+						<span class="text_strong float_left">{action.TITLE}</span>
+						<span class="float_right">{action.COM}{action.EDIT}{action.DEL}</span>
 					</div>
 					<div class="module_contents">
 						{action.CONTENTS}
@@ -91,10 +91,10 @@
 					<div class="module_bottom_l"></div>
 					<div class="module_bottom_r"></div>
 					<div class="module_bottom">
-						<div style="float:left;padding-top:4px;padding-bottom:4px;">
+						<div class="event_display_author">
 							{@calendar.labels.created_by}:&nbsp;&nbsp;{action.LOGIN}
 						</div>
-						<div class="text_small" style="padding:4px;float: right;">
+						<div class="event_display_dates">
 							{@calendar.labels.start_date}:&nbsp;&nbsp;{action.START_DATE}
 							<br />
 							{@calendar.labels.end_date}:&nbsp;&nbsp;{action.END_DATE}
