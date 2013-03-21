@@ -338,7 +338,7 @@ class CalendarModuleHomePage implements ModuleHomePage
 						'TITLE' => '&nbsp;',
 						'LOGIN' => '',
 						'DATE' => gmdate_format('date_format_short', mktime(0, 0, 0, $month, $day, $year)),
-						'CONTENTS' => '<p style="text-align:center;">' . $this->lang['calendar.notice.no_current_action'] . '</p>'
+						'CONTENTS' => '<p class="text_center">' . $this->lang['calendar.notice.no_current_action'] . '</p>'
 					));
 					$check_action = false;
 				}
