@@ -13,7 +13,7 @@
 		# INCLUDE GUESTBOOK_FORM #
 		
 		# IF C_ERROR_WRITING_AUTH #
-		<div style="text-align:center;margin:10px;margin-bottom:25px;">
+		<div class="error_writing_auth">
 			{L_ERROR_WRITING_AUTH}
 		</div>
 		# ENDIF #
@@ -22,7 +22,7 @@
 		<div class="msg_position">
 			<div class="msg_top_l"></div>
 			<div class="msg_top_r"></div>
-			<div class="msg_top" style="text-align:center;">{PAGINATION}&nbsp;</div>
+			<div class="msg_top text_center">{PAGINATION}&nbsp;</div>
 		</div>
 		# ENDIF #
 		# START guestbook #
@@ -33,15 +33,15 @@
 					<div class="msg_pseudo_mbr">
 						{guestbook.USER_ONLINE} {guestbook.USER_PSEUDO}
 					</div>
-					<div style="float:left;">&nbsp;&nbsp;<a href="{guestbook.U_ANCHOR}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/ancre.png" alt="{guestbook.ID}" /></a> {guestbook.DATE}</div>
-					<div style="float:right;">{guestbook.EDIT}{guestbook.DEL}&nbsp;&nbsp;</div>
+					<div class="float_left">&nbsp;&nbsp;<a href="{guestbook.U_ANCHOR}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/ancre.png" alt="{guestbook.ID}" /></a> {guestbook.DATE}</div>
+					<div class="float_right">{guestbook.EDIT}{guestbook.DEL}&nbsp;&nbsp;</div>
 				</div>
 				<div class="msg_contents_container">
 					<div class="msg_info_mbr">
-						<p style="text-align:center;">{guestbook.USER_RANK}</p>
-						<p style="text-align:center;">{guestbook.USER_IMG_ASSOC}</p>
-						<p style="text-align:center;">{guestbook.USER_AVATAR}</p>
-						<p style="text-align:center;">{guestbook.USER_GROUP}</p>
+						<p class="text_center">{guestbook.USER_RANK}</p>
+						<p class="text_center">{guestbook.USER_IMG_ASSOC}</p>
+						<p class="text_center">{guestbook.USER_AVATAR}</p>
+						<p class="text_center">{guestbook.USER_GROUP}</p>
 						{guestbook.USER_SEX}
 						{guestbook.USER_DATE}<br />
 						{guestbook.USER_MSG}<br />
@@ -59,10 +59,10 @@
 					{guestbook.USER_SIGN}
 				</div>
 				<hr />
-				<div style="float:left;">
+				<div class="float_left">
 					{guestbook.U_USER_PM} {guestbook.USER_MAIL} {guestbook.USER_MSN} {guestbook.USER_YAHOO} {guestbook.USER_WEB}
 				</div>
-				<div style="float:right;font-size:10px;">
+				<div class="warning_punishment">
 					{guestbook.WARNING} {guestbook.PUNISHMENT}
 				</div>&nbsp;
 			</div>
@@ -72,7 +72,7 @@
 		<div class="msg_position">
 			<div class="msg_bottom_l"></div>
 			<div class="msg_bottom_r"></div>
-			<div class="msg_bottom" style="text-align:center;">{PAGINATION}&nbsp;</div>
+			<div class="msg_bottom text_center">{PAGINATION}&nbsp;</div>
 		</div>
 		# ENDIF #
 	
