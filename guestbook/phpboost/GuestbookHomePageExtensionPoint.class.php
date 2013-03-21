@@ -145,8 +145,7 @@ class GuestbookHomePageExtensionPoint implements HomePageExtensionPoint
 					if ($form->has_field('pseudo')) {
 						$guestbook_login = $form->get_value('pseudo');
 					}
-					$guestbook_login = $User->check_level(User::MEMBER_LEVEL) ? $User->get_attribute('login') : $guestbook_login;	
-					$guestbook_login = empty($guestbook_login) ? $LANG['guest'] : $guestbook_login;
+					$guestbook_login = empty($guestbook_login) ? ($User->check_level(User::MEMBER_LEVEL) ? $User->get_attribute('login') : $LANG['guest']) : $guestbook_login;
 					
 					$guestbook_contents = $form->get_value('contents');
 					
