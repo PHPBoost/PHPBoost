@@ -51,7 +51,7 @@ class ArticlesUrlBuilder
         
         public static function display_category($id, $rewrited_name)
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/' . $id . '-' . $rewrited_name .'/');
+		return DispatchManager::get_url(self::$dispatcher, '/' . $id . '-' . $rewrited_name . '/');
 	}
         
 	public static function print_article($title = '')

@@ -50,7 +50,7 @@ class ArticlesDisplayCategoryController extends ModuleController
                 $this->tpl->add_lang($this->lang);
 	}
         
-        private function build_form()
+        private function build_form($mode)
         {
                 $form = new HTMLForm(__CLASS__);
 		
@@ -58,18 +58,17 @@ class ArticlesDisplayCategoryController extends ModuleController
 		$form->add_fieldset($fieldset);
                 
                 $sort_fields = $this->list_sort_fields();
-                // @todo : link
+              
                 $fieldset->add_field(new FormFieldSimpleSelectChoice('sort_fields', '', $sort_fields[0], $sort_fields,
-			array('events' => array('change' => 'document.location = "'. ArticlesUrlBuilder::home()->absolute() .'" + HTMLForms.getField("sort_fields").getValue();')
+			array('events' => array('change' => 'document.location = "'. ArticlesUrlBuilder::display_category($this->category-get_id(), $this->category->get_rewrited_name())->absolute() .'" + HTMLForms.getField("sort_fields").getValue(); /' . $mode)
 		)));
                 
-                // @todo : link
                 $fieldset->add_field(new FormFieldSimpleSelectChoice('sort_mode', '', 'DESC',
 			array(
 				new FormFieldSelectChoiceOption($this->lang['articles.sort_mode.asc'], 'ASC'),
 				new FormFieldSelectChoiceOption($this->lang['articles.sort_mode.desc'], 'DESC')
 			), 
-			array('events' => array('change' => 'document.location = "' . ArticlesUrlBuilder::home()->absolute() . '" + HTMLForms.getField("sort_mode").getValue()'))
+			array('events' => array('change' => 'document.location = "' . ArticlesUrlBuilder::display_category($this->category-get_id(), $this->category->get_rewrited_name())->absolute() . '" + HTMLForms.getField("sort_fields").getValue() "/" + HTMLForms.getField("sort_mode").getValue();'))
 		));
                 
                 $this->form = $form;
@@ -113,7 +112,7 @@ class ArticlesDisplayCategoryController extends ModuleController
                                                                                                   )
                 );
                 
-                $this->build_form();
+                $this->build_form($mode);
                 
                 $moderation_auth = ArticlesAuthorizationsService::check_authorizations($this->category->get_id())->moderation();
                 
@@ -143,24 +142,21 @@ class ArticlesDisplayCategoryController extends ModuleController
                         $notation->set_notation_scale(ArticlesConfig::load()->get_notation_scale());
 
                         while($row = $result->fetch())
-                        {
-                                // @todo : à vérifier si je garde ou pas...
-                                $shorten_title = (strlen($row['title']) > 45 ) ? substr(TextHelper::html_entity_decode($row['title']), 0, 45) . '...' : $row['title'];
-
+                        {                                
                                 $notation->set_id_in_module($row['id']);
                                 
                                 $group_color = User::get_group_color($row['user_group'], $row['level']);
 
                                 $this->view->assign_block_vars('articles', array(
                                     'C_GROUP_COLOR' => !empty($group_color),
-                                    'TITLE' => $shorten_title, // @todo : link
+                                    'TITLE' => $row['title'],
                                     'PICTURE' => $row['picture_url'],// @todo : link
                                     'DATE' => gmdate_format('date_format_short', $row['date_created']),
                                     'NUMBER_VIEW' => $row['number_view'],
                                     'L_NUMBER_COM' => empty($row['number_comments']) ? '0' : $row['number_comments'],
                                     'NOTE' => $row['number_notes'] > 0 ? NotationService::display_static_image($notation, $row['average_notes']) : $this->lang['articles.no_notes'],
                                     'DESCRIPTION' =>FormatingHelper::second_parse($row['description']),                                    
-                                    'U_ARTICLES_LINK_COM' => ArticlesUrlBuilder::home($this->category->get_rewrited_name() . '/' . $row['id'] . '#comments_list')->absolute(),
+                                    'U_ARTICLES_LINK_COM' => ArticlesUrlBuilder::display_category($this->category->get_id(), $this->category->get_rewrited_name())->absolute() . $row['id'] . '-' . $row['rewrited_title'] . '/comments/',
                                     'U_AUTHOR' => '<a href="' . UserUrlBuilder::profile($row['user_id'])->absolute() . '" class="' . UserService::get_level_class($row['level']) . '"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . TextHelper::wordwrap_html($row['login'], 19) . '</a>',
                                     'U_ARTICLES_LINK' => ArticlesUrlBuilder::display_article($this->category->get_rewrited_name(), $row['id'], $row['rewrited_title'])->absolute(),
                                     'U_ARTICLES_EDIT' => ArticlesUrlBuilder::edit_article($row['id'])->absolute(),
