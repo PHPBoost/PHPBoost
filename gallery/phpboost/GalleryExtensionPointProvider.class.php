@@ -53,13 +53,17 @@ class GalleryExtensionPointProvider extends ExtensionPointProvider
 		$gallery_config .= '$CONFIG_GALLERY = ' . var_export($CONFIG_GALLERY, true) . ';' . "\n";
 
 		$cat_gallery = 'global $CAT_GALLERY;' . "\n";
+		
+		//Racine
+		$cat_gallery .= '$CAT_GALLERY[0] = ' . var_export(array('name' => $LANG['root'], 'auth' => $CONFIG_GALLERY['auth_root']), true) . ';' . "\n\n";
+		
 		$result = $this->sql_querier->query_while("SELECT id, id_left, id_right, level, name, aprob, auth
 		FROM " . PREFIX . "gallery_cats
 		ORDER BY id_left", __LINE__, __FILE__);
 		while ($row = $this->sql_querier->fetch_assoc($result))
 		{
 			if (empty($row['auth']))
-				$row['auth'] = serialize(array());
+				$row['auth'] = serialize($CONFIG_GALLERY['auth_root']);
 
 			$cat_gallery .= '$CAT_GALLERY[\'' . $row['id'] . '\'][\'id_left\'] = ' . var_export($row['id_left'], true) . ';' . "\n";
 			$cat_gallery .= '$CAT_GALLERY[\'' . $row['id'] . '\'][\'id_right\'] = ' . var_export($row['id_right'], true) . ';' . "\n";
