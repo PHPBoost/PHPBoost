@@ -21,8 +21,8 @@
 		&nbsp;
 	# ENDIF #
 	# IF C_ARTICLES_WAITING #
-		<a href="{U_ARTICLES_WAITING}" title="{L_ARTICLES_WAINTING}" class="img_link">
-			{L_ARTICLES_WAINTING}
+		<a href="{U_ARTICLES_WAITING}" title="{L_ARTICLES_WAITING}" class="img_link">
+			{L_ARTICLES_WAITING}
 		</a>
 	# ENDIF #
 </div>
