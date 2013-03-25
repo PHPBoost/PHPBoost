@@ -91,10 +91,11 @@ class ArticlesDisplayCategoryController extends ModuleController
                 LEFT JOIN ' . DB_TABLE_AVERAGE_NOTES . 'note ON note.id_in_module = a.id AND note.module_name = "articles"
 		WHERE articles.id_category = :id_category AND (articles.published = 1 OR (articles.published = 2 AND (articles.publishing_start_date < :timestamp_now 
                 AND articles.publishing_end_date > :timestamp_now) OR articles.publishing_end_date = 0)) 
-                ORDER BY :sort :mode LIMIT ' . $number_articles_per_page . 'OFFSET :start_limit', 
+                ORDER BY :sort :mode LIMIT :limit OFFSET :start_limit', 
                         array(
                               'id_category' => $this->category->get_id(),
                               'timestamp_now' => $now->get_timestamp(),
+                              'limit' => $number_articles_per_page,
                               'start_limit' => $limit_page,
                               'sort' => $sort,
                               'mode' => $mode
@@ -107,10 +108,7 @@ class ArticlesDisplayCategoryController extends ModuleController
                 $pagination = new Pagination($number_pages,$current_page);
                 $pagination->set_url_sprintf_pattern(ArticlesUrlBuilder::display_category($this->category->get_id(), $this->category->get_rewrited_name()));
                 
-                $number_articles_not_published = PersistenceContext::get_querier()->count(ArticlesSetup::$articles_table, 'WHERE id_category=:id_category AND published=0', array(
-                                                                                                  'id_category' => $this->category->get_id()
-                                                                                                  )
-                );
+                $number_articles_not_published = PersistenceContext::get_querier()->count(ArticlesSetup::$articles_table, 'WHERE published=0');
                 
                 $this->build_form($mode);
                 
