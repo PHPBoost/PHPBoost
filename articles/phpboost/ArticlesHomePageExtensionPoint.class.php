@@ -177,7 +177,6 @@ class ArticlesHomePageExtensionPoint implements HomePageExtensionPoint
 			'U_ADD' => PATH_TO_ROOT . url('/articles/management.php?new=1&amp;cat=' . $idartcat),
 			'U_EDIT'=> !empty($idartcat) ? PATH_TO_ROOT . url('/articles/admin_articles_cat.php?edit='.$idartcat) : PATH_TO_ROOT . url('/articles/admin_articles_config.php'),
 			'U_ARTICLES_WAITING'=> PATH_TO_ROOT . '/articles/articles.php?invisible=1&amp;cat='.$idartcat,
-			'L_ARTICLES_WAINTING' => $ARTICLES_LANG['waiting_articles'],
 			'U_ARTICLES_ALPHA_TOP' => url('.php?sort=alpha&amp;mode=desc&amp;cat=' . $idartcat, '-' . $idartcat . '+' . $rewrite_title . '.php?sort=alpha&amp;mode=desc'),
 			'U_ARTICLES_ALPHA_BOTTOM' => url('.php?sort=alpha&amp;mode=asc&amp;cat=' . $idartcat, '-' . $idartcat . '+' . $rewrite_title . '.php?sort=alpha&amp;mode=asc'),
 			'U_ARTICLES_DATE_TOP' => url('.php?sort=date&amp;mode=desc&amp;cat=' . $idartcat, '-' . $idartcat . '+' . $rewrite_title . '.php?sort=date&amp;mode=desc'),
