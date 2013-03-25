@@ -63,9 +63,16 @@ class ArticlesModuleHomePage implements ModuleHomePage
 		$pagination = new Pagination($nbr_pages, $current_page);
 		
 		$pagination->set_url_sprintf_pattern(ArticlesUrlBuilder::home());
+                
+                $number_articles_not_published = PersistenceContext::get_querier()->count(ArticlesSetup::$articles_table, 'WHERE published=0');
 		
                 $this->view->put_all(array(
-			'PAGINATION' => $pagination->export()->render()
+			'C_IS_MODERATOR' => $this->auth_moderation,
+                        'C_PENDING_ARTICLES' => $number_articles_not_published > 0 && $this->auth_moderation,
+                        'PAGINATION' => $pagination->export()->render(),
+                        'U_EDIT_CONFIG' => ArticlesUrlBuilder::articles_configuration()->absolute(),
+                        'U_PENDING_ARTICLES_LINK' => '', // @todo : link
+                        'U_ADD_ARTICLES' => ArticlesUrlBuilder::add_article()->absolute()
 		));
 
 		$limit_page = (($current_page - 1) * $nbr_categories_per_page);
@@ -86,13 +93,31 @@ class ArticlesModuleHomePage implements ModuleHomePage
                 
 		while ($row = $result->fetch())
 		{
-			
-                        $this->view->assign_block_vars('streams_list', array(
-                                
+			$childrens_cat = ArticlesCategoriesCache::load()->get_childrens($row['id']);
+                        $nbr_childrens_cat = count($childrens_cat);
+                        
+                        if ($nbr_childrens_cat > 0)
+                        {
+                            foreach ($childrens_cat as $children_cat)
+                            {
+                                $childrens_cat_links = $childrens_cat_links . '<a href="' . ArticlesUrlBuilder::display_category($children_cat['id'], $children_cat['rewrited_name'])->absolute() . '">' . $children_cat['name'] . '</a> / ' ;
+                            }
+                        }
+                        else
+                        {
+                            $childrens_cat_links = '';
+                        }
+                        
+                        $this->view->assign_block_vars('cat_list', array(
+                                'ID_CATEGORY' => $row['id'],
+                                'CATEGORY_NAME' => $row['name'],
+                                'CATEGORY_DESCRIPTION' => FormatingHelper::second_parse($rwo['description']),
+                                'CATEGORY_ICON_SOURCE' => !empty($row['image']) ? ($row['image'] == 'articles.png' || $row['image'] == 'articles_mini.png' ? ArticlesUrlBuilder::home()->absolute() . $row['image'] : $row['image']) : '',
+                                'L_NBR_ARTICLES_CAT' => sprintf($this->lang['articles.nbr_articles_category'],$row['nbr_articles']),
+                                'U_CATEGORY' => ArticlesUrlBuilder::display_category($row['id'], $row['rewrited_name'])->absolute(),
+                                'U_SUBCATS' => $childrens_cat_links
                         ));
-			
-		}
-		
+		}	
 	}
         
         private function check_authorizations($categories)
