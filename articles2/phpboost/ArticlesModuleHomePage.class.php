@@ -42,15 +42,17 @@ class ArticlesModuleHomePage implements ModuleHomePage
 	
 	public function build_view()
 	{
-		$request = AppContext::get_request();
-                $categories = ArticlesCategoriesCache::load()->get_categories();
+		$this->check_authorizations();
+                $this->init();
                 
-		$this->init();
-		
-                $unauthorized_cats = $this->check_authorizations($categories);
-                $nbr_unauthorized_cats = count($unauthorized_cats);
+                $request = AppContext::get_request();
                 
-                $unauthorized_cats_sql = ($nbr_unauthorized_cats > 0) ? 'AND ac.id NOT IN (' . implode(', ', $unauthorized_cats) . ')': '';
+                $search_category_children_options = new SearchCategoryChildrensOptions();
+		$search_category_children_options->get_authorizations_bits(Category::READ_AUTHORIZATIONS);
+		$categories = ArticlesService::get_categories_manager()->get_childrens(Category::ROOT_CATEGORY, $search_category_children_options);
+		$ids_categories = array_keys($categories);
+                      
+                $authorized_cats_sql = !empty($ids_categories) ? 'AND ac.id IN (' . implode(', ', $ids_categories) . ')': '';
                 
                 $now = new Date(DATE_NOW, TIMEZONE_AUTO);
                 
@@ -78,49 +80,48 @@ class ArticlesModuleHomePage implements ModuleHomePage
 		$limit_page = (($current_page - 1) * $nbr_categories_per_page);
 		
 		$result = PersistenceContext::get_querier()->select('SELECT @id_cat:= ac.id, ac.name, ac.description, ac.image,
-                        (SELECT COUNT(*) FROM '. ArticlesSetup::$articles_table .' articles 
-                        WHERE articles.id_category = @id_cat AND (articles.published = 1 OR (articles.published = 2 
-                        AND (articles.publishing_start_date < :timestamp_now AND articles.publishing_end_date > :timestamp_now) 
-                        OR articles.publishing_end_date = 0))) AS nbr_articles FROM ' . ArticlesSetup::$articles_cats_table .
-                        ' ac :unauthorized_cats ORDER BY ac.id_parent, ac.c_order LIMIT :limit OFFSET :start_limit',
-			array(
-				'timestamp_now' => $now->get_timestamp(),
-                                'unauthorized_cats' => $unauthorized_cats_sql,
-                                'limit' => $nbr_categories_per_page,
-                                'start_limit' => $limit_page
-			), SelectQueryResult::FETCH_ASSOC
+                (SELECT COUNT(*) FROM '. ArticlesSetup::$articles_table .' articles 
+                WHERE articles.id_category = @id_cat AND (articles.published = 1 OR (articles.published = 2 
+                AND (articles.publishing_start_date < :timestamp_now AND articles.publishing_end_date > :timestamp_now) 
+                OR articles.publishing_end_date = 0))) AS nbr_articles FROM ' . ArticlesSetup::$articles_cats_table .
+                ' ac :authorized_cats ORDER BY ac.id_parent, ac.c_order LIMIT :limit OFFSET :start_limit',
+		array(
+			'timestamp_now' => $now->get_timestamp(),
+                        'authorized_cats' => $authorized_cats_sql,
+                        'limit' => $nbr_categories_per_page,
+                        'start_limit' => $limit_page
+		     ), SelectQueryResult::FETCH_ASSOC
 		);
                 
 		while ($row = $result->fetch())
 		{
-			$childrens_cat = ArticlesCategoriesCache::load()->get_childrens($row['id']);
-                        $nbr_childrens_cat = count($childrens_cat);
-                        
-                        if ($nbr_childrens_cat > 0)
+			$children_cat = ArticlesService::get_categories_manager()->get_childrens($row['id'], $search_category_children_options);
+                         
+                        if (!empty($children_cat))
                         {
-                            foreach ($childrens_cat as $children_cat)
+                            foreach ($children_cat as $child_cat)
                             {
-                                $childrens_cat_links = $childrens_cat_links . '<a href="' . ArticlesUrlBuilder::display_category($children_cat['id'], $children_cat['rewrited_name'])->absolute() . '">' . $children_cat['name'] . '</a> / ' ;
+                                $children_cat_links = $children_cat_links . '<a href="' . ArticlesUrlBuilder::display_category($child_cat->get_id(), $child_cat->get_rewrited_name())->absolute() . '">' . $child_cat->get_name() . '</a> / ';
                             }
                         }
                         else
                         {
-                            $childrens_cat_links = '';
+                            $children_cat_links = '';
                         }
                         
                         $this->view->assign_block_vars('cat_list', array(
                                 'ID_CATEGORY' => $row['id'],
                                 'CATEGORY_NAME' => $row['name'],
-                                'CATEGORY_DESCRIPTION' => FormatingHelper::second_parse($rwo['description']),
+                                'CATEGORY_DESCRIPTION' => FormatingHelper::second_parse($row['description']),
                                 'CATEGORY_ICON_SOURCE' => !empty($row['image']) ? ($row['image'] == 'articles.png' || $row['image'] == 'articles_mini.png' ? ArticlesUrlBuilder::home()->absolute() . $row['image'] : $row['image']) : '',
                                 'L_NBR_ARTICLES_CAT' => sprintf($this->lang['articles.nbr_articles_category'],$row['nbr_articles']),
                                 'U_CATEGORY' => ArticlesUrlBuilder::display_category($row['id'], $row['rewrited_name'])->absolute(),
-                                'U_SUBCATS' => $childrens_cat_links
+                                'U_SUBCATS' => $children_cat_links
                         ));
 		}	
 	}
         
-        private function check_authorizations($categories)
+        private function check_authorizations()
 	{
                 $this->auth_read = ArticlesAuthorizationsService::check_authorizations()->read();
                 $this->add_auth = ArticlesAuthorizationsService::check_authorizations()->write() || ArticlesAuthorizationsService::check_authorizations()->contribution();
@@ -132,16 +133,6 @@ class ArticlesModuleHomePage implements ModuleHomePage
                         $error_controller = PHPBoostErrors::user_not_authorized();
                         DispatchManager::redirect($error_controller);
                 }
-                
-                $unauthorized_cats = array();
-                foreach ($categories as $category)
-                {
-                        if (!(ArticlesAuthorizationsService::check_authorizations($category->get_id())->read()))
-                        {
-                                $unauthorized_cats[] = $category->get_id();
-                        }
-                }
-                return $unauthorized_cats;
 	}
 	
 	private function init()
