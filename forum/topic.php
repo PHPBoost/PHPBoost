@@ -38,7 +38,7 @@ $topic = !empty($id_get) ? $Sql->query_array(PREFIX . 'forum_topics', 'id', 'use
 //Existance du topic.
 if (empty($topic['id']))
 {
-	$controller = PHPBoostErrors::unexisting_category();
+	$controller = PHPBoostErrors::unexisting_page();
     DispatchManager::redirect($controller);
 }
 //Existance de la catégorie.
