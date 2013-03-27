@@ -63,18 +63,30 @@ class ArticlesModuleHomePage implements ModuleHomePage
                 $nbr_categories_per_page = ArticlesConfig::load()->get_number_categories_per_page();		
                 $nbr_pages =  ceil($nbr_categories / $nbr_categories_per_page);
 		$pagination = new Pagination($nbr_pages, $current_page);
+                
+                $nbr_column_cats = ($nbr_categories > $nbr_categories_per_page) ? $nbr_categories_per_page : $nbr_categories;
+                $nbr_column_cats = !empty($nbr_column_cats) ? $nbr_column_cats : 1;
+                $column_width_cats = floor(100 / $nbr_column_cats);
 		
 		$pagination->set_url_sprintf_pattern(ArticlesUrlBuilder::home());
                 
                 $number_articles_not_published = PersistenceContext::get_querier()->count(ArticlesSetup::$articles_table, 'WHERE published=0');
 		
                 $this->view->put_all(array(
-			'C_IS_MODERATOR' => $this->auth_moderation,
+			'C_ADD' => $this->add_auth,
+                        'C_MODERATE' => $this->auth_moderation,
                         'C_PENDING_ARTICLES' => $number_articles_not_published > 0 && $this->auth_moderation,
+                        'ID_CAT' => ArticlesService::get_categories_manager()->get_categories_cache()->get_category(Category::ROOT_CATEGORY),
+                        'L_ADD_ARTICLES' => $this->lang['articles.add'],
+                        'L_MANAGE_CAT' => $this->lang['categories_management'],
                         'L_EDIT_CONFIG' => $this->lang['articles_configuration'],
+                        'L_MODULE_NAME' => $this->lang['articles'],
+                        'L_PENDING_ARTICLES' => $this->lang['articles.pending_articles'],
+                        'COLUMN_WIDTH_CATS' => $column_width_cats,
                         'PAGINATION' => $pagination->export()->render(),
                         'U_EDIT_CONFIG' => ArticlesUrlBuilder::articles_configuration()->absolute(),
-                        'U_PENDING_ARTICLES_LINK' => '', // @todo : link
+                        'U_MANAGE_CAT' => ArticlesUrlBuilder::manage_categories()->absolute(),
+                        'U_PENDING_ARTICLES' => '', // @todo : link
                         'U_ADD_ARTICLES' => ArticlesUrlBuilder::add_article()->absolute()
 		));
 
