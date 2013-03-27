@@ -71,6 +71,7 @@ class ArticlesModuleHomePage implements ModuleHomePage
                 $this->view->put_all(array(
 			'C_IS_MODERATOR' => $this->auth_moderation,
                         'C_PENDING_ARTICLES' => $number_articles_not_published > 0 && $this->auth_moderation,
+                        'L_EDIT_CONFIG' => $this->lang['articles_configuration'],
                         'PAGINATION' => $pagination->export()->render(),
                         'U_EDIT_CONFIG' => ArticlesUrlBuilder::articles_configuration()->absolute(),
                         'U_PENDING_ARTICLES_LINK' => '', // @todo : link
@@ -138,7 +139,7 @@ class ArticlesModuleHomePage implements ModuleHomePage
 	private function init()
 	{
 		$this->lang = LangLoader::get('articles-common', 'articles');
-		$this->view = new FileTemplate('articles/ArticlesHomeController.tpl');
+		$this->view = new FileTemplate('articles/ArticlesModuleHomePage.tpl');
 		$this->view->add_lang($this->lang);
 	}
 }
