@@ -237,7 +237,7 @@ else if ($action == 'warning')
 		//Modérateur ne peux avertir l'admin (logique non?).
 		if (!empty($info_mbr['user_id']) && ($info_mbr['level'] < 2 || $User->check_level(User::ADMIN_LEVEL)))
 		{
-			if ($new_warning_level < 100) //Ne peux pas mettre des avertissements supérieurs à 100.
+			if ($new_warning_level <= 100) //Ne peux pas mettre des avertissements supérieurs à 100.
 			{
 				//Envoi d'un MP au membre pour lui signaler, si le membre en question n'est pas lui-même.
 				if ($id_get != $User->get_attribute('user_id'))
