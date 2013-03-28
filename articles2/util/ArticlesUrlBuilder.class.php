@@ -84,6 +84,11 @@ class ArticlesUrlBuilder
 		return DispatchManager::get_url(self::$dispatcher, '/' . $rewrited_name_category . '/' . $id_article . '/' .$rewrited_title . '/');
 	}
         
+        public static function display_pending_articles()
+	{
+		return DispatchManager::get_url(self::$dispatcher, '/pending/');
+	}
+        
 	public static function home()
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/');

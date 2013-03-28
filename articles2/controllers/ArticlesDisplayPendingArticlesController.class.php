@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *		    ArticlesDisplayCategoryController.class.php
+ *		    ArticlesDisplayPendingArticlesController.class.php
  *                            -------------------
- *   begin                : March 05, 2013
+ *   begin                : March 28, 2013
  *   copyright            : (C) 2013 Patrick DUBEAU
  *   email                : daaxwizeman@gmail.com
  *
@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-class ArticlesDisplayCategoryController extends ModuleController
+class ArticlesDisplayPendingArticlesController extends ModuleController
 {	
 	private $lang;
 	private $tpl;
@@ -46,7 +46,7 @@ class ArticlesDisplayCategoryController extends ModuleController
 	private function init()
 	{
 		$this->lang = LangLoader::get('articles-common', 'articles');
-		$this->tpl = new FileTemplate('articles/ArticlesDisplayCategoryController.tpl');
+		$this->tpl = new FileTemplate('articles/ArticlesDisplayPendingArticlesController.tpl');
                 $this->tpl->add_lang($this->lang);
 	}
         
@@ -76,81 +76,7 @@ class ArticlesDisplayCategoryController extends ModuleController
 	private function build_view($request)
 	{
 		$now = new Date(DATE_NOW, TIMEZONE_AUTO);
-                
-                $search_category_children_options = new SearchCategoryChildrensOptions();
-		$search_category_children_options->get_authorizations_bits(Category::READ_AUTHORIZATIONS);
-		$categories = ArticlesService::get_categories_manager()->get_childrens($this->category->get_id(), $search_category_children_options);
-		$ids_categories = array_keys($categories);
-                
-                if (!empty($ids_categories))
-                {
-                    $authorized_cats_sql = !empty($ids_categories) ? 'AND ac.id IN (' . implode(', ', $ids_categories) . ')': '';
-                    
-                    $current_page_cat = ($request->get_getint('page_cat',1) > 0) ? $request->get_getint('page_cat',1) : 1;
-                    
-                    $nbr_categories = count($categories);
-                    $nbr_categories_per_page = ArticlesConfig::load()->get_number_categories_per_page();		
-                    $nbr_pages =  ceil($nbr_categories / $nbr_categories_per_page);
-                    $pagination_cat = new Pagination($nbr_pages, $current_page_cat);
-
-                    $nbr_column_cats = ($nbr_categories > $nbr_categories_per_page) ? $nbr_categories_per_page : $nbr_categories;
-                    $nbr_column_cats = !empty($nbr_column_cats) ? $nbr_column_cats : 1;
-                    $column_width_cats = floor(100 / $nbr_column_cats);
-
-                    $pagination_cat->set_url_sprintf_pattern(ArticlesUrlBuilder::home()->absolute()); // @todo : à vérifier si je dois inclure sort et mode
-                    
-                    $this->view->put_all(array(
-                        'C_MODERATE' => $this->auth_moderation,
-                        'L_MANAGE_CAT' => $this->lang['categories_management'],
-                        'COLUMN_WIDTH_CATS' => $column_width_cats,
-                        'PAGINATIONCAT' => $pagination_cat->export()->render(),
-                        'U_MANAGE_CAT' => ArticlesUrlBuilder::manage_categories()->absolute()
-                    ));
-                    
-                    $limit_page = (($current_page_cat - 1) * $nbr_categories_per_page);
-		
-                    $result = PersistenceContext::get_querier()->select('SELECT @id_cat:= ac.id, ac.name, ac.description, ac.image,
-                    (SELECT COUNT(*) FROM '. ArticlesSetup::$articles_table .' articles 
-                    WHERE articles.id_category = @id_cat AND (articles.published = 1 OR (articles.published = 2 
-                    AND (articles.publishing_start_date < :timestamp_now AND articles.publishing_end_date > :timestamp_now) 
-                    OR articles.publishing_end_date = 0))) AS nbr_articles FROM ' . ArticlesSetup::$articles_cats_table .
-                    ' ac :authorized_cats ORDER BY ac.id_parent, ac.c_order LIMIT :limit OFFSET :start_limit',
-                    array(
-                            'timestamp_now' => $now->get_timestamp(),
-                            'authorized_cats' => $authorized_cats_sql,
-                            'limit' => $nbr_categories_per_page,
-                            'start_limit' => $limit_page
-                         ), SelectQueryResult::FETCH_ASSOC
-                    );
-
-                    while ($row = $result->fetch())
-                    {
-                            $children_cat = ArticlesService::get_categories_manager()->get_childrens($row['id'], $search_category_children_options);
-
-                            if (!empty($children_cat))
-                            {
-                                foreach ($children_cat as $child_cat)
-                                {
-                                    $children_cat_links = $children_cat_links . '<a href="' . ArticlesUrlBuilder::display_category($child_cat->get_id(), $child_cat->get_rewrited_name())->absolute() . '">' . $child_cat->get_name() . '</a> / ';
-                                }
-                            }
-                            else
-                            {
-                                $children_cat_links = '';
-                            }
-
-                            $this->view->assign_block_vars('cat_list', array(
-                                    'ID_CATEGORY' => $row['id'],
-                                    'CATEGORY_NAME' => $row['name'],
-                                    'CATEGORY_DESCRIPTION' => FormatingHelper::second_parse($row['description']),
-                                    'CATEGORY_ICON_SOURCE' => !empty($row['image']) ? ($row['image'] == 'articles.png' || $row['image'] == 'articles_mini.png' ? ArticlesUrlBuilder::home()->absolute() . $row['image'] : $row['image']) : '',
-                                    'L_NBR_ARTICLES_CAT' => sprintf($this->lang['articles.nbr_articles_category'],$row['nbr_articles']),
-                                    'U_CATEGORY' => ArticlesUrlBuilder::display_category($row['id'], $row['rewrited_name'])->absolute(),
-                                    'U_SUBCATS' => $children_cat_links
-                            ));
-                    }
-                }
-                
+     
                 $mode = ($request->get_getstring('mode','') == 'asc') ? 'ASC' : 'DESC';
                 $sort = $request->get_getstring('sort', '');
                 
@@ -163,11 +89,9 @@ class ArticlesDisplayCategoryController extends ModuleController
 		LEFT JOIN '. DB_TABLE_MEMBER .' member ON member.user_id = articles.author_user_id
                 LEFT JOIN ' . DB_TABLE_COMMENTS_TOPIC . 'com ON com.id_in_module = a.id AND com.module_id = "articles"
                 LEFT JOIN ' . DB_TABLE_AVERAGE_NOTES . 'note ON note.id_in_module = a.id AND note.module_name = "articles"
-		WHERE articles.id_category = :id_category AND (articles.published = 1 OR (articles.published = 2 AND (articles.publishing_start_date < :timestamp_now 
-                AND articles.publishing_end_date > :timestamp_now) OR articles.publishing_end_date = 0)) 
-                ORDER BY :sort :mode LIMIT :limit OFFSET :start_limit', 
+		WHERE articles.published = 0 OR (articles.published = 2 AND (articles.publishing_start_date > :timestamp_now 
+                AND articles.publishing_end_date < :timestamp_now)) ORDER BY :sort :mode LIMIT :limit OFFSET :start_limit', 
                         array(
-                              'id_category' => $this->category->get_id(),
                               'timestamp_now' => $now->get_timestamp(),
                               'limit' => $number_articles_per_page,
                               'start_limit' => $limit_page,
@@ -176,29 +100,27 @@ class ArticlesDisplayCategoryController extends ModuleController
                              ), SelectQueryResult::FETCH_ASSOC
                 );
                 
-                $number_articles_in_category = $result->get_rows_count();
+                $number_articles_pending = $result->get_rows_count();
                     
-                $number_pages = ceil($number_articles_in_category / $number_articles_per_page);
+                $number_pages = ceil($number_articles_pending / $number_articles_per_page);
                 $pagination = new Pagination($number_pages,$current_page);
-                $pagination->set_url_sprintf_pattern(ArticlesUrlBuilder::display_category($this->category->get_id(), $this->category->get_rewrited_name()->absolute()));
-                
-                $number_articles_not_published = PersistenceContext::get_querier()->count(ArticlesSetup::$articles_table, 'WHERE published=0');
-                
+                $pagination->set_url_sprintf_pattern(ArticlesUrlBuilder::display_pending_articles()->absolute()); // @todo : à vérifier si j'ajoute pending
+                                
                 $this->build_form($mode);
                 
                 $moderation_auth = ArticlesAuthorizationsService::check_authorizations($this->category->get_id())->moderation();
                 
                 $this->view->put_all(array(
                             'C_IS_MODERATOR' => $moderation_auth,
-                            'C_PENDING_ARTICLES' => $number_articles_not_published > 0 && $moderation_auth,
+                            'L_PUBLISHED_ARTICLES' => $this->lang['articles.published_articles'],
                             'ID_CAT' => $this->category->get_id(),
                             'L_CAT' => $this->category->get_name(),
-                            'L_TOTAL_ARTICLES' => $number_articles_in_category > 0 ? spintf($this->lang['articles.total_articles_category'], $number_articles_in_category) : '',
-                            'U_PENDING_ARTICLES' => '', // @todo : link
+                            'L_TOTAL_PENDING' => $number_articles_pending > 0 ? spintf($this->lang['articles.total_articles.pending'], $number_articles_pending) : '',
+                            'U_PUBLISHED_ARTICLES' => ArticlesUrlBuilder::home()->absolute(), 
                             'U_ADD_ARTICLES' => ArticlesUrlBuilder::add_article()->absolute()
                 ));
                 
-                if($number_articles_in_category > 0)
+                if($number_articles_pending > 0)
                 {
                         $add_auth = ArticlesAuthorizationsService::check_authorizations($this->category->get_id())->write() || ArticlesAuthorizationsService::check_authorizations($this->category->get_id())->contribution();
                         $edit_auth = ArticlesAuthorizationsService::check_authorizations($this->category->get_id())->write() || ArticlesAuthorizationsService::check_authorizations($this->category->get_id())->moderation();
@@ -240,45 +162,15 @@ class ArticlesDisplayCategoryController extends ModuleController
                 else 
                 {
                     $this->view->put_all(array(
-                            'L_NO_ARTICLES' => $this->lang['articles.no_article']
+                            'L_NO_PENDING_ARTICLES' => $this->lang['articles.no_pending_article']
                     ));
                 }
                 $this->view->put('FORM', $this->form->display());
 	}
 	
-	private function get_category()
-	{
-		if ($this->category === null)
-		{
-			$rewrited_name = AppContext::get_request()->get_getstring('rewrited_name', '');
-			if (!empty($rewrited_name))
-			{
-				try {
-					$row = PersistenceContext::get_querier()->select_single_row(ArticlesSetup::$articles_cats_table, array('*'), 'WHERE rewrited_name=:rewrited_name', array('rewrited_name' => $rewrited_name));
-
-					$category = new RichCategory();
-					$category->set_properties($row);
-					$this->category = $category;
-				} 
-                                catch (RowNotFoundException $e) 
-                                {
-					$error_controller = PHPBoostErrors::unexisting_page();
-   					DispatchManager::redirect($error_controller);
-				}
-			}
-			else
-			{
-				$this->category = ArticlesService::get_categories_manager()->get_categories_cache()->get_category(Category::ROOT_CATEGORY);
-			}
-		}
-		return $this->category;
-	}
-	
 	private function check_authorizations()
 	{
-		$category = $this->get_category();
-                
-                if (!(ArticlesAuthorizationsService::check_authorizations($category->get_id())->read()))
+                if (!(ArticlesAuthorizationsService::check_authorizations()->moderation())
                 {
                         $error_controller = PHPBoostErrors::user_not_authorized();
                         DispatchManager::redirect($error_controller);
@@ -301,16 +193,10 @@ class ArticlesDisplayCategoryController extends ModuleController
 	private function generate_response(View $view)
 	{
 		$response = new ArticlesDisplayResponse();
-		$response->set_page_title($this->category->get_name());
+		$response->set_page_title($this->lang['articles.pending_articles']);
 		
-		$response->add_breadcrumb_link($this->lang['articles'], ArticlesUrlBuilder::home());
-		
-		$categories = array_reverse(ArticlesService::get_categories_manager()->get_parents($this->category->get_id(), true));
-		foreach ($categories as $id => $category)
-		{
-			if ($id != Category::ROOT_CATEGORY)
-				$response->add_breadcrumb_link($category->get_name(), ArticlesUrlBuilder::display_category($id, $category->get_rewrited_name()));
-		}
+		$response->add_breadcrumb_link($this->lang['articles'], NewsUrlBuilder::home());
+		$response->add_breadcrumb_link($this->lang['articles.pending_articles'], ArticlesUrlBuilder::display_pending_articles());
 	
 		return $response->display($view);
 	}
