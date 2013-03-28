@@ -57,8 +57,7 @@ class ArticlesModuleHomePage implements ModuleHomePage
                 $now = new Date(DATE_NOW, TIMEZONE_AUTO);
                 
 		$current_page = ($request->get_getint('page',1) > 0) ? $request->get_getint('page',1) : 1;
-		
-                
+		             
                 $nbr_categories = count($categories);
                 $nbr_categories_per_page = ArticlesConfig::load()->get_number_categories_per_page();		
                 $nbr_pages =  ceil($nbr_categories / $nbr_categories_per_page);
@@ -68,7 +67,7 @@ class ArticlesModuleHomePage implements ModuleHomePage
                 $nbr_column_cats = !empty($nbr_column_cats) ? $nbr_column_cats : 1;
                 $column_width_cats = floor(100 / $nbr_column_cats);
 		
-		$pagination->set_url_sprintf_pattern(ArticlesUrlBuilder::home());
+		$pagination->set_url_sprintf_pattern(ArticlesUrlBuilder::home()->absolute());// @todo : à vérifier, je dois inclure la page ?
                 
                 $number_articles_not_published = PersistenceContext::get_querier()->count(ArticlesSetup::$articles_table, 'WHERE published=0');
 		

@@ -6,8 +6,6 @@
 	}
 -->
 </script>
-
-
 <div class="module_actions">
 	# IF IS_ADMIN #
 	<a href="{U_EDIT_CONFIG}" title="{L_EDIT_CONFIG}" class="img_link">
@@ -27,8 +25,6 @@
 	# ENDIF #
 </div>
 <div class="spacer"></div>
-	
-
 <div class="module_position">					
 	<div class="module_top_l"></div>		
 	<div class="module_top_r"></div>
