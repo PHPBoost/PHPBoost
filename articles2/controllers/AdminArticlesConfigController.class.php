@@ -40,7 +40,7 @@ class AdminArticlesConfigController extends AdminModuleController
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save();
-			$tpl->put('MSG', MessageHelper::display($this->lang['articles_configuration.success-saving'], MessageHelper::SUCCESS, 4));
+			$this->tpl->put('MSG', MessageHelper::display($this->lang['articles_configuration.success-saving'], MessageHelper::SUCCESS, 4));
 		}
 		
 		 $this->tpl->put('FORM', $this->form->display());
