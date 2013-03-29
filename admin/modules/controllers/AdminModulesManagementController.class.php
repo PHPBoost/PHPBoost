@@ -59,21 +59,7 @@ class AdminModulesManagementController extends AdminController
 		foreach ($modules_installed as $module)
 		{
 			$configuration = $module->get_configuration();
-			$author_website = $configuration->get_author_website();
-			
-			$authors_list = '';
-			if (strpos($configuration->get_author(), ',') && strpos($configuration->get_author_email(), ','))
-			{
-				$logins = explode(',', $configuration->get_author());
-				$emails = explode(',', $configuration->get_author_email());
-				
-				foreach ($logins as $key => $author)
-				{
-					$authors_list[] = '<a href="mailto:' . ltrim($emails[$key]). '">' . ltrim($author) . '</a>';
-				}
-				$authors_list = implode(', ', $authors_list);
-			}
-			$authors_list = !empty($authors_list) ? $authors_list : '<a href="mailto:' . $configuration->get_author_email(). '">' . $configuration->get_author() . '</a>';
+			$authors_website = $configuration->get_authors_website();
 			
 			if (!in_array($module, $modules_activated))
 			{
@@ -82,8 +68,8 @@ class AdminModulesManagementController extends AdminController
 					'NAME' => ucfirst($configuration->get_name()),
 					'ICON' => $module->get_id(),
 					'VERSION' => $configuration->get_version(),
-					'AUTHOR' => $authors_list,
-					'AUTHOR_WEBSITE' => !empty($author_website) ? '<a href="' . $author_website . '"><img src="' . TPL_PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/' . get_ulang() . '/user_web.png" alt="" /></a>' : '',
+					'AUTHOR' => $configuration->get_authors_list(),
+					'AUTHOR_WEBSITE' => !empty($authors_website) ? '<a href="' . $authors_website . '"><img src="' . TPL_PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/' . get_ulang() . '/user_web.png" alt="" /></a>' : '',
 					'DESCRIPTION' => $configuration->get_description(),
 					'COMPATIBILITY' => $configuration->get_compatibility(),
 					'PHP_VERSION' => $configuration->get_php_version(),
@@ -98,8 +84,8 @@ class AdminModulesManagementController extends AdminController
 					'NAME' => ucfirst($configuration->get_name()),
 					'ICON' => $module->get_id(),
 					'VERSION' => $module->get_installed_version(),
-					'AUTHOR' => $authors_list,
-					'AUTHOR_WEBSITE' => !empty($author_website) ? '<a href="' . $author_website . '"><img src="' . TPL_PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/' . get_ulang() . '/user_web.png" alt="" /></a>' : '',
+					'AUTHOR' => $configuration->get_authors_list(),
+					'AUTHOR_WEBSITE' => !empty($authors_website) ? '<a href="' . $authors_website . '"><img src="' . TPL_PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/' . get_ulang() . '/user_web.png" alt="" /></a>' : '',
 					'DESCRIPTION' => $configuration->get_description(),
 					'COMPATIBILITY' => $configuration->get_compatibility(),
 					'PHP_VERSION' => $configuration->get_php_version(),
