@@ -35,9 +35,9 @@ class ModuleConfiguration
 {
 	private $name;
 	private $description;
-	private $author;
-	private $author_email;
-	private $author_website;
+	private $authors;
+	private $authors_email;
+	private $authors_website;
 	private $version;
 	private $date;
 	private $compatibility;
@@ -66,19 +66,30 @@ class ModuleConfiguration
 		return $this->description;
 	}
 
-	public function get_author()
+	public function get_authors()
 	{
-		return $this->author;
+		return $this->authors;
 	}
 
-	public function get_author_email()
+	public function get_authors_email()
 	{
-		return $this->author_email;
+		return $this->authors_email;
 	}
 
-	public function get_author_website()
+	public function get_authors_website()
 	{
-		return $this->author_website;
+		return $this->authors_website;
+	}
+
+	public function get_authors_list()
+	{
+		$authors_list = '';
+		$emails = $this->get_authors_email();
+		foreach ($this->get_authors() as $key => $author)
+		{
+			$authors_list[] = isset($emails[$key]) ? '<a href="mailto:' . ltrim($emails[$key]). '">' . ltrim($author) . '</a>' : ltrim($author);
+		}
+		return implode(', ', $authors_list);
 	}
 
 	public function get_version()
@@ -146,9 +157,9 @@ class ModuleConfiguration
 		$config = parse_ini_file($config_ini_file);
 		$this->check_parse_ini_file($config, $config_ini_file);
 
-		$this->author = $config['author'];
-		$this->author_email = $config['author_mail'];
-		$this->author_website = $config['author_website'];
+		$this->authors = explode(',', $config['author']);
+		$this->authors_email = explode(',', $config['author_mail']);
+		$this->authors_website = $config['author_website'];
 		$this->version = $config['version'];
 		$this->date = $config['date'];
 		$this->compatibility = $config['compatibility'];
