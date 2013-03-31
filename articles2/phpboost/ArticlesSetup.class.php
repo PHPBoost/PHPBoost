@@ -96,7 +96,7 @@ class ArticlesSetup extends DefaultModuleSetup
 			'indexes' => array(
 				'id_category' => array('type' => 'key', 'fields' => 'id_category'),
 				'title' => array('type' => 'fulltext', 'fields' => 'title'),
-				'contents' => array('type' => 'fulltext', 'fields' => 'content')
+				'contents' => array('type' => 'fulltext', 'fields' => 'contents')
 			)
 		);
 		PersistenceContext::get_dbms_utils()->create_table(self::$articles_table, $fields, $options);
