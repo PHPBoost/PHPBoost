@@ -32,10 +32,12 @@ class AdminArticlesConfigController extends AdminModuleController
 	private $form;
 	private $submit_button;
 	
-	function execute(HTTPRequest $request)
+	public function execute(HTTPRequest $request)
 	{
 		$this->init();
 		$this->build_form();
+                
+                $this->tpl = new StringTemplate('# INCLUDE MSG # # INCLUDE FORM #');
 
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
@@ -49,8 +51,7 @@ class AdminArticlesConfigController extends AdminModuleController
 	}
 	
 	private function init()
-	{	
-		$this->tpl = new StringTemplate('# INCLUDE MSG # # INCLUDE FORM #');
+	{			
 		$this->load_lang();
 		$this->tpl->add_lang($this->lang);
 		$this->load_config();
@@ -95,6 +96,7 @@ class AdminArticlesConfigController extends AdminModuleController
 		$fieldset_authorizations = new FormFieldsetHTML('authorizations', $this->lang['articles_configuration_authorizations'],
 			array('description' => $this->lang['articles_configuration.authorizations.explain'])
                 );
+                
 		$form->add_fieldset($fieldset_authorizations);
 			
 		$auth_settings = new AuthorizationsSettings(array(

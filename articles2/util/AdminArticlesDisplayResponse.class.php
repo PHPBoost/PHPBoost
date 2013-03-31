@@ -1,10 +1,10 @@
 <?php
 /*##################################################
- *                           AdminArticlesDisplayResponse.class.php
+ *                     AdminArticlesDisplayResponse.class.php
  *                            -------------------
- *   begin                : July 07, 2011
- *   copyright            : (C) 2011 Kévin MASSY
- *   email                : soldier.weasel@gmail.com
+ *   begin                : March 27, 2013
+ *   copyright            : (C) 2013 Patrick DUBEAU
+ *   email                : daaxwizeman@gmail.com
  *
  *
  ###################################################
@@ -34,9 +34,9 @@ class AdminArticlesDisplayResponse extends AdminMenuDisplayResponse
 		$lang = LangLoader::get('articles-common', 'articles');
                 $this->set_title($lang['articles']);
                 $img = 'articles.png';
-                $this->add_link($lang['articles_management'], ArticlesUrlBuilder::articles_management(), $img);
+                
                 $this->add_link($lang['add_article'], ArticlesUrlBuilder::add_article(), $img);
-                $this->add_link($lang['categories_management'], ArticlesUrlBuilder::articles_category_management(), $img);
+                $this->add_link($lang['categories_management'], ArticlesUrlBuilder::manage_categories(), $img);
                 $this->add_link($lang['add_category'], ArticlesUrlBuilder::add_category(), $img);
 		$this->add_link($lang['articles_configuration'], ArticlesUrlBuilder::articles_configuration(), $img);
 

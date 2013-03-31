@@ -106,7 +106,7 @@ class ArticlesConfig extends AbstractConfigData
 			self::NUMBER_COLUMNS_DISPLAYED => 3,
                         self::COMMENTS_ENABLED => true,
 			self::NOTATION_SCALE => 5,
-                        self::AUTHORIZATIONS => array()
+                        self::AUTHORIZATIONS => array('r1' => 13, 'r0' => 5, 'r-1' => 1)
 		);
 	}
 	
