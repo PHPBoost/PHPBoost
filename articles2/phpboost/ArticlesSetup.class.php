@@ -41,8 +41,8 @@ class ArticlesSetup extends DefaultModuleSetup
 	{
 		self::$articles_table = PREFIX . 'articles';
 		self::$articles_cats_table = PREFIX . 'articles_cats';
-                self::$articles_keywords_table = PREFIX . 'news_keywords';
-		self::$articles_keywords_relation_table = PREFIX . 'news_keywords_relation';
+                self::$articles_keywords_table = PREFIX . 'articles_keywords';
+		self::$articles_keywords_relation_table = PREFIX . 'articles_keywords_relation';
 	}
 
 	public function install()
