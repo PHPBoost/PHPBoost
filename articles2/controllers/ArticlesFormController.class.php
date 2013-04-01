@@ -33,7 +33,7 @@ class ArticlesFormController extends ModuleController
 	private $submit_button;
         private $articles;
 
-	public function execute(HTTPRequest $request)
+	public function execute(HTTPRequestCustom $request)
 	{
 		$this->init();
                 $this->check_authorizations();
