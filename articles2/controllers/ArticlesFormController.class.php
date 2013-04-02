@@ -31,7 +31,7 @@ class ArticlesFormController extends ModuleController
 	private $lang;
 	private $form;
 	private $submit_button;
-        private $articles;
+        private $article;
 
 	public function execute(HTTPRequestCustom $request)
 	{
@@ -170,7 +170,7 @@ class ArticlesFormController extends ModuleController
 		$form->submit_button = new FormButtonDefaultSubmit();
 		$form->add_button($this->submit_button);
                 
-                $this->form = form;
+                $this->form = $form;
 	}
         
         private function build_contribution_fieldset($form)
@@ -192,14 +192,14 @@ class ArticlesFormController extends ModuleController
         
         private function get_article()
         {
-                if($this->articles === null)
+                if($this->article === null)
                 {
                         $id = AppContext::get_request()->get_getint('id', 0);
                         if(!empty($id))
                         {
                                 try
                                 {
-                                        $this->articles = ArticlesService::get_article('WHERE id=:id', array('id' => $id));
+                                        $this->article = ArticlesService::get_article('WHERE id=:id', array('id' => $id));
                                 }
                                 catch(RowNotFoundException $e)
                                 {
@@ -209,11 +209,11 @@ class ArticlesFormController extends ModuleController
                         }
                         else
                         {
-                                $this->articles = new Articles();
-                                $this->articles->init_default_properties();
+                                $this->article = new Articles();
+                                $this->article->init_default_properties();
                         }
                 }
-                return $this->articles;
+                return $this->article;
         }
         
         private function check_authorizations()

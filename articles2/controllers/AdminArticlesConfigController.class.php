@@ -36,8 +36,6 @@ class AdminArticlesConfigController extends AdminModuleController
 	{
 		$this->init();
 		$this->build_form();
-                
-                $this->tpl = new StringTemplate('# INCLUDE MSG # # INCLUDE FORM #');
 
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
@@ -52,7 +50,8 @@ class AdminArticlesConfigController extends AdminModuleController
 	
 	private function init()
 	{			
-		$this->load_lang();
+		$this->tpl = new StringTemplate('# INCLUDE MSG # # INCLUDE FORM #');
+                $this->load_lang();
 		$this->tpl->add_lang($this->lang);
 		$this->load_config();
 	}
@@ -100,10 +99,10 @@ class AdminArticlesConfigController extends AdminModuleController
 		$form->add_fieldset($fieldset_authorizations);
 			
 		$auth_settings = new AuthorizationsSettings(array(
-			new ActionAuthorization($this->lang['articles_configuration.authorizations.read'], ArticlesAuthorizationsService::AUTHORIZATIONS_READ),
-                        new ActionAuthorization($this->lang['articles_configuration.config.authorizations.write'], ArticlesAuthorizationsService::AUTHORIZATIONS_WRITE),
-			new ActionAuthorization($this->lang['articles_configuration.config.authorizations.contribution'], ArticlesAuthorizationsService::AUTHORIZATIONS_CONTRIBUTION),
-			new ActionAuthorization($this->lang['articles_configuration.config.authorizations.moderation'], ArticlesAuthorizationsService::AUTHORIZATIONS_MODERATION)
+			new ActionAuthorization($this->lang['articles_configuration.authorizations.read'], Category::READ_AUTHORIZATIONS),
+                        new ActionAuthorization($this->lang['articles_configuration.config.authorizations.write'], Category::WRITE_AUTHORIZATIONS),
+			new ActionAuthorization($this->lang['articles_configuration.config.authorizations.contribution'], Category::CONTRIBUTION_AUTHORIZATIONS),
+			new ActionAuthorization($this->lang['articles_configuration.config.authorizations.moderation'], Category::MODERATION_AUTHORIZATIONS)
 		));
 		
                 $auth_setter = new FormFieldAuthorizationsSetter('authorizations', $auth_settings);
