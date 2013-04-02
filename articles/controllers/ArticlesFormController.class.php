@@ -102,12 +102,13 @@ class ArticlesFormController extends ModuleController
 
 		$other_fieldset->add_field(new FormFieldCheckbox('author_name_displayed', $this->lang['articles.form.author_name_displayed'], $this->get_article()->get_author_name_displayed()));
 
-		$other_fieldset->add_field(new FormFieldCheckbox('notation_enabled', $this->lang['articles.form.notation_enabled'], $this->get_article()->get_noation_enabled()));
+		$other_fieldset->add_field(new FormFieldCheckbox('notation_enabled', $this->lang['articles.form.notation_enabled'], $this->get_article()->get_notation_enabled()));
 
-		$image_preview_request = new AjaxRequest(PATH_TO_ROOT . '/kernel/framework/ajax/dispatcher.php?url=/image/preview/', 'function(response){
-		if (response.responseJSON.url) {
-			$(\'preview_picture\').src = response.responseJSON.url;
-		}}');
+		$image_preview_request = new AjaxRequest(PATH_TO_ROOT . '/kernel/framework/ajax/dispatcher.php?url=/image/preview/', 
+									'function(response){
+												if (response.responseJSON.url) {
+													$(\'preview_picture\').src = response.responseJSON.url;
+												}}');
 		$image_preview_request->add_event_callback(AjaxRequest::ON_CREATE, 'function(response){ $(\'preview_picture\').src = PATH_TO_ROOT + \'/templates/'. get_utheme() .'/images/loading_mini.gif\';}');
 		$image_preview_request->add_param('image', 'HTMLForms.getField(\'picture\').getValue()');
 		$other_fieldset->add_field(new FormFieldTextEditor('picture', $this->lang['articles.form.picture'], $this->get_article()->get_picture()->relative(), 
@@ -187,7 +188,7 @@ class ArticlesFormController extends ModuleController
 
 	private function is_contributor_member()
 	{
-		return ($this->get_article()->get_id() === null && !NewsAuthorizationsService::check_authorizations()->write() && NewsAuthorizationsService::check_authorizations()->contribution());
+		return ($this->get_article()->get_id() === null && !ArticlesAuthorizationsService::check_authorizations()->write() && ArticlesAuthorizationsService::check_authorizations()->contribution());
 	}
 
 	private function get_article()
