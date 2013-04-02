@@ -1,0 +1,26 @@
+/* Sur Class */
+.float_left{
+	float:left;
+	margin:0;
+}
+
+.float_right{
+	float:right;
+	margin:0;
+}
+
+/* general Class */
+div.error_writing_auth{
+	text-align:center;
+	margin:10px;
+	margin-bottom:25px;
+}
+
+div.warning_punishment{
+	float:right;
+	font-size:10px;
+}
+
+.text_italic{
+	font-style:italic;
+}
