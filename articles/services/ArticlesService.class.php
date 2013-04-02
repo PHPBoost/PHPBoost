@@ -27,18 +27,18 @@
 
 class ArticlesService
 {
-        private static $db_querier;
-        private static $categories_manager;
+	private static $db_querier;
+	private static $categories_manager;
         
-        public static function __static()
-        {
-                self::$db_querier = PersistenceContext::get_querier();
-        }
+	public static function __static()
+	{
+		self::$db_querier = PersistenceContext::get_querier();
+	}
         
-        public static function add(Articles $article)
+	public static function add(Articles $article)
 	{
 		$result = self::$db_querier->insert(ArticlesSetup::$articles_table, $article->get_properties());
-                return $result->get_last_inserted_id();
+		return $result->get_last_inserted_id();
 	}
 	
 	public static function update(Articles $article)
@@ -51,23 +51,23 @@ class ArticlesService
 		self::$db_querier->delete(ArticlesSetup::$articles_table, $condition, $parameters);
 	}
         
-        public static function get_article($condition, array $parameters)
+	public static function get_article($condition, array $parameters)
 	{
 		$row = self::$db_querier->select_single_row(ArticlesSetup::$articles_table, array('*'), $condition, $parameters);
-                $article = new Articles();
-                $article->set_properties($row);
-                return $article;
+		$article = new Articles();
+		$article->set_properties($row);
+		return $article;
 	}
         
-        public static function get_categories_manager()
-        {
-                if(self::$categories_manager === null)
-                {
-                        $categories_items_parameters = new CategoriesItemsParameters();
-                        $categories_items_parameters->set_table_name_contains_items(ArticlesSetup::$articles_table);
-                        self::$categories_manager = new CategoriesManager(ArticlesCategoriesCache::load(), $categories_items_parameters);
-                }
-                return self::$categories_manager;
-        }
+	public static function get_categories_manager()
+	{
+		if (self::$categories_manager === null)
+		{
+			$categories_items_parameters = new CategoriesItemsParameters();
+			$categories_items_parameters->set_table_name_contains_items(ArticlesSetup::$articles_table);
+			self::$categories_manager = new CategoriesManager(ArticlesCategoriesCache::load(), $categories_items_parameters);
+		}
+		return self::$categories_manager;
+	}
 }
 ?>

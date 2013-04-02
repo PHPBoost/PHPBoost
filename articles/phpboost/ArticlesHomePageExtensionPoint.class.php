@@ -27,7 +27,7 @@
 
 class ArticlesHomePageExtensionPoint extends HomePageExtensionPoint
 {
-        public function get_home_page()
+	public function get_home_page()
 	{
 		return new DefaultHomePage($this->get_title(), $this->get_view());
 	}

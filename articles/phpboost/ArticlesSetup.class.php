@@ -29,19 +29,19 @@ class ArticlesSetup extends DefaultModuleSetup
 {
 	public static $articles_table;
 	public static $articles_cats_table;
-        public static $articles_keywords_table;
+	public static $articles_keywords_table;
 	public static $articles_keywords_relation_table;
         
-        /**
+	/**
 	 * @var string[string] localized messages
-	 */
+	*/
 	private $messages;
 
 	public static function __static()
 	{
 		self::$articles_table = PREFIX . 'articles';
 		self::$articles_cats_table = PREFIX . 'articles_cats';
-                self::$articles_keywords_table = PREFIX . 'articles_keywords';
+		self::$articles_keywords_table = PREFIX . 'articles_keywords';
 		self::$articles_keywords_relation_table = PREFIX . 'articles_keywords_relation';
 	}
 
@@ -55,7 +55,7 @@ class ArticlesSetup extends DefaultModuleSetup
 	public function uninstall()
 	{
 		$this->drop_tables();
-                ConfigManager::delete('articles', 'catogories');
+		ConfigManager::delete('articles', 'catogories');
 	}
 
 	private function drop_tables()
@@ -67,7 +67,7 @@ class ArticlesSetup extends DefaultModuleSetup
 	{
 		$this->create_articles_table();
 		$this->create_articles_cats_table();
-                $this->create_articles_keywords_table();
+		$this->create_articles_keywords_table();
 		$this->create_articles_keywords_relation_table();
 	}
 
@@ -83,7 +83,7 @@ class ArticlesSetup extends DefaultModuleSetup
 			'contents' => array('type' => 'text', 'length' => 65000),
 			'number_view' => array('type' => 'integer', 'length' => 11, 'default' => 0),
 			'author_user_id' => array('type' => 'integer', 'length' => 11, 'default' => 0),
-                        'author_name_displayed' => array('type' => 'boolean', 'notnull' => 1, 'default' => 1),
+			'author_name_displayed' => array('type' => 'boolean', 'notnull' => 1, 'default' => 1),
 			'published' => array('type' => 'boolean', 'notnull' => 1, 'default' => 0),
 			'publishing_start_date' => array('type' => 'integer', 'length' => 11, 'default' => 0),
 			'publishing_end_date' => array('type' => 'integer', 'length' => 11, 'default' => 0),
@@ -104,10 +104,10 @@ class ArticlesSetup extends DefaultModuleSetup
 
 	private function create_articles_cats_table()
 	{
-                RichCategory::create_categories_table(self::$articles_cats_table);
+		RichCategory::create_categories_table(self::$articles_cats_table);
 	}
         
-        private function create_articles_keywords_table()
+	private function create_articles_keywords_table()
 	{
 		$fields = array(
 			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
@@ -129,16 +129,15 @@ class ArticlesSetup extends DefaultModuleSetup
 
 	private function insert_data()
 	{
-                $this->messages = LangLoader::get('install', 'articles');
-                $this->insert_articles_data();
-                $this->insert_articles_cats_data();
+		$this->messages = LangLoader::get('install', 'articles');
+		$this->insert_articles_data();
+		$this->insert_articles_cats_data();
 	}
         
-        private function insert_articles_data()
-        {
-                
-                PersistenceContext::get_querier()->insert(self::$articles_table, array(
-                        'id' => 1,
+	private function insert_articles_data()
+	{
+		PersistenceContext::get_querier()->insert(self::$articles_table, array(
+			'id' => 1,
 			'id_category' => 1,
 			'picture_url' => '',
 			'title' => $this->messages['default.article.name'],
@@ -147,20 +146,20 @@ class ArticlesSetup extends DefaultModuleSetup
 			'contents' => $this->messages['default.article.contents'],
 			'number_view' => 0,
 			'author_user_id' => 1,
-                        'author_name_displayed' => Articles::AUTHOR_NAME_DISPLAYED,
+			'author_name_displayed' => Articles::AUTHOR_NAME_DISPLAYED,
 			'published' => Articles::PUBLISHED_NOW,
 			'publishing_start_date' => 0,
 			'publishing_end_date' => 0,
 			'date_created' => time(),
-                        'notation_enabled' => Articles::NOTATION_ENABLED,
-                        'sources' => serialize(array())
-                ));
-        }
+			'notation_enabled' => Articles::NOTATION_ENABLED,
+			'sources' => serialize(array())
+		));
+	}
         
-        private function insert_articles_cats_data()
-        {
-                PersistenceContext::get_querier()->insert(self::$articles_cats_table, array(
-                        'id' => 1,
+	private function insert_articles_cats_data()
+	{
+		PersistenceContext::get_querier()->insert(self::$articles_cats_table, array(
+			'id' => 1,
 			'id_parent' => 0,
 			'c_order' => 1,
 			'auth' => '',
@@ -168,8 +167,7 @@ class ArticlesSetup extends DefaultModuleSetup
 			'name' => $this->messages['default.category.name'],
 			'description' => $this->messages['default.category.description'],
 			'image' => '/articles/articles.png'
-                ));
-        }
+		));
+	}
 }
-
 ?>
