@@ -40,7 +40,7 @@ $url_controller_mappers = array(
 	new UrlControllerMapper('ArticlesDeleteCategoryController', '`^/admin/categories/([0-9]+)/delete/?$`', array('id')),
 	
         //Manage articles
-	new UrlControllerMapper('ArticlesFormController', '`^/add?/?$`'),
+	new UrlControllerMapper('ArticlesFormController', '`^/add/?$`'),
 	new UrlControllerMapper('ArticlesFormController', '`^/([0-9]+)/edit/?$`', array('id')),
         new UrlControllerMapper('ArticlesDeleteController', '`^/([0-9]+)/delete/?$`', array('id')),
     
