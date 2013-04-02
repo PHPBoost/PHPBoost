@@ -39,17 +39,17 @@ class ArticlesUrlBuilder
 		return DispatchManager::get_url(self::$dispatcher, '/admin/categories/add/');
 	}
 	
-        public static function edit_category($id)
+	public static function edit_category($id)
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/admin/categories/'. $id .'/edit/');
 	}
         
-        public static function delete_category($id)
+	public static function delete_category($id)
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/admin/categories/'. $id .'/delete/');
 	}
         
-        public static function display_category($id, $rewrited_name)
+	public static function display_category($id, $rewrited_name)
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/' . $id . '-' . $rewrited_name . '/');
 	}
@@ -69,22 +69,22 @@ class ArticlesUrlBuilder
 		return DispatchManager::get_url(self::$dispatcher, '/add/');
 	}
         
-        public static function edit_article($id)
+	public static function edit_article($id)
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/' . $id . '/edit/');
 	}
         
-        public static function delete_article($id)
+	public static function delete_article($id)
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/' . $id . '/delete/');
 	}
 	
-        public static function display_article($rewrited_name_category, $id_article, $rewrited_title)
+	public static function display_article($rewrited_name_category, $id_article, $rewrited_title)
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/' . $rewrited_name_category . '/' . $id_article . '/' .$rewrited_title . '/');
 	}
         
-        public static function display_pending_articles()
+	public static function display_pending_articles()
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/pending/');
 	}
