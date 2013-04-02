@@ -81,7 +81,7 @@ class ArticlesDisplayCategoryController extends ModuleController
 		$search_category_children_options->get_authorizations_bits(Category::READ_AUTHORIZATIONS);
 		$categories = ArticlesService::get_categories_manager()->get_childrens($this->category->get_id(), $search_category_children_options);
 		$ids_categories = array_keys($categories);
-		
+		//Sub-cats of current cat
 		if (!empty($ids_categories))
 		{
 			$authorized_cats_sql = !empty($ids_categories) ? 'AND ac.id IN (' . implode(', ', $ids_categories) . ')': '';
@@ -103,7 +103,7 @@ class ArticlesDisplayCategoryController extends ModuleController
 				'C_MODERATE' => $this->auth_moderation,
 				'L_MANAGE_CAT' => $this->lang['categories_management'],
 				'COLUMN_WIDTH_CATS' => $column_width_cats,
-				'PAGINATIONCAT' => $pagination_cat->export()->render(),
+				'PAGINATION_CAT' => $pagination_cat->export()->render(),
 				'U_MANAGE_CAT' => ArticlesUrlBuilder::manage_categories()->absolute()
 			));
 			
@@ -122,7 +122,7 @@ class ArticlesDisplayCategoryController extends ModuleController
 				'start_limit' => $limit_page
 				), SelectQueryResult::FETCH_ASSOC
 			);
-
+			//Sub-sub-cats
 			while ($row = $result->fetch())
 			{
 				$children_cat = ArticlesService::get_categories_manager()->get_childrens($row['id'], $search_category_children_options);
@@ -150,7 +150,7 @@ class ArticlesDisplayCategoryController extends ModuleController
 				));
 			}
 		}
-
+		//Articles in current cat
 		$mode = ($request->get_getstring('mode','') == 'asc') ? 'ASC' : 'DESC';
 		$sort = $request->get_getstring('sort', '');
 
@@ -298,6 +298,7 @@ class ArticlesDisplayCategoryController extends ModuleController
 
 		return $options;
 	}
+	
 	private function generate_response(View $view)
 	{
 		$response = new ArticlesDisplayResponse();

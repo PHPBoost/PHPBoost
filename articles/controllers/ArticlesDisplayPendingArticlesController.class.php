@@ -73,6 +73,7 @@ class ArticlesDisplayPendingArticlesController extends ModuleController
 		
 		$this->form = $form;
 	}
+	
 	private function build_view($request)
 	{
 		$now = new Date(DATE_NOW, TIMEZONE_AUTO);
@@ -170,7 +171,7 @@ class ArticlesDisplayPendingArticlesController extends ModuleController
 	
 	private function check_authorizations()
 	{
-		if (!(ArticlesAuthorizationsService::check_authorizations()->moderation())
+		if(!(ArticlesAuthorizationsService::check_authorizations()->moderation()))
 		{
 			$error_controller = PHPBoostErrors::user_not_authorized();
 			DispatchManager::redirect($error_controller);
