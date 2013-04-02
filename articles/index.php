@@ -31,32 +31,32 @@ require_once PATH_TO_ROOT . '/kernel/init.php';
 
 $url_controller_mappers = array(
 	//Config
-        new UrlControllerMapper('AdminArticlesConfigController', '`^/admin(?:/config)?/?$`'),
-        
-        //Categories
+	new UrlControllerMapper('AdminArticlesConfigController', '`^/admin(?:/config)?/?$`'),
+
+	//Categories
 	new UrlControllerMapper('ArticlesCategoriesManageController', '`^/admin/categories/?$`'),
 	new UrlControllerMapper('ArticlesCategoriesFormController', '`^/admin/categories/add/?$`'),
 	new UrlControllerMapper('ArticlesCategoriesFormController', '`^/admin/categories/([0-9]+)/edit/?$`', array('id')),
 	new UrlControllerMapper('ArticlesDeleteCategoryController', '`^/admin/categories/([0-9]+)/delete/?$`', array('id')),
-	
-        //Manage articles
+
+	//Manage articles
 	new UrlControllerMapper('ArticlesFormController', '`^/add/?$`'),
 	new UrlControllerMapper('ArticlesFormController', '`^/([0-9]+)/edit/?$`', array('id')),
-        new UrlControllerMapper('ArticlesDeleteController', '`^/([0-9]+)/delete/?$`', array('id')),
-    
+	new UrlControllerMapper('ArticlesDeleteController', '`^/([0-9]+)/delete/?$`', array('id')),
+
 	//new UrlControllerMapper('ArticlesViewArticleController', '`^/article/([a-z0-9-]+)?/?([a-z0-9-]+)?/?$`', array('rewrited_title', 'rewrited_page_name')),
-	
-        //new UrlControllerMapper('ArticlesPrintArticleController', '`^/print/([a-z0-9-]+)?/?([A-Za-z0-9-]+)?/?$`', array('rewrited_title', 'rewrited_page_name')),
-	
+
+	//new UrlControllerMapper('ArticlesPrintArticleController', '`^/print/([a-z0-9-]+)?/?([A-Za-z0-9-]+)?/?$`', array('rewrited_title', 'rewrited_page_name')),
+
 	//new UrlControllerMapper('ArticlesPendingController', '`^/pending(?:/([a-z0-9-]+))?/?$`', array('pseudo')),
 
 	//new UrlControllerMapper('ArticlesHomePageController', '`^(?:/([a-z]+))?/?([a-z]+)?/?([0-9]+)?/?$`', array('field', 'sort', 'page')),
-        
-        new UrlControllerMapper('ArticlesDisplayArticlesController', '`^/([a-z0-9-_]+)/([0-9]+)/([a-z0-9-_]+)/?$`', array('rewrited_name_category', 'id', 'rewrited_title')),
-    
-        new UrlControllerMapper('ArticlesDisplayCategoryController', '`^/([0-9]+)-([a-z0-9-_]+)?/?$`', array('id', 'rewrited_name')),
-    
-        new UrlControllerMapper('AjaxTagsAutoCompleteController','`^/ajax/tag/?$`')
+
+	new UrlControllerMapper('ArticlesDisplayArticlesController', '`^/([a-z0-9-_]+)/([0-9]+)/([a-z0-9-_]+)/?$`', array('rewrited_name_category', 'id', 'rewrited_title')),
+
+	new UrlControllerMapper('ArticlesDisplayCategoryController', '`^/([0-9]+)-([a-z0-9-_]+)?/?$`', array('id', 'rewrited_name')),
+
+	new UrlControllerMapper('AjaxTagsAutoCompleteController','`^/ajax/tag/?$`')
 );
 
 DispatchManager::dispatch($url_controller_mappers);

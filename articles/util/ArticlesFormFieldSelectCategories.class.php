@@ -31,20 +31,20 @@
  */
 class ArticlesFormFieldSelectCategories extends FormFieldSimpleSelectChoice
 {
-    /**
-     * @desc Constructs a ArticlesFormFieldCategories.
-     * @param string $id Field id
-     * @param string $label Field label
-     * @param mixed $value Default value (either a FormFieldEnumOption object or a string corresponding to the FormFieldEnumOption's raw value)
-     * @param string[] $field_options Map of the field options (this field has no specific option, there are only the inherited ones)
-     * @param FormFieldConstraint List of the constraints
-     */
-    public function __construct($id, $label, $value = 0, $field_options = array(), array $constraints = array())
-    {
-        parent::__construct($id, $label, $value, $this->generate_options(), $field_options, $constraints);
-    }
+	/**
+	 * @desc Constructs a ArticlesFormFieldCategories.
+	 * @param string $id Field id
+	 * @param string $label Field label
+	 * @param mixed $value Default value (either a FormFieldEnumOption object or a string corresponding to the FormFieldEnumOption's raw value)
+	 * @param string[] $field_options Map of the field options (this field has no specific option, there are only the inherited ones)
+	 * @param FormFieldConstraint List of the constraints
+	 */
+	public function __construct($id, $label, $value = 0, $field_options = array(), array $constraints = array())
+	{
+		parent::__construct($id, $label, $value, $this->generate_options(), $field_options, $constraints);
+	}
 
-    private function generate_options()
+	private function generate_options()
 	{
 		$options = array();
 		foreach(ArticlesCategoriesService::get_categories() as $category)

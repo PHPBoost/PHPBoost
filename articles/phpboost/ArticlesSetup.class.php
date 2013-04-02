@@ -31,7 +31,7 @@ class ArticlesSetup extends DefaultModuleSetup
 	public static $articles_cats_table;
 	public static $articles_keywords_table;
 	public static $articles_keywords_relation_table;
-        
+	
 	/**
 	 * @var string[string] localized messages
 	*/
@@ -88,8 +88,8 @@ class ArticlesSetup extends DefaultModuleSetup
 			'publishing_start_date' => array('type' => 'integer', 'length' => 11, 'default' => 0),
 			'publishing_end_date' => array('type' => 'integer', 'length' => 11, 'default' => 0),
 			'date_created' => array('type' => 'integer', 'length' => 11, 'default' => 0),
-                        'notation_enabled' => array('type' => 'boolean', 'notnull' => 1, 'default' => 1),
-                        'sources' => array('type' => 'text', 'length' => 65000),
+			'notation_enabled' => array('type' => 'boolean', 'notnull' => 1, 'default' => 1),
+			'sources' => array('type' => 'text', 'length' => 65000),
 		);
 		$options = array(
 			'primary' => array('id'),
@@ -106,7 +106,7 @@ class ArticlesSetup extends DefaultModuleSetup
 	{
 		RichCategory::create_categories_table(self::$articles_cats_table);
 	}
-        
+	
 	private function create_articles_keywords_table()
 	{
 		$fields = array(
@@ -133,7 +133,7 @@ class ArticlesSetup extends DefaultModuleSetup
 		$this->insert_articles_data();
 		$this->insert_articles_cats_data();
 	}
-        
+	
 	private function insert_articles_data()
 	{
 		PersistenceContext::get_querier()->insert(self::$articles_table, array(
@@ -155,7 +155,7 @@ class ArticlesSetup extends DefaultModuleSetup
 			'sources' => serialize(array())
 		));
 	}
-        
+	
 	private function insert_articles_cats_data()
 	{
 		PersistenceContext::get_querier()->insert(self::$articles_cats_table, array(

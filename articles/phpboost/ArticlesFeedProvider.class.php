@@ -38,7 +38,7 @@ class ArticlesFeedProvider implements FeedProvider
 		$querier = PersistenceContext::get_querier();
 
 		$category = ArticlesService::get_categories_manager()->get_categories_cache()->get_category($idcat);
-                
+		
 		$site_name = GeneralConfig::load()->get_site_name();
 		$site_name = $idcat != Category::ROOT_CATEGORY ? $site_name . ' : ' . $category->get_name() : $site_name;
 
@@ -61,14 +61,15 @@ class ArticlesFeedProvider implements FeedProvider
 			$now = new Date(DATE_NOW, TIMEZONE_AUTO);
 			
 			$results = $querier->select('SELECT articles.id, articles.id_category, articles.title, articles.rewrited_title, 
-                        articles.contents, articles.description, articles.date_created, cat.rewrited_name AS rewrited_name_cat
-                        FROM ' . ArticlesSetup::$articles_table . ' articles
-                        LEFT JOIN '. ArticlesSetup::$articles_cats_table .' cat ON articles.id_category = cat.id
-                        WHERE articles.published = 1 OR (articles.published = 2 AND articles.publishing_start_date < :timestamp_now 
-                        AND (articles.publishing_end_date > :timestamp_now OR articles.publishing_end_date = 0)) AND articles.id_category IN :cats_ids
-                        ORDER BY articles.date_created DESC', array(
-                                                            'cats_ids' => $ids_categories,
-                                                            'timestamp_now' => $now->get_timestamp()
+			articles.contents, articles.description, articles.date_created, cat.rewrited_name AS rewrited_name_cat
+			FROM ' . ArticlesSetup::$articles_table . ' articles
+			LEFT JOIN '. ArticlesSetup::$articles_cats_table .' cat ON articles.id_category = cat.id
+			WHERE articles.published = 1 OR (articles.published = 2 AND articles.publishing_start_date < :timestamp_now 
+			AND (articles.publishing_end_date > :timestamp_now OR articles.publishing_end_date = 0)) AND articles.id_category IN :cats_ids
+			ORDER BY articles.date_created DESC', 
+			array(
+				'cats_ids' => $ids_categories,
+				'timestamp_now' => $now->get_timestamp()
 			));
 
 			foreach ($results as $row)

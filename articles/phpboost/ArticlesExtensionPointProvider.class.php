@@ -31,34 +31,34 @@ class ArticlesExtensionPointProvider extends ExtensionPointProvider
 	{
 		parent::__construct('articles');
 	}
-    
+	
 	public function home_page()
 	{
 		return new ArticlesHomePageExtensionPoint();
 	}
-        
+	
 	public function comments()
 	{
 		return new CommentsTopics(array(new ArticlesCommentsTopic()));
 	}
-        
+	
 	public function css_files()
 	{
 		$module_css_files = new ModuleCssFiles();
 		$module_css_files->adding_running_module_displayed_file('articles.css');
 		return $module_css_files;
 	}
-        
+	
 	public function feeds()
 	{
 		return new ArticlesFeedProvider();
 	}
-        
+	
 	public function search()
 	{
 		return new ArticlesSearchable();
 	}
-        
+	
 	public function url_mappings()
 	{
 		return new UrlMappings(array(new DispatcherUrlMapping('/articles/index.php')));

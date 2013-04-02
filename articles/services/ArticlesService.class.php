@@ -29,12 +29,12 @@ class ArticlesService
 {
 	private static $db_querier;
 	private static $categories_manager;
-        
+	
 	public static function __static()
 	{
 		self::$db_querier = PersistenceContext::get_querier();
 	}
-        
+	
 	public static function add(Articles $article)
 	{
 		$result = self::$db_querier->insert(ArticlesSetup::$articles_table, $article->get_properties());
@@ -50,7 +50,7 @@ class ArticlesService
 	{
 		self::$db_querier->delete(ArticlesSetup::$articles_table, $condition, $parameters);
 	}
-        
+	
 	public static function get_article($condition, array $parameters)
 	{
 		$row = self::$db_querier->select_single_row(ArticlesSetup::$articles_table, array('*'), $condition, $parameters);
@@ -58,7 +58,7 @@ class ArticlesService
 		$article->set_properties($row);
 		return $article;
 	}
-        
+	
 	public static function get_categories_manager()
 	{
 		if (self::$categories_manager === null)

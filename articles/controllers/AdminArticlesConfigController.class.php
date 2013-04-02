@@ -45,13 +45,13 @@ class AdminArticlesConfigController extends AdminModuleController
 		
 		 $this->tpl->put('FORM', $this->form->display());
 
-                return new AdminArticlesDisplayResponse($this->tpl, $this->lang['articles_configuration']);
+		return new AdminArticlesDisplayResponse($this->tpl, $this->lang['articles_configuration']);
 	}
 	
 	private function init()
 	{			
 		$this->tpl = new StringTemplate('# INCLUDE MSG # # INCLUDE FORM #');
-                $this->load_lang();
+		$this->load_lang();
 		$this->tpl->add_lang($this->lang);
 		$this->load_config();
 	}
@@ -85,35 +85,35 @@ class AdminArticlesConfigController extends AdminModuleController
 			array('maxlength' => 3, 'size' => 4, 'required' => true), array(new FormFieldConstraintRegex('`^[0-9]+$`i'))
 		));
 		
-                $fieldset->add_field(new FormFieldTextEditor('notation_scale', $this->lang['articles_configuration.notation_scale'], $this->config->get_notation_scale(),
+		$fieldset->add_field(new FormFieldTextEditor('notation_scale', $this->lang['articles_configuration.notation_scale'], $this->config->get_notation_scale(),
 			array('maxlength' => 2, 'size' => 4),
-                        array(new FormFieldConstraintRegex('`^[0-9]+$`i'))
+			array(new FormFieldConstraintRegex('`^[0-9]+$`i'))
 		));
 		
-                $fieldset->add_field(new FormFieldCheckbox('comments_enabled', $this->lang['articles_configuration.comments_enabled'], $this->config->get_comments_enabled()));
-                
+		$fieldset->add_field(new FormFieldCheckbox('comments_enabled', $this->lang['articles_configuration.comments_enabled'], $this->config->get_comments_enabled()));
+		
 		$fieldset_authorizations = new FormFieldsetHTML('authorizations', $this->lang['articles_configuration_authorizations'],
 			array('description' => $this->lang['articles_configuration.authorizations.explain'])
-                );
-                
+		);
+		
 		$form->add_fieldset($fieldset_authorizations);
 			
 		$auth_settings = new AuthorizationsSettings(array(
 			new ActionAuthorization($this->lang['articles_configuration.authorizations.read'], Category::READ_AUTHORIZATIONS),
-                        new ActionAuthorization($this->lang['articles_configuration.config.authorizations.write'], Category::WRITE_AUTHORIZATIONS),
+			new ActionAuthorization($this->lang['articles_configuration.config.authorizations.write'], Category::WRITE_AUTHORIZATIONS),
 			new ActionAuthorization($this->lang['articles_configuration.config.authorizations.contribution'], Category::CONTRIBUTION_AUTHORIZATIONS),
 			new ActionAuthorization($this->lang['articles_configuration.config.authorizations.moderation'], Category::MODERATION_AUTHORIZATIONS)
 		));
 		
-                $auth_setter = new FormFieldAuthorizationsSetter('authorizations', $auth_settings);
-                $auth_settings->build_from_auth_array($this->config->get_authorizations());
+		$auth_setter = new FormFieldAuthorizationsSetter('authorizations', $auth_settings);
+		$auth_settings->build_from_auth_array($this->config->get_authorizations());
 		$fieldset_authorizations->add_field($auth_setter);  
 		
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_button($this->submit_button);
 		$form->add_button(new FormButtonReset());
-                
-                $this->form = $form;
+		
+		$this->form = $form;
 	}
 	
 	private function save()
@@ -122,11 +122,11 @@ class AdminArticlesConfigController extends AdminModuleController
 		$this->config->set_number_categories_per_page($this->form->get_value('number_categories_per_page'));
 		$this->config->set_number_columns_displayed($this->form->get_value('number_columns_displayed'));
 		$this->config->set_notation_scale($this->form->get_value('notation_scale'));
-                $this->config->set_comments_enabled($this->form->get_value('comments_enabled'));
-                $this->config->set_authorizations($this->form->get_value('authorizations')->build_auth_array());
+		$this->config->set_comments_enabled($this->form->get_value('comments_enabled'));
+		$this->config->set_authorizations($this->form->get_value('authorizations')->build_auth_array());
 		
 		ArticlesConfig::save();
-                ArticlesService::get_categories_manager()->regenerate_cache();
+		ArticlesService::get_categories_manager()->regenerate_cache();
 	}
 }
 ?>

@@ -36,7 +36,7 @@ class ArticlesDisplayResponse
 		{
 			$link = $link->absolute();
 		}
-                $this->breadcrumb_links[$name] = $link;
+		$this->breadcrumb_links[$name] = $link;
 	}
 	
 	public function set_page_title($page_title)

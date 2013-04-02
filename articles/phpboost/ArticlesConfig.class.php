@@ -63,7 +63,7 @@ class ArticlesConfig extends AbstractConfigData
 	{
 		$this->set_property(self::NUMBER_COLUMNS_DISPLAYED, $number);
 	}
-        
+	
 	public function get_notation_scale()
 	{
 		return $this->get_property(self::NOTATION_SCALE);
@@ -83,7 +83,7 @@ class ArticlesConfig extends AbstractConfigData
 	{
 		$this->set_property(self::COMMENTS_ENABLED, $comments_enabled);
 	}
-        
+	
 	public function get_authorizations()
 	{
 		return $this->get_property(self::AUTHORIZATIONS);
@@ -93,7 +93,7 @@ class ArticlesConfig extends AbstractConfigData
 	{
 		$this->set_property(self::AUTHORIZATIONS, $array);
 	}
-        
+	
 	public function get_default_values()
 	{
 		return array(

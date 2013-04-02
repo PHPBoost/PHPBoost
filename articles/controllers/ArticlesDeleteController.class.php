@@ -34,20 +34,20 @@ class ArticlesDeleteController extends ModuleController
 		if (!(NewsAuthorizationsService::check_authorizations($article->get_id_cat())->moderation() || (NewsAuthorizationsService::check_authorizations($article->get_id_category())->write() && $article->get_user_id() == AppContext::get_current_user()->get_id())))
 		{
 			$error_controller = PHPBoostErrors::user_not_authorized();
-   			DispatchManager::redirect($error_controller);
+			DispatchManager::redirect($error_controller);
 		}
 		
 		ArticlesService::delete('WHERE id=:id', array('id' => $article->get_id()));
-                
+		
 		ArticlesKeywordsService::delete($article->get_id());
-                
+		
 		PersistenceContext::get_querier()->delete(DB_TABLE_EVENTS, 'WHERE module=:module AND id_in_module=:id', array('module' => 'articles', 'id' => $article->get_id()));
 		
 		CommentsService::delete_comments_topic_module('articles', $article['id']);
-	    
-	    Feed::clear_cache('articles');
-	    
-	    AppContext::get_response()->redirect(ArticlesUrlBuilder::home());
+		
+		Feed::clear_cache('articles');
+		
+		AppContext::get_response()->redirect(ArticlesUrlBuilder::home());
 	}
 	
 	private function get_article(HTTPRequestCustom $request)
@@ -60,7 +60,7 @@ class ArticlesDeleteController extends ModuleController
 				return ArticlesService::get_article('WHERE id=:id', array('id' => $id));
 			} catch (RowNotFoundException $e) {
 				$error_controller = PHPBoostErrors::unexisting_page();
-   				DispatchManager::redirect($error_controller);
+				DispatchManager::redirect($error_controller);
 			}
 		}
 	}

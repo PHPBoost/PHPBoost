@@ -37,24 +37,24 @@
 		</div>
 	</div>
 	<div class="module_contents">
-                <p style="text-align:center;" class="text_strong">
-                        {L_MANAGE_CAT}
-                        # IF C_MODERATE # <a href="{U_MANAGE_CAT}"><img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="" /></a> # ENDIF #
-                </p>
-                <hr style="margin-bottom:20px;" />
-                # START cat_list #
-                <div style="float:left;text-align:center;width:{COLUMN_WIDTH_CAT}%;margin-bottom:20px;">
-                        {cat_list.ICON_CAT}
-                        <a href="{PATH_TO_ROOT}/articles/articles{cat_list.U_CAT}">{cat_list.CAT}</a> {cat_list.EDIT}
-                        <br />
-                        <span class="text_small">{cat_list.DESC}</span> 
-                        <br />
-                        <span class="text_small">{cat_list.L_NBR_ARTICLES}</span> 
-                </div>
-                # END cat_list #
-                <div class="spacer">&nbsp;</div>				
-                <p style="text-align:center;">{PAGINATION}</p>
-                <hr />
+		<p style="text-align:center;" class="text_strong">
+			{L_MANAGE_CAT}
+			# IF C_MODERATE # <a href="{U_MANAGE_CAT}"><img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="" /></a> # ENDIF #
+		</p>
+		<hr style="margin-bottom:20px;" />
+		# START cat_list #
+		<div style="float:left;text-align:center;width:{COLUMN_WIDTH_CAT}%;margin-bottom:20px;">
+			{cat_list.ICON_CAT}
+			<a href="{PATH_TO_ROOT}/articles/articles{cat_list.U_CAT}">{cat_list.CAT}</a> {cat_list.EDIT}
+			<br />
+			<span class="text_small">{cat_list.DESC}</span> 
+			<br />
+			<span class="text_small">{cat_list.L_NBR_ARTICLES}</span> 
+		</div>
+		# END cat_list #
+		<div class="spacer">&nbsp;</div>				
+		<p style="text-align:center;">{PAGINATION}</p>
+		<hr />
 	</div>
 	<div class="module_bottom_l"></div>		
 	<div class="module_bottom_r"></div>
