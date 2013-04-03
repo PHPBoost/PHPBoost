@@ -116,6 +116,17 @@ class MemberSanctionManager
 	/*
 	 * This function request settters set_user_id.
 	 */
+	public static function cancel_caution($user_id)
+	{
+		if (self::verificate_user_id($user_id))
+		{
+			self::$sql_querier->update(DB_TABLE_MEMBER, array('user_warning' => 0), 'WHERE user_id = :user_id', array('user_id' => $user_id));
+		}
+	}
+	
+	/*
+	 * This function request settters set_user_id.
+	 */
 	public static function restore_write_permissions($user_id)
 	{
 		if (self::verificate_user_id($user_id))
