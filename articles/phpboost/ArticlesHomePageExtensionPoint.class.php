@@ -197,10 +197,14 @@ class ArticlesHomePageExtensionPoint implements HomePageExtensionPoint
 
 		//Catégories non autorisées.
 		$unauth_cats_sql = array();
+		$total_cat = 0;
 		foreach ($ARTICLES_CAT as $id => $key)
 		{
 			if (!$User->check_auth($ARTICLES_CAT[$id]['auth'], AUTH_ARTICLES_READ))
-			$unauth_cats_sql[] = $id;
+				$unauth_cats_sql[] = $id;
+			
+			if ($User->check_auth($ARTICLES_CAT[$id]['auth'], AUTH_ARTICLES_READ) && $id != 0)
+				$total_cat++;
 		}
 		$nbr_unauth_cats = count($unauth_cats_sql);
 		$clause_unauth_cats = ($nbr_unauth_cats > 0) ? " AND ac.id NOT IN (" . implode(', ', $unauth_cats_sql) . ")" : '';
@@ -216,7 +220,7 @@ class ArticlesHomePageExtensionPoint implements HomePageExtensionPoint
 		ORDER BY ac.id_parent, ac.c_order
 		" . $this->sql_querier->limit($Pagination->get_first_msg($CONFIG_ARTICLES['nbr_cat_max'], 'pcat'), $CONFIG_ARTICLES['nbr_cat_max']), __LINE__, __FILE__);
 
-		$total_cat = 0;
+		$displayed_cats = 0;
 		while ($row = $this->sql_querier->fetch_assoc($result))
 		{
 			$tpl->assign_block_vars('cat_list', array(
@@ -230,20 +234,20 @@ class ArticlesHomePageExtensionPoint implements HomePageExtensionPoint
 			
 			if (!empty($row['id']))
 			{
-				$total_cat++;
+				$displayed_cats++;
 			}
 		}
 		
 		if ($total_cat > 0)
 		{
-			$nbr_column_cats = ($total_cat > $CONFIG_ARTICLES['nbr_column']) ? $CONFIG_ARTICLES['nbr_column'] : $total_cat;
+			$nbr_column_cats = ($displayed_cats > $CONFIG_ARTICLES['nbr_column']) ? $CONFIG_ARTICLES['nbr_column'] : $displayed_cats;
 			$nbr_column_cats = !empty($nbr_column_cats) ? $nbr_column_cats : 1;
 			$column_width_cats = floor(100/$nbr_column_cats);
-			
+
 			$tpl->put_all(array(
 				'C_ARTICLES_CAT' => true,
 				'COLUMN_WIDTH_CAT' => $column_width_cats,
-				'PAGINATION_CAT' => $Pagination->display('articles' . url('.php' . (!empty($unget) ? $unget . '&amp;' : '?') . 'cat=' . $idartcat . '&amp;pcat=%d', '-' . $idartcat . '-0+' . $rewrite_title . '.php?pcat=%d' . $unget), $total_cat , 'pcat', $CONFIG_ARTICLES['nbr_cat_max'], 3)
+				'PAGINATION_CAT' => $Pagination->display('articles' . url('.php' . (!empty($unget) ? $unget . '&amp;' : '?') . 'cat=' . $idartcat . '&amp;pcat=%d', '-' . $idartcat . '-0+' . $rewrite_title . '.php?pcat=%d' . $unget), $total_cat, 'pcat', $CONFIG_ARTICLES['nbr_cat_max'], 3)
 			));
 		}
 			
