@@ -230,6 +230,10 @@ class AdminMemberEditController extends AdminController
 		{
 			MemberSanctionManager::caution($user_id, $user_warning, MemberSanctionManager::SEND_MP, str_replace('%level%', $user_warning, $this->main_lang['user_warning_level_changed']));
 		}
+		elseif ($user_warning != $this->user->get_warning_percentage())
+		{
+			MemberSanctionManager::cancel_caution($user_id);
+		}
 		
 		$user_readonly = $this->form->get_value('user_readonly')->get_raw_value();
 		if (!empty($user_readonly) && $user_readonly != $this->user->get_delay_readonly())
