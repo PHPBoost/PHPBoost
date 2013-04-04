@@ -38,6 +38,8 @@ class ArticlesDisplayArticlesController extends ModuleController
 		
 		$this->init();
 		
+		$this->update_number_view();
+		
 		$this->build_view();
 					
 		return $this->generate_response();
@@ -72,7 +74,44 @@ class ArticlesDisplayArticlesController extends ModuleController
 	
 	private function build_view()
 	{
+		$current_page = AppContext::get_request()->get_getint('page', 1) > 0;
 		
+		$article = PersistenceContext::get_querier()->select('SELECT articles.id, articles.id_category, articles.title, articles.contents, 
+		articles.author_user_id, articles.date_created, articles.sources, member.level, member.user_groups, member.login
+		FROM ' . ArticlesSetup::$articles_table . ' articles
+		LEFT JOIN ' . DB_TABLE_MEMBER . ' member ON member.user_id = articles.author_user_id 
+		WHERE articles.id_category=:id_category', 
+			array(
+				'id_category' => $this->article->get_id(),
+				), SelectQueryResult::FETCH_ASSOC
+		);
+		
+		//If article doesn't begin with a page, we insert one
+		if (substr(trim($article['contents']), 0, 6) != '[page]')
+		{
+			$article['contents'] = '[page]Introduction[/page]' . $article['contents'];
+		}
+		
+		//Removing pages bbcode
+		$article_contents = preg_split('`\[page\].+\[/page\](.*)`Us', $article['contents'], -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
+
+		//Retrieving pages 
+		preg_match_all('`\[page\]([^[]+)\[/page\]`U', $article['contents'], $array_page);
+		
+		// @todo : option de rendre les pages sous forme de lien (comme wiki, dans div flottant à droite)
+		$pages_dropdown_list = '<option value="1">' . $this->lang['articles.select_page'] . '</option>';
+		$pages_link_list = '<ul class="">';
+		
+		$i = 1;
+		foreach ($array_page[1] as $page_name)
+		{
+			$selected = ($i == $current_page) ? 'selected="selected"' : '';
+			$pages_dropdown_list .= '<option value="' . $i++ . '"' . $selected . '>' . $page_name . '</option>';
+		}
+		
+		
+		
+		$pagination = new Pagination($nb_pages, $current_page);
 	}
 	
 	private function check_authorizations()
@@ -111,6 +150,11 @@ class ArticlesDisplayArticlesController extends ModuleController
    				DispatchManager::redirect($error_controller);
 			break;
 		}
+	}
+	
+	private function update_number_view()
+	{
+	    PersistenceContext::get_querier()->inject('UPDATE' . LOW_PRIORITY. ' ' . ArticlesSetup::$articles_table . 'SET number_view = number_view + 1 WHERE id=:id', array('id' => $this->article->get_id()));
 	}
 	
 	private function generate_response()

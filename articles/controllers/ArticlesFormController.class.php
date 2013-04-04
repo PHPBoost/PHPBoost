@@ -96,7 +96,9 @@ class ArticlesFormController extends ModuleController
 		$fieldset->add_field(new FormFieldRichTextEditor('contents', $this->lang['articles.form.contents'], $this->get_article()->get_contents(),
 			array('rows' => 15, 'required' => true)
 		));
-
+		
+		// @todo : ajouter le lien pour l'ajout de page (balise [page][/page])
+		
 		$other_fieldset = new FormFieldsetHTML('other', $this->lang['articles.form.other']);
 		$form->add_fieldset($other_fieldset);
 
