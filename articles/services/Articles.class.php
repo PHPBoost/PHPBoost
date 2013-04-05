@@ -58,6 +58,8 @@ class Articles
 
 	const AUTHOR_NAME_NOTDISPLAYED = 0;
 	const AUTHOR_NAME_DISPLAYED = 1;
+        
+        const DEFAULT_PICTURE = '/articles/articles.png';
 
 	public function set_id($id)
 	{
@@ -126,7 +128,7 @@ class Articles
 
 	public function set_picture(Url $picture)
 	{
-		$this->picture_path = $picture;
+		$this->picture_url = $picture;
 	}
 
 	public function get_picture()
@@ -239,7 +241,7 @@ class Articles
 		$this->keywords = $keywords;
 	}
 
-	public function add_keyword(ArticlesKeyword $keyword)
+	public function add_keyword(ArticlesKeywords $keyword)
 	{
 		$this->keywords[] = $keyword;
 	}
@@ -265,7 +267,7 @@ class Articles
 			'published' => $this->get_publishing_state(),
 			'publishing_start_date' => $this->get_publishing_start_date() !== null ? $this->get_publishing_start_date()->get_timestamp() : '',
 			'publishing_end_date' => $this->get_publishing_end_date() !== null ? $this->get_publishing_end_date()->get_timestamp() : '',
-			'date_created' => $this->get_date_created(),
+			'date_created' => $this->get_date_created()->get_timestamp(),
 			'notation_enabled' => $this->get_notation_enabled(),
 			'sources' => serialize($this->get_sources())
 		);
@@ -301,6 +303,7 @@ class Articles
 		$this->set_date_created(new Date());
 		$this->set_notation_enabled(self::NOTATION_ENABLED);
 		$this->set_sources(array());
+                $this->set_picture(new Url(self::DEFAULT_PICTURE));
 	}
 
 	public function clean_publishing_start_and_end_date()
