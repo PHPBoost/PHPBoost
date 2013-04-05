@@ -27,7 +27,7 @@
 
 class ArticlesAuthorizationsService
 {
-	private $id_category;
+	public $id_category;
 	
 	public static function check_authorizations($id_category = Category::ROOT_CATEGORY)
 	{

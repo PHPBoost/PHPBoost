@@ -55,7 +55,7 @@ class ArticlesSetup extends DefaultModuleSetup
 	public function uninstall()
 	{
 		$this->drop_tables();
-		ConfigManager::delete('articles', 'catogories');
+		ConfigManager::delete('articles', 'categories');
 	}
 
 	private function drop_tables()
@@ -76,27 +76,28 @@ class ArticlesSetup extends DefaultModuleSetup
 		$fields = array(
 			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
 			'id_category' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'picture_url' => array('type' => 'string', 'length' => 255, 'default' => "''"),
-			'title' => array('type' => 'string', 'length' => 255, 'notnull' => 1),
-			'rewrited_title' => array('type' => 'string', 'length' => 255, 'notnull' => 1),
+			'picture_url' => array('type' => 'string', 'length' => 255, 'notnull' => 1),
+			'title' => array('type' => 'string', 'length' => 100, 'notnull' => 1, 'default' => "''"),
+			'rewrited_title' => array('type' => 'string', 'length' => 250, 'default' => "''"),
 			'description' => array('type' => 'text', 'length' => 65000),
 			'contents' => array('type' => 'text', 'length' => 65000),
 			'number_view' => array('type' => 'integer', 'length' => 11, 'default' => 0),
-			'author_user_id' => array('type' => 'integer', 'length' => 11, 'default' => 0),
+			'author_user_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'author_name_displayed' => array('type' => 'boolean', 'notnull' => 1, 'default' => 1),
 			'published' => array('type' => 'boolean', 'notnull' => 1, 'default' => 0),
-			'publishing_start_date' => array('type' => 'integer', 'length' => 11, 'default' => 0),
-			'publishing_end_date' => array('type' => 'integer', 'length' => 11, 'default' => 0),
-			'date_created' => array('type' => 'integer', 'length' => 11, 'default' => 0),
+			'publishing_start_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
+			'publishing_end_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
+			'date_created' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'notation_enabled' => array('type' => 'boolean', 'notnull' => 1, 'default' => 1),
 			'sources' => array('type' => 'text', 'length' => 65000),
 		);
 		$options = array(
-			'primary' => array('id'),
-			'indexes' => array(
-				'id_category' => array('type' => 'key', 'fields' => 'id_category'),
-				'title' => array('type' => 'fulltext', 'fields' => 'title'),
-				'contents' => array('type' => 'fulltext', 'fields' => 'contents')
+                                'primary' => array('id'),
+                                'indexes' => array(
+                                                'id_category' => array('type' => 'key', 'fields' => 'id_category'),
+                                                'title' => array('type' => 'fulltext', 'fields' => 'title'),
+                                                'description' => array('type' => 'fulltext', 'fields' => 'description'),
+                                                'contents' => array('type' => 'fulltext', 'fields' => 'contents')
 			)
 		);
 		PersistenceContext::get_dbms_utils()->create_table(self::$articles_table, $fields, $options);
@@ -114,7 +115,13 @@ class ArticlesSetup extends DefaultModuleSetup
 			'name' => array('type' => 'string', 'length' => 100, 'notnull' => 1, 'default' => "''"),
 			'rewrited_name' => array('type' => 'string', 'length' => 250, 'default' => "''"),
 		);
-		$options = array('primary' => array('id'));
+		$options = array(
+                                'primary' => array('id'),
+                                'indexes' => array(
+                                                'name' => array('type' => 'unique', 'fields' => 'name'),
+                                                'rewrited_name' => array('type' => 'unique', 'fields' => 'rewrited_name')
+                                )
+                );
 		PersistenceContext::get_dbms_utils()->create_table(self::$articles_keywords_table, $fields, $options);
 	}
 	
@@ -130,18 +137,32 @@ class ArticlesSetup extends DefaultModuleSetup
 	private function insert_data()
 	{
 		$this->messages = LangLoader::get('install', 'articles');
-		$this->insert_articles_data();
 		$this->insert_articles_cats_data();
+                $this->insert_articles_data();
 	}
 	
+        private function insert_articles_cats_data()
+	{
+		PersistenceContext::get_querier()->insert(self::$articles_cats_table, array(
+			'id' => 1,
+			'id_parent' => 0,
+			'c_order' => 1,
+			'auth' => '',
+			'rewrited_name' => Url::encode_rewrite($this->messages['default.category.name']),
+			'name' => $this->messages['default.category.name'],
+			'description' => $this->messages['default.category.description'],
+			'image' => '/articles/articles.png'
+		));
+	}
+        
 	private function insert_articles_data()
 	{
 		PersistenceContext::get_querier()->insert(self::$articles_table, array(
 			'id' => 1,
 			'id_category' => 1,
 			'picture_url' => '',
-			'title' => $this->messages['default.article.name'],
-			'rewrited_title' => Url::encode_rewrite($this->messages['default.article.name']),
+			'title' => $this->messages['default.article.title'],
+			'rewrited_title' => Url::encode_rewrite($this->messages['default.article.title']),
 			'description' => $this->messages['default.article.description'],
 			'contents' => $this->messages['default.article.contents'],
 			'number_view' => 0,
@@ -153,20 +174,6 @@ class ArticlesSetup extends DefaultModuleSetup
 			'date_created' => time(),
 			'notation_enabled' => Articles::NOTATION_ENABLED,
 			'sources' => serialize(array())
-		));
-	}
-	
-	private function insert_articles_cats_data()
-	{
-		PersistenceContext::get_querier()->insert(self::$articles_cats_table, array(
-			'id' => 1,
-			'id_parent' => 0,
-			'c_order' => 1,
-			'auth' => '',
-			'rewrited_name' => Url::encode_rewrite($this->messages['default.category.name']),
-			'name' => $this->messages['default.category.name'],
-			'description' => $this->messages['default.category.description'],
-			'image' => '/articles/articles.png'
 		));
 	}
 }

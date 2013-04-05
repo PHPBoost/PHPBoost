@@ -35,10 +35,10 @@ class ArticlesFormController extends ModuleController
 
 	public function execute(HTTPRequestCustom $request)
 	{
-		$this->init();
+                $this->init();
 		$this->check_authorizations();
-		$this->build_form();
-
+                $this->build_form();
+                
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save();
@@ -222,12 +222,12 @@ class ArticlesFormController extends ModuleController
 	private function check_authorizations()
 	{
 		$article = $this->get_article();
-
+                
 		if($article->get_id() === null)
 		{
 			if (!ArticlesAuthorizationsService::check_authorizations()->write() && !ArticlesAuthorizationsService::check_authorizations()->contribution())
 			{
-				$error_controller = PHPBoostErrors::user_not_authorized();
+                                $error_controller = PHPBoostErrors::user_not_authorized();
 				DispatchManager::redirect($error_controller);
 			}
 		}
