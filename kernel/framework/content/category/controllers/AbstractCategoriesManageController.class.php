@@ -67,6 +67,8 @@ abstract class AbstractCategoriesManageController extends AdminModuleController
 				$category_view->put_all(array(
 					'U_EDIT' => $this->get_edit_category_url($id)->absolute(),
 					'U_DELETE' => $this->get_delete_category_url($id)->absolute(),
+					'L_EDIT' => LangLoader::get_message('update', 'main'),
+					'L_DELETE' => LangLoader::get_message('delete', 'main'),
 					'ID' => $id,
 					'NAME' => $category->get_name()
 				));
