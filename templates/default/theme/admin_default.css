@@ -4,62 +4,34 @@ Css par défaut commun à tout les thèmes, permet les ajouts nécessaires au framew
 --------------------------------------*/ /* Titres */ /* Menus */
 
 /* Gestion des catégories */
-#menu_element_list{
-    position: relative;
-    padding:5px;
-}
-
-.menu_link_element > .menu_link_list { margin-left:30px; }
-
 .menu_link_list {
     list-style-type:none;
     list-style-position:outside;
-    margin:0px;
-	padding:0px;
+    margin-left:20px;
+    padding:10px 0;
 }
 
 .menu_link_element {
-	background:none;
-	border:1px solid #D6DEE7;
-	padding:0;
-	position: relative;
-	margin:5px;
+    margin-top:10px;
+        background:#e5e5e5;
+        border:1px solid #8F8F8F;
+        padding:5px
 }
+.menu_link_menu {
+    margin-top:15px;
+        background:#EFEFEF;
+        border:1px solid #8F8F8F;
+}
+
 .menu_link_element:hover {
-	border:1px solid #D6DEE7;
-	cursor:move;
+    border-color:#aaaaaa;
+    cursor:move;
 }
 
-.menu_link_element_title{
-	background:#f2f5f8;
-	height: 28px;
-	padding: 10px 5px 5px 10px;
-}
-.menu_link_element_title:hover{ background:#D6DEE7; }
-
-.menu_link_element_title img{ cursor:move; }
-
-.menu_link_element_admin{
-	float:right;
-	padding:0px 10px;
-}
-.menu_link_element_admin img{ opacity:0.01; }
-.menu_link_element_admin img:hover{ opacity:1!important; }
-
-.menu_link_element_title:hover > .menu_link_element_admin img{ opacity:0.5; }
-
-.menu_link_element_title > img.drag{ opacity:0.5; }
-.menu_link_element_title:hover > img.drag{ opacity:1; }
-
-.menu_link_element label { color:#1F507F;background:red; }
+.menu_link_element label { color:#1F507F; }
+.menu_link_element:hover label { cursor:move; }
 .menu_link_element:hover img { cursor:pointer; }
 .menu_link_element:hover label { cursor:pointer; }
-
-.menu_link_menu {
-    margin:0;
-	background:none;
-	border:none;
-}
 
 /* Interface des menus */
 #valid_position_menus {
