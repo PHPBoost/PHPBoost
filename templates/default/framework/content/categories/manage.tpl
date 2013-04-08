@@ -69,9 +69,9 @@ Event.observe(window, 'load', function() {
 </script>
 <fieldset>
 	<legend>Gestion des catégories</legend>
-	<ul id="menu_element_lists" class="menu_link_list" style="position: relative;">
-		<li class="menu_link_menu" style="position: relative;">
-			<ul id="menu_element_list" class="menu_link_list" style="">
+	<ul id="menu_element_lists" class="menu_link_list_tosupp cat_list" style="position: relative;">
+		<li class="menu_link_menu_tosupp" style="position: relative;">
+			<ul id="cats_elements_list" class="cat_list" style="">
 				# START childrens #
 					{childrens.child}
 				# END childrens #
