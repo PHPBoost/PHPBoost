@@ -2,8 +2,59 @@
 		admin_default.css
 Css par défaut commun à tout les thèmes, permet les ajouts nécessaires au framework et retrocompatibilité
 --------------------------------------*/ /* Titres */ /* Menus */
+/* Gestion des Catégories */
+#cats_elements_list{
+    position: relative;
+    padding:5px;
+}
 
-/* Gestion des catégories */
+.cat_element > .cat_list { margin-left:30px; }
+
+.cat_list {
+    list-style-type:none;
+    list-style-position:outside;
+    margin:0px;
+	padding:0px;
+}
+
+.cat_element {
+	background:none;
+	border:1px solid #D6DEE7;
+	padding:0;
+	position: relative;
+	margin:5px;
+}
+.cat_element:hover {
+	border:1px solid #D6DEE7;
+	cursor:move;
+}
+
+.cat_title{
+	background:#f2f5f8;
+	height: 28px;
+	padding: 10px 5px 5px 10px;
+}
+.cat_title:hover{ background:#D6DEE7; }
+
+.cat_title img{ cursor:move; }
+
+.cat_action_admin{
+	float:right;
+	padding:0px 10px;
+}
+.cat_action_admin img{ opacity:0.01; }
+.cat_action_admin img:hover{ opacity:1!important; }
+
+.cat_title:hover > .cat_action_admin img{ opacity:0.5; }
+
+.cat_title > img.drag{ opacity:0.5; }
+.cat_title:hover > img.drag{ opacity:1; }
+
+.cat_element label { color:#1F507F; }
+.cat_element:hover img { cursor:pointer; }
+.cat_element:hover label { cursor:pointer; }
+
+/* Gestion des Menus */
 .menu_link_list {
     list-style-type:none;
     list-style-position:outside;
@@ -19,8 +70,8 @@ Css par défaut commun à tout les thèmes, permet les ajouts nécessaires au framew
 }
 .menu_link_menu {
     margin-top:15px;
-        background:#EFEFEF;
-        border:1px solid #8F8F8F;
+    background:#EFEFEF;
+    border:1px solid #8F8F8F;
 }
 
 .menu_link_element:hover {
