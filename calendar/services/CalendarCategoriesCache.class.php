@@ -38,7 +38,7 @@ class CalendarCategoriesCache extends CategoriesCache
 	
 	public function get_category_class()
 	{
-		return new CalendarRichCategory();
+		return 'CalendarRichCategory';
 	}
 	
 	public function get_module_identifier()
