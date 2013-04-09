@@ -84,9 +84,20 @@ class FormFieldMultipleSelectChoice extends AbstractFormField
 	public function retrieve_value()
     {
 		$request = AppContext::get_request();
-		if ($request->has_parameter($this->get_html_id()))
+
+    	if ($request->has_parameter($this->get_html_id()))
 		{
-			$this->set_value($request->get_array($this->get_html_id()));
+			$selected_options = $request->get_array($this->get_html_id());
+			
+			$value = array();
+			foreach ($this->get_options() as $option)
+	        {
+	        	if (in_array($option->get_raw_value(), $selected_options))
+	        	{ 
+	        		$value[] = $option;
+	        	}
+	        }
+	        $this->set_value($value);
 		}
 		else
 		{
@@ -193,11 +204,11 @@ class FormFieldMultipleSelectChoice extends AbstractFormField
         return $this->options;
     }
     
-	private function get_option($raw_option)
+	private function get_option($identifier)
     {
         foreach ($this->options as $option)
         {
-            if ($option->get_raw_value() == $raw_option)
+            if ($option->get_raw_value() == $identifier || $option->get_label() == $identifier)
             {
                 return $option;
             }

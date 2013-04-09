@@ -64,8 +64,12 @@ class RegisterNewsletterExtendedField extends AbstractMemberExtendedField
 		$streams = $this->get_streams();
 		if (!empty($streams))
 		{
-			$value = $form->get_value($field_name, array());
-			return $this->serialise_value($value);
+			$array = array();
+			foreach ($form->get_value($field_name) as $field => $option)
+			{
+				$array[] = $option->get_raw_value();
+			}
+			return $this->serialise_value($array);
 		}
 		return '';
 	}
@@ -74,7 +78,12 @@ class RegisterNewsletterExtendedField extends AbstractMemberExtendedField
 	{
 		parent::register($member_extended_field, $member_extended_fields_dao, $form);
 		
-		$streams = $form->get_value($member_extended_field->get_field_name());
+		$streams = array();
+		foreach ($form->get_value($member_extended_field->get_field_name()) as $field => $option)
+		{
+			$streams[] = $option->get_raw_value();
+		}
+		
 		if (is_array($streams))
 		{
 			NewsletterService::update_subscriptions_member_registered($streams, $member_extended_field->get_user_id());
