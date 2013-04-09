@@ -54,7 +54,7 @@ class DispatchManager
 	 */
 	public static function redirect(Controller $controller)
 	{
-		AppContext::get_response()->clean_output();
+		AppContext::get_response()->clean_output(true);
 		Environment::init_output_bufferization();
 		$request = AppContext::get_request();
         $response = $controller->execute($request);
