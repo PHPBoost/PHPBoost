@@ -173,10 +173,14 @@ class AdminGuestbookConfigController extends AdminModuleController
 			}
 			else
 				$this->guestbook_config->disable_captcha();
-			$forbidden_tags = $this->form->get_value('forbidden_tags');
-			if (isset($forbidden_tags)) {
-				$this->guestbook_config->set_forbidden_tags($forbidden_tags);
+				
+			$forbidden_tags = array();
+			foreach ($this->form->get_value('forbidden_tags') as $field => $option)
+			{
+				$forbidden_tags[] = $option->get_raw_value();
 			}
+
+			$this->guestbook_config->set_forbidden_tags($forbidden_tags);
 			$this->guestbook_config->set_maximum_links_message($this->form->get_value('max_link', -1));
 			$this->guestbook_config->set_authorizations($this->form->get_value('authorizations')->build_auth_array());
 			
