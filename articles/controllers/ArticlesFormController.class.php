@@ -35,9 +35,9 @@ class ArticlesFormController extends ModuleController
 
 	public function execute(HTTPRequestCustom $request)
 	{
-                $this->init();
+		$this->init();
 		$this->check_authorizations();
-                $this->build_form();
+		$this->build_form();
                 
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
@@ -70,12 +70,11 @@ class ArticlesFormController extends ModuleController
 		{
 			$fieldset->add_field(new FormFieldCheckbox('personalize_rewrited_title', $this->lang['articles.form.rewrited_title.personalize'], $this->get_article()->rewrited_title_is_personalized(),
 				array('events' => array('click' =>'
-							if (HTMLForms.getField("personalize_rewrited_title").getValue()) {
-								HTMLForms.getField("rewrited_title").enable();
-							} else { 
-								HTMLForms.getField("rewrited_title").disable();
-							}'
-
+					if (HTMLForms.getField("personalize_rewrited_title").getValue()) {
+						HTMLForms.getField("rewrited_title").enable();
+					} else { 
+						HTMLForms.getField("rewrited_title").disable();
+					}'
 				))
 			));
 
@@ -107,10 +106,10 @@ class ArticlesFormController extends ModuleController
 		$other_fieldset->add_field(new FormFieldCheckbox('notation_enabled', $this->lang['articles.form.notation_enabled'], $this->get_article()->get_notation_enabled()));
 
 		$image_preview_request = new AjaxRequest(PATH_TO_ROOT . '/kernel/framework/ajax/dispatcher.php?url=/image/preview/', 
-									'function(response){
-												if (response.responseJSON.url) {
-													$(\'preview_picture\').src = response.responseJSON.url;
-												}}');
+			'function(response){
+				if (response.responseJSON.url) {
+					$(\'preview_picture\').src = response.responseJSON.url;
+		}}');
 		$image_preview_request->add_event_callback(AjaxRequest::ON_CREATE, 'function(response){ $(\'preview_picture\').src = PATH_TO_ROOT + \'/templates/'. get_utheme() .'/images/loading_mini.gif\';}');
 		$image_preview_request->add_param('image', 'HTMLForms.getField(\'picture\').getValue()');
 		$other_fieldset->add_field(new FormFieldTextEditor('picture', $this->lang['articles.form.picture'], $this->get_article()->get_picture()->relative(), 
@@ -154,11 +153,11 @@ class ArticlesFormController extends ModuleController
 			$publication_fieldset->add_field(new FormFieldCheckbox('end_date_enable', $this->lang['articles.form.end.date.enable'], $this->get_article()->end_date_enabled(), 
 				array('hidden' => ($this->get_article()->get_publishing_state() != Articles::PUBLISHED_DATE),
 					'events' => array('click' => '
-								if (HTMLForms.getField("end_date_enable").getValue()) {
-									HTMLForms.getField("end_date").enable();
-								} else { 
-									HTMLForms.getField("end_date").disable();
-								}'
+						if (HTMLForms.getField("end_date_enable").getValue()) {
+							HTMLForms.getField("end_date").enable();
+						} else { 
+							HTMLForms.getField("end_date").disable();
+						}'
 				))
 			));
 
@@ -170,7 +169,7 @@ class ArticlesFormController extends ModuleController
 		$this->build_contribution_fieldset($form);
 
 		$form->add_button(new FormButtonReset());
-		$form->submit_button = new FormButtonDefaultSubmit();
+		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_button($this->submit_button);
 
 		$this->form = $form;
@@ -227,7 +226,7 @@ class ArticlesFormController extends ModuleController
 		{
 			if (!ArticlesAuthorizationsService::check_authorizations()->write() && !ArticlesAuthorizationsService::check_authorizations()->contribution())
 			{
-                                $error_controller = PHPBoostErrors::user_not_authorized();
+				$error_controller = PHPBoostErrors::user_not_authorized();
 				DispatchManager::redirect($error_controller);
 			}
 		}

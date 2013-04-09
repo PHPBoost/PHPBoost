@@ -59,7 +59,7 @@ class Articles
 	const AUTHOR_NAME_NOTDISPLAYED = 0;
 	const AUTHOR_NAME_DISPLAYED = 1;
         
-        const DEFAULT_PICTURE = '/articles/articles.png';
+	const DEFAULT_PICTURE = '/articles/articles.png';
 
 	public function set_id($id)
 	{
