@@ -38,22 +38,22 @@ class ArticlesAuthorizationsService
 		
 	public function read()
 	{
-		$this->get_authorizations(Category::READ_AUTHORIZATIONS);
+		return $this->get_authorizations(Category::READ_AUTHORIZATIONS);
 	}
 	
 	public function contribution()
 	{
-		$this->get_authorizations(Category::CONTRIBUTION_AUTHORIZATIONS);
+		return $this->get_authorizations(Category::CONTRIBUTION_AUTHORIZATIONS);
 	}
 	
 	public function write()
 	{
-		$this->get_authorizations(Category::WRITE_AUTHORIZATIONS);
+		return $this->get_authorizations(Category::WRITE_AUTHORIZATIONS);
 	}
 	
 	public function moderation()
 	{
-		$this->get_authorizations(Category::MODERATION_AUTHORIZATIONS);
+		return $this->get_authorizations(Category::MODERATION_AUTHORIZATIONS);
 	}
 	
 	private function get_authorizations($bit)

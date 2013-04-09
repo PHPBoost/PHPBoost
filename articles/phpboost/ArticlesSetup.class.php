@@ -92,14 +92,13 @@ class ArticlesSetup extends DefaultModuleSetup
 			'sources' => array('type' => 'text', 'length' => 65000),
 		);
 		$options = array(
-                                'primary' => array('id'),
-                                'indexes' => array(
-                                                'id_category' => array('type' => 'key', 'fields' => 'id_category'),
-                                                'title' => array('type' => 'fulltext', 'fields' => 'title'),
-                                                'description' => array('type' => 'fulltext', 'fields' => 'description'),
-                                                'contents' => array('type' => 'fulltext', 'fields' => 'contents')
-			)
-		);
+			'primary' => array('id'),
+			'indexes' => array(
+				'id_category' => array('type' => 'key', 'fields' => 'id_category'),
+				'title' => array('type' => 'fulltext', 'fields' => 'title'),
+				'description' => array('type' => 'fulltext', 'fields' => 'description'),
+				'contents' => array('type' => 'fulltext', 'fields' => 'contents')
+		));
 		PersistenceContext::get_dbms_utils()->create_table(self::$articles_table, $fields, $options);
 	}
 
@@ -116,12 +115,11 @@ class ArticlesSetup extends DefaultModuleSetup
 			'rewrited_name' => array('type' => 'string', 'length' => 250, 'default' => "''"),
 		);
 		$options = array(
-                                'primary' => array('id'),
-                                'indexes' => array(
-                                                'name' => array('type' => 'unique', 'fields' => 'name'),
-                                                'rewrited_name' => array('type' => 'unique', 'fields' => 'rewrited_name')
-                                )
-                );
+			'primary' => array('id'),
+			'indexes' => array(
+				'name' => array('type' => 'unique', 'fields' => 'name'),
+				'rewrited_name' => array('type' => 'unique', 'fields' => 'rewrited_name')
+		));
 		PersistenceContext::get_dbms_utils()->create_table(self::$articles_keywords_table, $fields, $options);
 	}
 	
@@ -138,10 +136,10 @@ class ArticlesSetup extends DefaultModuleSetup
 	{
 		$this->messages = LangLoader::get('install', 'articles');
 		$this->insert_articles_cats_data();
-                $this->insert_articles_data();
+		$this->insert_articles_data();
 	}
 	
-        private function insert_articles_cats_data()
+	private function insert_articles_cats_data()
 	{
 		PersistenceContext::get_querier()->insert(self::$articles_cats_table, array(
 			'id' => 1,

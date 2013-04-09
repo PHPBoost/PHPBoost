@@ -31,7 +31,7 @@ class ArticlesFormFieldSelectSources extends AbstractFormField
 	
 	public function __construct($id, $label, array $value = array(), array $field_options = array(), array $constraints = array())
 	{
-	parent::__construct($id, $label, $value, $field_options, $constraints);
+		parent::__construct($id, $label, $value, $field_options, $constraints);
 	}
 
 	function display()
