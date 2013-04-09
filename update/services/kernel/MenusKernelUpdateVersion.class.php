@@ -50,7 +50,7 @@ class MenusKernelUpdateVersion extends KernelUpdateVersion
 	
 	private function update_mini_module()
 	{
-		$result = $this->querier->select_rows(PREFIX .'menus', array('*'), 'WHERE class=:type', array('type' => 'moduleminimenu'));
+		$result = $this->querier->select_rows(PREFIX .'menus', array('*'));
 		while ($row = $result->fetch())
 		{
 			if ($row['class'] == 'contentmenu')
@@ -61,6 +61,7 @@ class MenusKernelUpdateVersion extends KernelUpdateVersion
 			elseif ($row['class'] == 'linksmenu')
 			{
 				$object = str_replace('linksmenu', 'LinksMenu', $row['object']);
+				$object = str_replace('LinksMenulink', 'LinksMenuLink', $object);
 				$this->querier->update(PREFIX .'menus', array('class' => 'LinksMenu', 'object' => $object), 'WHERE id=:id', array('id' => $row['id']));
 			}
 			elseif ($row['class'] == 'feedmenu')
