@@ -142,18 +142,10 @@ class HTTPResponseCustom
 
 	/**
 	 * @desc Clean the output buffer.
-	 * @param boolean $off_output_buffering true for turn off output buffering
 	 */
-	public function clean_output($off_output_buffering = false)
+	public function clean_output()
 	{
-		if (Debug::is_debug_mode_enabled() || $off_output_buffering)
-		{
-			$this->last_ob_content_before_clean = @ob_get_clean();
-		}
-		else
-		{
-			@ob_clean();
-		}
+		$this->last_ob_content_before_clean = @ob_get_clean();
 	}
 
 	/**
