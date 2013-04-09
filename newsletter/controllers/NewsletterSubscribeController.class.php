@@ -128,7 +128,12 @@ class NewslettersubscribeController extends ModuleController
 	
 	private function save()
 	{
-		$streams = $this->form->get_value('newsletter_choice');
+		$streams = array();
+		foreach ($this->form->get_value('newsletter_choice') as $field => $option)
+		{
+			$streams[] = $option->get_raw_value();
+		}
+		
 		if (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL))
 		{
 			NewsletterService::update_subscriptions_member_registered($streams, AppContext::get_current_user()->get_attribute('user_id'));

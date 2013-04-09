@@ -101,8 +101,14 @@ class AddNewsletterController extends ModuleController
 	
 	private function send_mail($type)
 	{
+		$streams = array();
+		foreach ($this->form->get_value('newsletter_choice') as $field => $option)
+		{
+			$streams[] = $option->get_raw_value();
+		}
+			
 		NewsletterService::add_newsletter(
-			$this->form->get_value('newsletter_choice'), 
+			$streams, 
 			$this->form->get_value('title'), 
 			$this->form->get_value('contents'),
 			$type
