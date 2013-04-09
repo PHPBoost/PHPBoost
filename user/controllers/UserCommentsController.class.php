@@ -222,5 +222,15 @@ class UserCommentsController extends AbstractController
 		}
 		return $response->display($this->tpl);
 	}
+	
+	public function get_right_controller_regarding_authorizations()
+	{
+		if (!AppContext::get_current_user()->check_auth(CommentsConfig::load()->get_authorizations(), CommentsAuthorizations::READ_AUTHORIZATIONS))
+		{
+			$error_controller = PHPBoostErrors::user_not_authorized();
+			DispatchManager::redirect($error_controller);
+		}
+		return $this;
+	}
 }
 ?>
