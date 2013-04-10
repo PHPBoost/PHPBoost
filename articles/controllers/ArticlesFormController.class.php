@@ -138,10 +138,10 @@ class ArticlesFormController extends ModuleController
 				),
 				array('events' => array('change' => '
 				if (HTMLForms.getField("publishing_state").getValue() == 2) {
-					$("'.__CLASS__.'_start_date_field").appear();
+					$("'.__CLASS__.'_publishing_start_date_field").appear();
 					HTMLForms.getField("end_date_enable").enable();
 				} else { 
-					$("'.__CLASS__.'_start_date_field").fade();
+					$("'.__CLASS__.'_publishing_start_date_field").fade();
 					HTMLForms.getField("end_date_enable").disable();
 				}'))
 			));
@@ -154,9 +154,9 @@ class ArticlesFormController extends ModuleController
 				array('hidden' => ($this->get_article()->get_publishing_state() != Articles::PUBLISHED_DATE),
 					'events' => array('click' => '
 						if (HTMLForms.getField("end_date_enable").getValue()) {
-							HTMLForms.getField("end_date").enable();
+							HTMLForms.getField("publishing_end_date").enable();
 						} else { 
-							HTMLForms.getField("end_date").disable();
+							HTMLForms.getField("publishing_end_date").disable();
 						}'
 				))
 			));
