@@ -241,6 +241,7 @@ class CalendarHomePageExtensionPoint implements HomePageExtensionPoint
 					$java = '';
 				}
 				
+				$comments_topic = new CalendarCommentsTopic();
 				$comments_topic->set_id_in_module($row['id']);
 				$comments_topic->set_url(new Url('/calendar/calendar.php?d=' . $day . '&m=' . $month . '&y=' . $year . '&e=' . $row['id'] . '&com=0'));
 				
