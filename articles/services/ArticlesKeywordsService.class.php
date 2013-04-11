@@ -66,8 +66,8 @@ class ArticlesKeywordsService
 
 	public static function get_keywords($id_article)
 	{
-		$query = 'SELECT k.id, k.name, k.rewrited_name FROM '. ArticlesSetup::$articles_keywords_table.'k INNER JOIN '.
-			 ArticlesSetup::$articles_keywords_relation_table.'r ON k.id = r.id_keyword WHERE r.id_article=:id_article';
+		$query = 'SELECT keywords.id, keywords.name, keywords.rewrited_name FROM '. ArticlesSetup::$articles_keywords_table.'keywords INNER JOIN '.
+		ArticlesSetup::$articles_keywords_relation_table.'relation ON keywords.id = relation.id_keyword WHERE relation.id_article=:id_article';
 		$parameters = array('id_article' => $id_article);
 		$rows = self::$db_querier->select_rows($query, $parameters, SelectQueryResult::FETCH_ASSOC);
 

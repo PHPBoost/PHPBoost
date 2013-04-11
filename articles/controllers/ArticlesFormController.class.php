@@ -138,10 +138,10 @@ class ArticlesFormController extends ModuleController
 				),
 				array('events' => array('change' => '
 				if (HTMLForms.getField("publishing_state").getValue() == 2) {
-					$("'.__CLASS__.'_start_date_field").appear();
+					$("'.__CLASS__.'_publishing_start_date_field").appear();
 					HTMLForms.getField("end_date_enable").enable();
 				} else { 
-					$("'.__CLASS__.'_start_date_field").fade();
+					$("'.__CLASS__.'_publishing_start_date_field").fade();
 					HTMLForms.getField("end_date_enable").disable();
 				}'))
 			));
@@ -154,9 +154,9 @@ class ArticlesFormController extends ModuleController
 				array('hidden' => ($this->get_article()->get_publishing_state() != Articles::PUBLISHED_DATE),
 					'events' => array('click' => '
 						if (HTMLForms.getField("end_date_enable").getValue()) {
-							HTMLForms.getField("end_date").enable();
+							HTMLForms.getField("publishing_end_date").enable();
 						} else { 
-							HTMLForms.getField("end_date").disable();
+							HTMLForms.getField("publishing_end_date").disable();
 						}'
 				))
 			));
@@ -245,7 +245,7 @@ class ArticlesFormController extends ModuleController
 		$article = $this->get_article();
 
 		$article->set_title($this->form->get_value('title'));
-		$article->set_id_category($this->form->get_value('id_category'));
+		$article->set_id_category($this->form->get_value('id_category')->get_raw_value());
 		$article->set_description($this->form->get_value('description'));
 		$article->set_contents($this->form->get_value('contents'));
 		$article->set_author_name_displayed($this->form->get_value('author_name_displayed'));
@@ -349,10 +349,29 @@ class ArticlesFormController extends ModuleController
 	private function save_keywords($id_article)
 	{
 		$keywords = $this->form->get_value('keywords');
-
-		foreach($keywords as $keyword)
+		
+		if (!empty($id_article))
 		{
-			ArticlesKeywordsService::add($keyword, $id_article);
+			$result = ArticlesKeywordsService::get_keywords($id_article);
+			
+			foreach ($keywords as $keyword => $name)
+			{
+				
+				$new_keywords->set_name($name);
+				$new_keywords->set_rewrited_name(Url::encode_rewrite($name));
+				ArticlesKeywordsService::add($new_keywords, $id_article);
+			}
+		}
+		else
+		{
+			$new_keywords = new ArticlesKeywords();
+
+			foreach ($keywords as $keyword => $name)
+			{
+				$new_keywords->set_name($name);
+				$new_keywords->set_rewrited_name(Url::encode_rewrite($name));
+				ArticlesKeywordsService::add($new_keywords, $id_article);
+			}
 		}
 	}
 
