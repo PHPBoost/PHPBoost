@@ -1581,7 +1581,7 @@ else if (isset($_GET['roadmap'])) // roadmap
 		'C_NO_BUGS' 			=> empty($nbr_bugs) ? true : false,
 		'NO_BUGS_COLSPAN' 		=> $no_bugs_colspan,
 		'C_COM' 				=> ($comments_activated == true) ? true : false,
-		'PAGINATION' 			=> $Pagination->display(PATH_TO_ROOT . '/bugtracker/bugtracker' . url('.php?solved&amp;p=%d' . (!empty($get_sort) ? '&amp;sort=' . $get_sort : '') . (!empty($get_mode) ? '&amp;mode=' . $get_mode : '')), $nbr_bugs, 'p', $items_per_page, 3),
+		'PAGINATION' 			=> $Pagination->display(PATH_TO_ROOT . '/bugtracker/bugtracker' . url('.php?roadmap&amp;p=%d' . (!empty($get_sort) ? '&amp;sort=' . $get_sort : '') . (!empty($get_mode) ? '&amp;mode=' . $get_mode : '')), $nbr_bugs, 'p', $items_per_page, 3),
 		'L_ROADMAP' 			=> $LANG['bugs.titles.roadmap'],
 		'L_SELECTED_VERSION'	=> $LANG['bugs.labels.fields.version'] . ' ' . $versions[$roadmap_version]['name'],
 		'L_ID' 					=> $LANG['bugs.labels.fields.id'],
