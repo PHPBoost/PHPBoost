@@ -95,15 +95,17 @@ class AdminModuleAddController extends AdminController
 		foreach ($modules_not_installed as $id => $module)
 		{
 			$configuration = $module->get_configuration();
-			$authors_website = $configuration->get_authors_website();
+			$author = $configuration->get_author();
+			$author_email = $configuration->get_author_email();
+			$author_website = $configuration->get_author_website();
 			
 			$this->view->assign_block_vars('available', array(
 				'ID' => $module->get_id(),
 				'NAME' => ucfirst($configuration->get_name()),
 				'ICON' => $module->get_id(),
 				'VERSION' => $configuration->get_version(),
-				'AUTHOR' => $configuration->get_authors_list(),
-				'AUTHOR_WEBSITE' => !empty($authors_website) ? '<a href="' . $authors_website . '"><img src="' . TPL_PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/' . get_ulang() . '/user_web.png" alt="" /></a>' : '',
+				'AUTHOR' => !empty($author_email) ? '<a href="mailto:' . $author_email . '">' . $author . '</a>' : $author,
+				'AUTHOR_WEBSITE' => !empty($author_website) ? '<a href="' . $author_website . '"><img src="' . TPL_PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/' . get_ulang() . '/user_web.png" alt="" /></a>' : '',
 				'DESCRIPTION' => $configuration->get_description(),
 				'COMPATIBILITY' => $configuration->get_compatibility(),
 				'PHP_VERSION' => $configuration->get_php_version(),
