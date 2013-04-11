@@ -59,7 +59,10 @@ class AdminModulesManagementController extends AdminController
 		foreach ($modules_installed as $module)
 		{
 			$configuration = $module->get_configuration();
-			$authors_website = $configuration->get_authors_website();
+			$array_auth = $module->get_authorizations();
+			$author = $configuration->get_author();
+			$author_email = $configuration->get_author_email();
+			$author_website = $configuration->get_author_website();
 			
 			if (!in_array($module, $modules_activated))
 			{
@@ -68,12 +71,13 @@ class AdminModulesManagementController extends AdminController
 					'NAME' => ucfirst($configuration->get_name()),
 					'ICON' => $module->get_id(),
 					'VERSION' => $configuration->get_version(),
-					'AUTHOR' => $configuration->get_authors_list(),
-					'AUTHOR_WEBSITE' => !empty($authors_website) ? '<a href="' . $authors_website . '"><img src="' . TPL_PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/' . get_ulang() . '/user_web.png" alt="" /></a>' : '',
+					'AUTHOR' => !empty($author) ? '<a href="mailto:' . $author_email. '">' . $author . '</a>' : $author,
+					'AUTHOR_WEBSITE' => !empty($author_website) ? '<a href="' . $author_website . '"><img src="' . TPL_PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/' . get_ulang() . '/user_web.png" alt="" /></a>' : '',
 					'DESCRIPTION' => $configuration->get_description(),
 					'COMPATIBILITY' => $configuration->get_compatibility(),
 					'PHP_VERSION' => $configuration->get_php_version(),
 					'C_MODULE_ACTIVE' => $module->is_activated(),
+					'AUTHORIZATIONS' => Authorizations::generate_select(Module::ACCESS_AUTHORIZATION, $array_auth, array(2 => true), $module->get_id()),
 					'U_DELETE_LINK' => AdminModulesUrlBuilder::delete_module($module->get_id())->absolute()
 				));	
 			}
@@ -84,12 +88,13 @@ class AdminModulesManagementController extends AdminController
 					'NAME' => ucfirst($configuration->get_name()),
 					'ICON' => $module->get_id(),
 					'VERSION' => $module->get_installed_version(),
-					'AUTHOR' => $configuration->get_authors_list(),
-					'AUTHOR_WEBSITE' => !empty($authors_website) ? '<a href="' . $authors_website . '"><img src="' . TPL_PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/' . get_ulang() . '/user_web.png" alt="" /></a>' : '',
+					'AUTHOR' => !empty($author) ? '<a href="mailto:' . $author_email. '">' . $author . '</a>' : $author,
+					'AUTHOR_WEBSITE' => !empty($author_website) ? '<a href="' . $author_website . '"><img src="' . TPL_PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/' . get_ulang() . '/user_web.png" alt="" /></a>' : '',
 					'DESCRIPTION' => $configuration->get_description(),
 					'COMPATIBILITY' => $configuration->get_compatibility(),
 					'PHP_VERSION' => $configuration->get_php_version(),
 					'C_MODULE_ACTIVE' => $module->is_activated(),
+					'AUTHORIZATIONS' => Authorizations::generate_select(Module::ACCESS_AUTHORIZATION, $array_auth, array(2 => true), $module->get_id()),
 					'U_DELETE_LINK' => AdminModulesUrlBuilder::delete_module($module->get_id())->absolute()
 				));
 			}
@@ -111,7 +116,8 @@ class AdminModulesManagementController extends AdminController
 				$request = AppContext::get_request();
 				$module_id = $module->get_id();
 				$activated = $request->get_bool('activated-' . $module_id, false);
-				$error = ModulesManager::update_module($module_id, $activated);
+				$authorizations = Authorizations::auth_array_simple(Module::ACCESS_AUTHORIZATION, $module_id);
+				$error = ModulesManager::update_module_authorizations($module_id, $activated, $authorizations);
 				
 				if (!empty($error))
 					$errors[$module->get_configuration()->get_name()] = $error;
