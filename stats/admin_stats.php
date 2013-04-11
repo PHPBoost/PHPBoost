@@ -1150,7 +1150,27 @@ elseif ($bot)
 			$array_info = explode('/', $value);
 			if (isset($array_info[0]) && isset($array_info[1]))
 			{
-				$stats_array[$array_info[0]] = $array_info[1];
+				$name = ucwords($array_info[0]);
+				if (array_key_exists($name, $stats_array))
+				{
+					$stats_array[$name] = ($stats_array[$name] + $array_info[1]);
+				}
+				else
+				{
+					$stats_array[$name] = $array_info[1];
+				}
+			}
+			else if (isset($array_info[0]))
+			{
+				$name = ucwords($key);
+				if (array_key_exists($name, $stats_array))
+				{
+					$stats_array[$name] = ($stats_array[$name] + $array_info[0]);
+				}
+				else
+				{
+					$stats_array[$name] = $array_info[0];
+				}
 			}
 		}
 	}
