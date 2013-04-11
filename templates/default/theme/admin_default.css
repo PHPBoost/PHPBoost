@@ -18,23 +18,44 @@ Css par défaut commun à tout les thèmes, permet les ajouts nécessaires au framew
 }
 
 .cat_element {
-	background:none;
+	background:#FFFFFF;
 	border:1px solid #D6DEE7;
 	padding:0;
 	position: relative;
 	margin:5px;
 }
 .cat_element:hover {
-	border:1px solid #D6DEE7;
+	border:1px solid #d0d8e1;
 	cursor:move;
+	-moz-box-shadow: 0px 0px 5px #EAEAEA;
+	-webkit-box-shadow: 0px 0px 5px #EAEAEA;
+	box-shadow: 0px 0px 5px #EAEAEA;
 }
 
 .cat_title{
-	background:#f2f5f8;
+	background-image: linear-gradient(bottom, #FFFFFF 50%, #FAFAFA 100%);
+	background-image: -o-linear-gradient(bottom, #FFFFFF 50%, #FAFAFA 100%);
+	background-image: -moz-linear-gradient(bottom, #FFFFFF 50%, #FAFAFA 100%);
+	background-image: -webkit-linear-gradient(bottom, #FFFFFF 50%, #FAFAFA 100%);
+	background-image: -ms-linear-gradient(bottom, #FFFFFF 50%, #FAFAFA 100%);
 	height: 28px;
 	padding: 10px 5px 5px 10px;
+	font-size:1em;
+	font-weight:bold;
 }
-.cat_title:hover{ background:#D6DEE7; }
+.cat_title:hover{ 
+	background-image: linear-gradient(bottom, #FFFFFF 25%, #f2f5f8 100%);
+	background-image: -o-linear-gradient(bottom, #FFFFFF 25%, #f2f5f8 100%);
+	background-image: -moz-linear-gradient(bottom, #FFFFFF 25%, #f2f5f8 100%);
+	background-image: -webkit-linear-gradient(bottom, #FFFFFF 25%, #f2f5f8 100%);
+	background-image: -ms-linear-gradient(bottom, #FFFFFF 25%, #f2f5f8 100%);
+}
+
+.cat_title span.cat_desc {
+	font-size:0.8em;
+	font-weight:normal;
+	font-style:italic;	
+}
 
 .cat_title img{ cursor:move; }
 
