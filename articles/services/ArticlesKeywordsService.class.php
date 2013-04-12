@@ -40,7 +40,7 @@ class ArticlesKeywordsService
 		$this->add_relation($result->get_last_inserted_id(), $id_article);
 	}
 
-	private static function add_relation($id_keyword, $id_article)
+	public static function add_relation($id_keyword, $id_article)
 	{
 		self::$db_querier->insert(ArticlesSetup::$articles_keywords_relation_table, array(
 			'id_article' => $id_article,
@@ -48,7 +48,7 @@ class ArticlesKeywordsService
 		));
 	}
 
-	public static function delete($id_article)
+	public static function delete_all_keywords($id_article)
 	{
 		$keywords = $this->get_keywords($id_article);
 
@@ -61,6 +61,17 @@ class ArticlesKeywordsService
 
 		self::$db_querier->delete(ArticlesSetup::$articles_keywords_relation_table, 'WHERE id_article=:id_article',array(
 			'id_article' => $id_article
+		));
+	}
+	
+	public static function delete_single_keyword($id_keyword)
+	{
+		self::$db_querier->delete(ArticlesSetup::$articles_keywords_table, 'WHERE id=:id_keyword', array(
+				'id_keyword' => $id_keyword
+		));
+		
+		self::$db_querier->delete(ArticlesSetup::$articles_keywords_relation_table, 'WHERE id_keyword=:id_keyword',array(
+			'id_keyword' => $id_keyword
 		));
 	}
 
