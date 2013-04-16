@@ -38,6 +38,7 @@ class FeedItem
     private $desc = '';         // Item Description
     private $guid = '';         // Item GUID
     private $image_url = '';    // Item Image
+    private $enclosure;			// Item Enclosure
     private $auth = null;       // Authorizations
 	
     ## Setters ##
@@ -61,6 +62,11 @@ class FeedItem
      * @param string $value the picture url
      */
     public function set_image_url($value) { $this->image_url = $value; }
+ 	/**
+     * @desc Sets the feed item enclosure
+     * @param FeedItemEnclosure $value the enclosure
+     */
+    public function set_image_url($value) { $this->enclosure = $value; }
     /**
      * @desc Sets the feed item auth, useful to check authorizations
      * @param int[string] $value the item authorizations array
@@ -104,6 +110,7 @@ class FeedItem
 	public function get_date_text() { return $this->date->format(DATE_FORMAT_TEXT_SHORT, TIMEZONE_USER); }
     public function get_desc() { return $this->desc; }
     public function get_image_url() { return $this->image_url; }
+	public function get_enclosure() { return $this->enclosure; }
     public function get_auth() { return $this->auth; }
 }
 ?>
