@@ -44,6 +44,7 @@ class WebsiteConfigUpdateVersion extends ConfigUpdateVersion
 		//$general_config->set_site_url($config['server_name']);
 		//$general_config->set_site_path($config['server_path']);
 		$general_config->set_site_timezone($config['timezone']);
+		$general_config->set_site_install_date(new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, $config['start']));
 		GeneralConfig::save();
 		
 		$server_environment_config = ServerEnvironmentConfig::load();
