@@ -133,6 +133,7 @@ class Feed
 			foreach ($items as $item)
 			{
 				$desc = TextHelper::htmlspecialchars($item->get_desc());
+				$enclosure = $item->get_get_enclosure();
 				$tpl->assign_block_vars('item', array(
 	                'TITLE' => $item->get_title(),
 	                'U_LINK' => $item->get_link(),
@@ -144,7 +145,11 @@ class Feed
 	                'DATE_RFC3339' => $item->get_date_rfc3339(),
 					'DATE_TEXT' => $item->get_date_text(),
 	                'C_IMG' => ($item->get_image_url() != '') ? true : false,
-	                'U_IMG' => $item->get_image_url()
+	                'U_IMG' => $item->get_image_url(),
+					'C_ENCLOSURE' => $enclosure !== null,
+					'ENCLOSURE_LENGHT' => $enclosure->get_lenght(),
+					'ENCLOSURE_TYPE' => $enclosure->get_type(),
+					'ENCLOSURE_URL' => $enclosure->get_url()
 				));
 			}
 		}
