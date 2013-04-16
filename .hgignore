@@ -1,0 +1,60 @@
+syntax: regexp
+cache/*
+
+syntax: regexp
+^sitemap\.xml$
+
+syntax: regexp
+^kernel/db/config\.php$
+
+syntax: regexp
+^\.*$
+
+syntax: regexp
+\.swp$
+
+syntax: regexp
+\.orig$
+
+syntax: regexp
+\.htaccess$
+
+syntax: regexp
+^images/avatars/*
+
+syntax: regexp
+^images/maths/*
+
+syntax: regexp
+^images/customization/*
+
+syntax: regexp
+gallery/pics/*
+
+syntax: regexp
+^upload/*
+
+syntax: regexp
+^update/update_followed\.txt$
+syntax: regexp
+^templates/bluedream$
+syntax: regexp
+^HomeCustom$
+syntax: regexp
+^templates/around_the_world$
+syntax: regexp
+^templates/Cameleon$
+syntax: regexp
+^templates/Hiver$
+syntax: regexp
+^templates/steel_blue$
+syntax: regexp
+^templates/Summerday$
+syntax: regexp
+^templates/Enigma$
+syntax: regexp
+^templates/CrazyRider$
+syntax: regexp
+^templates/test$
+syntax: regexp
+^templates/lorem$
