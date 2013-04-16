@@ -206,16 +206,11 @@ class AdminModuleAddController extends AdminController
 							$file = new File($archive_path);
 							$file->delete();
 						}
-						else
-						{
-							$this->view->put('MSG', MessageHelper::display($this->lang['modules.upload_invalid_format'], MessageHelper::NOTICE, 4));
-						}
-						
 						$this->install_module($file->get_name_without_extension(), true);
 					}
 					else
 					{
-						$this->view->put('MSG', MessageHelper::display($this->lang['modules.upload_error'], MessageHelper::NOTICE, 4));
+						$this->view->put('MSG', MessageHelper::display($this->lang['modules.upload_invalid_format'], MessageHelper::NOTICE, 4));
 					}
 				}
 				else
