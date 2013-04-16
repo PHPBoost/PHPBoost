@@ -81,7 +81,7 @@ elseif(retrieve(POST,'submit',false))
 		if (retrieve(POST,'a'.$i,false,TSTRING))
 		{				
 			$sources[$i]['sources'] = retrieve(POST, 'a'.$i, '',TSTRING);
-			$sources[$i]['url'] = preg_replace('`\?.*`', '', retrieve(POST, 'v'.$i, '',TSTRING_UNCHANGE));
+			$sources[$i]['url'] = retrieve(POST, 'v'.$i, '',TSTRING_UNCHANGE);
 		}
 	}
 		
