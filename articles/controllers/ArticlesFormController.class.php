@@ -349,23 +349,46 @@ class ArticlesFormController extends ModuleController
 	private function save_keywords($id_article)
 	{
 		$keywords = $this->form->get_value('keywords');
+		$nbr_form_keywords = count($keywords);
+		
+		$new_keywords = new ArticlesKeywords();
 		
 		if (!empty($id_article))
 		{
 			$result = ArticlesKeywordsService::get_keywords($id_article);
+			$nbr_bdd_keywords = count($result['name']);
 			
-			foreach ($keywords as $keyword => $name)
+			//If there is more keywords in the form than what is in bdd, we add the new ones
+			if ($nbr_form_keywords > $nbr_bdd_keywords)
 			{
-				
-				$new_keywords->set_name($name);
-				$new_keywords->set_rewrited_name(Url::encode_rewrite($name));
-				ArticlesKeywordsService::add($new_keywords, $id_article);
+				while ($row = $result->fetch())
+				{
+					foreach ($keywords as $keyword => $name)
+					{
+						if (!(in_array($name, $row, true)))
+						{
+							$new_keywords->set_name($name);
+							$new_keywords->set_rewrited_name(Url::encode_rewrite($name));
+							ArticlesKeywordsService::add($new_keywords, $id_article);
+						}
+					}
+				}
+			}
+			//Else, we delete from the bdd the ones that are no longer in the form
+			else if ($nbr_form_keywords < $nbr_bdd_keywords)
+			{
+				while ($row = $result->fetch())
+				{
+					if(!(in_array($row['name'], $keywords, true)))
+					{
+						ArticlesKeywordsService::delete_single_keyword($row['id']);
+					}
+					
+				}
 			}
 		}
 		else
 		{
-			$new_keywords = new ArticlesKeywords();
-
 			foreach ($keywords as $keyword => $name)
 			{
 				$new_keywords->set_name($name);
