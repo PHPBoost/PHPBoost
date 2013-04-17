@@ -159,11 +159,17 @@ class AdminMemberEditController extends AdminController
 		$user_id = $this->user->get_id();
 		$old_approbation = (int)$this->user->get_approbation();
 		
-		GroupsService::edit_member($user_id, $this->form->get_value('groups'));
+		$groups = array();
+		foreach ($this->form->get_value('groups') as $field => $option)
+		{
+			$groups[] = $option->get_raw_value();
+		}
+		
+		GroupsService::edit_member($user_id, $groups);
 		
 		$this->user->set_pseudo($this->form->get_value('login'));
 		$this->user->set_level($this->form->get_value('rank')->get_raw_value());
-		$this->user->set_groups($this->form->get_value('groups'));
+		$this->user->set_groups($groups);
 		$this->user->set_email($this->form->get_value('mail'));
 		$this->user->set_show_email(!$this->form->get_value('user_hide_mail'));
 		$this->user->set_approbation($this->form->get_value('approbation'));
