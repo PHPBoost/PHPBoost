@@ -101,10 +101,13 @@
 		return $this->get_seo_meta_data()->get_title();
 	}
 	
-	public function set_page_title($title)
+	public function set_page_title($title, $complete_description = true)
 	{
 		$this->get_seo_meta_data()->set_title($title);
-		$this->get_seo_meta_data()->complete_description($title);
+		
+		if ($complete_description)
+			$this->get_seo_meta_data()->complete_description($title);
+			
 		defined('TITLE') or define('TITLE', $title);
 	}
 }
