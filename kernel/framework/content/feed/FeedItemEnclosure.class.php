@@ -66,11 +66,15 @@ class FeedItemEnclosure
 	
 	/**
 	 * @desc Defines the URL to the media file
-	 * @param Url $url
+	 * @param mixed $url a string url or an Url object
 	 */
-	public function set_url(Url $url)
+	public function set_url($url)
 	{
-		$this->url = $url->absolute();
+		if (!($url instanceof Url))
+        {
+            $url = new Url($url);
+        }
+        $this->url = $url->absolute();
 	}
 	
 	public function get_url()
