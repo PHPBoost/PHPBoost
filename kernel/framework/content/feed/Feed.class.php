@@ -133,7 +133,7 @@ class Feed
 			foreach ($items as $item)
 			{
 				$desc = TextHelper::htmlspecialchars($item->get_desc());
-				$enclosure = $item->get_get_enclosure();
+				$enclosure = $item->get_enclosure();
 				$tpl->assign_block_vars('item', array(
 	                'TITLE' => $item->get_title(),
 	                'U_LINK' => $item->get_link(),
@@ -147,9 +147,9 @@ class Feed
 	                'C_IMG' => ($item->get_image_url() != '') ? true : false,
 	                'U_IMG' => $item->get_image_url(),
 					'C_ENCLOSURE' => $enclosure !== null,
-					'ENCLOSURE_LENGHT' => $enclosure->get_lenght(),
-					'ENCLOSURE_TYPE' => $enclosure->get_type(),
-					'ENCLOSURE_URL' => $enclosure->get_url()
+					'ENCLOSURE_LENGHT' => $enclosure !== null ? $enclosure->get_lenght() : '',
+					'ENCLOSURE_TYPE' => $enclosure !== null ? $enclosure->get_type() : '',
+					'ENCLOSURE_URL' => $enclosure !== null ? $enclosure->get_url() : ''
 				));
 			}
 		}

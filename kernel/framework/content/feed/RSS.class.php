@@ -78,6 +78,16 @@ class RSS extends Feed
                     $item->set_guid(preg_match('`<guid>(.*)</guid>`is', $expParsed[$i], $guid) ? $guid[1] : '');
                     $item->set_desc(preg_match('`<desc>(.*)</desc>`is', $expParsed[$i], $desc) ? $desc[1] : '');
                     $item->set_date_rfc822(preg_match('`<pubDate>(.*)</pubDate>`is', $expParsed[$i], $date) ? gmdate_format('date_format_tiny', strtotime($date[1])) : '');
+					
+                    $enclosure = preg_match('`<enclosure url="(.*)" length="(.*)" type="(.*)" />`is', $expParsed[$i]);
+                    if ($enclosure)
+                    {
+                    	$enclosure_item = new FeedItemEnclosure();
+                    	$enclosure_item->set_lenght($enclosure[2]);
+                    	$enclosure_item->set_type($enclosure[3]);
+                    	$enclosure_item->set_url($enclosure[1]);
+                    	$item->set_enclosure($enclosure_item);
+                    }
                     
                     $this->data->add_item($item);
                 }

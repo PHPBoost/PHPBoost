@@ -77,6 +77,16 @@ class ATOM extends Feed
                     $item->set_desc(preg_match('`<summary>(.*)</summary>`is', $expParsed[$i], $desc) ? $desc[1] : '');
                     $item->set_date_rfc3339(preg_match('`<updated>(.*)</updated>`is', $expParsed[$i], $date) ? gmdate_format('date_format_tiny', strtotime($date[1])) : '');
                     
+                 	$enclosure = preg_match('`<enclosure rel="enclosure" url="(.*)" length="(.*)" type="(.*)" />`is', $expParsed[$i]);
+                    if ($enclosure)
+                    {
+                    	$enclosure_item = new FeedItemEnclosure();
+                    	$enclosure_item->set_lenght($enclosure[2]);
+                    	$enclosure_item->set_type($enclosure[3]);
+                    	$enclosure_item->set_url($enclosure[1]);
+                    	$item->set_enclosure($enclosure_item);
+                    }
+                    
                     $this->data->add_item($item);
                 }
                 return true;

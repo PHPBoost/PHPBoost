@@ -19,7 +19,7 @@
         <updated>{item.DATE_RFC3339}</updated>
         <content type="html">{item.DESC}</content>
         # IF item.C_ENCLOSURE #
-			<enclosure url="{item.ENCLOSURE_URL}" length="{item.ENCLOSURE_LENGHT}" type="{item.ENCLOSURE_TYPE}" />
+			<enclosure rel="enclosure" url="{item.ENCLOSURE_URL}" length="{item.ENCLOSURE_LENGHT}" type="{item.ENCLOSURE_TYPE}" />
 		# ENDIF #
     </entry>
     # END item #
