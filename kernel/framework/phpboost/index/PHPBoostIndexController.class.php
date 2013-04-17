@@ -62,7 +62,8 @@ class PHPBoostIndexController extends AbstractController
 	private function build_response($view, $title)
 	{
 		$response = new SiteDisplayResponse($view);
-		$response->get_graphical_environment()->set_page_title($title);
+		$graphical_environment = $response->get_graphical_environment();
+		$graphical_environment->set_page_title($title, false);
 		return $response;
 	}
 }
