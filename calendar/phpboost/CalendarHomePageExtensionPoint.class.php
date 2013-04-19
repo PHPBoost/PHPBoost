@@ -63,7 +63,7 @@ class CalendarHomePageExtensionPoint implements HomePageExtensionPoint
 		$month = empty($month) ? 0 : $month;
 		$day = retrieve(GET, 'd', $array_time[2]);
 		$day = empty($day) ? 0 : $day;
-		$bissextile = (date("L", mktime(0, 0, 0, 1, 1, $year)) == 1) ? 29 : 28;
+		$bissextile = ($year && date("L", mktime(0, 0, 0, 1, 1, $year)) == 1) ? 29 : 28;
 		
 		$get_event = retrieve(GET, 'e', '');
 		$id = retrieve(GET, 'id', 0);
