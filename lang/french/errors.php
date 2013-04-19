@@ -38,6 +38,7 @@ $LANG['e_unexist_module'] = 'Le module associé n\'existe pas !';
 $LANG['e_uninstalled_module'] = 'Ce module n\'est pas installé !';
 $LANG['e_unactivated_module'] = 'Ce module n\'est pas activé !';
 $LANG['e_already_installed_module'] = 'Ce module est déjà installé !';
+$LANG['e_config_conflict'] = 'Conflit avec la configuration du module, installation impossible!';
 $LANG['e_incomplete'] = 'Tous les champs obligatoires doivent être remplis !';
 $LANG['e_auth_post'] = 'Vous devez être inscrit pour poster !';
 $LANG['e_readonly'] = 'Vous ne pouvez exécuter cette action, car vous avez été placé en lecture seule !';
