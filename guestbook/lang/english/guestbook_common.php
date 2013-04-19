@@ -39,11 +39,11 @@ $lang['guestbook.titles.admin.module_config'] = 'Guestbook module configuration'
 $lang['guestbook.titles.admin.config'] = 'Configuration';
 $lang['guestbook.titles.admin.authorizations'] = 'Authorizations';
 $lang['guestbook.config.items_per_page'] = 'Messages number per page'; 
-$lang['guestbook.config.enable_captcha'] = 'Activer la protection anti-spam';
-$lang['guestbook.config.captcha_difficulty'] = 'Difficulté de l\'anti spam';
-$lang['guestbook.config.forbidden-tags'] = 'Types de formatage interdits';
-$lang['guestbook.config.max_links'] = 'Nombre de liens maximum dans le message';
-$lang['guestbook.config.max_links_explain'] = 'Mettre -1 pour illimité';
+$lang['guestbook.config.enable_captcha'] = 'Enable captcha';
+$lang['guestbook.config.captcha_difficulty'] = 'Captcha difficulty';
+$lang['guestbook.config.forbidden-tags'] = 'Forbidden tags';
+$lang['guestbook.config.max_links'] = 'Max links number in a message';
+$lang['guestbook.config.max_links_explain'] = '-1 for unlimited';
 $lang['guestbook.config.post_rank'] = 'Write permission';
 $lang['guestbook.config.modo_rank'] = 'Permission to delete or modify a message';
 
