@@ -39,6 +39,7 @@ $LANG['e_unexist_module'] = 'This module doesn\'t exist!';
 $LANG['e_uninstalled_module'] = 'This module isn\'t installed!';
 $LANG['e_unactivated_module'] = 'This module isn\'t activated!';
 $LANG['e_already_installed_module'] = 'This module is already insalled!';
+$LANG['e_config_conflict'] = 'Conflict with module configuration, impossible to install!';
 $LANG['e_incomplete'] = 'All the required fields must be filled!';
 $LANG['e_auth_post'] = 'You must be registered to post!';
 $LANG['e_readonly'] = 'You can\'t perform this action because your account is read-only!';
