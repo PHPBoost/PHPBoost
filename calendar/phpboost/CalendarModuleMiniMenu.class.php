@@ -55,7 +55,7 @@ class CalendarModuleMiniMenu extends ModuleMiniMenu
 			$month = empty($month) ? 0 : ltrim($month, "0");
 			$day = $request->get_int('day', $array_time[2]);
 			$day = empty($day) ? 0 : ltrim($day, "0");
-			$bissextile = (date("L", mktime(0, 0, 0, 1, 1, $year)) == 1) ? 29 : 28;
+			$bissextile = ($year && date("L", mktime(0, 0, 0, 1, 1, $year)) == 1) ? 29 : 28;
 			
 			$get_event = $request->get_value('event', '');
 			
