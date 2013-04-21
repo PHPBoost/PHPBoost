@@ -36,8 +36,8 @@ class AdminNewsDisplayResponse extends AdminMenuDisplayResponse
 		$img = 'news.png';
 		        
 		$this->add_link($lang['news.add'], NewsUrlBuilder::add_news(), $img);
-		$this->add_link($lang['admin.categories.manage'], NewsUrlBuilder::add_category(), $img);
-		$this->add_link($lang['admin.categories.add'], NewsUrlBuilder::manage_categories(), $img);
+		$this->add_link($lang['admin.categories.manage'], NewsUrlBuilder::manage_category(), $img);
+		$this->add_link($lang['admin.categories.add'], NewsUrlBuilder::add_categories(), $img);
 		$this->add_link($lang['admin.config'], NewsUrlBuilder::config(), $img);
 		
 		$env = $this->get_graphical_environment();
