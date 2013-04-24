@@ -45,7 +45,6 @@ $result = $Sql->query_while("SELECT n.id, n.idcat, n.title, n.user_id, n.timesta
 	ORDER BY n.timestamp DESC
 	" . $Sql->limit($Pagination->get_first_msg(25, 'p'), 25), __LINE__, __FILE__);
 
-$nbr_news = 0;
 $level = array(0 => '', 1 => ' modo', 2 => ' admin');
 
 while ($row = $Sql->fetch_assoc($result))
@@ -99,13 +98,13 @@ while ($row = $Sql->fetch_assoc($result))
 		'APROBATION' => $aprob,
 		'VISIBLE' => !empty($visible) ? $visible : ''
 	));
-
-	$nbr_news++;
 }
 $Sql->query_close($result);
 
 // Chargement du menu de l'administration.
 require_once('admin_news_menu.php');
+
+$nbr_news = $Sql->count_table(PREFIX . 'news', __LINE__, __FILE__);
 
 $tpl->put_all(array(
 	'ADMIN_MENU' => $admin_menu,
