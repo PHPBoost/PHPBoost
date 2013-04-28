@@ -98,35 +98,35 @@
 						<div class="block_contents">
 							<div style="float:left;width:70%">
 								<p style="margin-bottom:10px">
-									<a href="{PATH_TO_ROOT}/articles/articles{articles.U_ARTICLES_LINK}" class="big_link">{articles.NAME}</a>
+									<a href="{articles.U_ARTICLES_LINK}" class="big_link">{articles.TITLE}</a>
 									# IF C_MODERATE #
-										<a href="{articles.U_ADMIN_EDIT_ARTICLES}">
+										<a href="{articles.U_ARTICLES_EDIT}">
 											<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="" />
 										</a>
-										<a href="{articles.U_ADMIN_DELETE_ARTICLES}" onclick="return Confirm_del_article();">
+										<a href="{articles.U_ARTICLES_DELETE}" onclick="return Confirm_del_article();">
 											<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="" />
 										</a>
 									# ENDIF #
 								</p>
 								<p style="margin-bottom:10px">
-									{articles.DESCRIPTION}
+									{articles.CONTENTS}
 								</p>
 								<div class="text_small">
 									{L_DATE} : {articles.DATE}
 									<br />
-									{L_VIEW} : {articles.COMPT}
+									{L_VIEW} : {articles.NUMBER_VIEW}
 									<br />
-									{L_COM} : <a href="{PATH_TO_ROOT}/articles/articles{articles.U_ARTICLES_LINK_COM}">{articles.COM} </a>
+									{L_COM} : <a href="{articles.U_ARTICLES_LINK_COM}">{articles.L_NUMBER_COM} </a>
 									<br />
 									{L_NOTE} {articles.NOTE}
 									<br />
-								{L_WRITTEN} : {articles.U_ARTICLES_PSEUDO}
+								{L_WRITTEN} : {articles.U_AUTHOR}
 								</div>
 							</div>
 							<div class="float:right;">	
-								<div style="text-align:right;margin-top:15px;">								
-									<a href="{PATH_TO_ROOT}/articles/articles{articles.U_ARTICLES_LINK}">
-										{articles.ICON}
+								<div style="text-align:right;margin-top:15px;">
+									<a href="{articles.U_ARTICLES_LINK}">
+										{articles.PICTURE}
 									</a>	
 								</div>
 							</div>
