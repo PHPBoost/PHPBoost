@@ -31,7 +31,6 @@ class Articles
 	private $id_category;
 	private $title;
 	private $rewrited_title;
-	private $description;
 	private $contents;
 	private $picture_url;
 	private $number_view;
@@ -104,16 +103,6 @@ class Articles
 	public function rewrited_title_is_personalized()
 	{
 		return $this->rewrited_title != Url::encode_rewrite($this->title);
-	}
-
-	public function set_description($description)
-	{
-		$this->description = $description;
-	}
-
-	public function get_description()
-	{
-		return $this->description;
 	}
 
 	public function set_contents($contents)
@@ -258,7 +247,6 @@ class Articles
 			'id_category' => $this->get_id_category(),
 			'title' => $this->get_title(),
 			'rewrited_title' => $this->get_rewrited_title(),
-			'description' => $this->get_description(),
 			'contents' => $this->get_contents(),
 			'picture_url' => $this->get_picture()->absolute(),
 			'number_view' => $this->get_number_view(),
@@ -279,7 +267,6 @@ class Articles
 		$this->set_id_category($properties['id_category']);
 		$this->set_title($properties['title']);
 		$this->set_rewrited_title($properties['rewrited_title']);
-		$this->set_description($properties['description']);
 		$this->set_contents($properties['contents']);
 		$this->set_picture(new Url($properties['picture_url']));
 		$this->set_number_view($properties['number_view']);

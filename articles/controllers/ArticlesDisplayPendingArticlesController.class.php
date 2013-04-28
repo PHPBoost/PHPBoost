@@ -29,7 +29,6 @@ class ArticlesDisplayPendingArticlesController extends ModuleController
 {
 	private $lang;
 	private $tpl;
-	private $view;
 	private $category;
 	
 	public function execute(HTTPRequestCustom $request)
@@ -39,8 +38,8 @@ class ArticlesDisplayPendingArticlesController extends ModuleController
 		$this->init();
 		
 		$this->build_view($request);
-					
-		return $this->generate_response($this->tpl);
+		
+		return $this->generate_response();
 	}
 	
 	private function init()
@@ -60,7 +59,7 @@ class ArticlesDisplayPendingArticlesController extends ModuleController
 		$sort_fields = $this->list_sort_fields();
 		
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_fields', '', $sort_fields[0], $sort_fields,
-			array('events' => array('change' => 'document.location = "'. ArticlesUrlBuilder::display_category($this->category-get_id(), $this->category->get_rewrited_name())->absolute() .'" + HTMLForms.getField("sort_fields").getValue(); /' . $mode)
+			array('events' => array('change' => 'document.location = "'. ArticlesUrlBuilder::display_category($this->category->get_id(), $this->category->get_rewrited_name())->absolute() .'" + HTMLForms.getField("sort_fields").getValue(); /' . $mode)
 		)));
 		
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_mode', '', 'DESC',
@@ -68,7 +67,7 @@ class ArticlesDisplayPendingArticlesController extends ModuleController
 				new FormFieldSelectChoiceOption($this->lang['articles.sort_mode.asc'], 'ASC'),
 				new FormFieldSelectChoiceOption($this->lang['articles.sort_mode.desc'], 'DESC')
 			), 
-			array('events' => array('change' => 'document.location = "' . ArticlesUrlBuilder::display_category($this->category-get_id(), $this->category->get_rewrited_name())->absolute() . '" + HTMLForms.getField("sort_fields").getValue() "/" + HTMLForms.getField("sort_mode").getValue();'))
+			array('events' => array('change' => 'document.location = "' . ArticlesUrlBuilder::display_category($this->category->get_id(), $this->category->get_rewrited_name())->absolute() . '" + HTMLForms.getField("sort_fields").getValue() "/" + HTMLForms.getField("sort_mode").getValue();'))
 		));
 		
 		$this->form = $form;
@@ -85,11 +84,11 @@ class ArticlesDisplayPendingArticlesController extends ModuleController
 		$current_page = ($request->get_getint('page',1) > 0) ? $request->get_getint('page',1) : 1;
 		$limit_page = (($current_page - 1) * $number_articles_per_page);
 		
-		$result = PersistenceContext::get_querier()->select('SELECT articles.*, member.level, member.user_groups, member.login
+		$result = PersistenceContext::get_querier()->select('SELECT articles.*, member.level, member.user_groups, member.user_id, member.login
 		FROM '. ArticlesSetup::$articles_table .' articles
 		LEFT JOIN '. DB_TABLE_MEMBER .' member ON member.user_id = articles.author_user_id
-		LEFT JOIN ' . DB_TABLE_COMMENTS_TOPIC . 'com ON com.id_in_module = a.id AND com.module_id = "articles"
-		LEFT JOIN ' . DB_TABLE_AVERAGE_NOTES . 'note ON note.id_in_module = a.id AND note.module_name = "articles"
+		LEFT JOIN ' . DB_TABLE_COMMENTS_TOPIC . ' com ON com.id_in_module = articles.id AND com.module_id = "articles"
+		LEFT JOIN ' . DB_TABLE_AVERAGE_NOTES . ' note ON note.id_in_module = articles.id AND note.module_name = "articles"
 		WHERE articles.published = 0 OR (articles.published = 2 AND (articles.publishing_start_date > :timestamp_now 
 		AND articles.publishing_end_date < :timestamp_now)) ORDER BY :sort :mode LIMIT :limit OFFSET :start_limit', 
 			array(
@@ -111,12 +110,12 @@ class ArticlesDisplayPendingArticlesController extends ModuleController
 		
 		$moderation_auth = ArticlesAuthorizationsService::check_authorizations($this->category->get_id())->moderation();
 		
-		$this->view->put_all(array(
+		$this->tpl->put_all(array(
 			'C_IS_MODERATOR' => $moderation_auth,
 			'L_PUBLISHED_ARTICLES' => $this->lang['articles.published_articles'],
 			'ID_CAT' => $this->category->get_id(),
 			'L_CAT' => $this->category->get_name(),
-			'L_TOTAL_PENDING' => $number_articles_pending > 0 ? spintf($this->lang['articles.total_articles.pending'], $number_articles_pending) : '',
+			'L_TOTAL_PENDING' => $number_articles_pending > 0 ? sprintf($this->lang['articles.nbr_articles.pending'], $number_articles_pending) : '',
 			'U_PUBLISHED_ARTICLES' => ArticlesUrlBuilder::home()->absolute(), 
 			'U_ADD_ARTICLES' => ArticlesUrlBuilder::add_article()->absolute()
 		));
@@ -126,10 +125,15 @@ class ArticlesDisplayPendingArticlesController extends ModuleController
 			$add_auth = ArticlesAuthorizationsService::check_authorizations($this->category->get_id())->write() || ArticlesAuthorizationsService::check_authorizations($this->category->get_id())->contribution();
 			$edit_auth = ArticlesAuthorizationsService::check_authorizations($this->category->get_id())->write() || ArticlesAuthorizationsService::check_authorizations($this->category->get_id())->moderation();
 			
-			$this->view->put_all(array(
+			$this->tpl->put_all(array(
 				'C_ADD' => $add_auth,
 				'C_EDIT' => $edit_auth,
 				'C_ARTICLES_FILTERS' => true,
+				'L_DATE' => LangLoader::get_message('date', 'main'),
+				'L_VIEW' => LangLoader::get_message('views', 'main'),
+				'L_NOTE' => LangLoader::get_message('note', 'main'),
+				'L_COM' => LangLoader::get_message('com', 'main'),
+				'L_WRITTEN' => LangLoader::get_message('written_by', 'main'),
 				'PAGINATION' => $pagination->export()->render()
 			));
 			
@@ -141,16 +145,16 @@ class ArticlesDisplayPendingArticlesController extends ModuleController
 			{
 				$notation->set_id_in_module($row['id']);
 				
-				$group_color = User::get_group_color($row['user_group'], $row['level']);
+				$group_color = User::get_group_color($row['user_groups'], $row['level']);
 				
-				$this->view->assign_block_vars('articles', array(
+				$this->tpl->assign_block_vars('articles', array(
 					'C_GROUP_COLOR' => !empty($group_color),
 					'TITLE' => $row['title'],
 					'PICTURE' => $row['picture_url'],// @todo : link
 					'DATE' => gmdate_format('date_format_short', $row['date_created']),
 					'NUMBER_VIEW' => $row['number_view'],
 					'L_NUMBER_COM' => empty($row['number_comments']) ? '0' : $row['number_comments'],
-					'NOTE' => $row['number_notes'] > 0 ? NotationService::display_static_image($notation, $row['average_notes']) : $this->lang['articles.no_notes'],
+					'NOTE' => (int)NotationService::get_number_notes($notation) > 0 ? NotationService::display_static_image($notation, $row['average_notes']) : $this->lang['articles.no_notes'],
 					'DESCRIPTION' =>FormatingHelper::second_parse($row['description']),                                    
 					'U_ARTICLES_LINK_COM' => ArticlesUrlBuilder::display_category($this->category->get_id(), $this->category->get_rewrited_name())->absolute() . $row['id'] . '-' . $row['rewrited_title'] . '/comments/',
 					'U_AUTHOR' => '<a href="' . UserUrlBuilder::profile($row['user_id'])->absolute() . '" class="' . UserService::get_level_class($row['level']) . '"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . TextHelper::wordwrap_html($row['login'], 19) . '</a>',
@@ -162,11 +166,11 @@ class ArticlesDisplayPendingArticlesController extends ModuleController
 		}
 		else 
 		{
-			$this->view->put_all(array(
+			$this->tpl->put_all(array(
 				'L_NO_PENDING_ARTICLES' => $this->lang['articles.no_pending_article']
 			));
 		}
-		$this->view->put('FORM', $this->form->display());
+		$this->tpl->put('FORM', $this->form->display());
 	}
 	
 	private function check_authorizations()
@@ -182,16 +186,17 @@ class ArticlesDisplayPendingArticlesController extends ModuleController
 	{
 		$options = array();
 		
-		$option[] = new FormFieldSelectChoiceOption($this->lang['articles.sort_field.date'], 'date_created');
-		$option[] = new FormFieldSelectChoiceOption($this->lang['articles.sort_field.title'], 'title');
-		$option[] = new FormFieldSelectChoiceOption($this->lang['articles.sort_field.views'], 'number_view');
-		$option[] = new FormFieldSelectChoiceOption($this->lang['articles.sort_field.com'], 'com');
-		$option[] = new FormFieldSelectChoiceOption($this->lang['articles.sort_field.note'], 'note');
-		$option[] = new FormFieldSelectChoiceOption($this->lang['articles.sort_field.author'], 'author_user_id');
+		$options[] = new FormFieldSelectChoiceOption($this->lang['articles.sort_field.date'], 'date_created');
+		$options[] = new FormFieldSelectChoiceOption($this->lang['articles.sort_field.title'], 'title');
+		$options[] = new FormFieldSelectChoiceOption($this->lang['articles.sort_field.views'], 'number_view');
+		$options[] = new FormFieldSelectChoiceOption($this->lang['articles.sort_field.com'], 'com');
+		$options[] = new FormFieldSelectChoiceOption($this->lang['articles.sort_field.note'], 'note');
+		$options[] = new FormFieldSelectChoiceOption($this->lang['articles.sort_field.author'], 'author_user_id');
 		
 		return $options;
 	}
-	private function generate_response(View $view)
+	
+	private function generate_response()
 	{
 		$response = new ArticlesDisplayResponse();
 		$response->set_page_title($this->lang['articles.pending_articles']);
@@ -199,7 +204,7 @@ class ArticlesDisplayPendingArticlesController extends ModuleController
 		$response->add_breadcrumb_link($this->lang['articles'], NewsUrlBuilder::home());
 		$response->add_breadcrumb_link($this->lang['articles.pending_articles'], ArticlesUrlBuilder::display_pending_articles());
 	
-		return $response->display($view);
+		return $response->display($this->tpl);
 	}
 }
 ?>
