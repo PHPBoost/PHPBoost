@@ -89,7 +89,9 @@ class ArticlesFormController extends ModuleController
 		$search_category_children_options->add_authorizations_bits(Category::READ_AUTHORIZATIONS);
 		$search_category_children_options->add_authorizations_bits(Category::CONTRIBUTION_AUTHORIZATIONS);
 		$fieldset->add_field(ArticlesService::get_categories_manager()->get_select_categories_form_field('id_category', $this->lang['articles.form.category'], $this->get_article()->get_id_category(), $search_category_children_options));
-
+		
+		$fieldset->add_field(new FormFieldMultiLineTextEditor('description', $this->lang['articles.form.description'], $this->get_article()->get_description()));
+		
 		$fieldset->add_field(new FormFieldRichTextEditor('contents', $this->lang['articles.form.contents'], $this->get_article()->get_contents(),
 			array('rows' => 15, 'required' => true)
 		));
@@ -244,6 +246,7 @@ class ArticlesFormController extends ModuleController
 
 		$article->set_title($this->form->get_value('title'));
 		$article->set_id_category($this->form->get_value('id_category')->get_raw_value());
+		$article->set_description($this->form->get_value('description'));
 		$article->set_contents($this->form->get_value('contents'));
 		$article->set_author_name_displayed($this->form->get_value('author_name_displayed'));
 		$article->set_notation_enabled($this->form->get_value('notation_enabled'));
@@ -353,7 +356,7 @@ class ArticlesFormController extends ModuleController
 		if (!empty($id_article))
 		{
 			$result = ArticlesKeywordsService::get_keywords($id_article);
-			$nbr_bdd_keywords = count($result['name']);
+			$nbr_bdd_keywords = $result->get_rows_count();
 			
 			//If there is more keywords in the form than what is in bdd, we add the new ones
 			if ($nbr_form_keywords > $nbr_bdd_keywords)
