@@ -34,8 +34,8 @@ $lang = array();
 
 $lang['default.category.name'] = 'Catégorie de test';
 $lang['default.category.description'] = 'Articles de démonstration';
-
 $lang['default.article.title'] = 'Débuter avec le module Articles';
+$lang['default.article.description'] = '';
 $lang['default.article.contents'] = 'Ce bref article va vous donner quelques conseils simples pour prendre en main ce module.<br /> 
 <br /> 
 <ul class="bb_ul"> 

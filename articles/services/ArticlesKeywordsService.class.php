@@ -59,7 +59,7 @@ class ArticlesKeywordsService
 			));
 		}
 
-		self::$db_querier->delete(ArticlesSetup::$articles_keywords_relation_table, 'WHERE id_article=:id_article',array(
+		self::$db_querier->delete(ArticlesSetup::$articles_keywords_relation_table, 'WHERE id_article=:id_article', array(
 			'id_article' => $id_article
 		));
 	}
@@ -70,17 +70,17 @@ class ArticlesKeywordsService
 				'id_keyword' => $id_keyword
 		));
 		
-		self::$db_querier->delete(ArticlesSetup::$articles_keywords_relation_table, 'WHERE id_keyword=:id_keyword',array(
+		self::$db_querier->delete(ArticlesSetup::$articles_keywords_relation_table, 'WHERE id_keyword=:id_keyword', array(
 			'id_keyword' => $id_keyword
 		));
 	}
 
 	public static function get_keywords($id_article)
 	{
-		$query = 'SELECT keywords.id, keywords.name, keywords.rewrited_name FROM '. ArticlesSetup::$articles_keywords_table.'keywords INNER JOIN '.
-		ArticlesSetup::$articles_keywords_relation_table.'relation ON keywords.id = relation.id_keyword WHERE relation.id_article=:id_article';
+		$query = 'SELECT keywords.id, keywords.name, keywords.rewrited_name FROM ' . ArticlesSetup::$articles_keywords_table . ' keywords INNER JOIN '.
+		ArticlesSetup::$articles_keywords_relation_table .' relation ON keywords.id = relation.id_keyword WHERE relation.id_article=:id_article';
 		$parameters = array('id_article' => $id_article);
-		$rows = self::$db_querier->select_rows($query, $parameters, SelectQueryResult::FETCH_ASSOC);
+		$rows = self::$db_querier->select($query, $parameters, SelectQueryResult::FETCH_ASSOC);
 
 		return $rows;
 	}
