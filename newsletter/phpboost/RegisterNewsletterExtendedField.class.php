@@ -79,7 +79,7 @@ class RegisterNewsletterExtendedField extends AbstractMemberExtendedField
 		parent::register($member_extended_field, $member_extended_fields_dao, $form);
 		
 		$streams = array();
-		foreach ($form->get_value($member_extended_field->get_field_name()) as $field => $option)
+		foreach ($form->get_value($member_extended_field->get_field_name(), array()) as $field => $option)
 		{
 			$streams[] = $option->get_raw_value();
 		}
