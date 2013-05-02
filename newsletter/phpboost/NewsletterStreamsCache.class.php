@@ -52,7 +52,7 @@ class NewsletterStreamsCache implements CacheData
 
 		while ($row = $result->fetch())
 		{
-			$auth = unserialize($row['auth']);
+			$auth = @unserialize($row['auth']);
 			$this->streams[$row['id']] = array(
 				'id' => $row['id'],
 				'name' => $row['name'],
