@@ -473,8 +473,8 @@ class Environment
 		$path = trim($path, '/');
 		if (strpos($path, '/'))
 		{
-         $module_name = explode('/', $path);
-         self::$running_module_name = $module_name[0];
+			$module_name = explode('/', $path);
+			self::$running_module_name = $module_name[0];
 		}
 		else
 		{
