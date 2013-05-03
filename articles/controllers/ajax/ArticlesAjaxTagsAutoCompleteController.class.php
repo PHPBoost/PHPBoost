@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                          AjaxTagsAutoCompleteController.class.php
+ *                          ArticlesAjaxTagsAutoCompleteController.class.php
  *                            -------------------
  *   begin                : November 15, 2012
  *   copyright            : (C) 2012 Kevin MASSY
@@ -24,14 +24,14 @@
  *
  ###################################################*/
 
-class AjaxTagsAutoCompleteController extends AbstractController
+class ArticlesAjaxTagsAutoCompleteController extends AbstractController
 {
 	public function execute(HTTPRequestCustom $request)
 	{
 		$tpl = new StringTemplate('<ul> # START results # <li>{results.NAME}</li> # END results # </ul>');
- 
+		
 		try {
-			$result = PersistenceContext::get_querier()->select("SELECT name, rewrited_name FROM " . ArticlesSetup::$articles_keywords_table . " WHERE name LIKE '" . $request->get_value('value', '') . "%'",
+			$result = PersistenceContext::get_querier()->select("SELECT name, rewrited_name FROM " . ArticlesSetup::$articles_keywords_table . " WHERE name LIKE '" . $request->get_value('keywords', '') . "%'",
 				array(), SelectQueryResult::FETCH_ASSOC);
 	 
 			while($row = $result->fetch())
