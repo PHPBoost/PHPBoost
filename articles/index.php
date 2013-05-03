@@ -56,7 +56,7 @@ $url_controller_mappers = array(
 
 	new UrlControllerMapper('ArticlesDisplayCategoryController', '`^/([0-9]+)-([a-z0-9-_]+)?/?$`', array('id', 'rewrited_name')),
 
-	new UrlControllerMapper('AjaxTagsAutoCompleteController','`^/ajax/tag/?$`')
+	new UrlControllerMapper('ArticlesAjaxTagsAutoCompleteController','`^/ajax/tag/?$`')
 );
 
 DispatchManager::dispatch($url_controller_mappers);

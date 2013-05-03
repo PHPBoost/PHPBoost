@@ -117,7 +117,9 @@ class ArticlesFormController extends ModuleController
 		)));
 		$other_fieldset->add_field(new FormFieldFree('preview_picture', $this->lang['articles.form.picture.preview'], '<img id="preview_picture" src="'. $this->get_article()->get_picture()->rel() .'" alt="" style="vertical-align:top" />'));
 
-		$other_fieldset->add_field(new FormFieldMultipleAutocompleter('keywords', $this->lang['articles.form.keywords'], array(), array('description' => $this->lang['articles.form.keywords.description'], 'file' => TPL_PATH_TO_ROOT . '/articles/ajax/tag/')));
+		$other_fieldset->add_field(new FormFieldMultipleAutocompleter('keywords', $this->lang['articles.form.keywords'], array(), 
+			array('description' => $this->lang['articles.form.keywords.description'], 'file' => TPL_PATH_TO_ROOT . '/articles/ajax/tag/')
+		));
 
 		$other_fieldset->add_field(new ArticlesFormFieldSelectSources('sources', $this->lang['articles.form.sources'], $this->get_article()->get_sources(),
 			array('description' => $this->lang['articles.form.sources.description'])
@@ -303,7 +305,7 @@ class ArticlesFormController extends ModuleController
 		}
 
 		$this->contribution_actions($article);
-
+		
 		$this->save_keywords($id_article);
 
 		Feed::clear_cache('articles');
@@ -349,7 +351,35 @@ class ArticlesFormController extends ModuleController
 	private function save_keywords($id_article)
 	{
 		$keywords = $this->form->get_value('keywords');
-		$nbr_form_keywords = count($keywords);
+		$bdd_keywords = ArticlesKeywordsService::get_keywords();
+		
+		$new_keywords = new ArticlesKeywords();
+		
+		foreach ($keywords as $keyword => $name)
+		{	
+			$relation_added = false;
+			
+			while ($row = $bdd_keywords->fetch())
+			{
+			    if ($name == $row['name'])
+			    {
+				    ArticlesKeywordsService::add_relation($row['id'], $id_article);
+				    $relation_added = true;
+			    }
+			}
+			
+			if (!($relation_added))
+			{
+				$new_keywords->set_name($name);
+				$new_keywords->set_rewrited_name(Url::encode_rewrite($name));
+				ArticlesKeywordsService::add($new_keywords, $id_article);
+			}		
+		}
+	}
+
+	/*private function update_keywords($id_article)
+	{
+		$keywords = $this->form->get_value('keywords');
 		
 		$new_keywords = new ArticlesKeywords();
 		
@@ -387,17 +417,8 @@ class ArticlesFormController extends ModuleController
 				}
 			}
 		}
-		else
-		{
-			foreach ($keywords as $keyword => $name)
-			{
-				$new_keywords->set_name($name);
-				$new_keywords->set_rewrited_name(Url::encode_rewrite($name));
-				ArticlesKeywordsService::add($new_keywords, $id_article);
-			}
-		}
-	}
-
+	}*/
+	
 	private function build_response(View $tpl)
 	{
 		$article = $this->get_article();
