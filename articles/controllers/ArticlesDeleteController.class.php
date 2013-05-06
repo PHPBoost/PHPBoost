@@ -39,7 +39,7 @@ class ArticlesDeleteController extends ModuleController
 		
 		ArticlesService::delete('WHERE id=:id', array('id' => $article->get_id()));
 		
-		ArticlesKeywordsService::delete_all_keywords($article->get_id());
+		ArticlesKeywordsService::delete_all_keywords_relation($article->get_id());
 		
 		PersistenceContext::get_querier()->delete(DB_TABLE_EVENTS, 'WHERE module=:module AND id_in_module=:id', array('module' => 'articles', 'id' => $article->get_id()));
 		

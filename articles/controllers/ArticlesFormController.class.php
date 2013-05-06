@@ -347,77 +347,57 @@ class ArticlesFormController extends ModuleController
 			}
 		}
 	}
-
+	
 	private function save_keywords($id_article)
 	{
 		$keywords = $this->form->get_value('keywords');
+		
+		$bdd_article_keywords = ArticlesKeywordsService::get_article_keywords($id_article);
+		
 		$bdd_keywords = ArticlesKeywordsService::get_keywords();
 		
 		$new_keywords = new ArticlesKeywords();
 		
-		foreach ($keywords as $keyword => $name)
-		{	
-			$relation_added = false;
-			
-			while ($row = $bdd_keywords->fetch())
+		$available_article_keywords = array();
+		while ($result = $bdd_article_keywords->fetch())
+		{
+			$available_article_keywords['id'] = $result['id'];
+			$available_article_keywords['name'] = $result['name'];
+		}
+
+		$available_keywords = array();
+		while ($result = $bdd_keywords->fetch())
+		{
+			$available_keywords['id'] = $result['id'];
+			$available_keywords['name'] = $result['name'];
+		}
+		
+		foreach ($available_article_keywords as $id_keyword => $name)
+		{
+			//if the keyword in the bdd is not in the form, the relation is erased
+			if (!(in_array($name, $keywords)))
 			{
-			    if ($name == $row['name'])
-			    {
-				    ArticlesKeywordsService::add_relation($row['id'], $id_article);
-				    $relation_added = true;
-			    }
+			    ArticlesKeywordsService::delete_single_keyword_relation($id_article, $id_keyword);
 			}
-			
-			if (!($relation_added))
+		}
+		//We check if there is modified keywords in the form (already existed keyword that has been modified. ex : allo to hello)
+		//or there are new keywords
+		$keywords_to_add = array_diff($keywords, $available_article_keywords);
+		foreach ($keywords_to_add as $keyword)
+		{
+			//First we check if the keyword exist in articles_keywords_table
+			if (($id_keyword = array_search($keyword, $available_keywords)))
+			{
+				ArticlesKeywordsService::add_relation($id_keyword, $id_article);
+			}
+			else
 			{
 				$new_keywords->set_name($name);
 				$new_keywords->set_rewrited_name(Url::encode_rewrite($name));
 				ArticlesKeywordsService::add($new_keywords, $id_article);
-			}		
+			}
 		}
 	}
-
-	/*private function update_keywords($id_article)
-	{
-		$keywords = $this->form->get_value('keywords');
-		
-		$new_keywords = new ArticlesKeywords();
-		
-		if (!empty($id_article))
-		{
-			$result = ArticlesKeywordsService::get_keywords($id_article);
-			$nbr_bdd_keywords = $result->get_rows_count();
-			
-			//If there is more keywords in the form than what is in bdd, we add the new ones
-			if ($nbr_form_keywords > $nbr_bdd_keywords)
-			{
-				while ($row = $result->fetch())
-				{
-					foreach ($keywords as $keyword => $name)
-					{
-						if (!(in_array($name, $row, true)))
-						{
-							$new_keywords->set_name($name);
-							$new_keywords->set_rewrited_name(Url::encode_rewrite($name));
-							ArticlesKeywordsService::add($new_keywords, $id_article);
-						}
-					}
-				}
-			}
-			//Else, we delete from the bdd the ones that are no longer in the form
-			else if ($nbr_form_keywords < $nbr_bdd_keywords)
-			{
-				while ($row = $result->fetch())
-				{
-					if(!(in_array($row['name'], $keywords, true)))
-					{
-						ArticlesKeywordsService::delete_single_keyword($row['id']);
-					}
-					
-				}
-			}
-		}
-	}*/
 	
 	private function build_response(View $tpl)
 	{
