@@ -48,29 +48,17 @@ class ArticlesKeywordsService
 		));
 	}
 
-	public static function delete_all_keywords($id_article)
+	public static function delete_all_keywords_relation($id_article)
 	{
-		$keywords = $this->get_keywords($id_article);
-
-		foreach($keywords as $keyword)
-		{
-			self::$db_querier->delete(ArticlesSetup::$articles_keywords_table, 'WHERE id=:id_keyword', array(
-				'id_keyword' => $keyword['id']
-			));
-		}
-
 		self::$db_querier->delete(ArticlesSetup::$articles_keywords_relation_table, 'WHERE id_article=:id_article', array(
 			'id_article' => $id_article
 		));
 	}
 	
-	public static function delete_single_keyword($id_keyword)
+	public static function delete_single_keyword_relation($id_article, $id_keyword)
 	{
-		self::$db_querier->delete(ArticlesSetup::$articles_keywords_table, 'WHERE id=:id_keyword', array(
-				'id_keyword' => $id_keyword
-		));
-		
-		self::$db_querier->delete(ArticlesSetup::$articles_keywords_relation_table, 'WHERE id_keyword=:id_keyword', array(
+		self::$db_querier->delete(ArticlesSetup::$articles_keywords_relation_table, 'WHERE id_article=:id_article AND id_keyword=:id_keyword', array(
+			'id_article' => $id_article,
 			'id_keyword' => $id_keyword
 		));
 	}
