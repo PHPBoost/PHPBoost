@@ -25,6 +25,9 @@
  *
  ###################################################*/
 
+/**
+ * @author Patrick DUBEAU <daaxwizeman@gmail.com>
+ */
 class ArticlesFormFieldSelectSources extends AbstractFormField
 {
 	private $max_input = 20;

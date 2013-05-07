@@ -25,6 +25,9 @@
  *
  ###################################################*/
 
+/**
+ * @author Patrick DUBEAU <daaxwizeman@gmail.com>
+ */
 class ArticlesSitemapExtensionPoint extends SitemapCategoriesModule
 {
 	public function __construct()

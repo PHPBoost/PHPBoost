@@ -25,6 +25,9 @@
  *
  ###################################################*/
 
+/**
+ * @author Patrick DUBEAU <daaxwizeman@gmail.com>
+ */
 class ArticlesFormController extends ModuleController
 {
 	private $tpl;
@@ -42,6 +45,7 @@ class ArticlesFormController extends ModuleController
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save();
+			$this->redirect();
 		}
 		
 		$this->tpl->put('FORM', $this->form->display());
@@ -117,7 +121,7 @@ class ArticlesFormController extends ModuleController
 		)));
 		$other_fieldset->add_field(new FormFieldFree('preview_picture', $this->lang['articles.form.picture.preview'], '<img id="preview_picture" src="'. $this->get_article()->get_picture()->rel() .'" alt="" style="vertical-align:top" />'));
 
-		$other_fieldset->add_field(new FormFieldMultipleAutocompleter('keywords', $this->lang['articles.form.keywords'], array(), 
+		$other_fieldset->add_field(new FormFieldMultipleAutocompleter('keywords', $this->lang['articles.form.keywords'], $this->get_article()->get_keywords(), 
 			array('description' => $this->lang['articles.form.keywords.description'], 'file' => TPL_PATH_TO_ROOT . '/articles/ajax/tag/')
 		));
 
@@ -352,53 +356,40 @@ class ArticlesFormController extends ModuleController
 	{
 		$keywords = $this->form->get_value('keywords');
 		
-		$bdd_article_keywords = ArticlesKeywordsService::get_article_keywords($id_article);
-		
 		$bdd_keywords = ArticlesKeywordsService::get_keywords();
 		
 		$new_keywords = new ArticlesKeywords();
-		
-		$available_article_keywords = array();
-		while ($result = $bdd_article_keywords->fetch())
+		//We delete all relations in edition
+		if ($this->get_article()->get_id() !== null)
 		{
-			$available_article_keywords['id'] = $result['id'];
-			$available_article_keywords['name'] = $result['name'];
-		}
-
-		$available_keywords = array();
-		while ($result = $bdd_keywords->fetch())
-		{
-			$available_keywords['id'] = $result['id'];
-			$available_keywords['name'] = $result['name'];
+			ArticlesKeywordsService::delete_all_keywords_relation($id_article);
 		}
 		
-		foreach ($available_article_keywords as $id_keyword => $name)
+		foreach ($keywords as $keyword)
 		{
-			//if the keyword in the bdd is not in the form, the relation is erased
-			if (!(in_array($name, $keywords)))
+			//If the keyword is not in the articles_keywords_table, we add it (+ relation), else we create a relation
+			if (!(in_array($keyword, $bdd_keywords)))
 			{
-			    ArticlesKeywordsService::delete_single_keyword_relation($id_article, $id_keyword);
-			}
-		}
-		//We check if there is modified keywords in the form (already existed keyword that has been modified. ex : allo to hello)
-		//or there are new keywords
-		$keywords_to_add = array_diff($keywords, $available_article_keywords);
-		foreach ($keywords_to_add as $keyword)
-		{
-			//First we check if the keyword exist in articles_keywords_table
-			if (($id_keyword = array_search($keyword, $available_keywords)))
-			{
-				ArticlesKeywordsService::add_relation($id_keyword, $id_article);
+				$new_keywords->set_name($keyword);
+				$new_keywords->set_rewrited_name(Url::encode_rewrite($keyword));
+				ArticlesKeywordsService::add($new_keywords, $id_article);
 			}
 			else
 			{
-				$new_keywords->set_name($name);
-				$new_keywords->set_rewrited_name(Url::encode_rewrite($name));
-				ArticlesKeywordsService::add($new_keywords, $id_article);
+				$id_keyword = array_search($keyword, $bdd_keywords);
+				ArticlesKeywordsService::add_relation($id_keyword, $id_article);
 			}
 		}
 	}
 	
+	private function redirect()
+	{
+		$article = $this->get_article();
+		$category = ArticlesService::get_categories_manager()->get_categories_cache()->get_category($article->get_id_category());
+
+		AppContext::get_response()->redirect(ArticlesUrlBuilder::display_article($category->get_id(), $category->get_rewrited_name(), $article->get_id(), $article->get_rewrited_name()));
+	}				
+
 	private function build_response(View $tpl)
 	{
 		$article = $this->get_article();

@@ -169,8 +169,8 @@ class ArticlesDisplayArticlesController extends ModuleController
 			if ($id != Category::ROOT_CATEGORY)
 				$response->add_breadcrumb_link($category->get_name(), ArticlesUrlBuilder::display_category($id, $category->get_rewrited_name()));
 		}
-		$category = $categories[$this->article->get_id()];
-		$response->add_breadcrumb_link($this->article->get_title(), ArticlesUrlBuilder::display_article($category->get_rewrited_name(), $this->article->get_id(), $this->article->get_rewrited_title()));
+		$category = $categories[$this->article->get_id_category()];
+		$response->add_breadcrumb_link($this->article->get_title(), ArticlesUrlBuilder::display_article($category->get_id(), $category->get_rewrited_name(), $this->article->get_id(), $this->article->get_rewrited_title()));
 		
 		return $response->display($this->tpl);
 	}

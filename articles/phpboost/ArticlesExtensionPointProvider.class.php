@@ -25,6 +25,9 @@
  *
  ###################################################*/
 
+/**
+ * @author Patrick DUBEAU <daaxwizeman@gmail.com>
+ */
 class ArticlesExtensionPointProvider extends ExtensionPointProvider
 {
 	public function __construct()

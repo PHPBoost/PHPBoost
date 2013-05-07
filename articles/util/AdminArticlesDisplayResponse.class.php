@@ -25,6 +25,9 @@
  *
  ###################################################*/
 
+/**
+ * @author Patrick DUBEAU <daaxwizeman@gmail.com>
+ */
 class AdminArticlesDisplayResponse extends AdminMenuDisplayResponse
 {
 	public function __construct($view, $title_page)

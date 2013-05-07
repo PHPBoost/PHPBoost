@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *		           ArticlesKeywords.class.php
+ *                          ArticlesPagination.class.php
  *                            -------------------
- *   begin                : February 21, 2013
+ *   begin                : May 07, 2013
  *   copyright            : (C) 2013 Patrick DUBEAU
  *   email                : daaxwizeman@gmail.com
  *
@@ -28,56 +28,41 @@
 /**
  * @author Patrick DUBEAU <daaxwizeman@gmail.com>
  */
-class ArticlesKeywords
+class ArticlesPagination
 {
-	private $id;
-	private $name;
-	private $rewrited_name;
+	private $pagination;
+	private $current_page;
 	
-	public function set_id($id)
+	public function __construct($current_page, $number_elements)
 	{
-		$this->id = $id;
+		$this->current_page = $current_page;
+		$this->pagination = new Pagination($this->get_number_pages($number_elements), $this->current_page);
 	}
 	
-	public function get_id()
+	public function set_url($id_category, $rewrited_name_category, $id_news, $rewrited_title)
 	{
-		return $this->id;
+		$this->pagination->set_url_sprintf_pattern(ArticlesUrlBuilder::display_article($id_category, $rewrited_name_category, $id_article, $rewrited_title)->absolute());
 	}
 	
-	public function set_name($name)
+	public function display()
 	{
-		$this->name = $name;
+		return $this->pagination->export();
 	}
 	
-	public function get_name()
+	public function get_number_per_page()
 	{
-		return $this->name;
+		return $this->number_per_page;
 	}
 	
-	public function set_rewrited_name($rewrited_name)
+	public function get_display_from()
 	{
-		$this->rewrited_name = $rewrited_name;
+		$current_page = $this->current_page > 0 ? $this->current_page : 1;
+		return ($current_page - 1) * $this->get_number_per_page();
 	}
 	
-	public function get_rewrited_name()
+	private function get_number_pages($number_elements)
 	{
-		return $this->rewrited_name;
-	}
-	
-	public function get_properties()
-	{
-		return array(
-			'id' => $this->get_id(),
-			'name' => $this->get_name(),
-			'rewrited_name' => $this->get_rewrited_name(),
-		);
-	}
-	
-	public function set_properties(array $properties)
-	{
-		$this->set_id($properties['id']);
-		$this->set_name($properties['name']);
-		$this->set_rewrited_name($properties['rewrited_name']);
+		return ceil($number_elements / $this->get_number_per_page());
 	}
 }
 ?>

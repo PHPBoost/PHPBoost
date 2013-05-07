@@ -26,8 +26,6 @@
 
 /**
  * @author Patrick DUBEAU <daaxwizeman@gmail.com>
- * @desc
- * @package {@package}
  */
 class ArticlesFormFieldSelectIcons extends FormFieldSimpleSelectChoice
 {
