@@ -25,6 +25,9 @@
  *
  ###################################################*/
 
+/**
+ * @author Kevin MASSY <kevin.massy@phpboost.com>
+ */
 class News
 {
 	private $id;
@@ -44,11 +47,6 @@ class News
 
 	private $picture_url;
 	private $sources;
-	
-	/**
-	 * @var NewsKeyword[]
-	 */
-	private $keywords;
 	
 	const NOT_APPROVAL = 0;
 	const APPROVAL_NOW = 1;
@@ -211,20 +209,10 @@ class News
 	{
 		return $this->sources;
 	}
-	
-	public function set_keywords($keywords)
-	{
-		$this->keywords = $keywords;
-	}
-	
-	public function add_keyword(NewsKeyword $keyword)
-	{
-		$this->keywords[] = $keyword;
-	}
-	
+		
 	public function get_keywords()
 	{
-		return $this->keywords;
+		return NewsKeywordsService::get_keywords_name($this->id);
 	}
 	
 	public function get_properties()

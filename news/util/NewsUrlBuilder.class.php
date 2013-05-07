@@ -25,6 +25,9 @@
  *
  ###################################################*/
 
+/**
+ * @author Kevin MASSY <kevin.massy@phpboost.com>
+ */
 class NewsUrlBuilder
 {
 	private static $dispatcher = '/news';
@@ -54,9 +57,9 @@ class NewsUrlBuilder
 		return DispatchManager::get_url(self::$dispatcher, '/admin/categories/');
 	}
 	
-	public static function display_news($rewrited_name_category, $id_news, $rewrited_title)
+	public static function display_news($id_category, $rewrited_name_category, $id_news, $rewrited_title)
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/' . $rewrited_name_category . '/' . $id_news . '/' .$rewrited_title . '/');
+		return DispatchManager::get_url(self::$dispatcher, '/' . $id_category . '-' . $rewrited_name_category . '/' . $id_news . '-' . $rewrited_title . '/');
 	}
 	
 	public static function display_category($id, $rewrited_name)

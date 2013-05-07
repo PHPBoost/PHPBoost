@@ -25,6 +25,9 @@
  *
  ###################################################*/
 
+/**
+ * @author Kevin MASSY <kevin.massy@phpboost.com>
+ */
 class NewsCategoriesFormController extends AbstractRichCategoriesFormController
 {
 	protected function generate_response(View $view)
