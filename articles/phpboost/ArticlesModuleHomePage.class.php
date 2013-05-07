@@ -89,7 +89,7 @@ class ArticlesModuleHomePage implements ModuleHomePage
 			'PAGINATION' => $pagination_cat->export()->render(),
 			'U_EDIT_CONFIG' => ArticlesUrlBuilder::articles_configuration()->absolute(),
 			'U_MANAGE_CAT' => ArticlesUrlBuilder::manage_categories()->absolute(),
-			'U_PENDING_ARTICLES' => '', // @todo : link
+			'U_PENDING_ARTICLES' => ArticlesUrlBuilder::display_pending_articles()->absolute(), 
 			'U_ADD_ARTICLES' => ArticlesUrlBuilder::add_article()->absolute()
 		));
 
