@@ -51,7 +51,7 @@ $url_controller_mappers = array(
 
 	//new UrlControllerMapper('ArticlesPrintArticleController', '`^/print/([a-z0-9-]+)?/?([A-Za-z0-9-]+)?/?$`', array('rewrited_title', 'rewrited_page_name')),
 
-	//new UrlControllerMapper('ArticlesPendingController', '`^/pending(?:/([a-z0-9-]+))?/?$`', array('pseudo')),
+	new UrlControllerMapper('ArticlesDisplayPendingArticlesController', '`^/pending/?$`'),
 
 	//new UrlControllerMapper('ArticlesHomePageController', '`^(?:/([a-z]+))?/?([a-z]+)?/?([0-9]+)?/?$`', array('field', 'sort', 'page')),
 
