@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                              BugtrackerHomePageExtensionPoint.class.php
+ *                              BugtrackerDisplayResponse.class.php
  *                            -------------------
- *   begin                : April 16, 2012
+ *   begin                : February 26, 2013
  *   copyright            : (C) 2012 Julien BRISWALTER
  *   email                : julien.briswalter@gmail.com
  *
@@ -25,30 +25,37 @@
  *
  ###################################################*/
 
-class BugtrackerHomePageExtensionPoint implements HomePageExtensionPoint
+class BugtrackerDisplayResponse
 {
-	 /**
-	 * @method Get the module home page
-	 */
-	public function get_home_page()
+	private $page_title = '';
+	private $breadcrumb_links = array();
+
+	public function add_breadcrumb_link($name, $link)
 	{
-		return new DefaultHomePage($this->get_title(), $this->get_view());
+		if ($link instanceof Url)
+		{
+			$link = $link->absolute();
+		}
+		$this->breadcrumb_links[$name] = $link;
 	}
 	
-	 /**
-	 * @method Get the module title
-	 */
-	private function get_title()
+	public function set_page_title($page_title)
 	{
-		return LangLoader::get_message('bugs.module_title', 'bugtracker_common', 'bugtracker');
+		$this->page_title = $page_title;
 	}
 	
-	 /**
-	 * @method Get the module view
-	 */
-	private function get_view()
+	public function display($view)
 	{
-		return BugtrackerModuleHomePage::get_view();
+		$response = new SiteDisplayResponse($view);
+		$graphical_environment = $response->get_graphical_environment();
+		$graphical_environment->set_page_title($this->page_title);
+		
+		$breadcrumb = $graphical_environment->get_breadcrumb();
+		foreach ($this->breadcrumb_links as $name => $link)
+		{
+			$breadcrumb->add($name, $link);
+		}
+		return $response;
 	}
 }
 ?>

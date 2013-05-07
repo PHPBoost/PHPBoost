@@ -1,19 +1,19 @@
 <?php
 /*##################################################
- *                              BugtrackerExtensionPointProvider.class.php
+ *                      BugtrackerDeleteFilterController.class.php
  *                            -------------------
- *   begin                : April 16, 2012
+ *   begin                : November 09, 2012
  *   copyright            : (C) 2012 Julien BRISWALTER
  *   email                : julien.briswalter@gmail.com
  *
- *  
+ *
  ###################################################
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -25,55 +25,32 @@
  *
  ###################################################*/
 
-class BugtrackerExtensionPointProvider extends ExtensionPointProvider
+class BugtrackerDeleteFilterController extends ModuleController
 {
-	public function __construct()
+	public function execute(HTTPRequestCustom $request)
 	{
-		parent::__construct('bugtracker');
-	}
-	
-	 /**
-	 * @method Get home page
-	 */
-	public function home_page()
-	{
-		return new BugtrackerHomePageExtensionPoint();
-	}
-	
-	 /**
-	 * @method Get css files
-	 */
-	public function css_files()
-	{
-		$module_css_files = new ModuleCssFiles();
-		$module_css_files->adding_running_module_displayed_file('bugtracker.css');
-		return $module_css_files;
-	}
-	
-	 /**
-	 * @method Get search form
-	 */
-	public function search()
-	{
-		return new BugtrackerSearchable();
-	}
-	
-	 /**
-	 * @method Get comments
-	 */
-	public function comments()
-	{
-		return new CommentsTopics(array(
-			new BugtrackerCommentsTopic()
-		));
-	}
-	
-	 /**
-	 * @method Get url mappings
-	 */
-	public function url_mappings()
-	{
-		return new UrlMappings(array(new DispatcherUrlMapping('/bugtracker/index.php')));
+		AppContext::get_session()->csrf_post_protect();
+		
+		$id = $request->get_int('id', 0);
+		$page = $request->get_int('page', 1);
+		$back_page = $request->get_value('back_page', '');
+		$back_filter = $request->get_value('back_filter', '');
+		$filter_id = $request->get_value('filter_id', '');
+		
+		//Delete filter
+		BugtrackerService::delete_filter("WHERE id=:id", array('id' => $id));
+		
+		switch ($back_page)
+		{
+			case 'solved' :
+				$redirect = BugtrackerUrlBuilder::solved($page . (!empty($back_filter) ? '/' . $back_filter . '/' . $filter_id : ''))->absolute();
+				break;
+			default :
+				$redirect = BugtrackerUrlBuilder::unsolved($page . (!empty($back_filter) ? '/' . $back_filter . '/' . $filter_id : ''))->absolute();
+				break;
+		}
+		
+		AppContext::get_response()->redirect($redirect);
 	}
 }
 ?>
