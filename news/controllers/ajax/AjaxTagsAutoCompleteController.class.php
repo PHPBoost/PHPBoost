@@ -24,6 +24,9 @@
  *
  ###################################################*/
 
+/**
+ * @author Kevin MASSY <kevin.massy@phpboost.com>
+ */
 class AjaxTagsAutoCompleteController extends AbstractController
 {
 	public function execute(HTTPRequestCustom $request)

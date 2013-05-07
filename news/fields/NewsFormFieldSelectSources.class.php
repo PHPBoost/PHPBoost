@@ -25,6 +25,9 @@
  *
  ###################################################*/
 
+/**
+ * @author Kevin MASSY <kevin.massy@phpboost.com>
+ */
 class NewsFormFieldSelectSources extends AbstractFormField
 {
 	private $max_input = 20;

@@ -25,6 +25,9 @@
  *
  ###################################################*/
 
+/**
+ * @author Kevin MASSY <kevin.massy@phpboost.com>
+ */
 class NewsCategoriesManageController extends AbstractCategoriesManageController
 {
 	protected function generate_response(View $view)

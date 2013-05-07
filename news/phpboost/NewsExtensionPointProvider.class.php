@@ -25,6 +25,9 @@
  *
  ###################################################*/
 
+/**
+ * @author Kevin MASSY <kevin.massy@phpboost.com>
+ */
 class NewsExtensionPointProvider extends ExtensionPointProvider
 {
 	public function __construct()

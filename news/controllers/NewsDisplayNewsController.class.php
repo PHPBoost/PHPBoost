@@ -25,6 +25,9 @@
  *
  ###################################################*/
 
+/**
+ * @author Kevin MASSY <kevin.massy@phpboost.com>
+ */
 class NewsDisplayNewsController extends ModuleController
 {	
 	private $lang;
@@ -123,8 +126,8 @@ class NewsDisplayNewsController extends ModuleController
 			if ($id != Category::ROOT_CATEGORY)
 				$response->add_breadcrumb_link($category->get_name(), NewsUrlBuilder::display_category($id, $category->get_rewrited_name()));
 		}
-		$category = $categories[$this->get_news()->get_id()];
-		$response->add_breadcrumb_link($this->get_news()->get_name(), NewsUrlBuilder::display_news($category->get_rewrited_name(), $this->get_news()->get_id(), $this->get_news()->get_rewrited_name()));
+		$category = $categories[$this->get_news()->get_id_cat()];
+		$response->add_breadcrumb_link($this->get_news()->get_name(), NewsUrlBuilder::display_news($category->get_id(), $category->get_rewrited_name(), $this->get_news()->get_id(), $this->get_news()->get_rewrited_name()));
 		
 		return $response->display($this->tpl);
 	}

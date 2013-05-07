@@ -25,9 +25,13 @@
  *
  ###################################################*/
 
+/**
+ * @author Kevin MASSY <kevin.massy@phpboost.com>
+ */
 class NewsDisplayResponse
 {
 	private $page_title = '';
+	private $page_description = '';
 	private $breadcrumb_links = array();
 
 	public function add_breadcrumb_link($name, $link)
@@ -44,11 +48,21 @@ class NewsDisplayResponse
 		$this->page_title = $page_title;
 	}
 	
+	public function set_page_description($page_description)
+	{
+		$this->page_description = $page_description;
+	}
+	
 	public function display($view)
 	{
 		$response = new SiteDisplayResponse($view);
 		$graphical_environment = $response->get_graphical_environment();
 		$graphical_environment->set_page_title($this->page_title);
+		
+		if (!empty($this->page_description))
+		{
+			$graphical_environment->get_seo_meta_data()->set_description($this->page_description);
+		}
 		
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		foreach ($this->breadcrumb_links as $name => $link)

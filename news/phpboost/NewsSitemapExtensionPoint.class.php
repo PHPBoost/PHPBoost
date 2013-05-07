@@ -25,6 +25,9 @@
  *
  ###################################################*/
 
+/**
+ * @author Kevin MASSY <kevin.massy@phpboost.com>
+ */
 class NewsSitemapExtensionPoint extends SitemapCategoriesModule
 {
 	public function __construct()

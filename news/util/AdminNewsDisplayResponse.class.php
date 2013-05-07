@@ -25,6 +25,9 @@
  *
  ###################################################*/
 
+/**
+ * @author Kevin MASSY <kevin.massy@phpboost.com>
+ */
 class AdminNewsDisplayResponse extends AdminMenuDisplayResponse
 {
 	public function __construct($view, $title_page)

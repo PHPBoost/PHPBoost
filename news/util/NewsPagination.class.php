@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *		                NewsDeleteCategoryController.class.php
+ *                          NewsPagination.class.php
  *                            -------------------
- *   begin                : February 13, 2013
+ *   begin                : February 26, 2013
  *   copyright            : (C) 2013 Kevin MASSY
  *   email                : kevin.massy@phpboost.com
  *
@@ -28,26 +28,41 @@
 /**
  * @author Kevin MASSY <kevin.massy@phpboost.com>
  */
-class NewsDeleteCategoryController extends AbstractDeleteCategoryController
+class NewsPagination
 {
-	protected function generate_response(View $view)
+	private $pagination;
+	private $current_page;
+	
+	public function __construct($current_page, $number_elements)
 	{
-		return new AdminNewsDisplayResponse($view, LangLoader::get_message('admin.categories.delete', 'common', 'news'));
+		$this->current_page = $current_page;
+		$this->pagination = new Pagination($this->get_number_pages($number_elements), $this->current_page);
 	}
 	
-	protected function get_categories_manager()
+	public function set_url($id_category, $rewrited_name_category, $id_news, $rewrited_title)
 	{
-		return NewsService::get_categories_manager();
+		$this->pagination->set_url_sprintf_pattern(NewsUrlBuilder::display_news($id_category, $rewrited_name_category, $id_news, $rewrited_title)->absolute());
 	}
 	
-	protected function get_id_category()
+	public function display()
 	{
-		return AppContext::get_request()->get_getint('id', 0);
+		return $this->pagination->export();
 	}
 	
-	protected function get_categories_management_url()
+	public function get_number_per_page()
 	{
-		return NewsUrlBuilder::manage_categories();
+		return $this->number_per_page;
+	}
+	
+	public function get_display_from()
+	{
+		$current_page = $this->current_page > 0 ? $this->current_page : 1;
+		return ($current_page - 1) * $this->get_number_per_page();
+	}
+	
+	private function get_number_pages($number_elements)
+	{
+		return ceil($number_elements / $this->get_number_per_page());
 	}
 }
 ?>

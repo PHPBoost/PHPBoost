@@ -26,6 +26,9 @@
  *###################################################
  */
 
+/**
+ * @author Kevin MASSY <kevin.massy@phpboost.com>
+ */
 class NewsFeedProvider implements FeedProvider
 {
 	public function get_feeds_list()

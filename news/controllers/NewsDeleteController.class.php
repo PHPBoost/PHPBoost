@@ -25,6 +25,9 @@
  *
  ###################################################*/
 
+/**
+ * @author Kevin MASSY <kevin.massy@phpboost.com>
+ */
 class NewsDeleteController extends ModuleController
 {	
 	public function execute(HTTPRequestCustom $request)

@@ -47,7 +47,7 @@ $url_controller_mappers = array(
 	new UrlControllerMapper('NewsDisplayNewsTagController', '`^/tag/([a-z0-9-_]+)?/?$`', array('tag')),
 	new UrlControllerMapper('NewsDisplayPendingNewsController', '`^/pending/?$`'),
 	
-	new UrlControllerMapper('NewsDisplayNewsController', '`^/([a-z0-9-_]+)/([0-9]+)/([a-z0-9-_]+)/?$`', array('rewrited_name_category', 'id', 'rewrited_name')),
+	new UrlControllerMapper('NewsDisplayNewsController', '`^/([0-9]+)-([a-z0-9-_]+)/([0-9]+)-([a-z0-9-_]+)/?$`', array('id_category', 'rewrited_name_category', 'id', 'rewrited_name')),
 	
 	new UrlControllerMapper('NewsDisplayCategoryController', '`^/([0-9]+)-([a-z0-9-_]+)?/?$`', array('id', 'rewrited_name')),
 	

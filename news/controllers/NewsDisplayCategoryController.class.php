@@ -25,6 +25,9 @@
  *
  ###################################################*/
 
+/**
+ * @author Kevin MASSY <kevin.massy@phpboost.com>
+ */
 class NewsDisplayCategoryController extends ModuleController
 {	
 	private $lang;
@@ -69,11 +72,11 @@ class NewsDisplayCategoryController extends ModuleController
 	{
 		if ($this->category === null)
 		{
-			$rewrited_name = AppContext::get_request()->get_getstring('rewrited_name', '');
-			if (!empty($rewrited_name))
+			$id = AppContext::get_request()->get_getint('id', 0);
+			if (!empty($id))
 			{
 				try {
-					$row = PersistenceContext::get_querier()->select_single_row(NewsSetup::$news_cats_table, array('*'), 'WHERE rewrited_name=:rewrited_name', array('rewrited_name' => $rewrited_name));
+					$row = PersistenceContext::get_querier()->select_single_row(NewsSetup::$news_cats_table, array('*'), 'WHERE id=:id', array('id' => $id));
 
 					$category = new RichCategory();
 					$category->set_properties($row);

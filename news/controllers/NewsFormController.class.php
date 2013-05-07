@@ -54,6 +54,7 @@ class NewsFormController extends ModuleController
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save();
+			$this->redirect();
 		}
 		
 		$tpl->put('FORM', $this->form->display());
@@ -123,8 +124,8 @@ class NewsFormController extends ModuleController
 			'events' => array('change' => $image_preview_request->render())
 		)));
 		$other_fieldset->add_field(new FormFieldFree('preview_picture', $this->lang['news.form.picture.preview'], '<img id="preview_picture" src="'. $this->get_news()->get_picture()->rel() .'" alt="" style="vertical-align:top" />'));
-		
-		$other_fieldset->add_field(new FormFieldMultipleAutocompleter('keywords', $this->lang['news.form.keywords'], array(), array('description' => $this->lang['news.form.keywords.description'], 'file' => TPL_PATH_TO_ROOT . '/news/ajax/tag/')));
+
+		$other_fieldset->add_field(new FormFieldMultipleAutocompleter('keywords', $this->lang['news.form.keywords'], $this->get_news()->get_keywords(), array('description' => $this->lang['news.form.keywords.description'], 'file' => TPL_PATH_TO_ROOT . '/news/ajax/tag/')));
 		
 		$other_fieldset->add_field(new NewsFormFieldSelectSources('sources', $this->lang['news.form.sources'], $this->get_news()->get_sources()));
 		
@@ -295,6 +296,8 @@ class NewsFormController extends ModuleController
 			NewsService::update($news);
 		}
 		
+		$news->set_id($id_news);
+		
 		$this->contribution_actions($news);
 		
 		$this->put_keywords($id_news);
@@ -341,20 +344,39 @@ class NewsFormController extends ModuleController
 	
 	private function put_keywords($id_news)
 	{
-		/*$keywords = $this->form->get_value('keywords');
+		$keywords = $this->form->get_value('keywords');
+		
+		//Delete all relations for edition
+		if ($this->get_news()->get_id() !== null)
+		{
+			NewsKeywordsService::delete_relations($id_news);
+		}
 		
 		foreach ($keywords as $keyword)
 		{
-			$id_keyword = NewsKeywordsService::add($keyword);
+			if (!NewsKeywordsService::exists($keyword))
+			{
+				$id_keyword = NewsKeywordsService::add($keyword);
+			}
+			else
+			{
+				$id_keyword = NewsKeywordsService::get_id_keyword('WHERE rewrited_name=:rewrited_name', array('rewrited_name' => Url::encode_rewrite($keyword)));
+			}
 			NewsKeywordsService::put_relation($id_news, $id_keyword);
 		}
-		*/
+	}
+	
+	private function redirect()
+	{
+		$news = $this->get_news();
+		$category = NewsService::get_categories_manager()->get_categories_cache()->get_category($news->get_id_cat());
+
+		AppContext::get_response()->redirect(NewsUrlBuilder::display_news($category->get_id(), $category->get_rewrited_name(), $news->get_id(), $news->get_rewrited_name()));
 	}
 	
 	private function generate_response(View $tpl)
 	{
 		$news = $this->get_news();
-		$category = NewsService::get_categories_manager()->get_categories_cache()->get_category($news->get_id_cat());
 		
 		$response = new NewsDisplayResponse();
 		$response->add_breadcrumb_link($this->lang['news'], NewsUrlBuilder::home());
@@ -372,8 +394,8 @@ class NewsFormController extends ModuleController
 				if ($id != Category::ROOT_CATEGORY)
 					$response->add_breadcrumb_link($category->get_name(), NewsUrlBuilder::display_category($id, $category->get_rewrited_name()));
 			}
-			$category = $categories[$this->get_news()->get_id()];
-			$response->add_breadcrumb_link($this->get_news()->get_name(), NewsUrlBuilder::display_news($category->get_rewrited_name(), $this->get_news()->get_id(), $this->get_news()->get_rewrited_name()));
+			$category = $categories[$this->get_news()->get_id_cat()];
+			$response->add_breadcrumb_link($this->get_news()->get_name(), NewsUrlBuilder::display_news($category->get_id(), $category->get_rewrited_name(), $this->get_news()->get_id(), $this->get_news()->get_rewrited_name()));
 			
 			$response->add_breadcrumb_link($this->lang['news.edit'], NewsUrlBuilder::edit_news($news->get_id()));
 			$response->set_page_title($this->lang['news.edit']);

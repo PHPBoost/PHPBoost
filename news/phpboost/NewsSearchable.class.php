@@ -25,6 +25,9 @@
  *
  ###################################################*/
 
+/**
+ * @author Kevin MASSY <kevin.massy@phpboost.com>
+ */
 class NewsSearchable extends AbstractSearchableExtensionPoint
 {
 	private $sql_querier;
