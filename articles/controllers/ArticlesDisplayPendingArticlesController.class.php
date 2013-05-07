@@ -25,6 +25,9 @@
  *
  ###################################################*/
 
+/**
+ * @author Patrick DUBEAU <daaxwizeman@gmail.com>
+ */
 class ArticlesDisplayPendingArticlesController extends ModuleController
 {
 	private $lang;

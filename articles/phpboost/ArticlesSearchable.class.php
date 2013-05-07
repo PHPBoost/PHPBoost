@@ -25,6 +25,9 @@
  *
  ###################################################*/
 
+/**
+ * @author Patrick DUBEAU <daaxwizeman@gmail.com>
+ */
 class ArticlesSearchable extends AbstractSearchableExtensionPoint
 {
 	private $sql_querier;

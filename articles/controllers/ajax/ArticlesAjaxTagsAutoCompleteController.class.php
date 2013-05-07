@@ -24,6 +24,9 @@
  *
  ###################################################*/
 
+/**
+ * @author Patrick DUBEAU <daaxwizeman@gmail.com>
+ */
 class ArticlesAjaxTagsAutoCompleteController extends AbstractController
 {
 	public function execute(HTTPRequestCustom $request)

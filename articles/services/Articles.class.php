@@ -25,6 +25,9 @@
  *
  ###################################################*/
 
+/**
+ * @author Patrick DUBEAU <daaxwizeman@gmail.com>
+ */
 class Articles
 {
 	private $id;
@@ -236,19 +239,9 @@ class Articles
 		return $this->sources;
 	}
 
-	public function set_keywords($keywords)
-	{
-		$this->keywords = $keywords;
-	}
-
-	public function add_keyword(ArticlesKeywords $keyword)
-	{
-		$this->keywords[] = $keyword;
-	}
-
 	public function get_keywords()
 	{
-		return $this->keywords;
+		return ArticlesKeywordsService::get_article_keywords($this->id);
 	}
 
 	public function get_properties()

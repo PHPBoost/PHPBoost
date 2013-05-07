@@ -25,6 +25,9 @@
  *
  ###################################################*/
 
+/**
+ * @author Patrick DUBEAU <daaxwizeman@gmail.com>
+ */
 class ArticlesUrlBuilder
 {
 	private static $dispatcher = '/articles';
@@ -79,9 +82,9 @@ class ArticlesUrlBuilder
 		return DispatchManager::get_url(self::$dispatcher, '/' . $id . '/delete/');
 	}
 	
-	public static function display_article($rewrited_name_category, $id_article, $rewrited_title)
+	public static function display_article($id_category, $rewrited_name_category, $id_article, $rewrited_title)
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/' . $rewrited_name_category . '/' . $id_article . '/' .$rewrited_title . '/');
+		return DispatchManager::get_url(self::$dispatcher, '/' . $id_category . '-' . $rewrited_name_category . '/' . $id_article . '-' .$rewrited_title . '/');
 	}
 	
 	public static function display_pending_articles()

@@ -25,6 +25,9 @@
  *
  ###################################################*/
 
+/**
+ * @author Patrick DUBEAU <daaxwizeman@gmail.com>
+ */
 class ArticlesDeleteController extends ModuleController
 {	
 	public function execute(HTTPRequestCustom $request)

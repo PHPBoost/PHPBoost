@@ -25,6 +25,9 @@
  *
  ###################################################*/
 
+/**
+ * @author Patrick DUBEAU <daaxwizeman@gmail.com>
+ */
 class ArticlesConfig extends AbstractConfigData
 {    
 	const NUMBER_ARTICLES_PER_PAGE = 'number_articles_per_page';
