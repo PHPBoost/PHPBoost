@@ -33,7 +33,7 @@ $lang = array();
 
 //Types
 $lang['bugtracker.config.types.anomaly'] = 'Anomalie';
-$lang['bugtracker.config.types.evolution_demand'] = 'Demande d\'évolution';
+$lang['bugtracker.config.types.evolution_demand'] = 'Evolution';
 
 //Catégories
 $lang['bugtracker.config.categories.kernel'] = 'Noyau';
@@ -47,7 +47,7 @@ $lang['bugtracker.config.severities.major'] = 'Majeur';
 $lang['bugtracker.config.severities.critical'] = 'Bloquant';
 
 //Priorités
-$lang['bugtracker.config.priorities.none'] = 'Aucune';
+$lang['bugtracker.config.priorities.very_low'] = 'Très basse';
 $lang['bugtracker.config.priorities.low'] = 'Basse';
 $lang['bugtracker.config.priorities.normal'] = 'Normale';
 $lang['bugtracker.config.priorities.high'] = 'Elevée';
@@ -55,11 +55,10 @@ $lang['bugtracker.config.priorities.urgent'] = 'Urgente';
 
 //Message de contenu par défaut
 $lang['bugtracker.config.contents_value'] = '
-Système d\'exploitation :<br />
-Navigateur Web :<br />
-Version de phpboost :<br />
-Installation locale ou sur un serveur web ? :<br />
-Lien :<br />
+- Navigateur Web :<br />
+- Version de PHPBoost :<br />
+- Lien du site :<br />
+- Thème utilisé :<br />
 ----------------------------------------------------------------------<br />
 ';
 

@@ -1,19 +1,19 @@
 <?php
 /*##################################################
- *                              BugtrackerCommentsTopic.class.php
+ *                          BugtrackerListPagination.class.php
  *                            -------------------
- *   begin                : April 27, 2012
+ *   begin                : November 11, 2012
  *   copyright            : (C) 2012 Julien BRISWALTER
  *   email                : julien.briswalter@gmail.com
  *
- *  
+ *
  ###################################################
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -25,37 +25,44 @@
  *
  ###################################################*/
 
-class BugtrackerCommentsTopic extends CommentsTopic
+ /**
+ * @author Julien BRISWALTER <julien.briswalter@gmail.com>
+ * @desc Pagination of the bugtracker module
+ */
+class BugtrackerListPagination
 {
-	public function __construct()
+	private $pagination;
+	private $current_page;
+	private $nbr_bugs;
+	private $number_items_per_page;
+	
+	public function __construct($current_page, $nbr_bugs)
 	{
-		parent::__construct('bugtracker');
+		$this->current_page = $current_page;
+		$this->nbr_bugs = $nbr_bugs;
+		$this->number_items_per_page = BugtrackerConfig::load()->get_items_per_page();
+		$this->pagination = new Pagination($this->get_number_pages(), $this->current_page);
 	}
 	
-	 /**
-	 * @method Get comments authorizations
-	 */
-	public function get_authorizations()
+	public function display()
 	{
-		$authorizations = new CommentsAuthorizations();
-		$authorizations->set_authorized_access_module(BugtrackerAuthorizationsService::check_authorizations()->write());
-		return $authorizations;
+		return $this->pagination->export();
 	}
 	
-	 /**
-	 * @method Get comments events
-	 */
-	public function get_events()
+	public function get_display_from()
 	{
-		return new BugtrackerCommentsTopicEvents($this);
+		$current_page = $this->current_page > 0 ? $this->current_page : 1;
+		return ($current_page - 1) * $this->number_items_per_page;
 	}
 	
-	 /**
-	 * @method Display comments
-	 */
-	public function is_display()
+	public function set_url($url)
 	{
-		return true;
+		$this->pagination->set_url_sprintf_pattern($url);
+	}
+	
+	private function get_number_pages()
+	{
+		return ceil($this->nbr_bugs / $this->number_items_per_page);
 	}
 }
 ?>

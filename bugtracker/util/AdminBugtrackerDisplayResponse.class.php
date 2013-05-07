@@ -1,19 +1,19 @@
 <?php
 /*##################################################
- *                              BugtrackerHomePageExtensionPoint.class.php
+ *                           AdminBugtrackerDisplayResponse.class.php
  *                            -------------------
- *   begin                : April 16, 2012
+ *   begin                : October 18, 2012
  *   copyright            : (C) 2012 Julien BRISWALTER
  *   email                : julien.briswalter@gmail.com
  *
- *  
+ *
  ###################################################
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -25,30 +25,24 @@
  *
  ###################################################*/
 
-class BugtrackerHomePageExtensionPoint implements HomePageExtensionPoint
+ /**
+ * @author Julien BRISWALTER <julien.briswalter@gmail.com>
+ * @desc AdminMenuDisplayResponse of the bugtracker module
+ */
+class AdminBugtrackerDisplayResponse extends AdminMenuDisplayResponse
 {
-	 /**
-	 * @method Get the module home page
-	 */
-	public function get_home_page()
+	public function __construct($view, $title_page)
 	{
-		return new DefaultHomePage($this->get_title(), $this->get_view());
-	}
-	
-	 /**
-	 * @method Get the module title
-	 */
-	private function get_title()
-	{
-		return LangLoader::get_message('bugs.module_title', 'bugtracker_common', 'bugtracker');
-	}
-	
-	 /**
-	 * @method Get the module view
-	 */
-	private function get_view()
-	{
-		return BugtrackerModuleHomePage::get_view();
+		parent::__construct($view);
+		
+		$lang = LangLoader::get('bugtracker_common', 'bugtracker');
+		$picture = '/bugtracker/bugtracker.png';
+		$this->set_title($lang['bugs.module_title']);
+		$this->add_link($lang['bugs.titles.admin.config'], BugtrackerUrlBuilder::configuration(), $picture);
+		$this->add_link($lang['bugs.titles.admin.authorizations'], BugtrackerUrlBuilder::authorizations(), $picture);
+		
+		$env = $this->get_graphical_environment();
+		$env->set_page_title($title_page);
 	}
 }
 ?>
