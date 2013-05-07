@@ -58,7 +58,7 @@
 							<a href="{PATH_TO_ROOT}/download/file-229+phpboost-4-0.php" class="pbt_button_a">
 								<img src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/img_phpboost.png" alt="" class="valign_middle pbt_custom_img left"/>
 								<p class="pbt_button_title">Télécharger PHPBoost 4.0</p>
-								<p class="pbt_button_com">Rev : 4.0.0 | Req : PHP 5.1.2 | .zip </p>
+								<p class="pbt_button_com">Rev : 4.0.4 | Req : PHP 5.1.2 | .zip </p>
 							</a>
 						</div>
 						<div class="pbt_button pbt_button_green">
