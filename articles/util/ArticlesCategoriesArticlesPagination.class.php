@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                          ArticlesPagination.class.php
+ *                          ArticlesCategoriesArticlesPagination.class.php
  *                            -------------------
  *   begin                : May 07, 2013
  *   copyright            : (C) 2013 Patrick DUBEAU
@@ -28,7 +28,7 @@
 /**
  * @author Patrick DUBEAU <daaxwizeman@gmail.com>
  */
-class ArticlesPagination
+class ArticlesCategoriesArticlesPagination
 {
 	private $pagination;
 	private $current_page;
@@ -38,12 +38,12 @@ class ArticlesPagination
 	{
 		$this->current_page = $current_page;
 		$this->pagination = new Pagination($this->get_number_pages($number_elements), $this->current_page);
-		
+		$this->number_per_page = ArticlesConfig::load()->get_number_articles_per_page();
 	}
 	
-	public function set_url($id_category, $rewrited_name_category, $id_article, $rewrited_title)
+	public function set_url($id_category, $rewrited_name_category)
 	{
-		$this->pagination->set_url_sprintf_pattern(ArticlesUrlBuilder::display_article($id_category, $rewrited_name_category, $id_article, $rewrited_title)->absolute());
+		$this->pagination->set_url_sprintf_pattern(ArticlesUrlBuilder::display_category($id_category, $rewrited_name_category)->absolute());
 	}
 	
 	public function display()
