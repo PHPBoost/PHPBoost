@@ -63,15 +63,14 @@ class ArticlesModuleHomePage implements ModuleHomePage
 		$current_page_cat = ($request->get_getint('page',1) > 0) ? $request->get_getint('page',1) : 1;
 		
 		$nbr_categories = count($categories);
-		$nbr_categories_per_page = ArticlesConfig::load()->get_number_categories_per_page();		
-		$nbr_pages =  ceil($nbr_categories / $nbr_categories_per_page);
-		$pagination_cat = new Pagination($nbr_pages, $current_page_cat);
+		
+		$pagination_cat = new ArticlesCategoriesPagination($current_page_cat, $nbr_categories);
+		$pagination_cat->set_url(Category::ROOT_CATEGORY, Url::encode_rewrite(LangLoader::get_message('root', 'main')));
+		$nbr_categories_per_page = $pagination_cat->get_number_per_page();
 		
 		$nbr_column_cats = ($nbr_categories > $nbr_categories_per_page) ? $nbr_categories_per_page : $nbr_categories;
 		$nbr_column_cats = !empty($nbr_column_cats) ? $nbr_column_cats : 1;
 		$column_width_cats = floor(100 / $nbr_column_cats);
-		
-		$pagination_cat->set_url_sprintf_pattern(ArticlesUrlBuilder::home()->absolute());// @todo : à vérifier, je dois inclure la page ?
 		
 		$number_articles_not_published = PersistenceContext::get_querier()->count(ArticlesSetup::$articles_table, 'WHERE published=0');
 		
@@ -86,14 +85,15 @@ class ArticlesModuleHomePage implements ModuleHomePage
 			'L_MODULE_NAME' => $this->lang['articles'],
 			'L_PENDING_ARTICLES' => $this->lang['articles.pending_articles'],
 			'COLUMN_WIDTH_CATS' => $column_width_cats,
-			'PAGINATION' => $pagination_cat->export()->render(),
+			'PAGINATION' => $pagination_cat->display()->render(),
 			'U_EDIT_CONFIG' => ArticlesUrlBuilder::articles_configuration()->absolute(),
 			'U_MANAGE_CAT' => ArticlesUrlBuilder::manage_categories()->absolute(),
 			'U_PENDING_ARTICLES' => ArticlesUrlBuilder::display_pending_articles()->absolute(), 
 			'U_ADD_ARTICLES' => ArticlesUrlBuilder::add_article()->absolute()
 		));
 
-		$limit_page = (($current_page_cat - 1) * $nbr_categories_per_page);
+		$limit_page = $pagination_cat->get_display_from();
+		
 		//All root cats
 		$result = PersistenceContext::get_querier()->select('SELECT @id_cat:= ac.id, ac.name, ac.description, ac.image,
 		(SELECT COUNT(*) FROM '. ArticlesSetup::$articles_table .' articles 
@@ -108,7 +108,7 @@ class ArticlesModuleHomePage implements ModuleHomePage
 			'start_limit' => $limit_page
 			), SelectQueryResult::FETCH_ASSOC
 		);
-		//Sub-cats
+		//Sub-cats and their children of root display
 		while ($row = $result->fetch())
 		{
 			$children_cat = ArticlesService::get_categories_manager()->get_childrens($row['id'], $search_category_children_options);
@@ -146,10 +146,13 @@ class ArticlesModuleHomePage implements ModuleHomePage
 		{
 			$mode = ($request->get_getstring('mode', '') == 'asc') ? 'ASC' : 'DESC';
 			$sort = $request->get_getstring('sort', '');
-
-			$number_articles_per_page = ArticlesConfig::load()->get_number_articles_per_page();
+			
 			$current_page = ($request->get_getint('page', 1) > 0) ? $request->get_getint('page', 1) : 1;
-			$limit_page = (($current_page - 1) * $number_articles_per_page);
+			
+			$pagination = new ArticlesCategoriesArticlesPagination($current_page, $nbr_articles_root_cat);
+			
+			$number_articles_per_page = $pagination->get_number_per_page();
+			$limit_page = $pagination->get_display_from();
 
 			$result = PersistenceContext::get_querier()->select('SELECT articles.*, member.level, member.user_groups, member.login
 			FROM ' . ArticlesSetup::$articles_table . ' articles
@@ -169,17 +172,13 @@ class ArticlesModuleHomePage implements ModuleHomePage
 				    ), SelectQueryResult::FETCH_ASSOC
 			    );
 
-			$number_articles_in_category = $result->get_rows_count();
-
-			$number_pages = ceil($number_articles_in_category / $number_articles_per_page);
-			$pagination = new Pagination($number_pages, $current_page);
-			$pagination->set_url_sprintf_pattern(ArticlesUrlBuilder::home()->absolute());
+			$pagination->set_url(Category::ROOT_CATEGORY, Url::encode_rewrite(LangLoader::get_message('root', 'main')));
 
 			$this->build_form($mode);
 
 			$this->view->put_all(array(
 				    'C_ARTICLES_FILTERS' => true,
-				    'PAGINATION' => $pagination->export()->render()
+				    'PAGINATION' => $pagination->display()->render()
 			));
 
 			$notation = new Notation();
@@ -246,12 +245,12 @@ class ArticlesModuleHomePage implements ModuleHomePage
 	{
 		$options = array();
 
-		$option[] = new FormFieldSelectChoiceOption($this->lang['articles.sort_field.date'], 'date_created');
-		$option[] = new FormFieldSelectChoiceOption($this->lang['articles.sort_field.title'], 'title');
-		$option[] = new FormFieldSelectChoiceOption($this->lang['articles.sort_field.views'], 'number_view');
-		$option[] = new FormFieldSelectChoiceOption($this->lang['articles.sort_field.com'], 'com');
-		$option[] = new FormFieldSelectChoiceOption($this->lang['articles.sort_field.note'], 'note');
-		$option[] = new FormFieldSelectChoiceOption($this->lang['articles.sort_field.author'], 'author_user_id');
+		$options[] = new FormFieldSelectChoiceOption($this->lang['articles.sort_field.date'], 'date_created');
+		$options[] = new FormFieldSelectChoiceOption($this->lang['articles.sort_field.title'], 'title');
+		$options[] = new FormFieldSelectChoiceOption($this->lang['articles.sort_field.views'], 'number_view');
+		$options[] = new FormFieldSelectChoiceOption($this->lang['articles.sort_field.com'], 'com');
+		$options[] = new FormFieldSelectChoiceOption($this->lang['articles.sort_field.note'], 'note');
+		$options[] = new FormFieldSelectChoiceOption($this->lang['articles.sort_field.author'], 'author_user_id');
 
 		return $options;
 	}
