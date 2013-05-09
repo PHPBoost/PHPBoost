@@ -64,13 +64,10 @@ class ArticlesModuleHomePage implements ModuleHomePage
 		
 		$nbr_categories = count($categories);
 		
-		$pagination_cat = new ArticlesCategoriesPagination($current_page_cat, $nbr_categories);
-		$pagination_cat->set_url(Category::ROOT_CATEGORY, Url::encode_rewrite(LangLoader::get_message('root', 'main')));
-		$nbr_categories_per_page = $pagination_cat->get_number_per_page();
+		$nbr_categories_per_page = ArticlesConfig::load()->get_number_categories_per_page();
 		
-		$nbr_column_cats = ($nbr_categories > $nbr_categories_per_page) ? $nbr_categories_per_page : $nbr_categories;
-		$nbr_column_cats = !empty($nbr_column_cats) ? $nbr_column_cats : 1;
-		$column_width_cats = floor(100 / $nbr_column_cats);
+		$pagination_cat = new ArticlesPagination($current_page_cat, $nbr_categories, $nbr_categories_per_page);
+		$pagination_cat->set_url(Category::ROOT_CATEGORY, Url::encode_rewrite(LangLoader::get_message('root', 'main')));
 		
 		$number_articles_not_published = PersistenceContext::get_querier()->count(ArticlesSetup::$articles_table, 'WHERE published=0');
 		
@@ -79,15 +76,19 @@ class ArticlesModuleHomePage implements ModuleHomePage
 			'C_MODERATE' => $this->auth_moderation,
 			'C_PENDING_ARTICLES' => $number_articles_not_published > 0 && $this->auth_moderation,
 			'ID_CAT' => ArticlesService::get_categories_manager()->get_categories_cache()->get_category(Category::ROOT_CATEGORY),
+			'L_DATE' => LangLoader::get_message('date', 'main'),
+			'L_VIEW' => LangLoader::get_message('views', 'main'),
+			'L_COM' => LangLoader::get_message('com', 'main'),
+			'L_NOTE' => LangLoader::get_message('note', 'main'),
+			'L_WRITTEN' => LangLoader::get_message('written_by', 'main'),
+			'L_ARTICLES_INDEX' => $this->lang['articles'],
 			'L_ADD_ARTICLES' => $this->lang['articles.add'],
-			'L_MANAGE_CAT' => $this->lang['categories_management'],
+			'L_MANAGE_CATEGORIES' => $this->lang['categories_management'],
 			'L_EDIT_CONFIG' => $this->lang['articles_configuration'],
 			'L_MODULE_NAME' => $this->lang['articles'],
 			'L_PENDING_ARTICLES' => $this->lang['articles.pending_articles'],
-			'COLUMN_WIDTH_CATS' => $column_width_cats,
-			'PAGINATION' => $pagination_cat->display()->render(),
 			'U_EDIT_CONFIG' => ArticlesUrlBuilder::articles_configuration()->absolute(),
-			'U_MANAGE_CAT' => ArticlesUrlBuilder::manage_categories()->absolute(),
+			'U_MANAGE_CATEGORIES' => ArticlesUrlBuilder::manage_categories()->absolute(),
 			'U_PENDING_ARTICLES' => ArticlesUrlBuilder::display_pending_articles()->absolute(), 
 			'U_ADD_ARTICLES' => ArticlesUrlBuilder::add_article()->absolute()
 		));
@@ -117,7 +118,7 @@ class ArticlesModuleHomePage implements ModuleHomePage
 			{
 				foreach ($children_cat as $child_cat)
 				{
-					$children_cat_links = $children_cat_links . '<a href="' . ArticlesUrlBuilder::display_category($child_cat->get_id(), $child_cat->get_rewrited_name())->absolute() . '">' . $child_cat->get_name() . '</a> / ';
+					$children_cat_links .= '<a href="' . ArticlesUrlBuilder::display_category($child_cat->get_id(), $child_cat->get_rewrited_name())->absolute() . '">' . $child_cat->get_name() . '</a> / ';
 				}
 			}
 			else
@@ -132,15 +133,27 @@ class ArticlesModuleHomePage implements ModuleHomePage
 			
 			$this->view->assign_block_vars('cat_list', array(
 				'ID_CATEGORY' => $row['id'],
-				'CATEGORY_NAME' => $row['name'],
+				'CATEGORY_NAME' => $row['name'] . ' (' . $row['nbr_articles'] . ')',
 				'CATEGORY_DESCRIPTION' => FormatingHelper::second_parse($row['description']),
 				'CATEGORY_ICON_SOURCE' => !empty($row['image']) ? ($row['image'] == 'articles.png' || $row['image'] == 'articles_mini.png' ? ArticlesUrlBuilder::home()->absolute() . $row['image'] : $row['image']) : '',
 				'L_NBR_ARTICLES_CAT' => sprintf($this->lang['articles.nbr_articles_category'],$row['nbr_articles']),
 				'U_CATEGORY' => ArticlesUrlBuilder::display_category($row['id'], $row['rewrited_name'])->absolute(),
-				'U_SUBCATS' => $children_cat_links
+				'U_SUBCATEGORIES' => $children_cat_links
 			));
 		}
 		
+		if ($nbr_categories > 0)
+		{
+			$nbr_column_cats = ($nbr_categories > $nbr_categories_per_page) ? $nbr_categories_per_page : $nbr_categories;
+			$nbr_column_cats = !empty($nbr_column_cats) ? $nbr_column_cats : 1;
+			$column_width_cat = floor(100 / $nbr_column_cats);
+			
+			$this->view->put_all(array(
+				'C_ARTICLES_CAT' => true,
+				'COLUMN_WIDTH_CAT' => $column_width_cat,
+				'PAGINATION_CAT' => $pagination_cat->display()->render(),
+			));
+		}
 		//Articles in root cat
 		if ($nbr_articles_root_cat > 0)
 		{
@@ -148,10 +161,10 @@ class ArticlesModuleHomePage implements ModuleHomePage
 			$sort = $request->get_getstring('sort', '');
 			
 			$current_page = ($request->get_getint('page', 1) > 0) ? $request->get_getint('page', 1) : 1;
+			$number_articles_per_page = ArticlesConfig::load()->get_number_articles_per_page();
 			
-			$pagination = new ArticlesCategoriesArticlesPagination($current_page, $nbr_articles_root_cat);
+			$pagination = new ArticlesPagination($current_page, $nbr_articles_root_cat, $number_articles_per_page);
 			
-			$number_articles_per_page = $pagination->get_number_per_page();
 			$limit_page = $pagination->get_display_from();
 
 			$result = PersistenceContext::get_querier()->select('SELECT articles.*, member.level, member.user_groups, member.login
@@ -178,7 +191,8 @@ class ArticlesModuleHomePage implements ModuleHomePage
 
 			$this->view->put_all(array(
 				    'C_ARTICLES_FILTERS' => true,
-				    'PAGINATION' => $pagination->display()->render()
+				    'PAGINATION' => $pagination->display()->render(),
+				    'L_TOTAL_ARTICLES' => $nbr_articles_root_cat
 			));
 
 			$notation = new Notation();
