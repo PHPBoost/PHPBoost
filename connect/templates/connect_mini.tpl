@@ -122,6 +122,9 @@
 		# IF C_ADMIN_AUTH #
 		<img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/ranks_mini.png" alt="" class="valign_middle" /> <a href="{U_ADMINISTRATION}" class="small_link">{L_ADMIN_PANEL} # IF C_UNREAD_ALERT # ({NUMBER_UNREAD_ALERTS}) # ENDIF # </a>&nbsp; 
 		# ENDIF #
+		# IF C_MODERATOR_AUTH # 
+		<img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/modo_mini.png" alt="" class="valign_middle" /> <a href="${relative_url(UserUrlBuilder::moderation_panel())}" class="small_link">{L_MODO_PANEL}</a>
+		# ENDIF #
 		# IF C_UNREAD_CONTRIBUTION #
 			# IF C_KNOWN_NUMBER_OF_UNREAD_CONTRIBUTION #
 				<img src="{PATH_TO_ROOT}/templates/{THEME}/images/contribution_panel_mini_new.gif" alt="" class="valign_middle" /> <a href="{U_CONTRIBUTION}" class="small_link">{L_CONTRIBUTION_PANEL} ({NUM_UNREAD_CONTRIBUTIONS})</a>&nbsp;
