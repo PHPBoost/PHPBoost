@@ -34,16 +34,24 @@ class ArticlesPagination
 	private $current_page;
 	private $number_per_page;
 	
-	public function __construct($current_page, $number_elements)
+	public function __construct($current_page, $number_elements, $number_per_page)
 	{
 		$this->current_page = $current_page;
 		$this->pagination = new Pagination($this->get_number_pages($number_elements), $this->current_page);
+		$this->number_per_page = $number_per_page;
 		
 	}
 	
-	public function set_url($id_category, $rewrited_name_category, $id_article, $rewrited_title)
+	public function set_url($id_category, $rewrited_name_category, $id_article = '', $rewrited_title = '')
 	{
-		$this->pagination->set_url_sprintf_pattern(ArticlesUrlBuilder::display_article($id_category, $rewrited_name_category, $id_article, $rewrited_title)->absolute());
+		if ($id_article == '')
+		{
+			$this->pagination->set_url_sprintf_pattern(ArticlesUrlBuilder::display_category($id_category, $rewrited_name_category)->absolute());
+		}
+		else
+		{
+		    $this->pagination->set_url_sprintf_pattern(ArticlesUrlBuilder::display_article($id_category, $rewrited_name_category, $id_article, $rewrited_title)->absolute());
+		}
 	}
 	
 	public function display()
