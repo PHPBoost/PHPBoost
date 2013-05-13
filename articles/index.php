@@ -57,7 +57,7 @@ $url_controller_mappers = array(
 	new UrlControllerMapper('ArticlesAjaxTagsAutoCompleteController','`^/ajax/tag/?$`'),
     
 	//Home page
-	new UrlControllerMapper('ArticlesModuleHomePage', '`^/([a-z]+)/([a-z]+)/([0-9]+)/?$`', array('field', 'sort', 'page'))
+	new UrlControllerMapper('ArticlesHomeController', '`^(?:/([a-z]+))?/?([a-z]+)?/?([0-9]+)?/?$`', array('field', 'sort', 'page'))
 );
 
 DispatchManager::dispatch($url_controller_mappers);
