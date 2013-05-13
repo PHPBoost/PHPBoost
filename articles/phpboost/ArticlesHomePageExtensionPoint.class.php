@@ -28,7 +28,7 @@
 /**
  * @author Patrick DUBEAU <daaxwizeman@gmail.com>
  */
-class ArticlesHomePageExtensionPoint extends HomePageExtensionPoint
+class ArticlesHomePageExtensionPoint implements HomePageExtensionPoint
 {
 	public function get_home_page()
 	{

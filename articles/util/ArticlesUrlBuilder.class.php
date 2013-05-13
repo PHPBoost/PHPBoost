@@ -92,9 +92,9 @@ class ArticlesUrlBuilder
 		return DispatchManager::get_url(self::$dispatcher, '/pending/');
 	}
 	
-	public static function home()
+	public static function home($param = '')
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/');
+		return DispatchManager::get_url(self::$dispatcher, '/' . $param);
 	}
 }
 ?>

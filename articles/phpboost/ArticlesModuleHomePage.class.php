@@ -32,6 +32,7 @@ class ArticlesModuleHomePage implements ModuleHomePage
 {
 	private $lang;
 	private $view;
+	private $form;
 	private $auth_read;
 	private $add_auth;
 	private $edit_auth;
@@ -56,7 +57,7 @@ class ArticlesModuleHomePage implements ModuleHomePage
 		$categories = ArticlesService::get_categories_manager()->get_childrens(Category::ROOT_CATEGORY, $search_category_children_options);
 		$ids_categories = array_keys($categories);
 		
-		$authorized_cats_sql = !empty($ids_categories) ? 'AND ac.id IN (' . implode(', ', $ids_categories) . ')': '';
+		$authorized_cats_sql = !empty($ids_categories) ? "AND ac.id IN (" . implode(', ', $ids_categories) . ")" : '';
 		
 		$now = new Date(DATE_NOW, TIMEZONE_AUTO);
 		
@@ -96,15 +97,15 @@ class ArticlesModuleHomePage implements ModuleHomePage
 		$limit_page = $pagination_cat->get_display_from();
 		
 		//All root cats
-		$result = PersistenceContext::get_querier()->select('SELECT @id_cat:= ac.id, ac.name, ac.description, ac.image,
+		$result = PersistenceContext::get_querier()->select('SELECT @id_cat:= ac.id, ac.id, ac.name, ac.description, ac.image,
 		(SELECT COUNT(*) FROM '. ArticlesSetup::$articles_table .' articles 
 		WHERE articles.id_category = @id_cat AND (articles.published = 1 OR (articles.published = 2 
 		AND (articles.publishing_start_date < :timestamp_now AND articles.publishing_end_date > :timestamp_now) 
 		OR articles.publishing_end_date = 0))) AS nbr_articles FROM ' . ArticlesSetup::$articles_cats_table .
-		' ac :authorized_cats ORDER BY ac.id_parent, ac.c_order LIMIT :limit OFFSET :start_limit',
+		' ac WHERE ac.id_parent = 0 ' . $authorized_cats_sql . ' ORDER BY ac.id_parent, ac.c_order LIMIT :limit OFFSET :start_limit',
 		array(
 			'timestamp_now' => $now->get_timestamp(),
-			'authorized_cats' => $authorized_cats_sql,
+			//'authorized_cats' => $authorized_cats_sql,
 			'limit' => $nbr_categories_per_page,
 			'start_limit' => $limit_page
 			), SelectQueryResult::FETCH_ASSOC
@@ -228,7 +229,10 @@ class ArticlesModuleHomePage implements ModuleHomePage
 				'L_NO_ARTICLES' => $this->lang['articles.no_article']
 			));
 		}
+		
 		$this->view->put('FORM', $this->form->display());
+		
+		return $this->view;
 	}
 	
 	private function build_form($mode)
