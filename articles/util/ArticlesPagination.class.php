@@ -37,9 +37,8 @@ class ArticlesPagination
 	public function __construct($current_page, $number_elements, $number_per_page)
 	{
 		$this->current_page = $current_page;
-		$this->pagination = new Pagination($this->get_number_pages($number_elements), $this->current_page);
 		$this->number_per_page = $number_per_page;
-		
+		$this->pagination = new Pagination($this->get_number_pages($number_elements), $this->current_page);
 	}
 	
 	public function set_url($id_category, $rewrited_name_category, $id_article = '', $rewrited_title = '')

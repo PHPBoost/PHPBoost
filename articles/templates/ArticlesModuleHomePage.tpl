@@ -43,19 +43,19 @@
 	<div class="module_contents">
 		# IF C_ARTICLES_CAT #
 		<p style="text-align:center;" class="text_strong">
-			{L_MANAGE_CATEGORIES}
-			# IF C_MODERATE # <a href="{U_MANAGE_CATEGORIES}"><img class="valign_middle" src="../templates/{THEME}/images/{LANG}/edit.png" alt="" /></a> # ENDIF #
+			{L_SUBCATEGORIES}
+			# IF C_MODERATE # <a href="{U_MANAGE_CATEGORIES}" title="{L_MANAGE_CATEGORIES}"><img class="valign_middle" src="../templates/{THEME}/images/{LANG}/edit.png" alt="{L_MANAGE_CATEGORIES}" /></a> # ENDIF #
 		</p>
 		<hr style="margin-bottom:20px;" />
 		# START cat_list #
 		<div style="float:left;text-align:center;width:{COLUMN_WIDTH_CAT}%;margin-bottom:20px;">
-			<a href="{cat_list.U_CATEGORY}"><img class="valign_middle" src="{cat_list.CATEGORY_ICON_SOURCE}" /></a>
+			<a href="{cat_list.U_CATEGORY}"><img class="valign_middle" src="../{cat_list.CATEGORY_ICON_SOURCE}" /></a>
 			<br />
 			<a href="{cat_list.U_CATEGORY}">{cat_list.CATEGORY_NAME}</a>
 			<br />
 			<span class="text_small">{cat_list.CATEGORY_DESCRIPTION}</span> 
 			<br />
-			<span class="text_small">{cat_list.U_SUBCATEGORIES}</span> 
+			<span class="text_small">{L_SUBCATEGORIES} : {cat_list.U_SUBCATEGORIES}</span> 
 		</div>
 		# END cat_list #
 		<div class="spacer">&nbsp;</div>				
@@ -63,12 +63,14 @@
 		<hr />
 		# ENDIF #			
 		<div class="spacer">&nbsp;</div>
+		# IF C_ARTICLES_FILTERS #
 		<div style="float:right;" class="row3" id="form">
 			{FORM}
 		</div>
+		# ENDIF #
 		<div class="spacer">&nbsp;</div>
-		<hr />	
 		# START articles #
+		<hr />	
 		<div class="block_container" style="margin-bottom:20px;">
 			<div class="block_contents">
 				<div style="float:left;width:70%">
@@ -111,6 +113,6 @@
 	<div class="module_bottom_l"></div>		
 	<div class="module_bottom_r"></div>
 	<div class="module_bottom text_strong">
-		<a href="../articles/articles.php{SID}">{L_ARTICLES_INDEX}</a>
+		<a href="../articles/{SID}">{L_ARTICLES_INDEX}</a>
 	</div>
 </div>
