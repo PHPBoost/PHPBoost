@@ -54,10 +54,11 @@ class ArticlesModuleHomePage implements ModuleHomePage
 		
 		$search_category_children_options = new SearchCategoryChildrensOptions();
 		$search_category_children_options->get_authorizations_bits(Category::READ_AUTHORIZATIONS);
+		$search_category_children_options->set_enable_recursive_exploration(false);
 		$categories = ArticlesService::get_categories_manager()->get_childrens(Category::ROOT_CATEGORY, $search_category_children_options);
 		$ids_categories = array_keys($categories);
 		
-		$authorized_cats_sql = !empty($ids_categories) ? "AND ac.id IN (" . implode(', ', $ids_categories) . ")" : '';
+		$authorized_cats_sql = !empty($ids_categories) ? 'AND ac.id IN (' . implode(', ', $ids_categories) . ')' : '';
 		
 		$now = new Date(DATE_NOW, TIMEZONE_AUTO);
 		
@@ -84,7 +85,8 @@ class ArticlesModuleHomePage implements ModuleHomePage
 			'L_WRITTEN' => LangLoader::get_message('written_by', 'main'),
 			'L_ARTICLES_INDEX' => $this->lang['articles'],
 			'L_ADD_ARTICLES' => $this->lang['articles.add'],
-			'L_MANAGE_CATEGORIES' => $this->lang['categories_management'],
+			'L_SUBCATEGORIES' => $this->lang['articles.sub_categories'],
+			'L_MANAGE_CATEGORIES' => $this->lang['admin.categories.manage'],
 			'L_EDIT_CONFIG' => $this->lang['articles_configuration'],
 			'L_MODULE_NAME' => $this->lang['articles'],
 			'L_PENDING_ARTICLES' => $this->lang['articles.pending_articles'],
@@ -97,7 +99,7 @@ class ArticlesModuleHomePage implements ModuleHomePage
 		$limit_page = $pagination_cat->get_display_from();
 		
 		//All root cats
-		$result = PersistenceContext::get_querier()->select('SELECT @id_cat:= ac.id, ac.id, ac.name, ac.description, ac.image,
+		$result = PersistenceContext::get_querier()->select('SELECT @id_cat:= ac.id, ac.id, ac.name, ac.description, ac.image, ac.rewrited_name,
 		(SELECT COUNT(*) FROM '. ArticlesSetup::$articles_table .' articles 
 		WHERE articles.id_category = @id_cat AND (articles.published = 1 OR (articles.published = 2 
 		AND (articles.publishing_start_date < :timestamp_now AND articles.publishing_end_date > :timestamp_now) 
@@ -105,7 +107,6 @@ class ArticlesModuleHomePage implements ModuleHomePage
 		' ac WHERE ac.id_parent = 0 ' . $authorized_cats_sql . ' ORDER BY ac.id_parent, ac.c_order LIMIT :limit OFFSET :start_limit',
 		array(
 			'timestamp_now' => $now->get_timestamp(),
-			//'authorized_cats' => $authorized_cats_sql,
 			'limit' => $nbr_categories_per_page,
 			'start_limit' => $limit_page
 			), SelectQueryResult::FETCH_ASSOC
@@ -114,17 +115,20 @@ class ArticlesModuleHomePage implements ModuleHomePage
 		while ($row = $result->fetch())
 		{
 			$children_cat = ArticlesService::get_categories_manager()->get_childrens($row['id'], $search_category_children_options);
+			$children_cat_links = '';
+			$nbr_children_cat = count($children_cat);
 			
 			if (!empty($children_cat))
 			{
 				foreach ($children_cat as $child_cat)
 				{
-					$children_cat_links .= '<a href="' . ArticlesUrlBuilder::display_category($child_cat->get_id(), $child_cat->get_rewrited_name())->absolute() . '">' . $child_cat->get_name() . '</a> / ';
+					$children_cat_links .= '<a style="font-size:10px;" href="' . ArticlesUrlBuilder::display_category($child_cat->get_id(), $child_cat->get_rewrited_name())->absolute() . '">' . $child_cat->get_name() . '</a>';
+					if ($nbr_children_cat - 1 > 0)
+					{
+					    $children_cat_links .= ', ';
+					    $nbr_children_cat--;
+					}
 				}
-			}
-			else
-			{
-				$children_cat_links = '';
 			}
 			
 			if ($row['id'] == 0)
@@ -139,20 +143,20 @@ class ArticlesModuleHomePage implements ModuleHomePage
 				'CATEGORY_ICON_SOURCE' => !empty($row['image']) ? ($row['image'] == 'articles.png' || $row['image'] == 'articles_mini.png' ? ArticlesUrlBuilder::home()->absolute() . $row['image'] : $row['image']) : '',
 				'L_NBR_ARTICLES_CAT' => sprintf($this->lang['articles.nbr_articles_category'],$row['nbr_articles']),
 				'U_CATEGORY' => ArticlesUrlBuilder::display_category($row['id'], $row['rewrited_name'])->absolute(),
-				'U_SUBCATEGORIES' => $children_cat_links
+				'U_SUBCATEGORIES' => (count($children_cat) > 0) ? $children_cat_links : 'aucune'
 			));
 		}
 		
 		if ($nbr_categories > 0)
 		{
 			$nbr_column_cats = ($nbr_categories > $nbr_categories_per_page) ? $nbr_categories_per_page : $nbr_categories;
-			$nbr_column_cats = !empty($nbr_column_cats) ? $nbr_column_cats : 1;
+			$nbr_column_cats = ($nbr_column_cats <= 2) ? 1 : $nbr_column_cats - 1;//We exclude the root cat
 			$column_width_cat = floor(100 / $nbr_column_cats);
 			
 			$this->view->put_all(array(
 				'C_ARTICLES_CAT' => true,
 				'COLUMN_WIDTH_CAT' => $column_width_cat,
-				'PAGINATION_CAT' => $pagination_cat->display()->render(),
+				'PAGINATION_CAT' => ($nbr_categories > $nbr_categories_per_page) ? $pagination_cat->display()->render() : '',
 			));
 		}
 		//Articles in root cat
@@ -222,6 +226,8 @@ class ArticlesModuleHomePage implements ModuleHomePage
 					'U_ARTICLES_DELETE' => ArticlesUrlBuilder::delete_article($row['id'])->absolute()
 				));
 			}
+			
+			$this->view->put('FORM', $this->form->display());
 		}
 		else 
 		{
@@ -229,8 +235,6 @@ class ArticlesModuleHomePage implements ModuleHomePage
 				'L_NO_ARTICLES' => $this->lang['articles.no_article']
 			));
 		}
-		
-		$this->view->put('FORM', $this->form->display());
 		
 		return $this->view;
 	}
