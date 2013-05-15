@@ -284,7 +284,7 @@ class ArticlesFormController extends ModuleController
 
 				if ($this->form->get_value('end_date_enable'))
 				{
-					$article->set_end_date($this->form->get_value('publishing_end_date'));
+					$article->set_publishing_end_date($this->form->get_value('publishing_end_date'));
 				}
 				else
 				{
@@ -387,7 +387,7 @@ class ArticlesFormController extends ModuleController
 		$article = $this->get_article();
 		$category = ArticlesService::get_categories_manager()->get_categories_cache()->get_category($article->get_id_category());
 
-		AppContext::get_response()->redirect(ArticlesUrlBuilder::display_article($category->get_id(), $category->get_rewrited_name(), $article->get_id(), $article->get_rewrited_name()));
+		AppContext::get_response()->redirect(ArticlesUrlBuilder::display_article($category->get_id(), $category->get_rewrited_name(), $article->get_id(), $article->get_rewrited_title()));
 	}				
 
 	private function build_response(View $tpl)
