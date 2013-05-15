@@ -50,7 +50,6 @@ class ArticlesModuleHomePage implements ModuleHomePage
 		$this->init();
 		
 		$request = AppContext::get_request();
-		$nbr_articles_root_cat = 0;
 		
 		$search_category_children_options = new SearchCategoryChildrensOptions();
 		$search_category_children_options->get_authorizations_bits(Category::READ_AUTHORIZATIONS);
@@ -70,6 +69,13 @@ class ArticlesModuleHomePage implements ModuleHomePage
 		
 		$pagination_cat = new ArticlesPagination($current_page_cat, $nbr_categories, $nbr_categories_per_page);
 		$pagination_cat->set_url(Category::ROOT_CATEGORY, Url::encode_rewrite(LangLoader::get_message('root', 'main')));
+		
+		$nbr_articles_root_cat = PersistenceContext::get_querier()->count(ArticlesSetup::$articles_table, 
+					'WHERE id_category=0 AND (published=1 OR (published=2 AND (publishing_start_date < :timestamp_now 
+					AND publishing_end_date=0) OR publishing_end_date > :timestamp_now))', 
+					array(
+					    'timestamp_now' => $now->get_timestamp()
+		));
 		
 		$number_articles_not_published = PersistenceContext::get_querier()->count(ArticlesSetup::$articles_table, 'WHERE published=0');
 		
@@ -131,11 +137,6 @@ class ArticlesModuleHomePage implements ModuleHomePage
 				}
 			}
 			
-			if ($row['id'] == 0)
-			{
-			    $nbr_articles_root_cat = $row['nbr_articles'];
-			}
-			
 			$this->view->assign_block_vars('cat_list', array(
 				'ID_CATEGORY' => $row['id'],
 				'CATEGORY_NAME' => $row['name'] . ' (' . $row['nbr_articles'] . ')',
@@ -175,8 +176,8 @@ class ArticlesModuleHomePage implements ModuleHomePage
 			$result = PersistenceContext::get_querier()->select('SELECT articles.*, member.level, member.user_groups, member.login
 			FROM ' . ArticlesSetup::$articles_table . ' articles
 			LEFT JOIN ' . DB_TABLE_MEMBER . ' member ON member.user_id = articles.author_user_id
-			LEFT JOIN ' . DB_TABLE_COMMENTS_TOPIC . 'com ON com.id_in_module = a.id AND com.module_id = "articles"
-			LEFT JOIN ' . DB_TABLE_AVERAGE_NOTES . 'note ON note.id_in_module = a.id AND note.module_name = "articles"
+			LEFT JOIN ' . DB_TABLE_COMMENTS_TOPIC . ' com ON com.id_in_module = articles.id AND com.module_id = "articles"
+			LEFT JOIN ' . DB_TABLE_AVERAGE_NOTES . ' note ON note.id_in_module = articles.id AND note.module_name = "articles"
 			WHERE articles.id_category = :id_category AND (articles.published = 1 OR (articles.published = 2 AND (articles.publishing_start_date < :timestamp_now 
 			AND articles.publishing_end_date > :timestamp_now) OR articles.publishing_end_date = 0)) 
 			ORDER BY :sort :mode LIMIT :limit OFFSET :start_limit', 
@@ -221,7 +222,7 @@ class ArticlesModuleHomePage implements ModuleHomePage
 					'DESCRIPTION' =>FormatingHelper::second_parse($row['description']),                                    
 					'U_ARTICLES_LINK_COM' => ArticlesUrlBuilder::home()->absolute() . $row['id'] . '-' . $row['rewrited_title'] . '/comments/',
 					'U_AUTHOR' => '<a href="' . UserUrlBuilder::profile($row['user_id'])->absolute() . '" class="' . UserService::get_level_class($row['level']) . '"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . TextHelper::wordwrap_html($row['login'], 19) . '</a>',
-					'U_ARTICLES_LINK' => ArticlesUrlBuilder::display_article($this->category->get_rewrited_name(), $row['id'], $row['rewrited_title'])->absolute(),
+					/* @todo : à revoir */'U_ARTICLES_LINK' => ArticlesUrlBuilder::display_article($this->category->get_rewrited_name(), $row['id'], $row['rewrited_title'])->absolute(),
 					'U_ARTICLES_EDIT' => ArticlesUrlBuilder::edit_article($row['id'])->absolute(),
 					'U_ARTICLES_DELETE' => ArticlesUrlBuilder::delete_article($row['id'])->absolute()
 				));
@@ -249,7 +250,7 @@ class ArticlesModuleHomePage implements ModuleHomePage
 		$sort_fields = $this->list_sort_fields();
 		
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_fields', '', $sort_fields[0], $sort_fields,
-			array('events' => array('change' => 'document.location = "'. ArticlesUrlBuilder::display_category($this->category-get_id(), $this->category->get_rewrited_name())->absolute() .'" + HTMLForms.getField("sort_fields").getValue(); /' . $mode)
+			array('events' => array('change' => 'document.location = "'. ArticlesUrlBuilder::display_category($this->category->get_id(), $this->category->get_rewrited_name())->absolute() .'" + HTMLForms.getField("sort_fields").getValue(); /' . $mode)
 		)));
 		
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_mode', '', 'DESC',
@@ -257,7 +258,7 @@ class ArticlesModuleHomePage implements ModuleHomePage
 				new FormFieldSelectChoiceOption($this->lang['articles.sort_mode.asc'], 'ASC'),
 				new FormFieldSelectChoiceOption($this->lang['articles.sort_mode.desc'], 'DESC')
 			), 
-			array('events' => array('change' => 'document.location = "' . ArticlesUrlBuilder::display_category($this->category-get_id(), $this->category->get_rewrited_name())->absolute() . '" + HTMLForms.getField("sort_fields").getValue() "/" + HTMLForms.getField("sort_mode").getValue();'))
+			array('events' => array('change' => 'document.location = "' . ArticlesUrlBuilder::display_category($this->category->get_id(), $this->category->get_rewrited_name())->absolute() . '" + HTMLForms.getField("sort_fields").getValue() "/" + HTMLForms.getField("sort_mode").getValue();'))
 		));
 		
 		$this->form = $form;

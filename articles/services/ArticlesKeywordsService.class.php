@@ -73,8 +73,8 @@ class ArticlesKeywordsService
 		
 		while ($rows = $result->fetch())
 		{
-			$keywords['id'] = $result['id'];
-			$keywords['name'] = $result['name'];
+			$keywords['id'] = $rows['id'];
+			$keywords['name'] = $rows['name'];
 		}
 		
 		return $keywords;
@@ -94,7 +94,7 @@ class ArticlesKeywordsService
 		
 		while ($rows = $result->fetch())
 		{
-			$article_keywords['name'] = $result['name'];
+			$article_keywords['name'] = $rows['name'];
 		}
 		
                 return $article_keywords;
