@@ -28,6 +28,7 @@
 class RichCategory extends Category
 {
 	protected $description;
+	protected $image;
 	
 	public function set_description($description)
 	{
@@ -39,15 +40,29 @@ class RichCategory extends Category
 		return $this->description;
 	}
 	
+	public function set_image(Url $image)
+	{
+		$this->image = $image;
+	}
+	
+	public function get_image()
+	{
+		if (!$this->image instanceof Url)
+			return new Url('/' . Environment::get_running_module_name() . '/' . Environment::get_running_module_name() . '.png');
+		
+		return $this->image;
+	}
+	
 	public function get_properties()
 	{
-		return array_merge(parent::get_properties(), array('description' => $this->get_description()));
+		return array_merge(parent::get_properties(), array('description' => $this->get_description(), 'image' => $this->get_image()->relative()));
 	}
 	
 	public function set_properties(array $properties)
 	{
 		parent::set_properties($properties);
 		$this->set_description($properties['description']);
+		$this->set_image(new Url($properties['image']));
 	}
 	
 	public static function create_categories_table($table_name)
