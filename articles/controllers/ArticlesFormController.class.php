@@ -411,8 +411,8 @@ class ArticlesFormController extends ModuleController
 				if ($id != Category::ROOT_CATEGORY)
 					$response->add_breadcrumb_link($category->get_name(), ArticlesUrlBuilder::display_category($id, $category->get_rewrited_name()));
 			}
-			$category = $categories[$this->get_article()->get_id()];
-			$response->add_breadcrumb_link($this->get_article()->get_title(), ArticlesUrlBuilder::display_article($category->get_rewrited_name(), $this->get_article()->get_id(), $this->get_article()->get_rewrited_title()));
+			$category = $categories[$this->get_article()->get_id_category()];
+			$response->add_breadcrumb_link($this->get_article()->get_title(), ArticlesUrlBuilder::display_article($category->get_id(), $category->get_rewrited_name(), $this->get_article()->get_id(), $this->get_article()->get_rewrited_title()));
 
 			$response->add_breadcrumb_link($this->lang['articles.edit'], ArticlesUrlBuilder::edit_article($article->get_id()));
 			$response->set_page_title($this->lang['articles.edit']);

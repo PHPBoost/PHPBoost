@@ -64,23 +64,23 @@
 		# ENDIF #			
 		<div class="spacer">&nbsp;</div>
 		# IF C_ARTICLES_FILTERS #
-		<div style="float:right;" class="row3" id="form">
-			{FORM}
+		<div style="float:right;width:240px;" class="row3" id="form">
+			{L_ARTICLES_FILTERS_TITLE}# INCLUDE FORM #
 		</div>
 		# ENDIF #
 		<div class="spacer">&nbsp;</div>
 		# START articles #
 		<hr />	
-		<div class="block_container" style="margin-bottom:20px;">
+		<div class="block_container" style="margin-bottom:20px;height:160px;">
 			<div class="block_contents">
 				<div style="float:left;width:70%">
 					<p style="margin-bottom:10px">
-						<a href="../articles/articles{articles.U_ARTICLES_LINK}" class="big_link">{articles.TITLE}</a>
+						<a href="{articles.U_ARTICLE_LINK}" class="big_link">{articles.TITLE}</a>
 						# IF C_MODERATE #
-							<a href="{articles.U_EDIT_ARTICLES}">
+							<a href="{articles.U_EDIT_ARTICLE}">
 								<img class="valign_middle" src="../templates/{THEME}/images/{LANG}/edit.png" alt="" />
 							</a>
-							<a href="{articles.U_DELETE_ARTICLES}" onclick="return Confirm_del_article();">
+							<a href="{articles.U_DELETE_ARTICLE}" onclick="return Confirm_del_article();">
 								<img class="valign_middle" src="../templates/{THEME}/images/{LANG}/delete.png" alt="" />
 							</a>
 						# ENDIF #
@@ -93,20 +93,27 @@
 						<br />
 						{L_VIEW} : {articles.NUMBER_VIEW}
 						<br />
-						{L_COM} : <a href="../articles/articles{articles.U_ARTICLES_LINK_COM}">{articles.L_NUMBER_COM} </a>
+						{L_COM} : <a href="../articles/articles{U_ARTICLE_LINK_COM}">{articles.L_NUMBER_COM} </a>
 						<br />
 						{L_NOTE} {articles.NOTE}
 						<br />
 					{L_WRITTEN} : {articles.U_AUTHOR}
 					</div>
-				</div>		
+				</div>	
+				<div class="float:right;">	
+					<div style="text-align:right;margin-top:15px;">								
+						<!--<a href="../articles/articles{articles.U_ARTICLES_LINK}">
+							{articles.ICON}
+						</a>-->	
+					</div>
+				</div>
 			</div>
 		</div>
 		# END articles #
 		{PAGINATION}
 		<br />
 		<p style="text-align:center;padding-top:10px;" class="text_small">
-			{L_NO_ARTICLES} {L_TOTAL_ARTICLE}
+			{L_NO_ARTICLE} {L_TOTAL_ARTICLES}
 		</p>
 		&nbsp;
 	</div>
