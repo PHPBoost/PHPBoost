@@ -48,6 +48,8 @@ $lang['category.form.authorizations.contribution'] = 'Autorisations de contribut
 $lang['category.form.authorizations.moderation'] = 'Autorisations de modération';
 $lang['category.form.authorizations.description'] = 'Par défaut la catégorie aura la configuration générale du module. Vous pouvez lui appliquer des permissions particulières.';
 $lang['category.form.description'] = 'Description de la catégorie';
+$lang['category.form.image'] = 'Image de la catégorie';
+$lang['category.form.image.preview'] = 'Prévisualisation de l\'image';
 $lang['category.form.options'] = 'Options';
 
 //Delete category

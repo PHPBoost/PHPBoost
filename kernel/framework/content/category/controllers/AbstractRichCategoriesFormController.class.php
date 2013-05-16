@@ -35,12 +35,25 @@ abstract class AbstractRichCategoriesFormController extends AbstractCategoriesFo
 	protected function get_options_fields(FormFieldset $fieldset)
 	{
 		$fieldset->add_field(new FormFieldRichTextEditor('description', $this->lang['category.form.description'], $this->get_category()->get_description()));
+		
+		$image_preview_request = new AjaxRequest(PATH_TO_ROOT . '/kernel/framework/ajax/dispatcher.php?url=/image/preview/', 'function(response){
+		if (response.responseJSON.url) {
+			$(\'preview_picture\').src = response.responseJSON.url;
+		}}');
+		$image_preview_request->add_event_callback(AjaxRequest::ON_CREATE, 'function(response){ $(\'preview_picture\').src = PATH_TO_ROOT + \'/templates/'. get_utheme() .'/images/loading_mini.gif\';}');
+		$image_preview_request->add_param('image', 'HTMLForms.getField(\'picture\').getValue()');
+		
+		$fieldset->add_field(new FormFieldTextEditor('image', $this->lang['category.form.image'], $this->get_category()->get_image()->relative(), array(
+			'events' => array('change' => $image_preview_request->render())
+		)));
+		$fieldset->add_field(new FormFieldFree('image_preview', $this->lang['category.form.image.preview'], '<img id="preview_picture" src="'. $this->get_category()->get_image()->rel() .'" alt="" style="vertical-align:top" />'));
 	}
 	
 	protected function set_properties()
 	{
 		parent::set_properties();
 		$this->get_category()->set_description($this->form->get_value('description'));
+		$this->get_category()->set_image(new Url($this->form->get_value('image')));
 	}
 }
 ?>
