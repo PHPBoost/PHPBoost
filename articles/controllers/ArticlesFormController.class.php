@@ -45,7 +45,7 @@ class ArticlesFormController extends ModuleController
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save();
-			$this->redirect();
+			//$this->redirect();
 		}
 		
 		$this->tpl->put('FORM', $this->form->display());
