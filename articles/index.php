@@ -52,8 +52,8 @@ $url_controller_mappers = array(
 	//new UrlControllerMapper('ArticlesPrintArticleController', '`^/print/([a-z0-9-]+)?/?([A-Za-z0-9-]+)?/?$`', array('rewrited_title', 'rewrited_page_name')),
 	//Display articles and categories
 	new UrlControllerMapper('ArticlesDisplayPendingArticlesController', '`^/pending/?$`'),
-	new UrlControllerMapper('ArticlesDisplayArticlesController', '`^/([0-9]+)-([a-z0-9-_]+)/([0-9]+)-([a-z0-9-_]+)/?$`', array('id_category', 'rewrited_name_category', 'id', 'rewrited_title')),
-	new UrlControllerMapper('ArticlesDisplayCategoryController', '`^/([0-9]+)-([a-z0-9-_]+)?/?$`', array('id', 'rewrited_name')),
+	new UrlControllerMapper('ArticlesDisplayArticlesController', '`^/([0-9]+)-([a-z0-9-_]+)/([0-9]+)-([a-z0-9-_]+)/([0-9]+)/?$`', array('id_category', 'rewrited_name_category', 'id', 'rewrited_title', 'page')),
+	new UrlControllerMapper('ArticlesDisplayCategoryController', '`^/([0-9]+)-([a-z0-9-_]+)/(?:/([a-z]+))?/?([a-z]+)?/?([0-9]+)?/?$`', array('id', 'rewrited_name', 'field', 'sort', 'page')),
 	new UrlControllerMapper('ArticlesAjaxTagsAutoCompleteController','`^/ajax/tag/?$`'),
     
 	//Home page
