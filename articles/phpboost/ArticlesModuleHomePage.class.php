@@ -109,15 +109,15 @@ class ArticlesModuleHomePage implements ModuleHomePage
 		$result = PersistenceContext::get_querier()->select('SELECT @id_cat:= ac.id, ac.id, ac.name, ac.description, ac.image, ac.rewrited_name,
 		(SELECT COUNT(*) FROM '. ArticlesSetup::$articles_table .' articles 
 		WHERE articles.id_category = @id_cat AND (articles.published = 1 OR (articles.published = 2 
-		AND (articles.publishing_start_date < :timestamp_now AND articles.publishing_end_date > :timestamp_now) 
-		OR articles.publishing_end_date = 0))) AS nbr_articles FROM ' . ArticlesSetup::$articles_cats_table .
-		' ac WHERE ac.id_parent = 0 ' . $authorized_cats_sql . ' ORDER BY ac.id_parent, ac.c_order LIMIT ' . $nbr_categories_per_page . ' OFFSET :start_limit',
+		AND (articles.publishing_start_date < :timestamp_now AND articles.publishing_end_date = 0) 
+		OR articles.publishing_end_date > :timestamp_now))) AS nbr_articles FROM ' . ArticlesSetup::$articles_cats_table .
+		' ac WHERE ac.id_parent = 0 ' . $authorized_cats_sql . ' ORDER BY ac.id_parent, ac.c_order LIMIT '
+		. $nbr_categories_per_page . ' OFFSET ' . $limit_page,
 		array(
-			'timestamp_now' => $now->get_timestamp(),
-			'start_limit' => $limit_page
+			'timestamp_now' => $now->get_timestamp()
 			), SelectQueryResult::FETCH_ASSOC
 		);
-		//Sub-cats and their children of root display
+		//Sub-cats and their children display
 		while ($row = $result->fetch())
 		{
 			$children_cat = ArticlesService::get_categories_manager()->get_childrens($row['id'], $search_category_children_options);
@@ -204,16 +204,13 @@ class ArticlesModuleHomePage implements ModuleHomePage
 			LEFT JOIN ' . DB_TABLE_AVERAGE_NOTES . ' note ON note.id_in_module = articles.id AND note.module_name = "articles"
 			WHERE articles.id_category = :id_category AND (articles.published = 1 OR (articles.published = 2 AND (articles.publishing_start_date < :timestamp_now 
 			AND articles.publishing_end_date = 0) OR articles.publishing_end_date > :timestamp_now)) 
-			ORDER BY :field :sort LIMIT ' . $nbr_articles_per_page . ' OFFSET :start_limit', 
+			ORDER BY ' .$sort_field . ' ' . $sort_mode . ' LIMIT ' . $nbr_articles_per_page . ' OFFSET ' .$limit_page, 
 				array(
 				'id_category' => Category::ROOT_CATEGORY,
-				'timestamp_now' => $now->get_timestamp(),
-				'start_limit' => $limit_page,
-				'field' => $sort_field,
-				'sort' => $sort_mode
+				'timestamp_now' => $now->get_timestamp()
 				    ), SelectQueryResult::FETCH_ASSOC
 			    );
-
+			
 			$pagination->set_url(Category::ROOT_CATEGORY, Url::encode_rewrite(LangLoader::get_message('root', 'main')));
 
 			$this->build_form($field, $mode);
@@ -222,7 +219,7 @@ class ArticlesModuleHomePage implements ModuleHomePage
 				    'C_ARTICLES_FILTERS' => true,
 				    'L_ARTICLES_FILTERS_TITLE' => $this->lang['articles.sort_filter_title'],
 				    'PAGINATION' => ($nbr_articles_root_cat > $nbr_articles_per_page) ? $pagination->display()->render() : '',
-				    'L_TOTAL_ARTICLES' => sprintf($this->lang['articles.nbr_articles_category'],$nbr_articles_root_cat)
+				    'L_TOTAL_ARTICLES' => sprintf($this->lang['articles.nbr_articles_category'], $nbr_articles_root_cat)
 			));
 
 			$notation = new Notation();
@@ -236,7 +233,6 @@ class ArticlesModuleHomePage implements ModuleHomePage
 				$group_color = User::get_group_color($row['user_groups'], $row['level']);
 
 				$this->view->assign_block_vars('articles', array(
-					'C_GROUP_COLOR' => !empty($group_color),
 					'TITLE' => $row['title'],
 					'PICTURE' => $row['picture_url'],// @todo : link
 					'DATE' => gmdate_format('date_format_short', $row['date_created']),
@@ -246,7 +242,7 @@ class ArticlesModuleHomePage implements ModuleHomePage
 					'DESCRIPTION' =>FormatingHelper::second_parse($row['description']),                                    
 					'U_ARTICLE_LINK_COM' => ArticlesUrlBuilder::home()->absolute() . $row['id'] . '-' . $row['rewrited_title'] . '/comments/',
 					'U_AUTHOR' => '<a href="' . UserUrlBuilder::profile($row['author_user_id'])->absolute() . '" class="' . UserService::get_level_class($row['level']) . '"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . TextHelper::wordwrap_html($row['login'], 19) . '</a>',
-					/* @ todo: à voir si je ne devrais pas créer un objet RichCategory*/'U_ARTICLE_LINK' => ArticlesUrlBuilder::display_article(Category::ROOT_CATEGORY, 'root', $row['id'], $row['rewrited_title'])->absolute(),
+					'U_ARTICLE_LINK' => ArticlesUrlBuilder::display_article(Category::ROOT_CATEGORY, Url::encode_rewrite(LangLoader::get_message('root', 'main')), $row['id'], $row['rewrited_title'])->absolute(),
 					'U_EDIT_ARTICLE' => ArticlesUrlBuilder::edit_article($row['id'])->absolute(),
 					'U_DELETE_ARTICLE' => ArticlesUrlBuilder::delete_article($row['id'])->absolute()
 				));
