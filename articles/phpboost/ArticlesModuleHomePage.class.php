@@ -163,8 +163,32 @@ class ArticlesModuleHomePage implements ModuleHomePage
 		//Articles in root cat
 		if ($nbr_articles_root_cat > 0)
 		{
-			$mode = ($request->get_getstring('sort', '') == 'asc') ? 'ASC' : 'DESC';
-			$field = $request->get_getstring('field', '');
+			$mode = $request->get_getstring('sort', 'desc');
+			$field = $request->get_getstring('field', 'date');
+			
+			$sort_mode = ($mode == 'asc') ? 'ASC' : 'DESC';
+			
+			switch ($field)
+			{
+				case 'title':
+					$sort_field = 'title';
+					break;
+				case 'view':
+					$sort_field = 'number_view';
+					break;
+				case 'com':
+					$sort_field = 'number_comments';
+					break;
+				case 'note':
+					$sort_field = 'number_notes';
+					break;
+				case 'author':
+					$sort_field = 'author_user_id';
+					break;
+				default:
+					$sort_field = 'date_created';
+					break;
+			}
 			
 			$current_page = ($request->get_getint('page', 1) > 0) ? $request->get_getint('page', 1) : 1;
 			$nbr_articles_per_page = ArticlesConfig::load()->get_number_articles_per_page();
@@ -185,14 +209,14 @@ class ArticlesModuleHomePage implements ModuleHomePage
 				'id_category' => Category::ROOT_CATEGORY,
 				'timestamp_now' => $now->get_timestamp(),
 				'start_limit' => $limit_page,
-				'field' => $field,
-				'sort' => $mode
+				'field' => $sort_field,
+				'sort' => $sort_mode
 				    ), SelectQueryResult::FETCH_ASSOC
 			    );
 
 			$pagination->set_url(Category::ROOT_CATEGORY, Url::encode_rewrite(LangLoader::get_message('root', 'main')));
 
-			$this->build_form($mode);
+			$this->build_form($field, $mode);
 
 			$this->view->put_all(array(
 				    'C_ARTICLES_FILTERS' => true,
@@ -240,7 +264,7 @@ class ArticlesModuleHomePage implements ModuleHomePage
 		return $this->view;
 	}
 	
-	private function build_form($mode)
+	private function build_form($field, $mode)
 	{
 		$form = new HTMLForm(__CLASS__);
 		
@@ -249,16 +273,16 @@ class ArticlesModuleHomePage implements ModuleHomePage
 		
 		$sort_fields = $this->list_sort_fields();
 		
-		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_fields', '', $sort_fields[0], $sort_fields,
-			array('events' => array('change' => 'document.location = "'. ArticlesUrlBuilder::home()->absolute() .'" + HTMLForms.getField("sort_fields").getValue(); /' . $mode)
-		)));
+		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_fields', '', $field, $sort_fields,
+			array('events' => array('change' => 'document.location = "'. ArticlesUrlBuilder::home()->absolute() .'" + HTMLForms.getField("sort_fields").getValue() + "/" + HTMLForms.getField("sort_mode").getValue();'))
+		));
 		
-		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_mode', '', 'DESC',
+		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_mode', '', $mode,
 			array(
-				new FormFieldSelectChoiceOption($this->lang['articles.sort_mode.asc'], 'ASC'),
-				new FormFieldSelectChoiceOption($this->lang['articles.sort_mode.desc'], 'DESC')
+				new FormFieldSelectChoiceOption($this->lang['articles.sort_mode.asc'], 'asc'),
+				new FormFieldSelectChoiceOption($this->lang['articles.sort_mode.desc'], 'desc')
 			), 
-			array('events' => array('change' => 'document.location = "' . ArticlesUrlBuilder::home()->absolute() . '" + HTMLForms.getField("sort_fields").getValue() "/" + HTMLForms.getField("sort_mode").getValue();'))
+			array('events' => array('change' => 'document.location = "' . ArticlesUrlBuilder::home()->absolute() . '" + HTMLForms.getField("sort_fields").getValue() + "/" + HTMLForms.getField("sort_mode").getValue();'))
 		));
 		
 		$this->form = $form;
@@ -268,12 +292,12 @@ class ArticlesModuleHomePage implements ModuleHomePage
 	{
 		$options = array();
 
-		$options[] = new FormFieldSelectChoiceOption($this->lang['articles.sort_field.date'], 'date_created');
+		$options[] = new FormFieldSelectChoiceOption($this->lang['articles.sort_field.date'], 'date');
 		$options[] = new FormFieldSelectChoiceOption($this->lang['articles.sort_field.title'], 'title');
-		$options[] = new FormFieldSelectChoiceOption($this->lang['articles.sort_field.views'], 'number_view');
+		$options[] = new FormFieldSelectChoiceOption($this->lang['articles.sort_field.views'], 'view');
 		$options[] = new FormFieldSelectChoiceOption($this->lang['articles.sort_field.com'], 'com');
 		$options[] = new FormFieldSelectChoiceOption($this->lang['articles.sort_field.note'], 'note');
-		$options[] = new FormFieldSelectChoiceOption($this->lang['articles.sort_field.author'], 'author_user_id');
+		$options[] = new FormFieldSelectChoiceOption($this->lang['articles.sort_field.author'], 'author');
 
 		return $options;
 	}
