@@ -51,16 +51,19 @@
 
 [b]BugTracker[/b]
 [*] [color=red]Nouveauté :[/color] Passage du module en MVC
-[*] [color=red]Nouveauté :[/color] Filtres en haut des tableaux
+[*] [color=red]Nouveauté :[/color] Filtres en haut des tableaux avec possibilité pour chaque utilisateur d'enregistrer ses combinaisons de filtres favoris
 [*] [color=red]Nouveauté :[/color] Légende en bas des tableaux avec la couleur des niveaux et leurs noms
-[*] [color=red]Nouveauté :[/color] Possibilité de désactiver l'affichage des statistiques via une nouvelle option dans l'administration
+[*] [color=red]Nouveauté :[/color] Affichage du nombre de bugs correspondants aux filtres choisis
+[*] [color=red]Nouveauté :[/color] Options dans l'administration pour personnaliser les statistiques
+[*] [color=red]Nouveauté :[/color] Graphiques dans les statistiques
 [*] [color=red]Nouveauté :[/color] Alertes administrateur en fonction de la criticité du bug lors de l'ajout, possibilité de désactiver l'option dans l'administration
 [*] [color=red]Nouveauté :[/color] Statut d'avancement sous forme de %
-[*] [color=red]Nouveauté :[/color] Graphiques dans les statistiques
+[*] [color=red]Nouveauté :[/color] Ajout d'une date de parution pour les versions (utilisée dans la roadmap)
+[*] [color=red]Nouveauté :[/color] Nouvel état : "En cours", lorsque la version de correction d'un bug est choisie mais qu'il n'est pas encore corrigé
 [*] L'ajout et la suppression de niveaux et priorités n'est plus possible pour être cohérent avec les alertes administrateur. Par contre il est toujours possible de changer leur nom et la couleur des niveaux
 [*] L'envoi de MP peut être activé de manière plus affinée
 [*] Changement de mise en forme des tableaux pour plus de lisibilité
-- Ajout d'une date de parution pour les versions (utilisée dans la roadmap)
+[*] Amélioration de l'affichage Corrigé/En cours dans la roadmap
 
 [b]Contact[/b]
 [*] [color=red]Nouveauté :[/color] Possibilité d'ajouter des champs supplémentaires depuis l'admin
