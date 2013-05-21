@@ -109,11 +109,7 @@ if (!empty($idweb) && !empty($CAT_WEB[$idcat]['name']) && !empty($idcat)) //Cont
 }
 elseif (!empty($idcat) && empty($idweb)) //Catégories.
 {
-	$nbr_web = $Sql->query("SELECT COUNT(*) as compt 
-	FROM " . PREFIX . "web 
-	WHERE aprob = 1 AND idcat = '" . $idcat . "'", __LINE__, __FILE__);
-	
-	if (!$nbr_web)
+	if (!$CAT_WEB[$idcat]['name'])
 	{
 		$error_controller = PHPBoostErrors::unexisting_page();
 		DispatchManager::redirect($error_controller);
@@ -124,6 +120,10 @@ elseif (!empty($idcat) && empty($idweb)) //Catégories.
 		$error_controller = PHPBoostErrors::user_not_authorized();
 		DispatchManager::redirect($error_controller);
 	} 
+	
+	$nbr_web = $Sql->query("SELECT COUNT(*) as compt 
+	FROM " . PREFIX . "web 
+	WHERE aprob = 1 AND idcat = '" . $idcat . "'", __LINE__, __FILE__);
 	
 	$tpl->put_all(array(
 		'C_WEB_LINK' => true,
