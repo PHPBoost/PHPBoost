@@ -11,12 +11,12 @@
 <div class="module_actions">
 	# IF IS_ADMIN #
 	<a href="{U_EDIT_CONFIG}" title="{L_EDIT_CONFIG}" class="img_link">
-		<img class="valign_middle" src="../templates/{THEME}/images/{LANG}/edit.png" alt="{L_EDIT_CONFIG}"/>
+		<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="{L_EDIT_CONFIG}"/>
 	</a>
 	# ENDIF #
 	# IF C_ADD #
 		<a href="{U_ADD_ARTICLES}" title="{L_ADD_ARTICLES}" class="img_link">
-			<img src="../templates/{THEME}/images/{LANG}/add.png" class="valign_middle" alt="{L_ADD_ARTICLES}" />
+			<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/add.png" class="valign_middle" alt="{L_ADD_ARTICLES}" />
 		</a>
 		&nbsp;
 	# ENDIF #
@@ -35,7 +35,7 @@
 	<div class="module_top">
 		<div class="module_top_title">
 			<a href="{PATH_TO_ROOT}/syndication/?url=/rss/articles/{IDCAT}" title="Rss" class="img_link">
-				<img class="valign_middle" src="../templates/{THEME}/images/rss.png" alt="Rss" title="Rss" />
+				<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/rss.png" alt="Rss" title="Rss" />
 			</a>
 			{L_MODULE_NAME}
 		</div>
@@ -44,12 +44,12 @@
 		# IF C_ARTICLES_CAT #
 		<p style="text-align:center;" class="text_strong">
 			{L_SUBCATEGORIES}
-			# IF C_MODERATE # <a href="{U_MANAGE_CATEGORIES}" title="{L_MANAGE_CATEGORIES}"><img class="valign_middle" src="../templates/{THEME}/images/{LANG}/edit.png" alt="{L_MANAGE_CATEGORIES}" /></a> # ENDIF #
+			# IF C_MODERATE # <a href="{U_MANAGE_CATEGORIES}" title="{L_MANAGE_CATEGORIES}"><img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="{L_MANAGE_CATEGORIES}" /></a> # ENDIF #
 		</p>
 		<hr style="margin-bottom:20px;" />
 		# START cat_list #
 		<div style="float:left;text-align:center;width:{COLUMN_WIDTH_CAT}%;margin-bottom:20px;">
-			<a href="{cat_list.U_CATEGORY}"><img class="valign_middle" src="../{cat_list.CATEGORY_ICON_SOURCE}" /></a>
+			<a href="{cat_list.U_CATEGORY}"><img class="valign_middle" src="{PATH_TO_ROOT}{cat_list.CATEGORY_ICON_SOURCE}" /></a>
 			<br />
 			<a href="{cat_list.U_CATEGORY}">{cat_list.CATEGORY_NAME}</a>
 			<br />
@@ -78,10 +78,10 @@
 						<a href="{articles.U_ARTICLE_LINK}" class="big_link">{articles.TITLE}</a>
 						# IF C_MODERATE #
 							<a href="{articles.U_EDIT_ARTICLE}">
-								<img class="valign_middle" src="../templates/{THEME}/images/{LANG}/edit.png" alt="" />
+								<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="" />
 							</a>
 							<a href="{articles.U_DELETE_ARTICLE}" onclick="return Confirm_del_article();">
-								<img class="valign_middle" src="../templates/{THEME}/images/{LANG}/delete.png" alt="" />
+								<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="" />
 							</a>
 						# ENDIF #
 					</p>

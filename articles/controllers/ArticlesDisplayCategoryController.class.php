@@ -93,7 +93,7 @@ class ArticlesDisplayCategoryController extends ModuleController
 		$current_page_cat = ($request->get_getint('page',1) > 0) ? $request->get_getint('page',1) : 1;
 		
 		$nbr_categories = count($categories);
-		
+		Debug::dump($nbr_categories);
 		$nbr_categories_per_page = ArticlesConfig::load()->get_number_categories_per_page();
 		
 		$pagination_cat = new ArticlesPagination($current_page_cat, $nbr_categories, $nbr_categories_per_page);

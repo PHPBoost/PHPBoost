@@ -46,18 +46,17 @@ $url_controller_mappers = array(
 	new UrlControllerMapper('ArticlesFormController', '`^/add/?$`'),
 	new UrlControllerMapper('ArticlesFormController', '`^/([0-9]+)/edit/?$`', array('id')),
 	new UrlControllerMapper('ArticlesDeleteController', '`^/([0-9]+)/delete/?$`', array('id')),
-
-	//new UrlControllerMapper('ArticlesViewArticleController', '`^/article/([a-z0-9-]+)?/?([a-z0-9-]+)?/?$`', array('rewrited_title', 'rewrited_page_name')),
-
-	//new UrlControllerMapper('ArticlesPrintArticleController', '`^/print/([a-z0-9-]+)?/?([A-Za-z0-9-]+)?/?$`', array('rewrited_title', 'rewrited_page_name')),
-	//Display articles and categories
+	
+	//Display articles
 	new UrlControllerMapper('ArticlesDisplayPendingArticlesController', '`^/pending/?$`'),
 	new UrlControllerMapper('ArticlesDisplayArticlesController', '`^/([0-9]+)-([a-z0-9-_]+)/([0-9]+)-([a-z0-9-_]+)/([0-9]+)/?$`', array('id_category', 'rewrited_name_category', 'id', 'rewrited_title', 'page')),
-	new UrlControllerMapper('ArticlesDisplayCategoryController', '`^/([0-9]+)-([a-z0-9-_]+)/(?:/([a-z]+))?/?([a-z]+)?/?([0-9]+)?/?$`', array('id', 'rewrited_name', 'field', 'sort', 'page')),
+	
+	//Display home and categories
+	new UrlControllerMapper('ArticlesDisplayHomeCategoryController', '`^(?:/([0-9]+)-([a-z0-9-_]+))?/?([a-z]+)?/?([a-z]+)?/?([0-9]+)?/?$`', array('id', 'rewrited_name', 'field', 'sort', 'page')),
+	
+	//Utilities
 	new UrlControllerMapper('ArticlesAjaxTagsAutoCompleteController','`^/ajax/tag/?$`'),
-    
-	//Home page
-	new UrlControllerMapper('ArticlesHomeController', '`^(?:/([a-z]+))?/?([a-z]+)?/?([0-9]+)?/?$`', array('field', 'sort', 'page'))
+	//new UrlControllerMapper('ArticlesPrintArticleController', '`^/print/([a-z0-9-]+)?/?([A-Za-z0-9-]+)?/?$`', array('rewrited_title', 'rewrited_page_name')),
 );
 
 DispatchManager::dispatch($url_controller_mappers);
