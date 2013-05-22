@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                      ArticlesModuleHomePage.class.php
+ *		    ArticlesModuleHomePage.class.php
  *                            -------------------
- *   begin                : March 19, 2013
+ *   begin                : March 05, 2013
  *   copyright            : (C) 2013 Patrick DUBEAU
  *   email                : daaxwizeman@gmail.com
  *
@@ -25,11 +25,8 @@
  *
  ###################################################*/
 
-/**
- * @author Patrick DUBEAU <daaxwizeman@gmail.com>
- */
 class ArticlesModuleHomePage implements ModuleHomePage
-{
+{	
 	private $lang;
 	private $view;
 	private $form;
@@ -37,6 +34,7 @@ class ArticlesModuleHomePage implements ModuleHomePage
 	private $add_auth;
 	private $edit_auth;
 	private $auth_moderation;
+	private $category;
 	
 	public static function get_view()
 	{
@@ -44,7 +42,38 @@ class ArticlesModuleHomePage implements ModuleHomePage
 		return $object->build_view();
 	}
 	
-	public function build_view()
+	private function init()
+	{
+		$this->lang = LangLoader::get('articles-common', 'articles');
+		$this->view = new FileTemplate('articles/ArticlesDisplayHomeCategoryController.tpl');
+		$this->view->add_lang($this->lang);
+	}
+	
+	private function build_form($field, $mode)
+	{
+		$form = new HTMLForm(__CLASS__);
+		
+		$fieldset = new FormFieldsetHorizontal('filters'); // @todo : voir si je passe une classe en option pour styliser
+		$form->add_fieldset($fieldset);
+		
+		$sort_fields = $this->list_sort_fields();
+		
+		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_fields', '', $field, $sort_fields,
+			array('events' => array('change' => 'document.location = "'. ArticlesUrlBuilder::display_category($this->category->get_id(), $this->category->get_rewrited_name())->absolute() .'" + HTMLForms.getField("sort_fields").getValue() + "/" + HTMLForms.getField("sort_mode").getValue();'))
+		));
+		
+		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_mode', '', $mode,
+			array(
+				new FormFieldSelectChoiceOption($this->lang['articles.sort_mode.asc'], 'asc'),
+				new FormFieldSelectChoiceOption($this->lang['articles.sort_mode.desc'], 'desc')
+			), 
+			array('events' => array('change' => 'document.location = "' . ArticlesUrlBuilder::display_category($this->category->get_id(), $this->category->get_rewrited_name())->absolute() . '" + HTMLForms.getField("sort_fields").getValue() + "/" + HTMLForms.getField("sort_mode").getValue();'))
+		));
+		
+		$this->form = $form;
+	}
+	
+	private function build_view()
 	{
 		$this->check_authorizations();
 		$this->init();
@@ -54,7 +83,7 @@ class ArticlesModuleHomePage implements ModuleHomePage
 		$search_category_children_options = new SearchCategoryChildrensOptions();
 		$search_category_children_options->get_authorizations_bits(Category::READ_AUTHORIZATIONS);
 		$search_category_children_options->set_enable_recursive_exploration(false);
-		$categories = ArticlesService::get_categories_manager()->get_childrens(Category::ROOT_CATEGORY, $search_category_children_options);
+		$categories = ArticlesService::get_categories_manager()->get_childrens($this->category->get_id(), $search_category_children_options);
 		$ids_categories = array_keys($categories);
 		
 		$authorized_cats_sql = !empty($ids_categories) ? 'AND ac.id IN (' . implode(', ', $ids_categories) . ')' : '';
@@ -68,14 +97,16 @@ class ArticlesModuleHomePage implements ModuleHomePage
 		$nbr_categories_per_page = ArticlesConfig::load()->get_number_categories_per_page();
 		
 		$pagination_cat = new ArticlesPagination($current_page_cat, $nbr_categories, $nbr_categories_per_page);
-		$pagination_cat->set_url(Category::ROOT_CATEGORY, Url::encode_rewrite(LangLoader::get_message('root', 'main')));
+		$pagination_cat->set_url($this->category->get_id(), $this->category->get_rewrited_name());
 		
-		$nbr_articles_root_cat = PersistenceContext::get_querier()->count(ArticlesSetup::$articles_table, 
-					'WHERE id_category = 0 AND (published = 1 OR (published = 2 AND (publishing_start_date < :timestamp_now 
+		$nbr_articles_cat = PersistenceContext::get_querier()->count(ArticlesSetup::$articles_table, 
+					'WHERE id_category = :id_category AND (published = 1 OR (published = 2 AND (publishing_start_date < :timestamp_now 
 					AND publishing_end_date = 0) OR publishing_end_date > :timestamp_now))', 
 					array(
+					    'id_category' => $this->category->get_id(),
 					    'timestamp_now' => $now->get_timestamp()
-		));
+					)
+		);
 		
 		$number_articles_not_published = PersistenceContext::get_querier()->count(ArticlesSetup::$articles_table, 'WHERE published = 0');
 		
@@ -83,7 +114,7 @@ class ArticlesModuleHomePage implements ModuleHomePage
 			'C_ADD' => $this->add_auth,
 			'C_MODERATE' => $this->auth_moderation,
 			'C_PENDING_ARTICLES' => $number_articles_not_published > 0 && $this->auth_moderation,
-			'ID_CAT' => ArticlesService::get_categories_manager()->get_categories_cache()->get_category(Category::ROOT_CATEGORY),
+			'ID_CAT' => ArticlesService::get_categories_manager()->get_categories_cache()->get_category($this->category->get_id()),
 			'L_DATE' => LangLoader::get_message('date', 'main'),
 			'L_VIEW' => LangLoader::get_message('views', 'main'),
 			'L_COM' => LangLoader::get_message('com', 'main'),
@@ -111,10 +142,11 @@ class ArticlesModuleHomePage implements ModuleHomePage
 		WHERE articles.id_category = @id_cat AND (articles.published = 1 OR (articles.published = 2 
 		AND (articles.publishing_start_date < :timestamp_now AND articles.publishing_end_date = 0) 
 		OR articles.publishing_end_date > :timestamp_now))) AS nbr_articles FROM ' . ArticlesSetup::$articles_cats_table .
-		' ac WHERE ac.id_parent = 0 ' . $authorized_cats_sql . ' ORDER BY ac.id_parent, ac.c_order LIMIT '
+		' ac WHERE ac.id_parent = :id_category ' . $authorized_cats_sql . ' ORDER BY ac.id_parent, ac.c_order LIMIT '
 		. $nbr_categories_per_page . ' OFFSET ' . $limit_page,
 		array(
-			'timestamp_now' => $now->get_timestamp()
+			'timestamp_now' => $now->get_timestamp(),
+			'id_category' => $this->category->get_id()
 			), SelectQueryResult::FETCH_ASSOC
 		);
 		//Sub-cats and their children display
@@ -151,7 +183,14 @@ class ArticlesModuleHomePage implements ModuleHomePage
 		if ($nbr_categories > 0)
 		{
 			$nbr_column_cats = ($nbr_categories > $nbr_categories_per_page) ? $nbr_categories_per_page : $nbr_categories;
-			$nbr_column_cats = ($nbr_column_cats <= 2) ? 1 : $nbr_column_cats - 1;//We exclude the root cat
+			if ($this->category->get_id() == Category::ROOT_CATEGORY)
+			{
+				$nbr_column_cats = ($nbr_column_cats <= 2) ? 1 : $nbr_column_cats - 1;//We exclude the root cat
+			}
+			else
+			{
+				$nbr_column_cats = ($nbr_column_cats) ? $nbr_column_cats : 1;
+			}
 			$column_width_cat = floor(100 / $nbr_column_cats);
 			
 			$this->view->put_all(array(
@@ -160,8 +199,8 @@ class ArticlesModuleHomePage implements ModuleHomePage
 				'PAGINATION_CAT' => ($nbr_categories > $nbr_categories_per_page) ? $pagination_cat->display()->render() : '',
 			));
 		}
-		//Articles in root cat
-		if ($nbr_articles_root_cat > 0)
+		//Articles in current cat
+		if ($nbr_articles_cat > 0)
 		{
 			$mode = $request->get_getstring('sort', 'desc');
 			$field = $request->get_getstring('field', 'date');
@@ -193,7 +232,7 @@ class ArticlesModuleHomePage implements ModuleHomePage
 			$current_page = ($request->get_getint('page', 1) > 0) ? $request->get_getint('page', 1) : 1;
 			$nbr_articles_per_page = ArticlesConfig::load()->get_number_articles_per_page();
 			
-			$pagination = new ArticlesPagination($current_page, $nbr_articles_root_cat, $nbr_articles_per_page);
+			$pagination = new ArticlesPagination($current_page, $nbr_articles_cat, $nbr_articles_per_page);
 			
 			$limit_page = $pagination->get_display_from();
 
@@ -206,20 +245,20 @@ class ArticlesModuleHomePage implements ModuleHomePage
 			AND articles.publishing_end_date = 0) OR articles.publishing_end_date > :timestamp_now)) 
 			ORDER BY ' .$sort_field . ' ' . $sort_mode . ' LIMIT ' . $nbr_articles_per_page . ' OFFSET ' .$limit_page, 
 				array(
-				'id_category' => Category::ROOT_CATEGORY,
+				'id_category' => $this->category->get_id(),
 				'timestamp_now' => $now->get_timestamp()
 				    ), SelectQueryResult::FETCH_ASSOC
 			    );
 			
-			$pagination->set_url(Category::ROOT_CATEGORY, Url::encode_rewrite(LangLoader::get_message('root', 'main')));
+			$pagination->set_url($this->category->get_id(), $this->category->get_rewrited_name());
 
 			$this->build_form($field, $mode);
 
 			$this->view->put_all(array(
 				    'C_ARTICLES_FILTERS' => true,
 				    'L_ARTICLES_FILTERS_TITLE' => $this->lang['articles.sort_filter_title'],
-				    'PAGINATION' => ($nbr_articles_root_cat > $nbr_articles_per_page) ? $pagination->display()->render() : '',
-				    'L_TOTAL_ARTICLES' => sprintf($this->lang['articles.nbr_articles_category'], $nbr_articles_root_cat)
+				    'PAGINATION' => ($nbr_articles_cat > $nbr_articles_per_page) ? $pagination->display()->render() : '',
+				    'L_TOTAL_ARTICLES' => sprintf($this->lang['articles.nbr_articles_category'], $nbr_articles_cat)
 			));
 
 			$notation = new Notation();
@@ -242,7 +281,7 @@ class ArticlesModuleHomePage implements ModuleHomePage
 					'DESCRIPTION' =>FormatingHelper::second_parse($row['description']),                                    
 					'U_ARTICLE_LINK_COM' => ArticlesUrlBuilder::home()->absolute() . $row['id'] . '-' . $row['rewrited_title'] . '/comments/',
 					'U_AUTHOR' => '<a href="' . UserUrlBuilder::profile($row['author_user_id'])->absolute() . '" class="' . UserService::get_level_class($row['level']) . '"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . TextHelper::wordwrap_html($row['login'], 19) . '</a>',
-					'U_ARTICLE_LINK' => ArticlesUrlBuilder::display_article(Category::ROOT_CATEGORY, Url::encode_rewrite(LangLoader::get_message('root', 'main')), $row['id'], $row['rewrited_title'])->absolute(),
+					'U_ARTICLE_LINK' => ArticlesUrlBuilder::display_article($this->category->get_id(), $this->category->get_rewrited_name(), $row['id'], $row['rewrited_title'])->absolute(),
 					'U_EDIT_ARTICLE' => ArticlesUrlBuilder::edit_article($row['id'])->absolute(),
 					'U_DELETE_ARTICLE' => ArticlesUrlBuilder::delete_article($row['id'])->absolute()
 				));
@@ -256,32 +295,51 @@ class ArticlesModuleHomePage implements ModuleHomePage
 				'L_NO_ARTICLE' => $this->lang['articles.no_article']
 			));
 		}
-		
 		return $this->view;
 	}
 	
-	private function build_form($field, $mode)
+	private function get_category()
 	{
-		$form = new HTMLForm(__CLASS__);
+		if ($this->category === null)
+		{
+			$id = AppContext::get_request()->get_getstring('id', 0);
+			if (!empty($id))
+			{
+				try {
+					$row = PersistenceContext::get_querier()->select_single_row(ArticlesSetup::$articles_cats_table, array('*'), 'WHERE id=:id', array('id' => $id));
+
+					$category = new RichCategory();
+					$category->set_properties($row);
+					$this->category = $category;
+				} 
+				catch (RowNotFoundException $e) 
+				{
+					$error_controller = PHPBoostErrors::unexisting_page();
+					DispatchManager::redirect($error_controller);
+				}
+			}
+			else
+			{
+				$this->category = ArticlesService::get_categories_manager()->get_categories_cache()->get_category(Category::ROOT_CATEGORY);
+			}
+		}
+		return $this->category;
+	}
+	
+	private function check_authorizations()
+	{
+		$category = $this->get_category();
 		
-		$fieldset = new FormFieldsetHorizontal('filters'); // @todo : voir si je passe une classe en option pour styliser
-		$form->add_fieldset($fieldset);
+		$this->auth_read = ArticlesAuthorizationsService::check_authorizations($category->get_id())->read();
+		$this->add_auth = ArticlesAuthorizationsService::check_authorizations($category->get_id())->write() || ArticlesAuthorizationsService::check_authorizations($category->get_id())->contribution();
+		$this->edit_auth = ArticlesAuthorizationsService::check_authorizations($category->get_id())->write() || ArticlesAuthorizationsService::check_authorizations($category->get_id())->moderation();
+		$this->auth_moderation = ArticlesAuthorizationsService::check_authorizations($category->get_id())->moderation();
 		
-		$sort_fields = $this->list_sort_fields();
-		
-		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_fields', '', $field, $sort_fields,
-			array('events' => array('change' => 'document.location = "'. ArticlesUrlBuilder::home()->absolute() .'" + HTMLForms.getField("sort_fields").getValue() + "/" + HTMLForms.getField("sort_mode").getValue();'))
-		));
-		
-		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_mode', '', $mode,
-			array(
-				new FormFieldSelectChoiceOption($this->lang['articles.sort_mode.asc'], 'asc'),
-				new FormFieldSelectChoiceOption($this->lang['articles.sort_mode.desc'], 'desc')
-			), 
-			array('events' => array('change' => 'document.location = "' . ArticlesUrlBuilder::home()->absolute() . '" + HTMLForms.getField("sort_fields").getValue() + "/" + HTMLForms.getField("sort_mode").getValue();'))
-		));
-		
-		$this->form = $form;
+		if (!($this->auth_read))
+		{
+			$error_controller = PHPBoostErrors::user_not_authorized();
+			DispatchManager::redirect($error_controller);
+		}
 	}
 	
 	private function list_sort_fields()
@@ -296,27 +354,6 @@ class ArticlesModuleHomePage implements ModuleHomePage
 		$options[] = new FormFieldSelectChoiceOption($this->lang['articles.sort_field.author'], 'author');
 
 		return $options;
-	}
-	
-	private function check_authorizations()
-	{
-		$this->auth_read = ArticlesAuthorizationsService::check_authorizations()->read();
-		$this->add_auth = ArticlesAuthorizationsService::check_authorizations()->write() || ArticlesAuthorizationsService::check_authorizations()->contribution();
-		$this->edit_auth = ArticlesAuthorizationsService::check_authorizations()->write() || ArticlesAuthorizationsService::check_authorizations()->moderation();
-		$this->auth_moderation = ArticlesAuthorizationsService::check_authorizations()->moderation();
-		
-		if (!($this->auth_read))
-		{
-			$error_controller = PHPBoostErrors::user_not_authorized();
-			DispatchManager::redirect($error_controller);
-		}
-	}
-	
-	private function init()
-	{
-		$this->lang = LangLoader::get('articles-common', 'articles');
-		$this->view = new FileTemplate('articles/ArticlesModuleHomePage.tpl');
-		$this->view->add_lang($this->lang);
 	}
 }
 ?>
