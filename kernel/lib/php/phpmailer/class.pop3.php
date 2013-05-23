@@ -389,13 +389,15 @@ class POP3 {
    * @access private
    */
   private function displayErrors () {
-    echo '<pre>';
+  //For PHPBoost
+   /* echo '<pre>';
 
     foreach ($this->error as $single_error) {
       print_r($single_error);
     }
 
     echo '</pre>';
+    */
   }
 
   /**

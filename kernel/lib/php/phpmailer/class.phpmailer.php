@@ -296,7 +296,7 @@ class PHPMailer {
    * Right now we only honor "echo" or "error_log"
    * @var string
    */
-  public $Debugoutput     = "echo";
+  public $Debugoutput     = "error_log";
 
   /**
    * Prevents the SMTP connection from being closed after each mail
