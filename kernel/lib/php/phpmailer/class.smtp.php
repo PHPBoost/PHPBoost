@@ -68,7 +68,7 @@ class SMTP {
    * Right now we only honor 'echo', 'html' or 'error_log'
    * @var string
    */
-  public $Debugoutput     = 'echo';
+  public $Debugoutput     = 'error_log';
 
   /**
    *  Sets VERP use on/off (default is off)
