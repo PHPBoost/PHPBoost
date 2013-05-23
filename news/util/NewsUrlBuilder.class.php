@@ -57,9 +57,19 @@ class NewsUrlBuilder
 		return DispatchManager::get_url(self::$dispatcher, '/admin/categories/');
 	}
 	
+	public static function category_syndication($id)
+	{
+		return SyndicationUrlBuilder::rss('news', $id);
+	}
+	
 	public static function display_news($id_category, $rewrited_name_category, $id_news, $rewrited_title)
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/' . $id_category . '-' . $rewrited_name_category . '/' . $id_news . '-' . $rewrited_title . '/');
+	}
+	
+	public static function display_comments_news($id_category, $rewrited_name_category, $id_news, $rewrited_title)
+	{
+		return DispatchManager::get_url(self::$dispatcher, '/' . $id_category . '-' . $rewrited_name_category . '/' . $id_news . '-' . $rewrited_title . '/comments/');
 	}
 	
 	public static function display_category($id, $rewrited_name)

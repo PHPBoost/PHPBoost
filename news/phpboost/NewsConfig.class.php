@@ -38,11 +38,7 @@ class NewsConfig extends AbstractConfigData
 	
 	const COMMENTS_ENABLED = 'comments_enabled';
 	const NEWS_SUGGESTIONS_ENABLED = 'news_suggestions_enabled';
-	
-	const EDITO_ENABLED = 'edito_enabled';
-	const EDITO_TITLE = 'edito_title';
-	const EDITO_CONTENTS = 'edito_contents';
-	
+
 	const DISPLAY_TYPE = 'display_type';
 	const DISPLAY_BLOCK = 'block';
 	const DISPLAY_LIST = 'list';
@@ -119,36 +115,6 @@ class NewsConfig extends AbstractConfigData
 		$this->set_property(self::DISPLAY_TYPE, $display_type);
 	}
 	
-	public function get_edito_enabled()
-	{
-		return $this->get_property(self::EDITO_ENABLED);
-	}
-
-	public function set_edito_enabled($edito_enabled)
-	{
-		$this->set_property(self::EDITO_ENABLED, $edito_enabled);
-	}
-	
-	public function get_edito_title()
-	{
-		return $this->get_property(self::EDITO_TITLE);
-	}
-
-	public function set_edito_title($edito_title)
-	{
-		$this->set_property(self::EDITO_TITLE, $edito_title);
-	}
-	
-	public function get_edito_contents()
-	{
-		return $this->get_property(self::EDITO_CONTENTS);
-	}
-
-	public function set_edito_contents($edito_contents)
-	{
-		$this->set_property(self::EDITO_CONTENTS, $edito_contents);
-	}
-		
 	public function get_authorizations()
 	{
 		return $this->get_property(self::AUTHORIZATIONS);
@@ -171,9 +137,6 @@ class NewsConfig extends AbstractConfigData
 			self::NUMBER_CHARACTER_TO_CUT => 200,
 			self::COMMENTS_ENABLED => true,
 			self::NEWS_SUGGESTIONS_ENABLED => true,
-			self::EDITO_ENABLED => true,
-			self::EDITO_TITLE => 'titre',
-			self::EDITO_CONTENTS => 'contenu',
 			self::DISPLAY_TYPE => self::DISPLAY_BLOCK,
 			self::AUTHORIZATIONS => array('r1' => 13, 'r0' => 5, 'r-1' => 1)
 		);

@@ -74,7 +74,51 @@ class NewsDisplayNewsController extends ModuleController
 	
 	private function build_view()
 	{
+		$news = $this->get_news();
+		$category = NewsService::get_categories_manager()->get_categories_cache()->get_category($news->get_id_cat());
+		$main_lang = LangLoader::get('main');
+		
+		$this->tpl->put_all(array(
+			'C_EDIT' => NewsAuthorizationsService::check_authorizations($news->get_id_cat())->moderation() || (NewsAuthorizationsService::check_authorizations($news->get_id_cat())->write() && $news->get_user_id() == AppContext::get_current_user()->get_id()),
+			'C_DELETE' => NewsAuthorizationsService::check_authorizations($news->get_id_cat())->moderation(),
+			'C_PICTURE' => $news->has_picture(),
+		
+			'L_SYNDICATION' => $main_lang['syndication'],
+			'L_COMMENTS' => CommentsService::get_number_and_lang_comments('news', $news->get_id()),
+			'L_EDIT' => $main_lang['edit'],
+			'L_DELETE' => $main_lang['delete'],
+		
+			'ID' => $news->get_id(),
+			'NAME' => $news->get_name(),
+			'CONTENTS' => FormatingHelper::second_parse($news->get_contents()),
+			'DATE' => $news->get_creation_date()->format(DATE_FORMAT_SHORT, TIMEZONE_AUTO),
+				
+			'U_SYNDICATION' => NewsUrlBuilder::category_syndication($news->get_id_cat())->rel(),
+			'U_COMMENTS' => NewsUrlBuilder::display_comments_news($category->get_id(), $category->get_rewrited_name(), $news->get_id(), $news->get_rewrited_name())->rel(),
+			'U_EDIT' => NewsUrlBuilder::edit_news($news->get_id())->rel(),
+			'U_DELETE' => NewsUrlBuilder::delete_news($news->get_id())->rel(),
+			'U_PICTURE' => $news->get_picture()->absolute(),
+		));
+		
+		$this->build_sources_view($news);
+	}
 	
+	private function build_sources_view(News $news)
+	{
+		$sources = $news->get_sources();
+		$this->tpl->put('C_SOURCES', !empty($sources));
+		
+		$i = 0;
+		foreach ($sources as $name => $url)
+		{	
+			$this->tpl->assign_block_vars('sources', array(
+				'I' => $i,
+				'NAME' => $name,
+				'COMMA' => $i > 0 ? ', ' : ' ',
+				'URL' => $url,
+			));
+			$i++;
+		}
 	}
 	
 	private function check_authorizations()

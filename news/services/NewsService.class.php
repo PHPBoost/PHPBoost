@@ -58,7 +58,10 @@ class NewsService
 
 	public static function get_news($condition, array $parameters)
 	{
-		$row = self::$db_querier->select_single_row(NewsSetup::$news_table, array('*'), $condition, $parameters);
+		$row = self::$db_querier->select_single_row_query('SELECT news.*, member.*
+		FROM ' . NewsSetup::$news_table . ' news 
+		LEFT JOIN ' . DB_TABLE_MEMBER . ' member ON member.user_id = news.author_user_id
+		' . $condition, $parameters);
 		$news = new News();
 		$news->set_properties($row);
 		return $news;

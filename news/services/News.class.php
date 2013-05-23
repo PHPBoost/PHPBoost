@@ -41,9 +41,11 @@ class News
 	private $start_date;
 	private $end_date;
 	private $end_date_enabled;
+	private $top_list_enabled;
 	
 	private $creation_date;
 	private $author_user_id;
+	private $author_user;
 
 	private $picture_url;
 	private $sources;
@@ -165,6 +167,16 @@ class News
 		return $this->end_date_enabled;
 	}
 	
+	public function set_top_list_enabled($top_list_enabled)
+	{
+		$this->top_list_enabled = $top_list_enabled;
+	}
+	
+	public function top_list_enabled()
+	{
+		return $this->top_list_enabled;
+	}
+
 	public function set_creation_date(Date $creation_date)
 	{
 		$this->creation_date = $creation_date;
@@ -185,6 +197,11 @@ class News
 		return $this->author_user_id;
 	}
 	
+	public function get_author_user()
+	{
+		return $this->author_user;
+	}
+	
 	public function set_picture(Url $picture)
 	{
 		$this->picture_url = $picture;
@@ -193,6 +210,12 @@ class News
 	public function get_picture()
 	{
 		return $this->picture_url;
+	}
+	
+	public function has_picture()
+	{
+		$picture = $this->picture_url->absolute();
+		return !empty($picture);
 	}
 	
 	public function add_source($source)
@@ -227,6 +250,7 @@ class News
 			'approbation_type' => $this->get_approbation_type(),
 			'start_date' => $this->get_start_date() !== null ? $this->get_start_date()->get_timestamp() : '',
 			'end_date' => $this->get_end_date() !== null ? $this->get_end_date()->get_timestamp() : '',
+			'top_list_enabled' => (int)$this->top_list_enabled(),
 			'creation_date' => $this->get_creation_date()->get_timestamp(),
 			'author_user_id' => $this->get_author_user_id(),
 			'picture_url' => $this->get_picture()->absolute(),
@@ -246,10 +270,15 @@ class News
 		$this->set_start_date(!empty($properties['start_date']) ? new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, $properties['start_date']) : new Date());
 		$this->set_end_date(!empty($properties['end_date']) ? new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, $properties['end_date']) : new Date());
 		$this->end_date_enabled = !empty($properties['end_date']);
+		$this->set_top_list_enabled((bool)$properties['top_list_enabled']);
 		$this->set_creation_date(new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, $properties['creation_date']));
 		$this->set_author_user_id($properties['author_user_id']);
 		$this->set_picture(new Url($properties['picture_url']));
 		$this->set_sources(!empty($properties['sources']) ? unserialize($properties['sources']) : array());
+		
+		$user = new User();
+		$user->set_properties($properties);
+		$this->author_user = $user;
 	}
 	
 	public function init_default_properties()

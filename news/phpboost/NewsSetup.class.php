@@ -87,6 +87,7 @@ class NewsSetup extends DefaultModuleSetup
 			'approbation_type' => array('type' => 'boolean', 'notnull' => 1, 'notnull' => 1, 'default' => 0),
 			'start_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'end_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
+			'top_list_enabled' => array('type' => 'boolean', 'notnull' => 1, 'notnull' => 1, 'default' => 0),
 			'picture_url' => array('type' => 'string', 'length' => 255, 'notnull' => 1),
 			'author_user_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'sources' => array('type' => 'text', 'length' => 65000),
@@ -166,6 +167,7 @@ class NewsSetup extends DefaultModuleSetup
 			'approbation_type' => News::APPROVAL_NOW,
 			'start_date' => 0,
 			'end_date' => 0,
+			'top_list_enabled' => 0,
 			'picture_url' => '',
 			'author_user_id' => 1,
 			'sources' => serialize(array())

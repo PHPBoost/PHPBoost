@@ -165,6 +165,8 @@ class NewsFormController extends ModuleController
 			))));
 			
 			$publication_fieldset->add_field(new FormFieldDateTime('end_date', $this->lang['news.form.date.end'], $this->get_news()->get_end_date(), array('hidden' => !$this->get_news()->end_date_enabled())));
+		
+			$publication_fieldset->add_field(new FormFieldCheckbox('top_list', $this->lang['news.form.top_list'], $this->get_news()->top_list_enabled()));
 		}
 		
 		$this->build_contribution_fieldset($form);
@@ -264,7 +266,7 @@ class NewsFormController extends ModuleController
 			$news->set_creation_date($this->form->get_value('creation_date'));
 			$rewrited_name = $this->form->get_value('personalize_rewrited_name') ? $this->form->get_value('rewrited_name') : Url::encode_rewrite($news->get_name());
 			$news->set_rewrited_name($rewrited_name);
-			
+			$news->set_top_list_enabled($this->form->get_value('top_list'));
 			$news->set_approbation_type($this->form->get_value('approbation_type')->get_raw_value());
 			if ($news->get_approbation_type() == News::APPROVAL_DATE)
 			{

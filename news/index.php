@@ -49,9 +49,9 @@ $url_controller_mappers = array(
 	
 	new UrlControllerMapper('NewsDisplayNewsController', '`^/([0-9]+)-([a-z0-9-_]+)/([0-9]+)-([a-z0-9-_]+)/?$`', array('id_category', 'rewrited_name_category', 'id', 'rewrited_name')),
 	
-	new UrlControllerMapper('NewsDisplayCategoryController', '`^/([0-9]+)-([a-z0-9-_]+)?/?$`', array('id', 'rewrited_name')),
+	new UrlControllerMapper('NewsDisplayCategoryController', '`^(?:/([0-9]+)-([a-z0-9-_]+))?/?([0-9]+)?/?$`', array('id', 'rewrited_name', 'page')),
 	
-	new UrlControllerMapper('AjaxTagsAutoCompleteController','`^/ajax/tag/?$`')
+	new UrlControllerMapper('NewsAjaxTagsAutoCompleteController','`^/ajax/tag/?$`')
 	
 	
 );

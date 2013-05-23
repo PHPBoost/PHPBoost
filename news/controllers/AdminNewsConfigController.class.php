@@ -124,15 +124,6 @@ class AdminNewsConfigController extends AdminModuleController
 		$auth_settings->build_from_auth_array($this->config->get_authorizations());
 		$fieldset_authorizations->add_field($auth_setter);
 		
-		$edito_fieldset = new FormFieldsetHTML('edito', $this->lang['admin.config.edito']);
-		$form->add_fieldset($edito_fieldset);
-		
-		$edito_fieldset->add_field(new FormFieldCheckbox('edito_enabled', $this->lang['admin.config.edito.enabled'], $this->config->get_edito_enabled()));
-		
-		$edito_fieldset->add_field(new FormFieldTextEditor('edito_title', $this->lang['admin.config.edito.title'], $this->config->get_edito_title()));
-		
-		$edito_fieldset->add_field(new FormFieldRichTextEditor('edito_contents', $this->lang['admin.config.edito.contents'], $this->config->get_edito_contents()));
-		
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_button($this->submit_button);
 		$form->add_button(new FormButtonReset());
@@ -150,9 +141,6 @@ class AdminNewsConfigController extends AdminModuleController
 		$this->config->set_news_suggestions_enabled($this->form->get_value('news_suggestions_enabled'));
 		$this->config->set_display_type($this->form->get_value('display_type')->get_raw_value());
 		$this->config->set_authorizations($this->form->get_value('authorizations')->build_auth_array());
-		$this->config->set_edito_enabled($this->form->get_value('edito_enabled'));
-		$this->config->set_edito_title($this->form->get_value('edito_title'));
-		$this->config->set_edito_contents($this->form->get_value('edito_contents'));
 		NewsConfig::save();
 		NewsService::get_categories_manager()->regenerate_cache();
 	}
