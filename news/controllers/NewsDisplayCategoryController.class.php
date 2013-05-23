@@ -53,19 +53,91 @@ class NewsDisplayCategoryController extends ModuleController
 	}
 		
 	private function build_view()
-	{
-		$now = new Date(DATE_NOW, TIMEZONE_AUTO);
+	{	
+		$number_columns_display_news = NewsConfig::load()->get_number_columns_display_news();
 		
-		$result = PersistenceContext::get_querier()->select('SELECT news.*, member.level, member.user_groups
+		$now = new Date(DATE_NOW, TIMEZONE_AUTO);
+		$result = PersistenceContext::get_querier()->select('SELECT news.*, member.*, com.number_comments
 		FROM '. NewsSetup::$news_table .' news
 		LEFT JOIN '. DB_TABLE_MEMBER .' member ON member.user_id = news.author_user_id
-		WHERE news.approbation_type = 1 OR (news.approbation_type = 2 AND news.start_date < :timestamp_now AND (news.end_date > :timestamp_now) OR news.end_date = 0)', array(
-			'timestamp_now' => $now->get_timestamp()));
+		LEFT JOIN ' . DB_TABLE_COMMENTS_TOPIC . ' com ON com.id_in_module = news.id AND com.module_id = \'news\'
+		WHERE (news.approbation_type = 1 OR (news.approbation_type = 2 AND news.start_date < :timestamp_now AND (news.end_date > :timestamp_now) OR news.end_date = 0)) AND news.id_category IN :authorized_categories', array(
+			'timestamp_now' => $now->get_timestamp(),
+			'authorized_categories' => $this->get_authorized_categories()));
 
+		$i = 0;
 		while ($row = $result->fetch())
 		{
-
+			if ($number_columns_display_news > 1)
+			{
+				$new_row = (($i % $number_columns_display_news) == 0 && $i > 0);
+				$i++;
+			}
+			else
+				$new_row = false;
+				
+			$news = new News();
+			$news->set_properties($row);
+			$category = NewsService::get_categories_manager()->get_categories_cache()->get_category($news->get_id_cat());
+			
+			$this->tpl->assign_block_vars('news', array(
+				'C_NEWS_ROW' => $new_row,
+				'C_EDIT' =>  NewsAuthorizationsService::check_authorizations($row['id_category'])->moderation() || NewsAuthorizationsService::check_authorizations($row['id_category'])->write() && $news->get_author_user_id() == AppContext::get_current_user()->get_id(),
+				'C_DELETE' =>  NewsAuthorizationsService::check_authorizations($row['id_category'])->moderation(),
+				'C_IMG' => $news->has_picture(),
+			
+				'ID' => $news->get_id(),
+				'COM' => CommentsService::get_number_and_lang_comments('news', $row['id']),
+				'NUMBER_COM' => !empty($row['number_comments']) ? $row['number_comments'] : 0,
+				'NAME' => $news->get_name(),
+				'CONTENTS' => FormatingHelper::second_parse($news->get_contents()),
+				'IMG' => FormatingHelper::second_parse_url($news->get_picture()->rel()),
+			
+				'PSEUDO' => $news->get_author_user()->get_pseudo(),
+				'DATE' => $news->get_creation_date()->format(DATE_FORMAT_SHORT, TIMEZONE_AUTO),
+				
+				'U_LINK' => NewsUrlBuilder::display_news($category->get_id(), $category->get_rewrited_name(), $news->get_id(), $news->get_rewrited_name())->rel(),
+				'U_EDIT' => NewsUrlBuilder::edit_news($news->get_id())->rel(),
+				'U_DELETE' => NewsUrlBuilder::delete_news($news->get_id())->rel(),
+				'U_AUTHOR_PROFILE' => UserUrlBuilder::profile($news->get_author_user_id())->absolute(),
+				'U_SYNDICATION' => SyndicationUrlBuilder::rss('news', $news->get_id_cat())->rel(),
+			));
 		}
+		
+		$this->tpl->put_all(array(
+			'C_ADD' => NewsAuthorizationsService::check_authorizations($this->get_category()->get_id())->write(),
+		
+			'L_ADD' => $this->lang['news.add'],
+		
+			'U_ADD' => NewsUrlBuilder::add_news()->rel(),
+		));
+		
+		if ($number_columns_display_news > 1)
+		{
+			$column_width = floor(100 / $number_columns_display_news);
+			$this->tpl->put_all(array(
+				'C_NEWS_BLOCK_COLUMN' => true,
+				'COLUMN_WIDTH' => $column_width
+			));
+		}
+	}
+	
+	private function get_authorized_categories()
+	{
+		$category = $this->get_category();
+		$authorized_categories = array();
+		if ($category->get_id() !== Category::ROOT_CATEGORY)
+		{
+			$authorized_categories[] = $category->get_id();
+		}
+		else
+		{
+			$search_category_children_options = new SearchCategoryChildrensOptions();
+			$search_category_children_options->add_authorizations_bits(Category::READ_AUTHORIZATIONS);
+			$categories = NewsService::get_categories_manager()->get_childrens($category->get_id(), $search_category_children_options);
+			$authorized_categories = array_keys($categories);
+		}
+		return $authorized_categories;
 	}
 	
 	private function get_category()
@@ -96,7 +168,15 @@ class NewsDisplayCategoryController extends ModuleController
 	
 	private function check_authorizations()
 	{
-		
+		$id_cat = $this->get_category()->get_id();
+		if ($id_cat !== Category::ROOT_CATEGORY)
+		{
+			if (!NewsAuthorizationsService::check_authorizations($id_cat)->read())
+			{
+				$error_controller = PHPBoostErrors::user_not_authorized();
+		   		DispatchManager::redirect($error_controller);
+			}
+		}
 	}
 	
 	private function generate_response()

@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                          AjaxTagsAutoCompleteController.class.php
+ *                          NewsAjaxTagsAutoCompleteController.class.php
  *                            -------------------
  *   begin                : November 15, 2012
  *   copyright            : (C) 2012 Kevin MASSY
@@ -27,7 +27,7 @@
 /**
  * @author Kevin MASSY <kevin.massy@phpboost.com>
  */
-class AjaxTagsAutoCompleteController extends AbstractController
+class NewsAjaxTagsAutoCompleteController extends AbstractController
 {
 	public function execute(HTTPRequestCustom $request)
 	{
