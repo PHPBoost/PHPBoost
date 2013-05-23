@@ -100,8 +100,11 @@ class User
 		return $this->level == self::ADMIN_LEVEL;
 	}
 
-	public function set_groups(Array $groups)
+	public function set_groups($groups)
 	{
+		if (!is_array($groups))
+			$groups = explode('|', $groups);
+		
 		$this->groups = $groups;
 	}
 	
@@ -266,6 +269,27 @@ class User
 				return '';
 			}
 		}
+	}
+	
+	public function set_properties(array $properties)
+	{
+		$this->set_id($properties['user_id']);
+		$this->set_level($properties['level']);
+		
+		$this->set_email($properties['user_mail']);
+		$this->set_show_email($properties['user_show_mail']);
+		$this->set_approbation($properties['user_aprob']);
+		$this->set_locale($properties['user_lang']);
+		$this->set_theme($properties['user_theme']);
+		$this->set_timezone($properties['user_timezone']);
+		$this->set_editor($properties['user_editor']);
+		
+		$this->set_delay_banned($properties['user_ban']);
+		$this->set_delay_readonly($properties['user_readonly']);
+		$this->set_warning_percentage($properties['user_warning']);
+		
+		$this->set_pseudo($properties['login']);
+		$this->set_groups($properties['user_groups']);
 	}
 }
 ?>
