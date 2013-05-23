@@ -59,11 +59,11 @@ class MemberUserBornExtendedField extends AbstractMemberExtendedField
 	{
 		$fieldset = $member_extended_field->get_fieldset();
 		
-		$date = new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, $member_extended_field->get_value());
-		$value = $date->format(DATE_FORMAT_MEDIUM);
+		$value = $member_extended_field->get_value();
 		if (!empty($value))
 		{
-			$fieldset->add_field(new FormFieldFree($member_extended_field->get_field_name(), $member_extended_field->get_name(), $value));
+			$date = new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, $value);
+			$fieldset->add_field(new FormFieldFree($member_extended_field->get_field_name(), $member_extended_field->get_name(), $date->format(DATE_FORMAT_MEDIUM)));
 		}
 	}
 	
