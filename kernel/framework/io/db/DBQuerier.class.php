@@ -178,7 +178,7 @@ class DBQuerier implements SQLQuerier
 	 */
 	public function select_single_row_query($query, $parameters = array())
 	{
-		$query_result = self::select($query, $parameters, SelectQueryResult::FETCH_NUM);
+		$query_result = self::select($query, $parameters, SelectQueryResult::FETCH_ASSOC);
 		
 		$query_result->rewind();
 		if (!$query_result->valid())
@@ -186,7 +186,12 @@ class DBQuerier implements SQLQuerier
 			throw new RowNotFoundException();
 		}
 		$result = $query_result->current();
-		return $result[0];
+		$query_result->next();
+		if ($query_result->valid())
+		{
+			throw new NotASingleRowFoundException($query_result);
+		}
+		return $result;
 	}
 	
 	/**

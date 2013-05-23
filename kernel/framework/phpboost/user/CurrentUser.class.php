@@ -54,7 +54,12 @@ class CurrentUser extends User
 		
 		$this->login = $this->user_data['login'];
 		$this->pseudo = $this->user_data['login'];
-		$this->build_groups();
+
+		$groups = explode('|', $this->user_data['user_groups']);
+		array_unshift($groups, 'r' . $this->level);
+		$this->set_groups($groups);
+		
+		$this->build_groups_auth();
 	}
 	
 	public function get_login()
@@ -197,7 +202,7 @@ class CurrentUser extends User
 		}
 	}
 	
-	private function build_groups()
+	private function build_groups_auth()
 	{
 		$groups_auth = array();
 		foreach (GroupsService::get_groups() as $idgroup => $array_info)
@@ -205,9 +210,6 @@ class CurrentUser extends User
 			$groups_auth[$idgroup] = $array_info['auth'];
 		}
 		$this->groups_auth = $groups_auth;
-
-		$this->groups = explode('|', $this->user_data['user_groups']);
-		array_unshift($this->groups, 'r' . $this->level);
 	}
 	
 	private function sum_auth_groups($array_auth_groups)
