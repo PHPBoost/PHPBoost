@@ -81,7 +81,7 @@ class DownloadSitemapExtensionPoint implements SitemapExtensionPoint
 	{
 		global $DOWNLOAD_CATS, $LANG, $User, $CONFIG_DOWNLOAD;
 		
-		$this_category = new SitemapLink($DOWNLOAD_CATS[$id_cat]['name'], new Url('/download/download' . url('.php?cat='.$id_cat, '-' . $id_cat . '+' . Url::encode_rewrite($DOWNLOAD_CATS[$id_cat]['name']) . '.php')));
+		$this_category = new SitemapLink($DOWNLOAD_CATS[$id_cat]['name'], new Url('/download/' . url('download.php?cat='.$id_cat, 'category-' . $id_cat . '+' . Url::encode_rewrite($DOWNLOAD_CATS[$id_cat]['name']) . '.php')));
 
 		$category = new SitemapSection($this_category);
 		
