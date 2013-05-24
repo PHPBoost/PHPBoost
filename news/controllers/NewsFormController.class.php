@@ -327,8 +327,6 @@ class NewsFormController extends ModuleController
 					)
 				);
 				ContributionService::save_contribution($contribution);
-
-				AppContext::get_response()->redirect(UserUrlBuilder::contribution_success()->absolute());
 			}
 		}
 		else
@@ -373,7 +371,18 @@ class NewsFormController extends ModuleController
 		$news = $this->get_news();
 		$category = NewsService::get_categories_manager()->get_categories_cache()->get_category($news->get_id_cat());
 
-		AppContext::get_response()->redirect(NewsUrlBuilder::display_news($category->get_id(), $category->get_rewrited_name(), $news->get_id(), $news->get_rewrited_name()));
+		if ($this->is_contributor_member() && !$news->is_visible())
+		{
+			AppContext::get_response()->redirect(UserUrlBuilder::contribution_success()->absolute());
+		}
+		elseif ($news->is_visible())
+		{
+			AppContext::get_response()->redirect(NewsUrlBuilder::display_news($category->get_id(), $category->get_rewrited_name(), $news->get_id(), $news->get_rewrited_name()));
+		}
+		else
+		{
+			AppContext::get_response()->redirect(NewsUrlBuilder::home());
+		}
 	}
 	
 	private function generate_response(View $tpl)
