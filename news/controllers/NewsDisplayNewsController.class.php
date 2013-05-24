@@ -91,7 +91,10 @@ class NewsDisplayNewsController extends ModuleController
 			'ID' => $news->get_id(),
 			'NAME' => $news->get_name(),
 			'CONTENTS' => FormatingHelper::second_parse($news->get_contents()),
+		
+			'PSEUDO' => $news->get_author_user()->get_pseudo(),
 			'DATE' => $news->get_creation_date()->format(DATE_FORMAT_SHORT, TIMEZONE_AUTO),
+		
 				
 			'U_SYNDICATION' => NewsUrlBuilder::category_syndication($news->get_id_cat())->rel(),
 			'U_COMMENTS' => NewsUrlBuilder::display_comments_news($category->get_id(), $category->get_rewrited_name(), $news->get_id(), $news->get_rewrited_name())->rel(),

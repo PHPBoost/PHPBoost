@@ -94,7 +94,7 @@
     		<div class="module_bottom_l"></div>
 			<div class="module_bottom_r"></div>
 			<div class="module_bottom">
-				<div style="float:left"># IF news.PSEUDO #<a class="small_link {news.LEVEL}" href="{news.U_AUTHOR_PROFILE}">{news.PSEUDO}</a>, # ENDIF # # IF news.C_DATE # {news.DATE} # ENDIF #</div>
+				<div style="float:left"># IF news.PSEUDO #<a class="small_link {news.LEVEL}" href="{news.U_AUTHOR_PROFILE}">{news.PSEUDO}</a>, # ENDIF # {news.DATE}</div>
 				<div class="spacer"></div>
     		</div>
 		</div>

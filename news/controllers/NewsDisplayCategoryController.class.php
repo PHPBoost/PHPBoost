@@ -49,7 +49,7 @@ class NewsDisplayCategoryController extends ModuleController
 	private function init()
 	{
 		$this->lang = LangLoader::get('common', 'news');
-		$this->tpl = new FileTemplate('news/NewsDisplayCategoryController.tpl');
+		$this->tpl = new FileTemplate('news/NewsDisplaySeveralNewsController.tpl');
 	}
 		
 	private function build_view()
@@ -61,7 +61,8 @@ class NewsDisplayCategoryController extends ModuleController
 		FROM '. NewsSetup::$news_table .' news
 		LEFT JOIN '. DB_TABLE_MEMBER .' member ON member.user_id = news.author_user_id
 		LEFT JOIN ' . DB_TABLE_COMMENTS_TOPIC . ' com ON com.id_in_module = news.id AND com.module_id = \'news\'
-		WHERE (news.approbation_type = 1 OR (news.approbation_type = 2 AND news.start_date < :timestamp_now AND (news.end_date > :timestamp_now) OR news.end_date = 0)) AND news.id_category IN :authorized_categories', array(
+		WHERE (news.approbation_type = 1 OR (news.approbation_type = 2 AND news.start_date < :timestamp_now AND (news.end_date > :timestamp_now) OR news.end_date = 0)) AND news.id_category IN :authorized_categories
+		ORDER BY top_list_enabled DESC, news.creation_date DESC', array(
 			'timestamp_now' => $now->get_timestamp(),
 			'authorized_categories' => $this->get_authorized_categories()));
 
