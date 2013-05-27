@@ -41,11 +41,11 @@ class ArticlesPagination
 		$this->pagination = new Pagination($this->get_number_pages($number_elements), $this->current_page);
 	}
 	
-	public function set_url($id_category, $rewrited_name_category, $id_article = '', $rewrited_title = '')
+	public function set_url($id_category, $rewrited_name_category, $id_article = '', $rewrited_title = '', $field = '', $sort = '')
 	{
 		if ($id_article == '')
 		{
-			$this->pagination->set_url_sprintf_pattern(ArticlesUrlBuilder::display_category($id_category, $rewrited_name_category)->absolute());
+			$this->pagination->set_url_sprintf_pattern(ArticlesUrlBuilder::display_category($id_category, $rewrited_name_category)->absolute() . $field . '/' . $sort . '/%d');
 		}
 		else
 		{

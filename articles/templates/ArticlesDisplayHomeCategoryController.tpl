@@ -34,7 +34,7 @@
 	<div class="module_top_r"></div>
 	<div class="module_top">
 		<div class="module_top_title">
-			<a href="{PATH_TO_ROOT}/syndication/?url=/rss/articles/{IDCAT}" title="Rss" class="img_link">
+			<a href="{U_SYNDICATION}" title="Rss" class="img_link">
 				<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/rss.png" alt="Rss" title="Rss" />
 			</a>
 			{L_MODULE_NAME}
@@ -76,14 +76,16 @@
 				<div style="float:left;width:70%">
 					<p style="margin-bottom:10px">
 						<a href="{articles.U_ARTICLE_LINK}" class="big_link">{articles.TITLE}</a>
-						# IF C_MODERATE #
+							# IF articles.C_EDIT #
 							<a href="{articles.U_EDIT_ARTICLE}">
 								<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="" />
 							</a>
+							# ENDIF #
+							# IF articles.C_DELETE #
 							<a href="{articles.U_DELETE_ARTICLE}" onclick="return Confirm_del_article();">
 								<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="" />
 							</a>
-						# ENDIF #
+							# ENDIF #
 					</p>
 					<p style="margin-bottom:10px">
 						{articles.DESCRIPTION}
@@ -93,9 +95,9 @@
 						<br />
 						{L_VIEW} : {articles.NUMBER_VIEW}
 						<br />
-						{L_COM} : <a href="../articles/articles{U_ARTICLE_LINK_COM}">{articles.L_NUMBER_COM} </a>
+						{L_COM} : <a href="{articles.U_ARTICLE_LINK_COM}">{articles.L_NUMBER_COM} </a>
 						<br />
-						{L_NOTE} {articles.NOTE}
+						{L_NOTE} : {articles.NOTE}
 						<br />
 					{L_WRITTEN} : {articles.U_AUTHOR}
 					</div>
