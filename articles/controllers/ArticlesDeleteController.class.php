@@ -34,7 +34,7 @@ class ArticlesDeleteController extends ModuleController
 	{
 		$article = $this->get_article();
 		
-		if (!(NewsAuthorizationsService::check_authorizations($article->get_id_cat())->moderation() || (NewsAuthorizationsService::check_authorizations($article->get_id_category())->write() && $article->get_user_id() == AppContext::get_current_user()->get_id())))
+		if (!ArticlesAuthorizationsService::check_authorizations($article->get_id_cat())->moderation())
 		{
 			$error_controller = PHPBoostErrors::user_not_authorized();
 			DispatchManager::redirect($error_controller);

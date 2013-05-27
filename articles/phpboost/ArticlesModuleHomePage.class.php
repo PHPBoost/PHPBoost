@@ -31,10 +31,11 @@ class ArticlesModuleHomePage implements ModuleHomePage
 	private $view;
 	private $form;
 	private $auth_read;
-	private $add_auth;
-	private $edit_auth;
+	private $auth_add;
 	private $auth_moderation;
+	private $auth_write;
 	private $category;
+	private $search_category_children_options;
 	
 	public static function get_view()
 	{
@@ -80,19 +81,15 @@ class ArticlesModuleHomePage implements ModuleHomePage
 		
 		$request = AppContext::get_request();
 		
-		$search_category_children_options = new SearchCategoryChildrensOptions();
-		$search_category_children_options->get_authorizations_bits(Category::READ_AUTHORIZATIONS);
-		$search_category_children_options->set_enable_recursive_exploration(false);
-		$categories = ArticlesService::get_categories_manager()->get_childrens($this->category->get_id(), $search_category_children_options);
-		$ids_categories = array_keys($categories);
+		$authorized_categories = $this->get_authorized_categories();
 		
-		$authorized_cats_sql = !empty($ids_categories) ? 'AND ac.id IN (' . implode(', ', $ids_categories) . ')' : '';
+		$authorized_cats_sql = !empty($authorized_categories) ? 'AND ac.id IN (' . implode(', ', $authorized_categories) . ')' : '';
 		
 		$now = new Date(DATE_NOW, TIMEZONE_AUTO);
 		
 		$current_page_cat = ($request->get_getint('page',1) > 0) ? $request->get_getint('page',1) : 1;
 		
-		$nbr_categories = count($categories);
+		$nbr_categories = count($authorized_categories);
 		
 		$nbr_categories_per_page = ArticlesConfig::load()->get_number_categories_per_page();
 		
@@ -111,7 +108,7 @@ class ArticlesModuleHomePage implements ModuleHomePage
 		$number_articles_not_published = PersistenceContext::get_querier()->count(ArticlesSetup::$articles_table, 'WHERE published = 0');
 		
 		$this->view->put_all(array(
-			'C_ADD' => $this->add_auth,
+			'C_ADD' => $this->auth_add,
 			'C_MODERATE' => $this->auth_moderation,
 			'C_PENDING_ARTICLES' => $number_articles_not_published > 0 && $this->auth_moderation,
 			'ID_CAT' => ArticlesService::get_categories_manager()->get_categories_cache()->get_category($this->category->get_id()),
@@ -131,7 +128,8 @@ class ArticlesModuleHomePage implements ModuleHomePage
 			'U_EDIT_CONFIG' => ArticlesUrlBuilder::articles_configuration()->absolute(),
 			'U_MANAGE_CATEGORIES' => ArticlesUrlBuilder::manage_categories()->absolute(),
 			'U_PENDING_ARTICLES' => ArticlesUrlBuilder::display_pending_articles()->absolute(), 
-			'U_ADD_ARTICLES' => ArticlesUrlBuilder::add_article()->absolute()
+			'U_ADD_ARTICLES' => ArticlesUrlBuilder::add_article()->absolute(),
+			'U_SYNDICATION' => ArticlesUrlBuilder::category_syndication($this->category->get_id())->rel()
 		));
 
 		$limit_page = $pagination_cat->get_display_from();
@@ -152,7 +150,7 @@ class ArticlesModuleHomePage implements ModuleHomePage
 		//Sub-cats and their children display
 		while ($row = $result->fetch())
 		{
-			$children_cat = ArticlesService::get_categories_manager()->get_childrens($row['id'], $search_category_children_options);
+			$children_cat = ArticlesService::get_categories_manager()->get_childrens($row['id'], $this->search_category_children_options);
 			$children_cat_links = '';
 			$nbr_children_cat = count($children_cat);
 			
@@ -245,12 +243,12 @@ class ArticlesModuleHomePage implements ModuleHomePage
 			AND articles.publishing_end_date = 0) OR articles.publishing_end_date > :timestamp_now)) 
 			ORDER BY ' .$sort_field . ' ' . $sort_mode . ' LIMIT ' . $nbr_articles_per_page . ' OFFSET ' .$limit_page, 
 				array(
-				'id_category' => $this->category->get_id(),
-				'timestamp_now' => $now->get_timestamp()
+					'id_category' => $this->category->get_id(),
+					'timestamp_now' => $now->get_timestamp()
 				    ), SelectQueryResult::FETCH_ASSOC
 			    );
 			
-			$pagination->set_url($this->category->get_id(), $this->category->get_rewrited_name());
+			$pagination->set_url($this->category->get_id(), $this->category->get_rewrited_name(), $sort_field, $sort_mode);
 
 			$this->build_form($field, $mode);
 
@@ -270,16 +268,18 @@ class ArticlesModuleHomePage implements ModuleHomePage
 				$notation->set_id_in_module($row['id']);
 
 				$group_color = User::get_group_color($row['user_groups'], $row['level']);
-
+				
 				$this->view->assign_block_vars('articles', array(
+					'C_EDIT' => $this->auth_moderation || $this->auth_write && $row['author_user_id'] == AppContext::get_current_user()->get_id(),
+					'C_DELETE' => $this->auth_moderation,
 					'TITLE' => $row['title'],
 					'PICTURE' => $row['picture_url'],// @todo : link
 					'DATE' => gmdate_format('date_format_short', $row['date_created']),
-					'NUMBER_VIEW' => $row['number_view'],
+					'NUMBER_VIEW' => empty($row['number_view']) ? '0' : $row['number_view'],
 					'L_NUMBER_COM' => empty($row['number_comments']) ? '0' : $row['number_comments'],
 					'NOTE' => $row['number_notes'] > 0 ? NotationService::display_static_image($notation, $row['average_notes']) : $this->lang['articles.no_notes'],
 					'DESCRIPTION' =>FormatingHelper::second_parse($row['description']),                                    
-					'U_ARTICLE_LINK_COM' => ArticlesUrlBuilder::home()->absolute() . $row['id'] . '-' . $row['rewrited_title'] . '/comments/',
+					'U_ARTICLE_LINK_COM' => ArticlesUrlBuilder::display_comments_article($this->category->get_id(), $this->category->get_rewrited_name(), $row['id'], $row['rewrited_title'])->absolute(),
 					'U_AUTHOR' => '<a href="' . UserUrlBuilder::profile($row['author_user_id'])->absolute() . '" class="' . UserService::get_level_class($row['level']) . '"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . TextHelper::wordwrap_html($row['login'], 19) . '</a>',
 					'U_ARTICLE_LINK' => ArticlesUrlBuilder::display_article($this->category->get_id(), $this->category->get_rewrited_name(), $row['id'], $row['rewrited_title'])->absolute(),
 					'U_EDIT_ARTICLE' => ArticlesUrlBuilder::edit_article($row['id'])->absolute(),
@@ -326,13 +326,24 @@ class ArticlesModuleHomePage implements ModuleHomePage
 		return $this->category;
 	}
 	
+	private function get_authorized_categories()
+	{
+		$this->search_category_children_options = new SearchCategoryChildrensOptions();
+		$this->search_category_children_options->get_authorizations_bits(Category::READ_AUTHORIZATIONS);
+		$this->search_category_children_options->set_enable_recursive_exploration(false);
+		$authorized_categories = ArticlesService::get_categories_manager()->get_childrens($this->category->get_id(), $this->search_category_children_options);
+		$ids_categories = array_keys($authorized_categories);
+		
+		return $ids_categories;
+	}
+	
 	private function check_authorizations()
 	{
 		$category = $this->get_category();
 		
 		$this->auth_read = ArticlesAuthorizationsService::check_authorizations($category->get_id())->read();
-		$this->add_auth = ArticlesAuthorizationsService::check_authorizations($category->get_id())->write() || ArticlesAuthorizationsService::check_authorizations($category->get_id())->contribution();
-		$this->edit_auth = ArticlesAuthorizationsService::check_authorizations($category->get_id())->write() || ArticlesAuthorizationsService::check_authorizations($category->get_id())->moderation();
+		$this->auth_write = ArticlesAuthorizationsService::check_authorizations($category->get_id())->write();
+		$this->auth_add = ArticlesAuthorizationsService::check_authorizations($category->get_id())->write() || ArticlesAuthorizationsService::check_authorizations($category->get_id())->contribution();
 		$this->auth_moderation = ArticlesAuthorizationsService::check_authorizations($category->get_id())->moderation();
 		
 		if (!($this->auth_read))

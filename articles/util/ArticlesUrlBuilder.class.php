@@ -37,6 +37,10 @@ class ArticlesUrlBuilder
 		return DispatchManager::get_url(self::$dispatcher, '/admin/categories/');
 	}
 	
+	public static function category_syndication($id)
+	{
+		return SyndicationUrlBuilder::rss('articles', $id);
+	}
 	public static function add_category()
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/admin/categories/add/');
@@ -87,6 +91,10 @@ class ArticlesUrlBuilder
 		return DispatchManager::get_url(self::$dispatcher, '/' . $id_category . '-' . $rewrited_name_category . '/' . $id_article . '-' .$rewrited_title . '/');
 	}
 	
+	public static function display_comments_article($id_category, $rewrited_name_category, $id_article, $rewrited_title)
+	{
+		return DispatchManager::get_url(self::$dispatcher, '/' . $id_category . '-' . $rewrited_name_category . '/' . $id_article . '-' . $rewrited_title . '/comments/');
+	}
 	public static function display_pending_articles()
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/pending/');
