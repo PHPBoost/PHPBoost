@@ -2,7 +2,7 @@
 <!--
 	function Confirm()
 	{
-		return confirm("{L_ALERT_DELETE_NEWS}");
+		return confirm("${i18n('news.message.delete')}");
 	}
 -->
 </script>
@@ -34,16 +34,11 @@
 				{L_LAST_NEWS}
 			</div>
         	<div class="module_top_com">
-				# IF C_ADMIN #
-				<a href="{U_ADMIN}" title="{L_ADMIN}" class="img_link">
-					<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="{L_ADMIN}" />
-				</a>
-				# ENDIF #
 			</div>
 			<div class="spacer"></div>
     	</div>
     	<div class="module_contents" style="text-align:center;">
-        	{L_NO_NEWS_AVAILABLE}
+        	${i18n('news.message.no_items')}
     	</div>
     	<div class="module_bottom_l"></div>
 		<div class="module_bottom_r"></div>
@@ -81,7 +76,7 @@
 				<div class="spacer"></div>
     		</div>
     		<div class="module_contents">
-        		# IF news.C_IMG #<img src="{news.IMG}" alt="{news.NAME}" title="{news.NAME}" class="img_right" /># ENDIF #
+        		# IF news.C_PICTURE #<img src="{news.U_PICTURE}" alt="{news.NAME}" title="{news.NAME}" class="img_right" /># ENDIF #
 				{news.CONTENTS}
 				
 				# IF news.C_EXTEND_CONTENTS #
@@ -94,7 +89,7 @@
     		<div class="module_bottom_l"></div>
 			<div class="module_bottom_r"></div>
 			<div class="module_bottom">
-				<div style="float:left"># IF news.PSEUDO #<a class="small_link {news.LEVEL}" href="{news.U_AUTHOR_PROFILE}">{news.PSEUDO}</a>, # ENDIF # {news.DATE}</div>
+				<div style="float:left"># IF news.PSEUDO #<a href="{news.U_AUTHOR_PROFILE}" class="small_link {news.USER_LEVEL_CLASS}" # IF news.C_USER_GROUP_COLOR # style="color:{news.USER_GROUP_COLOR}" # ENDIF #>{news.PSEUDO}</a>, # ENDIF # {news.DATE}</div>
 				<div class="spacer"></div>
     		</div>
 		</div>
