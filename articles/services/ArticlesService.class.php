@@ -56,7 +56,9 @@ class ArticlesService
 	
 	public static function get_article($condition, array $parameters)
 	{
-		$row = self::$db_querier->select_single_row(ArticlesSetup::$articles_table, array('*'), $condition, $parameters);
+		$row = self::$db_querier->select_single_row_query('SELECT articles.*, member.* FROM ' 
+		. ArticlesSetup::$articles_table . ' articles LEFT JOIN '
+		. DB_TABLE_MEMBER . ' member ON member.user_id = articles.author_user_id ' . $condition, $parameters);
 		$article = new Articles();
 		$article->set_properties($row);
 		return $article;
