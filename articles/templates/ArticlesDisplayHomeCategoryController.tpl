@@ -75,7 +75,7 @@
 			<div class="block_contents">
 				<div style="float:left;width:70%">
 					<p style="margin-bottom:10px">
-						<a href="{articles.U_ARTICLE_LINK}" class="big_link">{articles.TITLE}</a>
+						<a href="{articles.U_ARTICLE}" class="big_link">{articles.TITLE}</a>
 							# IF articles.C_EDIT #
 							<a href="{articles.U_EDIT_ARTICLE}">
 								<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="" />
@@ -95,7 +95,7 @@
 						<br />
 						{L_VIEW} : {articles.NUMBER_VIEW}
 						<br />
-						{L_COM} : <a href="{articles.U_ARTICLE_LINK_COM}">{articles.L_NUMBER_COM} </a>
+						{L_COM} : <a href="{articles.U_COMMENTS}">{articles.L_NUMBER_COM} </a>
 						<br />
 						{L_NOTE} : {articles.NOTE}
 						<br />
@@ -104,7 +104,7 @@
 				</div>	
 				<div class="float:right;">	
 					<div style="text-align:right;margin-top:15px;">								
-						<!--<a href="../articles/articles{articles.U_ARTICLES_LINK}">
+						<!--<a href="../articles/articles{articles.U_ARTICLE}">
 							{articles.ICON}
 						</a>-->	
 					</div>

@@ -34,7 +34,7 @@ class ArticlesPagination
 	private $current_page;
 	private $number_per_page;
 	
-	public function __construct($current_page, $number_elements, $number_per_page)
+	public function __construct($current_page, $number_elements, $number_per_page = 1)
 	{
 		$this->current_page = $current_page;
 		$this->number_per_page = $number_per_page;
@@ -49,7 +49,7 @@ class ArticlesPagination
 		}
 		else
 		{
-		    $this->pagination->set_url_sprintf_pattern(ArticlesUrlBuilder::display_article($id_category, $rewrited_name_category, $id_article, $rewrited_title)->absolute());
+		    $this->pagination->set_url_sprintf_pattern(ArticlesUrlBuilder::display_article($id_category, $rewrited_name_category, $id_article, $rewrited_title)->absolute() . '/%d');
 		}
 	}
 	
