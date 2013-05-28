@@ -253,7 +253,7 @@ class News
 			'top_list_enabled' => (int)$this->top_list_enabled(),
 			'creation_date' => $this->get_creation_date()->get_timestamp(),
 			'author_user_id' => $this->get_author_user_id(),
-			'picture_url' => $this->get_picture()->absolute(),
+			'picture_url' => $this->get_picture()->relative(),
 			'sources' => serialize($this->get_sources())
 		);
 	}

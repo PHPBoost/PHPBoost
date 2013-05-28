@@ -30,6 +30,9 @@ $lang['news.add'] = 'Ajouter une news';
 $lang['news.edit'] = 'Modifier une news';
 $lang['news.pending'] = 'News en attente';
 
+$lang['news.message.delete'] = 'Voulez vous vraiment supprimer la news ?';
+$lang['news.message.no_items'] = 'Aucune news n\'est disponible pour le moment';
+
 $lang['news.form.name'] = 'Nom de la news';
 $lang['news.form.rewrited_name'] = 'Nom de votre news dans l\'url';
 $lang['news.form.rewrited_name.description'] = 'Contient uniquement des lettres minuscules, des chiffres et des traits d\'union.';

@@ -32,7 +32,7 @@ class NewsDeleteController extends ModuleController
 {	
 	public function execute(HTTPRequestCustom $request)
 	{
-		$news = $this->get_news();
+		$news = $this->get_news($request);
 		
 		if (!NewsAuthorizationsService::check_authorizations($news->get_id_cat())->moderation())
 		{
@@ -43,7 +43,7 @@ class NewsDeleteController extends ModuleController
 		NewsService::delete('WHERE id=:id', array('id' => $news->get_id()));
 		PersistenceContext::get_querier()->delete(DB_TABLE_EVENTS, 'WHERE module=:module AND id_in_module=:id', array('module' => 'news', 'id' => $news->get_id()));
 		
-		CommentsService::delete_comments_topic_module('news', $news['id']);
+		CommentsService::delete_comments_topic_module('news', $news->get_id());
 	    
 	    Feed::clear_cache('news');
 	    
@@ -52,7 +52,7 @@ class NewsDeleteController extends ModuleController
 	
 	private function get_news(HTTPRequestCustom $request)
 	{
-		$id = AppContext::get_request()->get_getint('id', 0);
+		$id = $request->get_getint('id', 0);
 	
 		if (!empty($id))
 		{

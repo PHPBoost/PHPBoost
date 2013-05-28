@@ -50,6 +50,7 @@ class NewsDisplayCategoryController extends ModuleController
 	{
 		$this->lang = LangLoader::get('common', 'news');
 		$this->tpl = new FileTemplate('news/NewsDisplaySeveralNewsController.tpl');
+		$this->tpl->add_lang($this->lang);
 	}
 		
 	private function build_view()
@@ -80,21 +81,27 @@ class NewsDisplayCategoryController extends ModuleController
 			$news = new News();
 			$news->set_properties($row);
 			$category = NewsService::get_categories_manager()->get_categories_cache()->get_category($news->get_id_cat());
+			$user = $news->get_author_user();
+			$user_group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
 			
 			$this->tpl->assign_block_vars('news', array(
 				'C_NEWS_ROW' => $new_row,
 				'C_EDIT' =>  NewsAuthorizationsService::check_authorizations($row['id_category'])->moderation() || NewsAuthorizationsService::check_authorizations($row['id_category'])->write() && $news->get_author_user_id() == AppContext::get_current_user()->get_id(),
 				'C_DELETE' =>  NewsAuthorizationsService::check_authorizations($row['id_category'])->moderation(),
-				'C_IMG' => $news->has_picture(),
+				'C_PICTURE' => $news->has_picture(),
+				'C_USER_GROUP_COLOR' => !empty($user_group_color),
 			
 				'ID' => $news->get_id(),
 				'COM' => CommentsService::get_number_and_lang_comments('news', $row['id']),
 				'NUMBER_COM' => !empty($row['number_comments']) ? $row['number_comments'] : 0,
 				'NAME' => $news->get_name(),
 				'CONTENTS' => FormatingHelper::second_parse($news->get_contents()),
-				'IMG' => FormatingHelper::second_parse_url($news->get_picture()->rel()),
+				
 			
-				'PSEUDO' => $news->get_author_user()->get_pseudo(),
+				'PSEUDO' => $user->get_pseudo(),
+				'USER_LEVEL_CLASS' => UserService::get_level_class($user->get_level()),
+				'USER_GROUP_COLOR' => $user_group_color,
+			
 				'DATE' => $news->get_creation_date()->format(DATE_FORMAT_SHORT, TIMEZONE_AUTO),
 				
 				'U_LINK' => NewsUrlBuilder::display_news($category->get_id(), $category->get_rewrited_name(), $news->get_id(), $news->get_rewrited_name())->rel(),
@@ -102,10 +109,12 @@ class NewsDisplayCategoryController extends ModuleController
 				'U_DELETE' => NewsUrlBuilder::delete_news($news->get_id())->rel(),
 				'U_AUTHOR_PROFILE' => UserUrlBuilder::profile($news->get_author_user_id())->absolute(),
 				'U_SYNDICATION' => SyndicationUrlBuilder::rss('news', $news->get_id_cat())->rel(),
+				'U_PICTURE' => $news->get_picture()->rel(),
 			));
 		}
 		
 		$this->tpl->put_all(array(
+			'C_NEWS_NO_AVAILABLE' => $result->get_rows_count() == 0,
 			'C_ADD' => NewsAuthorizationsService::check_authorizations($this->get_category()->get_id())->write(),
 		
 			'L_ADD' => $this->lang['news.add'],

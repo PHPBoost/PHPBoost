@@ -2,7 +2,7 @@
 <!--
 function Confirm()
 {
-	return confirm("{L_ALERT_DELETE_NEWS}");
+	return confirm("${i18n('news.message.delete')}");
 }
 -->
 </script>
@@ -52,7 +52,7 @@ function Confirm()
 	<div class="module_bottom_l"></div>
 	<div class="module_bottom_r"></div>
 	<div class="module_bottom">
-		<div style="float:left"># IF PSEUDO #<a class="small_link {LEVEL}" href="{U_USER_ID}">{PSEUDO}</a>, # ENDIF # {DATE}</div>
+		<div style="float:left"># IF PSEUDO #<a href="{U_AUTHOR_PROFILE}" class="small_link {USER_LEVEL_CLASS}" # IF C_USER_GROUP_COLOR # style="color:{USER_GROUP_COLOR}" # ENDIF #>{PSEUDO}</a>, # ENDIF # {DATE}</div>
 		<div class="spacer"></div>
 	</div>
 		
