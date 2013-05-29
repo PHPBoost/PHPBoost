@@ -55,17 +55,23 @@ class NewsDisplayCategoryController extends ModuleController
 		
 	private function build_view()
 	{	
-		$number_columns_display_news = NewsConfig::load()->get_number_columns_display_news();
-		
 		$now = new Date(DATE_NOW, TIMEZONE_AUTO);
+		$authorized_categories = $this->get_authorized_categories();
+		$number_columns_display_news = NewsConfig::load()->get_number_columns_display_news();
+		$pagination = $this->get_pagination($now, $authorized_categories);
+
 		$result = PersistenceContext::get_querier()->select('SELECT news.*, member.*, com.number_comments
 		FROM '. NewsSetup::$news_table .' news
 		LEFT JOIN '. DB_TABLE_MEMBER .' member ON member.user_id = news.author_user_id
 		LEFT JOIN ' . DB_TABLE_COMMENTS_TOPIC . ' com ON com.id_in_module = news.id AND com.module_id = \'news\'
 		WHERE (news.approbation_type = 1 OR (news.approbation_type = 2 AND news.start_date < :timestamp_now AND (news.end_date > :timestamp_now) OR news.end_date = 0)) AND news.id_category IN :authorized_categories
-		ORDER BY top_list_enabled DESC, news.creation_date DESC', array(
+		ORDER BY top_list_enabled DESC, news.creation_date DESC
+		LIMIT :number_items_per_page OFFSET :display_from', array(
 			'timestamp_now' => $now->get_timestamp(),
-			'authorized_categories' => $this->get_authorized_categories()));
+			'authorized_categories' => $authorized_categories,
+			'number_items_per_page' => $pagination->get_number_items_per_page(),
+			'display_from' => $pagination->get_display_from()
+		));
 
 		$i = 0;
 		while ($row = $result->fetch())
@@ -115,11 +121,13 @@ class NewsDisplayCategoryController extends ModuleController
 		
 		$this->tpl->put_all(array(
 			'C_NEWS_NO_AVAILABLE' => $result->get_rows_count() == 0,
-			'C_ADD' => NewsAuthorizationsService::check_authorizations($this->get_category()->get_id())->write(),
+			'C_ADD' => NewsAuthorizationsService::check_authorizations($this->get_category()->get_id())->write() || NewsAuthorizationsService::check_authorizations($this->get_category()->get_id())->contribution(),
+			'C_PENDING_NEWS' => NewsAuthorizationsService::check_authorizations($this->get_category()->get_id())->write() || NewsAuthorizationsService::check_authorizations($this->get_category()->get_id())->moderation(),
 		
-			'L_ADD' => $this->lang['news.add'],
+			'PAGINATION' => $pagination->display(),
 		
 			'U_ADD' => NewsUrlBuilder::add_news()->rel(),
+			'U_PENDING_NEWS' => NewsUrlBuilder::display_pending_news()->rel(),
 		));
 		
 		if ($number_columns_display_news > 1)
@@ -148,6 +156,21 @@ class NewsDisplayCategoryController extends ModuleController
 			$authorized_categories = array_keys($categories);
 		}
 		return $authorized_categories;
+	}
+	
+	private function get_pagination(Date $now, $authorized_categories)
+	{
+		$number_news = PersistenceContext::get_querier()->count(
+			NewsSetup::$news_table, 
+			'WHERE (approbation_type = 1 OR (approbation_type = 2 AND start_date < :timestamp_now AND (end_date > :timestamp_now) OR end_date = 0)) AND id_category IN :authorized_categories', 
+			array(
+				'timestamp_now' => $now->get_timestamp(),
+				'authorized_categories' => $authorized_categories
+		));
+		
+		$pagination = new NewsPagination(AppContext::get_request()->get_getint('page', 1), $number_news, NewsConfig::load()->get_number_news_per_page());
+		$pagination->set_url(NewsUrlBuilder::display_category($this->get_category()->get_id(), $this->get_category()->get_rewrited_name(), '%d'));
+		return $pagination;
 	}
 	
 	private function get_category()

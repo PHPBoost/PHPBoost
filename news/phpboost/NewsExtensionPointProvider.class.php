@@ -37,9 +37,7 @@ class NewsExtensionPointProvider extends ExtensionPointProvider
 	
 	public function url_mappings()
 	{
-		return new UrlMappings(array(
-			new DispatcherUrlMapping('/news/index.php')
-		));
+		return new UrlMappings(array(new DispatcherUrlMapping('/news/index.php')));
 	}
 	
 	public function search()

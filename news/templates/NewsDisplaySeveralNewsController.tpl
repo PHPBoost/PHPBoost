@@ -9,14 +9,14 @@
 		
 <div class="module_actions">
 	# IF C_ADD #
-	<a href="{U_ADD}" title="{L_ADD}" class="img_link">
-		<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/add.png" class="valign_middle" alt="{L_ADD}" />
+	<a href="{U_ADD}" title="${i18n('news.add')}" class="img_link">
+		<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/add.png" class="valign_middle" alt="${i18n('news.add')}" />
 	</a>
 	# ENDIF #
 	&nbsp;
-	# IF C_WRITER #
-	<a href="{PATH_TO_ROOT}/news/news.php?user=1" title="{L_NEWS_WAITING}">
-		<img src="{PATH_TO_ROOT}/news/news_mini.png" class="valign_middle" alt="{L_NEWS_WAITING}" />
+	# IF C_PENDING_NEWS #
+	<a href="{U_PENDING_NEWS}" title="${i18n('news.pending')}">
+		<img src="{PATH_TO_ROOT}/news/news_mini.png" class="valign_middle" alt="${i18n('news.pending')}" />
 	</a>
 	# ENDIF #
 </div>
@@ -78,12 +78,6 @@
     		<div class="module_contents">
         		# IF news.C_PICTURE #<img src="{news.U_PICTURE}" alt="{news.NAME}" title="{news.NAME}" class="img_right" /># ENDIF #
 				{news.CONTENTS}
-				
-				# IF news.C_EXTEND_CONTENTS #
-					<br /><br />
-	        		{news.EXTEND_CONTENTS}
-        		# ENDIF #
-				<br /><br />
 				<div class="spacer"></div>
     		</div>
     		<div class="module_bottom_l"></div>
@@ -95,5 +89,5 @@
 		</div>
 	# END news #
 	</div>
-	# IF PAGINATION #<div class="text_center">{PAGINATION}</div># ENDIF #
+	<div class="text_center"># INCLUDE PAGINATION #</div>
 # ENDIF #
