@@ -7,7 +7,7 @@
 .calendar_top_l{
 	float:left;
 	height:30px;
-	width:39px;
+	width:11px;
 	padding-top:7px;
 	background: #336397;
 	-webkit-border-top-left-radius: 10px;
@@ -15,6 +15,7 @@
 	border-top-left-radius: 10px;
 	border-top:1px solid #BEBEBE;
 	border-left:1px solid #BEBEBE;
+	padding-left: 28px;
 }
 
 .calendar_top_l a, .calendar_top_l a:hover, .calendar_top_r a, .calendar_top_r a:hover{
@@ -45,11 +46,13 @@
 	margin:0px 40px;
 	background: #336397;
 	border-top:1px solid #BEBEBE;
+	text-align: center;
 }
 
 .calendar_table{
 	background:none;
 	border:none;
+	text-align: center;
 }
 
 .calendar_table td{
