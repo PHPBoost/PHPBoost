@@ -159,6 +159,8 @@ class StatsSaver
 		
 		########### Détection des systèmes d'exploitation ###########
 		$array_os = array(
+			'android' => 'android',
+			'iphone|ipad' => 'ios',
 			'windows nt 6.2' => 'windows8',
 			'windows nt 6.1|seven' => 'windowsseven',
 			'windows nt 6.0|vista' => 'windowsvista',
@@ -182,7 +184,7 @@ class StatsSaver
 			'hp-ux' => 'hp-ux', 
 			'os2|os/2' => 'os2',
 			'netbsd' => 'netbsd',
-			'samsung|sony|nokia|blackberry|android|ipod|iphone|opera mini|palm|iemobile|smartphone|symbian' => 'phone'
+			'samsung|sony|nokia|blackberry|ipod|opera mini|palm|iemobile|smartphone|symbian' => 'phone'
 		);
 		if (!empty($_SERVER['HTTP_USER_AGENT']) ) //On ignore si user agent vide.
 		{
