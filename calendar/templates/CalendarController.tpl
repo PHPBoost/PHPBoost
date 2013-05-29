@@ -24,8 +24,10 @@
 					<strong>{@calendar.module_title}</strong>
 				</div>
 			</div>
-			<div class="module_contents text_center">
+			<div class="module_contents">
+				<div id="date_select_form" class="text_center">
 				# INCLUDE FORM #
+				</div>
 				
 				<span id="act"></span>
 				<div class="calendar_container">
