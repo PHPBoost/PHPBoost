@@ -72,9 +72,10 @@ class NewsUrlBuilder
 		return DispatchManager::get_url(self::$dispatcher, '/' . $id_category . '-' . $rewrited_name_category . '/' . $id_news . '-' . $rewrited_title . '/comments/');
 	}
 	
-	public static function display_category($id, $rewrited_name)
+	public static function display_category($id, $rewrited_name, $page = null)
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/' . $id . '-' . $rewrited_name .'/');
+		$page = $page !== null ? $page . '/' : '';
+		return DispatchManager::get_url(self::$dispatcher, '/' . $id . '-' . $rewrited_name .'/' . $page);
 	}
 	
 	public static function display_tag($rewrited_name)

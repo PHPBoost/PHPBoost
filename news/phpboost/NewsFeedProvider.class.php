@@ -63,7 +63,7 @@ class NewsFeedProvider implements FeedProvider
 		{
 			$now = new Date(DATE_NOW, TIMEZONE_AUTO);
 			
-			$results = $querier->select('SELECT news.id, news.id_category, news.name, news.rewrited_name, news.contents, news.short_contents, news.creation_date, cat.rewrited_name AS rewrited_name_cat
+			$results = $querier->select('SELECT news.id, news.id_category, news.name, news.rewrited_name, news.contents, news.short_contents, news.creation_date, cat.id AS id_category, cat.rewrited_name AS rewrited_name_cat
                  FROM ' . NewsSetup::$news_table . ' news
                  LEFT JOIN '. NewsSetup::$news_cats_table .' cat ON news.id_category = cat.id
                  WHERE news.approbation_type = 1 OR (news.approbation_type = 2 AND news.start_date < :timestamp_now AND (news.end_date > :timestamp_now OR news.end_date = 0)) AND news.id_category IN :cats_ids
@@ -74,7 +74,7 @@ class NewsFeedProvider implements FeedProvider
 
 			foreach ($results as $row)
 			{
-				$link = NewsUrlBuilder::display_news($row['rewrited_name_cat'], $row['id'], $row['rewrited_name'])->absolute();
+				$link = NewsUrlBuilder::display_news($row['id_category'], $row['rewrited_name_cat'], $row['id'], $row['rewrited_name'])->absolute();
 				
 				$item = new FeedItem();
 				$item->set_title($row['name']);
@@ -82,7 +82,7 @@ class NewsFeedProvider implements FeedProvider
 				$item->set_guid($link);
 				$item->set_desc(FormatingHelper::second_parse($row['contents']));
 				$item->set_date(new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $row['creation_date']));
-				//$item->set_image_url($row['img']);
+				$item->set_image_url($row['picture_url']);
 				$item->set_auth(NewsService::get_categories_manager()->get_heritated_authorizations($row['id_category'], Category::READ_AUTHORIZATIONS, Authorizations::AUTH_PARENT_PRIORITY));
 				$data->add_item($item);
 			}
