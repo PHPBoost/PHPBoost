@@ -105,7 +105,7 @@ class ArticlesDisplayArticlesController extends ModuleController
 		$this->build_view_sources();
 		
 		$pagination = new ArticlesPagination($current_page, $nbr_pages);
-		$pagination->set_url($this->category->get_id(), $this->category->get_rewrited_name(), $this->article->get_id(), $this->article->get_rewrited_title());
+		$pagination->set_url(ArticlesUrlBuilder($this->category->get_id(), $this->category->get_rewrited_name(), $this->article->get_id(), $this->article->get_rewrited_title()) . '%d');
 		
 		$notation = new Notation();
 		$notation->set_module_name('articles');

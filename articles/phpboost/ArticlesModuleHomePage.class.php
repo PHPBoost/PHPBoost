@@ -94,16 +94,9 @@ class ArticlesModuleHomePage implements ModuleHomePage
 		$nbr_categories_per_page = ArticlesConfig::load()->get_number_categories_per_page();
 		
 		$pagination_cat = new ArticlesPagination($current_page_cat, $nbr_categories, $nbr_categories_per_page);
-		$pagination_cat->set_url($this->category->get_id(), $this->category->get_rewrited_name());
+		$pagination_cat->set_url(ArticlesUrlBuilder::display_category($this->category->get_id(), $this->category->get_rewrited_name()) . $sort_field . '/' . $sort_mode . '/%d');
 		
-		$nbr_articles_cat = PersistenceContext::get_querier()->count(ArticlesSetup::$articles_table, 
-					'WHERE id_category = :id_category AND (published = 1 OR (published = 2 AND (publishing_start_date < :timestamp_now 
-					AND publishing_end_date = 0) OR publishing_end_date > :timestamp_now))', 
-					array(
-					    'id_category' => $this->category->get_id(),
-					    'timestamp_now' => $now->get_timestamp()
-					)
-		);
+		$nbr_articles_cat = 0;
 		
 		$number_articles_not_published = PersistenceContext::get_querier()->count(ArticlesSetup::$articles_table, 'WHERE published = 0');
 		
@@ -176,6 +169,11 @@ class ArticlesModuleHomePage implements ModuleHomePage
 				'U_CATEGORY' => ArticlesUrlBuilder::display_category($row['id'], $row['rewrited_name'])->absolute(),
 				'U_SUBCATEGORIES' => (count($children_cat) > 0) ? $children_cat_links : 'aucune'
 			));
+			
+			if ($this->category->get_id() == $row['id'])
+			{
+			    $nbr_articles_cat = $row['nbr_articles'];
+			}
 		}
 		
 		if ($nbr_categories > 0)
@@ -248,7 +246,7 @@ class ArticlesModuleHomePage implements ModuleHomePage
 				    ), SelectQueryResult::FETCH_ASSOC
 			    );
 			
-			$pagination->set_url($this->category->get_id(), $this->category->get_rewrited_name(), $sort_field, $sort_mode);
+			$pagination->set_url(ArticlesUrlBuilder::display_category($this->category->get_id(), $this->category->get_rewrited_name()) . $sort_field . '/' . $sort_mode . '/%d');
 
 			$this->build_form($field, $mode);
 
