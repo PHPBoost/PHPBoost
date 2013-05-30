@@ -265,20 +265,24 @@ class ArticlesModuleHomePage implements ModuleHomePage
 			{
 				$notation->set_id_in_module($row['id']);
 
-				$group_color = User::get_group_color($row['user_groups'], $row['level']);
+				$user_group_color = User::get_group_color($row['user_groups'], $row['level']);
 				
 				$this->view->assign_block_vars('articles', array(
 					'C_EDIT' => $this->auth_moderation || $this->auth_write && $row['author_user_id'] == AppContext::get_current_user()->get_id(),
 					'C_DELETE' => $this->auth_moderation,
+					'C_USER_GROUP_COLOR' => !empty($user_group_color),
 					'TITLE' => $row['title'],
 					'PICTURE' => $row['picture_url'],// @todo : link
 					'DATE' => gmdate_format('date_format_short', $row['date_created']),
 					'NUMBER_VIEW' => empty($row['number_view']) ? '0' : $row['number_view'],
 					'L_NUMBER_COM' => empty($row['number_comments']) ? '0' : $row['number_comments'],
 					'NOTE' => $row['number_notes'] > 0 ? NotationService::display_static_image($notation, $row['average_notes']) : $this->lang['articles.no_notes'],
-					'DESCRIPTION' =>FormatingHelper::second_parse($row['description']),                                    
+					'DESCRIPTION' =>FormatingHelper::second_parse($row['description']),
+					'PSEUDO' => $row['login'],
+					'USER_LEVEL_CLASS' => UserService::get_level_class($row['level']),
+					'USER_GROUP_COLOR' => $user_group_color,
 					'U_COMMENTS' => ArticlesUrlBuilder::display_comments_article($this->category->get_id(), $this->category->get_rewrited_name(), $row['id'], $row['rewrited_title'])->absolute(),
-					'U_AUTHOR' => '<a href="' . UserUrlBuilder::profile($row['author_user_id'])->absolute() . '" class="' . UserService::get_level_class($row['level']) . '"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . TextHelper::wordwrap_html($row['login'], 19) . '</a>',
+					'U_AUTHOR' => UserUrlBuilder::profile($row['author_user_id'])->absolute(),
 					'U_ARTICLE' => ArticlesUrlBuilder::display_article($this->category->get_id(), $this->category->get_rewrited_name(), $row['id'], $row['rewrited_title'])->absolute(),
 					'U_EDIT_ARTICLE' => ArticlesUrlBuilder::edit_article($row['id'])->absolute(),
 					'U_DELETE_ARTICLE' => ArticlesUrlBuilder::delete_article($row['id'])->absolute()
