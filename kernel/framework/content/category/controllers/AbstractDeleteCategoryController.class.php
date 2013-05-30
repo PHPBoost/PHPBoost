@@ -55,7 +55,7 @@ abstract class AbstractDeleteCategoryController extends AdminModuleController
 		}
 
 		$childrens = $this->get_category_childrens($category);
-		if (empty($childrens))
+		if (empty($childrens) && !$this->get_category_items_exists($category))
 		{
 			$this->get_categories_manager()->delete($this->get_category()->get_id());
 			AppContext::get_response()->redirect($this->get_categories_management_url());
@@ -133,6 +133,15 @@ abstract class AbstractDeleteCategoryController extends AdminModuleController
 		$options->add_category_in_excluded_categories($category->get_id());
 		$options->set_enable_recursive_exploration($enable_recursive_exploration);
 		return $this->get_categories_manager()->get_childrens($category->get_id(), $options);
+	}
+	
+	private function get_category_items_exists(Category $category)
+	{
+		return PersistenceContext::get_querier()->row_exists(
+		$this->categories_items_parameters->get_table_name_contains_items(), 
+		'WHERE '.$this->categories_items_parameters->get_field_name_id_category().'=:id_category', 
+		array('id_category' => $category->get_id()
+		)); 
 	}
 	
 	private function get_category()
