@@ -30,6 +30,8 @@
  */
 class ArticlesCommentsTopic extends CommentsTopic
 {
+	private $article;
+	
 	public function __construct()
 	{
 		parent::__construct('articles');
@@ -38,12 +40,37 @@ class ArticlesCommentsTopic extends CommentsTopic
 	public function get_authorizations()
 	{
 		$authorizations = new CommentsAuthorizations();
+		$authorizations->set_authorized_access_module(ArticlesAuthorizationsService::check_authorizations($this->get_article()->get_id_category())->read());
 		return $authorizations;
 	}
 	
 	public function is_display()
 	{
-		return true;
+		$article = $this->get_article();
+
+                switch ($article->get_publishing_state()) {
+			case Articles::PUBLISHED_NOW:
+                                return true;
+                        break;
+			case Articles::NOT_PUBLISHED:
+                                return false;
+                        break;
+			case Articles::PUBLISHED_DATE:
+                                return $article->is_published();
+                        break;
+                        default:
+                                return false;
+                        break;
+                }
 	}
+	
+	private function get_article()
+        {
+                if ($this->article === null)
+                {
+                        $this->article = ArticlesService::get_article('WHERE id=:id', array('id' => $this->get_id_in_module()));
+                }
+                return $this->article;
+        }
 }
 ?>

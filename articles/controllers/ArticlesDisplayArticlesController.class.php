@@ -80,7 +80,7 @@ class ArticlesDisplayArticlesController extends ModuleController
 	
 	private function build_view($request)
 	{
-		$current_page = $request->get_getint('page', 1) > 0;
+		$current_page = $request->get_getint('page', 1);
 		
 		$this->category = ArticlesService::get_categories_manager()->get_categories_cache()->get_category($this->article->get_id_category());
 		
@@ -144,7 +144,7 @@ class ArticlesDisplayArticlesController extends ModuleController
 			'L_PREVIOUS_TITLE' => $array_page[1][($current_page-2)],
 			'U_PAGE_NEXT_ARTICLES' => ($current_page > 0 && $current_page < $nbr_pages && $nbr_pages > 1) ? ArticlesUrlBuilder::display_article($this->category->get_id(), $this->category->get_rewrited_name(), $this->article->get_id(), $this->article->get_rewrited_title())->absolute() . ($current_page + 1) : '',
 			'L_NEXT_TITLE' => $array_page[1][$current_page],
-			'U_COMMENTS' => ArticlesUrlBuilder::display_comments_article($this->category->get_id(), $this->category->get_rewrited_name(), $row['id'], $row['rewrited_title'])->absolute(),
+			'U_COMMENTS' => ArticlesUrlBuilder::display_comments_article($this->category->get_id(), $this->category->get_rewrited_name(), $this->article->get_id(), $this->article->get_rewrited_title())->absolute(),
 			'U_AUTHOR' => UserUrlBuilder::profile($this->article->get_author_user_id())->absolute(),
 			'U_EDIT_ARTICLE' => ArticlesUrlBuilder::edit_article($this->article->get_id())->absolute(),
 			'U_DELETE_ARTICLE' => ArticlesUrlBuilder::delete_article($this->article->get_id())->absolute(),
@@ -152,22 +152,19 @@ class ArticlesDisplayArticlesController extends ModuleController
 			'U_SYNDICATION' => ArticlesUrlBuilder::category_syndication($this->article->get_id_category())->rel()
 		));
 		
-		/* @todo: mettre option dans config. Affichage commentaires.
-		if ()
-		{
-			$comments_topic = new ArticlesCommentsTopic();
-			$comments_topic->set_id_in_module($idart);
-			$comments_topic->set_url(new Url('/articles/articles.php?cat=' . $cat . '&id=' . $idart . '&com=0'));
-			$tpl->put_all(array(
-				'COMMENTS' => CommentsService::display($comments_topic)->render()
-			));
-		}	
-		$this->view->display();*/
+		//Affichage commentaires
+		$comments_topic = new ArticlesCommentsTopic();
+		$comments_topic->set_id_in_module($this->article->get_id());
+		$comments_topic->set_url(ArticlesUrlBuilder::display_comments_article($this->category->get_id(), $this->category->get_rewrited_name(), $this->article->get_id(), $this->article->get_rewrited_title()));
+		
+		$this->view->put('COMMENTS', CommentsService::display($comments_topic)->render());
+		
+		$this->view->put('FORM', $this->form->display());
 	}
 	
 	private function build_form($array_page, $current_page)
 	{
-	    $form = new HTMLForm(__CLASS__);
+		$form = new HTMLForm(__CLASS__);
 		
 		$fieldset = new FormFieldsetHorizontal('pages');
 		$form->add_fieldset($fieldset);
@@ -191,8 +188,6 @@ class ArticlesDisplayArticlesController extends ModuleController
 		foreach ($array_page[1] as $page_name)
 		{
 			$options[] = new FormFieldSelectChoiceOption($page_name, $i++);
-			//$selected = ($i == $current_page) ? 'selected="selected"' : '';
-			//$pages_dropdown_list .= '<option value="' . $i++ . '"' . $selected . '>' . $page_name . '</option>';
 		}
 		
 		return $options;
@@ -244,7 +239,7 @@ class ArticlesDisplayArticlesController extends ModuleController
 				}
 			break;
 			case Articles::PUBLISHED_DATE:
-				if (!$article->get_publishing_state() && $no_reading_authorizations_no_approval)
+				if (!$article->is_published() && $no_reading_authorizations_no_approval)
 				{
 					$error_controller = PHPBoostErrors::user_not_authorized();
 		   			DispatchManager::redirect($error_controller);
@@ -264,7 +259,7 @@ class ArticlesDisplayArticlesController extends ModuleController
 	
 	private function generate_response()
 	{
-		$response = new NewsDisplayResponse();
+		$response = new ArticlesDisplayResponse();
 		$response->set_page_title($this->article->get_title());
 		$response->add_breadcrumb_link($this->lang['articles'], ArticlesUrlBuilder::home());
 		
