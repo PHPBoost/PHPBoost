@@ -118,6 +118,7 @@ class ArticlesDisplayArticlesController extends ModuleController
 		$this->view->put_all(array(
 			'C_EDIT' => $this->auth_moderation || $this->auth_write && $this->article->get_author_user_id() == AppContext::get_current_user()->get_id(),
 			'C_DELETE' => $this->auth_moderation,
+			'C_USER_GROUP_COLOR' => !empty($user_group_color),
 			'TITLE' => $this->article->get_title(),
 			'PICTURE' => $this->article->get_picture_url(),// @todo : link
 			'DATE' => gmdate_format('date_format_short', $this->article->get_date_created()),
@@ -126,13 +127,17 @@ class ArticlesDisplayArticlesController extends ModuleController
 			'L_NEXT_PAGE' => LangLoader::get_message('next_page', 'main'),
 			'L_DATE' => LangLoader::get_message('date', 'main'),
 			'L_VIEW' => LangLoader::get_message('views', 'main'),
+			'L_ON' => LangLoader::get_message('on', 'main'),
 			'L_WRITTEN' => LangLoader::get_message('written_by', 'main'),
 			'L_ALERT_DELETE_ARTICLE' => $this->lang['articles.form.alert_delete_article'],
 			'L_SOURCE' => LangLoader::get_message('source', 'main'),
 			'L_SUMMARY' => LangLoader::get_message('summary', 'main'),
 			'L_PRINTABLE_VERSION' => LangLoader::get_message('printable_version', 'main'),
-			'NOTATION' => NotationService::display_active_image($notation),
+			'KERNEL_NOTATION' => NotationService::display_active_image($notation),
 			'CONTENTS' => isset($article_contents[$current_page]) ? FormatingHelper::second_parse($article_contents[$current_page]) : '',
+			'PSEUDO' => $user->get_pseudo(),
+			'USER_LEVEL_CLASS' => UserService::get_level_class($user->get_level()),
+			'USER_GROUP_COLOR' => $user_group_color,
 			'PAGINATION_ARTICLES' => $pagination->display(),
 			'PAGE_NAME' => (isset($array_page[1][($current_page-1)]) && $array_page[1][($current_page-1)] != '&nbsp;') ? $array_page[1][($current_page-1)] : '',
 			'U_PAGE_PREVIOUS_ARTICLES' => ($current_page > 1 && $current_page <= $nbr_pages && $nbr_pages > 1) ? ArticlesUrlBuilder::display_article($this->category->get_id(), $this->category->get_rewrited_name(), $this->article->get_id(), $this->article->get_rewrited_title())->absolute() . ($current_page - 1) : '',
@@ -140,14 +145,24 @@ class ArticlesDisplayArticlesController extends ModuleController
 			'U_PAGE_NEXT_ARTICLES' => ($current_page > 0 && $current_page < $nbr_pages && $nbr_pages > 1) ? ArticlesUrlBuilder::display_article($this->category->get_id(), $this->category->get_rewrited_name(), $this->article->get_id(), $this->article->get_rewrited_title())->absolute() . ($current_page + 1) : '',
 			'L_NEXT_TITLE' => $array_page[1][$current_page],
 			'U_COMMENTS' => ArticlesUrlBuilder::display_comments_article($this->category->get_id(), $this->category->get_rewrited_name(), $row['id'], $row['rewrited_title'])->absolute(),
-			'U_AUTHOR' => '<a href="' . UserUrlBuilder::profile($this->article->get_author_user_id())->absolute() . '" class="' . UserService::get_level_class($user->get_level()) . '"' . (!empty($user_group_color) ? ' style="color:' . $user_group_color . '"' : '') . '>' . $user->get_pseudo() . '</a>',
+			'U_AUTHOR' => UserUrlBuilder::profile($this->article->get_author_user_id())->absolute(),
 			'U_EDIT_ARTICLE' => ArticlesUrlBuilder::edit_article($this->article->get_id())->absolute(),
 			'U_DELETE_ARTICLE' => ArticlesUrlBuilder::delete_article($this->article->get_id())->absolute(),
 			'U_PRINT_ARTICLE' => ArticlesUrlBuilder::print_article(), // @todo : à modifier dans url builder et finaliser lien contrôleur prêt
 			'U_SYNDICATION' => ArticlesUrlBuilder::category_syndication($this->article->get_id_category())->rel()
 		));
 		
-		
+		/* @todo: mettre option dans config. Affichage commentaires.
+		if ()
+		{
+			$comments_topic = new ArticlesCommentsTopic();
+			$comments_topic->set_id_in_module($idart);
+			$comments_topic->set_url(new Url('/articles/articles.php?cat=' . $cat . '&id=' . $idart . '&com=0'));
+			$tpl->put_all(array(
+				'COMMENTS' => CommentsService::display($comments_topic)->render()
+			));
+		}	
+		$this->view->display();*/
 	}
 	
 	private function build_form($array_page, $current_page)
@@ -191,7 +206,7 @@ class ArticlesDisplayArticlesController extends ModuleController
 	    $i = 0;
 	    foreach ($sources as $name => $url)
 	    {	
-		    $tpl->assign_block_vars('sources', array(
+		    $this->view->assign_block_vars('sources', array(
 			    'I' => $i,
 			    'NAME' => $name,
 			    'URL' => $url,

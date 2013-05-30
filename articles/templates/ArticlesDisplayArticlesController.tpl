@@ -52,9 +52,9 @@
 				{CONTENTS}
 				<div class="spacer" style="margin-top:35px;">&nbsp;</div>
 				# IF PAGINATION_ARTICLES #
-				<div style="float:left;width:33%;text-align:right">&nbsp;{PAGE_PREVIOUS_ARTICLES}</div>
+				<div style="float:left;width:33%;text-align:right"><a href="{PAGE_PREVIOUS_ARTICLES}">&nbsp;&laquo;{L_PREVIOUS_TITLE}</a></div>
 				<div style="float:left;width:33%" class="text_center">{PAGINATION_ARTICLES}</div>
-				<div style="float:left;width:33%;">{PAGE_NEXT_ARTICLES}&nbsp;</div>
+				<div style="float:left;width:33%;"><a href="{PAGE_NEXT_ARTICLES}">{L_NEXT_TITLE}&nbsp;&laquo;</a></div>
 				# ENDIF #		
 			<div class="spacer">&nbsp;</div>
 		</div>
@@ -62,14 +62,14 @@
 		<div class="module_bottom_r"></div>
 		<div class="module_bottom">
 			# IF C_SOURCES #
-			<div><b> {L_SOURCE} : </b># START sources # <a href="{sources.URL}"> {sources.SOURCE}</a>&nbsp;{sources.INDENT} # END sources #</div>
+			<div><b> {L_SOURCE} : </b># START sources #{sources.COMMA}<a href="{sources.URL}" class="small_link">{sources.NAME}</a># END sources #</div>
 			# ENDIF #
 			<div class="spacer">&nbsp;</div>
 			<div style="float:left" class="text_small">
 				{KERNEL_NOTATION}
 			</div>
 			<div style="float:right" class="text_small">
-				{L_WRITTEN}: <a href="{U_PROFILE}" class="{LEVEL_CLASS}" # IF C_GROUP_COLOR # style="color:{GROUP_COLOR}" # ENDIF #>{PSEUDO}</a>
+				{L_WRITTEN}: <a href="{U_AUTHOR}" class="small_link {LEVEL_CLASS}" # IF C_GROUP_COLOR # style="color:{GROUP_COLOR}"# ENDIF #>{PSEUDO}</a>
 				{L_ON}: {DATE}
 			</div>
 			<div class="spacer"></div>
