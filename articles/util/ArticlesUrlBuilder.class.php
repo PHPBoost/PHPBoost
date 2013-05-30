@@ -93,7 +93,7 @@ class ArticlesUrlBuilder
 	
 	public static function display_comments_article($id_category, $rewrited_name_category, $id_article, $rewrited_title)
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/' . $id_category . '-' . $rewrited_name_category . '/' . $id_article . '-' . $rewrited_title . '/comments/');
+		return DispatchManager::get_url(self::$dispatcher, '/' . $id_category . '-' . $rewrited_name_category . '/' . $id_article . '-' . $rewrited_title . '/#comments_list');
 	}
 	public static function display_pending_articles()
 	{

@@ -99,7 +99,7 @@
 						<br />
 						{L_NOTE} : {articles.NOTE}
 						<br />
-						{L_WRITTEN} : <a href="{articles.U_AUTHOR}" class="small_link {articles.LEVEL_CLASS}" # IF C_GROUP_COLOR # style="color:{articles.GROUP_COLOR}"# ENDIF #>{articles.PSEUDO}</a>
+						{L_WRITTEN} : <a href="{articles.U_AUTHOR}" class="small_link {articles.USER_LEVEL_CLASS}" # IF C_USER_GROUP_COLOR # style="color:{articles.USER_GROUP_COLOR}"# ENDIF #>{articles.PSEUDO}</a>
 					</div>
 				</div>	
 				<div class="float:right;">	

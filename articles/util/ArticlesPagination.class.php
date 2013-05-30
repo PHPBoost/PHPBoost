@@ -41,10 +41,10 @@ class ArticlesPagination
 		$this->pagination = new Pagination($this->get_number_pages($number_elements), $this->current_page);
 	}
 	
-	public function set_url(Url $url)
+	public function set_url($url)
 	{
 		
-		$this->pagination->set_url_sprintf_pattern($url->absolute());
+		$this->pagination->set_url_sprintf_pattern($url);
 	}
 	
 	public function display()

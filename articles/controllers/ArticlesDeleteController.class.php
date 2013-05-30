@@ -46,7 +46,7 @@ class ArticlesDeleteController extends ModuleController
 		
 		PersistenceContext::get_querier()->delete(DB_TABLE_EVENTS, 'WHERE module=:module AND id_in_module=:id', array('module' => 'articles', 'id' => $article->get_id()));
 		
-		CommentsService::delete_comments_topic_module('articles', $article['id']);
+		CommentsService::delete_comments_topic_module('articles', $article->get_id());
 		
 		Feed::clear_cache('articles');
 		

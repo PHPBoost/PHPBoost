@@ -62,12 +62,12 @@ class ArticlesFeedProvider implements FeedProvider
 		{
 			$now = new Date(DATE_NOW, TIMEZONE_AUTO);
 			
-			$results = $querier->select('SELECT articles.id, articles.id_category, articles.title, articles.rewrited_title, 
-			articles.contents, articles.description, articles.date_created, cat.rewrited_name AS rewrited_name_cat
+			$results = $querier->select('SELECT articles.id, articles.id_category, articles.title, articles.rewrited_title, articles.picture_url, 
+			articles.contents, articles.description, articles.date_created, cat.id AS id_category, cat.rewrited_name AS rewrited_name_cat
 			FROM ' . ArticlesSetup::$articles_table . ' articles
 			LEFT JOIN '. ArticlesSetup::$articles_cats_table .' cat ON articles.id_category = cat.id
-			WHERE articles.published = 1 OR (articles.published = 2 AND articles.publishing_start_date < :timestamp_now 
-			AND (articles.publishing_end_date > :timestamp_now OR articles.publishing_end_date = 0)) AND articles.id_category IN :cats_ids
+			WHERE articles.published = 1 OR (articles.published = 2 AND (articles.publishing_start_date < :timestamp_now 
+			AND articles.publishing_end_date = 0) OR articles.publishing_end_date > :timestamp_now) AND articles.id_category IN :cats_ids
 			ORDER BY articles.date_created DESC', 
 			array(
 				'cats_ids' => $ids_categories,
@@ -76,7 +76,7 @@ class ArticlesFeedProvider implements FeedProvider
 
 			foreach ($results as $row)
 			{
-				$link = ArticlesUrlBuilder::display_article($row['rewrited_name_cat'], $row['id'], $row['rewrited_title'])->absolute();
+				$link = ArticlesUrlBuilder::display_article($row['id_category'], $row['rewrited_name_cat'], $row['id'], $row['rewrited_title'])->absolute();
 				
 				$item = new FeedItem();
 				$item->set_title($row['title']);
@@ -84,7 +84,7 @@ class ArticlesFeedProvider implements FeedProvider
 				$item->set_guid($link);
 				$item->set_desc(FormatingHelper::second_parse($row['contents']));
 				$item->set_date(new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $row['date_created']));
-				//$item->set_image_url($row['img']);
+				$item->set_image_url($row['picture_url']);
 				$item->set_auth(ArticlesService::get_categories_manager()->get_heritated_authorizations($row['id_category'], Category::READ_AUTHORIZATIONS, Authorizations::AUTH_PARENT_PRIORITY));
 				$data->add_item($item);
 			}
