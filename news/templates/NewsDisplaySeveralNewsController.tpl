@@ -61,7 +61,7 @@
         			<a href="{news.U_LINK}">{news.NAME}</a>
         		</div>
         		<div class="module_top_com">
-					<img src="{PATH_TO_ROOT}/templates/{THEME}/images/com_mini.png" alt="" class="valign_middle" /> <a href="{news.U_COM}">{news.COM}</a>
+					<img src="{PATH_TO_ROOT}/templates/{THEME}/images/com_mini.png" alt="" class="valign_middle" /> <a href="{news.U_COMMENTS}">{news.L_COMMENTS}</a>
 					# IF news.C_EDIT #
 					<a href="{news.U_EDIT}" title="{L_EDIT}" class="img_link">
 						<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="{L_EDIT}" />

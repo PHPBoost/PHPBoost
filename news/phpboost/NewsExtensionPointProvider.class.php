@@ -61,5 +61,10 @@ class NewsExtensionPointProvider extends ExtensionPointProvider
 	{
 		return new NewsSitemapExtensionPoint();
 	}
+	
+	public function comments()
+	{
+		return new CommentsTopics(array(new NewsCommentsTopic()));
+	}
 }
 ?>
