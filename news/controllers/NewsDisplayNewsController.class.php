@@ -89,7 +89,6 @@ class NewsDisplayNewsController extends ModuleController
 			'C_USER_GROUP_COLOR' => !empty($user_group_color),
 		
 			'L_SYNDICATION' => $main_lang['syndication'],
-			'L_COMMENTS' => CommentsService::get_number_and_lang_comments('news', $news->get_id()),
 			'L_EDIT' => $main_lang['edit'],
 			'L_DELETE' => $main_lang['delete'],
 		
@@ -105,12 +104,17 @@ class NewsDisplayNewsController extends ModuleController
 		
 				
 			'U_SYNDICATION' => NewsUrlBuilder::category_syndication($news->get_id_cat())->rel(),
-			'U_COMMENTS' => NewsUrlBuilder::display_comments_news($category->get_id(), $category->get_rewrited_name(), $news->get_id(), $news->get_rewrited_name())->rel(),
 			'U_AUTHOR_PROFILE' => UserUrlBuilder::profile($news->get_author_user_id())->absolute(),
 			'U_EDIT' => NewsUrlBuilder::edit_news($news->get_id())->rel(),
 			'U_DELETE' => NewsUrlBuilder::delete_news($news->get_id())->rel(),
 			'U_PICTURE' => $news->get_picture()->absolute(),
 		));
+		
+		$comments_topic = new NewsCommentsTopic();
+		$comments_topic->set_id_in_module($news->get_id());
+		$comments_topic->set_url(NewsUrlBuilder::display_news($category->get_id(), $category->get_rewrited_name(), $news->get_id(), $news->get_rewrited_name()));
+		
+		$this->tpl->put('COMMENTS', $comments_topic->display());
 		
 		$this->build_sources_view($news);
 	}
@@ -156,7 +160,6 @@ class NewsDisplayNewsController extends ModuleController
 				}
 			break;
 			case News::APPROVAL_DATE:
-				$now = new Date();
 				if (!$news->is_visible() && $user_not_read_authorizations_not_approval)
 				{
 					$error_controller = PHPBoostErrors::user_not_authorized();

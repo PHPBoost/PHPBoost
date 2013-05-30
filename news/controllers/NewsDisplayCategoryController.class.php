@@ -97,8 +97,10 @@ class NewsDisplayCategoryController extends ModuleController
 				'C_PICTURE' => $news->has_picture(),
 				'C_USER_GROUP_COLOR' => !empty($user_group_color),
 			
+				'L_COMMENTS' => CommentsService::get_number_and_lang_comments('news', $row['id']),
+			
 				'ID' => $news->get_id(),
-				'COM' => CommentsService::get_number_and_lang_comments('news', $row['id']),
+				
 				'NUMBER_COM' => !empty($row['number_comments']) ? $row['number_comments'] : 0,
 				'NAME' => $news->get_name(),
 				'CONTENTS' => FormatingHelper::second_parse($news->get_contents()),
@@ -116,6 +118,7 @@ class NewsDisplayCategoryController extends ModuleController
 				'U_AUTHOR_PROFILE' => UserUrlBuilder::profile($news->get_author_user_id())->absolute(),
 				'U_SYNDICATION' => SyndicationUrlBuilder::rss('news', $news->get_id_cat())->rel(),
 				'U_PICTURE' => $news->get_picture()->rel(),
+				'U_COMMENTS' => NewsUrlBuilder::display_comments_news($category->get_id(), $category->get_rewrited_name(), $news->get_id(), $news->get_rewrited_name())->rel()
 			));
 		}
 		

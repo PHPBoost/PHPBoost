@@ -18,10 +18,6 @@ function Confirm()
 			{NAME}
 		</div>
 		<div class="module_top_com">
-			<a href="{U_COMMENTS}" title="{L_COMMENTS}" class="img_link">
-				<img src="{PATH_TO_ROOT}/templates/{THEME}/images/com_mini.png" alt="" class="valign_middle" />
-				{L_COMMENTS}
-			</a>
 			# IF C_EDIT #
 			<a href="{U_EDIT}" title="{L_EDIT}" class="img_link">
 				<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="{L_EDIT}" />
