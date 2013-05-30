@@ -105,7 +105,9 @@ class ArticlesModuleHomePage implements ModuleHomePage
                                         )
                 );
 		
-		$number_articles_not_published = PersistenceContext::get_querier()->count(ArticlesSetup::$articles_table, 'WHERE published = 0');
+		$number_articles_not_published = PersistenceContext::get_querier()->count(ArticlesSetup::$articles_table, 
+						    'WHERE published = 0 OR (published = 2 AND (publishing_start_date > ' . $now->get_timestamp() . 
+						    ' AND publishing_end_date < ' . $now->get_timestamp() . '))');
 		
 		$this->view->put_all(array(
 			'C_ADD' => $this->auth_add,
