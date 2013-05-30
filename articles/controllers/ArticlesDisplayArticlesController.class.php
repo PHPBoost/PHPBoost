@@ -37,6 +37,7 @@ class ArticlesDisplayArticlesController extends ModuleController
 	
 	public function execute(HTTPRequestCustom $request)
 	{
+		echo 'ici';
 		$this->check_authorizations();
 		
 		$this->init();

@@ -48,7 +48,7 @@ $url_controller_mappers = array(
 	new UrlControllerMapper('ArticlesDeleteController', '`^/([0-9]+)/delete/?$`', array('id')),
 	
 	//Display articles
-	new UrlControllerMapper('ArticlesDisplayPendingArticlesController', '`^/pending/?$`'),
+	new UrlControllerMapper('ArticlesDisplayPendingArticlesController', '`^/pending(?:/([a-z]+))?/?([a-z]+)?/?([0-9]+)?/?$`', array('field', 'sort', 'page')),
 	new UrlControllerMapper('ArticlesDisplayArticlesController', '`^(?:/([0-9]+)-([a-z0-9-_]+)/([0-9]+)-([a-z0-9-_]+))/?([0-9]+)?/?$`', array('id_category', 'rewrited_name_category', 'id', 'rewrited_title', 'page')),
 	
 	//Display home and categories
