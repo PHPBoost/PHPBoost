@@ -86,15 +86,11 @@ class ArticlesModuleHomePage implements ModuleHomePage
 		$authorized_cats_sql = !empty($authorized_categories) ? 'AND ac.id IN (' . implode(', ', $authorized_categories) . ')' : '';
 		
 		$now = new Date(DATE_NOW, TIMEZONE_AUTO);
-		
-		$current_page_cat = ($request->get_getint('page',1) > 0) ? $request->get_getint('page',1) : 1;
-		
+				
 		$nbr_categories = count($authorized_categories);
 		
 		$nbr_categories_per_page = ArticlesConfig::load()->get_number_categories_per_page();
-		
-		$pagination_cat = new ArticlesPagination($current_page_cat, $nbr_categories, $nbr_categories_per_page);
-		//$pagination_cat->set_url(ArticlesUrlBuilder::display_category($this->category->get_id(), $this->category->get_rewrited_name()) . $sort_field . '/' . $sort_mode . '/%d');
+		$comments_enabled = ArticlesConfig::load()->get_comments_enabled();
 		
 		$nbr_articles_cat = PersistenceContext::get_querier()->count(ArticlesSetup::$articles_table, 
                                         'WHERE id_category = :id_category AND (published = 1 OR (published = 2 AND (publishing_start_date < :timestamp_now 
@@ -113,6 +109,7 @@ class ArticlesModuleHomePage implements ModuleHomePage
 			'C_ADD' => $this->auth_add,
 			'C_MODERATE' => $this->auth_moderation,
 			'C_PENDING_ARTICLES' => $number_articles_not_published > 0 && $this->auth_moderation,
+			'C_COMMENTS_ENABLED' => $comments_enabled,
 			'ID_CAT' => ArticlesService::get_categories_manager()->get_categories_cache()->get_category($this->category->get_id()),
 			'L_DATE' => LangLoader::get_message('date', 'main'),
 			'L_VIEW' => LangLoader::get_message('views', 'main'),
@@ -133,8 +130,6 @@ class ArticlesModuleHomePage implements ModuleHomePage
 			'U_ADD_ARTICLES' => ArticlesUrlBuilder::add_article()->absolute(),
 			'U_SYNDICATION' => ArticlesUrlBuilder::category_syndication($this->category->get_id())->rel()
 		));
-
-		$limit_page = $pagination_cat->get_display_from();
 		
 		//All root cats
 		$result = PersistenceContext::get_querier()->select('SELECT @id_cat:= ac.id, ac.id, ac.name, ac.description, ac.image, ac.rewrited_name,
@@ -142,8 +137,7 @@ class ArticlesModuleHomePage implements ModuleHomePage
 		WHERE articles.id_category = @id_cat AND (articles.published = 1 OR (articles.published = 2 
 		AND (articles.publishing_start_date < :timestamp_now AND articles.publishing_end_date = 0) 
 		OR articles.publishing_end_date > :timestamp_now))) AS nbr_articles FROM ' . ArticlesSetup::$articles_cats_table .
-		' ac WHERE ac.id_parent = :id_category ' . $authorized_cats_sql . ' ORDER BY ac.id_parent, ac.c_order LIMIT '
-		. $nbr_categories_per_page . ' OFFSET ' . $limit_page,
+		' ac WHERE ac.id_parent = :id_category ' . $authorized_cats_sql . ' ORDER BY ac.id_parent',
 		array(
 			'timestamp_now' => $now->get_timestamp(),
 			'id_category' => $this->category->get_id()
@@ -195,8 +189,7 @@ class ArticlesModuleHomePage implements ModuleHomePage
 			
 			$this->view->put_all(array(
 				'C_ARTICLES_CAT' => true,
-				'COLUMN_WIDTH_CAT' => $column_width_cat,
-				'PAGINATION_CAT' => ($nbr_categories > $nbr_categories_per_page) ? $pagination_cat->display()->render() : '',
+				'COLUMN_WIDTH_CAT' => $column_width_cat
 			));
 		}
 		//Articles in current cat
@@ -236,8 +229,8 @@ class ArticlesModuleHomePage implements ModuleHomePage
 			
 			$limit_page = $pagination->get_display_from();
 
-			$result = PersistenceContext::get_querier()->select('SELECT articles.*, member.level, member.user_groups, member.login, note.number_notes
-			FROM ' . ArticlesSetup::$articles_table . ' articles
+			$result = PersistenceContext::get_querier()->select('SELECT articles.*, member.level, member.user_groups, member.login, 
+			com.number_comments, note.number_notes, note.average_notes FROM ' . ArticlesSetup::$articles_table . ' articles
 			LEFT JOIN ' . DB_TABLE_MEMBER . ' member ON member.user_id = articles.author_user_id
 			LEFT JOIN ' . DB_TABLE_COMMENTS_TOPIC . ' com ON com.id_in_module = articles.id AND com.module_id = "articles"
 			LEFT JOIN ' . DB_TABLE_AVERAGE_NOTES . ' note ON note.id_in_module = articles.id AND note.module_name = "articles"
