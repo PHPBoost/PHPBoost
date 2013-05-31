@@ -59,7 +59,6 @@
 		</div>
 		# END cat_list #
 		<div class="spacer">&nbsp;</div>				
-		<p style="text-align:center;">{PAGINATION_CAT}</p>
 		<hr />
 		# ENDIF #			
 		<div class="spacer">&nbsp;</div>
@@ -95,8 +94,10 @@
 						<br />
 						{L_VIEW} : {articles.NUMBER_VIEW}
 						<br />
-						{L_COM} : <a href="{articles.U_COMMENTS}">{articles.L_NUMBER_COM} </a>
+						# IF C_COMMENTS_ENABLED #
+						{L_COM} : <a href="{articles.U_COMMENTS}">{articles.L_NUMBER_COM}</a>
 						<br />
+						# ENDIF #
 						{L_NOTE} : {articles.NOTE}
 						<br />
 						{L_WRITTEN} : <a href="{articles.U_AUTHOR}" class="small_link {articles.USER_LEVEL_CLASS}" # IF C_USER_GROUP_COLOR # style="color:{articles.USER_GROUP_COLOR}"# ENDIF #>{articles.PSEUDO}</a>

@@ -17,22 +17,24 @@
 			{TITLE}
 		</div>
 		<div class="module_top_com">
+			# IF C_COMMENTS_ENABLED #
 			<a href="{U_COMMENTS}" title="{L_COMMENTS}" class="img_link">
 				<img src="{PATH_TO_ROOT}/templates/{THEME}/images/com_mini.png" alt="" class="valign_middle" />
 				{L_COMMENTS}
 			</a>
+			# ENDIF #
 			# IF C_EDIT #
 			<a href="{U_EDIT_ARTICLE}" title="{L_EDIT}" class="img_link">
-				<img src="../templates/{THEME}/images/{LANG}/edit.png" class="valign_middle" alt="{L_EDIT}" />
+				<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" class="valign_middle" alt="{L_EDIT}" />
 			</a>
 			# ENDIF #
 			# IF C_DELETE #
 			<a href="{U_DELETE_ARTICLE}" title="{L_DELETE}" onclick="javascript:return Confirm_del_article();" class="img_link">
-				<img src="../templates/{THEME}/images/{LANG}/delete.png" class="valign_middle" alt="{L_DELETE}" />
+				<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" class="valign_middle" alt="{L_DELETE}" />
 			</a>
 			# ENDIF #
 			<a href="{U_PRINT_ARTICLE}" title="{L_PRINTABLE_VERSION}" class="img_link">
-				<img src="../templates/{THEME}/images/print_mini.png" alt="{L_PRINTABLE_VERSION}" class="valign_middle" />
+				<img src="{PATH_TO_ROOT}/templates/{THEME}/images/print_mini.png" alt="{L_PRINTABLE_VERSION}" class="valign_middle" />
 			</a>
 		</div>
 	</div>
@@ -50,9 +52,9 @@
 			{CONTENTS}
 			<div class="spacer" style="margin-top:35px;">&nbsp;</div>
 			# IF PAGINATION_ARTICLES #
-			<div style="float:left;width:33%;text-align:right"><a href="{PAGE_PREVIOUS_ARTICLES}">&nbsp;&laquo;{L_PREVIOUS_TITLE}</a></div>
+			<div style="float:left;width:33%;text-align:right"><a href="{PAGE_PREVIOUS_ARTICLES}">&nbsp;&leftarrow;{L_PREVIOUS_TITLE}</a></div>
 			<div style="float:left;width:33%" class="text_center">{PAGINATION_ARTICLES}</div>
-			<div style="float:left;width:33%;"><a href="{PAGE_NEXT_ARTICLES}">{L_NEXT_TITLE}&nbsp;&laquo;</a></div>
+			<div style="float:left;width:33%;"><a href="{PAGE_NEXT_ARTICLES}">{L_NEXT_TITLE}&nbsp;&rightarrow;</a></div>
 			# ENDIF #		
 		<div class="spacer">&nbsp;</div>
 	</div>
@@ -74,4 +76,6 @@
 	</div>
 </div>
 <br /><br />
-# INCLUDE COMMENTS #
+# IF C_COMMENTS_ENABLED #
+    # INCLUDE COMMENTS #
+# ENDIF #

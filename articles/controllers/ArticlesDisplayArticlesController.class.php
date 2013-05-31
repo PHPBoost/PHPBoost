@@ -81,6 +81,7 @@ class ArticlesDisplayArticlesController extends ModuleController
 	private function build_view($request)
 	{
 		$current_page = $request->get_getint('page', 1);
+		$comments_enabled = ArticlesConfig::load()->get_comments_enabled();
 		
 		$this->category = ArticlesService::get_categories_manager()->get_categories_cache()->get_category($this->article->get_id_category());
 		
@@ -89,7 +90,7 @@ class ArticlesDisplayArticlesController extends ModuleController
 		//If article doesn't begin with a page, we insert one
 		if (substr(trim($article_contents), 0, 6) != '[page]')
 		{
-			$article_contents = '[page]Introduction[/page]' . $article_contents;
+			$article_contents = '[page]&nbsp;[/page]' . $article_contents;
 		}
 		else
 		{
@@ -103,7 +104,7 @@ class ArticlesDisplayArticlesController extends ModuleController
 		preg_match_all('`\[page\]([^[]+)\[/page\]`U', $article_contents, $array_page);
 		
 		$nbr_pages = count($array_page[1]);
-		Debug::stop($nbr_pages);
+		
 		// @todo : option de rendre les pages sous forme de lien (comme wiki, dans div flottant à droite)
 		//$pages_link_list = '<ul class="">';
 		$this->build_form($array_page, $current_page);
@@ -125,6 +126,7 @@ class ArticlesDisplayArticlesController extends ModuleController
 			'C_EDIT' => $this->auth_moderation || $this->auth_write && $this->article->get_author_user_id() == AppContext::get_current_user()->get_id(),
 			'C_DELETE' => $this->auth_moderation,
 			'C_USER_GROUP_COLOR' => !empty($user_group_color),
+			'C_COMMENTS_ENABLED' => $comments_enabled,
 			'TITLE' => $this->article->get_title(),
 			'PICTURE' => $this->article->get_picture(),// @todo : link
 			'DATE' => $this->article->get_date_created()->format(DATE_FORMAT_SHORT, TIMEZONE_AUTO),
@@ -140,16 +142,16 @@ class ArticlesDisplayArticlesController extends ModuleController
 			'L_SUMMARY' => $this->lang['articles.summary'],
 			'L_PRINTABLE_VERSION' => LangLoader::get_message('printable_version', 'main'),
 			'KERNEL_NOTATION' => NotationService::display_active_image($notation),
-			'CONTENTS' => isset($article_contents_clean[$current_page]) ? FormatingHelper::second_parse($article_contents_clean[$current_page]) : '',
+			'CONTENTS' => isset($article_contents_clean[$current_page-1]) ? FormatingHelper::second_parse($article_contents_clean[$current_page-1]) : '',
 			'PSEUDO' => $user->get_pseudo(),
 			'USER_LEVEL_CLASS' => UserService::get_level_class($user->get_level()),
 			'USER_GROUP_COLOR' => $user_group_color,
-			'PAGINATION_ARTICLES' => $pagination->display()->render(),
-			'PAGE_NAME' => (isset($array_page[1][($current_page-1)]) && $array_page[1][($current_page-1)] != '&nbsp;') ? $array_page[1][($current_page-1)] : '',
+			'PAGINATION_ARTICLES' => ($nbr_pages > 1) ? $pagination->display()->render() : '',
+			'PAGE_NAME' => (isset($array_page[1][$current_page-1]) && $array_page[1][$current_page-1] != '&nbsp;') ? $array_page[1][($current_page-1)] : '',
 			'U_PAGE_PREVIOUS_ARTICLES' => ($current_page > 1 && $current_page <= $nbr_pages && $nbr_pages > 1) ? ArticlesUrlBuilder::display_article($this->category->get_id(), $this->category->get_rewrited_name(), $this->article->get_id(), $this->article->get_rewrited_title())->absolute() . ($current_page - 1) : '',
-			'L_PREVIOUS_TITLE' => $array_page[1][($current_page-2)],
+			'L_PREVIOUS_TITLE' => ($current_page > 1 && $current_page <= $nbr_pages && $nbr_pages > 1) ? $array_page[1][$current_page-2] : '',
 			'U_PAGE_NEXT_ARTICLES' => ($current_page > 0 && $current_page < $nbr_pages && $nbr_pages > 1) ? ArticlesUrlBuilder::display_article($this->category->get_id(), $this->category->get_rewrited_name(), $this->article->get_id(), $this->article->get_rewrited_title())->absolute() . ($current_page + 1) : '',
-			'L_NEXT_TITLE' => $array_page[1][$current_page],
+			'L_NEXT_TITLE' => ($current_page > 0 && $current_page < $nbr_pages && $nbr_pages > 1) ? $array_page[1][$current_page] : '', 
 			'U_COMMENTS' => ArticlesUrlBuilder::display_comments_article($this->category->get_id(), $this->category->get_rewrited_name(), $this->article->get_id(), $this->article->get_rewrited_title())->absolute(),
 			'U_AUTHOR' => UserUrlBuilder::profile($this->article->get_author_user_id())->absolute(),
 			'U_EDIT_ARTICLE' => ArticlesUrlBuilder::edit_article($this->article->get_id())->absolute(),
@@ -159,11 +161,15 @@ class ArticlesDisplayArticlesController extends ModuleController
 		));
 		
 		//Affichage commentaires
-		$comments_topic = new ArticlesCommentsTopic();
-		$comments_topic->set_id_in_module($this->article->get_id());
-		$comments_topic->set_url(ArticlesUrlBuilder::display_comments_article($this->category->get_id(), $this->category->get_rewrited_name(), $this->article->get_id(), $this->article->get_rewrited_title()));
-		
-		$this->view->put('COMMENTS', $comments_topic->display());
+		if ($comments_enabled)
+		{
+		    $comments_topic = new ArticlesCommentsTopic();
+		    $comments_topic->set_id_in_module($this->article->get_id());
+		    $comments_topic->set_url(ArticlesUrlBuilder::display_comments_article($this->category->get_id(), $this->category->get_rewrited_name(), $this->article->get_id(), $this->article->get_rewrited_title()));
+
+
+		    $this->view->put('COMMENTS', $comments_topic->display());
+		}
 		
 		$this->view->put('FORM', $this->form->display());
 	}
