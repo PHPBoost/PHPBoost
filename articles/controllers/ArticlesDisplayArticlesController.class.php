@@ -37,7 +37,6 @@ class ArticlesDisplayArticlesController extends ModuleController
 	
 	public function execute(HTTPRequestCustom $request)
 	{
-		echo 'ici';
 		$this->check_authorizations();
 		
 		$this->init();
@@ -85,28 +84,34 @@ class ArticlesDisplayArticlesController extends ModuleController
 		
 		$this->category = ArticlesService::get_categories_manager()->get_categories_cache()->get_category($this->article->get_id_category());
 		
+		$article_contents = $this->article->get_contents();
+		
 		//If article doesn't begin with a page, we insert one
-		if (substr(trim($this->article->get_contents()), 0, 6) != '[page]')
+		if (substr(trim($article_contents), 0, 6) != '[page]')
 		{
-			$this->article->get_contents() = '[page]Introduction[/page]' . $this->article->get_contents();
+			$article_contents = '[page]Introduction[/page]' . $article_contents;
+		}
+		else
+		{
+			$article_contents = ' ' . $article_contents;
 		}
 		
-		//Removing pages bbcode
-		$article_contents = preg_split('`\[page\].+\[/page\](.*)`Us', $this->article->get_contents(), -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
-
+		//Removing [page] bbcode
+		$article_contents_clean = preg_split('`\[page\].+\[/page\](.*)`Us', $article_contents, -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
+		
 		//Retrieving pages 
-		preg_match_all('`\[page\]([^[]+)\[/page\]`U', $this->article->get_contents(), $array_page);
+		preg_match_all('`\[page\]([^[]+)\[/page\]`U', $article_contents, $array_page);
 		
 		$nbr_pages = count($array_page[1]);
-		
+		Debug::stop($nbr_pages);
 		// @todo : option de rendre les pages sous forme de lien (comme wiki, dans div flottant à droite)
 		//$pages_link_list = '<ul class="">';
 		$this->build_form($array_page, $current_page);
 		
 		$this->build_view_sources();
 		
-		$pagination = new ArticlesPagination($current_page, $nbr_pages);
-		$pagination->set_url(ArticlesUrlBuilder($this->category->get_id(), $this->category->get_rewrited_name(), $this->article->get_id(), $this->article->get_rewrited_title()) . '%d');
+		$pagination = new ArticlesPagination($current_page, $nbr_pages, 1);
+		$pagination->set_url(ArticlesUrlBuilder::display_article($this->category->get_id(), $this->category->get_rewrited_name(), $this->article->get_id(), $this->article->get_rewrited_title())->absolute() . '%d');
 		
 		$notation = new Notation();
 		$notation->set_module_name('articles');
@@ -114,15 +119,15 @@ class ArticlesDisplayArticlesController extends ModuleController
 		$notation->set_id_in_module($this->article->get_id());
 		
 		$user = $this->article->get_author_user();
-		$user_group_color = User::get_group_color($user->get_groups(), $user->get_level());
+		$user_group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
 		
 		$this->view->put_all(array(
 			'C_EDIT' => $this->auth_moderation || $this->auth_write && $this->article->get_author_user_id() == AppContext::get_current_user()->get_id(),
 			'C_DELETE' => $this->auth_moderation,
 			'C_USER_GROUP_COLOR' => !empty($user_group_color),
 			'TITLE' => $this->article->get_title(),
-			'PICTURE' => $this->article->get_picture_url(),// @todo : link
-			'DATE' => gmdate_format('date_format_short', $this->article->get_date_created()),
+			'PICTURE' => $this->article->get_picture(),// @todo : link
+			'DATE' => $this->article->get_date_created()->format(DATE_FORMAT_SHORT, TIMEZONE_AUTO),
 			'L_COMMENTS' => CommentsService::get_number_and_lang_comments('articles', $this->article->get_id()),
 			'L_PREVIOUS_PAGE' => LangLoader::get_message('previous_page', 'main'),
 			'L_NEXT_PAGE' => LangLoader::get_message('next_page', 'main'),
@@ -131,15 +136,15 @@ class ArticlesDisplayArticlesController extends ModuleController
 			'L_ON' => LangLoader::get_message('on', 'main'),
 			'L_WRITTEN' => LangLoader::get_message('written_by', 'main'),
 			'L_ALERT_DELETE_ARTICLE' => $this->lang['articles.form.alert_delete_article'],
-			'L_SOURCE' => LangLoader::get_message('source', 'main'),
-			'L_SUMMARY' => LangLoader::get_message('summary', 'main'),
+			'L_SOURCE' => $this->lang['articles.sources'],
+			'L_SUMMARY' => $this->lang['articles.summary'],
 			'L_PRINTABLE_VERSION' => LangLoader::get_message('printable_version', 'main'),
 			'KERNEL_NOTATION' => NotationService::display_active_image($notation),
-			'CONTENTS' => isset($article_contents[$current_page]) ? FormatingHelper::second_parse($article_contents[$current_page]) : '',
+			'CONTENTS' => isset($article_contents_clean[$current_page]) ? FormatingHelper::second_parse($article_contents_clean[$current_page]) : '',
 			'PSEUDO' => $user->get_pseudo(),
 			'USER_LEVEL_CLASS' => UserService::get_level_class($user->get_level()),
 			'USER_GROUP_COLOR' => $user_group_color,
-			'PAGINATION_ARTICLES' => $pagination->display(),
+			'PAGINATION_ARTICLES' => $pagination->display()->render(),
 			'PAGE_NAME' => (isset($array_page[1][($current_page-1)]) && $array_page[1][($current_page-1)] != '&nbsp;') ? $array_page[1][($current_page-1)] : '',
 			'U_PAGE_PREVIOUS_ARTICLES' => ($current_page > 1 && $current_page <= $nbr_pages && $nbr_pages > 1) ? ArticlesUrlBuilder::display_article($this->category->get_id(), $this->category->get_rewrited_name(), $this->article->get_id(), $this->article->get_rewrited_title())->absolute() . ($current_page - 1) : '',
 			'L_PREVIOUS_TITLE' => $array_page[1][($current_page-2)],
@@ -149,7 +154,7 @@ class ArticlesDisplayArticlesController extends ModuleController
 			'U_AUTHOR' => UserUrlBuilder::profile($this->article->get_author_user_id())->absolute(),
 			'U_EDIT_ARTICLE' => ArticlesUrlBuilder::edit_article($this->article->get_id())->absolute(),
 			'U_DELETE_ARTICLE' => ArticlesUrlBuilder::delete_article($this->article->get_id())->absolute(),
-			'U_PRINT_ARTICLE' => ArticlesUrlBuilder::print_article(), // @todo : à modifier dans url builder et finaliser lien contrôleur prêt
+			'U_PRINT_ARTICLE' => ArticlesUrlBuilder::print_article()->absolute(), // @todo : à modifier dans url builder et finaliser lien contrôleur prêt
 			'U_SYNDICATION' => ArticlesUrlBuilder::category_syndication($this->article->get_id_category())->rel()
 		));
 		
@@ -158,7 +163,7 @@ class ArticlesDisplayArticlesController extends ModuleController
 		$comments_topic->set_id_in_module($this->article->get_id());
 		$comments_topic->set_url(ArticlesUrlBuilder::display_comments_article($this->category->get_id(), $this->category->get_rewrited_name(), $this->article->get_id(), $this->article->get_rewrited_title()));
 		
-		$this->view->put('COMMENTS', CommentsService::display($comments_topic)->render());
+		$this->view->put('COMMENTS', $comments_topic->display());
 		
 		$this->view->put('FORM', $this->form->display());
 	}
@@ -255,7 +260,7 @@ class ArticlesDisplayArticlesController extends ModuleController
 	
 	private function update_number_view()
 	{
-	    PersistenceContext::get_querier()->inject('UPDATE' . LOW_PRIORITY. ' ' . ArticlesSetup::$articles_table . 'SET number_view = number_view + 1 WHERE id=:id', array('id' => $this->article->get_id()));
+	    PersistenceContext::get_querier()->inject('UPDATE ' . LOW_PRIORITY . ' ' . ArticlesSetup::$articles_table . ' SET number_view = number_view + 1 WHERE id=:id', array('id' => $this->article->get_id()));
 	}
 	
 	private function generate_response()
