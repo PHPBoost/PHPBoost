@@ -45,7 +45,7 @@ class ArticlesFormController extends ModuleController
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save();
-			//$this->redirect();
+			$this->redirect();
 		}
 		
 		$this->tpl->put('FORM', $this->form->display());
@@ -249,13 +249,16 @@ class ArticlesFormController extends ModuleController
 	private function save()
 	{
 		$article = $this->get_article();
-
+		
 		$article->set_title($this->form->get_value('title'));
 		$article->set_id_category($this->form->get_value('id_category')->get_raw_value());
 		$article->set_description($this->form->get_value('description'));
 		$article->set_contents($this->form->get_value('contents'));
-		$article->set_author_name_displayed($this->form->get_value('author_name_displayed'));
-		$article->set_notation_enabled($this->form->get_value('notation_enabled'));
+		
+		$author_name_displayed = $this->form->get_value('author_name_displayed') ? $this->form->get_value('author_name_displayed') : Articles::AUTHOR_NAME_NOTDISPLAYED;
+		$article->set_author_name_displayed($author_name_displayed);
+		$notation_enabled = $this->form->get_value('notation_enabled') ? $this->form->get_value('notation_enabled') : Articles::NOTATION_DISABLED;
+		$article->set_notation_enabled($notation_enabled);
 
 		$picture = $this->form->get_value('picture');
 		if(!empty($picture))
@@ -335,8 +338,6 @@ class ArticlesFormController extends ModuleController
 					)
 				);
 				ContributionService::save_contribution($contribution);
-
-				AppContext::get_response()->redirect(UserUrlBuilder::contribution_success()->absolute());
 			}
 		}
 		else
@@ -387,7 +388,18 @@ class ArticlesFormController extends ModuleController
 		$article = $this->get_article();
 		$category = ArticlesService::get_categories_manager()->get_categories_cache()->get_category($article->get_id_category());
 
-		AppContext::get_response()->redirect(ArticlesUrlBuilder::display_article($category->get_id(), $category->get_rewrited_name(), $article->get_id(), $article->get_rewrited_title()));
+		if ($this->is_contributor_member() && !$article->is_published())
+                {
+                        AppContext::get_response()->redirect(UserUrlBuilder::contribution_success()->absolute());
+                }
+                elseif ($article->is_published())
+                {
+                        AppContext::get_response()->redirect(ArticlesUrlBuilder::display_article($category->get_id(), $category->get_rewrited_name(), $article->get_id(), $article->get_rewrited_title()));
+                }
+                else
+                {
+                        AppContext::get_response()->redirect(ArticlesUrlBuilder::home());
+                }
 	}				
 
 	private function build_response(View $tpl)

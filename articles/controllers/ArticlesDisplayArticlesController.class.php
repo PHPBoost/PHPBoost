@@ -127,6 +127,8 @@ class ArticlesDisplayArticlesController extends ModuleController
 			'C_DELETE' => $this->auth_moderation,
 			'C_USER_GROUP_COLOR' => !empty($user_group_color),
 			'C_COMMENTS_ENABLED' => $comments_enabled,
+			'C_AUTHOR_DISPLAYED' => $this->article->get_author_name_displayed(),
+			'C_NOTATION_ENABLED' => $this->article->get_notation_enabled(),
 			'TITLE' => $this->article->get_title(),
 			'PICTURE' => $this->article->get_picture(),// @todo : link
 			'DATE' => $this->article->get_date_created()->format(DATE_FORMAT_SHORT, TIMEZONE_AUTO),
@@ -135,8 +137,9 @@ class ArticlesDisplayArticlesController extends ModuleController
 			'L_NEXT_PAGE' => LangLoader::get_message('next_page', 'main'),
 			'L_DATE' => LangLoader::get_message('date', 'main'),
 			'L_VIEW' => LangLoader::get_message('views', 'main'),
-			'L_ON' => LangLoader::get_message('on', 'main'),
-			'L_WRITTEN' => LangLoader::get_message('written_by', 'main'),
+			'L_ON' => $this->lang['articles.written.on'],
+			'L_WRITTEN' => $this->lang['articles.written.by'],
+			'L_NO_AUTHOR_DISPLAYED' => $this->lang['articles.no.author.diplsayed'],
 			'L_ALERT_DELETE_ARTICLE' => $this->lang['articles.form.alert_delete_article'],
 			'L_SOURCE' => $this->lang['articles.sources'],
 			'L_SUMMARY' => $this->lang['articles.summary'],
@@ -208,6 +211,7 @@ class ArticlesDisplayArticlesController extends ModuleController
 	private function build_view_sources()
 	{
 	    $sources = $this->article->get_sources();
+	    
 	    $this->view->put('C_SOURCES', !empty($sources));
 	    
 	    $i = 0;

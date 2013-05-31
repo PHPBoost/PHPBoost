@@ -33,12 +33,14 @@ class ArticlesPagination
 	private $pagination;
 	private $current_page;
 	private $number_items_per_page;
+	private $tpl_path;
 	
 	public function __construct($current_page, $number_elements, $number_items_per_page)
 	{
 		$this->current_page = $current_page;
 		$this->number_items_per_page = $number_items_per_page;
-		$this->pagination = new Pagination($this->get_number_pages($number_elements), $this->current_page);
+		$this->tpl_path = 'articles/ArticlesPagination.tpl';
+		$this->pagination = new Pagination($this->get_number_pages($number_elements), $this->current_page, $this->tpl_path);
 	}
 	
 	public function set_url($url)
