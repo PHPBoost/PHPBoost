@@ -98,18 +98,15 @@
 						{L_COM} : <a href="{articles.U_COMMENTS}">{articles.L_NUMBER_COM}</a>
 						<br />
 						# ENDIF #
+						# IF articles.C_NOTATION_ENABLED #
 						{L_NOTE} : {articles.NOTE}
 						<br />
+						# ENDIF #
+						# IF articles.C_AUTHOR_DISPLAYED #
 						{L_WRITTEN} : <a href="{articles.U_AUTHOR}" class="small_link {articles.USER_LEVEL_CLASS}" # IF C_USER_GROUP_COLOR # style="color:{articles.USER_GROUP_COLOR}"# ENDIF #>{articles.PSEUDO}</a>
+						# ENDIF #
 					</div>
 				</div>	
-				<div class="float:right;">	
-					<div style="text-align:right;margin-top:15px;">								
-						<!--<a href="../articles/articles{articles.U_ARTICLE}">
-							{articles.ICON}
-						</a>-->	
-					</div>
-				</div>
 			</div>
 		</div>
 		# END articles #

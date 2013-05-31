@@ -65,12 +65,17 @@
 		<div><b> {L_SOURCE} : </b># START sources #{sources.COMMA}<a href="{sources.URL}" class="small_link">{sources.NAME}</a># END sources #</div>
 		# ENDIF #
 		<div class="spacer">&nbsp;</div>
+		# IF C_NOTATION_ENABLED #
 		<div style="float:left" class="text_small">
 			{KERNEL_NOTATION}
 		</div>
+		# ENDIF #
 		<div style="float:right" class="text_small">
-			{L_WRITTEN}: <a href="{U_AUTHOR}" class="small_link {USER_LEVEL_CLASS}" # IF C_USER_GROUP_COLOR # style="color:{USER_GROUP_COLOR}"# ENDIF #>{PSEUDO}</a>
-			{L_ON}: {DATE}
+			# IF C_AUTHOR_DISPLAYED #
+			{L_WRITTEN}<a href="{U_AUTHOR}" class="small_link {USER_LEVEL_CLASS}" # IF C_USER_GROUP_COLOR # style="color:{USER_GROUP_COLOR}"# ENDIF #>{PSEUDO}</a>{L_ON}{DATE}
+			# ELSE #
+			{L_NO_AUTHOR_DISPLAYED}{DATE}
+			# ENDIF #
 		</div>
 		<div class="spacer"></div>
 	</div>

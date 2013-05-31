@@ -268,6 +268,8 @@ class ArticlesModuleHomePage implements ModuleHomePage
 					'C_EDIT' => $this->auth_moderation || $this->auth_write && $row['author_user_id'] == AppContext::get_current_user()->get_id(),
 					'C_DELETE' => $this->auth_moderation,
 					'C_USER_GROUP_COLOR' => !empty($user_group_color),
+					'C_AUTHOR_DISPLAYED' => $row['author_name_displayed'],
+					'C_NOTATION_ENABLED' => $row['notation_enabled'],
 					'TITLE' => $row['title'],
 					'PICTURE' => $row['picture_url'],// @todo : link
 					'DATE' => gmdate_format('date_format_short', $row['date_created']),
