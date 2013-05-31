@@ -48,7 +48,8 @@ class ArticlesCommentsTopic extends CommentsTopic
 	{
 		$article = $this->get_article();
 
-                switch ($article->get_publishing_state()) {
+                switch ($article->get_publishing_state()) 
+		{
 			case Articles::PUBLISHED_NOW:
                                 return true;
                         break;

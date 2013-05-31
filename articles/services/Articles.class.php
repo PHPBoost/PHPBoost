@@ -51,7 +51,6 @@ class Articles
 	private $end_date_enabled;
 
 	private $sources;
-	private $keywords;
 
 	const NOT_PUBLISHED = 0;
 	const PUBLISHED_NOW = 1;
@@ -268,7 +267,7 @@ class Articles
 			'rewrited_title' => $this->get_rewrited_title(),
 			'description' => $this->get_description(),
 			'contents' => $this->get_contents(),
-			'picture_url' => $this->get_picture()->absolute(),
+			'picture_url' => $this->get_picture()->relative(),
 			'number_view' => $this->get_number_view(),
 			'author_user_id' => $this->get_author_user_id(),
 			'author_name_displayed' => $this->get_author_name_displayed(),
