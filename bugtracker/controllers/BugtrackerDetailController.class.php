@@ -59,6 +59,11 @@ class BugtrackerDetailController extends ModuleController
 		$date_format = $config->get_date_form();
 		$auth_moderate = BugtrackerAuthorizationsService::check_authorizations()->moderation();
 		
+		$main_lang = LangLoader::get('main');
+		
+		$author = $this->bug->get_author_user();
+		$author_group_color = User::get_group_color($author->get_groups(), $author->get_level(), true);
+		
 		switch ($this->bug->get_status())
 		{
 			case 'new' :
@@ -81,7 +86,7 @@ class BugtrackerDetailController extends ModuleController
 		{
 			$this->view->put_all(array(
 				'C_EDIT_BUG'=> true,
-				'L_UPDATE'	=> LangLoader::get_message('update', 'main')
+				'L_UPDATE'	=> $main_lang['update']
 			));
 		}
 		
@@ -92,7 +97,7 @@ class BugtrackerDetailController extends ModuleController
 				'C_REJECT_BUG'	=> $c_reject,
 				'C_HISTORY_BUG'	=> true,
 				'C_DELETE_BUG'	=> true,
-				'L_DELETE' 		=> LangLoader::get_message('delete', 'main')
+				'L_DELETE' 		=> $main_lang['delete']
 			));
 		}
 		
@@ -105,8 +110,9 @@ class BugtrackerDetailController extends ModuleController
 			'C_FIXED_IN' 				=> $this->bug->get_detected_in() ? true : false,
 			'C_COMMENT_BUG'				=> $comments_activated ? true : false,
 			'C_REPRODUCTIBLE' 			=> ($this->bug->is_reproductible() && $this->bug->get_reproduction_method()) ? true : false,
-			'L_ON' 						=> LangLoader::get_message('on', 'main'),
-			'RETURN_NAME' 				=> LangLoader::get_message('back', 'main'),
+			'L_GUEST' 					=> $main_lang['guest'],
+			'L_ON' 						=> $main_lang['on'],
+			'RETURN_NAME' 				=> $main_lang['back'],
 			'LINK_BUG_REJECT'			=> BugtrackerUrlBuilder::reject($this->bug->get_id(), 'detail')->absolute(),
 			'LINK_BUG_REOPEN'			=> BugtrackerUrlBuilder::reopen($this->bug->get_id(), 'detail')->absolute(),
 			'LINK_BUG_EDIT'				=> BugtrackerUrlBuilder::edit($this->bug->get_id() . '/detail')->absolute(),
@@ -115,31 +121,34 @@ class BugtrackerDetailController extends ModuleController
 			'LINK_RETURN' 				=> 'javascript:history.back(1);'
 		));
 		
-		if (UserService::user_exists('WHERE user_aprob = 1 AND user_id=:user_id', array('user_id' => $this->bug->get_assigned_to_id()))) {
-			$user_infos = UserService::get_user('WHERE user_aprob = 1 AND user_id=:user_id', array('user_id' => $this->bug->get_assigned_to_id()));
-			$user_assigned = '<a href="' . UserUrlBuilder::profile($this->bug->get_assigned_to_id())->absolute() . '" class="' . UserService::get_level_class($user_infos->get_level()) . '">' . $user_infos->get_pseudo() . '</a>';
-		}
-		else
-			$user_assigned = $this->lang['bugs.notice.no_one'];
+		$user_assigned = UserService::get_user('WHERE user_aprob = 1 AND user_id=:user_id', array('user_id' => $this->bug->get_assigned_to_id()));
+		$user_assigned_group_color = User::get_group_color($user_assigned->get_groups(), $user_assigned->get_level(), true);
 		
-		$author_infos = (UserService::user_exists('WHERE user_aprob = 1 AND user_id=:user_id', array('user_id' => $this->bug->get_author_id()))) ? UserService::get_user('WHERE user_aprob = 1 AND user_id=:user_id', array('user_id' => $this->bug->get_author_id())) : '';
-		
-		$this->view->assign_vars(array(
-			'ID' 					=> $this->bug->get_id(),
-			'TITLE' 				=> ($cat_in_title_activated == true && $display_categories) ? '[' . $categories[$this->bug->get_category()] . '] ' . $this->bug->get_title() : $this->bug->get_title(),
-			'CONTENTS' 				=> FormatingHelper::second_parse($this->bug->get_contents()),
-			'STATUS' 				=> $this->lang['bugs.status.' . $this->bug->get_status()],
-			'TYPE'					=> (isset($types[$this->bug->get_type()])) ? stripslashes($types[$this->bug->get_type()]) : $this->lang['bugs.notice.none'],
-			'CATEGORY'				=> (isset($categories[$this->bug->get_category()])) ? stripslashes($categories[$this->bug->get_category()]) : $this->lang['bugs.notice.none_e'],
-			'PRIORITY' 				=> (isset($priorities[$this->bug->get_priority()])) ? stripslashes($priorities[$this->bug->get_priority()]) : $this->lang['bugs.notice.none_e'],
-			'SEVERITY' 				=> (isset($severities[$this->bug->get_severity()])) ? stripslashes($severities[$this->bug->get_severity()]['name']) : $this->lang['bugs.notice.none'],
-			'REPRODUCTIBLE'			=> $this->bug->is_reproductible() ? LangLoader::get_message('yes', 'main') : LangLoader::get_message('no', 'main'),
-			'REPRODUCTION_METHOD'	=> FormatingHelper::second_parse($this->bug->get_reproduction_method()),
-			'DETECTED_IN' 			=> (isset($versions[$this->bug->get_detected_in()])) ? stripslashes($versions[$this->bug->get_detected_in()]['name']) : $this->lang['bugs.notice.not_defined'],
-			'FIXED_IN' 				=> (isset($versions[$this->bug->get_fixed_in()])) ? stripslashes($versions[$this->bug->get_fixed_in()]['name']) : $this->lang['bugs.notice.not_defined'],
-			'USER_ASSIGNED'			=> $user_assigned,
-			'AUTHOR' 				=> $author_infos ? '<a href="' . UserUrlBuilder::profile($this->bug->get_author_id())->absolute() . '" class="' . UserService::get_level_class($author_infos->get_level()) . '">' . $author_infos->get_pseudo() . '</a>' : LangLoader::get_message('guest', 'main'),
-			'SUBMIT_DATE'			=> gmdate_format($date_format, $this->bug->get_submit_date()),
+		$this->view->put_all(array(
+			'C_AUTHOR_GROUP_COLOR'			=> !empty($user_assigned_group_color),
+			'C_USER_ASSIGNED_GROUP_COLOR'	=> !empty($author_group_color),
+			'ID'							=> $this->bug->get_id(),
+			'TITLE'							=> ($cat_in_title_activated == true && $display_categories) ? '[' . $categories[$this->bug->get_category()] . '] ' . $this->bug->get_title() : $this->bug->get_title(),
+			'CONTENTS'						=> FormatingHelper::second_parse($this->bug->get_contents()),
+			'STATUS'						=> $this->lang['bugs.status.' . $this->bug->get_status()],
+			'TYPE'							=> (isset($types[$this->bug->get_type()])) ? stripslashes($types[$this->bug->get_type()]) : $this->lang['bugs.notice.none'],
+			'CATEGORY'						=> (isset($categories[$this->bug->get_category()])) ? stripslashes($categories[$this->bug->get_category()]) : $this->lang['bugs.notice.none_e'],
+			'PRIORITY'						=> (isset($priorities[$this->bug->get_priority()])) ? stripslashes($priorities[$this->bug->get_priority()]) : $this->lang['bugs.notice.none_e'],
+			'SEVERITY'						=> (isset($severities[$this->bug->get_severity()])) ? stripslashes($severities[$this->bug->get_severity()]['name']) : $this->lang['bugs.notice.none'],
+			'REPRODUCTIBLE'					=> $this->bug->is_reproductible() ? LangLoader::get_message('yes', 'main') : LangLoader::get_message('no', 'main'),
+			'REPRODUCTION_METHOD'			=> FormatingHelper::second_parse($this->bug->get_reproduction_method()),
+			'DETECTED_IN' 					=> (isset($versions[$this->bug->get_detected_in()])) ? stripslashes($versions[$this->bug->get_detected_in()]['name']) : $this->lang['bugs.notice.not_defined'],
+			'FIXED_IN'						=> (isset($versions[$this->bug->get_fixed_in()])) ? stripslashes($versions[$this->bug->get_fixed_in()]['name']) : $this->lang['bugs.notice.not_defined'],
+			'USER_ASSIGNED'					=> $user_assigned,
+			'SUBMIT_DATE'					=> gmdate_format($date_format, $this->bug->get_submit_date()),
+			'AUTHOR'						=> $author->get_pseudo(),
+			'AUTHOR_LEVEL_CLASS'			=> UserService::get_level_class($author->get_level()),
+			'AUTHOR_GROUP_COLOR'			=> $author_group_color,
+			'USER_ASSIGNED'					=> $user_assigned->get_pseudo(),
+			'USER_ASSIGNED_LEVEL_CLASS'		=> UserService::get_level_class($user_assigned->get_level()),
+			'USER_ASSIGNED_GROUP_COLOR'		=> $user_assigned_group_color,
+			'LINK_AUTHOR_PROFILE'			=> UserUrlBuilder::profile($author->get_id())->absolute(),
+			'LINK_USER_ASSIGNED_PROFILE'	=> UserUrlBuilder::profile($user_assigned->get_id())->absolute(),
 		));
 		
 		//Comments display

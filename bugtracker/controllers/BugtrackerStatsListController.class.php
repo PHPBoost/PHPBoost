@@ -76,7 +76,8 @@ class BugtrackerStatsListController extends ModuleController
 			'C_FIXED_BUGS' 			=> (float)$nbr_fixed_bugs,
 			'C_BUGS_NOT_REJECTED' 	=> (float)$nbr_bugs_not_rejected,
 			'C_DISPLAY_VERSIONS'	=> $display_versions,
-			'C_DISPLAY_TOP_POSTERS'	=> $config->get_stats_top_posters_activated()
+			'C_DISPLAY_TOP_POSTERS'	=> $config->get_stats_top_posters_activated(),
+			'L_GUEST'				=> LangLoader::get_message('guest', 'main')
 		));
 		
 		if (!empty($nbr_fixed_bugs))
@@ -98,9 +99,9 @@ class BugtrackerStatsListController extends ModuleController
 		}
 		
 		$i = 1;
-		$result = PersistenceContext::get_querier()->select("SELECT user_id, login, level, COUNT(*) as nb_bugs
+		$result = PersistenceContext::get_querier()->select("SELECT member.*, COUNT(*) as nb_bugs
 		FROM " . BugtrackerSetup::$bugtracker_table . " b
-		JOIN " . DB_TABLE_MEMBER . " a ON (a.user_id = b.author_id)
+		JOIN " . DB_TABLE_MEMBER . " member ON (member.user_id = b.author_id)
 		WHERE status <> 'rejected'
 		GROUP BY author_id
 		ORDER BY nb_bugs DESC
@@ -108,11 +109,19 @@ class BugtrackerStatsListController extends ModuleController
 		
 		while ($row = $result->fetch())
 		{
+			//Author
+			$author = new User();
+			$author->set_properties($row);
+			$author_group_color = User::get_group_color($author->get_groups(), $author->get_level(), true);
+			
 			$this->view->assign_block_vars('top_poster', array(
-				'ID' 				=> $i,
-				'LINK_USER_PROFILE'	=> UserUrlBuilder::profile($row['user_id'])->absolute(),
-				'LOGIN' 			=> !empty($row['login']) ? '<a href="' . UserUrlBuilder::profile($row['user_id'])->absolute() . '" class="' . UserService::get_level_class($row['level']) . '">' . $row['login'] . '</a>': LangLoader::get_message('guest', 'main'),
-				'USER_BUGS' 		=> $row['nb_bugs']
+				'C_AUTHOR_GROUP_COLOR'	=> !empty($author_group_color),
+				'ID' 					=> $i,
+				'AUTHOR'				=> $author->get_pseudo(),
+				'AUTHOR_LEVEL_CLASS'	=> UserService::get_level_class($author->get_level()),
+				'AUTHOR_GROUP_COLOR'	=> $author_group_color,
+				'LINK_AUTHOR_PROFILE'	=> UserUrlBuilder::profile($author->get_id())->absolute(),
+				'USER_BUGS' 			=> $row['nb_bugs']
 			));
 			
 			$i++;

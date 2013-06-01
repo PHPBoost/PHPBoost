@@ -32,6 +32,7 @@ class Bug
 	private $contents;
 	
 	private $author_id;
+	private $author_user;
 	
 	private $submit_date;
 	private $fix_date;
@@ -50,6 +51,7 @@ class Bug
 	
 	private $progress;
 	private $assigned_to_id;
+	private $assigned_user;
 	
 	const NEW_BUG = 'new';
 	const ASSIGNED = 'assigned';
@@ -96,6 +98,11 @@ class Bug
 	public function get_author_id()
 	{
 		return $this->author_id;
+	}
+	
+	public function get_author_user()
+	{
+		return $this->author_user;
 	}
 	
 	public function set_submit_date($submit_date)
@@ -263,6 +270,11 @@ class Bug
 		return $this->assigned_to_id;
 	}
 	
+	public function get_assigned_user()
+	{
+		return $this->assigned_user;
+	}
+	
 	public function get_properties()
 	{
 		return array(
@@ -305,6 +317,10 @@ class Bug
 		$this->set_fixed_in($properties['fixed_in']);
 		$this->set_progress($properties['progress']);
 		$this->set_assigned_to_id($properties['assigned_to_id']);
+		
+		$user = new User();
+		$user->set_properties($properties);
+		$this->author_user = $user;
 	}
 	
 	public function init_default_properties()

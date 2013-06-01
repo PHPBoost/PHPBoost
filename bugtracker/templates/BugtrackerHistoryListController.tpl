@@ -22,7 +22,7 @@
 	# START history #
 	<tr class="text_center"> 
 		<td class="row2"> 
-			{history.UPDATER}
+			# IF history.UPDATER #<a href="{history.U_UPDATER_PROFILE}" class="small_link {history.UPDATER_LEVEL_CLASS}" # IF history.C_UPDATER_GROUP_COLOR # style="color:{history.UPDATER_GROUP_COLOR}" # ENDIF #>{history.UPDATER}</a># ELSE #{L_GUEST}# ENDIF #
 		</td>
 		<td class="row2"> 
 			{history.UPDATED_FIELD}

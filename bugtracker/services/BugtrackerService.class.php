@@ -145,7 +145,11 @@ class BugtrackerService
 	 */
 	public static function get_bug($condition, array $parameters)
 	{
-		$row = self::$db_querier->select_single_row(BugtrackerSetup::$bugtracker_table, array('*'), $condition, $parameters);
+		$row = self::$db_querier->select_single_row_query('SELECT bugtracker.*, author.*
+		FROM ' . BugtrackerSetup::$bugtracker_table . ' bugtracker
+		LEFT JOIN ' . DB_TABLE_MEMBER . ' author ON author.user_id = bugtracker.author_id
+		' . $condition, $parameters);
+		
 		$bug = new Bug();
 		$bug->set_properties($row);
 		return $bug;
