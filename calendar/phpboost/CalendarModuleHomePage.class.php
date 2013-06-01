@@ -126,6 +126,8 @@ class CalendarModuleHomePage implements ModuleHomePage
 		
 		$get_event = $request->get_value('event', '');
 		
+		$main_lang = LangLoader::get('main');
+		
 		$checkdate = checkdate($month, $day, $year); //Validité de la date entrée.
 		if ($checkdate === true)
 		{
@@ -198,7 +200,9 @@ class CalendarModuleHomePage implements ModuleHomePage
 				'LINK_NEXT' => ($month == 12) ? CalendarUrlBuilder::home(($year + 1) . '/1/1')->absolute() : CalendarUrlBuilder::home($year . '/' . ($month + 1) . '/1')->absolute(),
 				'LINK_PREVIOUS_EVENT' => ( $get_event != 'fd' ) ? '<a href="'. CalendarUrlBuilder::home($year . '/' . $month . '/' . $day . '/down#act')->absolute() . '" title="">&laquo;</a>' : '',
 				'LINK_NEXT_EVENT' => ( $get_event != 'fu') ? '<a href="'. CalendarUrlBuilder::home($year . '/' . $month . '/' . $day . '/up#act')->absolute() . '" title="">&raquo;</a>' : '',
-				'L_SUBMIT' => LangLoader::get_message('submit', 'main')
+				'L_UPDATE' => $main_lang['update'],
+				'L_DELETE' => $main_lang['delete'],
+				'L_GUEST' => $main_lang['guest'],
 			));
 			
 			//Récupération des actions du mois en cours.
@@ -293,7 +297,7 @@ class CalendarModuleHomePage implements ModuleHomePage
 			//Affichage de l'action pour la période du jour donné.
 			if (!empty($day))
 			{
-				$result = $this->sql_querier->select("SELECT calendar.*, member.login, member.level
+				$result = $this->sql_querier->select("SELECT calendar.*, member.*
 				FROM " . CalendarSetup::$calendar_table . " calendar
 				LEFT JOIN " . DB_TABLE_MEMBER . " member ON member.user_id=calendar.author_id
 				WHERE (calendar.start_date BETWEEN '" . mktime(0, 0, 0, $month, $day, $year) . "' AND '" . mktime(23, 59, 59, $month, $day, $year) . "')
@@ -314,19 +318,27 @@ class CalendarModuleHomePage implements ModuleHomePage
 						$del = '';
 					}
 					
+					//Author
+					$author = new User();
+					$author->set_properties($row);
+					$author_group_color = User::get_group_color($author->get_groups(), $author->get_level(), true);
+					
 					$comments_topic->set_id_in_module($row['id']);
 					$comments_topic->set_url(new Url(CalendarUrlBuilder::home($year . '/' . $month . '/' . $day . '/' . $row['id'])->absolute()));
 					
 					$this->view->assign_block_vars('action', array(
+						'C_AUTHOR_GROUP_COLOR'		=> !empty($author_group_color),
 						'START_DATE' => gmdate_format('date_format', $row['start_date']),
 						'END_DATE' => gmdate_format('date_format', $row['end_date']),
 						'TITLE' => $row['title'],
 						'CONTENTS' => FormatingHelper::second_parse($row['contents']),
-						'LOGIN' => '<a class="' . UserService::get_level_class($row['level']) . '"" href="'. UserUrlBuilder::profile($row['author_id'])->absolute() . '">' . $row['login'] . '</a>',
 						'COM' => '<a href="' . CalendarUrlBuilder::home($year . '/' . $month . '/' . $day . '/' . $row['id'] . '#comments_list')->absolute() . '">'. CommentsService::get_number_and_lang_comments('calendar', $row['id']) . '</a>',
 						'EDIT' => $edit,
 						'DEL' => $del,
-						'L_ON' => LangLoader::get_message('on', 'main')
+						'AUTHOR'					=> $author->get_pseudo(),
+						'AUTHOR_LEVEL_CLASS'		=> UserService::get_level_class($author->get_level()),
+						'AUTHOR_GROUP_COLOR'		=> $author_group_color,
+						'LINK_AUTHOR_PROFILE'		=> UserUrlBuilder::profile($author->get_id())->absolute()
 					));
 					
 					$check_action = true;

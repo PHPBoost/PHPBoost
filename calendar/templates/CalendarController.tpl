@@ -94,12 +94,12 @@
 					<div class="module_bottom_r"></div>
 					<div class="module_bottom">
 						<div class="event_display_author">
-							{@calendar.labels.created_by}:&nbsp;&nbsp;{action.LOGIN}
+							{@calendar.labels.created_by} : # IF action.AUTHOR #<a href="{action.LINK_AUTHOR_PROFILE}" class="small_link {action.AUTHOR_LEVEL_CLASS}" # IF action.C_AUTHOR_GROUP_COLOR # style="color:{action.AUTHOR_GROUP_COLOR}" # ENDIF #>{action.AUTHOR}</a># ELSE #{L_GUEST}# ENDIF #
 						</div>
 						<div class="event_display_dates">
-							{@calendar.labels.start_date}:&nbsp;&nbsp;{action.START_DATE}
+							{@calendar.labels.start_date} : {action.START_DATE}
 							<br />
-							{@calendar.labels.end_date}:&nbsp;&nbsp;{action.END_DATE}
+							{@calendar.labels.end_date} : {action.END_DATE}
 						</div>
 					</div>
 				</div>

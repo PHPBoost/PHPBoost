@@ -281,7 +281,6 @@ class CalendarFormController extends ModuleController
 	private function generate_response(View $tpl)
 	{
 		$event = $this->get_event();
-		$category = CalendarService::get_categories_manager()->get_categories_cache()->get_category($event->get_id_cat());
 		
 		$response = new CalendarDisplayResponse();
 		$response->add_breadcrumb_link($this->lang['calendar.module_title'], CalendarUrlBuilder::home());
@@ -299,7 +298,7 @@ class CalendarFormController extends ModuleController
 				if ($id != Category::ROOT_CATEGORY)
 					$response->add_breadcrumb_link($category->get_name(), CalendarUrlBuilder::display_category($id, $category->get_rewrited_name()));
 			}
-			$category = $categories[$event->get_id()];
+			$category = $categories[$event->get_id_cat()];
 			$response->add_breadcrumb_link($event->get_title(), CalendarUrlBuilder::display_event($category->get_rewrited_name(), $event->get_id(), $event->get_title()));
 			
 			$response->add_breadcrumb_link($this->lang['calendar.titles.edit_event'], CalendarUrlBuilder::edit_event($event->get_id()));
