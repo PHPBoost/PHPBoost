@@ -58,6 +58,8 @@ class BugtrackerHistoryListController extends ModuleController
 		
 		$current_page = $request->get_int('page', 1);
 		
+		$main_lang = LangLoader::get('main');
+		
 		//Count history lines number
 		$history_lines_number = BugtrackerService::count_history($this->bug->get_id());
 		
@@ -67,7 +69,8 @@ class BugtrackerHistoryListController extends ModuleController
 		$this->view->put_all(array(
 			'C_HISTORY' 	=> (float)$history_lines_number,
 			'PAGINATION'	=> $pagination->display()->render(),
-			'RETURN_NAME' 	=> LangLoader::get_message('back', 'main'),
+			'L_GUEST' 		=> $main_lang['guest'],
+			'RETURN_NAME' 	=> $main_lang['back'],
 			'LINK_RETURN' 	=> 'javascript:history.back(1);'
 		));
 		$limit_page = $current_page > 0 ? $current_page : 1;
@@ -76,7 +79,7 @@ class BugtrackerHistoryListController extends ModuleController
 		$result = PersistenceContext::get_querier()->select("SELECT *
 		FROM " . BugtrackerSetup::$bugtracker_table . " b
 		JOIN " . BugtrackerSetup::$bugtracker_history_table . " bh ON (bh.bug_id = b.id)
-		JOIN " . DB_TABLE_MEMBER . " a ON (a.user_id = bh.updater_id)
+		LEFT JOIN " . DB_TABLE_MEMBER . " member ON (member.user_id = bh.updater_id)
 		WHERE b.id = '" . $this->bug->get_id() . "'
 		ORDER BY update_date DESC
 		LIMIT ". $items_per_page ." OFFSET :start_limit",
@@ -121,8 +124,8 @@ class BugtrackerHistoryListController extends ModuleController
 					break;
 				
 				case 'reproductible': 
-					$old_value = ($row['old_value'] == true) ? LangLoader::get_message('yes', 'main') : LangLoader::get_message('no', 'main');
-					$new_value = ($row['new_value'] == true) ? LangLoader::get_message('yes', 'main') : LangLoader::get_message('no', 'main');
+					$old_value = ($row['old_value'] == true) ? $main_lang['yes'] : $main_lang['no'];
+					$new_value = ($row['new_value'] == true) ? $main_lang['yes'] : $main_lang['no'];
 					break;
 				
 				case 'assigned_to_id': 
@@ -137,13 +140,21 @@ class BugtrackerHistoryListController extends ModuleController
 					$new_value = $row['new_value'];
 			}
 			
+			$user = new User();
+			$user->set_properties($row);
+			$user_group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
+			
 			$this->view->assign_block_vars('history', array(
-				'UPDATED_FIELD'	=> (!empty($row['updated_field']) ? $this->lang['bugs.labels.fields.' . $row['updated_field']] : $this->lang['bugs.notice.none']),
-				'OLD_VALUE'		=> stripslashes($old_value),
-				'NEW_VALUE'		=> stripslashes($new_value),
-				'COMMENT'		=> $row['change_comment'],
-				'UPDATER' 		=> !empty($row['login']) ? '<a href="' . UserUrlBuilder::profile($row['user_id'])->absolute() . '" class="' . UserService::get_level_class($row['level']) . '">' . $row['login'] . '</a>': LangLoader::get_message('guest', 'main'),
-				'DATE' 			=> gmdate_format($date_format, $row['update_date'])
+				'C_UPDATER_GROUP_COLOR'	=> !empty($user_group_color),
+				'UPDATED_FIELD'			=> (!empty($row['updated_field']) ? $this->lang['bugs.labels.fields.' . $row['updated_field']] : $this->lang['bugs.notice.none']),
+				'OLD_VALUE'				=> stripslashes($old_value),
+				'NEW_VALUE'				=> stripslashes($new_value),
+				'COMMENT'				=> $row['change_comment'],
+				'DATE' 					=> gmdate_format($date_format, $row['update_date']),
+				'UPDATER'				=> $user->get_pseudo(),
+				'UPDATER_LEVEL_CLASS'	=> UserService::get_level_class($user->get_level()),
+				'UPDATER_GROUP_COLOR'	=> $user_group_color,
+				'LINK_UPDATER_PROFILE'	=> UserUrlBuilder::profile($user->get_id())->absolute(),
 			));
 		}
 	}

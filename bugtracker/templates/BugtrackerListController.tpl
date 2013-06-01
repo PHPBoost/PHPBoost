@@ -49,8 +49,8 @@ function Confirm() {
 			{bug.INFOS}
 		</td>
 		<td class="row2" {bug.LINE_COLOR}>
-			{bug.DATE}<br />
-			{bug.AUTHOR}
+			{L_ON}: {bug.DATE}<br />
+			# IF C_DISPLAY_AUTHOR #{L_BY}: # IF bug.AUTHOR #<a href="{bug.LINK_AUTHOR_PROFILE}" class="small_link {bug.AUTHOR_LEVEL_CLASS}" # IF bug.C_AUTHOR_GROUP_COLOR # style="color:{bug.AUTHOR_GROUP_COLOR}" # ENDIF #>{bug.AUTHOR}</a># ELSE #{L_GUEST}# ENDIF ## ENDIF #
 		</td>
 		# IF C_IS_ADMIN #
 		<td class="row2" {bug.LINE_COLOR}> 

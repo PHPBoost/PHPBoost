@@ -42,7 +42,7 @@
 	</dl>
 	<dl>
 		<dt>{@bugs.labels.fields.assigned_to_id}</dt>
-		<dd>{USER_ASSIGNED}</dd>
+		<dd># IF USER_ASSIGNED #<a href="{LINK_USER_ASSIGNED_PROFILE}" class="small_link {USER_ASSIGNED_LEVEL_CLASS}" # IF C_USER_ASSIGNED_GROUP_COLOR # style="color:{USER_ASSIGNED_GROUP_COLOR}" # ENDIF #>{USER_ASSIGNED}</a># ELSE #{@bugs.notice.no_one}# ENDIF #</dd>
 	</dl>
 	# IF C_FIXED_IN #
 	<dl>
@@ -105,7 +105,7 @@
 # ENDIF #
 
 <div class="text_small float_right">
-	{@bugs.labels.fields.author_id}: {AUTHOR}, {L_ON}: {SUBMIT_DATE}
+	{@bugs.labels.fields.author_id}: # IF AUTHOR #<a href="{LINK_AUTHOR_PROFILE}" class="small_link {AUTHOR_LEVEL_CLASS}" # IF C_AUTHOR_GROUP_COLOR # style="color:{AUTHOR_GROUP_COLOR}" # ENDIF #>{AUTHOR}</a># ELSE #{L_GUEST}# ENDIF #, {L_ON}: {SUBMIT_DATE}
 </div>
 
 <div class="spacer">&nbsp;</div>

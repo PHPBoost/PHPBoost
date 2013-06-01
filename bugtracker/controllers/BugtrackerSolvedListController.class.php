@@ -71,6 +71,8 @@ class BugtrackerSolvedListController extends ModuleController
 		$filter = $request->get_value('filter', '');
 		$filter_id = $request->get_value('filter_id', '');
 		
+		$main_lang = LangLoader::get('main');
+		
 		if (!empty($filter) && empty($filter_id))
 		{
 			$filter = $filter_id = '';
@@ -138,8 +140,8 @@ class BugtrackerSolvedListController extends ModuleController
 			'C_BUGS' 					=> (int)$nbr_bugs,
 			'PAGINATION' 				=> $pagination->display()->render(),
 			'BUGS_COLSPAN' 				=> $bugs_colspan,
-			'L_UPDATE' 					=> LangLoader::get_message('update', 'main'),
-			'L_DELETE' 					=> LangLoader::get_message('delete', 'main'),
+			'L_UPDATE' 					=> $main_lang['update'],
+			'L_DELETE' 					=> $main_lang['delete'],
 			'L_NO_BUG' 					=> empty($filters) ? $this->lang['bugs.notice.no_bug_solved'] : (sizeof($filters) > 1 ? $this->lang['bugs.notice.no_bug_matching_filters'] : $this->lang['bugs.notice.no_bug_matching_filter']),
 			'L_DATE'					=> $this->lang['bugs.labels.fields.fix_date'],
 			'L_REOPEN_REJECT'			=> $this->lang['bugs.actions.reopen'],

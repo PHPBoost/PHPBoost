@@ -71,6 +71,8 @@ class BugtrackerUnsolvedListController extends ModuleController
 		$filter = $request->get_value('filter', '');
 		$filter_id = $request->get_value('filter_id', '');
 		
+		$main_lang = LangLoader::get('main');
+		
 		if (!empty($filter) && empty($filter_id))
 		{
 			$filter = $filter_id = '';
@@ -137,10 +139,14 @@ class BugtrackerUnsolvedListController extends ModuleController
 		$this->view->put_all(array(
 			'C_BUGS' 					=> (int)$nbr_bugs,
 			'C_DISPLAY_TYPES' 			=> $display_types,
+			'C_DISPLAY_AUTHOR'			=> true,
 			'PAGINATION' 				=> $pagination->display()->render(),
 			'BUGS_COLSPAN' 				=> $bugs_colspan,
-			'L_UPDATE' 					=> LangLoader::get_message('update', 'main'),
-			'L_DELETE' 					=> LangLoader::get_message('delete', 'main'),
+			'L_UPDATE' 					=> $main_lang['update'],
+			'L_DELETE' 					=> $main_lang['delete'],
+			'L_ON' 						=> $main_lang['on'],
+			'L_BY' 						=> $main_lang['by'],
+			'L_GUEST' 					=> $main_lang['guest'],
 			'L_NO_BUG' 					=> empty($filters) ? $this->lang['bugs.notice.no_bug'] : (sizeof($filters) > 1 ? $this->lang['bugs.notice.no_bug_matching_filters'] : $this->lang['bugs.notice.no_bug_matching_filter']),
 			'L_DATE'					=> $this->lang['bugs.labels.detected'],
 			'L_REOPEN_REJECT'			=> $this->lang['bugs.actions.reject'],
@@ -158,10 +164,10 @@ class BugtrackerUnsolvedListController extends ModuleController
 			'LINK_BUG_DATE_BOTTOM' 		=> BugtrackerUrlBuilder::unsolved('date/bottom/'. $current_page . (!empty($filter) ? '/' . $filter . '/' . $filter_id : ''))->absolute()
 		));
 		
-		$result = PersistenceContext::get_querier()->select("SELECT b.*, com.number_comments, m.login, m.level
+		$result = PersistenceContext::get_querier()->select("SELECT b.*, com.number_comments, member.*
 		FROM " . BugtrackerSetup::$bugtracker_table . " b
 		LEFT JOIN " . DB_TABLE_COMMENTS_TOPIC . " com ON com.id_in_module = b.id AND com.module_id = 'bugtracker'
-		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = b.author_id AND m.user_aprob = 1
+		LEFT JOIN " . DB_TABLE_MEMBER . " member ON member.user_id = b.author_id AND member.user_aprob = 1
 		WHERE status <> 'fixed' AND status <> 'rejected'" .
 		$select_filters . "
 		ORDER BY " . $field_bdd . " " . $mode . "
@@ -176,13 +182,22 @@ class BugtrackerUnsolvedListController extends ModuleController
 			//Comments number
 			$nbr_coms = $row['number_comments'];
 			
+			//Author
+			$author = new User();
+			$author->set_properties($row);
+			$author_group_color = User::get_group_color($author->get_groups(), $author->get_level(), true);
+			
 			$this->view->assign_block_vars('bug', array(
+				'C_AUTHOR_GROUP_COLOR'		=> !empty($author_group_color),
 				'ID'						=> $row['id'],
 				'TITLE'						=> ($cat_in_title_activated == true && $display_categories) ? '[' . $categories[$row['category']] . '] ' . $row['title'] : $row['title'],
 				'INFOS'						=> ($progress_bar_activated && $row['progress'] ? '<span class="progressBar progress' . $row['progress'] . '">' . $row['progress'] . '%</span><br/>' : '') . $this->lang['bugs.labels.fields.status'] . ' : ' . $this->lang['bugs.status.' . $row['status']] . ($comments_activated == true ? '<br /><a href="' . BugtrackerUrlBuilder::detail($row['id'] . '/#comments_list')->absolute() . '">' . (empty($nbr_coms) ? 0 : $nbr_coms) . ' ' . ($nbr_coms <= 1 ? LangLoader::get_message('comment', 'comments-common') : LangLoader::get_message('comments', 'comments-common')) . '</a>' : ''),
 				'LINE_COLOR' 				=> (!empty($row['severity']) && isset($severities[$row['severity']])) ? 'style="background-color:' . stripslashes($severities[$row['severity']]['color']) . ';"' : '',
-				'DATE' 						=> LangLoader::get_message('on', 'main') . ' : ' . gmdate_format($config->get_date_form(), $row['submit_date']),
-				'AUTHOR'					=> LangLoader::get_message('by', 'main') . ' : ' . (!empty($row['login']) ? '<a href="' . UserUrlBuilder::profile($row['author_id'])->absolute() . '" class="' . UserService::get_level_class($row['level']) . '">' . $row['login'] . '</a>' : LangLoader::get_message('guest', 'main')),
+				'DATE' 						=> gmdate_format($config->get_date_form(), $row['submit_date']),
+				'AUTHOR'					=> $author->get_pseudo(),
+				'AUTHOR_LEVEL_CLASS'		=> UserService::get_level_class($author->get_level()),
+				'AUTHOR_GROUP_COLOR'		=> $author_group_color,
+				'LINK_AUTHOR_PROFILE'		=> UserUrlBuilder::profile($author->get_id())->absolute(),
 				'LINK_BUG_DETAIL'			=> BugtrackerUrlBuilder::detail($row['id'] . '/' . Url::encode_rewrite($row['title']))->absolute(),
 				'LINK_BUG_REOPEN_REJECT'	=> BugtrackerUrlBuilder::reject($row['id'], 'unsolved', $current_page, (!empty($filter) ? $filter : ''), (!empty($filter) ? $filter_id : ''))->absolute(),
 				'LINK_BUG_EDIT'				=> BugtrackerUrlBuilder::edit($row['id'] . '/unsolved/' . $current_page . (!empty($filter) ? '/' . $filter . '/' . $filter_id : ''))->absolute(),
