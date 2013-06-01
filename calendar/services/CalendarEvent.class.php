@@ -38,6 +38,7 @@ class CalendarEvent
 	private $end_date;
 	
 	private $author_id;
+	private $author_user;
 	
 	private $registration_authorized;
 	private $max_registred_members;
@@ -132,6 +133,11 @@ class CalendarEvent
 		return $this->author_id;
 	}
 	
+	public function get_author_user()
+	{
+		return $this->author_user;
+	}
+	
 	public function set_registration_authorized($registration_authorized)
 	{
 		$this->registration_authorized = $registration_authorized;
@@ -214,6 +220,10 @@ class CalendarEvent
 		$this->set_max_registred_members($properties['max_registred_members']);
 		$this->set_repeat_number($properties['repeat_number']);
 		$this->set_repeat_type($properties['repeat_type']);
+		
+		$user = new User();
+		$user->set_properties($properties);
+		$this->author_user = $user;
 	}
 	
 	public function init_default_properties()

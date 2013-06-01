@@ -57,7 +57,7 @@ class CalendarService
 	 */
 	public static function update(CalendarEvent $event)
 	{
-		self::$db_querier->update(NewsSetup::$news_table, $event->get_properties(), 'WHERE id=:id', array('id' => $event->get_id()));
+		self::$db_querier->update(CalendarSetup::$calendar_table, $event->get_properties(), 'WHERE id=:id', array('id' => $event->get_id()));
 	}
 	
 	 /**
@@ -77,7 +77,11 @@ class CalendarService
 	 */
 	public static function get_event($condition, array $parameters)
 	{
-		$row = self::$db_querier->select_single_row(CalendarSetup::$calendar_table, array('*'), $condition, $parameters);
+		$row = self::$db_querier->select_single_row_query('SELECT calendar.*, author.*
+		FROM ' . CalendarSetup::$calendar_table . ' calendar
+		LEFT JOIN ' . DB_TABLE_MEMBER . ' author ON author.user_id = calendar.author_id
+		' . $condition, $parameters);
+		
 		$event = new CalendarEvent();
 		$event->set_properties($row);
 		return $event;
