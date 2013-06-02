@@ -328,17 +328,17 @@
 									</th>
 								</tr>
 								<tr>
-									<td class="row2 text_small" style="width:50%;border:none;padding:4px;">
+									# IF C_ACTIV_TITLE #<td class="row2 text_small" style="width:50%;border:none;padding:4px;">
 										<strong>{L_NAME}:</strong> {NAME}
-									</td>
-									<td class="row2 text_small" style="border:none;padding:4px;">
+									</td># ENDIF #
+									# IF C_ACTIV_POSTOR #<td class="row2 text_small" style="border:none;padding:4px;">
 										<strong>{L_POSTOR}:</strong> {POSTOR}
-									</td>
+									</td># ENDIF #
 								</tr>
 								<tr>										
-									<td class="row2 text_small" style="border:none;padding:4px;">
+									# IF C_ACTIV_VIEW #<td class="row2 text_small" style="border:none;padding:4px;">
 										<strong>{L_VIEWS}:</strong> {VIEWS}
-									</td>
+									</td># ENDIF #
 									<td class="row2 text_small" style="border:none;padding:4px;">
 										<strong>{L_ADD_ON}:</strong> {DATE}
 									</td>
@@ -352,12 +352,12 @@
 									</td>
 								</tr>
 								<tr>										
-									<td class="row2 text_small" style="border:none;padding:4px;">
+									# IF C_ACTIV_NOTE #<td class="row2 text_small" style="border:none;padding:4px;">
 										{KERNEL_NOTATION}
-									</td>
-									<td class="row2 text_small" style="border:none;padding:4px;vertical-align:top">
+									</td># ENDIF #
+									# IF C_ACTIV_COM # #<td class="row2 text_small" style="border:none;padding:4px;vertical-align:top">
 										<strong>{L_COM}:</strong> {COM}
-									</td>
+									</td># ENDIF #
 								</tr>
 								
 								# IF C_GALLERY_PICS_MODO #

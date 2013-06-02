@@ -396,6 +396,11 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 					$Template->put_all(array(
 						'C_GALLERY_PICS_MAX' => true,
 						'C_GALLERY_PICS_MODO' => $is_modo ? true : false,
+						'C_ACTIV_POSTOR' => $CONFIG_GALLERY['activ_user'],
+						'C_ACTIV_VIEW' => $CONFIG_GALLERY['activ_view'],
+						'C_ACTIV_TITLE' => $CONFIG_GALLERY['activ_title'],
+						'C_ACTIV_COM' => $CONFIG_GALLERY['activ_com'],
+						'C_ACTIV_NOTE' => $CONFIG_GALLERY['activ_note'],
 						'ID' => $info_pics['id'],
 						'IMG_MAX' => '<img src="' . PATH_TO_ROOT . '/gallery/show_pics' . url('.php?id=' . $g_idpics . '&amp;cat=' . $g_idcat) . '" alt="" />',
 						'NAME' => '<span id="fi_' . $info_pics['id'] . '">' . stripslashes($info_pics['name']) . '</span> <span id="fi' . $info_pics['id'] . '"></span>',
