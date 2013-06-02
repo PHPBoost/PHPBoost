@@ -236,6 +236,9 @@
 			
 			
 			# IF C_ADD_GROUP #
+			
+			# INCLUDE message_helper #
+			
 			<form action="admin_groups.php?add=1" method="post" enctype="multipart/form-data" class="fieldset_content">				
 				<fieldset>
 				<legend>{L_UPLOAD_GROUPS}</legend>						
