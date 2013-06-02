@@ -187,7 +187,7 @@ class MediaHomePageExtensionPoint implements HomePageExtensionPoint
 				'TARGET_ON_CHANGE_ORDER' => ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? 'media-0-' . $id_cat . '.php?' : 'media.php?cat=' . $id_cat . '&'
 			));
 	
-			$result = $this->sql_querier->query_while("SELECT v.id, v.iduser, v.name, v.timestamp, v.counter, v.infos, v.contents, mb.login, mb.level, notes.average_notes, com.number_comments
+			$result = $this->sql_querier->query_while("SELECT v.id, v.iduser, v.name, v.timestamp, v.counter, v.infos, v.contents, mb.login, mb.user_groups, mb.level, notes.average_notes, com.number_comments
 				FROM " . PREFIX . "media AS v
 				LEFT JOIN " . DB_TABLE_MEMBER . " AS mb ON v.iduser = mb.user_id
 				LEFT JOIN " . DB_TABLE_AVERAGE_NOTES . " notes ON v.id = notes.id_in_module AND notes.module_name = 'media'
@@ -204,12 +204,14 @@ class MediaHomePageExtensionPoint implements HomePageExtensionPoint
 			{
 				$notation->set_id_in_module($row['id']);
 				
+				$group_color = User::get_group_color($row['user_groups'], $row['level']);
+				
 				$tpl->assign_block_vars('file', array(
 					'NAME' => $row['name'],
 					'IMG_NAME' => str_replace('"', '\"', $row['name']),
 					'C_DESCRIPTION' => !empty($row['contents']),
 					'DESCRIPTION' => FormatingHelper::second_parse($row['contents']),
-					'POSTER' => !empty($row['login']) ? sprintf($MEDIA_LANG['media_added_by'], $row['login'], UserUrlBuilder::profile($row['iduser'])->absolute(), $level[$row['level']]) : $LANG['guest'],
+					'POSTER' => $MEDIA_LANG['media_added_by'] . ' : ' . !empty($row['login']) ? '<a href="' . UserUrlBuilder::profile($row['user_id'])->absolute() . '" class="'.UserService::get_level_class($row['level']).'"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . $row['login'] . '</a>' : $LANG['guest'],
 					'DATE' => sprintf($MEDIA_LANG['add_on_date'], gmdate_format('date_format_short', $row['timestamp'])),
 					'COUNT' => sprintf($MEDIA_LANG['view_n_times'], $row['counter']),
 					'NOTE' => NotationService::display_static_image($notation),

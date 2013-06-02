@@ -113,8 +113,7 @@ $MEDIA_LANG = array(
 'sort_popularity' => 'Popularity',
 'sort_title' => 'Title',
 'media_infos' => 'Information on the multimedia file',
-'media_added' => '<a href="%2$s"%3$s>%1$s</a>',
-'media_added_by' => 'By <a href="%2$s"%3$s>%1$s</a>',
+'media_added_by' => 'By',
 'view_n_times' => 'Seen %d time(s)',
 
 // media_action.php
