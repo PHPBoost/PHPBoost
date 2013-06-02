@@ -265,7 +265,7 @@ class ArticlesHomePageExtensionPoint implements HomePageExtensionPoint
 			$notation->set_module_name('articles');
 			$notation->set_notation_scale($CONFIG_ARTICLES['note_max']);
 
-			$result = $this->sql_querier->query_while("SELECT a.id, a.title, a.description, a.icon, a.timestamp, a.views, a.user_id, m.user_id, m.login, m.level, note.average_notes, note.number_notes, com.number_comments
+			$result = $this->sql_querier->query_while("SELECT a.id, a.title, a.description, a.icon, a.timestamp, a.views, a.user_id, m.user_id, m.login, m.user_groups, m.level, note.average_notes, note.number_notes, com.number_comments
 			FROM " . DB_TABLE_ARTICLES . " a
 			LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = a.user_id
 			LEFT JOIN " . DB_TABLE_COMMENTS_TOPIC . " com ON com.id_in_module = a.id AND com.module_id = 'articles'
@@ -280,6 +280,8 @@ class ArticlesHomePageExtensionPoint implements HomePageExtensionPoint
 				$shorten_title = (strlen($row['title']) > 45 ) ? substr(TextHelper::html_entity_decode($row['title']), 0, 45) . '...' : $row['title'];
 				
 				$notation->set_id_in_module($row['id']);
+				
+				$group_color = User::get_group_color($row['user_groups'], $row['level']);
 				
 				$tpl->assign_block_vars('articles', array(
 					'NAME' => $row['title'],
