@@ -306,7 +306,7 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 			//Affichage d'une photo demandée.
 			if (!empty($g_idpics))
 			{
-				$result = $this->sql_querier->query_while("SELECT g.*, m.login
+				$result = $this->sql_querier->query_while("SELECT g.*, m.login, m.user_groups, m.level
 					FROM " . PREFIX . "gallery g
 					LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = g.user_id
 					LEFT JOIN " . DB_TABLE_COMMENTS_TOPIC . " com ON com.id_in_module = g.id AND com.module_id = 'gallery'
@@ -327,9 +327,6 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 					$array_js = 'var array_pics = new Array();';
 					$result = $this->sql_querier->query_while("SELECT g.id, g.idcat, g.path
 					FROM " . PREFIX . "gallery g
-					LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = g.user_id
-					LEFT JOIN " . DB_TABLE_COMMENTS_TOPIC . " com ON com.id_in_module = g.id AND com.module_id = 'gallery'
-					LEFT JOIN " . DB_TABLE_AVERAGE_NOTES . " note ON note.id_in_module = g.id AND note.module_name = 'gallery'
 					WHERE g.idcat = '" . $g_idcat . "' AND g.aprob = 1
 					" . $g_sql_sort, __LINE__, __FILE__);
 					while ($row = $this->sql_querier->fetch_assoc($result))
@@ -391,7 +388,9 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 	
 					$comments_topic->set_id_in_module($info_pics['id']);
 					$comments_topic->set_url(new Url('/gallery/gallery.php?cat='. $g_idcat .'&id=' . $g_idpics . '&com=0'));
-						
+					
+					$group_color = User::get_group_color($info_pics['user_groups'], $info_pics['level']);
+					
 					//Affichage de l'image et de ses informations.
 					$Template->put_all(array(
 						'C_GALLERY_PICS_MAX' => true,
@@ -404,7 +403,7 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 						'ID' => $info_pics['id'],
 						'IMG_MAX' => '<img src="' . PATH_TO_ROOT . '/gallery/show_pics' . url('.php?id=' . $g_idpics . '&amp;cat=' . $g_idcat) . '" alt="" />',
 						'NAME' => '<span id="fi_' . $info_pics['id'] . '">' . stripslashes($info_pics['name']) . '</span> <span id="fi' . $info_pics['id'] . '"></span>',
-						'POSTOR' => '<a class="small_link" href="'. UserUrlBuilder::profile($info_pics['user_id'])->absolute() .'">' . $info_pics['login'] . '</a>',
+						'POSTOR' => '<a class="small_link ' . UserService::get_level_class($info_pics['level']) . '"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . ' href="'. UserUrlBuilder::profile($info_pics['user_id'])->absolute() .'">' . $info_pics['login'] . '</a>',
 						'DATE' => gmdate_format('date_format_short', $info_pics['timestamp']),
 						'VIEWS' => ($info_pics['views'] + 1),
 						'DIMENSION' => $info_pics['width'] . ' x ' . $info_pics['height'],
@@ -486,7 +485,7 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 				
 				$is_connected = $User->check_level(User::MEMBER_LEVEL);
 				$j = 0;
-				$result = $this->sql_querier->query_while("SELECT g.id, g.idcat, g.name, g.path, g.timestamp, g.aprob, g.width, g.height, g.user_id, g.views, g.aprob, m.login
+				$result = $this->sql_querier->query_while("SELECT g.id, g.idcat, g.name, g.path, g.timestamp, g.aprob, g.width, g.height, g.user_id, g.views, g.aprob, m.login, m.user_groups, m.level
 				FROM " . PREFIX . "gallery g
 				LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = g.user_id
 				LEFT JOIN " . DB_TABLE_COMMENTS_TOPIC . " com ON com.id_in_module = g.id AND com.module_id = 'gallery'
@@ -522,6 +521,8 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 
 					$notation->set_id_in_module($row['id']);
 					
+					$group_color = User::get_group_color($row['user_groups'], $row['level']);
+					
 					$comments_topic->set_id_in_module($row['id']);
 					
 					$html_protected_name = $row['name'];
@@ -531,7 +532,7 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 						'IMG' => '<img src="'. PATH_TO_ROOT.'/gallery/pics/thumbnails/' . $row['path'] . '" alt="' . str_replace('"', '', stripslashes($row['name'])) . '" class="gallery_image" />',
 						'PATH' => $row['path'],
 						'NAME' => ($CONFIG_GALLERY['activ_title'] == 1) ? '<a class="small_link" href="' . $display_name . '"><span id="fi_' . $row['id'] . '">' . TextHelper::wordwrap_html(stripslashes($row['name']), 22, ' ') . '</span></a> <span id="fi' . $row['id'] . '"></span>' : '<span id="fi_' . $row['id'] . '"></span></a> <span id="fi' . $row['id'] . '"></span>',
-						'POSTOR' => ($CONFIG_GALLERY['activ_user'] == 1) ? '<br />' . $LANG['by'] . (!empty($row['login']) ? ' <a class="small_link" href="'. UserUrlBuilder::profile($row['user_id'])->absolute() .'">' . $row['login'] . '</a>' : ' ' . $LANG['guest']) : '',
+						'POSTOR' => ($CONFIG_GALLERY['activ_user'] == 1) ? '<br />' . $LANG['by'] . (!empty($row['login']) ? ' <a class="small_link '.UserService::get_level_class($row['level']).'"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . ' href="'. UserUrlBuilder::profile($row['user_id'])->absolute() .'">' . $row['login'] . '</a>' : ' ' . $LANG['guest']) : '',
 						'VIEWS' => ($CONFIG_GALLERY['activ_view'] == 1) ? '<br /><span id="gv' . $row['id'] . '">' . $row['views'] . '</span> <span id="gvl' . $row['id'] . '">' . ($row['views'] > 1 ? $LANG['views'] : $LANG['view']) . '</span>' : '',
 						'COM' => $CONFIG_GALLERY['activ_com'] == 1 ? '<br /><a href="'. PATH_TO_ROOT .'/gallery/gallery' . url('.php?cat=' . $row['idcat'] . '&amp;id=' . $row['id'] . '&amp;com=0', '-' . $row['idcat'] . '-' . $row['id'] . '.php?com=0') .'#comments_list">'. CommentsService::get_number_and_lang_comments('gallery', $row['id']) . '</a>' : '',
 						'KERNEL_NOTATION' => $activ_note ? NotationService::display_active_image($notation) : '',
