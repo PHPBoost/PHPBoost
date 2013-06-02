@@ -50,7 +50,7 @@ elseif ($id_media > 0)
 {
 	$tpl = new FileTemplate('media/media.tpl');
 	
-	$result = $Sql->query_while("SELECT v.*, mb.login, mb.level	FROM " . PREFIX . "media AS v LEFT JOIN " . DB_TABLE_MEMBER . " AS mb ON v.iduser = mb.user_id	WHERE id = '" . $id_media . "'", __LINE__, __FILE__);
+	$result = $Sql->query_while("SELECT v.*, mb.login, mb.user_groups, mb.level	FROM " . PREFIX . "media AS v LEFT JOIN " . DB_TABLE_MEMBER . " AS mb ON v.iduser = mb.user_id	WHERE id = '" . $id_media . "'", __LINE__, __FILE__);
 	$media = $Sql->fetch_assoc($result);
 	$Sql->query_close($result);
 	
@@ -78,6 +78,8 @@ elseif ($id_media > 0)
 	$notation->set_id_in_module($id_media);
 	$nbr_notes = NotationService::get_number_notes($notation);
 	
+	$group_color = User::get_group_color($media['user_groups'], $media['level']);
+	
 	$tpl->put_all(array(
 		'C_DISPLAY_MEDIA' => true,
 		'C_MODO' => $User->check_level(User::MODERATOR_LEVEL),
@@ -100,7 +102,7 @@ elseif ($id_media > 0)
 		'HEIGHT_P' => $media['height'] + 50,
 		'L_VIEWED' => $LANG['view'],
 		'L_BY' => $LANG['by'],
-		'BY' => !empty($media['login']) ? sprintf($MEDIA_LANG['media_added'], $media['login'], UserUrlBuilder::profile($media['iduser'])->absolute(), $level[$media['level']]) : $LANG['guest'],
+		'BY' => !empty($media['login']) ? '<a href="' . UserUrlBuilder::profile($media['user_id'])->absolute() . '" class="'.UserService::get_level_class($media['level']).'"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . $media['login'] . '</a>' : $LANG['guest'],
 		'L_CONFIRM_DELETE_MEDIA' => str_replace('\'', '\\\'', $MEDIA_LANG['confirm_delete_media']),
 		'U_UNVISIBLE_MEDIA' => url('media_action.php?unvisible=' . $id_media . '&amp;token=' . $Session->get_token()),
 		'U_EDIT_MEDIA' => url('media_action.php?edit=' . $id_media),
