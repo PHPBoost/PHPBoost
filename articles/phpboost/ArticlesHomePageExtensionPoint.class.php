@@ -134,9 +134,6 @@ class ArticlesHomePageExtensionPoint implements HomePageExtensionPoint
 		else
 		$selected_fields['desc'] = ' selected="selected"';
 		
-		$group_color = User::get_group_color($User->get_attribute('user_groups'), $User->get_attribute('level'));
-		$array_class = array('member', 'modo', 'admin');
-
 		$tpl->put_all(array(
 			'C_WRITE'=> $User->check_auth($ARTICLES_CAT[$idartcat]['auth'], AUTH_ARTICLES_WRITE),
 			'C_MODERATE' => $User->check_auth($ARTICLES_CAT[$idartcat]['auth'], AUTH_ARTICLES_MODERATE),
@@ -292,7 +289,7 @@ class ArticlesHomePageExtensionPoint implements HomePageExtensionPoint
 					'NOTE' => ($row['number_notes'] > 0) ? NotationService::display_static_image($notation, $row['average_notes']) : $LANG['no_note'],
 					'COM' => empty($row['number_comments']) ? '0' : $row['number_comments'],
 					'DESCRIPTION' => FormatingHelper::second_parse($row['description']),
-					'U_ARTICLES_PSEUDO' => '<a href="' . UserUrlBuilder::profile($row['user_id'])->absolute() . '" class="' . $array_class[$row['level']] . '"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . TextHelper::wordwrap_html($row['login'], 19) . '</a>',
+					'U_ARTICLES_PSEUDO' => '<a href="' . UserUrlBuilder::profile($row['user_id'])->absolute() . '" class="'.UserService::get_level_class($row['level']).'"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . TextHelper::wordwrap_html($row['login'], 19) . '</a>',
 					'U_ARTICLES_LINK' => url('.php?id=' . $row['id'] . '&amp;cat=' . $idartcat, '-' . $idartcat . '-' . $row['id'] . '+' . Url::encode_rewrite($shorten_title) . '.php'),
 					'U_ARTICLES_LINK_COM' => url('.php?cat=' . $idartcat . '&amp;id=' . $row['id'] . '&amp;com=0', '-' . $idartcat . '-' . $row['id'] . '.php?com=0') . '#comments_list',
 					'U_ADMIN_EDIT_ARTICLES' => url('management.php?edit=' . $row['id']),
@@ -318,7 +315,7 @@ class ArticlesHomePageExtensionPoint implements HomePageExtensionPoint
 				}
 				$where = !empty($array_cat) ? " AND a.idcat IN(" . implode(", ", $array_cat) . ") OR a.user_id = '" . $User->get_attribute('user_id') . "'" : "AND a.user_id = '" . $User->get_attribute('user_id') . "'";
 
-				$result = $this->sql_querier->query_while("SELECT a.id, a.title, a.icon, a.timestamp, a.views, a.user_id, a.description, m.user_id, m.login, m.level, note.average_notes, note.number_notes, com.number_comments
+				$result = $this->sql_querier->query_while("SELECT a.id, a.title, a.icon, a.timestamp, a.views, a.user_id, a.description, m.user_id, m.login, m.user_groups, m.level, note.average_notes, note.number_notes, com.number_comments
 				FROM " . DB_TABLE_ARTICLES . " a
 				LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = a.user_id
 				LEFT JOIN " . DB_TABLE_COMMENTS_TOPIC . " com ON com.id_in_module = a.id AND com.module_id = 'articles'
@@ -333,6 +330,8 @@ class ArticlesHomePageExtensionPoint implements HomePageExtensionPoint
 					
 					$notation->set_id_in_module($row['id']);
 					
+					$group_color = User::get_group_color($row['user_groups'], $row['level']);
+					
 					$tpl->assign_block_vars('articles_invisible', array(
 						'NAME' => $row['title'],
 						'ICON' => !empty($row['icon']) ? '<a href="articles' . url('.php?id=' . $row['id'] . '&amp;cat=' . $idartcat, '-' . $idartcat . '-' . $row['id'] . '+' . Url::encode_rewrite($shorten_title) . '.php') . '"><img src="' . $row['icon'] . '" alt="" class="valign_middle" /></a>' : '',
@@ -342,7 +341,7 @@ class ArticlesHomePageExtensionPoint implements HomePageExtensionPoint
 						'NOTE' => ($row['number_notes'] > 0) ? NotationService::display_static_image($notation, $row['average_notes']) : $LANG['no_note'],
 						'COM' => empty($row['number_comments']) ? '0' : $row['number_comments'],
 						'DESCRIPTION' => FormatingHelper::second_parse($row['description']),
-						'U_ARTICLES_PSEUDO'=>'<a href="' . UserUrlBuilder::profile($row['user_id'])->absolute() . '" class="' . $array_class[$row['level']] . '"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . TextHelper::wordwrap_html($row['login'], 19) . '</a>',
+						'U_ARTICLES_PSEUDO'=>'<a href="' . UserUrlBuilder::profile($row['user_id'])->absolute() . '" class="'.UserService::get_level_class($row['level']).'"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . TextHelper::wordwrap_html($row['login'], 19) . '</a>',
 						'U_ARTICLES_LINK' => url('.php?id=' . $row['id'] . '&amp;cat=' . $idartcat, '-' . $idartcat . '-' . $row['id'] . '+' . Url::encode_rewrite($shorten_title) . '.php'),
 						'U_ARTICLES_LINK_COM' => url('.php?cat=' . $idartcat . '&amp;id=' . $row['id'] . '&amp;com=%s', '-' . $idartcat . '-' . $row['id'] . '.php?com=0'),
 						'U_ADMIN_EDIT_ARTICLES' => url('management.php?edit=' . $row['id']),
