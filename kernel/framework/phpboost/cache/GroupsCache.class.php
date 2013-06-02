@@ -70,6 +70,16 @@ class GroupsCache implements CacheData
 		return array_key_exists($group_id, $this->groups);
 	}
 	
+	public function group_name_exists($group_name)
+	{
+		$exists = false;
+		foreach ($this->groups as $group)
+		{
+			$exists = ($group['name'] == $group_name ? true : false);
+		}
+		return $exists;
+	}
+	
 	/**
 	 * Returns a group
 	 * @param $group_id Id of the group

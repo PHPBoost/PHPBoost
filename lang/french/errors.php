@@ -83,6 +83,7 @@ $LANG['e_nomore_test_connect'] = 'Vous avez épuisé tous vos essais de connexion,
 $LANG['e_wrong_password'] = 'Le mot de passe est incorrect';
 
 //Groupes
+$LANG['e_group_already_exists'] = 'Ce groupe existe déjà, veuillez choisir un nom différent.';
 $LANG['e_already_group'] = 'Le membre appartient déjà au groupe';
 
 //Oublié

@@ -84,6 +84,7 @@ $LANG['e_nomore_test_connect'] = 'You have used all your log in attempts and you
 $LANG['e_wrong_password'] = 'The password is not correct';
 
 //Groups
+$LANG['e_group_already_exists'] = 'This group already exists, please choose a different name.';
 $LANG['e_already_group'] = 'Member is already in this group';
 
 //Forget

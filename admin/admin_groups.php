@@ -65,17 +65,22 @@ elseif (!empty($_POST['valid']) && $add_post) //ajout  du groupe.
 	
 	if (!empty($name))
 	{
-		//Insertion
-		$group_auth = array('auth_flood' => $auth_flood, 'pm_group_limit' => $pm_group_limit, 'data_group_limit' => $data_group_limit);
-		$Sql->query_inject("INSERT INTO " . DB_TABLE_GROUP . " (name, img, color, auth, members) VALUES ('" . $name . "', '" . $img . "', '" . $color_group . "', '" . serialize($group_auth) . "', '')", __LINE__, __FILE__);
-		
-		GroupsCache::invalidate(); //On régénère le fichier de cache des groupes
-		
-		AppContext::get_response()->redirect('/admin/admin_groups.php?id=' . $Sql->insert_id("SELECT MAX(id) FROM " . PREFIX . "group"));
+		if (!GroupsCache::load()->group_name_exists($name))
+		{
+			//Insertion
+			$group_auth = array('auth_flood' => $auth_flood, 'pm_group_limit' => $pm_group_limit, 'data_group_limit' => $data_group_limit);
+			$Sql->query_inject("INSERT INTO " . DB_TABLE_GROUP . " (name, img, color, auth, members) VALUES ('" . $name . "', '" . $img . "', '" . $color_group . "', '" . serialize($group_auth) . "', '')", __LINE__, __FILE__);
+			
+			GroupsCache::invalidate(); //On régénère le fichier de cache des groupes
+			
+			AppContext::get_response()->redirect('/admin/admin_groups.php?id=' . $Sql->insert_id("SELECT MAX(id) FROM " . PREFIX . "group"));
+		}
+		else
+			AppContext::get_response()->redirect('/admin/admin_groups.php?add=1&error=group_already_exists#message_helper');
 	}
 	else
 	{
-		AppContext::get_response()->redirect('/admin/admin_groups.php?error=incomplete#message_helper');
+		AppContext::get_response()->redirect('/admin/admin_groups.php?add=1&error=incomplete#message_helper');
 	}
 }
 elseif (!empty($idgroup) && $del_group) //Suppression du groupe.
@@ -249,6 +254,17 @@ elseif (!empty($idgroup)) //Interface d'édition du groupe.
 elseif ($add) //Interface d'ajout du groupe.
 {
 	$template = new FileTemplate('admin/admin_groups_management2.tpl');
+	
+	//Gestion erreur.
+	$get_error = retrieve(GET, 'error', '');
+	if ($get_error == 'incomplete')
+	{
+		$template->put('message_helper', MessageHelper::display($LANG['e_incomplete'], E_USER_NOTICE));
+	}
+	elseif ($get_error == 'group_already_exists')
+	{
+		$template->put('message_helper', MessageHelper::display($LANG['e_group_already_exists'], E_USER_NOTICE));
+	}
 	
 	//On recupère les dossier des images des groupes contenu dans le dossier /images/group.
 	$img_groups = '<option value="" selected="selected">--</option>';
