@@ -93,7 +93,7 @@
 					# START member_list #
 					<tr>
 						<td class="row1" style="text-align:center;width:25%;">
-							<a href="{member_list.U_PROFILE}">{member_list.LOGIN}</a>
+							<a href="{member_list.U_PROFILE}" class="{member_list.USER_LEVEL_CLASS}" # IF member_list.C_USER_GROUP_COLOR # style="color:{member_list.USER_GROUP_COLOR}" # ENDIF #>{member_list.LOGIN}</a>
 						</td>
 						<td class="row1" style="text-align:center;width:25%;">
 							{member_list.INFO}
@@ -146,7 +146,7 @@
 								{L_LOGIN}
 							</td>
 							<td class="row2">
-								{LOGIN}
+								<a href="{U_PROFILE}" class="{USER_LEVEL_CLASS}" # IF C_USER_GROUP_COLOR # style="color:{USER_GROUP_COLOR}" # ENDIF #>{LOGIN}</a>
 							</td>
 						</tr>
 						<tr>
@@ -197,7 +197,7 @@
 								{L_LOGIN}
 							</td>
 							<td class="row2">
-								{LOGIN}
+								<a href="{U_PROFILE}" class="{USER_LEVEL_CLASS}" # IF C_USER_GROUP_COLOR # style="color:{USER_GROUP_COLOR}" # ENDIF #>{LOGIN}</a>
 							</td>
 						</tr>
 						<tr>
