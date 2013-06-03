@@ -41,7 +41,7 @@ class ArticlesDisplayArticlesController extends ModuleController
 		
 		$this->init();
 		
-		$this->update_number_view();
+		$this->check_pending_article();
 		
 		$this->build_view($request);
 					
@@ -78,6 +78,17 @@ class ArticlesDisplayArticlesController extends ModuleController
 		return $this->article;
 	}
 	
+	private function check_pending_article()
+	{
+	    if (!$this->article->is_published())
+	    {
+		    $this->view->put('MSG', MessageHelper::display($this->lang['articles.not.published'], MessageHelper::WARNING));
+	    }
+	    else
+	    {
+		    $this->update_number_view();
+	    }
+	}
 	private function build_view($request)
 	{
 		$current_page = $request->get_getint('page', 1);
@@ -130,7 +141,7 @@ class ArticlesDisplayArticlesController extends ModuleController
 			'C_AUTHOR_DISPLAYED' => $this->article->get_author_name_displayed(),
 			'C_NOTATION_ENABLED' => $this->article->get_notation_enabled(),
 			'TITLE' => $this->article->get_title(),
-			'PICTURE' => $this->article->get_picture(),// @todo : link
+			'PICTURE' => $this->article->get_picture(),
 			'DATE' => $this->article->get_date_created()->format(DATE_FORMAT_SHORT, TIMEZONE_AUTO),
 			'L_COMMENTS' => CommentsService::get_number_and_lang_comments('articles', $this->article->get_id()),
 			'L_PREVIOUS_PAGE' => LangLoader::get_message('previous_page', 'main'),
@@ -231,7 +242,6 @@ class ArticlesDisplayArticlesController extends ModuleController
 	{
 		$article = $this->get_article();
 		
-		
 		$this->auth_write = ArticlesAuthorizationsService::check_authorizations($article->get_id_category())->write();
 		$this->auth_moderation = ArticlesAuthorizationsService::check_authorizations($article->get_id_category())->moderation();
 		
@@ -270,7 +280,11 @@ class ArticlesDisplayArticlesController extends ModuleController
 	
 	private function update_number_view()
 	{
-	    PersistenceContext::get_querier()->inject('UPDATE ' . LOW_PRIORITY . ' ' . ArticlesSetup::$articles_table . ' SET number_view = number_view + 1 WHERE id=:id', array('id' => $this->article->get_id()));
+		PersistenceContext::get_querier()->inject('UPDATE ' . LOW_PRIORITY . ' ' . ArticlesSetup::$articles_table . ' SET number_view = number_view + 1 WHERE id=:id', 
+			array(
+				'id' => $this->article->get_id()
+			)
+		);
 	}
 	
 	private function generate_response()

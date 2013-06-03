@@ -20,11 +20,9 @@
 		</a>
 		&nbsp;
 	# ENDIF #
-	# IF C_PENDING_ARTICLES #
-		<a href="{U_PENDING_ARTICLES}" title="{L_PENDING_ARTICLES}" class="img_link">
-			{L_PENDING_ARTICLES}
-		</a>
-	# ENDIF #
+	<a href="{U_PUBLISHED_ARTICLES}" title="{L_PUBLISHED_ARTICLES}" class="img_link">
+		{L_PUBLISHED_ARTICLES}
+	</a>
 </div>
 <div class="spacer"></div>
 	
@@ -41,51 +39,30 @@
 		</div>
 	</div>
 	<div class="module_contents">
-		# IF C_ARTICLES_CAT #
-		<p style="text-align:center;" class="text_strong">
-			{L_SUBCATEGORIES}
-			# IF C_MODERATE # <a href="{U_MANAGE_CATEGORIES}" title="{L_MANAGE_CATEGORIES}"><img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="{L_MANAGE_CATEGORIES}" /></a> # ENDIF #
-		</p>
-		<hr style="margin-bottom:20px;" />
-		# START cat_list #
-		<div style="float:left;text-align:center;width:{COLUMN_WIDTH_CAT}%;margin-bottom:20px;">
-			<a href="{cat_list.U_CATEGORY}"><img class="valign_middle" src="{PATH_TO_ROOT}{cat_list.CATEGORY_ICON_SOURCE}" /></a>
-			<br />
-			<a href="{cat_list.U_CATEGORY}">{cat_list.CATEGORY_NAME}</a>
-			<br />
-			<span class="text_small">{cat_list.CATEGORY_DESCRIPTION}</span> 
-			<br />
-			<span class="text_small">{L_SUBCATEGORIES} : {cat_list.U_SUBCATEGORIES}</span> 
-		</div>
-		# END cat_list #
-		<div class="spacer">&nbsp;</div>				
-		<p style="text-align:center;">{PAGINATION_CAT}</p>
-		<hr />
-		# ENDIF #			
-		<div class="spacer">&nbsp;</div>
 		# IF C_ARTICLES_FILTERS #
 		<div style="float:right;width:240px;" class="row3" id="form">
 			{L_ARTICLES_FILTERS_TITLE}# INCLUDE FORM #
 		</div>
 		# ENDIF #
 		<div class="spacer">&nbsp;</div>
-		# START articles #
-		<hr />	
+		<p style="padding-left: 5px;font-weight:bold">{L_PENDING_ARTICLES}</p>
+		<hr />
+		# START articles #	
 		<div class="block_container" style="margin-bottom:20px;height:160px;">
 			<div class="block_contents">
 				<div style="float:left;width:70%">
 					<p style="margin-bottom:10px">
 						<a href="{articles.U_ARTICLE}" class="big_link">{articles.TITLE}</a>
-							# IF articles.C_EDIT #
-							<a href="{articles.U_EDIT_ARTICLE}">
-								<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="" />
-							</a>
-							# ENDIF #
-							# IF articles.C_DELETE #
-							<a href="{articles.U_DELETE_ARTICLE}" onclick="return Confirm_del_article();">
-								<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="" />
-							</a>
-							# ENDIF #
+						# IF articles.C_EDIT #
+						<a href="{articles.U_EDIT_ARTICLE}">
+							<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="" />
+						</a>
+						# ENDIF #
+						# IF articles.C_DELETE #
+						<a href="{articles.U_DELETE_ARTICLE}" onclick="return Confirm_del_article();">
+							<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="" />
+						</a>
+						# ENDIF #
 					</p>
 					<p style="margin-bottom:10px">
 						{articles.DESCRIPTION}
@@ -102,13 +79,6 @@
 						{L_WRITTEN} : <a href="{articles.U_AUTHOR}" class="small_link {articles.USER_LEVEL_CLASS}" # IF C_USER_GROUP_COLOR # style="color:{articles.USER_GROUP_COLOR}"# ENDIF #>{articles.PSEUDO}</a>
 					</div>
 				</div>	
-				<div class="float:right;">	
-					<div style="text-align:right;margin-top:15px;">								
-						<!--<a href="../articles/articles{articles.U_ARTICLE}">
-							{articles.ICON}
-						</a>-->	
-					</div>
-				</div>
 			</div>
 		</div>
 		# END articles #

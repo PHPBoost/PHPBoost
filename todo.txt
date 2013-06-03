@@ -28,6 +28,19 @@
 #################################################################################
 
 ------------------------------------ MODULES -----------------------------------
+[b]Articles[/b]
+- [color=red]Nouveauté :[/color] Passage du module en MVC
+- [color=red]Nouveauté :[/color] Ajout du nouveau système de catégorie
+- [color=red]Nouveauté :[/color] Possibilité d'ajouter des mots clés
+- [color=red]Nouveauté :[/color] Refonte des formulaires (plus intuitifs)
+- [color=red]Nouveauté :[/color] Nettoyage de la configuration
+- [color=red]Nouveauté :[/color] Refonte graphique
+- [color=red]Nouveauté :[/color] Possibilité de personnaliser l'url d'un article
+- [color=red]Nouveauté :[/color] Amélioration du référencement
+- [color=red]Nouveauté :[/color] Possibilité de personnaliser la pagination
+- [color=red]Nouveauté :[/color] Possibilité d'activer/désactiver les commentaires globalement
+- [color=red]Nouveauté :[/color] Possibilité d'activer/désactiver l'affichage du nom de l'auteur d'un article pour chacun des articles
+- [color=red]Nouveauté :[/color] Possibilité d'activer/désactiver la notation d'un article pour chacun des articles
 
 #################################################################################
 

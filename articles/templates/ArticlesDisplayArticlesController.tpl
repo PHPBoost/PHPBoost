@@ -5,7 +5,7 @@
 	}
 -->
 </script>
-
+# INCLUDE MSG #
 <div class="module_position">					
 	<div class="module_top_l"></div>		
 	<div class="module_top_r"></div>
