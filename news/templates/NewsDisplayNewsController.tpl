@@ -10,59 +10,86 @@ function Confirm()
 <div class="module_position">
 	<div class="module_top_l"></div>
 	<div class="module_top_r"></div>
-	<div class="module_top">
+	<div class="module_top module_top_news">
+	
+		<ul class="module_top_options">
+			<li>
+				<a>
+					<span class="options"></span><span class="caret"></span>
+				</a>
+				<ul>
+					# IF C_EDIT #
+					<li>
+						<a href="{PATH_TO_ROOT}/news/management.php?edit={ID}" title="{L_EDIT}" class="img_link">Editer</a>
+					</li>
+					# ENDIF #
+					# IF C_DELETE #
+					<li>
+						<a href="{PATH_TO_ROOT}/news/management.php?del={ID}&amp;token={TOKEN}" title="{L_DELETE}" onclick="javascript:return Confirm();">Supprimer</a>
+					</li>
+					# ENDIF #
+				</ul>
+			</li>
+		</ul>
+
 		<div class="module_top_title">
 			<a href="{U_SYNDICATION}" title="{L_SYNDICATION}" class="img_link">
 				<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/rss.png" alt="{L_SYNDICATION}"/>
 			</a>
 			{NAME}
 		</div>
-		<div class="module_top_com">
-			# IF C_EDIT #
-			<a href="{U_EDIT}" title="{L_EDIT}" class="img_link">
-				<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="{L_EDIT}" />
-			</a>
-			# ENDIF #
-			# IF C_DELETE #
-			<a href="{U_DELETE}" title="{L_DELETE}" onclick="javascript:return Confirm();">
-				<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" />
-			</a>
-			# ENDIF #
+		
+		<div class="news_author_container">
+			Par # IF PSEUDO #<a class="small_link {USER_LEVEL_CLASS}" href="{U_AUTHOR_PROFILE}" # IF C_USER_GROUP_COLOR # style="color:{USER_GROUP_COLOR}" # ENDIF #>{PSEUDO}</a>, # ENDIF # 
+			le {DATE},
+			dans la catégorie <a href="{U_CAT}">Test</a>
 		</div>
+		
 		<div class="spacer"></div>
+		
 	</div>
 	<div class="module_contents">
 		# IF C_PICTURE #<img src="{U_PICTURE}" alt="{NAME}" title="{NAME}" class="img_right" /># ENDIF #
 		
 		{CONTENTS}
 		
-		<div class="spacer"></div>
-		
-		# IF C_SOURCES #
-		<div style="float:right">
-			<div class="text_small"><b> {L_SOURCES} : </b># START sources #{sources.COMMA}<a href="{sources.URL}" class="small_link">{sources.NAME}</a># END sources #</div>
+		<div class="spacer" style="margin-bottom:40px;"></div>
+	
+		<!-- # IF C_SOURCES # -->
+		<div id="news_sources_container">
+			<span class="news_more_title">{L_SOURCES}</span> :
+			# START sources #
+			<a href="{sources.URL}" class="small_link">{sources.NAME}</a> - 
+			# END sources #
 		</div>
-		# ENDIF #
+		<!-- # ENDIF # -->
+
+		<div id="news_tags_container">
+			<span class="news_more_title">Mot cléfs</span> :
+			<span>PHP</span> - <span>Boost</span> - <span>Elephant</span>
+		</div>
+								
 		<div class="spacer"></div>
 	</div>
 	<div class="module_bottom_l"></div>
 	<div class="module_bottom_r"></div>
 	<div class="module_bottom">
-		<div style="float:left"># IF PSEUDO #<a href="{U_AUTHOR_PROFILE}" class="small_link {USER_LEVEL_CLASS}" # IF C_USER_GROUP_COLOR # style="color:{USER_GROUP_COLOR}" # ENDIF #>{PSEUDO}</a>, # ENDIF # {DATE}</div>
 		<div class="spacer"></div>
 	</div>
 		
-	# IF C_NEWS_SUGGESTED #
-		<div id="news_suggested">
-			<b>{L_NEWS_SUGGESTED}</b><br />
-			<ul class="bb_ul">
+		<!-- # IF C_NEWS_SUGGESTED # -->
+		<div id="news_suggested_container">
+			<div class="news_more_title">{L_NEWS_SUGGESTED}</div>
+			<ul class="bb_ul" style="margin: 10px 30px 0;">
 				# START suggested #
-					<li class="bb_li"><a href="{suggested.URL}">{suggested.TITLE}</a></li>
+				<li class="bb_li"><a href="{suggested.URL}">{suggested.TITLE}</a></li>
 				# END suggested #
 			</ul>
 		</div>
-	# ENDIF #
-
+		<!-- # ENDIF # -->
+	
+	<hr style="width:70%;margin:0px auto 40px auto;">
+	
 	# IF C_NEWS_NAVIGATION_LINKS #
 	<div class="navigation_link">
 		# IF C_PREVIOUS_NEWS #
@@ -80,6 +107,9 @@ function Confirm()
 		<div class="spacer"></div>
 	</div>
 	# ENDIF #
-
+	
+	<div class="">
+		Ajouter un menu déroulant pour afficher / masquer l'ajout d'un commentaire.
+	</div>
 	# INCLUDE COMMENTS #	
 </div>
