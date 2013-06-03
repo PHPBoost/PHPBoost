@@ -131,14 +131,19 @@ if ($action == 'punish')
 		));	
 			
 		$i = 0;
-		$result = $Sql->query_while("SELECT user_id, login, user_readonly
+		$result = $Sql->query_while("SELECT user_id, login, level, user_groups, user_readonly
 		FROM " . PREFIX . "member
 		WHERE user_readonly > " . time() . "
 		ORDER BY user_readonly DESC", __LINE__, __FILE__);
 		while ($row = $Sql->fetch_assoc($result))
 		{
+			$group_color = User::get_group_color($row['user_groups'], $row['level']);
+			
 			$moderation_panel_template->assign_block_vars('member_list', array(
+				'C_USER_GROUP_COLOR' => !empty($group_color),
 				'LOGIN' => $row['login'],
+				'USER_LEVEL_CLASS' => UserService::get_level_class($row['level']),
+				'USER_GROUP_COLOR' => $group_color,
 				'INFO' => gmdate_format('date_format', $row['user_readonly']),
 				'U_PROFILE' => UserUrlBuilder::profile($row['user_id'])->absolute(),
 				'U_ACTION_USER' => '<a href="'. UserUrlBuilder::moderation_panel('punish', $row['user_id'])->absolute() .'"><img src="../templates/' . get_utheme() . '/images/readonly.png" alt="" /></a>',
@@ -157,7 +162,7 @@ if ($action == 'punish')
 	}
 	else //On affiche les infos sur l'utilisateur
 	{
-		$member = $Sql->query_array(DB_TABLE_MEMBER, 'login', 'user_readonly', "WHERE user_id = '" . $id_get . "'", __LINE__, __FILE__);
+		$member = $Sql->query_array(DB_TABLE_MEMBER, 'login', 'level', 'user_groups', 'user_readonly', "WHERE user_id = '" . $id_get . "'", __LINE__, __FILE__);
 				
 		//On crée le formulaire select
 		$select = '';
@@ -187,11 +192,15 @@ if ($action == 'punish')
 			$select .= '<option value="' . $time . '" ' . $selected . '>' . strtolower($array_sanction[$key]) . '</option>';
 		}	
 		
+		$group_color = User::get_group_color($member['user_groups'], $member['level']);
 		$moderation_panel_template->put_all(array(
 			'C_MODO_PANEL_USER_INFO' => true,
+			'C_USER_GROUP_COLOR' => !empty($group_color),
+			'LOGIN' => $member['login'],
+			'USER_LEVEL_CLASS' => UserService::get_level_class($member['level']),
+			'USER_GROUP_COLOR' => $group_color,
 			'KERNEL_EDITOR' => $editor->display(),
 			'ALTERNATIVE_PM' => ($key_sanction > 0) ? str_replace('%date%', $array_sanction[$key_sanction], $LANG['user_readonly_changed']) : str_replace('%date%', '1 ' . $LANG['minute'], $LANG['user_readonly_changed']),
-			'LOGIN' => '<a href="'. UserUrlBuilder::profile($id_get)->absolute() .'">' . $member['login'] . '</a>',
 			'INFO' => $array_sanction[$key_sanction],
 			'SELECT' => $select,
 			'REPLACE_VALUE' => 'replace_value = parseInt(replace_value);'. "\n" .
@@ -217,6 +226,7 @@ if ($action == 'punish')
 			'REGEX'=> '/[0-9]+ [a-zA-Z]+/',
 			'U_PM' => url('.php?pm='. $id_get, '-' . $id_get . '.php'),
 			'U_ACTION_INFO' => UserUrlBuilder::moderation_panel('ban', $id_get)->absolute() . '&amp;token=' . $Session->get_token(),
+			'U_PROFILE' => UserUrlBuilder::profile($member['user_id'])->absolute(),
 			'L_ALTERNATIVE_PM' => $LANG['user_alternative_pm'],
 			'L_INFO_EXPLAIN' => $LANG['user_readonly_explain'],
 			'L_PM' => $LANG['user_contact_pm'],
@@ -287,14 +297,19 @@ else if ($action == 'warning')
 		));
 		
 		$i = 0;
-		$result = $Sql->query_while("SELECT user_id, login, user_warning
+		$result = $Sql->query_while("SELECT user_id, login, level, user_groups, user_warning
 		FROM " . PREFIX . "member
 		WHERE user_warning > 0
 		ORDER BY user_warning", __LINE__, __FILE__);
 		while ($row = $Sql->fetch_assoc($result))
 		{
+			$group_color = User::get_group_color($row['user_groups'], $row['level']);
+			
 			$moderation_panel_template->assign_block_vars('member_list', array(
+				'C_USER_GROUP_COLOR' => !empty($group_color),
 				'LOGIN' => $row['login'],
+				'USER_LEVEL_CLASS' => UserService::get_level_class($row['level']),
+				'USER_GROUP_COLOR' => $group_color,
 				'INFO' => $row['user_warning'] . '%',
 				'U_ACTION_USER' => '<a href="'. UserUrlBuilder::moderation_panel('warning', $row['user_id'])->absolute() .'"><img src="../templates/' . get_utheme() . '/images/admin/important.png" alt="" /></a>',
 				'U_PROFILE' => UserUrlBuilder::profile($row['user_id'])->absolute(),
@@ -313,7 +328,7 @@ else if ($action == 'warning')
 	}
 	else //On affiche les infos sur l'utilisateur
 	{
-		$member = $Sql->query_array(DB_TABLE_MEMBER, 'login', 'user_warning', "WHERE user_id = '" . $id_get . "'", __LINE__, __FILE__);
+		$member = $Sql->query_array(DB_TABLE_MEMBER, 'login', 'level', 'user_groups', 'user_warning', "WHERE user_id = '" . $id_get . "'", __LINE__, __FILE__);
 					
 		//On crée le formulaire select
 		$select = '';
@@ -325,17 +340,24 @@ else if ($action == 'warning')
 			else
 				$select .= '<option value="' . 10 * $j . '">' . 10 * $j . '%</option>';
 		}
+		
+		$group_color = User::get_group_color($member['user_groups'], $member['level']);
+		
 		$moderation_panel_template->put_all(array(
 			'C_MODO_PANEL_USER_INFO' => true,
+			'C_USER_GROUP_COLOR' => !empty($group_color),
+			'LOGIN' => $member['login'],
+			'USER_LEVEL_CLASS' => UserService::get_level_class($member['level']),
+			'USER_GROUP_COLOR' => $group_color,
 			'KERNEL_EDITOR' => $editor->display(),
 			'ALTERNATIVE_PM' => str_replace('%level%', $member['user_warning'], $LANG['user_warning_level_changed']),
-			'LOGIN' => '<a href="'. UserUrlBuilder::profile($id_get)->absolute() .'">' . $member['login'] . '</a>',
 			'INFO' => $LANG['user_warning_level'] . ': ' . $member['user_warning'] . '%',
 			'SELECT' => $select,
 			'REPLACE_VALUE' => 'contents = contents.replace(regex, \' \' + replace_value + \'%\');' . "\n" . 'document.getElementById(\'action_info\').innerHTML = \'' . addslashes($LANG['user_warning_level']) . ': \' + replace_value + \'%\';',
 			'REGEX'=> '/ [0-9]+%/',
 			'U_ACTION_INFO' => UserUrlBuilder::moderation_panel('warning', $id_get)->absolute() . '&amp;token=' . $Session->get_token(),
 			'U_PM' => UserUrlBuilder::personnal_message($id_get)->absolute(),
+			'U_PROFILE' => UserUrlBuilder::profile($member['user_id'])->absolute(),
 			'L_ALTERNATIVE_PM' => $LANG['user_alternative_pm'],
 			'L_INFO_EXPLAIN' => $LANG['user_warning_explain'],
 			'L_PM' => $LANG['user_contact_pm'],
@@ -396,14 +418,19 @@ else
 		));	
 			
 		$i = 0;
-		$result = $Sql->query_while("SELECT user_id, login, user_ban, user_warning
+		$result = $Sql->query_while("SELECT user_id, login, level, user_groups, user_ban, user_warning
 		FROM " . PREFIX . "member
 		WHERE user_ban > " . time() . " OR user_warning = 100
 		ORDER BY user_ban", __LINE__, __FILE__);
 		while ($row = $Sql->fetch_assoc($result))
 		{
+			$group_color = User::get_group_color($row['user_groups'], $row['level']);
+			
 			$moderation_panel_template->assign_block_vars('member_list', array(
-				'LOGIN' => '<a href="' . UserUrlBuilder::moderation_panel('ban', $row['user_id'])->absolute() . '">' . $row['login'] . '</a>',
+				'C_USER_GROUP_COLOR' => !empty($group_color),
+				'LOGIN' => $row['login'],
+				'USER_LEVEL_CLASS' => UserService::get_level_class($row['level']),
+				'USER_GROUP_COLOR' => $group_color,
 				'INFO' => ($row['user_warning'] != 100) ? gmdate_format('date_format', $row['user_ban']) : $LANG['illimited'],
 				'U_PROFILE' => UserUrlBuilder::profile($row['user_id'])->absolute(),
 				'U_ACTION_USER' => '<a href="'. UserUrlBuilder::moderation_panel('ban', $row['user_id'])->absolute()  .'"><img src="../templates/' . get_utheme() . '/images/admin/forbidden.png" alt="" /></a>',
@@ -422,13 +449,20 @@ else
 	}
 	else //On affiche les infos sur l'utilisateur
 	{
-		$mbr = $Sql->query_array(DB_TABLE_MEMBER, 'login', 'user_ban', 'user_warning', "WHERE user_id = '" . $id_get . "'", __LINE__, __FILE__);
+		$member = $Sql->query_array(DB_TABLE_MEMBER, 'login', 'level', 'user_groups', 'user_ban', 'user_warning', "WHERE user_id = '" . $id_get . "'", __LINE__, __FILE__);
+		
+		$group_color = User::get_group_color($member['user_groups'], $member['level']);
+		
 		$moderation_panel_template->put_all(array(
 			'C_MODO_PANEL_USER_BAN' => true,
+			'C_USER_GROUP_COLOR' => !empty($group_color),
+			'LOGIN' => $member['login'],
+			'USER_LEVEL_CLASS' => UserService::get_level_class($member['level']),
+			'USER_GROUP_COLOR' => $group_color,
 			'KERNEL_EDITOR' => $editor->display(),
-			'LOGIN' => '<a href="'. UserUrlBuilder::profile($id_get)->absolute() .'">' . $mbr['login'] . '</a>',
 			'U_PM' => UserUrlBuilder::personnal_message($id_get)->absolute(),
 			'U_ACTION_INFO' => UserUrlBuilder::moderation_panel('ban', $id_get)->absolute() . '&amp;token=' . $Session->get_token(),
+			'U_PROFILE' => UserUrlBuilder::profile($member['user_id'])->absolute(),
 			'L_PM' => $LANG['user_contact_pm'],
 			'L_LOGIN' => $LANG['pseudo'],
 			'L_BAN' => $LANG['ban_user'],
@@ -439,7 +473,7 @@ else
 		$array_time = array(0, 60, 300, 900, 1800, 3600, 7200, 86400, 172800, 604800, 1209600, 2419200, 326592000);
 		$array_sanction = array($LANG['no'], '1 ' . $LANG['minute'], '5 ' . $LANG['minutes'], '15 ' . $LANG['minutes'], '30 ' . $LANG['minutes'], '1 ' . $LANG['hour'], '2 ' . $LANG['hours'], '1 ' . $LANG['day'], '2 ' . $LANG['days'], '1 ' . $LANG['week'], '2 ' . $LANG['weeks'], '1 ' . $LANG['month'], $LANG['illimited']); 
 		
-		$diff = ($mbr['user_ban'] - time());	
+		$diff = ($member['user_ban'] - time());	
 		$key_sanction = 0;
 		if ($diff > 0)
 		{
@@ -454,7 +488,7 @@ else
 				}
 			}
 		}
-		if ($mbr['user_warning'] == 100)
+		if ($member['user_warning'] == 100)
 			$key_sanction = 12;
 			
 		//Affichge des sanctions

@@ -58,7 +58,7 @@ if (!empty($id_article))
 	$delete_auth = (!$general_auth || $User->check_auth($_WIKI_CONFIG['auth'], WIKI_DELETE_ARCHIVE)) && ($general_auth || $User->check_auth($article_auth , WIKI_DELETE_ARCHIVE)) ? true : false;
 	
 	//on va chercher le contenu de la page
-	$result = $Sql->query_while("SELECT a.title, a.encoded_title, c.timestamp, c.id_contents, c.user_id, c.user_ip, m.login, c.id_article, c.activ
+	$result = $Sql->query_while("SELECT a.title, a.encoded_title, c.timestamp, c.id_contents, c.user_id, c.user_ip, m.login, m.user_groups, m.level, c.id_article, c.activ
 		FROM " . PREFIX . "wiki_contents c
 		LEFT JOIN " . PREFIX . "wiki_articles a ON a.id = c.id_article
 		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = c.user_id
@@ -73,10 +73,11 @@ if (!empty($id_article))
 		//Suppression
 		$actions .= ($row['activ'] != 1 && $delete_auth) ? '<a href="' . url('action.php?del_contents=' . $row['id_contents']. '&amp;token=' . $Session->get_token()) . '" title="' . $LANG['delete'] . '" onclick="javascript: return confirm(\'' . str_replace('\'', '\\\'', $LANG['wiki_confirm_delete_archive']) . '\');"><img src="' . $Template->get_pictures_data_path() . '/images/delete.png" alt="' . $LANG['delete'] . '" /></a>' : '';
 		
+		$group_color = User::get_group_color($row['user_groups'], $row['level']);
 		
 		$Template->assign_block_vars('article.list', array(
 			'TITLE' => $LANG['wiki_consult_article'],
-			'AUTHOR' => !empty($row['login']) ? '<a href="'. UserUrlBuilder::profile($row['user_id'])->absolute() . '">' . $row['login'] . '</a>' : $row['user_ip'],
+			'AUTHOR' => !empty($row['login']) ? '<a href="'. UserUrlBuilder::profile($row['user_id'])->absolute() . '" class="'.UserService::get_level_class($row['level']).'"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . $row['login'] . '</a>' : $row['user_ip'],
 			'DATE' => gmdate_format('date_format', $row['timestamp']),
 			'U_ARTICLE' => $row['activ'] == 1 ? url('wiki.php?title=' . $row['encoded_title'], $row['encoded_title']) : url('wiki.php?id_contents=' . $row['id_contents']),
 			'CURRENT_RELEASE' => $row['activ'] == 1 ? '(' . $LANG['wiki_current_version'] . ')' : '',
