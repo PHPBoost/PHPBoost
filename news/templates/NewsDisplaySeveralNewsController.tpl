@@ -6,19 +6,31 @@
 	}
 -->
 </script>
-		
+
 <div class="module_actions">
-	# IF C_ADD #
-	<a href="{U_ADD}" title="${i18n('news.add')}" class="img_link">
-		<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/add.png" class="valign_middle" alt="${i18n('news.add')}" />
-	</a>
-	# ENDIF #
-	&nbsp;
-	# IF C_PENDING_NEWS #
-	<a href="{U_PENDING_NEWS}" title="${i18n('news.pending')}">
-		<img src="{PATH_TO_ROOT}/news/news_mini.png" class="valign_middle" alt="${i18n('news.pending')}" />
-	</a>
-	# ENDIF #
+	<ul class="module_top_options">
+		<li>
+			<a><span class="options"></span><span class="caret"></span></a>
+			<ul style="width: 150px;">
+				# IF C_ADMIN #
+				<li>
+					<a href="{U_ADMIN}" title="{L_ADMIN}" class="img_link">{L_ADMIN} l'édito</a>
+				</li>
+				# ENDIF #
+
+				# IF C_ADD #
+				<li>
+					<a href="{U_ADD}" title="${i18n('news.add')}" class="img_link">${i18n('news.add')}</a>
+				</li>
+				# ENDIF #
+				# IF C_PENDING_NEWS #
+				<li>
+					<a href="{U_PENDING_NEWS}" title="${i18n('news.pending')}">${i18n('news.pending')}</a>
+				</li>
+				# ENDIF #
+			</ul>
+		</li>
+	</ul>
 </div>
 <div class="spacer"></div>
 
@@ -27,13 +39,18 @@
 		<div class="module_top_l"></div>
 		<div class="module_top_r"></div>
 		<div class="module_top">
-			<div class="module_top_title">
+			<div class="module_top_title module_top_news">
 				<a href="{U_SYNDICATION}" title="{L_SYNDICATION}" class="img_link">
 					<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/rss.png" alt="{L_SYNDICATION}" />
 				</a>
 				{L_LAST_NEWS}
 			</div>
-        	<div class="module_top_com">
+	        <div class="module_top_com">
+				# IF C_ADMIN #
+				<a href="{U_ADMIN}" title="{L_ADMIN}" class="img_link">
+					<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="{L_ADMIN}" />
+				</a>
+				# ENDIF #
 			</div>
 			<div class="spacer"></div>
     	</div>
@@ -53,26 +70,47 @@
 		<div class="module_position" style="float:left;width:{COLUMN_WIDTH}%">
     		<div class="module_top_l"></div>
 			<div class="module_top_r"></div>
-			<div class="module_top">
+			<div class="module_top module_top_news">
+				# IF C_NEWS_BLOCK_COLUMN #
+				<ul class="module_top_options block_hidden">
+				# ELSE #
+				<ul class="module_top_options">
+				# ENDIF #
+					<li>
+						<a class="news_comments" href="{news.U_COM}">1</a>
+					</li>
+					<li>
+						<a><span class="options"></span><span class="caret"></span></a>
+						<ul>
+							# IF news.C_EDIT #
+							<li>
+								<a href="{PATH_TO_ROOT}/news/management.php?edit={news.ID}" title="{L_EDIT}" class="img_link">Editer</a>
+							</li>
+							# ENDIF #
+							# IF news.C_DELETE #
+							<li>
+								<a href="{PATH_TO_ROOT}/news/management.php?del={news.ID}&amp;token={TOKEN}" title="{L_DELETE}" onclick="javascript:return Confirm();">Supprimer</a>
+							</li>
+							# ENDIF #
+						</ul>
+					</li>
+				</ul>
 				<div class="module_top_title">
 					<a href="{news.U_SYNDICATION}" title="{L_SYNDICATION}" class="img_link">
 						<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/rss.png" alt="{L_SYNDICATION}" />
 					</a>
         			<a href="{news.U_LINK}">{news.NAME}</a>
         		</div>
-        		<div class="module_top_com">
-					<img src="{PATH_TO_ROOT}/templates/{THEME}/images/com_mini.png" alt="" class="valign_middle" /> <a href="{news.U_COMMENTS}">{news.L_COMMENTS}</a>
-					# IF news.C_EDIT #
-					<a href="{news.U_EDIT}" title="{L_EDIT}" class="img_link">
-						<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="{L_EDIT}" />
-					</a>
-					# ENDIF #
-					# IF news.C_DELETE #
-					<a href="{news.U_DELETE}" title="{L_DELETE}" onclick="javascript:return Confirm();">
-						<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" />
-					</a>
-					# ENDIF #
+        		
+        		<div class="news_author_container">
+					Posté par 
+					# IF news.PSEUDO #
+					<a class="small_link {news.USER_LEVEL_CLASS}" href="{news.U_AUTHOR_PROFILE}" style="font-size: 12px;" # IF news.C_USER_GROUP_COLOR # style="color:{news.USER_GROUP_COLOR}" # ENDIF #>{news.PSEUDO}</a>, 
+					# ENDIF # 
+					le {news.DATE}, 
+					dans la catégorie <a href="{news.U_CAT}">Test</a>
 				</div>
+        		
 				<div class="spacer"></div>
     		</div>
     		<div class="module_contents">
@@ -83,7 +121,6 @@
     		<div class="module_bottom_l"></div>
 			<div class="module_bottom_r"></div>
 			<div class="module_bottom">
-				<div style="float:left"># IF news.PSEUDO #<a href="{news.U_AUTHOR_PROFILE}" class="small_link {news.USER_LEVEL_CLASS}" # IF news.C_USER_GROUP_COLOR # style="color:{news.USER_GROUP_COLOR}" # ENDIF #>{news.PSEUDO}</a>, # ENDIF # {news.DATE}</div>
 				<div class="spacer"></div>
     		</div>
 		</div>
