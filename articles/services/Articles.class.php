@@ -61,6 +61,8 @@ class Articles
 
 	const AUTHOR_NAME_NOTDISPLAYED = 0;
 	const AUTHOR_NAME_DISPLAYED = 1;
+	
+	const DEFAULT_NBR_VIEW = 0;
         
 	const DEFAULT_PICTURE = '/articles/articles.png';
 
@@ -314,6 +316,7 @@ class Articles
 		$this->set_notation_enabled(self::NOTATION_ENABLED);
 		$this->set_sources(array());
                 $this->set_picture(new Url(self::DEFAULT_PICTURE));
+		$this->set_number_view(self::DEFAULT_NBR_VIEW);
 	}
 
 	public function clean_publishing_start_and_end_date()
