@@ -150,7 +150,7 @@
 						<a href="${relative_url(AdminMembersUrlBuilder::delete(member.IDMBR))}" onclick="javascript:return Confirm({member.LEVEL});"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" /></a>
 					</td>
 					<td class="row2">
-						<a href="{member.U_PROFILE}">{member.NAME}</a>				
+						<a href="{member.U_PROFILE}" class="{member.LEVEL_CLASS}" # IF member.C_GROUP_COLOR # style="color:{member.GROUP_COLOR}" # ENDIF #>{member.NAME}</a>				
 					</td>
 					<td class="row2"> 
 						{member.RANK}

@@ -107,7 +107,7 @@ $Template->put_all(array(
 
 //Liste des personnes en lignes.
 $result = $Sql->query_while("SELECT s.user_id, s.level, s.session_ip, s.session_time, s.session_script, s.session_script_get, 
-s.session_script_title, m.login 
+s.session_script_title, m.login, m.user_groups
 FROM " . DB_TABLE_SESSIONS . " s
 LEFT JOIN " . DB_TABLE_MEMBER . " m ON s.user_id = m.user_id
 WHERE s.session_time > '" . (time() - SessionsConfig::load()->get_active_session_duration()) . "'
@@ -135,7 +135,10 @@ while ($row = $Sql->fetch_assoc($result))
 	if (!empty($robot))
 		$login = '<span class="robot">' . ($robot == 'unknow_bot' ? $LANG['unknow_bot'] : $robot) . '</span>';
 	else
-		$login = !empty($row['login']) ? '<a class="' . $class . '" href="'. UserUrlBuilder::profile($row['user_id'])->absolute() .'">' . $row['login'] . '</a>' : $LANG['guest'];
+	{
+		$group_color = User::get_group_color($row['user_groups'], $row['level']);
+		$login = !empty($row['login']) ? '<a class="' . $class . '"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . ' href="'. UserUrlBuilder::profile($row['user_id'])->absolute() .'">' . $row['login'] . '</a>' : $LANG['guest'];
+	}
 	
 	$row['session_script_get'] = !empty($row['session_script_get']) ? '?' . $row['session_script_get'] : '';
 	

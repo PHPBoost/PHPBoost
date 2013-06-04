@@ -111,7 +111,7 @@
 				# START list #
 				<tr>
 					<td class="row1" style="text-align:center;width:25%;">
-						<a href="{list.U_PROFILE}">{list.LOGIN}</a>
+						<a href="{list.U_PROFILE}" class="{list.LEVEL_CLASS}" # IF list.C_GROUP_COLOR # style="color:{list.GROUP_COLOR}" # ENDIF #>{list.LOGIN}</a>
 					</td>
 					<td class="row1" style="text-align:center;width:25%;">
 						{list.INFO}

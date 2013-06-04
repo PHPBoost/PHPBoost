@@ -233,18 +233,35 @@ elseif (!empty($idgroup)) //Interface d'édition du groupe.
 		//Liste des membres du groupe.
 		$members = $Sql->query("SELECT members FROM " . DB_TABLE_GROUP . " WHERE id = '" . NumberHelper::numeric($group['id']) . "'", __LINE__, __FILE__);
 		$members = explode('|', $members);
+		
+		$number_member = 0;
 		foreach ($members as $key => $user_id)
 		{
-			$login = $Sql->query("SELECT login FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . NumberHelper::numeric($user_id) . "'", __LINE__, __FILE__);
-			if (!empty($login))
+			$user = PersistenceContext::get_querier()->select('SELECT login, level, user_groups
+				FROM ' . DB_TABLE_MEMBER . '
+				WHERE user_id = :user_id
+				', array('user_id' => $user_id))->fetch();
+			
+			if (!empty($user))
 			{
+				$group_color = User::get_group_color($user['user_groups'], $user['level']);
+				
 				$template->assign_block_vars('member', array(
+					'C_GROUP_COLOR' => !empty($group_color),
 					'USER_ID' => $user_id,
-					'LOGIN' => $login,
+					'LOGIN' => $user['login'],
+					'LEVEL_CLASS' => UserService::get_level_class($user['level']),
+					'GROUP_COLOR' => $group_color,
 					'U_PROFILE' => UserUrlBuilder::profile($user_id)->absolute()
 				));
+				$number_member++;
 			}
 		}
+		
+		$template->put_all(array(
+			'C_NO_MEMBERS' => $number_member == 0,
+			'NO_MEMBERS' => LangLoader::get_message('no_member', 'user-common')
+		));
 	}
 	else
 		AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);
