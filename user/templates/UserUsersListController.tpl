@@ -50,7 +50,7 @@
 	# START member_list #
 	<tr> 
 		<td class="row2" style="text-align:center;">
-			<a href="{member_list.U_USER_ID}">{member_list.PSEUDO}</a>
+			<a href="{member_list.U_USER_ID}" class="{member_list.LEVEL_CLASS}" # IF member_list.C_GROUP_COLOR # style="color:{member_list.GROUP_COLOR}" # ENDIF #>{member_list.PSEUDO}</a>
 		</td>
 		<td class="row2" style="text-align:center;"> 
 			# IF member_list.C_MAIL #
