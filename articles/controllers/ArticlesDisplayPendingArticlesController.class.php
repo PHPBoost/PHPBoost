@@ -182,7 +182,7 @@ class ArticlesDisplayPendingArticlesController extends ModuleController
 					'TITLE' => $row['title'],
 					'PICTURE' => $row['picture_url'],
 					'DATE' => gmdate_format('date_format_short', $row['date_created']),
-					'NUMBER_VIEW' => empty($row['number_view']) ? '0' : $row['number_view'],
+					'NUMBER_VIEW' => $row['number_view'],
 					'L_NUMBER_COM' => empty($row['number_comments']) ? '0' : $row['number_comments'],
 					'NOTE' => (int)NotationService::get_number_notes($notation) > 0 ? NotationService::display_static_image($notation, $row['average_notes']) : $this->lang['articles.no_notes'],
 					'DESCRIPTION' =>FormatingHelper::second_parse($row['description']), 
