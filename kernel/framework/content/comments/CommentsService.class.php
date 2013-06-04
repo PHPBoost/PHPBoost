@@ -111,11 +111,11 @@ class CommentsService
 					$user_read_only = self::$user->get_attribute('user_readonly');
 					if (!$authorizations->is_authorized_moderation() && $comments_topic_locked)
 					{
-						self::$template->put('KEEP_MESSAGE', MessageHelper::display(self::$lang['com_locked'], MessageHelper::NOTICE));
+						self::$template->put('KEEP_MESSAGE', MessageHelper::display(self::$comments_lang['comment.locked'], MessageHelper::NOTICE));
 					}
 					elseif (!empty($user_read_only) && $user_read_only > time())
 					{
-						self::$template->put('KEEP_MESSAGE', MessageHelper::display('Read Only', MessageHelper::NOTICE));
+						self::$template->put('KEEP_MESSAGE', MessageHelper::display($comments_lang['comments.not-authorized.post'], MessageHelper::NOTICE));
 					}
 					else
 					{
