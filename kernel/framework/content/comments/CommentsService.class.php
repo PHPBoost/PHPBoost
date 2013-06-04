@@ -115,7 +115,7 @@ class CommentsService
 					}
 					elseif (!empty($user_read_only) && $user_read_only > time())
 					{
-						self::$template->put('KEEP_MESSAGE', MessageHelper::display($comments_lang['comments.not-authorized.post'], MessageHelper::NOTICE));
+						self::$template->put('KEEP_MESSAGE', MessageHelper::display(self::$comments_lang['comments.user.read-only'], MessageHelper::NOTICE));
 					}
 					else
 					{
@@ -247,6 +247,7 @@ class CommentsService
 				$template->assign_block_vars('comments', array(
 					'C_MODERATOR' => self::is_authorized_edit_or_delete_comment($authorizations, $id),
 					'C_VISITOR' => empty($row['login']),
+					'C_GROUP_COLOR' => !empty($group_color),
 					'U_EDIT' => CommentsUrlBuilder::edit($path, $id)->absolute(),
 					'U_DELETE' => CommentsUrlBuilder::delete($path, $id)->absolute(),
 					'U_PROFILE' => UserUrlBuilder::profile($row['user_id'])->absolute(),
@@ -257,6 +258,7 @@ class CommentsService
 					'USER_ID' => $row['user_id'],
 					'PSEUDO' => empty($row['login']) ? $row['pseudo'] : $row['login'],
 					'LEVEL_CLASS' => UserService::get_level_class($row['level']),
+					'GROUP_COLOR' => $group_color,
 					'L_LEVEL' => UserService::get_level_lang($row['level'] !== null ? $row['level'] : '-1'),
 				));
 				
@@ -267,6 +269,7 @@ class CommentsService
 				));
 			}
 		}
+
 
 		self::$template->put_all(array(
 			'MODULE_ID' => $module_id,
