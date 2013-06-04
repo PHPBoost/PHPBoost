@@ -51,7 +51,7 @@ class ContributionService
 	 */
     public static function find_by_id($id_contrib)
 	{
-		$result = self::$sql_querier->query_while("SELECT id, entitled, fixing_url, module, current_status, creation_date, fixing_date, auth, poster_id, fixer_id, id_in_module, identifier, type, poster_member.login poster_login, fixer_member.login fixer_login, description
+		$result = self::$sql_querier->query_while("SELECT id, entitled, fixing_url, module, current_status, creation_date, fixing_date, auth, poster_id, fixer_id, id_in_module, identifier, type, poster_member.login poster_login, poster_member.level poster_level, poster_member.user_groups poster_groups, fixer_member.login fixer_login, fixer_member.level fixer_level, fixer_member.user_groups fixer_groups, description
 		FROM " . DB_TABLE_EVENTS  . " c
 		LEFT JOIN " . DB_TABLE_MEMBER . " poster_member ON poster_member.user_id = c.poster_id
 		LEFT JOIN " . DB_TABLE_MEMBER . " fixer_member ON fixer_member.user_id = c.poster_id
@@ -63,7 +63,7 @@ class ContributionService
 		if ((int)$properties['id'] > 0)
 		{
 			$contribution = new Contribution();
-			$contribution->build($properties['id'], $properties['entitled'], $properties['description'], $properties['fixing_url'], $properties['module'], $properties['current_status'], new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $properties['creation_date']), new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $properties['fixing_date']), unserialize($properties['auth']), $properties['poster_id'], $properties['fixer_id'], $properties['id_in_module'], $properties['identifier'], $properties['type'], $properties['poster_login'], $properties['fixer_login']);
+			$contribution->build($properties['id'], $properties['entitled'], $properties['description'], $properties['fixing_url'], $properties['module'], $properties['current_status'], new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $properties['creation_date']), new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $properties['fixing_date']), unserialize($properties['auth']), $properties['poster_id'], $properties['fixer_id'], $properties['id_in_module'], $properties['identifier'], $properties['type'], $properties['poster_login'], $properties['fixer_login'], $properties['poster_level'], $properties['fixer_level'], $properties['poster_groups'], $properties['fixer_groups']);
 			return $contribution;
 		}
 		else

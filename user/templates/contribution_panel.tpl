@@ -111,11 +111,11 @@
 						# ENDIF #
 					</td>
 					<td class="row2" style="text-align:center;">
-						<a href="{contributions.U_POSTER_PROFILE}">{contributions.POSTER}</a>
+						<a href="{contributions.U_POSTER_PROFILE}" class="{contributions.POSTER_LEVEL_CLASS}" # IF contributions.C_POSTER_GROUP_COLOR # style="color:{contributions.POSTER_GROUP_COLOR}" # ENDIF #>{contributions.POSTER}</a>
 					</td>
 					<td class="row2" style="text-align:center;">
 						# IF contributions.C_FIXED #
-						<a href="{contributions.U_FIXER_PROFILE}">{contributions.FIXER}</a>
+						<a href="{contributions.U_FIXER_PROFILE}" class="{contributions.FIXER_LEVEL_CLASS}" # IF contributions.C_FIXER_GROUP_COLOR # style="color:{contributions.FIXER_GROUP_COLOR}" # ENDIF #>{contributions.FIXER}</a>
 						# ELSE #
 						-
 						# ENDIF #
@@ -211,7 +211,7 @@
 				</dl>
 				<dl>
 					<dt>{L_CONTRIBUTOR}</dt>
-					<dd><a href="{U_CONTRIBUTOR_PROFILE}">{CONTRIBUTER}</a></dd>
+					<dd><a href="{U_CONTRIBUTOR_PROFILE}" class="{CONTRIBUTOR_LEVEL_CLASS}" # IF C_CONTRIBUTOR_GROUP_COLOR # style="color:{CONTRIBUTOR_GROUP_COLOR}" # ENDIF #>{CONTRIBUTOR}</a></dd>
 				</dl>
 				<dl>
 					<dt>{L_CREATION_DATE}</dt>
@@ -220,7 +220,7 @@
 				# IF C_CONTRIBUTION_FIXED #
 				<dl>
 					<dt>{L_FIXER}</dt>
-					<dd><a href="{U_FIXER_PROFILE}">{FIXER}</a></dd>
+					<dd><a href="{U_FIXER_PROFILE}" class="{FIXER_LEVEL_CLASS}" # IF C_FIXER_GROUP_COLOR # style="color:{FIXER_GROUP_COLOR}" # ENDIF #>{FIXER}</a></dd>
 				</dl>
 				<dl>
 					<dt>{L_FIXING_DATE}</dt>

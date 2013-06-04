@@ -162,13 +162,22 @@ if ($contribution_id > 0)
 	$contribution_creation_date = $contribution->get_creation_date();
 	$contribution_fixing_date = $contribution->get_fixing_date();
 	
+	$contributor = PersistenceContext::get_querier()->select('SELECT *
+		FROM ' . DB_TABLE_MEMBER . ' member
+		WHERE user_id = :user_id', array('user_id' => $contribution->get_poster_id()))->fetch();
+	
+	$contributor_group_color = User::get_group_color($contributor['user_groups'], $contributor['level']);
+	
 	$template->put_all(array(
 		'C_WRITE_AUTH' => $User->check_auth($contribution->get_auth(), Contribution::CONTRIBUTION_AUTH_BIT),
 		'C_UNPROCESSED_CONTRIBUTION' => $contribution->get_status() != Event::EVENT_STATUS_PROCESSED,
+		'C_CONTRIBUTOR_GROUP_COLOR' => !empty($contributor_group_color),
 		'ENTITLED' => $contribution->get_entitled(),
 		'DESCRIPTION' => FormatingHelper::second_parse($contribution->get_description()),
 		'STATUS' => $contribution->get_status_name(),
-		'CONTRIBUTER' => $Sql->query("SELECT login FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $contribution->get_poster_id() . "'", __LINE__, __FILE__),
+		'CONTRIBUTOR' => $contributor['login'],
+		'CONTRIBUTOR_LEVEL_CLASS' => UserService::get_level_class($contributor['level']),
+		'CONTRIBUTOR_GROUP_COLOR' => $contributor_group_color,
 		'COMMENTS' => CommentsService::display($comments_topic)->render(),
 		'CREATION_DATE' => $contribution_creation_date->format(DATE_FORMAT_SHORT),
 		'MODULE' => $contribution->get_module_name(),
@@ -178,12 +187,23 @@ if ($contribution_id > 0)
 	
 	//Si la contribution a été traitée
 	if ($contribution->get_status() == Event::EVENT_STATUS_PROCESSED)
+	{
+		$fixer = PersistenceContext::get_querier()->select('SELECT *
+			FROM ' . DB_TABLE_MEMBER . ' member
+			WHERE user_id = :user_id', array('user_id' => $contribution->get_fixer_id()))->fetch();
+		
+		$fixer_group_color = User::get_group_color($fixer['user_groups'], $fixer['level']);
+		
 		$template->put_all(array(
 			'C_CONTRIBUTION_FIXED' => true,
-			'FIXER' => $Sql->query("SELECT login FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $contribution->get_fixer_id() . "'", __LINE__, __FILE__),
+			'C_FIXER_GROUP_COLOR' => !empty($fixer_group_color),
+			'FIXER' => $fixer['login'],
+			'FIXER_LEVEL_CLASS' => UserService::get_level_class($fixer['level']),
+			'FIXER_GROUP_COLOR' => $fixer_group_color,
 			'FIXING_DATE' => $contribution_fixing_date->format(DATE_FORMAT_SHORT),
 			'U_FIXER_PROFILE' => UserUrlBuilder::profile($contribution->get_fixer_id())->absolute()
 		));
+	}
 	
 	$template->put_all(array(
 		'L_CONTRIBUTION' => $LANG['contribution'],
@@ -263,14 +283,24 @@ else
 		{
 			//On affiche seulement si on est dans le bon cadre d'affichage
 			if ($num_contributions > CONTRIBUTIONS_PER_PAGE * ($pagination->get_current_page() - 1) && $num_contributions <= CONTRIBUTIONS_PER_PAGE * $pagination->get_current_page())
+			{
+				$poster_group_color = User::get_group_color($this_contribution->get_poster_groups(), $this_contribution->get_poster_level());
+				$fixer_group_color = User::get_group_color($this_contribution->get_fixer_groups(), $this_contribution->get_fixer_level());
+				
 				$template->assign_block_vars('contributions', array(
+					'C_POSTER_GROUP_COLOR' => !empty($poster_group_color),
+					'C_FIXER_GROUP_COLOR' => !empty($fixer_group_color),
 					'ENTITLED' => $this_contribution->get_entitled(),
 					'MODULE' => $this_contribution->get_module_name(),
 					'STATUS' => $this_contribution->get_status_name(),
 					'CREATION_DATE' => $creation_date->format(DATE_FORMAT_SHORT),
 					'FIXING_DATE' => $fixing_date->format(DATE_FORMAT_SHORT),
 					'POSTER' => $this_contribution->get_poster_login(),
+					'POSTER_LEVEL_CLASS' => UserService::get_level_class($this_contribution->get_poster_level()),
+					'POSTER_GROUP_COLOR' => $poster_group_color,
 					'FIXER' => $this_contribution->get_fixer_login(),
+					'FIXER_LEVEL_CLASS' => UserService::get_level_class($this_contribution->get_fixer_level()),
+					'FIXER_GROUP_COLOR' => $fixer_group_color,
 					'ACTIONS' => '',
 					'U_FIXER_PROFILE' => UserUrlBuilder::profile($this_contribution->get_fixer_id())->absolute(),
 					'U_POSTER_PROFILE' => UserUrlBuilder::profile($this_contribution->get_poster_id())->absolute(),
@@ -278,6 +308,7 @@ else
 					'C_FIXED' => $this_contribution->get_status() == Event::EVENT_STATUS_PROCESSED,
 					'C_PROCESSING' => $this_contribution->get_status() == Event::EVENT_STATUS_BEING_PROCESSED
 				));
+			}
 			
 			$num_contributions++;
 		}
