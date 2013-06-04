@@ -118,7 +118,8 @@ class UserCommentsController extends AbstractController
 				'C_MODERATOR' => $comments_authorizations->is_authorized_moderation(),
 				'C_VISITOR' => empty($row['login']),
 				'C_VIEW_TOPIC' => true,
-			
+				'C_GROUP_COLOR' => !empty($group_color),
+				
 				'U_TOPIC' => Url::to_rel($path),
 				'U_EDIT' => CommentsUrlBuilder::edit($path, $id)->absolute(),
 				'U_DELETE' => CommentsUrlBuilder::delete($path, $id)->absolute(),
@@ -133,6 +134,7 @@ class UserCommentsController extends AbstractController
 				'USER_ID' => $row['user_id'],
 				'PSEUDO' => empty($row['login']) ? $row['pseudo'] : $row['login'],
 				'LEVEL_CLASS' => UserService::get_level_class($row['level']),
+				'GROUP_COLOR' => $group_color,
 				
 				'L_LEVEL' => UserService::get_level_lang($row['level'] !== null ? $row['level'] : '-1')
 			));
