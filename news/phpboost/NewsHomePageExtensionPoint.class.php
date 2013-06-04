@@ -145,7 +145,7 @@ class NewsHomePageExtensionPoint implements HomePageExtensionPoint
 				}
 			}
 			
-			$result = $this->sql_querier->query_while("SELECT n.contents, n.extend_contents, n.title, n.id, n.idcat, n.timestamp, n.start, n.user_id, n.img, n.alt, m.login, m.level, com.number_comments
+			$result = $this->sql_querier->query_while("SELECT n.contents, n.extend_contents, n.title, n.id, n.idcat, n.timestamp, n.start, n.user_id, n.img, n.alt, m.login, m.level, m.user_groups, com.number_comments
 				FROM " . DB_TABLE_NEWS . " n
 				LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = n.user_id
 				LEFT JOIN " . DB_TABLE_COMMENTS_TOPIC . " com ON com.id_in_module = n.id AND com.module_id = 'news'
@@ -170,7 +170,9 @@ class NewsHomePageExtensionPoint implements HomePageExtensionPoint
 
 					$timestamp = new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, $row['timestamp']);
 					$last_release = max($last_release, $row['start']);
-	
+					
+					$group_color = User::get_group_color($row['user_groups'], $row['level']);
+					
 					$tpl->assign_block_vars('news', array(
 						'C_NEWS_ROW' => $new_row,
 						'C_COM' => $NEWS_CONFIG['activ_com'],
@@ -180,7 +182,8 @@ class NewsHomePageExtensionPoint implements HomePageExtensionPoint
 						'C_EXTEND_CONTENTS' => !empty($row['extend_contents']),
 						'C_ICON' => $NEWS_CONFIG['activ_icon'] && !empty($row['idcat']),
 						'C_DATE' => $NEWS_CONFIG['display_date'],
-					
+						'C_GROUP_COLOR' => !empty($group_color),
+						
 						'ID' => $row['id'],
 						'COM' => CommentsService::get_number_and_lang_comments('news', $row['id']),
 						'NUMBER_COM' => !empty($row['number_comments']) ? $row['number_comments'] : 0,
@@ -192,6 +195,7 @@ class NewsHomePageExtensionPoint implements HomePageExtensionPoint
 						'ICON' => FormatingHelper::second_parse_url($NEWS_CAT[$row['idcat']]['image']),
 						'PSEUDO' => $NEWS_CONFIG['display_author'] && !empty($row['login']) ? $row['login'] : '',
 						'LEVEL' =>	isset($row['level']) ? UserService::get_level_class($row['level']) : '',
+						'GROUP_COLOR' => $group_color,
 						'DATE' => $NEWS_CONFIG['display_date'] ? sprintf($NEWS_LANG['on'], $timestamp->format(DATE_FORMAT_SHORT, TIMEZONE_AUTO)) : '',
 						'FEED_MENU' => Feed::get_feed_menu(FEED_URL),
 						'U_LINK' => PATH_TO_ROOT .'/news/news' . url('.php?id=' . $row['id'], '-' . $row['idcat'] . '-' . $row['id'] . '+' . Url::encode_rewrite($row['title']) . '.php'),

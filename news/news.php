@@ -57,7 +57,7 @@ if (!$User->check_auth($NEWS_CAT[$idcat]['auth'], AUTH_NEWS_READ))
 if (!empty($idnews)) // On affiche la news correspondant à l'id envoyé.
 {
 	// Récupération de la news
-	$result = $Sql->query_while("SELECT n.contents, n.extend_contents, n.title, n.id, n.idcat, n.timestamp, n.start, n.visible, n.user_id, n.img, n.alt, m.login, m.level, n.sources
+	$result = $Sql->query_while("SELECT n.contents, n.extend_contents, n.title, n.id, n.idcat, n.timestamp, n.start, n.visible, n.user_id, n.img, n.alt, m.login, m.level, m.user_groups, n.sources
 	FROM " . DB_TABLE_NEWS . " n LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = n.user_id
 	WHERE n.id = '" . $idnews . "' AND ('" . $now->get_timestamp() . "' >= n.start AND n.start > 0 AND ('" . $now->get_timestamp() . "' <= n.end OR n.end = 0) OR n.visible = 1)", __LINE__, __FILE__);
 	$news = $Sql->fetch_assoc($result);
@@ -138,6 +138,8 @@ if (!empty($idnews)) // On affiche la news correspondant à l'id envoyé.
 		$comments_topic->set_id_in_module($idnews);
 		$comments_topic->set_url(new Url('/news/news.php?cat='. $news['idcat'] .'&id=' . $news['id'] . '&com=0'));
 		
+		$group_color = User::get_group_color($news['user_groups'], $news['level']);
+		
 		$tpl->put_all(array(
 			'C_NEXT_NEWS' => !empty($next_news['id']),
 			'C_EDIT' => $auth_edit,
@@ -148,6 +150,7 @@ if (!empty($idnews)) // On affiche la news correspondant à l'id envoyé.
 			'C_IMG' => !empty($news['img']),
 			'C_ICON' => $NEWS_CONFIG['activ_icon'] && !empty($row['idcat']),
 			'C_SOURCES' => $i > 0 ? true : false,
+			'C_GROUP_COLOR' => !empty($group_color),
 			'ID' => $news['id'],
 			'TITLE' => $news['title'],
 			'CONTENTS' => FormatingHelper::second_parse($news['contents']),
@@ -158,6 +161,7 @@ if (!empty($idnews)) // On affiche la news correspondant à l'id envoyé.
 			'DATE' => $NEWS_CONFIG['display_date'] ? sprintf($NEWS_LANG['on'], $timestamp->format(DATE_FORMAT_SHORT, TIMEZONE_AUTO)) : '',
 			'LEVEL' =>	isset($news['level']) ? UserService::get_level_class($news['level']) : '',
 			'PSEUDO' => $NEWS_CONFIG['display_author'] && !empty($news['login']) ? $news['login'] : false,
+			'GROUP_COLOR' => $group_color,
 			'COMMENTS' => isset($_GET['com']) && $NEWS_CONFIG['activ_com'] == 1 ? CommentsService::display($comments_topic)->render() : '',
 			'NEXT_NEWS' => $next_news['title'],
 			'PREVIOUS_NEWS' => $previous_news['title'],

@@ -59,7 +59,7 @@ elseif (isset($_POST['preview']))
 		'alt' => retrieve(POST, 'alt', '', TSTRING)
 	);
 
-	$user = $Sql->query_array(DB_TABLE_MEMBER, 'level', 'login', "WHERE user_id = '" . $news['user_id'] . "'", __LINE__, __FILE__);
+	$user = $Sql->query_array(DB_TABLE_MEMBER, 'level', 'login', 'user_groups', "WHERE user_id = '" . $news['user_id'] . "'", __LINE__, __FILE__);
 
 	if (!empty($news['date']))
 	{
@@ -77,11 +77,14 @@ elseif (isset($_POST['preview']))
 	}
 
 	$preview->put_all(array('C_NEWS_BLOCK' => true));
-
+	
+	$group_color = User::get_group_color($user['user_groups'], $user['level']);
+	
 	$preview->assign_vars(array(
 		'C_NEWS_ROW' => false,
 		'C_IMG' => !empty($news['img']),
 		'C_ICON' => $NEWS_CONFIG['activ_icon'],
+		'C_GROUP_COLOR' => !empty($group_color),
 		'ID' => $news['id'],
 		'IDCAT' => $news['idcat'],
 		'ICON' => FormatingHelper::second_parse_url($NEWS_CAT[$news['idcat']]['image']),
@@ -92,6 +95,7 @@ elseif (isset($_POST['preview']))
 		'IMG_DESC' => $news['alt'],
 		'PSEUDO' => $NEWS_CONFIG['display_author'] && !empty($user['login']) ? $user['login'] : $LANG['guest'],
 		'LEVEL' =>	UserService::get_level_class($user['level']),
+		'GROUP_COLOR' => $group_color,
 		'DATE' => $NEWS_CONFIG['display_date'] ? sprintf($NEWS_LANG['on'], $date->format(DATE_FORMAT_SHORT, TIMEZONE_AUTO)) : '',
 		'U_USER_ID' => UserUrlBuilder::profile($news['user_id'])->absolute(),
 		'U_CAT' => 'news' . url('.php?cat=' . $news['idcat'], '-' . $news['idcat'] . '+' . Url::encode_rewrite($NEWS_CAT[$news['idcat']]['name']) . '.php'),
