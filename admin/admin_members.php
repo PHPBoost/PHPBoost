@@ -132,7 +132,7 @@ $template->put_all(array(
 	'L_DELETE' => $LANG['delete']
 ));
 	
-$result = $Sql->query_while("SELECT login, user_id, user_mail, timestamp, last_connect, level, user_aprob
+$result = $Sql->query_while("SELECT login, user_id, user_mail, timestamp, last_connect, level, user_groups, user_aprob
 FROM " . DB_TABLE_MEMBER . " 
 ORDER BY " . $sort . " " . $mode . 
 $Sql->limit($Pagination->get_first_msg(25, 'p'), 25), __LINE__, __FILE__);
@@ -156,11 +156,15 @@ while ($row = $Sql->fetch_assoc($result))
 	} 
 	
 	$user_web = !empty($row['user_web']) ? '<a href="' . $row['user_web'] . '"><img src="'. PATH_TO_ROOT .'/templates/' . get_utheme() . '/images/' . get_ulang() . '/user_web.png" alt="' . $row['user_web'] . '" title="' . $row['user_web'] . '" /></a>' : '';
+	$group_color = User::get_group_color($row['user_groups'], $row['level']);
 	
 	$template->assign_block_vars('member', array(
 		'U_PROFILE' => UserUrlBuilder::profile($row['user_id'])->absolute(),
 		'IDMBR' => $row['user_id'],
 		'NAME' => $row['login'],
+		'LEVEL_CLASS' => UserService::get_level_class($row['level']),
+		'C_GROUP_COLOR' => !empty($group_color),
+		'GROUP_COLOR' => $group_color,
 		'RANK' => $rank,
 		'MAIL' => $row['user_mail'],
 		'LAST_CONNECT' => gmdate_format('date_format_short', $row['last_connect']),

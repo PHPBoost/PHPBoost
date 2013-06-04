@@ -836,7 +836,7 @@ else //Liste des conversation, dans la boite du membre.
 	//Conversation supprimée chez le destinataire: user_convers_status => 2.
 	$i = 0;
 	$j = 0;
-	$result = $Sql->query_while("SELECT pm.id, pm.title, pm.user_id, pm.user_id_dest, pm.user_convers_status, pm.nbr_msg, pm.last_user_id, pm.last_msg_id, pm.last_timestamp, msg.view_status, m.login AS login, m1.login AS login_dest, m2.login AS last_login
+	$result = $Sql->query_while("SELECT pm.id, pm.title, pm.user_id, pm.user_id_dest, pm.user_convers_status, pm.nbr_msg, pm.last_user_id, pm.last_msg_id, pm.last_timestamp, msg.view_status, m.login AS login, m1.login AS login_dest, m2.login AS last_login, m.level AS level, m1.level AS dest_level, m2.level AS last_level, m.user_groups AS user_groups, m1.user_groups AS dest_groups, m2.user_groups AS last_groups
 	FROM " . DB_TABLE_PM_TOPIC . "  pm
 	LEFT JOIN " . DB_TABLE_PM_MSG . " msg ON msg.id = pm.last_msg_id
 	LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = pm.user_id
@@ -894,20 +894,24 @@ else //Liste des conversation, dans la boite du membre.
 		$last_page_rewrite = ($last_page > 1) ? '-' . $last_page : '';
 		$last_page = ($last_page > 1) ? 'p=' . $last_page . '&amp;' : '';
 		
+		$group_color = User::get_group_color($row['user_groups'], $row['level']);
+		
 		if ($row['user_id'] == -1)
 			$author = $LANG['admin'];
 		elseif (!empty($row['login']))
-			$author = '<a href="' . UserUrlBuilder::profile($row['user_id'])->absolute() . '" class="small_link">' . $row['login'] . '</a>';
+			$author = '<a href="' . UserUrlBuilder::profile($row['user_id'])->absolute() . '" class="small_link '.UserService::get_level_class($row['level']).'"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . $row['login'] . '</a>';
 		else
 			$author = '<strike>' . $LANG['guest'] . '</strike>';
 			
 		$participants = ($row['login_dest'] != $User->get_attribute('login')) ? $row['login_dest'] : $author;
 		$user_id_dest = $row['user_id_dest'] != $User->get_attribute('user_id') ? $row['user_id_dest'] : $row['user_id'];
-		$participants = !empty($participants) ? '<a href="' . UserUrlBuilder::profile($user_id_dest)->absolute() . '">' . $participants . '</a>' : '<strike>' . $LANG['admin']. '</strike>';
+		$participants_group_color = ($participants != $LANG['admin'] && $participants != '<strike>' . $LANG['guest'] . '</strike>') ? User::get_group_color($row['dest_groups'], $row['dest_level']) : '';
+		$participants = !empty($participants) ? '<a href="' . UserUrlBuilder::profile($user_id_dest)->absolute() . '" class="'.UserService::get_level_class($row['dest_level']).'"' . (!empty($participants_group_color) ? ' style="color:' . $participants_group_color . '"' : '') . '>' . $participants . '</a>' : '<strike>' . $LANG['admin']. '</strike>';
 		
 		//Affichage du dernier message posté.
+		$last_group_color = User::get_group_color($row['last_groups'], $row['last_level']);
 		$last_msg = '<a href="pm' . url('.php?' . $last_page . 'id=' . $row['id'], '-0-' . $row['id'] . $last_page_rewrite . '.php') . '#m' . $row['last_msg_id'] . '" title=""><img src="../templates/' . get_utheme() . '/images/ancre.png" alt="" /></a>' . ' ' . $LANG['on'] . ' ' . gmdate_format('date_format', $row['last_timestamp']) . '<br />';
-		$last_msg .= ($row['user_id'] == -1) ? $LANG['by'] . ' ' . $LANG['admin'] : $LANG['by'] . ' <a href="' . UserUrlBuilder::profile($row['last_user_id'])->absolute() . '" class="small_link">' . $row['last_login'] . '</a>';
+		$last_msg .= ($row['user_id'] == -1) ? $LANG['by'] . ' ' . $LANG['admin'] : $LANG['by'] . ' <a href="' . UserUrlBuilder::profile($row['last_user_id'])->absolute() . '" class="small_link '.UserService::get_level_class($row['last_level']).'"' . (!empty($last_group_color) ? ' style="color:' . $last_group_color . '"' : '') . '>' . $row['last_login'] . '</a>';
 
 		$tpl->assign_block_vars('convers.list', array(
 			'INCR' => $i,

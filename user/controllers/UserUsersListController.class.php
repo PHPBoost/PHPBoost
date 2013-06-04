@@ -99,10 +99,14 @@ class UserUsersListController extends AbstractController
 		{
 			$user_msg = !empty($row['user_msg']) ? $row['user_msg'] : '0';
 			$last_connect = !empty($row['last_connect']) ? $row['last_connect'] : $row['timestamp'];
-		
+			$group_color = User::get_group_color($row['user_groups'], $row['level']);
+			
 			$this->view->assign_block_vars('member_list', array(
 				'C_MAIL' => $row['user_show_mail'] == 1,
+				'C_GROUP_COLOR' => !empty($group_color),
 				'PSEUDO' => $row['login'],
+				'LEVEL_CLASS' => UserService::get_level_class($row['level']),
+				'GROUP_COLOR' => $group_color,
 				'MAIL' => $row['user_mail'],
 				'MSG' => $user_msg,
 				'LAST_CONNECT' => gmdate_format('date_format_short', $last_connect),
