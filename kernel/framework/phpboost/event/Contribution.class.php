@@ -79,6 +79,26 @@ class Contribution extends Event
 	 * @var string Login of the member who has fixed the contribution.
 	 */
 	private $fixer_login = '';
+
+	/**
+	 * @var string Level of the member who has posted the contribution.
+	 */
+	private $poster_level = '';
+
+	/**
+	 * @var string Level of the member who has fixed the contribution.
+	 */
+	private $fixer_level = '';
+
+	/**
+	 * @var string Groups of the member who has posted the contribution.
+	 */
+	private $poster_groups = '';
+
+	/**
+	 * @var string Groups of the member who has fixed the contribution.
+	 */
+	private $fixer_groups = '';
 	
 	private $sql_querier;
 
@@ -114,7 +134,7 @@ class Contribution extends Event
 	 * @param string $poster_login Login of the poster of the contribution.
 	 * @param string $fixer_login Login of the fixer of the contribution.
 	 */
-	public function build($id, $entitled, $description, $fixing_url, $module, $status, $creation_date, $fixing_date, $auth, $poster_id, $fixer_id, $id_in_module, $identifier, $type, $poster_login = '', $fixer_login = '')
+	public function build($id, $entitled, $description, $fixing_url, $module, $status, $creation_date, $fixing_date, $auth, $poster_id, $fixer_id, $id_in_module, $identifier, $type, $poster_login = '', $fixer_login = '', $poster_level = '', $fixer_level = '', $poster_groups = '', $fixer_groups = '')
 	{
 		//Building parent class
 		parent::build_event($id, $entitled, $fixing_url, $status, $creation_date, $id_in_module, $identifier, $type);
@@ -128,6 +148,10 @@ class Contribution extends Event
 		$this->fixer_id 	= $fixer_id;
 		$this->poster_login = $poster_login;
 		$this->fixer_login 	= $fixer_login;
+		$this->poster_level = $poster_level;
+		$this->fixer_level 	= $fixer_level;
+		$this->poster_groups = $poster_groups;
+		$this->fixer_groups = $fixer_groups;
 
 		//Setting the modification flag to false, it just comes to be loaded
 		$this->must_regenerate_cache = false;
@@ -311,6 +335,42 @@ class Contribution extends Event
 	public function get_fixer_login()
 	{
 		return $this->fixer_login;
+	}
+
+	/**
+	 * @desc Gets the poster level.
+	 * @return string The poster level.
+	 */
+	public function get_poster_level()
+	{
+		return $this->poster_level;
+	}
+
+	/**
+	 * @desc Gets the fixer level.
+	 * @return string The fixer level.
+	 */
+	public function get_fixer_level()
+	{
+		return $this->fixer_level;
+	}
+
+	/**
+	 * @desc Gets the poster groups.
+	 * @return string The poster groups.
+	 */
+	public function get_poster_groups()
+	{
+		return $this->poster_groups;
+	}
+
+	/**
+	 * @desc Gets the fixer groups.
+	 * @return string The fixer groups.
+	 */
+	public function get_fixer_groups()
+	{
+		return $this->fixer_groups;
 	}
 
 	/**
