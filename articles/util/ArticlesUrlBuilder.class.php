@@ -61,6 +61,11 @@ class ArticlesUrlBuilder
 		return DispatchManager::get_url(self::$dispatcher, '/' . $id . '-' . $rewrited_name . '/');
 	}
 	
+	public static function manage_articles()
+	{
+		return DispatchManager::get_url(self::$dispatcher, '/admin/articles/');
+	}
+	
 	public static function print_article($id_article, $rewrited_title)
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/print/' . $id_article . '-' .$rewrited_title . '/');
