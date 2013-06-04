@@ -33,7 +33,7 @@
 				<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" class="valign_middle" alt="{L_DELETE}" />
 			</a>
 			# ENDIF #
-			<a href="{U_PRINT_ARTICLE}" title="{L_PRINTABLE_VERSION}" class="img_link">
+			<a href="{U_PRINT_ARTICLE}" title="{L_PRINTABLE_VERSION}" class="img_link" target="_blank">
 				<img src="{PATH_TO_ROOT}/templates/{THEME}/images/print_mini.png" alt="{L_PRINTABLE_VERSION}" class="valign_middle" />
 			</a>
 		</div>

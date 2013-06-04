@@ -56,7 +56,7 @@ $url_controller_mappers = array(
 	
 	//Utilities
 	new UrlControllerMapper('ArticlesAjaxTagsAutoCompleteController','`^/ajax/tag/?$`'),
-	//new UrlControllerMapper('ArticlesPrintArticleController', '`^/print/([a-z0-9-]+)?/?([A-Za-z0-9-]+)?/?$`', array('rewrited_title', 'rewrited_page_name')),
+	new UrlControllerMapper('ArticlesPrintArticlesController', '`^/print/([0-9-]+)-([a-z0-9-_]+)/?$`', array('id', 'rewrited_title'))
 );
 
 DispatchManager::dispatch($url_controller_mappers);

@@ -170,7 +170,7 @@ class ArticlesDisplayArticlesController extends ModuleController
 			'U_AUTHOR' => UserUrlBuilder::profile($this->article->get_author_user_id())->absolute(),
 			'U_EDIT_ARTICLE' => ArticlesUrlBuilder::edit_article($this->article->get_id())->absolute(),
 			'U_DELETE_ARTICLE' => ArticlesUrlBuilder::delete_article($this->article->get_id())->absolute(),
-			'U_PRINT_ARTICLE' => ArticlesUrlBuilder::print_article()->absolute(), // @todo : à modifier dans url builder et finaliser lien contrôleur prêt
+			'U_PRINT_ARTICLE' => ArticlesUrlBuilder::print_article($this->article->get_id(), $this->article->get_rewrited_title())->absolute(),
 			'U_SYNDICATION' => ArticlesUrlBuilder::category_syndication($this->article->get_id_category())->rel()
 		));
 		
