@@ -132,7 +132,7 @@
 	    		<div class="module_bottom_l"></div>
 				<div class="module_bottom_r"></div>
 				<div class="module_bottom">
-					<div style="float:left"># IF news.PSEUDO #<a class="small_link {news.LEVEL}" href="{news.U_USER_ID}">{news.PSEUDO}</a>, # ENDIF # # IF news.C_DATE # {news.DATE} # ENDIF #</div>
+					<div style="float:left"># IF news.PSEUDO #<a class="small_link {news.LEVEL}"# IF news.C_GROUP_COLOR # style="color:{news.GROUP_COLOR}" # ENDIF # href="{news.U_USER_ID}">{news.PSEUDO}</a>, # ENDIF # # IF news.C_DATE # {news.DATE} # ENDIF #</div>
 					<div class="spacer"></div>
 	    		</div>
 			</div>
