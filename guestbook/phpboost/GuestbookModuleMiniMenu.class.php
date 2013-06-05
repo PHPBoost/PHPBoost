@@ -59,7 +59,10 @@ class GuestbookModuleMiniMenu extends ModuleMiniMenu
 			{
 		    	//Pseudo.
 		    	if ($guestbook_rand['user_id'] != -1)
-		    		$guestbook_login = '<a class="small_link" href="' . UserUrlBuilder::profile($guestbook_rand['user_id'])->absolute() . '" title="' . $guestbook_rand['login'] . '"><span style="font-weight:bold;">' . TextHelper::wordwrap_html($guestbook_rand['login'], 13) . '</span></a>';
+		    	{
+					$group_color = User::get_group_color($guestbook_rand['user_groups'], $guestbook_rand['level']);
+					$guestbook_login = '<a class="small_link '.UserService::get_level_class($guestbook_rand['level']).'"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . ' href="' . UserUrlBuilder::profile($guestbook_rand['user_id'])->absolute() . '" title="' . $guestbook_rand['login'] . '"><span style="font-weight:bold;">' . TextHelper::wordwrap_html($guestbook_rand['login'], 13) . '</span></a>';
+				}
 		    	else
 		    		$guestbook_login = '<span style="font-style:italic;">' . (!empty($guestbook_rand['login']) ? TextHelper::wordwrap_html($guestbook_rand['login'], 13) : $LANG['guest']) . '</span>';
 	
