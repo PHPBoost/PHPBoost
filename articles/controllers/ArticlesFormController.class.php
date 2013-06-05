@@ -238,7 +238,8 @@ class ArticlesFormController extends ModuleController
 		}
 		else
 		{
-			if (!(ArticlesAuthorizationsService::check_authorizations($article->get_id_category())->moderation() || (ArticlesAuthorizationsService::check_authorizations($article->get_id_category())->write() && $article->get_user_id() == AppContext::get_current_user()->get_id())))
+			if (!(ArticlesAuthorizationsService::check_authorizations($article->get_id_category())->moderation() || ArticlesAuthorizationsService::check_authorizations($article->get_id_category())->write() || 
+				ArticlesAuthorizationsService::check_authorizations($article->get_id_category())->contribution() && $article->get_author_user()->get_id() == AppContext::get_current_user()->get_id()))
 			{
 				$error_controller = PHPBoostErrors::user_not_authorized();
 				DispatchManager::redirect($error_controller);
@@ -302,7 +303,7 @@ class ArticlesFormController extends ModuleController
 
 		if ($article->get_id() === null)
 		{
-			$article->set_author_user_id(AppContext::get_current_user()->get_id());
+			$article->set_author_user(AppContext::get_current_user());
 			$id_article = ArticlesService::add($article);
 		}
 		else

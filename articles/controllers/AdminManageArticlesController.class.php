@@ -40,7 +40,7 @@ class AdminManageArticlesController extends AdminModuleController
 		
 		$this->build_view($request);
 		
-		return $this->generate_response();
+		return new AdminArticlesDisplayResponse($this->view, $this->lang['articles_management']);
 	}
 	
 	private function init()
@@ -52,8 +52,6 @@ class AdminManageArticlesController extends AdminModuleController
 	
 	private function build_form($field, $mode)
 	{
-		$category = ArticlesService::get_categories_manager()->get_categories_cache()->get_category(Category::ROOT_CATEGORY);
-		
 		$form = new HTMLForm(__CLASS__);
 		
 		$fieldset = new FormFieldsetHorizontal('filters');
@@ -111,76 +109,68 @@ class AdminManageArticlesController extends AdminModuleController
 		
 		$result = PersistenceContext::get_querier()->select('SELECT articles.*, articles_cat.name, member.level, member.user_groups, member.user_id, member.login  
 		FROM '. ArticlesSetup::$articles_table . ' articles
-		LEFT JOIN ' . ArticlesSetup::$articles_cats_table . 'articles_cat ON articles_cat.id = articles.id_category 
+		LEFT JOIN ' . ArticlesSetup::$articles_cats_table . ' articles_cat ON articles_cat.id = articles.id_category 
 		LEFT JOIN '. DB_TABLE_MEMBER .' member ON member.user_id = articles.author_user_id
 		ORDER BY ' . $sort_field . ' ' . $sort_mode . ' LIMIT ' . $nbr_articles_per_page .
-		' OFFSET ' . $limit_page, SelectQueryResult::FETCH_ASSOC);
+		' OFFSET ' . $limit_page, array(), SelectQueryResult::FETCH_ASSOC);
 		
 		$nbr_articles = $result->get_rows_count();
-		
-		$pagination = new ArticlesPagination($current_page, $nbr_articles, $nbr_articles_per_page);
-		$pagination->set_url(ArticlesUrlBuilder::manage_articles()->absolute() . $sort_field . '/' . $sort_mode . '/%d');
 		
 		$this->build_form($field, $mode);
 		
 		$this->view->put_all(array(
-			'L_PUBLISHED_ARTICLES' => $this->lang['articles.published_articles'],
-			'L_MODULE_NAME' => $this->lang['articles'],
-			'L_ALERT_DELETE_ARTICLE' => $this->lang['articles.form.alert_delete_article'],
-			'L_TOTAL_PENDING' => $nbr_articles_pending > 0 ? sprintf($this->lang['articles.nbr_articles.pending'], $nbr_articles_pending) : '',
-			'L_PENDING_ARTICLES' => $this->lang['articles.pending_articles'],
-			'L_EDIT_CONFIG' => $this->lang['articles_configuration'],
-			'U_PUBLISHED_ARTICLES' => ArticlesUrlBuilder::home()->absolute(), 
-			'U_ADD_ARTICLES' => ArticlesUrlBuilder::add_article()->absolute(),
-			'U_EDIT_CONFIG' => ArticlesUrlBuilder::articles_configuration()->absolute(),
-			'U_SYNDICATION' => ArticlesUrlBuilder::category_syndication(Category::ROOT_CATEGORY)->rel()
+			'L_ALERT_DELETE_ARTICLE' => $this->lang['articles.form.alert_delete_article']
 		));
 		
-		if($nbr_articles_pending > 0)
+		if($nbr_articles > 0)
 		{	
-			$add_auth = ArticlesAuthorizationsService::check_authorizations()->write() || ArticlesAuthorizationsService::check_authorizations()->contribution();
+			$pagination = new ArticlesPagination($current_page, $nbr_articles, $nbr_articles_per_page);
+			$pagination->set_url(ArticlesUrlBuilder::manage_articles()->absolute() . $sort_field . '/' . $sort_mode . '/%d');
 			
 			$this->view->put_all(array(
 				'C_ARTICLES_FILTERS' => true,
-				'C_ADD' => $add_auth,
-				'L_DATE' => LangLoader::get_message('date', 'main'),
-				'L_VIEW' => LangLoader::get_message('views', 'main'),
-				'L_NOTE' => LangLoader::get_message('note', 'main'),
-				'L_COM' => LangLoader::get_message('com', 'main'),
-				'L_WRITTEN' => LangLoader::get_message('written_by', 'main'),
-				'PAGINATION' => ($nbr_articles_pending > $nbr_articles_per_page) ? $pagination->display()->render() : ''
+				'L_ARTICLES_FILTERS_TITLE' => $this->lang['articles.sort_filter_title'],
+				'L_AUTHOR' => $this->lang['admin.articles.sort_field.author'],
+				'L_CATEGORY' => $this->lang['admin.articles.sort_field.cat'],
+				'L_DATE' => $this->lang['admin.articles.sort_field.date'],
+				'L_PUBLISHED' => $this->lang['admin.articles.sort_field.published'],
+				'L_TITLE' => $this->lang['admin.articles.sort_field.title'],
+				'PAGINATION' => ($nbr_articles > $nbr_articles_per_page) ? $pagination->display()->render() : ''
 			));
-			
-			$notation = new Notation();
-			$notation->set_module_name('articles');
-			$notation->set_notation_scale(ArticlesConfig::load()->get_notation_scale());
 			
 			while($row = $result->fetch())
 			{
-				$notation->set_id_in_module($row['id']);
-				
 				$user_group_color = User::get_group_color($row['user_groups'], $row['level']);
 				
 				$category = ArticlesService::get_categories_manager()->get_categories_cache()->get_category($row['id_category']);
-				$edit_auth = ArticlesAuthorizationsService::check_authorizations($category->get_id())->moderation() || ArticlesAuthorizationsService::check_authorizations($category->get_id())->write() && $row['author_user_id'] == $request->get_current_user()->get_id();
+				
+				$title = strlen($row['title']) > 45 ? TextHelper::substr_html($row['title'], 0, 45) . '...' : $row['title'];
+				
+				$published_date = '';
+				if ($row['publishing_start_date'] > 0)
+					$published_date .= gmdate_format('date_format_short', $row['publishing_start_date']);
+
+				if ($row['publishing_end_date'] > 0 && $row['publishing_start_date'] > 0)
+					$published_date .= ' ' . strtolower(LangLoader::get_message('until', 'main')) . ' ' . gmdate_format('date_format_short', $row['publishing_end_date']);
+				elseif ($row['publishing_end_date'] > 0)
+					$published_date .= LangLoader::get_message('until', 'main') . ' ' . gmdate_format('date_format_short', $row['publishing_end_date']);
+				
 				
 				$this->view->assign_block_vars('articles', array(
-					'C_DELETE' => ArticlesAuthorizationsService::check_authorizations($category->get_id())->moderation(),
-					'C_EDIT' => $edit_auth,
 					'C_USER_GROUP_COLOR' => !empty($user_group_color),
-					'TITLE' => $row['title'],
-					'PICTURE' => $row['picture_url'],
-					'DATE' => gmdate_format('date_format_short', $row['date_created']),
-					'NUMBER_VIEW' => $row['number_view'],
-					'L_NUMBER_COM' => empty($row['number_comments']) ? '0' : $row['number_comments'],
-					'NOTE' => (int)NotationService::get_number_notes($notation) > 0 ? NotationService::display_static_image($notation, $row['average_notes']) : $this->lang['articles.no_notes'],
-					'DESCRIPTION' =>FormatingHelper::second_parse($row['description']), 
+					'L_TITLE' => $title,
+					'L_CATEGORY' => $category->get_name(),
+					'L_EDIT_ARTICLE' => $this->lang['articles.edit'],
+					'L_DELETE_ARTICLE' => $this->lang['articles.delete'],
+					'DATE' => gmdate_format('date_format_short', $row['date_created']), 
+					'PUBLISHED' => ($row['published'] == 1) ? LangLoader::get_message('yes', 'main') : LangLoader::get_message('no', 'main'),
+					'PUBLISHED_DATE' => $published_date,
 					'PSEUDO' => $row['login'],
 					'USER_LEVEL_CLASS' => UserService::get_level_class($row['level']),
 					'USER_GROUP_COLOR' => $user_group_color,
-					'U_COMMENTS' => ArticlesUrlBuilder::display_comments_article($category->get_id(), $category->get_rewrited_name(), $row['id'], $row['rewrited_title'])->absolute(),
 					'U_AUTHOR' => UserUrlBuilder::profile($row['author_user_id'])->absolute(),
 					'U_ARTICLE' => ArticlesUrlBuilder::display_article($category->get_id(), $category->get_rewrited_name(), $row['id'], $row['rewrited_title'])->absolute(),
+					'U_CATEGORY' => ArticlesUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name())->absolute(),
 					'U_EDIT_ARTICLE' => ArticlesUrlBuilder::edit_article($row['id'])->absolute(),
 					'U_DELETE_ARTICLE' => ArticlesUrlBuilder::delete_article($row['id'])->absolute()
 				));
@@ -189,7 +179,7 @@ class AdminManageArticlesController extends AdminModuleController
 		else 
 		{
 			$this->view->put_all(array(
-				'L_NO_PENDING_ARTICLES' => $this->lang['articles.no_pending_article']
+				'L_NO_ARTICLES' => $this->lang['articles.no_article']
 			));
 		}
 		$this->view->put('FORM', $this->form->display());
@@ -206,17 +196,6 @@ class AdminManageArticlesController extends AdminModuleController
 		$options[] = new FormFieldSelectChoiceOption($this->lang['admin.articles.sort_field.published'], 'published');
 
 		return $options;
-	}
-	
-	private function generate_response()
-	{
-		$response = new ArticlesDisplayResponse();
-		$response->set_page_title($this->lang['articles.pending_articles']);
-		
-		$response->add_breadcrumb_link($this->lang['articles'], ArticlesUrlBuilder::home());
-		$response->add_breadcrumb_link($this->lang['articles.pending_articles'], ArticlesUrlBuilder::display_pending_articles());
-	
-		return $response->display($this->view);
 	}
 }
 ?>
