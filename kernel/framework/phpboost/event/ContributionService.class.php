@@ -85,7 +85,7 @@ class ContributionService
 		$array_result = array();
 		
 		//On liste les contributions
-		$result = self::$sql_querier->query_while("SELECT id, entitled, fixing_url, auth, current_status, module, creation_date, fixing_date, poster_id, fixer_id, poster_member.login poster_login, fixer_member.login fixer_login, identifier, id_in_module, type, description
+		$result = self::$sql_querier->query_while("SELECT id, entitled, fixing_url, auth, current_status, module, creation_date, fixing_date, poster_id, fixer_id, poster_member.login poster_login, poster_member.level poster_level, poster_member.user_groups poster_groups, fixer_member.login fixer_login, fixer_member.level fixer_level, fixer_member.user_groups fixer_groups, identifier, id_in_module, type, description
 		FROM " . DB_TABLE_EVENTS  . " c
 		LEFT JOIN " . DB_TABLE_MEMBER . " poster_member ON poster_member.user_id = c.poster_id
 		LEFT JOIN " . DB_TABLE_MEMBER . " fixer_member ON fixer_member.user_id = c.fixer_id
@@ -95,7 +95,7 @@ class ContributionService
 		{
 			$contri = new Contribution();
 			
-			$contri->build($row['id'], $row['entitled'], $row['description'], $row['fixing_url'], $row['module'], $row['current_status'], new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $row['creation_date']), new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $row['fixing_date']), unserialize($row['auth']), $row['poster_id'], $row['fixer_id'], $row['id_in_module'], $row['identifier'], $row['type'], $row['poster_login'], $row['fixer_login']);
+			$contri->build($row['id'], $row['entitled'], $row['description'], $row['fixing_url'], $row['module'], $row['current_status'], new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $row['creation_date']), new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $row['fixing_date']), unserialize($row['auth']), $row['poster_id'], $row['fixer_id'], $row['id_in_module'], $row['identifier'], $row['type'], $row['poster_login'], $row['fixer_login'], $row['poster_level'], $row['fixer_level'], $row['poster_groups'], $row['fixer_groups']);
 			$array_result[] = $contri;
 		}
 		
