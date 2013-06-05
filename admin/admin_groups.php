@@ -234,28 +234,24 @@ elseif (!empty($idgroup)) //Interface d'édition du groupe.
 		$members = $Sql->query("SELECT members FROM " . DB_TABLE_GROUP . " WHERE id = '" . NumberHelper::numeric($group['id']) . "'", __LINE__, __FILE__);
 		$members = explode('|', $members);
 		
+		$result = PersistenceContext::get_querier()->select('SELECT user_id, login, level, user_groups
+			FROM ' . DB_TABLE_MEMBER . '
+			WHERE user_id IN (' . implode(',', $members) . ')');
+		
 		$number_member = 0;
-		foreach ($members as $key => $user_id)
+		while ($row = $result->fetch())
 		{
-			$user = PersistenceContext::get_querier()->select('SELECT login, level, user_groups
-				FROM ' . DB_TABLE_MEMBER . '
-				WHERE user_id = :user_id
-				', array('user_id' => $user_id))->fetch();
+			$group_color = User::get_group_color($row['user_groups'], $row['level']);
 			
-			if (!empty($user))
-			{
-				$group_color = User::get_group_color($user['user_groups'], $user['level']);
-				
-				$template->assign_block_vars('member', array(
-					'C_GROUP_COLOR' => !empty($group_color),
-					'USER_ID' => $user_id,
-					'LOGIN' => $user['login'],
-					'LEVEL_CLASS' => UserService::get_level_class($user['level']),
-					'GROUP_COLOR' => $group_color,
-					'U_PROFILE' => UserUrlBuilder::profile($user_id)->absolute()
-				));
-				$number_member++;
-			}
+			$template->assign_block_vars('member', array(
+				'C_GROUP_COLOR' => !empty($group_color),
+				'USER_ID' => $row['user_id'],
+				'LOGIN' => $row['login'],
+				'LEVEL_CLASS' => UserService::get_level_class($row['level']),
+				'GROUP_COLOR' => $group_color,
+				'U_PROFILE' => UserUrlBuilder::profile($row['user_id'])->absolute()
+			));
+			$number_member++;
 		}
 		
 		$template->put_all(array(
