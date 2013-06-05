@@ -252,20 +252,18 @@ class User
 			$user_groups = explode('|', $user_groups);
 			
 		$i = 0;
+		$group_color = '';
 		$groups_cache = GroupsCache::load();
 
 		foreach ($user_groups as $idgroup) //Récupération du premier groupe.
 		{
-			if ($i++ == 0)
+			if ($groups_cache->group_exists($idgroup))
 			{
-				if ($groups_cache->group_exists($idgroup))
-				{
-					$group = $groups_cache->get_group($idgroup);
-					return (!empty($group['color']) && $level == 0) ? '#' . $group['color'] : '';
-				}
-				return '';
+				$group = $groups_cache->get_group($idgroup);
+				$group_color = (!empty($group['color']) && $level == 0) ? '#' . $group['color'] : '';
 			}
 		}
+		return $group_color;
 	}
 }
 ?>
