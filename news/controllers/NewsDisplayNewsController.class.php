@@ -104,7 +104,7 @@ class NewsDisplayNewsController extends ModuleController
 		
 				
 			'U_SYNDICATION' => NewsUrlBuilder::category_syndication($news->get_id_cat())->rel(),
-			'U_AUTHOR_PROFILE' => UserUrlBuilder::profile($news->get_author_user_id())->absolute(),
+			'U_AUTHOR_PROFILE' => UserUrlBuilder::profile($news->get_author_user()->get_id())->absolute(),
 			'U_EDIT' => NewsUrlBuilder::edit_news($news->get_id())->rel(),
 			'U_DELETE' => NewsUrlBuilder::delete_news($news->get_id())->rel(),
 			'U_PICTURE' => $news->get_picture()->absolute(),
@@ -142,7 +142,7 @@ class NewsDisplayNewsController extends ModuleController
 		$news = $this->get_news();
 		
 		$user_not_read_authorizations = !NewsAuthorizationsService::check_authorizations($news->get_id_cat())->read() && !NewsAuthorizationsService::check_authorizations()->read();
-		$user_not_read_authorizations_not_approval = $user_not_read_authorizations && !NewsAuthorizationsService::check_authorizations($news->get_id_cat())->moderation() && (!NewsAuthorizationsService::check_authorizations($news->get_id_cat())->write() && $news->get_author_user_id() != AppContext::get_current_user()->get_id());
+		$user_not_read_authorizations_not_approval = $user_not_read_authorizations && !NewsAuthorizationsService::check_authorizations($news->get_id_cat())->moderation() && (!NewsAuthorizationsService::check_authorizations($news->get_id_cat())->write() && $news->get_author_user()->get_id() != AppContext::get_current_user()->get_id());
 		
 		switch ($news->get_approbation_type()) {
 			case News::APPROVAL_NOW:
