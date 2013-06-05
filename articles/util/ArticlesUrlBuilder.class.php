@@ -100,9 +100,15 @@ class ArticlesUrlBuilder
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/' . $id_category . '-' . $rewrited_name_category . '/' . $id_article . '-' . $rewrited_title . '/#comments_list');
 	}
+	
 	public static function display_pending_articles()
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/pending/');
+	}
+	
+	public static function display_tag($rewrited_name)
+	{
+		return DispatchManager::get_url(self::$dispatcher, '/tag/'. $rewrited_name);
 	}
 	
 	public static function home()
