@@ -20,12 +20,12 @@ function Confirm()
 				<ul>
 					# IF C_EDIT #
 					<li>
-						<a href="{PATH_TO_ROOT}/news/management.php?edit={ID}" title="{L_EDIT}" class="img_link">Editer</a>
+						<a href="{U_EDIT}" title="{L_EDIT}" class="img_link">{L_EDIT}</a>
 					</li>
 					# ENDIF #
 					# IF C_DELETE #
 					<li>
-						<a href="{PATH_TO_ROOT}/news/management.php?del={ID}&amp;token={TOKEN}" title="{L_DELETE}" onclick="javascript:return Confirm();">Supprimer</a>
+						<a href="{U_DELETE}" title="{L_DELETE}" onclick="javascript:return Confirm();">{L_DELETE}</a>
 					</li>
 					# ENDIF #
 				</ul>
