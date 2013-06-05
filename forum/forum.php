@@ -110,7 +110,7 @@ if (!empty($id_get))
 		
 		//On liste les sous-catégories.
 		$result = $Sql->query_while("SELECT c.id AS cid, c.name, c.subname, c.url, c.nbr_topic, c.nbr_msg, c.status, t.id AS tid, 
-		t.idcat, t.title, t.last_timestamp, t.last_user_id, t.last_msg_id, t.nbr_msg AS t_nbr_msg, t.display_msg, m.user_id, m.login, v.last_view_id 
+		t.idcat, t.title, t.last_timestamp, t.last_user_id, t.last_msg_id, t.nbr_msg AS t_nbr_msg, t.display_msg, m.user_id, m.login, m.level AS user_level, m.user_groups, v.last_view_id 
 		FROM " . PREFIX . "forum_cats c
 		LEFT JOIN " . PREFIX . "forum_topics t ON t.id = c.last_topic_id
 		LEFT JOIN " . PREFIX . "forum_view v ON v.user_id = '" . $User->get_attribute('user_id') . "' AND v.idtopic = t.id
@@ -138,10 +138,12 @@ if (!empty($id_get))
 							
 				$last_topic_title = (($CONFIG_FORUM['activ_display_msg'] && $row['display_msg']) ? $CONFIG_FORUM['display_msg'] : '') . ' ' . ucfirst($row['title']);
 				$last_topic_title = (strlen(TextHelper::html_entity_decode($last_topic_title)) > 20) ? TextHelper::substr_html($last_topic_title, 0, 20) . '...' : $last_topic_title;
-
+				
+				$group_color = User::get_group_color($row['user_groups'], $row['user_level']);
+				
 				$last = '<a href="topic' . url('.php?id=' . $row['tid'], '-' . $row['tid'] . '+' . Url::encode_rewrite($row['title'])  . '.php') . '" class="small_link">' . ucfirst($last_topic_title) . '</a><br />
 				<a href="topic' . url('.php?' . $last_page .  'id=' . $row['tid'], '-' . $row['tid'] . $last_page_rewrite . '+' . Url::encode_rewrite($row['title'])  . '.php') . '#m' .  $last_msg_id . '" title=""><img src="../templates/' . get_utheme() . '/images/ancre.png" alt="" /></a> ' . $LANG['on'] . ' ' . gmdate_format('date_format', $row['last_timestamp']) . '<br />
-				' . $LANG['by'] . (!empty($row['login']) ? ' <a href="'. UserUrlBuilder::profile($row['last_user_id'])->absolute() .'" class="small_link">' . TextHelper::wordwrap_html($row['login'], 13) . '</a>' : ' ' . $LANG['guest']);
+				' . $LANG['by'] . (!empty($row['login']) ? ' <a href="'. UserUrlBuilder::profile($row['last_user_id'])->absolute() .'" class="small_link '.UserService::get_level_class($row['user_level']).'"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . TextHelper::wordwrap_html($row['login'], 13) . '</a>' : ' ' . $LANG['guest']);
 			}
 			else
 			{
@@ -267,7 +269,7 @@ if (!empty($id_get))
 	));		
 
 	$nbr_topics_display = 0;
-	$result = $Sql->query_while("SELECT m1.login AS login, m2.login AS last_login, t.id, t.title, t.subtitle, t.user_id, t.nbr_msg, t.nbr_views, t.last_user_id , t.last_msg_id, t.last_timestamp, t.type, t.status, t.display_msg, v.last_view_id, p.question, tr.id AS idtrack
+	$result = $Sql->query_while("SELECT m1.login AS login, m1.level AS user_level, m1.user_groups AS user_groups, m2.login AS last_login, m2.level AS last_user_level, m2.user_groups AS last_user_groups, t.id, t.title, t.subtitle, t.user_id, t.nbr_msg, t.nbr_views, t.last_user_id , t.last_msg_id, t.last_timestamp, t.type, t.status, t.display_msg, v.last_view_id, p.question, tr.id AS idtrack
 	FROM " . PREFIX . "forum_topics t
 	LEFT JOIN " . PREFIX . "forum_view v ON v.user_id = '" . $User->get_attribute('user_id') . "' AND v.idtopic = t.id
 	LEFT JOIN " . DB_TABLE_MEMBER . " m1 ON m1.user_id = t.user_id
@@ -318,10 +320,13 @@ if (!empty($id_get))
 		$rewrited_title_topic = ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? '+' . Url::encode_rewrite($row['title']) : '';
 		
 		//Affichage du dernier message posté.
-		$last_msg = '<a href="topic' . url('.php?' . $last_page . 'id=' . $row['id'], '-' . $row['id'] . $last_page_rewrite . $rewrited_title_topic . '.php') . '#m' . $last_msg_id . '" title=""><img src="../templates/' . get_utheme() . '/images/ancre.png" alt="" /></a>' . ' ' . $LANG['on'] . ' ' . gmdate_format('date_format', $row['last_timestamp']) . '<br /> ' . $LANG['by'] . ' ' . (!empty($row['last_login']) ? '<a class="small_link" href="'. UserUrlBuilder::profile($row['last_user_id'])->absolute() .'">' . TextHelper::wordwrap_html($row['last_login'], 13) . '</a>' : '<em>' . $LANG['guest'] . '</em>');
+		$last_group_color = User::get_group_color($row['last_user_groups'], $row['last_user_level']);
+		$last_msg = '<a href="topic' . url('.php?' . $last_page . 'id=' . $row['id'], '-' . $row['id'] . $last_page_rewrite . $rewrited_title_topic . '.php') . '#m' . $last_msg_id . '" title=""><img src="../templates/' . get_utheme() . '/images/ancre.png" alt="" /></a>' . ' ' . $LANG['on'] . ' ' . gmdate_format('date_format', $row['last_timestamp']) . '<br /> ' . $LANG['by'] . ' ' . (!empty($row['last_login']) ? '<a class="small_link '.UserService::get_level_class($row['last_user_level']).'"' . (!empty($last_group_color) ? ' style="color:' . $last_group_color . '"' : '') . ' href="'. UserUrlBuilder::profile($row['last_user_id'])->absolute() .'">' . TextHelper::wordwrap_html($row['last_login'], 13) . '</a>' : '<em>' . $LANG['guest'] . '</em>');
 		
 		//Ancre ajoutée aux messages non lus.	
 		$new_ancre = ($new_msg === true && !$is_guest) ? '<a href="topic' . url('.php?' . $last_page . 'id=' . $row['id'], '-' . $row['id'] . $last_page_rewrite . $rewrited_title_topic . '.php') . '#m' . $last_msg_id . '" title=""><img src="../templates/' . get_utheme() . '/images/ancre.png" alt="" /></a>' : '';
+		
+		$group_color = User::get_group_color($row['user_groups'], $row['user_level']);
 		
 		$Template->assign_block_vars('topics', array(
 			'C_IMG_POLL' => !empty($row['question']),
@@ -332,7 +337,7 @@ if (!empty($id_get))
 			'ANCRE' => $new_ancre,
 			'TYPE' => $type[$row['type']],
 			'TITLE' => ucfirst($row['title']),			
-			'AUTHOR' => !empty($row['login']) ? '<a href="'. UserUrlBuilder::profile($row['user_id'])->absolute() .'" class="small_link">' . $row['login'] . '</a>' : '<em>' . $LANG['guest'] . '</em>',
+			'AUTHOR' => !empty($row['login']) ? '<a href="'. UserUrlBuilder::profile($row['user_id'])->absolute() .'" class="small_link '.UserService::get_level_class($row['user_level']).'"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . $row['login'] . '</a>' : '<em>' . $LANG['guest'] . '</em>',
 			'DESC' => $row['subtitle'],
 			'PAGINATION_TOPICS' => $Pagination->display('topic' . url('.php?id=' . $row['id'] . '&amp;pt=%d', '-' . $row['id'] . '-%d.php'), $row['nbr_msg'], 'pt', $CONFIG_FORUM['pagination_msg'], 2, 10, NO_PREVIOUS_NEXT_LINKS, LINK_START_PAGE),
 			'MSG' => ($row['nbr_msg'] - 1),

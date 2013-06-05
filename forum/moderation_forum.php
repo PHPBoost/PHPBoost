@@ -166,7 +166,7 @@ if ($action == 'alert') //Gestion des alertes
 		$auth_cats = !empty($auth_cats) ? " WHERE c.id NOT IN (" . trim($auth_cats, ',') . ")" : '';
 
 		$i = 0;
-		$result = $Sql->query_while("SELECT ta.id, ta.title, ta.timestamp, ta.status, ta.user_id, ta.idtopic, ta.idmodo, m2.login AS login_modo, m.login, t.title AS topic_title, c.id AS cid
+		$result = $Sql->query_while("SELECT ta.id, ta.title, ta.timestamp, ta.status, ta.user_id, ta.idtopic, ta.idmodo, m2.login AS login_modo, m2.level AS modo_level, m2.user_groups AS modo_groups, m.login, m.level AS user_level, m.user_groups, t.title AS topic_title, c.id AS cid
 		FROM " . PREFIX . "forum_alerts ta
 		LEFT JOIN " . PREFIX . "forum_topics t ON t.id = ta.idtopic
 		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = ta.user_id
@@ -179,14 +179,19 @@ if ($action == 'alert') //Gestion des alertes
 			if ($row['status'] == 0)
 				$status = $LANG['alert_not_solved'];
 			else
-				$status = $LANG['alert_solved'] . '<a href="'. UserUrlBuilder::profile($row['idmodo'])->absolute() .'">' . $row['login_modo'] . '</a>';
-
+			{
+				$modo_group_color = User::get_group_color($row['modo_groups'], $row['modo_level']);
+				$status = $LANG['alert_solved'] . '<a href="'. UserUrlBuilder::profile($row['idmodo'])->absolute() .'" class=" '.UserService::get_level_class($row['modo_level']).'"' . (!empty($modo_group_color) ? ' style="color:' . $modo_group_color . '"' : '') . '>' . $row['login_modo'] . '</a>';
+			}
+			
+			$group_color = User::get_group_color($row['user_groups'], $row['user_level']);
+			
 			$Template->assign_block_vars('alert_list', array(
 				'TITLE' => '<a href="moderation_forum' . url('.php?action=alert&amp;id=' . $row['id']) . '">' . $row['title'] . '</a>',
 				'EDIT' => '<a href="moderation_forum' . url('.php?action=alert&amp;id=' . $row['id']) . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/edit.png" alt="" class="valign_middle" /></a>',
 				'TOPIC' => '<a href="topic' . url('.php?id=' . $row['idtopic'], '-' . $row['idtopic'] . '+' . Url::encode_rewrite($row['topic_title']) . '.php') . '">' . $row['topic_title'] . '</a>',
 				'STATUS' => $status,
-				'LOGIN' => '<a href="'. UserUrlBuilder::profile($row['user_id'])->absolute() .'">' . $row['login'] . '</a>',
+				'LOGIN' => '<a href="'. UserUrlBuilder::profile($row['user_id'])->absolute() .'" class=" '.UserService::get_level_class($row['user_level']).'"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . $row['login'] . '</a>',
 				'TIME' => gmdate_format('date_format', $row['timestamp']),
 				'BACKGROUND_COLOR' => $row['status'] == 1 ? 'background-color:#82c2a7;' : 'background-color:#e59f09;',
 				'ID' => $row['id']
@@ -215,7 +220,7 @@ if ($action == 'alert') //Gestion des alertes
 		$auth_cats = !empty($auth_cats) ? " AND c.id NOT IN (" . trim($auth_cats, ',') . ")" : '';
 
 		$result = $Sql->query_while("
-		SELECT ta.id, ta.title, ta.timestamp, ta.status, ta.user_id, ta.idtopic, ta.idmodo, m2.login AS login_modo, m.login, t.title AS topic_title, t.idcat, c.id AS cid, ta.contents
+		SELECT ta.id, ta.title, ta.timestamp, ta.status, ta.user_id, ta.idtopic, ta.idmodo, m2.login AS login_modo, m2.level AS modo_level, m2.user_groups AS modo_groups, m.login, m.level AS user_level, m.user_groups, t.title AS topic_title, t.idcat, c.id AS cid, ta.contents
 		FROM " . PREFIX . "forum_alerts ta
 		LEFT JOIN " . PREFIX . "forum_topics t ON t.id = ta.idtopic
 		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = ta.user_id
@@ -238,15 +243,20 @@ if ($action == 'alert') //Gestion des alertes
 			if ($row['status'] == 0)
 				$status = $LANG['alert_not_solved'];
 			else
-				$status = $LANG['alert_solved'] . '<a href="'. UserUrlBuilder::profile($row['idmodo'])->absolute() .'">' . $row['login_modo'] . '</a>';
-
+			{
+				$modo_group_color = User::get_group_color($row['modo_groups'], $row['modo_level']);
+				$status = $LANG['alert_solved'] . '<a href="'. UserUrlBuilder::profile($row['idmodo'])->absolute() .'" class=" '.UserService::get_level_class($row['modo_level']).'"' . (!empty($modo_group_color) ? ' style="color:' . $modo_group_color . '"' : '') . '>' . $row['login_modo'] . '</a>';
+			}
+			
+			$group_color = User::get_group_color($row['user_groups'], $row['user_level']);
+			
 			$Template->put_all(array(
 				'ID' => $id_get,
 				'TITLE' => $row['title'],
 				'TOPIC' => '<a href="topic' . url('.php?id=' . $row['idtopic'], '-' . $row['idtopic'] . '+' . Url::encode_rewrite($row['topic_title']) . '.php') . '">' . $row['topic_title'] . '</a>',
 				'CONTENTS' => FormatingHelper::second_parse($row['contents']),
 				'STATUS' => $status,
-				'LOGIN' => '<a href="'. UserUrlBuilder::profile($row['user_id'])->absolute() .'">' . $row['login'] . '</a>',
+				'LOGIN' => '<a href="'. UserUrlBuilder::profile($row['user_id'])->absolute() .'" class=" '.UserService::get_level_class($row['user_level']).'"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . $row['login'] . '</a>',
 				'TIME' => gmdate_format('date_format', $row['timestamp']),
 				'CAT' => '<a href="forum' . url('.php?id=' . $row['idcat'], '-' . $row['idcat'] . '+' . Url::encode_rewrite($CAT_FORUM[$row['idcat']]['name']) . '.php') . '">' . $CAT_FORUM[$row['idcat']]['name'] . '</a>',
 				'C_FORUM_ALERT_LIST' => true,
@@ -338,14 +348,19 @@ elseif ($action == 'punish') //Gestion des utilisateurs
 		));
 
 		$i = 0;
-		$result = $Sql->query_while("SELECT user_id, login, user_readonly
+		$result = $Sql->query_while("SELECT user_id, login, level, user_groups, user_readonly
 		FROM " . PREFIX . "member
 		WHERE user_readonly > " . time() . "
 		ORDER BY user_readonly", __LINE__, __FILE__);
 		while ($row = $Sql->fetch_assoc($result))
 		{
+			$group_color = User::get_group_color($row['user_groups'], $row['level']);
+			
 			$Template->assign_block_vars('user_list', array(
-				'LOGIN' => '<a href="moderation_forum.php' . url('?action=punish&amp;id=' . $row['user_id']) . '">' . $row['login'] . '</a>',
+				'C_GROUP_COLOR' => !empty($group_color),
+				'LOGIN' => $row['login'],
+				'LEVEL_CLASS' => UserService::get_level_class($row['level']),
+				'GROUP_COLOR' => $group_color,
 				'INFO' => gmdate_format('date_format', $row['user_readonly']),
 				'U_PROFILE' => UserUrlBuilder::profile($row['user_id'])->absolute(),
 				'U_ACTION_USER' => '<a href="moderation_forum.php' . url('?action=punish&amp;id=' . $row['user_id'] . '&amp;token=' . $Session->get_token()) . '"><img src="../templates/' . get_utheme() . '/images/readonly.png" alt="" /></a>',
@@ -365,7 +380,7 @@ elseif ($action == 'punish') //Gestion des utilisateurs
 	}
 	else //On affiche les infos sur l'utilisateur
 	{
-		$member = $Sql->query_array(DB_TABLE_MEMBER, 'login', 'user_readonly', "WHERE user_id = '" . $id_get . "'", __LINE__, __FILE__);
+		$member = $Sql->query_array(DB_TABLE_MEMBER, 'login', 'level', 'user_groups', 'user_readonly', "WHERE user_id = '" . $id_get . "'", __LINE__, __FILE__);
 
 		//Durée de la sanction.
 		$array_time = array(0, 60, 300, 900, 1800, 3600, 7200, 86400, 172800, 604800, 1209600, 2419200, 326592000);
@@ -399,12 +414,14 @@ elseif ($action == 'punish') //Gestion des utilisateurs
 		
 		$editor = AppContext::get_content_formatting_service()->get_default_editor();
 		$editor->set_identifier('action_contents');
-
+		
+		$group_color = User::get_group_color($member['user_groups'], $member['level']);
+		
 		$Template->put_all(array(
 			'C_FORUM_USER_INFO' => true,
 			'KERNEL_EDITOR' => $editor->display(),
 			'ALTERNATIVE_PM' => ($key_sanction > 0) ? str_replace('%date%', $array_sanction[$key_sanction], $LANG['user_readonly_changed']) : str_replace('%date%', '1 ' . $LANG['minute'], $LANG['user_readonly_changed']),
-			'LOGIN' => '<a href="'. UserUrlBuilder::profile($id_get)->absolute() .'">' . $member['login'] . '</a>',
+			'LOGIN' => '<a href="'. UserUrlBuilder::profile($id_get)->absolute() .'" class="'.UserService::get_level_class($member['level']).'"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . $member['login'] . '</a>',
 			'INFO' => $array_sanction[$key_sanction],
 			'SELECT' => $select,
 			'REPLACE_VALUE' => 'replace_value = parseInt(replace_value);'. "\n" .
@@ -519,14 +536,19 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 		));
 
 		$i = 0;
-		$result = $Sql->query_while("SELECT user_id, login, user_warning
+		$result = $Sql->query_while("SELECT user_id, login, level, user_groups, user_warning
 		FROM " . PREFIX . "member
 		WHERE user_warning > 0
 		ORDER BY user_warning", __LINE__, __FILE__);
 		while ($row = $Sql->fetch_assoc($result))
 		{
+			$group_color = User::get_group_color($row['user_groups'], $row['level']);
+			
 			$Template->assign_block_vars('user_list', array(
+				'C_GROUP_COLOR' => !empty($group_color),
 				'LOGIN' => $row['login'],
+				'LEVEL_CLASS' => UserService::get_level_class($row['level']),
+				'GROUP_COLOR' => $group_color,
 				'INFO' => $row['user_warning'] . '%',
 				'U_ACTION_USER' => '<a href="moderation_forum.php' . url('?action=warning&amp;id=' . $row['user_id'] . '&amp;token=' . $Session->get_token()) . '"><img src="../templates/' . get_utheme() . '/images/admin/important.png" alt="" /></a>',
 				'U_PROFILE' => UserUrlBuilder::profile($row['user_id'])->absolute(),
@@ -546,7 +568,7 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 	}
 	else //On affiche les infos sur l'utilisateur
 	{
-		$member = $Sql->query_array(DB_TABLE_MEMBER, 'login', 'user_warning', "WHERE user_id = '" . $id_get . "'", __LINE__, __FILE__);
+		$member = $Sql->query_array(DB_TABLE_MEMBER, 'login', 'level', 'user_groups', 'user_warning', "WHERE user_id = '" . $id_get . "'", __LINE__, __FILE__);
 
 		$select = '';
 		$j = 0;
@@ -561,11 +583,13 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 		$editor = AppContext::get_content_formatting_service()->get_default_editor();
 		$editor->set_identifier('action_contents');
 		
+		$group_color = User::get_group_color($member['user_groups'], $member['level']);
+		
 		$Template->put_all(array(
 			'C_FORUM_USER_INFO' => true,
 			'KERNEL_EDITOR' => $editor->display(),
 			'ALTERNATIVE_PM' => str_replace('%level%', $member['user_warning'], $LANG['user_warning_level_changed']),
-			'LOGIN' => '<a href="'. UserUrlBuilder::profile($id_get)->absolute() .'">' . $member['login'] . '</a>',
+			'LOGIN' => '<a href="'. UserUrlBuilder::profile($id_get)->absolute() .'" class="'.UserService::get_level_class($member['level']).'"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . $member['login'] . '</a>',
 			'INFO' => $LANG['user_warning_level'] . ': ' . $member['user_warning'] . '%',
 			'SELECT' => $select,
 			'REPLACE_VALUE' => 'contents = contents.replace(regex, \' \' + replace_value + \'%\');' . "\n" . 'document.getElementById(\'action_info\').innerHTML = \'' . addslashes($LANG['user_warning_level']) . ': \' + replace_value + \'%\';',
@@ -626,7 +650,7 @@ else //Panneau de modération
 	$end = !empty($get_more) ? $get_more : 15; //Limit.
 	$i = 0;
 
-	$result = $Sql->query_while("SELECT h.action, h.user_id, h.user_id_action, h.url, h.timestamp, m.login, m2.login as member
+	$result = $Sql->query_while("SELECT h.action, h.user_id, h.user_id_action, h.url, h.timestamp, m.login, m.level AS user_level, m.user_groups, m2.login as member, m2.level as member_level, m2.user_groups as member_groups
 	FROM " . PREFIX . "forum_history h
 	LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = h.user_id
 	LEFT JOIN " . DB_TABLE_MEMBER . " m2 ON m2.user_id = h.user_id_action
@@ -634,12 +658,18 @@ else //Panneau de modération
 	" . $Sql->limit(0, $end), __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))
 	{
+		$group_color = User::get_group_color($row['user_groups'], $row['user_level']);
+		$member_group_color = User::get_group_color($row['member_groups'], $row['member_level']);
+		
 		$Template->assign_block_vars('action_list', array(
+			'C_GROUP_COLOR' => !empty($group_color),
 			'LOGIN' => !empty($row['login']) ? $row['login'] : $LANG['guest'],
+			'LEVEL_CLASS' => UserService::get_level_class($row['user_level']),
+			'GROUP_COLOR' => $group_color,
 			'DATE' => gmdate_format('date_format', $row['timestamp']),
 			'U_ACTION' => (!empty($row['url']) ? '<a href="../forum/' . $row['url'] . '">' . $LANG[$row['action']] . '</a>' : $LANG[$row['action']]),
 			'U_USER_PROFILE' => UserUrlBuilder::profile($row['user_id'])->absolute(),
-			'U_USER_CONCERN' => (!empty($row['user_id_action']) ? '<a href="'. UserUrlBuilder::profile($row['user_id_action'])->absolute() .'">' . $row['member'] . '</a>' : '-')
+			'U_USER_CONCERN' => (!empty($row['user_id_action']) ? '<a href="'. UserUrlBuilder::profile($row['user_id_action'])->absolute() .'" class="'.UserService::get_level_class($row['member_level']).'"' . (!empty($member_group_color) ? ' style="color:' . $member_group_color . '"' : '') . '>' . $row['member'] . '</a>' : '-')
 		));
 
 		$i++;
