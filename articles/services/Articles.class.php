@@ -41,7 +41,6 @@ class Articles
 
 	private $notation_enabled;
 	private $author_name_displayed;
-	private $author_user_id;
 	private $author_user;
 
 	private $published;
@@ -171,14 +170,9 @@ class Articles
 		$this->author_name_displayed = $displayed;
 	}
 
-	public function set_author_user_id($author_user_id)
+	public function set_author_user(User $user)
 	{
-		$this->author_user_id = $author_user_id;
-	}
-
-	public function get_author_user_id()
-	{
-		return $this->author_user_id;
+		$this->author_user = $user;
 	}
 	
 	public function get_author_user()
@@ -271,7 +265,7 @@ class Articles
 			'contents' => $this->get_contents(),
 			'picture_url' => $this->get_picture()->relative(),
 			'number_view' => $this->get_number_view(),
-			'author_user_id' => $this->get_author_user_id(),
+			'author_user_id' => $this->get_author_user()->get_id(),
 			'author_name_displayed' => $this->get_author_name_displayed(),
 			'published' => $this->get_publishing_state(),
 			'publishing_start_date' => $this->get_publishing_start_date() !== null ? $this->get_publishing_start_date()->get_timestamp() : '',
@@ -292,7 +286,6 @@ class Articles
 		$this->set_contents($properties['contents']);
 		$this->set_picture(new Url($properties['picture_url']));
 		$this->set_number_view($properties['number_view']);
-		$this->set_author_user_id($properties['author_user_id']);
 		$this->set_author_name_displayed($properties['author_name_displayed']);
 		$this->set_publishing_state($properties['published']);
 		$this->set_publishing_start_date(!empty($properties['publishing_start_date']) ? new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, $properties['publishing_start_date']) : new Date());
@@ -302,7 +295,7 @@ class Articles
 		$this->set_sources(!empty($properties['sources']) ? unserialize($properties['sources']) : array());
 		$user = new User();
 		$user->set_properties($properties);
-		$this->author_user = $user;
+		$this->set_author_user($user);
 	}
 
 	public function init_default_properties()

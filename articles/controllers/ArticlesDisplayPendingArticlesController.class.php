@@ -179,6 +179,8 @@ class ArticlesDisplayPendingArticlesController extends ModuleController
 					'C_DELETE' => ArticlesAuthorizationsService::check_authorizations($category->get_id())->moderation(),
 					'C_EDIT' => $edit_auth,
 					'C_USER_GROUP_COLOR' => !empty($user_group_color),
+					'L_EDIT_ARTICLE' => $this->lang['articles.edit'],
+					'L_DELETE_ARTICLE' => $this->lang['articles.delete'],
 					'TITLE' => $row['title'],
 					'PICTURE' => $row['picture_url'],
 					'DATE' => gmdate_format('date_format_short', $row['date_created']),

@@ -77,12 +77,12 @@
 						<a href="{articles.U_ARTICLE}" class="big_link">{articles.TITLE}</a>
 							# IF articles.C_EDIT #
 							<a href="{articles.U_EDIT_ARTICLE}">
-								<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="" />
+								<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="{articles.L_EDIT_ARTICLE}" title="{articles.L_EDIT_ARTICLE}" />
 							</a>
 							# ENDIF #
 							# IF articles.C_DELETE #
 							<a href="{articles.U_DELETE_ARTICLE}" onclick="return Confirm_del_article();">
-								<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="" />
+							    <img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{articles.L_DELETE_ARTICLE}" title="{articles.L_DELETE_ARTICLE}" />
 							</a>
 							# ENDIF #
 					</p>

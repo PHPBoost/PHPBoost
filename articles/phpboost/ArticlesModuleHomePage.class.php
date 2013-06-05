@@ -270,6 +270,8 @@ class ArticlesModuleHomePage implements ModuleHomePage
 					'C_USER_GROUP_COLOR' => !empty($user_group_color),
 					'C_AUTHOR_DISPLAYED' => $row['author_name_displayed'],
 					'C_NOTATION_ENABLED' => $row['notation_enabled'],
+					'L_EDIT_ARTICLE' => $this->lang['articles.edit'],
+					'L_DELETE_ARTICLE' => $this->lang['articles.delete'],
 					'TITLE' => $row['title'],
 					'PICTURE' => $row['picture_url'],// @todo : link
 					'DATE' => gmdate_format('date_format_short', $row['date_created']),
@@ -293,7 +295,7 @@ class ArticlesModuleHomePage implements ModuleHomePage
 		else 
 		{
 			$this->view->put_all(array(
-				'L_NO_ARTICLE' => $this->lang['articles.no_article']
+				'L_NO_ARTICLE' => $this->lang['articles.no_article.category']
 			));
 		}
 		return $this->view;

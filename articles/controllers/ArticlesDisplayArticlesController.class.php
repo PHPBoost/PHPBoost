@@ -82,7 +82,7 @@ class ArticlesDisplayArticlesController extends ModuleController
 	{
 	    if (!$this->article->is_published())
 	    {
-		    $this->view->put('MSG', MessageHelper::display($this->lang['articles.not.published'], MessageHelper::WARNING));
+		    $this->view->put('MSG', MessageHelper::display($this->lang['articles.not_published'], MessageHelper::WARNING));
 	    }
 	    else
 	    {
@@ -134,7 +134,7 @@ class ArticlesDisplayArticlesController extends ModuleController
 		$user_group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
 		
 		$this->view->put_all(array(
-			'C_EDIT' => $this->auth_moderation || $this->auth_write && $this->article->get_author_user_id() == AppContext::get_current_user()->get_id(),
+			'C_EDIT' => $this->auth_moderation || $this->auth_write && $this->article->get_author_user()->get_id() == AppContext::get_current_user()->get_id(),
 			'C_DELETE' => $this->auth_moderation,
 			'C_USER_GROUP_COLOR' => !empty($user_group_color),
 			'C_COMMENTS_ENABLED' => $comments_enabled,
@@ -150,7 +150,7 @@ class ArticlesDisplayArticlesController extends ModuleController
 			'L_VIEW' => LangLoader::get_message('views', 'main'),
 			'L_ON' => $this->lang['articles.written.on'],
 			'L_WRITTEN' => $this->lang['articles.written.by'],
-			'L_NO_AUTHOR_DISPLAYED' => $this->lang['articles.no.author.diplsayed'],
+			'L_NO_AUTHOR_DISPLAYED' => $this->lang['articles.no_author_diplsayed'],
 			'L_ALERT_DELETE_ARTICLE' => $this->lang['articles.form.alert_delete_article'],
 			'L_SOURCE' => $this->lang['articles.sources'],
 			'L_SUMMARY' => $this->lang['articles.summary'],
@@ -167,7 +167,7 @@ class ArticlesDisplayArticlesController extends ModuleController
 			'U_PAGE_NEXT_ARTICLES' => ($current_page > 0 && $current_page < $nbr_pages && $nbr_pages > 1) ? ArticlesUrlBuilder::display_article($this->category->get_id(), $this->category->get_rewrited_name(), $this->article->get_id(), $this->article->get_rewrited_title())->absolute() . ($current_page + 1) : '',
 			'L_NEXT_TITLE' => ($current_page > 0 && $current_page < $nbr_pages && $nbr_pages > 1) ? $array_page[1][$current_page] : '', 
 			'U_COMMENTS' => ArticlesUrlBuilder::display_comments_article($this->category->get_id(), $this->category->get_rewrited_name(), $this->article->get_id(), $this->article->get_rewrited_title())->absolute(),
-			'U_AUTHOR' => UserUrlBuilder::profile($this->article->get_author_user_id())->absolute(),
+			'U_AUTHOR' => UserUrlBuilder::profile($this->article->get_author_user()->get_id())->absolute(),
 			'U_EDIT_ARTICLE' => ArticlesUrlBuilder::edit_article($this->article->get_id())->absolute(),
 			'U_DELETE_ARTICLE' => ArticlesUrlBuilder::delete_article($this->article->get_id())->absolute(),
 			'U_PRINT_ARTICLE' => ArticlesUrlBuilder::print_article($this->article->get_id(), $this->article->get_rewrited_title())->absolute(),
@@ -246,7 +246,7 @@ class ArticlesDisplayArticlesController extends ModuleController
 		$this->auth_moderation = ArticlesAuthorizationsService::check_authorizations($article->get_id_category())->moderation();
 		
 		$no_reading_authorizations = !ArticlesAuthorizationsService::check_authorizations($article->get_id_category())->read() && !ArticlesAuthorizationsService::check_authorizations()->read();
-		$no_reading_authorizations_no_approval = $no_reading_authorizations && !$this->auth_moderation && (!$this->auth_write && $article->get_author_user_id() != AppContext::get_current_user()->get_id());
+		$no_reading_authorizations_no_approval = $no_reading_authorizations && !$this->auth_moderation && (!$this->auth_write && $article->get_author_user()->get_id() != AppContext::get_current_user()->get_id());
 		
 		switch ($article->get_publishing_state()) 
 		{
