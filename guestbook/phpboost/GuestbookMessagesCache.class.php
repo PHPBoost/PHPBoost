@@ -36,7 +36,7 @@ class GuestbookMessagesCache implements CacheData
 	{
 		$this->messages = array();
 		
-		$result = PersistenceContext::get_querier()->select("SELECT g.id, g.login, g.user_id, g.timestamp, m.login as mlogin, g.contents
+		$result = PersistenceContext::get_querier()->select("SELECT g.id, g.login, g.user_id, g.timestamp, m.login as mlogin, m.level, m.user_groups, g.contents
 		FROM " . PREFIX . "guestbook g
 		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = g.user_id
 		ORDER BY g.timestamp DESC
@@ -48,7 +48,9 @@ class GuestbookMessagesCache implements CacheData
 				'id' => $msg['id'],
 				'contents' => nl2br(TextHelper::substr_html(strip_tags(FormatingHelper::second_parse($msg['contents'])), 0, 150)),
 				'user_id' => $msg['user_id'],
-				'login' => $msg['login'],
+				'login' => $msg['mlogin'] ? $msg['mlogin'] : $msg['login'],
+				'level' => $msg['level'],
+				'user_groups' => $msg['user_groups'],
 				'timestamp' => $msg['timestamp']
 			);
 		}
