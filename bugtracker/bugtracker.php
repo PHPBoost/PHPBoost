@@ -743,6 +743,9 @@ else if (isset($_GET['edit']) && is_numeric($id)) // edition d'un bug
 	if ($auth_moderate || (!empty($result['assigned_to_id']) && $User->get_attribute('user_id') == $result['assigned_to_id']))
 	{
 		$assigned_to = !empty($result['assigned_to_id']) ? $Sql->query("SELECT login FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $result['assigned_to_id'] . "'", __LINE__, __FILE__) : '';
+		
+		$group_color = User::get_group_color($result['user_groups'], $result['level']);
+		
 		$Template->assign_block_vars('edit', array(
 			'C_IS_ADMIN'				=> true,
 			'C_IS_FIXED'				=> ($result['status'] == 'fixed') ? true : false,
@@ -755,7 +758,7 @@ else if (isset($_GET['edit']) && is_numeric($id)) // edition d'un bug
 			'REPRODUCTIBLE_DISABLED' 	=> (!$result['reproductible']) ? 'checked="checked"' : '',
 			'REPRODUCTION_METHOD' 		=> FormatingHelper::unparse($result['reproduction_method']),
 			'STATUS'					=> ($result['status'] != 'fixed') ? $result['status'] : 'reopen',
-			'AUTHOR' 					=> !empty($result['login']) ? '<a href="' . UserUrlBuilder::profile($result['user_id'])->absolute() . '" class="' . UserService::get_level_class($result['level']) . '">' . $result['login'] . '</a>': $LANG['guest'],
+			'AUTHOR' 					=> !empty($result['login']) ? '<a href="' . UserUrlBuilder::profile($result['user_id'])->absolute() . '" class="' . UserService::get_level_class($result['level']) . '"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . $result['login'] . '</a>': $LANG['guest'],
 			'ASSIGNED_TO'				=> $assigned_to
 		));
 	}
@@ -1048,13 +1051,15 @@ else if (isset($_GET['history']) && is_numeric($id)) // Affichage de l'historiqu
 				$new_value = $row['new_value'];
 		}
 		
+		$group_color = User::get_group_color($row['user_groups'], $row['level']);
+		
 		$Template->assign_block_vars('history.bug', array(
 			'TOKEN' 		=> $Session->get_token(),
 			'UPDATED_FIELD'	=> (!empty($row['updated_field']) ? $LANG['bugs.labels.fields.' . $row['updated_field']] : $LANG['bugs.notice.none']),
 			'OLD_VALUE'		=> stripslashes($old_value),
 			'NEW_VALUE'		=> stripslashes($new_value),
 			'COMMENT'		=> $row['change_comment'],
-			'UPDATER' 		=> !empty($row['login']) ? '<a href="' . UserUrlBuilder::profile($row['user_id'])->absolute() . '" class="' . UserService::get_level_class($row['level']) . '">' . $row['login'] . '</a>': $LANG['guest'],
+			'UPDATER' 		=> !empty($row['login']) ? '<a href="' . UserUrlBuilder::profile($row['user_id'])->absolute() . '" class="' . UserService::get_level_class($row['level']) . '"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . $row['login'] . '</a>': $LANG['guest'],
 			'DATE' 			=> gmdate_format($date_format, $row['update_date'])
 		));
 	}
@@ -1177,12 +1182,15 @@ else if (isset($_GET['view']) && is_numeric($id)) // Visualisation d'une fiche B
 	));
 	
 	if (!empty($result['assigned_to_id'])) {
-		$result_assigned = $Sql->query_array(DB_TABLE_MEMBER, "login, level", "WHERE user_id = " . $result['assigned_to_id'], __LINE__, __FILE__);
-		$user_assigned = '<a href="' . UserUrlBuilder::profile($result['assigned_to_id'])->absolute() . '" class="' . UserService::get_level_class($result_assigned['level']) . '">' . $result_assigned['login'] . '</a>';
+		$result_assigned = $Sql->query_array(DB_TABLE_MEMBER, "login, level, user_groups", "WHERE user_id = " . $result['assigned_to_id'], __LINE__, __FILE__);
+		$assigned_group_color = User::get_group_color($result_assigned['user_groups'], $result_assigned['level']);
+		$user_assigned = '<a href="' . UserUrlBuilder::profile($result['assigned_to_id'])->absolute() . '" class="' . UserService::get_level_class($result_assigned['level']) . '"' . (!empty($assigned_group_color) ? ' style="color:' . $assigned_group_color . '"' : '') . '>' . $result_assigned['login'] . '</a>';
 	}
 	else
 		$user_assigned = $LANG['bugs.notice.no_one'];
 		
+	$group_color = User::get_group_color($result['user_groups'], $result['level']);
+	
 	$Template->assign_block_vars('view', array(
 		'ID' 					=> $id,
 		'TITLE' 				=> ($cat_in_title_activated == true && $display_categories) ? '[' . $categories[$result['category']] . '] ' . $result['title'] : $result['title'],
@@ -1197,7 +1205,7 @@ else if (isset($_GET['view']) && is_numeric($id)) // Visualisation d'une fiche B
 		'DETECTED_IN' 			=> (!empty($result['detected_in']) && isset($versions[$result['detected_in']])) ? stripslashes($versions[$result['detected_in']]['name']) : $LANG['bugs.notice.not_defined'],
 		'FIXED_IN' 				=> (!empty($result['fixed_in']) && isset($versions[$result['fixed_in']])) ? stripslashes($versions[$result['fixed_in']]['name']) : $LANG['bugs.notice.not_defined'],
 		'USER_ASSIGNED'			=> $user_assigned,
-		'AUTHOR' 				=> !empty($result['login']) ? '<a href="' . UserUrlBuilder::profile($result['user_id'])->absolute() . '" class="' . UserService::get_level_class($result['level']) . '">' . $result['login'] . '</a>': $LANG['guest'],
+		'AUTHOR' 				=> !empty($result['login']) ? '<a href="' . UserUrlBuilder::profile($result['user_id'])->absolute() . '" class="' . UserService::get_level_class($result['level']) . '"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . $result['login'] . '</a>': $LANG['guest'],
 		'SUBMIT_DATE'			=> gmdate_format($date_format, $result['submit_date'])
 	));
 	
@@ -1479,7 +1487,7 @@ else if (isset($_GET['stats'])) // Statistiques
 	}
 	
 	$i = 1;
-	$result = $Sql->query_while("SELECT user_id, login, level, COUNT(*) as nb_bugs
+	$result = $Sql->query_while("SELECT user_id, login, level, user_groups, COUNT(*) as nb_bugs
 	FROM " . PREFIX . "bugtracker b
 	JOIN " . DB_TABLE_MEMBER . " a ON (a.user_id = b.author_id)
 	WHERE status != 'rejected'
@@ -1488,10 +1496,12 @@ else if (isset($_GET['stats'])) // Statistiques
 	" . $Sql->limit(0, 10), __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))
 	{
+		$group_color = User::get_group_color($row['user_groups'], $row['level']);
+		
 		$Template->assign_block_vars('stats.top_poster', array(
 			'ID' 			=> $i,
 			'U_USER_PROFILE'=> UserUrlBuilder::profile($row['user_id'])->absolute(),
-			'LOGIN' 		=> !empty($row['login']) ? '<a href="' . UserUrlBuilder::profile($row['user_id'])->absolute() . '" class="' . UserService::get_level_class($row['level']) . '">' . $row['login'] . '</a>': $LANG['guest'],
+			'LOGIN' 		=> !empty($row['login']) ? '<a href="' . UserUrlBuilder::profile($row['user_id'])->absolute() . '" class="' . UserService::get_level_class($row['level']) . '"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . $row['login'] . '</a>': $LANG['guest'],
 			'USER_BUGS' 	=> $row['nb_bugs']
 		));
 
