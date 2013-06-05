@@ -232,7 +232,7 @@ class NewsFormController extends ModuleController
 		}
 		else
 		{
-			if (!(NewsAuthorizationsService::check_authorizations($news->get_id_cat())->moderation() || (NewsAuthorizationsService::check_authorizations($news->get_id_cat())->write() && $news->get_user_id() == AppContext::get_current_user()->get_id())))
+			if (!(NewsAuthorizationsService::check_authorizations($news->get_id_cat())->moderation() || ((NewsAuthorizationsService::check_authorizations($news->get_id_cat())->write() || NewsAuthorizationsService::check_authorizations($news->get_id_cat())->contribution()) && $news->get_user_id() == AppContext::get_current_user()->get_id())))
 			{
 				$error_controller = PHPBoostErrors::user_not_authorized();
 	   			DispatchManager::redirect($error_controller);
@@ -289,7 +289,7 @@ class NewsFormController extends ModuleController
 		
 		if ($news->get_id() === null)
 		{
-			$news->set_author_user_id(AppContext::get_current_user()->get_id());
+			$news->set_author_user(AppContext::get_current_user());
 			$id_news = NewsService::add($news);
 		}
 		else

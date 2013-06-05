@@ -92,7 +92,7 @@ class NewsDisplayCategoryController extends ModuleController
 			
 			$this->tpl->assign_block_vars('news', array(
 				'C_NEWS_ROW' => $new_row,
-				'C_EDIT' =>  NewsAuthorizationsService::check_authorizations($row['id_category'])->moderation() || NewsAuthorizationsService::check_authorizations($row['id_category'])->write() && $news->get_author_user_id() == AppContext::get_current_user()->get_id(),
+				'C_EDIT' =>  NewsAuthorizationsService::check_authorizations($row['id_category'])->moderation() || NewsAuthorizationsService::check_authorizations($row['id_category'])->write() && $news->get_author_user()->get_id() == AppContext::get_current_user()->get_id(),
 				'C_DELETE' =>  NewsAuthorizationsService::check_authorizations($row['id_category'])->moderation(),
 				'C_PICTURE' => $news->has_picture(),
 				'C_USER_GROUP_COLOR' => !empty($user_group_color),
@@ -115,7 +115,7 @@ class NewsDisplayCategoryController extends ModuleController
 				'U_LINK' => NewsUrlBuilder::display_news($category->get_id(), $category->get_rewrited_name(), $news->get_id(), $news->get_rewrited_name())->rel(),
 				'U_EDIT' => NewsUrlBuilder::edit_news($news->get_id())->rel(),
 				'U_DELETE' => NewsUrlBuilder::delete_news($news->get_id())->rel(),
-				'U_AUTHOR_PROFILE' => UserUrlBuilder::profile($news->get_author_user_id())->absolute(),
+				'U_AUTHOR_PROFILE' => UserUrlBuilder::profile($news->get_author_user()->get_id())->absolute(),
 				'U_SYNDICATION' => SyndicationUrlBuilder::rss('news', $news->get_id_cat())->rel(),
 				'U_PICTURE' => $news->get_picture()->rel(),
 				'U_COMMENTS' => NewsUrlBuilder::display_comments_news($category->get_id(), $category->get_rewrited_name(), $news->get_id(), $news->get_rewrited_name())->rel()
