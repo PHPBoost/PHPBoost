@@ -56,7 +56,7 @@
 						# START action_list # 
 						<tr style="text-align:center;">
 							<td class="row2" style="width: 150px">
-								<a href="{action_list.U_USER_PROFILE}">{action_list.LOGIN}</a>
+								<a href="{action_list.U_USER_PROFILE}" class="{action_list.LEVEL_CLASS}" # IF action_list.C_GROUP_COLOR # style="color:{action_list.GROUP_COLOR}" # ENDIF #>{action_list.LOGIN}</a>
 							</td>
 							<td class="row2">
 								{action_list.U_ACTION}
@@ -326,7 +326,7 @@
 					# START user_list #
 					<tr>
 						<td class="row1" style="text-align:center;width:25%;">
-							<a href="{user_list.U_PROFILE}">{user_list.LOGIN}</a>
+							<a href="{user_list.U_PROFILE}" class="{user_list.LEVEL_CLASS}" # IF user_list.C_GROUP_COLOR # style="color:{user_list.GROUP_COLOR}" # ENDIF #>{user_list.LOGIN}</a>
 						</td>
 						<td class="row1" style="text-align:center;width:25%;">
 							{user_list.INFO}

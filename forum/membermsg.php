@@ -91,14 +91,19 @@ if (!empty($view_msg)) //Affichage de tous les messages du membre
 		$rewrited_title = ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? '+' . Url::encode_rewrite($row['title']) : '';
 		
 		//Ajout du marqueur d'édition si activé.
-	$edit_mark = ($row['timestamp_edit'] > 0 && $CONFIG_FORUM['edit_mark'] == '0') ? '<br /><br /><br /><span style="padding: 10px;font-size:10px;font-style:italic;">' . $LANG['edit_by'] . ' <a class="edit_pseudo" href="'. UserUrlBuilder::profile($row['user_id_edit'])->absolute() .'">' . $row['login_edit'] . '</a> ' . $LANG['on'] . ' ' . gmdate_format('date_format', $row['timestamp_edit']) . '</span><br />' : '';
+		$edit_mark = ($row['timestamp_edit'] > 0 && $CONFIG_FORUM['edit_mark'] == '0') ? '<br /><br /><br /><span style="padding: 10px;font-size:10px;font-style:italic;">' . $LANG['edit_by'] . ' <a class="edit_pseudo" href="'. UserUrlBuilder::profile($row['user_id_edit'])->absolute() .'">' . $row['login_edit'] . '</a> ' . $LANG['on'] . ' ' . gmdate_format('date_format', $row['timestamp_edit']) . '</span><br />' : '';
+		
+		$group_color = User::get_group_color($row['user_groups'], $row['level']);
 		
 		$Template->assign_block_vars('list', array(
+			'C_GROUP_COLOR' => !empty($group_color),
 			'CONTENTS' => FormatingHelper::second_parse($row['contents']),
 			'DATE' => $LANG['on'] . ' ' . gmdate_format('date_format', $row['timestamp']),
 			'ID' => $row['id'],
 			'USER_ONLINE' => '<img src="../templates/' . get_utheme() . '/images/' . (!empty($row['connect']) ? 'online' : 'offline') . '.png" alt="" class="valign_middle" />',
-			'USER_PSEUDO' => !empty($row['login']) ? wordwrap(TextHelper::html_entity_decode($row['login']), 13, '<br />', 1) : $LANG['guest'],			
+			'USER_PSEUDO' => !empty($row['login']) ? wordwrap(TextHelper::html_entity_decode($row['login']), 13, '<br />', 1) : $LANG['guest'],
+			'LEVEL_CLASS' => UserService::get_level_class($row['level']),
+			'GROUP_COLOR' => $group_color,
 			'U_USER_PROFILE' => UserUrlBuilder::profile($row['user_id'])->absolute(),
 			'U_VARS_ANCRE' => url('.php?id=' . $row['idtopic'], '-' . $row['idtopic'] . $rewrited_title . '.php'),
 			'U_FORUM_CAT' => '<a class="forum_mbrmsg_links" href="../forum/forum' . url('.php?id=' . $row['idcat'], '-' . $row['idcat'] . $rewrited_cat_title . '.php') . '">' . $row['name'] . '</a>',
