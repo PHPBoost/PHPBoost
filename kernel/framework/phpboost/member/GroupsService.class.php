@@ -55,7 +55,7 @@ class GroupsService
 		//On insère le groupe au champ membre.
 		$user_groups = self::$sql_querier->query("SELECT user_groups FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
 		$user_groups = explode('|', $user_groups);
-		if (!array_key_exists($idgroup, $user_groups)) //Le membre n'appartient pas déjà au groupe.
+		if (!in_array($idgroup, $user_groups)) //Le membre n'appartient pas déjà au groupe.
 		{
 			array_push($user_groups, $idgroup);
 			self::$sql_querier->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET user_groups = '" . (trim(implode('|', $user_groups), '|')) . "' WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
@@ -68,7 +68,7 @@ class GroupsService
 		//On insère le membre dans le groupe.
 		$group_members = self::$sql_querier->query("SELECT members FROM " . DB_TABLE_GROUP . " WHERE id = '" . $idgroup . "'", __LINE__, __FILE__);
 		$group_members = explode('|', $group_members);
-		if (!array_key_exists($user_id, $group_members)) //Le membre n'appartient pas déjà au groupe.
+		if (!in_array($user_id, $group_members)) //Le membre n'appartient pas déjà au groupe.
 		{
 			array_push($group_members, $user_id);
 			self::$sql_querier->query_inject("UPDATE " . DB_TABLE_GROUP . " SET members = '" . (trim(implode('|', $group_members), '|')) . "' WHERE id = '" . $idgroup . "'", __LINE__, __FILE__);
