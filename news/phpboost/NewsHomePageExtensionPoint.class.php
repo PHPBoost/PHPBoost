@@ -113,7 +113,7 @@ class NewsHomePageExtensionPoint implements HomePageExtensionPoint
 				$show_pagin = (($nbr_news > $NEWS_CONFIG['pagination_news']) && ($nbr_news != 0)) ? '<a href="' . PATH_TO_ROOT . '/news/news.php' . '?arch=1" title="' . $NEWS_LANG['display_archive'] . '">' . $NEWS_LANG['display_archive'] . '</a>' : '';
 				$first_msg = 0;
 			}
-			$tpl->put_all(array('PAGINATION' => $show_pagin));
+			$tpl->put_all(array('PAGINATION' => $User->check_auth($NEWS_CAT[$cat]['auth'], AUTH_NEWS_READ) ? $show_pagin : ''));
 
 			// News en bloc => news_block.tpl
 			if($NEWS_CONFIG['type'] == 1)
