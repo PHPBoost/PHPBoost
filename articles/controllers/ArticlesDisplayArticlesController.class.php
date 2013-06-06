@@ -122,6 +122,8 @@ class ArticlesDisplayArticlesController extends ModuleController
 		
 		$this->build_view_sources();
 		
+		$this->build_view_keywords($this->article->get_id());
+		
 		$pagination = new ArticlesPagination($current_page, $nbr_pages, 1);
 		$pagination->set_url(ArticlesUrlBuilder::display_article($this->category->get_id(), $this->category->get_rewrited_name(), $this->article->get_id(), $this->article->get_rewrited_title())->absolute() . '%d');
 		
@@ -237,7 +239,26 @@ class ArticlesDisplayArticlesController extends ModuleController
 		    $i++;
 	    }	
 	}
+	
+	private function build_view_keywords($id_article)
+	{
+		$keywords = ArticlesKeywordsService::get_article_keywords($id_article);
 		
+		$this->view->put('C_KEYWORDS', !empty($keywords));
+		
+		$i = 0;
+		while ($row = $keywords->fetch())
+		{	
+			$this->view->assign_block_vars('keywords', array(
+				'I' => $i,
+				'NAME' => $row['name'],
+				'U_KEYWORD' => ArticlesUrlBuilder::display_tag($row['rewrited_name']),
+				'COMMA' => $i > 0 ? ', ' : ' '
+			));
+			$i++;
+		}	
+	}
+	
 	private function check_authorizations()
 	{
 		$article = $this->get_article();

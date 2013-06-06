@@ -81,9 +81,7 @@ class ArticlesKeywordsService
 	}
 	
 	public static function get_article_keywords($id_article)
-	{
-		$article_keywords = array();
-		
+	{	
 		$result = self::$db_querier->select('SELECT keywords.id, keywords.name, keywords.rewrited_name FROM ' 
 			. ArticlesSetup::$articles_keywords_table . ' keywords LEFT JOIN '. ArticlesSetup::$articles_keywords_relation_table . 
 			' relation ON keywords.id = relation.id_keyword WHERE relation.id_article=:id_article', 
@@ -92,12 +90,7 @@ class ArticlesKeywordsService
 			), SelectQueryResult::FETCH_ASSOC
 		);
 		
-		while ($rows = $result->fetch())
-		{
-			$article_keywords['name'] = $rows['name'];
-		}
-		
-                return $article_keywords;
+                return $result;
 	}
 }
 ?>
