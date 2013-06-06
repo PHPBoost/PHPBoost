@@ -260,6 +260,7 @@ class NewsFormController extends ModuleController
 			$news->set_rewrited_name(Url::encode_rewrite($news->get_name()));
 			$news->set_approbation_type(News::NOT_APPROVAL);
 			$news->set_creation_date(new Date());
+			$news->clean_start_and_end_date();
 		}
 		else
 		{
@@ -298,26 +299,24 @@ class NewsFormController extends ModuleController
 			NewsService::update($news);
 		}
 		
-		$news->set_id($id_news);
-		
-		$this->contribution_actions($news);
+		$this->contribution_actions($news, $id_news);
 		
 		$this->put_keywords($id_news);
 		
 		Feed::clear_cache('news');
 	}
 	
-	private function contribution_actions(News $news)
+	private function contribution_actions(News $news, $id_news)
 	{
 		if ($news->get_id() === null)
 		{
 			if ($this->is_contributor_member())
 			{
 				$contribution = new Contribution();
-				$contribution->set_id_in_module($news->get_id());
-				$contribution->set_description(stripslashes($news->get_short_content()));
-				$contribution->set_entitled(sprintf($NEWS_LANG['contribution_entitled'], $news->get_name()));
-				$contribution->set_fixing_url(NewsUrlBuilder::edit_news($news->get_id()));
+				$contribution->set_id_in_module($id_news);
+				$contribution->set_description(stripslashes($news->get_short_contents()));
+				$contribution->set_entitled(StringVars::replace_vars($this->lang['news.form.contribution.entitled'], array('name' => $news->get_name())));
+				$contribution->set_fixing_url(NewsUrlBuilder::edit_news($id_news));
 				$contribution->set_poster_id(AppContext::get_current_user()->get_attribute('user_id'));
 				$contribution->set_module('news');
 				$contribution->set_auth(
@@ -331,7 +330,7 @@ class NewsFormController extends ModuleController
 		}
 		else
 		{
-			$corresponding_contributions = ContributionService::find_by_criteria('news', $news->get_id());
+			$corresponding_contributions = ContributionService::find_by_criteria('news', $id_news);
 			if (count($corresponding_contributions) > 0)
 			{
 				$news_contribution = $corresponding_contributions[0];

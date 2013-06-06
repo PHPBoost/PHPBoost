@@ -61,6 +61,7 @@
 [*] [color=red]Nouveauté :[/color] Refonte graphique
 [*] [color=red]Nouveauté :[/color] Possibilité de personnaliser l'url d'une news
 [*] [color=red]Nouveauté :[/color] Amélioration du référencement
+[*] [color=red]Nouveauté :[/color] Suppression de l'édito et ajout d'une option supplémentaire dans le formulaire d'ajout pour placer les news en tête de liste.
 - Ajout des microdonnées pour améliorer le référencement
 
 [b]BugTracker[/b]
