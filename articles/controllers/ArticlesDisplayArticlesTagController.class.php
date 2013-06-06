@@ -29,8 +29,6 @@ class ArticlesDisplayArticlesTagController extends ModuleController
 {	
 	private $lang;
 	private $view;
-	private $auth_moderation;
-	private $auth_write;
 	private $keyword;
 	private $category;
 	
@@ -105,55 +103,54 @@ class ArticlesDisplayArticlesTagController extends ModuleController
 		$nbr_articles = $result->get_rows_count();
 		
 		$pagination = new ArticlesPagination($current_page, $nbr_articles, $nbr_articles_per_page);
-		$pagination->set_url(ArticlesUrlBuilder::display_article($this->category->get_id(), $this->category->get_rewrited_name(), $this->article->get_id(), $this->article->get_rewrited_title())->absolute() . '%d');
+		$pagination->set_url(ArticlesUrlBuilder::display_tag($this->keyword->get_rewrited_name())->absolute() . '%d');
 		
 		$notation = new Notation();
 		$notation->set_module_name('articles');
 		$notation->set_notation_scale(ArticlesConfig::load()->get_notation_scale());
 		
-		$user = $this->article->get_author_user();
-		$user_group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
+		$comments_enabled = ArticlesConfig::load()->get_comments_enabled();
 		
-		$this->view->put_all(array(
-			'C_EDIT' => $this->auth_moderation || $this->auth_write && $this->article->get_author_user()->get_id() == AppContext::get_current_user()->get_id(),
-			'C_DELETE' => $this->auth_moderation,
-			'C_USER_GROUP_COLOR' => !empty($user_group_color),
-			'C_COMMENTS_ENABLED' => $comments_enabled,
-			'C_AUTHOR_DISPLAYED' => $this->article->get_author_name_displayed(),
-			'C_NOTATION_ENABLED' => $this->article->get_notation_enabled(),
-			'TITLE' => $this->article->get_title(),
-			'PICTURE' => $this->article->get_picture(),
-			'DATE' => $this->article->get_date_created()->format(DATE_FORMAT_SHORT, TIMEZONE_AUTO),
-			'L_COMMENTS' => CommentsService::get_number_and_lang_comments('articles', $this->article->get_id()),
-			'L_PREVIOUS_PAGE' => LangLoader::get_message('previous_page', 'main'),
-			'L_NEXT_PAGE' => LangLoader::get_message('next_page', 'main'),
-			'L_DATE' => LangLoader::get_message('date', 'main'),
-			'L_VIEW' => LangLoader::get_message('views', 'main'),
-			'L_ON' => $this->lang['articles.written.on'],
-			'L_WRITTEN' => $this->lang['articles.written.by'],
-			'L_NO_AUTHOR_DISPLAYED' => $this->lang['articles.no_author_diplsayed'],
-			'L_ALERT_DELETE_ARTICLE' => $this->lang['articles.form.alert_delete_article'],
-			'L_SOURCE' => $this->lang['articles.sources'],
-			'L_SUMMARY' => $this->lang['articles.summary'],
-			'L_PRINTABLE_VERSION' => LangLoader::get_message('printable_version', 'main'),
-			'KERNEL_NOTATION' => NotationService::display_active_image($notation),
-			'CONTENTS' => isset($article_contents_clean[$current_page-1]) ? FormatingHelper::second_parse($article_contents_clean[$current_page-1]) : '',
-			'PSEUDO' => $user->get_pseudo(),
-			'USER_LEVEL_CLASS' => UserService::get_level_class($user->get_level()),
-			'USER_GROUP_COLOR' => $user_group_color,
-			'PAGINATION_ARTICLES' => ($nbr_pages > 1) ? $pagination->display()->render() : '',
-			'PAGE_NAME' => (isset($array_page[1][$current_page-1]) && $array_page[1][$current_page-1] != '&nbsp;') ? $array_page[1][($current_page-1)] : '',
-			'U_PAGE_PREVIOUS_ARTICLES' => ($current_page > 1 && $current_page <= $nbr_pages && $nbr_pages > 1) ? ArticlesUrlBuilder::display_article($this->category->get_id(), $this->category->get_rewrited_name(), $this->article->get_id(), $this->article->get_rewrited_title())->absolute() . ($current_page - 1) : '',
-			'L_PREVIOUS_TITLE' => ($current_page > 1 && $current_page <= $nbr_pages && $nbr_pages > 1) ? $array_page[1][$current_page-2] : '',
-			'U_PAGE_NEXT_ARTICLES' => ($current_page > 0 && $current_page < $nbr_pages && $nbr_pages > 1) ? ArticlesUrlBuilder::display_article($this->category->get_id(), $this->category->get_rewrited_name(), $this->article->get_id(), $this->article->get_rewrited_title())->absolute() . ($current_page + 1) : '',
-			'L_NEXT_TITLE' => ($current_page > 0 && $current_page < $nbr_pages && $nbr_pages > 1) ? $array_page[1][$current_page] : '', 
-			'U_COMMENTS' => ArticlesUrlBuilder::display_comments_article($this->category->get_id(), $this->category->get_rewrited_name(), $this->article->get_id(), $this->article->get_rewrited_title())->absolute(),
-			'U_AUTHOR' => UserUrlBuilder::profile($this->article->get_author_user()->get_id())->absolute(),
-			'U_EDIT_ARTICLE' => ArticlesUrlBuilder::edit_article($this->article->get_id())->absolute(),
-			'U_DELETE_ARTICLE' => ArticlesUrlBuilder::delete_article($this->article->get_id())->absolute(),
-			'U_PRINT_ARTICLE' => ArticlesUrlBuilder::print_article($this->article->get_id(), $this->article->get_rewrited_title())->absolute(),
-			'U_SYNDICATION' => ArticlesUrlBuilder::category_syndication($this->article->get_id_category())->rel()
-		));
+		while ($row = $result->fetch())
+		{
+			$article = new Articles();
+			$article->set_properties($row);
+			
+			$category = ArticlesService::get_categories_manager()->get_categories_cache()->get_category($article->get_id_category());
+			
+			$user = $article->get_author_user();
+			$auth_moderation = ArticlesAuthorizationsService::check_authorizations($category->get_id())->moderation();
+			$auth_write = ArticlesAuthorizationsService::check_authorizations($$category->get_id())->write();
+			
+			$user_group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
+			
+			$notation->set_id_in_module($article->get_id());
+			
+			$this->view->put_all(array(
+			    'C_EDIT' => $auth_moderation || $auth_write && $article->get_author_user()->get_id() == AppContext::get_current_user()->get_id(),
+			    'C_DELETE' => $auth_moderation,
+			    'C_USER_GROUP_COLOR' => !empty($user_group_color),
+			    'C_COMMENTS_ENABLED' => $comments_enabled,
+			    'C_AUTHOR_DISPLAYED' => $article->get_author_name_displayed(),
+			    'C_NOTATION_ENABLED' => $article->get_notation_enabled(),
+			    'TITLE' => $article->get_title(),
+			    'PICTURE' => $article->get_picture(),
+			    'DATE' => $article->get_date_created()->format(DATE_FORMAT_SHORT, TIMEZONE_AUTO),
+			    'L_COMMENTS' => CommentsService::get_number_and_lang_comments('articles', $article->get_id()),
+			    'L_DATE' => LangLoader::get_message('date', 'main'),
+			    'L_VIEW' => LangLoader::get_message('views', 'main'),
+			    'L_NO_AUTHOR_DISPLAYED' => $this->lang['articles.no_author_diplsayed'],
+			    'L_ALERT_DELETE_ARTICLE' => $this->lang['articles.form.alert_delete_article'],
+			    'NOTE' => $row['number_notes'] > 0 ? NotationService::display_static_image($notation, $row['average_notes']) : $this->lang['articles.no_notes'],
+			    'PSEUDO' => $user->get_pseudo(),
+			    'USER_LEVEL_CLASS' => UserService::get_level_class($user->get_level()),
+			    'USER_GROUP_COLOR' => $user_group_color,
+			    'U_COMMENTS' => ArticlesUrlBuilder::display_comments_article($category->get_id(), $category->get_rewrited_name(), $article->get_id(), $article->get_rewrited_title())->absolute(),
+			    'U_AUTHOR' => UserUrlBuilder::profile($article->get_author_user()->get_id())->absolute(),
+			    'U_EDIT_ARTICLE' => ArticlesUrlBuilder::edit_article($article->get_id())->absolute(),
+			    'U_DELETE_ARTICLE' => ArticlesUrlBuilder::delete_article($article->get_id())->absolute()
+			));
+		}
 	}
 	
 	private function generate_response()
