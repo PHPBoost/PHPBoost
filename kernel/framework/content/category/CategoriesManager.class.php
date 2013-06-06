@@ -337,6 +337,10 @@ class CategoriesManager
 	 */
 	public function get_module_id() { return $this->module_id; }
 	
+	/**
+	 * @return CategoriesItemsParameters
+	 */
+	public function get_categories_items_parameters() { return $this->categories_items_parameters; }
 	
 	private function build_children_map($id_category, $all_categories, $id_parent, $search_category_children_options, &$categories = array(), $node = 1)
 	{

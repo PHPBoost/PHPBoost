@@ -57,6 +57,11 @@ $lang['news.form.keywords.description'] = 'Vous permet d\'ajouter des mots clés 
 $lang['news.form.picture'] = 'Image de la news';
 $lang['news.form.picture.preview'] = 'Preview de l\'image';
 $lang['news.form.sources'] = 'Sources de la news';
+$lang['news.form.contribution'] = 'Contribution';
+$lang['news.form.contribution.explain'] = 'Vous n\'êtes pas autorisé à créer une news, cependant vous pouvez proposer une news. Votre contribution suivra le parcours classique et sera traitée dans le panneau de contribution de PHPBoost. Vous pouvez, dans le champ suivant, justifier votre contribution de façon à expliquer votre démarche à un approbateur.';
+$lang['news.form.contribution.description'] = 'Complément de contribution';
+$lang['news.form.contribution.description.explain'] = 'Expliquez les raisons de votre contribution (pourquoi vous souhaitez proposer cette news au site). Ce champ est facultatif.';
+$lang['news.form.contribution.entitled'] = '[News] :name';
 
 $lang['admin.config'] = 'Configuration';
 $lang['admin.config.number_news_per_page'] = 'Nombre de news par page';
