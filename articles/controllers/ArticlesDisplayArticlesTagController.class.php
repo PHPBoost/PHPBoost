@@ -77,15 +77,30 @@ class ArticlesDisplayArticlesTagController extends ModuleController
 	
 	private function build_view($request)
 	{
+		$this->get_keyword();
+		
+		$auth_add = ArticlesAuthorizationsService::check_authorizations()->write() || ArticlesAuthorizationsService::check_authorizations()->contribution();
+		$comments_enabled = ArticlesConfig::load()->get_comments_enabled();
+		
+		$this->view->put_all(array(
+			'C_ADD' => $auth_add,
+			'C_COMMENTS_ENABLED' => $comments_enabled,
+			'L_EDIT_CONFIG' => $this->lang['articles_configuration'],
+			'L_ADD_ARTICLES' => $this->lang['articles.add'],
+			'L_MODULE_NAME' => $this->lang['articles'],
+			'L_TAG' => $this->lang['articles.tag'] . $this->keyword->get_name(),
+			'U_ADD_ARTICLES' => ArticlesUrlBuilder::add_article()->absolute(),
+			'U_EDIT_CONFIG' => ArticlesUrlBuilder::articles_configuration()->absolute(),
+			'U_SYNDICATION' => ArticlesUrlBuilder::category_syndication($this->category->get_id())->rel()
+		));
+		
 		$current_page = $request->get_getint('page', 1);
 		$nbr_articles_per_page = ArticlesConfig::load()->get_number_articles_per_page();
 		$limit_page = (($current_page - 1) * $nbr_articles_per_page);
 		
-		$this->get_keyword();
-		
 		$now = new Date(DATE_NOW, TIMEZONE_AUTO);
 		
-		$result = PersistenceContext::get_querier()->select('SELECT articles.*, member.level, member.user_groups, member.login, 
+		$result = PersistenceContext::get_querier()->select('SELECT articles.*, member.*, 
 		com.number_comments, note.number_notes, note.average_notes FROM ' . ArticlesSetup::$articles_table . ' articles
 		LEFT JOIN '. ArticlesSetup::$articles_keywords_relation_table .' relation ON relation.id_article = articles.id 
 		LEFT JOIN ' . DB_TABLE_MEMBER . ' member ON member.user_id = articles.author_user_id
@@ -109,8 +124,6 @@ class ArticlesDisplayArticlesTagController extends ModuleController
 		$notation->set_module_name('articles');
 		$notation->set_notation_scale(ArticlesConfig::load()->get_notation_scale());
 		
-		$comments_enabled = ArticlesConfig::load()->get_comments_enabled();
-		
 		while ($row = $result->fetch())
 		{
 			$article = new Articles();
@@ -120,17 +133,16 @@ class ArticlesDisplayArticlesTagController extends ModuleController
 			
 			$user = $article->get_author_user();
 			$auth_moderation = ArticlesAuthorizationsService::check_authorizations($category->get_id())->moderation();
-			$auth_write = ArticlesAuthorizationsService::check_authorizations($$category->get_id())->write();
+			$auth_write = ArticlesAuthorizationsService::check_authorizations($category->get_id())->write();
 			
 			$user_group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
 			
 			$notation->set_id_in_module($article->get_id());
 			
-			$this->view->put_all(array(
+			$this->view->assign_block_vars('articles', array(
 			    'C_EDIT' => $auth_moderation || $auth_write && $article->get_author_user()->get_id() == AppContext::get_current_user()->get_id(),
 			    'C_DELETE' => $auth_moderation,
 			    'C_USER_GROUP_COLOR' => !empty($user_group_color),
-			    'C_COMMENTS_ENABLED' => $comments_enabled,
 			    'C_AUTHOR_DISPLAYED' => $article->get_author_name_displayed(),
 			    'C_NOTATION_ENABLED' => $article->get_notation_enabled(),
 			    'TITLE' => $article->get_title(),
@@ -156,19 +168,9 @@ class ArticlesDisplayArticlesTagController extends ModuleController
 	private function generate_response()
 	{
 		$response = new ArticlesDisplayResponse();
-		$response->set_page_title($this->article->get_title());
+		$response->set_page_title($this->keyword->get_name());
 		$response->add_breadcrumb_link($this->lang['articles'], ArticlesUrlBuilder::home());
-		
-		$categories = array_reverse(ArticlesService::get_categories_manager()->get_parents($this->article->get_id_category(), true));
-		foreach ($categories as $id => $category)
-		{
-			if ($id != Category::ROOT_CATEGORY)
-				$response->add_breadcrumb_link($category->get_name(), ArticlesUrlBuilder::display_category($id, $category->get_rewrited_name()));
-		}
-		$category = $categories[$this->article->get_id_category()];
-		if (!$this->article->is_published())
-			$response->add_breadcrumb_link ($this->lang['articles.pending_articles'], ArticlesUrlBuilder::display_pending_articles()->absolute());
-		$response->add_breadcrumb_link($this->article->get_title(), ArticlesUrlBuilder::display_article($category->get_id(), $category->get_rewrited_name(), $this->article->get_id(), $this->article->get_rewrited_title()));
+		$response->add_breadcrumb_link($this->keyword->get_name(), ArticlesUrlBuilder::display_tag($this->keyword->get_rewrited_name()));
 		
 		return $response->display($this->view);
 	}

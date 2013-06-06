@@ -114,7 +114,7 @@ class ArticlesDisplayPendingArticlesController extends ModuleController
 
 		$limit_page = (($current_page - 1) * $nbr_articles_per_page);
 		
-		$result = PersistenceContext::get_querier()->select('SELECT articles.*, member.level, member.user_groups, member.user_id, member.login  
+		$result = PersistenceContext::get_querier()->select('SELECT articles.*, member.*, note.number_notes, note.average_notes 
 		FROM '. ArticlesSetup::$articles_table .' articles
 		LEFT JOIN '. DB_TABLE_MEMBER .' member ON member.user_id = articles.author_user_id
 		LEFT JOIN ' . DB_TABLE_COMMENTS_TOPIC . ' com ON com.id_in_module = articles.id AND com.module_id = "articles"
@@ -150,10 +150,12 @@ class ArticlesDisplayPendingArticlesController extends ModuleController
 		if($nbr_articles_pending > 0)
 		{	
 			$add_auth = ArticlesAuthorizationsService::check_authorizations()->write() || ArticlesAuthorizationsService::check_authorizations()->contribution();
+			$comments_enabled = ArticlesConfig::load()->get_comments_enabled();
 			
 			$this->view->put_all(array(
 				'C_ARTICLES_FILTERS' => true,
 				'C_ADD' => $add_auth,
+				'C_COMMENTS_ENABLED' => $comments_enabled,
 				'L_DATE' => LangLoader::get_message('date', 'main'),
 				'L_VIEW' => LangLoader::get_message('views', 'main'),
 				'L_NOTE' => LangLoader::get_message('note', 'main'),
@@ -168,34 +170,40 @@ class ArticlesDisplayPendingArticlesController extends ModuleController
 			
 			while($row = $result->fetch())
 			{
-				$notation->set_id_in_module($row['id']);
+				$article = new Articles();
+				$article->set_properties($row);
+				$user = $article->get_author_user();
 				
-				$user_group_color = User::get_group_color($row['user_groups'], $row['level']);
+				$notation->set_id_in_module($article->get_id());
 				
-				$category = ArticlesService::get_categories_manager()->get_categories_cache()->get_category($row['id_category']);
-				$edit_auth = ArticlesAuthorizationsService::check_authorizations($category->get_id())->moderation() || ArticlesAuthorizationsService::check_authorizations($category->get_id())->write() && $row['author_user_id'] == $request->get_current_user()->get_id();
+				$user_group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
+				
+				$category = ArticlesService::get_categories_manager()->get_categories_cache()->get_category($article->get_id_category());
+				$edit_auth = ArticlesAuthorizationsService::check_authorizations($category->get_id())->moderation() || ArticlesAuthorizationsService::check_authorizations($category->get_id())->write() && $article->get_author_user()->get_id() == $request->get_current_user()->get_id();
 				
 				$this->view->assign_block_vars('articles', array(
 					'C_DELETE' => ArticlesAuthorizationsService::check_authorizations($category->get_id())->moderation(),
 					'C_EDIT' => $edit_auth,
 					'C_USER_GROUP_COLOR' => !empty($user_group_color),
+					'C_AUTHOR_DISPLAYED' => $article->get_author_name_displayed(),
+					'C_NOTATION_ENABLED' => $article->get_notation_enabled(),
 					'L_EDIT_ARTICLE' => $this->lang['articles.edit'],
 					'L_DELETE_ARTICLE' => $this->lang['articles.delete'],
-					'TITLE' => $row['title'],
-					'PICTURE' => $row['picture_url'],
-					'DATE' => gmdate_format('date_format_short', $row['date_created']),
+					'TITLE' => $article->get_title(),
+					'PICTURE' => $article->get_picture(),
+					'DATE' => $article->get_date_created()->format(DATE_FORMAT_SHORT, TIMEZONE_AUTO),
 					'NUMBER_VIEW' => $row['number_view'],
 					'L_NUMBER_COM' => empty($row['number_comments']) ? '0' : $row['number_comments'],
-					'NOTE' => (int)NotationService::get_number_notes($notation) > 0 ? NotationService::display_static_image($notation, $row['average_notes']) : $this->lang['articles.no_notes'],
-					'DESCRIPTION' =>FormatingHelper::second_parse($row['description']), 
-					'PSEUDO' => $row['login'],
-					'USER_LEVEL_CLASS' => UserService::get_level_class($row['level']),
+					'NOTE' => $row['number_notes'] > 0 ? NotationService::display_static_image($notation, $row['average_notes']) : $this->lang['articles.no_notes'],
+					'DESCRIPTION' =>FormatingHelper::second_parse($article->get_description()), 
+					'PSEUDO' => $user->get_pseudo(),
+					'USER_LEVEL_CLASS' => UserService::get_level_class($user->get_level()),
 					'USER_GROUP_COLOR' => $user_group_color,
-					'U_COMMENTS' => ArticlesUrlBuilder::display_comments_article($category->get_id(), $category->get_rewrited_name(), $row['id'], $row['rewrited_title'])->absolute(),
+					'U_COMMENTS' => ArticlesUrlBuilder::display_comments_article($category->get_id(), $category->get_rewrited_name(), $article->get_id(), $article->get_rewrited_title())->absolute(),
 					'U_AUTHOR' => UserUrlBuilder::profile($row['author_user_id'])->absolute(),
-					'U_ARTICLE' => ArticlesUrlBuilder::display_article($category->get_id(), $category->get_rewrited_name(), $row['id'], $row['rewrited_title'])->absolute(),
-					'U_EDIT_ARTICLE' => ArticlesUrlBuilder::edit_article($row['id'])->absolute(),
-					'U_DELETE_ARTICLE' => ArticlesUrlBuilder::delete_article($row['id'])->absolute()
+					'U_ARTICLE' => ArticlesUrlBuilder::display_article($category->get_id(), $category->get_rewrited_name(), $article->get_id(), $article->get_rewrited_title())->absolute(),
+					'U_EDIT_ARTICLE' => ArticlesUrlBuilder::edit_article($article->get_id())->absolute(),
+					'U_DELETE_ARTICLE' => ArticlesUrlBuilder::delete_article($article->get_id())->absolute()
 				));
 			}
 		}

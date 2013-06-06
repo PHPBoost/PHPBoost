@@ -274,6 +274,7 @@ class ArticlesFormController extends ModuleController
 			$article->set_rewrited_title(Url::encode_rewrite($article->get_title()));
 			$article->set_publishing_state(Articles::NOT_PUBLISHED);
 			$article->set_date_created(new Date());
+			$article->clean_start_and_end_date();
 		}
 		else
 		{
@@ -312,24 +313,24 @@ class ArticlesFormController extends ModuleController
 			ArticlesService::update($article);
 		}
 
-		$this->contribution_actions($article);
+		$this->contribution_actions($article, $id_article);
 		
 		$this->save_keywords($id_article);
 
 		Feed::clear_cache('articles');
 	}
 
-	private function contribution_actions(Articles $article)
+	private function contribution_actions(Articles $article, $id_article)
 	{
 		if ($article->get_id() === null)
 		{
 			if ($this->is_contributor_member())
 			{
 				$contribution = new Contribution();
-				$contribution->set_id_in_module($article->get_id());
+				$contribution->set_id_in_module($id_article);
 				$contribution->set_description(stripslashes($article->get_description()));
-				$contribution->set_entitled(sprintf($this->lang['articles.form.contribution_entitled'], $article->get_title()));
-				$contribution->set_fixing_url(ArticlesUrlBuilder::edit_article($article->get_id()));
+				$contribution->set_entitled(StringVars::replace_vars($this->lang['articles.form.contribution_entitled'], array('title', $article->get_title())));
+				$contribution->set_fixing_url(ArticlesUrlBuilder::edit_article($id_article));
 				$contribution->set_poster_id(AppContext::get_current_user()->get_attribute('user_id'));
 				$contribution->set_module('articles');
 				$contribution->set_auth(
@@ -343,7 +344,7 @@ class ArticlesFormController extends ModuleController
 		}
 		else
 		{
-			$corresponding_contributions = ContributionService::find_by_criteria('articles', $article->get_id());
+			$corresponding_contributions = ContributionService::find_by_criteria('articles', $id_article);
 			if (count($corresponding_contributions) > 0)
 			{
 				$article_contribution = $corresponding_contributions[0];

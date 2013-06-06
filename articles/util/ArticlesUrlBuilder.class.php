@@ -108,7 +108,7 @@ class ArticlesUrlBuilder
 	
 	public static function display_tag($rewrited_name)
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/tag/'. $rewrited_name);
+		return DispatchManager::get_url(self::$dispatcher, '/tag/'. $rewrited_name . '/');
 	}
 	
 	public static function home()

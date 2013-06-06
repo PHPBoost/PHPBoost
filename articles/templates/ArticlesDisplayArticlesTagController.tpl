@@ -15,18 +15,13 @@
 	</a>
 	# ENDIF #
 	# IF C_ADD #
-		<a href="{U_ADD_ARTICLES}" title="{L_ADD_ARTICLES}" class="img_link">
-			<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/add.png" class="valign_middle" alt="{L_ADD_ARTICLES}" />
-		</a>
-		&nbsp;
-	# ENDIF #
-	<a href="{U_PUBLISHED_ARTICLES}" title="{L_PUBLISHED_ARTICLES}" class="img_link">
-		{L_PUBLISHED_ARTICLES}
+	<a href="{U_ADD_ARTICLES}" title="{L_ADD_ARTICLES}" class="img_link">
+		<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/add.png" class="valign_middle" alt="{L_ADD_ARTICLES}" />
 	</a>
+	&nbsp;
+	# ENDIF #
 </div>
 <div class="spacer"></div>
-	
-
 <div class="module_position">					
 	<div class="module_top_l"></div>		
 	<div class="module_top_r"></div>
@@ -39,13 +34,7 @@
 		</div>
 	</div>
 	<div class="module_contents">
-		# IF C_ARTICLES_FILTERS #
-		<div style="float:right;width:240px;" class="row3" id="form">
-			{L_ARTICLES_FILTERS_TITLE}# INCLUDE FORM #
-		</div>
-		# ENDIF #
-		<div class="spacer">&nbsp;</div>
-		<p style="padding-left: 5px;font-weight:bold">{L_PENDING_ARTICLES}</p>
+		<p style="padding-left: 5px;font-weight:bold">{L_TAG}</p>
 		<hr />
 		# START articles #	
 		<div class="block_container" style="margin-bottom:20px;height:160px;">
@@ -90,10 +79,6 @@
 		# END articles #
 		{PAGINATION}
 		<br />
-		<p style="text-align:center;padding-top:10px;" class="text_small">
-			{L_NO_ARTICLE} {L_TOTAL_ARTICLES}
-		</p>
-		&nbsp;
 	</div>
 	<div class="module_bottom_l"></div>		
 	<div class="module_bottom_r"></div>

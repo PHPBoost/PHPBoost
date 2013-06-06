@@ -120,6 +120,6 @@
 	<div class="module_bottom_l"></div>		
 	<div class="module_bottom_r"></div>
 	<div class="module_bottom text_strong">
-		<a href="../articles/{SID}">{L_ARTICLES_INDEX}</a>
+		<a href="../articles/{SID}">{L_MODULE_NAME}</a>
 	</div>
 </div>
