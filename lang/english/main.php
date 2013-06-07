@@ -249,6 +249,7 @@ $LANG['refresh'] = 'Refresh';
 $LANG['ranks'] = 'Ranks';
 $LANG['previous_page'] = 'Previous page';
 $LANG['next_page'] = 'Next page';
+$LANG['never'] = 'Jamais';
 
 //Dates.
 $LANG['on'] = 'On';

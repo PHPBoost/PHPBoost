@@ -117,7 +117,6 @@ class AdminViewAllMembersController extends AdminController
 		while ($row = $result->fetch())
 		{
 			$user_mail = '<a href="mailto:' . $row['user_mail'] . '"><img src="'. PATH_TO_ROOT .'/templates/' . get_utheme() . '/images/' . get_ulang() . '/email.png" alt="' . $row['user_mail'] . '" /></a>';
-			$row['last_connect'] = !empty($row['last_connect']) ? $row['last_connect'] : $row['timestamp'];
 		
 			$this->view->assign_block_vars('member_list', array(
 				'DELETE_LINK' => DispatchManager::get_url('/admin/member', '/'. $row['user_id'] .'/delete/')->absolute(),
@@ -126,7 +125,7 @@ class AdminViewAllMembersController extends AdminController
 				'LEVEL' => $this->get_lang_level($row['level']),
 				'APPROBATION' => $row['user_aprob'] == 0 ? $this->lang['no'] : $this->lang['yes'],
 				'MAIL' => $user_mail,
-				'LAST_CONNECT' => gmdate_format('date_format_short', $row['last_connect']),
+				'LAST_CONNECT' => !empty($row['last_connect']) ? gmdate_format('date_format_short', $row['last_connect']) : LangLoader::get_message('never', 'main'),
 				'REGISTERED' => gmdate_format('date_format_short', $row['timestamp']),
 				'U_USER_ID' => UserUrlBuilder::profile($row['user_id'])->absolute()
 			));
