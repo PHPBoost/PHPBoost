@@ -83,7 +83,7 @@ class OnlineModuleMiniMenu extends ModuleMiniMenu
 				'L_MEMBER' => $this->number_member > 1 ? $main_lang['member_s'] : $main_lang['member'],
 				'L_MODO' => $this->number_moderator > 1 ? $main_lang['modo_s'] : $main_lang['modo'],
 				'L_ADMIN' => $this->number_administrator > 1 ? $main_lang['admin_s'] : $main_lang['admin'],
-				'L_USERS_ONLINE' => strtolower($lang['online']),
+				'L_USERS_ONLINE' => $this->total_users > 1 ? $lang['online_users'] : $lang['online_user'],
 				'L_TOTAL' => $main_lang['total'],
 				'TOTAL_USERS_CONNECTED' => $this->total_users,
 				'TOTAL_VISITOR_CONNECTED' => $this->number_visitor,
