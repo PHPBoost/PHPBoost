@@ -22,6 +22,10 @@ function check_msg(){
                 <dt><label>{L_NAME}</label></dt>
                 <dd><label>{NAME}</label></dd>
             </dl>
+			<dl>
+				<dt><label for="location">* {L_LOCATION}</label></dt>
+				<dd><select name="location" id="location">{LOCATIONS}</select></dd>
+			</dl>
             <dl>
                 <dt><label for="activ">{L_STATUS}</label></dt>
                 <dd><label>
