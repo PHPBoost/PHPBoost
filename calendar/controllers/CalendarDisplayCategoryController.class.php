@@ -93,7 +93,15 @@ class CalendarDisplayCategoryController extends ModuleController
 	
 	private function check_authorizations()
 	{
-		
+		$id_cat = $this->get_category()->get_id();
+		if ($id_cat !== Category::ROOT_CATEGORY)
+		{
+			if (!CalendarAuthorizationsService::check_authorizations($id_cat)->read())
+			{
+				$error_controller = PHPBoostErrors::user_not_authorized();
+		   		DispatchManager::redirect($error_controller);
+			}
+		}
 	}
 	
 	private function generate_response()

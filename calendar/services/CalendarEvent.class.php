@@ -192,7 +192,7 @@ class CalendarEvent
 			'location' => $this->get_location(),
 			'start_date' => $this->get_start_date() !== null ? $this->get_start_date()->get_timestamp() : '',
 			'end_date' => $this->get_end_date() !== null ? $this->get_end_date()->get_timestamp() : '',
-			'author_id' => $this->get_author_user()get_id(),
+			'author_id' => $this->get_author_user()->get_id(),
 			'registration_authorized' => $this->get_registration_authorized(),
 			'max_registred_members' => $this->get_max_registred_members(),
 			'repeat_number' => $this->get_repeat_number(),

@@ -63,7 +63,7 @@ class CalendarFormController extends ModuleController
 	
 	private function init()
 	{
-			$this->lang = LangLoader::get('calendar_common', 'calendar');
+		$this->lang = LangLoader::get('calendar_common', 'calendar');
 	}
 	
 	private function build_form()
@@ -187,7 +187,7 @@ class CalendarFormController extends ModuleController
 		}
 		else
 		{
-			if (!(CalendarAuthorizationsService::check_authorizations($event->get_id_cat())->moderation() || (CalendarAuthorizationsService::check_authorizations($event->get_id_cat())->write() && $event->get_user_id() == AppContext::get_current_user()->get_id())))
+			if (!(CalendarAuthorizationsService::check_authorizations($event->get_id_cat())->moderation() || (CalendarAuthorizationsService::check_authorizations($event->get_id_cat())->write() && $event->get_author_user()->get_id() == AppContext::get_current_user()->get_id())))
 			{
 				$error_controller = PHPBoostErrors::user_not_authorized();
 				DispatchManager::redirect($error_controller);
@@ -251,7 +251,7 @@ class CalendarFormController extends ModuleController
 				$contribution->set_id_in_module($event->get_id());
 				$contribution->set_description(stripslashes($event->get_contents()));
 				$contribution->set_entitled('[' . $this->lang['calendar.titles.event'] . '] ' . $event->get_title());
-				$contribution->set_fixing_url(CalendarUrlBuilder::edit_event($event->get_id()));
+				$contribution->set_fixing_url(CalendarUrlBuilder::edit_event($event->get_id())->relative());
 				$contribution->set_poster_id(AppContext::get_current_user()->get_id());
 				$contribution->set_module('calendar');
 				$contribution->set_auth(
