@@ -42,6 +42,10 @@ if ($menu == null)
 if ($post)
 {   // Edit a Menu authorizations
     $menu->enabled(retrieve(POST, 'activ', Menu::MENU_NOT_ENABLED));
+	if ($menu->is_enabled())
+    {
+        $menu->set_block(retrieve(POST, 'location', Menu::BLOCK_POSITION__NOT_ENABLED));
+    }
     $menu->set_auth(Authorizations::build_auth_array_from_form(Menu::MENU_AUTH_BIT));
     
     //Filters
@@ -83,10 +87,30 @@ $tpl->put_all(array(
     'ACTION' => 'save',
 ));
 
+//Localisation possibles.
+$block = $menu->get_block();
+$array_location = array(
+    Menu::BLOCK_POSITION__HEADER => $LANG['menu_header'],
+    Menu::BLOCK_POSITION__SUB_HEADER => $LANG['menu_subheader'],
+    Menu::BLOCK_POSITION__LEFT => $LANG['menu_left'],
+    Menu::BLOCK_POSITION__TOP_CENTRAL => $LANG['menu_top_central'],
+    Menu::BLOCK_POSITION__BOTTOM_CENTRAL => $LANG['menu_bottom_central'],
+    Menu::BLOCK_POSITION__RIGHT => $LANG['menu_right'],
+    Menu::BLOCK_POSITION__TOP_FOOTER => $LANG['menu_top_footer'],
+    Menu::BLOCK_POSITION__FOOTER => $LANG['menu_footer']
+);
+
+$locations = '';
+foreach ($array_location as $key => $name) 
+{
+    $locations .= '<option value="' . $key . '" ' . (($block == $key) ? 'selected="selected"' : '') . '>' . $name . '</option>';
+}
+
 
 $tpl->put_all(array(
     'IDMENU' => $id,
     'NAME' => $menu->get_title(),
+	'LOCATIONS' => $locations,
     'AUTH_MENUS' => Authorizations::generate_select(Menu::MENU_AUTH_BIT, $menu->get_auth()),
     'C_ENABLED' => $menu->is_enabled(),
 ));
