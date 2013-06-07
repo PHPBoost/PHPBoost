@@ -39,6 +39,9 @@ $lang['online'] = 'Online';
 $lang['online.location'] = 'Location';
 $lang['online.last_update'] = 'Last update';
 
+$lang['online_user'] = 'online user';
+$lang['online_users'] = 'online users';
+
 //Admin
 $lang['admin.online-config'] = 'Online configuration';
 $lang['admin.nbr-displayed'] = 'Number of online members displayed';
