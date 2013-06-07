@@ -167,7 +167,7 @@ while ($row = $Sql->fetch_assoc($result))
 		'GROUP_COLOR' => $group_color,
 		'RANK' => $rank,
 		'MAIL' => $row['user_mail'],
-		'LAST_CONNECT' => gmdate_format('date_format_short', $row['last_connect']),
+		'LAST_CONNECT' => !empty($row['last_connect']) ? gmdate_format('date_format_short', $row['last_connect']) : LangLoader::get_message('never', 'main'),
 		'LEVEL' => $row['level'],
 		'DATE' => gmdate_format('date_format_short', $row['timestamp']),
 		'APROB' => ($row['user_aprob'] == 0) ? $LANG['no'] : $LANG['yes']		
