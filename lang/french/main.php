@@ -248,6 +248,7 @@ $LANG['refresh'] = 'Rafraichir';
 $LANG['ranks'] = 'Rangs';
 $LANG['previous_page'] = 'Page précédente';
 $LANG['next_page'] = 'Page suivante';
+$LANG['never'] = 'Jamais';
 
 //Dates.
 $LANG['on'] = 'Le';

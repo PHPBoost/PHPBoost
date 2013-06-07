@@ -98,7 +98,6 @@ class UserUsersListController extends AbstractController
 		while ($row = $result->fetch())
 		{
 			$user_msg = !empty($row['user_msg']) ? $row['user_msg'] : '0';
-			$last_connect = !empty($row['last_connect']) ? $row['last_connect'] : $row['timestamp'];
 			$group_color = User::get_group_color($row['user_groups'], $row['level']);
 			
 			$this->view->assign_block_vars('member_list', array(
@@ -109,7 +108,7 @@ class UserUsersListController extends AbstractController
 				'GROUP_COLOR' => $group_color,
 				'MAIL' => $row['user_mail'],
 				'MSG' => $user_msg,
-				'LAST_CONNECT' => gmdate_format('date_format_short', $last_connect),
+				'LAST_CONNECT' => !empty($row['last_connect']) ? gmdate_format('date_format_short', $row['last_connect']) : LangLoader::get_message('never', 'main'),
 				'DATE' => gmdate_format('date_format_short', $row['timestamp']),
 				'U_USER_ID' => UserUrlBuilder::profile($row['user_id'])->absolute(),
 				'U_USER_PM' => UserUrlBuilder::personnal_message($row['user_id'])->absolute()
