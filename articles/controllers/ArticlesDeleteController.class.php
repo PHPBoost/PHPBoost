@@ -32,6 +32,8 @@ class ArticlesDeleteController extends ModuleController
 {	
 	public function execute(HTTPRequestCustom $request)
 	{
+		AppContext::get_session()->csrf_post_protect();
+		
 		$article = $this->get_article();
 		
 		if (!ArticlesAuthorizationsService::check_authorizations($article->get_id_cat())->moderation())
