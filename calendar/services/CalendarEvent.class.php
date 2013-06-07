@@ -37,7 +37,6 @@ class CalendarEvent
 	private $start_date;
 	private $end_date;
 	
-	private $author_id;
 	private $author_user;
 	
 	private $registration_authorized;
@@ -123,14 +122,9 @@ class CalendarEvent
 		return $this->end_date;
 	}
 	
-	public function set_author_id($author_id)
+	public function set_author_user(User $author)
 	{
-		$this->author_id = $author_id;
-	}
-	
-	public function get_author_id()
-	{
-		return $this->author_id;
+		$this->author_user = $author;
 	}
 	
 	public function get_author_user()
@@ -198,7 +192,7 @@ class CalendarEvent
 			'location' => $this->get_location(),
 			'start_date' => $this->get_start_date() !== null ? $this->get_start_date()->get_timestamp() : '',
 			'end_date' => $this->get_end_date() !== null ? $this->get_end_date()->get_timestamp() : '',
-			'author_id' => $this->get_author_id(),
+			'author_id' => $this->get_author_user()get_id(),
 			'registration_authorized' => $this->get_registration_authorized(),
 			'max_registred_members' => $this->get_max_registred_members(),
 			'repeat_number' => $this->get_repeat_number(),
@@ -215,7 +209,6 @@ class CalendarEvent
 		$this->set_location($properties['location']);
 		$this->set_start_date(!empty($properties['start_date']) ? new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, $properties['start_date']) : new Date(DATE_NOW, TIMEZONE_AUTO));
 		$this->set_end_date(!empty($properties['end_date']) ? new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, $properties['end_date']) : new Date(DATE_NOW, TIMEZONE_AUTO));
-		$this->set_author_id($properties['author_id']);
 		$this->set_registration_authorized($properties['registration_authorized']);
 		$this->set_max_registred_members($properties['max_registred_members']);
 		$this->set_repeat_number($properties['repeat_number']);
@@ -223,7 +216,7 @@ class CalendarEvent
 		
 		$user = new User();
 		$user->set_properties($properties);
-		$this->author_user = $user;
+		$this->set_author_user($user);
 	}
 	
 	public function init_default_properties()

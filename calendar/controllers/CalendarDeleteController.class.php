@@ -34,7 +34,7 @@ class CalendarDeleteController extends ModuleController
 		$event = $this->get_event();
 		
 		//Authorization check
-		if (!(CalendarAuthorizationsService::check_authorizations($event->get_id_cat())->moderation() || (CalendarAuthorizationsService::check_authorizations($event->get_id_cat())->write() && $event->get_author_id() == AppContext::get_current_user()->get_id())))
+		if (!(CalendarAuthorizationsService::check_authorizations($event->get_id_cat())->moderation() || (CalendarAuthorizationsService::check_authorizations($event->get_id_cat())->write() && $event->get_author()->get_id() == AppContext::get_current_user()->get_id())))
 		{
 			$error_controller = PHPBoostErrors::user_not_authorized();
 			DispatchManager::redirect($error_controller);
