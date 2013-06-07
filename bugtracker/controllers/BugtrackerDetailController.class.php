@@ -202,22 +202,22 @@ class BugtrackerDetailController extends ModuleController
 		switch ($success)
 		{
 			case 'add':
-				$errstr = sprintf($this->lang['bugs.success.add'], $this->bug->get_id());
+				$errstr = StringVars::replace_vars($this->lang['bugs.success.add'], array('id' => $this->bug->get_id()));
 				break;
 			case 'edit':
-				$errstr = sprintf($this->lang['bugs.success.edit'], $this->bug->get_id());
+				$errstr = StringVars::replace_vars($this->lang['bugs.success.edit'], array('id' => $this->bug->get_id()));
 				break;
 			case 'fixed':
-				$errstr = sprintf($this->lang['bugs.success.fixed'], $this->bug->get_id());
+				$errstr = StringVars::replace_vars($this->lang['bugs.success.fixed'], array('id' => $this->bug->get_id()));
 				break;
 			case 'delete':
-				$errstr = sprintf($this->lang['bugs.success.delete'], $this->bug->get_id());
+				$errstr = StringVars::replace_vars($this->lang['bugs.success.delete'], array('id' => $this->bug->get_id()));
 				break;
 			case 'reject':
-				$errstr = sprintf($this->lang['bugs.success.reject'], $this->bug->get_id());
+				$errstr = StringVars::replace_vars($this->lang['bugs.success.reject'], array('id' => $this->bug->get_id()));
 				break;
 			case 'reopen':
-				$errstr = sprintf($this->lang['bugs.success.reopen'], $this->bug->get_id());
+				$errstr = StringVars::replace_vars($this->lang['bugs.success.reopen'], array('id' => $this->bug->get_id()));
 				break;
 			default:
 				$errstr = '';

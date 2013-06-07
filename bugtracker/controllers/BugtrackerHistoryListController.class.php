@@ -196,7 +196,7 @@ class BugtrackerHistoryListController extends ModuleController
 		switch ($success)
 		{
 			case 'add':
-				$errstr = sprintf($this->lang['bugs.success.add'], $this->bug->get_id());
+				$errstr = StringVars::replace_vars($this->lang['bugs.success.add'], array('id' => $this->bug->get_id()));
 				break;
 			default:
 				$errstr = '';

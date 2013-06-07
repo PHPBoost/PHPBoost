@@ -189,33 +189,33 @@ $lang['bugs.explain.remarks'] = 'Remarques : <br />
 $lang['bugs.explain.contents_value'] = 'Entrez ci-dessous la description par défaut à afficher lors de l\'ouverture d\'un nouveau bug. Laissez vide pour que la description ne soit pas pré-remplie.';
 
 //MP
-$lang['bugs.pm.assigned.title'] = '[%s] Le bug #%d vous a été assigné par %s';
+$lang['bugs.pm.assigned.title'] = '[Rapport de bugs] Le bug #:id vous a été assigné par :author';
 $lang['bugs.pm.assigned.contents'] = 'Cliquez ici pour afficher le détail du bug :
-%s';
-$lang['bugs.pm.comment.title'] = '[%s] Le bug #%d a été commenté par %s';
-$lang['bugs.pm.comment.contents'] = '%s a ajouté le commentaire suivant au bug #%d :
+:link';
+$lang['bugs.pm.comment.title'] = '[Rapport de bugs] Le bug #:id a été commenté par :author';
+$lang['bugs.pm.comment.contents'] = ':author a ajouté le commentaire suivant au bug #:id :
 
-%s
-
-Lien vers le bug :
-%s';
-$lang['bugs.pm.edit.title'] = '[%s] Le bug #%d a été modifié par %s';
-$lang['bugs.pm.edit.contents'] = '%s a modifié les champs suivants dans le bug #%d :
-
-%s
+:comment
 
 Lien vers le bug :
-%s';
-$lang['bugs.pm.reopen.title'] = '[%s] Le bug #%d a été ré-ouvert par %s';
-$lang['bugs.pm.reopen.contents'] = '%s a ré-ouvert le bug #%d.
+:link';
+$lang['bugs.pm.edit.title'] = '[Rapport de bugs] Le bug #:id a été modifié par :author';
+$lang['bugs.pm.edit.contents'] = ':author a modifié les champs suivants dans le bug #:id :
+
+:fields
+
 Lien vers le bug :
-%s';
-$lang['bugs.pm.reject.title'] = '[%s] Le bug #%d a été rejeté par %s';
-$lang['bugs.pm.reject.contents'] = '%s a rejeté le bug #%d.
+:link';
+$lang['bugs.pm.reopen.title'] = '[Rapport de bugs] Le bug #:id a été ré-ouvert par :author';
+$lang['bugs.pm.reopen.contents'] = ':author a ré-ouvert le bug #:id.
 Lien vers le bug :
-%s';
-$lang['bugs.pm.delete.title'] = '[%s] Le bug #%d a été supprimé par %s';
-$lang['bugs.pm.delete.contents'] = '%s a supprimé le bug #%d.';
+:link';
+$lang['bugs.pm.reject.title'] = '[Rapport de bugs] Le bug #:id a été rejeté par :author';
+$lang['bugs.pm.reject.contents'] = ':author a rejeté le bug #:id.
+Lien vers le bug :
+:link';
+$lang['bugs.pm.delete.title'] = '[Rapport de bugs] Le bug #:id a été supprimé par :author';
+$lang['bugs.pm.delete.contents'] = ':author a supprimé le bug #:id.';
 
 //Recherche
 $lang['bugs.search.where'] = 'Où ?';
@@ -267,10 +267,10 @@ $lang['bugs.error.e_unexist_pm_type'] = 'Ce type de MP n\'existe pas';
 
 //Succès
 $lang['bugs.success.config'] = 'La configuration a été modifiée';
-$lang['bugs.success.add'] = 'Le bug #%d a été ajouté';
-$lang['bugs.success.edit'] = 'Le bug #%d a été modifié';
-$lang['bugs.success.fixed'] = 'Le bug #%d a été corrigé';
-$lang['bugs.success.delete'] = 'Le bug #%d a été supprimé';
-$lang['bugs.success.reject'] = 'Le bug #%d a été rejeté';
-$lang['bugs.success.reopen'] = 'Le bug #%d a été ré-ouvert';
+$lang['bugs.success.add'] = 'Le bug #:id a été ajouté';
+$lang['bugs.success.edit'] = 'Le bug #:id a été modifié';
+$lang['bugs.success.fixed'] = 'Le bug #:id a été corrigé';
+$lang['bugs.success.delete'] = 'Le bug #:id a été supprimé';
+$lang['bugs.success.reject'] = 'Le bug #:id a été rejeté';
+$lang['bugs.success.reopen'] = 'Le bug #:id a été ré-ouvert';
 ?>
