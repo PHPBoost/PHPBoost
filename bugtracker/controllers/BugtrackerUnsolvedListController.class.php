@@ -108,7 +108,7 @@ class BugtrackerUnsolvedListController extends ModuleController
 		//Bugs number
 		$nbr_bugs = BugtrackerService::count("WHERE status <> 'fixed' AND status <> 'rejected'" . $select_filters);
 		
-		if ($current_page > ($nbr_bugs/$items_per_page + 1))
+		if ($current_page > ceil($nbr_bugs / $items_per_page))
 		{
 			$error_controller = PHPBoostErrors::unexisting_page();
 			DispatchManager::redirect($error_controller);
