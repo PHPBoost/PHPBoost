@@ -111,7 +111,7 @@ class BugtrackerRoadmapListController extends ModuleController
 		//Bugs number
 		$nbr_bugs = BugtrackerService::count("WHERE fixed_in = " . $roadmap_version . ($roadmap_status != 'all' ? " AND status = '" . $roadmap_status . "'" : ""));
 		
-		if ($current_page > ($nbr_bugs/$items_per_page + 1))
+		if ($current_page > ceil($nbr_bugs / $items_per_page))
 		{
 			$error_controller = PHPBoostErrors::unexisting_page();
 			DispatchManager::redirect($error_controller);
