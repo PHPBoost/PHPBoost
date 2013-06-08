@@ -108,6 +108,12 @@ class BugtrackerSolvedListController extends ModuleController
 		//Bugs number
 		$nbr_bugs = BugtrackerService::count("WHERE (status = 'fixed' OR status = 'rejected')" . $select_filters);
 		
+		if ($current_page > ($nbr_bugs/$items_per_page + 1))
+		{
+			$error_controller = PHPBoostErrors::unexisting_page();
+			DispatchManager::redirect($error_controller);
+		}
+		
 		$pagination = new BugtrackerListPagination($current_page, $nbr_bugs);
 		$pagination->set_url(BugtrackerUrlBuilder::solved($field . '/' . $sort . '/%d' . (!empty($filter) ? '/' . $filter . '/' . $filter_id : ''))->absolute());
 		

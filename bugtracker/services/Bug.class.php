@@ -31,7 +31,6 @@ class Bug
 	private $title;
 	private $contents;
 	
-	private $author_id;
 	private $author_user;
 	
 	private $submit_date;
@@ -90,14 +89,9 @@ class Bug
 		return $this->contents;
 	}
 	
-	public function set_author_id($author_id)
+	public function set_author_user(User $user)
 	{
-		$this->author_id = $author_id;
-	}
-	
-	public function get_author_id()
-	{
-		return $this->author_id;
+		$this->author_user = $user;
 	}
 	
 	public function get_author_user()
@@ -281,7 +275,7 @@ class Bug
 			'id' => $this->get_id(),
 			'title' => $this->get_title(),
 			'contents' => $this->get_contents(),
-			'author_id' => $this->get_author_id(),
+			'author_id' => $this->get_author_user()->get_id(),
 			'submit_date' => $this->get_submit_date() !== null ? $this->get_submit_date() : 0,
 			'fix_date' => $this->get_fix_date() !== null ? $this->get_fix_date() : 0,
 			'status' => $this->get_status(),
@@ -303,7 +297,6 @@ class Bug
 		$this->set_id($properties['id']);
 		$this->set_title($properties['title']);
 		$this->set_contents($properties['contents']);
-		$this->set_author_id($properties['author_id']);
 		$this->set_submit_date(!empty($properties['submit_date']) ? $properties['submit_date'] : 0);
 		$this->set_fix_date(!empty($properties['fix_date']) ? $properties['fix_date'] : 0);
 		$this->set_status($properties['status']);
@@ -320,7 +313,7 @@ class Bug
 		
 		$user = new User();
 		$user->set_properties($properties);
-		$this->author_user = $user;
+		$this->set_author_user($user);
 	}
 	
 	public function init_default_properties()
@@ -331,7 +324,7 @@ class Bug
 		
 		$this->set_submit_date($now->get_timestamp());
 		$this->set_status(Bug::NEW_BUG);
-		$this->set_author_id(AppContext::get_current_user()->get_id());
+		$this->set_author_user(AppContext::get_current_user());
 		$this->set_progress($status_list[Bug::NEW_BUG]);
 		$this->set_fixed_in(0);
 		$this->set_assigned_to_id(0);

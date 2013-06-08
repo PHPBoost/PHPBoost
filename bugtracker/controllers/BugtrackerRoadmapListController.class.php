@@ -111,6 +111,12 @@ class BugtrackerRoadmapListController extends ModuleController
 		//Bugs number
 		$nbr_bugs = BugtrackerService::count("WHERE fixed_in = " . $roadmap_version . ($roadmap_status != 'all' ? " AND status = '" . $roadmap_status . "'" : ""));
 		
+		if ($current_page > ($nbr_bugs/$items_per_page + 1))
+		{
+			$error_controller = PHPBoostErrors::unexisting_page();
+			DispatchManager::redirect($error_controller);
+		}
+		
 		$pagination = new BugtrackerListPagination($current_page, $nbr_bugs);
 		$pagination->set_url(BugtrackerUrlBuilder::roadmap($r_version . '/' . $roadmap_status . '/' . $field . '/' . $sort . '/%d')->absolute());
 		

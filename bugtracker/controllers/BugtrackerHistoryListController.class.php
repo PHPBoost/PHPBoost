@@ -63,6 +63,12 @@ class BugtrackerHistoryListController extends ModuleController
 		//Count history lines number
 		$history_lines_number = BugtrackerService::count_history($this->bug->get_id());
 		
+		if ($current_page > ($history_lines_number/$items_per_page + 1))
+		{
+			$error_controller = PHPBoostErrors::unexisting_page();
+			DispatchManager::redirect($error_controller);
+		}
+		
 		$pagination = new BugtrackerListPagination($current_page, $history_lines_number);
 		$pagination->set_url(BugtrackerUrlBuilder::history($this->bug->get_id() . '/%d')->absolute());
 		

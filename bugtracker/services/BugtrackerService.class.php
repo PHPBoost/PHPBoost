@@ -168,13 +168,13 @@ class BugtrackerService
 			'id' => $bug_id
 		), SelectQueryResult::FETCH_ASSOC);
 		
-		$updaters_list = array($bug->get_author_id());
-		if ($bug->get_assigned_to_id() && $bug->get_assigned_to_id() != $bug->get_author_id())
+		$updaters_list = array($bug->get_author_user()->get_id());
+		if ($bug->get_assigned_to_id() && $bug->get_assigned_to_id() != $bug->get_author_user()->get_id())
 			$updaters_list[] = $bug->get_assigned_to_id();
 		
 		while ($row = $updater_ids->fetch())
 		{
-			if ($row['updater_id'] != $bug->get_author_id() && $row['updater_id'] != $bug->get_assigned_to_id())
+			if ($row['updater_id'] != $bug->get_author_user()->get_id() && $row['updater_id'] != $bug->get_assigned_to_id())
 				$updaters_list[] = $row['updater_id'];
 		}
 		
