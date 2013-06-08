@@ -81,7 +81,7 @@ class BugtrackerEditController extends ModuleController
 	
 	private function check_authorizations()
 	{
-		if (!(BugtrackerAuthorizationsService::check_authorizations()->moderation() || (BugtrackerAuthorizationsService::check_authorizations()->write() && $this->bug->get_author_id() == $this->current_user->get_id())))
+		if (!(BugtrackerAuthorizationsService::check_authorizations()->moderation() || (BugtrackerAuthorizationsService::check_authorizations()->write() && $this->bug->get_author_user()->get_id() == $this->current_user->get_id())))
 		{
 			$error_controller = PHPBoostErrors::user_not_authorized();
 			DispatchManager::redirect($error_controller);

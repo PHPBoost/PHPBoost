@@ -82,7 +82,7 @@ class BugtrackerDetailController extends ModuleController
 				$c_reject = true;
 		}
 		
-		if ($auth_moderate || ($this->current_user->get_id() == $this->bug->get_author_id() && $this->bug->get_author_id() != -1) || ($this->bug->get_assigned_to_id() && $this->current_user->get_id() == $this->bug->get_assigned_to_id()))
+		if ($auth_moderate || ($this->current_user->get_id() == $this->bug->get_author_user()->get_id() && $this->bug->get_author_user()->get_id() != -1) || ($this->bug->get_assigned_to_id() && $this->current_user->get_id() == $this->bug->get_assigned_to_id()))
 		{
 			$this->view->put_all(array(
 				'C_EDIT_BUG'=> true,
@@ -121,8 +121,8 @@ class BugtrackerDetailController extends ModuleController
 			'LINK_RETURN' 				=> 'javascript:history.back(1);'
 		));
 		
-		$user_assigned = UserService::get_user('WHERE user_aprob = 1 AND user_id=:user_id', array('user_id' => $this->bug->get_assigned_to_id()));
-		$user_assigned_group_color = User::get_group_color($user_assigned->get_groups(), $user_assigned->get_level(), true);
+		$user_assigned = $this->bug->get_assigned_to_id() ? UserService::get_user('WHERE user_aprob = 1 AND user_id=:user_id', array('user_id' => $this->bug->get_assigned_to_id())) : '';
+		$user_assigned_group_color = $this->bug->get_assigned_to_id() ? User::get_group_color($user_assigned->get_groups(), $user_assigned->get_level(), true) : '';
 		
 		$this->view->put_all(array(
 			'C_AUTHOR_GROUP_COLOR'			=> !empty($user_assigned_group_color),
@@ -135,7 +135,7 @@ class BugtrackerDetailController extends ModuleController
 			'CATEGORY'						=> (isset($categories[$this->bug->get_category()])) ? stripslashes($categories[$this->bug->get_category()]) : $this->lang['bugs.notice.none_e'],
 			'PRIORITY'						=> (isset($priorities[$this->bug->get_priority()])) ? stripslashes($priorities[$this->bug->get_priority()]) : $this->lang['bugs.notice.none_e'],
 			'SEVERITY'						=> (isset($severities[$this->bug->get_severity()])) ? stripslashes($severities[$this->bug->get_severity()]['name']) : $this->lang['bugs.notice.none'],
-			'REPRODUCTIBLE'					=> $this->bug->is_reproductible() ? LangLoader::get_message('yes', 'main') : LangLoader::get_message('no', 'main'),
+			'REPRODUCTIBLE'					=> $this->bug->is_reproductible() ? $main_lang['yes'] : $main_lang['no'],
 			'REPRODUCTION_METHOD'			=> FormatingHelper::second_parse($this->bug->get_reproduction_method()),
 			'DETECTED_IN' 					=> (isset($versions[$this->bug->get_detected_in()])) ? stripslashes($versions[$this->bug->get_detected_in()]['name']) : $this->lang['bugs.notice.not_defined'],
 			'FIXED_IN'						=> (isset($versions[$this->bug->get_fixed_in()])) ? stripslashes($versions[$this->bug->get_fixed_in()]['name']) : $this->lang['bugs.notice.not_defined'],
@@ -144,11 +144,11 @@ class BugtrackerDetailController extends ModuleController
 			'AUTHOR'						=> $author->get_pseudo(),
 			'AUTHOR_LEVEL_CLASS'			=> UserService::get_level_class($author->get_level()),
 			'AUTHOR_GROUP_COLOR'			=> $author_group_color,
-			'USER_ASSIGNED'					=> $user_assigned->get_pseudo(),
-			'USER_ASSIGNED_LEVEL_CLASS'		=> UserService::get_level_class($user_assigned->get_level()),
+			'USER_ASSIGNED'					=> $user_assigned ? $user_assigned->get_pseudo() : '',
+			'USER_ASSIGNED_LEVEL_CLASS'		=> $user_assigned ? UserService::get_level_class($user_assigned->get_level()) : '',
 			'USER_ASSIGNED_GROUP_COLOR'		=> $user_assigned_group_color,
 			'LINK_AUTHOR_PROFILE'			=> UserUrlBuilder::profile($author->get_id())->absolute(),
-			'LINK_USER_ASSIGNED_PROFILE'	=> UserUrlBuilder::profile($user_assigned->get_id())->absolute(),
+			'LINK_USER_ASSIGNED_PROFILE'	=> $user_assigned ? UserUrlBuilder::profile($user_assigned->get_id())->absolute() : '',
 		));
 		
 		//Comments display
