@@ -62,9 +62,13 @@ if ($action == 'punish') //Gestion des utilisateurs
 		//Envoi d'un MP au membre pour lui signaler, si le membre en question n'est pas lui-même.
 		if ($id_get != $User->get_attribute('user_id'))
 		{
-			if (!empty($readonly_contents))
+			if (!empty($readonly))
 			{
 				MemberSanctionManager::remove_write_permissions($id_get, $readonly, MemberSanctionManager::SEND_MP, str_replace('%date', gmdate_format('date_format', $readonly), $readonly_contents));
+			}
+			else
+			{
+				MemberSanctionManager::restore_write_permissions($id_get);
 			}
 		}
 		else
