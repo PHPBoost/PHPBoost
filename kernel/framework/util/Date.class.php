@@ -367,7 +367,7 @@ class Date
 
 	public function set_hours($hours, $referential_timezone = TIMEZONE_AUTO)
 	{
-		$adjusted_hours = $hours + self::compute_server_user_difference($referential_timezone);
+		$adjusted_hours = $hours - self::compute_server_user_difference($referential_timezone);
 		$this->set_date_from_values($this->get_year(), $this->get_month(), $this->get_day(),
 		$adjusted_hours, $this->get_minutes(), $this->get_seconds());
 	}
