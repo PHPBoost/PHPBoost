@@ -40,7 +40,7 @@ class OnlineModuleMiniMenu extends ModuleMiniMenu
 	
 	public function display($tpl = false)
 	{
-		if (!Url::is_current_url('/online/index.php'))
+		if (!Url::is_current_url('/online/'))
 		{
 			$tpl = new FileTemplate('online/OnlineModuleMiniMenu.tpl');
 			MenuService::assign_positions_conditions($tpl, $this->get_block());
