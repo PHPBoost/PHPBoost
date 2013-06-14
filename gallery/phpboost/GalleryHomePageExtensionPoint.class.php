@@ -153,7 +153,7 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 			'L_APROB' => $LANG['aprob'],
 			'L_UNAPROB' => $LANG['unaprob'],
 			'L_FILE_FORBIDDEN_CHARS' => $LANG['file_forbidden_chars'],
-			'L_TOTAL_IMG' => sprintf($LANG['total_img_cat'], $nbr_pics),
+			'L_TOTAL_IMG' => $g_idcat > 0 ? sprintf($LANG['total_img_cat'], $nbr_pics) : '',
 			'L_ADD_IMG' => $LANG['add_pic'],
 			'L_GALLERY' => $LANG['gallery'],
 			'L_CATEGORIES' => ($CAT_GALLERY[$g_idcat]['level'] >= 0) ? $LANG['sub_album'] : $LANG['album'],
