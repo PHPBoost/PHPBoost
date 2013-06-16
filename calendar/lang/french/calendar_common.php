@@ -71,6 +71,7 @@ $lang['calendar.labels.contribution'] = 'Contribution';
 $lang['calendar.labels.contribution.explain'] = 'Vous n\'êtes pas autorisé à créer un événement, cependant vous pouvez en proposer un. Votre contribution suivra le parcours classique et sera traitée dans le panneau de contribution de PHPBoost. Vous pouvez, dans le champ suivant, justifier votre contribution de façon à expliquer votre démarche à un approbateur.';
 $lang['calendar.labels.contribution.description'] = 'Complément de contribution';
 $lang['calendar.labels.contribution.description.explain'] = 'Expliquez les raisons de votre contribution (pourquoi vous souhaitez proposer cet événement). Ce champ est facultatif.';
+$lang['calendar.labels.contribution.entitled'] = '[Calendrier] :title';
 
 //Explications
 $lang['calendar.explain.date'] = '<span class="text_small">(jj/mm/aa)</span>';

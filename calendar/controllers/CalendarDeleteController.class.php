@@ -25,13 +25,16 @@
  *
  ###################################################*/
 
+/**
+ * @author Julien BRISWALTER <julien.briswalter@phpboost.com>
+ */
 class CalendarDeleteController extends ModuleController
 {
 	public function execute(HTTPRequestCustom $request)
 	{
 		AppContext::get_session()->csrf_post_protect();
 		
-		$event = $this->get_event();
+		$event = $this->get_event($request);
 		
 		//Authorization check
 		if (!(CalendarAuthorizationsService::check_authorizations($event->get_id_cat())->moderation() || (CalendarAuthorizationsService::check_authorizations($event->get_id_cat())->write() && $event->get_author()->get_id() == AppContext::get_current_user()->get_id())))
@@ -56,8 +59,8 @@ class CalendarDeleteController extends ModuleController
 	
 	private function get_event()
 	{
-		$id = AppContext::get_request()->get_getint('id', 0);
-
+		$id = $request->get_getint('id', 0);
+		
 		if (!empty($id))
 		{
 			try {

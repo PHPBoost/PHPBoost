@@ -25,6 +25,9 @@
  *
  ###################################################*/
 
+ /**
+ * @author Julien BRISWALTER <julien.briswalter@phpboost.com>
+ */
 class CalendarFormController extends ModuleController
 {     
 	/**
@@ -54,6 +57,7 @@ class CalendarFormController extends ModuleController
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save();
+			$this->redirect();
 		}
 		
 		$tpl->put('FORM', $this->form->display());
@@ -68,7 +72,7 @@ class CalendarFormController extends ModuleController
 	
 	private function build_form()
 	{
-		$form = new HTMLForm('event');
+		$form = new HTMLForm(__CLASS__);
 		
 		$fieldset = new FormFieldsetHTML('event', $this->lang['calendar.titles.event']);
 		$form->add_fieldset($fieldset);
@@ -187,7 +191,7 @@ class CalendarFormController extends ModuleController
 		}
 		else
 		{
-			if (!(CalendarAuthorizationsService::check_authorizations($event->get_id_cat())->moderation() || (CalendarAuthorizationsService::check_authorizations($event->get_id_cat())->write() && $event->get_author_user()->get_id() == AppContext::get_current_user()->get_id())))
+			if (!(CalendarAuthorizationsService::check_authorizations($event->get_id_cat())->moderation() || ((CalendarAuthorizationsService::check_authorizations($event->get_id_cat())->write() || CalendarAuthorizationsService::check_authorizations($event->get_id_cat())->contribution()) && $event->get_author_user()->get_id() == AppContext::get_current_user()->get_id())))
 			{
 				$error_controller = PHPBoostErrors::user_not_authorized();
 				DispatchManager::redirect($error_controller);
@@ -224,34 +228,29 @@ class CalendarFormController extends ModuleController
 		
 		if ($event->get_id() === null)
 		{
-			$event->set_author_id(AppContext::get_current_user()->get_id());
-			CalendarService::add($event);
+			$id_event = CalendarService::add($event);
 		}
 		else
 		{
-			CalendarService::update($event);
+			$id_event = CalendarService::update($event);
 		}
 		
-		$this->contribution_actions($event);
+		$this->contribution_actions($event, $id_event);
 		
 		Feed::clear_cache('calendar');
-		
-		$array_time = explode('-', $event->get_start_date()->to_date());
-		
-		AppContext::get_response()->redirect(CalendarUrlBuilder::home($array_time[0] . '/'. $array_time[1])->absolute());
 	}
 	
-	private function contribution_actions(CalendarEvent $event)
+	private function contribution_actions(CalendarEvent $event, $id_event)
 	{
 		if ($event->get_id() === null)
 		{
 			if ($this->is_contributor_member())
 			{
 				$contribution = new Contribution();
-				$contribution->set_id_in_module($event->get_id());
+				$contribution->set_id_in_module($id_event);
 				$contribution->set_description(stripslashes($event->get_contents()));
-				$contribution->set_entitled('[' . $this->lang['calendar.titles.event'] . '] ' . $event->get_title());
-				$contribution->set_fixing_url(CalendarUrlBuilder::edit_event($event->get_id())->relative());
+				$contribution->set_entitled(StringVars::replace_vars($this->lang['calendar.labels.contribution.entitled'], array('title' => $event->get_title())));
+				$contribution->set_fixing_url(CalendarUrlBuilder::edit_event($id_event)->relative());
 				$contribution->set_poster_id(AppContext::get_current_user()->get_id());
 				$contribution->set_module('calendar');
 				$contribution->set_auth(
@@ -261,13 +260,11 @@ class CalendarFormController extends ModuleController
 					)
 				);
 				ContributionService::save_contribution($contribution);
-
-				AppContext::get_response()->redirect(UserUrlBuilder::contribution_success()->absolute());
 			}
 		}
 		else
 		{
-			$corresponding_contributions = ContributionService::find_by_criteria('calendar', $event->get_id());
+			$corresponding_contributions = ContributionService::find_by_criteria('calendar', $id_event);
 			if (count($corresponding_contributions) > 0)
 			{
 				$event_contribution = $corresponding_contributions[0];
@@ -275,6 +272,27 @@ class CalendarFormController extends ModuleController
 
 				ContributionService::save_contribution($event_contribution);
 			}
+		}
+	}
+	
+	private function redirect()
+	{
+		$event = $this->get_event();
+		$category = CalendarService::get_categories_manager()->get_categories_cache()->get_category($event->get_id_cat());
+		
+		if ($this->is_contributor_member() && !$event->is_approved())
+		{
+			AppContext::get_response()->redirect(UserUrlBuilder::contribution_success()->absolute());
+		}
+		elseif ($event->is_approved())
+		{
+			$array_time = explode('-', $event->get_start_date()->to_date());
+		
+			AppContext::get_response()->redirect(CalendarUrlBuilder::home($array_time[0] . '/' . $array_time[1])->absolute());
+		}
+		else
+		{
+			AppContext::get_response()->redirect(CalendarUrlBuilder::home());
 		}
 	}
 	

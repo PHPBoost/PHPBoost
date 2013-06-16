@@ -71,6 +71,7 @@ $lang['calendar.labels.contribution'] = 'Contribution';
 $lang['calendar.labels.contribution.explain'] = 'You aren\'t authorized to add an event, however you can contribute by submitting one. Your contribution will be processed by a moderator.';
 $lang['calendar.labels.contribution.description'] = 'Contribution counterpart';
 $lang['calendar.labels.contribution.description.explain'] = 'Tell us why you want us to add this event. This field is not required, but it may help the moderator to make his decision.';
+$lang['calendar.labels.contribution.entitled'] = '[Calendar] :title';
 
 //Explications
 $lang['calendar.explain.date'] = '<span class="text_small">(mm/dd/yy)</span>';
