@@ -32,7 +32,7 @@ class ArticlesDeleteController extends ModuleController
 {	
 	public function execute(HTTPRequestCustom $request)
 	{
-		AppContext::get_session()->csrf_post_protect();
+		AppContext::get_session()->csrf_get_protect();
 		
 		$article = $this->get_article();
 		
