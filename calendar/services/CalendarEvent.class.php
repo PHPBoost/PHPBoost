@@ -225,8 +225,8 @@ class CalendarEvent
 		
 		$this->set_id_cat(Category::ROOT_CATEGORY);
 		$this->set_author_user(AppContext::get_current_user());
-		$this->set_start_date(new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, $now->get_timestamp()));
-		$this->set_end_date(new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, ($now->get_timestamp() + 3600)));
+		$this->set_start_date(new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, $this->round_to_five_minutes($now->get_timestamp())));
+		$this->set_end_date(new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, $this->round_to_five_minutes($now->get_timestamp() + 3600)));
 		$this->set_registration_authorized(false);
 		$this->set_max_registred_members(0);
 		$this->set_repeat_number(0);
@@ -237,6 +237,14 @@ class CalendarEvent
 	{
 		$this->start_date = null;
 		$this->end_date = null;
+	}
+	
+	private function round_to_five_minutes($timestamp)
+	{
+		if (($timestamp % 300) < 150)
+			return $timestamp - ($timestamp % 300);
+		else
+			return $timestamp - ($timestamp % 300) + 300;
 	}
 }
 ?>

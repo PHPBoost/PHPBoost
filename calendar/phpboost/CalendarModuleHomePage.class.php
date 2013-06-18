@@ -83,7 +83,7 @@ class CalendarModuleHomePage implements ModuleHomePage
 	{
 		if ($this->event === null)
 		{
-			$id = AppContext::get_request()->get_getint('id', 0);
+			$id = AppContext::get_request()->get_getint('event', 0);
 			if (!empty($id))
 			{
 				try {

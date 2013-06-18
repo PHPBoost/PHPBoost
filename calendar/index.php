@@ -48,7 +48,7 @@ $url_controller_mappers = array(
 	
 	new UrlControllerMapper('AjaxMiniCalendarController', '`^/mini/([0-9]+)?/?([0-9]+)?/?$`', array('year', 'month')),
 	new UrlControllerMapper('CalendarController', '`^/error/([a-z_-]+)?/?$`', array('error')),
-	new UrlControllerMapper('CalendarController', '`^/?([0-9]+)?/?([0-9]+)?/?([0-9]+)?/?([a-z]+)?/?$`', array('year', 'month', 'day', 'event')),
+	new UrlControllerMapper('CalendarController', '`^/?([0-9]+)?/?([0-9]+)?/?([0-9]+)?/?([0-9]+)?/?$`', array('year', 'month', 'day', 'event')),
 );
 DispatchManager::dispatch($url_controller_mappers);
 ?>
