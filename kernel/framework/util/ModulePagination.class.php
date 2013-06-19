@@ -1,10 +1,10 @@
 <?php
 /*##################################################
- *                          ArticlesPagination.class.php
+ *                          ModulePagination.class.php
  *                            -------------------
- *   begin                : May 07, 2013
- *   copyright            : (C) 2013 Patrick DUBEAU
- *   email                : daaxwizeman@gmail.com
+ *   begin                : June 19, 2013
+ *   copyright            : (C) 2013 Kevin MASSY
+ *   email                : kevin.massy@phpboost.com
  *
  *
  ###################################################
@@ -26,27 +26,24 @@
  ###################################################*/
 
 /**
- * @author Patrick DUBEAU <daaxwizeman@gmail.com>
+ * @author Kevin MASSY <kevin.massy@phpboost.com>
  */
-class ArticlesPagination
+class ModulePagination
 {
 	private $pagination;
 	private $current_page;
 	private $number_items_per_page;
-	private $tpl_path;
 	
 	public function __construct($current_page, $number_elements, $number_items_per_page)
 	{
 		$this->current_page = $current_page;
 		$this->number_items_per_page = $number_items_per_page;
-		$this->tpl_path = 'articles/ArticlesPagination.tpl';
-		$this->pagination = new Pagination($this->get_number_pages($number_elements), $this->current_page, $this->tpl_path);
+		$this->pagination = new Pagination($this->get_number_pages($number_elements), $this->current_page);
 	}
 	
-	public function set_url($url)
+	public function set_url(Url $url)
 	{
-		
-		$this->pagination->set_url_sprintf_pattern($url);
+		$this->pagination->set_url_sprintf_pattern($url->absolute());
 	}
 	
 	public function display()
@@ -65,7 +62,7 @@ class ArticlesPagination
 		return ($current_page - 1) * $this->get_number_items_per_page();
 	}
 	
-	private function get_number_pages($number_elements)
+	public function get_number_pages($number_elements)
 	{
 		return ceil($number_elements / $this->get_number_items_per_page());
 	}

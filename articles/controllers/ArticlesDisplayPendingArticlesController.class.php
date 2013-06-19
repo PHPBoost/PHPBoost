@@ -129,8 +129,8 @@ class ArticlesDisplayPendingArticlesController extends ModuleController
 		
 		$nbr_articles_pending = $result->get_rows_count();
 		
-		$pagination = new ArticlesPagination($current_page, $nbr_articles_pending, $nbr_articles_per_page);
-		$pagination->set_url(ArticlesUrlBuilder::display_pending_articles()->absolute() . $sort_field . '/' . $sort_mode . '/%d');
+		$pagination = new ModulePagination($current_page, $nbr_articles_pending, $nbr_articles_per_page);
+		$pagination->set_url(ArticlesUrlBuilder::display_pending_articles($sort_field, $sort_mode, '/%d'));
 		
 		$this->build_form($field, $mode);
 		

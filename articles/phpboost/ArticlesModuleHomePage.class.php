@@ -224,7 +224,7 @@ class ArticlesModuleHomePage implements ModuleHomePage
 			$current_page = ($request->get_getint('page', 1) > 0) ? $request->get_getint('page', 1) : 1;
 			$nbr_articles_per_page = ArticlesConfig::load()->get_number_articles_per_page();
 			
-			$pagination = new ArticlesPagination($current_page, $nbr_articles_cat, $nbr_articles_per_page);
+			$pagination = new ModulePagination($current_page, $nbr_articles_cat, $nbr_articles_per_page);
 			
 			$limit_page = $pagination->get_display_from();
 
@@ -242,7 +242,7 @@ class ArticlesModuleHomePage implements ModuleHomePage
 				    ), SelectQueryResult::FETCH_ASSOC
 			    );
 			
-			$pagination->set_url(ArticlesUrlBuilder::display_category($this->category->get_id(), $this->category->get_rewrited_name())->absolute() . $sort_field . '/' . $sort_mode . '/%d');
+			$pagination->set_url(ArticlesUrlBuilder::display_category($this->category->get_id(), $this->category->get_rewrited_name($sort_field, $sort_mode, '/%d')));
 
 			$this->build_form($field, $mode);
 

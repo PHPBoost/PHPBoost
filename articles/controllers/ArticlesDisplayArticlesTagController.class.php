@@ -117,8 +117,8 @@ class ArticlesDisplayArticlesTagController extends ModuleController
 		
 		$nbr_articles = $result->get_rows_count();
 		
-		$pagination = new ArticlesPagination($current_page, $nbr_articles, $nbr_articles_per_page);
-		$pagination->set_url(ArticlesUrlBuilder::display_tag($this->keyword->get_rewrited_name())->absolute() . '%d');
+		$pagination = new ModulePagination($current_page, $nbr_articles, $nbr_articles_per_page);
+		$pagination->set_url(ArticlesUrlBuilder::display_tag($this->keyword->get_rewrited_name(), '%d'));
 		
 		$notation = new Notation();
 		$notation->set_module_name('articles');
