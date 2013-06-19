@@ -86,40 +86,12 @@ class NewsDisplayCategoryController extends ModuleController
 				
 			$news = new News();
 			$news->set_properties($row);
-			$category = NewsService::get_categories_manager()->get_categories_cache()->get_category($news->get_id_cat());
-			$user = $news->get_author_user();
-			$user_group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
-			
-			$this->tpl->assign_block_vars('news', array(
+						
+			$this->tpl->assign_block_vars('news', array_merge($news->get_array_tpl_vars(), array(
 				'C_NEWS_ROW' => $new_row,
-				'C_EDIT' =>  NewsAuthorizationsService::check_authorizations($row['id_category'])->moderation() || NewsAuthorizationsService::check_authorizations($row['id_category'])->write() && $news->get_author_user()->get_id() == AppContext::get_current_user()->get_id(),
-				'C_DELETE' =>  NewsAuthorizationsService::check_authorizations($row['id_category'])->moderation(),
-				'C_PICTURE' => $news->has_picture(),
-				'C_USER_GROUP_COLOR' => !empty($user_group_color),
-			
 				'L_COMMENTS' => CommentsService::get_number_and_lang_comments('news', $row['id']),
-			
-				'ID' => $news->get_id(),
-				
 				'NUMBER_COM' => !empty($row['number_comments']) ? $row['number_comments'] : 0,
-				'NAME' => $news->get_name(),
-				'CONTENTS' => FormatingHelper::second_parse($news->get_contents()),
-				
-			
-				'PSEUDO' => $user->get_pseudo(),
-				'USER_LEVEL_CLASS' => UserService::get_level_class($user->get_level()),
-				'USER_GROUP_COLOR' => $user_group_color,
-			
-				'DATE' => $news->get_creation_date()->format(DATE_FORMAT_SHORT, TIMEZONE_AUTO),
-				
-				'U_LINK' => NewsUrlBuilder::display_news($category->get_id(), $category->get_rewrited_name(), $news->get_id(), $news->get_rewrited_name())->rel(),
-				'U_EDIT' => NewsUrlBuilder::edit_news($news->get_id())->rel(),
-				'U_DELETE' => NewsUrlBuilder::delete_news($news->get_id())->rel(),
-				'U_AUTHOR_PROFILE' => UserUrlBuilder::profile($news->get_author_user()->get_id())->absolute(),
-				'U_SYNDICATION' => SyndicationUrlBuilder::rss('news', $news->get_id_cat())->rel(),
-				'U_PICTURE' => $news->get_picture()->rel(),
-				'U_COMMENTS' => NewsUrlBuilder::display_comments_news($category->get_id(), $category->get_rewrited_name(), $news->get_id(), $news->get_rewrited_name())->rel()
-			));
+			)));
 		}
 		
 		$this->tpl->put_all(array(

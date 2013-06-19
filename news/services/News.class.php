@@ -296,5 +296,43 @@ class News
 	{
 		$this->end_date = null;
 	}
+	
+	public function get_array_tpl_vars()
+	{
+		$category = NewsService::get_categories_manager()->get_categories_cache()->get_category($this->get_id_cat());
+		$user = $this->get_author_user();
+		$user_group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
+		
+		return array(
+			'C_EDIT' =>  NewsAuthorizationsService::check_authorizations($this->get_id_cat())->moderation() || NewsAuthorizationsService::check_authorizations($this->get_id_cat())->write() && $news->get_author_user()->get_id() == AppContext::get_current_user()->get_id(),
+			'C_DELETE' =>  NewsAuthorizationsService::check_authorizations($this->get_id_cat())->moderation(),
+			'C_PICTURE' => $this->has_picture(),
+			'C_USER_GROUP_COLOR' => !empty($user_group_color),
+		
+			//News
+			'ID' => $this->get_id(),
+			'NAME' => $this->get_name(),
+			'CONTENTS' => FormatingHelper::second_parse($this->get_contents()),
+			'DATE' => $this->get_creation_date()->format(DATE_FORMAT_SHORT, TIMEZONE_AUTO),
+			'PSEUDO' => $user->get_pseudo(),
+			'USER_LEVEL_CLASS' => UserService::get_level_class($user->get_level()),
+			'USER_GROUP_COLOR' => $user_group_color,
+		
+			//Category
+			'CATEGORY_ID' => $category->get_id(),
+			'CATEGORY_NAME' => $category->get_name(),
+			'CATEGORY_DESCRIPTION' => $category->get_id() > 0 ? $category->get_description() : '',
+			'CATEGORY_IMAGE' => $category->get_id() > 0 ? $category->get_image() : '',
+		
+			'U_SYNDICATION' => SyndicationUrlBuilder::rss('news', $this->get_id_cat())->rel(),
+			'U_AUTHOR_PROFILE' => UserUrlBuilder::profile($this->get_author_user()->get_id())->absolute(),
+			'U_LINK' => NewsUrlBuilder::display_news($category->get_id(), $category->get_rewrited_name(), $this->get_id(), $this->get_rewrited_name())->rel(),
+			'U_CATEGORY' => NewsUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name())->rel(),
+			'U_EDIT' => NewsUrlBuilder::edit_news($this->get_id())->rel(),
+			'U_DELETE' => NewsUrlBuilder::delete_news($this->get_id())->rel(),
+			'U_PICTURE' => $this->get_picture()->rel(),
+			'U_COMMENTS' => NewsUrlBuilder::display_comments_news($category->get_id(), $category->get_rewrited_name(), $this->get_id(), $this->get_rewrited_name())->rel()
+		);
+	}
 }
 ?>

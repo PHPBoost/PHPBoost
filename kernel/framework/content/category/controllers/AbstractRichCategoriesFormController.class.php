@@ -41,7 +41,7 @@ abstract class AbstractRichCategoriesFormController extends AbstractCategoriesFo
 			$(\'preview_picture\').src = response.responseJSON.url;
 		}}');
 		$image_preview_request->add_event_callback(AjaxRequest::ON_CREATE, 'function(response){ $(\'preview_picture\').src = PATH_TO_ROOT + \'/templates/'. get_utheme() .'/images/loading_mini.gif\';}');
-		$image_preview_request->add_param('image', 'HTMLForms.getField(\'picture\').getValue()');
+		$image_preview_request->add_param('image', 'HTMLForms.getField(\'image\').getValue()');
 		
 		$fieldset->add_field(new FormFieldTextEditor('image', $this->lang['category.form.image'], $this->get_category()->get_image()->relative(), array(
 			'events' => array('change' => $image_preview_request->render())

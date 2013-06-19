@@ -133,7 +133,7 @@ class NewsFormController extends ModuleController
 		{
 			$publication_fieldset = new FormFieldsetHTML('publication', $this->lang['news.form.approbation']);
 			$form->add_fieldset($publication_fieldset);
-		
+
 			$publication_fieldset->add_field(new FormFieldDateTime('creation_date', $this->lang['news.form.date.creation'], $this->get_news()->get_creation_date()));
 			
 			$publication_fieldset->add_field(new FormFieldSimpleSelectChoice('approbation_type', $this->lang['news.form.approbation'], $this->get_news()->get_approbation_type(),
@@ -316,7 +316,7 @@ class NewsFormController extends ModuleController
 				$contribution->set_id_in_module($id_news);
 				$contribution->set_description(stripslashes($news->get_short_contents()));
 				$contribution->set_entitled(StringVars::replace_vars($this->lang['news.form.contribution.entitled'], array('name' => $news->get_name())));
-				$contribution->set_fixing_url(NewsUrlBuilder::edit_news($id_news));
+				$contribution->set_fixing_url(NewsUrlBuilder::edit_news($id_news)->relative());
 				$contribution->set_poster_id(AppContext::get_current_user()->get_attribute('user_id'));
 				$contribution->set_module('news');
 				$contribution->set_auth(
@@ -339,6 +339,7 @@ class NewsFormController extends ModuleController
 				ContributionService::save_contribution($news_contribution);
 			}
 		}
+		$news->set_id($id_news);
 	}
 	
 	private function put_keywords($id_news)

@@ -77,19 +77,19 @@
 				<ul class="module_top_options">
 				# ENDIF #
 					<li>
-						<a class="news_comments" href="{news.U_COM}">1</a>
+						<a class="news_comments" href="{news.U_COMMENTS}">1</a>
 					</li>
 					<li>
 						<a><span class="options"></span><span class="caret"></span></a>
 						<ul>
 							# IF news.C_EDIT #
 							<li>
-								<a href="{PATH_TO_ROOT}/news/management.php?edit={news.ID}" title="{L_EDIT}" class="img_link">Editer</a>
+								<a href="{news.U_EDIT}" title="{L_EDIT}" class="img_link">Editer</a>
 							</li>
 							# ENDIF #
 							# IF news.C_DELETE #
 							<li>
-								<a href="{PATH_TO_ROOT}/news/management.php?del={news.ID}&amp;token={TOKEN}" title="{L_DELETE}" onclick="javascript:return Confirm();">Supprimer</a>
+								<a href="{news.U_DELETE}" title="{L_DELETE}" onclick="javascript:return Confirm();">Supprimer</a>
 							</li>
 							# ENDIF #
 						</ul>
@@ -108,7 +108,7 @@
 					<a class="small_link {news.USER_LEVEL_CLASS}" href="{news.U_AUTHOR_PROFILE}" style="font-size: 12px;" # IF news.C_USER_GROUP_COLOR # style="color:{news.USER_GROUP_COLOR}" # ENDIF #>{news.PSEUDO}</a>, 
 					# ENDIF # 
 					le {news.DATE}, 
-					dans la catégorie <a href="{news.U_CAT}">Test</a>
+					dans la catégorie <a href="{news.U_CATEGORY}">{news.CATEGORY_NAME}</a>
 				</div>
         		
 				<div class="spacer"></div>
