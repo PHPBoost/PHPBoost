@@ -56,6 +56,11 @@ class ModulePagination
 		return $this->number_items_per_page;
 	}
 	
+	public function current_page_is_empty()
+	{
+		return $this->current_page > $this->pagination->get_number_pages();
+	}
+	
 	public function get_display_from()
 	{
 		$current_page = $this->current_page > 0 ? $this->current_page : 1;
