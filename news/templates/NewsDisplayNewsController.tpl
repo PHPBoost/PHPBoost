@@ -42,7 +42,7 @@ function Confirm()
 		<div class="news_author_container">
 			Par # IF PSEUDO #<a class="small_link {USER_LEVEL_CLASS}" href="{U_AUTHOR_PROFILE}" # IF C_USER_GROUP_COLOR # style="color:{USER_GROUP_COLOR}" # ENDIF #>{PSEUDO}</a>, # ENDIF # 
 			le {DATE},
-			dans la catégorie <a href="{U_CAT}">Test</a>
+			dans la catégorie <a href="{U_CATEGORY}">{CATEGORY_NAME}</a>
 		</div>
 		
 		<div class="spacer"></div>

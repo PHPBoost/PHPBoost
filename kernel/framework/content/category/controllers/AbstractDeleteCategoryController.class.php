@@ -138,8 +138,8 @@ abstract class AbstractDeleteCategoryController extends AdminModuleController
 	private function get_category_items_exists(Category $category)
 	{
 		return PersistenceContext::get_querier()->row_exists(
-		$this->categories_items_parameters->get_table_name_contains_items(), 
-		'WHERE '.$this->categories_items_parameters->get_field_name_id_category().'=:id_category', 
+		$this->get_categories_manager()->get_categories_items_parameters()->get_table_name_contains_items(), 
+		'WHERE '.$this->get_categories_manager()->get_categories_items_parameters()->get_field_name_id_category().'=:id_category', 
 		array('id_category' => $category->get_id()
 		)); 
 	}

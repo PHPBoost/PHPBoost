@@ -100,7 +100,7 @@ class NewsUrlBuilder
 	
 	public static function delete_news($id)
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/' . $id . '/delete/');
+		return DispatchManager::get_url(self::$dispatcher, '/' . $id . '/delete/?token=' . AppContext::get_session()->get_token());
 	}
 	
 	public static function home()
