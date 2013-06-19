@@ -124,8 +124,8 @@ class AdminManageArticlesController extends AdminModuleController
 		
 		if($nbr_articles > 0)
 		{	
-			$pagination = new ArticlesPagination($current_page, $nbr_articles, $nbr_articles_per_page);
-			$pagination->set_url(ArticlesUrlBuilder::manage_articles()->absolute() . $sort_field . '/' . $sort_mode . '/%d');
+			$pagination = new ModulePagination($current_page, $nbr_articles, $nbr_articles_per_page);
+			$pagination->set_url(ArticlesUrlBuilder::manage_articles($sort_field, $sort_mode, '/%d'));
 			
 			$this->view->put_all(array(
 				'C_ARTICLES_FILTERS' => true,

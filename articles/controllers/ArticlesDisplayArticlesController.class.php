@@ -124,7 +124,7 @@ class ArticlesDisplayArticlesController extends ModuleController
 		
 		$this->build_view_keywords($this->article->get_id());
 		
-		$pagination = new ArticlesPagination($current_page, $nbr_pages, 1);
+		$pagination = new ModulePagination($current_page, $nbr_pages, 1);
 		$pagination->set_url(ArticlesUrlBuilder::display_article($this->category->get_id(), $this->category->get_rewrited_name(), $this->article->get_id(), $this->article->get_rewrited_title())->absolute() . '%d');
 		
 		$notation = new Notation();

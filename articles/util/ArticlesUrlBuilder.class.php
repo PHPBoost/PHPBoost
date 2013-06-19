@@ -56,14 +56,18 @@ class ArticlesUrlBuilder
 		return DispatchManager::get_url(self::$dispatcher, '/admin/categories/'. $id .'/delete/');
 	}
 	
-	public static function display_category($id, $rewrited_name)
+	public static function display_category($id, $rewrited_name, $sort_field = null, $sort_mode = null, $page = null)
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/' . $id . '-' . $rewrited_name . '/');
+		$page = $page !== null ? $page . '/': '';
+		$sort = $sort_field !== null ? $sort_field . '/' . $sort_mode . '/' : '';
+		return DispatchManager::get_url(self::$dispatcher, '/' . $id . '-' . $rewrited_name . '/' . $sort . $page);
 	}
 	
-	public static function manage_articles()
+	public static function manage_articles($sort_field = null, $sort_mode = null, $page = null)
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/admin/articles/');
+		$page = $page !== null ? $page . '/': '';
+		$sort = $sort_field !== null ? $sort_field . '/' . $sort_mode . '/' : '';
+		return DispatchManager::get_url(self::$dispatcher, '/admin/articles/' . $sort . $page);
 	}
 	
 	public static function print_article($id_article, $rewrited_title)
@@ -101,14 +105,17 @@ class ArticlesUrlBuilder
 		return DispatchManager::get_url(self::$dispatcher, '/' . $id_category . '-' . $rewrited_name_category . '/' . $id_article . '-' . $rewrited_title . '/#comments_list');
 	}
 	
-	public static function display_pending_articles()
+	public static function display_pending_articles($sort_field = null, $sort_mode = null, $page = null)
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/pending/');
+		$page = $page !== null ? $page . '/': '';
+		$sort = $sort_field !== null ? $sort_field . '/' . $sort_mode . '/' : '';
+		return DispatchManager::get_url(self::$dispatcher, '/pending/' . $sort . $page);
 	}
 	
-	public static function display_tag($rewrited_name)
+	public static function display_tag($rewrited_name, $page = null)
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/tag/'. $rewrited_name . '/');
+		$page = $page !== null ? $page . '/' : '';
+		return DispatchManager::get_url(self::$dispatcher, '/tag/'. $rewrited_name . '/' . $page);
 	}
 	
 	public static function home()
