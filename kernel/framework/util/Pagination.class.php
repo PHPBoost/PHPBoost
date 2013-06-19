@@ -78,6 +78,11 @@ class Pagination
 		$this->generate_last_page_pagination();
 		return $this->tpl;
 	}
+	
+	public function get_number_pages()
+	{
+		return $this->nb_pages;
+	}
 
 	private function generate_first_page_pagination()
 	{
