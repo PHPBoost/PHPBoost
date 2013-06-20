@@ -148,8 +148,8 @@ class NewsDisplayCategoryController extends ModuleController
 		
 		if ($pagination->current_page_is_empty())
         {
-                $error_controller = PHPBoostErrors::unexisting_page();
-                DispatchManager::redirect($error_controller);
+			$error_controller = PHPBoostErrors::unexisting_page();
+			DispatchManager::redirect($error_controller);
         }
         
 		return $pagination;

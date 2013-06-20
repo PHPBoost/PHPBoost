@@ -93,7 +93,7 @@ class OnlineModuleHomePage implements ModuleHomePage
 		$this->view->add_lang($this->lang);
 	}
 	
-	private function get_pagination($nbr_messages)
+	private function get_pagination()
 	{
 		$number_users_online = PersistenceContext::get_querier()->count(
 			DB_TABLE_SESSIONS, 

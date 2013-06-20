@@ -57,7 +57,7 @@ class CalendarDeleteController extends ModuleController
 		AppContext::get_response()->redirect(CalendarUrlBuilder::home($array_time[0] . '/'. $array_time[1]));
 	}
 	
-	private function get_event()
+	private function get_event(HTTPRequestCustom $request)
 	{
 		$id = $request->get_getint('id', 0);
 		
