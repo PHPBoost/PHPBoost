@@ -283,7 +283,7 @@ class CalendarFormController extends ModuleController
 			if (count($corresponding_contributions) > 0)
 			{
 				$event_contribution = $corresponding_contributions[0];
-				$event_contribution->set_status(CalendarEvent::EVENT_STATUS_PROCESSED);
+				$event_contribution->set_status(Event::EVENT_STATUS_PROCESSED);
 
 				ContributionService::save_contribution($event_contribution);
 			}
