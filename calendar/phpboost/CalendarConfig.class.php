@@ -30,25 +30,66 @@
  */
 class CalendarConfig extends AbstractConfigData
 {
-	const MEMBERS_BIRTHDAY_ACTIVATED = 'members_birthday_activated';
+	const ITEMS_NUMBER_PER_PAGE = 'items_number_per_page';
+	const COMMENTS_ENABLED = 'comments_enabled';
+	const LOCATION_ENABLED = 'location_enabled';
+	const MEMBERS_BIRTHDAY_ENABLED = 'members_birthday_enabled';
 	
 	const AUTHORIZATIONS = 'authorizations';
 	
-	 /**
-	 * @method Check if the members birthday are activated
-	 */
-	public function get_members_birthday_activated()
+	public function get_items_number_per_page()
 	{
-		return $this->get_members_birthday_activated(self::MEMBERS_BIRTHDAY_ACTIVATED);
+		return $this->get_property(self::ITEMS_NUMBER_PER_PAGE);
 	}
 	
-	 /**
-	 * @method Set the activation of the members birthday
-	 * @params bool $value true/false
-	 */
-	public function set_members_birthday_activated($value)
+	public function set_items_number_per_page($value)
 	{
-		$this->set_property(self::members_birthday_activated, $value);
+		$this->set_property(self::ITEMS_NUMBER_PER_PAGE, $value);
+	}
+	
+	public function enable_comments()
+	{
+		$this->set_property(self::COMMENTS_ENABLED, true);
+	}
+	
+	public function disable_comments()
+	{
+		$this->set_property(self::COMMENTS_ENABLED, false);
+	}
+	
+	public function is_comment_enabled()
+	{
+		return $this->get_property(self::COMMENTS_ENABLED);
+	}
+	
+	public function enable_location()
+	{
+		$this->set_property(self::LOCATION_ENABLED, true);
+	}
+	
+	public function disable_location()
+	{
+		$this->set_property(self::LOCATION_ENABLED, false);
+	}
+	
+	public function is_location_enabled()
+	{
+		return $this->get_property(self::LOCATION_ENABLED);
+	}
+	
+	public function enable_members_birthday()
+	{
+		$this->set_property(self::MEMBERS_BIRTHDAY_ENABLED, true);
+	}
+	
+	public function disable_members_birthday()
+	{
+		$this->set_property(self::MEMBERS_BIRTHDAY_ENABLED, false);
+	}
+	
+	public function is_members_birthday_enabled()
+	{
+		return $this->get_property(self::MEMBERS_BIRTHDAY_ENABLED);
 	}
 	
 	 /**
@@ -74,7 +115,10 @@ class CalendarConfig extends AbstractConfigData
 	public function get_default_values()
 	{
 		return array(
-			self::MEMBERS_BIRTHDAY_ACTIVATED => false,
+			self::ITEMS_NUMBER_PER_PAGE => 10,
+			self::COMMENTS_ENABLED => true,
+			self::LOCATION_ENABLED => true,
+			self::MEMBERS_BIRTHDAY_ENABLED => false,
 			self::AUTHORIZATIONS => array('r1' => 15, 'r0' => 5, 'r-1' => 1)
 		);
 	}

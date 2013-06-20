@@ -27,6 +27,8 @@
 
 class CalendarCommentsTopic extends CommentsTopic
 {
+	private $event;
+	
 	public function __construct()
 	{
 		parent::__construct('calendar');
@@ -35,12 +37,22 @@ class CalendarCommentsTopic extends CommentsTopic
 	public function get_authorizations()
 	{
 		$authorizations = new CommentsAuthorizations();
+		$authorizations->set_authorized_access_module(CalendarAuthorizationsService::check_authorizations($this->get_event()->get_id_cat())->read());
 		return $authorizations;
 	}
 	
 	public function is_display()
 	{
 		return true;
+	}
+
+	private function get_event()
+	{
+		if ($this->event === null)
+		{
+			$this->event = CalendarService::get_event('WHERE id=:id', array('id' => $this->get_id_in_module()));
+		}
+		return $this->event;
 	}
 }
 ?>
