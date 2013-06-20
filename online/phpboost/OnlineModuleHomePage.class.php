@@ -29,7 +29,7 @@ class OnlineModuleHomePage implements ModuleHomePage
 {
 	private $lang;
 	private $view;
-		
+	
 	public static function get_view()
 	{
 		$object = new self();
@@ -40,19 +40,23 @@ class OnlineModuleHomePage implements ModuleHomePage
 	{
 		$this->init();
 		
-		$pagination = new OnlineUsersListPagination(AppContext::get_request()->get_int('page', 1));
+		$pagination = $this->get_pagination();
 		
 		$this->view->put_all(array(
 			'L_LOGIN' => LangLoader::get_message('pseudo', 'main'),
-			'PAGINATION' => '<strong>' . LangLoader::get_message('page', 'main') . ' :</strong> ' . $pagination->display()->render()
+			'PAGINATION' => '<strong>' . LangLoader::get_message('page', 'main') . ' :</strong> ' . $pagination->display()
 		));
 		
-		$condition = 'WHERE s.session_time > :time ORDER BY '. OnlineConfig::load()->get_display_order_request() .' LIMIT '. $pagination->get_number_users_per_page() .' OFFSET '. $pagination->get_display_from();
-		$parameters = array(
-			'time' => (time() - SessionsConfig::load()->get_active_session_duration())
+		$users = OnlineService::get_online_users('WHERE s.session_time > :time
+		ORDER BY '. OnlineConfig::load()->get_display_order_request() .'
+		LIMIT :number_items_per_page OFFSET :display_from',
+			array(
+				'number_items_per_page' => (int)$pagination->get_number_items_per_page(),
+				'display_from' => $pagination->get_display_from(),
+				'time' => (time() - SessionsConfig::load()->get_active_session_duration())
+			)
 		);
 		
-		$users = OnlineService::get_online_users($condition, $parameters);
 		foreach ($users as $user)
 		{
 			if ($user->get_id() == AppContext::get_current_user()->get_id())
@@ -63,7 +67,7 @@ class OnlineModuleHomePage implements ModuleHomePage
 			}
 			
 			$group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
-
+			
 			if ($user->get_level() != User::VISITOR_LEVEL) 
 			{
 				$this->view->assign_block_vars('users', array(
@@ -78,7 +82,7 @@ class OnlineModuleHomePage implements ModuleHomePage
 				));
 			}
 		}
-
+		
 		return $this->view;
 	}
 	
@@ -87,6 +91,27 @@ class OnlineModuleHomePage implements ModuleHomePage
 		$this->lang = LangLoader::get('online_common', 'online');
 		$this->view = new FileTemplate('online/OnlineHomeController.tpl');
 		$this->view->add_lang($this->lang);
+	}
+	
+	private function get_pagination($nbr_messages)
+	{
+		$number_users_online = PersistenceContext::get_querier()->count(
+			DB_TABLE_SESSIONS, 
+			'WHERE level <> -1 AND session_time > :time', 
+			array(
+				'time' => time() - SessionsConfig::load()->get_active_session_duration()
+		));
+		
+		$pagination = new ModulePagination(AppContext::get_request()->get_getint('page', 1), $number_users_online, OnlineConfig::load()->get_nbr_members_per_page());
+		$pagination->set_url(OnlineUrlBuilder::home('%d'));
+		
+		if ($pagination->current_page_is_empty())
+		{
+			$error_controller = PHPBoostErrors::unexisting_page();
+			DispatchManager::redirect($error_controller);
+		}
+		
+		return $pagination;
 	}
 }
 ?>
