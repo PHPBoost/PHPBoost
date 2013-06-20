@@ -29,7 +29,7 @@ class BugtrackerDeleteFilterController extends ModuleController
 {
 	public function execute(HTTPRequestCustom $request)
 	{
-		AppContext::get_session()->csrf_post_protect();
+		AppContext::get_session()->csrf_get_protect();
 		
 		$id = $request->get_int('id', 0);
 		$page = $request->get_int('page', 1);
