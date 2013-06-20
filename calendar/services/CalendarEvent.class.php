@@ -37,6 +37,8 @@ class CalendarEvent
 	private $start_date;
 	private $end_date;
 	
+	private $approved;
+	
 	private $author_user;
 	
 	private $registration_authorized;
@@ -122,6 +124,21 @@ class CalendarEvent
 		return $this->end_date;
 	}
 	
+	public function approve()
+	{
+		$this->approved = true;
+	}
+	
+	public function unapprove()
+	{
+		$this->approved = false;
+	}
+	
+	public function is_approved()
+	{
+		return $this->approved;
+	}
+	
 	public function set_author_user(User $author)
 	{
 		$this->author_user = $author;
@@ -192,6 +209,7 @@ class CalendarEvent
 			'location' => $this->get_location(),
 			'start_date' => $this->get_start_date() !== null ? $this->get_start_date()->get_timestamp() : '',
 			'end_date' => $this->get_end_date() !== null ? $this->get_end_date()->get_timestamp() : '',
+			'approved' => $this->is_approved() ? 1 : 0,
 			'author_id' => $this->get_author_user()->get_id(),
 			'registration_authorized' => $this->get_registration_authorized(),
 			'max_registred_members' => $this->get_max_registred_members(),
@@ -209,6 +227,10 @@ class CalendarEvent
 		$this->set_location($properties['location']);
 		$this->set_start_date(!empty($properties['start_date']) ? new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, $properties['start_date']) : new Date(DATE_NOW, TIMEZONE_AUTO));
 		$this->set_end_date(!empty($properties['end_date']) ? new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, $properties['end_date']) : new Date(DATE_NOW, TIMEZONE_AUTO));
+		if ($properties['approved'])
+			$this->approve();
+		else
+			$this->unapprove();
 		$this->set_registration_authorized($properties['registration_authorized']);
 		$this->set_max_registred_members($properties['max_registred_members']);
 		$this->set_repeat_number($properties['repeat_number']);
@@ -231,6 +253,10 @@ class CalendarEvent
 		$this->set_max_registred_members(0);
 		$this->set_repeat_number(0);
 		$this->set_repeat_type('never');
+		if (CalendarAuthorizationsService::check_authorizations()->write())
+			$this->approve();
+		else
+			$this->unapprove();
 	}
 	
 	public function clean_start_and_end_date()

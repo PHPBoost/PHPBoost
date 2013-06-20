@@ -52,6 +52,7 @@ class CalendarSetup extends DefaultModuleSetup
 		PersistenceContext::get_dbms_utils()->add_column(self::$calendar_table, 'end_date', array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0));
 		PersistenceContext::get_dbms_utils()->add_column(self::$calendar_table, 'category_id', array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0));
 		PersistenceContext::get_dbms_utils()->add_column(self::$calendar_table, 'registration_authorized', array('type' => 'boolean', 'notnull' => 1, 'notnull' => 1, 'default' => 0));
+		PersistenceContext::get_dbms_utils()->add_column(self::$calendar_table, 'approved', array('type' => 'boolean', 'notnull' => 1, 'default' => 0));
 		PersistenceContext::get_dbms_utils()->add_column(self::$calendar_table, 'repeat', array('type' => 'string', 'length' => 25, 'notnull' => 1, 'default' => "'none'"));
 		PersistenceContext::get_dbms_utils()->add_column(self::$calendar_table, 'repeat_number', array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0));
 		$this->create_calendar_cats_table();
@@ -90,6 +91,7 @@ class CalendarSetup extends DefaultModuleSetup
 			'author_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'registration_authorized' => array('type' => 'boolean', 'notnull' => 1, 'notnull' => 1, 'default' => 0),
 			'max_registred_members' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => -1),
+			'approved' => array('type' => 'boolean', 'notnull' => 1, 'default' => 0),
 			'repeat_number' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'repeat_type' => array('type' => 'string', 'length' => 25, 'notnull' => 1, 'default' => "'never'"),
 		);

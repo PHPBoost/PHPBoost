@@ -6,13 +6,27 @@
 			return confirm("{@calendar.actions.confirm.del_event}");
 		}
 		
-		var PreviousMonth = new Ajax.Updater('calendar_container', ${escapejs(LINK_HOME)}, {
-			parameters: { year: ${escapejs(PREVIOUS_YEAR)}; month: ${escapejs(PREVIOUS_MONTH)}; }
-		});
+		window.PreviousMonth = function()
+		{
+			new Ajax.Updater(
+				'mini_calendar',
+				${escapejs(LINK_PREVIOUS_MONTH)},
+				{
+					evalScripts: true
+				}
+			);
+		}
 		
-		var NextMonth = new Ajax.Updater('calendar_container', ${escapejs(LINK_HOME)}, {
-			parameters: { year: ${escapejs(NEXT_YEAR)}; month: ${escapejs(NEXT_MONTH)}; }
-		});
+		window.NextMonth = function()
+		{
+			new Ajax.Updater(
+				'mini_calendar',
+				${escapejs(LINK_NEXT_MONTH)},
+				{
+					evalScripts: true
+				}
+			);
+		}
 		-->
 		</script>
 		
@@ -29,7 +43,6 @@
 				# INCLUDE FORM #
 				</div>
 				
-				<span id="act"></span>
 				<div class="calendar_container">
 					<div class="calendar_top_l">
 						<a href="{LINK_PREVIOUS}" title="">&laquo;</a>
@@ -44,15 +57,23 @@
 					<div class="calendar_content">
 						<table class="module_table calendar_table">
 							<tr>
-								# START day #
-								{day.L_DAY}
-								# END day #
+								<td></td>
+								<td><span class="text_month">{L_MONDAY}</span></td>
+								<td><span class="text_month">{L_TUESDAY}</span></td>
+								<td><span class="text_month">{L_WEDNESDAY}</span></td>
+								<td><span class="text_month">{L_THURSDAY}</span></td>
+								<td><span class="text_month">{L_FRIDAY}</span></td>
+								<td><span class="text_month">{L_SATURDAY}</span></td>
+								<td><span class="text_month">{L_SUNDAY}</span></td>
 							</tr>
 							<tr>
-								# START calendar #
-								{calendar.DAY}
-								{calendar.TR}
-								# END calendar #
+								# START day #
+								<td class="c_row {day.CLASS}">{day.CONTENT}</td>
+								# IF day.CHANGE_LINE #
+							</tr>
+							<tr>
+								# ENDIF #
+								# END day #
 							</tr>
 							<tr>
 								<td></td>
@@ -69,37 +90,59 @@
 		</div>
 		<br /><br />
 		
-		<div class="event_container">
+		<div id="events" class="event_container">
 			<div class="event_top_title">
 				<strong>{LINK_PREVIOUS_EVENT} &nbsp {@calendar.titles.events} &nbsp {LINK_NEXT_EVENT}</strong>
-				<div class="module_actions">{ADD}</div>
+				<div class="module_actions">
+				# IF C_ADD #
+				<a href="{U_ADD}" title="{@calendar.titles.add_event}" class="img_link">
+					<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/add.png" class="valign_middle" alt="{@calendar.titles.add_event}" />
+				</a>
+				# ENDIF #
+				</div>
 			</div>
 			<div class="event_date">{DATE2}</div>
 			
-			# IF C_ACTION #
-				# START action #
+			# IF C_EVENT #
+				# START event #
 				
 				<div class="module_position">
 					<div class="module_top_l"></div>
 					<div class="module_top_r"></div>
 					<div class="module_top">
-						<span class="text_strong float_left">{action.TITLE}</span>
-						<span class="float_right">{action.COM}{action.EDIT}{action.DEL}</span>
+						<div class="module_top_title">
+							{event.TITLE}
+						</div>
+						
+						<div class="module_top_com">
+						# IF C_COMMENTS_ENABLED #<a href="{event.U_COMMENTS}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/com_mini.png" alt="" class="valign_middle" /> {event.L_COMMENTS}</a># ENDIF #
+						# IF event.C_EDIT #
+						<a href="{event.U_EDIT}" title="{L_EDIT}" class="img_link">
+							<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="{L_EDIT}" />
+						</a>
+						# ENDIF #
+						# IF event.C_DELETE #
+						<a href="{event.U_DELETE}" title="{L_DELETE}" onclick="javascript:return Confirm();">
+							<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" />
+						</a>
+						# ENDIF #
 					</div>
+					<div class="spacer"></div>
+				</div>
 					<div class="module_contents">
-						{action.CONTENTS}
+						{event.CONTENTS}
 						<br /><br /><br />
 					</div>
 					<div class="module_bottom_l"></div>
 					<div class="module_bottom_r"></div>
 					<div class="module_bottom">
 						<div class="event_display_author">
-							{@calendar.labels.created_by} : # IF action.AUTHOR #<a href="{action.LINK_AUTHOR_PROFILE}" class="small_link {action.AUTHOR_LEVEL_CLASS}" # IF action.C_AUTHOR_GROUP_COLOR # style="color:{action.AUTHOR_GROUP_COLOR}" # ENDIF #>{action.AUTHOR}</a># ELSE #{L_GUEST}# ENDIF #
+							{@calendar.labels.created_by} : # IF event.AUTHOR #<a href="{event.U_AUTHOR_PROFILE}" class="small_link {event.AUTHOR_LEVEL_CLASS}" # IF event.C_AUTHOR_GROUP_COLOR # style="color:{event.AUTHOR_GROUP_COLOR}" # ENDIF #>{event.AUTHOR}</a># ELSE #{L_GUEST}# ENDIF #
 						</div>
 						<div class="event_display_dates">
-							{@calendar.labels.start_date} : <span class="float_right">{action.START_DATE}</span>
+							{@calendar.labels.start_date} : <span class="float_right">{event.START_DATE}</span>
 							<br />
-							{@calendar.labels.end_date} : <span class="float_right">{action.END_DATE}</span>
+							{@calendar.labels.end_date} : <span class="float_right">{event.END_DATE}</span>
 						</div>
 					</div>
 				</div>
@@ -107,17 +150,17 @@
 				
 				{COMMENTS}
 				
-				# END action #
+				# END event #
 			# ELSE #
 			
-				# START action #
+				# START event #
 				<div class="module_position">
 					<div class="module_contents">
-						{action.CONTENTS}
+						{event.CONTENTS}
 						<br /><br /><br />
 					</div>
 				</div>
-				# END action #
+				# END event #
 				
 			# ENDIF #
 		</div>

@@ -2,18 +2,29 @@
 	padding:6px;
 	border:1px solid #BEBEBE;
 	border-top:none;
+	-webkit-border-bottom-left-radius: 10px;
+	-moz-border-radius-bottomleft: 10px;
+	border-bottom-left-radius: 10px;
+	border-left:1px solid #BEBEBE;
+	-webkit-border-bottom-right-radius: 10px;
+	-moz-border-radius-bottomright: 10px;
+	border-bottom-right-radius: 10px;
+	border-right:1px solid #BEBEBE;
+}
+
+.calendar_top_l, .calendar_top_r{
+	height:30px;
+	padding-top:7px;
+	background: #336397;
+	border-top:1px solid #BEBEBE;
 }
 
 .calendar_top_l{
 	float:left;
-	height:30px;
 	width:11px;
-	padding-top:7px;
-	background: #336397;
 	-webkit-border-top-left-radius: 10px;
 	-moz-border-radius-topleft: 10px;
 	border-top-left-radius: 10px;
-	border-top:1px solid #BEBEBE;
 	border-left:1px solid #BEBEBE;
 	padding-left: 28px;
 }
@@ -26,14 +37,10 @@
 
 .calendar_top_r {
 	float:right;
-	height:30px;
 	width:39px;
-	padding-top:7px;
-	background: #336397;
 	-webkit-border-top-right-radius: 10px;
 	-moz-border-radius-topright: 10px;
 	border-top-right-radius: 10px;
-	border-top:1px solid #BEBEBE;
 	border-right:1px solid #BEBEBE;
 }
 
@@ -114,6 +121,7 @@
 .calendar_week{
 	color:#BEBEBE;
 	padding:2px;
+	padding-right:5px;
 }
 
 div.event_top_title{
@@ -140,6 +148,18 @@ div.event_date{
 	padding-top:7px;
 }
 
+.mini_calendar_top_l {
+	float:left;
+	padding-left:10px;
+	padding-top:5px;
+}
+
+.mini_calendar_top_r {
+	float:right;
+	padding-right:10px;
+	padding-top:5px;
+}
+
 .mini_calendar_table{
 	background:none;
 	border:none;
@@ -149,13 +169,15 @@ div.event_date{
 	height:30px;
 }
 
+.mini_calendar_table td.c_row_last{
+	border-top:1px solid #DDDDDD;
+	height: 1px;
+	padding:none;
+}
+
 .mini_calendar_content{
 	padding:6px;
 	border-top:none;
-}
-
-.width_auto {
-	width: auto;
 }
 
 .float_left{

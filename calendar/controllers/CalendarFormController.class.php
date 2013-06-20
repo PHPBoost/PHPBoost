@@ -112,7 +112,8 @@ class CalendarFormController extends ModuleController
 			array(new FormFieldConstraintRegex('`^[0-9]+$`i'))
 		));
 		
-		$fieldset->add_field(new FormFieldTextEditor('location', $this->lang['calendar.labels.location'], $this->get_event()->get_location()));
+		if (CalendarConfig::load()->is_location_enabled())
+			$fieldset->add_field(new FormFieldTextEditor('location', $this->lang['calendar.labels.location'], $this->get_event()->get_location()));
 		
 		$fieldset->add_field(new FormFieldCheckbox('registration_authorized', $this->lang['calendar.labels.registration_authorized'], $this->get_event()->get_registration_authorized(),array(
 			'events' => array('click' => '
@@ -127,7 +128,8 @@ class CalendarFormController extends ModuleController
 			'class' => 'text', 'description' => $this->lang['calendar.labels.max_registred_members.explain'], 'maxlength' => 3, 'size' => 3, 'required' => false, 'hidden' => !$this->get_event()->is_registration_authorized()),
 			array(new FormFieldConstraintRegex('`^[0-9]+$`i'))
 		));
-
+		
+		$this->build_approval_field($fieldset);
 		$this->build_contribution_fieldset($form);
 		
 		$this->submit_button = new FormButtonDefaultSubmit();
@@ -135,6 +137,14 @@ class CalendarFormController extends ModuleController
 		$form->add_button(new FormButtonReset());
 		
 		$this->form = $form;
+	}
+	
+	private function build_approval_field($fieldset)
+	{
+		if (!$this->is_contributor_member())
+		{
+			$fieldset->add_field(new FormFieldCheckbox('approved', $this->lang['calendar.labels.approved'], $this->get_event()->is_approved()));
+		}
 	}
 	
 	private function build_contribution_fieldset($form)
@@ -209,6 +219,10 @@ class CalendarFormController extends ModuleController
 		
 		$event->set_start_date($this->form->get_value('start_date'));
 		$event->set_end_date($this->form->get_value('end_date'));
+		if (!$this->is_contributor_member() && $this->form->get_value('approved'))
+			$event->approve();
+		else
+			$event->unapprove();
 		
 		$event->set_repeat_type($this->form->get_value('repeat_type')->get_raw_value());
 		
@@ -217,7 +231,8 @@ class CalendarFormController extends ModuleController
 			$event->set_repeat_number($this->form->get_value('repeat_number'));
 		}
 		
-		$event->set_location($this->form->get_value('location'));
+		if (CalendarConfig::load()->is_location_enabled())
+			$event->set_location($this->form->get_value('location'));
 		
 		$event->set_registration_authorized($this->form->get_value('registration_authorized') ? true : 0);
 		
@@ -273,6 +288,7 @@ class CalendarFormController extends ModuleController
 				ContributionService::save_contribution($event_contribution);
 			}
 		}
+		$event->set_id($id_event);
 	}
 	
 	private function redirect()
