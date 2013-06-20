@@ -38,15 +38,13 @@ class BugtrackerStatsListController extends ModuleController
 		
 		$this->check_authorizations();
 		
-		$this->build_view();
+		$this->build_view($request);
 		
 		return $this->build_response($this->view);
 	}
 	
-	private function build_view()
+	private function build_view($request)
 	{
-		$request = AppContext::get_request();
-		
 		//Récupération des paramètres de configuration
 		$config = BugtrackerConfig::load();
 		$versions = $config->get_versions();
@@ -160,7 +158,7 @@ class BugtrackerStatsListController extends ModuleController
 		$object = new self();
 		$object->init();
 		$object->check_authorizations();
-		$object->build_view();
+		$object->build_view(AppContext::get_request());
 		return BugtrackerViews::build_body_view($object->view, 'stats');
 	}
 	
