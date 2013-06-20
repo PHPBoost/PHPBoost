@@ -86,8 +86,6 @@ class CalendarFormController extends ModuleController
 		
 		$fieldset->add_field(new FormFieldRichTextEditor('contents', $this->lang['calendar.labels.contents'], $this->get_event()->get_contents(), array('rows' => 15, 'required' => true)));
 		
-		$fieldset->add_field(new FormFieldTextEditor('location', $this->lang['calendar.labels.location'], $this->get_event()->get_location()));
-		
 		$fieldset->add_field(new FormFieldDateTime('start_date', $this->lang['calendar.labels.start_date'], $this->get_event()->get_start_date(), array('required' => true)));
 		
 		$fieldset->add_field(new FormFieldDateTime('end_date', $this->lang['calendar.labels.end_date'], $this->get_event()->get_end_date(), array('required' => true)));
@@ -113,6 +111,8 @@ class CalendarFormController extends ModuleController
 			'class' => 'text', 'maxlength' => 3, 'size' => 3, 'required' => false, 'hidden' => !$this->get_event()->is_repeatable()),
 			array(new FormFieldConstraintRegex('`^[0-9]+$`i'))
 		));
+		
+		$fieldset->add_field(new FormFieldTextEditor('location', $this->lang['calendar.labels.location'], $this->get_event()->get_location()));
 		
 		$fieldset->add_field(new FormFieldCheckbox('registration_authorized', $this->lang['calendar.labels.registration_authorized'], $this->get_event()->get_registration_authorized(),array(
 			'events' => array('click' => '
@@ -207,8 +207,6 @@ class CalendarFormController extends ModuleController
 		$event->set_id_cat($this->form->get_value('id_cat')->get_raw_value());
 		$event->set_contents($this->form->get_value('contents'));
 		
-		$event->set_location($this->form->get_value('location'));
-		
 		$event->set_start_date($this->form->get_value('start_date'));
 		$event->set_end_date($this->form->get_value('end_date'));
 		
@@ -218,6 +216,8 @@ class CalendarFormController extends ModuleController
 		{
 			$event->set_repeat_number($this->form->get_value('repeat_number'));
 		}
+		
+		$event->set_location($this->form->get_value('location'));
 		
 		$event->set_registration_authorized($this->form->get_value('registration_authorized') ? true : 0);
 		
