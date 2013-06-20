@@ -29,7 +29,7 @@ class AdminBugtrackerDeleteParameterController extends AdminController
 {
 	public function execute(HTTPRequestCustom $request)
 	{
-		AppContext::get_session()->csrf_post_protect();
+		AppContext::get_session()->csrf_get_protect();
 		
 		$this->check_authorizations();
 		
