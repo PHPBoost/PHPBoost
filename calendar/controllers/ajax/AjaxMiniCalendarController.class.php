@@ -69,7 +69,7 @@ class AjaxMiniCalendarController extends AbstractController
 			'LINK_NEXT_MONTH' => CalendarUrlBuilder::mini($next_year . '/' . $next_month)->absolute()
 		));
 	
-		//Récupération des actions du mois en cours.
+		//Retrieve all the events of the selected month
 		$result = PersistenceContext::get_querier()->select("SELECT start_date, end_date, title
 		FROM " . CalendarSetup::$calendar_table . "
 		WHERE start_date BETWEEN '" . mktime(0, 0, 0, $month, 1, $year) . "' AND '" . mktime(23, 59, 59, $month, $month_day, $year) . "'
@@ -92,12 +92,12 @@ class AjaxMiniCalendarController extends AbstractController
 			}
 		}
 		
-		//Premier jour du mois.
+		//First day of the month
 		$first_day = @gmdate_format('w', @mktime(1, 0, 0, $month, 1, $year)); 
 		if ($first_day == 0)
 			$first_day = 7;
 			
-		//Génération du calendrier.
+		//Calendar generation
 		$day = 1;
 		$last_day = ($month_day + $first_day);
 		for ($i = 1; $i <= 56; $i++)
@@ -112,12 +112,10 @@ class AjaxMiniCalendarController extends AbstractController
 			}
 			else
 			{
-				if (($i >= $first_day +1) && $i < $last_day)
+				if (($i >= $first_day + 1) && $i < $last_day)
 				{
 					if ( !empty($array_action[$day]) )
-					{
 						$class = 'calendar_event';
-					}
 					elseif (($day == Date("j")) && ($month == Date("m")) && ($year == Date("Y")) )
 						$class = 'calendar_today';
 					else
@@ -138,9 +136,7 @@ class AjaxMiniCalendarController extends AbstractController
 				}
 			}
 			if (($day > $month_day) && ($i % 8) == 0)
-			{
 				$i = 56;
-			}
 			
 			$this->view->assign_block_vars('day', array(
 				'CONTENT' => $calendar_day,

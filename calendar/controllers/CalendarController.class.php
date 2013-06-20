@@ -271,9 +271,9 @@ class CalendarController extends ModuleController
 					'AUTHOR_LEVEL_CLASS' => UserService::get_level_class($author->get_level()),
 					'AUTHOR_GROUP_COLOR' => $author_group_color,
 					'U_AUTHOR_PROFILE' => UserUrlBuilder::profile($author->get_id())->absolute(),
-					'U_COMMENTS' =>  CalendarUrlBuilder::home($year . '/' . $month . '/' . $day . '/' . $row['id'] . '#comments_list')->rel(),
-					'U_EDIT' => NewsUrlBuilder::edit_news($event->get_id())->rel(),
-					'U_DELETE' => NewsUrlBuilder::delete_news($event->get_id())->rel(),
+					'U_COMMENTS' => CalendarUrlBuilder::home($year . '/' . $month . '/' . $day . '/' . $row['id'] . '#comments_list')->rel(),
+					'U_EDIT' => CalendarUrlBuilder::edit_event($row['id'])->rel(),
+					'U_DELETE' => CalendarUrlBuilder::delete_event($row['id'])->rel(),
 				));
 				
 				$check_event = true;
