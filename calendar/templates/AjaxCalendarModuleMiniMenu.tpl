@@ -29,10 +29,10 @@
 	<div class="module_mini_contents">
 		<div class="mini_calendar_container">
 			<div class="mini_calendar_top_l">
-				<a onclick="PreviousMonth();" href="#" title="{PREVIOUS_MONTH_TITLE}">&laquo;</a>
+				<a class="change_month_link" onclick="PreviousMonth();" title="{PREVIOUS_MONTH_TITLE}">&laquo;</a>
 			</div>
 			<div class="mini_calendar_top_r">
-				<a onclick="NextMonth();" href="#" title="{NEXT_MONTH_TITLE}">&raquo;</a>
+				<a class="change_month_link" onclick="NextMonth();" title="{NEXT_MONTH_TITLE}">&raquo;</a>
 			</div>
 			<div class="mini_calendar_top">
 				{DATE} 
@@ -52,7 +52,7 @@
 					</tr>
 					<tr>
 						# START day #
-						<td class="c_row {day.CLASS}">{day.CONTENT}</td>
+						<td class="c_row {day.CLASS}"# IF day.C_BIRTHDAY # style="background-color:{BIRTHDAY_COLOR}"# ENDIF #>{day.CONTENT}</td>
 						# IF day.CHANGE_LINE #
 					</tr>
 					<tr>

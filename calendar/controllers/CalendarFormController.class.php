@@ -207,6 +207,11 @@ class CalendarFormController extends ModuleController
 				DispatchManager::redirect($error_controller);
 			}
 		}
+		if (AppContext::get_current_user()->is_readonly())
+		{
+			$controller = PHPBoostErrors::user_in_read_only();
+			DispatchManager::redirect($controller);
+		}
 	}
 	
 	private function save()

@@ -92,7 +92,7 @@ class CalendarUrlBuilder
 	 */
 	public static function delete_event($param = '')
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/delete/' . $param);
+		return DispatchManager::get_url(self::$dispatcher, '/delete/' . $param . '/?token=' . AppContext::get_session()->get_token());
 	}
 	
 	/**

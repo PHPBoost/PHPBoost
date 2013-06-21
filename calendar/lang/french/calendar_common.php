@@ -73,6 +73,7 @@ $lang['calendar.labels.contribution.explain'] = 'Vous n\'êtes pas autorisé à cré
 $lang['calendar.labels.contribution.description'] = 'Complément de contribution';
 $lang['calendar.labels.contribution.description.explain'] = 'Expliquez les raisons de votre contribution (pourquoi vous souhaitez proposer cet événement). Ce champ est facultatif.';
 $lang['calendar.labels.contribution.entitled'] = '[Calendrier] :title';
+$lang['calendar.labels.birthday_title'] = 'Anniversaire de';
 
 //Explications
 $lang['calendar.explain.date'] = '<span class="text_small">(jj/mm/aa)</span>';
@@ -86,6 +87,8 @@ $lang['calendar.config.category.delete'] = 'Supprimer une catégorie';
 $lang['calendar.config.items_number_per_page'] = 'Nombre d\'événements affichés par page';
 $lang['calendar.config.comments_enabled'] = 'Activer les commentaires';
 $lang['calendar.config.location_enabled'] = 'Activer le choix de l\'adresse d\'un événement';
+$lang['calendar.config.members_birthday_enabled'] = 'Afficher les anniversaires des membres';
+$lang['calendar.config.birthday_color'] = 'Couleur des anniversaires';
 $lang['calendar.config.authorizations.read'] = 'Autorisations de lecture';
 $lang['calendar.config.authorizations.write'] = 'Autorisations d\'écriture';
 $lang['calendar.config.authorizations.contribution'] = 'Autorisations de contribution';

@@ -122,7 +122,7 @@
 						</a>
 						# ENDIF #
 						# IF event.C_DELETE #
-						<a href="{event.U_DELETE}" title="{L_DELETE}" onclick="javascript:return Confirm();">
+						<a href="{event.U_DELETE}" title="{L_DELETE}" onclick="javascript:return Confirm_del();">
 							<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" />
 						</a>
 						# ENDIF #
