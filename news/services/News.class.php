@@ -304,7 +304,7 @@ class News
 		$user_group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
 		
 		return array(
-			'C_EDIT' =>  NewsAuthorizationsService::check_authorizations($this->get_id_cat())->moderation() || NewsAuthorizationsService::check_authorizations($this->get_id_cat())->write() && $news->get_author_user()->get_id() == AppContext::get_current_user()->get_id(),
+			'C_EDIT' =>  NewsAuthorizationsService::check_authorizations($this->get_id_cat())->moderation() || NewsAuthorizationsService::check_authorizations($this->get_id_cat())->write() && $user->get_id() == AppContext::get_current_user()->get_id(),
 			'C_DELETE' =>  NewsAuthorizationsService::check_authorizations($this->get_id_cat())->moderation(),
 			'C_PICTURE' => $this->has_picture(),
 			'C_USER_GROUP_COLOR' => !empty($user_group_color),
