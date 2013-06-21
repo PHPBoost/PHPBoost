@@ -34,6 +34,7 @@ class CalendarConfig extends AbstractConfigData
 	const COMMENTS_ENABLED = 'comments_enabled';
 	const LOCATION_ENABLED = 'location_enabled';
 	const MEMBERS_BIRTHDAY_ENABLED = 'members_birthday_enabled';
+	const BIRTHDAY_COLOR = 'birthday_color';
 	
 	const AUTHORIZATIONS = 'authorizations';
 	
@@ -92,6 +93,16 @@ class CalendarConfig extends AbstractConfigData
 		return $this->get_property(self::MEMBERS_BIRTHDAY_ENABLED);
 	}
 	
+	public function get_birthday_color()
+	{
+		return $this->get_property(self::BIRTHDAY_COLOR);
+	}
+	
+	public function set_birthday_color($value)
+	{
+		$this->set_property(self::BIRTHDAY_COLOR, $value);
+	}
+	
 	 /**
 	 * @method Get authorizations
 	 */
@@ -119,6 +130,7 @@ class CalendarConfig extends AbstractConfigData
 			self::COMMENTS_ENABLED => true,
 			self::LOCATION_ENABLED => true,
 			self::MEMBERS_BIRTHDAY_ENABLED => false,
+			self::BIRTHDAY_COLOR => '#f8465e',
 			self::AUTHORIZATIONS => array('r1' => 15, 'r0' => 5, 'r-1' => 1)
 		);
 	}

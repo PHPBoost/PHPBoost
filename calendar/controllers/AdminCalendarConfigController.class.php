@@ -89,6 +89,20 @@ class AdminCalendarConfigController extends AdminModuleController
 		
 		$fieldset_config->add_field(new FormFieldCheckbox('location_enabled', $this->lang['calendar.config.location_enabled'], $this->config->is_location_enabled()));
 		
+		$fieldset_config->add_field(new FormFieldCheckbox('members_birthday_enabled', $this->lang['calendar.config.members_birthday_enabled'], $this->config->is_members_birthday_enabled(),
+			array('events' => array('click' => '
+				if (HTMLForms.getField("members_birthday_enabled").getValue()) {
+					HTMLForms.getField("birthday_color").enable();
+				} else {
+					HTMLForms.getField("birthday_color").disable();
+				}')
+			)
+		));
+		
+		$fieldset_config->add_field(new FormFieldColorPicker('birthday_color', $this->lang['calendar.config.birthday_color'], $this->config->get_birthday_color(),
+			array('hidden' => !$this->config->is_members_birthday_enabled())
+		));
+		
 		//Authorizations fieldset
 		$fieldset_authorizations = new FormFieldsetHTML('authorizations_fieldset', $this->lang['calendar.titles.admin.authorizations']);
 		$form->add_fieldset($fieldset_authorizations);
@@ -124,6 +138,14 @@ class AdminCalendarConfigController extends AdminModuleController
 			$this->config->enable_location();
 		else
 			$this->config->disable_location();
+		
+		if ($this->form->get_value('members_birthday_enabled'))
+		{
+			$this->config->enable_members_birthday();
+			$this->config->set_birthday_color($this->form->get_value('birthday_color'));
+		}
+		else
+			$this->config->disable_members_birthday();
 		
 		$this->config->set_authorizations($this->form->get_value('authorizations')->build_auth_array());
 		CalendarConfig::save();

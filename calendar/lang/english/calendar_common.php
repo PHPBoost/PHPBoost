@@ -73,6 +73,7 @@ $lang['calendar.labels.contribution.explain'] = 'You aren\'t authorized to add a
 $lang['calendar.labels.contribution.description'] = 'Contribution counterpart';
 $lang['calendar.labels.contribution.description.explain'] = 'Tell us why you want us to add this event. This field is not required, but it may help the moderator to make his decision.';
 $lang['calendar.labels.contribution.entitled'] = '[Calendar] :title';
+$lang['calendar.labels.birthday_title'] = 'Birthday of';
 
 //Explications
 $lang['calendar.explain.date'] = '<span class="text_small">(mm/dd/yy)</span>';
@@ -86,6 +87,8 @@ $lang['calendar.config.category.delete'] = 'Delete category';
 $lang['calendar.config.items_number_per_page'] = 'Events number per page';
 $lang['calendar.config.comments_enabled'] = 'Enable comments';
 $lang['calendar.config.location_enabled'] = 'Enable location choice for each event';
+$lang['calendar.config.members_birthday_enabled'] = 'Display members birthday';
+$lang['calendar.config.birthday_color'] = 'Birthday color';
 $lang['calendar.config.authorizations.read'] = 'Read permissions';
 $lang['calendar.config.authorizations.write'] = 'Write permissions';
 $lang['calendar.config.authorizations.contribution'] = 'Contribution permissions';

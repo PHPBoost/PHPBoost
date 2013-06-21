@@ -190,6 +190,10 @@ div.event_date{
 	margin:0;
 }
 
+.change_month_link {
+	cursor:pointer;
+}
+
 div.event_display_author{
 	float:left;
 	padding-top:4px;

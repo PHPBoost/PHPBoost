@@ -65,7 +65,7 @@ class CalendarController extends ModuleController
 		$array_time = explode('-', $date->to_date());
 		
 		$year = $request->get_int('year', date('Y'));
-		$month = $request->get_int('month', date('m'));
+		$month = $request->get_int('month', date('n'));
 		$day = $request->get_int('day', date('j'));
 		$bissextile = (date("L", mktime(0, 0, 0, 1, 1, $year)) == 1) ? 29 : 28;
 		
@@ -218,7 +218,7 @@ class CalendarController extends ModuleController
 				}
 				else
 				{
-					if ( (($i % 8) == 7) || (($i % 8) == 0))
+					if ( ((($i % 8) == 7) || (($i % 8) == 0)) && ($j <= $month_day))
 						$class = 'calendar_weekend';
 					else
 						$class = 'calendar_none';
