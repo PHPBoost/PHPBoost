@@ -80,9 +80,9 @@ class AjaxMiniCalendarController extends AbstractController
 		(SELECT user_born AS start_date, user_born AS end_date, login AS title, 'BIRTHDAY' AS type
 		FROM " . DB_TABLE_MEMBER . " member
 		LEFT JOIN " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " member_extended_fields ON member_extended_fields.user_id = member.user_id
-		WHERE MONTH(FROM_UNIXTIME(user_born, '%Y-%m-%d')) = " . $month . ")
+		WHERE MONTH(FROM_UNIXTIME(user_born)) = " . $month . ")
 		" : "") . "ORDER BY start_date");
-	
+		
 		while ($row = $result->fetch())
 		{
 			$day_action = gmdate_format('j', $row['start_date']);

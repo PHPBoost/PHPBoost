@@ -68,7 +68,7 @@
 							</tr>
 							<tr>
 								# START day #
-								<td class="c_row {day.CLASS}">{day.CONTENT}</td>
+								<td class="c_row {day.CLASS}"# IF day.C_BIRTHDAY # style="background-color:{BIRTHDAY_COLOR}"# ENDIF #>{day.CONTENT}</td>
 								# IF day.CHANGE_LINE #
 							</tr>
 							<tr>

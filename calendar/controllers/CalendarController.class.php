@@ -129,6 +129,7 @@ class CalendarController extends ModuleController
 		$this->view->put_all(array(
 			'C_COMMENTS_ENABLED' => $config->is_comment_enabled(),
 			'C_ADD' => CalendarAuthorizationsService::check_authorizations($event->get_id_cat())->write() || CalendarAuthorizationsService::check_authorizations($event->get_id_cat())->contribution(),
+			'BIRTHDAY_COLOR' => $config->get_birthday_color(),
 			'DATE' => $array_l_month[$month - 1] . ' ' . $year,
 			'DATE2' => $day . ' ' . $array_l_month[$month - 1] . ' ' . $year,
 			'L_MONDAY' => $date_lang['monday_mini'],
@@ -157,15 +158,15 @@ class CalendarController extends ModuleController
 		));
 		
 		//Récupération des actions du mois en cours.
-		$result = $this->sql_querier->select("SELECT start_date, end_date
+		$result = $this->sql_querier->select("(SELECT start_date, end_date, title, 'EVENT' AS type
 		FROM " . CalendarSetup::$calendar_table. "
-		WHERE start_date BETWEEN '" . mktime(0, 0, 0, $month, 1, $year) . "' AND '" . mktime(23, 59, 59, $month, $month_day, $year) . "'
-		ORDER BY start_date
-		LIMIT ". ($array_month[$month - 1] - 1) ." OFFSET :start_limit",
-			array(
-				'start_limit' => 0
-			), SelectQueryResult::FETCH_ASSOC
-		);
+		WHERE start_date BETWEEN '" . mktime(0, 0, 0, $month, 1, $year) . "' AND '" . mktime(23, 59, 59, $month, $month_day, $year) . "')
+		" . ($config->is_members_birthday_enabled() ? "UNION
+		(SELECT user_born AS start_date, user_born AS end_date, login AS title, 'BIRTHDAY' AS type
+		FROM " . DB_TABLE_MEMBER . " member
+		LEFT JOIN " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " member_extended_fields ON member_extended_fields.user_id = member.user_id
+		WHERE MONTH(FROM_UNIXTIME(user_born)) = " . $month . ")
+		" : "") . "ORDER BY start_date");
 	
 		while ($row = $result->fetch())
 		{
@@ -174,7 +175,7 @@ class CalendarController extends ModuleController
 			
 			while ($day_action <= $end_day_action)
 			{
-				$array_action[$day_action] = true;
+				$array_action[$day_action] = array('title' => ($row['type'] == 'BIRTHDAY' ? $this->lang['calendar.labels.birthday_title'] . ' ' . $row['title'] : $row['title']), 'type' => $row['type']);
 				$day_action++;
 			}
 		}
@@ -190,6 +191,7 @@ class CalendarController extends ModuleController
 		for ($i = 1; $i <= 56; $i++)
 		{
 			$calendar_day = ' ';
+			$birthday_day =  false;
 			
 			if ( (($i % 8) == 1) && $i < $last_day)
 			{
@@ -203,6 +205,7 @@ class CalendarController extends ModuleController
 				{
 					if ( !empty($array_action[$j]) )
 					{
+						$birthday_day = ($array_action[$j]['type'] == 'BIRTHDAY' ? true : false);
 						$class = 'calendar_event';
 					}
 					elseif (($j == Date("j")) && ($month == Date("m")) && ($year == Date("Y")) )
@@ -213,7 +216,7 @@ class CalendarController extends ModuleController
 						else
 							$class = 'calendar_other';
 							
-					$calendar_day = '<a href="'. CalendarUrlBuilder::home($year . '/' . $month . '/' . $j . '#events')->absolute() . '">' . $j . '</a>';
+					$calendar_day = '<a ' . (!empty($array_action[$j]) ? 'title="' . $array_action[$j]['title'] . '" ' : '') . 'href="'. CalendarUrlBuilder::home($year . '/' . $month . '/' . $j . '#events')->absolute() . '">' . $j . '</a>';
 					$j++;
 				}
 				else
@@ -230,6 +233,7 @@ class CalendarController extends ModuleController
 			}
 			
 			$this->view->assign_block_vars('day', array(
+				'C_BIRTHDAY' => $birthday_day,
 				'CONTENT' => $calendar_day,
 				'CLASS' => $class,
 				'CHANGE_LINE' => (($i % 8) == 0 && $i != 56) ? true : false
