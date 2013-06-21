@@ -166,6 +166,7 @@ $lang['bugs.labels.alert_delete'] = 'Supprimer l\'alerte';
 $lang['bugs.labels.matching_selected_filter'] = 'correspondants au filtre sélectionné';
 $lang['bugs.labels.matching_selected_filters'] = 'correspondants aux filtres sélectionnés';
 $lang['bugs.labels.save_filters'] = 'Sauvegarder les filtres';
+$lang['bugs.labels.version_name'] = 'Nom de la version';
 
 //Etats
 $lang['bugs.status.new'] = 'Nouveau';

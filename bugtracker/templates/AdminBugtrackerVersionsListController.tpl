@@ -33,7 +33,7 @@ function display_default_version_radio(version_id)
 				{@bugs.labels.default}
 			</th>
 			<th>
-				{L_NAME}
+				{@bugs.labels.version_name}
 			</th>
 			<th>
 				{@bugs.labels.fields.version_release_date}
@@ -67,14 +67,14 @@ function display_default_version_radio(version_id)
 		# IF C_VERSIONS #
 			# IF C_DISPLAY_DEFAULT_DELETE_BUTTON #
 		<tr>
-			<td colspan="4" class="row3">
+			<td colspan="5" class="row3">
 				<a href="{LINK_DELETE_DEFAULT}" onclick="javascript:return Confirm_del_default_value();"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" /> {@bugs.labels.del_default_value}</a>
 			</td>
 		</tr>
 			# ENDIF #
 		# ELSE #
 			<tr class="text_center"> 
-				<td colspan="4" class="row2">
+				<td colspan="5" class="row2">
 					{@bugs.notice.no_version}
 				</td>
 			</tr>

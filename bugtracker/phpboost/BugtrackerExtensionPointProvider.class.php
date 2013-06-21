@@ -63,9 +63,7 @@ class BugtrackerExtensionPointProvider extends ExtensionPointProvider
 	 */
 	public function comments()
 	{
-		return new CommentsTopics(array(
-			new BugtrackerCommentsTopic()
-		));
+		return new CommentsTopics(array(new BugtrackerCommentsTopic()));
 	}
 	
 	 /**

@@ -38,7 +38,7 @@ class BugtrackerCommentsTopic extends CommentsTopic
 	public function get_authorizations()
 	{
 		$authorizations = new CommentsAuthorizations();
-		$authorizations->set_authorized_access_module(BugtrackerAuthorizationsService::check_authorizations()->write());
+		$authorizations->set_authorized_access_module(BugtrackerAuthorizationsService::check_authorizations()->read());
 		return $authorizations;
 	}
 	
