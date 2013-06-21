@@ -113,6 +113,11 @@ if ( !empty($_POST['valid_add']) )
 		$error_controller = PHPBoostErrors::user_not_authorized();
 		DispatchManager::redirect($error_controller);
 	}
+	if (AppContext::get_current_user()->is_readonly())
+	{
+		$controller = PHPBoostErrors::user_in_read_only();
+		DispatchManager::redirect($controller);
+	}
 	
 	$title = retrieve(POST, 'title', '');
 	$contents = retrieve(POST, 'contents', '', TSTRING_PARSE);
@@ -146,6 +151,11 @@ else if (isset($_GET['add'])) // ajout d'un bug
 	{
 		$error_controller = PHPBoostErrors::user_not_authorized();
 		DispatchManager::redirect($error_controller);
+	}
+	if (AppContext::get_current_user()->is_readonly())
+	{
+		$controller = PHPBoostErrors::user_in_read_only();
+		DispatchManager::redirect($controller);
 	}
 	
 	$Template->set_filenames(array(
@@ -303,6 +313,11 @@ else if (isset($_GET['delete']) && is_numeric($id)) //Suppression du bug.
 		$error_controller = PHPBoostErrors::user_not_authorized();
 		DispatchManager::redirect($error_controller);
 	}
+	if (AppContext::get_current_user()->is_readonly())
+	{
+		$controller = PHPBoostErrors::user_in_read_only();
+		DispatchManager::redirect($controller);
+	}
 	//Récupération des valeurs
 	$result = $Sql->query_array(PREFIX . 'bugtracker', 'author_id, assigned_to_id', "
 	WHERE id = '" . $id . "'", __LINE__, __FILE__);
@@ -360,6 +375,11 @@ else if (isset($_GET['reject']) && is_numeric($id)) //Rejeter un bug
 		$error_controller = PHPBoostErrors::user_not_authorized();
 		DispatchManager::redirect($error_controller);
 	}
+	if (AppContext::get_current_user()->is_readonly())
+	{
+		$controller = PHPBoostErrors::user_in_read_only();
+		DispatchManager::redirect($controller);
+	}
 	
 	//Récupération des valeurs
 	$result = $Sql->query_array(PREFIX . 'bugtracker', 'status, author_id, assigned_to_id', "
@@ -416,6 +436,11 @@ else if (isset($_GET['reopen']) && is_numeric($id)) //Ré-ouvrir un bug
 		$error_controller = PHPBoostErrors::user_not_authorized();
 		DispatchManager::redirect($error_controller);
 	}
+	if (AppContext::get_current_user()->is_readonly())
+	{
+		$controller = PHPBoostErrors::user_in_read_only();
+		DispatchManager::redirect($controller);
+	}
 	
 	//Récupération des valeurs
 	$result = $Sql->query_array(PREFIX . 'bugtracker', 'status, author_id, assigned_to_id', "
@@ -471,6 +496,11 @@ else if (!empty($_POST['valid_edit']) && is_numeric($id))
 	{
 		$error_controller = PHPBoostErrors::user_not_authorized();
 		DispatchManager::redirect($error_controller);
+	}
+	if (AppContext::get_current_user()->is_readonly())
+	{
+		$controller = PHPBoostErrors::user_in_read_only();
+		DispatchManager::redirect($controller);
 	}
 	
 	$old_values = $Sql->query_array(PREFIX . 'bugtracker b', '*', "
@@ -715,6 +745,11 @@ else if (isset($_GET['edit']) && is_numeric($id)) // edition d'un bug
 	{
 		$error_controller = PHPBoostErrors::user_not_authorized();
 		DispatchManager::redirect($error_controller);
+	}
+	if (AppContext::get_current_user()->is_readonly())
+	{
+		$controller = PHPBoostErrors::user_in_read_only();
+		DispatchManager::redirect($controller);
 	}
 	
 	if (empty($id))
