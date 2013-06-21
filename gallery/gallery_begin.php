@@ -38,6 +38,9 @@ define('EDIT_CAT_GALLERY', 0x04);
 $g_idcat = retrieve(GET, 'cat', 0);
 if (!empty($g_idcat))
 {
+	if (!isset($CAT_GALLERY[$g_idcat]))
+		AppContext::get_response()->redirect('/gallery/gallery' . url('.php?error=unexist_cat', '', '&'));
+	
 	//Création de l'arborescence des catégories.
 	$Bread_crumb->add($LANG['title_gallery'], url('gallery.php'));
 	foreach ($CAT_GALLERY as $id => $array_info_cat)
