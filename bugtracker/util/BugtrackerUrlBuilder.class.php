@@ -70,7 +70,7 @@ class BugtrackerUrlBuilder
 	 */
 	public static function delete_parameter($parameter, $id)
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/admin/delete/' . $parameter . '/' . $id);
+		return DispatchManager::get_url(self::$dispatcher, '/admin/delete/' . $parameter . '/' . $id . '/?token=' . AppContext::get_session()->get_token());
 	}
 	
 	/**
@@ -78,7 +78,7 @@ class BugtrackerUrlBuilder
 	 */
 	public static function delete_default_parameter($parameter)
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/admin/delete/default/' . $parameter);
+		return DispatchManager::get_url(self::$dispatcher, '/admin/delete/default/' . $parameter . '/?token=' . AppContext::get_session()->get_token());
 	}
 	
 	/**
@@ -198,7 +198,7 @@ class BugtrackerUrlBuilder
 	 */
 	public static function delete($id = '', $page = 1, $back_page = '', $back_filter = '', $filter_id = 0)
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/delete/' . $id . '/' . $page . '/' . $back_page . '/' . $back_filter . '/' . $filter_id);
+		return DispatchManager::get_url(self::$dispatcher, '/delete/' . $id . '/' . $page . '/' . $back_page . '/' . $back_filter . '/' . $filter_id . '/?token=' . AppContext::get_session()->get_token());
 	}
 	
 	/**
@@ -214,7 +214,7 @@ class BugtrackerUrlBuilder
 	 */
 	public static function delete_filter($param = '')
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/delete_filter/' . $param);
+		return DispatchManager::get_url(self::$dispatcher, '/delete_filter/' . $param . '/?token=' . AppContext::get_session()->get_token());
 	}
 	
 	/**
@@ -222,7 +222,7 @@ class BugtrackerUrlBuilder
 	 */
 	public static function reject($id = '', $page = 1, $back_page = '', $back_filter = '', $filter_id = 0)
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/reject/' . $id . '/' . $page . '/' . $back_page . '/' . $back_filter . '/' . $filter_id);
+		return DispatchManager::get_url(self::$dispatcher, '/reject/' . $id . '/' . $page . '/' . $back_page . '/' . $back_filter . '/' . $filter_id . '/?token=' . AppContext::get_session()->get_token());
 	}
 	
 	/**
@@ -230,7 +230,7 @@ class BugtrackerUrlBuilder
 	 */
 	public static function reopen($id = '', $page = 1, $back_page = '', $back_filter = '', $filter_id = 0)
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/reopen/' . $id . '/' . $page . '/' . $back_page . '/' . $back_filter . '/' . $filter_id);
+		return DispatchManager::get_url(self::$dispatcher, '/reopen/' . $id . '/' . $page . '/' . $back_page . '/' . $back_filter . '/' . $filter_id . '/?token=' . AppContext::get_session()->get_token());
 	}
 	
 	/**

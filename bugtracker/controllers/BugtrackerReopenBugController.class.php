@@ -111,6 +111,11 @@ class BugtrackerReopenBugController extends ModuleController
 			$error_controller = PHPBoostErrors::user_not_authorized();
 			DispatchManager::redirect($error_controller);
 		}
+		if (AppContext::get_current_user()->is_readonly())
+		{
+			$controller = PHPBoostErrors::user_in_read_only();
+			DispatchManager::redirect($controller);
+		}
 	}
 }
 ?>
