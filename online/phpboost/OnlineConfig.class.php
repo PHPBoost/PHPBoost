@@ -68,7 +68,7 @@ class OnlineConfig extends AbstractConfigData
 	
 	public function get_number_member_displayed()
 	{
-		return $this->get_property(self::NUMBER_MEMBER_DISPLAYED);
+		return (int)$this->get_property(self::NUMBER_MEMBER_DISPLAYED);
 	}
 	
 	public function set_number_member_displayed($number)

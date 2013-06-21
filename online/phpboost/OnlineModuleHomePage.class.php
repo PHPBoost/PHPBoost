@@ -52,7 +52,7 @@ class OnlineModuleHomePage implements ModuleHomePage
 		ORDER BY '. OnlineConfig::load()->get_display_order_request() .'
 		LIMIT :number_items_per_page OFFSET :display_from',
 			array(
-				'number_items_per_page' => (int)$pagination->get_number_items_per_page(),
+				'number_items_per_page' => $pagination->get_number_items_per_page(),
 				'display_from' => $pagination->get_display_from(),
 				'time' => (time() - SessionsConfig::load()->get_active_session_duration())
 			)
