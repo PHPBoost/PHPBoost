@@ -34,9 +34,7 @@ class EventsCommentsTopic extends CommentsTopic
 	
     public function get_authorizations()
     {
-		$contribution = ContributionService::find_by_id($this->get_id_in_module());
 		$authorizations = new CommentsAuthorizations();
-		$authorizations->set_authorized_access_module(AppContext::get_current_user()->check_auth($contribution->get_auth(), Contribution::CONTRIBUTION_AUTH_BIT));
 		return $authorizations;
     }
 
