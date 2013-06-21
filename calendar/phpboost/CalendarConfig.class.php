@@ -130,7 +130,7 @@ class CalendarConfig extends AbstractConfigData
 			self::COMMENTS_ENABLED => true,
 			self::LOCATION_ENABLED => true,
 			self::MEMBERS_BIRTHDAY_ENABLED => false,
-			self::BIRTHDAY_COLOR => '#f8465e',
+			self::BIRTHDAY_COLOR => '#f77c91',
 			self::AUTHORIZATIONS => array('r1' => 15, 'r0' => 5, 'r-1' => 1)
 		);
 	}

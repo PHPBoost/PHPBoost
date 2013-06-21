@@ -96,7 +96,8 @@
 [*] [color=red]Nouveauté :[/color] Passage du module en MVC
 [*] [color=red]Nouveauté :[/color] Ajout du nouveau système de catégorie pour les événements
 [*] [color=red]Nouveauté :[/color] Gestion des événements sur plusieurs jours
-+ [color=red]Nouveauté:[/color] Module mini-calendrier, module mini attenant au module du calendrier.
+[*] [color=red]Nouveauté :[/color] Module mini-calendrier, module mini attenant au module du calendrier
+[*] [color=red]Nouveauté :[/color] Option pour afficher l'anniversaire des membres dans le calendrier
 [*] [color=red]Nouveauté :[/color] Flux RSS
 [*] [color=red]Nouveauté :[/color] Recherche
 [*] [color=red]Nouveauté :[/color] Sitemap

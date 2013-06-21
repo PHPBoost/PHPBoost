@@ -53,7 +53,6 @@
 
 ------------------------------------ MODULES -----------------------------------
 [b]Calendrier:[/b]
-+ [color=red]Nouveauté:[/color] Module mini-calendrier, module mini attenant au module du calendrier.
 - Ajout des microdonnées pour améliorer le référencement
 + Possibilité de créer un évènement de manière récursive ( tous les X jours, X semaines, X mois) / pouvoir dupliquer de la même manière un événement déjà présent dans le calendrier
 + Possibilité de s'inscrire à un évènement et de limiter le nombre des inscrits à un événement
