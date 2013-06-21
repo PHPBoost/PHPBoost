@@ -37,7 +37,7 @@
 			# END users #
 			<tr>
 				<td colspan="8" class="row1">
-					<span style="float:left;">{PAGINATION}</span>
+					<span style="float:left;">{L_PAGE} : # INCLUDE PAGINATION #</span>
 				</td>
 			</tr>
 		</table>
