@@ -115,6 +115,8 @@ class AdminBugtrackerConfigController extends AdminModuleController
 		$default_priority = $this->config->get_default_priority();
 		$default_version = $this->config->get_default_version();
 		
+		$main_lang = LangLoader::get('main');
+		
 		$fieldset = new FormFieldsetHTML('config', $this->lang['bugs.titles.admin.config']);
 		$form->add_fieldset($fieldset);
 		
@@ -129,7 +131,7 @@ class AdminBugtrackerConfigController extends AdminModuleController
 		
 		$fieldset->add_field(new FormFieldRadioChoice('date_form', $this->lang['bugs.labels.date_format'], $this->config->get_date_form(),
 			array(
-				new FormFieldRadioChoiceOption(LangLoader::get_message('date', 'main'), BugtrackerConfig::DATE_FORMAT_SHORT),
+				new FormFieldRadioChoiceOption($main_lang['date'], BugtrackerConfig::DATE_FORMAT_SHORT),
 				new FormFieldRadioChoiceOption($this->lang['bugs.labels.date_time'], BugtrackerConfig::DATE_FORMAT)
 			)
 		));
@@ -247,8 +249,8 @@ class AdminBugtrackerConfigController extends AdminModuleController
 		$types_table_view->put_all(array(
 			'C_TYPES'							=> !empty($types) ? true : false,
 			'C_DISPLAY_DEFAULT_DELETE_BUTTON'	=> !empty($default_type) ? true : false,
-			'L_NAME'							=> LangLoader::get_message('name', 'main'),
-			'L_DELETE'							=> LangLoader::get_message('delete', 'main'),
+			'L_NAME'							=> $main_lang['name'],
+			'L_DELETE'							=> $main_lang['delete'],
 			'LINK_DELETE_DEFAULT'				=> BugtrackerUrlBuilder::delete_default_parameter('type')->absolute()
 		));
 		
@@ -269,8 +271,8 @@ class AdminBugtrackerConfigController extends AdminModuleController
 		
 		$fieldset->add_field(new FormFieldRadioChoice('type_mandatory', $this->lang['bugs.labels.type_mandatory'], $this->config->get_type_mandatory(),
 			array(
-				new FormFieldRadioChoiceOption(LangLoader::get_message('yes', 'main'), 1),
-				new FormFieldRadioChoiceOption(LangLoader::get_message('no', 'main'), 0)
+				new FormFieldRadioChoiceOption($main_lang['yes'], 1),
+				new FormFieldRadioChoiceOption($main_lang['no'], 0)
 			)
 		));
 		
@@ -285,8 +287,8 @@ class AdminBugtrackerConfigController extends AdminModuleController
 		$categories_table_view->put_all(array(
 			'C_CATEGORIES'						=> !empty($categories) ? true : false,
 			'C_DISPLAY_DEFAULT_DELETE_BUTTON'	=> !empty($default_category) ? true : false,
-			'L_NAME'							=> LangLoader::get_message('name', 'main'),
-			'L_DELETE'							=> LangLoader::get_message('delete', 'main'),
+			'L_NAME'							=> $main_lang['name'],
+			'L_DELETE'							=> $main_lang['delete'],
 			'LINK_DELETE_DEFAULT'				=> BugtrackerUrlBuilder::delete_default_parameter('category')->absolute()
 		));
 		
@@ -307,8 +309,8 @@ class AdminBugtrackerConfigController extends AdminModuleController
 		
 		$fieldset->add_field(new FormFieldRadioChoice('category_mandatory', $this->lang['bugs.labels.category_mandatory'], $this->config->get_category_mandatory(),
 			array(
-				new FormFieldRadioChoiceOption(LangLoader::get_message('yes', 'main'), 1),
-				new FormFieldRadioChoiceOption(LangLoader::get_message('no', 'main'), 0)
+				new FormFieldRadioChoiceOption($main_lang['yes'], 1),
+				new FormFieldRadioChoiceOption($main_lang['no'], 0)
 			)
 		));
 		
@@ -323,8 +325,8 @@ class AdminBugtrackerConfigController extends AdminModuleController
 		$severities_table_view->put_all(array(
 			'C_SEVERITIES'						=> !empty($severities) ? true : false,
 			'C_DISPLAY_DEFAULT_DELETE_BUTTON'	=> !empty($default_severity) ? true : false,
-			'L_NAME'							=> LangLoader::get_message('name', 'main'),
-			'L_DELETE'							=> LangLoader::get_message('delete', 'main'),
+			'L_NAME'							=> $main_lang['name'],
+			'L_DELETE'							=> $main_lang['delete'],
 			'LINK_DELETE_DEFAULT'				=> BugtrackerUrlBuilder::delete_default_parameter('severity')->absolute()
 		));
 		
@@ -345,8 +347,8 @@ class AdminBugtrackerConfigController extends AdminModuleController
 		
 		$fieldset->add_field(new FormFieldRadioChoice('severity_mandatory', $this->lang['bugs.labels.severity_mandatory'], $this->config->get_severity_mandatory(),
 			array(
-				new FormFieldRadioChoiceOption(LangLoader::get_message('yes', 'main'), 1),
-				new FormFieldRadioChoiceOption(LangLoader::get_message('no', 'main'), 0)
+				new FormFieldRadioChoiceOption($main_lang['yes'], 1),
+				new FormFieldRadioChoiceOption($main_lang['no'], 0)
 			)
 		));
 		
@@ -355,8 +357,8 @@ class AdminBugtrackerConfigController extends AdminModuleController
 		$priorities_table_view->put_all(array(
 			'C_PRIORITIES'						=> !empty($priorities) ? true : false,
 			'C_DISPLAY_DEFAULT_DELETE_BUTTON'	=> !empty($default_priority) ? true : false,
-			'L_NAME'							=> LangLoader::get_message('name', 'main'),
-			'L_DELETE'							=> LangLoader::get_message('delete', 'main'),
+			'L_NAME'							=> $main_lang['name'],
+			'L_DELETE'							=> $main_lang['delete'],
 			'LINK_DELETE_DEFAULT'				=> BugtrackerUrlBuilder::delete_default_parameter('priority')->absolute()
 		));
 		
@@ -376,8 +378,8 @@ class AdminBugtrackerConfigController extends AdminModuleController
 		
 		$fieldset->add_field(new FormFieldRadioChoice('priority_mandatory', $this->lang['bugs.labels.priority_mandatory'], $this->config->get_priority_mandatory(),
 			array(
-				new FormFieldRadioChoiceOption(LangLoader::get_message('yes', 'main'), 1),
-				new FormFieldRadioChoiceOption(LangLoader::get_message('no', 'main'), 0)
+				new FormFieldRadioChoiceOption($main_lang['yes'], 1),
+				new FormFieldRadioChoiceOption($main_lang['no'], 0)
 			)
 		));
 		
@@ -386,8 +388,7 @@ class AdminBugtrackerConfigController extends AdminModuleController
 		$versions_table_view->put_all(array(
 			'C_VERSIONS'						=> !empty($versions) ? true : false,
 			'C_DISPLAY_DEFAULT_DELETE_BUTTON'	=> !empty($default_version) ? true : false,
-			'L_NAME'							=> LangLoader::get_message('name', 'main'),
-			'L_DELETE'							=> LangLoader::get_message('delete', 'main'),
+			'L_DELETE'							=> $main_lang['delete'],
 			'LINK_DELETE_DEFAULT'				=> BugtrackerUrlBuilder::delete_default_parameter('version')->absolute()
 		));
 		
@@ -411,8 +412,8 @@ class AdminBugtrackerConfigController extends AdminModuleController
 		
 		$fieldset->add_field(new FormFieldRadioChoice('detected_in_mandatory', $this->lang['bugs.labels.detected_in_mandatory'], $this->config->get_detected_in_mandatory(),
 			array(
-				new FormFieldRadioChoiceOption(LangLoader::get_message('yes', 'main'), 1),
-				new FormFieldRadioChoiceOption(LangLoader::get_message('no', 'main'), 0)
+				new FormFieldRadioChoiceOption($main_lang['yes'], 1),
+				new FormFieldRadioChoiceOption($main_lang['no'], 0)
 			)
 		));
 		

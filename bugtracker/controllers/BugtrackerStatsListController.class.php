@@ -153,15 +153,6 @@ class BugtrackerStatsListController extends ModuleController
 		}
 	}
 	
-	public static function get_view()
-	{
-		$object = new self();
-		$object->init();
-		$object->check_authorizations();
-		$object->build_view(AppContext::get_request());
-		return BugtrackerViews::build_body_view($object->view, 'stats');
-	}
-	
 	private function build_response(View $view)
 	{
 		$request = AppContext::get_request();
