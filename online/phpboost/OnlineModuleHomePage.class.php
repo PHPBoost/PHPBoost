@@ -44,7 +44,8 @@ class OnlineModuleHomePage implements ModuleHomePage
 		
 		$this->view->put_all(array(
 			'L_LOGIN' => LangLoader::get_message('pseudo', 'main'),
-			'PAGINATION' => '<strong>' . LangLoader::get_message('page', 'main') . ' :</strong> ' . $pagination->display()
+			'L_PAGE' => LangLoader::get_message('page', 'main'),
+			'PAGINATION' => $pagination->display()
 		));
 		
 		$users = OnlineService::get_online_users('WHERE s.session_time > :time
