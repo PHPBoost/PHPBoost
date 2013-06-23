@@ -37,7 +37,7 @@ class CalendarModuleMiniMenu extends ModuleMiniMenu
 		if (!Url::is_current_url('/calendar/') && CalendarAuthorizationsService::check_authorizations()->read())
 		{
 			$tpl = new FileTemplate('calendar/CalendarModuleMiniMenu.tpl');
-			MenuService::assign_positions_conditions($tpl, $this->get_default_block());
+			MenuService::assign_positions_conditions($tpl, $this->get_block());
 			
 			$tpl->put('MINI_MENU', AjaxMiniCalendarController::get_view());
 			
