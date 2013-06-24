@@ -57,6 +57,12 @@ class NewsUrlBuilder
 		return DispatchManager::get_url(self::$dispatcher, '/admin/categories/');
 	}
 	
+	public static function manage_news($page = null)
+	{
+		$page = $page !== null ? $page . '/' : '';
+		return DispatchManager::get_url(self::$dispatcher, '/admin/manage/' . $page);
+	}
+	
 	public static function category_syndication($id)
 	{
 		return SyndicationUrlBuilder::rss('news', $id);

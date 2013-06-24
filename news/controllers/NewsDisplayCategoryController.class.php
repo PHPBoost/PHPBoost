@@ -143,7 +143,7 @@ class NewsDisplayCategoryController extends ModuleController
 				'authorized_categories' => $authorized_categories
 		));
 		
-		$pagination = new ModulePagination(AppContext::get_request()->get_getint('page', 1), $number_news, NewsConfig::load()->get_number_news_per_page());
+		$pagination = new ModulePagination(AppContext::get_request()->get_getint('page', 1), $number_news, (int)NewsConfig::load()->get_number_news_per_page());
 		$pagination->set_url(NewsUrlBuilder::display_category($this->get_category()->get_id(), $this->get_category()->get_rewrited_name(), '%d'));
 		
 		if ($pagination->current_page_is_empty())

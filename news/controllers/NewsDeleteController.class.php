@@ -43,6 +43,8 @@ class NewsDeleteController extends ModuleController
 		}
 		
 		NewsService::delete('WHERE id=:id', array('id' => $news->get_id()));
+		NewsKeywordsService::delete_relations($news->get_id());
+
 		PersistenceContext::get_querier()->delete(DB_TABLE_EVENTS, 'WHERE module=:module AND id_in_module=:id', array('module' => 'news', 'id' => $news->get_id()));
 		
 		CommentsService::delete_comments_topic_module('news', $news->get_id());

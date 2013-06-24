@@ -55,17 +55,17 @@ function Confirm()
 		
 		<div class="spacer" style="margin-bottom:40px;"></div>
 	
-		<!-- # IF C_SOURCES # -->
+		# IF C_SOURCES #
 		<div id="news_sources_container">
-			<span class="news_more_title">{L_SOURCES}</span> :
+			<span class="news_more_title">{@news.form.sources}</span> :
 			# START sources #
-			<a href="{sources.URL}" class="small_link">{sources.NAME}</a> - 
+			<a href="{sources.URL}" class="small_link">{sources.NAME}</a> {sources.COMMA} 
 			# END sources #
 		</div>
-		<!-- # ENDIF # -->
+		# ENDIF #
 
 		<div id="news_tags_container">
-			<span class="news_more_title">Mot cléfs</span> :
+			<span class="news_more_title">{@news.form.keywords}</span> :
 			<span>PHP</span> - <span>Boost</span> - <span>Elephant</span>
 		</div>
 								
@@ -107,9 +107,6 @@ function Confirm()
 		<div class="spacer"></div>
 	</div>
 	# ENDIF #
-	
-	<div class="">
-		Ajouter un menu déroulant pour afficher / masquer l'ajout d'un commentaire.
-	</div>
+
 	# INCLUDE COMMENTS #	
 </div>

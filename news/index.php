@@ -30,8 +30,9 @@ define('PATH_TO_ROOT', '..');
 require_once PATH_TO_ROOT . '/kernel/init.php';
 
 $url_controller_mappers = array(
-	//Config
+	//Admin
 	new UrlControllerMapper('AdminNewsConfigController', '`^/admin(?:/config)?/?$`'),
+	new UrlControllerMapper('AdminNewsManageController', '`^/admin/manage?/?([0-9]+)?/?$`', array('page')),
 	
 	//Categories
 	new UrlControllerMapper('NewsCategoriesManageController', '`^/admin/categories/?$`'),
