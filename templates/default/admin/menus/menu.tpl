@@ -1,4 +1,4 @@
-<div class="menus_block_container" id="menu_{IDMENU}">
+<div class="menus_block_container" id="menu_{IDMENU}"# IF C_HORIZONTAL # style="width:auto;"# ENDIF #>
 	<div class="menus_block_move menus_block_move_top"><a href="{U_UP}" alt=""></a></div>
 	<div class="menus_block_top">
 		

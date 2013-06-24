@@ -241,7 +241,8 @@ foreach ($menus_blocks as $block_id => $menus)
         $del_link = menu_admin_link($menu, 'delete');
 
 		$mini = in_array($block_id, array(Menu::BLOCK_POSITION__LEFT, Menu::BLOCK_POSITION__NOT_ENABLED, Menu::BLOCK_POSITION__RIGHT));
-
+		$vertical_position = in_array($block_id, array(Menu::BLOCK_POSITION__LEFT, Menu::BLOCK_POSITION__RIGHT));
+		
         $menu_tpl->put_all(array(
             'NAME' => $menu->get_formated_title(),
             'IDMENU' => $id,
@@ -258,6 +259,8 @@ foreach ($menus_blocks as $block_id => $menus)
             'U_UP' => menu_admin_link($menu, 'up'),
             'U_DOWN' => menu_admin_link($menu, 'down'),
             'U_MOVE' => menu_admin_link($menu, 'move'),
+            'C_VERTICAL' => $vertical_position,
+            'C_HORIZONTAL' => !$vertical_position
         ));
 
 		if($enabled)
