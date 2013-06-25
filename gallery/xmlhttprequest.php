@@ -31,6 +31,9 @@ require_once('../kernel/begin.php');
 include_once('../gallery/gallery_begin.php');
 require_once('../kernel/header_no_display.php');
 
+if (AppContext::get_current_user()->is_readonly())
+	exit;
+	
 //Notation.
 if (!empty($_GET['increment_view']))
 {

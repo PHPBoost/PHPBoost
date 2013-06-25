@@ -28,6 +28,13 @@
 
 require_once('../kernel/begin.php');
 require_once('media_begin.php');
+
+if (AppContext::get_current_user()->is_readonly())
+{
+	$controller = PHPBoostErrors::user_in_read_only();
+	DispatchManager::redirect($controller);
+}
+
 $media_categories = new MediaCats();
 
 $Template->set_filenames(array('media_action' => 'media/media_action.tpl'));

@@ -29,6 +29,12 @@ require_once('../kernel/begin.php');
 include_once('../wiki/wiki_functions.php'); 
 load_module_lang('wiki');
 
+if (AppContext::get_current_user()->is_readonly())
+{
+	$controller = PHPBoostErrors::user_in_read_only();
+	DispatchManager::redirect($controller);
+}
+
 define('TITLE', $LANG['wiki'] . ': ' . $LANG['wiki_contribuate']);
 
 $bread_crumb_key = 'wiki_post';

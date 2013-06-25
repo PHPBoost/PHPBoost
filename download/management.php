@@ -27,6 +27,12 @@
 
 require_once('../kernel/begin.php');
 
+if (AppContext::get_current_user()->is_readonly())
+{
+	$controller = PHPBoostErrors::user_in_read_only();
+	DispatchManager::redirect($controller);
+}
+
 load_module_lang('download'); //Chargement de la langue du module.
 $Cache->load('download');
 
