@@ -221,6 +221,15 @@ class ContributionService
 	}
 	
 	/**
+	 * @desc Delete all contributions of a module
+	 * @param string $module_id the module identifier
+	 */
+	public static function delete_contribution_module($module_id)
+	{
+		self::$sql_querier->query_inject("DELETE FROM " . DB_TABLE_EVENTS  . " WHERE module = '" . $module_id . "'", __LINE__, __FILE__);
+	}
+	
+	/**
 	 * @desc Generates the contribution cache file.
 	 */
 	public static function generate_cache()
