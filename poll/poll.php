@@ -59,6 +59,12 @@ $config_authorizations = $poll_config->get_authorizations();
 
 if (!empty($_POST['valid_poll']) && !empty($poll['id']) && !$archives)
 {
+	if (AppContext::get_current_user()->is_readonly())
+	{
+		$controller = PHPBoostErrors::user_in_read_only();
+		DispatchManager::redirect($controller);
+	}
+	
 	//Niveau d'autorisation.
 	if ($User->check_level($config_authorizations))
 	{

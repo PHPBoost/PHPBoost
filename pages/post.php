@@ -29,6 +29,12 @@ require_once('../kernel/begin.php');
 require_once('../pages/pages_begin.php'); 
 include_once('pages_functions.php');
 
+if (AppContext::get_current_user()->is_readonly())
+{
+	$controller = PHPBoostErrors::user_in_read_only();
+	DispatchManager::redirect($controller);
+}
+
 $id_edit = retrieve(GET, 'id', 0);
 $id_edit_post = retrieve(POST, 'id_edit', 0);
 $id_edit = $id_edit > 0 ? $id_edit : $id_edit_post;

@@ -28,6 +28,12 @@
 include_once('../kernel/begin.php');
 include_once('faq_begin.php');
 
+if (AppContext::get_current_user()->is_readonly())
+{
+	$controller = PHPBoostErrors::user_in_read_only();
+	DispatchManager::redirect($controller);
+}
+
 $id_faq = retrieve(GET, 'faq', 0);
 $edit_question = retrieve(GET, 'edit', 0);
 $cat_of_new_question = retrieve(GET, 'idcat', 0);

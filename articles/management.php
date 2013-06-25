@@ -28,6 +28,12 @@
 require_once('../kernel/begin.php');
 require_once('articles_begin.php');
 
+if (AppContext::get_current_user()->is_readonly())
+{
+	$controller = PHPBoostErrors::user_in_read_only();
+	DispatchManager::redirect($controller);
+}
+
 $articles_categories = new ArticlesCats();
 
 $now = new Date(DATE_NOW, TIMEZONE_AUTO);
