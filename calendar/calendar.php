@@ -94,6 +94,11 @@ if ($checkdate === true && empty($id) && !$add)
 }
 elseif (!empty($id))
 {
+	if (AppContext::get_current_user()->is_readonly())
+	{
+		$controller = PHPBoostErrors::user_in_read_only();
+		DispatchManager::redirect($controller);
+	}
 	
 	if ($delete) //Suppression simple.
 	{
@@ -211,7 +216,12 @@ elseif ($add) //Ajout d'un évenement
 		$error_controller = PHPBoostErrors::user_not_authorized();
 		DispatchManager::redirect($error_controller);
 	}
-
+	if (AppContext::get_current_user()->is_readonly())
+	{
+		$controller = PHPBoostErrors::user_in_read_only();
+		DispatchManager::redirect($controller);
+	}
+	
 	if (!empty($_POST['valid'])) //Enregistrement
 	{
 		$contents = retrieve(POST, 'contents', '', TSTRING_PARSE);

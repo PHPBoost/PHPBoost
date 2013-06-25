@@ -53,6 +53,12 @@ $Gallery = new Gallery();
 
 if (!empty($g_del)) //Suppression d'une image.
 {
+	if (AppContext::get_current_user()->is_readonly())
+	{
+		$controller = PHPBoostErrors::user_in_read_only();
+		DispatchManager::redirect($controller);
+	}
+	
 	$Session->csrf_get_protect(); //Protection csrf
 
 	$Gallery->Del_pics($g_del);
@@ -64,6 +70,12 @@ if (!empty($g_del)) //Suppression d'une image.
 }
 elseif (!empty($g_idpics) && $g_move) //Déplacement d'une image.
 {
+	if (AppContext::get_current_user()->is_readonly())
+	{
+		$controller = PHPBoostErrors::user_in_read_only();
+		DispatchManager::redirect($controller);
+	}
+	
 	$Session->csrf_get_protect(); //Protection csrf
 
 	$g_move = max($g_move, 0);
@@ -76,6 +88,12 @@ elseif (!empty($g_idpics) && $g_move) //Déplacement d'une image.
 }
 elseif (isset($_FILES['gallery'])) //Upload
 {
+	if (AppContext::get_current_user()->is_readonly())
+	{
+		$controller = PHPBoostErrors::user_in_read_only();
+		DispatchManager::redirect($controller);
+	}
+	
 	if (!empty($g_idcat))
 	{
 		if (!isset($CAT_GALLERY[$g_idcat]) || $CAT_GALLERY[$g_idcat]['aprob'] == 0)
@@ -134,6 +152,12 @@ elseif (isset($_FILES['gallery'])) //Upload
 }
 elseif ($g_add)
 {
+	if (AppContext::get_current_user()->is_readonly())
+	{
+		$controller = PHPBoostErrors::user_in_read_only();
+		DispatchManager::redirect($controller);
+	}
+	
 	$Template = new FileTemplate('gallery/gallery_add.tpl');
 
 	if (!empty($g_idcat))
