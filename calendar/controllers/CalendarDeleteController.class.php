@@ -36,17 +36,7 @@ class CalendarDeleteController extends ModuleController
 		
 		$event = $this->get_event($request);
 		
-		//Authorization check
-		if (!(CalendarAuthorizationsService::check_authorizations($event->get_id_cat())->moderation() || (CalendarAuthorizationsService::check_authorizations($event->get_id_cat())->write() && $event->get_author()->get_id() == AppContext::get_current_user()->get_id())))
-		{
-			$error_controller = PHPBoostErrors::user_not_authorized();
-			DispatchManager::redirect($error_controller);
-		}
-		if (AppContext::get_current_user()->is_readonly())
-		{
-			$controller = PHPBoostErrors::user_in_read_only();
-			DispatchManager::redirect($controller);
-		}
+		$this->check_authorizations();
 		
 		//Delete event
 		CalendarService::delete('WHERE id=:id', array('id' => $event->get_id()));
@@ -74,6 +64,20 @@ class CalendarDeleteController extends ModuleController
 				$error_controller = PHPBoostErrors::unexisting_page();
 				DispatchManager::redirect($error_controller);
 			}
+		}
+	}
+	
+	private function check_authorizations()
+	{
+		if (!(CalendarAuthorizationsService::check_authorizations($event->get_id_cat())->moderation() || (CalendarAuthorizationsService::check_authorizations($event->get_id_cat())->write() && $event->get_author()->get_id() == AppContext::get_current_user()->get_id())))
+		{
+			$error_controller = PHPBoostErrors::user_not_authorized();
+			DispatchManager::redirect($error_controller);
+		}
+		if (AppContext::get_current_user()->is_readonly())
+		{
+			$controller = PHPBoostErrors::user_in_read_only();
+			DispatchManager::redirect($controller);
 		}
 	}
 }
