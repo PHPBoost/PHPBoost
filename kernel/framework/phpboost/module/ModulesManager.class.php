@@ -274,6 +274,8 @@ class ModulesManager
 	
 				//Suppression du fichier cache
 				$Cache->delete_file($module_id);
+
+				ContributionService::delete_contribution_module($module_id);
 	
 				NotationService::delete_notes_module($module_id);
 	
