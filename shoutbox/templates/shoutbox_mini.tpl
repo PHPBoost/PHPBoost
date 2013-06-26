@@ -16,7 +16,7 @@
 				pseudo = escape_xmlhttprequest(pseudo);
 				contents = escape_xmlhttprequest(contents);
 				data = "pseudo=" + pseudo + "&contents=" + contents;
-				var xhr_object = xmlhttprequest_init('{PATH_TO_ROOT}/shoutbox/xmlhttprequest.php?add=1# IF NOT C_VERTICAL #&display_date=1# ENDIF #&token={TOKEN}');
+				var xhr_object = xmlhttprequest_init('{PATH_TO_ROOT}/shoutbox/xmlhttprequest.php?add=1# IF C_HORIZONTAL #&display_date=1# ENDIF #&token={TOKEN}');
 				xhr_object.onreadystatechange = function() 
 				{
 					if( xhr_object.readyState == 4 && xhr_object.status == 200 && xhr_object.responseText != '-1' && xhr_object.responseText != '-2' && xhr_object.responseText != '-3' && xhr_object.responseText != '-4' && xhr_object.responseText != '-5' && xhr_object.responseText != '-6' )
@@ -79,7 +79,7 @@
 		function XMLHttpRequest_shoutrefresh()
 		{
 			document.getElementById('shoutimg').src = '{PATH_TO_ROOT}/templates/{THEME}/images/loading_mini.gif';
-			var xhr_object = xmlhttprequest_init('{PATH_TO_ROOT}/shoutbox/xmlhttprequest.php?refresh=1# IF NOT C_VERTICAL #&display_date=1# ENDIF #&token={TOKEN}');
+			var xhr_object = xmlhttprequest_init('{PATH_TO_ROOT}/shoutbox/xmlhttprequest.php?refresh=1# IF C_HORIZONTAL #&display_date=1# ENDIF #&token={TOKEN}');
 			xhr_object.onreadystatechange = function() 
 			{
 				if( xhr_object.readyState == 4 && xhr_object.status == 200 && xhr_object.responseText != '' )
