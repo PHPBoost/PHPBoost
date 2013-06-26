@@ -40,7 +40,6 @@ $url_controller_mappers = array(
 	new UrlControllerMapper('AdminMemberConfigController', '`^/config/?$`'),
 	new UrlControllerMapper('AdminMemberEditController', '`^/([0-9]+)/edit/?$`', array('id')),
 	new UrlControllerMapper('AdminMemberDeleteController', '`^/([0-9]+)/delete/?$`', array('id')),
-	//new UrlControllerMapper('AdminMemberPunishmentController', '`^/punishment(?:/([a-z]+)/([0-9]+))?/?$`', array('type', 'user_id')),
 	//new UrlControllerMapper('AdminViewAllMembersController', '`^/members(?:/([a-z	²]+))?/?([a-z]+)?/?([0-9]+)?/?$`', array('field', 'sort', 'page')),
 );
 DispatchManager::dispatch($url_controller_mappers);
