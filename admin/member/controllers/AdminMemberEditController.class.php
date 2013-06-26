@@ -266,7 +266,7 @@ class AdminMemberEditController extends AdminController
 		
 		if ($redirect)
 		{
-			AppContext::get_response()->redirect(PATH_TO_ROOT . '/admin/admin_members.php');
+			AppContext::get_response()->redirect(AdminMembersUrlBuilder::management());
 		}
 	}
 	

@@ -128,9 +128,9 @@
 		<h5 class="links"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/groups_mini.png" class="valign_middle" alt="" /> {L_USER}</h5>
 		<ul id="smenu4">
 			<li class="extend" onmouseover="show_menu(41, 1);" onmouseout="hide_menu(1);">
-				<a href="{PATH_TO_ROOT}/admin/admin_members.php" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/members_mini.png);">{L_USER}</a>
+				<a href="${relative_url(AdminMembersUrlBuilder::management())}" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/members_mini.png);">{L_USER}</a>
 				<ul id="ssmenu41">
-					<li><a href="{PATH_TO_ROOT}/admin/admin_members.php" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/members_mini.png);">{L_MANAGEMENT}</a></li>
+					<li><a href="${relative_url(AdminMembersUrlBuilder::management())}" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/members_mini.png);">{L_MANAGEMENT}</a></li>
 					<li><a href="${relative_url(AdminMembersUrlBuilder::add())}" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/members_mini.png);">{L_ADD}</a></li>
 					<li><a href="${relative_url(AdminMembersUrlBuilder::configuration())}" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/members_mini.png);">{L_CONFIGURATION}</a></li>
 					<li><a href="{PATH_TO_ROOT}/user/moderation_panel.php" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/members_mini.png);">{L_PUNISHEMENT}</a></li>

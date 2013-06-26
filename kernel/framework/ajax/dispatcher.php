@@ -33,6 +33,7 @@ $url_controller_mappers = array(
 	//new UrlControllerMapper('AjaxCommentsNotationController', '`^/comments/notation/?$`'),
 	new UrlControllerMapper('AjaxCommentsDisplayController', '`^/comments/display/?$`'),
 	new UrlControllerMapper('AjaxUserAutoCompleteController','`^/users_autocomplete/?$`'),
+	new UrlControllerMapper('AjaxSearchUserAutoCompleteController','`^/search_users_autocomplete/?$`'),
 	new UrlControllerMapper('AjaxImagePreviewController', '`^/image/preview/?$`'),
 );
 

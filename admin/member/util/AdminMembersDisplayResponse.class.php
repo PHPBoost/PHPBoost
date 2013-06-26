@@ -34,7 +34,7 @@ class AdminMembersDisplayResponse extends AdminMenuDisplayResponse
 		$lang = LangLoader::get('admin-members-common');
 		$picture = '/templates/' . get_utheme() . '/images/admin/members.png';
 		$this->set_title($lang['members.members-management']);
-		$this->add_link($lang['members.members-management'], PATH_TO_ROOT . '/admin/admin_members.php', $picture);
+		$this->add_link($lang['members.members-management'], AdminMembersUrlBuilder::management(), $picture);
 		$this->add_link($lang['members.add-member'], AdminMembersUrlBuilder::add(), $picture);
 		$this->add_link($lang['members.config-members'], AdminMembersUrlBuilder::configuration(), $picture);
 		$this->add_link($lang['members.members-punishment'], PATH_TO_ROOT . '/user/moderation_panel.php', $picture);
