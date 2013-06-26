@@ -1,5 +1,5 @@
 <div class="menus_block_container" id="menu_{IDMENU}"# IF C_HORIZONTAL # style="width:auto;"# ENDIF #>
-	<div class="menus_block_move menus_block_move_top"><a href="{U_UP}" alt=""></a></div>
+	# IF C_UP #<div class="menus_block_move menus_block_move_top"><a href="{U_UP}" alt="{L_MOVE_UP}" title="{L_MOVE_UP}"></a></div># ENDIF #
 	<div class="menus_block_top">
 		
 		
@@ -18,7 +18,7 @@
 			</a>
 		# ENDIF #
 		
-		<a href="menus.php?action={ACTIV}&amp;id={IDMENU}&amp;token={TOKEN}#m{IDMENU}" title="{L_UNACTIVATE}">
+		<a href="menus.php?action={ACTIV}&amp;id={IDMENU}&amp;token={TOKEN}#m{IDMENU}" title="# IF C_MENU_ACTIVATED #{L_UNACTIVATE}# ELSE #{L_ACTIVATE}# ENDIF #">
 		# IF C_MENU_ACTIVATED #
 			<img src="{PATH_TO_ROOT}/templates/{THEME}/images/processed_mini.png" alt="{L_UNACTIVATE}" class="valign_middle" />
 		# ELSE #
@@ -28,5 +28,5 @@
 	</div>
 	
 	{CONTENTS}
-	<div class="menus_block_move menus_block_move_bot"><a href="{U_DOWN}" alt=""></a></div>
+	# IF C_DOWN #<div class="menus_block_move menus_block_move_bot"><a href="{U_DOWN}" alt="{L_MOVE_DOWN}" title="{L_MOVE_DOWN}"></a></div># ENDIF #
 </div>

@@ -108,6 +108,7 @@ class BBCodeEditor extends ContentEditor
 			'L_BB_MATH' => $bbcode_lang['bb_math'],
 			'L_BB_ANCHOR' => $bbcode_lang['bb_anchor'],
 			'L_BB_HELP' => $bbcode_lang['bb_help'],
+			'L_BB_MORE' => $bbcode_lang['bb_more'],
 			'L_URL_PROMPT' => $bbcode_lang['bb_url_prompt'],
         	'L_IMAGE_PROMPT' => $bbcode_lang['bb_image_prompt'],
 			'L_TITLE' => $bbcode_lang['format_title'],

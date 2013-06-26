@@ -324,6 +324,8 @@ $LANG['feed'] = 'flux';
 $LANG['availables_feeds'] = 'Flux disponibles';
 $LANG['valid_position_menus'] = 'Valider la position des menus';
 $LANG['themes_management'] = 'Gérer le thème';
+$LANG['move_up'] = 'Monter';
+$LANG['move_down'] = 'Descendre';
 
 $LANG['menu_configurations'] = 'Configurations';
 $LANG['menu_configurations_list'] = 'Liste des configurations de menus';
