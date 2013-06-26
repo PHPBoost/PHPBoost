@@ -48,7 +48,7 @@ class AdminMemberAddController extends AdminController
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save();
-			AppContext::get_response()->redirect(PATH_TO_ROOT . '/admin/admin_members.php');
+			AppContext::get_response()->redirect(AdminMembersUrlBuilder::management());
 		}
 
 		$tpl->put('FORM', $this->form->display());
@@ -98,7 +98,7 @@ class AdminMemberAddController extends AdminController
 		$user = new User();
 		$user->set_level($this->form->get_value('rank')->get_raw_value());
 		$user->set_email($this->form->get_value('mail'));
-		$user->set_approbation(true);		
+		$user->set_approbation(true);
 		UserService::create($user_authentification, $user);
 		
 		StatsCache::invalidate();

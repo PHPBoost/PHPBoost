@@ -1,10 +1,10 @@
 <?php
 /*##################################################
- *                          AjaxUserAutoCompleteController.class.php
+ *                          AjaxSearchUserAutoCompleteController.class.php
  *                            -------------------
- *   begin                : November 15, 2012
- *   copyright            : (C) 2012 Kevin MASSY
- *   email                : kevin.massy@phpboost.com
+ *   begin                : June 26, 2013
+ *   copyright            : (C) 2013 julienseth78
+ *   email                : julienseth78@phpboost.com
  *
  ###################################################
  *
@@ -24,15 +24,15 @@
  *
  ###################################################*/
 
-class AjaxUserAutoCompleteController extends AbstractController
+class AjaxSearchUserAutoCompleteController extends AbstractController
 {
 	public function execute(HTTPRequestCustom $request)
 	{
-		$tpl = new StringTemplate('<ul> # IF C_RESULTS ## START results # <li><a class="{results.USER_LEVEL_CLASS}" # IF results.C_USER_GROUP_COLOR # style="color:{results.USER_GROUP_COLOR}" # ENDIF #>{results.NAME}</a></li> # END results ## ELSE # <li>{NO_RESULT}</li># ENDIF # </ul>');
- 
+		$tpl = new StringTemplate('<ul> # IF C_RESULTS ## START results # <li><a class="{results.USER_LEVEL_CLASS}" href="{results.U_PROFILE}" # IF results.C_USER_GROUP_COLOR # style="color:{results.USER_GROUP_COLOR}" # ENDIF #>{results.NAME}</a></li> # END results ## ELSE # <li>{NO_RESULT}</li># ENDIF # </ul>');
+		
 		$result = PersistenceContext::get_querier()->select("SELECT user_id, login, level, user_groups FROM " . DB_TABLE_MEMBER . " WHERE login LIKE '" . $request->get_value('value', '') . "%'",
 			array(), SelectQueryResult::FETCH_ASSOC);
- 
+		
 		$nb_results = 0;
 		
 		while($row = $result->fetch())
@@ -43,7 +43,8 @@ class AjaxUserAutoCompleteController extends AbstractController
 				'C_USER_GROUP_COLOR' => !empty($user_group_color),
 				'NAME' => $row['login'],
 				'USER_LEVEL_CLASS' => UserService::get_level_class($row['level']),
-				'USER_GROUP_COLOR' => $user_group_color
+				'USER_GROUP_COLOR' => $user_group_color,
+				'U_PROFILE' => UserUrlBuilder::profile($row['user_id'])->absolute()
 			));
 			
 			$nb_results++;
@@ -53,7 +54,7 @@ class AjaxUserAutoCompleteController extends AbstractController
 			'C_RESULTS' => $nb_results,
 			'NO_RESULT' => LangLoader::get_message('no_result', 'main')
 		));
- 
+		
 		return new SiteNodisplayResponse($tpl);
 	}
 }

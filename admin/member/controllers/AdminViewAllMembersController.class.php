@@ -32,35 +32,38 @@ class AdminViewAllMembersController extends AdminController
 	private $view;
 	
 	private $nbr_members_per_page = 25;
-
+	
 	public function execute(HTTPRequestCustom $request)
 	{
 		$this->init();
 		$this->build_view($request);
-
-		return $this->build_response($this->view);
+		
+		return new AdminMembersDisplayResponse($this->view, LangLoader::get_message('members.members-management', 'admin-members-common'));
 	}
-
+	
 	private function build_form()
 	{
-		$form = new HTMLForm('search_member');
+		$form = new HTMLForm(__CLASS__);
 		
-		$fieldset = new FormFieldsetHTML('search_member', $this->lang['members.member-search']);
+		$fieldset = new FormFieldsetHTML('search_member', $this->lang['search_member']);
 		$form->add_fieldset($fieldset);
 		
-		$fieldset->add_field(new FormFieldAjaxCompleter('search_member', $this->lang['members.pseudo'], '', array(
-			'file' => 'test', 'name_parameter' => 'pseudo'))
+		$fieldset->add_field(new FormFieldAjaxSearchUserAutoComplete('member', $this->lang['pseudo'], '', array(
+			'maxlength' => 25, 'size' => 25))
 		);
-
+		
 		return $form;
 	}
 	
 	private function build_view($request)
 	{
+		$admin_lang = LangLoader::get('admin');
+		$user_common_lang = LangLoader::get('user-common');
+		
 		$field = $request->get_value('field', 'timestamp');
 		$sort = $request->get_value('sort', 'top');
 		$page = $request->get_int('page', 1);
-
+		
 		$mode = ($sort == 'top') ? 'ASC' : 'DESC';
 		
 		switch ($field)
@@ -84,67 +87,66 @@ class AdminViewAllMembersController extends AdminController
 				$field_bdd = 'timestamp';
 		}
 		
-		$nbr_member = PersistenceContext::get_sql()->count_table(DB_TABLE_MEMBER, __LINE__, __FILE__);
-		$nb_pages =  ceil($nbr_member / $this->nbr_members_per_page);
+		$nbr_member = PersistenceContext::get_querier()->count(DB_TABLE_MEMBER);
+		$nb_pages = ceil($nbr_member / $this->nbr_members_per_page);
 		$pagination = new Pagination($nb_pages, $page);
-		$pagination->set_url_sprintf_pattern(DispatchManager::get_url('/admin/member', '/members/'. $field .'/'. $sort .'/%d')->absolute());
+		$pagination->set_url_sprintf_pattern(AdminMembersUrlBuilder::management($field . '/' . $sort . '/%d')->absolute());
 		$this->view->put_all(array(
-			'SORT_LOGIN_TOP' => DispatchManager::get_url('/admin/member', '/members/login/top/'. $page)->absolute(),
-			'SORT_LOGIN_BOTTOM' => DispatchManager::get_url('/admin/member', '/members/login/bottom/'. $page)->absolute(),
-			'SORT_REGISTERED_TOP' => DispatchManager::get_url('/admin/member', '/members/registered/top/'. $page)->absolute(),
-			'SORT_REGISTERED_BOTTOM' => DispatchManager::get_url('/admin/member', '/members/registered/bottom/'. $page)->absolute(),
-			'SORT_LEVEL_TOP' => DispatchManager::get_url('/admin/member', '/members/level/top/'. $page)->absolute(),
-			'SORT_LEVEL_BOTTOM' => DispatchManager::get_url('/admin/member', '/members/level/bottom/'. $page)->absolute(),
-			'SORT_APPROBATION_TOP' => DispatchManager::get_url('/admin/member', '/members/approbation/top/'. $page)->absolute(),
-			'SORT_APPROBATION_BOTTOM' => DispatchManager::get_url('/admin/member', '/members/approbation/bottom/'. $page)->absolute(),
-			'SORT_LAST_CONNECT_TOP' => DispatchManager::get_url('/admin/member', '/members/connect/top/'. $page)->absolute(),
-			'SORT_LAST_CONNECT_BOTTOM' => DispatchManager::get_url('/admin/member', '/members/connect/bottom'. $page)->absolute(),
-			'PAGINATION' => '&nbsp;<strong>' . $this->lang['page'] . ' :</strong> ' . $pagination->export()->render(),
+			'C_PAGINATION' => $nb_pages > 1,
+			'SORT_LOGIN_TOP' => AdminMembersUrlBuilder::management('login/top/'. $page)->absolute(),
+			'SORT_LOGIN_BOTTOM' => AdminMembersUrlBuilder::management('login/bottom/'. $page)->absolute(),
+			'SORT_LEVEL_TOP' => AdminMembersUrlBuilder::management('level/top/'. $page)->absolute(),
+			'SORT_LEVEL_BOTTOM' => AdminMembersUrlBuilder::management('level/bottom/'. $page)->absolute(),
+			'SORT_REGISTERED_TOP' => AdminMembersUrlBuilder::management('registered/top/'. $page)->absolute(),
+			'SORT_REGISTERED_BOTTOM' => AdminMembersUrlBuilder::management('registered/bottom/'. $page)->absolute(),
+			'SORT_LAST_CONNECT_TOP' => AdminMembersUrlBuilder::management('connect/top/'. $page)->absolute(),
+			'SORT_LAST_CONNECT_BOTTOM' => AdminMembersUrlBuilder::management('connect/bottom'. $page)->absolute(),
+			'SORT_APPROBATION_TOP' => AdminMembersUrlBuilder::management('approbation/top/'. $page)->absolute(),
+			'SORT_APPROBATION_BOTTOM' => AdminMembersUrlBuilder::management('approbation/bottom/'. $page)->absolute(),
+			'L_CONFIRM_DEL_USER' => $admin_lang['confirm_del_member'],
+			'L_CONFIRM_DEL_ADMIN' => $admin_lang['confirm_del_admin'],
+			'L_USERS_MANAGEMENT' => $admin_lang['members_management'],
+			'L_LOGIN' => $user_common_lang['pseudo'],
+			'L_MAIL' => $user_common_lang['email'],
+			'L_LEVEL' => $user_common_lang['level'],
+			'L_APPROBATION' => $user_common_lang['approbation'],
+			'L_LAST_CONNECT' => $this->lang['last_connect'],
+			'L_REGISTERED' => $admin_lang['registered'],
+			'L_UPDATE' => $this->lang['update'],
+			'L_DELETE' => $this->lang['delete'],
+			'PAGINATION' => $pagination->export()->render(),
 			'FORM' => $this->build_form()->display()
 		));
-
-		$limite_page = $page > 0 ? $page : 1;
-		$limite_page = (($limite_page - 1) * $this->nbr_members_per_page);
 		
-		$result = PersistenceContext::get_querier()->select("SELECT user_id, login, user_mail, timestamp, last_connect, level, user_aprob
+		$limit_page = $page > 0 ? $page : 1;
+		$limit_page = (($limit_page - 1) * $this->nbr_members_per_page);
+		
+		$result = PersistenceContext::get_querier()->select("SELECT user_id, login, user_mail, timestamp, last_connect, level, user_groups, user_aprob
 		FROM " . DB_TABLE_MEMBER . "
 		ORDER BY ". $field_bdd ." ". $mode ."
 		LIMIT ". $this->nbr_members_per_page ." OFFSET :start_limit",
 			array(
-				'start_limit' => $limite_page
+				'start_limit' => $limit_page
 			), SelectQueryResult::FETCH_ASSOC
 		);
 		while ($row = $result->fetch())
 		{
-			$user_mail = '<a href="mailto:' . $row['user_mail'] . '"><img src="'. PATH_TO_ROOT .'/templates/' . get_utheme() . '/images/' . get_ulang() . '/email.png" alt="' . $row['user_mail'] . '" /></a>';
-		
+			$group_color = User::get_group_color($row['user_groups'], $row['level']);
+			
 			$this->view->assign_block_vars('member_list', array(
-				'DELETE_LINK' => DispatchManager::get_url('/admin/member', '/'. $row['user_id'] .'/delete/')->absolute(),
-				'EDIT_LINK' => DispatchManager::get_url('/admin/member', '/'. $row['user_id'] .'/edit/')->absolute(),
-				'PSEUDO' => $row['login'],
-				'LEVEL' => $this->get_lang_level($row['level']),
+				'C_GROUP_COLOR' => !empty($group_color),
+				'DELETE_LINK' => AdminMembersUrlBuilder::delete($row['user_id'])->absolute(),
+				'EDIT_LINK' => AdminMembersUrlBuilder::edit($row['user_id'])->absolute(),
+				'LOGIN' => $row['login'],
+				'LEVEL' => UserService::get_level_lang($row['level']),
+				'LEVEL_CLASS' => UserService::get_level_class($row['level']),
+				'GROUP_COLOR' => $group_color,
 				'APPROBATION' => $row['user_aprob'] == 0 ? $this->lang['no'] : $this->lang['yes'],
-				'MAIL' => $user_mail,
-				'LAST_CONNECT' => !empty($row['last_connect']) ? gmdate_format('date_format_short', $row['last_connect']) : LangLoader::get_message('never', 'main'),
+				'MAIL' => $row['user_mail'],
+				'LAST_CONNECT' => !empty($row['last_connect']) ? gmdate_format('date_format_short', $row['last_connect']) : $this->lang['never'],
 				'REGISTERED' => gmdate_format('date_format_short', $row['timestamp']),
-				'U_USER_ID' => UserUrlBuilder::profile($row['user_id'])->absolute()
+				'U_PROFILE' => UserUrlBuilder::profile($row['user_id'])->absolute()
 			));
-		}
-	}
-	
-	private function get_lang_level($level)
-	{
-		if ($level == '2')
-		{
-			return $this->lang['admin'];
-		}
-		elseif ($level == '1')
-		{
-			return $this->lang['modo'];
-		}
-		else 
-		{
-			return $this->lang['member'];
 		}
 	}
 	
@@ -154,20 +156,5 @@ class AdminViewAllMembersController extends AdminController
 		$this->view = new FileTemplate('admin/member/AdminViewAllMembersController.tpl');
 		$this->view->add_lang($this->lang);
 	}
-
-	private function build_response(View $view)
-	{
-		$response = new AdminMenuDisplayResponse($view);
-		$response->set_title($this->lang['members.members-management']);
-		$response->add_link($this->lang['members.members-management'], DispatchManager::get_url('/admin/member', '/member/'), '/templates/' . get_utheme() . '/images/admin/members.png');
-		$response->add_link($this->lang['members.add-member'], DispatchManager::get_url('/admin/member', '/member/add'), '/templates/' . get_utheme() . '/images/admin/members.png');
-		$response->add_link($this->lang['members.config-members'], DispatchManager::get_url('/admin/member', '/member/config'), '/templates/' . get_utheme() . '/images/admin/members.png');
-		$response->add_link($this->lang['members.members-punishment'], DispatchManager::get_url('/admin/member', '/member/punishment'), '/templates/' . get_utheme() . '/images/admin/members.png');
-		$env = $response->get_graphical_environment();
-		$env->set_page_title($this->lang['members.members-management']);
-		
-		return $response;
-	}
 }
-
 ?>

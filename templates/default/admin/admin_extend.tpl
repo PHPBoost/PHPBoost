@@ -65,11 +65,11 @@
 				<a href="{PATH_TO_ROOT}/admin/admin_system_report.php">{L_SERVER}</a>
 			</td>
 		</tr>	
-		<tr style="text-align:center;">								
+		<tr style="text-align:center;">
 			<td class="row2" style="width:20%;">
-				<a href="{PATH_TO_ROOT}/admin/admin_members.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/members.png" alt="" /></a>		
+				<a href="{PATH_TO_ROOT}/admin/member/index.php?url=/management/"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/members.png" alt="" /></a>		
 				<br />
-				<a href="{PATH_TO_ROOT}/admin/admin_members.php">{L_USER}</a>
+				<a href="{PATH_TO_ROOT}/admin/member/index.php?url=/management/">{L_USER}</a>
 			</td>
 			<td class="row2" style="width:20%;">
 				<a href="{PATH_TO_ROOT}/admin/admin_groups.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/groups.png" alt="" /></a>		

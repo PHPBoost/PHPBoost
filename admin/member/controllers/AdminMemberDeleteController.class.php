@@ -46,7 +46,7 @@ class AdminMemberDeleteController extends AdminController
 		
 		StatsCache::invalidate();
 		
-		AppContext::get_response()->redirect(PATH_TO_ROOT . '/admin/admin_members.php');
+		AppContext::get_response()->redirect(AdminMembersUrlBuilder::management());
 	}
 }
 ?>
