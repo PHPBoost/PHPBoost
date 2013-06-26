@@ -115,6 +115,7 @@ $template->put_all(array(
 	'L_USERS_MANAGEMENT' => $LANG['members_management'],
 	'L_USERS_ADD' => $LANG['members_add'],
 	'L_USERS_CONFIG' => $LANG['members_config'],
+	'L_USERS_PUNISHMENT' => $LANG['members_punishment'],
 	'L_PSEUDO' => $LANG['pseudo'],
 	'L_PASSWORD' => $LANG['password'],
 	'L_MAIL' => $LANG['mail'],

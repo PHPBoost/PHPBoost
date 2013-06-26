@@ -62,6 +62,11 @@
 					<br />
 					<a href="{PATH_TO_ROOT}/admin/member/index.php?url=/config/" class="quick_link">{L_USERS_CONFIG}</a>
 				</li>
+				<li>
+					<a href="{PATH_TO_ROOT}/user/moderation_panel.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/members.png" alt="" /></a>
+					<br />
+					<a href="{PATH_TO_ROOT}/user/moderation_panel.php" class="quick_link">{L_USERS_PUNISHMENT}</a>
+				</li>
 			</ul>
 		</div>
 
