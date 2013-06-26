@@ -46,6 +46,8 @@ $lang['admin.online-config'] = 'Configuration En ligne';
 $lang['admin.nbr-displayed'] = 'Nombre d\'utilisateurs en ligne affichés';
 $lang['admin.nbr-members-per-page'] = 'Nombre d\'utilisateurs affichés par page';
 $lang['admin.display-order'] = 'Ordre d\'affichage';
+$lang['admin.authorizations'] = 'Autorisations';
+$lang['admin.authorizations.read'] = 'Autorisation d\'afficher la liste des membres en ligne';
 
 //Errors
 $lang['admin.success-saving-config'] = 'Vous avez modifié la configuration avec succès ';

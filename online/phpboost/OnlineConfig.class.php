@@ -38,6 +38,8 @@ class OnlineConfig extends AbstractConfigData
 	const SESSION_TIME_DISPLAY_ORDER = 'session_time_display_order';
 	const LEVEL_AND_SESSION_TIME_DISPLAY_ORDER = 'level_and_session_time_display_order';
 	
+	const AUTHORIZATIONS = 'authorizations';
+	
 	public function get_display_order()
 	{
 		return $this->get_property(self::DISPLAY_ORDER);
@@ -85,13 +87,25 @@ class OnlineConfig extends AbstractConfigData
 	{
 		$this->set_property(self::NBR_MEMBERS_PER_PAGE, $number);
 	}
-		
+	
+	
+	public function get_authorizations()
+	{
+		return $this->get_property(self::AUTHORIZATIONS);
+	}
+	
+	public function set_authorizations(Array $array)
+	{
+		$this->set_property(self::AUTHORIZATIONS, $array);
+	}
+	
 	public function get_default_values()
 	{
 		return array(
 			self::DISPLAY_ORDER => self::LEVEL_AND_SESSION_TIME_DISPLAY_ORDER,
 			self::NUMBER_MEMBER_DISPLAYED => 4,
-			self::NBR_MEMBERS_PER_PAGE => 20
+			self::NBR_MEMBERS_PER_PAGE => 20,
+			self::AUTHORIZATIONS => array('r-1' => 1, 'r0' => 1, 'r1' => 1)
 		);
 	}
 	
@@ -103,7 +117,7 @@ class OnlineConfig extends AbstractConfigData
 	{
 		return ConfigManager::load(__CLASS__, 'online', 'config');
 	}
-
+	
 	/**
 	 * Saves the configuration in the database. Has it become persistent.
 	 */
