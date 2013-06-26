@@ -83,6 +83,17 @@ class AdminOnlineConfigController extends AdminModuleController
 			), array('required' => true)
 		));
 		
+		$fieldset_authorizations = new FormFieldsetHTML('authorizations', $this->lang['admin.authorizations']);
+		$form->add_fieldset($fieldset_authorizations);
+		
+		//Authorizations list
+		$auth_settings = new AuthorizationsSettings(array(
+			new ActionAuthorization($this->lang['admin.authorizations.read'], OnlineAuthorizationsService::READ_AUTHORIZATIONS)
+		));
+		
+		$auth_settings->build_from_auth_array(OnlineConfig::load()->get_authorizations());
+		$fieldset_authorizations->add_field(new FormFieldAuthorizationsSetter('authorizations', $auth_settings));
+		
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_button($this->submit_button);
 		$form->add_button(new FormButtonReset());
@@ -96,6 +107,7 @@ class AdminOnlineConfigController extends AdminModuleController
 		$online_config->set_number_member_displayed($this->form->get_value('number_member_displayed'));
 		$online_config->set_nbr_members_per_page($this->form->get_value('nbr_members_per_page'));
 		$online_config->set_display_order($this->form->get_value('display_order')->get_raw_value());
+		$online_config->set_authorizations($this->form->get_value('authorizations')->build_auth_array());
 		OnlineConfig::save();
 	}
 }

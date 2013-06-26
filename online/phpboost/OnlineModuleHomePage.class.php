@@ -40,6 +40,8 @@ class OnlineModuleHomePage implements ModuleHomePage
 	{
 		$this->init();
 		
+		$this->check_authorizations();
+		
 		$pagination = $this->get_pagination();
 		
 		$this->view->put_all(array(
@@ -94,6 +96,15 @@ class OnlineModuleHomePage implements ModuleHomePage
 		$this->view->add_lang($this->lang);
 	}
 	
+	private function check_authorizations()
+	{
+		if (!OnlineAuthorizationsService::check_authorizations()->read())
+		{
+			$error_controller = PHPBoostErrors::user_not_authorized();
+			DispatchManager::redirect($error_controller);
+		}
+	}
+	
 	private function get_pagination()
 	{
 		$number_users_online = PersistenceContext::get_querier()->count(
@@ -103,7 +114,7 @@ class OnlineModuleHomePage implements ModuleHomePage
 				'time' => time() - SessionsConfig::load()->get_active_session_duration()
 		));
 		
-		$pagination = new ModulePagination(AppContext::get_request()->get_getint('page', 1), $number_users_online, OnlineConfig::load()->get_nbr_members_per_page());
+		$pagination = new ModulePagination(AppContext::get_request()->get_getint('page', 1), $number_users_online, (int)OnlineConfig::load()->get_nbr_members_per_page());
 		$pagination->set_url(OnlineUrlBuilder::home('%d'));
 		
 		if ($pagination->current_page_is_empty())
