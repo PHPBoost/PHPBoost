@@ -247,32 +247,28 @@ foreach ($menus_blocks as $block_id => $menus)
             'NAME' => $menu->get_formated_title(),
             'IDMENU' => $id,
             'CONTENTS' => $menu->admin_display(),
+			'ACTIV' => ($enabled ? 'disable' : 'enable'),
+			'UNACTIV' => ($enabled ? 'enable' : 'disable'),
 			'C_MENU_ACTIVATED' => $enabled,
             'C_EDIT' => !empty($edit_link),
             'C_DEL' => !empty($del_link),
 			'C_UP' => $block_id != Menu::BLOCK_POSITION__NOT_ENABLED && $i > 0,
             'C_DOWN' => $block_id != Menu::BLOCK_POSITION__NOT_ENABLED && $i < $max - 1,
+			'C_VERTICAL' => $vertical_position,
+			'C_HORIZONTAL' => !$vertical_position,
 			'L_DEL' => $LANG['delete'],
 			'L_EDIT' => $LANG['edit'],
+			'L_ACTIVATE' => $LANG['activate'],
+			'L_UNACTIVATE' => $LANG['unactivate'],
+			'L_MOVE_UP' => $LANG['move_up'],
+			'L_MOVE_DOWN' => $LANG['move_down'],
 			'U_EDIT' => menu_admin_link($menu, 'edit'),
             'U_DELETE' => menu_admin_link($menu, 'delete'),
             'U_UP' => menu_admin_link($menu, 'up'),
             'U_DOWN' => menu_admin_link($menu, 'down'),
             'U_MOVE' => menu_admin_link($menu, 'move'),
-            'C_VERTICAL' => $vertical_position,
-            'C_HORIZONTAL' => !$vertical_position
-        ));
-
-		if($enabled)
-		{
-			$menu_tpl->put_all(array(
-				'ACTIV' => ($enabled ? 'disable' : 'enable'),
-				'UNACTIV' => ($enabled ? 'enable' : 'disable'),
-				'L_ACTIVATE' => $LANG['activate'],
-				'L_UNACTIVATE' => $LANG['unactivate'],
-
-			));
-        }
+		));
+		
         $tpl->assign_block_vars($blocks[$block_id], array('MENU' => $menu_tpl->render()));
         $i++;
     }
