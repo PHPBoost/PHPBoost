@@ -29,7 +29,7 @@ class AdminMembersDisplayResponse extends AdminMenuDisplayResponse
 {
 	public function __construct($view, $title_page)
 	{
-        parent::__construct($view);
+		parent::__construct($view);
 
 		$lang = LangLoader::get('admin-members-common');
 		$picture = '/templates/' . get_utheme() . '/images/admin/members.png';
@@ -37,7 +37,6 @@ class AdminMembersDisplayResponse extends AdminMenuDisplayResponse
 		$this->add_link($lang['members.members-management'], PATH_TO_ROOT . '/admin/admin_members.php', $picture);
 		$this->add_link($lang['members.add-member'], AdminMembersUrlBuilder::add(), $picture);
 		$this->add_link($lang['members.config-members'], AdminMembersUrlBuilder::configuration(), $picture);
-		$this->add_link($lang['members.members-punishment'], PATH_TO_ROOT . '/admin/admin_members_punishment.php', $picture);
 
 		$env = $this->get_graphical_environment();
 		$env->set_page_title($title_page);
