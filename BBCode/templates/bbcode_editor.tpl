@@ -171,7 +171,7 @@ function XMLHttpRequest_preview(field)
 							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/minus.png" style="cursor: pointer;cursor:hand;" onclick="textarea_resize('{FIELD}', -100, 'height');textarea_resize('xmlhttprequest_preview', -100, 'height');" alt="{L_BB_SMALL}" title="{L_BB_SMALL}" />
 							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/plus.png" style="cursor: pointer;cursor:hand;" onclick="textarea_resize('{FIELD}', 100, 'height');textarea_resize('xmlhttprequest_preview', 100, 'height');" alt="{L_BB_LARGE}" title="{L_BB_LARGE}" />
 	
-							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/more.png" alt="" class="bbcode_hover" onclick="show_bbcode_div('bbcode_more{FIELD}', 1);" />
+							<a onclick="show_bbcode_div('bbcode_more{FIELD}', 1);"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/more.png" title="{L_BB_MORE}" alt="{L_BB_MORE}" class="bbcode_hover" /></a>
 						</td>
 					</tr>	
 				</table>

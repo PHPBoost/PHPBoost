@@ -73,6 +73,7 @@ $lang['bb_text'] = 'Texte';
 $lang['bb_script'] = 'Script';
 $lang['bb_web'] = 'Web';
 $lang['bb_prog'] = 'Programmation';
+$lang['bb_more'] = 'Afficher/cacher les autres fonctions';
 $lang['lines'] = 'Nombre de lignes';
 $lang['cols'] = 'Nombre de colonnes';
 $lang['head_table'] = 'Entête';
