@@ -26,35 +26,39 @@
  ###################################################*/
 
 class StatsModuleMiniMenu extends ModuleMiniMenu
-{    
-    public function get_default_block()
-    {
-    	return self::BLOCK_POSITION__LEFT;
-    }
-
+{
+	public function get_default_block()
+	{
+		return self::BLOCK_POSITION__LEFT;
+	}
+	
 	public function display($tpl = false)
-    {
-	    global $LANG;
-	    //Chargement de la langue du module.
-	    load_module_lang('stats');
-	
-	    #########################Stats.tpl###########################
-	    $tpl = new FileTemplate('stats/stats_mini.tpl');
-	
-	    MenuService::assign_positions_conditions($tpl, $this->get_block());
-	
-	    $stats_cache = StatsCache::load();
-	    $l_member_registered = ($stats_cache->get_stats_properties('nbr_members') > 1) ? $LANG['member_registered_s'] : $LANG['member_registered'];
-	
-	    $tpl->put_all(array(
-	    	'SID' => SID,
-	    	'L_STATS' => $LANG['stats'],
-	    	'L_MORE_STAT' => $LANG['more_stats'],
-	    	'L_USER_REGISTERED' => sprintf($l_member_registered, $stats_cache->get_stats_properties('nbr_members')),
-	    	'L_LAST_REGISTERED_USER' => $LANG['last_member'],
-	    	'U_LINK_LAST_USER' => '<a href="' . UserUrlBuilder::profile($stats_cache->get_stats_properties('last_member_id'))->absolute() . '">' . $stats_cache->get_stats_properties('last_member_login') . '</a>'
-	    ));
-	    return $tpl->render();
-    }
+	{
+		if (StatsAuthorizationsService::check_authorizations()->read())
+		{
+			global $LANG;
+			//Chargement de la langue du module.
+			load_module_lang('stats');
+			
+			#########################Stats.tpl###########################
+			$tpl = new FileTemplate('stats/stats_mini.tpl');
+			
+			MenuService::assign_positions_conditions($tpl, $this->get_block());
+			
+			$stats_cache = StatsCache::load();
+			$l_member_registered = ($stats_cache->get_stats_properties('nbr_members') > 1) ? $LANG['member_registered_s'] : $LANG['member_registered'];
+			
+			$tpl->put_all(array(
+				'SID' => SID,
+				'L_STATS' => $LANG['stats'],
+				'L_MORE_STAT' => $LANG['more_stats'],
+				'L_USER_REGISTERED' => sprintf($l_member_registered, $stats_cache->get_stats_properties('nbr_members')),
+				'L_LAST_REGISTERED_USER' => $LANG['last_member'],
+				'U_LINK_LAST_USER' => '<a href="' . UserUrlBuilder::profile($stats_cache->get_stats_properties('last_member_id'))->absolute() . '">' . $stats_cache->get_stats_properties('last_member_login') . '</a>'
+			));
+			return $tpl->render();
+		}
+		return '';
+	}
 }
 ?>

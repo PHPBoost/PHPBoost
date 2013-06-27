@@ -677,5 +677,28 @@
 		# ENDIF #
 		
 		<br /><br />
+		<form action="admin_stats.php?token={TOKEN}" method="post" class="fieldset_content">
+				<fieldset>
+					<legend>
+						{L_AUTHORIZATIONS}
+					</legend>
+					<dl>
+						<dt>
+							<label>
+								{L_READ_AUTHORIZATION}
+							</label>
+						</dt>
+						<dd>
+							{READ_AUTHORIZATION}
+						</dd>
+					</dl>
+				</fieldset>
+								
+				<fieldset class="fieldset_submit">
+					<input type="submit" name="valid" value="{L_UPDATE}" class="submit" />
+					&nbsp;&nbsp; 
+					<input type="reset" value="{L_RESET}" class="reset" />
+				</fieldset>	
+			</form>
 	</div>
 	

@@ -29,9 +29,9 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 {
 	private $sql_querier;
 
-    public function __construct()
-    {
-        $this->sql_querier = PersistenceContext::get_sql();
+	public function __construct()
+	{
+		$this->sql_querier = PersistenceContext::get_sql();
 	}
 	
 	public function get_home_page()
@@ -50,6 +50,8 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 	
 	private function get_view()
 	{
+		$this->check_authorizations();
+		
 		global $LANG, $Cache, $User, $auth_write, $Session, $Bread_crumb, $members, $pages, $pages_year, $referer, $keyword, $visit, $visit_year, $os, $browser, $user_lang, $stats_array_browsers, $stats_array_os, $stats_array_lang;
 		
 		require_once(PATH_TO_ROOT . '/stats/stats_begin.php');
@@ -1149,6 +1151,15 @@ class StatsHomePageExtensionPoint implements HomePageExtensionPoint
 		}
 		
 		return $tpl;
+	}
+	
+	private function check_authorizations()
+	{
+		if (!StatsAuthorizationsService::check_authorizations()->read())
+		{
+			$error_controller = PHPBoostErrors::user_not_authorized();
+			DispatchManager::redirect($error_controller);
+		}
 	}
 }
 ?>
