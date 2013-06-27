@@ -1,20 +1,19 @@
 <?php
 /*##################################################
- *                             stats_english.php
+ *                               StatsAuthorizationsService.class.php
  *                            -------------------
- *   begin                :  September 27, 2007
- *   last modified		: August 1st, 2009 - Forensic
- *   copyright            : (C) 2007 Viarre Régis
- *   email                : crowkait@phpboost.com
+ *   begin                : June 26, 2013
+ *   copyright            : (C) 2013 julienseth78
+ *   email                : julienseth78@phpboost.com
  *
- *  
+ *
  ###################################################
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -26,17 +25,24 @@
  *
  ###################################################*/
 
-
- ####################################################
-#                                                          English                                                                        #
- ####################################################
-
-$LANG['stats'] = 'Statistics';
-$LANG['more_stats'] = 'More statistics';
-$LANG['last_member'] = 'Latest member';
-$LANG['member_registered'] = '<strong>%d</strong> registered member';
-$LANG['member_registered_s'] = '<strong>%d</strong> registered members';
-$LANG['admin.authorizations'] = 'Permissions';
-$LANG['admin.authorizations.read'] = 'Permission to display the statistics';
-
+class StatsAuthorizationsService
+{
+	const READ_AUTHORIZATIONS = 1;
+	
+	public static function check_authorizations()
+	{
+		$instance = new self();
+		return $instance;
+	}
+	
+	public function read()
+	{
+		return $this->get_authorizations(self::READ_AUTHORIZATIONS);
+	}
+	
+	private function get_authorizations($bit)
+	{
+		return AppContext::get_current_user()->check_auth(StatsConfig::load()->get_authorizations(), $bit);
+	}
+}
 ?>
