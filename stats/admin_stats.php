@@ -95,14 +95,17 @@ else
 
 	if (!empty($members))
 	{
-		$last_user = $Sql->query_array(DB_TABLE_MEMBER, 'user_id', 'login', "ORDER BY user_id DESC " . $Sql->limit(0, 1), __LINE__, __FILE__);
-		$nbr_member = $Sql->count_table(DB_TABLE_MEMBER, __LINE__, __FILE__);
-
+		$stats_cache = StatsCache::load();
+		$last_user_group_color = User::get_group_color($stats_cache->get_stats_properties('last_member_groups'), $stats_cache->get_stats_properties('last_member_level'));
+		
 		$Template->put_all(array(
 			'C_STATS_USERS' => true,
-			'LAST_USER' => $last_user['login'],
-			'U_LAST_USER_PROFILE' => UserUrlBuilder::profile($last_user['user_id'])->absolute(),
-			'USERS' => $nbr_member,
+			'C_LAST_USER_GROUP_COLOR' => !empty($last_user_group_color),
+			'LAST_USER' => $stats_cache->get_stats_properties('last_member_login'),
+			'LAST_USER_LEVEL_CLASS' => UserService::get_level_class($stats_cache->get_stats_properties('last_member_level')),
+			'LAST_USER_GROUP_COLOR' => $last_user_group_color,
+			'U_LAST_USER_PROFILE' => UserUrlBuilder::profile($stats_cache->get_stats_properties('last_member_id'))->absolute(),
+			'USERS' => $stats_cache->get_stats_properties('nbr_members'),
 			'GRAPH_RESULT_THEME' => !file_exists('../cache/theme.png') ? '<img src="display_stats.php?theme=1" alt="" />' : '<img src="../cache/theme.png" alt="" />',
 			'GRAPH_RESULT_SEX' => !file_exists('../cache/sex.png') ? '<img src="display_stats.php?sex=1" alt="" />' : '<img src="../cache/sex.png" alt="" />',
 			'L_LAST_USER' => $LANG['last_member'],
@@ -173,17 +176,22 @@ else
 		}
 
 		$i = 1;
-		$result = $Sql->query_while("SELECT user_id, login, user_msg
+		$result = $Sql->query_while("SELECT user_id, login, level, user_groups, user_msg
 		FROM " . DB_TABLE_MEMBER . "
 		ORDER BY user_msg DESC
 		" . $Sql->limit(0, 10), __LINE__, __FILE__);
 		while ($row = $Sql->fetch_assoc($result))
 		{
+			$user_group_color = User::get_group_color($row['user_groups'], $row['level']);
+			
 			$Template->assign_block_vars('top_poster', array(
+				'C_USER_GROUP_COLOR' => !empty($user_group_color),
 				'ID' => $i,
-				'U_USER_PROFILE' => UserUrlBuilder::profile($row['user_id'])->absolute(),
 				'LOGIN' => $row['login'],
-				'USER_POST' => $row['user_msg']
+				'USER_LEVEL_CLASS' => UserService::get_level_class($row['level']),
+				'USER_GROUP_COLOR' => $user_group_color,
+				'USER_POST' => $row['user_msg'],
+				'U_USER_PROFILE' => UserUrlBuilder::profile($row['user_id'])->absolute(),
 			));
 
 			$i++;
