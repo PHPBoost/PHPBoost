@@ -92,7 +92,7 @@
 					{L_LAST_USER}
 				</td>
 				<td class="row2">
-					<a href="{U_LAST_USER_PROFILE}">{LAST_USER}</a>
+					<a href="{U_LAST_USER_PROFILE}" class="{LAST_USER_LEVEL_CLASS}" # IF C_LAST_USER_GROUP_COLOR # style="color:{LAST_USER_GROUP_COLOR}" # ENDIF #>{LAST_USER}</a>
 				</td>
 			</tr>
 		</table>
@@ -206,7 +206,7 @@
 					{top_poster.ID}
 				</td>
 				<td class="row2" style="text-align:center;">
-					<a href="{top_poster.U_USER_PROFILE}">{top_poster.LOGIN}</a>
+					<a href="{top_poster.U_USER_PROFILE}" class="{top_poster.USER_LEVEL_CLASS}" # IF top_poster.C_USER_GROUP_COLOR # style="color:{top_poster.USER_GROUP_COLOR}" # ENDIF #>{top_poster.LOGIN}</a>
 				</td>
 				<td class="row2" style="text-align:center;">
 					{top_poster.USER_POST}
