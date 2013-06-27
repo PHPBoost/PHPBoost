@@ -41,12 +41,14 @@ class StatsCache implements CacheData
 		$db_connection = PersistenceContext::get_sql();
 			
 		$nbr_members = $db_connection->query("SELECT COUNT(*) FROM " . DB_TABLE_MEMBER . " WHERE user_aprob = 1", __LINE__, __FILE__);
-		$last_member = $db_connection->query_array(DB_TABLE_MEMBER, 'user_id', 'login', "WHERE user_aprob = 1 ORDER BY timestamp DESC " . $db_connection->limit(0, 1), __LINE__, __FILE__);
+		$last_member = $db_connection->query_array(DB_TABLE_MEMBER, 'user_id', 'login', 'level', 'user_groups', "WHERE user_aprob = 1 ORDER BY timestamp DESC " . $db_connection->limit(0, 1), __LINE__, __FILE__);
 
 		$this->stats = 	array(
 			'nbr_members' => $nbr_members,
 			'last_member_login' => $last_member['login'],
-			'last_member_id' => $last_member['user_id']
+			'last_member_id' => $last_member['user_id'],
+			'last_member_level' => $last_member['level'],
+			'last_member_groups' => $last_member['user_groups']
 		);
 	}
 
