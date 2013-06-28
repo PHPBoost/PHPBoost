@@ -34,7 +34,8 @@
 $LANG['shoutbox_max_msg'] = 'Nombre de messages maximum à conserver';
 $LANG['shoutbox_max_msg_explain'] = 'Supprimés tous les jours, mettre -1 pour désactiver';
 $LANG['shoutbox_config'] = 'Configuration de la discussion rapide';
-$LANG['rank_post'] = 'Autorisation d\'écriture';
+$LANG['auth_read'] = 'Autorisation d\'afficher la fenêtre de discussion';
+$LANG['auth_write'] = 'Autorisation d\'écriture';
 $LANG['auth_moderation'] = 'Autorisation de modération';
 $LANG['shoutbox_refresh_delay'] = 'Délai de rafraichissement automatique de la discussion';
 $LANG['shoutbox_refresh_delay_explain'] = 'Mettre 0 pour désactiver';

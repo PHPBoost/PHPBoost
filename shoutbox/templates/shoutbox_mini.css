@@ -1,5 +1,5 @@
 /* Conteneur des messages de la shoutbox.*/
-div#shout_container{
+div#shout_container, .shout_horizontal div#shout_container{
 	width:142px;
 	height:150px;
 	overflow:auto;
@@ -10,6 +10,7 @@ div#shout_container{
 
 .shout_horizontal div#shout_container{
 	width:auto;
+	padding-left:15px;
 }
 
 .shout_horizontal {
