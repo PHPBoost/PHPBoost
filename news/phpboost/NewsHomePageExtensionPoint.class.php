@@ -99,7 +99,7 @@ class NewsHomePageExtensionPoint implements HomePageExtensionPoint
 			$Pagination = new DeprecatedPagination();
 			if ($NEWS_CONFIG['activ_pagin']) // Pagination activée, sinon affichage lien vers les archives.
 			{
-				$show_pagin = $Pagination->display(PATH_TO_ROOT . '/news/news' . url('.php?p=%d', '-0-0-%d.php'), $nbr_news, 'p', $NEWS_CONFIG['pagination_news'], 3);
+				$show_pagin = $Pagination->display(PATH_TO_ROOT . '/news/news' . url('.php?p=%d&cat=' . $cat, '-'. $cat .'-0-%d.php'), $nbr_news, 'p', $NEWS_CONFIG['pagination_news'], 3);
 				$first_msg = $Pagination->get_first_msg($NEWS_CONFIG['pagination_news'], 'p');
 			}
 			elseif ($arch) // Pagination des archives.
