@@ -31,13 +31,10 @@
 class ShoutboxConfig extends AbstractConfigData
 {
 	const MAX_MESSAGES_NUMBER = 'max_messages_number';
-	const AUTHORIZATION = 'authorization';
+	const AUTHORIZATIONS = 'authorizations';
 	const FORBIDDEN_FORMATTING_TAGS = 'forbidden_formatting_tags';
 	const MAX_LINKS_NUMBER_PER_MESSAGE = 'max_links_number_per_message';
 	const REFRESH_DELAY = 'refresh_delay';
-	
-	const AUTHORIZATION_WRITE = 2;
-	const AUTHORIZATION_MODERATION = 4;
 	
 	public function get_max_messages_number()
 	{
@@ -49,14 +46,14 @@ class ShoutboxConfig extends AbstractConfigData
 		$this->set_property(self::MAX_MESSAGES_NUMBER, $nbr_messages);
 	}
 	
-	public function get_authorization()
+	public function get_authorizations()
 	{
-		return $this->get_property(self::AUTHORIZATION);
+		return $this->get_property(self::AUTHORIZATIONS);
 	}
 	
-	public function set_authorization(Array $array)
+	public function set_authorizations(Array $array)
 	{
-		$this->set_property(self::AUTHORIZATION, $array);
+		$this->set_property(self::AUTHORIZATIONS, $array);
 	}
 	
 	public function get_forbidden_formatting_tags()
@@ -96,7 +93,7 @@ class ShoutboxConfig extends AbstractConfigData
 	{
 		return array(
 			self::MAX_MESSAGES_NUMBER => 100,
-			self::AUTHORIZATION => array ('r0' => 2, 'r1' => 6),
+			self::AUTHORIZATIONS => array ('r-1' => 1, 'r0' => 3, 'r1' => 7),
 			self::FORBIDDEN_FORMATTING_TAGS => array(
 				'title', 'style', 'url', 'img','quote',
 				'hide', 'list', 'color', 'bgcolor', 'font',

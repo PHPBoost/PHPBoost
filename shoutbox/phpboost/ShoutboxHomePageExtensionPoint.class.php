@@ -50,6 +50,8 @@ class ShoutboxHomePageExtensionPoint implements HomePageExtensionPoint
 	
 	private function get_view()
 	{
+		$this->check_authorizations();
+		
 		global $LANG, $Cache, $User, $auth_write, $Session, $Bread_crumb;
 		
 		require_once(PATH_TO_ROOT . '/shoutbox/shoutbox_begin.php');
@@ -147,7 +149,7 @@ class ShoutboxHomePageExtensionPoint implements HomePageExtensionPoint
 			$del_message = '';
 			
 			$is_guest = ($row['user_id'] === -1);
-			$is_modo = $User->check_auth($shoutbox_config->get_authorization(), ShoutboxConfig::AUTHORIZATION_MODERATION);
+			$is_modo = ShoutboxAuthorizationsService::check_authorizations()->moderation();
 			$warning = '';
 			$readonly = '';
 			if ($is_modo && !$is_guest) //Modération.
@@ -279,6 +281,15 @@ class ShoutboxHomePageExtensionPoint implements HomePageExtensionPoint
 		$this->sql_querier->query_close($result);
 
 		return $tpl;
+	}
+	
+	private function check_authorizations()
+	{
+		if (!ShoutboxAuthorizationsService::check_authorizations()->read())
+		{
+			$error_controller = PHPBoostErrors::user_not_authorized();
+			DispatchManager::redirect($error_controller);
+		}
 	}
 }
 ?>

@@ -44,6 +44,14 @@
 					<legend>{L_SHOUTBOX_CONFIG}</legend>
 					<dl>
 						<dt>
+							<label for="shoutbox_auth">{L_AUTH_READ}</label>
+						</dt>
+						<dd>
+							{AUTH_READ}
+						</dd>
+					</dl>
+					<dl>
+						<dt>
 							<label for="shoutbox_auth">{L_AUTH_WRITE}</label>
 						</dt>
 						<dd>
