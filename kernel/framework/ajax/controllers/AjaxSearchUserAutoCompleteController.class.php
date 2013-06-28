@@ -28,7 +28,23 @@ class AjaxSearchUserAutoCompleteController extends AbstractController
 {
 	public function execute(HTTPRequestCustom $request)
 	{
-		$tpl = new StringTemplate('<ul> # IF C_RESULTS ## START results # <li><a class="{results.USER_LEVEL_CLASS}" href="{results.U_PROFILE}" # IF results.C_USER_GROUP_COLOR # style="color:{results.USER_GROUP_COLOR}" # ENDIF #>{results.NAME}</a></li> # END results ## ELSE # <li>{NO_RESULT}</li># ENDIF # </ul>');
+		$lang = LangLoader::get('main');
+		
+		$tpl = new StringTemplate('<ul>
+		# IF C_RESULTS #
+			# START results #
+			<li>
+				# IF IS_ADMIN #
+				<a href="{results.U_EDIT}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="{L_EDIT}" title="{L_EDIT}" /></a>&nbsp;
+				<a href="{results.U_DELETE}" onclick="javascript:return Confirm({results.LEVEL});"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" /></a>&nbsp;
+				# ENDIF #
+				<a class="{results.USER_LEVEL_CLASS}" href="{results.U_PROFILE}" # IF results.C_USER_GROUP_COLOR # style="color:{results.USER_GROUP_COLOR}" # ENDIF #>{results.NAME}</a>
+			</li>
+			# END results #
+		# ELSE #
+			<li>{L_NO_RESULT}</li>
+		# ENDIF #
+		</ul>');
 		
 		$result = PersistenceContext::get_querier()->select("SELECT user_id, login, level, user_groups FROM " . DB_TABLE_MEMBER . " WHERE login LIKE '" . $request->get_value('value', '') . "%'",
 			array(), SelectQueryResult::FETCH_ASSOC);
@@ -42,17 +58,23 @@ class AjaxSearchUserAutoCompleteController extends AbstractController
 			$tpl->assign_block_vars('results', array(
 				'C_USER_GROUP_COLOR' => !empty($user_group_color),
 				'NAME' => $row['login'],
+				'LEVEL' => $row['level'],
 				'USER_LEVEL_CLASS' => UserService::get_level_class($row['level']),
 				'USER_GROUP_COLOR' => $user_group_color,
-				'U_PROFILE' => UserUrlBuilder::profile($row['user_id'])->absolute()
+				'U_PROFILE' => UserUrlBuilder::profile($row['user_id'])->absolute(),
+				'U_DELETE' => AdminMembersUrlBuilder::delete($row['user_id'])->absolute(),
+				'U_EDIT' => AdminMembersUrlBuilder::edit($row['user_id'])->absolute()
 			));
 			
 			$nb_results++;
 		}
 		
 		$tpl->put_all(array(
+			'IS_ADMIN' => AppContext::get_current_user()->check_level(User::ADMIN_LEVEL),
 			'C_RESULTS' => $nb_results,
-			'NO_RESULT' => LangLoader::get_message('no_result', 'main')
+			'L_EDIT' => $lang['edit'],
+			'L_DELETE' => $lang['delete'],
+			'L_NO_RESULT' => $lang['no_result']
 		));
 		
 		return new SiteNodisplayResponse($tpl);
