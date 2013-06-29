@@ -154,8 +154,8 @@ class DownloadCats extends DeprecatedCategoriesManager
 	//Method which determines if a category is writable by the current user
 	public function check_auth($id)
 	{
-		global $User, $CONFIG_DOWNLOAD, $DOWNLOAD_CATS;
-		$auth_write = $User->check_auth($CONFIG_DOWNLOAD['global_auth'], DOWNLOAD_WRITE_CAT_AUTH_BIT);
+		global $User, $DOWNLOAD_CATS;
+		$auth_write = $User->check_auth(DownloadConfig::load()->get_authorizations(), DOWNLOAD_WRITE_CAT_AUTH_BIT);
 		
 		$id_cat = $id;
 
@@ -173,8 +173,8 @@ class DownloadCats extends DeprecatedCategoriesManager
 	//Method which determines if a category is writable by the current user
 	public function check_contribution_auth($id)
 	{
-		global $User, $CONFIG_DOWNLOAD, $DOWNLOAD_CATS;
-		$contribution_auth = $User->check_auth($CONFIG_DOWNLOAD['global_auth'], DOWNLOAD_CONTRIBUTION_CAT_AUTH_BIT);
+		global $User, $DOWNLOAD_CATS;
+		$contribution_auth = $User->check_auth(DownloadConfig::load()->get_authorizations(), DOWNLOAD_CONTRIBUTION_CAT_AUTH_BIT);
 		
 		$id_cat = $id;
 

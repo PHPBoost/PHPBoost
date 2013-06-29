@@ -50,10 +50,11 @@ class DownloadHomePageExtensionPoint implements HomePageExtensionPoint
 	
 	private function get_view()
 	{
-		global $DOWNLOAD_LANG, $LANG, $CONFIG_DOWNLOAD, $DOWNLOAD_CATS, $Cache, $User, $Bread_crumb, $Session, $category_id, $auth_read, $auth_write, $auth_contribution, $notation;
+		global $DOWNLOAD_LANG, $LANG, $DOWNLOAD_CATS, $Cache, $User, $Bread_crumb, $Session, $category_id, $auth_read, $auth_write, $auth_contribution, $notation;
 		
 		require_once(PATH_TO_ROOT . '/download/download_begin.php');
-
+		
+		$config = DownloadConfig::load();
 		$tpl = new FileTemplate('download/download.tpl');
 	
 		$now = new Date(DATE_NOW, TIMEZONE_AUTO);
@@ -63,11 +64,11 @@ class DownloadHomePageExtensionPoint implements HomePageExtensionPoint
 			'C_ADMIN' => $auth_write,
 			'C_DOWNLOAD_CAT' => true,
 			'C_ADD_FILE' => $auth_write || $auth_contribution,
-			'C_DESCRIPTION' => !empty($DOWNLOAD_CATS[$category_id]['contents']) || ($category_id == 0 && !empty($CONFIG_DOWNLOAD['root_contents'])),
+			'C_DESCRIPTION' => !empty($DOWNLOAD_CATS[$category_id]['contents']) || ($category_id == 0 && $config->get_root_contents()),
 			'C_ROOT_AND_EXPLORE' => $explore_cats ? false : $category_id == 0,
 			'IDCAT' => $category_id,
 			'TITLE' => sprintf($DOWNLOAD_LANG['title_download'] . ($category_id > 0 ? ' - ' . $DOWNLOAD_CATS[$category_id]['name'] : '')),
-			'DESCRIPTION' => $category_id > 0 ? FormatingHelper::second_parse($DOWNLOAD_CATS[$category_id]['contents']) : FormatingHelper::second_parse($CONFIG_DOWNLOAD['root_contents']),
+			'DESCRIPTION' => $category_id > 0 ? FormatingHelper::second_parse($DOWNLOAD_CATS[$category_id]['contents']) : FormatingHelper::second_parse($config->get_root_contents()),
 			'L_ADD_FILE' => $DOWNLOAD_LANG['add_file'],
 			'U_ADMIN_CAT' => $category_id > 0 ? url(PATH_TO_ROOT . '/download/admin_download_cat.php?edit=' . $category_id) : url(PATH_TO_ROOT . '/download/admin_download_cat.php'),
 			'U_ADD_FILE' => url(PATH_TO_ROOT . '/download/management.php?new=1&amp;idcat=' . $category_id)
@@ -95,13 +96,13 @@ class DownloadHomePageExtensionPoint implements HomePageExtensionPoint
 				//List of children categories
 				if ($id != 0 && $value['visible'] && $value['id_parent'] == $category_id && (empty($value['auth']) || $User->check_auth($value['auth'], DOWNLOAD_READ_CAT_AUTH_BIT)))
 				{
-					if ( $i % $CONFIG_DOWNLOAD['nbr_column'] == 1 )
+					if ( $i % $config->get_columns_number() == 1 )
 						$tpl->assign_block_vars('row', array());
 						
 					$tpl->assign_block_vars('row.list_cats', array(
 						'ID' => $id,
 						'NAME' => $value['name'],
-						'WIDTH' => floor(100 / (float)$CONFIG_DOWNLOAD['nbr_column']),
+						'WIDTH' => floor(100 / (float)$config->get_columns_number()),
 						'SRC' => ($value['icon'] == 'download.png' || $value['icon'] == 'download_mini.png' ? PATH_TO_ROOT . '/download/' . $value['icon'] : $value['icon']),
 						'IMG_NAME' => addslashes($value['name']),
 						'NUM_FILES' => sprintf(((int)$value['num_files'] > 1 ? $DOWNLOAD_LANG['num_files_plural'] : $DOWNLOAD_LANG['num_files_singular']), (int)$value['num_files']),
@@ -191,7 +192,7 @@ class DownloadHomePageExtensionPoint implements HomePageExtensionPoint
 			$Pagination = new DeprecatedPagination();
 			
 			$tpl->put_all(array(
-				'PAGINATION' => $Pagination->display(url(PATH_TO_ROOT . '/download/download.php' . (!empty($unget) ? $unget . '&amp;' : '?') . 'cat=' . $category_id . '&amp;p=%d', 'category-' . $category_id . '-%d.php' . $unget), $nbr_files, 'p', $CONFIG_DOWNLOAD['nbr_file_max'], 3),
+				'PAGINATION' => $Pagination->display(url(PATH_TO_ROOT . '/download/download.php' . (!empty($unget) ? $unget . '&amp;' : '?') . 'cat=' . $category_id . '&amp;p=%d', 'category-' . $category_id . '-%d.php' . $unget), $nbr_files, 'p', $config->get_max_files_number_per_page(), 3),
 				'C_FILES' => true,
 				'TARGET_ON_CHANGE_ORDER' => ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? 'category-' . $category_id . '.php?' : 'download.php?cat=' . $category_id . '&'
 			));
@@ -201,7 +202,7 @@ class DownloadHomePageExtensionPoint implements HomePageExtensionPoint
 			LEFT JOIN " . DB_TABLE_AVERAGE_NOTES . " notes ON d.id = notes.id_in_module AND module_name = 'download'
 			WHERE approved = 1 AND idcat = '" . $category_id . "' AND (visible = 1 OR start <= '" . $now->get_timestamp() . "' AND start > 0 AND (end >= '" . $now->get_timestamp() . "' OR end = 0))
 			ORDER BY " . $sort . " " . $mode . 
-			$this->sql_querier->limit($Pagination->get_first_msg($CONFIG_DOWNLOAD['nbr_file_max'], 'p'), $CONFIG_DOWNLOAD['nbr_file_max']), __LINE__, __FILE__);
+			$this->sql_querier->limit($Pagination->get_first_msg($config->get_max_files_number_per_page(), 'p'), $config->get_max_files_number_per_page()), __LINE__, __FILE__);
 			while ($row = $this->sql_querier->fetch_assoc($result))
 			{
 				$notation->set_id_in_module($row['id']);

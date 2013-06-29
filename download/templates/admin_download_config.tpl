@@ -2,15 +2,15 @@
 		<!--
 		function check_form_conf()
 		{
-			if(document.getElementById('nbr_download_max').value == "") {
+			if(document.getElementById('max_files_number_per_page').value == "") {
 				alert("{L_REQUIRE}");
 				return false;
 			}
-			if(document.getElementById('nbr_column').value == "") {
+			if(document.getElementById('columns_number').value == "") {
 				alert("{L_REQUIRE}");
 				return false;
 			}
-			if(document.getElementById('note_max').value == "") {
+			if(document.getElementById('notation_scale').value == "") {
 				alert("{L_REQUIRE}");
 				return false;
 			}
@@ -63,16 +63,16 @@
 				<fieldset>
 					<legend>{L_DOWNLOAD_CONFIG}</legend>
 					<dl>
-						<dt><label for="nbr_file_max">* {L_NBR_FILE_MAX}</label></dt>
-						<dd><label><input type="text" size="3" maxlength="3" id="nbr_file_max" name="nbr_file_max" value="{NBR_FILE_MAX}" class="text" /></label></dd>
+						<dt><label for="max_files_number_per_page">* {L_MAX_FILES_NUMBER_PER_PAGE}</label></dt>
+						<dd><label><input type="text" size="3" maxlength="3" id="max_files_number_per_page" name="max_files_number_per_page" value="{MAX_FILES_NUMBER_PER_PAGE}" class="text" /></label></dd>
 					</dl>
 					<dl>
-						<dt><label for="nbr_column">* {L_NBR_COLUMN_MAX}</label></dt>
-						<dd><label><input type="text" size="3" maxlength="3" id="nbr_column" name="nbr_column" value="{NBR_COLUMN}" class="text" /></label></dd>
+						<dt><label for="columns_number">* {L_COLUMNS_NUMBER}</label></dt>
+						<dd><label><input type="text" size="3" maxlength="3" id="columns_number" name="columns_number" value="{COLUMNS_NUMBER}" class="text" /></label></dd>
 					</dl>
 					<dl>
-						<dt><label for="note_max">* {L_NOTE_MAX}</label></dt>
-						<dd><label><input type="text" size="2" maxlength="2" id="note_max" name="note_max" value="{NOTE_MAX}" class="text" /></label></dd>
+						<dt><label for="notation_scale">* {L_NOTATION_SCALE}</label></dt>
+						<dd><label><input type="text" size="2" maxlength="2" id="notation_scale" name="note_max" value="{NOTATION_SCALE}" class="text" /></label></dd>
 					</dl>
 					<label for="contents">
 						{L_ROOT_DESCRIPTION}

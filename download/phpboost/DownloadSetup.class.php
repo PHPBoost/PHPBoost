@@ -60,11 +60,11 @@ class DownloadSetup extends DefaultModuleSetup
 
 	private function create_tables()
 	{
-		$this->create_faq_table();
-		$this->create_faq_cats_table();
+		$this->create_download_table();
+		$this->create_doanload_cats_table();
 	}
 
-	private function create_faq_table()
+	private function create_download_table()
 	{
 		$fields = array(
 			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
@@ -96,7 +96,7 @@ class DownloadSetup extends DefaultModuleSetup
 		PersistenceContext::get_dbms_utils()->create_table(self::$download_table, $fields, $options);
 	}
 
-	private function create_faq_cats_table()
+	private function create_download_cats_table()
 	{
 		$fields = array(
 			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),

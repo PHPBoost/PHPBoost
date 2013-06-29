@@ -34,7 +34,7 @@ class DownloadCommentsTopic extends CommentsTopic
 	
 	public function get_authorizations()
 	{
-		global $DOWNLOAD_CATS, $CONFIG_DOWNLOAD;
+		global $DOWNLOAD_CATS;
 		
 		$cache = new Cache();
 		$cache->load($this->get_module_id());
@@ -46,7 +46,7 @@ class DownloadCommentsTopic extends CommentsTopic
 		$cat_authorizations = $DOWNLOAD_CATS[$id_cat]['auth'];
 		if (!is_array($cat_authorizations))
 		{
-			$cat_authorizations = $CONFIG_DOWNLOAD['global_auth'];
+			$cat_authorizations = DownloadConfig::load()->get_authorizations();
 		}
 		$authorizations = new CommentsAuthorizations();
 		$authorizations->set_authorized_access_module(AppContext::get_current_user()->check_auth($cat_authorizations, DOWNLOAD_READ_CAT_AUTH_BIT));

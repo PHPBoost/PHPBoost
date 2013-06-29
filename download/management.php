@@ -39,6 +39,7 @@ $Cache->load('download');
 include_once('download_auth.php');
 
 $download_categories = new DownloadCats();
+$config = DownloadConfig::load();
 
 $edit_file_id = retrieve(GET, 'edit', 0);
 $add_file = retrieve(GET, 'new', false);
@@ -116,7 +117,7 @@ elseif ($edit_file_id > 0)
 	define('TITLE', $DOWNLOAD_LANG['file_management']);
 	
 	//Barre d'arborescence
-	$auth_write = $User->check_auth($CONFIG_DOWNLOAD['global_auth'], DOWNLOAD_WRITE_CAT_AUTH_BIT);
+	$auth_write = $User->check_auth($config->get_authorizations(), DOWNLOAD_WRITE_CAT_AUTH_BIT);
 	
 	$Bread_crumb->add($DOWNLOAD_LANG['file_management'], url('management.php?edit=' . $edit_file_id));
 	
@@ -146,7 +147,7 @@ else
 	$Bread_crumb->add($DOWNLOAD_LANG['file_addition'], url('management.php?new=1'));
 	define('TITLE', $DOWNLOAD_LANG['file_addition']);
 	
-	if (!($auth_write = $User->check_auth($CONFIG_DOWNLOAD['global_auth'], DOWNLOAD_WRITE_CAT_AUTH_BIT)) && !($auth_contribute = $User->check_auth($CONFIG_DOWNLOAD['global_auth'], DOWNLOAD_CONTRIBUTION_CAT_AUTH_BIT)))
+	if (!($auth_write = $User->check_auth($config->get_authorizations(), DOWNLOAD_WRITE_CAT_AUTH_BIT)) && !($auth_contribute = $User->check_auth($config->get_authorizations(), DOWNLOAD_CONTRIBUTION_CAT_AUTH_BIT)))
 	{
 		$error_controller = PHPBoostErrors::user_not_authorized();
 		DispatchManager::redirect($error_controller);
@@ -373,7 +374,7 @@ if ($edit_file_id > 0)
 			'URL' => $file_url,
 			'SIZE_FORM' => $file_size,
 			'DATE' => $file_creation_date->format(DATE_FORMAT_SHORT, TIMEZONE_AUTO),
-			'CATEGORIES_TREE' => $download_categories->build_select_form($file_cat_id, 'idcat', 'idcat', 0, DOWNLOAD_WRITE_CAT_AUTH_BIT, $CONFIG_DOWNLOAD['global_auth'], IGNORE_AND_CONTINUE_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH),
+			'CATEGORIES_TREE' => $download_categories->build_select_form($file_cat_id, 'idcat', 'idcat', 0, DOWNLOAD_WRITE_CAT_AUTH_BIT, $config->get_authorizations(), IGNORE_AND_CONTINUE_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH),
 			'SHORT_DESCRIPTION_PREVIEW' => FormatingHelper::second_parse(stripslashes($file_short_contents)),
 			'VISIBLE_WAITING' => $file_visibility == 2 ? ' checked="checked"' : '',
 			'VISIBLE_ENABLED' => $file_visibility == 1 ? ' checked="checked"' : '',
@@ -428,7 +429,7 @@ if ($edit_file_id > 0)
 			'URL' => $file_infos['url'],
 			'SIZE_FORM' => $file_infos['size'],
 			'DATE' => $file_creation_date->format(DATE_FORMAT_SHORT, TIMEZONE_AUTO),
-			'CATEGORIES_TREE' => $download_categories->build_select_form($file_infos['idcat'], 'idcat', 'idcat', 0, DOWNLOAD_WRITE_CAT_AUTH_BIT, $CONFIG_DOWNLOAD['global_auth'], IGNORE_AND_CONTINUE_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH),
+			'CATEGORIES_TREE' => $download_categories->build_select_form($file_infos['idcat'], 'idcat', 'idcat', 0, DOWNLOAD_WRITE_CAT_AUTH_BIT, $config->get_authorizations(), IGNORE_AND_CONTINUE_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH),
 			'DATE_CALENDAR_CREATION' => $creation_calendar->display(),
 			'DATE_CALENDAR_RELEASE' => $release_calendar->display(),
 			'BOOL_IGNORE_RELEASE_DATE' => $ignore_release_date ? 'true' : 'false',
@@ -519,7 +520,7 @@ else
 						//C'est la fusion entre l'autorisation de la racine et de l'ensemble de la branche des catégories
 						//We merge the whole authorizations of the branch constituted by the selected category
 						Authorizations::merge_auth(
-							$CONFIG_DOWNLOAD['global_auth'],
+							$config->get_authorizations(),
 							//Autorisation de l'ensemble de la branche des catégories jusqu'à la catégorie demandée
 							$download_categories->compute_heritated_auth($file_cat_id, DOWNLOAD_WRITE_CAT_AUTH_BIT, Authorizations::AUTH_CHILD_PRIORITY),
 							DOWNLOAD_WRITE_CAT_AUTH_BIT, Authorizations::AUTH_CHILD_PRIORITY
@@ -625,8 +626,8 @@ else
 			'SIZE_FORM' => $file_size,
 			'DATE' => $file_creation_date->format(DATE_FORMAT_SHORT, TIMEZONE_AUTO),
 			'CATEGORIES_TREE' => $auth_write ?
-									$download_categories->build_select_form($file_cat_id, 'idcat', 'idcat', 0, DOWNLOAD_WRITE_CAT_AUTH_BIT, $CONFIG_DOWNLOAD['global_auth'], IGNORE_AND_CONTINUE_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH) :
-									$download_categories->build_select_form($file_cat_id, 'idcat', 'idcat', 0, DOWNLOAD_CONTRIBUTION_CAT_AUTH_BIT, $CONFIG_DOWNLOAD['global_auth'], IGNORE_AND_CONTINUE_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH),
+									$download_categories->build_select_form($file_cat_id, 'idcat', 'idcat', 0, DOWNLOAD_WRITE_CAT_AUTH_BIT, $config->get_authorizations(), IGNORE_AND_CONTINUE_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH) :
+									$download_categories->build_select_form($file_cat_id, 'idcat', 'idcat', 0, DOWNLOAD_CONTRIBUTION_CAT_AUTH_BIT, $config->get_authorizations(), IGNORE_AND_CONTINUE_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH),
 			'SHORT_DESCRIPTION_PREVIEW' => stripslashes($file_short_contents),
 			'VISIBLE_WAITING' => $file_visibility == 2 ? ' checked="checked"' : '',
 			'VISIBLE_ENABLED' => $file_visibility == 1 ? ' checked="checked"' : '',
@@ -674,8 +675,8 @@ else
 			'SIZE_FORM' => '',
 			'DATE' => $file_creation_date->format(DATE_FORMAT_SHORT, TIMEZONE_AUTO),
 			'CATEGORIES_TREE' => $auth_write ?
-									$download_categories->build_select_form($file_cat_id, 'idcat', 'idcat', 0, DOWNLOAD_WRITE_CAT_AUTH_BIT, $CONFIG_DOWNLOAD['global_auth'], IGNORE_AND_CONTINUE_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH) :
-									$download_categories->build_select_form($file_cat_id, 'idcat', 'idcat', 0, DOWNLOAD_CONTRIBUTION_CAT_AUTH_BIT, $CONFIG_DOWNLOAD['global_auth'], IGNORE_AND_CONTINUE_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH),
+									$download_categories->build_select_form($file_cat_id, 'idcat', 'idcat', 0, DOWNLOAD_WRITE_CAT_AUTH_BIT, $config->get_authorizations(), IGNORE_AND_CONTINUE_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH) :
+									$download_categories->build_select_form($file_cat_id, 'idcat', 'idcat', 0, DOWNLOAD_CONTRIBUTION_CAT_AUTH_BIT, $config->get_authorizations(), IGNORE_AND_CONTINUE_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH),
 			'DATE_CALENDAR_CREATION' => $creation_calendar->display(),
 			'DATE_CALENDAR_RELEASE' => $release_calendar->display(),
 			'BOOL_IGNORE_RELEASE_DATE' => $ignore_release_date ? 'true' : 'false',
