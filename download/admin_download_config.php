@@ -29,6 +29,7 @@
 require_once('../admin/admin_begin.php');
 load_module_lang('download'); //Chargement de la langue du module.
 $Cache->load('download');
+$config = DownloadConfig::load();
 define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
 
@@ -36,21 +37,20 @@ include_once('download_auth.php');
 
 if (!empty($_POST['valid']))
 {
-	$config_download['nbr_file_max'] = retrieve(POST, 'nbr_file_max', 10);
-	$config_download['nbr_column'] = retrieve(POST, 'nbr_column', 4);
-	$config_download['note_max'] = max(1, retrieve(POST, 'note_max', 5));
-	$config_download['root_contents'] = stripslashes(retrieve(POST, 'root_contents', '', TSTRING_PARSE));
-	$config_download['global_auth'] = Authorizations::build_auth_array_from_form(DOWNLOAD_READ_CAT_AUTH_BIT, DOWNLOAD_WRITE_CAT_AUTH_BIT, DOWNLOAD_CONTRIBUTION_CAT_AUTH_BIT);
+	$config->set_max_files_number_per_page(retrieve(POST, 'max_files_number_per_page', 10));
+	$config->set_columns_number(retrieve(POST, 'columns_number', 2));
+	if (retrieve(POST, 'notation_scale', 5) != $config->get_notation_scale())
+		NotationService::update_notation_scale('download', $config->get_notation_scale(), retrieve(POST, 'notation_scale', 5));
+	$config->set_notation_scale(max(1, retrieve(POST, 'notation_scale', 5)));
+	$config->set_root_contents(stripslashes(retrieve(POST, 'root_contents', '', TSTRING_PARSE)));
+	$config->set_authorizations(Authorizations::build_auth_array_from_form(DOWNLOAD_READ_CAT_AUTH_BIT, DOWNLOAD_WRITE_CAT_AUTH_BIT, DOWNLOAD_CONTRIBUTION_CAT_AUTH_BIT));
 	
-	$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($config_download)) . "' WHERE name = 'download'", __LINE__, __FILE__);
+	DownloadConfig::save();
 	
-	if (!empty($CONFIG_DOWNLOAD['note_max']) && $CONFIG_DOWNLOAD['note_max'] != $config_download['note_max'])
-		NotationService::update_notation_scale('download', $CONFIG_DOWNLOAD['note_max'], $config_download['note_max']);
-		
-	###### Régénération du cache des news #######
+	###### Régénération du cache #######
 	$Cache->Generate_module_file('download');
 	
-	AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);	
+	AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT);
 }
 //Sinon on remplit le formulaire
 else	
@@ -61,28 +61,26 @@ else
 	
 	$Cache->load('download');
 	
-	$CONFIG_DOWNLOAD['global_auth'] = isset($CONFIG_DOWNLOAD['global_auth']) && is_array($CONFIG_DOWNLOAD['global_auth']) ? $CONFIG_DOWNLOAD['global_auth'] : array();
-	
 	$editor = AppContext::get_content_formatting_service()->get_default_editor();
 	$editor->set_identifier('contents');
 	
 	$Template->put_all(array(
-		'NBR_FILE_MAX' => !empty($CONFIG_DOWNLOAD['nbr_file_max']) ? $CONFIG_DOWNLOAD['nbr_file_max'] : '10',
-		'NBR_COLUMN' => !empty($CONFIG_DOWNLOAD['nbr_column']) ? $CONFIG_DOWNLOAD['nbr_column'] : '2',
-		'NOTE_MAX' => !empty($CONFIG_DOWNLOAD['note_max']) ? $CONFIG_DOWNLOAD['note_max'] : '10',
-		'READ_AUTH' => Authorizations::generate_select(DOWNLOAD_READ_CAT_AUTH_BIT, $CONFIG_DOWNLOAD['global_auth']),
-		'WRITE_AUTH' => Authorizations::generate_select(DOWNLOAD_WRITE_CAT_AUTH_BIT, $CONFIG_DOWNLOAD['global_auth']),
-		'CONTRIBUTION_AUTH' => Authorizations::generate_select(DOWNLOAD_CONTRIBUTION_CAT_AUTH_BIT, $CONFIG_DOWNLOAD['global_auth']),
-		'DESCRIPTION' => FormatingHelper::unparse($CONFIG_DOWNLOAD['root_contents']),
+		'MAX_FILES_NUMBER_PER_PAGE' => $config->get_max_files_number_per_page(),
+		'COLUMNS_NUMBER' => $config->get_columns_number(),
+		'NOTATION_SCALE' => $config->get_notation_scale(),
+		'READ_AUTH' => Authorizations::generate_select(DOWNLOAD_READ_CAT_AUTH_BIT, $config->get_authorizations()),
+		'WRITE_AUTH' => Authorizations::generate_select(DOWNLOAD_WRITE_CAT_AUTH_BIT, $config->get_authorizations()),
+		'CONTRIBUTION_AUTH' => Authorizations::generate_select(DOWNLOAD_CONTRIBUTION_CAT_AUTH_BIT, $config->get_authorizations()),
+		'DESCRIPTION' => FormatingHelper::unparse($config->get_root_contents()),
 		'KERNEL_EDITOR' => $editor->display(),
 		'L_REQUIRE' => $LANG['require'],		
 		'L_DOWNLOAD_MANAGEMENT' => $DOWNLOAD_LANG['download_management'],
 		'L_DOWNLOAD_ADD' => $DOWNLOAD_LANG['download_add'],
 		'L_DOWNLOAD_CAT' => $LANG['cat_management'],
 		'L_DOWNLOAD_CONFIG' => $DOWNLOAD_LANG['download_config'],
-		'L_NBR_FILE_MAX' => $DOWNLOAD_LANG['nbr_download_max'],
-		'L_NBR_COLUMN_MAX' => $DOWNLOAD_LANG['nbr_columns_for_cats'],
-		'L_NOTE_MAX' => $LANG['note_max'],
+		'L_MAX_FILES_NUMBER_PER_PAGE' => $DOWNLOAD_LANG['nbr_download_max'],
+		'L_COLUMNS_NUMBER' => $DOWNLOAD_LANG['nbr_columns_for_cats'],
+		'L_NOTATION_SCALE' => $LANG['note_max'],
 		'L_SUBMIT' => $LANG['submit'],
 		'L_UPDATE' => $LANG['update'],
 		'L_RESET' => $LANG['reset'],

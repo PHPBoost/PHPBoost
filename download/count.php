@@ -41,7 +41,7 @@ if (!empty($idurl))
 	//Vérification de l'autorisation sur le fichier
 	$Cache->load('download');
 	
-    $auth_read = $User->check_auth($CONFIG_DOWNLOAD['global_auth'], DOWNLOAD_READ_CAT_AUTH_BIT);
+    $auth_read = $User->check_auth(DownloadConfig::load()->get_authorizations(), DOWNLOAD_READ_CAT_AUTH_BIT);
     $id_cat_for_download = (int)$info_file['idcat'];
     
     //Bread_crumb : we read categories list recursively

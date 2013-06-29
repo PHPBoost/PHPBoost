@@ -81,7 +81,7 @@ class DownloadSearchable extends AbstractSearchableExtensionPoint
      */
     public function parse_search_result($result_data)
     {
-        global $Cache, $LANG, $DOWNLOAD_LANG, $CONFIG_DOWNLOAD;
+        global $Cache, $LANG, $DOWNLOAD_LANG;
         $Cache->load('download');
 
         load_module_lang('download'); //Chargement de la langue du module.
@@ -93,7 +93,7 @@ class DownloadSearchable extends AbstractSearchableExtensionPoint
          
         $notation = new Notation();
 		$notation->set_module_name('download');
-		$notation->set_notation_scale($CONFIG_DOWNLOAD['note_max']);
+		$notation->set_notation_scale(DownloadConfig::load()->get_notation_scale());
 
         $tpl->put_all(array(
             'L_ADDED_ON' => sprintf($DOWNLOAD_LANG['add_on_date'], $date->format(DATE_FORMAT_TINY, TIMEZONE_USER)),

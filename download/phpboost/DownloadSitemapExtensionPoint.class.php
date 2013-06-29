@@ -39,10 +39,11 @@ class DownloadSitemapExtensionPoint implements SitemapExtensionPoint
 
 	private function get_module_map($auth_mode)
 	{
-		global $DOWNLOAD_CATS, $DOWNLOAD_LANG, $LANG, $User, $CONFIG_DOWNLOAD, $Cache;
+		global $DOWNLOAD_CATS, $DOWNLOAD_LANG, $LANG, $User, $Cache;
 
 		load_module_lang('download');
 		$Cache->load('download');
+		$config->get_authorizations()
 		
 		require_once PATH_TO_ROOT . '/download/download_auth.php';
 
@@ -61,11 +62,11 @@ class DownloadSitemapExtensionPoint implements SitemapExtensionPoint
 
 			if ($auth_mode == Sitemap::AUTH_PUBLIC)
 			{
-				$this_auth = is_array($properties['auth']) ? Authorizations::check_auth(RANK_TYPE, User::VISITOR_LEVEL, $properties['auth'], DOWNLOAD_READ_CAT_AUTH_BIT) : Authorizations::check_auth(RANK_TYPE, User::VISITOR_LEVEL, $CONFIG_DOWNLOAD['global_auth'], DOWNLOAD_READ_CAT_AUTH_BIT);
+				$this_auth = is_array($properties['auth']) ? Authorizations::check_auth(RANK_TYPE, User::VISITOR_LEVEL, $properties['auth'], DOWNLOAD_READ_CAT_AUTH_BIT) : Authorizations::check_auth(RANK_TYPE, User::VISITOR_LEVEL, $config->get_authorizations(), DOWNLOAD_READ_CAT_AUTH_BIT);
 			}
 			else
 			{
-				$this_auth = is_array($properties['auth']) ? $User->check_auth($properties['auth'], DOWNLOAD_READ_CAT_AUTH_BIT) : $User->check_auth($CONFIG_DOWNLOAD['global_auth'], DOWNLOAD_READ_CAT_AUTH_BIT);
+				$this_auth = is_array($properties['auth']) ? $User->check_auth($properties['auth'], DOWNLOAD_READ_CAT_AUTH_BIT) : $User->check_auth($config->get_authorizations(), DOWNLOAD_READ_CAT_AUTH_BIT);
 			}
 
 			if ($this_auth && $id != 0 && $properties['visible'] && $properties['id_parent'] == $id_cat)
@@ -79,7 +80,7 @@ class DownloadSitemapExtensionPoint implements SitemapExtensionPoint
 	
 	private function create_module_map_sections($id_cat, $auth_mode)
 	{
-		global $DOWNLOAD_CATS, $LANG, $User, $CONFIG_DOWNLOAD;
+		global $DOWNLOAD_CATS, $LANG, $User;
 		
 		$this_category = new SitemapLink($DOWNLOAD_CATS[$id_cat]['name'], new Url('/download/' . url('download.php?cat='.$id_cat, 'category-' . $id_cat . '+' . Url::encode_rewrite($DOWNLOAD_CATS[$id_cat]['name']) . '.php')));
 

@@ -39,7 +39,7 @@ class DownloadFeedProvider implements FeedProvider
 		$querier = PersistenceContext::get_querier();
 		require_once(PATH_TO_ROOT . '/download/download_auth.php');
 
-		global $Cache, $LANG, $DOWNLOAD_LANG, $CONFIG_DOWNLOAD, $DOWNLOAD_CATS;
+		global $Cache, $LANG, $DOWNLOAD_LANG, $DOWNLOAD_CATS;
 		load_module_lang('download');
 		$Cache->load('download');
 		$data = new FeedData();
@@ -65,7 +65,7 @@ class DownloadFeedProvider implements FeedProvider
         ORDER BY timestamp DESC LIMIT :limit OFFSET 0';
 		$results = $querier->select($req, array(
 			'children' => $children_cats,
-			'limit' => 2 * $CONFIG_DOWNLOAD['nbr_file_max']));
+			'limit' => 2 * DownloadConfig::load()->get_max_files_number_per_page()));
 
 		foreach ($results as $row)
 		{
