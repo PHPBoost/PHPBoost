@@ -2,7 +2,7 @@
 		<!--
 		function check_form_conf()
 		{
-			if(document.getElementById('nbr_download_max').value == "") {
+			if(document.getElementById('nbr_file_max').value == "") {
 				alert("{L_REQUIRE}");
 				return false;
 			}
