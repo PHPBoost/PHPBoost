@@ -4,7 +4,7 @@
  *                            -------------------
  *   begin                : November 30, 2012
  *   copyright            : (C) 2012 Julien BRISWALTER
- *   email                : julien.briswalter@gmail.com
+ *   email                : julienseth78@phpboost.com
  *
  *
  ###################################################
@@ -25,35 +25,49 @@
  *
  ###################################################*/
 
-/**
- * @author Julien BRISWALTER <julien.briswalter@gmail.com>
- * @desc Delete controller of the guestbook module
+ /**
+ * @author Julien BRISWALTER <julienseth78@phpboost.com>
  */
 class GuestbookDeleteController extends ModuleController
 {
 	public function execute(HTTPRequestCustom $request)
 	{
-		AppContext::get_session()->csrf_post_protect();
+		AppContext::get_session()->csrf_get_protect();
 		
-		//Authorization check
-		if (!AppContext::get_current_user()->check_auth(GuestbookConfig::load()->get_authorizations(), GuestbookConfig::GUESTBOOK_MODO_AUTH_BIT))
+		$message = $this->get_message($request);
+		
+		$this->check_authorizations($message);
+		
+		GuestbookService::delete('WHERE id=:id', array('id' => $message->get_id()));
+		
+		AppContext::get_response()->redirect(GuestbookUrlBuilder::home($request->get_int('page', 1)));
+	}
+	
+	private function get_message(HTTPRequestCustom $request)
+	{
+		$id = $request->get_getint('id', 0);
+		
+		if (!empty($id))
+		{
+			try {
+				return GuestbookService::get_message('WHERE id=:id', array('id' => $id));
+			} catch (RowNotFoundException $e) {
+				$error_controller = PHPBoostErrors::unexisting_page();
+				DispatchManager::redirect($error_controller);
+			}
+		}
+	}
+	
+	private function check_authorizations($message)
+	{
+		if (!(GuestbookAuthorizationsService::check_authorizations()->moderation() || (GuestbookAuthorizationsService::check_authorizations()->write() && $message->get_author_user()->get_id() == AppContext::get_current_user()->get_id())))
 		{
 			$error_controller = PHPBoostErrors::user_not_authorized();
 			DispatchManager::redirect($error_controller);
 		}
-		
-		$id = $request->get_int('id', null);
-		$page = $request->get_int('page', 1);
-		
-		if (!empty($id))
+		if (AppContext::get_current_user()->is_readonly())
 		{
-			GuestbookService::delete("WHERE id=:id", array('id' => $id));
-			
-			AppContext::get_response()->redirect(GuestbookUrlBuilder::home($page)->absolute());
-		}
-		else
-		{
-			$controller = new UserErrorController(LangLoader::get_message('error', 'errors-common'), LangLoader::get_message('guestbook.error.e_unexist_message', 'guestbook_common', 'guestbook'));
+			$controller = PHPBoostErrors::user_in_read_only();
 			DispatchManager::redirect($controller);
 		}
 	}

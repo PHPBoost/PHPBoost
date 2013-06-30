@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                              guestbook_common.php
+ *                              common.php
  *                            -------------------
  *   begin                : November 30, 2012
  *   copyright            : (C) 2012 Julien BRISWALTER
@@ -29,33 +29,30 @@
 # English                                          #
 ####################################################
 
-$lang = array();
-
 //Module title
-$lang['guestbook.module_title'] = 'Guest Book';
-
-//Admin
-$lang['guestbook.titles.admin.module_config'] = 'Guestbook module configuration';
-$lang['guestbook.titles.admin.config'] = 'Configuration';
-$lang['guestbook.titles.admin.authorizations'] = 'Authorizations';
-$lang['guestbook.config.items_per_page'] = 'Messages number per page'; 
-$lang['guestbook.config.enable_captcha'] = 'Enable captcha';
-$lang['guestbook.config.captcha_difficulty'] = 'Captcha difficulty';
-$lang['guestbook.config.forbidden-tags'] = 'Forbidden tags';
-$lang['guestbook.config.max_links'] = 'Max links number in a message';
-$lang['guestbook.config.max_links_explain'] = '-1 for unlimited';
-$lang['guestbook.config.post_rank'] = 'Write permission';
-$lang['guestbook.config.modo_rank'] = 'Permission to delete or modify a message';
+$lang['module_title'] = 'Guest Book';
 
 //Title
 $lang['guestbook.titles.more_contents'] = '[Read more...]';
 $lang['guestbook.titles.no_message'] = 'No message';
+$lang['guestbook.delete_message_confirm'] = 'Delete this message?';
+$lang['guestbook.add'] = 'Sign the guest book';
+$lang['guestbook.edit'] = 'Message edition';
 
-//Errors
-$lang['guestbook.error.require_items_per_page'] = 'The field \"Messages number per page\" must not be empty';
-$lang['guestbook.error.number-required'] = 'The value entered must be a number';
-
-//Success
-$lang['guestbook.success.config'] = 'The configuration has been modified';
+//Admin
+$lang['admin.config'] = 'Configuration';
+$lang['admin.config.items_per_page'] = 'Messages number per page';
+$lang['admin.config.enable_captcha'] = 'Enable captcha';
+$lang['admin.config.captcha_difficulty'] = 'Captcha difficulty';
+$lang['admin.config.forbidden-tags'] = 'Forbidden tags';
+$lang['admin.config.max_links'] = 'Max links number in a message';
+$lang['admin.config.max_links_explain'] = '-1 for unlimited';
+$lang['admin.authorizations'] = 'Permissions';
+$lang['admin.authorizations.read']  = 'Permission to display the guestbook';
+$lang['admin.authorizations.write']  = 'Write permission';
+$lang['admin.authorizations.moderation']  = 'Moderation permission';
+$lang['admin.config.success'] = 'The configuration has been modified';
+$lang['admin.config.error.require_items_per_page'] = 'The field \"Messages number per page\" must not be empty';
+$lang['admin.config.error.number-required'] = 'The value entered must be a number';
 
 ?>

@@ -34,9 +34,10 @@ $url_controller_mappers = array(
 	new UrlControllerMapper('AdminGuestbookConfigController', '`^/admin/config/error/([a-z_-]+)?/?$`', array('error')),
 	new UrlControllerMapper('AdminGuestbookConfigController', '`^/admin/config/success/([a-z_-]+)?/?$`', array('success')),
 	
-	new UrlControllerMapper('GuestbookDeleteController', '`^/delete/([0-9]+)?/?([0-9]+)?/?$`', array('id', 'page')),
-	new UrlControllerMapper('GuestbookController', '`^(?:/([0-9]+))?/?([0-9]+)?/?$`', array('page', 'id')),
-	new UrlControllerMapper('UserError404Controller', '`^/([\w/_-]*)?/?$`'),
+	new UrlControllerMapper('GuestbookFormController', '`^/add(?:/[0-9]+)??$`', array('page')),
+	new UrlControllerMapper('GuestbookFormController', '`^/([0-9]+)/edit(?:/([0-9]+))?/?$`', array('id', 'page')),
+	new UrlControllerMapper('GuestbookDeleteController', '`^/([0-9]+)/delete(?:/([0-9]+))?/?$`', array('id', 'page')),
+	new UrlControllerMapper('GuestbookController', '`^(?:/([0-9]+))?/?$`', array('page')),
 );
 DispatchManager::dispatch($url_controller_mappers);
 ?>

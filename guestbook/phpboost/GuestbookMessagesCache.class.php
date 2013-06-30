@@ -31,35 +31,44 @@
 class GuestbookMessagesCache implements CacheData
 {
 	private $messages = array();
-
+	
 	public function synchronize()
 	{
 		$this->messages = array();
+		$items_number_per_page = GuestbookConfig::load()->get_items_per_page();
 		
-		$result = PersistenceContext::get_querier()->select("SELECT g.id, g.login, g.user_id, g.timestamp, m.login as mlogin, m.level, m.user_groups, g.contents
+		$result = PersistenceContext::get_querier()->select("SELECT g.id, g.login, g.contents, g.timestamp, m.user_id, m.login as mlogin, m.level, m.user_groups
 		FROM " . PREFIX . "guestbook g
 		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = g.user_id
-		ORDER BY g.timestamp DESC");
-
+		GROUP BY g.id
+		ORDER BY RAND()
+		LIMIT 50");
+		
+		$page = $i = 1;
 		foreach ($result as $msg)
 		{
+			if ($i > ($page * $items_number_per_page))
+				$page ++;
+			
 			$this->messages[$msg['id']] = array(
 				'id' => $msg['id'],
-				'contents' => nl2br(TextHelper::substr_html(strip_tags(FormatingHelper::second_parse($msg['contents'])), 0, 150)),
+				'contents' => strip_tags(FormatingHelper::second_parse($msg['contents'])),
 				'user_id' => $msg['user_id'],
 				'login' => $msg['mlogin'] ? $msg['mlogin'] : $msg['login'],
 				'level' => $msg['level'],
 				'user_groups' => $msg['user_groups'],
-				'timestamp' => $msg['timestamp']
+				'timestamp' => $msg['timestamp'],
+				'page' => $page
 			);
+			$i++;
 		}
 	}
-
+	
 	public function get_messages()
 	{
 		return $this->messages;
 	}
-
+	
 	public function get_message($identifier)
 	{
 		if (isset($this->messages[$identifier]))
@@ -68,7 +77,7 @@ class GuestbookMessagesCache implements CacheData
 		}
 		return null;
 	}
-
+	
 	/**
 	 * Loads and returns the messages guestbook cached data.
 	 * @return GuestbookCache The cached data
@@ -77,7 +86,7 @@ class GuestbookMessagesCache implements CacheData
 	{
 		return CacheManager::load(__CLASS__, 'module', 'guestbook-messages');
 	}
-
+	
 	/**
 	 * Invalidates the current Guestbook messages cached data.
 	 */

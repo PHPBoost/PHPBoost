@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                             guestbook_common.php
+ *                             common.php
  *                            -------------------
  *   begin                : November 30, 2012
  *   copyright            : (C) 2012 Julien BRISWALTER
@@ -29,32 +29,30 @@
 # French                                           #
 ####################################################
 
-$lang = array();
+//Module title
+$lang['module_title'] = 'Livre d\'or';
 
-//Titre du module
-$lang['guestbook.module_title'] = 'Livre d\'or';
-
-//Admin
-$lang['guestbook.titles.admin.module_config'] = 'Configuration du module Livre d\'or';
-$lang['guestbook.titles.admin.config'] = 'Configuration';
-$lang['guestbook.titles.admin.authorizations'] = 'Autorisations';
-$lang['guestbook.config.items_per_page'] = 'Nombre de messages par page';
-$lang['guestbook.config.enable_captcha'] = 'Activer la protection anti-spam';
-$lang['guestbook.config.captcha_difficulty'] = 'Difficulté de l\'anti spam';
-$lang['guestbook.config.forbidden-tags'] = 'Types de formatage interdits';
-$lang['guestbook.config.max_links'] = 'Nombre de liens maximum dans le message';
-$lang['guestbook.config.max_links_explain'] = 'Mettre -1 pour illimité';
-$lang['guestbook.config.post_rank']  = 'Autorisation d\'écriture';
-$lang['guestbook.config.modo_rank'] = 'Autorisation de supprimer ou modifier un message';
-
-//Titre
+//Title
 $lang['guestbook.titles.more_contents'] = '[Suite...]';
 $lang['guestbook.titles.no_message'] = 'Aucun message';
+$lang['guestbook.delete_message_confirm'] = 'Etes-vous sûr de vouloir supprimer ce message ?';
+$lang['guestbook.add'] = 'Signer le livre d\'or';
+$lang['guestbook.edit'] = 'Edition d\'un message';
 
-//Erreurs
-$lang['guestbook.error.require_items_per_page'] = 'Veuillez remplir le champ \"Nombre de messages par page\"';
-$lang['guestbook.error.number-required'] = 'La valeur saisie doit être un nombre';
+//Admin
+$lang['admin.config'] = 'Configuration';
+$lang['admin.config.items_per_page'] = 'Nombre de messages par page';
+$lang['admin.config.enable_captcha'] = 'Activer la protection anti-spam';
+$lang['admin.config.captcha_difficulty'] = 'Difficulté de l\'anti spam';
+$lang['admin.config.forbidden-tags'] = 'Formats interdits';
+$lang['admin.config.max_links'] = 'Nombre de liens maximum dans le message';
+$lang['admin.config.max_links_explain'] = 'Mettre -1 pour illimité';
+$lang['admin.authorizations'] = 'Autorisations';
+$lang['admin.authorizations.read']  = 'Autorisation d\'afficher le livre d\'or';
+$lang['admin.authorizations.write']  = 'Autorisation d\'écriture';
+$lang['admin.authorizations.moderation']  = 'Autorisation de supprimer ou modifier un message';
+$lang['admin.config.success'] = 'La configuration a été modifiée';
+$lang['admin.config.error.require_items_per_page'] = 'Veuillez remplir le champ \"Nombre de messages par page\"';
+$lang['admin.config.error.number-required'] = 'La valeur saisie doit être un nombre';
 
-//Succès
-$lang['guestbook.success.config'] = 'La configuration a été modifiée';
 ?>

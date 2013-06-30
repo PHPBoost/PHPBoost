@@ -10,17 +10,6 @@
 }
 
 /* general Class */
-div.error_writing_auth{
-	text-align:center;
-	margin:10px;
-	margin-bottom:25px;
-}
-
-div.warning_punishment{
-	float:right;
-	font-size:10px;
-}
-
 .text_italic{
 	font-style:italic;
 }

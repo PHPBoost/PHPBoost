@@ -4,7 +4,7 @@
  *                            -------------------
  *   begin                : December 12, 2012
  *   copyright            : (C) 2012 Julien BRISWALTER
- *   email                : julien.briswalter@gmail.com
+ *   email                : julienseth78@phpboost.com
  *
  *
  ###################################################
@@ -25,28 +25,24 @@
  *
  ###################################################*/
 
-/**
- * @author Julien BRISWALTER <julien.briswalter@gmail.com>
- * @desc Module controller of the guestbook module
+ /**
+ * @author Julien BRISWALTER <julienseth78@phpboost.com>
  */
 class GuestbookController extends ModuleController
 {
-	private $lang;
-	
 	public function execute(HTTPRequestCustom $request)
 	{
-		$this->lang = LangLoader::get('guestbook_common', 'guestbook');
-		
 		return $this->build_response(GuestbookModuleHomePage::get_view());
 	}
 	
 	private function build_response(View $view)
 	{
-		$response = new SiteDisplayResponse($view);
-		$breadcrumb = $response->get_graphical_environment()->get_breadcrumb();
-		$breadcrumb->add($this->lang['guestbook.module_title'], GuestbookUrlBuilder::home()->absolute());
-		$response->get_graphical_environment()->set_page_title($this->lang['guestbook.module_title']);
-		return $response;
+		$lang = LangLoader::get('common', 'guestbook');
+		
+		$response = new GuestbookDisplayResponse();
+		$response->add_breadcrumb_link($lang['module_title'], GuestbookUrlBuilder::home(AppContext::get_request()->get_getint('page', 1)));
+		$response->set_page_title($lang['module_title']);
+		return $response->display($view);
 	}
 }
 ?>

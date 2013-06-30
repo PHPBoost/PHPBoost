@@ -34,43 +34,34 @@ class GuestbookModuleMiniMenu extends ModuleMiniMenu
 	
 	public function display($tpl = false)
 	{
-		if (!Url::is_current_url('/guestbook/'))
+		if (!Url::is_current_url('/guestbook/') && GuestbookAuthorizationsService::check_authorizations()->read())
 		{
-			$lang = LangLoader::get('guestbook_common', 'guestbook');
-			$guestbook_cache = GuestbookMessagesCache::load();
-			$guestbook_msgs_cache = $guestbook_cache->get_messages();
+			$lang = LangLoader::get('common', 'guestbook');
+			$main_lang = LangLoader::get('main');
 			$tpl = new FileTemplate('guestbook/GuestbookModuleMiniMenu.tpl');
 			$tpl->add_lang($lang);
 			MenuService::assign_positions_conditions($tpl, $this->get_block());
+			$tpl->put('U_GUESTBOOK',GuestbookUrlBuilder::home()->absolute());
 			
-			$rand = array_rand($guestbook_msgs_cache);
-			$guestbook_rand = isset($guestbook_msgs_cache[$rand]) ? $guestbook_cache->get_message($rand) : null;
+			$guestbook_cache = GuestbookMessagesCache::load();
+			$random_message = $guestbook_cache->get_message(array_rand($guestbook_cache->get_messages()));
 			
-			if ($guestbook_rand === null)
+			if ($random_message !== null)
 			{
-				$tpl->put_all(array(
-					'C_ANY_MESSAGE_GUESTBOOK' => false,
-					'LINK_GUESTBOOK' => GuestbookUrlBuilder::home()->absolute()
-				));
-			}
-			else
-			{
-				//Pseudo.
-				if ($guestbook_rand['user_id'] != -1)
-				{
-					$group_color = User::get_group_color($guestbook_rand['user_groups'], $guestbook_rand['level']);
-					$guestbook_login = '<a class="small_link '.UserService::get_level_class($guestbook_rand['level']).'"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . ' href="' . UserUrlBuilder::profile($guestbook_rand['user_id'])->absolute() . '" title="' . $guestbook_rand['login'] . '"><span class="text_strong">' . TextHelper::wordwrap_html($guestbook_rand['login'], 13) . '</span></a>';
-				}
-				else
-					$guestbook_login = '<span class="text_italic">' . (!empty($guestbook_rand['login']) ? TextHelper::wordwrap_html($guestbook_rand['login'], 13) : LangLoader::get_message('guest', 'main')) . '</span>';
+				$user_group_color = User::get_group_color($random_message['user_groups'], $random_message['level']);
 				
 				$tpl->put_all(array(
 					'C_ANY_MESSAGE_GUESTBOOK' => true,
-					'RAND_MSG_ID' => $guestbook_rand['id'],
-					'RAND_MSG_CONTENTS' => (strlen($guestbook_rand['contents']) > 149) ? $guestbook_rand['contents'] . ' <a href="' . GuestbookUrlBuilder::home('#m' . $guestbook_rand['id'])->absolute() . '" class="small_link">' . $lang['guestbook.titles.more_contents'] . '</a>' : $guestbook_rand['contents'],
-					'RAND_MSG_LOGIN' => $guestbook_login,
-					'L_BY' => LangLoader::get_message('by', 'main'),
-					'LINK_GUESTBOOK' => GuestbookUrlBuilder::home('#m' . $guestbook_rand['id'])->absolute()
+					'C_USER_GROUP_COLOR' => !empty($user_group_color),
+					'C_MORE_CONTENTS' => strlen($random_message['contents']) >= 200,
+					'C_VISITOR' => empty($random_message['user_id']),
+					'CONTENTS' => nl2br(TextHelper::substr_html($random_message['contents'], 0, 200)),
+					'USER_PSEUDO' => $random_message['login'],
+					'USER_LEVEL_CLASS' => UserService::get_level_class($random_message['level']),
+					'USER_GROUP_COLOR' => $user_group_color,
+					'L_GUEST' => $main_lang['guest'],
+					'L_BY' => $main_lang['by'],
+					'U_MESSAGE' => GuestbookUrlBuilder::home($random_message['page'], $random_message['id'])->absolute()
 				));
 			}
 			return $tpl->render();

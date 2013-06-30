@@ -27,13 +27,13 @@
 
 class GuestbookSetup extends DefaultModuleSetup
 {
-	private static $guestbook_table;
-
+	public static $guestbook_table;
+	
 	public static function __static()
 	{
 		self::$guestbook_table = PREFIX . 'guestbook';
 	}
-
+	
 	public function install()
 	{
 		$this->drop_tables();
@@ -44,13 +44,13 @@ class GuestbookSetup extends DefaultModuleSetup
 	{
 		return '4.1.0';
 	}
-
+	
 	public function uninstall()
 	{
 		$this->drop_tables();
 		$this->delete_configuration();
 	}
-
+	
 	private function drop_tables()
 	{
 		PersistenceContext::get_dbms_utils()->drop(array(self::$guestbook_table));
@@ -60,12 +60,12 @@ class GuestbookSetup extends DefaultModuleSetup
 	{
 		ConfigManager::delete('guestbook', 'config');
 	}
-
+	
 	private function create_tables()
 	{
 		$this->create_guestbook_table();
 	}
-
+	
 	private function create_guestbook_table()
 	{
 		$fields = array(
