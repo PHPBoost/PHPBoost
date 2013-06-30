@@ -33,7 +33,7 @@ $poll_config = PollConfig::load();
 
 if (!empty($_POST['valid']))
 {
-	$poll_config->set_authorizations(retrieve(POST, 'authorizations', '-1'));
+	$poll_config->set_authorizations(Authorizations::build_auth_array_from_form(PollAuthorizationsService::READ_AUTHORIZATIONS, PollAuthorizationsService::WRITE_AUTHORIZATIONS));
 	$poll_config->set_displayed_in_mini_module_list(!empty($_POST['displayed_in_mini_module_list']) ? $_POST['displayed_in_mini_module_list'] : array());
 	$poll_config->set_cookie_name(retrieve(POST, 'cookie_name', 'poll', TSTRING_UNCHANGE));
 	$poll_config->set_cookie_lenght(!empty($_POST['cookie_lenght']) ? NumberHelper::numeric($_POST['cookie_lenght']) : 30);
@@ -71,9 +71,11 @@ else
 	
 	$Template->put_all(array(
 		'COOKIE_NAME' => $poll_config->get_cookie_name(),
-		'COOKIE_LENGHT' => $poll_config->get_cookie_lenght(),		
-		'POLL_LIST' => $poll_list,		
-		'NBR_POLL' => $i,		
+		'COOKIE_LENGHT' => $poll_config->get_cookie_lenght(),
+		'POLL_LIST' => $poll_list,
+		'NBR_POLL' => $i,
+		'READ_AUTHORIZATION' => Authorizations::generate_select(PollAuthorizationsService::READ_AUTHORIZATIONS, $poll_config->get_authorizations()),
+		'WRITE_AUTHORIZATION' => Authorizations::generate_select(PollAuthorizationsService::WRITE_AUTHORIZATIONS, $poll_config->get_authorizations()),
 		'L_POLL_MANAGEMENT' => $LANG['poll_management'],
 		'L_POLL_ADD' => $LANG['poll_add'],
 		'L_POLL_CONFIG' => $LANG['poll_config'],
@@ -81,7 +83,9 @@ else
 		'L_POLL_CONFIG_ADVANCED' => $LANG['poll_config_advanced'],
 		'L_DISPLAYED_IN_MINI_MODULE_LIST' => $LANG['displayed_in_mini_module_list'],
 		'L_DISPLAYED_IN_MINI_MODULE_LIST_EXPLAIN' => $LANG['displayed_in_mini_module_list_explain'],
-		'L_RANK' => $LANG['rank_vote'],
+		'L_AUTHORIZATIONS' => $LANG['admin.authorizations'],
+		'L_READ_AUTHORIZATION' => $LANG['admin.authorizations.read'],
+		'L_WRITE_AUTHORIZATION' => $LANG['admin.authorizations.write'],
 		'L_COOKIE_NAME' => $LANG['cookie_name'],
 		'L_COOKIE_LENGHT' => $LANG['cookie_lenght'],
 		'L_SELECT_ALL' => $LANG['select_all'],
@@ -90,31 +94,6 @@ else
 		'L_UPDATE' => $LANG['update'],
 		'L_RESET' => $LANG['reset']
 	));
-	
-	//Rang d'autorisation.
-	for ($i = -1; $i <= 2; $i++)
-	{
-		switch ($i) 
-		{	
-			case -1:
-				$rank = $LANG['guest'];
-			break;				
-			case 0:
-				$rank = $LANG['member'];
-			break;				
-			case 1: 
-				$rank = $LANG['modo'];
-			break;		
-			case 2:
-				$rank = $LANG['admin'];
-			break;					
-			default: -1;
-		} 
-		$selected = ($config_authorizations == $i) ? 'selected="selected"' : '' ;
-		$Template->assign_block_vars('select_authorizations', array(
-			'RANK' => '<option value="' . $i . '" ' . $selected . '>' . $rank . '</option>'
-		));
-	} 
 	 
 	$Template->pparse('admin_poll_config');	
 }

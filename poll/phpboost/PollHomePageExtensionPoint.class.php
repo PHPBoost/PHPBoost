@@ -50,6 +50,8 @@ class PollHomePageExtensionPoint implements HomePageExtensionPoint
 	
 	private function get_view()
 	{
+		$this->check_authorizations();
+		
 		global $User, $Cache, $Bread_crumb, $POLL_CAT, $POLL_LANG, $LANG, $Session;
 
 		require_once(PATH_TO_ROOT . '/poll/poll_begin.php');
@@ -87,6 +89,16 @@ class PollHomePageExtensionPoint implements HomePageExtensionPoint
 		$this->sql_querier->query_close($result);	
 
 		return $tpl;
+	}
+	
+	
+	private function check_authorizations()
+	{
+		if (!PollAuthorizationsService::check_authorizations()->read())
+		{
+			$error_controller = PHPBoostErrors::user_not_authorized();
+			DispatchManager::redirect($error_controller);
+		}
 	}
 }
 ?>

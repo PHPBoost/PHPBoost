@@ -2,10 +2,6 @@
 			<!--
 			function check_form_conf()
 			{
-				if(document.getElementById('authorizations').value == "") {
-					alert("{L_REQUIRE}");
-					return false;
-				}
 				if(document.getElementById('cookie_lenght').value == "") {
 					alert("{L_REQUIRE}");
 					return false;
@@ -64,16 +60,6 @@
 							<a class="small_link" href="javascript:check_select_multiple('displayed_in_mini_module_list', true);">{L_SELECT_ALL}</a>/<a class="small_link" href="javascript:check_select_multiple('displayed_in_mini_module_list', false);">{L_SELECT_NONE}</a>
 						</label></dd>
 					</dl>
-					<dl>
-						<dt><label for="authorizations">* {L_RANK}</label></dt>
-						<dd><label>
-							<select name="authorizations" id="authorizations">
-								# START select_authorizations #
-									{select_authorizations.RANK}
-								# END select_authorizations #
-							</select>
-						</label></dd>
-					</dl>
 				</fieldset>	
 				<fieldset>
 					<legend>{L_POLL_CONFIG_ADVANCED}</legend>
@@ -84,6 +70,31 @@
 					<dl>
 						<dt><label for="cookie_lenght">* {L_COOKIE_LENGHT}</label></dt>
 						<dd><label><input type="text" maxlength="11" size="6" name="cookie_lenght" id="cookie_lenght" value="{COOKIE_LENGHT}" class="text" /></label> {L_DAYS}</dd>
+					</dl>
+				</fieldset>
+				<fieldset>
+					<legend>
+						{L_AUTHORIZATIONS}
+					</legend>
+					<dl>
+						<dt>
+							<label>
+								{L_READ_AUTHORIZATION}
+							</label>
+						</dt>
+						<dd>
+							{READ_AUTHORIZATION}
+						</dd>
+					</dl>
+					<dl>
+						<dt>
+							<label>
+								{L_WRITE_AUTHORIZATION}
+							</label>
+						</dt>
+						<dd>
+							{WRITE_AUTHORIZATION}
+						</dd>
 					</dl>
 				</fieldset>
 				<fieldset class="fieldset_submit">

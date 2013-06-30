@@ -49,7 +49,9 @@ $LANG['displayed_in_mini_module_list'] = 'Mini-poll';
 $LANG['displayed_in_mini_module_list'] = 'Random display if more than one poll is selected';
 $LANG['cookie_name'] = 'Cookie name';
 $LANG['cookie_lenght'] = 'Cookie life length';
-$LANG['rank_vote'] = 'Rank to vote';
+$LANG['admin.authorizations'] = 'Permissions';
+$LANG['admin.authorizations.read'] = 'Permission to display polls';
+$LANG['admin.authorizations.write'] = 'Permission to vote';
 $LANG['poll_date'] = 'Poll date';
 $LANG['poll_date_explain'] = '(dd/mm/yy) Leave empty to use today\'s date';
 
