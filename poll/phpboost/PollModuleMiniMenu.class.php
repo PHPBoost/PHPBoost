@@ -39,12 +39,12 @@ class PollModuleMiniMenu extends ModuleMiniMenu
 
 	public function display($tpl = false)
     {
-    	global $Cache, $LANG, $_array_poll;
+		global $Cache, $LANG, $_array_poll;
 	    $Cache->load('poll'); //Mini sondages en cache => $_array_poll.
 		$poll_config = PollConfig::load();
 		$config_cookie_name = $poll_config->get_cookie_name();
 		
-	    if (!empty($_array_poll) && $_array_poll != array() && !Url::is_current_url('/poll/poll.php'))
+	    if (!empty($_array_poll) && $_array_poll != array() && !Url::is_current_url('/poll/poll.php') && PollAuthorizationsService::check_authorizations()->read())
 	    {
 	    	//Chargement de la langue du module.
 	    	load_module_lang('poll');

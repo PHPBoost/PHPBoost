@@ -55,7 +55,6 @@ $now = new Date(DATE_NOW, TIMEZONE_AUTO);
 $config_cookie_name = $poll_config->get_cookie_name();
 $config_cookie_lenght = $poll_config->get_cookie_lenght();
 $config_displayed_in_mini_module_list = $poll_config->get_displayed_in_mini_module_list();
-$config_authorizations = $poll_config->get_authorizations();
 
 if (!empty($_POST['valid_poll']) && !empty($poll['id']) && !$archives)
 {
@@ -65,8 +64,8 @@ if (!empty($_POST['valid_poll']) && !empty($poll['id']) && !$archives)
 		DispatchManager::redirect($controller);
 	}
 	
-	//Niveau d'autorisation.
-	if ($User->check_level($config_authorizations))
+	//Autorisation de voter
+	if (PollAuthorizationsService::check_authorizations()->write())
 	{
 		//On note le passage du visiteur par un cookie.
 		if (AppContext::get_request()->has_cookieparameter($config_cookie_name)) //Recherche dans le cookie existant.
@@ -91,7 +90,7 @@ if (!empty($_POST['valid_poll']) && !empty($poll['id']) && !$archives)
 		}
 		
 		$check_bdd = true;
-		if ($config_authorizations == -1) //Autorisé aux visiteurs, on filtre par ip => fiabilité moyenne.
+		if (Authorizations::check_auth(RANK_TYPE, -1, $poll_config->get_authorizations(), PollAuthorizationsService::WRITE_AUTHORIZATIONS)) //Autorisé aux visiteurs, on filtre par ip => fiabilité moyenne.
 		{
 			//Injection de l'adresse ip du visiteur dans la bdd.	
 			$ip = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "poll_ip WHERE ip = '" . AppContext::get_current_user()->get_ip() . "' AND idpoll = '" . $poll['id'] . "'",  __LINE__, __FILE__);		
@@ -168,7 +167,7 @@ elseif (!empty($poll['id']) && !$archives) //Affichage du sondage.
 
 	//Résultats
 	$check_bdd = false;
-	if ($config_authorizations == -1) //Autorisé aux visiteurs, on filtre par ip => fiabilité moyenne.
+	if (Authorizations::check_auth(RANK_TYPE, -1, $poll_config->get_authorizations(), PollAuthorizationsService::WRITE_AUTHORIZATIONS)) //Autorisé aux visiteurs, on filtre par ip => fiabilité moyenne.
 	{
 		//Injection de l'adresse ip du visiteur dans la bdd.	
 		$ip = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "poll_ip WHERE ip = '" . AppContext::get_current_user()->get_ip() . "' AND idpoll = '" . $poll['id'] . "'",  __LINE__, __FILE__);		

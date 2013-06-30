@@ -48,7 +48,9 @@ $LANG['displayed_in_mini_module_list'] = 'Mini-sondage';
 $LANG['displayed_in_mini_module_list_explain'] = 'Affichage aléatoire si plus d\'un sondage sélectionné';
 $LANG['cookie_name'] = 'Nom du cookie';
 $LANG['cookie_lenght'] = 'Durée de validité du cookie';
-$LANG['rank_vote'] = 'Rang pour pouvoir voter';
+$LANG['admin.authorizations'] = 'Autorisations';
+$LANG['admin.authorizations.read'] = 'Autorisation d\'afficher les sondages';
+$LANG['admin.authorizations.write'] = 'Rang pour pouvoir voter';
 $LANG['poll_date'] = 'Date du sondage';
 $LANG['poll_date_explain'] = '(jj/mm/aa) Laisser vide pour mettre la date d\'aujourd\'hui';
 

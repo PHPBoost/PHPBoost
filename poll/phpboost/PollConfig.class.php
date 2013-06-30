@@ -67,9 +67,9 @@ class PollConfig extends AbstractConfigData
 		return $this->get_property(self::AUTHORIZATIONS);
 	}
 
-	public function set_authorizations($value)
+	public function set_authorizations(array $array)
 	{
-		$this->set_property(self::AUTHORIZATIONS, $value);
+		$this->set_property(self::AUTHORIZATIONS, $array);
 	}
 	
 	public function get_default_values()
@@ -78,7 +78,7 @@ class PollConfig extends AbstractConfigData
 			self::COOKIE_NAME => 'poll',
 			self::COOKIE_LENGHT => 30 * 24 * 3600, //La durée du cookie est de 30 jours par défaut (30 * 24 * 3600 secondes)
 			self::DISPLAYED_IN_MINI_MODULE_LIST => array('1'),
-			self::AUTHORIZATIONS => '-1'
+			self::AUTHORIZATIONS => array('r-1' => 3, 'r0' => 3, 'r1' => 3)
 		);
 	}
 	
