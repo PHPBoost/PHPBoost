@@ -4,7 +4,7 @@
  *                            -------------------
  *   begin                : November 30, 2012
  *   copyright            : (C) 2012 Julien BRISWALTER
- *   email                : julien.briswalter@gmail.com
+ *   email                : julienseth78@phpboost.com
  *
  *  
  ###################################################
@@ -25,9 +25,8 @@
  *
  ###################################################*/
 
-/**
- * @author Julien BRISWALTER <julien.briswalter@gmail.com>
- * @desc Admin config controller of the guestbook module
+ /**
+ * @author Julien BRISWALTER <julienseth78@phpboost.com>
  */
 class AdminGuestbookConfigController extends AdminModuleController
 {
@@ -40,8 +39,8 @@ class AdminGuestbookConfigController extends AdminModuleController
 	 * @var FormButtonDefaultSubmit
 	 */
 	private $submit_button;
-	private $guestbook_config;
-
+	private $config;
+	
 	public function execute(HTTPRequestCustom $request)
 	{
 		$this->init();
@@ -61,7 +60,7 @@ class AdminGuestbookConfigController extends AdminModuleController
 		switch ($error)
 		{
 			case 'require_items_per_page':
-				$errstr = $this->lang['guestbook.error.require_items_per_page'];
+				$errstr = $this->lang['admin.config.error.require_items_per_page'];
 				break;
 			default:
 				$errstr = '';
@@ -73,7 +72,7 @@ class AdminGuestbookConfigController extends AdminModuleController
 		switch ($success)
 		{
 			case 'config_modified':
-				$errstr = $this->lang['guestbook.success.config'];
+				$errstr = $this->lang['admin.config.success'];
 				break;
 			default:
 				$errstr = '';
@@ -83,54 +82,52 @@ class AdminGuestbookConfigController extends AdminModuleController
 		
 		$tpl->put('FORM', $this->form->display());
 		
-		return new AdminGuestbookDisplayResponse($tpl, $this->lang['guestbook.titles.admin.module_config']);
+		return new AdminGuestbookDisplayResponse($tpl, $this->lang['module_title']);
 	}
-
+	
 	private function init()
 	{
-		$this->guestbook_config = GuestbookConfig::load();
-		$this->lang = LangLoader::get('guestbook_common', 'guestbook');
+		$this->config = GuestbookConfig::load();
+		$this->lang = LangLoader::get('common', 'guestbook');
 	}
-
+	
 	private function build_form()
 	{
-		$form = new HTMLForm('guestbook-config');
+		$form = new HTMLForm(__CLASS__);
 		
-		$fieldset = new FormFieldsetHTML('config', $this->lang['guestbook.titles.admin.config']);
+		$fieldset = new FormFieldsetHTML('config', $this->lang['admin.config']);
 		$form->add_fieldset($fieldset);
 		
-		$fieldset->add_field(new FormFieldTextEditor('items_per_page', $this->lang['guestbook.config.items_per_page'], (int)$this->guestbook_config->get_items_per_page(), array(
+		$fieldset->add_field(new FormFieldTextEditor('items_per_page', $this->lang['admin.config.items_per_page'], (int)$this->config->get_items_per_page(), array(
 			'class' => 'text', 'maxlength' => 3, 'size' => 3, 'required' => true),
 			array(new FormFieldConstraintRegex('`^[0-9]+$`i'))
 		));
 		
-		$fieldset->add_field(new FormFieldCheckbox('enable_captcha', $this->lang['guestbook.config.enable_captcha'], $this->guestbook_config->is_captcha_enabled(),
+		$fieldset->add_field(new FormFieldCheckbox('enable_captcha', $this->lang['admin.config.enable_captcha'], $this->config->is_captcha_enabled(),
 			array('events' => array('click' => 'if (HTMLForms.getField("enable_captcha").getValue()) { HTMLForms.getField("captcha_difficulty_level").enable(); } else { HTMLForms.getField("captcha_difficulty_level").disable(); }'))));
 			
-		$fieldset->add_field(new FormFieldSimpleSelectChoice('captcha_difficulty_level', $this->lang['guestbook.config.captcha_difficulty'], $this->guestbook_config->get_captcha_difficulty_level(), $this->generate_difficulty_level_options(),
-			array('hidden' => !$this->guestbook_config->is_captcha_enabled(), 'required' => true)));
+		$fieldset->add_field(new FormFieldSimpleSelectChoice('captcha_difficulty_level', $this->lang['admin.config.captcha_difficulty'], $this->config->get_captcha_difficulty_level(), $this->generate_difficulty_level_options(),
+			array('hidden' => !$this->config->is_captcha_enabled())));
 		
-		$fieldset->add_field(new FormFieldMultipleSelectChoice('forbidden_tags', $this->lang['guestbook.config.forbidden-tags'], $this->guestbook_config->get_forbidden_tags(),
+		$fieldset->add_field(new FormFieldMultipleSelectChoice('forbidden_tags', $this->lang['admin.config.forbidden-tags'], $this->config->get_forbidden_tags(),
 			$this->generate_forbidden_tags_option(), array('size' => 10)
 		));
 		
-		$fieldset->add_field(new FormFieldTextEditor('max_link', $this->lang['guestbook.config.max_links'], $this->guestbook_config->get_maximum_links_message(), array(
-			'class' => 'text', 'description' => $this->lang['guestbook.config.max_links_explain'], 'maxlength' => 3, 'size' => 3, 'required' => true),
-			array(new FormFieldConstraintRegex('`^([-]?[0-9]+)$`i', '`^([-]?[0-9]+)$`i', $this->lang['guestbook.error.number-required']))
+		$fieldset->add_field(new FormFieldTextEditor('max_link', $this->lang['admin.config.max_links'], $this->config->get_maximum_links_message(), array(
+			'class' => 'text', 'description' => $this->lang['admin.config.max_links_explain'], 'maxlength' => 3, 'size' => 3, 'required' => true),
+			array(new FormFieldConstraintRegex('`^([-]?[0-9]+)$`i', '`^([-]?[0-9]+)$`i', $this->lang['admin.config.error.number-required']))
 		));
 		
-		//Add a fieldset
-		$fieldset_authorizations = new FormFieldsetHTML('authorizations', $this->lang['guestbook.titles.admin.authorizations']);
+		$fieldset_authorizations = new FormFieldsetHTML('authorizations', $this->lang['admin.authorizations']);
 		$form->add_fieldset($fieldset_authorizations);
 		
-		//Authorizations list
 		$auth_settings = new AuthorizationsSettings(array(
-			new ActionAuthorization($this->lang['guestbook.config.post_rank'], GuestbookConfig::GUESTBOOK_WRITE_AUTH_BIT),
-			new ActionAuthorization($this->lang['guestbook.config.modo_rank'], GuestbookConfig::GUESTBOOK_MODO_AUTH_BIT)
+			new ActionAuthorization($this->lang['admin.authorizations.read'], GuestbookAuthorizationsService::READ_AUTHORIZATIONS),
+			new ActionAuthorization($this->lang['admin.authorizations.write'], GuestbookAuthorizationsService::WRITE_AUTHORIZATIONS),
+			new ActionAuthorization($this->lang['admin.authorizations.moderation'], GuestbookAuthorizationsService::MODERATION_AUTHORIZATIONS)
 		));
 		
-		//Load the authorizations in the configuration
-		$auth_settings->build_from_auth_array(GuestbookConfig::load()->get_authorizations());
+		$auth_settings->build_from_auth_array($this->config->get_authorizations());
 		$fieldset_authorizations->add_field(new FormFieldAuthorizationsSetter('authorizations', $auth_settings));
 		
 		$this->submit_button = new FormButtonDefaultSubmit();
@@ -139,7 +136,7 @@ class AdminGuestbookConfigController extends AdminModuleController
 		
 		$this->form = $form;
 	}
-
+	
 	private function generate_difficulty_level_options()
 	{
 		$options = array();
@@ -165,26 +162,27 @@ class AdminGuestbookConfigController extends AdminModuleController
 		$items_per_page = $this->form->get_value('items_per_page');
 		if (!empty($items_per_page))
 		{
-			$this->guestbook_config->set_items_per_page($items_per_page);
+			$this->config->set_items_per_page($items_per_page);
 			if ($this->form->get_value('enable_captcha'))
 			{
-				$this->guestbook_config->enable_captcha();
-				$this->guestbook_config->set_captcha_difficulty_level($this->form->get_value('captcha_difficulty_level')->get_raw_value());
+				$this->config->enable_captcha();
+				$this->config->set_captcha_difficulty_level($this->form->get_value('captcha_difficulty_level')->get_raw_value());
 			}
 			else
-				$this->guestbook_config->disable_captcha();
-				
+				$this->config->disable_captcha();
+			
 			$forbidden_tags = array();
 			foreach ($this->form->get_value('forbidden_tags') as $field => $option)
 			{
 				$forbidden_tags[] = $option->get_raw_value();
 			}
-
-			$this->guestbook_config->set_forbidden_tags($forbidden_tags);
-			$this->guestbook_config->set_maximum_links_message($this->form->get_value('max_link', -1));
-			$this->guestbook_config->set_authorizations($this->form->get_value('authorizations')->build_auth_array());
+			
+			$this->config->set_forbidden_tags($forbidden_tags);
+			$this->config->set_maximum_links_message($this->form->get_value('max_link', -1));
+			$this->config->set_authorizations($this->form->get_value('authorizations')->build_auth_array());
 			
 			GuestbookConfig::save();
+			GuestbookMessagesCache::invalidate();
 			
 			AppContext::get_response()->redirect(GuestbookUrlBuilder::configuration_success('config_modified'));
 		}

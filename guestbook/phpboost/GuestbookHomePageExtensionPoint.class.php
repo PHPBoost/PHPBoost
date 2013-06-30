@@ -4,7 +4,7 @@
  *                            -------------------
  *   begin                : February 08, 2012
  *   copyright            : (C) 2012 Julien BRISWALTER
- *   email                : julien.briswalter@gmail.com
+ *   email                : julienseth78@phpboost.com
  *
  *
  ###################################################
@@ -25,31 +25,21 @@
  *
  ###################################################*/
 
-/**
- * @author Julien BRISWALTER <julien.briswalter@gmail.com>
- * @desc Home page of the guestbook module
+ /**
+ * @author Julien BRISWALTER <julienseth78@phpboost.com>
  */
 class GuestbookHomePageExtensionPoint implements HomePageExtensionPoint
 {
-	 /**
-	 * @method Get the module home page
-	 */
 	public function get_home_page()
 	{
 		return new DefaultHomePage($this->get_title(), $this->get_view());
 	}
 	
-	 /**
-	 * @method Get the module title
-	 */
 	private function get_title()
 	{
-		return LangLoader::get_message('guestbook.module_title', 'guestbook_common', 'guestbook');
+		return LangLoader::get_message('module_title', 'common', 'guestbook');
 	}
 	
-	 /**
-	 * @method Get the module view
-	 */
 	private function get_view()
 	{
 		return GuestbookModuleHomePage::get_view();

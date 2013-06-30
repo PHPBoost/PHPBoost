@@ -1,9 +1,9 @@
 <?php
 /*##################################################
- *                           AdminGuestbookDisplayResponse.class.php
+ *                               GuestbookAuthorizationsService.class.php
  *                            -------------------
- *   begin                : November 30, 2012
- *   copyright            : (C) 2012 Julien BRISWALTER
+ *   begin                : June 27, 2013
+ *   copyright            : (C) 2013 julienseth78
  *   email                : julienseth78@phpboost.com
  *
  *
@@ -27,21 +27,37 @@
 
  /**
  * @author Julien BRISWALTER <julienseth78@phpboost.com>
- * @desc AdminMenuDisplayResponse of the guestbook module
  */
-class AdminGuestbookDisplayResponse extends AdminMenuDisplayResponse
+class GuestbookAuthorizationsService
 {
-	public function __construct($view, $title_page)
+	const READ_AUTHORIZATIONS = 1;
+	const WRITE_AUTHORIZATIONS = 2;
+	const MODERATION_AUTHORIZATIONS = 4;
+	
+	public static function check_authorizations()
 	{
-		parent::__construct($view);
-		
-		$lang = LangLoader::get('common', 'guestbook');
-		$picture = '/guestbook/guestbook.png';
-		$this->set_title($lang['module_title']);
-		$this->add_link($lang['admin.config'], GuestbookUrlBuilder::configuration(), $picture);
-		
-		$env = $this->get_graphical_environment();
-		$env->set_page_title($title_page);
+		$instance = new self();
+		return $instance;
+	}
+	
+	public function read()
+	{
+		return $this->get_authorizations(self::READ_AUTHORIZATIONS);
+	}
+	
+	public function write()
+	{
+		return $this->get_authorizations(self::WRITE_AUTHORIZATIONS);
+	}
+	
+	public function moderation()
+	{
+		return $this->get_authorizations(self::MODERATION_AUTHORIZATIONS);
+	}
+	
+	private function get_authorizations($bit)
+	{
+		return AppContext::get_current_user()->check_auth(GuestbookConfig::load()->get_authorizations(), $bit);
 	}
 }
 ?>

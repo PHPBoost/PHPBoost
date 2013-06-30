@@ -4,7 +4,7 @@
  *                            -------------------
  *   begin                : November 30, 2012
  *   copyright            : (C) 2012 Julien BRISWALTER
- *   email                : julien.briswalter@gmail.com
+ *   email                : julienseth78@phpboost.com
  *
  *
  ###################################################
@@ -25,9 +25,8 @@
  *
  ###################################################*/
 
-/**
- * @author Julien BRISWALTER <julien.briswalter@gmail.com>
- * @desc Url builder of the guestbook module
+ /**
+ * @author Julien BRISWALTER <julienseth78@phpboost.com>
  */
 class GuestbookUrlBuilder
 {
@@ -60,17 +59,38 @@ class GuestbookUrlBuilder
 	/**
 	 * @return Url
 	 */
-	public static function home($param = '')
+	public static function home($page = null, $id = null)
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/' . $param);
+		$page = $page !== null ? $page : '';
+		$id = $id !== null ? '#m' . $id : '';
+		return DispatchManager::get_url(self::$dispatcher, '/' . $page . $id);
 	}
 	
 	/**
 	 * @return Url
 	 */
-	public static function delete($param = '')
+	public static function add($page = null)
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/delete/' . $param);
+		$page = $page !== null ? $page . '/' : '';
+		return DispatchManager::get_url(self::$dispatcher, '/add/' . $page);
+	}
+	
+	/**
+	 * @return Url
+	 */
+	public static function edit($id, $page = null)
+	{
+		$page = $page !== null ? $page . '/' : '';
+		return DispatchManager::get_url(self::$dispatcher, '/' . $id . '/edit/' . $page);
+	}
+	
+	/**
+	 * @return Url
+	 */
+	public static function delete($id, $page = null)
+	{
+		$page = $page !== null ? $page . '/' : '';
+		return DispatchManager::get_url(self::$dispatcher, '/' . $id . '/delete/' . $page . '?token=' . AppContext::get_session()->get_token());
 	}
 }
 ?>

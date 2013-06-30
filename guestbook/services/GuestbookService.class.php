@@ -4,7 +4,7 @@
  *                            -------------------
  *   begin                : November 30, 2012
  *   copyright            : (C) 2012 Julien BRISWALTER
- *   email                : julien.briswalter@gmail.com
+ *   email                : julienseth78@phpboost.com
  *
  *  
  ###################################################
@@ -25,67 +25,57 @@
  *
  ###################################################*/
 
-/**
- * @author Julien BRISWALTER <julien.briswalter@gmail.com>
- * @desc Services of the guestbook module
+ /**
+ * @author Julien BRISWALTER <julienseth78@phpboost.com>
  */
 class GuestbookService
 {
-	private static $querier;
+	private static $db_querier;
 	
 	public static function __static()
 	{
-		self::$querier = PersistenceContext::get_querier();
+		self::$db_querier = PersistenceContext::get_querier();
 	}
 	
-	 /**
-	 * @desc Count the messages list.
-	 * @param string $condition (optional) Restriction to apply to the list
-	 */
 	public static function count($condition = '')
 	{
-		return self::$querier->count(PREFIX . 'guestbook', $condition);
+		return self::$db_querier->count(GuestbookSetup::$guestbook_table, $condition);
 	}
 	
-	 /**
-	 * @desc Delete a message.
-	 * @param string $condition Restriction to apply to the list of messages
-	 * @param string[] $parameters Parameters of the condition
-	 */
-	public static function delete($condition, array $parameters)
+	public static function add(GuestbookMessage $message)
 	{
-		self::$querier->delete(PREFIX . 'guestbook', $condition, $parameters);
-	}
-	
-	 /**
-	 * @desc Return the content of a message.
-	 * @param int $event_id ID of the message which is concerned
-	 */
-	public static function get_message($message_id)
-	{
-		return self::$querier->select_single_row(PREFIX . 'guestbook', array('*'), 'WHERE id=' . $message_id);
-	}
-	
-	 /**
-	 * @desc Create a new message.
-	 * @param string[] $columns Values of the message
-	 */
-	public static function insert(array $columns)
-	{
-		$result = self::$querier->insert(PREFIX . 'guestbook', $columns);
+		$result = self::$db_querier->insert(GuestbookSetup::$guestbook_table, $message->get_properties());
 		
 		return $result->get_last_inserted_id();
 	}
 	
-	 /**
-	 * @desc Update a message.
-	 * @param string[] $columns Values of the message
-	 * @param string $condition Restriction to apply to the list of messages
-	 * @param string[] $parameters Parameters of the condition
-	 */
-	public static function update(array $columns, $condition, array $parameters)
+	public static function update(GuestbookMessage $message)
 	{
-		self::$querier->update(PREFIX . 'guestbook', $columns, $condition, $parameters);
+		self::$db_querier->update(GuestbookSetup::$guestbook_table, $message->get_properties(), 'WHERE id=:id', array('id' => $message->get_id()));
+	}
+	
+	public static function delete($condition, array $parameters)
+	{
+		self::$db_querier->delete(GuestbookSetup::$guestbook_table, $condition, $parameters);
+	}
+	
+	public static function get_message($condition, array $parameters)
+	{
+		$row = self::$db_querier->select_single_row_query('SELECT member.*, guestbook.*
+		FROM ' . GuestbookSetup::$guestbook_table . ' guestbook 
+		LEFT JOIN ' . DB_TABLE_MEMBER . ' member ON member.user_id = guestbook.user_id
+		' . $condition, $parameters);
+		
+		$message = new GuestbookMessage();
+		$message->set_properties($row);
+		return $message;
+	}
+	
+	public static function get_last_message_timestamp_from_user($user_id)
+	{
+		return self::$db_querier->get_column_value(GuestbookSetup::$guestbook_table, 'MAX(timestamp) as timestamp', 'WHERE user_id=:user_id', array(
+			'user_id' => $user_id
+		));
 	}
 }
 ?>
