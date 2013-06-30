@@ -90,7 +90,7 @@ if (!empty($_POST['valid_poll']) && !empty($poll['id']) && !$archives)
 		}
 		
 		$check_bdd = true;
-		if (Authorizations::check_auth(RANK_TYPE, -1, $poll_config->get_authorizations(), PollAuthorizationsService::WRITE_AUTHORIZATIONS)) //Autorisé aux visiteurs, on filtre par ip => fiabilité moyenne.
+		if (Authorizations::check_auth(RANK_TYPE, User::VISITOR_LEVEL, $poll_config->get_authorizations(), PollAuthorizationsService::WRITE_AUTHORIZATIONS)) //Autorisé aux visiteurs, on filtre par ip => fiabilité moyenne.
 		{
 			//Injection de l'adresse ip du visiteur dans la bdd.	
 			$ip = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "poll_ip WHERE ip = '" . AppContext::get_current_user()->get_ip() . "' AND idpoll = '" . $poll['id'] . "'",  __LINE__, __FILE__);		
@@ -167,7 +167,7 @@ elseif (!empty($poll['id']) && !$archives) //Affichage du sondage.
 
 	//Résultats
 	$check_bdd = false;
-	if (Authorizations::check_auth(RANK_TYPE, -1, $poll_config->get_authorizations(), PollAuthorizationsService::WRITE_AUTHORIZATIONS)) //Autorisé aux visiteurs, on filtre par ip => fiabilité moyenne.
+	if (Authorizations::check_auth(RANK_TYPE, User::VISITOR_LEVEL, $poll_config->get_authorizations(), PollAuthorizationsService::WRITE_AUTHORIZATIONS)) //Autorisé aux visiteurs, on filtre par ip => fiabilité moyenne.
 	{
 		//Injection de l'adresse ip du visiteur dans la bdd.	
 		$ip = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "poll_ip WHERE ip = '" . AppContext::get_current_user()->get_ip() . "' AND idpoll = '" . $poll['id'] . "'",  __LINE__, __FILE__);		
