@@ -39,7 +39,7 @@ class WikiSitemapExtensionPoint implements SitemapExtensionPoint
 
 	private function get_module_map($auth_mode)
 	{
-		global $_WIKI_CATS, $LANG, $User, $_WIKI_CONFIG, $Cache;
+		global $_WIKI_CATS, $LANG, $User, $Cache;
 		
 		load_module_lang('wiki');
 		$Cache->load('wiki');
@@ -67,7 +67,7 @@ class WikiSitemapExtensionPoint implements SitemapExtensionPoint
 
 	private function create_module_map_sections($id_cat, $auth_mode)
 	{
-		global $_WIKI_CATS, $LANG, $User, $_WIKI_CONFIG;
+		global $_WIKI_CATS, $LANG, $User;
 		
 		$this_category = new SitemapLink($_WIKI_CATS[$id_cat]['name'], new Url('/wiki/' . url('wiki.php?title='.Url::encode_rewrite($_WIKI_CATS[$id_cat]['name']), Url::encode_rewrite($_WIKI_CATS[$id_cat]['name']))));
 			

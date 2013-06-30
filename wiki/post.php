@@ -28,6 +28,7 @@
 require_once('../kernel/begin.php'); 
 include_once('../wiki/wiki_functions.php'); 
 load_module_lang('wiki');
+$config = WikiConfig::load();
 
 if (AppContext::get_current_user()->is_readonly())
 {
@@ -94,7 +95,7 @@ if (!empty($contents)) //On enregistre un article
 			//Autorisations
 			$general_auth = empty($article_infos['auth']) ? true : false;
 			$article_auth = !empty($article_infos['auth']) ? unserialize($article_infos['auth']) : array();
-			if (!((!$general_auth || $User->check_auth($_WIKI_CONFIG['auth'], WIKI_EDIT)) && ($general_auth || $User->check_auth($article_auth , WIKI_EDIT))))
+			if (!((!$general_auth || $User->check_auth($config->get_authorizations(), WIKI_EDIT)) && ($general_auth || $User->check_auth($article_auth , WIKI_EDIT))))
 			{
 				$error_controller = PHPBoostErrors::user_not_authorized();
 				DispatchManager::redirect($error_controller);
@@ -122,12 +123,12 @@ if (!empty($contents)) //On enregistre un article
 		elseif (!empty($title)) //On crée un article
 		{
 			//autorisations
-			if ($is_cat && !$User->check_auth($_WIKI_CONFIG['auth'], WIKI_CREATE_CAT))
+			if ($is_cat && !$User->check_auth($config->get_authorizations(), WIKI_CREATE_CAT))
 			{
 				$error_controller = PHPBoostErrors::user_not_authorized();
 				DispatchManager::redirect($error_controller);
 			} 
-			elseif (!$is_cat && !$User->check_auth($_WIKI_CONFIG['auth'], WIKI_CREATE_ARTICLE))
+			elseif (!$is_cat && !$User->check_auth($config->get_authorizations(), WIKI_CREATE_ARTICLE))
 			{
 				$error_controller = PHPBoostErrors::user_not_authorized();
 				DispatchManager::redirect($error_controller);
@@ -182,7 +183,7 @@ if ($id_edit > 0)//On édite
 	//Autorisations
 	$general_auth = empty($article_infos['auth']) ? true : false;
 	$article_auth = !empty($article_infos['auth']) ? unserialize($article_infos['auth']) : array();
-	if (!((!$general_auth || $User->check_auth($_WIKI_CONFIG['auth'], WIKI_EDIT)) && ($general_auth || $User->check_auth($article_auth , WIKI_EDIT))))
+	if (!((!$general_auth || $User->check_auth($config->get_authorizations(), WIKI_EDIT)) && ($general_auth || $User->check_auth($article_auth , WIKI_EDIT))))
 	{
 		$error_controller = PHPBoostErrors::user_not_authorized();
 		DispatchManager::redirect($error_controller);
@@ -210,12 +211,12 @@ if ($id_edit > 0)//On édite
 else
 {
 	//autorisations
-	if ($is_cat && !$User->check_auth($_WIKI_CONFIG['auth'], WIKI_CREATE_CAT))
+	if ($is_cat && !$User->check_auth($config->get_authorizations(), WIKI_CREATE_CAT))
 	{
 		$error_controller = PHPBoostErrors::user_not_authorized();
 		DispatchManager::redirect($error_controller);
 	} 
-	elseif (!$is_cat && !$User->check_auth($_WIKI_CONFIG['auth'], WIKI_CREATE_ARTICLE))
+	elseif (!$is_cat && !$User->check_auth($config->get_authorizations(), WIKI_CREATE_ARTICLE))
 	{
 		$error_controller = PHPBoostErrors::user_not_authorized();
 		DispatchManager::redirect($error_controller);

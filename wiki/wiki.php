@@ -27,6 +27,7 @@
 
 require_once('../kernel/begin.php');
 load_module_lang('wiki');
+$config = WikiConfig::load();
 
 include('../wiki/wiki_functions.php');
 
@@ -90,7 +91,7 @@ elseif (!empty($id_contents))
 $bread_crumb_key = 'wiki';
 require_once('../wiki/wiki_bread_crumb.php');
 
-$page_title = (!empty($article_infos['title']) ? $article_infos['title'] . ' - ' : '') . (!empty($_WIKI_CONFIG['wiki_name']) ? $_WIKI_CONFIG['wiki_name'] : $LANG['wiki']);
+$page_title = (!empty($article_infos['title']) ? $article_infos['title'] . ' - ' : '') . ($config->get_wiki_name() ? $config->get_wiki_name() : $LANG['wiki']);
 define('TITLE', $page_title);
 
 require_once('../kernel/header.php');
@@ -103,7 +104,7 @@ $Template->set_filenames(array(
 //Si il s'agit d'un article
 if ((!empty($encoded_title) || !empty($id_contents)) && $num_rows > 0)
 {
-	if ($_WIKI_CONFIG['count_hits'] != 0)//Si on prend en compte le nombre de vus
+	if ($config->is_hits_counter_enabled())//Si on prend en compte le nombre de vus
 		$Sql->query_inject("UPDATE " . LOW_PRIORITY . " " . PREFIX . "wiki_articles SET hits = hits + 1 WHERE id = '" . $article_infos['id'] . "'", __LINE__, __FILE__);
 
 	//Si c'est une archive
@@ -124,7 +125,7 @@ if ((!empty($encoded_title) || !empty($id_contents)) && $num_rows > 0)
 			));
 			$general_auth = empty($article_infos['auth']) ? true : false;
 			
-			if (((!$general_auth || $User->check_auth($_WIKI_CONFIG['auth'], WIKI_REDIRECT)) && ($general_auth || $User->check_auth($article_auth , WIKI_REDIRECT))))
+			if (((!$general_auth || $User->check_auth($config->get_authorizations(), WIKI_REDIRECT)) && ($general_auth || $User->check_auth($article_auth , WIKI_REDIRECT))))
 			{
 				$Template->assign_block_vars('redirect.remove_redirection', array(
 					'L_REMOVE_REDIRECTION' => $LANG['wiki_remove_redirection'],
@@ -157,7 +158,7 @@ if ((!empty($encoded_title) || !empty($id_contents)) && $num_rows > 0)
 		'ID_CAT' => $article_infos['id_cat'],
 		'TITLE' => $article_infos['title'],
 		'CONTENTS' => FormatingHelper::second_parse(wiki_no_rewrite($article_infos['content'])),
-		'HITS' => ($_WIKI_CONFIG['count_hits'] != 0 && $id_contents == 0) ? sprintf($LANG['wiki_article_hits'], (int)$article_infos['hits']) : '',
+		'HITS' => ($config->is_hits_counter_enabled() && $id_contents == 0) ? sprintf($LANG['wiki_article_hits'], (int)$article_infos['hits']) : '',
 		'L_SUB_CATS' => $LANG['wiki_subcats'],
 		'L_SUB_ARTICLES' => $LANG['wiki_subarticles'],
 		'L_TABLE_OF_CONTENTS' => $LANG['wiki_table_of_contents'],
