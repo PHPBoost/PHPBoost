@@ -27,6 +27,7 @@
 
 require_once('../kernel/begin.php'); 
 load_module_lang('wiki');
+$config = WikiConfig::load();
 
 $id_article = retrieve(GET, 'id', 0);
 $field = retrieve(GET, 'field', '');
@@ -54,8 +55,8 @@ if (!empty($id_article))
 	
 	$general_auth = empty($article_infos['auth']) ? true : false;
 	$article_auth = !empty($article_infos['auth']) ? unserialize($article_infos['auth']) : array();
-	$restore_auth = (!$general_auth || $User->check_auth($_WIKI_CONFIG['auth'], WIKI_RESTORE_ARCHIVE)) && ($general_auth || $User->check_auth($article_auth , WIKI_RESTORE_ARCHIVE)) ? true : false;
-	$delete_auth = (!$general_auth || $User->check_auth($_WIKI_CONFIG['auth'], WIKI_DELETE_ARCHIVE)) && ($general_auth || $User->check_auth($article_auth , WIKI_DELETE_ARCHIVE)) ? true : false;
+	$restore_auth = (!$general_auth || $User->check_auth($config_>get_authorizations(), WIKI_RESTORE_ARCHIVE)) && ($general_auth || $User->check_auth($article_auth , WIKI_RESTORE_ARCHIVE)) ? true : false;
+	$delete_auth = (!$general_auth || $User->check_auth($config_>get_authorizations(), WIKI_DELETE_ARCHIVE)) && ($general_auth || $User->check_auth($article_auth , WIKI_DELETE_ARCHIVE)) ? true : false;
 	
 	//on va chercher le contenu de la page
 	$result = $Sql->query_while("SELECT a.title, a.encoded_title, c.timestamp, c.id_contents, c.user_id, c.user_ip, m.login, m.user_groups, m.level, c.id_article, c.activ

@@ -53,10 +53,11 @@ class WikiFeedProvider implements FeedProvider
 	public function get_feed_data_struct($idcat = 0, $name = '')
 	{
 		$querier = PersistenceContext::get_querier();
-		global $Cache, $LANG, $_WIKI_CATS, $_WIKI_CONFIG;
+		global $Cache, $LANG, $_WIKI_CATS;
 
 		load_module_lang('wiki');
 		$Cache->load('wiki');
+		$config = WikiConfig::load();
 		$parameters = array('limit' => 20);
 		if (($idcat > 0) && array_key_exists($idcat, $_WIKI_CATS))//Catégorie
 		{
@@ -66,13 +67,13 @@ class WikiFeedProvider implements FeedProvider
 		}
 		else //Sinon derniers messages
 		{
-			$desc = sprintf($LANG['wiki_rss_last_articles'], (!empty($_WIKI_CONFIG['wiki_name']) ? $_WIKI_CONFIG['wiki_name'] : $LANG['wiki']));
+			$desc = sprintf($LANG['wiki_rss_last_articles'], ($config->get_wiki_name() ? $config->get_wiki_name() : $LANG['wiki']));
 			$where = '';
 		}
 
 		$data = new FeedData();
 
-		$data->set_title(!empty($_WIKI_CONFIG['wiki_name']) ? $_WIKI_CONFIG['wiki_name'] : $LANG['wiki']);
+		$data->set_title($config->get_wiki_name() ? $config->get_wiki_name() : $LANG['wiki']);
 		$data->set_date(new Date());
 		$data->set_link(SyndicationUrlBuilder::rss('wiki', $idcat));
 		$data->set_host(HOST);

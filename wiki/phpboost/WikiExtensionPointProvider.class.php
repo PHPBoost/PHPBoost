@@ -48,17 +48,8 @@ class WikiExtensionPointProvider extends ExtensionPointProvider
 		{
 			$config .= '$_WIKI_CATS[\'' . $row['id'] . '\'] = array(\'id_parent\' => ' . ( !empty($row['id_parent']) ? $row['id_parent'] : '0') . ', \'name\' => ' . var_export($row['title'], true) . ');' . "\n";
 		}
-
-		//Configuration du wiki
-		$code = 'global $_WIKI_CONFIG;' . "\n" . '$_WIKI_CONFIG = array();' . "\n";
-		$CONFIG_WIKI = unserialize($this->sql_querier->query("SELECT value FROM " . DB_TABLE_CONFIGS . " WHERE name = 'wiki'", __LINE__, __FILE__));
-
-		$CONFIG_WIKI = is_array($CONFIG_WIKI) ? $CONFIG_WIKI : array();
-		$CONFIG_WIKI['auth'] = unserialize($CONFIG_WIKI['auth']);
-
-		$code .= '$_WIKI_CONFIG = ' . var_export($CONFIG_WIKI, true) . ';' . "\n";
-
-		return $config . "\n\r" . $code;
+		
+		return $config;
 	}
 
 	public static function _build_wiki_cat_children($cats_tree, $cats, $id_parent = 0)

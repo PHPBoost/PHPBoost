@@ -33,23 +33,25 @@ require_once('../admin/admin_header.php');
 include_once('../wiki/wiki_functions.php');
 
 $Cache->load('wiki');
+$config = WikiConfig::load();
 
-$wiki_name = TextHelper::strprotect(retrieve(POST, 'wiki_name', $LANG['wiki'], TSTRING_AS_RECEIVED), TextHelper::HTML_PROTECT, TextHelper::ADDSLASHES_NONE);
 $index_text = stripslashes(wiki_parse(retrieve(POST, 'contents', '', TSTRING_AS_RECEIVED)));
-$last_articles = retrieve(POST, 'last_articles', 0);
-$display_cats = !empty($_POST['display_cats']) ? 1 : 0;
-$count_hits = !empty($_POST['count_hits']) ? 1 : 0;
-
 if (!empty($_POST['update']))  //Mise à jour
 {
-	$_WIKI_CONFIG['wiki_name'] = $wiki_name;
-	$_WIKI_CONFIG['last_articles'] = $last_articles;
-	$_WIKI_CONFIG['display_cats'] = $display_cats;
-	$_WIKI_CONFIG['index_text'] = $index_text;
-	$_WIKI_CONFIG['count_hits'] = $count_hits;
-	$_WIKI_CONFIG['auth'] = serialize($_WIKI_CONFIG['auth']);
-
-	$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($_WIKI_CONFIG)) . "' WHERE name = 'wiki'", __LINE__, __FILE__);
+	$config->set_wiki_name(TextHelper::strprotect(retrieve(POST, 'wiki_name', $LANG['wiki'], TSTRING_AS_RECEIVED), TextHelper::HTML_PROTECT, TextHelper::ADDSLASHES_NONE));
+	$config->set_number_articles_on_index(retrieve(POST, 'number_articles_on_index', 0));
+	if ($_POST['display_categories_on_index'])
+		$config->display_categories_on_index();
+	else
+		$config->hide_categories_on_index();
+	if (isset($_POST['hits_counter']))
+		$config->enable_hits_counter();
+	else
+		$config->disable_hits_counter();
+	$config->set_index_text(stripslashes(wiki_parse(retrieve(POST, 'contents', '', TSTRING_AS_RECEIVED))));
+	
+	WikiConfig::save();
+	
 	//Régénération du cache
 	$Cache->Generate_module_file('wiki');	
 }
@@ -67,12 +69,12 @@ $editor->set_identifier('contents');
 
 $Template->put_all(array(
 	'KERNEL_EDITOR' => $editor->display(),
-	'HITS_SELECTED' => ($_WIKI_CONFIG['count_hits'] > 0) ? 'checked="checked"' : '',
-	'WIKI_NAME' => $_WIKI_CONFIG['wiki_name'],
-	'NOT_DISPLAY_CATS' => ( $_WIKI_CONFIG['display_cats'] == 0 ) ? 'checked="checked"' : '',
-	'DISPLAY_CATS' => ( $_WIKI_CONFIG['display_cats'] != 0 ) ? 'checked="checked"' : '',
-	'LAST_ARTICLES' => $_WIKI_CONFIG['last_articles'],
-	'DESCRIPTION' => wiki_unparse($_WIKI_CONFIG['index_text']),
+	'HITS_SELECTED' => $config->is_hits_counter_enabled() ? 'checked="checked"' : '',
+	'WIKI_NAME' => $config->get_wiki_name(),
+	'HIDE_CATEGORIES_ON_INDEX' => !$config->are_categories_displayed_on_index() ? 'checked="checked"' : '',
+	'DISPLAY_CATEGORIES_ON_INDEX' => $config->are_categories_displayed_on_index() ? 'checked="checked"' : '',
+	'NUMBER_ARTICLES_ON_INDEX' => $config->get_number_articles_on_index(),
+	'DESCRIPTION' => wiki_unparse($config->get_index_text()),
 	'L_UPDATE' => $LANG['update'],
 	'L_RESET' => $LANG['reset'],
 	'L_PREVIEW' => $LANG['preview'],
@@ -81,13 +83,13 @@ $Template->put_all(array(
 	'L_CONFIG_WIKI' => $LANG['wiki_config'],
 	'L_WHOLE_WIKI' => $LANG['wiki_config_whole'],
 	'L_INDEX_WIKI' => $LANG['wiki_index'],
-	'L_COUNT_HITS' => $LANG['wiki_count_hits'], 
+	'L_HITS_COUNTER' => $LANG['wiki_count_hits'], 
 	'L_WIKI_NAME' => $LANG['wiki_name'],
-	'L_DISPLAY_CATS' => $LANG['wiki_display_cats'],
+	'L_DISPLAY_CATEGORIES_ON_INDEX' => $LANG['wiki_display_cats'],
 	'L_NOT_DISPLAY' => $LANG['wiki_no_display'],
 	'L_DISPLAY' => $LANG['wiki_display'],
-	'L_LAST_ARTICLES' => $LANG['wiki_last_articles'],
-	'L_LAST_ARTICLES_EXPLAIN' => $LANG['wiki_last_articles_explain'],
+	'L_NUMBER_ARTICLES_ON_INDEX' => $LANG['wiki_last_articles'],
+	'L_NUMBER_ARTICLES_ON_INDEX_EXPLAIN' => $LANG['wiki_last_articles_explain'],
 	'L_DESCRIPTION' => $LANG['wiki_desc']
 ));
 	

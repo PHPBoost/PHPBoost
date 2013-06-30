@@ -50,26 +50,28 @@ class WikiHomePageExtensionPoint implements HomePageExtensionPoint
 	
 	private function get_view()
 	{
-		global $User, $Template, $Cache, $Bread_crumb, $_WIKI_CONFIG, $_WIKI_CATS, $LANG, $encoded_title;
+		global $User, $Template, $Cache, $Bread_crumb, $_WIKI_CATS, $LANG, $encoded_title;
 
 		load_module_lang('wiki');
 		include_once(PATH_TO_ROOT . '/wiki/wiki_functions.php');
 		$bread_crumb_key = 'wiki';
 		require_once(PATH_TO_ROOT . '/wiki/wiki_bread_crumb.php');
-
+		
+		$config = WikiConfig::load();
+		
 		$Template->set_filenames(array(
 			'wiki'=> 'wiki/wiki.tpl',
 			'index'=> 'wiki/index.tpl'
 		));
 
-		if ($_WIKI_CONFIG['last_articles'] > 1)
+		if ($config->get_number_articles_on_index() > 1)
 		{
 			$result = $this->sql_querier->query_while("SELECT a.title, a.encoded_title, a.id
 			FROM " . PREFIX . "wiki_articles a
 			LEFT JOIN " . PREFIX . "wiki_contents c ON c.id_contents = a.id_contents
 			WHERE a.redirect = 0
 			ORDER BY c.timestamp DESC
-			LIMIT 0, " . $_WIKI_CONFIG['last_articles'], __LINE__, __FILE__);
+			LIMIT 0, " . $config->get_number_articles_on_index(), __LINE__, __FILE__);
 			$articles_number = $this->sql_querier->num_rows($result, "SELECT COUNT(*) FROM " . PREFIX . "wiki_articles WHERE encoded_title = '" . $encoded_title . "'", __LINE__, __FILE__);
 
 			$Template->assign_block_vars('last_articles', array(
@@ -96,7 +98,7 @@ class WikiHomePageExtensionPoint implements HomePageExtensionPoint
 			}
 		}
 		//Affichage de toutes les catégories si c'est activé
-		if ($_WIKI_CONFIG['display_cats'] != 0)
+		if ($config->are_categories_displayed_on_index())
 		{
 			$Template->assign_block_vars('cat_list', array(
 			'L_CATS' => $LANG['wiki_cats_list']
@@ -121,8 +123,8 @@ class WikiHomePageExtensionPoint implements HomePageExtensionPoint
 		}
 
 		$Template->put_all(array(
-			'TITLE' => !empty($_WIKI_CONFIG['wiki_name']) ? $_WIKI_CONFIG['wiki_name'] : $LANG['wiki'],
-			'INDEX_TEXT' => !empty($_WIKI_CONFIG['index_text']) ? FormatingHelper::second_parse(wiki_no_rewrite($_WIKI_CONFIG['index_text'])) : $LANG['wiki_empty_index'],
+			'TITLE' => $config->get_wiki_name() ? $config->get_wiki_name() : $LANG['wiki'],
+			'INDEX_TEXT' => $config->get_index_text() ? FormatingHelper::second_parse(wiki_no_rewrite($config->get_index_text())) : $LANG['wiki_empty_index'],
 			'L_EXPLORER' => $LANG['wiki_explorer'],
 			'U_EXPLORER' => url('explorer.php'),
 		));

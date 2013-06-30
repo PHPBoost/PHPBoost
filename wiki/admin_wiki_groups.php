@@ -32,16 +32,16 @@ require_once('../admin/admin_header.php');
 
 include_once('../wiki/wiki_auth.php');
 
+$config = WikiConfig::load();
 
 //Si c'est confirmé on execute
 if (!empty($_POST['valid']))
 {
 	//Génération du tableau des droits.
-	$array_auth_all = Authorizations::build_auth_array_from_form(WIKI_CREATE_ARTICLE, WIKI_CREATE_CAT, WIKI_RESTORE_ARCHIVE, WIKI_DELETE_ARCHIVE, WIKI_EDIT, WIKI_DELETE, WIKI_RENAME, WIKI_REDIRECT, WIKI_MOVE, WIKI_STATUS, WIKI_COM, WIKI_RESTRICTION);
-		
-	$_WIKI_CONFIG['auth'] = serialize($array_auth_all);
-	$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($_WIKI_CONFIG)) . "' WHERE name = 'wiki'", __LINE__, __FILE__);
-
+	$config->set_authorizations(Authorizations::build_auth_array_from_form(WIKI_CREATE_ARTICLE, WIKI_CREATE_CAT, WIKI_RESTORE_ARCHIVE, WIKI_DELETE_ARCHIVE, WIKI_EDIT, WIKI_DELETE, WIKI_RENAME, WIKI_REDIRECT, WIKI_MOVE, WIKI_STATUS, WIKI_COM, WIKI_RESTRICTION));
+	
+	WikiConfig::save();
+	
 	###### Regénération du cache des catégories (liste déroulante dans le forum) #######
 	$Cache->Generate_module_file('wiki');
 
@@ -53,22 +53,20 @@ else
 		'admin_wiki_groups'=> 'wiki/admin_wiki_groups.tpl'
 	));
 	
-	$array_auth = isset($_WIKI_CONFIG['auth']) ? $_WIKI_CONFIG['auth'] : array(); //Récupération des tableaux des autorisations et des groupes.
-	
 	$Template->put_all(array(
 		'THEME' => get_utheme(),
-		'SELECT_CREATE_ARTICLE' => Authorizations::generate_select(WIKI_CREATE_ARTICLE, $array_auth),
-		'SELECT_CREATE_CAT' => Authorizations::generate_select(WIKI_CREATE_CAT, $array_auth),
-		'SELECT_RESTORE_ARCHIVE' => Authorizations::generate_select(WIKI_RESTORE_ARCHIVE, $array_auth),
-		'SELECT_DELETE_ARCHIVE' => Authorizations::generate_select(WIKI_DELETE_ARCHIVE, $array_auth),
-		'SELECT_EDIT' => Authorizations::generate_select(WIKI_EDIT, $array_auth),
-		'SELECT_DELETE' => Authorizations::generate_select(WIKI_DELETE, $array_auth),
-		'SELECT_RENAME' => Authorizations::generate_select(WIKI_RENAME, $array_auth),
-		'SELECT_REDIRECT' => Authorizations::generate_select(WIKI_REDIRECT, $array_auth),
-		'SELECT_MOVE' => Authorizations::generate_select(WIKI_MOVE, $array_auth),
-		'SELECT_STATUS' => Authorizations::generate_select(WIKI_STATUS, $array_auth),
-		'SELECT_COM' => Authorizations::generate_select(WIKI_COM, $array_auth),
-		'SELECT_RESTRICTION' => Authorizations::generate_select(WIKI_RESTRICTION, $array_auth),
+		'SELECT_CREATE_ARTICLE' => Authorizations::generate_select(WIKI_CREATE_ARTICLE, $config->get_authorizations()),
+		'SELECT_CREATE_CAT' => Authorizations::generate_select(WIKI_CREATE_CAT, $config->get_authorizations()),
+		'SELECT_RESTORE_ARCHIVE' => Authorizations::generate_select(WIKI_RESTORE_ARCHIVE, $config->get_authorizations()),
+		'SELECT_DELETE_ARCHIVE' => Authorizations::generate_select(WIKI_DELETE_ARCHIVE, $config->get_authorizations()),
+		'SELECT_EDIT' => Authorizations::generate_select(WIKI_EDIT, $config->get_authorizations()),
+		'SELECT_DELETE' => Authorizations::generate_select(WIKI_DELETE, $config->get_authorizations()),
+		'SELECT_RENAME' => Authorizations::generate_select(WIKI_RENAME, $config->get_authorizations()),
+		'SELECT_REDIRECT' => Authorizations::generate_select(WIKI_REDIRECT, $config->get_authorizations()),
+		'SELECT_MOVE' => Authorizations::generate_select(WIKI_MOVE, $config->get_authorizations()),
+		'SELECT_STATUS' => Authorizations::generate_select(WIKI_STATUS, $config->get_authorizations()),
+		'SELECT_COM' => Authorizations::generate_select(WIKI_COM, $config->get_authorizations()),
+		'SELECT_RESTRICTION' => Authorizations::generate_select(WIKI_RESTRICTION, $config->get_authorizations()),
 		'L_WIKI_MANAGEMENT' => $LANG['wiki_management'],
 		'L_WIKI_GROUPS' => $LANG['wiki_groups_config'],
 		'L_CONFIG_WIKI' => $LANG['wiki_config'],

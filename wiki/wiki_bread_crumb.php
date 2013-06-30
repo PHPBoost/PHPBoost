@@ -28,6 +28,7 @@
 if (defined('PHPBOOST') !== true)	exit;
 
 require_once(PATH_TO_ROOT .'/wiki/wiki_auth.php');
+$config = WikiConfig::load();
 
 switch ($bread_crumb_key)
 {
@@ -50,11 +51,11 @@ switch ($bread_crumb_key)
 			}	
 			while ($id > 0);
 		}
-		$Bread_crumb->add((!empty($_WIKI_CONFIG['wiki_name']) ? $_WIKI_CONFIG['wiki_name'] : $LANG['wiki']), url('wiki.php'));
+		$Bread_crumb->add(($config->get_wiki_name() ? $config->get_wiki_name() : $LANG['wiki']), url('wiki.php'));
 		$Bread_crumb->reverse();
 		break;
 	case 'wiki_history':
-		$Bread_crumb->add((!empty($_WIKI_CONFIG['wiki_name']) ? $_WIKI_CONFIG['wiki_name'] : $LANG['wiki']),url('wiki.php'));
+		$Bread_crumb->add(($config->get_wiki_name() ? $config->get_wiki_name() : $LANG['wiki']),url('wiki.php'));
 		$Bread_crumb->add($LANG['wiki_history'], url('history.php'));
 			if (!empty($id_article))
 				$Bread_crumb->add($article_infos['title'], url('wiki.php?title=' . $article_infos['encoded_title'], $article_infos['encoded_title']));
@@ -75,11 +76,11 @@ switch ($bread_crumb_key)
 			}	
 			while ($id > 0);
 		}
-		$Bread_crumb->add((!empty($_WIKI_CONFIG['wiki_name']) ? $_WIKI_CONFIG['wiki_name'] : $LANG['wiki']), url('wiki.php'));
+		$Bread_crumb->add(($config->get_wiki_name() ? $config->get_wiki_name() : $LANG['wiki']), url('wiki.php'));
 		$Bread_crumb->reverse();
 		break;
 	case 'wiki_post':
-		$Bread_crumb->add((!empty($_WIKI_CONFIG['wiki_name']) ? $_WIKI_CONFIG['wiki_name'] : $LANG['wiki']), url('wiki.php'));
+		$Bread_crumb->add(($config->get_wiki_name() ? $config->get_wiki_name() : $LANG['wiki']), url('wiki.php'));
 		$Bread_crumb->add($LANG['wiki_contribuate'], '');
 		break;
 	case 'wiki_property':
@@ -115,23 +116,23 @@ switch ($bread_crumb_key)
 			}	
 			while ($id > 0);
 		}
-		$Bread_crumb->add((!empty($_WIKI_CONFIG['wiki_name']) ? $_WIKI_CONFIG['wiki_name'] : $LANG['wiki']), url('wiki.php'));
+		$Bread_crumb->add(($config->get_wiki_name() ? $config->get_wiki_name() : $LANG['wiki']), url('wiki.php'));
 		$Bread_crumb->reverse();
 		break;
 	case 'wiki_favorites':
-		$Bread_crumb->add((!empty($_WIKI_CONFIG['wiki_name']) ? $_WIKI_CONFIG['wiki_name'] : $LANG['wiki']), url('wiki.php'));
+		$Bread_crumb->add(($config->get_wiki_name() ? $config->get_wiki_name() : $LANG['wiki']), url('wiki.php'));
 		$Bread_crumb->add($LANG['wiki_favorites'], url('favorites.php'));
 		break;
 	case 'wiki_explorer':
-		$Bread_crumb->add(( !empty($_WIKI_CONFIG['wiki_name']) ? $_WIKI_CONFIG['wiki_name'] : $LANG['wiki']), url('wiki.php'));
+		$Bread_crumb->add(($config->get_wiki_name() ? $config->get_wiki_name() : $LANG['wiki']), url('wiki.php'));
 		$Bread_crumb->add($LANG['wiki_explorer'], url('explorer.php'));
 		break;
 	case 'wiki_search':
-		$Bread_crumb->add((!empty($_WIKI_CONFIG['wiki_name']) ? $_WIKI_CONFIG['wiki_name'] : $LANG['wiki']), url('wiki.php'));
+		$Bread_crumb->add(($config->get_wiki_name() ? $config->get_wiki_name() : $LANG['wiki']), url('wiki.php'));
 		$Bread_crumb->add($LANG['wiki_search'], url('search.php'));
 		break;
 	default:
-		$Bread_crumb->add((!empty($_WIKI_CONFIG['wiki_name']) ? $_WIKI_CONFIG['wiki_name'] : $LANG['wiki']), url('wiki.php'));
+		$Bread_crumb->add(($config->get_wiki_name() ? $config->get_wiki_name() : $LANG['wiki']), url('wiki.php'));
 		break;
 }
 	
