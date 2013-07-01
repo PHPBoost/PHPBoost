@@ -89,7 +89,7 @@ class FaqHomePageExtensionPoint implements HomePageExtensionPoint
 			foreach ($FAQ_CATS as $id => $value)
 			{
 				//List of children categories
-				if ($id != 0 && $value['visible'] && $value['id_parent'] == $id_faq && (empty($value['auth']) || $User->check_auth($value['auth'], AUTH_READ)))
+				if ($id != 0 && $value['visible'] && $value['id_parent'] == $id_faq && (empty($value['auth']) || $User->check_auth($value['auth'], FaqAuthorizationsService::READ_AUTHORIZATIONS)))
 				{
 					if ( $i % $faq_config->get_number_columns() == 1 )
 						$tpl->assign_block_vars('row', array());

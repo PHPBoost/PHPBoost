@@ -50,7 +50,7 @@ class FaqFeedProvider implements FeedProvider
 		$data->set_host(HOST);
 		$data->set_desc($FAQ_LANG['xml_faq_desc']);
 		$data->set_lang($LANG['xml_lang']);
-		$data->set_auth_bit(AUTH_READ);
+		$data->set_auth_bit(FaqAuthorizationsService::READ_AUTHORIZATIONS);
 
 		$cat_clause = !empty($idcat) ? ' AND f.idcat = :idcat' : '';
 		$results = $querier->select('SELECT f.*, fc.auth

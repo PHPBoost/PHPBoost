@@ -38,8 +38,8 @@ while ($id_cat_for_bread_crumb > 0)
 	if (is_array($FAQ_CATS[$id_cat_for_bread_crumb]['auth']))
 	{
 			//If we can't read a category, we can't read sub elements.
-			$auth_read = $auth_read && $User->check_auth($FAQ_CATS[$id_cat_for_bread_crumb]['auth'], AUTH_READ);
-			$auth_write = $User->check_auth($FAQ_CATS[$id_cat_for_bread_crumb]['auth'], AUTH_WRITE);
+			$auth_read = $auth_read && $User->check_auth($FAQ_CATS[$id_cat_for_bread_crumb]['auth'], FaqAuthorizationsService::READ_AUTHORIZATIONS);
+			$auth_write = $User->check_auth($FAQ_CATS[$id_cat_for_bread_crumb]['auth'], FaqAuthorizationsService::WRITE_AUTHORIZATIONS);
 	}
 	
 	//We go up to the next category

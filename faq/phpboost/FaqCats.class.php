@@ -147,7 +147,7 @@ class FaqCats extends DeprecatedCategoriesManager
 	public function check_auth($id)
 	{
 		global $User, $FAQ_CATS;
-		$auth_read = $User->check_auth(FaqConfig::load()->get_authorizations(), AUTH_READ);
+		$auth_read = $User->check_auth(FaqConfig::load()->get_authorizations(), FaqAuthorizationsService::READ_AUTHORIZATIONS);
 		$id_cat = $id;
 
 		//We read the categories recursively
@@ -155,7 +155,7 @@ class FaqCats extends DeprecatedCategoriesManager
 		{
 			if (is_array($FAQ_CATS[$id_cat]['auth']))
 			{
-				$auth_read  = $auth_read && $User->check_auth($FAQ_CATS[$id_cat]['auth'], AUTH_READ);
+				$auth_read  = $auth_read && $User->check_auth($FAQ_CATS[$id_cat]['auth'], FaqAuthorizationsService::READ_AUTHORIZATIONS);
 			}
 			
 			$id_cat = (int)$FAQ_CATS[$id_cat]['id_parent'];
