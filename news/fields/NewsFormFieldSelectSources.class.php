@@ -95,11 +95,11 @@ class NewsFormFieldSelectSources extends AbstractFormField
 			if ($request->has_postparameter($field_name_id))
 			{
 				$field_value_id = 'field_value_' . $this->get_html_id() . '_' . $i;
-				$feild_name = $request->get_poststring($field_name_id);
+				$field_name = $request->get_poststring($field_name_id);
 				$field_value = $request->get_poststring($field_value_id);
 				
-				if (!empty($feild_name) && !empty($field_value))
-					$values[$feild_name] = $field_value;
+				if (!empty($field_name) && !empty($field_value))
+					$values[$field_name] = $field_value;
 			}
 		}
 		$this->set_value($values);

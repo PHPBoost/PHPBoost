@@ -49,7 +49,15 @@ class SEOMetaData
 	
 	public function get_title()
 	{
-		return $this->title;
+		if (Environment::get_running_module_name())
+		{
+			return $this->title . ' - ' . GeneralConfig::load()->get_site_name();
+		}
+		else
+		{
+			// HomePage
+			return GeneralConfig::load()->get_site_name() . ' - ' . $this->title;
+		}
 	}
 	
 	public function set_description($description)
@@ -64,7 +72,15 @@ class SEOMetaData
 	
 	public function get_description()
 	{
-		return $this->description;
+		if (Environment::get_running_module_name())
+		{
+			return $this->description . ' ' . $this->get_title();
+		}
+		else
+		{
+			// HomePage
+			return $this->description;
+		}
 	}
 	
 	public function set_keywords($keywords)

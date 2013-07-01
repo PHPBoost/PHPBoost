@@ -63,7 +63,7 @@ class PHPBoostIndexController extends AbstractController
 	{
 		$response = new SiteDisplayResponse($view);
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($title, false);
+		$graphical_environment->set_page_title($title);
 		return $response;
 	}
 }

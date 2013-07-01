@@ -103,6 +103,7 @@ class NewsDisplayNewsTagController extends ModuleController
 	{
 		$response = new NewsDisplayResponse();
 		$response->set_page_title($this->get_keyword()->get_name());
+		$response->set_page_description(StringVars::replace_vars($this->lang['news.seo.description.tag'], array('subject' => $this->get_keyword()->get_name())));
 		
 		$response->add_breadcrumb_link($this->lang['news'], NewsUrlBuilder::home());
 		$response->add_breadcrumb_link($this->get_keyword()->get_name(), NewsUrlBuilder::display_tag($this->get_keyword()->get_rewrited_name()));
