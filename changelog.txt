@@ -4,16 +4,21 @@
 
 ===================================== Noyau ======================================
 [b]Framework :[/b]
-[*] [color=red]Nouveauté :[/color] Nouveau système de catégories, plus fiable et plus performant avec ajout du drag & drop pour la gestion des catégories
+[*] [color=red]Nouveauté :[/color] 
+	- Nouveau système de catégories, plus fiable et plus performant avec ajout du drag & drop pour la gestion des catégories
+	- Il est maintenant possible de déplacer et de supprimer les éléments contenus dans une catégorie lors de sa suppression
 [*] [color=red]Nouveauté :[/color] Ajout de l'affichage de la taille de la mémoire utilisée par PHP
 - Revoir la façon dont est stocké les inscrits aux groupes (actuellement c'est stocké dans la table member et groups, faire une table de jointure)
 - Changer de format de stockage des fuseaux horaires
 - Ajout de ReCaptcha
 - Amélioration du référencement :
+	- Le nom du site est affiché à la fin dans la balise title (sauf pour la page d'accueil ou il est au début)
 	- Modification de la balise description (elle présentera la description de la page ou du site sur la page d'accueil du site)
 	- Ajout des microdonnées : 
 		- Modification du système de notation
 		- Modification du système de commentaire
+[*] Ajout des liens éditer et supprimer dans la liste déroulante de la recherche d'un membre
+[*] Ajout d'une classe ModulePagination pour simplifier l'ajout de la pagination dans un module
 
 [b]Menus :[/b]
 - Possibilité de désactiver l'affichage d'un lien dans les menus
