@@ -38,7 +38,7 @@ if (retrieve(POST, 'submit', false))
 	$faq_config->set_faq_name(stripslashes(retrieve(POST, 'faq_name', $FAQ_LANG['faq'])));
 	$faq_config->set_number_columns(retrieve(POST, 'num_cols', 3));
 	$faq_config->set_display_mode((!empty($_POST['display_mode']) && $_POST['display_mode'] == 'inline') ? 'inline' : 'block');
-	$faq_config->set_authorizations(Authorizations::build_auth_array_from_form(AUTH_READ, AUTH_WRITE));
+	$faq_config->set_authorizations(Authorizations::build_auth_array_from_form(FaqAuthorizationsService::READ_AUTHORIZATIONS, FaqAuthorizationsService::WRITE_AUTHORIZATIONS));
 	
 	FaqConfig::save();
 	
@@ -123,8 +123,8 @@ else
 		'L_AUTH_READ' => $FAQ_LANG['read_auth'],
 		'L_AUTH_WRITE' => $FAQ_LANG['write_auth'],
 		'L_SUBMIT' => $LANG['submit'],
-		'AUTH_READ' => Authorizations::generate_select(AUTH_READ, $faq_config->get_authorizations()),
-		'AUTH_WRITE' => Authorizations::generate_select(AUTH_WRITE, $faq_config->get_authorizations()),
+		'AUTH_READ' => Authorizations::generate_select(FaqAuthorizationsService::READ_AUTHORIZATIONS, $faq_config->get_authorizations()),
+		'AUTH_WRITE' => Authorizations::generate_select(FaqAuthorizationsService::WRITE_AUTHORIZATIONS, $faq_config->get_authorizations()),
 		'FAQ_NAME' => $faq_config->get_faq_name(),
 		'NUM_COLS' => $faq_config->get_number_columns(),
 		'SELECTED_BLOCK' => $faq_config->get_display_mode() == FaqConfig::DISPLAY_MODE_BLOCK ? ' selected="selected"' : '',
