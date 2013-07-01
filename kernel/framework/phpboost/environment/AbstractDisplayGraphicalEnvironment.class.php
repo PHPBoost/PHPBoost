@@ -104,8 +104,6 @@
 	public function set_page_title($title)
 	{
 		$this->get_seo_meta_data()->set_title($title);
-		
-		$this->get_seo_meta_data()->complete_description($title);
 			
 		defined('TITLE') or define('TITLE', $title);
 	}

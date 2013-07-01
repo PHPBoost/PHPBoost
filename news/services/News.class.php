@@ -321,8 +321,8 @@ class News
 			//Category
 			'CATEGORY_ID' => $category->get_id(),
 			'CATEGORY_NAME' => $category->get_name(),
-			'CATEGORY_DESCRIPTION' => $category->get_id() > 0 ? $category->get_description() : '',
-			'CATEGORY_IMAGE' => $category->get_id() > 0 ? $category->get_image() : '',
+			'CATEGORY_DESCRIPTION' => $category->get_description(),
+			'CATEGORY_IMAGE' => $category->get_image(),
 		
 			'U_SYNDICATION' => SyndicationUrlBuilder::rss('news', $this->get_id_cat())->rel(),
 			'U_AUTHOR_PROFILE' => UserUrlBuilder::profile($this->get_author_user()->get_id())->absolute(),

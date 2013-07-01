@@ -198,6 +198,7 @@ class NewsDisplayCategoryController extends ModuleController
 	{
 		$response = new NewsDisplayResponse();
 		$response->set_page_title($this->get_category()->get_name());
+		$response->set_page_description($this->get_category()->get_description());
 		
 		$response->add_breadcrumb_link($this->lang['news'], NewsUrlBuilder::home());
 		

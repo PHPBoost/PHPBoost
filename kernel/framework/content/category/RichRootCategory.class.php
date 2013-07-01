@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                        NewsCategoriesCache.class.php
+ *                          RootCategory.class.php
  *                            -------------------
- *   begin                : February 13, 2013
+ *   begin                : January 31, 2013
  *   copyright            : (C) 2013 Kévin MASSY
  *   email                : kevin.massy@phpboost.com
  *
@@ -25,35 +25,15 @@
  *
  ###################################################*/
 
-/**
- * @author Kevin MASSY <kevin.massy@phpboost.com>
- */
-class NewsCategoriesCache extends CategoriesCache
+class RichRootCategory extends RichCategory
 {
-	public function get_table_name()
+	public function __construct()
 	{
-		return NewsSetup::$news_cats_table;
-	}
-	
-	public function get_category_class()
-	{
-		return CategoriesManager::RICH_CATEGORY_CLASS;
-	}
-	
-	public function get_module_identifier()
-	{
-		return 'news';
-	}
-	
-	public function get_root_category()
-	{
-		$root = new RichRootCategory();
-		$root->set_authorizations(NewsConfig::load()->get_authorizations());
-		$root->set_description(
-			StringVars::replace_vars(LangLoader::get_message('news.seo.description.root', 'common', 'news'), 
-			array('site' => GeneralConfig::load()->get_site_name()
-		)));
-		return $root;
+		$this->set_id(self::ROOT_CATEGORY);
+		$this->set_id_parent(self::ROOT_CATEGORY);
+		$this->set_name(LangLoader::get_message('root', 'main'));
+		$this->set_rewrited_name('root');
+		$this->set_order(0);
 	}
 }
 ?>
