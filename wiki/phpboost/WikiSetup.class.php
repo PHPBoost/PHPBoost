@@ -49,6 +49,7 @@ class WikiSetup extends DefaultModuleSetup
 	public function uninstall()
 	{
 		$this->drop_tables();
+		ConfigManager::delete('wiki', 'config');
 	}
 
 	private function drop_tables()

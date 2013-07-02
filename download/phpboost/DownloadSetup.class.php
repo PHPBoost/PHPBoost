@@ -51,6 +51,7 @@ class DownloadSetup extends DefaultModuleSetup
 	public function uninstall()
 	{
 		$this->drop_tables();
+		ConfigManager::delete('download', 'config');
 	}
 
 	private function drop_tables()
