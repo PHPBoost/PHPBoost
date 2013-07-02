@@ -58,7 +58,7 @@ class NewsSetup extends DefaultModuleSetup
 	public function uninstall()
 	{
 		$this->drop_tables();
-		ConfigManager::delete('news', 'categories');
+		ConfigManager::delete('news', 'config');
 	}
 
 	private function drop_tables()

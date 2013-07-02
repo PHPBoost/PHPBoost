@@ -58,7 +58,7 @@ class ArticlesSetup extends DefaultModuleSetup
 	public function uninstall()
 	{
 		$this->drop_tables();
-		ConfigManager::delete('articles', 'categories');
+		ConfigManager::delete('articles', 'config');
 	}
 
 	private function drop_tables()
