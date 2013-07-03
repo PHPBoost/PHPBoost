@@ -54,11 +54,14 @@ class CommentsDAO
 		self::$db_querier->delete(DB_TABLE_COMMENTS, $condition, $parameters);
 	}
 	
-	public static function delete_comments_module($module_id)
+	public static function delete_comments_module($id_topics)
 	{
-		$condition = "WHERE module_id=:module_id";
-		$parameters = array('module_id' => $module_id);
-		self::$db_querier->delete(DB_TABLE_COMMENTS, $condition, $parameters);
+		if ($id_topics)
+		{
+			$condition= 'WHERE id_topic IN (' . implode(',', $id_topics) . ')';
+			$parameters= array('id_topics'=> $id_topics);
+			self::$db_querier->delete(DB_TABLE_COMMENTS, $condition, $parameters);
+		}
 	}
 
 	public static function delete_comment($comment_id)

@@ -86,7 +86,7 @@ class CommentsManager
 	
 	public static function delete_comments_module($module_id)
 	{
-		CommentsDAO::delete_comments_module($module_id);
+		CommentsDAO::delete_comments_module(CommentsTopicDAO::get_id_topics_module($module_id));
 		CommentsTopicDAO::delete_topics_module($module_id);
 		self::regenerate_cache();
 	}
