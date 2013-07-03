@@ -1,3 +1,10 @@
+<script type="text/javascript">
+<!--
+function Confirm_del_comment() {
+	return confirm("{L_CONFIRM_DELETE}");
+}
+-->
+</script>
 # START comments #
 	<div id="com{comments.ID_COMMENT}" class="comment">
 		<div class="comment-user_infos">
@@ -21,7 +28,7 @@
 						<a href="{comments.U_EDIT}">
 							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="{L_UPDATE}" title="{L_UPDATE}" class="valign_middle" />
 						</a> 
-						<a href="{comments.U_DELETE}">
+						<a href="{comments.U_DELETE}" onclick="javascript:return Confirm_del_comment();">
 							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" class="valign_middle" />
 						</a>
 					# ENDIF #

@@ -39,6 +39,8 @@ $lang['comment.locked'] = 'Commentaires bloqués, vous ne pouvez pas poster de co
 $lang['comment.add'] = 'Ajouter un commentaire';
 $lang['comment.edit'] = 'Editer un commentaire';
 
+$lang['comment.confirm_delete'] = 'Etes-vous sûr de vouloir supprimer ce commentaire ?';
+
 $lang['lock'] = 'Verrouiller';
 $lang['unlock'] = 'Déverrouiller';
 
