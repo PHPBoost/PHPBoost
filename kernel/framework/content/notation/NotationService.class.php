@@ -103,12 +103,12 @@ class NotationService
 	 */
 	public static function display_active_image(Notation $notation)
 	{
-		$html_id = $notation->get_module_name() . '_' . $notation->get_id_in_module();
-		
 		$note_post = AppContext::get_request()->get_int('note', 0);
+		$id_post = AppContext::get_request()->get_int('id', 0);
 		
-		if (!empty($note_post))
+		if (!empty($note_post) && !empty($id_post))
 		{
+			$notation->set_id_in_module($id_post);
 			$notation->set_note($note_post);
 			self::register_notation($notation);
 		}
