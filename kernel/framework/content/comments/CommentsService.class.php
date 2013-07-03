@@ -262,6 +262,12 @@ class CommentsService
 					'L_LEVEL' => UserService::get_level_lang($row['level'] !== null ? $row['level'] : '-1'),
 				));
 				
+				$template->put_all(array(
+					'L_UPDATE' => self::$lang['update'],
+					'L_DELETE' => self::$lang['delete'],
+					'L_CONFIRM_DELETE' => self::$comments_lang['comment.confirm_delete']
+				));
+				
 				self::$template->put_all(array(
 					'C_IS_LOCKED' => (bool)$row['is_locked'],
 					'U_LOCK' => CommentsUrlBuilder::lock_and_unlock($path, true)->absolute(),
