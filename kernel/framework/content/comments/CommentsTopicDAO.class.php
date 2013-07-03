@@ -59,6 +59,23 @@ class CommentsTopicDAO
 		return self::$db_querier->get_column_value(DB_TABLE_COMMENTS_TOPIC, 'id_topic', $condition, $parameters);
 	}
 	
+	public static function get_id_topics_module($module_id)
+	{
+		$condition = "WHERE module_id = :module_id";
+		$parameters = array(
+			'module_id' => $module_id
+		);
+		
+		$id_topics = array();
+		$result = self::$db_querier->select_rows(DB_TABLE_COMMENTS_TOPIC, array('id_topic'), $condition, $parameters);
+		while ($row = $result->fetch())
+		{
+			$id_topics[] = $row['id_topic'];
+		}
+		
+		return $id_topics;
+	}
+	
 	public static function create_topic($module_id, $id_in_module, $topic_identifier, $path)
 	{
 		$columns = array(
