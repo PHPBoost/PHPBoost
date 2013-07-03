@@ -81,7 +81,7 @@
 		this.get_current_url(),
 		{
 			method: 'post',
-			parameters: {'note': note, 'token' : TOKEN},
+			parameters: {'note': note, 'id': id, 'token' : TOKEN},
 			onSuccess: function() {
 				$('noteloading' + id).update('');
 				if (user_connected == 0) {
