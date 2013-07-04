@@ -36,6 +36,7 @@ $lang['news.message.no_items'] = 'Aucune news n\'est disponible pour le moment';
 
 $lang['news.seo.description.root'] = 'Toutes les news du site :site.';
 $lang['news.seo.description.tag'] = 'Toutes les news sur le sujet :subject.';
+$lang['news.seo.description.pending'] = 'Toutes les news en attente.';
 
 $lang['news.form.name'] = 'Nom de la news';
 $lang['news.form.rewrited_name'] = 'Nom de votre news dans l\'url';

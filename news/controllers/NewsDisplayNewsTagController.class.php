@@ -55,7 +55,7 @@ class NewsDisplayNewsTagController extends ModuleController
 	
 	public function build_view()
 	{
-		$now = new Date(DATE_NOW, TIMEZONE_AUTO);
+		$now = new Date();
 		
 		$result = PersistenceContext::get_querier()->select('SELECT news.*, relation.id_news, relation.id_keyword, member.level, member.user_groups
 		FROM '. NewsSetup::$news_table .' news

@@ -61,7 +61,7 @@ class NewsFeedProvider implements FeedProvider
 
 		if (!empty($ids_categories))
 		{
-			$now = new Date(DATE_NOW, TIMEZONE_AUTO);
+			$now = new Date();
 			
 			$results = $querier->select('SELECT news.id, news.id_category, news.name, news.rewrited_name, news.contents, news.short_contents, news.creation_date, cat.id AS id_category, cat.rewrited_name AS rewrited_name_cat
                  FROM ' . NewsSetup::$news_table . ' news
