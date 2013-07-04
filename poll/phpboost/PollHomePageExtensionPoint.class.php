@@ -91,7 +91,6 @@ class PollHomePageExtensionPoint implements HomePageExtensionPoint
 		return $tpl;
 	}
 	
-	
 	private function check_authorizations()
 	{
 		if (!PollAuthorizationsService::check_authorizations()->read())
