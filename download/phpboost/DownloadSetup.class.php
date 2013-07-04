@@ -62,7 +62,7 @@ class DownloadSetup extends DefaultModuleSetup
 	private function create_tables()
 	{
 		$this->create_download_table();
-		$this->create_doanload_cats_table();
+		$this->create_download_cats_table();
 	}
 
 	private function create_download_table()
