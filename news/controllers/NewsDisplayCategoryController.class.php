@@ -55,7 +55,7 @@ class NewsDisplayCategoryController extends ModuleController
 		
 	private function build_view()
 	{	
-		$now = new Date(DATE_NOW, TIMEZONE_AUTO);
+		$now = new Date();
 		$authorized_categories = $this->get_authorized_categories();
 		$number_columns_display_news = NewsConfig::load()->get_number_columns_display_news();
 		$pagination = $this->get_pagination($now, $authorized_categories);
@@ -64,7 +64,7 @@ class NewsDisplayCategoryController extends ModuleController
 		FROM '. NewsSetup::$news_table .' news
 		LEFT JOIN '. DB_TABLE_MEMBER .' member ON member.user_id = news.author_user_id
 		LEFT JOIN ' . DB_TABLE_COMMENTS_TOPIC . ' com ON com.id_in_module = news.id AND com.module_id = \'news\'
-		WHERE (news.approbation_type = 1 OR (news.approbation_type = 2 AND news.start_date < :timestamp_now AND (news.end_date > :timestamp_now) OR news.end_date = 0)) AND news.id_category IN :authorized_categories
+		WHERE (news.approbation_type = 1 OR (news.approbation_type = 2 AND news.start_date < :timestamp_now AND (news.end_date > :timestamp_now OR news.end_date = 0))) AND news.id_category IN :authorized_categories
 		ORDER BY top_list_enabled DESC, news.creation_date DESC
 		LIMIT :number_items_per_page OFFSET :display_from', array(
 			'timestamp_now' => $now->get_timestamp(),
@@ -143,10 +143,11 @@ class NewsDisplayCategoryController extends ModuleController
 				'authorized_categories' => $authorized_categories
 		));
 		
-		$pagination = new ModulePagination(AppContext::get_request()->get_getint('page', 1), $number_news, (int)NewsConfig::load()->get_number_news_per_page());
+		$page = AppContext::get_request()->get_getint('page', 1);
+		$pagination = new ModulePagination($page, $number_news, (int)NewsConfig::load()->get_number_news_per_page());
 		$pagination->set_url(NewsUrlBuilder::display_category($this->get_category()->get_id(), $this->get_category()->get_rewrited_name(), '%d'));
 		
-		if ($pagination->current_page_is_empty())
+		if ($pagination->current_page_is_empty() && $page > 1)
         {
 			$error_controller = PHPBoostErrors::unexisting_page();
 			DispatchManager::redirect($error_controller);

@@ -39,8 +39,9 @@ class NewsSearchable extends AbstractSearchableExtensionPoint
 	
 	public function get_search_request($args)
 	{
-		$now = new Date(DATE_NOW, TIMEZONE_AUTO);
-
+		$now = new Date();
+		$timestamp = $now->get_timestamp();
+		
 		$search_category_children_options = new SearchCategoryChildrensOptions();
 		$search_category_children_options->add_authorizations_bits(Category::READ_AUTHORIZATIONS);
 		$categories = NewsService::get_categories_manager()->get_childrens(Category::ROOT_CATEGORY, $search_category_children_options);
@@ -62,7 +63,7 @@ class NewsSearchable extends AbstractSearchableExtensionPoint
             LEFT JOIN ". NewsSetup::$news_cats_table ." cat ON n.id_category = cat.id
             WHERE ( FT_SEARCH(n.name, '" . $args['search'] . "') OR FT_SEARCH(n.contents, '" . $args['search'] . "') OR
             FT_SEARCH_RELEVANCE(n.short_contents, '" . $args['search'] . "') )
-                AND n.approbation_type = 1 OR (n.approbation_type = 2 AND n.start_date < '" . $now->get_timestamp() . "' AND (end_date > '" . $now->get_timestamp() . "' OR end_date = 0))
+                AND n.approbation_type = 1 OR (n.approbation_type = 2 AND n.start_date < '" . $timestamp . "' AND (end_date > '" . $timestamp . "' OR end_date = 0))
 			" . $where . "
             ORDER BY relevance DESC " . $this->sql_querier->limit(0, 100);
 	}

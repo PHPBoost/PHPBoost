@@ -50,7 +50,7 @@ class NewsDisplayPendingNewsController extends ModuleController
 	
 	public function build_view()
 	{
-		$now = new Date(DATE_NOW, TIMEZONE_AUTO);
+		$now = new Date();
 		
 		$result = PersistenceContext::get_querier()->select('SELECT news.*, member.level, member.user_groups
 		FROM '. NewsSetup::$news_table .' news
@@ -69,6 +69,7 @@ class NewsDisplayPendingNewsController extends ModuleController
 	{
 		$response = new NewsDisplayResponse();
 		$response->set_page_title($this->lang['news.pending']);
+		$response->set_page_description($this->lang['news.seo.pending']);
 		
 		$response->add_breadcrumb_link($this->lang['news'], NewsUrlBuilder::home());
 		$response->add_breadcrumb_link($this->lang['news.pending'], NewsUrlBuilder::display_pending_news());

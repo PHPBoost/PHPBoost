@@ -91,9 +91,11 @@ class NewsDisplayNewsController extends ModuleController
 		$comments_topic->set_id_in_module($news->get_id());
 		$comments_topic->set_url(NewsUrlBuilder::display_news($category->get_id(), $category->get_rewrited_name(), $news->get_id(), $news->get_rewrited_name()));
 		
-		$this->tpl->put('COMMENTS', $comments_topic->display());
+		//$this->tpl->put('COMMENTS', $comments_topic->display());
 		
 		$this->build_sources_view($news);
+		
+		$this->build_navigation_links($news);
 	}
 	
 	private function build_sources_view(News $news)
@@ -114,30 +116,69 @@ class NewsDisplayNewsController extends ModuleController
 		}
 	}
 	
+	private function build_navigation_links(News $news)
+	{
+		$now = new Date();
+		$timestamp_news = $news->get_creation_date()->get_timestamp();
+
+		try {
+			$previous_news = PersistenceContext::get_querier()->select_single_row(NewsSetup::$news_table, array('id', 'name', 'id_category', 'rewrited_name'), 
+				'WHERE (approbation_type = 1 OR (approbation_type = 2 AND start_date < :timestamp_now AND (end_date > :timestamp_now OR end_date = 0))) AND creation_date < :timestamp_news ORDER BY creation_date DESC LIMIT 1 OFFSET 0', 
+				array(
+					'timestamp_now' => $now->get_timestamp(),
+					'timestamp_news' => $timestamp_news,
+			));
+			
+			$this->tpl->put_all(array(
+				'C_NEWS_NAVIGATION_LINKS' => true,
+				'C_PREVIOUS_NEWS' => true,
+				'PREVIOUS_NEWS' => $previous_news['name'],
+				'U_PREVIOUS_NEWS' => NewsUrlBuilder::display_news($previous_news['id_category'], NewsService::get_categories_manager()->get_categories_cache()->get_category($previous_news['id_category'])->get_rewrited_name(), $previous_news['id'], $previous_news['rewrited_name'])->rel(),
+			));
+		} catch (RowNotFoundException $e) {
+		}
+		
+		try {
+			$next_news = PersistenceContext::get_querier()->select_single_row(NewsSetup::$news_table, array('id', 'name', 'id_category', 'rewrited_name'), 
+				'WHERE (approbation_type = 1 OR (approbation_type = 2 AND start_date < :timestamp_now AND (end_date > :timestamp_now OR end_date = 0))) AND creation_date > :timestamp_news ORDER BY creation_date ASC LIMIT 1 OFFSET 0', 
+				array(
+					'timestamp_now' => $now->get_timestamp(),
+					'timestamp_news' => $timestamp_news
+			));
+			
+			$this->tpl->put_all(array(
+				'C_NEWS_NAVIGATION_LINKS' => true,
+				'C_NEXT_NEWS' => true,
+				'NEXT_NEWS' => $next_news['name'],
+				'U_NEXT_NEWS' => NewsUrlBuilder::display_news($next_news['id_category'], NewsService::get_categories_manager()->get_categories_cache()->get_category($next_news['id_category'])->get_rewrited_name(), $next_news['id'], $next_news['rewrited_name'])->rel(),
+			));
+		} catch (RowNotFoundException $e) {
+		}
+	}
+	
 	private function check_authorizations()
 	{
 		$news = $this->get_news();
 		
-		$user_not_read_authorizations = !NewsAuthorizationsService::check_authorizations($news->get_id_cat())->read() && !NewsAuthorizationsService::check_authorizations()->read();
-		$user_not_read_authorizations_not_approval = $user_not_read_authorizations && !NewsAuthorizationsService::check_authorizations($news->get_id_cat())->moderation() && (!NewsAuthorizationsService::check_authorizations($news->get_id_cat())->write() && $news->get_author_user()->get_id() != AppContext::get_current_user()->get_id());
+		$not_authorized = !NewsAuthorizationsService::check_authorizations($news->get_id_cat())->moderation() && (!NewsAuthorizationsService::check_authorizations($news->get_id_cat())->write() && $news->get_author_user()->get_id() != AppContext::get_current_user()->get_id());
 		
 		switch ($news->get_approbation_type()) {
 			case News::APPROVAL_NOW:
-				if ($user_not_read_authorizations)
+				if (!NewsAuthorizationsService::check_authorizations($news->get_id_cat())->read() && $not_authorized)
 				{
 					$error_controller = PHPBoostErrors::user_not_authorized();
 		   			DispatchManager::redirect($error_controller);
 				}
 			break;
 			case News::NOT_APPROVAL:
-				if ($user_not_read_authorizations_not_approval)
+				if ($not_authorized)
 				{
 					$error_controller = PHPBoostErrors::user_not_authorized();
 		   			DispatchManager::redirect($error_controller);
 				}
 			break;
 			case News::APPROVAL_DATE:
-				if (!$news->is_visible() && $user_not_read_authorizations_not_approval)
+				if (!$news->is_visible() && $not_authorized)
 				{
 					$error_controller = PHPBoostErrors::user_not_authorized();
 		   			DispatchManager::redirect($error_controller);

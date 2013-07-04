@@ -265,7 +265,7 @@ class News
 		$this->set_end_date(!empty($properties['end_date']) ? new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, $properties['end_date']) : new Date());
 		$this->end_date_enabled = !empty($properties['end_date']);
 		$this->set_top_list_enabled((bool)$properties['top_list_enabled']);
-		$this->set_creation_date(new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, $properties['creation_date']));
+		$this->set_creation_date(new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $properties['creation_date']));
 		$this->set_picture(new Url($properties['picture_url']));
 		$this->set_sources(!empty($properties['sources']) ? unserialize($properties['sources']) : array());
 		
@@ -313,7 +313,7 @@ class News
 			'ID' => $this->get_id(),
 			'NAME' => $this->get_name(),
 			'CONTENTS' => FormatingHelper::second_parse($this->get_contents()),
-			'DATE' => $this->get_creation_date()->format(DATE_FORMAT_SHORT, TIMEZONE_AUTO),
+			'DATE' => $this->get_creation_date()->format(DATE_FORMAT_LONG),
 			'PSEUDO' => $user->get_pseudo(),
 			'USER_LEVEL_CLASS' => UserService::get_level_class($user->get_level()),
 			'USER_GROUP_COLOR' => $user_group_color,
