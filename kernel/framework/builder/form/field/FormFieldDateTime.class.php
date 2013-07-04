@@ -65,8 +65,9 @@ class FormFieldDateTime extends FormFieldDate
 
         $request = AppContext::get_request();
         $date = $this->get_value();
-        $date->set_hours($request->get_int($this->get_html_id() . '_hours', 0));
         $date->set_minutes($request->get_int($this->get_html_id() . '_minutes', 0));
+        $date->set_hours($request->get_int($this->get_html_id() . '_hours', 0));
+        
         // TODO Add a range constraint for the hours and minutes
         $this->set_value($date);
     }
