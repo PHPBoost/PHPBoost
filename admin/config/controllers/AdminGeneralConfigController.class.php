@@ -198,14 +198,15 @@ class AdminGeneralConfigController extends AdminController
 
 	private function list_modules_home_page()
 	{
-		$options = array();
-		$options[] = new FormFieldSelectChoiceOption($this->lang['general-config.other_start_page'], 'other');
-		$providers = AppContext::get_extension_provider_service()->get_providers(HomePageExtensionPoint::EXTENSION_POINT);
-		foreach ($providers as $id => $provider)
+		$providers = array_keys(AppContext::get_extension_provider_service()->get_providers(HomePageExtensionPoint::EXTENSION_POINT));
+		$options = array(new FormFieldSelectChoiceOption($this->lang['general-config.other_start_page'], 'other'));
+		
+		foreach (ModulesManager::get_installed_modules_map_sorted_by_localized_name() as $id => $module)
 		{
-			$module = ModulesManager::get_module($id);
-			$configuration = $module->get_configuration();
-			$options[] = new FormFieldSelectChoiceOption($configuration->get_name(), $id);
+			if (in_array($module->get_id(), $providers))
+			{
+				$options[] = new FormFieldSelectChoiceOption($module->get_configuration()->get_name(), $id);
+			}
 		}
 		
 		if (empty($options))
