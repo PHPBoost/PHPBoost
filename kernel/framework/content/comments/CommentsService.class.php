@@ -173,7 +173,7 @@ class CommentsService
 	{
 		try {
 			CommentsManager::delete_comments_module($module_id);
-		} catch (Exception $e) {
+		} catch (RowNotFoundException $e) {
 		}
 	}
 	
@@ -186,7 +186,7 @@ class CommentsService
 	{
 		try {
 			CommentsManager::delete_comments_topic_module($module_id, $id_in_module);
-		} catch (Exception $e) {
+		} catch (RowNotFoundException $e) {
 		}
 	}
 	
