@@ -46,6 +46,8 @@ class FaqHomePageExtensionPoint implements HomePageExtensionPoint
 	
 	private function get_view()
 	{
+		$this->check_authorizations();
+		
 		global $Cache, $FAQ_CATS, $LANG, $FAQ_LANG, $id_faq, $User, $auth_write, $Session, $id_question;
 		
 		require_once(PATH_TO_ROOT . '/faq/faq_begin.php');
@@ -216,6 +218,15 @@ class FaqHomePageExtensionPoint implements HomePageExtensionPoint
 		));
 
 		return $tpl;
+	}
+	
+	private function check_authorizations()
+	{
+		if (!FaqAuthorizationsService::check_authorizations()->read())
+		{
+			$error_controller = PHPBoostErrors::user_not_authorized();
+			DispatchManager::redirect($error_controller);
+		}
 	}
 }
 ?>
