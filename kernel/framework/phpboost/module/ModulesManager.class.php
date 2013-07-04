@@ -330,6 +330,8 @@ class ModulesManager
 					}
 				}
 				
+				AppContext::get_cache_service()->clear_cache();
+				
 				return self::MODULE_UNINSTALLED;
 			}
 			return $error;
