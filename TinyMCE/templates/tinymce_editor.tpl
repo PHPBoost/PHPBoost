@@ -47,9 +47,9 @@ function XMLHttpRequest_preview(field)
 		alert("{L_REQUIRE_TEXT}");
 }
 		
-function insertTinyMceContent(content)
+function insertTinyMceContent(textAreaId, content)
 {
-	tinyMCE.execCommand('mceInsertContent', false, content, {skip_undo : 1});
+	tinyMCE.get(textAreaId).execCommand('mceInsertContent', false, content, {skip_undo : 1});
 }
 
 -->
