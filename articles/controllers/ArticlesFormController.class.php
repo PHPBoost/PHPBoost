@@ -125,9 +125,7 @@ class ArticlesFormController extends ModuleController
 			array('description' => $this->lang['articles.form.keywords.description'], 'file' => TPL_PATH_TO_ROOT . '/articles/ajax/tag/')
 		));
 
-		$other_fieldset->add_field(new ArticlesFormFieldSelectSources('sources', $this->lang['articles.form.sources'], $this->get_article()->get_sources(),
-			array('description' => $this->lang['articles.form.sources.description'])
-		));
+		$other_fieldset->add_field(new ArticlesFormFieldSelectSources('sources', $this->lang['articles.form.sources'], $this->get_article()->get_sources()));
 
 		if(!$this->is_contributor_member())
 		{
@@ -363,10 +361,8 @@ class ArticlesFormController extends ModuleController
 	private function save_keywords($id_article)
 	{
 		$keywords = $this->form->get_value('keywords');
-		
-		$bdd_keywords = ArticlesKeywordsService::get_keywords();
-		
-		$new_keywords = new ArticlesKeywords();
+				
+		$new_keyword = new ArticlesKeywords();
 		//We delete all relations in edition
 		if ($this->get_article()->get_id() !== null)
 		{
@@ -375,16 +371,15 @@ class ArticlesFormController extends ModuleController
 		
 		foreach ($keywords as $keyword)
 		{
-			//If the keyword is not in the articles_keywords_table, we add it (+ relation), else we create a relation
-			if (!(in_array($keyword, $bdd_keywords)))
+			if (!ArticlesKeywordsService::exists($keyword))
 			{
-				$new_keywords->set_name($keyword);
-				$new_keywords->set_rewrited_name(Url::encode_rewrite($keyword));
-				ArticlesKeywordsService::add($new_keywords, $id_article);
+				$new_keyword->set_name($keyword);
+				$new_keyword->set_rewrited_name(Url::encode_rewrite($keyword));
+				ArticlesKeywordsService::add($new_keyword, $id_article);
 			}
 			else
 			{
-				$id_keyword = array_search($keyword, $bdd_keywords);
+				$id_keyword = ArticlesKeywordsService::get_id_keyword('WHERE rewrited_name=:rewrited_name', array('rewrited_name' => Url::encode_rewrite($keyword)));
 				ArticlesKeywordsService::add_relation($id_keyword, $id_article);
 			}
 		}
@@ -405,7 +400,7 @@ class ArticlesFormController extends ModuleController
                 }
                 else
                 {
-                        AppContext::get_response()->redirect(ArticlesUrlBuilder::home());
+                        AppContext::get_response()->redirect(ArticlesUrlBuilder::display_pending_articles());
                 }
 	}				
 

@@ -63,6 +63,8 @@ class ArticlesDisplayPendingArticlesController extends ModuleController
 		
 		$sort_fields = $this->list_sort_fields();
 		
+		$fieldset->add_field(new FormFieldLabel($this->lang['articles.sort_filter_title']));
+		
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_fields', '', $field, $sort_fields,
 			array('events' => array('change' => 'document.location = "'. ArticlesUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name())->absolute() .'" + HTMLForms.getField("sort_fields").getValue() + "/" + HTMLForms.getField("sort_mode").getValue();'))
 		));
@@ -80,7 +82,7 @@ class ArticlesDisplayPendingArticlesController extends ModuleController
 	
 	private function build_view($request)
 	{
-		$now = new Date(DATE_NOW, TIMEZONE_AUTO);
+		$now = new Date();
 		
 		$mode = $request->get_getstring('sort', 'desc');
 		$field = $request->get_getstring('field', 'date');
@@ -156,11 +158,6 @@ class ArticlesDisplayPendingArticlesController extends ModuleController
 				'C_ARTICLES_FILTERS' => true,
 				'C_ADD' => $add_auth,
 				'C_COMMENTS_ENABLED' => $comments_enabled,
-				'L_DATE' => LangLoader::get_message('date', 'main'),
-				'L_VIEW' => LangLoader::get_message('views', 'main'),
-				'L_NOTE' => LangLoader::get_message('note', 'main'),
-				'L_COM' => LangLoader::get_message('com', 'main'),
-				'L_WRITTEN' => LangLoader::get_message('written_by', 'main'),
 				'PAGINATION' => ($nbr_articles_pending > $nbr_articles_per_page) ? $pagination->display()->render() : ''
 			));
 			
@@ -187,14 +184,22 @@ class ArticlesDisplayPendingArticlesController extends ModuleController
 					'C_USER_GROUP_COLOR' => !empty($user_group_color),
 					'C_AUTHOR_DISPLAYED' => $article->get_author_name_displayed(),
 					'C_NOTATION_ENABLED' => $article->get_notation_enabled(),
+					'C_HAS_PICTURE' => $article->has_picture(),
 					'L_EDIT_ARTICLE' => $this->lang['articles.edit'],
 					'L_DELETE_ARTICLE' => $this->lang['articles.delete'],
+					'L_CATEGORY' => $this->lang['articles.category'],
+					'L_AUTHOR' => $this->lang['articles.sort_field.author'],
+					'L_DATE' => $this->lang['articles.sort_field.date'],
+					'L_VIEW' => $this->lang['articles.sort_field.views'],
+					'L_TAGS' => $this->lang['articles.tags'],
+					'L_READ_MORE' => $this->lang['articles.read_more'],
+					'L_CAT_NAME' => $category->get_name(),
 					'TITLE' => $article->get_title(),
-					'PICTURE' => $article->get_picture(),
+					'PICTURE' => $article->get_picture()->absolute(),
 					'DATE' => $article->get_date_created()->format(DATE_FORMAT_SHORT, TIMEZONE_AUTO),
 					'NUMBER_VIEW' => $row['number_view'],
 					'L_NUMBER_COM' => empty($row['number_comments']) ? '0' : $row['number_comments'],
-					'NOTE' => $row['number_notes'] > 0 ? NotationService::display_static_image($notation, $row['average_notes']) : $this->lang['articles.no_notes'],
+					'NOTE' => $row['number_notes'] > 0 ? NotationService::display_static_image($notation, $row['average_notes']) : '&nbsp;',
 					'DESCRIPTION' =>FormatingHelper::second_parse($article->get_description()), 
 					'PSEUDO' => $user->get_pseudo(),
 					'USER_LEVEL_CLASS' => UserService::get_level_class($user->get_level()),
@@ -202,6 +207,7 @@ class ArticlesDisplayPendingArticlesController extends ModuleController
 					'U_COMMENTS' => ArticlesUrlBuilder::display_comments_article($category->get_id(), $category->get_rewrited_name(), $article->get_id(), $article->get_rewrited_title())->absolute(),
 					'U_AUTHOR' => UserUrlBuilder::profile($row['author_user_id'])->absolute(),
 					'U_ARTICLE' => ArticlesUrlBuilder::display_article($category->get_id(), $category->get_rewrited_name(), $article->get_id(), $article->get_rewrited_title())->absolute(),
+					'U_CATEGORY' => ArticlesUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name())->absolute(),
 					'U_EDIT_ARTICLE' => ArticlesUrlBuilder::edit_article($article->get_id())->absolute(),
 					'U_DELETE_ARTICLE' => ArticlesUrlBuilder::delete_article($article->get_id())->absolute()
 				));
@@ -243,6 +249,7 @@ class ArticlesDisplayPendingArticlesController extends ModuleController
 	{
 		$response = new ArticlesDisplayResponse();
 		$response->set_page_title($this->lang['articles.pending_articles']);
+		$response->set_page_description($this->lang['articles.seo.description.pending']);
 		
 		$response->add_breadcrumb_link($this->lang['articles'], ArticlesUrlBuilder::home());
 		$response->add_breadcrumb_link($this->lang['articles.pending_articles'], ArticlesUrlBuilder::display_pending_articles());

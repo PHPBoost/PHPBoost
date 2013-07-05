@@ -29,6 +29,7 @@ class ArticlesDisplayArticlesTagController extends ModuleController
 {	
 	private $lang;
 	private $view;
+	private $form;
 	private $keyword;
 	private $category;
 	
@@ -75,9 +76,64 @@ class ArticlesDisplayArticlesTagController extends ModuleController
 		return $this->keyword;
 	}
 	
+	private function build_form($field, $mode)
+	{
+		$category = ArticlesService::get_categories_manager()->get_categories_cache()->get_category(Category::ROOT_CATEGORY);
+		
+		$form = new HTMLForm(__CLASS__);
+		
+		$fieldset = new FormFieldsetHorizontal('filters');
+		$form->add_fieldset($fieldset);
+		
+		$sort_fields = $this->list_sort_fields();
+		
+		$fieldset->add_field(new FormFieldLabel($this->lang['articles.sort_filter_title']));
+		
+		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_fields', '', $field, $sort_fields,
+			array('events' => array('change' => 'document.location = "'. ArticlesUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name())->absolute() .'" + HTMLForms.getField("sort_fields").getValue() + "/" + HTMLForms.getField("sort_mode").getValue();'))
+		));
+		
+		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_mode', '', $mode,
+			array(
+				new FormFieldSelectChoiceOption($this->lang['articles.sort_mode.asc'], 'asc'),
+				new FormFieldSelectChoiceOption($this->lang['articles.sort_mode.desc'], 'desc')
+			), 
+			array('events' => array('change' => 'document.location = "' . ArticlesUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name())->absolute() . '" + HTMLForms.getField("sort_fields").getValue() + "/" + HTMLForms.getField("sort_mode").getValue();'))
+		));
+		
+		$this->form = $form;
+	}
+	
 	private function build_view($request)
 	{
 		$this->get_keyword();
+		
+		$mode = $request->get_getstring('sort', 'desc');
+		$field = $request->get_getstring('field', 'date');
+			
+		$sort_mode = ($mode == 'asc') ? 'ASC' : 'DESC';
+
+		switch ($field)
+		{
+			case 'title':
+				$sort_field = 'title';
+				break;
+			case 'view':
+				$sort_field = 'number_view';
+				break;
+			case 'com':
+				$sort_field = 'number_comments';
+				break;
+			case 'note':
+				$sort_field = 'number_notes';
+				break;
+			case 'author':
+				$sort_field = 'author_user_id';
+				break;
+			default:
+				$sort_field = 'date_created';
+				break;
+		}
 		
 		$auth_add = ArticlesAuthorizationsService::check_authorizations()->write() || ArticlesAuthorizationsService::check_authorizations()->contribution();
 		$comments_enabled = ArticlesConfig::load()->get_comments_enabled();
@@ -85,10 +141,11 @@ class ArticlesDisplayArticlesTagController extends ModuleController
 		$this->view->put_all(array(
 			'C_ADD' => $auth_add,
 			'C_COMMENTS_ENABLED' => $comments_enabled,
+			'C_ARTICLES_FILTERS' => true,
 			'L_EDIT_CONFIG' => $this->lang['articles_configuration'],
 			'L_ADD_ARTICLES' => $this->lang['articles.add'],
 			'L_MODULE_NAME' => $this->lang['articles'],
-			'L_TAG' => $this->lang['articles.tag'] . $this->keyword->get_name(),
+			'L_TAG' => $this->lang['articles.tags'] . ': ' . $this->keyword->get_name(),
 			'U_ADD_ARTICLES' => ArticlesUrlBuilder::add_article()->absolute(),
 			'U_EDIT_CONFIG' => ArticlesUrlBuilder::articles_configuration()->absolute(),
 			'U_SYNDICATION' => ArticlesUrlBuilder::category_syndication($this->category->get_id())->rel()
@@ -98,7 +155,7 @@ class ArticlesDisplayArticlesTagController extends ModuleController
 		$nbr_articles_per_page = ArticlesConfig::load()->get_number_articles_per_page();
 		$limit_page = (($current_page - 1) * $nbr_articles_per_page);
 		
-		$now = new Date(DATE_NOW, TIMEZONE_AUTO);
+		$now = new Date();
 		
 		$result = PersistenceContext::get_querier()->select('SELECT articles.*, member.*, 
 		com.number_comments, note.number_notes, note.average_notes FROM ' . ArticlesSetup::$articles_table . ' articles
@@ -118,7 +175,9 @@ class ArticlesDisplayArticlesTagController extends ModuleController
 		$nbr_articles = $result->get_rows_count();
 		
 		$pagination = new ModulePagination($current_page, $nbr_articles, $nbr_articles_per_page);
-		$pagination->set_url(ArticlesUrlBuilder::display_tag($this->keyword->get_rewrited_name(), '%d'));
+		$pagination->set_url(ArticlesUrlBuilder::display_tag($this->keyword->get_rewrited_name(), $sort_field, $sort_mode, '%d'));
+		
+		$this->build_form($field, $mode);
 		
 		$notation = new Notation();
 		$notation->set_module_name('articles');
@@ -145,15 +204,19 @@ class ArticlesDisplayArticlesTagController extends ModuleController
 			    'C_USER_GROUP_COLOR' => !empty($user_group_color),
 			    'C_AUTHOR_DISPLAYED' => $article->get_author_name_displayed(),
 			    'C_NOTATION_ENABLED' => $article->get_notation_enabled(),
+			    'C_HAS_PICTURE' => $article->has_picture(),
 			    'TITLE' => $article->get_title(),
-			    'PICTURE' => $article->get_picture(),
+			    'PICTURE' => $article->get_picture()->absolute(),
 			    'DATE' => $article->get_date_created()->format(DATE_FORMAT_SHORT, TIMEZONE_AUTO),
 			    'L_COMMENTS' => CommentsService::get_number_and_lang_comments('articles', $article->get_id()),
-			    'L_DATE' => LangLoader::get_message('date', 'main'),
-			    'L_VIEW' => LangLoader::get_message('views', 'main'),
+			    'L_AUTHOR' => $this->lang['articles.sort_field.author'],
+			    'L_DATE' => $this->lang['articles.sort_field.date'],
+			    'L_VIEW' => $this->lang['articles.sort_field.views'],
+			    'L_TAGS' => $this->lang['articles.tags'],
+			    'L_READ_MORE' => $this->lang['articles.read_more'],
 			    'L_NO_AUTHOR_DISPLAYED' => $this->lang['articles.no_author_diplsayed'],
 			    'L_ALERT_DELETE_ARTICLE' => $this->lang['articles.form.alert_delete_article'],
-			    'NOTE' => $row['number_notes'] > 0 ? NotationService::display_static_image($notation, $row['average_notes']) : $this->lang['articles.no_notes'],
+			    'NOTE' => $row['number_notes'] > 0 ? NotationService::display_static_image($notation, $row['average_notes']) : '&nbsp;',
 			    'PSEUDO' => $user->get_pseudo(),
 			    'USER_LEVEL_CLASS' => UserService::get_level_class($user->get_level()),
 			    'USER_GROUP_COLOR' => $user_group_color,
@@ -163,12 +226,30 @@ class ArticlesDisplayArticlesTagController extends ModuleController
 			    'U_DELETE_ARTICLE' => ArticlesUrlBuilder::delete_article($article->get_id())->absolute()
 			));
 		}
+		
+		$this->view->put('FORM', $this->form->display());
+	}
+	
+	private function list_sort_fields()
+	{
+		$options = array();
+
+		$options[] = new FormFieldSelectChoiceOption($this->lang['articles.sort_field.date'], 'date');
+		$options[] = new FormFieldSelectChoiceOption($this->lang['articles.sort_field.title'], 'title');
+		$options[] = new FormFieldSelectChoiceOption($this->lang['articles.sort_field.views'], 'view');
+		$options[] = new FormFieldSelectChoiceOption($this->lang['articles.sort_field.com'], 'com');
+		$options[] = new FormFieldSelectChoiceOption($this->lang['articles.sort_field.note'], 'note');
+		$options[] = new FormFieldSelectChoiceOption($this->lang['articles.sort_field.author'], 'author');
+
+		return $options;
 	}
 	
 	private function generate_response()
 	{
 		$response = new ArticlesDisplayResponse();
 		$response->set_page_title($this->keyword->get_name());
+		$response->set_page_description(StringVars::replace_vars($this->lang['articles.seo.description.tag'], array('subject' => $this->keyword->get_name())));
+		
 		$response->add_breadcrumb_link($this->lang['articles'], ArticlesUrlBuilder::home());
 		$response->add_breadcrumb_link($this->keyword->get_name(), ArticlesUrlBuilder::display_tag($this->keyword->get_rewrited_name()));
 		

@@ -45,6 +45,7 @@ class ArticlesDisplayHomeCategoryController extends ModuleController
 	{	
 		$response = new ArticlesDisplayResponse();
 		$response->set_page_title($this->category->get_name());
+		//$response->set_page_description($this->category->get_description()); @todo: remettre en place lorsque je réinstallerai
 		
 		$response->add_breadcrumb_link($this->lang['articles'], ArticlesUrlBuilder::home());
 		

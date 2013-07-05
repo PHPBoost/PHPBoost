@@ -6,8 +6,8 @@
 -->
 </script>
 # IF C_ARTICLES_FILTERS #
-<div style="float:right;width:240px;margin-right:10px;" class="row3" id="form">
-	{L_ARTICLES_FILTERS_TITLE}# INCLUDE FORM #
+<div style="float:right;width:300px;margin-right:10px;">
+	# INCLUDE FORM #
 </div>
 # ENDIF #
 <div class="spacer">&nbsp;</div>

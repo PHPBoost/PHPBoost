@@ -6,38 +6,59 @@
 -->
 </script>
 # INCLUDE MSG #
+
+<div class="module_actions">
+    <ul class="nav">
+	<li id="options">
+	    <a><span class="options"></span><span class="caret"></span></a>
+	    <ul class="subnav">
+		# IF C_EDIT #
+		<li>
+			<a href="{U_EDIT_ARTICLE}" title="{L_EDIT_ARTICLE}"><img class="valign_middle" src="{PATH_TO_ROOT}/{L_MODULE_NAME}/templates/images/edit_white.png" alt="{L_EDIT_ARTICLE}" /></a>
+		</li>
+		# ENDIF #
+		# IF C_DELETE #
+		<li>
+			<a href="{U_DELETE_ARTICLE}" title="{L_DELETE_ARTICLE}"><img class="valign_middle" src="{PATH_TO_ROOT}/{L_MODULE_NAME}/templates/images/delete.png" alt="{L_DELETE_ARTICLE}" /></a>
+		</li>
+		# ENDIF #
+		<li>
+			<a href="{U_PRINT_ARTICLE}" title="{L_PRINTABLE_VERSION}"><img class="valign_middle" src="{PATH_TO_ROOT}/{L_MODULE_NAME}/templates/images/print.png" alt="{L_PRINTABLE_VERSION}" /></a>
+		</li>
+	    </ul>
+	</li>
+    </ul>
+</div>
+<div class="spacer"></div>
+
 <div class="module_position">					
-	<div class="module_top_l"></div>		
-	<div class="module_top_r"></div>
-	<div class="module_top">
-		<div class="module_top_title">
+	<div class="article_top">
+		<div class="article_top_title">
 			<a href="{U_SYNDICATION}" title="Rss" class="img_link">
 				<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/rss.png" alt="Rss" title="Rss" />
 			</a>
 			{TITLE}
 		</div>
-		<div class="module_top_com">
+		<div class="article_info">
+			# IF C_AUTHOR_DISPLAYED #
+			<img class="valign_middle" src="{PATH_TO_ROOT}/{L_MODULE_NAME}/templates/images/author.png" alt="{L_AUTHOR}" title="{L_AUTHOR}" /><a href="{U_AUTHOR}" class="small_link {USER_LEVEL_CLASS}" # IF C_USER_GROUP_COLOR # style="color:{USER_GROUP_COLOR}"# ENDIF #>&nbsp;{PSEUDO}&nbsp;</a>|
+			# ENDIF #
+			&nbsp;<img class="valign_middle" src="{PATH_TO_ROOT}/{L_MODULE_NAME}/templates/images/calendar.png" alt="{L_DATE}" title="{L_DATE}" />&nbsp;{DATE}&nbsp;|
+			&nbsp;<img class="valign_middle" src="{PATH_TO_ROOT}/{L_MODULE_NAME}/templates/images/view.png" alt="{L_VIEW}" title="{L_VIEW}" />&nbsp;{NUMBER_VIEW}
 			# IF C_COMMENTS_ENABLED #
-			<a href="{U_COMMENTS}" title="{L_COMMENTS}" class="img_link">
-				<img src="{PATH_TO_ROOT}/templates/{THEME}/images/com_mini.png" alt="" class="valign_middle" />
-				{L_COMMENTS}
-			</a>
+				&nbsp;|&nbsp;<img class="valign_middle" src="{PATH_TO_ROOT}/{L_MODULE_NAME}/templates/images/comment.png" /><a class="small_link" href="{U_COMMENTS}">&nbsp;{L_COMMENTS}</a>
 			# ENDIF #
-			# IF C_EDIT #
-			<a href="{U_EDIT_ARTICLE}" title="{L_EDIT}" class="img_link">
-				<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" class="valign_middle" alt="{L_EDIT}" />
-			</a>
+			&nbsp;|&nbsp;<img class="valign_middle" src="{PATH_TO_ROOT}/{L_MODULE_NAME}/templates/images/category.png" alt="{L_CATEGORY}" title="{L_CATEGORY}" />&nbsp;<a class="small_link" href="{U_CATEGORY}">{L_CAT_NAME}</a>
+			# IF C_KEYWORDS #
+			&nbsp;|&nbsp;<img class="valign_middle" src="{PATH_TO_ROOT}/{L_MODULE_NAME}/templates/images/tags.png" alt="{L_TAGS}" title="{L_TAGS}" /> 
+				# START keywords #
+				{keywords.COMMA}<a href="{keywords.U_KEYWORD}" class="small_link">{keywords.NAME}</a>
+				# END keywords #
 			# ENDIF #
-			# IF C_DELETE #
-			<a href="{U_DELETE_ARTICLE}" title="{L_DELETE}" onclick="javascript:return Confirm_del_article();" class="img_link">
-				<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" class="valign_middle" alt="{L_DELETE}" />
-			</a>
-			# ENDIF #
-			<a href="{U_PRINT_ARTICLE}" title="{L_PRINTABLE_VERSION}" class="img_link" target="_blank">
-				<img src="{PATH_TO_ROOT}/templates/{THEME}/images/print_mini.png" alt="{L_PRINTABLE_VERSION}" class="valign_middle" />
-			</a>
 		</div>
 	</div>
+	<div class="spacer"></div>
+	
 	<div class="module_contents">
 			# IF PAGINATION_ARTICLES #
 			<div style="float:right;margin-right:35px;width:250px;">
@@ -58,8 +79,6 @@
 			# ENDIF #		
 		<div class="spacer">&nbsp;</div>
 	</div>
-	<div class="module_bottom_l"></div>		
-	<div class="module_bottom_r"></div>
 	<div class="module_bottom">
 		# IF C_SOURCES #
 		<div><b> {L_SOURCE} : </b># START sources #{sources.COMMA}<a href="{sources.URL}" class="small_link">{sources.NAME}</a># END sources #</div>
@@ -70,13 +89,6 @@
 			{KERNEL_NOTATION}
 		</div>
 		# ENDIF #
-		<div style="float:right" class="text_small">
-			# IF C_AUTHOR_DISPLAYED #
-			{L_WRITTEN}<a href="{U_AUTHOR}" class="small_link {USER_LEVEL_CLASS}" # IF C_USER_GROUP_COLOR # style="color:{USER_GROUP_COLOR}"# ENDIF #>{PSEUDO}</a>{L_ON}{DATE}
-			# ELSE #
-			{L_NO_AUTHOR_DISPLAYED}{DATE}
-			# ENDIF #
-		</div>
 		<div class="spacer"></div>
 	</div>
 </div>

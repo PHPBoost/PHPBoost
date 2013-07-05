@@ -54,10 +54,12 @@ class ArticlesModuleHomePage implements ModuleHomePage
 	{
 		$form = new HTMLForm(__CLASS__);
 		
-		$fieldset = new FormFieldsetHorizontal('filters'); // @todo : voir si je passe une classe en option pour styliser
+		$fieldset = new FormFieldsetHorizontal('filters');
 		$form->add_fieldset($fieldset);
 		
 		$sort_fields = $this->list_sort_fields();
+		
+		$fieldset->add_field(new FormFieldLabel($this->lang['articles.sort_filter_title']));
 		
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_fields', '', $field, $sort_fields,
 			array('events' => array('change' => 'document.location = "'. ArticlesUrlBuilder::display_category($this->category->get_id(), $this->category->get_rewrited_name())->absolute() .'" + HTMLForms.getField("sort_fields").getValue() + "/" + HTMLForms.getField("sort_mode").getValue();'))
@@ -85,11 +87,10 @@ class ArticlesModuleHomePage implements ModuleHomePage
 		
 		$authorized_cats_sql = !empty($authorized_categories) ? 'AND ac.id IN (' . implode(', ', $authorized_categories) . ')' : '';
 		
-		$now = new Date(DATE_NOW, TIMEZONE_AUTO);
+		$now = new Date();
 				
 		$nbr_categories = count($authorized_categories);
 		
-		$nbr_categories_per_page = ArticlesConfig::load()->get_number_categories_per_page();
 		$comments_enabled = ArticlesConfig::load()->get_comments_enabled();
 		
 		$nbr_articles_cat = PersistenceContext::get_querier()->count(ArticlesSetup::$articles_table, 
@@ -106,16 +107,14 @@ class ArticlesModuleHomePage implements ModuleHomePage
 						    ' AND publishing_end_date < ' . $now->get_timestamp() . '))');
 		
 		$this->view->put_all(array(
+			'C_MOSAIC' => ArticlesConfig::load()->get_display_type() == ArticlesConfig::DISPLAY_MOSAIC,
 			'C_ADD' => $this->auth_add,
 			'C_MODERATE' => $this->auth_moderation,
 			'C_PENDING_ARTICLES' => $number_articles_not_published > 0 && $this->auth_moderation,
 			'C_COMMENTS_ENABLED' => $comments_enabled,
-			'ID_CAT' => ArticlesService::get_categories_manager()->get_categories_cache()->get_category($this->category->get_id()),
-			'L_DATE' => LangLoader::get_message('date', 'main'),
-			'L_VIEW' => LangLoader::get_message('views', 'main'),
-			'L_COM' => LangLoader::get_message('com', 'main'),
-			'L_NOTE' => LangLoader::get_message('note', 'main'),
-			'L_WRITTEN' => LangLoader::get_message('written_by', 'main'),
+			'C_ARTICLES_CAT' => $nbr_categories > 0,
+			'C_CURRENT_CAT' => $this->category->get_id() != Category::ROOT_CATEGORY,
+			'ID_CAT' => $this->category->get_name(),
 			'L_ADD_ARTICLES' => $this->lang['articles.add'],
 			'L_ALERT_DELETE_ARTICLE' => $this->lang['articles.form.alert_delete_article'],
 			'L_SUBCATEGORIES' => $this->lang['articles.sub_categories'],
@@ -173,24 +172,6 @@ class ArticlesModuleHomePage implements ModuleHomePage
 			));
 		}
 		
-		if ($nbr_categories > 0)
-		{
-			$nbr_column_cats = ($nbr_categories > $nbr_categories_per_page) ? $nbr_categories_per_page : $nbr_categories;
-			if ($this->category->get_id() == Category::ROOT_CATEGORY)
-			{
-				$nbr_column_cats = ($nbr_column_cats <= 2) ? 1 : $nbr_column_cats - 1;//We exclude the root cat
-			}
-			else
-			{
-				$nbr_column_cats = ($nbr_column_cats) ? $nbr_column_cats : 1;
-			}
-			$column_width_cat = floor(100 / $nbr_column_cats);
-			
-			$this->view->put_all(array(
-				'C_ARTICLES_CAT' => true,
-				'COLUMN_WIDTH_CAT' => $column_width_cat
-			));
-		}
 		//Articles in current cat
 		if ($nbr_articles_cat > 0)
 		{
@@ -262,26 +243,46 @@ class ArticlesModuleHomePage implements ModuleHomePage
 				$article = new Articles();
 				$article->set_properties($row);
 				$user = $article->get_author_user();
+				$keywords = ArticlesKeywordsService::get_article_keywords($article->get_id());
+				
+				$keywords_list = $this->build_keywords_list($keywords);
 				
 				$notation->set_id_in_module($article->get_id());
 
 				$user_group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
 				
+				$description = FormatingHelper::second_parse($article->get_description());
+				if (ArticlesConfig::load()->get_display_type() == ArticlesConfig::DISPLAY_MOSAIC)
+				{
+					$short_description = strlen($description > 132) ? TextHelper::substr_html($description, 0, 128) . '...' : $description;
+				}
+				else
+				{
+					$short_description = strlen($description > 249) ? TextHelper::substr_html($description, 0, 245) . '...' : $description;
+				}
+				
 				$this->view->assign_block_vars('articles', array(
+					'C_KEYWORDS' => $keywords->get_rows_count() > 0 ? true : false,
 					'C_EDIT' => $this->auth_moderation || $this->auth_write && $article->get_author_user()->get_id() == AppContext::get_current_user()->get_id(),
 					'C_DELETE' => $this->auth_moderation,
 					'C_USER_GROUP_COLOR' => !empty($user_group_color),
 					'C_AUTHOR_DISPLAYED' => $article->get_author_name_displayed(),
 					'C_NOTATION_ENABLED' => $article->get_notation_enabled(),
+					'C_HAS_PICTURE' => $article->has_picture(),
 					'L_EDIT_ARTICLE' => $this->lang['articles.edit'],
 					'L_DELETE_ARTICLE' => $this->lang['articles.delete'],
+					'L_AUTHOR' => $this->lang['articles.sort_field.author'],
+					'L_DATE' => $this->lang['articles.sort_field.date'],
+					'L_VIEW' => $this->lang['articles.sort_field.views'],
+					'L_TAGS' => $this->lang['articles.tags'],
+					'L_READ_MORE' => $this->lang['articles.read_more'],
 					'TITLE' => $article->get_title(),
-					'PICTURE' => $article->get_picture(),
+					'PICTURE' => $article->get_picture()->absolute(),
 					'DATE' => $article->get_date_created()->format(DATE_FORMAT_SHORT, TIMEZONE_AUTO),
 					'NUMBER_VIEW' => $article->get_number_view(),
 					'L_NUMBER_COM' => CommentsService::get_number_and_lang_comments('articles', $article->get_id()),
-					'NOTE' => $row['number_notes'] > 0 ? NotationService::display_static_image($notation, $row['average_notes']) : $this->lang['articles.no_notes'],
-					'DESCRIPTION' =>FormatingHelper::second_parse($article->get_description()),
+					'NOTE' => $row['number_notes'] > 0 ? NotationService::display_static_image($notation, $row['average_notes']) : '&nbsp;',
+					'DESCRIPTION' =>$short_description,
 					'PSEUDO' => $user->get_pseudo(),
 					'USER_LEVEL_CLASS' => UserService::get_level_class($user->get_level()),
 					'USER_GROUP_COLOR' => $user_group_color,
@@ -289,7 +290,8 @@ class ArticlesModuleHomePage implements ModuleHomePage
 					'U_AUTHOR' => UserUrlBuilder::profile($row['author_user_id'])->absolute(),
 					'U_ARTICLE' => ArticlesUrlBuilder::display_article($this->category->get_id(), $this->category->get_rewrited_name(), $article->get_id(), $article->get_rewrited_title())->absolute(),
 					'U_EDIT_ARTICLE' => ArticlesUrlBuilder::edit_article($article->get_id())->absolute(),
-					'U_DELETE_ARTICLE' => ArticlesUrlBuilder::delete_article($article->get_id())->absolute()
+					'U_DELETE_ARTICLE' => ArticlesUrlBuilder::delete_article($article->get_id())->absolute(),
+					'U_KEYWORDS_LIST' => $keywords_list
 				));
 			}
 			
@@ -330,6 +332,23 @@ class ArticlesModuleHomePage implements ModuleHomePage
 			}
 		}
 		return $this->category;
+	}
+	
+	private function build_keywords_list($keywords)
+	{
+		$keywords_list = '';
+		$nbr_keywords = $keywords->get_rows_count();
+		
+		while ($row = $keywords->fetch())
+		{	
+			$keywords_list .= '<a class="small_link" href="' . ArticlesUrlBuilder::display_tag($row['rewrited_name'])->absolute() . '">' . $row['name'] . '</a>';
+			if ($nbr_keywords - 1 > 0)
+			{
+				$keywords_list .= ', ';
+				$nbr_keywords--;
+			}
+		}
+		return $keywords_list;
 	}
 	
 	private function get_authorized_categories()

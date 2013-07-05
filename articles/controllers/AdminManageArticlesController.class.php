@@ -59,6 +59,8 @@ class AdminManageArticlesController extends AdminModuleController
 		
 		$sort_fields = $this->list_sort_fields();
 		
+		$fieldset->add_field(new FormFieldLabel($this->lang['articles.sort_filter_title']));
+		
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_fields', '', $field, $sort_fields,
 			array('events' => array('change' => 'document.location = "'. ArticlesUrlBuilder::manage_articles()->absolute() .'" + HTMLForms.getField("sort_fields").getValue() + "/" + HTMLForms.getField("sort_mode").getValue();'))
 		));
