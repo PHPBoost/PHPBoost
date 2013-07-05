@@ -267,11 +267,11 @@ else
 
 			// Calendrier.
 			$start_calendar = new MiniCalendar('start');
-			$start = new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, ($articles['start'] > 0 ? $articles['start'] : ''));
+			$start = new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, ($articles['start'] > 0 ? $articles['start'] : $now->get_timestamp()));
 			$start_calendar->set_date($start);
 			
 			$end_calendar = new MiniCalendar('end');
-			$end = new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, ($articles['end'] > 0 ? $articles['end'] : ''));
+			$end = new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, ($articles['end'] > 0 ? $articles['end'] : $now->get_timestamp()));
 			$end_calendar->set_date($end);
 			$end_calendar->set_style('margin-left:100px;');
 			
