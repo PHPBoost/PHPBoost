@@ -154,6 +154,7 @@ class News
 	public function set_end_date(Date $end_date)
 	{
 		$this->end_date = $end_date;
+		$this->end_date_enabled = true;
 	}
 	
 	public function get_end_date()
@@ -261,9 +262,8 @@ class News
 		$this->set_contents($properties['contents']);
 		$this->set_short_contents($properties['short_contents']);
 		$this->set_approbation_type($properties['approbation_type']);
-		$this->set_start_date(!empty($properties['start_date']) ? new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $properties['start_date']) : new Date());
-		$this->set_end_date(!empty($properties['end_date']) ? new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $properties['end_date']) : new Date());
-		$this->end_date_enabled = !empty($properties['end_date']);
+		$this->start_date = !empty($properties['start_date']) ? new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $properties['start_date']) : null;
+		$this->end_date = !empty($properties['end_date']) ? new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $properties['end_date']) : null;
 		$this->set_top_list_enabled((bool)$properties['top_list_enabled']);
 		$this->set_creation_date(new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $properties['creation_date']));
 		$this->set_picture(new Url($properties['picture_url']));
@@ -276,13 +276,13 @@ class News
 	
 	public function init_default_properties()
 	{
-		$this->set_id_cat(Category::ROOT_CATEGORY);
-		$this->set_approbation_type(self::APPROVAL_NOW);
-		$this->set_start_date(new Date());
-		$this->set_end_date(new Date());
-		$this->set_creation_date(new Date());
-		$this->set_sources(array());
-		$this->set_picture(new Url(self::DEFAULT_PICTURE));
+		$this->id_cat = Category::ROOT_CATEGORY;
+		$this->approbation_type = self::APPROVAL_NOW;
+		$this->start_date = new Date();
+		$this->end_date = new Date();
+		$this->creation_date = new Date();
+		$this->sources = array();
+		$this->picture_url = new Url(self::DEFAULT_PICTURE);
 		$this->end_date_enabled = false;
 	}
 	
@@ -290,11 +290,13 @@ class News
 	{
 		$this->start_date = null;
 		$this->end_date = null;
+		$this->end_date_enabled = false;
 	}
 	
 	public function clean_end_date()
 	{
 		$this->end_date = null;
+		$this->end_date_enabled = false;
 	}
 	
 	public function get_array_tpl_vars()

@@ -91,7 +91,7 @@ class NewsDisplayNewsController extends ModuleController
 		$comments_topic->set_id_in_module($news->get_id());
 		$comments_topic->set_url(NewsUrlBuilder::display_news($category->get_id(), $category->get_rewrited_name(), $news->get_id(), $news->get_rewrited_name()));
 		
-		//$this->tpl->put('COMMENTS', $comments_topic->display());
+		$this->tpl->put('COMMENTS', $comments_topic->display());
 		
 		$this->build_sources_view($news);
 		
@@ -123,10 +123,11 @@ class NewsDisplayNewsController extends ModuleController
 
 		try {
 			$previous_news = PersistenceContext::get_querier()->select_single_row(NewsSetup::$news_table, array('id', 'name', 'id_category', 'rewrited_name'), 
-				'WHERE (approbation_type = 1 OR (approbation_type = 2 AND start_date < :timestamp_now AND (end_date > :timestamp_now OR end_date = 0))) AND creation_date < :timestamp_news ORDER BY creation_date DESC LIMIT 1 OFFSET 0', 
+				'WHERE (approbation_type = 1 OR (approbation_type = 2 AND start_date < :timestamp_now AND (end_date > :timestamp_now OR end_date = 0))) AND creation_date < :timestamp_news AND id_category IN :authorized_categories ORDER BY creation_date DESC LIMIT 1 OFFSET 0', 
 				array(
 					'timestamp_now' => $now->get_timestamp(),
 					'timestamp_news' => $timestamp_news,
+					'authorized_categories' => array($news->get_id_cat())
 			));
 			
 			$this->tpl->put_all(array(
@@ -140,10 +141,11 @@ class NewsDisplayNewsController extends ModuleController
 		
 		try {
 			$next_news = PersistenceContext::get_querier()->select_single_row(NewsSetup::$news_table, array('id', 'name', 'id_category', 'rewrited_name'), 
-				'WHERE (approbation_type = 1 OR (approbation_type = 2 AND start_date < :timestamp_now AND (end_date > :timestamp_now OR end_date = 0))) AND creation_date > :timestamp_news ORDER BY creation_date ASC LIMIT 1 OFFSET 0', 
+				'WHERE (approbation_type = 1 OR (approbation_type = 2 AND start_date < :timestamp_now AND (end_date > :timestamp_now OR end_date = 0))) AND creation_date > :timestamp_news AND id_category IN :authorized_categories ORDER BY creation_date ASC LIMIT 1 OFFSET 0', 
 				array(
 					'timestamp_now' => $now->get_timestamp(),
-					'timestamp_news' => $timestamp_news
+					'timestamp_news' => $timestamp_news,
+				'authorized_categories' => array($news->get_id_cat())
 			));
 			
 			$this->tpl->put_all(array(
