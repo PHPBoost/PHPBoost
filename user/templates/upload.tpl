@@ -4,12 +4,13 @@
 	function insert_popup(code) 
 	{
 		# IF C_BBCODE_TINYMCE_MODE #
-		window.opener.insertTinyMceContent(code); //insertion pour tinymce.
-		# ENDIF #
+		opener.insertTinyMceContent("{FIELD}", code); //insertion pour tinymce.
+		# ELSE #
 		
 		var textarea = opener.document.getElementById("{FIELD}");
 		textarea.focus();
 		textarea.value += ' ' + code;
+		# ENDIF #
 	}	
 	function close_popup()
 	{
