@@ -89,9 +89,10 @@ class NewsUrlBuilder
 		return DispatchManager::get_url(self::$dispatcher, '/tag/'. $rewrited_name);
 	}
 	
-	public static function display_pending_news()
+	public static function display_pending_news($page = null)
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/pending/');
+		$page = $page !== null ? $page . '/' : '';
+		return DispatchManager::get_url(self::$dispatcher, '/pending/' . $page);
 	}
 	
 	public static function add_news()

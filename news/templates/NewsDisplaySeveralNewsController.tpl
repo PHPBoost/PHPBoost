@@ -12,12 +12,6 @@
 		<li>
 			<a><span class="options"></span><span class="caret"></span></a>
 			<ul style="width: 150px;">
-				# IF C_ADMIN #
-				<li>
-					<a href="{U_ADMIN}" title="{L_ADMIN}" class="img_link">{L_ADMIN} l'édito</a>
-				</li>
-				# ENDIF #
-
 				# IF C_ADD #
 				<li>
 					<a href="{U_ADD}" title="${i18n('news.add')}" class="img_link">${i18n('news.add')}</a>

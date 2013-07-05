@@ -152,7 +152,7 @@ class NewsFormController extends ModuleController
 				}'))
 			));
 			
-			$publication_fieldset->add_field(new FormFieldDateTime('start_date', $this->lang['news.form.date.start'], $this->get_news()->get_start_date(), array('hidden' => ($this->get_news()->get_approbation_type() != News::APPROVAL_DATE))));
+			$publication_fieldset->add_field(new FormFieldDateTime('start_date', $this->lang['news.form.date.start'], ($this->get_news()->get_start_date() === null ? new Date() : $this->get_news()->get_start_date()), array('hidden' => ($this->get_news()->get_approbation_type() != News::APPROVAL_DATE))));
 			
 			$publication_fieldset->add_field(new FormFieldCheckbox('end_date_enable', $this->lang['news.form.date.end.enable'], $this->get_news()->end_date_enabled(), array(
 			'hidden' => ($this->get_news()->get_approbation_type() != News::APPROVAL_DATE),
@@ -164,7 +164,7 @@ class NewsFormController extends ModuleController
 			}'
 			))));
 			
-			$publication_fieldset->add_field(new FormFieldDateTime('end_date', $this->lang['news.form.date.end'], $this->get_news()->get_end_date(), array('hidden' => !$this->get_news()->end_date_enabled())));
+			$publication_fieldset->add_field(new FormFieldDateTime('end_date', $this->lang['news.form.date.end'], ($this->get_news()->get_end_date() === null ? new Date() : $this->get_news()->get_end_date()), array('hidden' => !$this->get_news()->end_date_enabled())));
 		
 			$publication_fieldset->add_field(new FormFieldCheckbox('top_list', $this->lang['news.form.top_list'], $this->get_news()->top_list_enabled()));
 		}
@@ -386,7 +386,7 @@ class NewsFormController extends ModuleController
 		}
 		else
 		{
-			AppContext::get_response()->redirect(NewsUrlBuilder::home());
+			AppContext::get_response()->redirect(NewsUrlBuilder::display_pending_news());
 		}
 	}
 	
