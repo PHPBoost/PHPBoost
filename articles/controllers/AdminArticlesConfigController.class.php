@@ -85,16 +85,19 @@ class AdminArticlesConfigController extends AdminModuleController
 			array('maxlength' => 3, 'size' => 4, 'required' => true), array(new FormFieldConstraintRegex('`^[0-9]+$`i'))
 		));
 		
-		$fieldset->add_field(new FormFieldTextEditor('number_columns_displayed', $this->lang['articles_configuration.number_columns_displayed'], $this->config->get_number_columns_displayed(),
-			array('maxlength' => 3, 'size' => 4, 'required' => true), array(new FormFieldConstraintRegex('`^[0-9]+$`i'))
-		));
-		
 		$fieldset->add_field(new FormFieldTextEditor('notation_scale', $this->lang['articles_configuration.notation_scale'], $this->config->get_notation_scale(),
 			array('maxlength' => 2, 'size' => 4),
 			array(new FormFieldConstraintRegex('`^[0-9]+$`i'))
 		));
 		
 		$fieldset->add_field(new FormFieldCheckbox('comments_enabled', $this->lang['articles_configuration.comments_enabled'], $this->config->get_comments_enabled()));
+		
+		$fieldset->add_field(new FormFieldSimpleSelectChoice('display_type', $this->lang['articles_configuration.display_type'], $this->config->get_display_type(),
+			array(
+				new FormFieldSelectChoiceOption($this->lang['articles_configuration.display_type.mosaic'], ArticlesConfig::DISPLAY_MOSAIC),
+				new FormFieldSelectChoiceOption($this->lang['articles_configuration.display_type.list'], ArticlesConfig::DISPLAY_LIST),
+			)
+		));
 		
 		$fieldset_authorizations = new FormFieldsetHTML('authorizations', $this->lang['articles_configuration_authorizations'],
 			array('description' => $this->lang['articles_configuration.authorizations.explain'])
@@ -124,9 +127,9 @@ class AdminArticlesConfigController extends AdminModuleController
 	{	
 		$this->config->set_number_articles_per_page($this->form->get_value('number_articles_per_page'));
 		$this->config->set_number_categories_per_page($this->form->get_value('number_categories_per_page'));
-		$this->config->set_number_columns_displayed($this->form->get_value('number_columns_displayed'));
 		$this->config->set_notation_scale($this->form->get_value('notation_scale'));
 		$this->config->set_comments_enabled($this->form->get_value('comments_enabled'));
+		$this->config->set_display_type($this->form->get_value('display_type')->get_raw_value());
 		$this->config->set_authorizations($this->form->get_value('authorizations')->build_auth_array());
 		
 		ArticlesConfig::save();

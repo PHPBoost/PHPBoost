@@ -112,10 +112,11 @@ class ArticlesUrlBuilder
 		return DispatchManager::get_url(self::$dispatcher, '/pending/' . $sort . $page);
 	}
 	
-	public static function display_tag($rewrited_name, $page = null)
+	public static function display_tag($rewrited_name, $sort_field = null, $sort_mode = null, $page = null)
 	{
 		$page = $page !== null ? $page . '/' : '';
-		return DispatchManager::get_url(self::$dispatcher, '/tag/'. $rewrited_name . '/' . $page);
+		$sort = $sort_field !== null ? $sort_field . '/' . $sort_mode . '/' : '';
+		return DispatchManager::get_url(self::$dispatcher, '/tag/'. $rewrited_name . '/' . $sort . $page);
 	}
 	
 	public static function home()

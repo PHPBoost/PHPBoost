@@ -63,7 +63,7 @@ class Articles
 	
 	const DEFAULT_NBR_VIEW = 0;
         
-	const DEFAULT_PICTURE = '/articles/articles.png';
+	const DEFAULT_PICTURE = '/articles/templates/images/default.png';
 
 	public function set_id($id)
 	{
@@ -139,7 +139,13 @@ class Articles
 	{
 		return $this->picture_url;
 	}
-
+	
+	public function has_picture()
+	{
+		$picture = $this->picture_url->absolute();
+                return !empty($picture);
+	}
+	
 	public function set_number_view($number_view)
 	{
 		$this->number_view = $number_view;
@@ -251,7 +257,7 @@ class Articles
 
 	public function get_keywords()
 	{
-		return ArticlesKeywordsService::get_article_keywords($this->id);
+		return ArticlesKeywordsService::get_article_keywords_name($this->id);
 	}
 
 	public function get_properties()

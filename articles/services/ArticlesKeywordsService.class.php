@@ -80,6 +80,17 @@ class ArticlesKeywordsService
 		return $keywords;
 	}
 	
+	public static function exists($name)
+	{
+		return self::$db_querier->row_exists(ArticlesSetup::$articles_keywords_table, 'WHERE rewrited_name=:rewrited_name', array('rewrited_name' => Url::encode_rewrite($name)));
+	}
+
+	public static function get_id_keyword($condition, array $parameters)
+	{
+		$id = self::$db_querier->get_column_value(ArticlesSetup::$articles_keywords_table, 'id', $condition, $parameters);
+		return $id;
+	}
+	
 	public static function get_article_keywords($id_article)
 	{	
 		$result = self::$db_querier->select('SELECT keywords.id, keywords.name, keywords.rewrited_name FROM ' 
@@ -91,6 +102,18 @@ class ArticlesKeywordsService
 		);
 		
                 return $result;
+	}
+	
+	public static function get_article_keywords_name($id_article)
+	{
+		$result = self::get_article_keywords($id_article);
+		
+		$article_keywords = array();
+		while ($rows = $result->fetch())	
+		{		
+			$article_keywords['name'] = $rows['name'];		
+		}		
+		return $article_keywords;
 	}
 }
 ?>

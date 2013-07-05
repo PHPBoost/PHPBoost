@@ -39,7 +39,7 @@ class ArticlesSearchable extends AbstractSearchableExtensionPoint
 	
 	public function get_search_request($args)
 	{
-		$now = new Date(DATE_NOW, TIMEZONE_AUTO);
+		$now = new Date();
 		
 		$search_category_children_options = new SearchCategoryChildrensOptions();
 		$search_category_children_options->add_authorizations_bits(Category::READ_AUTHORIZATIONS);

@@ -76,6 +76,8 @@ class ArticlesFormFieldSelectSources extends AbstractFormField
 			'C_DISABLED' => $this->is_disabled(),
 			'MAX_INPUT' => $this->max_input,
 			'NBR_FIELDS' => $i == 0 ? 1 : $i,
+			'L_SOURCE_NAME' => LangLoader::get_message('articles.form.source_name', 'articles-common', 'articles'),
+			'L_SOURCE_URL' => LangLoader::get_message('articles.form.source_url', 'articles-common', 'articles')
 		));
 
 		$template->assign_block_vars('fieldelements', array(

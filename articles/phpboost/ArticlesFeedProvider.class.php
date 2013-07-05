@@ -60,7 +60,7 @@ class ArticlesFeedProvider implements FeedProvider
 
 		if (!empty($ids_categories))
 		{
-			$now = new Date(DATE_NOW, TIMEZONE_AUTO);
+			$now = new Date();
 			
 			$results = $querier->select('SELECT articles.id, articles.id_category, articles.title, articles.rewrited_title, articles.picture_url, 
 			articles.contents, articles.description, articles.date_created, cat.id AS id_category, cat.rewrited_name AS rewrited_name_cat

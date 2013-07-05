@@ -43,10 +43,11 @@ var ArticlesFormFieldSelectSources = new ArticlesFormFieldSelectSources();
 
 <div id="input_fields_${escape(ID)}">
 # START fieldelements #
-		<input type="text" name="field_name_${escape(ID)}_{fieldelements.ID}" id="field_name_${escape(ID)}_{fieldelements.ID}" value="{fieldelements.NAME}" size="30" class="text"/>
-		<input type="text" name="field_value_${escape(ID)}_{fieldelements.ID}" id="field_value_${escape(ID)}_{fieldelements.ID}" value="{fieldelements.VALUE}" size="30" class="text"/>
-		<a href="javascript:ArticlesFormFieldSelectSources.delete_field({fieldelements.ID});" id="delete_${escape(ID)}_{fieldelements.ID}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="" class="valign_middle" /></a>
-		<br id="br_${escape(ID)}_{fieldelements.ID}">
+	<div style="float:left;width:84%;display:inline;padding-bottom:5px;color:#334455;font-weight:bold;"><span style="width:50%;margin:0 75px 0 40px;">{L_SOURCE_NAME}</span><span style="width:50%;">{L_SOURCE_URL}</span></div>
+	<input type="text" name="field_name_${escape(ID)}_{fieldelements.ID}" id="field_name_${escape(ID)}_{fieldelements.ID}" value="{fieldelements.NAME}" size="30" class="text" />
+	<input type="text" name="field_value_${escape(ID)}_{fieldelements.ID}" id="field_value_${escape(ID)}_{fieldelements.ID}" value="{fieldelements.VALUE}" size="30" class="text"/>
+	<a href="javascript:ArticlesFormFieldSelectSources.delete_field({fieldelements.ID});" id="delete_${escape(ID)}_{fieldelements.ID}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="" class="valign_middle" /></a>
+	<br id="br_${escape(ID)}_{fieldelements.ID}">
 # END fieldelements #
 </div>
 <img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/plus.png" id="add_${escape(ID)}" class="valign_middle" style="width:25px;"/>

@@ -32,9 +32,11 @@ class ArticlesConfig extends AbstractConfigData
 {    
 	const NUMBER_ARTICLES_PER_PAGE = 'number_articles_per_page';
 	const NUMBER_CATEGORIES_PER_PAGE = 'number_categories_per_page';
-	const NUMBER_COLUMNS_DISPLAYED = 'number_columns_displayed';
 	const NOTATION_SCALE = 'notation_scale';
 	const COMMENTS_ENABLED = 'comments_enable'; 
+	const DISPLAY_TYPE = 'display_type';
+	const DISPLAY_MOSAIC = 'mosaic';
+	const DISPLAY_LIST = 'list';
 	const AUTHORIZATIONS = 'authorizations';
 	
 	public function get_number_articles_per_page()
@@ -57,14 +59,14 @@ class ArticlesConfig extends AbstractConfigData
 		$this->set_property(self::NUMBER_CATEGORIES_PER_PAGE, $number);
 	}
 	
-	public function get_number_columns_displayed()
+	public function get_display_type()
 	{
-		return $this->get_property(self::NUMBER_COLUMNS_DISPLAYED);
+		return $this->get_property(self::DISPLAY_TYPE);
 	}
-	
-	public function set_number_columns_displayed($number) 
+
+	public function set_display_type($display_type)
 	{
-		$this->set_property(self::NUMBER_COLUMNS_DISPLAYED, $number);
+		$this->set_property(self::DISPLAY_TYPE, $display_type);
 	}
 	
 	public function get_notation_scale()
@@ -102,9 +104,9 @@ class ArticlesConfig extends AbstractConfigData
 		return array(
 			self::NUMBER_ARTICLES_PER_PAGE => 10,
 			self::NUMBER_CATEGORIES_PER_PAGE => 10,
-			self::NUMBER_COLUMNS_DISPLAYED => 3,
 			self::COMMENTS_ENABLED => true,
 			self::NOTATION_SCALE => 5,
+			self::DISPLAY_TYPE => self::DISPLAY_MOSAIC,
 			self::AUTHORIZATIONS => array('r1' => 13, 'r0' => 5, 'r-1' => 1)
 		);
 	}
