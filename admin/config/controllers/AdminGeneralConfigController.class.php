@@ -205,7 +205,7 @@ class AdminGeneralConfigController extends AdminController
 		{
 			if (in_array($module->get_id(), $providers))
 			{
-				$options[] = new FormFieldSelectChoiceOption($module->get_configuration()->get_name(), $id);
+				$options[] = new FormFieldSelectChoiceOption($module->get_configuration()->get_name(), $module->get_id());
 			}
 		}
 		
