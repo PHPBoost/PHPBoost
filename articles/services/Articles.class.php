@@ -42,6 +42,7 @@ class Articles
 	private $notation_enabled;
 	private $author_name_displayed;
 	private $author_user;
+	private $notation;
 
 	private $published;
 	private $publishing_start_date;
@@ -185,6 +186,16 @@ class Articles
 	{
 	    return $this->author_user;
 	}
+
+	public function set_notation(Notation $notation)
+	{
+		$this->notation = $notation;
+	}
+	
+	public function get_notation()
+	{
+	    return $this->notation;
+	}
 	
 	public function set_publishing_state($published)
 	{
@@ -299,9 +310,16 @@ class Articles
 		$this->set_date_created(new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, $properties['date_created']));
 		$this->set_notation_enabled($properties['notation_enabled']);
 		$this->set_sources(!empty($properties['sources']) ? unserialize($properties['sources']) : array());
+		
 		$user = new User();
 		$user->set_properties($properties);
 		$this->set_author_user($user);
+		
+		$notation = new Notation();
+		$notation->set_module_name('articles');
+		$notation->set_notation_scale(ArticlesConfig::load()->get_notation_scale());
+		$notation->set_id_in_module($properties['id']);
+		$this->set_notation($notation);
 	}
 
 	public function init_default_properties()

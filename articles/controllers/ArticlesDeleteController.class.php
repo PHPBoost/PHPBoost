@@ -67,7 +67,7 @@ class ArticlesDeleteController extends ModuleController
 		if (!empty($id))
 		{
 			try {
-				return ArticlesService::get_article('WHERE id=:id', array('id' => $id));
+				return ArticlesService::get_article('WHERE articles.id=:id', array('id' => $id));
 			} catch (RowNotFoundException $e) {
 				$error_controller = PHPBoostErrors::unexisting_page();
 				DispatchManager::redirect($error_controller);

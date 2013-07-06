@@ -69,7 +69,7 @@ class ArticlesCommentsTopic extends CommentsTopic
         {
                 if ($this->article === null)
                 {
-                        $this->article = ArticlesService::get_article('WHERE id=:id', array('id' => $this->get_id_in_module()));
+                        $this->article = ArticlesService::get_article('WHERE articles.id=:id', array('id' => $this->get_id_in_module()));
                 }
                 return $this->article;
         }

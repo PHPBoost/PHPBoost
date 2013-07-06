@@ -50,7 +50,13 @@ elseif ($id_media > 0)
 {
 	$tpl = new FileTemplate('media/media.tpl');
 	
-	$result = $Sql->query_while("SELECT v.*, mb.login, mb.user_groups, mb.level	FROM " . PREFIX . "media AS v LEFT JOIN " . DB_TABLE_MEMBER . " AS mb ON v.iduser = mb.user_id	WHERE id = '" . $id_media . "'", __LINE__, __FILE__);
+	$result = $Sql->query_while("SELECT v.*, mb.login, mb.user_groups, mb.level, notes.average_notes, notes.number_notes, note.note
+	FROM " . PREFIX . "media AS v
+	LEFT JOIN " . DB_TABLE_MEMBER . " AS mb ON v.iduser = mb.user_id
+	LEFT JOIN " . DB_TABLE_AVERAGE_NOTES . " notes ON notes.id_in_module = v.id AND notes.module_name = 'media'
+	LEFT JOIN " . DB_TABLE_NOTE . " note ON note.id_in_module = v.id AND note.module_name = 'media' AND note.user_id = " . AppContext::get_current_user()->get_id() . "
+	WHERE v.id = '" . $id_media . "'", __LINE__, __FILE__);
+	
 	$media = $Sql->fetch_assoc($result);
 	$Sql->query_close($result);
 	
@@ -76,7 +82,8 @@ elseif ($id_media > 0)
 	$Sql->query_inject("UPDATE " . LOW_PRIORITY . " " . PREFIX . "media SET counter = counter + 1 WHERE id = " . $id_media, __LINE__, __FILE__);
 
 	$notation->set_id_in_module($id_media);
-	$nbr_notes = NotationService::get_number_notes($notation);
+	$notation->set_properties($media);
+	$nbr_notes = $media['number_notes'];
 	
 	$group_color = User::get_group_color($media['user_groups'], $media['level']);
 	
