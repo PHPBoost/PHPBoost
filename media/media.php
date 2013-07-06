@@ -102,7 +102,7 @@ elseif ($id_media > 0)
 		'HEIGHT_P' => $media['height'] + 50,
 		'L_VIEWED' => $LANG['view'],
 		'L_BY' => $LANG['by'],
-		'BY' => !empty($media['login']) ? '<a href="' . UserUrlBuilder::profile($media['user_id'])->absolute() . '" class="'.UserService::get_level_class($media['level']).'"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . $media['login'] . '</a>' : $LANG['guest'],
+		'BY' => !empty($media['login']) ? '<a href="' . UserUrlBuilder::profile($media['iduser'])->absolute() . '" class="'.UserService::get_level_class($media['level']).'"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . $media['login'] . '</a>' : $LANG['guest'],
 		'L_CONFIRM_DELETE_MEDIA' => str_replace('\'', '\\\'', $MEDIA_LANG['confirm_delete_media']),
 		'U_UNVISIBLE_MEDIA' => url('media_action.php?unvisible=' . $id_media . '&amp;token=' . $Session->get_token()),
 		'U_EDIT_MEDIA' => url('media_action.php?edit=' . $id_media),
