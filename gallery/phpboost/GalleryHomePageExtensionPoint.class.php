@@ -322,11 +322,12 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 			//Affichage d'une photo demandée.
 			if (!empty($g_idpics))
 			{
-				$result = $this->sql_querier->query_while("SELECT g.*, m.login, m.user_groups, m.level
+				$result = $this->sql_querier->query_while("SELECT g.*, m.login, m.user_groups, m.level, notes.average_notes, notes.number_notes, note.note
 					FROM " . PREFIX . "gallery g
 					LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = g.user_id
 					LEFT JOIN " . DB_TABLE_COMMENTS_TOPIC . " com ON com.id_in_module = g.id AND com.module_id = 'gallery'
-					LEFT JOIN " . DB_TABLE_AVERAGE_NOTES . " note ON note.id_in_module = g.id AND note.module_name = 'gallery'
+					LEFT JOIN " . DB_TABLE_AVERAGE_NOTES . " notes ON notes.id_in_module = g.id AND notes.module_name = 'gallery'
+					LEFT JOIN " . DB_TABLE_NOTE . " note ON note.id_in_module = g.id AND note.module_name = 'gallery' AND note.user_id = " . AppContext::get_current_user()->get_id() . "
 					WHERE g.idcat = '" . $g_idcat . "' AND g.id = '" . $g_idpics . "' AND g.aprob = 1
 					" . $g_sql_sort . "
 					" . $this->sql_querier->limit(0, 1), __LINE__, __FILE__);
@@ -393,6 +394,7 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 						$notation->set_module_name('gallery');
 						$notation->set_id_in_module($info_pics['id']);
 						$notation->set_notation_scale($CONFIG_GALLERY['note_max']);
+						$notation->set_properties($info_pics);
 					}
 
 					if ($thumbnails_before < $nbr_pics_display_before)
@@ -501,11 +503,12 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 				
 				$is_connected = $User->check_level(User::MEMBER_LEVEL);
 				$j = 0;
-				$result = $this->sql_querier->query_while("SELECT g.id, g.idcat, g.name, g.path, g.timestamp, g.aprob, g.width, g.height, g.user_id, g.views, g.aprob, m.login, m.user_groups, m.level
+				$result = $this->sql_querier->query_while("SELECT g.id, g.idcat, g.name, g.path, g.timestamp, g.aprob, g.width, g.height, g.user_id, g.views, g.aprob, m.login, m.user_groups, m.level, notes.average_notes, notes.number_notes, note.note
 				FROM " . PREFIX . "gallery g
 				LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = g.user_id
 				LEFT JOIN " . DB_TABLE_COMMENTS_TOPIC . " com ON com.id_in_module = g.id AND com.module_id = 'gallery'
-				LEFT JOIN " . DB_TABLE_AVERAGE_NOTES . " note ON note.id_in_module = g.id AND note.module_name = 'gallery'
+				LEFT JOIN " . DB_TABLE_AVERAGE_NOTES . " notes ON notes.id_in_module = g.id AND notes.module_name = 'gallery'
+				LEFT JOIN " . DB_TABLE_NOTE . " note ON note.id_in_module = g.id AND note.module_name = 'gallery' AND note.user_id = " . AppContext::get_current_user()->get_id() . "
 				WHERE g.idcat = '" . $g_idcat . "' AND g.aprob = 1
 				" . $g_sql_sort . "
 				" . $this->sql_querier->limit($Pagination->get_first_msg($CONFIG_GALLERY['nbr_pics_max'], 'pp'), $CONFIG_GALLERY['nbr_pics_max']), __LINE__, __FILE__);
@@ -536,6 +539,7 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 					$activ_note = ($CONFIG_GALLERY['activ_note'] == 1 && $is_connected );
 
 					$notation->set_id_in_module($row['id']);
+					$notation->set_properties($row);
 					
 					$group_color = User::get_group_color($row['user_groups'], $row['level']);
 					

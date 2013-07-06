@@ -37,9 +37,11 @@ $now = new Date(DATE_NOW, TIMEZONE_AUTO);
 
 if (!empty($idart) && isset($cat))
 {		
-	$result = $Sql->query_while("SELECT a.contents, a.title, a.id, a.idcat, a.timestamp, a.sources, a.start, a.visible, a.user_id, a.icon, m.login, m.level, m.user_groups
+	$result = $Sql->query_while("SELECT a.contents, a.title, a.id, a.idcat, a.timestamp, a.sources, a.start, a.visible, a.user_id, a.icon, m.login, m.level, m.user_groups, notes.average_notes, notes.number_notes, note.note
 		FROM " . DB_TABLE_ARTICLES . " a 
 		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = a.user_id
+		LEFT JOIN " . DB_TABLE_AVERAGE_NOTES . " notes ON notes.id_in_module = a.id AND notes.module_name = 'articles'
+		LEFT JOIN " . DB_TABLE_NOTE . " note ON note.id_in_module = a.id AND note.module_name = 'articles' AND note.user_id = " . AppContext::get_current_user()->get_id() . "
 		WHERE a.id = '" . $idart . "' AND (visible = 1 OR start <= '" . $now->get_timestamp() . "' AND start > 0 AND (end >= '" . $now->get_timestamp() . "' OR end = 0))", __LINE__, __FILE__);
 	$articles = $Sql->fetch_assoc($result);
 	$Sql->query_close($result);
@@ -119,6 +121,7 @@ if (!empty($idart) && isset($cat))
 	$notation->set_module_name('articles');
 	$notation->set_id_in_module($articles['id']);
 	$notation->set_notation_scale($CONFIG_ARTICLES['note_max']);
+	$notation->set_properties($articles);
 	
 	$group_color = User::get_group_color($articles['user_groups'], $articles['level']);
 	
