@@ -135,9 +135,9 @@ class Notation
 	
 	public function set_properties(array $properties)
 	{
-		$this->set_average_notes((int)$properties['average_notes']);
-		$this->set_number_notes((int)$properties['number_notes']);
-		$this->set_current_user_note((int)$properties['note']);
+		$this->set_average_notes((string)(float)$properties['average_notes']);
+		$this->set_number_notes((string)(int)$properties['number_notes']);
+		$this->set_current_user_note((string)(int)$properties['note']);
 	}
 }
 ?>

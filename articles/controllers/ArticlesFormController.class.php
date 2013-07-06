@@ -205,7 +205,7 @@ class ArticlesFormController extends ModuleController
 			{
 				try
 				{
-					$this->article = ArticlesService::get_article('WHERE id=:id', array('id' => $id));
+					$this->article = ArticlesService::get_article('WHERE articles.id=:id', array('id' => $id));
 				}
 				catch(RowNotFoundException $e)
 				{

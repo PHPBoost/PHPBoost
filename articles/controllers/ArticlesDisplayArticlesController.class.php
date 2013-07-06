@@ -64,7 +64,7 @@ class ArticlesDisplayArticlesController extends ModuleController
 			{
 				try 
 				{
-					$this->article = ArticlesService::get_article('WHERE id=:id', array('id' => $id));
+					$this->article = ArticlesService::get_article('WHERE articles.id=:id', array('id' => $id));
 				} 
 				catch (RowNotFoundException $e) 
 				{
@@ -127,11 +127,6 @@ class ArticlesDisplayArticlesController extends ModuleController
 		$pagination = new ModulePagination($current_page, $nbr_pages, 1);
 		$pagination->set_url(ArticlesUrlBuilder::display_article($this->category->get_id(), $this->category->get_rewrited_name(), $this->article->get_id(), $this->article->get_rewrited_title()), '%d');
 		
-		$notation = new Notation();
-		$notation->set_module_name('articles');
-		$notation->set_notation_scale(ArticlesConfig::load()->get_notation_scale());
-		$notation->set_id_in_module($this->article->get_id());
-		
 		$user = $this->article->get_author_user();
 		$user_group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
 		
@@ -163,7 +158,7 @@ class ArticlesDisplayArticlesController extends ModuleController
 			'L_COMMENTS' => CommentsService::get_number_and_lang_comments('articles', $this->article->get_id()),
 			'L_CAT_NAME' => $this->category->get_name(),
 			'NUMBER_VIEW' => $this->article->get_number_view(),
-			'KERNEL_NOTATION' => NotationService::display_active_image($notation),
+			'KERNEL_NOTATION' => NotationService::display_active_image($this->article->get_notation()),
 			'CONTENTS' => isset($article_contents_clean[$current_page-1]) ? FormatingHelper::second_parse($article_contents_clean[$current_page-1]) : '',
 			'PSEUDO' => $user->get_pseudo(),
 			'USER_LEVEL_CLASS' => UserService::get_level_class($user->get_level()),
