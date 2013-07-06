@@ -127,6 +127,8 @@ class AdminArticlesConfigController extends AdminModuleController
 	{	
 		$this->config->set_number_articles_per_page($this->form->get_value('number_articles_per_page'));
 		$this->config->set_number_categories_per_page($this->form->get_value('number_categories_per_page'));
+		if ($this->form->get_value('notation_scale') != $this->config->get_notation_scale())
+			NotationService::update_notation_scale('articles', $this->config->get_notation_scale(), $this->form->get_value('notation_scale'));
 		$this->config->set_notation_scale($this->form->get_value('notation_scale'));
 		$this->config->set_comments_enabled($this->form->get_value('comments_enabled'));
 		$this->config->set_display_type($this->form->get_value('display_type')->get_raw_value());
