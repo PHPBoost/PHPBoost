@@ -39,6 +39,10 @@ class Notation
 	private $note;
 	private $notation_scale;
 	
+	private $average_notes;
+	private $number_notes;
+	private $current_user_note;
+	
 	public function set_id($id)
 	{
 		$this->id = $id;
@@ -97,6 +101,43 @@ class Notation
 	public function get_notation_scale()
 	{
 		return $this->notation_scale;
+	}
+	
+	public function set_average_notes($average_notes)
+	{
+		$this->average_notes = $average_notes;
+	}
+	
+	public function get_average_notes()
+	{
+		return $this->average_notes;
+	}
+	
+	public function set_number_notes($number_notes)
+	{
+		$this->number_notes = $number_notes;
+	}
+	
+	public function get_number_notes()
+	{
+		return $this->number_notes;
+	}
+	
+	public function set_current_user_note($current_user_note)
+	{
+		$this->current_user_note = $current_user_note;
+	}
+	
+	public function get_current_user_note()
+	{
+		return $this->current_user_note;
+	}
+	
+	public function set_properties(array $properties)
+	{
+		$this->set_average_notes((string)(float)$properties['average_notes']);
+		$this->set_number_notes((string)(int)$properties['number_notes']);
+		$this->set_current_user_note((string)(int)$properties['note']);
 	}
 }
 ?>
