@@ -211,7 +211,7 @@ class MediaHomePageExtensionPoint implements HomePageExtensionPoint
 					'IMG_NAME' => str_replace('"', '\"', $row['name']),
 					'C_DESCRIPTION' => !empty($row['contents']),
 					'DESCRIPTION' => FormatingHelper::second_parse($row['contents']),
-					'POSTER' => $MEDIA_LANG['media_added_by'] . ' : ' . !empty($row['login']) ? '<a href="' . UserUrlBuilder::profile($row['user_id'])->absolute() . '" class="'.UserService::get_level_class($row['level']).'"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . $row['login'] . '</a>' : $LANG['guest'],
+					'POSTER' => $MEDIA_LANG['media_added_by'] . ' : ' . !empty($row['login']) ? '<a href="' . UserUrlBuilder::profile($row['iduser'])->absolute() . '" class="'.UserService::get_level_class($row['level']).'"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . $row['login'] . '</a>' : $LANG['guest'],
 					'DATE' => sprintf($MEDIA_LANG['add_on_date'], gmdate_format('date_format_short', $row['timestamp'])),
 					'COUNT' => sprintf($MEDIA_LANG['view_n_times'], $row['counter']),
 					'NOTE' => NotationService::display_static_image($notation),
