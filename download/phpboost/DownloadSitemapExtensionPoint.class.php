@@ -43,7 +43,7 @@ class DownloadSitemapExtensionPoint implements SitemapExtensionPoint
 
 		load_module_lang('download');
 		$Cache->load('download');
-		$config->get_authorizations()
+		$config = DownloadConfig::load();
 		
 		require_once PATH_TO_ROOT . '/download/download_auth.php';
 
