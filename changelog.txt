@@ -114,3 +114,6 @@
 - Possibilité d'afficher la liste des événements d'une ou de plusieurs catégories pour un mois donné
 - Possibilité d'afficher la liste des événements d'une ou de plusieurs catégories pour une année donnée
 - Possibilité d'afficher la liste des événements d'une ou de plusieurs catégories pour un écart entre 2 dates
+
+[b]Multimedia[/b]
+- Ajout de la balise enclosure dans les flux RSS pour pouvoir diffuser le media
