@@ -177,14 +177,12 @@ class Sitemap
 	 */
 	private function build_modules_maps($auth_mode = self::AUTH_PUBLIC)
 	{
-		$providers = array_keys(AppContext::get_extension_provider_service()->get_providers(SitemapExtensionPoint::EXTENSION_POINT));
-		$providers_sitemap = AppContext::get_extension_provider_service()->get_providers(SitemapExtensionPoint::EXTENSION_POINT);
-		
+		$providers = AppContext::get_extension_provider_service()->get_providers(SitemapExtensionPoint::EXTENSION_POINT);
 		foreach (ModulesManager::get_installed_modules_map_sorted_by_localized_name() as $id => $module)
 		{
-			if (in_array($module->get_id(), $providers))
+			if (array_key_exists($module->get_id(), $providers))
 			{
-				$sitemap_provider = $providers_sitemap[$module->get_id()]->sitemap();
+				$sitemap_provider = $providers[$module->get_id()]->sitemap();
 				if ($auth_mode == self::AUTH_PUBLIC)
 				{
 					$module_map = $sitemap_provider->get_public_sitemap();
