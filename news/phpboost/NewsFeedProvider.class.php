@@ -55,18 +55,24 @@ class NewsFeedProvider implements FeedProvider
 		$data->set_lang(LangLoader::get_message('xml_lang', 'main'));
 		$data->set_auth_bit(Category::READ_AUTHORIZATIONS);
 
-		$search_category_children_options = new SearchCategoryChildrensOptions();
-		$categories = NewsService::get_categories_manager()->get_childrens($idcat, $search_category_children_options);
-		$ids_categories = array_keys($categories);
+		if ($idcat != Category::ROOT_CATEGORY)
+		{
+			$ids_categories[] = $idcat;
+		}
+		else
+		{
+			$search_category_children_options = new SearchCategoryChildrensOptions();
+			$categories = NewsService::get_categories_manager()->get_childrens($idcat, $search_category_children_options);
+			$ids_categories = array_keys($categories);
+		}
 
 		if (!empty($ids_categories))
 		{
 			$now = new Date();
-			
-			$results = $querier->select('SELECT news.id, news.id_category, news.name, news.rewrited_name, news.contents, news.short_contents, news.creation_date, cat.id AS id_category, cat.rewrited_name AS rewrited_name_cat
+			$results = $querier->select('SELECT news.id, news.id_category, news.name, news.rewrited_name, news.contents, news.short_contents, news.creation_date, news.picture_url, cat.rewrited_name AS rewrited_name_cat
                  FROM ' . NewsSetup::$news_table . ' news
-                 LEFT JOIN '. NewsSetup::$news_cats_table .' cat ON news.id_category = cat.id
-                 WHERE news.approbation_type = 1 OR (news.approbation_type = 2 AND news.start_date < :timestamp_now AND (news.end_date > :timestamp_now OR news.end_date = 0)) AND news.id_category IN :cats_ids
+                 LEFT JOIN '. NewsSetup::$news_cats_table .' cat ON cat.id = news.id_category
+                 WHERE (news.approbation_type = 1 OR (news.approbation_type = 2 AND news.start_date < :timestamp_now AND (news.end_date > :timestamp_now OR news.end_date = 0))) AND news.id_category IN :cats_ids
                  ORDER BY news.creation_date DESC', array(
 			        'cats_ids' => $ids_categories,
 					'timestamp_now' => $now->get_timestamp()
@@ -74,6 +80,7 @@ class NewsFeedProvider implements FeedProvider
 
 			foreach ($results as $row)
 			{
+				$row['rewrited_name_cat'] = !empty($row['id_category']) ? $row['rewrited_name_cat'] : 'root';
 				$link = NewsUrlBuilder::display_news($row['id_category'], $row['rewrited_name_cat'], $row['id'], $row['rewrited_name'])->absolute();
 				
 				$item = new FeedItem();
