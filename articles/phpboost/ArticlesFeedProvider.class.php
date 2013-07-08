@@ -54,20 +54,27 @@ class ArticlesFeedProvider implements FeedProvider
 		$data->set_lang(LangLoader::get_message('xml_lang', 'main'));
 		$data->set_auth_bit(Category::READ_AUTHORIZATIONS);
 
-		$search_category_children_options = new SearchCategoryChildrensOptions();
-		$categories = ArticlesService::get_categories_manager()->get_childrens($idcat, $search_category_children_options);
-		$ids_categories = array_keys($categories);
+		if ($idcat != Category::ROOT_CATEGORY)
+		{
+			$ids_categories[] = $idcat;
+		}
+		else
+		{
+		    $search_category_children_options = new SearchCategoryChildrensOptions();
+		    $categories = ArticlesService::get_categories_manager()->get_childrens($idcat, $search_category_children_options);
+		    $ids_categories = array_keys($categories);
+		}
 
 		if (!empty($ids_categories))
 		{
 			$now = new Date();
 			
 			$results = $querier->select('SELECT articles.id, articles.id_category, articles.title, articles.rewrited_title, articles.picture_url, 
-			articles.contents, articles.description, articles.date_created, cat.id AS id_category, cat.rewrited_name AS rewrited_name_cat
+			articles.contents, articles.description, articles.date_created, cat.rewrited_name AS rewrited_name_cat
 			FROM ' . ArticlesSetup::$articles_table . ' articles
-			LEFT JOIN '. ArticlesSetup::$articles_cats_table .' cat ON articles.id_category = cat.id
-			WHERE articles.published = 1 OR (articles.published = 2 AND (articles.publishing_start_date < :timestamp_now 
-			AND articles.publishing_end_date = 0) OR articles.publishing_end_date > :timestamp_now) AND articles.id_category IN :cats_ids
+			LEFT JOIN '. ArticlesSetup::$articles_cats_table .' cat ON cat.id = articles.id_category
+			WHERE (articles.published = 1 OR (articles.published = 2 AND (articles.publishing_start_date < :timestamp_now 
+			AND articles.publishing_end_date = 0) OR articles.publishing_end_date > :timestamp_now)) AND articles.id_category IN :cats_ids
 			ORDER BY articles.date_created DESC', 
 			array(
 				'cats_ids' => $ids_categories,
@@ -76,8 +83,8 @@ class ArticlesFeedProvider implements FeedProvider
 
 			foreach ($results as $row)
 			{
+				$row['rewrited_name_cat'] = !empty($row['id_category']) ? $row['rewrited_name_cat'] : 'root';
 				$link = ArticlesUrlBuilder::display_article($row['id_category'], $row['rewrited_name_cat'], $row['id'], $row['rewrited_title'])->absolute();
-				
 				$item = new FeedItem();
 				$item->set_title($row['title']);
 				$item->set_link($link);

@@ -1,7 +1,7 @@
 <script type="text/javascript">
 <!--
 	function Confirm_del_article() {
-	return confirm("{L_ALERT_DELETE_ARTICLE}");
+	return confirm("${i18n('articles.form.alert_delete_article')}");
 	}
 -->
 </script>
@@ -13,17 +13,17 @@
 	    <ul class="subnav">
 		# IF IS_ADMIN #
 		<li>
-			<a href="{U_EDIT_CONFIG}" title="{L_EDIT_CONFIG}"><img class="valign_middle" src="{PATH_TO_ROOT}/{L_MODULE_NAME}/templates/images/edit_white.png" alt="{L_EDIT_CONFIG}" /></a>
+			<a href="{U_EDIT_CONFIG}" title="${i18n('articles_configuration')}"><img class="valign_middle" src="{PATH_TO_ROOT}/articles/templates/images/edit_white.png" alt="${i18n('articles_configuration')}" /></a>
 		</li>
 		# ENDIF #
 		# IF C_ADD #
 		<li>
-			<a href="{U_ADD_ARTICLES}" title="{L_ADD_ARTICLES}"><img class="valign_middle" src="{PATH_TO_ROOT}/{L_MODULE_NAME}/templates/images/add.png" alt="{L_ADD_ARTICLES}" /></a>
+			<a href="{U_ADD_ARTICLES}" title="${i18n('articles.add')}"><img class="valign_middle" src="{PATH_TO_ROOT}/articles/templates/images/add.png" alt="${i18n('articles.add')}" /></a>
 		</li>
 		# ENDIF #
 		# IF C_PENDING_ARTICLES #
 		<li>
-			<a href="{U_PENDING_ARTICLES}" title="{L_PENDING_ARTICLES}"><img class="valign_middle" src="{PATH_TO_ROOT}/{L_MODULE_NAME}/templates/images/pending.png" alt="{L_PENDING_ARTICLES}" /></a>
+			<a href="{U_PENDING_ARTICLES}" title="${i18n('articles.pending_articles')}"><img class="valign_middle" src="{PATH_TO_ROOT}/articles/templates/images/pending.png" alt="${i18n('articles.pending_articles')}" /></a>
 		</li>
 		# ENDIF #
 	    </ul>
@@ -38,17 +38,17 @@
 			<a href="{U_SYNDICATION}" title="Rss" class="img_link">
 				<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/rss.png" alt="Rss" title="Rss" />
 			</a>
-			{L_MODULE_NAME}
+			${i18n('articles')}
 		</div>
 	</div>
 	<div class="module_contents">
 		<div class="cat">
 		    <div class="cat_tool">
 			    # IF C_MODERATE # 
-			    <a href="{U_MANAGE_CATEGORIES}" title="{L_MANAGE_CATEGORIES}"><img class="valign_middle" src="{PATH_TO_ROOT}/{L_MODULE_NAME}/templates/images/edit.png" alt="{L_MANAGE_CATEGORIES}" /></a>
+			    <a href="{U_MANAGE_CATEGORIES}" title="${i18n('admin.categories.manage')}"><img class="valign_middle" src="{PATH_TO_ROOT}/articles/templates/images/edit.png" alt="${i18n('admin.categories.manage')}" /></a>
 			    # ENDIF #
 		    </div>
-		    {L_SUBCATEGORIES} :
+		    ${i18n('articles.sub_categories')} :
 		    <br /><br />
 		    # IF C_ARTICLES_CAT #
 		    <div style="margin-bottom:36px;">
@@ -79,12 +79,12 @@
 					<div class="article_tools">
 						# IF articles.C_EDIT #
 						<a style="text-decoration:none;" href="{articles.U_EDIT_ARTICLE}">
-							<img class="valign_middle" src="{PATH_TO_ROOT}/{L_MODULE_NAME}/templates/images/edit.png" alt="{articles.L_EDIT_ARTICLE}" title="{articles.L_EDIT_ARTICLE}" />
+							<img class="valign_middle" src="{PATH_TO_ROOT}/articles/templates/images/edit.png" alt="${i18n('articles.edit')}" title="${i18n('articles.edit')}" />
 						</a>
 						# ENDIF #
 						# IF articles.C_DELETE #
 						<a href="{articles.U_DELETE_ARTICLE}" onclick="return Confirm_del_article();">
-						    <img class="valign_middle" src="{PATH_TO_ROOT}/{L_MODULE_NAME}/templates/images/delete.png" alt="{articles.L_DELETE_ARTICLE}" title="{articles.L_DELETE_ARTICLE}" />
+						    <img class="valign_middle" src="{PATH_TO_ROOT}/articles/templates/images/delete.png" alt="${i18n('articles.delete')}" title="${i18n('articles.delete')}" />
 						</a>
 						# ENDIF #
 					</div>
@@ -97,14 +97,18 @@
 						<h3 title="{articles.TITLE}">{articles.TITLE}</h3>
 						<span>
 							# IF articles.C_AUTHOR_DISPLAYED #
-							<img class="valign_middle" src="{PATH_TO_ROOT}/{L_MODULE_NAME}/templates/images/author.png" alt="{articles.L_AUTHOR}" title="{articles.L_AUTHOR}" />&nbsp;<a href="{articles.U_AUTHOR}" class="small_link {articles.USER_LEVEL_CLASS}" # IF C_USER_GROUP_COLOR # style="color:{articles.USER_GROUP_COLOR}"# ENDIF #>{articles.PSEUDO}</a>
+							<img class="valign_middle" src="{PATH_TO_ROOT}/articles/templates/images/author.png" alt="${i18n('articles.sort_field.author')}" title="${i18n('articles.sort_field.author')}" />&nbsp;<a href="{articles.U_AUTHOR}" class="small_link {articles.USER_LEVEL_CLASS}" # IF C_USER_GROUP_COLOR # style="color:{articles.USER_GROUP_COLOR}"# ENDIF #>{articles.PSEUDO}</a>
+							# ELSE #
+							&nbsp;
 							# ENDIF #
 							<br />
-							<img class="valign_middle" src="{PATH_TO_ROOT}/{L_MODULE_NAME}/templates/images/calendar.png" alt="{articles.L_DATE}" title="{articles.L_DATE}" />&nbsp;{articles.DATE}&nbsp;|
-							<img class="valign_middle" src="{PATH_TO_ROOT}/{L_MODULE_NAME}/templates/images/view.png" alt="{articles.L_VIEW}" title="{articles.L_VIEW}" />&nbsp;{articles.NUMBER_VIEW}
+							<img class="valign_middle" src="{PATH_TO_ROOT}/articles/templates/images/calendar.png" alt="${i18n('articles.sort_field.date')}" title="${i18n('articles.sort_field.date')}" />&nbsp;{articles.DATE}&nbsp;|
+							<img class="valign_middle" src="{PATH_TO_ROOT}/articles/templates/images/view.png" alt="${i18n('articles.sort_field.views')}" title="${i18n('articles.sort_field.views')}" />&nbsp;{articles.NUMBER_VIEW}
 							<br />
 							# IF C_COMMENTS_ENABLED #
-							<img class="valign_middle" src="{PATH_TO_ROOT}/{L_MODULE_NAME}/templates/images/comment.png" /><a class="small_link" href="{articles.U_COMMENTS}">&nbsp;{articles.L_NUMBER_COM}</a>
+							<img class="valign_middle" src="{PATH_TO_ROOT}/articles/templates/images/comment.png" /><a class="small_link" href="{articles.U_COMMENTS}">&nbsp;{articles.L_COMMENTS}</a>
+							# ELSE #
+							&nbsp;
 							# ENDIF #
 						</span>
 					</header>
@@ -116,10 +120,10 @@
 					    # ENDIF #
 					</figure>
 					<div class="description">{articles.DESCRIPTION}</div>
-					<a href="{articles.U_ARTICLE}" class="button_read_more">{articles.L_READ_MORE}</a>
+					<a href="{articles.U_ARTICLE}" class="button_read_more">${i18n('articles.read_more')}</a>
 					# IF articles.C_KEYWORDS #
 					<div class="article_tags">
-						<img class="valign_middle" src="{PATH_TO_ROOT}/{L_MODULE_NAME}/templates/images/tags.png" alt="{articles.L_TAGS}" title="{articles.L_TAGS}" /> : 
+						<img class="valign_middle" src="{PATH_TO_ROOT}/articles/templates/images/tags.png" alt="${i18n('articles.tags')}" title="${i18n('articles.tags')}" /> : 
 						{articles.U_KEYWORDS_LIST}	
 					</div>
 					# ENDIF #
@@ -133,18 +137,20 @@
 					<div class="article_tools">
 						# IF articles.C_EDIT #
 						<a style="text-decoration:none;" href="{articles.U_EDIT_ARTICLE}">
-							<img class="valign_middle" src="{PATH_TO_ROOT}/{L_MODULE_NAME}/templates/images/edit.png" alt="{articles.L_EDIT_ARTICLE}" title="{articles.L_EDIT_ARTICLE}" />
+							<img class="valign_middle" src="{PATH_TO_ROOT}/articles/templates/images/edit.png" alt="${i18n('articles.edit')}" title="${i18n('articles.edit')}" />
 						</a>
 						# ENDIF #
 						# IF articles.C_DELETE #
 						<a href="{articles.U_DELETE_ARTICLE}" onclick="return Confirm_del_article();">
-						    <img class="valign_middle" src="{PATH_TO_ROOT}/{L_MODULE_NAME}/templates/images/delete.png" alt="{articles.L_DELETE_ARTICLE}" title="{articles.L_DELETE_ARTICLE}" />
+						    <img class="valign_middle" src="{PATH_TO_ROOT}/articles/templates/images/delete.png" alt="${i18n('articles.delete')}" title="${i18n('articles.delete')}" />
 						</a>
 						# ENDIF #
 					</div>
 					<div>
 						# IF articles.C_NOTATION_ENABLED #
 						{articles.NOTE}
+						# ELSE #
+						&nbsp;
 						# ENDIF #
 					</div>
 					<figure>
@@ -158,20 +164,20 @@
 						<h3 title="{articles.TITLE}">{articles.TITLE}</h3>
 						<span>
 							# IF articles.C_AUTHOR_DISPLAYED #
-							<img class="valign_middle" src="{PATH_TO_ROOT}/{L_MODULE_NAME}/templates/images/author.png" alt="{articles.L_AUTHOR}" title="{articles.L_AUTHOR}" /><a href="{articles.U_AUTHOR}" class="small_link {articles.USER_LEVEL_CLASS}" # IF C_USER_GROUP_COLOR # style="color:{articles.USER_GROUP_COLOR}"# ENDIF #>&nbsp;{articles.PSEUDO}&nbsp;</a>|
+							<img class="valign_middle" src="{PATH_TO_ROOT}/articles/templates/images/author.png" alt="${i18n('articles.sort_field.author')}" title="${i18n('articles.sort_field.author')}" /><a href="{articles.U_AUTHOR}" class="small_link {articles.USER_LEVEL_CLASS}" # IF C_USER_GROUP_COLOR # style="color:{articles.USER_GROUP_COLOR}"# ENDIF #>&nbsp;{articles.PSEUDO}&nbsp;</a>|
 							# ENDIF #
-							<img class="valign_middle" src="{PATH_TO_ROOT}/{L_MODULE_NAME}/templates/images/calendar.png" alt="{articles.L_DATE}" title="{articles.L_DATE}" />&nbsp;{articles.DATE}&nbsp;|
-							<img class="valign_middle" src="{PATH_TO_ROOT}/{L_MODULE_NAME}/templates/images/view.png" alt="{articles.L_VIEW}" title="{articles.L_VIEW}" />&nbsp;{articles.NUMBER_VIEW}
+							<img class="valign_middle" src="{PATH_TO_ROOT}/articles/templates/images/calendar.png" alt="${i18n('articles.sort_field.date')}" title="${i18n('articles.sort_field.date')}" />&nbsp;{articles.DATE}&nbsp;|
+							<img class="valign_middle" src="{PATH_TO_ROOT}/articles/templates/images/view.png" alt="${i18n('articles.sort_field.views')}" title="${i18n('articles.sort_field.views')}" />&nbsp;{articles.NUMBER_VIEW}
 							# IF C_COMMENTS_ENABLED #
-							&nbsp;|&nbsp;<img class="valign_middle" src="{PATH_TO_ROOT}/{L_MODULE_NAME}/templates/images/comment.png" /><a class="small_link" href="{articles.U_COMMENTS}">&nbsp;{articles.L_NUMBER_COM}</a>
+							&nbsp;|&nbsp;<img class="valign_middle" src="{PATH_TO_ROOT}/articles/templates/images/comment.png" /><a class="small_link" href="{articles.U_COMMENTS}">&nbsp;{articles.L_COMMENTS}</a>
 							# ENDIF #
 						</span>
 					</header>
 					<div class="description">{articles.DESCRIPTION}</div>
-					<a style="margin-left:10px;" href="{articles.U_ARTICLE}" class="button_read_more">{articles.L_READ_MORE}</a>
+					<a style="margin-left:10px;" href="{articles.U_ARTICLE}" class="button_read_more">${i18n('articles.read_more')}</a>
 					# IF articles.C_KEYWORDS #
 					<div class="article_tags">
-						<img class="valign_middle" src="{PATH_TO_ROOT}/{L_MODULE_NAME}/templates/images/tags.png" alt="{articles.L_TAGS}" title="{articles.L_TAGS}" /> : 
+						<img class="valign_middle" src="{PATH_TO_ROOT}/articles/templates/images/tags.png" alt="${i18n('articles.tags')}" title="${i18n('articles.tags')}" /> : 
 						{articles.U_KEYWORDS_LIST}
 					</div>
 					# ENDIF #
@@ -188,6 +194,6 @@
 		&nbsp;
 	</div>
 	<div class="module_bottom text_strong">
-		<a href="../articles/{SID}">{L_MODULE_NAME}</a>
+		<a href="../articles/{SID}">${i18n('articles')}</a>
 	</div>
 </div>

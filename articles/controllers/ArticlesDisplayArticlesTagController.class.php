@@ -142,9 +142,6 @@ class ArticlesDisplayArticlesTagController extends ModuleController
 			'C_ADD' => $auth_add,
 			'C_COMMENTS_ENABLED' => $comments_enabled,
 			'C_ARTICLES_FILTERS' => true,
-			'L_EDIT_CONFIG' => $this->lang['articles_configuration'],
-			'L_ADD_ARTICLES' => $this->lang['articles.add'],
-			'L_MODULE_NAME' => $this->lang['articles'],
 			'L_TAG' => $this->lang['articles.tags'] . ': ' . $this->keyword->get_name(),
 			'U_ADD_ARTICLES' => ArticlesUrlBuilder::add_article()->absolute(),
 			'U_EDIT_CONFIG' => ArticlesUrlBuilder::articles_configuration()->absolute(),
@@ -179,51 +176,13 @@ class ArticlesDisplayArticlesTagController extends ModuleController
 		
 		$this->build_form($field, $mode);
 		
-		$notation = new Notation();
-		$notation->set_module_name('articles');
-		$notation->set_notation_scale(ArticlesConfig::load()->get_notation_scale());
-		
 		while ($row = $result->fetch())
 		{
 			$article = new Articles();
 			$article->set_properties($row);
 			
-			$category = ArticlesService::get_categories_manager()->get_categories_cache()->get_category($article->get_id_category());
-			
-			$user = $article->get_author_user();
-			$auth_moderation = ArticlesAuthorizationsService::check_authorizations($category->get_id())->moderation();
-			$auth_write = ArticlesAuthorizationsService::check_authorizations($category->get_id())->write();
-			
-			$user_group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
-			
-			$notation->set_id_in_module($article->get_id());
-			
-			$this->view->assign_block_vars('articles', array(
-			    'C_EDIT' => $auth_moderation || $auth_write && $article->get_author_user()->get_id() == AppContext::get_current_user()->get_id(),
-			    'C_DELETE' => $auth_moderation,
-			    'C_USER_GROUP_COLOR' => !empty($user_group_color),
-			    'C_AUTHOR_DISPLAYED' => $article->get_author_name_displayed(),
-			    'C_NOTATION_ENABLED' => $article->get_notation_enabled(),
-			    'C_HAS_PICTURE' => $article->has_picture(),
-			    'TITLE' => $article->get_title(),
-			    'PICTURE' => $article->get_picture()->absolute(),
-			    'DATE' => $article->get_date_created()->format(DATE_FORMAT_SHORT, TIMEZONE_AUTO),
-			    'L_COMMENTS' => CommentsService::get_number_and_lang_comments('articles', $article->get_id()),
-			    'L_AUTHOR' => $this->lang['articles.sort_field.author'],
-			    'L_DATE' => $this->lang['articles.sort_field.date'],
-			    'L_VIEW' => $this->lang['articles.sort_field.views'],
-			    'L_TAGS' => $this->lang['articles.tags'],
-			    'L_READ_MORE' => $this->lang['articles.read_more'],
-			    'L_NO_AUTHOR_DISPLAYED' => $this->lang['articles.no_author_diplsayed'],
-			    'L_ALERT_DELETE_ARTICLE' => $this->lang['articles.form.alert_delete_article'],
-			    'NOTE' => $row['number_notes'] > 0 ? NotationService::display_static_image($notation, $row['average_notes']) : '&nbsp;',
-			    'PSEUDO' => $user->get_pseudo(),
-			    'USER_LEVEL_CLASS' => UserService::get_level_class($user->get_level()),
-			    'USER_GROUP_COLOR' => $user_group_color,
-			    'U_COMMENTS' => ArticlesUrlBuilder::display_comments_article($category->get_id(), $category->get_rewrited_name(), $article->get_id(), $article->get_rewrited_title())->absolute(),
-			    'U_AUTHOR' => UserUrlBuilder::profile($article->get_author_user()->get_id())->absolute(),
-			    'U_EDIT_ARTICLE' => ArticlesUrlBuilder::edit_article($article->get_id())->absolute(),
-			    'U_DELETE_ARTICLE' => ArticlesUrlBuilder::delete_article($article->get_id())->absolute()
+			$this->view->assign_block_vars('articles', array_merge($article->get_tpl_vars()), array(
+				'NOTE' => $row['number_notes'] > 0 ? NotationService::display_static_image($article->get_notation(), $row['average_notes']) : '&nbsp;',
 			));
 		}
 		
