@@ -28,6 +28,8 @@
 
 interface SitemapExtensionPoint extends ExtensionPoint
 {
+	const EXTENSION_POINT = 'sitemap';
+	
 	/**
 	 * @return Sitemap
 	 */
