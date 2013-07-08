@@ -40,22 +40,13 @@ class GalleryExtensionPointProvider extends ExtensionPointProvider
 	//Récupération du cache.
 	function get_cache()
 	{
-		global $CONFIG_GALLERY, $LANG;
-
-		$gallery_config = 'global $CONFIG_GALLERY;' . "\n";
-
-		//Récupération du tableau linéarisé dans la bdd.
-		$CONFIG_GALLERY = unserialize($this->sql_querier->query("SELECT value FROM " . DB_TABLE_CONFIGS . " WHERE name = 'gallery'", __LINE__, __FILE__));
-		$CONFIG_GALLERY = is_array($CONFIG_GALLERY) ? $CONFIG_GALLERY : array();
-		if (isset($CONFIG_GALLERY['auth_root']))
-			$CONFIG_GALLERY['auth_root'] = unserialize($CONFIG_GALLERY['auth_root']);
-
-		$gallery_config .= '$CONFIG_GALLERY = ' . var_export($CONFIG_GALLERY, true) . ';' . "\n";
-
+		global $LANG;
+		$config = GalleryConfig::load();
+		
 		$cat_gallery = 'global $CAT_GALLERY;' . "\n";
 		
 		//Racine
-		$cat_gallery .= '$CAT_GALLERY[0] = ' . var_export(array('name' => $LANG['root'], 'id_left' => 0, 'id_right' => 0, 'auth' => $CONFIG_GALLERY['auth_root']), true) . ';' . "\n\n";
+		$cat_gallery .= '$CAT_GALLERY[0] = ' . var_export(array('name' => $LANG['root'], 'id_left' => 0, 'id_right' => 0, 'auth' => $config->get_authorizations()), true) . ';' . "\n\n";
 		
 		$result = $this->sql_querier->query_while("SELECT id, id_left, id_right, level, name, aprob, auth
 		FROM " . PREFIX . "gallery_cats
@@ -63,7 +54,7 @@ class GalleryExtensionPointProvider extends ExtensionPointProvider
 		while ($row = $this->sql_querier->fetch_assoc($result))
 		{
 			if (empty($row['auth']))
-				$row['auth'] = serialize($CONFIG_GALLERY['auth_root']);
+				$row['auth'] = serialize($config->get_authorizations());
 
 			$cat_gallery .= '$CAT_GALLERY[\'' . $row['id'] . '\'][\'id_left\'] = ' . var_export($row['id_left'], true) . ';' . "\n";
 			$cat_gallery .= '$CAT_GALLERY[\'' . $row['id'] . '\'][\'id_right\'] = ' . var_export($row['id_right'], true) . ';' . "\n";
@@ -86,7 +77,7 @@ class GalleryExtensionPointProvider extends ExtensionPointProvider
 		while ($row = $this->sql_querier->fetch_assoc($result))
 		{
 			if ($row['idcat'] == 0)
-				$row['auth'] = serialize($CONFIG_GALLERY['auth_root']);
+				$row['auth'] = serialize($config->get_authorizations());
 
 			//Calcul des dimensions avec respect des proportions.
 			list($width, $height) = $Gallery->get_resize_properties($row['width'], $row['height']);
@@ -103,7 +94,7 @@ class GalleryExtensionPointProvider extends ExtensionPointProvider
 		$this->sql_querier->query_close($result);
 		$_array_random_pics .= ');';
 
-		return $gallery_config . "\n" . $cat_gallery . "\n" . $_array_random_pics;
+		return $cat_gallery . "\n" . $_array_random_pics;
 	}
 	
 	function feeds()

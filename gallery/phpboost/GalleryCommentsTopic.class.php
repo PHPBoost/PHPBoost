@@ -34,7 +34,7 @@ class GalleryCommentsTopic extends CommentsTopic
 	
 	public function get_authorizations()
 	{
-		global $CAT_GALLERY, $CONFIG_GALLERY;
+		global $CAT_GALLERY;
 		
 		$cache = new Cache();
 		$cache->load($this->get_module_id());
@@ -43,7 +43,7 @@ class GalleryCommentsTopic extends CommentsTopic
 		$cat_authorizations = $CAT_GALLERY[$id_cat]['auth'];
 
 		$authorizations = new CommentsAuthorizations();
-		$authorizations->set_authorized_access_module(AppContext::get_current_user()->check_auth($cat_authorizations, 0x01));
+		$authorizations->set_authorized_access_module(AppContext::get_current_user()->check_auth($cat_authorizations, GalleryAuthorizationsService::READ_AUTHORIZATIONS));
 		return $authorizations;
 	}
 	

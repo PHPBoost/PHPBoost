@@ -328,15 +328,15 @@
 									</th>
 								</tr>
 								<tr>
-									# IF C_ACTIV_TITLE #<td class="row2 text_small" style="width:50%;border:none;padding:4px;">
+									# IF C_TITLE_ENABLED #<td class="row2 text_small" style="width:50%;border:none;padding:4px;">
 										<strong>{L_NAME}:</strong> {NAME}
 									</td># ENDIF #
-									# IF C_ACTIV_POSTOR #<td class="row2 text_small" style="border:none;padding:4px;">
+									# IF C_AUTHOR_DISPLAYED #<td class="row2 text_small" style="border:none;padding:4px;">
 										<strong>{L_POSTOR}:</strong> {POSTOR}
 									</td># ENDIF #
 								</tr>
 								<tr>										
-									# IF C_ACTIV_VIEW #<td class="row2 text_small" style="border:none;padding:4px;">
+									# IF C_VIEWS_COUNTER_ENABLED #<td class="row2 text_small" style="border:none;padding:4px;">
 										<strong>{L_VIEWS}:</strong> {VIEWS}
 									</td># ENDIF #
 									<td class="row2 text_small" style="border:none;padding:4px;">
@@ -352,10 +352,10 @@
 									</td>
 								</tr>
 								<tr>										
-									# IF C_ACTIV_NOTE #<td class="row2 text_small" style="border:none;padding:4px;">
+									# IF C_NOTATION_ENABLED #<td class="row2 text_small" style="border:none;padding:4px;">
 										{KERNEL_NOTATION}
 									</td># ENDIF #
-									# IF C_ACTIV_COM # #<td class="row2 text_small" style="border:none;padding:4px;vertical-align:top">
+									# IF C_COMMENTS_ENABLED # #<td class="row2 text_small" style="border:none;padding:4px;vertical-align:top">
 										<strong>{L_COM}:</strong> {COM}
 									</td># ENDIF #
 								</tr>

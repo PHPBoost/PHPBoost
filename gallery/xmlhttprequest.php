@@ -33,7 +33,9 @@ require_once('../kernel/header_no_display.php');
 
 if (AppContext::get_current_user()->is_readonly())
 	exit;
-	
+
+$config = GalleryConfig::load();
+
 //Notation.
 if (!empty($_GET['increment_view']))
 {
@@ -48,11 +50,11 @@ if (!empty($_GET['increment_view']))
 	}
 	else //Racine.
 	{
-		$CAT_GALLERY[0]['auth'] = $CONFIG_GALLERY['auth_root'];
+		$CAT_GALLERY[0]['auth'] = $config->get_authorizations();
 		$CAT_GALLERY[0]['aprob'] = 1;
 	}
 	//Niveau d'autorisation de la catégorie
-	if (!$User->check_auth($CAT_GALLERY[$g_idcat]['auth'], READ_CAT_GALLERY))
+	if (!$User->check_auth($CAT_GALLERY[$g_idcat]['auth'], GalleryAuthorizationsService::READ_AUTHORIZATIONS))
 		exit;
 
 	//Mise à jour du nombre de vues.
@@ -69,11 +71,11 @@ else
 		
 		if (empty($id_cat))
 		{
-			$CAT_GALLERY[0]['auth'] = $CONFIG_GALLERY['auth_root'];
+			$CAT_GALLERY[0]['auth'] = $config->get_authorizations();
 			$CAT_GALLERY[0]['aprob'] = 1;
 		}
 		
-		if ($User->check_auth($CAT_GALLERY[$id_cat]['auth'], EDIT_CAT_GALLERY)) //Modo
+		if ($User->check_auth($CAT_GALLERY[$id_cat]['auth'], GalleryAuthorizationsService::MODERATION_AUTHORIZATIONS)) //Modo
 		{	
 			//Initialisation  de la class de gestion des fichiers.
 			include_once(PATH_TO_ROOT .'/gallery/Gallery.class.php');
@@ -96,11 +98,11 @@ else
 		
 		if (empty($id_cat))
 		{
-			$CAT_GALLERY[0]['auth'] = $CONFIG_GALLERY['auth_root'];
+			$CAT_GALLERY[0]['auth'] = $config->get_authorizations();
 			$CAT_GALLERY[0]['aprob'] = 1;
 		}
 		
-		if ($User->check_auth($CAT_GALLERY[$id_cat]['auth'], EDIT_CAT_GALLERY)) //Modo
+		if ($User->check_auth($CAT_GALLERY[$id_cat]['auth'], GalleryAuthorizationsService::MODERATION_AUTHORIZATIONS)) //Modo
 		{
 			//Initialisation  de la class de gestion des fichiers.
 			include_once(PATH_TO_ROOT .'/gallery/Gallery.class.php');

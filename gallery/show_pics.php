@@ -42,11 +42,11 @@ if (!empty($g_idpics))
 	}
 	else //Racine.
 	{
-		$CAT_GALLERY[0]['auth'] = $CONFIG_GALLERY['auth_root'];
+		$CAT_GALLERY[0]['auth'] = GalleryConfig::load()->get_authorizations();
 		$CAT_GALLERY[0]['aprob'] = 1;
 	}
 	//Niveau d'autorisation de la catégorie
-	if (!$User->check_auth($CAT_GALLERY[$g_idcat]['auth'], READ_CAT_GALLERY))
+	if (!$User->check_auth($CAT_GALLERY[$g_idcat]['auth'], GalleryAuthorizationsService::READ_AUTHORIZATIONS))
 	{
 		$error_controller = PHPBoostErrors::user_not_authorized();
 		DispatchManager::redirect($error_controller);

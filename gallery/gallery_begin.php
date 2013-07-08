@@ -31,10 +31,6 @@ if (defined('PHPBOOST') !== true)
 load_module_lang('gallery'); //Chargement de la langue du module.
 $Cache->load('gallery');
 
-define('READ_CAT_GALLERY', 0x01);
-define('WRITE_CAT_GALLERY', 0x02);
-define('EDIT_CAT_GALLERY', 0x04);
-
 $g_idcat = retrieve(GET, 'cat', 0);
 if (!empty($g_idcat))
 {

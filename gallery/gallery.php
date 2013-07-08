@@ -30,6 +30,8 @@ require_once('../kernel/begin.php');
 require_once('../gallery/gallery_begin.php');
 require_once('../kernel/header.php');
 
+$config = GalleryConfig::load();
+
 $g_idpics = retrieve(GET, 'id', 0);
 $g_del = retrieve(GET, 'del', 0);
 $g_move = retrieve(GET, 'move', 0);
@@ -100,10 +102,10 @@ elseif (isset($_FILES['gallery'])) //Upload
 			AppContext::get_response()->redirect('/gallery/gallery' . url('.php?error=unexist_cat', '', '&'));
 	}
 	else //Racine.
-		$CAT_GALLERY[0]['auth'] = $CONFIG_GALLERY['auth_root'];
+		$CAT_GALLERY[0]['auth'] = $config->get_authorizations();
 
 	//Niveau d'autorisation de la catégorie, accès en écriture.
-	if (!$User->check_auth($CAT_GALLERY[$g_idcat]['auth'], WRITE_CAT_GALLERY))
+	if (!$User->check_auth($CAT_GALLERY[$g_idcat]['auth'], GalleryAuthorizationsService::WRITE_AUTHORIZATIONS))
 	{
 		$error_controller = PHPBoostErrors::user_not_authorized();
 		DispatchManager::redirect($error_controller);
@@ -121,7 +123,7 @@ elseif (isset($_FILES['gallery'])) //Upload
 	$idcat_post = retrieve(POST, 'cat', '');
 	$name_post = retrieve(POST, 'name', '', TSTRING_AS_RECEIVED);
 
-	$Upload->file('gallery', '`([a-z0-9()_-])+\.(jpg|jpeg|gif|png)+$`i', Upload::UNIQ_NAME, $CONFIG_GALLERY['weight_max']);
+	$Upload->file('gallery', '`([a-z0-9()_-])+\.(jpg|jpeg|gif|png)+$`i', Upload::UNIQ_NAME, $config->get_max_weight());
 	if ($Upload->get_error() != '') //Erreur, on arrête ici
 	{
 		AppContext::get_response()->redirect(GalleryUrlBuilder::get_link_cat_add($g_idcat,$Upload->get_error()) . '#message_helper');
@@ -129,7 +131,7 @@ elseif (isset($_FILES['gallery'])) //Upload
 	else
 	{
 		$path = $dir . $Upload->get_filename();
-		$error = $Upload->check_img($CONFIG_GALLERY['width_max'], $CONFIG_GALLERY['height_max'], Upload::DELETE_ON_ERROR);
+		$error = $Upload->check_img($config->get_max_width(), $config->get_max_height(), Upload::DELETE_ON_ERROR);
 		if (!empty($error)) //Erreur, on arrête ici
 			AppContext::get_response()->redirect(GalleryUrlBuilder::get_link_cat_add($g_idcat,$error) . '#message_helper');
 		else
@@ -178,13 +180,13 @@ elseif ($g_add)
 	else //Racine.
 	{
 		$cat_links = '';
-		$CAT_GALLERY[0]['auth'] = $CONFIG_GALLERY['auth_root'];
+		$CAT_GALLERY[0]['auth'] = $config->get_authorizations();
 		$CAT_GALLERY[0]['aprob'] = 1;
 		$CAT_GALLERY[0]['name'] = $LANG['root'];
 	}
 
 	//Niveau d'autorisation de la catégorie, accès en écriture.
-	if (!$User->check_auth($CAT_GALLERY[$g_idcat]['auth'], WRITE_CAT_GALLERY))
+	if (!$User->check_auth($CAT_GALLERY[$g_idcat]['auth'], GalleryAuthorizationsService::WRITE_AUTHORIZATIONS))
 	{
 		$error_controller = PHPBoostErrors::user_not_authorized();
 		DispatchManager::redirect($error_controller);
@@ -195,7 +197,7 @@ elseif ($g_add)
 	{
 		if ($idcat != 0  && $CAT_GALLERY[$idcat]['aprob'] == 1)
 		{
-			if ($User->check_auth($CAT_GALLERY[$idcat]['auth'], READ_CAT_GALLERY) && $User->check_auth($CAT_GALLERY[$idcat]['auth'], WRITE_CAT_GALLERY))
+			if ($User->check_auth($CAT_GALLERY[$idcat]['auth'], GalleryAuthorizationsService::READ_AUTHORIZATIONS) && $User->check_auth($CAT_GALLERY[$idcat]['auth'], GalleryAuthorizationsService::WRITE_AUTHORIZATIONS))
 			{
 				$margin = ($CAT_GALLERY[$idcat]['level'] > 0) ? str_repeat('--------', $CAT_GALLERY[$idcat]['level']) : '--';
 				$selected = ($idcat == $g_idcat) ? ' selected="selected"' : '';
@@ -237,10 +239,10 @@ elseif ($g_add)
 			$l_pics_quota = $LANG['illimited'];
 			break;
 			case 1:
-			$l_pics_quota = $CONFIG_GALLERY['limit_modo'];
+			$l_pics_quota = $config->get_moderator_max_pics_number();
 			break;
 			default:
-			$l_pics_quota = $CONFIG_GALLERY['limit_member'];
+			$l_pics_quota = $config->get_member_max_pics_number();
 		}
 		$nbr_upload_pics = $Gallery->get_nbr_upload_pics($User->get_attribute('user_id'));
 
@@ -256,10 +258,10 @@ elseif ($g_add)
 		'CAT_ID' => $g_idcat,
 		'GALLERY' => !empty($g_idcat) ? $CAT_GALLERY[$g_idcat]['name'] : $LANG['gallery'],
 		'CATEGORIES' => $auth_cats,
-		'WIDTH_MAX' => $CONFIG_GALLERY['width_max'],
-		'HEIGHT_MAX' => $CONFIG_GALLERY['height_max'],
-		'WEIGHT_MAX' => $CONFIG_GALLERY['weight_max'],
-		'ADD_PICS' => $User->check_auth($CAT_GALLERY[$g_idcat]['auth'], WRITE_CAT_GALLERY) ? '<a href="' . GalleryUrlBuilder::get_link_cat_add($g_idcat) . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/add.png" alt="" class="valign_middle" /></a>' : '',
+		'WIDTH_MAX' => $config->get_max_width(),
+		'HEIGHT_MAX' => $config->get_max_height(),
+		'WEIGHT_MAX' => $config->get_max_weight(),
+		'ADD_PICS' => $User->check_auth($CAT_GALLERY[$g_idcat]['auth'], GalleryAuthorizationsService::WRITE_AUTHORIZATIONS) ? '<a href="' . GalleryUrlBuilder::get_link_cat_add($g_idcat) . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/add.png" alt="" class="valign_middle" /></a>' : '',
 		'IMG_FORMAT' => 'JPG, PNG, GIF',
 		'L_IMG_FORMAT' => $LANG['img_format'],
 		'L_WIDTH_MAX' => $LANG['width_max'],

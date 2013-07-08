@@ -46,6 +46,7 @@ class GallerySetup extends DefaultModuleSetup
 	public function uninstall()
 	{
 		$this->drop_tables();
+		ConfigManager::delete('gallery', 'config');
 	}
 
 	private function drop_tables()
@@ -144,7 +145,7 @@ class GallerySetup extends DefaultModuleSetup
 			'nbr_pics_unaprob' => 0,
 			'status' => 1,
 			'aprob' => 1,
-			'auth' => 'a:3:{s:3:"r-1";i:1;s:2:"r0";i:1;s:2:"r1";i:3;}',
+			'auth' => 'a:3:{s:3:"r-1";i:1;s:2:"r0";i:1;s:2:"r1";i:11;}',
 		));
 	}
 }
