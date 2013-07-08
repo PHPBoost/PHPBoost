@@ -50,7 +50,9 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 	
 	private function get_view()
 	{
-		global $CONFIG_GALLERY, $Cache, $CAT_GALLERY, $Bread_crumb, $LANG, $User, $Session;
+		$this->check_authorizations();
+		
+		global $Cache, $CAT_GALLERY, $Bread_crumb, $LANG, $User, $Session;
 		
 		require_once(PATH_TO_ROOT . '/gallery/gallery_begin.php');
 		
@@ -73,7 +75,8 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 		$Template = new FileTemplate('gallery/gallery.tpl');
 
 		$comments_topic = new GalleryCommentsTopic();
-
+		$config = GalleryConfig::load();
+		
 		$Gallery = new Gallery();
 		
 		if (!empty($g_idcat))
@@ -96,14 +99,14 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 		{
 			$cat_links = '';
 			$clause_cat = " WHERE gc.level = '0' AND gc.aprob = 1";
-			$CAT_GALLERY[0]['auth'] = $CONFIG_GALLERY['auth_root'];
+			$CAT_GALLERY[0]['auth'] = $config->get_authorizations();
 			$CAT_GALLERY[0]['aprob'] = 1;
 			$CAT_GALLERY[0]['name'] = $LANG['root'];
 			$CAT_GALLERY[0]['level'] = -1;
 		}
 	
 		//Niveau d'autorisation de la catégorie
-		if (!$User->check_auth($CAT_GALLERY[$g_idcat]['auth'], READ_CAT_GALLERY))
+		if (!$User->check_auth($CAT_GALLERY[$g_idcat]['auth'], GalleryAuthorizationsService::READ_AUTHORIZATIONS))
 		{
 			$error_controller = PHPBoostErrors::user_not_authorized();
 			DispatchManager::redirect($error_controller);
@@ -122,17 +125,17 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 		$Pagination = new DeprecatedPagination();
 	
 		//Colonnes des catégories.
-		$nbr_column_cats = ($total_cat > $CONFIG_GALLERY['nbr_column']) ? $CONFIG_GALLERY['nbr_column'] : $total_cat;
+		$nbr_column_cats = ($total_cat > $config->get_columns_number()) ? $config->get_columns_number() : $total_cat;
 		$nbr_column_cats = !empty($nbr_column_cats) ? $nbr_column_cats : 1;
 		$column_width_cats = floor(100/$nbr_column_cats);
 	
 		//Colonnes des images.
-		$nbr_column_pics = ($nbr_pics > $CONFIG_GALLERY['nbr_column']) ? $CONFIG_GALLERY['nbr_column'] : $nbr_pics;
+		$nbr_column_pics = ($nbr_pics > $config->get_columns_number()) ? $config->get_columns_number() : $nbr_pics;
 		$nbr_column_pics = !empty($nbr_column_pics) ? $nbr_column_pics : 1;
 		$column_width_pics = floor(100/$nbr_column_pics);
 	
 		$is_admin = $User->check_level(User::ADMIN_LEVEL) ? true : false;
-		$is_modo = ($User->check_auth($CAT_GALLERY[$g_idcat]['auth'], EDIT_CAT_GALLERY)) ? true : false;
+		$is_modo = ($User->check_auth($CAT_GALLERY[$g_idcat]['auth'], GalleryAuthorizationsService::MODERATION_AUTHORIZATIONS)) ? true : false;
 	
 		$module_data_path = $Template->get_pictures_data_path();
 		$rewrite_title = Url::encode_rewrite($CAT_GALLERY[$g_idcat]['name']);
@@ -155,16 +158,16 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 			'SID' => SID,
 			'THEME' => get_utheme(),
 			'LANG' => get_ulang(),
-			'PAGINATION' => $Pagination->display('gallery' . url('.php?p=%d&amp;cat=' . $g_idcat . '&amp;id=' . $g_idpics . '&amp;' . $g_sort, '-' . $g_idcat . '-' . $g_idpics . '-%d.php?&' . $g_sort), $total_cat, 'p', $CONFIG_GALLERY['nbr_pics_max'], 3),
+			'PAGINATION' => $Pagination->display('gallery' . url('.php?p=%d&amp;cat=' . $g_idcat . '&amp;id=' . $g_idpics . '&amp;' . $g_sort, '-' . $g_idcat . '-' . $g_idpics . '-%d.php?&' . $g_sort), $total_cat, 'p', $config->get_pics_number_per_page(), 3),
 			'COLUMN_WIDTH_CATS' => $column_width_cats,
 			'COLUMN_WIDTH_PICS' => $column_width_pics,
 			'CAT_ID' => $g_idcat,
-			'DISPLAY_MODE' => $CONFIG_GALLERY['display_pics'],
+			'DISPLAY_MODE' => $config->get_pics_enlargement_mode(),
 			'GALLERY' => !empty($g_idcat) ? $CAT_GALLERY[$g_idcat]['name'] : $LANG['gallery'],
-			'HEIGHT_MAX' => $CONFIG_GALLERY['height'],
+			'HEIGHT_MAX' => $config->get_mini_max_height(),
 			'WIDTH_MAX' => $column_width_pics,
 			'MODULE_DATA_PATH' => $module_data_path,
-			'ADD_PICS' => $User->check_auth($CAT_GALLERY[$g_idcat]['auth'], WRITE_CAT_GALLERY) ? '<a href="' . GalleryUrlBuilder::get_link_cat_add($g_idcat) . '"><img src="'. PATH_TO_ROOT.'/templates/' . get_utheme() . '/images/' . get_ulang() . '/add.png" alt="" class="valign_middle" title="' . $LANG['gallery_pics_add'] .'"/></a>' : '',
+			'ADD_PICS' => $User->check_auth($CAT_GALLERY[$g_idcat]['auth'], GalleryAuthorizationsService::WRITE_AUTHORIZATIONS) ? '<a href="' . GalleryUrlBuilder::get_link_cat_add($g_idcat) . '"><img src="'. PATH_TO_ROOT.'/templates/' . get_utheme() . '/images/' . get_ulang() . '/add.png" alt="" class="valign_middle" title="' . $LANG['gallery_pics_add'] .'"/></a>' : '',
 			'L_CONFIRM_DEL_FILE' => $LANG['confim_del_file'],
 			'L_APROB' => $LANG['aprob'],
 			'L_UNAPROB' => $LANG['unaprob'],
@@ -197,7 +200,7 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 		{
 			if ($idcat > 0 && $CAT_GALLERY[$idcat]['aprob'] == 1)
 			{
-				if (!$User->check_auth($CAT_GALLERY[$idcat]['auth'], READ_CAT_GALLERY))
+				if (!$User->check_auth($CAT_GALLERY[$idcat]['auth'], GalleryAuthorizationsService::READ_AUTHORIZATIONS))
 				{
 					$clause_level = !empty($g_idcat) ? ($CAT_GALLERY[$idcat]['level'] == ($CAT_GALLERY[$g_idcat]['level'] + 1)) : ($CAT_GALLERY[$idcat]['level'] == 0);
 					if ($clause_level)
@@ -224,7 +227,7 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 			" . $clause_cat . $clause_unauth_cats . "
 			GROUP BY gc.id
 			ORDER BY gc.id_left
-			" . $this->sql_querier->limit($Pagination->get_first_msg($CONFIG_GALLERY['nbr_pics_max'], 'p'), $CONFIG_GALLERY['nbr_pics_max']), __LINE__, __FILE__);
+			" . $this->sql_querier->limit($Pagination->get_first_msg($config->get_pics_number_per_page(), 'p'), $config->get_pics_number_per_page()), __LINE__, __FILE__);
 			while ($row = $this->sql_querier->fetch_assoc($result))
 			{
 				//Si la miniature n'existe pas (cache vidé) on regénère la miniature à partir de l'image en taille réelle.
@@ -312,7 +315,7 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 				if (!in_array($row['id'], $unauth_cats))
 				{
 					$margin = ($row['level'] > 0) ? str_repeat('--------', $row['level']) : '--';
-					$array_cat_list[$row['id']] = $User->check_auth($CAT_GALLERY[$row['id']]['auth'], EDIT_CAT_GALLERY) ? '<option value="' . $row['id'] . '" %s>' . $margin . ' ' . $row['name'] . '</option>' : '';
+					$array_cat_list[$row['id']] = $User->check_auth($CAT_GALLERY[$row['id']]['auth'], GalleryAuthorizationsService::MODERATION_AUTHORIZATIONS) ? '<option value="' . $row['id'] . '" %s>' . $margin . ' ' . $row['name'] . '</option>' : '';
 				}
 			}
 			$this->sql_querier->query_close($result);
@@ -353,7 +356,7 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 							$Gallery->Resize_pics(PATH_TO_ROOT . '/gallery/pics/' . $row['path']); //Redimensionnement + création miniature
 	
 						//Affichage de la liste des miniatures sous l'image.
-						$array_pics[] = '<td class="row2" style="text-align:center;height:' . ($CONFIG_GALLERY['height'] + 16) . 'px"><span id="thumb' . $i . '"><a href="gallery' . url('.php?cat=' . $row['idcat'] . '&amp;id=' . $row['id'] . '&amp;sort=' . $g_sort, '-' . $row['idcat'] . '-' . $row['id'] . '.php?sort=' . $g_sort) . '#pics_max' . '"><img src="pics/thumbnails/' . $row['path'] . '" alt="" / ></a></span></td>';
+						$array_pics[] = '<td class="row2" style="text-align:center;height:' . ($config->get_mini_max_height() + 16) . 'px"><span id="thumb' . $i . '"><a href="gallery' . url('.php?cat=' . $row['idcat'] . '&amp;id=' . $row['id'] . '&amp;sort=' . $g_sort, '-' . $row['idcat'] . '-' . $row['id'] . '.php?sort=' . $g_sort) . '#pics_max' . '"><img src="pics/thumbnails/' . $row['path'] . '" alt="" / ></a></span></td>';
 	
 						if ($row['id'] == $g_idpics)
 						{
@@ -386,14 +389,14 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 					foreach ($array_cat_list as $key_cat => $option_value)
 						$cat_list .= ($key_cat == $info_pics['idcat']) ? sprintf($option_value, 'selected="selected"') : sprintf($option_value, '');
 	
-					$activ_note = ($CONFIG_GALLERY['activ_note'] == 1 && $User->check_level(User::MEMBER_LEVEL) );
+					$activ_note = ($config->is_notation_enabled() && $User->check_level(User::MEMBER_LEVEL) );
 					if ($activ_note)
 					{
 						//Affichage notation.
 						$notation = new Notation();
 						$notation->set_module_name('gallery');
 						$notation->set_id_in_module($info_pics['id']);
-						$notation->set_notation_scale($CONFIG_GALLERY['note_max']);
+						$notation->set_notation_scale($config->get_notation_scale());
 						$notation->set_properties($info_pics);
 					}
 
@@ -413,11 +416,11 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 					$Template->put_all(array(
 						'C_GALLERY_PICS_MAX' => true,
 						'C_GALLERY_PICS_MODO' => $is_modo ? true : false,
-						'C_ACTIV_POSTOR' => $CONFIG_GALLERY['activ_user'],
-						'C_ACTIV_VIEW' => $CONFIG_GALLERY['activ_view'],
-						'C_ACTIV_TITLE' => $CONFIG_GALLERY['activ_title'],
-						'C_ACTIV_COM' => $CONFIG_GALLERY['activ_com'],
-						'C_ACTIV_NOTE' => $CONFIG_GALLERY['activ_note'],
+						'C_AUTHOR_DISPLAYED' => $config->is_author_displayed(),
+						'C_VIEWS_COUNTER_ENABLED' => $config->is_views_counter_enabled(),
+						'C_TITLE_ENABLED' => $config->is_title_enabled(),
+						'C_COMMENTS_ENABLED' => $config->are_comments_enabled(),
+						'C_NOTATION_ENABLED' => $config->is_notation_enabled(),
 						'ID' => $info_pics['id'],
 						'IMG_MAX' => '<img src="' . PATH_TO_ROOT . '/gallery/show_pics' . url('.php?id=' . $g_idpics . '&amp;cat=' . $g_idcat) . '" alt="" />',
 						'NAME' => '<span id="fi_' . $info_pics['id'] . '">' . stripslashes($info_pics['name']) . '</span> <span id="fi' . $info_pics['id'] . '"></span>',
@@ -428,7 +431,7 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 						'SIZE' => NumberHelper::round($info_pics['weight']/1024, 1),
 						'COM' => '<a href="'. GalleryUrlBuilder::get_link_item($info_pics['idcat'],$info_pics['id'],0,$g_sort) .'#comments_list">'. CommentsService::get_number_and_lang_comments('gallery', $info_pics['id']) . '</a>',
 						'KERNEL_NOTATION' => $activ_note ? NotationService::display_active_image($notation) : '',
-						'COLSPAN' => ($CONFIG_GALLERY['nbr_column'] + 2),
+						'COLSPAN' => ($config->get_columns_number() + 2),
 						'CAT' => $cat_list,
 						'RENAME' => $html_protected_name,
 						'RENAME_CUT' => $html_protected_name,
@@ -475,9 +478,17 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 					//Commentaires
 					if (isset($_GET['com']))
 					{
-						$Template->put_all(array(
-							'COMMENTS' => CommentsService::display($comments_topic)->render()
-						));
+						if ($config->are_comments_enabled())
+						{
+							$Template->put_all(array(
+								'COMMENTS' => CommentsService::display($comments_topic)->render()
+							));
+						}
+						else
+						{
+							$error_controller = PHPBoostErrors::user_not_authorized();
+							DispatchManager::redirect($error_controller);
+						}
 					}
 				}
 			}
@@ -490,7 +501,7 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 				$sort = retrieve(GET, 'sort', '');
 				$Template->put_all(array(
 					'C_GALLERY_MODO' => $is_modo ? true : false,
-					'PAGINATION_PICS' => $Pagination->display(PATH_TO_ROOT . '/gallery/gallery' . url('.php?pp=%d' . (!empty($sort) ? '&amp;sort=' . $sort : '') . '&amp;cat=' . $g_idcat, '-' . $g_idcat . '+' . $rewrite_title . '.php?pp=%d'), $nbr_pics, 'pp', $CONFIG_GALLERY['nbr_pics_max'], 3),
+					'PAGINATION_PICS' => $Pagination->display(PATH_TO_ROOT . '/gallery/gallery' . url('.php?pp=%d' . (!empty($sort) ? '&amp;sort=' . $sort : '') . '&amp;cat=' . $g_idcat, '-' . $g_idcat . '+' . $rewrite_title . '.php?pp=%d'), $nbr_pics, 'pp', $config->get_pics_number_per_page(), 3),
 					'L_EDIT' => $LANG['edit'],
 					'L_VIEW' => $LANG['view'],
 					'L_VIEWS' => $LANG['views']
@@ -499,7 +510,7 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 	
 				$notation = new Notation();
 				$notation->set_module_name('gallery');
-				$notation->set_notation_scale($CONFIG_GALLERY['note_max']);
+				$notation->set_notation_scale($config->get_notation_scale());
 				
 				$is_connected = $User->check_level(User::MEMBER_LEVEL);
 				$j = 0;
@@ -511,7 +522,7 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 				LEFT JOIN " . DB_TABLE_NOTE . " note ON note.id_in_module = g.id AND note.module_name = 'gallery' AND note.user_id = " . AppContext::get_current_user()->get_id() . "
 				WHERE g.idcat = '" . $g_idcat . "' AND g.aprob = 1
 				" . $g_sql_sort . "
-				" . $this->sql_querier->limit($Pagination->get_first_msg($CONFIG_GALLERY['nbr_pics_max'], 'pp'), $CONFIG_GALLERY['nbr_pics_max']), __LINE__, __FILE__);
+				" . $this->sql_querier->limit($Pagination->get_first_msg($config->get_pics_number_per_page(), 'pp'), $config->get_pics_number_per_page()), __LINE__, __FILE__);
 				while ($row = $this->sql_querier->fetch_assoc($result))
 				{
 					//Si la miniature n'existe pas (cache vidé) on regénère la miniature à partir de l'image en taille réelle.
@@ -519,14 +530,14 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 						$Gallery->Resize_pics(PATH_TO_ROOT . '/gallery/pics/' . $row['path']); //Redimensionnement + création miniature
 					
 					//Affichage de l'image en grand.
-					if ($CONFIG_GALLERY['display_pics'] == 3) //Ouverture en popup plein écran.
+					if ($config->get_pics_enlargement_mode() == GalleryConfig::FULL_SCREEN) //Ouverture en popup plein écran.
 					{
 						$display_link = PATH_TO_ROOT.'/gallery/show_pics' . url('.php?id=' . $row['id'] . '&amp;cat=' . $row['idcat']) . '" rel="lightbox[1]" onmousedown="increment_view(' . $row['id'] . ');" title="' . str_replace('"', '', stripslashes($row['name']));
 						$display_name = PATH_TO_ROOT.'/gallery/show_pics' . url('.php?id=' . $row['id'] . '&amp;cat=' . $row['idcat']) . '" rel="lightbox[2]" onmousedown="increment_view(' . $row['id'] . ');" title="' . str_replace('"', '', stripslashes($row['name']));
 					}
-					elseif ($CONFIG_GALLERY['display_pics'] == 2) //Ouverture en popup simple.
+					elseif ($config->get_pics_enlargement_mode() == GalleryConfig::POPUP) //Ouverture en popup simple.
 						$display_name = $display_link = 'javascript:increment_view(' . $row['id'] . ');display_pics_popup(\'' . PATH_TO_ROOT . '/gallery/show_pics' . url('.php?id=' . $row['id'] . '&amp;cat=' . $row['idcat']) . '\', \'' . $row['width'] . '\', \'' . $row['height'] . '\')';
-					elseif ($CONFIG_GALLERY['display_pics'] == 1) //Ouverture en agrandissement simple.
+					elseif ($config->get_pics_enlargement_mode() == GalleryConfig::RESIZE) //Ouverture en agrandissement simple.
 						$display_name = $display_link = 'javascript:increment_view(' . $row['id'] . ');display_pics(' . $row['id'] . ', \'' . PATH_TO_ROOT . '/gallery/show_pics' . url('.php?id=' . $row['id'] . '&amp;cat=' . $row['idcat']) . '\')';
 					else //Ouverture nouvelle page.
 						$display_name = $display_link = url('gallery.php?cat=' . $row['idcat'] . '&amp;id=' . $row['id'], 'gallery-' . $row['idcat'] . '-' . $row['id'] . '.php') . '#pics_max';
@@ -535,9 +546,7 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 					$cat_list = '';
 					foreach ($array_cat_list as $key_cat => $option_value)
 						$cat_list .= ($key_cat == $row['idcat']) ? sprintf($option_value, 'selected="selected"') : sprintf($option_value, '');
-		
-					$activ_note = ($CONFIG_GALLERY['activ_note'] == 1 && $is_connected );
-
+					
 					$notation->set_id_in_module($row['id']);
 					$notation->set_properties($row);
 					
@@ -551,11 +560,11 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 						'APROB' => $row['aprob'],
 						'IMG' => '<img src="'. PATH_TO_ROOT.'/gallery/pics/thumbnails/' . $row['path'] . '" alt="' . str_replace('"', '', stripslashes($row['name'])) . '" class="gallery_image" />',
 						'PATH' => $row['path'],
-						'NAME' => ($CONFIG_GALLERY['activ_title'] == 1) ? '<a class="small_link" href="' . $display_name . '"><span id="fi_' . $row['id'] . '">' . TextHelper::wordwrap_html(stripslashes($row['name']), 22, ' ') . '</span></a> <span id="fi' . $row['id'] . '"></span>' : '<span id="fi_' . $row['id'] . '"></span></a> <span id="fi' . $row['id'] . '"></span>',
-						'POSTOR' => ($CONFIG_GALLERY['activ_user'] == 1) ? '<br />' . $LANG['by'] . (!empty($row['login']) ? ' <a class="small_link '.UserService::get_level_class($row['level']).'"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . ' href="'. UserUrlBuilder::profile($row['user_id'])->absolute() .'">' . $row['login'] . '</a>' : ' ' . $LANG['guest']) : '',
-						'VIEWS' => ($CONFIG_GALLERY['activ_view'] == 1) ? '<br /><span id="gv' . $row['id'] . '">' . $row['views'] . '</span> <span id="gvl' . $row['id'] . '">' . ($row['views'] > 1 ? $LANG['views'] : $LANG['view']) . '</span>' : '',
-						'COM' => $CONFIG_GALLERY['activ_com'] == 1 ? '<br /><a href="'. PATH_TO_ROOT .'/gallery/gallery' . url('.php?cat=' . $row['idcat'] . '&amp;id=' . $row['id'] . '&amp;com=0', '-' . $row['idcat'] . '-' . $row['id'] . '.php?com=0') .'#comments_list">'. CommentsService::get_number_and_lang_comments('gallery', $row['id']) . '</a>' : '',
-						'KERNEL_NOTATION' => $activ_note ? NotationService::display_active_image($notation) : '',
+						'NAME' => $config->is_title_enabled() ? '<a class="small_link" href="' . $display_name . '"><span id="fi_' . $row['id'] . '">' . TextHelper::wordwrap_html(stripslashes($row['name']), 22, ' ') . '</span></a> <span id="fi' . $row['id'] . '"></span>' : '<span id="fi_' . $row['id'] . '"></span></a> <span id="fi' . $row['id'] . '"></span>',
+						'POSTOR' => $config->is_author_displayed() ? '<br />' . $LANG['by'] . (!empty($row['login']) ? ' <a class="small_link '.UserService::get_level_class($row['level']).'"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . ' href="'. UserUrlBuilder::profile($row['user_id'])->absolute() .'">' . $row['login'] . '</a>' : ' ' . $LANG['guest']) : '',
+						'VIEWS' => $config->is_views_counter_enabled() ? '<br /><span id="gv' . $row['id'] . '">' . $row['views'] . '</span> <span id="gvl' . $row['id'] . '">' . ($row['views'] > 1 ? $LANG['views'] : $LANG['view']) . '</span>' : '',
+						'COM' => $config->are_comments_enabled() ? '<br /><a href="'. PATH_TO_ROOT .'/gallery/gallery' . url('.php?cat=' . $row['idcat'] . '&amp;id=' . $row['id'] . '&amp;com=0', '-' . $row['idcat'] . '-' . $row['id'] . '.php?com=0') .'#comments_list">'. CommentsService::get_number_and_lang_comments('gallery', $row['id']) . '</a>' : '',
+						'KERNEL_NOTATION' => $config->is_notation_enabled() && $is_connected ? NotationService::display_active_image($notation) : '',
 						'CAT' => $cat_list,
 						'RENAME' => $html_protected_name,
 						'RENAME_CUT' => $html_protected_name,
@@ -582,6 +591,15 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 		}
 	
 		return $Template;
+	}
+	
+	private function check_authorizations()
+	{
+		if (!GalleryAuthorizationsService::check_authorizations()->read())
+		{
+			$error_controller = PHPBoostErrors::user_not_authorized();
+			DispatchManager::redirect($error_controller);
+		}
 	}
 }
 ?>

@@ -33,6 +33,7 @@ require_once('../admin/admin_header.php');
 
 $Cache->load('gallery');
 $Gallery = new Gallery();
+$config = GalleryConfig::load();
 
 $idcat = !empty($_GET['cat']) ? NumberHelper::numeric($_GET['cat']) : 0;
 $idcat_post = !empty($_POST['idcat_post']) ? NumberHelper::numeric($_POST['idcat_post']) : 0;
@@ -46,13 +47,13 @@ if (isset($_FILES['gallery']) && isset($_POST['idcat_post'])) //Upload
 	$Upload->disableContentCheck();
 
 	$idpic = 0;
-	$Upload->file('gallery', '`([a-z0-9()_-])+\.(jpg|jpeg|gif|png)+$`i', Upload::UNIQ_NAME, $CONFIG_GALLERY['weight_max']);
+	$Upload->file('gallery', '`([a-z0-9()_-])+\.(jpg|jpeg|gif|png)+$`i', Upload::UNIQ_NAME, $config->get_max_weight());
 	if ($Upload->get_error() != '') //Erreur, on arrête ici
 		AppContext::get_response()->redirect('/gallery/admin_gallery_add.php?error=' . $Upload->get_error() . '#message_helper');
 	else
 	{
 		$path = $dir . $Upload->get_filename();
-		$error = $Upload->check_img($CONFIG_GALLERY['width_max'], $CONFIG_GALLERY['height_max'], Upload::DELETE_ON_ERROR);
+		$error = $Upload->check_img($config->get_max_width(), $config->get_max_height(), Upload::DELETE_ON_ERROR);
 		if (!empty($error)) //Erreur, on arrête ici
 			AppContext::get_response()->redirect('/gallery/admin_gallery_add.php?error=' . $error . '#message_helper');
 		else
@@ -143,12 +144,12 @@ else
 	}
 
 	$Template->put_all(array(
-		'WIDTH_MAX' => $CONFIG_GALLERY['width_max'],
-		'HEIGHT_MAX' => $CONFIG_GALLERY['height_max'],
-		'WEIGHT_MAX' => $CONFIG_GALLERY['weight_max'],
+		'WIDTH_MAX' => $config->get_max_width(),
+		'HEIGHT_MAX' => $config->get_max_height(),
+		'WEIGHT_MAX' => $config->get_max_weight(),
 		'AUTH_EXTENSION' => 'JPEG, GIF, PNG',
 		'CATEGORIES' => $cat_list,
-		'IMG_HEIGHT_MAX' => $CONFIG_GALLERY['height']+10,
+		'IMG_HEIGHT_MAX' => $config->get_mini_max_height()+10,
 		'L_GALLERY_MANAGEMENT' => $LANG['gallery_management'],
 		'L_GALLERY_PICS_ADD' => $LANG['gallery_pics_add'],
 		'L_GALLERY_CAT_MANAGEMENT' => $LANG['gallery_cats_management'],
@@ -199,7 +200,7 @@ else
 
 			//Colonnes des images.
 			$nbr_pics = count($array_pics);
-			$nbr_column_pics = ($nbr_pics > $CONFIG_GALLERY['nbr_column']) ? $CONFIG_GALLERY['nbr_column'] : $nbr_pics;
+			$nbr_column_pics = ($nbr_pics > $config->get_columns_number()) ? $config->get_columns_number() : $nbr_pics;
 			$nbr_column_pics = !empty($nbr_column_pics) ? $nbr_column_pics : 1;
 			$column_width_pics = floor(100/$nbr_column_pics);
 			$selectbox_width = floor(100-(10*$nbr_column_pics));

@@ -33,10 +33,6 @@ require_once('../admin/admin_header.php');
 
 $idcat = !empty($_GET['idcat']) ? NumberHelper::numeric($_GET['idcat']) : 0;
 
-define('READ_CAT_GALLERY', 0x01);
-define('WRITE_CAT_GALLERY', 0x02);
-define('EDIT_CAT_GALLERY', 0x04);
-
 //Si c'est confirmé on execute
 if (!empty($_POST['add'])) //Nouvelle galerie/catégorie.
 {
@@ -49,7 +45,7 @@ if (!empty($_POST['add'])) //Nouvelle galerie/catégorie.
 	$status = isset($_POST['status']) ? NumberHelper::numeric($_POST['status']) : 0;   
 		
 	//Génération du tableau des droits.
-	$array_auth_all = Authorizations::build_auth_array_from_form(READ_CAT_GALLERY, WRITE_CAT_GALLERY, EDIT_CAT_GALLERY);
+	$array_auth_all = Authorizations::build_auth_array_from_form(GalleryAuthorizationsService::READ_AUTHORIZATIONS, GalleryAuthorizationsService::WRITE_AUTHORIZATIONS, GalleryAuthorizationsService::MODERATION_AUTHORIZATIONS);
 	
 	if (!empty($name))
 	{	
@@ -121,9 +117,9 @@ else
 	$Template->put_all(array(
 		'THEME' => get_utheme(),
 		'CATEGORIES' => $galleries,
-		'AUTH_READ' => Authorizations::generate_select(READ_CAT_GALLERY, array(), array(-1 => true, 0 => true, 1 => true, 2 => true)),
-		'AUTH_WRITE' => Authorizations::generate_select(WRITE_CAT_GALLERY, array(), array(1 => true, 2 => true)),
-		'AUTH_EDIT' => Authorizations::generate_select(EDIT_CAT_GALLERY, array(), array(2 => true)),
+		'AUTH_READ' => Authorizations::generate_select(GalleryAuthorizationsService::READ_AUTHORIZATIONS, array(), array(-1 => true, 0 => true, 1 => true, 2 => true)),
+		'AUTH_WRITE' => Authorizations::generate_select(GalleryAuthorizationsService::WRITE_AUTHORIZATIONS, array(), array(1 => true, 2 => true)),
+		'AUTH_EDIT' => Authorizations::generate_select(GalleryAuthorizationsService::MODERATION_AUTHORIZATIONS, array(), array(2 => true)),
 		'L_REQUIRE_TITLE' => $LANG['require_title'],
 		'L_GALLERY_MANAGEMENT' => $LANG['gallery_management'], 
 		'L_GALLERY_PICS_ADD' => $LANG['gallery_pics_add'], 
