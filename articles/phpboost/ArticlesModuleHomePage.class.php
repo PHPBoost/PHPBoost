@@ -115,13 +115,6 @@ class ArticlesModuleHomePage implements ModuleHomePage
 			'C_ARTICLES_CAT' => $nbr_categories > 0,
 			'C_CURRENT_CAT' => $this->category->get_id() != Category::ROOT_CATEGORY,
 			'ID_CAT' => $this->category->get_name(),
-			'L_ADD_ARTICLES' => $this->lang['articles.add'],
-			'L_ALERT_DELETE_ARTICLE' => $this->lang['articles.form.alert_delete_article'],
-			'L_SUBCATEGORIES' => $this->lang['articles.sub_categories'],
-			'L_MANAGE_CATEGORIES' => $this->lang['admin.categories.manage'],
-			'L_EDIT_CONFIG' => $this->lang['articles_configuration'],
-			'L_MODULE_NAME' => $this->lang['articles'],
-			'L_PENDING_ARTICLES' => $this->lang['articles.pending_articles'],
 			'U_EDIT_CONFIG' => ArticlesUrlBuilder::articles_configuration()->absolute(),
 			'U_MANAGE_CATEGORIES' => ArticlesUrlBuilder::manage_categories()->absolute(),
 			'U_PENDING_ARTICLES' => ArticlesUrlBuilder::display_pending_articles()->absolute(), 
@@ -166,7 +159,7 @@ class ArticlesModuleHomePage implements ModuleHomePage
 				'CATEGORY_NAME' => $row['name'] . ' (' . $row['nbr_articles'] . ')',
 				'CATEGORY_DESCRIPTION' => FormatingHelper::second_parse($row['description']),
 				'CATEGORY_ICON_SOURCE' => !empty($row['image']) ? ($row['image'] == 'articles.png' || $row['image'] == 'articles_mini.png' ? ArticlesUrlBuilder::home()->absolute() . $row['image'] : $row['image']) : '',
-				'L_NBR_ARTICLES_CAT' => sprintf($this->lang['articles.nbr_articles_category'],$row['nbr_articles']),
+				'L_NBR_ARTICLES_CAT' => StringVars::replace_vars($this->lang['articles.nbr_articles_category'], array('number' => $row['nbr_articles'])),
 				'U_CATEGORY' => ArticlesUrlBuilder::display_category($row['id'], $row['rewrited_name'])->absolute(),
 				'U_SUBCATEGORIES' => (count($children_cat) > 0) ? $children_cat_links : 'aucune'
 			));
@@ -229,70 +222,24 @@ class ArticlesModuleHomePage implements ModuleHomePage
 
 			$this->view->put_all(array(
 				    'C_ARTICLES_FILTERS' => true,
-				    'L_ARTICLES_FILTERS_TITLE' => $this->lang['articles.sort_filter_title'],
 				    'PAGINATION' => ($nbr_articles_cat > $nbr_articles_per_page) ? $pagination->display()->render() : '',
-				    'L_TOTAL_ARTICLES' => sprintf($this->lang['articles.nbr_articles_category'], $nbr_articles_cat)
+				    'L_TOTAL_ARTICLES' => StringVars::replace_vars($this->lang['articles.nbr_articles_category'], array('number' => $nbr_articles_cat))
 			));
-
-			$notation = new Notation();
-			$notation->set_module_name('articles');
-			$notation->set_notation_scale(ArticlesConfig::load()->get_notation_scale());
 
 			while($row = $result->fetch())
 			{
 				$article = new Articles();
 				$article->set_properties($row);
-				$user = $article->get_author_user();
+				
 				$keywords = ArticlesKeywordsService::get_article_keywords($article->get_id());
 				
 				$keywords_list = $this->build_keywords_list($keywords);
 				
-				$notation->set_id_in_module($article->get_id());
-
-				$user_group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
-				
-				$description = FormatingHelper::second_parse($article->get_description());
-				if (ArticlesConfig::load()->get_display_type() == ArticlesConfig::DISPLAY_MOSAIC)
-				{
-					$short_description = strlen($description > 132) ? TextHelper::substr_html($description, 0, 128) . '...' : $description;
-				}
-				else
-				{
-					$short_description = strlen($description > 249) ? TextHelper::substr_html($description, 0, 245) . '...' : $description;
-				}
-				
-				$this->view->assign_block_vars('articles', array(
+				$this->view->assign_block_vars('articles', array_merge($article->get_tpl_vars(), array(
 					'C_KEYWORDS' => $keywords->get_rows_count() > 0 ? true : false,
-					'C_EDIT' => $this->auth_moderation || $this->auth_write && $article->get_author_user()->get_id() == AppContext::get_current_user()->get_id(),
-					'C_DELETE' => $this->auth_moderation,
-					'C_USER_GROUP_COLOR' => !empty($user_group_color),
-					'C_AUTHOR_DISPLAYED' => $article->get_author_name_displayed(),
-					'C_NOTATION_ENABLED' => $article->get_notation_enabled(),
-					'C_HAS_PICTURE' => $article->has_picture(),
-					'L_EDIT_ARTICLE' => $this->lang['articles.edit'],
-					'L_DELETE_ARTICLE' => $this->lang['articles.delete'],
-					'L_AUTHOR' => $this->lang['articles.sort_field.author'],
-					'L_DATE' => $this->lang['articles.sort_field.date'],
-					'L_VIEW' => $this->lang['articles.sort_field.views'],
-					'L_TAGS' => $this->lang['articles.tags'],
-					'L_READ_MORE' => $this->lang['articles.read_more'],
-					'TITLE' => $article->get_title(),
-					'PICTURE' => $article->get_picture()->absolute(),
-					'DATE' => $article->get_date_created()->format(DATE_FORMAT_SHORT, TIMEZONE_AUTO),
-					'NUMBER_VIEW' => $article->get_number_view(),
-					'L_NUMBER_COM' => CommentsService::get_number_and_lang_comments('articles', $article->get_id()),
-					'NOTE' => $row['number_notes'] > 0 ? NotationService::display_static_image($notation, $row['average_notes']) : '&nbsp;',
-					'DESCRIPTION' =>$short_description,
-					'PSEUDO' => $user->get_pseudo(),
-					'USER_LEVEL_CLASS' => UserService::get_level_class($user->get_level()),
-					'USER_GROUP_COLOR' => $user_group_color,
-					'U_COMMENTS' => ArticlesUrlBuilder::display_comments_article($this->category->get_id(), $this->category->get_rewrited_name(), $article->get_id(), $article->get_rewrited_title())->absolute(),
-					'U_AUTHOR' => UserUrlBuilder::profile($row['author_user_id'])->absolute(),
-					'U_ARTICLE' => ArticlesUrlBuilder::display_article($this->category->get_id(), $this->category->get_rewrited_name(), $article->get_id(), $article->get_rewrited_title())->absolute(),
-					'U_EDIT_ARTICLE' => ArticlesUrlBuilder::edit_article($article->get_id())->absolute(),
-					'U_DELETE_ARTICLE' => ArticlesUrlBuilder::delete_article($article->get_id())->absolute(),
+					'NOTE' => $row['number_notes'] > 0 ? NotationService::display_static_image($article->get_notation(), $row['average_notes']) : '&nbsp;',
 					'U_KEYWORDS_LIST' => $keywords_list
-				));
+				)));
 			}
 			
 			$this->view->put('FORM', $this->form->display());

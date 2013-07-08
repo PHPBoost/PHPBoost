@@ -127,55 +127,24 @@ class ArticlesDisplayArticlesController extends ModuleController
 		$pagination = new ModulePagination($current_page, $nbr_pages, 1);
 		$pagination->set_url(ArticlesUrlBuilder::display_article($this->category->get_id(), $this->category->get_rewrited_name(), $this->article->get_id(), $this->article->get_rewrited_title()), '%d');
 		
-		$user = $this->article->get_author_user();
-		$user_group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
-		
+		$this->view->put_all($this->article->get_tpl_vars());
+			
 		$this->view->put_all(array(
-			'C_EDIT' => $this->auth_moderation || $this->auth_write && $this->article->get_author_user()->get_id() == AppContext::get_current_user()->get_id(),
-			'C_DELETE' => $this->auth_moderation,
-			'C_USER_GROUP_COLOR' => !empty($user_group_color),
 			'C_COMMENTS_ENABLED' => $comments_enabled,
-			'C_AUTHOR_DISPLAYED' => $this->article->get_author_name_displayed(),
-			'C_NOTATION_ENABLED' => $this->article->get_notation_enabled(),
-			'TITLE' => $this->article->get_title(),
-			'DATE' => $this->article->get_date_created()->format(DATE_FORMAT_SHORT, TIMEZONE_AUTO),
-			'L_COMMENTS' => CommentsService::get_number_and_lang_comments('articles', $this->article->get_id()),
 			'L_PREVIOUS_PAGE' => LangLoader::get_message('previous_page', 'main'),
 			'L_NEXT_PAGE' => LangLoader::get_message('next_page', 'main'),
-			'L_AUTHOR' => $this->lang['articles.sort_field.author'],
-			'L_DATE' => $this->lang['articles.sort_field.date'],
-			'L_VIEW' => $this->lang['articles.sort_field.views'],
-			'L_TAGS' => $this->lang['articles.tags'],
-			'L_CATEGORY' => $this->lang['articles.category'],
-			'L_NO_AUTHOR_DISPLAYED' => $this->lang['articles.no_author_diplsayed'],
-			'L_ALERT_DELETE_ARTICLE' => $this->lang['articles.form.alert_delete_article'],
-			'L_SOURCE' => $this->lang['articles.sources'],
-			'L_SUMMARY' => $this->lang['articles.summary'],
 			'L_PRINTABLE_VERSION' => LangLoader::get_message('printable_version', 'main'),
-			'L_MODULE_NAME' => $this->lang['articles'],
-			'L_EDIT_ARTICLE' => $this->lang['articles.edit'],
-			'L_DELETE_ARTICLE' => $this->lang['articles.delete'],
-			'L_COMMENTS' => CommentsService::get_number_and_lang_comments('articles', $this->article->get_id()),
 			'L_CAT_NAME' => $this->category->get_name(),
-			'NUMBER_VIEW' => $this->article->get_number_view(),
 			'KERNEL_NOTATION' => NotationService::display_active_image($this->article->get_notation()),
 			'CONTENTS' => isset($article_contents_clean[$current_page-1]) ? FormatingHelper::second_parse($article_contents_clean[$current_page-1]) : '',
-			'PSEUDO' => $user->get_pseudo(),
-			'USER_LEVEL_CLASS' => UserService::get_level_class($user->get_level()),
-			'USER_GROUP_COLOR' => $user_group_color,
 			'PAGINATION_ARTICLES' => ($nbr_pages > 1) ? $pagination->display()->render() : '',
 			'PAGE_NAME' => (isset($array_page[1][$current_page-1]) && $array_page[1][$current_page-1] != '&nbsp;') ? $array_page[1][($current_page-1)] : '',
 			'U_PAGE_PREVIOUS_ARTICLES' => ($current_page > 1 && $current_page <= $nbr_pages && $nbr_pages > 1) ? ArticlesUrlBuilder::display_article($this->category->get_id(), $this->category->get_rewrited_name(), $this->article->get_id(), $this->article->get_rewrited_title())->absolute() . ($current_page - 1) : '',
 			'L_PREVIOUS_TITLE' => ($current_page > 1 && $current_page <= $nbr_pages && $nbr_pages > 1) ? $array_page[1][$current_page-2] : '',
 			'U_PAGE_NEXT_ARTICLES' => ($current_page > 0 && $current_page < $nbr_pages && $nbr_pages > 1) ? ArticlesUrlBuilder::display_article($this->category->get_id(), $this->category->get_rewrited_name(), $this->article->get_id(), $this->article->get_rewrited_title())->absolute() . ($current_page + 1) : '',
-			'L_NEXT_TITLE' => ($current_page > 0 && $current_page < $nbr_pages && $nbr_pages > 1) ? $array_page[1][$current_page] : '', 
-			'U_COMMENTS' => ArticlesUrlBuilder::display_comments_article($this->category->get_id(), $this->category->get_rewrited_name(), $this->article->get_id(), $this->article->get_rewrited_title())->absolute(),
-			'U_AUTHOR' => UserUrlBuilder::profile($this->article->get_author_user()->get_id())->absolute(),
+			'L_NEXT_TITLE' => ($current_page > 0 && $current_page < $nbr_pages && $nbr_pages > 1) ? $array_page[1][$current_page] : '',
 			'U_CATEGORY' => ArticlesUrlBuilder::display_category($this->category->get_id(), $this->category->get_rewrited_name())->absolute(),
-			'U_EDIT_ARTICLE' => ArticlesUrlBuilder::edit_article($this->article->get_id())->absolute(),
-			'U_DELETE_ARTICLE' => ArticlesUrlBuilder::delete_article($this->article->get_id())->absolute(),
-			'U_PRINT_ARTICLE' => ArticlesUrlBuilder::print_article($this->article->get_id(), $this->article->get_rewrited_title())->absolute(),
-			'U_SYNDICATION' => ArticlesUrlBuilder::category_syndication($this->category->get_id())->rel()
+			'U_PRINT_ARTICLE' => ArticlesUrlBuilder::print_article($this->article->get_id(), $this->article->get_rewrited_title())->absolute()
 		));
 		
 		//Affichage commentaires
@@ -268,27 +237,26 @@ class ArticlesDisplayArticlesController extends ModuleController
 		$this->auth_write = ArticlesAuthorizationsService::check_authorizations($article->get_id_category())->write();
 		$this->auth_moderation = ArticlesAuthorizationsService::check_authorizations($article->get_id_category())->moderation();
 		
-		$no_reading_authorizations = !ArticlesAuthorizationsService::check_authorizations($article->get_id_category())->read() && !ArticlesAuthorizationsService::check_authorizations()->read();
-		$no_reading_authorizations_no_approval = $no_reading_authorizations && !$this->auth_moderation && (!$this->auth_write && $article->get_author_user()->get_id() != AppContext::get_current_user()->get_id());
+		$not_authorized = !$this->auth_moderation && (!$this->auth_write && $article->get_author_user()->get_id() != AppContext::get_current_user()->get_id());
 		
 		switch ($article->get_publishing_state()) 
 		{
 			case Articles::PUBLISHED_NOW:
-				if ($no_reading_authorizations)
+				if (!ArticlesAuthorizationsService::check_authorizations()->read() && $not_authorized)
 				{
 					$error_controller = PHPBoostErrors::user_not_authorized();
 		   			DispatchManager::redirect($error_controller);
 				}
 			break;
 			case Articles::NOT_PUBLISHED:
-				if ($no_reading_authorizations_no_approval)
+				if ($not_authorized)
 				{
 					$error_controller = PHPBoostErrors::user_not_authorized();
 		   			DispatchManager::redirect($error_controller);
 				}
 			break;
 			case Articles::PUBLISHED_DATE:
-				if (!$article->is_published() && $no_reading_authorizations_no_approval)
+				if (!$article->is_published() && $not_authorized)
 				{
 					$error_controller = PHPBoostErrors::user_not_authorized();
 		   			DispatchManager::redirect($error_controller);

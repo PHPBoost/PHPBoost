@@ -229,6 +229,7 @@ class Articles
 	public function set_publishing_end_date(Date $publishing_end_date)
 	{
 		$this->publishing_end_date = $publishing_end_date;
+		$this->end_date_enabled = true;
 	}
 
 	public function get_publishing_end_date()
@@ -305,9 +306,9 @@ class Articles
 		$this->set_number_view($properties['number_view']);
 		$this->set_author_name_displayed($properties['author_name_displayed']);
 		$this->set_publishing_state($properties['published']);
-		$this->set_publishing_start_date(!empty($properties['publishing_start_date']) ? new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, $properties['publishing_start_date']) : new Date());
-		$this->set_publishing_end_date(!empty($properties['publishing_end_date']) ? new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, $properties['publishing_end_date']) : new Date());
-		$this->set_date_created(new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, $properties['date_created']));
+		$this->publishing_start_date = !empty($properties['publishing_start_date']) ? new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $properties['publishing_start_date']) : null;
+		$this->publishing_end_date = !empty($properties['publishing_end_date']) ? new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $properties['publishing_end_date']) : null;
+		$this->set_date_created(new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $properties['date_created']));
 		$this->set_notation_enabled($properties['notation_enabled']);
 		$this->set_sources(!empty($properties['sources']) ? unserialize($properties['sources']) : array());
 		
@@ -324,27 +325,76 @@ class Articles
 
 	public function init_default_properties()
 	{
-		$this->set_id_category(Category::ROOT_CATEGORY);
-		$this->set_author_name_displayed(self::AUTHOR_NAME_DISPLAYED);
-		$this->set_publishing_state(self::NOT_PUBLISHED);
-		$this->set_publishing_start_date(new Date());
-		$this->set_publishing_end_date(new Date());
-		$this->set_date_created(new Date());
-		$this->set_notation_enabled(self::NOTATION_ENABLED);
-		$this->set_sources(array());
-                $this->set_picture(new Url(self::DEFAULT_PICTURE));
-		$this->set_number_view(self::DEFAULT_NBR_VIEW);
+		$this->id_category = Category::ROOT_CATEGORY;
+		$this->author_name_displayed = self::AUTHOR_NAME_DISPLAYED;
+		$this->publishing_state = self::NOT_PUBLISHED;
+		$this->publishing_start_date = new Date();
+		$this->publishing_end_date = new Date();
+		$this->date_created = new Date();
+		$this->notation_enabled = self::NOTATION_ENABLED;
+		$this->sources = array();
+                $this->picture = new Url(self::DEFAULT_PICTURE);
+		$this->number_view = self::DEFAULT_NBR_VIEW;
 	}
 
 	public function clean_publishing_start_and_end_date()
 	{
 		$this->publishing_start_date = null;
 		$this->publishing_end_date = null;
+		$this->end_date_enabled = false;
 	}
 
 	public function clean_publishing_end_date()
 	{
 		$this->publishing_end_date = null;
+		$this->end_date_enabled = false;
+	}
+	
+	public function get_tpl_vars()
+	{
+		$category = ArticlesService::get_categories_manager()->get_categories_cache()->get_category($this->get_id_category());
+		$user = $this->get_author_user();
+		$user_group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
+		
+		$description = FormatingHelper::second_parse($this->get_description());
+		if (ArticlesConfig::load()->get_display_type() == ArticlesConfig::DISPLAY_MOSAIC)
+		{
+			$short_description = strlen($description > 132) ? TextHelper::substr_html($description, 0, 128) . '...' : $description;
+		}
+		else
+		{
+			$short_description = strlen($description > 249) ? TextHelper::substr_html($description, 0, 245) . '...' : $description;
+		}
+		
+		return array(
+			//Conditions
+			'C_EDIT' => ArticlesAuthorizationsService::check_authorizations($category->get_id())->moderation() || ArticlesAuthorizationsService::check_authorizations($category->get_id())->write() && $user->get_id() == AppContext::get_current_user()->get_id(),
+			'C_DELETE' => ArticlesAuthorizationsService::check_authorizations($category->get_id())->moderation(),
+			'C_HAS_PICTURE' => $this->has_picture(),
+			'C_USER_GROUP_COLOR' => !empty($user_group_color),
+			'C_AUTHOR_DISPLAYED' => $this->get_author_name_displayed(),
+			'C_NOTATION_ENABLED' => $this->get_notation_enabled(),
+			
+			//Articles
+			'TITLE' => $this->get_title(),
+			'DATE' => $this->get_date_created()->format(DATE_FORMAT_SHORT),
+			'L_COMMENTS' => CommentsService::get_number_and_lang_comments('articles', $this->get_id()),
+			'NUMBER_VIEW' => $this->get_number_view(),
+			'PSEUDO' => $user->get_pseudo(),
+			'DESCRIPTION' =>$short_description,
+			'PICTURE' => $this->get_picture()->absolute(),
+			'USER_LEVEL_CLASS' => UserService::get_level_class($user->get_level()),
+			'USER_GROUP_COLOR' => $user_group_color,
+		    
+			//Links
+			'U_COMMENTS' => ArticlesUrlBuilder::display_comments_article($category->get_id(), $category->get_rewrited_name(), $this->get_id(), $this->get_rewrited_title())->absolute(),
+			'U_AUTHOR' => UserUrlBuilder::profile($this->get_author_user()->get_id())->absolute(),
+			'U_CATEGORY' => ArticlesUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name())->absolute(),
+			'U_ARTICLE' => ArticlesUrlBuilder::display_article($category->get_id(), $category->get_rewrited_name(), $this->get_id(), $this->get_rewrited_title())->absolute(),
+			'U_EDIT_ARTICLE' => ArticlesUrlBuilder::edit_article($this->get_id())->absolute(),
+			'U_DELETE_ARTICLE' => ArticlesUrlBuilder::delete_article($this->get_id())->absolute(),
+			'U_SYNDICATION' => ArticlesUrlBuilder::category_syndication($category->get_id())->rel()
+		);
 	}
 }
 ?>

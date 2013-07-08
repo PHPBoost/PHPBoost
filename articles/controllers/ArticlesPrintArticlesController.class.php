@@ -116,27 +116,26 @@ class ArticlesPrintArticlesController extends ModuleController
 		$this->auth_write = ArticlesAuthorizationsService::check_authorizations($article->get_id_category())->write();
 		$this->auth_moderation = ArticlesAuthorizationsService::check_authorizations($article->get_id_category())->moderation();
 		
-		$no_reading_authorizations = !ArticlesAuthorizationsService::check_authorizations($article->get_id_category())->read() && !ArticlesAuthorizationsService::check_authorizations()->read();
-		$no_reading_authorizations_no_approval = $no_reading_authorizations && !$this->auth_moderation && (!$this->auth_write && $article->get_author_user_id() != AppContext::get_current_user()->get_id());
+		$not_authorized = !$this->auth_moderation && (!$this->auth_write && $article->get_author_user()->get_id() != AppContext::get_current_user()->get_id());
 		
 		switch ($article->get_publishing_state()) 
 		{
 			case Articles::PUBLISHED_NOW:
-				if ($no_reading_authorizations)
+				if (!ArticlesAuthorizationsService::check_authorizations()->read() && $not_authorized)
 				{
 					$error_controller = PHPBoostErrors::user_not_authorized();
 		   			DispatchManager::redirect($error_controller);
 				}
 			break;
 			case Articles::NOT_PUBLISHED:
-				if ($no_reading_authorizations_no_approval)
+				if ($not_authorized)
 				{
 					$error_controller = PHPBoostErrors::user_not_authorized();
 		   			DispatchManager::redirect($error_controller);
 				}
 			break;
 			case Articles::PUBLISHED_DATE:
-				if (!$article->is_published() && $no_reading_authorizations_no_approval)
+				if (!$article->is_published() && $not_authorized)
 				{
 					$error_controller = PHPBoostErrors::user_not_authorized();
 		   			DispatchManager::redirect($error_controller);

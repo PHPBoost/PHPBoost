@@ -40,6 +40,7 @@ class ArticlesSearchable extends AbstractSearchableExtensionPoint
 	public function get_search_request($args)
 	{
 		$now = new Date();
+		$timestamp = $now->get_timestamp();
 		
 		$search_category_children_options = new SearchCategoryChildrensOptions();
 		$search_category_children_options->add_authorizations_bits(Category::READ_AUTHORIZATIONS);
@@ -62,8 +63,8 @@ class ArticlesSearchable extends AbstractSearchableExtensionPoint
 			LEFT JOIN ". ArticlesSetup::$articles_cats_table ." cat ON articles.id_category = cat.id
 			WHERE (FT_SEARCH(articles.title, '" . $args['search'] . "') OR FT_SEARCH(articles.contents, '" . $args['search'] . "') OR
 			FT_SEARCH_RELEVANCE(articles.description, '" . $args['search'] . "') )
-			AND articles.published = 1 OR (articles.published = 2 AND n.publishing_start_date < '" . $now->get_timestamp() . 
-			"' AND (publishing_end_date > '" . $now->get_timestamp() . "' OR publishing_end_date = 0))
+			AND articles.published = 1 OR (articles.published = 2 AND n.publishing_start_date < '" . $timestamp() . 
+			"' AND (publishing_end_date > '" . $timestamp() . "' OR publishing_end_date = 0))
 			" . $where . " ORDER BY relevance DESC " . $this->sql_querier->limit(0, 100);
 	}
 }

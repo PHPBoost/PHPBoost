@@ -1,7 +1,7 @@
 <script type="text/javascript">
 <!--
 	function Confirm_del_article() {
-		return confirm("{L_ALERT_DELETE_ARTICLE}");
+		return confirm("${i18n('articles.form.alert_delete_article')}");
 	}
 -->
 </script>
@@ -14,16 +14,16 @@
 	    <ul class="subnav">
 		# IF C_EDIT #
 		<li>
-			<a href="{U_EDIT_ARTICLE}" title="{L_EDIT_ARTICLE}"><img class="valign_middle" src="{PATH_TO_ROOT}/{L_MODULE_NAME}/templates/images/edit_white.png" alt="{L_EDIT_ARTICLE}" /></a>
+			<a href="{U_EDIT_ARTICLE}" title="${i18n('articles.edit')}"><img class="valign_middle" src="{PATH_TO_ROOT}/articles/templates/images/edit_white.png" alt="${i18n('articles.edit')}" /></a>
 		</li>
 		# ENDIF #
 		# IF C_DELETE #
 		<li>
-			<a href="{U_DELETE_ARTICLE}" title="{L_DELETE_ARTICLE}"><img class="valign_middle" src="{PATH_TO_ROOT}/{L_MODULE_NAME}/templates/images/delete.png" alt="{L_DELETE_ARTICLE}" /></a>
+			<a href="{U_DELETE_ARTICLE}" title="${i18n('articles.delete')}"><img class="valign_middle" src="{PATH_TO_ROOT}/articles/templates/images/delete.png" alt="${i18n('articles.delete')}" /></a>
 		</li>
 		# ENDIF #
 		<li>
-			<a href="{U_PRINT_ARTICLE}" title="{L_PRINTABLE_VERSION}"><img class="valign_middle" src="{PATH_TO_ROOT}/{L_MODULE_NAME}/templates/images/print.png" alt="{L_PRINTABLE_VERSION}" /></a>
+			<a href="{U_PRINT_ARTICLE}" title="{L_PRINTABLE_VERSION}"><img class="valign_middle" src="{PATH_TO_ROOT}/articles/templates/images/print.png" alt="{L_PRINTABLE_VERSION}" /></a>
 		</li>
 	    </ul>
 	</li>
@@ -41,16 +41,16 @@
 		</div>
 		<div class="article_info">
 			# IF C_AUTHOR_DISPLAYED #
-			<img class="valign_middle" src="{PATH_TO_ROOT}/{L_MODULE_NAME}/templates/images/author.png" alt="{L_AUTHOR}" title="{L_AUTHOR}" /><a href="{U_AUTHOR}" class="small_link {USER_LEVEL_CLASS}" # IF C_USER_GROUP_COLOR # style="color:{USER_GROUP_COLOR}"# ENDIF #>&nbsp;{PSEUDO}&nbsp;</a>|
+			<img class="valign_middle" src="{PATH_TO_ROOT}/articles/templates/images/author.png" alt="${i18n('articles.sort_field.author')}" title="${i18n('articles.sort_field.author')}" /><a href="{U_AUTHOR}" class="small_link {USER_LEVEL_CLASS}" # IF C_USER_GROUP_COLOR # style="color:{USER_GROUP_COLOR}"# ENDIF #>&nbsp;{PSEUDO}&nbsp;</a>|
 			# ENDIF #
-			&nbsp;<img class="valign_middle" src="{PATH_TO_ROOT}/{L_MODULE_NAME}/templates/images/calendar.png" alt="{L_DATE}" title="{L_DATE}" />&nbsp;{DATE}&nbsp;|
-			&nbsp;<img class="valign_middle" src="{PATH_TO_ROOT}/{L_MODULE_NAME}/templates/images/view.png" alt="{L_VIEW}" title="{L_VIEW}" />&nbsp;{NUMBER_VIEW}
+			&nbsp;<img class="valign_middle" src="{PATH_TO_ROOT}/articles/templates/images/calendar.png" alt="${i18n('articles.sort_field.date')}" title="${i18n('articles.sort_field.date')}" />&nbsp;{DATE}&nbsp;|
+			&nbsp;<img class="valign_middle" src="{PATH_TO_ROOT}/articles/templates/images/view.png" alt="${i18n('articles.sort_field.views')}" title="${i18n('articles.sort_field.views')}" />&nbsp;{NUMBER_VIEW}
 			# IF C_COMMENTS_ENABLED #
-				&nbsp;|&nbsp;<img class="valign_middle" src="{PATH_TO_ROOT}/{L_MODULE_NAME}/templates/images/comment.png" /><a class="small_link" href="{U_COMMENTS}">&nbsp;{L_COMMENTS}</a>
+				&nbsp;|&nbsp;<img class="valign_middle" src="{PATH_TO_ROOT}/articles/templates/images/comment.png" /><a class="small_link" href="{U_COMMENTS}">&nbsp;{L_COMMENTS}</a>
 			# ENDIF #
-			&nbsp;|&nbsp;<img class="valign_middle" src="{PATH_TO_ROOT}/{L_MODULE_NAME}/templates/images/category.png" alt="{L_CATEGORY}" title="{L_CATEGORY}" />&nbsp;<a class="small_link" href="{U_CATEGORY}">{L_CAT_NAME}</a>
+			&nbsp;|&nbsp;<img class="valign_middle" src="{PATH_TO_ROOT}/articles/templates/images/category.png" alt="${i18n('articles.category')}" title="${i18n('articles.category')}" />&nbsp;<a class="small_link" href="{U_CATEGORY}">{L_CAT_NAME}</a>
 			# IF C_KEYWORDS #
-			&nbsp;|&nbsp;<img class="valign_middle" src="{PATH_TO_ROOT}/{L_MODULE_NAME}/templates/images/tags.png" alt="{L_TAGS}" title="{L_TAGS}" /> 
+			&nbsp;|&nbsp;<img class="valign_middle" src="{PATH_TO_ROOT}/articles/templates/images/tags.png" alt="${i18n('articles.tags')}" title="${i18n('articles.tags')}" /> 
 				# START keywords #
 				{keywords.COMMA}<a href="{keywords.U_KEYWORD}" class="small_link">{keywords.NAME}</a>
 				# END keywords #
@@ -62,7 +62,7 @@
 	<div class="module_contents">
 			# IF PAGINATION_ARTICLES #
 			<div style="float:right;margin-right:35px;width:250px;">
-				<p class="row2 text_strong" style="padding:2px;text-indent:4px;">{L_SUMMARY}:</p>
+				<p class="row2 text_strong" style="padding:2px;text-indent:4px;">${i18n('articles.summary')}:</p>
 				# INCLUDE FORM #	
 			</div>
 			<div class="spacer">&nbsp;</div>
@@ -81,7 +81,7 @@
 	</div>
 	<div class="module_bottom">
 		# IF C_SOURCES #
-		<div><b> {L_SOURCE} : </b># START sources #{sources.COMMA}<a href="{sources.URL}" class="small_link">{sources.NAME}</a># END sources #</div>
+		<div><b> ${i18n('articles.sources')} : </b># START sources #{sources.COMMA}<a href="{sources.URL}" class="small_link">{sources.NAME}</a># END sources #</div>
 		# ENDIF #
 		<div class="spacer">&nbsp;</div>
 		# IF C_NOTATION_ENABLED #

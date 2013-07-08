@@ -137,12 +137,7 @@ class ArticlesDisplayPendingArticlesController extends ModuleController
 		$this->build_form($field, $mode);
 		
 		$this->view->put_all(array(
-			'L_PUBLISHED_ARTICLES' => $this->lang['articles.published_articles'],
-			'L_MODULE_NAME' => $this->lang['articles'],
-			'L_ALERT_DELETE_ARTICLE' => $this->lang['articles.form.alert_delete_article'],
-			'L_TOTAL_PENDING' => $nbr_articles_pending > 0 ? sprintf($this->lang['articles.nbr_articles.pending'], $nbr_articles_pending) : '',
-			'L_PENDING_ARTICLES' => $this->lang['articles.pending_articles'],
-			'L_EDIT_CONFIG' => $this->lang['articles_configuration'],
+			'L_TOTAL_PENDING_ARTICLE' => $nbr_articles_pending > 0 ? StringVars::replace_vars($this->lang['articles.nbr_articles.pending'], array('number' => $nbr_articles_pending)) : '',
 			'U_PUBLISHED_ARTICLES' => ArticlesUrlBuilder::home()->absolute(), 
 			'U_ADD_ARTICLES' => ArticlesUrlBuilder::add_article()->absolute(),
 			'U_EDIT_CONFIG' => ArticlesUrlBuilder::articles_configuration()->absolute(),
@@ -160,66 +155,51 @@ class ArticlesDisplayPendingArticlesController extends ModuleController
 				'C_COMMENTS_ENABLED' => $comments_enabled,
 				'PAGINATION' => ($nbr_articles_pending > $nbr_articles_per_page) ? $pagination->display()->render() : ''
 			));
-			
-			$notation = new Notation();
-			$notation->set_module_name('articles');
-			$notation->set_notation_scale(ArticlesConfig::load()->get_notation_scale());
-			
+						
 			while($row = $result->fetch())
 			{
 				$article = new Articles();
 				$article->set_properties($row);
-				$user = $article->get_author_user();
 				
-				$notation->set_id_in_module($article->get_id());
+				$keywords = ArticlesKeywordsService::get_article_keywords($article->get_id());
 				
-				$user_group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
-				
+				$keywords_list = $this->build_keywords_list($keywords);
+		
 				$category = ArticlesService::get_categories_manager()->get_categories_cache()->get_category($article->get_id_category());
-				$edit_auth = ArticlesAuthorizationsService::check_authorizations($category->get_id())->moderation() || ArticlesAuthorizationsService::check_authorizations($category->get_id())->write() && $article->get_author_user()->get_id() == $request->get_current_user()->get_id();
 				
-				$this->view->assign_block_vars('articles', array(
-					'C_DELETE' => ArticlesAuthorizationsService::check_authorizations($category->get_id())->moderation(),
-					'C_EDIT' => $edit_auth,
-					'C_USER_GROUP_COLOR' => !empty($user_group_color),
-					'C_AUTHOR_DISPLAYED' => $article->get_author_name_displayed(),
-					'C_NOTATION_ENABLED' => $article->get_notation_enabled(),
-					'C_HAS_PICTURE' => $article->has_picture(),
-					'L_EDIT_ARTICLE' => $this->lang['articles.edit'],
-					'L_DELETE_ARTICLE' => $this->lang['articles.delete'],
-					'L_CATEGORY' => $this->lang['articles.category'],
-					'L_AUTHOR' => $this->lang['articles.sort_field.author'],
-					'L_DATE' => $this->lang['articles.sort_field.date'],
-					'L_VIEW' => $this->lang['articles.sort_field.views'],
-					'L_TAGS' => $this->lang['articles.tags'],
-					'L_READ_MORE' => $this->lang['articles.read_more'],
+				$this->view->assign_block_vars('articles',  array_merge($article->get_tpl_vars()), array(
+					'C_KEYWORDS' => $keywords->get_rows_count() > 0 ? true : false,
 					'L_CAT_NAME' => $category->get_name(),
-					'TITLE' => $article->get_title(),
-					'PICTURE' => $article->get_picture()->absolute(),
-					'DATE' => $article->get_date_created()->format(DATE_FORMAT_SHORT, TIMEZONE_AUTO),
-					'NUMBER_VIEW' => $row['number_view'],
-					'L_NUMBER_COM' => empty($row['number_comments']) ? '0' : $row['number_comments'],
-					'NOTE' => $row['number_notes'] > 0 ? NotationService::display_static_image($notation, $row['average_notes']) : '&nbsp;',
-					'DESCRIPTION' =>FormatingHelper::second_parse($article->get_description()), 
-					'PSEUDO' => $user->get_pseudo(),
-					'USER_LEVEL_CLASS' => UserService::get_level_class($user->get_level()),
-					'USER_GROUP_COLOR' => $user_group_color,
-					'U_COMMENTS' => ArticlesUrlBuilder::display_comments_article($category->get_id(), $category->get_rewrited_name(), $article->get_id(), $article->get_rewrited_title())->absolute(),
-					'U_AUTHOR' => UserUrlBuilder::profile($row['author_user_id'])->absolute(),
-					'U_ARTICLE' => ArticlesUrlBuilder::display_article($category->get_id(), $category->get_rewrited_name(), $article->get_id(), $article->get_rewrited_title())->absolute(),
+					'NOTE' => $row['number_notes'] > 0 ? NotationService::display_static_image($article->get_notation(), $row['average_notes']) : '&nbsp;',
 					'U_CATEGORY' => ArticlesUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name())->absolute(),
-					'U_EDIT_ARTICLE' => ArticlesUrlBuilder::edit_article($article->get_id())->absolute(),
-					'U_DELETE_ARTICLE' => ArticlesUrlBuilder::delete_article($article->get_id())->absolute()
+					'U_KEYWORDS_LIST' => $keywords_list
 				));
 			}
 		}
 		else 
 		{
 			$this->view->put_all(array(
-				'L_NO_PENDING_ARTICLES' => $this->lang['articles.no_pending_article']
+				'L_NO_PENDING_ARTICLE' => $this->lang['articles.no_pending_article']
 			));
 		}
 		$this->view->put('FORM', $this->form->display());
+	}
+	
+	private function build_keywords_list($keywords)
+	{
+		$keywords_list = '';
+		$nbr_keywords = $keywords->get_rows_count();
+		
+		while ($row = $keywords->fetch())
+		{	
+			$keywords_list .= '<a class="small_link" href="' . ArticlesUrlBuilder::display_tag($row['rewrited_name'])->absolute() . '">' . $row['name'] . '</a>';
+			if ($nbr_keywords - 1 > 0)
+			{
+				$keywords_list .= ', ';
+				$nbr_keywords--;
+			}
+		}
+		return $keywords_list;
 	}
 	
 	private function check_authorizations()

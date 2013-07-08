@@ -150,7 +150,8 @@ class ArticlesFormController extends ModuleController
 				}'))
 			));
 
-			$publication_fieldset->add_field(new FormFieldDateTime('publishing_start_date', $this->lang['articles.form.publishing_start_date'], $this->get_article()->get_publishing_start_date(), 
+			$publication_fieldset->add_field(new FormFieldDateTime('publishing_start_date', $this->lang['articles.form.publishing_start_date'], 
+				($this->get_article()->get_publishing_start_date() === null ? new Date() : $this->get_article()->get_publishing_start_date()), 
 				array('hidden' => ($this->get_article()->get_publishing_state() != Articles::PUBLISHED_DATE))
 			));
 
@@ -165,7 +166,8 @@ class ArticlesFormController extends ModuleController
 				))
 			));
 
-			$publication_fieldset->add_field(new FormFieldDateTime('publishing_end_date', $this->lang['articles.form.publishing_end_date'], $this->get_article()->get_publishing_end_date(), 
+			$publication_fieldset->add_field(new FormFieldDateTime('publishing_end_date', $this->lang['articles.form.publishing_end_date'], 
+				($this->get_article()->get_publishing_end_date() === null ? new date() : $this->get_article()->get_publishing_end_date()), 
 				array('hidden' => !$this->get_article()->end_date_enabled())
 			));
 		}

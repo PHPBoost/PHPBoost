@@ -92,7 +92,7 @@ class ArticlesUrlBuilder
 	
 	public static function delete_article($id)
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/' . $id . '/delete/');
+		return DispatchManager::get_url(self::$dispatcher, '/' . $id . '/delete/?token=' . AppContext::get_session()->get_token());
 	}
 	
 	public static function display_article($id_category, $rewrited_name_category, $id_article, $rewrited_title)
