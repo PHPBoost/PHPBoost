@@ -60,7 +60,7 @@ class MediaFeedProvider implements FeedProvider
         $children_cats = array();
         $cats->build_children_id_list($idcat, $children_cats, RECURSIVE_EXPLORATION, ADD_THIS_CATEGORY_IN_LIST);
 
-        $results = $querier->select('SELECT id, idcat, name, contents, timestamp FROM ' .
+        $results = $querier->select('SELECT id, idcat, name, contents, mime_type, url, timestamp FROM ' .
         PREFIX . 'media WHERE infos = :status_approved AND idcat IN :children ORDER BY timestamp DESC
         LIMIT :limit OFFSET 0', array(
             'status_approved' => MEDIA_STATUS_APROBED,
@@ -85,6 +85,12 @@ class MediaFeedProvider implements FeedProvider
             $item->set_date(new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $row['timestamp']));
             $item->set_image_url($MEDIA_CATS[$row['idcat']]['image']);
             $item->set_auth($cats->compute_heritated_auth($row['idcat'], MEDIA_AUTH_READ, Authorizations::AUTH_PARENT_PRIORITY));
+
+            $enclosure = new FeedItemEnclosure();
+            $enclosure->set_lenght(@filesize($row['url']));
+            $enclosure->set_type($row['mime_type']);
+            $enclosure->set_url($row['url']);
+            $item->set_enclosure($enclosure);
             
             // Adding the item to the list
             $data->add_item($item);
