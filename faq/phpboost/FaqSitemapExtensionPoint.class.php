@@ -45,7 +45,8 @@ class FaqSitemapExtensionPoint implements SitemapExtensionPoint
 	private function get_module_map($auth_mode)
 	{
 		global $FAQ_CATS, $FAQ_LANG, $LANG, $User, $Cache;
-
+		$faq_config = FaqConfig::load();
+		
 		include_once(PATH_TO_ROOT . '/faq/faq_begin.php');
 
 		$faq_link = new SitemapLink($FAQ_LANG['faq'], new Url('/faq/faq.php'), Sitemap::FREQ_DEFAULT, Sitemap::PRIORITY_MAX);
