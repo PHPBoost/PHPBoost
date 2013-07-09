@@ -390,11 +390,10 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 					if ($activ_note)
 					{
 						//Affichage notation.
-						$notation = new Notation();
+						$notation = new Notation((int) $info_pics['number_notes'], (float) $info_pics['average_notes'], (int) $info_pics['note']);
 						$notation->set_module_name('gallery');
 						$notation->set_id_in_module($info_pics['id']);
 						$notation->set_notation_scale($CONFIG_GALLERY['note_max']);
-						$notation->set_properties($info_pics);
 					}
 
 					if ($thumbnails_before < $nbr_pics_display_before)
@@ -496,11 +495,6 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 					'L_VIEWS' => $LANG['views']
 				));
 	
-	
-				$notation = new Notation();
-				$notation->set_module_name('gallery');
-				$notation->set_notation_scale($CONFIG_GALLERY['note_max']);
-				
 				$is_connected = $User->check_level(User::MEMBER_LEVEL);
 				$j = 0;
 				$result = $this->sql_querier->query_while("SELECT g.id, g.idcat, g.name, g.path, g.timestamp, g.aprob, g.width, g.height, g.user_id, g.views, g.aprob, m.login, m.user_groups, m.level, notes.average_notes, notes.number_notes, note.note
@@ -536,10 +530,10 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 					foreach ($array_cat_list as $key_cat => $option_value)
 						$cat_list .= ($key_cat == $row['idcat']) ? sprintf($option_value, 'selected="selected"') : sprintf($option_value, '');
 		
-					$activ_note = ($CONFIG_GALLERY['activ_note'] == 1 && $is_connected );
-
+					$notation = new Notation((int) $row['number_notes'], (float) $row['average_notes'], (int) $row['note']);
+					$notation->set_module_name('gallery');
+					$notation->set_notation_scale($CONFIG_GALLERY['note_max']);
 					$notation->set_id_in_module($row['id']);
-					$notation->set_properties($row);
 					
 					$group_color = User::get_group_color($row['user_groups'], $row['level']);
 					
@@ -555,7 +549,7 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 						'POSTOR' => ($CONFIG_GALLERY['activ_user'] == 1) ? '<br />' . $LANG['by'] . (!empty($row['login']) ? ' <a class="small_link '.UserService::get_level_class($row['level']).'"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . ' href="'. UserUrlBuilder::profile($row['user_id'])->absolute() .'">' . $row['login'] . '</a>' : ' ' . $LANG['guest']) : '',
 						'VIEWS' => ($CONFIG_GALLERY['activ_view'] == 1) ? '<br /><span id="gv' . $row['id'] . '">' . $row['views'] . '</span> <span id="gvl' . $row['id'] . '">' . ($row['views'] > 1 ? $LANG['views'] : $LANG['view']) . '</span>' : '',
 						'COM' => $CONFIG_GALLERY['activ_com'] == 1 ? '<br /><a href="'. PATH_TO_ROOT .'/gallery/gallery' . url('.php?cat=' . $row['idcat'] . '&amp;id=' . $row['id'] . '&amp;com=0', '-' . $row['idcat'] . '-' . $row['id'] . '.php?com=0') .'#comments_list">'. CommentsService::get_number_and_lang_comments('gallery', $row['id']) . '</a>' : '',
-						'KERNEL_NOTATION' => $activ_note ? NotationService::display_active_image($notation) : '',
+						'KERNEL_NOTATION' => ($CONFIG_GALLERY['activ_note'] == 1 && $is_connected ) ? NotationService::display_active_image($notation) : NotationService::display_static_image($notation),
 						'CAT' => $cat_list,
 						'RENAME' => $html_protected_name,
 						'RENAME_CUT' => $html_protected_name,
