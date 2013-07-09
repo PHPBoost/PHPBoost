@@ -34,6 +34,15 @@
 					<li><a href="${relative_url(AdminConfigUrlBuilder::mail_config())}" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/config_mini.png);">{L_MAIL_CONFIG}</a></li>
 				</ul>
 			</li>
+			 <li class="extend" onmouseover="show_menu(31, 1);" onmouseout="hide_menu(1);">
+				<a href="{PATH_TO_ROOT}/admin/updates/updates.php" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/updater_mini.png);">{L_UPDATES}</a>
+				<ul id="ssmenu31">
+					<li><a href="{PATH_TO_ROOT}/admin/updates/updates.php?type=kernel" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/configuration_mini.png);">{L_KERNEL}</a></li>
+					<li><a href="{PATH_TO_ROOT}/admin/updates/updates.php?type=module" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/modules_mini.png);">{L_MODULES}</a></li>
+					<li><a href="{PATH_TO_ROOT}/admin/updates/updates.php?type=template" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/themes_mini.png);">{L_THEMES}</a></li>
+				</ul>
+			</li>
+			<li><a href="{PATH_TO_ROOT}/admin/admin_maintain.php" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/maintain_mini.png);">{L_MAINTAIN}</a></li>
 			<li class="extend" onmouseover="show_menu(22, 1);" onmouseout="hide_menu(1);">
 				<a href="${relative_url(AdminThemeUrlBuilder::list_installed_theme())}" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/themes_mini.png);">{L_THEMES}</a>
 				<ul id="ssmenu22">
@@ -46,13 +55,6 @@
 				<ul id="ssmenu23">
 					<li><a href="${relative_url(AdminLangsUrlBuilder::list_installed_langs())}" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/languages_mini.png);">{L_MANAGEMENT}</a></li>
 					<li><a href="${relative_url(AdminLangsUrlBuilder::install())}" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/languages_mini.png);">{L_ADD}</a></li>
-				</ul>
-			</li>
-			<li class="extend" onmouseover="show_menu(24, 1);" onmouseout="hide_menu(1);">
-				<a href="{PATH_TO_ROOT}/admin/admin_smileys.php" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/smileys_mini.png);">{L_SMILEY}</a>
-				<ul id="ssmenu24">
-					<li><a href="{PATH_TO_ROOT}/admin/admin_smileys.php" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/smileys_mini.png);">{L_MANAGEMENT}</a></li>
-					<li><a href="{PATH_TO_ROOT}/admin/admin_smileys_add.php" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/smileys_mini.png);">{L_ADD}</a></li>
 				</ul>
 			</li>
 			<li><a href="{PATH_TO_ROOT}/admin/admin_alerts.php" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/administrator_alert_mini.png);">{L_ADMINISTRATOR_ALERTS}</a></li>
@@ -75,16 +77,7 @@
 	</li>
 	<li onmouseover="show_menu(3, 0);" onmouseout="hide_menu(0);">
 		<h5 class="links"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/tools_mini.png" class="valign_middle" alt="" /> {L_TOOLS}</h5>
-		<ul id="smenu3">			
-            <li class="extend" onmouseover="show_menu(31, 1);" onmouseout="hide_menu(1);">
-				<a href="{PATH_TO_ROOT}/admin/updates/updates.php" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/updater_mini.png);">{L_UPDATES}</a>
-				<ul id="ssmenu31">
-					<li><a href="{PATH_TO_ROOT}/admin/updates/updates.php?type=kernel" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/configuration_mini.png);">{L_KERNEL}</a></li>
-					<li><a href="{PATH_TO_ROOT}/admin/updates/updates.php?type=module" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/modules_mini.png);">{L_MODULES}</a></li>
-					<li><a href="{PATH_TO_ROOT}/admin/updates/updates.php?type=template" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/themes_mini.png);">{L_THEMES}</a></li>
-				</ul>
-			</li>
-			<li><a href="{PATH_TO_ROOT}/admin/admin_maintain.php" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/maintain_mini.png);">{L_MAINTAIN}</a></li>
+		<ul id="smenu3">
 			<li class="extend" onmouseover="show_menu(32, 1);" onmouseout="hide_menu(1);">
 				<a href="${relative_url(AdminCacheUrlBuilder::clear_cache())}" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/cache_mini.png);">{L_CACHE}</a>
 				<ul id="ssmenu32">
@@ -178,6 +171,13 @@
 		<h5 class="links"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/contents_mini.png" class="valign_middle" alt="" /> {L_CONTENT}</h5>
 		<ul id="smenu5">
 			<li><a href="${relative_url(AdminContentUrlBuilder::content_configuration())}" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/content_mini.png);">{L_CONTENT_CONFIG}</a></li>
+			<li class="extend" onmouseover="show_menu(24, 1);" onmouseout="hide_menu(1);">
+				<a href="{PATH_TO_ROOT}/admin/admin_smileys.php" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/smileys_mini.png);">{L_SMILEY}</a>
+				<ul id="ssmenu24">
+					<li><a href="{PATH_TO_ROOT}/admin/admin_smileys.php" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/smileys_mini.png);">{L_MANAGEMENT}</a></li>
+					<li><a href="{PATH_TO_ROOT}/admin/admin_smileys_add.php" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/smileys_mini.png);">{L_ADD}</a></li>
+				</ul>
+			</li>
 			<li class="extend" onmouseover="show_menu(51, 1);" onmouseout="hide_menu(1);">
 				<a href="{PATH_TO_ROOT}/admin/menus/menus.php" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/menus_mini.png);">{L_MENUS}</a>
 				<ul id="ssmenu51">
