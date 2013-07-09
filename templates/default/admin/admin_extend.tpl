@@ -89,9 +89,9 @@
 		</tr>	
 		<tr style="text-align:center;">		
 			<td class="row2" style="width:20%;">
-				<a href="{PATH_TO_ROOT}/admin/admin_content_config.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/content.png" alt="" /></a>		
+				<a href="${relative_url(AdminContentUrlBuilder::content_configuration())}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/content.png" alt="" /></a>		
 				<br />
-				<a href="{PATH_TO_ROOT}/admin/admin_content_config.php">{L_CONTENT_CONFIG}</a>		
+				<a href="${relative_url(AdminContentUrlBuilder::content_configuration())}">{L_CONTENT_CONFIG}</a>		
 			</td>
 			<td class="row2" style="width:20%;">
 				<a href="{PATH_TO_ROOT}/admin/menus/"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/menus.png" alt="" /></a>		

@@ -282,14 +282,6 @@ $LANG['files_media'] = 'Media';
 $LANG['files_prog'] = 'Programation';
 $LANG['files_misc'] = 'Miscellaneous';
 
-$LANG['post_management'] = 'Post Management';
-$LANG['pm_max'] = 'Maximum number of private messages';
-$LANG['anti_flood'] = 'Anti-flood';
-$LANG['int_flood'] = 'Minimal interval of time between two messages';
-$LANG['pm_max_explain'] = 'Unlimited for administrators and moderators';
-$LANG['anti_flood_explain'] = 'Block too rapid repeat messages, except if the visitors are authorized';
-$LANG['int_flood_explain'] = '7 seconds by default</span>';
-
 //Gestion des menus
 $LANG['confirm_del_menu'] = 'Delete this menu?';
 $LANG['confirm_delete_element'] = 'Delete this item?';
@@ -341,16 +333,6 @@ $LANG['menu_configuration_configure_default_config'] = 'onfigure default configu
 $LANG['menu_configuration_edition'] = 'Edition a menu configuration';
 $LANG['menu_configuration_edition_name'] = 'Configuration name';
 $LANG['menu_configuration_edition_match_regex'] = 'Match regular expression';
-
-//Gestion du contenu
-$LANG['content_config'] = 'Content';
-$LANG['content_config_extend'] = 'Content configuration';
-$LANG['default_formatting_language'] = 'Default formatting language on the website
-<span style="display:block;">Every user will be able to choose</span>';
-$LANG['content_language_config'] = 'Formatting language';
-$LANG['content_html_language'] = 'HTML language';
-$LANG['content_auth_use_html'] = 'Authorization level to insert HTML langage in the content
-<span style="display:block">Warning : if you can insert HTML tags, you can also insert some JavaScript and this code can be the source of vulnerabilities. People who can insert some HTML language must be people who you trust.</span>';
 
 //Smiley
 $LANG['upload_smiley'] = 'Upload smiley';

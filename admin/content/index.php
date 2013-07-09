@@ -30,8 +30,8 @@ defined('PATH_TO_ROOT') or define('PATH_TO_ROOT', '../..');
 require_once PATH_TO_ROOT . '/kernel/init.php';
 
 $url_controller_mappers = array(
+	new UrlControllerMapper('AdminContentConfigController', '`^/config/?$`'),
 	new UrlControllerMapper('AdminCommentsConfigController', '`^/comments/config/?$`'),
-	new UrlControllerMapper('AdminCommentsManagementController', '`^/comments(?:/management)?$`'),
 );
 DispatchManager::dispatch($url_controller_mappers);
 ?>
