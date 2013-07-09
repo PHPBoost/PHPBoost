@@ -56,7 +56,7 @@ class ArticlesService
 	
 	public static function get_article($condition, array $parameters)
 	{
-		$row = self::$db_querier->select_single_row_query('SELECT articles.*, member.*
+		$row = self::$db_querier->select_single_row_query('SELECT articles.*, member.*, notes.average_notes, notes.number_notes, note.note
 		FROM ' . ArticlesSetup::$articles_table . ' articles
 		LEFT JOIN ' . DB_TABLE_MEMBER . ' member ON member.user_id = articles.author_user_id 
 		LEFT JOIN ' . DB_TABLE_AVERAGE_NOTES . ' notes ON notes.id_in_module = articles.id AND notes.module_name = \'articles\'
