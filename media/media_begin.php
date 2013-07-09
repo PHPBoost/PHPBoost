@@ -40,10 +40,6 @@ $level = array('', ' class="modo"', ' class="admin"');
 
 require_once('media_constant.php');
 
-$notation = new Notation();
-$notation->set_module_name('media');
-$notation->set_notation_scale($MEDIA_CONFIG['note_max']);
-
 function bread_crumb($id)
 {
 	global $Bread_crumb, $MEDIA_CATS;

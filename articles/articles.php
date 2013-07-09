@@ -117,11 +117,10 @@ if (!empty($idart) && isset($cat))
 		$i++;
 	}	
 	
-	$notation = new Notation();
+	$notation = new Notation((int) $articles['number_notes'], (float) $articles['average_notes'], (int) $articles['note']);
 	$notation->set_module_name('articles');
 	$notation->set_id_in_module($articles['id']);
 	$notation->set_notation_scale($CONFIG_ARTICLES['note_max']);
-	$notation->set_properties($articles);
 	
 	$group_color = User::get_group_color($articles['user_groups'], $articles['level']);
 	
