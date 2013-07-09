@@ -31,7 +31,6 @@ class ArticlesDisplayArticlesTagController extends ModuleController
 	private $view;
 	private $form;
 	private $keyword;
-	private $category;
 	
 	public function execute(HTTPRequestCustom $request)
 	{
@@ -57,7 +56,7 @@ class ArticlesDisplayArticlesTagController extends ModuleController
 			if (!empty($rewrited_name))
 			{
 				try {
-					$row = PersistenceContext::get_querier()->select_single_row(ArticlesSetup::$articles_keywords_relation_table, array('*'), 'WHERE rewrited_name=:rewrited_name', array('rewrited_name' => $rewrited_name));
+					$row = PersistenceContext::get_querier()->select_single_row(ArticlesSetup::$articles_keywords_table, array('*'), 'WHERE rewrited_name=:rewrited_name', array('rewrited_name' => $rewrited_name));
 					
 					$keyword = new ArticlesKeywords();
 					$keyword->set_properties($row);
@@ -136,16 +135,19 @@ class ArticlesDisplayArticlesTagController extends ModuleController
 		}
 		
 		$auth_add = ArticlesAuthorizationsService::check_authorizations()->write() || ArticlesAuthorizationsService::check_authorizations()->contribution();
+		$auth_moderation = ArticlesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORY)->moderation();
 		$comments_enabled = ArticlesConfig::load()->get_comments_enabled();
 		
 		$this->view->put_all(array(
 			'C_ADD' => $auth_add,
+			'C_MODERATE' => $auth_moderation,
+			'C_MOSAIC' => ArticlesConfig::load()->get_display_type() == ArticlesConfig::DISPLAY_MOSAIC,
 			'C_COMMENTS_ENABLED' => $comments_enabled,
 			'C_ARTICLES_FILTERS' => true,
-			'L_TAG' => $this->lang['articles.tags'] . ': ' . $this->keyword->get_name(),
+			'L_TAG' => $this->lang['articles.tags'] . ' : ' . $this->keyword->get_name(),
 			'U_ADD_ARTICLES' => ArticlesUrlBuilder::add_article()->absolute(),
 			'U_EDIT_CONFIG' => ArticlesUrlBuilder::articles_configuration()->absolute(),
-			'U_SYNDICATION' => ArticlesUrlBuilder::category_syndication($this->category->get_id())->rel()
+			'U_SYNDICATION' => ArticlesUrlBuilder::category_syndication(Category::ROOT_CATEGORY)->rel()
 		));
 		
 		$current_page = $request->get_getint('page', 1);
@@ -155,12 +157,12 @@ class ArticlesDisplayArticlesTagController extends ModuleController
 		$now = new Date();
 		
 		$result = PersistenceContext::get_querier()->select('SELECT articles.*, member.*, 
-		com.number_comments, note.number_notes, note.average_notes FROM ' . ArticlesSetup::$articles_table . ' articles
+		notes.number_notes, notes.average_notes, note.note FROM ' . ArticlesSetup::$articles_table . ' articles
 		LEFT JOIN '. ArticlesSetup::$articles_keywords_relation_table .' relation ON relation.id_article = articles.id 
 		LEFT JOIN ' . DB_TABLE_MEMBER . ' member ON member.user_id = articles.author_user_id
-		LEFT JOIN ' . DB_TABLE_COMMENTS_TOPIC . ' com ON com.id_in_module = articles.id AND com.module_id = "articles"
-		LEFT JOIN ' . DB_TABLE_AVERAGE_NOTES . ' note ON note.id_in_module = articles.id AND note.module_name = "articles"
-		WHERE realtion.id_keyword = :id_keyword AND (articles.published = 1 OR (articles.published = 2 AND (articles.publishing_start_date < :timestamp_now 
+		LEFT JOIN ' . DB_TABLE_AVERAGE_NOTES . ' notes ON notes.id_in_module = articles.id AND notes.module_name = "articles"
+		LEFT JOIN ' . DB_TABLE_NOTE . ' note ON note.id_in_module = articles.id AND note.module_name = "articles" AND note.user_id = ' . AppContext::get_current_user()->get_id() . '
+		WHERE relation.id_keyword = :id_keyword AND (articles.published = 1 OR (articles.published = 2 AND (articles.publishing_start_date < :timestamp_now 
 		AND articles.publishing_end_date = 0) OR articles.publishing_end_date > :timestamp_now)) 
 		LIMIT ' . $nbr_articles_per_page . ' OFFSET ' .$limit_page, 
 			array(
@@ -181,12 +183,34 @@ class ArticlesDisplayArticlesTagController extends ModuleController
 			$article = new Articles();
 			$article->set_properties($row);
 			
+			$keywords = ArticlesKeywordsService::get_article_keywords($article->get_id());
+				
+			$keywords_list = $this->build_keywords_list($keywords);
+			
 			$this->view->assign_block_vars('articles', array_merge($article->get_tpl_vars()), array(
-				'NOTE' => $row['number_notes'] > 0 ? NotationService::display_static_image($article->get_notation(), $row['average_notes']) : '&nbsp;',
+				'C_KEYWORDS' => $keywords->get_rows_count() > 0 ? true : false,
+				'U_KEYWORDS_LIST' => $keywords_list
 			));
 		}
 		
 		$this->view->put('FORM', $this->form->display());
+	}
+	
+	private function build_keywords_list($keywords)
+	{
+		$keywords_list = '';
+		$nbr_keywords = $keywords->get_rows_count();
+		
+		while ($row = $keywords->fetch())
+		{	
+			$keywords_list .= '<a class="small_link" href="' . ArticlesUrlBuilder::display_tag($row['rewrited_name'])->absolute() . '">' . $row['name'] . '</a>';
+			if ($nbr_keywords - 1 > 0)
+			{
+				$keywords_list .= ', ';
+				$nbr_keywords--;
+			}
+		}
+		return $keywords_list;
 	}
 	
 	private function list_sort_fields()

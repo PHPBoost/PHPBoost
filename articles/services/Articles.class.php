@@ -333,7 +333,7 @@ class Articles
 		$this->date_created = new Date();
 		$this->notation_enabled = self::NOTATION_ENABLED;
 		$this->sources = array();
-                $this->picture = new Url(self::DEFAULT_PICTURE);
+                $this->picture_url = new Url(self::DEFAULT_PICTURE);
 		$this->number_view = self::DEFAULT_NBR_VIEW;
 	}
 
@@ -380,6 +380,7 @@ class Articles
 			'DATE' => $this->get_date_created()->format(DATE_FORMAT_SHORT),
 			'L_COMMENTS' => CommentsService::get_number_and_lang_comments('articles', $this->get_id()),
 			'NUMBER_VIEW' => $this->get_number_view(),
+			'NOTE' => $this->get_notation()->get_number_notes() > 0 ? NotationService::display_static_image($this->get_notation(), $this->get_notation()->get_average_notes()) : '&nbsp;',
 			'PSEUDO' => $user->get_pseudo(),
 			'DESCRIPTION' =>$short_description,
 			'PICTURE' => $this->get_picture()->absolute(),

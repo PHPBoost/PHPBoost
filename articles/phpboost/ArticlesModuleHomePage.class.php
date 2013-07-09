@@ -238,7 +238,6 @@ class ArticlesModuleHomePage implements ModuleHomePage
 				
 				$this->view->assign_block_vars('articles', array_merge($article->get_tpl_vars(), array(
 					'C_KEYWORDS' => $keywords->get_rows_count() > 0 ? true : false,
-					'NOTE' => $row['number_notes'] > 0 ? NotationService::display_static_image($article->get_notation(), $row['average_notes']) : '&nbsp;',
 					'U_KEYWORDS_LIST' => $keywords_list
 				)));
 			}
