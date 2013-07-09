@@ -177,7 +177,7 @@
 	<li onmouseover="show_menu(5, 0);" onmouseout="hide_menu(0);">
 		<h5 class="links"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/contents_mini.png" class="valign_middle" alt="" /> {L_CONTENT}</h5>
 		<ul id="smenu5">
-			<li><a href="{PATH_TO_ROOT}/admin/admin_content_config.php" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/content_mini.png);">{L_CONTENT_CONFIG}</a></li>
+			<li><a href="${relative_url(AdminContentUrlBuilder::content_configuration())}" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/content_mini.png);">{L_CONTENT_CONFIG}</a></li>
 			<li class="extend" onmouseover="show_menu(51, 1);" onmouseout="hide_menu(1);">
 				<a href="{PATH_TO_ROOT}/admin/menus/menus.php" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/menus_mini.png);">{L_MENUS}</a>
 				<ul id="ssmenu51">

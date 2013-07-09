@@ -282,14 +282,6 @@ $LANG['files_media'] = 'Media';
 $LANG['files_prog'] = 'Programmation';
 $LANG['files_misc'] = 'Divers';
 
-$LANG['post_management'] = 'Gestion des posts';
-$LANG['pm_max'] = 'Nombre maximum de messages privés';
-$LANG['anti_flood'] = 'Anti-flood';
-$LANG['int_flood'] = 'Intervalle minimal de temps entre les messages';
-$LANG['pm_max_explain'] = 'Illimité pour administrateurs et modérateurs';
-$LANG['anti_flood_explain'] = 'Empêche les messages trop rapprochés, sauf si les visiteurs sont autorisés';
-$LANG['int_flood_explain'] = '7 secondes par défaut';
-
 //Gestion des menus
 $LANG['confirm_del_menu'] = 'Supprimer ce menu ?';
 $LANG['confirm_delete_element'] = 'Voulez vous vraiment supprimer cet élément ?';
@@ -339,16 +331,6 @@ $LANG['menu_configuration_configure_default_config'] = 'Configurer la configurat
 $LANG['menu_configuration_edition'] = 'Edition d\'une configuration de menu';
 $LANG['menu_configuration_edition_name'] = 'Nom de la configuration';
 $LANG['menu_configuration_edition_match_regex'] = 'Expression régulière de correspondance';
-
-//Gestion du contenu
-$LANG['content_config'] = 'Contenu';
-$LANG['content_config_extend'] = 'Configuration du contenu';
-$LANG['default_formatting_language'] = 'Langage de formatage du contenu par défaut du site
-<span style="display:block;">Chaque utilisateur pourra choisir</span>';
-$LANG['content_language_config'] = 'Langage de formatage';
-$LANG['content_html_language'] = 'Langage HTML';
-$LANG['content_auth_use_html'] = 'Niveau d\'autorisation pour insérer du langage HTML
-<span style="display:block">Attention : le code HTML peut contenir du code Javascript qui peut constituer une source de faille de sécurité si quelqu\'un y insère un code malveillant. Veillez donc à n\'autoriser seulement les personnes de confiance à insérer du HTML.</span>';
 
 //Smiley
 $LANG['upload_smiley'] = 'Uploader un smiley';

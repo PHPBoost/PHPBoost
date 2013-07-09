@@ -26,10 +26,26 @@
  ###################################################*/
 
  ####################################################
-#                     French                       #
+#                     English                       #
  ####################################################
  
 $lang = array();
+
+$lang['content'] = 'Content';
+$lang['content.config'] = 'Content configuration';
+$lang['content.config.language'] = 'Formatting language';
+$lang['content.config.default-formatting-language'] = 'Default formatting language on the website';
+$lang['content.config.default-formatting-language-explain'] = 'Every user will be able to choose';
+$lang['content.config.html-language'] = 'HTML language';
+$lang['content.config.html-language-use-authorization'] = 'Authorization level to insert HTML langage in the content';
+$lang['content.config.html-language-use-authorization-explain'] = 'Warning : if you can insert HTML tags, you can also insert some JavaScript and this code can be the source of vulnerabilities. People who can insert some HTML language must be people who you trust.';
+$lang['content.config.post-management'] = 'Post Management';
+$lang['content.config.max-pm-number'] = 'Maximum number of private messages';
+$lang['content.config.max-pm-number-explain'] = 'Unlimited for administrators and moderators';
+$lang['content.config.anti-flood-enabled'] = 'Anti-flood';
+$lang['content.config.anti-flood-enabled-explain'] = 'Block too rapid repeat messages, except if the visitors are authorized';
+$lang['content.config.delay-flood'] = 'Minimal interval of time between two messages';
+$lang['content.config.delay-flood-explain'] = '7 seconds by default';
 
 $lang['comments'] = 'Comments';
 $lang['comments.config'] = 'Comments configuration';
@@ -54,5 +70,7 @@ $lang['comments.config.approbation.auto'] = 'Automatic';
 $lang['comments.config.approbation.moderator'] = 'Moderator';
 $lang['comments.config.approbation.administrator'] = 'Administrator';
 
+$lang['enabled'] = 'Enabled';
+$lang['disabled'] = 'Disabled';
 $lang['number-required'] = 'The value entered must be a number';
 ?>
