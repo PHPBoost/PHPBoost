@@ -116,9 +116,9 @@ class Articles
 		$this->description = $description;		
 	}		
 			
-	public function get_description()		
+	public function get_description()
 	{		
-		return $this->description;		
+		return $this->description;
 	}
 
 	public function set_contents($contents)
@@ -144,7 +144,7 @@ class Articles
 	public function has_picture()
 	{
 		$picture = $this->picture_url->absolute();
-                return !empty($picture);
+		return !empty($picture);
 	}
 	
 	public function set_number_view($number_view)
@@ -208,9 +208,9 @@ class Articles
 	}
 	
 	public function is_published()
-        {
-                $now = new Date();
-                return $this->get_publishing_state() == Articles::PUBLISHED_NOW || 
+	{
+		$now = new Date();
+		return $this->get_publishing_state() == Articles::PUBLISHED_NOW || 
 			($this->get_publishing_state() == Articles::PUBLISHED_DATE 
 			&& $this->get_publishing_start_date()->is_anterior_to($now) 
 			&& ($this->end_date_enabled ? $this->get_publishing_end_date()->is_posterior_to($now) : true));
@@ -316,7 +316,7 @@ class Articles
 		$user->set_properties($properties);
 		$this->set_author_user($user);
 		
-		$notation = new Notation();
+		$notation = new Notation((int) $properties['number_notes'], (float) $properties['average_notes'], (int) $properties['note']);
 		$notation->set_module_name('articles');
 		$notation->set_notation_scale(ArticlesConfig::load()->get_notation_scale());
 		$notation->set_id_in_module($properties['id']);
