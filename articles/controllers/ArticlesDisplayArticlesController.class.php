@@ -200,7 +200,7 @@ class ArticlesDisplayArticlesController extends ModuleController
 	    
 	    $i = 0;
 	    foreach ($sources as $name => $url)
-	    {	
+	    {			    
 		    $this->view->assign_block_vars('sources', array(
 			    'I' => $i,
 			    'NAME' => $name,
@@ -208,14 +208,14 @@ class ArticlesDisplayArticlesController extends ModuleController
 			    'COMMA' => $i > 0 ? ', ' : ' '
 		    ));
 		    $i++;
-	    }	
+	    }
 	}
 	
 	private function build_view_keywords($id_article)
 	{
 		$keywords = ArticlesKeywordsService::get_article_keywords($id_article);
 		
-		$this->view->put('C_KEYWORDS', !empty($keywords));
+		$this->view->put('C_KEYWORDS', $keywords->get_rows_count() > 0);
 		
 		$i = 0;
 		while ($row = $keywords->fetch())

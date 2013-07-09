@@ -94,12 +94,10 @@
 				    </header>
 				    <div class="description">{articles.DESCRIPTION}</div>
 				    <a style="margin-left:10px;" href="{articles.U_ARTICLE}" class="button_read_more">${i18n('articles.read_more')}</a>
-				    # IF C_KEYWORDS #
+				    # IF articles.C_KEYWORDS #
 				    <div class="article_tags">
 					    <img class="valign_middle" src="{PATH_TO_ROOT}/articles/templates/images/tags.png" alt="${i18n('articles.tags')}" title="${i18n('articles.tags')}" /> : 
-					    # START keywords #
-					    {keywords.COMMA}<a href="{keywords.U_KEYWORD}" class="small_link">{keywords.NAME}</a>
-					    # END keywords #
+					    {articles.U_KEYWORDS_LIST}
 				    </div>
 				    # ENDIF #
 			    </article>

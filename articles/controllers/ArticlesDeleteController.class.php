@@ -34,7 +34,7 @@ class ArticlesDeleteController extends ModuleController
 	{
 		AppContext::get_session()->csrf_get_protect();
 		
-		$article = $this->get_article();
+		$article = $this->get_article($request);
 		
 		if (!ArticlesAuthorizationsService::check_authorizations($article->get_id_category())->moderation())
 		{
@@ -62,7 +62,7 @@ class ArticlesDeleteController extends ModuleController
 	
 	private function get_article(HTTPRequestCustom $request)
 	{
-		$id = AppContext::get_request()->get_getint('id', 0);
+		$id = $request->get_getint('id', 0);
 	
 		if (!empty($id))
 		{

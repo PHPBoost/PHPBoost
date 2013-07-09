@@ -271,9 +271,9 @@ class ArticlesFormController extends ModuleController
 		{
 			$article->set_picture(new Url($picture));
 		}
-
+		
 		$article->set_sources($this->form->get_value('sources'));
-
+		
 		if ($this->is_contributor_member())
 		{
 			$article->set_rewrited_title(Url::encode_rewrite($article->get_title()));
@@ -306,7 +306,7 @@ class ArticlesFormController extends ModuleController
 				$article->clean_publishing_start_and_end_date();
 			}
 		}
-
+		
 		if ($article->get_id() === null)
 		{
 			$article->set_author_user(AppContext::get_current_user());
@@ -363,7 +363,7 @@ class ArticlesFormController extends ModuleController
 	private function save_keywords($id_article)
 	{
 		$keywords = $this->form->get_value('keywords');
-				
+		
 		$new_keyword = new ArticlesKeywords();
 		//We delete all relations in edition
 		if ($this->get_article()->get_id() !== null)
@@ -373,17 +373,20 @@ class ArticlesFormController extends ModuleController
 		
 		foreach ($keywords as $keyword)
 		{
+		    if ($keyword != '')
+		    {
 			if (!ArticlesKeywordsService::exists($keyword))
 			{
-				$new_keyword->set_name($keyword);
-				$new_keyword->set_rewrited_name(Url::encode_rewrite($keyword));
-				ArticlesKeywordsService::add($new_keyword, $id_article);
+			    $new_keyword->set_name($keyword);
+			    $new_keyword->set_rewrited_name(Url::encode_rewrite($keyword));
+			    ArticlesKeywordsService::add($new_keyword, $id_article);
 			}
 			else
 			{
-				$id_keyword = ArticlesKeywordsService::get_id_keyword('WHERE rewrited_name=:rewrited_name', array('rewrited_name' => Url::encode_rewrite($keyword)));
-				ArticlesKeywordsService::add_relation($id_keyword, $id_article);
+			    $id_keyword = ArticlesKeywordsService::get_id_keyword('WHERE rewrited_name=:rewrited_name', array('rewrited_name' => Url::encode_rewrite($keyword)));
+			    ArticlesKeywordsService::add_relation($id_keyword, $id_article);
 			}
+		    }
 		}
 	}
 	

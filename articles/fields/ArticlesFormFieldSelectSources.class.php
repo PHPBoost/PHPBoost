@@ -93,11 +93,15 @@ class ArticlesFormFieldSelectSources extends AbstractFormField
 		$values = array();
 		for ($i = 0; $i < $this->max_input; $i++)
 		{
-			$field_name = 'field_name_' . $this->get_html_id() . '_' . $i;
-			if ($request->has_postparameter($field_name))
+			$field_name_id = 'field_name_' . $this->get_html_id() . '_' . $i;
+			if ($request->has_postparameter($field_name_id))
 			{
-				$field_value = 'field_value_' . $this->get_html_id() . '_' . $i;
-				$values[$request->get_poststring($field_name)] = $request->get_poststring($field_value);
+				$field_value_id = 'field_value_' . $this->get_html_id() . '_' . $i;
+				$field_name = $request->get_poststring($field_name_id);
+				$field_value = $request->get_poststring($field_value_id);
+
+				if (!empty($field_name) && !empty($field_value))
+					$values[$field_name] = $field_value;
 			}
 		}
 		$this->set_value($values);

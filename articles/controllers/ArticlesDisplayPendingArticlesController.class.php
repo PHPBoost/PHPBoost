@@ -116,11 +116,11 @@ class ArticlesDisplayPendingArticlesController extends ModuleController
 
 		$limit_page = (($current_page - 1) * $nbr_articles_per_page);
 		
-		$result = PersistenceContext::get_querier()->select('SELECT articles.*, member.*, note.number_notes, note.average_notes 
+		$result = PersistenceContext::get_querier()->select('SELECT articles.*, member.*, notes.number_notes, notes.average_notes, note.note 
 		FROM '. ArticlesSetup::$articles_table .' articles
 		LEFT JOIN '. DB_TABLE_MEMBER .' member ON member.user_id = articles.author_user_id
-		LEFT JOIN ' . DB_TABLE_COMMENTS_TOPIC . ' com ON com.id_in_module = articles.id AND com.module_id = "articles"
-		LEFT JOIN ' . DB_TABLE_AVERAGE_NOTES . ' note ON note.id_in_module = articles.id AND note.module_name = "articles"
+		LEFT JOIN ' . DB_TABLE_AVERAGE_NOTES . ' notes ON notes.id_in_module = articles.id AND notes.module_name = "articles"
+		LEFT JOIN ' . DB_TABLE_NOTE . ' note ON note.id_in_module = articles.id AND note.module_name = "articles" AND note.user_id = ' . AppContext::get_current_user()->get_id() . '
 		WHERE articles.published = 0 OR (articles.published = 2 AND (articles.publishing_start_date > :timestamp_now 
 		AND articles.publishing_end_date < :timestamp_now)) ORDER BY ' . $sort_field . ' ' . $sort_mode . ' LIMIT ' . $nbr_articles_per_page .
 		' OFFSET ' . $limit_page, 
@@ -170,7 +170,6 @@ class ArticlesDisplayPendingArticlesController extends ModuleController
 				$this->view->assign_block_vars('articles',  array_merge($article->get_tpl_vars()), array(
 					'C_KEYWORDS' => $keywords->get_rows_count() > 0 ? true : false,
 					'L_CAT_NAME' => $category->get_name(),
-					'NOTE' => $row['number_notes'] > 0 ? NotationService::display_static_image($article->get_notation(), $row['average_notes']) : '&nbsp;',
 					'U_CATEGORY' => ArticlesUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name())->absolute(),
 					'U_KEYWORDS_LIST' => $keywords_list
 				));

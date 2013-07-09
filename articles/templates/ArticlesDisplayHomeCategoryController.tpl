@@ -5,7 +5,7 @@
 	}
 -->
 </script>
-
+# IF C_MODERATE #
 <div class="module_actions">
     <ul class="nav">
 	<li id="options">
@@ -30,6 +30,7 @@
 	</li>
     </ul>
 </div>
+# ENDIF #
 <div class="spacer"></div>
 	
 <div class="module_position">	
@@ -48,10 +49,10 @@
 			    <a href="{U_MANAGE_CATEGORIES}" title="${i18n('admin.categories.manage')}"><img class="valign_middle" src="{PATH_TO_ROOT}/articles/templates/images/edit.png" alt="${i18n('admin.categories.manage')}" /></a>
 			    # ENDIF #
 		    </div>
-		    ${i18n('articles.sub_categories')} :
-		    <br /><br />
 		    # IF C_ARTICLES_CAT #
 		    <div style="margin-bottom:36px;">
+			${i18n('articles.sub_categories')} :
+			<br /><br />
 			<ul style="list-style:none;">
 			    # IF C_CURRENT_CAT #
 			    <li style="float:left;"><a class="button_read_more" href="">{ID_CAT}</a></li>
