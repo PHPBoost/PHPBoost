@@ -103,12 +103,6 @@ class AdminGuestbookConfigController extends AdminModuleController
 			array(new FormFieldConstraintRegex('`^[0-9]+$`i'))
 		));
 		
-		$fieldset->add_field(new FormFieldCheckbox('enable_captcha', $this->lang['admin.config.enable_captcha'], $this->config->is_captcha_enabled(),
-			array('events' => array('click' => 'if (HTMLForms.getField("enable_captcha").getValue()) { HTMLForms.getField("captcha_difficulty_level").enable(); } else { HTMLForms.getField("captcha_difficulty_level").disable(); }'))));
-			
-		$fieldset->add_field(new FormFieldSimpleSelectChoice('captcha_difficulty_level', $this->lang['admin.config.captcha_difficulty'], $this->config->get_captcha_difficulty_level(), $this->generate_difficulty_level_options(),
-			array('hidden' => !$this->config->is_captcha_enabled())));
-		
 		$fieldset->add_field(new FormFieldMultipleSelectChoice('forbidden_tags', $this->lang['admin.config.forbidden-tags'], $this->config->get_forbidden_tags(),
 			$this->generate_forbidden_tags_option(), array('size' => 10)
 		));
@@ -137,16 +131,6 @@ class AdminGuestbookConfigController extends AdminModuleController
 		$this->form = $form;
 	}
 	
-	private function generate_difficulty_level_options()
-	{
-		$options = array();
-		for ($i = 0; $i <= 4; $i++)
-		{
-			$options[] = new FormFieldSelectChoiceOption($i, $i);
-		}
-		return $options;
-	}
-	
 	private function generate_forbidden_tags_option()
 	{
 		$options = array();
@@ -163,13 +147,6 @@ class AdminGuestbookConfigController extends AdminModuleController
 		if (!empty($items_per_page))
 		{
 			$this->config->set_items_per_page($items_per_page);
-			if ($this->form->get_value('enable_captcha'))
-			{
-				$this->config->enable_captcha();
-				$this->config->set_captcha_difficulty_level($this->form->get_value('captcha_difficulty_level')->get_raw_value());
-			}
-			else
-				$this->config->disable_captcha();
 			
 			$forbidden_tags = array();
 			foreach ($this->form->get_value('forbidden_tags') as $field => $option)

@@ -42,8 +42,6 @@ $lang['guestbook.edit'] = 'Message edition';
 //Admin
 $lang['admin.config'] = 'Configuration';
 $lang['admin.config.items_per_page'] = 'Messages number per page';
-$lang['admin.config.enable_captcha'] = 'Enable captcha';
-$lang['admin.config.captcha_difficulty'] = 'Captcha difficulty';
 $lang['admin.config.forbidden-tags'] = 'Forbidden tags';
 $lang['admin.config.max_links'] = 'Max links number in a message';
 $lang['admin.config.max_links_explain'] = '-1 for unlimited';

@@ -111,11 +111,11 @@ class GuestbookFormController extends ModuleController
 			'formatter' => $formatter, 'rows' => 10, 'cols' => 47, 'required' => true)
 		));
 		
-		if ($is_guest && $config->is_captcha_enabled())
+		if ($is_guest)
 		{
-			$captcha = new PHPBoostCaptcha();
-			$captcha->set_difficulty($config->get_captcha_difficulty_level());
-			$fieldset->add_field(new FormFieldCaptcha('captcha', $captcha));
+			// $captcha = new PHPBoostCaptcha();
+			// $captcha->set_difficulty(PHPBoostCaptchaConfig::load()->get_difficulty());
+			// $fieldset->add_field(new FormFieldCaptcha('captcha', $captcha));
 		}
 		
 		$this->submit_button = new FormButtonDefaultSubmit();
