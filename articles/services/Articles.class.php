@@ -316,10 +316,13 @@ class Articles
 		$user->set_properties($properties);
 		$this->set_author_user($user);
 		
-		$notation = new Notation((int) $properties['number_notes'], (float) $properties['average_notes'], (int) $properties['note']);
+		$notation = new Notation();
 		$notation->set_module_name('articles');
 		$notation->set_notation_scale(ArticlesConfig::load()->get_notation_scale());
 		$notation->set_id_in_module($properties['id']);
+		$notation->set_number_notes((int) $properties['number_notes']);
+		$notation->set_average_notes((float) $properties['average_notes']);
+		$notation->set_current_user_note((int) $properties['note']);
 		$this->set_notation($notation);
 	}
 
@@ -333,7 +336,7 @@ class Articles
 		$this->date_created = new Date();
 		$this->notation_enabled = self::NOTATION_ENABLED;
 		$this->sources = array();
-                $this->picture_url = new Url(self::DEFAULT_PICTURE);
+		$this->picture_url = new Url(self::DEFAULT_PICTURE);
 		$this->number_view = self::DEFAULT_NBR_VIEW;
 	}
 

@@ -116,7 +116,7 @@ class NotationService
 		{
 			$template = new FileTemplate('framework/content/notation/notation.tpl');
 			
-			$average_notes = $notation->get_average_notes() != '' ? $notation->get_average_notes() : self::get_average_notes($notation);
+			$average_notes = (string) $notation->get_average_notes() != '' ? $notation->get_average_notes() : self::get_average_notes($notation);
 			
 			for ($i = 1; $i <= $notation->get_notation_scale(); $i++)
 			{
@@ -144,7 +144,7 @@ class NotationService
 				));
 			}
 
-			$count_notes = $notation->get_number_notes() != '' ? $notation->get_number_notes() : NotationService::get_number_notes($notation);
+			$count_notes = (string) $notation->get_number_notes() != '' ? $notation->get_number_notes() : NotationService::get_number_notes($notation);
 			
 			$template->put_all(array(
 				'C_VOTES' => $count_notes > 0 ? true : false,
@@ -155,7 +155,7 @@ class NotationService
 				'NUMBER_PIXEL' => $notation->get_notation_scale() * 16,
 				'NUMBER_NOTES' => $count_notes,
 				'AVERAGE_NOTES' => $average_notes,
-				'ALREADY_NOTE' => $notation->get_current_user_note() != '' ? $notation->get_current_user_note() : NotationDAO::get_member_already_notation($notation),
+				'ALREADY_NOTE' => (string) $notation->get_current_user_note() != '' ? $notation->get_current_user_note() : NotationDAO::get_member_already_notation($notation),
 				'L_NO_NOTE' => self::$lang['no_note'],
 				'L_AUTH_ERROR' => LangLoader::get_message('e_auth', 'errors'),
 				'L_ALREADY_NOTE' => self::$lang['already_vote'],

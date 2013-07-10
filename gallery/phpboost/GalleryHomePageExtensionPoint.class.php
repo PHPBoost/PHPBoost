@@ -393,10 +393,13 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 					if ($activ_note)
 					{
 						//Affichage notation.
-						$notation = new Notation((int) $info_pics['number_notes'], (float) $info_pics['average_notes'], (int) $info_pics['note']);
+						$notation = new Notation();
 						$notation->set_module_name('gallery');
 						$notation->set_id_in_module($info_pics['id']);
 						$notation->set_notation_scale($config->get_notation_scale());
+						$notation->set_number_notes((int) $info_pics['number_notes']);
+						$notation->set_average_notes((float) $info_pics['average_notes']);
+						$notation->set_current_user_note((int) $info_pics['note']);
 					}
 
 					if ($thumbnails_before < $nbr_pics_display_before)
@@ -542,10 +545,13 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 					foreach ($array_cat_list as $key_cat => $option_value)
 						$cat_list .= ($key_cat == $row['idcat']) ? sprintf($option_value, 'selected="selected"') : sprintf($option_value, '');
 					
-					$notation = new Notation((int) $row['number_notes'], (float) $row['average_notes'], (int) $row['note']);
+					$notation = new Notation();
 					$notation->set_module_name('gallery');
 					$notation->set_notation_scale($config->get_notation_scale());
 					$notation->set_id_in_module($row['id']);
+					$notation->set_number_notes((int) $row['number_notes']);
+					$notation->set_average_notes((float) $row['average_notes']);
+					$notation->set_current_user_note((int) $row['note']);
 					
 					$group_color = User::get_group_color($row['user_groups'], $row['level']);
 					
