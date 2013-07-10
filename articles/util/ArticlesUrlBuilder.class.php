@@ -80,9 +80,9 @@ class ArticlesUrlBuilder
 		return DispatchManager::get_url(self::$dispatcher, '/admin/config/');
 	}
 	
-	public static function add_article()
+	public static function add_article($id_category)
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/add/');
+		return DispatchManager::get_url(self::$dispatcher, '/add/' . $id_category);
 	}
 	
 	public static function edit_article($id)

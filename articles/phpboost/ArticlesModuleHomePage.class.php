@@ -118,7 +118,7 @@ class ArticlesModuleHomePage implements ModuleHomePage
 			'U_EDIT_CONFIG' => ArticlesUrlBuilder::articles_configuration()->absolute(),
 			'U_MANAGE_CATEGORIES' => ArticlesUrlBuilder::manage_categories()->absolute(),
 			'U_PENDING_ARTICLES' => ArticlesUrlBuilder::display_pending_articles()->absolute(), 
-			'U_ADD_ARTICLES' => ArticlesUrlBuilder::add_article()->absolute(),
+			'U_ADD_ARTICLES' => ArticlesUrlBuilder::add_article($this->category->get_id())->absolute(),
 			'U_SYNDICATION' => ArticlesUrlBuilder::category_syndication($this->category->get_id())->rel()
 		));
 		

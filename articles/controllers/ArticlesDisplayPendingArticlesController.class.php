@@ -139,7 +139,7 @@ class ArticlesDisplayPendingArticlesController extends ModuleController
 		$this->view->put_all(array(
 			'L_TOTAL_PENDING_ARTICLE' => $nbr_articles_pending > 0 ? StringVars::replace_vars($this->lang['articles.nbr_articles.pending'], array('number' => $nbr_articles_pending)) : '',
 			'U_PUBLISHED_ARTICLES' => ArticlesUrlBuilder::home()->absolute(), 
-			'U_ADD_ARTICLES' => ArticlesUrlBuilder::add_article()->absolute(),
+			'U_ADD_ARTICLES' => ArticlesUrlBuilder::add_article(Category::ROOT_CATEGORY)->absolute(),
 			'U_EDIT_CONFIG' => ArticlesUrlBuilder::articles_configuration()->absolute(),
 			'U_SYNDICATION' => ArticlesUrlBuilder::category_syndication(Category::ROOT_CATEGORY)->rel()
 		));
