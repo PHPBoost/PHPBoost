@@ -43,13 +43,6 @@ class Notation
 	private $number_notes;
 	private $current_user_note;
 	
-	public function __construct($number_notes = '', $average_notes = '', $current_user_note = '')
-	{
-		$this->set_number_notes((string) $number_notes);
-		$this->set_average_notes((string) $average_notes);
-		$this->set_current_user_note((string) $current_user_note);
-	}
-	
 	public function set_id($id)
 	{
 		$this->id = $id;
