@@ -32,8 +32,6 @@
 class GuestbookConfig extends AbstractConfigData
 {
 	const ITEMS_PER_PAGE = 'items_per_page';
-	const CAPTCHA_ENABLED = 'captcha_enabled';
-	const CAPTCHA_DIFFICULTY_LEVEL = 'captcha_difficulty_level';
 	const FORBIDDEN_TAGS = 'forbidden_tags';
 	const MAXIMUM_LINKS_MESSAGE = 'maximum_links_message';
 	const AUTHORIZATIONS = 'authorizations';
@@ -53,47 +51,6 @@ class GuestbookConfig extends AbstractConfigData
 	public function set_items_per_page($value) 
 	{
 		$this->set_property(self::ITEMS_PER_PAGE, $value);
-	}
-	
-	 /**
-	 * @method Enable captcha
-	 */
-	public function enable_captcha()
-	{
-		$this->set_property(self::CAPTCHA_ENABLED, true);
-	}
-	
-	 /**
-	 * @method Disable captcha
-	 */
-	public function disable_captcha()
-	{
-		$this->set_property(self::CAPTCHA_ENABLED, false);
-	}
-	
-	 /**
-	 * @method Check if the captcha is enabled
-	 */
-	public function is_captcha_enabled()
-	{
-		return $this->get_property(self::CAPTCHA_ENABLED);
-	}
-	
-	 /**
-	 * @method Get captcha difficulty level
-	 */
-	public function get_captcha_difficulty_level()
-	{
-		return $this->get_property(self::CAPTCHA_DIFFICULTY_LEVEL);
-	}
-	
-	 /**
-	 * @method Set captcha difficulty level
-	 * @params int $value Difficulty level of the captcha
-	 */
-	public function set_captcha_difficulty_level($value) 
-	{
-		$this->set_property(self::CAPTCHA_DIFFICULTY_LEVEL, $value);
 	}
 	
 	 /**
@@ -154,8 +111,6 @@ class GuestbookConfig extends AbstractConfigData
 	{
 		return array(
 			self::ITEMS_PER_PAGE => 10,
-			self::CAPTCHA_ENABLED => true,
-			self::CAPTCHA_DIFFICULTY_LEVEL => 2,
 			self::FORBIDDEN_TAGS => array('swf', 'movie', 'sound', 'code', 'math', 'mail', 'html', 'feed'),
 			self::MAXIMUM_LINKS_MESSAGE => -1,
 			self::AUTHORIZATIONS => array('r-1' => 3, 'r0' => 3, 'r1' => 7)
