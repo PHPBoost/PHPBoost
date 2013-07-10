@@ -140,10 +140,12 @@ class GuestbookModuleHomePage implements ModuleHomePage
 	
 	private function get_pagination()
 	{
-		$pagination = new ModulePagination(AppContext::get_request()->get_getint('page', 1), GuestbookService::count(), (int)GuestbookConfig::load()->get_items_per_page());
+		$page = AppContext::get_request()->get_getint('page', 1);
+		
+		$pagination = new ModulePagination($page, GuestbookService::count(), (int)GuestbookConfig::load()->get_items_per_page());
 		$pagination->set_url(GuestbookUrlBuilder::home('%d'));
 		
-		if ($pagination->current_page_is_empty())
+		if ($pagination->current_page_is_empty() && $page > 1)
 		{
 			$error_controller = PHPBoostErrors::unexisting_page();
 			DispatchManager::redirect($error_controller);
