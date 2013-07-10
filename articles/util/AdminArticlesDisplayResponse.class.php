@@ -39,7 +39,7 @@ class AdminArticlesDisplayResponse extends AdminMenuDisplayResponse
 		$img = 'articles.png';
 		
 		$this->add_link($lang['articles_management'], ArticlesUrlBuilder::manage_articles(), $img);
-		$this->add_link($lang['articles.add'], ArticlesUrlBuilder::add_article(), $img);
+		$this->add_link($lang['articles.add'], ArticlesUrlBuilder::add_article(Category::ROOT_CATEGORY), $img);
 		$this->add_link($lang['categories_management'], ArticlesUrlBuilder::manage_categories(), $img);
 		$this->add_link($lang['add_category'], ArticlesUrlBuilder::add_category(), $img);
 		$this->add_link($lang['articles_configuration'], ArticlesUrlBuilder::articles_configuration(), $img);
