@@ -121,9 +121,9 @@ if (!empty($idart) && isset($cat))
 	$notation->set_module_name('articles');
 	$notation->set_id_in_module($articles['id']);
 	$notation->set_notation_scale($CONFIG_ARTICLES['note_max']);
-	$notation->set_number_notes((int) $articles['number_notes']);
-	$notation->set_average_notes((float) $articles['average_notes']);
-	$notation->set_current_user_note((int) $articles['note']);
+	$notation->set_number_notes($articles['number_notes']);
+	$notation->set_average_notes($articles['average_notes']);
+	$notation->set_user_already_noted(!empty($articles['note']));
 	
 	$group_color = User::get_group_color($articles['user_groups'], $articles['level']);
 	

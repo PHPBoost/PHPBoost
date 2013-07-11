@@ -39,9 +39,9 @@ class Notation
 	private $note;
 	private $notation_scale;
 	
-	private $average_notes = null;
-	private $number_notes = null;
-	private $current_user_note = null;
+	private $average_notes;
+	private $number_notes;
+	private $user_already_noted;
 	
 	public function set_id($id)
 	{
@@ -110,6 +110,10 @@ class Notation
 	
 	public function get_average_notes()
 	{
+		if ($this->average_notes === null)
+		{
+			return NotationService::get_average_notes($this);
+		}
 		return $this->average_notes;
 	}
 	
@@ -120,17 +124,26 @@ class Notation
 	
 	public function get_number_notes()
 	{
+		if ($this->number_notes === null)
+		{
+			return NotationService::get_number_notes($this);
+		}
 		return $this->number_notes;
 	}
 	
-	public function set_current_user_note($current_user_note)
+	public function set_user_already_noted($user_already_noted)
 	{
-		$this->current_user_note = $current_user_note;
+		$this->user_already_noted = $user_already_noted;
 	}
 	
-	public function get_current_user_note()
+	public function user_already_noted()
 	{
-		return $this->current_user_note;
+		if ($this->user_already_noted === null)
+		{
+			return NotationDAO::get_member_already_notation($this);
+		}
+		return $this->user_already_noted;
+		
 	}
 }
 ?>

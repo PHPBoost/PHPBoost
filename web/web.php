@@ -194,6 +194,7 @@ elseif (!empty($idcat) && empty($idweb)) //Catégories.
 	while ($row = $Sql->fetch_assoc($result))
 	{
 		$notation->set_id_in_module($row['id']);
+		$notation->set_average_notes($row['average_notes']);
 		
 		//On reccourci le lien si il est trop long.
 		$row['title'] = (strlen($row['title']) > 45 ) ? substr(TextHelper::html_entity_decode($row['title']), 0, 45) . '...' : $row['title'];
@@ -203,7 +204,7 @@ elseif (!empty($idcat) && empty($idweb)) //Catégories.
 			'CAT' => $CAT_WEB[$idcat]['name'],
 			'DATE' => gmdate_format('date_format_short', $row['timestamp']),
 			'COMPT' => $row['compt'],
-			'NOTE' => NotationService::display_static_image($notation, $row['average_notes']),
+			'NOTE' => NotationService::display_static_image($notation),
 			'COM' => CommentsService::get_number_comments('web', $row['id']),
 			'U_WEB_LINK' => url('.php?cat=' . $idcat . '&amp;id=' . $row['id'], '-' .  $idcat . '-' . $row['id'] . '.php')
 		));

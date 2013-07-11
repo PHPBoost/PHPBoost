@@ -85,9 +85,9 @@ elseif ($id_media > 0)
 	$notation->set_module_name('media');
 	$notation->set_notation_scale($MEDIA_CONFIG['note_max']);
 	$notation->set_id_in_module($id_media);
-	$notation->set_number_notes((int) $media['number_notes']);
-	$notation->set_average_notes((float) $media['average_notes']);
-	$notation->set_current_user_note((int) $media['note']);
+	$notation->set_number_notes($media['number_notes']);
+	$notation->set_average_notes($media['average_notes']);
+	$notation->set_user_already_noted(!empty($media['note']));
 	$nbr_notes = $media['number_notes'];
 	
 	$group_color = User::get_group_color($media['user_groups'], $media['level']);

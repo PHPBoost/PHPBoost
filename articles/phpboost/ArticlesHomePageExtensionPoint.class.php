@@ -277,6 +277,7 @@ class ArticlesHomePageExtensionPoint implements HomePageExtensionPoint
 				$shorten_title = (strlen($row['title']) > 45 ) ? substr(TextHelper::html_entity_decode($row['title']), 0, 45) . '...' : $row['title'];
 				
 				$notation->set_id_in_module($row['id']);
+				$notation->set_average_notes($row['average_notes']);
 				
 				$group_color = User::get_group_color($row['user_groups'], $row['level']);
 				
@@ -286,7 +287,7 @@ class ArticlesHomePageExtensionPoint implements HomePageExtensionPoint
 					'CAT' => $ARTICLES_CAT[$idartcat]['name'],
 					'DATE' => gmdate_format('date_format_short', $row['timestamp']),
 					'COMPT' => $row['views'],
-					'NOTE' => ($row['number_notes'] > 0) ? NotationService::display_static_image($notation, $row['average_notes']) : $LANG['no_note'],
+					'NOTE' => ($row['number_notes'] > 0) ? NotationService::display_static_image($notation) : $LANG['no_note'],
 					'COM' => empty($row['number_comments']) ? '0' : $row['number_comments'],
 					'DESCRIPTION' => FormatingHelper::second_parse($row['description']),
 					'U_ARTICLES_PSEUDO' => '<a href="' . UserUrlBuilder::profile($row['user_id'])->absolute() . '" class="'.UserService::get_level_class($row['level']).'"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . TextHelper::wordwrap_html($row['login'], 19) . '</a>',
@@ -329,6 +330,7 @@ class ArticlesHomePageExtensionPoint implements HomePageExtensionPoint
 					$shorten_title = (strlen($row['title']) > 45 ) ? substr(TextHelper::html_entity_decode($row['title']), 0, 45) . '...' : $row['title'];
 					
 					$notation->set_id_in_module($row['id']);
+					$notation->set_average_notes($row['average_notes']);
 					
 					$group_color = User::get_group_color($row['user_groups'], $row['level']);
 					
@@ -338,7 +340,7 @@ class ArticlesHomePageExtensionPoint implements HomePageExtensionPoint
 						'CAT' => $ARTICLES_CAT[$idartcat]['name'],
 						'DATE' => gmdate_format('date_format_short', $row['timestamp']),
 						'COMPT' => $row['views'],
-						'NOTE' => ($row['number_notes'] > 0) ? NotationService::display_static_image($notation, $row['average_notes']) : $LANG['no_note'],
+						'NOTE' => ($row['number_notes'] > 0) ? NotationService::display_static_image($notation) : $LANG['no_note'],
 						'COM' => empty($row['number_comments']) ? '0' : $row['number_comments'],
 						'DESCRIPTION' => FormatingHelper::second_parse($row['description']),
 						'U_ARTICLES_PSEUDO'=>'<a href="' . UserUrlBuilder::profile($row['user_id'])->absolute() . '" class="'.UserService::get_level_class($row['level']).'"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . TextHelper::wordwrap_html($row['login'], 19) . '</a>',
