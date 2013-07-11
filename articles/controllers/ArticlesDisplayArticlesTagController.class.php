@@ -145,7 +145,7 @@ class ArticlesDisplayArticlesTagController extends ModuleController
 			'C_COMMENTS_ENABLED' => $comments_enabled,
 			'C_ARTICLES_FILTERS' => true,
 			'L_TAG' => $this->lang['articles.tags'] . ' : ' . $this->keyword->get_name(),
-			'U_ADD_ARTICLES' => ArticlesUrlBuilder::add_article()->absolute(),
+			'U_ADD_ARTICLES' => ArticlesUrlBuilder::add_article(Category::ROOT_CATEGORY)->absolute(),
 			'U_EDIT_CONFIG' => ArticlesUrlBuilder::articles_configuration()->absolute(),
 			'U_SYNDICATION' => ArticlesUrlBuilder::category_syndication(Category::ROOT_CATEGORY)->rel()
 		));
