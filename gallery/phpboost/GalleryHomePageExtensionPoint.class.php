@@ -399,7 +399,7 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 						$notation->set_notation_scale($config->get_notation_scale());
 						$notation->set_number_notes($info_pics['number_notes']);
 						$notation->set_average_notes($info_pics['average_notes']);
-						$notation->set_user_already_notation(!empty($info_pics['note']));
+						$notation->set_user_already_noted(!empty($info_pics['note']));
 					}
 
 					if ($thumbnails_before < $nbr_pics_display_before)
@@ -551,7 +551,7 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 					$notation->set_id_in_module($row['id']);
 					$notation->set_number_notes( $row['number_notes']);
 					$notation->set_average_notes($row['average_notes']);
-					$notation->set_user_already_notation(!empty($row['note']));
+					$notation->set_user_already_noted(!empty($row['note']));
 					
 					$group_color = User::get_group_color($row['user_groups'], $row['level']);
 					

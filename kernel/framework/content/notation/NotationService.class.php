@@ -152,7 +152,7 @@ class NotationService
 				'NUMBER_PIXEL' => $notation->get_notation_scale() * 16,
 				'NUMBER_NOTES' => $count_notes,
 				'AVERAGE_NOTES' => $average_notes,
-				'ALREADY_NOTE' => $notation->user_already_notation(),
+				'ALREADY_NOTE' => $notation->user_already_noted(),
 				'L_NO_NOTE' => self::$lang['no_note'],
 				'L_AUTH_ERROR' => LangLoader::get_message('e_auth', 'errors'),
 				'L_ALREADY_NOTE' => self::$lang['already_vote'],
