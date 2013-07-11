@@ -1,0 +1,119 @@
+#################################################################################
+#                           PHPBoost 4.1 Changelog                              #
+#################################################################################
+
+===================================== Noyau ======================================
+[b]Framework :[/b]
+[*] [color=red]Nouveauté :[/color] 
+	- Nouveau système de catégories, plus fiable et plus performant avec ajout du drag & drop pour la gestion des catégories
+	- Il est maintenant possible de déplacer et de supprimer les éléments contenus dans une catégorie lors de sa suppression
+[*] [color=red]Nouveauté :[/color] Ajout de l'affichage de la taille de la mémoire utilisée par PHP
+- Revoir la façon dont est stocké les inscrits aux groupes (actuellement c'est stocké dans la table member et groups, faire une table de jointure)
+- Changer de format de stockage des fuseaux horaires
+- Ajout de ReCaptcha
+- Amélioration du référencement :
+	- Le nom du site est affiché à la fin dans la balise title (sauf pour la page d'accueil ou il est au début)
+	- Modification de la balise description (elle présentera la description de la page ou du site sur la page d'accueil du site)
+	- Ajout des microdonnées : 
+		- Modification du système de notation
+		- Modification du système de commentaire
+[*] Ajout des liens éditer et supprimer dans la liste déroulante de la recherche d'un membre
+[*] Ajout d'une classe ModulePagination pour simplifier l'ajout de la pagination dans un module
+
+[b]Menus :[/b]
+- Possibilité de désactiver l'affichage d'un lien dans les menus
+- Refonte graphique
+
+[b]Personnalisation graphique :[/b]
+- Support mobile et version tablette
+- Intégration des technologies HTML5 + CSS 3
+- Logo cliquable
+- Nouveau thème épuré
+- Possibilité d'ajouter un texte de présentation du site en dessous du nom
+- Nettoyage des fichiers TPL et CSS
+- Nouveau pack de smileys
+
+[b]Divers :[/b]
+- Suppression du panneau de modération présent dans l'administration qui fait doublon avec celui du dossier user
+- Envoi d'un MP lors d'un commentaire sur une contribution
+[*] Ajout de la balise enclosure dans les flux RSS pour joindre des médias
+
+=================================== Modules =====================================
+[b]Articles[/b]
+[*] [color=red]Nouveauté :[/color] Passage du module en MVC
+[*] [color=red]Nouveauté :[/color] Ajout du nouveau système de catégorie
+[*] [color=red]Nouveauté :[/color] Possibilité d'ajouter des mots clés
+[*] [color=red]Nouveauté :[/color] Refonte des formulaires (plus intuitifs)
+[*] [color=red]Nouveauté :[/color] Nettoyage de la configuration
+[*] [color=red]Nouveauté :[/color] Refonte graphique
+[*] [color=red]Nouveauté :[/color] Possibilité de personnaliser l'url d'un article
+[*] [color=red]Nouveauté :[/color] Amélioration du référencement
+[*] [color=red]Nouveauté :[/color] Possibilité de personnaliser la pagination
+[*] [color=red]Nouveauté :[/color] Possibilité d'activer/désactiver les commentaires globalement
+[*] [color=red]Nouveauté :[/color] Possibilité d'activer/désactiver l'affichage du nom de l'auteur d'un article pour chacun des articles
+[*] [color=red]Nouveauté :[/color] Possibilité d'activer/désactiver la notation d'un article pour chacun des articles
+- Ajout des microdonnées pour améliorer le référencement
+
+[b]News[/b]
+[*] [color=red]Nouveauté :[/color] Passage du module en MVC
+[*] [color=red]Nouveauté :[/color] Ajout du nouveau système de catégorie
+[*] [color=red]Nouveauté :[/color] Possibilité d'ajouter des mots clés
+[*] [color=red]Nouveauté :[/color] Refonte des formulaires (plus intuitifs)
+[*] [color=red]Nouveauté :[/color] Possibilité de couper une news à un certain nombre de caractères
+[*] [color=red]Nouveauté :[/color] Possiblité de désactiver les suggestions de news
+[*] [color=red]Nouveauté :[/color] Suppression de l'affichage en liste devenu inutil
+[*] [color=red]Nouveauté :[/color] Nettoyage de la configuration
+[*] [color=red]Nouveauté :[/color] Refonte graphique
+[*] [color=red]Nouveauté :[/color] Possibilité de personnaliser l'url d'une news
+[*] [color=red]Nouveauté :[/color] Amélioration du référencement
+[*] [color=red]Nouveauté :[/color] Suppression de l'édito et ajout d'une option supplémentaire dans le formulaire d'ajout pour placer les news en tête de liste.
+- Ajout des microdonnées pour améliorer le référencement
+
+[b]BugTracker[/b]
+[*] [color=red]Nouveauté :[/color] Passage du module en MVC
+[*] [color=red]Nouveauté :[/color] Filtres en haut des tableaux avec possibilité pour chaque utilisateur d'enregistrer ses combinaisons de filtres favoris
+[*] [color=red]Nouveauté :[/color] Légende en bas des tableaux avec la couleur des niveaux et leurs noms
+[*] [color=red]Nouveauté :[/color] Affichage du nombre de bugs correspondants aux filtres choisis
+[*] [color=red]Nouveauté :[/color] Options dans l'administration pour personnaliser les statistiques
+[*] [color=red]Nouveauté :[/color] Graphiques dans les statistiques
+[*] [color=red]Nouveauté :[/color] Alertes administrateur en fonction de la criticité du bug lors de l'ajout, possibilité de désactiver l'option dans l'administration
+[*] [color=red]Nouveauté :[/color] Statut d'avancement sous forme de %
+[*] [color=red]Nouveauté :[/color] Ajout d'une date de parution pour les versions (utilisée dans la roadmap)
+[*] [color=red]Nouveauté :[/color] Nouvel état : "En cours", lorsque la version de correction d'un bug est choisie mais qu'il n'est pas encore corrigé
+[*] L'ajout et la suppression de niveaux et priorités n'est plus possible pour être cohérent avec les alertes administrateur. Par contre il est toujours possible de changer leur nom et la couleur des niveaux
+[*] L'envoi de MP peut être activé de manière plus affinée
+[*] Changement de mise en forme des tableaux pour plus de lisibilité
+[*] Amélioration de l'affichage Corrigé/En cours dans la roadmap
+
+[b]Contact[/b]
+[*] [color=red]Nouveauté :[/color] Possibilité d'ajouter des champs supplémentaires depuis l'admin
+[*] [color=red]Nouveauté :[/color] Possibilité de cacher le champ objet, de demander s'il est obligatoire et de choisir sa valeur par défaut défaut dans la config
+[*] [color=red]Nouveauté :[/color] Possibilité d'afficher une liste pour l'objet et de définir ses valeurs dans la config
+[*] [color=red]Nouveauté :[/color] Possibilité de configurer le titre du formulaire dans la config
+[*] [color=red]Nouveauté :[/color] Possibilité d'afficher une zone d'informations à côté du formulaire (à gauche, au dessus, à droite ou en dessous) et de la configurer dans l'admin
+[*] [color=red]Nouveauté :[/color] Nouvelle icône
+- Possibilité de choisir à quel groupe d'utilisateurs envoyer le mail.
+
+[b]Livre d'or[/b]
+[*] [color=red]Nouveauté :[/color] Passage du module en MVC
+
+[b]Calendrier[/b]
+[*] [color=red]Nouveauté :[/color] Passage du module en MVC
+[*] [color=red]Nouveauté :[/color] Ajout du nouveau système de catégorie pour les événements
+[*] [color=red]Nouveauté :[/color] Gestion des événements sur plusieurs jours
+[*] [color=red]Nouveauté :[/color] Module mini-calendrier, module mini attenant au module du calendrier
+[*] [color=red]Nouveauté :[/color] Option pour afficher l'anniversaire des membres dans le calendrier
+[*] [color=red]Nouveauté :[/color] Flux RSS
+[*] [color=red]Nouveauté :[/color] Recherche
+[*] [color=red]Nouveauté :[/color] Sitemap
+[*] [color=red]Nouveauté :[/color] Contributions pour l'ajout d'événement
+- Ajout des microdonnées pour améliorer le référencement
++ Possibilité de créer un évènement de manière récursive ( tous les X jours, X semaines, X mois) / pouvoir dupliquer de la même manière un événement déjà présent dans le calendrier
++ Possibilité de s'inscrire à un évènement et de limiter le nombre des inscrits à un événement
+- Système de filtre par mot-clé dans la liste des événements
+- Possibilité d'afficher la liste des événements d'une ou de plusieurs catégories pour un mois donné
+- Possibilité d'afficher la liste des événements d'une ou de plusieurs catégories pour une année donnée
+- Possibilité d'afficher la liste des événements d'une ou de plusieurs catégories pour un écart entre 2 dates
+
+[b]Multimedia[/b]
+- Ajout de la balise enclosure dans les flux RSS pour pouvoir diffuser le media
