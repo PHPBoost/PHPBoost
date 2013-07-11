@@ -41,7 +41,7 @@ class Notation
 	
 	private $average_notes;
 	private $number_notes;
-	private $user_already_notation;
+	private $user_already_noted;
 	
 	public function set_id($id)
 	{
@@ -131,18 +131,18 @@ class Notation
 		return $this->number_notes;
 	}
 	
-	public function set_user_already_notation($user_already_notation)
+	public function set_user_already_noted($user_already_noted)
 	{
-		$this->user_already_notation = $user_already_notation;
+		$this->user_already_noted = $user_already_noted;
 	}
 	
-	public function user_already_notation()
+	public function user_already_noted()
 	{
-		if ($this->user_already_notation === null)
+		if ($this->user_already_noted === null)
 		{
 			return NotationDAO::get_member_already_notation($this);
 		}
-		return $this->user_already_notation;
+		return $this->user_already_noted;
 		
 	}
 }

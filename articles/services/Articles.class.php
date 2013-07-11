@@ -322,7 +322,7 @@ class Articles
 		$notation->set_id_in_module($properties['id']);
 		$notation->set_number_notes($properties['number_notes']);
 		$notation->set_average_notes($properties['average_notes']);
-		$notation->set_user_already_notation(!empty($properties['note']));
+		$notation->set_user_already_noted(!empty($properties['note']));
 		$this->notation = $notation;
 	}
 
