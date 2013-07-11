@@ -40,7 +40,7 @@ class ArticlesFormController extends ModuleController
 	{
 		$this->init();
 		$this->check_authorizations();
-		$this->build_form();
+		$this->build_form($request);
                 
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
@@ -59,8 +59,17 @@ class ArticlesFormController extends ModuleController
 		$this->tpl->add_lang($this->lang);
 	}
 	
-	private function build_form()
+	private function build_form($request)
 	{
+		if ($this->article->get_id() === null)
+		{
+			$id_category = $request->get_getstring('id_category');
+		}
+		else
+		{
+			$id_category = null;
+		}
+		
 		$form = new HTMLForm(__CLASS__);
 		
 		$fieldset = new FormFieldsetHTML('articles', $this->lang['articles']);
@@ -92,7 +101,7 @@ class ArticlesFormController extends ModuleController
 		$search_category_children_options = new SearchCategoryChildrensOptions();
 		$search_category_children_options->add_authorizations_bits(Category::READ_AUTHORIZATIONS);
 		$search_category_children_options->add_authorizations_bits(Category::CONTRIBUTION_AUTHORIZATIONS);
-		$fieldset->add_field(ArticlesService::get_categories_manager()->get_select_categories_form_field('id_category', $this->lang['articles.form.category'], $this->get_article()->get_id_category(), $search_category_children_options));
+		$fieldset->add_field(ArticlesService::get_categories_manager()->get_select_categories_form_field('id_category', $this->lang['articles.form.category'], ($id_category === null ? $this->get_article()->get_id_category() : $id_category), $search_category_children_options));
 		
 		$fieldset->add_field(new FormFieldMultiLineTextEditor('description', $this->lang['articles.form.description'], $this->get_article()->get_description()));
 		
@@ -417,21 +426,21 @@ class ArticlesFormController extends ModuleController
 		$response = new ArticlesDisplayResponse();	
 		$response->add_breadcrumb_link($this->lang['articles'], ArticlesUrlBuilder::home());
 
-		if ($this->get_article()->get_id() === null)
+		if ($article->get_id() === null)
 		{
-			$response->add_breadcrumb_link($this->lang['articles.add'], ArticlesUrlBuilder::add_article());
+			$response->add_breadcrumb_link($this->lang['articles.add'], ArticlesUrlBuilder::add_article($article->get_id_category()));
 			$response->set_page_title($this->lang['articles.add']);
 		}
 		else
 		{
-			$categories = array_reverse(ArticlesService::get_categories_manager()->get_parents($this->get_article()->get_id_category(), true));
+			$categories = array_reverse(ArticlesService::get_categories_manager()->get_parents($article->get_id_category(), true));
 			foreach ($categories as $id => $category)
 			{
 				if ($id != Category::ROOT_CATEGORY)
 					$response->add_breadcrumb_link($category->get_name(), ArticlesUrlBuilder::display_category($id, $category->get_rewrited_name()));
 			}
-			$category = $categories[$this->get_article()->get_id_category()];
-			$response->add_breadcrumb_link($this->get_article()->get_title(), ArticlesUrlBuilder::display_article($category->get_id(), $category->get_rewrited_name(), $this->get_article()->get_id(), $this->get_article()->get_rewrited_title()));
+			$category = $categories[$article->get_id_category()];
+			$response->add_breadcrumb_link($article->get_title(), ArticlesUrlBuilder::display_article($category->get_id(), $category->get_rewrited_name(), $article->get_id(), $article->get_rewrited_title()));
 
 			$response->add_breadcrumb_link($this->lang['articles.edit'], ArticlesUrlBuilder::edit_article($article->get_id()));
 			$response->set_page_title($this->lang['articles.edit']);
