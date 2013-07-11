@@ -320,10 +320,10 @@ class Articles
 		$notation->set_module_name('articles');
 		$notation->set_notation_scale(ArticlesConfig::load()->get_notation_scale());
 		$notation->set_id_in_module($properties['id']);
-		$notation->set_number_notes((int) $properties['number_notes']);
-		$notation->set_average_notes((float) $properties['average_notes']);
-		$notation->set_current_user_note((int) $properties['note']);
-		$this->set_notation($notation);
+		$notation->set_number_notes($properties['number_notes']);
+		$notation->set_average_notes($properties['average_notes']);
+		$notation->set_user_already_notation(!empty($properties['note']));
+		$this->notation = $notation;
 	}
 
 	public function init_default_properties()
@@ -383,7 +383,7 @@ class Articles
 			'DATE' => $this->get_date_created()->format(DATE_FORMAT_SHORT),
 			'L_COMMENTS' => CommentsService::get_number_and_lang_comments('articles', $this->get_id()),
 			'NUMBER_VIEW' => $this->get_number_view(),
-			'NOTE' => $this->get_notation()->get_number_notes() > 0 ? NotationService::display_static_image($this->get_notation(), $this->get_notation()->get_average_notes()) : '&nbsp;',
+			'NOTE' => $this->get_notation()->get_number_notes() > 0 ? NotationService::display_static_image($this->get_notation()) : '&nbsp;',
 			'PSEUDO' => $user->get_pseudo(),
 			'DESCRIPTION' =>$short_description,
 			'PICTURE' => $this->get_picture()->absolute(),

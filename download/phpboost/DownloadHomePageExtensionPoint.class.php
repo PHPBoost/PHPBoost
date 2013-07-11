@@ -206,7 +206,8 @@ class DownloadHomePageExtensionPoint implements HomePageExtensionPoint
 			while ($row = $this->sql_querier->fetch_assoc($result))
 			{
 				$notation->set_id_in_module($row['id']);
-
+				$notation->set_average_notes($row['average_notes']);
+				
 				$tpl->assign_block_vars('file', array(			
 					'NAME' => $row['title'],
 					'IMG_NAME' => str_replace('"', '\"', $row['title']),
@@ -214,7 +215,7 @@ class DownloadHomePageExtensionPoint implements HomePageExtensionPoint
 					'DESCRIPTION' => FormatingHelper::second_parse($row['short_contents']),
 					'DATE' => sprintf($DOWNLOAD_LANG['add_on_date'], gmdate_format('date_format_short', $row['timestamp'])),
 					'COUNT_DL' => sprintf($DOWNLOAD_LANG['downloaded_n_times'], $row['count']),
-					'NOTE' => NotationService::display_static_image($notation, $row['average_notes']),
+					'NOTE' => NotationService::display_static_image($notation),
 					'SIZE' => ($row['size'] >= 1) ? NumberHelper::round($row['size'], 1) . ' ' . $LANG['unit_megabytes'] : (NumberHelper::round($row['size'], 1) * 1024) . ' ' . $LANG['unit_kilobytes'],
 					'C_IMG' => !empty($row['image']),
 					'IMG' => $row['image'],
