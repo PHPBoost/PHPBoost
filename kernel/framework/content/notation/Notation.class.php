@@ -39,9 +39,9 @@ class Notation
 	private $note;
 	private $notation_scale;
 	
-	private $average_notes;
-	private $number_notes;
-	private $current_user_note;
+	private $average_notes = null;
+	private $number_notes = null;
+	private $current_user_note = null;
 	
 	public function set_id($id)
 	{
