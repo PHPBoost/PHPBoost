@@ -171,13 +171,6 @@
 		<h5 class="links"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/contents_mini.png" class="valign_middle" alt="" /> {L_CONTENT}</h5>
 		<ul id="smenu5">
 			<li><a href="${relative_url(AdminContentUrlBuilder::content_configuration())}" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/content_mini.png);">{L_CONTENT_CONFIG}</a></li>
-			<li class="extend" onmouseover="show_menu(24, 1);" onmouseout="hide_menu(1);">
-				<a href="{PATH_TO_ROOT}/admin/admin_smileys.php" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/smileys_mini.png);">{L_SMILEY}</a>
-				<ul id="ssmenu24">
-					<li><a href="{PATH_TO_ROOT}/admin/admin_smileys.php" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/smileys_mini.png);">{L_MANAGEMENT}</a></li>
-					<li><a href="{PATH_TO_ROOT}/admin/admin_smileys_add.php" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/smileys_mini.png);">{L_ADD}</a></li>
-				</ul>
-			</li>
 			<li class="extend" onmouseover="show_menu(51, 1);" onmouseout="hide_menu(1);">
 				<a href="{PATH_TO_ROOT}/admin/menus/menus.php" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/menus_mini.png);">{L_MENUS}</a>
 				<ul id="ssmenu51">
@@ -199,6 +192,13 @@
 				<ul id="ssmenu53">
 					<li><a href="${relative_url(UserUrlBuilder::comments())}" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/com_mini.png);">{L_MANAGEMENT}</a></li>
 					<li><a href="{PATH_TO_ROOT}/admin/content/?url=/comments/config/" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/com_mini.png);">{L_CONFIGURATION}</a></li>
+				</ul>
+			</li>
+			<li class="extend" onmouseover="show_menu(24, 1);" onmouseout="hide_menu(1);">
+				<a href="{PATH_TO_ROOT}/admin/admin_smileys.php" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/smileys_mini.png);">{L_SMILEY}</a>
+				<ul id="ssmenu24">
+					<li><a href="{PATH_TO_ROOT}/admin/admin_smileys.php" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/smileys_mini.png);">{L_MANAGEMENT}</a></li>
+					<li><a href="{PATH_TO_ROOT}/admin/admin_smileys_add.php" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/smileys_mini.png);">{L_ADD}</a></li>
 				</ul>
 			</li>
 			# IF C_ADMIN_LINKS_5 #
