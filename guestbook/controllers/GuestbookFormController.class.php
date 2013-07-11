@@ -111,10 +111,7 @@ class GuestbookFormController extends ModuleController
 			'formatter' => $formatter, 'rows' => 10, 'cols' => 47, 'required' => true)
 		));
 		
-		if ($is_guest)
-		{
-			$fieldset->add_field(new FormFieldCaptcha('captcha'));
-		}
+		$fieldset->add_field(new FormFieldCaptcha('captcha'));
 		
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_button($this->submit_button);
