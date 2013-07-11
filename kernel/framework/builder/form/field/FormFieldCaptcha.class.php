@@ -39,19 +39,22 @@ class FormFieldCaptcha extends AbstractFormField
     /**
      * @param Captcha $captcha The captcha to use. If not given, a default captcha will be used.
      */
-    public function __construct($name = 'captcha', PHPBoostCaptcha $captcha = null)
+    public function __construct($name = 'captcha', Captcha $captcha = null)
     {
         global $LANG;
-        $field_options = $this->is_enabled() ? array('required' => true) : array();
-        parent::__construct($name, $LANG['verif_code'], false, $field_options);
-        if ($captcha !== null)
+       
+    	if ($captcha !== null)
         {
             $this->captcha = $captcha;
         }
         else
         {
-            $this->captcha = new PHPBoostCaptcha();
+        	$captcha_service = new CaptchaService();
+            $this->captcha = $captcha_service->get_default_factory();
         }
+        
+        $field_options = $this->is_enabled() ? array('required' => true) : array();
+        parent::__construct($name, $LANG['verif_code'], false, $field_options);
     }
 
     /**
@@ -75,7 +78,6 @@ class FormFieldCaptcha extends AbstractFormField
      */
     public function display()
     {
-        $this->captcha->save_user();
         $this->captcha->set_html_id($this->get_html_id());
 
         $template = $this->get_template_to_use();
@@ -84,11 +86,7 @@ class FormFieldCaptcha extends AbstractFormField
          
         $template->put_all(array(
 			'C_IS_ENABLED' => $this->is_enabled(),
-			'CAPTCHA_INSTANCE' => $this->captcha->get_instance(),
-			'CAPTCHA_WIDTH' => $this->captcha->get_width(),
-			'CAPTCHA_HEIGHT' => $this->captcha->get_height(),
-			'CAPTCHA_FONT' => $this->captcha->get_font(),
-			'CAPTCHA_DIFFICULTY' => $this->captcha->get_difficulty(),
+			'CAPTCHA' => $this->captcha->display(),
         ));
 
         return $template;
@@ -110,7 +108,7 @@ class FormFieldCaptcha extends AbstractFormField
 
     private function is_enabled()
     {
-        return !AppContext::get_current_user()->check_level(User::MEMBER_LEVEL);
+        return !AppContext::get_current_user()->check_level(User::MEMBER_LEVEL) && $this->captcha->is_available();
     }
 
     protected function get_default_template()

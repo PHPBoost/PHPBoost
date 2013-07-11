@@ -92,9 +92,7 @@ class UserRegistrationController extends AbstractController
 		
 		if ($this->user_accounts_config->is_registration_captcha_enabled())
 		{
-			$captcha = new PHPBoostCaptcha();
-			$captcha->set_difficulty($this->user_accounts_config->get_registration_captcha_difficulty());
-			$fieldset->add_field(new FormFieldCaptcha('captcha', $captcha));
+			$fieldset->add_field(new FormFieldCaptcha('captcha'));
 		}
 		
 		$fieldset->add_field(new FormFieldCheckbox('user_hide_mail', $this->lang['email.hide'], FormFieldCheckbox::CHECKED));

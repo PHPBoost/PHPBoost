@@ -228,12 +228,7 @@ class PHPBoostCaptcha extends Captcha
 		imagejpeg($img);
 		imagedestroy($img);
 	}
-	
-	public function get_error()
-	{
-		
-	}
-	
+
 	private function get_code()
 	{
 		if ($this->code === null)
