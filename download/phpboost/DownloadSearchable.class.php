@@ -90,7 +90,9 @@ class DownloadSearchable extends AbstractSearchableExtensionPoint
         $date = new Date(DATE_TIMESTAMP, TIMEZONE_USER, $result_data['timestamp']);
         
          //Notes
-	    $notation->set_id_in_module($result_data['id']);
+	    $notation = new Notation();
+		$notation->set_module_name('download');
+		$notation->set_id_in_module($result_data['id']);
 		$notation->set_notation_scale(DownloadConfig::load()->get_notation_scale());
 		$notation->set_average_notes($result_data['average_notes']);
 
