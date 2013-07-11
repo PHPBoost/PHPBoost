@@ -87,13 +87,12 @@ class DownloadSearchable extends AbstractSearchableExtensionPoint
         load_module_lang('download'); //Chargement de la langue du module.
         $tpl = new FileTemplate('download/download_generic_results.tpl');
 
-
         $date = new Date(DATE_TIMESTAMP, TIMEZONE_USER, $result_data['timestamp']);
+        
          //Notes
-         
-        $notation = new Notation();
-		$notation->set_module_name('download');
-		$notation->set_notation_scale($CONFIG_DOWNLOAD['note_max']);
+	    $notation->set_id_in_module($result_data['id']);
+		$notation->set_notation_scale(DownloadConfig::load()->get_notation_scale());
+		$notation->set_average_notes($result_data['average_notes']);
 
         $tpl->put_all(array(
             'L_ADDED_ON' => sprintf($DOWNLOAD_LANG['add_on_date'], $date->format(DATE_FORMAT_TINY, TIMEZONE_USER)),
@@ -104,7 +103,7 @@ class DownloadSearchable extends AbstractSearchableExtensionPoint
             'SHORT_DESCRIPTION' => FormatingHelper::second_parse($result_data['short_contents']),
             'L_NB_DOWNLOADS' => $DOWNLOAD_LANG['downloaded'] . ' ' . sprintf($DOWNLOAD_LANG['n_times'], $result_data['count']),
             'L_NB_COMMENTS' => $result_data['number_comments'] > 1 ? sprintf($DOWNLOAD_LANG['num_com'], $result_data['number_comments']) : sprintf($DOWNLOAD_LANG['num_coms'], $result_data['number_comments']),
-            'L_MARK' => $result_data['average_notes'] > 0 ? NotationService::display_static_image($notation, $result_data['average_notes']) : ('<em>' . $LANG['no_note'] . '</em>')
+            'L_MARK' => $result_data['average_notes'] > 0 ? NotationService::display_static_image($notation) : ('<em>' . $LANG['no_note'] . '</em>')
         ));
 
         return $tpl->render();
