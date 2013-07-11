@@ -51,8 +51,6 @@ $lang['comments'] = 'Commentaires';
 $lang['comments.config'] = 'Configuration des commentaires';
 $lang['comments.management'] = 'Gestion des commentaires';
 
-$lang['comments.config.display-captcha'] = 'Code de vérification visuel';
-$lang['comments.config.captcha-difficulty'] = 'Difficulté du code de vérification';
 $lang['comments.config.number-comments-display'] = 'Nombre de commentaires à afficher par défaut';
 $lang['comments.config.order-display-comments'] = 'Ordre d\'affichage des commentaires';
 $lang['comments.config.order-display-comments.asc'] = 'Du plus ancien au plus récent';

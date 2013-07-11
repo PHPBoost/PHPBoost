@@ -51,7 +51,7 @@ class CaptchaService
 	public function get_default_captcha()
 	{
 		// PHPBoost, ReCaptcha, ... for use
-		return '';
+		return 'ReCaptcha';
 	}
 
 	public function is_available()

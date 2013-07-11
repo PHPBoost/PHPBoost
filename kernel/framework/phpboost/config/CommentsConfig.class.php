@@ -31,8 +31,6 @@
 class CommentsConfig extends AbstractConfigData
 {
 	const AUTHORIZATIONS = 'authorizations';
-	const DISPLAY_CAPTCHA = 'display_captcha';
-	const CAPTCHA_DIFFICULTY = 'captcha_difficulty';
 	const NUMBER_COMMENTS_DISPLAY = 'number_comments_per_page';
 	const FORBIDDEN_TAGS = 'forbidden_tags';
 	const MAX_LINKS_COMMENT = 'max_links_comment';
@@ -49,26 +47,6 @@ class CommentsConfig extends AbstractConfigData
 	public function set_authorizations(Array $array)
 	{
 		$this->set_property(self::AUTHORIZATIONS, $array);
-	}
-	
-	public function get_display_captcha()
-	{
-		return $this->get_property(self::DISPLAY_CAPTCHA);
-	}
-	
-	public function set_display_captcha($display)
-	{
-		$this->set_property(self::DISPLAY_CAPTCHA, $display);
-	}
-	
-	public function get_captcha_difficulty()
-	{
-		return $this->get_property(self::CAPTCHA_DIFFICULTY);
-	}
-	
-	public function set_captcha_difficulty($difficulty)
-	{
-		$this->set_property(self::CAPTCHA_DIFFICULTY, $difficulty);
 	}
 	
 	public function get_number_comments_display()
@@ -133,12 +111,8 @@ class CommentsConfig extends AbstractConfigData
 	
 	public function get_default_values()
 	{
-		$server_configuration = new ServerConfiguration();
-		
 		return array(
 			self::AUTHORIZATIONS => array('r1' => 7, 'r0' => 3, 'r-1' => 3),
-			self::DISPLAY_CAPTCHA => $server_configuration->has_gd_library() ? true : false,
-			self::CAPTCHA_DIFFICULTY => 2,
 			self::NUMBER_COMMENTS_DISPLAY => 15,
 			self::FORBIDDEN_TAGS => array(),
 			self::MAX_LINKS_COMMENT => 2,

@@ -92,25 +92,6 @@ class AdminMemberConfigController extends AdminController
 		array(new FormFieldConstraintRegex('`^[0-9]+$`i'))
 		));
 		
-		$fieldset->add_field(new FormFieldCheckbox('captcha_activation', $this->lang['members.config.captcha-activation'], $user_account_config->is_registration_captcha_enabled(),
-		array('events' => array('change' => '
-				if (HTMLForms.getField("captcha_activation").getValue()) { 
-					HTMLForms.getField("captcha_difficulty").enable(); 
-				} else { 
-					HTMLForms.getField("captcha_difficulty").disable(); 
-				}'
-		))));
-		
-		$fieldset->add_field(new FormFieldSimpleSelectChoice('captcha_difficulty', $this->lang['members.config.captcha-difficulty'], (string)$user_account_config->get_registration_captcha_difficulty(),
-			array(
-				new FormFieldSelectChoiceOption('0', '0'),
-				new FormFieldSelectChoiceOption('1', '1'),
-				new FormFieldSelectChoiceOption('2', '2'),
-				new FormFieldSelectChoiceOption('3', '3'),
-				new FormFieldSelectChoiceOption('4', '4'),
-			), array('hidden' => !$user_account_config->is_registration_captcha_enabled())
-		));
-
 		$fieldset = new FormFieldsetHTML('avatar_management', $this->lang['members.config.avatars-management']);
 		$form->add_fieldset($fieldset);
 				
@@ -185,13 +166,6 @@ class AdminMemberConfigController extends AdminController
 		if (!$this->form->field_is_disabled('type_activation_members'))
 		{
 			$user_account_config->set_member_accounts_validation_method($this->form->get_value('type_activation_members')->get_raw_value());
-		}
-		
-		$user_account_config->set_registration_captcha_enabled($this->form->get_value('captcha_activation'));
-		
-		if (!$this->form->field_is_disabled('captcha_difficulty'))
-		{
-			$user_account_config->set_registration_captcha_difficulty($this->form->get_value('captcha_difficulty')->get_raw_value());
 		}
 		
 		$user_account_config->set_avatar_upload_enabled($this->form->get_value('upload_avatar_server'));

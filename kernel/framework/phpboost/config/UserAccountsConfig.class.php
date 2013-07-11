@@ -50,16 +50,6 @@ class UserAccountsConfig extends AbstractConfigData
 	 */
 	const REGISTRATION_AGREEMENT_PROPERTY = 'registration_agreement';
 	/**
-	 * Name of the property indicating if the captcha is enabled when users register to prevent
-	 * robot registrations.
-	 */
-	const REGISTRATION_CAPTCHA_ENABLED_PROPERTY = 'registration_captcha_enabled';
-	/**
-	 * Name of the property containing the ifficulty level of the registration captcha
-	 * (if it's enabled)
-	 */
-	const REGISTRATION_CAPTCHA_DIFFICULTY_PROPERTY = 'registration_captcha_difficulty';
-	/**
 	 * Name of the property containing the time (in days) after which a member account
 	 * which hasn't been activated will be automatically removed.
 	 */
@@ -204,63 +194,6 @@ class UserAccountsConfig extends AbstractConfigData
 	public function set_registration_agreement($agreement)
 	{
 		$this->set_property(self::REGISTRATION_AGREEMENT_PROPERTY, $agreement);
-	}
-
-	/**
-	 * Tells whether the captcha is enabled in the registration form.
-	 * @return bool true if enabled, false otherwise
-	 */
-	public function is_registration_captcha_enabled()
-	{
-		return $this->get_property(self::REGISTRATION_CAPTCHA_ENABLED_PROPERTY);
-	}
-
-	/**
-	 * Sets the boolean indicating if the registration captcha is enabled.
-	 * If it can't be enabled (GD extension not loaded), it's disabled.
-	 * @param true $enabled true if enabled, false otherwise
-	 */
-	public function set_registration_captcha_enabled($enabled)
-	{
-		$this->set_property(self::REGISTRATION_CAPTCHA_ENABLED_PROPERTY, $enabled && @extension_loaded('gd'));
-	}
-
-	/**
-	 * Enables the registration captcha.
-	 */
-	public function enable_registration_captcha()
-	{
-		$this->set_registration_captcha_enabled(true);
-	}
-
-	/**
-	 * Disables the registration captcha.
-	 */
-	public function disable_registration_captcha()
-	{
-		$this->set_registration_captcha_enabled(false);
-	}
-
-	/**
-	 * Returns the difficulty level of the registration captcha
-	 * @return int The level
-	 */
-	public function get_registration_captcha_difficulty()
-	{
-		return $this->get_property(self::REGISTRATION_CAPTCHA_DIFFICULTY_PROPERTY);
-	}
-
-	/**
-	 * Sets the difficulty level of the registration captcha
-	 * @param $level The level
-	 */
-	public function set_registration_captcha_difficulty($level)
-	{
-		if ($level < 0 || $level > 4)
-		{
-			$level = 2;
-		}
-		$this->set_property(self::REGISTRATION_CAPTCHA_DIFFICULTY_PROPERTY, $level);
 	}
 
 	/**
@@ -503,8 +436,6 @@ class UserAccountsConfig extends AbstractConfigData
 			self::MEMBER_ACCOUNTS_VALIDATION_METHOD_PROPERTY => self::AUTOMATIC_USER_ACCOUNTS_VALIDATION,
 			self::WELCOME_MESSAGE_PROPERTY => LangLoader::get_message('site_config_msg_mbr', 'main'),
 			self::REGISTRATION_AGREEMENT_PROPERTY => LangLoader::get_message('register_agreement', 'main'),
-			self::REGISTRATION_CAPTCHA_ENABLED_PROPERTY => FormFieldCheckbox::CHECKED,
-			self::REGISTRATION_CAPTCHA_DIFFICULTY_PROPERTY => 2,
 			self::UNACTIVATED_ACCOUNTS_TIMEOUT_PROPERTY => 20,
 			self::ENABLE_AVATAR_UPLOAD_PROPERTY => FormFieldCheckbox::CHECKED,
 			self::ENABLE_AVATAR_AUTO_RESIZING => $server_configuration->has_gd_library() ? FormFieldCheckbox::CHECKED : FormFieldCheckbox::UNCHECKED,

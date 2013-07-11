@@ -113,9 +113,7 @@ class GuestbookFormController extends ModuleController
 		
 		if ($is_guest)
 		{
-			// $captcha = new PHPBoostCaptcha();
-			// $captcha->set_difficulty(PHPBoostCaptchaConfig::load()->get_difficulty());
-			// $fieldset->add_field(new FormFieldCaptcha('captcha', $captcha));
+			$fieldset->add_field(new FormFieldCaptcha('captcha'));
 		}
 		
 		$this->submit_button = new FormButtonDefaultSubmit();

@@ -89,7 +89,7 @@ class AddCommentBuildForm extends AbstractCommentsBuildForm
 		
 		if ($this->comments_configuration->get_display_captcha() && !$this->user->check_level(User::MEMBER_LEVEL))
 		{
-			$fieldset->add_field(new FormFieldCaptcha('captcha', $this->get_captcha()));
+			$fieldset->add_field(new FormFieldCaptcha('captcha'));
 		}
 
 		$form->add_button($submit_button = new FormButtonDefaultSubmit());
@@ -123,13 +123,6 @@ class AddCommentBuildForm extends AbstractCommentsBuildForm
 		$formatter = AppContext::get_content_formatting_service()->get_default_factory();
 		$formatter->set_forbidden_tags($this->comments_configuration->get_forbidden_tags());
 		return $formatter;
-	}
-	
-	private function get_captcha()
-	{
-		$captcha = new PHPBoostCaptcha();
-		$captcha->set_difficulty($this->comments_configuration->get_captcha_difficulty());
-		return $captcha;
 	}
 }
 ?>
