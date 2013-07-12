@@ -40,6 +40,8 @@ class GuestbookDeleteController extends ModuleController
 		
 		GuestbookService::delete('WHERE id=:id', array('id' => $message->get_id()));
 		
+		GuestbookMessagesCache::invalidate();
+		
 		AppContext::get_response()->redirect(GuestbookUrlBuilder::home($request->get_int('page', 1)));
 	}
 	

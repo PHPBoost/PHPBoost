@@ -90,8 +90,6 @@ class GuestbookFormController extends ModuleController
 		$config = GuestbookConfig::load();
 		$main_lang = LangLoader::get('main');
 		
-		$is_guest = !AppContext::get_current_user()->check_level(User::MEMBER_LEVEL);
-		
 		$formatter = AppContext::get_content_formatting_service()->get_default_factory();
 		$formatter->set_forbidden_tags($config->get_forbidden_tags());
 		
@@ -100,7 +98,7 @@ class GuestbookFormController extends ModuleController
 		$fieldset = new FormFieldsetHTML('message', $main_lang['add_msg']);
 		$form->add_fieldset($fieldset);
 		
-		if ($is_guest)
+		if (!AppContext::get_current_user()->check_level(User::MEMBER_LEVEL))
 		{
 			$fieldset->add_field(new FormFieldTextEditor('pseudo', $main_lang['pseudo'], $this->get_message()->get_login(), array(
 				'class' => 'text', 'required' => true, 'maxlength' => 25)
