@@ -105,7 +105,7 @@ class Notation
 	
 	public function set_average_notes($average_notes)
 	{
-		$this->average_notes = $average_notes;
+		$this->average_notes = (int)$average_notes;
 	}
 	
 	public function get_average_notes()
@@ -119,7 +119,7 @@ class Notation
 	
 	public function set_number_notes($number_notes)
 	{
-		$this->number_notes = $number_notes;
+		$this->number_notes = (int)$number_notes;
 	}
 	
 	public function get_number_notes()
@@ -133,7 +133,7 @@ class Notation
 	
 	public function set_user_already_noted($user_already_noted)
 	{
-		$this->user_already_noted = $user_already_noted;
+		$this->user_already_noted = (bool)$user_already_noted;
 	}
 	
 	public function user_already_noted()
