@@ -183,10 +183,10 @@ class ArticlesFormController extends ModuleController
 
 		$this->build_contribution_fieldset($form);
 
-		$form->add_button(new FormButtonReset());
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_button($this->submit_button);
-
+		$form->add_button(new FormButtonReset());
+		
 		$this->form = $form;
 	}
 
