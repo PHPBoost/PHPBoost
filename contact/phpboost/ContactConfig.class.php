@@ -36,12 +36,10 @@ class ContactConfig extends AbstractConfigData
 	const INFORMATIONS_ENABLED = 'informations_enabled';
 	const INFORMATIONS = 'informations';
 	const INFORMATIONS_POSITION = 'informations_position';
-	const CAPTCHA_ENABLED = 'captcha_enabled';
 	const SUBJECT_FIELD_MANDATORY = 'subject_field_mandatory';
 	const SUBJECT_FIELD_TYPE = 'subject_field_type';
 	const SUBJECT_FIELD_POSSIBLE_VALUES = 'subject_field_possible_values';
 	const SUBJECT_FIELD_DEFAULT_VALUE = 'subject_field_default_value';
-	const CAPTCHA_DIFFICULTY_LEVEL = 'captcha_difficulty_level';
 	const DISPLAY_SUBJECT_FIELD = 'display_subject_field';
 	
 	const LEFT = 'left';
@@ -187,31 +185,6 @@ class ContactConfig extends AbstractConfigData
 		$this->set_property(self::SUBJECT_FIELD_DEFAULT_VALUE, $value);
 	}
 	
-	public function enable_captcha()
-	{
-		$this->set_property(self::CAPTCHA_ENABLED, true);
-	}
-	
-	public function disable_captcha()
-	{
-		$this->set_property(self::CAPTCHA_ENABLED, false);
-	}
-	
-	public function is_captcha_enabled()
-	{
-		return $this->get_property(self::CAPTCHA_ENABLED);
-	}
-	
-	public function get_captcha_difficulty_level()
-	{
-		return $this->get_property(self::CAPTCHA_DIFFICULTY_LEVEL);
-	}
-	
-	public function set_captcha_difficulty_level($difficulty) 
-	{
-		$this->set_property(self::CAPTCHA_DIFFICULTY_LEVEL, $difficulty);
-	}
-
 	/**
 	 * {@inheritdoc}
 	 */
@@ -226,9 +199,7 @@ class ContactConfig extends AbstractConfigData
 			self::SUBJECT_FIELD_MANDATORY => true,
 			self::SUBJECT_FIELD_TYPE => self::TEXT_TYPE,
 			self::SUBJECT_FIELD_POSSIBLE_VALUES => '',
-			self::SUBJECT_FIELD_DEFAULT_VALUE => '',
-			self::CAPTCHA_ENABLED => true,
-			self::CAPTCHA_DIFFICULTY_LEVEL => 2
+			self::SUBJECT_FIELD_DEFAULT_VALUE => ''
 		);
 	}
 	

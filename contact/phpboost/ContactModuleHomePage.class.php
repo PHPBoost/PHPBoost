@@ -105,12 +105,7 @@ class ContactModuleHomePage implements ModuleHomePage
 		
 		$fieldset->add_field(new FormFieldMultiLineTextEditor('message', $this->lang['message'], '', array('required' => true)));
 		
-		if ($this->config->is_captcha_enabled())
-		{
-			$captcha = new PHPBoostCaptcha();
-			$captcha->set_difficulty($this->config->get_captcha_difficulty_level());
-			$fieldset->add_field(new FormFieldCaptcha('captcha', $captcha));
-		}
+		$fieldset->add_field(new FormFieldCaptcha('captcha'));
 		
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_button($this->submit_button);
