@@ -65,9 +65,6 @@ $lang['contact_config.text'] = 'Text';
 $lang['contact_config.select'] = 'Select';
 $lang['contact_config.default_value'] = 'Default value';
 $lang['contact_config.possible_values'] = 'Possible values';
-$lang['contact_config.anti_spam'] = 'Anti spam protection';
-$lang['contact_config.enable_captcha'] = 'Enable the anti spam protection';
-$lang['contact_config.captcha_difficulty'] = 'Anti spam difficulty';
 
 //Messages
 $lang['contact.message.success_saving_config'] = 'The configuration has been saved successfully';

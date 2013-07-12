@@ -145,30 +145,11 @@ class AdminContactConfigController extends AdminController
 			array('class' => 'text', 'rows' => 8, 'cols' => 47, 'hidden' => !$config->is_informations_enabled())
 		));
 		
-		$fieldset = new FormFieldsetHTML('anti-spam', $this->lang['contact_config.anti_spam']);
-		$form->add_fieldset($fieldset);
-		
-		$fieldset->add_field(new FormFieldCheckbox('enable_captcha', $this->lang['contact_config.enable_captcha'], $config->is_captcha_enabled(),
-			array('events' => array('click' => 'if (HTMLForms.getField("enable_captcha").getValue()) { HTMLForms.getField("captcha_difficulty_level").enable(); } else { HTMLForms.getField("captcha_difficulty_level").disable(); }'))));
-		
-		$fieldset->add_field(new FormFieldSimpleSelectChoice('captcha_difficulty_level', $this->lang['contact_config.captcha_difficulty'], $config->get_captcha_difficulty_level(), $this->generate_difficulty_level_options(),
-			array('hidden' => !$config->is_captcha_enabled())));
-
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_button($this->submit_button);
 		$form->add_button(new FormButtonReset());
 		
 		$this->form = $form;
-	}
-
-	private function generate_difficulty_level_options()
-	{
-		$options = array();
-		for ($i = 0; $i <= 4; $i++)
-		{
-			$options[] = new FormFieldSelectChoiceOption($i, $i);
-		}
-		return $options;
 	}
 	
 	private function save()
@@ -203,14 +184,6 @@ class AdminContactConfigController extends AdminController
 			$config->not_display_subject_field();
 		
 		$config->set_subject_field_default_value($this->form->get_value('subject_field_default_value'));
-		
-		if ($this->form->get_value('enable_captcha'))
-		{
-			$config->enable_captcha();
-			$config->set_captcha_difficulty_level($this->form->get_value('captcha_difficulty_level')->get_raw_value());
-		}
-		else
-			$config->disable_captcha();
 		
 		ContactConfig::save();
 	}
