@@ -179,6 +179,10 @@ class Environment
 		define('SCRIPT', 			$_SERVER['PHP_SELF']);
 		define('REWRITED_SCRIPT', 	$_SERVER['REQUEST_URI']);
 
+		//Defines for PHP 5.1
+		if (!defined('E_RECOVERABLE_ERROR'))
+			define('E_RECOVERABLE_ERROR', 4096);
+			
 		//Get parameters
 		define('QUERY_STRING', 		addslashes($_SERVER['QUERY_STRING']));
 		define('PHPBOOST', 			true);
