@@ -42,14 +42,15 @@ class GuestbookModuleHomePage implements ModuleHomePage
 		
 		$this->check_authorizations();
 		
-		$pagination = $this->get_pagination();
+		$messages_number = GuestbookService::count();
+		$pagination = $this->get_pagination($messages_number);
 		$main_lang = LangLoader::get('main');
 		$page = AppContext::get_request()->get_getint('page', 1);
 		$is_guest = !AppContext::get_current_user()->check_level(User::MEMBER_LEVEL);
 		
 		$this->view->put_all(array(
 			'C_ADD' => GuestbookAuthorizationsService::check_authorizations()->write(),
-			'C_PAGINATION' => GuestbookService::count() > GuestbookConfig::load()->get_items_per_page(),
+			'C_PAGINATION' => $messages_number > GuestbookConfig::load()->get_items_per_page(),
 			'PAGINATION' => $pagination->display(),
 			'L_EDIT' => $main_lang['edit'],
 			'L_DELETE' => $main_lang['delete'],
@@ -138,11 +139,11 @@ class GuestbookModuleHomePage implements ModuleHomePage
 		}
 	}
 	
-	private function get_pagination()
+	private function get_pagination($messages_number)
 	{
 		$page = AppContext::get_request()->get_getint('page', 1);
 		
-		$pagination = new ModulePagination($page, GuestbookService::count(), (int)GuestbookConfig::load()->get_items_per_page());
+		$pagination = new ModulePagination($page, $messages_number, (int)GuestbookConfig::load()->get_items_per_page());
 		$pagination->set_url(GuestbookUrlBuilder::home('%d'));
 		
 		if ($pagination->current_page_is_empty() && $page > 1)
