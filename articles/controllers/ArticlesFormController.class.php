@@ -55,10 +55,44 @@ class ArticlesFormController extends ModuleController
 	private function init()
 	{
 		$this->lang = LangLoader::get('articles-common', 'articles');
-		$this->tpl = new StringTemplate('# INCLUDE MSG # # INCLUDE FORM #');
+		$this->tpl = new StringTemplate($this->get_bbcode_page_script() . ' # INCLUDE MSG # # INCLUDE FORM #');
 		$this->tpl->add_lang($this->lang);
 	}
 	
+	private function get_bbcode_page_script()
+	{
+		$script = '<script type="text/javascript">
+			    <!--
+			    function bbcode_page()
+			    {
+				    var page = prompt("Titre de la nouvelle page");
+
+				    if (page)
+				    {
+					    var textarea = $(\'ArticlesFormController_contents\');
+					    var start = textarea.selectionStart;
+					    var end = textarea.selectionEnd;
+
+					    if (start == end)
+					    {
+						    var insert_value = \'[page]\' + page + \'[/page]\';
+						    textarea.value = textarea.value.substr(0, start) + insert_value + textarea.value.substr(end);
+					    }
+					    else
+					    {
+						    var value = textarea.value;
+						    var insert_value = \'[page]\' + value.substring(start, end) + \'[/page]\';
+						    textarea.value = textarea.value.substr(0, start) + insert_value + textarea.value.substr(end);
+					    }
+
+					    textarea.selectionStart = start + insert_value.length;
+					    textarea.selectionEnd = start + insert_value.length;
+				    }
+			    }
+			    -->
+			    </script>';
+		return $script;
+	}
 	private function build_form($request)
 	{
 		if ($this->article->get_id() === null)
@@ -109,7 +143,8 @@ class ArticlesFormController extends ModuleController
 			array('rows' => 15, 'required' => true)
 		));
 		
-		// @todo : ajouter le lien pour l'ajout de page (balise [page][/page])
+		$onclick_action = 'javascript:bbcode_page();';
+		$fieldset->add_field(new FormFieldActionLink('add_page', $this->lang['articles.form.add_page'] , $onclick_action, PATH_TO_ROOT . '/articles/templates/images/pagebreak.png'));
 		
 		$other_fieldset = new FormFieldsetHTML('other', $this->lang['articles.form.other']);
 		$form->add_fieldset($other_fieldset);
@@ -125,8 +160,8 @@ class ArticlesFormController extends ModuleController
 		}}');
 		$image_preview_request->add_event_callback(AjaxRequest::ON_CREATE, 'function(response){ $(\'preview_picture\').src = PATH_TO_ROOT + \'/templates/'. get_utheme() .'/images/loading_mini.gif\';}');
 		$image_preview_request->add_param('image', 'HTMLForms.getField(\'picture\').getValue()');
-		$other_fieldset->add_field(new FormFieldTextEditor('picture', $this->lang['articles.form.picture'], $this->get_article()->get_picture()->relative(), 
-			array('events' => array('change' => $image_preview_request->render())
+		$other_fieldset->add_field(new FormFieldUploadFileTextEditor('picture', $this->lang['articles.form.picture'], $this->get_article()->get_picture()->relative(), 
+			array('description' => $this->lang['articles.form.picture.description'], 'events' => array('change' => $image_preview_request->render())
 		)));
 		$other_fieldset->add_field(new FormFieldFree('preview_picture', $this->lang['articles.form.picture.preview'], '<img id="preview_picture" src="'. $this->get_article()->get_picture()->rel() .'" alt="" style="vertical-align:top" />'));
 
