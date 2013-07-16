@@ -87,10 +87,7 @@ class AddCommentBuildForm extends AbstractCommentsBuildForm
 			)
 		));
 		
-		if ($this->comments_configuration->get_display_captcha() && !$this->user->check_level(User::MEMBER_LEVEL))
-		{
-			$fieldset->add_field(new FormFieldCaptcha('captcha'));
-		}
+		$fieldset->add_field(new FormFieldCaptcha('captcha'));
 
 		$form->add_button($submit_button = new FormButtonDefaultSubmit());
 		$form->add_button(new FormButtonReset());
