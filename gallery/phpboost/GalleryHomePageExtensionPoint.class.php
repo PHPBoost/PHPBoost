@@ -271,7 +271,7 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 				$sort_type = 'g.views';
 				break;
 				case 'notes' :
-				$sort_type = 'note.average_notes';
+				$sort_type = 'notes.average_notes';
 				break;
 				case 'com' :
 				$sort_type = 'com.number_comments';
