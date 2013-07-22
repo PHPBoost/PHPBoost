@@ -66,64 +66,6 @@
 	height:40px;
 }
 
-.text_month{
-	font-size:13px;
-	font-weight:bold;
-}
-
-.c_row{
-	border-top:1px solid #DDDDDD;
-	border-right:1px solid #DDDDDD;
-}
-
-.c_row a, .c_row a:hover{
-	color: #3F5164;
-}
-
-.c_row:first-child{
-	border-top:none;
-	border-right:1px solid #DDDDDD; 
-}
-
-.c_row_last{
-	border-top:1px solid #DDDDDD;
-	height: 1px;
-	padding:none;
-}
-
-.calendar_today {
-	background:#DBEEDD;
-	font-weight:bold;
-	padding:2px;
-}
-
-.calendar_event {
-	background:#DBE5EE;
-	font-weight:bold;
-	padding:2px;
-}
-
-.calendar_other {
-	background:#F1F1F1;
-	padding:2px;
-}
-
-.calendar_none {
-	background:#FFFFFF;
-	padding:2px;
-}
-
-.calendar_weekend{
-	background:#ECECEC;
-	padding:2px;
-}
-
-.calendar_week{
-	color:#BEBEBE;
-	padding:2px;
-	padding-right:5px;
-}
-
 div.event_top_title{
 	text-align:center;
 	font-size:15px;
@@ -140,58 +82,6 @@ div.event_date{
 	border-bottom: 3px #336397 solid;
 	border-radius: 8px;
 	width:30%;
-}
-
-.mini_calendar_top{
-	text-align:center;
-	font-weight:bold;
-	padding-top:7px;
-}
-
-.mini_calendar_top_l {
-	float:left;
-	padding-left:10px;
-	padding-top:5px;
-}
-
-.mini_calendar_top_r {
-	float:right;
-	padding-right:10px;
-	padding-top:5px;
-}
-
-.mini_calendar_table{
-	background:none;
-	border:none;
-}
-
-.mini_calendar_table td{
-	height:30px;
-}
-
-.mini_calendar_table td.c_row_last{
-	border-top:1px solid #DDDDDD;
-	height: 1px;
-	padding:none;
-}
-
-.mini_calendar_content{
-	padding:6px;
-	border-top:none;
-}
-
-.float_left{
-	float:left;
-	margin:0;
-}
-
-.float_right{
-	float:right;
-	margin:0;
-}
-
-.change_month_link {
-	cursor:pointer;
 }
 
 div.event_display_author{

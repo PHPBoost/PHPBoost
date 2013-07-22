@@ -50,18 +50,26 @@ class CalendarFeedProvider implements FeedProvider
 		$data->set_desc($feed_module_name . ' - ' . $site_name);
 		$data->set_lang(LangLoader::get_message('xml_lang', 'main'));
 		$data->set_auth_bit(Category::READ_AUTHORIZATIONS);
-
-		$search_category_children_options = new SearchCategoryChildrensOptions();
-		$categories = CalendarService::get_categories_manager()->get_childrens($idcat, $search_category_children_options);
+		
 		$ids_categories = array_keys($categories);
-
+		if ($idcat != Category::ROOT_CATEGORY)
+		{
+			$ids_categories[] = $idcat;
+		}
+		else
+		{
+			$search_category_children_options = new SearchCategoryChildrensOptions();
+			$categories = CalendarService::get_categories_manager()->get_childrens($idcat, $search_category_children_options);
+			$ids_categories = array_keys($categories);
+		}
+		
 		if (!empty($ids_categories))
 		{
-			$now = new Date(DATE_NOW, TIMEZONE_AUTO);
+			$now = new Date();
 			
 			$results = $querier->select('SELECT calendar.id, calendar.id_category, calendar.title, calendar.contents, calendar.creation_date, cat.rewrited_name AS rewrited_name_cat
 			 FROM ' . CalendarSetup::$calendar_table . ' calendar
-			 LEFT JOIN '. CalendarSetup::$calendar_cats_table .' cat ON calendar.id_category = cat.id
+			 LEFT JOIN '. CalendarSetup::$calendar_cats_table .' cat ON cat.id = calendar.id_category
 			 WHERE calendar.start_date < :timestamp_now AND calendar.end_date > :timestamp_now AND calendar.id_category IN :cats_ids
 			 ORDER BY calendar.start_date DESC', array(
 				'cats_ids' => $ids_categories,
@@ -70,6 +78,7 @@ class CalendarFeedProvider implements FeedProvider
 
 			foreach ($results as $row)
 			{
+				$row['rewrited_name_cat'] = !empty($row['id_category']) ? $row['rewrited_name_cat'] : 'root';
 				$link = CalendarUrlBuilder::display_event($row['rewrited_name_cat'], $row['id'], $row['title'])->absolute();
 				
 				$item = new FeedItem();

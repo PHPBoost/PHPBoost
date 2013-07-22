@@ -136,7 +136,7 @@ class AjaxMiniCalendarController extends AbstractController
 				}
 				else
 				{
-					if ( ((($i % 8) == 7) || (($i % 8) == 0)) && ($day <= $month_day))
+					if ( ((($i % 8) == 7) || (($i % 8) == 0)) && ($i > $first_day) && ($day <= $month_day))
 						$class = 'calendar_weekend';
 					else
 						$class = 'calendar_none';

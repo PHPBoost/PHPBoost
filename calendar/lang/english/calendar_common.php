@@ -94,6 +94,9 @@ $lang['calendar.config.authorizations.write'] = 'Write permissions';
 $lang['calendar.config.authorizations.contribution'] = 'Contribution permissions';
 $lang['calendar.config.authorizations.moderation'] = 'Moderation permissions';
 
+//SEO
+$lang['calendar.seo.description.root'] = 'All events of :site.';
+
 //Feed name
 $lang['calendar.feed.name'] = 'Events';
 

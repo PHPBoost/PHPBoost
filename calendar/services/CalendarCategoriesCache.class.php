@@ -48,8 +48,11 @@ class CalendarCategoriesCache extends CategoriesCache
 	
 	public function get_root_category()
 	{
-		$root = new RootCategory();
+		$root = new RichRootCategory();
 		$root->set_authorizations(CalendarConfig::load()->get_authorizations());
+		$root->set_description(
+			StringVars::replace_vars(LangLoader::get_message('calendar.seo.description.root', 'calendar_common', 'calendar'), array('site' => GeneralConfig::load()->get_site_name()))
+		);
 		return $root;
 	}
 }

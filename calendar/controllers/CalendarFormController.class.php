@@ -116,7 +116,7 @@ class CalendarFormController extends ModuleController
 			$fieldset->add_field(new FormFieldTextEditor('location', $this->lang['calendar.labels.location'], $this->get_event()->get_location()));
 		
 		$fieldset->add_field(new FormFieldCheckbox('registration_authorized', $this->lang['calendar.labels.registration_authorized'], $this->get_event()->get_registration_authorized(),array(
-			'events' => array('click' => '
+			'hidden' => true, 'events' => array('click' => '
 			if (HTMLForms.getField("registration_authorized").getValue()) {
 				HTMLForms.getField("max_registred_members").enable();
 			} else {

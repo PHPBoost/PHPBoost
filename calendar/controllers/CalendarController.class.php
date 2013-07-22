@@ -221,7 +221,7 @@ class CalendarController extends ModuleController
 				}
 				else
 				{
-					if ( ((($i % 8) == 7) || (($i % 8) == 0)) && ($j <= $month_day))
+					if ( ((($i % 8) == 7) || (($i % 8) == 0)) && ($i > $first_day) && ($j <= $month_day))
 						$class = 'calendar_weekend';
 					else
 						$class = 'calendar_none';
