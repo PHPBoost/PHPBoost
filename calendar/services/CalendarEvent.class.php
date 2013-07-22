@@ -225,8 +225,8 @@ class CalendarEvent
 		$this->set_title($properties['title']);
 		$this->set_contents($properties['contents']);
 		$this->set_location($properties['location']);
-		$this->set_start_date(!empty($properties['start_date']) ? new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, $properties['start_date']) : new Date(DATE_NOW, TIMEZONE_AUTO));
-		$this->set_end_date(!empty($properties['end_date']) ? new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, $properties['end_date']) : new Date(DATE_NOW, TIMEZONE_AUTO));
+		$this->start_date = !empty($properties['start_date']) ? new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $properties['start_date']) : null;
+		$this->end_date = !empty($properties['end_date']) ? new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $properties['end_date']) : null;
 		if ($properties['approved'])
 			$this->approve();
 		else
@@ -245,14 +245,14 @@ class CalendarEvent
 	{
 		$now = new Date(DATE_NOW, TIMEZONE_AUTO);
 		
-		$this->set_id_cat(Category::ROOT_CATEGORY);
-		$this->set_author_user(AppContext::get_current_user());
-		$this->set_start_date(new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, $this->round_to_five_minutes($now->get_timestamp())));
-		$this->set_end_date(new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, $this->round_to_five_minutes($now->get_timestamp() + 3600)));
-		$this->set_registration_authorized(false);
-		$this->set_max_registred_members(0);
-		$this->set_repeat_number(0);
-		$this->set_repeat_type('never');
+		$this->id_cat = Category::ROOT_CATEGORY;
+		$this->author_user = AppContext::get_current_user();
+		$this->start_date = new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $this->round_to_five_minutes($now->get_timestamp()));
+		$this->end_date = new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $this->round_to_five_minutes($now->get_timestamp() + 3600));
+		$this->registration_authorized = false;
+		$this->max_registred_members = 0;
+		$this->repeat_number = 0;
+		$this->repeat_type = 'never';
 		if (CalendarAuthorizationsService::check_authorizations()->write())
 			$this->approve();
 		else

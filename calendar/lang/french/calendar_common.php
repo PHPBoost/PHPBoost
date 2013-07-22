@@ -93,6 +93,10 @@ $lang['calendar.config.authorizations.read'] = 'Autorisations de lecture';
 $lang['calendar.config.authorizations.write'] = 'Autorisations d\'écriture';
 $lang['calendar.config.authorizations.contribution'] = 'Autorisations de contribution';
 $lang['calendar.config.authorizations.moderation'] = 'Autorisation de modération';
+
+//SEO
+$lang['calendar.seo.description.root'] = 'Tous les événements du site :site.';
+
 //Feed name
 $lang['calendar.feed.name'] = 'Evénements';
 
