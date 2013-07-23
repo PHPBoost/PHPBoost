@@ -55,7 +55,7 @@ class GalleryExtensionPointProvider extends ExtensionPointProvider
 		$cat_gallery = 'global $CAT_GALLERY;' . "\n";
 		
 		//Racine
-		$cat_gallery .= '$CAT_GALLERY[0] = ' . var_export(array('name' => $LANG['root'], 'id_left' => 0, 'id_right' => 0, 'auth' => $CONFIG_GALLERY['auth_root']), true) . ';' . "\n\n";
+		$cat_gallery .= '$CAT_GALLERY[0] = ' . var_export(array('name' => $LANG['root'], 'id_left' => 0, 'id_right' => 0, 'level' => -1, 'auth' => $CONFIG_GALLERY['auth_root']), true) . ';' . "\n\n";
 		
 		$result = $this->sql_querier->query_while("SELECT id, id_left, id_right, level, name, aprob, auth
 		FROM " . PREFIX . "gallery_cats
