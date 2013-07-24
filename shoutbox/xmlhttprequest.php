@@ -79,7 +79,7 @@ if ($add)
 			$Sql->query_inject("INSERT INTO " . PREFIX . "shoutbox (login, user_id, level, contents, timestamp) VALUES('" . $shout_pseudo . "', '" . $User->get_attribute('user_id') . "', '" . $User->get_attribute('level') . "', '" . $shout_contents . "', '" . time() . "')", __LINE__, __FILE__);
 			$last_msg_id = $Sql->insert_id("SELECT MAX(id) FROM " . PREFIX . "shoutbox"); 
 			
-			$date = gmdate_format('date_format', $row['timestamp']);
+			$date = gmdate_format('date_format', time());
 			
 			$array_class = array('member', 'modo', 'admin');
 			if ($User->get_attribute('user_id') !== -1)
