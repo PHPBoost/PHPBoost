@@ -85,8 +85,16 @@ class AjaxMiniCalendarController extends AbstractController
 		
 		while ($row = $result->fetch())
 		{
-			$day_action = gmdate_format('j', $row['start_date']);
-			$end_day_action = gmdate_format('j', $row['end_date']);
+			if ($row['type'] == 'BIRTHDAY')
+			{
+				$day_action = date('j', $row['start_date']);
+				$end_day_action = date('j', $row['end_date']);
+			}
+			else
+			{
+				$day_action = gmdate_format('j', $row['start_date']);
+				$end_day_action = gmdate_format('j', $row['end_date']);
+			}
 			
 			while ($day_action <= $end_day_action)
 			{
@@ -96,7 +104,7 @@ class AjaxMiniCalendarController extends AbstractController
 		}
 		
 		//First day of the month
-		$first_day = @gmdate_format('w', @mktime(1, 0, 0, $month, 1, $year)); 
+		$first_day = date('w', @mktime(1, 0, 0, $month, 1, $year)); 
 		if ($first_day == 0)
 			$first_day = 7;
 			

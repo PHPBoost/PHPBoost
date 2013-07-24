@@ -104,7 +104,7 @@ if ($calendar_type == 'date')
     }
 
     //Premier jour du mois.
-    $first_day = @gmdate_format('w', @mktime(1, 0, 0, $month, 1, $year));
+    $first_day = date('w', @mktime(1, 0, 0, $month, 1, $year));
     if ($first_day == 0)
     {
         $first_day = 7;
