@@ -42,7 +42,7 @@
 			</a>
 		</td>
 		<td class="row1">
-			{members_list.STATUS}
+			{members_list.LEVEL}
 		</td>
 	</tr>	
 	# END members_list #
