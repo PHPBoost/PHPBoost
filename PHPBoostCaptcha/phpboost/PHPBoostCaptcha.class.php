@@ -40,7 +40,6 @@ class PHPBoostCaptcha extends Captcha
 	public function __construct()
 	{
 		$this->set_options(new PHPBoostCaptchaOptions());
-		$this->set_html_id('test');
 		$this->sql_querier = PersistenceContext::get_sql();
 		$this->user_id = $this->get_user_id();
 	}
