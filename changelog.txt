@@ -8,17 +8,19 @@
 	- Nouveau système de catégories, plus fiable et plus performant avec ajout du drag & drop pour la gestion des catégories
 	- Il est maintenant possible de déplacer et de supprimer les éléments contenus dans une catégorie lors de sa suppression
 [*] [color=red]Nouveauté :[/color] Ajout de l'affichage de la taille de la mémoire utilisée par PHP
-- Revoir la façon dont est stocké les inscrits aux groupes (actuellement c'est stocké dans la table member et groups, faire une table de jointure)
-- Changer de format de stockage des fuseaux horaires
-- Ajout de ReCaptcha
-- Amélioration du référencement :
-	- Le nom du site est affiché à la fin dans la balise title (sauf pour la page d'accueil ou il est au début)
-	- Modification de la balise description (elle présentera la description de la page ou du site sur la page d'accueil du site)
+[*] Ajout de ReCaptcha
++ Amélioration du référencement :
+	[*] Le nom du site est affiché à la fin dans la balise title (sauf pour la page d'accueil ou il est au début)
+	[*] Modification de la balise description (elle présentera la description de la page ou du site sur la page d'accueil du site)
 	- Ajout des microdonnées : 
 		- Modification du système de notation
 		- Modification du système de commentaire
-[*] Ajout des liens éditer et supprimer dans la liste déroulante de la recherche d'un membre
+[*] Ajout des liens éditer et supprimer dans la liste déroulante de la recherche d'un membre (les boutons sont visible seulement par les administrateurs)
 [*] Ajout d'une classe ModulePagination pour simplifier l'ajout de la pagination dans un module
+
+- Etendre les fonctionnalités de l'ExtensionPoint HomePage pour pouvoir avoir la possibilité d'en avoir plusieurs par module et ainsi afficher par exemple 
+les pages du module "pages".
+- Refonte du module Web ?
 
 [b]Menus :[/b]
 - Possibilité de désactiver l'affichage d'un lien dans les menus
@@ -34,9 +36,13 @@
 - Nouveau pack de smileys
 
 [b]Divers :[/b]
-- Suppression du panneau de modération présent dans l'administration qui fait doublon avec celui du dossier user
+[*] Suppression du panneau de modération présent dans l'administration qui fait doublon avec celui du dossier user
 - Envoi d'un MP lors d'un commentaire sur une contribution
 [*] Ajout de la balise enclosure dans les flux RSS pour joindre des médias
+[*] Armonisation des liens dans l'administration :
+	- Smileys est maintenant dans Contenu
+	- Mises à jours dans Administration
+	- Maintenance dans Administration
 
 =================================== Modules =====================================
 [b]Articles[/b]
@@ -116,4 +122,4 @@
 - Possibilité d'afficher la liste des événements d'une ou de plusieurs catégories pour un écart entre 2 dates
 
 [b]Multimedia[/b]
-- Ajout de la balise enclosure dans les flux RSS pour pouvoir diffuser le media
+[*] Ajout de la balise enclosure dans les flux RSS pour pouvoir diffuser le media
