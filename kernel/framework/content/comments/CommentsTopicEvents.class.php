@@ -38,10 +38,7 @@ class CommentsTopicEvents
 		$this->comments_topic = $comments_topic;
 	}
 	
-	public function execute_add_comment_event()
-	{
-		
-	}
+	public function execute_add_comment_event()	{}
 	
 	protected function get_comments_topic()
 	{

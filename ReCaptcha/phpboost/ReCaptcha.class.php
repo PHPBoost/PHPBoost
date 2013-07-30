@@ -54,7 +54,7 @@ class ReCaptcha extends Captcha
 		{
 			$challenge_field = AppContext::get_request()->get_value('recaptcha_challenge_field');
 		
-			$this->recaptcha_response = recaptcha_check_answer(self::PRIVATE_KEY, $_SERVER["REMOTE_ADDR"],$_POST["recaptcha_challenge_field"],$_POST["recaptcha_response_field"]);
+			$this->recaptcha_response = recaptcha_check_answer(self::PRIVATE_KEY, $_SERVER["REMOTE_ADDR"], $_POST["recaptcha_challenge_field"], $_POST["recaptcha_response_field"]);
 			
 			return $this->recaptcha_response->is_valid;
 		}
