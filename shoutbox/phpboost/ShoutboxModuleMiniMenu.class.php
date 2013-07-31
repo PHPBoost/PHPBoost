@@ -151,10 +151,11 @@ class ShoutboxModuleMiniMenu extends ModuleMiniMenu
 	    		else
 	    			$row['login'] = $del_message . ' <span class="text_small" style="font-style: italic;">' . (!empty($row['login']) ? TextHelper::wordwrap_html($row['login'], 16) : $LANG['guest']) . '</span>';
 				
-	    		$tpl->assign_block_vars('shout', array(
+				$date = new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $row['timestamp']);
+				$tpl->assign_block_vars('shout', array(
 	    			'IDMSG' => $row['id'],
 	    			'PSEUDO' => $row['login'],
-	    			'DATE' => gmdate_format('date_format', $row['timestamp']),
+	    			'DATE' => $date->format(DATE_YEAR_MONTH_DAY_HOUR_MINUTE_SECOND),
 	    			'CONTENTS' => ucfirst(FormatingHelper::second_parse(stripslashes($row['contents']))) //Majuscule premier caractère.
 	    		));
 	    	}
