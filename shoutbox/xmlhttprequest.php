@@ -46,7 +46,7 @@ if ($add)
 	}
 		
 	$shout_pseudo = !empty($_POST['pseudo']) ? TextHelper::strprotect(utf8_decode($_POST['pseudo'])) : $LANG['guest'];
-	$shout_contents = !empty($_POST['contents']) ? trim(utf8_decode($_POST['contents'])) : '';
+	$shout_contents = !empty($_POST['contents']) ? trim(utf8_decode(htmlentities($_POST['contents'], ENT_COMPAT, "UTF-8"))) : '';
 	if (!empty($shout_pseudo) && !empty($shout_contents))
 	{
 		//Accès pour poster.		
