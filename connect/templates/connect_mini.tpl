@@ -16,7 +16,7 @@
 				<div class="module_mini_top">
 					<h5 class="sub_title">{L_CONNECT}</h5>
 				</div>
-				<div class="module_mini_contents connect_vertical"">
+				<div class="module_mini_contents connect_vertical">
 					<p>
 						<label>{L_PSEUDO}
 						<br />
