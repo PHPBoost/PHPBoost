@@ -504,7 +504,6 @@ else if (!empty($_POST['valid_edit']) && is_numeric($id))
 	}
 	
 	$old_values = $Sql->query_array(PREFIX . 'bugtracker b', '*', "
-	JOIN " . DB_TABLE_MEMBER . " a ON (a.user_id = b.author_id)
 	WHERE b.id = '" . $id . "'", __LINE__, __FILE__);
 	
 	$title = retrieve(POST, 'title', $old_values['title']);
@@ -779,7 +778,7 @@ else if (isset($_GET['edit']) && is_numeric($id)) // edition d'un bug
 	{
 		$assigned_to = !empty($result['assigned_to_id']) ? $Sql->query("SELECT login FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $result['assigned_to_id'] . "'", __LINE__, __FILE__) : '';
 		
-		$group_color = User::get_group_color($result['user_groups'], $result['level']);
+		$group_color = ($author_id != '-1') ? User::get_group_color($result['user_groups'], $result['level']) : '';
 		
 		$Template->assign_block_vars('edit', array(
 			'C_IS_ADMIN'				=> true,
@@ -1224,7 +1223,7 @@ else if (isset($_GET['view']) && is_numeric($id)) // Visualisation d'une fiche B
 	else
 		$user_assigned = $LANG['bugs.notice.no_one'];
 		
-	$group_color = User::get_group_color($result['user_groups'], $result['level']);
+	$group_color = ($author_id != '-1') ? User::get_group_color($result['user_groups'], $result['level']) : '';
 	
 	$Template->assign_block_vars('view', array(
 		'ID' 					=> $id,
