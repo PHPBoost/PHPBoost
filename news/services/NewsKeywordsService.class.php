@@ -68,8 +68,7 @@ class NewsKeywordsService
 
 	public static function get_id_keyword($condition, array $parameters)
 	{
-		$id = self::$db_querier->get_column_value(NewsSetup::$news_keywords_table, 'id', $condition, $parameters);
-		return $id;
+		return self::$db_querier->get_column_value(NewsSetup::$news_keywords_table, 'id', $condition, $parameters);
 	}
 	
 	public static function get_keywords_name($id)

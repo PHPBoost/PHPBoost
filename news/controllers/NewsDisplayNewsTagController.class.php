@@ -50,25 +50,68 @@ class NewsDisplayNewsTagController extends ModuleController
 	public function init()
 	{
 		$this->lang = LangLoader::get('common', 'news');
-		$this->tpl = new StringTemplate('');
+		$this->tpl = new FileTemplate('news/NewsDisplaySeveralNewsController.tpl');
+		$this->tpl->add_lang($this->lang);
 	}
 	
 	public function build_view()
 	{
 		$now = new Date();
+		$authorized_categories = NewsService::get_authorized_categories(Category::ROOT_CATEGORY);
+		$number_columns_display_news = NewsConfig::load()->get_number_columns_display_news();
+		$pagination = $this->get_pagination($now, $authorized_categories);
 		
-		$result = PersistenceContext::get_querier()->select('SELECT news.*, relation.id_news, relation.id_keyword, member.level, member.user_groups
+		$result = PersistenceContext::get_querier()->select('SELECT news.*, relation.id_news, relation.id_keyword, member.*
 		FROM '. NewsSetup::$news_table .' news
 		LEFT JOIN '. NewsSetup::$news_keywords_relation_table .' relation ON relation.id_news = news.id
 		LEFT JOIN '. DB_TABLE_MEMBER .' member ON member.user_id = news.author_user_id
-		WHERE relation.id_keyword = :id_keyword AND (news.approbation_type = 1 OR (news.approbation_type = 2 AND news.start_date < :timestamp_now AND (end_date > :timestamp_now OR end_date = 0)))', array(
+		WHERE relation.id_keyword = :id_keyword AND (news.approbation_type = 1 OR (news.approbation_type = 2 AND news.start_date < :timestamp_now AND (end_date > :timestamp_now OR end_date = 0))) AND news.id_category IN :authorized_categories', array(
 			'id_keyword' => $this->get_keyword()->get_id(),
-			'timestamp_now' => $now->get_timestamp()
+			'timestamp_now' => $now->get_timestamp(),
+			'authorized_categories' => $authorized_categories,
+			'number_items_per_page' => $pagination->get_number_items_per_page(),
+			'display_from' => $pagination->get_display_from()
 		));
 		
+		$i = 0;
 		while ($row = $result->fetch())
 		{
-
+			if ($number_columns_display_news > 1)
+			{
+				$new_row = (($i % $number_columns_display_news) == 0 && $i > 0);
+				$i++;
+			}
+			else
+				$new_row = false;
+				
+			$news = new News();
+			$news->set_properties($row);
+						
+			$this->tpl->assign_block_vars('news', array_merge($news->get_array_tpl_vars(), array(
+				'C_NEWS_ROW' => $new_row,
+				'L_COMMENTS' => CommentsService::get_number_and_lang_comments('news', $row['id']),
+				'NUMBER_COM' => !empty($row['number_comments']) ? $row['number_comments'] : 0,
+			)));
+		}
+		
+	
+		$this->tpl->put_all(array(
+			'C_NEWS_NO_AVAILABLE' => $result->get_rows_count() == 0,
+			'C_ADD' => NewsAuthorizationsService::check_authorizations()->write() || NewsAuthorizationsService::check_authorizations()->contribution(),
+			'C_PENDING_NEWS' => NewsAuthorizationsService::check_authorizations()->write() || NewsAuthorizationsService::check_authorizations()->moderation(),
+		
+			'PAGINATION' => $pagination->display(),
+			
+			'L_NEWS_NO_AVAILABLE_TITLE' => $this->lang['news'],
+		));
+		
+		if ($number_columns_display_news > 1)
+		{
+			$column_width = floor(100 / $number_columns_display_news);
+			$this->tpl->put_all(array(
+				'C_NEWS_BLOCK_COLUMN' => true,
+				'COLUMN_WIDTH' => $column_width
+			));
 		}
 	}
 	
@@ -97,6 +140,29 @@ class NewsDisplayNewsTagController extends ModuleController
 			}
 		}
 		return $this->keyword;
+	}
+	
+	private function get_pagination(Date $now, $authorized_categories)
+	{
+		$number_news = PersistenceContext::get_querier()->count(
+			NewsSetup::$news_table, 
+			'WHERE (approbation_type = 1 OR (approbation_type = 2 AND start_date < :timestamp_now AND (end_date > :timestamp_now) OR end_date = 0)) AND id_category IN :authorized_categories', 
+			array(
+				'timestamp_now' => $now->get_timestamp(),
+				'authorized_categories' => $authorized_categories
+		));
+		
+		$page = AppContext::get_request()->get_getint('page', 1);
+		$pagination = new ModulePagination($page, $number_news, (int)NewsConfig::load()->get_number_news_per_page());
+		$pagination->set_url(NewsUrlBuilder::display_tag($this->get_keyword()->get_rewrited_name(), '%d'));
+		
+		if ($pagination->current_page_is_empty() && $page > 1)
+        {
+			$error_controller = PHPBoostErrors::unexisting_page();
+			DispatchManager::redirect($error_controller);
+        }
+        
+		return $pagination;
 	}
 	
 	private function generate_response()
