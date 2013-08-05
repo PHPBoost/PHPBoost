@@ -21,6 +21,7 @@
 - Etendre les fonctionnalités de l'ExtensionPoint HomePage pour pouvoir avoir la possibilité d'en avoir plusieurs par module et ainsi afficher par exemple 
 les pages du module "pages".
 - Refonte du module Web ?
+- Modification de la classe Date (modification des constantes permettant de choisir le formatage de la date : plus explicites et plus de choix)
 
 [b]Menus :[/b]
 - Possibilité de désactiver l'affichage d'un lien dans les menus
