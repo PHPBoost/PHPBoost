@@ -56,7 +56,7 @@ class NewsDisplayCategoryController extends ModuleController
 	private function build_view()
 	{	
 		$now = new Date();
-		$authorized_categories = $this->get_authorized_categories();
+		$authorized_categories = NewsService::get_authorized_categories($this->get_category()->get_id());
 		$number_columns_display_news = NewsConfig::load()->get_number_columns_display_news();
 		$pagination = $this->get_pagination($now, $authorized_categories);
 
@@ -100,9 +100,8 @@ class NewsDisplayCategoryController extends ModuleController
 			'C_PENDING_NEWS' => NewsAuthorizationsService::check_authorizations($this->get_category()->get_id())->write() || NewsAuthorizationsService::check_authorizations($this->get_category()->get_id())->moderation(),
 		
 			'PAGINATION' => $pagination->display(),
-		
-			'U_ADD' => NewsUrlBuilder::add_news()->rel(),
-			'U_PENDING_NEWS' => NewsUrlBuilder::display_pending_news()->rel(),
+			
+			'L_NEWS_NO_AVAILABLE_TITLE' => $this->lang['news'],
 		));
 		
 		if ($number_columns_display_news > 1)
@@ -114,25 +113,7 @@ class NewsDisplayCategoryController extends ModuleController
 			));
 		}
 	}
-	
-	private function get_authorized_categories()
-	{
-		$category = $this->get_category();
-		$authorized_categories = array();
-		if ($category->get_id() !== Category::ROOT_CATEGORY)
-		{
-			$authorized_categories[] = $category->get_id();
-		}
-		else
-		{
-			$search_category_children_options = new SearchCategoryChildrensOptions();
-			$search_category_children_options->add_authorizations_bits(Category::READ_AUTHORIZATIONS);
-			$categories = NewsService::get_categories_manager()->get_childrens($category->get_id(), $search_category_children_options);
-			$authorized_categories = array_keys($categories);
-		}
-		return $authorized_categories;
-	}
-	
+		
 	private function get_pagination(Date $now, $authorized_categories)
 	{
 		$number_news = PersistenceContext::get_querier()->count(

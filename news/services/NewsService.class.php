@@ -67,6 +67,23 @@ class NewsService
 		return $news;
 	}
 	
+	public static function get_authorized_categories($current_id_category)
+	{
+		$authorized_categories = array();
+		if ($current_id_category !== Category::ROOT_CATEGORY)
+		{
+			$authorized_categories[] = $current_id_category;
+		}
+		else
+		{
+			$search_category_children_options = new SearchCategoryChildrensOptions();
+			$search_category_children_options->add_authorizations_bits(Category::READ_AUTHORIZATIONS);
+			$categories = NewsService::get_categories_manager()->get_childrens($current_id_category, $search_category_children_options);
+			$authorized_categories = array_keys($categories);
+		}
+		return $authorized_categories;
+	}
+	
 	public static function get_categories_manager()
 	{
 		if (self::$categories_manager === null)

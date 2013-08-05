@@ -52,7 +52,7 @@ class NewsDisplayPendingNewsController extends ModuleController
 	public function build_view()
 	{
 		$now = new Date();
-		$authorized_categories = $this->get_authorized_categories();
+		$authorized_categories = NewsService::get_authorized_categories(Category::ROOT_CATEGORY);
 		$number_columns_display_news = NewsConfig::load()->get_number_columns_display_news();
 		$pagination = $this->get_pagination($now, $authorized_categories);
 		
@@ -91,25 +91,22 @@ class NewsDisplayPendingNewsController extends ModuleController
 		
 		$this->tpl->put_all(array(
 			'C_NEWS_NO_AVAILABLE' => $result->get_rows_count() == 0,
-			//'C_ADD' => NewsAuthorizationsService::check_authorizations($this->get_category()->get_id())->write() || NewsAuthorizationsService::check_authorizations($this->get_category()->get_id())->contribution(),
-			//'C_PENDING_NEWS' => NewsAuthorizationsService::check_authorizations($this->get_category()->get_id())->write() || NewsAuthorizationsService::check_authorizations($this->get_category()->get_id())->moderation(),
+			'C_ADD' => NewsAuthorizationsService::check_authorizations()->write() || NewsAuthorizationsService::check_authorizations()->contribution(),
+			'C_PENDING_NEWS' => NewsAuthorizationsService::check_authorizations()->write() || NewsAuthorizationsService::check_authorizations()->moderation(),
 		
 			'PAGINATION' => $pagination->display(),
 		
-			'U_ADD' => NewsUrlBuilder::add_news()->rel(),
-			'U_PENDING_NEWS' => NewsUrlBuilder::display_pending_news()->rel(),
+			'L_NEWS_NO_AVAILABLE_TITLE' => $this->lang['news.pending'],
 		));
-	}
-	
-	private function get_authorized_categories()
-	{
-		$authorized_categories = array();
-		$search_category_children_options = new SearchCategoryChildrensOptions();
-		$search_category_children_options->add_authorizations_bits(Category::READ_AUTHORIZATIONS);
-		$categories = NewsService::get_categories_manager()->get_childrens(Category::ROOT_CATEGORY, $search_category_children_options);
-		$authorized_categories = array_keys($categories);
-
-		return $authorized_categories;
+		
+		if ($number_columns_display_news > 1)
+		{
+			$column_width = floor(100 / $number_columns_display_news);
+			$this->tpl->put_all(array(
+				'C_NEWS_BLOCK_COLUMN' => true,
+				'COLUMN_WIDTH' => $column_width
+			));
+		}
 	}
 	
 	private function get_pagination(Date $now, $authorized_categories)
