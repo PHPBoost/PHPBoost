@@ -81,7 +81,7 @@ class CategoriesManager
 	{
 		$id_parent = $category->get_id_parent();
 		$max_order = $this->db_querier->select_single_row_query('SELECT MAX(c_order) FROM '. $this->table_name .' WHERE id_parent=:id_parent', array('id_parent' => $id_parent));
-		$max_order = NumberHelper::numeric($max_order);
+		$max_order = NumberHelper::numeric($max_order['MAX(c_order)']);
 		
 		if ($this->get_categories_cache()->category_exists($id_parent))
 		{
@@ -154,7 +154,7 @@ class CategoriesManager
 			if (!array_key_exists($id_parent, $childrens))
 			{
 				$max_order = $this->db_querier->select_single_row_query('SELECT MAX(c_order) FROM '. $this->table_name .' WHERE id_parent=:id_parent', array('id_parent' => $id_parent));
-				$max_order = NumberHelper::numeric($max_order);
+				$max_order = NumberHelper::numeric($max_order['MAX(c_order)']);
 
 				if ($position <= 0 || $position > $max_order)
 				{
@@ -167,14 +167,14 @@ class CategoriesManager
 					while ($row = $result->fetch())
 					{
 						$this->db_querier->update($this->table_name, array('c_order' => ($row['c_order'] - 1)), 'WHERE id=:id', array('id' => $row['id']));
-					}		
+					}
 				}
 				else
 				{
 					$result = PersistenceContext::get_querier()->select_rows($this->table_name, array('id', 'c_order'), 'WHERE id_parent=:id_parent AND c_order >= :order', array('id_parent' => $id_parent, 'order' => $position));
 					while ($row = $result->fetch())
 					{
-						$this->db_querier->update($this->table_name, array('c_order' => ($row['c_order'] + 1), 'WHERE id=:id', array('id' => $row['id'])));
+						$this->db_querier->update($this->table_name, array('c_order' => ($row['c_order'] + 1)), 'WHERE id=:id', array('id' => $row['id']));
 					}
 					
 					$this->db_querier->update($this->table_name, array('id_parent' => $id_parent, 'c_order' => $position), 'WHERE id=:id', array('id' => $id));
@@ -186,7 +186,7 @@ class CategoriesManager
 					while ($row = $result->fetch())
 					{
 						$this->db_querier->update($this->table_name, array('c_order' => ($row['c_order'] - 1)), 'WHERE id=:id', array('id' => $row['id']));
-					}	
+					}
 				}
 
 				$this->regenerate_cache();
@@ -205,6 +205,45 @@ class CategoriesManager
 			if ($id != Category::ROOT_CATEGORY && !$this->get_categories_cache()->category_exists($id))
 			{}
 				//TODO category doesn't exists
+		}
+	}
+	
+	/**
+	 * @desc Update category and items position.
+	 * @param Category $category
+	 * @param int $id_parent
+	 * @param int $position
+	 */
+	public function update_position(Category $category, $id_parent, $position)
+	{
+		$id = $category->get_id();
+		if (($id == Category::ROOT_CATEGORY || $this->get_categories_cache()->category_exists($id)) && ($id_parent == Category::ROOT_CATEGORY || $this->get_categories_cache()->category_exists($id_parent)) && !($category->get_id_parent == $id_parent && $category->get_order() == $position))
+		{
+			$options = new SearchCategoryChildrensOptions();
+			$childrens = $this->get_childrens($id, $options);
+			$childrens[$id] = $category;
+			if (!array_key_exists($id_parent, $childrens))
+			{
+				$max_order = $this->db_querier->select_single_row_query('SELECT MAX(c_order) FROM '. $this->table_name .' WHERE id_parent=:id_parent', array('id_parent' => $id_parent));
+				$max_order = NumberHelper::numeric($max_order['MAX(c_order)']);
+
+				if ($position <= 0 || $position > $max_order)
+				{
+					$this->db_querier->update($this->table_name, array('id_parent' => $id_parent, 'c_order' => ($max_order + 1)), 'WHERE id=:id', array('id' => $id));
+
+					//Update items
+					$this->db_querier->update($this->categories_items_parameters->get_table_name_contains_items(), array($this->categories_items_parameters->get_field_name_id_category() => $id_parent), 'WHERE '.$this->categories_items_parameters->get_field_name_id_category().'=:id_category', array('id_category' => $category->get_id_parent()));
+				}
+				else
+				{
+					$this->db_querier->update($this->table_name, array('id_parent' => $id_parent, 'c_order' => $position), 'WHERE id=:id', array('id' => $id));
+					
+					//Update items
+					$this->db_querier->update($this->categories_items_parameters->get_table_name_contains_items(), array($this->categories_items_parameters->get_field_name_id_category() => $id_parent), 'WHERE '.$this->categories_items_parameters->get_field_name_id_category().'=:id_category', array('id_category' => $category->get_id_parent()));
+				}
+
+				$this->regenerate_cache();
+			}
 		}
 	}
 	
