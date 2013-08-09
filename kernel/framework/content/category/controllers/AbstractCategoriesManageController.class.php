@@ -37,6 +37,8 @@ abstract class AbstractCategoriesManageController extends AdminModuleController
 	
 	public function execute(HTTPRequestCustom $request)
 	{
+		$this->update_positions($request);
+		
 		$this->init();
 		
 		$this->build_view();
@@ -76,6 +78,43 @@ abstract class AbstractCategoriesManageController extends AdminModuleController
 				$this->build_children_view($category_view, $categories, $id);
 					
 				$template->assign_block_vars('childrens', array('child' => $category_view->render()));
+			}
+		}
+	}
+	
+	private function update_positions(HTTPRequestCustom $request)
+	{
+		if ($request->get_postvalue('valid', false))
+		{
+			parse_str($_POST['tree']);
+			
+			foreach ($categories as $position => $tree)
+			{
+				$category = $this->get_categories_manager()->get_categories_cache()->get_category($tree['id']);
+				
+				$this->get_categories_manager()->update_position($category, Category::ROOT_CATEGORY, ($position +1));
+				
+				$this->update_childrens_positions($tree, $category->get_id());
+			}
+			
+			AppContext::get_response()->redirect(str_replace(GeneralConfig::load()->get_site_path(), '', REWRITED_SCRIPT));
+		}
+	}
+	
+	private function update_childrens_positions($categories, $id_parent)
+	{
+		if (count($categories) > 1)
+		{
+			foreach ($categories as $position => $tree)
+			{
+				if (is_int($position))
+				{
+					$category = $this->get_categories_manager()->get_categories_cache()->get_category($tree['id']);
+	
+					$this->get_categories_manager()->update_position($category, $id_parent, ($position +1));
+					
+					$this->update_childrens_positions($tree, $category->get_id());
+				}
 			}
 		}
 	}
