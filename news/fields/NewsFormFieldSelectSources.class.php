@@ -42,11 +42,14 @@ class NewsFormFieldSelectSources extends AbstractFormField
         $template = $this->get_template_to_use();
 
 		$tpl = new FileTemplate('news/NewsFormFieldSelectSources.tpl');
+		$tpl->add_lang(LangLoader::get('common', 'news'));
+		
         $tpl->put_all(array(
 			'NAME' => $this->get_html_id(),
 			'ID' => $this->get_html_id(),
 			'C_DISABLED' => $this->is_disabled()
         ));
+        
 
         $this->assign_common_template_variables($template);
 
