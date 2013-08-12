@@ -34,8 +34,8 @@
 		<div class="module_top_r"></div>
 		<div class="module_top">
 			<div class="module_top_title module_top_news">
-				<a href="{U_SYNDICATION}" title="{L_SYNDICATION}" class="img_link">
-					<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/rss.png" alt="{L_SYNDICATION}" />
+				<a href="${relative_url(SyndicationUrlBuilder::rss('news'))}" title="${i18n('syndication')}" class="img_link">
+					<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/rss.png" alt="${i18n('syndication')}" />
 				</a>
 				{L_NEWS_NO_AVAILABLE_TITLE}
 			</div>
