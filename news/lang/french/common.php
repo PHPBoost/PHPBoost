@@ -93,6 +93,8 @@ $lang['admin.categories.manage'] = 'Gérer les catégories';
 $lang['admin.categories.add'] = 'Ajouter une catégorie';
 $lang['admin.categories.edit'] = 'Modifier une catégorie';
 $lang['admin.categories.delete'] = 'Supprimer une catégorie';
+
 //Feed name
 $lang['feed.name'] = 'Actualités';
+$lang['syndication'] = 'Flux RSS';
 ?>

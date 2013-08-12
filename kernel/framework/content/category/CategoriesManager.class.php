@@ -28,7 +28,8 @@
 /**
  * @package {@package}
  * @author Kévin MASSY
- * @desc
+ * @desc This class allows you to easily integrate a complete system of categories in its script. 
+ * It needs to have its first instantiation of a parameter child object CategoriesCache and as the second parameter to have a CategoriesItemsParameters object.
  */
 class CategoriesManager
 {
@@ -61,7 +62,7 @@ class CategoriesManager
 	const RICH_CATEGORY_CLASS = 'RichCategory';
 	
 	/**
-	 * @param CategoriesCache $categories_cache
+	 * @param CategoriesCache $categories_cache A child object of the class CategoriesCache
 	 * @param CategoriesItemsParameters $categories_items_parameters
 	 */
 	public function __construct(CategoriesCache $categories_cache, CategoriesItemsParameters $categories_items_parameters)
@@ -199,12 +200,14 @@ class CategoriesManager
 		else
 		{
 			if ($id_parent != Category::ROOT_CATEGORY && !$this->get_categories_cache()->category_exists($id_parent))
-			{}
-				//TODO new parent doesn't exists
+			{
+				throw new CategoryNotFoundException($id_parent);
+			}
+			elseif ($id != Category::ROOT_CATEGORY && !$this->get_categories_cache()->category_exists($id))
+			{
+				throw new CategoryNotFoundException($id);
+			}
 				
-			if ($id != Category::ROOT_CATEGORY && !$this->get_categories_cache()->category_exists($id))
-			{}
-				//TODO category doesn't exists
 		}
 	}
 	
