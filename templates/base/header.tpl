@@ -61,7 +61,7 @@
 	<div id="header_container">
 		<div id="header">
 			<div id="logo"></div>
-			<div id="site_name">{SITE_NAME}</div>
+			<div id="site_name"><a href="{PATH_TO_ROOT}">{SITE_NAME}</a></div>
 			# IF C_MENUS_HEADER_CONTENT #
 			{MENUS_HEADER_CONTENT}
 			# ENDIF #

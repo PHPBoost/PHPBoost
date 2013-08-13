@@ -5,8 +5,8 @@
 ===================================== Noyau ======================================
 [b]Framework :[/b]
 [*] [color=red]Nouveauté :[/color] 
-	- Nouveau système de catégories, plus fiable et plus performant avec ajout du drag & drop pour la gestion des catégories
-	- Il est maintenant possible de déplacer et de supprimer les éléments contenus dans une catégorie lors de sa suppression
+	[*] Nouveau système de catégories, plus fiable et plus performant avec ajout du drag & drop pour la gestion des catégories
+	[*] Il est maintenant possible de déplacer et de supprimer les éléments contenus dans une catégorie lors de sa suppression
 [*] [color=red]Nouveauté :[/color] Ajout de l'affichage de la taille de la mémoire utilisée par PHP
 [*] Ajout de ReCaptcha
 + Amélioration du référencement :
@@ -28,9 +28,9 @@ les pages du module "pages".
 - Refonte graphique
 
 [b]Personnalisation graphique :[/b]
+[*] Logo cliquable
 - Support mobile et version tablette
 - Intégration des technologies HTML5 + CSS 3
-- Logo cliquable
 - Nouveau thème épuré
 - Possibilité d'ajouter un texte de présentation du site en dessous du nom
 - Nettoyage des fichiers TPL et CSS
