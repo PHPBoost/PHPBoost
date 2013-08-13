@@ -349,7 +349,7 @@ abstract class AbstractFormField implements FormField
 			{
 				case 'description':
 					$this->set_description($value);
-					unset($field_options['subtitle']);
+					unset($field_options['description']);
 					break;
 				case 'disabled':
 					$this->set_disabled($value);
