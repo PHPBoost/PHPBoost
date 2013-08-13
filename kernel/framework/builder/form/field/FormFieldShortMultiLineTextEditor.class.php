@@ -71,7 +71,8 @@ class FormFieldShortMultiLineTextEditor extends FormFieldMultiLineTextEditor
 			'ID' => $this->get_html_id(),
 			'VALUE' => $this->get_value(),
 			'CLASS' => $this->get_css_class(),
-			'C_DISABLED' => $this->is_disabled()
+			'C_DISABLED' => $this->is_disabled(),
+			'C_READONLY' => $this->is_readonly()
         ));
 
         $this->assign_common_template_variables($template);
