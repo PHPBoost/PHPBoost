@@ -7,7 +7,7 @@ function Confirm()
 -->
 </script>
 
-<div class="module_position">
+<div class="module_position" itemscope="itemscope" itemtype="http://schema.org/BlogPosting">
 	<div class="module_top_l"></div>
 	<div class="module_top_r"></div>
 	<div class="module_top module_top_news">
@@ -36,11 +36,11 @@ function Confirm()
 			<a href="{U_SYNDICATION}" title="{L_SYNDICATION}" class="img_link">
 				<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/rss.png" alt="{L_SYNDICATION}"/>
 			</a>
-			{NAME}
+			<span id="name" itemprop="name">{NAME}</span>
 		</div>
 		
 		<div class="news_author_container">
-			Par # IF PSEUDO #<a class="small_link {USER_LEVEL_CLASS}" href="{U_AUTHOR_PROFILE}" # IF C_USER_GROUP_COLOR # style="color:{USER_GROUP_COLOR}" # ENDIF #>{PSEUDO}</a>, # ENDIF # 
+			Par # IF PSEUDO #<a class="small_link {USER_LEVEL_CLASS}" href="{U_AUTHOR_PROFILE}" # IF C_USER_GROUP_COLOR # style="color:{USER_GROUP_COLOR}" # ENDIF #><span itemprop="author">{PSEUDO}</span></a>, # ENDIF # 
 			le {DATE},
 			dans la catégorie <a href="{U_CATEGORY}">{CATEGORY_NAME}</a>
 		</div>
