@@ -53,7 +53,7 @@
 			</style>
 		# ENDIF #
 	</head>
-	<body>
+	<body itemscope="itemscope" itemtype="http://schema.org/WebPage">
 	
 	# INCLUDE MAINTAIN #
 
@@ -94,7 +94,7 @@
 	</div>
 	# ENDIF #
 	
-	<div id="main">
+	<div id="main" itemprop="mainContentOfPage">
 		# IF C_MENUS_TOPCENTRAL_CONTENT #
 		<div id="top_contents">
 			{MENUS_TOPCENTRAL_CONTENT}
@@ -103,8 +103,10 @@
 		# ENDIF #
 		<div id="main_content">&nbsp;
 			<div id="links">
-				&nbsp;&nbsp;<a class="small_link" href="{START_PAGE}" title="{L_INDEX}">{L_INDEX}</a>
-				# START link_bread_crumb #
-				<img src="{PATH_TO_ROOT}/templates/{THEME}/images/breadcrumb.png" alt="" class="valign_middle" /> <a class="small_link" href="{link_bread_crumb.URL}" title="{link_bread_crumb.TITLE}">{link_bread_crumb.TITLE}</a>
-				# END link_bread_crumb #
+				<a class="small_link" href="{START_PAGE}" title="{L_INDEX}">{L_INDEX}</a>
+				<div id="breadcrumb" itemprop="breadcrumb">
+					# START link_bread_crumb #
+					<img src="{PATH_TO_ROOT}/templates/{THEME}/images/breadcrumb.png" alt="" class="valign_middle" /> <a class="small_link" href="{link_bread_crumb.URL}" title="{link_bread_crumb.TITLE}">{link_bread_crumb.TITLE}</a>
+					# END link_bread_crumb #
+				</div>
 			</div>
