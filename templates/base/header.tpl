@@ -101,12 +101,10 @@
 		</div>
 		<div class="spacer"></div>
 		# ENDIF #
-		<div id="main_content">&nbsp;
+		<div id="main_content" itemprop="breadcrumb">
 			<div id="links">
 				<a class="small_link" href="{START_PAGE}" title="{L_INDEX}">{L_INDEX}</a>
-				<div id="breadcrumb" itemprop="breadcrumb">
 					# START link_bread_crumb #
 					<img src="{PATH_TO_ROOT}/templates/{THEME}/images/breadcrumb.png" alt="" class="valign_middle" /> <a class="small_link" href="{link_bread_crumb.URL}" title="{link_bread_crumb.TITLE}">{link_bread_crumb.TITLE}</a>
 					# END link_bread_crumb #
-				</div>
 			</div>
