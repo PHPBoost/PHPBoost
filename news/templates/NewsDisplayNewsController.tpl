@@ -44,11 +44,12 @@ function Confirm()
 		<meta itemprop="dateCreated" content="{DATE_ISO}">
 		<meta itemprop="discussionUrl" content="{U_COMMENTS}">
 		# IF C_PICTURE #<meta itemprop="thumbnailUrl" content="{U_PICTURE}"># ENDIF #
+		<meta itemprop="interactionCount" content="{NUMBER_COMMENTS} UserComments">
 		
 		<div class="news_author_container">
-			Par # IF PSEUDO #<a class="small_link {USER_LEVEL_CLASS}" href="{U_AUTHOR_PROFILE}" # IF C_USER_GROUP_COLOR # style="color:{USER_GROUP_COLOR}" # ENDIF #><span itemprop="author">{PSEUDO}</span></a>, # ENDIF # 
+			Par # IF PSEUDO #<a itemprop="author" class="small_link {USER_LEVEL_CLASS}" href="{U_AUTHOR_PROFILE}" # IF C_USER_GROUP_COLOR # style="color:{USER_GROUP_COLOR}" # ENDIF #>{PSEUDO}</a>, # ENDIF # 
 			le {DATE},
-			dans la catégorie <a href="{U_CATEGORY}">{CATEGORY_NAME}</a>
+			dans la catégorie <a itemprop="about" href="{U_CATEGORY}">{CATEGORY_NAME}</a>
 		</div>
 		
 		<div class="spacer"></div>
@@ -72,9 +73,9 @@ function Confirm()
 
 		<div id="news_tags_container">
 			<span class="news_more_title">{@news.form.keywords}</span> :
-			<div id="news_tags_content" itemprop="keywords">
-				<span>PHP</span> - <span>Boost</span> - <span>Elephant</span>
-			</div>
+				# START keywords #
+					<a itemprop="keywords" href="{keywords.URL}">{keywords.NAME}</a> {keywords.COMMA}
+				# END keywords #
 		</div>
 								
 		<div class="spacer"></div>

@@ -6,13 +6,13 @@ function Confirm_del_comment() {
 -->
 </script>
 # START comments #
-	<div id="com{comments.ID_COMMENT}" class="comment" itemscope="itemscope" itemtype="http://schema.org/UserComments">
+	<div id="com{comments.ID_COMMENT}" class="comment" itemscope="itemscope" itemtype="http://schema.org/Comments">
 		<div class="comment-user_infos">
 			<div id="comment-pseudo">
 				# IF comments.C_VISITOR #
-					<span itemprop="name">{comments.PSEUDO}</span>
+					<span itemprop="author">{comments.PSEUDO}</span>
 				# ELSE #
-					<a itemprop="name" href="{comments.U_PROFILE}" class="{comments.LEVEL_CLASS}" # IF comments.C_GROUP_COLOR # style="color:{comments.GROUP_COLOR}" # ENDIF #>
+					<a itemprop="author" href="{comments.U_PROFILE}" class="{comments.LEVEL_CLASS}" # IF comments.C_GROUP_COLOR # style="color:{comments.GROUP_COLOR}" # ENDIF #>
 						{comments.PSEUDO}
 					</a>
 				# ENDIF #
@@ -23,7 +23,7 @@ function Confirm_del_comment() {
 		<div class="comment-content">
 			<div class="comment-date">
 				<div style="float:right;">
-					<a itemprop="replyToUrl" href="\#com{comments.ID_COMMENT}">\#{comments.ID_COMMENT}</a>
+					<a itemprop="url" href="\#com{comments.ID_COMMENT}">\#{comments.ID_COMMENT}</a>
 					# IF comments.C_MODERATOR #
 						<a href="{comments.U_EDIT}">
 							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="{L_UPDATE}" title="{L_UPDATE}" class="valign_middle" />
@@ -33,10 +33,10 @@ function Confirm_del_comment() {
 						</a>
 					# ENDIF #
 				</div>
-				<span itemprop="commentTime">{comments.DATE}</span>
+				<span itemprop="dateCreated" content="{comments.DATE_ISO}">{comments.DATE}</span>
 			</div>
 			<div class="comment-message">
-				<div class="message-containt" class="content">{comments.MESSAGE}</div>
+				<div itemprop="text" class="message-containt" class="content">{comments.MESSAGE}</div>
 				# IF comments.C_VIEW_TOPIC #
 					<div class="view-topic">
 						<a href="{comments.U_TOPIC}&refresh_all=1\#com{comments.ID_COMMENT}">
