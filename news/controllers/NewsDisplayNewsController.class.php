@@ -81,21 +81,18 @@ class NewsDisplayNewsController extends ModuleController
 		
 		$this->tpl->put_all($news->get_array_tpl_vars());
 		
-		$this->tpl->put_all(array(
-			'L_SYNDICATION' => $main_lang['syndication'],
-			'L_EDIT' => $main_lang['edit'],
-			'L_DELETE' => $main_lang['delete'],
-		));
-		
 		$comments_topic = new NewsCommentsTopic();
 		$comments_topic->set_id_in_module($news->get_id());
 		$comments_topic->set_url(NewsUrlBuilder::display_news($category->get_id(), $category->get_rewrited_name(), $news->get_id(), $news->get_rewrited_name()));
 		
 		$this->tpl->put_all(array(
 			'NUMBER_COMMENTS' => CommentsService::get_number_comments('news', $news->get_id()),
-			'COMMENTS', $comments_topic->display()
+			'COMMENTS' => $comments_topic->display(),
+			'L_SYNDICATION' => $main_lang['syndication'],
+			'L_EDIT' => $main_lang['edit'],
+			'L_DELETE' => $main_lang['delete'],
 		));
-		
+
 		$this->build_sources_view($news);
 		
 		$this->build_navigation_links($news);

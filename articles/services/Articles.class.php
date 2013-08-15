@@ -385,7 +385,7 @@ class Articles
 			'NUMBER_VIEW' => $this->get_number_view(),
 			'NOTE' => $this->get_notation()->get_number_notes() > 0 ? NotationService::display_static_image($this->get_notation()) : '&nbsp;',
 			'PSEUDO' => $user->get_pseudo(),
-			'DESCRIPTION' =>$short_description,
+			'DESCRIPTION' => $short_description,
 			'PICTURE' => $this->get_picture()->absolute(),
 			'USER_LEVEL_CLASS' => UserService::get_level_class($user->get_level()),
 			'USER_GROUP_COLOR' => $user_group_color,
