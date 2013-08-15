@@ -66,7 +66,7 @@ function Confirm()
 		<div id="news_sources_container">
 			<span class="news_more_title">{@news.form.sources}</span> :
 			# START sources #
-			<a href="{sources.URL}" class="small_link">{sources.NAME}</a> {sources.COMMA} 
+			<a itemprop="isBasedOnUrl" href="{sources.URL}" class="small_link">{sources.NAME}</a> {sources.COMMA} 
 			# END sources #
 		</div>
 		# ENDIF #

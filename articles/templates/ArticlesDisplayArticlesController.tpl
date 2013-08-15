@@ -31,34 +31,41 @@
 </div>
 <div class="spacer"></div>
 
-<div class="module_position">					
+<div class="module_position" itemscope="itemscope" itemtype="http://schema.org/Article">					
 	<div class="article_top">
 		<div class="article_top_title">
 			<a href="{U_SYNDICATION}" title="Rss" class="img_link">
 				<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/rss.png" alt="Rss" title="Rss" />
 			</a>
-			{TITLE}
+			<span id="name" itemprop="name">{TITLE}</span>
 		</div>
 		<div class="article_info">
 			# IF C_AUTHOR_DISPLAYED #
-			<img class="valign_middle" src="{PATH_TO_ROOT}/articles/templates/images/author.png" alt="${i18n('articles.sort_field.author')}" title="${i18n('articles.sort_field.author')}" /><a href="{U_AUTHOR}" class="small_link {USER_LEVEL_CLASS}" # IF C_USER_GROUP_COLOR # style="color:{USER_GROUP_COLOR}"# ENDIF #>&nbsp;{PSEUDO}&nbsp;</a>|
+			<img class="valign_middle" src="{PATH_TO_ROOT}/articles/templates/images/author.png" alt="${i18n('articles.sort_field.author')}" title="${i18n('articles.sort_field.author')}" /><a itemprop="author" href="{U_AUTHOR}" class="small_link {USER_LEVEL_CLASS}" # IF C_USER_GROUP_COLOR # style="color:{USER_GROUP_COLOR}"# ENDIF #>&nbsp;{PSEUDO}&nbsp;</a>|
 			# ENDIF #
 			&nbsp;<img class="valign_middle" src="{PATH_TO_ROOT}/articles/templates/images/calendar.png" alt="${i18n('articles.sort_field.date')}" title="${i18n('articles.sort_field.date')}" />&nbsp;{DATE}&nbsp;|
 			&nbsp;<img class="valign_middle" src="{PATH_TO_ROOT}/articles/templates/images/view.png" alt="${i18n('articles.sort_field.views')}" title="${i18n('articles.sort_field.views')}" />&nbsp;{NUMBER_VIEW}
 			# IF C_COMMENTS_ENABLED #
 				&nbsp;|&nbsp;<img class="valign_middle" src="{PATH_TO_ROOT}/articles/templates/images/comment.png" /><a class="small_link" href="{U_COMMENTS}">&nbsp;{L_COMMENTS}</a>
 			# ENDIF #
-			&nbsp;|&nbsp;<img class="valign_middle" src="{PATH_TO_ROOT}/articles/templates/images/category.png" alt="${i18n('articles.category')}" title="${i18n('articles.category')}" />&nbsp;<a class="small_link" href="{U_CATEGORY}">{L_CAT_NAME}</a>
+			&nbsp;|&nbsp;<img class="valign_middle" src="{PATH_TO_ROOT}/articles/templates/images/category.png" alt="${i18n('articles.category')}" title="${i18n('articles.category')}" />&nbsp;<a itemprop="about" class="small_link" href="{U_CATEGORY}">{L_CAT_NAME}</a>
 			# IF C_KEYWORDS #
 			&nbsp;|&nbsp;<img class="valign_middle" src="{PATH_TO_ROOT}/articles/templates/images/tags.png" alt="${i18n('articles.tags')}" title="${i18n('articles.tags')}" /> 
 				# START keywords #
-				{keywords.COMMA}<a href="{keywords.U_KEYWORD}" class="small_link">{keywords.NAME}</a>
+				{keywords.COMMA}<a itemprop="keywords" href="{keywords.U_KEYWORD}" class="small_link">{keywords.NAME}</a>
 				# END keywords #
 			# ENDIF #
 		</div>
 	</div>
 	<div class="spacer"></div>
 	
+	<meta itemprop="url" content="{U_ARTICLE}">
+	<meta itemprop="description" content="{DESCRIPTION}">
+	<meta itemprop="dateCreated" content="{DATE_ISO}">
+	<meta itemprop="discussionUrl" content="{U_COMMENTS}">
+	# IF C_PICTURE #<meta itemprop="thumbnailUrl" content="{PICTURE}"># ENDIF #
+	<meta itemprop="interactionCount" content="{NUMBER_COMMENTS} UserComments">
+		
 	<div class="module_contents">
 			# IF PAGINATION_ARTICLES #
 			<div style="float:right;margin-right:35px;width:250px;">
@@ -70,7 +77,7 @@
 			# IF PAGE_NAME #
 			<h2 class="title" style="text-indent:35px;">{PAGE_NAME}</h2>
 			# ENDIF #	
-			{CONTENTS}
+			<span itemprop="text">{CONTENTS}</span>
 			<div class="spacer" style="margin-top:35px;">&nbsp;</div>
 			# IF PAGINATION_ARTICLES #
 			<div style="float:left;width:33%;text-align:right"><a href="{PAGE_PREVIOUS_ARTICLES}">&nbsp;&leftarrow;{L_PREVIOUS_TITLE}</a></div>
@@ -81,7 +88,7 @@
 	</div>
 	<div class="module_bottom">
 		# IF C_SOURCES #
-		<div><b> ${i18n('articles.sources')} : </b># START sources #{sources.COMMA}<a href="{sources.URL}" class="small_link">{sources.NAME}</a># END sources #</div>
+		<div><b> ${i18n('articles.sources')} : </b># START sources #{sources.COMMA}<a itemprop="isBasedOnUrl" href="{sources.URL}" class="small_link">{sources.NAME}</a># END sources #</div>
 		# ENDIF #
 		<div class="spacer">&nbsp;</div>
 		# IF C_NOTATION_ENABLED #
