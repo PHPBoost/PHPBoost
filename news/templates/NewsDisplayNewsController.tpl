@@ -7,7 +7,7 @@ function Confirm()
 -->
 </script>
 
-<div class="module_position" itemscope="itemscope" itemtype="http://schema.org/BlogPosting">
+<div class="module_position" itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
 	<div class="module_top_l"></div>
 	<div class="module_top_r"></div>
 	<div class="module_top module_top_news">
@@ -39,6 +39,12 @@ function Confirm()
 			<span id="name" itemprop="name">{NAME}</span>
 		</div>
 		
+		<meta itemprop="url" content="{U_LINK}">
+		<meta itemprop="description" content="{DESCRIPTION}">
+		<meta itemprop="dateCreated" content="{DATE_ISO}">
+		<meta itemprop="discussionUrl" content="{U_COMMENTS}">
+		# IF C_PICTURE #<meta itemprop="thumbnailUrl" content="{U_PICTURE}"># ENDIF #
+		
 		<div class="news_author_container">
 			Par # IF PSEUDO #<a class="small_link {USER_LEVEL_CLASS}" href="{U_AUTHOR_PROFILE}" # IF C_USER_GROUP_COLOR # style="color:{USER_GROUP_COLOR}" # ENDIF #><span itemprop="author">{PSEUDO}</span></a>, # ENDIF # 
 			le {DATE},
@@ -51,7 +57,7 @@ function Confirm()
 	<div class="module_contents">
 		# IF C_PICTURE #<img src="{U_PICTURE}" alt="{NAME}" title="{NAME}" class="img_right" /># ENDIF #
 		
-		{CONTENTS}
+		<span itemprop="text">{CONTENTS}</span>
 		
 		<div class="spacer" style="margin-bottom:40px;"></div>
 	
@@ -66,7 +72,9 @@ function Confirm()
 
 		<div id="news_tags_container">
 			<span class="news_more_title">{@news.form.keywords}</span> :
-			<span>PHP</span> - <span>Boost</span> - <span>Elephant</span>
+			<div id="news_tags_content" itemprop="keywords">
+				<span>PHP</span> - <span>Boost</span> - <span>Elephant</span>
+			</div>
 		</div>
 								
 		<div class="spacer"></div>
