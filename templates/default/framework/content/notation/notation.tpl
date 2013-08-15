@@ -27,7 +27,7 @@
 		-->
 		</script>
 		
-		<div>
+		<div itemscope="itemscope" itemtype="http://schema.org/AggregateRating">
 			<div style="width:{NUMBER_PIXEL}px;margin:auto;display:none" id="note_pictures{ID_IN_MODULE}" >
 				# START notation #
 					<a href="javascript:Note{ID_IN_MODULE}.send_request({notation.I})" onmouseover="javascript:Note{ID_IN_MODULE}.change_picture_status({notation.I});" class="img_link">
@@ -36,26 +36,27 @@
 				# END notation #
 				<span id="noteloading{ID_IN_MODULE}"></span>
 			</div>
-		</div>
-		<form action="" method="post" class="text_small">
-			<span id="note_value{ID_IN_MODULE}">
-				# IF C_VOTES #
-					{NUMBER_NOTES} 
-					# IF C_MORE_1_NOTES #
-						{L_NOTES}
+			<form action="" method="post" class="text_small">
+				<span id="note_value{ID_IN_MODULE}">
+					# IF C_VOTES #
+						<span itemprop="reviewCount">{NUMBER_NOTES}</span>
+						# IF C_MORE_1_NOTES #
+							{L_NOTES}
+						# ELSE #
+							{L_NOTE}
+						# ENDIF #
 					# ELSE #
-						{L_NOTE}
+						{L_NO_NOTE}
 					# ENDIF #
-				# ELSE #
-					{L_NO_NOTE}
-				# ENDIF #
-			</span>
-			<select id="note_select{ID_IN_MODULE}" name="note">
-				<option value="-1">{L_NOTE}</option>
-				# START notation_no_js #
-				<option value="{notation_no_js.I}">{notation_no_js.I}</option>
-				# END notation_no_js #
-			</select>
-			<input type="hidden" name="token" value="{TOKEN}" />
-			<input type="submit" name="valid" id="valid_note{ID_IN_MODULE}" value="{L_VALID_NOTE}" class="submit" style="padding:1px 2px;" />
-		</form>		
+				</span>
+				<select id="note_select{ID_IN_MODULE}" name="note">
+					<option value="-1">{L_NOTE}</option>
+					# START notation_no_js #
+					<option value="{notation_no_js.I}">{notation_no_js.I}</option>
+					# END notation_no_js #
+				</select>
+				<meta itemprop="ratingValue" content="{AVERAGE_NOTES}">
+				<input type="hidden" name="token" value="{TOKEN}" />
+				<input type="submit" name="valid" id="valid_note{ID_IN_MODULE}" value="{L_VALID_NOTE}" class="submit" style="padding:1px 2px;" />
+			</form>
+		</div>	
