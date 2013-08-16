@@ -249,17 +249,16 @@ function gmdate_format($format, $timestamp = false, $timezone_system = 0)
 		switch ($format)
 		{
 			case 'date_format':
-				$format = $LANG['date_format'];
+				$format = $LANG['date_format_day_month_year_hour_minute'];
 				break;
 			case 'date_format_tiny':
-				$format = $LANG['date_format_tiny'];
+				$format = $LANG['date_format_day_month'];
 				break;
 			case 'date_format_short':
-				$format = $LANG['date_format_short'];
-
+				$format = $LANG['date_format_day_month_year'];
 				break;
 			case 'date_format_long':
-				$format = $LANG['date_format_long'];
+				$format = $LANG['date_format_day_month_year_hour_minute'];
 				break;
 		}
 	}
