@@ -253,7 +253,7 @@ class CommentsService
 					'U_PROFILE' => UserUrlBuilder::profile($row['user_id'])->absolute(),
 					'U_AVATAR' => $user_avatar,
 					'ID_COMMENT' => $id,
-					'DATE' => $timestamp->format(DATE_FORMAT, TIMEZONE_AUTO),
+					'DATE' => $timestamp->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE, TIMEZONE_AUTO),
 					'MESSAGE' => FormatingHelper::second_parse($row['message']),
 					'USER_ID' => $row['user_id'],
 					'PSEUDO' => empty($row['login']) ? $row['pseudo'] : $row['login'],

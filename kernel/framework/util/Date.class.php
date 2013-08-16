@@ -31,18 +31,10 @@ define('DATE_NOW', 				1);
 define('DATE_YEAR_MONTH_DAY', 	2);
 define('DATE_YEAR_MONTH_DAY_HOUR_MINUTE_SECOND', 3);
 define('DATE_FROM_STRING', 		4);
-define('DATE_FORMAT_TINY', 		1);
-define('DATE_FORMAT_SHORT', 	2);
-define('DATE_FORMAT', 			3);
-define('DATE_FORMAT_LONG', 		4);
-define('DATE_RFC822_F', 		5);
-define('DATE_RFC3339_F', 		6);
-define('DATE_FORMAT_TEXT_SHORT',7);
-define('DATE_FORMAT_TEXT_LONG', 8);
-define('DATE_FORMAT_MEDIUM', 	9);
 
-define('DATE_RFC822_FORMAT', 	'D, d M Y H:i:s O');
-define('DATE_RFC3339_FORMAT', 	'Y-m-d\TH:i:s');
+define('ISO_FORMAT', 	'Y-m-d');
+define('RFC822_FORMAT', 	'D, d M Y H:i:s O');
+define('RFC3339_FORMAT', 	'Y-m-d\TH:i:s');
 
 define('TIMEZONE_AUTO', 		TIMEZONE_USER);
 
@@ -59,6 +51,17 @@ define('TIMEZONE_AUTO', 		TIMEZONE_USER);
  */
 class Date
 {
+	const FORMAT_TIMESTAMP = 0;
+	const FORMAT_DAY_MONTH = 1;
+	const FORMAT_DAY_MONTH_YEAR = 2;
+	const FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE = 3;
+	const FORMAT_ISO = 4;
+	const FORMAT_RFC822_F = 5;
+	const FORMAT_RFC3339_F = 6;
+	const FORMAT_DAY_MONTH_YEAR_LONG = 7;
+	const FORMAT_DAY_MONTH_YEAR_TEXT = 8;
+	const FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE_TEXT = 9;
+
 	/**
 	 * @var int The timestamp of the current date
 	 */
@@ -232,12 +235,11 @@ class Date
 	 * @desc Formats the date to a particular format.
 	 * @param int $format One of the following enumeration:
 	 * <ul>
-	 * 	<li>DATE_FORMAT_TINY for a tiny formatting (only month and day)</li>
-	 * 	<li>DATE_FORMAT_SHORT for a short formatting (month, day, year)</li>
-	 * 	<li>DATE_FORMAT for a longer displaying (year, month, day, hour and minutes)</li>
-	 * 	<li>DATE_FORMAT_LONG for a total displaying (year, month, day, hour, minutes and seconds)</li>
-	 * 	<li>DATE_RFC822_F to format according to what the RFC822 announces</li>
-	 * 	<li>DATE_RFC3339_F to format according to what the RFC3339 announces</li>
+	 * 	<li>Date::FORMAT_DAY_MONTH for a tiny formatting (only month and day)</li>
+	 * 	<li>Date::FORMAT_DAY_MONTH_YEAR for a short formatting (month, day, year)</li>
+	 * 	<li>Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE for a longer displaying (year, month, day, hour and minutes)</li>
+	 * 	<li>Date::DATE_RFC822_F to format according to what the RFC822 announces</li>
+	 * 	<li>Date::DATE_RFC3339_F to format according to what the RFC3339 announces</li>
 	 * </ul>
 	 * @param int $referencial_timezone One of the following enumeration:
 	 * <ul>
@@ -247,50 +249,55 @@ class Date
 	 * </ul>
 	 * @return string The formatted date
 	 */
-	public function format($format = DATE_FORMAT_TINY, $referencial_timezone = TIMEZONE_USER)
+	public function format($format = self::FORMAT_DAY_MONTH, $referencial_timezone = TIMEZONE_USER)
 	{
 		$timestamp = $this->timestamp + self::compute_server_user_difference($referencial_timezone) * 3600;
 
+		if (is_string($format))
+		{
+			return date($format, $timestamp);
+		}
+		
 		switch ($format)
 		{
-			case DATE_FORMAT_TINY:
-				return date(LangLoader::get_message('date_format_tiny', 'main'), $timestamp);
-				break;
-
-			case DATE_FORMAT_SHORT:
-				return date(LangLoader::get_message('date_format_short', 'main'), $timestamp);
+			case self::FORMAT_DAY_MONTH:
+				return date(LangLoader::get_message('date_format_day_month', 'main'), $timestamp);
 				break;
 				
-			case DATE_FORMAT_MEDIUM:
-				return date(LangLoader::get_message('date_format_medium', 'main'), $timestamp);
+			case self::FORMAT_DAY_MONTH_YEAR:
+				return date(LangLoader::get_message('date_format_day_month_year', 'main'), $timestamp);
 				break;
 				
-			case DATE_FORMAT:
-				return date(LangLoader::get_message('date_format', 'main'), $timestamp);
+			case self::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE:
+				return date(LangLoader::get_message('date_format_day_month_year_hour_minute', 'main'), $timestamp);
 				break;
 
-			case DATE_FORMAT_LONG:
-				return date(LangLoader::get_message('date_format_long', 'main'), $timestamp);
-				break;
-
-			case DATE_TIMESTAMP:
+			case self::FORMAT_TIMESTAMP:
 				return $timestamp;
 				break;
 
-			case DATE_RFC822_F:
-				return date(DATE_RFC822_FORMAT, $timestamp);
-				break;
-
-			case DATE_RFC3339_F:
-				return date(DATE_RFC3339_FORMAT, $timestamp) . (GeneralConfig::load()->get_site_timezone() < 0 ? '-' : '+') . sprintf('%02d:00', GeneralConfig::load()->get_site_timezone());
-				break;
-
-			case DATE_FORMAT_TEXT_SHORT:
-				return self::transform_date(date(LangLoader::get_message('date_format_text_short', 'main'), $timestamp));
+			case self::FORMAT_ISO:
+				return date(ISO_FORMAT, $timestamp);
 				break;
 				
-			case DATE_FORMAT_TEXT_LONG:
-				return self::transform_date(date(LangLoader::get_message('date_format_text_long', 'main'), $timestamp));
+			case self::FORMAT_RFC822_F:
+				return date(RFC822_FORMAT, $timestamp);
+				break;
+
+			case self::FORMAT_RFC3339_F:
+				return date(RFC3339_FORMAT, $timestamp) . (GeneralConfig::load()->get_site_timezone() < 0 ? '-' : '+') . sprintf('%02d:00', GeneralConfig::load()->get_site_timezone());
+				break;
+
+			case self::FORMAT_DAY_MONTH_YEAR_LONG:
+				return self::transform_date(date(LangLoader::get_message('date_format_day_month_year_long', 'main'), $timestamp));
+				break;
+				
+			case self::FORMAT_DAY_MONTH_YEAR_TEXT:
+				return self::transform_date(date(LangLoader::get_message('date_format_day_month_year_text', 'main'), $timestamp));
+				break;
+				
+			case self::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE_TEXT:
+				return self::transform_date(date(LangLoader::get_message('date_format_day_month_year_hour_minute_text', 'main'), $timestamp));
 				break;
 				
 			default:

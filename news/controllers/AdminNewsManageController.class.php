@@ -79,7 +79,7 @@ class AdminNewsManageController extends AdminModuleController
 				'DELETE_LINK' => NewsUrlBuilder::delete_news($row['id'])->absolute(),
 				'NAME' => $row['name'],
 				'CATEGORY' => !empty($row['category_name']) ? $row['category_name'] : LangLoader::get_message('root', 'main'),
-				'DATE' => $date->format(DATE_FORMAT_SHORT, TIMEZONE_AUTO),
+				'DATE' => $date->format(Date::FORMAT_DAY_MONTH_YEAR, TIMEZONE_AUTO),
 				'PSEUDO' => $row['login'],
 				'STATUS' => $status
 			));

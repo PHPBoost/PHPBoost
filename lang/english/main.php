@@ -33,13 +33,12 @@
 
 // Dates
 $LANG['xml_lang'] = 'en';
-$LANG['date_format_tiny'] = 'm/d';
-$LANG['date_format_short'] = 'm/d/y';
-$LANG['date_format_medium'] = 'd/m/Y';
-$LANG['date_format'] = 'm/d/y \a\t H\hi';
-$LANG['date_format_long'] = 'm/d/y \a\t H\hi\m\i\ns\s';
-$LANG['date_format_text_short'] = 'j F Y';
-$LANG['date_format_text_long'] = 'l j F Y';
+$LANG['date_format_day_month'] = 'm/d';
+$LANG['date_format_day_month_year'] = 'd/m/Y';
+$LANG['date_format_day_month_year_hour_minute'] = 'm/d/Y \a\t H\hi';
+$LANG['date_format_day_month_year_long'] = 'j F Y';
+$LANG['date_format_day_month_year_text'] = 'l j F Y';
+$LANG['date_format_day_month_year_hour_minute_text'] = 'l j F Y \a\t H\hi';
 $LANG['from_date'] = 'from';
 $LANG['to_date'] = 'to';
 $LANG['now'] = 'Now';

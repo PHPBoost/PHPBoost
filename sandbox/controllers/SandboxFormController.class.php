@@ -57,8 +57,8 @@ class SandboxFormController extends ModuleController
 					'CHECKBOX' => var_export($form->get_value('checkbox'), true),
 					'SELECT' => $form->get_value('select')->get_label(),
 					'HIDDEN' => $form->get_value('hidden'),
-					'DATE' => $form->get_value('date')->format(DATE_FORMAT_SHORT),
-					'DATE_TIME' => $form->get_value('date_time')->format(DATE_FORMAT),
+					'DATE' => $form->get_value('date')->format(Date::FORMAT_DAY_MONTH_YEAR),
+					'DATE_TIME' => $form->get_value('date_time')->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE),
 					'H_T_TEXT_FIELD' => $form->get_value('alone'),
 					'C_PREVIEW' => $this->preview_button->has_been_submited()                
 				));

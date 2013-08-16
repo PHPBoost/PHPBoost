@@ -104,10 +104,10 @@ class FeedItem
     public function get_title() { return $this->title; }
     public function get_link() { return $this->link; }
     public function get_guid() { return $this->guid; }
-    public function get_date() { return $this->date->format(DATE_FORMAT_TINY, TIMEZONE_USER); }
-    public function get_date_rfc822() { return $this->date->format(DATE_RFC822_F, TIMEZONE_USER); }
-    public function get_date_rfc3339() { return $this->date->format(DATE_RFC3339_F, TIMEZONE_USER); }
-	public function get_date_text() { return $this->date->format(DATE_FORMAT_TEXT_SHORT, TIMEZONE_USER); }
+    public function get_date() { return $this->date->format(Date::FORMAT_DAY_MONTH, TIMEZONE_USER); }
+    public function get_date_rfc822() { return $this->date->format(Date::DATE_RFC822_F, TIMEZONE_USER); }
+    public function get_date_rfc3339() { return $this->date->format(Date::DATE_RFC3339_F, TIMEZONE_USER); }
+	public function get_date_text() { return $this->date->format(Date::FORMAT_DAY_MONTH_YEAR_LONG, TIMEZONE_USER); }
     public function get_desc() { return $this->desc; }
     public function get_image_url() { return $this->image_url; }
 	public function get_enclosure() { return $this->enclosure; }

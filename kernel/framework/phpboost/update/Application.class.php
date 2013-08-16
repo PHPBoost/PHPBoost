@@ -254,7 +254,7 @@ class Application
 	/**
 	 * @desc Accessor of Publication Date
 	 */
-	public function get_pubdate() { return !empty($this->pubdate) && is_object($this->pubdate) ? $this->pubdate->format(DATE_FORMAT_SHORT, TIMEZONE_USER) : ''; }
+	public function get_pubdate() { return !empty($this->pubdate) && is_object($this->pubdate) ? $this->pubdate->format(Date::FORMAT_DAY_MONTH_YEAR, TIMEZONE_USER) : ''; }
 	/**
 	 * @desc Accessor of Priority
 	 */

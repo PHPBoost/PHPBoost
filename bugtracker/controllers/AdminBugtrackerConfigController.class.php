@@ -131,8 +131,8 @@ class AdminBugtrackerConfigController extends AdminModuleController
 		
 		$fieldset->add_field(new FormFieldRadioChoice('date_form', $this->lang['bugs.labels.date_format'], $this->config->get_date_form(),
 			array(
-				new FormFieldRadioChoiceOption($main_lang['date'], BugtrackerConfig::DATE_FORMAT_SHORT),
-				new FormFieldRadioChoiceOption($this->lang['bugs.labels.date_time'], BugtrackerConfig::DATE_FORMAT)
+				new FormFieldRadioChoiceOption($main_lang['date'], BugtrackerConfig::FORMAT_DAY_MONTH_YEAR),
+				new FormFieldRadioChoiceOption($this->lang['bugs.labels.date_time'], BugtrackerConfig::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE)
 			)
 		));
 		

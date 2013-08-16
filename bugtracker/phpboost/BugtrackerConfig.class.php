@@ -73,8 +73,8 @@ class BugtrackerConfig extends AbstractConfigData
 	const BUGTRACKER_MAX_SEARCH_RESULTS = 50;
 	
 	//Date format
-	const DATE_FORMAT = 'date_format';
-	const DATE_FORMAT_SHORT = 'date_format_short';
+	const FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE = 'date_format';
+	const FORMAT_DAY_MONTH_YEAR = 'date_format_short';
 	
 	//Admin alerts fix type
 	const FIX = 'fix';
@@ -758,7 +758,7 @@ class BugtrackerConfig extends AbstractConfigData
 			self::ITEMS_PER_PAGE => 20,
 			self::REJECTED_BUG_COLOR => '#f8465e',
 			self::FIXED_BUG_COLOR => '#afffa2',
-			self::DATE_FORM => self::DATE_FORMAT,
+			self::DATE_FORM => self::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE,
 			self::COMMENTS_ACTIVATED => true,
 			self::CAT_IN_TITLE_ACTIVATED => false,
 			self::ROADMAP_ACTIVATED => false,
