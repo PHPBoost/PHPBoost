@@ -179,7 +179,7 @@ if ($contribution_id > 0)
 		'CONTRIBUTOR_LEVEL_CLASS' => UserService::get_level_class($contributor['level']),
 		'CONTRIBUTOR_GROUP_COLOR' => $contributor_group_color,
 		'COMMENTS' => CommentsService::display($comments_topic)->render(),
-		'CREATION_DATE' => $contribution_creation_date->format(DATE_FORMAT_SHORT),
+		'CREATION_DATE' => $contribution_creation_date->format(Date::FORMAT_DAY_MONTH_YEAR),
 		'MODULE' => $contribution->get_module_name(),
 		'U_CONTRIBUTOR_PROFILE' => UserUrlBuilder::profile($contribution->get_poster_id())->absolute(),
 		'FIXING_URL' => url(PATH_TO_ROOT . $contribution->get_fixing_url())
@@ -200,7 +200,7 @@ if ($contribution_id > 0)
 			'FIXER' => $fixer['login'],
 			'FIXER_LEVEL_CLASS' => UserService::get_level_class($fixer['level']),
 			'FIXER_GROUP_COLOR' => $fixer_group_color,
-			'FIXING_DATE' => $contribution_fixing_date->format(DATE_FORMAT_SHORT),
+			'FIXING_DATE' => $contribution_fixing_date->format(Date::FORMAT_DAY_MONTH_YEAR),
 			'U_FIXER_PROFILE' => UserUrlBuilder::profile($contribution->get_fixer_id())->absolute()
 		));
 	}
@@ -293,8 +293,8 @@ else
 					'ENTITLED' => $this_contribution->get_entitled(),
 					'MODULE' => $this_contribution->get_module_name(),
 					'STATUS' => $this_contribution->get_status_name(),
-					'CREATION_DATE' => $creation_date->format(DATE_FORMAT_SHORT),
-					'FIXING_DATE' => $fixing_date->format(DATE_FORMAT_SHORT),
+					'CREATION_DATE' => $creation_date->format(Date::FORMAT_DAY_MONTH_YEAR),
+					'FIXING_DATE' => $fixing_date->format(Date::FORMAT_DAY_MONTH_YEAR),
 					'POSTER' => $this_contribution->get_poster_login(),
 					'POSTER_LEVEL_CLASS' => UserService::get_level_class($this_contribution->get_poster_level()),
 					'POSTER_GROUP_COLOR' => $poster_group_color,

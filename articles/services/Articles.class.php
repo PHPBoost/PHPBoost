@@ -380,7 +380,8 @@ class Articles
 			
 			//Articles
 			'TITLE' => $this->get_title(),
-			'DATE' => $this->get_date_created()->format(DATE_FORMAT_SHORT),
+			'DATE' => $this->get_date_created()->format(Date::FORMAT_DAY_MONTH_YEAR),
+			'DATE_ISO' => $this->get_creation_date()->format(Date::FORMAT_ISO),
 			'L_COMMENTS' => CommentsService::get_number_and_lang_comments('articles', $this->get_id()),
 			'NUMBER_VIEW' => $this->get_number_view(),
 			'NOTE' => $this->get_notation()->get_number_notes() > 0 ? NotationService::display_static_image($this->get_notation()) : '&nbsp;',

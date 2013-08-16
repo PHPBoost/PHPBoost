@@ -81,7 +81,7 @@ foreach ($alerts_list as $alert)
 		'PRIORITY' => $alert->get_priority_name(),
 		'STYLE' => 'background:#' . $color . ';',
 		'IMG' => !empty($img_type) ? '<img src="'. PATH_TO_ROOT .'/templates/' . get_utheme() . '/images/admin/' . $img_type . '" alt="" class="valign_middle" />' : '',
-		'DATE' => $creation_date->format(DATE_FORMAT),
+		'DATE' => $creation_date->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE),
 		'ID' => $alert->get_id(),
 		'STATUS' => $alert->get_status()
 	));

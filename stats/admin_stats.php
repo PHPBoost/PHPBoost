@@ -1216,7 +1216,7 @@ else
 	{
 		$Template->put_all(array(
 			'C_STATS_SITE' => true,
-			'START' => GeneralConfig::load()->get_site_install_date()->format(DATE_FORMAT_SHORT),
+			'START' => GeneralConfig::load()->get_site_install_date()->format(Date::FORMAT_DAY_MONTH_YEAR),
 			'VERSION' => Environment::get_phpboost_version(),
 			'BUILD' => GeneralConfig::load()->get_phpboost_major_version(),
 			'L_START' => $LANG['start'],
