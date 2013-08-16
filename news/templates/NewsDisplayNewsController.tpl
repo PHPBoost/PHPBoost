@@ -41,9 +41,8 @@ function Confirm()
 		
 		<meta itemprop="url" content="{U_LINK}">
 		<meta itemprop="description" content="{DESCRIPTION}">
-		<meta itemprop="dateCreated" content="{DATE_ISO}">
+		<meta itemprop="datePublished" content="{DATE_ISO}">
 		<meta itemprop="discussionUrl" content="{U_COMMENTS}">
-		# IF C_PICTURE #<meta itemprop="thumbnailUrl" content="{U_PICTURE}"># ENDIF #
 		<meta itemprop="interactionCount" content="{NUMBER_COMMENTS} UserComments">
 		
 		<div class="news_author_container">
@@ -56,7 +55,7 @@ function Confirm()
 		
 	</div>
 	<div class="module_contents">
-		# IF C_PICTURE #<img src="{U_PICTURE}" alt="{NAME}" title="{NAME}" class="img_right" /># ENDIF #
+		# IF C_PICTURE #<img itemprop="thumbnailUrl" src="{U_PICTURE}" alt="{NAME}" title="{NAME}" class="img_right" /># ENDIF #
 		
 		<span itemprop="text">{CONTENTS}</span>
 		
