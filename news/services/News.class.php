@@ -119,6 +119,15 @@ class News
 	{
 		return $this->short_contents;
 	}
+	
+	public function get_real_short_contents()
+	{
+		if ($this->get_short_contents_enabled())
+		{
+			return $this->short_contents;
+		}
+		return TextHelper::substr_html(@strip_tags($this->contents), 0, NewsConfig::load()->get_number_character_to_cut());
+	}
 		
 	public function get_short_contents_enabled()
 	{
@@ -315,8 +324,8 @@ class News
 			'ID' => $this->get_id(),
 			'NAME' => $this->get_name(),
 			'CONTENTS' => FormatingHelper::second_parse($this->get_contents()),
-		//	'DESCRIPTION' => ,
-			'DATE' => $this->get_creation_date()->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE),
+			'DESCRIPTION' => $this->get_real_short_contents(),
+			'DATE' => $this->get_creation_date()->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE_TEXT),
 			'DATE_ISO' => $this->get_creation_date()->format(Date::FORMAT_ISO),
 			'PSEUDO' => $user->get_pseudo(),
 			'USER_LEVEL_CLASS' => UserService::get_level_class($user->get_level()),
@@ -328,14 +337,14 @@ class News
 			'CATEGORY_DESCRIPTION' => $category->get_description(),
 			'CATEGORY_IMAGE' => $category->get_image(),
 		
-			'U_SYNDICATION' => SyndicationUrlBuilder::rss('news', $this->get_id_cat())->rel(),
+			'U_SYNDICATION' => SyndicationUrlBuilder::rss('news', $this->get_id_cat())->absolute(),
 			'U_AUTHOR_PROFILE' => UserUrlBuilder::profile($this->get_author_user()->get_id())->absolute(),
-			'U_LINK' => NewsUrlBuilder::display_news($category->get_id(), $category->get_rewrited_name(), $this->get_id(), $this->get_rewrited_name())->rel(),
-			'U_CATEGORY' => NewsUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name())->rel(),
-			'U_EDIT' => NewsUrlBuilder::edit_news($this->get_id())->rel(),
-			'U_DELETE' => NewsUrlBuilder::delete_news($this->get_id())->rel(),
-			'U_PICTURE' => $this->get_picture()->rel(),
-			'U_COMMENTS' => NewsUrlBuilder::display_comments_news($category->get_id(), $category->get_rewrited_name(), $this->get_id(), $this->get_rewrited_name())->rel()
+			'U_LINK' => NewsUrlBuilder::display_news($category->get_id(), $category->get_rewrited_name(), $this->get_id(), $this->get_rewrited_name())->absolute(),
+			'U_CATEGORY' => NewsUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name())->absolute(),
+			'U_EDIT' => NewsUrlBuilder::edit_news($this->get_id())->absolute(),
+			'U_DELETE' => NewsUrlBuilder::delete_news($this->get_id())->absolute(),
+			'U_PICTURE' => $this->get_picture()->absolute(),
+			'U_COMMENTS' => NewsUrlBuilder::display_comments_news($category->get_id(), $category->get_rewrited_name(), $this->get_id(), $this->get_rewrited_name())->absolute()
 		);
 	}
 }

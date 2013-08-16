@@ -398,7 +398,7 @@ class Articles
 			'U_ARTICLE' => ArticlesUrlBuilder::display_article($category->get_id(), $category->get_rewrited_name(), $this->get_id(), $this->get_rewrited_title())->absolute(),
 			'U_EDIT_ARTICLE' => ArticlesUrlBuilder::edit_article($this->get_id())->absolute(),
 			'U_DELETE_ARTICLE' => ArticlesUrlBuilder::delete_article($this->get_id())->absolute(),
-			'U_SYNDICATION' => ArticlesUrlBuilder::category_syndication($category->get_id())->rel()
+			'U_SYNDICATION' => ArticlesUrlBuilder::category_syndication($category->get_id())->absolute()
 		);
 	}
 }
