@@ -32,13 +32,15 @@ class ModulePagination
 {
 	private $pagination;
 	private $current_page;
+	private $number_elements;
 	private $number_items_per_page;
 	
 	public function __construct($current_page, $number_elements, $number_items_per_page)
 	{
 		$this->current_page = $current_page;
+		$this->number_elements = $number_elements;
 		$this->number_items_per_page = $number_items_per_page;
-		$this->pagination = new Pagination($this->get_number_pages($number_elements), $this->current_page);
+		$this->pagination = new Pagination($this->get_number_pages(), $this->current_page);
 	}
 	
 	public function set_url(Url $url)
@@ -67,9 +69,14 @@ class ModulePagination
 		return ($current_page - 1) * $this->get_number_items_per_page();
 	}
 	
-	public function get_number_pages($number_elements)
+	public function has_several_pages()
 	{
-		return ceil($number_elements / $this->get_number_items_per_page());
+		return $this->get_number_pages() > 1;
+	}
+	
+	public function get_number_pages()
+	{
+		return ceil($this->number_elements / $this->get_number_items_per_page());
 	}
 }
 ?>
