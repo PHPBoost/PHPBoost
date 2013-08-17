@@ -271,22 +271,22 @@ class User
 	
 	public function set_properties(array $properties)
 	{
-		$this->set_id($properties['user_id']);
-		$this->set_level($properties['level']);
+		$this->id = $properties['user_id'];
+		$this->level = $properties['level'];
 		
-		$this->set_email($properties['user_mail']);
-		$this->set_show_email($properties['user_show_mail']);
-		$this->set_approbation($properties['user_aprob']);
-		$this->set_locale($properties['user_lang']);
-		$this->set_theme($properties['user_theme']);
-		$this->set_timezone($properties['user_timezone']);
-		$this->set_editor($properties['user_editor']);
+		$this->email = $properties['user_mail'];
+		$this->show_email = $properties['user_show_mail'];
+		$this->approbation = $properties['user_aprob'];
+		$this->locale = $properties['user_lang'];
+		$this->theme = $properties['user_theme'];
+		$this->timezone = $properties['user_timezone'];
+		$this->editor = $properties['user_editor'];
 		
-		$this->set_delay_banned($properties['user_ban']);
-		$this->set_delay_readonly($properties['user_readonly']);
-		$this->set_warning_percentage($properties['user_warning']);
+		$this->delay_banned = $properties['user_ban'];
+		$this->delay_readonly = $properties['user_readonly'];
+		$this->warning_percentage = $properties['user_warning'];
 		
-		$this->set_pseudo($properties['login']);
+		$this->pseudo = $properties['login'];
 		$this->set_groups($properties['user_groups']);
 	}
 }
