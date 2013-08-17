@@ -112,7 +112,7 @@ if ($calendar_type == 'date')
     	
     //Prise en compte et converstion des formats de dates.
     $format = '';
-    $array_date = explode('/', $LANG['date_format_short']);
+    $array_date = explode('/', $LANG['date_format_day_month_year']);
     for ($i = 0; $i < 3; $i++)
     {
         switch ($array_date[$i])
@@ -123,7 +123,7 @@ if ($calendar_type == 'date')
             case 'm':
                 $format .= "%2\$s";
                 break;
-            case 'y':
+            case 'Y':
                 $format .= "%3\$s";
                 break;
         }
