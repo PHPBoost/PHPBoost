@@ -93,6 +93,7 @@ class NewsDisplayPendingNewsController extends ModuleController
 			'C_NEWS_NO_AVAILABLE' => $result->get_rows_count() == 0,
 			'C_ADD' => NewsAuthorizationsService::check_authorizations()->write() || NewsAuthorizationsService::check_authorizations()->contribution(),
 			'C_PENDING_NEWS' => NewsAuthorizationsService::check_authorizations()->write() || NewsAuthorizationsService::check_authorizations()->moderation(),
+			'C_PAGINATION' => $pagination->has_several_pages(),
 		
 			'PAGINATION' => $pagination->display(),
 		

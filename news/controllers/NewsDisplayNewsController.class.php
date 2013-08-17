@@ -77,7 +77,6 @@ class NewsDisplayNewsController extends ModuleController
 	{
 		$news = $this->get_news();
 		$category = NewsService::get_categories_manager()->get_categories_cache()->get_category($news->get_id_cat());
-		$main_lang = LangLoader::get('main');
 		
 		$this->tpl->put_all($news->get_array_tpl_vars());
 		
@@ -86,14 +85,11 @@ class NewsDisplayNewsController extends ModuleController
 		$comments_topic->set_url(NewsUrlBuilder::display_news($category->get_id(), $category->get_rewrited_name(), $news->get_id(), $news->get_rewrited_name()));
 		
 		$this->tpl->put_all(array(
-			'NUMBER_COMMENTS' => CommentsService::get_number_comments('news', $news->get_id()),
 			'COMMENTS' => $comments_topic->display(),
-			'L_SYNDICATION' => $main_lang['syndication'],
-			'L_EDIT' => $main_lang['edit'],
-			'L_DELETE' => $main_lang['delete'],
 		));
 
 		$this->build_sources_view($news);
+		$this->build_keywords_view($news);
 		
 		$this->build_navigation_links($news);
 	}
@@ -101,16 +97,34 @@ class NewsDisplayNewsController extends ModuleController
 	private function build_sources_view(News $news)
 	{
 		$sources = $news->get_sources();
-		$this->tpl->put('C_SOURCES', !empty($sources));
+		$nbr_sources = count($sources);
+		$this->tpl->put('C_SOURCES', $nbr_sources > 0);
 		
-		$i = 0;
+		$i = 1;
 		foreach ($sources as $name => $url)
 		{	
 			$this->tpl->assign_block_vars('sources', array(
-				'I' => $i,
+				'C_SEPARATOR' => $i < $nbr_sources,
 				'NAME' => $name,
-				'COMMA' => $i > 0 ? ', ' : ' ',
 				'URL' => $url,
+			));
+			$i++;
+		}
+	}
+	
+	private function build_keywords_view(News $news)
+	{
+		$keywords = $news->get_keywords();
+		$nbr_keywords = count($keywords);
+		$this->tpl->put('C_KEYWORDS', $nbr_keywords > 0);
+
+		$i = 1;
+		foreach ($keywords as $keyword)
+		{	
+			$this->tpl->assign_block_vars('keywords', array(
+				'C_SEPARATOR' => $i < $nbr_keywords,
+				'NAME' => $keyword->get_name(),
+				'URL' => NewsUrlBuilder::display_tag($keyword->get_rewrited_name())->absolute(),
 			));
 			$i++;
 		}

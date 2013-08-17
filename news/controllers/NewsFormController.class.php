@@ -125,7 +125,7 @@ class NewsFormController extends ModuleController
 		)));
 		$other_fieldset->add_field(new FormFieldFree('preview_picture', $this->lang['news.form.picture.preview'], '<img id="preview_picture" src="'. $this->get_news()->get_picture()->rel() .'" alt="" style="vertical-align:top" />'));
 
-		$other_fieldset->add_field(new FormFieldMultipleAutocompleter('keywords', $this->lang['news.form.keywords'], $this->get_news()->get_keywords(), array('description' => $this->lang['news.form.keywords.description'], 'file' => TPL_PATH_TO_ROOT . '/news/ajax/tag/')));
+		$other_fieldset->add_field(new FormFieldMultipleAutocompleter('keywords', $this->lang['news.form.keywords'], $this->get_news()->get_keywords_name(), array('description' => $this->lang['news.form.keywords.description'], 'file' => TPL_PATH_TO_ROOT . '/news/ajax/tag/')));
 		
 		$other_fieldset->add_field(new NewsFormFieldSelectSources('sources', $this->lang['news.form.sources'], $this->get_news()->get_sources()));
 		

@@ -2,7 +2,7 @@
 <!--
 function Confirm()
 {
-	return confirm("${i18n('news.message.delete')}");
+	return confirm(${i18njs('news.message.delete')});
 }
 -->
 </script>
@@ -20,12 +20,12 @@ function Confirm()
 				<ul>
 					# IF C_EDIT #
 					<li>
-						<a href="{U_EDIT}" title="{L_EDIT}" class="img_link">{L_EDIT}</a>
+						<a href="{U_EDIT}" title="${LangLoader::get_message('edit', 'main')}" class="img_link">${LangLoader::get_message('edit', 'main')}</a>
 					</li>
 					# ENDIF #
 					# IF C_DELETE #
 					<li>
-						<a href="{U_DELETE}" title="{L_DELETE}" onclick="javascript:return Confirm();">{L_DELETE}</a>
+						<a href="{U_DELETE}" title="${LangLoader::get_message('delete', 'main')}" onclick="javascript:return Confirm();">${LangLoader::get_message('delete', 'main')}</a>
 					</li>
 					# ENDIF #
 				</ul>
@@ -33,8 +33,8 @@ function Confirm()
 		</ul>
 
 		<div class="module_top_title">
-			<a href="{U_SYNDICATION}" title="{L_SYNDICATION}" class="img_link">
-				<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/rss.png" alt="{L_SYNDICATION}"/>
+			<a href="{U_SYNDICATION}" title="${LangLoader::get_message('syndication', 'main')}" class="img_link">
+				<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/rss.png" alt="${LangLoader::get_message('syndication', 'main')}"/>
 			</a>
 			<span id="name" itemprop="name">{NAME}</span>
 		</div>
@@ -65,18 +65,20 @@ function Confirm()
 		<div id="news_sources_container">
 			<span class="news_more_title">{@news.form.sources}</span> :
 			# START sources #
-			<a itemprop="isBasedOnUrl" href="{sources.URL}" class="small_link">{sources.NAME}</a> {sources.COMMA} 
+			<a itemprop="isBasedOnUrl" href="{sources.URL}" class="small_link">{sources.NAME}</a># IF sources.C_SEPARATOR #, # ENDIF #
 			# END sources #
 		</div>
 		# ENDIF #
 
+		# IF C_KEYWORDS #
 		<div id="news_tags_container">
 			<span class="news_more_title">{@news.form.keywords}</span> :
 				# START keywords #
-					<a itemprop="keywords" href="{keywords.URL}">{keywords.NAME}</a> {keywords.COMMA}
+					<a itemprop="keywords" href="{keywords.URL}">{keywords.NAME}</a># IF keywords.C_SEPARATOR #, # ENDIF #
 				# END keywords #
 		</div>
-								
+		# ENDIF #
+							
 		<div class="spacer"></div>
 	</div>
 	<div class="module_bottom_l"></div>

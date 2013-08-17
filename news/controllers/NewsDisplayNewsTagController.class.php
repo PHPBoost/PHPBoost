@@ -65,7 +65,9 @@ class NewsDisplayNewsTagController extends ModuleController
 		FROM '. NewsSetup::$news_table .' news
 		LEFT JOIN '. NewsSetup::$news_keywords_relation_table .' relation ON relation.id_news = news.id
 		LEFT JOIN '. DB_TABLE_MEMBER .' member ON member.user_id = news.author_user_id
-		WHERE relation.id_keyword = :id_keyword AND (news.approbation_type = 1 OR (news.approbation_type = 2 AND news.start_date < :timestamp_now AND (end_date > :timestamp_now OR end_date = 0))) AND news.id_category IN :authorized_categories', array(
+		WHERE relation.id_keyword = :id_keyword AND (news.approbation_type = 1 OR (news.approbation_type = 2 AND news.start_date < :timestamp_now AND (end_date > :timestamp_now OR end_date = 0))) AND news.id_category IN :authorized_categories
+		ORDER BY top_list_enabled DESC, news.creation_date DESC
+		LIMIT :number_items_per_page OFFSET :display_from', array(
 			'id_keyword' => $this->get_keyword()->get_id(),
 			'timestamp_now' => $now->get_timestamp(),
 			'authorized_categories' => $authorized_categories,
@@ -99,6 +101,7 @@ class NewsDisplayNewsTagController extends ModuleController
 			'C_NEWS_NO_AVAILABLE' => $result->get_rows_count() == 0,
 			'C_ADD' => NewsAuthorizationsService::check_authorizations()->write() || NewsAuthorizationsService::check_authorizations()->contribution(),
 			'C_PENDING_NEWS' => NewsAuthorizationsService::check_authorizations()->write() || NewsAuthorizationsService::check_authorizations()->moderation(),
+			'C_PAGINATION' => $pagination->has_several_pages(),
 		
 			'PAGINATION' => $pagination->display(),
 			
@@ -144,16 +147,17 @@ class NewsDisplayNewsTagController extends ModuleController
 	
 	private function get_pagination(Date $now, $authorized_categories)
 	{
-		$number_news = PersistenceContext::get_querier()->count(
-			NewsSetup::$news_table, 
-			'WHERE (approbation_type = 1 OR (approbation_type = 2 AND start_date < :timestamp_now AND (end_date > :timestamp_now) OR end_date = 0)) AND id_category IN :authorized_categories', 
-			array(
-				'timestamp_now' => $now->get_timestamp(),
-				'authorized_categories' => $authorized_categories
+		$result = PersistenceContext::get_querier()->select_single_row_query('SELECT COUNT(*) AS nbr_news
+		FROM '. NewsSetup::$news_table .' news
+		LEFT JOIN '. NewsSetup::$news_keywords_relation_table .' relation ON relation.id_news = news.id
+		WHERE relation.id_keyword = :id_keyword AND (news.approbation_type = 1 OR (news.approbation_type = 2 AND news.start_date < :timestamp_now AND (end_date > :timestamp_now OR end_date = 0))) AND news.id_category IN :authorized_categories', array(
+			'id_keyword' => $this->get_keyword()->get_id(),
+			'timestamp_now' => $now->get_timestamp(),
+			'authorized_categories' => $authorized_categories,
 		));
-		
+
 		$page = AppContext::get_request()->get_getint('page', 1);
-		$pagination = new ModulePagination($page, $number_news, (int)NewsConfig::load()->get_number_news_per_page());
+		$pagination = new ModulePagination($page, $result['nbr_news'], (int)NewsConfig::load()->get_number_news_per_page());
 		$pagination->set_url(NewsUrlBuilder::display_tag($this->get_keyword()->get_rewrited_name(), '%d'));
 		
 		if ($pagination->current_page_is_empty() && $page > 1)

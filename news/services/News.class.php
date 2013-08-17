@@ -236,8 +236,13 @@ class News
 	{
 		return $this->sources;
 	}
-		
+	
 	public function get_keywords()
+	{
+		return NewsKeywordsService::get_keywords($this->id);
+	}
+	
+	public function get_keywords_name()
 	{
 		return NewsKeywordsService::get_keywords_name($this->id);
 	}
@@ -264,19 +269,20 @@ class News
 	
 	public function set_properties(array $properties)
 	{
-		$this->set_id($properties['id']);
-		$this->set_id_cat($properties['id_category']);
-		$this->set_name($properties['name']);
-		$this->set_rewrited_name($properties['rewrited_name']);
-		$this->set_contents($properties['contents']);
-		$this->set_short_contents($properties['short_contents']);
-		$this->set_approbation_type($properties['approbation_type']);
+		$this->id = $properties['id'];
+		$this->id_cat = $properties['id_category'];
+		$this->name = $properties['name'];
+		$this->rewrited_name = $properties['rewrited_name'];
+		$this->contents = $properties['contents'];
+		$this->short_contents = $properties['short_contents'];
+		$this->approbation_type = $properties['approbation_type'];
 		$this->start_date = !empty($properties['start_date']) ? new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $properties['start_date']) : null;
-		$this->end_date = !empty($properties['end_date']) ? new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $properties['end_date']) : null;
-		$this->set_top_list_enabled((bool)$properties['top_list_enabled']);
-		$this->set_creation_date(new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $properties['creation_date']));
-		$this->set_picture(new Url($properties['picture_url']));
-		$this->set_sources(!empty($properties['sources']) ? unserialize($properties['sources']) : array());
+		$this->set_end_date = !empty($properties['end_date']) ? new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $properties['end_date']) : null;
+		$this->end_date_enabled = true;
+		$this->top_list_enabled = (bool)$properties['top_list_enabled'];
+		$this->creation_date = new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $properties['creation_date']);
+		$this->picture = new Url($properties['picture_url']);
+		$this->sources = !empty($properties['sources']) ? unserialize($properties['sources']) : array();
 		
 		$user = new User();
 		$user->set_properties($properties);
@@ -310,26 +316,27 @@ class News
 	
 	public function get_array_tpl_vars()
 	{
-		$category = NewsService::get_categories_manager()->get_categories_cache()->get_category($this->get_id_cat());
+		$category = NewsService::get_categories_manager()->get_categories_cache()->get_category($this->id_cat);
 		$user = $this->get_author_user();
 		$user_group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
 		
 		return array(
-			'C_EDIT' =>  NewsAuthorizationsService::check_authorizations($this->get_id_cat())->moderation() || NewsAuthorizationsService::check_authorizations($this->get_id_cat())->write() && $user->get_id() == AppContext::get_current_user()->get_id(),
-			'C_DELETE' =>  NewsAuthorizationsService::check_authorizations($this->get_id_cat())->moderation(),
+			'C_EDIT' =>  NewsAuthorizationsService::check_authorizations($this->id_cat)->moderation() || NewsAuthorizationsService::check_authorizations($this->id_cat)->write() && $user->get_id() == AppContext::get_current_user()->get_id(),
+			'C_DELETE' =>  NewsAuthorizationsService::check_authorizations($this->id_cat)->moderation(),
 			'C_PICTURE' => $this->has_picture(),
 			'C_USER_GROUP_COLOR' => !empty($user_group_color),
 		
 			//News
-			'ID' => $this->get_id(),
-			'NAME' => $this->get_name(),
-			'CONTENTS' => FormatingHelper::second_parse($this->get_contents()),
+			'ID' => $this->id,
+			'NAME' => $this->name,
+			'CONTENTS' => FormatingHelper::second_parse($this->contents),
 			'DESCRIPTION' => $this->get_real_short_contents(),
-			'DATE' => $this->get_creation_date()->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE_TEXT),
-			'DATE_ISO' => $this->get_creation_date()->format(Date::FORMAT_ISO),
+			'DATE' => $this->creation_date->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE_TEXT),
+			'DATE_ISO' => $this->creation_date->format(Date::FORMAT_ISO),
 			'PSEUDO' => $user->get_pseudo(),
 			'USER_LEVEL_CLASS' => UserService::get_level_class($user->get_level()),
 			'USER_GROUP_COLOR' => $user_group_color,
+			'NUMBER_COMMENTS' => CommentsService::get_number_comments('news', $this->id),
 		
 			//Category
 			'CATEGORY_ID' => $category->get_id(),
@@ -337,14 +344,14 @@ class News
 			'CATEGORY_DESCRIPTION' => $category->get_description(),
 			'CATEGORY_IMAGE' => $category->get_image(),
 		
-			'U_SYNDICATION' => SyndicationUrlBuilder::rss('news', $this->get_id_cat())->absolute(),
-			'U_AUTHOR_PROFILE' => UserUrlBuilder::profile($this->get_author_user()->get_id())->absolute(),
-			'U_LINK' => NewsUrlBuilder::display_news($category->get_id(), $category->get_rewrited_name(), $this->get_id(), $this->get_rewrited_name())->absolute(),
+			'U_SYNDICATION' => SyndicationUrlBuilder::rss('news', $this->id_cat)->absolute(),
+			'U_AUTHOR_PROFILE' => UserUrlBuilder::profile($this->get_author_user()->id)->absolute(),
+			'U_LINK' => NewsUrlBuilder::display_news($category->get_id(), $category->get_rewrited_name(), $this->id, $this->rewrited_name)->absolute(),
 			'U_CATEGORY' => NewsUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name())->absolute(),
-			'U_EDIT' => NewsUrlBuilder::edit_news($this->get_id())->absolute(),
-			'U_DELETE' => NewsUrlBuilder::delete_news($this->get_id())->absolute(),
+			'U_EDIT' => NewsUrlBuilder::edit_news($this->id)->absolute(),
+			'U_DELETE' => NewsUrlBuilder::delete_news($this->id)->absolute(),
 			'U_PICTURE' => $this->get_picture()->absolute(),
-			'U_COMMENTS' => NewsUrlBuilder::display_comments_news($category->get_id(), $category->get_rewrited_name(), $this->get_id(), $this->get_rewrited_name())->absolute()
+			'U_COMMENTS' => NewsUrlBuilder::display_comments_news($category->get_id(), $category->get_rewrited_name(), $this->id, $this->rewrited_name)->absolute()
 		);
 	}
 }
