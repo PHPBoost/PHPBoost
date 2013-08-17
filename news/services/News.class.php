@@ -345,7 +345,7 @@ class News
 			'CATEGORY_IMAGE' => $category->get_image(),
 		
 			'U_SYNDICATION' => SyndicationUrlBuilder::rss('news', $this->id_cat)->absolute(),
-			'U_AUTHOR_PROFILE' => UserUrlBuilder::profile($this->get_author_user()->id)->absolute(),
+			'U_AUTHOR_PROFILE' => UserUrlBuilder::profile($this->get_author_user()->get_id())->absolute(),
 			'U_LINK' => NewsUrlBuilder::display_news($category->get_id(), $category->get_rewrited_name(), $this->id, $this->rewrited_name)->absolute(),
 			'U_CATEGORY' => NewsUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name())->absolute(),
 			'U_EDIT' => NewsUrlBuilder::edit_news($this->id)->absolute(),
