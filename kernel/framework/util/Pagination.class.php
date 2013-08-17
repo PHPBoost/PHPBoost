@@ -118,8 +118,10 @@ class Pagination
 	{
 		$this->tpl->assign_block_vars('page', array(
 			'URL' => $this->get_url($page_number),
-			'NUMBER' => $name,
-			'C_CURRENT_PAGE' => $is_current_page
+			'NAME' => $name,
+			'C_CURRENT_PAGE' => $is_current_page,
+			'C_PREVIOUS' => $name == '&laquo;',
+			'C_NEXT' => $name == '&raquo;'
 		));
 	}
 
