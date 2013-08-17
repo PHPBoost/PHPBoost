@@ -281,7 +281,7 @@ class News
 		$this->end_date_enabled = true;
 		$this->top_list_enabled = (bool)$properties['top_list_enabled'];
 		$this->creation_date = new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $properties['creation_date']);
-		$this->picture = new Url($properties['picture_url']);
+		$this->picture_url = new Url($properties['picture_url']);
 		$this->sources = !empty($properties['sources']) ? unserialize($properties['sources']) : array();
 		
 		$user = new User();
