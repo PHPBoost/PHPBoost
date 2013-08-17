@@ -2,7 +2,7 @@
 <!--
 	function Confirm()
 	{
-		return confirm("${i18n('news.message.delete')}");
+		return confirm(${i18njs('news.message.delete')});
 	}
 -->
 </script>
@@ -71,27 +71,27 @@
 				<ul class="module_top_options">
 				# ENDIF #
 					<li>
-						<a class="news_comments" href="{news.U_COMMENTS}">1</a>
+						<a class="news_comments" href="{news.U_COMMENTS}">{news.NUMBER_COMMENTS}</a>
 					</li>
 					<li>
 						<a><span class="options"></span><span class="caret"></span></a>
 						<ul>
 							# IF news.C_EDIT #
 							<li>
-								<a href="{news.U_EDIT}" title="{L_EDIT}" class="img_link">Editer</a>
+								<a href="{news.U_EDIT}" title="${LangLoader::get_message('edit', 'main')}" class="img_link">${LangLoader::get_message('edit', 'main')}</a>
 							</li>
 							# ENDIF #
 							# IF news.C_DELETE #
 							<li>
-								<a href="{news.U_DELETE}" title="{L_DELETE}" onclick="javascript:return Confirm();">Supprimer</a>
+								<a href="{news.U_DELETE}" title="${LangLoader::get_message('delete', 'main')}" onclick="javascript:return Confirm();">${LangLoader::get_message('delete', 'main')}</a>
 							</li>
 							# ENDIF #
 						</ul>
 					</li>
 				</ul>
 				<div class="module_top_title">
-					<a href="{news.U_SYNDICATION}" title="{L_SYNDICATION}" class="img_link">
-						<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/rss.png" alt="{L_SYNDICATION}" />
+					<a href="{news.U_SYNDICATION}" title="${LangLoader::get_message('syndication', 'main')}" class="img_link">
+						<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/rss.png" alt="${LangLoader::get_message('syndication', 'main')}" />
 					</a>
         			<a href="{news.U_LINK}">{news.NAME}</a>
         		</div>
@@ -120,5 +120,5 @@
 		</div>
 	# END news #
 	</div>
-	<div class="text_center"># INCLUDE PAGINATION #</div>
+	# IF C_PAGINATION #<div class="text_center"># INCLUDE PAGINATION #</div># ENDIF #
 # ENDIF #

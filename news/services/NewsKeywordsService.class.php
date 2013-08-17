@@ -71,14 +71,32 @@ class NewsKeywordsService
 		return self::$db_querier->get_column_value(NewsSetup::$news_keywords_table, 'id', $condition, $parameters);
 	}
 	
-	public static function get_keywords_name($id)
+	public static function get_keywords($id_news)
+	{
+		$keywords = array();
+		$result = PersistenceContext::get_querier()->select('SELECT relation.id_news, relation.id_keyword, keyword.*
+			FROM '. NewsSetup::$news_keywords_relation_table .' relation
+			LEFT JOIN '. NewsSetup::$news_keywords_table .' keyword ON keyword.id = relation.id_keyword
+			WHERE relation.id_news = :id_news', array(
+				'id_news' => $id_news
+		));
+		while ($row = $result->fetch())
+		{
+			$keyword = new NewsKeyword();
+			$keyword->set_properties($row);
+			$keywords[] = $keyword;
+		}
+		return $keywords;
+	}
+	
+	public static function get_keywords_name($id_news)
 	{
 		$keywords = array();
 		$result = PersistenceContext::get_querier()->select('SELECT relation.id_news, relation.id_keyword, keyword.name
 			FROM '. NewsSetup::$news_keywords_relation_table .' relation
 			LEFT JOIN '. NewsSetup::$news_keywords_table .' keyword ON keyword.id = relation.id_keyword
 			WHERE relation.id_news = :id_news', array(
-				'id_news' => $id
+				'id_news' => $id_news
 		));
 		while ($row = $result->fetch())
 		{

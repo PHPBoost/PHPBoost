@@ -98,6 +98,7 @@ class NewsDisplayCategoryController extends ModuleController
 			'C_NEWS_NO_AVAILABLE' => $result->get_rows_count() == 0,
 			'C_ADD' => NewsAuthorizationsService::check_authorizations($this->get_category()->get_id())->write() || NewsAuthorizationsService::check_authorizations($this->get_category()->get_id())->contribution(),
 			'C_PENDING_NEWS' => NewsAuthorizationsService::check_authorizations($this->get_category()->get_id())->write() || NewsAuthorizationsService::check_authorizations($this->get_category()->get_id())->moderation(),
+			'C_PAGINATION' => $pagination->has_several_pages(),
 		
 			'PAGINATION' => $pagination->display(),
 			
@@ -118,7 +119,7 @@ class NewsDisplayCategoryController extends ModuleController
 	{
 		$number_news = PersistenceContext::get_querier()->count(
 			NewsSetup::$news_table, 
-			'WHERE (approbation_type = 1 OR (approbation_type = 2 AND start_date < :timestamp_now AND (end_date > :timestamp_now) OR end_date = 0)) AND id_category IN :authorized_categories', 
+			'WHERE (approbation_type = 1 OR (approbation_type = 2 AND start_date < :timestamp_now AND (end_date > :timestamp_now OR end_date = 0))) AND id_category IN :authorized_categories', 
 			array(
 				'timestamp_now' => $now->get_timestamp(),
 				'authorized_categories' => $authorized_categories
