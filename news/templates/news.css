@@ -226,3 +226,207 @@ span.caret{
 }
 
 .module_bottom{ height:0px; }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.nav{
+	background-image: linear-gradient(bottom, #E6E6E6 0%, #FFFFFF 50%);
+	background-image: -o-linear-gradient(bottom, #E6E6E6 0%, #FFFFFF 50%);
+	background-image: -moz-linear-gradient(bottom, #E6E6E6 0%, #FFFFFF 50%);
+	background-image: -webkit-linear-gradient(bottom, #E6E6E6 0%, #FFFFFF 50%);
+	background-image: -ms-linear-gradient(bottom, #E6E6E6 0%, #FFFFFF 50%);
+    -moz-border-radius:3px;
+    -webkit-border-radius:3px;
+    border-radius:3px;
+    border: 1px solid #cccccc;
+    -webkit-box-shadow:rgba(0, 0, 0, 0.2) 0 1px 3px inset;
+    box-shadow:rgba(0, 0, 0, 0.2) 0 1px 3px inset;
+    display:inline-block;
+	transition-delay:1s;
+	transition-proprety:all;  	
+}
+ 
+.nav:hover{
+    background-image:linear-gradient(#454042, #383435 45%, #383435);
+    box-shadow:rgba(0, 0, 0, 0.6) 0 4px 10px inset;
+    border: 1px solid #383435;
+    -moz-border-radius:3px 3px 0 0;
+    -webkit-border-radius:3px 3px 0 0;
+    border-radius:3px 3px 0 0;
+	transition-delay:0s;
+	transition-proprety:border;  
+}
+
+.nav li{
+    float:right;
+    list-style:none;
+    position:relative;
+}
+
+.nav > li > a {
+	display:block;	
+	padding: 5px 7px;
+    height:16px;
+	transition-delay:1s;
+	transition-proprety:background-color;  
+}
+.nav:hover > li > a{
+   background-color:#383435;
+   transition-delay:0s;
+}
+
+span.options{
+	display:inline-block;
+	background:url(images/icones_admin.png) no-repeat -16px -16px;
+	width:16px;
+	height:16px;	
+	transition-delay:1s;
+}
+.nav:hover span.options{ 
+	background-position:-16px 0px;
+	transition-delay:0s;
+}
+
+span.edit{
+	display:inline-block;
+	background:url(images/icones_admin.png) no-repeat -32px 0px;
+	width:16px;
+	height:16px;	
+}
+.subnav li:hover span.edit{ background-position:-32px -16px; }
+
+span.add{
+	display:inline-block;
+	background:url(images/icones_admin.png) no-repeat -48px 0px;
+	width:16px;
+	height:16px;	
+}
+.subnav li:hover span.add{ background-position:-48px -16px; }
+
+span.pending{
+	display:inline-block;
+	background:url(images/icones_admin.png) no-repeat -64px 0px;
+	width:16px;
+	height:16px;	
+}
+.subnav li:hover span.pending{ background-position:-64px -16px; }
+
+.subnav {
+    position: absolute;
+   	right: -1px;
+    overflow:hidden;
+    max-height:0em;
+    transition: 0.9s max-height 0.1s; 
+    background-color:#383435;
+    -moz-border-radius:0 0 3px 3px;
+    -webkit-border-radius:0 0 3px 3px;
+    border-radius:0 0 3px 3px;
+    width: 50px;
+    height: auto;
+}
+
+.subnav > li:first-child {
+    margin-top:3px;
+}
+.subnav > li:last-child {
+    margin-bottom:7px;
+}
+.subnav > li {
+    float: none;
+    padding: 3px 0px;
+}
+ 
+.subnav li:hover{
+    background-color:#376394;
+}
+ 
+.subnav li a {
+    text-align:right;
+    padding:2px 0 0 17px;;
+}
+ 
+.nav:hover .subnav{
+    max-height:13em;
+    background-color: #383435;
+}
+ 
+span.caret{
+	display: inline-block;
+	margin:0px 5px 5px 5px;
+	border-top: 4px solid #999999;
+	border-right: 4px solid transparent;
+	border-left: 4px solid transparent;
+	transition-delay:1s;
+}
+.nav:hover span.caret{ 
+	border-top: 4px solid #DDDDDD;
+	transition-delay:0s;
+}
