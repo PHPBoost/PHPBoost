@@ -321,6 +321,7 @@ function strtotimestamp($str, $date_format)
 				$month = (isset($array_timestamp[$i])) ? NumberHelper::numeric($array_timestamp[$i]) : 0;
 				break;
 			case 'y':
+			case 'Y':
 				$year = (isset($array_timestamp[$i])) ? NumberHelper::numeric($array_timestamp[$i]) : 0;
 				break;
 		}
