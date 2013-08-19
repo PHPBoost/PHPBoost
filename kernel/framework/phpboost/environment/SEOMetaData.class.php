@@ -49,6 +49,11 @@ class SEOMetaData
 	
 	public function get_title()
 	{
+		return $this->title;
+	}
+	
+	public function get_full_title()
+	{
 		if (Environment::get_running_module_name())
 		{
 			return $this->title . ' - ' . GeneralConfig::load()->get_site_name();
@@ -71,6 +76,11 @@ class SEOMetaData
 	}
 	
 	public function get_description()
+	{
+		return $this->description;
+	}
+	
+	public function get_full_description()
 	{
 		if (Environment::get_running_module_name())
 		{

@@ -199,7 +199,7 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 			'C_HEADER_LOGO' => !empty($header_logo_path),
 			'HEADER_LOGO' => Url::to_rel($header_logo_path),
 			'SITE_NAME' => GeneralConfig::load()->get_site_name(),
-			'TITLE' => $this->get_page_title(),
+			'TITLE' => $this->get_seo_meta_data()->get_full_title(),
 			'PATH_TO_ROOT' => TPL_PATH_TO_ROOT,
 			'MODULES_CSS' => $this->get_modules_css_files_html_code(),
 			'L_XML_LANGUAGE' => self::$lang['xml_lang'],
