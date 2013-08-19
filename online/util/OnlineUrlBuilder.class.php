@@ -4,7 +4,7 @@
  *                            -------------------
  *   begin                : January 30, 2012
  *   copyright            : (C) 2012 Julien BRISWALTER
- *   email                : julien.briswalter@gmail.com
+ *   email                : julienseth78@phpboost.com
  *
  *
  ###################################################
@@ -26,17 +26,17 @@
  ###################################################*/
 
 /**
- * @author Julien BRISWALTER <julien.briswalter@gmail.com>
+ * @author Julien BRISWALTER <julienseth78@phpboost.com>
  * @desc
  */
 class OnlineUrlBuilder
 {
-    private static $dispatcher = '/online';
-    
+	private static $dispatcher = '/online';
+	
 	/**
 	 * @return Url
 	 */
-    public static function configuration()
+	public static function configuration()
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/admin/config/');
 	}
@@ -44,7 +44,7 @@ class OnlineUrlBuilder
 	/**
 	 * @return Url
 	 */
-    public static function home($page = '')
+	public static function home($page = '')
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/' . $page);
 	}

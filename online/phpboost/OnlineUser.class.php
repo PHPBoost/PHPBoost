@@ -4,7 +4,7 @@
  *                            -------------------
  *   begin                : February 01, 2012
  *   copyright            : (C) 2012 Julien BRISWALTER
- *   email                : julien.briswalter@gmail.com
+ *   email                : julienseth78@phpboost.com
  *
  *
  ###################################################
@@ -30,6 +30,7 @@ class OnlineUser extends User
 	protected $location_script;
 	protected $location_title;
 	protected $last_update;
+	protected $avatar;
 	
 	public function set_location_script($location_script)
 	{
@@ -59,6 +60,22 @@ class OnlineUser extends User
 	public function get_last_update()
 	{
 		return $this->last_update;
+	}
+	
+	public function set_avatar($avatar)
+	{
+		$this->avatar = $avatar;
+	}
+	
+	public function get_avatar()
+	{
+		$user_accounts_config = UserAccountsConfig::load();
+		
+		if (empty($this->avatar))
+		{
+			return $user_accounts_config->is_default_avatar_enabled() == '1' ? PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/' .  $user_accounts_config->get_default_avatar_name() : '';
+		}
+		return Url::to_rel($this->avatar);
 	}
 }
 ?>

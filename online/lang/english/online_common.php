@@ -41,6 +41,7 @@ $lang['online.last_update'] = 'Last update';
 
 $lang['online_user'] = 'online user';
 $lang['online_users'] = 'online users';
+$lang['online.no_user_online'] = 'No user online';
 
 //Admin
 $lang['admin.online-config'] = 'Online configuration';
