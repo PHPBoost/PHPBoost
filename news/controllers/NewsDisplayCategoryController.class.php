@@ -194,5 +194,14 @@ class NewsDisplayCategoryController extends ModuleController
 	
 		return $response->display($this->tpl);
 	}
+	
+	public static function get_view()
+	{
+		$object = new self();
+		$object->init();
+		$object->check_authorizations();
+		$object->build_view();
+		return $object->tpl;
+	}
 }
 ?>

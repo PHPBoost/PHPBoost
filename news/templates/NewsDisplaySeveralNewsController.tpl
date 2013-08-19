@@ -61,7 +61,7 @@
 		# IF news.C_NEWS_ROW #
 			<div class="spacer"></div>
 		# ENDIF #
-		<div class="module_position" style="float:left;width:{COLUMN_WIDTH}%">
+		<div class="module_position" style="float:left;width:{COLUMN_WIDTH}%" itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
     		<div class="module_top_l"></div>
 			<div class="module_top_r"></div>
 			<div class="module_top module_top_news">
@@ -93,23 +93,28 @@
 					<a href="{news.U_SYNDICATION}" title="${LangLoader::get_message('syndication', 'main')}" class="img_link">
 						<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/rss.png" alt="${LangLoader::get_message('syndication', 'main')}" />
 					</a>
-        			<a href="{news.U_LINK}">{news.NAME}</a>
+        			<a href="{news.U_LINK}"><span id="name" itemprop="name">{news.NAME}</span></a>
         		</div>
+        		
+        		<meta itemprop="url" content="{news.U_LINK}">
+				<meta itemprop="description" content="{news.DESCRIPTION}">
+				<meta itemprop="discussionUrl" content="{news.U_COMMENTS}">
+				<meta itemprop="interactionCount" content="{news.NUMBER_COMMENTS} UserComments">
         		
         		<div class="news_author_container">
 					Posté par 
 					# IF news.PSEUDO #
-					<a class="small_link {news.USER_LEVEL_CLASS}" href="{news.U_AUTHOR_PROFILE}" style="font-size: 12px;" # IF news.C_USER_GROUP_COLOR # style="color:{news.USER_GROUP_COLOR}" # ENDIF #>{news.PSEUDO}</a>, 
+					<a itemprop="author" class="small_link {news.USER_LEVEL_CLASS}" href="{news.U_AUTHOR_PROFILE}" style="font-size: 12px;" # IF news.C_USER_GROUP_COLOR # style="color:{news.USER_GROUP_COLOR}" # ENDIF #>{news.PSEUDO}</a>, 
 					# ENDIF # 
-					le {news.DATE}, 
-					dans la catégorie <a href="{news.U_CATEGORY}">{news.CATEGORY_NAME}</a>
+					le <time datetime="{DATE_RFC3339_F}" itemprop="datePublished">{news.DATE}</time>, 
+					dans la catégorie <a itemprop="about" href="{news.U_CATEGORY}">{news.CATEGORY_NAME}</a>
 				</div>
         		
 				<div class="spacer"></div>
     		</div>
     		<div class="module_contents">
-        		# IF news.C_PICTURE #<img src="{news.U_PICTURE}" alt="{news.NAME}" title="{news.NAME}" class="img_right" /># ENDIF #
-				{news.CONTENTS}
+        		# IF news.C_PICTURE #<img itemprop="thumbnailUrl" src="{news.U_PICTURE}" alt="{news.NAME}" title="{news.NAME}" class="img_right" /># ENDIF #
+				<span itemprop="text">{news.CONTENTS}</span>
 				<div class="spacer"></div>
     		</div>
     		<div class="module_bottom_l"></div>
