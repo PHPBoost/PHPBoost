@@ -47,6 +47,11 @@ class NewsExtensionPointProvider extends ExtensionPointProvider
 		return $module_css_files;
 	}
 	
+	public function home_page()
+	{
+		return new NewsHomePageExtensionPoint();
+	}
+	
 	public function search()
 	{
 		return new NewsSearchable();

@@ -41,18 +41,16 @@ function Confirm()
 		
 		<meta itemprop="url" content="{U_LINK}">
 		<meta itemprop="description" content="{DESCRIPTION}">
-		<meta itemprop="datePublished" content="{DATE_ISO}">
 		<meta itemprop="discussionUrl" content="{U_COMMENTS}">
 		<meta itemprop="interactionCount" content="{NUMBER_COMMENTS} UserComments">
 		
 		<div class="news_author_container">
 			Par # IF PSEUDO #<a itemprop="author" class="small_link {USER_LEVEL_CLASS}" href="{U_AUTHOR_PROFILE}" # IF C_USER_GROUP_COLOR # style="color:{USER_GROUP_COLOR}" # ENDIF #>{PSEUDO}</a>, # ENDIF # 
-			le {DATE},
+			le <time datetime="{DATE_RFC3339_F}" itemprop="datePublished">{DATE}</time>,
 			dans la catégorie <a itemprop="about" href="{U_CATEGORY}">{CATEGORY_NAME}</a>
 		</div>
 		
 		<div class="spacer"></div>
-		
 	</div>
 	<div class="module_contents">
 		# IF C_PICTURE #<img itemprop="thumbnailUrl" src="{U_PICTURE}" alt="{NAME}" title="{NAME}" class="img_right" /># ENDIF #

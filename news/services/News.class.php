@@ -332,6 +332,7 @@ class News
 			'CONTENTS' => FormatingHelper::second_parse($this->contents),
 			'DESCRIPTION' => $this->get_real_short_contents(),
 			'DATE' => $this->creation_date->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE_TEXT),
+			'DATE_RFC3339_F' => $this->creation_date->format(Date::FORMAT_RFC3339_F),
 			'DATE_ISO' => $this->creation_date->format(Date::FORMAT_ISO),
 			'PSEUDO' => $user->get_pseudo(),
 			'USER_LEVEL_CLASS' => UserService::get_level_class($user->get_level()),
