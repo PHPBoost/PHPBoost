@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                              guestbookExtensionPointProvider.class.php
+ *                              GuestbookExtensionPointProvider.class.php
  *                            -------------------
  *   begin                : July 7, 2008
  *   copyright            : (C) 2008 Régis Viarre
