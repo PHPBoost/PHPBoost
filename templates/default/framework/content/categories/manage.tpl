@@ -15,7 +15,7 @@ function serialize_sortable()
 </script>
 <form action="{REWRITED_SCRIPT}" method="post" onsubmit="serialize_sortable();">
 	<fieldset>
-		<legend>Gestion des catégories</legend>
+		<legend>{@categories}</legend>
 			<ul id="categories" class="cat_list">
 				# START childrens #
 					{childrens.child}
