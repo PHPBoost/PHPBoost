@@ -27,7 +27,7 @@
 
 class CacheService
 {
-	private static $all_files_regex_with_extensions = '`^\.|.*\.log`i';
+	private static $all_files_regex_with_extensions = '`^\.|.*\.log|apc.php|debug.php`i';
 
 	private static $cache_folder;
 	private static $tpl_cache_folder;
@@ -52,18 +52,8 @@ class CacheService
 
 	public function clear_phpboost_cache()
 	{
-		$debug_mode = Debug::is_debug_mode_enabled();
-		$debug_mode_type = Debug::is_strict_mode_enabled();
-		
 		CacheManager::clear();
 		$this->delete_files(self::$cache_folder, self::$all_files_regex_with_extensions);
-		
-		if ($debug_mode_type)
-			Debug::enabled_debug_mode(array(Debug::STRICT_MODE => true));
-		elseif ($debug_mode)
-			Debug::enabled_debug_mode(array());
-		else
-			Debug::disable_debug_mode();
 	}
 
 	public function clear_template_cache()
