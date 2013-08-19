@@ -277,7 +277,7 @@ class News
 		$this->short_contents = $properties['short_contents'];
 		$this->approbation_type = $properties['approbation_type'];
 		$this->start_date = !empty($properties['start_date']) ? new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $properties['start_date']) : null;
-		$this->set_end_date = !empty($properties['end_date']) ? new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $properties['end_date']) : null;
+		$this->end_date = !empty($properties['end_date']) ? new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $properties['end_date']) : null;
 		$this->end_date_enabled = true;
 		$this->top_list_enabled = (bool)$properties['top_list_enabled'];
 		$this->creation_date = new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $properties['creation_date']);
