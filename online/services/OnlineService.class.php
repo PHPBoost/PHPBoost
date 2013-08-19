@@ -4,7 +4,7 @@
  *                            -------------------
  *   begin                : February 1, 2012
  *   copyright            : (C) 2012 Julien BRISWALTER
- *   email                : julien.briswalter@gmail.com
+ *   email                : julienseth78@phpboost.com
  *
  *  
  ###################################################
@@ -34,7 +34,7 @@ class OnlineService
 		self::$querier = PersistenceContext::get_querier();
 	}
 	
-	public static function get_nbr_users_connected($condition, $parameters)
+	public static function get_number_users_connected($condition, $parameters)
 	{
 		return self::$querier->count(DB_TABLE_SESSIONS, $condition, $parameters);
 	}
@@ -45,9 +45,11 @@ class OnlineService
 		
 		$result = self::$querier->select("SELECT 
 		s.user_id, s.level, s.session_time, s.session_script, s.session_script_get, s.session_script_title,
-		m.login, m.user_groups
-        FROM " . DB_TABLE_SESSIONS . " s
-        LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = s.user_id "
+		m.login, m.user_groups,
+		f.user_avatar
+		FROM " . DB_TABLE_SESSIONS . " s
+		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = s.user_id 
+		LEFT JOIN " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " f ON f.user_id = s.user_id "
 		. $condition, $parameters);
 		
 		while ($row = $result->fetch())
@@ -58,9 +60,10 @@ class OnlineService
 			$user->set_pseudo($row['login']);
 			$user->set_level($row['level']);
 			$user->set_groups(explode('|', $row['user_groups']));
-			$user->set_last_update(gmdate_format('date_format_long', $row['session_time']));
+			$user->set_last_update(new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $row['session_time']));
 			$user->set_location_script($row['session_script'] . $row['session_script_get']);
 			$user->set_location_title(stripslashes($row['session_script_title']));
+			$user->set_avatar($row['user_avatar']);
 			$users[] = $user;
 		}
 		

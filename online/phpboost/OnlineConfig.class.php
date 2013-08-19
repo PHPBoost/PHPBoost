@@ -32,7 +32,7 @@ class OnlineConfig extends AbstractConfigData
 {
 	const DISPLAY_ORDER = 'display_order';
 	const NUMBER_MEMBER_DISPLAYED = 'number_member_displayed';
-	const NBR_MEMBERS_PER_PAGE = 'nbr_members_per_page';
+	const NUMBER_MEMBERS_PER_PAGE = 'number_members_per_page';
 	
 	const LEVEL_DISPLAY_ORDER = 'level_display_order';
 	const SESSION_TIME_DISPLAY_ORDER = 'session_time_display_order';
@@ -78,16 +78,15 @@ class OnlineConfig extends AbstractConfigData
 		$this->set_property(self::NUMBER_MEMBER_DISPLAYED, $number);
 	}
 	
-	public function get_nbr_members_per_page()
+	public function get_number_members_per_page()
 	{
-		return $this->get_property(self::NBR_MEMBERS_PER_PAGE);
+		return $this->get_property(self::NUMBER_MEMBERS_PER_PAGE);
 	}
 	
-	public function set_nbr_members_per_page($number)
+	public function set_number_members_per_page($number)
 	{
-		$this->set_property(self::NBR_MEMBERS_PER_PAGE, $number);
+		$this->set_property(self::NUMBER_MEMBERS_PER_PAGE, $number);
 	}
-	
 	
 	public function get_authorizations()
 	{
@@ -104,7 +103,7 @@ class OnlineConfig extends AbstractConfigData
 		return array(
 			self::DISPLAY_ORDER => self::LEVEL_AND_SESSION_TIME_DISPLAY_ORDER,
 			self::NUMBER_MEMBER_DISPLAYED => 4,
-			self::NBR_MEMBERS_PER_PAGE => 20,
+			self::NUMBER_MEMBERS_PER_PAGE => 20,
 			self::AUTHORIZATIONS => array('r-1' => 1, 'r0' => 1, 'r1' => 1)
 		);
 	}

@@ -4,7 +4,7 @@
  *                            -------------------
  *   begin                : February 08, 2012
  *   copyright            : (C) 2012 Julien BRISWALTER
- *   email                : julien.briswalter@gmail.com
+ *   email                : julienseth78@phpboost.com
  *
  *
  ###################################################
@@ -42,16 +42,13 @@ class OnlineModuleHomePage implements ModuleHomePage
 		
 		$this->check_authorizations();
 		
-		$pagination = $this->get_pagination();
-		
-		$this->view->put_all(array(
-			'L_LOGIN' => LangLoader::get_message('pseudo', 'main'),
-			'L_PAGE' => LangLoader::get_message('page', 'main'),
-			'PAGINATION' => $pagination->display()
-		));
+		$config = OnlineConfig::load();
+		$number_users_online = OnlineService::get_number_users_connected('WHERE level <> -1 AND session_time > :time', array('time' => time() - SessionsConfig::load()->get_active_session_duration()));
+		$number_users_per_page = (int)$config->get_number_members_per_page();
+		$pagination = $this->get_pagination($number_users_online, $number_users_per_page);
 		
 		$users = OnlineService::get_online_users('WHERE s.session_time > :time
-		ORDER BY '. OnlineConfig::load()->get_display_order_request() .'
+		ORDER BY '. $config->get_display_order_request() .'
 		LIMIT :number_items_per_page OFFSET :display_from',
 			array(
 				'number_items_per_page' => $pagination->get_number_items_per_page(),
@@ -66,7 +63,7 @@ class OnlineModuleHomePage implements ModuleHomePage
 			{
 				$user->set_location_script(OnlineUrlBuilder::home()->absolute());
 				$user->set_location_title($this->lang['online']);
-				$user->set_last_update(gmdate_format('date_format_long', time()));
+				$user->set_last_update(new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, time()));
 			}
 			
 			$group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
@@ -76,15 +73,24 @@ class OnlineModuleHomePage implements ModuleHomePage
 				$this->view->assign_block_vars('users', array(
 					'U_PROFILE' => UserUrlBuilder::profile($user->get_id())->absolute(),
 					'U_LOCATION' => $user->get_location_script(),
+					'U_AVATAR' => $user->get_avatar(),
 					'PSEUDO' => $user->get_pseudo(),
+					'LEVEL' => UserService::get_level_lang($user->get_level()),
 					'LEVEL_CLASS' => UserService::get_level_class($user->get_level()),
 					'C_GROUP_COLOR' => !empty($group_color),
 					'GROUP_COLOR' => $group_color,
 					'TITLE_LOCATION' => $user->get_location_title(),
-					'LAST_UPDATE' => $user->get_last_update()
+					'LAST_UPDATE' => $user->get_last_update()->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE)
 				));
 			}
 		}
+		
+		$this->view->put_all(array(
+			'C_PAGINATION' => $number_users_online > $number_users_per_page,
+			'C_USERS' => $number_users_online,
+			'L_LOGIN' => LangLoader::get_message('pseudo', 'main'),
+			'PAGINATION' => $pagination->display()
+		));
 		
 		return $this->view;
 	}
@@ -105,19 +111,13 @@ class OnlineModuleHomePage implements ModuleHomePage
 		}
 	}
 	
-	private function get_pagination()
+	private function get_pagination($number_users_online, $number_users_per_page)
 	{
-		$number_users_online = PersistenceContext::get_querier()->count(
-			DB_TABLE_SESSIONS, 
-			'WHERE level <> -1 AND session_time > :time', 
-			array(
-				'time' => time() - SessionsConfig::load()->get_active_session_duration()
-		));
-		
-		$pagination = new ModulePagination(AppContext::get_request()->get_getint('page', 1), $number_users_online, (int)OnlineConfig::load()->get_nbr_members_per_page());
+		$page = AppContext::get_request()->get_getint('page', 1);
+		$pagination = new ModulePagination($page, $number_users_online, $number_users_per_page);
 		$pagination->set_url(OnlineUrlBuilder::home('%d'));
 		
-		if ($pagination->current_page_is_empty())
+		if ($pagination->current_page_is_empty() && $page > 1)
 		{
 			$error_controller = PHPBoostErrors::unexisting_page();
 			DispatchManager::redirect($error_controller);

@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                              onlineExtensionPointProvider.class.php
+ *                              OnlineExtensionPointProvider.class.php
  *                            -------------------
  *   begin                : July 7, 2008
  *   copyright            : (C) 2008 Régis Viarre
@@ -27,10 +27,20 @@
 
 class OnlineExtensionPointProvider extends ExtensionPointProvider
 {
-    public function __construct()
-    {
-        parent::__construct('online');
-    }
+	public function __construct()
+	{
+		parent::__construct('online');
+	}
+	
+	 /**
+	 * @method Get css files
+	 */
+	public function css_files()
+	{
+		$module_css_files = new ModuleCssFiles();
+		$module_css_files->adding_always_displayed_file('online.css');
+		return $module_css_files;
+	}
 	
 	public function home_page()
 	{
@@ -41,10 +51,10 @@ class OnlineExtensionPointProvider extends ExtensionPointProvider
 	{
 		return new UrlMappings(array(new DispatcherUrlMapping('/online/index.php')));
 	}
-    
-    public function menus()
-    {
-    	return new ModuleMenus(array(new OnlineModuleMiniMenu()));
-    }
+	
+	public function menus()
+	{
+		return new ModuleMenus(array(new OnlineModuleMiniMenu()));
+	}
 }
 ?>

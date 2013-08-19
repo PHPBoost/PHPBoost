@@ -28,8 +28,8 @@
 /**
  * @author Kevin MASSY <kevin.massy@phpboost.com>
  */
-class OnlineSetup extends DefaultModuleSetup {
-	
+class OnlineSetup extends DefaultModuleSetup
+{
 	public function uninstall()
 	{
 		$this->delete_configuration();
