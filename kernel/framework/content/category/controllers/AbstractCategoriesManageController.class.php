@@ -50,6 +50,7 @@ abstract class AbstractCategoriesManageController extends AdminModuleController
 	{
 		$this->lang = LangLoader::get('categories-common');
 		$this->tpl = new FileTemplate('default/framework/content/categories/manage.tpl');
+		$this->tpl->add_lang($this->lang);	
 	}
 	
 	private function build_view()
@@ -64,15 +65,18 @@ abstract class AbstractCategoriesManageController extends AdminModuleController
 		foreach ($categories as $id => $category)
 		{
 			if ($category->get_id_parent() == $id_parent && $id != Category::ROOT_CATEGORY)
-			{		
+			{	
+				$description_exists = method_exists($category, 'get_description');
 				$category_view = new FileTemplate('default/framework/content/categories/category.tpl');
 				$category_view->put_all(array(
+					'C_DESCRIPTION' => $description_exists,
 					'U_EDIT' => $this->get_edit_category_url($id)->absolute(),
 					'U_DELETE' => $this->get_delete_category_url($id)->absolute(),
 					'L_EDIT' => LangLoader::get_message('update', 'main'),
 					'L_DELETE' => LangLoader::get_message('delete', 'main'),
 					'ID' => $id,
-					'NAME' => $category->get_name()
+					'NAME' => $category->get_name(),
+					'DESCRIPTION' => $description_exists ? $category->get_description() : ''
 				));
 				
 				$this->build_children_view($category_view, $categories, $id);
