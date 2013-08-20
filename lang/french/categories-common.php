@@ -34,6 +34,7 @@ $lang['categories'] = 'Catégories';
 
 //Errors
 $lang['errors.unexisting'] = 'La catégorie n\'existe pas.';
+$lang['message.not_categories'] = 'Aucune catégorie existante.';
 
 //Form
 $lang['category.form.name'] = 'Nom de la catégorie';
