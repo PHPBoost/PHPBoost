@@ -41,7 +41,7 @@ les pages du module "pages".
 [*] Suppression du panneau de modération présent dans l'administration qui fait doublon avec celui du dossier user
 - Envoi d'un MP lors d'un commentaire sur une contribution
 [*] Ajout de la balise enclosure dans les flux RSS pour joindre des médias
-[*] Armonisation des liens dans l'administration :
+[*] Harmonisation des liens dans l'administration :
 	- Smileys est maintenant dans Contenu
 	- Mises à jours dans Administration
 	- Maintenance dans Administration
@@ -62,21 +62,6 @@ les pages du module "pages".
 [*] [color=red]Nouveauté :[/color] Possibilité d'activer/désactiver la notation d'un article pour chacun des articles
 - Ajout des microdonnées pour améliorer le référencement
 
-[b]News[/b]
-[*] [color=red]Nouveauté :[/color] Passage du module en MVC
-[*] [color=red]Nouveauté :[/color] Ajout du nouveau système de catégorie
-[*] [color=red]Nouveauté :[/color] Possibilité d'ajouter des mots clés
-[*] [color=red]Nouveauté :[/color] Refonte des formulaires (plus intuitifs)
-[*] [color=red]Nouveauté :[/color] Possibilité de couper une news à un certain nombre de caractères
-[*] [color=red]Nouveauté :[/color] Possiblité de désactiver les suggestions de news
-[*] [color=red]Nouveauté :[/color] Suppression de l'affichage en liste devenu inutil
-[*] [color=red]Nouveauté :[/color] Nettoyage de la configuration
-[*] [color=red]Nouveauté :[/color] Refonte graphique
-[*] [color=red]Nouveauté :[/color] Possibilité de personnaliser l'url d'une news
-[*] [color=red]Nouveauté :[/color] Amélioration du référencement
-[*] [color=red]Nouveauté :[/color] Suppression de l'édito et ajout d'une option supplémentaire dans le formulaire d'ajout pour placer les news en tête de liste.
-[*] Ajout des microdonnées pour améliorer le référencement
-
 [b]BugTracker[/b]
 [*] [color=red]Nouveauté :[/color] Passage du module en MVC
 [*] [color=red]Nouveauté :[/color] Filtres en haut des tableaux avec possibilité pour chaque utilisateur d'enregistrer ses combinaisons de filtres favoris
@@ -93,18 +78,6 @@ les pages du module "pages".
 [*] Changement de mise en forme des tableaux pour plus de lisibilité
 [*] Amélioration de l'affichage Corrigé/En cours dans la roadmap
 
-[b]Contact[/b]
-[*] [color=red]Nouveauté :[/color] Possibilité d'ajouter des champs supplémentaires depuis l'admin
-[*] [color=red]Nouveauté :[/color] Possibilité de cacher le champ objet, de demander s'il est obligatoire et de choisir sa valeur par défaut défaut dans la config
-[*] [color=red]Nouveauté :[/color] Possibilité d'afficher une liste pour l'objet et de définir ses valeurs dans la config
-[*] [color=red]Nouveauté :[/color] Possibilité de configurer le titre du formulaire dans la config
-[*] [color=red]Nouveauté :[/color] Possibilité d'afficher une zone d'informations à côté du formulaire (à gauche, au dessus, à droite ou en dessous) et de la configurer dans l'admin
-[*] [color=red]Nouveauté :[/color] Nouvelle icône
-- Possibilité de choisir à quel groupe d'utilisateurs envoyer le mail.
-
-[b]Livre d'or[/b]
-[*] [color=red]Nouveauté :[/color] Passage du module en MVC
-
 [b]Calendrier[/b]
 [*] [color=red]Nouveauté :[/color] Passage du module en MVC
 [*] [color=red]Nouveauté :[/color] Ajout du nouveau système de catégorie pour les événements
@@ -117,11 +90,43 @@ les pages du module "pages".
 [*] [color=red]Nouveauté :[/color] Contributions pour l'ajout d'événement
 - Ajout des microdonnées pour améliorer le référencement
 + Possibilité de créer un évènement de manière récursive ( tous les X jours, X semaines, X mois) / pouvoir dupliquer de la même manière un événement déjà présent dans le calendrier
-+ Possibilité de s'inscrire à un évènement et de limiter le nombre des inscrits à un événement
+- Possibilité de s'inscrire à un évènement et de limiter le nombre des inscrits à un événement
 - Système de filtre par mot-clé dans la liste des événements
 - Possibilité d'afficher la liste des événements d'une ou de plusieurs catégories pour un mois donné
 - Possibilité d'afficher la liste des événements d'une ou de plusieurs catégories pour une année donnée
 - Possibilité d'afficher la liste des événements d'une ou de plusieurs catégories pour un écart entre 2 dates
 
+[b]Contact[/b]
+[*] [color=red]Nouveauté :[/color] Possibilité d'ajouter des champs supplémentaires depuis l'admin
+[*] [color=red]Nouveauté :[/color] Possibilité de cacher le champ objet, de demander s'il est obligatoire et de choisir sa valeur par défaut défaut dans la config
+[*] [color=red]Nouveauté :[/color] Possibilité d'afficher une liste pour l'objet et de définir ses valeurs dans la config
+[*] [color=red]Nouveauté :[/color] Possibilité de configurer le titre du formulaire dans la config
+[*] [color=red]Nouveauté :[/color] Possibilité d'afficher une zone d'informations à côté du formulaire (à gauche, au dessus, à droite ou en dessous) et de la configurer dans l'admin
+[*] [color=red]Nouveauté :[/color] Nouvelle icône
+- Possibilité de choisir à quel groupe d'utilisateurs envoyer le mail.
+
+[b]En ligne[/b]
+[*] [color=red]Nouveauté :[/color] Ajout de l'avatar des membres dans la liste
+[*] Refonte de l'affichage
+
+[b]Livre d'or[/b]
+[*] [color=red]Nouveauté :[/color] Passage du module en MVC
+[*] Refonte de l'affichage
+
 [b]Multimedia[/b]
 [*] Ajout de la balise enclosure dans les flux RSS pour pouvoir diffuser le media
+
+[b]News[/b]
+[*] [color=red]Nouveauté :[/color] Passage du module en MVC
+[*] [color=red]Nouveauté :[/color] Ajout du nouveau système de catégorie
+[*] [color=red]Nouveauté :[/color] Possibilité d'ajouter des mots clés
+[*] [color=red]Nouveauté :[/color] Refonte des formulaires (plus intuitifs)
+[*] [color=red]Nouveauté :[/color] Possibilité de couper une news à un certain nombre de caractères
+[*] [color=red]Nouveauté :[/color] Possiblité de désactiver les suggestions de news
+[*] [color=red]Nouveauté :[/color] Suppression de l'affichage en liste devenu inutil
+[*] [color=red]Nouveauté :[/color] Nettoyage de la configuration
+[*] [color=red]Nouveauté :[/color] Refonte graphique
+[*] [color=red]Nouveauté :[/color] Possibilité de personnaliser l'url d'une news
+[*] [color=red]Nouveauté :[/color] Amélioration du référencement
+[*] [color=red]Nouveauté :[/color] Suppression de l'édito et ajout d'une option supplémentaire dans le formulaire d'ajout pour placer les news en tête de liste.
+[*] Ajout des microdonnées pour améliorer le référencement
