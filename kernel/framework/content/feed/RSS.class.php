@@ -71,13 +71,15 @@ class RSS extends Feed
                 
                 for ($i = 1; $i <= $nbItems; $i++)
                 {
-                    $item = new FeedItem();
+                    $pubDate = strtotime($date[1]);
+					
+					$item = new FeedItem();
                     
                     $item->set_title(preg_match('`<title>(.*)</title>`is', $expParsed[$i], $title) ? $title[1] : '');
                     $item->set_link(preg_match('`<link>(.*)</link>`is', $expParsed[$i], $url) ? $url[1] : '');
                     $item->set_guid(preg_match('`<guid>(.*)</guid>`is', $expParsed[$i], $guid) ? $guid[1] : '');
                     $item->set_desc(preg_match('`<desc>(.*)</desc>`is', $expParsed[$i], $desc) ? $desc[1] : '');
-                    $item->set_date_rfc822(preg_match('`<pubDate>(.*)</pubDate>`is', $expParsed[$i], $date) ? gmdate_format('date_format_tiny', strtotime($date[1])) : '');
+                    $item->set_date_rfc822(preg_match('`<pubDate>(.*)</pubDate>`is', $expParsed[$i], $date) ? $pubDate->format(Date::FORMAT_RFC822_F, TIMEZONE_USER) : '');
 					
                     $enclosure = preg_match('`<enclosure url="(.*)" length="(.*)" type="(.*)" />`is', $expParsed[$i]);
                     if ($enclosure)
