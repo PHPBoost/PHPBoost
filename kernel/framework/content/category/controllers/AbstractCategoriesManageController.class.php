@@ -57,6 +57,8 @@ abstract class AbstractCategoriesManageController extends AdminModuleController
 	{
 		$categories = $this->get_categories_manager()->get_categories_cache()->get_categories();
 		
+		$this->tpl->put('C_NOT_CATEGORIES', empty($categories));
+		
 		$this->build_children_view($this->tpl, $categories, Category::ROOT_CATEGORY);
 	}
 	

@@ -17,14 +17,18 @@ function serialize_sortable()
 	<fieldset>
 		<legend>{@categories}</legend>
 			<ul id="categories" class="cat_list">
-				# START childrens #
-					{childrens.child}
-				# END childrens #
+				# IF C_NOT_CATEGORIES #
+					<div class="text_center">{@message.not_categories}</div>
+				# ELSE #
+					# START childrens #
+						{childrens.child}
+					# END childrens #
+				# ENDIF #
 			</ul>
 	</fieldset>
 	<fieldset class="fieldset_submit">
 		<input type="hidden" name="token" value="{TOKEN}">
 		<input type="hidden" name="tree" id="tree" value="">
-		<input type="submit" name="valid" value="test" class="submit">					
+		<input type="submit" name="valid" value="${LangLoader::get_message('submit', 'main')}" class="submit">					
 	</fieldset>
 </form>
