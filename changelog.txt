@@ -23,6 +23,7 @@ les pages du module "pages".
 - Refonte du module Web ?
 [*] Modification de la classe Date (modification des constantes permettant de choisir le formatage de la date : plus explicites et plus de choix)
 - Optimisation du système de commentaires et de notes (suppression des requêtes SQL doublons)
+- Refonte du système d'événement et intégration d'un système de notification
 
 [b]Menus :[/b]
 - Possibilité de désactiver l'affichage d'un lien dans les menus
