@@ -8,7 +8,6 @@
 		<meta http-equiv="Content-Language" content="{L_XML_LANGUAGE}" />
 		<!-- Default CSS -->
 		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/default/theme/default.css" type="text/css" media="screen, print, handheld" />
-		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/default/framework/content/syndication/syndication.css" type="text/css" media="screen, print, handheld" />
 		
 		<!-- Theme CSS -->
 		# IF C_CSS_CACHE_ENABLED #
