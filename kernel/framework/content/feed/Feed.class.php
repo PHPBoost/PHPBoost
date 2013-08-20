@@ -121,6 +121,7 @@ class Feed
 	            'DATE_RFC822' => $this->data->get_date_rfc822(),
 	            'DATE_RFC3339' => $this->data->get_date_rfc3339(),
 				'DATE_TEXT' => $this->data->get_date_text(),
+				'THIS_YEAR' => date('Y'),
 	            'TITLE' => $this->data->get_title(),
 	            'U_LINK' => $this->data->get_link(),
 	            'HOST' => $this->data->get_host(),
