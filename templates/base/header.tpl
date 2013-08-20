@@ -39,10 +39,6 @@
 			var LANG = "{LANG}";
 		-->
 		</script>
-		<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/lib/js/scriptaculous/prototype.js"></script>
-		<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/lib/js/scriptaculous/scriptaculous.js"></script>
-		<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/lib/js/phpboost/global.js"></script>
-		<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/lib/js/lightbox/lightbox.js"></script>
 		
 		# IF C_HEADER_LOGO #
 			<style type="text/css">
@@ -52,58 +48,59 @@
 			</style>
 		# ENDIF #
 	</head>
+
 	<body itemscope="itemscope" itemtype="http://schema.org/WebPage">
 	
-	# INCLUDE MAINTAIN #
-
-<div id="global">
-	<div id="header_container">
-		<div id="header">
-			<div id="logo"></div>
-			<div id="site_name"><a href="{PATH_TO_ROOT}/">{SITE_NAME}</a></div>
-			# IF C_MENUS_HEADER_CONTENT #
-			{MENUS_HEADER_CONTENT}
-			# ENDIF #
-		</div>
-		<div id="sub_header">
-			# IF C_MENUS_SUB_HEADER_CONTENT #
-			{MENUS_SUB_HEADER_CONTENT}
-			# ENDIF #
-		</div>
-		<div class="spacer"></div>
-	</div>
-	
-	# IF C_COMPTEUR #
-	<div id="compteur">
-		<span class="text_strong">{L_VISIT}:</span> {COMPTEUR_TOTAL}
-		<br />
-		<span class="text_strong">{L_TODAY}:</span> {COMPTEUR_DAY}
-	</div>
-	# ENDIF #
-	
-	# IF C_MENUS_LEFT_CONTENT #
-	<div id="left_menu">
-		{MENUS_LEFT_CONTENT}
-	</div>
-	# ENDIF #
-	
-	# IF C_MENUS_RIGHT_CONTENT #
-	<div id="right_menu">
-		{MENUS_RIGHT_CONTENT}
-	</div>
-	# ENDIF #
-	
-	<div id="main">
-		# IF C_MENUS_TOPCENTRAL_CONTENT #
-		<div id="top_contents">
-			{MENUS_TOPCENTRAL_CONTENT}
-		</div>
-		<div class="spacer"></div>
-		# ENDIF #
-		<div id="main_content" itemprop="mainContentOfPage">
-			<div id="links" itemprop="breadcrumb">
-				<a class="small_link" href="{START_PAGE}" title="{L_INDEX}">{L_INDEX}</a>
-					# START link_bread_crumb #
-					<img src="{PATH_TO_ROOT}/templates/{THEME}/images/breadcrumb.png" alt="" class="valign_middle" /> <a class="small_link" href="{link_bread_crumb.URL}" title="{link_bread_crumb.TITLE}">{link_bread_crumb.TITLE}</a>
-					# END link_bread_crumb #
+		# INCLUDE MAINTAIN #
+		
+		<div id="global">
+			<header>
+				<div id="top_header">
+					<div id="logo"></div>
+					<div id="site_name"><a href="{PATH_TO_ROOT}/">{SITE_NAME}</a></div>
+					# IF C_MENUS_HEADER_CONTENT #
+					{MENUS_HEADER_CONTENT}
+					# ENDIF #
+				</div>
+				<div id="sub_header">
+					# IF C_MENUS_SUB_HEADER_CONTENT #
+					{MENUS_SUB_HEADER_CONTENT}
+					# ENDIF #
+				</div>
+				<div class="spacer"></div>
+			</header>
+			
+			# IF C_COMPTEUR #
+			<div id="compteur">
+				<span class="text_strong">{L_VISIT}:</span> {COMPTEUR_TOTAL}
+				<br />
+				<span class="text_strong">{L_TODAY}:</span> {COMPTEUR_DAY}
 			</div>
+			# ENDIF #
+			
+			# IF C_MENUS_LEFT_CONTENT #
+			<aside id="menu_left">
+				{MENUS_LEFT_CONTENT}
+			</aside>
+			# ENDIF #
+			
+			# IF C_MENUS_RIGHT_CONTENT #
+			<aside id="menu_right">
+				{MENUS_RIGHT_CONTENT}
+			</aside>
+			# ENDIF #
+			
+			<section id="main">
+				# IF C_MENUS_TOPCENTRAL_CONTENT #
+				<div id="top_contents">
+					{MENUS_TOPCENTRAL_CONTENT}
+				</div>
+				<div class="spacer"></div>
+				# ENDIF #
+				<div id="main_content" itemprop="mainContentOfPage">
+					<nav id="breadcrumb" itemprop="breadcrumb">
+						<a class="small_link" href="{START_PAGE}" title="{L_INDEX}">{L_INDEX}</a>
+						# START link_bread_crumb #
+						<img src="{PATH_TO_ROOT}/templates/{THEME}/images/breadcrumb.png" alt="" class="valign_middle" /> <a class="small_link" href="{link_bread_crumb.URL}" title="{link_bread_crumb.TITLE}">{link_bread_crumb.TITLE}</a>
+						# END link_bread_crumb #
+					</nav>
