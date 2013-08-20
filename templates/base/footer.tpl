@@ -1,18 +1,18 @@
-		</div>
-		# IF C_MENUS_BOTTOM_CENTRAL_CONTENT #
-        <div id="bottom_contents">
-			{MENUS_BOTTOMCENTRAL_CONTENT}
+			</div>
+			# IF C_MENUS_BOTTOM_CENTRAL_CONTENT #
+	        <div id="bottom_contents">
+				{MENUS_BOTTOMCENTRAL_CONTENT}
+			</div>
+			# ENDIF #
+		</section>
+		# IF C_MENUS_TOP_FOOTER_CONTENT #
+		<div id="top_footer">
+			{MENUS_TOP_FOOTER_CONTENT}
+			<div class="spacer"></div>
 		</div>
 		# ENDIF #
 	</div>
-	# IF C_MENUS_TOP_FOOTER_CONTENT #
-	<div id="top_footer">
-		{MENUS_TOP_FOOTER_CONTENT}
-		<div class="spacer"></div>
-	</div>
-	# ENDIF #
-</div>
-	<div id="footer">
+	<footer>
 		# IF C_MENUS_FOOTER_CONTENT #
 		{MENUS_FOOTER_CONTENT}
 		# ENDIF #
@@ -30,6 +30,10 @@
 			| {L_THEME} {L_THEME_NAME} {L_BY} <a href="{U_THEME_AUTHOR_LINK}" style="font-size:10px;">{L_THEME_AUTHOR}</a>
 		</span>
 		# ENDIF #
-	</div>
+	</footer>
+	<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/lib/js/scriptaculous/prototype.js"></script>
+	<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/lib/js/scriptaculous/scriptaculous.js"></script>
+	<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/lib/js/phpboost/global.js"></script>
+	<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/lib/js/lightbox/lightbox.js"></script>
 	</body>
 </html>
