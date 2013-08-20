@@ -76,6 +76,7 @@ class GuestbookModuleHomePage implements ModuleHomePage
 		
 		while ($row = $result->fetch())
 		{
+			$date = new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $row['timestamp']);
 			$user_accounts_config = UserAccountsConfig::load();
 			$user_group_color = User::get_group_color($row['user_groups'], $row['level']);
 			
@@ -87,7 +88,7 @@ class GuestbookModuleHomePage implements ModuleHomePage
 				'C_VISITOR' => empty($row['user_id']),
 				'ID' => $row['id'],
 				'CONTENTS' => FormatingHelper::second_parse($row['contents']),
-				'DATE' => gmdate_format('date_format', $row['timestamp']),
+				'DATE' => $date->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE),
 				'USER_PSEUDO' => $row['mlogin'] ? $row['mlogin'] : $row['login'],
 				'USER_LEVEL_CLASS' => UserService::get_level_class($row['level']),
 				'USER_GROUP_COLOR' => $user_group_color,
