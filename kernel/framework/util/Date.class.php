@@ -61,6 +61,7 @@ class Date
 	const FORMAT_DAY_MONTH_YEAR_LONG = 7;
 	const FORMAT_DAY_MONTH_YEAR_TEXT = 8;
 	const FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE_TEXT = 9;
+	const FORMAT_RELATIVE = 10;
 
 	/**
 	 * @var int The timestamp of the current date
@@ -298,6 +299,41 @@ class Date
 				
 			case self::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE_TEXT:
 				return self::transform_date(date(LangLoader::get_message('date_format_day_month_year_hour_minute_text', 'main'), $timestamp));
+				break;
+				
+			case self::FORMAT_RELATIVE:
+				$now = new Date(DATE_NOW, $referencial_timezone);
+				
+				if ($now->get_timestamp() > $this->timestamp)
+					$time_diff = $now->get_timestamp() - $this->timestamp;
+				else 
+					$time_diff = $this->timestamp - $now->get_timestamp();
+				
+				$secondes = $time_diff;
+				$minutes = round($time_diff/60);
+				$hours = round($time_diff/3600);
+				$days = round($time_diff/86400);
+				$weeks = round($time_diff/604800);
+				$months = round($time_diff/2419200);
+				$years = round($time_diff/29030400);
+
+				if ($secondes == 1)
+					return LangLoader::get_message('instantly', 'date-common');
+				elseif ($secondes < 60)
+					return $secondes . ' ' . LangLoader::get_message('seconds', 'date-common');
+				elseif ($minutes < 60)
+					return $minutes . ' ' . ($minutes > 1 ? LangLoader::get_message('minutes', 'date-common') : LangLoader::get_message('minute', 'date-common'));
+				elseif ($hours < 24)
+					return $hours . ' ' . ($hours > 1 ? LangLoader::get_message('hours', 'date-common') : LangLoader::get_message('hour', 'date-common'));
+				elseif ($days < 7)
+					return $days . ' ' . ($days > 1 ? LangLoader::get_message('days', 'date-common') : LangLoader::get_message('day', 'date-common'));
+				elseif ($weeks < 4)
+					return $weeks . ' ' . ($weeks > 1 ? LangLoader::get_message('weeks', 'date-common') : LangLoader::get_message('week', 'date-common'));
+				elseif ($months < 12)
+					return $months . ' ' . LangLoader::get_message('months', 'date-common');
+				else
+					return $years . ' ' . ($years > 1 ? LangLoader::get_message('years', 'date-common') : LangLoader::get_message('year', 'date-common'));
+					
 				break;
 				
 			default:
