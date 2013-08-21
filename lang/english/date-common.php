@@ -29,6 +29,9 @@
  #                     English                      #
  ####################################################
 
+$lang['date'] = 'Date';
+$lang['today'] = 'Today';
+
 $lang['january'] = 'January';
 $lang['february'] = 'February';
 $lang['march'] = 'March';
@@ -65,4 +68,19 @@ $lang['thursday'] = 'Thursday';
 $lang['friday'] = 'Friday';
 $lang['saturday'] = 'Saturday';
 $lang['sunday'] = 'Sunday';
+
+$lang['instantly'] = 'instantly';
+$lang['second'] = 'second';
+$lang['seconds'] = 'seconds';
+$lang['minute'] = 'minute';
+$lang['minutes'] = 'minutes';
+$lang['hour'] = 'hour';
+$lang['hours'] = 'hours';
+$lang['day'] = 'day';
+$lang['days'] = 'days';
+$lang['week'] = 'week';
+$lang['weeks'] = 'weeks';
+$lang['month'] = 'month';
+$lang['year'] = 'year';
+$lang['years'] = 'years';
 ?>

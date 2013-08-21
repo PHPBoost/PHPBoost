@@ -29,6 +29,9 @@
  #                     French                       #
  ####################################################
 
+$lang['date'] = 'Date';
+$lang['today'] = 'Aujourd\'hui';
+
 $lang['january'] = 'Janvier';
 $lang['february'] = 'Février';
 $lang['march'] = 'Mars';
@@ -65,4 +68,20 @@ $lang['thursday'] = 'Jeudi';
 $lang['friday'] = 'Vendredi';
 $lang['saturday'] = 'Samedi';
 $lang['sunday']	= 'Dimanche';
+
+$lang['instantly'] = 'a l\'instant';
+$lang['second'] = 'seconde';
+$lang['seconds'] = 'secondes';
+$lang['minute'] = 'minute';
+$lang['minutes'] = 'minutes';
+$lang['hour'] = 'heure';
+$lang['hours'] = 'heures';
+$lang['day'] = 'jour';
+$lang['days'] = 'jours';
+$lang['week'] = 'semaine';
+$lang['weeks'] = 'semaines';
+$lang['month'] = 'mois';
+$lang['year'] = 'année';
+$lang['years'] = 'années';
+
 ?>
