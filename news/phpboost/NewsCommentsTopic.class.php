@@ -29,9 +29,10 @@ class NewsCommentsTopic extends CommentsTopic
 {
 	private $news;
 	
-	public function __construct()
+	public function __construct(News $news)
 	{
 		parent::__construct('news');
+		$this->news = $news;
 	}
 	
 	public function get_authorizations()
