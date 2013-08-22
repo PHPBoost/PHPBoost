@@ -113,7 +113,7 @@ class NotationDAO
 		));
 	}
 	
-	public static function get_member_already_notation(Notation $notation)
+	public static function get_member_already_noted(Notation $notation)
 	{
 		return self::$db_querier->count(DB_TABLE_NOTE, 'WHERE user_id=:user_id AND module_name=:module_name AND id_in_module=:id_in_module', array(
 			'module_name' => $notation->get_module_name(), 
