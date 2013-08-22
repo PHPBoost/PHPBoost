@@ -53,7 +53,7 @@
 								<span class="text_small">{L_MODULE_NAME_EXPLAIN}</span>
 							</dt>
 							<dd>
-								<input type="text" size="65" maxlength="100" id="media_name" name="media_name" value="{MODULE_NAME}" class="text" />
+								<input type="text" size="65" maxlength="100" id="media_name" name="media_name" value="{MODULE_NAME}" class="text">
 							</dd>
 						</dl>
 						<br />
@@ -66,11 +66,11 @@
 						<dl>
 							<dt><label for="activ_com">{L_MIME_TYPE}</label></dt>
 							<dd>
-								<label><input type="radio" name="mime_type" value="0"{TYPE_BOTH} /> {L_TYPE_BOTH}</label>
+								<label><input type="radio" name="mime_type" value="0"{TYPE_BOTH}> {L_TYPE_BOTH}</label>
 								&nbsp;&nbsp;
-								<label><input type="radio" name="mime_type" value="1"{TYPE_MUSIC} /> {L_TYPE_MUSIC}</label>
+								<label><input type="radio" name="mime_type" value="1"{TYPE_MUSIC}> {L_TYPE_MUSIC}</label>
 								&nbsp;&nbsp;
-								<label><input type="radio" name="mime_type" value="2"{TYPE_VIDEO} /> {L_TYPE_VIDEO}</label>
+								<label><input type="radio" name="mime_type" value="2"{TYPE_VIDEO}> {L_TYPE_VIDEO}</label>
 							</dd>
 						</dl>
 					</fieldset>
@@ -79,70 +79,70 @@
 						<legend>{L_CONFIG_DISPLAY}</legend>
 						<dl>
 							<dt><label for="num_cols">{L_NBR_COLS}</label></dt>
-							<dd><input type="text" size="4" maxlength="1" id="num_cols" name="num_cols" value="{NBR_COLS}" class="text" /></dd>
+							<dd><input type="text" size="4" maxlength="1" id="num_cols" name="num_cols" value="{NBR_COLS}" class="text"></dd>
 						</dl>
 						<dl>
 							<dt><label for="pagin">{L_PAGINATION}</label></dt>
-							<dd><input type="text" size="4" maxlength="3" id="pagin" name="pagin" value="{PAGINATION}" class="text" /></dd>
+							<dd><input type="text" size="4" maxlength="3" id="pagin" name="pagin" value="{PAGINATION}" class="text"></dd>
 						</dl>
 						<dl>
 							<dt><label for="note">{L_NOTE}</label></dt>
-							<dd><input type="text" size="4" maxlength="3" id="note" name="note" value="{NOTE}" class="text" /></dd>
+							<dd><input type="text" size="4" maxlength="3" id="note" name="note" value="{NOTE}" class="text"></dd>
 						</dl>
 						<dl>
 							<dt><label for="width">{L_WIDTH_MAX}</label></dt>
-							<dd><input type="text" size="4" maxlength="4" id="width" name="width" value="{WIDTH_MAX}" class="text" /></dd>
+							<dd><input type="text" size="4" maxlength="4" id="width" name="width" value="{WIDTH_MAX}" class="text"></dd>
 						</dl>
 						<dl>
 							<dt><label for="height">{L_HEIGHT_MAX}</label></dt>
-							<dd><input type="text" size="4" maxlength="4" id="height" name="height" value="{HEIGHT_MAX}" class="text" /></dd>
+							<dd><input type="text" size="4" maxlength="4" id="height" name="height" value="{HEIGHT_MAX}" class="text"></dd>
 						</dl>
 						<dl>
 							<dt><label for="activ_com">{L_DISPLAY_COM}</label></dt>
 							<dd>
-								<label><input type="checkbox" name="activ[]" value="1" {COM_LIST} /> {L_IN_LIST}</label>
+								<label><input type="checkbox" name="activ[]" value="1" {COM_LIST}> {L_IN_LIST}</label>
 								&nbsp;&nbsp;
-								<label><input type="checkbox" name="activ[]" value="2" {COM_MEDIA} /> {L_IN_MEDIA}</label>
+								<label><input type="checkbox" name="activ[]" value="2" {COM_MEDIA}> {L_IN_MEDIA}</label>
 							</dd>
 						</dl>
 						<dl>
 							<dt><label for="activ_note">{L_DISPLAY_NOTE}</label></dt>
 							<dd>
-								<label><input type="checkbox" name="activ[]" value="4" {NOTE_LIST} /> {L_IN_LIST}</label>
+								<label><input type="checkbox" name="activ[]" value="4" {NOTE_LIST}> {L_IN_LIST}</label>
 								&nbsp;&nbsp;
-								<label><input type="checkbox" name="activ[]" value="8" {NOTE_MEDIA} /> {L_IN_MEDIA}</label>
+								<label><input type="checkbox" name="activ[]" value="8" {NOTE_MEDIA}> {L_IN_MEDIA}</label>
 							</dd>
 						</dl>
 						<dl>
 							<dt><label for="activ_user">{L_DISPLAY_USER}</label></dt>
 							<dd>
-								<label><input type="checkbox" name="activ[]" value="16" {USER_LIST} /> {L_IN_LIST}</label>
+								<label><input type="checkbox" name="activ[]" value="16" {USER_LIST}> {L_IN_LIST}</label>
 								&nbsp;&nbsp;
-								<label><input type="checkbox" name="activ[]" value="32" {USER_MEDIA} /> {L_IN_MEDIA}</label>
+								<label><input type="checkbox" name="activ[]" value="32" {USER_MEDIA}> {L_IN_MEDIA}</label>
 							</dd>
 						</dl>
 						<dl>
 							<dt><label for="activ_counter">{L_DISPLAY_COUNTER}</label></dt>
 							<dd>
-								<label><input type="checkbox" name="activ[]" value="64" {COUNTER_LIST} /> {L_IN_LIST}</label>
+								<label><input type="checkbox" name="activ[]" value="64" {COUNTER_LIST}> {L_IN_LIST}</label>
 								&nbsp;&nbsp;
-								<label><input type="checkbox" name="activ[]" value="128" {COUNTER_MEDIA} /> {L_IN_MEDIA}</label>
+								<label><input type="checkbox" name="activ[]" value="128" {COUNTER_MEDIA}> {L_IN_MEDIA}</label>
 							</dd>
 						</dl>
 						<dl>
 							<dt><label for="activ_date">{L_DISPLAY_DATE}</label></dt>
 							<dd>
-								<label><input type="checkbox" name="activ[]" value="256" {DATE_LIST} /> {L_IN_LIST}</label>
+								<label><input type="checkbox" name="activ[]" value="256" {DATE_LIST}> {L_IN_LIST}</label>
 								&nbsp;&nbsp;
-								<label><input type="checkbox" name="activ[]" value="512" {DATE_MEDIA} /> {L_IN_MEDIA}</label>
+								<label><input type="checkbox" name="activ[]" value="512" {DATE_MEDIA}> {L_IN_MEDIA}</label>
 							</dd>
 						</dl>
 						<dl>
 							<dt><label for="activ_desc">{L_DISPLAY_DESC}</label></dt>
 							<dd>
-								<label><input type="checkbox" name="activ[]" value="1024" {DESC_LIST} /> {L_IN_LIST}</label>
+								<label><input type="checkbox" name="activ[]" value="1024" {DESC_LIST}> {L_IN_LIST}</label>
 								&nbsp;&nbsp;
-								<label><input type="checkbox" name="activ[]" value="2048" {DESC_MEDIA} /> {L_IN_MEDIA}</label>
+								<label><input type="checkbox" name="activ[]" value="2048" {DESC_MEDIA}> {L_IN_MEDIA}</label>
 							</dd>
 						</dl>
 					</fieldset>
@@ -178,11 +178,11 @@
 
 					<fieldset class="fieldset_submit">
 						<legend>{L_UPDATE}</legend>
-						<input type="submit" name="valid" value="{L_UPDATE}" class="submit" />
+						<input type="submit" name="valid" value="{L_UPDATE}" class="submit">
 						&nbsp;&nbsp;
-						<input value="{L_PREVIEW}" type="button" name="valid" class="submit" onclick="XMLHttpRequest_preview(); new Effect.ScrollTo('preview_description',{duration:1.2}); return false;" />
+						<input value="{L_PREVIEW}" type="button" name="valid" class="submit" onclick="XMLHttpRequest_preview(); new Effect.ScrollTo('preview_description',{duration:1.2}); return false;">
 						&nbsp;&nbsp;
-						<input type="reset" value="{L_RESET}" class="reset" />
+						<input type="reset" value="{L_RESET}" class="reset">
 					</fieldset>
 				</form>
 			</div>

@@ -28,9 +28,9 @@
 							<td style="width:100px;">{L_AUTHOR}</td>
 							<td style="width:60px;">{L_MESSAGE}</td>
 							<td style="width:60px;">{L_VIEW}</td>
-							<td style="width:40px;"><input type="checkbox" class="valign_middle" onclick="check_convers(this.checked, 'p');" /> {L_PM}</td>
-							<td style="width:50px;"><input type="checkbox" class="valign_middle" onclick="check_convers(this.checked, 'm');" /> {L_MAIL}</td>
-							<td style="width:85px;"><input type="checkbox" class="valign_middle" onclick="check_convers(this.checked, 'd');" /> {L_DELETE}</td>
+							<td style="width:40px;"><input type="checkbox" class="valign_middle" onclick="check_convers(this.checked, 'p');"> {L_PM}</td>
+							<td style="width:50px;"><input type="checkbox" class="valign_middle" onclick="check_convers(this.checked, 'm');"> {L_MAIL}</td>
+							<td style="width:85px;"><input type="checkbox" class="valign_middle" onclick="check_convers(this.checked, 'd');"> {L_DELETE}</td>
 							<td style="width:150px;">{L_LAST_MESSAGE}</td>
 						</tr>
 					</table>
@@ -74,13 +74,13 @@
 								{topics.VUS}
 							</td>
 							<td class="forum_sous_cat_compteur" style="width:40px;text-align:center;">
-								<input type="checkbox" id="p{topics.INCR}" name="p{topics.ID}" {topics.CHECKED_PM} />
+								<input type="checkbox" id="p{topics.INCR}" name="p{topics.ID}" {topics.CHECKED_PM}>
 							</td>
 							<td class="forum_sous_cat_compteur" style="width:50px;text-align:center;">
-								<input type="checkbox" id="m{topics.INCR}" name="m{topics.ID}" {topics.CHECKED_MAIL} />
+								<input type="checkbox" id="m{topics.INCR}" name="m{topics.ID}" {topics.CHECKED_MAIL}>
 							</td>
 							<td class="forum_sous_cat_compteur" style="width:85px;text-align:center;">
-								<input type="checkbox" id="d{topics.INCR}" name="d{topics.ID}" />
+								<input type="checkbox" id="d{topics.INCR}" name="d{topics.ID}">
 							</td>
 							<td class="forum_sous_cat_last">
 								{topics.U_LAST_MSG}
@@ -88,7 +88,7 @@
 						</tr>	
 						# END topics #
 					</table>
-					<div style="margin-top:10px;text-align:center"><input type="submit" name="valid" value="{L_SUBMIT}" class="submit" /></div>
+					<div style="margin-top:10px;text-align:center"><input type="submit" name="valid" value="{L_SUBMIT}" class="submit"></div>
 				</div>
 			</div>
 		</form>

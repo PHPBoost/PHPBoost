@@ -25,7 +25,7 @@
 									<legend>{L_SEARCH_FORUM}</legend>
 									<dl>
 										<dt><label for="search_forum_form">{L_KEYWORDS}</label></dt>
-										<dd><label><input type="text" size="35" id="search_forum_form" name="search" value="{SEARCH}"  class="text" /></label></dd>
+										<dd><label><input type="text" size="35" id="search_forum_form" name="search" value="{SEARCH}"  class="text"></label></dd>
 									</dl>
 									<dl>
 										<dt><label for="time">{L_DATE}</label></dt>
@@ -54,23 +54,23 @@
 									<dl>
 										<dt><label for="where">{L_OPTIONS}</label></dt>
 										<dd>
-											<label><input type="radio" name="where" id="where" value="contents" {CONTENTS_CHECKED} /> {L_CONTENTS}</label>
+											<label><input type="radio" name="where" id="where" value="contents" {CONTENTS_CHECKED}> {L_CONTENTS}</label>
 											<br />
-											<label><input type="radio" name="where" value="title" {TITLE_CHECKED} /> {L_TITLE}</label>
+											<label><input type="radio" name="where" value="title" {TITLE_CHECKED}> {L_TITLE}</label>
 											<br />
-											<label><input type="radio" name="where" value="all" {ALL_CHECKED} /> {L_TITLE}/{L_CONTENTS}</label>
+											<label><input type="radio" name="where" value="all" {ALL_CHECKED}> {L_TITLE}/{L_CONTENTS}</label>
 										</dd>
 									</dl>
 									<dl>
 										<dt><label for="colorate_result">{L_COLORATE_RESULT}</label></dt>
 										<dd>
-											<label><input type="checkbox" name="colorate_result" id="colorate_result" value="1" {COLORATE_RESULT} /></label>
+											<label><input type="checkbox" name="colorate_result" id="colorate_result" value="1" {COLORATE_RESULT}></label>
 										</dd>
 									</dl>
 								</fieldset>			
 								<fieldset class="fieldset_submit" style="margin-bottom:0px;">
 									<legend>{L_SEARCH}</legend>
-									<input type="submit" name="valid_search" value="{L_SEARCH}" class="submit" />			
+									<input type="submit" name="valid_search" value="{L_SEARCH}" class="submit">			
 								</fieldset>
 							</div>	
 						</div>

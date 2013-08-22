@@ -39,7 +39,7 @@
 								<input type="radio" name="maintain_check" id="maintain_check2" value="2"{MAINTAIN_CHECK_UNTIL}>
 								{L_UNTIL}&nbsp;
 								
-								<input type="text" size="8" maxlength="8" id="end" name="end" value="{DATE_UNTIL}" class="text" />
+								<input type="text" size="8" maxlength="8" id="end" name="end" value="{DATE_UNTIL}" class="text">
 								<div style="position:absolute;z-index:100;display:none;" id="calendar2">
 									<div id="end_date" class="calendar_block" onmouseover="hide_calendar(2, 1);" onmouseout="hide_calendar(2, 0);"></div>
 								</div>
@@ -49,15 +49,15 @@
 					</dl>
 					<dl>
 						<dt><label for="display_delay">{L_MAINTAIN_DELAY}</label></dt>
-						<dd><label><input type="radio" {DISPLAY_DELAY_ENABLED} name="display_delay" id="display_delay" value="1" /> {L_YES}</label>
+						<dd><label><input type="radio" {DISPLAY_DELAY_ENABLED} name="display_delay" id="display_delay" value="1"> {L_YES}</label>
 						&nbsp;&nbsp; 
-						<label><input type="radio" {DISPLAY_DELAY_DISABLED} name="display_delay" value="0" /> {L_NO}</label></dd>
+						<label><input type="radio" {DISPLAY_DELAY_DISABLED} name="display_delay" value="0"> {L_NO}</label></dd>
 					</dl>
 					<dl>
 						<dt><label for="maintain_display_admin">{L_MAINTAIN_DISPLAY_ADMIN}</label></dt>
-						<dd><label><input type="radio" {DISPLAY_ADMIN_ENABLED} name="maintain_display_admin" id="maintain_display_admin" value="1" /> {L_YES}</label>
+						<dd><label><input type="radio" {DISPLAY_ADMIN_ENABLED} name="maintain_display_admin" id="maintain_display_admin" value="1"> {L_YES}</label>
 						&nbsp;&nbsp; 
-						<label><input type="radio" {DISPLAY_ADMIN_DISABLED} name="maintain_display_admin" value="0" /> {L_NO}</label></dd>
+						<label><input type="radio" {DISPLAY_ADMIN_DISABLED} name="maintain_display_admin" value="0"> {L_NO}</label></dd>
 					</dl>
 					<label for="contents">{L_MAINTAIN_TEXT}</label>
 					<label>
@@ -72,15 +72,15 @@
 				</fieldset>			
 				<fieldset class="fieldset_submit">
 					<legend>{L_UPDATE}</legend>
-					<input type="submit" name="valid" value="{L_UPDATE}" class="submit" />
+					<input type="submit" name="valid" value="{L_UPDATE}" class="submit">
 					<script type="text/javascript">
 					<!--				
-					document.write('&nbsp;&nbsp;<input value="{L_PREVIEW}" onclick="XMLHttpRequest_preview();" type="button" class="submit" />');
+					document.write('&nbsp;&nbsp;<input value="{L_PREVIEW}" onclick="XMLHttpRequest_preview();" type="button" class="submit">');
 					-->
 					</script>
 					&nbsp;&nbsp;
-					<input type="reset" value="{L_RESET}" class="reset" />	
-					<input type="hidden" name="token" value="{TOKEN}" />
+					<input type="reset" value="{L_RESET}" class="reset">	
+					<input type="hidden" name="token" value="{TOKEN}">
 				</fieldset>	
 			</form>	
 		</div>

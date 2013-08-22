@@ -96,8 +96,8 @@
 							<div id="picture_desc{modules_not_activated.ID}" style="text-align: center;" "><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/plus.png" alt="" class="valign_middle" style="cursor: pointer; width: 25px; height: auto;" /></div>
 						</td>
 						<td class="row2">								
-							<label><input type="radio" name="activated-{modules_not_activated.ID}" value="1" # IF modules_not_activated.C_MODULE_ACTIVE # checked="checked" # ENDIF # /> {@modules.yes}</label>
-							<label><input type="radio" name="activated-{modules_not_activated.ID}" value="0" # IF NOT modules_not_activated.C_MODULE_ACTIVE # checked="checked" # ENDIF # /> {@modules.no}</label>
+							<label><input type="radio" name="activated-{modules_not_activated.ID}" value="1" # IF modules_not_activated.C_MODULE_ACTIVE # checked="checked" # ENDIF #> {@modules.yes}</label>
+							<label><input type="radio" name="activated-{modules_not_activated.ID}" value="0" # IF NOT modules_not_activated.C_MODULE_ACTIVE # checked="checked" # ENDIF #> {@modules.no}</label>
 						</td>
 						<td class="row2">
 							<a href="{modules_not_activated.U_DELETE_LINK}">	
@@ -170,8 +170,8 @@
 							<div id="picture_desc{modules_activated.ID}" style="text-align: center;"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/plus.png" alt="" class="valign_middle" style="cursor: pointer; width: 25px; height: auto;" /></div>
 						</td>
 						<td class="row2">								
-							<label><input type="radio" name="activated-{modules_activated.ID}" value="1" # IF modules_activated.C_MODULE_ACTIVE # checked="checked" # ENDIF # /> {@modules.yes}</label>
-							<label><input type="radio" name="activated-{modules_activated.ID}" value="0" # IF NOT modules_activated.C_MODULE_ACTIVE # checked="checked" # ENDIF # /> {@modules.no}</label>
+							<label><input type="radio" name="activated-{modules_activated.ID}" value="1" # IF modules_activated.C_MODULE_ACTIVE # checked="checked" # ENDIF #> {@modules.yes}</label>
+							<label><input type="radio" name="activated-{modules_activated.ID}" value="0" # IF NOT modules_activated.C_MODULE_ACTIVE # checked="checked" # ENDIF #> {@modules.no}</label>
 						</td>
 						<td class="row2">
 							<a href="{modules_activated.U_DELETE_LINK}">	
@@ -200,10 +200,10 @@
 			
 			<fieldset class="fieldset_submit">
 				<legend>{L_SUBMIT}</legend>
-				<input type="submit" name="update_modules_configuration" value="{@modules.update}" class="submit" />
-				<input type="hidden" name="token" value="{TOKEN}" />
-				<input type="hidden" name="update" value="true" />
+				<input type="submit" name="update_modules_configuration" value="{@modules.update}" class="submit">
+				<input type="hidden" name="token" value="{TOKEN}">
+				<input type="hidden" name="update" value="true">
 				&nbsp;&nbsp; 
-				<input type="reset" value="{@modules.reset}" class="reset" />
+				<input type="reset" value="{@modules.reset}" class="reset">
 			</fieldset>
 		</form>			

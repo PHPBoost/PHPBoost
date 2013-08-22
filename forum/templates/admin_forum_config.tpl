@@ -68,54 +68,54 @@
 					<legend>{L_FORUM_CONFIG}</legend>
 					<dl>
 						<dt><label for="forum_name">* {L_FORUM_NAME}</label></dt>
-						<dd><label><input type="text" maxlength="255" size="40" id="forum_name" name="forum_name" value="{FORUM_NAME}" class="text" /></label></dd>
+						<dd><label><input type="text" maxlength="255" size="40" id="forum_name" name="forum_name" value="{FORUM_NAME}" class="text"></label></dd>
 					</dl>
 					<dl>
 						<dt><label for="pagination_topic">* {L_NBR_TOPIC_P}</label><br /><span>{L_NBR_TOPIC_P_EXPLAIN}</span></dt>
-						<dd><label><input type="text" maxlength="3" size="3" id="pagination_topic" name="pagination_topic" value="{PAGINATION_TOPIC}" class="text" /></label></dd>
+						<dd><label><input type="text" maxlength="3" size="3" id="pagination_topic" name="pagination_topic" value="{PAGINATION_TOPIC}" class="text"></label></dd>
 					</dl>
 					<dl>
 						<dt><label for="pagination_msg">* {L_NBR_MSG_P}</label><br /><span>{L_NBR_MSG_P_EXPLAIN}</span></dt>
-						<dd><label><input type="text" size="3" maxlength="3" id="pagination_msg" name="pagination_msg" value="{PAGINATION_MSG}" class="text" /></label></dd>
+						<dd><label><input type="text" size="3" maxlength="3" id="pagination_msg" name="pagination_msg" value="{PAGINATION_MSG}" class="text"></label></dd>
 					</dl>
 					<dl>
 						<dt><label for="view_time">* {L_TIME_NEW_MSG}</label><br /><span>{L_TIME_NEW_MSG_EXPLAIN}</span></dt>
-						<dd><label><input type="text" size="4" maxlength="6" id="view_time" name="view_time" value="{VIEW_TIME}" class="text" /> {L_DAYS}</label></dd>
+						<dd><label><input type="text" size="4" maxlength="6" id="view_time" name="view_time" value="{VIEW_TIME}" class="text"> {L_DAYS}</label></dd>
 					</dl>
 					<dl>
 						<dt><label for="topic_track">* {L_TOPIC_TRACK_MAX}</label><br /><span>{L_TOPIC_TRACK_MAX_EXPLAIN}</span></dt>
-						<dd><label><input type="text" size="4" maxlength="6" id="topic_track" name="topic_track" value="{TOPIC_TRACK_MAX}" class="text" /></label></dd>
+						<dd><label><input type="text" size="4" maxlength="6" id="topic_track" name="topic_track" value="{TOPIC_TRACK_MAX}" class="text"></label></dd>
 					</dl>
 					<dl>
 						<dt><label for="edit_mark">{L_EDIT_MARK}</label></dt>
 						<dd>
-							<label><input type="radio" {EDIT_MARK_ENABLED} name="edit_mark" id="edit_mark" value="1" /> {L_ACTIV}</label>
+							<label><input type="radio" {EDIT_MARK_ENABLED} name="edit_mark" id="edit_mark" value="1"> {L_ACTIV}</label>
 							&nbsp;&nbsp; 
-							<label><input type="radio" {EDIT_MARK_DISABLED} name="edit_mark" value="0" /> {L_UNACTIVE}</label>
+							<label><input type="radio" {EDIT_MARK_DISABLED} name="edit_mark" value="0"> {L_UNACTIVE}</label>
 						</dd>
 					</dl>
 					<dl>
 						<dt><label for="display_connexion">{L_DISPLAY_CONNEXION}</label></dt>
 						<dd>
-							<label><input type="radio" {DISPLAY_CONNEXION_ENABLED} name="display_connexion" id="display_connexion" value="1" /> {L_YES}</label>
+							<label><input type="radio" {DISPLAY_CONNEXION_ENABLED} name="display_connexion" id="display_connexion" value="1"> {L_YES}</label>
 							&nbsp;&nbsp; 
-							<label><input type="radio" {DISPLAY_CONNEXION_DISABLED} name="display_connexion" value="0" /> {L_NO}</label>
+							<label><input type="radio" {DISPLAY_CONNEXION_DISABLED} name="display_connexion" value="0"> {L_NO}</label>
 						</dd>
 					</dl>
 					<dl>
 						<dt><label for="no_left_column">{L_NO_LEFT_COLUMN}</label></dt>
 						<dd>
-							<label><input type="radio" {NO_LEFT_COLUMN_ENABLED} name="no_left_column" id="no_left_column" value="1" /> {L_YES}</label>
+							<label><input type="radio" {NO_LEFT_COLUMN_ENABLED} name="no_left_column" id="no_left_column" value="1"> {L_YES}</label>
 							&nbsp;&nbsp; 
-							<label><input type="radio" {NO_LEFT_COLUMN_DISABLED} name="no_left_column" value="0" /> {L_NO}</label>
+							<label><input type="radio" {NO_LEFT_COLUMN_DISABLED} name="no_left_column" value="0"> {L_NO}</label>
 						</dd>
 					</dl>
 					<dl>
 						<dt><label for="no_right_column">{L_NO_RIGHT_COLUMN}</label></dt>
 						<dd>
-							<label><input type="radio" {NO_RIGHT_COLUMN_ENABLED} name="no_right_column" id="no_right_column" value="1" /> {L_YES}</label>
+							<label><input type="radio" {NO_RIGHT_COLUMN_ENABLED} name="no_right_column" id="no_right_column" value="1"> {L_YES}</label>
 							&nbsp;&nbsp; 
-							<label><input type="radio" {NO_RIGHT_COLUMN_DISABLED} name="no_right_column" value="0" /> {L_NO}</label>
+							<label><input type="radio" {NO_RIGHT_COLUMN_DISABLED} name="no_right_column" value="0"> {L_NO}</label>
 						</dd>
 					</dl>
 				</fieldset>
@@ -125,35 +125,35 @@
 					<dl>
 						<dt><label for="activ_display_msg">{L_ACTIV_DISPLAY_MSG}</label></dt>
 						<dd>
-							<label><input type="radio" {DISPLAY_MSG_ENABLED} name="activ_display_msg" id="activ_display_msg" value="1" /> {L_ACTIV}</label>
+							<label><input type="radio" {DISPLAY_MSG_ENABLED} name="activ_display_msg" id="activ_display_msg" value="1"> {L_ACTIV}</label>
 							&nbsp;&nbsp; 
-							<label><input type="radio" {DISPLAY_MSG_DISABLED} name="activ_display_msg" value="0" /> {L_UNACTIVE}</label>
+							<label><input type="radio" {DISPLAY_MSG_DISABLED} name="activ_display_msg" value="0"> {L_UNACTIVE}</label>
 						</dd>
 					</dl>
 					<dl>
 						<dt><label for="display_msg">{L_DISPLAY_MSG}</label></dt>
 						<dd>
-							<label><input type="text" size="25" name="display_msg" id="display_msg" value="{DISPLAY_MSG}" class="text" /></label>
+							<label><input type="text" size="25" name="display_msg" id="display_msg" value="{DISPLAY_MSG}" class="text"></label>
 						</dd>
 					</dl>
 					<dl>
 						<dt><label for="explain_display_msg">{L_EXPLAIN_DISPLAY_MSG}</label><br /><span>{L_EXPLAIN_DISPLAY_MSG_EXPLAIN}</span></dt>
 						<dd>
-							<label><input type="text" size="40" name="explain_display_msg" id="explain_display_msg" value="{EXPLAIN_DISPLAY_MSG}" class="text" /></label>
+							<label><input type="text" size="40" name="explain_display_msg" id="explain_display_msg" value="{EXPLAIN_DISPLAY_MSG}" class="text"></label>
 						</dd>
 					</dl>
 					<dl>
 						<dt><label for="explain_display_msg_bis">{L_EXPLAIN_DISPLAY_MSG_BIS}</label><br /><span>{L_EXPLAIN_DISPLAY_MSG_BIS_EXPLAIN}</span></dt>
 						<dd>
-							<label><input type="text" size="40" name="explain_display_msg_bis" id="explain_display_msg_bis" value="{EXPLAIN_DISPLAY_MSG_BIS}" class="text" /></label>
+							<label><input type="text" size="40" name="explain_display_msg_bis" id="explain_display_msg_bis" value="{EXPLAIN_DISPLAY_MSG_BIS}" class="text"></label>
 						</dd>
 					</dl>
 					<dl>
 						<dt><label for="icon_activ_display_msg">{L_ICON_DISPLAY_MSG}</label></dt>
 						<dd>
-							<label><input type="radio" {ICON_DISPLAY_MSG_ENABLED} name="icon_activ_display_msg" id="icon_activ_display_msg" value="1" /> {L_ACTIV}</label>
+							<label><input type="radio" {ICON_DISPLAY_MSG_ENABLED} name="icon_activ_display_msg" id="icon_activ_display_msg" value="1"> {L_ACTIV}</label>
 							&nbsp;&nbsp; 
-							<label><input type="radio" {ICON_DISPLAY_MSG_DISABLED} name="icon_activ_display_msg" value="0" /> {L_UNACTIVE}</label>
+							<label><input type="radio" {ICON_DISPLAY_MSG_DISABLED} name="icon_activ_display_msg" value="0"> {L_UNACTIVE}</label>
 							&nbsp; <img src="{PICTURES_DATA_PATH}/images/msg_display.png" name="icon" alt="" style="vertical-align:middle" /> / <img src="{PICTURES_DATA_PATH}/images/msg_display2.png" name="icon" alt="" style="vertical-align:middle" />
 						</dd>
 					</dl>
@@ -161,9 +161,9 @@
 					
 				<fieldset class="fieldset_submit">
 				<legend>{L_UPDATE}</legend>
-					<input type="submit" name="valid" value="{L_UPDATE}" class="submit" />
+					<input type="submit" name="valid" value="{L_UPDATE}" class="submit">
 					&nbsp;&nbsp; 
-					<input type="reset" value="{L_RESET}" class="reset" />
+					<input type="reset" value="{L_RESET}" class="reset">
 				</fieldset>
 			</form>
 

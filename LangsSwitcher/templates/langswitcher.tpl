@@ -13,7 +13,7 @@
 						</select>
 						<img src="{IMG_LANG_IDENTIFIER}" alt="" class="valign_middle" />
  
-						<input style="display: none;" value="{L_SUBMIT}" name="valid" id="switchlang_valid" class="submit" type="submit" />
+						<input style="display: none;" value="{L_SUBMIT}" name="valid" id="switchlang_valid" class="submit" type="submit">
 					<script type="text/javascript">
 					<!--
 					document.getElementById('switchlang_valid').style.display = 'none';
@@ -35,7 +35,7 @@
 				# END langs #
 			</select>
 			<img src="{IMG_LANG_IDENTIFIER}" alt="" class="valign_middle" />
-			<input style="display: none;" value="{L_SUBMIT}" name="valid" id="switchlang_valid" class="submit" type="submit" />
+			<input style="display: none;" value="{L_SUBMIT}" name="valid" id="switchlang_valid" class="submit" type="submit">
 				<script type="text/javascript">
 					<!--
 					document.getElementById('switchlang_valid').style.display = 'none';

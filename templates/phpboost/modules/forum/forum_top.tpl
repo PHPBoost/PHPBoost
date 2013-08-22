@@ -87,13 +87,13 @@
 				<div class="forum_title_search">
 					<form action="{PATH_TO_ROOT}/forum/search.php?token={TOKEN}" method="post">
 						<div>
-							<label><input type="text" size="14" id="search" name="search" value="{L_SEARCH}..." class="text" onclick="if(this.value=='{L_SEARCH}...')this.value='';" onblur="if(this.value=='')this.value='{L_SEARCH}...';" /></label>
-							<input class="submit" value="{L_SEARCH}" type="submit" name="valid_search" style="padding:1px" />
+							<label><input type="text" size="14" id="search" name="search" value="{L_SEARCH}..." class="text" onclick="if(this.value=='{L_SEARCH}...')this.value='';" onblur="if(this.value=='')this.value='{L_SEARCH}...';"></label>
+							<input class="submit" value="{L_SEARCH}" type="submit" name="valid_search" style="padding:1px">
 							<BR /><a href="{PATH_TO_ROOT}/forum/search.php{SID}" title="{L_ADVANCED_SEARCH}" class="small_link" style="font-size:10px;">{L_ADVANCED_SEARCH}</a>
                                 
-							<input type="hidden" name="time" value="30000" />
-							<input type="hidden" name="where" value="contents" />
-							<input type="hidden" name="colorate_result" value="1" />
+							<input type="hidden" name="time" value="30000">
+							<input type="hidden" name="where" value="contents">
+							<input type="hidden" name="colorate_result" value="1">
 						</div>
 					</form>
 				</div>

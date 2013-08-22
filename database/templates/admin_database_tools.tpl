@@ -359,7 +359,7 @@
 					</div>
 					<fieldset class="fieldset_submit" style="margin:0">
 						<legend>{L_EXECUTE}</legend>
-						<input type="submit" class="submit" value="{L_EXECUTE}" />
+						<input type="submit" class="submit" value="{L_EXECUTE}">
 					</fieldset>
 				</div>
 			</form>
@@ -426,7 +426,7 @@
 							# IF fields.C_FIELD_FORM_EXTEND #
 							<textarea class="post" rows="6" cols="37" name="{fields.FIELD_NAME}">{fields.FIELD_VALUE}</textarea>
 							# ELSE #
-							<input type="text" size="30" name="{fields.FIELD_NAME}" class="text" value="{fields.FIELD_VALUE}" />
+							<input type="text" size="30" name="{fields.FIELD_NAME}" class="text" value="{fields.FIELD_VALUE}">
 							# ENDIF #
 						</td>
 					</tr>
@@ -434,7 +434,7 @@
 				</table>
 				<fieldset class="fieldset_submit" style="margin:0">
 					<legend>{L_EXECUTE}</legend>
-					<input type="submit" class="submit" name="submit" value="{L_EXECUTE}" />
+					<input type="submit" class="submit" name="submit" value="{L_EXECUTE}">
 				</fieldset>
 			</form>	
 			# ENDIF #

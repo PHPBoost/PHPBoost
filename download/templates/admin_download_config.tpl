@@ -64,15 +64,15 @@
 					<legend>{L_DOWNLOAD_CONFIG}</legend>
 					<dl>
 						<dt><label for="max_files_number_per_page">* {L_MAX_FILES_NUMBER_PER_PAGE}</label></dt>
-						<dd><label><input type="text" size="3" maxlength="3" id="max_files_number_per_page" name="max_files_number_per_page" value="{MAX_FILES_NUMBER_PER_PAGE}" class="text" /></label></dd>
+						<dd><label><input type="text" size="3" maxlength="3" id="max_files_number_per_page" name="max_files_number_per_page" value="{MAX_FILES_NUMBER_PER_PAGE}" class="text"></label></dd>
 					</dl>
 					<dl>
 						<dt><label for="columns_number">* {L_COLUMNS_NUMBER}</label></dt>
-						<dd><label><input type="text" size="3" maxlength="3" id="columns_number" name="columns_number" value="{COLUMNS_NUMBER}" class="text" /></label></dd>
+						<dd><label><input type="text" size="3" maxlength="3" id="columns_number" name="columns_number" value="{COLUMNS_NUMBER}" class="text"></label></dd>
 					</dl>
 					<dl>
 						<dt><label for="notation_scale">* {L_NOTATION_SCALE}</label></dt>
-						<dd><label><input type="text" size="2" maxlength="2" id="notation_scale" name="note_max" value="{NOTATION_SCALE}" class="text" /></label></dd>
+						<dd><label><input type="text" size="2" maxlength="2" id="notation_scale" name="note_max" value="{NOTATION_SCALE}" class="text"></label></dd>
 					</dl>
 					<label for="contents">
 						{L_ROOT_DESCRIPTION}
@@ -83,9 +83,9 @@
 								
 				<fieldset class="fieldset_submit">
 					<legend>{L_DELETE}</legend>
-					<input type="submit" name="valid" value="{L_UPDATE}" class="submit" />
+					<input type="submit" name="valid" value="{L_UPDATE}" class="submit">
 					&nbsp;&nbsp; 
-					<input type="reset" value="{L_RESET}" class="reset" />				
+					<input type="reset" value="{L_RESET}" class="reset">				
 				</fieldset>	
 			</form>
 		</div>	

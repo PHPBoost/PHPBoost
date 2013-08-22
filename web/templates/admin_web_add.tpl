@@ -112,7 +112,7 @@
 					<p>{L_REQUIRE}</p>
 					<dl>
 						<dt><label for="name">* {L_NAME}</label></dt>
-						<dd><label><input type="text" size="55" maxlength="50" name="name" id="name" value="{NAME}" class="text" /></label></dd>
+						<dd><label><input type="text" size="55" maxlength="50" name="name" id="name" value="{NAME}" class="text"></label></dd>
 					</dl>
 					<dl>
 						<dt><label for="idcat">* {L_CATEGORY}</label></dt>
@@ -126,11 +126,11 @@
 					</dl>
 					<dl>
 						<dt><label for="url">* {L_URL_LINK}</label></dt>
-						<dd><label><input type="text" size="65" id="url" name="url" id="url" value="{URL}" class="text" /></label></dd>
+						<dd><label><input type="text" size="65" id="url" name="url" id="url" value="{URL}" class="text"></label></dd>
 					</dl>
 					<dl>
 						<dt><label for="compt">{L_VIEWS}</label></dt>
-						<dd><label><input type="text" size="10" maxlength="10" name="compt" id="compt" value="{COMPT}" class="text" /></label></dd>
+						<dd><label><input type="text" size="10" maxlength="10" name="compt" id="compt" value="{COMPT}" class="text"></label></dd>
 					</dl>
 					<br />
 					<label for="contents">{L_DESC}</label>
@@ -142,19 +142,19 @@
 					<dl>
 						<dt><label for="aprob">* {L_APROB}</label></dt>
 						<dd>
-							<label><input type="radio" {CHECK_ENABLED} name="aprob" id="aprob" value="1" /> {L_YES}</label>
+							<label><input type="radio" {CHECK_ENABLED} name="aprob" id="aprob" value="1"> {L_YES}</label>
 							&nbsp;&nbsp; 
-							<label><input type="radio" {CHECK_DISABLED}  name="aprob" value="0" /> {L_NO}</label></dd>
+							<label><input type="radio" {CHECK_DISABLED}  name="aprob" value="0"> {L_NO}</label></dd>
 					</dl>
 				</fieldset>		
 				
 				<fieldset class="fieldset_submit">
 					<legend>{L_SUBMIT}</legend>
-					<input type="submit" name="valid" value="{L_SUBMIT}" class="submit" />
+					<input type="submit" name="valid" value="{L_SUBMIT}" class="submit">
 					&nbsp;&nbsp; 
-					<input type="submit" name="previs" value="{L_PREVIEW}" class="submit" />
+					<input type="submit" name="previs" value="{L_PREVIEW}" class="submit">
 					&nbsp;&nbsp; 
-					<input type="reset" value="{L_RESET}" class="reset" />				
+					<input type="reset" value="{L_RESET}" class="reset">				
 				</fieldset>	
 			</form>
 		</div>

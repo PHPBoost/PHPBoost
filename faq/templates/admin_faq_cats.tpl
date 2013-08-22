@@ -65,11 +65,11 @@
 					<p>{L_EXPLAIN_REMOVING}</p>
 					
 					<label>
-						<input type="radio" name="action" value="delete" /> {L_DELETE_CATEGORY_AND_CONTENT}
+						<input type="radio" name="action" value="delete"> {L_DELETE_CATEGORY_AND_CONTENT}
 					</label>
 					<br /> <br />
 					<label>
-						<input type="radio" name="action" value="move" checked="checked" /> {L_MOVE_CONTENT}
+						<input type="radio" name="action" value="move" checked="checked"> {L_MOVE_CONTENT}
 					</label>
 					&nbsp;
 					{removing_interface.CATEGORY_TREE}
@@ -77,8 +77,8 @@
 				
 				<fieldset class="fieldset_submit">
 					<legend>{L_SUBMIT}</legend>
-					<input type="hidden" name="cat_to_del" value="{removing_interface.IDCAT}" />
-					<input type="submit" name="submit" value="{L_SUBMIT}" class="submit" />	
+					<input type="hidden" name="cat_to_del" value="{removing_interface.IDCAT}">
+					<input type="submit" name="submit" value="{L_SUBMIT}" class="submit">	
 				</fieldset>
 			</form>
 			
@@ -110,7 +110,7 @@
 							</label>
 						</dt>
 						<dd>
-							<input type="text" size="65" maxlength="100" id="name" name="name" value="{edition_interface.NAME}" class="text" />
+							<input type="text" size="65" maxlength="100" id="name" name="name" value="{edition_interface.NAME}" class="text">
 						</dd>
 					</dl>
 					<dl>
@@ -130,7 +130,7 @@
 							</label>
 						</dt>
 						<dd>
-							<input type="text" size="65" maxlength="100" id="image" name="image" value="{edition_interface.IMAGE}" class="text" />
+							<input type="text" size="65" maxlength="100" id="image" name="image" value="{edition_interface.IMAGE}" class="text">
 						</dd>
 					</dl>
 					<label for="description">
@@ -142,12 +142,12 @@
 				
 				<fieldset class="fieldset_submit">
 					<legend>{L_SUBMIT}</legend>
-					<input type="hidden" name="idcat" value="{edition_interface.IDCAT}" />
-					<input type="submit" name="submit" value="{L_SUBMIT}" class="submit" />
+					<input type="hidden" name="idcat" value="{edition_interface.IDCAT}">
+					<input type="submit" name="submit" value="{L_SUBMIT}" class="submit">
 					&nbsp;&nbsp;
-					<input type="button" name="preview" value="{L_PREVIEW}" onclick="XMLHttpRequest_preview();" class="submit" />
+					<input type="button" name="preview" value="{L_PREVIEW}" onclick="XMLHttpRequest_preview();" class="submit">
 					&nbsp;&nbsp;
-					<input type="reset" value="{L_RESET}" class="reset" />				
+					<input type="reset" value="{L_RESET}" class="reset">				
 				</fieldset>
 			</form>
 			# END edition_interface #

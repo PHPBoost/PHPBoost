@@ -11,16 +11,16 @@
 					<br />
 					<p style="padding-left: 6px;text-align: left;">		
 						# START question.radio #
-						<label><input type="radio" name="radio" value="{question.radio.NAME}" /> <span class="text_small">{question.radio.ANSWERS}</span></label>
+						<label><input type="radio" name="radio" value="{question.radio.NAME}"> <span class="text_small">{question.radio.ANSWERS}</span></label>
 						<br /><br />	
 						# END question.radio #
 					
 						# START question.checkbox #
-						<label><input type="checkbox" name="{question.checkbox.NAME}" value="{question.checkbox.NAME}" /> <span class="text_small">{question.checkbox.ANSWERS}</span></label>
+						<label><input type="checkbox" name="{question.checkbox.NAME}" value="{question.checkbox.NAME}"> <span class="text_small">{question.checkbox.ANSWERS}</span></label>
 						<br /><br />	
 						# END question.checkbox #
 					</p>
-					<input class="submit" name="valid_poll" type="submit" value="{L_VOTE}" /><br />
+					<input class="submit" name="valid_poll" type="submit" value="{L_VOTE}" /><br>
 					<a class="small_link" href="{PATH_TO_ROOT}/poll/poll{U_POLL_RESULT}">{L_POLL_RESULT}</a>
 				</div>	
 				<div class="module_mini_bottom">

@@ -47,7 +47,7 @@
             <div class="module_contents">
                 <div class="spacer">&nbsp;</div>
                 <form action="{U_FORM_VALID}" onsubmit="return check_search_form_post();" method="post">
-                    <div class="search_field"><input type="text" id="TxTsearched" name="q" value="{TEXT_SEARCHED}" class="text" onclick="if(this.value=='{L_SEARCH}...')this.value='';" onblur="if(this.value=='')this.value='{L_SEARCH}...';" /></div>
+                    <div class="search_field"><input type="text" id="TxTsearched" name="q" value="{TEXT_SEARCHED}" class="text" onclick="if(this.value=='{L_SEARCH}...')this.value='';" onblur="if(this.value=='')this.value='{L_SEARCH}...';"></div>
                     <div class="spacer">&nbsp;</div>
                     <div style="text-align:center;">
                         <p id="forms_selection">
@@ -81,10 +81,10 @@
                     <div class="spacer">&nbsp;</div>
                     <fieldset class="fieldset_submit">
                         <legend>{L_SEARCH}</legend>
-                        <input type="hidden" id="search_in" name="search_in" value="all" />
-                        <input type="hidden" id="query_mode" name="query_mode" value="0" />
-                        <input type="submit" id="search_submit" name="search_submit" value="{L_SEARCH}" class="submit" />
-                        <input type="hidden" name="token" value="{TOKEN}" />
+                        <input type="hidden" id="search_in" name="search_in" value="all">
+                        <input type="hidden" id="query_mode" name="query_mode" value="0">
+                        <input type="submit" id="search_submit" name="search_submit" value="{L_SEARCH}" class="submit">
+                        <input type="hidden" name="token" value="{TOKEN}">
                     </fieldset>
                 </form>
             </div>

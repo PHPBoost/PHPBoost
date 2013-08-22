@@ -245,8 +245,8 @@
 								{STATS_YEAR}
 							</select>
 							# ENDIF #
-							<input type="hidden" name="{TYPE}" value="1" />
-							<input type="submit" name="date" value="{L_SUBMIT}" class="submit" />
+							<input type="hidden" name="{TYPE}" value="1">
+							<input type="submit" name="date" value="{L_SUBMIT}" class="submit">
 							&nbsp;&nbsp;&nbsp;&nbsp;
 							<a href="stats{U_NEXT_LINK}#stats">&raquo;</a>				
 						</div>

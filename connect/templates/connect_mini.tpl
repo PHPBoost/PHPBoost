@@ -20,18 +20,18 @@
 					<p>
 						<label>{L_PSEUDO}
 						<br />
-						<input type="text" class="text" id="login" name="login" maxlength="25" /></label>
+						<input type="text" class="text" id="login" name="login" maxlength="25"></label>
 						<br />
 						<label>{L_PASSWORD}
 						<br />
-						<input type="password" id="password" name="password" class="text" maxlength="30" /></label>
+						<input type="password" id="password" name="password" class="text" maxlength="30"></label>
 						<br />
-						<label>{L_AUTOCONNECT} <input checked="checked" type="checkbox" name="auto" /></label>
+						<label>{L_AUTOCONNECT} <input checked="checked" type="checkbox" name="auto"></label>
 					</p>
 					<p>
-						<input type="hidden" name="redirect" value="{REWRITED_SCRIPT}" />
-						<input type="hidden" name="token" value="{TOKEN}" />
-						<input type="submit" name="connect" value="{L_CONNECT}" class="submit" />
+						<input type="hidden" name="redirect" value="{REWRITED_SCRIPT}">
+						<input type="hidden" name="token" value="{TOKEN}">
+						<input type="submit" name="connect" value="{L_CONNECT}" class="submit">
 					</p>
 					<p class="connect_register">
 						# IF C_USER_REGISTER # 
@@ -103,15 +103,15 @@
 	</script>
 	<div class="connect_align">
 		<form action="{U_CONNECT}" method="post" onsubmit="return check_connect();" class="connect_align">
-			<p class="connect_inline"><input type="text" id="login" name="login" value="{L_PSEUDO}" class="connect_form" onfocus="if( this.value == '{L_PSEUDO}' ) this.value = '';" maxlength="25" />
-			<input type="password" id="password" name="password" class="connect_form" value="******" onfocus="if( this.value == '******' ) this.value = '';" maxlength="30" />
-			<input checked="checked" type="checkbox" name="auto" />
-			<input type="hidden" name="redirect" value="{REWRITED_SCRIPT}" />
-			<input type="submit" name="connect" value="{L_CONNECT}" class="submit" /></p>
+			<p class="connect_inline"><input type="text" id="login" name="login" value="{L_PSEUDO}" class="connect_form" onfocus="if( this.value == '{L_PSEUDO}' ) this.value = '';" maxlength="25">
+			<input type="password" id="password" name="password" class="connect_form" value="******" onfocus="if( this.value == '******' ) this.value = '';" maxlength="30">
+			<input checked="checked" type="checkbox" name="auto">
+			<input type="hidden" name="redirect" value="{REWRITED_SCRIPT}">
+			<input type="submit" name="connect" value="{L_CONNECT}" class="submit"></p>
 		</form>
 		# IF C_USER_REGISTER #
 		<form action="{U_REGISTER}" method="post" class="connect_align">
-			<p class="connect_inline"><input type="submit" name="register" value="{L_REGISTER}" class="submit" /></p>
+			<p class="connect_inline"><input type="submit" name="register" value="{L_REGISTER}" class="submit"></p>
 		</form>
 		# ENDIF #
 	</div>

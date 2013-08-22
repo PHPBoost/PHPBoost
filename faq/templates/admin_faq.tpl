@@ -43,7 +43,7 @@
 							<span class="text_small">{L_FAQ_NAME_EXPLAIN}</span>
 						</dt>
 						<dd>
-							<input type="text" size="65" maxlength="100" id="faq_name" name="faq_name" value="{FAQ_NAME}" class="text" />
+							<input type="text" size="65" maxlength="100" id="faq_name" name="faq_name" value="{FAQ_NAME}" class="text">
 						</dd>	
 					</dl>
 					<dl>
@@ -53,7 +53,7 @@
 							<span class="text_small">{L_NBR_COLS_EXPLAIN}</span>
 						</dt>
 						<dd>
-							<input type="text" size="3" maxlength="3" id="num_cols" name="num_cols" value="{NUM_COLS}" class="text" />
+							<input type="text" size="3" maxlength="3" id="num_cols" name="num_cols" value="{NUM_COLS}" class="text">
 						</dd>	
 					</dl>
 					<dl>
@@ -93,7 +93,7 @@
 				</fieldset>
 				<fieldset class="fieldset_submit">
 					<legend>{L_SUBMIT}</legend>
-					<input type="submit" name="submit" value="{L_SUBMIT}" class="submit" />
+					<input type="submit" name="submit" value="{L_SUBMIT}" class="submit">
 				</fieldset>
 			</form>
 		</div>		

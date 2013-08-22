@@ -50,11 +50,11 @@ function check_msg(){
     
         <fieldset class="fieldset_submit">
             <legend>{L_ACTION}</legend>
-            <input type="hidden" name="action" value="{ACTION}" />
-            <input type="hidden" name="id" value="{IDMENU}" />
-            <input type="submit" name="valid" value="{L_ACTION}" class="submit" />
-            <input type="reset" value="{L_RESET}" class="reset" />
-			<input type="hidden" name="token" value="{TOKEN}" />			
+            <input type="hidden" name="action" value="{ACTION}">
+            <input type="hidden" name="id" value="{IDMENU}">
+            <input type="submit" name="valid" value="{L_ACTION}" class="submit">
+            <input type="reset" value="{L_RESET}" class="reset">
+			<input type="hidden" name="token" value="{TOKEN}">			
         </fieldset> 
     </form>
 </div>

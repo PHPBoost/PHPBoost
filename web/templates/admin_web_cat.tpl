@@ -77,7 +77,7 @@
 							<tr>	
 								<td class="row2"> 
 									<span id="w{cat.IDCAT}"></span>
-									<input type="text" maxlength="60" size="20" name="{cat.IDCAT}cat" value="{cat.CAT}" class="text" />
+									<input type="text" maxlength="60" size="20" name="{cat.IDCAT}cat" value="{cat.CAT}" class="text">
 								</td>							
 								<td class="row2"> 
 									<textarea class="post" rows="3" cols="40" name="{cat.IDCAT}contents">{cat.CONTENTS}</textarea> 
@@ -88,7 +88,7 @@
 									</select>
 									<span id="{cat.IDCAT}icon_img">{cat.IMG_ICON}</span>
 									<br />
-									<span class="text_small">{L_OR_DIRECT_PATH}</span> <input type="text" class="text" name="{cat.IDCAT}icon_path" value="{cat.IMG_PATH}" onblur="if( this.value != '' )change_icon('{cat.IDCAT}', this.value)" />
+									<span class="text_small">{L_OR_DIRECT_PATH}</span> <input type="text" class="text" name="{cat.IDCAT}icon_path" value="{cat.IMG_PATH}" onblur="if( this.value != '' )change_icon('{cat.IDCAT}', this.value)">
 								</td>	
 								<td class="row2"> 
 									<select name="{cat.IDCAT}secure">
@@ -98,9 +98,9 @@
 									</select>
 								</td>							
 								<td class="row2"> 
-									<label><input type="radio" {cat.ACTIV_ENABLED} name="{cat.IDCAT}aprob" value="1" /> {L_ACTIV}</label>
+									<label><input type="radio" {cat.ACTIV_ENABLED} name="{cat.IDCAT}aprob" value="1"> {L_ACTIV}</label>
 									&nbsp;&nbsp; 
-									<label><input type="radio" {cat.ACTIV_DISABLED} name="{cat.IDCAT}aprob" value="0" /> {L_UNACTIV}</label>
+									<label><input type="radio" {cat.ACTIV_DISABLED} name="{cat.IDCAT}aprob" value="0"> {L_UNACTIV}</label>
 								</td>
 								<td class="row2">
 									{cat.TOP}
@@ -119,9 +119,9 @@
 				
 				<fieldset class="fieldset_submit">
 					<legend>{L_UPDATE}</legend>
-					<input type="submit" name="valid" value="{L_UPDATE}" class="submit" />
+					<input type="submit" name="valid" value="{L_UPDATE}" class="submit">
 					&nbsp;&nbsp; 
-					<input type="reset" value="{L_RESET}" class="reset" />				
+					<input type="reset" value="{L_RESET}" class="reset">				
 				</fieldset>	
 			</form>
 
@@ -130,7 +130,7 @@
 					<legend>{L_ADD_CAT}</legend>
 					<dl>
 						<dt><label for="cat">* {L_NAME}</label></dt>
-						<dd><label><input type="text" size="25" maxlength="60" name="cat" id="cat" class="text" /></label></dd>
+						<dd><label><input type="text" size="25" maxlength="60" name="cat" id="cat" class="text"></label></dd>
 					</dl>
 					<dl>
 						<dt><label for="cat">{L_DESC}</label></dt>
@@ -144,7 +144,7 @@
 							</select></label>
 							<span id="icon_img">{IMG_ICON}</span>
 							<br />
-							<label><span class="text_small">{L_OR_DIRECT_PATH}</span> <input type="text" class="text" name="icon_path" id="icon_path" value="" onblur="if( this.value != '' )change_icon('', this.value)" /></label>
+							<label><span class="text_small">{L_OR_DIRECT_PATH}</span> <input type="text" class="text" name="icon_path" id="icon_path" value="" onblur="if( this.value != '' )change_icon('', this.value)"></label>
 						</dd>
 					</dl>
 					<dl>
@@ -161,18 +161,18 @@
 					<dl>
 						<dt><label for="contents">{L_ACTIVATION}</label></dt>
 						<dd>
-							<label><input type="radio" name="aprob" checked="checked" value="1" /> {L_ACTIV}</label>
+							<label><input type="radio" name="aprob" checked="checked" value="1"> {L_ACTIV}</label>
 							&nbsp;&nbsp; 
-							<label><input type="radio" name="aprob" value="0" /> {L_UNACTIV}</label>
+							<label><input type="radio" name="aprob" value="0"> {L_UNACTIV}</label>
 						</dd>
 					</dl>
 				</fieldset>	
 				
 				<fieldset class="fieldset_submit">
 					<legend>{L_ADD}</legend>
-					<input type="submit" name="add" value="{L_ADD}" class="submit" />
+					<input type="submit" name="add" value="{L_ADD}" class="submit">
 					&nbsp;&nbsp; 
-					<input type="reset" value="{L_RESET}" class="reset" />				
+					<input type="reset" value="{L_RESET}" class="reset">				
 				</fieldset>	
 			</form>
 		</div>

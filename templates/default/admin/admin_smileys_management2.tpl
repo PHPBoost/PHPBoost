@@ -45,7 +45,7 @@
 				<legend>{L_EDIT_SMILEY}</legend>
 					<dl>
 						<dt><label for="code_smiley">* {L_SMILEY_CODE}</label></dt>
-						<dd><label><input type="text" size="40" maxlength="100" id="code_smiley" name="code_smiley" value="{CODE_SMILEY}" class="text" /> </label></dd>
+						<dd><label><input type="text" size="40" maxlength="100" id="code_smiley" name="code_smiley" value="{CODE_SMILEY}" class="text"> </label></dd>
 					</dl>
 					<dl>
 						<dt><label for="code_smiley">* {L_SMILEY_AVAILABLE}</label></dt>
@@ -59,10 +59,10 @@
 				</fieldset>			
 				<fieldset class="fieldset_submit">
 					<legend>{L_DELETE}</legend>
-					<input type="hidden" name="idsmiley" value="{IDSMILEY}" />
-					<input type="submit" name="valid" value="{L_UPDATE}" class="submit" />
+					<input type="hidden" name="idsmiley" value="{IDSMILEY}">
+					<input type="submit" name="valid" value="{L_UPDATE}" class="submit">
 					&nbsp;&nbsp; 
-					<input type="reset" value="{L_RESET}" class="reset" />				
+					<input type="reset" value="{L_RESET}" class="reset">				
 				</fieldset>	
 			</form>
 		</div>

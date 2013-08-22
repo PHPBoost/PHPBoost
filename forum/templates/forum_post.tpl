@@ -48,7 +48,7 @@
 					if( document.getElementById('add_poll_field_link') )
 						document.getElementById('add_poll_field_link').innerHTML = '';
 				}
-				document.getElementById('add_poll_field' + this.max_field_p).innerHTML += '<label><input type="text" size="25" name="a' + this.max_field_p + '" value="" class="text" /></label><br /><span id="add_poll_field' + (this.max_field_p + 1) + '"></span>';
+				document.getElementById('add_poll_field' + this.max_field_p).innerHTML += '<label><input type="text" size="25" name="a' + this.max_field_p + '" value="" class="text" /></label><br><span id="add_poll_field' + (this.max_field_p + 1) + '"></span>';
 			}
 		}
 		function XMLHttpRequest_change_statut()
@@ -139,11 +139,11 @@
 							# ENDIF #
 							<dl>
 								<dt><label for="title">* {L_TITLE}</label></dt>
-								<dd><label><input type="text" size="51" maxlength="100" id="title" name="title" value="{TITLE}" class="text" /></label></dd>
+								<dd><label><input type="text" size="51" maxlength="100" id="title" name="title" value="{TITLE}" class="text"></label></dd>
 							</dl>
 							<dl>
 								<dt><label for="desc">{L_DESC}</label></dt>
-								<dd><label><input type="text" size="51" maxlength="75" id="desc" name="desc" value="{DESC}" class="text" /></label></dd>
+								<dd><label><input type="text" size="51" maxlength="75" id="desc" name="desc" value="{DESC}" class="text"></label></dd>
 							</dl>
 							
 							<label for="contents">* {L_MESSAGE}</label>
@@ -156,9 +156,9 @@
 							<dl>
 								<dt><label for="type">{L_TYPE}</label></dt>
 								<dd>
-									<label><input type="radio" name="type" id="type" value="0" {CHECKED_NORMAL} /> {L_DEFAULT}</label>
-									<label><input type="radio" name="type" value="1" {CHECKED_POSTIT} /> {L_POST_IT}</label>
-									<label><input type="radio" name="type" value="2" {CHECKED_ANNONCE} /> {L_ANOUNCE}</label>
+									<label><input type="radio" name="type" id="type" value="0" {CHECKED_NORMAL}> {L_DEFAULT}</label>
+									<label><input type="radio" name="type" value="1" {CHECKED_POSTIT}> {L_POST_IT}</label>
+									<label><input type="radio" name="type" value="2" {CHECKED_ANNONCE}> {L_ANOUNCE}</label>
 								</dd>
 							</dl>
 							# ENDIF #
@@ -170,26 +170,26 @@
 							<div id="hidepoll">
 								<dl>
 									<dt><label for="question">* {L_QUESTION}</label></dt>
-									<dd><label><input type="text" size="40" name="question" id="question" value="{POLL_QUESTION}" class="text" /></label></dd>
+									<dd><label><input type="text" size="40" name="question" id="question" value="{POLL_QUESTION}" class="text"></label></dd>
 								</dl>
 								<dl>
 									<dt><label for="poll_type">{L_POLL_TYPE}</label></dt>
 									<dd>
-										<label><input type="radio" name="poll_type" id="poll_type" value="0" {SELECTED_SIMPLE} /> {L_SINGLE}</label>
-										<label><input type="radio" name="poll_type" value="1" {SELECTED_MULTIPLE} /> {L_MULTIPLE}</label>	
+										<label><input type="radio" name="poll_type" id="poll_type" value="0" {SELECTED_SIMPLE}> {L_SINGLE}</label>
+										<label><input type="radio" name="poll_type" value="1" {SELECTED_MULTIPLE}> {L_MULTIPLE}</label>	
 									</dd>
 								</dl>
 								# IF C_DELETE_POLL #
 								<dl>
 									<dt><label for="del_poll">{L_DELETE_POLL}</label></dt>
-									<dd><label><input type="checkbox" name="del_poll" id="del_poll" value="true" /></label></dd>
+									<dd><label><input type="checkbox" name="del_poll" id="del_poll" value="true"></label></dd>
 								</dl>
 								# ENDIF #
 								<dl>
 									<dt><label>{L_ANSWERS}</label></dt>
 									<dd>
 										# START answers_poll #
-										<label><input type="text" size="25" name="a{answers_poll.ID}" value="{answers_poll.ANSWER}" class="text" /> <em>{answers_poll.NBR_VOTES} {answers_poll.L_VOTES}</em></label><br />
+										<label><input type="text" size="25" name="a{answers_poll.ID}" value="{answers_poll.ANSWER}" class="text" /> <em>{answers_poll.NBR_VOTES} {answers_poll.L_VOTES}</em></label><br>
 										# END answers_poll #
 										<span id="add_poll_field{NBR_POLL_FIELD}"></span>	
 										
@@ -211,18 +211,18 @@
 						
 						<fieldset class="fieldset_submit">
 						<legend>{L_SUBMIT}</legend>
-							<input type="hidden" name="idm" value="{IDM}" />
-							<input type="submit" name="post_topic" value="{L_SUBMIT}" class="submit" />
+							<input type="hidden" name="idm" value="{IDM}">
+							<input type="submit" name="post_topic" value="{L_SUBMIT}" class="submit">
 							&nbsp;&nbsp;
-							<input value="{L_PREVIEW}" type="submit" name="prw_t" id="previs_topic" class="submit" />
+							<input value="{L_PREVIEW}" type="submit" name="prw_t" id="previs_topic" class="submit">
 							<script type="text/javascript">
 							<!--
 							document.getElementById('previs_topic').style.display = 'none';
-							document.write('<input value="{L_PREVIEW}" onclick="XMLHttpRequest_preview();" type="button" class="submit" />');
+							document.write('<input value="{L_PREVIEW}" onclick="XMLHttpRequest_preview();" type="button" class="submit">');
 							-->
 							</script>
 							&nbsp;&nbsp;
-							<input type="reset" value="{L_RESET}" class="reset" />
+							<input type="reset" value="{L_RESET}" class="reset">
 						
 							# IF C_DISPLAY_MSG #
 							<br /><br /><br />

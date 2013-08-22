@@ -76,10 +76,12 @@ class DispatchManager
 		$url = ltrim($url, '/');
 		if (ServerEnvironmentConfig::load()->is_url_rewriting_enabled())
 		{
+			/*
 			if (empty($url))
 			{
 				$url = '.';
 			}
+			*/
 			return new Url(self::get_dispatcher_path($dispatcher_url->relative()) . '/' . $url);
 		}
 		else

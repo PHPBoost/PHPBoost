@@ -55,26 +55,26 @@
 					<legend>{L_WEB_CONFIG}</legend>
 					<dl>
 						<dt><label for="nbr_web_max">* {L_NBR_WEB_MAX}</label></dt>
-						<dd><label><input type="text" size="3" maxlength="3" id="nbr_web_max" name="nbr_web_max" value="{NBR_WEB_MAX}" class="text" /></label></dd>
+						<dd><label><input type="text" size="3" maxlength="3" id="nbr_web_max" name="nbr_web_max" value="{NBR_WEB_MAX}" class="text"></label></dd>
 					</dl>
 					<dl>
 						<dt><label for="nbr_cat_max">* {L_NBR_CAT_MAX}</label></dt>
-						<dd><label><input type="text" size="3" maxlength="3" id="nbr_cat_max" name="nbr_cat_max" value="{NBR_CAT_MAX}" class="text" /></label></dd>
+						<dd><label><input type="text" size="3" maxlength="3" id="nbr_cat_max" name="nbr_cat_max" value="{NBR_CAT_MAX}" class="text"></label></dd>
 					</dl>
 					<dl>
 						<dt><label for="nbr_column">* {L_NBR_COLUMN_MAX}</label></dt>
-						<dd><label><input type="text" size="3" maxlength="3" id="nbr_column" name="nbr_column" value="{NBR_COLUMN}" class="text" /></label></dd>
+						<dd><label><input type="text" size="3" maxlength="3" id="nbr_column" name="nbr_column" value="{NBR_COLUMN}" class="text"></label></dd>
 					</dl>
 					<dl>
 						<dt><label for="note_max">* {L_NOTE_MAX}</label></dt>
-						<dd><label><input type="text" size="2" maxlength="2" id="note_max" name="note_max" value="{NOTE_MAX}" class="text" /></label></dd>
+						<dd><label><input type="text" size="2" maxlength="2" id="note_max" name="note_max" value="{NOTE_MAX}" class="text"></label></dd>
 					</dl>
 				</fieldset>			
 				<fieldset class="fieldset_submit">
 					<legend>{L_UPDATE}</legend>
-					<input type="submit" name="valid" value="{L_UPDATE}" class="submit" />
+					<input type="submit" name="valid" value="{L_UPDATE}" class="submit">
 					&nbsp;&nbsp; 
-					<input type="reset" value="{L_RESET}" class="reset" />				
+					<input type="reset" value="{L_RESET}" class="reset">				
 				</fieldset>	
 			</form>
 		</div>

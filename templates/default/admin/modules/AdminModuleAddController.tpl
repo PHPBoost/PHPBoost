@@ -38,11 +38,11 @@
 				<strong>{@modules.compatibility}:</strong> PHPBoost {available.COMPATIBILITY}<br />
 			</td>
 			<td class="row2" style="text-align:center;">	
-				<input type="radio" name="activated-{available.ID}" value="1" checked="checked" /> {@modules.yes}
-				<input type="radio" name="activated-{available.ID}" value="0" /> {@modules.no}
+				<input type="radio" name="activated-{available.ID}" value="1" checked="checked"> {@modules.yes}
+				<input type="radio" name="activated-{available.ID}" value="0"> {@modules.no}
 				<br /><br />
-				<input type="hidden" name="token" value="{TOKEN}" />
-				<input type="submit" name="add-{available.ID}" value="{@modules.install_module}" class="submit" />
+				<input type="hidden" name="token" value="{TOKEN}">
+				<input type="submit" name="add-{available.ID}" value="{@modules.install_module}" class="submit">
 			</td>
 		</tr>						
 		# END available #

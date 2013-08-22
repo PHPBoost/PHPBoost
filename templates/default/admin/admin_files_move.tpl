@@ -104,8 +104,8 @@
 							</tr>	
 						</table>
 						<br />
-						<input type="hidden" name="new_cat" id="id_cat" value="{SELECTED_CAT}" />
-						<p style="text-align:center;"><input type="submit" class="submit" value="{L_SUBMIT}" name="valid" /></p>
+						<input type="hidden" name="new_cat" id="id_cat" value="{SELECTED_CAT}">
+						<p style="text-align:center;"><input type="submit" class="submit" value="{L_SUBMIT}" name="valid"></p>
 						</form>
 					</td>
 				</tr>		

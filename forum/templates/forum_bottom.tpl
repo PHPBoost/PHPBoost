@@ -26,10 +26,10 @@
 				# IF C_FORUM_CONNEXION #
 					# IF C_USER_NOTCONNECTED #
 					<form action="" method="post">
-						<p style="margin-bottom:8px;" class="text_small"><label>{L_PSEUDO} <input size="15" type="text" class="text" name="login" maxlength="25" /></label>
-						<label>{L_PASSWORD}	<input size="15" type="password" name="password" class="text" maxlength="30" /></label>
-						&nbsp;| <label>{L_AUTOCONNECT} <input type="checkbox" name="auto" checked="checked" /></label>
-						&nbsp;| <input type="submit" name="connect" value="{L_CONNECT}" class="submit" /></p>
+						<p style="margin-bottom:8px;" class="text_small"><label>{L_PSEUDO} <input size="15" type="text" class="text" name="login" maxlength="25"></label>
+						<label>{L_PASSWORD}	<input size="15" type="password" name="password" class="text" maxlength="30"></label>
+						&nbsp;| <label>{L_AUTOCONNECT} <input type="checkbox" name="auto" checked="checked"></label>
+						&nbsp;| <input type="submit" name="connect" value="{L_CONNECT}" class="submit"></p>
 					</form>
 					# ENDIF #	
 				# ENDIF #	
@@ -48,7 +48,7 @@
                                 {SELECT_CAT}
                             </select>
                             <noscript>
-                                <div><input type="submit" name="valid_change_cat" value="Go" class="submit" /></div>
+                                <div><input type="submit" name="valid_change_cat" value="Go" class="submit"></div>
                             </noscript>
                         </div>
 					</form>
@@ -66,7 +66,7 @@
                                 <option value="unlock">{L_UNLOCK}</option>
                                 <option value="del">{L_DELETE}</option>
                             </select>
-                            <input type="submit" value="{L_GO}" name="valid" class="submit" />
+                            <input type="submit" value="{L_GO}" name="valid" class="submit">
                         </div>
 					</form>
 					# ENDIF #

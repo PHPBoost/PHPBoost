@@ -60,8 +60,8 @@
 					</div>
 				</td>
 				<td class="row2" style="text-align:center;">
-					<label><input type="radio" name="activated-{langs_not_installed.ID}" value="1" checked="checked" /> {@langs.yes}</label>
-					<label><input type="radio" name="activated-{langs_not_installed.ID}" value="0" /> {@langs.no}</label>
+					<label><input type="radio" name="activated-{langs_not_installed.ID}" value="1" checked="checked"> {@langs.yes}</label>
+					<label><input type="radio" name="activated-{langs_not_installed.ID}" value="0"> {@langs.no}</label>
 					<br /><br />
 					<input type="submit" name="add-{langs_not_installed.ID}" value="{L_ADD}" class="submit"/>
 				</td>
@@ -71,6 +71,6 @@
 	
 	<fieldset class="fieldset_submit">
 		<legend>{L_SUBMIT}</legend>
-		<input type="hidden" name="token" value="{TOKEN}" />
+		<input type="hidden" name="token" value="{TOKEN}">
 	</fieldset>
 </form>

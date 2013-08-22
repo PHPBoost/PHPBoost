@@ -28,9 +28,9 @@
 								<td>{L_TOPIC}</td>
 								<td style="width:100px;">{L_AUTHOR}</td>
 								<td style="width:120px;"></td>
-								<td style="width:40px;"><input type="checkbox" class="valign_middle" onclick="check_convers(this.checked, 'p');" /> {L_PM}</td>
-								<td style="width:50px;"><input type="checkbox" class="valign_middle" onclick="check_convers(this.checked, 'm');" /> {L_MAIL}</td>
-								<td style="width:85px;"><input type="checkbox" class="valign_middle" onclick="check_convers(this.checked, 'd');" /> {L_DELETE}</td>
+								<td style="width:40px;"><input type="checkbox" class="valign_middle" onclick="check_convers(this.checked, 'p');"> {L_PM}</td>
+								<td style="width:50px;"><input type="checkbox" class="valign_middle" onclick="check_convers(this.checked, 'm');"> {L_MAIL}</td>
+								<td style="width:85px;"><input type="checkbox" class="valign_middle" onclick="check_convers(this.checked, 'd');"> {L_DELETE}</td>
 								<td style="width:150px;">{L_LAST_MESSAGE}</td>
 							</tr>
 						</table>
@@ -77,13 +77,13 @@
 								{L_VIEW}
 							</td>
 							<td class="forum_sous_cat_compteur forum_sous_cat_pbt" style="width:40px;text-align:center;">
-								<input type="checkbox" id="p{topics.INCR}" name="p{topics.ID}" {topics.CHECKED_PM} />
+								<input type="checkbox" id="p{topics.INCR}" name="p{topics.ID}" {topics.CHECKED_PM}>
 							</td>
 							<td class="forum_sous_cat_compteur forum_sous_cat_pbt" style="width:50px;text-align:center;">
-								<input type="checkbox" id="m{topics.INCR}" name="m{topics.ID}" {topics.CHECKED_MAIL} />
+								<input type="checkbox" id="m{topics.INCR}" name="m{topics.ID}" {topics.CHECKED_MAIL}>
 							</td>
 							<td class="forum_sous_cat_compteur forum_sous_cat_pbt" style="width:85px;text-align:center;">
-								<input type="checkbox" id="d{topics.INCR}" name="d{topics.ID}" />
+								<input type="checkbox" id="d{topics.INCR}" name="d{topics.ID}">
 							</td>
 							<td class="forum_sous_cat_last forum_sous_cat_pbt">
 								{topics.U_LAST_MSG}
@@ -99,7 +99,7 @@
 				</div>
 			</div>
 			<div style="text-align:center;margin-top:10px;">
-				<input type="submit" name="valid" value="{L_SUBMIT}" class="submit" />
+				<input type="submit" name="valid" value="{L_SUBMIT}" class="submit">
 			</div>
 		</form>
 		

@@ -64,7 +64,7 @@
 				# START create #
 				<dl>
 					<dt><label for="title">* {L_TITLE_FIELD}</label></dt>
-					<dd><label><input type="text" class="text" id="title" name="title" size="70" maxlength="250" value="{PAGE_TITLE}" /></label></dd>					
+					<dd><label><input type="text" class="text" id="title" name="title" size="70" maxlength="250" value="{PAGE_TITLE}"></label></dd>					
 				</dl>
 				# END create #
 				<br />
@@ -80,7 +80,7 @@
 				<legend>{L_PATH}</legend>
 				<dl>
 					<dt><label for="is_cat">{L_IS_CAT}</label></dt>
-					<dd><label><input type="checkbox" name="is_cat" id="is_cat" {CHECK_IS_CAT} /></label></dd>					
+					<dd><label><input type="checkbox" name="is_cat" id="is_cat" {CHECK_IS_CAT}></label></dd>					
 				</dl>
 				<dl>
 					<dt><label>{L_CAT}</label></dt>
@@ -99,15 +99,15 @@
 				<legend>{L_PROPERTIES}</legend>
 				<dl>
 					<dt><label for="count_hits">{L_COUNT_HITS}</label></dt>
-					<dd><label><input type="checkbox" id="count_hits" name="count_hits" {COUNT_HITS_CHECKED} /></label></dd>					
+					<dd><label><input type="checkbox" id="count_hits" name="count_hits" {COUNT_HITS_CHECKED}></label></dd>					
 				</dl>
 				<dl>
 					<dt><label for="comments_activated">{L_COMMENTS_ACTIVATED}</label></dt>
-					<dd><label><input type="checkbox" id="comments_activated" name="comments_activated" {COMMENTS_ACTIVATED_CHECKED} /></label></dd>					
+					<dd><label><input type="checkbox" id="comments_activated" name="comments_activated" {COMMENTS_ACTIVATED_CHECKED}></label></dd>					
 				</dl>
 				<dl>
 					<dt><label for="activ_com">{L_DISPLAY_PRINT_LINK}</label></dt>
-					<dd><label><input type="checkbox" id="display_print_link" name="display_print_link" {DISPLAY_PRINT_LINK_CHECKED} /></label></dd>					
+					<dd><label><input type="checkbox" id="display_print_link" name="display_print_link" {DISPLAY_PRINT_LINK_CHECKED}></label></dd>					
 				</dl>
 			</fieldset>
 			
@@ -115,7 +115,7 @@
 				<legend>{L_AUTH}</legend>
 				<dl>
 					<dt><label for="own_auth">{L_OWN_AUTH}</label></dt>
-					<dd><label><input type="checkbox" name="own_auth" id="own_auth" onclick="disable_own_auth();" {OWN_AUTH_CHECKED} /></label></dd>					
+					<dd><label><input type="checkbox" name="own_auth" id="own_auth" onclick="disable_own_auth();" {OWN_AUTH_CHECKED}></label></dd>					
 				</dl>
 				<span id="own_auth_display" style="{DISPLAY}">
 					<dl>
@@ -135,9 +135,9 @@
 			
 			<fieldset class="fieldset_submit">
 				<legend>{L_SUBMIT}</legend>
-				<input type="hidden" name="id_edit" value="{ID_EDIT}" />
-				<input type="submit" class="submit" value="{L_SUBMIT}" />
-				<input type="submit" class="submit" value="{L_PREVIEW}" name="preview" />
-				<input value="{L_RESET}" class="reset" type="reset" />
+				<input type="hidden" name="id_edit" value="{ID_EDIT}">
+				<input type="submit" class="submit" value="{L_SUBMIT}">
+				<input type="submit" class="submit" value="{L_PREVIEW}" name="preview">
+				<input value="{L_RESET}" class="reset" type="reset">
 			</fieldset>
 		</form>

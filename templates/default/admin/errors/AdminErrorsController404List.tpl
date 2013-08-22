@@ -3,10 +3,10 @@
         <legend>{@clear_404_list}</legend>
         <dl>
             <dt><label>{@clear_404_list}</label><br /><span>{@clear_404_list_explain}</span></dt>
-            <dd><label><input type="submit" name="clear" value="{@clear_404_list}" class="reset" /> </label></dd>
+            <dd><label><input type="submit" name="clear" value="{@clear_404_list}" class="reset"> </label></dd>
         </dl>
     </fieldset>
-	<input type="hidden" name="token" value="{TOKEN}" />
+	<input type="hidden" name="token" value="{TOKEN}">
 </form>            
 <br />
 <table class="module_table">
