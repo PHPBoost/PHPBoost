@@ -65,11 +65,11 @@
 					<legend>{L_POLL_CONFIG_ADVANCED}</legend>
 					<dl>
 						<dt><label for="cookie_name">* {L_COOKIE_NAME}</label></dt>
-						<dd><label><input type="text" maxlength="25" size="25" name="cookie_name" id="cookie_name" value="{COOKIE_NAME}" class="text" /></label></dd>
+						<dd><label><input type="text" maxlength="25" size="25" name="cookie_name" id="cookie_name" value="{COOKIE_NAME}" class="text"></label></dd>
 					</dl>
 					<dl>
 						<dt><label for="cookie_lenght">* {L_COOKIE_LENGHT}</label></dt>
-						<dd><label><input type="text" maxlength="11" size="6" name="cookie_lenght" id="cookie_lenght" value="{COOKIE_LENGHT}" class="text" /></label> {L_DAYS}</dd>
+						<dd><label><input type="text" maxlength="11" size="6" name="cookie_lenght" id="cookie_lenght" value="{COOKIE_LENGHT}" class="text"></label> {L_DAYS}</dd>
 					</dl>
 				</fieldset>
 				<fieldset>
@@ -99,9 +99,9 @@
 				</fieldset>
 				<fieldset class="fieldset_submit">
 					<legend>{L_UPDATE}</legend>
-					<input type="submit" name="valid" value="{L_UPDATE}" class="submit" />
+					<input type="submit" name="valid" value="{L_UPDATE}" class="submit">
 					&nbsp;&nbsp; 
-					<input type="reset" value="{L_RESET}" class="reset" />				
+					<input type="reset" value="{L_RESET}" class="reset">				
 				</fieldset>	
 			</form>
 		</div>

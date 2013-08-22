@@ -27,10 +27,10 @@
 					<legend>{L_ERASE}</legend>
 					<dl>
 						<dt><label>{L_ERASE_RAPPORT}</label><br /><span>{L_ERASE_RAPPORT_EXPLAIN}!</span></dt>
-						<dd><label><input type="submit" name="erase" value="{L_ERASE}" class="reset" /> </label></dd>
+						<dd><label><input type="submit" name="erase" value="{L_ERASE}" class="reset"> </label></dd>
 					</dl>
 				</fieldset>
-				<input type="hidden" name="token" value="{TOKEN}" />
+				<input type="hidden" name="token" value="{TOKEN}">
 			</form>
 			
 			<br />

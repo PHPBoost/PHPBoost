@@ -76,8 +76,8 @@
 				</td>
 				<td class="row2 # IF themes_installed.C_IS_DEFAULT_THEME # row_disabled # ENDIF #" style="text-align:center;">
 					# IF NOT themes_installed.C_IS_DEFAULT_THEME #
-						<label><input type="radio" name="activated-{themes_installed.ID}" value="1" # IF themes_installed.C_IS_ACTIVATED # checked="checked" # ENDIF # /> {@themes.yes}</label>
-						<label><input type="radio" name="activated-{themes_installed.ID}" value="0" # IF NOT themes_installed.C_IS_ACTIVATED # checked="checked" # ENDIF # /> {@themes.no}</label>
+						<label><input type="radio" name="activated-{themes_installed.ID}" value="1" # IF themes_installed.C_IS_ACTIVATED # checked="checked" # ENDIF #> {@themes.yes}</label>
+						<label><input type="radio" name="activated-{themes_installed.ID}" value="0" # IF NOT themes_installed.C_IS_ACTIVATED # checked="checked" # ENDIF #> {@themes.no}</label>
 						<br /><br />
 						<a href="{themes_installed.DELETE_LINK}">
 							<input name="delete-{themes_installed.ID}" value="{L_DELETE}" class="submit" style="width:70px;text-align:center;"/>
@@ -92,10 +92,10 @@
 	
 	<fieldset class="fieldset_submit">
 		<legend>{L_SUBMIT}</legend>
-		<input type="submit" name="update_themes_configuration" value="{L_UPDATE}" class="submit" />
-		<input type="hidden" name="token" value="{TOKEN}" />
-		<input type="hidden" name="update" value="true" />
+		<input type="submit" name="update_themes_configuration" value="{L_UPDATE}" class="submit">
+		<input type="hidden" name="token" value="{TOKEN}">
+		<input type="hidden" name="update" value="true">
 		&nbsp;&nbsp; 
-		<input type="reset" value="{L_RESET}" class="reset" />
+		<input type="reset" value="{L_RESET}" class="reset">
 	</fieldset>
 </form>

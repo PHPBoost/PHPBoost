@@ -46,15 +46,15 @@
 							{CATEGORIES}
 						</select></label>
 						<br /><br />
-						<label>{L_NAME}: <input type="text" size="40" maxlength="50" name="name" class="text" /></label>
+						<label>{L_NAME}: <input type="text" size="40" maxlength="50" name="name" class="text"></label>
 						<br /><br />
 						  					
-						* <input type="file" name="gallery" size="30" class="file" /><br /><br />
+						* <input type="file" name="gallery" size="30" class="file" /><br /><br>
 					</div>
 					<br />
 					<fieldset class="fieldset_submit">
-					<legend></legend><input type="hidden" name="max_file_size" value="2000000" />
-					<input type="submit" name="vupload" value="{L_UPLOAD}" class="submit" />
+					<legend></legend><input type="hidden" name="max_file_size" value="2000000">
+					<input type="submit" name="vupload" value="{L_UPLOAD}" class="submit">
 					</fieldset>
 				</div>
 				<div class="module_bottom_l"></div>		

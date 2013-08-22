@@ -77,18 +77,18 @@
 						
 						<fieldset class="fieldset_submit">
 						<legend>{L_SUBMIT}</legend>
-							<input type="hidden" name="p_update" value="{P_UPDATE}" />
-							<input type="submit" name="edit_msg" value="{L_SUBMIT}" class="submit" />
+							<input type="hidden" name="p_update" value="{P_UPDATE}">
+							<input type="submit" name="edit_msg" value="{L_SUBMIT}" class="submit">
 							&nbsp;&nbsp; 									
-							<input value="{L_PREVIEW}" type="submit" name="prw" id="previs_msg" class="submit" />
+							<input value="{L_PREVIEW}" type="submit" name="prw" id="previs_msg" class="submit">
 							<script type="text/javascript">
 							<!--
 							document.getElementById('previs_msg').style.display = 'none';
-							document.write('<input value="{L_PREVIEW}" onclick="XMLHttpRequest_preview();" type="button" class="submit" />');
+							document.write('<input value="{L_PREVIEW}" onclick="XMLHttpRequest_preview();" type="button" class="submit">');
 							-->
 							</script>
 							&nbsp;&nbsp;
-							<input type="reset" value="{L_RESET}" class="reset" />
+							<input type="reset" value="{L_RESET}" class="reset">
 						</fieldset>
 					</div>		
 				</form>

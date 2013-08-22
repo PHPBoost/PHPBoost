@@ -36,9 +36,9 @@ import('/test/util/phpboost_unit_tests', INC_IMPORT);
                 <tr>
                     <td class="options-set-name"><span>command line</span></td>
 		            <td class="options-set">
-	                    <input type="text" name="params" id="params" value="<?php echo $params; ?>" style="width: 75%;" />
+	                    <input type="text" name="params" id="params" value="<?php echo $params; ?>" style="width: 75%;">
 			            <span>html output:</span>
-			            <input type="checkbox" name="is_html" id="is_html" />
+			            <input type="checkbox" name="is_html" id="is_html">
                     </td>
 		            <td class="run-options-set">
 	                    <input type="button" name="run" value="run command" class="run-button"

@@ -44,26 +44,26 @@
 				<legend>{@admin}</legend>
 				<dl>
 					<dt><label for="login">{@pseudo}</label></dt>
-					<dd><label><input size="15" type="text" class="text" id="login" name="login" maxlength="25" /></label></dd>
+					<dd><label><input size="15" type="text" class="text" id="login" name="login" maxlength="25"></label></dd>
 				</dl>
 				<dl>
 					<dt><label for="password">{@password}</label></dt>
-					<dd><label><input size="15" type="password" id="password" name="password" class="text" maxlength="30" /></label></dd>
+					<dd><label><input size="15" type="password" id="password" name="password" class="text" maxlength="30"></label></dd>
 				</dl>
 				# IF C_UNLOCK #
 				<dl>
 					<dt><label for="unlock">{@unlock_admin_panel}</label></dt>
-					<dd><label><input size="15" type="password" name="unlock" id="unlock" class="text" maxlength="30" /></label></dd>
+					<dd><label><input size="15" type="password" name="unlock" id="unlock" class="text" maxlength="30"></label></dd>
 				</dl>
 				# ENDIF #
 				<dl>
 					<dt><label for="auto">{@autoconnect}</label></dt>
-					<dd><label><input type="checkbox" checked="checked" name="auto" id="auto" /></label></dd>
+					<dd><label><input type="checkbox" checked="checked" name="auto" id="auto"></label></dd>
 				</dl>
 			</fieldset>
-			<input type="hidden" name="redirect" value="{REWRITED_SCRIPT}" />
+			<input type="hidden" name="redirect" value="{REWRITED_SCRIPT}">
 			<fieldset class="fieldset_submit">
-				<input type="submit" name="connect" value="{@connect}" class="submit" />		
+				<input type="submit" name="connect" value="{@connect}" class="submit">		
 			</fieldset>	
 		</form>
 	</body>

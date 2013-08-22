@@ -50,7 +50,7 @@
 						# START rank #
 						<tr>
 							<td class="row2" style="text-align:center;"> 
-								<input type="text" maxlength="30" size="20" name="{rank.ID}name" value="{rank.RANK}" class="text" />
+								<input type="text" maxlength="30" size="20" name="{rank.ID}name" value="{rank.RANK}" class="text">
 							</td>
 							<td class="row2" style="text-align:center;">
 								{rank.MSG}
@@ -71,9 +71,9 @@
 				</fieldset>
 				<fieldset class="fieldset_submit">
 					<legend>{L_UPDATE}</legend>
-					<input type="submit" name="valid" value="{L_UPDATE}" class="submit" />
+					<input type="submit" name="valid" value="{L_UPDATE}" class="submit">
 					&nbsp;&nbsp; 
-					<input type="reset" value="{L_RESET}" class="reset" />
+					<input type="reset" value="{L_RESET}" class="reset">
 				</fieldset>
 			</form>
 		</div>

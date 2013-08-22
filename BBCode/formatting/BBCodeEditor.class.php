@@ -167,7 +167,7 @@ class BBCodeEditor extends ContentEditor
             $smiley_height = 18;
             $smiley_width = 18;
 
-            $smiley = new Image(TPL_PATH_TO_ROOT . '/images/smileys/' . $infos['url_smiley']);
+            $smiley = new Image(PATH_TO_ROOT . '/images/smileys/' . $infos['url_smiley']);
 			$smiley_height = $smiley->get_height();
 			$smiley_width = $smiley->get_width();
 			
@@ -193,7 +193,7 @@ class BBCodeEditor extends ContentEditor
             }
 
             $template->assign_block_vars('smileys', array(
-				'URL' => $smiley->get_path(),
+				'URL' => TPL_PATH_TO_ROOT . '/images/smileys/' . $infos['url_smiley'],
 				'CODE' => addslashes($code_smile),
 				'HEIGHT' => $height,
                 'WIDTH' => $width,

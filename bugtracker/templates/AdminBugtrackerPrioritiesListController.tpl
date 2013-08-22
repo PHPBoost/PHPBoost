@@ -22,10 +22,10 @@ function Confirm_del_default_value() {
 		# START priorities #
 		<tr class="text_center">
 			<td class="row2">
-				<input type="radio" name="default_priority" value="{priorities.ID}" {priorities.IS_DEFAULT} />
+				<input type="radio" name="default_priority" value="{priorities.ID}" {priorities.IS_DEFAULT}>
 			</td>
 			<td class="row2">
-				<input type="text" maxlength="100" size="40" name="priority{priorities.ID}" value="{priorities.NAME}" class="text" />
+				<input type="text" maxlength="100" size="40" name="priority{priorities.ID}" value="{priorities.NAME}" class="text">
 			</td>
 		</tr>
 		# END priorities #

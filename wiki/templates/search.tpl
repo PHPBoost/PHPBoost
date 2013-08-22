@@ -13,21 +13,21 @@
 				<tr>
 					<td class="row2" style="text-align:center;">
 						{L_KEY_WORDS} &nbsp;
-						<input type="text" name="search" class="text" value="{KEY_WORDS}" maxlength="255" size="40" />
+						<input type="text" name="search" class="text" value="{KEY_WORDS}" maxlength="255" size="40">
 					</td>
 				</tr>
 				<tr>
 					<td class="row2" style="text-align:center;">
 						<label>
-							<input name="where" value="title" type="radio" {SELECTED_TITLE} />
+							<input name="where" value="title" type="radio" {SELECTED_TITLE}>
 							{L_TITLE}
 						</label>
 						<label>
-							<input name="where" value="contents" type="radio" {SELECTED_CONTENTS} />
+							<input name="where" value="contents" type="radio" {SELECTED_CONTENTS}>
 							{L_CONTENTS}
 						</label>
 						<br /><br />
-						<input type="submit" class="submit" value="{L_SEARCH}" />
+						<input type="submit" class="submit" value="{L_SEARCH}">
 					</td>
 				</tr>
 			</table>

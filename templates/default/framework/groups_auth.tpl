@@ -32,8 +32,8 @@
 <div id="advanced_auth{IDSELECT}" style="{ADVANCED_AUTH_STYLE}float:left;margin-left:5px;width:150px;">
 	<strong>{L_ADD_USER}</strong>
 	<br />
-	<input type="text" size="14" class="text" value="" id="login{IDSELECT}" name="login{IDSELECT}" />
-	<input onclick="XMLHttpRequest_search_members('{IDSELECT}', '{THEME}', 'add_member_auth', '{L_REQUIRE_PSEUDO}');" type="button" name="valid" value="{L_GO}" class="submit" />
+	<input type="text" size="14" class="text" value="" id="login{IDSELECT}" name="login{IDSELECT}">
+	<input onclick="XMLHttpRequest_search_members('{IDSELECT}', '{THEME}', 'add_member_auth', '{L_REQUIRE_PSEUDO}');" type="button" name="valid" value="{L_GO}" class="submit">
 	<br />
 	<span id="search_img{IDSELECT}"></span> 
 	<div id="xmlhttprequest_result_search{IDSELECT}" style="display:none;width:125px;height:67px;margin-top:2px;" class="xmlhttprequest_result_search"></div>

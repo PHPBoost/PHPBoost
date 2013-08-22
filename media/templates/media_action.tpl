@@ -67,7 +67,7 @@
 					<legend>{L_PAGE_TITLE}</legend>
 					<dl>
 						<dt><label for="name">* {L_TITLE}</label></dt>
-						<dd><input type="text" size="50" maxlength="100" id="name" name="name" value="{NAME}" class="text" /></dd>
+						<dd><input type="text" size="50" maxlength="100" id="name" name="name" value="{NAME}" class="text"></dd>
 					</dl>
 					<dl>
 						<dt><label for="idcat">{L_CATEGORY}</label></dt>
@@ -77,15 +77,15 @@
 					</dl>
 					<dl id="width_dl">
 						<dt><label for="width">{L_WIDTH}</label></dt>
-						<dd><input type="text" size="10" maxlength="4" id="width" name="width" value="{WIDTH}" class="text" /></dd>
+						<dd><input type="text" size="10" maxlength="4" id="width" name="width" value="{WIDTH}" class="text"></dd>
 					</dl>
 					<dl id="height_dl">
 						<dt><label for="height">{L_HEIGHT}</label></dt>
-						<dd><input type="text" size="10" maxlength="4" id="height" name="height" value="{HEIGHT}" class="text" /></dd>
+						<dd><input type="text" size="10" maxlength="4" id="height" name="height" value="{HEIGHT}" class="text"></dd>
 					</dl>
 					<dl>
 						<dt><label for="u_media">* {L_U_MEDIA}</label></dt>
-						<dd><input type="text" size="50" maxlength="500" id="u_media" name="u_media" value="{U_MEDIA}" class="text" /></dd>
+						<dd><input type="text" size="50" maxlength="500" id="u_media" name="u_media" value="{U_MEDIA}" class="text"></dd>
 					</dl>
 					<br />
 					<label for="contents" id="preview_content">{L_CONTENTS}</label>
@@ -96,7 +96,7 @@
 					<dl>
 						<dt><label>{L_APPROVED}</label></dt>
 						<dd>
-							<input type="checkbox" name="approved" id="approved"{APPROVED} />
+							<input type="checkbox" name="approved" id="approved"{APPROVED}>
 						</dd>
 					</dl>
 					# ENDIF #
@@ -116,17 +116,17 @@
 
 				<fieldset class="fieldset_submit">
 					<legend>{L_SUBMIT}</legend>
-					<input type="hidden" name="idedit" value="{IDEDIT}" />
-					<input type="hidden" name="contrib" value="{C_CONTRIBUTION}" />
-					<input type="submit" name="submit" value="{L_SUBMIT}" class="submit" />
+					<input type="hidden" name="idedit" value="{IDEDIT}">
+					<input type="hidden" name="contrib" value="{C_CONTRIBUTION}">
+					<input type="submit" name="submit" value="{L_SUBMIT}" class="submit">
 					&nbsp;&nbsp;
                     <script type="text/javascript">
                     <!--
-                    document.write('<input value="{L_PREVIEW}" onclick="XMLHttpRequest_preview();new Effect.ScrollTo(\'preview_content\',{duration:1.2});return false;" type="button" class="submit" />');
+                    document.write('<input value="{L_PREVIEW}" onclick="XMLHttpRequest_preview();new Effect.ScrollTo(\'preview_content\',{duration:1.2});return false;" type="button" class="submit">');
                     -->
                     </script>
 					&nbsp;&nbsp;
-					<input type="reset" value="{L_RESET}" class="reset" />
+					<input type="reset" value="{L_RESET}" class="reset">
 				</fieldset>
 			</form>
 			</div>

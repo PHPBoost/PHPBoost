@@ -71,7 +71,7 @@
 
 						<tr>
 							<td><label for="height">{#table_dlg.height}</label></td>
-							<td class="col2"><input name="height" type="text" id="height" value="" size="7" maxlength="7" onchange="changedSize();" class="size" /></td>
+							<td class="col2"><input name="height" type="text" id="height" value="" size="7" maxlength="7" onchange="changedSize();" class="size"></td>
 						</tr>
 					</table>
 				</fieldset>
@@ -84,12 +84,12 @@
 					<table role="presentation" border="0" cellpadding="0" cellspacing="4">
 						<tr>
 							<td class="column1"><label for="id">{#table_dlg.id}</label></td> 
-							<td><input id="id" name="id" type="text" value="" style="width: 200px" /></td> 
+							<td><input id="id" name="id" type="text" value="" style="width: 200px"></td> 
 						</tr>
 
 						<tr>
 							<td><label for="style">{#table_dlg.style}</label></td>
-							<td><input type="text" id="style" name="style" value="" style="width: 200px;" onchange="changedStyle();" /></td>
+							<td><input type="text" id="style" name="style" value="" style="width: 200px;" onchange="changedStyle();"></td>
 						</tr>
 
 						<tr>
@@ -106,7 +106,7 @@
 						<tr>
 							<td class="column1"><label for="lang">{#table_dlg.langcode}</label></td> 
 							<td>
-								<input id="lang" name="lang" type="text" value="" style="width: 200px" />
+								<input id="lang" name="lang" type="text" value="" style="width: 200px">
 							</td> 
 						</tr>
 
@@ -115,7 +115,7 @@
 							<td>
 								<table role="presentation" border="0" cellpadding="0" cellspacing="0">
 									<tr>
-										<td><input id="backgroundimage" name="backgroundimage" type="text" value="" style="width: 200px" onchange="changedBackgroundImage();" /></td>
+										<td><input id="backgroundimage" name="backgroundimage" type="text" value="" style="width: 200px" onchange="changedBackgroundImage();"></td>
 										<td id="backgroundimagebrowsercontainer">&nbsp;</td>
 									</tr>
 								</table>
@@ -128,7 +128,7 @@
 								<span role="group" aria-labelledby="bgcolor_label">
 								<table role="presentation" border="0" cellpadding="0" cellspacing="0">
 									<tr>
-										<td><input id="bgcolor" name="bgcolor" type="text" value="" size="9" onchange="updateColor('bgcolor_pick','bgcolor');changedColor();" /></td>
+										<td><input id="bgcolor" name="bgcolor" type="text" value="" size="9" onchange="updateColor('bgcolor_pick','bgcolor');changedColor();"></td>
 										<td id="bgcolor_pickcontainer">&nbsp;</td>
 									</tr>
 								</table>
@@ -150,8 +150,8 @@
 				</select>
 			</div>
 
-			<input type="submit" id="insert" name="insert" value="{#update}" />
-			<input type="button" id="cancel" name="cancel" value="{#cancel}" onclick="tinyMCEPopup.close();" />
+			<input type="submit" id="insert" name="insert" value="{#update}">
+			<input type="button" id="cancel" name="cancel" value="{#cancel}" onclick="tinyMCEPopup.close();">
 		</div>
 	</form>
 </body>

@@ -30,10 +30,10 @@ function Confirm_del_default_value() {
 		# START categories #
 		<tr class="text_center">
 			<td class="row2">
-				<input type="radio" name="default_category" value="{categories.ID}" {categories.IS_DEFAULT} />
+				<input type="radio" name="default_category" value="{categories.ID}" {categories.IS_DEFAULT}>
 			</td>
 			<td class="row2">
-				<input type="text" maxlength="100" size="40" name="category{categories.ID}" value="{categories.NAME}" class="text" />
+				<input type="text" maxlength="100" size="40" name="category{categories.ID}" value="{categories.NAME}" class="text">
 			</td>
 			<td class="row2">
 				<a href="{categories.LINK_DELETE}" onclick="javascript:return Confirm_del_category();"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" /></a>

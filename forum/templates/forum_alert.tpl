@@ -40,24 +40,24 @@
 						<tr>
 							<td class="row2">
 								<p style="text-align:center;">
-									<label>{L_ALERT_TITLE} <input type="text" name="title" id="title" class="text" size="50" /></label>
+									<label>{L_ALERT_TITLE} <input type="text" name="title" id="title" class="text" size="50"></label>
 								</p>
 								<br />
 								<p style="text-align:center;"><label for="contents">{L_ALERT_CONTENTS}</label></p>
 								{KERNEL_EDITOR}
 								<textarea class="post" style="width:70%" rows="15" cols="40" id="contents" name="contents"></textarea> 
 								<br />
-								<input type="hidden" name="id" value="{alert_form.ID_ALERT}" />
+								<input type="hidden" name="id" value="{alert_form.ID_ALERT}">
 								<p style="text-align:center;">
-									<input type="submit" name="edit_msg" value="{L_SUBMIT}" class="submit" />
+									<input type="submit" name="edit_msg" value="{L_SUBMIT}" class="submit">
 									&nbsp;&nbsp; 
 									<script type="text/javascript">
 									<!--				
-									document.write('<input value="{L_PREVIEW}" onclick="XMLHttpRequest_preview();" type="button" class="submit" />');
+									document.write('<input value="{L_PREVIEW}" onclick="XMLHttpRequest_preview();" type="button" class="submit">');
 									-->
 									</script>	
 									&nbsp;&nbsp; 	
-									<input type="reset" value="{L_RESET}" class="reset" />								
+									<input type="reset" value="{L_RESET}" class="reset">								
 								</p>
 							</td>
 						</tr>

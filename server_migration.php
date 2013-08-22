@@ -65,14 +65,14 @@ $site_path = $general_config->get_site_path();
 		<legend>Migration</legend>
 		<dl>
 			<dd>
-				<label>Url :&nbsp;</label><input type="text" size="65" maxlength="100" id="url" name="url" value="<?php echo $site_url ?>" class="text" />
+				<label>Url :&nbsp;</label><input type="text" size="65" maxlength="100" id="url" name="url" value="<?php echo $site_url ?>" class="text">
 			</dd>
 			<dd>
-				<label>Path :&nbsp;</label><input type="text" size="65" maxlength="100" id="path" name="path" value="<?php echo $site_path ?>" class="text" />
+				<label>Path :&nbsp;</label><input type="text" size="65" maxlength="100" id="path" name="path" value="<?php echo $site_path ?>" class="text">
 			</dd>	
 		</dl>
 		<div>
-			<input type="submit" name="submit" value="Submit" class="submit" />
+			<input type="submit" name="submit" value="Submit" class="submit">
 		</div>
 	</fieldset>
 </form>

@@ -21,11 +21,11 @@ function CheckForm() {
 			<legend>{L_ACTION_MENUS}</legend>
             <dl>
                 <dt><label for="name">* {L_NAME}</label></dt>
-                <dd><input type="text" size="18" name="name" id="name" class="text" value="{NAME}" /></dd>
+                <dd><input type="text" size="18" name="name" id="name" class="text" value="{NAME}"></dd>
             </dl>
             <dl>
                 <dt><label for="name">* {L_DISPLAY_TITLE}</label></dt>
-                <dd><input type="checkbox" name="display_title[]" value="display_title" {DISPLAY_TITLE_CHECKED} /></dd>
+                <dd><input type="checkbox" name="display_title[]" value="display_title" {DISPLAY_TITLE_CHECKED}></dd>
             </dl>
 			<dl>
 				<dt><label for="location">* {L_LOCATION}</label></dt>
@@ -58,10 +58,10 @@ function CheckForm() {
 	    
 		<fieldset class="fieldset_submit">
 			<legend>{L_ACTION}</legend>
-			<input type="hidden" name="action" value="{ACTION}" />
-			<input type="hidden" name="id" value="{IDMENU}" />
-			<input type="submit" name="valid" value="{L_ACTION}" class="submit" />
-			<input type="hidden" name="token" value="{TOKEN}" />			
+			<input type="hidden" name="action" value="{ACTION}">
+			<input type="hidden" name="id" value="{IDMENU}">
+			<input type="submit" name="valid" value="{L_ACTION}" class="submit">
+			<input type="hidden" name="token" value="{TOKEN}">			
 		</fieldset>	
 	</form>
 </div>

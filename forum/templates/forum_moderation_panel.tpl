@@ -81,7 +81,7 @@
 						<tr>
 							<td class="row3" colspan="4" style="text-align:center;">
 								# IF C_FORUM_ADMIN #
-								<span style="float:left"><input type="submit" name="valid" value="{L_DELETE}" class="submit" /></span> 
+								<span style="float:left"><input type="submit" name="valid" value="{L_DELETE}" class="submit"></span> 
 								# ENDIF #
 								# IF C_DISPLAY_LINK_MORE_ACTION #
 								<a href="moderation_forum{U_MORE_ACTION}">{L_MORE_ACTION}</a>
@@ -110,7 +110,7 @@
 				<form name="alert" action="moderation_forum{U_ACTION_ALERT}" method="post" onsubmit="javascript:return Confirm_alert();">
 					<table class="module_table">
 						<tr>			
-							<th style="width:25px;"><input type="checkbox" onclick="if(this.checked) {check_alert(true)} else {check_alert(false)};" /></th>
+							<th style="width:25px;"><input type="checkbox" onclick="if(this.checked) {check_alert(true)} else {check_alert(false)};"></th>
 							<th style="width:20%;">{L_TITLE}</th>
 							<th style="width:20%;">{L_TOPIC}</th>
 							<th style="width:100px;">{L_STATUS}</th>
@@ -123,7 +123,7 @@
 						# START alert_list #
 						<tr>
 							<td class="row1" style="text-align:center;width:25px;">
-								<input type="checkbox" name="{alert_list.ID}" />
+								<input type="checkbox" name="{alert_list.ID}">
 							</td>
 							<td class="row1" style="text-align:center;width:20%;">
 								{alert_list.TITLE} {alert_list.EDIT}
@@ -152,7 +152,7 @@
 						# ENDIF #				
 						<tr>
 							<td class="row2" colspan="6">
-								&nbsp;<input type="submit" value="{L_DELETE}" class="submit" />
+								&nbsp;<input type="submit" value="{L_DELETE}" class="submit">
 							</td>
 						</tr>
 					</table>
@@ -228,7 +228,7 @@
 				<form action="{U_CHANGE_STATUS}" method="post">
 					<fieldset class="fieldset_submit" style="padding-top:25px;">
 						<legend></legend>
-						<input type="submit" name="valid" value="{L_CHANGE_STATUS}" class="submit" />
+						<input type="submit" name="valid" value="{L_CHANGE_STATUS}" class="submit">
 					</fieldset>		
 				</form>
 				# ENDIF #
@@ -298,11 +298,11 @@
 					<tr>
 						<td class="row2">
 							<span style="float:left;">
-								{L_SEARCH_USER}: <input type="text" size="20" maxlength="25" id="login" name="login" class="text" />
+								{L_SEARCH_USER}: <input type="text" size="20" maxlength="25" id="login" name="login" class="text">
 								<span id="search_img"></span>
 							</span>
 							<span style="float:left;margin-left:5px;">
-								<input type="submit" id="search_member" name="search_member" value="{L_SEARCH}" class="submit" />
+								<input type="submit" id="search_member" name="search_member" value="{L_SEARCH}" class="submit">
 								<script type="text/javascript">
 								<!--								
 									document.getElementById('search_member').style.display = 'none';
@@ -402,7 +402,7 @@
 								<label><select name="new_info" id="new_info" onchange="change_textarea_level(this.options[this.selectedIndex].value, {REGEX})">
 									{SELECT}
 								</select></label>	
-								<input type="submit" name="valid_user" value="{L_CHANGE_INFO}" class="submit" />				
+								<input type="submit" name="valid_user" value="{L_CHANGE_INFO}" class="submit">				
 							</td>
 						</tr>
 					</table>

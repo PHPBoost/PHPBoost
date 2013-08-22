@@ -106,7 +106,7 @@
 					# IF news.PSEUDO #
 					<a itemprop="author" class="small_link {news.USER_LEVEL_CLASS}" href="{news.U_AUTHOR_PROFILE}" style="font-size: 12px;" # IF news.C_USER_GROUP_COLOR # style="color:{news.USER_GROUP_COLOR}" # ENDIF #>{news.PSEUDO}</a>, 
 					# ENDIF # 
-					le <time datetime="{DATE_RFC3339_F}" itemprop="datePublished">{news.DATE}</time>, 
+					le <time datetime="{news.DATE_RFC3339_F}" itemprop="datePublished">{news.DATE}</time>, 
 					dans la catégorie <a itemprop="about" href="{news.U_CATEGORY}">{news.CATEGORY_NAME}</a>
 				</div>
         		

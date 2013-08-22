@@ -246,8 +246,8 @@
 								{STATS_YEAR}
 							</select>
 							# ENDIF #
-							<input type="hidden" name="{TYPE}" value="1" />
-							<input type="submit" name="date" value="{L_SUBMIT}" class="submit" />
+							<input type="hidden" name="{TYPE}" value="1">
+							<input type="submit" name="date" value="{L_SUBMIT}" class="submit">
 							&nbsp;&nbsp;&nbsp;&nbsp;
 							<a href="admin_stats{U_NEXT_LINK}#stats">&raquo;</a>				
 						</div>
@@ -671,7 +671,7 @@
 			<br /><br />
 			<fieldset class="fieldset_submit">
 				<legend>{L_ERASE_RAPPORT}</legend>
-				<input type="submit" name="erase" value="{L_ERASE_RAPPORT}" class="reset" /> 
+				<input type="submit" name="erase" value="{L_ERASE_RAPPORT}" class="reset"> 
 			</fieldset>
 		</form>
 		# ENDIF #
@@ -695,9 +695,9 @@
 				</fieldset>
 								
 				<fieldset class="fieldset_submit">
-					<input type="submit" name="valid" value="{L_UPDATE}" class="submit" />
+					<input type="submit" name="valid" value="{L_UPDATE}" class="submit">
 					&nbsp;&nbsp; 
-					<input type="reset" value="{L_RESET}" class="reset" />
+					<input type="reset" value="{L_RESET}" class="reset">
 				</fieldset>	
 			</form>
 	</div>

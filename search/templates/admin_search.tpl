@@ -49,7 +49,7 @@
                     <legend>{L_SEARCH_CONFIG}</legend>
                     <dl>
                         <dt><label for="nb_results_p">* {L_NB_RESULTS_P}</label></dt>
-                        <dd><label><input type="text" maxlength="2" size="4" id="nb_results_p" name="nb_results_p" value="{NB_RESULTS_P}" class="text" /></label></dd>
+                        <dd><label><input type="text" maxlength="2" size="4" id="nb_results_p" name="nb_results_p" value="{NB_RESULTS_P}" class="text"></label></dd>
                     </dl>
                     <dl>
                         <dt><label for="authorized_modules[]">* {L_AUTHORIZED_MODULES}</label><br /><span>{L_AUTHORIZED_MODULES_EXPLAIN}</span></dt>
@@ -67,19 +67,19 @@
                     <legend>{L_SEARCH_CACHE}</legend>
                     <dl>
                         <dt><label for="cache_time">* {L_CACHE_TIME}</label><br /><span>{L_CACHE_TIME_EXPLAIN}</span></dt>
-                        <dd><label><input type="text" maxlength="4" size="4" id="cache_time" name="cache_time" value="{CACHE_TIME}" class="text" /></label></dd>
+                        <dd><label><input type="text" maxlength="4" size="4" id="cache_time" name="cache_time" value="{CACHE_TIME}" class="text"></label></dd>
                     </dl>
                     <dl>
                         <dt><label for="max_use">* {L_MAX_USE}</label><br /><span>{L_MAX_USE_EXPLAIN}</span></dt>
-                        <dd><label><input type="text" maxlength="3" size="4" id="max_use" name="max_use" value="{MAX_USE}" class="text" /></label></dd>
+                        <dd><label><input type="text" maxlength="3" size="4" id="max_use" name="max_use" value="{MAX_USE}" class="text"></label></dd>
                     </dl>
                 </fieldset>
                 
                 <fieldset class="fieldset_submit">
                 <legend>{L_UPDATE}</legend>
-                    <input type="submit" name="valid" value="{L_UPDATE}" class="submit" />
+                    <input type="submit" name="valid" value="{L_UPDATE}" class="submit">
                     &nbsp;&nbsp; 
-                    <input type="reset" value="{L_RESET}" class="reset" />
+                    <input type="reset" value="{L_RESET}" class="reset">
                 </fieldset>
             </form>
             <form action="admin_search.php?clear=1&amp;token={TOKEN}" name="form" method="post" class="fieldset_content">
@@ -103,7 +103,7 @@
                                 # START weights #
                                 <tr>
                                     <td class="row2"><label for="{weights.MODULE}">{weights.L_MODULE_NAME}</label></td>
-                                    <td class="row2" style="text-align:center;"><input type="text" id="{weights.MODULE}" name="{weights.MODULE}" value="{weights.WEIGHT}" size="2" maxlength="3" class="text" /></td>
+                                    <td class="row2" style="text-align:center;"><input type="text" id="{weights.MODULE}" name="{weights.MODULE}" value="{weights.WEIGHT}" size="2" maxlength="3" class="text"></td>
                                 </tr>
                                 # END weights #
                             </tbody>
@@ -112,9 +112,9 @@
                 
                 <fieldset class="fieldset_submit">
                 <legend>{L_UPDATE}</legend>
-                    <input type="submit" name="valid" value="{L_UPDATE}" class="submit" />
+                    <input type="submit" name="valid" value="{L_UPDATE}" class="submit">
                     &nbsp;&nbsp; 
-                    <input type="reset" value="{L_RESET}" class="reset" />
+                    <input type="reset" value="{L_RESET}" class="reset">
                 </fieldset>
             </form>
             # ENDIF #

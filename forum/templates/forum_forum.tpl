@@ -115,7 +115,7 @@
 					<tr>
 						# IF C_MASS_MODO_CHECK #
 						<td class="forum_sous_cat" style="width:25px;text-align:center;">
-							<input type="checkbox" name="ck{topics.ID}" />
+							<input type="checkbox" name="ck{topics.ID}">
 						</td>
 						# ENDIF #
 						<td class="forum_sous_cat" style="width:25px;text-align:center;">

@@ -67,18 +67,18 @@
 					</dl>
 					<dl>
 						<dt><label for="name">{L_NAME}</label></dt>
-						<dd><label><input type="text" size="40" maxlength="50" name="name" id="name" class="text" /></label></dd>
+						<dd><label><input type="text" size="40" maxlength="50" name="name" id="name" class="text"></label></dd>
 					</dl>
 					<dl>
 						<dt><label for="gallery">{L_UPLOAD_IMG}</label></dt>
-						<dd><label><input type="file" name="gallery" id="gallery" size="30" class="file" /></label></dd>
+						<dd><label><input type="file" name="gallery" id="gallery" size="30" class="file"></label></dd>
 					</dl>
 				</fieldset>	
 				
 				<fieldset class="fieldset_submit">
 					<legend>{L_UPLOAD_IMG}</legend>
-					<input type="hidden" name="max_file_size" value="2000000" />
-					<input type="submit" value="{L_UPLOAD_IMG}" class="submit" />
+					<input type="hidden" name="max_file_size" value="2000000">
+					<input type="submit" value="{L_UPLOAD_IMG}" class="submit">
 				</fieldset>	
 			</form>
 			
@@ -123,7 +123,7 @@
 									<table class="module_table" style="width:100%;">
 										<tr>
 											<td class="row2">												
-												<input type="checkbox" checked="checked" name="{list.ID}activ" value="1" class="valign_middle" /> <span class="text_small">{L_SELECT}</span>
+												<input type="checkbox" checked="checked" name="{list.ID}activ" value="1" class="valign_middle"> <span class="text_small">{L_SELECT}</span>
 											</td>
 										</tr>
 										<tr>
@@ -134,9 +134,9 @@
 										<tr>
 											<td class="row2">
 												<span class="text_small">{L_NAME}: </span>
-												<input type="text" size="25" name="{list.ID}name" value="{list.NAME}" class="text valign_middle" />
+												<input type="text" size="25" name="{list.ID}name" value="{list.NAME}" class="text valign_middle">
 												
-												<input type="hidden" name="{list.ID}uniq" value="{list.UNIQ_NAME}" />
+												<input type="hidden" name="{list.ID}uniq" value="{list.UNIQ_NAME}">
 											</td>
 										</tr>
 										<tr>
@@ -149,7 +149,7 @@
 										</tr>
 										<tr>
 											<td class="row2">												
-												<input type="checkbox" name="{list.ID}del" value="1" class="valign_middle" /> <span class="text_small">{L_DELETE}</span> 
+												<input type="checkbox" name="{list.ID}del" value="1" class="valign_middle"> <span class="text_small">{L_DELETE}</span> 
 											</td>
 										</tr>
 									</table>	
@@ -169,8 +169,8 @@
 				
 				<fieldset class="fieldset_submit">
 					<legend>{L_SUBMIT}</legend>
-					<input type="hidden" name="nbr_pics" value="{NBR_PICS}" />
-					<input type="submit" name="valid" value="{L_SUBMIT}" class="submit" />
+					<input type="hidden" name="nbr_pics" value="{NBR_PICS}">
+					<input type="submit" name="valid" value="{L_SUBMIT}" class="submit">
 				</fieldset>			
 			</form>
 		</div>	

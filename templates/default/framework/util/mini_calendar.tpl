@@ -2,7 +2,7 @@
 			<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/lib/js/phpboost/calendar.js"></script>
 		# ENDIF #
 		
-		<input type="text" size="11" maxlength="10" id="{CALENDAR_ID}" name="{FORM_NAME}" value="{DEFAULT_DATE}" class="text" />
+		<input type="text" size="11" maxlength="10" id="{CALENDAR_ID}" name="{FORM_NAME}" value="{DEFAULT_DATE}" class="text">
 		<div style="position:relative;z-index:100;float:left;display:none;{CALENDAR_STYLE}" id="calendar{CALENDAR_NUMBER}">
 			<div id="{CALENDAR_ID}_date" class="calendar_block" onmouseover="hide_calendar({CALENDAR_NUMBER}, 1);" onmouseout="hide_calendar({CALENDAR_NUMBER}, 0);">
 			</div>

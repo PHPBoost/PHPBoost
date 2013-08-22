@@ -69,8 +69,8 @@
 						<dl>
 							<dt><label for="login">{L_SEARCH_USER}</label><br /><span>{L_JOKER}</span></dt>
 							<dd>
-								<input type="text" size="20" maxlength="25" id="login" value="" name="login" class="text" />						
-								<input type="submit" name="search_member" id="search_member" value="{L_SEARCH}" class="submit" />
+								<input type="text" size="20" maxlength="25" id="login" value="" name="login" class="text">						
+								<input type="submit" name="search_member" id="search_member" value="{L_SEARCH}" class="submit">
 								<script type="text/javascript">
 								<!--	
 									document.getElementById("search_member").style.display = "none";
@@ -176,7 +176,7 @@
 								<select name="new_info" onchange="change_textarea_level(this.options[this.selectedIndex].value, {REGEX})">
 									{SELECT}
 								</select>
-								<input type="submit" name="valid_user" value="{L_CHANGE_INFO}" class="submit" />					
+								<input type="submit" name="valid_user" value="{L_CHANGE_INFO}" class="submit">					
 							</td>
 						</tr>
 					</table>
@@ -222,7 +222,7 @@
 						</tr>
 						<tr>
 							<td class="row2" colspan="2" style="text-align:center;">
-								<input type="submit" name="valid_user" value="{L_BAN}" class="submit" />					
+								<input type="submit" name="valid_user" value="{L_BAN}" class="submit">					
 							</td>
 						</tr>
 					</table>

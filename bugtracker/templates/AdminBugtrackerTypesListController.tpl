@@ -30,10 +30,10 @@ function Confirm_del_default_value() {
 		# START types #
 		<tr class="text_center">
 			<td class="row2">
-				<input type="radio" name="default_type" value="{types.ID}" {types.IS_DEFAULT} />
+				<input type="radio" name="default_type" value="{types.ID}" {types.IS_DEFAULT}>
 			</td>
 			<td class="row2">
-				<input type="text" maxlength="100" size="40" name="type{types.ID}" value="{types.NAME}" class="text" />
+				<input type="text" maxlength="100" size="40" name="type{types.ID}" value="{types.NAME}" class="text">
 			</td>
 			<td class="row2">
 				<a href="{types.LINK_DELETE}" onclick="javascript:return Confirm_del_type();"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" /></a>

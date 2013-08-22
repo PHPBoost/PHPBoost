@@ -61,15 +61,15 @@
 							# IF C_POLL_QUESTION #
 							<div class="row1 text_small">
 								# START radio #
-								<p style="margin-top:15px;padding-left:25px;"><label><input type="{radio.TYPE}" name="radio" value="{radio.NAME}" /> {radio.ANSWERS}</label></p>
+								<p style="margin-top:15px;padding-left:25px;"><label><input type="{radio.TYPE}" name="radio" value="{radio.NAME}"> {radio.ANSWERS}</label></p>
 								# END radio #
 							
 								# START checkbox #
-								<p style="margin-top:15px;padding-left:25px;"><label><input type="{checkbox.TYPE}" name="{checkbox.NAME}" value="{checkbox.NAME}" /> {checkbox.ANSWERS}</label></p>
+								<p style="margin-top:15px;padding-left:25px;"><label><input type="{checkbox.TYPE}" name="{checkbox.NAME}" value="{checkbox.NAME}"> {checkbox.ANSWERS}</label></p>
 								# END checkbox #
 								
 								<p class="text_center">
-									<input class="submit" name="valid_poll" type="submit" value="{L_VOTE}" /><br />
+									<input class="submit" name="valid_poll" type="submit" value="{L_VOTE}" /><br>
 									<a class="small_link" href="{PATH_TO_ROOT}/poll/poll{U_POLL_RESULT}">{L_RESULT}</a>
 								</p>
 							</div>							

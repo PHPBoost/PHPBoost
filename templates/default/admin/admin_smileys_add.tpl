@@ -45,13 +45,13 @@
 					<legend>{L_UPLOAD_SMILEY}</legend>
 					<dl>
 						<dt><label for="upload_smiley">{L_EXPLAIN_UPLOAD_IMG}</label></dt>
-						<dd><label><input type="file" name="upload_smiley" id="upload_smiley" size="30" class="file" />
-						<input type="hidden" name="max_file_size" value="2000000" /></label></dd>
+						<dd><label><input type="file" name="upload_smiley" id="upload_smiley" size="30" class="file">
+						<input type="hidden" name="max_file_size" value="2000000"></label></dd>
 					</dl>
 				</fieldset>			
 				<fieldset class="fieldset_submit">
 					<legend>{L_UPLOAD}</legend>
-					<input type="submit" value="{L_UPLOAD}" class="submit" />				
+					<input type="submit" value="{L_UPLOAD}" class="submit">				
 				</fieldset>
 			</form>
 							
@@ -60,7 +60,7 @@
 				<legend>{L_ADD_SMILEY}</legend>
 					<dl>
 						<dt><label for="code_smiley">* {L_SMILEY_CODE}</label></dt>
-						<dd><label><input type="text" size="40" maxlength="100" id="code_smiley" name="code_smiley" value="{CODE_SMILEY}" class="text" /> </label></dd>
+						<dd><label><input type="text" size="40" maxlength="100" id="code_smiley" name="code_smiley" value="{CODE_SMILEY}" class="text"> </label></dd>
 					</dl>
 					<dl>
 						<dt><label for="code_smiley">* {L_SMILEY_AVAILABLE}</label></dt>
@@ -74,9 +74,9 @@
 				</fieldset>			
 				<fieldset class="fieldset_submit">
 					<legend>{L_ADD}</legend>
-					<input type="submit" name="add" value="{L_ADD}" class="submit" />
+					<input type="submit" name="add" value="{L_ADD}" class="submit">
 					&nbsp;&nbsp; 
-					<input type="reset" value="{L_RESET}" class="reset" />				
+					<input type="reset" value="{L_RESET}" class="reset">				
 				</fieldset>	
 			</form>	
 		</div>

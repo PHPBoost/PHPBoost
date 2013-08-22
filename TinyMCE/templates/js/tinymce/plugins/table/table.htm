@@ -27,15 +27,15 @@
 					<table role="presentation" border="0" cellpadding="4" cellspacing="0" width="100%">
 						<tr>
 							<td><label id="colslabel" for="cols">{#table_dlg.cols}</label></td>
-							<td><input id="cols" name="cols" type="text" value="" size="3" maxlength="3" class="required number min1 mceFocus" aria-required="true" /></td>
+							<td><input id="cols" name="cols" type="text" value="" size="3" maxlength="3" class="required number min1 mceFocus" aria-required="true"></td>
 							<td><label id="rowslabel" for="rows">{#table_dlg.rows}</label></td>
-							<td><input id="rows" name="rows" type="text" value="" size="3" maxlength="3" class="required number min1" aria-required="true" /></td>
+							<td><input id="rows" name="rows" type="text" value="" size="3" maxlength="3" class="required number min1" aria-required="true"></td>
 						</tr>
 						<tr>
 							<td><label id="cellpaddinglabel" for="cellpadding">{#table_dlg.cellpadding}</label></td>
-							<td><input id="cellpadding" name="cellpadding" type="text" value="" size="3" maxlength="3" class="number" /></td>
+							<td><input id="cellpadding" name="cellpadding" type="text" value="" size="3" maxlength="3" class="number"></td>
 							<td><label id="cellspacinglabel" for="cellspacing">{#table_dlg.cellspacing}</label></td>
-							<td><input id="cellspacing" name="cellspacing" type="text" value="" size="3" maxlength="3" class="number" /></td>
+							<td><input id="cellspacing" name="cellspacing" type="text" value="" size="3" maxlength="3" class="number"></td>
 						</tr>
 						<tr>
 							<td><label id="alignlabel" for="align">{#table_dlg.align}</label></td>
@@ -46,13 +46,13 @@
 								<option value="right">{#table_dlg.align_right}</option>
 							</select></td>
 							<td><label id="borderlabel" for="border">{#table_dlg.border}</label></td>
-							<td><input id="border" name="border" type="text" value="" size="3" maxlength="5" onchange="changedBorder();" class="size" /></td>
+							<td><input id="border" name="border" type="text" value="" size="3" maxlength="5" onchange="changedBorder();" class="size"></td>
 						</tr>
 						<tr id="width_row">
 							<td><label id="widthlabel" for="width">{#table_dlg.width}</label></td>
-							<td><input name="width" type="text" id="width" value="" size="7" maxlength="7" onchange="changedSize();" class="size" /></td>
+							<td><input name="width" type="text" id="width" value="" size="7" maxlength="7" onchange="changedSize();" class="size"></td>
 							<td><label id="heightlabel" for="height">{#table_dlg.height}</label></td>
-							<td><input name="height" type="text" id="height" value="" size="7" maxlength="7" onchange="changedSize();" class="size" /></td>
+							<td><input name="height" type="text" id="height" value="" size="7" maxlength="7" onchange="changedSize();" class="size"></td>
 						</tr>
 						<tr id="styleSelectRow" >
 							<td><label id="classlabel" for="class">{#class_name}</label></td>
@@ -63,7 +63,7 @@
 						</tr>
 						<tr>
 							<td class="column1" ><label for="caption">{#table_dlg.caption}</label></td> 
-							<td><input id="caption" name="caption" type="checkbox" class="checkbox" value="true" /></td> 
+							<td><input id="caption" name="caption" type="checkbox" class="checkbox" value="true"></td> 
 						</tr>
 					</table>
 				</fieldset>
@@ -76,23 +76,23 @@
 					<table role="presentation" border="0" cellpadding="0" cellspacing="4">
 						<tr>
 							<td class="column1"><label for="id">{#table_dlg.id}</label></td> 
-							<td><input id="id" name="id" type="text" value="" class="advfield" /></td> 
+							<td><input id="id" name="id" type="text" value="" class="advfield"></td> 
 						</tr>
 
 						<tr>
 							<td class="column1"><label for="summary">{#table_dlg.summary}</label></td> 
-							<td><input id="summary" name="summary" type="text" value="" class="advfield" /></td> 
+							<td><input id="summary" name="summary" type="text" value="" class="advfield"></td> 
 						</tr>
 
 						<tr>
 							<td><label for="style">{#table_dlg.style}</label></td>
-							<td><input type="text" id="style" name="style" value="" class="advfield" onchange="changedStyle();" /></td>
+							<td><input type="text" id="style" name="style" value="" class="advfield" onchange="changedStyle();"></td>
 						</tr>
 
 						<tr>
 							<td class="column1"><label id="langlabel" for="lang">{#table_dlg.langcode}</label></td> 
 							<td>
-								<input id="lang" name="lang" type="text" value="" class="advfield" />
+								<input id="lang" name="lang" type="text" value="" class="advfield">
 							</td> 
 						</tr>
 
@@ -101,7 +101,7 @@
 							<td>
 								<table role="presentation" aria-labelledby="backgroundimage_label" border="0" cellpadding="0" cellspacing="0">
 									<tr>
-										<td><input id="backgroundimage" name="backgroundimage" type="text" value="" class="advfield" onchange="changedBackgroundImage();" /></td>
+										<td><input id="backgroundimage" name="backgroundimage" type="text" value="" class="advfield" onchange="changedBackgroundImage();"></td>
 										<td id="backgroundimagebrowsercontainer">&nbsp;</td>
 									</tr>
 								</table>
@@ -156,7 +156,7 @@
 							<td>
 								<table role="presentation" border="0" cellpadding="0" cellspacing="0">
 									<tr>
-										<td><input id="bordercolor" name="bordercolor" type="text" value="" size="9" onchange="updateColor('bordercolor_pick','bordercolor');changedColor();" /></td>
+										<td><input id="bordercolor" name="bordercolor" type="text" value="" size="9" onchange="updateColor('bordercolor_pick','bordercolor');changedColor();"></td>
 										<td id="bordercolor_pickcontainer">&nbsp;</td>
 									</tr>
 								</table>
@@ -168,7 +168,7 @@
 							<td>
 								<table role="presentation" border="0" cellpadding="0" cellspacing="0">
 									<tr>
-										<td><input id="bgcolor" name="bgcolor" type="text" value="" size="9" onchange="updateColor('bgcolor_pick','bgcolor');changedColor();" /></td>
+										<td><input id="bgcolor" name="bgcolor" type="text" value="" size="9" onchange="updateColor('bgcolor_pick','bgcolor');changedColor();"></td>
 										<td id="bgcolor_pickcontainer">&nbsp;</td>
 									</tr>
 								</table>
@@ -180,8 +180,8 @@
 		</div>
 
 		<div class="mceActionPanel">
-			<input type="submit" id="insert" name="insert" value="{#insert}" />
-			<input type="button" id="cancel" name="cancel" value="{#cancel}" onclick="tinyMCEPopup.close();" />
+			<input type="submit" id="insert" name="insert" value="{#insert}">
+			<input type="button" id="cancel" name="cancel" value="{#cancel}" onclick="tinyMCEPopup.close();">
 		</div>
 	</form>
 </body>

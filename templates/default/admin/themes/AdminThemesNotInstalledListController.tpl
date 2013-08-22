@@ -77,8 +77,8 @@
 					</div>
 				</td>
 				<td class="row2" style="text-align:center;">
-					<label><input type="radio" name="activated-{themes_not_installed.ID}" value="1" checked="checked" /> {@themes.yes}</label>
-					<label><input type="radio" name="activated-{themes_not_installed.ID}" value="0" /> {@themes.no}</label>
+					<label><input type="radio" name="activated-{themes_not_installed.ID}" value="1" checked="checked"> {@themes.yes}</label>
+					<label><input type="radio" name="activated-{themes_not_installed.ID}" value="0"> {@themes.no}</label>
 					<br /><br />
 					<input type="submit" name="add-{themes_not_installed.ID}" value="{L_ADD}" class="submit"/>
 				</td>
@@ -88,6 +88,6 @@
 	
 	<fieldset class="fieldset_submit">
 		<legend>{L_SUBMIT}</legend>
-		<input type="hidden" name="token" value="{TOKEN}" />
+		<input type="hidden" name="token" value="{TOKEN}">
 	</fieldset>
 </form>

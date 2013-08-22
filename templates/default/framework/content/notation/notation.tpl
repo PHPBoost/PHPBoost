@@ -57,7 +57,7 @@
 				</select>
 				<meta itemprop="ratingValue" content="{AVERAGE_NOTES}">
 				<meta itemprop="bestRating" content="{NOTATION_SCALE}">
-				<input type="hidden" name="token" value="{TOKEN}" />
-				<input type="submit" name="valid" id="valid_note{ID_IN_MODULE}" value="{L_VALID_NOTE}" class="submit" style="padding:1px 2px;" />
+				<input type="hidden" name="token" value="{TOKEN}">
+				<input type="submit" name="valid" id="valid_note{ID_IN_MODULE}" value="{L_VALID_NOTE}" class="submit" style="padding:1px 2px;">
 			</form>
 		</div>	

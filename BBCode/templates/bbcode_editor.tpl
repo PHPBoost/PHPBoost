@@ -67,7 +67,7 @@ function XMLHttpRequest_preview(field)
 							<div style="position:relative;z-index:100;margin-left:-50px;float:left;display:none;" id="bb_block1{FIELD}">
 								<div class="bbcode_block" style="width:130px;" onmouseover="bb_hide_block('1', '{FIELD}', 1);" onmouseout="bb_hide_block('1', '{FIELD}', 0);">
 									# START smileys #
-									<a onclick="insertbbcode('{smileys.CODE}', 'smile', '{FIELD}');" class="bbcode_hover" title="{smileys.CODE}"><img src="{smileys.URL}" style="height:{smileys.HEIGHT};width:{smileys.WIDTH};"></a>{smileys.END_LINE}
+									<a onclick="insertbbcode('{smileys.CODE}', 'smile', '{FIELD}');" class="bbcode_hover" title="{smileys.CODE}"><img src="{smileys.URL}" style="height:{smileys.HEIGHT}px;width:{smileys.WIDTH}px;" alt="{smileys.CODE}"></a>{smileys.END_LINE}
 									# END smileys #
 									# IF C_BBCODE_SMILEY_MORE #
 									<br />
@@ -133,8 +133,8 @@ function XMLHttpRequest_preview(field)
 							
 							<div style="position:relative;z-index:100;float:right;display:none;" id="bb_block9{FIELD}">
 								<div class="bbcode_block" style="margin-left:-220px;width:180px;" onmouseover="bb_hide_block('9', '{FIELD}', 1);" onmouseout="bb_hide_block('9', '{FIELD}', 0);">
-									<p><label style="font-size:10px;font-weight:normal">* {L_LINES} <input size="3" type="text" class="text" name="bb_list{FIELD}" id="bb_list{FIELD}" maxlength="3" value="3" /></label></p>
-									<p><label style="font-size:10px;font-weight:normal">{L_ORDERED_LIST} <input size="3" type="checkbox" name="bb_ordered_list{FIELD}" id="bb_ordered_list{FIELD}" /></label></p>
+									<p><label style="font-size:10px;font-weight:normal">* {L_LINES} <input size="3" type="text" class="text" name="bb_list{FIELD}" id="bb_list{FIELD}" maxlength="3" value="3"></label></p>
+									<p><label style="font-size:10px;font-weight:normal">{L_ORDERED_LIST} <input size="3" type="checkbox" name="bb_ordered_list{FIELD}" id="bb_ordered_list{FIELD}"></label></p>
 									<p style="text-align:center;"><a class="small_link" href="javascript:bbcode_list('{FIELD}');"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/list.png" alt="{L_BB_LIST}" title="{L_BB_LIST}" class="valign_middle" /> {L_INSERT_LIST}</a></p>
 								</div>
 							</div>
@@ -194,9 +194,9 @@ function XMLHttpRequest_preview(field)
 							
 							<div style="position:relative;z-index:100;float:left;display:none;" id="bb_block7{FIELD}">
 								<div id="bbtable{FIELD}" class="bbcode_block" style="margin-left:130px;width:180px;" onmouseover="bb_hide_block('7', '{FIELD}', 1);" onmouseout="bb_hide_block('7', '{FIELD}', 0);">
-									<p><label style="font-size:10px;font-weight:normal">* {L_LINES} <input size="3" type="text" class="text" name="bb_lines{FIELD}" id="bb_lines{FIELD}" maxlength="3" value="2" /></label></p>
-									<p><label style="font-size:10px;font-weight:normal">* {L_COLS} <input size="3" type="text" class="text" name="bb_cols{FIELD}" id="bb_cols{FIELD}" maxlength="3" value="2" /></label></p>
-									<p><label style="font-size:10px;font-weight:normal">{L_ADD_HEAD} <input size="3" type="checkbox" name="bb_head{FIELD}" id="bb_head{FIELD}" /></label></p>
+									<p><label style="font-size:10px;font-weight:normal">* {L_LINES} <input size="3" type="text" class="text" name="bb_lines{FIELD}" id="bb_lines{FIELD}" maxlength="3" value="2"></label></p>
+									<p><label style="font-size:10px;font-weight:normal">* {L_COLS} <input size="3" type="text" class="text" name="bb_cols{FIELD}" id="bb_cols{FIELD}" maxlength="3" value="2"></label></p>
+									<p><label style="font-size:10px;font-weight:normal">{L_ADD_HEAD} <input size="3" type="checkbox" name="bb_head{FIELD}" id="bb_head{FIELD}"></label></p>
 									<p style="text-align:center;"><a class="small_link" href="javascript:{DISABLED_TABLE}bbcode_table('{FIELD}');"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/table.png" alt="{L_BB_TABLE}" title="{L_BB_TABLE}" class="valign_middle" /> {L_INSERT_TABLE}</a></p>
 								</div>
 							</div>

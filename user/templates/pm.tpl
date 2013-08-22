@@ -66,7 +66,7 @@
 					<table class="module_table">	
 						<tr>
 							<th style="text-align:center;width:20px;">
-								<input type="checkbox" id="checkall" onclick="check_convers(this.checked, 'd');" />
+								<input type="checkbox" id="checkall" onclick="check_convers(this.checked, 'd');">
 							</th>
 							<th colspan="2" style="text-align:center;">
 								{L_TITLE}
@@ -85,7 +85,7 @@
 						# START convers.list #		
 						<tr class="row2">
 							<td style="width:20px;text-align:center;">
-								<input type="checkbox" id="d{convers.list.INCR}" name="{convers.list.ID}" />
+								<input type="checkbox" id="d{convers.list.INCR}" name="{convers.list.ID}">
 							</td>
 							<td class="text_small" style="width:40px;text-align:center;">
 								<img src="{convers.list.ANNOUNCE}.png" alt="" />
@@ -116,7 +116,7 @@
 						# END convers.no_pm #	
 						<tr>
 							<td colspan="6" class="row3">
-								<div style="float:left;">&nbsp;<input type="checkbox" id="validc" onclick="check_convers(this.checked, 'd');" /> &nbsp;<input type="submit" name="valid" value="{L_DELETE}" class="submit" /></div>
+								<div style="float:left;">&nbsp;<input type="checkbox" id="validc" onclick="check_convers(this.checked, 'd');" /> &nbsp;<input type="submit" name="valid" value="{L_DELETE}" class="submit"></div>
 								<div style="float:right;">{convers.PAGINATION}&nbsp;</div>
 							</td>
 						</tr>
@@ -266,17 +266,17 @@
 				<textarea class="post" rows="15" cols="66" id="contents" name="contents">{post_pm.CONTENTS}</textarea>
 				<fieldset class="fieldset_submit" style="padding-top:17px;margin-bottom:0px;">
 				<legend>{L_SUBMIT}</legend>
-					<input type="submit" name="pm" value="{L_SUBMIT}" class="submit" />
+					<input type="submit" name="pm" value="{L_SUBMIT}" class="submit">
 					&nbsp;&nbsp; 									
-					<input value="{L_PREVIEW}" type="submit" name="prw" id="prw_pm" class="submit" />
+					<input value="{L_PREVIEW}" type="submit" name="prw" id="prw_pm" class="submit">
 					<script type="text/javascript">
 					<!--				
 					document.getElementById('prw_pm').style.display = 'none';
-					document.write('<input value="{L_PREVIEW}" onclick="XMLHttpRequest_preview();" type="button" class="submit" />');
+					document.write('<input value="{L_PREVIEW}" onclick="XMLHttpRequest_preview();" type="button" class="submit">');
 					-->
 					</script>				
 					&nbsp;&nbsp;
-					<input type="reset" value="{L_RESET}" class="reset" />				
+					<input type="reset" value="{L_RESET}" class="reset">				
 				</fieldset>	
 			</div>				
 		</form>
@@ -316,7 +316,7 @@
 							# START edit_pm.title #
 							<dl>
 								<dt><label for="title">* {L_TITLE}</label></dt>
-								<dd><label><input type="text" size="50" maxlength="100" id="title" name="title" value="{edit_pm.title.TITLE}" class="text" /></label></dd>
+								<dd><label><input type="text" size="50" maxlength="100" id="title" name="title" value="{edit_pm.title.TITLE}" class="text"></label></dd>
 							</dl>
 							# END edit_pm.title #
 							<br />
@@ -328,17 +328,17 @@
 						
 						<fieldset class="fieldset_submit">
 							<legend>{L_SUBMIT}</legend>
-							<input type="submit" name="{SUBMIT_NAME}" value="{L_SUBMIT}" class="submit" />
+							<input type="submit" name="{SUBMIT_NAME}" value="{L_SUBMIT}" class="submit">
 							&nbsp;&nbsp; 
-							<input value="{L_PREVIEW}" type="submit" name="prw" id="prw_pm" class="submit" />							
+							<input value="{L_PREVIEW}" type="submit" name="prw" id="prw_pm" class="submit">							
 							<script type="text/javascript">
 							<!--				
 							document.getElementById('prw_pm').style.display = 'none';
-							document.write('<input value="{L_PREVIEW}" onclick="XMLHttpRequest_preview();" type="button" class="submit" />');
+							document.write('<input value="{L_PREVIEW}" onclick="XMLHttpRequest_preview();" type="button" class="submit">');
 							-->
 							</script>						
 							&nbsp;&nbsp; 
-							<input type="reset" value="{L_RESET}" class="reset" />
+							<input type="reset" value="{L_RESET}" class="reset">
 						</fieldset>	
 					</div>	
 				</div>
@@ -387,8 +387,8 @@
 								<dt><label for="login">* {L_RECIPIENT}</label></dt>
 								<dd>
 									<label>
-										<input type="text" size="20" maxlength="25" id="login" name="login" value="{post_convers.LOGIN}" class="text" />
-										<span id="search_img"></span> <input value="{L_SEARCH}" onclick="XMLHttpRequest_search_members('', '{THEME}', 'insert_member', '{L_REQUIRE_RECIPIENT}');" type="button" class="submit" />								
+										<input type="text" size="20" maxlength="25" id="login" name="login" value="{post_convers.LOGIN}" class="text">
+										<span id="search_img"></span> <input value="{L_SEARCH}" onclick="XMLHttpRequest_search_members('', '{THEME}', 'insert_member', '{L_REQUIRE_RECIPIENT}');" type="button" class="submit">								
 									</label>
 									<div id="xmlhttprequest_result_search" style="display:none;" class="xmlhttprequest_result_search"></div>
 									# START post_convers.user_id_dest.search #
@@ -399,7 +399,7 @@
 							# END post_convers.user_id_dest #
 							<dl>
 								<dt><label for="title">* {L_TITLE}</label></dt>
-								<dd><label><input type="text" size="50" maxlength="100" id="title" name="title" value="{post_convers.TITLE}" class="text" /></label></dd>
+								<dd><label><input type="text" size="50" maxlength="100" id="title" name="title" value="{post_convers.TITLE}" class="text"></label></dd>
 							</dl>
 							<br />
 							<label for="contents">* {L_MESSAGE}</label>
@@ -410,17 +410,17 @@
 						
 						<fieldset class="fieldset_submit">
 							<legend>{L_SUBMIT}</legend>
-							<input type="submit" name="convers" value="{L_SUBMIT}" class="submit" />
+							<input type="submit" name="convers" value="{L_SUBMIT}" class="submit">
 								&nbsp;&nbsp; 
-								<input value="{L_PREVIEW}" type="submit" name="prw_convers" id="prw_convers_pm" class="submit" />
+								<input value="{L_PREVIEW}" type="submit" name="prw_convers" id="prw_convers_pm" class="submit">
 								<script type="text/javascript">
 								<!--				
 								document.getElementById('prw_convers_pm').style.display = 'none';
-								document.write('<input value="{L_PREVIEW}" onclick="XMLHttpRequest_preview();" type="button" class="submit" />');
+								document.write('<input value="{L_PREVIEW}" onclick="XMLHttpRequest_preview();" type="button" class="submit">');
 								-->
 								</script>
 								&nbsp;&nbsp; 
-								<input type="reset" value="{L_RESET}" class="reset" />
+								<input type="reset" value="{L_RESET}" class="reset">
 						</fieldset>	
 					</div>
 				</div>

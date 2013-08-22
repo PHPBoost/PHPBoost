@@ -46,24 +46,24 @@
 					</dl>
 					<dl>
 						<dt><label for="name">* {L_NAME}</label></dt>
-						<dd><label><input type="text" maxlength="100" size="35" id="name" name="name" class="text" /></label></dd>
+						<dd><label><input type="text" maxlength="100" size="35" id="name" name="name" class="text"></label></dd>
 					</dl>
 					<dl>
 						<dt><label for="desc">{L_DESC}</label></dt>
-						<dd><label><input type="text" maxlength="150" size="35" name="desc" id="desc" class="text" /></label></dd>
+						<dd><label><input type="text" maxlength="150" size="35" name="desc" id="desc" class="text"></label></dd>
 					</dl>
 					<dl>
 						<dt><label for="aprob">{L_APROB}</label></dt>
 						<dd><label>
-							<label><input type="radio" name="aprob" id="aprob" checked="checked" value="1" /> {L_YES}</label>
-							<label><input type="radio" name="aprob" value="0" /> {L_NO}</label>
+							<label><input type="radio" name="aprob" id="aprob" checked="checked" value="1"> {L_YES}</label>
+							<label><input type="radio" name="aprob" value="0"> {L_NO}</label>
 						</label></dd>
 					</dl>
 					<dl>
 						<dt><label for="status">{L_STATUS}</label></dt>
 						<dd><label>
-							<label><input type="radio" name="status" id="status" checked="checked" value="1" /> {L_UNLOCK}</label>
-							<label><input type="radio" name="status" value="0" /> {L_LOCK}</label>
+							<label><input type="radio" name="status" id="status" checked="checked" value="1"> {L_UNLOCK}</label>
+							<label><input type="radio" name="status" value="0"> {L_LOCK}</label>
 						</label></dd>
 					</dl>
 					<dl>
@@ -82,9 +82,9 @@
 				
 				<fieldset class="fieldset_submit">
 					<legend>{L_ADD}</legend>
-					<input type="submit" name="add" value="{L_ADD}" class="submit" />
+					<input type="submit" name="add" value="{L_ADD}" class="submit">
 					&nbsp;&nbsp; 
-					<input type="reset" value="{L_RESET}" class="reset" />	
+					<input type="reset" value="{L_RESET}" class="reset">	
 				</fieldset>	
 			</form>
 		</div>

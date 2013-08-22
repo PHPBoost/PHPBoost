@@ -177,14 +177,14 @@
 						# START poll_radio #
 						<tr>
 							<td class="row2" style="font-size:10px;">
-								<label><input type="{poll_radio.TYPE}" name="forumpoll" value="{poll_radio.NAME}" /> {poll_radio.ANSWERS}</label>
+								<label><input type="{poll_radio.TYPE}" name="forumpoll" value="{poll_radio.NAME}"> {poll_radio.ANSWERS}</label>
 							</td>
 						</tr>
 						# END poll_radio #
 						# START poll_checkbox #
 						<tr>
 							<td class="row2">
-								<label><input type="{poll_checkbox.TYPE}" name="{poll_checkbox.NAME}" value="{poll_checkbox.NAME}" /> {poll_checkbox.ANSWERS}</label>
+								<label><input type="{poll_checkbox.TYPE}" name="{poll_checkbox.NAME}" value="{poll_checkbox.NAME}"> {poll_checkbox.ANSWERS}</label>
 							</td>
 						</tr>
 						# END poll_checkbox #
@@ -208,7 +208,7 @@
 					# IF C_POLL_QUESTION #
 					<fieldset class="fieldset_submit">
 						<legend>{L_VOTE}</legend>
-						<input class="submit" name="valid_forum_poll" type="submit" value="{L_VOTE}" /><br />
+						<input class="submit" name="valid_forum_poll" type="submit" value="{L_VOTE}" /><br>
 						<a class="small_link" href="topic{U_POLL_RESULT}">{L_RESULT}</a>
 					</fieldset>
 					# ENDIF #
@@ -341,16 +341,16 @@
 					<label><textarea class="post" rows="15" cols="66" id="contents" name="contents">{CONTENTS}</textarea></label>
 					<fieldset class="fieldset_submit" style="padding-top:17px;margin-bottom:0px;">
 						<legend>{L_SUBMIT}</legend>
-						<input type="submit" name="valid" value="{L_SUBMIT}" class="submit" />
+						<input type="submit" name="valid" value="{L_SUBMIT}" class="submit">
 						&nbsp;&nbsp;
 						<script type="text/javascript">
 						<!--				
-						document.write('<input value="{L_PREVIEW}" onclick="XMLHttpRequest_preview();" type="button" class="submit" />');
+						document.write('<input value="{L_PREVIEW}" onclick="XMLHttpRequest_preview();" type="button" class="submit">');
 						-->
 						</script>
-						<noscript><div><input value="{L_PREVIEW}" type="submit" name="prw" class="submit" /></div></noscript>
+						<noscript><div><input value="{L_PREVIEW}" type="submit" name="prw" class="submit"></div></noscript>
 						&nbsp;&nbsp;
-						<input type="reset" value="{L_RESET}" class="reset" />
+						<input type="reset" value="{L_RESET}" class="reset">
 					</fieldset>
 				</div>
 			</form>

@@ -45,14 +45,14 @@
 					</dl>
 					<dl> 
 						<dt><label for="size_limit">* {L_SIZE_LIMIT}</label></dt>
-						<dd><label><input type="text" size="3" id="size_limit" name="size_limit" value="{SIZE_LIMIT}" class="text" /> {L_MB}</label></dd>
+						<dd><label><input type="text" size="3" id="size_limit" name="size_limit" value="{SIZE_LIMIT}" class="text"> {L_MB}</label></dd>
 					</dl>
 					<dl> 
 						<dt><label for="bandwidth_protect">{L_BANDWIDTH_PROTECT}</label><br /><span>{L_BANDWIDTH_PROTECT_EXPLAIN}</span></dt>
 						<dd>
-							<label><input type="radio" name="bandwidth_protect" id="bandwidth_protect" value="1" {BANDWIDTH_PROTECT_ENABLED} /> {L_ACTIV}</label>
+							<label><input type="radio" name="bandwidth_protect" id="bandwidth_protect" value="1" {BANDWIDTH_PROTECT_ENABLED}> {L_ACTIV}</label>
 							&nbsp;
-							<label><input type="radio" name="bandwidth_protect" value="0" {BANDWIDTH_PROTECT_DISABLED} /> {L_UNACTIV}</label>
+							<label><input type="radio" name="bandwidth_protect" value="0" {BANDWIDTH_PROTECT_DISABLED}> {L_UNACTIV}</label>
 						</dd>
 					</dl>
 					<dl> 
@@ -67,15 +67,15 @@
 					</dl>
 					<dl> 
 						<dt><label for="auth_extensions_sup">{L_EXTEND_EXTENSIONS}</label><br /><span>{L_EXTEND_EXTENSIONS_EXPLAIN}</span></dt>
-						<dd><label><input type="text" size="35" id="auth_extensions_sup" name="auth_extensions_sup" value="{AUTH_EXTENSIONS_SUP}" class="text" /></label></dd>
+						<dd><label><input type="text" size="35" id="auth_extensions_sup" name="auth_extensions_sup" value="{AUTH_EXTENSIONS_SUP}" class="text"></label></dd>
 					</dl>
 				</fieldset>
 				
 				<fieldset class="fieldset_submit">
 					<legend>{L_UPDATE}</legend>
-					<input type="submit" name="valid" value="{L_UPDATE}" class="submit" />
-					<input type="reset" value="{L_RESET}" class="reset" />
-					<input type="hidden" name="token" value="{TOKEN}" />					
+					<input type="submit" name="valid" value="{L_UPDATE}" class="submit">
+					<input type="reset" value="{L_RESET}" class="reset">
+					<input type="hidden" name="token" value="{TOKEN}">					
 				</fieldset>		
 			</form>
 		</div>

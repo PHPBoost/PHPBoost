@@ -13,12 +13,12 @@
 					&nbsp;{L_CATEGORIES}&nbsp;
 						{CATEGORIES_TREE}
 					&nbsp;{L_INCLUDE_SUB_CATS}&nbsp;
-					<input type="checkbox" name="sub_cats" value="1"{SUB_CATS} />
+					<input type="checkbox" name="sub_cats" value="1"{SUB_CATS}>
 				</div>
 				<div style="margin-top:20px;text-align:center;">
-					<input type="submit" name="filter" value="{L_SUBMIT}" class="submit" />
+					<input type="submit" name="filter" value="{L_SUBMIT}" class="submit">
 					&nbsp;&nbsp;
-					<input type="reset" value="{L_RESET}" class="reset" />
+					<input type="reset" value="{L_RESET}" class="reset">
 				</div>
 			</fieldset>
 		</form>
@@ -84,16 +84,16 @@
 							<a href="{files.U_CAT}">{files.CAT}</a>
 						</td>
 						<td class="row2" style="background:{files.COLOR};padding:5px 0;">
-							<input type="radio" id="visible{files.ID}" name="action[{files.ID}]" value="visible"{files.SHOW} />
+							<input type="radio" id="visible{files.ID}" name="action[{files.ID}]" value="visible"{files.SHOW}>
 						</td>
 						<td class="row2" style="background:{files.COLOR};padding:5px 0;">
-							<input type="radio" id="unvisible{files.ID}" name="action[{files.ID}]" value="unvisible"{files.HIDE} />
+							<input type="radio" id="unvisible{files.ID}" name="action[{files.ID}]" value="unvisible"{files.HIDE}>
 						</td>
 						<td class="row2" style="background:{files.COLOR};padding:5px 0;">
 							<input type="radio" name="action[{files.ID}]" value="unaprobed"{files.UNAPROBED} # IF NOT files.UNAPROBED #disabled="disabled" # ENDIF #/>
 						</td>
 						<td class="row2" style="background:{files.COLOR};padding:5px 0;">
-							<input type="radio" id="delete{files.ID}" name="action[{files.ID}]" value="delete" onclick="return confirm('{L_CONFIRM_DELETE}');" />
+							<input type="radio" id="delete{files.ID}" name="action[{files.ID}]" value="delete" onclick="return confirm('{L_CONFIRM_DELETE}');">
 						</td>
 					</tr>
 					# END files #
@@ -119,9 +119,9 @@
 			</fieldset>
 			<fieldset class="fieldset_submit">
 				<legend>{L_SUBMIT}</legend>
-				<input type="submit" name="submit" value="{L_SUBMIT}" class="submit" />
+				<input type="submit" name="submit" value="{L_SUBMIT}" class="submit">
 				&nbsp;&nbsp;
-				<input type="reset" value="{L_RESET}" class="reset" />
+				<input type="reset" value="{L_RESET}" class="reset">
 			</fieldset>
 		</form>
 		# IF C_ADMIN #

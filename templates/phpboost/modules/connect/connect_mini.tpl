@@ -23,12 +23,12 @@
 			<li class="submenu connect"><a href='/user/?url=/connect'>{L_CONNECT}</a>
 				<ul>
 					<form action="{U_CONNECT}" method="post" onsubmit="return check_connect();" class="connect_align">
-						<input type="text" id="login" name="login" value="{L_PSEUDO}" class="connect_form" onfocus="if( this.value == '{L_PSEUDO}' ) this.value = '';" maxlength="25" />
-						<br /><input type="password" id="password" name="password" class="connect_form" value="******" onfocus="if( this.value == '******' ) this.value = '';" maxlength="30" />
+						<input type="text" id="login" name="login" value="{L_PSEUDO}" class="connect_form" onfocus="if( this.value == '{L_PSEUDO}' ) this.value = '';" maxlength="25">
+						<br /><input type="password" id="password" name="password" class="connect_form" value="******" onfocus="if( this.value == '******' ) this.value = '';" maxlength="30">
 						<br />
-						<p class="auto_connect">{L_AUTOCONNECT} <input checked="checked" type="checkbox" name="auto" class="submit" /> </p>
-						<input type="hidden" name="redirect" value="{REWRITED_SCRIPT}" />
-						<input type="submit" name="connect" value="{L_CONNECT}" class="submit" />
+						<p class="auto_connect">{L_AUTOCONNECT} <input checked="checked" type="checkbox" name="auto" class="submit"> </p>
+						<input type="hidden" name="redirect" value="{REWRITED_SCRIPT}">
+						<input type="submit" name="connect" value="{L_CONNECT}" class="submit">
 					</form>
 				</ul>
 			</li>

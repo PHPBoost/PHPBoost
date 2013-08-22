@@ -236,6 +236,7 @@ class HTMLForm
 		$template->put_all(array(
 			'C_JS_NOT_ALREADY_INCLUDED' => !self::$js_already_included,
 			'C_HAS_REQUIRED_FIELDS' => (self::$instance_id == 1) ? $this->has_required_fields() : false,
+			'C_TARGET' => !empty($this->target),
 			'FORMCLASS' => $this->css_class,
 			'TARGET' => $this->target,
 			'HTML_ID' => $this->html_id,

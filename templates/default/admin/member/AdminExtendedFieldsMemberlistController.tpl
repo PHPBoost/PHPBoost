@@ -128,8 +128,8 @@ Event.observe(window, 'load', function() {
 		</div>
 	</fieldset>
 	<fieldset class="fieldset_submit">
-		<input type="submit" name="submit" value="{L_VALID}" class="submit" />
-		<input type="hidden" name="token" value="{TOKEN}" />
-		<input type="hidden" name="position" id="position" value="" />
+		<input type="submit" name="submit" value="{L_VALID}" class="submit">
+		<input type="hidden" name="token" value="{TOKEN}">
+		<input type="hidden" name="position" id="position" value="">
 	</fieldset>
 </form>

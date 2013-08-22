@@ -89,7 +89,7 @@
 					<p>{L_REQUIRE}</p>
 					<dl>
 						<dt><label for="title">* {L_TITLE}</label></dt>
-						<dd><input type="text" size="50" maxlength="100" id="title" name="title" value="{TITLE}" class="text" /></dd>
+						<dd><input type="text" size="50" maxlength="100" id="title" name="title" value="{TITLE}" class="text"></dd>
 					</dl>
 					<dl>
 						<dt><label for="idcat">* {L_CATEGORY}</label></dt>
@@ -100,17 +100,17 @@
 					<dl>
 						<dt><label for="url">* {L_URL}</label></dt>
 						<dd>
-							<input type="text" size="50" id="url" name="url" value="{URL}" class="text" />
+							<input type="text" size="50" id="url" name="url" value="{URL}" class="text">
 							<a title="{L_FILE_ADD}" href="#" onclick="window.open('{PATH_TO_ROOT}/user/upload.php?popup=1&amp;fd=url&amp;parse=true', '', 'height=500,width=720,resizable=yes,scrollbars=yes');return false;"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/upload/files_add.png" alt="" /></a>
 						</dd>
 					</dl>
 					<dl>
 						<dt><label for="size">{L_SIZE}</label></dt>
-						<dd><input type="text" size="10" maxlength="10" name="size" id="size" value="{SIZE_FORM}" class="text" /> {L_UNIT_SIZE}</dd>
+						<dd><input type="text" size="10" maxlength="10" name="size" id="size" value="{SIZE_FORM}" class="text"> {L_UNIT_SIZE}</dd>
 					</dl>
 					<dl>
 						<dt><label for="count">{L_NUMBER_OF_HITS}</label></dt>
-						<dd><input type="text" size="10" maxlength="10" name="count" id="count" value="{COUNT}" class="text" /></dd>
+						<dd><input type="text" size="10" maxlength="10" name="count" id="count" value="{COUNT}" class="text"></dd>
 					</dl>
 					<dl>					
 						<dt>
@@ -140,7 +140,7 @@
 							</label>
 						</dt>
 						<dd>
-							<input type="text" size="50" name="image" id="image" class="text" value="{FILE_IMAGE}" />
+							<input type="text" size="50" name="image" id="image" class="text" value="{FILE_IMAGE}">
 						</dd>
 					</dl>
 					<dl class="overflow_visible">
@@ -154,7 +154,7 @@
 							<label>{L_IGNORE_RELEASE_DATE}</label>
 						</dt>
 						<dd>
-							<input type="checkbox" id="ignore_release_date" name="ignore_release_date" onclick="show_hide_release_date();" {IGNORE_RELEASE_DATE_CHECKED} />
+							<input type="checkbox" id="ignore_release_date" name="ignore_release_date" onclick="show_hide_release_date();" {IGNORE_RELEASE_DATE_CHECKED}>
 						</dd>
 					</dl>
 					<dl id="release_date_form" style="display:{STYLE_FIELD_RELEASE_DATE};" class="overflow_visible">
@@ -166,18 +166,18 @@
 					<dl class="overflow_visible">
 						<dt><label>* {L_FILE_VISIBILITY}</label></dt>
 						<dd>
-							<input type="radio" value="2" name="visibility" {VISIBLE_WAITING} /> 
+							<input type="radio" value="2" name="visibility" {VISIBLE_WAITING}> 
 						{L_FROM_DATE}&nbsp;
 						{BEGINING_CALENDAR}
 						&nbsp;{L_TO_DATE}&nbsp;
 						{END_CALENDAR}
 						<br />
 						<label>
-							<input type="radio" value="1" name="visibility" {VISIBLE_ENABLED} id="release_date" /> {L_NOW}
+							<input type="radio" value="1" name="visibility" {VISIBLE_ENABLED} id="release_date"> {L_NOW}
 						</label>
 						<br />
 						<label>
-							<input type="radio" value="0" name="visibility" {VISIBLE_HIDDEN} /> {L_HIDDEN}
+							<input type="radio" value="0" name="visibility" {VISIBLE_HIDDEN}> {L_HIDDEN}
 						</label>
 						</dd>
 					</dl>
@@ -185,7 +185,7 @@
 					<dl>
 						<dt><label>{L_APPROVED}</label></dt>
 						<dd>
-							<input type="checkbox" name="approved" id="approved" {APPROVED} />
+							<input type="checkbox" name="approved" id="approved" {APPROVED}>
 						</dd>
 					</dl>
 					# ENDIF #
@@ -205,12 +205,12 @@
 				
 				<fieldset class="fieldset_submit">
 					<legend>{L_SUBMIT}</legend>
-					<input type="submit" name="submit" value="{L_SUBMIT}" class="submit" />
+					<input type="submit" name="submit" value="{L_SUBMIT}" class="submit">
 					&nbsp;&nbsp; 
-					<input type="submit" name="preview" value="{L_PREVIEW}" class="submit" />
+					<input type="submit" name="preview" value="{L_PREVIEW}" class="submit">
 					&nbsp;&nbsp; 
-					<input type="reset" value="{L_RESET}" class="reset" />
-					<input type="hidden" name="token" value="{TOKEN}" />
+					<input type="reset" value="{L_RESET}" class="reset">
+					<input type="hidden" name="token" value="{TOKEN}">
 				</fieldset>
 			</form>
 			</div>

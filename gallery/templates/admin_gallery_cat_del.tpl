@@ -73,13 +73,13 @@
 					<legend>{L_DEL_ALL}</legend>
 					<dl>
 						<dt><label for="del_conf">{L_DEL_GALLERY_CONTENTS}</label></dt>
-						<dd><label><input type="checkbox" name="del_conf" id="del_conf" /></label></dd>
+						<dd><label><input type="checkbox" name="del_conf" id="del_conf"></label></dd>
 					</dl>
 				</fieldset>	
 				
 				<fieldset class="fieldset_submit">
 					<legend>{L_SUBMIT}</legend>
-					<input type="submit" name="del_cat" value="{L_SUBMIT}" class="submit" />
+					<input type="submit" name="del_cat" value="{L_SUBMIT}" class="submit">
 				</fieldset>
 			</form>
 		</div>

@@ -67,7 +67,7 @@
 								<label for="cat_title">{L_CAT_NAME}</label>
 							</dt>
 							<dd>
-								<input type="text" name="cat_name" id="cat_name" value="{category.not_root_name.CAT_TITLE}" />
+								<input type="text" name="cat_name" id="cat_name" value="{category.not_root_name.CAT_TITLE}">
 							</dd>
 						</dl>
 						# END category.not_root_name #
@@ -76,7 +76,7 @@
 						<textarea id="contents" rows="15" cols="40" name="description">{DESCRIPTION}</textarea>
 						<br />
 						<div style="text-align:center;">
-							<input value="{L_PREVIEW}" onclick="XMLHttpRequest_preview();" class="submit" type="button" />
+							<input value="{L_PREVIEW}" onclick="XMLHttpRequest_preview();" class="submit" type="button">
 						</div>
 						<br />
 						<dl>
@@ -99,7 +99,7 @@
 							<br />
 							<span class="text_small">{L_GLOBAL_AUTH_EXPLAIN}</span></dt>
 							<dd>
-								<input type="checkbox" name="global_auth" id="global_auth" onclick="javascript: change_status_global_auth();" {GLOBAL_CHECKED} />
+								<input type="checkbox" name="global_auth" id="global_auth" onclick="javascript: change_status_global_auth();" {GLOBAL_CHECKED}>
 							</dd>					
 						</dl>
 						<div id="hide_global_auth" style="display:{DISPLAY_GLOBAL};">
@@ -128,10 +128,10 @@
 					</fieldset>
 					<fieldset class="fieldset_submit">
 						<legend>{L_SUBMIT}</legend>
-						<input type="submit" name="valid" value="{L_SUBMIT}" class="submit" />
+						<input type="submit" name="valid" value="{L_SUBMIT}" class="submit">
 						&nbsp;&nbsp; 
-						<input type="reset" value="{L_RESET}" class="reset" />
-						<input type="hidden" id="id_faq" name="id_faq" value="{category.ID_FAQ}" />
+						<input type="reset" value="{L_RESET}" class="reset">
+						<input type="hidden" id="id_faq" name="id_faq" value="{category.ID_FAQ}">
 					</fieldset>
 				</form>
 				
@@ -227,7 +227,7 @@
 								<label for="entitled">{L_ENTITLED}</label>
 							</dt>
 							<dd>
-								<input type="text" value="{edit_question.ENTITLED}" maxlength="255" size="50" id="entitled" name="entitled" />
+								<input type="text" value="{edit_question.ENTITLED}" maxlength="255" size="50" id="entitled" name="entitled">
 							</dd>
 						</dl>
 						<label for="contents">{L_ANSWER}</label>
@@ -237,14 +237,14 @@
 					</fieldset>
 					<fieldset class="fieldset_submit">
 						<legend>{L_SUBMIT}</legend>
-						<input type="submit" name="valid" value="{L_SUBMIT}" class="submit" />
+						<input type="submit" name="valid" value="{L_SUBMIT}" class="submit">
 						&nbsp;&nbsp;
-						<input value="{L_PREVIEW}" onclick="XMLHttpRequest_preview();" class="submit" type="button" />
+						<input value="{L_PREVIEW}" onclick="XMLHttpRequest_preview();" class="submit" type="button">
 						&nbsp;&nbsp;
-						<input type="reset" value="{L_RESET}" class="reset" />
-						<input type="hidden" name="id_question" value="{edit_question.ID_QUESTION}" />
-						<input type="hidden" name="id_cat" value="{edit_question.ID_CAT}" />
-						<input type="hidden" name="after" value="{edit_question.ID_AFTER}" />
+						<input type="reset" value="{L_RESET}" class="reset">
+						<input type="hidden" name="id_question" value="{edit_question.ID_QUESTION}">
+						<input type="hidden" name="id_cat" value="{edit_question.ID_CAT}">
+						<input type="hidden" name="after" value="{edit_question.ID_AFTER}">
 					</fieldset>					
 				</form>
 				&nbsp;
@@ -276,9 +276,9 @@
 					</fieldset>
 					<fieldset class="fieldset_submit">
 						<legend>{L_MOVE}</legend>
-						<input type="submit" name="submit" value="{L_MOVE}" class="submit" />
-						<input type="hidden" name="id_question" value="{move_question.ID_QUESTION}" />
-						<input type="hidden" name="move_question" value="true" />
+						<input type="submit" name="submit" value="{L_MOVE}" class="submit">
+						<input type="hidden" name="id_question" value="{move_question.ID_QUESTION}">
+						<input type="hidden" name="move_question" value="true">
 					</fieldset>					
 				</form>
 				&nbsp;

@@ -43,7 +43,7 @@ ${resources('update/update')}
 								&nbsp;&nbsp;&nbsp;<img src="../images/stats/countries/{LANG_IDENTIFIER}.png" alt="" class="valign_middle" />
 							</p>
 							<p id="button_change_lang">
-								<input type="submit" class="submit" value="{@change}" />
+								<input type="submit" class="submit" value="{@change}">
 							</p>
 							<script type="text/javascript">
 							<!--

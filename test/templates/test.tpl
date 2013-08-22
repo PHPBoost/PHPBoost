@@ -10,7 +10,7 @@
 	<dd><input type="text" name="params" id="params" value="{PARAMS}"
 		class="text" style="width: 75%;" /></dd>
 	<dt><label for="is_html">HTML output</label></dt>
-	<dd><input type="checkbox" name="is_html" id="is_html" /></dd>
+	<dd><input type="checkbox" name="is_html" id="is_html"></dd>
 </dl>
 </fieldset>
 <fieldset class="fieldset_submit"><input type="button"

@@ -90,19 +90,19 @@
 				<dl>
 					<dt><label for="create_redirection">{L_NEW_TITLE}</label></dt>
 					<dd>
-						<label><input type="text" name="new_title" class="text" size="70" maxlength="250" /></label>
-						<input type="hidden" name="id_rename" value="{ID_RENAME}" />
+						<label><input type="text" name="new_title" class="text" size="70" maxlength="250"></label>
+						<input type="hidden" name="id_rename" value="{ID_RENAME}">
 					</dd>					
 				</dl>
 				<dl>
 					<dt><label for="create_redirection">{L_CREATE_REDIRECTION}</label></dt>
-					<dd><label><input type="checkbox" name="create_redirection" id="create_redirection" /></label></dd>					
+					<dd><label><input type="checkbox" name="create_redirection" id="create_redirection"></label></dd>					
 				</dl>
 			</fieldset>	
 			
 			<fieldset class="fieldset_submit">
 				<legend>{L_SUBMIT}</legend>
-				<input type="submit" value="{L_SUBMIT}" class="submit" />
+				<input type="submit" value="{L_SUBMIT}" class="submit">
 			</fieldset>
 		</form>
 		# END rename #
@@ -116,15 +116,15 @@
 				<dl>
 					<dt><label for="redirection_name">{L_REDIRECTION_NAME}</label></dt>
 					<dd>
-						<label><input type="text" name="redirection_name" id="redirection_name" class="text" size="70" maxlength="250" /></label>
-						<input type="hidden" name="id_new" value="{ID_NEW}" />
+						<label><input type="text" name="redirection_name" id="redirection_name" class="text" size="70" maxlength="250"></label>
+						<input type="hidden" name="id_new" value="{ID_NEW}">
 					</dd>					
 				</dl>
 			</fieldset>	
 			
 			<fieldset class="fieldset_submit">
 				<legend>{L_SUBMIT}</legend>
-				<input type="submit" value="{L_SUBMIT}" class="submit" />
+				<input type="submit" value="{L_SUBMIT}" class="submit">
 			</fieldset>
 		</form>
 		# END new #

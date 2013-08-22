@@ -37,10 +37,10 @@
 					<div style="float:left;width:50%">
 						{L_RESTORE_FROM_UPLOADED_FILE}
 						<br /><br />
-						<input type="file" class="file" name="file_sql" />
-						<input type="hidden" name="max_file_size" value="10485760" />
+						<input type="file" class="file" name="file_sql">
+						<input type="hidden" name="max_file_size" value="10485760">
 						<br /><br />
-						<input type="submit" class="submit" value="{L_RESTORE_NOW}" />
+						<input type="submit" class="submit" value="{L_RESTORE_NOW}">
 					</div>
 					<div class="spacer"></div>
 				</div>
@@ -59,7 +59,7 @@
 					</tr>
 					<tr style="text-align:center;">			
 						<td class="row3" style="width:140px;">
-							{L_SELECTED_TABLES} <br />(<input type="checkbox" onclick="check_all(this.checked, 'id');" class="valign_middle" /> {L_ALL})
+							{L_SELECTED_TABLES} <br />(<input type="checkbox" onclick="check_all(this.checked, 'id');" class="valign_middle"> {L_ALL})
 						</td>
 						<td class="row2">
 							{L_TABLE_NAME}
@@ -83,7 +83,7 @@
 					# START table_list #
 					<tr>			
 						<td class="row2" style="text-align:center;">
-							<input type="checkbox" id="id{table_list.I}" name="table_{table_list.TABLE_NAME}" />
+							<input type="checkbox" id="id{table_list.I}" name="table_{table_list.TABLE_NAME}">
 						</td>
 						<td class="row2">
 							<a href="admin_database_tools.php?table={table_list.TABLE_NAME}">{table_list.TABLE_NAME}</a>
@@ -107,7 +107,7 @@
 					# END table_list #
 					<tr style="text-align:center;"> 
 						<td class="row3">
-							( <input type="checkbox" onclick="check_all(this.checked, 'id');" class="valign_middle" /> {L_ALL})
+							( <input type="checkbox" onclick="check_all(this.checked, 'id');" class="valign_middle"> {L_ALL})
 						</td>
 						<td class="row3">
 							<strong>{NBR_TABLES}</strong>
@@ -142,9 +142,9 @@
 								<td>&nbsp;&nbsp;<img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/updater.png" alt="optimize" class="valign_middle" /></td>
 							</tr>
 							<tr>
-								<td><input type="submit" name="optimize" value="{L_OPTIMIZE}" class="submit" /></td>
-								<td>&nbsp;&nbsp;<input type="submit" name="repair" value="{L_REPAIR}" class="submit" /></td>
-								<td>&nbsp;&nbsp;<input type="submit" name="backup" value="{L_BACKUP}" class="submit" /></td>
+								<td><input type="submit" name="optimize" value="{L_OPTIMIZE}" class="submit"></td>
+								<td>&nbsp;&nbsp;<input type="submit" name="repair" value="{L_REPAIR}" class="submit"></td>
+								<td>&nbsp;&nbsp;<input type="submit" name="backup" value="{L_BACKUP}" class="submit"></td>
 							</tr>
 						</table>
 					</div>
@@ -248,10 +248,10 @@
 							<br /><br />
 							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/updater.png" alt="backup" /><br />
 							<label><input type="radio" name="backup_type" checked="checked" value="all"/> {L_BACKUP_ALL}</label>
-							<label><input type="radio" name="backup_type" value="struct" /> {L_BACKUP_STRUCT}</label>
+							<label><input type="radio" name="backup_type" value="struct"> {L_BACKUP_STRUCT}</label>
 							<label><input type="radio" name="backup_type" value="data"/> {L_BACKUP_DATA}</label>
 							<br /><br />
-							<input type="submit" value="{L_BACKUP}" class="submit" />
+							<input type="submit" value="{L_BACKUP}" class="submit">
 						</td>
 					</tr>
 				</table>
@@ -310,7 +310,7 @@
 					</div>
 					<fieldset class="fieldset_submit" style="margin:0">
 						<legend>{L_EXECUTE}</legend>
-						<input type="submit" class="submit" value="{L_EXECUTE}" />		
+						<input type="submit" class="submit" value="{L_EXECUTE}">		
 					</fieldset>
 				</div>
 				</form>

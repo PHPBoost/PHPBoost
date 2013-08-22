@@ -153,15 +153,15 @@ function deleteElement(element_id)
 			<legend>{L_ACTION_MENUS}</legend>
 			<dl>
 				<dt><label for="menu_element_{ID}_name">* {L_NAME}</label></dt>
-				<dd><input type="text" name="menu_element_{ID}_name" id="menu_element_{ID}_name" value="{MENU_NAME}" /></dd>
+				<dd><input type="text" name="menu_element_{ID}_name" id="menu_element_{ID}_name" value="{MENU_NAME}"></dd>
 			</dl>
 			<dl>
 				<dt><label for="menu_element_{ID}_url">{L_URL}</label></dt>
-				<dd><input type="text" name="menu_element_{ID}_url" id="menu_element_{ID}_url" value="{MENU_URL}" /></dd>
+				<dd><input type="text" name="menu_element_{ID}_url" id="menu_element_{ID}_url" value="{MENU_URL}"></dd>
 			</dl>
 			<dl>
 				<dt><label for="menu_element_{ID}_image">{L_IMAGE}</label></dt>
-				<dd><input type="text" name="menu_element_{ID}_image" id="menu_element_{ID}_image" value="{MENU_IMG}" /></dd>
+				<dd><input type="text" name="menu_element_{ID}_image" id="menu_element_{ID}_image" value="{MENU_IMG}"></dd>
 			</dl>
 			<dl>
 				<dt><label for="menu_element_{ID}_type">* {L_TYPE}</label></dt>
@@ -222,10 +222,10 @@ function deleteElement(element_id)
 	
 		<fieldset class="fieldset_submit">
 			<legend>{L_ACTION}</legend>
-			<input type="hidden" name="id" value="{MENU_ID}" />
-			<input type="hidden" name="token" value="{TOKEN}" />
-			<input type="hidden" name="menu_tree" id="menu_tree" value="" />
-			<input type="submit" name="valid" value="{L_ACTION}" class="submit" />					
+			<input type="hidden" name="id" value="{MENU_ID}">
+			<input type="hidden" name="token" value="{TOKEN}">
+			<input type="hidden" name="menu_tree" id="menu_tree" value="">
+			<input type="submit" name="valid" value="{L_ACTION}" class="submit">					
 		</fieldset>
 	</form>
 </div>

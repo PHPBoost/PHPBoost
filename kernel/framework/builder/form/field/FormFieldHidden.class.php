@@ -31,7 +31,7 @@
  */
 class FormFieldHidden extends AbstractFormField
 {
-    private static $tpl_src = '<input type="hidden" id="${escape(ID)}" name="${escape(ID)}" value="${escape(VALUE)}" />';
+    private static $tpl_src = '<input type="hidden" id="${escape(ID)}" name="${escape(ID)}" value="${escape(VALUE)}">';
 
     public function __construct($id, $value)
     {

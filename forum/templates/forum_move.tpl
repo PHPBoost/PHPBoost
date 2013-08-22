@@ -40,8 +40,8 @@
 					
 					<fieldset class="fieldset_submit">
 						<legend>{L_SUBMIT}</legend>
-						<input type="hidden" name="id" value="{ID}" />
-						<input type="submit" value="{L_SUBMIT}" class="submit" />			
+						<input type="hidden" name="id" value="{ID}">
+						<input type="submit" value="{L_SUBMIT}" class="submit">			
 					</fieldset>	
 				</form>
 			</div>

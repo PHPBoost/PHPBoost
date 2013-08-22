@@ -130,25 +130,25 @@
 					<legend>{L_GROUPS_MANAGEMENT}</legend>
 					<dl>
 						<dt><label for="name">* {L_NAME}</label></dt>
-						<dd><label><input type="text" size="25" id="name" name="name" value="{NAME}" class="text" /></label></dd>
+						<dd><label><input type="text" size="25" id="name" name="name" value="{NAME}" class="text"></label></dd>
 					</dl>
 					<dl>
 						<dt><label for="auth_flood">{L_AUTH_FLOOD}</label></dt>
-						<dd><label><input type="radio" {AUTH_FLOOD_ENABLED} name="auth_flood" id="auth_flood" value="1" /> {L_YES}
+						<dd><label><input type="radio" {AUTH_FLOOD_ENABLED} name="auth_flood" id="auth_flood" value="1"> {L_YES}
 						</label>&nbsp;&nbsp; 
-						<label><input type="radio" {AUTH_FLOOD_DISABLED} name="auth_flood" value="0" class="text" /> {L_NO}</label></dd>
+						<label><input type="radio" {AUTH_FLOOD_DISABLED} name="auth_flood" value="0" class="text"> {L_NO}</label></dd>
 					</dl>
 					<dl>
 						<dt><label for="pm_group_limit">{L_PM_GROUP_LIMIT}</label><br /><span>{L_PM_GROUP_LIMIT_EXPLAIN}</span></dt>
-						<dd><label><input type="text" size="3" name="pm_group_limit" id="pm_group_limit" value="{PM_GROUP_LIMIT}" class="text" /></label></dd>
+						<dd><label><input type="text" size="3" name="pm_group_limit" id="pm_group_limit" value="{PM_GROUP_LIMIT}" class="text"></label></dd>
 					</dl>
 					<dl>
 						<dt><label for="data_group_limit">{L_DATA_GROUP_LIMIT}</label><br /><span>{L_DATA_GROUP_LIMIT_EXPLAIN}</span></dt>
-						<dd><label><input type="text" size="3" name="data_group_limit" id="data_group_limit" value="{DATA_GROUP_LIMIT}" class="text" /> {L_MB}</label></dd>
+						<dd><label><input type="text" size="3" name="data_group_limit" id="data_group_limit" value="{DATA_GROUP_LIMIT}" class="text"> {L_MB}</label></dd>
 					</dl>
 					<dl class="overflow_visible">
 						<dt><label for="color_group">{L_COLOR_GROUP}</label><br /><span>{L_COLOR_GROUP_EXPLAIN}</span></dt>
-						<dd>#<input type="text" size="7" name="color_group" id="color_group" value="{COLOR_GROUP}" class="text" />
+						<dd>#<input type="text" size="7" name="color_group" id="color_group" value="{COLOR_GROUP}" class="text">
 							<a href="javascript:bbcode_color();bb_display_block('1', '');" onmouseout="bb_hide_block('1', '', 0);" class="bbcode_hover" title="{L_BB_COLOR}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/color.png" alt="" class="valign_middle" /></a>	
 							<div style="position:relative;z-index:100;display:none;" id="bb_block1">
 								<div id="color_group_list" class="bbcode_block" style="background:white;width:150px;" onmouseover="bb_hide_block('1', '', 1);" onmouseout="bb_hide_block('1', '', 0);">
@@ -170,11 +170,11 @@
 				</fieldset>						
 				<fieldset class="fieldset_submit">
 					<legend>{L_UPDATE}</legend>
-					<input type="hidden" name="id" value="{GROUP_ID}" class="update" />
-					<input type="submit" name="valid" value="{L_UPDATE}" class="submit" />
+					<input type="hidden" name="id" value="{GROUP_ID}" class="update">
+					<input type="submit" name="valid" value="{L_UPDATE}" class="submit">
 					&nbsp;&nbsp; 
-					<input type="reset" value="{L_RESET}" class="reset" />
-					<input type="hidden" name="token" value="{TOKEN}" />
+					<input type="reset" value="{L_RESET}" class="reset">
+					<input type="hidden" name="token" value="{TOKEN}">
 				</fieldset>
 			</form>
 			
@@ -186,7 +186,7 @@
 					<dl>
 						<dt><label for="login">* {L_PSEUDO}</label></dt>
 						<dd>
-							<input type="text" size="20" maxlength="25" id="login" value="{LOGIN}" name="login_mbr" class="text" /> 
+							<input type="text" size="20" maxlength="25" id="login" value="{LOGIN}" name="login_mbr" class="text"> 
 							<span id="loading_groups"></span>
 							<script type="text/javascript">
 							<!--								
@@ -199,8 +199,8 @@
 				</fieldset>	
 				<fieldset class="fieldset_submit">
 					<legend>{L_ADD}</legend>
-					<input type="submit" name="add_mbr" value="{L_ADD}" class="submit" />
-					<input type="hidden" value="{TOKEN}" name="token" />
+					<input type="submit" name="add_mbr" value="{L_ADD}" class="submit">
+					<input type="hidden" value="{TOKEN}" name="token">
 				</fieldset>
 			</form>
 			
@@ -252,15 +252,15 @@
 					<dl>
 						<dt><label for="upload_groups">{L_UPLOAD_GROUPS}</label><br />{L_UPLOAD_FORMAT}</dt>
 						<dd><label>
-							<input type="hidden" name="max_file_size" value="2000000" />
-							<input type="file" id="upload_groups" name="upload_groups" size="30" class="file" />
+							<input type="hidden" name="max_file_size" value="2000000">
+							<input type="file" id="upload_groups" name="upload_groups" size="30" class="file">
 						</label></dd>
 					</dl>
 				</fieldset>
 				<fieldset class="fieldset_submit">
 					<legend>{L_UPLOAD}</legend>
-					<input type="submit" value="{L_UPLOAD}" class="submit" />
-					<input type="hidden" value="{TOKEN}" name="token" />
+					<input type="submit" value="{L_UPLOAD}" class="submit">
+					<input type="hidden" value="{TOKEN}" name="token">
 				</fieldset>
 			</form>
 			
@@ -270,25 +270,25 @@
 					<legend>{L_ADD_GROUPS}</legend>
 					<dl>
 						<dt><label for="name">* {L_NAME}</label></dt>
-						<dd><label><input type="text" maxlength="25" size="25" id="name" name="name" value="" class="text" /></label></dd>
+						<dd><label><input type="text" maxlength="25" size="25" id="name" name="name" value="" class="text"></label></dd>
 					</dl>
 					<dl>
 						<dt><label for="auth_flood">{L_AUTH_FLOOD}</label></dt>
-						<dd><label><input type="radio" name="auth_flood" id="auth_flood" checked="checked" value="1" /> {L_YES}</label>
+						<dd><label><input type="radio" name="auth_flood" id="auth_flood" checked="checked" value="1"> {L_YES}</label>
 						&nbsp;&nbsp; 
-						<label><input type="radio" name="auth_flood" value="0" /> {L_NO}</label></dd>
+						<label><input type="radio" name="auth_flood" value="0"> {L_NO}</label></dd>
 					</dl>
 					<dl>
 						<dt><label for="pm_group_limit">{L_PM_GROUP_LIMIT}</label><br /><span>{L_PM_GROUP_LIMIT_EXPLAIN}</span></dt>
-						<dd><label><input type="text" size="3" name="pm_group_limit" id="pm_group_limit" value="75" class="text" /></label></dd>
+						<dd><label><input type="text" size="3" name="pm_group_limit" id="pm_group_limit" value="75" class="text"></label></dd>
 					</dl>
 					<dl>
 						<dt><label for="data_group_limit">{L_DATA_GROUP_LIMIT}</label><br /><span>{L_DATA_GROUP_LIMIT_EXPLAIN}</span></dt>
-						<dd><label><input type="text" size="3" name="data_group_limit" id="data_group_limit" value="5" class="text" /> {L_MB}</label></dd>
+						<dd><label><input type="text" size="3" name="data_group_limit" id="data_group_limit" value="5" class="text"> {L_MB}</label></dd>
 					</dl>
 					<dl class="overflow_visible">
 						<dt><label for="color_group">{L_COLOR_GROUP}</label><br /><span>{L_COLOR_GROUP_EXPLAIN}</span></dt>
-						<dd>#<input type="text" size="7" name="color_group" id="color_group" value="{COLOR_GROUP}" class="text" />
+						<dd>#<input type="text" size="7" name="color_group" id="color_group" value="{COLOR_GROUP}" class="text">
 							<a href="javascript:bbcode_color();bb_display_block('1', '');" onmouseout="bb_hide_block('1', '', 0);" class="bbcode_hover" title="{L_BB_COLOR}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/color.png" alt="" class="valign_middle" /></a>	
 							<div style="position:relative;z-index:100;display:none;" id="bb_block1">
 								<div id="color_group_list" class="bbcode_block" style="background:white;width:150px;" onmouseover="bb_hide_block('1', '', 1);" onmouseout="bb_hide_block('1', '', 0);">
@@ -308,9 +308,9 @@
 				</fieldset>
 				<fieldset class="fieldset_submit">
 					<legend>{L_ADD}</legend>
-					<input type="hidden" name="add" value="1" />
-					<input type="submit" name="valid" value="{L_ADD}" class="submit" />
-					<input type="hidden" value="{TOKEN}" name="token" />
+					<input type="hidden" name="add" value="1">
+					<input type="submit" name="valid" value="{L_ADD}" class="submit">
+					<input type="hidden" value="{TOKEN}" name="token">
 				</fieldset>
 			</form>
 			# ENDIF #

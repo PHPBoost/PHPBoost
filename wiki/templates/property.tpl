@@ -5,7 +5,7 @@
 				<p style="text-align:center">
 					{L_EXPLAIN_DEFAULT}
 					<br />
-					<input type="submit" name="default" value="{L_DEFAULT}" class="reset" />
+					<input type="submit" name="default" value="{L_DEFAULT}" class="reset">
 				</p>
 				<br />
 				<hr />
@@ -53,10 +53,10 @@
 			
 			<fieldset class="fieldset_submit">
 				<legend>{L_SUBMIT}</legend>
-				<input type="submit" name="valid" value="{L_UPDATE}" class="submit" />
+				<input type="submit" name="valid" value="{L_UPDATE}" class="submit">
 				&nbsp;&nbsp; 
-				<input type="reset" value="{L_RESET}" class="reset" />
-				<input type="hidden" name="id_auth" value="{auth.ID}" />
+				<input type="reset" value="{L_RESET}" class="reset">
+				<input type="hidden" name="id_auth" value="{auth.ID}">
 			</fieldset>
 		</form>
 		# END auth #
@@ -118,14 +118,14 @@
 				<dl>
 					<dt><label>{L_STATUS}</label></dt>
 					<dd>
-						<label><input type="radio" name="status" id="radio_defined" value="radio_defined" {status.DEFINED} onclick="javascript: change_type(0);" {status.SELECTED_DEFINED} />&nbsp;{L_DEFINED_STATUS}</label>
+						<label><input type="radio" name="status" id="radio_defined" value="radio_defined" {status.DEFINED} onclick="javascript: change_type(0);" {status.SELECTED_DEFINED}>&nbsp;{L_DEFINED_STATUS}</label>
 						<select id="id_status" name="id_status" {status.SELECTED_SELECT} class="nav" onchange="javascript:show_status();">
 						# START status.list #
 							<option value="{status.list.ID_STATUS}" {status.list.SELECTED}>{status.list.L_STATUS}</option>
 						# END status.list #
 						</select>
 						<br /><br />
-						<label><input type="radio" name="status" id="radio_undefined" value="radio_undefined" {status.UNDEFINED} onclick="javascript: change_type(-1);" {status.SELECTED_UNDEFINED} />&nbsp;{L_UNDEFINED_STATUS}</label> 
+						<label><input type="radio" name="status" id="radio_undefined" value="radio_undefined" {status.UNDEFINED} onclick="javascript: change_type(-1);" {status.SELECTED_UNDEFINED}>&nbsp;{L_UNDEFINED_STATUS}</label> 
 						
 					</dd>					
 				</dl>
@@ -135,9 +135,9 @@
 			</fieldset>
 			<fieldset class="fieldset_submit">
 				<legend>{L_SUBMIT}</legend>
-				<input type="hidden" name="id_change_status" value="{status.ID_ARTICLE}" />
-				<input type="submit" class="submit" value="{L_SUBMIT}" />
-				<input value="{L_PREVIEW}" onclick="XMLHttpRequest_preview();hide_div('xmlhttprequest_result')" class="submit" type="button" />
+				<input type="hidden" name="id_change_status" value="{status.ID_ARTICLE}">
+				<input type="submit" class="submit" value="{L_SUBMIT}">
+				<input value="{L_PREVIEW}" onclick="XMLHttpRequest_preview();hide_div('xmlhttprequest_result')" class="submit" type="button">
 				<input value="{L_RESET}" class="reset" type="reset">
 			</fieldset>
 		</form>
@@ -162,7 +162,7 @@
 				<dl>
 					<dt><label>{L_CURRENT_CAT}</label></dt>
 					<dd>
-						<input type="hidden" name="new_cat" id="id_cat" value="{move.ID_CAT}" />
+						<input type="hidden" name="new_cat" id="id_cat" value="{move.ID_CAT}">
 						<div id="selected_cat">{move.CURRENT_CAT}</div>
 					</dd>					
 				</dl>
@@ -178,8 +178,8 @@
 			
 			<fieldset class="fieldset_submit">
 				<legend>{L_SUBMIT}</legend>
-				<input type="hidden" name="id_to_move" value="{move.ID_ARTICLE}" />
-				<input type="submit" class="submit" value="{L_SUBMIT}" />
+				<input type="hidden" name="id_to_move" value="{move.ID_ARTICLE}">
+				<input type="submit" class="submit" value="{L_SUBMIT}">
 			</fieldset>
 		</form>
 		# END move #
@@ -208,18 +208,18 @@
 				<br />
 				<dl>
 					<dt><label for="new_title">{L_NEW_TITLE}</label></dt>
-					<dd><input type="text" name="new_title" id="new_title" class="text" size="70" maxlength="250" value="{rename.FORMER_NAME}" /></dd>					
+					<dd><input type="text" name="new_title" id="new_title" class="text" size="70" maxlength="250" value="{rename.FORMER_NAME}"></dd>					
 				</dl>
 				<dl>
 					<dt><label for="create_redirection_while_renaming">{rename.L_CREATE_REDIRECTION}</label></dt>
-					<dd><label><input type="checkbox" name="create_redirection_while_renaming" id="create_redirection_while_renaming" checked="checked" /></label></dd>					
+					<dd><label><input type="checkbox" name="create_redirection_while_renaming" id="create_redirection_while_renaming" checked="checked"></label></dd>					
 				</dl>
 			</fieldset>
 			
 			<fieldset class="fieldset_submit">
 				<legend>{L_SUBMIT}</legend>
-				<input type="hidden" name="id_to_rename" value="{rename.ID_ARTICLE}" />
-				<input type="submit" class="submit" value="{L_SUBMIT}" />
+				<input type="hidden" name="id_to_rename" value="{rename.ID_ARTICLE}">
+				<input type="submit" class="submit" value="{L_SUBMIT}">
 			</fieldset>
 		</form>
 		# END rename #
@@ -291,14 +291,14 @@
 				<legend>{create.L_TITLE}</legend>				
 				<dl>
 					<dt><label for="redirection_title">{L_REDIRECTION_NAME}</label></dt>
-					<dd><label><input type="text" name="redirection_title" id="redirection_title" class="text" size="70" maxlength="250" value="" /></label></dd>					
+					<dd><label><input type="text" name="redirection_title" id="redirection_title" class="text" size="70" maxlength="250" value=""></label></dd>					
 				</dl>
 			</fieldset>
 			
 			<fieldset class="fieldset_submit">
 				<legend>{L_SUBMIT}</legend>
-				<input type="hidden" name="create_redirection" value="{create.ID_ARTICLE}" />
-				<input type="submit" class="submit" value="{L_SUBMIT}" />
+				<input type="hidden" name="create_redirection" value="{create.ID_ARTICLE}">
+				<input type="submit" class="submit" value="{L_SUBMIT}">
 			</fieldset>
 		</form>
 		# END create #
@@ -320,14 +320,14 @@
 				<dl>
 					<dt><label for="action">{L_EXPLAIN_REMOVE_CAT}</label></dt>
 					<dd>
-						<label><input id="action" name="action" value="remove_all" type="radio" /><strong>&nbsp;{remove.L_REMOVE_ALL_CONTENTS}</strong></label>
-						<label><input name="action" value="move_all" type="radio" checked="checked" /><strong>&nbsp;{remove.L_MOVE_ALL_CONTENTS}</strong></label>
+						<label><input id="action" name="action" value="remove_all" type="radio"><strong>&nbsp;{remove.L_REMOVE_ALL_CONTENTS}</strong></label>
+						<label><input name="action" value="move_all" type="radio" checked="checked"><strong>&nbsp;{remove.L_MOVE_ALL_CONTENTS}</strong></label>
 					</dd>					
 				</dl>
 				<dl>
 					<dt><label>{L_FUTURE_CAT}</label></dt>
 					<dd>
-						<input type="hidden" name="report_cat" value="{remove.ID_CAT}" id="id_cat" />
+						<input type="hidden" name="report_cat" value="{remove.ID_CAT}" id="id_cat">
 						<div id="selected_cat">{remove.CURRENT_CAT}</div>
 					</dd>					
 				</dl>
@@ -343,8 +343,8 @@
 			
 			<fieldset class="fieldset_submit">
 				<legend>{L_SUBMIT}</legend>
-				<input type="hidden" name="id_to_remove" value="{remove.ID_ARTICLE}" />
-				<input type="submit" class="submit" value="{L_SUBMIT}" />
+				<input type="hidden" name="id_to_remove" value="{remove.ID_ARTICLE}">
+				<input type="submit" class="submit" value="{L_SUBMIT}">
 			</fieldset>
 		</form>
 		# END remove #

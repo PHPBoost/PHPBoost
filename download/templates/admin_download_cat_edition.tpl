@@ -44,7 +44,7 @@
 							</label>
 						</dt>
 						<dd>
-							<input type="text" size="65" maxlength="100" id="name" name="name" value="{NAME}" class="text" />
+							<input type="text" size="65" maxlength="100" id="name" name="name" value="{NAME}" class="text">
 						</dd>
 					</dl>
 					<dl>
@@ -70,7 +70,7 @@
 								{IMG_LIST}
 							</select>
 							<span id="icon_img">{IMG_ICON}</span>
-							<input type="text" class="text" style="margin-left:50px;" name="alt_image" value="{IMG_PATH}" onblur="if( this.value != '' )change_icon(this.value)" />
+							<input type="text" class="text" style="margin-left:50px;" name="alt_image" value="{IMG_PATH}" onblur="if( this.value != '' )change_icon(this.value)">
 						</dd>
 					</dl>
 					<dl>
@@ -80,7 +80,7 @@
 							</label>
 						</dt>
 						<dd>
-							<input type="checkbox" name="visible_cat" id="visible_cat" {VISIBLE_CHECKED} />
+							<input type="checkbox" name="visible_cat" id="visible_cat" {VISIBLE_CHECKED}>
 						</dd>
 					</dl>
 					<label for="contents">
@@ -98,7 +98,7 @@
 						<br />
 						<span class="text_small">{L_SPECIAL_AUTH_EXPLAIN}</span></dt>
 						<dd>
-							<input type="checkbox" name="special_auth" id="special_auth" onclick="javascript: change_status_global_auth();" {SPECIAL_CHECKED} />
+							<input type="checkbox" name="special_auth" id="special_auth" onclick="javascript: change_status_global_auth();" {SPECIAL_CHECKED}>
 						</dd>					
 					</dl>
 					<div id="hide_special_auth" style="display:{DISPLAY_SPECIAL_AUTH};">
@@ -137,12 +137,12 @@
 				
 				<fieldset class="fieldset_submit">
 					<legend>{L_SUBMIT}</legend>
-					<input type="hidden" name="idcat" value="{IDCAT}" />
-					<input type="submit" name="submit" value="{L_SUBMIT}" class="submit" />
+					<input type="hidden" name="idcat" value="{IDCAT}">
+					<input type="submit" name="submit" value="{L_SUBMIT}" class="submit">
 					&nbsp;&nbsp;
-					<input type="button" name="preview" value="{L_PREVIEW}" onclick="XMLHttpRequest_preview();" class="submit" />
+					<input type="button" name="preview" value="{L_PREVIEW}" onclick="XMLHttpRequest_preview();" class="submit">
 					&nbsp;&nbsp;
-					<input type="reset" value="{L_RESET}" class="reset" />				
+					<input type="reset" value="{L_RESET}" class="reset">				
 				</fieldset>
 			</form>
 		</div>

@@ -60,7 +60,7 @@ if (!empty($popup)) //Popup.
 <body>';
 	$footer = '<fieldset class="fieldset_submit" style="width:96%;margin:auto;">
 			<legend>' . $LANG['close'] . '</legend>
-			<input type="button" class="reset" onclick="javascript:close_popup()" value="' . $LANG['close'] . '" />
+			<input type="button" class="reset" onclick="javascript:close_popup()" value="' . $LANG['close'] . '">
 		</fieldset>
 	</body>
 </html>';
@@ -498,7 +498,7 @@ else
 			'NAME' => $name_cut,
 			'RENAME_FILE' => '<span id="fihref' . $row['id'] . '"><a href="javascript:display_rename_file(\'' . $row['id'] . '\', \'' . addslashes($row['name']) . '\', \'' . addslashes($name_cut) . '\');" title="' . $LANG['edit'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/edit.png" alt="" class="valign_middle" /></a></span>',
 			'FILETYPE' => $get_img_mimetype['filetype'] . $size_img,
-			'BBCODE' => '<input size="25" type="text" class="text" onclick="select_div(\'text_' . $row['id'] . '\');" id="text_' . $row['id'] . '" style="margin-top:2px;cursor:pointer;" value="' . $displayed_code . '" />',
+			'BBCODE' => '<input size="25" type="text" class="text" onclick="select_div(\'text_' . $row['id'] . '\');" id="text_' . $row['id'] . '" style="margin-top:2px;cursor:pointer;" value="' . $displayed_code . '">',
 			'SIZE' => ($row['size'] > 1024) ? NumberHelper::round($row['size']/1024, 2) . ' ' . $LANG['unit_megabytes'] : NumberHelper::round($row['size'], 0) . ' ' . $LANG['unit_kilobytes'],
 			'INSERT' => !empty($popup) ? '<a href="javascript:insert_popup(\'' . $inserted_code . '\')" title="' . $LANG['popup_insert'] . '"><img src="../templates/' . get_utheme() . '/images/upload/insert.png" alt="" class="valign_middle" /></a>' : '',
 			'LIGHTBOX' => !empty($size_img) ? ' rel="lightbox[1]"' : '',
