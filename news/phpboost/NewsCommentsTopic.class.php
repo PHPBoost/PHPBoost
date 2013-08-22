@@ -29,7 +29,7 @@ class NewsCommentsTopic extends CommentsTopic
 {
 	private $news;
 	
-	public function __construct(News $news)
+	public function __construct(News $news = null)
 	{
 		parent::__construct('news');
 		$this->news = $news;
