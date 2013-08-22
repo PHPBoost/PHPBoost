@@ -43,6 +43,8 @@ class Notation
 	private $number_notes;
 	private $user_already_noted;
 	
+	private $infos;
+	
 	public function set_id($id)
 	{
 		$this->id = $id;
@@ -112,7 +114,8 @@ class Notation
 	{
 		if ($this->average_notes === null)
 		{
-			return NotationService::get_average_notes($this);
+			$this->init_database_infos();
+			return $this->infos['average_notes'];
 		}
 		return $this->average_notes;
 	}
@@ -126,7 +129,8 @@ class Notation
 	{
 		if ($this->number_notes === null)
 		{
-			return NotationService::get_number_notes($this);
+			$this->init_database_infos();
+			return $this->infos['number_notes'];
 		}
 		return $this->number_notes;
 	}
@@ -140,10 +144,19 @@ class Notation
 	{
 		if ($this->user_already_noted === null)
 		{
-			return NotationDAO::get_member_already_notation($this);
+			$this->init_database_infos();
+			return $this->infos['user_already_noted'];
 		}
 		return $this->user_already_noted;
-		
+	}
+	
+	private function init_database_infos()
+	{
+		if ($this->infos === null)
+		{
+			$this->infos = NotationService::get_informations_note($this);
+		}
+		return $this->infos;
 	}
 }
 ?>

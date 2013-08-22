@@ -235,12 +235,35 @@ class NotationService
 		}
 	}
 	
+	/**
+	 * This function required object Notation containing the module_name, id_in_module and user_id.
+	 */
+	public static function get_informations_note(Notation $notation)
+	{
+		try {
+			$row = self::$db_querier->select_single_row_query('SELECT average_notes, number_notes, (SELECT COUNT(*) FROM '. DB_TABLE_NOTE .'
+			WHERE user_id=:user_id AND module_name=:module_name AND id_in_module=:id_in_module) AS user_already_noted
+			FROM ' . DB_TABLE_AVERAGE_NOTES . '
+			WHERE module_name = :module_name AND id_in_module = :id_in_module', array(
+				'module_name' => $notation->get_module_name(), 
+				'id_in_module' => $notation->get_id_in_module(),
+				'user_id' => $notation->get_user_id()
+			));
+		} catch (RowNotFoundException $e) {
+			return array(
+				'average_notes' => 0,
+				'number_notes' => 0,
+				'user_already_noted' => 0
+			);
+		}
+	}
+	
 	private static function register_notation(Notation $notation)
 	{
 		if (self::$user->check_level(User::MEMBER_LEVEL))
 		{
 			$note_is_valid = $notation->get_note() >= 0 && $notation->get_note() <= $notation->get_notation_scale() ? true : false;
-			$member_already_notation = NotationDAO::get_member_already_notation($notation);
+			$member_already_notation = NotationDAO::get_member_already_noted($notation);
 			
 			if (!$member_already_notation && $note_is_valid)
 			{
