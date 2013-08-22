@@ -82,12 +82,7 @@ class Session
 			$info_connect = $this->sql->query_array(DB_TABLE_MEMBER, 'level', 'user_warning', 'last_connect', 'test_connect', 'user_ban', 'user_aprob', 'password', "WHERE user_id='" . $user_id . "'", __LINE__, __FILE__);
 			$delay_connect = (time() - $info_connect['last_connect']); //Délai entre deux essais de connexion.
 			$delay_ban = (time() - $info_connect['user_ban']); //Vérification si le membre est banni.
-				
-			if (!$already_hashed)
-			{
-				$password = KeyGenerator::string_hash($password);
-			}
-		
+	
 			if ($delay_ban >= 0 && $info_connect['user_aprob'] == '1' && $info_connect['user_warning'] < '100') //Utilisateur non (plus) banni.
 			{
 				if ($delay_connect >= 600) //5 nouveau essais, 10 minutes après.
