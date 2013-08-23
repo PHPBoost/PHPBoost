@@ -26,6 +26,11 @@
 			<a href="{U_PENDING_ARTICLES}" title="${i18n('articles.pending_articles')}"><img class="valign_middle" src="{PATH_TO_ROOT}/articles/templates/images/pending.png" alt="${i18n('articles.pending_articles')}" /></a>
 		</li>
 		# ENDIF #
+		# IF C_PUBLISHED_ARTICLES #
+		<li>
+			<a href="{U_PUBLISHED_ARTICLES}" title="${i18n('articles.published_articles')}"><img class="valign_middle" src="{PATH_TO_ROOT}/articles/templates/images/published.png" alt="${i18n('articles.published_articles')}" /></a>
+		</li>
+		# ENDIF #
 	    </ul>
 	</li>
     </ul>
@@ -43,13 +48,13 @@
 		</div>
 	</div>
 	<div class="module_contents">
+		# IF C_ARTICLES_CAT #
 		<div class="cat">
 		    <div class="cat_tool">
 			    # IF C_MODERATE # 
 			    <a href="{U_MANAGE_CATEGORIES}" title="${i18n('admin.categories.manage')}"><img class="valign_middle" src="{PATH_TO_ROOT}/articles/templates/images/edit.png" alt="${i18n('admin.categories.manage')}" /></a>
 			    # ENDIF #
 		    </div>
-		    # IF C_ARTICLES_CAT #
 		    <div style="margin-bottom:36px;">
 			${i18n('articles.sub_categories')} :
 			<br /><br />
@@ -62,10 +67,10 @@
 			    # END cat_list #
 			</ul>   
 		    </div>
-		    # ENDIF #
 		</div>
 		<div class="spacer">&nbsp;</div>
-		<hr />					
+		<hr />	
+		# ENDIF #
 		# IF C_ARTICLES_FILTERS #
 		<div style="float:right;width:300px;height:40px;">
 			# INCLUDE FORM #

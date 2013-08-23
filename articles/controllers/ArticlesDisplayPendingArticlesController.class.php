@@ -48,7 +48,7 @@ class ArticlesDisplayPendingArticlesController extends ModuleController
 	private function init()
 	{
 		$this->lang = LangLoader::get('articles-common', 'articles');
-		$this->view = new FileTemplate('articles/ArticlesDisplayPendingArticlesController.tpl');
+		$this->view = new FileTemplate('articles/ArticlesDisplayHomeCategoryController.tpl');
 		$this->view->add_lang($this->lang);
 	}
 	
@@ -137,6 +137,10 @@ class ArticlesDisplayPendingArticlesController extends ModuleController
 		$this->build_form($field, $mode);
 		
 		$this->view->put_all(array(
+			'C_PENDING_ARTICLES' => false,
+			'C_PUBLISHED_ARTICLES' => true,
+			'C_ARTICLES_CAT' => false,
+			'C_MOSAIC' => false,
 			'L_TOTAL_PENDING_ARTICLE' => $nbr_articles_pending > 0 ? StringVars::replace_vars($this->lang['articles.nbr_articles.pending'], array('number' => $nbr_articles_pending)) : '',
 			'U_PUBLISHED_ARTICLES' => ArticlesUrlBuilder::home()->absolute(), 
 			'U_ADD_ARTICLES' => ArticlesUrlBuilder::add_article(Category::ROOT_CATEGORY)->absolute(),
@@ -147,9 +151,11 @@ class ArticlesDisplayPendingArticlesController extends ModuleController
 		if($nbr_articles_pending > 0)
 		{	
 			$add_auth = ArticlesAuthorizationsService::check_authorizations()->write() || ArticlesAuthorizationsService::check_authorizations()->contribution();
+			$auth_moderation = ArticlesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORY)->moderation();
 			$comments_enabled = ArticlesConfig::load()->get_comments_enabled();
 			
 			$this->view->put_all(array(
+				'C_MODERATE' => $auth_moderation,
 				'C_ARTICLES_FILTERS' => true,
 				'C_ADD' => $add_auth,
 				'C_COMMENTS_ENABLED' => $comments_enabled,
