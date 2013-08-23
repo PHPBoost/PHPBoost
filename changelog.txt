@@ -17,13 +17,20 @@
 		[*] Modification du système de commentaire
 [*] Ajout des liens éditer et supprimer dans la liste déroulante de la recherche d'un membre (les boutons sont visible seulement par les administrateurs)
 [*] Ajout d'une classe ModulePagination pour simplifier l'ajout de la pagination dans un module
-
+[*] Possibilité d'afficher la liste des requêtes SQL dans la classe Debug et d'afficher le stacktrace pour pouvoir les tracer
+[*] Modification de la classe Date :
+	- Refonte des constantes de formatage
+	- Ajout d'un formatage ISO (Année-Mois-Jour)
+	- Ajout d'un formatage relatif (ex : Il y a 9 heures)
+[+] Optmisation du CMS :
+	[*] Optimisation des requêtes du système de notation
+	- Optimisation des requêtes du système de commentaires
+	[*] Optimisation du code
+[*] Installation : Ajout de la possibilité de modifier la description du site dans l'installation en CLI
 - Etendre les fonctionnalités de l'ExtensionPoint HomePage pour pouvoir avoir la possibilité d'en avoir plusieurs par module et ainsi afficher par exemple 
 les pages du module "pages".
 - Refonte du module Web ?
-[*] Modification de la classe Date (modification des constantes permettant de choisir le formatage de la date : plus explicites et plus de choix)
-- Optimisation du système de commentaires et de notes (suppression des requêtes SQL doublons)
-- Refonte du système d'événement et intégration d'un système de notification
+- Refonte du système d'événement et intégration d'un système de notification	
 
 [b]Menus :[/b]
 - Possibilité de désactiver l'affichage d'un lien dans les menus
