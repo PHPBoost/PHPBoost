@@ -73,7 +73,17 @@ class MySQLQuerier extends AbstractSQLQuerier
 		{
 			throw new MySQLQuerierException('invalid query', $query);
 		}
+		$this->display_database_query($query);
 		return $resource;
+	}
+	
+	private function display_database_query($query)
+	{
+		if (Debug::is_display_database_query_enabled())
+		{
+			Debug::dump($query);
+			Debug::print_stacktrace();
+		}
 	}
 }
 ?>
