@@ -394,7 +394,7 @@ class Date
 
 	public function set_week_number($week_number)
 	{
-		$this->timestamp = strtotime('+'. $week_number .' week', strtotime($this->get_year() . '-01 first day'));
+		$this->timestamp = strtotime(($week_number-1) .'week', strtotime($this->get_year() . '-01 first day'));
 	}
 
 	/**
@@ -420,12 +420,12 @@ class Date
 	 */
 	public function get_day_of_year($timezone = TIMEZONE_AUTO)
 	{
-		return (int)date('y', $this->get_adjusted_timestamp($timezone));
+		return (int)date('z', $this->get_adjusted_timestamp($timezone));
 	}
 
 	public function set_day_of_year($day_of_year)
 	{
-		$this->set_date_from_values(0, 0, 0, 1, $day_of_year, $this->get_year());
+		$this->timestamp = mktime(0, 0, 0, 1, $day_of_year, $this->get_year());
 	}
 
 	/**
