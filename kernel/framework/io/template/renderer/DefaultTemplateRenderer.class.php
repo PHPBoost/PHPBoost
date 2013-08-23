@@ -78,8 +78,6 @@ class DefaultTemplateRenderer implements TemplateRenderer
 	{
         $_functions = $this->functions;
 		$_data = $data;
-		// FIXME l'eval ne fonctionne pas actuellement: segfault php
-		// donc la fonctionnalité est désactivée et tout est mis en cache
 		eval($this->get_code_to_eval($loader));
 		return $_result;
 	}
