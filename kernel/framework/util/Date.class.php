@@ -381,6 +381,21 @@ class Date
 		$this->set_date_from_values($this->get_year(), $month, $this->get_day(),
 		$this->get_hours(), $this->get_minutes(), $this->get_seconds());
 	}
+	
+	/**
+	 * @desc Returns the week number of the date
+	 * @param $timezone The timezone in which you want this value
+	 * @return string The week number
+	 */
+	public function get_week_number($timezone = TIMEZONE_AUTO)
+	{
+		return date('W', $this->get_adjusted_timestamp($timezone));
+	}
+
+	public function set_week_number($week_number)
+	{
+		$this->timestamp = strtotime('+'. $week_number .' week', strtotime($this->get_year() . '-01 first day'));
+	}
 
 	/**
 	 * @desc Returns the day of the date
@@ -396,6 +411,21 @@ class Date
 	{
 		$this->set_date_from_values($this->get_year(), $this->get_month(), $day,
 		$this->get_hours(), $this->get_minutes(), $this->get_seconds());
+	}
+	
+	/**
+	 * @desc Returns the day of the year
+	 * @param $timezone The timezone in which you want this value
+	 * @return string The day of the year
+	 */
+	public function get_day_of_year($timezone = TIMEZONE_AUTO)
+	{
+		return (int)date('y', $this->get_adjusted_timestamp($timezone));
+	}
+
+	public function set_day_of_year($day_of_year)
+	{
+		$this->set_date_from_values(0, 0, 0, 1, $day_of_year, $this->get_year());
 	}
 
 	/**
