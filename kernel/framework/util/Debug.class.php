@@ -32,6 +32,7 @@
 class Debug
 {
 	const STRICT_MODE = 'strict_mode';
+	const DISPLAY_DATABASE_QUERY = 'display_database_query';
 	
 	private static $enabled = true;
 	private static $options = array();
@@ -64,6 +65,7 @@ class Debug
 	 * be passed in the options array
 	 * <ul>
 	 *     <li><code>self::STRICT_MODE</code>: boolean - If true, page processing will stop
+	 *     <li><code>self::DISPLAY_DATABASE_QUERY</code>: boolean - If true, display database query
 	 *     at the first notice / warning / error encountered</li>
      * </ul>
 	 */
@@ -111,6 +113,16 @@ class Debug
     public static function is_strict_mode_enabled()
     {
         return self::is_debug_mode_enabled() && self::get_option(self::STRICT_MODE, false);
+    }
+    
+	/**
+     * @desc Returns true if the display database query is enabled.
+     * If true, the page display a database query with the Debug::dump() function and display stacktrace
+     * @return bool true if the display database query is enabled.
+     */
+    public static function is_display_database_query_enabled()
+    {
+        return self::is_debug_mode_enabled() && self::get_option(self::DISPLAY_DATABASE_QUERY, false);
     }
     
     private static function get_option($key, $default)
