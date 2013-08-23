@@ -82,7 +82,7 @@ class GuestbookModuleHomePage implements ModuleHomePage
 			
 			$this->view->assign_block_vars('messages', array(
 				'C_MODERATOR' => GuestbookAuthorizationsService::check_authorizations()->moderation() || GuestbookAuthorizationsService::check_authorizations()->write() && $row['user_id'] == AppContext::get_current_user()->get_id() && !$is_guest,
-				'C_AVATAR' => $row['user_avatar'] || ($user_accounts_config->is_default_avatar_enabled() && !empty($row['user_id'])),
+				'C_AVATAR' => $row['user_avatar'] || ($user_accounts_config->is_default_avatar_enabled()),
 				'C_USER_GROUPS' => !empty($row['user_groups']),
 				'C_USER_GROUP_COLOR' => !empty($user_group_color),
 				'C_VISITOR' => empty($row['user_id']),
