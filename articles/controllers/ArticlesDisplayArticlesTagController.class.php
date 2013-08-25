@@ -44,7 +44,7 @@ class ArticlesDisplayArticlesTagController extends ModuleController
 	private function init()
 	{
 		$this->lang = LangLoader::get('articles-common', 'articles');
-		$this->view = new FileTemplate('articles/ArticlesDisplayArticlesTagController.tpl');
+		$this->view = new FileTemplate('articles/ArticlesDisplayHomeCategoryController.tpl');
 		$this->view->add_lang($this->lang);
 	}
 	
@@ -142,6 +142,9 @@ class ArticlesDisplayArticlesTagController extends ModuleController
 			'C_ADD' => $auth_add,
 			'C_MODERATE' => $auth_moderation,
 			'C_MOSAIC' => ArticlesConfig::load()->get_display_type() == ArticlesConfig::DISPLAY_MOSAIC,
+			'C_PENDING_ARTICLES' => false,
+			'C_PUBLISHED_ARTICLES' => true,
+			'C_ARTICLES_CAT' => false,
 			'C_COMMENTS_ENABLED' => $comments_enabled,
 			'C_ARTICLES_FILTERS' => true,
 			'L_TAG' => $this->lang['articles.tags'] . ' : ' . $this->keyword->get_name(),

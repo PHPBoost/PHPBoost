@@ -55,11 +55,11 @@ class ArticlesFormController extends ModuleController
 	private function init()
 	{
 		$this->lang = LangLoader::get('articles-common', 'articles');
-		$this->tpl = new StringTemplate($this->get_bbcode_page_script() . ' # INCLUDE MSG # # INCLUDE FORM #');
+		$this->tpl = new StringTemplate($this->get_page_scripts() . ' # INCLUDE MSG # # INCLUDE FORM #');
 		$this->tpl->add_lang($this->lang);
 	}
 	
-	private function get_bbcode_page_script()
+	private function get_page_scripts()
 	{
 		$script = '<script type="text/javascript">
 			    <!--
@@ -91,6 +91,36 @@ class ArticlesFormController extends ModuleController
 			    }
 			    -->
 			    </script>';
+			    
+		
+		if ($this->get_article()->get_id() !== null)
+		{
+			$script .= '<script type="text/javascript">
+				    <!--
+				    function setSelectionRange(selectionStart, selectionEnd) {
+					    var input = $(\'ArticlesFormController_contents\');
+					    if (input.setSelectionRange) {
+						    input.focus();
+						    input.setSelectionRange(selectionStart, selectionEnd);
+						    input.scrollTop = input.scrollHeight;
+					    }
+					    else if (input.createTextRange) {
+						    var range = input.createTextRange();
+						    range.collapse(true);
+						    range.moveEnd(\'character\', selectionEnd);
+						    range.moveStart(\'character\', selectionStart);
+						    range.select();
+					    }
+				    }
+
+				    function setCaretToPos (start, end) {
+					      setSelectionRange(start, end);
+				    }
+				    window.onload = function(){setCaretToPos(900,930)};
+				     -->
+				    </script>';
+		}
+		
 		return $script;
 	}
 	private function build_form($request)
@@ -358,6 +388,8 @@ class ArticlesFormController extends ModuleController
 		}
 		else
 		{
+			$now = new Date();
+			$article->set_date_updated($now->get_timestamp());
 			$id_article = $article->get_id();
 			ArticlesService::update($article);
 		}

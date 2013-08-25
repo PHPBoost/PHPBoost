@@ -91,6 +91,7 @@ class ArticlesSetup extends DefaultModuleSetup
 			'publishing_start_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'publishing_end_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'date_created' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
+			'date_updated' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'notation_enabled' => array('type' => 'boolean', 'notnull' => 1, 'default' => 1),
 			'sources' => array('type' => 'text', 'length' => 65000),
 		);
@@ -161,7 +162,7 @@ class ArticlesSetup extends DefaultModuleSetup
 		PersistenceContext::get_querier()->insert(self::$articles_table, array(
 			'id' => 1,
 			'id_category' => 1,
-			'picture_url' => '',
+			'picture_url' => '/articles/templates/images/default.png',
 			'title' => $this->messages['default.article.title'],
 			'rewrited_title' => Url::encode_rewrite($this->messages['default.article.title']),
 			'description' => $this->messages['default.article.description'],
@@ -173,6 +174,7 @@ class ArticlesSetup extends DefaultModuleSetup
 			'publishing_start_date' => 0,
 			'publishing_end_date' => 0,
 			'date_created' => time(),
+			'date_updated' => 0,
 			'notation_enabled' => Articles::NOTATION_ENABLED,
 			'sources' => serialize(array())
 		));

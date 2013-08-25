@@ -90,6 +90,9 @@
 		# IF C_SOURCES #
 		<div><b> ${i18n('articles.sources')} : </b># START sources #{sources.COMMA}<a itemprop="isBasedOnUrl" href="{sources.URL}" class="small_link">{sources.NAME}</a># END sources #</div>
 		# ENDIF #
+		# IF C_DATE_UPDATED #
+		<div>${i18n('articles.date_updated')}{DATE_UPDATED}</div>
+		# ENDIF #
 		<div class="spacer">&nbsp;</div>
 		# IF C_NOTATION_ENABLED #
 		<div style="float:left" class="text_small">
