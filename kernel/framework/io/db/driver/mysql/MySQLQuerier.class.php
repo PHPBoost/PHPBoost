@@ -82,7 +82,7 @@ class MySQLQuerier extends AbstractSQLQuerier
 		if (Debug::is_display_database_query_enabled())
 		{
 			Debug::dump($query);
-			Debug::print_stacktrace();
+			Debug::print_stacktrace(4);
 		}
 	}
 }
