@@ -114,6 +114,7 @@ class ArticlesModuleHomePage implements ModuleHomePage
 			'C_COMMENTS_ENABLED' => $comments_enabled,
 			'C_ARTICLES_CAT' => $nbr_categories > 0,
 			'C_CURRENT_CAT' => $this->category->get_id() != Category::ROOT_CATEGORY,
+			'C_PUBLISHED_ARTICLES' => false,
 			'ID_CAT' => $this->category->get_name(),
 			'U_EDIT_CONFIG' => ArticlesUrlBuilder::articles_configuration()->absolute(),
 			'U_MANAGE_CATEGORIES' => ArticlesUrlBuilder::manage_categories()->absolute(),

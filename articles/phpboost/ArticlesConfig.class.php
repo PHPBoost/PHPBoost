@@ -34,6 +34,7 @@ class ArticlesConfig extends AbstractConfigData
 	const NUMBER_CATEGORIES_PER_PAGE = 'number_categories_per_page';
 	const NOTATION_SCALE = 'notation_scale';
 	const COMMENTS_ENABLED = 'comments_enable'; 
+	const DATE_UPDATED_DISPLAYED = 'date_updated_displayed';
 	const DISPLAY_TYPE = 'display_type';
 	const DISPLAY_MOSAIC = 'mosaic';
 	const DISPLAY_LIST = 'list';
@@ -89,6 +90,16 @@ class ArticlesConfig extends AbstractConfigData
 		$this->set_property(self::COMMENTS_ENABLED, $comments_enabled);
 	}
 	
+	public function get_date_updated_displayed()
+	{
+		return $this->get_property(self::DATE_UPDATED_DISPLAYED);
+	}
+
+	public function set_date_updated_displayed($date_updated_displayed)
+	{
+		$this->set_property(self::DATE_UPDATED_DISPLAYED, $date_updated_displayed);
+	}
+	
 	public function get_authorizations()
 	{
 		return $this->get_property(self::AUTHORIZATIONS);
@@ -105,6 +116,7 @@ class ArticlesConfig extends AbstractConfigData
 			self::NUMBER_ARTICLES_PER_PAGE => 10,
 			self::NUMBER_CATEGORIES_PER_PAGE => 10,
 			self::COMMENTS_ENABLED => true,
+			self::DATE_UPDATED_DISPLAYED => false,
 			self::NOTATION_SCALE => 5,
 			self::DISPLAY_TYPE => self::DISPLAY_MOSAIC,
 			self::AUTHORIZATIONS => array('r1' => 13, 'r0' => 5, 'r-1' => 1)

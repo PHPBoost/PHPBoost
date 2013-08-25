@@ -49,6 +49,7 @@ class Articles
 	private $publishing_end_date;
 	private $date_created;
 	private $end_date_enabled;
+	private $date_updated;
 
 	private $sources;
 
@@ -251,7 +252,17 @@ class Articles
 	{
 		return $this->date_created;
 	}
-
+	
+	public function get_date_updated()
+	{
+		return $this->date_updated;
+	}
+	
+	public function set_date_updated(Date $date_updated)
+	{
+	    $this->date_updated = $date_updated;
+	}
+	
 	public function add_source($source)
 	{
 		$this->sources[] = $source;
@@ -289,6 +300,7 @@ class Articles
 			'publishing_start_date' => $this->get_publishing_start_date() !== null ? $this->get_publishing_start_date()->get_timestamp() : '',
 			'publishing_end_date' => $this->get_publishing_end_date() !== null ? $this->get_publishing_end_date()->get_timestamp() : '',
 			'date_created' => $this->get_date_created()->get_timestamp(),
+			'date_updated' => $this->get_date_updated() !== null ? $this->get_date_updated()->get_timestamp() : '',
 			'notation_enabled' => $this->get_notation_enabled(),
 			'sources' => serialize($this->get_sources())
 		);
@@ -309,6 +321,7 @@ class Articles
 		$this->publishing_start_date = !empty($properties['publishing_start_date']) ? new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $properties['publishing_start_date']) : null;
 		$this->publishing_end_date = !empty($properties['publishing_end_date']) ? new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $properties['publishing_end_date']) : null;
 		$this->set_date_created(new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $properties['date_created']));
+		$this->date_updated = !empty($properties['date_updated']) ? new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $properties['date_updated']) : null;
 		$this->set_notation_enabled($properties['notation_enabled']);
 		$this->set_sources(!empty($properties['sources']) ? unserialize($properties['sources']) : array());
 		

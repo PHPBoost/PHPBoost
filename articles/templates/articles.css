@@ -180,9 +180,15 @@ span.caret{
 .article_content article:hover > .article_tools img{ opacity:0.5; }
 .article_content_list_view article:hover > .article_tools img{ opacity:0.5; }
 
+.article_content header {
+	height: 118px;
+	max-height: 138px;
+}
+
 .article_content_list_view header {
 	margin-left:150px;
 	padding:0 0 10px 10px;
+	max-height: 54px;
 }
 .article_content h3 {
 	font-size: 14px;
@@ -203,12 +209,14 @@ span.caret{
 	font-style:italic;
 	padding-bottom: 10px;
 	display: block;
+	max-height: 48px;
 }
 
 .article_content_list_view article header span{
 	font-size: 11px;
 	font-style:italic;
 	display: block;
+	max-height: 18px;
 }
 
 .article_content article figure {
@@ -247,7 +255,7 @@ span.caret{
 
 .article_content_list_view .description {
 	margin-left:150px;
-	width:500px;
+	width:510px;
 	height:60px;
 	max-height:60px;
 	padding:0 0 10px 10px;

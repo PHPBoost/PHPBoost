@@ -131,10 +131,12 @@ class ArticlesDisplayArticlesController extends ModuleController
 			
 		$this->view->put_all(array(
 			'C_COMMENTS_ENABLED' => $comments_enabled,
+			'C_DATE_UPDATED' => $this->article->get_date_updated() != 0 ? true : false,
 			'L_PREVIOUS_PAGE' => LangLoader::get_message('previous_page', 'main'),
 			'L_NEXT_PAGE' => LangLoader::get_message('next_page', 'main'),
 			'L_PRINTABLE_VERSION' => LangLoader::get_message('printable_version', 'main'),
 			'L_CAT_NAME' => $this->category->get_name(),
+			'DATE_UPDATED' => $this->article->get_date_updated() != 0 ? $this->article->get_date_updated()->format(Date::FORMAT_DAY_MONTH_YEAR) : '',
 			'KERNEL_NOTATION' => NotationService::display_active_image($this->article->get_notation()),
 			'CONTENTS' => isset($article_contents_clean[$current_page-1]) ? FormatingHelper::second_parse($article_contents_clean[$current_page-1]) : '',
 			'PAGINATION_ARTICLES' => ($nbr_pages > 1) ? $pagination->display()->render() : '',
