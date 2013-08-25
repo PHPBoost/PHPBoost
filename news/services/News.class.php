@@ -247,6 +247,21 @@ class News
 		return NewsKeywordsService::get_keywords_name($this->id);
 	}
 	
+	public function is_authorized_add()
+	{
+		return NewsAuthorizationsService::check_authorizations($this->id_cat)->write() && !NewsAuthorizationsService::check_authorizations($this->id_cat)->contribution();
+	}
+	
+	public function is_authorized_edit()
+	{
+		return NewsAuthorizationsService::check_authorizations($this->id_cat)->moderation() || ((NewsAuthorizationsService::check_authorizations($this->get_id_cat())->write() || (NewsAuthorizationsService::check_authorizations($this->get_id_cat())->contribution() && !$this->is_visible())) && $this->get_author_user()->get_id() == AppContext::get_current_user()->get_id());
+	}
+	
+	public function is_authorized_delete()
+	{
+		return NewsAuthorizationsService::check_authorizations($this->id_cat)->moderation() || ((NewsAuthorizationsService::check_authorizations($this->get_id_cat())->write() || (NewsAuthorizationsService::check_authorizations($this->get_id_cat())->contribution() && !$this->is_visible())) && $this->get_author_user()->get_id() == AppContext::get_current_user()->get_id());
+	}
+	
 	public function get_properties()
 	{
 		return array(
@@ -321,8 +336,8 @@ class News
 		$user_group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
 		
 		return array(
-			'C_EDIT' =>  NewsAuthorizationsService::check_authorizations($this->id_cat)->moderation() || NewsAuthorizationsService::check_authorizations($this->id_cat)->write() && $user->get_id() == AppContext::get_current_user()->get_id(),
-			'C_DELETE' =>  NewsAuthorizationsService::check_authorizations($this->id_cat)->moderation(),
+			'C_EDIT' => $this->is_authorized_edit(),
+			'C_DELETE' => $this->is_authorized_delete(),
 			'C_PICTURE' => $this->has_picture(),
 			'C_USER_GROUP_COLOR' => !empty($user_group_color),
 		

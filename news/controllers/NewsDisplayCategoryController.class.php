@@ -146,11 +146,7 @@ class NewsDisplayCategoryController extends ModuleController
 			if (!empty($id))
 			{
 				try {
-					$row = PersistenceContext::get_querier()->select_single_row(NewsSetup::$news_cats_table, array('*'), 'WHERE id=:id', array('id' => $id));
-
-					$category = new RichCategory();
-					$category->set_properties($row);
-					$this->category = $category;
+					$this->category = NewsService::get_categories_manager()->get_categories_cache()->get_category($id);
 				} catch (RowNotFoundException $e) {
 					$error_controller = PHPBoostErrors::unexisting_page();
    					DispatchManager::redirect($error_controller);
@@ -167,13 +163,10 @@ class NewsDisplayCategoryController extends ModuleController
 	private function check_authorizations()
 	{
 		$id_cat = $this->get_category()->get_id();
-		if ($id_cat !== Category::ROOT_CATEGORY)
+		if (!NewsAuthorizationsService::check_authorizations($id_cat)->read())
 		{
-			if (!NewsAuthorizationsService::check_authorizations($id_cat)->read())
-			{
-				$error_controller = PHPBoostErrors::user_not_authorized();
-		   		DispatchManager::redirect($error_controller);
-			}
+			$error_controller = PHPBoostErrors::user_not_authorized();
+	   		DispatchManager::redirect($error_controller);
 		}
 	}
 	
