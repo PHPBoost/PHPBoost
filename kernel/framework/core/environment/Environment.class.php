@@ -353,6 +353,8 @@ class Environment
 	{
 		self::perform_stats_changeday();
 
+		self::perform_users_birthday_changeday();
+
 		self::clear_all_temporary_cache_files();
 
 		self::execute_modules_changedays_tasks();
@@ -419,6 +421,11 @@ class Environment
 
 		//Deleting all the invalid sessions
 		AppContext::get_session()->garbage_collector();
+	}
+
+	private static function perform_users_birthday_changeday()
+	{
+		UsersBirthdayCache::invalidate();
 	}
 
 	private static function clear_all_temporary_cache_files()

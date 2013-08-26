@@ -84,6 +84,8 @@ $lang['readonly'] = 'Read only';
 $lang['banned'] = 'Banned';
 $lang['connect'] = 'Connect';
 $lang['autoconnect'] = 'Auto connect';
+$lang['year'] = 'year';
+$lang['years'] = 'years';
 
 // Ranks
 $lang['rank'] = 'Rank';
