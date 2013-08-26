@@ -47,7 +47,7 @@ class UsersBirthdayCache implements CacheData
 		
 		while ($row = $result->fetch())
 		{
-			$row['age'] = $row['age'] . ' ' . ($row['age'] > 1 ? LangLoader::get_message('years', 'user-common') : LangLoader::get_message('year', 'user-common'))
+			$row['age'] = $row['age'] . ' ' . ($row['age'] > 1 ? LangLoader::get_message('years', 'user-common') : LangLoader::get_message('year', 'user-common'));
 			$this->users_birthday[] = $row;
 		}
 	}
