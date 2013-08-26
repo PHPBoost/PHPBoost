@@ -505,7 +505,7 @@ class Date
 	}
 
 	/**
-	 * Tells whetehr this date equals the given one
+	 * Tells whether this date equals the given one
 	 * @param Date $date The date to compare with.
 	 * @return bool true if the two dates are the same, false otherwise
 	 */
@@ -513,6 +513,34 @@ class Date
 	{
 		return $this->timestamp == $date->timestamp;
 	}
+
+	/**
+	 * Adds the given number of days to the date
+	 * @param int $number_days The number of days to add.
+	 */
+	public function add_days(int $number_days)
+	{
+		$this->timestamp = $this->timestamp + ($number_days * 24 * 60 * 60);
+	}
+
+	/**
+	 * Adds the given number of weeks to the date
+	 * @param int $number_weeks The number of weeks to add.
+	 */
+	public function add_days(int $number_weeks)
+	{
+		$this->timestamp = $this->timestamp + ($number_weeks * 7 * 24 * 60 * 60);
+	}
+
+	/**
+	 * Tells whether the year of the date is bissextile
+	 * @return bool true if the year is bissextile, false otherwise
+	 */
+	public function is_date_year_bissextile()
+	{
+		return date("L", mktime(0, 0, 0, 1, 1, $this->get_year())) == 1;
+	}
+
 	/**
 	 * @desc Determines whether a date is correct. For example the february 31st is not correct.
 	 * @param int $month The month
