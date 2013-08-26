@@ -136,8 +136,8 @@ class Application
 		if ($this->security_update)
 		$this->priority++;
 
-		$this->download_url =  self::get_attribute($xml_desc, 'url', '//download');
-		$this->update_url = self::get_attribute($xml_desc, 'url', '//update');;
+		$this->download_url =  self::get_attribute($xml_desc, 'url', 'download');
+		$this->update_url = self::get_attribute($xml_desc, 'url', 'update');;
 
 		$this->authors = array();
 		$authors_elts = $xml_desc->xpath('authors/author');
