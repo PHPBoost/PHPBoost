@@ -200,7 +200,7 @@ class Application
 	 */
 	public function check_compatibility()
 	{
-		$current_version = $this->get_installed_version();
+		$current_version = GeneralConfig::load()->get_phpboost_major_version();
 		
         if ($current_version == '0')
         {
@@ -321,32 +321,6 @@ class Application
 			return isset($attributes[$attibute_name]) ? utf8_decode((string) $attributes[$attibute_name]) : null;
 		}
 		return null;
-	}
-	/**
-	 * @desc Get the number of the installed version
-	 * @return string version
-	 */
-	private function get_installed_version()
-	{
-		switch ($this->type)
-		{
-			case self::KERNEL_TYPE:
-				return GeneralConfig::load()->get_phpboost_major_version();
-			case self::MODULE_TYPE:
-				if (ModulesManager::is_module_installed($this->id))
-				{
-					return ModulesManager::get_module($this->id)->get_configuration()->get_version();
-				}
-				return '0';
-			case self::TEMPLATE_TYPE:
-				if (ThemeManager::get_theme_existed($this->id))
-				{
-					return ThemeManager::get_theme($this->id)->get_configuration()->get_version();
-				}
-				return '0';
-			default:
-				return '0';
-		}
 	}
 }
 ?>
