@@ -46,6 +46,12 @@ class HTTPCookie
 		$this->name = $name;
 		$this->value = stripslashes($value);
 		
+		$site_path = GeneralConfig::load()->get_site_path();
+		if (!empty($site_path))
+		{
+			$this->path = $site_path;
+		}
+		
 		if ($timestamp == null)
 		{
 			$this->expiration_date = time() + 3600*744; //1 month
