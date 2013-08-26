@@ -1,0 +1,131 @@
+/* Sur Class */
+div.module_top{
+	margin-top: 30px;
+	height: 22px;
+	padding-bottom: 0px;
+}
+
+div.module_top a{	font-size: 14px; }
+
+div.module_top ul{ list-style-type:none; }
+
+div.block_top, table tr:first-child th{
+	text-align: center;
+}
+
+.float_left{
+	float:left;
+	margin:0;
+}
+
+.float_right{
+	float:right;
+	margin:0;
+}
+
+/* Class générales */
+li { text-indent: 0px; }
+
+.align_center { text-align: center; }
+
+.align_left { text-align: left; }
+
+.filter_title{ padding-top: 10px; }
+
+.filter {
+	padding: 0px;
+	margin: 10px 0;
+	text-align: center;
+	vertical-align: top;
+}
+
+.save_filter {
+	padding: 3px 10px 0 0;
+	margin: 10px 0;
+}
+
+.saved_filter {
+	padding: 0 0 5px 10px;
+}
+
+.saved_filter a:hover{
+	text-decoration:none;
+}
+
+.filter_nbr_bugs {
+	padding: 10px 0 5px 10px;
+}
+
+.legend_top, .legend_bottom {
+	height: 10px;
+}
+
+.legend {
+	padding: 5px;
+	text-align: center;
+	border: 1px solid;
+	width: 30px;
+	height: 15px;
+}
+
+li.bt_current, li.bt_no_current{
+	float: left;
+	-webkit-border-top-left-radius: 10px;
+	-moz-border-radius-topleft: 10px;
+	border-top-left-radius: 10px;
+	-webkit-border-top-right-radius: 10px;
+	-moz-border-radius-topright: 10px;
+	border-top-right-radius: 10px;
+	text-align: center;
+	margin:0px 7px;
+}
+
+li.bt_add { float:right; }
+
+li.bt_current a, li.bt_no_current a, li.bt_add a{ 
+	display: block;
+	height: 20px;
+	padding: 2px 10px 0px 10px; 
+}
+
+/* lien Actif*/
+li.bt_current { background:#2F5B8A; }
+
+li.bt_current a { color: #FFFFFF; }
+li.bt_current a:hover { text-decoration: none; }
+
+/* Liens non actifs*/
+li.bt_no_current { background: #E0E9EF; }
+li.bt_no_current:hover {
+	background: #2F5B8A;
+	color: #FFFFFF;
+}
+
+li.bt_no_current a { color: #2F5B8A; }
+li.bt_no_current a:hover { color: #FFFFFF; }
+
+/* Lien Ajouter Bug */ 
+li.bt_add { background: none; }
+
+.display_none{ display: none; }
+.vertical_top{ vertical-align: top; }
+
+.column_id{ width: 60px; }
+.column_admin{ width: 80px; }
+.column_history{ width: 70px; }
+.column_severity{ width: 100px; }
+.column_informations{ width: 115px; }
+.column_date{ width: 130px; }
+.column_date_roadmap{ width: 100px; }
+.column_version{ width: 45px; }
+.column_version_detected{ width: 96px; }
+.column_default{ width: 60px; }
+.column_delete{ width: 50px; }
+.column_color{ width: 76px; }
+
+#status_chart { width: 90%; }
+.chart {
+	padding-top: 10px;
+	padding-left: 60px;
+	vertical-align: top;
+}
