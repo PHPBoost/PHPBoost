@@ -73,7 +73,7 @@ class Application
 	 * @param $version
 	 * @param $repository
 	 */
-	public function __construct($id, $language, $type = self::MODULE_TYPE , $version = 0, $repository = '')
+	public function __construct($id, $language, $type = self::MODULE_TYPE, $version = 0, $repository = '')
 	{
 		$this->id = $id;
 		$this->name = $id;
@@ -136,8 +136,8 @@ class Application
 		if ($this->security_update)
 		$this->priority++;
 
-		$this->download_url =  self::get_attribute($xml_desc, 'url', '//download');
-		$this->update_url = self::get_attribute($xml_desc, 'url', '//update');
+		$this->download_url = self::get_attribute($xml_desc, 'url', 'download');
+		$this->update_url = self::get_attribute($xml_desc, 'url', 'update');
 
 		$this->authors = array();
 		$authors_elts = $xml_desc->xpath('authors/author');
@@ -318,7 +318,7 @@ class Application
 		if (count($elements) > 0)
 		{
 			$attributes = $elements[0]->attributes();
-			return isset($attributes[$attibute_name]) ? utf8_decode( (string) $attributes[$attibute_name]) : null;
+			return isset($attributes[$attibute_name]) ? utf8_decode((string) $attributes[$attibute_name]) : null;
 		}
 		return null;
 	}
