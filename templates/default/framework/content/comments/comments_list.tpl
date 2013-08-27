@@ -33,7 +33,7 @@ function Confirm_del_comment() {
 						</a>
 					# ENDIF #
 				</div>
-				<span itemprop="datePublished" content="{comments.DATE_ISO}">{comments.DATE}</span>
+				<span itemprop="datePublished" content="{comments.DATE_ISO8601}">{comments.DATE}</span>
 			</div>
 			<div class="comment-message">
 				<div itemprop="text" class="message-containt" class="content">{comments.MESSAGE}</div>

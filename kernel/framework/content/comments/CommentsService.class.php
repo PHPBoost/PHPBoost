@@ -254,7 +254,7 @@ class CommentsService
 					'U_AVATAR' => $user_avatar,
 					'ID_COMMENT' => $id,
 					'DATE' => $timestamp->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE),
-					'DATE_ISO' => $timestamp->format(Date::FORMAT_ISO),
+					'DATE_ISO8601' => $timestamp->format(Date::FORMAT_ISO8601),
 					'MESSAGE' => FormatingHelper::second_parse($row['message']),
 					'USER_ID' => $row['user_id'],
 					'PSEUDO' => empty($row['login']) ? $row['pseudo'] : $row['login'],
