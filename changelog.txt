@@ -19,8 +19,8 @@
 [*] Ajout d'une classe ModulePagination pour simplifier l'ajout de la pagination dans un module
 [*] Possibilité d'afficher la liste des requêtes SQL dans la classe Debug et d'afficher le stacktrace pour pouvoir les tracer
 [*] Modification de la classe Date :
-	- Refonte des constantes de formatage
-	- Ajout d'un formatage relatif (ex : Il y a 9 heures)
+	[*] Refonte des constantes de formatage
+	[*] Ajout d'un formatage relatif (ex : Il y a 9 heures)
 [+] Optmisation du CMS :
 	[*] Optimisation des requêtes du système de notation
 	- Optimisation des requêtes du système de commentaires
@@ -50,9 +50,9 @@ les pages du module "pages".
 - Envoi d'un MP lors d'un commentaire sur une contribution
 [*] Ajout de la balise enclosure dans les flux RSS pour joindre des médias
 [*] Harmonisation des liens dans l'administration :
-	- Smileys est maintenant dans Contenu
-	- Mises à jours dans Administration
-	- Maintenance dans Administration
+	[*] Smileys est maintenant dans Contenu
+	[*] Mises à jours dans Administration
+	[*] Maintenance dans Administration
 
 =================================== Modules =====================================
 [b]Articles[/b]
