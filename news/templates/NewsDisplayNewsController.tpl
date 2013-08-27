@@ -46,7 +46,7 @@ function Confirm()
 		
 		<div class="news_author_container">
 			Par # IF PSEUDO #<a itemprop="author" class="small_link {USER_LEVEL_CLASS}" href="{U_AUTHOR_PROFILE}" # IF C_USER_GROUP_COLOR # style="color:{USER_GROUP_COLOR}" # ENDIF #>{PSEUDO}</a>, # ENDIF # 
-			le <time datetime="{DATE_RFC3339_F}" itemprop="datePublished">{DATE}</time>,
+			le <time datetime="{DATE_ISO8601}" itemprop="datePublished">{DATE}</time>,
 			dans la catégorie <a itemprop="about" href="{U_CATEGORY}">{CATEGORY_NAME}</a>
 		</div>
 		

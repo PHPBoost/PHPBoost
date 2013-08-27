@@ -69,15 +69,12 @@ class ATOM extends Feed
                 
                 for ($i = 1; $i <= $nbItems; $i++)
                 {
-                    $updated = strtotime($date[1]);
-					
 					$item = new FeedItem();
-                    
                     $item->set_title(preg_match('`<title>(.*)</title>`is', $expParsed[$i], $title) ? $title[1] : '');
                     $item->set_link(preg_match('`<link href="(.*)"/>`is', $expParsed[$i], $url) ? $url[1] : '');
                     $item->set_guid(preg_match('`<id>(.*)</id>`is', $expParsed[$i], $guid) ? $guid[1] : '');
                     $item->set_desc(preg_match('`<summary>(.*)</summary>`is', $expParsed[$i], $desc) ? $desc[1] : '');
-                    $item->set_date_rfc3339(preg_match('`<updated>(.*)</updated>`is', $expParsed[$i], $date) ? $updated->format(Date::FORMAT_RFC822_F, TIMEZONE_USER) : '');
+                    $item->set_date(preg_match('`<updated>(.*)</updated>`is', $expParsed[$i], $date) ? new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, strtotime($date[1])) : null);
                     
                  	$enclosure = preg_match('`<enclosure rel="enclosure" url="(.*)" length="(.*)" type="(.*)" />`is', $expParsed[$i]);
                     if ($enclosure)

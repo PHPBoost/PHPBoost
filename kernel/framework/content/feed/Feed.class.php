@@ -118,8 +118,8 @@ class Feed
 			$desc = TextHelper::htmlspecialchars($this->data->get_desc());
 			$tpl->put_all(array(
 	            'DATE' => $this->data->get_date(),
-	            'DATE_RFC822' => $this->data->get_date_rfc822(),
-	            'DATE_RFC3339' => $this->data->get_date_rfc3339(),
+	            'DATE_RFC822' => $this->data->get_date_rfc2822(),
+	            'DATE_RFC3339' => $this->data->get_date_iso8601(),
 				'DATE_TEXT' => $this->data->get_date_text(),
 				'THIS_YEAR' => date('Y'),
 	            'TITLE' => $this->data->get_title(),
@@ -142,8 +142,8 @@ class Feed
 	                'DESC' => ContentSecondParser::export_html_text($desc),
 	                'RAW_DESC' => $desc,
 	                'DATE' => $item->get_date(),
-	                'DATE_RFC822' => $item->get_date_rfc822(),
-	                'DATE_RFC3339' => $item->get_date_rfc3339(),
+	                'DATE_RFC822' => $item->get_date_rfc2822(),
+	                'DATE_RFC3339' => $item->get_date_iso8601(),
 					'DATE_TEXT' => $item->get_date_text(),
 	                'C_IMG' => ($item->get_image_url() != '') ? true : false,
 	                'U_IMG' => $item->get_image_url(),
