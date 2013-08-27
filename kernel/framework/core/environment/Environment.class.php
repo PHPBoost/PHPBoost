@@ -426,6 +426,25 @@ class Environment
 	private static function perform_users_birthday_changeday()
 	{
 		UsersBirthdayCache::invalidate();
+		
+		$config = UserAccountsConfigConfig::load();
+		
+		if ($config->is_pm_for_members_birthday_enabled())
+		{
+			$users = UsersBirthdayCache::load()->get_users_birthday();
+			
+			foreach ($users as $user)
+			{
+				//Send the PM
+				PrivateMsg::start_conversation(
+					$user['user_id'], 
+					StringVars::replace_vars($config->get_pm_for_members_birthday_title(), array('user_login' => $user['login'], 'user_age' => $user['age']),
+					StringVars::replace_vars($config->get_pm_for_members_birthday_content(), array('user_login' => $user['login'], 'user_age' => $user['age']),
+					'-1', 
+					PrivateMsg::SYSTEM_PM
+				);
+			}
+		}
 	}
 
 	private static function clear_all_temporary_cache_files()

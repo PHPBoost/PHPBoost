@@ -92,6 +92,26 @@ class AdminMemberConfigController extends AdminController
 		array(new FormFieldConstraintRegex('`^[0-9]+$`i'))
 		));
 		
+		$fieldset->add_field(new FormFieldCheckbox('pm_for_members_birthday_enabled', $this->lang['members.config.send_pm_for_members_birthday'], $user_account_config->is_pm_for_members_birthday_enabled(),
+			array('events' => array('click' => '
+				if (HTMLForms.getField("pm_for_members_birthday_enabled").getValue()) {
+					HTMLForms.getField("pm_for_members_birthday_title").enable();
+					HTMLForms.getField("pm_for_members_birthday_content").enable();
+				} else {
+					HTMLForms.getField("pm_for_members_birthday_title").disable();
+					HTMLForms.getField("pm_for_members_birthday_content").disable();
+				}')
+			)
+		));
+		
+		$fieldset->add_field(new FormFieldTextEditor('pm_for_members_birthday_title', $this->lang['members.config.pm_for_members_birthday_title'], $user_account_config->get_pm_for_members_birthday_title(), 
+			array('size' => 40, 'description' => $this->lang['members.config.pm_for_members_birthday_title.explain'], 'hidden' => !$user_account_config->is_pm_for_members_birthday_enabled())
+		));
+		
+		$fieldset->add_field(new FormFieldShortMultiLineTextEditor('pm_for_members_birthday_content', $this->lang['members.config.pm_for_members_birthday_content'], $user_account_config->get_pm_for_members_birthday_content(), 
+			array('description' => $this->lang['members.config.pm_for_members_birthday_content.explain'], 'hidden' => !$user_account_config->is_pm_for_members_birthday_enabled())
+		));
+		
 		$fieldset = new FormFieldsetHTML('avatar_management', $this->lang['members.config.avatars-management']);
 		$form->add_fieldset($fieldset);
 				
@@ -167,6 +187,15 @@ class AdminMemberConfigController extends AdminController
 		{
 			$user_account_config->set_member_accounts_validation_method($this->form->get_value('type_activation_members')->get_raw_value());
 		}
+		
+		if ($this->form->get_value('pm_for_members_birthday_enabled'))
+		{
+			$user_account_config->enable_pm_for_members_birthday();
+			$user_account_config->set_pm_for_members_birthday_title($this->form->get_value('pm_for_members_birthday_title'));
+			$user_account_config->set_pm_for_members_birthday_content($this->form->get_value('pm_for_members_birthday_content'));
+		}
+		else
+			$user_account_config->disable_pm_for_members_birthday();
 		
 		$user_account_config->set_avatar_upload_enabled($this->form->get_value('upload_avatar_server'));
 		$user_account_config->set_unactivated_accounts_timeout($this->form->get_value('unactivated_accounts_timeout'));

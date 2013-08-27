@@ -102,6 +102,12 @@ class UserAccountsConfig extends AbstractConfigData
 	
 	const MAX_PRIVATE_MESSAGES_NUMBER = 'max_pm_number';
 	
+	const PM_FOR_MEMBERS_BIRTHDAY_ENABLED = 'pm_for_members_birthday_enabled';
+	
+	const PM_FOR_MEMBERS_BIRTHDAY_TITLE = 'pm_for_members_birthday_title';
+	
+	const PM_FOR_MEMBERS_BIRTHDAY_CONTENT = 'pm_for_members_birthday_content';
+	
 	const AUTOMATIC_USER_ACCOUNTS_VALIDATION = '1';
 	const MAIL_USER_ACCOUNTS_VALIDATION = '2';
 	const ADMINISTRATOR_USER_ACCOUNTS_VALIDATION = '3';
@@ -423,6 +429,41 @@ class UserAccountsConfig extends AbstractConfigData
 	{
 		$this->set_property(self::MAX_PRIVATE_MESSAGES_NUMBER, $number);
 	}
+	
+	public function enable_pm_for_members_birthday()
+	{
+		$this->set_property(self::PM_FOR_MEMBERS_BIRTHDAY_ENABLED, true);
+	}
+	
+	public function disable_pm_for_members_birthday()
+	{
+		$this->set_property(self::PM_FOR_MEMBERS_BIRTHDAY_ENABLED, false);
+	}
+	
+	public function is_pm_for_members_birthday_enabled()
+	{
+		return $this->get_property(self::PM_FOR_MEMBERS_BIRTHDAY_ENABLED);
+	}
+	
+	public function get_pm_for_members_birthday_title()
+	{
+		return $this->get_property(self::PM_FOR_MEMBERS_BIRTHDAY_TITLE);
+	}
+	
+	public function set_pm_for_members_birthday_title($value)
+	{
+		$this->set_property(self::PM_FOR_MEMBERS_BIRTHDAY_TITLE, $value);
+	}
+	
+	public function get_pm_for_members_birthday_content()
+	{
+		return $this->get_property(self::PM_FOR_MEMBERS_BIRTHDAY_CONTENT);
+	}
+	
+	public function set_pm_for_members_birthday_content($value)
+	{
+		$this->set_property(self::PM_FOR_MEMBERS_BIRTHDAY_CONTENT, $value);
+	}
 
 	/**
 	 * {@inheritdoc}
@@ -447,7 +488,10 @@ class UserAccountsConfig extends AbstractConfigData
 			self::AUTH_READ_MEMBERS => array('r0' => 1, 'r1' => 1),
 			self::DEFAULT_LANG => 'english',
 			self::DEFAULT_THEME => 'base',
-			self::MAX_PRIVATE_MESSAGES_NUMBER => 50
+			self::MAX_PRIVATE_MESSAGES_NUMBER => 50,
+			self::PM_FOR_MEMBERS_BIRTHDAY_ENABLED => false,
+			self::PM_FOR_MEMBERS_BIRTHDAY_TITLE => LangLoader::get_message('members.config.pm_for_members_birthday.default_title', 'admin-members-common'),
+			self::PM_FOR_MEMBERS_BIRTHDAY_CONTENT => LangLoader::get_message('members.config.pm_for_members_birthday.default_content', 'admin-members-common')
 		);
 	}
 
