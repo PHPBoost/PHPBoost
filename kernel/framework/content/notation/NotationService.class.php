@@ -53,40 +53,39 @@ class NotationService
 		if (!empty($notation_scale))
 		{
 			$average_notes = $notation->get_average_notes();
+			$count_notes = $notation->get_number_notes();
 			
-			if ($average_notes > 0)
+			$template = new FileTemplate('framework/content/notation/notation.tpl');
+			$template->put_all(array(
+				'C_STATIC_DISPLAY' => true,
+				'C_NOTES' => $count_notes > 0 ? true : false,
+				'NUMBER_NOTES' => $notation->get_number_notes(),
+				'AVERAGE_NOTES' => $average_notes,
+				'NOTATION_SCALE' => $notation->get_notation_scale(),
+				'L_NO_NOTE' => self::$lang['no_note'],
+			));
+		
+			for ($i = 1; $i <= $notation_scale; $i++)
 			{
-				$template = new StringTemplate('
-				# START notation #
-					<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{notation.PICTURE}" alt="" class="valign_middle" />
-				# END notation #');
-				
-				for ($i = 1; $i <= $notation_scale; $i++)
+				$star_img = 'stars.png';
+				if ($average_notes < $i)
 				{
-					$star_img = 'stars.png';
-					if ($average_notes < $i)
-					{
-						$decimal = $i - $average_notes;
-						if ($decimal >= 1)
-							$star_img = 'stars0.png';
-						elseif ($decimal >= 0.75)
-							$star_img = 'stars1.png';
-						elseif ($decimal >= 0.50)
-							$star_img = 'stars2.png';
-						else
-							$star_img = 'stars3.png';
-					}
-					
-					$template->assign_block_vars('notation', array(
-						'PICTURE' => $star_img
-					));
+					$decimal = $i - $average_notes;
+					if ($decimal >= 1)
+						$star_img = 'stars0.png';
+					elseif ($decimal >= 0.75)
+						$star_img = 'stars1.png';
+					elseif ($decimal >= 0.50)
+						$star_img = 'stars2.png';
+					else
+						$star_img = 'stars3.png';
 				}
-				return $template->render();
+				
+				$template->assign_block_vars('notation', array(
+					'PICTURE' => $star_img
+				));
 			}
-			else
-			{
-				return self::$lang['no_note'];
-			}
+			return $template->render();
 		}
 		else
 		{
@@ -142,9 +141,8 @@ class NotationService
 			}
 
 			$count_notes = $notation->get_number_notes();
-			
 			$template->put_all(array(
-				'C_VOTES' => $count_notes > 0 ? true : false,
+				'C_NOTES' => $count_notes > 0 ? true : false,
 				'C_MORE_1_NOTES' => $count_notes > 1 ? true : false,
 				'CURRENT_URL' => REWRITED_SCRIPT,
 				'ID_IN_MODULE' => $notation->get_id_in_module(),
@@ -241,7 +239,7 @@ class NotationService
 	public static function get_informations_note(Notation $notation)
 	{
 		try {
-			$row = self::$db_querier->select_single_row_query('SELECT average_notes, number_notes, (SELECT COUNT(*) FROM '. DB_TABLE_NOTE .'
+			return self::$db_querier->select_single_row_query('SELECT average_notes, number_notes, (SELECT COUNT(*) FROM '. DB_TABLE_NOTE .'
 			WHERE user_id=:user_id AND module_name=:module_name AND id_in_module=:id_in_module) AS user_already_noted
 			FROM ' . DB_TABLE_AVERAGE_NOTES . '
 			WHERE module_name = :module_name AND id_in_module = :id_in_module', array(
