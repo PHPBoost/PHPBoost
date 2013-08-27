@@ -555,7 +555,6 @@ class Date
 	{
 		// Number of hours separating GMT and server's timezone
 		$server_hour = self::get_server_timezone() - self::get_offset_due_to_daylight_saving_time();
-		Debug::dump($server_hour);
 		switch ($referencial_timezone)
 		{
 			// Référentiel : heure du site
