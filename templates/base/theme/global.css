@@ -96,20 +96,12 @@ a:hover {
 
 
 /* Liens petite taille */
-a.small_link {
-    font-size:11px;
-}
-
-a.small_link:hover {
+a.small_link, a.small_link:hover {
     font-size:11px;
 }
 
 /* Liens grande taille */
-a.big_link {
-    font-size:15px;
-}
-
-a.big_link:hover {
+a.big_link, a.big_link:hover {
     font-size:15px;
 }
 
@@ -122,8 +114,6 @@ a.com {
 
 a.com:hover {
     color:#01528D;
-    font-size:10px;
-    font-weight:bold;
 }
 
 /* Lien des utilisateurs => ne pas changer le nom de ces classes! */
