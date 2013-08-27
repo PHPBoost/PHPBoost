@@ -60,6 +60,15 @@ $lang['members.default-avatar-link-explain'] = 'Put it in the images folder of y
 $lang['members.config.authorization-read-member-profile'] = 'Here you define the permissions to read the list of members as well as some personal information such as their emails.';
 $lang['members.config.welcome-message'] = 'Message to all members';
 $lang['members.config.welcome-message-content'] = 'Welcome message displayed in the panel member';
+$lang['members.config.send_pm_for_members_birthday'] = 'Send a PM on members birthday';
+$lang['members.config.pm_for_members_birthday_title'] = 'PM title';
+$lang['members.config.pm_for_members_birthday_title.explain'] = 'Use <b>:user_login</b> to display the login of the member in the title and <b>:user_age</b> to display his age if needed.';
+$lang['members.config.pm_for_members_birthday_content'] = 'PM content';
+$lang['members.config.pm_for_members_birthday_content.explain'] = 'Use <b>:user_login</b> to display the login of the member in the content and <b>:user_age</b> to display his age if needed';
+
+//Default birthday PM values
+$lang['members.config.pm_for_members_birthday.default_title'] = 'Happy birthday :user_login';
+$lang['members.config.pm_for_members_birthday.default_content'] = 'The community wish you a happy birthday !';
 
 //Other fieldset configuration title
 $lang['members.config.avatars-management'] = 'Avatars management';

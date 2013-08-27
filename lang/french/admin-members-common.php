@@ -60,6 +60,15 @@ $lang['members.default-avatar-link-explain'] = 'Mettre dans le dossier images de
 $lang['members.config.authorization-read-member-profile'] = 'Vous définissez ici les permissions de lecture de la liste des membres ainsi que certaines informations personnelles comme leurs emails.';
 $lang['members.config.welcome-message'] = 'Message à tous les membres';
 $lang['members.config.welcome-message-content'] = 'Message de bienvenue affiché dans le profil du membre';
+$lang['members.config.send_pm_for_members_birthday'] = 'Envoyer un MP à l\'anniversaire des membres';
+$lang['members.config.pm_for_members_birthday_title'] = 'Titre du MP à envoyer à l\'anniversaire des membres';
+$lang['members.config.pm_for_members_birthday_title.explain'] = 'Utilisez <b>:user_login</b> pour afficher le pseudo du membre dans le titre et <b>:user_age</b> pour afficher son âge si besoin.';
+$lang['members.config.pm_for_members_birthday_content'] = 'Contenu du MP à envoyer à l\'anniversaire des membres';
+$lang['members.config.pm_for_members_birthday_content.explain'] = 'Utilisez <b>:user_login</b> pour afficher le pseudo du membre dans le texte et <b>:user_age</b> pour afficher son âge si besoin.';
+
+//Default birthday PM values
+$lang['members.config.pm_for_members_birthday.default_title'] = 'Joyeux anniversaire :user_login';
+$lang['members.config.pm_for_members_birthday.default_content'] = 'La communauté vous souhaite un joyeux anniversaire !';
 
 //Other fieldset configuration title
 $lang['members.config.avatars-management'] = 'Gestion des avatars';
