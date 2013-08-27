@@ -154,19 +154,23 @@ class AdminAdvancedConfigController extends AdminController
 		$miscellaneous_fieldset->add_field(new FormFieldCheckbox('debug_mode_enabled', $this->lang['advanced-config.debug-mode'], Debug::is_debug_mode_enabled(), 
 		array('description' => $this->lang['advanced-config.debug-mode.explain'], 'events' => array('change' => '
 				if (HTMLForms.getField("debug_mode_enabled").getValue()) { 
-					HTMLForms.getField("debug_mode_type").enable(); 
+					HTMLForms.getField("debug_mode_type").enable();
+					HTMLForms.getField("display_database_query_enabled").enable();
 				} else { 
-					HTMLForms.getField("debug_mode_type").disable(); 
+					HTMLForms.getField("debug_mode_type").disable();
+					HTMLForms.getField("display_database_query_enabled").disable();
 				}'))));
 		
-		$debug_mode_type = Debug::is_strict_mode_enabled() ? '1' : '0';
-		$miscellaneous_fieldset->add_field(new FormFieldSimpleSelectChoice('debug_mode_type', $this->lang['advanced-config.debug-mode.type'], $debug_mode_type,
+		$miscellaneous_fieldset->add_field(new FormFieldSimpleSelectChoice('debug_mode_type', $this->lang['advanced-config.debug-mode.type'], Debug::is_strict_mode_enabled(),
 			array(
 				new FormFieldSelectChoiceOption($this->lang['advanced-config.debug-mode.type.normal'], '0'),
 				new FormFieldSelectChoiceOption($this->lang['advanced-config.debug-mode.type.strict'], '1')
 			), 
 			array('hidden' => !Debug::is_debug_mode_enabled())
 		));
+		
+		$miscellaneous_fieldset->add_field(new FormFieldCheckbox('display_database_query_enabled', $this->lang['advanced-config.debug-display-database-query-enabled'], Debug::is_display_database_query_enabled(), 
+			array('hidden' => !Debug::is_debug_mode_enabled())));
 		
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_button($this->submit_button);
@@ -202,13 +206,18 @@ class AdminAdvancedConfigController extends AdminController
 		ServerEnvironmentConfig::save();
 		$this->clear_cache();
 		
-		if ($this->form->get_value('debug_mode_enabled') && $this->form->get_value('debug_mode_type')->get_raw_value() == '1')
+		if ($this->form->get_value('debug_mode_enabled'))
 		{
-			Debug::enabled_debug_mode(array(Debug::STRICT_MODE => true));
-		}
-		elseif ($this->form->get_value('debug_mode_enabled') && $this->form->get_value('debug_mode_type')->get_raw_value() == '0')
-		{
-			Debug::enabled_debug_mode(array());
+			$options = array();
+			if ($this->form->get_value('debug_mode_type')->get_raw_value() == '1')
+			{
+				$options[Debug::STRICT_MODE] = true;
+			}
+			if ($this->form->get_value('display_database_query_enabled'))
+			{
+				$options[Debug::DISPLAY_DATABASE_QUERY] = true;
+			}
+			Debug::enabled_debug_mode($options);
 		}
 		else
 		{

@@ -118,6 +118,7 @@ $lang = array(
 	'advanced-config.debug-mode.type' => 'Debug mode type',
 	'advanced-config.debug-mode.type.normal' => 'Normal',
 	'advanced-config.debug-mode.type.strict' => 'Strict',
+	'advanced-config.debug-display-database-query-enabled' => 'Enable display and monitoring SQL queries',
 
 	'advanced-config.unlock-code.title' => 'Mail to keep',
 	'advanced-config.unlock-code.content' => 'Keep this code (it will never be redelivered): :unlock_code
