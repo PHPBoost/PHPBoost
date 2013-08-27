@@ -344,7 +344,6 @@ a.msg_link_pseudo {
 
 a.msg_link_pseudo:hover {
     color:#f2fbff;
-    font-weight:bold;
 }
 
 .msg_position { /* Conteneur des messages */
