@@ -79,7 +79,7 @@ class RSS extends Feed
                     $item->set_link(preg_match('`<link>(.*)</link>`is', $expParsed[$i], $url) ? $url[1] : '');
                     $item->set_guid(preg_match('`<guid>(.*)</guid>`is', $expParsed[$i], $guid) ? $guid[1] : '');
                     $item->set_desc(preg_match('`<desc>(.*)</desc>`is', $expParsed[$i], $desc) ? $desc[1] : '');
-                    $item->set_date_rfc822(preg_match('`<pubDate>(.*)</pubDate>`is', $expParsed[$i], $date) ? $pubDate->format(Date::FORMAT_RFC822_F, TIMEZONE_USER) : '');
+                    $item->set_date(preg_match('`<pubDate>(.*)</pubDate>`is', $expParsed[$i], $date) ? new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, strtotime($date[1])) : null);
 					
                     $enclosure = preg_match('`<enclosure url="(.*)" length="(.*)" type="(.*)" />`is', $expParsed[$i]);
                     if ($enclosure)

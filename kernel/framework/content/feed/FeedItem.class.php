@@ -105,8 +105,8 @@ class FeedItem
     public function get_link() { return $this->link; }
     public function get_guid() { return $this->guid; }
     public function get_date() { return $this->date->format(Date::FORMAT_DAY_MONTH, TIMEZONE_USER); }
-    public function get_date_rfc822() { return $this->date->format(Date::FORMAT_RFC822_F, TIMEZONE_USER); }
-    public function get_date_rfc3339() { return $this->date->format(Date::FORMAT_RFC3339_F, TIMEZONE_USER); }
+    public function get_date_rfc2822() { return $this->date->format(Date::FORMAT_RFC2822, TIMEZONE_USER); }
+    public function get_date_iso8601() { return $this->date->format(Date::FORMAT_ISO8601, TIMEZONE_USER); }
 	public function get_date_text() { return $this->date->format(Date::FORMAT_DAY_MONTH_YEAR_LONG, TIMEZONE_USER); }
     public function get_desc() { return $this->desc; }
     public function get_image_url() { return $this->image_url; }

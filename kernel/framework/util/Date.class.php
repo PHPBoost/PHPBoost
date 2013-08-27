@@ -33,7 +33,6 @@ define('DATE_YEAR_MONTH_DAY_HOUR_MINUTE_SECOND', 3);
 define('DATE_FROM_STRING', 		4);
 
 define('ISO_FORMAT', 	'Y-m-d');
-define('RFC822_FORMAT', 	'D, d M Y H:i:s O');
 define('RFC3339_FORMAT', 	'Y-m-d\TH:i:s');
 
 define('TIMEZONE_AUTO', 		TIMEZONE_USER);
@@ -55,13 +54,12 @@ class Date
 	const FORMAT_DAY_MONTH = 1;
 	const FORMAT_DAY_MONTH_YEAR = 2;
 	const FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE = 3;
-	const FORMAT_ISO = 4;
-	const FORMAT_RFC822_F = 5;
-	const FORMAT_RFC3339_F = 6;
-	const FORMAT_DAY_MONTH_YEAR_LONG = 7;
-	const FORMAT_DAY_MONTH_YEAR_TEXT = 8;
-	const FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE_TEXT = 9;
-	const FORMAT_RELATIVE = 10;
+	const FORMAT_RFC2822 = 4;
+	const FORMAT_ISO8601 = 5;
+	const FORMAT_DAY_MONTH_YEAR_LONG = 6;
+	const FORMAT_DAY_MONTH_YEAR_TEXT = 7;
+	const FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE_TEXT = 8;
+	const FORMAT_RELATIVE = 9;
 
 	/**
 	 * @var int The timestamp of the current date
@@ -276,17 +274,13 @@ class Date
 			case self::FORMAT_TIMESTAMP:
 				return $timestamp;
 				break;
-
-			case self::FORMAT_ISO:
-				return date(ISO_FORMAT, $timestamp);
-				break;
 				
-			case self::FORMAT_RFC822_F:
-				return date(RFC822_FORMAT, $timestamp);
+			case self::FORMAT_RFC2822:
+				return date('r', $timestamp);
 				break;
 
-			case self::FORMAT_RFC3339_F:
-				return date(RFC3339_FORMAT, $timestamp) . (GeneralConfig::load()->get_site_timezone() < 0 ? '-' : '+') . sprintf('%02d:00', GeneralConfig::load()->get_site_timezone());
+			case self::FORMAT_ISO8601:
+				return date('c', $timestamp);
 				break;
 
 			case self::FORMAT_DAY_MONTH_YEAR_LONG:
@@ -561,7 +555,7 @@ class Date
 	{
 		// Number of hours separating GMT and server's timezone
 		$server_hour = self::get_server_timezone() - self::get_offset_due_to_daylight_saving_time();
-			
+		Debug::dump($server_hour);
 		switch ($referencial_timezone)
 		{
 			// Référentiel : heure du site
