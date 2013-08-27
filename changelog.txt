@@ -20,7 +20,6 @@
 [*] Possibilité d'afficher la liste des requêtes SQL dans la classe Debug et d'afficher le stacktrace pour pouvoir les tracer
 [*] Modification de la classe Date :
 	- Refonte des constantes de formatage
-	- Ajout d'un formatage ISO (Année-Mois-Jour)
 	- Ajout d'un formatage relatif (ex : Il y a 9 heures)
 [+] Optmisation du CMS :
 	[*] Optimisation des requêtes du système de notation
@@ -31,7 +30,7 @@
 les pages du module "pages".
 - Refonte du module Web ?
 - Refonte du système d'événement et intégration d'un système de notification
-[*] Configuration des utilisateurs : possibilité d'envoyer un MP à l'anniversaire des membres et de personnaliser le titre et le texte du message
+[*] Ajout d'une option dans la configuration pour le mode de débogage permettant d'afficher les requêtes SQL
 
 [b]Menus :[/b]
 - Possibilité de désactiver l'affichage d'un lien dans les menus
