@@ -30,3 +30,82 @@
 }
 
 .bb_ul { margin-left: 20px; }
+
+/* Tableaux */
+.bb_table{
+	border:1px solid #2C5169;
+	border-spacing:0px;
+	border-collapse:collapse;
+	margin:2px;
+}
+.bb_table_col{
+	border:1px solid #2C5169;
+	padding:6px;
+}
+/* Listes */
+.bb_ul{
+	margin-left:20px;
+}
+.bb_ol{
+	margin-left:35px;
+}
+.bb_li{
+	text-align:left;
+}
+
+/* Affichage balise quote, code, hide */
+.text_blockquote, .text_code, .text_hide{
+	display:block;
+	width:93%;
+	padding-bottom:2px;
+	font-weight:bold;
+	margin:auto;
+}
+.blockquote, .code, .hide {
+	overflow:auto;
+	max-height:500px;
+	background:#f8f8f8;
+	border:1px solid #366393;
+	border-left:2px solid #366393;
+	border-right:2px solid #366393;
+	border-radius:4px;
+	color:#000000;
+	padding:8px;
+	margin:0px 25px;
+}
+.hide{
+	cursor:pointer;
+	height:10px;
+	overflow:auto;
+}
+.hide2{
+	visibility:hidden;
+}
+.indent{
+	margin-left:30px;
+}
+.bb_acronym{
+	cursor:help;
+}
+
+.bb_block{
+	margin:5px 20px;
+	padding:5px;
+	border:1px solid #C4CED6;
+}
+
+.bb_fieldset{
+	margin:10px;
+}
+
+/* Code avec numérotation des listes */
+.code ol{ margin-left:3em; }
+
+/*Lien vers Wikipédia*/
+a.wikipedia_link:before{
+   content:url('wikipedia_icon.png');
+   vertical-align:middle;
+   padding-right:2px;
+}
+
+a.wikipedia_link{ border-bottom:1px dotted; }

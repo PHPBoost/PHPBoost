@@ -73,21 +73,16 @@ Css par défaut commun * tout les thèmes, permet les ajouts nécessaires au framew
     padding:0;
     margin:2px 0px;
 }
-	
 
-div.block_title span {
-    border:1px solid;
-    padding:2px 8px;
-    padding:1px 0;
-    vertical-align:middle;
-    position:relative;
-    margin-top:-0.4em;
-    padding-left:10px;
-    padding-right:10px;
-    line-height:1.2em;
+.float_left
+{
+	float:left;
+	margin:5px;
 }
-
-div.block_title {
+.float_right
+{
+	float:right;
+	margin:5px;
 }
 
 div.block_content {
@@ -100,6 +95,75 @@ div.block_content {
 
 div.block_content ul {
     padding-left:20px;
+}
+
+/* Balises */
+img {
+    border:none;
+	overflow:scroll;
+}
+
+hr {
+    background:#C4CED6;
+    border:none;
+    margin:1px auto;
+    height:1px;
+    width:99%;
+}
+
+ul {
+    margin:0;
+    line-height:normal;
+}
+
+p {
+    margin-bottom:0.7em;
+    line-height:normal;
+    font-size:1em;
+}
+
+/* Classes textes */
+.text_center {
+    text-align:center;
+}
+
+.text_small {
+    font-size:10px;
+    font-weight:normal;
+}
+
+.text_strong {
+    font-weight:bold;
+}
+
+.text_justify {
+    text-align:justify;
+}
+
+.img_right {
+    float:right;
+    margin:6px;
+}
+
+.img_left {
+    float:left;
+    margin:6px;
+}
+
+.valign_top {
+    vertical-align:top;
+}
+
+.valign_middle {
+    vertical-align:middle;
+}
+
+.valign_bottom {
+    vertical-align:bottom;
+}
+
+.spacer {
+    clear:both;
 }
 
 /*Menu dynamique des liens
@@ -384,6 +448,37 @@ button.image{
     background:none;
     border:none;
     cursor:pointer;
+}
+
+/* Liens pagination
+--------------------------------------*/
+.pagination {
+    font-size:11px;
+}
+
+.pagination_current_page {
+    text-decoration:underline;
+}
+
+/* Affichage des smiley */
+.smiley{
+	vertical-align:middle;
+}
+
+/* Prévisualisation AJAX. */
+.xmlhttprequest_preview{
+	overflow:auto;
+	height:220px;
+	width:94%;
+	font-size:11px;
+	margin:auto;
+	margin-top:4px;
+	margin-bottom:3px;			
+	padding:1px 2px;
+    -moz-border-radius:4px;
+    -khtml-border-radius:4px;
+    -webkit-border-radius:4px;
+    border-radius:4px;
 }
 
 /* Syndications */
