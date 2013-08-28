@@ -94,7 +94,6 @@ a:hover {
 	text-decoration:none;
 }
 
-
 /* Liens petite taille */
 a.small_link, a.small_link:hover {
     font-size:11px;
@@ -130,16 +129,6 @@ a.modo {
 a.member {
     color:#000000;
     font-weight:bold;
-}
-
-/* Liens pagination
---------------------------------------*/
-.pagination {
-    font-size:11px;
-}
-
-.pagination_current_page {
-    text-decoration:underline;
 }
 
 /*Menu dynamique des liens
