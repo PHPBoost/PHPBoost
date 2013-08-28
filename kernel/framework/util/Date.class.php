@@ -512,7 +512,7 @@ class Date
 	 * Adds the given number of days to the date
 	 * @param int $number_days The number of days to add.
 	 */
-	public function add_days(int $number_days)
+	public function add_days($number_days)
 	{
 		$this->timestamp = $this->timestamp + ($number_days * 86400);
 	}
@@ -521,7 +521,7 @@ class Date
 	 * Adds the given number of weeks to the date
 	 * @param int $number_weeks The number of weeks to add.
 	 */
-	public function add_weeks(int $number_weeks)
+	public function add_weeks($number_weeks)
 	{
 		$this->timestamp = $this->timestamp + ($number_weeks * 604800);
 	}
