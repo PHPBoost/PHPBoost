@@ -77,7 +77,7 @@ else
 		'L_AUTH_MODERATION' => $LANG['auth_moderation'],
 		'L_SHOUTBOX_REFRESH_DELAY' => $LANG['shoutbox_refresh_delay'],
 		'L_SHOUTBOX_REFRESH_DELAY_EXPLAIN' => $LANG['shoutbox_refresh_delay_explain'],
-		'L_MINUTES' => $LANG['minutes'],
+		'L_MINUTES' => LangLoader::get_message('minutes', 'date-common'),
 		'L_UPDATE' => $LANG['update'],
 		'L_RESET' => $LANG['reset'],
 		'L_FORBIDDEN_TAGS' => $LANG['forbidden_tags'],

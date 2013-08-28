@@ -48,6 +48,7 @@ $Template->set_filenames(array(
 	'forum_bottom'=> 'forum/forum_bottom.tpl'
 ));
 
+$date_lang = LangLoader::get('date-common');
 $Template->put_all(array(
 	'FORUM_NAME' => $CONFIG_FORUM['forum_name'],
 	'LANG' => get_ulang(),
@@ -68,12 +69,12 @@ $Template->put_all(array(
 	'L_KEYWORDS' => $LANG['keywords'],
 	'L_OPTIONS' => $LANG['options'],
 	'L_DATE' => $LANG['date'],
-	'L_DAY' => $LANG['day'],
-	'L_DAYS' => $LANG['day_s'],
+	'L_DAY' => $date_lang['day'],
+	'L_DAYS' => $date_lang['days'],
 	'L_ALL' => $LANG['all'],
-	'L_MONTH' => $LANG['month'],
+	'L_MONTH' => $date_lang['month'],
 	'L_TOPIC' => $LANG['topic'],
-	'L_YEAR' => $LANG['year'],
+	'L_YEAR' => $date_lang['year'],
 	'L_CATEGORY' => $LANG['category'],
 	'L_TITLE' => $LANG['title'],
 	'L_CONTENTS' => $LANG['content'],

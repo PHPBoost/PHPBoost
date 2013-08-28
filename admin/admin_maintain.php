@@ -86,8 +86,9 @@ else //Sinon on rempli le formulaire
 	$maintenance_config = MaintenanceConfig::load();
 	
 	//Durée de la maintenance.
+	$date_lang = LangLoader::get('date-common');
 	$array_time = array(-1, 60, 300, 600, 900, 1800, 3600, 7200, 10800, 14400, 18000, 21600, 25200, 28800, 57600); 
-	$array_delay = array($LANG['unspecified'], '1 ' . $LANG['minute'], '5 ' . $LANG['minutes'], '10 ' . $LANG['minutes'], '15 ' . $LANG['minutes'], '30 ' . $LANG['minutes'], '1 ' . $LANG['hour'], '2 ' . $LANG['hours'], '3 ' . $LANG['hours'], '4 ' . $LANG['hours'], '5 ' . $LANG['hours'], '6 ' . $LANG['hours'], '7 ' . $LANG['hours'], '8 ' . $LANG['hours'], '16 ' . $LANG['hours']); 
+	$array_delay = array($LANG['unspecified'], '1 ' . $date_lang['minute'], '5 ' . $date_lang['minutes'], '10 ' . $date_lang['minutes'], '15 ' . $date_lang['minutes'], '30 ' . $date_lang['minutes'], '1 ' . $date_lang['hour'], '2 ' . $date_lang['hours'], '3 ' . $date_lang['hours'], '4 ' . $date_lang['hours'], '5 ' . $date_lang['hours'], '6 ' . $date_lang['hours'], '7 ' . $date_lang['hours'], '8 ' . $date_lang['hours'], '16 ' . $date_lang['hours']); 
 	
 	$array_size = count($array_time) - 1;
 	if (!$maintenance_config->is_unlimited_maintenance())

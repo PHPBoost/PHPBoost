@@ -206,13 +206,13 @@ else
 		$compteur_day = !empty($compteur['total']) ? $compteur['total'] : '1';
 
 		$Template->put_all(array(
-			'L_TODAY' => $LANG['today'],
+			'L_TODAY' => $date_lang['today'],
 			'L_TOTAL' => $LANG['total'],
 			'L_AVERAGE' => $LANG['average'],
 			'L_VISITORS' => $LANG['guest_s'] . ':',
 			'L_VISITS_DAY' => $LANG['guest_s'],
-			'L_DAY' => $LANG['date'],
-			'L_MONTH' => $LANG['month'],
+			'L_DAY' => $date_lang['date'],
+			'L_MONTH' => $date_lang['month'],
 			'L_SUBMIT' => $LANG['submit']
 		));
 
@@ -566,13 +566,13 @@ else
 		$compteur_day = !empty($compteur_day) ? $compteur_day : '1';
 
 		$Template->put_all(array(
-			'L_TODAY' => $LANG['today'],
+			'L_TODAY' => $date_lang['today'],
 			'L_TOTAL' => $LANG['total'],
 			'L_AVERAGE' => $LANG['average'],
 			'L_VISITORS' => $LANG['page_s'] . ':',
 			'L_VISITS_DAY' => $LANG['page_s'],
-			'L_DAY' => $LANG['date'],
-			'L_MONTH' => $LANG['month'],
+			'L_DAY' => $date_lang['date'],
+			'L_MONTH' => $date_lang['month'],
 			'L_SUBMIT' => $LANG['submit']
 		));
 
