@@ -125,7 +125,7 @@ class NewsFormController extends ModuleController
 		)));
 		$other_fieldset->add_field(new FormFieldFree('preview_picture', $this->lang['news.form.picture.preview'], '<img id="preview_picture" src="'. $this->get_news()->get_picture()->rel() .'" alt="" style="vertical-align:top" />'));
 
-		$other_fieldset->add_field(new FormFieldMultipleAutocompleter('keywords', $this->lang['news.form.keywords'], $this->get_news()->get_keywords_name(), array('description' => $this->lang['news.form.keywords.description'], 'file' => TPL_PATH_TO_ROOT . '/news/ajax/tag/')));
+		$other_fieldset->add_field(NewsService::get_keywords_manager()->get_form_field($this->get_news()->get_id(), 'keywords', $this->lang['news.form.keywords'], array('description' => $this->lang['news.form.keywords.description'])));
 		
 		$other_fieldset->add_field(new NewsFormFieldSelectSources('sources', $this->lang['news.form.sources'], $this->get_news()->get_sources()));
 		
@@ -306,7 +306,7 @@ class NewsFormController extends ModuleController
 		
 		$this->contribution_actions($news, $id_news);
 		
-		$this->put_keywords($id_news);
+		NewsService::get_keywords_manager()->put_relations($id_news, $this->form->get_value('keywords'));
 		
 		Feed::clear_cache('news');
 	}
@@ -346,31 +346,7 @@ class NewsFormController extends ModuleController
 		}
 		$news->set_id($id_news);
 	}
-	
-	private function put_keywords($id_news)
-	{
-		$keywords = $this->form->get_value('keywords');
 		
-		//Delete all relations for edition
-		if ($this->get_news()->get_id() !== null)
-		{
-			NewsKeywordsService::delete_relations($id_news);
-		}
-		
-		foreach ($keywords as $keyword)
-		{
-			if (!NewsKeywordsService::exists($keyword))
-			{
-				$id_keyword = NewsKeywordsService::add($keyword);
-			}
-			else
-			{
-				$id_keyword = NewsKeywordsService::get_id_keyword('WHERE rewrited_name=:rewrited_name', array('rewrited_name' => Url::encode_rewrite($keyword)));
-			}
-			NewsKeywordsService::put_relation($id_news, $id_keyword);
-		}
-	}
-	
 	private function redirect()
 	{
 		$news = $this->get_news();

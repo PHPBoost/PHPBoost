@@ -61,9 +61,9 @@ class NewsDisplayNewsTagController extends ModuleController
 		$number_columns_display_news = NewsConfig::load()->get_number_columns_display_news();
 		$pagination = $this->get_pagination($now, $authorized_categories);
 		
-		$result = PersistenceContext::get_querier()->select('SELECT news.*, relation.id_news, relation.id_keyword, member.*
+		$result = PersistenceContext::get_querier()->select('SELECT news.*, member.*
 		FROM '. NewsSetup::$news_table .' news
-		LEFT JOIN '. NewsSetup::$news_keywords_relation_table .' relation ON relation.id_news = news.id
+		LEFT JOIN '. DB_TABLE_KEYWORDS_RELATIONS .' relation ON relation.module_id = \'news\' AND relation.id_in_module = news.id 
 		LEFT JOIN '. DB_TABLE_MEMBER .' member ON member.user_id = news.author_user_id
 		WHERE relation.id_keyword = :id_keyword AND (news.approbation_type = 1 OR (news.approbation_type = 2 AND news.start_date < :timestamp_now AND (end_date > :timestamp_now OR end_date = 0))) AND news.id_category IN :authorized_categories
 		ORDER BY top_list_enabled DESC, news.creation_date DESC
@@ -126,11 +126,7 @@ class NewsDisplayNewsTagController extends ModuleController
 			if (!empty($rewrited_name))
 			{
 				try {
-					$row = PersistenceContext::get_querier()->select_single_row(NewsSetup::$news_keywords_table, array('*'), 'WHERE rewrited_name=:rewrited_name', array('rewrited_name' => $rewrited_name));
-					
-					$keyword = new NewsKeyword();
-					$keyword->set_properties($row);
-					$this->keyword = $keyword;
+					$this->keyword = NewsService::get_keywords_manager()->get_keyword('WHERE rewrited_name=:rewrited_name', array('rewrited_name' => $rewrited_name));
 				} catch (RowNotFoundException $e) {
 					$error_controller = PHPBoostErrors::unexisting_page();
    					DispatchManager::redirect($error_controller);
@@ -149,7 +145,7 @@ class NewsDisplayNewsTagController extends ModuleController
 	{
 		$result = PersistenceContext::get_querier()->select_single_row_query('SELECT COUNT(*) AS nbr_news
 		FROM '. NewsSetup::$news_table .' news
-		LEFT JOIN '. NewsSetup::$news_keywords_relation_table .' relation ON relation.id_news = news.id
+		LEFT JOIN '. DB_TABLE_KEYWORDS_RELATIONS .' relation ON relation.module_id = \'news\' AND relation.id_in_module = news.id 
 		WHERE relation.id_keyword = :id_keyword AND (news.approbation_type = 1 OR (news.approbation_type = 2 AND news.start_date < :timestamp_now AND (end_date > :timestamp_now OR end_date = 0))) AND news.id_category IN :authorized_categories', array(
 			'id_keyword' => $this->get_keyword()->get_id(),
 			'timestamp_now' => $now->get_timestamp(),

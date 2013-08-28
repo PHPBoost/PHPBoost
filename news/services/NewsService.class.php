@@ -33,6 +33,7 @@ class NewsService
 	private static $db_querier;
 	
 	private static $categories_manager;
+	private static $keywords_manager;
 	
 	public static function __static()
 	{
@@ -93,6 +94,15 @@ class NewsService
 			self::$categories_manager = new CategoriesManager(NewsCategoriesCache::load(), $categories_items_parameters);
 		}
 		return self::$categories_manager;
+	}
+	
+	public static function get_keywords_manager()
+	{
+		if (self::$keywords_manager === null)
+		{
+			self::$keywords_manager = new KeywordsManager('news');
+		}
+		return self::$keywords_manager;
 	}
 }
 ?>
