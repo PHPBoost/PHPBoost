@@ -78,7 +78,7 @@ class UserLoginController extends AbstractController
 	
 	private function build_error_message()
 	{
-		$lang = LangLoader::get('main');
+		$date_lang = LangLoader::get('date-common');
 		$errors_lang = LangLoader::get('errors');
 		
 		$error_type = $this->request->get_string('error_type', '');
@@ -108,31 +108,31 @@ class UserLoginController extends AbstractController
 					if ($delay > 0)
 					{
 						if ($delay < 60)
-							$message = $delay . ' ' . (($delay > 1) ? $lang['minutes'] : $lang['minute']);
+							$message = $delay . ' ' . (($delay > 1) ? $date_lang['minutes'] : $date_lang['minute']);
 						elseif ($delay < 1440)
 						{
 							$delay_ban = NumberHelper::round($delay/60, 0);
-							$message = $delay_ban . ' ' . (($delay_ban > 1) ? $lang['hours'] : $lang['hour']);
+							$message = $delay_ban . ' ' . (($delay_ban > 1) ? $date_lang['hours'] : $date_lang['hour']);
 						}
 						elseif ($delay < 10080)
 						{
 							$delay_ban = NumberHelper::round($delay/1440, 0);
-							$message = $delay_ban . ' ' . (($delay_ban > 1) ? $lang['days'] : $lang['day']);
+							$message = $delay_ban . ' ' . (($delay_ban > 1) ? $date_lang['days'] : $date_lang['day']);
 						}
 						elseif ($delay < 43200)
 						{
 							$delay_ban = NumberHelper::round($delay/10080, 0);
-							$message = $delay_ban . ' ' . (($delay_ban > 1) ? $lang['weeks'] : $lang['week']);
+							$message = $delay_ban . ' ' . (($delay_ban > 1) ? $date_lang['weeks'] : $date_lang['week']);
 						}
 						elseif ($delay < 525600)
 						{
 							$delay_ban = NumberHelper::round($delay/43200, 0);
-							$message = $delay_ban . ' ' . (($delay_ban > 1) ? $lang['months'] : $lang['month']);
+							$message = $delay_ban . ' ' . (($delay_ban > 1) ? $date_lang['months'] : $date_lang['month']);
 						}
 						else
 						{
 							$delay_ban = NumberHelper::round($delay/525600, 0);
-							$message = $delay_ban . ' ' . (($delay_ban > 1) ? $lang['years'] : $lang['year']);
+							$message = $delay_ban . ' ' . (($delay_ban > 1) ? $date_lang['years'] : $date_lang['year']);
 						}
 						$message = $errors_lang['e_member_ban'] . ' ' . $message;
 					}

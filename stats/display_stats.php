@@ -79,7 +79,7 @@ if ($get_visit_month)
     }
     $Stats->load_data($array_stats, 'histogram', 5);
     //Tracé de l'histogramme.
-    $Stats->draw_histogram(440, 250, '', array($LANG['days'], $LANG['guest_s']), NO_DRAW_LEGEND, DRAW_VALUES, 8);
+    $Stats->draw_histogram(440, 250, '', array(LangLoader::get_message('days', 'date-common'), $LANG['guest_s']), NO_DRAW_LEGEND, DRAW_VALUES, 8);
 }
 elseif ($get_visit_year)
 {
@@ -134,7 +134,7 @@ elseif ($get_pages_day)
     }
     $Stats->load_data($array_stats, 'histogram', 5);
     //Tracé de l'histogramme.
-    $Stats->draw_histogram(440, 250, '', array($LANG['hours'], $LANG['page_s']), NO_DRAW_LEGEND, DRAW_VALUES, 8);
+    $Stats->draw_histogram(440, 250, '', array(LangLoader::get_message('hours', 'date-common'), $LANG['page_s']), NO_DRAW_LEGEND, DRAW_VALUES, 8);
 }
 elseif ($get_pages_month)
 {
@@ -164,7 +164,7 @@ elseif ($get_pages_month)
     }
     $Stats->load_data($array_stats, 'histogram', 5);
     //Tracé de l'histogramme.
-    $Stats->draw_histogram(440, 250, '', array($LANG['days'], $LANG['page_s']), NO_DRAW_LEGEND, NO_DRAW_VALUES, 8);
+    $Stats->draw_histogram(440, 250, '', array(LangLoader::get_message('days', 'date-common'), $LANG['page_s']), NO_DRAW_LEGEND, NO_DRAW_VALUES, 8);
 }
 elseif ($get_pages_year)
 {

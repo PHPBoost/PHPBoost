@@ -106,8 +106,9 @@ class UserMaintainController extends AbstractController
 	
 	private function init_delay()
 	{
+		$date_lang = LangLoader::get('date-common');
 		$array_time = array(0 => '-1', 1 => '0', 2 => '60', 3 => '300', 4 => '900', 5 => '1800', 6 => '3600', 7 => '7200', 8 => '86400', 9 => '172800', 10 => '604800'); 
-		$array_delay = array(0 => $this->main_lang['unspecified'], 1 => '', 2 => '1 ' . $this->main_lang['minute'], 3 => '5 ' . $this->main_lang['minutes'], 4 => '15 ' . $this->main_lang['minutes'], 5 => '30 ' . $this->main_lang['minutes'], 6 => '1 ' . $this->main_lang['hour'], 7 => '2 ' . $this->main_lang['hours'], 8 => '1 ' . $this->main_lang['day'], 9 => '2 ' . $this->main_lang['days'], 10 => '1 ' . $this->main_lang['week']);
+		$array_delay = array(0 => $this->main_lang['unspecified'], 1 => '', 2 => '1 ' . $date_lang['minute'], 3 => '5 ' . $date_lang['minutes'], 4 => '15 ' . $date_lang['minutes'], 5 => '30 ' . $date_lang['minutes'], 6 => '1 ' . $date_lang['hour'], 7 => '2 ' . $date_lang['hours'], 8 => '1 ' . $date_lang['day'], 9 => '2 ' . $date_lang['days'], 10 => '1 ' . $date_lang['week']);
 		
 		if (!$this->maintain_config->is_unlimited_maintenance())
 		{
@@ -251,7 +252,7 @@ class UserMaintainController extends AbstractController
 	
 	private function build_error_message()
 	{
-		$lang = LangLoader::get('main');
+		$date_lang = LangLoader::get('date-common');
 		$errors_lang = LangLoader::get('errors');
 		
 		$error_type = $this->request->get_string('error_type', '');
@@ -281,31 +282,31 @@ class UserMaintainController extends AbstractController
 					if ($delay > 0)
 					{
 						if ($delay < 60)
-							$message = $delay . ' ' . (($delay > 1) ? $lang['minutes'] : $lang['minute']);
+							$message = $delay . ' ' . (($delay > 1) ? $date_lang['minutes'] : $date_lang['minute']);
 						elseif ($delay < 1440)
 						{
 							$delay_ban = NumberHelper::round($delay/60, 0);
-							$message = $delay_ban . ' ' . (($delay_ban > 1) ? $lang['hours'] : $lang['hour']);
+							$message = $delay_ban . ' ' . (($delay_ban > 1) ? $date_lang['hours'] : $date_lang['hour']);
 						}
 						elseif ($delay < 10080)
 						{
 							$delay_ban = NumberHelper::round($delay/1440, 0);
-							$message = $delay_ban . ' ' . (($delay_ban > 1) ? $lang['days'] : $lang['day']);
+							$message = $delay_ban . ' ' . (($delay_ban > 1) ? $date_lang['days'] : $date_lang['day']);
 						}
 						elseif ($delay < 43200)
 						{
 							$delay_ban = NumberHelper::round($delay/10080, 0);
-							$message = $delay_ban . ' ' . (($delay_ban > 1) ? $lang['weeks'] : $lang['week']);
+							$message = $delay_ban . ' ' . (($delay_ban > 1) ? $date_lang['weeks'] : $date_lang['week']);
 						}
 						elseif ($delay < 525600)
 						{
 							$delay_ban = NumberHelper::round($delay/43200, 0);
-							$message = $delay_ban . ' ' . (($delay_ban > 1) ? $lang['months'] : $lang['month']);
+							$message = $delay_ban . ' ' . (($delay_ban > 1) ? $date_lang['months'] : $date_lang['month']);
 						}
 						else
 						{
 							$delay_ban = NumberHelper::round($delay/525600, 0);
-							$message = $delay_ban . ' ' . (($delay_ban > 1) ? $lang['years'] : $lang['year']);
+							$message = $delay_ban . ' ' . (($delay_ban > 1) ? $date_lang['years'] : $date_lang['year']);
 						}
 						$message = $errors_lang['e_member_ban'] . ' ' . $message;
 					}

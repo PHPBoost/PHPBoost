@@ -81,6 +81,7 @@ $lang['days'] = 'days';
 $lang['week'] = 'week';
 $lang['weeks'] = 'weeks';
 $lang['month'] = 'month';
+$lang['months'] = 'months';
 $lang['year'] = 'year';
 $lang['years'] = 'years';
 ?>

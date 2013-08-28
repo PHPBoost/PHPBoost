@@ -135,16 +135,6 @@ $LANG['modo_s'] = 'Moderators';
 $LANG['admin'] = 'Administrator';
 $LANG['admin_s'] = 'Administrators';
 $LANG['home'] = 'Home';
-/* Delete, forward in date-common*/
-$LANG['date'] = 'Date';
-$LANG['today'] = 'Today';
-$LANG['day'] = 'Day';
-$LANG['day_s'] = 'Days';
-$LANG['month'] = 'Month';
-$LANG['months'] = 'Months';
-$LANG['year'] = 'Year';
-$LANG['years'] = 'Years';
-/**/
 $LANG['description'] = 'Description';
 $LANG['view'] = 'View';
 $LANG['views'] = 'Views';
@@ -190,16 +180,6 @@ $LANG['total'] = 'Total';
 $LANG['average'] = 'Average';
 $LANG['page'] = 'Page';
 $LANG['illimited'] = 'Unlimited';
-/* Delete, forward in date-common*/
-$LANG['seconds'] = 'seconds';
-$LANG['minute'] = 'minute';
-$LANG['minutes'] = 'minutes';
-$LANG['hour'] = 'hour';
-$LANG['hours'] = 'hours';
-$LANG['day'] = 'day';
-$LANG['days'] = 'days';
-$LANG['week'] = 'week';
-/**/
 $LANG['unspecified'] = 'Unspecified';
 $LANG['admin_panel'] = 'Administration panel';
 $LANG['modo_panel'] = 'Moderation panel';

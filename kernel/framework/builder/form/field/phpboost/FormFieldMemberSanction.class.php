@@ -62,7 +62,7 @@ class FormFieldMemberSanction extends FormFieldSimpleSelectChoice
 	
 	private function load_lang()
 	{
-		$this->lang = LangLoader::get('main');
+		$this->lang = LangLoader::get('date-common');
 	}
 	
 	private function get_time_value()
@@ -88,7 +88,7 @@ class FormFieldMemberSanction extends FormFieldSimpleSelectChoice
 	private function get_sanctions_duration()
 	{
 		return array(
-			'0' => $this->lang['no'], 
+			'0' => LangLoader::get_message('no', 'main'), 
 			'60' => '1 ' . $this->lang['minute'], 
 			'300' => '5 ' . $this->lang['minutes'],
 			'900' => '15 ' . $this->lang['minutes'], 
@@ -101,7 +101,7 @@ class FormFieldMemberSanction extends FormFieldSimpleSelectChoice
 			'1209600' => '2 ' . $this->lang['weeks'], 
 			'2419200' => '1 ' . $this->lang['month'], 
 			'4838400' => '2 ' . $this->lang['month'],
-			'326592000' => $this->lang['illimited']
+			'326592000' => LangLoader::get_message('illimited', 'main')
 		);
 	}
 }

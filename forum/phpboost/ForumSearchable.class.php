@@ -55,13 +55,14 @@ class ForumSearchable extends AbstractSearchableExtensionPoint
 		$where = !empty($args['ForumWhere']) ? TextHelper::strprotect($args['ForumWhere']) : 'all';
 		$colorate_result = !empty($args['ForumColorate_result']) ? true : false;
 
+		$date_lang = LangLoader::get('date-common');
 		$Tpl->put_all(Array(
-            'L_DATE' => $LANG['date'],
-            'L_DAY' => $LANG['day'],
-            'L_DAYS' => $LANG['day_s'],
-            'L_MONTH' => $LANG['month'],
-            'L_MONTHS' => $LANG['month'],
-            'L_YEAR' => $LANG['year'],
+            'L_DATE' => $date_lang['date'],
+            'L_DAY' => $date_lang['day'],
+            'L_DAYS' => $date_lang['days'],
+            'L_MONTH' => $date_lang['month'],
+            'L_MONTHS' => $date_lang['month'],
+            'L_YEAR' => $date_lang['year'],
             'IS_SELECTED_30000' => $time == 30000 ? ' selected="selected"' : '',
             'IS_SELECTED_1' => $time == 1 ? ' selected="selected"' : '',
             'IS_SELECTED_7' => $time == 7 ? ' selected="selected"' : '',
