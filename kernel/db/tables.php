@@ -13,6 +13,8 @@ define('DB_TABLE_VISIT_COUNTER', PREFIX . 'visit_counter');
 define('DB_TABLE_CONFIGS', PREFIX . 'configs');
 define('DB_TABLE_EVENTS', PREFIX . 'events');
 define('DB_TABLE_GROUP', PREFIX . 'group');
+define('DB_TABLE_KEYWORDS', PREFIX . 'keywords');
+define('DB_TABLE_KEYWORDS_RELATIONS', PREFIX . 'keywords_relations');
 define('DB_TABLE_MEMBER', PREFIX . 'member');
 define('DB_TABLE_MEMBER_EXTENDED_FIELDS', PREFIX . 'member_extended_fields');
 define('DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST', PREFIX . 'member_extended_fields_list');

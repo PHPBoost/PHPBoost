@@ -44,6 +44,7 @@ class News
 	private $top_list_enabled;
 	
 	private $creation_date;
+	private $updated_date;
 	private $author_user;
 
 	private $picture_url;
@@ -196,6 +197,21 @@ class News
 		return $this->creation_date;
 	}
 	
+	public function set_updated_date(Date $updated_date)
+	{
+		$this->updated_date = $updated_date;
+	}
+	
+	public function get_updated_date()
+	{
+		return $this->updated_date;
+	}
+	
+	public function has_updated_date()
+	{
+		return $this->updated_date !== null;
+	}
+	
 	public function set_author_user(User $user)
 	{
 		$this->author_user = $user;
@@ -239,17 +255,17 @@ class News
 	
 	public function get_keywords()
 	{
-		return NewsKeywordsService::get_keywords($this->id);
+		return NewsService::get_keywords_manager()->get_keywords($this->id);
 	}
 	
 	public function get_keywords_name()
 	{
-		return NewsKeywordsService::get_keywords_name($this->id);
+		return NewsService::get_keywords_manager()->get_keywords_name($this->id);
 	}
 	
 	public function is_authorized_add()
 	{
-		return NewsAuthorizationsService::check_authorizations($this->id_cat)->write() && !NewsAuthorizationsService::check_authorizations($this->id_cat)->contribution();
+		return NewsAuthorizationsService::check_authorizations($this->id_cat)->write() || NewsAuthorizationsService::check_authorizations($this->id_cat)->contribution();
 	}
 	
 	public function is_authorized_edit()
@@ -276,6 +292,7 @@ class News
 			'end_date' => $this->get_end_date() !== null ? $this->get_end_date()->get_timestamp() : '',
 			'top_list_enabled' => (int)$this->top_list_enabled(),
 			'creation_date' => $this->get_creation_date()->get_timestamp(),
+			'updated_date' => $this->get_updated_date() !== null ? $this->get_updated_date()->get_timestamp() : '',
 			'author_user_id' => $this->get_author_user()->get_id(),
 			'picture_url' => $this->get_picture()->relative(),
 			'sources' => serialize($this->get_sources())
@@ -296,6 +313,7 @@ class News
 		$this->end_date_enabled = true;
 		$this->top_list_enabled = (bool)$properties['top_list_enabled'];
 		$this->creation_date = new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $properties['creation_date']);
+		$this->updated_date = !empty($properties['updated_date']) ? new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $properties['updated_date']) : null;
 		$this->picture_url = new Url($properties['picture_url']);
 		$this->sources = !empty($properties['sources']) ? unserialize($properties['sources']) : array();
 		

@@ -1,10 +1,11 @@
 <?php
 /*##################################################
- *                          NewsAjaxTagsAutoCompleteController.class.php
+ *		                Keyword.class.php
  *                            -------------------
- *   begin                : November 15, 2012
- *   copyright            : (C) 2012 Kevin MASSY
+ *   begin                : August 28, 2013
+ *   copyright            : (C) 2013 Kevin MASSY
  *   email                : kevin.massy@phpboost.com
+ *
  *
  ###################################################
  *
@@ -24,27 +25,56 @@
  *
  ###################################################*/
 
-/**
- * @author Kevin MASSY <kevin.massy@phpboost.com>
- */
-class NewsAjaxTagsAutoCompleteController extends AbstractController
+class Keyword
 {
-	public function execute(HTTPRequestCustom $request)
+	private $id;
+	private $name;
+	private $rewrited_name;
+	
+	public function set_id($id)
 	{
-		$tpl = new StringTemplate('<ul> # START results # <li>{results.NAME}</li> # END results # </ul>');
- 
-		try {
-			$result = PersistenceContext::get_querier()->select("SELECT name, rewrited_name FROM " . NewsSetup::$news_keywords_table . " WHERE name LIKE '" . $request->get_value('value', '') . "%'",
-				array(), SelectQueryResult::FETCH_ASSOC);
-	 
-			while($row = $result->fetch())
-			{
-				$tpl->assign_block_vars('results', array('NAME' => $row['name']));
-			}
-		} catch (Exception $e) {
-		}
- 
-		return new SiteNodisplayResponse($tpl);
+		$this->id = $id;
+	}
+	
+	public function get_id()
+	{
+		return $this->id;
+	}
+	
+	public function set_name($name)
+	{
+		$this->name = $name;
+	}
+	
+	public function get_name()
+	{
+		return $this->name;
+	}
+	
+	public function set_rewrited_name($rewrited_name)
+	{
+		$this->rewrited_name = $rewrited_name;
+	}
+	
+	public function get_rewrited_name()
+	{
+		return $this->rewrited_name;
+	}
+	
+	public function get_properties()
+	{
+		return array(
+			'id' => $this->get_id(),
+			'name' => $this->get_name(),
+			'rewrited_name' => $this->get_rewrited_name(),
+		);
+	}
+	
+	public function set_properties(array $properties)
+	{
+		$this->set_id($properties['id']);
+		$this->set_name($properties['name']);
+		$this->set_rewrited_name($properties['rewrited_name']);
 	}
 }
 ?>

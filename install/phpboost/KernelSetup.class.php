@@ -44,6 +44,8 @@ class KernelSetup
 	private static $events_table;
 	private static $errors_404_table;
 	private static $group_table;
+	private static $keywords_table;
+	private static $keywords_relations_table;
 	private static $member_table;
 	private static $member_extended_fields_table;
 	private static $member_extended_fields_list;
@@ -75,6 +77,8 @@ class KernelSetup
 		self::$events_table = PREFIX . 'events';
 		self::$errors_404_table = PREFIX . 'errors_404';
 		self::$group_table = PREFIX . 'group';
+		self::$keywords_table = PREFIX . 'keywords';
+		self::$keywords_relations_table = PREFIX . 'keywords_relations';
 		self::$member_table = PREFIX . 'member';
 		self::$member_extended_fields_table = PREFIX . 'member_extended_fields';
 		self::$member_extended_fields_list = PREFIX . 'member_extended_fields_list';
@@ -112,6 +116,8 @@ class KernelSetup
 			self::$events_table,
 			self::$errors_404_table,
 			self::$group_table,
+			self::$keywords_table, 
+			self::$keywords_relations_table,
 			self::$member_table,
 			self::$member_extended_fields_table,
 			self::$member_extended_fields_list,
@@ -142,6 +148,8 @@ class KernelSetup
 		$this->create_events_table();
 		$this->create_errors_404_table();
 		$this->create_group_table();
+		$this->create_keywords_table();
+		$this->create_keywords_relations_table();
 		$this->create_member_table();
 		$this->create_member_extended_fields_table();
 		$this->create_member_extended_fields_list_table();
@@ -318,6 +326,32 @@ class KernelSetup
 			'primary' => array('id'),
 		);
 		self::$db_utils->create_table(self::$group_table, $fields, $options);
+	}
+	
+	private function create_keywords_table()
+	{
+		$fields = array(
+			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
+			'name' => array('type' => 'string', 'length' => 100, 'notnull' => 1, 'default' => "''"),
+			'rewrited_name' => array('type' => 'string', 'length' => 250, 'default' => "''"),
+		);
+		$options = array(
+			'primary' => array('id'),
+			'indexes' => array(
+				'name' => array('type' => 'unique', 'fields' => 'name',
+				'rewrited_name' => array('type' => 'unique', 'fields' => 'rewrited_name')
+		)));
+		PersistenceContext::get_dbms_utils()->create_table(self::$keywords_table, $fields, $options);
+	}
+	
+	private function create_keywords_relations_table()
+	{
+		$fields = array(
+			'id_in_module' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
+			'module_id' => array('type' => 'string', 'length' => 25, 'default' => "''"),
+			'id_keyword' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
+		);
+		PersistenceContext::get_dbms_utils()->create_table(self::$keywords_relations_table, $fields);
 	}
 
 	private function create_member_table()
