@@ -31,6 +31,7 @@ les pages du module "pages".
 - Refonte du module Web ?
 - Refonte du système d'événement et intégration d'un système de notification
 [*] Ajout d'une option dans la configuration pour le mode de débogage permettant d'afficher les requêtes SQL
+[*] Création d'un système permettant de gérer facilement des mots clés dans les modules
 
 [b]Menus :[/b]
 - Possibilité de désactiver l'affichage d'un lien dans les menus
