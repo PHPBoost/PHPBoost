@@ -155,7 +155,7 @@ class ShoutboxModuleMiniMenu extends ModuleMiniMenu
 	    		$tpl->assign_block_vars('shout', array(
 	    			'IDMSG' => $row['id'],
 	    			'PSEUDO' => $row['login'],
-	    			'DATE' => $date->format(DATE_YEAR_MONTH_DAY_HOUR_MINUTE_SECOND),
+	    			'DATE' => $date->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE),
 	    			'CONTENTS' => ucfirst(FormatingHelper::second_parse(stripslashes($row['contents']))) //Majuscule premier caractère.
 	    		));
 	    	}
