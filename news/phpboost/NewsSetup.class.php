@@ -55,6 +55,7 @@ class NewsSetup extends DefaultModuleSetup
 	{
 		$this->drop_tables();
 		ConfigManager::delete('news', 'config');
+		NewsService::get_keywords_manager()->delete_module_relations();
 	}
 
 	private function drop_tables()

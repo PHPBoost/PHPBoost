@@ -56,13 +56,14 @@ class KeywordsManager
 		{
 			if (!$this->exists($keyword))
 			{
-				$id_keyword = $this->add($keyword);
+				$result = $this->db_querier->insert(DB_TABLE_KEYWORDS, array('name' => $keyword, 'rewrited_name' => Url::encode_rewrite($keyword)));
+				$id_keyword = $result->get_last_inserted_id();
 			}
 			else
 			{
-				$id_keyword = $this->get_id_keyword('WHERE rewrited_name=:rewrited_name', array('rewrited_name' => Url::encode_rewrite($keyword)));
+				$id_keyword = $this->db_querier->get_column_value(DB_TABLE_KEYWORDS, 'id', 'WHERE rewrited_name=:rewrited_name', array('rewrited_name' => Url::encode_rewrite($keyword)));
 			}
-			$this->put_relation($id_in_module, $id_keyword);
+			$this->db_querier->insert(DB_TABLE_KEYWORDS_RELATIONS, array('module_id' => $this->module_id, 'id_in_module' => $id_in_module, 'id_keyword' => $id_keyword));
 		}
 	}
 	
@@ -109,42 +110,20 @@ class KeywordsManager
 		}
 		return $keywords;
 	}
-		
-	private function add($name)
-	{
-		$result = $this->db_querier->insert(DB_TABLE_KEYWORDS, array('name' => $name, 'rewrited_name' => Url::encode_rewrite($name)));
-		return $result->get_last_inserted_id();
-	}
-
-	private function update($id, $name)
-	{
-		$this->db_querier->update(DB_TABLE_KEYWORDS, array('name' => $name, 'rewrited_name' => Url::encode_rewrite($name), 'WHERE id=:id', array('id' => $id)));
-	}
-
-	private function delete($condition, array $parameters)
-	{
-		$this->db_querier->delete(DB_TABLE_KEYWORDS, $condition, $parameters);
-	}
 	
-	private function delete_relations($id_in_module)
+	public function delete_relations($id_in_module)
 	{
 		$this->db_querier->delete(DB_TABLE_KEYWORDS_RELATIONS, 'WHERE module_id = :module_id AND id_in_module=:id_in_module', array('module_id' => $this->module_id, 'id_in_module' => $id_in_module));
 	}
 	
+	public function delete_module_relations()
+	{
+		$this->db_querier->delete(DB_TABLE_KEYWORDS_RELATIONS, 'WHERE module_id=:module_id', array('module_id' => $this->module_id));
+	}
+
 	private function exists($name)
 	{
 		return $this->db_querier->row_exists(DB_TABLE_KEYWORDS, 'WHERE rewrited_name=:rewrited_name', array('rewrited_name' => Url::encode_rewrite($name)));
-	}
-
-	private function get_id_keyword($condition, array $parameters)
-	{
-		return $this->db_querier->get_column_value(DB_TABLE_KEYWORDS, 'id', $condition, $parameters);
-	}	
-
-	private function put_relation($id_in_module, $id_keyword)
-	{
-		$result = $this->db_querier->insert(DB_TABLE_KEYWORDS_RELATIONS, array('module_id' => $this->module_id, 'id_in_module' => $id_in_module, 'id_keyword' => $id_keyword));
-		return $result->get_last_inserted_id();
 	}
 }
 ?>
