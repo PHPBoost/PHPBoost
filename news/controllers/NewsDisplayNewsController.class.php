@@ -212,6 +212,7 @@ class NewsDisplayNewsController extends ModuleController
 		$response = new NewsDisplayResponse();
 		$response->set_page_title($this->get_news()->get_name());
 		$response->set_page_description($this->get_news()->get_real_short_contents());
+		$response->set_page_keywords($this->get_news()->get_keywords_name());
 		$response->add_breadcrumb_link($this->lang['news'], NewsUrlBuilder::home());
 		
 		$categories = array_reverse(NewsService::get_categories_manager()->get_parents($this->get_news()->get_id_cat(), true));

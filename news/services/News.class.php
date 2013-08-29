@@ -49,6 +49,7 @@ class News
 
 	private $picture_url;
 	private $sources;
+	private $keywords;
 	
 	const NOT_APPROVAL = 0;
 	const APPROVAL_NOW = 1;
@@ -255,12 +256,16 @@ class News
 	
 	public function get_keywords()
 	{
-		return NewsService::get_keywords_manager()->get_keywords($this->id);
+		if ($this->keywords === null)
+		{
+			$this->keywords = NewsService::get_keywords_manager()->get_keywords($this->id);
+		}
+		return $this->keywords;
 	}
 	
 	public function get_keywords_name()
 	{
-		return NewsService::get_keywords_manager()->get_keywords_name($this->id);
+		return array_keys($this->get_keywords());
 	}
 	
 	public function is_authorized_add()
