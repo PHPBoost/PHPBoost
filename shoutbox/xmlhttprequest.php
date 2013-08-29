@@ -80,7 +80,7 @@ if ($add)
 			$last_msg_id = $Sql->insert_id("SELECT MAX(id) FROM " . PREFIX . "shoutbox"); 
 			
 			$date = new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, time());
-			$date = $date->format(DATE_YEAR_MONTH_DAY_HOUR_MINUTE_SECOND);
+			$date = $date->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE);
 			
 			$array_class = array('member', 'modo', 'admin');
 			if ($User->get_attribute('user_id') !== -1)
@@ -119,7 +119,7 @@ elseif ($refresh)
 			$del = '';
 			
 		$date = new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $row['timestamp']);
-		$date = $date->format(DATE_YEAR_MONTH_DAY_HOUR_MINUTE_SECOND);
+		$date = $date->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE);
 		
 		if ($row['user_id'] !== -1) 
 		{
