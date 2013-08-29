@@ -150,7 +150,7 @@ if ($action == 'alert') //Gestion des alertes
 			'L_TITLE' => $LANG['alert_title'],
 			'L_TOPIC' => $LANG['alert_concerned_topic'],
 			'L_LOGIN' => $LANG['alert_login'],
-			'L_TIME' => $LANG['date'],
+			'L_TIME' => LangLoader::get_message('date', 'date-common'),
 			'L_STATUS' => $LANG['status'],
 			'L_DELETE' => $LANG['delete'],
 			'L_DELETE_MESSAGE' => $LANG['delete_several_alerts']
@@ -266,7 +266,7 @@ if ($action == 'alert') //Gestion des alertes
 				'L_TOPIC' => $LANG['alert_concerned_topic'],
 				'L_CONTENTS' => $LANG['alert_msg'],
 				'L_LOGIN' => $LANG['alert_login'],
-				'L_TIME' => $LANG['date'],
+				'L_TIME' => LangLoader::get_message('date', 'date-common'),
 				'L_STATUS' => $LANG['status'],
 				'L_STATUS_1' => $LANG['change_status_to_1'],
 				'L_CAT' => $LANG['alert_concerned_cat']
@@ -643,7 +643,7 @@ else //Panneau de modération
 		'L_MODO' => $LANG['modo'],
 		'L_ACTION' => $LANG['action'],
 		'L_USER_CONCERN' => $LANG['history_member_concern'],
-		'L_DATE' => $LANG['date'],
+		'L_DATE' => LangLoader::get_message('date', 'date-common'),
 		'L_DELETE' => $LANG['delete'],
 		'L_MORE_ACTION' => $LANG['more_action']
 	));

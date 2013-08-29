@@ -103,7 +103,7 @@ elseif ($id_media > 0)
 		'HITS' => ((int)$media['counter']+1) > 1 ? sprintf($MEDIA_LANG['n_times'], ((int)$media['counter']+1)) : sprintf($MEDIA_LANG['n_time'], ((int)$media['counter']+1)),
 		'NUM_NOTES' => (int)$nbr_notes > 1 ? sprintf($MEDIA_LANG['num_notes'], (int)$nbr_notes) : sprintf($MEDIA_LANG['num_note'], (int)$nbr_notes),
 		'U_COM' => '<a href="'. PATH_TO_ROOT .'/media/media' . url('.php?id=' . $id_media . '&amp;com=0', '-' . $id_media . '-' . $media['idcat'] . '+' . Url::encode_rewrite($media['name']) . '.php?com=0') .'#comments_list">'. CommentsService::get_number_and_lang_comments('media', $id_media) . '</a>',
-		'L_DATE' => $LANG['date'],
+		'L_DATE' => LangLoader::get_message('date', 'date-common'),
 		'L_SIZE' => $LANG['size'],
 		'L_MEDIA_INFOS' => $MEDIA_LANG['media_infos'],
 		'DATE' => gmdate_format('date_format', $media['timestamp']),

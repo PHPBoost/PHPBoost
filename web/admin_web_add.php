@@ -79,7 +79,7 @@ elseif (!empty($_POST['previs']))
 		'COMPT' => $compt,
 		'DATE' => gmdate_format('date_format_short'),
 		'L_DESC' => $LANG['description'],
-		'L_DATE' => $LANG['date'],
+		'L_DATE' => LangLoader::get_message('date', 'date-common'),
 		'L_COM' => $LANG['com'],
 		'L_VIEWS' => $LANG['views'],
 		'L_NOTE' => $LANG['note'],

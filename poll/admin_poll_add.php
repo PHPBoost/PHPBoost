@@ -125,7 +125,7 @@ else
 		'L_MULTIPLE' => $LANG['multiple'],
 		'L_ANSWERS' => $LANG['answers'],
 		'L_NUMBER_VOTE' => $LANG['number_vote'],
-		'L_DATE' => $LANG['date'],
+		'L_DATE' => LangLoader::get_message('date', 'date-common'),
 		'L_UNTIL' => $LANG['until'],
 		'L_RELEASE_DATE' => $LANG['release_date'],
 		'L_IMMEDIATE' => $LANG['immediate'],
