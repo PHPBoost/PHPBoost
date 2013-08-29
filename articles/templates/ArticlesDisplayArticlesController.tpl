@@ -14,7 +14,7 @@
 	    <ul class="subnav">
 		# IF C_EDIT #
 		<li>
-			<a href="{U_EDIT_ARTICLE}" title="${i18n('articles.edit')}"><img class="valign_middle" src="{PATH_TO_ROOT}/articles/templates/images/edit_white.png" alt="${i18n('articles.edit')}" /></a>
+			<a href="{U_EDIT_ARTICLE_PAGE}" title="${i18n('articles.edit')}"><img class="valign_middle" src="{PATH_TO_ROOT}/articles/templates/images/edit_white.png" alt="${i18n('articles.edit')}" /></a>
 		</li>
 		# ENDIF #
 		# IF C_DELETE #
@@ -80,9 +80,9 @@
 			<span itemprop="text">{CONTENTS}</span>
 			<div class="spacer" style="margin-top:35px;">&nbsp;</div>
 			# IF PAGINATION_ARTICLES #
-			<div style="float:left;width:33%;text-align:right"><a href="{PAGE_PREVIOUS_ARTICLES}">&nbsp;&leftarrow;{L_PREVIOUS_TITLE}</a></div>
+			<div style="float:left;width:33%;text-align:right"><a href="{U_PAGE_PREVIOUS}">&nbsp;&leftarrow;{L_PREVIOUS_TITLE}</a></div>
 			<div style="float:left;width:33%" class="text_center">{PAGINATION_ARTICLES}</div>
-			<div style="float:left;width:33%;"><a href="{PAGE_NEXT_ARTICLES}">{L_NEXT_TITLE}&nbsp;&rightarrow;</a></div>
+			<div style="float:left;width:33%;"><a href="{U_PAGE_NEXT}">{L_NEXT_TITLE}&nbsp;&rightarrow;</a></div>
 			# ENDIF #		
 		<div class="spacer">&nbsp;</div>
 	</div>
@@ -91,7 +91,7 @@
 		<div><b> ${i18n('articles.sources')} : </b># START sources #{sources.COMMA}<a itemprop="isBasedOnUrl" href="{sources.URL}" class="small_link">{sources.NAME}</a># END sources #</div>
 		# ENDIF #
 		# IF C_DATE_UPDATED #
-		<div>${i18n('articles.date_updated')}{DATE_UPDATED}</div>
+		<div><i>${i18n('articles.date_updated')}{DATE_UPDATED}</i></div>
 		# ENDIF #
 		<div class="spacer">&nbsp;</div>
 		# IF C_NOTATION_ENABLED #

@@ -116,8 +116,6 @@ class ArticlesDisplayArticlesController extends ModuleController
 		
 		$nbr_pages = count($array_page[1]);
 		
-		// @todo : option de rendre les pages sous forme de lien (comme wiki, dans div flottant à droite)
-		//$pages_link_list = '<ul class="">';
 		$this->build_form($array_page, $current_page);
 		
 		$this->build_view_sources();
@@ -128,26 +126,28 @@ class ArticlesDisplayArticlesController extends ModuleController
 		$pagination->set_url(ArticlesUrlBuilder::display_article($this->category->get_id(), $this->category->get_rewrited_name(), $this->article->get_id(), $this->article->get_rewrited_title()), '%d');
 		
 		$this->view->put_all($this->article->get_tpl_vars());
-			
+		$page_name = (isset($array_page[1][$current_page-1]) && $array_page[1][$current_page-1] != '&nbsp;') ? $array_page[1][($current_page-1)] : '';
+		
 		$this->view->put_all(array(
 			'C_COMMENTS_ENABLED' => $comments_enabled,
-			'C_DATE_UPDATED' => $this->article->get_date_updated() != 0 ? true : false,
+			'C_DATE_UPDATED' => $this->article->get_date_updated() != null ? true : false,
 			'L_PREVIOUS_PAGE' => LangLoader::get_message('previous_page', 'main'),
 			'L_NEXT_PAGE' => LangLoader::get_message('next_page', 'main'),
 			'L_PRINTABLE_VERSION' => LangLoader::get_message('printable_version', 'main'),
 			'L_CAT_NAME' => $this->category->get_name(),
-			'DATE_UPDATED' => $this->article->get_date_updated() != 0 ? $this->article->get_date_updated()->format(Date::FORMAT_DAY_MONTH_YEAR) : '',
+			'DATE_UPDATED' => $this->article->get_date_updated() != null ? $this->article->get_date_updated()->format(Date::FORMAT_DAY_MONTH_YEAR) : '',
 			'KERNEL_NOTATION' => NotationService::display_active_image($this->article->get_notation()),
 			'CONTENTS' => isset($article_contents_clean[$current_page-1]) ? FormatingHelper::second_parse($article_contents_clean[$current_page-1]) : '',
 			'PAGINATION_ARTICLES' => ($nbr_pages > 1) ? $pagination->display()->render() : '',
-			'PAGE_NAME' => (isset($array_page[1][$current_page-1]) && $array_page[1][$current_page-1] != '&nbsp;') ? $array_page[1][($current_page-1)] : '',
+			'PAGE_NAME' => $page_name,
 			'NUMBER_COMMENTS' => CommentsService::get_number_comments('articles', $this->article->get_id()),
-			'U_PAGE_PREVIOUS_ARTICLES' => ($current_page > 1 && $current_page <= $nbr_pages && $nbr_pages > 1) ? ArticlesUrlBuilder::display_article($this->category->get_id(), $this->category->get_rewrited_name(), $this->article->get_id(), $this->article->get_rewrited_title())->absolute() . ($current_page - 1) : '',
+			'U_PAGE_PREVIOUS' => ($current_page > 1 && $current_page <= $nbr_pages && $nbr_pages > 1) ? ArticlesUrlBuilder::display_article($this->category->get_id(), $this->category->get_rewrited_name(), $this->article->get_id(), $this->article->get_rewrited_title())->absolute() . ($current_page - 1) : '',
 			'L_PREVIOUS_TITLE' => ($current_page > 1 && $current_page <= $nbr_pages && $nbr_pages > 1) ? $array_page[1][$current_page-2] : '',
-			'U_PAGE_NEXT_ARTICLES' => ($current_page > 0 && $current_page < $nbr_pages && $nbr_pages > 1) ? ArticlesUrlBuilder::display_article($this->category->get_id(), $this->category->get_rewrited_name(), $this->article->get_id(), $this->article->get_rewrited_title())->absolute() . ($current_page + 1) : '',
+			'U_PAGE_NEXT' => ($current_page > 0 && $current_page < $nbr_pages && $nbr_pages > 1) ? ArticlesUrlBuilder::display_article($this->category->get_id(), $this->category->get_rewrited_name(), $this->article->get_id(), $this->article->get_rewrited_title())->absolute() . ($current_page + 1) : '',
 			'L_NEXT_TITLE' => ($current_page > 0 && $current_page < $nbr_pages && $nbr_pages > 1) ? $array_page[1][$current_page] : '',
 			'U_CATEGORY' => ArticlesUrlBuilder::display_category($this->category->get_id(), $this->category->get_rewrited_name())->absolute(),
-			'U_PRINT_ARTICLE' => ArticlesUrlBuilder::print_article($this->article->get_id(), $this->article->get_rewrited_title())->absolute()
+			'U_PRINT_ARTICLE' => ArticlesUrlBuilder::print_article($this->article->get_id(), $this->article->get_rewrited_title())->absolute(),
+			'U_EDIT_ARTICLE_PAGE' => $page_name !== '' ? ArticlesUrlBuilder::edit_article($this->article->get_id(), $page_name)->absolute() : ArticlesUrlBuilder::edit_article($this->article->get_id())->absolute() 
 		));
 		
 		//Affichage commentaires

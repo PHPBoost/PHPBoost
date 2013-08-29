@@ -91,32 +91,32 @@ class ArticlesFormController extends ModuleController
 			    }
 			    -->
 			    </script>';
-			    
 		
 		if ($this->get_article()->get_id() !== null)
 		{
+			$page_to_edit = AppContext::get_request()->get_getstring('page', '');
+			
 			$script .= '<script type="text/javascript">
 				    <!--
-				    function setSelectionRange(selectionStart, selectionEnd) {
-					    var input = $(\'ArticlesFormController_contents\');
-					    if (input.setSelectionRange) {
-						    input.focus();
-						    input.setSelectionRange(selectionStart, selectionEnd);
-						    input.scrollTop = input.scrollHeight;
-					    }
-					    else if (input.createTextRange) {
-						    var range = input.createTextRange();
-						    range.collapse(true);
-						    range.moveEnd(\'character\', selectionEnd);
-						    range.moveStart(\'character\', selectionStart);
-						    range.select();
+				    function page_to_edit(page)
+				    {
+					    var searchText = page;
+					    var t = $(\'ArticlesFormController_contents\');
+					    var l = t.value.indexOf(searchText);
+
+					    if(l != -1)
+					    {
+						    t.focus();
+						    t.selectionStart = l;
+						    t.selectionEnd = l + searchText.length;
+						    t.scrollTop = t.scrollHeight;
 					    }
 				    }
 
-				    function setCaretToPos (start, end) {
-					      setSelectionRange(start, end);
+				    function setPagePosition (page) {
+					      page_to_edit(page);
 				    }
-				    window.onload = function(){setCaretToPos(900,930)};
+				    window.onload = function(){setPagePosition("' . $page_to_edit . '")};
 				     -->
 				    </script>';
 		}
@@ -389,7 +389,7 @@ class ArticlesFormController extends ModuleController
 		else
 		{
 			$now = new Date();
-			$article->set_date_updated($now->get_timestamp());
+			$article->set_date_updated($now);
 			$id_article = $article->get_id();
 			ArticlesService::update($article);
 		}
