@@ -113,7 +113,6 @@ $LANG['unaprob'] = 'Disapproval';
 $LANG['url'] = 'Url';
 $LANG['categorie'] = 'Category';
 $LANG['note'] = 'Note';
-LangLoader::get_message('date', 'date-common') = 'Date';
 $LANG['com'] = 'Comments';
 $LANG['size'] = 'Size';
 $LANG['file'] = 'File';
