@@ -97,6 +97,7 @@ class ConnectModuleMiniMenu extends ModuleMiniMenu
 	    		'C_UNREAD_ALERT' => (bool)AdministratorAlertService::get_number_unread_alerts(),
 	    		'NUM_UNREAD_CONTRIBUTIONS' => $contribution_number,
 	    		'NUMBER_UNREAD_ALERTS' => AdministratorAlertService::get_number_unread_alerts(),
+				'NUMBER_PM' => $user->get_attribute('user_pm'),
 	    		'IMG_PM' => $user->get_attribute('user_pm') > 0 ? 'new_pm.gif' : 'pm_mini.png',
 	    		'PSEUDO' => $user->get_pseudo(),
 	    		'NUMBER_TOTAL_ALERT' => $total_alert,
