@@ -45,7 +45,8 @@ $url_controller_mappers = array(
 	//Manage articles
 	new UrlControllerMapper('AdminManageArticlesController', '`^/admin/articles(?:/([a-z]+))?/?([a-z]+)?/?([0-9]+)?/?$`', array('field', 'sort', 'page')),
 	new UrlControllerMapper('ArticlesFormController', '`^/add/([0-9]+)/?$`', array('id_category')),
-	new UrlControllerMapper('ArticlesFormController', '`^/([0-9]+)/edit/?$`', array('id')),
+	//new UrlControllerMapper('ArticlesFormController', '`^/([0-9]+)/edit/?$`', array('id')),
+	new UrlControllerMapper('ArticlesFormController', '`^(?:/([0-9]+))/edit/?([A-Za-z0-9-_]+)?/?$`', array('id', 'page')),
 	new UrlControllerMapper('ArticlesDeleteController', '`^/([0-9]+)/delete/?$`', array('id')),
 	
 	//Display articles
