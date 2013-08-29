@@ -30,8 +30,9 @@
  */
 class NewsDisplayResponse
 {
-	private $page_title = '';
-	private $page_description = '';
+	private $page_title;
+	private $page_description;
+	private $page_keywords = array();
 	private $breadcrumb_links = array();
 
 	public function add_breadcrumb_link($name, $link)
@@ -53,15 +54,25 @@ class NewsDisplayResponse
 		$this->page_description = $page_description;
 	}
 	
+	public function set_page_keywords($keywords)
+	{
+		$this->page_keywords = $keywords;
+	}
+	
 	public function display($view)
 	{
 		$response = new SiteDisplayResponse($view);
 		$graphical_environment = $response->get_graphical_environment();
 		$graphical_environment->set_page_title($this->page_title);
 		
-		if (!empty($this->page_description))
+		if ($this->page_description !== null)
 		{
 			$graphical_environment->get_seo_meta_data()->set_description($this->page_description);
+		}
+		
+		foreach ($this->page_keywords as $keyword)
+		{
+			$graphical_environment->get_seo_meta_data()->add_keyword($keyword);
 		}
 		
 		$breadcrumb = $graphical_environment->get_breadcrumb();

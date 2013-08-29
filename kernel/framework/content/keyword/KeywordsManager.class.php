@@ -89,24 +89,7 @@ class KeywordsManager
 		{
 			$keyword = new Keyword();
 			$keyword->set_properties($row);
-			$keywords[] = $keyword;
-		}
-		return $keywords;
-	}
-	
-	public function get_keywords_name($id_in_module)
-	{
-		$keywords = array();
-		$result = $this->db_querier->select('SELECT relation.id_in_module, relation.id_keyword, keyword.name
-			FROM '. DB_TABLE_KEYWORDS_RELATIONS .' relation
-			LEFT JOIN '. DB_TABLE_KEYWORDS .' keyword ON keyword.id = relation.id_keyword
-			WHERE relation.module_id = :module_id AND relation.id_in_module = :id_in_module', array(
-				'module_id' => $this->module_id,
-				'id_in_module' => $id_in_module
-		));
-		while ($row = $result->fetch())
-		{
-			$keywords[] = $row['name'];
+			$keywords[$row['name']] = $keyword;
 		}
 		return $keywords;
 	}
