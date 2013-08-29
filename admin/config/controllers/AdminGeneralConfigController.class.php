@@ -155,15 +155,10 @@ class AdminGeneralConfigController extends AdminController
 		$this->general_config->set_site_description($this->form->get_value('site_description'));
 		$this->general_config->set_site_keywords($this->form->get_value('site_keywords'));
 
-		$other_start_page = $this->form->get_value('other_start_page');
-
 		$module_home_page = $this->form->get_value('start_page')->get_raw_value();
-		if ($module_home_page !== 'other')
+		$this->general_config->set_module_home_page($module_home_page);
+		if ($module_home_page == 'other')
 		{
-			$this->general_config->set_module_home_page($module_home_page);		
-		}		
-		else		
-		{		
 			$this->general_config->set_other_home_page($this->form->get_value('other_start_page'));
 		}
 
