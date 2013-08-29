@@ -62,7 +62,7 @@ if (retrieve(GET, 'refresh_unread', false)) //Affichage des messages non lus
 		$contents = '';
 		//Requête pour compter le nombre de messages non lus.
 		$nbr_msg_not_read = 0;
-		$result = $Sql->query_while("SELECT t.id AS tid, t.title, t.last_timestamp, t.last_user_id, t.last_msg_id, t.nbr_msg AS t_nbr_msg, t.display_msg, m.user_id, m.login, m.level as user_lever, m.user_groups, v.last_view_id
+		$result = $Sql->query_while("SELECT t.id AS tid, t.title, t.last_timestamp, t.last_user_id, t.last_msg_id, t.nbr_msg AS t_nbr_msg, t.display_msg, m.user_id, m.login, m.level as user_level, m.user_groups, v.last_view_id
 		FROM " . PREFIX . "forum_topics t
 		LEFT JOIN " . PREFIX . "forum_cats c ON c.id = t.idcat
 		LEFT JOIN " . PREFIX . "forum_view v ON v.idtopic = t.id AND v.user_id = '" . $User->get_attribute('user_id') . "'
