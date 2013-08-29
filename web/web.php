@@ -92,7 +92,7 @@ if (!empty($idweb) && !empty($CAT_WEB[$idcat]['name']) && !empty($idcat)) //Cont
 		'L_VISIT' =>$LANG['visit_link'],
 		'L_DESC' => $LANG['description'],
 		'L_CAT' => $LANG['category'],
-		'L_DATE' => $LANG['date'],
+		'L_DATE' => LangLoader::get_message('date', 'date-common'),
 		'L_TIMES' => $LANG['n_time'],
 		'L_VIEWS' => $LANG['views']
 	));
@@ -132,7 +132,7 @@ elseif (!empty($idcat) && empty($idweb)) //Catégories.
 		'NO_CAT' => ($nbr_web == 0) ? $LANG['none_link'] : '',
 		'MAX_NOTE' => $web_config->get_note_max(),
 		'L_LINK' => $LANG['link'],
-		'L_DATE' => $LANG['date'],
+		'L_DATE' => LangLoader::get_message('date', 'date-common'),
 		'L_VIEW' => $LANG['views'],
 		'L_NOTE' => $LANG['note'],
 		'L_COM' => $LANG['com'],

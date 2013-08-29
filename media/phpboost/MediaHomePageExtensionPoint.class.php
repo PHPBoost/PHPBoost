@@ -153,7 +153,7 @@ class MediaHomePageExtensionPoint implements HomePageExtensionPoint
 	
 			$tpl->put_all(array(
 				'L_ALPHA' => $MEDIA_LANG['sort_title'],
-				'L_DATE' => $LANG['date'],
+				'L_DATE' => LangLoader::get_message('date', 'date-common'),
 				'L_NBR' => $MEDIA_LANG['sort_popularity'],
 				'L_NOTE' => $LANG['note'],
 				'L_COM' => $LANG['com'],

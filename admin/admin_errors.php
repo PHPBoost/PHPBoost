@@ -52,7 +52,7 @@ $tpl->add_lang(LangLoader::get('admin-errors-Common'));
 $tpl->put_all(array(
 	'L_ERRORS' => LangLoader::get_message('logged_errors', 'admin-errors-Common'),
 	'L_DESC' => $LANG['description'],
-	'L_DATE' => $LANG['date'],
+	'L_DATE' => LangLoader::get_message('date', 'date-common'),
 	'L_ERASE_RAPPORT' => $LANG['erase_rapport'],
 	'L_ERASE_RAPPORT_EXPLAIN' => $LANG['final'],
 	'L_ERASE' => $LANG['erase']

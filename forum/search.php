@@ -68,7 +68,7 @@ $Template->put_all(array(
 	'L_SEARCH_FORUM' => $LANG['search_forum'],
 	'L_KEYWORDS' => $LANG['keywords'],
 	'L_OPTIONS' => $LANG['options'],
-	'L_DATE' => $LANG['date'],
+	'L_DATE' => LangLoader::get_message('date', 'date-common'),
 	'L_DAY' => $date_lang['day'],
 	'L_DAYS' => $date_lang['days'],
 	'L_ALL' => $LANG['all'],

@@ -171,7 +171,7 @@ class DownloadHomePageExtensionPoint implements HomePageExtensionPoint
 				'L_FILE' => $DOWNLOAD_LANG['file'],
 				'L_ALPHA' => $DOWNLOAD_LANG['sort_alpha'],
 				'L_SIZE' => $LANG['size'],
-				'L_DATE' => $LANG['date'],
+				'L_DATE' => LangLoader::get_message('date', 'date-common'),
 				'L_DOWNLOAD' => $DOWNLOAD_LANG['download'],
 				'L_POPULARITY' => $DOWNLOAD_LANG['popularity'],
 				'L_DESC' => $LANG['desc'],

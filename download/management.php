@@ -351,7 +351,7 @@ if ($edit_file_id > 0)
 		    'FORCE_DOWNLOAD_SELECTED' => $file_download_method == 'force_download' ? ' selected="selected"' : '',
 			'REDIRECTION_SELECTED' => $file_download_method != 'force_download' ? ' selected="selected"' : '',
 			// Those langs are required by the template inclusion
-			'L_DATE' => $LANG['date'],
+			'L_DATE' => LangLoader::get_message('date', 'date-common'),
 			'L_SIZE' => $LANG['size'],
 			'L_DOWNLOAD' => $DOWNLOAD_LANG['download'],
 			'L_DOWNLOAD_FILE' => $DOWNLOAD_LANG['download_file'],
@@ -601,7 +601,7 @@ else
 		    'FORCE_DOWNLOAD_SELECTED' => $file_download_method == 'force_download' ? ' selected="selected"' : '',
 			'REDIRECTION_SELECTED' => $file_download_method != 'force_download' ? ' selected="selected"' : '',
 			// Those langs are required by the template inclusion
-			'L_DATE' => $LANG['date'],
+			'L_DATE' => LangLoader::get_message('date', 'date-common'),
 			'L_SIZE' => $LANG['size'],
 			'L_DOWNLOAD' => $DOWNLOAD_LANG['download'],
 			'L_DOWNLOAD_FILE' => $DOWNLOAD_LANG['download_file'],

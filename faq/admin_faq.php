@@ -86,7 +86,7 @@ if ($page > 0)
 		'L_EDIT' => $FAQ_LANG['update'],
 		'L_DELETE' => $FAQ_LANG['delete'],
 		'L_CONFIRM_DELETE' => addslashes($FAQ_LANG['confirm_delete']),
-		'L_DATE' => $LANG['date'],
+		'L_DATE' => LangLoader::get_message('date', 'date-common'),
 		'L_FAQ_MANAGEMENT' => $FAQ_LANG['faq_management'],
 		'L_CATS_MANAGEMENT' => $FAQ_LANG['cats_management'],
 		'L_CONFIG_MANAGEMENT' => $FAQ_LANG['faq_configuration'],

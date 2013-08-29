@@ -93,7 +93,7 @@ $template->put_all(array(
 	'PAGINATION' => $pagination->display('admin_alerts.php?p=%d&criteria=' . $criteria . '&order=' . $order, AdministratorAlertService::get_number_alerts(), 'p', NUM_ALERTS_PER_PAGE, 3),	
 	'L_ADMIN_ALERTS' => $LANG['administrator_alerts'],
 	'L_TYPE' => $LANG['type'],
-	'L_DATE' => $LANG['date'],
+	'L_DATE' => LangLoader::get_message('date', 'date-common'),
 	'L_PRIORITY' => $LANG['priority'],
 	'L_ADMINISTRATOR_ALERTS_LIST' => $LANG['administrator_alerts_list'],
 	'L_ACTIONS' => $LANG['administrator_alerts_action'],

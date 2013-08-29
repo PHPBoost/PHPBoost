@@ -141,7 +141,7 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 		$rewrite_title = Url::encode_rewrite($CAT_GALLERY[$g_idcat]['name']);
 	
 		//Ordonnement.
-		$array_order = array('name' => $LANG['name'], 'date' => $LANG['date'], 'views' => $LANG['views'], 'notes' => $LANG['notes'], 'com' => $LANG['com_s']);
+		$array_order = array('name' => $LANG['name'], 'date' => LangLoader::get_message('date', 'date-common'), 'views' => $LANG['views'], 'notes' => $LANG['notes'], 'com' => $LANG['com_s']);
 		foreach ($array_order as $type => $name)
 		{
 			$Template->assign_block_vars('order', array(
