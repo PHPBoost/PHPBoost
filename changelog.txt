@@ -48,6 +48,7 @@ les pages du module "pages".
 
 [b]Divers :[/b]
 [*] Suppression du panneau de modération présent dans l'administration qui fait doublon avec celui du dossier user
+[*] Suppression des autorisations d'accès dans la gestion des modules pour plus de cohérence et éviter les doublons avec les autorisations des modules
 - Envoi d'un MP lors d'un commentaire sur une contribution
 [*] Ajout de la balise enclosure dans les flux RSS pour joindre des médias
 [*] Harmonisation des liens dans l'administration :

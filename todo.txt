@@ -74,7 +74,6 @@
 ###################################### PHPBoost 4.1 ##################################
 
 [b]Structure et fonctionnement:[/b]
-- [color=red]Nouveauté:[/color] Refonte des catégories avec support du Drag'n Drop.
 - [color=red]Nouveauté:[/color] Générateur automatique de tableaux avec gestion de la pagination, filtres, tris.
 - [color=red]Nouveauté:[/color] Possibilité d'associer un template à un menu pour pouvoir le personnaliser.
 - [color=red]Nouveauté:[/color] Pose de verrous sur les contenus lors de leur édition afin de faciliter le travail collaboratif.
@@ -95,7 +94,6 @@
 + [color=red]Nouveauté:[/color] Interface de personnalisation de la page de démarrage du site.
 - Possibilité de désactiver l'affichage d'un lien dans les menus
 - [color=red]Nouveauté:[/color] Système d'alertes (javascript) utilisateur évolué.
-- Supprimer les autorisations d'accès dans la gestion des modules pour plus de cohérence
 - Travailler sur le support mobile
 - Mettre en avant les technologies HTML 5 et CSS3
 
