@@ -72,7 +72,7 @@ class AdminOnlineConfigController extends AdminModuleController
 			'class' => 'text', 'maxlength' => 3, 'required' => true)
 		));
 		
-		$fieldset_config->add_field(new FormFieldTextEditor('nbr_members_per_page', $this->lang['admin.nbr-members-per-page'], $online_config->get_nbr_members_per_page(), array(
+		$fieldset_config->add_field(new FormFieldTextEditor('nbr_members_per_page', $this->lang['admin.nbr-members-per-page'], $online_config->get_number_members_per_page(), array(
 			'class' => 'text', 'maxlength' => 3, 'required' => true)
 		));
 		
