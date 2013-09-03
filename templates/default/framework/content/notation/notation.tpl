@@ -41,7 +41,7 @@
 -->
 </script>
 	
-<div itemscope="itemscope" itemtype="http://schema.org/AggregateRating">
+<div itemprop="aggregateRating" itemscope="itemscope" itemtype="http://schema.org/AggregateRating">
 	<div style="width:{NUMBER_PIXEL}px;margin:auto;display:none" id="note_pictures{ID_IN_MODULE}" >
 		# START notation #
 			<a href="javascript:Note{ID_IN_MODULE}.send_request({notation.I})" onmouseover="javascript:Note{ID_IN_MODULE}.change_picture_status({notation.I});" class="img_link">
