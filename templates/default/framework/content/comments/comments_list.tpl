@@ -6,7 +6,7 @@ function Confirm_del_comment() {
 -->
 </script>
 # START comments #
-	<div id="com{comments.ID_COMMENT}" class="comment" itemscope="itemscope" itemtype="http://schema.org/Comments">
+	<div id="com{comments.ID_COMMENT}" class="comment" itemscope="itemscope" itemtype="http://schema.org/Comment">
 		<div class="comment-user_infos">
 			<div id="comment-pseudo">
 				# IF comments.C_VISITOR #
