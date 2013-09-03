@@ -45,7 +45,7 @@ class KeywordsManager
 	public function get_form_field($id_in_module, $id, $label, array $field_options = array(), array $constraints = array())
 	{
 		$field_options['file'] = TPL_PATH_TO_ROOT . '/kernel/framework/ajax/dispatcher.php?url=/tags/';
-		return new FormFieldMultipleAutocompleter($id, $label, $this->get_keywords_name($id_in_module), $field_options, $constraints);
+		return new FormFieldMultipleAutocompleter($id, $label, array_keys($this->get_keywords($id_in_module)), $field_options, $constraints);
 	}
 	
 	public function put_relations($id_in_module, $keywords)
