@@ -1,9 +1,9 @@
 <?php
 /*##################################################
- *                          CalendarModuleMiniMenu.class.php
+ *                         CalendarScheduledJobs.class.php
  *                            -------------------
- *   begin                : November 22, 2012
- *   copyright            : (C) 2012 Julien BRISWALTER
+ *   begin                : August 23, 2013
+ *   copyright            : (C) 2013 Julien BRISWALTER
  *   email                : julienseth78@phpboost.com
  *
  *
@@ -25,27 +25,15 @@
  *
  ###################################################*/
 
-class CalendarModuleMiniMenu extends ModuleMiniMenu
+class CalendarScheduledJobs extends AbstractScheduledJobExtensionPoint
 {
-	public function get_default_block()
+	/**
+	 * {@inheritDoc}
+	 */
+	public function on_changeday(Date $yesterday, Date $today)
 	{
-		return self::BLOCK_POSITION__LEFT;
-	}
-	
-	public function display($tpl = false)
-	{
-		if (!Url::is_current_url('/calendar/') && CalendarAuthorizationsService::check_authorizations()->read())
-		{
-			$tpl = new FileTemplate('calendar/CalendarModuleMiniMenu.tpl');
-			$tpl->add_lang(LangLoader::get('common', 'calendar'));
-			
-			MenuService::assign_positions_conditions($tpl, $this->get_block());
-			
-			$tpl->put('CALENDAR', CalendarAjaxCalendarController::get_view());
-			
-			return $tpl->render();  
-		}
-		return '';
+		if ($today->get_day() == 1)
+			CalendarCurrentMonthEventsCache::invalidate();
 	}
 }
 ?>

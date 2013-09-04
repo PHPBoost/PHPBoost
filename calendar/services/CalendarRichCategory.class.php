@@ -4,7 +4,7 @@
  *                            -------------------
  *   begin                : February 25, 2013
  *   copyright            : (C) 2013 Julien BRISWALTER
- *   email                : julien.briswalter@gmail.com
+ *   email                : julienseth78@phpboost.com
  *
  *  
  ###################################################
@@ -63,7 +63,7 @@ class CalendarRichCategory extends RichCategory
 			'id_parent' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'color' => array('type' => 'string', 'length' => 250, 'default' => "''"),
 		);
- 
+		
 		$options = array(
 			'primary' => array('id')
 		);

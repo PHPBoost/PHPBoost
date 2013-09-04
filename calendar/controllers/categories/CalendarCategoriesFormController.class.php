@@ -4,7 +4,7 @@
  *                            -------------------
  *   begin                : February 25, 2013
  *   copyright            : (C) 2013 Julien BRISWALTER
- *   email                : julien.briswalter@gmail.com
+ *   email                : julienseth78@phpboost.com
  *
  *  
  ###################################################
@@ -29,7 +29,7 @@ class CalendarCategoriesFormController extends AbstractRichCategoriesFormControl
 {
 	protected function generate_response(View $view)
 	{
-		$page_name = $this->get_id_category() == 0 ? LangLoader::get_message('calendar.config.category.add', 'calendar_common', 'calendar') : LangLoader::get_message('calendar.config.category.edit', 'calendar_common', 'calendar');
+		$page_name = $this->get_id_category() == 0 ? LangLoader::get_message('calendar.config.category.add', 'common', 'calendar') : LangLoader::get_message('calendar.config.category.edit', 'common', 'calendar');
 		return new AdminCalendarDisplayResponse($view, $page_name);
 	}
 
@@ -51,7 +51,7 @@ class CalendarCategoriesFormController extends AbstractRichCategoriesFormControl
 	protected function get_options_fields(FormFieldset $fieldset)
 	{
 		parent::get_options_fields($fieldset);
-		$fieldset->add_field(new FormFieldColorPicker('color', LangLoader::get_message('calendar.config.category.color', 'calendar_common', 'calendar'), $this->get_category()->get_color()));
+		$fieldset->add_field(new FormFieldColorPicker('color', LangLoader::get_message('calendar.config.category.color', 'common', 'calendar'), $this->get_category()->get_color()));
 	}
 
 	protected function set_properties()

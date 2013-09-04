@@ -1,3 +1,41 @@
+.calendar_top{
+	text-align:center;
+	font-weight:bold;
+	padding-top:7px;
+}
+
+.calendar_top_l {
+	float:left;
+	padding-left:10px;
+	padding-top:5px;
+}
+
+.calendar_top_r {
+	float:right;
+	padding-right:10px;
+	padding-top:5px;
+}
+
+.calendar_table{
+	background:none;
+	border:none;
+}
+
+.calendar_table td{
+	height:30px;
+}
+
+.calendar_table td.c_row_last{
+	border-top:1px solid #DDDDDD;
+	height: 1px;
+	padding:none;
+}
+
+.calendar_content{
+	padding:6px;
+	border-top:none;
+}
+
 .text_month{
 	font-size:13px;
 	font-weight:bold;
@@ -54,44 +92,6 @@
 	color:#BEBEBE;
 	padding:2px;
 	padding-right:5px;
-}
-
-.mini_calendar_top{
-	text-align:center;
-	font-weight:bold;
-	padding-top:7px;
-}
-
-.mini_calendar_top_l {
-	float:left;
-	padding-left:10px;
-	padding-top:5px;
-}
-
-.mini_calendar_top_r {
-	float:right;
-	padding-right:10px;
-	padding-top:5px;
-}
-
-.mini_calendar_table{
-	background:none;
-	border:none;
-}
-
-.mini_calendar_table td{
-	height:30px;
-}
-
-.mini_calendar_table td.c_row_last{
-	border-top:1px solid #DDDDDD;
-	height: 1px;
-	padding:none;
-}
-
-.mini_calendar_content{
-	padding:6px;
-	border-top:none;
 }
 
 .float_left{

@@ -95,4 +95,92 @@ div.event_display_dates{
 	font-weight:normal;
 	padding:4px;
 	float:right;
+	width: 160px;
 }
+
+.text_month{
+	font-size:13px;
+	font-weight:bold;
+}
+
+.c_row{
+	border-top:1px solid #DDDDDD;
+	border-right:1px solid #DDDDDD;
+}
+
+.c_row a, .c_row a:hover{
+	color: #3F5164;
+}
+
+.c_row:first-child{
+	border-top:none;
+	border-right:1px solid #DDDDDD; 
+}
+
+.c_row_last{
+	border-top:1px solid #DDDDDD;
+	height: 1px;
+	padding:none;
+}
+
+.calendar_today {
+	background:#DBEEDD;
+	font-weight:bold;
+	padding:2px;
+}
+
+.calendar_event {
+	background:#DBE5EE;
+	font-weight:bold;
+	padding:2px;
+}
+
+.calendar_other {
+	background:#F1F1F1;
+	padding:2px;
+}
+
+.calendar_none {
+	background:#FFFFFF;
+	padding:2px;
+}
+
+.calendar_weekend{
+	background:#ECECEC;
+	padding:2px;
+}
+
+.calendar_week{
+	color:#BEBEBE;
+	padding:2px;
+	padding-right:5px;
+}
+
+.float_left{
+	float:left;
+	margin:0;
+}
+
+.float_right{
+	float:right;
+	margin:0;
+}
+
+.change_month_link {
+	cursor:pointer;
+}
+
+.admin_add_link {
+	float:right;
+	margin:15px 15px 0 0;
+}
+
+.admin_form {
+	float:right;
+	width:300px;
+	margin-right:15px;
+}
+
+.column_title { width:28%; }
+.text_left { text-align:left; }
+.change_approval { cursor:pointer; }

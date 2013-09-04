@@ -4,7 +4,7 @@
  *                            -------------------
  *   begin                : February 25, 2013
  *   copyright            : (C) 2012 Julien BRISWALTER
- *   email                : julien.briswalter@gmail.com
+ *   email                : julienseth78@phpboost.com
  *
  *  
  ###################################################
@@ -38,6 +38,10 @@ class CalendarFormController extends ModuleController
 	 * @var FormButtonSubmit
 	 */
 	private $submit_button;
+	/**
+	 * @var FormButtonSubmit
+	 */
+	private $edit_all_serie_events_button;
 	
 	private $lang;
 	
@@ -54,7 +58,7 @@ class CalendarFormController extends ModuleController
 		$tpl = new StringTemplate('# INCLUDE FORM #');
 		$tpl->add_lang($this->lang);
 		
-		if ($this->submit_button->has_been_submited() && $this->form->validate())
+		if (($this->submit_button->has_been_submited() || ($this->event !== null && $this->event->belongs_to_a_serie() && $this->edit_all_serie_events_button->has_been_submited())) && $this->form->validate())
 		{
 			$this->save();
 			$this->redirect();
@@ -67,7 +71,7 @@ class CalendarFormController extends ModuleController
 	
 	private function init()
 	{
-		$this->lang = LangLoader::get('calendar_common', 'calendar');
+		$this->lang = LangLoader::get('common', 'calendar');
 	}
 	
 	private function build_form()
@@ -94,12 +98,11 @@ class CalendarFormController extends ModuleController
 			array(
 				new FormFieldSelectChoiceOption($this->lang['calendar.labels.repeat.never'], CalendarEvent::NEVER),
 				new FormFieldSelectChoiceOption($this->lang['calendar.labels.repeat.daily'], CalendarEvent::DAILY),
-				new FormFieldSelectChoiceOption($this->lang['calendar.labels.repeat.daily_not_weekend'], CalendarEvent::DAILY_NOT_WEEKEND),
 				new FormFieldSelectChoiceOption($this->lang['calendar.labels.repeat.weekly'], CalendarEvent::WEEKLY),
 				new FormFieldSelectChoiceOption($this->lang['calendar.labels.repeat.monthly'], CalendarEvent::MONTHLY),
 				new FormFieldSelectChoiceOption($this->lang['calendar.labels.repeat.yearly'], CalendarEvent::YEARLY),
 			),
-			array('events' => array('change' => '
+			array('disabled' => $this->get_event()->belongs_to_a_serie(), 'events' => array('change' => '
 			if (HTMLForms.getField("repeat_type").getValue() != "' . CalendarEvent::NEVER . '") {
 				HTMLForms.getField("repeat_number").enable();
 			} else {
@@ -108,19 +111,20 @@ class CalendarFormController extends ModuleController
 		));
 		
 		$fieldset->add_field(new FormFieldTextEditor('repeat_number', $this->lang['calendar.labels.repeat_number'], $this->get_event()->get_repeat_number(), array(
-			'class' => 'text', 'maxlength' => 3, 'size' => 3, 'required' => false, 'hidden' => !$this->get_event()->is_repeatable()),
+			'class' => 'text', 'maxlength' => 3, 'size' => 3, 'required' => false, 'hidden' => !$this->get_event()->is_repeatable(), 'readonly' => $this->get_event()->belongs_to_a_serie()),
 			array(new FormFieldConstraintRegex('`^[0-9]+$`i'))
 		));
 		
-		if (CalendarConfig::load()->is_location_enabled())
-			$fieldset->add_field(new FormFieldTextEditor('location', $this->lang['calendar.labels.location'], $this->get_event()->get_location()));
+		$fieldset->add_field(new FormFieldShortMultiLineTextEditor('location', $this->lang['calendar.labels.location'], $this->get_event()->get_location()));
 		
-		$fieldset->add_field(new FormFieldCheckbox('registration_authorized', $this->lang['calendar.labels.registration_authorized'], $this->get_event()->get_registration_authorized(),array(
-			'hidden' => true, 'events' => array('click' => '
+		$fieldset->add_field(new FormFieldCheckbox('registration_authorized', $this->lang['calendar.labels.registration_authorized'], $this->get_event()->is_registration_authorized(),array(
+			'events' => array('click' => '
 			if (HTMLForms.getField("registration_authorized").getValue()) {
 				HTMLForms.getField("max_registred_members").enable();
+				$("' . __CLASS__ . '_register_authorizations").show();
 			} else {
 				HTMLForms.getField("max_registred_members").disable();
+				$("' . __CLASS__ . '_register_authorizations").hide();
 			}'
 		))));
 		
@@ -129,11 +133,29 @@ class CalendarFormController extends ModuleController
 			array(new FormFieldConstraintRegex('`^[0-9]+$`i'))
 		));
 		
+		$auth_settings = new AuthorizationsSettings(array(
+			new ActionAuthorization($this->lang['calendar.authorizations.display_registered_users'], CalendarEvent::DISPLAY_REGISTERED_USERS_AUTHORIZATION),
+			new ActionAuthorization($this->lang['calendar.authorizations.register'], CalendarEvent::REGISTER_AUTHORIZATION)
+		));
+		$auth_settings->build_from_auth_array($this->get_event()->get_register_authorizations());
+		$auth_setter = new FormFieldAuthorizationsSetter('register_authorizations', $auth_settings, array('hidden' => !$this->get_event()->is_registration_authorized()));
+		$fieldset->add_field($auth_setter);
+		
 		$this->build_approval_field($fieldset);
 		$this->build_contribution_fieldset($form);
 		
-		$this->submit_button = new FormButtonDefaultSubmit();
-		$form->add_button($this->submit_button);
+		if ($this->get_event()->get_id() === null || !$this->get_event()->belongs_to_a_serie())
+		{
+			$this->submit_button = new FormButtonDefaultSubmit();
+			$form->add_button($this->submit_button);
+		}
+		else
+		{
+			$this->submit_button = new FormButtonDefaultSubmit($this->lang['calendar.titles.edit_occurrency']);
+			$form->add_button($this->submit_button);
+			$this->edit_all_serie_events_button = new FormButtonSubmit($this->lang['calendar.titles.edit_all_events_of_the_serie'], 'edit_all_events_of_the_serie');
+			$form->add_button($this->edit_all_serie_events_button);
+		}
 		$form->add_button(new FormButtonReset());
 		
 		$this->form = $form;
@@ -168,7 +190,8 @@ class CalendarFormController extends ModuleController
 	{
 		if ($this->event === null)
 		{
-			$id = AppContext::get_request()->get_getint('id', 0);
+			$request = AppContext::get_request();
+			$id = $request->get_getint('id', 0);
 			if (!empty($id))
 			{
 				try {
@@ -181,7 +204,7 @@ class CalendarFormController extends ModuleController
 			else
 			{
 				$this->event = new CalendarEvent();
-				$this->event->init_default_properties();
+				$this->event->init_default_properties($request->get_getint('year', date('Y')), $request->get_getint('month', date('n')), $request->get_getint('day', date('j')), $request->get_getint('id_category', Category::ROOT_CATEGORY));
 			}
 		}
 		return $this->event;
@@ -193,7 +216,7 @@ class CalendarFormController extends ModuleController
 		
 		if ($event->get_id() === null)
 		{
-			if (!CalendarAuthorizationsService::check_authorizations()->write() && !CalendarAuthorizationsService::check_authorizations()->contribution())
+			if (!$event->is_authorized_to_add())
 			{
 				$error_controller = PHPBoostErrors::user_not_authorized();
 				DispatchManager::redirect($error_controller);
@@ -201,7 +224,7 @@ class CalendarFormController extends ModuleController
 		}
 		else
 		{
-			if (!(CalendarAuthorizationsService::check_authorizations($event->get_id_cat())->moderation() || ((CalendarAuthorizationsService::check_authorizations($event->get_id_cat())->write() || CalendarAuthorizationsService::check_authorizations($event->get_id_cat())->contribution()) && $event->get_author_user()->get_id() == AppContext::get_current_user()->get_id())))
+			if (!$event->is_authorized_to_edit())
 			{
 				$error_controller = PHPBoostErrors::user_not_authorized();
 				DispatchManager::redirect($error_controller);
@@ -218,6 +241,9 @@ class CalendarFormController extends ModuleController
 	{
 		$event = $this->get_event();
 		
+		if ($event->belongs_to_a_serie() && $this->edit_all_serie_events_button->has_been_submited())
+			$this->update_recurrence_events();
+		
 		$event->set_title($this->form->get_value('title'));
 		$event->set_id_cat($this->form->get_value('id_cat')->get_raw_value());
 		$event->set_contents($this->form->get_value('contents'));
@@ -229,35 +255,44 @@ class CalendarFormController extends ModuleController
 		else
 			$event->unapprove();
 		
-		$event->set_repeat_type($this->form->get_value('repeat_type')->get_raw_value());
+		$event->set_location($this->form->get_value('location'));
 		
-		if ($event->is_repeatable())
+		if ($this->form->get_value('registration_authorized'))
 		{
-			$event->set_repeat_number($this->form->get_value('repeat_number'));
-		}
-		
-		if (CalendarConfig::load()->is_location_enabled())
-			$event->set_location($this->form->get_value('location'));
-		
-		$event->set_registration_authorized($this->form->get_value('registration_authorized') ? true : 0);
-		
-		if ($event->is_registration_authorized())
-		{
+			$event->authorize_registration();
 			$event->set_max_registred_members($this->form->get_value('max_registred_members'));
+			$event->set_register_authorizations($this->form->get_value('register_authorizations', $event->get_register_authorizations())->build_auth_array());
 		}
+		else
+			$event->unauthorize_registration();
 		
 		if ($event->get_id() === null)
 		{
+			$event->set_repeat_type($this->form->get_value('repeat_type')->get_raw_value());
+			$event->set_repeat_number($this->form->get_value('repeat_number'));
 			$id_event = CalendarService::add($event);
+			if ($event->is_repeatable())
+				$this->create_recurrence_events($id_event);
 		}
 		else
 		{
+			$create_recurrence = false;
+			
+			if (!$event->is_repeatable() && $this->form->get_value('repeat_type')->get_raw_value() != CalendarEvent::NEVER)
+			{
+				$event->set_repeat_type($this->form->get_value('repeat_type')->get_raw_value());
+				$event->set_repeat_number($this->form->get_value('repeat_number'));
+				$create_recurrence = true;
+			}
 			$id_event = CalendarService::update($event);
+			if ($create_recurrence)
+				$this->create_recurrence_events($event->get_id());
 		}
 		
 		$this->contribution_actions($event, $id_event);
 		
 		Feed::clear_cache('calendar');
+		CalendarCurrentMonthEventsCache::invalidate();
 	}
 	
 	private function contribution_actions(CalendarEvent $event, $id_event)
@@ -268,7 +303,7 @@ class CalendarFormController extends ModuleController
 			{
 				$contribution = new Contribution();
 				$contribution->set_id_in_module($id_event);
-				$contribution->set_description(stripslashes($event->get_contents()));
+				$contribution->set_description(stripslashes($this->form->get_value('contents')));
 				$contribution->set_entitled(StringVars::replace_vars($this->lang['calendar.labels.contribution.entitled'], array('title' => $event->get_title())));
 				$contribution->set_fixing_url(CalendarUrlBuilder::edit_event($id_event)->relative());
 				$contribution->set_poster_id(AppContext::get_current_user()->get_id());
@@ -296,6 +331,132 @@ class CalendarFormController extends ModuleController
 		$event->set_id($id_event);
 	}
 	
+	private function create_recurrence_events($id_parent_event)
+	{
+		$new_start_date = $this->form->get_value('start_date');
+		$new_end_date = $this->form->get_value('end_date');
+		
+		$repeat_number = $this->form->get_value('repeat_number');
+		$repeat_type = $this->form->get_value('repeat_type')->get_raw_value();
+		
+		for ($i = 1 ; $i <= $repeat_number ; $i++)
+		{
+			$event = new CalendarEvent();
+			$event->set_title($this->form->get_value('title'));
+			$event->set_id_cat($this->form->get_value('id_cat')->get_raw_value());
+			$event->set_contents($this->form->get_value('contents'));
+			$event->set_location($this->form->get_value('location'));
+			$event->set_author_user(AppContext::get_current_user());
+			$event->set_creation_date($this->get_event()->get_creation_date());
+			
+			if (!$this->is_contributor_member() && $this->form->get_value('approved'))
+				$event->approve();
+			else
+				$event->unapprove();
+			
+			switch ($repeat_type)
+			{
+				case CalendarEvent::DAILY:
+					$new_start_date->add_days(1);
+					$new_end_date->add_days(1);
+					$event->set_start_date($new_start_date);
+					$event->set_end_date($new_end_date);
+					break;
+				 case CalendarEvent::WEEKLY:
+					$new_start_date->add_weeks(1);
+					$new_end_date->add_weeks(1);
+					$event->set_start_date($new_start_date);
+					$event->set_end_date($new_end_date);
+					break;
+				case CalendarEvent::MONTHLY:
+					$new_start_month = $new_start_date->get_month() + 1;
+					if ($new_start_month > 12)
+					{
+						$new_start_date->set_month(1);
+						$new_start_date->set_year($new_start_date->get_year() + 1);
+					}
+					else
+						$new_start_date->set_month($new_start_month);
+					$new_end_month = $new_end_date->get_month() + 1;
+					if ($new_end_month > 12)
+					{
+						$new_end_date->set_month(1);
+						$new_end_date->set_year($new_end_date->get_year() + 1);
+					}
+					else
+						$new_end_date->set_month($new_end_month);
+					$event->set_start_date($new_start_date);
+					$event->set_end_date($new_end_date);
+					break;
+				case CalendarEvent::YEARLY:
+					$new_start_date->set_year($new_start_date->get_year() + 1);
+					$new_end_date->set_year($new_end_date->get_year() + 1);
+					$event->set_start_date($new_start_date);
+					$event->set_end_date($new_end_date);
+					break;
+				default :
+					break;
+			}
+			
+			if ($this->form->get_value('registration_authorized'))
+			{
+				$event->authorize_registration();
+				$event->set_max_registred_members($this->form->get_value('max_registred_members'));
+				$event->set_register_authorizations($this->form->get_value('register_authorizations', $event->get_register_authorizations())->build_auth_array());
+			}
+			else
+			{
+				$event->unauthorize_registration();
+				$event->set_max_registred_members(0);
+				$event->set_register_authorizations(array('r0' => 3, 'r1' => 3));
+			}
+			
+			$event->set_repeat_type($repeat_type);
+			$event->set_repeat_number($repeat_number - $i);
+			
+			$event->set_id_parent_event($id_parent_event);
+			
+			CalendarService::add($event);
+		}
+	}
+	
+	private function update_recurrence_events()
+	{
+		$start_date_diff = $this->form->get_value('start_date')->get_timestamp() - $this->get_event()->get_start_date()->get_timestamp();
+		$end_date_diff = $this->form->get_value('end_date')->get_timestamp() - $this->get_event()->get_end_date()->get_timestamp();
+		
+		foreach ($this->get_event()->get_events_of_the_serie() as $event)
+		{
+			$event->set_title($this->form->get_value('title'));
+			$event->set_id_cat($this->form->get_value('id_cat')->get_raw_value());
+			$event->set_contents($this->form->get_value('contents'));
+			$event->set_location($this->form->get_value('location'));
+			
+			if (!$this->is_contributor_member() && $this->form->get_value('approved'))
+				$event->approve();
+			else
+				$event->unapprove();
+			
+			$event->set_start_date(new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $event->get_start_date()->get_timestamp() + $start_date_diff));
+			$event->set_end_date(new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $event->get_end_date()->get_timestamp() + $end_date_diff));
+			
+			if ($this->form->get_value('registration_authorized'))
+			{
+				$event->authorize_registration();
+				$event->set_max_registred_members($this->form->get_value('max_registred_members'));
+				$event->set_register_authorizations($this->form->get_value('register_authorizations', $event->get_register_authorizations())->build_auth_array());
+			}
+			else
+			{
+				$event->unauthorize_registration();
+				$event->set_max_registred_members(0);
+				$event->set_register_authorizations(array('r0' => 3, 'r1' => 3));
+			}
+			
+			CalendarService::update($event);
+		}
+	}
+	
 	private function redirect()
 	{
 		$event = $this->get_event();
@@ -307,9 +468,7 @@ class CalendarFormController extends ModuleController
 		}
 		elseif ($event->is_approved())
 		{
-			$array_time = explode('-', $event->get_start_date()->to_date());
-		
-			AppContext::get_response()->redirect(CalendarUrlBuilder::home($array_time[0] . '/' . $array_time[1])->absolute());
+			AppContext::get_response()->redirect(CalendarUrlBuilder::home($event->get_start_date()->get_year() . '/' . $event->get_start_date()->get_month() . '/' . $event->get_start_date()->get_day() . '/' . $category->get_id() . '-' . $category->get_rewrited_name() . '#events')->absolute());
 		}
 		else
 		{
@@ -322,7 +481,7 @@ class CalendarFormController extends ModuleController
 		$event = $this->get_event();
 		
 		$response = new CalendarDisplayResponse();
-		$response->add_breadcrumb_link($this->lang['calendar.module_title'], CalendarUrlBuilder::home());
+		$response->add_breadcrumb_link($this->lang['module_title'], CalendarUrlBuilder::home());
 		
 		if ($event->get_id() === null)
 		{
@@ -338,10 +497,10 @@ class CalendarFormController extends ModuleController
 					$response->add_breadcrumb_link($category->get_name(), CalendarUrlBuilder::display_category($id, $category->get_rewrited_name()));
 			}
 			$category = $categories[$event->get_id_cat()];
-			$response->add_breadcrumb_link($event->get_title(), CalendarUrlBuilder::display_event($category->get_rewrited_name(), $event->get_id(), $event->get_title()));
+			$response->add_breadcrumb_link($event->get_title(), CalendarUrlBuilder::display_event($category->get_id(), $category->get_rewrited_name(), $event->get_id(), Url::encode_rewrite($event->get_title())));
 			
-			$response->add_breadcrumb_link($this->lang['calendar.titles.edit_event'], CalendarUrlBuilder::edit_event($event->get_id()));
-			$response->set_page_title($this->lang['calendar.titles.edit_event']);
+			$response->add_breadcrumb_link($this->lang['calendar.titles.event_edition'], CalendarUrlBuilder::edit_event($event->get_id()));
+			$response->set_page_title($this->lang['calendar.titles.event_edition']);
 		}
 		
 		return $response->display($tpl);

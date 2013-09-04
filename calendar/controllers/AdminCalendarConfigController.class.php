@@ -4,7 +4,7 @@
  *                            -------------------
  *   begin                : November 20, 2012
  *   copyright            : (C) 2012 Julien BRISWALTER
- *   email                : julien.briswalter@gmail.com
+ *   email                : julienseth78@phpboost.com
  *
  *  
  ###################################################
@@ -55,8 +55,11 @@ class AdminCalendarConfigController extends AdminModuleController
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save();
-			$tpl->put('MSG', MessageHelper::display($this->lang['calendar.success.config'], E_USER_SUCCESS, 5));
+			AppContext::get_response()->redirect(CalendarUrlBuilder::configuration_success());
 		}
+		
+		if ($request->get_string('message', '') == 'success')
+			$tpl->put('MSG', MessageHelper::display($this->lang['calendar.success.config'], E_USER_SUCCESS, 5));
 		
 		//Display the form on the template
 		$tpl->put('FORM', $this->form->display());
@@ -67,29 +70,26 @@ class AdminCalendarConfigController extends AdminModuleController
 	
 	private function init()
 	{
-		$this->lang = LangLoader::get('calendar_common', 'calendar');
+		$this->lang = LangLoader::get('common', 'calendar');
 		$this->config = CalendarConfig::load();
 	}
 	
 	private function build_form()
 	{
-		//Creation of a new form
 		$form = new HTMLForm(__CLASS__);
 		
-		//Configuration fieldset
-		$fieldset_config = new FormFieldsetHTML('configuration_fieldset', $this->lang['calendar.titles.admin.config']);
-		$form->add_fieldset($fieldset_config);
+		//Configuration
+		$fieldset = new FormFieldsetHTML('configuration_fieldset', $this->lang['calendar.titles.admin.config']);
+		$form->add_fieldset($fieldset);
 		
-		$fieldset_config->add_field(new FormFieldTextEditor('items_number_per_page', $this->lang['calendar.config.items_number_per_page'], $this->config->get_items_number_per_page(), 
+		$fieldset->add_field(new FormFieldTextEditor('items_number_per_page', $this->lang['calendar.config.items_number_per_page'], $this->config->get_items_number_per_page(), 
 			array('size' => 6, 'required' => true),
 			array(new FormFieldConstraintRegex('`^[0-9]+$`i')
 		)));
 		
-		$fieldset_config->add_field(new FormFieldCheckbox('comments_enabled', $this->lang['calendar.config.comments_enabled'], $this->config->is_comment_enabled()));
+		$fieldset->add_field(new FormFieldCheckbox('comments_enabled', $this->lang['calendar.config.comments_enabled'], $this->config->are_comments_enabled()));
 		
-		$fieldset_config->add_field(new FormFieldCheckbox('location_enabled', $this->lang['calendar.config.location_enabled'], $this->config->is_location_enabled()));
-		
-		$fieldset_config->add_field(new FormFieldCheckbox('members_birthday_enabled', $this->lang['calendar.config.members_birthday_enabled'], $this->config->is_members_birthday_enabled(),
+		$fieldset->add_field(new FormFieldCheckbox('members_birthday_enabled', $this->lang['calendar.config.members_birthday_enabled'], $this->config->is_members_birthday_enabled(),
 			array('events' => array('click' => '
 				if (HTMLForms.getField("members_birthday_enabled").getValue()) {
 					HTMLForms.getField("birthday_color").enable();
@@ -99,13 +99,13 @@ class AdminCalendarConfigController extends AdminModuleController
 			)
 		));
 		
-		$fieldset_config->add_field(new FormFieldColorPicker('birthday_color', $this->lang['calendar.config.birthday_color'], $this->config->get_birthday_color(),
+		$fieldset->add_field(new FormFieldColorPicker('birthday_color', $this->lang['calendar.config.birthday_color'], $this->config->get_birthday_color(),
 			array('hidden' => !$this->config->is_members_birthday_enabled())
 		));
 		
-		//Authorizations fieldset
-		$fieldset_authorizations = new FormFieldsetHTML('authorizations_fieldset', $this->lang['calendar.titles.admin.authorizations']);
-		$form->add_fieldset($fieldset_authorizations);
+		//Authorizations
+		$fieldset = new FormFieldsetHTML('authorizations_fieldset', $this->lang['calendar.titles.admin.authorizations']);
+		$form->add_fieldset($fieldset);
 		
 		$auth_settings = new AuthorizationsSettings(array(
 			new ActionAuthorization($this->lang['calendar.config.authorizations.read'], Category::READ_AUTHORIZATIONS),
@@ -115,7 +115,7 @@ class AdminCalendarConfigController extends AdminModuleController
 		));
 		$auth_setter = new FormFieldAuthorizationsSetter('authorizations', $auth_settings);
 		$auth_settings->build_from_auth_array($this->config->get_authorizations());
-		$fieldset_authorizations->add_field($auth_setter);
+		$fieldset->add_field($auth_setter);
 		
 		//Submit and reset buttons
 		$this->submit_button = new FormButtonDefaultSubmit();
@@ -134,11 +134,6 @@ class AdminCalendarConfigController extends AdminModuleController
 		else
 			$this->config->disable_comments();
 		
-		if ($this->form->get_value('location_enabled'))
-			$this->config->enable_location();
-		else
-			$this->config->disable_location();
-		
 		if ($this->form->get_value('members_birthday_enabled'))
 		{
 			$this->config->enable_members_birthday();
@@ -148,8 +143,15 @@ class AdminCalendarConfigController extends AdminModuleController
 			$this->config->disable_members_birthday();
 		
 		$this->config->set_authorizations($this->form->get_value('authorizations')->build_auth_array());
+		
 		CalendarConfig::save();
 		CalendarService::get_categories_manager()->regenerate_cache();
+		CalendarCurrentMonthEventsCache::invalidate();
+	}
+	
+	private function clear_cache()
+	{
+		AppContext::get_cache_service()->clear_cache();
 	}
 }
 ?>

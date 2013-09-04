@@ -4,7 +4,7 @@
  *                            -------------------
  *   begin                : February 25, 2013
  *   copyright            : (C) 2012 Julien BRISWALTER
- *   email                : julien.briswalter@gmail.com
+ *   email                : julienseth78@phpboost.com
  *
  *  
  ###################################################
@@ -27,7 +27,8 @@
 
 class CalendarDisplayResponse
 {
-	private $page_title = '';
+	private $page_title;
+	private $page_description;
 	private $breadcrumb_links = array();
 
 	public function add_breadcrumb_link($name, $link)
@@ -44,11 +45,21 @@ class CalendarDisplayResponse
 		$this->page_title = $page_title;
 	}
 	
+	public function set_page_description($page_description)
+	{
+		$this->page_description = $page_description;
+	}
+	
 	public function display($view)
 	{
 		$response = new SiteDisplayResponse($view);
 		$graphical_environment = $response->get_graphical_environment();
 		$graphical_environment->set_page_title($this->page_title);
+		
+		if ($this->page_description !== null)
+		{
+			$graphical_environment->get_seo_meta_data()->set_description($this->page_description);
+		}
 		
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		foreach ($this->breadcrumb_links as $name => $link)

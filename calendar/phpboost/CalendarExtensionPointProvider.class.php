@@ -32,21 +32,11 @@ class CalendarExtensionPointProvider extends ExtensionPointProvider
 		parent::__construct('calendar');
 	}
 	
-	public function home_page()
-	{
-		return new CalendarHomePageExtensionPoint();
-	}
-	
 	public function comments()
 	{
 		return new CommentsTopics(array(
 			new CalendarCommentsTopic()
 		));
-	}
-	
-	public function menus()
-	{
-		return new ModuleMenus(array(new CalendarModuleMiniMenu()));
 	}
 	
 	public function css_files()
@@ -57,9 +47,24 @@ class CalendarExtensionPointProvider extends ExtensionPointProvider
 		return $module_css_files;
 	}
 	
-	public function url_mappings()
+	public function feeds()
 	{
-		return new UrlMappings(array(new DispatcherUrlMapping('/calendar/index.php')));
+		return new CalendarFeedProvider();
+	}
+	
+	public function home_page()
+	{
+		return new CalendarHomePageExtensionPoint();
+	}
+	
+	public function menus()
+	{
+		return new ModuleMenus(array(new CalendarModuleMiniMenu()));
+	}
+	
+	public function scheduled_jobs()
+	{
+		return new CalendarScheduledJobs();
 	}
 	
 	public function search()
@@ -67,14 +72,14 @@ class CalendarExtensionPointProvider extends ExtensionPointProvider
 		return new CalendarSearchable();
 	}
 	
-	public function feeds()
-	{
-		return new CalendarFeedProvider();
-	}
-	
 	public function sitemap()
 	{
 		return new CalendarSitemapExtensionPoint();
+	}
+	
+	public function url_mappings()
+	{
+		return new UrlMappings(array(new DispatcherUrlMapping('/calendar/index.php')));
 	}
 }
 ?>

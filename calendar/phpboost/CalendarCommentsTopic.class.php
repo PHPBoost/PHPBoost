@@ -29,9 +29,10 @@ class CalendarCommentsTopic extends CommentsTopic
 {
 	private $event;
 	
-	public function __construct()
+	public function __construct(CalendarEvent $event = null)
 	{
 		parent::__construct('calendar');
+		$this->event = $event;
 	}
 	
 	public function get_authorizations()

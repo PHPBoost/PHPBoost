@@ -1,19 +1,19 @@
 <?php
 /*##################################################
- *                        CalendarCategoriesCache.class.php
+ *                           CalendarCurrentMonthEventsCache.class.php
  *                            -------------------
- *   begin                : February 25, 2013
+ *   begin                : August 24, 2013
  *   copyright            : (C) 2013 Julien BRISWALTER
  *   email                : julienseth78@phpboost.com
  *
- *  
+ *
  ###################################################
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -27,33 +27,46 @@
 
 /**
  * @author Julien BRISWALTER <julienseth78@phpboost.com>
- * @desc CategoriesCache of the calendar module
  */
-class CalendarCategoriesCache extends CategoriesCache
+class CalendarCurrentMonthEventsCache implements CacheData
 {
-	public function get_table_name()
+	private $events = array();
+	
+	public function synchronize()
 	{
-		return CalendarSetup::$calendar_cats_table;
+		$year = date('Y');
+		$month = date('n');
+		$bissextile = (date("L", mktime(0, 0, 0, 1, 1, $year)) == 1) ? 29 : 28;
+		$array_month = array(31, $bissextile, 31, 30, 31, 30 , 31, 31, 30, 31, 30, 31);
+		$month_days = $array_month[$month - 1];
+		
+		$result = CalendarService::get_all_current_month_events($month, $year, $month_days);
+		while ($row = $result->fetch())
+		{
+			$this->events[] = $row;
+		}
 	}
 	
-	public function get_category_class()
+	public function get_events()
 	{
-		return 'CalendarRichCategory';
+		return $this->events;
 	}
 	
-	public function get_module_identifier()
+	/**
+	 * Loads and returns current month events cached data.
+	 * @return CalendarCurrentMonthEventsCache The cached data
+	 */
+	public static function load()
 	{
-		return 'calendar';
+		return CacheManager::load(__CLASS__, 'calendar', 'currentmonthevents');
 	}
 	
-	public function get_root_category()
+	/**
+	 * Invalidates the current Calendar month events cached data.
+	 */
+	public static function invalidate()
 	{
-		$root = new RichRootCategory();
-		$root->set_authorizations(CalendarConfig::load()->get_authorizations());
-		$root->set_description(
-			StringVars::replace_vars(LangLoader::get_message('calendar.seo.description.root', 'common', 'calendar'), array('site' => GeneralConfig::load()->get_site_name()))
-		);
-		return $root;
+		CacheManager::invalidate('calendar', 'currentmonthevents');
 	}
 }
 ?>

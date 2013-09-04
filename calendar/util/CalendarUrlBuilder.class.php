@@ -4,7 +4,7 @@
  *                            -------------------
  *   begin                : November 20, 2012
  *   copyright            : (C) 2012 Julien BRISWALTER
- *   email                : julien.briswalter@gmail.com
+ *   email                : julienseth78@phpboost.com
  *
  *
  ###################################################
@@ -26,7 +26,7 @@
  ###################################################*/
 
 /**
- * @author Julien BRISWALTER <julien.briswalter@gmail.com>
+ * @author Julien BRISWALTER <julienseth78@phpboost.com>
  * @desc Url builder of the calendar module
  */
 class CalendarUrlBuilder
@@ -41,31 +41,75 @@ class CalendarUrlBuilder
 		return DispatchManager::get_url(self::$dispatcher, '/admin/config');
 	}
 	
+	/**
+	 * @return Url
+	 */
+	public static function configuration_success()
+	{
+		return DispatchManager::get_url(self::$dispatcher, '/admin/config/success');
+	}
+	
+	/**
+	 * @return Url
+	 */
+	public static function manage_events($sort_field = null, $sort_mode = null, $page = null)
+	{
+		$page = $page !== null ? $page . '/': '';
+		$sort = $sort_field !== null ? $sort_field . '/' . $sort_mode . '/' : '';
+		return DispatchManager::get_url(self::$dispatcher, '/admin/manage/' . $sort . $page);
+	}
+	
+	/**
+	 * @return Url
+	 */
 	public static function add_category()
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/admin/categories/add/');
 	}
 	
+	/**
+	 * @return Url
+	 */
 	public static function edit_category($id)
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/admin/categories/'. $id .'/edit/');
 	}
 	
+	/**
+	 * @return Url
+	 */
 	public static function delete_category($id)
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/admin/categories/'. $id .'/delete/');
 	}
 	
+	/**
+	 * @return Url
+	 */
 	public static function manage_categories()
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/admin/categories/');
 	}
 	
-	public static function display_event($rewrited_name_category, $event_id, $title)
+	/**
+	 * @return Url
+	 */
+	public static function display_event($category_id, $rewrited_name_category, $event_id, $rewrited_title)
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/' . $rewrited_name_category . '/' . $event_id . '/' .$title . '/');
+		return DispatchManager::get_url(self::$dispatcher, '/' . $category_id . '-' . $rewrited_name_category . '/' . $event_id . '-' . $rewrited_title . '/');
 	}
 	
+	/**
+	 * @return Url
+	 */
+	public static function display_event_comments($category_id, $rewrited_name_category, $event_id, $rewrited_title)
+	{
+		return DispatchManager::get_url(self::$dispatcher, '/' . $category_id . '-' . $rewrited_name_category . '/' . $event_id . '-' . $rewrited_title . '#comments_list');
+	}
+	
+	/**
+	 * @return Url
+	 */
 	public static function display_category($id, $rewrited_name)
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/category/' . $id . '-' . $rewrited_name .'/');
@@ -74,9 +118,9 @@ class CalendarUrlBuilder
 	/**
 	 * @return Url
 	 */
-	public static function add_event()
+	public static function add_event($param = '')
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/add');
+		return DispatchManager::get_url(self::$dispatcher, '/add/' . $param);
 	}
 	
 	/**
@@ -98,9 +142,17 @@ class CalendarUrlBuilder
 	/**
 	 * @return Url
 	 */
-	public static function mini($param = '')
+	public static function ajax_month_calendar($param = '')
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/mini/' . $param);
+		return DispatchManager::get_url(self::$dispatcher, '/ajax_month_calendar/' . $param);
+	}
+	
+	/**
+	 * @return Url
+	 */
+	public static function ajax_change_participation($param = '')
+	{
+		return DispatchManager::get_url(self::$dispatcher, '/ajax_change_participation/' . $param);
 	}
 	
 	/**
