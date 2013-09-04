@@ -37,9 +37,10 @@
 			{@bugs.notice.no_bug}
 		</td>
 		# ENDIF #
-
 </table>
-<br /><br />
+
+<div class="spacer">&nbsp;</div>
+
 # IF C_DISPLAY_VERSIONS #
 <table class="module_table">
 	<tr class="text_center">
@@ -68,8 +69,10 @@
 	</tr>
 	# ENDIF #
 </table>
-<br /><br />
+
+<div class="spacer">&nbsp;</div>
 # ENDIF #
+
 # IF C_DISPLAY_TOP_POSTERS #
 <table class="module_table">
 	<tr>
@@ -101,7 +104,7 @@
 		</td>
 	</tr>
 	# END top_poster #
-	# IF NOT C_BUGS_NOT_REJECTED #
+	# IF NOT C_POSTERS #
 	<tr class="text_center"> 
 		<td colspan="3" class="row2">
 			{@bugs.notice.no_bug}

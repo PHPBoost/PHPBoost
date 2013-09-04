@@ -4,7 +4,7 @@
  *                            -------------------
  *   begin                : April 27, 2012
  *   copyright            : (C) 2012 Julien BRISWALTER
- *   email                : julien.briswalter@gmail.com
+ *   email                : julienseth78@phpboost.com
  *
  *  
  ###################################################
@@ -42,7 +42,7 @@ class BugtrackerSearchable extends AbstractSearchableExtensionPoint
 	public function get_search_form($args = null)
 	{
 		//Load module lang
-		$lang = LangLoader::get('bugtracker_common', 'bugtracker');
+		$lang = LangLoader::get('common', 'bugtracker');
 		
 		//Creation of the template
 		$tpl = new FileTemplate('bugtracker/BugtrackerSearchForm.tpl');

@@ -4,7 +4,7 @@
  *                            -------------------
  *   begin                : November 13, 2012
  *   copyright            : (C) 2012 Julien BRISWALTER
- *   email                : julien.briswalter@gmail.com
+ *   email                : julienseth78@phpboost.com
  *
  *
  ###################################################
@@ -61,7 +61,7 @@ class BugtrackerAddController extends ModuleController
 	{
 		$this->config = BugtrackerConfig::load();
 		
-		$this->lang = LangLoader::get('bugtracker_common', 'bugtracker');
+		$this->lang = LangLoader::get('common', 'bugtracker');
 		$this->view = new StringTemplate('# INCLUDE FORM #');
 		$this->view->add_lang($this->lang);
 	}
@@ -102,7 +102,7 @@ class BugtrackerAddController extends ModuleController
 		$default_priority = $this->config->get_default_priority();
 		$default_version = $this->config->get_default_version();
 
-		$form = new HTMLForm('bug-add');
+		$form = new HTMLForm(__CLASS__);
 		
 		$fieldset = new FormFieldsetHTML('bug_infos', $this->lang['bugs.titles.bugs_infos']);
 		$form->add_fieldset($fieldset);
@@ -129,7 +129,7 @@ class BugtrackerAddController extends ModuleController
 			}
 			
 			$fieldset->add_field(new FormFieldSimpleSelectChoice('type', $this->lang['bugs.labels.fields.type'], $default_type, $array_types, array(
-				'required' => $this->config->get_type_mandatory() ? true : false)
+				'required' => $this->config->is_type_mandatory())
 			));
 		}
 		
@@ -147,7 +147,7 @@ class BugtrackerAddController extends ModuleController
 			}
 			
 			$fieldset->add_field(new FormFieldSimpleSelectChoice('category', $this->lang['bugs.labels.fields.category'], $default_category, $array_categories, array(
-				'required' => $this->config->get_category_mandatory() ? true : false)
+				'required' => $this->config->is_category_mandatory())
 			));
 		}
 		
@@ -167,7 +167,7 @@ class BugtrackerAddController extends ModuleController
 				}
 				
 				$fieldset->add_field(new FormFieldSimpleSelectChoice('severity', $this->lang['bugs.labels.fields.severity'], $default_severity, $array_severities, array(
-					'required' => $this->config->get_priority_mandatory() ? true : false)
+					'required' => $this->config->is_severity_mandatory())
 				));
 			}
 			
@@ -185,7 +185,7 @@ class BugtrackerAddController extends ModuleController
 				}
 				
 				$fieldset->add_field(new FormFieldSimpleSelectChoice('priority', $this->lang['bugs.labels.fields.priority'], $default_priority, $array_priorities, array(
-					'required' => $this->config->get_severity_mandatory() ? true : false)
+					'required' => $this->config->is_priority_mandatory())
 				));
 			}
 		}
@@ -204,7 +204,7 @@ class BugtrackerAddController extends ModuleController
 			}
 			
 			$fieldset->add_field(new FormFieldSimpleSelectChoice('detected_in', $this->lang['bugs.labels.fields.detected_in'], $default_version, $array_versions, array(
-				'required' => $this->config->get_detected_in_mandatory() ? true : false)
+				'required' => $this->config->is_detected_in_version_mandatory())
 			));
 		}
 		
@@ -220,6 +220,8 @@ class BugtrackerAddController extends ModuleController
 		$fieldset->add_field(new FormFieldRichTextEditor('reproduction_method', $this->lang['bugs.labels.fields.reproduction_method'], '', array(
 			'rows' => 15)
 		));
+		
+		$fieldset->add_field(new FormFieldCaptcha('captcha'));
 		
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_button($this->submit_button);
@@ -254,7 +256,7 @@ class BugtrackerAddController extends ModuleController
 		
 		$response = new BugtrackerDisplayResponse();
 		$response->add_breadcrumb_link($this->lang['bugs.module_title'], BugtrackerUrlBuilder::home());
-		$response->add_breadcrumb_link($this->lang['bugs.titles.add_bug'], bugtrackerUrlBuilder::add(!empty($back_page) ? $back_page . '/' . $page . (!empty($back_filter) ? '/' . $back_filter . '/' . $filter_id : '') : ''));
+		$response->add_breadcrumb_link($this->lang['bugs.titles.add_bug'], BugtrackerUrlBuilder::add(!empty($back_page) ? $back_page . '/' . $page . (!empty($back_filter) ? '/' . $back_filter . '/' . $filter_id : '') : ''));
 		$response->set_page_title($this->lang['bugs.titles.add_bug']);
 		
 		return $response->display($body_view);
@@ -291,14 +293,14 @@ class BugtrackerAddController extends ModuleController
 		if ($bug->is_reproductible())
 			$bug->set_reproduction_method($this->form->get_value('reproduction_method'));
 		
-		$something_is_missing = ($this->config->get_types() && $this->config->get_type_mandatory() && !$bug->get_type() || $this->config->get_categories() && $this->config->get_category_mandatory() && !$bug->get_category() || $this->config->get_severities() && $this->config->get_severity_mandatory() && !$bug->get_severity() || $this->config->get_priorities() && $this->config->get_priority_mandatory() && !$bug->get_priority() || $this->config->get_versions() && $this->config->get_detected_in_mandatory() && !$bug->get_detected_in()) ? true : false;
+		$something_is_missing = ($this->config->get_types() && $this->config->is_type_mandatory() && !$bug->get_type() || $this->config->get_categories() && $this->config->is_category_mandatory() && !$bug->get_category() || $this->config->get_severities() && $this->config->is_severity_mandatory() && !$bug->get_severity() || $this->config->get_priorities() && $this->config->is_priority_mandatory() && !$bug->get_priority() || $this->config->get_versions() && $this->config->is_detected_in_version_mandatory() && !$bug->get_detected_in());
 		
 		if ($bug->get_title() && $bug->get_contents() && !$something_is_missing)
 		{
 			//Bug creation
 			$id = BugtrackerService::add($bug);
 			
-			if ($this->config->get_admin_alerts_activated())
+			if ($this->config->are_admin_alerts_enabled() && in_array($bug->get_severity(), $this->config->get_admin_alerts_levels()))
 			{
 				$alert = new AdministratorAlert();
 				$alert->set_entitled('[' . $this->lang['bugs.module_title'] . '] ' . $bug->get_title());
@@ -418,6 +420,8 @@ class BugtrackerAddController extends ModuleController
 				$alert->set_type('bugtracker');
 				AdministratorAlertService::save_alert($alert);
 			}
+			
+			BugtrackerStatsCache::invalidate();
 			
 			switch ($back_page)
 			{

@@ -4,7 +4,7 @@
  *                            -------------------
  *   begin                : October 18, 2012
  *   copyright            : (C) 2012 Julien BRISWALTER
- *   email                : julien.briswalter@gmail.com
+ *   email                : julienseth78@phpboost.com
  *
  *  
  ###################################################
@@ -67,7 +67,7 @@ class AdminBugtrackerAuthorizationsController extends AdminModuleController
 	private function init()
 	{
 		//Load module lang
-		$this->lang = LangLoader::get('bugtracker_common', 'bugtracker');
+		$this->lang = LangLoader::get('common', 'bugtracker');
 	}
 	
 	private function check_authorizations()
@@ -82,7 +82,7 @@ class AdminBugtrackerAuthorizationsController extends AdminModuleController
 	private function build_form()
 	{
 		//Creation of a new form
-		$form = new HTMLForm('bugtracker_authorizations');
+		$form = new HTMLForm(__CLASS__);
 		
 		//Add a fieldset
 		$fieldset_authorizations = new FormFieldsetHTML('authorizations', $this->lang['bugs.titles.admin.authorizations']);

@@ -4,7 +4,7 @@
  *                            -------------------
  *   begin                : October 08, 2012
  *   copyright            : (C) 2012 Julien BRISWALTER
- *   email                : julien.briswalter@gmail.com
+ *   email                : julienseth78@phpboost.com
  *
  *  
  ###################################################
@@ -30,7 +30,7 @@ class BugtrackerCommentsTopicEvents extends CommentsTopicEvents
 	public function execute_add_comment_event()
 	{
 		//Load module lang
-		$lang = LangLoader::get('bugtracker_common', 'bugtracker');
+		$lang = LangLoader::get('common', 'bugtracker');
 		
 		//Load module configuration
 		$config = BugtrackerConfig::load();
@@ -51,8 +51,8 @@ class BugtrackerCommentsTopicEvents extends CommentsTopicEvents
 			'change_comment' => $lang['bugs.notice.new_comment'],
 		));
 		
-		//Send a PM to the list of members who updated the bug if the send of PM is activated
-		if ($config->get_pm_activated() && $config->get_pm_comment_activated())
+		//Send a PM to the list of members who updated the bug if the send of PM is enabled
+		if ($config->are_pm_enabled() && $config->are_pm_comment_enabled())
 			BugtrackerPMService::send_PM_to_updaters('comment', $bug_id, $comment);
 		
 		return true;

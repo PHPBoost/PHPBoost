@@ -4,7 +4,7 @@
  *                            -------------------
  *   begin                : November 11, 2012
  *   copyright            : (C) 2012 Julien BRISWALTER
- *   email                : julien.briswalter@gmail.com
+ *   email                : julienseth78@phpboost.com
  *
  *
  ###################################################
@@ -44,12 +44,12 @@ class BugtrackerDeleteBugController extends ModuleController
 		try {
 			$bug = BugtrackerService::get_bug('WHERE id=:id', array('id' => $id));
 		} catch (RowNotFoundException $e) {
-			$controller = new UserErrorController(LangLoader::get_message('error', 'errors-common'), LangLoader::get_message('bugs.error.e_unexist_bug', 'bugtracker_common', 'bugtracker'));
+			$controller = new UserErrorController(LangLoader::get_message('error', 'errors-common'), LangLoader::get_message('bugs.error.e_unexist_bug', 'common', 'bugtracker'));
 			DispatchManager::redirect($controller);
 		}
 		
-		//Send PM to updaters if the option is activated
-		if ($config->get_pm_activated() && $config->get_pm_delete_activated())
+		//Send PM to updaters if the option is enabled
+		if ($config->are_pm_enabled() && $config->are_pm_delete_enabled())
 			BugtrackerPMService::send_PM_to_updaters('delete', $id);
 		
 		//Delete bug
@@ -62,12 +62,14 @@ class BugtrackerDeleteBugController extends ModuleController
 		CommentsService::delete_comments_topic_module('bugtracker', $id);
 		
 		//Delete admin alert
-		if ($config->get_admin_alerts_activated())
+		if ($config->are_admin_alerts_enabled())
 		{
 			$alerts = AdministratorAlertService::find_by_criteria($id, 'bugtracker');
 			if (!empty($alerts))
 				AdministratorAlertService::delete_alert($alerts[0]);
 		}
+		
+		BugtrackerStatsCache::invalidate();
 		
 		switch ($back_page)
 		{

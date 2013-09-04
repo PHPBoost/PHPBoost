@@ -12,7 +12,7 @@
 		# START legend #
 		<td class="row2">
 		</td>
-		<td class="row2 legend" {legend.COLOR}>
+		<td class="row2 legend" style="background-color:{legend.COLOR}">
 		</td>
 		<td class="row2">
 			{legend.NAME}

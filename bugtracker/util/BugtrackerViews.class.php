@@ -4,7 +4,7 @@
  *                            -------------------
  *   begin                : April 29, 2013
  *   copyright            : (C) 2013 Julien BRISWALTER
- *   email                : julien.briswalter@gmail.com
+ *   email                : julienseth78@phpboost.com
  *
  *
  ###################################################
@@ -26,13 +26,13 @@
  ###################################################*/
 
  /**
- * @author Julien BRISWALTER <julien.briswalter@gmail.com>
+ * @author Julien BRISWALTER <julienseth78@phpboost.com>
  */
 class BugtrackerViews
 {
 	public static function build_body_view(View $view, $current_page, $bug_id = 0)
 	{
-		$lang = LangLoader::get('bugtracker_common', 'bugtracker');
+		$lang = LangLoader::get('common', 'bugtracker');
 		
 		$request = AppContext::get_request();
 		$back_page = $request->get_value('back_page', '');
@@ -42,8 +42,6 @@ class BugtrackerViews
 		$filter_id = $request->get_value('filter_id', '');
 		
 		$config = BugtrackerConfig::load();
-		$roadmap_activated = $config->get_roadmap_activated();
-		$stats_activated = $config->get_stats_activated();
 		$versions = $config->get_versions();
 		$nbr_versions = array_keys($versions);
 		
@@ -51,13 +49,13 @@ class BugtrackerViews
 		$body_view->add_lang($lang);
 		$body_view->put_all(array(
 			'TEMPLATE'				=> $view,
-			'C_ADD' 				=> BugtrackerAuthorizationsService::check_authorizations()->write() ? true : false,
-			'C_ROADMAP_ACTIVATED' 	=> ($roadmap_activated && !empty($nbr_versions)) ? true : false,
-			'C_STATS_ACTIVATED' 	=> $stats_activated ? true : false,
-			'C_DETAIL_PAGE'			=> $current_page == 'detail' ? true : false,
-			'C_HISTORY_PAGE'		=> $current_page == 'history' ? true : false,
-			'C_ADD_PAGE'			=> $current_page == 'add' ? true : false,
-			'C_EDIT_PAGE'			=> $current_page == 'edit' ? true : false,
+			'C_ADD' 				=> BugtrackerAuthorizationsService::check_authorizations()->write(),
+			'C_ROADMAP_ACTIVATED' 	=> $config->is_roadmap_enabled() && !empty($nbr_versions),
+			'C_STATS_ACTIVATED' 	=> $config->are_stats_enabled(),
+			'C_DETAIL_PAGE'			=> $current_page == 'detail',
+			'C_HISTORY_PAGE'		=> $current_page == 'history',
+			'C_ADD_PAGE'			=> $current_page == 'add',
+			'C_EDIT_PAGE'			=> $current_page == 'edit',
 			'CLASS_BUG_UNSOLVED'	=> $current_page == 'unsolved' ? 'bt_current' : 'bt_no_current',
 			'CLASS_BUG_SOLVED'		=> $current_page == 'solved' ? 'bt_current' : 'bt_no_current',
 			'CLASS_BUG_ROADMAP'		=> $current_page == 'roadmap' ? 'bt_current' : 'bt_no_current',
@@ -78,7 +76,7 @@ class BugtrackerViews
 	
 	public static function build_filters($current_page, $nbr_bugs = 0)
 	{
-		$lang = LangLoader::get('bugtracker_common', 'bugtracker');
+		$lang = LangLoader::get('common', 'bugtracker');
 		$object = new self();
 		
 		$request = AppContext::get_request();
@@ -177,7 +175,7 @@ class BugtrackerViews
 	
 	public static function build_legend($list, $current_page)
 	{
-		$lang = LangLoader::get('bugtracker_common', 'bugtracker');
+		$lang = LangLoader::get('common', 'bugtracker');
 		
 		$config = BugtrackerConfig::load();
 		$severities = $config->get_severities();
@@ -187,13 +185,13 @@ class BugtrackerViews
 		
 		$legend_colspan = 0;
 		
-		while ($row = $list->fetch())
+		foreach ($list as $element)
 		{
-			if (($current_page == 'solved') || (!empty($row['severity']) && isset($severities[$row['severity']])))
+			if (($current_page == 'solved') || (!empty($element) && isset($severities[$element])))
 			{
 				$legend_view->assign_block_vars('legend', array(
-					'COLOR'	=> 'style="background-color:' . ($current_page == 'solved' ? ($row['status'] == 'fixed' ? $config->get_fixed_bug_color() : $config->get_rejected_bug_color()) : stripslashes($severities[$row['severity']]['color'])) . ';"',
-					'NAME'	=> ($current_page == 'solved' ? $lang['bugs.status.' . $row['status']] : stripslashes($severities[$row['severity']]['name']))
+					'COLOR'	=> $current_page == 'solved' ? ($element == 'fixed' ? $config->get_fixed_bug_color() : $config->get_rejected_bug_color()) : stripslashes($severities[$element]['color']),
+					'NAME'	=> $current_page == 'solved' ? $lang['bugs.status.' . $element] : stripslashes($severities[$element]['name'])
 				));
 				
 				$legend_colspan = $legend_colspan + 3;

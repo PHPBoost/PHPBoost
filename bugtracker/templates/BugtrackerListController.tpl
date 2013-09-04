@@ -4,8 +4,16 @@
 
 <script type="text/javascript">
 <!--
-function Confirm() {
-	return confirm("{@bugs.actions.confirm.del_bug}");
+function Confirm(action) {
+	if (action == 'delete') {
+		return confirm("{@bugs.actions.confirm.del_bug}");
+	}
+	else if (action == 'reopen') {
+		return confirm("{@bugs.actions.confirm.reopen_bug}");
+	}
+	else if (action == 'reject') {
+		return confirm("{@bugs.actions.confirm.reject_bug}");
+	}
 }
 -->
 </script>
@@ -54,21 +62,15 @@ function Confirm() {
 		</td>
 		# IF C_IS_ADMIN #
 		<td class="row2" {bug.LINE_COLOR}> 
-			<a href="{bug.LINK_BUG_REOPEN_REJECT}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/{PICT_REOPEN_REJECT}" alt="{L_REOPEN_REJECT}" title="{L_REOPEN_REJECT}" /></a>
+			<a href="{bug.LINK_BUG_REOPEN_REJECT}" onclick="javascript:return Confirm(${escapejs(REOPEN_REJECT_CONFIRM)});"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/{PICT_REOPEN_REJECT}" alt="{L_REOPEN_REJECT}" title="{L_REOPEN_REJECT}" /></a>
 			<a href="{bug.LINK_BUG_EDIT}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="{L_UPDATE}" title="{L_UPDATE}" /></a>
 			<a href="{bug.LINK_BUG_HISTORY}"><img src="{PATH_TO_ROOT}/bugtracker/templates/images/history.png" alt="{@bugs.actions.history}" title="{@bugs.actions.history}" /></a>
-			<a href="{bug.LINK_BUG_DELETE}" onclick="javascript:return Confirm();"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" /></a>
+			<a href="{bug.LINK_BUG_DELETE}" onclick="javascript:return Confirm('delete');"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" /></a>
 		</td>
 		# ENDIF #
 	</tr>
 	# END bug #
-	# IF C_BUGS #
-	<tr>
-		<td colspan="{BUGS_COLSPAN}" class="row1">
-			<span class="float_left">{@bugs.labels.page} : {PAGINATION}</span>
-		</td>
-	</tr>
-	# ELSE #
+	# IF NOT C_BUGS #
 	<tr class="text_center"> 
 		<td colspan="{BUGS_COLSPAN}" class="row2">
 			{L_NO_BUG}
@@ -78,3 +80,5 @@ function Confirm() {
 </table>
 
 # INCLUDE LEGEND #
+
+# IF C_PAGINATION #<div class="text_center"># INCLUDE PAGINATION #</div># ENDIF #

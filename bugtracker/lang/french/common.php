@@ -1,10 +1,10 @@
 <?php
 /*##################################################
- *                              bugtracker_common.php
+ *                              common.php
  *                            -------------------
  *   begin                : November 09, 2012
  *   copyright            : (C) 2012 Julien BRISWALTER
- *   email                : julien.briswalter@gmail.com
+ *   email                : julienseth78@phpboost.com
  *
  *  
  ###################################################
@@ -66,6 +66,8 @@ $lang['bugs.actions.history'] = 'Historique du bug';
 $lang['bugs.actions.reject'] = 'Rejeter le bug';
 $lang['bugs.actions.reopen'] = 'Ré-ouvrir le bug';
 $lang['bugs.actions.confirm.del_bug'] = 'Etes-vous sûr de vouloir supprimer ce rapport de la liste ? (tout l\'historique associé sera supprimé)';
+$lang['bugs.actions.confirm.reopen_bug'] = 'Etes-vous sûr de vouloir ré-ouvrir ce rapport ?';
+$lang['bugs.actions.confirm.reject_bug'] = 'Etes-vous sûr de vouloir rejeter ce rapport ?';
 $lang['bugs.actions.confirm.del_version'] = 'Etes-vous sûr de vouloir supprimer cette version ?';
 $lang['bugs.actions.confirm.del_type'] = 'Etes-vous sûr de vouloir supprimer ce type ?';
 $lang['bugs.actions.confirm.del_category'] = 'Etes-vous sûr de vouloir supprimer cette catégorie ?';
@@ -224,16 +226,17 @@ $lang['bugs.search.where.title'] = 'Titre';
 $lang['bugs.search.where.contents'] = 'Description';
 
 //Configuration
-$lang['bugs.config.items_per_page'] = 'Nombre de bugs par page'; 
+$lang['bugs.config.items_per_page'] = 'Nombre de bugs affichés par page'; 
 $lang['bugs.config.rejected_bug_color_label'] = 'Couleur de la ligne d\'un bug "Rejeté"';
 $lang['bugs.config.fixed_bug_color_label'] = 'Couleur de la ligne d\'un bug "Fermé"';
 $lang['bugs.config.activ_com'] = 'Activer les commentaires';
 $lang['bugs.config.activ_roadmap'] = 'Activer la feuille de route';
 $lang['bugs.config.activ_stats'] = 'Activer les statistiques';
-$lang['bugs.config.activ_stats_top_posters'] = 'Afficher les top posteurs';
+$lang['bugs.config.activ_stats_top_posters'] = 'Afficher la liste des membres qui ont posté le plus de bugs';
 $lang['bugs.config.stats_top_posters_number'] = 'Nombre d\'utilisateurs affichés';
 $lang['bugs.config.activ_progress_bar'] = 'Afficher la barre de progression des bugs';
 $lang['bugs.config.activ_admin_alerts'] = 'Activer les alertes administrateur';
+$lang['bugs.config.admin_alerts_levels'] = 'Niveau du bug pour déclencher l\'alerte';
 $lang['bugs.config.admin_alerts_fix_action'] = 'Action à la fermeture d\'un bug';
 $lang['bugs.config.activ_cat_in_title'] = 'Afficher la catégorie dans le titre du bug';
 $lang['bugs.config.pm'] = 'MP';

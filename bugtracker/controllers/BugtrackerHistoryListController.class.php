@@ -4,7 +4,7 @@
  *                            -------------------
  *   begin                : November 11, 2012
  *   copyright            : (C) 2012 Julien BRISWALTER
- *   email                : julien.briswalter@gmail.com
+ *   email                : julienseth78@phpboost.com
  *
  *
  ###################################################
@@ -33,54 +33,39 @@ class BugtrackerHistoryListController extends ModuleController
 	
 	public function execute(HTTPRequestCustom $request)
 	{
-		$this->init();
+		$this->init($request);
 		
 		$this->check_authorizations();
 		
-		$this->build_view();
+		$this->build_view($request);
 		
 		return $this->build_response($this->view);
 	}
 
-	private function build_view()
+	private function build_view($request)
 	{
-		$request = AppContext::get_request();
+		$current_page = $request->get_getint('page', 1);
 		
 		//Configuration load
 		$config = BugtrackerConfig::load();
-		$items_per_page = $config->get_items_per_page();
 		$types = $config->get_types();
 		$categories = $config->get_categories();
 		$severities = $config->get_severities();
 		$priorities = $config->get_priorities();
 		$versions = $config->get_versions();
-		$date_format = $config->get_date_form();
 		
-		$current_page = $request->get_int('page', 1);
-		
+		$history_lines_number = BugtrackerService::count_history($this->bug->get_id());
+		$pagination = $this->get_pagination($history_lines_number, $current_page);
 		$main_lang = LangLoader::get('main');
 		
-		//Count history lines number
-		$history_lines_number = BugtrackerService::count_history($this->bug->get_id());
-		
-		if ($current_page > ceil($history_lines_number / $items_per_page))
-		{
-			$error_controller = PHPBoostErrors::unexisting_page();
-			DispatchManager::redirect($error_controller);
-		}
-		
-		$pagination = new BugtrackerListPagination($current_page, $history_lines_number);
-		$pagination->set_url(BugtrackerUrlBuilder::history($this->bug->get_id() . '/%d')->absolute());
-		
 		$this->view->put_all(array(
-			'C_HISTORY' 	=> (float)$history_lines_number,
-			'PAGINATION'	=> $pagination->display()->render(),
-			'L_GUEST' 		=> $main_lang['guest'],
-			'RETURN_NAME' 	=> $main_lang['back'],
-			'LINK_RETURN' 	=> 'javascript:history.back(1);'
+			'C_PAGINATION'	=> $history_lines_number > $pagination->get_number_items_per_page(),
+			'C_HISTORY'		=> $history_lines_number,
+			'PAGINATION'	=> $pagination->display(),
+			'L_GUEST'		=> $main_lang['guest'],
+			'RETURN_NAME'	=> $main_lang['back'],
+			'LINK_RETURN'	=> 'javascript:history.back(1);'
 		));
-		$limit_page = $current_page > 0 ? $current_page : 1;
-		$limit_page = (($limit_page - 1) * $items_per_page);
 		
 		$result = PersistenceContext::get_querier()->select("SELECT *
 		FROM " . BugtrackerSetup::$bugtracker_table . " b
@@ -88,10 +73,11 @@ class BugtrackerHistoryListController extends ModuleController
 		LEFT JOIN " . DB_TABLE_MEMBER . " member ON (member.user_id = bh.updater_id)
 		WHERE b.id = '" . $this->bug->get_id() . "'
 		ORDER BY update_date DESC
-		LIMIT ". $items_per_page ." OFFSET :start_limit",
+		LIMIT :number_items_per_page OFFSET :display_from",
 			array(
-				'start_limit' => $limit_page
-			), SelectQueryResult::FETCH_ASSOC
+				'number_items_per_page' => $pagination->get_number_items_per_page(),
+				'display_from' => $pagination->get_display_from()
+			)
 		);
 		
 		while ($row = $result->fetch())
@@ -156,7 +142,7 @@ class BugtrackerHistoryListController extends ModuleController
 				'OLD_VALUE'				=> stripslashes($old_value),
 				'NEW_VALUE'				=> stripslashes($new_value),
 				'COMMENT'				=> $row['change_comment'],
-				'DATE' 					=> gmdate_format($date_format, $row['update_date']),
+				'DATE' 					=> gmdate_format($config->get_date_form(), $row['update_date']),
 				'UPDATER'				=> $user->get_pseudo(),
 				'UPDATER_LEVEL_CLASS'	=> UserService::get_level_class($user->get_level()),
 				'UPDATER_GROUP_COLOR'	=> $user_group_color,
@@ -165,19 +151,19 @@ class BugtrackerHistoryListController extends ModuleController
 		}
 	}
 	
-	private function init()
+	private function init($request)
 	{
-		$request = AppContext::get_request();
+		$this->lang = LangLoader::get('common', 'bugtracker');
 		$id = $request->get_int('id', 0);
 		
 		try {
 			$this->bug = BugtrackerService::get_bug('WHERE id=:id', array('id' => $id));
 		} catch (RowNotFoundException $e) {
-			$controller = new UserErrorController(LangLoader::get_message('error', 'errors-common'), LangLoader::get_message('bugs.error.e_unexist_bug', 'bugtracker_common', 'bugtracker'));
+			$controller = new UserErrorController(LangLoader::get_message('error', 'errors-common'), $this->lang['bugs.error.e_unexist_bug']);
 			DispatchManager::redirect($controller);
 		}
 		
-		$this->lang = LangLoader::get('bugtracker_common', 'bugtracker');
+		
 		$this->view = new FileTemplate('bugtracker/BugtrackerHistoryListController.tpl');
 		$this->view->add_lang($this->lang);
 	}
@@ -189,6 +175,20 @@ class BugtrackerHistoryListController extends ModuleController
 			$error_controller = PHPBoostErrors::user_not_authorized();
 			DispatchManager::redirect($error_controller);
 		}
+	}
+	
+	private function get_pagination($history_lines_number, $page)
+	{
+		$pagination = new ModulePagination($page, $history_lines_number, (int)BugtrackerConfig::load()->get_items_per_page());
+		$pagination->set_url(BugtrackerUrlBuilder::history($this->bug->get_id() . '/%d'));
+		
+		if ($pagination->current_page_is_empty() && $page > 1)
+		{
+			$error_controller = PHPBoostErrors::unexisting_page();
+			DispatchManager::redirect($error_controller);
+		}
+		
+		return $pagination;
 	}
 	
 	private function build_response(View $view)

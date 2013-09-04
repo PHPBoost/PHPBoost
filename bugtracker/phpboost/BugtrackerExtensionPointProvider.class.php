@@ -4,7 +4,7 @@
  *                            -------------------
  *   begin                : April 16, 2012
  *   copyright            : (C) 2012 Julien BRISWALTER
- *   email                : julien.briswalter@gmail.com
+ *   email                : julienseth78@phpboost.com
  *
  *  
  ###################################################
@@ -33,11 +33,11 @@ class BugtrackerExtensionPointProvider extends ExtensionPointProvider
 	}
 	
 	 /**
-	 * @method Get home page
+	 * @method Get comments
 	 */
-	public function home_page()
+	public function comments()
 	{
-		return new BugtrackerHomePageExtensionPoint();
+		return new CommentsTopics(array(new BugtrackerCommentsTopic()));
 	}
 	
 	 /**
@@ -51,19 +51,19 @@ class BugtrackerExtensionPointProvider extends ExtensionPointProvider
 	}
 	
 	 /**
+	 * @method Get home page
+	 */
+	public function home_page()
+	{
+		return new BugtrackerHomePageExtensionPoint();
+	}
+	
+	 /**
 	 * @method Get search form
 	 */
 	public function search()
 	{
 		return new BugtrackerSearchable();
-	}
-	
-	 /**
-	 * @method Get comments
-	 */
-	public function comments()
-	{
-		return new CommentsTopics(array(new BugtrackerCommentsTopic()));
 	}
 	
 	 /**

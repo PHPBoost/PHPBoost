@@ -4,7 +4,7 @@
  *                            -------------------
  *   begin                : October 20, 2012
  *   copyright            : (C) 2012 Julien BRISWALTER
- *   email                : julien.briswalter@gmail.com
+ *   email                : julienseth78@phpboost.com
  *
  *
  ###################################################
@@ -26,7 +26,7 @@
  ###################################################*/
 
 /**
- * @author Julien BRISWALTER <julien.briswalter@gmail.com>
+ * @author Julien BRISWALTER <julienseth78@phpboost.com>
  * @desc Url builder of the bugtracker module
  */
 class BugtrackerUrlBuilder

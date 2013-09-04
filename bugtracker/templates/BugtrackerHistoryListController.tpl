@@ -41,13 +41,8 @@
 		</td>
 	</tr>
 	# END history #
-	# IF C_HISTORY #
-	<tr>
-		<td colspan="6" class="row1">
-			<span class="float_left">{@bugs.labels.page} : {PAGINATION}</span>
-		</td>
-	</tr>
-	# ELSE #
+	# IF NOT C_HISTORY #
+	<div class="text_center"># INCLUDE PAGINATION #</div>
 	<tr class="text_center"> 
 		<td colspan="6" class="row2">
 			{@bugs.notice.no_history}
@@ -55,6 +50,8 @@
 	</tr>
 	# ENDIF #
 </table>
+
+# IF C_PAGINATION #<div class="text_center"># INCLUDE PAGINATION #</div># ENDIF #
 
 <div class="spacer">&nbsp;</div>
 

@@ -4,7 +4,7 @@
  *                            -------------------
  *   begin                : November 09, 2012
  *   copyright            : (C) 2012 Julien BRISWALTER
- *   email                : julien.briswalter@gmail.com
+ *   email                : julienseth78@phpboost.com
  *
  *
  ###################################################
@@ -44,12 +44,10 @@ class BugtrackerRejectBugController extends ModuleController
 		$back_filter = $request->get_value('back_filter', '');
 		$filter_id = $request->get_int('filter_id', 0);
 		
-		$bug = BugtrackerService::get_bug('WHERE id=:id', array('id' => $id));
-		
 		try {
 			$bug = BugtrackerService::get_bug('WHERE id=:id', array('id' => $id));
 		} catch (RowNotFoundException $e) {
-			$controller = new UserErrorController(LangLoader::get_message('error', 'errors-common'), LangLoader::get_message('bugs.error.e_unexist_bug', 'bugtracker_common', 'bugtracker'));
+			$controller = new UserErrorController(LangLoader::get_message('error', 'errors-common'), LangLoader::get_message('bugs.error.e_unexist_bug', 'common', 'bugtracker'));
 			DispatchManager::redirect($controller);
 		}
 		
@@ -68,15 +66,16 @@ class BugtrackerRejectBugController extends ModuleController
 			$bug->set_status(Bug::REJECTED);
 			$bug->set_progress($status_list[Bug::REJECTED]);
 			$bug->set_fix_date($now->get_timestamp());
+			$bug->set_fixed_in(0);
 			
 			BugtrackerService::update($bug);
 			
-			//Send PM to updaters if the option is activated
-			if ($config->get_pm_activated() && $config->get_pm_reject_activated())
+			//Send PM to updaters if the option is enabled
+			if ($config->are_pm_enabled() && $config->are_pm_reject_enabled())
 				BugtrackerPMService::send_PM_to_updaters('reject', $id);
 			
 			//Fix or delete admin alert
-			if ($config->get_admin_alerts_activated())
+			if ($config->are_admin_alerts_enabled() && in_array($bug->get_severity(), $config->get_admin_alerts_levels()))
 			{
 				$alerts = AdministratorAlertService::find_by_criteria($id, 'bugtracker');
 				if (!empty($alerts))
@@ -92,6 +91,8 @@ class BugtrackerRejectBugController extends ModuleController
 				}
 			}
 			
+			BugtrackerStatsCache::invalidate();
+			
 			switch ($back_page)
 			{
 				case 'detail' :
@@ -106,7 +107,7 @@ class BugtrackerRejectBugController extends ModuleController
 		}
 		else
 		{
-			$controller = new UserErrorController(LangLoader::get_message('error', 'errors-common'), LangLoader::get_message('bugs.error.e_already_rejected_bug', 'bugtracker_common', 'bugtracker'));
+			$controller = new UserErrorController(LangLoader::get_message('error', 'errors-common'), LangLoader::get_message('bugs.error.e_already_rejected_bug', 'common', 'bugtracker'));
 			DispatchManager::redirect($controller);
 		}
 	}

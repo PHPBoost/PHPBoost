@@ -4,7 +4,7 @@
  *                            -------------------
  *   begin                : October 21, 2012
  *   copyright            : (C) 2012 Julien BRISWALTER
- *   email                : julien.briswalter@gmail.com
+ *   email                : julienseth78@phpboost.com
  *
  *
  ###################################################
@@ -63,7 +63,7 @@ class AdminBugtrackerDeleteDefaultParameterController extends AdminController
 		}
 		else
 		{
-			$controller = new UserErrorController(LangLoader::get_message('error', 'errors-common'), LangLoader::get_message('bugs.error.e_unexist_parameter', 'bugtracker_common', 'bugtracker'));
+			$controller = new UserErrorController(LangLoader::get_message('error', 'errors-common'), LangLoader::get_message('bugs.error.e_unexist_parameter', 'common', 'bugtracker'));
 			$controller->set_response_classname(UserErrorController::ADMIN_RESPONSE);
 			DispatchManager::redirect($controller);
 		}
