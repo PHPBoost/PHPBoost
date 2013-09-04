@@ -4,7 +4,7 @@
  *                            -------------------
  *   begin                : February 25, 2013
  *   copyright            : (C) 2013 Julien BRISWALTER
- *   email                : julien.briswalter@gmail.com
+ *   email                : julienseth78@phpboost.com
  *
  *  
  ###################################################
@@ -29,7 +29,7 @@ class CalendarDeleteCategoryController extends AbstractDeleteCategoryController
 {
 	protected function generate_response(View $view)
 	{
-		return new AdminCalendarDisplayResponse($view, LangLoader::get_message('calendar.config.category.delete', 'calendar_common', 'calendar'));
+		return new AdminCalendarDisplayResponse($view, LangLoader::get_message('calendar.config.category.delete', 'common', 'calendar'));
 	}
 
 	protected function get_categories_manager()

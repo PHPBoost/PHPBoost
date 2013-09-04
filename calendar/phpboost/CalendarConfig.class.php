@@ -32,7 +32,6 @@ class CalendarConfig extends AbstractConfigData
 {
 	const ITEMS_NUMBER_PER_PAGE = 'items_number_per_page';
 	const COMMENTS_ENABLED = 'comments_enabled';
-	const LOCATION_ENABLED = 'location_enabled';
 	const MEMBERS_BIRTHDAY_ENABLED = 'members_birthday_enabled';
 	const BIRTHDAY_COLOR = 'birthday_color';
 	
@@ -58,24 +57,9 @@ class CalendarConfig extends AbstractConfigData
 		$this->set_property(self::COMMENTS_ENABLED, false);
 	}
 	
-	public function is_comment_enabled()
+	public function are_comments_enabled()
 	{
 		return $this->get_property(self::COMMENTS_ENABLED);
-	}
-	
-	public function enable_location()
-	{
-		$this->set_property(self::LOCATION_ENABLED, true);
-	}
-	
-	public function disable_location()
-	{
-		$this->set_property(self::LOCATION_ENABLED, false);
-	}
-	
-	public function is_location_enabled()
-	{
-		return $this->get_property(self::LOCATION_ENABLED);
 	}
 	
 	public function enable_members_birthday()
@@ -126,12 +110,11 @@ class CalendarConfig extends AbstractConfigData
 	public function get_default_values()
 	{
 		return array(
-			self::ITEMS_NUMBER_PER_PAGE => 10,
+			self::ITEMS_NUMBER_PER_PAGE => 15,
 			self::COMMENTS_ENABLED => true,
-			self::LOCATION_ENABLED => true,
 			self::MEMBERS_BIRTHDAY_ENABLED => false,
 			self::BIRTHDAY_COLOR => '#f77c91',
-			self::AUTHORIZATIONS => array('r1' => 15, 'r0' => 5, 'r-1' => 1)
+			self::AUTHORIZATIONS => array('r-1' => 1, 'r0' => 5, 'r1' => 15)
 		);
 	}
 	

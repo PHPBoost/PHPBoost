@@ -4,7 +4,7 @@
  *                            -------------------
  *   begin                : November 20, 2012
  *   copyright            : (C) 2012 Julien BRISWALTER
- *   email                : julien.briswalter@gmail.com
+ *   email                : julienseth78@phpboost.com
  *
  *
  ###################################################
@@ -26,7 +26,7 @@
  ###################################################*/
 
  /**
- * @author Julien BRISWALTER <julien.briswalter@gmail.com>
+ * @author Julien BRISWALTER <julienseth78@phpboost.com>
  * @desc AdminMenuDisplayResponse of the calendar module
  */
 class AdminCalendarDisplayResponse extends AdminMenuDisplayResponse
@@ -35,9 +35,10 @@ class AdminCalendarDisplayResponse extends AdminMenuDisplayResponse
 	{
 		parent::__construct($view);
 		
-		$lang = LangLoader::get('calendar_common', 'calendar');
+		$lang = LangLoader::get('common', 'calendar');
 		$picture = '/calendar/calendar.png';
-		$this->set_title($lang['calendar.module_title']);
+		$this->set_title($lang['module_title']);
+		$this->add_link($lang['calendar.config.manage_events'], CalendarUrlBuilder::manage_events(), $picture);
 		$this->add_link($lang['calendar.config.category.manage'], CalendarUrlBuilder::manage_categories(), $picture);
 		$this->add_link($lang['calendar.config.category.add'], CalendarUrlBuilder::add_category(), $picture);
 		$this->add_link($lang['calendar.titles.admin.config'], CalendarUrlBuilder::configuration(), $picture);
