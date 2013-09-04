@@ -38,7 +38,7 @@ class GuestbookMessagesCache implements CacheData
 		$items_number_per_page = GuestbookConfig::load()->get_items_per_page();
 		
 		$result = PersistenceContext::get_querier()->select("SELECT g.id, g.login, g.contents, g.timestamp, m.user_id, m.login as mlogin, m.level, m.user_groups
-		FROM " . PREFIX . "guestbook g
+		FROM " . GuestbookSetup::$guestbook_table . " g
 		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = g.user_id
 		GROUP BY g.id
 		ORDER BY RAND()
@@ -80,7 +80,7 @@ class GuestbookMessagesCache implements CacheData
 	
 	/**
 	 * Loads and returns the messages guestbook cached data.
-	 * @return GuestbookCache The cached data
+	 * @return GuestbookMessagesCache The cached data
 	 */
 	public static function load()
 	{
