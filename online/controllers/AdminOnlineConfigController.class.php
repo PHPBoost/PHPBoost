@@ -72,7 +72,7 @@ class AdminOnlineConfigController extends AdminModuleController
 			'class' => 'text', 'maxlength' => 3, 'required' => true)
 		));
 		
-		$fieldset_config->add_field(new FormFieldTextEditor('nbr_members_per_page', $this->lang['admin.nbr-members-per-page'], $online_config->get_number_members_per_page(), array(
+		$fieldset_config->add_field(new FormFieldTextEditor('number_members_per_page', $this->lang['admin.nbr-members-per-page'], $online_config->get_number_members_per_page(), array(
 			'class' => 'text', 'maxlength' => 3, 'required' => true)
 		));
 		
@@ -105,7 +105,7 @@ class AdminOnlineConfigController extends AdminModuleController
 	{
 		$online_config = OnlineConfig::load();
 		$online_config->set_number_member_displayed($this->form->get_value('number_member_displayed'));
-		$online_config->set_nbr_members_per_page($this->form->get_value('nbr_members_per_page'));
+		$online_config->set_number_members_per_page($this->form->get_value('number_members_per_page'));
 		$online_config->set_display_order($this->form->get_value('display_order')->get_raw_value());
 		$online_config->set_authorizations($this->form->get_value('authorizations')->build_auth_array());
 		OnlineConfig::save();
