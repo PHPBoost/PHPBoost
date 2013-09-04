@@ -1,8 +1,22 @@
 <script type="text/javascript">
 	<!--
-	function Confirm() {
+	# IF C_DELETE_BUG #
+	function Confirm_delete() {
 		return confirm("{@bugs.actions.confirm.del_bug}");
 	}
+	# ENDIF #
+	
+	# IF C_REOPEN_BUG #
+	function Confirm_reopen() {
+		return confirm("{@bugs.actions.confirm.reopen_bug}");
+	}
+	# ENDIF #
+	
+	# IF C_REJECT_BUG #
+	function Confirm_reject() {
+		return confirm("{@bugs.actions.confirm.reject_bug}");
+	}
+	# ENDIF #
 	-->
 </script>
 
@@ -11,27 +25,31 @@
 		{@bugs.titles.bugs_treatment_state}
 		# IF C_REOPEN_BUG #
 			&nbsp;&nbsp;
-			<a href="{LINK_BUG_REOPEN}">
+			<a href="{LINK_BUG_REOPEN}" onclick="javascript:return Confirm_reopen();">
 				<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/visible.png" alt="{@bugs.actions.reopen}" title="{@bugs.actions.reopen}" />
 			</a>
 		# ENDIF #
 		# IF C_REJECT_BUG #
-			<a href="{LINK_BUG_REJECT}">
+			&nbsp;
+			<a href="{LINK_BUG_REJECT}" onclick="javascript:return Confirm_reject();">
 				<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/unvisible.png" alt="{@bugs.actions.reject}" title="{@bugs.actions.reject}" />
 			</a>
 		# ENDIF #
 		# IF C_EDIT_BUG #
+			&nbsp;
 			<a href="{LINK_BUG_EDIT}">
 				<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="{L_UPDATE}" title="{L_UPDATE}" />
 			</a>
 		# ENDIF #
 		# IF C_HISTORY_BUG #
+			&nbsp;
 			<a href="{LINK_BUG_HISTORY}">
 				<img src="{PATH_TO_ROOT}/bugtracker/templates/images/history.png" alt="{@bugs.actions.history}" title="{@bugs.actions.history}" />
 			</a>
 		# ENDIF #
 		# IF C_DELETE_BUG #
-			<a href="{LINK_BUG_DELETE}" onclick="javascript:return Confirm();">
+			&nbsp;
+			<a href="{LINK_BUG_DELETE}" onclick="javascript:return Confirm_delete();">
 				<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" />
 			</a>
 		# ENDIF #
@@ -114,5 +132,5 @@
 	<strong><a href="{LINK_RETURN}" title="${escape(RETURN_NAME)}">${escape(RETURN_NAME)}</a></strong>
 </div>
 
-<br /><br />
-{COMMENTS}
+<br />
+# INCLUDE COMMENTS #

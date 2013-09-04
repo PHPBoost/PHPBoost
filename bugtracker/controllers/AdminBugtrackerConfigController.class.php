@@ -4,7 +4,7 @@
  *                            -------------------
  *   begin                : October 18, 2012
  *   copyright            : (C) 2012 Julien BRISWALTER
- *   email                : julien.briswalter@gmail.com
+ *   email                : julienseth78@phpboost.com
  *
  *  
  ###################################################
@@ -88,7 +88,7 @@ class AdminBugtrackerConfigController extends AdminModuleController
 	private function init()
 	{
 		$this->config = BugtrackerConfig::load();
-		$this->lang = LangLoader::get('bugtracker_common', 'bugtracker');
+		$this->lang = LangLoader::get('common', 'bugtracker');
 	}
 	
 	private function check_authorizations()
@@ -102,7 +102,7 @@ class AdminBugtrackerConfigController extends AdminModuleController
 	
 	private function build_form()
 	{
-		$form = new HTMLForm('bugtracker');
+		$form = new HTMLForm(__CLASS__);
 		$types = $this->config->get_types();
 		$categories = $this->config->get_categories();
 		$severities = $this->config->get_severities();
@@ -136,48 +136,54 @@ class AdminBugtrackerConfigController extends AdminModuleController
 			)
 		));
 		
-		$fieldset->add_field(new FormFieldCheckbox('comments_activated', $this->lang['bugs.config.activ_com'], $this->config->get_comments_activated()));
+		$fieldset->add_field(new FormFieldCheckbox('comments_enabled', $this->lang['bugs.config.activ_com'], $this->config->are_comments_enabled()));
 		
-		$fieldset->add_field(new FormFieldCheckbox('cat_in_title_activated', $this->lang['bugs.config.activ_cat_in_title'], $this->config->get_cat_in_title_activated()));
+		$fieldset->add_field(new FormFieldCheckbox('cat_in_title_displayed', $this->lang['bugs.config.activ_cat_in_title'], $this->config->is_cat_in_title_displayed()));
 		
-		$fieldset->add_field(new FormFieldCheckbox('roadmap_activated', $this->lang['bugs.config.activ_roadmap'], $this->config->get_roadmap_activated(),
+		$fieldset->add_field(new FormFieldCheckbox('roadmap_enabled', $this->lang['bugs.config.activ_roadmap'], $this->config->is_roadmap_enabled(),
 			array('description' => $this->lang['bugs.explain.roadmap'])
 		));
 		
-		$fieldset->add_field(new FormFieldCheckbox('progress_bar_activated', $this->lang['bugs.config.activ_progress_bar'], $this->config->get_progress_bar_activated()));
+		$fieldset->add_field(new FormFieldCheckbox('progress_bar_displayed', $this->lang['bugs.config.activ_progress_bar'], $this->config->is_progress_bar_displayed()));
 		
-		$fieldset->add_field(new FormFieldCheckbox('admin_alerts_activated', $this->lang['bugs.config.activ_admin_alerts'], $this->config->get_admin_alerts_activated(),
+		$fieldset->add_field(new FormFieldCheckbox('admin_alerts_enabled', $this->lang['bugs.config.activ_admin_alerts'], $this->config->are_admin_alerts_enabled(),
 			array('events' => array('click' => '
-				if (HTMLForms.getField("admin_alerts_activated").getValue()) {
+				if (HTMLForms.getField("admin_alerts_enabled").getValue()) {
+					HTMLForms.getField("admin_alerts_levels").enable();
 					HTMLForms.getField("admin_alerts_fix_action").enable();
 				} else {
+					HTMLForms.getField("admin_alerts_levels").disable();
 					HTMLForms.getField("admin_alerts_fix_action").disable();
 				}')
 			)
 		));
 		
+		$fieldset->add_field(new FormFieldMultipleCheckbox('admin_alerts_levels', $this->lang['bugs.config.admin_alerts_levels'], $this->config->get_admin_alerts_levels(), $this->build_admin_alerts_levels($severities),
+			array('hidden' => !$this->config->are_admin_alerts_enabled())
+		));
+		
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('admin_alerts_fix_action', $this->lang['bugs.config.admin_alerts_fix_action'], $this->config->get_admin_alerts_fix_action(), $this->build_admin_alerts_fix_actions(),
-			array('hidden' => !$this->config->get_admin_alerts_activated())
+			array('hidden' => !$this->config->are_admin_alerts_enabled())
 		));
 		
 		$fieldset = new FormFieldsetHTML('stats', $this->lang['bugs.titles.bugs_stats']);
 		$form->add_fieldset($fieldset);
 		
-		$fieldset->add_field(new FormFieldCheckbox('stats_activated', $this->lang['bugs.config.activ_stats'], $this->config->get_stats_activated(),
+		$fieldset->add_field(new FormFieldCheckbox('stats_enabled', $this->lang['bugs.config.activ_stats'], $this->config->are_stats_enabled(),
 			array('events' => array('click' => '
-				if (HTMLForms.getField("stats_activated").getValue()) {
-					HTMLForms.getField("stats_top_posters_activated").enable();
+				if (HTMLForms.getField("stats_enabled").getValue()) {
+					HTMLForms.getField("stats_top_posters_enabled").enable();
 					HTMLForms.getField("stats_top_posters_number").enable();
 				} else {
-					HTMLForms.getField("stats_top_posters_activated").disable();
+					HTMLForms.getField("stats_top_posters_enabled").disable();
 					HTMLForms.getField("stats_top_posters_number").disable();
 				}')
 			)
 		));
 		
-		$fieldset->add_field(new FormFieldCheckbox('stats_top_posters_activated', $this->lang['bugs.config.activ_stats_top_posters'], $this->config->get_stats_top_posters_activated(),
-			array('hidden' => !$this->config->get_stats_activated(), 'events' => array('click' => '
-				if (HTMLForms.getField("stats_top_posters_activated").getValue()) {
+		$fieldset->add_field(new FormFieldCheckbox('stats_top_posters_enabled', $this->lang['bugs.config.activ_stats_top_posters'], $this->config->are_stats_top_posters_enabled(),
+			array('hidden' => !$this->config->are_stats_enabled(), 'events' => array('click' => '
+				if (HTMLForms.getField("stats_top_posters_enabled").getValue()) {
 					HTMLForms.getField("stats_top_posters_number").enable();
 				} else {
 					HTMLForms.getField("stats_top_posters_number").disable();
@@ -185,54 +191,54 @@ class AdminBugtrackerConfigController extends AdminModuleController
 		)));
 		
 		$fieldset->add_field(new FormFieldTextEditor('stats_top_posters_number', $this->lang['bugs.config.stats_top_posters_number'], (int)$this->config->get_stats_top_posters_number(), array(
-			'class' => 'text', 'maxlength' => 3, 'size' => 3, 'hidden' => !$this->config->get_stats_top_posters_activated()),
+			'class' => 'text', 'maxlength' => 3, 'size' => 3, 'hidden' => !$this->config->are_stats_top_posters_enabled()),
 			array(new FormFieldConstraintRegex('`^[0-9]+$`i'))
 		));
 		
 		$fieldset = new FormFieldsetHTML('pm', $this->lang['bugs.config.pm']);
 		$form->add_fieldset($fieldset);
 		
-		$fieldset->add_field(new FormFieldCheckbox('pm_activated', $this->lang['bugs.config.activ_pm'], $this->config->get_pm_activated() ? FormFieldCheckbox::CHECKED : FormFieldCheckbox::UNCHECKED,
+		$fieldset->add_field(new FormFieldCheckbox('pm_enabled', $this->lang['bugs.config.activ_pm'], $this->config->are_pm_enabled() ? FormFieldCheckbox::CHECKED : FormFieldCheckbox::UNCHECKED,
 			array('events' => array('click' => '
-				if (HTMLForms.getField("pm_activated").getValue()) {
-					HTMLForms.getField("pm_comment_activated").enable();
-					HTMLForms.getField("pm_assign_activated").enable();
-					HTMLForms.getField("pm_edit_activated").enable();
-					HTMLForms.getField("pm_reject_activated").enable();
-					HTMLForms.getField("pm_reopen_activated").enable();
-					HTMLForms.getField("pm_delete_activated").enable();
+				if (HTMLForms.getField("pm_enabled").getValue()) {
+					HTMLForms.getField("pm_comment_enabled").enable();
+					HTMLForms.getField("pm_assign_enabled").enable();
+					HTMLForms.getField("pm_edit_enabled").enable();
+					HTMLForms.getField("pm_reject_enabled").enable();
+					HTMLForms.getField("pm_reopen_enabled").enable();
+					HTMLForms.getField("pm_delete_enabled").enable();
 				} else {
-					HTMLForms.getField("pm_comment_activated").disable();
-					HTMLForms.getField("pm_assign_activated").disable();
-					HTMLForms.getField("pm_edit_activated").disable();
-					HTMLForms.getField("pm_reject_activated").disable();
-					HTMLForms.getField("pm_reopen_activated").disable();
-					HTMLForms.getField("pm_delete_activated").disable();
+					HTMLForms.getField("pm_comment_enabled").disable();
+					HTMLForms.getField("pm_assign_enabled").disable();
+					HTMLForms.getField("pm_edit_enabled").disable();
+					HTMLForms.getField("pm_reject_enabled").disable();
+					HTMLForms.getField("pm_reopen_enabled").disable();
+					HTMLForms.getField("pm_delete_enabled").disable();
 				}')
 		)));
 		
-		$fieldset->add_field(new FormFieldCheckbox('pm_comment_activated', $this->lang['bugs.config.activ_pm.comment'], $this->config->get_pm_comment_activated(), array(
-			'hidden' => !$this->config->get_pm_activated())
+		$fieldset->add_field(new FormFieldCheckbox('pm_comment_enabled', $this->lang['bugs.config.activ_pm.comment'], $this->config->are_pm_comment_enabled(), array(
+			'hidden' => !$this->config->are_pm_enabled())
 		));
 		
-		$fieldset->add_field(new FormFieldCheckbox('pm_assign_activated', $this->lang['bugs.config.activ_pm.assign'], $this->config->get_pm_assign_activated(), array(
-			'hidden' => !$this->config->get_pm_activated())
+		$fieldset->add_field(new FormFieldCheckbox('pm_assign_enabled', $this->lang['bugs.config.activ_pm.assign'], $this->config->are_pm_assign_enabled(), array(
+			'hidden' => !$this->config->are_pm_enabled())
 		));
 		
-		$fieldset->add_field(new FormFieldCheckbox('pm_edit_activated', $this->lang['bugs.config.activ_pm.edit'], $this->config->get_pm_edit_activated(), array(
-			'hidden' => !$this->config->get_pm_activated())
+		$fieldset->add_field(new FormFieldCheckbox('pm_edit_enabled', $this->lang['bugs.config.activ_pm.edit'], $this->config->are_pm_edit_enabled(), array(
+			'hidden' => !$this->config->are_pm_enabled())
 		));
 		
-		$fieldset->add_field(new FormFieldCheckbox('pm_reject_activated', $this->lang['bugs.config.activ_pm.reject'], $this->config->get_pm_reject_activated(), array(
-			'hidden' => !$this->config->get_pm_activated())
+		$fieldset->add_field(new FormFieldCheckbox('pm_reject_enabled', $this->lang['bugs.config.activ_pm.reject'], $this->config->are_pm_reject_enabled(), array(
+			'hidden' => !$this->config->are_pm_enabled())
 		));
 		
-		$fieldset->add_field(new FormFieldCheckbox('pm_reopen_activated', $this->lang['bugs.config.activ_pm.reopen'], $this->config->get_pm_reopen_activated(), array(
-			'hidden' => !$this->config->get_pm_activated())
+		$fieldset->add_field(new FormFieldCheckbox('pm_reopen_enabled', $this->lang['bugs.config.activ_pm.reopen'], $this->config->are_pm_reopen_enabled(), array(
+			'hidden' => !$this->config->are_pm_enabled())
 		));
 		
-		$fieldset->add_field(new FormFieldCheckbox('pm_delete_activated', $this->lang['bugs.config.activ_pm.delete'], $this->config->get_pm_delete_activated(), array(
-			'hidden' => !$this->config->get_pm_activated())
+		$fieldset->add_field(new FormFieldCheckbox('pm_delete_enabled', $this->lang['bugs.config.activ_pm.delete'], $this->config->are_pm_delete_enabled(), array(
+			'hidden' => !$this->config->are_pm_enabled())
 		));
 		
 		$fieldset = new FormFieldsetHTML('contents-value', $this->lang['bugs.titles.contents_value_title']);
@@ -269,7 +275,7 @@ class AdminBugtrackerConfigController extends AdminModuleController
 		$fieldset->set_template($types_table_view);
 		$form->add_fieldset($fieldset);
 		
-		$fieldset->add_field(new FormFieldRadioChoice('type_mandatory', $this->lang['bugs.labels.type_mandatory'], $this->config->get_type_mandatory(),
+		$fieldset->add_field(new FormFieldRadioChoice('type_mandatory', $this->lang['bugs.labels.type_mandatory'], $this->config->is_type_mandatory(),
 			array(
 				new FormFieldRadioChoiceOption($main_lang['yes'], 1),
 				new FormFieldRadioChoiceOption($main_lang['no'], 0)
@@ -307,7 +313,7 @@ class AdminBugtrackerConfigController extends AdminModuleController
 		$fieldset->set_template($categories_table_view);
 		$form->add_fieldset($fieldset);
 		
-		$fieldset->add_field(new FormFieldRadioChoice('category_mandatory', $this->lang['bugs.labels.category_mandatory'], $this->config->get_category_mandatory(),
+		$fieldset->add_field(new FormFieldRadioChoice('category_mandatory', $this->lang['bugs.labels.category_mandatory'], $this->config->is_category_mandatory(),
 			array(
 				new FormFieldRadioChoiceOption($main_lang['yes'], 1),
 				new FormFieldRadioChoiceOption($main_lang['no'], 0)
@@ -345,7 +351,7 @@ class AdminBugtrackerConfigController extends AdminModuleController
 		$fieldset->set_template($severities_table_view);
 		$form->add_fieldset($fieldset);
 		
-		$fieldset->add_field(new FormFieldRadioChoice('severity_mandatory', $this->lang['bugs.labels.severity_mandatory'], $this->config->get_severity_mandatory(),
+		$fieldset->add_field(new FormFieldRadioChoice('severity_mandatory', $this->lang['bugs.labels.severity_mandatory'], $this->config->is_severity_mandatory(),
 			array(
 				new FormFieldRadioChoiceOption($main_lang['yes'], 1),
 				new FormFieldRadioChoiceOption($main_lang['no'], 0)
@@ -376,7 +382,7 @@ class AdminBugtrackerConfigController extends AdminModuleController
 		$fieldset->set_template($priorities_table_view);
 		$form->add_fieldset($fieldset);
 		
-		$fieldset->add_field(new FormFieldRadioChoice('priority_mandatory', $this->lang['bugs.labels.priority_mandatory'], $this->config->get_priority_mandatory(),
+		$fieldset->add_field(new FormFieldRadioChoice('priority_mandatory', $this->lang['bugs.labels.priority_mandatory'], $this->config->is_priority_mandatory(),
 			array(
 				new FormFieldRadioChoiceOption($main_lang['yes'], 1),
 				new FormFieldRadioChoiceOption($main_lang['no'], 0)
@@ -410,7 +416,7 @@ class AdminBugtrackerConfigController extends AdminModuleController
 		$fieldset->set_template($versions_table_view);
 		$form->add_fieldset($fieldset);
 		
-		$fieldset->add_field(new FormFieldRadioChoice('detected_in_mandatory', $this->lang['bugs.labels.detected_in_mandatory'], $this->config->get_detected_in_mandatory(),
+		$fieldset->add_field(new FormFieldRadioChoice('detected_in_version_mandatory', $this->lang['bugs.labels.detected_in_mandatory'], $this->config->is_detected_in_version_mandatory(),
 			array(
 				new FormFieldRadioChoiceOption($main_lang['yes'], 1),
 				new FormFieldRadioChoiceOption($main_lang['no'], 0)
@@ -447,6 +453,18 @@ class AdminBugtrackerConfigController extends AdminModuleController
 		$form->add_button(new FormButtonReset());
 		
 		$this->form = $form;
+	}
+	
+	private function build_admin_alerts_levels($severities)
+	{
+		$list = array();
+		
+		foreach ($severities as $key => $severity)
+		{
+			$list[] = new FormFieldMultipleCheckboxOption($key, stripslashes($severity['name']));
+		}
+		
+		return $list;
 	}
 	
 	private function build_admin_alerts_fix_actions()
@@ -538,49 +556,138 @@ class AdminBugtrackerConfigController extends AdminModuleController
 			$this->config->set_rejected_bug_color($this->form->get_value('rejected_bug_color'));
 			$this->config->set_fixed_bug_color($this->form->get_value('fixed_bug_color'));
 			$this->config->set_date_form($this->form->get_value('date_form')->get_raw_value());
-			$this->config->set_comments_activated($this->form->get_value('comments_activated'));
-			$this->config->set_cat_in_title_activated($this->form->get_value('cat_in_title_activated'));
-			$this->config->set_roadmap_activated($this->form->get_value('roadmap_activated'));
-			$this->config->set_progress_bar_activated($this->form->get_value('progress_bar_activated'));
-			$this->config->set_stats_activated($this->form->get_value('stats_activated'));
-			if (!$this->form->field_is_disabled('stats_top_posters_activated'))
-				$this->config->set_stats_top_posters_activated($this->form->get_value('stats_top_posters_activated'));
-			if (!$this->form->field_is_disabled('stats_top_posters_number'))
-				$this->config->set_stats_top_posters_number($this->form->get_value('stats_top_posters_number'));
-			$this->config->set_admin_alerts_activated($this->form->get_value('admin_alerts_activated'));
-			if (!$this->form->field_is_disabled('admin_alerts_fix_action'))
+			
+			if ($this->form->get_value('comments_enabled'))
+				$this->config->enable_comments();
+			else
+				$this->config->disable_comments();
+			
+			if ($this->form->get_value('cat_in_title_displayed'))
+				$this->config->display_cat_in_title();
+			else
+				$this->config->hide_cat_in_title();
+			
+			if ($this->form->get_value('roadmap_enabled'))
+				$this->config->enable_roadmap();
+			else
+				$this->config->disable_roadmap();
+			
+			if ($this->form->get_value('progress_bar_displayed'))
+				$this->config->display_progress_bar();
+			else
+				$this->config->hide_progress_bar();
+			
+			if ($this->form->get_value('stats_enabled'))
+			{
+				$this->config->enable_stats();
+				if ($this->form->get_value('stats_top_posters_enabled'))
+				{
+					$this->config->enable_stats_top_posters();
+					$this->config->set_stats_top_posters_number($this->form->get_value('stats_top_posters_number'));
+				}
+				else
+					$this->config->disable_stats_top_posters();
+			}
+			else
+				$this->config->disable_stats();
+			
+			if ($this->form->get_value('admin_alerts_enabled'))
+			{
+				$this->config->enable_admin_alerts();
 				$this->config->set_admin_alerts_fix_action($this->form->get_value('admin_alerts_fix_action')->get_raw_value());
-			$this->config->set_pm_activated($this->form->get_value('pm_activated'));
-			if (!$this->form->field_is_disabled('pm_comment_activated'))
-				$this->config->set_pm_comment_activated($this->form->get_value('pm_comment_activated'));
-			if (!$this->form->field_is_disabled('pm_assign_activated'))
-				$this->config->set_pm_assign_activated($this->form->get_value('pm_assign_activated'));
-			if (!$this->form->field_is_disabled('pm_edit_activated'))
-				$this->config->set_pm_edit_activated($this->form->get_value('pm_edit_activated'));
-			if (!$this->form->field_is_disabled('pm_reject_activated'))
-				$this->config->set_pm_reject_activated($this->form->get_value('pm_reject_activated'));
-			if (!$this->form->field_is_disabled('pm_reopen_activated'))
-				$this->config->set_pm_reopen_activated($this->form->get_value('pm_reopen_activated'));
-			if (!$this->form->field_is_disabled('pm_delete_activated'))
-				$this->config->set_pm_delete_activated($this->form->get_value('pm_delete_activated'));
+				
+				$admin_alerts_levels = array();
+				foreach ($this->form->get_value('admin_alerts_levels') as $level => $value)
+				{
+					$admin_alerts_levels[] = (string)$value->get_id();
+				}
+				$this->config->set_admin_alerts_levels($admin_alerts_levels);
+			}
+			else
+				$this->config->disable_admin_alerts();
+			
+			if ($this->form->get_value('pm_enabled'))
+			{
+				$this->config->enable_pm();
+				
+				if ($this->form->get_value('pm_comment_enabled'))
+					$this->config->enable_pm_comment();
+				else
+					$this->config->disable_pm_comment();
+				
+				if ($this->form->get_value('pm_assign_enabled'))
+					$this->config->enable_pm_assign();
+				else
+					$this->config->disable_pm_assign();
+				
+				if ($this->form->get_value('pm_edit_enabled'))
+					$this->config->enable_pm_edit();
+				else
+					$this->config->disable_pm_edit();
+				
+				if ($this->form->get_value('pm_reject_enabled'))
+					$this->config->enable_pm_reject();
+				else
+					$this->config->disable_pm_reject();
+				
+				if ($this->form->get_value('pm_reopen_enabled'))
+					$this->config->enable_pm_reopen();
+				else
+					$this->config->disable_pm_reopen();
+				
+				if ($this->form->get_value('pm_delete_enabled'))
+					$this->config->enable_pm_delete();
+				else
+					$this->config->disable_pm_delete();
+			}
+			else
+				$this->config->disable_pm();
+			
 			$this->config->set_contents_value($this->form->get_value('contents_value'));
-			$this->config->set_type_mandatory((bool)$this->form->get_value('type_mandatory')->get_raw_value());
+			
+			if ($this->form->get_value('type_mandatory')->get_raw_value())
+				$this->config->type_mandatory();
+			else
+				$this->config->type_not_mandatory();
+			
 			$this->config->set_types($types);
 			$this->config->set_default_type($this->form->get_value('add_type_default') ? sizeof($types) : $request->get_value('default_type', 0));
-			$this->config->set_category_mandatory((bool)$this->form->get_value('category_mandatory')->get_raw_value());
+			
+			if ($this->form->get_value('category_mandatory')->get_raw_value())
+				$this->config->category_mandatory();
+			else
+				$this->config->category_not_mandatory();
+			
 			$this->config->set_categories($categories);
 			$this->config->set_default_category($this->form->get_value('add_category_default') ? sizeof($categories) : $request->get_value('default_category', 0));
-			$this->config->set_severity_mandatory((bool)$this->form->get_value('severity_mandatory')->get_raw_value());
+			
+			if ($this->form->get_value('severity_mandatory')->get_raw_value())
+				$this->config->severity_mandatory();
+			else
+				$this->config->severity_not_mandatory();
+			
 			$this->config->set_severities($severities);
 			$this->config->set_default_severity($request->get_value('default_severity', 0));
-			$this->config->set_priority_mandatory((bool)$this->form->get_value('priority_mandatory')->get_raw_value());
+			
+			if ($this->form->get_value('priority_mandatory')->get_raw_value())
+				$this->config->priority_mandatory();
+			else
+				$this->config->priority_not_mandatory();
+			
 			$this->config->set_priorities($priorities);
 			$this->config->set_default_priority($request->get_value('default_priority', 0));
-			$this->config->set_detected_in_mandatory((bool)$this->form->get_value('detected_in_mandatory')->get_raw_value());
+			
+			if ($this->form->get_value('detected_in_version_mandatory')->get_raw_value())
+				$this->config->detected_in_version_mandatory();
+			else
+				$this->config->detected_in_version_not_mandatory();
+			
 			$this->config->set_versions($versions);
 			$this->config->set_default_version(!$this->form->field_is_disabled('add_version_default') && $this->form->get_value('add_version_default') ? sizeof($versions) : $request->get_value('default_version', 0));
 			
 			BugtrackerConfig::save();
+			
+			BugtrackerStatsCache::invalidate();
 			
 			AppContext::get_response()->redirect(BugtrackerUrlBuilder::configuration_success('config_modified'));
 		}

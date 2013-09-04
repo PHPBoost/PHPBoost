@@ -1,10 +1,10 @@
 <?php
 /*##################################################
- *                              bugtracker_common.php
+ *                              common.php
  *                            -------------------
  *   begin                : November 09, 2012
  *   copyright            : (C) 2012 Julien BRISWALTER
- *   email                : julien.briswalter@gmail.com
+ *   email                : julienseth78@phpboost.com
  *
  *  
  ###################################################
@@ -66,6 +66,8 @@ $lang['bugs.actions.history'] = 'Bug\'s history';
 $lang['bugs.actions.reject'] = 'Reject bug';
 $lang['bugs.actions.reopen'] = 'Reopen bug';
 $lang['bugs.actions.confirm.del_bug'] = 'Delete this bug? (All the history related to this bug will be deleted)';
+$lang['bugs.actions.confirm.reopen_bug'] = 'Reopen this bug?';
+$lang['bugs.actions.confirm.reject_bug'] = 'Reject this bug?';
 $lang['bugs.actions.confirm.del_version'] = 'Delete this version?';
 $lang['bugs.actions.confirm.del_type'] = 'Delete this type?';
 $lang['bugs.actions.confirm.del_category'] = 'Delete this category?';
@@ -224,16 +226,17 @@ $lang['bugs.search.where.title'] = 'Title';
 $lang['bugs.search.where.contents'] = 'Content';
 
 //Configuration
-$lang['bugs.config.items_per_page'] = 'Bugs number per page'; 
+$lang['bugs.config.items_per_page'] = 'Bugs number displayed per page'; 
 $lang['bugs.config.rejected_bug_color_label'] = 'Rejected bug line color';
 $lang['bugs.config.fixed_bug_color_label'] = 'Fixed bug line color';
 $lang['bugs.config.activ_com'] = 'Active comments';
 $lang['bugs.config.activ_roadmap'] = 'Active roadmap';
 $lang['bugs.config.activ_stats'] = 'Active statistics';
-$lang['bugs.config.activ_stats_top_posters'] = 'Active top posters';
+$lang['bugs.config.activ_stats_top_posters'] = 'Display top posters list';
 $lang['bugs.config.stats_top_posters_number'] = 'Number user displayed';
 $lang['bugs.config.activ_progress_bar'] = 'Active progress bar';
 $lang['bugs.config.activ_admin_alerts'] = 'Active admin alerts';
+$lang['bugs.config.admin_alerts_levels'] = 'Bug severity to send the alert';
 $lang['bugs.config.admin_alerts_fix_action'] = 'Action when fixing a bug';
 $lang['bugs.config.activ_cat_in_title'] = 'Display category in bug title';
 $lang['bugs.config.pm'] = 'PM';

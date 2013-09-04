@@ -4,7 +4,7 @@
  *                            -------------------
  *   begin                : April 16, 2012
  *   copyright            : (C) 2012 Julien BRISWALTER
- *   email                : julien.briswalter@gmail.com
+ *   email                : julienseth78@phpboost.com
  *
  *  
  ###################################################
@@ -32,7 +32,7 @@ class BugtrackerHomePageExtensionPoint implements HomePageExtensionPoint
 	 */
 	public function get_home_page()
 	{
-		return new DefaultHomePage($this->get_title(), $this->get_view());
+		return new DefaultHomePage($this->get_title(), BugtrackerUnsolvedListController::get_view());
 	}
 	
 	 /**
@@ -40,15 +40,7 @@ class BugtrackerHomePageExtensionPoint implements HomePageExtensionPoint
 	 */
 	private function get_title()
 	{
-		return LangLoader::get_message('bugs.module_title', 'bugtracker_common', 'bugtracker');
-	}
-	
-	 /**
-	 * @method Get the module view
-	 */
-	private function get_view()
-	{
-		return BugtrackerModuleHomePage::get_view();
+		return LangLoader::get_message('bugs.module_title', 'common', 'bugtracker');
 	}
 }
 ?>

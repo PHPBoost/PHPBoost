@@ -4,7 +4,7 @@
  *                            -------------------
  *   begin                : November 13, 2012
  *   copyright            : (C) 2012 Julien BRISWALTER
- *   email                : julien.briswalter@gmail.com
+ *   email                : julienseth78@phpboost.com
  *
  *
  ###################################################
@@ -47,18 +47,10 @@ class BugtrackerRoadmapListController extends ModuleController
 	{
 		//Configuration load
 		$config = BugtrackerConfig::load();
-		$authorizations = $config->get_authorizations();
-		$items_per_page = $config->get_items_per_page();
-		$roadmap_activated = $config->get_roadmap_activated();
-		$progress_bar_activated = $config->get_progress_bar_activated();
-		$comments_activated = $config->get_comments_activated();
-		$cat_in_title_activated = $config->get_cat_in_title_activated();
 		$types = $config->get_types();
 		$versions = $config->get_versions();
 		$categories = $config->get_categories();
 		$severities = $config->get_severities();
-		$rejected_bug_color = $config->get_rejected_bug_color();
-		$fixed_bug_color = $config->get_fixed_bug_color();
 		
 		$display_types = sizeof($types) > 1 ? true : false;
 		$display_categories = sizeof($categories) > 1 ? true : false;
@@ -106,46 +98,52 @@ class BugtrackerRoadmapListController extends ModuleController
 				break;
 		}
 		
-		//Bugs number
-		$nbr_bugs = BugtrackerService::count("WHERE fixed_in = " . $roadmap_version . ($roadmap_status != 'all' ? " AND status = '" . $roadmap_status . "'" : ""));
+		$stats_cache = BugtrackerStatsCache::load();
+		$bugs_number = $stats_cache->get_bugs_number_per_version($roadmap_version);
 		
-		if ($current_page > ceil($nbr_bugs / $items_per_page))
-		{
-			$error_controller = PHPBoostErrors::unexisting_page();
-			DispatchManager::redirect($error_controller);
-		}
+		$pagination = $this->get_pagination($bugs_number[$roadmap_status], $current_page, $r_version, $roadmap_status, $field, $sort);
 		
-		$pagination = new BugtrackerListPagination($current_page, $nbr_bugs);
-		$pagination->set_url(BugtrackerUrlBuilder::roadmap($r_version . '/' . $roadmap_status . '/' . $field . '/' . $sort . '/%d')->absolute());
-		
-		$bugs_colspan = 5;
-		
-		if ($comments_activated == true) $bugs_colspan = $bugs_colspan + 1;
-		if ($display_severities == true) $bugs_colspan = $bugs_colspan + 1;
-		
-		$limit_page = $current_page > 0 ? $current_page : 1;
-		$limit_page = (($limit_page - 1) * $items_per_page);
-		
-		$displayed_severities = PersistenceContext::get_querier()->select("SELECT severity
-		FROM (SELECT severity FROM " . BugtrackerSetup::$bugtracker_table . "
+		$result = PersistenceContext::get_querier()->select("SELECT b.*, com.number_comments
+		FROM " . BugtrackerSetup::$bugtracker_table . " b
+		LEFT JOIN " . DB_TABLE_COMMENTS_TOPIC . " com ON com.id_in_module = b.id AND com.module_id = 'bugtracker'
 		WHERE fixed_in = " . $roadmap_version . "
-		" . ($roadmap_status != 'all' ? "AND status = '" . $roadmap_status . "'" : "") . "
+		" . ($roadmap_status != 'all' ? ($roadmap_status == 'in_progress' ? "AND (b.status = 'in_progress' OR b.status = 'reopen')" : "AND b.status = 'fixed'") : "") . "
 		ORDER BY " . $field_bdd . " " . $mode . "
-		LIMIT ". $items_per_page ." OFFSET :start_limit) as b
-		GROUP BY severity",
+		LIMIT :number_items_per_page OFFSET :display_from",
 			array(
-				'start_limit' => $limit_page
-			), SelectQueryResult::FETCH_ASSOC
+				'number_items_per_page' => $pagination->get_number_items_per_page(),
+				'display_from' => $pagination->get_display_from()
+			)
 		);
 		
+		$displayed_severities = array();
+		
+		while ($row = $result->fetch())
+		{
+			if (!in_array($row['severity'], $displayed_severities)) $displayed_severities[] = $row['severity'];
+			
+			$this->view->assign_block_vars('bug', array(
+				'C_FIXED'			=> $row['status'] == Bug::FIXED,
+				'ID'				=> $row['id'],
+				'TITLE'				=> ($config->is_cat_in_title_displayed() && $display_categories) ? '[' . $categories[$row['category']] . '] ' . $row['title'] : $row['title'],
+				'LINE_COLOR' 		=> (!empty($row['severity']) && isset($severities[$row['severity']])) ? 'style="background-color:' . stripslashes($severities[$row['severity']]['color']) . ';"' : '',
+				'INFOS'				=> ($config->is_progress_bar_displayed() && $row['progress'] ? '<span class="progressBar progress' . $row['progress'] . '">' . $row['progress'] . '%</span><br/>' : '') . $this->lang['bugs.labels.fields.status'] . ' : ' . $this->lang['bugs.status.' . $row['status']] . ($config->are_comments_enabled() ? '<br /><a href="' . BugtrackerUrlBuilder::detail($row['id'] . '/#comments_list')->absolute() . '">' . (int) $row['number_comments'] . ' ' . ($row['number_comments'] <= 1 ? LangLoader::get_message('comment', 'comments-common') : LangLoader::get_message('comments', 'comments-common')) . '</a>' : ''),
+				'STATUS'			=> $this->lang['bugs.status.' . $row['status']],
+				'DATE' 				=> !empty($row['fix_date']) ? gmdate_format($config->get_date_form(), $row['fix_date']) : $this->lang['bugs.labels.not_yet_fixed'],
+				'LINK_BUG_DETAIL'	=> BugtrackerUrlBuilder::detail($row['id'] . '/' . Url::encode_rewrite($row['title']))->absolute()
+			));
+		}
+		
+		$bugs_colspan = 5;
+		if ($config->are_comments_enabled()) $bugs_colspan = $bugs_colspan + 1;
+		if ($display_severities) $bugs_colspan = $bugs_colspan + 1;
+		
 		$this->view->put_all(array(
-			'C_BUGS'					=> (int)$nbr_bugs,
-			'C_DISPLAY_SEVERITIES'		=> $display_severities,
-			'C_DISPLAY_VERSIONS'		=> $display_versions,
-			'C_COMMENTS_ACTIVATED'		=> ($comments_activated == true) ? true : false,
-			'PAGINATION' 				=> $pagination->display()->render(),
+			'C_BUGS'					=> $bugs_number[$roadmap_status],
+			'C_PAGINATION'				=> $bugs_number[$roadmap_status] > $pagination->get_number_items_per_page(),
+			'PAGINATION' 				=> $pagination->display(),
 			'BUGS_COLSPAN'				=> $bugs_colspan,
-			'SELECT_VERSION'			=> $this->build_form($versions[$roadmap_version], $roadmap_status, $nbr_bugs)->display(),
+			'SELECT_VERSION'			=> $this->build_form($versions[$roadmap_version], $roadmap_status, (int)$bugs_number[$roadmap_status])->display(),
 			'L_NO_BUG'					=> $roadmap_status == 'in_progress' ? $this->lang['bugs.notice.no_bug_in_progress'] : $this->lang['bugs.notice.no_bug_fixed'],
 			'PROGRESS_BAR'				=> BugtrackerViews::build_progress_bar(),
 			'LEGEND'					=> BugtrackerViews::build_legend($displayed_severities, 'roadmap'),
@@ -160,37 +158,6 @@ class BugtrackerRoadmapListController extends ModuleController
 			'LINK_BUG_DATE_TOP' 		=> BugtrackerUrlBuilder::roadmap($r_version . '/' . $roadmap_status . '/date/top/'. $current_page)->absolute(),
 			'LINK_BUG_DATE_BOTTOM'		=> BugtrackerUrlBuilder::roadmap($r_version . '/' . $roadmap_status . '/date/bottom/'. $current_page)->absolute()
 		));
-		
-		$result = PersistenceContext::get_querier()->select("SELECT b.*, com.number_comments
-		FROM " . BugtrackerSetup::$bugtracker_table . " b
-		LEFT JOIN " . DB_TABLE_COMMENTS_TOPIC . " com ON com.id_in_module = b.id AND com.module_id = 'bugtracker'
-		WHERE fixed_in = " . $roadmap_version . "
-		" . ($roadmap_status != 'all' ? "AND b.status = '" . $roadmap_status . "'" : "") . "
-		ORDER BY " . $field_bdd . " " . $mode . "
-		LIMIT ". $items_per_page ." OFFSET :start_limit",
-			array(
-				'start_limit' => $limit_page
-			), SelectQueryResult::FETCH_ASSOC
-		);
-		
-		while ($row = $result->fetch())
-		{
-			//Comments number
-			$nbr_coms = $row['number_comments'];
-			
-			$this->view->assign_block_vars('bug', array(
-				'C_FIXED'			=> $row['status'] == 'fixed' ? true : false,
-				'ID'				=> $row['id'],
-				'TITLE'				=> ($cat_in_title_activated == true && $display_categories) ? '[' . $categories[$row['category']] . '] ' . $row['title'] : $row['title'],
-				'SEVERITY'			=> (!empty($row['severity']) && isset($severities[$row['severity']])) ? stripslashes($severities[$row['severity']]['name']) : $this->lang['bugs.notice.none'],
-				'LINE_COLOR' 		=> (!empty($row['severity']) && isset($severities[$row['severity']])) ? 'style="background-color:' . stripslashes($severities[$row['severity']]['color']) . ';"' : '',
-				'INFOS'				=> ($progress_bar_activated && $row['progress'] ? '<span class="progressBar progress' . $row['progress'] . '">' . $row['progress'] . '%</span><br/>' : '') . $this->lang['bugs.labels.fields.status'] . ' : ' . $this->lang['bugs.status.' . $row['status']] . ($comments_activated == true ? '<br /><a href="' . BugtrackerUrlBuilder::detail($row['id'] . '/#comments_list')->absolute() . '">' . (empty($nbr_coms) ? 0 : $nbr_coms) . ' ' . ($nbr_coms <= 1 ? LangLoader::get_message('comment', 'comments-common') : LangLoader::get_message('comments', 'comments-common')) . '</a>' : ''),
-				'STATUS'			=> $this->lang['bugs.status.' . $row['status']],
-				'DATE' 				=> !empty($row['fix_date']) ? gmdate_format($config->get_date_form(), $row['fix_date']) : $this->lang['bugs.labels.not_yet_fixed'],
-				'LINK_BUG_DETAIL'	=> BugtrackerUrlBuilder::detail($row['id'] . '/' . Url::encode_rewrite($row['title']))->absolute(),
-				'LINK_BUG_HISTORY'	=> BugtrackerUrlBuilder::history($row['id'])->absolute()
-			));
-		}
 		
 		return $this->view;
 	}
@@ -244,14 +211,14 @@ class BugtrackerRoadmapListController extends ModuleController
 	
 	private function init()
 	{
-		$this->lang = LangLoader::get('bugtracker_common', 'bugtracker');
+		$this->lang = LangLoader::get('common', 'bugtracker');
 		$this->view = new FileTemplate('bugtracker/BugtrackerRoadmapListController.tpl');
 		$this->view->add_lang($this->lang);
 	}
 	
 	private function check_page_exists()
 	{
-		if (BugtrackerConfig::load()->get_roadmap_activated() == false)
+		if (!BugtrackerConfig::load()->is_roadmap_enabled())
 		{
 			$error_controller = PHPBoostErrors::unexisting_page();
 			DispatchManager::redirect($error_controller);
@@ -265,6 +232,20 @@ class BugtrackerRoadmapListController extends ModuleController
 			$error_controller = PHPBoostErrors::user_not_authorized();
 			DispatchManager::redirect($error_controller);
 		}
+	}
+	
+	private function get_pagination($bugs_number, $page, $roadmap_version, $roadmap_status, $field, $sort)
+	{
+		$pagination = new ModulePagination($page, $bugs_number, (int)BugtrackerConfig::load()->get_items_per_page());
+		$pagination->set_url(BugtrackerUrlBuilder::roadmap($roadmap_version . '/' . $roadmap_status . '/' . $field . '/' . $sort . '/%d'));
+		
+		if ($pagination->current_page_is_empty() && $page > 1)
+		{
+			$error_controller = PHPBoostErrors::unexisting_page();
+			DispatchManager::redirect($error_controller);
+		}
+		
+		return $pagination;
 	}
 	
 	private function build_response(View $view)

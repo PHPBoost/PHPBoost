@@ -4,7 +4,7 @@
  *                            -------------------
  *   begin                : November 11, 2012
  *   copyright            : (C) 2012 Julien BRISWALTER
- *   email                : julien.briswalter@gmail.com
+ *   email                : julienseth78@phpboost.com
  *
  *
  ###################################################
@@ -47,17 +47,12 @@ class BugtrackerDetailController extends ModuleController
 	{
 		//Configuration load
 		$config = BugtrackerConfig::load();
-		$authorizations = $config->get_authorizations();
-		$comments_activated = $config->get_comments_activated();
-		$cat_in_title_activated = $config->get_cat_in_title_activated();
 		$types = $config->get_types();
 		$categories = $config->get_categories();
 		$display_categories = sizeof($categories) > 1 ? true : false;
 		$severities = $config->get_severities();
 		$priorities = $config->get_priorities();
 		$versions = $config->get_versions();
-		$date_format = $config->get_date_form();
-		$auth_moderate = BugtrackerAuthorizationsService::check_authorizations()->moderation();
 		
 		$main_lang = LangLoader::get('main');
 		
@@ -82,7 +77,7 @@ class BugtrackerDetailController extends ModuleController
 				$c_reject = true;
 		}
 		
-		if ($auth_moderate || ($this->current_user->get_id() == $this->bug->get_author_user()->get_id() && $this->bug->get_author_user()->get_id() != -1) || ($this->bug->get_assigned_to_id() && $this->current_user->get_id() == $this->bug->get_assigned_to_id()))
+		if (BugtrackerAuthorizationsService::check_authorizations()->moderation() || ($this->current_user->get_id() == $this->bug->get_author_user()->get_id() && $this->bug->get_author_user()->get_id() != User::VISITOR_LEVEL) || ($this->bug->get_assigned_to_id() && $this->current_user->get_id() == $this->bug->get_assigned_to_id()))
 		{
 			$this->view->put_all(array(
 				'C_EDIT_BUG'=> true,
@@ -90,7 +85,7 @@ class BugtrackerDetailController extends ModuleController
 			));
 		}
 		
-		if ($auth_moderate)
+		if (BugtrackerAuthorizationsService::check_authorizations()->moderation())
 		{
 			$this->view->put_all(array(
 				'C_REOPEN_BUG'	=> $c_reopen,
@@ -101,34 +96,25 @@ class BugtrackerDetailController extends ModuleController
 			));
 		}
 		
-		$this->view->put_all(array(
-			'C_TYPES' 					=> $types ? true : false,
-			'C_CATEGORIES' 				=> $categories ? true : false,
-			'C_SEVERITIES' 				=> $severities ? true : false,
-			'C_PRIORITIES' 				=> $priorities ? true : false,
-			'C_VERSIONS' 				=> $versions ? true : false,
-			'C_FIXED_IN' 				=> $this->bug->get_detected_in() ? true : false,
-			'C_COMMENT_BUG'				=> $comments_activated ? true : false,
-			'C_REPRODUCTIBLE' 			=> ($this->bug->is_reproductible() && $this->bug->get_reproduction_method()) ? true : false,
-			'L_GUEST' 					=> $main_lang['guest'],
-			'L_ON' 						=> $main_lang['on'],
-			'RETURN_NAME' 				=> $main_lang['back'],
-			'LINK_BUG_REJECT'			=> BugtrackerUrlBuilder::reject($this->bug->get_id(), 'detail')->absolute(),
-			'LINK_BUG_REOPEN'			=> BugtrackerUrlBuilder::reopen($this->bug->get_id(), 'detail')->absolute(),
-			'LINK_BUG_EDIT'				=> BugtrackerUrlBuilder::edit($this->bug->get_id() . '/detail')->absolute(),
-			'LINK_BUG_HISTORY'			=> BugtrackerUrlBuilder::history($this->bug->get_id())->absolute(),
-			'LINK_BUG_DELETE'			=> BugtrackerUrlBuilder::delete($this->bug->get_id(), 'unsolved')->absolute(),
-			'LINK_RETURN' 				=> 'javascript:history.back(1);'
-		));
-		
 		$user_assigned = $this->bug->get_assigned_to_id() ? UserService::get_user('WHERE user_aprob = 1 AND user_id=:user_id', array('user_id' => $this->bug->get_assigned_to_id())) : '';
 		$user_assigned_group_color = $this->bug->get_assigned_to_id() ? User::get_group_color($user_assigned->get_groups(), $user_assigned->get_level(), true) : '';
 		
 		$this->view->put_all(array(
+			'C_TYPES' 						=> $types,
+			'C_CATEGORIES' 					=> $categories,
+			'C_SEVERITIES' 					=> $severities,
+			'C_PRIORITIES' 					=> $priorities,
+			'C_VERSIONS' 					=> $versions,
+			'C_FIXED_IN' 					=> $this->bug->get_detected_in(),
+			'C_COMMENT_BUG'					=> $config->are_comments_enabled(),
+			'C_REPRODUCTIBLE' 				=> ($this->bug->is_reproductible() && $this->bug->get_reproduction_method()),
 			'C_AUTHOR_GROUP_COLOR'			=> !empty($user_assigned_group_color),
 			'C_USER_ASSIGNED_GROUP_COLOR'	=> !empty($author_group_color),
+			'L_GUEST' 						=> $main_lang['guest'],
+			'L_ON' 							=> $main_lang['on'],
+			'RETURN_NAME' 					=> $main_lang['back'],
 			'ID'							=> $this->bug->get_id(),
-			'TITLE'							=> ($cat_in_title_activated == true && $display_categories) ? '[' . $categories[$this->bug->get_category()] . '] ' . $this->bug->get_title() : $this->bug->get_title(),
+			'TITLE'							=> ($config->is_cat_in_title_displayed() && $display_categories) ? '[' . $categories[$this->bug->get_category()] . '] ' . $this->bug->get_title() : $this->bug->get_title(),
 			'CONTENTS'						=> FormatingHelper::second_parse($this->bug->get_contents()),
 			'STATUS'						=> $this->lang['bugs.status.' . $this->bug->get_status()],
 			'TYPE'							=> (isset($types[$this->bug->get_type()])) ? stripslashes($types[$this->bug->get_type()]) : $this->lang['bugs.notice.none'],
@@ -140,26 +126,30 @@ class BugtrackerDetailController extends ModuleController
 			'DETECTED_IN' 					=> (isset($versions[$this->bug->get_detected_in()])) ? stripslashes($versions[$this->bug->get_detected_in()]['name']) : $this->lang['bugs.notice.not_defined'],
 			'FIXED_IN'						=> (isset($versions[$this->bug->get_fixed_in()])) ? stripslashes($versions[$this->bug->get_fixed_in()]['name']) : $this->lang['bugs.notice.not_defined'],
 			'USER_ASSIGNED'					=> $user_assigned,
-			'SUBMIT_DATE'					=> gmdate_format($date_format, $this->bug->get_submit_date()),
+			'SUBMIT_DATE'					=> gmdate_format($config->get_date_form(), $this->bug->get_submit_date()),
 			'AUTHOR'						=> $author->get_pseudo(),
 			'AUTHOR_LEVEL_CLASS'			=> UserService::get_level_class($author->get_level()),
 			'AUTHOR_GROUP_COLOR'			=> $author_group_color,
 			'USER_ASSIGNED'					=> $user_assigned ? $user_assigned->get_pseudo() : '',
 			'USER_ASSIGNED_LEVEL_CLASS'		=> $user_assigned ? UserService::get_level_class($user_assigned->get_level()) : '',
 			'USER_ASSIGNED_GROUP_COLOR'		=> $user_assigned_group_color,
+			'LINK_BUG_REJECT'				=> BugtrackerUrlBuilder::reject($this->bug->get_id(), 'detail')->absolute(),
+			'LINK_BUG_REOPEN'				=> BugtrackerUrlBuilder::reopen($this->bug->get_id(), 'detail')->absolute(),
+			'LINK_BUG_EDIT'					=> BugtrackerUrlBuilder::edit($this->bug->get_id() . '/detail')->absolute(),
+			'LINK_BUG_HISTORY'				=> BugtrackerUrlBuilder::history($this->bug->get_id())->absolute(),
+			'LINK_BUG_DELETE'				=> BugtrackerUrlBuilder::delete($this->bug->get_id(), 'unsolved')->absolute(),
 			'LINK_AUTHOR_PROFILE'			=> UserUrlBuilder::profile($author->get_id())->absolute(),
 			'LINK_USER_ASSIGNED_PROFILE'	=> $user_assigned ? UserUrlBuilder::profile($user_assigned->get_id())->absolute() : '',
+			'LINK_RETURN' 					=> 'javascript:history.back(1);'
 		));
 		
 		//Comments display
-		if ($comments_activated && is_numeric($this->bug->get_id()))
+		if ($config->are_comments_enabled() && is_numeric($this->bug->get_id()))
 		{
 			$comments_topic = new BugtrackerCommentsTopic();
 			$comments_topic->set_id_in_module($this->bug->get_id());
-			$comments_topic->set_url(new Url(BugtrackerUrlBuilder::detail($this->bug->get_id())->absolute()));
-			$this->view->put_all(array(
-				'COMMENTS' => CommentsService::display($comments_topic)->render()
-			));
+			$comments_topic->set_url(BugtrackerUrlBuilder::detail($this->bug->get_id()));
+			$this->view->put('COMMENTS', $comments_topic->display());
 		}
 	}
 	
@@ -169,7 +159,7 @@ class BugtrackerDetailController extends ModuleController
 		$request = AppContext::get_request();
 		$id = $request->get_int('id', 0);
 		
-		$this->lang = LangLoader::get('bugtracker_common', 'bugtracker');
+		$this->lang = LangLoader::get('common', 'bugtracker');
 		
 		try {
 			$this->bug = BugtrackerService::get_bug('WHERE id=:id', array('id' => $id));

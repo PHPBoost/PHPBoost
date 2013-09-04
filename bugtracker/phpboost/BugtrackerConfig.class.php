@@ -4,7 +4,7 @@
  *                            -------------------
  *   begin                : September 06, 2012
  *   copyright            : (C) 2012 Julien BRISWALTER
- *   email                : julien.briswalter@gmail.com
+ *   email                : julienseth78@phpboost.com
  *
  *
  ###################################################
@@ -26,7 +26,7 @@
  ###################################################*/
 
 /**
- * @author Julien BRISWALTER <julien.briswalter@gmail.com>
+ * @author Julien BRISWALTER <julienseth78@phpboost.com>
  * @desc Configuration of the bugtracker module
  */
 class BugtrackerConfig extends AbstractConfigData
@@ -35,22 +35,23 @@ class BugtrackerConfig extends AbstractConfigData
 	const REJECTED_BUG_COLOR = 'rejected_bug_color';
 	const FIXED_BUG_COLOR = 'fixed_bug_color';
 	const DATE_FORM = 'date_form';
-	const COMMENTS_ACTIVATED = 'comments_activated';
-	const CAT_IN_TITLE_ACTIVATED = 'cat_in_title_activated';
-	const ROADMAP_ACTIVATED = 'roadmap_activated';
-	const STATS_ACTIVATED = 'stats_activated';
-	const STATS_TOP_POSTERS_ACTIVATED = 'stats_top_posters_activated';
+	const COMMENTS_ENABLED = 'comments_enabled';
+	const CAT_IN_TITLE_ENABLED = 'cat_in_title_enabled';
+	const ROADMAP_ENABLED = 'roadmap_enabled';
+	const STATS_ENABLED = 'stats_enabled';
+	const STATS_TOP_POSTERS_ENABLED = 'stats_top_posters_enabled';
 	const STATS_TOP_POSTERS_NUMBER = 'stats_top_posters_number';
-	const PROGRESS_BAR_ACTIVATED = 'progress_bar_activated';
-	const ADMIN_ALERTS_ACTIVATED = 'admin_alerts_activated';
+	const PROGRESS_BAR_ENABLED = 'progress_bar_enabled';
+	const ADMIN_ALERTS_ENABLED = 'admin_alerts_enabled';
+	const ADMIN_ALERTS_LEVELS = 'admin_alerts_levels';
 	const ADMIN_ALERTS_FIX_ACTION = 'admin_alerts_fix_action';
-	const PM_ACTIVATED = 'pm_activated';
-	const PM_COMMENT_ACTIVATED = 'pm_comment_activated';
-	const PM_ASSIGN_ACTIVATED = 'pm_assign_activated';
-	const PM_EDIT_ACTIVATED = 'pm_edit_activated';
-	const PM_REJECT_ACTIVATED = 'pm_reject_activated';
-	const PM_REOPEN_ACTIVATED = 'pm_reopen_activated';
-	const PM_DELETE_ACTIVATED = 'pm_delete_activated';
+	const PM_ENABLED = 'pm_enabled';
+	const PM_COMMENT_ENABLED = 'pm_comment_enabled';
+	const PM_ASSIGN_ENABLED = 'pm_assign_enabled';
+	const PM_EDIT_ENABLED = 'pm_edit_enabled';
+	const PM_REJECT_ENABLED = 'pm_reject_enabled';
+	const PM_REOPEN_ENABLED = 'pm_reopen_enabled';
+	const PM_DELETE_ENABLED = 'pm_delete_enabled';
 	const CONTENTS_VALUE = 'contents_value';
 	const TYPES = 'types';
 	const CATEGORIES = 'categories';
@@ -66,7 +67,7 @@ class BugtrackerConfig extends AbstractConfigData
 	const CATEGORY_MANDATORY = 'category_mandatory';
 	const PRIORITY_MANDATORY = 'priority_mandatory';
 	const SEVERITY_MANDATORY = 'severity_mandatory';
-	const DETECTED_IN_MANDATORY = 'detected_in_mandatory';
+	const DETECTED_IN_VERSION_MANDATORY = 'detected_in_version_mandatory';
 	const AUTHORIZATIONS = 'authorizations';
 	const STATUS_LIST = 'status_list';
 	
@@ -148,89 +149,79 @@ class BugtrackerConfig extends AbstractConfigData
 		$this->set_property(self::DATE_FORM, $value);
 	}
 	
-	 /**
-	 * @method Check if the comments are activated
-	 */
-	public function get_comments_activated()
+	public function enable_comments()
 	{
-		return $this->get_property(self::COMMENTS_ACTIVATED);
+		$this->set_property(self::COMMENTS_ENABLED, true);
 	}
 	
-	 /**
-	 * @method Set the activation of the comments
-	 * @params boolean $value true/false
-	 */
-	public function set_comments_activated($value) 
+	public function disable_comments()
 	{
-		$this->set_property(self::COMMENTS_ACTIVATED, $value);
+		$this->set_property(self::COMMENTS_ENABLED, false);
 	}
 	
-	 /**
-	 * @method Check if the display of the category in the title of the bug is activated
-	 */
-	public function get_cat_in_title_activated()
+	public function are_comments_enabled()
 	{
-		return $this->get_property(self::CAT_IN_TITLE_ACTIVATED);
+		return $this->get_property(self::COMMENTS_ENABLED);
 	}
 	
-	 /**
-	 * @method Set the activation of the category in the title of the bug
-	 * @params boolean $value true/false
-	 */
-	public function set_cat_in_title_activated($value) 
+	public function display_cat_in_title()
 	{
-		$this->set_property(self::CAT_IN_TITLE_ACTIVATED, $value);
+		$this->set_property(self::CAT_IN_TITLE_ENABLED, true);
 	}
 	
-	 /**
-	 * @method Check if the roadmap is activated
-	 */
-	public function get_roadmap_activated()
+	public function hide_cat_in_title()
 	{
-		return $this->get_property(self::ROADMAP_ACTIVATED);
+		$this->set_property(self::CAT_IN_TITLE_ENABLED, false);
 	}
 	
-	 /**
-	 * @method Set the activation of the roadmap
-	 * @params boolean $value true/false
-	 */
-	public function set_roadmap_activated($value) 
+	public function is_cat_in_title_displayed()
 	{
-		$this->set_property(self::ROADMAP_ACTIVATED, $value);
+		return $this->get_property(self::CAT_IN_TITLE_ENABLED);
 	}
 	
-	 /**
-	 * @method Check if the stats are activated
-	 */
-	public function get_stats_activated()
+	public function enable_roadmap()
 	{
-		return $this->get_property(self::STATS_ACTIVATED);
+		$this->set_property(self::ROADMAP_ENABLED, true);
 	}
 	
-	 /**
-	 * @method Set the activation of the stats
-	 * @params boolean $value true/false
-	 */
-	public function set_stats_activated($value) 
+	public function disable_roadmap()
 	{
-		$this->set_property(self::STATS_ACTIVATED, $value);
+		$this->set_property(self::ROADMAP_ENABLED, false);
 	}
 	
-	 /**
-	 * @method Check if the stats top posters are activated
-	 */
-	public function get_stats_top_posters_activated()
+	public function is_roadmap_enabled()
 	{
-		return $this->get_property(self::STATS_TOP_POSTERS_ACTIVATED);
+		return $this->get_property(self::ROADMAP_ENABLED);
 	}
 	
-	 /**
-	 * @method Set the activation of the stats top posters
-	 * @params boolean $value true/false
-	 */
-	public function set_stats_top_posters_activated($value) 
+	public function enable_stats()
 	{
-		$this->set_property(self::STATS_TOP_POSTERS_ACTIVATED, $value);
+		$this->set_property(self::STATS_ENABLED, true);
+	}
+	
+	public function disable_stats()
+	{
+		$this->set_property(self::STATS_ENABLED, false);
+	}
+	
+	public function are_stats_enabled()
+	{
+		return $this->get_property(self::STATS_ENABLED);
+	}
+	
+	public function enable_stats_top_posters()
+	{
+		$this->set_property(self::STATS_TOP_POSTERS_ENABLED, true);
+	}
+	
+	public function disable_stats_top_posters()
+	{
+		$this->set_property(self::STATS_TOP_POSTERS_ENABLED, false);
+	}
+	
+	public function are_stats_top_posters_enabled()
+	{
+		return $this->get_property(self::STATS_TOP_POSTERS_ENABLED);
 	}
 	
 	 /**
@@ -250,38 +241,44 @@ class BugtrackerConfig extends AbstractConfigData
 		$this->set_property(self::STATS_TOP_POSTERS_NUMBER, $value);
 	}
 	
-	 /**
-	 * @method Check if the progress bar is activated
-	 */
-	public function get_progress_bar_activated()
+	public function display_progress_bar()
 	{
-		return $this->get_property(self::PROGRESS_BAR_ACTIVATED);
+		$this->set_property(self::PROGRESS_BAR_ENABLED, true);
 	}
 	
-	 /**
-	 * @method Set the activation of the progress bar
-	 * @params boolean $value true/false
-	 */
-	public function set_progress_bar_activated($value) 
+	public function hide_progress_bar()
 	{
-		$this->set_property(self::PROGRESS_BAR_ACTIVATED, $value);
+		$this->set_property(self::PROGRESS_BAR_ENABLED, false);
 	}
 	
-	 /**
-	 * @method Check if the admin alerts are activated
-	 */
-	public function get_admin_alerts_activated()
+	public function is_progress_bar_displayed()
 	{
-		return $this->get_property(self::ADMIN_ALERTS_ACTIVATED);
+		return $this->get_property(self::PROGRESS_BAR_ENABLED);
 	}
 	
-	 /**
-	 * @method Set the activation of the admin alerts
-	 * @params boolean $value true/false
-	 */
-	public function set_admin_alerts_activated($value) 
+	public function enable_admin_alerts()
 	{
-		$this->set_property(self::ADMIN_ALERTS_ACTIVATED, $value);
+		$this->set_property(self::ADMIN_ALERTS_ENABLED, true);
+	}
+	
+	public function disable_admin_alerts()
+	{
+		$this->set_property(self::ADMIN_ALERTS_ENABLED, false);
+	}
+	
+	public function are_admin_alerts_enabled()
+	{
+		return $this->get_property(self::ADMIN_ALERTS_ENABLED);
+	}
+	
+	public function get_admin_alerts_levels()
+	{
+		return $this->get_property(self::ADMIN_ALERTS_LEVELS);
+	}
+	
+	public function set_admin_alerts_levels(Array $array) 
+	{
+		$this->set_property(self::ADMIN_ALERTS_LEVELS, $array);
 	}
 	
 	 /**
@@ -306,126 +303,112 @@ class BugtrackerConfig extends AbstractConfigData
 	 */
 	public function is_admin_alerts_fix_action_fix()
 	{
-		return $this->get_property(self::ADMIN_ALERTS_FIX_ACTION) == self::FIX ? true : false;
+		return $this->get_property(self::ADMIN_ALERTS_FIX_ACTION) == self::FIX;
 	}
 	
-	 /**
-	 * @method Check if the PM are activated
-	 */
-	public function get_pm_activated()
+	public function enable_pm()
 	{
-		return $this->get_property(self::PM_ACTIVATED);
+		$this->set_property(self::PM_ENABLED, true);
 	}
 	
-	 /**
-	 * @method Set the activation of the PM
-	 * @params boolean $value true/false
-	 */
-	public function set_pm_activated($value) 
+	public function disable_pm()
 	{
-		$this->set_property(self::PM_ACTIVATED, $value);
+		$this->set_property(self::PM_ENABLED, false);
 	}
 	
-	 /**
-	 * @method Check if the comment PM are activated
-	 */
-	public function get_pm_comment_activated()
+	public function are_pm_enabled()
 	{
-		return $this->get_property(self::PM_COMMENT_ACTIVATED);
+		return $this->get_property(self::PM_ENABLED);
 	}
 	
-	 /**
-	 * @method Set the activation of the comment PM
-	 * @params boolean $value true/false
-	 */
-	public function set_pm_comment_activated($value) 
+	public function enable_pm_comment()
 	{
-		$this->set_property(self::PM_COMMENT_ACTIVATED, $value);
+		$this->set_property(self::PM_COMMENT_ENABLED, true);
 	}
 	
-	 /**
-	 * @method Check if the assign PM are activated
-	 */
-	public function get_pm_assign_activated()
+	public function disable_pm_comment()
 	{
-		return $this->get_property(self::PM_ASSIGN_ACTIVATED);
+		$this->set_property(self::PM_COMMENT_ENABLED, false);
 	}
 	
-	 /**
-	 * @method Set the activation of the assign PM
-	 * @params boolean $value true/false
-	 */
-	public function set_pm_assign_activated($value) 
+	public function are_pm_comment_enabled()
 	{
-		$this->set_property(self::PM_ASSIGN_ACTIVATED, $value);
+		return $this->get_property(self::PM_COMMENT_ENABLED);
 	}
 	
-	 /**
-	 * @method Check if the edit PM are activated
-	 */
-	public function get_pm_edit_activated()
+	public function enable_pm_assign()
 	{
-		return $this->get_property(self::PM_EDIT_ACTIVATED);
+		$this->set_property(self::PM_ASSIGN_ENABLED, true);
 	}
 	
-	 /**
-	 * @method Set the activation of the edit PM
-	 * @params boolean $value true/false
-	 */
-	public function set_pm_edit_activated($value) 
+	public function disable_pm_assign()
 	{
-		$this->set_property(self::PM_EDIT_ACTIVATED, $value);
+		$this->set_property(self::PM_ASSIGN_ENABLED, false);
 	}
 	
-	 /**
-	 * @method Check if the reject PM are activated
-	 */
-	public function get_pm_reject_activated()
+	public function are_pm_assign_enabled()
 	{
-		return $this->get_property(self::PM_REJECT_ACTIVATED);
+		return $this->get_property(self::PM_ASSIGN_ENABLED);
 	}
 	
-	 /**
-	 * @method Set the activation of the reject PM
-	 * @params boolean $value true/false
-	 */
-	public function set_pm_reject_activated($value) 
+	public function enable_pm_edit()
 	{
-		$this->set_property(self::PM_REJECT_ACTIVATED, $value);
+		$this->set_property(self::PM_EDIT_ENABLED, true);
 	}
 	
-	 /**
-	 * @method Check if the reopen PM are activated
-	 */
-	public function get_pm_reopen_activated()
+	public function disable_pm_edit()
 	{
-		return $this->get_property(self::PM_REOPEN_ACTIVATED);
+		$this->set_property(self::PM_EDIT_ENABLED, false);
 	}
 	
-	 /**
-	 * @method Set the activation of the reopen PM
-	 * @params boolean $value true/false
-	 */
-	public function set_pm_reopen_activated($value) 
+	public function are_pm_edit_enabled()
 	{
-		$this->set_property(self::PM_REOPEN_ACTIVATED, $value);
+		return $this->get_property(self::PM_EDIT_ENABLED);
 	}
 	
-	 /**
-	 * @method Check if the delete PM are activated
-	 */
-	public function get_pm_delete_activated()
+	public function enable_pm_reject()
 	{
-		return $this->get_property(self::PM_DELETE_ACTIVATED);
+		$this->set_property(self::PM_REJECT_ENABLED, true);
 	}
 	
-	 /**
-	 * @method Set the activation of the delete PM
-	 * @params boolean $value true/false
-	 */
-	public function set_pm_delete_activated($value) 
+	public function disable_pm_reject()
 	{
-		$this->set_property(self::PM_DELETE_ACTIVATED, $value);
+		$this->set_property(self::PM_REJECT_ENABLED, false);
+	}
+	
+	public function are_pm_reject_enabled()
+	{
+		return $this->get_property(self::PM_REJECT_ENABLED);
+	}
+	
+	public function enable_pm_reopen()
+	{
+		$this->set_property(self::PM_REOPEN_ENABLED, true);
+	}
+	
+	public function disable_pm_reopen()
+	{
+		$this->set_property(self::PM_REOPEN_ENABLED, false);
+	}
+	
+	public function are_pm_reopen_enabled()
+	{
+		return $this->get_property(self::PM_REOPEN_ENABLED);
+	}
+	
+	public function enable_pm_delete()
+	{
+		$this->set_property(self::PM_DELETE_ENABLED, true);
+	}
+	
+	public function disable_pm_delete()
+	{
+		$this->set_property(self::PM_DELETE_ENABLED, false);
+	}
+	
+	public function are_pm_delete_enabled()
+	{
+		return $this->get_property(self::PM_DELETE_ENABLED);
 	}
 	
 	 /**
@@ -630,89 +613,79 @@ class BugtrackerConfig extends AbstractConfigData
 		$this->set_property(self::DEFAULT_VERSION, $value);
 	}
 	
-	 /**
-	 * @method Check if the type field is mandatory
-	 */
-	public function get_type_mandatory()
+	public function type_mandatory()
+	{
+		$this->set_property(self::TYPE_MANDATORY, true);
+	}
+	
+	public function type_not_mandatory()
+	{
+		$this->set_property(self::TYPE_MANDATORY, false);
+	}
+	
+	public function is_type_mandatory()
 	{
 		return $this->get_property(self::TYPE_MANDATORY);
 	}
 	
-	 /**
-	 * @method Set the mandatory of type field
-	 * @params boolean $value true/false
-	 */
-	public function set_type_mandatory($value) 
+	public function category_mandatory()
 	{
-		$this->set_property(self::TYPE_MANDATORY, $value);
+		$this->set_property(self::CATEGORY_MANDATORY, true);
 	}
 	
-	 /**
-	 * @method Check if the category field is mandatory
-	 */
-	public function get_category_mandatory()
+	public function category_not_mandatory()
+	{
+		$this->set_property(self::CATEGORY_MANDATORY, false);
+	}
+	
+	public function is_category_mandatory()
 	{
 		return $this->get_property(self::CATEGORY_MANDATORY);
 	}
 	
-	 /**
-	 * @method Set the mandatory of category field
-	 * @params boolean $value true/false
-	 */
-	public function set_category_mandatory($value) 
+	public function severity_mandatory()
 	{
-		$this->set_property(self::CATEGORY_MANDATORY, $value);
+		$this->set_property(self::SEVERITY_MANDATORY, true);
 	}
 	
-	 /**
-	 * @method Check if the severity field is mandatory
-	 */
-	public function get_severity_mandatory()
+	public function severity_not_mandatory()
+	{
+		$this->set_property(self::SEVERITY_MANDATORY, false);
+	}
+	
+	public function is_severity_mandatory()
 	{
 		return $this->get_property(self::SEVERITY_MANDATORY);
 	}
 	
-	 /**
-	 * @method Set the mandatory of severity field
-	 * @params boolean $value true/false
-	 */
-	public function set_severity_mandatory($value) 
+	public function priority_mandatory()
 	{
-		$this->set_property(self::SEVERITY_MANDATORY, $value);
+		$this->set_property(self::PRIORITY_MANDATORY, true);
 	}
 	
-	 /**
-	 * @method Check if the priority field is mandatory
-	 */
-	public function get_priority_mandatory()
+	public function priority_not_mandatory()
+	{
+		$this->set_property(self::PRIORITY_MANDATORY, false);
+	}
+	
+	public function is_priority_mandatory()
 	{
 		return $this->get_property(self::PRIORITY_MANDATORY);
 	}
 	
-	 /**
-	 * @method Set the mandatory of priority field
-	 * @params boolean $value true/false
-	 */
-	public function set_priority_mandatory($value) 
+	public function detected_in_version_mandatory()
 	{
-		$this->set_property(self::PRIORITY_MANDATORY, $value);
+		$this->set_property(self::DETECTED_IN_VERSION_MANDATORY, true);
 	}
 	
-	 /**
-	 * @method Check if the detected in field is mandatory
-	 */
-	public function get_detected_in_mandatory()
+	public function detected_in_version_not_mandatory()
 	{
-		return $this->get_property(self::DETECTED_IN_MANDATORY);
+		$this->set_property(self::DETECTED_IN_VERSION_MANDATORY, false);
 	}
 	
-	 /**
-	 * @method Set the mandatory of detected in field
-	 * @params boolean $value true/false
-	 */
-	public function set_detected_in_mandatory($value) 
+	public function is_detected_in_version_mandatory()
 	{
-		$this->set_property(self::DETECTED_IN_MANDATORY, $value);
+		return $this->get_property(self::DETECTED_IN_VERSION_MANDATORY);
 	}
 	
 	 /**
@@ -754,32 +727,35 @@ class BugtrackerConfig extends AbstractConfigData
 	 */
 	public function get_default_values()
 	{
+		$lang = LangLoader::get('config', 'bugtracker');
+		
 		return array(
 			self::ITEMS_PER_PAGE => 20,
 			self::REJECTED_BUG_COLOR => '#f8465e',
 			self::FIXED_BUG_COLOR => '#afffa2',
 			self::DATE_FORM => self::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE,
-			self::COMMENTS_ACTIVATED => true,
-			self::CAT_IN_TITLE_ACTIVATED => false,
-			self::ROADMAP_ACTIVATED => false,
-			self::STATS_ACTIVATED => true,
-			self::STATS_TOP_POSTERS_ACTIVATED => true,
+			self::COMMENTS_ENABLED => true,
+			self::CAT_IN_TITLE_ENABLED => false,
+			self::ROADMAP_ENABLED => false,
+			self::STATS_ENABLED => true,
+			self::STATS_TOP_POSTERS_ENABLED => true,
 			self::STATS_TOP_POSTERS_NUMBER => 10,
-			self::PROGRESS_BAR_ACTIVATED => true,
-			self::ADMIN_ALERTS_ACTIVATED => true,
+			self::PROGRESS_BAR_ENABLED => true,
+			self::ADMIN_ALERTS_ENABLED => true,
+			self::ADMIN_ALERTS_LEVELS => array('2', '3'),
 			self::ADMIN_ALERTS_FIX_ACTION => self::FIX,
-			self::PM_ACTIVATED => true,
-			self::PM_COMMENT_ACTIVATED => true,
-			self::PM_ASSIGN_ACTIVATED => true,
-			self::PM_EDIT_ACTIVATED => true,
-			self::PM_REJECT_ACTIVATED => true,
-			self::PM_REOPEN_ACTIVATED => true,
-			self::PM_DELETE_ACTIVATED => true,
-			self::CONTENTS_VALUE => LangLoader::get_message('bugtracker.config.contents_value', 'bugtracker_config', 'bugtracker'),
-			self::TYPES => array(1 => LangLoader::get_message('bugtracker.config.types.anomaly', 'bugtracker_config', 'bugtracker'), LangLoader::get_message('bugtracker.config.types.evolution_demand', 'bugtracker_config', 'bugtracker')),
-			self::CATEGORIES => array(1 => LangLoader::get_message('bugtracker.config.categories.kernel', 'bugtracker_config', 'bugtracker'), LangLoader::get_message('bugtracker.config.categories.module', 'bugtracker_config', 'bugtracker'), LangLoader::get_message('bugtracker.config.categories.graphism', 'bugtracker_config', 'bugtracker'), LangLoader::get_message('bugtracker.config.categories.installation', 'bugtracker_config', 'bugtracker')),
-			self::SEVERITIES => array(1 => array('name' => LangLoader::get_message('bugtracker.config.severities.minor', 'bugtracker_config', 'bugtracker'), 'color' => '#e8ffa2'), array('name' => LangLoader::get_message('bugtracker.config.severities.major', 'bugtracker_config', 'bugtracker'), 'color' => '#feebbc'), array('name' => LangLoader::get_message('bugtracker.config.severities.critical', 'bugtracker_config', 'bugtracker'), 'color' => '#fdbbbb')),
-			self::PRIORITIES => array(1 => LangLoader::get_message('bugtracker.config.priorities.very_low', 'bugtracker_config', 'bugtracker'), LangLoader::get_message('bugtracker.config.priorities.low', 'bugtracker_config', 'bugtracker'), LangLoader::get_message('bugtracker.config.priorities.normal', 'bugtracker_config', 'bugtracker'), LangLoader::get_message('bugtracker.config.priorities.high', 'bugtracker_config', 'bugtracker'), LangLoader::get_message('bugtracker.config.priorities.urgent', 'bugtracker_config', 'bugtracker')),
+			self::PM_ENABLED => true,
+			self::PM_COMMENT_ENABLED => true,
+			self::PM_ASSIGN_ENABLED => true,
+			self::PM_EDIT_ENABLED => true,
+			self::PM_REJECT_ENABLED => true,
+			self::PM_REOPEN_ENABLED => true,
+			self::PM_DELETE_ENABLED => true,
+			self::CONTENTS_VALUE => $lang['bugtracker.config.contents_value'],
+			self::TYPES => array(1 => $lang['bugtracker.config.types.anomaly'], $lang['bugtracker.config.types.evolution_demand']),
+			self::CATEGORIES => array(1 => $lang['bugtracker.config.categories.kernel'], $lang['bugtracker.config.categories.module'], $lang['bugtracker.config.categories.graphism'], $lang['bugtracker.config.categories.installation']),
+			self::SEVERITIES => array(1 => array('name' => $lang['bugtracker.config.severities.minor'], 'color' => '#e8ffa2'), array('name' => $lang['bugtracker.config.severities.major'], 'color' => '#feebbc'), array('name' => $lang['bugtracker.config.severities.critical'], 'color' => '#fdbbbb')),
+			self::PRIORITIES => array(1 => $lang['bugtracker.config.priorities.very_low'], $lang['bugtracker.config.priorities.low'], $lang['bugtracker.config.priorities.normal'], $lang['bugtracker.config.priorities.high'], $lang['bugtracker.config.priorities.urgent']),
 			self::VERSIONS => array(),
 			self::DEFAULT_TYPE => 1,
 			self::DEFAULT_CATEGORY => 0,
@@ -790,7 +766,7 @@ class BugtrackerConfig extends AbstractConfigData
 			self::CATEGORY_MANDATORY => true,
 			self::SEVERITY_MANDATORY => false,
 			self::PRIORITY_MANDATORY => true,
-			self::DETECTED_IN_MANDATORY => false,
+			self::DETECTED_IN_VERSION_MANDATORY => false,
 			self::AUTHORIZATIONS => array('r0' => 3, 'r1' => 15),
 			self::STATUS_LIST => array(Bug::NEW_BUG => 10, Bug::ASSIGNED => 50, Bug::IN_PROGRESS => 50, Bug::REJECTED => 0, Bug::REOPEN => 30, Bug::FIXED => 100)
 		);

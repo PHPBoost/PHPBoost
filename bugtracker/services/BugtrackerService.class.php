@@ -4,7 +4,7 @@
  *                            -------------------
  *   begin                : October 19, 2012
  *   copyright            : (C) 2012 Julien BRISWALTER
- *   email                : julien.briswalter@gmail.com
+ *   email                : julienseth78@phpboost.com
  *
  *  
  ###################################################
@@ -26,7 +26,7 @@
  ###################################################*/
 
 /**
- * @author Julien BRISWALTER <julien.briswalter@gmail.com>
+ * @author Julien BRISWALTER <julienseth78@phpboost.com>
  * @desc Services of the bugtracker module
  */
 class BugtrackerService
@@ -166,7 +166,7 @@ class BugtrackerService
 		
 		$updater_ids = self::$db_querier->select_rows(BugtrackerSetup::$bugtracker_history_table, array('updater_id'), "WHERE bug_id=:id GROUP BY updater_id", array(
 			'id' => $bug_id
-		), SelectQueryResult::FETCH_ASSOC);
+		));
 		
 		$updaters_list = array($bug->get_author_user()->get_id());
 		if ($bug->get_assigned_to_id() && $bug->get_assigned_to_id() != $bug->get_author_user()->get_id())

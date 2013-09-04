@@ -4,7 +4,7 @@
  *                            -------------------
  *   begin                : October 22, 2012
  *   copyright            : (C) 2012 Julien BRISWALTER
- *   email                : julien.briswalter@gmail.com
+ *   email                : julienseth78@phpboost.com
  *
  *
  ###################################################
@@ -68,7 +68,7 @@ class AdminBugtrackerDeleteParameterController extends AdminController
 					else
 					{
 						//Error : unexist type
-						$controller = new UserErrorController(LangLoader::get_message('error', 'errors-common'), LangLoader::get_message('bugs.error.e_unexist_type', 'bugtracker_common', 'bugtracker'));
+						$controller = new UserErrorController(LangLoader::get_message('error', 'errors-common'), LangLoader::get_message('bugs.error.e_unexist_type', 'common', 'bugtracker'));
 						$controller->set_response_classname(UserErrorController::ADMIN_RESPONSE);
 						DispatchManager::redirect($controller);
 					}
@@ -91,7 +91,7 @@ class AdminBugtrackerDeleteParameterController extends AdminController
 					else
 					{
 						//Error : unexist category
-						$controller = new UserErrorController(LangLoader::get_message('error', 'errors-common'), LangLoader::get_message('bugs.error.e_unexist_category', 'bugtracker_common', 'bugtracker'));
+						$controller = new UserErrorController(LangLoader::get_message('error', 'errors-common'), LangLoader::get_message('bugs.error.e_unexist_category', 'common', 'bugtracker'));
 						$controller->set_response_classname(UserErrorController::ADMIN_RESPONSE);
 						DispatchManager::redirect($controller);
 					}
@@ -116,7 +116,7 @@ class AdminBugtrackerDeleteParameterController extends AdminController
 					else
 					{
 						//Error : unexist version
-						$controller = new UserErrorController(LangLoader::get_message('error', 'errors-common'), LangLoader::get_message('bugs.error.e_unexist_version', 'bugtracker_common', 'bugtracker'));
+						$controller = new UserErrorController(LangLoader::get_message('error', 'errors-common'), LangLoader::get_message('bugs.error.e_unexist_version', 'common', 'bugtracker'));
 						$controller->set_response_classname(UserErrorController::ADMIN_RESPONSE);
 						DispatchManager::redirect($controller);
 					}
@@ -128,7 +128,7 @@ class AdminBugtrackerDeleteParameterController extends AdminController
 		}
 		else
 		{
-			$controller = new UserErrorController(LangLoader::get_message('error', 'errors-common'), LangLoader::get_message('bugs.error.e_unexist_parameter', 'bugtracker_common', 'bugtracker'));
+			$controller = new UserErrorController(LangLoader::get_message('error', 'errors-common'), LangLoader::get_message('bugs.error.e_unexist_parameter', 'common', 'bugtracker'));
 			$controller->set_response_classname(UserErrorController::ADMIN_RESPONSE);
 			DispatchManager::redirect($controller);
 		}

@@ -4,7 +4,7 @@
  *                            -------------------
  *   begin                : November 10, 2012
  *   copyright            : (C) 2012 Julien BRISWALTER
- *   email                : julien.briswalter@gmail.com
+ *   email                : julienseth78@phpboost.com
  *
  *
  ###################################################
@@ -47,7 +47,7 @@ class BugtrackerReopenBugController extends ModuleController
 		try {
 			$bug = BugtrackerService::get_bug('WHERE id=:id', array('id' => $id));
 		} catch (RowNotFoundException $e) {
-			$controller = new UserErrorController(LangLoader::get_message('error', 'errors-common'), LangLoader::get_message('bugs.error.e_unexist_bug', 'bugtracker_common', 'bugtracker'));
+			$controller = new UserErrorController(LangLoader::get_message('error', 'errors-common'), LangLoader::get_message('bugs.error.e_unexist_bug', 'common', 'bugtracker'));
 			DispatchManager::redirect($controller);
 		}
 		
@@ -69,12 +69,12 @@ class BugtrackerReopenBugController extends ModuleController
 			
 			BugtrackerService::update($bug);
 			
-			//Send PM to updaters if the option is activated
-			if ($config->get_pm_activated() && $config->get_pm_reopen_activated())
+			//Send PM to updaters if the option is enabled
+			if ($config->are_pm_enabled() && $config->are_pm_reopen_enabled())
 				BugtrackerPMService::send_PM_to_updaters('reopen', $id);
 			
 			//Change admin alert status
-			if ($config->get_admin_alerts_activated())
+			if ($config->are_admin_alerts_enabled() && in_array($bug->get_severity(), $config->get_admin_alerts_levels()))
 			{
 				$alerts = AdministratorAlertService::find_by_criteria($id, 'bugtracker');
 				if (!empty($alerts))
@@ -84,6 +84,8 @@ class BugtrackerReopenBugController extends ModuleController
 					AdministratorAlertService::save_alert($alert);
 				}
 			}
+			
+			BugtrackerStatsCache::invalidate();
 			
 			switch ($back_page)
 			{
@@ -99,7 +101,7 @@ class BugtrackerReopenBugController extends ModuleController
 		}
 		else
 		{
-			$controller = new UserErrorController(LangLoader::get_message('error', 'errors-common'), LangLoader::get_message('bugs.error.e_already_reopen_bug', 'bugtracker_common', 'bugtracker'));
+			$controller = new UserErrorController(LangLoader::get_message('error', 'errors-common'), LangLoader::get_message('bugs.error.e_already_reopen_bug', 'common', 'bugtracker'));
 			DispatchManager::redirect($controller);
 		}
 	}

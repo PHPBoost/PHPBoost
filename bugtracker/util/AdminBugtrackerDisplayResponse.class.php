@@ -4,7 +4,7 @@
  *                            -------------------
  *   begin                : October 18, 2012
  *   copyright            : (C) 2012 Julien BRISWALTER
- *   email                : julien.briswalter@gmail.com
+ *   email                : julienseth78@phpboost.com
  *
  *
  ###################################################
@@ -26,7 +26,7 @@
  ###################################################*/
 
  /**
- * @author Julien BRISWALTER <julien.briswalter@gmail.com>
+ * @author Julien BRISWALTER <julienseth78@phpboost.com>
  * @desc AdminMenuDisplayResponse of the bugtracker module
  */
 class AdminBugtrackerDisplayResponse extends AdminMenuDisplayResponse
@@ -35,7 +35,7 @@ class AdminBugtrackerDisplayResponse extends AdminMenuDisplayResponse
 	{
 		parent::__construct($view);
 		
-		$lang = LangLoader::get('bugtracker_common', 'bugtracker');
+		$lang = LangLoader::get('common', 'bugtracker');
 		$picture = '/bugtracker/bugtracker.png';
 		$this->set_title($lang['bugs.module_title']);
 		$this->add_link($lang['bugs.titles.admin.config'], BugtrackerUrlBuilder::configuration(), $picture);

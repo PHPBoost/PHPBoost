@@ -48,7 +48,7 @@ function display_default_version_radio(version_id)
 		# START versions #
 		<tr class="text_center">
 			<td class="row2">
-				<input type="radio" id="default_version{versions.ID}" name="default_version" value="{versions.ID}" {versions.IS_DEFAULT} {versions.DISPLAY_DEFAULT}/>
+				<input type="radio" id="default_version{versions.ID}" name="default_version" value="{versions.ID}" {versions.IS_DEFAULT} {versions.DISPLAY_DEFAULT}>
 			</td>
 			<td class="row2">
 				<input type="text" maxlength="100" size="40" name="version{versions.ID}" value="{versions.NAME}" class="text">

@@ -4,7 +4,7 @@
  *                            -------------------
  *   begin                : November 13, 2012
  *   copyright            : (C) 2012 Julien BRISWALTER
- *   email                : julien.briswalter@gmail.com
+ *   email                : julienseth78@phpboost.com
  *
  *
  ###################################################
@@ -45,12 +45,6 @@ class BugtrackerSolvedListController extends ModuleController
 	{
 		//Configuration load
 		$config = BugtrackerConfig::load();
-		$authorizations = $config->get_authorizations();
-		$items_per_page = $config->get_items_per_page();
-		$roadmap_activated = $config->get_roadmap_activated();
-		$progress_bar_activated = $config->get_progress_bar_activated();
-		$comments_activated = $config->get_comments_activated();
-		$cat_in_title_activated = $config->get_cat_in_title_activated();
 		$types = $config->get_types();
 		$categories = $config->get_categories();
 		$severities = $config->get_severities();
@@ -65,7 +59,7 @@ class BugtrackerSolvedListController extends ModuleController
 		
 		$field = $request->get_value('field', 'date');
 		$sort = $request->get_value('sort', 'desc');
-		$current_page = $request->get_int('page', 1);
+		$current_page = $request->get_getint('page', 1);
 		$filter = $request->get_value('filter', '');
 		$filter_id = $request->get_value('filter_id', '');
 		
@@ -103,54 +97,58 @@ class BugtrackerSolvedListController extends ModuleController
 			$select_filters .= in_array($f, array('type', 'category', 'severity', 'status', 'fixed_in')) && $filters_ids[$key] ? "AND " . $f . " = '" . $filters_ids[$key] . "'" : '';
 		}
 		
-		//Bugs number
-		$nbr_bugs = BugtrackerService::count("WHERE (status = 'fixed' OR status = 'rejected')" . $select_filters);
+		$stats_cache = BugtrackerStatsCache::load();
+		$bugs_number = !empty($select_filters) ? BugtrackerService::count("WHERE (status = 'fixed' OR status = 'rejected')" . $select_filters) : $stats_cache->get_bugs_number(Bug::FIXED) + $stats_cache->get_bugs_number(Bug::REJECTED);
 		
-		if ($current_page > ceil($nbr_bugs / $items_per_page))
-		{
-			$error_controller = PHPBoostErrors::unexisting_page();
-			DispatchManager::redirect($error_controller);
-		}
+		$pagination = $this->get_pagination($bugs_number, $current_page, $field, $sort, $filter, $filter_id);
 		
-		$pagination = new BugtrackerListPagination($current_page, $nbr_bugs);
-		$pagination->set_url(BugtrackerUrlBuilder::solved($field . '/' . $sort . '/%d' . (!empty($filter) ? '/' . $filter . '/' . $filter_id : ''))->absolute());
-		
-		$bugs_colspan = 4;
-		//Actions column if the user is admin
-		if (BugtrackerAuthorizationsService::check_authorizations()->moderation())
-		{
-			$this->view->put_all(array(
-				'C_IS_ADMIN'	=> true
-			));
-			$bugs_colspan = $bugs_colspan + 1;
-		}
-		
-		$limit_page = $current_page > 0 ? $current_page : 1;
-		$limit_page = (($limit_page - 1) * $items_per_page);
-		
-		$displayed_status = PersistenceContext::get_querier()->select("SELECT status
-		FROM (SELECT status FROM " . BugtrackerSetup::$bugtracker_table . "
+		$result = PersistenceContext::get_querier()->select("SELECT b.*, com.number_comments
+		FROM " . BugtrackerSetup::$bugtracker_table . " b
+		LEFT JOIN " . DB_TABLE_COMMENTS_TOPIC . " com ON com.id_in_module = b.id AND com.module_id = 'bugtracker'
 		WHERE (status = 'fixed' OR status = 'rejected')" .
 		$select_filters . "
 		ORDER BY " . $field_bdd . " " . $mode . "
-		LIMIT ". $items_per_page ." OFFSET :start_limit) as b
-		GROUP BY status",
+		LIMIT :number_items_per_page OFFSET :display_from",
 			array(
-				'start_limit' => $limit_page
-			), SelectQueryResult::FETCH_ASSOC
+				'number_items_per_page' => $pagination->get_number_items_per_page(),
+				'display_from' => $pagination->get_display_from()
+			)
 		);
 		
+		$displayed_status = array();
+		
+		while ($row = $result->fetch())
+		{
+			if (!in_array($row['status'], $displayed_status)) $displayed_status[] = $row['status'];
+			
+			$this->view->assign_block_vars('bug', array(
+				'ID'						=> $row['id'],
+				'TITLE'						=> ($config->is_cat_in_title_displayed() && $display_categories) ? '[' . $categories[$row['category']] . '] ' . $row['title'] : $row['title'],
+				'INFOS'						=> ($config->is_progress_bar_displayed() && $row['progress'] ? '<span class="progressBar progress' . $row['progress'] . '">' . $row['progress'] . '%</span><br/>' : '') . $this->lang['bugs.labels.fields.status'] . ' : ' . $this->lang['bugs.status.' . $row['status']] . ($config->are_comments_enabled() ? '<br /><a href="' . BugtrackerUrlBuilder::detail($row['id'] . '/#comments_list')->absolute() . '">' . (int) $row['number_comments'] . ' ' . ($row['number_comments'] <= 1 ? LangLoader::get_message('comment', 'comments-common') : LangLoader::get_message('comments', 'comments-common')) . '</a>' : ''),
+				'LINE_COLOR' 				=> 'style="background-color:' . ($row['status'] == Bug::FIXED ? $fixed_bug_color : $rejected_bug_color) . ';"',
+				'DATE' 						=> !empty($row['fix_date']) ? gmdate_format($config->get_date_form(), $row['fix_date']) : $this->lang['bugs.labels.not_yet_fixed'],
+				'LINK_BUG_DETAIL'			=> BugtrackerUrlBuilder::detail($row['id'] . '/' . Url::encode_rewrite($row['title']))->absolute(),
+				'LINK_BUG_REOPEN_REJECT'	=> BugtrackerUrlBuilder::reopen($row['id'], 'solved', $current_page, (!empty($filter) ? $filter : ''), (!empty($filter) ? $filter_id : ''))->absolute(),
+				'LINK_BUG_EDIT'				=> BugtrackerUrlBuilder::edit($row['id'] . '/solved/' . $current_page . (!empty($filter) ? '/' . $filter . '/' . $filter_id : ''))->absolute(),
+				'LINK_BUG_HISTORY'			=> BugtrackerUrlBuilder::history($row['id'])->absolute(),
+				'LINK_BUG_DELETE'			=> BugtrackerUrlBuilder::delete($row['id'], 'solved', $current_page, (!empty($filter) ? $filter : ''), (!empty($filter) ? $filter_id : ''))->absolute()
+			));
+		}
+		
 		$this->view->put_all(array(
-			'C_BUGS' 					=> (int)$nbr_bugs,
-			'PAGINATION' 				=> $pagination->display()->render(),
-			'BUGS_COLSPAN' 				=> $bugs_colspan,
+			'C_IS_ADMIN'				=> BugtrackerAuthorizationsService::check_authorizations()->moderation(),
+			'C_BUGS' 					=> $bugs_number,
+			'C_PAGINATION'				=> $bugs_number > $pagination->get_number_items_per_page(),
+			'PAGINATION' 				=> $pagination->display(),
+			'BUGS_COLSPAN' 				=> BugtrackerAuthorizationsService::check_authorizations()->moderation() ? 5 : 4,
 			'L_UPDATE' 					=> $main_lang['update'],
 			'L_DELETE' 					=> $main_lang['delete'],
 			'L_NO_BUG' 					=> empty($filters) ? $this->lang['bugs.notice.no_bug_solved'] : (sizeof($filters) > 1 ? $this->lang['bugs.notice.no_bug_matching_filters'] : $this->lang['bugs.notice.no_bug_matching_filter']),
 			'L_DATE'					=> $this->lang['bugs.labels.fields.fix_date'],
 			'L_REOPEN_REJECT'			=> $this->lang['bugs.actions.reopen'],
 			'PICT_REOPEN_REJECT'		=> 'visible.png',
-			'FILTER_LIST'				=> BugtrackerViews::build_filters('solved', $nbr_bugs),
+			'REOPEN_REJECT_CONFIRM'		=> 'reopen',
+			'FILTER_LIST'				=> BugtrackerViews::build_filters('solved', $bugs_number),
 			'PROGRESS_BAR'				=> BugtrackerViews::build_progress_bar(),
 			'LEGEND'					=> BugtrackerViews::build_legend($displayed_status, 'solved'),
 			'LINK_BUG_ID_TOP' 			=> BugtrackerUrlBuilder::solved('id/top/'. $current_page . (!empty($filter) ? '/' . $filter . '/' . $filter_id : ''))->absolute(),
@@ -163,43 +161,12 @@ class BugtrackerSolvedListController extends ModuleController
 			'LINK_BUG_DATE_BOTTOM' 		=> BugtrackerUrlBuilder::solved('date/bottom/'. $current_page . (!empty($filter) ? '/' . $filter . '/' . $filter_id : ''))->absolute()
 		));
 		
-		$result = PersistenceContext::get_querier()->select("SELECT b.*, com.number_comments
-		FROM " . BugtrackerSetup::$bugtracker_table . " b
-		LEFT JOIN " . DB_TABLE_COMMENTS_TOPIC . " com ON com.id_in_module = b.id AND com.module_id = 'bugtracker'
-		WHERE (status = 'fixed' OR status = 'rejected')" .
-		$select_filters . "
-		ORDER BY " . $field_bdd . " " . $mode . "
-		LIMIT ". $items_per_page ." OFFSET :start_limit",
-			array(
-				'start_limit' => $limit_page
-			), SelectQueryResult::FETCH_ASSOC
-		);
-		
-		while ($row = $result->fetch())
-		{
-			//Comments number
-			$nbr_coms = $row['number_comments'];
-			
-			$this->view->assign_block_vars('bug', array(
-				'ID'						=> $row['id'],
-				'TITLE'						=> ($cat_in_title_activated == true && $display_categories) ? '[' . $categories[$row['category']] . '] ' . $row['title'] : $row['title'],
-				'INFOS'						=> ($progress_bar_activated && $row['progress'] ? '<span class="progressBar progress' . $row['progress'] . '">' . $row['progress'] . '%</span><br/>' : '') . $this->lang['bugs.labels.fields.status'] . ' : ' . $this->lang['bugs.status.' . $row['status']] . ($comments_activated == true ? '<br /><a href="' . BugtrackerUrlBuilder::detail($row['id'] . '/#comments_list')->absolute() . '">' . (empty($nbr_coms) ? 0 : $nbr_coms) . ' ' . ($nbr_coms <= 1 ? LangLoader::get_message('comment', 'comments-common') : LangLoader::get_message('comments', 'comments-common')) . '</a>' : ''),
-				'LINE_COLOR' 				=> 'style="background-color:' . ($row['status'] == Bug::FIXED ? $fixed_bug_color : $rejected_bug_color) . ';"',
-				'DATE' 						=> !empty($row['fix_date']) ? gmdate_format($config->get_date_form(), $row['fix_date']) : $this->lang['bugs.labels.not_yet_fixed'],
-				'LINK_BUG_DETAIL'			=> BugtrackerUrlBuilder::detail($row['id'] . '/' . Url::encode_rewrite($row['title']))->absolute(),
-				'LINK_BUG_REOPEN_REJECT'	=> BugtrackerUrlBuilder::reopen($row['id'], 'solved', $current_page, (!empty($filter) ? $filter : ''), (!empty($filter) ? $filter_id : ''))->absolute(),
-				'LINK_BUG_EDIT'				=> BugtrackerUrlBuilder::edit($row['id'] . '/solved/' . $current_page . (!empty($filter) ? '/' . $filter . '/' . $filter_id : ''))->absolute(),
-				'LINK_BUG_HISTORY'			=> BugtrackerUrlBuilder::history($row['id'])->absolute(),
-				'LINK_BUG_DELETE'			=> BugtrackerUrlBuilder::delete($row['id'], 'solved', $current_page, (!empty($filter) ? $filter : ''), (!empty($filter) ? $filter_id : ''))->absolute()
-			));
-		}
-		
 		return $this->view;
 	}
 	
 	private function init()
 	{
-		$this->lang = LangLoader::get('bugtracker_common', 'bugtracker');
+		$this->lang = LangLoader::get('common', 'bugtracker');
 		$this->view = new FileTemplate('bugtracker/BugtrackerListController.tpl');
 		$this->view->add_lang($this->lang);
 	}
@@ -211,6 +178,20 @@ class BugtrackerSolvedListController extends ModuleController
 			$error_controller = PHPBoostErrors::user_not_authorized();
 			DispatchManager::redirect($error_controller);
 		}
+	}
+	
+	private function get_pagination($bugs_number, $page, $field, $sort, $filter, $filter_id)
+	{
+		$pagination = new ModulePagination($page, $bugs_number, (int)BugtrackerConfig::load()->get_items_per_page());
+		$pagination->set_url(BugtrackerUrlBuilder::solved($field . '/' . $sort . '/%d' . (!empty($filter) ? '/' . $filter . '/' . $filter_id : '')));
+		
+		if ($pagination->current_page_is_empty() && $page > 1)
+		{
+			$error_controller = PHPBoostErrors::unexisting_page();
+			DispatchManager::redirect($error_controller);
+		}
+		
+		return $pagination;
 	}
 	
 	private function build_response(View $view)

@@ -4,7 +4,7 @@
  *                            -------------------
  *   begin                : November 13, 2012
  *   copyright            : (C) 2012 Julien BRISWALTER
- *   email                : julien.briswalter@gmail.com
+ *   email                : julienseth78@phpboost.com
  *
  *
  ###################################################
@@ -66,7 +66,7 @@ class BugtrackerEditController extends ModuleController
 		
 		$this->current_user = AppContext::get_current_user();
 		$this->config = BugtrackerConfig::load();
-		$this->lang = LangLoader::get('bugtracker_common', 'bugtracker');
+		$this->lang = LangLoader::get('common', 'bugtracker');
 		
 		try {
 			$this->bug = BugtrackerService::get_bug('WHERE id=:id', array('id' => $id));
@@ -81,12 +81,12 @@ class BugtrackerEditController extends ModuleController
 	
 	private function check_authorizations()
 	{
-		if (!(BugtrackerAuthorizationsService::check_authorizations()->moderation() || (BugtrackerAuthorizationsService::check_authorizations()->write() && $this->bug->get_author_user()->get_id() == $this->current_user->get_id())))
+		if (!(BugtrackerAuthorizationsService::check_authorizations()->moderation() || (BugtrackerAuthorizationsService::check_authorizations()->write() && $this->bug->get_author_user()->get_id() == $this->current_user->get_id()) || ($this->bug->get_assigned_to_id() && $this->current_user->get_id() == $this->bug->get_assigned_to_id())))
 		{
 			$error_controller = PHPBoostErrors::user_not_authorized();
 			DispatchManager::redirect($error_controller);
 		}
-		if (AppContext::get_current_user()->is_readonly())
+		if ($this->current_user->is_readonly())
 		{
 			$controller = PHPBoostErrors::user_in_read_only();
 			DispatchManager::redirect($controller);
@@ -119,7 +119,7 @@ class BugtrackerEditController extends ModuleController
 		$default_severity = $this->config->get_default_severity();
 		$default_version = $this->config->get_default_version();
 		
-		$form = new HTMLForm('bug-edit');
+		$form = new HTMLForm(__CLASS__);
 		
 		if (BugtrackerAuthorizationsService::check_authorizations()->moderation() || ($this->current_user->get_id() == $this->bug->get_assigned_to_id()))
 		{
@@ -158,7 +158,7 @@ class BugtrackerEditController extends ModuleController
 			'class' => 'text', 'maxlength' => 200, 'size' => 50, 'required' => true)
 		));
 		
-		$fieldset->add_field(new FormFieldRichTextEditor('contents', $this->lang['bugs.labels.fields.contents'], FormatingHelper::unparse($this->bug->get_contents()), array(
+		$fieldset->add_field(new FormFieldRichTextEditor('contents', $this->lang['bugs.labels.fields.contents'], $this->bug->get_contents(), array(
 			'description' => $this->lang['bugs.explain.contents'], 'rows' => 15, 'required' => true)
 		));
 		
@@ -176,7 +176,7 @@ class BugtrackerEditController extends ModuleController
 			}
 			
 			$fieldset->add_field(new FormFieldSimpleSelectChoice('type', $this->lang['bugs.labels.fields.type'], $this->bug->get_type(), $array_types, array(
-				'required' => $this->config->get_type_mandatory() ? true : false)
+				'required' => $this->config->is_type_mandatory())
 			));
 		}
 		
@@ -194,7 +194,7 @@ class BugtrackerEditController extends ModuleController
 			}
 			
 			$fieldset->add_field(new FormFieldSimpleSelectChoice('category', $this->lang['bugs.labels.fields.category'], $this->bug->get_category(), $array_categories, array(
-				'required' => $this->config->get_category_mandatory() ? true : false)
+				'required' => $this->config->is_category_mandatory())
 			));
 		}
 		
@@ -214,7 +214,7 @@ class BugtrackerEditController extends ModuleController
 				}
 				
 				$fieldset->add_field(new FormFieldSimpleSelectChoice('severity', $this->lang['bugs.labels.fields.severity'], $this->bug->get_severity(), $array_severities, array(
-					'required' => $this->config->get_priority_mandatory() ? true : false)
+					'required' => $this->config->is_severity_mandatory())
 				));
 			}
 			
@@ -232,7 +232,7 @@ class BugtrackerEditController extends ModuleController
 				}
 				
 				$fieldset->add_field(new FormFieldSimpleSelectChoice('priority', $this->lang['bugs.labels.fields.priority'], $this->bug->get_priority(), $array_priorities, array(
-					'required' => $this->config->get_severity_mandatory() ? true : false)
+					'required' => $this->config->is_priority_mandatory())
 				));
 			}
 		}
@@ -251,7 +251,7 @@ class BugtrackerEditController extends ModuleController
 			}
 			
 			$fieldset->add_field(new FormFieldSimpleSelectChoice('detected_in', $this->lang['bugs.labels.fields.detected_in'], $this->bug->get_detected_in(), $array_versions, array(
-				'required' => $this->config->get_detected_in_mandatory() ? true : false)
+				'required' => $this->config->is_detected_in_version_mandatory())
 			));
 		}
 		
@@ -279,6 +279,8 @@ class BugtrackerEditController extends ModuleController
 	{
 		$request = AppContext::get_request();
 		
+		$error_lang = LangLoader::get('errors');
+		
 		$error = $request->get_value('error', '');
 		$back_page = $request->get_value('back_page', '');
 		$page = $request->get_int('page', 1);
@@ -295,11 +297,11 @@ class BugtrackerEditController extends ModuleController
 				$errtyp = E_USER_ERROR;
 				break;
 			case 'unexist_user':
-				$errstr = LangLoader::get_message('e_unexist_user', 'errors');
+				$errstr = $error_lang['e_unexist_user'];
 				$errtyp = E_USER_ERROR;
 				break;
 			case 'incomplete':
-				$errstr = LangLoader::get_message('e_incomplete', 'errors');
+				$errstr = $error_lang['e_incomplete'];
 				$errtyp = E_USER_NOTICE;
 				break;
 			default:
@@ -319,6 +321,8 @@ class BugtrackerEditController extends ModuleController
 	private function save()
 	{
 		$request = AppContext::get_request();
+		
+		$main_lang = LangLoader::get('main');
 		
 		$back_page = $request->get_value('back_page', '');
 		$page = $request->get_int('page', 1);
@@ -346,7 +350,7 @@ class BugtrackerEditController extends ModuleController
 		$bug->set_priority($this->form->get_value('priority') ? $this->form->get_value('priority')->get_raw_value() : $old_values->get_priority());
 		$bug->set_detected_in($this->form->get_value('detected_in') ? $this->form->get_value('detected_in')->get_raw_value() : $old_values->get_detected_in());
 		
-		$something_is_missing = ($this->config->get_types() && $this->config->get_type_mandatory() && !$bug->get_type() || $this->config->get_categories() && $this->config->get_category_mandatory() && !$bug->get_category() || $this->config->get_severities() && $this->config->get_severity_mandatory() && !$bug->get_severity() || $this->config->get_priorities() && $this->config->get_priority_mandatory() && !$bug->get_priority() || $this->config->get_versions() && $this->config->get_detected_in_mandatory() && !$bug->get_detected_in()) ? true : false;
+		$something_is_missing = ($this->config->get_types() && $this->config->is_type_mandatory() && !$bug->get_type() || $this->config->get_categories() && $this->config->is_category_mandatory() && !$bug->get_category() || $this->config->get_severities() && $this->config->is_severity_mandatory() && !$bug->get_severity() || $this->config->get_priorities() && $this->config->is_priority_mandatory() && !$bug->get_priority() || $this->config->get_versions() && $this->config->is_detected_in_version_mandatory() && !$bug->get_detected_in());
 		
 		if ($bug->get_title() && $bug->get_contents() && !$something_is_missing)
 		{
@@ -397,8 +401,8 @@ class BugtrackerEditController extends ModuleController
 					
 				$bug->set_status($status);
 				
-				//Error if the status is fixed and no version is selected if the roadmap is activated
-				if ($display_versions && $this->config->get_roadmap_activated() && $bug->is_fixed() && !$bug->get_fixed_in())
+				//Error if the status is fixed and no version is selected if the roadmap is enabled
+				if ($display_versions && $this->config->is_roadmap_enabled() && $bug->is_fixed() && !$bug->get_fixed_in())
 					AppContext::get_response()->redirect(BugtrackerUrlBuilder::edit_error(!empty($back_page) ? 'no_fixed_version/' . $this->bug->get_id() . '/' . $back_page . '/' . $page : 'no_fixed_version/' . $this->bug->get_id()));
 				
 				$fields = array('title', 'contents', 'type', 'category', 'severity', 'priority', 'detected_in', 'reproductible', 'reproduction_method', 'status', 'fixed_in', 'assigned_to_id');
@@ -462,7 +466,7 @@ class BugtrackerEditController extends ModuleController
 							break;
 						
 						case 'reproductible': 
-							$new_value = ($new_values[$field] == true) ? LangLoader::get_message('yes', 'main') : LangLoader::get_message('no', 'main');
+							$new_value = $new_values[$field] ? $main_lang['yes'] : $main_lang['no'];
 							break;
 						
 						case 'assigned_to_id': 
@@ -477,7 +481,7 @@ class BugtrackerEditController extends ModuleController
 ' : '';
 					//Bug history update
 					BugtrackerService::add_history(array(
-						'bug_id'		=> $this->bug->get_id(),
+						'bug_id'		=> $bug->get_id(),
 						'updater_id'	=> $this->current_user->get_id(),
 						'update_date'	=> $now->get_timestamp(),
 						'updated_field'	=> $field,
@@ -488,28 +492,28 @@ class BugtrackerEditController extends ModuleController
 				}
 			}
 			
-			if ($modification == true)
+			if ($modification)
 			{
-				if (BugtrackerAuthorizationsService::check_authorizations()->moderation() || ($this->current_user->get_id() == $this->bug->get_assigned_to_id()))
+				if (BugtrackerAuthorizationsService::check_authorizations()->moderation() || ($this->current_user->get_id() == $bug->get_assigned_to_id()))
 				{
 					//Bug update
-					$bug->set_progress($bug->is_fixed() ? $status_list[Bug::FIXED] : ($bug->is_assigned() || $bug->is_in_progress() ? $status_list[Bug::IN_PROGRESS] : ($bug->is_new() ? $status_list[Bug::NEW_BUG] : $this->bug->get_progress())));
+					$bug->set_progress($bug->is_fixed() ? $status_list[Bug::FIXED] : ($bug->is_assigned() || $bug->is_in_progress() ? $status_list[Bug::IN_PROGRESS] : ($bug->is_new() ? $status_list[Bug::NEW_BUG] : $bug->get_progress())));
 					$bug->set_fix_date($bug->is_fixed() ? $now->get_timestamp() : 0);
 					
-					//Send PM to the assigned user if the option is activated
-					if ($this->config->get_pm_activated() && $this->config->get_pm_assign_activated() && $bug->get_assigned_to_id() && ($old_values->get_assigned_to_id() != $bug->get_assigned_to_id()) && ($this->current_user->get_id() != $bug->get_assigned_to_id()))
+					//Send PM to the assigned user if the option is enabled
+					if ($this->config->are_pm_enabled() && $this->config->are_pm_assign_enabled() && $bug->get_assigned_to_id() && ($old_values->get_assigned_to_id() != $bug->get_assigned_to_id()) && ($this->current_user->get_id() != $bug->get_assigned_to_id()))
 						BugtrackerPMService::send_PM('assigned', $bug->get_assigned_to_id(), $bug->get_id(), $pm_comment);
 				}
 				//Bug update
 				BugtrackerService::update($bug);
 				
-				//Send PM to updaters if the option is activated
-				if ($this->config->get_pm_activated() && $this->config->get_pm_edit_activated() && !empty($pm_comment))
-					BugtrackerPMService::send_PM_to_updaters('edit', $this->bug->get_id(), $pm_comment);
+				//Send PM to updaters if the option is enabled
+				if ($this->config->are_pm_enabled() && $this->config->are_pm_edit_enabled() && !empty($pm_comment))
+					BugtrackerPMService::send_PM_to_updaters('edit', $bug->get_id(), $pm_comment);
 				
-				if ($this->config->get_admin_alerts_activated())
+				if ($this->config->are_admin_alerts_enabled() && in_array($bug->get_severity(), $this->config->get_admin_alerts_levels()))
 				{
-					$alerts = AdministratorAlertService::find_by_criteria($this->bug->get_id(), 'bugtracker');
+					$alerts = AdministratorAlertService::find_by_criteria($bug->get_id(), 'bugtracker');
 					if (!empty($alerts))
 					{
 						$alert = $alerts[0];
@@ -523,19 +527,21 @@ class BugtrackerEditController extends ModuleController
 					}
 				}
 				
+				BugtrackerStatsCache::invalidate();
+				
 				switch ($back_page)
 				{
 					case 'detail' :
-						$redirect = BugtrackerUrlBuilder::detail_success('edit/' . $this->bug->get_id())->absolute();
+						$redirect = BugtrackerUrlBuilder::detail_success('edit/' . $bug->get_id())->absolute();
 						break;
 					case 'solved' :
-						$redirect = BugtrackerUrlBuilder::solved_success('edit/' . $this->bug->get_id() . '/' . $page . (!empty($back_filter) ? '/' . $back_filter . '/' . $filter_id : ''))->absolute();
+						$redirect = BugtrackerUrlBuilder::solved_success('edit/' . $bug->get_id() . '/' . $page . (!empty($back_filter) ? '/' . $back_filter . '/' . $filter_id : ''))->absolute();
 						break;
 					case 'unsolved' :
-						$redirect = BugtrackerUrlBuilder::unsolved_success('edit/' . $this->bug->get_id() . '/' . $page . (!empty($back_filter) ? '/' . $back_filter . '/' . $filter_id : ''))->absolute();
+						$redirect = BugtrackerUrlBuilder::unsolved_success('edit/' . $bug->get_id() . '/' . $page . (!empty($back_filter) ? '/' . $back_filter . '/' . $filter_id : ''))->absolute();
 						break;
 					default :
-						$redirect = BugtrackerUrlBuilder::edit_success('edit/' . $this->bug->get_id())->absolute();
+						$redirect = BugtrackerUrlBuilder::edit_success('edit/' . $bug->get_id())->absolute();
 						break;
 				}
 			}
@@ -544,7 +550,7 @@ class BugtrackerEditController extends ModuleController
 				switch ($back_page)
 				{
 					case 'detail' :
-						$redirect = BugtrackerUrlBuilder::detail($this->bug->get_id())->absolute();
+						$redirect = BugtrackerUrlBuilder::detail($bug->get_id())->absolute();
 						break;
 					case 'solved' :
 						$redirect = BugtrackerUrlBuilder::solved($page . (!empty($back_filter) ? '/' . $back_filter . '/' . $filter_id : ''))->absolute();
@@ -553,7 +559,7 @@ class BugtrackerEditController extends ModuleController
 						$redirect = BugtrackerUrlBuilder::unsolved($page . (!empty($back_filter) ? '/' . $back_filter . '/' . $filter_id : ''))->absolute();
 						break;
 					default :
-						$redirect = BugtrackerUrlBuilder::edit($this->bug->get_id())->absolute();
+						$redirect = BugtrackerUrlBuilder::edit($bug->get_id())->absolute();
 						break;
 				}
 			}

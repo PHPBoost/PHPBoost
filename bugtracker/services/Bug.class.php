@@ -4,7 +4,7 @@
  *                            -------------------
  *   begin                : February 25, 2013
  *   copyright            : (C) 2013 Julien BRISWALTER
- *   email                : julien.briswalter@gmail.com
+ *   email                : julienseth78@phpboost.com
  *
  *  
  ###################################################
@@ -131,32 +131,32 @@ class Bug
 	
 	public function is_new()
 	{
-		return $this->status == Bug::NEW_BUG ? true : false;
+		return $this->status == Bug::NEW_BUG;
 	}
 	
 	public function is_assigned()
 	{
-		return $this->status == Bug::ASSIGNED ? true : false;
+		return $this->status == Bug::ASSIGNED;
 	}
 	
 	public function is_in_progress()
 	{
-		return $this->status == Bug::IN_PROGRESS ? true : false;
+		return $this->status == Bug::IN_PROGRESS;
 	}
 	
 	public function is_rejected()
 	{
-		return $this->status == Bug::REJECTED ? true : false;
+		return $this->status == Bug::REJECTED;
 	}
 	
 	public function is_reopen()
 	{
-		return $this->status == Bug::REOPEN ? true : false;
+		return $this->status == Bug::REOPEN;
 	}
 	
 	public function is_fixed()
 	{
-		return $this->status == Bug::FIXED ? true : false;
+		return $this->status == Bug::FIXED;
 	}
 	
 	public function set_type($type)
@@ -211,7 +211,7 @@ class Bug
 	
 	public function is_reproductible()
 	{
-		return $this->reproductible ? true : false;
+		return $this->reproductible;
 	}
 	
 	public function set_reproduction_method($reproduction_method)
@@ -322,12 +322,12 @@ class Bug
 		$config = BugtrackerConfig::load();
 		$status_list = $config->get_status_list();
 		
-		$this->set_submit_date($now->get_timestamp());
-		$this->set_status(Bug::NEW_BUG);
-		$this->set_author_user(AppContext::get_current_user());
-		$this->set_progress($status_list[Bug::NEW_BUG]);
-		$this->set_fixed_in(0);
-		$this->set_assigned_to_id(0);
+		$this->submit_date = $now->get_timestamp();
+		$this->status = Bug::NEW_BUG;
+		$this->author_user = AppContext::get_current_user();
+		$this->progress = $status_list[Bug::NEW_BUG];
+		$this->fixed_in = 0;
+		$this->assigned_to_id = 0;
 	}
 	
 	public function clean_fix_date()

@@ -4,7 +4,7 @@
  *                            -------------------
  *   begin                : November 13, 2012
  *   copyright            : (C) 2012 Julien BRISWALTER
- *   email                : julien.briswalter@gmail.com
+ *   email                : julienseth78@phpboost.com
  *
  *
  ###################################################
@@ -45,84 +45,57 @@ class BugtrackerStatsListController extends ModuleController
 	
 	private function build_view($request)
 	{
-		//Récupération des paramètres de configuration
 		$config = BugtrackerConfig::load();
 		$versions = $config->get_versions();
+		$display_versions = sizeof($versions);
 		
-		$display_versions = sizeof($versions) ? true : false;
-		
-		//Nombre de bugs
-		$nbr_bugs = BugtrackerService::count();
-		$nbr_bugs_not_rejected = BugtrackerService::count("WHERE status <> 'rejected'");
-		$nbr_fixed_bugs = BugtrackerService::count("WHERE fixed_in <> ''");
-		
-		$result = PersistenceContext::get_querier()->select("SELECT status, COUNT(*) as nb_bugs
-		FROM " . BugtrackerSetup::$bugtracker_table . "
-		GROUP BY status
-		ORDER BY status ASC", array(), SelectQueryResult::FETCH_ASSOC);
-		
-		while ($row = $result->fetch())
-		{
-			$this->view->assign_block_vars('status', array(
-				'NAME'	=> $this->lang['bugs.status.' . $row['status']],
-				'NUMBER'=> $row['nb_bugs']
-			));
-		}
+		$stats_cache = BugtrackerStatsCache::load();
+		$bugs_number_per_version = $stats_cache->get_bugs_number_per_version_list();
+		$top_posters = $stats_cache->get_top_posters_list();
 		
 		$this->view->put_all(array(
-			'C_BUGS' 				=> (float)$nbr_bugs,
-			'C_FIXED_BUGS' 			=> (float)$nbr_fixed_bugs,
-			'C_BUGS_NOT_REJECTED' 	=> (float)$nbr_bugs_not_rejected,
+			'C_BUGS'				=> $stats_cache->get_bugs_number('total'),
+			'C_FIXED_BUGS'			=> !empty($bugs_number_per_version),
+			'C_POSTERS'				=> !empty($top_posters),
 			'C_DISPLAY_VERSIONS'	=> $display_versions,
-			'C_DISPLAY_TOP_POSTERS'	=> $config->get_stats_top_posters_activated(),
+			'C_DISPLAY_TOP_POSTERS'	=> $config->are_stats_top_posters_enabled(),
 			'L_GUEST'				=> LangLoader::get_message('guest', 'main')
 		));
 		
-		if (!empty($nbr_fixed_bugs))
+		foreach ($stats_cache->get_bugs_number_list() as $status => $bugs_number)
 		{
-			$result = PersistenceContext::get_querier()->select("SELECT fixed_in, COUNT(*) as nb_bugs
-			FROM " . BugtrackerSetup::$bugtracker_table . "
-			GROUP BY fixed_in
-			ORDER BY fixed_in ASC", array(), SelectQueryResult::FETCH_ASSOC);
-			
-			while ($row = $result->fetch())
-			{
-				if (!empty($row['fixed_in']) && isset($versions[$row['fixed_in']]))
-					$this->view->assign_block_vars('fixed_version', array(
-						'NAME'					=> stripslashes($versions[$row['fixed_in']]['name']),
-						'LINK_VERSION_ROADMAP'	=> BugtrackerUrlBuilder::roadmap(Url::encode_rewrite($versions[$row['fixed_in']]['name']))->absolute(),
-						'NUMBER'				=> $row['nb_bugs']
-					));
-			}
+			if ($status != 'total')
+				$this->view->assign_block_vars('status', array(
+					'NAME'	=> $this->lang['bugs.status.' . $status],
+					'NUMBER'=> $bugs_number
+				));
 		}
 		
-		$i = 1;
-		$result = PersistenceContext::get_querier()->select("SELECT member.*, COUNT(*) as nb_bugs
-		FROM " . BugtrackerSetup::$bugtracker_table . " b
-		JOIN " . DB_TABLE_MEMBER . " member ON (member.user_id = b.author_id)
-		WHERE status <> 'rejected'
-		GROUP BY author_id
-		ORDER BY nb_bugs DESC
-		LIMIT " . $config->get_stats_top_posters_number() . " OFFSET 0", array(), SelectQueryResult::FETCH_ASSOC);
-		
-		while ($row = $result->fetch())
+		foreach ($bugs_number_per_version as $version_id => $bugs_number)
 		{
-			//Author
-			$author = new User();
-			$author->set_properties($row);
-			$author_group_color = User::get_group_color($author->get_groups(), $author->get_level(), true);
-			
-			$this->view->assign_block_vars('top_poster', array(
-				'C_AUTHOR_GROUP_COLOR'	=> !empty($author_group_color),
-				'ID' 					=> $i,
-				'AUTHOR'				=> $author->get_pseudo(),
-				'AUTHOR_LEVEL_CLASS'	=> UserService::get_level_class($author->get_level()),
-				'AUTHOR_GROUP_COLOR'	=> $author_group_color,
-				'LINK_AUTHOR_PROFILE'	=> UserUrlBuilder::profile($author->get_id())->absolute(),
-				'USER_BUGS' 			=> $row['nb_bugs']
+			$this->view->assign_block_vars('fixed_version', array(
+				'NAME'					=> stripslashes($versions[$version_id]['name']),
+				'LINK_VERSION_ROADMAP'	=> BugtrackerUrlBuilder::roadmap(Url::encode_rewrite($versions[$version_id]['name']))->absolute(),
+				'NUMBER'				=> $bugs_number['all']
 			));
-			
-			$i++;
+		}
+		
+		foreach ($top_posters as $id => $poster)
+		{
+			if (isset($poster['user']))
+			{
+				$author_group_color = User::get_group_color($poster['user']->get_groups(), $poster['user']->get_level(), true);
+				
+				$this->view->assign_block_vars('top_poster', array(
+					'C_AUTHOR_GROUP_COLOR'	=> !empty($author_group_color),
+					'ID' 					=> $id,
+					'AUTHOR'				=> $poster['user']->get_pseudo(),
+					'AUTHOR_LEVEL_CLASS'	=> UserService::get_level_class($poster['user']->get_level()),
+					'AUTHOR_GROUP_COLOR'	=> $author_group_color,
+					'LINK_AUTHOR_PROFILE'	=> UserUrlBuilder::profile($poster['user']->get_id())->absolute(),
+					'USER_BUGS' 			=> $poster['bugs_number']
+				));
+			}
 		}
 		
 		return $this->view;
@@ -130,14 +103,14 @@ class BugtrackerStatsListController extends ModuleController
 	
 	private function init()
 	{
-		$this->lang = LangLoader::get('bugtracker_common', 'bugtracker');
+		$this->lang = LangLoader::get('common', 'bugtracker');
 		$this->view = new FileTemplate('bugtracker/BugtrackerStatsListController.tpl');
 		$this->view->add_lang($this->lang);
 	}
 	
 	private function check_page_exists()
 	{
-		if (BugtrackerConfig::load()->get_stats_activated() == false)
+		if (!BugtrackerConfig::load()->are_stats_enabled())
 		{
 			$error_controller = PHPBoostErrors::unexisting_page();
 			DispatchManager::redirect($error_controller);
@@ -161,7 +134,6 @@ class BugtrackerStatsListController extends ModuleController
 		
 		$body_view = BugtrackerViews::build_body_view($view, 'stats');
 		
-		//Gestion des messages
 		switch ($success)
 		{
 			case 'add':
