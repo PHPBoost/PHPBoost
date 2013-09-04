@@ -88,7 +88,7 @@ class CalendarAjaxSubscribeUnsubscribeController extends AbstractController
 	
 	private function check_authorizations()
 	{
-		if (!$this->event->is_registration_authorized() || !$this->event->is_authorized_to_register() || ($this->event->is_registration_authorized() && $this->event->get_max_registred_members() > 0 && $this->event->get_registred_members_number() == $this->event->get_max_registred_members()))
+		if (!$this->event->is_registration_authorized() || !$this->event->is_authorized_to_register() || ($this->event->is_registration_authorized() && $this->event->get_max_registred_members() > 0 && $this->event->get_registred_members_number() == $this->event->get_max_registred_members()) || time() > $this->event->get_start_date()->get_timestamp())
 		{
 			$error_controller = PHPBoostErrors::user_not_authorized();
 			DispatchManager::redirect($error_controller);

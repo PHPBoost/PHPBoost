@@ -94,7 +94,7 @@ class CalendarDisplayEventController extends ModuleController
 		$this->tpl->put_all(array_merge($event->get_array_tpl_vars(), array(
 			'C_COMMENTS_ENABLED' => $config->are_comments_enabled(),
 			'C_PARTICIPANTS' => !empty($participants),
-			'C_PARTICIPATE' => $event->is_registration_authorized() && $event->is_authorized_to_register() && (in_array($user_id, array_keys($participants)) || ($event->get_max_registred_members() > 0 && $event->get_registred_members_number() < $event->get_max_registred_members())),
+			'C_PARTICIPATE' => $event->is_registration_authorized() && $event->is_authorized_to_register() && $this->event->get_start_date()->get_timestamp() < time() && (in_array($user_id, array_keys($participants)) || ($event->get_max_registred_members() > 0 && $event->get_registred_members_number() < $event->get_max_registred_members())),
 			'IS_PARTICIPANT' => in_array($user_id, array_keys($participants)),
 			'PARTICIPANTS' => implode(', ', $p),
 			'USER_ID' => $user_id,
