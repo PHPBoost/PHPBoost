@@ -63,8 +63,7 @@ class BugtrackerHistoryListController extends ModuleController
 			'C_HISTORY'		=> $history_lines_number,
 			'PAGINATION'	=> $pagination->display(),
 			'L_GUEST'		=> $main_lang['guest'],
-			'RETURN_NAME'	=> $main_lang['back'],
-			'LINK_RETURN'	=> 'javascript:history.back(1);'
+			'RETURN_NAME'	=> $main_lang['back']
 		));
 		
 		$result = PersistenceContext::get_querier()->select("SELECT *

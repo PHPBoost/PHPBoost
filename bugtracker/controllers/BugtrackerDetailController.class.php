@@ -139,8 +139,7 @@ class BugtrackerDetailController extends ModuleController
 			'LINK_BUG_HISTORY'				=> BugtrackerUrlBuilder::history($this->bug->get_id())->absolute(),
 			'LINK_BUG_DELETE'				=> BugtrackerUrlBuilder::delete($this->bug->get_id(), 'unsolved')->absolute(),
 			'LINK_AUTHOR_PROFILE'			=> UserUrlBuilder::profile($author->get_id())->absolute(),
-			'LINK_USER_ASSIGNED_PROFILE'	=> $user_assigned ? UserUrlBuilder::profile($user_assigned->get_id())->absolute() : '',
-			'LINK_RETURN' 					=> 'javascript:history.back(1);'
+			'LINK_USER_ASSIGNED_PROFILE'	=> $user_assigned ? UserUrlBuilder::profile($user_assigned->get_id())->absolute() : ''
 		));
 		
 		//Comments display
