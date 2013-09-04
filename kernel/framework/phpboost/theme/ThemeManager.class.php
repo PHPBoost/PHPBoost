@@ -37,7 +37,12 @@ class ThemeManager
 	
 	public static function get_installed_themes_map()
 	{
-		return ThemesConfig::load()->get_themes();
+		$themes = array();
+		foreach (ThemesConfig::load()->get_themes() as $theme) {
+			$themes[$theme->get_id()] = $theme;
+		}
+		ksort($themes);
+		return $themes;
 	}
 	
 	public static function get_activated_themes_map()
@@ -48,6 +53,7 @@ class ThemeManager
 				$activated_themes[$theme->get_id()] = $theme;
 			}
 		}
+		ksort($activated_themes);
 		return $activated_themes;
 	}
 	
@@ -59,6 +65,7 @@ class ThemeManager
 				$themes[$theme->get_id()] = $theme;
 			}
 		}
+		ksort($themes);
 		return $themes;
 	}
 	
