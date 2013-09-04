@@ -53,13 +53,7 @@
 
 ------------------------------------ MODULES -----------------------------------
 [b]Calendrier:[/b]
-- Ajout des microdonnées pour améliorer le référencement
-+ Possibilité de créer un évènement de manière récursive ( tous les X jours, X semaines, X mois) / pouvoir dupliquer de la même manière un événement déjà présent dans le calendrier
 + Possibilité de s'inscrire à un évènement et de limiter le nombre des inscrits à un événement
-- Système de filtre par mot-clé dans la liste des événements
-- Possibilité d'afficher la liste des événements d'une ou de plusieurs catégories pour un mois donné
-- Possibilité d'afficher la liste des événements d'une ou de plusieurs catégories pour une année donnée
-- Possibilité d'afficher la liste des événements d'une ou de plusieurs catégories pour un écart entre 2 dates
 
 [b]Contact:[/b]
 - Possibilité de choisir à quel groupe d'utilisateurs envoyer le mail.
