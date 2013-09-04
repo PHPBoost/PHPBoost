@@ -98,13 +98,9 @@ les pages du module "pages".
 [*] [color=red]Nouveauté :[/color] Recherche
 [*] [color=red]Nouveauté :[/color] Sitemap
 [*] [color=red]Nouveauté :[/color] Contributions pour l'ajout d'événement
-- Ajout des microdonnées pour améliorer le référencement
-+ Possibilité de créer un évènement de manière récursive ( tous les X jours, X semaines, X mois) / pouvoir dupliquer de la même manière un événement déjà présent dans le calendrier
-- Possibilité de s'inscrire à un évènement et de limiter le nombre des inscrits à un événement
-- Système de filtre par mot-clé dans la liste des événements
-- Possibilité d'afficher la liste des événements d'une ou de plusieurs catégories pour un mois donné
-- Possibilité d'afficher la liste des événements d'une ou de plusieurs catégories pour une année donnée
-- Possibilité d'afficher la liste des événements d'une ou de plusieurs catégories pour un écart entre 2 dates
+[*] [color=red]Nouveauté :[/color] Possibilité de créer un évènement de manière récursive (tous les X jours, X semaines, X mois, X années)
+[*] Ajout des microdonnées pour améliorer le référencement
++ Possibilité de s'inscrire à un évènement et de limiter le nombre des inscrits à un événement
 
 [b]Contact[/b]
 [*] [color=red]Nouveauté :[/color] Possibilité d'ajouter des champs supplémentaires depuis l'admin
