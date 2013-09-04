@@ -35,16 +35,18 @@
 	</tr>
 	# START bug #
 	<tr class="align_center"> 
-		<td class="row2" {bug.LINE_COLOR}>
+		<td class="row2"# IF bug.C_LINE_COLOR # style="background-color:{bug.LINE_COLOR};"# ENDIF #>
 			<a href="{bug.LINK_BUG_DETAIL}" title="{bug.STATUS}"># IF bug.C_FIXED #<s># ENDIF #\#{bug.ID}# IF bug.C_FIXED #</s># ENDIF #</a>
 		</td>
-		<td class="row2 align_left" {bug.LINE_COLOR}>
+		<td class="row2 align_left"# IF bug.C_LINE_COLOR # style="background-color:{bug.LINE_COLOR};"# ENDIF #>
 			{bug.TITLE}
 		</td>
-		<td class="row2 align_left" {bug.LINE_COLOR}> 
-			{bug.INFOS}
+		<td class="row2 align_left"# IF bug.C_LINE_COLOR # style="background-color:{bug.LINE_COLOR};"# ENDIF #> 
+			# IF bug.C_PROGRESS #<span class="progressBar progress{bug.PROGRESS}">{bug.PROGRESS}%</span><br/># ENDIF #
+			<span>{bug.STATUS}</span>
+			# IF C_COMMENTS #<br /><a href="{bug.LINK_BUG_COMMENTS}">{bug.NUMBER_COMMENTS} {bug.L_COMMENTS}</a># ENDIF #
 		</td>
-		<td class="row2" {bug.LINE_COLOR}>
+		<td class="row2"# IF bug.C_LINE_COLOR # style="background-color:{bug.LINE_COLOR};"# ENDIF #>
 			{bug.DATE}
 		</td>
 	</tr>

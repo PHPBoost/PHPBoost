@@ -127,10 +127,15 @@ class BugtrackerUnsolvedListController extends ModuleController
 			
 			$this->view->assign_block_vars('bug', array(
 				'C_AUTHOR_GROUP_COLOR'		=> !empty($author_group_color),
+				'C_LINE_COLOR'				=> !empty($row['severity']) && isset($severities[$row['severity']]),
+				'C_PROGRESS'				=> $config->is_progress_bar_displayed() && $row['progress'],
 				'ID'						=> $row['id'],
 				'TITLE'						=> ($config->is_cat_in_title_displayed() && $display_categories) ? '[' . $categories[$row['category']] . '] ' . $row['title'] : $row['title'],
-				'INFOS'						=> ($config->is_progress_bar_displayed() && $row['progress'] ? '<span class="progressBar progress' . $row['progress'] . '">' . $row['progress'] . '%</span><br/>' : '') . $this->lang['bugs.labels.fields.status'] . ' : ' . $this->lang['bugs.status.' . $row['status']] . ($config->are_comments_enabled() ? '<br /><a href="' . BugtrackerUrlBuilder::detail($row['id'] . '/#comments_list')->absolute() . '">' . (int)$row['number_comments'] . ' ' . ($row['number_comments'] <= 1 ? LangLoader::get_message('comment', 'comments-common') : LangLoader::get_message('comments', 'comments-common')) . '</a>' : ''),
-				'LINE_COLOR' 				=> (!empty($row['severity']) && isset($severities[$row['severity']])) ? 'style="background-color:' . stripslashes($severities[$row['severity']]['color']) . ';"' : '',
+				'LINE_COLOR' 				=> stripslashes($severities[$row['severity']]['color']),
+				'PROGRESS' 					=> $row['progress'],
+				'STATUS'					=> $this->lang['bugs.labels.fields.status'] . ' : ' . $this->lang['bugs.status.' . $row['status']],
+				'NUMBER_COMMENTS'			=> (int) $row['number_comments'],
+				'L_COMMENTS'				=> $row['number_comments'] <= 1 ? LangLoader::get_message('comment', 'comments-common') : LangLoader::get_message('comments', 'comments-common'),
 				'DATE' 						=> gmdate_format($config->get_date_form(), $row['submit_date']),
 				'AUTHOR'					=> $author->get_pseudo(),
 				'AUTHOR_LEVEL_CLASS'		=> UserService::get_level_class($author->get_level()),
@@ -140,12 +145,14 @@ class BugtrackerUnsolvedListController extends ModuleController
 				'LINK_BUG_REOPEN_REJECT'	=> BugtrackerUrlBuilder::reject($row['id'], 'unsolved', $current_page, (!empty($filter) ? $filter : ''), (!empty($filter) ? $filter_id : ''))->absolute(),
 				'LINK_BUG_EDIT'				=> BugtrackerUrlBuilder::edit($row['id'] . '/unsolved/' . $current_page . (!empty($filter) ? '/' . $filter . '/' . $filter_id : ''))->absolute(),
 				'LINK_BUG_HISTORY'			=> BugtrackerUrlBuilder::history($row['id'])->absolute(),
-				'LINK_BUG_DELETE'			=> BugtrackerUrlBuilder::delete($row['id'], 'unsolved', $current_page, (!empty($filter) ? $filter : ''), (!empty($filter) ? $filter_id : ''))->absolute()
+				'LINK_BUG_DELETE'			=> BugtrackerUrlBuilder::delete($row['id'], 'unsolved', $current_page, (!empty($filter) ? $filter : ''), (!empty($filter) ? $filter_id : ''))->absolute(),
+				'LINK_COMMENTS'				=> BugtrackerUrlBuilder::detail($row['id'] . '/#comments_list')->absolute()
 			));
 		}
 		
 		$this->view->put_all(array(
 			'C_IS_ADMIN'				=> BugtrackerAuthorizationsService::check_authorizations()->moderation(),
+			'C_COMMENTS'				=> $config->are_comments_enabled(),
 			'C_UNSOLVED' 				=> true,
 			'C_BUGS' 					=> $bugs_number,
 			'C_DISPLAY_AUTHOR'			=> true,

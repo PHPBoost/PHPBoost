@@ -124,13 +124,19 @@ class BugtrackerRoadmapListController extends ModuleController
 			
 			$this->view->assign_block_vars('bug', array(
 				'C_FIXED'			=> $row['status'] == Bug::FIXED,
+				'C_LINE_COLOR'		=> !empty($row['severity']) && isset($severities[$row['severity']]),
+				'C_PROGRESS'		=> $config->is_progress_bar_displayed() && $row['progress'],
 				'ID'				=> $row['id'],
 				'TITLE'				=> ($config->is_cat_in_title_displayed() && $display_categories) ? '[' . $categories[$row['category']] . '] ' . $row['title'] : $row['title'],
-				'LINE_COLOR' 		=> (!empty($row['severity']) && isset($severities[$row['severity']])) ? 'style="background-color:' . stripslashes($severities[$row['severity']]['color']) . ';"' : '',
-				'INFOS'				=> ($config->is_progress_bar_displayed() && $row['progress'] ? '<span class="progressBar progress' . $row['progress'] . '">' . $row['progress'] . '%</span><br/>' : '') . $this->lang['bugs.labels.fields.status'] . ' : ' . $this->lang['bugs.status.' . $row['status']] . ($config->are_comments_enabled() ? '<br /><a href="' . BugtrackerUrlBuilder::detail($row['id'] . '/#comments_list')->absolute() . '">' . (int) $row['number_comments'] . ' ' . ($row['number_comments'] <= 1 ? LangLoader::get_message('comment', 'comments-common') : LangLoader::get_message('comments', 'comments-common')) . '</a>' : ''),
+				'LINE_COLOR' 		=> stripslashes($severities[$row['severity']]['color']),
+				'PROGRESS' 			=> $row['progress'],
+				'STATUS'			=> $this->lang['bugs.labels.fields.status'] . ' : ' . $this->lang['bugs.status.' . $row['status']],
+				'NUMBER_COMMENTS'	=> (int) $row['number_comments'],
+				'L_COMMENTS'		=> $row['number_comments'] <= 1 ? LangLoader::get_message('comment', 'comments-common') : LangLoader::get_message('comments', 'comments-common'),
 				'STATUS'			=> $this->lang['bugs.status.' . $row['status']],
 				'DATE' 				=> !empty($row['fix_date']) ? gmdate_format($config->get_date_form(), $row['fix_date']) : $this->lang['bugs.labels.not_yet_fixed'],
-				'LINK_BUG_DETAIL'	=> BugtrackerUrlBuilder::detail($row['id'] . '/' . Url::encode_rewrite($row['title']))->absolute()
+				'LINK_BUG_DETAIL'	=> BugtrackerUrlBuilder::detail($row['id'] . '/' . Url::encode_rewrite($row['title']))->absolute(),
+				'LINK_COMMENTS'		=> BugtrackerUrlBuilder::detail($row['id'] . '/#comments_list')->absolute()
 			));
 		}
 		
@@ -140,6 +146,7 @@ class BugtrackerRoadmapListController extends ModuleController
 		
 		$this->view->put_all(array(
 			'C_BUGS'					=> $bugs_number[$roadmap_status],
+			'C_COMMENTS'				=> $config->are_comments_enabled(),
 			'C_PAGINATION'				=> $bugs_number[$roadmap_status] > $pagination->get_number_items_per_page(),
 			'PAGINATION' 				=> $pagination->display(),
 			'BUGS_COLSPAN'				=> $bugs_colspan,

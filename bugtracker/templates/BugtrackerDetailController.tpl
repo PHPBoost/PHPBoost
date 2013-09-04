@@ -129,7 +129,7 @@
 <div class="spacer">&nbsp;</div>
 
 <div class="text_center">
-	<strong><a href="{LINK_RETURN}" title="${escape(RETURN_NAME)}">${escape(RETURN_NAME)}</a></strong>
+	<strong><a href="javascript:history.back(1);" title="${escape(RETURN_NAME)}">${escape(RETURN_NAME)}</a></strong>
 </div>
 
 <br />
