@@ -36,7 +36,7 @@ class SandboxHomeController extends ModuleController
 
 	private static $links = array(
 		'Form builder' => '?url=/form', 
-		'Messages builder' => '?url=/messages',
+		'CSS' => '?url=/css',
 		'Table builder' => '?url=/table', 
 		'String template bencher' => '?url=/template', 
 		'Mail sender' => '?url=/mail'
