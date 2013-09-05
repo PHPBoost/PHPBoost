@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                       SandboxMessagesController.class.php
+ *                       SandboxGraphicsCSSController.class.php
  *                            -------------------
  *   begin                : May 05, 2012
  *   copyright            : (C) 2012 Kevin MASSY
@@ -25,11 +25,11 @@
  *
  ###################################################*/
 
-class SandboxMessagesController extends ModuleController
+class SandboxGraphicsCSSController extends ModuleController
 {
 	public function execute(HTTPRequestCustom $request)
 	{
-		$view = new StringTemplate('# START messages # # INCLUDE messages.VIEW # <br/> # END messages #');
+		$view = new FileTemplate('sandbox/SandboxGraphicsCSSController.tpl');
 		
 		$messages = array(
 			MessageHelper::display('Ceci est un message de succès', MessageHelper::SUCCESS),
@@ -43,6 +43,10 @@ class SandboxMessagesController extends ModuleController
 		{
 			$view->assign_block_vars('messages', array('VIEW' => $message));
 		}
+		
+		$pagination = new ModulePagination(2, 15, 5);
+		$pagination->set_url(new Url('#%d'));
+		$view->put('PAGINATION', $pagination->display());
 		
 		return new SiteDisplayResponse($view);
 	}
