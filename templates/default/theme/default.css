@@ -85,22 +85,11 @@ Css par défaut commun * tout les thèmes, permet les ajouts nécessaires au framew
 	margin:5px;
 }
 
-div.block_content {
-    width:95%;
-    margin:auto;
-    margin:20px auto;
-    padding:6px;
-    border:1px solid;
-}
-
-div.block_content ul {
-    padding-left:20px;
-}
-
 /* Balises */
 img {
     border:none;
 	overflow:scroll;
+	max-width:100%;
 }
 
 hr {
