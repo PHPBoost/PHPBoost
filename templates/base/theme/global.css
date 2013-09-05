@@ -131,6 +131,83 @@ a.member {
     font-weight:bold;
 }
 
+/* Mise en forme
+-------------------------------------------*/
+/* Titres */
+h1 {
+    color:#5C5C5C;
+    font-size:18px;
+}
+
+h2.title {
+    font-size:16px;
+    font-weight:bold;
+}
+
+h3.title {
+    font-size:12px;
+    font-weight:bold;
+    display:inline;
+}
+
+/* Sous-Titres */
+h5.sub_title { /* Titre des menu */
+    font-size:13px;
+    color:#515C68;
+}
+
+h6.sub_title2 { /* Sous titre dans les menu */
+    font-size:12px;
+    font-weight:bold;
+    padding-top:4px;
+    text-indent:10px;
+    width:155px;
+    height:32px;
+    color:#515C68;
+}
+
+/* Titre 1 */
+h3.title1{
+	color:#3E4D5C;
+	border-bottom:2px solid #366393;
+	font-size:15px;
+	font-weight:bold;
+	padding:0px 5px;
+}
+/* Titre 2 */
+h3.title2{
+	font-size:14px;
+	text-decoration:underline;
+	font-weight:bold;
+	color:#3E4D5C;
+	padding:0px 5px;
+}
+
+/* Sous titre 1 */
+h4.stitle1, h4.stitle2{
+	display:inline;
+	color:#3E4D5C;
+	font-size:12px;
+	font-weight:bold;
+	margin-left:35px;
+	padding:4px 5px;
+	font-weight:bold;
+	background:#ECEFFA;	
+	border-radius:8px;
+}
+/* Sous titre 1 */
+h4.stitle1{
+	border:1px solid #336397;
+	border-left:4px solid #336397;
+	border-right:4px solid #336397;
+}
+/* Sous titre 2 */
+h4.stitle2{
+	margin-left:50px;
+	background:none;
+	border-bottom:3px solid #336397;
+}
+
 /*Menu dynamique des liens
 --------------------------------------*/
 /* Lien du menu */
@@ -178,4 +255,53 @@ a.member {
 
 h3.menu_vertical_0{
 	margin-top:0px;
+}
+
+/* Erreurs
+--------------------------------------*/
+.question{
+    color:#FFFFFF;
+    background:#98c0ea url(../images/question.png) no-repeat;
+    border:1px solid #7796b8;
+}
+.notice{
+    color:#334455;
+    background:#dadfe5 url(../images/notice.png) no-repeat;
+    border:1px solid #aaaeb3;
+}
+.warning{
+    color:#FFFFFF;
+    background:#e5ad54 url(../images/important.png) no-repeat;
+    border:1px solid #b38742;
+}
+.error{
+    color:#FFFFFF;
+    background:#C43C35 url(../images/stop.png) no-repeat;
+    border:1px solid #802722;
+}
+.success{
+    color:#FFFFFF;
+    background:#57A957 url(../images/success.png) no-repeat;
+  	border:1px solid #418041;
+}
+.question, .notice, .warning, .error, .success{
+    display:block;
+    height:35px;
+    padding-top:4px;
+    padding-bottom:10px;
+    padding-left:40px;
+    padding-right:5px;
+    margin:4px 25px;  
+    background-position:4px 4px;
+    border-radius:6px;
+}
+html>body .question, html>body .notice, html>body .warning, html>body .error, html>body .success
+{
+    height:auto;
+    min-height:25px;
+}
+
+.error_handler_position {
+	margin-top:5px;
+	margin-bottom:15px;
 }

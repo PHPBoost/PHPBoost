@@ -60,40 +60,6 @@ ul.list {
 	list-style-image: url(images/li.png)
 }
 
-/* Titres */
-h1 {
-    color:#5C5C5C;
-    font-size:18px;
-}
-
-h2.title {
-    font-size:16px;
-    font-weight:bold;
-}
-
-/* Titres */
-h3.title {
-    font-size:12px;
-    font-weight:bold;
-    display:inline;
-}
-
-/* Sous-Titres */
-h5.sub_title { /* Titre des menu */
-    font-size:13px;
-    color:#515C68;
-}
-
-h6.sub_title2 { /* Sous titre dans les menu */
-    font-size:12px;
-    font-weight:bold;
-    padding-top:4px;
-    text-indent:10px;
-    width:155px;
-    height:32px;
-    color:#515C68;
-}
-
 /* Formulaires 
 --------------------------------------*/
 .fieldset_mini {
