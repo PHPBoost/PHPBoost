@@ -69,7 +69,7 @@ class CalendarFeedProvider implements FeedProvider
 		FROM ' . CalendarSetup::$calendar_table . ' calendar
 		LEFT JOIN ' . DB_TABLE_MEMBER . ' member ON member.user_id=calendar.author_id
 		LEFT JOIN '. CalendarSetup::$calendar_cats_table .' cat ON cat.id = calendar.id_category
-		WHERE calendar.id_category IN :cats_ids
+		WHERE approved = 1 AND calendar.id_category IN :cats_ids
 		ORDER BY calendar.start_date DESC', array(
 			'cats_ids' => $ids_categories
 		));
