@@ -115,7 +115,8 @@ class CalendarDisplayEventController extends ModuleController
 	
 	private function check_authorizations()
 	{
-		if (!CalendarAuthorizationsService::check_authorizations($this->get_event()->get_id_cat())->read())
+		$event = $this->get_event();
+		if (!CalendarAuthorizationsService::check_authorizations($event->get_id_cat())->read() || !(CalendarAuthorizationsService::check_authorizations($event->get_id_cat())->moderation() && !$event->is_approved()))
 		{
 			$error_controller = PHPBoostErrors::user_not_authorized();
 			DispatchManager::redirect($error_controller);
