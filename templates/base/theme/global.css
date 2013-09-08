@@ -1,10 +1,12 @@
 /* --------------------------------------
 		global.css
  Contient les classes globales au site, peuvent être utilisées partout.
---------------------------------------*/ /* Classes générales
+--------------------------------------*/ 
+
+/* Classes générales
 --------------------------------------*/
 /* Case générale des tableaux du site*/
-.row1,.block_contents1 {
+.row1, .block_contents1 {
     background:#E0E9EF;
 	padding:8px 6px;
 	border-top:1px solid #CCCCCC;
@@ -14,7 +16,7 @@
     padding:20px 6px;	
 }
 
-.row2,.block_contents2 {
+.row2, .block_contents2 {
 	padding:8px 6px;
 }
 
@@ -22,7 +24,7 @@
     padding:20px 6px;	
 }
 
-.row3,.block_contents3 {
+.row3, .block_contents3 {
 	background:#F2F7FB;
     border-color:#C4CED6;
     padding:8px 6px;
@@ -53,7 +55,7 @@
     padding:2px;
 }
 
-/*Affichage du mini calendrier */
+/* Affichage du mini calendrier */
 .calendar_block {
     position:absolute;
     text-align:center;
@@ -69,7 +71,7 @@
 	border:none;	
 }
 
-/* Déplacement des fichiers*/
+/* Déplacement des fichiers */
 .upload_selected_cat {
     background:#f5fbff;
     border:1px solid #2C5169;
@@ -174,6 +176,7 @@ h3.title1{
 	font-weight:bold;
 	padding:0px 5px;
 }
+
 /* Titre 2 */
 h3.title2{
 	font-size:14px;
@@ -195,12 +198,14 @@ h4.stitle1, h4.stitle2{
 	background:#ECEFFA;	
 	border-radius:8px;
 }
+
 /* Sous titre 1 */
 h4.stitle1{
 	border:1px solid #336397;
 	border-left:4px solid #336397;
 	border-right:4px solid #336397;
 }
+
 /* Sous titre 2 */
 h4.stitle2{
 	margin-left:50px;
@@ -208,7 +213,7 @@ h4.stitle2{
 	border-bottom:3px solid #336397;
 }
 
-/*Menu dynamique des liens
+/* Menu dynamique des liens
 --------------------------------------*/
 /* Lien du menu */
 .dynamic_menu h5 {
@@ -264,26 +269,31 @@ h3.menu_vertical_0{
     background:#98c0ea url(../images/question.png) no-repeat;
     border:1px solid #7796b8;
 }
+
 .notice{
     color:#334455;
     background:#dadfe5 url(../images/notice.png) no-repeat;
     border:1px solid #aaaeb3;
 }
+
 .warning{
     color:#FFFFFF;
     background:#e5ad54 url(../images/important.png) no-repeat;
     border:1px solid #b38742;
 }
+
 .error{
     color:#FFFFFF;
     background:#C43C35 url(../images/stop.png) no-repeat;
     border:1px solid #802722;
 }
+
 .success{
     color:#FFFFFF;
     background:#57A957 url(../images/success.png) no-repeat;
   	border:1px solid #418041;
 }
+
 .question, .notice, .warning, .error, .success{
     display:block;
     height:35px;
@@ -295,8 +305,8 @@ h3.menu_vertical_0{
     background-position:4px 4px;
     border-radius:6px;
 }
-html>body .question, html>body .notice, html>body .warning, html>body .error, html>body .success
-{
+
+html>body .question, html>body .notice, html>body .warning, html>body .error, html>body .success{
     height:auto;
     min-height:25px;
 }
