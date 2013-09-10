@@ -82,8 +82,8 @@ hr {
     width:99%;
 }
 
-ul {
-    margin:0;
+ul,ol {
+    margin-left:10px;
     line-height:normal;
 }
 
@@ -91,6 +91,10 @@ p {
     margin-bottom:0.7em;
     line-height:normal;
     font-size:1em;
+}
+
+pre {
+	white-space:pre-wrap;
 }
 
 /* Classes textes */
