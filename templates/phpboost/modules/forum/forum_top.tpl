@@ -89,7 +89,7 @@
 						<div>
 							<label><input type="text" size="14" id="search" name="search" value="{L_SEARCH}..." class="text" onclick="if(this.value=='{L_SEARCH}...')this.value='';" onblur="if(this.value=='')this.value='{L_SEARCH}...';"></label>
 							<input class="submit" value="{L_SEARCH}" type="submit" name="valid_search" style="padding:1px">
-							<BR /><a href="{PATH_TO_ROOT}/forum/search.php{SID}" title="{L_ADVANCED_SEARCH}" class="small_link" style="font-size:10px;">{L_ADVANCED_SEARCH}</a>
+							<BR /><a href="{PATH_TO_ROOT}/forum/search.php{SID}" title="{L_ADVANCED_SEARCH}" class="small" style="font-size:10px;">{L_ADVANCED_SEARCH}</a>
                                 
 							<input type="hidden" name="time" value="30000">
 							<input type="hidden" name="where" value="contents">
@@ -102,17 +102,17 @@
 				<div>
 				# IF C_FORUM_CONNEXION #
 					# IF C_USER_NOTCONNECTED #
-						<a class="small_link" href="${relative_url(UserUrlBuilder::connect())}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/connect_mini.png" alt="" class="valign_middle" /> {L_CONNECT}</a> <span style="color:#000000;">&bull;</span> <a class="small_link" href="${relative_url(UserUrlBuilder::registration())}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/register_mini.png" alt="" class="valign_middle" /> {L_REGISTER}</a>
+						<a class="small" href="${relative_url(UserUrlBuilder::connect())}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/connect_mini.png" alt="" class="valign_middle" /> {L_CONNECT}</a> <span style="color:#000000;">&bull;</span> <a class="small" href="${relative_url(UserUrlBuilder::registration())}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/register_mini.png" alt="" class="valign_middle" /> {L_REGISTER}</a>
 					# ENDIF #
 					# IF C_USER_CONNECTED #
-						<a class="small_link" href="?disconnect=true&amp;token={TOKEN}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/home_mini.png" alt="" class="valign_middle" /> {L_DISCONNECT}</a> 
+						<a class="small" href="?disconnect=true&amp;token={TOKEN}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/home_mini.png" alt="" class="valign_middle" /> {L_DISCONNECT}</a> 
 					# ENDIF # 						
 				# ENDIF #
 				</div>
 			# IF C_MODERATION_PANEL #
 			
 				# IF C_FORUM_CONNEXION # <span style="color:#000000;">&bull;</span> # ENDIF #
-				<a class="small_link" href="{PATH_TO_ROOT}/forum/moderation_forum.php">
+				<a class="small" href="{PATH_TO_ROOT}/forum/moderation_forum.php">
 					<img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/modo_mini.png" class="valign_middle" alt="" /> 
 					{L_MODERATION_PANEL}
 				</a>

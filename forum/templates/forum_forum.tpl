@@ -38,7 +38,7 @@
 							<td class="forum_sous_cat" style="min-width:150px;border-right:none" colspan="3">
 								<a href="{subcats.U_FORUM_URL}">{subcats.NAME}</a>
 								<br />
-								<span class="text_small">{subcats.DESC}</span>
+								<span class="smaller">{subcats.DESC}</span>
 							</td>
 							# ELSE #
 							<td class="forum_sous_cat" style="width:25px;text-align:center;">
@@ -47,8 +47,8 @@
 							<td class="forum_sous_cat" style="min-width:150px;">
 								<a href="forum{subcats.U_FORUM_VARS}">{subcats.NAME}</a>
 								<br />
-								<span class="text_small">{subcats.DESC}</span>
-								<span class="text_small">{subcats.SUBFORUMS}</span>
+								<span class="smaller">{subcats.DESC}</span>
+								<span class="smaller">{subcats.SUBFORUMS}</span>
 							</td>
 							<td class="forum_sous_cat_compteur">
 								{subcats.NBR_TOPIC}
@@ -133,7 +133,7 @@
 						<td class="forum_sous_cat" style="min-width:115px;">
 							{topics.ANCRE} <strong>{topics.TYPE}</strong> <a href="topic{topics.U_TOPIC_VARS}">{topics.L_DISPLAY_MSG} {topics.TITLE}</a>
 							<br />
-							<span class="text_small">{topics.DESC}</span> &nbsp;<span class="pagin_forum">{topics.PAGINATION_TOPICS}</span>
+							<span class="smaller">{topics.DESC}</span> &nbsp;<span class="pagin_forum">{topics.PAGINATION_TOPICS}</span>
 						</td>
 						<td class="forum_sous_cat_compteur" style="width:100px;">
 							{topics.AUTHOR}

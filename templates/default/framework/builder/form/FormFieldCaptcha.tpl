@@ -2,7 +2,7 @@
 <dl id="${escape(ID)}_field" # IF C_HIDDEN # style="display:none;" # ENDIF #>
 	<dt>
 		<label for="${escape(ID)}">* {LABEL}</label>
-		# IF DESCRIPTION # <br /><span class="text_small">{DESCRIPTION}</span> # ENDIF #
+		# IF DESCRIPTION # <br /><span class="smaller">{DESCRIPTION}</span> # ENDIF #
 	</dt>
 	<dd>
 		{CAPTCHA}

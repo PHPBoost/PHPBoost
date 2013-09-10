@@ -96,16 +96,6 @@ a:hover {
 	text-decoration:none;
 }
 
-/* Liens petite taille */
-a.small_link, a.small_link:hover {
-    font-size:11px;
-}
-
-/* Liens grande taille */
-a.big_link, a.big_link:hover {
-    font-size:15px;
-}
-
 /* Liens des commentaires. */
 a.com {
     color:#515C68;
@@ -135,11 +125,21 @@ a.member {
 
 /* Mise en forme
 -------------------------------------------*/
+
+/* Taille police alternative */
+.smaller { font-size: 10px; }
+.small { font-size: 12px; }
+.big { font-size: 16px; }
+.bigger { font-size: 18px; }
+.biggest { font-size: 20px; }
+
 /* Titres */
-h1 {
-    color:#5C5C5C;
-    font-size:18px;
-}
+h1 { font-size:32px; }
+h2 { font-size:28px; }
+h3 { font-size:24px; }
+h4 { font-size:20px; }
+h5 { font-size:18px; }
+h6 { font-size:16px; }
 
 h2.title {
     font-size:16px;
@@ -212,6 +212,11 @@ h4.stitle2{
 	background:none;
 	border-bottom:3px solid #336397;
 }
+
+/* Listes */
+ul{ margin-left:20px; }
+ol{ margin-left:35px; }
+li{ text-align:left; }
 
 /* Menu dynamique des liens
 --------------------------------------*/

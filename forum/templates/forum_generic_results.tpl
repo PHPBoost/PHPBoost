@@ -6,8 +6,8 @@
                 <a class="msg_link_pseudo" href="{U_USER_PROFILE}">{USER_PSEUDO}</a>
             </div>
             <span class="text_strong" style="float:left;">&nbsp;&nbsp;{L_TOPIC} :
-            <a class="small_link" href="{U_TOPIC}">{TITLE}</a></span>
-            <span class="text_small" style="float: right;">{L_ON}: {DATE}</span>&nbsp;
+            <a class="small" href="{U_TOPIC}">{TITLE}</a></span>
+            <span class="smaller" style="float: right;">{L_ON}: {DATE}</span>&nbsp;
         </div>
         <div class="msg_contents_container">
             <div class="msg_info_mbr">
@@ -27,5 +27,5 @@
     </div>
     <div class="msg_bottom_l"></div>
     <div class="msg_bottom_r"></div>
-    <div class="msg_bottom"><span class="text_small">&nbsp;</span></div>
+    <div class="msg_bottom"><span class="smaller">&nbsp;</span></div>
 </div>

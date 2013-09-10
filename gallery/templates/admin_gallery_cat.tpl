@@ -16,6 +16,7 @@
 			var xhr_object = xmlhttprequest_init('admin_xmlhttprequest.php?token={TOKEN}&g_' + direction + '=' + divid + '&token={TOKEN}');
 			xhr_object.onreadystatechange = function() 
 			{
+				console.log(xhr_object.responseText);
 				if( xhr_object.readyState == 4 && xhr_object.status == 200 && xhr_object.responseText != '' )
 					XMLHttpRequest_gallery_cats_move(xhr_object.responseText, divid, direction);
 				else if( xhr_object.readyState == 4 && xhr_object.responseText == '' )
@@ -269,7 +270,7 @@
 								<div style="margin-left:{list.INDENT}px;">
 									<div class="row3 gallery_cat_admin">
 										<span style="float:left;">
-											&nbsp;&nbsp;<img src="{PICTURES_DATA_PATH}/images/folder.png" alt="" style="vertical-align:middle" /> {list.LOCK} &nbsp;<a href="gallery{list.U_GALLERY_VARS}" class="gallery_link_cat">{list.NAME}</a> &nbsp;<span class="text_small">{list.DESC}</span>
+											&nbsp;&nbsp;<img src="{PICTURES_DATA_PATH}/images/folder.png" alt="" style="vertical-align:middle" /> {list.LOCK} &nbsp;<a href="gallery{list.U_GALLERY_VARS}" class="gallery_link_cat">{list.NAME}</a> &nbsp;<span class="smaller">{list.DESC}</span>
 										</span>
 										<span style="float:right;">
 											<span id="l{list.ID}"></span> 

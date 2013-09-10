@@ -197,7 +197,7 @@
 						{L_NOTICE_CONTRIBUTION}
 					</div>
 					<p><label>{L_CONTRIBUTION_COUNTERPART}</label></p>
-					<p class="text_small">{L_CONTRIBUTION_COUNTERPART_EXPLAIN}</p>
+					<p class="smaller">{L_CONTRIBUTION_COUNTERPART_EXPLAIN}</p>
 					{CONTRIBUTION_COUNTERPART_EDITOR}
 					<textarea rows="20" cols="40" id="counterpart" name="counterpart">{CONTRIBUTION_COUNTERPART}</textarea>
 				</fieldset>

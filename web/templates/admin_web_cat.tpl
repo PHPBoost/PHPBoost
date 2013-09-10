@@ -88,7 +88,7 @@
 									</select>
 									<span id="{cat.IDCAT}icon_img">{cat.IMG_ICON}</span>
 									<br />
-									<span class="text_small">{L_OR_DIRECT_PATH}</span> <input type="text" class="text" name="{cat.IDCAT}icon_path" value="{cat.IMG_PATH}" onblur="if( this.value != '' )change_icon('{cat.IDCAT}', this.value)">
+									<span class="smaller">{L_OR_DIRECT_PATH}</span> <input type="text" class="text" name="{cat.IDCAT}icon_path" value="{cat.IMG_PATH}" onblur="if( this.value != '' )change_icon('{cat.IDCAT}', this.value)">
 								</td>	
 								<td class="row2"> 
 									<select name="{cat.IDCAT}secure">
@@ -144,7 +144,7 @@
 							</select></label>
 							<span id="icon_img">{IMG_ICON}</span>
 							<br />
-							<label><span class="text_small">{L_OR_DIRECT_PATH}</span> <input type="text" class="text" name="icon_path" id="icon_path" value="" onblur="if( this.value != '' )change_icon('', this.value)"></label>
+							<label><span class="smaller">{L_OR_DIRECT_PATH}</span> <input type="text" class="text" name="icon_path" id="icon_path" value="" onblur="if( this.value != '' )change_icon('', this.value)"></label>
 						</dd>
 					</dl>
 					<dl>

@@ -45,7 +45,7 @@
                     <td class="row1">
                         {L_NAME} : <strong>{apps.name}</strong> - {L_VERSION} : <strong>{apps.version}</strong>
                         <div style="padding:5px;padding-top:10px;text-align:justify;">{apps.short_description}</div>
-                        <p style="text-align:right;"><a href="detail.php?identifier={apps.identifier}" title="{L_MORE_DETAILS}" class="small_link">{L_DETAILS}</a></p>
+                        <p style="text-align:right;"><a href="detail.php?identifier={apps.identifier}" title="{L_MORE_DETAILS}" class="small">{L_DETAILS}</a></p>
                     </td>
                     <td class="row1 {apps.priority_css_class}" >{apps.L_PRIORITY}</td>
                     <td class="row1" style="text-align:center;">

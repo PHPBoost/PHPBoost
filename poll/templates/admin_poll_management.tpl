@@ -78,7 +78,7 @@
 					<td class="row2">
 						{questions.APROBATION} 
 						<br />
-						<span class="text_small">{questions.VISIBLE}</span>
+						<span class="smaller">{questions.VISIBLE}</span>
 					</td>
 					<td class="row2"> 
 						<a href="admin_poll.php?id={questions.IDPOLL}"><img src="../templates/{THEME}/images/{LANG}/edit.png" alt="{L_UPDATE}" title="{L_UPDATE}" /></a>

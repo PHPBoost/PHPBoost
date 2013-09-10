@@ -83,7 +83,7 @@
 							<dt>
 								<label for="display_mode">{L_DISPLAY_MODE}</label>
 								<br />
-								<span class="text_small">{L_DISPLAY_EXPLAIN}</span>
+								<span class="smaller">{L_DISPLAY_EXPLAIN}</span>
 							</dt>
 							<dd>
 								<select name="display_mode" id="display_mode">
@@ -97,7 +97,7 @@
 						<dl>
 							<dt><label for="global_auth">{L_GLOBAL_AUTH}</label>
 							<br />
-							<span class="text_small">{L_GLOBAL_AUTH_EXPLAIN}</span></dt>
+							<span class="smaller">{L_GLOBAL_AUTH_EXPLAIN}</span></dt>
 							<dd>
 								<input type="checkbox" name="global_auth" id="global_auth" onclick="javascript: change_status_global_auth();" {GLOBAL_CHECKED}>
 							</dd>					

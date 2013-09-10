@@ -70,7 +70,7 @@
 								
 								<p class="text_center">
 									<input class="submit" name="valid_poll" type="submit" value="{L_VOTE}" /><br>
-									<a class="small_link" href="{PATH_TO_ROOT}/poll/poll{U_POLL_RESULT}">{L_RESULT}</a>
+									<a class="small" href="{PATH_TO_ROOT}/poll/poll{U_POLL_RESULT}">{L_RESULT}</a>
 								</p>
 							</div>							
 							# ENDIF #														
@@ -82,8 +82,8 @@
 							</div>
 							# END result #	
 							<div class="row2">
-								<span class="text_small" style="float:left;">{VOTES} {L_VOTE}</span>
-								<span class="text_small" style="float:right;">{L_ON}:&nbsp;&nbsp;{DATE}&nbsp;&nbsp;</span>
+								<span class="smaller" style="float:left;">{VOTES} {L_VOTE}</span>
+								<span class="smaller" style="float:right;">{L_ON}:&nbsp;&nbsp;{DATE}&nbsp;&nbsp;</span>
 								&nbsp;
 							</div>
 						</div>
@@ -130,8 +130,8 @@
 						</div>
 						# END list.result #	
 						<div class="row2">
-							<span class="text_small" style="float:left;">{list.VOTE} {list.L_VOTE}</span>
-							<span class="text_small" style="float: right;">{L_ON}:&nbsp;&nbsp;{list.DATE}&nbsp;&nbsp;</span>
+							<span class="smaller" style="float:left;">{list.VOTE} {list.L_VOTE}</span>
+							<span class="smaller" style="float: right;">{L_ON}:&nbsp;&nbsp;{list.DATE}&nbsp;&nbsp;</span>
 							&nbsp;
 						</div>
 					</div>

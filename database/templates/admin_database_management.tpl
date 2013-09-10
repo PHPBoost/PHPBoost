@@ -179,7 +179,7 @@
 			</script>
 			<div style="width:95%;margin:auto;">	
 				<div class="block_contents1" style="padding:5px;padding-bottom:7px;margin-bottom:5px;">
-					<img src="{PATH_TO_ROOT}/templates/{THEME}/images/li.png" class="valign_middle" alt="" /> <a class="small_link" href="admin_database.php#tables">{L_DATABASE_MANAGEMENT}</a> <img src="{PATH_TO_ROOT}/templates/{THEME}/images/li.png" class="valign_middle" alt="" /> <a class="small_link" href="admin_database_tools.php?table={TABLE_NAME}&amp;action=structure">{TABLE_NAME}</a>
+					<img src="{PATH_TO_ROOT}/templates/{THEME}/images/li.png" class="valign_middle" alt="" /> <a class="small" href="admin_database.php#tables">{L_DATABASE_MANAGEMENT}</a> <img src="{PATH_TO_ROOT}/templates/{THEME}/images/li.png" class="valign_middle" alt="" /> <a class="small" href="admin_database_tools.php?table={TABLE_NAME}&amp;action=structure">{TABLE_NAME}</a>
 				</div>
 				<div class="dynamic_menu" style="z-index:0;float:none">
 					<ul>
@@ -241,7 +241,7 @@
 							# END table_list #
 							</select>
 							<br /><br />
-							<a class="small_link" href="javascript:check_select_multiple(true);">{SELECT_ALL}</a>/<a class="small_link" href="javascript:check_select_multiple(false);">{SELECT_NONE}</a>
+							<a class="small" href="javascript:check_select_multiple(true);">{SELECT_ALL}</a>/<a class="small" href="javascript:check_select_multiple(false);">{SELECT_NONE}</a>
 						</td>
 						<td class="row1" style="text-align:center;">
 							{L_EXPLAIN_BACKUP}

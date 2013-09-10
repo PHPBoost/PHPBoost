@@ -39,7 +39,7 @@
 								<h5 style="margin-right:25px;"><img src="{PICTURES_DATA_PATH}/images/tools.png" class="valign_middle" alt="" />{L_PAGE_OUTILS}</h5>
 								<ul id="smenu1">
 								# START links_list #
-									<li><a href="{links_list.U_ACTION}" title="{links_list.L_ACTION}" onclick="{links_list.ONCLICK}" class="small_link" style="background-image:url({links_list.DM_A_CLASS});background-repeat:no-repeat;background-position:5px;">{links_list.L_ACTION}</a></li>
+									<li><a href="{links_list.U_ACTION}" title="{links_list.L_ACTION}" onclick="{links_list.ONCLICK}" class="small" style="background-image:url({links_list.DM_A_CLASS});background-repeat:no-repeat;background-position:5px;">{links_list.L_ACTION}</a></li>
 								# END links_list #
 								</ul>
 							</li>

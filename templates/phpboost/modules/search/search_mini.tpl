@@ -26,7 +26,7 @@
 			<br /><br />
 			<input type="hidden" name="token" value="{TOKEN}">
 			<input type="submit" id="search_mini_submit" name="search_submit"  value="{SEARCH}" class="submit" /><br>
-			<a href="{U_ADVANCED_SEARCH}" class="small_link">{L_ADVANCED_SEARCH}</a>
+			<a href="{U_ADVANCED_SEARCH}" class="small">{L_ADVANCED_SEARCH}</a>
 		</div>
 		<div class="module_mini_bottom"></div>
 	</div>

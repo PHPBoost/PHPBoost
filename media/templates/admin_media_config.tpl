@@ -50,7 +50,7 @@
 							<dt>
 								<label for="media_name">{L_MODULE_NAME}</label>
 								<br />
-								<span class="text_small">{L_MODULE_NAME_EXPLAIN}</span>
+								<span class="smaller">{L_MODULE_NAME_EXPLAIN}</span>
 							</dt>
 							<dd>
 								<input type="text" size="65" maxlength="100" id="media_name" name="media_name" value="{MODULE_NAME}" class="text">

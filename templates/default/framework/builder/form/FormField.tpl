@@ -7,7 +7,7 @@
 		</label>
 		# IF C_DESCRIPTION #
 		<br />
-		<span class="text_small">{DESCRIPTION}</span>
+		<span class="smaller">{DESCRIPTION}</span>
 		# ENDIF #
 	</dt>
 	<dd>

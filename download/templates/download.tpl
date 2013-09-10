@@ -42,7 +42,7 @@
 									<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="" />
 								</a>
 								# ENDIF #
-								<div class="text_small">
+								<div class="smaller">
 									{row.list_cats.NUM_FILES}
 								</div>
 							</div>
@@ -89,7 +89,7 @@
 									</div>
 								# ENDIF #
 								<p style="margin-bottom:10px">
-									<a href="{file.U_DOWNLOAD_LINK}" class="big_link">{file.NAME}</a>
+									<a href="{file.U_DOWNLOAD_LINK}" class="big">{file.NAME}</a>
 									# IF C_ADMIN #
 										<a href="{file.U_ADMIN_EDIT_FILE}">
 											<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="" />
@@ -104,7 +104,7 @@
 									{file.DESCRIPTION}
 									</p>
 								# ENDIF #
-								<div class="text_small">
+								<div class="smaller">
 									{file.DATE}
 									<br />
 									{file.COUNT_DL}

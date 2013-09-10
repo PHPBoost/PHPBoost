@@ -37,7 +37,7 @@
 		                <div class="block_top"><span>{APP_NAME} - {APP_VERSION} ({APP_LANGUAGE})</span></div>
 		                <div class="block_contents">
 							{APP_DESCRIPTION}
-							<p class="text_small" style="text-align:right;margin:0">{APP_PUBDATE}</p>
+							<p class="smaller" style="text-align:right;margin:0">{APP_PUBDATE}</p>
 						</div>
 		            </div>
 		            # IF C_NEW_FEATURES #

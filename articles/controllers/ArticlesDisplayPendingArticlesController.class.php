@@ -197,7 +197,7 @@ class ArticlesDisplayPendingArticlesController extends ModuleController
 		
 		while ($row = $keywords->fetch())
 		{	
-			$keywords_list .= '<a class="small_link" href="' . ArticlesUrlBuilder::display_tag($row['rewrited_name'])->absolute() . '">' . $row['name'] . '</a>';
+			$keywords_list .= '<a class="small" href="' . ArticlesUrlBuilder::display_tag($row['rewrited_name'])->absolute() . '">' . $row['name'] . '</a>';
 			if ($nbr_keywords - 1 > 0)
 			{
 				$keywords_list .= ', ';

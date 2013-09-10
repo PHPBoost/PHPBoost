@@ -187,10 +187,10 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 			'L_DISPLAY' => $LANG['display'],
 			'U_INDEX' => url('.php'),
 			'U_GALLERY_CAT_LINKS' => $cat_links,
-			'U_BEST_VIEWS' => '<a class="small_link" href="'. PATH_TO_ROOT.'/gallery/gallery' . url('.php?views=1&amp;cat=' . $g_idcat, '-' . $g_idcat . '.php?views=1') . '" style="background-image:url(' . $module_data_path . '/images/views.png);">' . $LANG['best_views'] . '</a>',
-			'U_BEST_NOTES' => '<a class="small_link" href="'. PATH_TO_ROOT.'/gallery/gallery' . url('.php?notes=1&amp;cat=' . $g_idcat, '-' . $g_idcat . '.php?notes=1') . '" style="background-image:url(' . $module_data_path . '/images/notes.png);">' . $LANG['best_notes'] . '</a>',
-			'U_ASC' => '<a class="small_link" href="'. PATH_TO_ROOT.'/gallery/gallery' . url('.php?cat=' . $g_idcat . '&amp;sort=' . $g_type . '_' . 'asc', '-' . $g_idcat . '.php?sort=' . $g_type . '_' . 'asc') . '" style="background-image:url(' . $module_data_path . '/images/up.png);">' . $LANG['asc'] . '</a>',
-			'U_DESC' => '<a class="small_link" href="'. PATH_TO_ROOT.'/gallery/gallery' . url('.php?cat=' . $g_idcat . '&amp;sort=' . $g_type . '_' . 'desc', '-' . $g_idcat . '.php?sort=' . $g_type . '_' . 'desc') . '" style="background-image:url(' . $module_data_path . '/images/down.png);">' . $LANG['desc'] . '</a>',
+			'U_BEST_VIEWS' => '<a class="small" href="'. PATH_TO_ROOT.'/gallery/gallery' . url('.php?views=1&amp;cat=' . $g_idcat, '-' . $g_idcat . '.php?views=1') . '" style="background-image:url(' . $module_data_path . '/images/views.png);">' . $LANG['best_views'] . '</a>',
+			'U_BEST_NOTES' => '<a class="small" href="'. PATH_TO_ROOT.'/gallery/gallery' . url('.php?notes=1&amp;cat=' . $g_idcat, '-' . $g_idcat . '.php?notes=1') . '" style="background-image:url(' . $module_data_path . '/images/notes.png);">' . $LANG['best_notes'] . '</a>',
+			'U_ASC' => '<a class="small" href="'. PATH_TO_ROOT.'/gallery/gallery' . url('.php?cat=' . $g_idcat . '&amp;sort=' . $g_type . '_' . 'asc', '-' . $g_idcat . '.php?sort=' . $g_type . '_' . 'asc') . '" style="background-image:url(' . $module_data_path . '/images/up.png);">' . $LANG['asc'] . '</a>',
+			'U_DESC' => '<a class="small" href="'. PATH_TO_ROOT.'/gallery/gallery' . url('.php?cat=' . $g_idcat . '&amp;sort=' . $g_type . '_' . 'desc', '-' . $g_idcat . '.php?sort=' . $g_type . '_' . 'desc') . '" style="background-image:url(' . $module_data_path . '/images/down.png);">' . $LANG['desc'] . '</a>',
 		));
 	
 		//Catégories non autorisées.
@@ -563,7 +563,7 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 						'APROB' => $row['aprob'],
 						'IMG' => '<img src="'. PATH_TO_ROOT.'/gallery/pics/thumbnails/' . $row['path'] . '" alt="' . str_replace('"', '', stripslashes($row['name'])) . '" class="gallery_image" />',
 						'PATH' => $row['path'],
-						'NAME' => $config->is_title_enabled() ? '<a class="small_link" href="' . $display_name . '"><span id="fi_' . $row['id'] . '">' . TextHelper::wordwrap_html(stripslashes($row['name']), 22, ' ') . '</span></a> <span id="fi' . $row['id'] . '"></span>' : '<span id="fi_' . $row['id'] . '"></span></a> <span id="fi' . $row['id'] . '"></span>',
+						'NAME' => $config->is_title_enabled() ? '<a class="small" href="' . $display_name . '"><span id="fi_' . $row['id'] . '">' . TextHelper::wordwrap_html(stripslashes($row['name']), 22, ' ') . '</span></a> <span id="fi' . $row['id'] . '"></span>' : '<span id="fi_' . $row['id'] . '"></span></a> <span id="fi' . $row['id'] . '"></span>',
 						'POSTOR' => $config->is_author_displayed() ? '<br />' . $LANG['by'] . (!empty($row['login']) ? ' <a class="small_link '.UserService::get_level_class($row['level']).'"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . ' href="'. UserUrlBuilder::profile($row['user_id'])->absolute() .'">' . $row['login'] . '</a>' : ' ' . $LANG['guest']) : '',
 						'VIEWS' => $config->is_views_counter_enabled() ? '<br /><span id="gv' . $row['id'] . '">' . $row['views'] . '</span> <span id="gvl' . $row['id'] . '">' . ($row['views'] > 1 ? $LANG['views'] : $LANG['view']) . '</span>' : '',
 						'COM' => $config->are_comments_enabled() ? '<br /><a href="'. PATH_TO_ROOT .'/gallery/gallery' . url('.php?cat=' . $row['idcat'] . '&amp;id=' . $row['id'] . '&amp;com=0', '-' . $row['idcat'] . '-' . $row['id'] . '.php?com=0') .'#comments_list">'. CommentsService::get_number_and_lang_comments('gallery', $row['id']) . '</a>' : '',

@@ -21,13 +21,13 @@
 				# START cat_list #
 				<div style="float:left;text-align:center;width:{cat_list.WIDTH}%;">
 					{cat_list.U_IMG_CAT}
-					<a href="{PATH_TO_ROOT}/web/web{cat_list.U_WEB_CAT}">{cat_list.CAT}</a> <span class="text_small">({cat_list.TOTAL})</span><br />
-					<span class="text_small">{cat_list.CONTENTS}</span>
+					<a href="{PATH_TO_ROOT}/web/web{cat_list.U_WEB_CAT}">{cat_list.CAT}</a> <span class="smaller">({cat_list.TOTAL})</span><br />
+					<span class="smaller">{cat_list.CONTENTS}</span>
 					<br /><br /><br />
 				</div>	
 				# END cat_list #
 				
-				<div class="text_small" style="padding-top:10px;text-align:center;clear:both">
+				<div class="smaller" style="padding-top:10px;text-align:center;clear:both">
 					{TOTAL_FILE} {L_HOW_LINK}
 				</div>
 			</div>

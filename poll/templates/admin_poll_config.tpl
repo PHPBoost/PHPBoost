@@ -57,7 +57,7 @@
 								{POLL_LIST}				
 							</select>
 							<br />
-							<a class="small_link" href="javascript:check_select_multiple('displayed_in_mini_module_list', true);">{L_SELECT_ALL}</a>/<a class="small_link" href="javascript:check_select_multiple('displayed_in_mini_module_list', false);">{L_SELECT_NONE}</a>
+							<a class="small" href="javascript:check_select_multiple('displayed_in_mini_module_list', true);">{L_SELECT_ALL}</a>/<a class="small" href="javascript:check_select_multiple('displayed_in_mini_module_list', false);">{L_SELECT_NONE}</a>
 						</label></dd>
 					</dl>
 				</fieldset>	

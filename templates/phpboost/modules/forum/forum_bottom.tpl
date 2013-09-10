@@ -38,7 +38,7 @@
 				# IF C_FORUM_CONNEXION #
 					# IF C_USER_NOTCONNECTED #
 					<form action="" method="post">
-						<p style="margin-bottom:8px;" class="text_small"><label>{L_PSEUDO} <input size="15" type="text" class="text" name="login" maxlength="25"></label>
+						<p style="margin-bottom:8px;" class="smaller"><label>{L_PSEUDO} <input size="15" type="text" class="text" name="login" maxlength="25"></label>
 						<label>{L_PASSWORD}	<input size="15" type="password" name="password" class="text" maxlength="30"></label>
 						&nbsp;| <label>{L_AUTOCONNECT} <input type="checkbox" name="auto" checked="checked"></label>
 						&nbsp;| <input type="submit" name="connect" value="{L_CONNECT}" class="submit"></p>
@@ -102,44 +102,44 @@
 				<div class="forum_action">
 					# IF C_DISPLAY_MSG #
 					<span id="forum_change_statut">
-						<a href="{PATH_TO_ROOT}/forum/action{U_ACTION_MSG_DISPLAY}#go_bottom">{ICON_DISPLAY_MSG}</a>	<a href="{PATH_TO_ROOT}/forum/action{U_ACTION_MSG_DISPLAY}#go_bottom" class="small_link">{L_EXPLAIN_DISPLAY_MSG_DEFAULT}</a>
+						<a href="{PATH_TO_ROOT}/forum/action{U_ACTION_MSG_DISPLAY}#go_bottom">{ICON_DISPLAY_MSG}</a>	<a href="{PATH_TO_ROOT}/forum/action{U_ACTION_MSG_DISPLAY}#go_bottom" class="small">{L_EXPLAIN_DISPLAY_MSG_DEFAULT}</a>
 					</span>
 					<script type="text/javascript">
 					<!--				
 					document.getElementById('forum_change_statut').style.display = 'none';
-					document.write('<a href="javascript:XMLHttpRequest_change_statut()" class="small_link">{ICON_DISPLAY_MSG2}</a> <a href="javascript:XMLHttpRequest_change_statut()" class="small_link"><span id="forum_change_msg">{L_EXPLAIN_DISPLAY_MSG_DEFAULT}</span></a>');
+					document.write('<a href="javascript:XMLHttpRequest_change_statut()" class="small">{ICON_DISPLAY_MSG2}</a> <a href="javascript:XMLHttpRequest_change_statut()" class="small"><span id="forum_change_msg">{L_EXPLAIN_DISPLAY_MSG_DEFAULT}</span></a>');
 					-->
 					</script>
 					&bull;
 					# ENDIF #
-					<a href="{PATH_TO_ROOT}/forum/alert{U_ALERT}#go_bottom" class="small_link"><img class="valign_middle" src="{PICTURES_DATA_PATH}/images/important_mini.png" alt="" /></a> <a href="alert{U_ALERT}#go_bottom" class="small_link">{L_ALERT}</a>
+					<a href="{PATH_TO_ROOT}/forum/alert{U_ALERT}#go_bottom" class="small"><img class="valign_middle" src="{PICTURES_DATA_PATH}/images/important_mini.png" alt="" /></a> <a href="alert{U_ALERT}#go_bottom" class="small">{L_ALERT}</a>
 					<span id="forum_track">
-						<a href="{PATH_TO_ROOT}/forum/action{U_SUSCRIBE}#go_bottom">{ICON_TRACK}</a> <a href="{PATH_TO_ROOT}/forum/action{U_SUSCRIBE}#go_bottom" class="small_link">{L_TRACK_DEFAULT}</a>
+						<a href="{PATH_TO_ROOT}/forum/action{U_SUSCRIBE}#go_bottom">{ICON_TRACK}</a> <a href="{PATH_TO_ROOT}/forum/action{U_SUSCRIBE}#go_bottom" class="small">{L_TRACK_DEFAULT}</a>
 					</span>
 					<script type="text/javascript">
 					<!--				
 					document.getElementById('forum_track').style.display = 'none';
-					document.write('<a href="javascript:XMLHttpRequest_track()" class="small_link">{ICON_TRACK2}</a> <a href="javascript:XMLHttpRequest_track()" class="small_link"><span id="forum_track_msg">{L_TRACK_DEFAULT}</span></a>');
+					document.write('<a href="javascript:XMLHttpRequest_track()" class="small">{ICON_TRACK2}</a> <a href="javascript:XMLHttpRequest_track()" class="small"><span id="forum_track_msg">{L_TRACK_DEFAULT}</span></a>');
 					-->
 					</script>
 					&bull;
 					<span id="forum_track_pm">
-						<a href="{PATH_TO_ROOT}/forum/action{U_SUSCRIBE_PM}#go_bottom">{ICON_SUSCRIBE_PM}</a> <a href="{PATH_TO_ROOT}/forum/action{U_SUSCRIBE_PM}#go_bottom" class="small_link">{L_SUSCRIBE_PM_DEFAULT}</a>
+						<a href="{PATH_TO_ROOT}/forum/action{U_SUSCRIBE_PM}#go_bottom">{ICON_SUSCRIBE_PM}</a> <a href="{PATH_TO_ROOT}/forum/action{U_SUSCRIBE_PM}#go_bottom" class="small">{L_SUSCRIBE_PM_DEFAULT}</a>
 					</span>
 					<script type="text/javascript">
 					<!--				
 					document.getElementById('forum_track_pm').style.display = 'none';
-					document.write('<a href="javascript:XMLHttpRequest_track_pm()" class="small_link">{ICON_SUSCRIBE_PM2}</a> <a href="javascript:XMLHttpRequest_track_pm()" class="small_link"><span id="forum_track_pm_msg">{L_SUSCRIBE_PM_DEFAULT}</span></a>');
+					document.write('<a href="javascript:XMLHttpRequest_track_pm()" class="small">{ICON_SUSCRIBE_PM2}</a> <a href="javascript:XMLHttpRequest_track_pm()" class="small"><span id="forum_track_pm_msg">{L_SUSCRIBE_PM_DEFAULT}</span></a>');
 					-->
 					</script>
 					&bull;
 					<span id="forum_track_mail">
-						<a href="{PATH_TO_ROOT}/forum/action{U_SUSCRIBE_MAIL}#go_bottom">{ICON_SUSCRIBE}</a> <a href="{PATH_TO_ROOT}/forum/action{U_SUSCRIBE_MAIL}#go_bottom" class="small_link">{L_SUSCRIBE_DEFAULT}</a>
+						<a href="{PATH_TO_ROOT}/forum/action{U_SUSCRIBE_MAIL}#go_bottom">{ICON_SUSCRIBE}</a> <a href="{PATH_TO_ROOT}/forum/action{U_SUSCRIBE_MAIL}#go_bottom" class="small">{L_SUSCRIBE_DEFAULT}</a>
 					</span>
 					<script type="text/javascript">
 					<!--				
 					document.getElementById('forum_track_mail').style.display = 'none';
-					document.write('<a href="javascript:XMLHttpRequest_track_mail()" class="small_link">{ICON_SUSCRIBE2}</a> <a href="javascript:XMLHttpRequest_track_mail()" class="small_link"><span id="forum_track_mail_msg">{L_SUSCRIBE_DEFAULT}</span></a>');
+					document.write('<a href="javascript:XMLHttpRequest_track_mail()" class="small">{ICON_SUSCRIBE2}</a> <a href="javascript:XMLHttpRequest_track_mail()" class="small"><span id="forum_track_mail_msg">{L_SUSCRIBE_DEFAULT}</span></a>');
 					-->
 					</script>
 				</div>

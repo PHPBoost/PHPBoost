@@ -51,7 +51,7 @@
                     <div class="spacer">&nbsp;</div>
                     <div style="text-align:center;">
                         <p id="forms_selection">
-                            <a id="specialize_form_link_all" href="javascript:ChangeForm('all');" class="small_link">{L_SEARCH_ALL}</a>
+                            <a id="specialize_form_link_all" href="javascript:ChangeForm('all');" class="small">{L_SEARCH_ALL}</a>
                             # START forms #
                                 <a id="specialize_form_link_{forms.MODULE_NAME}" href="javascript:ChangeForm('{forms.MODULE_NAME}');" class="small_link SpecializedFormLink SFL_no_current">{forms.L_MODULE_NAME}</a>
                             # END forms #

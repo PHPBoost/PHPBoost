@@ -286,7 +286,7 @@ $LANG['member_msg'] = 'Member\'s messages';
 $LANG['nbr_message'] = 'Total posts';
 $LANG['member_online'] = 'Members online';
 $LANG['no_member_online'] = 'No member online';
-$LANG['del_member'] = 'Delete your account <span class="text_small">(Final!)</span>';
+$LANG['del_member'] = 'Delete your account <span class="smaller">(Final!)</span>';
 $LANG['choose_lang'] = 'Default language';
 $LANG['choose_theme'] = 'Default theme';
 $LANG['choose_editor'] = 'Default text editor';
@@ -360,7 +360,7 @@ $LANG['cats_management_show_cat'] = 'Make category visible';
 ##########Moderation panel##########
 $LANG['moderation_panel'] = 'Moderation panel';
 $LANG['user_contact_pm'] = 'Contact by private message';
-$LANG['user_alternative_pm'] = 'Private message sent to the member <span class="text_small">(Leave empty for no private message)</span>. The member won\'t be able to reply to this message, he won\'t know who sent it';
+$LANG['user_alternative_pm'] = 'Private message sent to the member <span class="smaller">(Leave empty for no private message)</span>. The member won\'t be able to reply to this message, he won\'t know who sent it';
 
 //Punishment management
 $LANG['punishment'] = 'Punishment';

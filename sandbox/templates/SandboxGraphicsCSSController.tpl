@@ -6,13 +6,16 @@
 	<strike>Texte barré</strike><br /><br />
 	<h1>h1. Titre 1</h1>
 	<h2>h2. Titre 2</h2>
-	<h3>h.. Titre 3</h3>
+	<h3>h3. Titre 3</h3>
 	<h4>h4. Titre 4</h4>
 	<h5>h5. Titre 5</h5>
 	<h6>h6. Titre 6</h6> <br>
 	<a href="#">Lien</a> <br>
-	<a href="#" class="small_link">Lien en petit</a> <br>
-	<a href="#" class="big_link">Lien en grand</a> <br><br>
+	<a href="#" class="smaller">Lien en très petit</a> <br>
+	<a href="#" class="small">Lien en petit</a> <br>
+	<a href="#" class="big">Lien en grand</a> <br>
+	<a href="#" class="bigger">Lien en plus grand</a> <br>
+	<a href="#" class="biggest">Lien très grand</a> <br>
 	<a href="#" class="admin">Administrateur</a> <br>
 	<a href="#" class="modo">Modérateur</a> <br>
 	<a href="#" class="member">Membre</a> <br>
@@ -136,19 +139,6 @@
 		<li> Élément 2</li>
 		<li> Élément 3</li>
 	</ol>
-	<br>
-	<h2>Listes BBCode</h1><br>
-	<ul class="bb_ul">
-		<li class="bb_li"> Élément 1</li>
-		<li class="bb_li"> Élément 2</li>
-		<li class="bb_li"> Élément 3</li>
-	</ul>
-
-	<ol class="bb_ol">
-		<li class="bb_li"> Élément 1</li>
-		<li class="bb_li"> Élément 2</li>
-		<li class="bb_li"> Élément 3</li>
-	</ol>
 </fieldset>
 
 <div class="text_center"># INCLUDE PAGINATION #</div>
@@ -159,13 +149,13 @@
 		<div class="comment-user_infos">
 			<div id="comment-pseudo">
 				
-					<a itemprop="author" href="http://localhost/trunk/user/?url=/profile/1" class="admin" >
+					<a itemprop="author" href="{PATH_TO_ROOT}/user/?url=/profile/1" class="admin" >
 						reidlos
 					</a>
 				
 			</div>
 			<div class="comment-level">Administrateur</div>
-			<img src="/trunk/templates/base/images/no_avatar.png" class="comment-avatar" />
+			<img src="{PATH_TO_ROOT}/templates/base/images/no_avatar.png" class="comment-avatar" />
 		</div>
 		<div class="comment-content">
 			<div class="comment-date">
@@ -173,10 +163,10 @@
 					<a itemprop="url" href="#com2">#2</a>
 					
 						<a href="#comments_message">
-							<img src="/trunk/templates/base/images/french/edit.png" alt="Modifier" title="Modifier" class="valign_middle" />
+							<img src="{PATH_TO_ROOT}/templates/base/images/french/edit.png" alt="Modifier" title="Modifier" class="valign_middle" />
 						</a> 
 						<a href="#comments_message" onclick="javascript:return Confirm_del_comment();">
-							<img src="/trunk/templates/base/images/french/delete.png" alt="Supprimer" title="Supprimer" class="valign_middle" />
+							<img src="{PATH_TO_ROOT}/templates/base/images/french/delete.png" alt="Supprimer" title="Supprimer" class="valign_middle" />
 						</a>
 					
 				</div>
@@ -192,13 +182,13 @@
 		<div class="comment-user_infos">
 			<div id="comment-pseudo">
 				
-					<a itemprop="author" href="http://localhost/trunk/user/?url=/profile/1" class="admin" >
+					<a itemprop="author" href="{PATH_TO_ROOT}/user/?url=/profile/1" class="admin" >
 						reidlos
 					</a>
 				
 			</div>
 			<div class="comment-level">Administrateur</div>
-			<img src="/trunk/templates/base/images/no_avatar.png" class="comment-avatar" />
+			<img src="{PATH_TO_ROOT}/templates/base/images/no_avatar.png" class="comment-avatar" />
 		</div>
 		<div class="comment-content">
 			<div class="comment-date">
@@ -206,10 +196,10 @@
 					<a itemprop="url" href="#com3">#3</a>
 					
 						<a href="#comments_message">
-							<img src="/trunk/templates/base/images/french/edit.png" alt="Modifier" title="Modifier" class="valign_middle" />
+							<img src="{PATH_TO_ROOT}/templates/base/images/french/edit.png" alt="Modifier" title="Modifier" class="valign_middle" />
 						</a> 
 						<a href="#comments_message" onclick="javascript:return Confirm_del_comment();">
-							<img src="/trunk/templates/base/images/french/delete.png" alt="Supprimer" title="Supprimer" class="valign_middle" />
+							<img src="{PATH_TO_ROOT}/templates/base/images/french/delete.png" alt="Supprimer" title="Supprimer" class="valign_middle" />
 						</a>
 					
 				</div>

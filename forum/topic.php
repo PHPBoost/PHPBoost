@@ -169,7 +169,7 @@ $Template->put_all(array(
 	'PAGE' => $page,
 	'TITLE_T' => ucfirst($topic['title']),
 	'DISPLAY_MSG' => (($CONFIG_FORUM['activ_display_msg'] && $topic['display_msg']) ? $CONFIG_FORUM['display_msg'] . ' ' : '') ,
-	'U_MSG_SET_VIEW' => '<a class="small_link" href="../forum/action' . url('.php?read=1&amp;f=' . $topic['idcat'], '') . '" title="' . $LANG['mark_as_read'] . '" onclick="javascript:return Confirm_read_topics();">' . $LANG['mark_as_read'] . '</a>',
+	'U_MSG_SET_VIEW' => '<a class="small" href="../forum/action' . url('.php?read=1&amp;f=' . $topic['idcat'], '') . '" title="' . $LANG['mark_as_read'] . '" onclick="javascript:return Confirm_read_topics();">' . $LANG['mark_as_read'] . '</a>',
 	'U_CHANGE_CAT'=> 'topic' . url('.php?id=' . $id_get . '&amp;token=' . $Session->get_token(), '-' . $id_get . $rewrited_cat_title . '.php?token=' . $Session->get_token()),
 	'U_ONCHANGE' => url(".php?id=' + this.options[this.selectedIndex].value + '", "-' + this.options[this.selectedIndex].value + '.php"),		
 	'U_ONCHANGE_CAT' => url("index.php?id=' + this.options[this.selectedIndex].value + '", "cat-' + this.options[this.selectedIndex].value + '.php"),		
@@ -369,9 +369,9 @@ while ( $row = $Sql->fetch_assoc($result) )
 
 	//Affichage du nombre de message.
 	if ($row['user_msg'] >= 1)
-		$user_msg = '<a href="'. UserUrlBuilder::messages($row['user_id'])->absolute() . '" class="small_link">' . $LANG['message_s'] . '</a>: ' . $row['user_msg'];
+		$user_msg = '<a href="'. UserUrlBuilder::messages($row['user_id'])->absolute() . '" class="small">' . $LANG['message_s'] . '</a>: ' . $row['user_msg'];
 	else		
-		$user_msg = (!$is_guest) ? '<a href="../forum/membermsg' . url('.php?id=' . $row['user_id'], '') . '" class="small_link">' . $LANG['message'] . '</a>: 0' : $LANG['message'] . ': 0';		
+		$user_msg = (!$is_guest) ? '<a href="../forum/membermsg' . url('.php?id=' . $row['user_id'], '') . '" class="small">' . $LANG['message'] . '</a>: 0' : $LANG['message'] . ': 0';		
 	
 	$Template->assign_block_vars('msg', array(
 		'ID' => $row['id'],

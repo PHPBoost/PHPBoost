@@ -45,7 +45,7 @@
 					<td class="row2">
 						{list.APROBATION}
 						<br />
-						<span class="text_small">{list.VISIBLE}</span>
+						<span class="smaller">{list.VISIBLE}</span>
 					</td>
 					<td class="row2"> 
 						<a href="{list.U_EDIT_FILE}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="{L_UPDATE}" title="{L_UPDATE}" /></a>

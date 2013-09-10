@@ -54,7 +54,7 @@
 		<td class="row2">
 			{articles.PUBLISHED} 
 			<br />
-			<span class="text_small">{articles.PUBLISHED_DATE}</span>
+			<span class="smaller">{articles.PUBLISHED_DATE}</span>
 		</td>
 		<td class="row2"> 
 			<a href="{articles.U_EDIT_ARTICLE}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="{articles.L_EDIT_ARTICLE}" title="{articles.L_EDIT_ARTICLE}" /></a>

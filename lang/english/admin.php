@@ -163,7 +163,7 @@ $LANG['category'] = 'Category';
 $LANG['site'] = 'Site';
 $LANG['modules'] = 'Modules';
 $LANG['powered_by'] = 'Boosted by';
-$LANG['release_date'] = 'Release date <span class="text_small">dd/mm/yy</span>';
+$LANG['release_date'] = 'Release date <span class="smaller">dd/mm/yy</span>';
 $LANG['immediate'] = 'Immediate';
 $LANG['waiting'] = 'Waiting';
 $LANG['stats'] = 'Statistics';
