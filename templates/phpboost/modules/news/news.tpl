@@ -44,7 +44,7 @@
 				<br /><br />
 				# IF C_SOURCES #
 				<div style="float:right">
-					<div class="text_small"><b> {L_SOURCES} : </b># START sources #{sources.COMMA}<a href="{sources.URL}" class="small_link">{sources.NAME}</a># END sources #</div>
+					<div class="smaller"><b> {L_SOURCES} : </b># START sources #{sources.COMMA}<a href="{sources.URL}" class="small">{sources.NAME}</a># END sources #</div>
 				</div>
 				# ENDIF #
 				<div class="spacer"></div>

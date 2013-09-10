@@ -9,7 +9,7 @@
 	<div class="module_mini_contents">
 		<ul class="list">
 			# START item #
-			<li><span class="text_small">{item.DATE}</span> <a href="{item.U_LINK} ">{item.TITLE} </a></li>
+			<li><span class="smaller">{item.DATE}</span> <a href="{item.U_LINK} ">{item.TITLE} </a></li>
 			# END item #
 		</ul>
 	</div>
@@ -25,7 +25,7 @@
 		</h5>
 		<ul class="list" style="margin-top:8px;">
 			# START item #
-			<li><span class="text_small">{item.DATE}</span> <a href="{item.U_LINK} ">{item.TITLE} </a></li>
+			<li><span class="smaller">{item.DATE}</span> <a href="{item.U_LINK} ">{item.TITLE} </a></li>
 			# END item #
 		</ul>
 		&nbsp;

@@ -7,7 +7,7 @@
 		</label>
 		# IF actions.DESCRIPTION #
 		<br />
-		<span class="text_small">{actions.DESCRIPTION}</span>
+		<span class="smaller">{actions.DESCRIPTION}</span>
 		# ENDIF #
 	</dt>
 	<dd>

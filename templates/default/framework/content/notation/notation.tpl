@@ -50,7 +50,7 @@
 		# END notation #
 		<span id="noteloading{ID_IN_MODULE}"></span>
 	</div>
-	<form action="" method="post" class="text_small">
+	<form action="" method="post" class="smaller">
 		<span id="note_value{ID_IN_MODULE}">
 			# IF C_NOTES #
 				<span itemprop="reviewCount">{NUMBER_NOTES}</span>

@@ -88,7 +88,7 @@ $lang['calendar.labels.suscribe'] = 'Suscribe';
 $lang['calendar.labels.unsuscribe'] = 'Unsuscribe';
 
 //Explications
-$lang['calendar.explain.date'] = '<span class="text_small">(mm/dd/yy)</span>';
+$lang['calendar.explain.date'] = '<span class="smaller">(mm/dd/yy)</span>';
 
 //Administration
 $lang['calendar.config.manage_events'] = 'Events management';

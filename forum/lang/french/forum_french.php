@@ -48,7 +48,7 @@ $LANG['move_topics_to'] = 'Déplacer le(s) sujet(s) vers';
 $LANG['move_sub_forums_to'] = 'Déplacer le(s) sous-forum(s) vers';
 $LANG['cat_target'] = 'Catégorie cible';
 $LANG['del_all'] = 'Suppression complète';
-$LANG['del_forum_contents'] = 'Supprimer le forum "<strong>%s</strong>", ses <strong>sous-forums</strong> et <strong>tout</strong> son contenu <span class="text_small">(Définitif)</span>';
+$LANG['del_forum_contents'] = 'Supprimer le forum "<strong>%s</strong>", ses <strong>sous-forums</strong> et <strong>tout</strong> son contenu <span class="smaller">(Définitif)</span>';
 $LANG['forum_config'] = 'Configuration du forum';
 $LANG['forum_management'] = 'Gestion du forum';
 $LANG['forum_name'] = 'Nom du forum';

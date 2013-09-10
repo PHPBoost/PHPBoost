@@ -98,15 +98,7 @@ pre {
 }
 
 /* Classes textes */
-.text_small {
-    font-size:10px;
-    font-weight:normal;
-}
-
-.text_strong {
-    font-weight:bold;
-}
-
+.text_strong { font-weight:bold; }
 .text_justify { text-align:justify; }
 .text_center { text-align:center; }
 

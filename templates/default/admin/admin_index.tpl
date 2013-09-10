@@ -65,15 +65,15 @@
 							<div style="height:140px;width:358px;overflow:auto;margin:auto;">
 								# START comments_list #	
 								<div style="margin-bottom:10px;">
-									<a href="{comments_list.U_LINK}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/ancre.png" alt="" /></a> <span class="text_small">{L_BY} {comments_list.U_PSEUDO}</span>
-									<p class="text_small">{comments_list.CONTENT}</p>
+									<a href="{comments_list.U_LINK}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/ancre.png" alt="" /></a> <span class="smaller">{L_BY} {comments_list.U_PSEUDO}</span>
+									<p class="smaller">{comments_list.CONTENT}</p>
 								</div>	
 								# END comments_list #
 								# IF C_NO_COM #
 								<p style="text-align:center;margin:0px;margin-top:50px;"><em>{L_NO_COMMENT}</em></p>
 								# ENDIF #
 							</div>
-							<p style="text-align:center;margin:0;margin-top:9px;"><a class="small_link" href="${relative_url(UserUrlBuilder::comments())}">{L_VIEW_ALL_COMMENTS}</a></p>
+							<p style="text-align:center;margin:0;margin-top:9px;"><a class="small" href="${relative_url(UserUrlBuilder::comments())}">{L_VIEW_ALL_COMMENTS}</a></p>
 						</td>
 					</tr>
 				</table>

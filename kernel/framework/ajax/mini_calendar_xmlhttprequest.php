@@ -99,7 +99,7 @@ if ($calendar_type == 'date')
     foreach ($array_l_days as $l_day)
     {
         $Template->assign_block_vars('day', array(
-			'L_DAY' => '<td style="width:25px;border-top:1px solid black;border-bottom:1px solid black"><span class="text_small">' . $l_day . '</span></td>'
+			'L_DAY' => '<td style="width:25px;border-top:1px solid black;border-bottom:1px solid black"><span class="smaller">' . $l_day . '</span></td>'
 		));
     }
 

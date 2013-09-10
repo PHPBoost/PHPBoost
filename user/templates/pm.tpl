@@ -87,11 +87,11 @@
 							<td style="width:20px;text-align:center;">
 								<input type="checkbox" id="d{convers.list.INCR}" name="{convers.list.ID}">
 							</td>
-							<td class="text_small" style="width:40px;text-align:center;">
+							<td class="smaller" style="width:40px;text-align:center;">
 								<img src="{convers.list.ANNOUNCE}.png" alt="" />
 							</td>
 							<td style="padding:4px;">
-								{convers.list.ANCRE} <a href="pm{convers.list.U_CONVERS}">{convers.list.TITLE}</a> &nbsp;<span class="text_small">[{convers.list.U_AUTHOR}]</span>
+								{convers.list.ANCRE} <a href="pm{convers.list.U_CONVERS}">{convers.list.TITLE}</a> &nbsp;<span class="smaller">[{convers.list.U_AUTHOR}]</span>
 								<br />
 								&nbsp;{convers.list.PAGINATION_PM}
 							</td>
@@ -101,7 +101,7 @@
 							<td style="text-align:center">
 								{convers.list.MSG}
 							</td>
-							<td class="text_small" style="text-align:center;">
+							<td class="smaller" style="text-align:center;">
 								{convers.list.U_LAST_MSG}
 							</td>
 						</tr>	

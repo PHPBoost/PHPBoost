@@ -112,7 +112,7 @@
 							<img class="valign_middle" src="{PATH_TO_ROOT}/articles/templates/images/view.png" alt="${i18n('articles.sort_field.views')}" title="${i18n('articles.sort_field.views')}" />&nbsp;{articles.NUMBER_VIEW}
 							<br />
 							# IF C_COMMENTS_ENABLED #
-							<img class="valign_middle" src="{PATH_TO_ROOT}/articles/templates/images/comment.png" /><a class="small_link" href="{articles.U_COMMENTS}">&nbsp;{articles.L_COMMENTS}</a>
+							<img class="valign_middle" src="{PATH_TO_ROOT}/articles/templates/images/comment.png" /><a class="small" href="{articles.U_COMMENTS}">&nbsp;{articles.L_COMMENTS}</a>
 							# ELSE #
 							&nbsp;
 							# ENDIF #
@@ -175,7 +175,7 @@
 							<img class="valign_middle" src="{PATH_TO_ROOT}/articles/templates/images/calendar.png" alt="${i18n('articles.sort_field.date')}" title="${i18n('articles.sort_field.date')}" />&nbsp;{articles.DATE}&nbsp;|
 							<img class="valign_middle" src="{PATH_TO_ROOT}/articles/templates/images/view.png" alt="${i18n('articles.sort_field.views')}" title="${i18n('articles.sort_field.views')}" />&nbsp;{articles.NUMBER_VIEW}
 							# IF C_COMMENTS_ENABLED #
-							&nbsp;|&nbsp;<img class="valign_middle" src="{PATH_TO_ROOT}/articles/templates/images/comment.png" /><a class="small_link" href="{articles.U_COMMENTS}">&nbsp;{articles.L_COMMENTS}</a>
+							&nbsp;|&nbsp;<img class="valign_middle" src="{PATH_TO_ROOT}/articles/templates/images/comment.png" /><a class="small" href="{articles.U_COMMENTS}">&nbsp;{articles.L_COMMENTS}</a>
 							# ENDIF #
 						</span>
 					</header>
@@ -194,7 +194,7 @@
 		</div>
 		{PAGINATION}
 		<div class="spacer">&nbsp;</div>
-		<p style="text-align:center;padding-top:10px;" class="text_small">
+		<p style="text-align:center;padding-top:10px;" class="smaller">
 			{L_NO_ARTICLE} {L_TOTAL_ARTICLES}
 		</p>
 		&nbsp;

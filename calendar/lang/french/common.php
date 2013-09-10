@@ -88,7 +88,7 @@ $lang['calendar.labels.suscribe'] = 'S\'inscrire';
 $lang['calendar.labels.unsuscribe'] = 'Se désinscrire';
 
 //Explications
-$lang['calendar.explain.date'] = '<span class="text_small">(jj/mm/aa)</span>';
+$lang['calendar.explain.date'] = '<span class="smaller">(jj/mm/aa)</span>';
 
 //Administration
 $lang['calendar.config.manage_events'] = 'Gestion des événements';

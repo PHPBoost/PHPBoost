@@ -209,7 +209,7 @@
 					<fieldset class="fieldset_submit">
 						<legend>{L_VOTE}</legend>
 						<input class="submit" name="valid_forum_poll" type="submit" value="{L_VOTE}" /><br>
-						<a class="small_link" href="topic{U_POLL_RESULT}">{L_RESULT}</a>
+						<a class="small" href="topic{U_POLL_RESULT}">{L_RESULT}</a>
 					</fieldset>
 					# ENDIF #
 				</form>
@@ -277,7 +277,7 @@
 							<br /><br /><br /><br /><span style="padding: 10px;font-size:10px;font-style:italic;">
 							{L_EDIT_BY}
 								# IF msg.C_FORUM_USER_EDITOR_LOGIN # 
-							<a class="small_link" href="{msg.U_FORUM_USER_EDITOR_PROFILE}">{msg.FORUM_USER_EDITOR_LOGIN}</a>
+							<a class="small" href="{msg.U_FORUM_USER_EDITOR_PROFILE}">{msg.FORUM_USER_EDITOR_LOGIN}</a>
 								# ELSE #
 							<em>{L_GUEST}</em>
 								# ENDIF #

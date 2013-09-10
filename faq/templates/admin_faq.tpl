@@ -40,7 +40,7 @@
 						<dt>
 							<label for="faq_name">{L_FAQ_NAME}</label>
 							<br />
-							<span class="text_small">{L_FAQ_NAME_EXPLAIN}</span>
+							<span class="smaller">{L_FAQ_NAME_EXPLAIN}</span>
 						</dt>
 						<dd>
 							<input type="text" size="65" maxlength="100" id="faq_name" name="faq_name" value="{FAQ_NAME}" class="text">
@@ -50,7 +50,7 @@
 						<dt>
 							<label for="num_cols">{L_NBR_COLS}</label>
 							<br />
-							<span class="text_small">{L_NBR_COLS_EXPLAIN}</span>
+							<span class="smaller">{L_NBR_COLS_EXPLAIN}</span>
 						</dt>
 						<dd>
 							<input type="text" size="3" maxlength="3" id="num_cols" name="num_cols" value="{NUM_COLS}" class="text">
@@ -60,7 +60,7 @@
 						<dt>
 							<label for="display_mode">{L_DISPLAY_MODE}</label>
 							<br />
-							<span class="text_small">{L_DISPLAY_MODE_EXPLAIN}</span>
+							<span class="smaller">{L_DISPLAY_MODE_EXPLAIN}</span>
 						</dt>
 						<dd>
 							<select name="display_mode" id="display_mode">

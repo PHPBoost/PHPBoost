@@ -285,7 +285,7 @@ $LANG['member_msg_display'] = 'Afficher les messages du membre';
 $LANG['member_msg'] = 'Messages du membre';
 $LANG['member_online'] = 'Membres en ligne';
 $LANG['no_member_online'] = 'Aucun membre connecté';
-$LANG['del_member'] = 'Suppression du compte <span class="text_small">(Définitif!)</span>';
+$LANG['del_member'] = 'Suppression du compte <span class="smaller">(Définitif!)</span>';
 $LANG['choose_lang'] = 'Langue par défaut';
 $LANG['choose_theme'] = 'Thème par défaut';
 $LANG['choose_editor'] = 'Editeur de texte par défaut';
@@ -359,7 +359,7 @@ $LANG['cats_management_show_cat'] = 'Rendre la catégorie visible';
 ##########Panneau de modération##########
 $LANG['moderation_panel'] = 'Panneau de modération';
 $LANG['user_contact_pm'] = 'Contacter par message privé';
-$LANG['user_alternative_pm'] = 'Message privé envoyé au membre <span class="text_small">(Laisser vide pour aucun message privé)</span>. <br />Le membre averti ne pourra pas répondre à ce message, et ne connaîtra pas l\'expéditeur.';
+$LANG['user_alternative_pm'] = 'Message privé envoyé au membre <span class="smaller">(Laisser vide pour aucun message privé)</span>. <br />Le membre averti ne pourra pas répondre à ce message, et ne connaîtra pas l\'expéditeur.';
 
 //Gestion des sanctions
 $LANG['punishment'] = 'Sanctions';

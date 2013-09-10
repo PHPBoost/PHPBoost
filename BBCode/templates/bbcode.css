@@ -29,8 +29,6 @@
 	z-index:100;
 }
 
-.bb_ul { margin-left: 20px; }
-
 /* Tableaux */
 .bb_table{
 	border:1px solid #2C5169;
@@ -41,16 +39,6 @@
 .bb_table_col{
 	border:1px solid #2C5169;
 	padding:6px;
-}
-/* Listes */
-.bb_ul{
-	margin-left:20px;
-}
-.bb_ol{
-	margin-left:35px;
-}
-.bb_li{
-	text-align:left;
 }
 
 /* Affichage balise quote, code, hide */

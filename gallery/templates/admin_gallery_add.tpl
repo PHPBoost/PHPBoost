@@ -101,7 +101,7 @@
 					</tr>
 					<tr> 
 						<td class="row1" colspan="2">
-							<span class="text_small">{L_CAT}:</span> 
+							<span class="smaller">{L_CAT}:</span> 
 							<select name="root_cat" id="root_cat" class="valign_middle">
 								{CATEGORIES}
 							</select>
@@ -123,7 +123,7 @@
 									<table class="module_table" style="width:100%;">
 										<tr>
 											<td class="row2">												
-												<input type="checkbox" checked="checked" name="{list.ID}activ" value="1" class="valign_middle"> <span class="text_small">{L_SELECT}</span>
+												<input type="checkbox" checked="checked" name="{list.ID}activ" value="1" class="valign_middle"> <span class="smaller">{L_SELECT}</span>
 											</td>
 										</tr>
 										<tr>
@@ -133,7 +133,7 @@
 										</tr>
 										<tr>
 											<td class="row2">
-												<span class="text_small">{L_NAME}: </span>
+												<span class="smaller">{L_NAME}: </span>
 												<input type="text" size="25" name="{list.ID}name" value="{list.NAME}" class="text valign_middle">
 												
 												<input type="hidden" name="{list.ID}uniq" value="{list.UNIQ_NAME}">
@@ -141,7 +141,7 @@
 										</tr>
 										<tr>
 											<td class="row2">
-												<span class="text_small">{L_CAT}:</span> 
+												<span class="smaller">{L_CAT}:</span> 
 												<select name="{list.ID}cat" id="{list.ID}cat" class="valign_middle" style="width:{SELECTBOX_WIDTH}%">
 													{list.CATEGORIES}
 												</select>
@@ -149,7 +149,7 @@
 										</tr>
 										<tr>
 											<td class="row2">												
-												<input type="checkbox" name="{list.ID}del" value="1" class="valign_middle"> <span class="text_small">{L_DELETE}</span> 
+												<input type="checkbox" name="{list.ID}del" value="1" class="valign_middle"> <span class="smaller">{L_DELETE}</span> 
 											</td>
 										</tr>
 									</table>	

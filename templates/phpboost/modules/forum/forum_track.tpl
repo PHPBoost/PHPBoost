@@ -63,10 +63,10 @@
 							<td class="forum_sous_cat forum_sous_cat_pbt">
 								{topics.ANCRE} <strong>{topics.TYPE}</strong> <a href="topic{topics.U_TOPIC_VARS}">{topics.L_DISPLAY_MSG} {topics.TITLE}</a>
 								<br />
-								<span class="text_small">{topics.DESC}</span> &nbsp;<span class="pagin_forum">{topics.PAGINATION_TOPICS}</span>
+								<span class="smaller">{topics.DESC}</span> &nbsp;<span class="pagin_forum">{topics.PAGINATION_TOPICS}</span>
 							</td>
 							<td class="forum_sous_cat_compteur forum_sous_cat_pbt" style="width:100px;">
-								<span class="text_small">Par </span>{topics.AUTHOR}
+								<span class="smaller">Par </span>{topics.AUTHOR}
 							</td>
 							<td class="forum_sous_cat_compteur_nbr forum_sous_cat_compteur forum_sous_cat_pbt">
 								{topics.MSG}<BR />{topics.VUS}

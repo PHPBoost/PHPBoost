@@ -164,7 +164,7 @@ class GalleryModuleMiniMenu extends ModuleMiniMenu
 				'HIDDEN_WIDTH' => ($config->get_mini_max_width() * 3) + 30,
 				'SCROLL_DELAY' => 0.2 * (11 - $config->get_mini_pics_speed()),
 				'L_RANDOM_PICS' => $LANG['random_img'],
-				'L_NO_RANDOM_PICS' => ($i == 0) ? '<br /><span class="text_small"><em>' . $LANG['no_random_img']  . '</em></span><br />' : '',
+				'L_NO_RANDOM_PICS' => ($i == 0) ? '<br /><span class="smaller"><em>' . $LANG['no_random_img']  . '</em></span><br />' : '',
 				'L_GALLERY' => $LANG['gallery']
 			));
 			return $tpl->render();

@@ -49,7 +49,7 @@ $LANG['move_topics_to'] = 'Move post(s) to';
 $LANG['move_forums_to'] = 'Move subforum(s) to';
 $LANG['cat_target'] = 'Category target';
 $LANG['del_all'] = 'Delete all';
-$LANG['del_forum_contents'] = 'Delete the forum "<strong>%s</strong>", <strong>subforums</strong> and <strong>all</strong> its content <span class="text_small">(irreversible)</span>';
+$LANG['del_forum_contents'] = 'Delete the forum "<strong>%s</strong>", <strong>subforums</strong> and <strong>all</strong> its content <span class="smaller">(irreversible)</span>';
 $LANG['forum_config'] = 'Forum configuration';
 $LANG['forum_management'] = 'Forum management';
 $LANG['forum_name'] = 'Forum name';

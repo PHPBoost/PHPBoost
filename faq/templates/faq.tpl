@@ -56,7 +56,7 @@
 									<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="" />
 								</a>
 								# ENDIF #
-								<div class="text_small">
+								<div class="smaller">
 									{row.list_cats.NUM_QUESTIONS}
 								</div>
 							</div>

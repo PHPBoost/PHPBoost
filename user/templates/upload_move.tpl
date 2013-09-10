@@ -70,8 +70,8 @@
 									<td style="padding-top:8px;">						
 										{file.NAME}	
 										<br />
-										<span class="text_small">{file.FILETYPE}</span><br />
-										<span class="text_small">{file.SIZE}</span><br />								
+										<span class="smaller">{file.FILETYPE}</span><br />
+										<span class="smaller">{file.SIZE}</span><br />								
 									</td>
 								</tr>						
 							</table>

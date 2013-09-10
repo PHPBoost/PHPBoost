@@ -6,7 +6,7 @@
 				{LABEL}
 			</label>
 			<br />
-			<span class="text_small">{DESCRIPTION}</span>
+			<span class="smaller">{DESCRIPTION}</span>
 		</dt>
 		<dd>
 			{CALENDAR}

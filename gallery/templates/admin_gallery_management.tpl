@@ -269,7 +269,7 @@
 									<br />
 									<a href="admin_gallery.php?cat={cat.list.IDCAT}">{cat.list.CAT}</a> <a href="admin_gallery_cat.php?id={cat.list.IDCAT}" title="{L_EDIT}"><img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="{L_EDIT}" title="{L_EDIT}" /></a> 
 									<br />
-									{cat.list.LOCK} <span class="text_small">{cat.list.L_NBR_PICS}</span> 
+									{cat.list.LOCK} <span class="smaller">{cat.list.L_NBR_PICS}</span> 
 								</td>	
 							{cat.list.TR_END}
 							# END cat.list #						
@@ -407,7 +407,7 @@
 											</td>
 										</tr>
 										<tr>
-											<td style="text-align:center;" class="text_small">
+											<td style="text-align:center;" class="smaller">
 												<a class="com" href="{pics.list.U_DISPLAY}" title="{pics.list.TITLE}" rel="lightbox[2]"><span id="fi_{pics.list.ID}">{pics.list.NAME}</span></a> <span id="fi{pics.list.ID}"></span>
 												<br />
 												{pics.list.U_POSTOR}
@@ -452,7 +452,7 @@
 						</p>			
 						# END pics #
 						
-						<p style="text-align:center" class="text_small">
+						<p style="text-align:center" class="smaller">
 							{L_TOTAL_IMG}
 						</p>	
 

@@ -135,7 +135,7 @@ function XMLHttpRequest_preview(field)
 								<div class="bbcode_block" style="margin-left:-220px;width:180px;" onmouseover="bb_hide_block('9', '{FIELD}', 1);" onmouseout="bb_hide_block('9', '{FIELD}', 0);">
 									<p><label style="font-size:10px;font-weight:normal">* {L_LINES} <input size="3" type="text" class="text" name="bb_list{FIELD}" id="bb_list{FIELD}" maxlength="3" value="3"></label></p>
 									<p><label style="font-size:10px;font-weight:normal">{L_ORDERED_LIST} <input size="3" type="checkbox" name="bb_ordered_list{FIELD}" id="bb_ordered_list{FIELD}"></label></p>
-									<p style="text-align:center;"><a class="small_link" href="javascript:bbcode_list('{FIELD}');"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/list.png" alt="{L_BB_LIST}" title="{L_BB_LIST}" class="valign_middle" /> {L_INSERT_LIST}</a></p>
+									<p style="text-align:center;"><a class="small" href="javascript:bbcode_list('{FIELD}');"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/list.png" alt="{L_BB_LIST}" title="{L_BB_LIST}" class="valign_middle" /> {L_INSERT_LIST}</a></p>
 								</div>
 							</div>
 							<a href="javascript:{DISABLED_LIST}bb_display_block('9', '{FIELD}');" onmouseout="{DISABLED_LIST}bb_hide_block('9', '{FIELD}', 0);" class="bbcode_hover" title="{L_BB_LIST}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/list.png" {AUTH_LIST} alt="{L_BB_LIST}" title="{L_BB_LIST}" /></a>
@@ -197,7 +197,7 @@ function XMLHttpRequest_preview(field)
 									<p><label style="font-size:10px;font-weight:normal">* {L_LINES} <input size="3" type="text" class="text" name="bb_lines{FIELD}" id="bb_lines{FIELD}" maxlength="3" value="2"></label></p>
 									<p><label style="font-size:10px;font-weight:normal">* {L_COLS} <input size="3" type="text" class="text" name="bb_cols{FIELD}" id="bb_cols{FIELD}" maxlength="3" value="2"></label></p>
 									<p><label style="font-size:10px;font-weight:normal">{L_ADD_HEAD} <input size="3" type="checkbox" name="bb_head{FIELD}" id="bb_head{FIELD}"></label></p>
-									<p style="text-align:center;"><a class="small_link" href="javascript:{DISABLED_TABLE}bbcode_table('{FIELD}');"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/table.png" alt="{L_BB_TABLE}" title="{L_BB_TABLE}" class="valign_middle" /> {L_INSERT_TABLE}</a></p>
+									<p style="text-align:center;"><a class="small" href="javascript:{DISABLED_TABLE}bbcode_table('{FIELD}');"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/table.png" alt="{L_BB_TABLE}" title="{L_BB_TABLE}" class="valign_middle" /> {L_INSERT_TABLE}</a></p>
 								</div>
 							</div>
 							<a href="javascript:{DISABLED_TABLE}bb_display_block('7', '{FIELD}');" onmouseover="{DISABLED_TABLE}bb_hide_block('7', '{FIELD}', 1);" class="bbcode_hover" title="{L_BB_TABLE}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/table.png" {AUTH_TABLE} alt="{L_BB_TABLE}" title="{L_BB_TABLE}" /></a>   

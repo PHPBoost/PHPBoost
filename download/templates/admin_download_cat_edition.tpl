@@ -62,7 +62,7 @@
 							<label for="alt_image">
 								{L_IMAGE}
 								<br />
-								<span class="text_small">{L_EXPLAIN_IMAGE}</span>
+								<span class="smaller">{L_EXPLAIN_IMAGE}</span>
 							</label>
 						</dt>
 						<dd>
@@ -96,7 +96,7 @@
 					<dl>
 						<dt><label for="special_auth">{L_SPECIAL_AUTH}</label>
 						<br />
-						<span class="text_small">{L_SPECIAL_AUTH_EXPLAIN}</span></dt>
+						<span class="smaller">{L_SPECIAL_AUTH_EXPLAIN}</span></dt>
 						<dd>
 							<input type="checkbox" name="special_auth" id="special_auth" onclick="javascript: change_status_global_auth();" {SPECIAL_CHECKED}>
 						</dd>					

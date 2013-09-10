@@ -24,6 +24,6 @@
 	# START options # # INCLUDE options.OPTION # # END options # 
 </select>
 <br />
-<a href="javascript:${escapejscharacters(NAME)}select_all()" class="small_link">{L_SELECT_ALL}</a> / <a href="javascript:${escapejscharacters(NAME)}unselect_all()" class="small_link">{L_UNSELECT_ALL}</a>
+<a href="javascript:${escapejscharacters(NAME)}select_all()" class="small">{L_SELECT_ALL}</a> / <a href="javascript:${escapejscharacters(NAME)}unselect_all()" class="small">{L_UNSELECT_ALL}</a>
 <br />
-<span class="text_small">{L_SELECT_EXPLAIN}</span>
+<span class="smaller">{L_SELECT_EXPLAIN}</span>

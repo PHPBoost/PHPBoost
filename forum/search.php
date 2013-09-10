@@ -208,7 +208,7 @@ if (!empty($valid_search) && !empty($search))
 				'CONTENTS' => $contents,
 				'RELEVANCE' => ($relevance > $max_relevance ) ? '100' : NumberHelper::round(($relevance * 100) / $max_relevance, 2),
 				'DATE' => gmdate_format('d/m/y', $row['timestamp']),
-				'U_TITLE'  => '<a class="small_link" href="../forum/topic' . url('.php?id=' . $row['idtopic'], '-' . $row['idtopic'] . $rewrited_title . '.php') . '#m' . $row['msgid'] . '">' . ucfirst($title) . '</a>'				
+				'U_TITLE'  => '<a class="small" href="../forum/topic' . url('.php?id=' . $row['idtopic'], '-' . $row['idtopic'] . $rewrited_title . '.php') . '#m' . $row['msgid'] . '">' . ucfirst($title) . '</a>'				
 			));
 			
 			$check_result = true;

@@ -291,9 +291,9 @@
 								<br />
 								<a href="{cat_list.U_CAT}">{cat_list.CAT}</a> {cat_list.EDIT}
 								<br />
-								<span class="text_small">{cat_list.DESC}</span> 
+								<span class="smaller">{cat_list.DESC}</span> 
 								<br />
-								{cat_list.LOCK} <span class="text_small">{cat_list.L_NBR_PICS}</span>
+								{cat_list.LOCK} <span class="smaller">{cat_list.L_NBR_PICS}</span>
 							</td>	
 							{cat_list.CLOSE_TR}
 							# END cat_list #
@@ -410,8 +410,8 @@
 						<table class="module_table">
 							# START pics_list #
 								{pics_list.OPEN_TR}
-								<td style="width:{COLUMN_WIDTH_PICS}%;text-align:center;padding:15px 0px;vertical-align:middle" class="text_small">
-									<div style="margin-bottom:5px;" id="pics{pics_list.ID}"><a class="small_link" href="{pics_list.U_DISPLAY}">{pics_list.IMG}</a></div>
+								<td style="width:{COLUMN_WIDTH_PICS}%;text-align:center;padding:15px 0px;vertical-align:middle" class="smaller">
+									<div style="margin-bottom:5px;" id="pics{pics_list.ID}"><a class="small" href="{pics_list.U_DISPLAY}">{pics_list.IMG}</a></div>
 									{pics_list.NAME}
 									{pics_list.POSTOR}
 									{pics_list.VIEWS}
@@ -425,7 +425,7 @@
 										<div style="position:relative;margin:auto;width:170px;display:none;float:right" onmouseover="pics_hide_block({pics_list.ID}, 1);" onmouseout="pics_hide_block({pics_list.ID}, 0);" id="move{pics_list.ID}">
 											<div style="position:absolute;z-index:100;margin-top:90px;">
 												<div class="bbcode_block" style="width:170px;overflow:auto;">
-													<div style="margin-bottom:4px;" class="text_small"><strong>{L_MOVETO}</strong>:</div>
+													<div style="margin-bottom:4px;" class="smaller"><strong>{L_MOVETO}</strong>:</div>
 													<select class="valign_middle" name="{pics_list.ID}cat" onchange="document.location = '{pics_list.U_MOVE}">
 														{pics_list.CAT}
 													</select>
@@ -454,7 +454,7 @@
 				</div>
 				# ENDIF #
 					
-				<p style="text-align:center;padding-top:15px;" class="text_small">{L_TOTAL_IMG}</p>
+				<p style="text-align:center;padding-top:15px;" class="smaller">{L_TOTAL_IMG}</p>
 			</div>
 			<div class="module_bottom_l"></div>		
 			<div class="module_bottom_r"></div>

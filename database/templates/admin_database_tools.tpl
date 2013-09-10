@@ -28,7 +28,7 @@
 		<div id="admin_contents">
 			<div style="width:95%;margin:auto;">	
 				<div class="block_contents1" style="padding:5px;padding-bottom:7px;margin-bottom:5px">
-					<img src="{PATH_TO_ROOT}/templates/{THEME}/images/li.png" class="valign_middle" alt="" /> <a class="small_link" href="admin_database.php#tables">{L_DATABASE_MANAGEMENT}</a> <img src="{PATH_TO_ROOT}/templates/{THEME}/images/li.png" class="valign_middle" alt="" /> <a class="small_link" href="admin_database_tools.php?table={TABLE_NAME}&amp;action=structure">{TABLE_NAME}</a>
+					<img src="{PATH_TO_ROOT}/templates/{THEME}/images/li.png" class="valign_middle" alt="" /> <a class="small" href="admin_database.php#tables">{L_DATABASE_MANAGEMENT}</a> <img src="{PATH_TO_ROOT}/templates/{THEME}/images/li.png" class="valign_middle" alt="" /> <a class="small" href="admin_database_tools.php?table={TABLE_NAME}&amp;action=structure">{TABLE_NAME}</a>
 				</div>
 				<div class="dynamic_menu" style="z-index:0;float:none">
 					<ul>
@@ -250,7 +250,7 @@
 							{L_CREATION_DATE}
 						</td>
 						<td class="row2" style="text-align:right;">
-							<span class="text_small">{TABLE_CREATION_DATE}</span>
+							<span class="smaller">{TABLE_CREATION_DATE}</span>
 						</td>
 					</tr>
 					<tr>
@@ -258,7 +258,7 @@
 							{L_LAST_UPDATE}
 						</td>
 						<td class="row2" style="text-align:right;">
-							<span class="text_small">{TABLE_LAST_UPDATE}</span>
+							<span class="smaller">{TABLE_LAST_UPDATE}</span>
 						</td>
 					</tr>
 				</table>

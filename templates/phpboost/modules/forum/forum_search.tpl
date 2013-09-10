@@ -97,7 +97,7 @@
 										{list.USER_ONLINE} {list.USER_PSEUDO}
 									</div>
 									<span class="text_strong" style="float:left;">&nbsp;&nbsp;{L_TOPIC}: {list.U_TITLE}</span>
-									<span class="text_small" style="float: right;">{L_ON}: {list.DATE}</span>&nbsp;
+									<span class="smaller" style="float: right;">{L_ON}: {list.DATE}</span>&nbsp;
 								</div>
 								<div class="msg_contents_container">
 									<div class="msg_info_mbr">
@@ -111,7 +111,7 @@
 							</div>	
 							<div class="msg_bottom_l"></div>		
 							<div class="msg_bottom_r"></div>
-							<div class="msg_bottom"><span class="text_small">{L_RELEVANCE}: {list.RELEVANCE}%</span></div>
+							<div class="msg_bottom"><span class="smaller">{L_RELEVANCE}: {list.RELEVANCE}%</span></div>
 						</div>
 						# END list #
 					</form>			

@@ -51,9 +51,9 @@
 								# END tags #
 								</select>
 								<br />
-								<span class="text_small">({L_EXPLAIN_SELECT_MULTIPLE})</span>
+								<span class="smaller">({L_EXPLAIN_SELECT_MULTIPLE})</span>
 								<br />
-								<a class="small_link" href="javascript:check_select_multiple('tag', true);">{L_SELECT_ALL}</a>/<a class="small_link" href="javascript:check_select_multiple('tag', false);">{L_SELECT_NONE}</a>
+								<a class="small" href="javascript:check_select_multiple('tag', true);">{L_SELECT_ALL}</a>/<a class="small" href="javascript:check_select_multiple('tag', false);">{L_SELECT_NONE}</a>
 						</dd>
 					</dl>
 				</fieldset>

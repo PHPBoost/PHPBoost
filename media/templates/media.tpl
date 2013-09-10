@@ -50,7 +50,7 @@
 								</a>
 								# ENDIF #
 								# IF row.list_cats.NUM_MEDIA #
-								<div class="text_small">
+								<div class="smaller">
 									{row.list_cats.NUM_MEDIA}
 								</div>
 								# ENDIF #
@@ -103,7 +103,7 @@
 										</a>
 									</div>
 									# ENDIF #
-										<a href="{file.U_MEDIA_LINK}" class="big_link">{file.NAME}</a>
+										<a href="{file.U_MEDIA_LINK}" class="big">{file.NAME}</a>
 								</div>
 								# IF A_DESC #
 								# IF file.C_DESCRIPTION #
@@ -116,7 +116,7 @@
 									<br />
 								# ENDIF #
 								# IF A_BLOCK #
-								<div class="text_small">
+								<div class="smaller">
 									# IF A_DATE #
 									{file.DATE}
 									<br />

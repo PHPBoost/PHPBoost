@@ -123,7 +123,7 @@
 						# START templates #	
 						<tr>
 							<td style="text-align:center;" class="row2">			
-								{templates.THEME} <span class="text_small">({templates.PERCENT}%)</span>
+								{templates.THEME} <span class="smaller">({templates.PERCENT}%)</span>
 							</td>							
 							<td style="text-align:center;" class="row2">			
 								<div style="margin:auto;width:10px;margin:auto;height:10px;background:{templates.COLOR};border:1px solid black;"></div>
@@ -165,7 +165,7 @@
 						# START sex #	
 						<tr>
 							<td style="text-align:center;" class="row2">			
-								{sex.SEX} <span class="text_small">({sex.PERCENT}%)</span>
+								{sex.SEX} <span class="smaller">({sex.PERCENT}%)</span>
 							</td>							
 							<td style="text-align:center;" class="row2">			
 								<div style="margin:auto;width:10px;margin:auto;height:10px;background:{sex.COLOR};border:1px solid black;"></div>
@@ -358,7 +358,7 @@
 								<div style="margin:auto;width:10px;height:10px;margin:auto;background:{list.COLOR};border:1px solid black;"></div>
 							</td>
 							<td style="text-align:center;" class="row2">
-								 {list.L_NAME} <span class="text_small">({list.PERCENT}%)</span>
+								 {list.L_NAME} <span class="smaller">({list.PERCENT}%)</span>
 							</td>				
 						</tr>
 						# END list #
@@ -391,7 +391,7 @@
 								<div style="margin:auto;width:10px;height:10px;background:{list.COLOR};border:1px solid black;"></div>
 							</td>
 							<td style="text-align:center;" class="row2">
-								{list.L_NAME} <span class="text_small">({list.PERCENT}%)</span>
+								{list.L_NAME} <span class="smaller">({list.PERCENT}%)</span>
 							</td>				
 						</tr>
 						# END list #
@@ -424,7 +424,7 @@
 								<div style="margin:auto;width:10px;margin:auto;height:10px;background:{list.COLOR};border:1px solid black;"></div>
 							</td>
 							<td style="text-align:center;" class="row2">
-								{list.L_NAME} <span class="text_small">({list.PERCENT}%)</span>
+								{list.L_NAME} <span class="smaller">({list.PERCENT}%)</span>
 							</td>				
 						</tr>
 						# END list #
@@ -511,7 +511,7 @@
 					<table style="width:100%;border:none;border-collapse:collapse;">
 						<tr>
 							<td style="text-align:center;">		
-								{referer_list.IMG_MORE} <span class="text_small">({referer_list.NBR_LINKS})</span> <a href="{referer_list.URL}">{referer_list.URL}</a>	<span id="load{referer_list.ID}"></span>	 			
+								{referer_list.IMG_MORE} <span class="smaller">({referer_list.NBR_LINKS})</span> <a href="{referer_list.URL}">{referer_list.URL}</a>	<span id="load{referer_list.ID}"></span>	 			
 							</td>
 							<td style="width:112px;text-align:center;">
 								{referer_list.TOTAL_VISIT}
@@ -596,7 +596,7 @@
 					<table style="width:100%;border:none;border-collapse:collapse;">
 						<tr>
 							<td style="text-align:center;">		
-								{keyword_list.IMG_MORE} <span class="text_small">({keyword_list.NBR_LINKS})</span> {keyword_list.KEYWORD}	<span id="load{keyword_list.ID}"></span>	 			
+								{keyword_list.IMG_MORE} <span class="smaller">({keyword_list.NBR_LINKS})</span> {keyword_list.KEYWORD}	<span id="load{keyword_list.ID}"></span>	 			
 							</td>
 							<td style="width:112px;text-align:center;">
 								{keyword_list.TOTAL_VISIT}
@@ -651,7 +651,7 @@
 							# START list #	
 							<tr style="height:35px;">
 								<td class="text_center row2">
-									 {list.L_NAME}  <span class="text_small">({list.PERCENT}%)</span>
+									 {list.L_NAME}  <span class="smaller">({list.PERCENT}%)</span>
 								</td>
 								<td class="text_center row2">			
 									<div style="margin:auto;width:10px;margin:auto;height:10px;background:{list.COLOR}"></div>

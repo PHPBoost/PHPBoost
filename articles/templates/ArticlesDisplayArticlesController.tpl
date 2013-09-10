@@ -46,13 +46,13 @@
 			&nbsp;<img class="valign_middle" src="{PATH_TO_ROOT}/articles/templates/images/calendar.png" alt="${i18n('articles.sort_field.date')}" title="${i18n('articles.sort_field.date')}" />&nbsp;{DATE}&nbsp;|
 			&nbsp;<img class="valign_middle" src="{PATH_TO_ROOT}/articles/templates/images/view.png" alt="${i18n('articles.sort_field.views')}" title="${i18n('articles.sort_field.views')}" />&nbsp;{NUMBER_VIEW}
 			# IF C_COMMENTS_ENABLED #
-				&nbsp;|&nbsp;<img class="valign_middle" src="{PATH_TO_ROOT}/articles/templates/images/comment.png" /><a class="small_link" href="{U_COMMENTS}">&nbsp;{L_COMMENTS}</a>
+				&nbsp;|&nbsp;<img class="valign_middle" src="{PATH_TO_ROOT}/articles/templates/images/comment.png" /><a class="small" href="{U_COMMENTS}">&nbsp;{L_COMMENTS}</a>
 			# ENDIF #
-			&nbsp;|&nbsp;<img class="valign_middle" src="{PATH_TO_ROOT}/articles/templates/images/category.png" alt="${i18n('articles.category')}" title="${i18n('articles.category')}" />&nbsp;<a itemprop="about" class="small_link" href="{U_CATEGORY}">{L_CAT_NAME}</a>
+			&nbsp;|&nbsp;<img class="valign_middle" src="{PATH_TO_ROOT}/articles/templates/images/category.png" alt="${i18n('articles.category')}" title="${i18n('articles.category')}" />&nbsp;<a itemprop="about" class="small" href="{U_CATEGORY}">{L_CAT_NAME}</a>
 			# IF C_KEYWORDS #
 			&nbsp;|&nbsp;<img class="valign_middle" src="{PATH_TO_ROOT}/articles/templates/images/tags.png" alt="${i18n('articles.tags')}" title="${i18n('articles.tags')}" /> 
 				# START keywords #
-				{keywords.COMMA}<a itemprop="keywords" href="{keywords.U_KEYWORD}" class="small_link">{keywords.NAME}</a>
+				{keywords.COMMA}<a itemprop="keywords" href="{keywords.U_KEYWORD}" class="small">{keywords.NAME}</a>
 				# END keywords #
 			# ENDIF #
 		</div>
@@ -88,14 +88,14 @@
 	</div>
 	<div class="module_bottom">
 		# IF C_SOURCES #
-		<div><b> ${i18n('articles.sources')} : </b># START sources #{sources.COMMA}<a itemprop="isBasedOnUrl" href="{sources.URL}" class="small_link">{sources.NAME}</a># END sources #</div>
+		<div><b> ${i18n('articles.sources')} : </b># START sources #{sources.COMMA}<a itemprop="isBasedOnUrl" href="{sources.URL}" class="small">{sources.NAME}</a># END sources #</div>
 		# ENDIF #
 		# IF C_DATE_UPDATED #
 		<div><i>${i18n('articles.date_updated')}{DATE_UPDATED}</i></div>
 		# ENDIF #
 		<div class="spacer">&nbsp;</div>
 		# IF C_NOTATION_ENABLED #
-		<div style="float:left" class="text_small">
+		<div style="float:left" class="smaller">
 			{KERNEL_NOTATION}
 		</div>
 		# ENDIF #
