@@ -17,7 +17,7 @@
 </div>
 
 <table class="module_table">
-	<tr class="text_center">
+	<tr class="center">
 		<th class="column_title">
 			{@calendar.labels.title}
 		</th>
@@ -42,7 +42,7 @@
 	</tr>
 
 	# START events #
-	<tr class="text_center"> 
+	<tr class="center"> 
 		<td class="row2 text_left">
 			<a href="{events.U_LINK}">{events.SHORT_TITLE}</a>
 		</td>
@@ -67,7 +67,7 @@
 	</tr>
 	# END events #
 	# IF NOT C_EVENTS #
-	<tr class="text_center"> 
+	<tr class="center"> 
 		<td colspan="7" class="row2">
 			{@calendar.notice.no_event}
 		</td>
@@ -76,5 +76,5 @@
 </table>
 # IF C_PAGINATION #
 <div class="spacer">&nbsp;</div>
-<div class="text_center"># INCLUDE PAGINATION #</div>
+<div class="center"># INCLUDE PAGINATION #</div>
 # ENDIF #

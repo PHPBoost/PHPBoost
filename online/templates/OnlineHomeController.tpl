@@ -35,7 +35,7 @@
 			</tr>
 			# END users #
 			# IF NOT C_USERS #
-			<tr class="text_center"> 
+			<tr class="center"> 
 				<td colspan="3" class="row2">
 					{@online.no_user_online}
 				</td>
@@ -44,7 +44,7 @@
 		</table>
 		# IF C_PAGINATION #
 		<div class="spacer">&nbsp;</div>
-		<div class="text_center"># INCLUDE PAGINATION #</div>
+		<div class="center"># INCLUDE PAGINATION #</div>
 		# ENDIF #
 	</div>
 	<div class="module_bottom_l"></div>

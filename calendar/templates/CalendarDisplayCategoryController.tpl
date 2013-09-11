@@ -109,6 +109,6 @@
 				</div>
 				# END event #
 			# ELSE #
-				<p class="text_center">{@calendar.notice.no_current_action}</p>
+				<p class="center">{@calendar.notice.no_current_action}</p>
 			# ENDIF #
 		</div>

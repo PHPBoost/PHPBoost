@@ -13,16 +13,6 @@ div.block_top, table tr:first-child th{
 	text-align: center;
 }
 
-.float_left{
-	float:left;
-	margin:0;
-}
-
-.float_right{
-	float:right;
-	margin:0;
-}
-
 /* Class générales */
 li { text-indent: 0px; }
 

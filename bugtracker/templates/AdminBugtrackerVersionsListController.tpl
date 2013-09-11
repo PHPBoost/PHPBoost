@@ -28,7 +28,7 @@ function display_default_version_radio(version_id)
 		# INCLUDE elements.ELEMENT #
 	# END elements #
 	<table class="module_table">
-		<tr class="text_center">
+		<tr class="center">
 			<th class="column_default">
 				{@bugs.labels.default}
 			</th>
@@ -46,7 +46,7 @@ function display_default_version_radio(version_id)
 			</th>
 		</tr>
 		# START versions #
-		<tr class="text_center">
+		<tr class="center">
 			<td class="row2">
 				<input type="radio" id="default_version{versions.ID}" name="default_version" value="{versions.ID}" {versions.IS_DEFAULT} {versions.DISPLAY_DEFAULT}>
 			</td>
@@ -73,7 +73,7 @@ function display_default_version_radio(version_id)
 		</tr>
 			# ENDIF #
 		# ELSE #
-			<tr class="text_center"> 
+			<tr class="center"> 
 				<td colspan="5" class="row2">
 					{@bugs.notice.no_version}
 				</td>

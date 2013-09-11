@@ -1,14 +1,3 @@
-/* Sur Class */
-.float_left{
-	float:left;
-	margin: 0;
-}
-
-.float_right{
-	float:right;
-	margin: 0;
-}
-
 /* general Class */
 .informations_side{
 	width: 38%;

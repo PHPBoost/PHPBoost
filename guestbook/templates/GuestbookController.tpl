@@ -13,7 +13,7 @@ function Confirm() {
 		# INCLUDE FORM #
 		
 		# IF C_PAGINATION #
-			<div class="text_center"># INCLUDE PAGINATION #</div>
+			<div class="center"># INCLUDE PAGINATION #</div>
 		# ENDIF #
 		# START messages #
 			<div id="m{messages.ID}" class="comment">
@@ -59,7 +59,7 @@ function Confirm() {
 			</div>
 		# END messages #
 		# IF C_PAGINATION #
-			<div class="text_center"># INCLUDE PAGINATION #</div>
+			<div class="center"># INCLUDE PAGINATION #</div>
 		# ENDIF #
 	
 	<div class="module_bottom_l"></div>

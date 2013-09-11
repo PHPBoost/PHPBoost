@@ -113,7 +113,7 @@
 				<div class="spacer"></div>
     		</div>
     		<div class="module_contents">
-        		# IF news.C_PICTURE #<img itemprop="thumbnailUrl" src="{news.U_PICTURE}" alt="{news.NAME}" title="{news.NAME}" class="img_right" /># ENDIF #
+        		# IF news.C_PICTURE #<img itemprop="thumbnailUrl" src="{news.U_PICTURE}" alt="{news.NAME}" title="{news.NAME}" class="right" /># ENDIF #
 				<span itemprop="text">{news.CONTENTS}</span>
 				<div class="spacer"></div>
     		</div>
@@ -125,5 +125,5 @@
 		</div>
 	# END news #
 	</div>
-	# IF C_PAGINATION #<div class="text_center"># INCLUDE PAGINATION #</div># ENDIF #
+	# IF C_PAGINATION #<div class="center"># INCLUDE PAGINATION #</div># ENDIF #
 # ENDIF #

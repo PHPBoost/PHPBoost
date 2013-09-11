@@ -18,7 +18,7 @@ function serialize_sortable()
 		<legend>{@categories}</legend>
 			<ul id="categories" class="cat_list">
 				# IF C_NOT_CATEGORIES #
-					<div class="text_center">{@message.not_categories}</div>
+					<div class="center">{@message.not_categories}</div>
 				# ELSE #
 					# START childrens #
 						{childrens.child}
