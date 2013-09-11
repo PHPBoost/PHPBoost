@@ -8,6 +8,10 @@
 		<meta name="generator" content="PHPBoost {PHPBOOST_VERSION}" />
 		<!-- Default CSS -->
 		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/default/theme/default.css" type="text/css" media="screen, print, handheld" />
+		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/default/theme/font-awesome.css" />
+		<!--[if IE 7]>
+		  <link rel="stylesheet" href="{PATH_TO_ROOT}/templates/default/theme/font-awesome-ie7.css">
+		<![endif]-->
 		
 		<!-- Theme CSS -->
 		# IF C_CSS_CACHE_ENABLED #
