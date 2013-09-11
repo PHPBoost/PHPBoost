@@ -94,16 +94,6 @@
 	padding-right:5px;
 }
 
-.float_left{
-	float:left;
-	margin:0;
-}
-
-.float_right{
-	float:right;
-	margin:0;
-}
-
 .change_month_link {
 	cursor:pointer;
 }

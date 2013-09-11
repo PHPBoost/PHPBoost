@@ -193,7 +193,7 @@
 					{CONTENTS}
 				</p>
 				# ENDIF #
-				<p class="text_center" style="margin-top:25px;margin-bottom:25px;">
+				<p class="center" style="margin-top:25px;margin-bottom:25px;">
 					# INCLUDE media_format #
 				</p>
 				# IF C_DISPLAY #

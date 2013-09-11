@@ -92,19 +92,9 @@ a:hover {
     font-weight:bold;
 }
 
-.img_link, .img_link:hover{
+/* A supprimer ou remplacer par "a img" ? */
+.img_link, .img_link:hover {
 	text-decoration:none;
-}
-
-/* Liens des commentaires. */
-a.com {
-    color:#515C68;
-    font-size:10px;
-    font-weight:bold;
-}
-
-a.com:hover {
-    color:#01528D;
 }
 
 /* Lien des utilisateurs => ne pas changer le nom de ces classes! */
@@ -316,7 +306,7 @@ html>body .question, html>body .notice, html>body .warning, html>body .error, ht
     min-height:25px;
 }
 
-.error_handler_position {
+#message_helper {
 	margin-top:5px;
 	margin-bottom:15px;
 }

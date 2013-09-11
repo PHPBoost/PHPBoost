@@ -151,7 +151,7 @@
 					
 					<span class="spacer">&nbsp;</span>
 				</p>
-				<p class="text_center">					
+				<p class="center">					
 					<button type="button" name="{NAME}" class="visit" onclick="document.location = 'count.php?id={IDWEB}';" value="true">
 						{L_VISIT}<img src="{PATH_TO_ROOT}/web/templates/images/web.png" class="valign_middle button_img"/>
 					</button>

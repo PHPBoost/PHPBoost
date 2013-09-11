@@ -18,7 +18,7 @@ function Confirm(action) {
 -->
 </script>
 <table class="module_table">
-	<tr class="text_center">
+	<tr class="center">
 		<th class="column_id">
 			<a href="{LINK_BUG_ID_TOP}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
 			{@bugs.labels.fields.id}
@@ -73,7 +73,7 @@ function Confirm(action) {
 	</tr>
 	# END bug #
 	# IF NOT C_BUGS #
-	<tr class="text_center"> 
+	<tr class="center"> 
 		<td colspan="{BUGS_COLSPAN}" class="row2">
 			{L_NO_BUG}
 		</td>
@@ -83,4 +83,4 @@ function Confirm(action) {
 
 # INCLUDE LEGEND #
 
-# IF C_PAGINATION #<div class="text_center"># INCLUDE PAGINATION #</div># ENDIF #
+# IF C_PAGINATION #<div class="center"># INCLUDE PAGINATION #</div># ENDIF #

@@ -16,7 +16,7 @@ function Confirm_del_default_value() {
 		# INCLUDE elements.ELEMENT #
 	# END elements #
 	<table class="module_table">
-		<tr class="text_center">
+		<tr class="center">
 			<th class="column_default">
 				{@bugs.labels.default}
 			</th>
@@ -28,7 +28,7 @@ function Confirm_del_default_value() {
 			</th>
 		</tr>
 		# START types #
-		<tr class="text_center">
+		<tr class="center">
 			<td class="row2">
 				<input type="radio" name="default_type" value="{types.ID}" {types.IS_DEFAULT}>
 			</td>
@@ -49,7 +49,7 @@ function Confirm_del_default_value() {
 		</tr>
 			# ENDIF #
 		# ELSE #
-		<tr class="text_center"> 
+		<tr class="center"> 
 			<td colspan="3" class="row2">
 				{@bugs.notice.no_type}
 			</td>

@@ -53,7 +53,7 @@ function Confirm()
 		<div class="spacer"></div>
 	</div>
 	<div class="module_contents">
-		# IF C_PICTURE #<img itemprop="thumbnailUrl" src="{U_PICTURE}" alt="{NAME}" title="{NAME}" class="img_right" /># ENDIF #
+		# IF C_PICTURE #<img itemprop="thumbnailUrl" src="{U_PICTURE}" alt="{NAME}" title="{NAME}" class="right" /># ENDIF #
 		
 		<span itemprop="text">{CONTENTS}</span>
 		

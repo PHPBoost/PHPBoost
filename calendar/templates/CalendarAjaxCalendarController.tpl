@@ -13,7 +13,7 @@
 		-->
 		</script>
 		# IF C_FORM #
-		<div id="date_select_form" class="text_center">
+		<div id="date_select_form" class="center">
 			# INCLUDE FORM #
 		</div>
 		# ENDIF #

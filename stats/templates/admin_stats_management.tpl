@@ -109,13 +109,13 @@
 				<td style="width:50%;padding-top:30px;vertical-align:top" class="row1">
 					<table class="module_table">						
 						<tr>
-							<th class="text_center">		
+							<th class="center">		
 								{L_TEMPLATES} 
 							</th>
-							<th class="text_center" style="width:30px">		
+							<th class="center" style="width:30px">		
 								{L_COLORS}
 							</th>
-							<th class="text_center">
+							<th class="center">
 								{L_USERS}
 							</th>				
 						</tr>
@@ -151,13 +151,13 @@
 				<td style="width:50%;padding-top:30px;vertical-align:top" class="row1">
 					<table class="module_table">						
 						<tr>
-							<th class="text_center">		
+							<th class="center">		
 								{L_SEX} 
 							</th>
-							<th class="text_center" style="width:30px">			
+							<th class="center" style="width:30px">			
 								{L_COLORS}
 							</th>
-							<th class="text_center">
+							<th class="center">
 								{L_USERS}
 							</th>				
 						</tr>

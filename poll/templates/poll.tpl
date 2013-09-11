@@ -20,7 +20,7 @@
 				<br /><br />
 				# END list #
 				
-				<p class="text_center">{U_ARCHIVE}</p>
+				<p class="center">{U_ARCHIVE}</p>
 			</div>
 			<div class="module_bottom_l"></div>		
 			<div class="module_bottom_r"></div>
@@ -68,7 +68,7 @@
 								<p style="margin-top:15px;padding-left:25px;"><label><input type="{checkbox.TYPE}" name="{checkbox.NAME}" value="{checkbox.NAME}"> {checkbox.ANSWERS}</label></p>
 								# END checkbox #
 								
-								<p class="text_center">
+								<p class="center">
 									<input class="submit" name="valid_poll" type="submit" value="{L_VOTE}" /><br>
 									<a class="small" href="{PATH_TO_ROOT}/poll/poll{U_POLL_RESULT}">{L_RESULT}</a>
 								</p>

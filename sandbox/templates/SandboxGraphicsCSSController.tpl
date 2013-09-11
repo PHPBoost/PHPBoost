@@ -141,7 +141,7 @@
 	</ol>
 </fieldset>
 
-<div class="text_center"># INCLUDE PAGINATION #</div>
+<div class="center"># INCLUDE PAGINATION #</div>
 
 <div id="comments_list">
 	<h2>Commentaires</h2><br>
