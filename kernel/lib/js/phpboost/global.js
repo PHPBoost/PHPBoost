@@ -30,6 +30,47 @@ if (top != self)
 	top.location = self.location;
 }
 
+window.onload = function(){
+
+// Menus deroulants - dropdown
+	$$("ul.dropdown").each(function (element) {
+		element.hide();
+	});
+
+	$$("menu.dropdown button").each(function (button) {
+		button.insert({ bottom: ' <i class="icon-sort-down"></i>'});
+		var focus = 0;
+		button.observe("focus", function() {
+			if (focus = 0) button.next('ul.dropdown').appear({duration:0.2});
+			focus = 0;
+		});
+		button.observe("click", function() {
+			if (button.next('ul.dropdown').style.display=="none") 
+			{
+					button.next('ul.dropdown').appear({duration:0.2});
+					focus = 1;
+					button.focus();
+			}
+			else button.next('ul.dropdown').fade({duration:0.2});
+		});
+		button.observe("blur", function() {
+			setTimeout(function () {
+				var liens = $$("ul.dropdown li a:focus");
+				if (liens.length == 0)	button.next('ul.dropdown').fade({duration:0.2});
+			}, 50);
+		});
+	});
+	
+	$$("menu.dropdown ul.dropdown li a").each(function (link) {
+		link.observe("blur", function() {
+			setTimeout(function () {
+				var liens = $$("ul.dropdown li a:focus");
+				if (liens.length == 0)	link.up('ul.dropdown').fade({duration:0.2});
+			}, 50);
+		});
+	});
+};
+
 __uid = 42;
 
 function getUid() {
