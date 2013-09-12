@@ -409,31 +409,11 @@ ul.rss_feed li {
 }
 
 @media print {
-	body{
-		width:98%;
-		background-color:white;
-		font-size:12px;
-	 	font-family:"Trebuchet MS", Verdana, 'Bitstream Vera Sans', Times, serif;
+	* {
+		background: transparent;
 		color: #000;
 	    text-shadow: none;
 	    box-shadow: none;
-	}
-	h1{
-		border-bottom:1px solid black;
-	}
-	table
-	{
-		border-collapse: collapse;
-	}
-	
-	td, th
-	{
-		border:1px solid black;
-	}
-	
-	th
-	{
-		font-weight: bold;
 	}
 }
 
