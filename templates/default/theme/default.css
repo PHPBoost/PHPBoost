@@ -1,7 +1,11 @@
 /* --------------------------------------
 		default.css
 Css par défaut commun * tout les thèmes, permet les ajouts nécessaires au framework et retrocompatibilité
---------------------------------------*/ 
+--------------------------------------*/
+/* for HTML5 */
+article, aside, details, figcaption, figure, footer, header, hgroup, main, nav, section, summary { display: block; }
+audio, canvas, video { display: inline-block; }
+
 /* Titres */ /* Sécurité */
 [class*="row_priority"]{ text-align:center; }
 
@@ -402,6 +406,35 @@ ul.rss_feed {
 ul.rss_feed li {
     list-style-image:url(images/li.png);
     text-align: left;
+}
+
+@media print {
+	body{
+		width:98%;
+		background-color:white;
+		font-size:12px;
+	 	font-family:"Trebuchet MS", Verdana, 'Bitstream Vera Sans', Times, serif;
+		color: #000;
+	    text-shadow: none;
+	    box-shadow: none;
+	}
+	h1{
+		border-bottom:1px solid black;
+	}
+	table
+	{
+		border-collapse: collapse;
+	}
+	
+	td, th
+	{
+		border:1px solid black;
+	}
+	
+	th
+	{
+		font-weight: bold;
+	}
 }
 
 /* Lightbox*/
