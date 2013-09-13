@@ -311,16 +311,16 @@ html>body .question, html>body .notice, html>body .warning, html>body .error, ht
 	margin-bottom:15px;
 }
 
-/* Menus déroulants - Dropdown
+/* Menus par boutons
 --------------------------------------*/
+menu.buttons {
+	margin:5px;
+}
 
-menu.dropdown {
+menu.buttons > ul > li {
 	position:relative;
 	display:inline-block !important;
     display:inline;
-}
-
-menu.dropdown button {
 	padding:4px 12px;
 	background-image: -moz-linear-gradient(top,  rgba(255,255,255,0.18) 0%, rgba(56,56,56,0.18) 100%); /* FF3.6+ */
 	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,0.18)), color-stop(100%,rgba(56,56,56,0.18))); /* Chrome,Safari4+ */
@@ -341,19 +341,60 @@ menu.dropdown button {
 	text-align:center;
 }
 
-menu.dropdown button i{
-	font-size:133%;
+menu.buttons > ul > li:hover {
+	background-color:#EEE;
 }
 
-menu.dropdown button i.icon-sort-down{
+menu.buttons > ul > li > a{
+	color:inherit;
+	text-decoration:none;
+	font-weight:300;
+	outline:none;
+}
+
+menu.buttons > ul > li > a > i{
+	font-size:125%;
+}
+
+/* Menus groupés */
+menu.buttons > ul.btn-group {
+	font-size:0
+}
+
+menu.buttons > ul.btn-group > li {
+	-moz-border-radius:0;
+	-webkit-border-radius:0;
+	border-radius:0;
+	font-size:13px;
+	border-right:1px solid #FFF;
+	border-left:1px solid #BBB;
+}
+
+menu.buttons > ul.btn-group > li:first-child{
+	-moz-border-radius:4px 0 0 4px;
+	-webkit-border-radius:4px 0 0 4px;
+	border-radius:4px 0 0 4px;
+	border-left:1px solid rgba(0, 0, 0, 0.1)
+}
+
+menu.buttons > ul.btn-group > li:last-child{
+	-moz-border-radius:0 4px 4px 0;
+	-webkit-border-radius:0 4px 4px 0;
+	border-radius:0 4px 4px 0;
+	border-right:1px solid rgba(0, 0, 0, 0.1)
+}
+
+/* Menus déroulants */
+li.dropdown > a > i.icon-sort-down{
 	font-size:105%;
 	display:inline-block;
-	vertical-align:top;
+	vertical-align:2px;
 }
 
-ul.dropdown{
+li.dropdown ul{
 	position:absolute;
     top:100%;
+	left:-1px;
 	list-style-type:none;
 	padding:5px 0;
 	color:#333;
@@ -374,21 +415,22 @@ ul.dropdown{
 	margin:2px 0 0;
 }
 
-ul.dropdown.right{
-	right:0;
+li.dropdown ul.right{
+	right:-1px;
+	left:auto;
 }
 
-ul.dropdown li{
+li.dropdown ul li{
 	margin:0;
 	padding:0;
 	white-space: nowrap;
 }
 
-ul.dropdown li.separator{
+li.dropdown ul li.separator{
 	border-top:1px solid #bbb;
 }
 
-ul.dropdown li a{
+li.dropdown ul li a{
 	display:block;
 	color:inherit;
 	text-decoration:none;
@@ -397,7 +439,7 @@ ul.dropdown li a{
 	outline:none;
 }
 
-ul.dropdown li a:hover,ul.dropdown li a:focus{
+li.dropdown ul li a:hover,li.dropdown ul li a:focus{
 	color:#FFF;
 	background-color: #0088cc; /* Old browsers */
 	background-image: -moz-linear-gradient(top,  #0088cc 1%, #0077b3 100%); /* FF3.6+ */
@@ -407,4 +449,8 @@ ul.dropdown li a:hover,ul.dropdown li a:focus{
 	background-image: -ms-linear-gradient(top,  #0088cc 1%,#0077b3 100%); /* IE10+ */
 	background-image: linear-gradient(to bottom,  #0088cc 1%,#0077b3 100%); /* W3C */
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0088cc', endColorstr='#0077b3',GradientType=0 ); /* IE6-9 */
+}
+
+li.dropdown ul li i{
+	margin-right:8px;
 }

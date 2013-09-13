@@ -33,39 +33,40 @@ if (top != self)
 window.onload = function(){
 
 // Menus deroulants - dropdown
-	$$("ul.dropdown").each(function (element) {
+	$$("li.dropdown ul").each(function (element) {
 		element.hide();
 	});
 
-	$$("menu.dropdown button").each(function (button) {
-		button.insert({ bottom: ' <i class="icon-sort-down"></i>'});
+	$$("li.dropdown").each(function (lidrop) {
+		lidrop.down('a').insert({ bottom: ' <i class="icon-sort-down"></i>'});
+		if (lidrop.down('a').readAttribute('href') == null) lidrop.down('a').href = 'javascript: return false;';
 		var focus = 0;
-		button.observe("focus", function() {
-			if (focus = 0) button.next('ul.dropdown').appear({duration:0.2});
+		lidrop.down('a').observe("focus", function() {
+			if (focus = 0) lidrop.down('ul').appear({duration:0.2});
 			focus = 0;
 		});
-		button.observe("click", function() {
-			if (button.next('ul.dropdown').style.display=="none") 
+		lidrop.observe("click", function() {
+			if (lidrop.down('ul').style.display=="none") 
 			{
-					button.next('ul.dropdown').appear({duration:0.2});
-					focus = 1;
-					button.focus();
+				lidrop.down('ul').appear({duration:0.2});
+				focus = 1;
+				lidrop.down('a').focus();
 			}
-			else button.next('ul.dropdown').fade({duration:0.2});
+			else lidrop.down('ul').fade({duration:0.2});
 		});
-		button.observe("blur", function() {
+		lidrop.down('a').observe("blur", function() {
 			setTimeout(function () {
-				var liens = $$("ul.dropdown li a:focus");
-				if (liens.length == 0)	button.next('ul.dropdown').fade({duration:0.2});
+				var liens = $$("li.dropdown ul li a:focus");
+				if (liens.length == 0)	lidrop.down('ul').fade({duration:0.2});
 			}, 50);
 		});
 	});
 	
-	$$("menu.dropdown ul.dropdown li a").each(function (link) {
+	$$("li.dropdown li a").each(function (link) {
 		link.observe("blur", function() {
 			setTimeout(function () {
-				var liens = $$("ul.dropdown li a:focus");
-				if (liens.length == 0)	link.up('ul.dropdown').fade({duration:0.2});
+				var liens = $$("li.dropdown li a:focus");
+				if (liens.length == 0)	link.up('ul').fade({duration:0.2});
 			}, 50);
 		});
 	});
