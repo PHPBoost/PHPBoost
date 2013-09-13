@@ -8,20 +8,22 @@
 </script>
 
 <div class="module_actions">
-	<menu class="dropdown">
-		<button><i class="icon-cog"></i></button>
-		<ul class="dropdown right">
-			# IF C_ADD #
-			<li>
-				<a href="${relative_url(NewsUrlBuilder::add_news())}" title="${i18n('news.add')}"><i class="icon-plus"></i></a>
-			</li>
-			# ENDIF #
-			# IF C_PENDING_NEWS #
-			<li>
-				<a href="${relative_url(NewsUrlBuilder::display_pending_news())}" title="${i18n('news.pending')}"><i class="icon-time"></i></a>
-			</li>
-			# ENDIF #
-	    </ul>
+	<menu class="buttons">
+		<ul><li class="dropdown"><a><i class="icon-cog"></i></a>
+			<ul class="right">
+				# IF C_ADD #
+				<li>
+					<a href="${relative_url(NewsUrlBuilder::add_news())}" title="${i18n('news.add')}"><i class="icon-plus"></i> ${i18n('news.add')}</a>
+				</li>
+				# ENDIF #
+				# IF C_PENDING_NEWS #
+				<li>
+					<a href="${relative_url(NewsUrlBuilder::display_pending_news())}" title="${i18n('news.pending')}"><i class="icon-time"></i> ${i18n('news.pending')}</a>
+				</li>
+				# ENDIF #
+			</ul>
+		</li>
+		</ul>
 	</menu>
 </div>
 <div class="spacer"></div>
