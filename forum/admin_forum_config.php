@@ -167,7 +167,7 @@ else
 		'L_ICON_DISPLAY_MSG' => $LANG['icon_display_msg'],
 		'L_ACTIV' => $LANG['activ'],
 		'L_UNACTIVE' => $LANG['unactiv'],
-		'L_DAYS' => $LANG['day_s'],
+		'L_DAYS' => LangLoader::get_message('days', 'date-common'),
 		'L_YES' => $LANG['yes'],
 		'L_NO' => $LANG['no'],
 		'L_DELETE' => $LANG['delete'],
