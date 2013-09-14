@@ -36,7 +36,8 @@ if (is_array($CAT_FORUM))
 {
     foreach ($CAT_FORUM as $idcat => $key)
     {
-        if ($User->check_auth($CAT_FORUM[$idcat]['auth'], READ_CAT_FORUM) && $CAT_FORUM[$idcat]['aprob'])
+		$parent_approved = $CAT_FORUM[$idcat]['id_parent'] > 0 ? $CAT_FORUM[$CAT_FORUM[$idcat]['id_parent']]['aprob'] : true;
+        if ($User->check_auth($CAT_FORUM[$idcat]['auth'], READ_CAT_FORUM) && $CAT_FORUM[$idcat]['aprob'] && $parent_approved)
             $AUTH_READ_FORUM[$idcat] = true;
         else
             $AUTH_READ_FORUM[$idcat] = false;
