@@ -75,6 +75,10 @@ class CommentsService
 				{
 					if ($lock)
 					{
+						if (!CommentsTopicDAO::topic_exists($module_id, $id_in_module, $topic_identifier))
+						{
+							CommentsTopicDAO::create_topic($module_id, $id_in_module, $topic_identifier, $topic->get_path());
+						}
 						CommentsManager::lock_topic($module_id, $id_in_module, $topic_identifier);
 					}
 					else
@@ -143,7 +147,10 @@ class CommentsService
 				'TOPIC_IDENTIFIER' => $topic_identifier,
 				'C_DISPLAY_VIEW_ALL_COMMENTS' => ($number_comments > $number_comments_display) && $refresh_all == false,
 				'C_REFRESH_ALL' => $refresh_all,
-				'C_MODERATE' => $authorizations->is_authorized_moderation()
+				'C_MODERATE' => $authorizations->is_authorized_moderation(),
+				'C_IS_LOCKED' => CommentsManager::comment_topic_locked($module_id, $id_in_module, $topic_identifier),
+				'U_LOCK' => CommentsUrlBuilder::lock_and_unlock($topic->get_path(), true)->absolute(),
+				'U_UNLOCK' => CommentsUrlBuilder::lock_and_unlock($topic->get_path(), false)->absolute(),
 			));
 		}
 
@@ -267,12 +274,6 @@ class CommentsService
 					'L_UPDATE' => self::$lang['update'],
 					'L_DELETE' => self::$lang['delete'],
 					'L_CONFIRM_DELETE' => self::$comments_lang['comment.confirm_delete']
-				));
-				
-				self::$template->put_all(array(
-					'C_IS_LOCKED' => (bool)$row['is_locked'],
-					'U_LOCK' => CommentsUrlBuilder::lock_and_unlock($path, true)->absolute(),
-					'U_UNLOCK' => CommentsUrlBuilder::lock_and_unlock($path, false)->absolute(),
 				));
 			}
 		}
