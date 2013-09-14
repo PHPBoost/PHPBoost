@@ -50,16 +50,21 @@ class ForumExtensionPointProvider extends ExtensionPointProvider
 		$i = 0;
 		$forum_cats = 'global $CAT_FORUM;' . "\n";
 		$forum_cats .= '$CAT_FORUM = array();' . "\n";
-		$result = $sql_querier->query_while("SELECT id, id_left, id_right, level, name, url, status, aprob, auth, aprob
-		FROM " . PREFIX . "forum_cats
-		ORDER BY id_left", __LINE__, __FILE__);
+		$result = $sql_querier->query_while("SELECT child.*, parent.id as id_parent
+		FROM " . PREFIX . "forum_cats child
+		LEFT JOIN " . PREFIX . "forum_cats parent ON child.id_left > parent.id_left AND child.id_right < parent.id_right
+		ORDER BY child.id_left", __LINE__, __FILE__);
 		while ($row = $sql_querier->fetch_assoc($result))
 		{
+			if (empty($row['id_parent']))
+			$row['id_parent'] = 0;
+
 			if (empty($row['auth']))
 			$row['auth'] = serialize(array());
 
 			$forum_cats .= '$CAT_FORUM[\'' . $row['id'] . '\'][\'id_left\'] = ' . var_export($row['id_left'], true) . ';' . "\n";
 			$forum_cats .= '$CAT_FORUM[\'' . $row['id'] . '\'][\'id_right\'] = ' . var_export($row['id_right'], true) . ';' . "\n";
+			$forum_cats .= '$CAT_FORUM[\'' . $row['id'] . '\'][\'id_parent\'] = ' . var_export($row['id_parent'], true) . ';' . "\n";
 			$forum_cats .= '$CAT_FORUM[\'' . $row['id'] . '\'][\'level\'] = ' . var_export($row['level'], true) . ';' . "\n";
 			$forum_cats .= '$CAT_FORUM[\'' . $row['id'] . '\'][\'name\'] = ' . var_export($row['name'], true) . ';' . "\n";
 			$forum_cats .= '$CAT_FORUM[\'' . $row['id'] . '\'][\'status\'] = ' . var_export($row['status'], true) . ';' . "\n";
