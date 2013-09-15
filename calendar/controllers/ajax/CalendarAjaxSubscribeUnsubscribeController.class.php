@@ -60,6 +60,7 @@ class CalendarAjaxSubscribeUnsubscribeController extends AbstractController
 					break;
 				default :
 					break;
+			}
 		}
 		
 		$this->view->put('RESULT', $result);
