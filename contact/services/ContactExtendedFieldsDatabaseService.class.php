@@ -4,7 +4,7 @@
  *                            -------------------
  *   begin                : March 1, 2013
  *   copyright            : (C) 2013 Julien BRISWALTER
- *   email                : julien.briswalter@gmail.com
+ *   email                : julienseth78@phpboost.com
  *
  *
  ###################################################
@@ -26,7 +26,7 @@
  ###################################################*/
 
   /**
- * @author Julien BRISWALTER <julien.briswalter@gmail.com>
+ * @author Julien BRISWALTER <julienseth78@phpboost.com>
  * @desc This class is responsible of all database accesses implied by the contact extended fields management. 
  * Indeed, for instance when a field is created, the data base structure must be updated throw an ALTER request.
  * @package {@package}
