@@ -97,7 +97,7 @@ class NewsDisplayPendingNewsController extends ModuleController
 		
 			'PAGINATION' => $pagination->display(),
 		
-			'L_NEWS_NO_AVAILABLE_TITLE' => $this->lang['news.pending'],
+			'L_NEWS_TITLE' => $this->lang['news.pending'],
 		));
 		
 		if ($number_columns_display_news > 1)

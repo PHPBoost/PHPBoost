@@ -102,7 +102,7 @@ class NewsDisplayCategoryController extends ModuleController
 		
 			'PAGINATION' => $pagination->display(),
 			
-			'L_NEWS_NO_AVAILABLE_TITLE' => $this->lang['news'],
+			'L_NEWS_TITLE' => $this->lang['news'],
 		));
 		
 		if ($number_columns_display_news > 1)
