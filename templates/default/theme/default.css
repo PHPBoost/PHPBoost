@@ -361,7 +361,7 @@ button.image{
 
 /* Liens pagination
 --------------------------------------*/
-div#pagination .current_page {
+nav#pagination .current_page {
     text-decoration:underline;
 }
 
