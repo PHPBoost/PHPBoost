@@ -176,16 +176,17 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 		$maintenance_config = MaintenanceConfig::load();
 		if ($this->is_under_maintenance() && $maintenance_config->get_display_duration_for_admin())
 		{
+			$date_lang = LangLoader::get('date-common');
 			//Durée de la maintenance.
 			$array_time = array(-1, 60, 300, 600, 900, 1800, 3600, 7200, 10800, 14400, 18000,
 			21600, 25200, 28800, 57600, 86400, 172800, 604800);
-			$array_delay = array(LangLoader::get_message('unspecified', 'main'), '1 ' . LangLoader::get_message('minute', 'main'),
-				'5 ' . LangLoader::get_message('minutes', 'main'), '10 ' . LangLoader::get_message('minutes', 'main'), '15 ' . LangLoader::get_message('minutes', 'main'),
-				'30 ' . LangLoader::get_message('minutes', 'main'), '1 ' . LangLoader::get_message('hour', 'main'), '2 ' . LangLoader::get_message('hours', 'main'),
-				'3 ' . LangLoader::get_message('hours', 'main'), '4 ' . LangLoader::get_message('hours', 'main'), '5 ' . LangLoader::get_message('hours', 'main'),
-				'6 ' . LangLoader::get_message('hours', 'main'), '7 ' . LangLoader::get_message('hours', 'main'), '8 ' . LangLoader::get_message('hours', 'main'),
-				'16 ' . LangLoader::get_message('hours', 'main'), '1 ' . LangLoader::get_message('day', 'main'), '2 ' . LangLoader::get_message('hours', 'main'),
-				'1 ' . LangLoader::get_message('week', 'main'));
+			$array_delay = array(LangLoader::get_message('unspecified', 'main'), '1 ' . $date_lang['minute'],
+				'5 ' . $date_lang['minutes'], '10 ' . $date_lang['minutes'], '15 ' . $date_lang['minutes'],
+				'30 ' . $date_lang['minutes'], '1 ' . $date_lang['hour'], '2 ' . $date_lang['hours'],
+				'3 ' . $date_lang['hours'], '4 ' . $date_lang['hours'], '5 ' . $date_lang['hours'],
+				'6 ' . $date_lang['hours'], '7 ' . $date_lang['hours'], '8 ' . $date_lang['hours'],
+				'16 ' . $date_lang['hours'], '1 ' . $date_lang['day'], '2 ' . $date_lang['hours'],
+				'1 ' . $date_lang['week']);
 
 			//Retourne le délai de maintenance le plus proche.
 			if (!$maintenance_config->is_unlimited_maintenance())
@@ -237,10 +238,10 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 				'MAINTAIN_NOW_FORMAT' => implode(',', $array_now),
 				'L_MAINTAIN_DELAY' => self::$main_lang['maintain_delay'],
 				'L_LOADING' => self::$main_lang['loading'],
-				'L_DAYS' => self::$main_lang['days'],
-				'L_HOURS' => self::$main_lang['hours'],
-				'L_MIN' => self::$main_lang['minutes'],
-				'L_SEC' => self::$main_lang['seconds'],
+				'L_DAYS' => $date_lang['days'],
+				'L_HOURS' => $date_lang['hours'],
+				'L_MIN' => $date_lang['minutes'],
+				'L_SEC' => $date_lang['seconds'],
 			));
 		}
 		return $template;
