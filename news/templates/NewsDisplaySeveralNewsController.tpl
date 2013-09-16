@@ -27,38 +27,19 @@
 	</menu>
 </div>
 
-# IF C_NEWS_NO_AVAILABLE #
-	<div class="module_position edito">
-		<div class="module_top_l"></div>
-		<div class="module_top_r"></div>
-		<div class="module_top">
-			<div class="module_top_title module_top_news">
-				<a href="${relative_url(SyndicationUrlBuilder::rss('news'))}" title="${i18n('syndication')}" class="img_link">
-					<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/rss.png" alt="${i18n('syndication')}" />
-				</a>
-				{L_NEWS_NO_AVAILABLE_TITLE}
-			</div>
-	        <div class="module_top_com">
-				# IF C_ADMIN #
-				<a href="{U_ADMIN}" title="{L_ADMIN}" class="img_link">
-					<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="{L_ADMIN}" />
-				</a>
-				# ENDIF #
-			</div>
-			<div class="spacer"></div>
-    	</div>
-    	<div class="module_contents" style="text-align:center;">
-        	${i18n('news.message.no_items')}
-    	</div>
-    	<div class="module_bottom_l"></div>
-		<div class="module_bottom_r"></div>
-		<div class="module_bottom"></div>
-	</div>
-# ELSE #
 <section style="overflow: hidden;">
 	<header>
-		<h1>${i18n('news')}</h1>
+		<h1><a href="${relative_url(SyndicationUrlBuilder::rss('news'))}" title="${i18n('syndication')}" class="img_link">
+				<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/rss.png" alt="${i18n('syndication')}" />
+			</a>
+			{L_NEWS_TITLE}
+		</h1>
 	</header>
+# IF C_NEWS_NO_AVAILABLE #
+    <div class="center">
+        ${i18n('news.message.no_items')}
+    </div>
+# ELSE #
 	# START news #
 		# IF news.C_NEWS_ROW #
 			<div class="spacer"></div>
@@ -122,8 +103,8 @@
 			<footer></footer>
 		</article>
 	# END news #
+# ENDIF #
 	<footer>
 	# IF C_PAGINATION # # INCLUDE PAGINATION # # ENDIF #
 	</footer>
 </section>
-# ENDIF #
