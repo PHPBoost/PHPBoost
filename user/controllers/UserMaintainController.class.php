@@ -89,17 +89,17 @@ class UserMaintainController extends AbstractController
 			'L_XML_LANGUAGE' => $this->main_lang['xml_lang'],
 		));
 		
-		
+		$date_lang = LangLoader::get('date-common');
 		$this->tpl->put_all(array(
 			'L_MAINTAIN' => FormatingHelper::second_parse($this->maintain_config->get_message()),
 			'L_CONNECT' => $this->lang['connect'],
 			'U_CONNECT' => UserUrlBuilder::connect()->absolute(),
 			'L_MAINTAIN_DELAY' => $this->main_lang['maintain_delay'],
 			'L_LOADING' => $this->main_lang['loading'],
-			'L_DAYS' => $this->main_lang['days'],
-			'L_HOURS' => $this->main_lang['hours'],
-			'L_MIN' => $this->main_lang['minutes'],
-			'L_SEC' => $this->main_lang['seconds'],
+			'L_DAYS' => $date_lang['days'],
+			'L_HOURS' => $date_lang['hours'],
+			'L_MIN' => $date_lang['minutes'],
+			'L_SEC' => $date_lang['seconds'],
 			'LOGIN_FORM' => $this->form->display(),
 		));
 	}
