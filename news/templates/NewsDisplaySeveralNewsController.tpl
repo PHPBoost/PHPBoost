@@ -26,7 +26,6 @@
 		</ul>
 	</menu>
 </div>
-<div class="spacer"></div>
 
 # IF C_NEWS_NO_AVAILABLE #
 	<div class="module_position edito">
@@ -56,15 +55,17 @@
 		<div class="module_bottom"></div>
 	</div>
 # ELSE #
-	<div style="overflow:hidden;">
+<section style="overflow: hidden;">
+	<header>
+		<h1>${i18n('news')}</h1>
+	</header>
 	# START news #
 		# IF news.C_NEWS_ROW #
 			<div class="spacer"></div>
 		# ENDIF #
-		<div class="module_position" style="float:left;width:{COLUMN_WIDTH}%" itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
-    		<div class="module_top_l"></div>
-			<div class="module_top_r"></div>
-			<div class="module_top module_top_news">
+		<article # IF C_NEWS_BLOCK_COLUMN # style="float:left;width:{COLUMN_WIDTH}%" # ENDIF #~itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
+			<header>
+			
 				# IF C_NEWS_BLOCK_COLUMN #
 				<ul class="module_top_options block_hidden">
 				# ELSE #
@@ -89,19 +90,15 @@
 						</ul>
 					</li>
 				</ul>
-				<div class="module_top_title">
+				
+				<h1>
 					<a href="{news.U_SYNDICATION}" title="${LangLoader::get_message('syndication', 'main')}" class="img_link">
 						<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/rss.png" alt="${LangLoader::get_message('syndication', 'main')}" />
 					</a>
         			<a href="{news.U_LINK}"><span id="name" itemprop="name">{news.NAME}</span></a>
-        		</div>
+        		</h1>
         		
-        		<meta itemprop="url" content="{news.U_LINK}">
-				<meta itemprop="description" content="{news.DESCRIPTION}">
-				<meta itemprop="discussionUrl" content="{news.U_COMMENTS}">
-				<meta itemprop="interactionCount" content="{news.NUMBER_COMMENTS} UserComments">
-        		
-        		<div class="news_author_container">
+        		<div class="more">
 					Posté par 
 					# IF news.PSEUDO #
 					<a itemprop="author" class="small_link {news.USER_LEVEL_CLASS}" href="{news.U_AUTHOR_PROFILE}" style="font-size: 12px;" # IF news.C_USER_GROUP_COLOR # style="color:{news.USER_GROUP_COLOR}" # ENDIF #>{news.PSEUDO}</a>, 
@@ -109,21 +106,24 @@
 					le <time datetime="{news.DATE_ISO8601}" itemprop="datePublished">{news.DATE}</time>, 
 					dans la catégorie <a itemprop="about" href="{news.U_CATEGORY}">{news.CATEGORY_NAME}</a>
 				</div>
-        		
-				<div class="spacer"></div>
-    		</div>
-    		<div class="module_contents">
-        		# IF news.C_PICTURE #<img itemprop="thumbnailUrl" src="{news.U_PICTURE}" alt="{news.NAME}" title="{news.NAME}" class="right" /># ENDIF #
+				
+        		<meta itemprop="url" content="{news.U_LINK}">
+				<meta itemprop="description" content="{news.DESCRIPTION}">
+				<meta itemprop="discussionUrl" content="{news.U_COMMENTS}">
+				<meta itemprop="interactionCount" content="{news.NUMBER_COMMENTS} UserComments">
+				
+			</header>
+			
+			<div class="content">
+				# IF news.C_PICTURE #<img itemprop="thumbnailUrl" src="{news.U_PICTURE}" alt="{news.NAME}" title="{news.NAME}" class="right" /># ENDIF #
 				<span itemprop="text">{news.CONTENTS}</span>
-				<div class="spacer"></div>
-    		</div>
-    		<div class="module_bottom_l"></div>
-			<div class="module_bottom_r"></div>
-			<div class="module_bottom">
-				<div class="spacer"></div>
-    		</div>
-		</div>
+			</div>
+			
+			<footer></footer>
+		</article>
 	# END news #
-	</div>
-	# IF C_PAGINATION #<div class="center"># INCLUDE PAGINATION #</div># ENDIF #
+	<footer>
+	# IF C_PAGINATION # # INCLUDE PAGINATION # # ENDIF #
+	</footer>
+</section>
 # ENDIF #
