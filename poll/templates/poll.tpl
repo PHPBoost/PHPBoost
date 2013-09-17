@@ -1,16 +1,12 @@
 	# IF C_POLL_MAIN #
-		<div class="module_position">		
-			<div class="module_top_l"></div>		
-			<div class="module_top_r"></div>
-			<div class="module_top">
-				<div class="module_top_title">
-					{L_POLL}
-				</div>
+		<section>	
+			<header>
+				<h1>{L_POLL}</h1>
 				<div class="module_top_com">
 					{EDIT}
 				</div>
-			</div>
-			<div class="module_contents" style="text-align:center;">
+			</header>
+			<div class="content" style="text-align:center;">
 				{L_POLL_MAIN}
 				<br /><br />		
 				# START list #					
@@ -22,10 +18,8 @@
 				
 				<p class="center">{U_ARCHIVE}</p>
 			</div>
-			<div class="module_bottom_l"></div>		
-			<div class="module_bottom_r"></div>
-			<div class="module_bottom"></div>
-		</div>
+			<footer></footer>
+		</section>
 	# ENDIF #
 		
 		
@@ -33,26 +27,22 @@
 		<script type='text/javascript'>
 		<!--
 		function Confirm() {
-		return confirm('{L_DELETE_POLL}');
+			return confirm('{L_DELETE_POLL}');
 		}
 		-->
 		</script>
 		<form method="post" action="{PATH_TO_ROOT}/poll/poll{U_POLL_ACTION}">
-			<div class="module_position">					
-				<div class="module_top_l"></div>		
-				<div class="module_top_r"></div>
-				<div class="module_top">
-					<div class="module_top_title">
-						{QUESTION}
-					</div>
+			<article>					
+				<header>
+					<h1>{QUESTION}</h1>
 					<div class="module_top_com">
 						# IF C_IS_ADMIN #
 						<a href="{PATH_TO_ROOT}/poll/admin_poll.php?id={IDPOLL}" title="{L_EDIT}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" class="valign_middle" alt="" /></a>
 						<a href="{PATH_TO_ROOT}/poll/admin_poll.php?delete=1&amp;id={IDPOLL}&amp;token={TOKEN}" title="{L_DELETE}" onclick="javascript:return Confirm();"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" class="valign_middle" alt="" /></a>
 						# ENDIF #
 					</div>
-				</div>
-				<div class="module_contents">
+				</header>
+				<div class="content">
 					# INCLUDE message_helper #
 					
 					<div class="block_container">
@@ -89,9 +79,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="module_bottom_l"></div>		
-				<div class="module_bottom_r"></div>
-				<div class="module_bottom"><a href="{PATH_TO_ROOT}/poll/poll.php{SID}">{L_BACK_POLL}</a></div>
+				<footer></footer>
 			</div>
 		</form>
 	# ENDIF #
@@ -101,19 +89,17 @@
 		<script type='text/javascript'>
 		<!--
 			function Confirm() {
-			return confirm('{L_ALERT_DELETE_POLL}');
+				return confirm('{L_ALERT_DELETE_POLL}');
 			}
 		-->
 		</script>
 			
-		<div class="module_position">					
-			<div class="module_top_l"></div>		
-			<div class="module_top_r"></div>
-			<div class="module_top">
-				<span style="float:left;">{L_ARCHIVE}</span>
+		<section>					
+			<header>
+				<h1>{L_ARCHIVE}</h1>
 				<span style="float:right;">{PAGINATION}</span>
-			</div>
-			<div class="module_contents">				
+			</header>
+			<div class="content">
 				# START list #
 				<div class="block_container">
 					<div class="block_top">{list.QUESTION} 
@@ -138,12 +124,6 @@
 				</div>
 				# END list #				
 			</div>
-			<div class="module_bottom_l"></div>		
-			<div class="module_bottom_r"></div>
-			<div class="module_bottom">
-				<span style="float:left;"><a href="poll.php{SID}">{L_BACK_POLL}</a></span>
-				&nbsp;<span style="float:right;">{PAGINATION}</span>
-			</div>
+			<footer><span style="float:right;">{PAGINATION}</span></footer>
 		</div>
-	# ENDIF #			
-	
+	# ENDIF #

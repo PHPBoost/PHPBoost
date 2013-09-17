@@ -6,10 +6,11 @@ function Confirm() {
 -->
 </script>
 
-<div class="module_position">
-	<div class="module_top_l"></div>
-	<div class="module_top_r"></div>
-	<div class="module_top">{@module_title}</div>
+<section>
+	<header>
+		<h1>{@module_title}</h1>
+	</header>
+	<div class="content">
 		# INCLUDE FORM #
 		
 		# IF C_PAGINATION #
@@ -61,8 +62,6 @@ function Confirm() {
 		# IF C_PAGINATION #
 			<div class="center"># INCLUDE PAGINATION #</div>
 		# ENDIF #
-	
-	<div class="module_bottom_l"></div>
-	<div class="module_bottom_r"></div>
-	<div class="module_bottom"></div>
-</div>
+	</div>
+	<footer></footer>
+</section>

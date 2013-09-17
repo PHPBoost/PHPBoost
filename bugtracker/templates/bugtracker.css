@@ -1,25 +1,6 @@
-/* Sur Class */
-div.module_top{
-	margin-top: 30px;
-	height: 22px;
-	padding-bottom: 0px;
-}
-
-div.module_top a{	font-size: 14px; }
-
-div.module_top ul{ list-style-type:none; }
-
-div.block_top, table tr:first-child th{
-	text-align: center;
-}
+section .content ul:nth-of-type(1) { list-style-type:none; }
 
 /* Class générales */
-li { text-indent: 0px; }
-
-.align_center { text-align: center; }
-
-.align_left { text-align: left; }
-
 .filter_title{ padding-top: 10px; }
 
 .filter {

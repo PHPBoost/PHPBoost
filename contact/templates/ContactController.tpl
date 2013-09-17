@@ -1,8 +1,8 @@
-<div class="module_position">
-	<div class="module_top_l"></div>
-	<div class="module_top_r"></div>
-	<div class="module_top">{@title_contact} </div>
-	<div class="module_contents">
+<section>
+	<header>
+		<h1>{@title_contact}</h1>
+	</header>
+	<div class="content">
 		# INCLUDE MSG #
 		
 		# IF C_INFORMATIONS_TOP #
@@ -44,7 +44,5 @@
 		<div class="spacer">&nbsp;</div>
 		# ENDIF #
 	</div>
-	<div class="module_bottom_l"></div>
-	<div class="module_bottom_r"></div>
-	<div class="module_bottom"></div>
-</div>
+	<footer></footer>
+</section>

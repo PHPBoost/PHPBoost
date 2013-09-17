@@ -35,16 +35,14 @@ function change_registration() {
 -->
 </script>
 
-<div class="module_position" itemscope="itemscope" itemtype="http://schema.org/Event">
-	<div class="module_top_l"></div>
-	<div class="module_top_r"></div>
-	<div class="module_top">
-		<div class="module_top_title">
+<article itemscope="itemscope" itemtype="http://schema.org/Event">
+	<header>
+		<h1>
 			<a href="{U_SYNDICATION}" title="{@syndication}" class="img_link">
 				<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/rss.png" alt="{@syndication}"/>
 			</a>
 			<span id="name" itemprop="name">{TITLE}</span>
-		</div>
+		</h1>
 		
 		<meta itemprop="url" content="{U_LINK}">
 		<div itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
@@ -66,9 +64,8 @@ function change_registration() {
 			</a>
 			# ENDIF #
 		</div>
-		<div class="spacer"></div>
-	</div>
-	<div class="module_contents">
+	</header>
+	<div class="content">
 		<span itemprop="text">{CONTENTS}</span>
 		<div class="spacer">&nbsp;</div>
 		# IF C_LOCATION #
@@ -84,10 +81,8 @@ function change_registration() {
 			<span>{PARTICIPANTS}</span>
 		</div>
 		# ENDIF #
-	</div>
-	<div class="module_bottom_l"></div>
-	<div class="module_bottom_r"></div>
-	<div class="module_bottom">
+		
+		<div class="spacer">&nbsp;</div>
 		<div class="event_display_author" itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
 			{@calendar.labels.created_by} : # IF AUTHOR #<a itemprop="author" href="{U_AUTHOR_PROFILE}" class="small_link {AUTHOR_LEVEL_CLASS}" # IF C_AUTHOR_GROUP_COLOR # style="color:{AUTHOR_GROUP_COLOR}" # ENDIF #>{AUTHOR}</a># ELSE #{L_GUEST}# ENDIF #
 		</div>
@@ -97,11 +92,13 @@ function change_registration() {
 			<div class="spacer"></div>
 			{@calendar.labels.end_date} : <span class="float_right"><time datetime="{END_DATE_ISO8601}" itemprop="endDate">{END_DATE}</time></span>
 		</div>
+		
+		<div class="spacer">&nbsp;</div>
+		<hr style="width:70%;margin:0px auto 40px auto;">
+		
+		# IF C_COMMENTS_ENABLED #
+			# INCLUDE COMMENTS #
+		# ENDIF #
 	</div>
-	<div class="spacer">&nbsp;</div>
-	<hr style="width:70%;margin:0px auto 40px auto;">
-	
-	# IF C_COMMENTS_ENABLED #
-		# INCLUDE COMMENTS #
-	# ENDIF #
-</div>
+	<footer></footer>
+</article>

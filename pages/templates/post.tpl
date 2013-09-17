@@ -45,17 +45,13 @@
 		# ENDIF #
 		
 		# START previewing #
-		<div class="module_position">					
-			<div class="module_top_l"></div>		
-			<div class="module_top_r"></div>
-			<div class="module_top">
-				<div class="module_top_title">{L_PREVIEWING} {previewing.TITLE}</div>
-			</div>
-			<div class="module_contents">{previewing.PREVIEWING}</div>
-			<div class="module_bottom_l"></div>		
-			<div class="module_bottom_r"></div>
-			<div class="module_bottom"></div>
-		</div>
+		<article>					
+			<header>
+				<h1>{L_PREVIEWING} {previewing.TITLE}</h1>
+			</header>
+			<div class="content">{previewing.PREVIEWING}</div>
+			<footer></footer>
+		</article>
 		# END previewing #
 			
 		<form action="{TARGET}" method="post"  onsubmit="return check_form_post();" class="fieldset_content">					

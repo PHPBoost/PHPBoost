@@ -237,19 +237,19 @@
 		</div>
 		<div class="spacer"></div>
 		
-		<div class="module_position">					
-			<div class="module_top_l"></div>		
-			<div class="module_top_r"></div>
-			<div class="module_top">
-				<div class="module_top_title">
-					<a href="${relative_url(SyndicationUrlBuilder::rss('gallery', CAT_ID))}" title="Rss"><img style="vertical-align:middle;margin-top:-2px;" src="{PATH_TO_ROOT}/templates/{THEME}/images/rss.png" alt="Rss" title="Rss" /></a>
+		<section>					
+			<header>
+				<h1>
+					<a href="${relative_url(SyndicationUrlBuilder::rss('gallery', CAT_ID))}" title="Rss">
+						<img style="vertical-align:middle;margin-top:-2px;" src="{PATH_TO_ROOT}/templates/{THEME}/images/rss.png" alt="Rss" title="Rss" />
+					</a>
 					{L_GALLERY} {U_GALLERY_CAT_LINKS} {EDIT_CAT}
-				</div>
+				</h1>
 				<div class="module_top_com">
 					{PAGINATION}
 				</div>
-			</div>
-			<div class="module_contents">
+			</header>
+			<div class="content">
 				<div style="margin-bottom:50px;">
 					<div class="dynamic_menu" style="float:right;margin-right:85px;">
 						<ul>
@@ -456,12 +456,9 @@
 					
 				<p style="text-align:center;padding-top:15px;" class="smaller">{L_TOTAL_IMG}</p>
 			</div>
-			<div class="module_bottom_l"></div>		
-			<div class="module_bottom_r"></div>
-			<div class="module_bottom">
+			<footer>
 				<div style="float:right">
 					{PAGINATION}
 				</div>
-			</div>
-		</div>
-		
+			</footer>
+		</section>

@@ -1,10 +1,8 @@
-<div class="module_position">
-	<div class="module_top_l"></div>
-	<div class="module_top_r"></div>
-	<div class="module_top">
-		<div class="module_top_title">{@online} </div>
-	</div>
-	<div class="module_contents">
+<section>
+	<header>
+		<h1>{@online}</h1>
+	</header>
+	<div class="content">
 		<table class="module_table">
 			<tr>
 				<th class="column_login">
@@ -42,12 +40,6 @@
 			</tr>
 			# ENDIF #
 		</table>
-		# IF C_PAGINATION #
-		<div class="spacer">&nbsp;</div>
-		<div class="center"># INCLUDE PAGINATION #</div>
-		# ENDIF #
 	</div>
-	<div class="module_bottom_l"></div>
-	<div class="module_bottom_r"></div>
-	<div class="module_bottom"></div>
-</div>
+	<footer># IF C_PAGINATION # # INCLUDE PAGINATION # # ENDIF #</footer>
+</section>

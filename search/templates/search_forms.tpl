@@ -38,13 +38,11 @@
         -->
         </script>
 
-       <div class="module_position">
-            <div class="module_top_l"></div>
-            <div class="module_top_r"></div>
-            <div class="module_top">
-            	<div class="module_top_title">{L_TITLE_SEARCH}</div>
-            </div>
-            <div class="module_contents">
+       <section>
+           <header>
+				<h1>{L_TITLE_SEARCH}</h1>
+			</header>
+            <div class="content">
                 <div class="spacer">&nbsp;</div>
                 <form action="{U_FORM_VALID}" onsubmit="return check_search_form_post();" method="post">
                     <div class="search_field"><input type="text" id="TxTsearched" name="q" value="{TEXT_SEARCHED}" class="text" onclick="if(this.value=='{L_SEARCH}...')this.value='';" onblur="if(this.value=='')this.value='{L_SEARCH}...';"></div>
@@ -88,10 +86,8 @@
                     </fieldset>
                 </form>
             </div>
-            <div class="module_bottom_l"></div>
-            <div class="module_bottom_r"></div>
-            <div class="module_bottom" style="text-align:center;"></div>
-        </div>
+             <footer></footer>
+        </section>
         <script type="text/javascript">
         <!--
             ChangeForm('{SEARCH_MODE_MODULE}');
