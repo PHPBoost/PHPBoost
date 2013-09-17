@@ -168,6 +168,12 @@ a.forum_mbrmsg_links { /* Couleur des liens pour les messages du membre */
 	color:black;	
 }
 
+/* Module */
+.module_position {
+    width:96%;
+    margin:auto;
+}
+
 .module_top_l{ /* Barre supérieur des modules */
 }
 .module_top_r{

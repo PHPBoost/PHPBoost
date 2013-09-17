@@ -121,12 +121,6 @@ table th.row1 a {
 	vertical-align: middle;
 }
 
-ul.list {
-	text-align:left;
-	margin-left:20px;
-	list-style-image: url(images/li.png)
-}
-
 /* Formulaires 
 --------------------------------------*/
 .fieldset_mini {
@@ -523,68 +517,6 @@ a.msg_link_pseudo:hover {
 
 /* Modules
 --------------------------------------*/ 
-/* Conteneur des modules */
-.module_position {
-    width:96%;
-    margin:auto;
-}
-
-/* Barre supérieure des modules */
-.module_top_l {}
-.module_top_r {}
-
-.module_top {
-    height:18px;
-    text-indent:10px;
-    font-size:12px;
-    font-weight:bold;
-    color:#515C68;
-    border-bottom:2px solid #336397;
-}
-
-.module_top a {}
-
-.module_top_title {
-	float:left;
-    font-size:12px;
-	margin-left:3px;
-	font-weight:bold;
-}
-
-.module_top_title img {
-	margin-top:-2px;
-}
-
-.module_top_com {
-	float:right;
-}
-
-.module_actions {
-	float:right;
-	margin:0 10px 15px;
-	margin-top:-25px;
-}
-
-/* Contenu des modules */
-.module_contents {
-    padding:20px 15px;
-    padding-bottom:15px;
-    clear:both;
-    text-align:justify;
-	word-wrap:break-word;
-	overflow:auto;
-}
-
-/* Barre inférieure des modules */
-.module_bottom_l {}
-.module_bottom_r {}
-
-.module_bottom {
-    height:22px;
-    padding:2px 0 15px 6px;
-    font-size:10px;
-}
-
 
 /* Tableau global, utilisé dans les différents modules */
 .module_table {
