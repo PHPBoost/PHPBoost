@@ -45,7 +45,7 @@
 	
 		# INCLUDE MAINTAIN #
 		
-		<div id="global" class="show-desktop">
+		<div id="global">
 			<header>
 				<div id="top_header">
 					<div id="logo"></div>
