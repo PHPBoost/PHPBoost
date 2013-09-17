@@ -1,10 +1,8 @@
-		<div class="module_position">					
-			<div class="module_top_l"></div>		
-			<div class="module_top_r"></div>
-			<div class="module_top">
-				<div class="module_top_title">{TITLE}</div>
-			</div>
-			<div class="module_contents">
+		<section>					
+			<header>
+				<h1>{TITLE}</h1>
+			</header>
+			<div class="content">
 				# INCLUDE wiki_tools #
 				<br /><br />
 				{INDEX_TEXT}
@@ -43,8 +41,6 @@
 				</table>
 				# END last_articles #
 			</div>
-			<div class="module_bottom_l"></div>		
-			<div class="module_bottom_r"></div>
-			<div class="module_bottom"></div>
-		</div>
+			<footer></footer>
+		</section>
 		

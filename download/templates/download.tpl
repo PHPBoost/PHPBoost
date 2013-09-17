@@ -1,19 +1,19 @@
 		# IF C_DOWNLOAD_CAT #
-		<div class="module_position">			
-			<div class="module_top_l"></div>		
-			<div class="module_top_r"></div>
-			<div class="module_top">
-				<div class="module_top_title">
-					<a href="${relative_url(SyndicationUrlBuilder::rss('download',IDCAT))}" title="Rss"><img style="vertical-align:middle;margin-top:-2px;" src="{PATH_TO_ROOT}/templates/{THEME}/images/rss.png" alt="Rss" title="Rss" /></a>
+		<section>		
+			<header>
+				<h1>
+					<a href="${relative_url(SyndicationUrlBuilder::rss('download',IDCAT))}" title="Rss">
+						<img style="vertical-align:middle;margin-top:-2px;" src="{PATH_TO_ROOT}/templates/{THEME}/images/rss.png" alt="Rss" title="Rss" />
+					</a>
 					{TITLE}
 					# IF C_ADMIN #
 					<a href="{U_ADMIN_CAT}">
 						<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="" />
 					</a>
 					# END IF #
-				</div>
-			</div>
-			<div class="module_contents">
+				</h1>
+			</header>
+			<div class="content">
 				# IF C_ADD_FILE #
 					<div style="text-align:center;">
 						<a href="{U_ADD_FILE}" title="{L_ADD_FILE}">
@@ -79,17 +79,10 @@
 					<div class="spacer">&nbsp;</div>
 					
 					# START file #
-						<div class="block_container" style="margin-bottom:20px;vertical-align:top;">
-							<div class="block_contents">
-								# IF file.C_IMG #
-									<div class="float_right">
-										<a href="{file.U_DOWNLOAD_LINK}">
-											<img src="{file.IMG}" alt="{file.IMG_NAME}" />
-										</a>
-									</div>
-								# ENDIF #
-								<p style="margin-bottom:10px">
-									<a href="{file.U_DOWNLOAD_LINK}" class="big">{file.NAME}</a>
+						<article class="block" itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
+							<header>
+								<h1>
+									<a href="{file.U_DOWNLOAD_LINK}" itemprop="name">{file.NAME}</a>
 									# IF C_ADMIN #
 										<a href="{file.U_ADMIN_EDIT_FILE}">
 											<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="" />
@@ -98,14 +91,25 @@
 											<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="" />
 										</a>
 									# ENDIF #
-								</p>
+								</h1>
+							</header>
+							<div class="contents">
+								# IF file.C_IMG #
+									<div class="float_right">
+										<a href="{file.U_DOWNLOAD_LINK}">
+											<img src="{file.IMG}" alt="{file.IMG_NAME}" itemprop="image" />
+										</a>
+									</div>
+								# ENDIF #
 								# IF file.C_DESCRIPTION #
-									<p>
+									<p itemprop="text">
 									{file.DESCRIPTION}
 									</p>
 								# ENDIF #
 								<div class="smaller">
-									{file.DATE}
+									<span itemprop="dateCreated"> 
+										{file.DATE} 
+									<span> 
 									<br />
 									{file.COUNT_DL}
 									<br />
@@ -115,7 +119,8 @@
 								</div>
 								<div class="spacer"></div>								
 							</div>
-						</div>						
+							<footer></footer>
+						</article>						
 					# END file #
 					<div style="text-align:center;">{PAGINATION}</div>
 				# ENDIF #
@@ -127,20 +132,14 @@
 				# ENDIF #
 				<div class="spacer"></div>
 			</div>
-			<div class="module_bottom_l"></div>		
-			<div class="module_bottom_r"></div>
-			<div class="module_bottom"></div>
-		</div>
+			<footer></footer>
+		</section>
 		# ENDIF #
 		
 		# IF C_DISPLAY_DOWNLOAD #			
-		<div class="module_position">					
-			<div class="module_top_l"></div>		
-			<div class="module_top_r"></div>
-			<div class="module_top">
-				<div class="module_top_title">
-					{NAME}
-				</div>
+		<article itemscope="itemscope" itemtype="http://schema.org/CreativeWork">					
+			<header>
+				<h1 itemprop="name">{NAME}</h1>
 				<div style="float:right">
 					{U_COM}
 					# IF C_EDIT_AUTH #
@@ -152,13 +151,13 @@
 						</a>
 					# ENDIF #
 				</div>
-			</div>
-			<div class="module_contents">
+			</header>
+			<div class="content">
 				<table>
 					<tr>
 						<td style="text-align:center;padding-right:20px;vertical-align:top;">
 							# IF C_IMG #
-								<img src="{U_IMG}" alt="{IMAGE_ALT}" />
+								<img src="{U_IMG}" alt="{IMAGE_ALT}" itemprop="image"/>
 								<br /><br />
 							# ENDIF #
 							<a href="{U_DOWNLOAD_FILE}">
@@ -173,7 +172,9 @@
 							# ENDIF #
 						</td>
 						<td>
-							{CONTENTS}
+							<span itemprop="text">
+								{CONTENTS}
+							</span>
 						</td>
 					</tr>
 				</table>
@@ -196,7 +197,7 @@
 						<td class="row1" style="padding:3px">
 							{L_INSERTION_DATE}
 						</td>
-						<td class="row2" style="padding:3px">
+						<td class="row2" style="padding:3px" itemprop="dateCreated">
 							{CREATION_DATE}
 						</td>
 					</tr>
@@ -204,7 +205,7 @@
 						<td class="row1" style="padding:3px">
 							{L_RELEASE_DATE}
 						</td>
-						<td class="row2" style="padding:3px">
+						<td class="row2" style="padding:3px" itemprop="dateModified">
 							{RELEASE_DATE}
 						</td>
 					</tr>
@@ -225,13 +226,9 @@
 						</td>
 					</tr>
 				</table>
+				{COMMENTS}
 			</div>
-			<div class="module_bottom_l"></div>		
-			<div class="module_bottom_r"></div>
-			<div class="module_bottom">
-			</div>
-		</div>		
-		<br /><br />
-		{COMMENTS}
+			<footer></footer>
+		</article>
 		# ENDIF #
 		

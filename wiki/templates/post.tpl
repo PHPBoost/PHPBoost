@@ -22,13 +22,11 @@
 		</script>
 
 		# START preview #
-		<div class="module_position">					
-			<div class="module_top_l"></div>		
-			<div class="module_top_r"></div>
-			<div class="module_top">
-				<div class="module_top_title">{L_PREVIEWING}: {preview.TITLE}</div>
-			</div>
-			<div class="module_contents" id="preview">
+		<article>					
+			<header>
+				<h1>{L_PREVIEWING}: {preview.TITLE}</h1>
+			</header>
+			<div class="content" id="preview">
 				# START preview.menu #
 					<div class="row3" style="width:70%">
 						<div style="text-align:center;"><strong>{L_TABLE_OF_CONTENTS}</strong></div>
@@ -38,10 +36,8 @@
 				<br /><br />
 				{preview.CONTENTS}
 			</div>
-			<div class="module_bottom_l"></div>		
-			<div class="module_bottom_r"></div>
-			<div class="module_bottom"></div>
-		</div>
+			<footer></footer>
+		</article>
 		# END preview #
 		
 		# INCLUDE message_helper #

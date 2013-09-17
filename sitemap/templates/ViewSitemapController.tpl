@@ -1,13 +1,9 @@
-<div class="module_position">
-<div class="module_top_l"></div>
-<div class="module_top_r"></div>
-<div class="module_top">
-	<div class="module_top_title">{@sitemap} </div>
-</div>
-<div class="module_contents">
-# INCLUDE SITEMAP #
-</div>
-<div class="module_bottom_l"></div>
-<div class="module_bottom_r"></div>
-<div class="module_bottom" style="text-align: center">{COUNT_HITS}</div>
-</div>
+<section>
+	<header>
+		<h1>{@sitemap}</h1>
+	</header>
+	<div class="content">
+		# INCLUDE SITEMAP #
+	</div>
+	<footer></footer>
+</section>

@@ -1,4 +1,3 @@
-        <br />
         <script type="text/javascript"><!--
         
             const RESULTS = 'results_';
@@ -117,12 +116,10 @@
         
         --></script>
 
-        <div id="results" class="module_position">
-            <div class="module_top_l"></div>
-            <div class="module_top_r"></div>
-            <div class="module_top">
-            	<div class="module_top_title">{L_SEARCH_RESULTS}</div>
-                # IF C_SIMPLE_SEARCH #
+        <section id="results">
+           <header>
+				<h1>{L_SEARCH_RESULTS}</h1>
+				# IF C_SIMPLE_SEARCH #
                     <div id="results_choices" class="resultsChoices" style="display:none">
                         <span>{L_PRINT}</span>
                         <select id="results_choice" name="ResultsSelection" onchange="ChangeResults();">
@@ -133,8 +130,8 @@
                         </select>
                     </div>
                 # ENDIF #
-            </div>
-            <div class="module_contents">
+			</header>
+            <div class="content">
                 <div id="results_{SEARCH_IN}" class="results">
                     <span id="results_title_{SEARCH_IN}" class="title">{L_TITLE_ALL_RESULTS}</span><br />
                     <div id="infos_results_{SEARCH_IN}" class="infosResults">
@@ -168,12 +165,9 @@
                         </div>
                     # END results #
                 # ENDIF #
-                <!--<div id="DEBUG"></div>-->
             </div>
-            <div class="module_bottom_l"></div>
-            <div class="module_bottom_r"></div>
-            <div class="module_bottom" style="text-align:center;">{L_HITS}</div>
-        </div>
+            <footer>{L_HITS}</footer>
+        </section>
         <script type="text/javascript">
         <!--
             ChangePagination(0, Math.ceil(nbResults['{SEARCH_IN}'] / NB_RESULTS_PER_PAGE), PAGINATION_RESULTS + '{SEARCH_IN}', 'results_{SEARCH_IN}');

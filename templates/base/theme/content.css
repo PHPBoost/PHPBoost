@@ -1,7 +1,67 @@
 /* --------------------------------------
 		content.css
 Contient les formulaires, les modules (et modules minis), messages.
---------------------------------------*/ 
+--------------------------------------*/
+
+/* Conteneurs, éléments de module, ... */
+section, article {
+	width: 96%;
+    margin: auto;
+    margin-bottom: 10px;
+}
+
+section header, article header {
+	margin-bottom: 20px;
+}
+
+section header h1, article header h1 {
+    font-weight: bold;
+    border-bottom: 1px solid #336397;
+}
+
+article .more {
+	font-size: 11px;
+	font-style: italic;
+}
+
+section, .content, article .content {
+	padding-left: 15px;
+    text-align: justify;
+	word-wrap: break-word;
+	overflow: auto;
+}
+
+article .content {
+	clear: both;
+}
+
+section footer, article footer {
+	margin-bottom: 15px;
+	clear: both;
+}
+
+section footer nav#pagination {
+	text-align: center;
+}
+
+/* Vertical articles */
+article.block, article.small_block {
+	border: 1px solid #CCCCCC;
+	border-top:2px solid #366393;
+	border-bottom: 1px solid #99B1CB;
+	background:#F2F8FF;
+	padding:10px;
+}
+
+article.block {
+	width:auto;
+}
+
+article.small_block {
+	float: left;
+	width:29%;
+	margin: 0.6%;
+}
 
 /* Conteneurs
 --------------------------------------*/

@@ -105,6 +105,5 @@ function Confirm()
 	
 		# INCLUDE COMMENTS #
 	</aside>
-	<footer>
-	</footer>
+	<footer></footer>
 </article>

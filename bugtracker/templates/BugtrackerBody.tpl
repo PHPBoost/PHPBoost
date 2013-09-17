@@ -1,8 +1,9 @@
 # INCLUDE MSG #
-<div class="module_position">
-	<div class="module_top_l"></div>
-	<div class="module_top_r"></div>
-	<div class="module_top">
+<section>
+	<header>
+		<h1>A modifier</h1>
+	</header>
+	<div class="content">
 		<ul>
 			<li class="{CLASS_BUG_UNSOLVED}">
 				<a href="{LINK_BUG_UNSOLVED}">{@bugs.titles.unsolved_bugs}</a> 
@@ -46,11 +47,8 @@
 			</li>
 			# ENDIF #
 		</ul>
-	</div>
-	<div class="module_contents">
+		
 		# INCLUDE TEMPLATE #
 	</div>
-	<div class="module_bottom_l"></div>
-	<div class="module_bottom_r"></div>
-	<div class="module_bottom"></div>
-</div>
+	<footer></footer>
+</section>

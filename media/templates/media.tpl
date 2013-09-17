@@ -1,95 +1,94 @@
-
 		# IF C_CATEGORIES #
-		<div class="module_actions">
-			# IF C_ADMIN #
-				<a href="{U_ADMIN_CAT}" class="img_link" title="{L_EDIT}">
-					<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="">
-				</a>
-			# END IF #
-			# IF C_MODO #
-				<a href="{PATH_TO_ROOT}/media/moderation_media.php" class="img_link" title="{L_MODO_PANEL}">
-					<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/moderation_panel.png" style="width:16px;height:16px;" alt="">
-				</a>
-			# END IF #
-			# IF C_ADD_FILE #
-					<a href="{U_ADD_FILE}" title="{L_ADD_FILE}">
-						<img src="{PATH_TO_ROOT}/templates/{THEME}/images/french/add.png" alt="{L_ADD_FILE}" class="valign_middle"/>
+			<div class="module_actions">
+				# IF C_ADMIN #
+					<a href="{U_ADMIN_CAT}" class="img_link" title="{L_EDIT}">
+						<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="">
 					</a>
-			# ENDIF #
-		</div>
-		<div class="spacer"></div>
-		<div class="module_position">
-			<div class="module_top_l"></div>
-			<div class="module_top_r"></div>
-			<div class="module_top">
-				<div class="module_top_title">
-					<a href="${relative_url(SyndicationUrlBuilder::rss('media', ID_CAT))}" title="Syndication"><img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/rss.png" alt="Syndication" title="Syndication" /></a>
-					{TITLE}
-				</div>
-				<div class="module_top_com">
-				</div>
+				# END IF #
+				# IF C_MODO #
+					<a href="{PATH_TO_ROOT}/media/moderation_media.php" class="img_link" title="{L_MODO_PANEL}">
+						<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/moderation_panel.png" style="width:16px;height:16px;" alt="">
+					</a>
+				# END IF #
+				# IF C_ADD_FILE #
+						<a href="{U_ADD_FILE}" title="{L_ADD_FILE}">
+							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/french/add.png" alt="{L_ADD_FILE}" class="valign_middle"/>
+						</a>
+				# ENDIF #
 			</div>
-			<div class="module_contents">
-				# IF C_DESCRIPTION #
-					{DESCRIPTION}
-					<hr style="margin-top:25px;" />
-				# ENDIF #
-
-				# IF C_SUB_CATS #
-					# START row #
-						# START row.list_cats #
-							<div style="float:left;width:{row.list_cats.WIDTH}%;text-align:center;margin:20px 0px;">
-								<a href="{row.list_cats.U_CAT}" title="{row.list_cats.IMG_NAME}">
-									<img src="{row.list_cats.SRC}" alt="{row.list_cats.IMG_NAME}" />
-								</a>
-								<br />
-								<a href="{row.list_cats.U_CAT}">{row.list_cats.NAME}</a>
-								# IF C_ADMIN #
-								<a href="{row.list_cats.U_ADMIN_CAT}" title="{L_EDIT}">
-									<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="">
-								</a>
-								# ENDIF #
-								# IF row.list_cats.NUM_MEDIA #
-								<div class="smaller">
-									{row.list_cats.NUM_MEDIA}
+			
+			<div class="spacer"></div>
+			
+			<section>
+				<header>
+					<h1>
+						<a href="${relative_url(SyndicationUrlBuilder::rss('media', ID_CAT))}" title="Syndication">
+							<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/rss.png" alt="Syndication" title="Syndication" />
+						</a>
+						{TITLE}
+					</h1>
+				</header>
+				<div class="content">
+					# IF C_DESCRIPTION #
+						{DESCRIPTION}
+						<hr style="margin-top:25px;" />
+					# ENDIF #
+	
+					# IF C_SUB_CATS #
+						# START row #
+							# START row.list_cats #
+								<div style="float:left;width:{row.list_cats.WIDTH}%;text-align:center;margin:20px 0px;">
+									<a href="{row.list_cats.U_CAT}" title="{row.list_cats.IMG_NAME}">
+										<img src="{row.list_cats.SRC}" alt="{row.list_cats.IMG_NAME}" />
+									</a>
+									<br />
+									<a href="{row.list_cats.U_CAT}">{row.list_cats.NAME}</a>
+									# IF C_ADMIN #
+									<a href="{row.list_cats.U_ADMIN_CAT}" title="{L_EDIT}">
+										<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="">
+									</a>
+									# ENDIF #
+									# IF row.list_cats.NUM_MEDIA #
+									<div class="smaller">
+										{row.list_cats.NUM_MEDIA}
+									</div>
+									# ENDIF #
 								</div>
-								# ENDIF #
-							</div>
-						# END row.list_cats #
+							# END row.list_cats #
+							<div class="spacer">&nbsp;</div>
+						# END row #
+						<hr />
+					# ENDIF #
+	
+					# IF C_FILES #
+						<div style="float:right;" class="row3" id="form">
+							<script type="text/javascript">
+							<!--
+							function change_order()
+							{
+								window.location = "{TARGET_ON_CHANGE_ORDER}sort=" + document.getElementById("sort").value + "&mode=" + document.getElementById("mode").value;
+							}
+							-->
+							</script>
+							{L_ORDER_BY}
+							<select name="sort" id="sort" class="nav" onchange="change_order()">
+								<option value="alpha"{SELECTED_ALPHA}>{L_ALPHA}</option>
+								<option value="date"{SELECTED_DATE}>{L_DATE}</option>
+								<option value="nbr"{SELECTED_NBR}>{L_NBR}</option>
+								<option value="note"{SELECTED_NOTE}>{L_NOTE}</option>
+								<option value="com"{SELECTED_COM}>{L_COM}</option>
+							</select>
+							<select name="mode" id="mode" class="nav" onchange="change_order()">
+								<option value="asc"{SELECTED_ASC}>{L_ASC}</option>
+								<option value="desc"{SELECTED_DESC}>{L_DESC}</option>
+							</select>
+						</div>
 						<div class="spacer">&nbsp;</div>
-					# END row #
-					<hr />
-				# ENDIF #
-
-				# IF C_FILES #
-					<div style="float:right;" class="row3" id="form">
-						<script type="text/javascript">
-						<!--
-						function change_order()
-						{
-							window.location = "{TARGET_ON_CHANGE_ORDER}sort=" + document.getElementById("sort").value + "&mode=" + document.getElementById("mode").value;
-						}
-						-->
-						</script>
-						{L_ORDER_BY}
-						<select name="sort" id="sort" class="nav" onchange="change_order()">
-							<option value="alpha"{SELECTED_ALPHA}>{L_ALPHA}</option>
-							<option value="date"{SELECTED_DATE}>{L_DATE}</option>
-							<option value="nbr"{SELECTED_NBR}>{L_NBR}</option>
-							<option value="note"{SELECTED_NOTE}>{L_NOTE}</option>
-							<option value="com"{SELECTED_COM}>{L_COM}</option>
-						</select>
-						<select name="mode" id="mode" class="nav" onchange="change_order()">
-							<option value="asc"{SELECTED_ASC}>{L_ASC}</option>
-							<option value="desc"{SELECTED_DESC}>{L_DESC}</option>
-						</select>
-					</div>
-					<div class="spacer">&nbsp;</div>
-
-					# START file #
-						<div class="block_container">
-							<div class="block_contents">
-								<div>
+	
+						# START file #
+							<article class="block">
+								<header>
+									<h1><a href="{file.U_MEDIA_LINK}" class="big">{file.NAME}</a></h1>
 									# IF C_MODO #
 									<div style="float:right;">
 										<a href="{file.U_ADMIN_UNVISIBLE_MEDIA}" class="img_link" title="{L_UNAPROBED}">
@@ -103,69 +102,62 @@
 										</a>
 									</div>
 									# ENDIF #
-										<a href="{file.U_MEDIA_LINK}" class="big">{file.NAME}</a>
+								</header>
+								<div class="content">
+									# IF A_DESC #
+									# IF file.C_DESCRIPTION #
+										<p style="margin-top:10px">
+										{file.DESCRIPTION}
+										<br />
+										</p>
+									# ENDIF #
+									# ELSE #
+										<br />
+									# ENDIF #
+									# IF A_BLOCK #
+									<div class="smaller">
+										# IF A_DATE #
+										{file.DATE}
+										<br />
+										# ENDIF #
+										# IF A_USER #
+										{file.POSTER}
+										<br />
+										# ENDIF #
+										# IF A_COUNTER #
+										{file.COUNT}
+										<br />
+										# ENDIF #
+										# IF A_COM #
+										{file.U_COM_LINK}
+										<br />
+										# ENDIF #
+										# IF A_NOTE #
+										{L_NOTE} {file.NOTE}
+										# ENDIF #
+									</div>
+									# ENDIF #
 								</div>
-								# IF A_DESC #
-								# IF file.C_DESCRIPTION #
-									<p style="margin-top:10px">
-									{file.DESCRIPTION}
-									<br />
-									</p>
-								# ENDIF #
-								# ELSE #
-									<br />
-								# ENDIF #
-								# IF A_BLOCK #
-								<div class="smaller">
-									# IF A_DATE #
-									{file.DATE}
-									<br />
-									# ENDIF #
-									# IF A_USER #
-									{file.POSTER}
-									<br />
-									# ENDIF #
-									# IF A_COUNTER #
-									{file.COUNT}
-									<br />
-									# ENDIF #
-									# IF A_COM #
-									{file.U_COM_LINK}
-									<br />
-									# ENDIF #
-									# IF A_NOTE #
-									{L_NOTE} {file.NOTE}
-									# ENDIF #
-								</div>
-								# ENDIF #
-								<div class="spacer"></div>
-							</div>
+								<footer></footer>
+							</article>
+						# END file #
+					# ENDIF #
+	
+					# IF C_NO_FILE #
+						<div class="notice">
+							{L_NO_FILE_THIS_CATEGORY}
 						</div>
-					# END file #
-					<div style="text-align:center;">{PAGINATION}</div>
-				# ENDIF #
-
-				# IF C_NO_FILE #
-					<div class="notice">
-						{L_NO_FILE_THIS_CATEGORY}
-					</div>
-				# ENDIF #
-				<div class="spacer"></div>
-			</div>
-			<div class="module_bottom_l"></div>
-			<div class="module_bottom_r"></div>
-			<div class="module_bottom"></div>
-		</div>
+					# ENDIF #
+				</div>
+				<footer>{PAGINATION}</footer>
+			</section>
 		# ENDIF #
 
 		# IF C_DISPLAY_MEDIA #
-		<div class="module_position">
-			<div class="module_top_l"></div>
-			<div class="module_top_r"></div>
-			<div class="module_top">
-				<div class="module_top_title">
-					{NAME}
-				</div>
+		<article>
+			<header>
+				<h1>{NAME}</h1>
+				
 				<div class="module_top_com">
 					# IF A_COM #
 						<img src="{PATH_TO_ROOT}/templates/{THEME}/images/com_mini.png" alt="" class="valign_middle" />
@@ -186,8 +178,8 @@
 						</a>
 					# ENDIF #
 				</div>
-			</div>
-			<div class="module_contents">
+			</header>
+			<div class="content">
 				# IF A_DESC #
 				<p class="text_justify" style="margin-top:15px">
 					{CONTENTS}
@@ -246,12 +238,9 @@
 				</table>
 				<div class="spacer"></div>
 				# ENDIF #
+				
+				{COMMENTS}
 			</div>
-			<div class="module_bottom_l"></div>
-			<div class="module_bottom_r"></div>
-			<div class="module_bottom">
-			</div>
-		</div>
-		<br /><br />
-		{COMMENTS}
+			<footer></footer>
+		</article>
 		# ENDIF #

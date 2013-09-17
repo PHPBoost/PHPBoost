@@ -29,7 +29,8 @@
 
 <section style="overflow: hidden;">
 	<header>
-		<h1><a href="${relative_url(SyndicationUrlBuilder::rss('news'))}" title="${i18n('syndication')}" class="img_link">
+		<h1>
+			<a href="${relative_url(SyndicationUrlBuilder::rss('news'))}" title="${i18n('syndication')}" class="img_link">
 				<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/rss.png" alt="${i18n('syndication')}" />
 			</a>
 			{L_NEWS_TITLE}
@@ -44,7 +45,7 @@
 		# IF news.C_NEWS_ROW #
 			<div class="spacer"></div>
 		# ENDIF #
-		<article # IF C_NEWS_BLOCK_COLUMN # style="float:left;width:{COLUMN_WIDTH}%" # ENDIF #~itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
+		<article # IF C_NEWS_BLOCK_COLUMN # style="float:left;width:{COLUMN_WIDTH}%" # ENDIF # itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
 			<header>
 			
 				# IF C_NEWS_BLOCK_COLUMN #
@@ -104,7 +105,5 @@
 		</article>
 	# END news #
 # ENDIF #
-	<footer>
-	# IF C_PAGINATION # # INCLUDE PAGINATION # # ENDIF #
-	</footer>
+	<footer># IF C_PAGINATION # # INCLUDE PAGINATION # # ENDIF #</footer>
 </section>
