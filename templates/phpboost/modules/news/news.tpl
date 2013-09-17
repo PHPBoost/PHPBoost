@@ -12,9 +12,7 @@
 			<div class="module_top_r"></div>
 			<div class="module_top">
                	<div class="module_top_title">
-					<a href="{U_SYNDICATION}" title="{L_SYNDICATION}" class="img_link">
-						<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/rss.png" alt="{L_SYNDICATION}"/>
-					</a>
+					<a href="{U_SYNDICATION}" class="syndication" title="${LangLoader::get_message('syndication', 'main')}"></a>
 					{TITLE}
                	</div>
                	<div class="module_top_com">

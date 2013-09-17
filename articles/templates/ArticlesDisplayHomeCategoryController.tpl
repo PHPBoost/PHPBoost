@@ -41,9 +41,7 @@
 <div class="module_position">	
 	<div class="module_top">
 		<div class="module_top_title">
-			<a href="{U_SYNDICATION}" title="Rss" class="img_link">
-				<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/rss.png" alt="Rss" title="Rss" />
-			</a>
+			<a href="{U_SYNDICATION}" class="syndication" title="${LangLoader::get_message('syndication', 'main')}"></a>
 			${i18n('articles')}
 		</div>
 	</div>

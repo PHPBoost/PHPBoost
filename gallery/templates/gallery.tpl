@@ -240,9 +240,7 @@
 		<section>					
 			<header>
 				<h1>
-					<a href="${relative_url(SyndicationUrlBuilder::rss('gallery', CAT_ID))}" title="Rss">
-						<img style="vertical-align:middle;margin-top:-2px;" src="{PATH_TO_ROOT}/templates/{THEME}/images/rss.png" alt="Rss" title="Rss" />
-					</a>
+					<a href="${relative_url(SyndicationUrlBuilder::rss('gallery', CAT_ID))}" class="syndication" title="${LangLoader::get_message('syndication', 'main')}"></a>
 					{L_GALLERY} {U_GALLERY_CAT_LINKS} {EDIT_CAT}
 				</h1>
 				<div class="module_top_com">

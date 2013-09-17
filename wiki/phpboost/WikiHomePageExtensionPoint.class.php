@@ -76,7 +76,6 @@ class WikiHomePageExtensionPoint implements HomePageExtensionPoint
 
 			$Template->assign_block_vars('last_articles', array(
 				'L_ARTICLES' => $LANG['wiki_last_articles_list'],
-				'RSS' => $articles_number > 0 ? '<a href="' . SyndicationUrlBuilder::rss('wiki')->rel() .'"><img src="../templates/' . get_utheme() . '/images/rss.png" alt="RSS" /></a>' : ''
 			));
 
 			$i = 0;

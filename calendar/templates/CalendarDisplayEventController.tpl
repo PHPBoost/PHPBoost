@@ -38,9 +38,7 @@ function change_registration() {
 <article itemscope="itemscope" itemtype="http://schema.org/Event">
 	<header>
 		<h1>
-			<a href="{U_SYNDICATION}" title="{@syndication}" class="img_link">
-				<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/rss.png" alt="{@syndication}"/>
-			</a>
+			<a href="{U_SYNDICATION}" class="syndication" title="${LangLoader::get_message('syndication', 'main')}"></a>
 			<span id="name" itemprop="name">{TITLE}</span>
 		</h1>
 		
