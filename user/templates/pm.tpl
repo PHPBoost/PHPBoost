@@ -52,13 +52,11 @@
 		# INCLUDE message_helper #
 		
 		<form action="pm{convers.U_USER_ACTION_PM}" method="post" onsubmit="javascript:return Confirm_pm();">
-			<div class="module_position">					
-				<div class="module_top_l"></div>		
-				<div class="module_top_r"></div>
-				<div class="module_top">
-					<div class="module_top_title">&bull; {convers.U_USER_VIEW} &raquo; {convers.U_PM_BOX} &raquo; {convers.U_POST_NEW_CONVERS}</div>
-				</div>
-				<div class="module_contents">					
+			<section>					
+				<header>
+					<h1>&bull; {convers.U_USER_VIEW} &raquo; {convers.U_PM_BOX} &raquo; {convers.U_POST_NEW_CONVERS}</h1>
+				</header>
+				<div class="content">					
 					<div style="float:left;">{L_PRIVATE_MSG}: {convers.PM_POURCENT}</div>
 					<div style="float:right;"><img src="../templates/{THEME}/images/read_mini.png" alt="" class="valign_middle" /> {convers.U_MARK_AS_READ}</div>
 					<br /><br />
@@ -136,10 +134,8 @@
 						</tr>
 					</table>
 				</div>
-				<div class="module_bottom_l"></div>		
-				<div class="module_bottom_r"></div>
-				<div class="module_bottom">&bull; {convers.U_USER_VIEW} &raquo; {convers.U_PM_BOX} &raquo; {convers.U_POST_NEW_CONVERS}</div>
-			</div>
+				<footer>&bull; {convers.U_USER_VIEW} &raquo; {convers.U_PM_BOX} &raquo; {convers.U_POST_NEW_CONVERS}</footer>
+			</section>
 		</form>
 		# END convers #
 
@@ -228,11 +224,11 @@
 
 
 		# START show_pm #
-		<div class="module_position">					
-			<div class="module_top_l"></div>		
-			<div class="module_top_r"></div>
-			<div class="module_top">&bull; {show_pm.U_USER_VIEW} &raquo; {show_pm.U_PM_BOX} &raquo; {show_pm.U_TITLE_CONVERS}</div>
-			<div class="module_contents">
+		<section>					
+			<header>
+				<h1>&bull; {show_pm.U_USER_VIEW} &raquo; {show_pm.U_PM_BOX} &raquo; {show_pm.U_TITLE_CONVERS}</h1>
+			</header>
+			<div class="content">
 				<table class="module_table">
 					<tr>
 						<th>
@@ -248,10 +244,8 @@
 					</tr>	
 				</table>
 			</div>
-			<div class="module_bottom_l"></div>		
-			<div class="module_bottom_r"></div>
-			<div class="module_bottom">&bull; {show_pm.U_USER_VIEW} &raquo; {show_pm.U_PM_BOX} &raquo; {show_pm.U_TITLE_CONVERS}</div>
-		</div>
+			<footer>&bull; {show_pm.U_USER_VIEW} &raquo; {show_pm.U_PM_BOX} &raquo; {show_pm.U_TITLE_CONVERS}</footer>
+		</section>
 		# END show_pm #
 
 
@@ -286,11 +280,11 @@
 
 		# START edit_pm #
 		<form action="pm{edit_pm.U_ACTION_EDIT}" method="post" onsubmit="return check_form_convers();">
-			<div class="module_position">					
-				<div class="module_top_l"></div>		
-				<div class="module_top_r"></div>
-				<div class="module_top">&bull; {edit_pm.U_USER_VIEW} &raquo; {edit_pm.U_PM_BOX}</div>
-				<div class="module_contents">	
+			<section>					
+				<header>
+					<h1>&bull; {edit_pm.U_USER_VIEW} &raquo; {edit_pm.U_PM_BOX}</h1>
+				</header>
+				<div class="content">	
 					# START edit_pm.show_pm #		
 					<table class="module_table">
 						<tr>
@@ -342,10 +336,8 @@
 						</fieldset>	
 					</div>	
 				</div>
-				<div class="module_bottom_l"></div>		
-				<div class="module_bottom_r"></div>
-				<div class="module_bottom">&bull; {edit_pm.U_USER_VIEW} &raquo; {edit_pm.U_PM_BOX}</div>
-			</div>
+				<footer>&bull; {edit_pm.U_USER_VIEW} &raquo; {edit_pm.U_PM_BOX}</footer>
+			</section>
 		</form>
 		# END edit_pm #
 
@@ -353,11 +345,11 @@
 
 		# START post_convers #		
 		<form action="pm{post_convers.U_ACTION_CONVERS}" method="post" onsubmit="return check_form_convers();">
-			<div class="module_position">					
-				<div class="module_top_l"></div>		
-				<div class="module_top_r"></div>
-				<div class="module_top">&bull; {post_convers.U_USER_VIEW} &raquo; {post_convers.U_PM_BOX}</div>
-				<div class="module_contents">	
+			<section>					
+				<header>
+					<h1>&bull; {post_convers.U_USER_VIEW} &raquo; {post_convers.U_PM_BOX}</h1>
+				</header>
+				<div class="content">	
 					# INCLUDE message_helper #
 					
 					# START post_convers.show_convers #		
@@ -424,10 +416,7 @@
 						</fieldset>	
 					</div>
 				</div>
-				<div class="module_bottom_l"></div>		
-				<div class="module_bottom_r"></div>
-				<div class="module_bottom">&bull; {post_convers.U_USER_VIEW} &raquo; {post_convers.U_PM_BOX}</div>
-			</div>
+				<footer>&bull; {post_convers.U_USER_VIEW} &raquo; {post_convers.U_PM_BOX}</footer>
+			</section>
 		</form>
 		# END post_convers #
-		

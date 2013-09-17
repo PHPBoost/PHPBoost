@@ -1,9 +1,9 @@
 		# START category #
-		<div class="module_position">			
-			<div class="module_top_l"></div>		
-			<div class="module_top_r"></div>
-			<div class="module_top">{TITLE}</div>
-			<div class="module_contents">
+		<section>			
+			<header>
+				<h1>{TITLE}</h1>
+			</header>
+			<div class="content">
 				<p style="text-align:center;">
 					<a href="{U_GO_BACK_TO_CAT}">{L_GO_BACK_TO_CAT}</a>
 				</p>
@@ -183,10 +183,8 @@
 					# END category.questions #
 				</fieldset>&nbsp;
 			</div>
-			<div class="module_bottom_l"></div>		
-			<div class="module_bottom_r"></div>
-			<div class="module_bottom"></div>
-		</div>
+			<footer></footer>
+		</section>
 
 		# END category #
 
@@ -214,11 +212,11 @@
 		}
 		-->
 		</script>
-		<div class="module_position">			
-			<div class="module_top_l"></div>		
-			<div class="module_top_r"></div>
-			<div class="module_top">{TITLE}</div>
-			<div class="module_contents">
+		<section>			
+			<header>
+				<h1>{TITLE}</h1>
+			</header>
+			<div class="content">
 				<form action="{edit_question.TARGET}" method="post" onsubmit="return check_form_faq()">
 					<fieldset>
 						<legend>{L_QUESTION}</legend>
@@ -249,19 +247,17 @@
 				</form>
 				&nbsp;
 			</div>
-			<div class="module_bottom_l"></div>		
-			<div class="module_bottom_r"></div>
-			<div class="module_bottom"></div>
-		</div>
+			<footer></footer>
+		</section>
 		# END edit_question #
 
 		
 		# START move_question #
-		<div class="module_position">			
-			<div class="module_top_l"></div>		
-			<div class="module_top_r"></div>
-			<div class="module_top">{TITLE}</div>
-			<div class="module_contents">
+		<section>			
+			<header>
+				<h1>{TITLE}</h1>
+			</header>
+			<div class="content">
 				<form action="{U_FORM_TARGET}" method="post">
 					<fieldset>
 						<legend>{L_TARGET}</legend>
@@ -283,8 +279,6 @@
 				</form>
 				&nbsp;
 			</div>
-			<div class="module_bottom_l"></div>		
-			<div class="module_bottom_r"></div>
-			<div class="module_bottom"></div>
-		</div>
+			<footer></footer>
+		</section>
 		# END move_question #
