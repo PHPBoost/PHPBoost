@@ -2,9 +2,7 @@
 		<section>		
 			<header>
 				<h1>
-					<a href="${relative_url(SyndicationUrlBuilder::rss('download',IDCAT))}" title="Rss">
-						<img style="vertical-align:middle;margin-top:-2px;" src="{PATH_TO_ROOT}/templates/{THEME}/images/rss.png" alt="Rss" title="Rss" />
-					</a>
+					<a href="${relative_url(SyndicationUrlBuilder::rss('download',IDCAT))}" class="syndication" title="${LangLoader::get_message('syndication', 'main')}"></a>
 					{TITLE}
 					# IF C_ADMIN #
 					<a href="{U_ADMIN_CAT}">

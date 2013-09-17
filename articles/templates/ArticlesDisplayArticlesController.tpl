@@ -34,9 +34,7 @@
 <div class="module_position" itemscope="itemscope" itemtype="http://schema.org/Article">					
 	<div class="article_top">
 		<div class="article_top_title">
-			<a href="{U_SYNDICATION}" title="Rss" class="img_link">
-				<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/rss.png" alt="Rss" title="Rss" />
-			</a>
+			<a href="{U_SYNDICATION}" title="Rss" class="syndication"></a>
 			<span id="name" itemprop="name">{TITLE}</span>
 		</div>
 		<div class="article_info">

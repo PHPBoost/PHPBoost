@@ -30,9 +30,7 @@
 <section style="overflow: hidden;">
 	<header>
 		<h1>
-			<a href="${relative_url(SyndicationUrlBuilder::rss('news'))}" title="${i18n('syndication')}" class="img_link">
-				<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/rss.png" alt="${i18n('syndication')}" />
-			</a>
+			<a href="${relative_url(SyndicationUrlBuilder::rss('news'))}" class="syndication" title="${LangLoader::get_message('syndication', 'main')}"></a>
 			{L_NEWS_TITLE}
 		</h1>
 	</header>
@@ -74,9 +72,7 @@
 				</ul>
 				
 				<h1>
-					<a href="{news.U_SYNDICATION}" title="${LangLoader::get_message('syndication', 'main')}" class="img_link">
-						<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/rss.png" alt="${LangLoader::get_message('syndication', 'main')}" />
-					</a>
+					<a href="{news.U_SYNDICATION}" class="syndication" title="${LangLoader::get_message('syndication', 'main')}"></a>
         			<a href="{news.U_LINK}"><span id="name" itemprop="name">{news.NAME}</span></a>
         		</h1>
         		

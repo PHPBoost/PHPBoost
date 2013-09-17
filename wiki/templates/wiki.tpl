@@ -50,7 +50,7 @@
 					# END cat.no_sub_cat #
 					# END IF #
 					<br />
-					<strong>{L_SUB_ARTICLES}</strong> &nbsp; {cat.RSS}
+					<strong>{L_SUB_ARTICLES}</strong> &nbsp; <a href="${relative_url(SyndicationUrlBuilder::rss('wiki'))}" class="syndication" title="${LangLoader::get_message('syndication', 'main')}"></a>
 					<br /><br />
 					# START cat.list_art #
 						<img src="{PICTURES_DATA_PATH}/images/article.png" class="valign_middle" alt="" />&nbsp;<a href="{cat.list_art.U_ARTICLE}">{cat.list_art.TITLE}</a><br />

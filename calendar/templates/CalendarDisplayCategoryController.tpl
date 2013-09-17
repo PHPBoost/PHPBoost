@@ -11,9 +11,7 @@ function Confirm() {
 <section>
 	<header>
 		<h1>
-			<a href="${relative_url(SyndicationUrlBuilder::rss('calendar'))}" title="${LangLoader::get_message('syndication', 'main')}" class="img_link">
-				<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/rss.png" alt="${LangLoader::get_message('syndication', 'main')}"/>
-			</a>
+			<a href="${relative_url(SyndicationUrlBuilder::rss('calendar'))}" class="syndication" title="${LangLoader::get_message('syndication', 'main')}"></a>
 			{@module_title}
 		</h1>
 		<div class="module_actions">
@@ -51,9 +49,7 @@ function Confirm() {
 			<article itemscope="itemscope" itemtype="http://schema.org/Event">
 				<header>
 					<h1>
-						<a href="{event.U_SYNDICATION}" title="{@syndication}" class="img_link">
-							<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/rss.png" alt="{@syndication}"/>
-						</a>
+						<a href="{event.U_SYNDICATION}" class="syndication" title="${LangLoader::get_message('syndication', 'main')}"></a>
 						<a href="{event.U_LINK}"><span id="name" itemprop="name">{event.TITLE}</span></a>
 					</h1>
 					

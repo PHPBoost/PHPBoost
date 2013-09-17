@@ -176,7 +176,6 @@ if ((!empty($encoded_title) || !empty($id_contents)) && $num_rows > 0)
 		$num_articles = $Sql->num_rows($result, "SELECT COUNT(*) FROM " . PREFIX . "wiki_articles WHERE a.id_cat = '" . $article_infos['id_cat'] . "' AND a.id <> '" . $id_article . "' AND a.redirect = 0", __LINE__, __FILE__);
 		
 		$Template->assign_block_vars('cat', array(
-			'RSS' => $num_articles > 0 ? '<a href="' . SyndicationUrlBuilder::rss('wiki', $article_infos['id_cat'])->rel()  . '"><img src="' . TPL_PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/rss.png" alt="RSS" /></a>' : ''
 		));
 
 		while ($row = $Sql->fetch_assoc($result))

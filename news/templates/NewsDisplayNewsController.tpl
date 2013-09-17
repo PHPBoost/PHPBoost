@@ -30,9 +30,7 @@ function Confirm()
 		</ul>
 		
 		<h1>
-			<a href="{U_SYNDICATION}" title="${LangLoader::get_message('syndication', 'main')}" class="img_link">
-				<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/rss.png" alt="${LangLoader::get_message('syndication', 'main')}"/>
-			</a>
+			<a href="{U_SYNDICATION}" title="${LangLoader::get_message('syndication', 'main')}" class="syndication"></a>
 			<span id="name" itemprop="name">{NAME}</span>
 		</h1>
 		

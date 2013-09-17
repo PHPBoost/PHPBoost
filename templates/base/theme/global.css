@@ -113,6 +113,11 @@ a.member {
     font-weight:bold;
 }
 
+/*Image des syndications*/
+a.syndication {
+	content: url('../images/rss.png') no-repeat;
+}
+
 /* Mise en forme
 -------------------------------------------*/
 

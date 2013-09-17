@@ -22,9 +22,7 @@
 			<section>
 				<header>
 					<h1>
-						<a href="${relative_url(SyndicationUrlBuilder::rss('media', ID_CAT))}" title="Syndication">
-							<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/rss.png" alt="Syndication" title="Syndication" />
-						</a>
+						<a href="${relative_url(SyndicationUrlBuilder::rss('media', ID_CAT))}" class="syndication" title="${LangLoader::get_message('syndication', 'main')}"></a>
 						{TITLE}
 					</h1>
 				</header>
