@@ -86,7 +86,7 @@
 						# START file #
 							<article class="block">
 								<header>
-									<h1><a href="{file.U_MEDIA_LINK}" class="big">{file.NAME}</a></h1>
+									<h1><a href="{file.U_MEDIA_LINK}">{file.NAME}</a></h1>
 									# IF C_MODO #
 									<div style="float:right;">
 										<a href="{file.U_ADMIN_UNVISIBLE_MEDIA}" class="img_link" title="{L_UNAPROBED}">

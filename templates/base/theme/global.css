@@ -129,12 +129,12 @@ a.syndication {
 .biggest { font-size: 20px; }
 
 /* Titres */
-h1 { font-size:32px; }
-h2 { font-size:28px; }
-h3 { font-size:24px; }
-h4 { font-size:20px; }
-h5 { font-size:18px; }
-h6 { font-size:16px; }
+h1, h1 * { font-size:32px; }
+h2, h2 * { font-size:28px; }
+h3, h3 * { font-size:24px; }
+h4, h4 * { font-size:20px; }
+h5, h5 * { font-size:18px; }
+h6, h6 * { font-size:16px; }
 
 h2.title {
     font-size:16px;
