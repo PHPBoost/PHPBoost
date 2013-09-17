@@ -6,6 +6,7 @@
 		<meta name="description" content="{SITE_DESCRIPTION}" />
 		<meta name="keywords" content="{SITE_KEYWORD}" />
 		<meta name="generator" content="PHPBoost {PHPBOOST_VERSION}" />
+		<meta name="viewport" content="initial-scale=1.0">
 		<!-- Default CSS -->
 		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/default/theme/default.css" type="text/css" media="screen, print, handheld" />
 		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/default/theme/font-awesome.css" />
@@ -44,7 +45,7 @@
 	
 		# INCLUDE MAINTAIN #
 		
-		<div id="global">
+		<div id="global" class="show-desktop">
 			<header>
 				<div id="top_header">
 					<div id="logo"></div>

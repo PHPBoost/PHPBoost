@@ -408,6 +408,39 @@ ul.rss_feed li {
 	}
 }
 
+/* Medias queries
+--------------------------------------*/
+
+/* Mobiles */
+@media all and (max-width: 480px) {
+	.show-desktop	{display:none;}
+	.hide-desktop	{display:block;}
+	.show-tablet	{display:none;}
+	.hide-tablet	{display:block;}
+	.show-phone		{display:block;}
+	.hide-phone		{display:none;}
+}
+	
+/* Tablettes */
+@media all and (min-width: 481px) and (max-width: 979px) {
+	.show-desktop	{display:none;}
+	.hide-desktop	{display:block;}
+	.show-tablet	{display:block;}
+	.hide-tablet	{display:none;}
+	.show-phone		{display:none;}
+	.hide-phone		{display:block;}
+}
+	
+/* Ecrans */
+@media all and (min-width: 980px) {
+	.show-desktop	{display:block;}
+	.hide-desktop	{display:none;}
+	.show-tablet	{display:none;}
+	.hide-tablet	{display:block;}
+	.show-phone		{display:none;}
+	.hide-phone		{display:block;}
+}
+
 /* Lightbox*/
 #lightbox{  position:absolute;  left:0; width:100%; z-index:103; text-align:center; line-height:0;}
 #lightbox img{ width:auto; height:auto;}
