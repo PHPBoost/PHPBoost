@@ -1,10 +1,8 @@
-<div class="module_position">					
-	<div class="module_top_l"></div>		
-	<div class="module_top_r"></div>
-	<div class="module_top">
-		<div class="module_top_title">{L_MESSAGES}</div>
-	</div>
-	<div class="module_contents">
+<section>					
+	<header>
+		<h1>{L_MESSAGES}</h1>
+	</header>
+	<div class="content">
 		# START available_modules_msg #
 		<p style="text-align:center;margin-bottom:15px;"> 
 			<a href="{available_modules_msg.U_LINK_USER_MSG}">
@@ -16,4 +14,5 @@
 		# END available_modules_msg #
 		<br /><br />			
 	</div>
-</div>
+	<footer></footer>
+</section>

@@ -36,13 +36,11 @@
 		-->
 		</script>
 		
-		<div class="module_position">			
-			<div class="module_top_l"></div>		
-			<div class="module_top_r"></div>
-			<div class="module_top">
-				{L_PAGE_TITLE}
-			</div>
-			<div class="module_contents">
+		<section>			
+			<header>
+				<h1>{L_PAGE_TITLE}</h1>
+			</header>
+			<div class="content">
 			
 			<script type="text/javascript">
 			<!--
@@ -205,8 +203,5 @@
 				</fieldset>
 			</form>
 			</div>
-			<div class="module_bottom_l"></div>		
-			<div class="module_bottom_r"></div>
-			<div class="module_bottom"></div>
-		</div>
-		
+			<footer></footer>
+		</section>

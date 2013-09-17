@@ -1,11 +1,9 @@
 	# IF C_CONTRIBUTION_LIST #
-	<div class="module_position">			
-		<div class="module_top_l"></div>		
-		<div class="module_top_r"></div>
-		<div class="module_top">
-			<div class="module_top_title">{L_CONTRIBUTION_PANEL}</div>
-		</div>
-		<div class="module_contents">
+	<section>			
+		<header>
+			<h1>{L_CONTRIBUTION_PANEL}</h1>
+		</header>
+		<div class="content">
 			<h1>{L_CONTRIBUTION_LIST}</h1>
 			<br />
 			# IF C_NO_CONTRIBUTION #
@@ -151,28 +149,22 @@
 					<div class="warning">{L_NO_MODULE_IN_WHICH_CONTRIBUTE}</div>
 				# ENDIF #
 			</div>
-		<div class="module_bottom_l"></div>		
-		<div class="module_bottom_r"></div>
-		<div class="module_bottom"></div>
-	</div>
+		<footer></footer>
+	</section>
 	# ENDIF #
 
 	# IF C_CONSULT_CONTRIBUTION #
-	<div class="module_position">			
-		<div class="module_top_l"></div>		
-		<div class="module_top_r"></div>
-		<div class="module_top">
-			<span style="float:left;">
-				{ENTITLED}
-			</span>
+	<section>			
+		<header>
+			<h1>{ENTITLED}</h1>
 			# IF C_WRITE_AUTH #
 			<span style="float:right;">
 				<a href="{U_UPDATE}" title="{L_UPDATE}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="{L_UPDATE}" /></a>
 				<a href="{U_DELETE}" onclick="return confirm('{L_CONFIRM_DELETE_CONTRIBUTION}');" title="{L_DELETE}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" /></a>
 			</span>
 			# ENDIF #
-		</div>
-		<div class="module_contents">
+		</header>
+		<div class="content">
 			# IF C_WRITE_AUTH #
 				# IF C_UNPROCESSED_CONTRIBUTION #
 				<div style="text-align:center;margin:auto;width:300px">
@@ -235,20 +227,16 @@
 			
 			{COMMENTS}
 		</div>
-		<div class="module_bottom_l"></div>		
-		<div class="module_bottom_r"></div>
-		<div class="module_bottom"></div>
-	</div>
+		<footer></footer>
+	</section>
 	# ENDIF #
 	
 	# IF C_EDIT_CONTRIBUTION #
-	<div class="module_position">			
-		<div class="module_top_l"></div>		
-		<div class="module_top_r"></div>
-		<div class="module_top">
-			{ENTITLED}
-		</div>
-		<div class="module_contents">
+	<section>			
+		<header>
+			<h1>{ENTITLED}</h1>
+		</header>
+		<div class="content">
 			<form action="{U_TARGET}" method="post">
 				<fieldset>
 					<legend>{L_CONTRIBUTION}</legend>
@@ -282,8 +270,6 @@
 				</fieldset>
 			</form>
 		</div>
-		<div class="module_bottom_l"></div>		
-		<div class="module_bottom_r"></div>
-		<div class="module_bottom"></div>
-	</div>
+		<footer></footer>
+	</section>
 	# ENDIF #

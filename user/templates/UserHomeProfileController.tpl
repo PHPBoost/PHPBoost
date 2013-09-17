@@ -1,10 +1,8 @@
-<div class="module_position">					
-	<div class="module_top_l"></div>		
-	<div class="module_top_r"></div>
-	<div class="module_top">
-		<div class="module_top_title"><strong>{L_PROFIL}</strong></div>
-	</div>
-	<div class="module_contents">
+<section>					
+	<header>
+		<h1>{L_PROFIL}</h1>
+	</header>
+	<div class="content">
 		<p style="text-align:center;" class="text_strong">{L_WELCOME} {USER_NAME}</p>
 		
 		<table class="module_table" style="width:99%;margin-top:15px;">
@@ -53,7 +51,5 @@
 		<br /><br />
 		{MSG_MBR}
 	</div>
-	<div class="module_bottom_l"></div>		
-	<div class="module_bottom_r"></div>
-	<div class="module_bottom"></div>
-</div>
+	<footer></footer>
+</section>

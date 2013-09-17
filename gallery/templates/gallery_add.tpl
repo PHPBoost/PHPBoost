@@ -1,16 +1,12 @@
 		<form action="{U_GALLERY_ACTION_ADD}" method="post" enctype="multipart/form-data">
-			<div class="module_position">					
-				<div class="module_top_l"></div>		
-				<div class="module_top_r"></div>
-				<div class="module_top">
-					<div style="float:left">
-						<a href="gallery.php{SID}">{L_GALLERY}</a> &raquo; {U_GALLERY_CAT_LINKS} {ADD_PICS}
-					</div>
+			<section>					
+				<header>
+					<h1><a href="gallery.php{SID}">{L_GALLERY}</a> &raquo; {U_GALLERY_CAT_LINKS} {ADD_PICS}</h1>
 					<div style="float:right">
 						{PAGINATION}
 					</div>
-				</div>
-				<div class="module_contents">
+				</header>
+				<div class="content">
 					<div style="text-align:center">
 						# INCLUDE message_helper #
 		
@@ -57,15 +53,13 @@
 					<input type="submit" name="vupload" value="{L_UPLOAD}" class="submit">
 					</fieldset>
 				</div>
-				<div class="module_bottom_l"></div>		
-				<div class="module_bottom_r"></div>
-				<div class="module_bottom">
+				<footer>
 					<div style="float:left" class="text_strong">
 						<a href="gallery.php{SID}">{L_GALLERY}</a> &raquo; {U_GALLERY_CAT_LINKS} {ADD_PICS}
 					</div>
 					<div style="float:right">
 						{PAGINATION}
 					</div>
-				</div>
-			</div>
+				</footer>
+			</section>
 		</form>

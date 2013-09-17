@@ -57,11 +57,11 @@
 					<tr> 
 						<td>
 							<br />
-							<div class="module_position">					
-								<div class="module_top_l"></div>		
-								<div class="module_top_r"></div>
-								<div class="module_top">{web.NAME}</div>
-								<div class="module_contents">
+							<article>
+								<header>
+									<h1>{web.NAME}</h1>
+								</header>
+								<div class="content">
 									<p>					
 										<strong>{web.L_DESC}:</strong> {web.CONTENTS}									
 											<br /><br />									
@@ -75,10 +75,8 @@
 										<a href="{web.URL}"><img src="{PICTURES_DATA_PATH}/images/{LANG}/bouton_url.gif" alt="" title="" /></a>
 									</p>
 								</div>
-								<div class="module_bottom_l"></div>		
-								<div class="module_bottom_r"></div>
-								<div class="module_bottom">&nbsp;</div>
-							</div>
+								<footer></footer>
+							</article>
 							<br />
 						</td>
 					</tr>

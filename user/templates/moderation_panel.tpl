@@ -1,10 +1,8 @@
-		<div class="module_position">
-			<div class="module_top_l"></div>		
-			<div class="module_top_r"></div>
-			<div class="module_top">
-				<div class="module_top_title">{L_MODERATION_PANEL}</div>
-			</div>
-			<div class="module_contents" style="padding-bottom:75px;">	
+		<section>
+			<header>
+				<h1>{L_MODERATION_PANEL}</h1>
+			</header>
+			<div class="content" style="padding-bottom:75px;">	
 			# IF C_MODO_PANEL_USER #
 				<table class="module_table">
 					<tr>
@@ -230,8 +228,5 @@
 				# ENDIF #
 			# ENDIF #
 				</div>
-			<div class="module_bottom_l"></div>		
-			<div class="module_bottom_r"></div>
-			<div class="module_bottom">
-			</div>
-		</div>
+			<footer></footer>
+		</section>
