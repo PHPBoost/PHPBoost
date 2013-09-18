@@ -86,20 +86,22 @@
 						# START file #
 							<article class="block">
 								<header>
-									<h1><a href="{file.U_MEDIA_LINK}">{file.NAME}</a></h1>
-									# IF C_MODO #
-									<div style="float:right;">
-										<a href="{file.U_ADMIN_UNVISIBLE_MEDIA}" class="img_link" title="{L_UNAPROBED}">
-											<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/unvisible.png" alt="">
-										</a>
-										<a href="{file.U_ADMIN_EDIT_MEDIA}" class="img_link" title="{L_EDIT}">
-											<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="">
-										</a>
-										<a href="{file.U_ADMIN_DELETE_MEDIA}" onclick="return confirm('{L_CONFIRM_DELETE_FILE}');" class="img_link" title="{L_DELETE}">
-											<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="">
-										</a>
-									</div>
-									# ENDIF #
+									<h1>
+										<a href="{file.U_MEDIA_LINK}">{file.NAME}</a>
+										# IF C_MODO #
+										<span class="tools">
+											<a href="{file.U_ADMIN_UNVISIBLE_MEDIA}" class="img_link" title="{L_UNAPROBED}">
+												<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/unvisible.png" alt="">
+											</a>
+											<a href="{file.U_ADMIN_EDIT_MEDIA}" class="img_link" title="{L_EDIT}">
+												<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="">
+											</a>
+											<a href="{file.U_ADMIN_DELETE_MEDIA}" onclick="return confirm('{L_CONFIRM_DELETE_FILE}');" class="img_link" title="{L_DELETE}">
+												<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="">
+											</a>
+										</span>
+										# ENDIF #
+									</h1>
 								</header>
 								<div class="content">
 									# IF A_DESC #
@@ -154,28 +156,29 @@
 		# IF C_DISPLAY_MEDIA #
 		<article>
 			<header>
-				<h1>{NAME}</h1>
-				
-				<div class="module_top_com">
-					# IF A_COM #
-						<img src="{PATH_TO_ROOT}/templates/{THEME}/images/com_mini.png" alt="" class="valign_middle" />
-						{U_COM}
-					# ENDIF #
-					# IF C_MODO #
-						<a href="moderation_media.php" class="img_link" title="{L_MODO_PANEL}">
-							<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/moderation_panel.png" style="width:16px;height:16px;" alt="">
-						</a>
-						<a href="{U_UNVISIBLE_MEDIA}" class="img_link" title="{L_UNAPROBED}">
-							<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/unvisible.png" alt="">
-						</a>
-						<a href="{U_EDIT_MEDIA}" class="img_link" title="{L_EDIT}">
-							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" class="valign_middle" alt="" />
-						</a>
-						<a href="{U_DELETE_MEDIA}" onclick="return confirm('{L_CONFIRM_DELETE_FILE}');" class="img_link" title="{L_DELETE}">
-							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" class="valign_middle" alt="" />
-						</a>
-					# ENDIF #
-				</div>
+				<h1>
+					{NAME} 
+					<span class="tools">
+						# IF A_COM #
+							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/com_mini.png" alt="" class="valign_middle" />
+							{U_COM}
+						# ENDIF #
+						# IF C_MODO #
+							<a href="moderation_media.php" class="img_link" title="{L_MODO_PANEL}">
+								<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/moderation_panel.png" style="width:16px;height:16px;" alt="">
+							</a>
+							<a href="{U_UNVISIBLE_MEDIA}" class="img_link" title="{L_UNAPROBED}">
+								<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/unvisible.png" alt="">
+							</a>
+							<a href="{U_EDIT_MEDIA}" class="img_link" title="{L_EDIT}">
+								<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" class="valign_middle" alt="" />
+							</a>
+							<a href="{U_DELETE_MEDIA}" onclick="return confirm('{L_CONFIRM_DELETE_FILE}');" class="img_link" title="{L_DELETE}">
+								<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" class="valign_middle" alt="" />
+							</a>
+						# ENDIF #
+					</span>
+				</h1>
 			</header>
 			<div class="content">
 				# IF A_DESC #

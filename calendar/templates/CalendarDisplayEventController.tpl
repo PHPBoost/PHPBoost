@@ -40,6 +40,20 @@ function change_registration() {
 		<h1>
 			<a href="{U_SYNDICATION}" class="syndication" title="${LangLoader::get_message('syndication', 'main')}"></a>
 			<span id="name" itemprop="name">{TITLE}</span>
+			
+			<span class="tools">
+				# IF C_COMMENTS_ENABLED #<a href="{U_COMMENTS}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/com_mini.png" alt="" class="valign_middle" /> {L_COMMENTS}</a># ENDIF #
+				# IF C_EDIT #
+				<a href="{U_EDIT}" title="{L_EDIT}" class="img_link">
+					<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="{L_EDIT}" />
+				</a>
+				# ENDIF #
+				# IF C_DELETE #
+				<a href="{U_DELETE}" title="{L_DELETE}"# IF NOT C_BELONGS_TO_A_SERIE # onclick="javascript:return Confirm();"# ENDIF #>
+					<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" />
+				</a>
+				# ENDIF #
+			</span>
 		</h1>
 		
 		<meta itemprop="url" content="{U_LINK}">
@@ -47,20 +61,6 @@ function change_registration() {
 			<meta itemprop="about" content="{CATEGORY_NAME}">
 			<meta itemprop="discussionUrl" content="{U_COMMENTS}">
 			<meta itemprop="interactionCount" content="{NUMBER_COMMENTS} UserComments">
-		</div>
-		
-		<div class="module_top_com">
-			# IF C_COMMENTS_ENABLED #<a href="{U_COMMENTS}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/com_mini.png" alt="" class="valign_middle" /> {L_COMMENTS}</a># ENDIF #
-			# IF C_EDIT #
-			<a href="{U_EDIT}" title="{L_EDIT}" class="img_link">
-				<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="{L_EDIT}" />
-			</a>
-			# ENDIF #
-			# IF C_DELETE #
-			<a href="{U_DELETE}" title="{L_DELETE}"# IF NOT C_BELONGS_TO_A_SERIE # onclick="javascript:return Confirm();"# ENDIF #>
-				<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" />
-			</a>
-			# ENDIF #
 		</div>
 	</header>
 	<div class="content">

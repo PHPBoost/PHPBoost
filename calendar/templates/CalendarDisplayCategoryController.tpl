@@ -51,6 +51,20 @@ function Confirm() {
 					<h1>
 						<a href="{event.U_SYNDICATION}" class="syndication" title="${LangLoader::get_message('syndication', 'main')}"></a>
 						<a href="{event.U_LINK}"><span id="name" itemprop="name">{event.TITLE}</span></a>
+						
+						<span class="tools">
+							# IF C_COMMENTS_ENABLED #<a href="{event.U_COMMENTS}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/com_mini.png" alt="" class="valign_middle" /> {event.L_COMMENTS}</a># ENDIF #
+							# IF event.C_EDIT #
+							<a href="{event.U_EDIT}" title="{L_EDIT}" class="img_link">
+								<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="{L_EDIT}" />
+							</a>
+							# ENDIF #
+							# IF event.C_DELETE #
+							<a href="{event.U_DELETE}" title="{L_DELETE}"# IF NOT event.C_BELONGS_TO_A_SERIE # onclick="javascript:return Confirm();"# ENDIF #>
+								<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" />
+							</a>
+							# ENDIF #
+						</span>
 					</h1>
 					
 					<meta itemprop="url" content="{event.U_LINK}">
@@ -58,20 +72,6 @@ function Confirm() {
 						<meta itemprop="about" content="{event.CATEGORY_NAME}">
 						<meta itemprop="discussionUrl" content="{event.U_COMMENTS}">
 						<meta itemprop="interactionCount" content="{event.NUMBER_COMMENTS} UserComments">
-					</div>
-					
-					<div class="module_top_com">
-						# IF C_COMMENTS_ENABLED #<a href="{event.U_COMMENTS}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/com_mini.png" alt="" class="valign_middle" /> {event.L_COMMENTS}</a># ENDIF #
-						# IF event.C_EDIT #
-						<a href="{event.U_EDIT}" title="{L_EDIT}" class="img_link">
-							<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="{L_EDIT}" />
-						</a>
-						# ENDIF #
-						# IF event.C_DELETE #
-						<a href="{event.U_DELETE}" title="{L_DELETE}"# IF NOT event.C_BELONGS_TO_A_SERIE # onclick="javascript:return Confirm();"# ENDIF #>
-							<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" />
-						</a>
-						# ENDIF #
 					</div>
 				</header>
 				<div class="content">
