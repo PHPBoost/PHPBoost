@@ -140,16 +140,16 @@
 				<h1 itemprop="name">
 					{NAME}
 					<span class="tools">
-					{U_COM}
-					# IF C_EDIT_AUTH #
-						<a href="{U_EDIT_FILE}">
-							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" class="valign_middle" alt="{L_EDIT_FILE}" />
-						</a>
-						<a href="{U_DELETE_FILE}" onclick="return confirm('{L_CONFIRM_DELETE_FILE}');">
-							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" class="valign_middle" alt="{L_DELETE_FILE}" />
-						</a>
-					# ENDIF #
-				</span>
+						{U_COM}
+						# IF C_EDIT_AUTH #
+							<a href="{U_EDIT_FILE}">
+								<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" class="valign_middle" alt="{L_EDIT_FILE}" />
+							</a>
+							<a href="{U_DELETE_FILE}" onclick="return confirm('{L_CONFIRM_DELETE_FILE}');">
+								<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" class="valign_middle" alt="{L_DELETE_FILE}" />
+							</a>
+						# ENDIF #
+					</span>
 				</h1>
 				
 			</header>

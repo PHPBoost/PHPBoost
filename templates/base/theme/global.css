@@ -116,6 +116,7 @@ a.member {
 /*Image des syndications*/
 a.syndication {
 	content: url('../images/rss.png') no-repeat;
+	border: none;
 }
 
 /* Mise en forme

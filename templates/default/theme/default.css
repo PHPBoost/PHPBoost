@@ -59,6 +59,7 @@ img {
     border:none;
 	overflow:scroll;
 	max-width:100%;
+	vertical-align: middle;
 }
 
 hr {
