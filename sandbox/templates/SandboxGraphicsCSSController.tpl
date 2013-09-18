@@ -19,8 +19,6 @@
 	<a href="#" class="admin">Administrateur</a> <br>
 	<a href="#" class="modo">Modérateur</a> <br>
 	<a href="#" class="member">Membre</a> <br>
-	
-	
 </fieldset>
 
 <fieldset>
@@ -141,7 +139,78 @@
 	</ol>
 </fieldset>
 
+<h2>Pagination</h2><br>
 <div class="center"># INCLUDE PAGINATION #</div>
+
+<h2>Page</h2><br>
+
+<section>
+	<header>
+		<h1>Titre de la page</h1>
+	</header>
+	<div class="content">
+		Huic Arabia est conserta, ex alio latere Nabataeis contigua; opima varietate conmerciorum castrisque oppleta validis et castellis, quae ad repellendos gentium vicinarum excursus sollicitudo pervigil veterum per oportunos saltus erexit et cautos. haec quoque civitates habet inter oppida quaedam ingentes Bostram et Gerasam atque Philadelphiam murorum firmitate cautissimas. hanc provinciae inposito nomine rectoreque adtributo obtemperare legibus nostris Traianus conpulit imperator incolarum tumore saepe contunso cum glorioso marte Mediam urgeret et Parthos.
+	</div>
+	<footer></footer>
+</section>
+
+<h2>Blocs</h2><br>
+
+<section>
+	<header>
+		<h1>Titre de la page</h1>
+	</header>
+	<div class="content">
+		<article class="block">
+			<header>
+				<h1>Titre du bloc</h1>
+			</header>
+			<div class="contents">
+				Inpares parte deviis scirent diffuso petivere idem sed deviis documentis idem stataria omnia latrones undique.				
+			</div>
+			<footer></footer>
+		</article>
+	</div>
+	<footer></footer>
+</section>
+
+<h2>Blocs (3 sur une ligne)</h2><br>
+
+<section>
+	<header>
+		<h1>Titre de la page</h1>
+	</header>
+	<div class="content">
+		<article class="small_block">
+			<header>
+				<h1>Titre du bloc</h1>
+			</header>
+			<div class="contents">
+				Inpares parte deviis scirent diffuso petivere idem sed deviis documentis idem stataria omnia latrones undique.				
+			</div>
+			<footer></footer>
+		</article>
+		<article class="small_block">
+			<header>
+				<h1>Titre du bloc</h1>
+			</header>
+			<div class="contents">
+				Inpares parte deviis scirent diffuso petivere idem sed deviis documentis idem stataria omnia latrones undique.				
+			</div>
+			<footer></footer>
+		</article>
+		<article class="small_block">
+			<header>
+				<h1>Titre du bloc</h1>
+			</header>
+			<div class="contents">
+				Inpares parte deviis scirent diffuso petivere idem sed deviis documentis idem stataria omnia latrones undique.				
+			</div>
+			<footer></footer>
+		</article>
+	</div>
+	<footer></footer>
+</section>
 
 <div id="comments_list">
 	<h2>Commentaires</h2><br>
@@ -150,7 +219,7 @@
 			<div id="comment-pseudo">
 				
 					<a itemprop="author" href="{PATH_TO_ROOT}/user/?url=/profile/1" class="admin" >
-						reidlos
+						admin
 					</a>
 				
 			</div>
@@ -174,39 +243,6 @@
 			</div>
 			<div class="comment-message">
 				<div itemprop="text" class="message-containt" class="content">Ceci est un commentaire</div>
-			</div>
-		</div>
-	</div>
-
-	<div id="com3" class="comment" itemscope="itemscope" itemtype="http://schema.org/Comment">
-		<div class="comment-user_infos">
-			<div id="comment-pseudo">
-				
-					<a itemprop="author" href="{PATH_TO_ROOT}/user/?url=/profile/1" class="admin" >
-						reidlos
-					</a>
-				
-			</div>
-			<div class="comment-level">Administrateur</div>
-			<img src="{PATH_TO_ROOT}/templates/base/images/no_avatar.png" class="comment-avatar" />
-		</div>
-		<div class="comment-content">
-			<div class="comment-date">
-				<div style="float:right;">
-					<a itemprop="url" href="#com3">#3</a>
-					
-						<a href="#comments_message">
-							<img src="{PATH_TO_ROOT}/templates/base/images/french/edit.png" alt="Modifier" title="Modifier" class="valign_middle" />
-						</a> 
-						<a href="#comments_message" onclick="javascript:return Confirm_del_comment();">
-							<img src="{PATH_TO_ROOT}/templates/base/images/french/delete.png" alt="Supprimer" title="Supprimer" class="valign_middle" />
-						</a>
-					
-				</div>
-				<span itemprop="datePublished" content="2013-09-05T15:37:07+00:00">05/09/2013 à 15h37</span>
-			</div>
-			<div class="comment-message">
-				<div itemprop="text" class="message-containt" class="content">Voici le deuxième</div>
 			</div>
 		</div>
 	</div>
@@ -255,13 +291,6 @@
 		
 	</tr>
 </table>
-
-
-
-
-
-
-
 
 <fieldset>
 	<legend>Messages d'erreurs</legend>

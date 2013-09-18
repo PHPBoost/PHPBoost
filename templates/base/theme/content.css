@@ -15,7 +15,7 @@ section header, article header {
 }
 
 section header h1, article header h1, section header h1 a, article header h1 a {
-	font-size: 18px;
+	font-size: 16px;
     font-weight: bold;
     border-bottom: 1px solid #336397;
 }
@@ -24,7 +24,7 @@ section header h1 span.tools, article header h1 span.tools {
     float: right;
 }
 
-section header h1 span.tools a , article header h1 span.tools a{
+section header h1 span.tools a , article header h1 span.tools a {
     font-size: 12px;
 }
 
@@ -34,7 +34,7 @@ article .more {
 }
 
 section, .content, article .content {
-	padding-left: 15px;
+	margin: 0 15px;
     text-align: justify;
 	word-wrap: break-word;
 	overflow: auto;
@@ -53,22 +53,34 @@ section footer nav#pagination {
 	text-align: center;
 }
 
-/* Vertical articles */
+/* Block */
 article.block, article.small_block {
 	border: 1px solid #CCCCCC;
-	border-top:2px solid #366393;
+	border-top: 2px solid #366393;
 	border-bottom: 1px solid #99B1CB;
-	background:#F2F8FF;
-	padding:10px;
+	background: #F2F8FF;
+	padding: 10px;
+}
+
+article.block header h1, article.small_block header h1, article.block header h1 a, article.small_block header h1 a {
+    border: none;
 }
 
 article.block {
-	width:auto;
+	width: auto;
+}
+
+article.block header {
+	margin-bottom: 10px;
+}
+
+article.block footer {
+	margin: 0;
 }
 
 article.small_block {
 	float: left;
-	width:29%;
+	width: 28%;
 	margin: 0.6%;
 }
 
