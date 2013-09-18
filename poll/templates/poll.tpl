@@ -1,10 +1,7 @@
 	# IF C_POLL_MAIN #
 		<section>	
 			<header>
-				<h1>{L_POLL}</h1>
-				<div class="module_top_com">
-					{EDIT}
-				</div>
+				<h1>{L_POLL} <span class="tools">{EDIT}</span></h1>
 			</header>
 			<div class="content" style="text-align:center;">
 				{L_POLL_MAIN}
@@ -34,13 +31,15 @@
 		<form method="post" action="{PATH_TO_ROOT}/poll/poll{U_POLL_ACTION}">
 			<article>					
 				<header>
-					<h1>{QUESTION}</h1>
-					<div class="module_top_com">
+					<h1>
+						{QUESTION}
 						# IF C_IS_ADMIN #
-						<a href="{PATH_TO_ROOT}/poll/admin_poll.php?id={IDPOLL}" title="{L_EDIT}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" class="valign_middle" alt="" /></a>
-						<a href="{PATH_TO_ROOT}/poll/admin_poll.php?delete=1&amp;id={IDPOLL}&amp;token={TOKEN}" title="{L_DELETE}" onclick="javascript:return Confirm();"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" class="valign_middle" alt="" /></a>
+						<span class="tools">
+							<a href="{PATH_TO_ROOT}/poll/admin_poll.php?id={IDPOLL}" title="{L_EDIT}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" class="valign_middle" alt="" /></a>
+							<a href="{PATH_TO_ROOT}/poll/admin_poll.php?delete=1&amp;id={IDPOLL}&amp;token={TOKEN}" title="{L_DELETE}" onclick="javascript:return Confirm();"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" class="valign_middle" alt="" /></a>
+						</span>
 						# ENDIF #
-					</div>
+					</h1>
 				</header>
 				<div class="content">
 					# INCLUDE message_helper #
@@ -80,7 +79,7 @@
 					</div>
 				</div>
 				<footer></footer>
-			</div>
+			</article>
 		</form>
 	# ENDIF #
 	
@@ -125,5 +124,5 @@
 				# END list #				
 			</div>
 			<footer><span style="float:right;">{PAGINATION}</span></footer>
-		</div>
+		</section>
 	# ENDIF #

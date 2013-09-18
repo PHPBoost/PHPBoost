@@ -3,15 +3,17 @@
 # IF C_WEB_CAT #
 <section>					
 	<header>
-		<h1>{L_WEB} - {L_CATEGORIES}</h1>
-		<div class="module_top_com">
-			# IF C_IS_ADMIN # 
+		<h1>
+			{L_WEB} - {L_CATEGORIES}
+			<span class="tools">
+				# IF C_IS_ADMIN # 
 				<a href="{PATH_TO_ROOT}/web/admin_web_cat.php{SID}" title="{L_EDIT}">
 					<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" class="valign_middle" alt="" />
 				</a> 
-			# ENDIF #
-			{PAGINATION}
-		</div>
+				# ENDIF #
+				{PAGINATION}
+			</span>
+		</h1>
 	</header>
 	<div class="content">
 		# START cat_list #
@@ -38,15 +40,17 @@
 # IF C_WEB_LINK #
 <section>					
 	<header>
-		<h1>{L_WEB} - {CAT_NAME}</h1>
-		<div class="module_top_com">
-			# IF C_IS_ADMIN # 
+		<h1>
+			{L_WEB} - {CAT_NAME}
+			<span class="tools">
+				# IF C_IS_ADMIN # 
 				<a href="{PATH_TO_ROOT}/web/admin_web_cat.php{SID}" title="{L_EDIT}">
 					<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" class="valign_middle" alt="" />
 				</a> 
-			# ENDIF #
-			{PAGINATION}
-		</div>
+				# ENDIF #
+				{PAGINATION}
+			</span>
+		</h1>
 	</header>
 	<div class="content">
 		<table class="module_table">
@@ -106,10 +110,12 @@
 # IF C_DISPLAY_WEB #
 <article>					
 	<header>
-		<h1>{NAME}</h1>
-		<div style="float:right">
-			{COM} {EDIT}{DEL}
-		</div>
+		<h1>
+			{NAME}
+			<span class="tools">
+				{COM} {EDIT}{DEL}
+			</span>
+		</h1>
 	</header>
 	<div class="content">
 		<p>

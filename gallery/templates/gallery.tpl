@@ -242,10 +242,11 @@
 				<h1>
 					<a href="${relative_url(SyndicationUrlBuilder::rss('gallery', CAT_ID))}" class="syndication" title="${LangLoader::get_message('syndication', 'main')}"></a>
 					{L_GALLERY} {U_GALLERY_CAT_LINKS} {EDIT_CAT}
+					
+					<span class="tools">
+						{PAGINATION}
+					</span>
 				</h1>
-				<div class="module_top_com">
-					{PAGINATION}
-				</div>
 			</header>
 			<div class="content">
 				<div style="margin-bottom:50px;">

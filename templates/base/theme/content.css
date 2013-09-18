@@ -14,9 +14,18 @@ section header, article header {
 	margin-bottom: 20px;
 }
 
-section header h1, article header h1 {
+section header h1, article header h1, section header h1 a, article header h1 a {
+	font-size: 18px;
     font-weight: bold;
     border-bottom: 1px solid #336397;
+}
+
+section header h1 span.tools, article header h1 span.tools {
+    float: right;
+}
+
+section header h1 span.tools a , article header h1 span.tools a{
+    font-size: 12px;
 }
 
 article .more {

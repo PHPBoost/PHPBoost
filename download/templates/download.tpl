@@ -137,8 +137,9 @@
 		# IF C_DISPLAY_DOWNLOAD #			
 		<article itemscope="itemscope" itemtype="http://schema.org/CreativeWork">					
 			<header>
-				<h1 itemprop="name">{NAME}</h1>
-				<div style="float:right">
+				<h1 itemprop="name">
+					{NAME}
+					<span class="tools">
 					{U_COM}
 					# IF C_EDIT_AUTH #
 						<a href="{U_EDIT_FILE}">
@@ -148,7 +149,9 @@
 							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" class="valign_middle" alt="{L_DELETE_FILE}" />
 						</a>
 					# ENDIF #
-				</div>
+				</span>
+				</h1>
+				
 			</header>
 			<div class="content">
 				<table>
