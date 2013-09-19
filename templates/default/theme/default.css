@@ -70,10 +70,7 @@ hr {
     width:99%;
 }
 
-ul, ol {
-    margin-left:10px;
-    line-height:normal;
-}
+ul, ol { line-height:normal; }
 
 p {
     margin-bottom:0.7em;
@@ -471,29 +468,7 @@ ul.rss_feed li {
 
 #overlay{ position:absolute; top:0; left:0; z-index:102; width:100%; height:500px; background-color:#000; }
 
-div.form_autocompleter {
-  position: absolute;
-  background-color: #FFF;
-  border: 1px solid #6993AE;
-  margin: 0px;
-  padding: 0px;
-}
- 
-div.form_autocompleter ul {
-  margin: 0px;
-  padding: 0px;
-  max-height: 20em;
-  overflow: auto;
-}
- 
-div.form_autocompleter ul li.selected {
-    background-color: #F5FBFF;
-}
- 
-div.form_autocompleter ul li {
-  list-style-type:none;
-  display: block;
-  margin: 0;
-  padding: 2px;
-  cursor: pointer;
-}
+div.form_autocompleter { position: absolute; background-color: #FFF; border: 1px solid #6993AE; margin: 0px; padding: 0px; }
+div.form_autocompleter ul { margin: 0px; padding: 0px; max-height: 20em; overflow: auto; } 
+div.form_autocompleter ul li.selected { background-color: #F5FBFF; }
+div.form_autocompleter ul li { list-style-type:none; display: block; margin: 0; padding: 2px; cursor: pointer; }

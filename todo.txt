@@ -15,6 +15,7 @@
 
 ------------------------------------- NOYAU ------------------------------------
 - Filtres d'exclusion pour les menus
+- Sortir les pages d'erreurs 404 et 403 de l'environnement graphique de PHPBoost pour éviter le problème : http://phpboost.com/bugtracker/bugtracker.php?view&id=713
 
 ------------------------------------ MODULES -----------------------------------
 
