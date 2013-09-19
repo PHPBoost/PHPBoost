@@ -24,7 +24,7 @@ section header h1 span.tools, article header h1 span.tools {
     float: right;
 }
 
-section header h1 span.tools a , article header h1 span.tools a {
+section header h1 span.tools a, article header h1 span.tools a {
     font-size: 12px;
 }
 
@@ -33,7 +33,7 @@ article .more {
 	font-style: italic;
 }
 
-section, .content, article .content {
+section .content, article .content {
 	margin: 0 15px;
     text-align: justify;
 	word-wrap: break-word;
