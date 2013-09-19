@@ -1,3 +1,9 @@
+section#main * { 
+	-webkit-box-sizing: content-box;
+	-moz-box-sizing: content-box;
+	box-sizing: content-box; 
+}
+
 .forum_table {
 	width:100%;
 	border-collapse:collapse;
