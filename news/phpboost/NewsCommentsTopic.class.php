@@ -44,22 +44,7 @@ class NewsCommentsTopic extends CommentsTopic
 	
 	public function is_display()
 	{
-		$news = $this->get_news();
-
-		switch ($news->get_approbation_type()) {
-			case News::APPROVAL_NOW:
-				return true;
-			break;
-			case News::NOT_APPROVAL:
-				return false;
-			break;
-			case News::APPROVAL_DATE:
-				return $news->is_visible();
-			break;
-			default:
-				return false;
-			break;
-		}
+		return $this->get_news()->is_visible();
 	}
 
 	private function get_news()

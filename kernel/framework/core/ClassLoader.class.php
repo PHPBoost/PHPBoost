@@ -132,7 +132,8 @@ class ClassLoader
 		$files = array();
 		$folder = new Folder($directory);
 		$relative_path = Path::get_path_from_root($folder->get_path());
-		foreach ($folder->get_files($pattern) as $file)
+		$files = $folder->get_files($pattern);
+		foreach ($files as $file)
 		{
 			$filename = $file->get_name();
 			$classname = $file->get_name_without_extension();
@@ -141,7 +142,8 @@ class ClassLoader
 
 		if ($recursive)
 		{
-			foreach ($folder->get_folders('`^[a-z]{1}.*$`i') as $a_folder)
+			$folders = $folder->get_folders('`^[a-z]{1}.*$`i');
+			foreach ($folders as $a_folder)
 			{
 				if (!in_array($a_folder->get_path_from_root(), self::$exclude_paths)
 				&& !in_array($a_folder->get_name(), self::$exclude_folders_names))

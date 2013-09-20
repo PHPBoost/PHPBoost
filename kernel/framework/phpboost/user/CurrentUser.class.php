@@ -205,7 +205,8 @@ class CurrentUser extends User
 	private function build_groups_auth()
 	{
 		$groups_auth = array();
-		foreach (GroupsService::get_groups() as $idgroup => $array_info)
+		$groups = GroupsService::get_groups();
+		foreach ($groups as $idgroup => $array_info)
 		{
 			$groups_auth[$idgroup] = $array_info['auth'];
 		}

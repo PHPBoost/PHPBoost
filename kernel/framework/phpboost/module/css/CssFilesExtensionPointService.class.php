@@ -30,7 +30,8 @@ class CssFilesExtensionPointService
 	public static function get_css_files_always_displayed()
 	{
 		$css_files = array();
-		foreach (self::get_extension_points() as $module_name => $provider)
+		$extension_points = self::get_extension_points();
+		foreach ($extension_points as $module_name => $provider)
 		{
 			$css_files[$module_name] = $provider->get_css_files_always_displayed();
 		}
@@ -40,7 +41,8 @@ class CssFilesExtensionPointService
 	public static function get_css_files_running_module_displayed()
 	{
 		$css_files = array();
-		foreach (self::get_extension_points() as $module_name => $provider)
+		$extension_points = self::get_extension_points();
+		foreach ($extension_points as $module_name => $provider)
 		{
 			$css_files[$module_name] = $provider->get_css_files_running_module_displayed();
 		}
