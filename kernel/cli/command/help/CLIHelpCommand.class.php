@@ -58,7 +58,8 @@ class CLIHelpCommand implements CLICommand
     {
         CLIOutput::writeln('available commands are:');
         $provider_service = AppContext::get_extension_provider_service();
-        foreach ($provider_service->get_extension_point(CLICommands::EXTENSION_POINT) as $commands)
+        $extension_point = $provider_service->get_extension_point(CLICommands::EXTENSION_POINT);
+        foreach ($extension_point as $commands)
         {
             foreach ($commands->get_commands() as $command)
             {
@@ -70,7 +71,8 @@ class CLIHelpCommand implements CLICommand
 	private function call($command, array $args)
 	{
 		$provider_service = AppContext::get_extension_provider_service();
-		foreach ($provider_service->get_providers(CLICommands::EXTENSION_POINT) as $provider)
+		$providers = $provider_service->get_providers(CLICommands::EXTENSION_POINT);
+		foreach ($providers as $provider)
 		{
 			$commands = $provider->get_extension_point(CLICommands::EXTENSION_POINT);
 			if (in_array($command, $commands->get_commands()))

@@ -62,7 +62,8 @@ class GuestbookModuleMiniMenu extends ModuleMiniMenu
 					'USER_GROUP_COLOR' => $user_group_color,
 					'L_GUEST' => $main_lang['guest'],
 					'L_BY' => $main_lang['by'],
-					'U_MESSAGE' => GuestbookUrlBuilder::home($random_message['page'], $random_message['id'])->absolute()
+					'U_MESSAGE' => GuestbookUrlBuilder::home($random_message['page'], $random_message['id'])->absolute(),
+					'U_PROFILE' => UserUrlBuilder::profile($random_message['user_id'])->absolute(),
 				));
 			}
 			return $tpl->render();

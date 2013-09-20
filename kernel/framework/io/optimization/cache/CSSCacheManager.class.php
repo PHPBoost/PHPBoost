@@ -62,7 +62,8 @@ class CSSCacheManager
 		}
 		else
 		{
-			foreach ($this->css_optimizer->get_files() as $file)
+			$files = $this->css_optimizer->get_files();
+			foreach ($files as $file)
 			{
 				if(filemtime($file) > filemtime($this->cache_file_location))
 				{

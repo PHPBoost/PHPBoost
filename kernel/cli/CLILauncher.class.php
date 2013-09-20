@@ -88,7 +88,8 @@ class CLILauncher
 	private function load_commands_list()
 	{
 		$provider_service = AppContext::get_extension_provider_service();
-		foreach ($provider_service->get_extension_point(CLICommands::EXTENSION_POINT) as $commands)
+		$extension_point = $provider_service->get_extension_point(CLICommands::EXTENSION_POINT);
+		foreach ($extension_point as $commands)
 		{
 			foreach ($commands->get_commands() as $command)
 			{

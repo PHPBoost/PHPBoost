@@ -177,7 +177,8 @@ class AdminGeneralConfigController extends AdminController
 	private function construct_javascript_picture_theme()
     {
     	$text = 'var theme = new Array;' . "\n";
-    	foreach (ThemeManager::get_activated_themes_map() as $theme)
+    	$activated_themes = ThemeManager::get_activated_themes_map();
+    	foreach ($activated_themes as $theme)
     	{
    			$text .= 'theme["' . $theme->get_id() . '"] = "' . $this->get_picture_theme($theme->get_id()) . '";' . "\n";
    		}
@@ -196,7 +197,8 @@ class AdminGeneralConfigController extends AdminController
 		$providers = array_keys(AppContext::get_extension_provider_service()->get_providers(HomePageExtensionPoint::EXTENSION_POINT));
 		$options = array(new FormFieldSelectChoiceOption($this->lang['general-config.other_start_page'], 'other'));
 		
-		foreach (ModulesManager::get_installed_modules_map_sorted_by_localized_name() as $id => $module)
+		$installed_modules = ModulesManager::get_installed_modules_map_sorted_by_localized_name();
+		foreach ($installed_modules as $id => $module)
 		{
 			if (in_array($module->get_id(), $providers))
 			{
