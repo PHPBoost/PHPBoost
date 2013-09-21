@@ -209,6 +209,11 @@ h4.stitle2{
 	border-bottom:3px solid #336397;
 }
 
+/* Listes */
+ul{ margin-left:20px; }
+ol{ margin-left:35px; }
+li{ text-align:left; }
+
 /* Menu dynamique des liens
 --------------------------------------*/
 /* Lien du menu */
@@ -314,21 +319,21 @@ html>body .question, html>body .notice, html>body .warning, html>body .error, ht
 
 /* Menus par boutons
 --------------------------------------*/
-menu.buttons {
+menu {
 	margin:5px;
 }
 
-menu.buttons > ul > li {
+menu > ul > li {
 	position:relative;
 	display:inline-block !important;
     display:inline;
 	padding:4px 12px;
-	background-image: -moz-linear-gradient(top,  rgba(255,255,255,0.18) 0%, rgba(56,56,56,0.18) 100%); /* FF3.6+ */
-	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,0.18)), color-stop(100%,rgba(56,56,56,0.18))); /* Chrome,Safari4+ */
-	background-image: -webkit-linear-gradient(top,  rgba(255,255,255,0.18) 0%,rgba(56,56,56,0.18) 100%); /* Chrome10+,Safari5.1+ */
-	background-image: -o-linear-gradient(top,  rgba(255,255,255,0.18) 0%,rgba(56,56,56,0.18) 100%); /* Opera 11.10+ */
-	background-image: -ms-linear-gradient(top,  rgba(255,255,255,0.18) 0%,rgba(56,56,56,0.18) 100%); /* IE10+ */
-	background-image: linear-gradient(to bottom,  rgba(255,255,255,0.18) 0%,rgba(56,56,56,0.18) 100%); /* W3C */
+	background-image: -moz-linear-gradient(top,  rgba(255,255,255,0.18) 0%, rgba(56,56,56,0.18) 100%);
+	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,0.18)), color-stop(100%,rgba(56,56,56,0.18)));
+	background-image: -webkit-linear-gradient(top,  rgba(255,255,255,0.18) 0%,rgba(56,56,56,0.18) 100%);
+	background-image: -o-linear-gradient(top,  rgba(255,255,255,0.18) 0%,rgba(56,56,56,0.18) 100%);
+	background-image: -ms-linear-gradient(top,  rgba(255,255,255,0.18) 0%,rgba(56,56,56,0.18) 100%);
+	background-image: linear-gradient(to bottom,  rgba(255,255,255,0.18) 0%,rgba(56,56,56,0.18) 100%);
 	color:#444;
 	background-color:#fff;
 	border:1px solid #999;
@@ -338,47 +343,50 @@ menu.buttons > ul > li {
 	-webkit-border-radius:4px;
 	border-radius:4px;
 	cursor:pointer;
-	outline:none;
 	text-align:center;
 }
 
-menu.buttons > ul > li:hover {
+menu > ul > li:hover {
 	background-color:#EEE;
 }
 
-menu.buttons > ul > li > a{
+menu > ul > li > a{
 	color:inherit;
 	text-decoration:none;
 	font-weight:300;
-	outline:none;
 }
 
-menu.buttons > ul > li > a > i{
+menu > ul > li > a:hover{
+	text-decoration:none;
+}
+
+menu > ul > li > a > i{
 	font-size:125%;
+	vertical-align:-1px;
 }
 
 /* Menus groupés */
-menu.buttons > ul.btn-group {
+menu > ul.btn-group {
 	font-size:0
 }
 
-menu.buttons > ul.btn-group > li {
+menu > ul.btn-group > li {
 	-moz-border-radius:0;
 	-webkit-border-radius:0;
 	border-radius:0;
 	font-size:13px;
-	border-right:1px solid #FFF;
+	border-right:1px solid #F9F9F9;
 	border-left:1px solid #BBB;
 }
 
-menu.buttons > ul.btn-group > li:first-child{
+menu > ul.btn-group > li:first-child{
 	-moz-border-radius:4px 0 0 4px;
 	-webkit-border-radius:4px 0 0 4px;
 	border-radius:4px 0 0 4px;
 	border-left:1px solid rgba(0, 0, 0, 0.1)
 }
 
-menu.buttons > ul.btn-group > li:last-child{
+menu > ul.btn-group > li:last-child{
 	-moz-border-radius:0 4px 4px 0;
 	-webkit-border-radius:0 4px 4px 0;
 	border-radius:0 4px 4px 0;
@@ -386,15 +394,16 @@ menu.buttons > ul.btn-group > li:last-child{
 }
 
 /* Menus déroulants */
-li.dropdown > a > i.icon-sort-down{
+
+menu > ul > li > a > i.icon-sort-down{
 	font-size:105%;
 	display:inline-block;
 	vertical-align:2px;
 }
 
-li.dropdown ul{
+menu > ul > li > ul,li.subdropdown > ul{
 	position:absolute;
-    top:100%;
+    top:-99999em;
 	left:-1px;
 	list-style-type:none;
 	padding:5px 0;
@@ -414,24 +423,45 @@ li.dropdown ul{
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
 	margin:2px 0 0;
+	opacity:0;
+	-webkit-transition:opacity .2s ease-in-out,top 0 ease-in 0.2s;
+    -moz-transition:opacity .2s ease-in-out,top 0 ease-in 0.2s;
+    -o-transition:opacity .2s ease-in-out,top 0 ease-in 0.2s; 
+    transition:opacity .2s ease-in-out,top 0 ease-in 0.2s;
 }
 
-li.dropdown ul.right{
+menu > ul > li:hover > ul,li.subdropdown:hover > ul {
+	opacity:1;
+	-webkit-transition:opacity .2s ease-in-out,top 0s ease-in 0s;  
+    -moz-transition:opacity .2s ease-in-out,top 0s ease-in 0s; 
+    -o-transition:opacity .2s ease-in-out,top 0s ease-in 0s; 
+    transition:opacity .2s ease-in-out,top 0s ease-in 0s;  
+}
+
+menu > ul > li:hover > ul{
+	top:100%;
+}
+
+li.subdropdown:hover > ul {
+	top:-8px;
+}
+
+menu.right > ul > li ul{
 	right:-1px;
 	left:auto;
 }
 
-li.dropdown ul li{
+menu > ul > li ul li{
 	margin:0;
 	padding:0;
 	white-space: nowrap;
 }
 
-li.dropdown ul li.separator{
+menu > ul > li ul li.separator{
 	border-top:1px solid #bbb;
 }
 
-li.dropdown ul li a{
+menu > ul > li ul li a{
 	display:block;
 	color:inherit;
 	text-decoration:none;
@@ -440,18 +470,49 @@ li.dropdown ul li a{
 	outline:none;
 }
 
-li.dropdown ul li a:hover,li.dropdown ul li a:focus{
+menu > ul > li ul li a:hover,menu > ul > li ul li a:focus,li.subdropdown:hover> a{
 	color:#FFF;
 	background-color: #0088cc; /* Old browsers */
-	background-image: -moz-linear-gradient(top,  #0088cc 1%, #0077b3 100%); /* FF3.6+ */
-	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(1%,#0088cc), color-stop(100%,#0077b3)); /* Chrome,Safari4+ */
-	background-image: -webkit-linear-gradient(top,  #0088cc 1%,#0077b3 100%); /* Chrome10+,Safari5.1+ */
-	background-image: -o-linear-gradient(top,  #0088cc 1%,#0077b3 100%); /* Opera 11.10+ */
-	background-image: -ms-linear-gradient(top,  #0088cc 1%,#0077b3 100%); /* IE10+ */
-	background-image: linear-gradient(to bottom,  #0088cc 1%,#0077b3 100%); /* W3C */
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0088cc', endColorstr='#0077b3',GradientType=0 ); /* IE6-9 */
+	background-image: -moz-linear-gradient(top,  #0088cc 1%, #0077b3 100%);
+	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(1%,#0088cc), color-stop(100%,#0077b3));
+	background-image: -webkit-linear-gradient(top,  #0088cc 1%,#0077b3 100%);
+	background-image: -o-linear-gradient(top,  #0088cc 1%,#0077b3 100%);
+	background-image: -ms-linear-gradient(top,  #0088cc 1%,#0077b3 100%);
+	background-image: linear-gradient(to bottom,  #0088cc 1%,#0077b3 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0088cc', endColorstr='#0077b3',GradientType=0 );
+	text-decoration:none;
+	font-weight:300;
 }
 
-li.dropdown ul li i{
+menu > ul > li ul li i{
 	margin-right:8px;
+}
+
+menu > ul > li,li.subdropdown {
+	position:relative;
+}
+
+li.subdropdown > ul{
+	left:100%;
+}
+
+menu.right li.subdropdown > ul{
+	right:100%;
+	left:auto;
+}
+
+li.subdropdown > a:after{
+	display: block;
+	float: right;
+	width: 0;
+	height: 0;
+	margin-top: 3px;
+	margin-right: -3px;
+	font-family: FontAwesome;
+	content: "\F0DA";
+	color:#999;
+}
+
+li.subdropdown:hover > a:after {
+	color: #FFF;
 }

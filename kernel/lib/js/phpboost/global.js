@@ -30,48 +30,6 @@ if (top != self)
 	top.location = self.location;
 }
 
-window.onload = function(){
-
-// Menus deroulants - dropdown
-	$$("li.dropdown ul").each(function (element) {
-		element.hide();
-	});
-
-	$$("li.dropdown").each(function (lidrop) {
-		lidrop.down('a').insert({ bottom: ' <i class="icon-sort-down"></i>'});
-		if (lidrop.down('a').readAttribute('href') == null) lidrop.down('a').href = 'javascript: return false;';
-		var focus = 0;
-		lidrop.down('a').observe("focus", function() {
-			if (focus = 0) lidrop.down('ul').appear({duration:0.2});
-			focus = 0;
-		});
-		lidrop.observe("click", function() {
-			if (lidrop.down('ul').style.display=="none") 
-			{
-				lidrop.down('ul').appear({duration:0.2});
-				focus = 1;
-				lidrop.down('a').focus();
-			}
-			else lidrop.down('ul').fade({duration:0.2});
-		});
-		lidrop.down('a').observe("blur", function() {
-			setTimeout(function () {
-				var liens = $$("li.dropdown ul li a:focus");
-				if (liens.length == 0)	lidrop.down('ul').fade({duration:0.2});
-			}, 50);
-		});
-	});
-	
-	$$("li.dropdown li a").each(function (link) {
-		link.observe("blur", function() {
-			setTimeout(function () {
-				var liens = $$("li.dropdown li a:focus");
-				if (liens.length == 0)	link.up('ul').fade({duration:0.2});
-			}, 50);
-		});
-	});
-};
-
 __uid = 42;
 
 function getUid() {

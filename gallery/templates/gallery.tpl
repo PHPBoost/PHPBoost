@@ -231,17 +231,13 @@
 		</script> 
 
 		# INCLUDE message_helper #
-		<div class="module_actions">
-			 {EDIT}
-			{ADD_PICS}
-		</div>
 		<div class="spacer"></div>
 		
 		<section>					
 			<header>
 				<h1>
 					<a href="${relative_url(SyndicationUrlBuilder::rss('gallery', CAT_ID))}" class="syndication" title="${LangLoader::get_message('syndication', 'main')}"></a>
-					{L_GALLERY} {U_GALLERY_CAT_LINKS} {EDIT_CAT}
+					{L_GALLERY} {U_GALLERY_CAT_LINKS}
 					
 					<span class="tools">
 						{PAGINATION}
@@ -250,32 +246,38 @@
 			</header>
 			<div class="content">
 				<div style="margin-bottom:50px;">
-					<div class="dynamic_menu" style="float:right;margin-right:85px;">
+					<menu class="right">
 						<ul>
-							<li onmouseover="show_menu(1, 0);" onmouseout="hide_menu(0);">
-								<h5 style="margin-right:20px;"><img src="{PATH_TO_ROOT}/gallery/templates/images/contribuate.png" class="valign_middle" alt="" /> {L_DISPLAY}</h5>
-								<ul id="smenu1">
-									<li>{U_BEST_VIEWS}</li>
-									<li>{U_BEST_NOTES}</li>
-								</ul>
-							</li>
-							<li onmouseover="show_menu(2, 0);" onmouseout="hide_menu(0);">
-								<h5 style="margin-right:20px;"><img src="{PATH_TO_ROOT}/gallery/templates/images/tools.png" class="valign_middle" alt="" /> {L_ORDER_BY}</h5>
-								<ul id="smenu2">
-									# START order #
-									<li>{order.ORDER_BY}</li>
-									# END order #
-								</ul>
-							</li>
-							<li onmouseover="show_menu(3, 0);" onmouseout="hide_menu(0);">
-								<h5 style="margin-right:5px;"><img src="{PATH_TO_ROOT}/gallery/templates/images/tools.png" class="valign_middle" alt="" /> {L_DIRECTION}</h5>
-								<ul id="smenu3">
-									<li>{U_ASC}</li>
-									<li>{U_DESC}</li>	
+							<li><a><i class="icon-reorder"></i> Menu</a>
+								<ul>
+									<li class="subdropdown"><a><i class="icon-eye-open"></i> {L_DISPLAY}</a>
+										<ul>
+											<li>{U_BEST_VIEWS}</li>
+											<li>{U_BEST_NOTES}</li>
+										</ul>
+									</li>
+									<li class="subdropdown"><a><i class="icon-sort"></i> {L_ORDER_BY}</a>
+										<ul>
+											<li>{ORDER_BY_NAME}</li>
+											<li>{ORDER_BY_DATE}</li>
+											<li>{ORDER_BY_VIEWS}</li>
+											<li>{ORDER_BY_NOTES}</li>
+											<li>{ORDER_BY_COM}</li>
+										</ul>
+									</li>
+									<li class="subdropdown"><a><i class="icon-sort-by-alphabet"></i> {L_DIRECTION}</a>
+										<ul>
+											<li>{U_ASC}</li>
+											<li>{U_DESC}</li>	
+										</ul>
+									</li>
+									{ADD_PICS}
+									{EDIT}
+									{EDIT_CAT}
 								</ul>
 							</li>
 						</ul>
-					</div>
+					</menu>
 				</div>
 				
 				# IF C_GALLERY_CATS #
