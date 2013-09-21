@@ -56,7 +56,8 @@ abstract class AbstractConfigData implements ConfigData
 	 */
 	public function set_default_values()
 	{
-		foreach ($this->get_default_values() as $property => $value)
+		$default_values = $this->get_default_values();
+		foreach ($default_values as $property => $value)
 		{
 			$this->set_property($property, $value);
 		}

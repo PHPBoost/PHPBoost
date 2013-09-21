@@ -72,7 +72,8 @@ class ThemeConfigurationManager
 		}
 
 		$folder = new Folder($config_ini_folder);
-		foreach ($folder->get_folders() as $lang_folder)
+		$folders = $folder->get_folders();
+		foreach ($folders as $lang_folder)
 		{
 			$config_ini_file = $lang_folder->get_path() . '/config.ini';
 			if (file_exists($config_ini_file))

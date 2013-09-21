@@ -43,13 +43,6 @@ class BreadCrumb
      * @var SiteDisplayGraphicalEnvironment The graphical environment in which the breadcrumb is
      */
     private $graphical_environment;
-    
-    /**
-     * @desc Builds a BreadCrumb object.
-     */
-    public function __construct()
-    {
-    }
 
     /**
      * @desc Adds a link in the bread crumb. This link will be put at the end of the list.
