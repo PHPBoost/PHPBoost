@@ -70,7 +70,8 @@ class Updates
 
             if ($checks & CHECK_MODULES)
             {
-                foreach (ModulesManager::get_activated_modules_map_sorted_by_localized_name() as $module)
+            	$activated_modules = ModulesManager::get_activated_modules_map_sorted_by_localized_name();
+                foreach ($activated_modules as $module)
                 {
                     $this->apps[] = new Application($module->get_id(),
                     get_ulang(), Application::MODULE_TYPE,
@@ -81,7 +82,8 @@ class Updates
             if ($checks & CHECK_THEMES)
             {
                 // Add Themes
-                foreach (ThemeManager::get_activated_themes_map() as $id => $value)
+               $activated_themes = ThemeManager::get_activated_themes_map();
+                foreach ($activated_themes as $id => $value)
                 {
 					$repository = $value->get_configuration()->get_repository();
 					if (!empty($repository))

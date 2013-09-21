@@ -74,7 +74,8 @@ class AdminLangsInstalledListController extends AdminController
 	{
 		if ($request->get_bool('update', false))
 		{
-			foreach (LangManager::get_installed_langs_map() as $lang)
+			$installed_langs = LangManager::get_installed_langs_map();
+			foreach ($installed_langs as $lang)
 			{
 				if ($lang->get_id() !== LangManager::get_default_lang())
 				{

@@ -143,7 +143,8 @@ class AdminContentConfigController extends AdminController
 	private function generate_forbidden_tags_option()
 	{
 		$options = array();
-		foreach (AppContext::get_content_formatting_service()->get_available_tags() as $identifier => $name)
+		$available_tags = AppContext::get_content_formatting_service()->get_available_tags();
+		foreach ($available_tags as $identifier => $name)
 		{
 			$options[] = new FormFieldSelectChoiceOption($name, $identifier);
 		}

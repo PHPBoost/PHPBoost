@@ -94,7 +94,8 @@ class AdminThemesInstalledListController extends AdminController
 	{
 		if ($request->get_bool('update', false))
 		{
-			foreach (ThemeManager::get_installed_themes_map() as $theme)
+			$installed_themes = ThemeManager::get_installed_themes_map();
+			foreach ($installed_themes as $theme)
 			{
 				if ($theme->get_id() !== ThemeManager::get_default_theme())
 				{

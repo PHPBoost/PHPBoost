@@ -64,7 +64,8 @@ class ModulesCssFilesService
 	
 	private static function build_array()
 	{
-		foreach (ThemeManager::get_activated_themes_map() as $theme_id => $theme)
+		$activated_themes = ThemeManager::get_activated_themes_map();
+		foreach ($activated_themes as $theme_id => $theme)
 		{
 			self::$css_files[$theme_id] = array(
 				self::CSS_FILES_ALWAYS_DISPLAYED => self::get_modules_css_files_always_displayed($theme_id),
