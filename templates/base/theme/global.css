@@ -1,0 +1,518 @@
+/* --------------------------------------
+		global.css
+ Contient les classes globales au site, peuvent être utilisées partout.
+--------------------------------------*/ 
+
+/* Classes générales
+--------------------------------------*/
+/* Case générale des tableaux du site*/
+.row1, .block_contents1 {
+    background:#E0E9EF;
+	padding:8px 6px;
+	border-top:1px solid #CCCCCC;
+}
+
+.block_contents1 {
+    padding:20px 6px;	
+}
+
+.row2, .block_contents2 {
+	padding:8px 6px;
+}
+
+.block_contents2 {
+    padding:20px 6px;	
+}
+
+.row3, .block_contents3 {
+	background:#F2F7FB;
+    border-color:#C4CED6;
+    padding:8px 6px;
+	border-top:1px solid #CCCCCC;
+	border-bottom:1px solid #CCCCCC;
+	-moz-border-radius:0px 0px 5px 5px;
+	-khtml-border-bottom-right-radius:5px;
+	-khtml-border-bottom-left-radius:5px;
+	-webkit-border-bottom-right-radius:5px;
+	-webkit-border-bottom-left-radius:5px;
+    border-radius:5px;
+}
+
+.block_contents3 {
+    padding:20px 6px;	
+}
+
+/* Case résultat recherche membre AJAX */
+.xmlhttprequest_result_search {
+    overflow:auto;
+    height:100px;
+    width:100px;
+    overflow:auto;
+    font-size:11px;
+    background:#f5fbff;
+    border:1px solid #2C5169;
+    color:#061729;
+    padding:2px;
+}
+
+/* Affichage du mini calendrier */
+.calendar_block {
+    position:absolute;
+    text-align:center;
+    padding:6px 4px;
+    background:#f5fbff;
+    border:1px solid #2C5169;
+    bottom:28px;
+    width:204px;
+    z-index:100;
+}
+
+.calendar_block .row3{
+	border:none;	
+}
+
+/* Déplacement des fichiers */
+.upload_selected_cat {
+    background:#f5fbff;
+    border:1px solid #2C5169;
+}
+
+/* Lien du site
+--------------------------------------*/
+a {
+	color:#2F5B8A;
+    text-decoration:none;
+    font-size:12px;
+    font-weight:bold;
+}
+
+a:hover {
+    color:#718396;
+    text-decoration:underline;
+    font-weight:bold;
+}
+
+/* A supprimer ou remplacer par "a img" ? */
+.img_link, .img_link:hover {
+	text-decoration:none;
+}
+
+/* Lien des utilisateurs => ne pas changer le nom de ces classes! */
+a.admin {
+    color:#FFA34F;
+    font-weight:bold;
+}
+
+a.modo {
+    color:#006699;
+    font-weight:bold;
+}
+
+a.member {
+    color:#000000;
+    font-weight:bold;
+}
+
+/*Image des syndications*/
+a.syndication {
+	content: url('../images/rss.png') no-repeat;
+	border: none;
+}
+
+/* Mise en forme
+-------------------------------------------*/
+
+/* Taille police alternative */
+.smaller { font-size: 10px; }
+.small { font-size: 12px; }
+.big { font-size: 16px; }
+.bigger { font-size: 18px; }
+.biggest { font-size: 20px; }
+
+/* Titres */
+h1 { font-size:32px; }
+h2 { font-size:28px; }
+h3 { font-size:24px; }
+h4 { font-size:20px; }
+h5 { font-size:18px; }
+h6 { font-size:16px; }
+
+h2.title {
+    font-size:16px;
+    font-weight:bold;
+}
+
+h3.title {
+    font-size:12px;
+    font-weight:bold;
+    display:inline;
+}
+
+/* Sous-Titres */
+h5.sub_title { /* Titre des menu */
+    font-size:13px;
+    color:#515C68;
+}
+
+h6.sub_title2 { /* Sous titre dans les menu */
+    font-size:12px;
+    font-weight:bold;
+    padding-top:4px;
+    text-indent:10px;
+    width:155px;
+    height:32px;
+    color:#515C68;
+}
+
+/* Titre 1 */
+h3.title1{
+	color:#3E4D5C;
+	border-bottom:2px solid #366393;
+	font-size:15px;
+	font-weight:bold;
+	padding:0px 5px;
+}
+
+/* Titre 2 */
+h3.title2{
+	font-size:14px;
+	text-decoration:underline;
+	font-weight:bold;
+	color:#3E4D5C;
+	padding:0px 5px;
+}
+
+/* Sous titre 1 */
+h4.stitle1, h4.stitle2{
+	display:inline;
+	color:#3E4D5C;
+	font-size:12px;
+	font-weight:bold;
+	margin-left:35px;
+	padding:4px 5px;
+	font-weight:bold;
+	background:#ECEFFA;	
+	border-radius:8px;
+}
+
+/* Sous titre 1 */
+h4.stitle1{
+	border:1px solid #336397;
+	border-left:4px solid #336397;
+	border-right:4px solid #336397;
+}
+
+/* Sous titre 2 */
+h4.stitle2{
+	margin-left:50px;
+	background:none;
+	border-bottom:3px solid #336397;
+}
+
+/* Listes */
+ul{ margin-left:20px; }
+ol{ margin-left:35px; }
+li{ text-align:left; }
+
+/* Menu dynamique des liens
+--------------------------------------*/
+/* Lien du menu */
+.dynamic_menu h5 {
+    color:#515C68;
+    background:#F2F7FB;
+    border:1px solid #C4CED6;
+	margin-right:2px;
+}
+
+.dynamic_menu h5:hover {
+    color:#01528D;
+    background:#eaedee;
+}
+
+/* Séparateur */
+.dynamic_menu ul li.separator {
+    background:#e8edf3;
+}
+
+.dynamic_menu ul li.extend {
+	background:url(images/bgmenu_extend.png);
+}
+
+/* Case du menu */
+.dynamic_menu li ul {
+    border:none;
+    border:1px solid #C4CED6;
+    border-bottom:1px solid #99B1CB;
+}
+
+.dynamic_menu li li {
+    color:#0578CC;
+    background:#FFFFFF url(images/bgmenu.png) repeat-y;
+}
+
+.dynamic_menu li li a {
+    color:#0578CC;
+}
+
+.dynamic_menu li li a:hover {
+    background-color:#D2E3F1;
+    
+}
+
+h3.menu_vertical_0{
+	margin-top:0px;
+}
+
+/* Erreurs
+--------------------------------------*/
+.question{
+    color:#FFFFFF;
+    background:#98c0ea url(../images/question.png) no-repeat;
+    border:1px solid #7796b8;
+}
+
+.notice{
+    color:#334455;
+    background:#dadfe5 url(../images/notice.png) no-repeat;
+    border:1px solid #aaaeb3;
+}
+
+.warning{
+    color:#FFFFFF;
+    background:#e5ad54 url(../images/important.png) no-repeat;
+    border:1px solid #b38742;
+}
+
+.error{
+    color:#FFFFFF;
+    background:#C43C35 url(../images/stop.png) no-repeat;
+    border:1px solid #802722;
+}
+
+.success{
+    color:#FFFFFF;
+    background:#57A957 url(../images/success.png) no-repeat;
+  	border:1px solid #418041;
+}
+
+.question, .notice, .warning, .error, .success{
+    display:block;
+    height:35px;
+    padding-top:4px;
+    padding-bottom:10px;
+    padding-left:40px;
+    padding-right:5px;
+    margin:4px 25px;  
+    background-position:4px 4px;
+    border-radius:6px;
+}
+
+html>body .question, html>body .notice, html>body .warning, html>body .error, html>body .success{
+    height:auto;
+    min-height:25px;
+}
+
+#message_helper {
+	margin-top:5px;
+	margin-bottom:15px;
+}
+
+/* Menus par boutons
+--------------------------------------*/
+menu {
+	margin:5px;
+}
+
+menu > ul > li {
+	position:relative;
+	display:inline-block !important;
+    display:inline;
+	padding:4px 12px;
+	background-image: -moz-linear-gradient(top,  rgba(255,255,255,0.18) 0%, rgba(56,56,56,0.18) 100%);
+	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,0.18)), color-stop(100%,rgba(56,56,56,0.18)));
+	background-image: -webkit-linear-gradient(top,  rgba(255,255,255,0.18) 0%,rgba(56,56,56,0.18) 100%);
+	background-image: -o-linear-gradient(top,  rgba(255,255,255,0.18) 0%,rgba(56,56,56,0.18) 100%);
+	background-image: -ms-linear-gradient(top,  rgba(255,255,255,0.18) 0%,rgba(56,56,56,0.18) 100%);
+	background-image: linear-gradient(to bottom,  rgba(255,255,255,0.18) 0%,rgba(56,56,56,0.18) 100%);
+	color:#444;
+	background-color:#fff;
+	border:1px solid #999;
+	border-color:rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+	border-bottom-color: #b3b3b3;
+	-moz-border-radius:4px;
+	-webkit-border-radius:4px;
+	border-radius:4px;
+	cursor:pointer;
+	text-align:center;
+}
+
+menu > ul > li:hover {
+	background-color:#EEE;
+}
+
+menu > ul > li > a{
+	color:inherit;
+	text-decoration:none;
+	font-weight:300;
+}
+
+menu > ul > li > a:hover{
+	text-decoration:none;
+}
+
+menu > ul > li > a > i{
+	font-size:125%;
+	vertical-align:-1px;
+}
+
+/* Menus groupés */
+menu > ul.btn-group {
+	font-size:0
+}
+
+menu > ul.btn-group > li {
+	-moz-border-radius:0;
+	-webkit-border-radius:0;
+	border-radius:0;
+	font-size:13px;
+	border-right:1px solid #F9F9F9;
+	border-left:1px solid #BBB;
+}
+
+menu > ul.btn-group > li:first-child{
+	-moz-border-radius:4px 0 0 4px;
+	-webkit-border-radius:4px 0 0 4px;
+	border-radius:4px 0 0 4px;
+	border-left:1px solid rgba(0, 0, 0, 0.1)
+}
+
+menu > ul.btn-group > li:last-child{
+	-moz-border-radius:0 4px 4px 0;
+	-webkit-border-radius:0 4px 4px 0;
+	border-radius:0 4px 4px 0;
+	border-right:1px solid rgba(0, 0, 0, 0.1)
+}
+
+/* Menus déroulants */
+
+menu > ul > li > a > i.icon-sort-down{
+	font-size:105%;
+	display:inline-block;
+	vertical-align:2px;
+}
+
+menu > ul > li > ul,li.subdropdown > ul{
+	position:absolute;
+    top:-99999em;
+	left:-1px;
+	list-style-type:none;
+	padding:5px 0;
+	color:#333;
+	font-size:14px;
+	background: #FFF;
+	-moz-border-radius: 6px;
+	-webkit-border-radius: 6px;
+	border-radius: 6px;
+	-moz-box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+	-webkit-box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+	box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+	border:1px solid #AAA;
+	z-index:9999;
+	cursor:pointer;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	margin:2px 0 0;
+	opacity:0;
+	-webkit-transition:opacity .2s ease-in-out,top 0 ease-in 0.2s;
+    -moz-transition:opacity .2s ease-in-out,top 0 ease-in 0.2s;
+    -o-transition:opacity .2s ease-in-out,top 0 ease-in 0.2s; 
+    transition:opacity .2s ease-in-out,top 0 ease-in 0.2s;
+}
+
+menu > ul > li:hover > ul,li.subdropdown:hover > ul {
+	opacity:1;
+	-webkit-transition:opacity .2s ease-in-out,top 0s ease-in 0s;  
+    -moz-transition:opacity .2s ease-in-out,top 0s ease-in 0s; 
+    -o-transition:opacity .2s ease-in-out,top 0s ease-in 0s; 
+    transition:opacity .2s ease-in-out,top 0s ease-in 0s;  
+}
+
+menu > ul > li:hover > ul{
+	top:100%;
+}
+
+li.subdropdown:hover > ul {
+	top:-8px;
+}
+
+menu.right > ul > li ul{
+	right:-1px;
+	left:auto;
+}
+
+menu > ul > li ul li{
+	margin:0;
+	padding:0;
+	white-space: nowrap;
+}
+
+menu > ul > li ul li.separator{
+	border-top:1px solid #bbb;
+}
+
+menu > ul > li ul li a{
+	display:block;
+	color:inherit;
+	text-decoration:none;
+	padding:3px 20px;
+	font-weight:300;
+	outline:none;
+}
+
+menu > ul > li ul li a:hover,menu > ul > li ul li a:focus,li.subdropdown:hover> a{
+	color:#FFF;
+	background-color: #0088cc; /* Old browsers */
+	background-image: -moz-linear-gradient(top,  #0088cc 1%, #0077b3 100%);
+	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(1%,#0088cc), color-stop(100%,#0077b3));
+	background-image: -webkit-linear-gradient(top,  #0088cc 1%,#0077b3 100%);
+	background-image: -o-linear-gradient(top,  #0088cc 1%,#0077b3 100%);
+	background-image: -ms-linear-gradient(top,  #0088cc 1%,#0077b3 100%);
+	background-image: linear-gradient(to bottom,  #0088cc 1%,#0077b3 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0088cc', endColorstr='#0077b3',GradientType=0 );
+	text-decoration:none;
+	font-weight:300;
+}
+
+menu > ul > li ul li i{
+	margin-right:8px;
+}
+
+menu > ul > li,li.subdropdown {
+	position:relative;
+}
+
+li.subdropdown > ul{
+	left:100%;
+}
+
+menu.right li.subdropdown > ul{
+	right:100%;
+	left:auto;
+}
+
+li.subdropdown > a:after{
+	display: block;
+	float: right;
+	width: 0;
+	height: 0;
+	margin-top: 3px;
+	margin-right: -3px;
+	font-family: FontAwesome;
+	content: "\F0DA";
+	color:#999;
+}
+
+li.subdropdown:hover > a:after {
+	color: #FFF;
+}
