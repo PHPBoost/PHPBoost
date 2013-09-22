@@ -140,15 +140,6 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 		$module_data_path = $Template->get_pictures_data_path();
 		$rewrite_title = Url::encode_rewrite($CAT_GALLERY[$g_idcat]['name']);
 	
-		//Ordonnement.
-		$array_order = array('name' => $LANG['name'], 'date' => LangLoader::get_message('date', 'date-common'), 'views' => $LANG['views'], 'notes' => $LANG['notes'], 'com' => $LANG['com_s']);
-		foreach ($array_order as $type => $name)
-		{
-			$Template->assign_block_vars('order', array(
-				'ORDER_BY' => '<a href="' . PATH_TO_ROOT . '/gallery/gallery' . url('.php?sort=' . $type . '_desc&amp;cat=' . $g_idcat, '-' . $g_idcat . '+' . $rewrite_title . '.php?sort=' . $type . '_desc') . '" style="background-image:url(' . $module_data_path . '/images/' . $type . '.png);">' . $name . '</a>'
-			));
-		}
-	
 		$Template->put_all(array(
 			'ARRAY_JS' => '',
 			'NBR_PICS' => 0,
@@ -167,7 +158,7 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 			'HEIGHT_MAX' => $config->get_mini_max_height(),
 			'WIDTH_MAX' => $column_width_pics,
 			'MODULE_DATA_PATH' => $module_data_path,
-			'ADD_PICS' => $User->check_auth($CAT_GALLERY[$g_idcat]['auth'], GalleryAuthorizationsService::WRITE_AUTHORIZATIONS) ? '<a href="' . GalleryUrlBuilder::get_link_cat_add($g_idcat) . '"><img src="'. PATH_TO_ROOT.'/templates/' . get_utheme() . '/images/' . get_ulang() . '/add.png" alt="" class="valign_middle" title="' . $LANG['gallery_pics_add'] .'"/></a>' : '',
+			'ADD_PICS' => $User->check_auth($CAT_GALLERY[$g_idcat]['auth'], GalleryAuthorizationsService::WRITE_AUTHORIZATIONS) ? '<li class="separator"><a href="' . GalleryUrlBuilder::get_link_cat_add($g_idcat) . '"><i class="icon-plus"></i> ' . $LANG['gallery_pics_add'] . '</a></li>' : '',
 			'L_CONFIRM_DEL_FILE' => $LANG['confim_del_file'],
 			'L_APROB' => $LANG['aprob'],
 			'L_UNAPROB' => $LANG['unaprob'],
@@ -187,10 +178,15 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 			'L_DISPLAY' => $LANG['display'],
 			'U_INDEX' => url('.php'),
 			'U_GALLERY_CAT_LINKS' => $cat_links,
-			'U_BEST_VIEWS' => '<a class="small" href="'. PATH_TO_ROOT.'/gallery/gallery' . url('.php?views=1&amp;cat=' . $g_idcat, '-' . $g_idcat . '.php?views=1') . '" style="background-image:url(' . $module_data_path . '/images/views.png);">' . $LANG['best_views'] . '</a>',
-			'U_BEST_NOTES' => '<a class="small" href="'. PATH_TO_ROOT.'/gallery/gallery' . url('.php?notes=1&amp;cat=' . $g_idcat, '-' . $g_idcat . '.php?notes=1') . '" style="background-image:url(' . $module_data_path . '/images/notes.png);">' . $LANG['best_notes'] . '</a>',
-			'U_ASC' => '<a class="small" href="'. PATH_TO_ROOT.'/gallery/gallery' . url('.php?cat=' . $g_idcat . '&amp;sort=' . $g_type . '_' . 'asc', '-' . $g_idcat . '.php?sort=' . $g_type . '_' . 'asc') . '" style="background-image:url(' . $module_data_path . '/images/up.png);">' . $LANG['asc'] . '</a>',
-			'U_DESC' => '<a class="small" href="'. PATH_TO_ROOT.'/gallery/gallery' . url('.php?cat=' . $g_idcat . '&amp;sort=' . $g_type . '_' . 'desc', '-' . $g_idcat . '.php?sort=' . $g_type . '_' . 'desc') . '" style="background-image:url(' . $module_data_path . '/images/down.png);">' . $LANG['desc'] . '</a>',
+			'U_BEST_VIEWS' => '<a class="small" href="'. PATH_TO_ROOT.'/gallery/gallery' . url('.php?views=1&amp;cat=' . $g_idcat, '-' . $g_idcat . '.php?views=1') . '"><i class="icon-eye-open"></i> ' . $LANG['best_views'] . '</a>',
+			'U_BEST_NOTES' => '<a class="small" href="'. PATH_TO_ROOT.'/gallery/gallery' . url('.php?notes=1&amp;cat=' . $g_idcat, '-' . $g_idcat . '.php?notes=1') . '"><i class="icon-star-half-empty"></i> ' . $LANG['best_notes'] . '</a>',
+			'U_ASC' => '<a class="small" href="'. PATH_TO_ROOT.'/gallery/gallery' . url('.php?cat=' . $g_idcat . '&amp;sort=' . $g_type . '_' . 'asc', '-' . $g_idcat . '.php?sort=' . $g_type . '_' . 'asc') . '"><i class="icon-sort-by-attributes"></i> ' . $LANG['asc'] . '</a>',
+			'U_DESC' => '<a class="small" href="'. PATH_TO_ROOT.'/gallery/gallery' . url('.php?cat=' . $g_idcat . '&amp;sort=' . $g_type . '_' . 'desc', '-' . $g_idcat . '.php?sort=' . $g_type . '_' . 'desc') . '"><i class="icon-sort-by-attributes-alt"></i> ' . $LANG['desc'] . '</a>',
+			'ORDER_BY_NAME' => '<a href="' . PATH_TO_ROOT . '/gallery/gallery' . url('.php?sort=name_desc&amp;cat=' . $g_idcat, '-' . $g_idcat . '+' . $rewrite_title . '.php?sort=name_desc') . '"><i class="icon-tag"></i> ' . $LANG['name'] . '</a>',
+			'ORDER_BY_DATE' => '<a href="' . PATH_TO_ROOT . '/gallery/gallery' . url('.php?sort=date_desc&amp;cat=' . $g_idcat, '-' . $g_idcat . '+' . $rewrite_title . '.php?sort=date_desc') . '"><i class="icon-time"></i> ' . LangLoader::get_message('date', 'date-common') . '</a>',
+			'ORDER_BY_VIEWS' => '<a href="' . PATH_TO_ROOT . '/gallery/gallery' . url('.php?sort=views_desc&amp;cat=' . $g_idcat, '-' . $g_idcat . '+' . $rewrite_title . '.php?sort=views_desc') . '"><i class="icon-eye-open"></i> ' . $LANG['views'] . '</a>',
+			'ORDER_BY_NOTES' => '<a href="' . PATH_TO_ROOT . '/gallery/gallery' . url('.php?sort=notes_desc&amp;cat=' . $g_idcat, '-' . $g_idcat . '+' . $rewrite_title . '.php?sort=notes_desc') . '"><i class="icon-star-half-empty"></i> ' . $LANG['notes'] . '</a>',
+			'ORDER_BY_COM' => '<a href="' . PATH_TO_ROOT . '/gallery/gallery' . url('.php?sort=com_desc&amp;cat=' . $g_idcat, '-' . $g_idcat . '+' . $rewrite_title . '.php?sort=com_desc') . '"><i class="icon-comment"></i> ' . $LANG['com_s'] . '</a>'
 		));
 	
 		//Catégories non autorisées.
@@ -217,7 +213,7 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 		{
 			$Template->put_all(array(
 				'C_GALLERY_CATS' => true,
-				'EDIT_CAT' => $is_admin ? '<a href="'. PATH_TO_ROOT.'/gallery/admin_gallery_cat.php"><img class="valign_middle" src="'. PATH_TO_ROOT.'/templates/' . get_utheme() .  '/images/' . get_ulang() . '/edit.png" alt="" title="' . $LANG['gallery_cats_management'] .'"/></a>' : ''
+				'EDIT_CAT' => $is_admin ? '<li><a href="'. PATH_TO_ROOT.'/gallery/admin_gallery_cat.php"><i class="icon-reorder"></i> '. $LANG['gallery_cats_management'] . '</a></li>' : ''
 			));
 	
 			$j = 0;
@@ -301,7 +297,7 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 	
 			$Template->put_all(array(
 				'C_GALLERY_PICS' => true,
-				'EDIT' => $is_admin ? '<a href="'. PATH_TO_ROOT.'/gallery/admin_gallery_cat.php' . (!empty($g_idcat) ? '?id=' . $g_idcat : '') . '"><img class="valign_middle" src="'. PATH_TO_ROOT.'/templates/' . get_utheme() .  '/images/' . get_ulang() . '/edit.png" alt="" title="' . $LANG['cat_edit'] . '"/></a>' : ''
+				'EDIT' => $is_admin ? '<li><a href="'. PATH_TO_ROOT.'/gallery/admin_gallery_cat.php' . (!empty($g_idcat) ? '?id=' . $g_idcat : '') . '"><i class="icon-pencil"></i> ' . $LANG['cat_edit'] . '</a></li>' : ''
 			));
 	
 			//Liste des catégories.

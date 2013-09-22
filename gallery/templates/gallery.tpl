@@ -246,7 +246,7 @@
 			</header>
 			<div class="content">
 				<div style="margin-bottom:50px;">
-					<menu class="right">
+					<menu class="tools_menu right">
 						<ul>
 							<li><a><i class="icon-reorder"></i> Menu</a>
 								<ul>
