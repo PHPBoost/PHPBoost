@@ -320,6 +320,7 @@ menu.tools_menu {
 
 menu.tools_menu ul, section#main ul {
 	margin-left:0;
+	margin-top:1px;
 }
 
 menu.tools_menu > ul > li {
@@ -379,16 +380,22 @@ menu.tools_menu.group > ul > li {
 }
 
 menu.tools_menu.group > ul > li:first-child{
-	-moz-border-radius:4px 0 0 4px;
-	-webkit-border-radius:4px 0 0 4px;
-	border-radius:4px 0 0 4px;
+	-moz-border-radius-topleft: 4px;
+	-webkit-border-top-left-radius: 4px;
+	border-top-left-radius: 4px;
+	-moz-border-radius-bottomleft: 4px;
+	-webkit-border-bottom-left-radius: 4px;
+	border-bottom-left-radius: 4px;
 	border-left:1px solid rgba(0, 0, 0, 0.1)
 }
 
 menu.tools_menu.group > ul > li:last-child{
-	-moz-border-radius:0 4px 4px 0;
-	-webkit-border-radius:0 4px 4px 0;
-	border-radius:0 4px 4px 0;
+	-moz-border-radius-topright: 4px;
+	-webkit-border-top-right-radius: 4px;
+	border-top-right-radius: 4px;
+	-moz-border-radius-bottomright: 4px;
+	-webkit-border-bottom-right-radius: 4px;
+	border-bottom-right-radius: 4px;
 	border-right:1px solid rgba(0, 0, 0, 0.1)
 }
 
@@ -442,7 +449,7 @@ menu.tools_menu > ul > li:hover > ul{
 }
 
 menu.tools_menu li.subdropdown:hover > ul {
-	top:-8px;
+	top:-7px;
 }
 
 menu.tools_menu.right > ul > li ul{
