@@ -209,11 +209,6 @@ h4.stitle2{
 	border-bottom:3px solid #336397;
 }
 
-/* Listes */
-ul{ margin-left:20px; }
-ol{ margin-left:35px; }
-li{ text-align:left; }
-
 /* Menu dynamique des liens
 --------------------------------------*/
 /* Lien du menu */
@@ -319,11 +314,15 @@ html>body .question, html>body .notice, html>body .warning, html>body .error, ht
 
 /* Menus par boutons
 --------------------------------------*/
-menu {
+menu.tools_menu {
 	margin:5px;
 }
 
-menu > ul > li {
+menu.tools_menu ul, section#main ul {
+	margin-left:0;
+}
+
+menu.tools_menu > ul > li {
 	position:relative;
 	display:inline-block !important;
     display:inline;
@@ -346,31 +345,31 @@ menu > ul > li {
 	text-align:center;
 }
 
-menu > ul > li:hover {
+menu.tools_menu > ul > li:hover {
 	background-color:#EEE;
 }
 
-menu > ul > li > a{
+menu.tools_menu > ul > li > a{
 	color:inherit;
 	text-decoration:none;
 	font-weight:300;
 }
 
-menu > ul > li > a:hover{
+menu.tools_menu > ul > li > a:hover{
 	text-decoration:none;
 }
 
-menu > ul > li > a > i{
+menu.tools_menu > ul > li > a > i{
 	font-size:125%;
 	vertical-align:-1px;
 }
 
 /* Menus groupés */
-menu > ul.btn-group {
+menu.tools_menu.group > ul {
 	font-size:0
 }
 
-menu > ul.btn-group > li {
+menu.tools_menu.group > ul > li {
 	-moz-border-radius:0;
 	-webkit-border-radius:0;
 	border-radius:0;
@@ -379,14 +378,14 @@ menu > ul.btn-group > li {
 	border-left:1px solid #BBB;
 }
 
-menu > ul.btn-group > li:first-child{
+menu.tools_menu.group > ul > li:first-child{
 	-moz-border-radius:4px 0 0 4px;
 	-webkit-border-radius:4px 0 0 4px;
 	border-radius:4px 0 0 4px;
 	border-left:1px solid rgba(0, 0, 0, 0.1)
 }
 
-menu > ul.btn-group > li:last-child{
+menu.tools_menu.group > ul > li:last-child{
 	-moz-border-radius:0 4px 4px 0;
 	-webkit-border-radius:0 4px 4px 0;
 	border-radius:0 4px 4px 0;
@@ -395,13 +394,13 @@ menu > ul.btn-group > li:last-child{
 
 /* Menus déroulants */
 
-menu > ul > li > a > i.icon-sort-down{
+menu.tools_menu > ul > li > a > i.icon-sort-down{
 	font-size:105%;
 	display:inline-block;
 	vertical-align:2px;
 }
 
-menu > ul > li > ul,li.subdropdown > ul{
+menu.tools_menu > ul > li > ul,menu.tools_menu li.subdropdown > ul{
 	position:absolute;
     top:-99999em;
 	left:-1px;
@@ -430,7 +429,7 @@ menu > ul > li > ul,li.subdropdown > ul{
     transition:opacity .2s ease-in-out,top 0 ease-in 0.2s;
 }
 
-menu > ul > li:hover > ul,li.subdropdown:hover > ul {
+menu.tools_menu > ul > li:hover > ul,menu.tools_menu li.subdropdown:hover > ul {
 	opacity:1;
 	-webkit-transition:opacity .2s ease-in-out,top 0s ease-in 0s;  
     -moz-transition:opacity .2s ease-in-out,top 0s ease-in 0s; 
@@ -438,30 +437,31 @@ menu > ul > li:hover > ul,li.subdropdown:hover > ul {
     transition:opacity .2s ease-in-out,top 0s ease-in 0s;  
 }
 
-menu > ul > li:hover > ul{
+menu.tools_menu > ul > li:hover > ul{
 	top:100%;
 }
 
-li.subdropdown:hover > ul {
+menu.tools_menu li.subdropdown:hover > ul {
 	top:-8px;
 }
 
-menu.right > ul > li ul{
+menu.tools_menu.right > ul > li ul{
 	right:-1px;
 	left:auto;
 }
 
-menu > ul > li ul li{
+menu.tools_menu > ul > li ul li{
 	margin:0;
 	padding:0;
 	white-space: nowrap;
+	text-align:left;
 }
 
-menu > ul > li ul li.separator{
+menu.tools_menu > ul > li ul li.separator{
 	border-top:1px solid #bbb;
 }
 
-menu > ul > li ul li a{
+menu.tools_menu > ul > li ul li a{
 	display:block;
 	color:inherit;
 	text-decoration:none;
@@ -470,7 +470,7 @@ menu > ul > li ul li a{
 	outline:none;
 }
 
-menu > ul > li ul li a:hover,menu > ul > li ul li a:focus,li.subdropdown:hover> a{
+menu.tools_menu > ul > li ul li a:hover,menu.tools_menu > ul > li ul li a:focus,menu.tools_menu li.subdropdown:hover> a{
 	color:#FFF;
 	background-color: #0088cc; /* Old browsers */
 	background-image: -moz-linear-gradient(top,  #0088cc 1%, #0077b3 100%);
@@ -484,24 +484,24 @@ menu > ul > li ul li a:hover,menu > ul > li ul li a:focus,li.subdropdown:hover> 
 	font-weight:300;
 }
 
-menu > ul > li ul li i{
+menu.tools_menu > ul > li ul li i{
 	margin-right:8px;
 }
 
-menu > ul > li,li.subdropdown {
+menu.tools_menu > ul > li,li.subdropdown {
 	position:relative;
 }
 
-li.subdropdown > ul{
+menu.tools_menu li.subdropdown > ul{
 	left:100%;
 }
 
-menu.right li.subdropdown > ul{
+menu.tools_menu.right li.subdropdown > ul{
 	right:100%;
 	left:auto;
 }
 
-li.subdropdown > a:after{
+menu.tools_menu li.subdropdown > a:after{
 	display: block;
 	float: right;
 	width: 0;
@@ -513,6 +513,6 @@ li.subdropdown > a:after{
 	color:#999;
 }
 
-li.subdropdown:hover > a:after {
+menu.tools_menu li.subdropdown:hover > a:after {
 	color: #FFF;
 }
