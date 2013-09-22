@@ -252,28 +252,28 @@
 								<ul>
 									<li class="subdropdown"><a><i class="icon-eye-open"></i> {L_DISPLAY}</a>
 										<ul>
-											<li>{U_BEST_VIEWS}</li>
-											<li>{U_BEST_NOTES}</li>
+											<li><a href="{U_BEST_VIEWS}"><i class="icon-eye-open"></i> {L_BEST_VIEWS}</a></li>
+											<li><a href="{U_BEST_NOTES}"><i class="icon-star-half-empty"></i> {L_BEST_NOTES}</a></li>
 										</ul>
 									</li>
 									<li class="subdropdown"><a><i class="icon-sort"></i> {L_ORDER_BY}</a>
 										<ul>
-											<li>{ORDER_BY_NAME}</li>
-											<li>{ORDER_BY_DATE}</li>
-											<li>{ORDER_BY_VIEWS}</li>
-											<li>{ORDER_BY_NOTES}</li>
-											<li>{ORDER_BY_COM}</li>
+											<li><a href="{U_ORDER_BY_NAME}"><i class="icon-tag"></i> {L_NAME}</a></li>
+											<li><a href="{U_ORDER_BY_DATE}"><i class="icon-time"></i> {L_DATE}</a></li>
+											<li><a href="{U_ORDER_BY_VIEWS}"><i class="icon-eye-open"></i> {L_VIEWS}</a></li>
+											<li><a href="{U_ORDER_BY_NOTES}"><i class="icon-star-half-empty"></i> {L_NOTES}</a></li>
+											<li><a href="{U_ORDER_BY_COM}"><i class="icon-comment"></i> {L_COM}</a></li>
 										</ul>
 									</li>
 									<li class="subdropdown"><a><i class="icon-sort-by-alphabet"></i> {L_DIRECTION}</a>
 										<ul>
-											<li>{U_ASC}</li>
-											<li>{U_DESC}</li>	
+											<li><a href="{U_ASC}"><i class="icon-sort-by-attributes"></i> {L_ASC}</a></li>
+											<li><a href="{U_DESC}"><i class="icon-sort-by-attributes-alt"></i> {L_DESC}</a></li>	
 										</ul>
 									</li>
-									{ADD_PICS}
-									{EDIT}
-									{EDIT_CAT}
+									# IF U_ADD_PICS #<li class="separator"><a href="{U_ADD_PICS}"><i class="icon-plus"></i> {L_ADD_PICS}</a></li># ENDIF #
+									# IF U_EDIT #<li><a href="{U_EDIT}"><i class="icon-pencil"></i> {L_CAT_EDIT}</a></li># ENDIF #
+									# IF U_EDIT_CAT #<li><a href="{U_EDIT_CAT}"><i class="icon-reorder"></i> {L_EDIT_CAT}</a></li># ENDIF #
 								</ul>
 							</li>
 						</ul>
