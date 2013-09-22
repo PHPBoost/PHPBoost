@@ -158,7 +158,8 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 			'HEIGHT_MAX' => $config->get_mini_max_height(),
 			'WIDTH_MAX' => $column_width_pics,
 			'MODULE_DATA_PATH' => $module_data_path,
-			'ADD_PICS' => $User->check_auth($CAT_GALLERY[$g_idcat]['auth'], GalleryAuthorizationsService::WRITE_AUTHORIZATIONS) ? '<li class="separator"><a href="' . GalleryUrlBuilder::get_link_cat_add($g_idcat) . '"><i class="icon-plus"></i> ' . $LANG['gallery_pics_add'] . '</a></li>' : '',
+			'U_ADD_PICS' => $User->check_auth($CAT_GALLERY[$g_idcat]['auth'], GalleryAuthorizationsService::WRITE_AUTHORIZATIONS) ? GalleryUrlBuilder::get_link_cat_add($g_idcat) : '',
+			'L_ADD_PICS' => $LANG['gallery_pics_add'],
 			'L_CONFIRM_DEL_FILE' => $LANG['confim_del_file'],
 			'L_APROB' => $LANG['aprob'],
 			'L_UNAPROB' => $LANG['unaprob'],
@@ -178,15 +179,23 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 			'L_DISPLAY' => $LANG['display'],
 			'U_INDEX' => url('.php'),
 			'U_GALLERY_CAT_LINKS' => $cat_links,
-			'U_BEST_VIEWS' => '<a class="small" href="'. PATH_TO_ROOT.'/gallery/gallery' . url('.php?views=1&amp;cat=' . $g_idcat, '-' . $g_idcat . '.php?views=1') . '"><i class="icon-eye-open"></i> ' . $LANG['best_views'] . '</a>',
-			'U_BEST_NOTES' => '<a class="small" href="'. PATH_TO_ROOT.'/gallery/gallery' . url('.php?notes=1&amp;cat=' . $g_idcat, '-' . $g_idcat . '.php?notes=1') . '"><i class="icon-star-half-empty"></i> ' . $LANG['best_notes'] . '</a>',
-			'U_ASC' => '<a class="small" href="'. PATH_TO_ROOT.'/gallery/gallery' . url('.php?cat=' . $g_idcat . '&amp;sort=' . $g_type . '_' . 'asc', '-' . $g_idcat . '.php?sort=' . $g_type . '_' . 'asc') . '"><i class="icon-sort-by-attributes"></i> ' . $LANG['asc'] . '</a>',
-			'U_DESC' => '<a class="small" href="'. PATH_TO_ROOT.'/gallery/gallery' . url('.php?cat=' . $g_idcat . '&amp;sort=' . $g_type . '_' . 'desc', '-' . $g_idcat . '.php?sort=' . $g_type . '_' . 'desc') . '"><i class="icon-sort-by-attributes-alt"></i> ' . $LANG['desc'] . '</a>',
-			'ORDER_BY_NAME' => '<a href="' . PATH_TO_ROOT . '/gallery/gallery' . url('.php?sort=name_desc&amp;cat=' . $g_idcat, '-' . $g_idcat . '+' . $rewrite_title . '.php?sort=name_desc') . '"><i class="icon-tag"></i> ' . $LANG['name'] . '</a>',
-			'ORDER_BY_DATE' => '<a href="' . PATH_TO_ROOT . '/gallery/gallery' . url('.php?sort=date_desc&amp;cat=' . $g_idcat, '-' . $g_idcat . '+' . $rewrite_title . '.php?sort=date_desc') . '"><i class="icon-time"></i> ' . LangLoader::get_message('date', 'date-common') . '</a>',
-			'ORDER_BY_VIEWS' => '<a href="' . PATH_TO_ROOT . '/gallery/gallery' . url('.php?sort=views_desc&amp;cat=' . $g_idcat, '-' . $g_idcat . '+' . $rewrite_title . '.php?sort=views_desc') . '"><i class="icon-eye-open"></i> ' . $LANG['views'] . '</a>',
-			'ORDER_BY_NOTES' => '<a href="' . PATH_TO_ROOT . '/gallery/gallery' . url('.php?sort=notes_desc&amp;cat=' . $g_idcat, '-' . $g_idcat . '+' . $rewrite_title . '.php?sort=notes_desc') . '"><i class="icon-star-half-empty"></i> ' . $LANG['notes'] . '</a>',
-			'ORDER_BY_COM' => '<a href="' . PATH_TO_ROOT . '/gallery/gallery' . url('.php?sort=com_desc&amp;cat=' . $g_idcat, '-' . $g_idcat . '+' . $rewrite_title . '.php?sort=com_desc') . '"><i class="icon-comment"></i> ' . $LANG['com_s'] . '</a>'
+			'U_BEST_VIEWS' => PATH_TO_ROOT . '/gallery/gallery' . url('.php?views=1&amp;cat=' . $g_idcat, '-' . $g_idcat . '.php?views=1'),
+			'U_BEST_NOTES' => PATH_TO_ROOT . '/gallery/gallery' . url('.php?notes=1&amp;cat=' . $g_idcat, '-' . $g_idcat . '.php?notes=1'),
+			'U_ASC' => PATH_TO_ROOT . '/gallery/gallery' . url('.php?cat=' . $g_idcat . '&amp;sort=' . $g_type . '_' . 'asc', '-' . $g_idcat . '.php?sort=' . $g_type . '_' . 'asc'),
+			'U_DESC' => PATH_TO_ROOT . '/gallery/gallery' . url('.php?cat=' . $g_idcat . '&amp;sort=' . $g_type . '_' . 'desc', '-' . $g_idcat . '.php?sort=' . $g_type . '_' . 'desc'),
+			'U_ORDER_BY_NAME' => PATH_TO_ROOT . '/gallery/gallery' . url('.php?sort=name_desc&amp;cat=' . $g_idcat, '-' . $g_idcat . '+' . $rewrite_title . '.php?sort=name_desc'),
+			'U_ORDER_BY_DATE' => PATH_TO_ROOT . '/gallery/gallery' . url('.php?sort=date_desc&amp;cat=' . $g_idcat, '-' . $g_idcat . '+' . $rewrite_title . '.php?sort=date_desc'),
+			'U_ORDER_BY_VIEWS' => PATH_TO_ROOT . '/gallery/gallery' . url('.php?sort=views_desc&amp;cat=' . $g_idcat, '-' . $g_idcat . '+' . $rewrite_title . '.php?sort=views_desc'),
+			'U_ORDER_BY_NOTES' => PATH_TO_ROOT . '/gallery/gallery' . url('.php?sort=notes_desc&amp;cat=' . $g_idcat, '-' . $g_idcat . '+' . $rewrite_title . '.php?sort=notes_desc'),
+			'U_ORDER_BY_COM' => PATH_TO_ROOT . '/gallery/gallery' . url('.php?sort=com_desc&amp;cat=' . $g_idcat, '-' . $g_idcat . '+' . $rewrite_title . '.php?sort=com_desc'),
+			'L_BEST_VIEWS' => $LANG['best_views'],
+			'L_BEST_NOTES' => $LANG['best_notes'],
+			'L_ASC' => $LANG['asc'],
+			'L_DESC' => $LANG['desc'],
+			'L_DATE' => LangLoader::get_message('date', 'date-common'),
+			'L_VIEWS' => $LANG['views'],
+			'L_NOTES' => $LANG['notes'],
+			'L_COM' => $LANG['com_s']
 		));
 	
 		//Catégories non autorisées.
@@ -213,7 +222,9 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 		{
 			$Template->put_all(array(
 				'C_GALLERY_CATS' => true,
-				'EDIT_CAT' => $is_admin ? '<li><a href="'. PATH_TO_ROOT.'/gallery/admin_gallery_cat.php"><i class="icon-reorder"></i> '. $LANG['gallery_cats_management'] . '</a></li>' : ''
+				'U_EDIT_CAT' => $is_admin ? PATH_TO_ROOT.'/gallery/admin_gallery_cat.php' : '',
+				'L_EDIT_CAT' => $LANG['gallery_cats_management']
+				
 			));
 	
 			$j = 0;
@@ -297,7 +308,8 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 	
 			$Template->put_all(array(
 				'C_GALLERY_PICS' => true,
-				'EDIT' => $is_admin ? '<li><a href="'. PATH_TO_ROOT.'/gallery/admin_gallery_cat.php' . (!empty($g_idcat) ? '?id=' . $g_idcat : '') . '"><i class="icon-pencil"></i> ' . $LANG['cat_edit'] . '</a></li>' : ''
+				'U_EDIT' => $is_admin ? PATH_TO_ROOT.'/gallery/admin_gallery_cat.php' . (!empty($g_idcat) ? '?id=' . $g_idcat : '') : '',
+				'L_CAT_EDIT' => $LANG['cat_edit']
 			));
 	
 			//Liste des catégories.
