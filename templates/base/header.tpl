@@ -82,7 +82,7 @@
 			</aside>
 			# ENDIF #
 			
-			<section id="main">
+			<div id="main">
 				# IF C_MENUS_TOPCENTRAL_CONTENT #
 				<div id="top_contents">
 					{MENUS_TOPCENTRAL_CONTENT}
@@ -98,8 +98,7 @@
 								</a>
 							</li>
 							# START link_bread_crumb #
-								<li itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
-									<img src="{PATH_TO_ROOT}/templates/{THEME}/images/breadcrumb.png" alt="" class="valign_middle" />
+								<li itemscope itemtype="http://data-vocabulary.org/Breadcrumb" # IF link_bread_crumb.C_CURRENT # class="current" # ENDIF # >
 									<a href="{link_bread_crumb.URL}" title="{link_bread_crumb.TITLE}" itemprop="url">
 										<span itemprop="title">{link_bread_crumb.TITLE}</span>
 									</a>
