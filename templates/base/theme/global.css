@@ -318,7 +318,7 @@ menu.tools_menu {
 	margin:5px;
 }
 
-menu.tools_menu ul, section#main ul {
+menu.tools_menu ul {
 	margin-left:0;
 	margin-top:1px;
 }
@@ -350,17 +350,17 @@ menu.tools_menu > ul > li:hover {
 	background-color:#EEE;
 }
 
-menu.tools_menu > ul > li > a{
+menu.tools_menu > ul > li > a {
 	color:inherit;
 	text-decoration:none;
 	font-weight:300;
 }
 
-menu.tools_menu > ul > li > a:hover{
+menu.tools_menu > ul > li > a:hover {
 	text-decoration:none;
 }
 
-menu.tools_menu > ul > li > a > i{
+menu.tools_menu > ul > li > a > i {
 	font-size:125%;
 	vertical-align:-1px;
 }
@@ -379,7 +379,7 @@ menu.tools_menu.group > ul > li {
 	border-left:1px solid #BBB;
 }
 
-menu.tools_menu.group > ul > li:first-child{
+menu.tools_menu.group > ul > li:first-child {
 	-moz-border-radius-topleft: 4px;
 	-webkit-border-top-left-radius: 4px;
 	border-top-left-radius: 4px;
@@ -389,7 +389,7 @@ menu.tools_menu.group > ul > li:first-child{
 	border-left:1px solid rgba(0, 0, 0, 0.1)
 }
 
-menu.tools_menu.group > ul > li:last-child{
+menu.tools_menu.group > ul > li:last-child {
 	-moz-border-radius-topright: 4px;
 	-webkit-border-top-right-radius: 4px;
 	border-top-right-radius: 4px;
@@ -401,13 +401,13 @@ menu.tools_menu.group > ul > li:last-child{
 
 /* Menus déroulants */
 
-menu.tools_menu > ul > li > a > i.icon-sort-down{
+menu.tools_menu > ul > li > a > i.icon-sort-down {
 	font-size:105%;
 	display:inline-block;
 	vertical-align:2px;
 }
 
-menu.tools_menu > ul > li > ul,menu.tools_menu li.subdropdown > ul{
+menu.tools_menu > ul > li > ul, menu.tools_menu li.subdropdown > ul {
 	position:absolute;
     top:-99999em;
 	left:-1px;
@@ -416,18 +416,15 @@ menu.tools_menu > ul > li > ul,menu.tools_menu li.subdropdown > ul{
 	color:#333;
 	font-size:14px;
 	background: #FFF;
-	-moz-border-radius: 6px;
-	-webkit-border-radius: 6px;
-	border-radius: 6px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
 	-moz-box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
 	-webkit-box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
 	box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
 	border:1px solid #AAA;
 	z-index:9999;
 	cursor:pointer;
-	-webkit-box-sizing: border-box;
-	-moz-box-sizing: border-box;
-	box-sizing: border-box;
 	margin:2px 0 0;
 	opacity:0;
 	-webkit-transition:opacity .2s ease-in-out,top 0 ease-in 0.2s;
@@ -436,7 +433,7 @@ menu.tools_menu > ul > li > ul,menu.tools_menu li.subdropdown > ul{
     transition:opacity .2s ease-in-out,top 0 ease-in 0.2s;
 }
 
-menu.tools_menu > ul > li:hover > ul,menu.tools_menu li.subdropdown:hover > ul {
+menu.tools_menu > ul > li:hover > ul, menu.tools_menu li.subdropdown:hover > ul {
 	opacity:1;
 	-webkit-transition:opacity .2s ease-in-out,top 0s ease-in 0s;  
     -moz-transition:opacity .2s ease-in-out,top 0s ease-in 0s; 
@@ -444,7 +441,7 @@ menu.tools_menu > ul > li:hover > ul,menu.tools_menu li.subdropdown:hover > ul {
     transition:opacity .2s ease-in-out,top 0s ease-in 0s;  
 }
 
-menu.tools_menu > ul > li:hover > ul{
+menu.tools_menu > ul > li:hover > ul {
 	top:100%;
 }
 
@@ -452,23 +449,23 @@ menu.tools_menu li.subdropdown:hover > ul {
 	top:-7px;
 }
 
-menu.tools_menu.right > ul > li ul{
+menu.tools_menu.right > ul > li ul {
 	right:-1px;
 	left:auto;
 }
 
-menu.tools_menu > ul > li ul li{
+menu.tools_menu > ul > li ul li {
 	margin:0;
 	padding:0;
 	white-space: nowrap;
 	text-align:left;
 }
 
-menu.tools_menu > ul > li ul li.separator{
+menu.tools_menu > ul > li ul li.separator {
 	border-top:1px solid #bbb;
 }
 
-menu.tools_menu > ul > li ul li a{
+menu.tools_menu > ul > li ul li a {
 	display:block;
 	color:inherit;
 	text-decoration:none;
@@ -477,38 +474,30 @@ menu.tools_menu > ul > li ul li a{
 	outline:none;
 }
 
-menu.tools_menu > ul > li ul li a:hover,menu.tools_menu > ul > li ul li a:focus,menu.tools_menu li.subdropdown:hover> a{
-	color:#FFF;
-	background-color: #0088cc; /* Old browsers */
-	background-image: -moz-linear-gradient(top,  #0088cc 1%, #0077b3 100%);
-	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(1%,#0088cc), color-stop(100%,#0077b3));
-	background-image: -webkit-linear-gradient(top,  #0088cc 1%,#0077b3 100%);
-	background-image: -o-linear-gradient(top,  #0088cc 1%,#0077b3 100%);
-	background-image: -ms-linear-gradient(top,  #0088cc 1%,#0077b3 100%);
-	background-image: linear-gradient(to bottom,  #0088cc 1%,#0077b3 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0088cc', endColorstr='#0077b3',GradientType=0 );
+menu.tools_menu > ul > li ul li a:hover, menu.tools_menu > ul > li ul li a:focus, menu.tools_menu li.subdropdown:hover > a {
+	background-color: #F0F0F0;
 	text-decoration:none;
 	font-weight:300;
 }
 
-menu.tools_menu > ul > li ul li i{
+menu.tools_menu > ul > li ul li i {
 	margin-right:8px;
 }
 
-menu.tools_menu > ul > li,li.subdropdown {
+menu.tools_menu > ul > li, li.subdropdown {
 	position:relative;
 }
 
-menu.tools_menu li.subdropdown > ul{
+menu.tools_menu li.subdropdown > ul {
 	left:100%;
 }
 
-menu.tools_menu.right li.subdropdown > ul{
+menu.tools_menu.right li.subdropdown > ul {
 	right:100%;
 	left:auto;
 }
 
-menu.tools_menu li.subdropdown > a:after{
+menu.tools_menu li.subdropdown > a:after {
 	display: block;
 	float: right;
 	width: 0;
