@@ -30,7 +30,7 @@
 les pages du module "pages".
 - Refonte du module Web ?
 - Refonte du système d'événement et intégration d'un système de notification
-[*] Ajout d'une option dans la configuration pour le mode de débogage permettant d'afficher les requêtes SQL
+[*] Ajout d'une option dans la configuration avancée pour le mode de débogage permettant d'afficher les requêtes SQL
 [*] Création d'un système permettant de gérer facilement des mots clés dans les modules
 
 [b]Menus :[/b]
@@ -40,16 +40,16 @@ les pages du module "pages".
 [b]Personnalisation graphique :[/b]
 [*] Logo cliquable
 - Support mobile et version tablette
-- Intégration des technologies HTML5 + CSS 3
++ Intégration des technologies HTML5 + CSS 3
++ Création d'un menu unique remplaçant les icônes ajouter, éditer, supprimer, etc actuellement et permettant ainsi d'avoir quelque chose de plus harmonieux.
 - Nouveau thème épuré
 - Possibilité d'ajouter un texte de présentation du site en dessous du nom
-- Nettoyage des fichiers TPL et CSS
++ Nettoyage des fichiers TPL et CSS
 - Nouveau pack de smileys
 
 [b]Divers :[/b]
 [*] Suppression du panneau de modération présent dans l'administration qui fait doublon avec celui du dossier user
 [*] Suppression des autorisations d'accès dans la gestion des modules pour plus de cohérence et éviter les doublons avec les autorisations des modules
-- Envoi d'un MP lors d'un commentaire sur une contribution
 [*] Ajout de la balise enclosure dans les flux RSS pour joindre des médias
 [*] Harmonisation des liens dans l'administration :
 	[*] Smileys est maintenant dans Contenu
