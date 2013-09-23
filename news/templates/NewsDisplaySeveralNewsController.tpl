@@ -7,10 +7,10 @@
 -->
 </script>
 
-<div class="module_actions">
-	<menu class="buttons">
-		<ul><li class="dropdown"><a><i class="icon-cog"></i></a>
-			<ul class="right">
+<menu class="tools_menu right">
+	<ul>
+		<li><a><i class="icon-cog"></i></a>
+			<ul>
 				# IF C_ADD #
 				<li>
 					<a href="${relative_url(NewsUrlBuilder::add_news())}" title="${i18n('news.add')}"><i class="icon-plus"></i> ${i18n('news.add')}</a>
@@ -23,9 +23,8 @@
 				# ENDIF #
 			</ul>
 		</li>
-		</ul>
-	</menu>
-</div>
+	</ul>
+</menu>
 
 <section style="overflow: hidden;">
 	<header>
@@ -46,30 +45,27 @@
 		<article # IF C_NEWS_BLOCK_COLUMN # style="float:left;width:{COLUMN_WIDTH}%" # ENDIF # itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
 			<header>
 			
-				# IF C_NEWS_BLOCK_COLUMN #
-				<ul class="module_top_options block_hidden">
-				# ELSE #
-				<ul class="module_top_options">
-				# ENDIF #
-					<li>
-						<a class="news_comments" href="{news.U_COMMENTS}">{news.NUMBER_COMMENTS}</a>
-					</li>
-					<li>
-						<a><span class="options"></span><span class="caret"></span></a>
-						<ul>
-							# IF news.C_EDIT #
-							<li>
-								<a href="{news.U_EDIT}" title="${LangLoader::get_message('edit', 'main')}" class="img_link">${LangLoader::get_message('edit', 'main')}</a>
-							</li>
-							# ENDIF #
-							# IF news.C_DELETE #
-							<li>
-								<a href="{news.U_DELETE}" title="${LangLoader::get_message('delete', 'main')}" onclick="javascript:return Confirm();">${LangLoader::get_message('delete', 'main')}</a>
-							</li>
-							# ENDIF #
-						</ul>
-					</li>
-				</ul>
+				<menu class="tools_menu right">
+					<ul>
+						<li><a><i class="icon-cog"></i></a>
+							<ul>
+								<li>
+									<a class="news_comments" href="{news.U_COMMENTS}">{news.NUMBER_COMMENTS}</a>
+								</li>
+								# IF news.C_EDIT #
+								<li>
+									<a href="{news.U_EDIT}" title="${LangLoader::get_message('edit', 'main')}" class="img_link">${LangLoader::get_message('edit', 'main')}</a>
+								</li>
+								# ENDIF #
+								# IF news.C_DELETE #
+								<li>
+									<a href="{news.U_DELETE}" title="${LangLoader::get_message('delete', 'main')}" onclick="javascript:return Confirm();">${LangLoader::get_message('delete', 'main')}</a>
+								</li>
+								# ENDIF #
+							</ul>
+						</li>
+					</ul>
+				</menu>
 				
 				<h1>
 					<a href="{news.U_SYNDICATION}" class="syndication" title="${LangLoader::get_message('syndication', 'main')}"></a>
