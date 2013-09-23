@@ -4,7 +4,7 @@
 				{MENUS_BOTTOMCENTRAL_CONTENT}
 			</div>
 			# ENDIF #
-		</section>
+		</div>
 		# IF C_MENUS_TOP_FOOTER_CONTENT #
 		<div id="top_footer">
 			{MENUS_TOP_FOOTER_CONTENT}

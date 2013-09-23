@@ -101,9 +101,11 @@ class BreadCrumb
 			'L_INDEX' 	 => LangLoader::get_message('home', 'main')
         ));
         
+        $output = array_slice($this->array_links, -1, 1);
         foreach ($this->array_links as $key => $array)
         {
             $tpl->assign_block_vars('link_bread_crumb', array(
+            	'C_CURRENT' => $output[0] == $array,
 				'URL' 	=> $array[1],
 				'TITLE' => $array[0]
             ));
