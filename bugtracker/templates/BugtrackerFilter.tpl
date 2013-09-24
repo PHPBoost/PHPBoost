@@ -12,9 +12,9 @@ function Confirm_del_filter() {
 			{L_FILTERS}
 		</th>
 	</tr>
-	<tr class="center">
+	<tr>
 		# IF C_DISPLAY_TYPES #
-		<th class="filter_title">
+		<th class="filter_title text_center">
 			{@bugs.labels.fields.type}
 		</th>
 		# ENDIF #

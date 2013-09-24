@@ -143,9 +143,9 @@ class BugtrackerSolvedListController extends ModuleController
 		
 		$this->view->put_all(array(
 			'C_IS_ADMIN'				=> BugtrackerAuthorizationsService::check_authorizations()->moderation(),
-			'C_BUGS' 					=> $bugs_number,
+			'C_BUGS' 					=> $result->get_rows_count() > 0,
 			'C_COMMENTS'				=> $config->are_comments_enabled(),
-			'C_PAGINATION'				=> $bugs_number > $pagination->get_number_items_per_page(),
+			'C_PAGINATION'				=> $pagination->has_several_pages(),
 			'PAGINATION' 				=> $pagination->display(),
 			'BUGS_COLSPAN' 				=> BugtrackerAuthorizationsService::check_authorizations()->moderation() ? 5 : 4,
 			'L_UPDATE' 					=> $main_lang['update'],

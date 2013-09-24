@@ -11,7 +11,7 @@ function Confirm_del_default_value() {
 		# INCLUDE elements.ELEMENT #
 	# END elements #
 	<table class="module_table">
-		<tr class="center">
+		<tr>
 			<th class="column_default">
 				{@bugs.labels.default}
 			</th>
@@ -20,8 +20,8 @@ function Confirm_del_default_value() {
 			</th>
 		</tr>
 		# START priorities #
-		<tr class="center">
-			<td class="row2">
+		<tr>
+			<td class="row2 text_center">
 				<input type="radio" name="default_priority" value="{priorities.ID}" {priorities.IS_DEFAULT}>
 			</td>
 			<td class="row2">
@@ -38,8 +38,8 @@ function Confirm_del_default_value() {
 		</tr>
 			# ENDIF #
 		# ELSE #
-		<tr class="center"> 
-			<td colspan="3" class="row2">
+		<tr> 
+			<td colspan="3" class="row2 text_center">
 				{@bugs.notice.no_priority}
 			</td>
 		</tr>

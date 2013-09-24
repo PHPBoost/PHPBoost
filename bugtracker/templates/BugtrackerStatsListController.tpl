@@ -27,13 +27,13 @@
 			{@bugs.labels.fields.status}
 		</th>
 	</tr>
-	<tr class="center">
+	<tr>
 		# IF C_BUGS #
-		<td class="row2 chart">
+		<td class="row2 chart text_center">
 			<div id="status_chart"></div>
 		</td>
 		# ELSE #
-		<td class="row2">
+		<td class="row2 text_center">
 			{@bugs.notice.no_bug}
 		</td>
 		# ENDIF #
@@ -43,7 +43,7 @@
 
 # IF C_DISPLAY_VERSIONS #
 <table class="module_table">
-	<tr class="center">
+	<tr class="text_center">
 		<th class="column_version">
 			{@bugs.labels.fields.version}
 		</th>
@@ -52,7 +52,7 @@
 		</th>
 	</tr>
 	# START fixed_version #
-	<tr class="center"> 
+	<tr class="text_center"> 
 		<td class="row2"> 
 			{fixed_version.NAME}
 		</td>
@@ -62,7 +62,7 @@
 	</tr>
 	# END fixed_version #
 	# IF NOT C_FIXED_BUGS #
-	<tr class="center"> 
+	<tr class="text_center"> 
 		<td colspan="2" class="row2">
 			{@bugs.notice.no_bug_solved}
 		</td>
@@ -80,7 +80,7 @@
 			{@bugs.labels.top_posters}
 		</th>
 	</tr>
-	<tr class="center">
+	<tr class="text_center">
 		<td class="row1">
 			N&deg;
 		</td>
@@ -92,7 +92,7 @@
 		</td>
 	</tr>
 	# START top_poster #
-	<tr class="center">
+	<tr class="text_center">
 		<td class="row2">
 			{top_poster.ID}
 		</td>
@@ -105,8 +105,8 @@
 	</tr>
 	# END top_poster #
 	# IF NOT C_POSTERS #
-	<tr class="center"> 
-		<td colspan="3" class="row2">
+	<tr> 
+		<td colspan="3" class="row2 text_center">
 			{@bugs.notice.no_bug}
 		</td>
 	</tr>

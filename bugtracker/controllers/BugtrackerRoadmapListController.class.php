@@ -147,7 +147,7 @@ class BugtrackerRoadmapListController extends ModuleController
 		$this->view->put_all(array(
 			'C_BUGS'					=> $bugs_number[$roadmap_status],
 			'C_COMMENTS'				=> $config->are_comments_enabled(),
-			'C_PAGINATION'				=> $bugs_number[$roadmap_status] > $pagination->get_number_items_per_page(),
+			'C_PAGINATION'				=> $pagination->has_several_pages(),
 			'PAGINATION' 				=> $pagination->display(),
 			'BUGS_COLSPAN'				=> $bugs_colspan,
 			'SELECT_VERSION'			=> $this->build_form($versions[$roadmap_version], $roadmap_status, (int)$bugs_number[$roadmap_status])->display(),

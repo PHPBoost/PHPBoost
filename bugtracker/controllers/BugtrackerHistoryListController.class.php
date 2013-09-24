@@ -59,7 +59,7 @@ class BugtrackerHistoryListController extends ModuleController
 		$main_lang = LangLoader::get('main');
 		
 		$this->view->put_all(array(
-			'C_PAGINATION'	=> $history_lines_number > $pagination->get_number_items_per_page(),
+			'C_PAGINATION'	=> $pagination->has_several_pages(),
 			'C_HISTORY'		=> $history_lines_number,
 			'PAGINATION'	=> $pagination->display(),
 			'L_GUEST'		=> $main_lang['guest'],

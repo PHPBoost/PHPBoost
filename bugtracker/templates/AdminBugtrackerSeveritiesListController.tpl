@@ -40,7 +40,7 @@ function bbcode_color_list(field)
 		# INCLUDE elements.ELEMENT #
 	# END elements #
 	<table class="module_table">
-		<tr class="center">
+		<tr>
 			<th class="column_default">
 				{@bugs.labels.default}
 			</th>
@@ -52,8 +52,8 @@ function bbcode_color_list(field)
 			</th>
 		</tr>
 		# START severities #
-		<tr class="center">
-			<td class="row2">
+		<tr>
+			<td class="row2 text_center">
 				<input type="radio" name="default_severity" value="{severities.ID}" {severities.IS_DEFAULT}>
 			</td>
 			<td class="row2">
@@ -78,8 +78,8 @@ function bbcode_color_list(field)
 		</tr>
 			# ENDIF #
 		# ELSE #
-			<tr class="center"> 
-				<td colspan="4" class="row2">
+			<tr> 
+				<td colspan="4" class="row2 text_center">
 					{@bugs.notice.no_severity}
 				</td>
 			</tr>

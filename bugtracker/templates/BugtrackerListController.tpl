@@ -18,7 +18,7 @@ function Confirm(action) {
 -->
 </script>
 <table class="module_table">
-	<tr class="center">
+	<tr class="text_center">
 		<th class="column_id">
 			<a href="{LINK_BUG_ID_TOP}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
 			{@bugs.labels.fields.id}
@@ -46,7 +46,7 @@ function Confirm(action) {
 		# ENDIF #
 	</tr>
 	# START bug #
-	<tr class="align_center"> 
+	<tr class="text_center"> 
 		<td class="row2"# IF bug.C_LINE_COLOR # style="background-color:{bug.LINE_COLOR};"# ENDIF #>
 			<a href="{bug.LINK_BUG_DETAIL}">\#{bug.ID}</a>
 		</td>
@@ -73,8 +73,8 @@ function Confirm(action) {
 	</tr>
 	# END bug #
 	# IF NOT C_BUGS #
-	<tr class="center"> 
-		<td colspan="{BUGS_COLSPAN}" class="row2">
+	<tr> 
+		<td colspan="{BUGS_COLSPAN}" class="row2 text_center">
 			{L_NO_BUG}
 		</td>
 	</tr>

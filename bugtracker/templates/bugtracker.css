@@ -1,7 +1,10 @@
 section .content ul:nth-of-type(1) { list-style-type:none; }
 
 /* Class générales */
-.filter_title{ padding-top: 10px; }
+.filter_title{
+	padding-top: 10px;
+	text-align: center;
+}
 
 .filter {
 	padding: 0px;
@@ -81,12 +84,12 @@ li.bt_add { background: none; }
 .display_none{ display: none; }
 .vertical_top{ vertical-align: top; }
 
-.column_id{ width: 60px; }
+.column_id{ width: 61px; }
 .column_admin{ width: 80px; }
 .column_history{ width: 70px; }
 .column_severity{ width: 100px; }
-.column_informations{ width: 115px; }
-.column_date{ width: 130px; }
+.column_informations{ width: 125px; }
+.column_date{ width: 138px; }
 .column_date_roadmap{ width: 100px; }
 .column_version{ width: 45px; }
 .column_version_detected{ width: 96px; }
