@@ -13,12 +13,12 @@
 			<ul>
 				# IF C_ADD #
 				<li>
-					<a href="${relative_url(NewsUrlBuilder::add_news())}" title="${i18n('news.add')}"><i class="icon-plus"></i> ${i18n('news.add')}</a>
+					<a href="${relative_url(NewsUrlBuilder::add_news())}" title="${i18n('news.add')}">${i18n('news.add')}</a>
 				</li>
 				# ENDIF #
 				# IF C_PENDING_NEWS #
 				<li>
-					<a href="${relative_url(NewsUrlBuilder::display_pending_news())}" title="${i18n('news.pending')}"><i class="icon-time"></i> ${i18n('news.pending')}</a>
+					<a href="${relative_url(NewsUrlBuilder::display_pending_news())}" title="${i18n('news.pending')}">${i18n('news.pending')}</a>
 				</li>
 				# ENDIF #
 			</ul>
