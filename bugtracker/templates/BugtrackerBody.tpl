@@ -1,7 +1,7 @@
 # INCLUDE MSG #
 <section>
 	<header>
-		<h1>A modifier</h1>
+		<h1>{@bugs.module_title}</h1>
 	</header>
 	<div class="content">
 		<ul>

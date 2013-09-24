@@ -28,7 +28,7 @@ function display_default_version_radio(version_id)
 		# INCLUDE elements.ELEMENT #
 	# END elements #
 	<table class="module_table">
-		<tr class="center">
+		<tr>
 			<th class="column_default">
 				{@bugs.labels.default}
 			</th>
@@ -46,8 +46,8 @@ function display_default_version_radio(version_id)
 			</th>
 		</tr>
 		# START versions #
-		<tr class="center">
-			<td class="row2">
+		<tr>
+			<td class="row2 text_center">
 				<input type="radio" id="default_version{versions.ID}" name="default_version" value="{versions.ID}" {versions.IS_DEFAULT} {versions.DISPLAY_DEFAULT}>
 			</td>
 			<td class="row2">
@@ -59,7 +59,7 @@ function display_default_version_radio(version_id)
 			<td class="row2">
 				<input type="checkbox" id="detected_in{versions.ID}" name="detected_in{versions.ID}" onclick="javascript:display_default_version_radio('{versions.ID}');" {versions.DETECTED_IN}>
 			</td> 
-			<td class="row2">
+			<td class="row2 text_center">
 				<a href="{versions.LINK_DELETE}" onclick="javascript:return Confirm_del_version();"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" /></a>
 			</td>
 		</tr>
@@ -73,8 +73,8 @@ function display_default_version_radio(version_id)
 		</tr>
 			# ENDIF #
 		# ELSE #
-			<tr class="center"> 
-				<td colspan="5" class="row2">
+			<tr> 
+				<td colspan="5" class="row2 text_center">
 					{@bugs.notice.no_version}
 				</td>
 			</tr>

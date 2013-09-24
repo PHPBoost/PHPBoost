@@ -16,7 +16,7 @@ function Confirm_del_default_value() {
 		# INCLUDE elements.ELEMENT #
 	# END elements #
 	<table class="module_table">
-		<tr class="center">
+		<tr>
 			<th class="column_default">
 				{@bugs.labels.default}
 			</th>
@@ -28,14 +28,14 @@ function Confirm_del_default_value() {
 			</th>
 		</tr>
 		# START categories #
-		<tr class="center">
-			<td class="row2">
+		<tr>
+			<td class="row2 text_center">
 				<input type="radio" name="default_category" value="{categories.ID}" {categories.IS_DEFAULT}>
 			</td>
 			<td class="row2">
 				<input type="text" maxlength="100" size="40" name="category{categories.ID}" value="{categories.NAME}" class="text">
 			</td>
-			<td class="row2">
+			<td class="row2 text_center">
 				<a href="{categories.LINK_DELETE}" onclick="javascript:return Confirm_del_category();"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" /></a>
 			</td>
 		</tr>
@@ -49,8 +49,8 @@ function Confirm_del_default_value() {
 		</tr>
 			# ENDIF #
 		# ELSE #
-		<tr class="center"> 
-			<td colspan="3" class="row2">
+		<tr> 
+			<td colspan="3" class="row2 text_center">
 				{@bugs.notice.no_category}
 			</td>
 		</tr>
