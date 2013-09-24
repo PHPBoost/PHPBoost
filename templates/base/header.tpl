@@ -18,10 +18,6 @@
 		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/{THEME}/theme/global.css" type="text/css" media="screen, print, handheld" />
 		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/{THEME}/theme/content.css" type="text/css" media="screen, print, handheld" />
 		# ENDIF #
-
-		<!--[if IE 7]>
-		  <link rel="stylesheet" href="{PATH_TO_ROOT}/kernel/lib/css/font-awesome/css/font-awesome-ie7.css">
-		<![endif]-->
 		
 		<!-- Modules CSS -->
 		{MODULES_CSS}
