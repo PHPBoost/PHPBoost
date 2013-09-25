@@ -318,9 +318,9 @@ menu.tools_menu {
 	margin:5px;
 }
 
-menu.tools_menu ul {
+menu.tools_menu ul li ul {
 	margin-left:0 !important;
-	margin-top:1px;
+	margin-top:1px !important;
 }
 
 menu.tools_menu > ul > li {
@@ -396,12 +396,6 @@ menu.tools_menu.group > ul > li:last-child {
 }
 
 /* Menus déroulants */
-
-menu.tools_menu > ul > li > a > i.icon-sort-down {
-	font-size:105%;
-	display:inline-block;
-	vertical-align:2px;
-}
 
 menu.tools_menu > ul > li > ul, menu.tools_menu li.subdropdown > ul {
 	position:absolute;
