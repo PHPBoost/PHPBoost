@@ -256,8 +256,8 @@ class BugtrackerAddController extends ModuleController
 		
 		$response = new BugtrackerDisplayResponse();
 		$response->add_breadcrumb_link($this->lang['bugs.module_title'], BugtrackerUrlBuilder::home());
-		$response->add_breadcrumb_link($this->lang['bugs.titles.add_bug'], BugtrackerUrlBuilder::add(!empty($back_page) ? $back_page . '/' . $page . (!empty($back_filter) ? '/' . $back_filter . '/' . $filter_id : '') : ''));
-		$response->set_page_title($this->lang['bugs.titles.add_bug']);
+		$response->add_breadcrumb_link($this->lang['bugs.titles.add'], BugtrackerUrlBuilder::add(!empty($back_page) ? $back_page . '/' . $page . (!empty($back_filter) ? '/' . $back_filter . '/' . $filter_id : '') : ''));
+		$response->set_page_title($this->lang['bugs.titles.add']);
 		
 		return $response->display($body_view);
 	}

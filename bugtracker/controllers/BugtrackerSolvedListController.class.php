@@ -235,8 +235,8 @@ class BugtrackerSolvedListController extends ModuleController
 		
 		$response = new BugtrackerDisplayResponse();
 		$response->add_breadcrumb_link($this->lang['bugs.module_title'], BugtrackerUrlBuilder::home());
-		$response->add_breadcrumb_link($this->lang['bugs.titles.solved_bugs'], BugtrackerUrlBuilder::solved());
-		$response->set_page_title($this->lang['bugs.titles.solved_bugs']);
+		$response->add_breadcrumb_link($this->lang['bugs.titles.solved'], BugtrackerUrlBuilder::solved());
+		$response->set_page_title($this->lang['bugs.titles.solved']);
 		
 		return $response->display($body_view);
 	}
