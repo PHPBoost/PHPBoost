@@ -147,8 +147,8 @@ class BugtrackerStatsListController extends ModuleController
 		
 		$response = new BugtrackerDisplayResponse();
 		$response->add_breadcrumb_link($this->lang['bugs.module_title'], BugtrackerUrlBuilder::home());
-		$response->add_breadcrumb_link($this->lang['bugs.titles.bugs_stats'], BugtrackerUrlBuilder::stats());
-		$response->set_page_title($this->lang['bugs.titles.bugs_stats']);
+		$response->add_breadcrumb_link($this->lang['bugs.titles.stats'], BugtrackerUrlBuilder::stats());
+		$response->set_page_title($this->lang['bugs.titles.stats']);
 		
 		return $response->display($body_view);
 	}

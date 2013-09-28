@@ -68,7 +68,8 @@ class BugtrackerViews
 			'LINK_BUG_HISTORY'		=> $current_page == 'history' ? BugtrackerUrlBuilder::history($bug_id)->absolute() : '',
 			'LINK_BUG_ADD'			=> BugtrackerUrlBuilder::add((in_array($current_page, array('add', 'edit')) ? (!empty($back_page) ? $back_page . '/' . $page . (!empty($back_filter) ? '/' . $back_filter . '/' . $filter_id : '') : '') : (!in_array($current_page, array('detail', 'history')) ? $current_page : '')) . (in_array($current_page, array('unsolved', 'solved', 'roadmap')) ? '/' . $page . (!empty($filter) ? '/' . $filter . '/' . $filter_id : '') : ''))->absolute(),
 			'LINK_BUG_EDIT'			=> $current_page == 'edit' ? BugtrackerUrlBuilder::edit(!empty($back_page) ? $bug_id . '/' . $back_page . '/' . $page . (!empty($back_filter) ? '/' . $back_filter . '/' . $filter_id : '') : $bug_id)->absolute() : '',
-			'BUG_ID'				=> $bug_id
+			'BUG_ID'				=> $bug_id,
+			'TITLE'					=> $lang['bugs.titles.' . $current_page] . (in_array($current_page, array('history', 'detail', 'edit')) ? ' #' . $bug_id : '')
 		));
 		
 		return $body_view;

@@ -258,8 +258,8 @@ class BugtrackerUnsolvedListController extends ModuleController
 		
 		$response = new BugtrackerDisplayResponse();
 		$response->add_breadcrumb_link($this->lang['bugs.module_title'], BugtrackerUrlBuilder::home());
-		$response->add_breadcrumb_link($this->lang['bugs.titles.unsolved_bugs'], BugtrackerUrlBuilder::unsolved());
-		$response->set_page_title($this->lang['bugs.titles.unsolved_bugs']);
+		$response->add_breadcrumb_link($this->lang['bugs.titles.unsolved'], BugtrackerUrlBuilder::unsolved());
+		$response->set_page_title($this->lang['bugs.titles.unsolved']);
 		
 		return $response->display($body_view);
 	}

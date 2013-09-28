@@ -166,7 +166,7 @@ class AdminBugtrackerConfigController extends AdminModuleController
 			array('hidden' => !$this->config->are_admin_alerts_enabled())
 		));
 		
-		$fieldset = new FormFieldsetHTML('stats', $this->lang['bugs.titles.bugs_stats']);
+		$fieldset = new FormFieldsetHTML('stats', $this->lang['bugs.titles.stats']);
 		$form->add_fieldset($fieldset);
 		
 		$fieldset->add_field(new FormFieldCheckbox('stats_enabled', $this->lang['bugs.config.activ_stats'], $this->config->are_stats_enabled(),
