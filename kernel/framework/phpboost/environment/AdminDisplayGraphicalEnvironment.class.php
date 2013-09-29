@@ -301,11 +301,10 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 					{
 						if (is_array($value))
 						{
-							$links .= '<li class="extend" onmouseover="show_menu(\'' . $idmenu .
-							$i . $module_id . '\', 2);" onmouseout="hide_menu(2);"><a href="#" ' .
+							$links .= '<li class="extend"><a href="#" ' .
 									'style="background-image:url(' . TPL_PATH_TO_ROOT . '/' . $module_id .
 									'/' . $module_id . '_mini.png);cursor:default;">' . $key .
-									'</a><ul id="sssmenu' . $idmenu . $i . $module_id . '">' . "\n";
+									'</a><ul>' . "\n";
 							foreach ($value as $key2 => $value2)
 							{
 								$links .= '<li><a href="' . TPL_PATH_TO_ROOT . '/' . $module_id .

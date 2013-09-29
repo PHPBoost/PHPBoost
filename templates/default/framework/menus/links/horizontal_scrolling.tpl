@@ -7,7 +7,7 @@
         </div>
     # ENDIF #
     # IF C_NEXT_MENU #
-        <li class="# IF C_FIRST_LEVEL #first_level dynamic_menu# ELSE #extend# ENDIF #" onmouseover="showMenu('gmenu{ID}', {PARENT_DEPTH});" onmouseout="hideMenu({PARENT_DEPTH});">
+        <li class="# IF C_FIRST_LEVEL #first_level dynamic_menu# ELSE #extend# ENDIF #">
             # IF C_URL #
                 <a href="{ABSOLUTE_URL}" # IF C_IMG # style="background-image:url('{ABSOLUTE_IMG}');" # ENDIF #>{TITLE}</a>
             # ELSE #
