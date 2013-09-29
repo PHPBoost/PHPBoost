@@ -294,9 +294,23 @@ h4.stitle2{
     border:none;
     border:1px solid #C4CED6;
     border-bottom:1px solid #99B1CB;
-	visibility:hidden;
     position:absolute;
 	background-color:#FFFFFF;
+	top:-99999em;
+	opacity:0;
+	-webkit-transition:opacity .2s ease-in-out,top 0 ease-in 0.2s;
+	-moz-transition:opacity .2s ease-in-out,top 0 ease-in 0.2s;
+	-o-transition:opacity .2s ease-in-out,top 0 ease-in 0.2s; 
+	transition:opacity .2s ease-in-out,top 0 ease-in 0.2s;
+}
+
+.dynamic_menu li:hover > ul {
+	opacity:1;
+	top:100%;
+	-webkit-transition:opacity .2s ease-in-out,top 0s ease-in 0s;  
+	-moz-transition:opacity .2s ease-in-out,top 0s ease-in 0s; 
+	-o-transition:opacity .2s ease-in-out,top 0s ease-in 0s; 
+	transition:opacity .2s ease-in-out,top 0s ease-in 0s;
 }
 
 .dynamic_menu li li {
@@ -317,10 +331,12 @@ h4.stitle2{
 
 /* Niveau 2 */
 .dynamic_menu li li ul {
-    visibility:hidden;
-    top:-1px;
     left:100%;
     z-index:101;
+}
+
+.dynamic_menu li li:hover > ul {
+    top:-1px;
 }
 
 .dynamic_menu li.vertical ul {

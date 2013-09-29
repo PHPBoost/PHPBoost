@@ -3,7 +3,7 @@
 		<div class="dynamic_menu">
 			<ul>
                 # IF C_HAS_CHILD #
-			    <li onmouseover="showMenu('gmenu{ID}', {DEPTH});" onmouseout="hideMenu({DEPTH});">
+			    <li>
                 # ELSE #
                 <li>
                 # ENDIF #
@@ -22,7 +22,7 @@
 	    # ENDIF #
 	# ENDIF #
 	# IF C_NEXT_MENU # <!-- Children -->
-		<li class="extend" onmouseover="showMenu('gmenu{ID}', {DEPTH});" onmouseout="hideMenu({DEPTH});">
+		<li class="extend">
 			# IF C_URL #<a href="{ABSOLUTE_URL}" style="# IF C_IMG #background-image:url({ABSOLUTE_IMG});# ENDIF #"># ELSE #<span style="# IF C_IMG #background-image:url({ABSOLUTE_IMG});# ENDIF #"># ENDIF #
 		    {TITLE}
 		    # IF C_URL #</a># ELSE #</span># ENDIF #
