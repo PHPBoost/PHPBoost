@@ -3,7 +3,15 @@
 Contient les conteneur, fortement dépendant du design.
 --------------------------------------*/ 
 
-* { margin:0; padding:0; font-size:100%; }
+* { 
+	margin:0;
+	padding:0;
+	font-size:100%;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box; 
+}
+
 html, body{	height: 100%; }
 
 body {
@@ -68,7 +76,6 @@ div#sub_header_admin .dynamic_menu h5 {
 div#sub_header_admin .dynamic_menu h5:hover, div#sub_header_admin .dynamic_menu h5:active {
     color:#366393;
     background:#e8edf3;
-    border-bottom:1px solid #99B1CB;
 }
 
 div#admin_extend_link{

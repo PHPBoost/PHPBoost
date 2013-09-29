@@ -262,8 +262,21 @@ h4.stitle2{
 	height:2px;
 }
 
-.dynamic_menu ul li.extend {
-	background:url(images/bgmenu_extend.png);
+.dynamic_menu ul li.extend > a, .dynamic_menu ul li.extend > span {
+	padding-right:18px;
+}
+
+.dynamic_menu ul li.extend > a:after, .dynamic_menu ul li.extend > span:after{
+	position:absolute;
+	display: block;
+	right:7px;
+	top:50%;
+	margin-top:-5px;
+	font-family: FontAwesome;
+	content: "\F0DA";
+	color:#CCC;
+	font-size:11px;
+	font-weight:300;
 }
 
 /* Case du menu */
@@ -273,36 +286,29 @@ h4.stitle2{
     border-bottom:1px solid #99B1CB;
 	visibility:hidden;
     position:absolute;
+	background-color:#FFFFFF;
 }
 
 .dynamic_menu li li {
     clear:both;
-    color:#0578CC;
-    background:#FFFFFF url(images/bgmenu.png) repeat-y;
     display:block;
-    width:169px;
+	width:100%;
 }
 
 .dynamic_menu li li a, .dynamic_menu li li span {
     color:#0578CC;
     font-size:10px;
     text-decoration:none;
-    width:133px;
     display:block;
     white-space:nowrap;
     margin:auto;
-    padding:6px 0px 6px 32px;
+    padding:6px 12px 6px 32px;
     background-repeat:no-repeat;
     background-position:5px;
 }
 
-.dynamic_menu li li a:hover {
+.dynamic_menu li li a:hover, .dynamic_menu li li span:hover {
     background-color:#D2E3F1;
-    background-repeat:no-repeat;
-    background-position:5px;
-    border:1px solid #0578CC;
-    padding-top:5px;
-    padding-bottom:5px;
     cursor:pointer;
 }
 
@@ -334,14 +340,8 @@ ul.vertical_scrolling_menu li.first_level {
 
 /* Menu Horizontal - Scrolling */
 ul.horizontal_scrolling_menu li {
-    display:inline;
-    padding-left:5px;
-    padding-right:5px;
-}
-
-.horizontal_scrolling_menu .dynamic_menu li {
-    width:163px;
-    padding-left:1px;
+    display:block;
+    padding:0;
 }
 
 ul.horizontal_scrolling_menu li.first_level {
@@ -372,6 +372,10 @@ ul.menu_vertical a,ul.menu_vertical span {
 
 ul.menu_vertical {
     text-align:left;
+}
+
+ul.menu_vertical li {
+    list-style:none;
 }
 
 ul.menu_vertical li a,ul.menu_vertical li span{
