@@ -237,6 +237,16 @@ h4.stitle2{
     margin-bottom:15px;
 }
 
+.dynamic_menu li a, .dynamic_menu li span {
+    text-decoration:none;
+    display:block;
+    white-space:nowrap;
+    margin:auto;
+    padding:6px 12px 6px 32px;
+    background-repeat:no-repeat;
+    background-position:5px center;
+}
+
 /* Lien du menu */
 
 .dynamic_menu h5 {
@@ -298,13 +308,6 @@ h4.stitle2{
 .dynamic_menu li li a, .dynamic_menu li li span {
     color:#0578CC;
     font-size:10px;
-    text-decoration:none;
-    display:block;
-    white-space:nowrap;
-    margin:auto;
-    padding:6px 12px 6px 32px;
-    background-repeat:no-repeat;
-    background-position:5px;
 }
 
 .dynamic_menu li li a:hover, .dynamic_menu li li span:hover {

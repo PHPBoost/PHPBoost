@@ -8,15 +8,14 @@
     # ENDIF #
     # IF C_NEXT_MENU #
         <li class="# IF C_FIRST_LEVEL #first_level dynamic_menu# ELSE #extend# ENDIF #" onmouseover="showMenu('gmenu{ID}', {PARENT_DEPTH});" onmouseout="hideMenu({PARENT_DEPTH});">
-            # IF C_IMG #<img style="float:left;margin-top:3px;margin-left:5px" src="{ABSOLUTE_IMG}" alt="" /> # ENDIF #
             # IF C_URL #
-                <a href="{ABSOLUTE_URL}">{TITLE}</a>
+                <a href="{ABSOLUTE_URL}" # IF C_IMG # style="background-image:url('{ABSOLUTE_IMG}');" # ENDIF #>{TITLE}</a>
             # ELSE #
-                <span>{TITLE}</span>
+                <span # IF C_IMG # style="background-image:url('{ABSOLUTE_IMG}');" # ENDIF #>{TITLE}</span>
             # ENDIF #
             <ul id="gmenu{ID_VAR}"># START elements #{elements.DISPLAY}# END elements #</ul>
         </li>
     # ENDIF #
 # ELSE #
-    <li# IF C_FIRST_LEVEL # class="first_level"# ENDIF #># IF C_IMG #<img style="float:left;margin-top:3px;margin-left:5px" src="{ABSOLUTE_IMG}" alt="" /> # ENDIF #<a href="{ABSOLUTE_URL}" title="{TITLE}">{TITLE}</a></li>
+    <li# IF C_FIRST_LEVEL # class="first_level"# ENDIF #><a href="{ABSOLUTE_URL}" title="{TITLE}" # IF C_IMG # style="background-image:url('{ABSOLUTE_IMG}');" # ENDIF # >{TITLE}</a></li>
 # ENDIF #
