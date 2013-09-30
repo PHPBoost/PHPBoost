@@ -112,7 +112,7 @@ html>body div#admin_contents {
 /* Menu de gauche */
 div#admin_quick_menu {
     float:left;
-    width:170px;
+    width:190px;
     text-align:center;
     padding-top:5px;
     margin:auto;
@@ -192,7 +192,6 @@ a.admin_extend_link {
 
 /* ##### Pied de page ###### */
 div#footer {
-	height:40px;
 	clear:both;
     margin-top:0px;
     padding:10px 20px 0px 0px;
