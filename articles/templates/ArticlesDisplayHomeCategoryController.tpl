@@ -190,7 +190,7 @@
 			# END articles #
 		# ENDIF #
 		</div>
-		{PAGINATION}
+		# IF C_PAGINATION # # INCLUDE PAGINATION # # ENDIF #
 		<div class="spacer">&nbsp;</div>
 		<p style="text-align:center;padding-top:10px;" class="smaller">
 			{L_NO_ARTICLE} {L_TOTAL_ARTICLES}
