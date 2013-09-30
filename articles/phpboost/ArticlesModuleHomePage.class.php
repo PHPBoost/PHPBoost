@@ -196,12 +196,7 @@ class ArticlesModuleHomePage implements ModuleHomePage
 					break;
 			}
 			
-			$current_page = ($request->get_getint('page', 1) > 0) ? $request->get_getint('page', 1) : 1;
-			$nbr_articles_per_page = ArticlesConfig::load()->get_number_articles_per_page();
-			
-			$pagination = new ModulePagination($current_page, $nbr_articles_cat, $nbr_articles_per_page);
-			
-			$limit_page = $pagination->get_display_from();
+			$pagination = $this->get_pagination($nbr_articles_cat, $sort_field, $sort_mode);
 
 			$result = PersistenceContext::get_querier()->select('SELECT articles.*, member.*, com.number_comments, notes.average_notes, notes.number_notes, note.note
 			FROM ' . ArticlesSetup::$articles_table . ' articles
@@ -211,20 +206,19 @@ class ArticlesModuleHomePage implements ModuleHomePage
 			LEFT JOIN ' . DB_TABLE_NOTE . ' note ON note.id_in_module = articles.id AND note.module_name = "articles" AND note.user_id = ' . AppContext::get_current_user()->get_id() . '
 			WHERE articles.id_category = :id_category AND (articles.published = 1 OR (articles.published = 2 AND (articles.publishing_start_date < :timestamp_now 
 			AND articles.publishing_end_date = 0) OR articles.publishing_end_date > :timestamp_now)) 
-			ORDER BY ' .$sort_field . ' ' . $sort_mode . ' LIMIT ' . $nbr_articles_per_page . ' OFFSET ' .$limit_page, 
+			ORDER BY ' .$sort_field . ' ' . $sort_mode . ' LIMIT ' . $pagination->get_number_items_per_page() . ' OFFSET ' . $pagination->get_display_from(), 
 				array(
 					'id_category' => $this->category->get_id(),
 					'timestamp_now' => $now->get_timestamp()
 				    ), SelectQueryResult::FETCH_ASSOC
 			    );
-			
-			$pagination->set_url(ArticlesUrlBuilder::display_category($this->category->get_id(), $this->category->get_rewrited_name($sort_field, $sort_mode, '/%d')));
 
 			$this->build_form($field, $mode);
 
 			$this->view->put_all(array(
 				    'C_ARTICLES_FILTERS' => true,
-				    'PAGINATION' => ($nbr_articles_cat > $nbr_articles_per_page) ? $pagination->display()->render() : '',
+				    'C_PAGINATION' => $pagination->has_several_pages(),
+				    'PAGINATION' => $pagination->display(),
 				    'L_TOTAL_ARTICLES' => StringVars::replace_vars($this->lang['articles.nbr_articles_category'], array('number' => $nbr_articles_cat))
 			));
 
@@ -308,6 +302,22 @@ class ArticlesModuleHomePage implements ModuleHomePage
 		$ids_categories = array_keys($authorized_categories);
 		
 		return $ids_categories;
+	}
+	
+	private function get_pagination($nbr_articles_cat, $sort_field, $sort_mode)
+	{
+		$current_page = AppContext::get_request()->get_getint('page', 1);
+		
+		$pagination = new ModulePagination($current_page, $nbr_articles_cat, ArticlesConfig::load()->get_number_articles_per_page());
+		$pagination->set_url(ArticlesUrlBuilder::display_category($this->category->get_id(), $this->category->get_rewrited_name($sort_field, $sort_mode, '/%d')));
+		
+		if ($pagination->current_page_is_empty() && $current_page > 1)
+	        {
+			$error_controller = PHPBoostErrors::unexisting_page();
+			DispatchManager::redirect($error_controller);
+	        }
+	
+		return $pagination;
 	}
 	
 	private function check_authorizations()

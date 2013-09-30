@@ -42,6 +42,8 @@ class ArticlesFormFieldSelectSources extends AbstractFormField
 		$template = $this->get_template_to_use();
 
 		$tpl = new FileTemplate('articles/ArticlesFormFieldSelectSources.tpl');
+		$tpl->add_lang(LangLoader::get('articles-common', 'articles'));
+		
 		$tpl->put_all(array(
 			'NAME' => $this->get_html_id(),
 			'ID' => $this->get_html_id(),
@@ -75,9 +77,7 @@ class ArticlesFormFieldSelectSources extends AbstractFormField
 			'ID' => $this->get_html_id(),
 			'C_DISABLED' => $this->is_disabled(),
 			'MAX_INPUT' => $this->max_input,
-			'NBR_FIELDS' => $i == 0 ? 1 : $i,
-			'L_SOURCE_NAME' => LangLoader::get_message('articles.form.source_name', 'articles-common', 'articles'),
-			'L_SOURCE_URL' => LangLoader::get_message('articles.form.source_url', 'articles-common', 'articles')
+			'NBR_FIELDS' => $i == 0 ? 1 : $i
 		));
 
 		$template->assign_block_vars('fieldelements', array(

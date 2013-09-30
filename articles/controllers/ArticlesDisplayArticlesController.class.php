@@ -122,8 +122,9 @@ class ArticlesDisplayArticlesController extends ModuleController
 		
 		$this->build_view_keywords($this->article->get_id());
 		
-		$pagination = new ModulePagination($current_page, $nbr_pages, 1);
-		$pagination->set_url(ArticlesUrlBuilder::display_article($this->category->get_id(), $this->category->get_rewrited_name(), $this->article->get_id(), $this->article->get_rewrited_title()), '%d');
+		$pagination = $this->get_pagination($nbr_pages);
+		//$pagination = new ModulePagination($current_page, $nbr_pages, 1);
+		//$pagination->set_url(ArticlesUrlBuilder::display_article($this->category->get_id(), $this->category->get_rewrited_name(), $this->article->get_id(), $this->article->get_rewrited_title()), '%d');
 		
 		$this->view->put_all($this->article->get_tpl_vars());
 		$page_name = (isset($array_page[1][$current_page-1]) && $array_page[1][$current_page-1] != '&nbsp;') ? $array_page[1][($current_page-1)] : '';
@@ -131,6 +132,7 @@ class ArticlesDisplayArticlesController extends ModuleController
 		$this->view->put_all(array(
 			'C_COMMENTS_ENABLED' => $comments_enabled,
 			'C_DATE_UPDATED' => $this->article->get_date_updated() != null ? true : false,
+			'C_PAGINATION' => $pagination->has_several_pages(),
 			'L_PREVIOUS_PAGE' => LangLoader::get_message('previous_page', 'main'),
 			'L_NEXT_PAGE' => LangLoader::get_message('next_page', 'main'),
 			'L_PRINTABLE_VERSION' => LangLoader::get_message('printable_version', 'main'),
@@ -138,7 +140,7 @@ class ArticlesDisplayArticlesController extends ModuleController
 			'DATE_UPDATED' => $this->article->get_date_updated() != null ? $this->article->get_date_updated()->format(Date::FORMAT_DAY_MONTH_YEAR) : '',
 			'KERNEL_NOTATION' => NotationService::display_active_image($this->article->get_notation()),
 			'CONTENTS' => isset($article_contents_clean[$current_page-1]) ? FormatingHelper::second_parse($article_contents_clean[$current_page-1]) : '',
-			'PAGINATION_ARTICLES' => ($nbr_pages > 1) ? $pagination->display()->render() : '',
+			'PAGINATION_ARTICLES' => $pagination->display(),
 			'PAGE_NAME' => $page_name,
 			'NUMBER_COMMENTS' => CommentsService::get_number_comments('articles', $this->article->get_id()),
 			'U_PAGE_PREVIOUS' => ($current_page > 1 && $current_page <= $nbr_pages && $nbr_pages > 1) ? ArticlesUrlBuilder::display_article($this->category->get_id(), $this->category->get_rewrited_name(), $this->article->get_id(), $this->article->get_rewrited_title())->absolute() . ($current_page - 1) : '',
@@ -279,6 +281,22 @@ class ArticlesDisplayArticlesController extends ModuleController
 				'id' => $this->article->get_id()
 			)
 		);
+	}
+	
+	private function get_pagination($nbr_pages)
+	{
+		$current_page = AppContext::get_request()->get_getint('page', 1);
+		
+		$pagination = new ModulePagination($current_page, $nbr_pages, 1);
+		$pagination->set_url(ArticlesUrlBuilder::display_article($this->category->get_id(), $this->category->get_rewrited_name(), $this->article->get_id(), $this->article->get_rewrited_title()), '%d');
+		
+		if ($pagination->current_page_is_empty() && $current_page > 1)
+	        {
+			$error_controller = PHPBoostErrors::unexisting_page();
+			DispatchManager::redirect($error_controller);
+	        }
+	
+		return $pagination;
 	}
 	
 	private function generate_response()

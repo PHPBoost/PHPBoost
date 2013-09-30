@@ -176,10 +176,14 @@ class ArticlesDisplayArticlesTagController extends ModuleController
 		
 		$nbr_articles = $result->get_rows_count();
 		
-		$pagination = new ModulePagination($current_page, $nbr_articles, $nbr_articles_per_page);
-		$pagination->set_url(ArticlesUrlBuilder::display_tag($this->keyword->get_rewrited_name(), $sort_field, $sort_mode, '%d'));
+		$pagination = $this->get_pagination($nbr_articles, $sort_field, $sort_mode);
 		
 		$this->build_form($field, $mode);
+		
+		$this->view->put_all(array(
+			'C_PAGINATION' => $pagination->has_several_pages(),
+			'PAGINATION' => $pagination->display()
+		));
 		
 		while ($row = $result->fetch())
 		{
@@ -228,6 +232,22 @@ class ArticlesDisplayArticlesTagController extends ModuleController
 		$options[] = new FormFieldSelectChoiceOption($this->lang['articles.sort_field.author'], 'author');
 
 		return $options;
+	}
+	
+	private function get_pagination($nbr_articles, $sort_field, $sort_mode)
+	{
+		$current_page = AppContext::get_request()->get_getint('page', 1);
+		
+		$pagination = new ModulePagination($current_page, $nbr_articles, ArticlesConfig::load()->get_number_articles_per_page());
+		$pagination->set_url(ArticlesUrlBuilder::display_tag($this->keyword->get_rewrited_name(), $sort_field, $sort_mode, '%d'));
+		
+		if ($pagination->current_page_is_empty() && $current_page > 1)
+	        {
+			$error_controller = PHPBoostErrors::unexisting_page();
+			DispatchManager::redirect($error_controller);
+	        }
+	
+		return $pagination;
 	}
 	
 	private function generate_response()

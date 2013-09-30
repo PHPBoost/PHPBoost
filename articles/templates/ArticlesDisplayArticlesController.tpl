@@ -77,9 +77,9 @@
 			# ENDIF #	
 			<span itemprop="text">{CONTENTS}</span>
 			<div class="spacer" style="margin-top:35px;">&nbsp;</div>
-			# IF PAGINATION_ARTICLES #
+			# IF C_PAGINATION #
 			<div style="float:left;width:33%;text-align:right"><a href="{U_PAGE_PREVIOUS}">&nbsp;&leftarrow;{L_PREVIOUS_TITLE}</a></div>
-			<div style="float:left;width:33%" class="center">{PAGINATION_ARTICLES}</div>
+			<div style="float:left;width:33%" class="center"># INCLUDE PAGINATION #</div>
 			<div style="float:left;width:33%;"><a href="{U_PAGE_NEXT}">{L_NEXT_TITLE}&nbsp;&rightarrow;</a></div>
 			# ENDIF #		
 		<div class="spacer">&nbsp;</div>
