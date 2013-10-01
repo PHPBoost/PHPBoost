@@ -33,4 +33,6 @@ $lang['error'] = 'Error';
 //Process
 $lang['process.success'] = 'The operation is a success';
 $lang['process.error'] = 'An error occurred during the operation';
+
+$lang['confirm.delete'] = 'Do you really want to delete this item ?';
 ?>
