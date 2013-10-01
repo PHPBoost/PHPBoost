@@ -31,10 +31,10 @@
 							</li>
 						# ENDIF #
 							<li>
-								<a><i class="icon-cog"></i> {L_PAGE_OUTILS}<a>
-								<ul>
+								<a><i class="icon-cog"></i> {L_PAGE_OUTILS}</a>
+								<ul class="img_bg">
 								# START links_list #
-									<li><a href="{links_list.U_ACTION}" title="{links_list.L_ACTION}" onclick="{links_list.ONCLICK}" class="small" style="background-image:url({links_list.DM_A_CLASS});background-repeat:no-repeat;background-position:5px;">{links_list.L_ACTION}</a></li>
+									<li><a href="{links_list.U_ACTION}" title="{links_list.L_ACTION}" onclick="{links_list.ONCLICK}" class="small" style="background-image:url({links_list.DM_A_CLASS});">{links_list.L_ACTION}</a></li>
 								# END links_list #
 								</ul>
 							</li>
