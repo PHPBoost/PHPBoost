@@ -113,11 +113,22 @@ a.member {
     font-weight:bold;
 }
 
-/*Image des syndications*/
+/* Images */
 a.syndication {
 	content: url('../images/rss.png') no-repeat;
 	border: none;
 }
+
+a.edit:before, a.delete:before {
+	font-family: FontAwesome;
+	font-size: 16px;
+	vertical-align: text-bottom;
+}
+
+a.edit:hover, a.delete:hover { text-decoration:none; }
+
+a.edit:before { content: "\f044"; }
+a.delete { content: "\f014"; }
 
 /* Mise en forme
 -------------------------------------------*/
