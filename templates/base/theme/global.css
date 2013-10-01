@@ -128,7 +128,7 @@ a.edit:before, a.delete:before {
 a.edit:hover, a.delete:hover { text-decoration:none; }
 
 a.edit:before { content: "\f044"; }
-a.delete { content: "\f014"; }
+a.delete:before { content: "\f014"; }
 
 /* Mise en forme
 -------------------------------------------*/
