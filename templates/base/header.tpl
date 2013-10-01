@@ -94,7 +94,7 @@
 								</a>
 							</li>
 							# START link_bread_crumb #
-								<li itemscope itemtype="http://data-vocabulary.org/Breadcrumb" # IF link_bread_crumb.C_CURRENT # class="current" # ENDIF # >
+								<li itemscope itemtype="http://data-vocabulary.org/Breadcrumb" # IF link_bread_crumb.C_CURRENT # class="current" # ENDIF #>
 									<a href="{link_bread_crumb.URL}" title="{link_bread_crumb.TITLE}" itemprop="url">
 										<span itemprop="title">{link_bread_crumb.TITLE}</span>
 									</a>

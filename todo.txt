@@ -89,8 +89,7 @@
 + [color=red]Nouveauté:[/color] Interface de personnalisation de la page de démarrage du site.
 - Possibilité de désactiver l'affichage d'un lien dans les menus
 - [color=red]Nouveauté:[/color] Système d'alertes (javascript) utilisateur évolué.
-- Travailler sur le support mobile
-- Mettre en avant les technologies HTML 5 et CSS3
+- Support mobile et version tablette
 
 [b]Installateur[/b]
 - Ajout d'une option pour supprimer le dossier à la fin de l'installation

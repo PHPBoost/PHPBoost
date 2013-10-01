@@ -1,11 +1,11 @@
 /* --------------------------------------
 		global.css
- Contient les classes globales au site, peuvent être utilisées partout.
+ Contient les classes globales au site, peuvent Ãªtre utilisÃ©es partout.
 --------------------------------------*/ 
 
-/* Classes générales
+/* Classes gÃ©nÃ©rales
 --------------------------------------*/
-/* Case générale des tableaux du site*/
+/* Case gÃ©nÃ©rale des tableaux du site*/
 .row1, .block_contents1 {
     background:#E0E9EF;
 	padding:8px 6px;
@@ -42,7 +42,7 @@
     padding:20px 6px;	
 }
 
-/* Case résultat recherche membre AJAX */
+/* Case rÃ©sultat recherche membre AJAX */
 .xmlhttprequest_result_search {
     overflow:auto;
     height:100px;
@@ -71,7 +71,7 @@
 	border:none;	
 }
 
-/* Déplacement des fichiers */
+/* DÃ©placement des fichiers */
 .upload_selected_cat {
     background:#f5fbff;
     border:1px solid #2C5169;
@@ -266,7 +266,7 @@ h4.stitle2{
 	cursor:default;
 }
 
-/* Séparateur */
+/* SÃ©parateur */
 .dynamic_menu ul li.separator {
     background:#e8edf3;
 	height:2px;
@@ -295,6 +295,7 @@ h4.stitle2{
 	background-color:#FFFFFF;
 	top:-99999em;
 	opacity:0;
+	margin:0 !important;
 	-webkit-transition:opacity .2s ease-in-out,top 0 ease-in 0.2s;
 	-moz-transition:opacity .2s ease-in-out,top 0 ease-in 0.2s;
 	-o-transition:opacity .2s ease-in-out,top 0 ease-in 0.2s; 
@@ -549,7 +550,7 @@ menu.tools_menu > ul > li > a > i {
 	vertical-align:-1px;
 }
 
-/* Menus groupés */
+/* Menus groupÃ©s */
 menu.tools_menu.group > ul {
 	font-size:0
 }
@@ -583,7 +584,7 @@ menu.tools_menu.group > ul > li:last-child {
 	border-right:1px solid rgba(0, 0, 0, 0.1)
 }
 
-/* Menus déroulants */
+/* Menus dÃ©roulants */
 
 menu.tools_menu > ul > li > ul, menu.tools_menu li.subdropdown > ul {
 	position:absolute;
@@ -607,7 +608,6 @@ menu.tools_menu > ul > li > ul, menu.tools_menu li.subdropdown > ul {
 	opacity:0;
 	-webkit-transition:opacity .2s ease-in-out,top 0 ease-in 0.2s;
     -moz-transition:opacity .2s ease-in-out,top 0 ease-in 0.2s;
-    -o-transition:opacity .2s ease-in-out,top 0 ease-in 0.2s; 
     transition:opacity .2s ease-in-out,top 0 ease-in 0.2s;
 }
 

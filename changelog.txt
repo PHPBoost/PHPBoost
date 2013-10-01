@@ -39,13 +39,13 @@ les pages du module "pages".
 
 [b]Personnalisation graphique :[/b]
 [*] Logo cliquable
-- Support mobile et version tablette
 + Intégration des technologies HTML5 + CSS 3
 + Création d'un menu unique remplaçant les icônes ajouter, éditer, supprimer, etc actuellement et permettant ainsi d'avoir quelque chose de plus harmonieux.
 - Nouveau thème épuré
 - Possibilité d'ajouter un texte de présentation du site en dessous du nom
 + Nettoyage des fichiers TPL et CSS
 - Nouveau pack de smileys
+[*] Fin du support d'Internet Explorer 7 et inférieur qui ne représente maintenant plus que 0.6 % du marché des navigateurs
 
 [b]Divers :[/b]
 [*] Suppression du panneau de modération présent dans l'administration qui fait doublon avec celui du dossier user
