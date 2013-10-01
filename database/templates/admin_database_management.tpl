@@ -184,25 +184,25 @@
 				<div class="dynamic_menu" style="z-index:0">
 					<ul>
 						<li>
-							<h5 class="links" style=""><img src="" class="valign_middle" alt="" /> <a href="admin_database_tools.php?table={TABLE_NAME}&amp;action=structure" style="background-image:url(./database_mini.png)">{L_TABLE_STRUCTURE}</a></h5>
+							<h5 class="links"><a href="admin_database_tools.php?table={TABLE_NAME}&amp;action=structure" style="background-image:url(./database_mini.png)">{L_TABLE_STRUCTURE}</a></h5>
 						</li>
 						<li>
-							<h5 class="links"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/themes_mini.png" class="valign_middle" alt="" /> <a href="admin_database_tools.php?table={TABLE_NAME}&amp;action=data">{L_TABLE_DISPLAY}</a></h5>
+							<h5 class="links"><a href="admin_database_tools.php?table={TABLE_NAME}&amp;action=data" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/themes_mini.png)">{L_TABLE_DISPLAY}</a></h5>
 						</li>
 						<li>
-							<h5 class="links"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/tools_mini.png" class="valign_middle" alt="" /> <a href="admin_database_tools.php?table={TABLE_NAME}&amp;action=query">SQL</a></h5>
+							<h5 class="links"><a href="admin_database_tools.php?table={TABLE_NAME}&amp;action=query" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/tools_mini.png)">SQL</a></h5>
 						</li>
 						<li>
-							<h5 class="links"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/extendfield_mini.png" class="valign_middle" alt="" /> <a href="admin_database_tools.php?table={TABLE_NAME}&amp;action=insert">{L_INSERT}</a></h5>
+							<h5 class="links"><a href="admin_database_tools.php?table={TABLE_NAME}&amp;action=insert" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/extendfield_mini.png)">{L_INSERT}</a></h5>
 						</li>
 						<li>
-							<h5 class="links"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/cache_mini.png" class="valign_middle" alt="" /> <a href="admin_database.php?table={TABLE_NAME}&amp;action=backup_table">{L_BACKUP}</a></h5>
+							<h5 class="links"><a href="admin_database.php?table={TABLE_NAME}&amp;action=backup_table" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/cache_mini.png)">{L_BACKUP}</a></h5>
 						</li>
 						<li>
-							<h5 class="links"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/upload/trash_mini.png" class="valign_middle" alt="" /> <a onclick="javascript:return Confirm_truncate_table()" style="color:red" href="admin_database_tools.php?table={TABLE_NAME}&amp;action=truncate">{L_TRUNCATE}</a></h5>
+							<h5 class="links"><a onclick="javascript:return Confirm_truncate_table()" style="color:red;background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/upload/trash_mini.png)" href="admin_database_tools.php?table={TABLE_NAME}&amp;action=truncate">{L_TRUNCATE}</a></h5>
 						</li>
 						<li>
-							<h5 class="links"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" class="valign_middle" alt="" /> <a onclick="javascript:return Confirm_del_table()" style="color:red" href="admin_database_tools.php?table={TABLE_NAME}&amp;action=drop">{L_DELETE}</a></h5>
+							<h5 class="links"><a onclick="javascript:return Confirm_del_table()" style="color:red;background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png)" href="admin_database_tools.php?table={TABLE_NAME}&amp;action=drop">{L_DELETE}</a></h5>
 						</li>
 					</ul>
 				</div>
