@@ -690,3 +690,16 @@ menu.tools_menu li.subdropdown > a:after {
 menu.tools_menu li.subdropdown:hover > a:after {
 	color: #000;
 }
+
+/* Menus images bg */
+menu.tools_menu.img_bg > ul > li > a {
+	padding-left:24px;
+	background-repeat:no-repeat;
+	background-position:left center;
+}
+
+menu.tools_menu ul ul.img_bg > li > a {
+	padding-left:44px;
+	background-repeat:no-repeat;
+	background-position:20px center;
+}
