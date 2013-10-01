@@ -23,26 +23,23 @@
 				</noscript>
 
 				<div style="margin-bottom:10px;">
-					<div class="dynamic_menu" style="float:right;margin-right:70px;">
+					<menu class="tools_menu right group">
 						<ul>
 						# IF C_ACTIV_COM #
 							<li>
-								<h5 style="margin-right:20px;">
-									<img src="{PICTURES_DATA_PATH}/images/com.png" class="valign_middle" alt="" /> 
-									<a href="{U_COM}" >{L_COM}</a>
-								</h5>
+								<a href="{U_COM}" ><i class="icon-comments"></i> {L_COM}</a>
 							</li>
 						# ENDIF #
-							<li onmouseover="show_menu(1, 0);" onmouseout="hide_menu(0);">
-								<h5 style="margin-right:25px;"><img src="{PICTURES_DATA_PATH}/images/tools.png" class="valign_middle" alt="" />{L_PAGE_OUTILS}</h5>
-								<ul id="smenu1">
+							<li>
+								<a><i class="icon-cog"></i> {L_PAGE_OUTILS}<a>
+								<ul>
 								# START links_list #
 									<li><a href="{links_list.U_ACTION}" title="{links_list.L_ACTION}" onclick="{links_list.ONCLICK}" class="small" style="background-image:url({links_list.DM_A_CLASS});background-repeat:no-repeat;background-position:5px;">{links_list.L_ACTION}</a></li>
 								# END links_list #
 								</ul>
 							</li>
 						</ul>
-					</div>	
+					</menu>	
 				</div>			
 				<div class="spacer">&nbsp;</div>
 					{CONTENTS}
