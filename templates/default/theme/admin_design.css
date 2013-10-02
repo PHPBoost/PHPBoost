@@ -68,16 +68,30 @@ div#sub_header_admin .dynamic_menu {
 div#sub_header_admin .dynamic_menu h5 {
     color:#FFFFFF;
 	margin-right:2px;
-	background:none;
+	background:transparent;
 	border:none;
 	font-weight:normal;
+	-moz-border-radius:4px 4px 0 0;
+	-webkit-border-radius:4px 4px 0 0;
+	border-radius:4px 4px 0 0;
+	margin-right:0;
 }
 
-div#sub_header_admin .dynamic_menu h5:hover, div#sub_header_admin .dynamic_menu h5:active {
-    color:#366393;
-    background:#e8edf3;
+div#sub_header_admin .dynamic_menu > ul > li:hover {
+    background:transparent;
 }
 
+div#sub_header_admin .dynamic_menu > ul > li:hover h5 {
+	color:#444;
+	background:#FFF;
+}
+
+div#sub_header_admin .dynamic_menu > ul > li > ul {
+	-moz-border-radius:0 4px 4px 4px;
+	-webkit-border-radius:0 4px 4px 4px;
+	border-radius:0 4px 4px 4px;
+}
+	
 div#admin_extend_link{
 	float:right;
 	margin-right:15px;
