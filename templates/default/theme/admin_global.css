@@ -151,7 +151,6 @@ a.member {
     margin:0;
     padding:0;
     border:none;
-    font-weight:bold;
     list-style:none;
 	z-index:101;
 }
@@ -166,8 +165,8 @@ a.member {
     text-decoration:none;
     display:block;
     white-space:nowrap;
-    margin:auto;
     padding:6px 12px;
+	font-size:11px;
 }
 
 .dynamic_menu > ul > li:hover {
@@ -194,7 +193,6 @@ a.member {
 	-moz-border-radius:0;
 	-webkit-border-radius:0;
 	border-radius:0;
-	font-size:13px;
 	border-right:1px solid #F9F9F9;
 	border-left:1px solid #BBB;
 }
@@ -232,7 +230,7 @@ a.member {
 	transition:opacity .2s ease-in-out,top 0 ease-in 0.2s;
 	padding:5px 0;
 	color:#333;
-	font-size:14px;
+	font-size:11px;
 	background: #FFF;
 	-moz-border-radius: 3px;
 	-webkit-border-radius: 3px;
@@ -287,7 +285,7 @@ a.member {
 	display: block;
 	right:7px;
 	top:50%;
-	margin-top:-4px;
+	margin-top:-5px;
 	font-family: FontAwesome;
 	content: "\F0DA";
 	color:#CCC;
@@ -383,14 +381,22 @@ menu.dynamic_menu li li:hover > ul {
 }
 
 menu.dynamic_menu li ul li a, menu.dynamic_menu li ul li span{
-	color:#555;
-	font-size:12px;
+	color:#666;
+	font-size:10px;
 	padding:3px 12px;
 }
 
 menu.dynamic_menu li ul li a i, menu.dynamic_menu li ul li span i{
-	font-size:15px;
+	font-size:14px;
 	vertical-align:-2px;
+	width:16px;
+	display:inline-block;
+	text-align:center;
+	margin-right:4px;
+}
+
+menu.dynamic_menu ul li.extend > a:after, menu.dynamic_menu ul li.extend > span:after{
+	margin-top:-6px;
 }
 
 /* Menu Right */
