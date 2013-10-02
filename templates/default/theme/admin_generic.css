@@ -31,7 +31,7 @@ p { margin-bottom:0.7em; line-height:normal; font-size:1em; }
 .warning{ color:#FFFFFF; background:#e5ad54 url(../images/important.png) no-repeat; border:1px solid #b38742; }
 .error{ color:#FFFFFF; background:#C43C35 url(../images/stop.png) no-repeat; border:1px solid #802722; }
 .success{ color:#FFFFFF; background:#57A957 url(../images/success.png) no-repeat; border:1px solid #418041; }
-.question, .notice, .warning, .error, .success{ display:block; height:35px; padding-top:4px; padding-bottom:10px; padding-left:40px; padding-right:5px; margin:4px 25px; background-position:4px 4px; border-radius:6px; }
+.question, .notice, .warning, .error, .success{ display:block; height:35px; padding:10px; text-indent:35px; margin:4px 25px; background-position:4px 4px; border-radius:6px; }
 html>body .question, html>body .notice, html>body .warning, html>body .error, html>body .success{ height:auto; min-height:25px; }
 .error_handler_position { margin-top:5px; margin-bottom:15px; }
 
