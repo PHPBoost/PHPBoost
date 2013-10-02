@@ -8,6 +8,7 @@
 		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/default/theme/admin_default.css" type="text/css" media="screen" />
 		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/default/theme/default.css" type="text/css" media="screen" />
 		<link rel="stylesheet" href="{PATH_TO_ROOT}/kernel/lib/css/font-awesome/css/font-awesome.css" />
+
 		
 		<!-- Theme CSS -->
 		# IF C_CSS_CACHE_ENABLED #
@@ -62,9 +63,9 @@
 				<div id="site_name">{SITE_NAME}</div>
 			</div>
 			<div id="sub_header_admin">
-				<div class="dynamic_menu">
+				<nav class="dynamic_menu">
 					# INCLUDE subheader_menu #
-				</div>
+				</nav>
 				<div id="admin_extend_link">
 					<a href="{PATH_TO_ROOT}/admin/admin_extend.php" class="admin_extend_link">
 						<img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/extendfield_mini.png" class="valign_middle" alt="" /> {L_EXTEND_MENU}
