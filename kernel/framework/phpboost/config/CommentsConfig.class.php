@@ -116,7 +116,7 @@ class CommentsConfig extends AbstractConfigData
 			self::NUMBER_COMMENTS_DISPLAY => 15,
 			self::FORBIDDEN_TAGS => array(),
 			self::MAX_LINKS_COMMENT => 2,
-			self::ORDER_DISPLAY_COMMENTS => self::ASC_ORDER
+			self::ORDER_DISPLAY_COMMENTS => self::DESC_ORDER
 		);
 	}
 
