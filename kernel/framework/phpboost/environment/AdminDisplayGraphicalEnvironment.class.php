@@ -301,16 +301,14 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 					{
 						if (is_array($value))
 						{
-							$links .= '<li class="extend"><a href="#" ' .
-									'style="background-image:url(' . TPL_PATH_TO_ROOT . '/' . $module_id .
-									'/' . $module_id . '_mini.png);cursor:default;">' . $key .
+							$links .= '<li class="extend"><a href="#"><img src="' . TPL_PATH_TO_ROOT . '/' . $module_id .
+									'/' . $module_id . '_mini.png"/>' . $key .
 									'</a><ul>' . "\n";
 							foreach ($value as $key2 => $value2)
 							{
 								$links .= '<li><a href="' . TPL_PATH_TO_ROOT . '/' . $module_id .
-									'/' . $value2 . '" style="background-image:url(' .
-								TPL_PATH_TO_ROOT . '/' . $module_id . '/' . $module_id . '_mini.png);">'
-								. $key2 . '</a></li>' . "\n";
+									'/' . $value2 . '"><img src="' . TPL_PATH_TO_ROOT . '/' . $module_id .
+									'/' . $module_id . '_mini.png"/>' . $key2 . '</a></li>' . "\n";
 							}
 							$links .= '</ul></li>' . "\n";
 							$i++;
@@ -318,8 +316,8 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 						else
 						{
 							$links .= '<li><a href="' . TPL_PATH_TO_ROOT . '/' . $module_id . '/' .
-							$value . '" style="background-image:url(' . TPL_PATH_TO_ROOT .
-									'/' . $module_id . '/' . $module_id . '_mini.png);">' . $key .
+							$value . '"><img src="' . TPL_PATH_TO_ROOT . '/' . $module_id .
+									'/' . $module_id . '_mini.png"/>' . $key .
 									'</a></li>' . "\n";
 						}
 						$j++;
