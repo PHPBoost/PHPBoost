@@ -7,7 +7,7 @@
 			</tr>
 			<tr style="text-align:center;">
 				<td style="width:20%;padding:15px;" class="row1">
-					<a href="admin_stats.php?site=1#stats"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/stats/site.png" alt="" /></a>
+					<a href="admin_stats.php?site=1#stats"><img src="{PATH_TO_ROOT}/stats/templates/images/site.png" alt="" /></a>
 					<br /><a href="admin_stats.php?site=1#stats">{L_SITE}</a>
 				</td>
 				<td style="width:20%;padding:15px;" class="row1">
@@ -15,37 +15,37 @@
 					<br /><a href="admin_stats.php?members=1#stats">{L_USERS}</a>
 				</td>
 				<td style="width:20%;" class="row1">
-					<a href="admin_stats.php?visit=1#stats"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/stats/visitors.png" alt="" /></a>
+					<a href="admin_stats.php?visit=1#stats"><img src="{PATH_TO_ROOT}/stats/templates/images/visitors.png" alt="" /></a>
 					<br /><a href="admin_stats.php?visit=1#stats">{L_VISITS}</a>
 				</td>
 				<td style="width:20%;padding:15px;" class="row1">
-					<a href="admin_stats.php?pages=1#stats"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/stats/pages.png" alt="" /></a>
+					<a href="admin_stats.php?pages=1#stats"><img src="{PATH_TO_ROOT}/stats/templates/images/pages.png" alt="" /></a>
 					<br /><a href="admin_stats.php?pages=1#stats">{L_PAGES}</a>
 				</td>				
 				<td style="width:20%;padding:15px;" class="row1">
-					<a href="admin_stats.php?browser=1#stats"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/stats/browsers.png" alt="" /></a>
+					<a href="admin_stats.php?browser=1#stats"><img src="{PATH_TO_ROOT}/stats/templates/images/browsers.png" alt="" /></a>
 					<br /><a href="admin_stats.php?browser=1#stats">{L_BROWSERS}</a>
 				</td>
 			</tr>
 			<tr style="text-align:center;">						
 				<td style="width:20%;" class="row1">	
-					<a href="admin_stats.php?os=1#stats"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/stats/os.png" alt="" /></a>
+					<a href="admin_stats.php?os=1#stats"><img src="{PATH_TO_ROOT}/stats/templates/images/os.png" alt="" /></a>
 					<br /><a href="admin_stats.php?os=1#stats">{L_OS}</a>		
 				</td>
 				<td style="width:20%;padding:15px;" class="row1">
-					<a href="admin_stats.php?lang=1#stats"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/stats/countries.png" alt="" /></a>
+					<a href="admin_stats.php?lang=1#stats"><img src="{PATH_TO_ROOT}/stats/templates/images/countries.png" alt="" /></a>
 					<br /><a href="admin_stats.php?lang=1#stats">{L_LANG}</a>
 				</td>				
 				<td style="width:20%;padding:15px;" class="row1">
-					<a href="admin_stats.php?referer=1#stats"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/stats/referer.png" alt="" /></a>
+					<a href="admin_stats.php?referer=1#stats"><img src="{PATH_TO_ROOT}/stats/templates/images/referer.png" alt="" /></a>
 					<br /><a href="admin_stats.php?referer=1#stats">{L_REFERER}</a>
 				</td>
 				<td style="width:20%;padding:15px;" class="row1">
-					<a href="admin_stats.php?keyword=1#stats"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/stats/keyword.png" alt="" /></a>
+					<a href="admin_stats.php?keyword=1#stats"><img src="{PATH_TO_ROOT}/stats/templates/images/keyword.png" alt="" /></a>
 					<br /><a href="admin_stats.php?keyword=1#stats">{L_KEYWORD}</a>
 				</td>
 				<td style="width:20%;padding:15px;" class="row1">
-					<a href="admin_stats.php?bot=1#stats"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/stats/robots.png" alt="" /></a>
+					<a href="admin_stats.php?bot=1#stats"><img src="{PATH_TO_ROOT}/stats/templates/images/robots.png" alt="" /></a>
 					<br /><a href="admin_stats.php?bot=1#stats">{L_ROBOTS}</a>
 				</td>	
 			</tr>

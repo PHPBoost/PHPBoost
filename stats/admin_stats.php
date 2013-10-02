@@ -1124,7 +1124,7 @@ else
 				$value_name = 'other';
 				$angle_value += $percent_other;
 				$percent_other += $angle_value;
-				$stats_img = '<img src="../templates/' . get_utheme() . '/images/stats/other.png" alt="' . $LANG['other'] . '" />';
+				$stats_img = '<img src="' . PATH_TO_ROOT . '/stats/templates/images/other.png" alt="' . $LANG['other'] . '" />';
 				$name_stats = $LANG['other'];
 			}
 			else
