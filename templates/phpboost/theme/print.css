@@ -1,0 +1,25 @@
+/*Fichier CSS prenant en charge l'impression de contenu rédigé en BBCode*/
+body{
+	width:98%;
+	background-color:white;
+	font-size:12px;
+ 	font-family:"Trebuchet MS", Verdana, 'Bitstream Vera Sans', Times, serif;
+	color:black;
+}
+h1{
+	border-bottom:1px solid black;
+}
+table
+{
+	border-collapse: collapse;
+}
+
+td, th
+{
+	border:1px solid black;
+}
+
+th
+{
+	font-weight: bold;
+}
