@@ -1,37 +1,16 @@
-<script type="text/javascript">
-<!--
-function Confirm()
-{
-	return confirm(${i18njs('news.message.delete')});
-}
--->
-</script>
-
 <article itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
 	<header>
-		<ul class="module_top_options">
-			<li>
-				<a>
-					<span class="options"></span><span class="caret"></span>
-				</a>
-				<ul>
-					# IF C_EDIT #
-					<li>
-						<a href="{U_EDIT}" title="${LangLoader::get_message('edit', 'main')}" class="img_link">${LangLoader::get_message('edit', 'main')}</a>
-					</li>
-					# ENDIF #
-					# IF C_DELETE #
-					<li>
-						<a href="{U_DELETE}" title="${LangLoader::get_message('delete', 'main')}" onclick="javascript:return Confirm();">${LangLoader::get_message('delete', 'main')}</a>
-					</li>
-					# ENDIF #
-				</ul>
-			</li>
-		</ul>
-		
 		<h1>
 			<a href="{U_SYNDICATION}" title="${LangLoader::get_message('syndication', 'main')}" class="syndication"></a>
 			<span id="name" itemprop="name">{NAME}</span>
+			<span class="tools">
+				# IF C_EDIT #
+					<a href="{U_EDIT}" title="${LangLoader::get_message('edit', 'main')}" class="edit"></a>
+				# ENDIF #
+				# IF C_DELETE #
+					<a href="{U_DELETE}" title="${LangLoader::get_message('delete', 'main')}" class="delete"></a>
+				# ENDIF #
+			</span>
 		</h1>
 		
 		<div class="more">

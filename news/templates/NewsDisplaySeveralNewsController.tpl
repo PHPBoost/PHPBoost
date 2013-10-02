@@ -1,12 +1,3 @@
-<script type="text/javascript">
-<!--
-	function Confirm()
-	{
-		return confirm(${i18njs('news.message.delete')});
-	}
--->
-</script>
-
 <menu class="tools_menu right">
 	<ul>
 		<li><a><i class="icon-cog"></i></a>
@@ -44,32 +35,17 @@
 		# ENDIF #
 		<article # IF C_NEWS_BLOCK_COLUMN # style="float:left;width:{COLUMN_WIDTH}%" # ENDIF # itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
 			<header>
-			
-				<menu class="tools_menu right">
-					<ul>
-						<li><a><i class="icon-cog"></i></a>
-							<ul>
-								<li>
-									<a class="news_comments" href="{news.U_COMMENTS}">{news.NUMBER_COMMENTS}</a>
-								</li>
-								# IF news.C_EDIT #
-								<li>
-									<a href="{news.U_EDIT}" title="${LangLoader::get_message('edit', 'main')}" class="img_link">${LangLoader::get_message('edit', 'main')}</a>
-								</li>
-								# ENDIF #
-								# IF news.C_DELETE #
-								<li>
-									<a href="{news.U_DELETE}" title="${LangLoader::get_message('delete', 'main')}" onclick="javascript:return Confirm();">${LangLoader::get_message('delete', 'main')}</a>
-								</li>
-								# ENDIF #
-							</ul>
-						</li>
-					</ul>
-				</menu>
-				
 				<h1>
 					<a href="{news.U_SYNDICATION}" class="syndication" title="${LangLoader::get_message('syndication', 'main')}"></a>
         			<a href="{news.U_LINK}"><span id="name" itemprop="name">{news.NAME}</span></a>
+        			<span class="tools">
+        				# IF news.C_EDIT #
+							<a href="{news.U_EDIT}" title="${LangLoader::get_message('edit', 'main')}" class="edit"></a>
+						# ENDIF #
+						# IF news.C_DELETE #
+							<a href="{news.U_DELETE}" title="${LangLoader::get_message('delete', 'main')}" class="delete"></a>
+						# ENDIF #
+					</span>
         		</h1>
         		
         		<div class="more">
