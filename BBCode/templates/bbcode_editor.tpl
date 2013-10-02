@@ -62,7 +62,7 @@ function XMLHttpRequest_preview(field)
 				<table class="bbcode">
 					<tr>
 						<td style="padding:1px;">
-							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/separate.png" alt="" />
+							<i class="bbcode-icon-separate"></i>
 	
 							<div style="position:relative;z-index:100;margin-left:-50px;float:left;display:none;" id="bb_block1{FIELD}">
 								<div class="bbcode_block" style="width:130px;" onmouseover="bb_hide_block('1', '{FIELD}', 1);" onmouseout="bb_hide_block('1', '{FIELD}', 0);">
@@ -75,16 +75,18 @@ function XMLHttpRequest_preview(field)
 									# ENDIF #
 								</div>
 							</div>
-							<a href="javascript:bb_display_block('1', '{FIELD}');" onmouseover="bb_hide_block('1', '{FIELD}', 1);" onmouseout="bb_hide_block('1', '{FIELD}', 0);" class="bbcode_hover" title="{L_BB_SMILEYS}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/smileys.png"  {AUTH_SMILEYS} alt="{L_BB_SMILEYS}" /></a>
+							<a href="javascript:bb_display_block('1', '{FIELD}');" onmouseover="bb_hide_block('1', '{FIELD}', 1);" onmouseout="bb_hide_block('1', '{FIELD}', 0);" class="bbcode_hover" title="{L_BB_SMILEYS}">
+								<i class="bbcode-icon-smileys" {AUTH_SMILEYS} alt="{L_BB_SMILEYS}"></i>
+							</a>
 							
-							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/separate.png" alt="" />
+							<i class="bbcode-icon-separate"></i>
 							
-							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/bold.png" class="bbcode_hover" {AUTH_B} onclick="{DISABLED_B}insertbbcode('[b]', '[/b]', '{FIELD}');" alt="{L_BB_BOLD}" title="{L_BB_BOLD}" />
-							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/italic.png" class="bbcode_hover" {AUTH_I} onclick="{DISABLED_I}insertbbcode('[i]', '[/i]', '{FIELD}');" alt="{L_BB_ITALIC}" title="{L_BB_ITALIC}" />
-							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/underline.png" class="bbcode_hover" {AUTH_U} onclick="{DISABLED_U}insertbbcode('[u]', '[/u]', '{FIELD}');" alt="{L_BB_UNDERLINE}" title="{L_BB_UNDERLINE}" />
-							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/strike.png" class="bbcode_hover" {AUTH_S} onclick="{DISABLED_S}insertbbcode('[s]', '[/s]', '{FIELD}');" alt="{L_BB_STRIKE}" title="{L_BB_STRIKE}" />
+							<i class="bbcode-icon-bold" {AUTH_B} onclick="{DISABLED_B}insertbbcode('[b]', '[/b]', '{FIELD}');" alt="{L_BB_BOLD}" title="{L_BB_BOLD}"></i>
+							<i class="bbcode-icon-italic" {AUTH_I} onclick="{DISABLED_I}insertbbcode('[i]', '[/i]', '{FIELD}');" alt="{L_BB_ITALIC}" title="{L_BB_ITALIC}"></i>
+							<i class="bbcode-icon-underline" {AUTH_U} onclick="{DISABLED_U}insertbbcode('[u]', '[/u]', '{FIELD}');" alt="{L_BB_UNDERLINE}" title="{L_BB_UNDERLINE}"></i>
+							<i class="bbcode-icon-strike" {AUTH_S} onclick="{DISABLED_S}insertbbcode('[s]', '[/s]', '{FIELD}');" alt="{L_BB_STRIKE}" title="{L_BB_STRIKE}"></i>
 							
-							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/separate.png" alt="" />
+							<i class="bbcode-icon-separate"></i>
 							
 							<div style="position:relative;z-index:100;float:left;display:none;" id="bb_block2{FIELD}">
 								<div style="margin-left:110px;" class="bbcode_block" onmouseover="bb_hide_block('2', '{FIELD}', 1);" onmouseout="bb_hide_block('2', '{FIELD}', 0);">
@@ -97,7 +99,9 @@ function XMLHttpRequest_preview(field)
 									</select>	
 								</div>
 							</div>
-							<a href="javascript:{DISABLED_TITLE}bb_display_block('2', '{FIELD}');" onmouseout="{DISABLED_TITLE}bb_hide_block('2', '{FIELD}', 0);" class="bbcode_hover" title="{L_BB_TITLE}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/title.png" {AUTH_TITLE} alt="{L_BB_TITLE}" /></a>
+							<a href="javascript:{DISABLED_TITLE}bb_display_block('2', '{FIELD}');" onmouseout="{DISABLED_TITLE}bb_hide_block('2', '{FIELD}', 0);" class="bbcode_hover" title="{L_BB_TITLE}">
+								<i class="bbcode-icon-title" {AUTH_TITLE} alt="{L_BB_TITLE}"></i>
+							</a>
 							
 							<div style="position:relative;z-index:100;float:left;display:none;" id="bb_block3{FIELD}">
 								<div style="margin-left:135px;" class="bbcode_block" onmouseover="bb_hide_block('3', '{FIELD}', 1);" onmouseout="bb_hide_block('3', '{FIELD}', 0);">
@@ -108,7 +112,9 @@ function XMLHttpRequest_preview(field)
 									</select>	
 								</div>
 							</div>
-							<a href="javascript:{DISABLED_BLOCK}bb_display_block('3', '{FIELD}');" onmouseout="{DISABLED_BLOCK}bb_hide_block('3', '{FIELD}', 0);" class="bbcode_hover" title="{L_BB_CONTAINER}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/subtitle.png" {AUTH_BLOCK} alt="{L_BB_CONTAINER}" /></a>
+							<a href="javascript:{DISABLED_BLOCK}bb_display_block('3', '{FIELD}');" onmouseout="{DISABLED_BLOCK}bb_hide_block('3', '{FIELD}', 0);" class="bbcode_hover" title="{L_BB_CONTAINER}">
+								<i class="bbcode-icon-subtitle" {AUTH_BLOCK} alt="{L_BB_CONTAINER}"></i>
+							</a>
 							
 							<div style="position:relative;z-index:100;float:left;display:none;" id="bb_block4{FIELD}">
 								<div style="margin-left:160px;" class="bbcode_block" onmouseover="bb_hide_block('4', '{FIELD}', 1);" onmouseout="bb_hide_block('4', '{FIELD}', 0);">
@@ -122,31 +128,39 @@ function XMLHttpRequest_preview(field)
 									</select>	
 								</div>
 							</div>
-							<a href="javascript:{DISABLED_STYLE}bb_display_block('4', '{FIELD}');" onmouseout="{DISABLED_STYLE}bb_hide_block('4', '{FIELD}', 0);" class="bbcode_hover" title="{L_BB_STYLE}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/style.png" {AUTH_STYLE} alt="{L_BB_STYLE}" /></a>
+							<a href="javascript:{DISABLED_STYLE}bb_display_block('4', '{FIELD}');" onmouseout="{DISABLED_STYLE}bb_hide_block('4', '{FIELD}', 0);" class="bbcode_hover" title="{L_BB_STYLE}">
+								<i class="bbcode-icon-style" {AUTH_STYLE} alt="{L_BB_STYLE}"></i>
+							</a>
 							
-							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/separate.png" alt="" />
+							<i class="bbcode-icon-separate"></i>
 							
-							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/url.png" class="bbcode_hover" {AUTH_URL} onclick="{DISABLED_URL}bbcode_url('{FIELD}', '{L_URL_PROMPT}');" alt="{L_BB_URL}" title="{L_BB_URL}" />
-							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/image.png" class="bbcode_hover" {AUTH_IMG} onclick="{DISABLED_IMG}insertbbcode('[img]', '[/img]', '{FIELD}');" alt="{L_BB_IMAGE}" title="{L_BB_IMAGE}" />			
-							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/quote.png" class="bbcode_hover" {AUTH_QUOTE} onclick="{DISABLED_QUOTE}insertbbcode('[quote]', '[/quote]', '{FIELD}');" alt="{L_BB_QUOTE}" title="{L_BB_QUOTE}" />		
-							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/hide.png" class="bbcode_hover" {AUTH_HIDE} onclick="{DISABLED_HIDE}insertbbcode('[hide]', '[/hide]', '{FIELD}');" alt="{L_BB_HIDE}" title="{L_BB_HIDE}" />	
+							<i class="bbcode-icon-url" {AUTH_URL} onclick="{DISABLED_URL}bbcode_url('{FIELD}', '{L_URL_PROMPT}');" alt="{L_BB_URL}" title="{L_BB_URL}"></i>
+							<i class="bbcode-icon-image" {AUTH_IMG} onclick="{DISABLED_IMG}insertbbcode('[img]', '[/img]', '{FIELD}');" alt="{L_BB_IMAGE}" title="{L_BB_IMAGE}"></i>
+							<i class="bbcode-icon-quote" {AUTH_QUOTE} onclick="{DISABLED_QUOTE}insertbbcode('[quote]', '[/quote]', '{FIELD}');" alt="{L_BB_QUOTE}" title="{L_BB_QUOTE}"></i>
+							<i class="bbcode-icon-hide" {AUTH_HIDE} onclick="{DISABLED_HIDE}insertbbcode('[hide]', '[/hide]', '{FIELD}');" alt="{L_BB_HIDE}" title="{L_BB_HIDE}"></i>
 							
 							<div style="position:relative;z-index:100;float:right;display:none;" id="bb_block9{FIELD}">
 								<div class="bbcode_block" style="margin-left:-220px;width:180px;" onmouseover="bb_hide_block('9', '{FIELD}', 1);" onmouseout="bb_hide_block('9', '{FIELD}', 0);">
 									<p><label style="font-size:10px;font-weight:normal">* {L_LINES} <input size="3" type="text" class="text" name="bb_list{FIELD}" id="bb_list{FIELD}" maxlength="3" value="3"></label></p>
 									<p><label style="font-size:10px;font-weight:normal">{L_ORDERED_LIST} <input size="3" type="checkbox" name="bb_ordered_list{FIELD}" id="bb_ordered_list{FIELD}"></label></p>
-									<p style="text-align:center;"><a class="small" href="javascript:bbcode_list('{FIELD}');"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/list.png" alt="{L_BB_LIST}" title="{L_BB_LIST}" class="valign_middle" /> {L_INSERT_LIST}</a></p>
+									<p style="text-align:center;"><a class="small" href="javascript:bbcode_list('{FIELD}');">
+										<i class="bbcode-icon-list" alt="{L_BB_LIST}" title="{L_BB_LIST}" class="valign_middle"></i> {L_INSERT_LIST}
+									</a></p>
 								</div>
 							</div>
-							<a href="javascript:{DISABLED_LIST}bb_display_block('9', '{FIELD}');" onmouseout="{DISABLED_LIST}bb_hide_block('9', '{FIELD}', 0);" class="bbcode_hover" title="{L_BB_LIST}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/list.png" {AUTH_LIST} alt="{L_BB_LIST}" title="{L_BB_LIST}" /></a>
+							<a href="javascript:{DISABLED_LIST}bb_display_block('9', '{FIELD}');" onmouseout="{DISABLED_LIST}bb_hide_block('9', '{FIELD}', 0);" class="bbcode_hover" title="{L_BB_LIST}">
+								<i class="bbcode-icon-list" {AUTH_LIST} alt="{L_BB_LIST}" title="{L_BB_LIST}"></i>
+							</a>
 							
-							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/separate.png" alt="" />
+							<i class="bbcode-icon-separate"></i>
 							
 							<div style="position:relative;z-index:100;float:right;display:none;" id="bb_block5{FIELD}">
 								<div id="bbcolor{FIELD}" class="bbcode_block" style="margin-left:-170px;background:white;" onmouseover="bb_hide_block('5', '{FIELD}', 1);" onmouseout="bb_hide_block('5', '{FIELD}', 0);">
 								</div>
 							</div>
-							<a href="javascript:{DISABLED_COLOR}bbcode_color('{FIELD}');{DISABLED_COLOR}bb_display_block('5', '{FIELD}');" onmouseout="{DISABLED_COLOR}bb_hide_block('5', '{FIELD}', 0);" class="bbcode_hover" title="{L_BB_COLOR}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/color.png" {AUTH_COLOR} alt="{L_BB_COLOR}" /></a>					
+							<a href="javascript:{DISABLED_COLOR}bbcode_color('{FIELD}');{DISABLED_COLOR}bb_display_block('5', '{FIELD}');" onmouseout="{DISABLED_COLOR}bb_hide_block('5', '{FIELD}', 0);" class="bbcode_hover" title="{L_BB_COLOR}">
+								<i class="bbcode-icon-color" {AUTH_COLOR} alt="{L_BB_COLOR}"></i>
+							</a>					
 							
 							<div style="position:relative;z-index:100;margin-left:-70px;float:right;display:none;" id="bb_block6{FIELD}">
 								<div style="margin-left:-120px;" class="bbcode_block" onmouseover="bb_hide_block('6', '{FIELD}', 1);" onmouseout="bb_hide_block('6', '{FIELD}', 0);">
@@ -164,51 +178,57 @@ function XMLHttpRequest_preview(field)
 									</select>
 								</div>
 							</div>
-							<a href="javascript:{DISABLED_SIZE}bb_display_block('6', '{FIELD}');" onmouseout="{DISABLED_SIZE}bb_hide_block('6', '{FIELD}', 0);" class="bbcode_hover" title="{L_BB_SIZE}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/size.png" {AUTH_SIZE} alt="{L_BB_SIZE}" /></a>			
+							<a href="javascript:{DISABLED_SIZE}bb_display_block('6', '{FIELD}');" onmouseout="{DISABLED_SIZE}bb_hide_block('6', '{FIELD}', 0);" class="bbcode_hover" title="{L_BB_SIZE}">
+								<i class="bbcode-icon-size" {AUTH_SIZE} alt="{L_BB_SIZE}"></i>
+							</a>			
 	
-							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/separate.png" alt="" />
+							<i class="bbcode-icon-separate"></i>
 							&nbsp;
-							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/minus.png" style="cursor: pointer;cursor:hand;" onclick="textarea_resize('{FIELD}', -100, 'height');textarea_resize('xmlhttprequest_preview', -100, 'height');" alt="{L_BB_SMALL}" title="{L_BB_SMALL}" />
-							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/plus.png" style="cursor: pointer;cursor:hand;" onclick="textarea_resize('{FIELD}', 100, 'height');textarea_resize('xmlhttprequest_preview', 100, 'height');" alt="{L_BB_LARGE}" title="{L_BB_LARGE}" />
+							<i class="bbcode-icon-minus" style="cursor: pointer;cursor:hand;" onclick="textarea_resize('{FIELD}', -100, 'height');textarea_resize('xmlhttprequest_preview', -100, 'height');" alt="{L_BB_SMALL}" title="{L_BB_SMALL}"></i>
+							<i class="bbcode-icon-plus" style="cursor: pointer;cursor:hand;" onclick="textarea_resize('{FIELD}', 100, 'height');textarea_resize('xmlhttprequest_preview', 100, 'height');" alt="{L_BB_LARGE}" title="{L_BB_LARGE}"></i>
 	
-							<a onclick="show_bbcode_div('bbcode_more{FIELD}', 1);"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/more.png" title="{L_BB_MORE}" alt="{L_BB_MORE}" class="bbcode_hover" /></a>
+							<a onclick="show_bbcode_div('bbcode_more{FIELD}', 1);"><i class="bbcode-icon-more" title="{L_BB_MORE}" alt="{L_BB_MORE}" class="bbcode_hover"></i></a>
 						</td>
 					</tr>	
 				</table>
 				<table class="bbcode2" id="bbcode_more{FIELD}">
 					<tr>
 						<td style="width:100%;padding:1px;">
-							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/separate.png" alt="" />
+							<i class="bbcode-icon-separate"></i>
 							
-							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/left.png" class="bbcode_hover" {AUTH_ALIGN} onclick="{DISABLED_ALIGN}insertbbcode('[align=left]', '[/align]', '{FIELD}');" alt="{L_BB_LEFT}" title="{L_BB_LEFT}" />
-							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/center.png" class="bbcode_hover" {AUTH_ALIGN} onclick="{DISABLED_ALIGN}insertbbcode('[align=center]', '[/align]', '{FIELD}');" alt="{L_BB_CENTER}" title="{L_BB_CENTER}" />
-							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/right.png" class="bbcode_hover" {AUTH_ALIGN} onclick="{DISABLED_ALIGN}insertbbcode('[align=right]', '[/align]', '{FIELD}');" alt="{L_BB_RIGHT}" title="{L_BB_RIGHT}" />	
-							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/justify.png" class="bbcode_hover" {AUTH_ALIGN} onclick="{DISABLED_ALIGN}insertbbcode('[align=justify]', '[/align]', '{FIELD}');" alt="{L_BB_JUSTIFY}" title="{L_BB_JUSTIFY}" />	
-							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/separate.png" alt="" />
+							<i class="bbcode-icon-left" {AUTH_ALIGN} onclick="{DISABLED_ALIGN}insertbbcode('[align=left]', '[/align]', '{FIELD}');" alt="{L_BB_LEFT}" title="{L_BB_LEFT}"></i>
+							<i class="bbcode-icon-center" {AUTH_ALIGN} onclick="{DISABLED_ALIGN}insertbbcode('[align=center]', '[/align]', '{FIELD}');" alt="{L_BB_CENTER}" title="{L_BB_CENTER}"></i>
+							<i class="bbcode-icon-right" {AUTH_ALIGN} onclick="{DISABLED_ALIGN}insertbbcode('[align=right]', '[/align]', '{FIELD}');" alt="{L_BB_RIGHT}" title="{L_BB_RIGHT}"></i>
+							<i class="bbcode-icon-justify" {AUTH_ALIGN} onclick="{DISABLED_ALIGN}insertbbcode('[align=justify]', '[/align]', '{FIELD}');" alt="{L_BB_JUSTIFY}" title="{L_BB_JUSTIFY}"></i>
+							<i class="bbcode-icon-separate" alt=""></i>
 							
-							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/float_left.png" class="bbcode_hover" {AUTH_FLOAT} onclick="{DISABLED_FLOAT}insertbbcode('[float=left]', '[/float]', '{FIELD}');" alt="{L_BB_FLOAT_LEFT}" title="{L_BB_FLOAT_LEFT}" />
-							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/float_right.png" class="bbcode_hover" {AUTH_FLOAT} onclick="{DISABLED_FLOAT}insertbbcode('[float=right]', '[/float]', '{FIELD}');" alt="{L_BB_FLOAT_RIGHT}" title="{L_BB_FLOAT_RIGHT}" />
-							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/sup.png" class="bbcode_hover" {AUTH_SUP} onclick="{DISABLED_SUP}insertbbcode('[sup]', '[/sup]', '{FIELD}');" alt="{L_BB_SUP}" title="{L_BB_SUP}" />
-							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/sub.png" class="bbcode_hover" {AUTH_SUB} onclick="{DISABLED_SUB}insertbbcode('[sub]', '[/sub]', '{FIELD}');" alt="{L_BB_SUB}" title="{L_BB_SUB}" />
-							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/indent.png" class="bbcode_hover" {AUTH_INDENT} onclick="{DISABLED_INDENT}insertbbcode('[indent]', '[/indent]', '{FIELD}');" alt="{L_BB_INDENT}" title="{L_BB_INDENT}" />
+							<i class="bbcode-icon-float_left" {AUTH_FLOAT} onclick="{DISABLED_FLOAT}insertbbcode('[float=left]', '[/float]', '{FIELD}');" alt="{L_BB_FLOAT_LEFT}" title="{L_BB_FLOAT_LEFT}"></i>
+							<i class="bbcode-icon-float_right" {AUTH_FLOAT} onclick="{DISABLED_FLOAT}insertbbcode('[float=right]', '[/float]', '{FIELD}');" alt="{L_BB_FLOAT_RIGHT}" title="{L_BB_FLOAT_RIGHT}"></i>
+							<i class="bbcode-icon-sup" {AUTH_SUP} onclick="{DISABLED_SUP}insertbbcode('[sup]', '[/sup]', '{FIELD}');" alt="{L_BB_SUP}" title="{L_BB_SUP}"></i>
+							<i class="bbcode-icon-sub" {AUTH_SUB} onclick="{DISABLED_SUB}insertbbcode('[sub]', '[/sub]', '{FIELD}');" alt="{L_BB_SUB}" title="{L_BB_SUB}"></i>
+							<i class="bbcode-icon-indent" {AUTH_INDENT} onclick="{DISABLED_INDENT}insertbbcode('[indent]', '[/indent]', '{FIELD}');" alt="{L_BB_INDENT}" title="{L_BB_INDENT}"></i>
 							
 							<div style="position:relative;z-index:100;float:left;display:none;" id="bb_block7{FIELD}">
 								<div id="bbtable{FIELD}" class="bbcode_block" style="margin-left:130px;width:180px;" onmouseover="bb_hide_block('7', '{FIELD}', 1);" onmouseout="bb_hide_block('7', '{FIELD}', 0);">
 									<p><label style="font-size:10px;font-weight:normal">* {L_LINES} <input size="3" type="text" class="text" name="bb_lines{FIELD}" id="bb_lines{FIELD}" maxlength="3" value="2"></label></p>
 									<p><label style="font-size:10px;font-weight:normal">* {L_COLS} <input size="3" type="text" class="text" name="bb_cols{FIELD}" id="bb_cols{FIELD}" maxlength="3" value="2"></label></p>
 									<p><label style="font-size:10px;font-weight:normal">{L_ADD_HEAD} <input size="3" type="checkbox" name="bb_head{FIELD}" id="bb_head{FIELD}"></label></p>
-									<p style="text-align:center;"><a class="small" href="javascript:{DISABLED_TABLE}bbcode_table('{FIELD}');"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/table.png" alt="{L_BB_TABLE}" title="{L_BB_TABLE}" class="valign_middle" /> {L_INSERT_TABLE}</a></p>
+									<p style="text-align:center;"><a class="small" href="javascript:{DISABLED_TABLE}bbcode_table('{FIELD}');">
+										<i class="bbcode-icon-table" alt="{L_BB_TABLE}" title="{L_BB_TABLE}"></i>
+									{L_INSERT_TABLE}</a></p>
 								</div>
 							</div>
-							<a href="javascript:{DISABLED_TABLE}bb_display_block('7', '{FIELD}');" onmouseover="{DISABLED_TABLE}bb_hide_block('7', '{FIELD}', 1);" class="bbcode_hover" title="{L_BB_TABLE}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/table.png" {AUTH_TABLE} alt="{L_BB_TABLE}" title="{L_BB_TABLE}" /></a>   
+							<a href="javascript:{DISABLED_TABLE}bb_display_block('7', '{FIELD}');" onmouseover="{DISABLED_TABLE}bb_hide_block('7', '{FIELD}', 1);" class="bbcode_hover" title="{L_BB_TABLE}">
+								<i class="bbcode-icon-table" {AUTH_TABLE} alt="{L_BB_TABLE}" title="{L_BB_TABLE}"></i>
+							</a>   
 							
-							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/separate.png" alt="" />
+							<i class="bbcode-icon-separate"></i>
 							
-							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/flash.png" class="bbcode_hover" {AUTH_SWF} onclick="{DISABLED_SWF}insertbbcode('[swf=425,344]', '[/swf]', '{FIELD}');" alt="{L_BB_SWF}" title="{L_BB_SWF}" />
-							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/movie.png" class="bbcode_hover" {AUTH_MOVIE} onclick="{DISABLED_MOVIE}insertbbcode('[movie=100,100]', '[/movie]', '{FIELD}');" alt="{L_BB_MOVIE}" title="{L_BB_MOVIE}" />
-							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/sound.png" class="bbcode_hover" {AUTH_SOUND} onclick="{DISABLED_SOUND}insertbbcode('[sound]', '[/sound]', '{FIELD}');" alt="{L_BB_SOUND}" title="{L_BB_SOUND}" />
+							<i class="bbcode-icon-flash" {AUTH_SWF} onclick="{DISABLED_SWF}insertbbcode('[swf=425,344]', '[/swf]', '{FIELD}');" alt="{L_BB_SWF}" title="{L_BB_SWF}"></i>
+							<i class="bbcode-icon-movie" {AUTH_MOVIE} onclick="{DISABLED_MOVIE}insertbbcode('[movie=100,100]', '[/movie]', '{FIELD}');" alt="{L_BB_MOVIE}" title="{L_BB_MOVIE}"></i>
+							<i class="bbcode-icon-sound" {AUTH_SOUND} onclick="{DISABLED_SOUND}insertbbcode('[sound]', '[/sound]', '{FIELD}');" alt="{L_BB_SOUND}" title="{L_BB_SOUND}"></i>
 							
-							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/separate.png" alt="" />
+							<i class="bbcode-icon-separate"></i>
 							
 							<div style="position:relative;z-index:100;margin-left:-70px;float:right;display:none;" id="bb_block8{FIELD}">
 								<div style="margin-left:-120px;" class="bbcode_block" onmouseover="bb_hide_block('8', '{FIELD}', 1);" onmouseout="bb_hide_block('8', '{FIELD}', 0);">
@@ -251,16 +271,18 @@ function XMLHttpRequest_preview(field)
 									</select>
 								</div>
 							</div>
-							<a href="javascript:{DISABLED_CODE}bb_display_block('8', '{FIELD}');" onmouseout="{DISABLED_CODE}bb_hide_block('8', '{FIELD}', 0);" class="bbcode_hover" title="{L_BB_CODE}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/code.png" {AUTH_CODE} alt="{L_BB_CODE}" /></a>
+							<a href="javascript:{DISABLED_CODE}bb_display_block('8', '{FIELD}');" onmouseout="{DISABLED_CODE}bb_hide_block('8', '{FIELD}', 0);" class="bbcode_hover" title="{L_BB_CODE}">
+								<i class="bbcode-icon-code" {AUTH_CODE} alt="{L_BB_CODE}"></i>
+							</a>
 							
-							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/math.png" class="bbcode_hover" {AUTH_MATH} onclick="{DISABLED_MATH}insertbbcode('[math]', '[/math]', '{FIELD}');" alt="{L_BB_MATH}" title="{L_BB_MATH}" />	
-							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/html.png" class="bbcode_hover" {AUTH_HTML} onclick="{DISABLED_HTML}insertbbcode('[html]', '[/html]', '{FIELD}');" alt="{L_BB_HTML}" title="{L_BB_HTML}" />
+							<i class="bbcode-icon-math" {AUTH_MATH} onclick="{DISABLED_MATH}insertbbcode('[math]', '[/math]', '{FIELD}');" alt="{L_BB_MATH}" title="{L_BB_MATH}"></i>	
+							<i class="bbcode-icon-html" {AUTH_HTML} onclick="{DISABLED_HTML}insertbbcode('[html]', '[/html]', '{FIELD}');" alt="{L_BB_HTML}" title="{L_BB_HTML}"></i>
 						</td>
 						<td style="width:3px;">
-							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/separate.png" alt="" />
+							<i class="bbcode-icon-separate"></i>
 						</td>
 						<td style="padding:0px 2px;width:22px;">
-							<a href="http://www.phpboost.com/wiki/bbcode" title="{L_BB_HELP}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/help.png" alt="{L_BB_HELP}" /></a>
+							<a href="http://www.phpboost.com/wiki/bbcode" title="{L_BB_HELP}"><i class="bbcode-icon-help" alt="{L_BB_HELP}"></i></a>
 						</td>
 					</tr>	
 				</table>
