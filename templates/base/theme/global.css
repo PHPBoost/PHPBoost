@@ -473,6 +473,10 @@ menu.dynamic_menu li ul li a, menu.dynamic_menu li ul li span{
 menu.dynamic_menu li ul li a i, menu.dynamic_menu li ul li span i{
 	font-size:15px;
 	vertical-align:-2px;
+	width:16px;
+	display:inline-block;
+	text-align:center;
+	margin-right:4px;
 }
 
 /* Menu Right */
