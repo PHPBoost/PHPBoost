@@ -31,7 +31,6 @@ $lang['news.edit'] = 'Modifier une news';
 $lang['news.pending'] = 'News en attente';
 $lang['news.manage'] = 'Gérer les news';
 
-$lang['news.message.delete'] = 'Voulez vous vraiment supprimer la news ?';
 $lang['news.message.no_items'] = 'Aucune news n\'est disponible pour le moment';
 
 $lang['news.seo.description.root'] = 'Toutes les news du site :site.';

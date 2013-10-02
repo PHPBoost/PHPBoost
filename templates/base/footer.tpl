@@ -32,4 +32,5 @@
 		# ENDIF #
 	</footer>
 	</body>
+	# INCLUDE JAVASCRIPT #
 </html>

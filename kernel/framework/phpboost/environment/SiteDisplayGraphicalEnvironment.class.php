@@ -87,7 +87,7 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 			'MODULES_CSS' => $this->get_modules_css_files_html_code(),
 			'L_XML_LANGUAGE' => self::$main_lang['xml_lang'],
 			'PHPBOOST_VERSION' => GeneralConfig::load()->get_phpboost_major_version(),
-			'JAVASCRIPT' => new FileTemplate('javascript.tpl')
+			'JAVASCRIPT' => new FileTemplate('javascript_header.tpl')
 		));
 
 		$this->display_counter($template);
@@ -283,7 +283,8 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 			'L_BY' => strtolower(self::$main_lang['by']),
 			'L_THEME_AUTHOR' => $theme_configuration->get_author_name(),
 			'U_THEME_AUTHOR_LINK' => $theme_configuration->get_author_link(),
-		    'PHPBOOST_VERSION' => GeneralConfig::load()->get_phpboost_major_version()
+		    'PHPBOOST_VERSION' => GeneralConfig::load()->get_phpboost_major_version(),
+			'JAVASCRIPT' => new FileTemplate('javascript_footer.tpl')
 		));
 
 		//We add a page to the page displayed counter
