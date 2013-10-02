@@ -7,7 +7,7 @@
 		<![endif]-->
 		<script type="text/javascript">
 		<!-- 
-			$$('a.delete').each(function(a) {
+			$$('.delete').each(function(a) {
 				a.onclick = function () { return confirm('${LangLoader::get_message('confirm.delete', 'errors-common')}'); }
 			}); 
 		-->
