@@ -28,7 +28,7 @@
 		<div id="admin_contents">
 			<div style="width:95%;margin:auto;">	
 				<div class="block_contents1" style="padding:5px;padding-bottom:7px;margin-bottom:5px">
-					<img src="{PATH_TO_ROOT}/templates/{THEME}/images/li.png" class="valign_middle" alt="" /> <a class="small" href="admin_database.php#tables">{L_DATABASE_MANAGEMENT}</a> <img src="{PATH_TO_ROOT}/templates/{THEME}/images/li.png" class="valign_middle" alt="" /> <a class="small" href="admin_database_tools.php?table={TABLE_NAME}&amp;action=structure">{TABLE_NAME}</a>
+					- <a class="small" href="admin_database.php#tables">{L_DATABASE_MANAGEMENT}</a> - <a class="small" href="admin_database_tools.php?table={TABLE_NAME}&amp;action=structure">{TABLE_NAME}</a>
 				</div>
 				<menu class="dynamic_menu group">
 					<ul>
@@ -285,7 +285,7 @@
 					</fieldset>
 					
 					<br />
-					# IF PAGINATION # <img src="{PATH_TO_ROOT}/templates/{THEME}/images/li.png" class="valign_middle" alt="" /> <strong>{L_PAGE}</strong> : {PAGINATION} # ENDIF #
+					# IF PAGINATION #<strong>{L_PAGE}</strong> : {PAGINATION} # ENDIF #
 					
 					<div style="width:99%;margin:auto;overflow:auto;padding:0px 2px">
 						<table class="module_table">
@@ -301,7 +301,7 @@
 						</table>
 					</div>
 					<br />
-					# IF PAGINATION # <img src="{PATH_TO_ROOT}/templates/{THEME}/images/li.png" class="valign_middle" alt="" /> <strong>{L_PAGE}</strong> : {PAGINATION} # ENDIF #
+					# IF PAGINATION #<strong>{L_PAGE}</strong> : {PAGINATION} # ENDIF #
 				</div>
 			</div>			
 			# ENDIF #
