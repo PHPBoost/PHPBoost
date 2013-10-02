@@ -132,7 +132,7 @@ function createSortableMenu()
 							</div>
 							<p class="menu_block_libelle"><label><input onclick="minimize_container(this, 'header')" type="checkbox" name="header_enabled" {CHECKED_HEADER_COLUMN}> {L_HEADER}</label></p>
 							<p class="menus_block_add" onclick="menu_display_block('addmenu1');" onmouseover="menu_hide_block('addmenu1', 1);" onmouseout="menu_hide_block('addmenu1', 0);">
-								<img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/plus.png" class="valign_middle" alt="" /> {L_ADD_MENU}
+								<img src="{PATH_TO_ROOT}/templates/{THEME}/images/plus.png" class="valign_middle" alt="" /> {L_ADD_MENU}
 							</p>
 						</div>
 					</div>
@@ -172,7 +172,7 @@ function createSortableMenu()
 							</div>
 							<p class="menu_block_libelle"><label><input onclick="minimize_container(this, 'subheader')" type="checkbox" name="sub_header_enabled" {CHECKED_SUB_HEADER_COLUMN}> {L_SUB_HEADER}</label></p>
 							<p class="menus_block_add" onclick="menu_display_block('addmenu2');" onmouseover="menu_hide_block('addmenu2', 1);" onmouseout="menu_hide_block('addmenu2', 0);">
-								<img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/plus.png" class="valign_middle" alt="" /> {L_ADD_MENU}
+								<img src="{PATH_TO_ROOT}/templates/{THEME}/images/plus.png" class="valign_middle" alt="" /> {L_ADD_MENU}
 							</p>
 						</div>
 					</div>
@@ -212,7 +212,7 @@ function createSortableMenu()
 							</div>
 							<p class="menu_block_libelle"><label><input onclick="minimize_container(this, 'left')" type="checkbox" name="left_column_enabled" {CHECKED_LEFT_COLUMN}> {L_LEFT_MENU}</label></p>
 							<p class="menus_block_add" onclick="menu_display_block('addmenu3');" onmouseover="menu_hide_block('addmenu3', 1);" onmouseout="menu_hide_block('addmenu3', 0);">
-								<img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/plus.png" class="valign_middle" alt="" /> {L_ADD_MENU}
+								<img src="{PATH_TO_ROOT}/templates/{THEME}/images/plus.png" class="valign_middle" alt="" /> {L_ADD_MENU}
 							</p>
 						</div>
 					</div>
@@ -254,7 +254,7 @@ function createSortableMenu()
 										</div>
 										<p class="menu_block_libelle"><label><input onclick="minimize_container(this, 'topcentral')" type="checkbox" name="top_central_enabled" {CHECKED_TOP_CENTRAL_COLUMN}> {L_TOP_CENTRAL_MENU}</label></p>
 										<p class="menus_block_add" onclick="menu_display_block('addmenu4');" onmouseover="menu_hide_block('addmenu4', 1);" onmouseout="menu_hide_block('addmenu4', 0);">
-											<img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/plus.png" class="valign_middle" alt="" /> {L_ADD_MENU}
+											<img src="{PATH_TO_ROOT}/templates/{THEME}/images/plus.png" class="valign_middle" alt="" /> {L_ADD_MENU}
 										</p>
 									</div>
 								</div>
@@ -313,7 +313,7 @@ function createSortableMenu()
 										</div>
 										<p class="menu_block_libelle"><label><input onclick="minimize_container(this, 'bottomcentral')" type="checkbox" name="bottom_central_enabled" {CHECKED_BOTTOM_CENTRAL_COLUMN}> {L_BOTTOM_CENTRAL_MENU}</label></p>
 										<p class="menus_block_add" onclick="menu_display_block('addmenu5');" onmouseover="menu_hide_block('addmenu5', 1);" onmouseout="menu_hide_block('addmenu5', 0);">
-											<img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/plus.png" class="valign_middle" alt="" /> {L_ADD_MENU}
+											<img src="{PATH_TO_ROOT}/templates/{THEME}/images/plus.png" class="valign_middle" alt="" /> {L_ADD_MENU}
 										</p>
 									</div>
 								</div>
@@ -354,7 +354,7 @@ function createSortableMenu()
 							</div>
 							<p class="menu_block_libelle"><label><input onclick="minimize_container(this, 'right')" type="checkbox" name="right_column_enabled" {CHECKED_RIGHT_COLUMN}> {L_RIGHT_MENU}</label></p>
 							<p class="menus_block_add" onclick="menu_display_block('addmenu6');" onmouseover="menu_hide_block('addmenu6', 1);" onmouseout="menu_hide_block('addmenu6', 0);">
-								<img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/plus.png" class="valign_middle" alt="" /> {L_ADD_MENU}
+								<img src="{PATH_TO_ROOT}/templates/{THEME}/images/plus.png" class="valign_middle" alt="" /> {L_ADD_MENU}
 							</p>
 						</div>
 					</div>
@@ -395,7 +395,7 @@ function createSortableMenu()
 							</div>
 							<p class="menu_block_libelle"><label><input onclick="minimize_container(this, 'topfooter')" type="checkbox" name="top_footer_enabled" {CHECKED_TOP_FOOTER_COLUMN}> {L_TOP_FOOTER}</label></p>
 							<p class="menus_block_add" onclick="menu_display_block('addmenu7');" onmouseover="menu_hide_block('addmenu7', 1);" onmouseout="menu_hide_block('addmenu7', 0);">
-								<img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/plus.png" class="valign_middle" alt="" /> {L_ADD_MENU}
+								<img src="{PATH_TO_ROOT}/templates/{THEME}/images/plus.png" class="valign_middle" alt="" /> {L_ADD_MENU}
 							</p>
 						</div>
 					</div>
@@ -435,7 +435,7 @@ function createSortableMenu()
 							</div>
 							<p class="menu_block_libelle"><label><input onclick="minimize_container(this, 'footer')" type="checkbox" name="footer_enabled" {CHECKED_FOOTER_COLUMN}> {L_FOOTER}</label></p>
 							<p class="menus_block_add" onclick="menu_display_block('addmenu8');" onmouseover="menu_hide_block('addmenu8', 1);" onmouseout="menu_hide_block('addmenu8', 0);">
-								<img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/plus.png" class="valign_middle" alt="" /> {L_ADD_MENU}
+								<img src="{PATH_TO_ROOT}/templates/{THEME}/images/plus.png" class="valign_middle" alt="" /> {L_ADD_MENU}
 							</p>
 						</div>
 					</div>

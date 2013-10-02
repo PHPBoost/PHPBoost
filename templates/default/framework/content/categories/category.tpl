@@ -5,7 +5,7 @@
 			<a href="{U_DELETE}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" class="valign_middle"></a>
 		</div>
 		<img src="{PATH_TO_ROOT}/templates/default/images/drag.png" alt="Drag&Drop" class="valign_middle drag" >
-		<img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/url.png" alt="Url" class="valign_middle"> 
+		<img src="{PATH_TO_ROOT}/templates/{THEME}/images/url.png" alt="Url" class="valign_middle"> 
 		{NAME}
 		# IF C_DESCRIPTION #<span class="cat_desc"> | {DESCRIPTION}</span># ENDIF #
 	</div>

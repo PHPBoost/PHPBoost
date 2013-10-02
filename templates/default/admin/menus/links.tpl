@@ -14,12 +14,12 @@ function toggleProperties(id) {
     if (document.getElementById("menu_element_" + id + "_properties").style.display == "none")
     {   //Si les propriétés sont repliées, on les affiche
         Effect.Appear("menu_element_" + id + "_properties");
-        document.getElementById("menu_element_" + id + "_more_image").src = "{PATH_TO_ROOT}/templates/{THEME}/images/form/minus.png";
+        document.getElementById("menu_element_" + id + "_more_image").src = "{PATH_TO_ROOT}/templates/{THEME}/images/minus.png";
     }
     else
     {   //Sinon, on les cache
         Effect.Fade("menu_element_" + id + "_properties");
-        document.getElementById("menu_element_" + id + "_more_image").src = "{PATH_TO_ROOT}/templates/{THEME}/images/form/plus.png";
+        document.getElementById("menu_element_" + id + "_more_image").src = "{PATH_TO_ROOT}/templates/{THEME}/images/plus.png";
     }
 }
 
@@ -46,7 +46,7 @@ function addSubElement(menu_element_id) {
         Builder.node('div', {style: 'float:left;'}, [
 			Builder.node('img', {src: '{PATH_TO_ROOT}/templates/default/images/drag.png', alt: 'plus', className: 'valign_middle', style: 'padding-left:5px;padding-right:5px;cursor:move'}),
             ' ',
-            Builder.node('img', {src: '{PATH_TO_ROOT}/templates/{THEME}/images/form/url.png', alt: 'plus', className: 'valign_middle', style: 'cursor:move'}),
+            Builder.node('img', {src: '{PATH_TO_ROOT}/templates/{THEME}/images/url.png', alt: 'plus', className: 'valign_middle', style: 'cursor:move'}),
             ' ',
             Builder.node('label', {htmlFor: 'menu_element_' + id + '_name'}, {JL_NAME}),
             ' ',
@@ -61,7 +61,7 @@ function addSubElement(menu_element_id) {
             Builder.node('input', {type: 'text', value: '', id: 'menu_element_' + id + '_image', name: 'menu_element_' + id + '_image'})
         ]),
         Builder.node('div', {style: 'float:right;'}, [
-            Builder.node('img', {src: '{PATH_TO_ROOT}/templates/{THEME}/images/form/plus.png', alt: {JL_MORE}, id: 'menu_element_' + id + '_more_image', className: 'valign_middle', onclick: 'toggleProperties(' + id + ');'}),
+            Builder.node('img', {src: '{PATH_TO_ROOT}/templates/{THEME}/images/plus.png', alt: {JL_MORE}, id: 'menu_element_' + id + '_more_image', className: 'valign_middle', onclick: 'toggleProperties(' + id + ');'}),
             ' ',
             Builder.node('img', {src: '{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png', alt: {JL_DELETE}, id: 'menu_element_' + id + '_delete_image', className: 'valign_middle', onclick: 'deleteElement(\'menu_element_' + id + '\');'})
         ]),
@@ -105,7 +105,7 @@ function addSubMenu(menu_element_id) {
             Builder.node('input', {type: 'text', value: '', id: 'menu_element_' + id + '_image', name: 'menu_element_' + id + '_image'})
         ]),
         Builder.node('div', {style: 'float:right;'}, [
-            Builder.node('img', {src: '{PATH_TO_ROOT}/templates/{THEME}/images/form/plus.png', alt: {JL_MORE}, id: 'menu_element_' + id + '_more_image', className: 'valign_middle', onclick: 'toggleProperties(' + id + ');'}),
+            Builder.node('img', {src: '{PATH_TO_ROOT}/templates/{THEME}/images/plus.png', alt: {JL_MORE}, id: 'menu_element_' + id + '_more_image', className: 'valign_middle', onclick: 'toggleProperties(' + id + ');'}),
             ' ',
             Builder.node('img', {src: '{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png', alt: {JL_DELETE}, id: 'menu_element_' + id + '_delete_image', className: 'valign_middle', onclick: 'deleteElement(\'menu_element_' + id + '\');'})
         ]),

@@ -49,7 +49,7 @@
 					
 					<span id="add_filter{NBR_FILTER}"></span>
 					<p style="text-align:center;margin-top:10px;">
-						<a href="javascript:add_filter({NBR_FILTER})" title="{@add_filter}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/plus.png" alt="+" /></a>
+						<a href="javascript:add_filter({NBR_FILTER})" title="{@add_filter}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/plus.png" alt="+" /></a>
 					</p>
 				</dd>
 			</dl>

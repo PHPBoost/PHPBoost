@@ -23,7 +23,7 @@
 			<label for="menu_element_{ID}_image">{L_IMAGE}</label> <input type="text" value="{RELATIVE_IMG}" id="menu_element_{ID}_image" name="menu_element_{ID}_image">
 		</div>
 		<div style="float:right;">
-			<img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/plus.png" alt="More..." id="menu_element_{ID}_more_image" class="valign_middle" onclick="toggleProperties({ID});" />
+			<img src="{PATH_TO_ROOT}/templates/{THEME}/images/plus.png" alt="More..." id="menu_element_{ID}_more_image" class="valign_middle" onclick="toggleProperties({ID});" />
             <img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" id="menu_element_{ID}_delete_image" class="valign_middle" onclick="deleteElement('menu_element_{ID}');" />
 		</div>
 		<div class="spacer"></div>
@@ -51,13 +51,13 @@
     <li class="menu_link_element" id="menu_element_{ID}">
    		<div style="float:left;">
 			<img src="{PATH_TO_ROOT}/templates/default/images/drag.png" alt="" class="valign_middle" style="padding-left:5px;padding-right:5px;cursor:move" />
-   			<img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/url.png" alt="plus" class="valign_middle" style="cursor:move" />
+   			<img src="{PATH_TO_ROOT}/templates/{THEME}/images/url.png" alt="plus" class="valign_middle" style="cursor:move" />
 			<label for="menu_element_{ID}_name">{L_NAME}</label> <input type="text" value="{TITLE}" id="menu_element_{ID}_name" name="menu_element_{ID}_name">
 			<label for="menu_element_{ID}_url">{L_URL}</label> <input type="text" value="{RELATIVE_URL}" id="menu_element_{ID}_url" name="menu_element_{ID}_url">
 			<label for="menu_element_{ID}_image">{L_IMAGE}</label> <input type="text" value="{RELATIVE_IMG}" id="menu_element_{ID}_image" name="menu_element_{ID}_image">
 		</div>
 		<div style="float:right;">
-			<img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/plus.png" alt="{L_MORE}" id="menu_element_{ID}_more_image" class="valign_middle" onclick="toggleProperties({ID});" />
+			<img src="{PATH_TO_ROOT}/templates/{THEME}/images/plus.png" alt="{L_MORE}" id="menu_element_{ID}_more_image" class="valign_middle" onclick="toggleProperties({ID});" />
             <img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" id="menu_element_{ID}_delete_image" class="valign_middle" onclick="deleteElement('menu_element_{ID}');" />
 		</div>
 		<div class="spacer"></div>
