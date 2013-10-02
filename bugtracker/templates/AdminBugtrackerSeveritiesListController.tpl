@@ -58,7 +58,7 @@ function bbcode_color_list(field)
 			</td>
 			<td class="row2">
 				<input type="text" size="8" maxlength="7" name="s_color{severities.ID}" id="s_color{severities.ID}" value="{severities.COLOR}" style="background-color:{severities.COLOR};" class="text">
-				<a href="javascript:bbcode_color_list('s_color{severities.ID}');bb_display_block('{severities.ID}', '');" onmouseout="bb_hide_block('{severities.ID}', '', 0);" class="bbcode_hover"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/color.png" alt="" class="valign_middle" /></a>
+				<a href="javascript:bbcode_color_list('s_color{severities.ID}');bb_display_block('{severities.ID}', '');" onmouseout="bb_hide_block('{severities.ID}', '', 0);" class="bbcode_hover"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/color.png" alt="" class="valign_middle" /></a>
 				<div style="position:relative;z-index:100;display:none;margin-left:85px;" id="bb_block{severities.ID}">
 					<div id="s_color{severities.ID}_list" class="bbcode_block" style="background:white;width:150px;" onmouseover="bb_hide_block('{severities.ID}', '', 1);" onmouseout="bb_hide_block('{severities.ID}', '', 0);">
 					</div>
