@@ -5,9 +5,7 @@
 					<a href="${relative_url(SyndicationUrlBuilder::rss('download',IDCAT))}" class="syndication" title="${LangLoader::get_message('syndication', 'main')}"></a>
 					{TITLE}
 					# IF C_ADMIN #
-					<a href="{U_ADMIN_CAT}">
-						<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="" />
-					</a>
+					<a href="{U_ADMIN_CAT}" title="${LangLoader::get_message('edit', 'main')}" class="edit"></a>
 					# END IF #
 				</h1>
 			</header>
@@ -36,9 +34,7 @@
 								<a href="{row.list_cats.U_CAT}">{row.list_cats.NAME}</a>
 								
 								# IF C_ADMIN #
-								<a href="{row.list_cats.U_ADMIN_CAT}">
-									<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="" />
-								</a>
+								<a href="{row.list_cats.U_ADMIN_CAT}" title="${LangLoader::get_message('edit', 'main')}" class="edit"></a>
 								# ENDIF #
 								<div class="smaller">
 									{row.list_cats.NUM_FILES}
@@ -82,12 +78,8 @@
 								<h1>
 									<a href="{file.U_DOWNLOAD_LINK}" itemprop="name">{file.NAME}</a>
 									# IF C_ADMIN #
-										<a href="{file.U_ADMIN_EDIT_FILE}">
-											<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="" />
-										</a>
-										<a href="{file.U_ADMIN_DELETE_FILE}" onclick="return confirm('{L_CONFIRM_DELETE_FILE}');">
-											<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="" />
-										</a>
+										<a href="{file.U_ADMIN_EDIT_FILE}" title="${LangLoader::get_message('edit', 'main')}" class="edit"></a>
+										<a href="{file.U_ADMIN_DELETE_FILE}" title="${LangLoader::get_message('delete', 'main')}" class="delete"></a>
 									# ENDIF #
 								</h1>
 							</header>
@@ -142,12 +134,8 @@
 					<span class="tools">
 						{U_COM}
 						# IF C_EDIT_AUTH #
-							<a href="{U_EDIT_FILE}">
-								<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" class="valign_middle" alt="{L_EDIT_FILE}" />
-							</a>
-							<a href="{U_DELETE_FILE}" onclick="return confirm('{L_CONFIRM_DELETE_FILE}');">
-								<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" class="valign_middle" alt="{L_DELETE_FILE}" />
-							</a>
+							<a href="{U_EDIT_FILE}" title="${LangLoader::get_message('edit', 'main')}" class="edit"></a>
+							<a href="{U_DELETE_FILE}" title="${LangLoader::get_message('delete', 'main')}" class="delete"></a>
 						# ENDIF #
 					</span>
 				</h1>
