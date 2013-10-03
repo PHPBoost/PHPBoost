@@ -20,33 +20,28 @@ section header h1, article header h1, section header h1 a, article header h1 a {
     border-bottom: 1px solid #336397;
 }
 
-section header h1 span.tools, article header h1 span.tools, .comment-date .tools {
+span.tools {
     float: right;
 }
 
-section header h1 span.tools a, article header h1 span.tools a, .comment-date .tools a {
+span.tools a {
     font-size: 12px;
 }
 
-article .more {
+.more {
 	font-size: 11px;
 	font-style: italic;
 }
 
-section .content, article .content {
+.content {
 	margin: 0 15px;
     text-align: justify;
 	word-wrap: break-word;
 	overflow: auto;
 }
 
-article .content {
-	clear: both;
-}
-
 section footer, article footer {
 	margin-bottom: 15px;
-	clear: both;
 }
 
 section footer nav#pagination {
