@@ -14,9 +14,9 @@
 			</div>
 		# ENDIF #
 		# START messages #
-			<div id="m{messages.ID}" class="comment">
+			<article id="m{messages.ID}" class="comment">
 				<div class="comment-user_infos">
-					<div id="comment-pseudo">
+					<div class="comment-pseudo">
 						# IF messages.C_VISITOR #
 							<span class="text_italic"># IF messages.USER_PSEUDO #{messages.USER_PSEUDO}# ELSE #{L_GUEST}# ENDIF #</span>
 						# ELSE #
@@ -39,7 +39,7 @@
 				<div class="comment-content">
 					<div class="comment-date">
 						# IF messages.C_MODERATOR #
-						<span class="tools float_right">
+						<span class="tools">
 							<a href="{messages.U_EDIT}" title="${LangLoader::get_message('edit', 'main')}" class="edit"></a>
 							<a href="{messages.U_DELETE}" title="${LangLoader::get_message('delete', 'main')}" class="delete"></a>
 						</span>
@@ -50,7 +50,7 @@
 						<div class="message-containt">{messages.CONTENTS}</div>
 					</div>
 				</div>
-			</div>
+			</article>
 		# END messages #
 	</div>
 	<footer># IF C_PAGINATION # # INCLUDE PAGINATION # # ENDIF #</footer>

@@ -20,11 +20,11 @@ section header h1, article header h1, section header h1 a, article header h1 a {
     border-bottom: 1px solid #336397;
 }
 
-section header h1 span.tools, article header h1 span.tools {
+section header h1 span.tools, article header h1 span.tools, .comment-date .tools {
     float: right;
 }
 
-section header h1 span.tools a, article header h1 span.tools a {
+section header h1 span.tools a, article header h1 span.tools a, .comment-date .tools a {
     font-size: 12px;
 }
 
@@ -705,7 +705,7 @@ div#comment-rating .negative {
 	overflow:auto;	
 }
 
-div#comment-pseudo a {}
+.comment-pseudo a {}
 
 .comment-user_infos img{
 	padding:10px 0px;	
