@@ -22,9 +22,7 @@
 			<a href="${relative_url(SyndicationUrlBuilder::rss('faq', ID_FAQ))}" class="syndication" title="${LangLoader::get_message('syndication', 'main')}"></a>
 			{TITLE}
 			# IF C_ADMIN #
-			<a href="{U_ADMIN_CAT}" alt="" title="{L_EDIT}">
-				<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="" />
-			</a>
+			<a href="{U_ADMIN_CAT}" title="${LangLoader::get_message('edit', 'main')}" class="edit"></a>
 			# END IF #
 		</h1>
 	</header>
@@ -45,9 +43,7 @@
 						<a href="{row.list_cats.U_CAT}">{row.list_cats.NAME}</a>
 						
 						# IF C_ADMIN #
-						<a href="{row.list_cats.U_ADMIN_CAT}">
-							<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="" />
-						</a>
+						<a href="{row.list_cats.U_ADMIN_CAT}" title="${LangLoader::get_message('edit', 'main')}" class="edit"></a>
 						# ENDIF #
 						<div class="smaller">
 							{row.list_cats.NUM_QUESTIONS}
@@ -93,9 +89,9 @@
 								# START questions.faq.down #
 									<a href="{questions.faq.U_DOWN}" title="{L_DOWN}"><img src="{PICTURES_DATA_PATH}/images/down.png" alt="{L_DOWN}" /></a>
 								# END questions.faq.down #
-								<a href="{questions.faq.U_EDIT}" title="{L_EDIT}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="{L_EDIT}" /></a>
-								<a href="{questions.faq.U_DEL}" onclick="return confirm('{L_CONFIRM_DELETE}');" title="{L_DELETE}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" /></a>
-							# ENDIF #
+								<a href="{questions.faq.U_EDIT}" title="${LangLoader::get_message('edit', 'main')}" class="edit"></a>
+								<a href="{questions.faq.U_DEL}" title="${LangLoader::get_message('delete', 'main')}" class="delete"></a>
+								# ENDIF #
 						</span>
 						<div style="clear:both"></div>
 					</div>
@@ -142,9 +138,9 @@
 							# START questions_block.contents.down #
 								<a href="{questions_block.contents.U_DOWN}" title="{L_DOWN}"><img src="{PICTURES_DATA_PATH}/images/down.png" alt="{L_DOWN}" /></a>
 							# END questions_block.contents.down #
-							<a href="{questions_block.contents.U_EDIT}" title="{L_EDIT}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="{L_EDIT}" /></a>
-							<a href="{questions_block.contents.U_DEL}" onclick="return confirm('{L_CONFIRM_DELETE}');" title="{L_DELETE}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" /></a>
-						# ENDIF #
+							<a href="{questions_block.contents.U_EDIT}" title="${LangLoader::get_message('edit', 'main')}" class="edit"></a>
+							<a href="{questions_block.contents.U_DEL}" title="${LangLoader::get_message('delete', 'main')}" class="delete"></a>
+							# ENDIF #
 					</span>
 					<div style="clear:both"></div>
 				</div>
