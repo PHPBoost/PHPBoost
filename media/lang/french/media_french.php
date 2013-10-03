@@ -36,7 +36,6 @@ global $MEDIA_LANG;
 $MEDIA_LANG = array(
 // admin_media.php
 'aprob_media' => 'Approuver le fichier multimédia',
-'confirm_delete_media' => 'Êtes-vous certain de vouloir supprimer ce fichier multimédia ?',
 'hide_media' => 'Cacher ce fichier multimédia',
 'recount_per_cat' => 'Recompter le nombre de fichiers multimédias par catégorie',
 'show_media' => 'Montrer ce fichier multimédia',

@@ -42,9 +42,7 @@
 									<br />
 									<a href="{row.list_cats.U_CAT}">{row.list_cats.NAME}</a>
 									# IF C_ADMIN #
-									<a href="{row.list_cats.U_ADMIN_CAT}" title="{L_EDIT}">
-										<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="">
-									</a>
+									<a href="{row.list_cats.U_ADMIN_CAT}" title="${LangLoader::get_message('edit', 'main')}" class="edit"></a>
 									# ENDIF #
 									# IF row.list_cats.NUM_MEDIA #
 									<div class="smaller">
@@ -93,12 +91,8 @@
 											<a href="{file.U_ADMIN_UNVISIBLE_MEDIA}" class="img_link" title="{L_UNAPROBED}">
 												<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/unvisible.png" alt="">
 											</a>
-											<a href="{file.U_ADMIN_EDIT_MEDIA}" class="img_link" title="{L_EDIT}">
-												<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="">
-											</a>
-											<a href="{file.U_ADMIN_DELETE_MEDIA}" onclick="return confirm('{L_CONFIRM_DELETE_FILE}');" class="img_link" title="{L_DELETE}">
-												<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="">
-											</a>
+											<a href="{file.U_ADMIN_EDIT_MEDIA}" title="${LangLoader::get_message('edit', 'main')}" class="edit"></a>
+											<a href="{file.U_ADMIN_DELETE_MEDIA}" title="${LangLoader::get_message('delete', 'main')}" class="delete"></a>
 										</span>
 										# ENDIF #
 									</h1>
@@ -170,12 +164,8 @@
 							<a href="{U_UNVISIBLE_MEDIA}" class="img_link" title="{L_UNAPROBED}">
 								<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/unvisible.png" alt="">
 							</a>
-							<a href="{U_EDIT_MEDIA}" class="img_link" title="{L_EDIT}">
-								<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" class="valign_middle" alt="" />
-							</a>
-							<a href="{U_DELETE_MEDIA}" onclick="return confirm('{L_CONFIRM_DELETE_FILE}');" class="img_link" title="{L_DELETE}">
-								<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" class="valign_middle" alt="" />
-							</a>
+							<a href="{U_EDIT_MEDIA}" title="${LangLoader::get_message('edit', 'main')}" class="edit"></a>
+							<a href="{U_DELETE_MEDIA}" title="${LangLoader::get_message('delete', 'main')}" class="delete"></a>
 						# ENDIF #
 					</span>
 				</h1>

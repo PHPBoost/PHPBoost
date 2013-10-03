@@ -91,9 +91,7 @@ class MediaHomePageExtensionPoint implements HomePageExtensionPoint
 	
 		$tpl->put_all(array(
 			'C_CATEGORIES' => true,
-			'L_EDIT' => $LANG['edit'],
 			'L_MODO_PANEL' => $LANG['modo_panel'],
-			'L_DELETE' => $LANG['delete'],
 			'L_UNAPROBED' => $MEDIA_LANG['unaprobed_media_short'],
 			'TITLE' => $MEDIA_CATS[$id_cat]['name'],
 			'C_ADMIN' => $User->check_level(User::ADMIN_LEVEL),
@@ -160,7 +158,6 @@ class MediaHomePageExtensionPoint implements HomePageExtensionPoint
 				'L_DESC' => $LANG['desc'],
 				'L_ASC' => $LANG['asc'],
 				'L_ORDER_BY' => $LANG['orderby'],
-				'L_CONFIRM_DELETE_FILE' => str_replace('\'', '\\\'', $MEDIA_LANG['confirm_delete_media']),
 				'SELECTED_ALPHA' => $selected_fields['alpha'],
 				'SELECTED_DATE' => $selected_fields['date'],
 				'SELECTED_NBR' => $selected_fields['nbr'],
