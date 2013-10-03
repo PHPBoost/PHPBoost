@@ -125,6 +125,7 @@ a.edit:before, a.delete:before {
 	vertical-align: text-bottom;
 	font-weight:300;
 	vertical-align:-2px;
+	text-decoration:none;
 }
 
 a.edit:hover, a.delete:hover { text-decoration:none; }

@@ -246,7 +246,7 @@ class GalleryHomePageExtensionPoint implements HomePageExtensionPoint
 					'CAT' => $row['name'],
 					'DESC' => $row['contents'],
 					'IMG' => !empty($row['path']) ? '<img src="'. PATH_TO_ROOT.'/gallery/pics/thumbnails/' . $row['path'] . '" alt="" />' : '',
-					'EDIT' => $is_admin ? '<a href="'. PATH_TO_ROOT.'/gallery/admin_gallery_cat.php?id=' . $row['id'] . '"><img class="valign_middle" src="'. PATH_TO_ROOT.'/templates/' . get_utheme() .  '/images/' . get_ulang() . '/edit.png" alt="" title="' . $LANG['cat_edit'] . '"/></a>' : '',
+					'EDIT' => $is_admin ? '<a href="'. PATH_TO_ROOT.'/gallery/admin_gallery_cat.php?id=' . $row['id'] . '" title="' . $LANG['cat_edit'] . '" class="edit"></a>' : '',
 					'LOCK' => ($row['status'] == 0) ? '<img class="valign_middle" src="'. PATH_TO_ROOT.'/templates/' . get_utheme() . '/images/readonly.png" alt="" title="' . $LANG['gallery_lock'] . '" />' : '',
 					'OPEN_TR' => is_int($j++/$nbr_column_cats) ? '<tr>' : '',
 					'CLOSE_TR' => is_int($j/$nbr_column_cats) ? '</tr>' : '',
