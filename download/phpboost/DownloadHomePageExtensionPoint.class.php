@@ -178,7 +178,6 @@ class DownloadHomePageExtensionPoint implements HomePageExtensionPoint
 				'L_ASC' => $LANG['asc'],
 				'L_NOTE' => $LANG['note'],
 				'L_ORDER_BY' => $DOWNLOAD_LANG['order_by'],
-				'L_CONFIRM_DELETE_FILE' => str_replace('\'', '\\\'', $DOWNLOAD_LANG['confirm_delete_file']),
 				'SELECTED_ALPHA' => $selected_fields['alpha'],
 				'SELECTED_SIZE' => $selected_fields['size'],
 				'SELECTED_DATE' => $selected_fields['date'],
