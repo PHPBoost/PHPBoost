@@ -124,12 +124,13 @@ a.edit:before, a.delete:before {
 	font-size: 15px;
 	vertical-align: text-bottom;
 	font-weight:300;
+	vertical-align:-2px;
 }
 
 a.edit:hover, a.delete:hover { text-decoration:none; }
 
 a.edit:before { content: "\f044"; }
-a.delete:before { content: "\f014"; }
+a.delete:before { content: "\f014";vertical-align:-1px; }
 
 /* Mise en forme
 -------------------------------------------*/
