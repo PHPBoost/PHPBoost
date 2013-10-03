@@ -36,7 +36,7 @@ $lang = array(
     'what_is_phpboost' => 'What is PHPBoost ?',
     'what_is_phpboost__answer' => 'PHPBoost is a french CMS (Content Management System). This software allows anybody to create easily their website. Designed to satisfy beginners, it should also delight users who would like to push its functionning or develop theirn own modules.',
     'phpboost_cat_title' => 'PHPBoost',
-    'phpboost_cat_desc' => 'Any question about PHPBoost?',
+    'phpboost_cat_desc' => 'Any question about PHPBoost ?',
     'dictionary_cat_title' => 'Dictionary',
     'dictionary_cat_desc' => '',
 );
