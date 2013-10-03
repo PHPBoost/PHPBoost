@@ -35,7 +35,6 @@ $lang['module_title'] = 'Livre d\'or';
 //Title
 $lang['guestbook.titles.more_contents'] = '[Suite...]';
 $lang['guestbook.titles.no_message'] = 'Aucun message';
-$lang['guestbook.delete_message_confirm'] = 'Etes-vous sûr de vouloir supprimer ce message ?';
 $lang['guestbook.add'] = 'Signer le livre d\'or';
 $lang['guestbook.edit'] = 'Edition d\'un message';
 

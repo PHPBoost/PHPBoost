@@ -35,7 +35,6 @@ $lang['module_title'] = 'Guest Book';
 //Title
 $lang['guestbook.titles.more_contents'] = '[Read more...]';
 $lang['guestbook.titles.no_message'] = 'No message';
-$lang['guestbook.delete_message_confirm'] = 'Delete this message?';
 $lang['guestbook.add'] = 'Sign the guest book';
 $lang['guestbook.edit'] = 'Message edition';
 
