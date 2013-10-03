@@ -108,14 +108,11 @@ elseif ($id_media > 0)
 		'L_MEDIA_INFOS' => $MEDIA_LANG['media_infos'],
 		'DATE' => gmdate_format('date_format', $media['timestamp']),
 		'L_MODO_PANEL' => $LANG['modo_panel'],
-		'L_EDIT' => $LANG['edit'],
-		'L_DELETE' => $LANG['delete'],
 		'L_UNAPROBED' => $MEDIA_LANG['unaprobed_media_short'],
 		'HEIGHT_P' => $media['height'] + 50,
 		'L_VIEWED' => $LANG['view'],
 		'L_BY' => $LANG['by'],
 		'BY' => !empty($media['login']) ? '<a href="' . UserUrlBuilder::profile($media['iduser'])->absolute() . '" class="'.UserService::get_level_class($media['level']).'"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . $media['login'] . '</a>' : $LANG['guest'],
-		'L_CONFIRM_DELETE_MEDIA' => str_replace('\'', '\\\'', $MEDIA_LANG['confirm_delete_media']),
 		'U_UNVISIBLE_MEDIA' => url('media_action.php?unvisible=' . $id_media . '&amp;token=' . $Session->get_token()),
 		'U_EDIT_MEDIA' => url('media_action.php?edit=' . $id_media),
 		'U_DELETE_MEDIA' => url('media_action.php?del=' . $id_media . '&amp;token=' . $Session->get_token()),
@@ -127,7 +124,6 @@ elseif ($id_media > 0)
 		'A_COUNTER' => ($MEDIA_CATS[$media['idcat']]['active'] & MEDIA_DV_COUNT) !== 0,
 		'A_DATE' => ($MEDIA_CATS[$media['idcat']]['active'] & MEDIA_DV_DATE) !== 0,
 		'A_DESC' => ($MEDIA_CATS[$media['idcat']]['active'] & MEDIA_DV_DESC) !== 0,
-		'L_CONFIRM_DELETE_FILE' => str_replace('\'', '\\\'', $MEDIA_LANG['confirm_delete_media'])
 	));
 	
 	if (empty($mime_type_tpl[$media['mime_type']]))
