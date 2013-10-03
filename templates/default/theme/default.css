@@ -2,57 +2,6 @@
 		default.css
 Css par défaut commun * tout les thèmes, permet les ajouts nécessaires au framework et retrocompatibilité
 --------------------------------------*/
-/* Titres */ /* Sécurité */
-.row_priority_very_high, .row_priority_high, .row_priority_medium, .row_priority_low, .row_priority_very_low { text-align:center; }
-.row_priority_very_high { background:#F3A29B !important; color:#ffffff !important; font-weight:bold !important; }
-.row_priority_high { background:#FFD5D1 !important; }
-.row_priority_medium { background:#F5D5C6 !important; }
-.row_priority_low { background:#ECDBB7 !important; }
-.row_priority_very_low { background:#FFFFFF !important; }
-.row_disabled { background:#E1E1E1 !important; }
-
-.button {
-    cursor:pointer;
-}
-
-/* Imite l'affichage fieldset / legend */
-.fieldset_content {
-    width:95%;
-    margin:auto;
-    margin-top:20px;
-}
-
-.low_opacity {
-    filter:alpha(opacity=40);
-    opacity: 0.40;
-    -moz-opacity:0.40;
-}
-
-/* Alignements */
-.inline { display:inline; }
-
-.center {
-	text-align:center;
-	display:block;
-	padding:0;
-	margin:2px 0px;
-}
-.left {
-    text-align:left;
-    display:block;
-    padding:0;
-    margin:2px 0px;
-}
-.right {
-    text-align:right;
-    display:block;
-    padding:0;
-    margin:2px 0px;
-}
-
-div.float_left, img.left { float:left; }
-div.float_right, img.right { float:right; }
-img.left, img.right { margin:6px; }
 
 /* Balises */
 img {
@@ -80,6 +29,32 @@ p {
 
 pre { white-space:pre-wrap; }
 
+/* Alignements */
+.inline { display:inline; }
+
+.center {
+	text-align:center;
+	display:block;
+	padding:0;
+	margin:2px 0px;
+}
+.left {
+    text-align:left;
+    display:block;
+    padding:0;
+    margin:2px 0px;
+}
+.right {
+    text-align:right;
+    display:block;
+    padding:0;
+    margin:2px 0px;
+}
+
+div.float_left, img.left { float:left; }
+div.float_right, img.right { float:right; }
+img.left, img.right { margin:6px; }
+
 /* Classes textes */
 .text_strong { font-weight:bold; }
 .text_justify { text-align:justify; }
@@ -95,41 +70,39 @@ pre { white-space:pre-wrap; }
 .smiley { vertical-align:middle; }
 
 /* Fieldsets */
-fieldset.horizontal_fieldset {
-    float:left;
-    margin:0 5px;
-}
+fieldset.horizontal_fieldset { float:left; margin:0 5px; }
+div.horizontal_fieldset, div.vertical_fieldset { margin:20px 0; }
+div.vertical_fieldset dl { margin:5px 0px 5px 0px; }
+div.horizontal_fieldset dl, div.horizontal_fieldset dl dd { float:left; margin:0px 5px 0px 5px; }
+div.vertical_fieldset dl dt { margin:0px 5px 0px 5px; }
+div.horizontal_fieldset dl dt label, div.vertical_fieldset dl dt label { font-weight:bold; }
 
-div.horizontal_fieldset, div.vertical_fieldset {
-    margin:20px 0;
-}
-
-div.vertical_fieldset dl {
-    margin:5px 0px 5px 0px;
-}
-
-div.horizontal_fieldset dl, div.horizontal_fieldset dl dd {
-    float:left;
-    margin:0px 5px 0px 5px;
-}
-
-div.vertical_fieldset dl dt {
-    margin:0px 5px 0px 5px;
-}
-
-div.horizontal_fieldset dl dt label, div.vertical_fieldset dl dt label {
-    font-weight:bold;
+/* Imite l'affichage fieldset / legend */
+.fieldset_content {
+    width:95%;
+    margin:auto;
+    margin-top:20px;
 }
 
 /* Boutons */
+.button {
+    cursor:pointer;
+}
+
 button.image{
     background:none;
     border:none;
     cursor:pointer;
 }
 
-/* Liens pagination
---------------------------------------*/
+/* Opacité */
+.low_opacity {
+    filter:alpha(opacity=40);
+    opacity: 0.40;
+    -moz-opacity:0.40;
+}
+
+/* Liens pagination */
 nav#pagination .current_page {
     text-decoration:underline;
 }
@@ -218,7 +191,7 @@ ul.rss_feed li {
 	.hide-phone		{display:block;}
 }
 
-/* Lightbox*/
+/* Lightbox */
 #lightbox{  position:absolute;  left:0; width:100%; z-index:103; text-align:center; line-height:0;}
 #lightbox img{ width:auto; height:auto;}
 #lightbox a img{ border:none; }
@@ -247,6 +220,7 @@ ul.rss_feed li {
 
 #overlay{ position:absolute; top:0; left:0; z-index:102; width:100%; height:500px; background-color:#000; }
 
+/* Auto-complétion */
 div.form_autocompleter { position: absolute; background-color: #FFF; border: 1px solid #6993AE; margin: 0px; padding: 0px; }
 div.form_autocompleter ul { margin: 0px; padding: 0px; max-height: 20em; overflow: auto; } 
 div.form_autocompleter ul li.selected { background-color: #F5FBFF; }

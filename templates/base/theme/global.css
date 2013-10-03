@@ -5,43 +5,6 @@
 
 /* Classes générales
 --------------------------------------*/
-/* Case générale des tableaux du site*/
-.row1, .block_contents1 {
-    background:#E0E9EF;
-	padding:8px 6px;
-	border-top:1px solid #CCCCCC;
-}
-
-.block_contents1 {
-    padding:20px 6px;	
-}
-
-.row2, .block_contents2 {
-	padding:8px 6px;
-}
-
-.block_contents2 {
-    padding:20px 6px;	
-}
-
-.row3, .block_contents3 {
-	background:#F2F7FB;
-    border-color:#C4CED6;
-    padding:8px 6px;
-	border-top:1px solid #CCCCCC;
-	border-bottom:1px solid #CCCCCC;
-	-moz-border-radius:0px 0px 5px 5px;
-	-khtml-border-bottom-right-radius:5px;
-	-khtml-border-bottom-left-radius:5px;
-	-webkit-border-bottom-right-radius:5px;
-	-webkit-border-bottom-left-radius:5px;
-    border-radius:5px;
-}
-
-.block_contents3 {
-    padding:20px 6px;	
-}
-
 /* Case résultat recherche membre AJAX */
 .xmlhttprequest_result_search {
     overflow:auto;
@@ -226,7 +189,7 @@ h4.stitle2{
 /* Mise en forme du contenu (généré par éditeurs de texte
 --------------------------------------------------------------------  */
 
-/* Menu caché du BBcode */
+/* Menu caché */
 .bbcode_block{
 	position:absolute;
 	text-align:center;
@@ -549,7 +512,7 @@ menu.dynamic_menu li li:hover > ul {
 
 menu.dynamic_menu li ul li a, menu.dynamic_menu li ul li span{
 	color:#666;
-	font-size:10px;
+	font-size:11px;
 	padding:3px 12px;
 }
 
