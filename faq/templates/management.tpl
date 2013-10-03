@@ -166,8 +166,8 @@
 										<img src="{PICTURES_DATA_PATH}/images/down.png" alt="{L_DOWN}" />
 									</a>
 								# END category.questions.down #
-								<a href="{category.questions.U_EDIT}" title="{L_EDIT}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="{L_EDIT}" /></a>
-								<a href="{category.questions.U_DEL}" onclick="return confirm('{L_CONFIRM_DELETE}');" title="{L_DELETE}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" /></a>
+								<a href="{category.questions.U_EDIT}" title="${LangLoader::get_message('edit', 'main')}" class="edit"></a>
+								<a href="{category.questions.U_DEL}" title="${LangLoader::get_message('delete', 'main')}" class="delete"></a>
 							</span>
 							<div style="clear:both"></div>
 						</div>
