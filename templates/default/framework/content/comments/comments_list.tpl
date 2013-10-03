@@ -22,17 +22,13 @@ function Confirm_del_comment() {
 		</div>
 		<div class="comment-content">
 			<div class="comment-date">
-				<div style="float:right;">
+				<span class="tools">
 					<a itemprop="url" href="\#com{comments.ID_COMMENT}">\#{comments.ID_COMMENT}</a>
 					# IF comments.C_MODERATOR #
-						<a href="{comments.U_EDIT}">
-							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="{L_UPDATE}" title="{L_UPDATE}" class="valign_middle" />
-						</a> 
-						<a href="{comments.U_DELETE}" onclick="javascript:return Confirm_del_comment();">
-							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" class="valign_middle" />
-						</a>
+						<a href="{comments.U_EDIT}" title="${LangLoader::get_message('edit', 'main')}" class="edit"></a>
+						<a href="{comments.U_DELETE}" title="${LangLoader::get_message('delete', 'main')}" class="delete"></a>
 					# ENDIF #
-				</div>
+				</span>
 				<span itemprop="datePublished" content="{comments.DATE_ISO8601}">{comments.DATE}</span>
 			</div>
 			<div class="comment-message">
