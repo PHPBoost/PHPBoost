@@ -248,7 +248,7 @@
 				<div style="margin-bottom:50px;">
 					<menu class="dynamic_menu right">
 						<ul>
-							<li><a><i class="icon-reorder"></i> Menu</a>
+							<li><a><i class="icon-reorder"></i></a>
 								<ul>
 									<li class="extend"><a><i class="icon-eye-open"></i> {L_DISPLAY}</a>
 										<ul>
@@ -284,9 +284,9 @@
 				</div>
 				
 				# IF C_GALLERY_CATS #
-				<div class="block_container">
-					<div class="block_top">{L_CATEGORIES}</div>
-					<div class="block_contents">
+				<section class="block">
+					<header><h1>{L_CATEGORIES}</h1></header>
+					<div class="contents">
 						<table style="width:100%">
 							# START cat_list #
 							{cat_list.OPEN_TR}								
@@ -308,14 +308,15 @@
 							# END end_table_cats #
 						</table>
 					</div>
-				</div>
+					<footer></footer>
+				</section>
 				# ENDIF #
 				
 				
 				# IF C_GALLERY_PICS #
-				<div class="block_container">
-					<div class="block_top">{GALLERY}</div>
-					<div class="block_contents">
+				<article class="block">
+					<header><h1>{GALLERY}</h1></header>
+					<div class="contents">
 						<p style="text-align:center" id="pics_max">{PAGINATION_PICS}</p>				
 						
 						# IF C_GALLERY_PICS_MAX #
@@ -455,7 +456,8 @@
 						</table>
 						<p style="text-align:center">{PAGINATION_PICS}</p>			
 					</div>
-				</div>
+					<footer></footer>
+				</article>
 				# ENDIF #
 					
 				<p style="text-align:center;padding-top:15px;" class="smaller">{L_TOTAL_IMG}</p>
