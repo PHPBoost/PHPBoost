@@ -216,7 +216,7 @@
 	<h2>Commentaires</h2><br>
 	<div id="com2" class="comment" itemscope="itemscope" itemtype="http://schema.org/Comment">
 		<div class="comment-user_infos">
-			<div id="comment-pseudo">
+			<div class="comment-pseudo">
 				
 					<a itemprop="author" href="{PATH_TO_ROOT}/user/?url=/profile/1" class="admin" >
 						admin
@@ -228,17 +228,11 @@
 		</div>
 		<div class="comment-content">
 			<div class="comment-date">
-				<div style="float:right;">
+				<span class="tools">
 					<a itemprop="url" href="#com2">#2</a>
-					
-						<a href="#comments_message">
-							<img src="{PATH_TO_ROOT}/templates/base/images/french/edit.png" alt="Modifier" title="Modifier" class="valign_middle" />
-						</a> 
-						<a href="#comments_message" onclick="javascript:return Confirm_del_comment();">
-							<img src="{PATH_TO_ROOT}/templates/base/images/french/delete.png" alt="Supprimer" title="Supprimer" class="valign_middle" />
-						</a>
-					
-				</div>
+						<a href="#comments_message" class="edit"></a> 
+						<a href="#comments_message" onclick="javascript:return Confirm_del_comment();" class="delete"></a>
+				</span>
 				<span itemprop="datePublished" content="2013-09-05T15:37:01+00:00">05/09/2013 à 15h37</span>
 			</div>
 			<div class="comment-message">

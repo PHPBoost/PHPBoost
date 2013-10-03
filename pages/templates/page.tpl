@@ -23,18 +23,18 @@
 				</noscript>
 
 				<div style="margin-bottom:10px;">
-					<menu class="tools_menu right group">
+					<menu class="dynamic_menu right group">
 						<ul>
 						# IF C_ACTIV_COM #
 							<li>
-								<a href="{U_COM}" ><i class="icon-comments"></i> {L_COM}</a>
+								<a href="{U_COM}"><i class="icon-comments"></i> {L_COM}</a>
 							</li>
 						# ENDIF #
 							<li>
 								<a><i class="icon-cog"></i> {L_PAGE_OUTILS}</a>
-								<ul class="img_bg">
+								<ul>
 								# START links_list #
-									<li><a href="{links_list.U_ACTION}" title="{links_list.L_ACTION}" onclick="{links_list.ONCLICK}" class="small" style="background-image:url({links_list.DM_A_CLASS});">{links_list.L_ACTION}</a></li>
+									<li><a href="{links_list.U_ACTION}" title="{links_list.L_ACTION}" onclick="{links_list.ONCLICK}"><img src="{links_list.DM_A_CLASS}"/> {links_list.L_ACTION}</a></li>
 								# END links_list #
 								</ul>
 							</li>
