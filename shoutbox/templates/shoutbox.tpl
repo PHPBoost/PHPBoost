@@ -1,11 +1,3 @@
-		<script type="text/javascript">
-		<!--
-		function Confirm_shout() {
-		return confirm("{L_DELETE_MSG}");
-		}
-		-->
-		</script>
-
 		# INCLUDE SHOUTBOX_FORM #
 
 		<br />

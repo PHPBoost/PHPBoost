@@ -124,7 +124,6 @@ class ShoutboxHomePageExtensionPoint implements HomePageExtensionPoint
 		$Pagination = new DeprecatedPagination();
 		
 		$tpl->put_all(array(
-			'L_DELETE_MSG' => $LANG['alert_delete_msg'],
 			'PAGINATION' => $Pagination->display('shoutbox' . url('.php?p=%d'), $nbr_shout, 'p', 10, 3)
 		));
 		
@@ -161,8 +160,8 @@ class ShoutboxHomePageExtensionPoint implements HomePageExtensionPoint
 			//Edition/suppression.
 			if ($is_modo || ($row['user_id'] === $User->get_attribute('user_id') && $User->get_attribute('user_id') !== -1))
 			{
-				$edit_message = '&nbsp;&nbsp;<a href="' . PATH_TO_ROOT . '/shoutbox/shoutbox' . url('.php?edit=1&amp;id=' . $row['id']) . '"><img src="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/' . get_ulang() . '/edit.png" alt="' . $LANG['edit'] . '" title="' . $LANG['edit'] . '" class="valign_middle" /></a>';
-				$del_message = '&nbsp;&nbsp;<a href="' . PATH_TO_ROOT . '/shoutbox/shoutbox' . url('.php?del=1&amp;id=' . $row['id'] . '&amp;token=' . $Session->get_token()) . '" onclick="javascript:return Confirm_shout();"><img src="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/' . get_ulang() . '/delete.png" alt="' . $LANG['delete'] . '" title="' . $LANG['delete'] . '" class="valign_middle" /></a>';
+				$edit_message = '&nbsp;&nbsp;<a href="' . PATH_TO_ROOT . '/shoutbox/shoutbox' . url('.php?edit=1&amp;id=' . $row['id']) . '" title="'. $LANG['edit'] .'" class="edit"></a>';
+				$del_message = '&nbsp;&nbsp;<a href="' . PATH_TO_ROOT . '/shoutbox/shoutbox' . url('.php?del=1&amp;id=' . $row['id'] . '&amp;token=' . $Session->get_token()) . '" title="'. $LANG['delete'] .'" class="delete"></a>';
 			}
 			
 			//Pseudo.
