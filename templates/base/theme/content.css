@@ -181,30 +181,35 @@ textarea {
     display:block;
     width:94%;
     margin:5px auto;
-	-moz-border-radius:5px;
-	-khtml-border-radius:5px;
-	-webkit-border-radius:5px;
-}
-input.text{
-	padding:1px 2px 1px 2px;	
-	-moz-border-radius:3px;
-	-khtml-border-radius:3px;
-	-webkit-border-radius:3px;
+	border-radius:5px;
 }
 
-input.submit, button.submit{
+input.text {
+	padding:1px 2px 1px 2px;	
+	border-radius:3px;
+}
+
+input.submit, input.reset, button {
+	background: #cccccc;
+	background: -webkit-gradient(linear, left top, left bottom, from(#ffffff), to(#cccccc));
+	background: -webkit-linear-gradient(top, #ffffff, #cccccc);
+	background: -moz-linear-gradient(top, #ffffff, #cccccc);
+	background: -o-linear-gradient(top, #ffffff, #cccccc);
+	background: linear-gradient(top, #ffffff, #cccccc);
 	height: 20px;
 	padding:0px 5px;
-	color:#0E2A48;	
 	font-weight:bold;
 	font-size:10px;
-	background: url(images/bouton.png) repeat-x;
-    border: 1px solid #bac5ca;
-    border-radius:4px;
-    vertical-align: top;
+	border: 1px solid #bac5ca;
+	border-radius:4px;
+	color:#0E2A48;
 }
 
-input.submit:hover, button.submit:hover{
+input.reset, button.reset {
+    color: #cc0000;
+}
+
+input.submit:hover, input.reset:hover, button:hover {
 	cursor:pointer;
 	background:#e8edf3;
 }
@@ -223,30 +228,11 @@ input.file{
 	font-size:10px;
 }
 
-input.reset, button.reset{
-	height: 20px;
-	padding:0px 5px;
-	background: url(images/bouton.png) repeat-x;
-    border: 1px solid #c9c9c9;
-    border-radius:4px;
-    color: #cc0000;
-	font-weight:bold;
-	font-size:10px;
-	
-}
-
-input.reset:hover, button.reset:hover{
-	cursor:pointer;
-	background:#e8edf3;
-}
-
 optgroup, select{
 	cursor:pointer;
 	vertical-align:middle;
 	width:auto;		
-	-moz-border-radius:3px;
-	-khtml-border-radius:3px;
-	-webkit-border-radius:3px;
+	border-radius:3px;
 }
 
 optgroup {

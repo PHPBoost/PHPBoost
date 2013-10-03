@@ -130,7 +130,7 @@ a.edit:before, a.delete:before {
 a.edit:hover, a.delete:hover { text-decoration:none; }
 
 a.edit:before { content: "\f044"; }
-a.delete:before { content: "\f014";vertical-align:-1px; }
+a.delete:before { content: "\f014"; vertical-align:-1px; }
 
 /* Mise en forme
 -------------------------------------------*/
