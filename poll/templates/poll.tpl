@@ -35,8 +35,8 @@
 						{QUESTION}
 						# IF C_IS_ADMIN #
 						<span class="tools">
-							<a href="{PATH_TO_ROOT}/poll/admin_poll.php?id={IDPOLL}" title="{L_EDIT}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" class="valign_middle" alt="" /></a>
-							<a href="{PATH_TO_ROOT}/poll/admin_poll.php?delete=1&amp;id={IDPOLL}&amp;token={TOKEN}" title="{L_DELETE}" onclick="javascript:return Confirm();"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" class="valign_middle" alt="" /></a>
+							<a href="{PATH_TO_ROOT}/poll/admin_poll.php?id={IDPOLL}" title="{L_EDIT}" title="${LangLoader::get_message('edit', 'main')}" class="edit"></a>
+							<a href="{PATH_TO_ROOT}/poll/admin_poll.php?delete=1&amp;id={IDPOLL}&amp;token={TOKEN}" title="${LangLoader::get_message('delete', 'main')}" class="delete"></a>
 						</span>
 						# ENDIF #
 					</h1>
@@ -44,9 +44,9 @@
 				<div class="content">
 					# INCLUDE message_helper #
 					
-					<div class="block_container">
-						<div class="block_top">{QUESTION}</div>
-						<div class="block_contents row2">
+					<article class="block">
+						<header><h1>{QUESTION}</h1></header>
+						<div class="contents">
 							# IF C_POLL_QUESTION #
 							<div class="row1 text_small">
 								# START radio #
@@ -76,7 +76,8 @@
 								&nbsp;
 							</div>
 						</div>
-					</div>
+						<footer></footer>
+					</article>
 				</div>
 				<footer></footer>
 			</article>
@@ -100,14 +101,19 @@
 			</header>
 			<div class="content">
 				# START list #
-				<div class="block_container">
-					<div class="block_top">{list.QUESTION} 
-					# IF C_IS_ADMIN #
-					<a href="{PATH_TO_ROOT}/poll/admin_poll.php?id={list.ID}" title="{L_EDIT}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" class="valign_middle" /></a>
-					&nbsp;&nbsp;<a href="{PATH_TO_ROOT}/poll/admin_poll.php?delete=1&amp;id={list.ID}&amp;token={TOKEN}" title="{L_DELETE}" onclick="javascript:return Confirm();"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" class="valign_middle" /></a>
-					# ENDIF #
-					</div>
-					<div class="block_contents">
+				<article class="block">
+					<header>
+						<h1>
+							{list.QUESTION}
+							<span class="tools">
+								# IF C_IS_ADMIN #
+								<a href="{PATH_TO_ROOT}/poll/admin_poll.php?id={list.ID}" title="{L_EDIT}" title="${LangLoader::get_message('edit', 'main')}" class="edit"></a>
+								<a href="{PATH_TO_ROOT}/poll/admin_poll.php?delete=1&amp;id={list.ID}&amp;token={TOKEN}" title="${LangLoader::get_message('delete', 'main')}" class="delete"></a>
+								# ENDIF #
+							</span>
+						</h1>
+					</header>
+					<div class="contents">
 						# START list.result #
 						<div class="row1 text_small">
 							<p>{list.result.ANSWERS}</p>
@@ -120,7 +126,7 @@
 							&nbsp;
 						</div>
 					</div>
-				</div>
+				</article>
 				# END list #				
 			</div>
 			<footer><span style="float:right;">{PAGINATION}</span></footer>

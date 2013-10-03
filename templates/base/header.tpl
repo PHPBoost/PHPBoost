@@ -42,7 +42,7 @@
 		# INCLUDE MAINTAIN #
 		
 		<div id="global">
-			<header>
+			<header id="header">
 				<div id="top_header">
 					<div id="logo"></div>
 					<div id="site_name"><a href="{PATH_TO_ROOT}/">{SITE_NAME}</a></div>
