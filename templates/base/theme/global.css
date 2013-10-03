@@ -631,6 +631,10 @@ ul.menu_vertical li {
     list-style:none;
 }
 
+ul.menu_vertical img {
+    margin-right:5px;
+}
+
 ul.menu_vertical li a,ul.menu_vertical li span{
     margin-top:3px;
     margin-left:10px;
