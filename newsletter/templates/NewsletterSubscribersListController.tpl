@@ -1,10 +1,3 @@
-<script type="text/javascript">
-<!--
-function Confirm(level) {
-	return confirm("{@subscribers.delete}");
-}
--->
-</script>
 <table  class="module_table">
 	<tr> 
 		<th colspan="3">
@@ -29,9 +22,9 @@ function Confirm(level) {
 		<td class="row1"> 
 			# IF subscribers_list.C_AUTH_MODO #
 				# IF subscribers_list.C_EDIT_LINK #
-				<a href="{subscribers_list.EDIT_LINK}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" /></a>
+				<a href="{subscribers_list.EDIT_LINK}" title="${LangLoader::get_message('edit', 'main')}" class="edit"></a>
 				# ENDIF #
-				<a href="{subscribers_list.DELETE_LINK}" onclick="javascript:Confirm();"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" /></a>
+				<a href="{subscribers_list.DELETE_LINK}" title="${LangLoader::get_message('delete', 'main')}" class="delete"></a>
 			# ENDIF #
 		</td>
 		<td class="row2">
