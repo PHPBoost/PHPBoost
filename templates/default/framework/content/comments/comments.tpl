@@ -25,7 +25,7 @@ Event.observe(window, 'load', function() {
 //-->
 </script>
 
-<div id="comments_list">
+<section id="comments_list">
 	# IF C_DISPLAY_FORM #
 		<div id="comment_form">
 			# INCLUDE COMMENT_FORM #
@@ -47,7 +47,7 @@ Event.observe(window, 'load', function() {
 	<div class="spacer">&nbsp;</div>
 	
 	# INCLUDE COMMENTS_LIST #
-</div>
+</section>
 
 # IF C_DISPLAY_VIEW_ALL_COMMENTS #
 <div style="text-align:center;">

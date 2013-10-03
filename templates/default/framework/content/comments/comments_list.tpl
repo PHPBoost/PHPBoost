@@ -6,9 +6,9 @@ function Confirm_del_comment() {
 -->
 </script>
 # START comments #
-	<div id="com{comments.ID_COMMENT}" class="comment" itemscope="itemscope" itemtype="http://schema.org/Comment">
+	<article id="com{comments.ID_COMMENT}" class="comment" itemscope="itemscope" itemtype="http://schema.org/Comment">
 		<div class="comment-user_infos">
-			<div id="comment-pseudo">
+			<div class="comment-pseudo">
 				# IF comments.C_VISITOR #
 					<span itemprop="author">{comments.PSEUDO}</span>
 				# ELSE #
@@ -53,5 +53,5 @@ function Confirm_del_comment() {
 				 -->
 			</div>
 		</div>
-	</div>
+	</article>
 # END comments #	
