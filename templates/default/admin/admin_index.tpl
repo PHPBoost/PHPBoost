@@ -7,9 +7,9 @@
 					<a href="admin_alerts.php" class="quick_link">{L_ADMINISTRATOR_ALERTS}</a>
 				</li>
 				<li>
-					<a href="admin_members.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/members.png" alt="" /></a>
+					<a href="${relative_url(AdminMembersUrlBuilder::management())}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/members.png" alt="" /></a>
 					<br />
-					<a href="admin_members.php" class="quick_link">{L_USERS_MANAGMENT}</a>
+					<a href="${relative_url(AdminMembersUrlBuilder::management())}" class="quick_link">{L_USERS_MANAGMENT}</a>
 				</li>
 				<li>
 					<a href="menus/menus.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/menus.png" alt="" /></a>
