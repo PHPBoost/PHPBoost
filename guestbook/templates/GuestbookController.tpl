@@ -1,11 +1,3 @@
-<script type="text/javascript">
-<!--
-function Confirm() {
-	return confirm("{@guestbook.delete_message_confirm}");
-}
--->
-</script>
-
 <section>
 	<header>
 		<h1>{@module_title}</h1>
@@ -15,6 +7,11 @@ function Confirm() {
 		
 		# IF C_PAGINATION #
 			<div class="center"># INCLUDE PAGINATION #</div>
+		# ENDIF #
+		# IF C_NO_MESSAGE #
+			<div class="center">
+				${@guestbook.titles.no_message}
+			</div>
 		# ENDIF #
 		# START messages #
 			<div id="m{messages.ID}" class="comment">
@@ -41,16 +38,12 @@ function Confirm() {
 				</div>
 				<div class="comment-content">
 					<div class="comment-date">
-						<div style="float:right;">
-							# IF messages.C_MODERATOR #
-								<a href="{messages.U_EDIT}">
-									<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="{L_EDIT}" title="{L_EDIT}" class="valign_middle" />
-								</a> 
-								<a href="{messages.U_DELETE}" onclick="javascript:return Confirm();">
-									<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" class="valign_middle" />
-								</a>
-							# ENDIF #
-						</div>
+						# IF messages.C_MODERATOR #
+						<span class="tools float_right">
+							<a href="{messages.U_EDIT}" title="${LangLoader::get_message('edit', 'main')}" class="edit"></a>
+							<a href="{messages.U_DELETE}" title="${LangLoader::get_message('delete', 'main')}" class="delete"></a>
+						</span>
+						# ENDIF #
 						<a href="{messages.U_ANCHOR}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/ancre.png" alt="{messages.ID}" /></a> {L_ON} {messages.DATE}
 					</div>
 					<div class="comment-message">
@@ -59,9 +52,6 @@ function Confirm() {
 				</div>
 			</div>
 		# END messages #
-		# IF C_PAGINATION #
-			<div class="center"># INCLUDE PAGINATION #</div>
-		# ENDIF #
 	</div>
-	<footer></footer>
+	<footer># IF C_PAGINATION # # INCLUDE PAGINATION # # ENDIF #</footer>
 </section>

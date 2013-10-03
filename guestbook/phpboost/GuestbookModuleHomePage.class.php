@@ -48,19 +48,6 @@ class GuestbookModuleHomePage implements ModuleHomePage
 		$page = AppContext::get_request()->get_getint('page', 1);
 		$is_guest = !AppContext::get_current_user()->check_level(User::MEMBER_LEVEL);
 		
-		$this->view->put_all(array(
-			'C_ADD' => GuestbookAuthorizationsService::check_authorizations()->write(),
-			'C_PAGINATION' => $messages_number > GuestbookConfig::load()->get_items_per_page(),
-			'PAGINATION' => $pagination->display(),
-			'L_EDIT' => $main_lang['edit'],
-			'L_DELETE' => $main_lang['delete'],
-			'L_ON' => $main_lang['on'],
-			'L_GUEST' => $main_lang['guest'],
-			'L_GROUP' => $main_lang['group'],
-			'FORM' => GuestbookFormController::get_view(),
-			'U_ADD' => GuestbookUrlBuilder::add($page)->rel(),
-		));
-		
 		$result = PersistenceContext::get_querier()->select("SELECT g.id, g.login, g.contents, g.timestamp, m.user_id, m.login as mlogin, m.level, m.user_groups, ext_field.user_avatar
 		FROM " . PREFIX . "guestbook g
 		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = g.user_id
@@ -118,6 +105,18 @@ class GuestbookModuleHomePage implements ModuleHomePage
 				}
 			}
 		}
+		
+		$this->view->put_all(array(
+			'C_NO_MESSAGE' => $result->get_rows_count() == 0,
+			'C_ADD' => GuestbookAuthorizationsService::check_authorizations()->write(),
+			'C_PAGINATION' => $messages_number > GuestbookConfig::load()->get_items_per_page(),
+			'PAGINATION' => $pagination->display(),
+			'L_ON' => $main_lang['on'],
+			'L_GUEST' => $main_lang['guest'],
+			'L_GROUP' => $main_lang['group'],
+			'FORM' => GuestbookFormController::get_view(),
+			'U_ADD' => GuestbookUrlBuilder::add($page)->rel(),
+		));
 		
 		return $this->view;
 	}
