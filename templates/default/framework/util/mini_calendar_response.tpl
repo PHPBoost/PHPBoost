@@ -1,9 +1,9 @@
-<table class="module_table" style="width: 205px;"> 
-	<tr style="text-align:center;">
-		<td>
-			<a href="javascript:xmlhttprequest_calendar('{FIELD}', '?{U_PREVIOUS}');">&laquo;</a>
-		</td>
-		<td colspan="5">
+<table class="module_table date-picker" style="width: 205px;"> 
+	<tr>
+		<th>
+			<a href="javascript:xmlhttprequest_calendar('{FIELD}', '?{U_PREVIOUS}');"><i class="icon-caret-left"></i></a>
+		</th>
+		<th colspan="5">
 			<select name="m" onchange="xmlhttprequest_calendar('{FIELD}', '?input_field={INPUT_FIELD}&amp;field={FIELD}{LYEAR}&amp;d=1&amp;m=' + this.options[this.selectedIndex].value + '&amp;y={YEAR}{TYPE}');">
 				# START month #
 				{month.MONTH}
@@ -14,10 +14,10 @@
 					{year.YEAR}
 				# END year #
 			</select>
-		</td> 
-		<td>
-			<a href="javascript:xmlhttprequest_calendar('{FIELD}', '?{U_NEXT}');">&raquo;</a>
-		</td>
+		</th> 
+		<th>
+			<a href="javascript:xmlhttprequest_calendar('{FIELD}', '?{U_NEXT}');" class="right"><i class="icon-caret-right"></i></a>
+		</th>
 	</tr>	
 	<tr style="text-align:center;">
 		# START day #
