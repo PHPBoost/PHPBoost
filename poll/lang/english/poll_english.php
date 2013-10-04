@@ -78,7 +78,6 @@ $LANG['no_vote'] = 'Your blank vote has been considered';
 $LANG['poll_vote'] = 'Vote';
 $LANG['poll_vote_s'] = 'Votes';
 $LANG['poll_result'] = 'Results';
-$LANG['alert_delete_poll'] = 'Delete this poll ?';
 $LANG['question'] = 'Question';
 $LANG['answers'] = 'Answers';
 $LANG['archives'] = 'Archives';
