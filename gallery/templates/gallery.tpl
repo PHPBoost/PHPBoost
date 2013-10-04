@@ -62,7 +62,7 @@
 						html_protected_name = name.replace(/\'/g, "\\\'").replace(/\"/g, "&quot;");
 						html_protected_name2 = xhr_object.responseText.replace(/\'/g, "\\\'").replace(/\"/g, "&quot;");
 						
-						document.getElementById('fihref' + id_file).innerHTML = '<a href="javascript:display_rename_file(\'' + id_file + '\', \'' + html_protected_name + '\', \'' + html_protected_name2 + '\');"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="" class="valign_middle" /></a>';
+						document.getElementById('fihref' + id_file).innerHTML = '<a href="javascript:display_rename_file(\'' + id_file + '\', \'' + html_protected_name + '\', \'' + html_protected_name2 + '\');" class="edit"></a>';
 						document.getElementById('img' + id_file).innerHTML = '';
 					}
 					else if( xhr_object.readyState == 4 && xhr_object.responseText == '0' )
@@ -189,7 +189,7 @@
 					}
 					else if( direction == 'right' && array_pics[key_right] ) 
 					{
-						document.getElementById('thumb' + i).innerHTML = '<a href="{PATH_TO_ROOT}/gallery/gallery' + array_pics[key_right]['link'] + '"><img 	src="{PATH_TO_ROOT}/gallery/pics/thumbnails/' + array_pics[key_right]['path'] + '" alt="" /></a>';				
+						document.getElementById('thumb' + i).innerHTML = '<a href="{PATH_TO_ROOT}/gallery/gallery' + array_pics[key_right]['link'] + '"><img src="{PATH_TO_ROOT}/gallery/pics/thumbnails/' + array_pics[key_right]['path'] + '" alt="" /></a>';				
 						j++;
 					}
 				}
