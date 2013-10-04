@@ -77,7 +77,6 @@ $LANG['no_vote'] = 'Votre vote nul a été considéré';
 $LANG['poll_vote'] = 'Vote';
 $LANG['poll_vote_s'] = 'Votes';
 $LANG['poll_result'] = 'Résultats';
-$LANG['alert_delete_poll'] = 'Supprimer ce sondage ?';
 $LANG['question'] = 'Question';
 $LANG['answers'] = 'Réponses';
 $LANG['archives'] = 'Archives';

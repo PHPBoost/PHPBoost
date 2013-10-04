@@ -21,13 +21,6 @@
 		
 		
 	# IF C_POLL_VIEW #
-		<script type='text/javascript'>
-		<!--
-		function Confirm() {
-			return confirm('{L_DELETE_POLL}');
-		}
-		-->
-		</script>
 		<form method="post" action="{PATH_TO_ROOT}/poll/poll{U_POLL_ACTION}">
 			<article>					
 				<header>
@@ -86,14 +79,6 @@
 	
 	
 	# IF C_POLL_ARCHIVES #
-		<script type='text/javascript'>
-		<!--
-			function Confirm() {
-				return confirm('{L_ALERT_DELETE_POLL}');
-			}
-		-->
-		</script>
-			
 		<section>					
 			<header>
 				<h1>{L_ARCHIVE}</h1>

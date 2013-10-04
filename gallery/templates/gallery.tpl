@@ -1,8 +1,5 @@
 		<script type="text/javascript">
 		<!--		
-		function Confirm_file() {
-			return confirm("{L_CONFIRM_DEL_FILE}");
-		}			
 		var pics_displayed = 0;
 		function display_pics(id, path)
 		{
@@ -368,8 +365,8 @@
 								# IF C_GALLERY_PICS_MODO #
 								<tr>										
 									<td colspan="2" class="row2 text_small" style="border:none;padding:4px;">
-										&nbsp;&nbsp;&nbsp;<span id="fihref{ID}"><a href="javascript:display_rename_file('{ID}', '{RENAME}', '{RENAME_CUT}');"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="{L_EDIT}" class="valign_middle" /></a></span>									
-										<a href="{U_DEL}" onclick="javascript:return Confirm_file();" title="{L_DELETE}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" class="valign_middle" /></a> 						
+										&nbsp;&nbsp;&nbsp;<span id="fihref{ID}"><a href="javascript:display_rename_file('{ID}', '{RENAME}', '{RENAME_CUT}');" class="edit"></a></span>									
+										<a href="{U_DEL}" title="{L_DELETE}" class="delete"></a> 						
 										<div style="position:absolute;z-index:100;margin-top:95px;float:left;display:none;" id="move{ID}">
 											<div class="bbcode_block" style="width:190px;overflow:auto;" onmouseover="pics_hide_block({ID}, 1);" onmouseout="pics_hide_block({ID}, 0);">
 												<div style="margin-bottom:4px;"><strong>{L_MOVETO}</strong>:</div>
@@ -425,8 +422,8 @@
 										
 									<div style="width:180px;margin:auto;">										
 										# IF C_GALLERY_MODO #
-										<span id="fihref{pics_list.ID}"><a href="javascript:display_rename_file('{pics_list.ID}', '{pics_list.RENAME}', '{pics_list.RENAME_CUT}');" title="{L_EDIT}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="{L_EDIT}" class="valign_middle" /></a></span>									
-										<a href="{pics_list.U_DEL}" onclick="javascript:return Confirm_file();" title="{L_DELETE}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" class="valign_middle" /></a>									
+										<span id="fihref{pics_list.ID}"><a href="javascript:display_rename_file('{pics_list.ID}', '{pics_list.RENAME}', '{pics_list.RENAME_CUT}');" title="{L_EDIT}" class="edit"></a></span>
+										<a href="{pics_list.U_DEL}"title="{L_DELETE}" class="delete"></a>									
 										<div style="position:relative;margin:auto;width:170px;display:none;float:right" onmouseover="pics_hide_block({pics_list.ID}, 1);" onmouseout="pics_hide_block({pics_list.ID}, 0);" id="move{pics_list.ID}">
 											<div style="position:absolute;z-index:100;margin-top:90px;">
 												<div class="bbcode_block" style="width:170px;overflow:auto;">
