@@ -99,7 +99,7 @@ if ($calendar_type == 'date')
     foreach ($array_l_days as $l_day)
     {
         $Template->assign_block_vars('day', array(
-			'L_DAY' => '<td style="width:25px;border-top:1px solid black;border-bottom:1px solid black"><span class="smaller">' . $l_day . '</span></td>'
+			'L_DAY' => '<td style="width:25px;"><span class="smaller">' . $l_day . '</span></td>'
 		));
     }
 
@@ -140,7 +140,7 @@ if ($calendar_type == 'date')
         if ($i >= $first_day && $i < $last_day)
         {
             $class = ($day == $j) ? ' style="padding:0px;" class="row2"' : ' style="padding:0px;" class="row3"';
-            $style = ($day == $j) ? 'border: 1px inset black;' : 'border: 1px outset black;';
+            $style = ($day == $j) ? '' : '';
             $date = sprintf($format, (($j < 10 && substr($j, 0, 1) != 0) ? '0' . $j : $j), $month, $year);
             	
             $contents = '<td' . $class . '><div style="' . $style . 'padding:2px;"><a href="javascript:insert_date(\'' . $input_field . '\', \'' . $date . '\');">' . $j . '</a></div></td>';
@@ -148,7 +148,7 @@ if ($calendar_type == 'date')
         }
         else
         {
-            $contents = '<td style="padding:0px;height:21px;" class="row3">&nbsp;</td>';
+            $contents = '<td style="padding:0px;height:21px;" class="row3 empty">&nbsp;</td>';
         }
 
         $Template->assign_block_vars('calendar', array(

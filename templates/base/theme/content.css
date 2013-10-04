@@ -100,13 +100,20 @@ div.block_contents {
 
 /* Entete de conteneur et des tableaux */
 div.block_top, table tr:first-child th {
-    padding:5px 6px;
     color:#FFFFFF;
-    background:#366393;
+    background:#4d4c50;
     text-align:left;
     font-size:11px;
     font-weight:normal;
     text-transform:uppercase;
+}
+
+div.block_top a, table tr:first-child th a {
+    color:#FFFFFF;
+    font-size:11px;
+    font-weight:normal;
+    text-transform:uppercase;
+	padding:4px;
 }
 
 .block_top {
@@ -528,7 +535,7 @@ a.msg_link_pseudo:hover {
 	border-collapse:separate;
 	padding:0px;
 	border:1px solid #D6DEE7;
-    background:#f2f8ff;
+    background:#fafafb;
 }
 *+html .module_table { /* Hack ie7 */
 	border-collapse:collapse;
