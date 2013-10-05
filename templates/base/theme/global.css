@@ -38,6 +38,13 @@
 .calendar_block .date-picker {
 	border-collapse:collapse;
 	border:none;
+	background:#FFF;
+}
+
+.calendar_block .date-picker select {
+	background:#4d4c50;
+	border:none;
+	color:#FFF;
 }
 
 .calendar_block .row3 {
@@ -46,14 +53,19 @@
 	background:#f4f4f4;
 }
 
+.calendar_block .row2 a, .calendar_block .row3 a {
+	padding:2px 7px;
+	display:inline-block;
+}
+
 .calendar_block .row3 a, .calendar_block .row3 a:hover {
 	color:#656766;
 }
 
 .calendar_block .row2 {
-	border:1px solid #68a6b5;
+	border:1px solid #bbb;
 	border-radius:0;
-	background:#6caebe;
+	background:#555;
 }
 
 .calendar_block .row2 a, .calendar_block .row2 a:hover {
