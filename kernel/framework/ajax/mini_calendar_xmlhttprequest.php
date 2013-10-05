@@ -143,7 +143,7 @@ if ($calendar_type == 'date')
             $style = ($day == $j) ? '' : '';
             $date = sprintf($format, (($j < 10 && substr($j, 0, 1) != 0) ? '0' . $j : $j), $month, $year);
             	
-            $contents = '<td' . $class . '><div style="' . $style . 'padding:2px;"><a href="javascript:insert_date(\'' . $input_field . '\', \'' . $date . '\');">' . $j . '</a></div></td>';
+            $contents = '<td' . $class . '><a href="javascript:insert_date(\'' . $input_field . '\', \'' . $date . '\');">' . $j . '</a></td>';
             $j++;
         }
         else
