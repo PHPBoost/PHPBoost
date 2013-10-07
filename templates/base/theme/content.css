@@ -67,30 +67,62 @@ section footer nav#pagination {	text-align: center; }
     width:98%;
     margin:auto;
 	border-spacing:0px;
-	border-collapse:separate;
+	border-collapse:collapse;
 	padding:0px;
-	border:1px solid #D6DEE7;
+	border:none;
     background:#f2f8ff;
 }
 
-table tr:first-child th {
-    color:#FFFFFF;
-    background:#4d4c50;
+/* Entête */
+table caption {
+	text-align:left;
+	margin: 5px 0 5px 20px;
+	border-bottom:1px solid #d1d2d5;
+	color:#757679;
+	font-size:13px;
+	
+}
+
+table th {
+    color:#e5e6e6;
+    background-color:#4d4c50;
     text-align:left;
-    font-size:11px;
+    font-size:12px;
     font-weight:normal;
-    text-transform:uppercase;
+	padding:8px;
 }
 
-table tr:first-child th a {
-	color:#FFFFFF;
-	font-size:11px;
+table th:first-child {
+    -moz-border-radius: 3px 0 0 0;
+	-webkit-border-radius: 3px 0 0 0;
+	border-radius: 3px 0 0 0;
+}
+
+table th:last-child {
+    -moz-border-radius: 0 3px 0 0;
+	-webkit-border-radius: 0 3px 0 0;
+	border-radius: 0 3px 0 0;
+}
+
+table th a {
+	color:#e5e6e6;
+	font-size:12px;
 	font-weight:normal;
-	text-transform:uppercase;
-	padding:4px;
 }
 
-/* Case générale des tableaux du site*/
+table th a:hover {
+	color:#fff;
+	text-decoration:none;
+}
+
+/* Contenu */
+table td {
+	background-color:#fafafb;
+	border:1px solid #d1d2d4;
+	padding:8px;
+	color:#676a74;
+}
+
 .row1 {
     background:#E0E9EF;
 	padding:8px 6px;
@@ -116,6 +148,8 @@ table tr:first-child th a {
 }
 
 .row_disabled { background:#E1E1E1 !important; }
+
+/* Pied */
 
 /* Formulaires 
 --------------------------------------*/
