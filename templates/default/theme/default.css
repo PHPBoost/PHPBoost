@@ -126,6 +126,34 @@ table.invisible tr td {
 	padding:0;
 }
 
+table.module_table {
+	width:98%;
+	margin:auto;
+	border-spacing:0px;
+	border-collapse:separate;
+	padding:0px;
+	border:1px solid #D6DEE7;
+	background:#f2f8ff;
+}
+
+table.module_table tr td {
+	border:none;
+	background:transparent;
+}
+
+table.module_table tr th {
+    color:#FFFFFF;
+    background:#336397;
+    text-align:left;
+    font-size:11px;
+    font-weight:normal;
+    text-transform:uppercase;
+}
+
+table.module_table tr td {
+    text-align:left;
+}
+
 /* Prévisualisation AJAX. */
 .xmlhttprequest_preview{
 	overflow:auto;
