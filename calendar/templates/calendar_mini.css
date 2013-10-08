@@ -18,11 +18,6 @@
 
 .calendar_table{
 	background:none;
-	border:none;
-}
-
-.calendar_table td{
-	height:30px;
 }
 
 .calendar_table td.c_row_last{
@@ -37,13 +32,7 @@
 }
 
 .text_month{
-	font-size:13px;
 	font-weight:bold;
-}
-
-.c_row{
-	border-top:1px solid #DDDDDD;
-	border-right:1px solid #DDDDDD;
 }
 
 .c_row a, .c_row a:hover{
@@ -51,8 +40,8 @@
 }
 
 .c_row:first-child{
-	border-top:none;
-	border-right:1px solid #DDDDDD; 
+	border-top:1px solid #eee; 
+	border-right:1px solid #eee; 
 }
 
 .c_row_last{
@@ -75,7 +64,7 @@
 
 .calendar_other {
 	background:#F1F1F1;
-	padding:2px;
+	padding:3px 1px;
 }
 
 .calendar_none {
@@ -90,8 +79,7 @@
 
 .calendar_week{
 	color:#BEBEBE;
-	padding:2px;
-	padding-right:5px;
+	padding:3px 2px;
 }
 
 .change_month_link {
