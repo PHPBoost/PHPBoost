@@ -159,6 +159,10 @@ table td:first-child {
 .row_disabled { background:#E1E1E1 !important; }
 
 /* Pied */
+table tfoot {
+	border-top:1px solid #d1d2d4;
+}
+
 table tfoot th {
     color:#aaa;
     background-color:#f0f0f0;
@@ -184,6 +188,16 @@ table tfoot th:last-child {
     -moz-border-radius-bottomright: 3px;
 	-webkit-border-bottom-right-radius: 3px;
 	border-bottom-right-radius: 3px;
+}
+
+/* Mini tableaux */
+table.mini th, table.mini td {
+	padding:3px 1px;
+	font-size:11px;
+}
+
+table.mini th a, table.mini td a {
+	font-size:11px;
 }
 
 /* Formulaires 
