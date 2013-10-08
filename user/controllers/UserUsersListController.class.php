@@ -86,7 +86,8 @@ class UserUsersListController extends AbstractController
 			'SORT_MSG_BOTTOM' => UserUrlBuilder::users('messages', 'bottom', $page)->absolute(),
 			'SORT_LAST_CONNECT_TOP' => UserUrlBuilder::users('lastconnect', 'top', $page)->absolute(),
 			'SORT_LAST_CONNECT_BOTTOM' => UserUrlBuilder::users('lastconnect', 'bottom', $page)->absolute(),
-			'PAGINATION' => '&nbsp;<strong>' . LangLoader::get_message('page', 'main') . ' :</strong> ' . $pagination->display()->render()
+			'PAGINATION' => $pagination->display()->render(),
+			'L_PAGE' => LangLoader::get_message('page', 'main')
 		));
 
 		$condition = 'WHERE user_aprob = 1 ORDER BY '. $field_bdd .' '. $mode .' LIMIT :number_users_per_page OFFSET :display_from';
