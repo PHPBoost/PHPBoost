@@ -8,8 +8,8 @@
 </table>	
 <br /><br />
 # ENDIF #
+<h1>{@users}</h1>
 <table>	
-	<caption>{@users}</caption>
 	<thead>
 		<tr>
 			<th>

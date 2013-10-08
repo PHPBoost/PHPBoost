@@ -72,7 +72,6 @@ table {
     border-spacing:0;
 	padding:0px;
 	border:1px solid #d1d2d4;
-    background:#f2f8ff;
 	-moz-border-radius: 3px;
     -webkit-border-radius: 3px;
     border-radius: 3px;
@@ -94,6 +93,7 @@ table thead th{
     font-size:12px;
     font-weight:normal;
 	padding:8px;
+	text-align:center;
 }
 
 table thead th:first-child {
@@ -126,6 +126,11 @@ table td {
 	border-left:1px solid #d1d2d4;
 	padding:8px;
 	color:#676a74;
+	text-align:center;
+}
+
+table tbody tr:nth-child(even) td {
+	background-color:#fff;
 }
 
 table td:first-child {
@@ -498,7 +503,7 @@ a.msg_link_pseudo:hover { color:#f2fbff; }
 
 .msg_info_mbr { /* Case des informations du membre */
     background:#f0f3ff;
-    width:127px;
+    width:136px;
     padding:4px;
     float:left;
     font-size:10px;
@@ -563,7 +568,7 @@ a.msg_link_pseudo:hover { color:#f2fbff; }
 --------------------------------------*/
 /* Placement des mini modules */
 .module_mini_container {
-    width:180px;
+    width:190px;
     margin:0px 0px 10px 0px;
     border:1px #bebebe solid;
     border-bottom:2px #99b1cb solid;
