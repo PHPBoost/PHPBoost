@@ -111,6 +111,21 @@ nav.pagination .current_page {
     text-decoration:underline;
 }
 
+/* Patch Tables */
+table.invisible {
+	-moz-border-radius: 0;
+    -webkit-border-radius: 0;
+	border-radius: 0;
+	border:none;
+	width:auto;
+}
+
+table.invisible tr td {
+	background-color:transparent;
+	border:none;
+	padding:0;
+}
+
 /* Prévisualisation AJAX. */
 .xmlhttprequest_preview{
 	overflow:auto;

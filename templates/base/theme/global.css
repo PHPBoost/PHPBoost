@@ -609,12 +609,17 @@ ul.horizontal_scrolling_menu li {
 }
 
 /* Menu Horizontal */
-div.menu_horizontal {
+nav.menu_horizontal {
     padding:10px;
 }
 
-ul.menu_horizontal li {
+nav.menu_horizontal ul li {
     display:inline;
+	margin-right:8px;
+}
+
+nav.menu_horizontal ul img {
+    margin-right:5px;
 }
 
 /* Menu Vertical */

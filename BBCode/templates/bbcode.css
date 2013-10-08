@@ -9,9 +9,15 @@
 	height:32px;
 	font-size:12px;
 	width: 491px;
+	-moz-border-radius: 0;
+    -webkit-border-radius: 0;
+	border-radius:0;
 }
 
-.bbcode td, .bbcode2 td{ }
+.bbcode td, .bbcode2 td{
+	background-color:transparent;
+	border:none;
+}
 
 .bbcode img, .bbcode2 img{ vertical-align:middle; }
 

@@ -56,7 +56,7 @@ function XMLHttpRequest_preview(field)
 	# IF C_EDITOR_NOT_ALREADY_INCLUDED #
 		<script type="text/javascript" src="{PATH_TO_ROOT}/BBCode/templates/js/bbcode.js"></script>
 	# ENDIF #
-	<table style="margin:4px;margin-left:auto;margin-right:auto;">
+	<table class="invisible">
 		<tr>
 			<td>
 				<table class="bbcode">
