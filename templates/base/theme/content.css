@@ -13,10 +13,13 @@ section, article {
 section header, article header { margin-bottom: 20px; }
 
 /* Titre d'une page ou d'un element d'un module */
+section header h1, article header h1 {
+    border-bottom: 1px solid #336397;
+}
+
 section header h1, article header h1, section header h1 a, article header h1 a {
 	font-size: 16px;
     font-weight: bold;
-    border-bottom: 1px solid #336397;
 }
 
 /* Icones avec les actions (edition, suppression, etc) */
@@ -37,7 +40,7 @@ span.tools a { font-size: 12px; }
 }
 
 section footer, article footer { margin-bottom: 15px; }
-section footer nav#pagination {	text-align: center; }
+section footer nav.pagination {	text-align: center; }
 
 /* Block */
 .block, .small_block {

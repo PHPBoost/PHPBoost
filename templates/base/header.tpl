@@ -6,7 +6,7 @@
 		<meta name="description" content="{SITE_DESCRIPTION}" />
 		<meta name="keywords" content="{SITE_KEYWORD}" />
 		<meta name="generator" content="PHPBoost {PHPBOOST_VERSION}" />
-		<meta name="viewport" content="initial-scale=1.0">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		
 		<!-- Theme CSS -->
 		# IF C_CSS_CACHE_ENABLED #

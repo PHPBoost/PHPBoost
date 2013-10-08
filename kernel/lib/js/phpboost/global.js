@@ -30,12 +30,6 @@ if (top != self)
 	top.location = self.location;
 }
 
-__uid = 42;
-
-function getUid() {
-	return __uid++;
-}
-
 //Répétition d'un caractère.
 function str_repeat(charrepeat, nbr)
 {
@@ -57,13 +51,6 @@ function trim(myString)
 {
 	return myString.replace(/^\s+/g,'').replace(/\s+$/g,'');
 } 
-
-//Vérifie une adresse email
-function check_mail_validity(mail)
-{
-	regex = new RegExp("^[a-z0-9._!#$%&\'*+/=?^|~-]+@([a-z0-9._-]{2,}\.)+[a-z]{2,4}$", "i");
-	return regex.test(trim(mail));
-}
 
 //Affichage/Masquage de la balise hide.
 function bb_hide(div2)
@@ -138,13 +125,6 @@ function show_inline(divID)
 		$(divID).appear({duration: 0.5});
 		$(divID).style.visibility = 'visible';
 	}
-}
-
-//Change l'adresse d'une image
-function change_img_path(id, path)
-{
-	if ($(id))
-		$(id).src = path;
 }
 
 //Switch entre deux images.
@@ -453,14 +433,6 @@ function ChangePagination(page, nbPages, blocPagin, blocName, nbPagesBefore, nbP
     $(blocPagin).innerHTML = pagin;
 }
 
-// Teste si une chaine est numerique
-function isNumeric(number)
-{
-    var numbers = "0123456789.";
-    for ( var i = 0; i < number.length && numbers.indexOf(number[i]) != -1; i++);
-    return i == number.length ;
-}
-
 // Teste si une chaine est un entier
 function isInteger(number)
 {
@@ -522,18 +494,6 @@ function functionExists(function_name)
     {
         return (function_name instanceof Function);
     }
-}
-
-//Includes synchronously a js file
-function include(file)
-{
-	if (window.document.getElementsByTagName)
-	{
-		script = window.document.createElement("script");
-		script.type = "text/javascript";
-		script.src = file;
-		document.documentElement.firstChild.appendChild(script);
-	}
 }
 
 //Affiche le lecteur vidéo avec la bonne URL, largeur et hauteur

@@ -103,7 +103,7 @@ button.image{
 }
 
 /* Liens pagination */
-nav#pagination .current_page {
+nav.pagination .current_page {
     text-decoration:underline;
 }
 
