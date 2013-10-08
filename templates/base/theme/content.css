@@ -66,14 +66,16 @@ section footer nav.pagination {	text-align: center; }
 /* Tableaux
 -------------------------------------- */
 
-.module_table {
+table {
     width:98%;
     margin:auto;
-	border-spacing:0px;
-	border-collapse:collapse;
+    border-spacing:0;
 	padding:0px;
-	border:none;
+	border:1px solid #d1d2d4;
     background:#f2f8ff;
+	-moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
 }
 
 /* Entête */
@@ -83,10 +85,9 @@ table caption {
 	border-bottom:1px solid #d1d2d5;
 	color:#757679;
 	font-size:13px;
-	
 }
 
-table th {
+table thead th{
     color:#e5e6e6;
     background-color:#4d4c50;
     text-align:left;
@@ -95,25 +96,25 @@ table th {
 	padding:8px;
 }
 
-table th:first-child {
-    -moz-border-radius: 3px 0 0 0;
-	-webkit-border-radius: 3px 0 0 0;
-	border-radius: 3px 0 0 0;
+table thead th:first-child {
+    -moz-border-radius-topleft: 3px;
+	-webkit-border-top-left-radius: 3px;
+	border-top-left-radius: 3px;
 }
 
-table th:last-child {
-    -moz-border-radius: 0 3px 0 0;
-	-webkit-border-radius: 0 3px 0 0;
-	border-radius: 0 3px 0 0;
+table thead th:last-child {
+    -moz-border-radius-topright: 3px;
+	-webkit-border-top-right-radius: 3px;
+	border-top-right-radius: 3px;
 }
 
-table th a {
+table thead th a {
 	color:#e5e6e6;
 	font-size:12px;
 	font-weight:normal;
 }
 
-table th a:hover {
+table thead th a:hover {
 	color:#fff;
 	text-decoration:none;
 }
@@ -121,9 +122,14 @@ table th a:hover {
 /* Contenu */
 table td {
 	background-color:#fafafb;
-	border:1px solid #d1d2d4;
+	border-top:1px solid #d1d2d4;
+	border-left:1px solid #d1d2d4;
 	padding:8px;
 	color:#676a74;
+}
+
+table td:first-child {
+	border-left: none;
 }
 
 .row1 {
@@ -153,6 +159,32 @@ table td {
 .row_disabled { background:#E1E1E1 !important; }
 
 /* Pied */
+table tfoot th {
+    color:#aaa;
+    background-color:#f0f0f0;
+	border-top:1px solid #d1d2d4;
+	padding:8px;
+}
+
+table tfoot th a{
+    color:#676a74;
+}
+
+table tfoot th:only-child{
+	text-align:right;
+}
+
+table tfoot th:first-child {
+    -moz-border-radius-bottomleft: 3px;
+	-webkit-border-bottom-left-radius: 3px;
+	border-bottom-left-radius: 3px;
+}
+
+table tfoot th:last-child {
+    -moz-border-radius-bottomright: 3px;
+	-webkit-border-bottom-right-radius: 3px;
+	border-bottom-right-radius: 3px;
+}
 
 /* Formulaires 
 --------------------------------------*/

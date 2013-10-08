@@ -1,5 +1,5 @@
 # IF C_ARE_GROUPS #
-<table class="module_table" style="width:98%;">	
+<table>	
 	<tr>
 		<td style="vertical-align:top;" class="row2">
 			# INCLUDE SELECT_GROUP #
@@ -8,8 +8,7 @@
 </table>	
 <br /><br />
 # ENDIF #
-{PAGINATION}
-<table class="module_table">	
+<table>	
 	<caption>{@users}</caption>
 	<thead>
 		<tr>
@@ -41,6 +40,13 @@
 			</th>
 		</tr>
 	</thead>
+	<tfoot>
+		<tr>
+			<th colspan="6">
+				<span class="inline">{L_PAGE} : </span>{PAGINATION}
+			</th>
+		</tr>
+	</tfoot>
 	<tbody>
 		# START member_list #
 		<tr> 
@@ -68,4 +74,3 @@
 		# END member_list #
 	</tbody>
 </table>
-{PAGINATION}
