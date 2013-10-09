@@ -46,7 +46,7 @@ class ArticlesModuleHomePage implements ModuleHomePage
 	private function init()
 	{
 		$this->lang = LangLoader::get('articles-common', 'articles');
-		$this->view = new FileTemplate('articles/ArticlesDisplayHomeCategoryController.tpl');
+		$this->view = new FileTemplate('articles/ArticlesDisplaySeveralArticlesController.tpl');
 		$this->view->add_lang($this->lang);
 	}
 	
@@ -116,9 +116,6 @@ class ArticlesModuleHomePage implements ModuleHomePage
 			'C_CURRENT_CAT' => $this->category->get_id() != Category::ROOT_CATEGORY,
 			'C_PUBLISHED_ARTICLES' => false,
 			'ID_CAT' => $this->category->get_name(),
-			'U_EDIT_CONFIG' => ArticlesUrlBuilder::articles_configuration()->absolute(),
-			'U_MANAGE_CATEGORIES' => ArticlesUrlBuilder::manage_categories()->absolute(),
-			'U_PENDING_ARTICLES' => ArticlesUrlBuilder::display_pending_articles()->absolute(), 
 			'U_ADD_ARTICLES' => ArticlesUrlBuilder::add_article($this->category->get_id())->absolute(),
 			'U_SYNDICATION' => ArticlesUrlBuilder::category_syndication($this->category->get_id())->rel()
 		));
@@ -218,8 +215,7 @@ class ArticlesModuleHomePage implements ModuleHomePage
 			$this->view->put_all(array(
 				    'C_ARTICLES_FILTERS' => true,
 				    'C_PAGINATION' => $pagination->has_several_pages(),
-				    'PAGINATION' => $pagination->display(),
-				    'L_TOTAL_ARTICLES' => StringVars::replace_vars($this->lang['articles.nbr_articles_category'], array('number' => $nbr_articles_cat))
+				    'PAGINATION' => $pagination->display()
 			));
 
 			while($row = $result->fetch())
@@ -242,7 +238,7 @@ class ArticlesModuleHomePage implements ModuleHomePage
 		else 
 		{
 			$this->view->put_all(array(
-				'L_NO_ARTICLE' => $this->lang['articles.no_article.category']
+				'C_NO_ARTICLE_AVAILABLE' => true
 			));
 		}
 		return $this->view;

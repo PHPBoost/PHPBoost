@@ -1,34 +1,25 @@
-<script type="text/javascript">
-<!--
-	function Confirm_del_article() {
-		return confirm("${i18n('articles.form.alert_delete_article')}");
-	}
--->
-</script>
 # INCLUDE MSG #
-
-<div class="module_actions">
-    <ul class="nav">
-	<li id="options">
-	    <a><span class="options"></span><span class="caret"></span></a>
-	    <ul class="subnav">
-		# IF C_EDIT #
-		<li>
-			<a href="{U_EDIT_ARTICLE_PAGE}" title="${i18n('articles.edit')}"><img class="valign_middle" src="{PATH_TO_ROOT}/articles/templates/images/edit_white.png" alt="${i18n('articles.edit')}" /></a>
+<menu class="dynamic_menu right">
+	<ul>
+		<li><a><i class="icon-cog"></i></a>
+			<ul>
+				# IF C_EDIT #
+				<li>
+					<a href="{U_EDIT_ARTICLE_PAGE}" title="${i18n('articles.edit')}"><i class="icon-pencil"></i></a>
+				</li>
+				# ENDIF #
+				# IF C_DELETE #
+				<li>
+					<a href="{U_DELETE_ARTICLE}" title="${i18n('articles.delete')}"><i style="color:#e80909;" class="icon-trash"></i></a>
+				</li>
+				# ENDIF #
+				<li>
+					<a href="{U_PRINT_ARTICLE}" title="{L_PRINTABLE_VERSION}"><i class="icon-print"></i></a>
+				</li>
+			</ul>
 		</li>
-		# ENDIF #
-		# IF C_DELETE #
-		<li>
-			<a href="{U_DELETE_ARTICLE}" title="${i18n('articles.delete')}"><img class="valign_middle" src="{PATH_TO_ROOT}/articles/templates/images/delete.png" alt="${i18n('articles.delete')}" /></a>
-		</li>
-		# ENDIF #
-		<li>
-			<a href="{U_PRINT_ARTICLE}" title="{L_PRINTABLE_VERSION}"><img class="valign_middle" src="{PATH_TO_ROOT}/articles/templates/images/print.png" alt="{L_PRINTABLE_VERSION}" /></a>
-		</li>
-	    </ul>
-	</li>
-    </ul>
-</div>
+	</ul>
+</menu>
 <div class="spacer"></div>
 
 <div class="module_position" itemscope="itemscope" itemtype="http://schema.org/Article">					
