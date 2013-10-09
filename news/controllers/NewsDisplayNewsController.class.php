@@ -126,7 +126,7 @@ class NewsDisplayNewsController extends ModuleController
 			$this->tpl->assign_block_vars('keywords', array(
 				'C_SEPARATOR' => $i < $nbr_keywords,
 				'NAME' => $keyword->get_name(),
-				'URL' => NewsUrlBuilder::display_tag($keyword->get_rewrited_name())->absolute(),
+				'URL' => NewsUrlBuilder::display_tag($keyword->get_rewrited_name())->rel(),
 			));
 			$i++;
 		}
