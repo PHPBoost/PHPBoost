@@ -60,7 +60,7 @@ class OnlineModuleHomePage implements ModuleHomePage
 		{
 			if ($user->get_id() == AppContext::get_current_user()->get_id())
 			{
-				$user->set_location_script(OnlineUrlBuilder::home()->absolute());
+				$user->set_location_script(OnlineUrlBuilder::home()->rel());
 				$user->set_location_title($this->lang['online']);
 				$user->set_last_update(new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, time()));
 			}
@@ -70,7 +70,7 @@ class OnlineModuleHomePage implements ModuleHomePage
 			if ($user->get_level() != User::VISITOR_LEVEL) 
 			{
 				$this->view->assign_block_vars('users', array(
-					'U_PROFILE' => UserUrlBuilder::profile($user->get_id())->absolute(),
+					'U_PROFILE' => UserUrlBuilder::profile($user->get_id())->rel(),
 					'U_LOCATION' => $user->get_location_script(),
 					'U_AVATAR' => $user->get_avatar(),
 					'PSEUDO' => $user->get_pseudo(),

@@ -36,7 +36,7 @@ class OnlineHomeController extends ModuleController
 	{
 		$response = new SiteDisplayResponse($view);
 		$breadcrumb = $response->get_graphical_environment()->get_breadcrumb();
-		$breadcrumb->add(LangLoader::get_message('online', 'online_common', 'online'), OnlineUrlBuilder::home()->absolute());
+		$breadcrumb->add(LangLoader::get_message('online', 'online_common', 'online'), OnlineUrlBuilder::home()->rel());
 		$response->get_graphical_environment()->set_page_title(LangLoader::get_message('online', 'online_common', 'online'));
 		return $response;
 	}

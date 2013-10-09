@@ -66,7 +66,7 @@ class OnlineModuleMiniMenu extends ModuleMiniMenu
 					if ($user->get_level() != User::VISITOR_LEVEL) 
 					{
 						$tpl->assign_block_vars('users', array(
-							'U_PROFILE' => UserUrlBuilder::profile($user->get_id())->absolute(),
+							'U_PROFILE' => UserUrlBuilder::profile($user->get_id())->rel(),
 							'PSEUDO' => TextHelper::wordwrap_html($user->get_pseudo(), 19),
 							'LEVEL_CLASS' => UserService::get_level_class($user->get_level()),
 							'C_GROUP_COLOR' => !empty($group_color),
