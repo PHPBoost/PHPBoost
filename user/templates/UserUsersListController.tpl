@@ -55,7 +55,7 @@
 			</td>
 			<td> 
 				# IF member_list.C_MAIL #
-					<a href="mailto:{member_list.MAIL}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/email.png" alt="{member_list.MAIL}" /></a>
+					<a href="mailto:{member_list.MAIL}"><span class="label">Mail</span></a>
 				# ENDIF #
 			</td>
 			<td> 
