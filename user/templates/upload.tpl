@@ -325,7 +325,6 @@
 							{L_EMPTY_FOLDER}					
 						</p>
 					# ENDIF #
-					
 					# START folder #		
 					<div style="width:190px;height:50px;float:left;margin-top:5px;">
 						<table class="module_table mini" style="border:0;">
