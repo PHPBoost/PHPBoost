@@ -49,13 +49,13 @@
 			
 		if( !hide_folder )
 		{
-			document.getElementById('new_folder').innerHTML += '<div style="width:210px;height:90px;float:left;margin-top:5px;" id="new_folder' + divid + '"><table style="border:0"><tr><td style="width:34px;vertical-align:top;"><img src="../templates/{THEME}/images/upload/folder_max.png" alt="" /></td><td style="padding-top:8px;"><input type="text" name="folder_name" id="folder_name" class="text" value="" onblur="add_folder(\'{FOLDER_ID}\', \'{USER_ID}\', ' + divid + ');"></td></tr></table></div>';
+			document.getElementById('new_folder').innerHTML += '<div style="width:190px;height:50px;float:left;margin-top:5px;" id="new_folder' + divid + '"><table class="module_table mini" style="border:0"><tr><td style="width:34px;vertical-align:top;"><img src="../templates/{THEME}/images/upload/folder_max.png" alt="" /></td><td style="padding-top:8px;"><input type="text" name="folder_name" id="folder_name" class="text" value="" onblur="add_folder(\'{FOLDER_ID}\', \'{USER_ID}\', ' + divid + ');"></td></tr></table></div>';
 			document.getElementById('folder_name').focus();
 		}
 		else
 		{	
 			document.getElementById('new_folder' + (divid - 1)).style.display = 'block';
-			document.getElementById('new_folder' + (divid - 1)).innerHTML = '<div style="width:210px;height:90px;float:left;margin-top:5px;" id="new_folder' + divid + '"><table style="border:0"><tr><td style="width:34px;vertical-align:top;"><img src="../templates/{THEME}/images/upload/folder_max.png" alt="" /></td><td style="padding-top:8px;"><input type="text" name="folder_name" id="folder_name" class="text" value="" onblur="add_folder(\'{FOLDER_ID}\', \'{USER_ID}\', ' + (divid - 1) + ');"></td></tr></table></div>';
+			document.getElementById('new_folder' + (divid - 1)).innerHTML = '<div style="width:190px;height:50px;float:left;margin-top:5px;" id="new_folder' + divid + '"><table class="module_table mini" style="border:0"><tr><td style="width:34px;vertical-align:top;"><img src="../templates/{THEME}/images/upload/folder_max.png" alt="" /></td><td style="padding-top:8px;"><input type="text" name="folder_name" id="folder_name" class="text" value="" onblur="add_folder(\'{FOLDER_ID}\', \'{USER_ID}\', ' + (divid - 1) + ');"></td></tr></table></div>';
 			document.getElementById('folder_name').focus();
 			this.divid--;	
 			hide_folder = false;
@@ -133,7 +133,7 @@
 				{
 					if( xhr_object.responseText > 0 )
 					{
-						document.getElementById('new_folder' + divid).innerHTML = '<table style="border:0"><tr><td style="width:34px;vertical-align:top;"><a href="upload.php?f=' + xhr_object.responseText + '{POPUP}"><img src="../templates/{THEME}/images/upload/folder_max.png" alt="" /></a></td><td style="padding-top:8px;"> <span id="f' + xhr_object.responseText + '"><a class="com" href="upload.php?f=' + xhr_object.responseText + '{POPUP}">' + name + '</a></span></span><div style="padding-top:5px;"><span id="fhref' + xhr_object.responseText + '"><span id="fihref' + xhr_object.responseText + '"><a href="javascript:display_rename_folder(\'' + xhr_object.responseText + '\', \'' + name.replace(/\'/g, "\\\'") + '\', \'' + name.replace(/\'/g, "\\\'") + '\');"><img src="../templates/{THEME}/images/{LANG}/edit.png" alt="" class="valign_middle" /></a></span></a></span> <a href="upload.php?delf=' + xhr_object.responseText + '&amp;f={FOLDER_ID}{POPUP}" onclick="javascript:return Confirm_folder();"><img src="../templates/{THEME}/images/{LANG}/delete.png" alt="" class="valign_middle" /></a> <a href="upload.php?move=' + xhr_object.responseText + '{POPUP}" title="{L_MOVETO}"><img src="../templates/{THEME}/images/upload/move.png" alt="" class="valign_middle" /></a></div><span id="img' + xhr_object.responseText + '"></span></td></tr></table>';
+						document.getElementById('new_folder' + divid).innerHTML = '<table class="module_table mini"><tr><td style="width:34px;vertical-align:top;"><a href="upload.php?f=' + xhr_object.responseText + '{POPUP}"><img src="../templates/{THEME}/images/upload/folder_max.png" alt="" /></a></td><td style="padding-top:8px;"> <span id="f' + xhr_object.responseText + '"><a class="com" href="upload.php?f=' + xhr_object.responseText + '{POPUP}">' + name + '</a></span></span><div style="padding-top:5px;"><span id="fhref' + xhr_object.responseText + '"><span id="fihref' + xhr_object.responseText + '"><a href="javascript:display_rename_folder(\'' + xhr_object.responseText + '\', \'' + name.replace(/\'/g, "\\\'") + '\', \'' + name.replace(/\'/g, "\\\'") + '\');"><img src="../templates/{THEME}/images/{LANG}/edit.png" alt="" class="valign_middle" /></a></span></a></span> <a href="upload.php?delf=' + xhr_object.responseText + '&amp;f={FOLDER_ID}{POPUP}" onclick="javascript:return Confirm_folder();"><img src="../templates/{THEME}/images/{LANG}/delete.png" alt="" class="valign_middle" /></a> <a href="upload.php?move=' + xhr_object.responseText + '{POPUP}" title="{L_MOVETO}"><img src="../templates/{THEME}/images/upload/move.png" alt="" class="valign_middle" /></a></div><span id="img' + xhr_object.responseText + '"></span></td></tr></table>';
 						var total_folder = document.getElementById('total_folder').innerHTML;
 						total_folder++;						
 						document.getElementById('total_folder').innerHTML = total_folder;
@@ -279,7 +279,7 @@
 	-->
 	</script>
 	
-	<table class="module_table" style="margin:8px;margin-bottom:0px;">
+	<table class="module_table mini" style="margin:8px;margin-bottom:0px;">
 		<tr> 
 			<th>
 				{L_FILES_ACTION}
@@ -327,8 +327,8 @@
 					# ENDIF #
 					
 					# START folder #		
-					<div style="width:210px;height:90px;float:left;margin-top:5px;">
-						<table style="border:0;">
+					<div style="width:190px;height:50px;float:left;margin-top:5px;">
+						<table class="module_table mini" style="border:0;">
 							<tr>
 								<td style="width:34px;vertical-align:top;">
 									<a href="upload.php?f={folder.ID}{POPUP}"><img src="../templates/{THEME}/images/upload/folder_max.png" alt="" /></a>
@@ -351,8 +351,8 @@
 					<span id="new_folder"></span>
 					
 					# START files #
-					<div style="width:210px;height:90px;float:left;margin-top:5px;">
-						<table style="border:0;">
+					<div style="width:190px;height:50px;float:left;margin-top:5px;">
+						<table class="module_table mini" style="border:0;">
 							<tr>
 								<td style="width:34px;vertical-align:top;">
 									<img src="../templates/{THEME}/images/upload/{files.IMG}" alt="" />

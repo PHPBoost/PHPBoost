@@ -123,24 +123,24 @@ div.event_display_dates{
 	padding:none;
 }
 
-.calendar_today {
+table tr td.calendar_today {
 	background:#DBEEDD;
 	font-weight:bold;
 	padding:2px;
 }
 
-.calendar_event {
+table tr td.calendar_event {
 	background:#DBE5EE;
 	font-weight:bold;
 	padding:2px;
 }
 
-.calendar_other {
+table td.calendar_other {
 	background:#F1F1F1;
 	padding:2px;
 }
 
-.calendar_none {
+table tr td.calendar_none {
 	background:#FFFFFF;
 	padding:2px;
 }
