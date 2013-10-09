@@ -96,10 +96,10 @@ class BugtrackerRejectBugController extends ModuleController
 			switch ($back_page)
 			{
 				case 'detail' :
-					$redirect = BugtrackerUrlBuilder::detail_success('reject/'. $id)->absolute();
+					$redirect = BugtrackerUrlBuilder::detail_success('reject/'. $id)->rel();
 					break;
 				default :
-					$redirect = BugtrackerUrlBuilder::unsolved_success('reject/'. $id . '/' . $page . (!empty($back_filter) ? '/' . $back_filter . '/' . $filter_id : ''))->absolute();
+					$redirect = BugtrackerUrlBuilder::unsolved_success('reject/'. $id . '/' . $page . (!empty($back_filter) ? '/' . $back_filter . '/' . $filter_id : ''))->rel();
 					break;
 			}
 			

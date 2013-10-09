@@ -75,7 +75,7 @@ class BugtrackerStatsListController extends ModuleController
 		{
 			$this->view->assign_block_vars('fixed_version', array(
 				'NAME'					=> stripslashes($versions[$version_id]['name']),
-				'LINK_VERSION_ROADMAP'	=> BugtrackerUrlBuilder::roadmap(Url::encode_rewrite($versions[$version_id]['name']))->absolute(),
+				'LINK_VERSION_ROADMAP'	=> BugtrackerUrlBuilder::roadmap(Url::encode_rewrite($versions[$version_id]['name']))->rel(),
 				'NUMBER'				=> $bugs_number['all']
 			));
 		}
@@ -92,7 +92,7 @@ class BugtrackerStatsListController extends ModuleController
 					'AUTHOR'				=> $poster['user']->get_pseudo(),
 					'AUTHOR_LEVEL_CLASS'	=> UserService::get_level_class($poster['user']->get_level()),
 					'AUTHOR_GROUP_COLOR'	=> $author_group_color,
-					'LINK_AUTHOR_PROFILE'	=> UserUrlBuilder::profile($poster['user']->get_id())->absolute(),
+					'LINK_AUTHOR_PROFILE'	=> UserUrlBuilder::profile($poster['user']->get_id())->rel(),
 					'USER_BUGS' 			=> $poster['bugs_number']
 				));
 			}

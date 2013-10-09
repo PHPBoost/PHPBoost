@@ -132,12 +132,12 @@ class BugtrackerSolvedListController extends ModuleController
 				'NUMBER_COMMENTS'			=> (int) $row['number_comments'],
 				'L_COMMENTS'				=> $row['number_comments'] <= 1 ? LangLoader::get_message('comment', 'comments-common') : LangLoader::get_message('comments', 'comments-common'),
 				'DATE' 						=> !empty($row['fix_date']) ? gmdate_format($config->get_date_form(), $row['fix_date']) : $this->lang['bugs.labels.not_yet_fixed'],
-				'LINK_BUG_DETAIL'			=> BugtrackerUrlBuilder::detail($row['id'] . '/' . Url::encode_rewrite($row['title']))->absolute(),
-				'LINK_BUG_REOPEN_REJECT'	=> BugtrackerUrlBuilder::reopen($row['id'], 'solved', $current_page, (!empty($filter) ? $filter : ''), (!empty($filter) ? $filter_id : ''))->absolute(),
-				'LINK_BUG_EDIT'				=> BugtrackerUrlBuilder::edit($row['id'] . '/solved/' . $current_page . (!empty($filter) ? '/' . $filter . '/' . $filter_id : ''))->absolute(),
-				'LINK_BUG_HISTORY'			=> BugtrackerUrlBuilder::history($row['id'])->absolute(),
-				'LINK_BUG_DELETE'			=> BugtrackerUrlBuilder::delete($row['id'], 'solved', $current_page, (!empty($filter) ? $filter : ''), (!empty($filter) ? $filter_id : ''))->absolute(),
-				'LINK_COMMENTS'				=> BugtrackerUrlBuilder::detail($row['id'] . '/#comments_list')->absolute()
+				'LINK_BUG_DETAIL'			=> BugtrackerUrlBuilder::detail($row['id'] . '/' . Url::encode_rewrite($row['title']))->rel(),
+				'LINK_BUG_REOPEN_REJECT'	=> BugtrackerUrlBuilder::reopen($row['id'], 'solved', $current_page, (!empty($filter) ? $filter : ''), (!empty($filter) ? $filter_id : ''))->rel(),
+				'LINK_BUG_EDIT'				=> BugtrackerUrlBuilder::edit($row['id'] . '/solved/' . $current_page . (!empty($filter) ? '/' . $filter . '/' . $filter_id : ''))->rel(),
+				'LINK_BUG_HISTORY'			=> BugtrackerUrlBuilder::history($row['id'])->rel(),
+				'LINK_BUG_DELETE'			=> BugtrackerUrlBuilder::delete($row['id'], 'solved', $current_page, (!empty($filter) ? $filter : ''), (!empty($filter) ? $filter_id : ''))->rel(),
+				'LINK_COMMENTS'				=> BugtrackerUrlBuilder::detail($row['id'] . '/#comments_list')->rel()
 			));
 		}
 		
@@ -158,14 +158,14 @@ class BugtrackerSolvedListController extends ModuleController
 			'FILTER_LIST'				=> BugtrackerViews::build_filters('solved', $bugs_number),
 			'PROGRESS_BAR'				=> BugtrackerViews::build_progress_bar(),
 			'LEGEND'					=> BugtrackerViews::build_legend($displayed_status, 'solved'),
-			'LINK_BUG_ID_TOP' 			=> BugtrackerUrlBuilder::solved('id/top/'. $current_page . (!empty($filter) ? '/' . $filter . '/' . $filter_id : ''))->absolute(),
-			'LINK_BUG_ID_BOTTOM' 		=> BugtrackerUrlBuilder::solved('id/bottom/'. $current_page . (!empty($filter) ? '/' . $filter . '/' . $filter_id : ''))->absolute(),
-			'LINK_BUG_TITLE_TOP' 		=> BugtrackerUrlBuilder::solved('title/top/'. $current_page . (!empty($filter) ? '/' . $filter . '/' . $filter_id : ''))->absolute(),
-			'LINK_BUG_TITLE_BOTTOM' 	=> BugtrackerUrlBuilder::solved('title/bottom/'. $current_page . (!empty($filter) ? '/' . $filter . '/' . $filter_id : ''))->absolute(),
-			'LINK_BUG_STATUS_TOP'		=> BugtrackerUrlBuilder::solved('status/top/'. $current_page . (!empty($filter) ? '/' . $filter . '/' . $filter_id : ''))->absolute(),
-			'LINK_BUG_STATUS_BOTTOM'	=> BugtrackerUrlBuilder::solved('status/bottom/'. $current_page . (!empty($filter) ? '/' . $filter . '/' . $filter_id : ''))->absolute(),
-			'LINK_BUG_DATE_TOP' 		=> BugtrackerUrlBuilder::solved('date/top/'. $current_page . (!empty($filter) ? '/' . $filter . '/' . $filter_id : ''))->absolute(),
-			'LINK_BUG_DATE_BOTTOM' 		=> BugtrackerUrlBuilder::solved('date/bottom/'. $current_page . (!empty($filter) ? '/' . $filter . '/' . $filter_id : ''))->absolute()
+			'LINK_BUG_ID_TOP' 			=> BugtrackerUrlBuilder::solved('id/top/'. $current_page . (!empty($filter) ? '/' . $filter . '/' . $filter_id : ''))->rel(),
+			'LINK_BUG_ID_BOTTOM' 		=> BugtrackerUrlBuilder::solved('id/bottom/'. $current_page . (!empty($filter) ? '/' . $filter . '/' . $filter_id : ''))->rel(),
+			'LINK_BUG_TITLE_TOP' 		=> BugtrackerUrlBuilder::solved('title/top/'. $current_page . (!empty($filter) ? '/' . $filter . '/' . $filter_id : ''))->rel(),
+			'LINK_BUG_TITLE_BOTTOM' 	=> BugtrackerUrlBuilder::solved('title/bottom/'. $current_page . (!empty($filter) ? '/' . $filter . '/' . $filter_id : ''))->rel(),
+			'LINK_BUG_STATUS_TOP'		=> BugtrackerUrlBuilder::solved('status/top/'. $current_page . (!empty($filter) ? '/' . $filter . '/' . $filter_id : ''))->rel(),
+			'LINK_BUG_STATUS_BOTTOM'	=> BugtrackerUrlBuilder::solved('status/bottom/'. $current_page . (!empty($filter) ? '/' . $filter . '/' . $filter_id : ''))->rel(),
+			'LINK_BUG_DATE_TOP' 		=> BugtrackerUrlBuilder::solved('date/top/'. $current_page . (!empty($filter) ? '/' . $filter . '/' . $filter_id : ''))->rel(),
+			'LINK_BUG_DATE_BOTTOM' 		=> BugtrackerUrlBuilder::solved('date/bottom/'. $current_page . (!empty($filter) ? '/' . $filter . '/' . $filter_id : ''))->rel()
 		));
 		
 		return $this->view;

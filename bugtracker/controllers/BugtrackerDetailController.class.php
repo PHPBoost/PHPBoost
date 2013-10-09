@@ -133,13 +133,13 @@ class BugtrackerDetailController extends ModuleController
 			'USER_ASSIGNED'					=> $user_assigned ? $user_assigned->get_pseudo() : '',
 			'USER_ASSIGNED_LEVEL_CLASS'		=> $user_assigned ? UserService::get_level_class($user_assigned->get_level()) : '',
 			'USER_ASSIGNED_GROUP_COLOR'		=> $user_assigned_group_color,
-			'LINK_BUG_REJECT'				=> BugtrackerUrlBuilder::reject($this->bug->get_id(), 'detail')->absolute(),
-			'LINK_BUG_REOPEN'				=> BugtrackerUrlBuilder::reopen($this->bug->get_id(), 'detail')->absolute(),
-			'LINK_BUG_EDIT'					=> BugtrackerUrlBuilder::edit($this->bug->get_id() . '/detail')->absolute(),
-			'LINK_BUG_HISTORY'				=> BugtrackerUrlBuilder::history($this->bug->get_id())->absolute(),
-			'LINK_BUG_DELETE'				=> BugtrackerUrlBuilder::delete($this->bug->get_id(), 'unsolved')->absolute(),
-			'LINK_AUTHOR_PROFILE'			=> UserUrlBuilder::profile($author->get_id())->absolute(),
-			'LINK_USER_ASSIGNED_PROFILE'	=> $user_assigned ? UserUrlBuilder::profile($user_assigned->get_id())->absolute() : ''
+			'LINK_BUG_REJECT'				=> BugtrackerUrlBuilder::reject($this->bug->get_id(), 'detail')->rel(),
+			'LINK_BUG_REOPEN'				=> BugtrackerUrlBuilder::reopen($this->bug->get_id(), 'detail')->rel(),
+			'LINK_BUG_EDIT'					=> BugtrackerUrlBuilder::edit($this->bug->get_id() . '/detail')->rel(),
+			'LINK_BUG_HISTORY'				=> BugtrackerUrlBuilder::history($this->bug->get_id())->rel(),
+			'LINK_BUG_DELETE'				=> BugtrackerUrlBuilder::delete($this->bug->get_id(), 'unsolved')->rel(),
+			'LINK_AUTHOR_PROFILE'			=> UserUrlBuilder::profile($author->get_id())->rel(),
+			'LINK_USER_ASSIGNED_PROFILE'	=> $user_assigned ? UserUrlBuilder::profile($user_assigned->get_id())->rel() : ''
 		));
 		
 		//Comments display
