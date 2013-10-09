@@ -64,7 +64,7 @@
 					{member_list.LEVEL}
 				</td>
 				<td class="row2">
-					<a href="mailto:{member_list.MAIL}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/email.png" alt="{member_list.MAIL}" title="{member_list.MAIL}" /></a>
+					<a href="mailto:{member_list.MAIL}"><span class="label">Mail</span></a>
 				</td>
 				<td class="row2">
 					{member_list.REGISTERED}
