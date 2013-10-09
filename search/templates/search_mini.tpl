@@ -25,7 +25,7 @@
 			<div id="search_form">
 				<input type="text" id="TxTMiniSearched" name="q" value="{TEXT_SEARCHED}" class="search_entry" onclick="if(this.value=='{L_SEARCH}...')this.value='';" onblur="if(this.value=='')this.value='{L_SEARCH}...';">
 				<input type="hidden" name="token" value="{TOKEN}">
-				<Button type="submit" name="search_submit" ><i class="icon-search"></i></Button>
+				<button type="submit" name="search_submit" ><i class="icon-search"></i></button>
 			</div>
 			<a href="{U_ADVANCED_SEARCH}" class="small">{L_ADVANCED_SEARCH}</a>
 		</div>
@@ -37,7 +37,7 @@
 	<div id="search_form">
 		<input type="text" id="TxTMiniSearched" name="q" value="{TEXT_SEARCHED}" class="search_entry" onclick="if(this.value=='{L_SEARCH}...')this.value='';" onblur="if(this.value=='')this.value='{L_SEARCH}...';">
 		<input type="hidden" name="search_submit" id="search_submit_mini" value="{SEARCH}" class="submit">
-		<Button type="submit" name="search_submit" ><i class="icon-search"></i></Button>
+		<button type="submit" name="search_submit" ><i class="icon-search"></i></button>
 	</div>
 </form>
 # ENDIF #
