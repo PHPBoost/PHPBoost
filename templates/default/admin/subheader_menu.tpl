@@ -2,7 +2,7 @@
 	<li>
 		<h5 class="links"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/admin_mini.png" alt="" /> {L_INDEX}</h5>
 		<ul>
-			<li><a href="{U_INDEX_SITE}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/admin_mini.png"/> {L_INDEX_SITE}</a></li>
+			<li><a href="{PATH_TO_ROOT}/index.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/admin_mini.png"/> {L_INDEX_SITE}</a></li>
 			<li><a href="{PATH_TO_ROOT}/admin/admin_index.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/ranks_mini.png"/> {L_ADMINISTRATION}</a></li>
 			<li class="separator"></li>
 			<li><a href="{PATH_TO_ROOT}/admin/admin_index.php?disconnect=true&amp;token={TOKEN}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/home_mini.png"/> {L_DISCONNECT}</a></li>
@@ -30,7 +30,7 @@
 				<a href="${relative_url(AdminConfigUrlBuilder::general_config())}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/config_mini.png"/> {L_CONFIGURATION}</a>
 				<ul>
 					<li><a href="${relative_url(AdminConfigUrlBuilder::general_config())}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/config_mini.png"/> {L_CONFIG_GENERAL}</a></li>
-					<li><a href="{PATH_TO_ROOT}/admin/config/?url=/advanced/"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/config_mini.png"/> {L_CONFIG_ADVANCED}</a></li>
+					<li><a href="${relative_url(AdminConfigUrlBuilder::advanced_config())}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/config_mini.png"/> {L_CONFIG_ADVANCED}</a></li>
 					<li><a href="${relative_url(AdminConfigUrlBuilder::mail_config())}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/config_mini.png"/> {L_MAIL_CONFIG}</a></li>
 				</ul>
 			</li>

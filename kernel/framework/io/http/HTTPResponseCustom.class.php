@@ -116,7 +116,7 @@ class HTTPResponseCustom
 		{
 			$url = new Url($url);
 		}
-		$url = $url->absolute();
+		$url = $url->rel();
 
 		header('Location:' . $url);
 		exit;
