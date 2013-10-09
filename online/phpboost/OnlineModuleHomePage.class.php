@@ -29,6 +29,7 @@ class OnlineModuleHomePage implements ModuleHomePage
 {
 	private $lang;
 	private $view;
+	private $config;
 	
 	public static function get_view()
 	{
@@ -41,19 +42,17 @@ class OnlineModuleHomePage implements ModuleHomePage
 		$this->init();
 		
 		$this->check_authorizations();
-		
-		$config = OnlineConfig::load();
-		$number_users_online = OnlineService::get_number_users_connected('WHERE level <> -1 AND session_time > :time', array('time' => time() - SessionsConfig::load()->get_active_session_duration()));
-		$number_users_per_page = (int)$config->get_number_members_per_page();
-		$pagination = $this->get_pagination($number_users_online, $number_users_per_page);
+		$active_sessions_start_time = time() - SessionsConfig::load()->get_active_session_duration();
+		$number_users_online = OnlineService::get_number_users_connected('WHERE level <> -1 AND session_time > :time', array('time' => $active_sessions_start_time));
+		$pagination = $this->get_pagination($number_users_online);
 		
 		$users = OnlineService::get_online_users('WHERE s.session_time > :time
-		ORDER BY '. $config->get_display_order_request() .'
+		ORDER BY '. $this->config->get_display_order_request() .'
 		LIMIT :number_items_per_page OFFSET :display_from',
 			array(
 				'number_items_per_page' => $pagination->get_number_items_per_page(),
 				'display_from' => $pagination->get_display_from(),
-				'time' => (time() - SessionsConfig::load()->get_active_session_duration())
+				'time' => $active_sessions_start_time
 			)
 		);
 		
@@ -86,9 +85,8 @@ class OnlineModuleHomePage implements ModuleHomePage
 		}
 		
 		$this->view->put_all(array(
-			'C_PAGINATION' => $number_users_online > $number_users_per_page,
+			'C_PAGINATION' => $pagination->has_several_pages(),
 			'C_USERS' => $number_users_online,
-			'L_LOGIN' => LangLoader::get_message('pseudo', 'main'),
 			'PAGINATION' => $pagination->display()
 		));
 		
@@ -100,6 +98,7 @@ class OnlineModuleHomePage implements ModuleHomePage
 		$this->lang = LangLoader::get('online_common', 'online');
 		$this->view = new FileTemplate('online/OnlineHomeController.tpl');
 		$this->view->add_lang($this->lang);
+		$this->config = OnlineConfig::load();
 	}
 	
 	private function check_authorizations()
@@ -111,10 +110,10 @@ class OnlineModuleHomePage implements ModuleHomePage
 		}
 	}
 	
-	private function get_pagination($number_users_online, $number_users_per_page)
+	private function get_pagination($number_users_online)
 	{
 		$page = AppContext::get_request()->get_getint('page', 1);
-		$pagination = new ModulePagination($page, $number_users_online, $number_users_per_page);
+		$pagination = new ModulePagination($page, $number_users_online, (int)$this->config->get_number_members_per_page());
 		$pagination->set_url(OnlineUrlBuilder::home('%d'));
 		
 		if ($pagination->current_page_is_empty() && $page > 1)
