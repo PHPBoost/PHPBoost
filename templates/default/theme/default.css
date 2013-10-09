@@ -126,7 +126,7 @@ table.invisible tr td {
 	padding:0;
 }
 
-table.module_table {
+.module_table {
 	width:98%;
 	margin:auto;
 	border-spacing:0px;
@@ -136,22 +136,19 @@ table.module_table {
 	background:#f2f8ff;
 }
 
-table.module_table tr td {
+.module_table td {
 	border:none;
 	background:transparent;
+	text-align:left;
 }
 
-table.module_table tr th {
-    color:#FFFFFF;
-    background:#336397;
-    text-align:left;
-    font-size:11px;
-    font-weight:normal;
-    text-transform:uppercase;
-}
-
-table.module_table tr td {
-    text-align:left;
+.module_table th {
+	color:#FFFFFF;
+	background:#336397;
+	text-align:left;
+	font-size:11px;
+	font-weight:normal;
+	text-transform:uppercase;
 }
 
 /* Prévisualisation AJAX. */
