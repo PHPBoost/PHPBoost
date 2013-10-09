@@ -394,7 +394,7 @@ while ( $row = $Sql->fetch_assoc($result) )
 		'USER_MSN' => (!empty($row['user_msn'])) ? '<a href="mailto:' . $row['user_msn'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/msn.png" alt="' . $row['user_msn']  . '" title="' . $row['user_msn']  . '" /></a>' : '',
 		'USER_YAHOO' => (!empty($row['user_yahoo'])) ? '<a href="mailto:' . $row['user_yahoo'] . '"><span class="label">Yahoo</span></a>' : '',
 		'USER_SIGN' => (!empty($row['user_sign'])) ? '____________________<br />' . FormatingHelper::second_parse($row['user_sign']) : '',
-		'USER_WEB' => (!empty($row['user_website'])) ? '<a href="' . $row['user_website'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/user_web.png" alt="' . $row['user_website']  . '" title="' . $row['user_website']  . '" /></a>' : '',
+		'USER_WEB' => (!empty($row['user_website'])) ? '<a href="' . $row['user_website'] . '"><span class="label">Web</span></a>' : '',
 		'USER_WARNING' => $row['user_warning'],
 		'L_FORUM_QUOTE_LAST_MSG' => ($quote_last_msg == 1 && $i == 0) ? $LANG['forum_quote_last_msg'] : '', //Reprise du dernier message de la page précédente.
 		'C_FORUM_USER_LOGIN' => !empty($row['login']) ? true : false,
