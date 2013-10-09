@@ -335,7 +335,7 @@
 							{user_list.U_ACTION_USER}
 						</td>
 						<td class="row1" style="text-align:center;width:25%;">
-							<a href="{user_list.U_PM}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/pm.png" alt="" /></a>
+							<a href="{user_list.U_PM}"><span class="label">MP</span></a>
 						</td>
 					</tr>
 					# END user_list #
@@ -382,7 +382,7 @@
 								{L_PM}
 							</td>
 							<td class="row2">
-								<a href="{U_PM}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/pm.png" alt="PM" /></a>
+								<a href="{U_PM}"><span class="label">MP</span></a>
 							</td>
 						</tr>
 						<tr>

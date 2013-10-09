@@ -239,7 +239,7 @@
 					<tr>	
 						<td class="row2">
 							{show_pm.CONTENTS}<br /><br /><br />
-							<hr /><img src="../templates/{THEME}/images/{LANG}/pm.png" />
+							<hr /><span class="label">MP</span>
 						</td>
 					</tr>	
 				</table>
@@ -297,7 +297,7 @@
 							<td class="row2">														
 								{edit_pm.show_pm.CONTENTS}
 								<br /><br /><br />
-								<hr /><img src="../templates/{THEME}/images/{LANG}/pm.png" />
+								<hr /><span class="label">MP</span>
 							</td>
 						</tr>	
 					</table>
@@ -364,7 +364,7 @@
 							<td class="row2">														
 								{post_convers.show_convers.CONTENTS}
 								<br /><br /><br />
-								<hr /><img src="../templates/{THEME}/images/{LANG}/pm.png" />
+								<hr /><span class="label">MP</span>
 							</td>
 						</tr>	
 					</table>

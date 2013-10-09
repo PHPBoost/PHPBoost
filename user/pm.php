@@ -714,7 +714,7 @@ elseif (!empty($pm_id_get)) //Messages associés à la conversation.
 			'U_USER_PROFILE' => ($is_admin) ? '' : UserUrlBuilder::profile($row['user_id'])->absolute(),
 			'U_ANCHOR' => 'pm' . url('.php?id=' . $pm_id_get . (!empty($page) ? '&amp;p=' . $page : ''), '-0-' . $pm_id_get . (!empty($page) ? '-' . $page : '') . '.php') . '#m' . $row['id'],
 			'U_QUOTE' => ($is_admin) ? '' : ('<a href="pm' . url('.php?quote=' . $row['id'] . '&amp;id=' . $pm_id_get . (!empty($page) ? '&amp;p=' . $page : ''), '-0-' . $pm_id_get . (!empty($page) ? '-' . $page : '-0') . '-' . $row['id'] . '.php') . '#quote" title="' . $LANG['quote'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/quote.png" alt="" /></a>'),
-			'U_USER_PM' => ($is_admin) ? '' : '<a href="../user/pm' . url('.php?pm=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/pm.png" alt="" /></a>',
+			'U_USER_PM' => ($is_admin) ? '' : '<a href="../user/pm' . url('.php?pm=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '"><span class="label">MP</span></a>',
 		));
 		
 		//Marqueur de suivis du sujet.

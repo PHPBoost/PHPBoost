@@ -272,7 +272,7 @@ class ShoutboxHomePageExtensionPoint implements HomePageExtensionPoint
 				'PUNISHMENT' => $readonly,			
 				'DEL' => $del_message,
 				'EDIT' => $edit_message,
-				'U_USER_PM' => !$is_guest ? '<a href="'. UserUrlBuilder::personnal_message($row['user_id'])->absolute() . '"><img src="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/' . get_ulang() . '/pm.png" alt="" /></a>' : '',
+				'U_USER_PM' => !$is_guest ? '<a href="'. UserUrlBuilder::personnal_message($row['user_id'])->absolute() . '"><span class="label">MP</span></a>' : '',
 				'U_ANCHOR' => 'shoutbox.php' . SID . '#m' . $row['id']
 			));
 			$j++;

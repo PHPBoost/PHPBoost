@@ -205,6 +205,21 @@ table.mini th a, table.mini td a {
 	font-size:11px;
 }
 
+
+/* Label 
+------------------------------------ */
+
+.label {
+	display: inline;
+	padding: 1px 6px;
+	font-size: 75%;
+	font-weight: bold;
+	text-align: center;
+	border-radius: 2px;
+	background: #2F5B8A;
+	color: #ffffff;
+}
+
 /* Formulaires 
 --------------------------------------*/
 
@@ -413,12 +428,6 @@ input.reset, button.reset {
 input.submit:hover, input.reset:hover, button:hover {
 	cursor:pointer;
 	background:#e8edf3;
-}
-
-.label {
-    font-weight:bold;
-    font-size:11px;
-    color:#476a7f;
 }
 
 /* Messages postés par les membres (messages privés, etc...) 

@@ -72,7 +72,7 @@
                     # START forms #
                     <div id="form_{forms.MODULE_NAME}" class="SpecializedForm" style="display:none">
                         <fieldset class="searchFieldset">
-                        # IF forms.C_SEARCH_FORM #{forms.SEARCH_FORM}# ELSE #<p class="label">{forms.SEARCH_FORM}</p># ENDIF #
+                        # IF forms.C_SEARCH_FORM #{forms.SEARCH_FORM}# ELSE #<p class="center">{forms.SEARCH_FORM}</p># ENDIF #
                         </fieldset>
                     </div>
                     # END forms #

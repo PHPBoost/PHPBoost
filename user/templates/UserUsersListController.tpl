@@ -68,7 +68,7 @@
 				{member_list.LAST_CONNECT}
 			</td>
 			<td> 
-				<a href="{member_list.U_USER_PM}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/pm.png" alt="{L_PRIVATE_MESSAGE}" /></a>
+				<a href="{member_list.U_USER_PM}"><span class="label">MP</span></a>
 			</td>
 		</tr>
 		# END member_list #
