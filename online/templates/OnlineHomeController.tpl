@@ -20,7 +20,7 @@
 		<tfoot>
 			<tr>
 				<th colspan="3">
-					<span class="inline">{L_PAGE} : </span># INCLUDE PAGINATION #
+					<span class="inline">${LangLoader::get_message('page', 'main')} : </span># INCLUDE PAGINATION #
 				</th>
 			</tr>
 		</tfoot>
