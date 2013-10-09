@@ -2,8 +2,8 @@
 	<header>
 		<h1>{@online}</h1>
 	</header>
-	<div class="content">
-		<table class="module_table">
+	<table>
+		<thead>
 			<tr>
 				<th class="column_login">
 					{L_LOGIN}
@@ -15,31 +15,42 @@
 					{@online.last_update}
 				</th>
 			</tr>
+		</thead>
+		# IF C_PAGINATION #
+		<tfoot>
+			<tr>
+				<th colspan="3">
+					<span class="inline">{L_PAGE} : </span># INCLUDE PAGINATION #
+				</th>
+			</tr>
+		</tfoot>
+		# ENDIF #
+		<tbody>
 			# START users #
 			<tr>
-				<td class="row3 text_center">
+				<td>
 					<div id="comment-pseudo">
 						<a href="{users.U_PROFILE}" class="{users.LEVEL_CLASS}" # IF users.C_GROUP_COLOR # style="color:{users.GROUP_COLOR}" # ENDIF #>{users.PSEUDO}</a>
 					</div>
 					<div class="comment-level">{users.LEVEL}</div>
 					<img src="{users.U_AVATAR}" width="90px" class="comment-avatar" />
 				</td>
-				<td class="row3">
+				<td>
 					<a href="{users.U_LOCATION}">{users.TITLE_LOCATION}</a>
 				</td>
-				<td class="row3">
+				<td>
 					{users.LAST_UPDATE}
 				</td>
 			</tr>
 			# END users #
 			# IF NOT C_USERS #
-			<tr class="center"> 
-				<td colspan="3" class="row2">
+			<tr> 
+				<td colspan="3">
 					{@online.no_user_online}
 				</td>
 			</tr>
 			# ENDIF #
-		</table>
-	</div>
-	<footer># IF C_PAGINATION # # INCLUDE PAGINATION # # ENDIF #</footer>
+		</tbody>
+	</table>
+	<footer></footer>
 </section>
