@@ -34,9 +34,9 @@ class CalendarDisplayCategoryController extends ModuleController
 	
 	public function execute(HTTPRequestCustom $request)
 	{
-		$this->init();
-		
 		$this->check_authorizations();
+		
+		$this->init();
 		
 		$this->build_view($request);
 		
@@ -46,7 +46,7 @@ class CalendarDisplayCategoryController extends ModuleController
 	private function init()
 	{
 		$this->lang = LangLoader::get('common', 'calendar');
-		$this->tpl = new FileTemplate('calendar/CalendarDisplayCategoryController.tpl');
+		$this->tpl = new FileTemplate('calendar/CalendarDisplaySeveralEventsController.tpl');
 		$this->tpl->add_lang($this->lang);
 	}
 	
@@ -60,7 +60,6 @@ class CalendarDisplayCategoryController extends ModuleController
 		$day = $request->get_getint('day', date('j'));
 		$bissextile = (date("L", mktime(0, 0, 0, 1, 1, $year)) == 1) ? 29 : 28;
 		
-		$main_lang = LangLoader::get('main');
 		$date_lang = LangLoader::get('date-common');
 		
 		$array_month = array(31, $bissextile, 31, 30, 31, 30 , 31, 31, 30, 31, 30, 31);
@@ -71,15 +70,10 @@ class CalendarDisplayCategoryController extends ModuleController
 		$this->tpl->put_all(array(
 			'C_COMMENTS_ENABLED' => $config->are_comments_enabled(),
 			'C_ADD' => CalendarAuthorizationsService::check_authorizations($this->get_category()->get_id())->write() || CalendarAuthorizationsService::check_authorizations($this->get_category()->get_id())->contribution(),
+			'C_PENDING_EVENTS' => CalendarAuthorizationsService::check_authorizations($this->get_category()->get_id())->write() || CalendarAuthorizationsService::check_authorizations($this->get_category()->get_id())->moderation(),
 			'CALENDAR' => CalendarAjaxCalendarController::get_view(),
 			'DATE' => $day . ' ' . $array_l_month[$month - 1] . ' ' . $year,
-			'LINK_HOME' => CalendarUrlBuilder::home()->absolute(),
-			'LINK_PREVIOUS' => ($month == 1) ? CalendarUrlBuilder::home(($year - 1) . '/12/1')->absolute() : CalendarUrlBuilder::home($year . '/' . ($month - 1) . '/1')->absolute(),
-			'LINK_NEXT' => ($month == 12) ? CalendarUrlBuilder::home(($year + 1) . '/1/1')->absolute() : CalendarUrlBuilder::home($year . '/' . ($month + 1) . '/1')->absolute(),
-			'L_EDIT' => $main_lang['update'],
-			'L_DELETE' => $main_lang['delete'],
-			'L_GUEST' => $main_lang['guest'],
-			'L_ON' => $main_lang['on'],
+			'L_EVENTS' => $this->lang['calendar.titles.events'],
 			'U_ADD' => CalendarUrlBuilder::add_event($year . '/' . $month . '/' . $day)->rel()
 		));
 		
@@ -87,9 +81,9 @@ class CalendarDisplayCategoryController extends ModuleController
 		FROM " . CalendarSetup::$calendar_table . " calendar
 		LEFT JOIN " . DB_TABLE_MEMBER . " member ON member.user_id=calendar.author_id
 		LEFT JOIN " . DB_TABLE_COMMENTS_TOPIC . " com ON com.id_in_module = calendar.id AND com.module_id = 'calendar'
-		WHERE (calendar.start_date BETWEEN :first_day_hour AND :last_day_hour)
+		WHERE calendar.approved = 1 AND ((calendar.start_date BETWEEN :first_day_hour AND :last_day_hour)
 		OR (calendar.end_date BETWEEN :first_day_hour AND :last_day_hour)
-		OR (:first_day_hour BETWEEN calendar.start_date AND calendar.end_date) AND calendar.id_category IN :authorized_categories
+		OR (:first_day_hour BETWEEN calendar.start_date AND calendar.end_date)) AND calendar.id_category IN :authorized_categories
 		ORDER BY start_date ASC", array(
 			'first_day_hour' => mktime(0, 0, 0, $month, $day, $year),
 			'last_day_hour' => mktime(23, 59, 59, $month, $day, $year),

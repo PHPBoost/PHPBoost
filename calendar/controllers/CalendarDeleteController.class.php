@@ -190,7 +190,7 @@ class CalendarDeleteController extends ModuleController
 				$response->add_breadcrumb_link($category->get_name(), CalendarUrlBuilder::display_category($id, $category->get_rewrited_name()));
 		}
 		$category = $categories[$this->event->get_id_cat()];
-		$response->add_breadcrumb_link($this->event->get_title(), CalendarUrlBuilder::display_event($category->get_id(), $category->get_rewrited_name(), $this->event->get_id(), Url::encode_rewrite($this->event->get_title())));
+		$response->add_breadcrumb_link($this->event->get_title(), CalendarUrlBuilder::display_event($category->get_id(), $category->get_rewrited_name(), $this->event->get_id(), $this->event->get_rewrited_title()));
 		
 		$response->add_breadcrumb_link($this->lang['calendar.titles.event_removal'], CalendarUrlBuilder::delete_event($this->event->get_id()));
 		$response->set_page_title($this->lang['calendar.titles.event_removal']);

@@ -58,7 +58,6 @@ class CalendarSetup extends DefaultModuleSetup
 		PersistenceContext::get_dbms_utils()->add_column(self::$calendar_table, 'register_authorizations', array('type' => 'text', 'length' => 65000));
 		PersistenceContext::get_dbms_utils()->add_column(self::$calendar_table, 'repeat_number', array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0));
 		PersistenceContext::get_dbms_utils()->add_column(self::$calendar_table, 'repeat_type', array('type' => 'string', 'length' => 25, 'notnull' => 1, 'default' => '\'' . CalendarEvent::NEVER . '\''));
-		PersistenceContext::get_dbms_utils()->add_column(self::$calendar_table, 'id_parent_event', array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0));
 		$this->create_calendar_cats_table();
 		$this->create_calendar_users_relation_table();
 		return '4.1.0';
@@ -99,8 +98,7 @@ class CalendarSetup extends DefaultModuleSetup
 			'max_registred_members' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => -1),
 			'register_authorizations' => array('type' => 'text', 'length' => 65000),
 			'repeat_number' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'repeat_type' => array('type' => 'string', 'length' => 25, 'notnull' => 1, 'default' => '\'' . CalendarEvent::NEVER . '\''),
-			'id_parent_event' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0)
+			'repeat_type' => array('type' => 'string', 'length' => 25, 'notnull' => 1, 'default' => '\'' . CalendarEvent::NEVER . '\'')
 		);
 		$options = array(
 			'primary' => array('id'),

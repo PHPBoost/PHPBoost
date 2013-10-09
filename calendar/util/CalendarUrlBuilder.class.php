@@ -118,6 +118,15 @@ class CalendarUrlBuilder
 	/**
 	 * @return Url
 	 */
+	public static function display_pending_events($page = null)
+	{
+		$page = $page !== null ? $page . '/' : '';
+		return DispatchManager::get_url(self::$dispatcher, '/pending/' . $page);
+	}
+	
+	/**
+	 * @return Url
+	 */
 	public static function add_event($param = '')
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/add/' . $param);

@@ -78,8 +78,8 @@ class CalendarAjaxCalendarController extends AbstractController
 			'DATE' => $array_l_month[$month - 1] . ' ' . $year,
 			'PREVIOUS_MONTH_TITLE' => ($month == 1) ? $array_l_month[11] . ' ' . ($year - 1) : $array_l_month[$month - 2] . ' ' . $year,
 			'NEXT_MONTH_TITLE' => ($month == 12) ? $array_l_month[0] . ' ' . ($year + 1) : $array_l_month[$month] . ' ' . $year,
-			'LINK_PREVIOUS_MONTH' => CalendarUrlBuilder::ajax_month_calendar($previous_year . '/' . $previous_month)->absolute(),
-			'LINK_NEXT_MONTH' => CalendarUrlBuilder::ajax_month_calendar($next_year . '/' . $next_month)->absolute()
+			'U_PREVIOUS_MONTH' => CalendarUrlBuilder::ajax_month_calendar($previous_year . '/' . $previous_month)->rel(),
+			'U_NEXT_MONTH' => CalendarUrlBuilder::ajax_month_calendar($next_year . '/' . $next_month)->rel()
 		));
 		
 		//Retrieve all the events of the selected month
@@ -168,7 +168,7 @@ class CalendarAjaxCalendarController extends AbstractController
 				'COLOR' => !empty($color) ? $color : $config->get_birthday_color(),
 				'CLASS' => $class,
 				'CHANGE_LINE' => (($i % 8) == 0 && $i != 56) ? true : false,
-				'U_DAY_EVENTS' => CalendarUrlBuilder::home($year . '/' . $month . '/' . $today . (!empty($array_events[$today]) ? '/' . $categories[$array_events[$today]['id_category']]->get_id() . '-' . $categories[$array_events[$today]['id_category']]->get_rewrited_name() : '') . '#events')->absolute()
+				'U_DAY_EVENTS' => CalendarUrlBuilder::home($year . '/' . $month . '/' . $today . (!empty($array_events[$today]) ? '/' . $categories[$array_events[$today]['id_category']]->get_id() . '-' . $categories[$array_events[$today]['id_category']]->get_rewrited_name() : '') . '#events')->rel()
 			));
 			
 			
@@ -195,11 +195,11 @@ class CalendarAjaxCalendarController extends AbstractController
 		}
 		
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('month', '', $month, $array_month,
-			array('events' => array('change' => 'ChangeMonth("' . CalendarUrlBuilder::ajax_month_calendar($year)->absolute() . '" + "/" + HTMLForms.getField("month").getValue());')
+			array('events' => array('change' => 'ChangeMonth("' . CalendarUrlBuilder::ajax_month_calendar($year)->rel() . '" + "/" + HTMLForms.getField("month").getValue());')
 		)));
 		
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('year', '', $year, $array_year,
-			array('events' => array('change' => 'ChangeMonth("' . CalendarUrlBuilder::ajax_month_calendar()->absolute() . '" + HTMLForms.getField("year").getValue() + "/" + HTMLForms.getField("month").getValue());')
+			array('events' => array('change' => 'ChangeMonth("' . CalendarUrlBuilder::ajax_month_calendar()->rel() . '" + HTMLForms.getField("year").getValue() + "/" + HTMLForms.getField("month").getValue());')
 		)));
 		
 		$this->form = $form;

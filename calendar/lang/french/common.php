@@ -36,25 +36,17 @@ $lang['module_title'] = 'Calendrier';
 $lang['calendar.notice.no_current_action'] = 'Aucun événement pour cette date';
 $lang['calendar.notice.no_event'] = 'Aucun événement';
 
-//Actions
-$lang['calendar.actions.confirm.del_event'] = 'Supprimer l\'événement ?';
-
 //Titres
 $lang['calendar.titles.admin.config'] = 'Configuration';
 $lang['calendar.titles.admin.authorizations'] = 'Autorisations';
 $lang['calendar.titles.add_event'] = 'Ajouter un événement';
 $lang['calendar.titles.edit_event'] = 'Editer l\'événement';
 $lang['calendar.titles.delete_event'] = 'Supprimer l\'événement';
-$lang['calendar.titles.delete_occurrence'] = 'L\'occurrence';
-$lang['calendar.titles.delete_all_events_of_the_serie'] = 'Tous les événements de la série';
-$lang['calendar.titles.edit_occurrence'] = 'Editer l\'occurrence';
-$lang['calendar.titles.edit_all_events_of_the_serie'] = 'Editer tous les événements de la série';
 $lang['calendar.titles.event_edition'] = 'Edition de l\'événement';
 $lang['calendar.titles.event_removal'] = 'Suppression de l\'événement';
 $lang['calendar.titles.events'] = 'Evénements';
 $lang['calendar.titles.event'] = 'Evénement';
-$lang['calendar.titles.edit_occurrency'] = 'Editer l\'occurrence';
-$lang['calendar.titles.edit_all_events_of_the_recurrence'] = 'Editer tous les événements de la série';
+$lang['calendar.pending'] = 'Evénements en attente';
 
 //Labels
 $lang['calendar.labels.title'] = 'Titre';
@@ -121,6 +113,7 @@ $lang['calendar.config.sort_field.start_date'] = 'Date de début';
 
 //SEO
 $lang['calendar.seo.description.root'] = 'Tous les événements du site :site.';
+$lang['calendar.seo.description.pending'] = 'Tous les événements en attente.';
 
 //Feed name
 $lang['calendar.feed.name'] = 'Evénements';
