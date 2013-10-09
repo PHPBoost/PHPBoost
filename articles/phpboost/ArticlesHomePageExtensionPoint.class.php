@@ -200,7 +200,7 @@ class ArticlesHomePageExtensionPoint implements HomePageExtensionPoint
 			if (!$User->check_auth($ARTICLES_CAT[$id]['auth'], AUTH_ARTICLES_READ))
 				$unauth_cats_sql[] = $id;
 			
-			if ($User->check_auth($ARTICLES_CAT[$id]['auth'], AUTH_ARTICLES_READ) && $id != 0)
+			if ($User->check_auth($ARTICLES_CAT[$id]['auth'], AUTH_ARTICLES_READ) && $id != 0 && $id != $idartcat && $key['id_parent'] == $idartcat && $key['visible'])
 				$total_cat++;
 		}
 		$nbr_unauth_cats = count($unauth_cats_sql);
