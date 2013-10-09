@@ -4,9 +4,9 @@
             <ul>
                 <li>
                     # IF RELATIVE_URL #
-		                <a href="{ABSOLUTE_URL}" title="{TITLE}"># IF C_IMG #<img src="{ABSOLUTE_IMG}" alt="" /># ENDIF #<a href="{ABSOLUTE_URL}" title="{TITLE}">{TITLE}</a>
+		                <a href="{PATH_TO_ROOT}{RELATIVE_URL}" title="{TITLE}"># IF C_IMG #<img src="{PATH_TO_ROOT}{RELATIVE_IMG}" alt="" /># ENDIF #{TITLE}</a>
 					# ELSE #
-		                <span># IF C_IMG #<img src="{ABSOLUTE_IMG}" alt="" /># ENDIF #{TITLE}</span>
+		                <span># IF C_IMG #<img src="{PATH_TO_ROOT}{RELATIVE_IMG}" alt="" /># ENDIF #{TITLE}</span>
 		            # ENDIF #
                 </li>
                 # START elements #{elements.DISPLAY}# END elements #
@@ -16,12 +16,12 @@
     # IF C_NEXT_MENU # <!-- Children -->
         <li>
             # IF RELATIVE_URL #
-				<a href="{ABSOLUTE_URL}" title="{TITLE}"># IF C_IMG #<img src="{ABSOLUTE_IMG}" alt="{TITLE}" /> # ENDIF #<a href="{ABSOLUTE_URL}" title="{TITLE}">{TITLE}</a>
+				<a href="{PATH_TO_ROOT}{RELATIVE_URL}" title="{TITLE}"># IF C_IMG #<img src="{PATH_TO_ROOT}{RELATIVE_IMG}" alt="{TITLE}" /> # ENDIF #{TITLE}</a>
 			# ELSE #
-				<span># IF C_IMG #<img src="{ABSOLUTE_IMG}" alt="" /># ENDIF #{TITLE}</span>
+				<span># IF C_IMG #<img src="{PATH_TO_ROOT}{RELATIVE_IMG}" alt="" /># ENDIF #{TITLE}</span>
 			# ENDIF #
         </li>
         # START elements #{elements.DISPLAY}# END elements #
     # ENDIF #
 # ELSE # <!-- Simple Menu Link -->
-    <li><a href="{ABSOLUTE_URL}" title="{TITLE}"># IF C_IMG #<img src="{ABSOLUTE_IMG}" alt="" /># ENDIF #{TITLE}</a></li># ENDIF #
+    <li><a href="{PATH_TO_ROOT}{RELATIVE_URL}" title="{TITLE}"># IF C_IMG #<img src="{PATH_TO_ROOT}{RELATIVE_IMG}" alt="" /># ENDIF #{TITLE}</a></li># ENDIF #

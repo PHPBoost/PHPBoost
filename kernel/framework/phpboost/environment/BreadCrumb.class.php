@@ -86,7 +86,7 @@ class BreadCrumb
     {
         if (empty($this->array_links))
         {
-            $this->add($this->get_page_title(), HOST . REWRITED_SCRIPT);
+            $this->add($this->get_page_title(), REWRITED_SCRIPT);
         }
 
 		$start_page_url = GeneralConfig::load()->get_site_url();
@@ -97,7 +97,7 @@ class BreadCrumb
 		}
 		
         $tpl->put_all(array(
-			'START_PAGE' => $start_page_url,
+			'START_PAGE' => PATH_TO_ROOT,
 			'L_INDEX' 	 => LangLoader::get_message('home', 'main')
         ));
         
