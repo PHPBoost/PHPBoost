@@ -1,7 +1,18 @@
+#search_form{
+	float:none;
+	display: inline-block;
+	margin: 10px 0 10px 0;
+	font-size: 0;
+	white-space: nowrap;
+	vertical-align: middle;
+}
+
 div.search_mini input {
     width:120px;
     margin:2px;
 }
+
+
 
 fieldset.searchFieldset {
     background-color: #fcfcfc;
