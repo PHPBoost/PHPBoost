@@ -109,7 +109,7 @@
 						<div class="msg_sign">		
 							<hr />
 							<span style="float:left;">
-								<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/pm.png" alt="pm" />
+								<span class="label">MP</span>
 							</span>
 							<span style="float:right;font-size:10px;">
 							</span>&nbsp;
