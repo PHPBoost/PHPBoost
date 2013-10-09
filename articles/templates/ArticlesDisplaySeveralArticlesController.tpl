@@ -29,7 +29,7 @@
 
 <div class="spacer"></div>
 	
-<section style="overflow: hidden;">	
+<section>	
 	<header>
 		<h1>
 			<a href="${relative_url(SyndicationUrlBuilder::rss('articles'))}" class="syndication" title="${LangLoader::get_message('syndication', 'main')}"></a>
