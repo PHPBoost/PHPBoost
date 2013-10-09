@@ -46,7 +46,7 @@ if ($add)
 	}
 		
 	$shout_pseudo = !empty($_POST['pseudo']) ? TextHelper::strprotect(utf8_decode($_POST['pseudo'])) : $LANG['guest'];
-	$shout_contents = !empty($_POST['contents']) ? trim(utf8_decode(htmlentities($_POST['contents'], ENT_COMPAT, "UTF-8"))) : '';
+	$shout_contents = !empty($_POST['contents']) ? addslashes(trim(utf8_decode(htmlentities($_POST['contents'], ENT_COMPAT, "UTF-8")))) : '';
 	if (!empty($shout_pseudo) && !empty($shout_contents))
 	{
 		//Accès pour poster.		
@@ -93,7 +93,7 @@ if ($add)
 				$shout_pseudo = ($display_date ? '<span class="smaller">' . $date . ' : </span>' : '') . '<span class="smaller" style="font-style: italic;">' . (!empty($shout_pseudo) ? TextHelper::wordwrap_html($shout_pseudo, 16) : $LANG['guest']) . ' </span>';
 			
 			echo "array_shout[0] = '" . $shout_pseudo . "';";
-			echo "array_shout[1] = '" . addslashes(FormatingHelper::second_parse(str_replace(array("\n", "\r"), array('', ''), ucfirst(stripslashes($shout_contents))))) . "';";
+			echo "array_shout[1] = '" . FormatingHelper::second_parse(str_replace(array("\n", "\r"), array('', ''), ucfirst(stripslashes($shout_contents)))) . "';";
 			echo "array_shout[2] = '" . $last_msg_id . "';";
 		}
 		else //utilisateur non autorisé!
