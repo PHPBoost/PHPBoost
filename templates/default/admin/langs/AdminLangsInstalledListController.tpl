@@ -39,7 +39,7 @@
 						</a>
 						# IF langs_installed.C_WEBSITE # 
 						<a href="{langs_installed.AUTHOR_WEBSITE}">
-							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/french/user_web.png" />
+							<span class="label">Web</span>
 						</a>
 						# ENDIF #
 						<br />
