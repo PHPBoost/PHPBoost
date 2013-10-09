@@ -79,11 +79,11 @@ class GuestbookModuleHomePage implements ModuleHomePage
 				'USER_PSEUDO' => $row['mlogin'] ? $row['mlogin'] : $row['login'],
 				'USER_LEVEL_CLASS' => UserService::get_level_class($row['level']),
 				'USER_GROUP_COLOR' => $user_group_color,
-				'U_ANCHOR' => GuestbookUrlBuilder::home($page, $row['id'])->absolute(),
+				'U_ANCHOR' => GuestbookUrlBuilder::home($page, $row['id'])->rel(),
 				'U_AVATAR' => $row['user_avatar'] ? Url::to_rel($row['user_avatar']) : PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/' .  $user_accounts_config->get_default_avatar_name(),
 				'U_EDIT' => GuestbookUrlBuilder::edit($row['id'], $page)->rel(),
 				'U_DELETE' => GuestbookUrlBuilder::delete($row['id'], $page)->rel(),
-				'U_PROFILE' => UserUrlBuilder::profile($row['user_id'])->absolute(),
+				'U_PROFILE' => UserUrlBuilder::profile($row['user_id'])->rel(),
 			));
 			
 			//user's groups

@@ -41,7 +41,7 @@ class GuestbookModuleMiniMenu extends ModuleMiniMenu
 			$tpl = new FileTemplate('guestbook/GuestbookModuleMiniMenu.tpl');
 			$tpl->add_lang($lang);
 			MenuService::assign_positions_conditions($tpl, $this->get_block());
-			$tpl->put('U_GUESTBOOK',GuestbookUrlBuilder::home()->absolute());
+			$tpl->put('U_GUESTBOOK',GuestbookUrlBuilder::home()->rel());
 			
 			$guestbook_cache = GuestbookMessagesCache::load();
 			$random_message = $guestbook_cache->get_message(array_rand($guestbook_cache->get_messages()));
@@ -62,8 +62,8 @@ class GuestbookModuleMiniMenu extends ModuleMiniMenu
 					'USER_GROUP_COLOR' => $user_group_color,
 					'L_GUEST' => $main_lang['guest'],
 					'L_BY' => $main_lang['by'],
-					'U_MESSAGE' => GuestbookUrlBuilder::home($random_message['page'], $random_message['id'])->absolute(),
-					'U_PROFILE' => UserUrlBuilder::profile($random_message['user_id'])->absolute(),
+					'U_MESSAGE' => GuestbookUrlBuilder::home($random_message['page'], $random_message['id'])->rel(),
+					'U_PROFILE' => UserUrlBuilder::profile($random_message['user_id'])->rel(),
 				));
 			}
 			return $tpl->render();
