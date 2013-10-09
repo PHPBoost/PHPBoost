@@ -86,8 +86,7 @@ class UserViewProfileController extends AbstractController
 		
 		if (AppContext::get_current_user()->check_auth(UserAccountsConfig::load()->get_auth_read_members(), AUTH_READ_MEMBERS) && $this->user_informations['user_show_mail'])
 		{
-			$link_email = '<a href="mailto:'. $this->user_informations['user_mail'] .'">
-			<img src="' . TPL_PATH_TO_ROOT . '/templates/'. get_utheme().'/images/'. get_ulang().'/email.png" alt="'.$this->lang['email'].'" /></a>';
+			$link_email = '<a href="mailto:'. $this->user_informations['user_mail'] .'"><span class="label">Mail</span></a>';
 			$fieldset->add_field(new FormFieldFree('email', $this->lang['email'], $link_email));
 		}
 		

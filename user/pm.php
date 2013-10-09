@@ -705,7 +705,7 @@ elseif (!empty($pm_id_get)) //Messages associés à la conversation.
 			'USER_SEX' => ($is_admin) ? '' : $user_sex,
 			'USER_MSG' => ($is_admin) ? '' : $user_msg,
 			'USER_LOCAL' => ($is_admin) ? '' : $user_local,
-			'USER_MAIL' => ($is_admin) ? '' : ( !empty($row['user_mail']) && ($row['user_show_mail'] == '1' ) ) ? '<a href="mailto:' . $row['user_mail'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/email.png" alt="' . $row['user_mail']  . '" title="' . $row['user_mail']  . '" /></a>' : '',
+			'USER_MAIL' => ($is_admin) ? '' : ( !empty($row['user_mail']) && ($row['user_show_mail'] == '1' ) ) ? '<a href="mailto:' . $row['user_mail'] . '"><span class="label">Mail</span></a>' : '',
 			'USER_MSN' => ($is_admin) ? '' : (!empty($row['user_msn'])) ? '<a href="mailto:' . $row['user_msn'] . '"><span class="label">MSN</span></a>' : '',
 			'USER_YAHOO' => ($is_admin) ? '' : (!empty($row['user_yahoo'])) ? '<a href="mailto:' . $row['user_yahoo'] . '"><span class="label">Yahoo</span></a>' : '',
 			'USER_SIGN' => ($is_admin) ? '' : (!empty($row['user_sign'])) ? '____________________<br />' . FormatingHelper::second_parse($row['user_sign']) : '',
