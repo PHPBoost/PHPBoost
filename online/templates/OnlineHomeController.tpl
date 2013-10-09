@@ -6,7 +6,7 @@
 		<thead>
 			<tr>
 				<th class="column_login">
-					{L_LOGIN}
+					${LangLoader::get_message('pseudo', 'main')}
 				</th>
 				<th>
 					{@online.location}
