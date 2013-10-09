@@ -50,6 +50,8 @@ $url_controller_mappers = array(
 	new UrlControllerMapper('CalendarDeleteController', '`^/delete/([0-9]+)?/?(?:/([a-z]+))?/?(?:/([a-z_-]+))?/?([a-z]+)?/?([0-9]+)?/?$`', array('id', 'return', 'field', 'sort', 'page')),
 	new UrlControllerMapper('CalendarAjaxSubscribeUnsubscribeController', '`^/ajax_change_participation/?$`'),
 	
+	new UrlControllerMapper('CalendarDisplayPendingEventsController', '`^/pending/?$`'),
+	
 	//Display calendar
 	new UrlControllerMapper('CalendarAjaxCalendarController', '`^/ajax_month_calendar/([0-9]+)?/?([0-9]+)?/?$`', array('year', 'month')),
 	new UrlControllerMapper('CalendarDisplayCategoryController', '`^/error/([a-z_-]+)?/?$`', array('error')),

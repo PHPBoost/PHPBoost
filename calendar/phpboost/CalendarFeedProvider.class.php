@@ -81,7 +81,7 @@ class CalendarFeedProvider implements FeedProvider
 			
 			$category = $categories[$event->get_id_cat()];
 			
-			$link = CalendarUrlBuilder::display_event($category->get_id(), $category->get_rewrited_name() ? $category->get_rewrited_name() : 'root', $event->get_id(), $event->get_title())->absolute();
+			$link = CalendarUrlBuilder::display_event($category->get_id(), $category->get_rewrited_name() ? $category->get_rewrited_name() : 'root', $event->get_id(), $event->get_title())->rel();
 			
 			$item = new FeedItem();
 			$item->set_title($event->get_title());

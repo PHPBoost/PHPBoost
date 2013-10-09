@@ -29,8 +29,6 @@
 # English                                          #
 ####################################################
 
-$lang = array();
-
 //Module title
 $lang['module_title'] = 'Calendar';
 
@@ -38,23 +36,17 @@ $lang['module_title'] = 'Calendar';
 $lang['calendar.notice.no_current_action'] = 'No events scheduled for this date';
 $lang['calendar.notice.no_event'] = 'No event';
 
-//Actions
-$lang['calendar.actions.confirm.del_event'] = 'Delete event?';
-
 //Titles
 $lang['calendar.titles.admin.config'] = 'Configuration';
 $lang['calendar.titles.admin.authorizations'] = 'Authorizations';
 $lang['calendar.titles.add_event'] = 'Add event';
 $lang['calendar.titles.edit_event'] = 'Edit event';
 $lang['calendar.titles.delete_event'] = 'Delete event';
-$lang['calendar.titles.delete_occurrence'] = 'Occurrence';
-$lang['calendar.titles.delete_all_events_of_the_serie'] = 'All events of the serie';
-$lang['calendar.titles.edit_occurrence'] = 'Edit occurrence';
-$lang['calendar.titles.edit_all_events_of_the_serie'] = 'Edit all events of the serie';
 $lang['calendar.titles.event_edition'] = 'Event edition';
 $lang['calendar.titles.event_removal'] = 'Event removal';
 $lang['calendar.titles.events'] = 'Events';
 $lang['calendar.titles.event'] = 'Event';
+$lang['calendar.pending'] = 'Pending events';
 
 //Labels
 $lang['calendar.labels.title'] = 'Title';
@@ -121,6 +113,7 @@ $lang['calendar.config.sort_field.start_date'] = 'Start date';
 
 //SEO
 $lang['calendar.seo.description.root'] = 'All events of :site.';
+$lang['calendar.seo.description.pending'] = 'All pending events.';
 
 //Feed name
 $lang['calendar.feed.name'] = 'Events';

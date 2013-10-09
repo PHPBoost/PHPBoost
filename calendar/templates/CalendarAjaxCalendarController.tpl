@@ -19,10 +19,10 @@
 		# ENDIF #
 		<div class="calendar_container">
 			<div class="calendar_top_l">
-				<a class="change_month_link" onclick="ChangeMonth(${escapejs(LINK_PREVIOUS_MONTH)});" title="{PREVIOUS_MONTH_TITLE}">&laquo;</a>
+				<a class="change_month_link" onclick="ChangeMonth(${escapejs(U_PREVIOUS_MONTH)});" title="{PREVIOUS_MONTH_TITLE}">&laquo;</a>
 			</div>
 			<div class="calendar_top_r">
-				<a class="change_month_link" onclick="ChangeMonth(${escapejs(LINK_NEXT_MONTH)});" title="{NEXT_MONTH_TITLE}">&raquo;</a>
+				<a class="change_month_link" onclick="ChangeMonth(${escapejs(U_NEXT_MONTH)});" title="{NEXT_MONTH_TITLE}">&raquo;</a>
 			</div>
 			<div class="calendar_top">
 				{DATE} 

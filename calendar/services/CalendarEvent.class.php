@@ -30,6 +30,7 @@ class CalendarEvent
 	private $id;
 	private $id_cat;
 	private $title;
+	private $rewrited_title;
 	private $contents;
 	
 	private $location;
@@ -48,7 +49,6 @@ class CalendarEvent
 	
 	private $repeat_number;
 	private $repeat_type;
-	private $id_parent_event;
 	
 	const DISPLAY_REGISTERED_USERS_AUTHORIZATION = 1;
 	const REGISTER_AUTHORIZATION = 2;
@@ -87,6 +87,16 @@ class CalendarEvent
 	public function get_title()
 	{
 		return $this->title;
+	}
+	
+	public function set_rewrited_title($title)
+	{
+		$this->rewrited_title = Url::encode_rewrite($title);
+	}
+	
+	public function get_rewrited_title()
+	{
+		return $this->rewrited_title;
 	}
 	
 	public function set_contents($contents)
@@ -239,62 +249,6 @@ class CalendarEvent
 		return $this->repeat_type != self::NEVER;
 	}
 	
-	public function set_id_parent_event($id_parent_event)
-	{
-		$this->id_parent_event = $id_parent_event;
-	}
-	
-	public function get_id_parent_event()
-	{
-		return $this->id_parent_event;
-	}
-	
-	public function belongs_to_a_serie()
-	{
-		return $this->id_parent_event || $this->is_repeatable();
-	}
-	
-	public function is_parent_event()
-	{
-		return $this->belongs_to_a_serie() && !$this->id_parent_event;
-	}
-	
-	public function get_events_of_the_serie()
-	{
-		$events = array();
-		
-		if ($this->belongs_to_a_serie())
-		{
-			if ($this->is_parent_event())
-			{
-				$result = PersistenceContext::get_querier()->select("SELECT *
-				FROM " . CalendarSetup::$calendar_table . " calendar
-				LEFT JOIN " . DB_TABLE_MEMBER . " author ON author.user_id = calendar.author_id
-				WHERE id=:id", array(
-					'id' => $this->id
-				));
-			}
-			else
-			{
-				$result = PersistenceContext::get_querier()->select("SELECT *
-				FROM " . CalendarSetup::$calendar_table . " calendar
-				LEFT JOIN " . DB_TABLE_MEMBER . " author ON author.user_id = calendar.author_id
-				WHERE id_parent_event=:id_parent_event OR id=:id_parent_event", array(
-					'id_parent_event' => $this->id_parent_event
-				));
-			}
-			
-			foreach ($result as $row)
-			{
-				$event = new CalendarEvent();
-				$event->set_properties($row);
-				$events[] = $event;
-			}
-		}
-		
-		return $events;
-	}
-	
 	public function is_authorized_to_add()
 	{
 		return CalendarAuthorizationsService::check_authorizations()->write() || CalendarAuthorizationsService::check_authorizations()->contribution();
@@ -327,8 +281,7 @@ class CalendarEvent
 			'max_registred_members' => $this->get_max_registred_members(),
 			'register_authorizations' => serialize($this->get_register_authorizations()),
 			'repeat_number' => $this->get_repeat_number(),
-			'repeat_type' => $this->get_repeat_type(),
-			'id_parent_event' => $this->get_id_parent_event()
+			'repeat_type' => $this->get_repeat_type()
 		);
 	}
 	
@@ -337,6 +290,7 @@ class CalendarEvent
 		$this->set_id($properties['id']);
 		$this->set_id_cat($properties['id_category']);
 		$this->set_title($properties['title']);
+		$this->set_rewrited_title($properties['title']);
 		$this->set_contents($properties['contents']);
 		$this->set_location($properties['location']);
 		$this->start_date = !empty($properties['start_date']) ? new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $properties['start_date']) : null;
@@ -356,7 +310,6 @@ class CalendarEvent
 		$this->set_register_authorizations(unserialize($properties['register_authorizations']));
 		$this->set_repeat_number($properties['repeat_number']);
 		$this->set_repeat_type($properties['repeat_type']);
-		$this->set_id_parent_event($properties['id_parent_event']);
 		$this->creation_date = new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $properties['creation_date']);
 		
 		$user = new User();
@@ -381,7 +334,6 @@ class CalendarEvent
 		
 		$this->repeat_number = 1;
 		$this->repeat_type = self::NEVER;
-		$this->id_parent_event = 0;
 		
 		if (CalendarAuthorizationsService::check_authorizations()->write())
 			$this->approve();
@@ -399,7 +351,6 @@ class CalendarEvent
 			'C_EDIT' => $this->is_authorized_to_edit(),
 			'C_DELETE' => $this->is_authorized_to_delete(),
 			'C_LOCATION' => $this->get_location(),
-			'C_BELONGS_TO_A_SERIE' => $this->belongs_to_a_serie(),
 			'C_APPROVED' => (int)$this->approved,
 			'C_AUTHOR_GROUP_COLOR' => !empty($user_group_color),
 			
@@ -427,12 +378,12 @@ class CalendarEvent
 			'CATEGORY_COLOR' => $category->get_id() != Category::ROOT_CATEGORY ? $category->get_color() : '',
 			
 			'U_SYNDICATION' => SyndicationUrlBuilder::rss('calendar', $this->id_cat)->rel(),
-			'U_AUTHOR_PROFILE' => UserUrlBuilder::profile($user->get_id())->absolute(),
-			'U_LINK' => CalendarUrlBuilder::display_event($category->get_id(), $category->get_rewrited_name(), $this->id, Url::encode_rewrite($this->title))->rel(),
+			'U_AUTHOR_PROFILE' => UserUrlBuilder::profile($user->get_id())->rel(),
+			'U_LINK' => CalendarUrlBuilder::display_event($category->get_id(), $category->get_rewrited_name(), $this->id, $this->rewrited_title)->rel(),
 			'U_CATEGORY' => CalendarUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name())->rel(),
 			'U_EDIT' => CalendarUrlBuilder::edit_event($this->id)->rel(),
 			'U_DELETE' => CalendarUrlBuilder::delete_event($this->id)->rel(),
-			'U_COMMENTS' => CalendarUrlBuilder::display_event_comments($category->get_id(), $category->get_rewrited_name(), $this->id, Url::encode_rewrite($this->title))->rel()
+			'U_COMMENTS' => CalendarUrlBuilder::display_event_comments($category->get_id(), $category->get_rewrited_name(), $this->id, $this->rewrited_title)->rel()
 		);
 	}
 	

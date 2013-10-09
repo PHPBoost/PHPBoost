@@ -1,14 +1,10 @@
+# IF C_PARTICIPATE #
 <script type="text/javascript">
 <!--
-function Confirm()
-{
-	return confirm("{@calendar.actions.confirm.del_event}");
-}
-# IF C_PARTICIPATE #
 function change_registration() {
 	var action = '';
 	
-	if ($('subscription_type').value == 0)
+	if (document.getElementById("subscription_type").value == 0)
 		action = 'subscribe';
 	else
 		action = 'unsubscribe';
@@ -31,27 +27,21 @@ function change_registration() {
 		}
 	});
 }
-# ENDIF #
 -->
 </script>
+# ENDIF #
 
 <article itemscope="itemscope" itemtype="http://schema.org/Event">
 	<header>
 		<h1>
-			<a href="{U_SYNDICATION}" class="syndication" title="${LangLoader::get_message('syndication', 'main')}"></a>
+			<a href="{U_SYNDICATION}" title="${LangLoader::get_message('syndication', 'main')}" class="syndication"></a>
 			<span id="name" itemprop="name">{TITLE}</span>
-			
 			<span class="tools">
-				# IF C_COMMENTS_ENABLED #<a href="{U_COMMENTS}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/com_mini.png" alt="" class="valign_middle" /> {L_COMMENTS}</a># ENDIF #
 				# IF C_EDIT #
-				<a href="{U_EDIT}" title="{L_EDIT}" class="img_link">
-					<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="{L_EDIT}" />
-				</a>
+					<a href="{U_EDIT}" title="${LangLoader::get_message('edit', 'main')}" class="edit"></a>
 				# ENDIF #
 				# IF C_DELETE #
-				<a href="{U_DELETE}" title="{L_DELETE}"# IF NOT C_BELONGS_TO_A_SERIE # onclick="javascript:return Confirm();"# ENDIF #>
-					<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" />
-				</a>
+					<a href="{U_DELETE}" title="${LangLoader::get_message('delete', 'main')}" class="delete"></a>
 				# ENDIF #
 			</span>
 		</h1>

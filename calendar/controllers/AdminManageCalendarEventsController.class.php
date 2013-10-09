@@ -62,7 +62,7 @@ class AdminManageCalendarEventsController extends AdminModuleController
 		$fieldset->add_field(new FormFieldLabel($this->lang['calendar.sort_filter.title']));
 		
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_fields', '', $field, $sort_fields,
-			array('events' => array('change' => 'document.location = "'. CalendarUrlBuilder::manage_events()->absolute() .'" + HTMLForms.getField("sort_fields").getValue() + "/" + HTMLForms.getField("sort_mode").getValue();'))
+			array('events' => array('change' => 'document.location = "'. CalendarUrlBuilder::manage_events()->rel() .'" + HTMLForms.getField("sort_fields").getValue() + "/" + HTMLForms.getField("sort_mode").getValue();'))
 		));
 		
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_mode', '', $mode,
@@ -70,7 +70,7 @@ class AdminManageCalendarEventsController extends AdminModuleController
 				new FormFieldSelectChoiceOption($this->lang['calendar.sort_mode.asc'], 'asc'),
 				new FormFieldSelectChoiceOption($this->lang['calendar.sort_mode.desc'], 'desc')
 			), 
-			array('events' => array('change' => 'document.location = "' . CalendarUrlBuilder::manage_events()->absolute() . '" + HTMLForms.getField("sort_fields").getValue() + "/" + HTMLForms.getField("sort_mode").getValue();'))
+			array('events' => array('change' => 'document.location = "' . CalendarUrlBuilder::manage_events()->rel() . '" + HTMLForms.getField("sort_fields").getValue() + "/" + HTMLForms.getField("sort_mode").getValue();'))
 		));
 		
 		$this->form = $form;
@@ -148,7 +148,7 @@ class AdminManageCalendarEventsController extends AdminModuleController
 				
 				$this->view->assign_block_vars('events', array_merge($event->get_array_tpl_vars(), array(
 					'DATE' => $date,
-					'U_DELETE' => CalendarUrlBuilder::delete_event($row['id'] . '/admin/' . $field . '/' . $mode . '/' . $page)->absolute()
+					'U_DELETE' => CalendarUrlBuilder::delete_event($row['id'] . '/admin/' . $field . '/' . $mode . '/' . $page)->rel()
 				)));
 			}
 		}
@@ -156,7 +156,7 @@ class AdminManageCalendarEventsController extends AdminModuleController
 		$this->view->put_all(array(
 			'C_EVENTS' => $events_number,
 			'FORM' => $this->form->display(),
-			'U_ADD' => CalendarUrlBuilder::add_event()->absolute()
+			'U_ADD' => CalendarUrlBuilder::add_event()->rel()
 		));
 	}
 	

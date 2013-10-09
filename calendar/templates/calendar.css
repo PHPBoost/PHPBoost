@@ -21,12 +21,11 @@
 
 .calendar_top_l{
 	float:left;
-	width:11px;
 	-webkit-border-top-left-radius: 10px;
 	-moz-border-radius-topleft: 10px;
 	border-top-left-radius: 10px;
 	border-left:1px solid #BEBEBE;
-	padding-left: 28px;
+	padding-left: 31px;
 }
 
 .calendar_top_l a, .calendar_top_l a:hover, .calendar_top_r a, .calendar_top_r a:hover{
@@ -37,7 +36,7 @@
 
 .calendar_top_r {
 	float:right;
-	width:39px;
+	width:40px;
 	-webkit-border-top-right-radius: 10px;
 	-moz-border-radius-topright: 10px;
 	border-top-right-radius: 10px;
@@ -95,7 +94,7 @@ div.event_display_dates{
 	font-weight:normal;
 	padding:4px;
 	float:right;
-	width: 160px;
+	width: 175px;
 }
 
 .text_month{

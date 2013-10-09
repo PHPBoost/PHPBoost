@@ -1,12 +1,23 @@
 # INCLUDE MSG #
 
-<script type="text/javascript">
-<!--
-function Confirm() {
-	return confirm("{@calendar.actions.confirm.del_event}");
-}
--->
-</script>
+<menu class="dynamic_menu right">
+	<ul>
+		<li><a><i class="icon-cog"></i></a>
+			<ul>
+				# IF C_ADD #
+				<li>
+					<a href="${relative_url(CalendarUrlBuilder::add_event())}" title="{@calendar.titles.add_event}">{@calendar.titles.add_event}</a>
+				</li>
+				# ENDIF #
+				# IF C_PENDING_EVENTS #
+				<li>
+					<a href="${relative_url(CalendarUrlBuilder::display_pending_events())}" title="{@calendar.pending}">{@calendar.pending}</a>
+				</li>
+				# ENDIF #
+			</ul>
+		</li>
+	</ul>
+</menu>
 
 <section>
 	<header>
@@ -14,13 +25,6 @@ function Confirm() {
 			<a href="${relative_url(SyndicationUrlBuilder::rss('calendar'))}" class="syndication" title="${LangLoader::get_message('syndication', 'main')}"></a>
 			{@module_title}
 		</h1>
-		<div class="module_actions">
-		# IF C_ADD #
-		<a href="{U_ADD}" title="{@calendar.titles.add_event}" class="img_link">
-			<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/add.png" class="valign_middle" alt="{@calendar.titles.add_event}" />
-		</a>
-		# ENDIF #
-		</div>
 	</header>
 		
 	<div class="content">
@@ -32,15 +36,8 @@ function Confirm() {
 	<div class="spacer">&nbsp;</div>
 	
 	<div id="events" class="event_container">
-		<div class="module_actions">
-		# IF C_ADD #
-		<a href="{U_ADD}" title="{@calendar.titles.add_event}" class="img_link">
-			<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/add.png" class="valign_middle" alt="{@calendar.titles.add_event}" />
-		</a>
-		# ENDIF #
-		</div>
 		<div class="event_top_title">
-			<strong>{@calendar.titles.events}</strong>
+			<strong>{L_EVENTS}</strong>
 		</div>
 		<div class="event_date">{DATE}</div>
 		
@@ -55,14 +52,10 @@ function Confirm() {
 						<span class="tools">
 							# IF C_COMMENTS_ENABLED #<a href="{event.U_COMMENTS}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/com_mini.png" alt="" class="valign_middle" /> {event.L_COMMENTS}</a># ENDIF #
 							# IF event.C_EDIT #
-							<a href="{event.U_EDIT}" title="{L_EDIT}" class="img_link">
-								<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="{L_EDIT}" />
-							</a>
+								<a href="{event.U_EDIT}" title="${LangLoader::get_message('edit', 'main')}" class="edit"></a>
 							# ENDIF #
 							# IF event.C_DELETE #
-							<a href="{event.U_DELETE}" title="{L_DELETE}"# IF NOT event.C_BELONGS_TO_A_SERIE # onclick="javascript:return Confirm();"# ENDIF #>
-								<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" />
-							</a>
+								<a href="{event.U_DELETE}" title="${LangLoader::get_message('delete', 'main')}" class="delete"></a>
 							# ENDIF #
 						</span>
 					</h1>
@@ -85,7 +78,7 @@ function Confirm() {
 					# ENDIF #
 					
 					<div class="event_display_author" itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
-						{@calendar.labels.created_by} : # IF event.AUTHOR #<a itemprop="author" href="{event.U_AUTHOR_PROFILE}" class="small_link {event.AUTHOR_LEVEL_CLASS}" # IF event.C_AUTHOR_GROUP_COLOR # style="color:{event.AUTHOR_GROUP_COLOR}" # ENDIF #>{event.AUTHOR}</a># ELSE #{L_GUEST}# ENDIF #
+						{@calendar.labels.created_by} : # IF event.AUTHOR #<a itemprop="author" href="{event.U_AUTHOR_PROFILE}" class="small_link {event.AUTHOR_LEVEL_CLASS}" # IF event.C_AUTHOR_GROUP_COLOR # style="color:{event.AUTHOR_GROUP_COLOR}" # ENDIF #>{event.AUTHOR}</a># ELSE #${LangLoader::get_message('guest', 'main')}# ENDIF #
 					</div>
 					<div class="event_display_dates">
 						{@calendar.labels.start_date} : <span class="float_right"><time datetime="{event.START_DATE_ISO8601}" itemprop="startDate">{event.START_DATE}</time></span>
