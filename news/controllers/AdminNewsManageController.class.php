@@ -75,8 +75,8 @@ class AdminNewsManageController extends AdminModuleController
 			
 			$date = new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, $row['creation_date']);
 			$this->view->assign_block_vars('news', array(
-				'EDIT_LINK' => NewsUrlBuilder::edit_news($row['id'])->absolute(),
-				'DELETE_LINK' => NewsUrlBuilder::delete_news($row['id'])->absolute(),
+				'EDIT_LINK' => NewsUrlBuilder::edit_news($row['id'])->rel(),
+				'DELETE_LINK' => NewsUrlBuilder::delete_news($row['id'])->rel(),
 				'NAME' => $row['name'],
 				'CATEGORY' => !empty($row['category_name']) ? $row['category_name'] : LangLoader::get_message('root', 'main'),
 				'DATE' => $date->format(Date::FORMAT_DAY_MONTH_YEAR, TIMEZONE_AUTO),

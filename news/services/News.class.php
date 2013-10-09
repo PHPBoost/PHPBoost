@@ -235,7 +235,7 @@ class News
 	
 	public function has_picture()
 	{
-		$picture = $this->picture_url->absolute();
+		$picture = $this->picture_url->rel();
 		return !empty($picture);
 	}
 	
@@ -382,14 +382,14 @@ class News
 			'CATEGORY_DESCRIPTION' => $category->get_description(),
 			'CATEGORY_IMAGE' => $category->get_image(),
 		
-			'U_SYNDICATION' => SyndicationUrlBuilder::rss('news', $this->id_cat)->absolute(),
-			'U_AUTHOR_PROFILE' => UserUrlBuilder::profile($this->get_author_user()->get_id())->absolute(),
-			'U_LINK' => NewsUrlBuilder::display_news($category->get_id(), $category->get_rewrited_name(), $this->id, $this->rewrited_name)->absolute(),
-			'U_CATEGORY' => NewsUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name())->absolute(),
-			'U_EDIT' => NewsUrlBuilder::edit_news($this->id)->absolute(),
-			'U_DELETE' => NewsUrlBuilder::delete_news($this->id)->absolute(),
-			'U_PICTURE' => $this->get_picture()->absolute(),
-			'U_COMMENTS' => NewsUrlBuilder::display_comments_news($category->get_id(), $category->get_rewrited_name(), $this->id, $this->rewrited_name)->absolute()
+			'U_SYNDICATION' => SyndicationUrlBuilder::rss('news', $this->id_cat)->rel(),
+			'U_AUTHOR_PROFILE' => UserUrlBuilder::profile($this->get_author_user()->get_id())->rel(),
+			'U_LINK' => NewsUrlBuilder::display_news($category->get_id(), $category->get_rewrited_name(), $this->id, $this->rewrited_name)->rel(),
+			'U_CATEGORY' => NewsUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name())->rel(),
+			'U_EDIT' => NewsUrlBuilder::edit_news($this->id)->rel(),
+			'U_DELETE' => NewsUrlBuilder::delete_news($this->id)->rel(),
+			'U_PICTURE' => $this->get_picture()->rel(),
+			'U_COMMENTS' => NewsUrlBuilder::display_comments_news($category->get_id(), $category->get_rewrited_name(), $this->id, $this->rewrited_name)->rel()
 		);
 	}
 }
