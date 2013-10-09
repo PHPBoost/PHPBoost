@@ -135,8 +135,8 @@ class BugtrackerRoadmapListController extends ModuleController
 				'L_COMMENTS'		=> $row['number_comments'] <= 1 ? LangLoader::get_message('comment', 'comments-common') : LangLoader::get_message('comments', 'comments-common'),
 				'STATUS'			=> $this->lang['bugs.status.' . $row['status']],
 				'DATE' 				=> !empty($row['fix_date']) ? gmdate_format($config->get_date_form(), $row['fix_date']) : $this->lang['bugs.labels.not_yet_fixed'],
-				'LINK_BUG_DETAIL'	=> BugtrackerUrlBuilder::detail($row['id'] . '/' . Url::encode_rewrite($row['title']))->absolute(),
-				'LINK_COMMENTS'		=> BugtrackerUrlBuilder::detail($row['id'] . '/#comments_list')->absolute()
+				'LINK_BUG_DETAIL'	=> BugtrackerUrlBuilder::detail($row['id'] . '/' . Url::encode_rewrite($row['title']))->rel(),
+				'LINK_COMMENTS'		=> BugtrackerUrlBuilder::detail($row['id'] . '/#comments_list')->rel()
 			));
 		}
 		
@@ -154,16 +154,16 @@ class BugtrackerRoadmapListController extends ModuleController
 			'L_NO_BUG'					=> $roadmap_status == 'in_progress' ? $this->lang['bugs.notice.no_bug_in_progress'] : $this->lang['bugs.notice.no_bug_fixed'],
 			'PROGRESS_BAR'				=> BugtrackerViews::build_progress_bar(),
 			'LEGEND'					=> BugtrackerViews::build_legend($displayed_severities, 'roadmap'),
-			'LINK_BUG_ID_TOP' 			=> BugtrackerUrlBuilder::roadmap($r_version . '/' . $roadmap_status . '/id/top/'. $current_page)->absolute(),
-			'LINK_BUG_ID_BOTTOM' 		=> BugtrackerUrlBuilder::roadmap($r_version . '/' . $roadmap_status . '/id/bottom/'. $current_page)->absolute(),
-			'LINK_BUG_TITLE_TOP' 		=> BugtrackerUrlBuilder::roadmap($r_version . '/' . $roadmap_status . '/title/top/'. $current_page)->absolute(),
-			'LINK_BUG_TITLE_BOTTOM' 	=> BugtrackerUrlBuilder::roadmap($r_version . '/' . $roadmap_status . '/title/bottom/'. $current_page)->absolute(),
-			'LINK_BUG_SEVERITY_TOP' 	=> BugtrackerUrlBuilder::roadmap($r_version . '/' . $roadmap_status . '/severity/top/'. $current_page)->absolute(),
-			'LINK_BUG_SEVERITY_BOTTOM'	=> BugtrackerUrlBuilder::roadmap($r_version . '/' . $roadmap_status . '/severity/bottom/'. $current_page)->absolute(),
-			'LINK_BUG_STATUS_TOP'		=> BugtrackerUrlBuilder::roadmap($r_version . '/' . $roadmap_status . '/status/top/'. $current_page)->absolute(),
-			'LINK_BUG_STATUS_BOTTOM'	=> BugtrackerUrlBuilder::roadmap($r_version . '/' . $roadmap_status . '/status/bottom/'. $current_page)->absolute(),
-			'LINK_BUG_DATE_TOP' 		=> BugtrackerUrlBuilder::roadmap($r_version . '/' . $roadmap_status . '/date/top/'. $current_page)->absolute(),
-			'LINK_BUG_DATE_BOTTOM'		=> BugtrackerUrlBuilder::roadmap($r_version . '/' . $roadmap_status . '/date/bottom/'. $current_page)->absolute()
+			'LINK_BUG_ID_TOP' 			=> BugtrackerUrlBuilder::roadmap($r_version . '/' . $roadmap_status . '/id/top/'. $current_page)->rel(),
+			'LINK_BUG_ID_BOTTOM' 		=> BugtrackerUrlBuilder::roadmap($r_version . '/' . $roadmap_status . '/id/bottom/'. $current_page)->rel(),
+			'LINK_BUG_TITLE_TOP' 		=> BugtrackerUrlBuilder::roadmap($r_version . '/' . $roadmap_status . '/title/top/'. $current_page)->rel(),
+			'LINK_BUG_TITLE_BOTTOM' 	=> BugtrackerUrlBuilder::roadmap($r_version . '/' . $roadmap_status . '/title/bottom/'. $current_page)->rel(),
+			'LINK_BUG_SEVERITY_TOP' 	=> BugtrackerUrlBuilder::roadmap($r_version . '/' . $roadmap_status . '/severity/top/'. $current_page)->rel(),
+			'LINK_BUG_SEVERITY_BOTTOM'	=> BugtrackerUrlBuilder::roadmap($r_version . '/' . $roadmap_status . '/severity/bottom/'. $current_page)->rel(),
+			'LINK_BUG_STATUS_TOP'		=> BugtrackerUrlBuilder::roadmap($r_version . '/' . $roadmap_status . '/status/top/'. $current_page)->rel(),
+			'LINK_BUG_STATUS_BOTTOM'	=> BugtrackerUrlBuilder::roadmap($r_version . '/' . $roadmap_status . '/status/bottom/'. $current_page)->rel(),
+			'LINK_BUG_DATE_TOP' 		=> BugtrackerUrlBuilder::roadmap($r_version . '/' . $roadmap_status . '/date/top/'. $current_page)->rel(),
+			'LINK_BUG_DATE_BOTTOM'		=> BugtrackerUrlBuilder::roadmap($r_version . '/' . $roadmap_status . '/date/bottom/'. $current_page)->rel()
 		));
 		
 		return $this->view;
@@ -177,11 +177,11 @@ class BugtrackerRoadmapListController extends ModuleController
 		$form->add_fieldset($fieldset);
 		
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('roadmap_version', $this->lang['bugs.titles.choose_version'], Url::encode_rewrite($requested_version['name']), $this->build_select_versions(),
-			array('events' => array('change' => 'document.location = "'. BugtrackerUrlBuilder::roadmap()->absolute() .'" + HTMLForms.getField("roadmap_version").getValue() + "/" + HTMLForms.getField("status").getValue();')
+			array('events' => array('change' => 'document.location = "'. BugtrackerUrlBuilder::roadmap()->rel() .'" + HTMLForms.getField("roadmap_version").getValue() + "/" + HTMLForms.getField("status").getValue();')
 		)));
 		
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('status', $this->lang['bugs.labels.fields.status'], $requested_status, $this->build_select_status(),
-			array('events' => array('change' => 'document.location = "'. BugtrackerUrlBuilder::roadmap(Url::encode_rewrite($requested_version['name']))->absolute() .'" + "/" + HTMLForms.getField("status").getValue();')
+			array('events' => array('change' => 'document.location = "'. BugtrackerUrlBuilder::roadmap(Url::encode_rewrite($requested_version['name']))->rel() .'" + "/" + HTMLForms.getField("status").getValue();')
 		)));
 		
 		$fieldset = new FormFieldsetHorizontal('informations');

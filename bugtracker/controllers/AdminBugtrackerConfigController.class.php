@@ -257,7 +257,7 @@ class AdminBugtrackerConfigController extends AdminModuleController
 			'C_DISPLAY_DEFAULT_DELETE_BUTTON'	=> !empty($default_type) ? true : false,
 			'L_NAME'							=> $main_lang['name'],
 			'L_DELETE'							=> $main_lang['delete'],
-			'LINK_DELETE_DEFAULT'				=> BugtrackerUrlBuilder::delete_default_parameter('type')->absolute()
+			'LINK_DELETE_DEFAULT'				=> BugtrackerUrlBuilder::delete_default_parameter('type')->rel()
 		));
 		
 		foreach ($types as $key => $type)
@@ -266,7 +266,7 @@ class AdminBugtrackerConfigController extends AdminModuleController
 				'ID'			=> $key,
 				'NAME'			=> stripslashes($type),
 				'IS_DEFAULT'	=> ($default_type == $key) ? 'checked=checked' : '',
-				'LINK_DELETE'	=> BugtrackerUrlBuilder::delete_parameter('type', $key)->absolute()
+				'LINK_DELETE'	=> BugtrackerUrlBuilder::delete_parameter('type', $key)->rel()
 			));
 		}
 		
@@ -295,7 +295,7 @@ class AdminBugtrackerConfigController extends AdminModuleController
 			'C_DISPLAY_DEFAULT_DELETE_BUTTON'	=> !empty($default_category) ? true : false,
 			'L_NAME'							=> $main_lang['name'],
 			'L_DELETE'							=> $main_lang['delete'],
-			'LINK_DELETE_DEFAULT'				=> BugtrackerUrlBuilder::delete_default_parameter('category')->absolute()
+			'LINK_DELETE_DEFAULT'				=> BugtrackerUrlBuilder::delete_default_parameter('category')->rel()
 		));
 		
 		foreach ($categories as $key => $category)
@@ -304,7 +304,7 @@ class AdminBugtrackerConfigController extends AdminModuleController
 				'ID'			=> $key,
 				'NAME'			=> stripslashes($category),
 				'IS_DEFAULT'	=> ($default_category == $key) ? 'checked=checked' : '',
-				'LINK_DELETE'	=> BugtrackerUrlBuilder::delete_parameter('category', $key)->absolute()
+				'LINK_DELETE'	=> BugtrackerUrlBuilder::delete_parameter('category', $key)->rel()
 			));
 		}
 		
@@ -333,7 +333,7 @@ class AdminBugtrackerConfigController extends AdminModuleController
 			'C_DISPLAY_DEFAULT_DELETE_BUTTON'	=> !empty($default_severity) ? true : false,
 			'L_NAME'							=> $main_lang['name'],
 			'L_DELETE'							=> $main_lang['delete'],
-			'LINK_DELETE_DEFAULT'				=> BugtrackerUrlBuilder::delete_default_parameter('severity')->absolute()
+			'LINK_DELETE_DEFAULT'				=> BugtrackerUrlBuilder::delete_default_parameter('severity')->rel()
 		));
 		
 		foreach ($severities as $key => $severity)
@@ -365,7 +365,7 @@ class AdminBugtrackerConfigController extends AdminModuleController
 			'C_DISPLAY_DEFAULT_DELETE_BUTTON'	=> !empty($default_priority) ? true : false,
 			'L_NAME'							=> $main_lang['name'],
 			'L_DELETE'							=> $main_lang['delete'],
-			'LINK_DELETE_DEFAULT'				=> BugtrackerUrlBuilder::delete_default_parameter('priority')->absolute()
+			'LINK_DELETE_DEFAULT'				=> BugtrackerUrlBuilder::delete_default_parameter('priority')->rel()
 		));
 		
 		foreach ($priorities as $key => $priority)
@@ -395,7 +395,7 @@ class AdminBugtrackerConfigController extends AdminModuleController
 			'C_VERSIONS'						=> !empty($versions) ? true : false,
 			'C_DISPLAY_DEFAULT_DELETE_BUTTON'	=> !empty($default_version) ? true : false,
 			'L_DELETE'							=> $main_lang['delete'],
-			'LINK_DELETE_DEFAULT'				=> BugtrackerUrlBuilder::delete_default_parameter('version')->absolute()
+			'LINK_DELETE_DEFAULT'				=> BugtrackerUrlBuilder::delete_default_parameter('version')->rel()
 		));
 		
 		foreach ($versions as $key => $version)
@@ -407,7 +407,7 @@ class AdminBugtrackerConfigController extends AdminModuleController
 				'DETECTED_IN'		=> $version['detected_in'] ? 'checked=checked' : '',
 				'DISPLAY_DEFAULT'	=> !$version['detected_in'] ? 'style="display:none"' : '',
 				'IS_DEFAULT'		=> ($default_version == $key) ? 'checked=checked' : '',
-				'LINK_DELETE'		=> BugtrackerUrlBuilder::delete_parameter('version', $key)->absolute()
+				'LINK_DELETE'		=> BugtrackerUrlBuilder::delete_parameter('version', $key)->rel()
 			));
 		}
 		

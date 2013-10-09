@@ -74,13 +74,13 @@ class BugtrackerDeleteBugController extends ModuleController
 		switch ($back_page)
 		{
 			case 'detail' :
-				$redirect = BugtrackerUrlBuilder::detail_success('delete/'. $id)->absolute();
+				$redirect = BugtrackerUrlBuilder::detail_success('delete/'. $id)->rel();
 				break;
 			case 'solved' :
-				$redirect = BugtrackerUrlBuilder::solved_success('delete/'. $id . '/' . $page . (!empty($back_filter) ? '/' . $back_filter . '/' . $filter_id : ''))->absolute();
+				$redirect = BugtrackerUrlBuilder::solved_success('delete/'. $id . '/' . $page . (!empty($back_filter) ? '/' . $back_filter . '/' . $filter_id : ''))->rel();
 				break;
 			default :
-				$redirect = BugtrackerUrlBuilder::unsolved_success('delete/'. $id . '/' . $page . (!empty($back_filter) ? '/' . $back_filter . '/' . $filter_id : ''))->absolute();
+				$redirect = BugtrackerUrlBuilder::unsolved_success('delete/'. $id . '/' . $page . (!empty($back_filter) ? '/' . $back_filter . '/' . $filter_id : ''))->rel();
 				break;
 		}
 		

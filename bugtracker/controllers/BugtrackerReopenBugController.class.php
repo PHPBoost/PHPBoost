@@ -90,10 +90,10 @@ class BugtrackerReopenBugController extends ModuleController
 			switch ($back_page)
 			{
 				case 'detail' :
-					$redirect = BugtrackerUrlBuilder::detail_success('reopen/'. $id)->absolute();
+					$redirect = BugtrackerUrlBuilder::detail_success('reopen/'. $id)->rel();
 					break;
 				default :
-					$redirect = BugtrackerUrlBuilder::solved_success('reopen/'. $id . '/' . $page . (!empty($back_filter) ? '/' . $back_filter . '/' . $filter_id : ''))->absolute();
+					$redirect = BugtrackerUrlBuilder::solved_success('reopen/'. $id . '/' . $page . (!empty($back_filter) ? '/' . $back_filter . '/' . $filter_id : ''))->rel();
 					break;
 			}
 			

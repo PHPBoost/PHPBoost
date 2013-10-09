@@ -61,11 +61,11 @@ class BugtrackerPMService
 			{
 				case 'assigned':
 					$pm_title = StringVars::replace_vars($lang['bugs.pm.assigned.title'], array('id' => $bug_id, 'author' => $current_user->get_id() != User::VISITOR_LEVEL ? $current_user->get_pseudo() : LangLoader::get_message('guest', 'main')));
-					$pm_content = nl2br(StringVars::replace_vars($lang['bugs.pm.assigned.contents'], array('link' => '<a href="' . BugtrackerUrlBuilder::detail($bug_id)->absolute() . '">' . BugtrackerUrlBuilder::detail($bug_id)->absolute() . '</a>')));
+					$pm_content = nl2br(StringVars::replace_vars($lang['bugs.pm.assigned.contents'], array('link' => '<a href="' . BugtrackerUrlBuilder::detail($bug_id)->rel() . '">' . BugtrackerUrlBuilder::detail($bug_id)->rel() . '</a>')));
 					break;
 				case 'comment':
 					$pm_title = StringVars::replace_vars($lang['bugs.pm.comment.title'], array('id' => $bug_id, 'author' => $current_user->get_id() != User::VISITOR_LEVEL ? $current_user->get_pseudo() : LangLoader::get_message('guest', 'main')));
-					$pm_content = nl2br(StringVars::replace_vars($lang['bugs.pm.comment.contents'], array('author' => $current_user->get_id() != User::VISITOR_LEVEL ? $current_user->get_pseudo() : LangLoader::get_message('guest', 'main'), 'id' => $bug_id, 'comment' => $message, 'link' => '<a href="' . BugtrackerUrlBuilder::detail($bug_id . '/#comments_list')->absolute() . '">' . BugtrackerUrlBuilder::detail($bug_id . '/#comments_list')->absolute() . '</a>')));
+					$pm_content = nl2br(StringVars::replace_vars($lang['bugs.pm.comment.contents'], array('author' => $current_user->get_id() != User::VISITOR_LEVEL ? $current_user->get_pseudo() : LangLoader::get_message('guest', 'main'), 'id' => $bug_id, 'comment' => $message, 'link' => '<a href="' . BugtrackerUrlBuilder::detail($bug_id . '/#comments_list')->rel() . '">' . BugtrackerUrlBuilder::detail($bug_id . '/#comments_list')->rel() . '</a>')));
 					break;
 				case 'delete':
 					$pm_title = StringVars::replace_vars($lang['bugs.pm.delete.title'], array('id' => $bug_id, 'author' => $current_user->get_id() != User::VISITOR_LEVEL ? $current_user->get_pseudo() : LangLoader::get_message('guest', 'main')));
@@ -73,15 +73,15 @@ class BugtrackerPMService
 					break;
 				case 'edit':
 					$pm_title = StringVars::replace_vars($lang['bugs.pm.edit.title'], array('id' => $bug_id, 'author' => $current_user->get_id() != User::VISITOR_LEVEL ? $current_user->get_pseudo() : LangLoader::get_message('guest', 'main')));
-					$pm_content = nl2br(StringVars::replace_vars($lang['bugs.pm.edit.contents'], array('author' => $current_user->get_id() != User::VISITOR_LEVEL ? $current_user->get_pseudo() : LangLoader::get_message('guest', 'main'), 'id' => $bug_id, 'fields' => $message, 'link' => '<a href="' . BugtrackerUrlBuilder::detail($bug_id)->absolute() . '">' . BugtrackerUrlBuilder::detail($bug_id)->absolute() . '</a>')));
+					$pm_content = nl2br(StringVars::replace_vars($lang['bugs.pm.edit.contents'], array('author' => $current_user->get_id() != User::VISITOR_LEVEL ? $current_user->get_pseudo() : LangLoader::get_message('guest', 'main'), 'id' => $bug_id, 'fields' => $message, 'link' => '<a href="' . BugtrackerUrlBuilder::detail($bug_id)->rel() . '">' . BugtrackerUrlBuilder::detail($bug_id)->rel() . '</a>')));
 					break;
 				case 'reject':
 					$pm_title = StringVars::replace_vars($lang['bugs.pm.reject.title'], array('id' => $bug_id, 'author' => $current_user->get_id() != User::VISITOR_LEVEL ? $current_user->get_pseudo() : LangLoader::get_message('guest', 'main')));
-					$pm_content = nl2br(StringVars::replace_vars($lang['bugs.pm.reject.contents'], array('author' => $current_user->get_id() != User::VISITOR_LEVEL ? $current_user->get_pseudo() : LangLoader::get_message('guest', 'main'), 'id' => $bug_id, 'link' => '<a href="' . BugtrackerUrlBuilder::detail($bug_id)->absolute() . '">' . BugtrackerUrlBuilder::detail($bug_id)->absolute() . '</a>')));
+					$pm_content = nl2br(StringVars::replace_vars($lang['bugs.pm.reject.contents'], array('author' => $current_user->get_id() != User::VISITOR_LEVEL ? $current_user->get_pseudo() : LangLoader::get_message('guest', 'main'), 'id' => $bug_id, 'link' => '<a href="' . BugtrackerUrlBuilder::detail($bug_id)->rel() . '">' . BugtrackerUrlBuilder::detail($bug_id)->rel() . '</a>')));
 					break;
 				case 'reopen':
 					$pm_title = StringVars::replace_vars($lang['bugs.pm.reopen.title'], array('id' => $bug_id, 'author' => $current_user->get_id() != User::VISITOR_LEVEL ? $current_user->get_pseudo() : LangLoader::get_message('guest', 'main')));
-					$pm_content = nl2br(StringVars::replace_vars($lang['bugs.pm.reopen.contents'], array('author' => $current_user->get_id() != User::VISITOR_LEVEL ? $current_user->get_pseudo() : LangLoader::get_message('guest', 'main'), 'id' => $bug_id, 'link' => '<a href="' . BugtrackerUrlBuilder::detail($bug_id)->absolute() . '">' . BugtrackerUrlBuilder::detail($bug_id)->absolute() . '</a>')));
+					$pm_content = nl2br(StringVars::replace_vars($lang['bugs.pm.reopen.contents'], array('author' => $current_user->get_id() != User::VISITOR_LEVEL ? $current_user->get_pseudo() : LangLoader::get_message('guest', 'main'), 'id' => $bug_id, 'link' => '<a href="' . BugtrackerUrlBuilder::detail($bug_id)->rel() . '">' . BugtrackerUrlBuilder::detail($bug_id)->rel() . '</a>')));
 					break;
 			}
 			

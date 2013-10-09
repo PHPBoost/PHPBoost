@@ -426,16 +426,16 @@ class BugtrackerAddController extends ModuleController
 			switch ($back_page)
 			{
 				case 'roadmap' :
-					$redirect = BugtrackerUrlBuilder::roadmap_success('add/'. $id . '/' . $page)->absolute();
+					$redirect = BugtrackerUrlBuilder::roadmap_success('add/'. $id . '/' . $page)->rel();
 					break;
 				case 'stats' :
-					$redirect = BugtrackerUrlBuilder::stats_success('add/'. $id)->absolute();
+					$redirect = BugtrackerUrlBuilder::stats_success('add/'. $id)->rel();
 					break;
 				case 'solved' :
-					$redirect = BugtrackerUrlBuilder::solved_success('add/'. $id . '/' . $page . (!empty($back_filter) ? '/' . $back_filter . '/' . $filter_id : ''))->absolute();
+					$redirect = BugtrackerUrlBuilder::solved_success('add/'. $id . '/' . $page . (!empty($back_filter) ? '/' . $back_filter . '/' . $filter_id : ''))->rel();
 					break;
 				default :
-					$redirect = BugtrackerUrlBuilder::unsolved_success('add/'. $id . '/' . $page . (!empty($back_filter) ? '/' . $back_filter . '/' . $filter_id : ''))->absolute();
+					$redirect = BugtrackerUrlBuilder::unsolved_success('add/'. $id . '/' . $page . (!empty($back_filter) ? '/' . $back_filter . '/' . $filter_id : ''))->rel();
 					break;
 			}
 			

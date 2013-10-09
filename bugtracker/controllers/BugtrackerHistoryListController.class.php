@@ -122,8 +122,8 @@ class BugtrackerHistoryListController extends ModuleController
 				case 'assigned_to_id': 
 					$old_user = !empty($row['old_value']) && UserService::user_exists("WHERE user_aprob = 1 AND user_id=:user_id", array('user_id' => $row['old_value'])) ? UserService::get_user("WHERE user_aprob = 1 AND user_id=:user_id", array('user_id' => $row['old_value'])) : '';
 					$new_user = !empty($row['new_value']) && UserService::user_exists("WHERE user_aprob = 1 AND user_id=:user_id", array('user_id' => $row['new_value'])) ? UserService::get_user("WHERE user_aprob = 1 AND user_id=:user_id", array('user_id' => $row['new_value'])) : '';
-					$old_value = !empty($old_user) ? '<a href="' . UserUrlBuilder::profile($row['old_value'])->absolute() . '" class="' . UserService::get_level_class($old_user->get_level()) . '">' . $old_user->get_pseudo() . '</a>' : $this->lang['bugs.notice.no_one'];
-					$new_value = !empty($new_user) ? '<a href="' . UserUrlBuilder::profile($row['new_value'])->absolute() . '" class="' . UserService::get_level_class($new_user->get_level()) . '">' . $new_user->get_pseudo() . '</a>' : $this->lang['bugs.notice.no_one'];
+					$old_value = !empty($old_user) ? '<a href="' . UserUrlBuilder::profile($row['old_value'])->rel() . '" class="' . UserService::get_level_class($old_user->get_level()) . '">' . $old_user->get_pseudo() . '</a>' : $this->lang['bugs.notice.no_one'];
+					$new_value = !empty($new_user) ? '<a href="' . UserUrlBuilder::profile($row['new_value'])->rel() . '" class="' . UserService::get_level_class($new_user->get_level()) . '">' . $new_user->get_pseudo() . '</a>' : $this->lang['bugs.notice.no_one'];
 					break;
 				
 				default:
@@ -145,7 +145,7 @@ class BugtrackerHistoryListController extends ModuleController
 				'UPDATER'				=> $user->get_pseudo(),
 				'UPDATER_LEVEL_CLASS'	=> UserService::get_level_class($user->get_level()),
 				'UPDATER_GROUP_COLOR'	=> $user_group_color,
-				'LINK_UPDATER_PROFILE'	=> UserUrlBuilder::profile($user->get_id())->absolute(),
+				'LINK_UPDATER_PROFILE'	=> UserUrlBuilder::profile($user->get_id())->rel(),
 			));
 		}
 	}
