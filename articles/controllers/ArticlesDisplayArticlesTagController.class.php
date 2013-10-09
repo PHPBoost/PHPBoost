@@ -44,7 +44,7 @@ class ArticlesDisplayArticlesTagController extends ModuleController
 	private function init()
 	{
 		$this->lang = LangLoader::get('articles-common', 'articles');
-		$this->view = new FileTemplate('articles/ArticlesDisplayHomeCategoryController.tpl');
+		$this->view = new FileTemplate('articles/ArticlesDisplaySeveralArticlesController.tpl');
 		$this->view->add_lang($this->lang);
 	}
 	
@@ -149,7 +149,6 @@ class ArticlesDisplayArticlesTagController extends ModuleController
 			'C_ARTICLES_FILTERS' => true,
 			'L_TAG' => $this->lang['articles.tags'] . ' : ' . $this->keyword->get_name(),
 			'U_ADD_ARTICLES' => ArticlesUrlBuilder::add_article(Category::ROOT_CATEGORY)->absolute(),
-			'U_EDIT_CONFIG' => ArticlesUrlBuilder::articles_configuration()->absolute(),
 			'U_SYNDICATION' => ArticlesUrlBuilder::category_syndication(Category::ROOT_CATEGORY)->rel()
 		));
 		
