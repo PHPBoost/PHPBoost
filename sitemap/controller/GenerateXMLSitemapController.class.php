@@ -45,7 +45,7 @@ class GenerateXMLSitemapController extends AdminController
 		}
 		
 		$view->put_all(array(
-			'U_GENERATE' => SitemapUrlBuilder::get_xml_file_generation()->absolute()
+			'U_GENERATE' => SitemapUrlBuilder::get_xml_file_generation()->rel()
 		));
 
 		$response = new AdminSitemapResponse($view);

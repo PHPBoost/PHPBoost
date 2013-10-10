@@ -145,7 +145,7 @@ class SitemapLink extends SitemapElement
 	{
 		if ($this->link !== null)
 		{
-			return $this->link->absolute();
+			return $this->link->rel();
 		}
 		else
 		{
