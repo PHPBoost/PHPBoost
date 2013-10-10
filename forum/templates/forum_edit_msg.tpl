@@ -52,7 +52,7 @@
 						<div class="msg_sign">
 							<hr />
 							<span style="float:left;">
-								<span class="label">MP</span>
+								<span class="small-button">MP</span>
 							</span>
 							<span style="float:right;font-size:10px;">
 							</span>&nbsp;

@@ -64,7 +64,7 @@
 					{member_list.LEVEL}
 				</td>
 				<td class="row2">
-					<a href="mailto:{member_list.MAIL}"><span class="label">Mail</span></a>
+					<a href="mailto:{member_list.MAIL}" class="small-button">Mail</a>
 				</td>
 				<td class="row2">
 					{member_list.REGISTERED}

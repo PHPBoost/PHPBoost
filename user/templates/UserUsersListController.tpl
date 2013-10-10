@@ -55,7 +55,7 @@
 			</td>
 			<td> 
 				# IF member_list.C_MAIL #
-					<a href="mailto:{member_list.MAIL}"><span class="label">Mail</span></a>
+					<a href="mailto:{member_list.MAIL}" class="small-button">Mail</a>
 				# ENDIF #
 			</td>
 			<td> 
@@ -68,7 +68,7 @@
 				{member_list.LAST_CONNECT}
 			</td>
 			<td> 
-				<a href="{member_list.U_USER_PM}"><span class="label">MP</span></a>
+				<a href="{member_list.U_USER_PM}" class="small-button">MP</a>
 			</td>
 		</tr>
 		# END member_list #

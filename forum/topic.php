@@ -390,11 +390,11 @@ while ( $row = $Sql->fetch_assoc($result) )
 		'USER_SEX' => $user_sex,
 		'USER_MSG' => (!$is_guest) ? $user_msg : '',
 		'USER_LOCAL' => $user_local,
-		'USER_MAIL' => ( !empty($row['user_mail']) && ($row['user_show_mail'] == '1' ) ) ? '<a href="mailto:' . $row['user_mail'] . '"><span class="label">Mail</span></a>' : '',			
-		'USER_MSN' => (!empty($row['user_msn'])) ? '<a href="mailto:' . $row['user_msn'] . '"><span class="label">MSN</span></a>' : '',
-		'USER_YAHOO' => (!empty($row['user_yahoo'])) ? '<a href="mailto:' . $row['user_yahoo'] . '"><span class="label">Yahoo</span></a>' : '',
+		'USER_MAIL' => ( !empty($row['user_mail']) && ($row['user_show_mail'] == '1' ) ) ? '<a href="mailto:' . $row['user_mail'] . '" class="small-button">Mail</a>' : '',			
+		'USER_MSN' => (!empty($row['user_msn'])) ? '<a href="mailto:' . $row['user_msn'] . '" class="small-button">MSN</a>' : '',
+		'USER_YAHOO' => (!empty($row['user_yahoo'])) ? '<a href="mailto:' . $row['user_yahoo'] . '" class="small-button">Yahoo</a>' : '',
 		'USER_SIGN' => (!empty($row['user_sign'])) ? '____________________<br />' . FormatingHelper::second_parse($row['user_sign']) : '',
-		'USER_WEB' => (!empty($row['user_website'])) ? '<a href="' . $row['user_website'] . '"><span class="label">Web</span></a>' : '',
+		'USER_WEB' => (!empty($row['user_website'])) ? '<a href="' . $row['user_website'] . '" class="small-button">Web</a>' : '',
 		'USER_WARNING' => $row['user_warning'],
 		'L_FORUM_QUOTE_LAST_MSG' => ($quote_last_msg == 1 && $i == 0) ? $LANG['forum_quote_last_msg'] : '', //Reprise du dernier message de la page précédente.
 		'C_FORUM_USER_LOGIN' => !empty($row['login']) ? true : false,
@@ -414,7 +414,7 @@ while ( $row = $Sql->fetch_assoc($result) )
 		'U_FORUM_MSG_CUT' => url('.php?idm=' . $row['id']),
 		'U_VARS_ANCRE' => url('.php?id=' . $id_get . (!empty($page) ? '&amp;pt=' . $page : ''), '-' . $id_get . (!empty($page) ? '-' . $page : '') . $rewrited_title . '.php'),
 		'U_VARS_QUOTE' => url('.php?quote=' . $row['id'] . '&amp;id=' . $id_get . (!empty($page) ? '&amp;pt=' . $page : ''), '-' . $id_get . (!empty($page) ? '-' . $page : '-0') . '-0-' . $row['id'] . $rewrited_title . '.php'),
-		'USER_PM' => !$is_guest ? '<a href="'. UserUrlBuilder::personnal_message($row['user_id'])->absolute() . '"><span class="label">MP</span></a>' : '',
+		'USER_PM' => !$is_guest ? '<a href="'. UserUrlBuilder::personnal_message($row['user_id'])->absolute() . '" class="small-button">MP</a>' : '',
 	));
 	
 	//Marqueur de suivis du sujet.

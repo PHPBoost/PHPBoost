@@ -263,16 +263,16 @@ class ShoutboxHomePageExtensionPoint implements HomePageExtensionPoint
 				'USER_SEX' => $user_sex,
 				'USER_MSG' => !$is_guest ? $user_msg : '',
 				'USER_LOCAL' => $user_local,
-				'USER_MAIL' => (!empty($row['user_mail']) && ($row['user_show_mail'] == '1')) ? '<a href="mailto:' . $row['user_mail'] . '"><span class="label">Mail</span></a>' : '',			
-				'USER_MSN' => !empty($row['user_msn']) ? '<a href="mailto:' . $row['user_msn'] . '"><span class="label">MSN</span></a>' : '',
-				'USER_YAHOO' => !empty($row['user_yahoo']) ? '<a href="mailto:' . $row['user_yahoo'] . '"><span class="label">Yahoo</span></a>' : '',
+				'USER_MAIL' => (!empty($row['user_mail']) && ($row['user_show_mail'] == '1')) ? '<a href="mailto:' . $row['user_mail'] . '" class="small-button">Mail</a>' : '',			
+				'USER_MSN' => !empty($row['user_msn']) ? '<a href="mailto:' . $row['user_msn'] . '" class="small-button">MSN</a>' : '',
+				'USER_YAHOO' => !empty($row['user_yahoo']) ? '<a href="mailto:' . $row['user_yahoo'] . '" class="small-button">Yahoo</a>' : '',
 				'USER_SIGN' => !empty($row['user_sign']) ? '____________________<br />' . FormatingHelper::second_parse($row['user_sign']) : '',
-				'USER_WEB' => !empty($row['user_website']) ? '<a href="' . $row['user_website'] . '"><span class="label">Web</span></a>' : '',
+				'USER_WEB' => !empty($row['user_website']) ? '<a href="' . $row['user_website'] . '" class="small-button">Web</a>' : '',
 				'WARNING' => (!empty($row['user_warning']) ? $row['user_warning'] : '0') . '%' . $warning,
 				'PUNISHMENT' => $readonly,			
 				'DEL' => $del_message,
 				'EDIT' => $edit_message,
-				'U_USER_PM' => !$is_guest ? '<a href="'. UserUrlBuilder::personnal_message($row['user_id'])->absolute() . '"><span class="label">MP</span></a>' : '',
+				'U_USER_PM' => !$is_guest ? '<a href="'. UserUrlBuilder::personnal_message($row['user_id'])->absolute() . '" class="small-button">MP</a>' : '',
 				'U_ANCHOR' => 'shoutbox.php' . SID . '#m' . $row['id']
 			));
 			$j++;
