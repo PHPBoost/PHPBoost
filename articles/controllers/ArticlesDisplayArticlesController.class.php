@@ -30,8 +30,6 @@ class ArticlesDisplayArticlesController extends ModuleController
 	private $lang;
 	private $form;
 	private $view;
-	private $auth_moderation;
-	private $auth_write;
 	private $article;
 	private $category;
 	
@@ -239,10 +237,10 @@ class ArticlesDisplayArticlesController extends ModuleController
 	{
 		$article = $this->get_article();
 		
-		$this->auth_write = ArticlesAuthorizationsService::check_authorizations($article->get_id_category())->write();
-		$this->auth_moderation = ArticlesAuthorizationsService::check_authorizations($article->get_id_category())->moderation();
+		$auth_write = ArticlesAuthorizationsService::check_authorizations($article->get_id_category())->write();
+		$auth_moderation = ArticlesAuthorizationsService::check_authorizations($article->get_id_category())->moderation();
 		
-		$not_authorized = !$this->auth_moderation && (!$this->auth_write && $article->get_author_user()->get_id() != AppContext::get_current_user()->get_id());
+		$not_authorized = !$auth_moderation && (!$auth_write && $article->get_author_user()->get_id() != AppContext::get_current_user()->get_id());
 		
 		switch ($article->get_publishing_state()) 
 		{
@@ -304,6 +302,7 @@ class ArticlesDisplayArticlesController extends ModuleController
 		$response = new ArticlesDisplayResponse();
 		$response->set_page_title($this->article->get_title());
 		$response->add_breadcrumb_link($this->lang['articles'], ArticlesUrlBuilder::home());
+		$response->set_page_description($this->article->get_clean_description());
 		
 		$categories = array_reverse(ArticlesService::get_categories_manager()->get_parents($this->article->get_id_category(), true));
 		foreach ($categories as $id => $category)
