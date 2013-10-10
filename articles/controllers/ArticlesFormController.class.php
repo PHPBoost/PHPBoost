@@ -195,8 +195,8 @@ class ArticlesFormController extends ModuleController
 		)));
 		$other_fieldset->add_field(new FormFieldFree('preview_picture', $this->lang['articles.form.picture.preview'], '<img id="preview_picture" src="'. $this->get_article()->get_picture()->rel() .'" alt="" style="vertical-align:top" />'));
 
-		$other_fieldset->add_field(new FormFieldMultipleAutocompleter('keywords', $this->lang['articles.form.keywords'], $this->get_article()->get_keywords(), 
-			array('description' => $this->lang['articles.form.keywords.description'], 'file' => TPL_PATH_TO_ROOT . '/articles/ajax/tag/')
+		$other_fieldset->add_field(ArticlesService::get_keywords_manager()->get_form_field($this->get_article()->get_id(), 'keywords', $this->lang['articles.form.keywords'],  
+			array('description' => $this->lang['articles.form.keywords.description'])
 		));
 
 		$other_fieldset->add_field(new ArticlesFormFieldSelectSources('sources', $this->lang['articles.form.sources'], $this->get_article()->get_sources()));
@@ -395,7 +395,7 @@ class ArticlesFormController extends ModuleController
 
 		$this->contribution_actions($article, $id_article);
 		
-		$this->save_keywords($id_article);
+		ArticlesService::get_keywords_manager()->put_relations($id_article, $this->form->get_value('keywords'));
 
 		Feed::clear_cache('articles');
 	}
@@ -432,36 +432,6 @@ class ArticlesFormController extends ModuleController
 
 				ContributionService::save_contribution($article_contribution);
 			}
-		}
-	}
-	
-	private function save_keywords($id_article)
-	{
-		$keywords = $this->form->get_value('keywords');
-		
-		$new_keyword = new ArticlesKeywords();
-		//We delete all relations in edition
-		if ($this->get_article()->get_id() !== null)
-		{
-			ArticlesKeywordsService::delete_all_keywords_relation($id_article);
-		}
-		
-		foreach ($keywords as $keyword)
-		{
-		    if ($keyword != '')
-		    {
-			if (!ArticlesKeywordsService::exists($keyword))
-			{
-			    $new_keyword->set_name($keyword);
-			    $new_keyword->set_rewrited_name(Url::encode_rewrite($keyword));
-			    ArticlesKeywordsService::add($new_keyword, $id_article);
-			}
-			else
-			{
-			    $id_keyword = ArticlesKeywordsService::get_id_keyword('WHERE rewrited_name=:rewrited_name', array('rewrited_name' => Url::encode_rewrite($keyword)));
-			    ArticlesKeywordsService::add_relation($id_keyword, $id_article);
-			}
-		    }
 		}
 	}
 	

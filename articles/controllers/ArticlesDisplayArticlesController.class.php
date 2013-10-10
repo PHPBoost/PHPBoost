@@ -216,7 +216,7 @@ class ArticlesDisplayArticlesController extends ModuleController
 	
 	private function build_view_keywords($id_article)
 	{
-		$keywords = ArticlesKeywordsService::get_article_keywords($id_article);
+		$keywords = ArticlesService::get_keywords_manager()->get_keywords('articles');
 		
 		$this->view->put('C_KEYWORDS', $keywords->get_rows_count() > 0);
 		
@@ -301,8 +301,9 @@ class ArticlesDisplayArticlesController extends ModuleController
 	{
 		$response = new ArticlesDisplayResponse();
 		$response->set_page_title($this->article->get_title());
-		$response->add_breadcrumb_link($this->lang['articles'], ArticlesUrlBuilder::home());
 		$response->set_page_description($this->article->get_clean_description());
+		$response->set_page_keywords($this->article->get_keywords_name());
+		$response->add_breadcrumb_link($this->lang['articles'], ArticlesUrlBuilder::home());
 		
 		$categories = array_reverse(ArticlesService::get_categories_manager()->get_parents($this->article->get_id_category(), true));
 		foreach ($categories as $id => $category)
