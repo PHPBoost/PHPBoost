@@ -32,8 +32,6 @@ class ArticlesSetup extends DefaultModuleSetup
 {
 	public static $articles_table;
 	public static $articles_cats_table;
-	public static $articles_keywords_table;
-	public static $articles_keywords_relation_table;
 	
 	/**
 	 * @var string[string] localized messages
@@ -44,8 +42,6 @@ class ArticlesSetup extends DefaultModuleSetup
 	{
 		self::$articles_table = PREFIX . 'articles';
 		self::$articles_cats_table = PREFIX . 'articles_cats';
-		self::$articles_keywords_table = PREFIX . 'articles_keywords';
-		self::$articles_keywords_relation_table = PREFIX . 'articles_keywords_relation';
 	}
 
 	public function install()
@@ -59,19 +55,18 @@ class ArticlesSetup extends DefaultModuleSetup
 	{
 		$this->drop_tables();
 		ConfigManager::delete('articles', 'config');
+		ArticlesService::get_keywords_manager()->delete_module_relations();
 	}
 
 	private function drop_tables()
 	{
-		PersistenceContext::get_dbms_utils()->drop(array(self::$articles_table, self::$articles_cats_table, self::$articles_keywords_table, self::$articles_keywords_relation_table));
+		PersistenceContext::get_dbms_utils()->drop(array(self::$articles_table, self::$articles_cats_table));
 	}
 
 	private function create_tables()
 	{
 		$this->create_articles_table();
 		$this->create_articles_cats_table();
-		$this->create_articles_keywords_table();
-		$this->create_articles_keywords_relation_table();
 	}
 
 	private function create_articles_table()
@@ -109,31 +104,6 @@ class ArticlesSetup extends DefaultModuleSetup
 	private function create_articles_cats_table()
 	{
 		RichCategory::create_categories_table(self::$articles_cats_table);
-	}
-	
-	private function create_articles_keywords_table()
-	{
-		$fields = array(
-			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
-			'name' => array('type' => 'string', 'length' => 100, 'notnull' => 1, 'default' => "''"),
-			'rewrited_name' => array('type' => 'string', 'length' => 250, 'default' => "''"),
-		);
-		$options = array(
-			'primary' => array('id'),
-			'indexes' => array(
-				'name' => array('type' => 'unique', 'fields' => 'name'),
-				'rewrited_name' => array('type' => 'unique', 'fields' => 'rewrited_name')
-		));
-		PersistenceContext::get_dbms_utils()->create_table(self::$articles_keywords_table, $fields, $options);
-	}
-	
-	private function create_articles_keywords_relation_table()
-	{
-		$fields = array(
-			'id_article' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'id_keyword' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-		);
-		PersistenceContext::get_dbms_utils()->create_table(self::$articles_keywords_relation_table, $fields);
 	}
 
 	private function insert_data()

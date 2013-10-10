@@ -52,6 +52,7 @@ class Articles
 	private $date_updated;
 
 	private $sources;
+	private $keywords;
 
 	const NOT_PUBLISHED = 0;
 	const PUBLISHED_NOW = 1;
@@ -304,7 +305,16 @@ class Articles
 
 	public function get_keywords()
 	{
-		return ArticlesKeywordsService::get_article_keywords_name($this->id);
+		if ($this->keywords === null)
+		{
+			$this->keywords = ArticlesService::get_keywords_manager()->get_keywords($this->id);
+		}
+		return $this->keywords;
+	}
+	
+	public function get_keywords_name()
+	{
+		return array_keys($this->get_keywords());
 	}
 	
 	public function is_authorized_add()

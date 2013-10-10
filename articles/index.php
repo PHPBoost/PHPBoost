@@ -58,7 +58,6 @@ $url_controller_mappers = array(
 	new UrlControllerMapper('ArticlesDisplayHomeCategoryController', '`^(?:/([0-9]+)-([a-z0-9-_]+))?/?([a-z]+)?/?([a-z]+)?/?([0-9]+)?/?$`', array('id', 'rewrited_name', 'field', 'sort', 'page')),
 	
 	//Utilities
-	new UrlControllerMapper('ArticlesAjaxTagsAutoCompleteController','`^/ajax/tag/?$`'),
 	new UrlControllerMapper('ArticlesPrintArticlesController', '`^/print/([0-9-]+)-([a-z0-9-_]+)/?$`', array('id', 'rewrited_title'))
 );
 

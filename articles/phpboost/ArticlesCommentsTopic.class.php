@@ -47,23 +47,7 @@ class ArticlesCommentsTopic extends CommentsTopic
 	
 	public function is_display()
 	{
-		$article = $this->get_article();
-
-                switch ($article->get_publishing_state()) 
-		{
-			case Articles::PUBLISHED_NOW:
-                                return true;
-                        break;
-			case Articles::NOT_PUBLISHED:
-                                return false;
-                        break;
-			case Articles::PUBLISHED_DATE:
-                                return $article->is_published();
-                        break;
-                        default:
-                                return false;
-                        break;
-                }
+		return $this->get_article()->is_published();
 	}
 	
 	private function get_article()

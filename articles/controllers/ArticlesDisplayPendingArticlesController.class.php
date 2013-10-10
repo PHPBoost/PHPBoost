@@ -165,7 +165,7 @@ class ArticlesDisplayPendingArticlesController extends ModuleController
 				$article = new Articles();
 				$article->set_properties($row);
 				
-				$keywords = ArticlesKeywordsService::get_article_keywords($article->get_id());
+				$keywords = ArticlesService::get_keywords_manager()->get_keywords('articles');
 				
 				$keywords_list = $this->build_keywords_list($keywords);
 		

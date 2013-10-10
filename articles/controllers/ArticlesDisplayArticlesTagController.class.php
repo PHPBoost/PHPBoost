@@ -56,11 +56,7 @@ class ArticlesDisplayArticlesTagController extends ModuleController
 			if (!empty($rewrited_name))
 			{
 				try {
-					$row = PersistenceContext::get_querier()->select_single_row(ArticlesSetup::$articles_keywords_table, array('*'), 'WHERE rewrited_name=:rewrited_name', array('rewrited_name' => $rewrited_name));
-					
-					$keyword = new ArticlesKeywords();
-					$keyword->set_properties($row);
-					$this->keyword = $keyword;
+					$this->keyword = ArticlesService::get_keywords_manager()->get_keyword('WHERE rewrited_name=:rewrited_name', array('rewrited_name' => $rewrited_name));
 				} catch (RowNotFoundException $e) {
 					$error_controller = PHPBoostErrors::unexisting_page();
    					DispatchManager::redirect($error_controller);
@@ -160,7 +156,7 @@ class ArticlesDisplayArticlesTagController extends ModuleController
 		
 		$result = PersistenceContext::get_querier()->select('SELECT articles.*, member.*, 
 		notes.number_notes, notes.average_notes, note.note FROM ' . ArticlesSetup::$articles_table . ' articles
-		LEFT JOIN '. ArticlesSetup::$articles_keywords_relation_table .' relation ON relation.id_article = articles.id 
+		LEFT JOIN ' . DB_TABLE_KEYWORDS_RELATIONS . ' relation ON relation.module_id = \'articles\' AND relation.id_in_module = articles.id 
 		LEFT JOIN ' . DB_TABLE_MEMBER . ' member ON member.user_id = articles.author_user_id
 		LEFT JOIN ' . DB_TABLE_AVERAGE_NOTES . ' notes ON notes.id_in_module = articles.id AND notes.module_name = "articles"
 		LEFT JOIN ' . DB_TABLE_NOTE . ' note ON note.id_in_module = articles.id AND note.module_name = "articles" AND note.user_id = ' . AppContext::get_current_user()->get_id() . '
@@ -189,7 +185,7 @@ class ArticlesDisplayArticlesTagController extends ModuleController
 			$article = new Articles();
 			$article->set_properties($row);
 			
-			$keywords = ArticlesKeywordsService::get_article_keywords($article->get_id());
+			$keywords = ArticlesService::get_keywords_manager()->get_keywords('articles');
 				
 			$keywords_list = $this->build_keywords_list($keywords);
 			

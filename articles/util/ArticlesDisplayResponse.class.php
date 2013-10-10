@@ -33,6 +33,7 @@ class ArticlesDisplayResponse
 	private $page_title = '';
 	private $page_description = '';
 	private $breadcrumb_links = array();
+	private $page_keywords = array();
 
 	public function add_breadcrumb_link($name, $link)
 	{
@@ -53,6 +54,11 @@ class ArticlesDisplayResponse
 		$this->page_description = $page_description;
 	}
 	
+	public function set_page_keywords($keywords)
+	{
+		$this->page_keywords = $keywords;
+	}
+	
 	public function display($view)
 	{
 		$response = new SiteDisplayResponse($view);
@@ -62,6 +68,11 @@ class ArticlesDisplayResponse
 		if (!empty($this->page_description))
 		{
 			$graphical_environment->get_seo_meta_data()->set_description($this->page_description);
+		}
+		
+		foreach ($this->page_keywords as $keyword)
+		{
+			$graphical_environment->get_seo_meta_data()->add_keyword($keyword);
 		}
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
