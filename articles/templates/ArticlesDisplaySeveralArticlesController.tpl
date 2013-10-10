@@ -98,7 +98,7 @@
 							&nbsp;
 							# ENDIF #
 							<br />
-							<i class="icon-calendar" title="${i18n('articles.sort_field.date')}"></i>&nbsp;<time datetime="{articles.DATE}" itemprop="datePublished">{articles.DATE}</time>&nbsp;|
+							<i class="icon-calendar" title="${i18n('articles.sort_field.date')}"></i>&nbsp;<time datetime="{articles.DATE_ISO8601}" itemprop="datePublished">{articles.DATE}</time>&nbsp;|
 							<i class="icon-eye-open" title="${i18n('articles.sort_field.views')}"></i>&nbsp;{articles.NUMBER_VIEW}
 							<br />
 							# IF C_COMMENTS_ENABLED #
@@ -119,12 +119,12 @@
 					    
 					<meta itemprop="url" content="{articles.U_ARTICLE}">
 					<meta itemprop="description" content="{articles.DESCRIPTION}">
-					<meta itemprop="datePublished" content="{articles.DATE}">
+					<meta itemprop="datePublished" content="{articles.DATE_ISO8601}">
 					<meta itemprop="discussionUrl" content="{articles.U_COMMENTS}">
 					# IF C_HAS_PICTURE #<meta itemprop="thumbnailUrl" content="{articles.PICTURE}"># ENDIF #
-					<meta itemprop="interactionCount" content="{articles.L_COMMENTS} UserComments">
+					<meta itemprop="interactionCount" content="{articles.NUMBER_COMMENTS} UserComments">
 						
-					<div itemprop="description" class="description">{articles.DESCRIPTION}</div>
+					<div itemprop="description" class="description">{articles.SHORT_DESCRIPTION}</div>
 					<a itemprop="url" href="{articles.U_ARTICLE}" class="button_read_more">${i18n('articles.read_more')}</a>
 					# IF articles.C_KEYWORDS #
 					<div itemprop="url" class="article_tags">
@@ -171,7 +171,7 @@
 							# IF articles.C_AUTHOR_DISPLAYED #
 							<i class="icon-user" title="${i18n('articles.sort_field.author')}"></i><a itemprop="author" href="{articles.U_AUTHOR}" class="small {articles.USER_LEVEL_CLASS}" # IF C_USER_GROUP_COLOR # style="color:{articles.USER_GROUP_COLOR}"# ENDIF #>&nbsp;{articles.PSEUDO}&nbsp;</a>|
 							# ENDIF #
-							<i class="icon-calendar" title="${i18n('articles.sort_field.date')}"></i>&nbsp;<time datetime="{articles.DATE}" itemprop="datePublished">{articles.DATE}</time>&nbsp;|
+							<i class="icon-calendar" title="${i18n('articles.sort_field.date')}"></i>&nbsp;<time datetime="{articles.DATE_ISO8601}" itemprop="datePublished">{articles.DATE}</time>&nbsp;|
 							<i class="icon-eye-open" title="${i18n('articles.sort_field.views')}"></i>&nbsp;{articles.NUMBER_VIEW}
 							# IF C_COMMENTS_ENABLED #
 							&nbsp;|&nbsp;<i class="icon-comment"></i><a itemprop="discussionUrl" class="small" href="{articles.U_COMMENTS}">&nbsp;{articles.L_COMMENTS}</a>
@@ -180,15 +180,15 @@
 				   </aside>
 					<meta itemprop="url" content="{articles.U_ARTICLE}">
 					<meta itemprop="description" content="{articles.DESCRIPTION}">
-					<meta itemprop="datePublished" content="{articles.DATE}">
+					<meta itemprop="datePublished" content="{articles.DATE_ISO8601}">
 					<meta itemprop="discussionUrl" content="{articles.U_COMMENTS}">
 					# IF C_HAS_PICTURE #<meta itemprop="thumbnailUrl" content="{articles.PICTURE}"># ENDIF #
 					<meta itemprop="interactionCount" content="{articles.L_COMMENTS} UserComments">
 					
-					<div itemprop="description" class="description">{articles.DESCRIPTION}</div>
+					<div itemprop="description" class="description">{articles.SHORT_DESCRIPTION}</div>
 					<a itemprop="url" style="margin-left:10px;" href="{articles.U_ARTICLE}" class="button_read_more">${i18n('articles.read_more')}</a>
 					# IF articles.C_KEYWORDS #
-					<div itemprop="url" class="article_tags">
+					<div itemprop="keywords" class="article_tags">
 						<i title="${i18n('articles.tags')}" class="icon-tags"></i> : 
 						{articles.U_KEYWORDS_LIST}
 					</div>

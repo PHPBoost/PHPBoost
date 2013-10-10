@@ -66,6 +66,9 @@ class Articles
 	const DEFAULT_NBR_VIEW = 0;
         
 	const DEFAULT_PICTURE = '/articles/templates/images/default.png';
+	
+	const NBR_CHARACTER_TO_CUT_MOSAIC = 128;
+	const NBR_CHARACTER_TO_CUT_LIST = 245;
 
 	public function set_id($id)
 	{
@@ -121,7 +124,28 @@ class Articles
 	{		
 		return $this->description;
 	}
-
+	
+	public function get_short_description()
+	{		
+		$description = FormatingHelper::second_parse($this->description);
+		
+		if (ArticlesConfig::load()->get_display_type() == ArticlesConfig::DISPLAY_MOSAIC)
+		{
+			$short_description = strlen($description > self::NBR_CHARACTER_TO_CUT_MOSAIC - 4) ? TextHelper::substr_html($description, 0, self::NBR_CHARACTER_TO_CUT_MOSAIC) . '...' : $description;
+		}
+		else
+		{
+			$short_description = strlen($description > self::NBR_CHARACTER_TO_CUT_LIST - 4) ? TextHelper::substr_html($description, 0, self::NBR_CHARACTER_TO_CUT_LIST) . '...' : $description;
+		}
+		
+		return $short_description;
+	}
+	
+	public function get_clean_description()
+	{
+		return TextHelper::substr_html($this->description, 0);
+	}
+	
 	public function set_contents($contents)
 	{
 		$this->contents = $contents;
@@ -282,6 +306,21 @@ class Articles
 	{
 		return ArticlesKeywordsService::get_article_keywords_name($this->id);
 	}
+	
+	public function is_authorized_add()
+	{
+		return ArticlesAuthorizationsService::check_authorizations($this->id_category)->write() || ArticlesAuthorizationsService::check_authorizations($this->id_category)->contribution();
+	}
+	
+	public function is_authorized_edit()
+	{
+		return ArticlesAuthorizationsService::check_authorizations($this->id_category)->moderation() || ((ArticlesAuthorizationsService::check_authorizations($this->get_id_category())->write() || (ArticlesAuthorizationsService::check_authorizations($this->get_id_category())->contribution() && !$this->is_published())) && $this->get_author_user()->get_id() == AppContext::get_current_user()->get_id());
+	}
+	
+	public function is_authorized_delete()
+	{
+		return ArticlesAuthorizationsService::check_authorizations($this->id_category)->moderation() || ((ArticlesAuthorizationsService::check_authorizations($this->get_id_category())->write() || (ArticlesAuthorizationsService::check_authorizations($this->get_id_category())->contribution() && !$this->is_published())) && $this->get_author_user()->get_id() == AppContext::get_current_user()->get_id());
+	}
 
 	public function get_properties()
 	{
@@ -372,20 +411,10 @@ class Articles
 		$user = $this->get_author_user();
 		$user_group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
 		
-		$description = FormatingHelper::second_parse($this->get_description());
-		if (ArticlesConfig::load()->get_display_type() == ArticlesConfig::DISPLAY_MOSAIC)
-		{
-			$short_description = strlen($description > 132) ? TextHelper::substr_html($description, 0, 128) . '...' : $description;
-		}
-		else
-		{
-			$short_description = strlen($description > 249) ? TextHelper::substr_html($description, 0, 245) . '...' : $description;
-		}
-		
 		return array(
 			//Conditions
-			'C_EDIT' => ArticlesAuthorizationsService::check_authorizations($category->get_id())->moderation() || ArticlesAuthorizationsService::check_authorizations($category->get_id())->write() && $user->get_id() == AppContext::get_current_user()->get_id(),
-			'C_DELETE' => ArticlesAuthorizationsService::check_authorizations($category->get_id())->moderation(),
+			'C_EDIT' => $this->is_authorized_edit(),
+			'C_DELETE' => $this->is_authorized_delete(),
 			'C_HAS_PICTURE' => $this->has_picture(),
 			'C_USER_GROUP_COLOR' => !empty($user_group_color),
 			'C_AUTHOR_DISPLAYED' => $this->get_author_name_displayed(),
@@ -396,10 +425,12 @@ class Articles
 			'DATE' => $this->get_date_created()->format(Date::FORMAT_DAY_MONTH_YEAR),
 			'DATE_ISO8601' => $this->get_date_created()->format(Date::FORMAT_ISO8601),
 			'L_COMMENTS' => CommentsService::get_number_and_lang_comments('articles', $this->get_id()),
+			'NUMBER_COMMENTS' => CommentsService::get_number_comments('articles', $this->get_id()),
 			'NUMBER_VIEW' => $this->get_number_view(),
 			'NOTE' => $this->get_notation()->get_number_notes() > 0 ? NotationService::display_static_image($this->get_notation()) : '&nbsp;',
 			'PSEUDO' => $user->get_pseudo(),
-			'DESCRIPTION' => $short_description,
+			'DESCRIPTION' => FormatingHelper::second_parse($this->get_description()),
+			'SHORT_DESCRIPTION' => $this->get_short_description(),
 			'PICTURE' => $this->get_picture()->absolute(),
 			'USER_LEVEL_CLASS' => UserService::get_level_class($user->get_level()),
 			'USER_GROUP_COLOR' => $user_group_color,
