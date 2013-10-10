@@ -60,7 +60,7 @@ class AdminSitemapController extends AdminModuleController
 
 	private function build_form()
 	{
-		$this->form = new HTMLForm('sitemap_global_config', SitemapUrlBuilder::get_general_config()->absolute());
+		$this->form = new HTMLForm('sitemap_global_config', SitemapUrlBuilder::get_general_config()->rel());
 		$fieldset = new FormFieldsetHTML('general_config', $this->lang['general_config']);
 		$this->form->add_fieldset($fieldset);
 
