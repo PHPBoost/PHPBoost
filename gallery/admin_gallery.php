@@ -322,7 +322,7 @@ else
 					'ID' => $info_pics['id'],
 					'IMG' => '<img src="show_pics.php?id=' . $idpics . '&amp;cat=' . $idcat . '" alt="" / >',
 					'NAME' => '<span id="fi_' . $info_pics['id'] . '">' . stripslashes($info_pics['name']) . '</span> <span id="fi' . $info_pics['id'] . '"></span>',
-					'POSTOR' => '<a class="com" href="'. UserUrlBuilder::profile($info_pics['user_id'])->absolute() .'</a>',
+					'POSTOR' => '<a class="com" href="'. UserUrlBuilder::profile($info_pics['user_id'])->rel() .'</a>',
 					'DATE' => gmdate_format('date_format_short', $info_pics['timestamp']),
 					'VIEWS' => ($info_pics['views'] + 1),
 					'DIMENSION' => $info_pics['width'] . ' x ' . $info_pics['height'],
@@ -408,7 +408,7 @@ else
 					'CAT' => $cat_list,
 					'L_APROB_IMG' => ($row['aprob'] == 1) ? $LANG['unaprob'] : $LANG['aprob'],
 					'U_DISPLAY' => $display_link,
-					'U_POSTOR' => $LANG['by'] . ' <a class="com" href="'. UserUrlBuilder::profile($row['user_id'])->absolute() . '">' . $row['login'] . '</a>',
+					'U_POSTOR' => $LANG['by'] . ' <a class="com" href="'. UserUrlBuilder::profile($row['user_id'])->rel() . '">' . $row['login'] . '</a>',
 				));
 			}
 			$Sql->query_close($result);
