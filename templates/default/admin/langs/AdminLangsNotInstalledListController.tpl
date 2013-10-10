@@ -46,9 +46,7 @@
 							{langs_not_installed.AUTHOR_NAME}
 						</a>
 						# IF langs_not_installed.C_WEBSITE # 
-						<a href="{langs_not_installed.AUTHOR_WEBSITE}">
-							<span class="label">Web</span>
-						</a>
+						<a href="{langs_not_installed.AUTHOR_WEBSITE}" class="small-button">Web</a>
 						# ENDIF #
 						<br />
 						<strong>{@langs.compatibility}:</strong> PHPBoost {langs_not_installed.COMPATIBILITY}<br />

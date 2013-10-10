@@ -50,9 +50,7 @@
 							{themes_installed.AUTHOR_NAME}
 						</a>
 						# IF themes_installed.C_WEBSITE # 
-						<a href="{themes_installed.AUTHOR_WEBSITE}">
-							<span class="label">Web</span>
-						</a>
+						<a href="{themes_installed.AUTHOR_WEBSITE}" class="small-button">Web</a>
 						# ENDIF #
 						<br />
 						<strong>{@themes.description}:</strong> {themes_installed.DESCRIPTION}<br />

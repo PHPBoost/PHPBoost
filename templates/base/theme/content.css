@@ -206,10 +206,10 @@ table.mini th a, table.mini td a {
 }
 
 
-/* Label 
+/* Bouton
 ------------------------------------ */
 
-.label {
+.small-button {
 	display: inline;
 	padding: 1px 6px;
 	font-size: 75%;
@@ -218,6 +218,12 @@ table.mini th a, table.mini td a {
 	border-radius: 2px;
 	background: #2F5B8A;
 	color: #ffffff;
+}
+
+.small-button:hover {
+	background: #3D6997;
+	color: #ffffff;
+	text-decoration: none;
 }
 
 /* Formulaires 
