@@ -85,7 +85,7 @@ class ArticlesDisplayArticlesTagController extends ModuleController
 		$fieldset->add_field(new FormFieldLabel($this->lang['articles.sort_filter_title']));
 		
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_fields', '', $field, $sort_fields,
-			array('events' => array('change' => 'document.location = "'. ArticlesUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name())->absolute() .'" + HTMLForms.getField("sort_fields").getValue() + "/" + HTMLForms.getField("sort_mode").getValue();'))
+			array('events' => array('change' => 'document.location = "'. ArticlesUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name())->rel() .'" + HTMLForms.getField("sort_fields").getValue() + "/" + HTMLForms.getField("sort_mode").getValue();'))
 		));
 		
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_mode', '', $mode,
@@ -93,7 +93,7 @@ class ArticlesDisplayArticlesTagController extends ModuleController
 				new FormFieldSelectChoiceOption($this->lang['articles.sort_mode.asc'], 'asc'),
 				new FormFieldSelectChoiceOption($this->lang['articles.sort_mode.desc'], 'desc')
 			), 
-			array('events' => array('change' => 'document.location = "' . ArticlesUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name())->absolute() . '" + HTMLForms.getField("sort_fields").getValue() + "/" + HTMLForms.getField("sort_mode").getValue();'))
+			array('events' => array('change' => 'document.location = "' . ArticlesUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name())->rel() . '" + HTMLForms.getField("sort_fields").getValue() + "/" + HTMLForms.getField("sort_mode").getValue();'))
 		));
 		
 		$this->form = $form;
@@ -144,7 +144,7 @@ class ArticlesDisplayArticlesTagController extends ModuleController
 			'C_COMMENTS_ENABLED' => $comments_enabled,
 			'C_ARTICLES_FILTERS' => true,
 			'L_TAG' => $this->lang['articles.tags'] . ' : ' . $this->keyword->get_name(),
-			'U_ADD_ARTICLES' => ArticlesUrlBuilder::add_article(Category::ROOT_CATEGORY)->absolute(),
+			'U_ADD_ARTICLES' => ArticlesUrlBuilder::add_article(Category::ROOT_CATEGORY)->rel(),
 			'U_SYNDICATION' => ArticlesUrlBuilder::category_syndication(Category::ROOT_CATEGORY)->rel()
 		));
 		

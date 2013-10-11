@@ -442,7 +442,7 @@ class ArticlesFormController extends ModuleController
 
 		if ($this->is_contributor_member() && !$article->is_published())
                 {
-                        AppContext::get_response()->redirect(UserUrlBuilder::contribution_success()->absolute());
+                        AppContext::get_response()->redirect(UserUrlBuilder::contribution_success()->rel());
                 }
                 elseif ($article->is_published())
                 {

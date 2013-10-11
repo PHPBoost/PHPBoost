@@ -62,7 +62,7 @@ class AdminManageArticlesController extends AdminModuleController
 		$fieldset->add_field(new FormFieldLabel($this->lang['articles.sort_filter_title']));
 		
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_fields', '', $field, $sort_fields,
-			array('events' => array('change' => 'document.location = "'. ArticlesUrlBuilder::manage_articles()->absolute() .'" + HTMLForms.getField("sort_fields").getValue() + "/" + HTMLForms.getField("sort_mode").getValue();'))
+			array('events' => array('change' => 'document.location = "'. ArticlesUrlBuilder::manage_articles()->rel() .'" + HTMLForms.getField("sort_fields").getValue() + "/" + HTMLForms.getField("sort_mode").getValue();'))
 		));
 		
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_mode', '', $mode,
@@ -70,7 +70,7 @@ class AdminManageArticlesController extends AdminModuleController
 				new FormFieldSelectChoiceOption($this->lang['articles.sort_mode.asc'], 'asc'),
 				new FormFieldSelectChoiceOption($this->lang['articles.sort_mode.desc'], 'desc')
 			), 
-			array('events' => array('change' => 'document.location = "' . ArticlesUrlBuilder::manage_articles()->absolute() . '" + HTMLForms.getField("sort_fields").getValue() + "/" + HTMLForms.getField("sort_mode").getValue();'))
+			array('events' => array('change' => 'document.location = "' . ArticlesUrlBuilder::manage_articles()->rel() . '" + HTMLForms.getField("sort_fields").getValue() + "/" + HTMLForms.getField("sort_mode").getValue();'))
 		));
 		
 		$this->form = $form;
@@ -166,11 +166,11 @@ class AdminManageArticlesController extends AdminModuleController
 					'PSEUDO' => $row['login'],
 					'USER_LEVEL_CLASS' => UserService::get_level_class($row['level']),
 					'USER_GROUP_COLOR' => $user_group_color,
-					'U_AUTHOR' => UserUrlBuilder::profile($row['author_user_id'])->absolute(),
-					'U_ARTICLE' => ArticlesUrlBuilder::display_article($category->get_id(), $category->get_rewrited_name(), $row['id'], $row['rewrited_title'])->absolute(),
-					'U_CATEGORY' => ArticlesUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name())->absolute(),
-					'U_EDIT_ARTICLE' => ArticlesUrlBuilder::edit_article($row['id'])->absolute(),
-					'U_DELETE_ARTICLE' => ArticlesUrlBuilder::delete_article($row['id'])->absolute()
+					'U_AUTHOR' => UserUrlBuilder::profile($row['author_user_id'])->rel(),
+					'U_ARTICLE' => ArticlesUrlBuilder::display_article($category->get_id(), $category->get_rewrited_name(), $row['id'], $row['rewrited_title'])->rel(),
+					'U_CATEGORY' => ArticlesUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name())->rel(),
+					'U_EDIT_ARTICLE' => ArticlesUrlBuilder::edit_article($row['id'])->rel(),
+					'U_DELETE_ARTICLE' => ArticlesUrlBuilder::delete_article($row['id'])->rel()
 				));
 			}
 		}
