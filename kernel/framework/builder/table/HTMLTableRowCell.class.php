@@ -34,7 +34,7 @@ class HTMLTableRowCell extends HTMLElement
 	private $value;
 	private $colspan = 1;
 	
-	public function __construct($value, array $classes = array('row2'))
+	public function __construct($value, array $classes = array())
 	{
 		$this->value = $value;
 		$this->set_css_classes($classes);
