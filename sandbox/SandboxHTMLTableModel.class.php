@@ -145,7 +145,7 @@ class SandboxHTMLTableModel extends AbstractHTMLTableModel
 	 */
 	private function build_table_row(array $row)
 	{
-		$login = new HTMLTableRowCell($row['login'], array('row1'));
+		$login = new HTMLTableRowCell($row['login']);
 		$user_mail = new HTMLTableRowCell(($row['user_show_mail'] == 1) ? '<a href="mailto:' . $row['user_mail'] . '" class="small-button">Mail</a>' : '&nbsp;');
 		$user_mail->add_css_style('width:50px');
 		$user_mail->center();

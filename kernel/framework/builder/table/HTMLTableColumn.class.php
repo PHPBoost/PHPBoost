@@ -36,7 +36,7 @@ class HTMLTableColumn extends HTMLTableRowCell
 	public function __construct($name, $sortable_parameter = '')
 	{
 		$this->sortable_parameter = $sortable_parameter;
-		parent::__construct($name, array('row1'));
+		parent::__construct($name, array());
 	}
 	
 	public function is_sortable()
