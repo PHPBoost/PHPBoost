@@ -141,13 +141,13 @@ class ArticlesDisplayArticlesController extends ModuleController
 			'PAGINATION_ARTICLES' => ($nbr_pages > 1) ? $pagination->display() : '',
 			'PAGE_NAME' => $page_name,
 			'NUMBER_COMMENTS' => CommentsService::get_number_comments('articles', $this->article->get_id()),
-			'U_PREVIOUS_PAGE' => ($current_page > 1 && $current_page <= $nbr_pages && $nbr_pages > 1) ? ArticlesUrlBuilder::display_article($this->category->get_id(), $this->category->get_rewrited_name(), $this->article->get_id(), $this->article->get_rewrited_title())->absolute() . ($current_page - 1) : '',
+			'U_PREVIOUS_PAGE' => ($current_page > 1 && $current_page <= $nbr_pages && $nbr_pages > 1) ? ArticlesUrlBuilder::display_article($this->category->get_id(), $this->category->get_rewrited_name(), $this->article->get_id(), $this->article->get_rewrited_title())->rel() . ($current_page - 1) : '',
 			'L_PREVIOUS_TITLE' => ($current_page > 1 && $current_page <= $nbr_pages && $nbr_pages > 1) ? $array_page[1][$current_page-2] : '',
-			'U_NEXT_PAGE' => ($current_page > 0 && $current_page < $nbr_pages && $nbr_pages > 1) ? ArticlesUrlBuilder::display_article($this->category->get_id(), $this->category->get_rewrited_name(), $this->article->get_id(), $this->article->get_rewrited_title())->absolute() . ($current_page + 1) : '',
+			'U_NEXT_PAGE' => ($current_page > 0 && $current_page < $nbr_pages && $nbr_pages > 1) ? ArticlesUrlBuilder::display_article($this->category->get_id(), $this->category->get_rewrited_name(), $this->article->get_id(), $this->article->get_rewrited_title())->rel() . ($current_page + 1) : '',
 			'L_NEXT_TITLE' => ($current_page > 0 && $current_page < $nbr_pages && $nbr_pages > 1) ? $array_page[1][$current_page] : '',
-			'U_CATEGORY' => ArticlesUrlBuilder::display_category($this->category->get_id(), $this->category->get_rewrited_name())->absolute(),
-			'U_PRINT_ARTICLE' => ArticlesUrlBuilder::print_article($this->article->get_id(), $this->article->get_rewrited_title())->absolute(),
-			'U_EDIT_ARTICLE_PAGE' => $page_name !== '' ? ArticlesUrlBuilder::edit_article($this->article->get_id(), $page_name)->absolute() : ArticlesUrlBuilder::edit_article($this->article->get_id())->absolute() 
+			'U_CATEGORY' => ArticlesUrlBuilder::display_category($this->category->get_id(), $this->category->get_rewrited_name())->rel(),
+			'U_PRINT_ARTICLE' => ArticlesUrlBuilder::print_article($this->article->get_id(), $this->article->get_rewrited_title())->rel(),
+			'U_EDIT_ARTICLE_PAGE' => $page_name !== '' ? ArticlesUrlBuilder::edit_article($this->article->get_id(), $page_name)->rel() : ArticlesUrlBuilder::edit_article($this->article->get_id())->rel() 
 		));
 		
 		//Affichage commentaires
@@ -174,7 +174,7 @@ class ArticlesDisplayArticlesController extends ModuleController
 		$article_pages = $this->list_article_pages($array_page);
 		
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('article_pages', '', $current_page, $article_pages,
-			array('events' => array('change' => 'document.location = "' . ArticlesUrlBuilder::display_article($this->category->get_id(), $this->category->get_rewrited_name(), $this->article->get_id(), $this->article->get_rewrited_title())->absolute() . '" + HTMLForms.getField("article_pages").getValue();'))
+			array('events' => array('change' => 'document.location = "' . ArticlesUrlBuilder::display_article($this->category->get_id(), $this->category->get_rewrited_name(), $this->article->get_id(), $this->article->get_rewrited_title())->rel() . '" + HTMLForms.getField("article_pages").getValue();'))
 		));
 		
 		$this->form = $form;
@@ -309,7 +309,7 @@ class ArticlesDisplayArticlesController extends ModuleController
 		}
 		$category = $categories[$this->article->get_id_category()];
 		if (!$this->article->is_published())
-			$response->add_breadcrumb_link ($this->lang['articles.pending_articles'], ArticlesUrlBuilder::display_pending_articles()->absolute());
+			$response->add_breadcrumb_link ($this->lang['articles.pending_articles'], ArticlesUrlBuilder::display_pending_articles()->rel());
 		$response->add_breadcrumb_link($this->article->get_title(), ArticlesUrlBuilder::display_article($category->get_id(), $category->get_rewrited_name(), $this->article->get_id(), $this->article->get_rewrited_title()));
 		
 		return $response->display($this->view);

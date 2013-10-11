@@ -66,7 +66,7 @@ class ArticlesDisplayPendingArticlesController extends ModuleController
 		$fieldset->add_field(new FormFieldLabel($this->lang['articles.sort_filter_title']));
 		
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_fields', '', $field, $sort_fields,
-			array('events' => array('change' => 'document.location = "'. ArticlesUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name())->absolute() .'" + HTMLForms.getField("sort_fields").getValue() + "/" + HTMLForms.getField("sort_mode").getValue();'))
+			array('events' => array('change' => 'document.location = "'. ArticlesUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name())->rel() .'" + HTMLForms.getField("sort_fields").getValue() + "/" + HTMLForms.getField("sort_mode").getValue();'))
 		));
 		
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_mode', '', $mode,
@@ -74,7 +74,7 @@ class ArticlesDisplayPendingArticlesController extends ModuleController
 				new FormFieldSelectChoiceOption($this->lang['articles.sort_mode.asc'], 'asc'),
 				new FormFieldSelectChoiceOption($this->lang['articles.sort_mode.desc'], 'desc')
 			), 
-			array('events' => array('change' => 'document.location = "' . ArticlesUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name())->absolute() . '" + HTMLForms.getField("sort_fields").getValue() + "/" + HTMLForms.getField("sort_mode").getValue();'))
+			array('events' => array('change' => 'document.location = "' . ArticlesUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name())->rel() . '" + HTMLForms.getField("sort_fields").getValue() + "/" + HTMLForms.getField("sort_mode").getValue();'))
 		));
 		
 		$this->form = $form;
@@ -141,7 +141,7 @@ class ArticlesDisplayPendingArticlesController extends ModuleController
 			'C_ARTICLES_CAT' => false,
 			'C_MOSAIC' => false,
 			'L_TOTAL_PENDING_ARTICLE' => $nbr_articles_pending > 0 ? StringVars::replace_vars($this->lang['articles.nbr_articles.pending'], array('number' => $nbr_articles_pending)) : '', 
-			'U_ADD_ARTICLES' => ArticlesUrlBuilder::add_article(Category::ROOT_CATEGORY)->absolute(),
+			'U_ADD_ARTICLES' => ArticlesUrlBuilder::add_article(Category::ROOT_CATEGORY)->rel(),
 			'U_SYNDICATION' => ArticlesUrlBuilder::category_syndication(Category::ROOT_CATEGORY)->rel()
 		));
 		
@@ -174,7 +174,7 @@ class ArticlesDisplayPendingArticlesController extends ModuleController
 				$this->view->assign_block_vars('articles',  array_merge($article->get_tpl_vars()), array(
 					'C_KEYWORDS' => count($keywords) > 0 ? true : false,
 					'L_CAT_NAME' => $category->get_name(),
-					'U_CATEGORY' => ArticlesUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name())->absolute(),
+					'U_CATEGORY' => ArticlesUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name())->rel(),
 					'U_KEYWORDS_LIST' => $keywords_list
 				));
 			}

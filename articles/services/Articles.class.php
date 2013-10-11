@@ -169,7 +169,7 @@ class Articles
 	
 	public function has_picture()
 	{
-		$picture = $this->picture_url->absolute();
+		$picture = $this->picture_url->rel();
 		return !empty($picture);
 	}
 	
@@ -441,18 +441,18 @@ class Articles
 			'PSEUDO' => $user->get_pseudo(),
 			'DESCRIPTION' => FormatingHelper::second_parse($this->get_description()),
 			'SHORT_DESCRIPTION' => $this->get_short_description(),
-			'PICTURE' => $this->get_picture()->absolute(),
+			'PICTURE' => $this->get_picture()->rel(),
 			'USER_LEVEL_CLASS' => UserService::get_level_class($user->get_level()),
 			'USER_GROUP_COLOR' => $user_group_color,
 		    
 			//Links
-			'U_COMMENTS' => ArticlesUrlBuilder::display_comments_article($category->get_id(), $category->get_rewrited_name(), $this->get_id(), $this->get_rewrited_title())->absolute(),
-			'U_AUTHOR' => UserUrlBuilder::profile($this->get_author_user()->get_id())->absolute(),
-			'U_CATEGORY' => ArticlesUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name())->absolute(),
-			'U_ARTICLE' => ArticlesUrlBuilder::display_article($category->get_id(), $category->get_rewrited_name(), $this->get_id(), $this->get_rewrited_title())->absolute(),
-			'U_EDIT_ARTICLE' => ArticlesUrlBuilder::edit_article($this->get_id())->absolute(),
-			'U_DELETE_ARTICLE' => ArticlesUrlBuilder::delete_article($this->get_id())->absolute(),
-			'U_SYNDICATION' => ArticlesUrlBuilder::category_syndication($category->get_id())->absolute()
+			'U_COMMENTS' => ArticlesUrlBuilder::display_comments_article($category->get_id(), $category->get_rewrited_name(), $this->get_id(), $this->get_rewrited_title())->rel(),
+			'U_AUTHOR' => UserUrlBuilder::profile($this->get_author_user()->get_id())->rel(),
+			'U_CATEGORY' => ArticlesUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name())->rel(),
+			'U_ARTICLE' => ArticlesUrlBuilder::display_article($category->get_id(), $category->get_rewrited_name(), $this->get_id(), $this->get_rewrited_title())->rel(),
+			'U_EDIT_ARTICLE' => ArticlesUrlBuilder::edit_article($this->get_id())->rel(),
+			'U_DELETE_ARTICLE' => ArticlesUrlBuilder::delete_article($this->get_id())->rel(),
+			'U_SYNDICATION' => ArticlesUrlBuilder::category_syndication($category->get_id())->rel()
 		);
 	}
 }

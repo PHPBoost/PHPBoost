@@ -62,7 +62,7 @@ class ArticlesModuleHomePage implements ModuleHomePage
 		$fieldset->add_field(new FormFieldLabel($this->lang['articles.sort_filter_title']));
 		
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_fields', '', $field, $sort_fields,
-			array('events' => array('change' => 'document.location = "'. ArticlesUrlBuilder::display_category($this->category->get_id(), $this->category->get_rewrited_name())->absolute() .'" + HTMLForms.getField("sort_fields").getValue() + "/" + HTMLForms.getField("sort_mode").getValue();'))
+			array('events' => array('change' => 'document.location = "'. ArticlesUrlBuilder::display_category($this->category->get_id(), $this->category->get_rewrited_name())->rel() .'" + HTMLForms.getField("sort_fields").getValue() + "/" + HTMLForms.getField("sort_mode").getValue();'))
 		));
 		
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_mode', '', $mode,
@@ -70,7 +70,7 @@ class ArticlesModuleHomePage implements ModuleHomePage
 				new FormFieldSelectChoiceOption($this->lang['articles.sort_mode.asc'], 'asc'),
 				new FormFieldSelectChoiceOption($this->lang['articles.sort_mode.desc'], 'desc')
 			), 
-			array('events' => array('change' => 'document.location = "' . ArticlesUrlBuilder::display_category($this->category->get_id(), $this->category->get_rewrited_name())->absolute() . '" + HTMLForms.getField("sort_fields").getValue() + "/" + HTMLForms.getField("sort_mode").getValue();'))
+			array('events' => array('change' => 'document.location = "' . ArticlesUrlBuilder::display_category($this->category->get_id(), $this->category->get_rewrited_name())->rel() . '" + HTMLForms.getField("sort_fields").getValue() + "/" + HTMLForms.getField("sort_mode").getValue();'))
 		));
 		
 		$this->form = $form;
@@ -116,7 +116,7 @@ class ArticlesModuleHomePage implements ModuleHomePage
 			'C_CURRENT_CAT' => $this->category->get_id() != Category::ROOT_CATEGORY,
 			'C_PUBLISHED_ARTICLES' => false,
 			'ID_CAT' => $this->category->get_name(),
-			'U_ADD_ARTICLES' => ArticlesUrlBuilder::add_article($this->category->get_id())->absolute(),
+			'U_ADD_ARTICLES' => ArticlesUrlBuilder::add_article($this->category->get_id())->rel(),
 			'U_SYNDICATION' => ArticlesUrlBuilder::category_syndication($this->category->get_id())->rel()
 		));
 		
@@ -143,7 +143,7 @@ class ArticlesModuleHomePage implements ModuleHomePage
 			{
 				foreach ($children_cat as $child_cat)
 				{
-					$children_cat_links .= '<a style="font-size:10px;" href="' . ArticlesUrlBuilder::display_category($child_cat->get_id(), $child_cat->get_rewrited_name())->absolute() . '">' . $child_cat->get_name() . '</a>';
+					$children_cat_links .= '<a style="font-size:10px;" href="' . ArticlesUrlBuilder::display_category($child_cat->get_id(), $child_cat->get_rewrited_name())->rel() . '">' . $child_cat->get_name() . '</a>';
 					if ($nbr_children_cat - 1 > 0)
 					{
 					    $children_cat_links .= ', ';
@@ -156,9 +156,9 @@ class ArticlesModuleHomePage implements ModuleHomePage
 				'ID_CATEGORY' => $row['id'],
 				'CATEGORY_NAME' => $row['name'] . ' (' . $row['nbr_articles'] . ')',
 				'CATEGORY_DESCRIPTION' => FormatingHelper::second_parse($row['description']),
-				'CATEGORY_ICON_SOURCE' => !empty($row['image']) ? ($row['image'] == 'articles.png' || $row['image'] == 'articles_mini.png' ? ArticlesUrlBuilder::home()->absolute() . $row['image'] : $row['image']) : '',
+				'CATEGORY_ICON_SOURCE' => !empty($row['image']) ? ($row['image'] == 'articles.png' || $row['image'] == 'articles_mini.png' ? ArticlesUrlBuilder::home()->rel() . $row['image'] : $row['image']) : '',
 				'L_NBR_ARTICLES_CAT' => StringVars::replace_vars($this->lang['articles.nbr_articles_category'], array('number' => $row['nbr_articles'])),
-				'U_CATEGORY' => ArticlesUrlBuilder::display_category($row['id'], $row['rewrited_name'])->absolute(),
+				'U_CATEGORY' => ArticlesUrlBuilder::display_category($row['id'], $row['rewrited_name'])->rel(),
 				'U_SUBCATEGORIES' => (count($children_cat) > 0) ? $children_cat_links : 'aucune'
 			));
 		}

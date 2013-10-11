@@ -39,7 +39,7 @@ class ArticlesDisplayResponse
 	{
 		if ($link instanceof Url)
 		{
-			$link = $link->absolute();
+			$link = $link->rel();
 		}
 		$this->breadcrumb_links[$name] = $link;
 	}
