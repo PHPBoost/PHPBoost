@@ -174,7 +174,7 @@ class ArticlesDisplayArticlesController extends ModuleController
 		$article_pages = $this->list_article_pages($array_page);
 		
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('article_pages', '', $current_page, $article_pages,
-			array('events' => array('change' => 'document.location = "' . ArticlesUrlBuilder::display_article($this->category->get_id(), $this->category->get_rewrited_name(), $this->article->get_id(), $this->article->get_rewrited_title())->rel() . '" + HTMLForms.getField("article_pages").getValue();'))
+			array('class' => 'summary', 'events' => array('change' => 'document.location = "' . ArticlesUrlBuilder::display_article($this->category->get_id(), $this->category->get_rewrited_name(), $this->article->get_id(), $this->article->get_rewrited_title())->rel() . '" + HTMLForms.getField("article_pages").getValue();'))
 		));
 		
 		$this->form = $form;
