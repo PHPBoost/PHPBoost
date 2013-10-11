@@ -1,10 +1,3 @@
-<script type="text/javascript">
-<!--
-	function Confirm() {
-	return confirm("{L_ALERT_DELETE_ARTICLE}");
-}
--->
-</script>
 # IF C_ARTICLES_FILTERS #
 <div style="float:right;width:300px;margin-right:10px;">
 	# INCLUDE FORM #

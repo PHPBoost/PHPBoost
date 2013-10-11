@@ -223,12 +223,12 @@ class ArticlesModuleHomePage implements ModuleHomePage
 				$article = new Articles();
 				$article->set_properties($row);
 				
-				$keywords = ArticlesService::get_keywords_manager()->get_keywords('articles');
+				$keywords = $article->get_keywords();
 				
 				$keywords_list = $this->build_keywords_list($keywords);
 				
 				$this->view->assign_block_vars('articles', array_merge($article->get_tpl_vars(), array(
-					'C_KEYWORDS' => $keywords->get_rows_count() > 0 ? true : false,
+					'C_KEYWORDS' => count($keywords) > 0 ? true : false,
 					'U_KEYWORDS_LIST' => $keywords_list
 				)));
 			}
@@ -275,11 +275,11 @@ class ArticlesModuleHomePage implements ModuleHomePage
 	private function build_keywords_list($keywords)
 	{
 		$keywords_list = '';
-		$nbr_keywords = $keywords->get_rows_count();
+		$nbr_keywords = count($keywords);
 		
-		while ($row = $keywords->fetch())
+		foreach ($keywords as $keyword)
 		{	
-			$keywords_list .= '<a class="small" href="' . ArticlesUrlBuilder::display_tag($row['rewrited_name'])->absolute() . '">' . $row['name'] . '</a>';
+			$keywords_list .= '<a class="small" href="' . ArticlesUrlBuilder::display_tag($keyword->get_rewrited_name())->rel() . '">' . $keyword->get_name() . '</a>';
 			if ($nbr_keywords - 1 > 0)
 			{
 				$keywords_list .= ', ';
@@ -305,7 +305,7 @@ class ArticlesModuleHomePage implements ModuleHomePage
 		$current_page = AppContext::get_request()->get_getint('page', 1);
 		
 		$pagination = new ModulePagination($current_page, $nbr_articles_cat, ArticlesConfig::load()->get_number_articles_per_page());
-		$pagination->set_url(ArticlesUrlBuilder::display_category($this->category->get_id(), $this->category->get_rewrited_name($sort_field, $sort_mode, '/%d')));
+		$pagination->set_url(ArticlesUrlBuilder::display_category($this->category->get_id(), $this->category->get_rewrited_name(), $sort_field, $sort_mode, '%d'));
 		
 		if ($pagination->current_page_is_empty() && $current_page > 1)
 	        {

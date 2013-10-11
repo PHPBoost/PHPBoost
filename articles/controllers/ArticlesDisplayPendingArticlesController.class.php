@@ -165,14 +165,14 @@ class ArticlesDisplayPendingArticlesController extends ModuleController
 				$article = new Articles();
 				$article->set_properties($row);
 				
-				$keywords = ArticlesService::get_keywords_manager()->get_keywords('articles');
+				$keywords = $article->get_keywords();
 				
 				$keywords_list = $this->build_keywords_list($keywords);
 		
 				$category = ArticlesService::get_categories_manager()->get_categories_cache()->get_category($article->get_id_category());
 				
 				$this->view->assign_block_vars('articles',  array_merge($article->get_tpl_vars()), array(
-					'C_KEYWORDS' => $keywords->get_rows_count() > 0 ? true : false,
+					'C_KEYWORDS' => count($keywords) > 0 ? true : false,
 					'L_CAT_NAME' => $category->get_name(),
 					'U_CATEGORY' => ArticlesUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name())->absolute(),
 					'U_KEYWORDS_LIST' => $keywords_list
@@ -191,11 +191,11 @@ class ArticlesDisplayPendingArticlesController extends ModuleController
 	private function build_keywords_list($keywords)
 	{
 		$keywords_list = '';
-		$nbr_keywords = $keywords->get_rows_count();
+		$nbr_keywords = count($keywords);
 		
-		while ($row = $keywords->fetch())
+		foreach ($keywords as $keyword)
 		{	
-			$keywords_list .= '<a class="small" href="' . ArticlesUrlBuilder::display_tag($row['rewrited_name'])->absolute() . '">' . $row['name'] . '</a>';
+			$keywords_list .= '<a class="small" href="' . ArticlesUrlBuilder::display_tag($keyword->get_rewrited_name())->rel() . '">' . $keyword->get_name() . '</a>';
 			if ($nbr_keywords - 1 > 0)
 			{
 				$keywords_list .= ', ';

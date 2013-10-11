@@ -120,10 +120,6 @@ class AdminManageArticlesController extends AdminModuleController
 		
 		$this->build_form($field, $mode);
 		
-		$this->view->put_all(array(
-			'L_ALERT_DELETE_ARTICLE' => $this->lang['articles.form.alert_delete_article']
-		));
-		
 		if($nbr_articles > 0)
 		{	
 			$pagination = new ModulePagination($current_page, $nbr_articles, $nbr_articles_per_page);

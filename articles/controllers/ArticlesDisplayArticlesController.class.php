@@ -118,9 +118,9 @@ class ArticlesDisplayArticlesController extends ModuleController
 		
 		$this->build_view_sources();
 		
-		$this->build_view_keywords($this->article->get_id());
+		$this->build_view_keywords();
 		
-		$pagination = $this->get_pagination($nbr_pages);
+		$pagination = $this->get_pagination($nbr_pages, $current_page);
 		//$pagination = new ModulePagination($current_page, $nbr_pages, 1);
 		//$pagination->set_url(ArticlesUrlBuilder::display_article($this->category->get_id(), $this->category->get_rewrited_name(), $this->article->get_id(), $this->article->get_rewrited_title()), '%d');
 		
@@ -131,19 +131,19 @@ class ArticlesDisplayArticlesController extends ModuleController
 			'C_COMMENTS_ENABLED' => $comments_enabled,
 			'C_DATE_UPDATED' => $this->article->get_date_updated() != null ? true : false,
 			'C_PAGINATION' => $pagination->has_several_pages(),
-			'L_PREVIOUS_PAGE' => LangLoader::get_message('previous_page', 'main'),
-			'L_NEXT_PAGE' => LangLoader::get_message('next_page', 'main'),
+			'C_PREVIOUS_PAGE' => ($current_page != 1) ? true : false,
+			'C_NEXT_PAGE' => ($current_page != $nbr_pages) ? true : false,
 			'L_PRINTABLE_VERSION' => LangLoader::get_message('printable_version', 'main'),
 			'L_CAT_NAME' => $this->category->get_name(),
 			'DATE_UPDATED' => $this->article->get_date_updated() != null ? $this->article->get_date_updated()->format(Date::FORMAT_DAY_MONTH_YEAR) : '',
 			'KERNEL_NOTATION' => NotationService::display_active_image($this->article->get_notation()),
 			'CONTENTS' => isset($article_contents_clean[$current_page-1]) ? FormatingHelper::second_parse($article_contents_clean[$current_page-1]) : '',
-			'PAGINATION_ARTICLES' => $pagination->display(),
+			'PAGINATION_ARTICLES' => ($nbr_pages > 1) ? $pagination->display() : '',
 			'PAGE_NAME' => $page_name,
 			'NUMBER_COMMENTS' => CommentsService::get_number_comments('articles', $this->article->get_id()),
-			'U_PAGE_PREVIOUS' => ($current_page > 1 && $current_page <= $nbr_pages && $nbr_pages > 1) ? ArticlesUrlBuilder::display_article($this->category->get_id(), $this->category->get_rewrited_name(), $this->article->get_id(), $this->article->get_rewrited_title())->absolute() . ($current_page - 1) : '',
+			'U_PREVIOUS_PAGE' => ($current_page > 1 && $current_page <= $nbr_pages && $nbr_pages > 1) ? ArticlesUrlBuilder::display_article($this->category->get_id(), $this->category->get_rewrited_name(), $this->article->get_id(), $this->article->get_rewrited_title())->absolute() . ($current_page - 1) : '',
 			'L_PREVIOUS_TITLE' => ($current_page > 1 && $current_page <= $nbr_pages && $nbr_pages > 1) ? $array_page[1][$current_page-2] : '',
-			'U_PAGE_NEXT' => ($current_page > 0 && $current_page < $nbr_pages && $nbr_pages > 1) ? ArticlesUrlBuilder::display_article($this->category->get_id(), $this->category->get_rewrited_name(), $this->article->get_id(), $this->article->get_rewrited_title())->absolute() . ($current_page + 1) : '',
+			'U_NEXT_PAGE' => ($current_page > 0 && $current_page < $nbr_pages && $nbr_pages > 1) ? ArticlesUrlBuilder::display_article($this->category->get_id(), $this->category->get_rewrited_name(), $this->article->get_id(), $this->article->get_rewrited_title())->absolute() . ($current_page + 1) : '',
 			'L_NEXT_TITLE' => ($current_page > 0 && $current_page < $nbr_pages && $nbr_pages > 1) ? $array_page[1][$current_page] : '',
 			'U_CATEGORY' => ArticlesUrlBuilder::display_category($this->category->get_id(), $this->category->get_rewrited_name())->absolute(),
 			'U_PRINT_ARTICLE' => ArticlesUrlBuilder::print_article($this->article->get_id(), $this->article->get_rewrited_title())->absolute(),
@@ -174,7 +174,7 @@ class ArticlesDisplayArticlesController extends ModuleController
 		$article_pages = $this->list_article_pages($array_page);
 		
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('article_pages', '', $current_page, $article_pages,
-			array('events' => array('change' => 'document.location = "'. ArticlesUrlBuilder::display_article($this->category->get_id(), $this->category->get_rewrited_name(), $this->article->get_id(), $this->article->get_rewrited_title())->absolute() .'" + HTMLForms.getField("article_pages").getValue();'))
+			array('events' => array('change' => 'document.location = "' . ArticlesUrlBuilder::display_article($this->category->get_id(), $this->category->get_rewrited_name(), $this->article->get_id(), $this->article->get_rewrited_title())->absolute() . '" + HTMLForms.getField("article_pages").getValue();'))
 		));
 		
 		$this->form = $form;
@@ -183,8 +183,6 @@ class ArticlesDisplayArticlesController extends ModuleController
 	private function list_article_pages($array_page)
 	{
 		$options = array();
-		
-		$options[] = new FormFieldSelectChoiceOption($this->lang['articles.select_page'], '1');
 		
 		$i = 1;
 		foreach ($array_page[1] as $page_name)
@@ -214,20 +212,20 @@ class ArticlesDisplayArticlesController extends ModuleController
 	    }
 	}
 	
-	private function build_view_keywords($id_article)
+	private function build_view_keywords()
 	{
-		$keywords = ArticlesService::get_keywords_manager()->get_keywords('articles');
+		$keywords = $this->article->get_keywords();
+		$nbr_keywords = count($keywords);
 		
-		$this->view->put('C_KEYWORDS', $keywords->get_rows_count() > 0);
+		$this->view->put('C_KEYWORDS', $nbr_keywords > 0);
 		
 		$i = 0;
-		while ($row = $keywords->fetch())
+		foreach ($keywords as $keyword)
 		{	
 			$this->view->assign_block_vars('keywords', array(
-				'I' => $i,
-				'NAME' => $row['name'],
-				'U_KEYWORD' => ArticlesUrlBuilder::display_tag($row['rewrited_name'])->absolute(),
-				'COMMA' => $i > 0 ? ', ' : ' '
+				'COMMA' => $i > 0 ? ', ' : ' ',
+				'NAME' => $keyword->get_name(),
+				'URL' => ArticlesUrlBuilder::display_tag($keyword->get_rewrited_name())->rel(),
 			));
 			$i++;
 		}	
@@ -281,12 +279,10 @@ class ArticlesDisplayArticlesController extends ModuleController
 		);
 	}
 	
-	private function get_pagination($nbr_pages)
-	{
-		$current_page = AppContext::get_request()->get_getint('page', 1);
-		
+	private function get_pagination($nbr_pages, $current_page)
+	{	
 		$pagination = new ModulePagination($current_page, $nbr_pages, 1);
-		$pagination->set_url(ArticlesUrlBuilder::display_article($this->category->get_id(), $this->category->get_rewrited_name(), $this->article->get_id(), $this->article->get_rewrited_title()), '%d');
+		$pagination->set_url(ArticlesUrlBuilder::display_article($this->category->get_id(), $this->category->get_rewrited_name(), $this->article->get_id(), $this->article->get_rewrited_title(), '%d'));
 		
 		if ($pagination->current_page_is_empty() && $current_page > 1)
 	        {
