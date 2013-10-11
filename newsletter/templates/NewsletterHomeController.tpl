@@ -1,63 +1,68 @@
-<table class="module_table">
-	<tr> 
-		<th colspan="5">
-			{@newsletter.list_newsletters} 
-		</th>
-	</tr>
-	<tr style="text-align:center;">
-		<td class="row1">
-		</td>
-		<td class="row1">
-			{@streams.name} 
-		</td>
-		<td class="row1">
-			{@streams.description}
-		</td>
-		<td class="row1">
-			{@newsletter.archives}
-		</td>
-		<td class="row1">
-			{@newsletter.subscribers}
-		</td>
-	</tr>
-	# IF C_STREAMS #
-		<tr style="text-align:center;">
-			<td colspan="5" class="row3">
-				<a href="{LINK_SUBSCRIBE}" style="margin-right:25px;">{@newsletter.subscribe_newsletters}</a>
-				<a href="{LINK_UNSUBSCRIBE}" style="margin-left:25px;">{@newsletter.unsubscribe_newsletters}</a>
-			</td>
+<h1>{@newsletter.list_newsletters}</h1>
+<table>
+	<thead>
+		<tr> 
+			<th>
+			</th>
+			<th>
+				{@streams.name}
+			</th>
+			<th>
+				{@streams.description}
+			</th>
+			<th>
+				{@newsletter.archives}
+			</th>
+			<th>
+				{@newsletter.subscribers}
+			</th>
 		</tr>
-		# START streams_list #
-		<tr style="text-align:center;">
-			<td class="row2"> 
-				<img src="{streams_list.PICTURE}"></img>
-			</td>
-			<td class="row2">
-				{streams_list.NAME}
-			</td>
-			<td class="row2">
-				{streams_list.DESCRIPTION}
-			</td>
-			<td class="row2">
-				{streams_list.VIEW_ARCHIVES}
-			</td>
-			<td class="row2">
-				{streams_list.VIEW_SUBSCRIBERS}
-			</td>
-		</tr>
-		# END streams_list #
-	# ENDIF #
+	</thead>
 	# IF C_STREAMS #
-	<tr>
-		<td colspan="5" class="row1">
-			<span style="float:left;">{@newsletter.page} : {PAGINATION}</span>
-		</td>
-	</tr>
+		<tfoot>
+			<tr>
+				<th colspan="5">
+					{@newsletter.page} : {PAGINATION}
+				</th>
+			</tr>
+		</tfoot>
+		<tbody>
+			<tr>
+				<td colspan="2">
+					<a href="{LINK_SUBSCRIBE}">{@newsletter.subscribe_newsletters}</a>
+				</td>
+				<td class="no-separator"></td>
+				<td colspan="2" class="no-separator">
+					<a href="{LINK_UNSUBSCRIBE}">{@newsletter.unsubscribe_newsletters}</a>
+				</td>
+			</tr>
+			# START streams_list #
+			<tr>
+				<td> 
+					<img src="{streams_list.PICTURE}"></img>
+				</td>
+				<td>
+					{streams_list.NAME}
+				</td>
+				<td>
+					{streams_list.DESCRIPTION}
+				</td>
+				<td>
+					{streams_list.VIEW_ARCHIVES}
+				</td>
+				<td>
+					{streams_list.VIEW_SUBSCRIBERS}
+				</td>
+			</tr>
+			# END streams_list #
+		</tbody>
 	# ELSE #
-	<tr style="text-align:center;">
-		<td colspan="5" class="row2">
-			<span style="margin-left:auto;margin-right:auto;" class="text_strong" >{@newsletter.no_newsletters}</span>
-		</td>
-	</tr>
+		<tbody>
+			<tr>
+				<td colspan="5">
+					<span class="text_strong">{@newsletter.no_newsletters}</span>
+				</td>
+			</tr>
+		</tbody>
 	# ENDIF #
 </table>
