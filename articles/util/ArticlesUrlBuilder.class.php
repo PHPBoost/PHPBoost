@@ -96,9 +96,10 @@ class ArticlesUrlBuilder
 		return DispatchManager::get_url(self::$dispatcher, '/' . $id . '/delete/?token=' . AppContext::get_session()->get_token());
 	}
 	
-	public static function display_article($id_category, $rewrited_name_category, $id_article, $rewrited_title)
+	public static function display_article($id_category, $rewrited_name_category, $id_article, $rewrited_title, $page = null)
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/' . $id_category . '-' . $rewrited_name_category . '/' . $id_article . '-' .$rewrited_title . '/');
+		$page = $page !== null ? $page . '/' : '';
+		return DispatchManager::get_url(self::$dispatcher, '/' . $id_category . '-' . $rewrited_name_category . '/' . $id_article . '-' .$rewrited_title . '/' . $page);
 	}
 	
 	public static function display_comments_article($id_category, $rewrited_name_category, $id_article, $rewrited_title)

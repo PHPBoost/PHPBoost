@@ -185,12 +185,12 @@ class ArticlesDisplayArticlesTagController extends ModuleController
 			$article = new Articles();
 			$article->set_properties($row);
 			
-			$keywords = ArticlesService::get_keywords_manager()->get_keywords('articles');
+			$keywords = $article->get_keywords();
 				
 			$keywords_list = $this->build_keywords_list($keywords);
 			
 			$this->view->assign_block_vars('articles', array_merge($article->get_tpl_vars()), array(
-				'C_KEYWORDS' => $keywords->get_rows_count() > 0 ? true : false,
+				'C_KEYWORDS' => count($keywords) > 0 ? true : false,
 				'U_KEYWORDS_LIST' => $keywords_list
 			));
 		}
@@ -201,11 +201,11 @@ class ArticlesDisplayArticlesTagController extends ModuleController
 	private function build_keywords_list($keywords)
 	{
 		$keywords_list = '';
-		$nbr_keywords = $keywords->get_rows_count();
+		$nbr_keywords = count($keywords);
 		
-		while ($row = $keywords->fetch())
+		foreach ($keywords as $keyword)
 		{	
-			$keywords_list .= '<a class="small" href="' . ArticlesUrlBuilder::display_tag($row['rewrited_name'])->absolute() . '">' . $row['name'] . '</a>';
+			$keywords_list .= '<a class="small" href="' . ArticlesUrlBuilder::display_tag($keyword->get_rewrited_name())->rel() . '">' . $keyword->get_name() . '</a>';
 			if ($nbr_keywords - 1 > 0)
 			{
 				$keywords_list .= ', ';
