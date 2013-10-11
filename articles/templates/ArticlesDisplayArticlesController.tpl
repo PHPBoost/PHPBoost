@@ -57,8 +57,7 @@
 	<div class="module_contents">
 			# IF C_PAGINATION #
 			<div style="float:right;margin-right:35px;width:250px;">
-				<p class="row2 text_strong" style="text-indent:4px;">${i18n('articles.summary')} :</p>
-				# INCLUDE FORM #	
+				<b>${i18n('articles.summary')} :</b> # INCLUDE FORM #	
 			</div>
 			<div class="spacer">&nbsp;</div>
 			# ENDIF #					
