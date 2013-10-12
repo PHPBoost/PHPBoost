@@ -521,7 +521,7 @@ menu.dynamic_menu ul li ul {
 menu.dynamic_menu > ul > li {
 	position:relative;
 	display:inline-block !important;
-    display:inline;
+	display:inline;
 	padding:4px 12px;
 	background-image: -moz-linear-gradient(top,  rgba(255,255,255,0.18) 0%, rgba(56,56,56,0.18) 100%);
 	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,0.18)), color-stop(100%,rgba(56,56,56,0.18)));
@@ -543,6 +543,17 @@ menu.dynamic_menu > ul > li {
 
 menu.dynamic_menu > ul > li:hover {
 	background-color:#EEE;
+}
+
+menu.dynamic_menu > ul > li.current {
+	background-image: -moz-linear-gradient(bottom,  rgba(255,255,255,0.18) 0%, rgba(56,56,56,0.18) 100%);
+	background-image: -webkit-gradient(linear, left bottom, left bottom, color-stop(0%,rgba(255,255,255,0.18)), color-stop(100%,rgba(56,56,56,0.18)));
+	background-image: -webkit-linear-gradient(bottom,  rgba(255,255,255,0.18) 0%,rgba(56,56,56,0.18) 100%);
+	background-image: -o-linear-gradient(bottom,  rgba(255,255,255,0.18) 0%,rgba(56,56,56,0.18) 100%);
+	background-image: -ms-linear-gradient(bottom,  rgba(255,255,255,0.18) 0%,rgba(56,56,56,0.18) 100%);
+	background-image: linear-gradient(to top,  rgba(255,255,255,0.18) 0%,rgba(56,56,56,0.18) 100%);
+	border-top-color: #b3b3b3;
+	background-color:#F0F0F0;
 }
 
 menu.dynamic_menu > ul > li > a{
