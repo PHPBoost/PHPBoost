@@ -17,53 +17,65 @@ function Confirm(action) {
 }
 -->
 </script>
-<table class="module_table">
-	<tr class="text_center">
-		<th class="column_id">
-			<a href="{LINK_BUG_ID_TOP}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
-			{@bugs.labels.fields.id}
-			<a href="{LINK_BUG_ID_BOTTOM}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
-		</th>
-		<th>
-			<a href="{LINK_BUG_TITLE_TOP}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
-			{@bugs.labels.fields.title}
-			<a href="{LINK_BUG_TITLE_BOTTOM}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
-		</th>
-		<th class="column_informations">
-			<a href="{LINK_BUG_STATUS_TOP}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
-			{@bugs.titles.informations}
-			<a href="{LINK_BUG_STATUS_BOTTOM}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
-		</th>
-		<th class="column_date">
-			<a href="{LINK_BUG_DATE_TOP}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
-			{L_DATE}
-			<a href="{LINK_BUG_DATE_BOTTOM}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
-		</th>
-		# IF C_IS_ADMIN #
-		<th class="column_admin">
-			{@bugs.actions}
-		</th>
-		# ENDIF #
-	</tr>
+<table>
+	<thead>
+		<tr>
+			<th class="column_id">
+				<a href="{LINK_BUG_ID_TOP}"><i class="icon-arrow-up"></i></a>
+				{@bugs.labels.fields.id}
+				<a href="{LINK_BUG_ID_BOTTOM}"><i class="icon-arrow-down"></i></a>
+			</th>
+			<th>
+				<a href="{LINK_BUG_TITLE_TOP}"><i class="icon-arrow-up"></i></a>
+				{@bugs.labels.fields.title}
+				<a href="{LINK_BUG_TITLE_BOTTOM}"><i class="icon-arrow-down"></i></a>
+			</th>
+			<th class="column_informations">
+				<a href="{LINK_BUG_STATUS_TOP}"><i class="icon-arrow-up"></i></a>
+				{@bugs.titles.informations}
+				<a href="{LINK_BUG_STATUS_BOTTOM}"><i class="icon-arrow-down"></i></a>
+			</th>
+			<th class="column_date">
+				<a href="{LINK_BUG_DATE_TOP}"><i class="icon-arrow-up"></i></a>
+				{L_DATE}
+				<a href="{LINK_BUG_DATE_BOTTOM}"><i class="icon-arrow-down"></i></a>
+			</th>
+			# IF C_IS_ADMIN #
+			<th class="column_admin">
+				{@bugs.actions}
+			</th>
+			# ENDIF #
+		</tr>
+	</thead>
+	# IF C_PAGINATION #
+		<tfoot>
+			<tr>
+				<th colspan="{BUGS_COLSPAN}">
+					# INCLUDE PAGINATION #
+				</th>
+			</tr>
+		</tfoot>
+	# ENDIF #
+	<tbody>
 	# START bug #
-	<tr class="text_center"> 
-		<td class="row2"# IF bug.C_LINE_COLOR # style="background-color:{bug.LINE_COLOR};"# ENDIF #>
+	<tr> 
+		<td # IF bug.C_LINE_COLOR # style="background-color:{bug.LINE_COLOR};"# ENDIF #>
 			<a href="{bug.LINK_BUG_DETAIL}">\#{bug.ID}</a>
 		</td>
-		<td class="row2 align_left"# IF bug.C_LINE_COLOR # style="background-color:{bug.LINE_COLOR};"# ENDIF #>
+		<td class="align_left"# IF bug.C_LINE_COLOR # style="background-color:{bug.LINE_COLOR};"# ENDIF #>
 			{bug.TITLE}
 		</td>
-		<td class="row2 align_left"# IF bug.C_LINE_COLOR # style="background-color:{bug.LINE_COLOR};"# ENDIF #> 
+		<td class="align_left"# IF bug.C_LINE_COLOR # style="background-color:{bug.LINE_COLOR};"# ENDIF #> 
 			# IF bug.C_PROGRESS #<span class="progressBar progress{bug.PROGRESS}">{bug.PROGRESS}%</span><br/># ENDIF #
 			<span>{bug.STATUS}</span>
 			# IF C_COMMENTS #<br /><a href="{bug.LINK_BUG_COMMENTS}">{bug.NUMBER_COMMENTS} {bug.L_COMMENTS}</a># ENDIF #
 		</td>
-		<td class="row2"# IF bug.C_LINE_COLOR # style="background-color:{bug.LINE_COLOR};"# ENDIF #>
+		<td # IF bug.C_LINE_COLOR # style="background-color:{bug.LINE_COLOR};"# ENDIF #>
 			# IF C_UNSOLVED #{L_ON}: # ENDIF #{bug.DATE}<br />
-			# IF C_DISPLAY_AUTHOR #{L_BY}: # IF bug.AUTHOR #<a href="{bug.LINK_AUTHOR_PROFILE}" class="small_link {bug.AUTHOR_LEVEL_CLASS}" # IF bug.C_AUTHOR_GROUP_COLOR # style="color:{bug.AUTHOR_GROUP_COLOR}" # ENDIF #>{bug.AUTHOR}</a># ELSE #{L_GUEST}# ENDIF ## ENDIF #
+			# IF C_DISPLAY_AUTHOR #{L_BY}: # IF bug.AUTHOR #<a href="{bug.LINK_AUTHOR_PROFILE}" class="small {bug.AUTHOR_LEVEL_CLASS}" # IF bug.C_AUTHOR_GROUP_COLOR # style="color:{bug.AUTHOR_GROUP_COLOR}" # ENDIF #>{bug.AUTHOR}</a># ELSE #{L_GUEST}# ENDIF ## ENDIF #
 		</td>
 		# IF C_IS_ADMIN #
-		<td class="row2"# IF bug.C_LINE_COLOR # style="background-color:{bug.LINE_COLOR};"# ENDIF #> 
+		<td # IF bug.C_LINE_COLOR # style="background-color:{bug.LINE_COLOR};"# ENDIF #> 
 			<a href="{bug.LINK_BUG_REOPEN_REJECT}" onclick="javascript:return Confirm(${escapejs(REOPEN_REJECT_CONFIRM)});"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/{PICT_REOPEN_REJECT}" alt="{L_REOPEN_REJECT}" title="{L_REOPEN_REJECT}" /></a>
 			<a href="{bug.LINK_BUG_EDIT}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="{L_UPDATE}" title="{L_UPDATE}" /></a>
 			<a href="{bug.LINK_BUG_HISTORY}"><img src="{PATH_TO_ROOT}/bugtracker/templates/images/history.png" alt="{@bugs.actions.history}" title="{@bugs.actions.history}" /></a>
@@ -72,9 +84,10 @@ function Confirm(action) {
 		# ENDIF #
 	</tr>
 	# END bug #
+	</tbody>
 	# IF NOT C_BUGS #
 	<tr> 
-		<td colspan="{BUGS_COLSPAN}" class="row2 text_center">
+		<td colspan="{BUGS_COLSPAN}">
 			{L_NO_BUG}
 		</td>
 	</tr>
@@ -83,4 +96,3 @@ function Confirm(action) {
 
 # INCLUDE LEGEND #
 
-# IF C_PAGINATION #<div class="center"># INCLUDE PAGINATION #</div># ENDIF #

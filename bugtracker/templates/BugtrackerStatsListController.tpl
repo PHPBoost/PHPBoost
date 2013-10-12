@@ -21,95 +21,106 @@
   }
 </script>
 
-<table class="module_table">
-	<tr>
-		<th colspan="2">
-			{@bugs.labels.fields.status}
-		</th>
-	</tr>
-	<tr>
+<section class="block" style="background:#FFF">
+	<header>
+		<h1>{@bugs.labels.fields.status}</h1>
+	</header>
+	<div class="contents">
 		# IF C_BUGS #
-		<td class="row2 chart text_center">
+		<div class="center">
 			<div id="status_chart"></div>
-		</td>
+		</div>
 		# ELSE #
-		<td class="row2 text_center">
+		<div class="center">
 			{@bugs.notice.no_bug}
-		</td>
+		</div>
 		# ENDIF #
+	</div>
 </table>
+</section>
 
 <div class="spacer">&nbsp;</div>
 
 # IF C_DISPLAY_VERSIONS #
-<table class="module_table">
-	<tr class="text_center">
-		<th class="column_version">
-			{@bugs.labels.fields.version}
-		</th>
-		<th>
-			{@bugs.labels.number_fixed}
-		</th>
-	</tr>
-	# START fixed_version #
-	<tr class="text_center"> 
-		<td class="row2"> 
-			{fixed_version.NAME}
-		</td>
-		<td class="row2"> 
-			<a href="{fixed_version.LINK_VERSION_ROADMAP}">{fixed_version.NUMBER}</a>
-		</td>
-	</tr>
-	# END fixed_version #
-	# IF NOT C_FIXED_BUGS #
-	<tr class="text_center"> 
-		<td colspan="2" class="row2">
-			{@bugs.notice.no_bug_solved}
-		</td>
-	</tr>
-	# ENDIF #
+<table>
+	<thead>
+		<tr>
+			<th class="column_version">
+				{@bugs.labels.fields.version}
+			</th>
+			<th>
+				{@bugs.labels.number_fixed}
+			</th>
+		</tr>
+	</thead>
+	<tbody>
+		# START fixed_version #
+		<tr> 
+			<td> 
+				{fixed_version.NAME}
+			</td>
+			<td> 
+				<a href="{fixed_version.LINK_VERSION_ROADMAP}">{fixed_version.NUMBER}</a>
+			</td>
+		</tr>
+		# END fixed_version #
+		# IF NOT C_FIXED_BUGS #
+		<tr> 
+			<td colspan="2">
+				{@bugs.notice.no_bug_solved}
+			</td>
+		</tr>
+		# ENDIF #
+	</tbody>
 </table>
 
 <div class="spacer">&nbsp;</div>
 # ENDIF #
 
 # IF C_DISPLAY_TOP_POSTERS #
-<table class="module_table">
-	<tr>
-		<th colspan="3">
-			{@bugs.labels.top_posters}
-		</th>
-	</tr>
-	<tr class="text_center">
-		<td class="row1">
-			N&deg;
-		</td>
-		<td class="row1">
-			{@bugs.labels.login}
-		</td>
-		<td class="row1">
-			{@bugs.labels.number}
-		</td>
-	</tr>
-	# START top_poster #
-	<tr class="text_center">
-		<td class="row2">
-			{top_poster.ID}
-		</td>
-		<td class="row2">
-			# IF top_poster.AUTHOR #<a href="{top_poster.LINK_AUTHOR_PROFILE}" class="small_link {top_poster.AUTHOR_LEVEL_CLASS}" # IF top_poster.C_AUTHOR_GROUP_COLOR # style="color:{top_poster.AUTHOR_GROUP_COLOR}" # ENDIF #>{top_poster.AUTHOR}</a># ELSE #{L_GUEST}# ENDIF #
-		</td>
-		<td class="row2">
-			{top_poster.USER_BUGS}
-		</td>
-	</tr>
-	# END top_poster #
-	# IF NOT C_POSTERS #
-	<tr> 
-		<td colspan="3" class="row2 text_center">
-			{@bugs.notice.no_bug}
-		</td>
-	</tr>
-	# ENDIF #
-</table>
+<section class="block" style="background:#FFF">
+	<header>
+		<h1>{@bugs.labels.top_posters}</h1>
+	<header>
+	<div class="spacer">&nbsp;</div>
+	<div class="contents">
+		<table>
+			<thead>
+				<tr>
+					<th>
+						N&deg;
+					</th>
+					<th>
+						{@bugs.labels.login}
+					</th>
+					<th>
+						{@bugs.labels.number}
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+				# START top_poster #
+				<tr>
+					<td>
+						{top_poster.ID}
+					</td>
+					<td>
+						# IF top_poster.AUTHOR #<a href="{top_poster.LINK_AUTHOR_PROFILE}" class="small_link {top_poster.AUTHOR_LEVEL_CLASS}" # IF top_poster.C_AUTHOR_GROUP_COLOR # style="color:{top_poster.AUTHOR_GROUP_COLOR}" # ENDIF #>{top_poster.AUTHOR}</a># ELSE #{L_GUEST}# ENDIF #
+					</td>
+					<td>
+						{top_poster.USER_BUGS}
+					</td>
+				</tr>
+				# END top_poster #
+				# IF NOT C_POSTERS #
+				<tr> 
+					<td colspan="3">
+						{@bugs.notice.no_bug}
+					</td>
+				</tr>
+				# ENDIF #
+			</tbody>
+		</table>
+	</div>
+</section>
 # ENDIF #
