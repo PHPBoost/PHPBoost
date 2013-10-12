@@ -75,7 +75,7 @@ elseif ($select_cat && empty($open_cat) && $root == 0)
 elseif (!empty($open_cat) || $root == 1)
 {
 	$open_cat = $root == 1 ? 0 : $open_cat;
-	$return = '<table style="width:100%;">';
+	$return = '<ul style="margin:0;padding:0;list-style-type:none;line-height:normal;">';
 	//Liste des catégories dans cette catégorie
 	foreach ($_PAGES_CATS as $key => $value)
 	{
@@ -86,7 +86,7 @@ elseif (!empty($open_cat) || $root == 1)
 			//Vérification de l'autorisation d'éditer la page
 			if (($special_auth && $User->check_auth($value['auth'], READ_PAGE)) || (!$special_auth && $User->check_auth($config_authorizations, READ_PAGE)))
 			{
-				$return .= '<tr><td class="row2"><img src="' . $pages_data_path . '/images/closed_cat.png" alt=""  style="vertical-align:middle" />&nbsp;<a href="javascript:open_cat(' . $key . '); show_cat_contents(' . $value['id_parent'] . ', 0);">' . $value['name'] . '</a></td></tr>';
+				$return .= '<li><img src="' . $pages_data_path . '/images/closed_cat.png" alt=""  style="vertical-align:middle" />&nbsp;<a href="javascript:open_cat(' . $key . '); show_cat_contents(' . $value['id_parent'] . ', 0);">' . $value['name'] . '</a></li>';
 			}
 		}
 	}
@@ -101,11 +101,11 @@ elseif (!empty($open_cat) || $root == 1)
 		//Vérification de l'autorisation d'éditer la page
 		if (($special_auth && $User->check_auth(unserialize($row['auth']), READ_PAGE)) || (!$special_auth && $User->check_auth($config_authorizations, READ_PAGE)))
 		{
-			$return .= '<tr><td class="row2"><img src="' . $pages_data_path . '/images/page.png" alt=""  style="vertical-align:middle" />&nbsp;<a href="' . PATH_TO_ROOT . url('/pages/pages.php?title=' . $row['encoded_title'], '/pages/' . $row['encoded_title']) . '">' . $row['title'] . '</a></td></tr>';
+			$return .= '<li style="padding-left:17px;"><img src="' . $pages_data_path . '/images/page.png" alt=""  style="vertical-align:middle" />&nbsp;<a href="' . PATH_TO_ROOT . url('/pages/pages.php?title=' . $row['encoded_title'], '/pages/' . $row['encoded_title']) . '">' . $row['title'] . '</a></li>';
 		}
 	}
 	$Sql->query_close($result);
-	$return .= '</table>';
+	$return .= '</ul>';
 	echo $return;
 }
 

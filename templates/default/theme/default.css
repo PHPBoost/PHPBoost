@@ -36,7 +36,7 @@ pre { white-space:pre-wrap; }
 	text-align:center;
 	display:block;
 	padding:0;
-	margin:2px 0px;
+	margin:2px auto;
 }
 .left {
     text-align:left;
