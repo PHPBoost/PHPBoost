@@ -221,6 +221,18 @@ table.mini th a, table.mini td a {
 	font-size:11px;
 }
 
+/* Pagination footer tableaux */
+table tfoot nav.pagination a{
+	color:#8b8d90;
+	text-decoration:none;
+	padding:3px 3px;
+	
+}
+
+table tfoot nav.pagination a span.current_page {
+	color:#ced0d0;
+	text-decoration:none;
+}
 
 /* Bouton
 ------------------------------------ */

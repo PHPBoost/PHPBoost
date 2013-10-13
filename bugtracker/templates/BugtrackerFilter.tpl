@@ -6,7 +6,14 @@ function Confirm_del_filter() {
 -->
 </script>
 
-<table>
+<menu class="dynamic_menu">
+	<ul>
+		<li>
+			<a onclick="Effect.toggle('table_filters', 'appear'); return false;"><i class="icon-filter"></i> Filtres</a> 
+		</li>
+	</ul>
+</menu>
+<table id="table_filters" style="display:none;">
 	<caption>
 		{L_FILTERS}
 	</caption>
