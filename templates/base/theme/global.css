@@ -522,7 +522,7 @@ menu.dynamic_menu > ul > li {
 	position:relative;
 	display:inline-block !important;
 	display:inline;
-	padding:4px 12px;
+	padding:0;
 	background-image: -moz-linear-gradient(top,  rgba(255,255,255,0.18) 0%, rgba(56,56,56,0.18) 100%);
 	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,0.18)), color-stop(100%,rgba(56,56,56,0.18)));
 	background-image: -webkit-linear-gradient(top,  rgba(255,255,255,0.18) 0%,rgba(56,56,56,0.18) 100%);
@@ -557,7 +557,7 @@ menu.dynamic_menu > ul > li.current {
 }
 
 menu.dynamic_menu > ul > li > a{
-	padding:0;
+	padding:4px 12px;
 }
 
 menu.dynamic_menu li li:hover > ul {
