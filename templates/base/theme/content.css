@@ -149,6 +149,10 @@ table td:first-child , table td.no-separator{
 	border-left: none;
 }
 
+table tbody td.align_left {
+	text-align:left;
+}
+
 .row1 {
     background:#E0E9EF;
 	padding:8px 6px;
