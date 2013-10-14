@@ -9,14 +9,11 @@ function Confirm_del_filter() {
 <menu class="dynamic_menu">
 	<ul>
 		<li>
-			<a onclick="Effect.toggle('table_filters', 'appear'); return false;"><i class="icon-filter"></i> Filtres</a> 
+			<a onclick="Effect.toggle('table_filters', 'appear'); return false;"><i class="icon-filter"></i> {L_FILTERS}</a> 
 		</li>
 	</ul>
 </menu>
 <table id="table_filters" style="display:none;">
-	<caption>
-		{L_FILTERS}
-	</caption>
 	<thead>
 		<tr>
 			# IF C_DISPLAY_TYPES #
@@ -58,30 +55,30 @@ function Confirm_del_filter() {
 	<tbody>
 		<tr>
 			# IF C_DISPLAY_TYPES #
-			<td>
+			<td class="no-separator">
 				# INCLUDE SELECT_TYPE #
 			</td>
 			# ENDIF #
 			# IF C_DISPLAY_CATEGORIES #
-			<td>
+			<td class="no-separator">
 				# INCLUDE SELECT_CATEGORY #
 			</td>
 			# ENDIF #
 			# IF C_DISPLAY_SEVERITIES #
-			<td>
+			<td class="no-separator">
 				# INCLUDE SELECT_SEVERITY #
 			</td>
 			# ENDIF #
-			<td>
+			<td class="no-separator">
 				# INCLUDE SELECT_STATUS #
 			</td>
 			# IF C_DISPLAY_VERSIONS #
-			<td>
+			<td class="no-separator">
 				# INCLUDE SELECT_VERSION #
 			</td>
 			# ENDIF #
 			# IF C_DISPLAY_SAVE_BUTTON #
-			<td>
+			<td class="no-separator">
 				<a href="{LINK_FILTER_SAVE}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/files_mini.png" alt="{@bugs.labels.save_filters}" title="{@bugs.labels.save_filters}" /></a>
 			</td>
 			# ENDIF #

@@ -2,11 +2,6 @@
 <section>
 	<header>
 		<h1>{@bugs.module_title} - {TITLE}
-			# IF C_ADD #
-			<span class="tools">
-				<a href="{LINK_BUG_ADD}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/add.png" alt="{@bugs.titles.add}" title="{@bugs.titles.add}" class="valign_middle" /></a>
-			</span>
-			# ENDIF #
 		</h1>
 	</header>
 	<div class="content">
@@ -46,6 +41,11 @@
 				# IF C_HISTORY_PAGE #
 				<li class="current">
 					<a href="{LINK_BUG_HISTORY}">{@bugs.titles.history} \#{BUG_ID}</a>
+				</li>
+				# ENDIF #
+				# IF C_ADD #
+				<li>
+					<a href="{LINK_BUG_ADD}"><i class="icon-plus"></i> {@bugs.titles.add}</a>
 				</li>
 				# ENDIF #
 			</ul>

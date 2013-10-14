@@ -11,7 +11,7 @@
 	<tbody>
 		<tr>
 			# START legend #
-			<td>
+			<td class="no-separator">
 			</td>
 			<td class="legend" style="background-color:{legend.COLOR}">
 			</td>
