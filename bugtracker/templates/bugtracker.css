@@ -25,8 +25,3 @@
 .column_color{ width: 76px; }
 
 #status_chart { width: 90%; }
-.chart {
-	padding-top: 10px;
-	padding-left: 60px;
-	vertical-align: top;
-}
