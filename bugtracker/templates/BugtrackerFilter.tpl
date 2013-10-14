@@ -13,7 +13,7 @@ function Confirm_del_filter() {
 		</li>
 	</ul>
 </menu>
-<table id="table_filters" style="display:none;">
+<table id="table_filters"# IF NOT C_HAS_SELECTED_FILTERS # style="display:none;"# ENDIF #>
 	<thead>
 		<tr>
 			# IF C_DISPLAY_TYPES #

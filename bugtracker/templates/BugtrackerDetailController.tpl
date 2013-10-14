@@ -123,12 +123,12 @@
 # ENDIF #
 
 <div class="text_small float_right">
-	{@bugs.labels.fields.author_id}: # IF AUTHOR #<a href="{LINK_AUTHOR_PROFILE}" class="small_link {AUTHOR_LEVEL_CLASS}" # IF C_AUTHOR_GROUP_COLOR # style="color:{AUTHOR_GROUP_COLOR}" # ENDIF #>{AUTHOR}</a># ELSE #{L_GUEST}# ENDIF #, {L_ON}: {SUBMIT_DATE}
+	{@bugs.labels.fields.author_id}: # IF AUTHOR #<a href="{LINK_AUTHOR_PROFILE}" class="small_link {AUTHOR_LEVEL_CLASS}" # IF C_AUTHOR_GROUP_COLOR # style="color:{AUTHOR_GROUP_COLOR}" # ENDIF #>{AUTHOR}</a># ELSE #{L_GUEST}# ENDIF #, {L_ON} {SUBMIT_DATE}
 </div>
 
 <div class="spacer">&nbsp;</div>
 
-<div class="text_center">
+<div class="center">
 	<strong><a href="javascript:history.back(1);" title="${escape(RETURN_NAME)}">${escape(RETURN_NAME)}</a></strong>
 </div>
 
