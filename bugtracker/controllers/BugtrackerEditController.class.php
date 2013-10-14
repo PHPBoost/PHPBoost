@@ -532,16 +532,16 @@ class BugtrackerEditController extends ModuleController
 				switch ($back_page)
 				{
 					case 'detail' :
-						$redirect = BugtrackerUrlBuilder::detail_success('edit/' . $bug->get_id())->rel();
+						$redirect = BugtrackerUrlBuilder::detail_success('edit/' . $bug->get_id());
 						break;
 					case 'solved' :
-						$redirect = BugtrackerUrlBuilder::solved_success('edit/' . $bug->get_id() . '/' . $page . (!empty($back_filter) ? '/' . $back_filter . '/' . $filter_id : ''))->rel();
+						$redirect = BugtrackerUrlBuilder::solved_success('edit/' . $bug->get_id() . '/' . $page . (!empty($back_filter) ? '/' . $back_filter . '/' . $filter_id : ''));
 						break;
 					case 'unsolved' :
-						$redirect = BugtrackerUrlBuilder::unsolved_success('edit/' . $bug->get_id() . '/' . $page . (!empty($back_filter) ? '/' . $back_filter . '/' . $filter_id : ''))->rel();
+						$redirect = BugtrackerUrlBuilder::unsolved_success('edit/' . $bug->get_id() . '/' . $page . (!empty($back_filter) ? '/' . $back_filter . '/' . $filter_id : ''));
 						break;
 					default :
-						$redirect = BugtrackerUrlBuilder::edit_success('edit/' . $bug->get_id())->rel();
+						$redirect = BugtrackerUrlBuilder::edit_success('edit/' . $bug->get_id());
 						break;
 				}
 			}
@@ -550,16 +550,16 @@ class BugtrackerEditController extends ModuleController
 				switch ($back_page)
 				{
 					case 'detail' :
-						$redirect = BugtrackerUrlBuilder::detail($bug->get_id())->rel();
+						$redirect = BugtrackerUrlBuilder::detail($bug->get_id());
 						break;
 					case 'solved' :
-						$redirect = BugtrackerUrlBuilder::solved($page . (!empty($back_filter) ? '/' . $back_filter . '/' . $filter_id : ''))->rel();
+						$redirect = BugtrackerUrlBuilder::solved($page . (!empty($back_filter) ? '/' . $back_filter . '/' . $filter_id : ''));
 						break;
 					case 'unsolved' :
-						$redirect = BugtrackerUrlBuilder::unsolved($page . (!empty($back_filter) ? '/' . $back_filter . '/' . $filter_id : ''))->rel();
+						$redirect = BugtrackerUrlBuilder::unsolved($page . (!empty($back_filter) ? '/' . $back_filter . '/' . $filter_id : ''));
 						break;
 					default :
-						$redirect = BugtrackerUrlBuilder::edit($bug->get_id())->rel();
+						$redirect = BugtrackerUrlBuilder::edit($bug->get_id());
 						break;
 				}
 			}
