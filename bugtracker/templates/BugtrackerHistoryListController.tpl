@@ -32,7 +32,7 @@
 		# START history #
 		<tr> 
 			<td> 
-				# IF history.UPDATER #<a href="{history.U_UPDATER_PROFILE}" class="small {history.UPDATER_LEVEL_CLASS}" # IF history.C_UPDATER_GROUP_COLOR # style="color:{history.UPDATER_GROUP_COLOR}" # ENDIF #>{history.UPDATER}</a># ELSE #{L_GUEST}# ENDIF #
+				# IF history.UPDATER #<a href="{history.U_UPDATER_PROFILE}" class="small {history.UPDATER_LEVEL_CLASS}" # IF history.C_UPDATER_GROUP_COLOR # style="color:{history.UPDATER_GROUP_COLOR}" # ENDIF #>{history.UPDATER}</a># ELSE #${LangLoader::get_message('guest', 'main')}# ENDIF #
 			</td>
 			<td> 
 				{history.UPDATED_FIELD}
@@ -66,5 +66,5 @@
 <div class="spacer">&nbsp;</div>
 
 <div class="center">
-	<strong><a href="javascript:history.back(1);" title="${escape(RETURN_NAME)}">${escape(RETURN_NAME)}</a></strong>
+	<strong><a href="javascript:history.back(1);">${LangLoader::get_message('back', 'main')}</a></strong>
 </div>
