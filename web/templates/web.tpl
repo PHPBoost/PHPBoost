@@ -7,9 +7,7 @@
 			{L_WEB} - {L_CATEGORIES}
 			<span class="tools">
 				# IF C_IS_ADMIN # 
-				<a href="{PATH_TO_ROOT}/web/admin_web_cat.php{SID}" title="{L_EDIT}">
-					<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" class="valign_middle" alt="" />
-				</a> 
+				<a href="{PATH_TO_ROOT}/web/admin_web_cat.php{SID}" title="{L_EDIT}" class="edit"></a> 
 				# ENDIF #
 				{PAGINATION}
 			</span>
@@ -44,66 +42,78 @@
 			{L_WEB} - {CAT_NAME}
 			<span class="tools">
 				# IF C_IS_ADMIN # 
-				<a href="{PATH_TO_ROOT}/web/admin_web_cat.php{SID}" title="{L_EDIT}">
-					<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" class="valign_middle" alt="" />
-				</a> 
+				<a href="{PATH_TO_ROOT}/web/admin_web_cat.php{SID}" title="{L_EDIT}" class="edit"></a> 
 				# ENDIF #
-				{PAGINATION}
 			</span>
 		</h1>
 	</header>
 	<div class="content">
-		<table class="module_table">
-			<tr>
-				<th style="text-align:center;">
-					<a href="web{U_WEB_ALPHA_TOP}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
-					{L_LINK}
-					<a href="web{U_WEB_ALPHA_BOTTOM}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
-				</th>
-				<th style="text-align:center;">
-					<a href="web{U_WEB_DATE_TOP}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
-					{L_DATE}					
-					<a href="web{U_WEB_DATE_BOTTOM}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
-				</th>
-				<th style="text-align:center;">
-					<a href="web{U_WEB_VIEW_TOP}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
-					{L_VIEW}					
-					<a href="web{U_WEB_VIEW_BOTTOM}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
-				</th>
-				<th style="text-align:center;">
-					<a href="web{U_WEB_NOTE_TOP}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
-					{L_NOTE}					
-					<a href="web{U_WEB_NOTE_BOTTOM}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
-				</th>
-				<th style="text-align:center;">
-					<a href="web{U_WEB_COM_TOP}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
-					{L_COM}
-					<a href="web{U_WEB_COM_BOTTOM}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
-				</th>
-			</tr>
-			# START web #
-			<tr>	
-				<td class="row2">
-					<a href="web{web.U_WEB_LINK}">{web.NAME}</a>
-				</td>
-				<td class="row2" style="text-align: center;">
-					{web.DATE}
-				</td>
-				<td class="row2" style="text-align: center;">
-					{web.COMPT} 
-				</td>
-				<td class="row2" style="text-align: center;">
-					{web.NOTE}
-				</td>
-				<td class="row2" style="text-align: center;">
-					{web.COM} 
-				</td>
-			</tr>
-			# END web #
-		</table>
-		<p style="text-align:center;padding:6px;">{NO_CAT}</p>
+		# IF NO_CAT #
+			<p style="text-align:center;padding:6px;">{NO_CAT}</p>
+		# ELSE #
+			<table>
+				<thead>
+					<tr>
+						<th>
+							<a href="web{U_WEB_ALPHA_TOP}" class="sort-up"></a>
+							{L_LINK}
+							<a href="web{U_WEB_ALPHA_BOTTOM}" class="sort-down"></a>
+						</th>
+						<th>
+							<a href="web{U_WEB_DATE_TOP}" class="sort-up"></a>
+							{L_DATE}					
+							<a href="web{U_WEB_DATE_BOTTOM}" class="sort-down"></a>
+						</th>
+						<th>
+							<a href="web{U_WEB_VIEW_TOP}" class="sort-up"></a>
+							{L_VIEW}					
+							<a href="web{U_WEB_VIEW_BOTTOM}" class="sort-down"></a>
+						</th>
+						<th>
+							<a href="web{U_WEB_NOTE_TOP}" class="sort-up"></a>
+							{L_NOTE}					
+							<a href="web{U_WEB_NOTE_BOTTOM}" class="sort-down"></a>
+						</th>
+						<th>
+							<a href="web{U_WEB_COM_TOP}" class="sort-up"></a>
+							{L_COM}
+							<a href="web{U_WEB_COM_BOTTOM}" class="sort-down"></a>
+						</th>
+					</tr>
+				</thead>
+				# IF PAGINATION #
+				<tfoot>
+					<tr>
+						<th colspan="5">
+							{PAGINATION}
+						</th>
+					</tr>
+				</tfoot>
+				# ENDIF #
+				<tbody>
+					# START web #
+					<tr>	
+						<td>
+							<a href="web{web.U_WEB_LINK}">{web.NAME}</a>
+						</td>
+						<td>
+							{web.DATE}
+						</td>
+						<td>
+							{web.COMPT} 
+						</td>
+						<td>
+							{web.NOTE}
+						</td>
+						<td>
+							{web.COM} 
+						</td>
+					</tr>
+					# END web #
+				</tbody>
+			</table>
+		# ENDIF #
 	</div>
-	<footer>{PAGINATION}</footer>
 </section>
 # ENDIF #
 

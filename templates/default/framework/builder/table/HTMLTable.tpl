@@ -20,15 +20,11 @@
 			# IF header_column.C_CSS_STYLE # style="{header_column.CSS_STYLE}"# ENDIF #>
 				
 				# IF header_column.C_SORTABLE #
-				<a href="{header_column.U_SORT_DESC}" title="{EL_DESCENDING}">
-					<i class="icon-arrow-up"></i>
-				</a>
+				<a href="{header_column.U_SORT_DESC}" title="{EL_DESCENDING}" class="sort-up"></a>
 				# ENDIF #
 				{header_column.NAME}
 				# IF header_column.C_SORTABLE #
-				<a href="{header_column.U_SORT_ASC}" title="{EL_ASCENDING}">
-					<i class="icon-arrow-down"></i>
-				</a>
+				<a href="{header_column.U_SORT_ASC}" title="{EL_ASCENDING}" class="sort-down"></a>
 				# ENDIF #
 			</th>
 			# END header_column #
