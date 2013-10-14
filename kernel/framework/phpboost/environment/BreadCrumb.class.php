@@ -97,7 +97,7 @@ class BreadCrumb
 		}
 		
         $tpl->put_all(array(
-			'START_PAGE' => PATH_TO_ROOT,
+			'START_PAGE' => $start_page_url,
 			'L_INDEX' 	 => LangLoader::get_message('home', 'main')
         ));
         
