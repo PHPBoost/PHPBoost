@@ -65,7 +65,6 @@ $lang['bugs.actions.edit'] = 'Edit bug';
 $lang['bugs.actions.history'] = 'Bug\'s history';
 $lang['bugs.actions.reject'] = 'Reject bug';
 $lang['bugs.actions.reopen'] = 'Reopen bug';
-$lang['bugs.actions.confirm.del_bug'] = 'Delete this bug? (All the history related to this bug will be deleted)';
 $lang['bugs.actions.confirm.reopen_bug'] = 'Reopen this bug?';
 $lang['bugs.actions.confirm.reject_bug'] = 'Reject this bug?';
 $lang['bugs.actions.confirm.del_version'] = 'Delete this version?';

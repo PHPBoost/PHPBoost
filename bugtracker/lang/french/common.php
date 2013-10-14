@@ -65,7 +65,6 @@ $lang['bugs.actions.edit'] = 'Editer le bug';
 $lang['bugs.actions.history'] = 'Historique du bug';
 $lang['bugs.actions.reject'] = 'Rejeter le bug';
 $lang['bugs.actions.reopen'] = 'Ré-ouvrir le bug';
-$lang['bugs.actions.confirm.del_bug'] = 'Etes-vous sûr de vouloir supprimer ce rapport de la liste ? (tout l\'historique associé sera supprimé)';
 $lang['bugs.actions.confirm.reopen_bug'] = 'Etes-vous sûr de vouloir ré-ouvrir ce rapport ?';
 $lang['bugs.actions.confirm.reject_bug'] = 'Etes-vous sûr de vouloir rejeter ce rapport ?';
 $lang['bugs.actions.confirm.del_version'] = 'Etes-vous sûr de vouloir supprimer cette version ?';

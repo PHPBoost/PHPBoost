@@ -5,10 +5,7 @@
 <script type="text/javascript">
 <!--
 function Confirm(action) {
-	if (action == 'delete') {
-		return confirm("{@bugs.actions.confirm.del_bug}");
-	}
-	else if (action == 'reopen') {
+	if (action == 'reopen') {
 		return confirm("{@bugs.actions.confirm.reopen_bug}");
 	}
 	else if (action == 'reject') {
@@ -71,15 +68,15 @@ function Confirm(action) {
 			# IF C_COMMENTS #<br /><a href="{bug.LINK_BUG_COMMENTS}">{bug.NUMBER_COMMENTS} {bug.L_COMMENTS}</a># ENDIF #
 		</td>
 		<td # IF bug.C_LINE_COLOR # style="background-color:{bug.LINE_COLOR};"# ENDIF #>
-			# IF C_UNSOLVED #{L_ON}: # ENDIF #{bug.DATE}<br />
-			# IF C_DISPLAY_AUTHOR #{L_BY}: # IF bug.AUTHOR #<a href="{bug.LINK_AUTHOR_PROFILE}" class="small {bug.AUTHOR_LEVEL_CLASS}" # IF bug.C_AUTHOR_GROUP_COLOR # style="color:{bug.AUTHOR_GROUP_COLOR}" # ENDIF #>{bug.AUTHOR}</a># ELSE #{L_GUEST}# ENDIF ## ENDIF #
+			# IF C_UNSOLVED #${LangLoader::get_message('on', 'main')} # ENDIF #{bug.DATE}<br />
+			# IF C_DISPLAY_AUTHOR #${LangLoader::get_message('by', 'main')}: # IF bug.AUTHOR #<a href="{bug.LINK_AUTHOR_PROFILE}" class="small {bug.AUTHOR_LEVEL_CLASS}" # IF bug.C_AUTHOR_GROUP_COLOR # style="color:{bug.AUTHOR_GROUP_COLOR}" # ENDIF #>{bug.AUTHOR}</a># ELSE #${LangLoader::get_message('guest', 'main')}# ENDIF ## ENDIF #
 		</td>
 		# IF C_IS_ADMIN #
 		<td # IF bug.C_LINE_COLOR # style="background-color:{bug.LINE_COLOR};"# ENDIF #> 
 			<a href="{bug.LINK_BUG_REOPEN_REJECT}" onclick="javascript:return Confirm(${escapejs(REOPEN_REJECT_CONFIRM)});"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/{PICT_REOPEN_REJECT}" alt="{L_REOPEN_REJECT}" title="{L_REOPEN_REJECT}" /></a>
-			<a href="{bug.LINK_BUG_EDIT}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="{L_UPDATE}" title="{L_UPDATE}" /></a>
+			<a href="{bug.LINK_BUG_EDIT}" title="${LangLoader::get_message('edit', 'main')}" class="edit"></a>
 			<a href="{bug.LINK_BUG_HISTORY}"><img src="{PATH_TO_ROOT}/bugtracker/templates/images/history.png" alt="{@bugs.actions.history}" title="{@bugs.actions.history}" /></a>
-			<a href="{bug.LINK_BUG_DELETE}" onclick="javascript:return Confirm('delete');"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" /></a>
+			<a href="{bug.LINK_BUG_DELETE}" title="${LangLoader::get_message('delete', 'main')}" class="delete"></a>
 		</td>
 		# ENDIF #
 	</tr>

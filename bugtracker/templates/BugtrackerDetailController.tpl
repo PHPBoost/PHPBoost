@@ -1,11 +1,5 @@
 <script type="text/javascript">
 	<!--
-	# IF C_DELETE_BUG #
-	function Confirm_delete() {
-		return confirm("{@bugs.actions.confirm.del_bug}");
-	}
-	# ENDIF #
-	
 	# IF C_REOPEN_BUG #
 	function Confirm_reopen() {
 		return confirm("{@bugs.actions.confirm.reopen_bug}");
@@ -23,35 +17,27 @@
 <fieldset>
 	<legend>
 		{@bugs.titles.bugs_treatment_state}
+		&nbsp;
 		# IF C_REOPEN_BUG #
-			&nbsp;&nbsp;
 			<a href="{LINK_BUG_REOPEN}" onclick="javascript:return Confirm_reopen();">
 				<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/visible.png" alt="{@bugs.actions.reopen}" title="{@bugs.actions.reopen}" />
 			</a>
 		# ENDIF #
 		# IF C_REJECT_BUG #
-			&nbsp;
 			<a href="{LINK_BUG_REJECT}" onclick="javascript:return Confirm_reject();">
 				<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/unvisible.png" alt="{@bugs.actions.reject}" title="{@bugs.actions.reject}" />
 			</a>
 		# ENDIF #
 		# IF C_EDIT_BUG #
-			&nbsp;
-			<a href="{LINK_BUG_EDIT}">
-				<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="{L_UPDATE}" title="{L_UPDATE}" />
-			</a>
+			<a href="{LINK_BUG_EDIT}" title="${LangLoader::get_message('edit', 'main')}" class="edit"></a>
 		# ENDIF #
 		# IF C_HISTORY_BUG #
-			&nbsp;
 			<a href="{LINK_BUG_HISTORY}">
 				<img src="{PATH_TO_ROOT}/bugtracker/templates/images/history.png" alt="{@bugs.actions.history}" title="{@bugs.actions.history}" />
 			</a>
 		# ENDIF #
 		# IF C_DELETE_BUG #
-			&nbsp;
-			<a href="{LINK_BUG_DELETE}" onclick="javascript:return Confirm_delete();">
-				<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" />
-			</a>
+			<a href="{LINK_BUG_DELETE}" title="${LangLoader::get_message('delete', 'main')}" class="delete"></a>
 		# ENDIF #
 	</legend>
 	<dl>
@@ -110,7 +96,7 @@
 	# ENDIF #
 	<dl>
 		<dt>{@bugs.labels.fields.reproductible}</dt>
-		<dd>{REPRODUCTIBLE}</dd>
+		<dd># IF C_REPRODUCTIBLE #${LangLoader::get_message('yes', 'main')}# ELSE #${LangLoader::get_message('no', 'main')}# ENDIF #</dd>
 	</dl>
 </fieldset>
 <br />
@@ -123,13 +109,13 @@
 # ENDIF #
 
 <div class="text_small float_right">
-	{@bugs.labels.fields.author_id}: # IF AUTHOR #<a href="{LINK_AUTHOR_PROFILE}" class="small_link {AUTHOR_LEVEL_CLASS}" # IF C_AUTHOR_GROUP_COLOR # style="color:{AUTHOR_GROUP_COLOR}" # ENDIF #>{AUTHOR}</a># ELSE #{L_GUEST}# ENDIF #, {L_ON} {SUBMIT_DATE}
+	{@bugs.labels.fields.author_id}: # IF AUTHOR #<a href="{LINK_AUTHOR_PROFILE}" class="small_link {AUTHOR_LEVEL_CLASS}" # IF C_AUTHOR_GROUP_COLOR # style="color:{AUTHOR_GROUP_COLOR}" # ENDIF #>{AUTHOR}</a># ELSE #${LangLoader::get_message('guest', 'main')}# ENDIF #, ${LangLoader::get_message('on', 'main')} {SUBMIT_DATE}
 </div>
 
 <div class="spacer">&nbsp;</div>
 
 <div class="center">
-	<strong><a href="javascript:history.back(1);" title="${escape(RETURN_NAME)}">${escape(RETURN_NAME)}</a></strong>
+	<strong><a href="javascript:history.back(1);">${LangLoader::get_message('back', 'main')}</a></strong>
 </div>
 
 <br />

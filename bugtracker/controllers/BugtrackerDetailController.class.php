@@ -54,8 +54,6 @@ class BugtrackerDetailController extends ModuleController
 		$priorities = $config->get_priorities();
 		$versions = $config->get_versions();
 		
-		$main_lang = LangLoader::get('main');
-		
 		$author = $this->bug->get_author_user();
 		$author_group_color = User::get_group_color($author->get_groups(), $author->get_level(), true);
 		
@@ -80,8 +78,7 @@ class BugtrackerDetailController extends ModuleController
 		if (BugtrackerAuthorizationsService::check_authorizations()->moderation() || ($this->current_user->get_id() == $this->bug->get_author_user()->get_id() && $this->bug->get_author_user()->get_id() != User::VISITOR_LEVEL) || ($this->bug->get_assigned_to_id() && $this->current_user->get_id() == $this->bug->get_assigned_to_id()))
 		{
 			$this->view->put_all(array(
-				'C_EDIT_BUG'=> true,
-				'L_UPDATE'	=> $main_lang['update']
+				'C_EDIT_BUG'=> true
 			));
 		}
 		
@@ -91,8 +88,7 @@ class BugtrackerDetailController extends ModuleController
 				'C_REOPEN_BUG'	=> $c_reopen,
 				'C_REJECT_BUG'	=> $c_reject,
 				'C_HISTORY_BUG'	=> true,
-				'C_DELETE_BUG'	=> true,
-				'L_DELETE' 		=> $main_lang['delete']
+				'C_DELETE_BUG'	=> true
 			));
 		}
 		
@@ -110,9 +106,6 @@ class BugtrackerDetailController extends ModuleController
 			'C_REPRODUCTIBLE' 				=> ($this->bug->is_reproductible() && $this->bug->get_reproduction_method()),
 			'C_AUTHOR_GROUP_COLOR'			=> !empty($user_assigned_group_color),
 			'C_USER_ASSIGNED_GROUP_COLOR'	=> !empty($author_group_color),
-			'L_GUEST' 						=> $main_lang['guest'],
-			'L_ON' 							=> $main_lang['on'],
-			'RETURN_NAME' 					=> $main_lang['back'],
 			'ID'							=> $this->bug->get_id(),
 			'TITLE'							=> ($config->is_cat_in_title_displayed() && $display_categories) ? '[' . $categories[$this->bug->get_category()] . '] ' . $this->bug->get_title() : $this->bug->get_title(),
 			'CONTENTS'						=> FormatingHelper::second_parse($this->bug->get_contents()),
@@ -121,7 +114,6 @@ class BugtrackerDetailController extends ModuleController
 			'CATEGORY'						=> (isset($categories[$this->bug->get_category()])) ? stripslashes($categories[$this->bug->get_category()]) : $this->lang['bugs.notice.none_e'],
 			'PRIORITY'						=> (isset($priorities[$this->bug->get_priority()])) ? stripslashes($priorities[$this->bug->get_priority()]) : $this->lang['bugs.notice.none_e'],
 			'SEVERITY'						=> (isset($severities[$this->bug->get_severity()])) ? stripslashes($severities[$this->bug->get_severity()]['name']) : $this->lang['bugs.notice.none'],
-			'REPRODUCTIBLE'					=> $this->bug->is_reproductible() ? $main_lang['yes'] : $main_lang['no'],
 			'REPRODUCTION_METHOD'			=> FormatingHelper::second_parse($this->bug->get_reproduction_method()),
 			'DETECTED_IN' 					=> (isset($versions[$this->bug->get_detected_in()])) ? stripslashes($versions[$this->bug->get_detected_in()]['name']) : $this->lang['bugs.notice.not_defined'],
 			'FIXED_IN'						=> (isset($versions[$this->bug->get_fixed_in()])) ? stripslashes($versions[$this->bug->get_fixed_in()]['name']) : $this->lang['bugs.notice.not_defined'],
