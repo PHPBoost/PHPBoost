@@ -152,7 +152,6 @@
 	float:left;
 	width:150px;
 	height:150px;
-	padding:5px 0 0 0;
 }
 
 .img_container {
@@ -173,8 +172,10 @@
 .article_content .article_tags {
 	font-size:10px;
 	font-style:italic;
-	padding:10px 0 0 0;
+	padding:5px 0 0 0;
 }
+
+.article_content .article_tags i { font-size:14px; }
 
 .article_content_list_view .description {
 	margin-left:150px;
@@ -192,10 +193,12 @@
 
 .article_content_list_view .article_tags {
 	margin:0;
-	padding:10px 0 0 10px;
+	padding:5px 0 0 10px;
 	font-size:10px;
 	font-style:italic;
 }
+
+.article_content_list_view .article_tags i { font-size:14px; }
 
 .button_read_more {
     background-color:#376294;
@@ -275,3 +278,7 @@
     font-style:italic;
     padding:5px 0 0 0;
 }
+
+.article_info i { font-size:14px;}
+
+.summary { width:160px;outline:none;}
