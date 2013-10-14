@@ -120,16 +120,20 @@ table thead th:last-child {
 	border-top-right-radius: 3px;
 }
 
-table thead th a {
+table .sort-up, table .sort-down {
 	color:#e5e6e6;
 	font-size:12px;
 	font-weight:normal;
+	font-family: FontAwesome;
 }
 
-table thead th a:hover {
+table .sort-up:hover, table .sort-down:hover {
 	color:#fff;
 	text-decoration:none;
 }
+
+table .sort-up:before { content: "\f062"; }
+table .sort-down:before { content: "\f063"; }
 
 /* Contenu */
 table td {

@@ -120,7 +120,7 @@ a.member {
 }
 
 /* Images */
-a.syndication {
+a.syndication:before {
 	content: url('../images/rss.png') no-repeat;
 	border: none;
 }
