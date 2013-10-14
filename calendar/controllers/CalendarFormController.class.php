@@ -310,11 +310,11 @@ class CalendarFormController extends ModuleController
 		
 		if ($this->is_contributor_member() && !$event->is_approved())
 		{
-			AppContext::get_response()->redirect(UserUrlBuilder::contribution_success()->rel());
+			AppContext::get_response()->redirect(UserUrlBuilder::contribution_success());
 		}
 		elseif ($event->is_approved())
 		{
-			AppContext::get_response()->redirect(CalendarUrlBuilder::home($event->get_start_date()->get_year() . '/' . $event->get_start_date()->get_month() . '/' . $event->get_start_date()->get_day() . '/' . $category->get_id() . '-' . $category->get_rewrited_name() . '#events')->rel());
+			AppContext::get_response()->redirect(CalendarUrlBuilder::home($event->get_start_date()->get_year() . '/' . $event->get_start_date()->get_month() . '/' . $event->get_start_date()->get_day() . '/' . $category->get_id() . '-' . $category->get_rewrited_name() . '#events'));
 		}
 		else
 		{

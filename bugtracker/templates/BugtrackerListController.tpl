@@ -18,24 +18,24 @@ function Confirm(action) {
 	<thead>
 		<tr>
 			<th class="column_id">
-				<a href="{LINK_BUG_ID_TOP}"><i class="icon-arrow-up"></i></a>
+				<a href="{LINK_BUG_ID_TOP}" class="sort-up"></a>
 				{@bugs.labels.fields.id}
-				<a href="{LINK_BUG_ID_BOTTOM}"><i class="icon-arrow-down"></i></a>
+				<a href="{LINK_BUG_ID_BOTTOM}" class="sort-down"></a>
 			</th>
 			<th>
-				<a href="{LINK_BUG_TITLE_TOP}"><i class="icon-arrow-up"></i></a>
+				<a href="{LINK_BUG_TITLE_TOP}" class="sort-up"></a>
 				{@bugs.labels.fields.title}
-				<a href="{LINK_BUG_TITLE_BOTTOM}"><i class="icon-arrow-down"></i></a>
+				<a href="{LINK_BUG_TITLE_BOTTOM}" class="sort-down"></a>
 			</th>
 			<th class="column_informations">
-				<a href="{LINK_BUG_STATUS_TOP}"><i class="icon-arrow-up"></i></a>
+				<a href="{LINK_BUG_STATUS_TOP}" class="sort-up"></a>
 				{@bugs.titles.informations}
-				<a href="{LINK_BUG_STATUS_BOTTOM}"><i class="icon-arrow-down"></i></a>
+				<a href="{LINK_BUG_STATUS_BOTTOM}" class="sort-down"></a>
 			</th>
 			<th class="column_date">
-				<a href="{LINK_BUG_DATE_TOP}"><i class="icon-arrow-up"></i></a>
+				<a href="{LINK_BUG_DATE_TOP}" class="sort-up"></a>
 				{L_DATE}
-				<a href="{LINK_BUG_DATE_BOTTOM}"><i class="icon-arrow-down"></i></a>
+				<a href="{LINK_BUG_DATE_BOTTOM}" class="sort-down"></a>
 			</th>
 			# IF C_IS_ADMIN #
 			<th class="column_admin">
