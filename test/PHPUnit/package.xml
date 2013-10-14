@@ -1,0 +1,1505 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<package packagerversion="1.9.0" version="2.0" xmlns="http://pear.php.net/dtd/package-2.0" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0                       http://pear.php.net/dtd/tasks-1.0.xsd                       http://pear.php.net/dtd/package-2.0                       http://pear.php.net/dtd/package-2.0.xsd">
+ <name>PHPUnit</name>
+ <channel>pear.phpunit.de</channel>
+ <summary>Regression testing framework for unit tests.</summary>
+ <description>PHPUnit is a regression testing framework used by the developer who implements unit tests in PHP. This is the version to be used with PHP 5.</description>
+ <lead>
+  <name>Sebastian Bergmann</name>
+  <user>sb</user>
+  <email>sb@sebastian-bergmann.de</email>
+  <active>yes</active>
+ </lead>
+ <date>2009-11-23</date>
+ <time>12:41:18</time>
+ <version>
+  <release>3.4.3</release>
+  <api>3.4.2</api>
+ </version>
+ <stability>
+  <release>stable</release>
+  <api>stable</api>
+ </stability>
+ <license>BSD License</license>
+ <notes>
+http://www.phpunit.de/wiki/ChangeLog34
+ </notes>
+ <contents>
+  <dir name="/">
+   <file baseinstalldir="/" md5sum="98aee015b0a7adb050cf05d6969b0501" name="PHPUnit/Extensions/Database/Constraint/DataSetIsEqual.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="e1b564294bec1843c844c4053cb1f22d" name="PHPUnit/Extensions/Database/Constraint/TableIsEqual.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="d476903a0a5adf53522dc7a8f8a579a8" name="PHPUnit/Extensions/Database/DataSet/Persistors/Abstract.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="73c01bef8d4a6af09161009160ab02f3" name="PHPUnit/Extensions/Database/DataSet/Persistors/Factory.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="9764f83f58058acded5d229b80323a07" name="PHPUnit/Extensions/Database/DataSet/Persistors/FlatXml.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="9a01301d2342d9aa118a0f9653812666" name="PHPUnit/Extensions/Database/DataSet/Persistors/Xml.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="6cc9a8f1b714ed4acb3aa1fb3bb0a238" name="PHPUnit/Extensions/Database/DataSet/Persistors/Yaml.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="30a51a10d8b13c682912e60b97ff4cc2" name="PHPUnit/Extensions/Database/DataSet/Specs/Csv.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="3dcbaf506049a20a431e940596067e81" name="PHPUnit/Extensions/Database/DataSet/Specs/DbQuery.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="46f5c80f0872909de375b02a3aa8c1e3" name="PHPUnit/Extensions/Database/DataSet/Specs/DbTable.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="12778845c143c86f5f283855cae25a81" name="PHPUnit/Extensions/Database/DataSet/Specs/Factory.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="7d313725a3d5869f4ebe809bd6f083ad" name="PHPUnit/Extensions/Database/DataSet/Specs/FlatXml.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="6a4d06842b92fe762fe145953403063f" name="PHPUnit/Extensions/Database/DataSet/Specs/IFactory.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="ec67c1d449d476fddf320211fae6f6ee" name="PHPUnit/Extensions/Database/DataSet/Specs/Xml.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="d5956407f9a9f400c87a0de597ae2d36" name="PHPUnit/Extensions/Database/DataSet/Specs/Yaml.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="93d41721fbc964b05e790138c5b7de0a" name="PHPUnit/Extensions/Database/DataSet/AbstractDataSet.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="6da4e8f2ba9a3725a496c04abfb01f55" name="PHPUnit/Extensions/Database/DataSet/AbstractTable.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="1d55fbe1459e16cf868db234631e472a" name="PHPUnit/Extensions/Database/DataSet/AbstractTableMetaData.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="8de6207207f10be1ccfcc962b0a9a6f8" name="PHPUnit/Extensions/Database/DataSet/AbstractXmlDataSet.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="576d96f38b5d7d6a96c054488bd1ee0f" name="PHPUnit/Extensions/Database/DataSet/CompositeDataSet.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="b3f18433936d6ff5bce8309b03fccdec" name="PHPUnit/Extensions/Database/DataSet/CsvDataSet.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="0fdffab6217ae58c5fa13f37ac4d8708" name="PHPUnit/Extensions/Database/DataSet/DataSetFilter.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="528073284920fcf393ce3e981ffd8aeb" name="PHPUnit/Extensions/Database/DataSet/DefaultDataSet.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="6302053f32fe80e59cc162a80c5201b8" name="PHPUnit/Extensions/Database/DataSet/DefaultTable.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="90aed4b50cb7e95ab59bdb2f393a3a7a" name="PHPUnit/Extensions/Database/DataSet/DefaultTableIterator.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="88508e0f94398cee1e335b569687ffc2" name="PHPUnit/Extensions/Database/DataSet/DefaultTableMetaData.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="d1205eb6bd8a2314c13faa2d40fba343" name="PHPUnit/Extensions/Database/DataSet/FlatXmlDataSet.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="5dbb704560439d49b12abf7714c11ec5" name="PHPUnit/Extensions/Database/DataSet/IDataSet.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="8f841b09e7e9856706db83387a999d9a" name="PHPUnit/Extensions/Database/DataSet/IPersistable.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="80b43682911a979715778d77ccc22038" name="PHPUnit/Extensions/Database/DataSet/ISpec.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="e5cbc1ad3daec06ddc10a09e846e2500" name="PHPUnit/Extensions/Database/DataSet/ITable.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="fd3987d72cbc99169b8cb99c38d2ac8c" name="PHPUnit/Extensions/Database/DataSet/ITableIterator.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="f4e792754b38525842a7f482bdc5a0c3" name="PHPUnit/Extensions/Database/DataSet/ITableMetaData.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="f72a9947a90ba1deb20a3373f37931de" name="PHPUnit/Extensions/Database/DataSet/QueryDataSet.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="eebb484b75d6bd3440e917a31387aea8" name="PHPUnit/Extensions/Database/DataSet/QueryTable.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="2ef5cd9dd06ac918a95dc1ef7854c025" name="PHPUnit/Extensions/Database/DataSet/ReplacementDataSet.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="8ef47e857e20aa76db3d98fc4f3d58cd" name="PHPUnit/Extensions/Database/DataSet/ReplacementTable.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="a164e0cc0811435572e4234735bc6ad4" name="PHPUnit/Extensions/Database/DataSet/ReplacementTableIterator.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="b651ccd1cbc9a51c8a2bc57d4308bf6b" name="PHPUnit/Extensions/Database/DataSet/TableFilter.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="27ee956af48f5ee049b0676f5204387a" name="PHPUnit/Extensions/Database/DataSet/TableMetaDataFilter.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="db1f824268c5f2ad856d9a9c08915eb8" name="PHPUnit/Extensions/Database/DataSet/XmlDataSet.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="cb4801a58d506de5cf2e81da732cb331" name="PHPUnit/Extensions/Database/DataSet/YamlDataSet.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="38002ef130f806b25079de83164d04b2" name="PHPUnit/Extensions/Database/DB/MetaData/InformationSchema.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="670f07c3868f634f2221393127e74de7" name="PHPUnit/Extensions/Database/DB/MetaData/MySQL.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="50154d75de39d4e75d1cfb9efac5c1b7" name="PHPUnit/Extensions/Database/DB/MetaData/Oci.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="2da2303572bbd78c6c833382c53418cf" name="PHPUnit/Extensions/Database/DB/MetaData/PgSQL.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="9cc5a443e193a7c5821808b8529339a7" name="PHPUnit/Extensions/Database/DB/MetaData/Sqlite.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="58eb6319aa8fd8a69d8eab8181a4b873" name="PHPUnit/Extensions/Database/DB/DataSet.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="829d43d9ce7d353b6208c7cae7b156e0" name="PHPUnit/Extensions/Database/DB/DefaultDatabaseConnection.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="6a3a2252308dfa592b55463931d73a2a" name="PHPUnit/Extensions/Database/DB/FilteredDataSet.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="2401b78214ef457661856c4dc3f20f03" name="PHPUnit/Extensions/Database/DB/IDatabaseConnection.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="9294870bcbd3f58fcd002a3805c48f0b" name="PHPUnit/Extensions/Database/DB/IMetaData.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="70a7624e7da38c379b98043b51bfa36f" name="PHPUnit/Extensions/Database/DB/MetaData.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="a509705a4e2ec93f9594163ff79a9f3e" name="PHPUnit/Extensions/Database/DB/ResultSetTable.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="c15a94509208d4d767c07b49eb753751" name="PHPUnit/Extensions/Database/DB/TableIterator.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="de6be2049d6169d47622c9d1bfbe24bb" name="PHPUnit/Extensions/Database/DB/TableMetaData.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="fde495791a994297c3e958ceecd29f23" name="PHPUnit/Extensions/Database/DB/Table.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="10146645f975378a18be7020437ffd16" name="PHPUnit/Extensions/Database/Operation/Composite.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="4ba2d32da900c810a3ce99e573407ae7" name="PHPUnit/Extensions/Database/Operation/DeleteAll.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="153720fbbfcb31496c834e6b4d05e167" name="PHPUnit/Extensions/Database/Operation/Delete.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="d688a9f71b02728ee939452dc539e81a" name="PHPUnit/Extensions/Database/Operation/Exception.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="10a4c4c15d422ccb8d0589746169e47f" name="PHPUnit/Extensions/Database/Operation/Factory.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="3af834c5b15f1632ffee0e5d469b387d" name="PHPUnit/Extensions/Database/Operation/IDatabaseOperation.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="3d1a2f2e4cd4273ddb9f15d5ed60e44c" name="PHPUnit/Extensions/Database/Operation/Insert.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="993a3325131a6a711d4d2863cc59a530" name="PHPUnit/Extensions/Database/Operation/Null.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="dd6d3132c143a479569b7d882130b3dd" name="PHPUnit/Extensions/Database/Operation/Replace.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="3ace65b985b8be7e58ee952e27090b7e" name="PHPUnit/Extensions/Database/Operation/RowBased.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="acad1bdab32d9347ac2666d03bc5b0e6" name="PHPUnit/Extensions/Database/Operation/Truncate.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="53dc260d4b7a7760270c295ebbd8dd0e" name="PHPUnit/Extensions/Database/Operation/Update.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="688e1f1578cfd86f38d9bfb239d60f21" name="PHPUnit/Extensions/Database/UI/Mediums/Text.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="3ea1f8381bc4bbaed375bdf808ecf575" name="PHPUnit/Extensions/Database/UI/Modes/ExportDataSet/Arguments.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="e8e3779433d3cb72ce4b56cc0fd2a041" name="PHPUnit/Extensions/Database/UI/Modes/ExportDataSet.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="25abec7458c81d4669435371d621e63a" name="PHPUnit/Extensions/Database/UI/Command.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="26f3dc24d5e71fd8dd9dfde785b40cf5" name="PHPUnit/Extensions/Database/UI/Context.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="c990890494524bb069a7889eed7b6083" name="PHPUnit/Extensions/Database/UI/IMedium.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="6571fcc4c8ce3c8b2d133679ec5cdb5d" name="PHPUnit/Extensions/Database/UI/IMediumPrinter.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="f0a812c4f7867d76d2499a01c038873d" name="PHPUnit/Extensions/Database/UI/IModeFactory.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="7c9a59a1981e000710f771965302f32f" name="PHPUnit/Extensions/Database/UI/IMode.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="93053df1728ed3d4de837ee6084d3dd3" name="PHPUnit/Extensions/Database/UI/InvalidModeException.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="a469e06f4a09d239769c8b0a7dd4a8d4" name="PHPUnit/Extensions/Database/UI/ModeFactory.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="65600a8b903abaf6b8fec919e2eedf98" name="PHPUnit/Extensions/Database/AbstractTester.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="0402aa7c9ed03ad61507450b87773664" name="PHPUnit/Extensions/Database/DefaultTester.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="8fddb79265e4644d8276144223b433d8" name="PHPUnit/Extensions/Database/IDatabaseListConsumer.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="725fa77e8f6793fffe3b37b8e1a5b6f0" name="PHPUnit/Extensions/Database/ITester.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="5cb5abad4b77d0db7c1eed882c50c3be" name="PHPUnit/Extensions/Database/TestCase.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="5d29121fcd8020e1f283f21f97058680" name="PHPUnit/Extensions/PhptTestCase/Logger.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="6515a53fc69471b17cac849a48581661" name="PHPUnit/Extensions/SeleniumTestCase/Driver.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="24c6e80dcc27a5c6a6e37fbe8e36931b" name="PHPUnit/Extensions/SeleniumTestCase/append.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="26386601e3dc5ebc993639972f8132b8" name="PHPUnit/Extensions/SeleniumTestCase/phpunit_coverage.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="c50e9c69cfcf91589f8a6ac4e6edd3f0" name="PHPUnit/Extensions/SeleniumTestCase/prepend.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="967a720e084a4f82f2f11812a33e03b2" name="PHPUnit/Extensions/Story/ResultPrinter/Template/scenario_header.html.dist" role="php" />
+   <file baseinstalldir="/" md5sum="45957f81fa96815ff481523e674bfaa4" name="PHPUnit/Extensions/Story/ResultPrinter/Template/scenario.html.dist" role="php" />
+   <file baseinstalldir="/" md5sum="be5ecd6bc7dc4076338d307ceb534978" name="PHPUnit/Extensions/Story/ResultPrinter/Template/scenarios.html.dist" role="php" />
+   <file baseinstalldir="/" md5sum="3c26ad650dde68cefac63ee2262d85a5" name="PHPUnit/Extensions/Story/ResultPrinter/Template/step.html.dist" role="php" />
+   <file baseinstalldir="/" md5sum="18f6fca50ab7280bded45cba33a042ae" name="PHPUnit/Extensions/Story/ResultPrinter/HTML.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="0a41b5fadc369c674bf8468dd23f7f72" name="PHPUnit/Extensions/Story/ResultPrinter/Text.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="ec3c4d8d185d72c02324e39e1036c2bb" name="PHPUnit/Extensions/Story/Given.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="ab5a73716ad96a4337a19ee5576af49a" name="PHPUnit/Extensions/Story/ResultPrinter.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="df0983683334d5456f88c86d0977a0f9" name="PHPUnit/Extensions/Story/Scenario.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="b67accd0b1175af0d9cedbc93d100c9f" name="PHPUnit/Extensions/Story/SeleniumTestCase.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="78850d07a495dd8fbb38421a9fffdd0c" name="PHPUnit/Extensions/Story/Step.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="d0ad492cd7427dde9f5b00f0ede1046f" name="PHPUnit/Extensions/Story/TestCase.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="8dcedaee59cff25ee00c524bb3bdf4de" name="PHPUnit/Extensions/Story/Then.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="736e0df1c3691afef31ec5af2a92383e" name="PHPUnit/Extensions/Story/When.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="520186405625e2579533cde7dc4bfc39" name="PHPUnit/Extensions/TicketListener/Trac.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="ef13b7926ae07476e76eae3f20aa61cc" name="PHPUnit/Extensions/GroupTestSuite.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="8e1ee930d50607c73c926e866497d1c3" name="PHPUnit/Extensions/OutputTestCase.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="fa12701cc2937dace3185390075a7a84" name="PHPUnit/Extensions/PerformanceTestCase.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="2fa15e8cca1dbdc5482994c121b9e3cf" name="PHPUnit/Extensions/PhptTestCase.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="4f3943f33599818960d8af57de800e2e" name="PHPUnit/Extensions/PhptTestSuite.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="bc398ef6e2a6715c30ca475d619857a5" name="PHPUnit/Extensions/RepeatedTest.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="5f47d2f34630c4114a9c0d68d72f1ef8" name="PHPUnit/Extensions/SeleniumTestCase.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="527a7872e919abc58c1645cde338c4f8" name="PHPUnit/Extensions/TestDecorator.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="743c750c789561541c20c6c6f05999d6" name="PHPUnit/Extensions/TicketListener.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="c4bf39448e6622de33efc7974ca79bce" name="PHPUnit/Framework/ComparisonFailure/Array.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="1a7371d23b7b0a84affb70b1f585f7bb" name="PHPUnit/Framework/ComparisonFailure/Object.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="b341e0c7e8449188997b50af3ae27258" name="PHPUnit/Framework/ComparisonFailure/Scalar.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="d3840ba2bd6b69f788f4bf559948e2fa" name="PHPUnit/Framework/ComparisonFailure/String.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="d91833d5d00e1fa8fecf290cad4afa0e" name="PHPUnit/Framework/ComparisonFailure/Type.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="b4a74084176c1404e46d98c61361d721" name="PHPUnit/Framework/Constraint/And.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="5610c6e330cb07d0efa7b8e9c0c266e6" name="PHPUnit/Framework/Constraint/ArrayHasKey.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="9a133e9e6d7bed43b4d9248ac92dccb7" name="PHPUnit/Framework/Constraint/Attribute.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="067f88ac7c89f60b78a7cbd8f5599932" name="PHPUnit/Framework/Constraint/ClassHasAttribute.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="bf4ab25a9afd740fbb92a9e06a39a21a" name="PHPUnit/Framework/Constraint/ClassHasStaticAttribute.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="e1b80c326b5c8efaf815d6553ce26bcc" name="PHPUnit/Framework/Constraint/FileExists.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="8700c83c787923298941233e5375e5ec" name="PHPUnit/Framework/Constraint/GreaterThan.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="adadc33561d9ff363c24088e509d4cd7" name="PHPUnit/Framework/Constraint/IsAnything.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="41731bba4e0e04c8fbe562f6cbfbf0f1" name="PHPUnit/Framework/Constraint/IsEqual.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="5d15c0496b5ac63af956b57199e013a5" name="PHPUnit/Framework/Constraint/IsFalse.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="6f2eac37d1a5570645c803caf4437a6e" name="PHPUnit/Framework/Constraint/IsIdentical.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="30048a3a15c647055e5012a773fc85bf" name="PHPUnit/Framework/Constraint/IsInstanceOf.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="a76a289bf3015d4e74223d58957510a9" name="PHPUnit/Framework/Constraint/IsNull.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="4445e027f48b81d4fe4be7588581102b" name="PHPUnit/Framework/Constraint/IsTrue.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="184751f028f838b429d970c9503e06b7" name="PHPUnit/Framework/Constraint/IsType.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="12cc98ae86b90a962c920408cf27739b" name="PHPUnit/Framework/Constraint/LessThan.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="ab584768c4a6fb071264330c27d38f18" name="PHPUnit/Framework/Constraint/Not.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="719739b44ff1d5b656d84d411692ccf1" name="PHPUnit/Framework/Constraint/ObjectHasAttribute.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="54100a85a6011d6fba638043471d2bb6" name="PHPUnit/Framework/Constraint/Or.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="3a479c95b952105a1a9185be3cceb0e2" name="PHPUnit/Framework/Constraint/PCREMatch.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="50c947ef507a1373344f51ce9ea3aad6" name="PHPUnit/Framework/Constraint/StringContains.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="58f4c038e3d0d686364c92acc9f4a7c1" name="PHPUnit/Framework/Constraint/StringEndsWith.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="850baa894cff5f9687289ddd44dc4203" name="PHPUnit/Framework/Constraint/StringStartsWith.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="b5c3ad4a20bb75e12128efe06d2bc954" name="PHPUnit/Framework/Constraint/TraversableContains.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="e10f21052e0ac1a1106bbdd1f5daca91" name="PHPUnit/Framework/Constraint/TraversableContainsOnly.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="d32b589c6d2fd1e3085751a08aeede03" name="PHPUnit/Framework/Constraint/Xor.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="92ccac7f71a43bfc057c30a9ce9e72c0" name="PHPUnit/Framework/Error/Notice.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="8e9258abb3b958a3f29b6a108bfd69dd" name="PHPUnit/Framework/Error/Warning.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="44dbb5e04bd8d90596aac5d4710ebfe9" name="PHPUnit/Framework/MockObject/Builder/Identity.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="e6a245dfbdc5ffe88238f18399e90a72" name="PHPUnit/Framework/MockObject/Builder/InvocationMocker.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="ff5fecf63e02289a09ae4676ef0ae75c" name="PHPUnit/Framework/MockObject/Builder/Match.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="c07e591d8a638c68ef49c5468a7f7df0" name="PHPUnit/Framework/MockObject/Builder/MethodNameMatch.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="7b2382b1c351b07ede68fe6d7ceed2d5" name="PHPUnit/Framework/MockObject/Builder/Namespace.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="0c99e88d57dbb90fa9ef66ceeed566a2" name="PHPUnit/Framework/MockObject/Builder/ParametersMatch.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="e9af181af0e9d5e4f968425fd22b30bb" name="PHPUnit/Framework/MockObject/Builder/Stub.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="d45b23a867b8465b667d75dd37ec0566" name="PHPUnit/Framework/MockObject/Generator/mocked_class.tpl.dist" role="php" />
+   <file baseinstalldir="/" md5sum="747ca12ba8caa3b9d13436eb8c640a2c" name="PHPUnit/Framework/MockObject/Generator/mocked_clone.tpl.dist" role="php" />
+   <file baseinstalldir="/" md5sum="f0d2bf1b2e30315e56795e2a3a9cbe63" name="PHPUnit/Framework/MockObject/Generator/mocked_method.tpl.dist" role="php" />
+   <file baseinstalldir="/" md5sum="24ed5db5749b2d54f4c1ec88853ece55" name="PHPUnit/Framework/MockObject/Generator/unmocked_clone.tpl.dist" role="php" />
+   <file baseinstalldir="/" md5sum="832ad042bcfb6853225f230a4d99dd3b" name="PHPUnit/Framework/MockObject/Generator/wsdl_class.tpl.dist" role="php" />
+   <file baseinstalldir="/" md5sum="b87ff1b355250565af7d5ec7c877c8d7" name="PHPUnit/Framework/MockObject/Generator/wsdl_method.tpl.dist" role="php" />
+   <file baseinstalldir="/" md5sum="34dad3362492a0c5330f109e59d942bf" name="PHPUnit/Framework/MockObject/Matcher/AnyInvokedCount.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="615a60a14f99c15a75c3de645b56fea8" name="PHPUnit/Framework/MockObject/Matcher/AnyParameters.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="56711e6b500603e0e89010e55ad51c67" name="PHPUnit/Framework/MockObject/Matcher/Invocation.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="b8dcca701417850ea437ef4b368eaa29" name="PHPUnit/Framework/MockObject/Matcher/InvokedAtIndex.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="945a0349a899e8f1605185866e589285" name="PHPUnit/Framework/MockObject/Matcher/InvokedAtLeastOnce.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="efab41001da000fa79976224e0aa8897" name="PHPUnit/Framework/MockObject/Matcher/InvokedCount.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="eb3a4930066c39c55bbcc057a523097f" name="PHPUnit/Framework/MockObject/Matcher/InvokedRecorder.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="ea0f0ddda93975e1787780568b195a80" name="PHPUnit/Framework/MockObject/Matcher/MethodName.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="87c62471f0035cd69df763f8fe61c556" name="PHPUnit/Framework/MockObject/Matcher/Parameters.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="739c14f107bd1c699988426de0ff4cb2" name="PHPUnit/Framework/MockObject/Matcher/StatelessInvocation.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="effae6b12c90148491f3298205b37112" name="PHPUnit/Framework/MockObject/Stub/ConsecutiveCalls.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="ac22872d36a12645745d7b8a02c56d7c" name="PHPUnit/Framework/MockObject/Stub/Exception.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="5d6a59b2b590d9e851cf7d8ad08d885f" name="PHPUnit/Framework/MockObject/Stub/MatcherCollection.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="3f8ede366b1c5b9d7498770cb43bc835" name="PHPUnit/Framework/MockObject/Stub/Return.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="f16894b092485f6a690fd2adee26f1e7" name="PHPUnit/Framework/MockObject/Stub/ReturnArgument.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="249a82258034109ff5f3b985eeac2eae" name="PHPUnit/Framework/MockObject/Stub/ReturnCallback.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="71cd85505b97a6fe63549d4afb2da606" name="PHPUnit/Framework/MockObject/Generator.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="14d79270ab13ccec36f5abbd5ad7129b" name="PHPUnit/Framework/MockObject/InvocationMocker.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="95baadb2434da3560d80c252d179e461" name="PHPUnit/Framework/MockObject/Invocation.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="4b6194893d95d051bcf97db5c0febf7e" name="PHPUnit/Framework/MockObject/Invokable.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="951704d4258f10cd7ef9d40d8e01f4ba" name="PHPUnit/Framework/MockObject/Matcher.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="22889cdb5363b06be07ed00d19daeac7" name="PHPUnit/Framework/MockObject/MockObject.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="272f2a8b557b8000957838936414e4d3" name="PHPUnit/Framework/MockObject/Stub.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="2a2947fa1ce4c1b9d571e0cbbee30a77" name="PHPUnit/Framework/MockObject/Verifiable.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="a235928dada3f0181e397a0da98469eb" name="PHPUnit/Framework/Process/TestCaseMethod.tpl.dist" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="d5b1a9295edc77e2be1a7ec71a619901" name="PHPUnit/Framework/TestSuite/DataProvider.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="fe954b71bc484a5be44926df34b9b67f" name="PHPUnit/Framework/AssertionFailedError.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="5c1d3d0703d14c1dc64a29e395106dcb" name="PHPUnit/Framework/Assert.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="ee1156b57097855f5db06fe741968f7c" name="PHPUnit/Framework/ComparisonFailure.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="d713625471d2132694c6206b345a31fc" name="PHPUnit/Framework/Constraint.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="44b4373b5a55c8fb23bf580fca45a939" name="PHPUnit/Framework/Error.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="12177289b5d423bf744a714a8a75e40a" name="PHPUnit/Framework/Exception.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="69dd6ea8d8f2bf60e066e98ce30e5008" name="PHPUnit/Framework/ExpectationFailedException.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="165338f8f3b81084f2734adb3a8599fd" name="PHPUnit/Framework/IncompleteTestError.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="d603df40862a80db26751205d900ba17" name="PHPUnit/Framework/IncompleteTest.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="99d2525c2f49f89895775ee7c271a0d9" name="PHPUnit/Framework/SelfDescribing.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="dcb08112e5742085ec48693f2a5c5d24" name="PHPUnit/Framework/SkippedTestError.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="047feba01d7453f2b85e9398479ff262" name="PHPUnit/Framework/SkippedTest.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="dda2be8908a41ca92c1f896365030aac" name="PHPUnit/Framework/SkippedTestSuiteError.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="a78c1bc01fa45f43b635721d59d2efe8" name="PHPUnit/Framework/TestCase.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="0e62a394c243fa2a289aed0b0881fcb6" name="PHPUnit/Framework/TestFailure.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="30f07a6ad6b0f3514a4946c6ec4c7679" name="PHPUnit/Framework/TestListener.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="e227707889274b56d423d7f11dead1fc" name="PHPUnit/Framework/Test.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="0e6ee536c355f26d909056b70a292d0a" name="PHPUnit/Framework/TestResult.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="96f7ef2050f1ca820626c726de07f7ae" name="PHPUnit/Framework/TestSuite.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="ccf938254e2f118c390cd965a3e32e18" name="PHPUnit/Framework/Warning.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="f39927e3eedd59fc958bd690d0023c8d" name="PHPUnit/Runner/BaseTestRunner.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="1ead0cc5fecfe4aaa0e32a989b9be6ea" name="PHPUnit/Runner/IncludePathTestCollector.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="4d306447060ebd35732d6dcf2a32de7e" name="PHPUnit/Runner/StandardTestSuiteLoader.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="b568b1724bd6bbb51085529196eba8d9" name="PHPUnit/Runner/TestCollector.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="2e53163bbf301e212912b86e735013d8" name="PHPUnit/Runner/TestSuiteLoader.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="8523ed8296c5c3cc9676164921b00622" name="PHPUnit/Runner/Version.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="89fc98dd5f96d1c56856717227224d5a" name="PHPUnit/Samples/BankAccount/BankAccount.php" role="doc">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="2a68e1f9a09945c4bb4684d4ef83a42e" name="PHPUnit/Samples/BankAccount/BankAccountTest.php" role="doc">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="c0c46e42863cdf5d0bddc222a17e3130" name="PHPUnit/Samples/BankAccountDB/_files/bank-account-after-deposits.xml" role="doc">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="2f81e27f7ef01a32fd64e61d4a49f622" name="PHPUnit/Samples/BankAccountDB/_files/bank-account-after-new-account.xml" role="doc">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="b8fdb4e8139c5ca952bb5440357e3da9" name="PHPUnit/Samples/BankAccountDB/_files/bank-account-after-withdrawals.xml" role="doc">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="344f9bdcf7dfd97f16ab3d224e4b3fc7" name="PHPUnit/Samples/BankAccountDB/_files/bank-account-seed.xml" role="doc">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="04efda7fa40a85ea108ff006a681c03b" name="PHPUnit/Samples/BankAccountDB/BankAccountDBTestMySQL.php" role="doc">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="a6dc778e23dee10536a0761891dcdf02" name="PHPUnit/Samples/BankAccountDB/BankAccountDBTest.php" role="doc">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="18d96413acfe97381c6b0e90f31aaa2b" name="PHPUnit/Samples/BankAccountDB/BankAccount.php" role="doc">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="e4c1f7d3e96eaabb896aa7cf5893e9e7" name="PHPUnit/Samples/BowlingGame/BowlingGame.php" role="doc">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="1a197b841468b7d5f16977a9c7c8e62f" name="PHPUnit/Samples/BowlingGame/BowlingGameSpec.php" role="doc">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="c9ea0e7efd0854784a103ab9cd0cd9d6" name="PHPUnit/Samples/BowlingGame/BowlingGameTest.php" role="doc">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="ba5f40164eef3580a15b6148e9ace76e" name="PHPUnit/Samples/Money/IMoney.php" role="doc">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="a268de2dc9774f0792e279bbd00f01e2" name="PHPUnit/Samples/Money/Money.php" role="doc">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="397a8980ee46290c18f0a9eba6993eab" name="PHPUnit/Samples/Money/MoneyBag.php" role="doc">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="82dc60d664aa93fbc2b9421269473c4e" name="PHPUnit/Samples/Money/MoneyTest.php" role="doc">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="beb3070f0886b8f57b92a948c3d68c9e" name="PHPUnit/Tests/Extensions/Database/_files/CsvDataSets/table1.csv" role="test" />
+   <file baseinstalldir="/" md5sum="b5a8aed5272d48f4891690bcf0aecfbb" name="PHPUnit/Tests/Extensions/Database/_files/CsvDataSets/table2.csv" role="test" />
+   <file baseinstalldir="/" md5sum="1f276e4321805204e1251406e3fe7009" name="PHPUnit/Tests/Extensions/Database/_files/XmlDataSets/AllEmptyTableInsertResult.xml" role="test" />
+   <file baseinstalldir="/" md5sum="dd709f67458d66c519b752475ed45aed" name="PHPUnit/Tests/Extensions/Database/_files/XmlDataSets/AllEmptyTableInsertTest.xml" role="test" />
+   <file baseinstalldir="/" md5sum="fb1cfcba46cfaeea1935b61f1225a99b" name="PHPUnit/Tests/Extensions/Database/_files/XmlDataSets/DeleteAllOperationTest.xml" role="test" />
+   <file baseinstalldir="/" md5sum="d076d427e966c770df9e2cb666a667d1" name="PHPUnit/Tests/Extensions/Database/_files/XmlDataSets/DeleteOperationResult.xml" role="test" />
+   <file baseinstalldir="/" md5sum="e1a91d5ac92b738e2d64c320d8a2d2b5" name="PHPUnit/Tests/Extensions/Database/_files/XmlDataSets/DeleteOperationTest.xml" role="test" />
+   <file baseinstalldir="/" md5sum="fcf5c129bd31bdd77931e8133ca0b01f" name="PHPUnit/Tests/Extensions/Database/_files/XmlDataSets/EmptyTableInsertResult.xml" role="test" />
+   <file baseinstalldir="/" md5sum="8907f7ad144103aaf4dca8ea583a863b" name="PHPUnit/Tests/Extensions/Database/_files/XmlDataSets/EmptyTableInsertTest.xml" role="test" />
+   <file baseinstalldir="/" md5sum="1f276e4321805204e1251406e3fe7009" name="PHPUnit/Tests/Extensions/Database/_files/XmlDataSets/FilteredTestComparison.xml" role="test" />
+   <file baseinstalldir="/" md5sum="184ace3827cb5783717aa8a285f0e335" name="PHPUnit/Tests/Extensions/Database/_files/XmlDataSets/FilteredTestFixture.xml" role="test" />
+   <file baseinstalldir="/" md5sum="2b8fef4ef5ee0ebd6f4221d3e0763649" name="PHPUnit/Tests/Extensions/Database/_files/XmlDataSets/FlatXmlDataSet.xml" role="test" />
+   <file baseinstalldir="/" md5sum="c01b94440a7c37cc8237f28bb010fbe7" name="PHPUnit/Tests/Extensions/Database/_files/XmlDataSets/FlatXmlWriter.xml" role="test" />
+   <file baseinstalldir="/" md5sum="8156e42ee202165287c06466996a30d8" name="PHPUnit/Tests/Extensions/Database/_files/XmlDataSets/InsertOperationResult.xml" role="test" />
+   <file baseinstalldir="/" md5sum="89c53bac303e23b43665cfd0004353b4" name="PHPUnit/Tests/Extensions/Database/_files/XmlDataSets/InsertOperationTest.xml" role="test" />
+   <file baseinstalldir="/" md5sum="1f276e4321805204e1251406e3fe7009" name="PHPUnit/Tests/Extensions/Database/_files/XmlDataSets/OperationsTestFixture.xml" role="test" />
+   <file baseinstalldir="/" md5sum="f4fcfafa44e3901fa9e8235e6f199649" name="PHPUnit/Tests/Extensions/Database/_files/XmlDataSets/QueryDataSetTest.xml" role="test" />
+   <file baseinstalldir="/" md5sum="845cdff95c1c52caeef63d349743d0a6" name="PHPUnit/Tests/Extensions/Database/_files/XmlDataSets/ReplaceOperationResult.xml" role="test" />
+   <file baseinstalldir="/" md5sum="68cb1013a6f3e098811e1106b7856343" name="PHPUnit/Tests/Extensions/Database/_files/XmlDataSets/ReplaceOperationTest.xml" role="test" />
+   <file baseinstalldir="/" md5sum="1b8044999fc4f5d401c7f237158a4e93" name="PHPUnit/Tests/Extensions/Database/_files/XmlDataSets/RowBasedExecute.xml" role="test" />
+   <file baseinstalldir="/" md5sum="49177fef22fedaf96d731144de7e0bdc" name="PHPUnit/Tests/Extensions/Database/_files/XmlDataSets/UpdateOperationResult.xml" role="test" />
+   <file baseinstalldir="/" md5sum="134a3983b8b4d8c0d974af19e74d011d" name="PHPUnit/Tests/Extensions/Database/_files/XmlDataSets/UpdateOperationTest.xml" role="test" />
+   <file baseinstalldir="/" md5sum="c2d2d9a8f86ebb3d9a16b728253d1f67" name="PHPUnit/Tests/Extensions/Database/_files/XmlDataSets/XmlDataSet.xml" role="test" />
+   <file baseinstalldir="/" md5sum="3a9f68f832dd86bdbf6588b094ecdd6f" name="PHPUnit/Tests/Extensions/Database/_files/XmlDataSets/XmlWriter.xml" role="test" />
+   <file baseinstalldir="/" md5sum="28f3315e55c532b3ddd3ed109cf53c12" name="PHPUnit/Tests/Extensions/Database/_files/YamlDataSets/testDataSet.yaml" role="test" />
+   <file baseinstalldir="/" md5sum="2a2703e4c664c0ca2bd39039ca1d2752" name="PHPUnit/Tests/Extensions/Database/_files/DatabaseTestUtility.php" role="test">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="3e5762789027a96c497489a1dd19cecc" name="PHPUnit/Tests/Extensions/Database/DataSet/AllTests.php" role="test">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="3bbc207a54177a3251f691e73c21539b" name="PHPUnit/Tests/Extensions/Database/DataSet/CompositeDataSetTest.php" role="test">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="4d219a5d8ef6c0725d9bb14de5e41f1d" name="PHPUnit/Tests/Extensions/Database/DataSet/CsvDataSetTest.php" role="test">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="facd0655ce2cdd396183309aa9971561" name="PHPUnit/Tests/Extensions/Database/DataSet/FilterTest.php" role="test">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="ef99654a406a058c72d849e8dc7e0bcf" name="PHPUnit/Tests/Extensions/Database/DataSet/PersistorTest.php" role="test">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="275778533355775ac3385ce633dcd044" name="PHPUnit/Tests/Extensions/Database/DataSet/QueryDataSetTest.php" role="test">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="4c148bc862c8e53e2511b9ff763d1b33" name="PHPUnit/Tests/Extensions/Database/DataSet/QueryTableTest.php" role="test">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="e624ed0cbe4e827e7e5d9066ae849852" name="PHPUnit/Tests/Extensions/Database/DataSet/ReplacementDataSetTest.php" role="test">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="810d295f13f932f5da68b3e55bc7bcb9" name="PHPUnit/Tests/Extensions/Database/DataSet/ReplacementTableTest.php" role="test">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="e3ffdeda65952ba3c00cc14b8bb68c91" name="PHPUnit/Tests/Extensions/Database/DataSet/XmlDataSetsTest.php" role="test">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="6be2824456065081cb0d8e81d927cd5f" name="PHPUnit/Tests/Extensions/Database/DataSet/YamlDataSetTest.php" role="test">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="c12a7afb089bb5d144fb4690dad3261f" name="PHPUnit/Tests/Extensions/Database/Operation/AllTests.php" role="test">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="eccb10be335a860109616feb609edb62" name="PHPUnit/Tests/Extensions/Database/Operation/OperationsTest.php" role="test">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="275ae528085cc16ab0984249a2d55ccc" name="PHPUnit/Tests/Extensions/Database/Operation/RowBasedTest.php" role="test">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="aa28fe5f634e49959216bdd91c29772a" name="PHPUnit/Tests/Extensions/Database/AllTests.php" role="test">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="3f09b767217eb703c0e394b6a915658a" name="PHPUnit/Tests/Extensions/AllTests.php" role="test">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="5a4c5c3af36cdd96c03bcba1dc43464f" name="PHPUnit/Tests/Extensions/OutputTestCaseTest.php" role="test">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="fbcd8b58e71cfc2de611468b843468da" name="PHPUnit/Tests/Extensions/PerformanceTestCaseTest.php" role="test">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="1598860ae132fccd373c7a9adc478260" name="PHPUnit/Tests/Extensions/RepeatedTestTest.php" role="test">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="7cfc6ba980f7d4a2b52d30e287b5c17b" name="PHPUnit/Tests/Extensions/SeleniumTestCaseTest.php" role="test">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="300d7e1e3b34ac6e2d96fec00cb79fd2" name="PHPUnit/Tests/Framework/MockObject/class_call_parent_clone.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="5465d7b231304bde44cd06372748db1e" name="PHPUnit/Tests/Framework/MockObject/class_call_parent_constructor.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="b1b963a2d07c84ee762a407e4f5e0e2c" name="PHPUnit/Tests/Framework/MockObject/class_dont_call_parent_clone.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="5465d7b231304bde44cd06372748db1e" name="PHPUnit/Tests/Framework/MockObject/class_dont_call_parent_constructor.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="c69610b510256468b8778f2372582833" name="PHPUnit/Tests/Framework/MockObject/class_implementing_interface_call_parent_constructor.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="c69610b510256468b8778f2372582833" name="PHPUnit/Tests/Framework/MockObject/class_implementing_interface_dont_call_parent_constructor.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="316eb39e797f2a50723516ee2871845f" name="PHPUnit/Tests/Framework/MockObject/class_partial.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="c5000733f6700c99e09bcba9ab1e911c" name="PHPUnit/Tests/Framework/MockObject/class.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="5b072a799988f8f5f206b9877cfc7a85" name="PHPUnit/Tests/Framework/MockObject/interface.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="06b7b8a30855bbc05a218a2be8335505" name="PHPUnit/Tests/Framework/MockObject/namespaced_class_call_parent_clone.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="6cd352595f3cc4eb3c70d7d6a1ee1cb7" name="PHPUnit/Tests/Framework/MockObject/namespaced_class_call_parent_constructor.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="e03245b8fc00d39b304c638503bcb8d4" name="PHPUnit/Tests/Framework/MockObject/namespaced_class_dont_call_parent_clone.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="6cd352595f3cc4eb3c70d7d6a1ee1cb7" name="PHPUnit/Tests/Framework/MockObject/namespaced_class_dont_call_parent_constructor.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="626f0a0f48d4eb57a58e0e14795833d2" name="PHPUnit/Tests/Framework/MockObject/namespaced_class_implementing_interface_call_parent_constructor.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="626f0a0f48d4eb57a58e0e14795833d2" name="PHPUnit/Tests/Framework/MockObject/namespaced_class_implementing_interface_dont_call_parent_constructor.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="446c60dd7322e0a05cfc7210b4712c12" name="PHPUnit/Tests/Framework/MockObject/namespaced_class_partial.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="59f76a6e295d6ef71edb5659cf9cf63f" name="PHPUnit/Tests/Framework/MockObject/namespaced_class.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="54f5d89e0f511f4aa5b2057099391c33" name="PHPUnit/Tests/Framework/MockObject/namespaced_interface.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="b391e5b7353e64f8688cc5a7eb4f6efc" name="PHPUnit/Tests/Framework/MockObject/wsdl_class_partial.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="8046511eb676195161f4a29e3613ff2d" name="PHPUnit/Tests/Framework/MockObject/wsdl_class.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="8da6bacc7dfbc45a71f1fb2a4c288ce8" name="PHPUnit/Tests/Framework/AllTests.php" role="test">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="feb430da6500bb27f7e823d97088db4e" name="PHPUnit/Tests/Framework/AssertTest.php" role="test">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="d076c3ffb4d85a4b7e787b5220bbf044" name="PHPUnit/Tests/Framework/ComparisonFailureTest.php" role="test">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="f0122e3ed13e86403ab407820a39289c" name="PHPUnit/Tests/Framework/ConstraintTest.php" role="test">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="3412ba5a4e5be6c31c1f9bc09d029318" name="PHPUnit/Tests/Framework/MockObjectTest.php" role="test">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="a17a5cab08f7fbc40dbbb7a7d1fedded" name="PHPUnit/Tests/Framework/SuiteTest.php" role="test">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="395cca1102f5aa3c9c934d5c404f5bb8" name="PHPUnit/Tests/Framework/TestCaseTest.php" role="test">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="61bb883c464d48bd3d1d232af31830a7" name="PHPUnit/Tests/Framework/TestFailureTest.php" role="test">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="80ca80d81964658217ffff34bac0d970" name="PHPUnit/Tests/Framework/TestImplementorTest.php" role="test">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="6453d8d994cbdfc38b373c00fece016f" name="PHPUnit/Tests/Framework/TestListenerTest.php" role="test">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="306255fa0dfe6a1224517e72187be697" name="PHPUnit/Tests/Runner/AllTests.php" role="test">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="fca963b3a22031825ec674b06301335d" name="PHPUnit/Tests/Runner/BaseTestRunnerTest.php" role="test">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="1001873d628646131c12fe9f7f2a15d3" name="PHPUnit/Tests/Regression/578/Issue578Test.php" role="test" />
+   <file baseinstalldir="/" md5sum="10c74e3921ca25f056407fa46d7c9b9b" name="PHPUnit/Tests/Regression/684/Issue684Test.php" role="test" />
+   <file baseinstalldir="/" md5sum="977db8e56c275f01d84ae36937698696" name="PHPUnit/Tests/Regression/783/ChildSuite.php" role="test" />
+   <file baseinstalldir="/" md5sum="dd22b9cffa33fffb144e5c777f133dd5" name="PHPUnit/Tests/Regression/783/OneTest.php" role="test" />
+   <file baseinstalldir="/" md5sum="5338b538d4a919a82d53db657b0068ed" name="PHPUnit/Tests/Regression/783/ParentSuite.php" role="test" />
+   <file baseinstalldir="/" md5sum="cebec3a68f31f46906369a26aa5ae1dc" name="PHPUnit/Tests/Regression/783/TwoTest.php" role="test" />
+   <file baseinstalldir="/" md5sum="342a6d3a7f245ea3ddd12053d7259947" name="PHPUnit/Tests/Regression/578.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="ab8e7ab260641b673a0c4b8b4505e082" name="PHPUnit/Tests/Regression/684.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="52f18417a83a7a6b7413c327de605c89" name="PHPUnit/Tests/Regression/783.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="58d40b40d4368ef36556d4c643e60e83" name="PHPUnit/Tests/TextUI/abstract-test-class.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="bf60240f9dcb98b11981bc9f850ce0a9" name="PHPUnit/Tests/TextUI/concrete-test-class.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="c149332a092fb0d499a023a5e989210a" name="PHPUnit/Tests/TextUI/coverage-clover-class-extended-isolation.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="3c606927a1d1fba593f0bb7505c39af9" name="PHPUnit/Tests/TextUI/coverage-clover-class-extended.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="02c3c49714fdcc7cad56275f1f291755" name="PHPUnit/Tests/TextUI/coverage-clover-class-isolation.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="9a5f4961453bec0e9a4b3659d622c2b2" name="PHPUnit/Tests/TextUI/coverage-clover-class.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="fa1c99fbdbd112d70f0cfff0b093476c" name="PHPUnit/Tests/TextUI/coverage-clover-function.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="b80ff94b7154211a74d28f4c95559d46" name="PHPUnit/Tests/TextUI/coverage-clover-isolation.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="396cc5a73f0d7cf1bf7fc0efaf707efe" name="PHPUnit/Tests/TextUI/coverage-clover-method-isolation.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="f34bb1c360a82c9b34e8e51a4c38ca2e" name="PHPUnit/Tests/TextUI/coverage-clover-method.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="e0fb2825257562c82eee811982cce591" name="PHPUnit/Tests/TextUI/coverage-clover-not-private-isolation.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="f039a03d75ef23ca91a51baa1c39ab90" name="PHPUnit/Tests/TextUI/coverage-clover-not-private.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="77bc68885970feebfd1e5f27dcc0ca58" name="PHPUnit/Tests/TextUI/coverage-clover-not-protected-isolation.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="c30a94ac2fd3f4d3520915fd79ac2570" name="PHPUnit/Tests/TextUI/coverage-clover-not-protected.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="701a3abf9c5cb82cbc2389b800d6a3c4" name="PHPUnit/Tests/TextUI/coverage-clover-not-public-isolation.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="289cb95aa8538e906c3b83a55fd089cb" name="PHPUnit/Tests/TextUI/coverage-clover-not-public.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="6539bb1bea7134742731b2927c5fa480" name="PHPUnit/Tests/TextUI/coverage-clover.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="1bf37c0db2182bbef7d0e104a68c62c5" name="PHPUnit/Tests/TextUI/coverage-clover-private-isolation.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="22186d6ff5beb75ba2103f0a0067c384" name="PHPUnit/Tests/TextUI/coverage-clover-private.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="e97140a3f8e9cd7597fd2e6baf04e498" name="PHPUnit/Tests/TextUI/coverage-clover-protected-isolation.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="4bf5e8e4521a4fa1b79ab5d1bf79ebac" name="PHPUnit/Tests/TextUI/coverage-clover-protected.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="01034675659cbcb0adff5b7772f992a1" name="PHPUnit/Tests/TextUI/coverage-clover-public-isolation.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="f788f319b65a21850f6483dbd780de7f" name="PHPUnit/Tests/TextUI/coverage-clover-public.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="2b8b6baa99f68f3b008d9077edce0b3f" name="PHPUnit/Tests/TextUI/coverage-source.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="3acf39ee13a3fb462a1e95c11c82bb3a" name="PHPUnit/Tests/TextUI/dataprovider-log-xml-isolation.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="3ebef4823458f6fc214c908548aa37bf" name="PHPUnit/Tests/TextUI/dataprovider-log-xml.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="e1ae8c013e0ebcf17111e5995f3062e1" name="PHPUnit/Tests/TextUI/dataprovider-testdox.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="915be62ea01632324d4aec9a8630078a" name="PHPUnit/Tests/TextUI/debug.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="d59f874c7d5b463804b1fc50c31468bc" name="PHPUnit/Tests/TextUI/default-isolation.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="1188ef8129cec9b05d7b6caa37384761" name="PHPUnit/Tests/TextUI/default.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="9529cb415f1c1e8631fe6ce3c4781740" name="PHPUnit/Tests/TextUI/dependencies.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="bdf7e7cf5fcae8d6c4c9b2a528de1ddc" name="PHPUnit/Tests/TextUI/dependencies2.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="10a71304c5c2d36ae2102f6cd829ddeb" name="PHPUnit/Tests/TextUI/dependencies3.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="1f96e92821facfaca94a41d7fe312e9a" name="PHPUnit/Tests/TextUI/dependencies-isolation.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="0d3bd22f7e37080f5ad37ec0d13b27b0" name="PHPUnit/Tests/TextUI/dependencies2-isolation.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="31f5aac442a1d67855d4b6824de679b0" name="PHPUnit/Tests/TextUI/dependencies3-isolation.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="f69cfdd0a2d99ecb767a57005b5aa4ea" name="PHPUnit/Tests/TextUI/empty-testcase.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="9b058dca26c4cdcb104b49550573b569" name="PHPUnit/Tests/TextUI/empty-testcase-coverage.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="78ea40dec0a5f2cc33264e84f12c69bb" name="PHPUnit/Tests/TextUI/exclude-group-isolation.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="4c88bcc125264ea60d9d52b1e4d8f0dc" name="PHPUnit/Tests/TextUI/exclude-group.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="99b760314a14c76f49b87c7a71207028" name="PHPUnit/Tests/TextUI/failure-isolation.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="6c423037936b4f4424bbe0de3f83cca0" name="PHPUnit/Tests/TextUI/failure.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="1b5ef0a30411600a0b9794ed6da6ddbf" name="PHPUnit/Tests/TextUI/failure-verbose-isolation.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="3542f7d19150951613f583aa2de49b1c" name="PHPUnit/Tests/TextUI/failure-verbose.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="bf8e18aa5a941b6755617393c65a37a5" name="PHPUnit/Tests/TextUI/filter-class-isolation.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="7cd1b2876c7d1348813c5d94e1c8adbe" name="PHPUnit/Tests/TextUI/filter-class.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="ae4cc14264f87da0256a81ea4f06477f" name="PHPUnit/Tests/TextUI/filter-method-isolation.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="1f3cbac9c820d30718035464b3e96054" name="PHPUnit/Tests/TextUI/filter-method.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="17f9e43b5b6b6bc844e0166a9028e087" name="PHPUnit/Tests/TextUI/group-isolation.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="4d96c7766ec26f7c5482df473b7dbce4" name="PHPUnit/Tests/TextUI/group.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="27e6ad112cfeda1b3a12c1bcc9f5f4e8" name="PHPUnit/Tests/TextUI/help2.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="a179bfdbff48358bd093abdc43d25fb0" name="PHPUnit/Tests/TextUI/help.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="b9f52c47e9c2b1d49e5129ab05e7acfc" name="PHPUnit/Tests/TextUI/list-groups.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="838cc6c7d9211702e0c86c99f279b0b7" name="PHPUnit/Tests/TextUI/log-graphviz.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="11ba531ac75ebb6eca02f9602af9cdc0" name="PHPUnit/Tests/TextUI/log-json.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="de9c7a137c6af656c18a65619fc8feea" name="PHPUnit/Tests/TextUI/log-tap.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="0984c8253e686b26d89089f5c9819c19" name="PHPUnit/Tests/TextUI/log-xml.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="6516083f370cae1716bd8c56f899f6b2" name="PHPUnit/Tests/TextUI/skeleton.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="6cf44ec82dba9eeb6c43619211d8067b" name="PHPUnit/Tests/TextUI/story-isolation.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="ae20f0dd6b12bfa186eef65270b7aed8" name="PHPUnit/Tests/TextUI/story.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="8069a0533b7e806dd5f1c7a34ee8084b" name="PHPUnit/Tests/TextUI/tap.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="dd2a09e3942cfcba1f4405340084a5fd" name="PHPUnit/Tests/TextUI/testdox-html.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="521bed6cce0392f576ad72495057c11f" name="PHPUnit/Tests/TextUI/testdox.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="019a6712c63f160e5e82885c33ef6b9a" name="PHPUnit/Tests/TextUI/testdox-text.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="b7ee9b25b564164593b2822a4685e044" name="PHPUnit/Tests/TextUI/verbose-isolation.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="994fe2e87ea3689ad2ddadffcd0f2182" name="PHPUnit/Tests/TextUI/verbose.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="3fb83fc085d253f2cb11360f18baf861" name="PHPUnit/Tests/Util/TestDox/AllTests.php" role="test">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="d6b0e75f033b93127615156b1df0660d" name="PHPUnit/Tests/Util/TestDox/NamePrettifierTest.php" role="test">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="7446acaaebf8c26d1f2df647bb0aebf2" name="PHPUnit/Tests/Util/AllTests.php" role="test">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="f495a648326e5c73c602f7fd7fbe0a37" name="PHPUnit/Tests/Util/ConfigurationTest.php" role="test">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="b76dd9d8758612b3c1f109a959d2afe9" name="PHPUnit/Tests/Util/TestTest.php" role="test">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="f6bb7fc8583ff040dbfcc29a5f989fd8" name="PHPUnit/Tests/Util/TimerTest.php" role="test">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="25f54158efac473d80f90d0a0331077b" name="PHPUnit/Tests/Util/XMLTest.php" role="test">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="83a109cd672f9e52654ab71619f4befa" name="PHPUnit/Tests/_files/AbstractMockTestClass.php" role="test">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="b214b8e36440dade916874968bbc5dde" name="PHPUnit/Tests/_files/AbstractTest.php" role="test">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="ada392fbd121d1a834b6d7ed097bc78a" name="PHPUnit/Tests/_files/AnInterface.php" role="test">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="d92ea4c8777cb1cb182d4845c15ddfc9" name="PHPUnit/Tests/_files/Calculator.php" role="test">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="ad0743711a34935e5fba64336fb61bb6" name="PHPUnit/Tests/_files/ClassWithNonPublicAttributes.php" role="test">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="4315e92b06742b7a4fdca1ad42c1ca8e" name="PHPUnit/Tests/_files/ConcreteTest.php" role="test">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="1478ffeea6c6550cbc7a4d0784245460" name="PHPUnit/Tests/_files/configuration.xml" role="test">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="c19d8899578780201fc5a6f8cc4fe1c3" name="PHPUnit/Tests/_files/CoverageClassExtendedTest.php" role="test">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="2b35d05f83ccf23c4f6fda0456f02fe7" name="PHPUnit/Tests/_files/CoverageClassTest.php" role="test">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="5a19376db871fe9097903a55f46cc2d1" name="PHPUnit/Tests/_files/CoverageFunctionTest.php" role="test">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="663a857ec36c9221629742706fddb44e" name="PHPUnit/Tests/_files/CoverageMethodTest.php" role="test">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="d8f289dced1a887523f70ff6b03ff8c2" name="PHPUnit/Tests/_files/CoverageNotPrivateTest.php" role="test">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="59cdd8ca8c9e360f78163b8ec2d091c0" name="PHPUnit/Tests/_files/CoverageNotProtectedTest.php" role="test">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="392813c26dd2e80540b7021f29a1997e" name="PHPUnit/Tests/_files/CoverageNotPublicTest.php" role="test">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="8ab65df1bbdf11d36e43c50d994b1bfc" name="PHPUnit/Tests/_files/CoveragePrivateTest.php" role="test">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="a8cff21de8d4624d61a3345972315482" name="PHPUnit/Tests/_files/CoverageProtectedTest.php" role="test">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="07abf5471d4ae48b5247e44fdc2dac88" name="PHPUnit/Tests/_files/CoveragePublicTest.php" role="test">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="ce67a19f1c5e64de0e4d01d3fdedfbba" name="PHPUnit/Tests/_files/CoveredClass.php" role="test">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="30b5006814a2cdc0c5d9a6fe2f8d3a4c" name="PHPUnit/Tests/_files/CoveredFunction.php" role="test">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="7cc93cfb6373a6b70f7ac350e2b3dc9a" name="PHPUnit/Tests/_files/DataProviderTest.php" role="test">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="5c91de05a62027e93d0be085552c4182" name="PHPUnit/Tests/_files/DependencyFailureTest.php" role="test">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="5198de49ad2ffc65f4fe5b79f461d6da" name="PHPUnit/Tests/_files/DependencySuccessTest.php" role="test">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="eb02715513a31a1379b7c825fb19047e" name="PHPUnit/Tests/_files/DependencyTestSuite.php" role="test">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="976924fe47f382b3bf8dbb9a312ba13c" name="PHPUnit/Tests/_files/DoubleTestCase.php" role="test">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="5bcdd8467634e1d3cceae5a186fcba65" name="PHPUnit/Tests/_files/EmptyTestCaseTest.php" role="test">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="9c7cb1fc9400eec4b2648a0d764b34e0" name="PHPUnit/Tests/_files/Error.php" role="test">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="86422a306a19e5bbe16d86ed54fca96e" name="PHPUnit/Tests/_files/ExceptionInAssertPostConditionsTest.php" role="test">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="bd5e0ce1c4733c4760e3a3433f7e2a0e" name="PHPUnit/Tests/_files/ExceptionInAssertPreConditionsTest.php" role="test">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="0d525ce50747d9eb2f8fb195b0e3061d" name="PHPUnit/Tests/_files/ExceptionInSetUpTest.php" role="test">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="dab0f23b8c85894272b16fe0d0b49411" name="PHPUnit/Tests/_files/ExceptionInTearDownTest.php" role="test">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="fab3a2547a2e1d0cd700fca8a46cb12a" name="PHPUnit/Tests/_files/ExceptionInTest.php" role="test">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="036461c504d078b03caae7de7e16b675" name="PHPUnit/Tests/_files/Failure.php" role="test">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="c3088d978ec084058a060722ac58ef15" name="PHPUnit/Tests/_files/FailureTest.php" role="test">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="63226980883c4718c40d0e37034b81ef" name="PHPUnit/Tests/_files/FunctionCallback.php" role="test">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="47d56194a35503fd6e49e3637e8c095c" name="PHPUnit/Tests/_files/GoogleSearch.wsdl" role="test">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="8228367aa397cced4852649b3bd5db1a" name="PHPUnit/Tests/_files/InheritedTestCase.php" role="test">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="45bdc857fd6e77a42e93a57548809dc8" name="PHPUnit/Tests/_files/MethodCallback.php" role="test">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="eb8a43788a02a74d638a39f38466d16b" name="PHPUnit/Tests/_files/MockRunner.php" role="test">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="03d7bde724945c8d20e5a7163451e92b" name="PHPUnit/Tests/_files/MultiDependencyTest.php" role="test">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="37b1a5e5adb22272901db5618db3e76f" name="PHPUnit/Tests/_files/NoArgTestCaseTest.php" role="test">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="96b4b4561bdfef4465973727edf6b252" name="PHPUnit/Tests/_files/NonStatic.php" role="test">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="19d6d1bac1237ebf1d1b6ee36eae78a9" name="PHPUnit/Tests/_files/NoTestCaseClass.php" role="test">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="1aeb1dc3eb373f8cd4aadbb80446e026" name="PHPUnit/Tests/_files/NoTestCases.php" role="test">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="076ace3d880c40ecbe0bc514b4dd5224" name="PHPUnit/Tests/_files/NotPublicTestCase.php" role="test">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="1fd51cb36642500557657cd8d449481a" name="PHPUnit/Tests/_files/NotVoidTestCase.php" role="test">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="3f1827b043fb5ae92543b9300c6a258c" name="PHPUnit/Tests/_files/PartialMockTestClass.php" role="test">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="910856846afd7f104e6cbfab30efed4e" name="PHPUnit/Tests/_files/OneTestCase.php" role="test">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="ae679d9cfe888a000c1fab1487e2d782" name="PHPUnit/Tests/_files/OutputTestCase.php" role="test">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="1e9b6b295b4d4428759b0bf78658b070" name="PHPUnit/Tests/_files/OverrideTestCase.php" role="test">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="b59631c46627a4f17e05a7219e6a7edb" name="PHPUnit/Tests/_files/SampleClass.php" role="test">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="5c7c1616b1fa7ebc8f7ca8d2c15872bb" name="PHPUnit/Tests/_files/SelectorAssertionsFixture.html" role="test">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="e0e490a6d4afcf7dfccb818ad3dadfd5" name="PHPUnit/Tests/_files/Singleton.php" role="test">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="ab1519dc6ae075150d58f1f03fd541d7" name="PHPUnit/Tests/_files/SleepTest.php" role="test">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="62d0cd4a68a695db12c68e9152310bcd" name="PHPUnit/Tests/_files/StackTest.php" role="test">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="9c7729b96eb9e92bedf78b6b8a2ed506" name="PHPUnit/Tests/_files/Struct.php" role="test">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="57fe4c6bc049415200ea4c3cbc93cbca" name="PHPUnit/Tests/_files/structureAttributesAreSameButValuesAreNot.xml" role="test">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="22373573c8f5f9675a96029ece9ec857" name="PHPUnit/Tests/_files/structureExpected.xml" role="test">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="2d53ca727a4a3e3c47ac371ba99fc86a" name="PHPUnit/Tests/_files/structureIgnoreTextNodes.xml" role="test">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="8569dc65fc416a7a40a4dd1136f3be51" name="PHPUnit/Tests/_files/structureIsSameButDataIsNot.xml" role="test">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="0faafcc0b086de6cabce4aed14592ffc" name="PHPUnit/Tests/_files/structureWrongNumberOfAttributes.xml" role="test">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="5bb939be9c9105fdf25d8d9b5a2a9487" name="PHPUnit/Tests/_files/structureWrongNumberOfNodes.xml" role="test">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="59075d487a55e6b30fb17b341ef0cc4d" name="PHPUnit/Tests/_files/Success.php" role="test">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="5262884dfc7730fb0539b704245bc3cb" name="PHPUnit/Tests/_files/TestIterator.php" role="test">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="8afad7c75f65a3a3e6875be7bf1de442" name="PHPUnit/Tests/_files/ThrowExceptionTestCase.php" role="test">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="3d71f5634b23e2aa0e9ed9fd1488c328" name="PHPUnit/Tests/_files/ThrowNoExceptionTestCase.php" role="test">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="53fb243176a0fa2641223f9a990fad2d" name="PHPUnit/Tests/_files/WasRun.php" role="test">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="1581f4e291c6d8f83330ab8b98a33b4c" name="PHPUnit/Tests/_files/bar.xml" role="test" />
+   <file baseinstalldir="/" md5sum="6dc4cf0f198581bd6b4e6943a95c32a1" name="PHPUnit/Tests/_files/foo.xml" role="test" />
+   <file baseinstalldir="/" md5sum="ddb8d8c9a1a9c26547b8acc027b61af4" name="PHPUnit/Tests/AllTests.php" role="test">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="4e51d521037a48def57dba67b4b08bad" name="PHPUnit/Tests/phpunit.xml.dist" role="test">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="e6b1538b8eeed187e2b553434f090730" name="PHPUnit/TextUI/Command.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="2b1b2f9cb906296b8df45fce1410e232" name="PHPUnit/TextUI/ResultPrinter.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="2e79890ce5d35f0cc255d9a668130011" name="PHPUnit/TextUI/TestRunner.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="58ff4e33158f4b2e1eea8c2cd25aab00" name="PHPUnit/Util/Log/CodeCoverage/XML/Clover.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="34ebf54574f99806e9aef3b43ab1f81f" name="PHPUnit/Util/Log/CodeCoverage/XML/Source.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="6455eb635e03f64fde67270501d128f5" name="PHPUnit/Util/Log/CodeCoverage/Database.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="26b953673be6d4113b5176fc77a1e607" name="PHPUnit/Util/Log/Database/MySQL.sql" role="php" />
+   <file baseinstalldir="/" md5sum="5622ca38cbb14fc2ce95fce601078c9f" name="PHPUnit/Util/Log/Database/SQLite3.sql" role="php" />
+   <file baseinstalldir="/" md5sum="b961288c8f50e9fcc32ec7a9bc8244de" name="PHPUnit/Util/Log/PMD/Rule/Class/DepthOfInheritanceTree.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="4d18cd4a6f29ff400cf99fd4de29cd68" name="PHPUnit/Util/Log/PMD/Rule/Class/EfferentCoupling.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="850224b3b43b0911e6bda77f2de8f788" name="PHPUnit/Util/Log/PMD/Rule/Class/ExcessiveClassLength.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="0540d7f0b1d1e5726b863a80d9b0c6ab" name="PHPUnit/Util/Log/PMD/Rule/Class/ExcessivePublicCount.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="a9862368481917efdb8d98da20e4cc5a" name="PHPUnit/Util/Log/PMD/Rule/Class/TooManyFields.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="ff4682bbb00be68c00c884f1c06c2e72" name="PHPUnit/Util/Log/PMD/Rule/Function/CodeCoverage.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="c2f93f24d29702e36b86cf6083570880" name="PHPUnit/Util/Log/PMD/Rule/Function/CRAP.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="99f2701c596fc8fe1218d14529dca9cb" name="PHPUnit/Util/Log/PMD/Rule/Function/CyclomaticComplexity.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="05a7e75ff84fdc13d63ab2254c90c00b" name="PHPUnit/Util/Log/PMD/Rule/Function/ExcessiveMethodLength.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="be9f7c936b966d7d0c7bd89e22e08f0b" name="PHPUnit/Util/Log/PMD/Rule/Function/ExcessiveParameterList.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="48fefed37ec7f05fa52d7dcb7f505161" name="PHPUnit/Util/Log/PMD/Rule/Function/NPathComplexity.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="ddb5ca04514811b4961f25108cce72bd" name="PHPUnit/Util/Log/PMD/Rule/Project/CRAP.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="f36f6f4f7176d5deda7733fd8a92fad8" name="PHPUnit/Util/Log/PMD/Rule/Class.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="20c50aa9c0afec640e92534114697449" name="PHPUnit/Util/Log/PMD/Rule/File.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="88738487cdace9eb5c66939ee5790623" name="PHPUnit/Util/Log/PMD/Rule/Function.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="c41f2d56deb79ecaa1d9a8df73386c22" name="PHPUnit/Util/Log/PMD/Rule/Project.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="5ea2360d207c1c3783fb361c3f32d3f6" name="PHPUnit/Util/Log/PMD/Rule.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="1a14a1407c11ab0abe394aec531fb422" name="PHPUnit/Util/Log/CPD.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="e9c220825d23dd2b321ac9067062a937" name="PHPUnit/Util/Log/Database.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="5fa23411a46138fde77ea242282a17e6" name="PHPUnit/Util/Log/GraphViz.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="a54a63d1ea04d302e98388ea6062ff85" name="PHPUnit/Util/Log/JSON.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="24626d48be719020132bba6aa3d967ab" name="PHPUnit/Util/Log/JUnit.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="69225423ab995675baf30084d64ad30e" name="PHPUnit/Util/Log/Metrics.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="b9b94f4314e2ecc64348ae1aab77451d" name="PHPUnit/Util/Log/PEAR.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="5bc7b82cd40b77c4797bd95a5bbf9b5a" name="PHPUnit/Util/Log/PMD.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="7ce6d1e14da4f8a3c17ddc0491227ff4" name="PHPUnit/Util/Log/TAP.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="cf2e4c2673f6f711ecb4b7fe42771f63" name="PHPUnit/Util/Metrics/Class.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="e7ecd355d6a23b4f9305a560335db2d3" name="PHPUnit/Util/Metrics/File.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="d60860fceb2f387df267112708cced47" name="PHPUnit/Util/Metrics/Function.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="bc07f264427acbee195e88fd7ff0d696" name="PHPUnit/Util/Metrics/Project.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="2cfe6950bb4b84104ce15d13285e2f9b" name="PHPUnit/Util/Report/Node/Directory.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="39b34e174f4eee08915e455e38ba48cb" name="PHPUnit/Util/Report/Node/File.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="521e849d37d1f1e3b769ccc7138c69c1" name="PHPUnit/Util/Report/Template/butter.png" role="php" />
+   <file baseinstalldir="/" md5sum="24abc354105ffce45a55cf5a0949527b" name="PHPUnit/Util/Report/Template/chameleon.png" role="php" />
+   <file baseinstalldir="/" md5sum="770d9c592b4300457ae025448c4c6816" name="PHPUnit/Util/Report/Template/close12_1.gif" role="php" />
+   <file baseinstalldir="/" md5sum="30d926224d525d460a79e393b2eac872" name="PHPUnit/Util/Report/Template/container.css" role="php" />
+   <file baseinstalldir="/" md5sum="cac1924c31ce2ac5ec14a0a95583696f" name="PHPUnit/Util/Report/Template/container-min.js" role="php" />
+   <file baseinstalldir="/" md5sum="aec6cf0e0c7648149e30e681e70f9b31" name="PHPUnit/Util/Report/Template/directory.html.dist" role="php" />
+   <file baseinstalldir="/" md5sum="4f7e481dfaf53a5d0a290e1f0813edc4" name="PHPUnit/Util/Report/Template/file.html.dist" role="php" />
+   <file baseinstalldir="/" md5sum="4d6d0669547a3d6cb6b6bce581e63aa7" name="PHPUnit/Util/Report/Template/file_no_yui.html.dist" role="php" />
+   <file baseinstalldir="/" md5sum="d0bcded9081d6a0efda48c495867da73" name="PHPUnit/Util/Report/Template/glass.png" role="php" />
+   <file baseinstalldir="/" md5sum="a5057eab6e9b2875d366ab0a09a4786d" name="PHPUnit/Util/Report/Template/directory_item.html.dist" role="php" />
+   <file baseinstalldir="/" md5sum="a803da60624ce8150a4c76a1735334a2" name="PHPUnit/Util/Report/Template/file_item.html.dist" role="php" />
+   <file baseinstalldir="/" md5sum="504e52f0d8341d4157be8c205a12d320" name="PHPUnit/Util/Report/Template/method_item.html.dist" role="php" />
+   <file baseinstalldir="/" md5sum="e7e94dd89a3b37b6d8bae1cfc1c00be5" name="PHPUnit/Util/Report/Template/scarlet_red.png" role="php" />
+   <file baseinstalldir="/" md5sum="3d0fcd32ed86be159672d1fe52f8d3cc" name="PHPUnit/Util/Report/Template/snow.png" role="php" />
+   <file baseinstalldir="/" md5sum="5170c6342b0296fc8c744f74ffde7bf2" name="PHPUnit/Util/Report/Template/style.css" role="php" />
+   <file baseinstalldir="/" md5sum="3ae37167c141a29c1c11f254de0d7abf" name="PHPUnit/Util/Report/Template/yahoo-dom-event.js" role="php" />
+   <file baseinstalldir="/" md5sum="32c5c6a60f60136b454fe03e685776b3" name="PHPUnit/Util/Report/Template/yui_item.js" role="php" />
+   <file baseinstalldir="/" md5sum="3c50ca9766f44a1d2e74f827031988e9" name="PHPUnit/Util/Report/Node.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="2bd8f3668d1c6523a24e5f65b5f6c2a2" name="PHPUnit/Util/Skeleton/Template/Class.tpl.dist" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="4aae4fcd0398bcea3dce34ce39dce357" name="PHPUnit/Util/Skeleton/Template/IncompleteTestMethod.tpl.dist" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="0738157d50fe3c2a9b60a37d9a703088" name="PHPUnit/Util/Skeleton/Template/Method.tpl.dist" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="cbdef56f24cb2521397a46a2a983bb43" name="PHPUnit/Util/Skeleton/Template/TestClass.tpl.dist" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="61410e196113b5d9963e3262abeac1f7" name="PHPUnit/Util/Skeleton/Template/TestMethod.tpl.dist" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="4b3154c3fd838faa20375cb27ed5306a" name="PHPUnit/Util/Skeleton/Template/TestMethodStatic.tpl.dist" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="9a094f35d9b3786ac65ab83c121dd99c" name="PHPUnit/Util/Skeleton/Template/TestMethodBool.tpl.dist" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="9fa029d0a2b0d1d66166cf732ec8661a" name="PHPUnit/Util/Skeleton/Template/TestMethodBoolStatic.tpl.dist" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="c08f7e119a78e19d3d151d08ea154f92" name="PHPUnit/Util/Skeleton/Template/TestMethodException.tpl.dist" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="c0213cd75ada250f361fd9ebedca0a61" name="PHPUnit/Util/Skeleton/Template/TestMethodExceptionStatic.tpl.dist" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="150e9dda220b516c4b51b3d7904081d9" name="PHPUnit/Util/Skeleton/Class.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="f24b8cdeee0ce766392294cfa74d4fbb" name="PHPUnit/Util/Skeleton/Test.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="ed427c1fa802531146e8d24a551ef07d" name="PHPUnit/Util/TestDox/ResultPrinter/HTML.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="31d2646e198c53bfe6c27fe8fe57c60c" name="PHPUnit/Util/TestDox/ResultPrinter/Text.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="1dcc1060335d8d6c51d67347fa8e211e" name="PHPUnit/Util/TestDox/NamePrettifier.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="7c7692ab2ea3ec4be084d1932050d960" name="PHPUnit/Util/TestDox/ResultPrinter.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="92bcba6d8e0a164727e73468a68045ae" name="PHPUnit/Util/YAML/sfYaml.class.php" role="php" />
+   <file baseinstalldir="/" md5sum="f9f3416a48cbc0b63a3456785177ee88" name="PHPUnit/Util/YAML/sfYamlDumper.class.php" role="php" />
+   <file baseinstalldir="/" md5sum="5f7f1e5a0d9ca434754bf4c3e314f546" name="PHPUnit/Util/YAML/sfYamlInline.class.php" role="php" />
+   <file baseinstalldir="/" md5sum="ab60a03f3325429669e5342d513097b4" name="PHPUnit/Util/YAML/sfYamlParser.class.php" role="php" />
+   <file baseinstalldir="/" md5sum="50eb7a202e9518600d0564f53ff98938" name="PHPUnit/Util/Class.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="e83140238f097517e632f43a4b3bde9b" name="PHPUnit/Util/CodeCoverage.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="1f92b5a79f01099648702c4d325b8f46" name="PHPUnit/Util/Configuration.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="ea49ccee3a4781ecb7270cbe2363b69e" name="PHPUnit/Util/Diff.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="2b6a4560f76b19843e00159f855fbaac" name="PHPUnit/Util/ErrorHandler.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="1d070983e2c332feb04c7503e859a363" name="PHPUnit/Util/Fileloader.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+    <tasks:replace from="@php_bin@" to="php_bin" type="pear-config" />
+   </file>
+   <file baseinstalldir="/" md5sum="8d97973b202c4e7d02779cfd0a569acf" name="PHPUnit/Util/File.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="cdcb6607d50ca16ff5d484f2814bd41f" name="PHPUnit/Util/Filesystem.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="8c8c4992729c41e5c0010f5e7d48bb83" name="PHPUnit/Util/Filter.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="f0eccf496f9145f9e9282733bd2f79f1" name="PHPUnit/Util/FilterIterator.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="c79699d5eb44b20a1f506469d5a5c1d6" name="PHPUnit/Util/Getopt.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="e950920f88fdf810e7da92c72bc28ebd" name="PHPUnit/Util/GlobalState.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="548588669fda064ddce8d2589f940ee9" name="PHPUnit/Util/InvalidArgumentHelper.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="ccbe4a5c15dad697a3d8c91665ddc533" name="PHPUnit/Util/Metrics.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="0a976d69e675439da2c3e3d6ff83f518" name="PHPUnit/Util/PDO.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="a6c57d4c50fec4dd49ab18852a117091" name="PHPUnit/Util/PHP.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+    <tasks:replace from="@php_bin@" to="php_bin" type="pear-config" />
+   </file>
+   <file baseinstalldir="/" md5sum="2efeaf17a93cb0eebe11ae7e163e1adb" name="PHPUnit/Util/Printer.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="b9eb5e4de8c129098d79ba59af556dde" name="PHPUnit/Util/Report.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="d5569027275ccf207a405d9da8ce1f0d" name="PHPUnit/Util/Skeleton.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="0fdbe55576063c81b4549e846a10be7c" name="PHPUnit/Util/Template.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="e493030b49921eee061cd3f32fd6913a" name="PHPUnit/Util/Test.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="cf8293fc7a2128ee0354ce68fb613880" name="PHPUnit/Util/TestSuiteIterator.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="57d26de68a76f05b351ccfa61ef3d000" name="PHPUnit/Util/Timer.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="1ae86e82a6a1b68573224d090275d283" name="PHPUnit/Util/Type.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="9983ce256ed444e260d0c5370d27fe2f" name="PHPUnit/Util/XML.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="d4034153facfccf61efd39a6a747bb23" name="PHPUnit/Framework.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="7bce0dc056fe946ffc5be1f62aa7d6d2" name="dbunit.php" role="script">
+    <tasks:replace from="/usr/bin/env php" to="php_bin" type="pear-config" />
+    <tasks:replace from="@php_bin@" to="php_bin" type="pear-config" />
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="e157c5e2b99670cca0377e6485179f4d" name="dbunit.bat" role="script">
+    <tasks:replace from="@php_bin@" to="php_bin" type="pear-config" />
+    <tasks:replace from="@bin_dir@" to="bin_dir" type="pear-config" />
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="37b3ed6806067f82fe0ba6db8f1b93c1" name="phpunit.php" role="script">
+    <tasks:replace from="/usr/bin/env php" to="php_bin" type="pear-config" />
+    <tasks:replace from="@php_bin@" to="php_bin" type="pear-config" />
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/" md5sum="cf5bb2a9225186ff5f97a775ae63c20f" name="phpunit.bat" role="script">
+    <tasks:replace from="@php_bin@" to="php_bin" type="pear-config" />
+    <tasks:replace from="@bin_dir@" to="bin_dir" type="pear-config" />
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+   </file>
+  </dir>
+ </contents>
+ <dependencies>
+  <required>
+   <php>
+    <min>5.1.4</min>
+   </php>
+   <pearinstaller>
+    <min>1.8.1</min>
+   </pearinstaller>
+   <extension>
+    <name>dom</name>
+   </extension>
+   <extension>
+    <name>pcre</name>
+   </extension>
+   <extension>
+    <name>reflection</name>
+   </extension>
+   <extension>
+    <name>spl</name>
+   </extension>
+  </required>
+  <optional>
+   <package>
+    <name>Image_GraphViz</name>
+    <channel>pear.php.net</channel>
+    <min>1.2.1</min>
+   </package>
+   <package>
+    <name>Log</name>
+    <channel>pear.php.net</channel>
+   </package>
+   <extension>
+    <name>json</name>
+   </extension>
+   <extension>
+    <name>pdo</name>
+   </extension>
+   <extension>
+    <name>pdo_mysql</name>
+   </extension>
+   <extension>
+    <name>pdo_sqlite</name>
+   </extension>
+   <extension>
+    <name>soap</name>
+   </extension>
+   <extension>
+    <name>tokenizer</name>
+   </extension>
+   <extension>
+    <name>xdebug</name>
+    <min>2.0.5</min>
+   </extension>
+  </optional>
+ </dependencies>
+ <phprelease>
+  <installconditions>
+   <os>
+    <name>windows</name>
+   </os>
+  </installconditions>
+  <filelist>
+   <install as="phpunit" name="phpunit.php" />
+   <install as="phpunit.bat" name="phpunit.bat" />
+   <install as="dbunit" name="dbunit.php" />
+   <install as="dbunit.bat" name="dbunit.bat" />
+  </filelist>
+ </phprelease>
+ <phprelease>
+  <filelist>
+   <install as="phpunit" name="phpunit.php" />
+   <install as="dbunit" name="dbunit.php" />
+   <ignore name="phpunit.bat" />
+   <ignore name="dbunit.bat" />
+  </filelist>
+ </phprelease>
+</package>
