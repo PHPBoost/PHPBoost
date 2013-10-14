@@ -23,11 +23,6 @@
 					<a href="{LINK_BUG_STATS}">{@bugs.titles.stats}</a>
 				</li>
 				# ENDIF #
-				# IF C_ADD_PAGE #
-				<li class="current">
-					<a href="{LINK_BUG_ADD}">{@bugs.titles.add}</a>
-				</li>
-				# ENDIF #
 				# IF C_EDIT_PAGE #
 				<li class="current">
 					<a href="{LINK_BUG_EDIT}">{@bugs.titles.edit} \#{BUG_ID}</a>
@@ -43,10 +38,16 @@
 					<a href="{LINK_BUG_HISTORY}">{@bugs.titles.history} \#{BUG_ID}</a>
 				</li>
 				# ENDIF #
-				# IF C_ADD #
-				<li>
+				# IF C_ADD_PAGE #
+				<li class="current">
 					<a href="{LINK_BUG_ADD}"><i class="icon-plus"></i> {@bugs.titles.add}</a>
 				</li>
+				# ELSE #
+					# IF C_ADD #
+					<li>
+						<a href="{LINK_BUG_ADD}"><i class="icon-plus"></i> {@bugs.titles.add}</a>
+					</li>
+					# ENDIF #
 				# ENDIF #
 			</ul>
 		</menu>
