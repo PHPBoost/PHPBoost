@@ -161,6 +161,7 @@ class BugtrackerViews
 			'C_DISPLAY_VERSIONS'	=> $display_versions,
 			'C_DISPLAY_SAVE_BUTTON'	=> $display_save_button,
 			'C_SAVED_FILTERS'		=> $saved_filters,
+			'C_HAS_SELECTED_FILTERS'=> $filters,
 			'FILTERS_NUMBER'		=> $filters_number,
 			'BUGS_NUMBER'			=> $nbr_bugs,
 			'LINK_FILTER_SAVE'		=> BugtrackerUrlBuilder::add_filter($current_page . '/' . $page . (!empty($filter) ? '/' . $filter . '/' . $filter_id : ''))->rel(),
