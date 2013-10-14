@@ -150,6 +150,8 @@ class ArticlesDisplayArticlesController extends ModuleController
 			'U_EDIT_ARTICLE_PAGE' => $page_name !== '' ? ArticlesUrlBuilder::edit_article($this->article->get_id(), $page_name)->rel() : ArticlesUrlBuilder::edit_article($this->article->get_id())->rel() 
 		));
 		
+		$this->view->put('FORM', $this->form->display());
+		
 		//Affichage commentaires
 		if ($comments_enabled)
 		{
@@ -160,8 +162,6 @@ class ArticlesDisplayArticlesController extends ModuleController
 
 		    $this->view->put('COMMENTS', $comments_topic->display());
 		}
-		
-		$this->view->put('FORM', $this->form->display());
 	}
 	
 	private function build_form($array_page, $current_page)
