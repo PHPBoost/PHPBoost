@@ -121,9 +121,16 @@ a.member {
 
 /* Images */
 a.syndication:before {
-	content: url('../images/rss.png') no-repeat;
-	border: none;
+	font-family: FontAwesome;
+	font-size: 15px;
+	font-weight:300;
+	color:#f57900;
+	text-decoration:none;
 }
+
+a.syndication:hover { text-decoration:none; }
+
+a.syndication:before { content: "\f09e"; }
 
 a.edit:before, a.delete:before {
 	font-family: FontAwesome;

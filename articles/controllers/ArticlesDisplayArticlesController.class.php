@@ -147,7 +147,8 @@ class ArticlesDisplayArticlesController extends ModuleController
 			'L_NEXT_TITLE' => ($current_page > 0 && $current_page < $nbr_pages && $nbr_pages > 1) ? $array_page[1][$current_page] : '',
 			'U_CATEGORY' => ArticlesUrlBuilder::display_category($this->category->get_id(), $this->category->get_rewrited_name())->rel(),
 			'U_PRINT_ARTICLE' => ArticlesUrlBuilder::print_article($this->article->get_id(), $this->article->get_rewrited_title())->rel(),
-			'U_EDIT_ARTICLE_PAGE' => $page_name !== '' ? ArticlesUrlBuilder::edit_article($this->article->get_id(), $page_name)->rel() : ArticlesUrlBuilder::edit_article($this->article->get_id())->rel() 
+			'U_EDIT_ARTICLE_PAGE' => $page_name !== '' ? ArticlesUrlBuilder::edit_article($this->article->get_id(), $page_name)->rel() : ArticlesUrlBuilder::edit_article($this->article->get_id())->rel(),
+			'U_SYNDICATION' => ArticlesUrlBuilder::category_syndication($this->category->get_id())->rel()
 		));
 		
 		$this->view->put('FORM', $this->form->display());
