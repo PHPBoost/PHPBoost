@@ -131,6 +131,7 @@ class InstallationServices
         $this->create_tables();
 		$this->write_connection_config_file($db_connection_data, $tables_prefix);
 		$this->generate_installation_token();
+		$this->regenerate_cache();
 		return true;
 	}
 
@@ -142,7 +143,6 @@ class InstallationServices
 		$this->install_modules($modules_to_install);
 		$this->add_menus();
 		$this->add_extended_fields();
-		$this->regenerate_cache();
 		return true;
 	}
 
@@ -170,7 +170,7 @@ class InstallationServices
 		$this->init_debug_mode();
 		$this->init_user_accounts_config($locale);
 		$this->install_locale($locale);
-		$this->configure_theme($this->distribution_config['theme'], $locale);
+		$this->configure_theme($this->distribution_config['theme']);
 	}
 
 	private function save_general_config($server_url, $server_path, $site_name, $site_description, $site_keywords, $site_timezone)
@@ -219,7 +219,7 @@ class InstallationServices
 		LangManager::install($locale);
 	}
 
-	private function configure_theme($theme, $locale)
+	private function configure_theme($theme)
 	{
 		ThemeManager::install($theme);
 	}
@@ -228,7 +228,12 @@ class InstallationServices
 	{
 		foreach ($modules_to_install as $module_name)
 		{
-			ModulesManager::install_module($module_name, true);
+			ModulesManager::install_module($module_name, true, false);
+		}
+		
+		if (ServerEnvironmentConfig::load()->is_url_rewriting_enabled())
+		{
+			HtaccessFileCache::regenerate();
 		}
 	}
 
@@ -238,7 +243,6 @@ class InstallationServices
 		$modules_menu = MenuService::website_modules(LinksMenu::VERTICAL_MENU);
 		MenuService::move($modules_menu, Menu::BLOCK_POSITION__LEFT, false);
 		MenuService::set_position($modules_menu, -$modules_menu->get_block_position());
-		MenuService::generate_cache();
 	}
 
 	private function add_extended_fields()
