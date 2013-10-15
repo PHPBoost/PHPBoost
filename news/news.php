@@ -59,7 +59,7 @@ if (!empty($idnews)) // On affiche la news correspondant à l'id envoyé.
 	// Récupération de la news
 	$result = $Sql->query_while("SELECT n.contents, n.extend_contents, n.title, n.id, n.idcat, n.timestamp, n.start, n.visible, n.user_id, n.img, n.alt, m.login, m.level, m.user_groups, n.sources
 	FROM " . DB_TABLE_NEWS . " n LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = n.user_id
-	WHERE n.id = '" . $idnews . "' AND ('" . $now->get_timestamp() . "' >= n.start AND n.start > 0 AND ('" . $now->get_timestamp() . "' <= n.end OR n.end = 0) OR n.visible = 1)", __LINE__, __FILE__);
+	WHERE n.id = '" . $idnews . "'" . (!$User->check_auth($NEWS_CAT[$idcat]['auth'], AUTH_NEWS_MODERATE) ? " AND ('" . $now->get_timestamp() . "' >= n.start AND n.start > 0 AND ('" . $now->get_timestamp() . "' <= n.end OR n.end = 0))" : ""), __LINE__, __FILE__);
 	$news = $Sql->fetch_assoc($result);
 	$Sql->query_close($result);
 
@@ -194,7 +194,7 @@ elseif ($user)
 {
 	// Bread crumb.
 	$Bread_crumb->add($NEWS_LANG['news'], url('news.php'));
-	$Bread_crumb->add($User->get_attribute('login'), url('news.php?user=1'));
+	$Bread_crumb->add($NEWS_LANG['waiting_news'], url('news.php?user=1'));
 
 	// Title of page
 	define('TITLE', $NEWS_LANG['news']);
@@ -212,12 +212,12 @@ elseif ($user)
 		$array_cat[] = '0';
 	}
 	
-	$where = !empty($array_cat) ? " AND n.idcat IN(" . implode(", ", $array_cat) . ") OR n.user_id = '" . $User->get_attribute('user_id') . "'" : "AND n.user_id = '" . $User->get_attribute('user_id') . "'";
+	$where = !empty($array_cat) ? " AND n.idcat IN(" . implode(", ", $array_cat) . ")" : "";
 
 	$result = $Sql->query_while("SELECT n.contents, n.extend_contents, n.title, n.id, n.idcat, n.timestamp, n.user_id, n.img, n.alt, m.login, m.level
 	FROM " . DB_TABLE_NEWS . " n
 	LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = n.user_id
-	WHERE n.visible = 0 AND (n.start <= '" . $now->get_timestamp() . "' AND (n.end >= '" . $now->get_timestamp() . "' OR n.end = 0) ". $where .")
+	WHERE (n.visible = 0 AND (n.start <= '" . $now->get_timestamp() . "' AND (n.end >= '" . $now->get_timestamp() . "' OR n.end = 0)) OR (n.visible = 2 AND (n.start > '" . $now->get_timestamp() . "' AND n.end >= '" . $now->get_timestamp() . "')) ". $where .")
 	ORDER BY n.timestamp DESC", __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))
 	{
@@ -230,6 +230,7 @@ elseif ($user)
 			'TITLE' => $row['title'],
 			'C_EDIT' => true,
 			'C_DELETE' => true,
+			'C_DATE' => $NEWS_CONFIG['display_date'],
 			'C_IMG' => !empty($row['img']),
 			'IMG' => FormatingHelper::second_parse_url($row['img']),
 			'IMG_DESC' => $row['alt'],
