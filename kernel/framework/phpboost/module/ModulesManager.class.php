@@ -221,7 +221,7 @@ class ModulesManager
 		// TODO Force initialization ExtensionProviderService for PHPBoost installation
 		AppContext::init_extension_provider_service();
 		
-		MenuService::add_mini_module($module_identifier);
+		MenuService::add_mini_module($module_identifier, $generate_cache);
 
 		if ($generate_cache)
 		{

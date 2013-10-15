@@ -78,8 +78,6 @@ class InstallServerConfigController extends InstallController
 	{
 		if ($this->server_conf->is_php_compatible() && PHPBoostFoldersPermissions::validate())
 		{
-			$service = new InstallationServices();
-			$service->regenerate_cache();
 			AppContext::get_response()->redirect(InstallUrlBuilder::database());
 		}
 	}
