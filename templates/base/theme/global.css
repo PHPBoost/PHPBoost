@@ -120,19 +120,7 @@ a.member {
 }
 
 /* Images */
-a.syndication:before {
-	font-family: FontAwesome;
-	font-size: 15px;
-	font-weight:300;
-	color:#f57900;
-	text-decoration:none;
-}
-
-a.syndication:hover { text-decoration:none; }
-
-a.syndication:before { content: "\f09e"; }
-
-a.edit:before, a.delete:before {
+a.syndication:before, a.edit:before, a.delete:before {
 	font-family: FontAwesome;
 	font-size: 15px;
 	vertical-align: text-bottom;
@@ -141,8 +129,9 @@ a.edit:before, a.delete:before {
 	text-decoration:none;
 }
 
-a.edit:hover, a.delete:hover { text-decoration:none; }
+a.syndication:hover, a.edit:hover, a.delete:hover { text-decoration:none; }
 
+a.syndication:before { color:#f57900; content: "\f09e"; }
 a.edit:before { content: "\f044"; }
 a.delete:before { content: "\f014"; vertical-align:-1px; }
 
