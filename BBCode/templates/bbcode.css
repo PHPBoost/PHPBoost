@@ -1,35 +1,27 @@
 /** BBcode **/
 /* Tableau du bbcode */
-.bbcode, .bbcode2{
-	background-color:#336397;
-	color:#FFFFFF;
-	border:1px solid #BEBEBE;
-	border-collapse:collapse;
-	border-spacing:0px;
-	height:32px;
-	font-size:12px;
-	width: 491px;
-	-moz-border-radius: 0;
-    -webkit-border-radius: 0;
-	border-radius:0;
+
+.bbcode {
+	margin: auto;
+	width: 500px;
 }
 
-.bbcode td, .bbcode2 td{
-	background-color:transparent;
-	border:none;
+.bbcode-container {
+	background-color: #336397;
+	border: 1px solid #BEBEBE;
+	padding: 5px 5px 0 5px;
 }
 
-.bbcode img, .bbcode2 img{ vertical-align:middle; }
+.bbcode-upload {
 
-/* Curseur de la souris au passage sur les icônes */
-.bbcode_hover{ cursor:pointer; }
+}
 
 /* Icones de la barre BBCode */
 i[class^="bbcode-icon-"] { vertical-align:middle; cursor: pointer;}
 
 i.bbcode-icon-separate:before { content: url('images/separate.png'); }
 i.bbcode-icon-bold:before { content: url('images/bold.png'); }
-i.bbcode-icon-italic :before { content: url('images/italic.png'); }
+i.bbcode-icon-italic:before { content: url('images/italic.png'); }
 i.bbcode-icon-underline:before { content: url('images/underline.png'); }
 i.bbcode-icon-strike:before { content: url('images/strike.png'); }
 i.bbcode-icon-smileys:before { content: url('images/smileys.png'); }
