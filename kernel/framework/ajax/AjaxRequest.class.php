@@ -57,7 +57,7 @@ class AjaxRequest implements View
 
 	public function set_target($target)
 	{
-		$this->target = Url::to_absolute($target);
+		$this->target = Url::to_rel($target);
 	}
 
 	public function set_method($method)
