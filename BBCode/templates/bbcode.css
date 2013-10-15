@@ -3,17 +3,19 @@
 
 .bbcode {
 	margin: auto;
-	width: 500px;
+	width: 532px;
 }
 
 .bbcode-container {
 	background-color: #336397;
 	border: 1px solid #BEBEBE;
 	padding: 5px 5px 0 5px;
+	width:500px;
 }
 
 .bbcode-upload {
-
+	margin:-27px 0 0 5px;
+	float:right;
 }
 
 /* Icones de la barre BBCode */
