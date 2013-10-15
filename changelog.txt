@@ -33,6 +33,7 @@ les pages du module "pages".
 [*] Ajout d'une option dans la configuration avancée pour le mode de débogage permettant d'afficher les requêtes SQL
 [*] Création d'un système permettant de gérer facilement des mots clés dans les modules
 - Passage de l'extension mysql à mysqli pour assurer la compatibilité à long terme de PHPBoost sur tous les serveurs
+[*] Améliorations de la rapidité d'éxécution et de la fiabilité de l'installateur
 
 [b]Menus :[/b]
 - Possibilité de désactiver l'affichage d'un lien dans les menus
