@@ -48,7 +48,7 @@ class AdminCustomizeInterfaceController extends AdminModuleController
 		
 		if ($theme !== 'all' && !ThemeManager::get_theme_existed($theme))
 		{
-			AppContext::get_response()->redirect(AdminCustomizeUrlBuilder::customize_interface()->absolute());
+			AppContext::get_response()->redirect(AdminCustomizeUrlBuilder::customize_interface()->rel());
 		}
 		
 		$this->build_form($theme);
@@ -66,7 +66,7 @@ class AdminCustomizeInterfaceController extends AdminModuleController
 				if ($file_type->is_picture())
 				{
 					$this->save($header_logo, $theme);
-					AppContext::get_response()->redirect(AdminCustomizeUrlBuilder::customize_interface()->absolute());
+					AppContext::get_response()->redirect(AdminCustomizeUrlBuilder::customize_interface()->rel());
 				}
 				else
 				{
@@ -76,7 +76,7 @@ class AdminCustomizeInterfaceController extends AdminModuleController
 			elseif ($this->form->get_value('use_default_logo'))
 			{
 				$this->delete_pictures_saved($theme);
-				AppContext::get_response()->redirect(AdminCustomizeUrlBuilder::customize_interface()->absolute());
+				AppContext::get_response()->redirect(AdminCustomizeUrlBuilder::customize_interface()->rel());
 			}
 			else
 			{
@@ -109,7 +109,7 @@ class AdminCustomizeInterfaceController extends AdminModuleController
 		$theme_choise_fieldset->add_field(
 			new FormFieldSimpleSelectChoice('select_theme', $this->lang['customization.interface.select-theme'], $theme_selected,
 				$this->list_themes(), 
-				array('events' => array('change' => 'document.location.href = "' . AdminCustomizeUrlBuilder::customize_interface()->absolute() . '" + HTMLForms.getField(\'select_theme\').getValue()'))
+				array('events' => array('change' => 'document.location.href = "' . AdminCustomizeUrlBuilder::customize_interface()->rel() . '" + HTMLForms.getField(\'select_theme\').getValue()'))
 			)
 		);
 		

@@ -67,7 +67,7 @@ class InstallServerConfigController extends InstallController
 		$action_fieldset = new FormFieldsetSubmit('actions');
 		$back = new FormButtonLink($this->lang['step.previous'], InstallUrlBuilder::license(), 'templates/images/left.png');
 		$action_fieldset->add_element($back);
-		$refresh = new FormButtonLink($this->lang['folders.chmod.refresh'], InstallUrlBuilder::server_configuration()->absolute(), 'templates/images/refresh.png');
+		$refresh = new FormButtonLink($this->lang['folders.chmod.refresh'], InstallUrlBuilder::server_configuration()->rel(), 'templates/images/refresh.png');
 		$action_fieldset->add_element($refresh);
 		$this->submit = new FormButtonSubmitImg($this->lang['step.next'], 'templates/images/right.png', 'server');
 		$action_fieldset->add_element($this->submit);

@@ -83,7 +83,7 @@ class AdminCustomizeEditorCSSFilesController extends AdminModuleController
 		$theme_choise_fieldset->add_field(
 			new FormFieldSimpleSelectChoice('select_theme', $this->lang['customization.interface.select-theme'], $theme_selected,
 				$this->list_themes(), 
-				array('events' => array('change' => 'document.location.href = "' . AdminCustomizeUrlBuilder::editor_file()->absolute() . '" + HTMLForms.getField(\'select_theme\').getValue()'))
+				array('events' => array('change' => 'document.location.href = "' . AdminCustomizeUrlBuilder::editor_file()->rel() . '" + HTMLForms.getField(\'select_theme\').getValue()'))
 			)
 		);
 		
@@ -95,7 +95,7 @@ class AdminCustomizeEditorCSSFilesController extends AdminModuleController
 			$file_editor_fieldset->add_field(
 				new FormFieldSimpleSelectChoice('select_file', $this->lang['customization.editor.css-files.select'], $file_selected,
 					$this->list_files($theme_selected), 
-					array('events' => array('change' => 'document.location.href = "' . AdminCustomizeUrlBuilder::editor_file($theme_selected)->absolute() . '" + "/" + HTMLForms.getField(\'select_file\').getValue()'))
+					array('events' => array('change' => 'document.location.href = "' . AdminCustomizeUrlBuilder::editor_file($theme_selected)->rel() . '" + "/" + HTMLForms.getField(\'select_file\').getValue()'))
 				)
 			);
 			
