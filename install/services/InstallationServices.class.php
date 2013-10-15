@@ -130,6 +130,7 @@ class InstallationServices
 		$password, $tables_prefix);
         $this->create_tables();
 		$this->write_connection_config_file($db_connection_data, $tables_prefix);
+		$this->generate_cache();
 		$this->generate_installation_token();
 		return true;
 	}
