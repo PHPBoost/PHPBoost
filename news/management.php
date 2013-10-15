@@ -103,15 +103,15 @@ elseif (!empty($_POST['submit']))
 	);
 	
 	$start = MiniCalendar::retrieve_date('start');
-	$start->set_hours(retrieve(POST, 'start_hour', 0, TINTEGER));
-	$start->set_minutes(retrieve(POST, 'start_min', 0, TINTEGER));
+	$start_hour = retrieve(POST, 'start_hour', 0, TINTEGER);
+	$start_minutes = retrieve(POST, 'start_min', 0, TINTEGER);
 	
 	$end = MiniCalendar::retrieve_date('end');
-	$end->set_hours(retrieve(POST, 'end_hour', 0, TINTEGER));
-	$end->set_minutes(retrieve(POST, 'end_min', 0, TINTEGER));
+	$end_hour = retrieve(POST, 'end_hour', 0, TINTEGER);
+	$end_minutes = retrieve(POST, 'end_min', 0, TINTEGER);
 	
-	$news['start'] = $start->get_timestamp();
-	$news['end'] = $end->get_timestamp();
+	$news['start'] = $start->get_timestamp() + 3600 * $start_hour + 60 * $start_minutes;
+	$news['end'] = $end->get_timestamp() + 3600 * $end_hour + 60 * $end_minutes;
 	
 
 	if (($news['id'] > 0 && ($User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_MODERATE) || $User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_WRITE) || $User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_CONTRIBUTE))) || ($news['id'] == 0 && ($User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_WRITE) || $User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_CONTRIBUTE))))
@@ -143,8 +143,6 @@ elseif (!empty($_POST['submit']))
 					{
 						$news['end'] = 0;
 					}
-	
-					$news['visible'] = 0;
 				}
 			}
 			else
@@ -274,14 +272,14 @@ else
 			
 			// Calendrier.
 			$start_calendar = new MiniCalendar('start');
-			$start = new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, ($news['start'] > 0 ? $news['start'] : $now->get_timestamp()));
+			$start = new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, ($news['start'] > 0 ? $news['start'] : $now->get_timestamp()));
 			$start_calendar->set_date($start);
 			$end_calendar = new MiniCalendar('end');
-			$end = new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, ($news['end'] > 0 ? $news['end'] : $now->get_timestamp()));
+			$end = new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, ($news['end'] > 0 ? $news['end'] : $now->get_timestamp()));
 			$end_calendar->set_date($end);
 			$end_calendar->set_style('margin-left:150px;');
 			$release_calendar = new MiniCalendar('release');
-			$release = new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, ($news['timestamp'] > 0 ? $news['timestamp'] : $now->get_timestamp()));
+			$release = new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, ($news['timestamp'] > 0 ? $news['timestamp'] : $now->get_timestamp()));
 			$release_calendar->set_date($release);
 			
 			$sources = unserialize($news['sources']);
@@ -356,14 +354,14 @@ else
 			define('TITLE', $NEWS_LANG['add_news']);
 
 			// Calendrier.
-			$now = new Date(DATE_NOW, TIMEZONE_AUTO);
+			$now = new Date(DATE_NOW, TIMEZONE_SYSTEM);
 			$start_calendar = new MiniCalendar('start');
-			$start_calendar->set_date(new Date(DATE_NOW, TIMEZONE_AUTO));
+			$start_calendar->set_date($now);
 			$end_calendar = new MiniCalendar('end');
-			$end_calendar->set_date(new Date(DATE_NOW, TIMEZONE_AUTO));
+			$end_calendar->set_date($now);
 			$end_calendar->set_style('margin-left:150px;');
 			$release_calendar = new MiniCalendar('release');
-			$release_calendar->set_date(new Date(DATE_NOW, TIMEZONE_AUTO));
+			$release_calendar->set_date($now);
 
 			$tpl->put_all(array(
 				'C_ADD' => false,
@@ -415,7 +413,7 @@ else
 	$counterpart_editor->set_identifier('counterpart');
 	
 	$tpl->put_all(array(
-		'NOW_DATE' => $now->format(DATE_FORMAT_SHORT, TIMEZONE_AUTO),
+		'NOW_DATE' => $now->format(DATE_FORMAT_SHORT, TIMEZONE_SYSTEM),
 		'NOW_HOUR' => $now->get_hours(),
 		'NOW_MIN' => $now->get_minutes(),
 		'L_NAME_SOURCES' => $NEWS_LANG['name_sources'],
