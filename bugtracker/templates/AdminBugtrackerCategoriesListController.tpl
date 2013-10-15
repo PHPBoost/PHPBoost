@@ -1,7 +1,7 @@
 <script type="text/javascript">
 <!--
 function Confirm_del_category() {
-	return confirm("{@bugs.actions.confirm.del_category
+	return confirm("{@bugs.actions.confirm.del_category}");
 }
 
 function Confirm_del_default_value() {

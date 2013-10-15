@@ -4,6 +4,7 @@ function Confirm_del_default_value() {
 	return confirm("{@bugs.actions.confirm.del_default_value}");
 }
 -->
+</script>
 # INCLUDE ADD_FIELDSET_JS #
 <fieldset id="${escape(ID)}" # IF C_DISABLED # style="display:none;" # ENDIF # # IF CSS_CLASS # class="{CSS_CLASS}" # ENDIF #>
 	<legend>{L_FORMTITLE}</legend>
