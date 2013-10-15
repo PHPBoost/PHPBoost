@@ -186,7 +186,12 @@ function XMLHttpRequest_preview(field)
 
 			<a onclick="show_bbcode_div('bbcode_more{FIELD}', 1);"><i class="bbcode-icon-more" title="{L_BB_MORE}" class="bbcode_hover"></i></a>
 		</div>
-		<div class="bbcode-container">
+		# IF C_UPLOAD_MANAGEMENT #
+			<div class="bbcode-upload">
+				<a title="{L_BB_UPLOAD}" href="#" onclick="window.open('{PATH_TO_ROOT}/user/upload.php?popup=1&amp;fd={FIELD}&amp;edt=BBCode', '', 'height=550,width=720,resizable=yes,scrollbars=yes');return false;"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/upload/files_add.png" alt="" /></a>
+			</div>
+		# ENDIF #
+		<div class="bbcode-container" id="bbcode_more{FIELD}">
 			<i class="bbcode-icon-separate"></i>
 			
 			<i class="bbcode-icon-left" {AUTH_ALIGN} onclick="{DISABLED_ALIGN}insertbbcode('[align=left]', '[/align]', '{FIELD}');" title="{L_BB_LEFT}"></i>
@@ -274,11 +279,6 @@ function XMLHttpRequest_preview(field)
 			<i class="bbcode-icon-separate"></i>
 
 			<a href="http://www.phpboost.com/wiki/bbcode" title="{L_BB_HELP}"><i class="bbcode-icon-help"></i></a>
-		</div>
-		<div class="bbcode-upload">
-		# IF C_UPLOAD_MANAGEMENT #
-			<a title="{L_BB_UPLOAD}" href="#" onclick="window.open('{PATH_TO_ROOT}/user/upload.php?popup=1&amp;fd={FIELD}&amp;edt=BBCode', '', 'height=550,width=720,resizable=yes,scrollbars=yes');return false;"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/upload/files_add.png" alt="" /></a>
-		# ENDIF #
 		</div>
 	</div>
 	
