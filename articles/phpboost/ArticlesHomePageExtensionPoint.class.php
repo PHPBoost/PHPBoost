@@ -81,7 +81,7 @@ class ArticlesHomePageExtensionPoint implements HomePageExtensionPoint
 
 		$tpl = new FileTemplate('articles/articles_cat.tpl');
 
-		$nbr_articles = $this->sql_querier->query("SELECT COUNT(*) FROM " . DB_TABLE_ARTICLES . " WHERE idcat = '" . $idartcat . "' AND (visible = 1 OR start <= '" . $now->get_timestamp() . "' AND start > 0 AND (end >= '" . $now->get_timestamp() . "' OR end = 0))", __LINE__, __FILE__);
+		$nbr_articles = $this->sql_querier->query("SELECT COUNT(*) FROM " . DB_TABLE_ARTICLES . " WHERE idcat = '" . $idartcat . "' AND (visible = 1 OR (start < '" . $now->get_timestamp() . "' AND (end >= '" . $now->get_timestamp() . "' OR end = 0)))", __LINE__, __FILE__);
 		$rewrite_title = Url::encode_rewrite($ARTICLES_CAT[$idartcat]['name']);
 
 		$get_sort = retrieve(GET, 'sort', '');
@@ -210,7 +210,7 @@ class ArticlesHomePageExtensionPoint implements HomePageExtensionPoint
 		$result = $this->sql_querier->query_while("SELECT @id_cat:= ac.id, ac.id, ac.name, ac.auth, ac.description, ac.image, 
 		(		SELECT  COUNT(*)
 				FROM " . DB_TABLE_ARTICLES . " a
-				WHERE idcat = @id_cat AND (a.visible = 1 OR a.start <= '" . $now->get_timestamp() . "' AND a.start > 0 AND (a.end >= '" . $now->get_timestamp() . "' OR a.end = 0))
+				WHERE idcat = @id_cat AND (a.visible = 1 OR (a.start < '" . $now->get_timestamp() . "' AND (a.end >= '" . $now->get_timestamp() . "' OR a.end = 0)))
         )		AS      nbr_articles
 		FROM " . DB_TABLE_ARTICLES_CAT . " ac
 		" . $clause_cat . $clause_unauth_cats . "
@@ -250,7 +250,7 @@ class ArticlesHomePageExtensionPoint implements HomePageExtensionPoint
 			
 		$this->sql_querier->query_close($result);
 
-		if ($nbr_articles > 0 || $invisible)
+		if ($nbr_articles > 0)
 		{
 			$tpl->put_all(array(
 				'C_ARTICLES_LINK' => true,
@@ -267,7 +267,7 @@ class ArticlesHomePageExtensionPoint implements HomePageExtensionPoint
 			LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = a.user_id
 			LEFT JOIN " . DB_TABLE_COMMENTS_TOPIC . " com ON com.id_in_module = a.id AND com.module_id = 'articles'
 			LEFT JOIN " . DB_TABLE_AVERAGE_NOTES . " note ON note.id_in_module = a.id AND note.module_name = 'articles'
-			WHERE a.idcat = '" . $idartcat . "' AND (a.visible = 1 OR a.start <= '" . $now->get_timestamp() . "' AND a.start > 0 AND (a.end >= '" . $now->get_timestamp() . "' OR a.end = 0))
+			WHERE a.idcat = '" . $idartcat . "' AND (a.visible = 1 OR (a.start < '" . $now->get_timestamp() . "' AND (a.end >= '" . $now->get_timestamp() . "' OR a.end = 0)))
 			ORDER BY " . $sort . " " . $mode .
 			$this->sql_querier->limit($Pagination->get_first_msg($CONFIG_ARTICLES['nbr_articles_max'], 'p'), $CONFIG_ARTICLES['nbr_articles_max']), __LINE__, __FILE__);
 
@@ -314,14 +314,14 @@ class ArticlesHomePageExtensionPoint implements HomePageExtensionPoint
 				{
 					$array_cat[] = '0';
 				}
-				$where = !empty($array_cat) ? " AND a.idcat IN(" . implode(", ", $array_cat) . ") OR a.user_id = '" . $User->get_attribute('user_id') . "'" : "AND a.user_id = '" . $User->get_attribute('user_id') . "'";
+				$where = !empty($array_cat) ? " AND a.idcat IN(" . implode(", ", $array_cat) . ")" : "";
 
 				$result = $this->sql_querier->query_while("SELECT a.id, a.title, a.icon, a.timestamp, a.views, a.user_id, a.description, m.user_id, m.login, m.user_groups, m.level, note.average_notes, note.number_notes, com.number_comments
 				FROM " . DB_TABLE_ARTICLES . " a
 				LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = a.user_id
 				LEFT JOIN " . DB_TABLE_COMMENTS_TOPIC . " com ON com.id_in_module = a.id AND com.module_id = 'articles'
 				LEFT JOIN " . DB_TABLE_AVERAGE_NOTES . " note ON note.id_in_module = a.id AND note.module_name = 'articles'
-				WHERE a.visible = 0 AND (a.start <= '" . $now->get_timestamp() . "' AND (a.end >= '" . $now->get_timestamp() . "' OR a.end = 0) ". $where .")
+				WHERE ((a.visible = 0 AND (a.start <= '" . $now->get_timestamp() . "' AND (a.end >= '" . $now->get_timestamp() . "' OR a.end = 0))) OR (a.visible = 2 AND (a.start > '" . $now->get_timestamp() . "' AND a.end >= '" . $now->get_timestamp() . "')) ". $where .")
 				ORDER BY " . $sort . " " . $mode .
 				$this->sql_querier->limit($Pagination->get_first_msg($CONFIG_ARTICLES['nbr_articles_max'], 'p'), $CONFIG_ARTICLES['nbr_articles_max']), __LINE__, __FILE__);
 
