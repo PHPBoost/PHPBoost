@@ -108,15 +108,15 @@ elseif(retrieve(POST,'submit',false))
 	);
 	
 	$begining_date = MiniCalendar::retrieve_date('start');
-	$begining_date->set_hours(retrieve(POST, 'start_hour', 0, TINTEGER));
-	$begining_date->set_minutes(retrieve(POST, 'start_min', 0, TINTEGER));
+	$start_hour = retrieve(POST, 'start_hour', 0, TINTEGER);
+	$start_minutes = retrieve(POST, 'start_min', 0, TINTEGER);
 	
 	$end_date = MiniCalendar::retrieve_date('end');
-	$end_date->set_hours(retrieve(POST, 'end_hour', 0, TINTEGER));
-	$end_date->set_minutes(retrieve(POST, 'end_min', 0, TINTEGER));
+	$end_hour = retrieve(POST, 'end_hour', 0, TINTEGER);
+	$end_minutes = retrieve(POST, 'end_min', 0, TINTEGER);
 	
-	$articles['start'] = $begining_date->get_timestamp();
-	$articles['end'] = $end_date->get_timestamp();
+	$articles['start'] = $begining_date->get_timestamp() + 3600 * $start_hour + 60 * $start_minutes;
+	$articles['end'] = $end_date->get_timestamp() + 3600 * $end_hour + 60 * $end_minutes;
 
 	if ($articles['id'] == 0 && ($User->check_auth($ARTICLES_CAT[$articles['idcat']]['auth'], AUTH_ARTICLES_WRITE) || $User->check_auth($ARTICLES_CAT[$articles['idcat']]['auth'], AUTH_ARTICLES_CONTRIBUTE)) || $articles['id'] > 0 && ($User->check_auth($ARTICLES_CAT[$articles['idcat']]['auth'], AUTH_ARTICLES_MODERATE) || $User->check_auth($ARTICLES_CAT[$articles['idcat']]['auth'], AUTH_ARTICLES_WRITE) && $articles['user_id'] == $User->get_attribute('user_id')))
 	{
@@ -147,8 +147,6 @@ elseif(retrieve(POST,'submit',false))
 					{
 						$articles['end'] = 0;
 					}
-	
-					$articles['visible'] = 0;
 				}
 			}
 			else
@@ -267,16 +265,16 @@ else
 
 			// Calendrier.
 			$start_calendar = new MiniCalendar('start');
-			$start = new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, ($articles['start'] > 0 ? $articles['start'] : $now->get_timestamp()));
+			$start = new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, ($articles['start'] > 0 ? $articles['start'] : $now->get_timestamp()));
 			$start_calendar->set_date($start);
 			
 			$end_calendar = new MiniCalendar('end');
-			$end = new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, ($articles['end'] > 0 ? $articles['end'] : $now->get_timestamp()));
+			$end = new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, ($articles['end'] > 0 ? $articles['end'] : $now->get_timestamp()));
 			$end_calendar->set_date($end);
 			$end_calendar->set_style('margin-left:100px;');
 			
 			$release_calendar = new MiniCalendar('release');
-			$release = new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, ($articles['timestamp'] > 0 ? $articles['timestamp'] : $now->get_timestamp()));
+			$release = new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, ($articles['timestamp'] > 0 ? $articles['timestamp'] : $now->get_timestamp()));
 			$release_calendar->set_date($release);
 
 			$img_direct_path = (strpos($articles['icon'], '/') !== false);
@@ -381,16 +379,16 @@ else
 			}
 
 			// Calendrier.
-			$now = new Date(DATE_NOW, TIMEZONE_AUTO);
+			$now = new Date(DATE_NOW, TIMEZONE_SYSTEM);
 			$start_calendar = new MiniCalendar('start');
-			$start_calendar->set_date(new Date(DATE_NOW, TIMEZONE_AUTO));
+			$start_calendar->set_date($now);
 			$end_calendar = new MiniCalendar('end');
 			
-			$end_calendar->set_date(new Date(DATE_NOW, TIMEZONE_AUTO));
+			$end_calendar->set_date($now);
 			$end_calendar->set_style('margin-left:100px;');
 			$release_calendar = new MiniCalendar('release');
 			
-			$release_calendar->set_date(new Date(DATE_NOW, TIMEZONE_AUTO));
+			$release_calendar->set_date($now);
 
 			$tpl->put_all(array(
 				'C_ADD' => false,
@@ -447,7 +445,7 @@ else
 		'KERNEL_EDITOR_DESC' => $desc_editor->display(),
 		'KERNEL_EDITOR' => $editor->display(),
 		'TITLE' => '',	
-		'NOW_DATE' => $now->format(DATE_FORMAT_SHORT, TIMEZONE_AUTO),
+		'NOW_DATE' => $now->format(DATE_FORMAT_SHORT, TIMEZONE_SYSTEM),
 		'NOW_HOUR' => $now->get_hours(),
 		'NOW_MIN' => $now->get_minutes(),
 		'VISIBLE_ENABLED' => 'checked="checked"',
