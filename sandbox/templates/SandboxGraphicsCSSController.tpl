@@ -242,48 +242,87 @@
 	</div>
 </div>
 
-<table class="module_table">
-	<tr> 
-		<th colspan="3">
-			Tableau
-		</th>
-	</tr>
-	<tr style="text-align:center;">
-		<td class="row1">
-			Nom
-		</td>
-		<td class="row1">
-			Description
-		</td>
-		<td class="row1">
-			Auteur
-		</td>
-	</tr>
-	<tr style="text-align:center;">
-		<td class="row2"> 
-			Test
-		</td>
-		<td class="row2">
-			Description
-		</td>
-		<td class="row2">
-			Auteur
-		</td>
-	</tr>
-	<tr style="text-align:center;">
-		<td class="row2"> 
-			Test
-		</td>
-		<td class="row2">
-			Description
-		</td>
-		<td class="row2">
-			Auteur
-		</td>
-	</tr>
-	<tr>
-		
-	</tr>
+<table>
+	<caption>
+		Tableau
+	</caption>
+	<thead>
+		<tr> 
+			<th>
+				Nom
+			</th>
+			<th>
+				Description
+			</th>
+			<th>
+				Auteur
+			</th>
+		</tr>
+	</thead>
+	<tfoot>
+		<tr>
+			<th colspan="5">
+				<nav class="pagination">
+					<a href="#page2"  rel="prev"   title="">
+						<span >&laquo;</span>
+					</a>
+					<a href="#page1"   title="">
+						<span >1</span>
+					</a>
+					<a href="#page2"   title="">
+						<span>2</span>
+					</a>
+					<a href="page#3"   title="">
+						<span  class="current_page" >3</span>
+					</a>
+					<a href="page#4" rel="next" title="">
+						<span >4</span>
+					</a>
+					<a href="#page5"   title="">
+						<span >5</span>
+					</a>
+					<a href="page#4"   rel="next"  title="">
+						<span >&raquo;</span>
+					</a>
+				</nav>
+			</th>
+		</tr>
+	</tfoot>
+	<tbody>
+		<tr>
+			<td> 
+				Test
+			</td>
+			<td>
+				Description
+			</td>
+			<td>
+				Auteur
+			</td>
+		</tr>
+		<tr>
+			<td> 
+				Test
+			</td>
+			<td>
+				Description
+			</td>
+			<td>
+				Auteur
+			</td>
+		</tr>
+		<tr>
+			<td> 
+				Test
+			</td>
+			<td>
+				Description
+			</td>
+			<td>
+				Auteur
+			</td>
+		</tr>
+	</tbody>
 </table>
 
 <fieldset>

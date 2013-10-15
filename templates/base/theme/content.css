@@ -79,8 +79,7 @@ section footer nav.pagination {	text-align: center; }
 -------------------------------------- */
 
 table {
-	width:98%;
-	margin:auto;
+	width:100%;
 	border-spacing:0;
 	padding:0px;
 	border:1px solid #d1d2d4;
@@ -101,7 +100,6 @@ table caption {
 table thead th{
 	color:#e5e6e6;
 	background-color:#4d4c50;
-	text-align:left;
 	font-size:12px;
 	font-weight:normal;
 	padding:8px;
