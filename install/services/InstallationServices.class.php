@@ -34,7 +34,6 @@ class InstallationServices
 
 	private static $token_file_content = '1';
 	private static $min_php_version = '5.1.2';
-	private static $phpboost_major_version = '4.0';
 
 	/**
 	 * @var File
@@ -131,7 +130,6 @@ class InstallationServices
 		$password, $tables_prefix);
         $this->create_tables();
 		$this->write_connection_config_file($db_connection_data, $tables_prefix);
-		$this->generate_cache();
 		$this->generate_installation_token();
 		return true;
 	}
@@ -144,6 +142,7 @@ class InstallationServices
 		$this->install_modules($modules_to_install);
 		$this->add_menus();
 		$this->add_extended_fields();
+		$this->generate_cache();
 		return true;
 	}
 
@@ -183,7 +182,6 @@ class InstallationServices
 		$general_config->set_site_description($site_description);
 		$general_config->set_site_keywords($site_keywords);
 		$general_config->set_module_home_page($this->distribution_config['module_home_page']);
-		$general_config->set_phpboost_major_version(self::$phpboost_major_version);
 		$general_config->set_site_install_date(new Date());
 		$general_config->set_site_timezone((int)$site_timezone);
 		GeneralConfig::save();

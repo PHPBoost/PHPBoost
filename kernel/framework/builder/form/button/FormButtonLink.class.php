@@ -36,13 +36,13 @@ class FormButtonLink extends FormButtonButton
     	$full_label = '';
     	if (!empty($img))
     	{
-    		$full_label = '<img src="' . Url::to_rel($img) . '" alt="' . $label . '" title="' . $label . '" />';
+    		$full_label = '<img src="' . $img . '" alt="' . $label . '" title="' . $label . '" />';
     	}
     	else
     	{
     		$full_label = $label;
     	}
-        parent::__construct($full_label, 'window.location=' . TextHelper::to_js_string(Url::to_absolute($link)), '');
+        parent::__construct($full_label, 'window.location=' . TextHelper::to_js_string(Url::to_rel($link)), '');
     }
 }
 ?>

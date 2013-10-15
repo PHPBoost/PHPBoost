@@ -36,7 +36,7 @@ class FormButtonAjax extends FormButtonButton
     	$full_label = '';
     	if (!empty($img))
     	{
-    		$full_label = '<img src="' . Url::to_rel($img) . '" alt="' . $label . '" title="' . $label . '" />';
+    		$full_label = '<img src="' . $img . '" alt="' . $label . '" title="' . $label . '" />';
     	}
     	else
     	{
