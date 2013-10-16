@@ -54,16 +54,19 @@ class KeywordsManager
 		
 		foreach ($keywords as $keyword)
 		{
-			if (!$this->exists($keyword))
+			if (!empty($keyword))
 			{
-				$result = $this->db_querier->insert(DB_TABLE_KEYWORDS, array('name' => $keyword, 'rewrited_name' => Url::encode_rewrite($keyword)));
-				$id_keyword = $result->get_last_inserted_id();
+				if (!$this->exists($keyword))
+				{
+					$result = $this->db_querier->insert(DB_TABLE_KEYWORDS, array('name' => $keyword, 'rewrited_name' => Url::encode_rewrite($keyword)));
+					$id_keyword = $result->get_last_inserted_id();
+				}
+				else
+				{
+					$id_keyword = $this->db_querier->get_column_value(DB_TABLE_KEYWORDS, 'id', 'WHERE rewrited_name=:rewrited_name', array('rewrited_name' => Url::encode_rewrite($keyword)));
+				}
+				$this->db_querier->insert(DB_TABLE_KEYWORDS_RELATIONS, array('module_id' => $this->module_id, 'id_in_module' => $id_in_module, 'id_keyword' => $id_keyword));
 			}
-			else
-			{
-				$id_keyword = $this->db_querier->get_column_value(DB_TABLE_KEYWORDS, 'id', 'WHERE rewrited_name=:rewrited_name', array('rewrited_name' => Url::encode_rewrite($keyword)));
-			}
-			$this->db_querier->insert(DB_TABLE_KEYWORDS_RELATIONS, array('module_id' => $this->module_id, 'id_in_module' => $id_in_module, 'id_keyword' => $id_keyword));
 		}
 	}
 	
