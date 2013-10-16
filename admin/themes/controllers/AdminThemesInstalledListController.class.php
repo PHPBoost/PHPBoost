@@ -68,7 +68,7 @@ class AdminThemesInstalledListController extends AdminController
 				'CSS_VERSION' => $configuration->get_css_version() !== '' ? $configuration->get_css_version() : $this->lang['themes.bot_informed'],
 				'MAIN_COLOR' => $configuration->get_main_color() !== '' ? $configuration->get_main_color() : $this->lang['themes.bot_informed'],
 				'WIDTH' => $configuration->get_variable_width() ? $this->lang['themes.variable-width'] : $configuration->get_width(),
-				'DELETE_LINK' => AdminThemeUrlBuilder::delete_theme($theme->get_id())->absolute()
+				'DELETE_LINK' => AdminThemeUrlBuilder::delete_theme($theme->get_id())->rel()
 			));
 			
 			if (count($pictures) > 0)

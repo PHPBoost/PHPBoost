@@ -51,17 +51,14 @@ class MenuControllerConfigurationsList extends AdminController
 			$this->view->assign_block_vars('menu_configuration', array(
                 'NAME' => $menu_config->get_name(),
                 'MATCH_REGEX' => $menu_config->get_match_regex(),
-                'U_EDIT' =>
-			MenuUrlBuilder::menu_configuration_edit($menu_config->get_id())->absolute(),
-				'U_CONFIGURE' =>
-			MenuUrlBuilder::menu_configuration_configure($menu_config->get_id())->absolute()
+                'U_EDIT' => MenuUrlBuilder::menu_configuration_edit($menu_config->get_id())->rel(),
+				'U_CONFIGURE' => MenuUrlBuilder::menu_configuration_configure($menu_config->get_id())->rel()
 			));
 		}
 
 		$default_menu_config = MenuConfigurationDAO::instance()->find_by_id(1);
 		$this->view->put_all(array(
-			'U_DEFAULT_MENU_CONFIG_CONFIGURE' =>
-		MenuUrlBuilder::menu_configuration_configure($default_menu_config->get_id())->absolute()
+			'U_DEFAULT_MENU_CONFIG_CONFIGURE' => MenuUrlBuilder::menu_configuration_configure($default_menu_config->get_id())->rel()
 		));
 
 		return $this->response;
