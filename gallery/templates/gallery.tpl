@@ -236,7 +236,7 @@
 					<a href="${relative_url(SyndicationUrlBuilder::rss('gallery', CAT_ID))}" class="syndication" title="${LangLoader::get_message('syndication', 'main')}"></a>
 					{L_GALLERY} {U_GALLERY_CAT_LINKS}
 					
-					<span class="tools">
+					<span class="actions">
 						{PAGINATION}
 					</span>
 				</h1>

@@ -1,7 +1,7 @@
 	# IF C_POLL_MAIN #
 		<section>	
 			<header>
-				<h1>{L_POLL} <span class="tools">{EDIT}</span></h1>
+				<h1>{L_POLL} <span class="actions">{EDIT}</span></h1>
 			</header>
 			<div class="content" style="text-align:center;">
 				{L_POLL_MAIN}
@@ -27,7 +27,7 @@
 					<h1>
 						{QUESTION}
 						# IF C_IS_ADMIN #
-						<span class="tools">
+						<span class="actions">
 							<a href="{PATH_TO_ROOT}/poll/admin_poll.php?id={IDPOLL}" title="{L_EDIT}" title="${LangLoader::get_message('edit', 'main')}" class="edit"></a>
 							<a href="{PATH_TO_ROOT}/poll/admin_poll.php?delete=1&amp;id={IDPOLL}&amp;token={TOKEN}" title="${LangLoader::get_message('delete', 'main')}" class="delete"></a>
 						</span>
@@ -90,7 +90,7 @@
 					<header>
 						<h1>
 							{list.QUESTION}
-							<span class="tools">
+							<span class="actions">
 								# IF C_IS_ADMIN #
 								<a href="{PATH_TO_ROOT}/poll/admin_poll.php?id={list.ID}" title="{L_EDIT}" title="${LangLoader::get_message('edit', 'main')}" class="edit"></a>
 								<a href="{PATH_TO_ROOT}/poll/admin_poll.php?delete=1&amp;id={list.ID}&amp;token={TOKEN}" title="${LangLoader::get_message('delete', 'main')}" class="delete"></a>

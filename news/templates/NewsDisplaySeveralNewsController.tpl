@@ -38,7 +38,7 @@
 				<h1>
 					<a href="{news.U_SYNDICATION}" class="syndication" title="${LangLoader::get_message('syndication', 'main')}"></a>
         			<a href="{news.U_LINK}"><span id="name" itemprop="name">{news.NAME}</span></a>
-        			<span class="tools">
+        			<span class="actions">
         				# IF news.C_EDIT #
 							<a href="{news.U_EDIT}" title="${LangLoader::get_message('edit', 'main')}" class="edit"></a>
 						# ENDIF #

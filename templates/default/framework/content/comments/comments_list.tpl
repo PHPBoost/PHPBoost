@@ -22,7 +22,7 @@ function Confirm_del_comment() {
 		</div>
 		<div class="comment-content">
 			<div class="comment-date">
-				<span class="tools">
+				<span class="actions">
 					<a itemprop="url" href="\#com{comments.ID_COMMENT}">\#{comments.ID_COMMENT}</a>
 					# IF comments.C_MODERATOR #
 						<a href="{comments.U_EDIT}" title="${LangLoader::get_message('edit', 'main')}" class="edit"></a>

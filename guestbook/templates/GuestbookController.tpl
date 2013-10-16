@@ -39,7 +39,7 @@
 				<div class="comment-content">
 					<div class="comment-date">
 						# IF messages.C_MODERATOR #
-						<span class="tools">
+						<span class="actions">
 							<a href="{messages.U_EDIT}" title="${LangLoader::get_message('edit', 'main')}" class="edit"></a>
 							<a href="{messages.U_DELETE}" title="${LangLoader::get_message('delete', 'main')}" class="delete"></a>
 						</span>
