@@ -169,6 +169,8 @@ else
 		'L_ADD_CAT' => $LANG['cat_add'],
 		'L_FORUM_CONFIG' => $LANG['forum_config'],
 		'L_FORUM_GROUPS' => $LANG['forum_groups_config'],
+		'L_FORUM_RANKS_MANAGEMENT' => $LANG['rank_management'],
+		'L_FORUM_ADD_RANKS' => $LANG['rank_add'],
 		'L_REQUIRE' => $LANG['require'],
 		'L_APROB' => $LANG['visible'],
 		'L_STATUS' => $LANG['status'],

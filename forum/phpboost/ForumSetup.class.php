@@ -35,6 +35,7 @@ class ForumSetup extends DefaultModuleSetup
 	private static $forum_topics_table;
 	private static $forum_track_table;
 	private static $forum_view_table;
+	private static $forum_ranks_table;
 
 	private static $member_extended_field_last_view_forum_column = 'last_view_forum';
 
@@ -55,6 +56,7 @@ class ForumSetup extends DefaultModuleSetup
 		self::$forum_topics_table = PREFIX . 'forum_topics';
 		self::$forum_track_table = PREFIX . 'forum_track';
 		self::$forum_view_table = PREFIX . 'forum_view';
+		self::$forum_ranks_table = PREFIX . 'forum_ranks';
 	}
 
 	public function __construct()
@@ -85,7 +87,8 @@ class ForumSetup extends DefaultModuleSetup
 		self::$forum_poll_table,
 		self::$forum_topics_table,
 		self::$forum_track_table,
-		self::$forum_view_table
+		self::$forum_view_table,
+		self::$forum_ranks_table
 		));
 	}
 
@@ -99,6 +102,7 @@ class ForumSetup extends DefaultModuleSetup
 		$this->create_forum_topics_table();
 		$this->create_forum_track_table();
 		$this->create_forum_view_table();
+		$this->create_forum_ranks_table();
 	}
 
 	private function create_forum_alerts_table()
@@ -263,6 +267,21 @@ class ForumSetup extends DefaultModuleSetup
 		);
 		PersistenceContext::get_dbms_utils()->create_table(self::$forum_view_table, $fields, $options);
 	}
+	
+	private function create_forum_ranks_table()
+	{
+		$fields = array(
+			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
+			'name' => array('type' => 'string', 'length' => 150, 'notnull' => 1, 'default' => "''"),
+			'msg' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
+			'icon' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
+			'special' => array('type' => 'boolean', 'length' => 1, 'notnull' => 1, 'default' => 0)
+		);
+		$options = array(
+			'primary' => array('id')
+		);
+		PersistenceContext::get_dbms_utils()->create_table(self::$forum_ranks_table, $fields, $options);
+	}
 
 	private function delete_member_extended_last_view_forum()
 	{
@@ -276,6 +295,7 @@ class ForumSetup extends DefaultModuleSetup
 		$this->insert_forum_cats_data();
 		$this->insert_forum_topics_data();
 		$this->insert_forum_msg_data();
+		$this->insert_forum_ranks_data();
 	}
 
 	private function create_member_extended_field()
@@ -355,6 +375,88 @@ class ForumSetup extends DefaultModuleSetup
 			'timestamp_edit' => 0,
 			'user_id_edit' => 0
 		));
+	}
+	
+	private function insert_forum_ranks_data()
+	{
+		$this->querier->insert(self::$forum_ranks_table, array(
+			'id' => 1,
+			'name' => $this->messages['rank.admin'],
+			'msg' => -2,
+			'icon' => 'rank_admin.png',
+			'special' => 1
+		));
+		$this->querier->insert(self::$forum_ranks_table, array(
+			'id' => 2,
+			'name' => $this->messages['rank.modo'],
+			'msg' => -1,
+			'icon' => 'rank_modo.png',
+			'special' => 1
+		));
+		$this->querier->insert(self::$forum_ranks_table, array(
+			'id' => 3,
+			'name' => $this->messages['rank.inactiv'],
+			'msg' => 0,
+			'icon' => 'rank_0.png',
+			'special' => 0
+		));
+		$this->querier->insert(self::$forum_ranks_table, array(
+			'id' => 4,
+			'name' => $this->messages['rank.fronde'],
+			'msg' => 1,
+			'icon' => 'rank_0.png',
+			'special' => 0
+		));
+		$this->querier->insert(self::$forum_ranks_table, array(
+			'id' => 5,
+			'name' => $this->messages['rank.minigun'],
+			'msg' => 25,
+			'icon' => 'rank_1.png',
+			'special' => 0
+		));
+		$this->querier->insert(self::$forum_ranks_table, array(
+			'id' => 6,
+			'name' => $this->messages['rank.fuzil'],
+			'msg' => 50,
+			'icon' => 'rank_2.png',
+			'special' => 0
+		));
+		$this->querier->insert(self::$forum_ranks_table, array(
+			'id' => 7,
+			'name' => $this->messages['rank.bazooka'],
+			'msg' => 100,
+			'icon' => 'rank_3.png',
+			'special' => 0
+		));
+		$this->querier->insert(self::$forum_ranks_table, array(
+			'id' => 8,
+			'name' => $this->messages['rank.roquette'],
+			'msg' => 250,
+			'icon' => 'rank_4.png',
+			'special' => 0
+		));
+		$this->querier->insert(self::$forum_ranks_table, array(
+			'id' => 9,
+			'name' => $this->messages['rank.mortier'],
+			'msg' => 500,
+			'icon' => 'rank_5.png',
+			'special' => 0
+		));
+		$this->querier->insert(self::$forum_ranks_table, array(
+			'id' => 10,
+			'name' => $this->messages['rank.missile'],
+			'msg' => 1000,
+			'icon' => 'rank_6.png',
+			'special' => 0
+		));
+		$this->querier->insert(self::$forum_ranks_table, array(
+			'id' => 11,
+			'name' => $this->messages['rank.fusee'],
+			'msg' => 1500,
+			'icon' => 'rank_special.png',
+			'special' => 0
+		));
+
 	}
 }
 ?>

@@ -131,7 +131,7 @@ class ShoutboxHomePageExtensionPoint implements HomePageExtensionPoint
 		$array_ranks = array(-1 => $LANG['guest'], 0 => $LANG['member'], 1 => $LANG['modo'], 2 => $LANG['admin']);
 
 		//Gestion des rangs.	
-		$ranks_cache = RanksCache::load()->get_ranks();
+		$ranks_cache = ForumRanksCache::load()->get_ranks();
 		$j = 0;
 		$result = $this->sql_querier->query_while("SELECT s.id, s.login, s.user_id, s.timestamp, m.login as mlogin, m.level, m.user_mail, m.user_show_mail, m.timestamp AS registered, ext_field.user_avatar, m.user_msg, ext_field.user_location, ext_field.user_website, ext_field.user_sex, ext_field.user_msn, ext_field.user_yahoo, ext_field.user_sign, m.user_warning, m.user_ban, m.user_groups, se.user_id AS connect, s.contents
 		FROM " . PREFIX . "shoutbox s

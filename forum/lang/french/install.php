@@ -38,5 +38,17 @@ $lang = array(
 	'sample.thread.title' => 'Test',
 	'sample.thread.subtitle' => 'Sujet de test',
 	'sample.thread.message.content' => 'Message de test sur le forum PHPBoost',
+
+	'rank.admin' => 'Administrateur',
+    'rank.modo' => 'Modérateur',
+    'rank.inactiv' => 'Boosteur Inactif',
+    'rank.fronde' => 'Booster Fronde',
+    'rank.minigun' => 'Booster Minigun',
+    'rank.fuzil' => 'Booster Fuzil',
+    'rank.bazooka' => 'Booster Bazooka',
+    'rank.roquette' => 'Booster Roquette',
+    'rank.mortier' => 'Booster Mortier',
+    'rank.missile' => 'Booster Missile',
+    'rank.fusee' => 'Booster Fusée',
 );
 ?>

@@ -27,6 +27,7 @@
  ###################################################*/
 
 require_once('../admin/admin_begin.php');
+load_module_lang('forum'); //Chargement de la langue du module.
 define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
 
@@ -36,7 +37,7 @@ $get_id = retrieve(GET, 'id', 0);
 if (!empty($_POST['valid']))
 {
 	$result = $Sql->query_while("SELECT id, special 
-	FROM " . PREFIX . "ranks", __LINE__, __FILE__);
+	FROM " . PREFIX . "forum_ranks", __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))
 	{
 		$name = retrieve(POST, $row['id'] . 'name', '');
@@ -44,37 +45,42 @@ if (!empty($_POST['valid']))
 		$icon = retrieve(POST, $row['id'] . 'icon', '');
 
 		if (!empty($name) && $row['special'] != 1)
-			$Sql->query_inject("UPDATE " . DB_TABLE_RANKS . " SET name = '" . $name . "', msg = '" . $msg . "', icon = '" . $icon . "' WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE " . PREFIX . "forum_ranks SET name = '" . $name . "', msg = '" . $msg . "', icon = '" . $icon . "' WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
 		else
-			$Sql->query_inject("UPDATE " . DB_TABLE_RANKS . " SET name = '" . $name . "', icon = '" . $icon . "' WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE " . PREFIX . "forum_ranks SET name = '" . $name . "', icon = '" . $icon . "' WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
 	}
 	$Sql->query_close($result);
 
-	RanksCache::invalidate();
+	ForumRanksCache::invalidate();
 		
 	AppContext::get_response()->redirect(HOST . SCRIPT);	
 }
 elseif (!empty($_GET['del']) && !empty($get_id)) //Suppression du rang.
 {
 	//On supprime dans la bdd.
-	$Sql->query_inject("DELETE FROM " . DB_TABLE_RANKS . " WHERE id = '" . $get_id . "'", __LINE__, __FILE__);	
+	$Sql->query_inject("DELETE FROM " . PREFIX . "forum_ranks WHERE id = '" . $get_id . "'", __LINE__, __FILE__);	
 
 	###### Régénération du cache des rangs #######
-	RanksCache::invalidate();
+	ForumRanksCache::invalidate();
 	
 	AppContext::get_response()->redirect(HOST . SCRIPT); 	
 }
 else //Sinon on rempli le formulaire	 
 {	
-	$template = new FileTemplate('admin/admin_ranks.tpl');
+	$template = new FileTemplate('forum/admin_ranks.tpl');
 
 	$template->put_all(array(
 		'THEME' => get_utheme(),
 		'L_REQUIRE_RANK_NAME' => $LANG['require_rank_name'],
 		'L_REQUIRE_NBR_MSG_RANK' => $LANG['require_nbr_msg_rank'],
 		'L_CONFIRM_DEL_RANK' => $LANG['confirm_del_rank'],
-		'L_RANKS_MANAGEMENT' => $LANG['rank_management'],
-		'L_ADD_RANKS' => $LANG['rank_add'],
+		'L_FORUM_MANAGEMENT' => $LANG['forum_management'],
+		'L_CAT_MANAGEMENT' => $LANG['cat_management'],
+		'L_ADD_CAT' => $LANG['cat_add'],
+		'L_FORUM_CONFIG' => $LANG['forum_config'],
+		'L_FORUM_GROUPS' => $LANG['forum_groups_config'],
+		'L_FORUM_RANKS_MANAGEMENT' => $LANG['rank_management'],
+		'L_FORUM_ADD_RANKS' => $LANG['rank_add'],
 		'L_RANK_NAME' => $LANG['rank_name'],
 		'L_NBR_MSG' => $LANG['nbr_msg'],
 		'L_IMG_ASSOC' => $LANG['img_assoc'],
@@ -87,14 +93,14 @@ else //Sinon on rempli le formulaire
 	//On recupère les images des groupes
 	
 	$rank_options_array = array();
-	$image_folder_path = new Folder(PATH_TO_ROOT . '/templates/' . get_utheme()  . '/images/ranks');
+	$image_folder_path = new Folder(PATH_TO_ROOT . '/forum/templates/images/ranks');
 	foreach ($image_folder_path->get_files('`\.(png|jpg|bmp|gif)$`i') as $image)
 	{
 		$file = $image->get_name();
 		$rank_options_array[] = $file;
 	}	
 	
-	$ranks_cache = RanksCache::load()->get_ranks();
+	$ranks_cache = ForumRanksCache::load()->get_ranks();
 	
 	foreach($ranks_cache as $msg => $row)
 	{				

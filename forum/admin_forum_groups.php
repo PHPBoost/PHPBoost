@@ -68,6 +68,8 @@ else
 		'L_ADD_CAT' => $LANG['cat_add'],
 		'L_FORUM_CONFIG' => $LANG['forum_config'],
 		'L_FORUM_GROUPS' => $LANG['forum_groups_config'],
+		'L_FORUM_RANKS_MANAGEMENT' => $LANG['rank_management'],
+		'L_FORUM_ADD_RANKS' => $LANG['rank_add'],
 		'EXPLAIN_FORUM_GROUPS' => $LANG['explain_forum_groups'],
 		'L_FLOOD' => $LANG['flood_auth'],
 		'L_EDIT_MARK' => $LANG['edit_mark_auth'],

@@ -197,7 +197,7 @@ $Template->put_all(array(
 $array_ranks = array(-1 => $LANG['guest_s'], 0 => $LANG['member_s'], 1 => $LANG['modo_s'], 2 => $LANG['admin_s']);
 
 list($track, $track_pm, $track_mail, $poll_done) = array(false, false, false, false);
-$ranks_cache = RanksCache::load()->get_ranks(); //Récupère les rangs en cache.
+$ranks_cache = ForumRanksCache::load()->get_ranks(); //Récupère les rangs en cache.
 $page = retrieve(GET, 'pt', 0); //Redéfinition de la variable $page pour prendre en compte les redirections.
 $quote_last_msg = ($page > 1) ? 1 : 0; //On enlève 1 au limite si on est sur une page > 1, afin de récupérer le dernier msg de la page précédente.
 $i = 0;	
@@ -330,7 +330,15 @@ while ( $row = $Sql->fetch_assoc($result) )
 	}
 
 	//Image associée au rang.
-	$user_assoc_img = !empty($user_rank_icon) ? '<img src="../templates/' . get_utheme() . '/images/ranks/' . $user_rank_icon . '" alt="" />' : '';
+	if (file_exists(TPL_PATH_TO_ROOT . '/templates/' . get_utheme() . '/modules/forum/images/ranks/' . $user_rank_icon))
+	{
+		$rank_img = TPL_PATH_TO_ROOT . '/templates/' . get_utheme() . '/modules/forum/images/ranks/' . $user_rank_icon;
+	}
+	else
+	{
+		$rank_img = TPL_PATH_TO_ROOT . '/forum/templates/images/ranks/' . $user_rank_icon;
+	}
+	$user_assoc_img = !empty($user_rank_icon) ? '<img src="' . $rank_img . '" alt="" />' : '';
 	
 	//Affichage des groupes du membre.		
 	if (!empty($row['user_groups'])) 

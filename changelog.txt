@@ -34,6 +34,7 @@ les pages du module "pages".
 [*] Création d'un système permettant de gérer facilement des mots clés dans les modules
 - Passage de l'extension mysql à mysqli pour assurer la compatibilité à long terme de PHPBoost sur tous les serveurs
 [*] Améliorations de la rapidité d'éxécution et de la fiabilité de l'installateur
+[*] Déplacement de la gestion des rangs dans le module forum
 
 [b]Menus :[/b]
 - Possibilité de désactiver l'affichage d'un lien dans les menus

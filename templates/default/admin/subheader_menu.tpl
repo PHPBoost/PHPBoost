@@ -143,13 +143,6 @@
 					<li><a href="{PATH_TO_ROOT}/admin/member/?url=/extended-fields/add/"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/extendfield_mini.png"/> {L_ADD}</a></li>
 				</ul>
 			</li>
-			<li class="extend">
-				<a href="{PATH_TO_ROOT}/admin/admin_ranks.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/ranks_mini.png"/> {L_RANKS}</a>
-				<ul>
-					<li><a href="{PATH_TO_ROOT}/admin/admin_ranks.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/ranks_mini.png"/> {L_MANAGEMENT}</a></li>
-					<li><a href="{PATH_TO_ROOT}/admin/admin_ranks_add.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/ranks_mini.png"/> {L_ADD}</a></li>
-				</ul>
-			</li>
 			# IF C_ADMIN_LINKS_4 #
 			<li class="separator"></li>
 				# START admin_links_4 #

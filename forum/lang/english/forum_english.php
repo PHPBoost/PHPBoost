@@ -273,4 +273,16 @@ $LANG['new_alerts'] = 'new alert';
 $LANG['new_alerts_s'] = 'new alerts';
 $LANG['action'] = 'Action';
 
+//Ranks
+$LANG['rank_management'] = 'Ranks management';
+$LANG['rank_add'] = 'Add a rank';
+$LANG['upload_rank'] = 'Upload icon rank';
+$LANG['upload_rank_format'] = 'JPG, GIF, PNG, BMP authorized';
+$LANG['rank'] = 'Rank';
+$LANG['special_rank'] = 'Special rank';
+$LANG['rank_name'] = 'Rank name';
+$LANG['nbr_msg'] = 'Number of messages';
+$LANG['img_assoc'] = 'Associated image';
+$LANG['require_rank_name'] = 'Please enter a name for the rank !';
+$LANG['require_nbr_msg_rank'] = 'Please enter a number of message for the rank !';
 ?>

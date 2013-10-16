@@ -32,18 +32,6 @@
 
 
 $lang = array(
-    'install.rank.admin' => 'Administrateur',
-    'install.rank.modo' => 'Modérateur',
-    'install.rank.inactiv' => 'Boosteur Inactif',
-    'install.rank.fronde' => 'Booster Fronde',
-    'install.rank.minigun' => 'Booster Minigun',
-    'install.rank.fuzil' => 'Booster Fuzil',
-    'install.rank.bazooka' => 'Booster Bazooka',
-    'install.rank.roquette' => 'Booster Roquette',
-    'install.rank.mortier' => 'Booster Mortier',
-    'install.rank.missile' => 'Booster Missile',
-    'install.rank.fusee' => 'Booster Fusée',
-
 	'chmod.cache.notWritable' => '<h1>Installation de PHPBoost</h1>
 <p><strong>Attention</strong> : les dossiers /cache et /cache/tpl n\'existent pas ou ne sont pas inscriptibles. Veuillez les créer et/ou changer leur CHMOD (mettre 777) pour pouvoir lancer l\'installation.</p>
 <p>Une fois ceci fait, actualisez la page pour continuer ou cliquez <a href="">ici</a>.</p>',

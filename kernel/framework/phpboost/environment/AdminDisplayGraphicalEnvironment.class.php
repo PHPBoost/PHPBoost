@@ -248,7 +248,6 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 			'L_PUNISHEMENT' => $subheader_lang['users.punishement'],
 			'L_GROUP' => $subheader_lang['users.groups'],
 			'L_EXTEND_FIELD' => $subheader_lang['users.extended-fields'],
-			'L_RANKS' => $subheader_lang['users.ranks'],
 			'L_CONTENT' => $subheader_lang['content'],
 			'L_CONTENT_CONFIG' => $subheader_lang['content'],
 			'L_MENUS' => $subheader_lang['content.menus'],

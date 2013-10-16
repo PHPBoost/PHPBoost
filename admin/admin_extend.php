@@ -42,7 +42,6 @@ $template->put_all(array(
 	'L_MAINTAIN' => $admin_links_lang['tools.maintain'],
 	'L_USER' => $admin_links_lang['users'],
 	'L_EXTEND_FIELD' => $admin_links_lang['users.extended-fields'],
-	'L_RANKS' => $admin_links_lang['users.ranks'],
 	'L_GROUP' => $admin_links_lang['users.groups'],
 	'L_THEME' => $admin_links_lang['administration.themes'],
 	'L_SMILEY' => $admin_links_lang['administration.smileys'],
