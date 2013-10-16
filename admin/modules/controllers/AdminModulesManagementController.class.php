@@ -76,7 +76,7 @@ class AdminModulesManagementController extends AdminController
 					'COMPATIBILITY' => $configuration->get_compatibility(),
 					'PHP_VERSION' => $configuration->get_php_version(),
 					'C_MODULE_ACTIVE' => $module->is_activated(),
-					'U_DELETE_LINK' => AdminModulesUrlBuilder::delete_module($module->get_id())->absolute()
+					'U_DELETE_LINK' => AdminModulesUrlBuilder::delete_module($module->get_id())->rel()
 				));	
 			}
 			else 
@@ -92,7 +92,7 @@ class AdminModulesManagementController extends AdminController
 					'COMPATIBILITY' => $configuration->get_compatibility(),
 					'PHP_VERSION' => $configuration->get_php_version(),
 					'C_MODULE_ACTIVE' => $module->is_activated(),
-					'U_DELETE_LINK' => AdminModulesUrlBuilder::delete_module($module->get_id())->absolute()
+					'U_DELETE_LINK' => AdminModulesUrlBuilder::delete_module($module->get_id())->rel()
 				));
 			}
 		}
