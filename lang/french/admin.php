@@ -80,8 +80,6 @@ $LANG['require_code'] = 'Veuillez entrer un code pour le smiley !';
 $LANG['require_max_width'] = 'Veuillez entrer une largeur maximale pour les avatars !';
 $LANG['require_height'] = 'Veuillez entrer une hauteur maximale pour les avatars !';
 $LANG['require_weight'] = 'Veuillez entrer un poids maximum pour les avatars !';
-$LANG['require_rank_name'] = 'Veuillez entrer un nom pour le rang !';
-$LANG['require_nbr_msg_rank'] = 'Veuillez entrer un nombre de messages pour le rang !';
 $LANG['require_subcat'] = 'Veuillez sélectionner une sous-catégorie !';
 $LANG['require_file_name'] = 'Vous devez saisir un nom de fichier !';
 
@@ -187,15 +185,6 @@ $LANG['flood_block'] = 'Il vous reste %d essai(s). Après cela il vous faudra att
 $LANG['flood_max'] = 'Vous avez épuisé tous vos essais de connexion, votre compte est verrouillé pendant 5 minutes';
 
 //Rang
-$LANG['rank_management'] = 'Gestion des rangs';
-$LANG['upload_rank'] = 'Uploader une image de rang';
-$LANG['upload_rank_format'] = 'JPG, GIF, PNG, BMP autorisés';
-$LANG['rank_add'] = 'Ajouter un rang';
-$LANG['rank'] = 'Rang';
-$LANG['special_rank'] = 'Rang spécial';
-$LANG['rank_name'] = 'Nom du Rang';
-$LANG['nbr_msg'] = 'Nombre de message(s)';
-$LANG['img_assoc'] = 'Image associée';
 $LANG['guest'] = 'Visiteur';
 $LANG['a_member'] = 'membre';
 $LANG['member'] = 'Membre';

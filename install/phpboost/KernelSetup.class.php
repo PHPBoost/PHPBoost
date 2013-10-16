@@ -52,7 +52,6 @@ class KernelSetup
 	private static $menus_table;
 	private static $pm_msg_table;
 	private static $pm_topic_table;
-	private static $ranks_table;
 	private static $search_index_table;
 	private static $search_results_table;
 	private static $sessions_table;
@@ -85,7 +84,6 @@ class KernelSetup
 		self::$menus_table = PREFIX . 'menus';
 		self::$pm_msg_table = PREFIX . 'pm_msg';
 		self::$pm_topic_table = PREFIX . 'pm_topic';
-		self::$ranks_table = PREFIX . 'ranks';
 		self::$search_index_table = PREFIX . 'search_index';
 		self::$search_results_table = PREFIX . 'search_results';
 		self::$sessions_table = PREFIX . 'sessions';
@@ -124,7 +122,6 @@ class KernelSetup
 			self::$menus_table,
 			self::$pm_msg_table,
 			self::$pm_topic_table,
-			self::$ranks_table,
 			self::$search_index_table,
 			self::$search_results_table,
 			self::$sessions_table,
@@ -156,7 +153,6 @@ class KernelSetup
 		$this->create_menus_table();
 		$this->create_pm_msg_table();
 		$this->create_pm_topic_table();
-		$this->create_ranks_table();
 		$this->create_search_index_table();
 		$this->create_search_results_table();
 		$this->create_sessions_table();
@@ -489,21 +485,6 @@ class KernelSetup
 		self::$db_utils->create_table(self::$pm_topic_table, $fields, $options);
 	}
 
-	private function create_ranks_table()
-	{
-		$fields = array(
-			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
-			'name' => array('type' => 'string', 'length' => 150, 'notnull' => 1, 'default' => "''"),
-			'msg' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'icon' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
-			'special' => array('type' => 'boolean', 'length' => 1, 'notnull' => 1, 'default' => 0)
-		);
-		$options = array(
-			'primary' => array('id')
-		);
-		self::$db_utils->create_table(self::$ranks_table, $fields, $options);
-	}
-
 	private function create_search_index_table()
 	{
 		$fields = array(
@@ -677,7 +658,6 @@ class KernelSetup
 	{
 		$this->messages = LangLoader::get('install', 'install');
 		$this->insert_visit_counter_data();
-		$this->insert_ranks_data();
 		$this->insert_member_data();
 		$this->insert_smileys_data();
 	}
@@ -833,88 +813,6 @@ class KernelSetup
 			'idsmiley' => 28,
 			'code_smiley' => ':lu',
 			'url_smiley' => 'lu.gif'
-		));
-
-	}
-
-	private function insert_ranks_data()
-	{
-		self::$db_querier->insert(self::$ranks_table, array(
-			'id' => 1,
-			'name' => $this->messages['install.rank.admin'],
-			'msg' => -2,
-			'icon' => 'rank_admin.png',
-			'special' => 1
-		));
-		self::$db_querier->insert(self::$ranks_table, array(
-			'id' => 2,
-			'name' => $this->messages['install.rank.modo'],
-			'msg' => -1,
-			'icon' => 'rank_modo.png',
-			'special' => 1
-		));
-		self::$db_querier->insert(self::$ranks_table, array(
-			'id' => 3,
-			'name' => $this->messages['install.rank.inactiv'],
-			'msg' => 0,
-			'icon' => 'rank_0.png',
-			'special' => 0
-		));
-		self::$db_querier->insert(self::$ranks_table, array(
-			'id' => 4,
-			'name' => $this->messages['install.rank.fronde'],
-			'msg' => 1,
-			'icon' => 'rank_0.png',
-			'special' => 0
-		));
-		self::$db_querier->insert(self::$ranks_table, array(
-			'id' => 5,
-			'name' => $this->messages['install.rank.minigun'],
-			'msg' => 25,
-			'icon' => 'rank_1.png',
-			'special' => 0
-		));
-		self::$db_querier->insert(self::$ranks_table, array(
-			'id' => 6,
-			'name' => $this->messages['install.rank.fuzil'],
-			'msg' => 50,
-			'icon' => 'rank_2.png',
-			'special' => 0
-		));
-		self::$db_querier->insert(self::$ranks_table, array(
-			'id' => 7,
-			'name' => $this->messages['install.rank.bazooka'],
-			'msg' => 100,
-			'icon' => 'rank_3.png',
-			'special' => 0
-		));
-		self::$db_querier->insert(self::$ranks_table, array(
-			'id' => 8,
-			'name' => $this->messages['install.rank.roquette'],
-			'msg' => 250,
-			'icon' => 'rank_4.png',
-			'special' => 0
-		));
-		self::$db_querier->insert(self::$ranks_table, array(
-			'id' => 9,
-			'name' => $this->messages['install.rank.mortier'],
-			'msg' => 500,
-			'icon' => 'rank_5.png',
-			'special' => 0
-		));
-		self::$db_querier->insert(self::$ranks_table, array(
-			'id' => 10,
-			'name' => $this->messages['install.rank.missile'],
-			'msg' => 1000,
-			'icon' => 'rank_6.png',
-			'special' => 0
-		));
-		self::$db_querier->insert(self::$ranks_table, array(
-			'id' => 11,
-			'name' => $this->messages['install.rank.fusee'],
-			'msg' => 1500,
-			'icon' => 'rank_special.png',
-			'special' => 0
 		));
 
 	}

@@ -586,7 +586,7 @@ elseif (!empty($pm_id_get)) //Messages associés à la conversation.
 	
 	$is_guest_in_convers = false;
 	//Gestion des rangs.
-	$ranks_cache = RanksCache::load()->get_ranks();
+	$ranks_cache = ForumRanksCache::load()->get_ranks();
 	$page = retrieve(GET, 'p', 0); //Redéfinition de la variable $page pour prendre en compte les redirections.
 	$quote_last_msg = ($page > 1) ? 1 : 0; //On enlève 1 au limite si on est sur une page > 1, afin de récupérer le dernier msg de la page précédente.
 	$i = 0;

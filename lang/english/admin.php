@@ -80,8 +80,6 @@ $LANG['require_code'] = 'Please enter a code for the smiley !';
 $LANG['require_max_width'] = 'Please enter a maximum width for the avatar !';
 $LANG['require_height'] = 'Please enter a maximum height for the avatar !';
 $LANG['require_weight'] = 'Please enter a maximum file size for the avatar !';
-$LANG['require_rank_name'] = 'Please enter a name for the rank !';
-$LANG['require_nbr_msg_rank'] = 'Please enter a number of message for the rank !';
 $LANG['require_subcat'] = 'Please enter a subcategory !';
 $LANG['require_file_name'] = 'Please enter a file name';
 
@@ -187,15 +185,6 @@ $LANG['flood_block'] = 'Rest %d test(s) after that you will have to wait 5 minut
 $LANG['flood_max'] = 'You exhausted all your tests of connection, your account is locked during 5 minutes';
 
 //Rank
-$LANG['rank_management'] = 'Ranks management';
-$LANG['rank_add'] = 'Add a rank';
-$LANG['upload_rank'] = 'Upload icon rank';
-$LANG['upload_rank_format'] = 'JPG, GIF, PNG, BMP authorized';
-$LANG['rank'] = 'Rank';
-$LANG['special_rank'] = 'Special rank';
-$LANG['rank_name'] = 'Rank name';
-$LANG['nbr_msg'] = 'Number of messages';
-$LANG['img_assoc'] = 'Associated image';
 $LANG['guest'] = 'Guest';
 $LANG['a_member'] = 'member';
 $LANG['member'] = 'Member';

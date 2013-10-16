@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                      	 RanksCache.class.php
+ *                      	 ForumRanksCache.class.php
  *                            -------------------
  *   begin                : August 09, 2010
  *   copyright            : (C) 2010 Kevin MASSY
@@ -28,7 +28,7 @@
 /**
  * @author Kevin MASSY <kevin.massy@phpboost.com>
  */
-class RanksCache implements CacheData
+class ForumRanksCache implements CacheData
 {
 	private $ranks = array();
 
@@ -65,11 +65,11 @@ class RanksCache implements CacheData
 	
 	/**
 	 * Loads and returns the ranks cached data.
-	 * @return RanksCache The cached data
+	 * @return ForumRanksCache The cached data
 	 */
 	public static function load()
 	{
-		return CacheManager::load(__CLASS__, 'kernel', 'ranks');
+		return CacheManager::load(__CLASS__, 'forum', 'ranks');
 	}
 	
 	/**
@@ -77,7 +77,7 @@ class RanksCache implements CacheData
 	 */
 	public static function invalidate()
 	{
-		CacheManager::invalidate('kernel', 'ranks');
+		CacheManager::invalidate('forum', 'ranks');
 	}
 }
 ?>

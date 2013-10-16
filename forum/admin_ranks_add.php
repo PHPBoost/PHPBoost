@@ -27,6 +27,7 @@
  ###################################################*/
 
 require_once('../admin/admin_begin.php');
+load_module_lang('forum'); //Chargement de la langue du module.
 define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
 
@@ -40,30 +41,28 @@ if (!empty($_POST['add']))
 	if (!empty($name) && $msg >= 0)
 	{	
 		//On insere le nouveau lien, tout en précisant qu'il s'agit d'un lien ajouté et donc supprimable
-		$Sql->query_inject("INSERT INTO " . DB_TABLE_RANKS . " (name,msg,icon,special) 
+		$Sql->query_inject("INSERT INTO " . PREFIX . "forum_ranks (name,msg,icon,special) 
 		VALUES('" . $name . "', '" . $msg . "', '" . $icon . "', '0')", __LINE__, __FILE__);	
 				
 		###### Régénération du cache des rangs #######
-		RanksCache::invalidate();
+		ForumRanksCache::invalidate();
 		
-		AppContext::get_response()->redirect('/admin/admin_ranks.php');	
+		AppContext::get_response()->redirect('/forum/admin_ranks.php');	
 	}
 	else
-		AppContext::get_response()->redirect('/admin/admin_ranks_add.php?error=incomplete#message_helper');
+		AppContext::get_response()->redirect('/forum/admin_ranks_add.php?error=incomplete#message_helper');
 }
 elseif (!empty($_FILES['upload_ranks']['name'])) //Upload
 {
 	//Si le dossier n'est pas en écriture on tente un CHMOD 777
 	@clearstatcache();
-	$dir = PATH_TO_ROOT . '/templates/' . get_utheme()  . '/images/ranks/';
+	$dir = PATH_TO_ROOT . '/forum/templates/images/ranks/';
 	if (!is_writable($dir))
 		$is_writable = (@chmod($dir, 0777)) ? true : false;
 	
-	@clearstatcache();
 	$error = '';
 	if (is_writable($dir)) //Dossier en écriture, upload possible
 	{
-		
 		$Upload = new Upload($dir);
 		$Upload->disableContentCheck();
 		if (!$Upload->file('upload_ranks', '`([a-z0-9_ -])+\.(jpg|gif|png|bmp)+$`i'))
@@ -77,7 +76,7 @@ elseif (!empty($_FILES['upload_ranks']['name'])) //Upload
 }
 else //Sinon on rempli le formulaire	 
 {	
-	$template = new FileTemplate('admin/admin_ranks_add.tpl');
+	$template = new FileTemplate('forum/admin_ranks_add.tpl');
 
 	//Gestion erreur.
 	$get_error = retrieve(GET, 'error', '');
@@ -91,7 +90,7 @@ else //Sinon on rempli le formulaire
 	$rank_options = '<option value="">--</option>';
 	
 	
-	$image_folder_path = new Folder(PATH_TO_ROOT . '/templates/' . get_utheme()  . '/images/ranks');
+	$image_folder_path = new Folder(PATH_TO_ROOT . '/forum/templates/images/ranks/');
 	foreach ($image_folder_path->get_files('`\.(png|jpg|bmp|gif)$`i') as $image)
 	{
 		$file = $image->get_name();
@@ -103,8 +102,13 @@ else //Sinon on rempli le formulaire
 		'L_REQUIRE_RANK_NAME' => $LANG['require_rank_name'],
 		'L_REQUIRE_NBR_MSG_RANK' => $LANG['require_nbr_msg_rank'],
 		'L_CONFIRM_DEL_RANK' => $LANG['confirm_del_rank'],
-		'L_RANKS_MANAGEMENT' => $LANG['rank_management'],
-		'L_ADD_RANKS' => $LANG['rank_add'],
+		'L_FORUM_MANAGEMENT' => $LANG['forum_management'],
+		'L_CAT_MANAGEMENT' => $LANG['cat_management'],
+		'L_ADD_CAT' => $LANG['cat_add'],
+		'L_FORUM_CONFIG' => $LANG['forum_config'],
+		'L_FORUM_GROUPS' => $LANG['forum_groups_config'],
+		'L_FORUM_RANKS_MANAGEMENT' => $LANG['rank_management'],
+		'L_FORUM_ADD_RANKS' => $LANG['rank_add'],
 		'L_UPLOAD_RANKS' => $LANG['upload_rank'],
 		'L_UPLOAD_FORMAT' => $LANG['upload_rank_format'],
 		'L_UPLOAD' => $LANG['upload'],

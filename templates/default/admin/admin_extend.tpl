@@ -80,12 +80,7 @@
 				<a href="{PATH_TO_ROOT}/admin/member/index.php?url=/extended-fields/list/"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/extendfield.png" alt=""/></a>		
 				<br />
 				<a href="{PATH_TO_ROOT}/admin/member/index.php?url=/extended-fields/list/">{L_EXTEND_FIELD}</a>
-			</td>			
-			<td class="row2" style="width:20%;">
-				<a href="{PATH_TO_ROOT}/admin/admin_ranks.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/ranks.png" alt="" /></a>		
-				<br />
-				<a href="{PATH_TO_ROOT}/admin/admin_ranks.php">{L_RANKS}</a>	
-			</td>	
+			</td>
 		</tr>	
 		<tr style="text-align:center;">		
 			<td class="row2" style="width:20%;">

@@ -272,4 +272,16 @@ $LANG['new_alerts'] = 'nouvelle alerte';
 $LANG['new_alerts_s'] = 'nouvelles alertes';
 $LANG['action'] = 'Action';
 
+//Ranks
+$LANG['rank_management'] = 'Gestion des rangs';
+$LANG['upload_rank'] = 'Uploader une image de rang';
+$LANG['upload_rank_format'] = 'JPG, GIF, PNG, BMP autorisés';
+$LANG['rank_add'] = 'Ajouter un rang';
+$LANG['rank'] = 'Rang';
+$LANG['special_rank'] = 'Rang spécial';
+$LANG['rank_name'] = 'Nom du Rang';
+$LANG['nbr_msg'] = 'Nombre de message(s)';
+$LANG['img_assoc'] = 'Image associée';
+$LANG['require_rank_name'] = 'Veuillez entrer un nom pour le rang !';
+$LANG['require_nbr_msg_rank'] = 'Veuillez entrer un nombre de messages pour le rang !';
 ?>
