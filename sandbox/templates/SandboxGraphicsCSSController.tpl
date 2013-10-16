@@ -228,7 +228,7 @@
 		</div>
 		<div class="comment-content">
 			<div class="comment-date">
-				<span class="tools">
+				<span class="actions">
 					<a itemprop="url" href="#com2">#2</a>
 						<a href="#comments_message" class="edit"></a> 
 						<a href="#comments_message" onclick="javascript:return Confirm_del_comment();" class="delete"></a>
@@ -242,14 +242,18 @@
 	</div>
 </div>
 
+<h2>Tableau</h2><br>
+
 <table>
 	<caption>
-		Tableau
+		Description du tableau
 	</caption>
 	<thead>
 		<tr> 
 			<th>
+				<a href="#" class="sort-up"></a>
 				Nom
+				<a href="#" class="sort-down"></a>
 			</th>
 			<th>
 				Description
@@ -262,29 +266,7 @@
 	<tfoot>
 		<tr>
 			<th colspan="5">
-				<nav class="pagination">
-					<a href="#page2"  rel="prev"   title="">
-						<span >&laquo;</span>
-					</a>
-					<a href="#page1"   title="">
-						<span >1</span>
-					</a>
-					<a href="#page2"   title="">
-						<span>2</span>
-					</a>
-					<a href="page#3"   title="">
-						<span  class="current_page" >3</span>
-					</a>
-					<a href="page#4" rel="next" title="">
-						<span >4</span>
-					</a>
-					<a href="#page5"   title="">
-						<span >5</span>
-					</a>
-					<a href="page#4"   rel="next"  title="">
-						<span >&raquo;</span>
-					</a>
-				</nav>
+				# INCLUDE PAGINATION #
 			</th>
 		</tr>
 	</tfoot>

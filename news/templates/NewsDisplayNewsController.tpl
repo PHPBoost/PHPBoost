@@ -3,7 +3,7 @@
 		<h1>
 			<a href="{U_SYNDICATION}" title="${LangLoader::get_message('syndication', 'main')}" class="syndication"></a>
 			<span id="name" itemprop="name">{NAME}</span>
-			<span class="tools">
+			<span class="actions">
 				# IF C_EDIT #
 					<a href="{U_EDIT}" title="${LangLoader::get_message('edit', 'main')}" class="edit"></a>
 				# ENDIF #

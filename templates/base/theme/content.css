@@ -23,8 +23,8 @@ section header h1, article header h1, section header h1 a, article header h1 a {
 }
 
 /* Icones avec les actions (edition, suppression, etc) */
-span.tools { float: right; }
-span.tools a { font-size: 12px; }
+span.actions { float: right; }
+span.actions a { font-size: 12px; }
 
 .more {
 	font-size: 11px;

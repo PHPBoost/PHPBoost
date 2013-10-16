@@ -131,7 +131,7 @@
 			<header>
 				<h1 itemprop="name">
 					{NAME}
-					<span class="tools">
+					<span class="actions">
 						{U_COM}
 						# IF C_EDIT_AUTH #
 							<a href="{U_EDIT_FILE}" title="${LangLoader::get_message('edit', 'main')}" class="edit"></a>

@@ -87,7 +87,7 @@
 									<h1>
 										<a href="{file.U_MEDIA_LINK}">{file.NAME}</a>
 										# IF C_MODO #
-										<span class="tools">
+										<span class="actions">
 											<a href="{file.U_ADMIN_UNVISIBLE_MEDIA}" class="img_link" title="{L_UNAPROBED}">
 												<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/unvisible.png" alt="">
 											</a>
@@ -152,7 +152,7 @@
 			<header>
 				<h1>
 					{NAME} 
-					<span class="tools">
+					<span class="actions">
 						# IF A_COM #
 							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/com_mini.png" alt="" class="valign_middle" />
 							{U_COM}

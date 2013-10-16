@@ -49,7 +49,7 @@
 						<a href="{event.U_SYNDICATION}" class="syndication" title="${LangLoader::get_message('syndication', 'main')}"></a>
 						<a href="{event.U_LINK}"><span id="name" itemprop="name">{event.TITLE}</span></a>
 						
-						<span class="tools">
+						<span class="actions">
 							# IF C_COMMENTS_ENABLED #<a href="{event.U_COMMENTS}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/com_mini.png" alt="" class="valign_middle" /> {event.L_COMMENTS}</a># ENDIF #
 							# IF event.C_EDIT #
 								<a href="{event.U_EDIT}" title="${LangLoader::get_message('edit', 'main')}" class="edit"></a>

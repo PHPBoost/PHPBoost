@@ -5,7 +5,7 @@
 	<header>
 		<h1>
 			{L_WEB} - {L_CATEGORIES}
-			<span class="tools">
+			<span class="actions">
 				# IF C_IS_ADMIN # 
 				<a href="{PATH_TO_ROOT}/web/admin_web_cat.php{SID}" title="{L_EDIT}" class="edit"></a> 
 				# ENDIF #
@@ -40,7 +40,7 @@
 	<header>
 		<h1>
 			{L_WEB} - {CAT_NAME}
-			<span class="tools">
+			<span class="actions">
 				# IF C_IS_ADMIN # 
 				<a href="{PATH_TO_ROOT}/web/admin_web_cat.php{SID}" title="{L_EDIT}" class="edit"></a> 
 				# ENDIF #
@@ -122,7 +122,7 @@
 	<header>
 		<h1>
 			{NAME}
-			<span class="tools">
+			<span class="actions">
 				{COM} {EDIT}{DEL}
 			</span>
 		</h1>
