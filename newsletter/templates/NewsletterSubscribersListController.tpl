@@ -5,9 +5,9 @@
 		<tr>
 			<th></th>
 			<th>
-				<a href="{SORT_PSEUDO_TOP}"><i class="icon-arrow-up"></i></a>
+				<a href="{SORT_PSEUDO_TOP}" class="sort-up"></a>
 				{@subscribers.pseudo} 
-				<a href="{SORT_PSEUDO_BOTTOM}"><i class="icon-arrow-down"></i></a>
+				<a href="{SORT_PSEUDO_BOTTOM}" class="sort-down"></a>
 			</th>
 			<th>
 				{@subscribers.mail}

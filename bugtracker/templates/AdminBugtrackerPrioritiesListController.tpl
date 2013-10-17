@@ -11,41 +11,46 @@ function Confirm_del_default_value() {
 	# START elements #
 		# INCLUDE elements.ELEMENT #
 	# END elements #
-	<table class="module_table">
-		<tr>
-			<th class="column_default">
-				{@bugs.labels.default}
-			</th>
-			<th>
-				{L_NAME}
-			</th>
-		</tr>
-		# START priorities #
-		<tr>
-			<td class="row2 text_center">
-				<input type="radio" name="default_priority" value="{priorities.ID}" {priorities.IS_DEFAULT}>
-			</td>
-			<td class="row2">
-				<input type="text" maxlength="100" size="40" name="priority{priorities.ID}" value="{priorities.NAME}" class="text">
-			</td>
-		</tr>
-		# END priorities #
-		# IF C_PRIORITIES #
-			# IF C_DISPLAY_DEFAULT_DELETE_BUTTON #
-		<tr>
-			<td colspan="3" class="row3">
-				<a href="{LINK_DELETE_DEFAULT}" onclick="javascript:return Confirm_del_default_value();"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" /> {@bugs.labels.del_default_value}</a>
-			</td>
-		</tr>
+	<table>
+		<thead>
+			<tr>
+				<th>
+					{@bugs.labels.default}
+				</th>
+				<th>
+					{L_NAME}
+				</th>
+			</tr>
+		</thead>
+		<tfoot>
+			# IF C_PRIORITIES #
+				# IF C_DISPLAY_DEFAULT_DELETE_BUTTON #
+			<tr>
+				<th colspan="3">
+					<a href="{LINK_DELETE_DEFAULT}" onclick="javascript:return Confirm_del_default_value();"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" /> {@bugs.labels.del_default_value}</a>
+				</th>
+			</tr>
+				# ENDIF #
+			# ELSE #
+			<tr> 
+				<th colspan="3">
+					{@bugs.notice.no_priority}
+				</th>
+			</tr>
 			# ENDIF #
-		# ELSE #
-		<tr> 
-			<td colspan="3" class="row2 text_center">
-				{@bugs.notice.no_priority}
-			</td>
-		</tr>
-		# ENDIF #
-		
+		</tfoot>
+		<tbody>
+			# START priorities #
+			<tr>
+				<td>
+					<input type="radio" name="default_priority" value="{priorities.ID}" {priorities.IS_DEFAULT}>
+				</td>
+				<td>
+					<input type="text" maxlength="100" size="40" name="priority{priorities.ID}" value="{priorities.NAME}" class="text">
+				</td>
+			</tr>
+			# END priorities #
+		</tbody>		
 	</table>
 	<br />
 </fieldset>
