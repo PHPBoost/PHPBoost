@@ -30,6 +30,18 @@
 </fieldset>
 
 <fieldset>
+	<legend>Divers</legend>
+	Petits boutons : <a href="#" class="small-button">Bouton</a> <a href="#" class="small-button">MP</a><br><br>
+	
+	<strong>Icônes des principales actions : </strong><br />
+	<ul>
+		<li>Flux RSS : <a href="#" class="syndication"></a></li>
+		<li>Edition : <a href="#" class="edit"></a></li>
+		<li>Supprimer (contrôle automatique JS avec confirmation) : <a href="#" class="delete"></a></li>
+	</ul>
+</fieldset>
+
+<fieldset>
 	<legend>Autre</legend>
 	<span class="text_blockquote">Citation:</span><div class="blockquote">Dein Syria per speciosam interpatet diffusa planitiem. hanc nobilitat Antiochia, mundo cognita civitas, cui non certaverit alia advecticiis ita adfluere copiis et internis, et Laodicia et Apamia itidemque Seleucia iam inde a primis auspiciis florentissimae.</div><br />
 	<span class="text_hide">Caché:</span><div class="hide" onclick="bb_hide(this)"><div class="hide2">Dein Syria per speciosam interpatet diffusa planitiem. hanc nobilitat Antiochia, mundo cognita civitas, cui non certaverit alia advecticiis ita adfluere copiis et internis, et Laodicia et Apamia itidemque Seleucia iam inde a primis auspiciis florentissimae.</div></div><br />
@@ -213,15 +225,11 @@
 </section>
 
 <div id="comments_list">
-	<h2>Commentaires</h2><br>
+	<h2>Messages et commentaires</h2><br>
 	<div id="com2" class="message" itemscope="itemscope" itemtype="http://schema.org/Comment">
 		<div class="message-user_infos">
 			<div class="message-pseudo">
-				
-					<a itemprop="author" href="{PATH_TO_ROOT}/user/?url=/profile/1" class="admin" >
-						admin
-					</a>
-				
+					<a itemprop="author" href="{PATH_TO_ROOT}/user/?url=/profile/1" class="admin" >admin</a>
 			</div>
 			<div class="message-level">Administrateur</div>
 			<img src="{PATH_TO_ROOT}/templates/base/images/no_avatar.png" class="message-avatar" />
@@ -231,7 +239,7 @@
 				<span class="actions">
 					<a itemprop="url" href="#com2">#2</a>
 						<a href="#comments_message" class="edit"></a> 
-						<a href="#comments_message" onclick="javascript:return Confirm_del_comment();" class="delete"></a>
+						<a href="#comments_message" class="delete"></a>
 				</span>
 				<span itemprop="datePublished" content="2013-09-05T15:37:01+00:00">05/09/2013 à 15h37</span>
 			</div>
