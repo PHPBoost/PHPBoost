@@ -5,25 +5,25 @@
 		<tr> 
 			# IF NOT C_SPECIFIC_STREAM #
 			<th>
-				<a href="{SORT_STREAM_TOP}"><i class="icon-arrow-up"></i></a>
+				<a href="{SORT_STREAM_TOP}" class="sort-up"></a>
 				{@archives.stream_name}
-				<a href="{SORT_STREAM_BOTTOM}"><i class="icon-arrow-down"></i></a>
+				<a href="{SORT_STREAM_BOTTOM}" class="sort-down"></a>
 			</th>
 			# ENDIF #
 			<th>
-				<a href="{SORT_SUBJECT_TOP}"><i class="icon-arrow-up"></i></a>
+				<a href="{SORT_SUBJECT_TOP}" class="sort-up"></a>
 				{@archives.name} 
-				<a href="{SORT_SUBJECT_BOTTOM}"><i class="icon-arrow-down"></i></a>
+				<a href="{SORT_SUBJECT_BOTTOM}" class="sort-down"></a>
 			</th>
 			<th>
-				<a href="{SORT_DATE_TOP}"><i class="icon-arrow-up"></i></a>
+				<a href="{SORT_DATE_TOP}" class="sort-up"></a>
 				{@archives.date} 
-				<a href="{SORT_DATE_BOTTOM}"><i class="icon-arrow-down"></i></a>
+				<a href="{SORT_DATE_BOTTOM}" class="sort-down"></a>
 			</th>
 			<th>
-				<a href="{SORT_SUBSCRIBERS_TOP}"><i class="icon-arrow-up"></i></a>
+				<a href="{SORT_SUBSCRIBERS_TOP}" class="sort-up"></a>
 				{@archives.nbr_subscribers} 
-				<a href="{SORT_SUBSCRIBERS_BOTTOM}"><i class="icon-arrow-down"></i></a>
+				<a href="{SORT_SUBSCRIBERS_BOTTOM}" class="sort-down"></a>
 			</th>
 		</tr>
 	</thead>
