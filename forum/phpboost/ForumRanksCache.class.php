@@ -41,7 +41,7 @@ class ForumRanksCache implements CacheData
 		$querier = PersistenceContext::get_querier();
 		
 		$columns = array('id', 'name', 'msg', 'icon', 'special');
-		$result = $querier->select_rows(PREFIX . 'ranks', $columns, 'ORDER BY msg ASC');
+		$result = $querier->select_rows(PREFIX . 'forum_ranks', $columns, 'ORDER BY msg ASC');
 		while ($row = $result->fetch())
 		{
 			$this->ranks[$row['msg']] = array(
