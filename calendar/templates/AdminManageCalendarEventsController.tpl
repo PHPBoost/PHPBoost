@@ -1,11 +1,3 @@
-<script type="text/javascript">
-<!--
-	function Confirm() {
-		return confirm("{@calendar.actions.confirm.del_event}");
-	}
--->
-</script>
-
 <div class="admin_add_link">
 	<a href="{U_ADD}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/add.png" alt="{@calendar.titles.add_event}" title="{@calendar.titles.add_event}" class="valign_middle" /></a>
 </div>
