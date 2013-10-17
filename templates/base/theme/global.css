@@ -120,16 +120,17 @@ a.member {
 }
 
 /* Images */
-a.syndication:before, a.edit:before, a.delete:before {
+a.syndication:before, a.edit:before, a.delete:before, [class^="pbt-icon-"]:before {
 	font-family: FontAwesome;
 	font-size: 15px;
 	vertical-align: text-bottom;
 	font-weight:300;
 	vertical-align:-2px;
 	text-decoration:none;
+	color: #4d4c50;
 }
 
-a.syndication:hover, a.edit:hover, a.delete:hover { text-decoration:none; }
+a.syndication:hover, a.edit:hover, a.delete:hover, [class^="pbt-icon-"]:hover { text-decoration:none;}
 
 a.syndication:before { color:#f57900; content: "\f09e"; }
 a.edit:before { content: "\f044"; }
