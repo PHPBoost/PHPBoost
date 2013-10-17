@@ -19,22 +19,16 @@
 		{@bugs.titles.bugs_treatment_state}
 		&nbsp;
 		# IF C_REOPEN_BUG #
-			<a href="{LINK_BUG_REOPEN}" onclick="javascript:return Confirm_reopen();">
-				<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/visible.png" alt="{@bugs.actions.reopen}" title="{@bugs.actions.reopen}" />
-			</a>
+			<a href="{LINK_BUG_REOPEN}" onclick="javascript:return Confirm_reopen();" class="pbt-icon-bugtracker-opened" title="{@bugs.actions.reopen}"></a>
 		# ENDIF #
 		# IF C_REJECT_BUG #
-			<a href="{LINK_BUG_REJECT}" onclick="javascript:return Confirm_reject();">
-				<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/unvisible.png" alt="{@bugs.actions.reject}" title="{@bugs.actions.reject}" />
-			</a>
+			<a href="{LINK_BUG_REJECT}" onclick="javascript:return Confirm_reject();" class="pbt-icon-bugtracker-rejected" title="{@bugs.actions.reject}"></a>
 		# ENDIF #
 		# IF C_EDIT_BUG #
 			<a href="{LINK_BUG_EDIT}" title="${LangLoader::get_message('edit', 'main')}" class="edit"></a>
 		# ENDIF #
 		# IF C_HISTORY_BUG #
-			<a href="{LINK_BUG_HISTORY}">
-				<img src="{PATH_TO_ROOT}/bugtracker/templates/images/history.png" alt="{@bugs.actions.history}" title="{@bugs.actions.history}" />
-			</a>
+			<a href="{LINK_BUG_HISTORY}" title="{@bugs.actions.history}" class="pbt-icon-bugtracker-history"></a>
 		# ENDIF #
 		# IF C_DELETE_BUG #
 			<a href="{LINK_BUG_DELETE}" title="${LangLoader::get_message('delete', 'main')}" class="delete"></a>

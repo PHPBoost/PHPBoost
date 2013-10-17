@@ -25,3 +25,7 @@
 .column_color{ width: 76px; }
 
 #status_chart { width: 90%; }
+
+a.pbt-icon-bugtracker-rejected:before { content: "\f070"; }
+a.pbt-icon-bugtracker-opened:before { content: "\f070"; }
+a.pbt-icon-bugtracker-history:before { content: "\f129"; }

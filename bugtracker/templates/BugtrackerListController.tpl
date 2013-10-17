@@ -73,9 +73,9 @@ function Confirm(action) {
 		</td>
 		# IF C_IS_ADMIN #
 		<td # IF bug.C_LINE_COLOR # style="background-color:{bug.LINE_COLOR};"# ENDIF #> 
-			<a href="{bug.LINK_BUG_REOPEN_REJECT}" onclick="javascript:return Confirm(${escapejs(REOPEN_REJECT_CONFIRM)});"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/{PICT_REOPEN_REJECT}" alt="{L_REOPEN_REJECT}" title="{L_REOPEN_REJECT}" /></a>
+			<a href="{bug.LINK_BUG_REOPEN_REJECT}" onclick="javascript:return Confirm(${escapejs(REOPEN_REJECT_CONFIRM)});" class="pbt-icon-bugtracker-opened" title="{@bugs.actions.reopen}"></a>
 			<a href="{bug.LINK_BUG_EDIT}" title="${LangLoader::get_message('edit', 'main')}" class="edit"></a>
-			<a href="{bug.LINK_BUG_HISTORY}"><img src="{PATH_TO_ROOT}/bugtracker/templates/images/history.png" alt="{@bugs.actions.history}" title="{@bugs.actions.history}" /></a>
+			<a href="{bug.LINK_BUG_HISTORY}" class="pbt-icon-bugtracker-history" title="{@bugs.actions.history}"></a>
 			<a href="{bug.LINK_BUG_DELETE}" title="${LangLoader::get_message('delete', 'main')}" class="delete"></a>
 		</td>
 		# ENDIF #
