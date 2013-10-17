@@ -214,20 +214,20 @@
 
 <div id="comments_list">
 	<h2>Commentaires</h2><br>
-	<div id="com2" class="comment" itemscope="itemscope" itemtype="http://schema.org/Comment">
-		<div class="comment-user_infos">
-			<div class="comment-pseudo">
+	<div id="com2" class="message" itemscope="itemscope" itemtype="http://schema.org/Comment">
+		<div class="message-user_infos">
+			<div class="message-pseudo">
 				
 					<a itemprop="author" href="{PATH_TO_ROOT}/user/?url=/profile/1" class="admin" >
 						admin
 					</a>
 				
 			</div>
-			<div class="comment-level">Administrateur</div>
-			<img src="{PATH_TO_ROOT}/templates/base/images/no_avatar.png" class="comment-avatar" />
+			<div class="message-level">Administrateur</div>
+			<img src="{PATH_TO_ROOT}/templates/base/images/no_avatar.png" class="message-avatar" />
 		</div>
-		<div class="comment-content">
-			<div class="comment-date">
+		<div class="message-content">
+			<div class="message-date">
 				<span class="actions">
 					<a itemprop="url" href="#com2">#2</a>
 						<a href="#comments_message" class="edit"></a> 
@@ -235,7 +235,7 @@
 				</span>
 				<span itemprop="datePublished" content="2013-09-05T15:37:01+00:00">05/09/2013 à 15h37</span>
 			</div>
-			<div class="comment-message">
+			<div class="message-message">
 				<div itemprop="text" class="message-containt" class="content">Ceci est un commentaire</div>
 			</div>
 		</div>

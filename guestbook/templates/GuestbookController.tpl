@@ -14,9 +14,9 @@
 			</div>
 		# ENDIF #
 		# START messages #
-			<article id="m{messages.ID}" class="comment">
-				<div class="comment-user_infos">
-					<div class="comment-pseudo">
+			<article id="m{messages.ID}" class="message">
+				<div class="message-user_infos">
+					<div class="message-pseudo">
 						# IF messages.C_VISITOR #
 							<span class="text_italic"># IF messages.USER_PSEUDO #{messages.USER_PSEUDO}# ELSE #{L_GUEST}# ENDIF #</span>
 						# ELSE #
@@ -25,7 +25,7 @@
 							</a>
 						# ENDIF #
 					</div>
-					# IF messages.C_AVATAR #<img src="{messages.U_AVATAR}" class="comment-avatar" /># ENDIF #
+					# IF messages.C_AVATAR #<img src="{messages.U_AVATAR}" class="message-avatar" /># ENDIF #
 					# IF messages.C_USER_GROUPS #
 						# START messages.user_groups #
 							# IF messages.user_groups.C_GROUP_PICTURE #
@@ -36,8 +36,8 @@
 						# END user_groups #
 					# ENDIF #
 				</div>
-				<div class="comment-content">
-					<div class="comment-date">
+				<div class="message-content">
+					<div class="message-date">
 						# IF messages.C_MODERATOR #
 						<span class="actions">
 							<a href="{messages.U_EDIT}" title="${LangLoader::get_message('edit', 'main')}" class="edit"></a>
@@ -46,7 +46,7 @@
 						# ENDIF #
 						<a href="{messages.U_ANCHOR}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/ancre.png" alt="{messages.ID}" /></a> {L_ON} {messages.DATE}
 					</div>
-					<div class="comment-message">
+					<div class="message-message">
 						<div class="message-containt">{messages.CONTENTS}</div>
 					</div>
 				</div>

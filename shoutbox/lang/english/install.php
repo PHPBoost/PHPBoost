@@ -30,7 +30,7 @@
  ####################################################
 
 $lang = array(
-    'shoutbox_login' => 'PHPBoost Team',
-    'shoutbox_contents' => 'PHPBoost Team welcomes you on your website!'
+    'shoutbox_login' => 'PHPBoost',
+    'shoutbox_contents' => 'PHPBoost Team welcomes you on your website !'
 );
 ?>

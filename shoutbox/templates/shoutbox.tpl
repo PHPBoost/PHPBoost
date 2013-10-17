@@ -1,58 +1,44 @@
+<section>
+	<header><h1>{TITLE}</h1></header>
+	<div class="content">
+	
 		# INCLUDE SHOUTBOX_FORM #
 
-		<br />
-		# INCLUDE message_helper #
-
-		<div class="msg_position">
-			<div class="msg_top_l"></div>
-			<div class="msg_top_r"></div>
-			<div class="msg_top" style="text-align:center;">{PAGINATION}&nbsp;</div>
-		</div>
-		# START shoutbox_list #
-		<div class="msg_position">
-			<div class="msg_container{shoutbox_list.CLASS_COLOR}">
-				<span id="m{shoutbox_list.ID}"></span>
-				<div class="msg_top_row">
-					<div class="msg_pseudo_mbr">
-						{shoutbox_list.USER_ONLINE} {shoutbox_list.USER_PSEUDO}
-					</div>
-					<div style="float:left;">&nbsp;&nbsp;<a href="{shoutbox_list.U_ANCHOR}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/ancre.png" alt="{shoutbox_list.ID}" /></a> {shoutbox_list.DATE}</div>
-					<div style="float:right;">{shoutbox_list.EDIT}{shoutbox_list.DEL}&nbsp;&nbsp;</div>
+		# START messages #
+		<article id="msg{messages.ID}" class="message">
+			<div class="message-user_infos">
+				<div class="message-pseudo">
+					# IF messages.C_VISITOR #
+						<span>{messages.PSEUDO}</span>
+					# ELSE #
+						<a href="{messages.U_PROFILE}" class="{messages.LEVEL_CLASS}" # IF messages.C_GROUP_COLOR # style="color:{messages.GROUP_COLOR}" # ENDIF #>
+							{messages.PSEUDO}
+						</a>
+					# ENDIF #
 				</div>
-				<div class="msg_contents_container">
-					<div class="msg_info_mbr">
-						<p style="text-align:center;">{shoutbox_list.USER_RANK}</p>
-						<p style="text-align:center;">{shoutbox_list.USER_IMG_ASSOC}</p>
-						<p style="text-align:center;">{shoutbox_list.USER_AVATAR}</p>
-						<p style="text-align:center;">{shoutbox_list.USER_GROUP}</p>
-						{shoutbox_list.USER_SEX}
-						{shoutbox_list.USER_DATE}<br />
-						{shoutbox_list.USER_MSG}<br />
-						{shoutbox_list.USER_LOCAL}
-					</div>
-					<div class="msg_contents{shoutbox_list.CLASS_COLOR}">
-						<div class="msg_contents_overflow">
-							{shoutbox_list.CONTENTS}
-						</div>
-					</div>
+				<div class="message-level">{messages.L_LEVEL}</div>
+				<img src="{messages.U_AVATAR}" class="message-avatar" />
+			</div>
+			<div class="message-content">
+				<div class="message-date">
+					<span class="actions">
+						<a href="\#msg{messages.ID_COMMENT}">\#{messages.ID}</a>
+						# IF messages.C_MODERATOR #
+							<a href="{messages.U_EDIT}" title="${LangLoader::get_message('edit', 'main')}" class="edit"></a>
+							<a href="{messages.U_DELETE}" title="${LangLoader::get_message('delete', 'main')}" class="delete"></a>
+						# ENDIF #
+					</span>
+					<span>{messages.DATE}</span>
+				</div>
+				<div class="message-message">
+					<div class="message-containt" class="content">{messages.MESSAGE}</div>
 				</div>
 			</div>
-			<div class="msg_sign{shoutbox_list.CLASS_COLOR}">
-				<div class="msg_sign_overflow">
-					{shoutbox_list.USER_SIGN}
-				</div>
-				<hr />
-				<div style="float:left;">
-					{shoutbox_list.U_USER_PM} {shoutbox_list.USER_MAIL} {shoutbox_list.USER_MSN} {shoutbox_list.USER_YAHOO} {shoutbox_list.USER_WEB}
-				</div>
-				<div style="float:right;font-size:10px;">
-					{shoutbox_list.WARNING} {shoutbox_list.PUNISHMENT}
-				</div>&nbsp;
-			</div>
-		</div>
-		# END shoutbox_list #
-		<div class="msg_position">
-			<div class="msg_bottom_l"></div>
-			<div class="msg_bottom_r"></div>
-			<div class="msg_bottom" style="text-align:center;">{PAGINATION}&nbsp;</div>
-		</div>
+		</article>
+		# END messages #
+		# IF C_PAGINATION #
+			# INCLUDE PAGINATION #
+		# ENDIF #
+	</div>
+	<footer></footer>
+</section>
