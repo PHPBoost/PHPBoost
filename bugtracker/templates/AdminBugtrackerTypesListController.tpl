@@ -15,47 +15,52 @@ function Confirm_del_default_value() {
 	# START elements #
 		# INCLUDE elements.ELEMENT #
 	# END elements #
-	<table class="module_table">
-		<tr>
-			<th class="column_default">
-				{@bugs.labels.default}
-			</th>
-			<th>
-				{L_NAME}
-			</th>
-			<th class="column_delete">
-				{L_DELETE}
-			</th>
-		</tr>
-		# START types #
-		<tr>
-			<td class="row2 text_center">
-				<input type="radio" name="default_type" value="{types.ID}" {types.IS_DEFAULT}>
-			</td>
-			<td class="row2">
-				<input type="text" maxlength="100" size="40" name="type{types.ID}" value="{types.NAME}" class="text">
-			</td>
-			<td class="row2 text_center">
-				<a href="{types.LINK_DELETE}" onclick="javascript:return Confirm_del_type();"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" /></a>
-			</td>
-		</tr>
-		# END types #
-		# IF C_TYPES #
-			# IF C_DISPLAY_DEFAULT_DELETE_BUTTON #
-		<tr>
-			<td colspan="3" class="row3">
-				<a href="{LINK_DELETE_DEFAULT}" onclick="javascript:return Confirm_del_default_value();"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" /> {@bugs.labels.del_default_value}</a>
-			</td>
-		</tr>
+	<table>
+		<thead>
+			<tr>
+				<th>
+					{@bugs.labels.default}
+				</th>
+				<th>
+					{L_NAME}
+				</th>
+				<th>
+					{L_DELETE}
+				</th>
+			</tr>
+		</thead>
+		<tfoot>
+			# IF C_TYPES #
+				# IF C_DISPLAY_DEFAULT_DELETE_BUTTON #
+			<tr>
+				<th colspan="3">
+					<a href="{LINK_DELETE_DEFAULT}" onclick="javascript:return Confirm_del_default_value();"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" /> {@bugs.labels.del_default_value}</a>
+				</th>
+			</tr>
+				# ENDIF #
+			# ELSE #
+			<tr> 
+				<th colspan="3">
+					{@bugs.notice.no_type}
+				</th>
+			</tr>
 			# ENDIF #
-		# ELSE #
-		<tr> 
-			<td colspan="3" class="row2 text_center">
-				{@bugs.notice.no_type}
-			</td>
-		</tr>
-		# ENDIF #
-		
+		</tfoot>
+		<tbody>
+			# START types #
+			<tr>
+				<td>
+					<input type="radio" name="default_type" value="{types.ID}" {types.IS_DEFAULT}>
+				</td>
+				<td>
+					<input type="text" maxlength="100" size="40" name="type{types.ID}" value="{types.NAME}" class="text">
+				</td>
+				<td>
+					<a href="{types.LINK_DELETE}" onclick="javascript:return Confirm_del_type();"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" /></a>
+				</td>
+			</tr>
+			# END types #
+		</tbody>
 	</table>
 	<br />
 </fieldset>

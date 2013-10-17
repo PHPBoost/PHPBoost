@@ -39,51 +39,57 @@ function bbcode_color_list(field)
 	# START elements #
 		# INCLUDE elements.ELEMENT #
 	# END elements #
-	<table class="module_table">
-		<tr>
-			<th class="column_default">
-				{@bugs.labels.default}
-			</th>
-			<th class="column_color">
-				{@bugs.labels.color}
-			</th>
-			<th>
-				{L_NAME}
-			</th>
-		</tr>
-		# START severities #
-		<tr>
-			<td class="row2 text_center">
-				<input type="radio" name="default_severity" value="{severities.ID}" {severities.IS_DEFAULT}>
-			</td>
-			<td class="row2">
-				<input type="text" size="8" maxlength="7" name="s_color{severities.ID}" id="s_color{severities.ID}" value="{severities.COLOR}" style="background-color:{severities.COLOR};" class="text">
-				<a href="javascript:bbcode_color_list('s_color{severities.ID}');bb_display_block('{severities.ID}', '');" onmouseout="bb_hide_block('{severities.ID}', '', 0);" class="bbcode_hover"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/color.png" alt="" class="valign_middle" /></a>
-				<div style="position:relative;z-index:100;display:none;margin-left:85px;" id="bb_block{severities.ID}">
-					<div id="s_color{severities.ID}_list" class="bbcode_block" style="background:white;width:150px;" onmouseover="bb_hide_block('{severities.ID}', '', 1);" onmouseout="bb_hide_block('{severities.ID}', '', 0);">
-					</div>
-				</div>
-			</td>
-			<td class="row2">
-				<input type="text" maxlength="100" size="40" name="severity{severities.ID}" value="{severities.NAME}" class="text">
-			</td>
-		</tr>
-		# END severities #
+	<table>
+		<thead>
+			<tr>
+				<th>
+					{@bugs.labels.default}
+				</th>
+				<th>
+					{@bugs.labels.color}
+				</th>
+				<th>
+					{L_NAME}
+				</th>
+			</tr>
+		</thead>
+		<tfoot>
 		# IF C_SEVERITIES #
 			# IF C_DISPLAY_DEFAULT_DELETE_BUTTON #
 		<tr>
-			<td colspan="4" class="row3">
+			<th colspan="4">
 				<a href="{LINK_DELETE_DEFAULT}" onclick="javascript:return Confirm_del_default_value();"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" /> {@bugs.labels.del_default_value}</a>
-			</td>
+			</th>
 		</tr>
 			# ENDIF #
 		# ELSE #
 			<tr> 
-				<td colspan="4" class="row2 text_center">
+				<th colspan="4">
 					{@bugs.notice.no_severity}
-				</td>
+				</th>
 			</tr>
 		# ENDIF #
+		</tfoot>
+		<tbody>
+			# START severities #
+			<tr>
+				<td>
+					<input type="radio" name="default_severity" value="{severities.ID}" {severities.IS_DEFAULT}>
+				</td>
+				<td>
+					<input type="text" size="8" maxlength="7" name="s_color{severities.ID}" id="s_color{severities.ID}" value="{severities.COLOR}" style="background-color:{severities.COLOR};" class="text">
+					<a href="javascript:bbcode_color_list('s_color{severities.ID}');bb_display_block('{severities.ID}', '');" onmouseout="bb_hide_block('{severities.ID}', '', 0);" class="bbcode_hover"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/color.png" alt="" class="valign_middle" /></a>
+					<div style="position:relative;z-index:100;display:none;margin-left:85px;" id="bb_block{severities.ID}">
+						<div id="s_color{severities.ID}_list" class="bbcode_block" style="background:white;width:150px;" onmouseover="bb_hide_block('{severities.ID}', '', 1);" onmouseout="bb_hide_block('{severities.ID}', '', 0);">
+						</div>
+					</div>
+				</td>
+				<td>
+					<input type="text" maxlength="100" size="40" name="severity{severities.ID}" value="{severities.NAME}" class="text">
+				</td>
+			</tr>
+			# END severities #
+		</tbody>
 	</table>
 	<br />
 </fieldset>
