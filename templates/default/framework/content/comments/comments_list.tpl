@@ -6,9 +6,9 @@ function Confirm_del_comment() {
 -->
 </script>
 # START comments #
-	<article id="com{comments.ID_COMMENT}" class="comment" itemscope="itemscope" itemtype="http://schema.org/Comment">
-		<div class="comment-user_infos">
-			<div class="comment-pseudo">
+	<article id="com{comments.ID_COMMENT}" class="message" itemscope="itemscope" itemtype="http://schema.org/Comment">
+		<div class="message-user_infos">
+			<div class="message-pseudo">
 				# IF comments.C_VISITOR #
 					<span itemprop="author">{comments.PSEUDO}</span>
 				# ELSE #
@@ -17,11 +17,11 @@ function Confirm_del_comment() {
 					</a>
 				# ENDIF #
 			</div>
-			<div class="comment-level">{comments.L_LEVEL}</div>
-			<img src="{comments.U_AVATAR}" class="comment-avatar" />
+			<div class="message-level">{comments.L_LEVEL}</div>
+			<img src="{comments.U_AVATAR}" class="message-avatar" />
 		</div>
-		<div class="comment-content">
-			<div class="comment-date">
+		<div class="message-content">
+			<div class="message-date">
 				<span class="actions">
 					<a itemprop="url" href="\#com{comments.ID_COMMENT}">\#{comments.ID_COMMENT}</a>
 					# IF comments.C_MODERATOR #
@@ -31,7 +31,7 @@ function Confirm_del_comment() {
 				</span>
 				<span itemprop="datePublished" content="{comments.DATE_ISO8601}">{comments.DATE}</span>
 			</div>
-			<div class="comment-message">
+			<div class="message-message">
 				<div itemprop="text" class="message-containt" class="content">{comments.MESSAGE}</div>
 				# IF comments.C_VIEW_TOPIC #
 					<div class="view-topic">
@@ -42,7 +42,7 @@ function Confirm_del_comment() {
 					</div>
 				# ENDIF #
 				<!-- 
-				<div id="comment-rating">
+				<div id="message-rating">
 					<div class="positive_vote_button">+</div>
 					<div class="negative_vote_button">-</div>
 				</div>

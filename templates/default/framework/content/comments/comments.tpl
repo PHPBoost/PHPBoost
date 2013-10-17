@@ -35,7 +35,7 @@ Event.observe(window, 'load', function() {
 	# INCLUDE KEEP_MESSAGE #
 	
 	# IF C_MODERATE #
-		<div class="comment-moderate">
+		<div class="message-moderate">
 			# IF C_IS_LOCKED #
 			<a href="{U_UNLOCK}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/unlock.png"> {@unlock}</a>
 			# ELSE #
