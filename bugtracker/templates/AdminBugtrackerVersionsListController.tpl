@@ -27,58 +27,63 @@ function display_default_version_radio(version_id)
 	# START elements #
 		# INCLUDE elements.ELEMENT #
 	# END elements #
-	<table class="module_table">
-		<tr>
-			<th class="column_default">
-				{@bugs.labels.default}
-			</th>
-			<th>
-				{@bugs.labels.version_name}
-			</th>
-			<th>
-				{@bugs.labels.fields.version_release_date}
-			</th>
-			<th class="column_version_detected">
-				{@bugs.labels.fields.version_detected}
-			</th>
-			<th class="column_delete">
-				{L_DELETE}
-			</th>
-		</tr>
+	<table>
+		<thead>
+			<tr>
+				<th class="column_default">
+					{@bugs.labels.default}
+				</th>
+				<th>
+					{@bugs.labels.version_name}
+				</th>
+				<th>
+					{@bugs.labels.fields.version_release_date}
+				</th>
+				<th class="column_version_detected">
+					{@bugs.labels.fields.version_detected}
+				</th>
+				<th class="column_delete">
+					{L_DELETE}
+				</th>
+			</tr>
+		</thead>
+		<tfoot>
+			# IF C_VERSIONS #
+				# IF C_DISPLAY_DEFAULT_DELETE_BUTTON #
+			<tr>
+				<th colspan="5">
+					<a href="{LINK_DELETE_DEFAULT}" onclick="javascript:return Confirm_del_default_value();" title="{L_DELETE}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="" /> {@bugs.labels.del_default_value}</a>
+				</th>
+			</tr>
+				# ENDIF #
+			# ELSE #
+				<tr> 
+					<th colspan="5">
+						{@bugs.notice.no_version}
+					</th>
+				</tr>
+			# ENDIF #
+		</tfoot>
+		<tbody>
 		# START versions #
 		<tr>
-			<td class="row2 text_center">
+			<td>
 				<input type="radio" id="default_version{versions.ID}" name="default_version" value="{versions.ID}" {versions.IS_DEFAULT} {versions.DISPLAY_DEFAULT}>
 			</td>
-			<td class="row2">
+			<td>
 				<input type="text" maxlength="100" size="40" name="version{versions.ID}" value="{versions.NAME}" class="text">
 			</td>
-			<td class="row2">
+			<td>
 				<input type="text" maxlength="10" size="11" id="release_date{versions.ID}" name="release_date{versions.ID}" value="{versions.RELEASE_DATE}" class="text" onclick="if(this.value == '00/00/0000') this.value = '';" onblur="if(this.value == '') this.value = '00/00/0000';">
 			</td> 
-			<td class="row2">
+			<td>
 				<input type="checkbox" id="detected_in{versions.ID}" name="detected_in{versions.ID}" onclick="javascript:display_default_version_radio('{versions.ID}');" {versions.DETECTED_IN}>
 			</td> 
-			<td class="row2 text_center">
-				<a href="{versions.LINK_DELETE}" onclick="javascript:return Confirm_del_version();"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" /></a>
+			<td>
+				<a href="{versions.LINK_DELETE}" onclick="javascript:return Confirm_del_version();" title="{L_DELETE}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="" /></a>
 			</td>
 		</tr>
 		# END versions #
-		# IF C_VERSIONS #
-			# IF C_DISPLAY_DEFAULT_DELETE_BUTTON #
-		<tr>
-			<td colspan="5" class="row3">
-				<a href="{LINK_DELETE_DEFAULT}" onclick="javascript:return Confirm_del_default_value();"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" /> {@bugs.labels.del_default_value}</a>
-			</td>
-		</tr>
-			# ENDIF #
-		# ELSE #
-			<tr> 
-				<td colspan="5" class="row2 text_center">
-					{@bugs.notice.no_version}
-				</td>
-			</tr>
-		# ENDIF #
+		</tbody>
 	</table>
-	<br />
 </fieldset>
