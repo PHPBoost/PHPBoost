@@ -47,7 +47,7 @@
 						<tr>
 							<th colspan="4">
 								<span><a href="admin_groups.php?add=1" title="{L_ADD_GROUPS}">{L_ADD_GROUPS}</a></span>
-								<span class="float_right">{PAGINATION}PPP</span>
+								<span class="float_right">{PAGINATION}</span>
 							</th>
 						</tr>
 					</tfoot>
