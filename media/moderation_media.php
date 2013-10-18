@@ -219,6 +219,7 @@ else
 		'L_VISIBLE' => $MEDIA_LANG['show_media_short'],
 		'L_UNVISIBLE' => $MEDIA_LANG['hide_media_short'],
 		'L_UNAPROBED' => $MEDIA_LANG['unaprobed_media_short'],
+		'L_DELETE' => $LANG['delete'],
 		'C_NO_MODERATION' => $nbr_media > 0 ? 0 : 1,
 		'L_NO_MODERATION' => $MEDIA_LANG['no_media_moderate'],
 		'L_CONFIRM_DELETE_ALL' => str_replace('\'', '\\\'', $MEDIA_LANG['confirm_delete_media_all']),
