@@ -45,7 +45,6 @@
 		<form action="moderation_media.php?token={TOKEN}" method="post" class="fieldset_content">
 			<fieldset>
 				<legend>{L_MODO_PANEL}</legend>
-				<p style="text-align:center;margin:10px auto;">{PAGINATION}</p>
 				<table>
 					<thead>
 						<tr>
@@ -117,7 +116,7 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr style="text-align:center;">
+						<tr>
 							<td style="background:#FFCCCC;">
 								{L_FILE_UNAPROBED}
 							</td>

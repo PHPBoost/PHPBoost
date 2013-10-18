@@ -30,67 +30,75 @@
 		<div id="admin_contents">
 			
 			
-			<table class="module_table">
-				<tr style="text-align:center;">
-					<th>
-						{L_POLLS}
-					</th>
-					<th>
-						{L_QUESTION}
-					</th>
-					<th>
-						{L_PSEUDO}
-					</th>
-					<th>
-						{L_DATE}
-					</th>
-					<th>
-						{L_ARCHIVED}
-					</th>
-					<th>
-						{L_APROB}
-					</th>
-					<th>
-						{L_UPDATE}
-					</th>
-					<th>
-						{L_DELETE}
-					</th>
-				</tr>
-				
-				# START questions #
-				<tr style="text-align:center;"> 
-					<td class="row2">
-						<a href="../poll/poll.php?id={questions.IDPOLL}">{L_SHOW}</a>
-					</td>
-					<td class="row2"> 
-						{questions.QUESTIONS}
-					</td>			
-					<td class="row2"> 
-						{questions.PSEUDO}
-					</td>
-					<td class="row2">
-						{questions.DATE}
-					</td>
-					<td class="row2">
-						{questions.ARCHIVES}
-					</td>	
-					<td class="row2">
-						{questions.APROBATION} 
-						<br />
-						<span class="smaller">{questions.VISIBLE}</span>
-					</td>
-					<td class="row2"> 
-						<a href="admin_poll.php?id={questions.IDPOLL}"><img src="../templates/{THEME}/images/{LANG}/edit.png" alt="{L_UPDATE}" title="{L_UPDATE}" /></a>
-					</td>
-					<td class="row2">
-						<a href="admin_poll.php?delete=true&amp;id={questions.IDPOLL}&amp;token={TOKEN}" onclick="javascript:return Confirm();"><img src="../templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" /></a>
-					</td>
-				</tr>
-				# END questions #
-
+			<table>
+				<thead>
+					<tr>
+						<th>
+							{L_POLLS}
+						</th>
+						<th>
+							{L_QUESTION}
+						</th>
+						<th>
+							{L_PSEUDO}
+						</th>
+						<th>
+							{L_DATE}
+						</th>
+						<th>
+							{L_ARCHIVED}
+						</th>
+						<th>
+							{L_APROB}
+						</th>
+						<th>
+							{L_UPDATE}
+						</th>
+						<th>
+							{L_DELETE}
+						</th>
+					</tr>
+				</thead>
+				# IF C_PAGINATION #
+				<tfoot>
+					<tr>
+						<th colspan="8">
+							{PAGINATION}
+						</th>
+					</tr>
+				</tfoot>
+				# ENDIF #
+				<tbody>
+					# START questions #
+					<tr> 
+						<td>
+							<a href="../poll/poll.php?id={questions.IDPOLL}">{L_SHOW}</a>
+						</td>
+						<td> 
+							{questions.QUESTIONS}
+						</td>			
+						<td> 
+							{questions.PSEUDO}
+						</td>
+						<td>
+							{questions.DATE}
+						</td>
+						<td>
+							{questions.ARCHIVES}
+						</td>	
+						<td>
+							{questions.APROBATION} 
+							<br />
+							<span class="smaller">{questions.VISIBLE}</span>
+						</td>
+						<td> 
+							<a href="admin_poll.php?id={questions.IDPOLL}"><img src="../templates/{THEME}/images/{LANG}/edit.png" alt="{L_UPDATE}" title="{L_UPDATE}" /></a>
+						</td>
+						<td>
+							<a href="admin_poll.php?delete=true&amp;id={questions.IDPOLL}&amp;token={TOKEN}" onclick="javascript:return Confirm();"><img src="../templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" /></a>
+						</td>
+					</tr>
+					# END questions #
+				</tbody>
 			</table>
-
-			<br /><br />
-			<p style="text-align: center;">{PAGINATION}</p>
 		</div>
