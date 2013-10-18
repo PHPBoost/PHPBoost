@@ -42,10 +42,10 @@ function bbcode_color_list(field)
 	<table>
 		<thead>
 			<tr>
-				<th>
+				<th class="column_default">
 					{@bugs.labels.default}
 				</th>
-				<th>
+				<th class="column_color">
 					{@bugs.labels.color}
 				</th>
 				<th>
@@ -58,7 +58,7 @@ function bbcode_color_list(field)
 			# IF C_DISPLAY_DEFAULT_DELETE_BUTTON #
 		<tr>
 			<th colspan="4">
-				<a href="{LINK_DELETE_DEFAULT}" onclick="javascript:return Confirm_del_default_value();"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" /> {@bugs.labels.del_default_value}</a>
+				<a href="{LINK_DELETE_DEFAULT}" onclick="javascript:return Confirm_del_default_value();" title="{L_DELETE}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="" /> {@bugs.labels.del_default_value}</a>
 			</th>
 		</tr>
 			# ENDIF #
@@ -91,5 +91,4 @@ function bbcode_color_list(field)
 			# END severities #
 		</tbody>
 	</table>
-	<br />
 </fieldset>

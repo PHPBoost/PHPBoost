@@ -18,13 +18,13 @@ function Confirm_del_default_value() {
 	<table>
 		<thead>
 			<tr>
-				<th>
+				<th class="column_default">
 					{@bugs.labels.default}
 				</th>
 				<th>
 					{L_NAME}
 				</th>
-				<th>
+				<th class="column_delete">
 					{L_DELETE}
 				</th>
 			</tr>
@@ -34,7 +34,7 @@ function Confirm_del_default_value() {
 				# IF C_DISPLAY_DEFAULT_DELETE_BUTTON #
 			<tr>
 				<th colspan="3">
-					<a href="{LINK_DELETE_DEFAULT}" onclick="javascript:return Confirm_del_default_value();"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" /> {@bugs.labels.del_default_value}</a>
+					<a href="{LINK_DELETE_DEFAULT}" onclick="javascript:return Confirm_del_default_value();" title="{L_DELETE}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="" /> {@bugs.labels.del_default_value}</a>
 				</th>
 			</tr>
 				# ENDIF #
@@ -56,11 +56,10 @@ function Confirm_del_default_value() {
 					<input type="text" maxlength="100" size="40" name="category{categories.ID}" value="{categories.NAME}" class="text">
 				</td>
 				<td>
-					<a href="{categories.LINK_DELETE}" onclick="javascript:return Confirm_del_category();"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" /></a>
+					<a href="{categories.LINK_DELETE}" onclick="javascript:return Confirm_del_category();" title="{L_DELETE}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="" /></a>
 				</td>
 			</tr>
 			# END categories #
-		</tbody>		
+		</tbody>
 	</table>
-	<br />
 </fieldset>

@@ -79,7 +79,7 @@ function Confirm_del_filter() {
 			# ENDIF #
 			# IF C_DISPLAY_SAVE_BUTTON #
 			<td class="no-separator">
-				<a href="{LINK_FILTER_SAVE}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/files_mini.png" alt="{@bugs.labels.save_filters}" title="{@bugs.labels.save_filters}" /></a>
+				<a href="{LINK_FILTER_SAVE}" title="{@bugs.labels.save_filters}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/files_mini.png" alt="" /></a>
 			</td>
 			# ENDIF #
 		</tr>
@@ -87,7 +87,7 @@ function Confirm_del_filter() {
 		# START filters #
 		<tr>
 			<td colspan="{FILTERS_NUMBER}">
-				<a href="{filters.LINK_FILTER_DELETE}" onclick="javascript:return Confirm_del_filter();"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" /></a> <a href="{filters.LINK_FILTER}">{filters.FILTER}</a>
+				<a href="{filters.LINK_FILTER_DELETE}" onclick="javascript:return Confirm_del_filter();" title="{L_DELETE}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="" /></a> <a href="{filters.LINK_FILTER}">{filters.FILTER}</a>
 			</td>
 		</tr>
 		# END filters #
