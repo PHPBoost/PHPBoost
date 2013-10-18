@@ -1,0 +1,31 @@
+/* Classes générales */
+
+.legend {
+	padding: 5px;
+	text-align: center;
+	border: 1px solid;
+	width: 30px;
+	height: 15px;
+}
+
+.display_none{ display: none; }
+.vertical_top{ vertical-align: top; }
+
+.column_id{ width: 61px; }
+.column_admin{ width: 95px; }
+.column_history{ width: 70px; }
+.column_severity{ width: 100px; }
+.column_informations{ width: 125px; }
+.column_date{ width: 138px; }
+.column_date_roadmap{ width: 100px; }
+.column_version{ width: 45px; }
+.column_version_detected{ width: 96px; }
+.column_default{ width: 60px; }
+.column_delete{ width: 50px; }
+.column_color{ width: 76px; }
+
+#status_chart { width: 90%; }
+
+a.pbt-icon-bugtracker-opened:before { content: "\f070"; }
+a.pbt-icon-bugtracker-rejected:before { content: "\f06E"; }
+a.pbt-icon-bugtracker-history:before { content: "\f129"; }
