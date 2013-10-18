@@ -46,73 +46,89 @@
 			<fieldset>
 				<legend>{L_MODO_PANEL}</legend>
 				<p style="text-align:center;margin:10px auto;">{PAGINATION}</p>
-				<table class="module_table">
-					<tr>
-						<th style="width:40%">
-							{L_NAME}
-						</th>
-						<th style="width:20%">
-							{L_CATEGORY}
-						</th>
-						<th style="width:10%" onclick="check_all('visible');" onmouseover="pointer('visible');" id="visible">
-							{L_VISIBLE}
-						</th>
-						<th style="width:10%" onclick="check_all('unvisible');" onmouseover="pointer('unvisible');" id="unvisible">
-							{L_UNVISIBLE}
-						</th>
-						<th style="width:10%">
-							{L_UNAPROBED}
-						</th>
-						<th style="width:10%" onclick="check_all('delete');" onmouseover="pointer('delete');" id="delete">
-							{L_DELETE}
-						</th>
-					</tr>
-					# IF C_NO_MODERATION #
-					<tr style="text-align:center;">
-						<td class="row1" colspan="6">{L_NO_MODERATION}</td>
-					</tr>
-					# ELSE #
-					# START files #
-					<tr style="text-align:center;">
-						<td class="row2" style="background:{files.COLOR};padding:5px 0;">
-							<a href="{files.U_FILE}">{files.NAME}</a>
-							<a href="{files.U_EDIT}" title="${LangLoader::get_message('edit', 'main')}" class="edit"></a>
-						</td>
-						<td class="row2" style="background:{files.COLOR};padding:5px 0;">
-							<a href="{files.U_CAT}">{files.CAT}</a>
-						</td>
-						<td class="row2" style="background:{files.COLOR};padding:5px 0;">
-							<input type="radio" id="visible{files.ID}" name="action[{files.ID}]" value="visible"{files.SHOW}>
-						</td>
-						<td class="row2" style="background:{files.COLOR};padding:5px 0;">
-							<input type="radio" id="unvisible{files.ID}" name="action[{files.ID}]" value="unvisible"{files.HIDE}>
-						</td>
-						<td class="row2" style="background:{files.COLOR};padding:5px 0;">
-							<input type="radio" name="action[{files.ID}]" value="unaprobed"{files.UNAPROBED} # IF NOT files.UNAPROBED #disabled="disabled" # ENDIF #/>
-						</td>
-						<td class="row2" style="background:{files.COLOR};padding:5px 0;">
-							<input type="radio" id="delete{files.ID}" name="action[{files.ID}]" value="delete" onclick="return confirm('{L_CONFIRM_DELETE}');">
-						</td>
-					</tr>
-					# END files #
+				<table>
+					<thead>
+						<tr>
+							<th>
+								{L_NAME}
+							</th>
+							<th>
+								{L_CATEGORY}
+							</th>
+							<th onclick="check_all('visible');" onmouseover="pointer('visible');" id="visible">
+								{L_VISIBLE}
+							</th>
+							<th onclick="check_all('unvisible');" onmouseover="pointer('unvisible');" id="unvisible">
+								{L_UNVISIBLE}
+							</th>
+							<th>
+								{L_UNAPROBED}
+							</th>
+							<th onclick="check_all('delete');" onmouseover="pointer('delete');" id="delete">
+								{L_DELETE}
+							</th>
+						</tr>
+					</thead>
+					# IF PAGINATION #
+					<tfoot>
+						<tr>
+							<th colspan="6">
+								{PAGINATION}
+							</th>
+						</tr>
+					</tfoot>
 					# ENDIF #
+					<tbody>
+						# IF C_NO_MODERATION #
+						<tr>
+							<td colspan="6">{L_NO_MODERATION}</td>
+						</tr>
+						# ELSE #
+						# START files #
+						<tr>
+							<td style="background:{files.COLOR};">
+								<a href="{files.U_FILE}">{files.NAME}</a>
+								<a href="{files.U_EDIT}" title="${LangLoader::get_message('edit', 'main')}" class="edit"></a>
+							</td>
+							<td style="background:{files.COLOR};">
+								<a href="{files.U_CAT}">{files.CAT}</a>
+							</td>
+							<td style="background:{files.COLOR};">
+								<input type="radio" id="visible{files.ID}" name="action[{files.ID}]" value="visible"{files.SHOW}>
+							</td>
+							<td style="background:{files.COLOR};">
+								<input type="radio" id="unvisible{files.ID}" name="action[{files.ID}]" value="unvisible"{files.HIDE}>
+							</td>
+							<td style="background:{files.COLOR};">
+								<input type="radio" name="action[{files.ID}]" value="unaprobed"{files.UNAPROBED} # IF NOT files.UNAPROBED #disabled="disabled" # ENDIF #/>
+							</td>
+							<td style="background:{files.COLOR};">
+								<input type="radio" id="delete{files.ID}" name="action[{files.ID}]" value="delete" onclick="return confirm('{L_CONFIRM_DELETE}');">
+							</td>
+						</tr>
+						# END files #
+						# ENDIF #
+					</tbody>
 				</table>
-				<p style="text-align: center;margin:10px auto;">{PAGINATION}</p>
-				<table class="module_table" style="margin-bottom: 15px;">
-					<tr>
-						<th colspan="3" style="text-align:center;">{L_LEGEND}</th>
-					</tr>
-					<tr style="text-align:center;">
-						<td class="row2" style="width:33.3%;background:#FFCCCC;padding:3px 0;">
-							{L_FILE_UNAPROBED}
-						</td>
-						<td class="row2" style="width:33.3%;background:#FFEE99;padding:3px 0;">
-							{L_FILE_UNVISIBLE}
-						</td>
-						<td class="row2" style="width:33.3%;background:#CCFFCC;padding:3px 0;">
-							{L_FILE_VISIBLE}
-						</td>
-					</tr>
+				<table>
+					<thead>
+						<tr>
+							<th colspan="3">{L_LEGEND}</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr style="text-align:center;">
+							<td style="background:#FFCCCC;">
+								{L_FILE_UNAPROBED}
+							</td>
+							<td style="background:#FFEE99;">
+								{L_FILE_UNVISIBLE}
+							</td>
+							<td style="background:#CCFFCC;">
+								{L_FILE_VISIBLE}
+							</td>
+						</tr>
+					</tbody>
 				</table>
 			</fieldset>
 			<fieldset class="fieldset_submit">
