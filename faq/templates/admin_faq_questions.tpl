@@ -30,47 +30,55 @@
 		</div>
 
 		<div id="admin_contents">	
-			<table class="module_table">
-				<tr style="text-align:center;">
-					<th>
-						{L_QUESTION}
-					</th>
-					<th>
-						{L_CATEGORY}
-					</th>
-					<th>
-						{L_DATE}
-					</th>
-					<th>
-						{L_EDIT}
-					</th>
-					<th>
-						{L_DELETE}
-					</th>
-				</tr>		
-			# START question #
-				<tr style="text-align:center;"> 
-					<td class="row2"> 
-						<a href="{question.U_QUESTION}">{question.QUESTION}</a>
-					</td>
-					<td class="row2"> 
-						<a href="{question.U_CATEGORY}">{question.CATEGORY}</a>
-					</td>
-					<td class="row2">
-						{question.DATE}
-					</td>
-					<td class="row2">
-						<a href="{question.U_EDIT}" title="{L_EDIT}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="{L_EDIT}" /></a>
-					</td>
-					<td class="row2">
-						<a href="{question.U_DEL}" onclick="return confirm('{L_CONFIRM_DELETE}');" title="{L_DELETE}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" /></a>
-					</td>
-				</tr>
-			# END question #
-				<tr>
-					<td colspan="5" class="row1" style="text-align:center;">
-						{PAGINATION}
-					</td>
-				</tr>
+			<table>
+				<thead>
+					<tr>
+						<th>
+							{L_QUESTION}
+						</th>
+						<th>
+							{L_CATEGORY}
+						</th>
+						<th>
+							{L_DATE}
+						</th>
+						<th>
+							{L_EDIT}
+						</th>
+						<th>
+							{L_DELETE}
+						</th>
+					</tr>
+				</thead>
+				# IF PAGINATION #
+				<tfoot>
+					<tr>
+						<th colspan="5">
+							{PAGINATION}
+						</th>
+					</tr>
+				</tfoot>
+				# ENDIF #
+				<tbody>
+					# START question #
+						<tr> 
+							<td> 
+								<a href="{question.U_QUESTION}">{question.QUESTION}</a>
+							</td>
+							<td> 
+								<a href="{question.U_CATEGORY}">{question.CATEGORY}</a>
+							</td>
+							<td>
+								{question.DATE}
+							</td>
+							<td>
+								<a href="{question.U_EDIT}" title="{L_EDIT}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="{L_EDIT}" /></a>
+							</td>
+							<td>
+								<a href="{question.U_DEL}" onclick="return confirm('{L_CONFIRM_DELETE}');" title="{L_DELETE}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" /></a>
+							</td>
+						</tr>
+					# END question #
+				</tbody>
 			</table>
 		</div>

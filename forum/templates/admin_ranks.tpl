@@ -51,42 +51,46 @@
 		<div id="admin_contents">
 			<form action="admin_ranks.php?token={TOKEN}" method="post">
 				<fieldset>
-					<legend>{L_RANKS_MANAGEMENT}</legend>
-					<table class="module_table">
-						<tr style="text-align:center;"> 
-							<th>
-								{L_RANK_NAME}
-							</th>
-							<th>
-								{L_NBR_MSG}
-							</th>
-							<th>
-								{L_IMG_ASSOC}
-							</th>
-							<th>
-								{L_DELETE}
-							</th>
-						</tr>
-						# START rank #
-						<tr>
-							<td class="row2" style="text-align:center;"> 
-								<input type="text" maxlength="30" size="20" name="{rank.ID}name" value="{rank.RANK}" class="text">
-							</td>
-							<td class="row2" style="text-align:center;">
-								{rank.MSG}
-							</td>
-							<td class="row2" style="text-align:center;"> 						
-								<select name="{rank.ID}icon" onchange="img_change('icon{rank.ID}', this.options[selectedIndex].value)">
-									{rank.RANK_OPTIONS}
-								</select>
-								<br />
-								# IF rank.IMG_RANK # <img src="{PATH_TO_ROOT}/forum/templates/images/ranks/{rank.IMG_RANK}" id="icon{rank.ID}" alt="" /> # ENDIF #
-							</td>
-							<td class="row2" style="text-align:center;">
-								{rank.DELETE}
-							</td>
-						</tr>
-						# END rank #
+					<legend>{L_FORUM_RANKS_MANAGEMENT}</legend>
+					<table>
+						<thead>
+							<tr> 
+								<th>
+									{L_RANK_NAME}
+								</th>
+								<th>
+									{L_NBR_MSG}
+								</th>
+								<th>
+									{L_IMG_ASSOC}
+								</th>
+								<th>
+									{L_DELETE}
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+							# START rank #
+							<tr>
+								<td> 
+									<input type="text" maxlength="30" size="20" name="{rank.ID}name" value="{rank.RANK}" class="text">
+								</td>
+								<td>
+									{rank.MSG}
+								</td>
+								<td> 						
+									<select name="{rank.ID}icon" onchange="img_change('icon{rank.ID}', this.options[selectedIndex].value)">
+										{rank.RANK_OPTIONS}
+									</select>
+									<br />
+									# IF rank.IMG_RANK # <img src="{PATH_TO_ROOT}/forum/templates/images/ranks/{rank.IMG_RANK}" id="icon{rank.ID}" alt="" /> # ENDIF #
+								</td>
+								<td>
+									{rank.DELETE}
+								</td>
+							</tr>
+							# END rank #
+						</tbody>
 					</table>					
 				</fieldset>
 				<fieldset class="fieldset_submit">

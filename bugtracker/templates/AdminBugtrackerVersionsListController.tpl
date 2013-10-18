@@ -65,25 +65,25 @@ function display_default_version_radio(version_id)
 			# ENDIF #
 		</tfoot>
 		<tbody>
-		# START versions #
-		<tr>
-			<td>
-				<input type="radio" id="default_version{versions.ID}" name="default_version" value="{versions.ID}" {versions.IS_DEFAULT} {versions.DISPLAY_DEFAULT}>
-			</td>
-			<td>
-				<input type="text" maxlength="100" size="40" name="version{versions.ID}" value="{versions.NAME}" class="text">
-			</td>
-			<td>
-				<input type="text" maxlength="10" size="11" id="release_date{versions.ID}" name="release_date{versions.ID}" value="{versions.RELEASE_DATE}" class="text" onclick="if(this.value == '00/00/0000') this.value = '';" onblur="if(this.value == '') this.value = '00/00/0000';">
-			</td> 
-			<td>
-				<input type="checkbox" id="detected_in{versions.ID}" name="detected_in{versions.ID}" onclick="javascript:display_default_version_radio('{versions.ID}');" {versions.DETECTED_IN}>
-			</td> 
-			<td>
-				<a href="{versions.LINK_DELETE}" onclick="javascript:return Confirm_del_version();" title="{L_DELETE}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="" /></a>
-			</td>
-		</tr>
-		# END versions #
+			# START versions #
+			<tr>
+				<td>
+					<input type="radio" id="default_version{versions.ID}" name="default_version" value="{versions.ID}" {versions.IS_DEFAULT} {versions.DISPLAY_DEFAULT}>
+				</td>
+				<td>
+					<input type="text" maxlength="100" size="40" name="version{versions.ID}" value="{versions.NAME}" class="text">
+				</td>
+				<td>
+					<input type="text" maxlength="10" size="11" id="release_date{versions.ID}" name="release_date{versions.ID}" value="{versions.RELEASE_DATE}" class="text" onclick="if(this.value == '00/00/0000') this.value = '';" onblur="if(this.value == '') this.value = '00/00/0000';">
+				</td> 
+				<td>
+					<input type="checkbox" id="detected_in{versions.ID}" name="detected_in{versions.ID}" onclick="javascript:display_default_version_radio('{versions.ID}');" {versions.DETECTED_IN}>
+				</td> 
+				<td>
+					<a href="{versions.LINK_DELETE}" onclick="javascript:return Confirm_del_version();" title="{L_DELETE}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="" /></a>
+				</td>
+			</tr>
+			# END versions #
 		</tbody>
 	</table>
 </fieldset>
