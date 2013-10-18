@@ -204,41 +204,47 @@
 				</fieldset>
 			</form>
 			
-			<table class="module_table">
-				<tr> 
-					<th colspan="2">
-						{L_MBR_GROUP}<span id="add"></span>
-					</th>				
-				</tr>
-				<tr>
-					<td class="row1">
-						* {L_PSEUDO}
-					</td>
-					<td style="width:50%;" class="row1"> 
-						{L_DELETE}
-					</td>
-				</tr>
-				
-				# START member #
-				<tr> 
-					<td class="row2">
-						<a href="{member.U_PROFILE}" class="{member.LEVEL_CLASS}" # IF member.C_GROUP_COLOR # style="color:{member.GROUP_COLOR}" # ENDIF #>{member.LOGIN}</a>
-					</td>
-					<td class="row2">
-						<a href="admin_groups.php?del_mbr=1&amp;id={GROUP_ID}&amp;user_id={member.USER_ID}&amp;token={TOKEN}" onclick="javascript:return Confirm();"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" /></a>
-					</td>
-				</tr>
-				# END member #
-				# IF C_NO_MEMBERS #
-				<tr style="text-align:center;">
-					<td colspan="2" class="row2">
-						<span>{NO_MEMBERS}</span>
-					</td>
-				</tr>
+			{L_MBR_GROUP}
+			<table>
+				<thead>
+					<tr> 
+						<th>
+							{L_PSEUDO}
+						</th>	
+						<th>
+							{L_DELETE}
+						</th>					
+					</tr>
+				</thead>
+				# IF C_PAGINATION #
+				<tfoot>
+					<tr>
+						<th colspan="2">
+							{PAGINATION}
+						</th>
+					</tr>
+				</tfoot>
 				# ENDIF #
+				<tbody>
+					# START member #
+					<tr> 
+						<td>
+							<a href="{member.U_PROFILE}" class="{member.LEVEL_CLASS}" # IF member.C_GROUP_COLOR # style="color:{member.GROUP_COLOR}" # ENDIF #>{member.LOGIN}</a>
+						</td>
+						<td>
+							<a href="admin_groups.php?del_mbr=1&amp;id={GROUP_ID}&amp;user_id={member.USER_ID}&amp;token={TOKEN}" onclick="javascript:return Confirm();"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" /></a>
+						</td>
+					</tr>
+					# END member #
+					# IF C_NO_MEMBERS #
+					<tr>
+						<td colspan="2">
+							{NO_MEMBERS}
+						</td>
+					</tr>
+					# ENDIF #
+				</tbody>
 			</table>
-					
-			<p style="text-align: center;">{PAGINATION}</p>
 			# ENDIF #
 			
 			

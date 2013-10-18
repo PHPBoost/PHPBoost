@@ -104,52 +104,42 @@
 			</div>
 			
 			<div style="clear:right;"></div>
-			
-			<table class="module_table" style="width:99%">
-				<tr> 
-					<th colspan="4">
-						{L_USER_ONLINE}
-					</th>
-				</tr>
-				<tr> 
-					<td class="row1" style="text-align:center;width:145px">
-						{L_USER_ONLINE}
-					</td>
-					<td  class="row1" style="text-align:center;width:135px">
-						{L_USER_IP}
-					</td>
-					<td  class="row1" style="text-align:center;">
-						{L_LOCALISATION}
-					</td>
-					<td  class="row1" style="text-align:center;width:170px">
-						{L_LAST_UPDATE}
-					</td>
-				</tr>	
-				<tr> 
-					<td colspan="4" class="row2" style="padding:0;">
-						<div style="overflow:auto;">
-							<table style="width:100%">
-								# START user #
-								<tr> 
-									<td class="row2" style="text-align:center;width:145px">
-										{user.USER}
-									</td>
-									<td class="row2" style="text-align:center;width:135px">
-										{user.USER_IP}
-									</td>
-									<td class="row2" style="text-align:center;">
-										{user.WHERE}
-									</td>
-									<td class="row2" style="text-align:center;width:170px">
-										{user.TIME}
-									</td>					
-								</tr>
-								# END user #
-							</table>
-						</div>
-						&nbsp;
-					</td>
-				</tr>
+			{L_USER_ONLINE}
+			<table>
+				<thead>
+					<tr> 
+						<th>
+							{L_USER_ONLINE}
+						</th>
+						<th>
+							{L_USER_IP}
+						</th>
+						<th>
+							{L_LOCALISATION}
+						</th>
+						<th>
+							{L_LAST_UPDATE}
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+					# START user #
+					<tr> 
+						<td>
+							{user.USER}
+						</td>
+						<td>
+							{user.USER_IP}
+						</td>
+						<td>
+							{user.WHERE}
+						</td>
+						<td>
+							{user.TIME}
+						</td>					
+					</tr>
+					# END user #
+				</tbody>
 			</table>
 		</div>
 			
