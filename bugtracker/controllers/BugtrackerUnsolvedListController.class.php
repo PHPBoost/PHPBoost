@@ -116,35 +116,39 @@ class BugtrackerUnsolvedListController extends ModuleController
 		
 		while ($row = $result->fetch())
 		{
+			$bug = new Bug();
+			$bug->set_properties($row);
+			
 			//Author
 			$author = new User();
 			$author->set_properties($row);
 			$author_group_color = User::get_group_color($author->get_groups(), $author->get_level(), true);
 			
-			if (!in_array($row['severity'], $displayed_severities)) $displayed_severities[] = $row['severity'];
+			if (!in_array($bug->get_severity(), $displayed_severities)) $displayed_severities[] = $bug->get_severity();
 			
 			$this->view->assign_block_vars('bug', array(
 				'C_AUTHOR_GROUP_COLOR'		=> !empty($author_group_color),
-				'C_LINE_COLOR'				=> !empty($row['severity']) && isset($severities[$row['severity']]),
-				'C_PROGRESS'				=> $config->is_progress_bar_displayed() && $row['progress'],
-				'ID'						=> $row['id'],
-				'TITLE'						=> ($config->is_cat_in_title_displayed() && $display_categories) ? '[' . $categories[$row['category']] . '] ' . $row['title'] : $row['title'],
-				'LINE_COLOR' 				=> stripslashes($severities[$row['severity']]['color']),
-				'PROGRESS' 					=> $row['progress'],
-				'STATUS'					=> $this->lang['bugs.labels.fields.status'] . ' : ' . $this->lang['bugs.status.' . $row['status']],
+				'C_LINE_COLOR'				=> $bug->get_severity() && isset($severities[$bug->get_severity()]),
+				'C_PROGRESS'				=> $config->is_progress_bar_displayed() && $bug->get_progress(),
+				'C_RESOLVED'				=> $bug->is_fixed() || $bug->is_rejected(),
+				'ID'						=> $bug->get_id(),
+				'TITLE'						=> ($config->is_cat_in_title_displayed() && $display_categories) ? '[' . $categories[$bug->get_category()] . '] ' . $bug->get_title() : $bug->get_title(),
+				'LINE_COLOR' 				=> stripslashes($severities[$bug->get_severity()]['color']),
+				'PROGRESS' 					=> $bug->get_progress(),
+				'STATUS'					=> $this->lang['bugs.labels.fields.status'] . ' : ' . $this->lang['bugs.status.' . $bug->get_status()],
 				'NUMBER_COMMENTS'			=> (int) $row['number_comments'],
 				'L_COMMENTS'				=> $row['number_comments'] <= 1 ? LangLoader::get_message('comment', 'comments-common') : LangLoader::get_message('comments', 'comments-common'),
-				'DATE' 						=> gmdate_format($config->get_date_form(), $row['submit_date']),
+				'DATE' 						=> gmdate_format($config->get_date_form(), $bug->get_submit_date()),
 				'AUTHOR'					=> $author->get_pseudo(),
 				'AUTHOR_LEVEL_CLASS'		=> UserService::get_level_class($author->get_level()),
 				'AUTHOR_GROUP_COLOR'		=> $author_group_color,
 				'LINK_AUTHOR_PROFILE'		=> UserUrlBuilder::profile($author->get_id())->rel(),
-				'LINK_BUG_DETAIL'			=> BugtrackerUrlBuilder::detail($row['id'] . '/' . Url::encode_rewrite($row['title']))->rel(),
-				'LINK_BUG_REOPEN_REJECT'	=> BugtrackerUrlBuilder::reject($row['id'], 'unsolved', $current_page, (!empty($filter) ? $filter : ''), (!empty($filter) ? $filter_id : ''))->rel(),
-				'LINK_BUG_EDIT'				=> BugtrackerUrlBuilder::edit($row['id'] . '/unsolved/' . $current_page . (!empty($filter) ? '/' . $filter . '/' . $filter_id : ''))->rel(),
-				'LINK_BUG_HISTORY'			=> BugtrackerUrlBuilder::history($row['id'])->rel(),
-				'LINK_BUG_DELETE'			=> BugtrackerUrlBuilder::delete($row['id'], 'unsolved', $current_page, (!empty($filter) ? $filter : ''), (!empty($filter) ? $filter_id : ''))->rel(),
-				'LINK_COMMENTS'				=> BugtrackerUrlBuilder::detail($row['id'] . '/#comments_list')->rel()
+				'LINK_BUG_DETAIL'			=> BugtrackerUrlBuilder::detail($bug->get_id() . '/' . Url::encode_rewrite($bug->get_title()))->rel(),
+				'LINK_BUG_REOPEN_REJECT'	=> BugtrackerUrlBuilder::reject($bug->get_id(), 'unsolved', $current_page, (!empty($filter) ? $filter : ''), (!empty($filter) ? $filter_id : ''))->rel(),
+				'LINK_BUG_EDIT'				=> BugtrackerUrlBuilder::edit($bug->get_id() . '/unsolved/' . $current_page . (!empty($filter) ? '/' . $filter . '/' . $filter_id : ''))->rel(),
+				'LINK_BUG_HISTORY'			=> BugtrackerUrlBuilder::history($bug->get_id())->rel(),
+				'LINK_BUG_DELETE'			=> BugtrackerUrlBuilder::delete($bug->get_id(), 'unsolved', $current_page, (!empty($filter) ? $filter : ''), (!empty($filter) ? $filter_id : ''))->rel(),
+				'LINK_COMMENTS'				=> BugtrackerUrlBuilder::detail($bug->get_id() . '/#comments_list')->rel()
 			));
 		}
 		
@@ -159,7 +163,6 @@ class BugtrackerUnsolvedListController extends ModuleController
 			'BUGS_COLSPAN' 				=> BugtrackerAuthorizationsService::check_authorizations()->moderation() ? 5 : 4,
 			'L_NO_BUG' 					=> empty($filters) ? $this->lang['bugs.notice.no_bug'] : (sizeof($filters) > 1 ? $this->lang['bugs.notice.no_bug_matching_filters'] : $this->lang['bugs.notice.no_bug_matching_filter']),
 			'L_DATE'					=> $this->lang['bugs.labels.detected'],
-			'L_REOPEN_REJECT'			=> $this->lang['bugs.actions.reject'],
 			'PICT_REOPEN_REJECT'		=> 'unvisible.png',
 			'REOPEN_REJECT_CONFIRM'		=> 'reject',
 			'FILTER_LIST'				=> BugtrackerViews::build_filters('unsolved', $bugs_number),
