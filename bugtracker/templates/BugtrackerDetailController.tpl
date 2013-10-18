@@ -19,10 +19,10 @@
 		{@bugs.titles.bugs_treatment_state}
 		&nbsp;
 		# IF C_REOPEN_BUG #
-			<a href="{LINK_BUG_REOPEN}" onclick="javascript:return Confirm_reopen();" class="pbt-icon-bugtracker-opened" title="{@bugs.actions.reopen}"></a>
+			<a href="{LINK_BUG_REOPEN}" onclick="javascript:return Confirm_reopen();" class="pbt-icon-bugtracker-rejected" title="{@bugs.actions.reopen}"></a>
 		# ENDIF #
 		# IF C_REJECT_BUG #
-			<a href="{LINK_BUG_REJECT}" onclick="javascript:return Confirm_reject();" class="pbt-icon-bugtracker-rejected" title="{@bugs.actions.reject}"></a>
+			<a href="{LINK_BUG_REJECT}" onclick="javascript:return Confirm_reject();" class="pbt-icon-bugtracker-opened" title="{@bugs.actions.reject}"></a>
 		# ENDIF #
 		# IF C_EDIT_BUG #
 			<a href="{LINK_BUG_EDIT}" title="${LangLoader::get_message('edit', 'main')}" class="edit"></a>

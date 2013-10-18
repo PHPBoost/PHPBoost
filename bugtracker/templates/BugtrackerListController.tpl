@@ -73,7 +73,7 @@ function Confirm(action) {
 		</td>
 		# IF C_IS_ADMIN #
 		<td # IF bug.C_LINE_COLOR # style="background-color:{bug.LINE_COLOR};"# ENDIF #> 
-			<a href="{bug.LINK_BUG_REOPEN_REJECT}" onclick="javascript:return Confirm(${escapejs(REOPEN_REJECT_CONFIRM)});" class="pbt-icon-bugtracker-opened" title="{@bugs.actions.reopen}"></a>
+			<a href="{bug.LINK_BUG_REOPEN_REJECT}" onclick="javascript:return Confirm(${escapejs(REOPEN_REJECT_CONFIRM)});" # IF bug.C_RESOLVED #class="pbt-icon-bugtracker-rejected" title="{@bugs.actions.reopen}"# ELSE #class="pbt-icon-bugtracker-opened" title="{@bugs.actions.reject}"# ENDIF #></a>
 			<a href="{bug.LINK_BUG_EDIT}" title="${LangLoader::get_message('edit', 'main')}" class="edit"></a>
 			<a href="{bug.LINK_BUG_HISTORY}" class="pbt-icon-bugtracker-history" title="{@bugs.actions.history}"></a>
 			<a href="{bug.LINK_BUG_DELETE}" title="${LangLoader::get_message('delete', 'main')}" class="delete"></a>
