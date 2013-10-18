@@ -6,8 +6,12 @@
 		<![endif]-->
 		<script type="text/javascript">
 		<!-- 
-			$$('.delete').each(function(a) {
-				a.onclick = function () { return confirm('${LangLoader::get_message('confirm.delete', 'errors-common')}'); }
+			$$('.delete:not([data-confirmation=false]').each(function(a) {
+				var message = ${escapejs(LangLoader::get_message('confirm.delete', 'errors-common'))};
+				var data_message = a.readAttribute('data-message');
+				if (data_message != null)
+					var message = data_message;
+				a.onclick = function () { return confirm(message); }
 			}); 
 		-->
 		</script>

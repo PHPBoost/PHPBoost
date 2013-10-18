@@ -34,7 +34,7 @@
 			<a href="#" class="biggest">Lien très grand</a> <br /><br />
 		</div>
 		
-		<h5>Couleur selon rangs de l'utilisateur</h5><br />
+		<h5>Couleur selon rang de l'utilisateur</h5><br />
 		<div class="content">
 			<a href="#" class="admin">Administrateur</a> <br />
 			<a href="#" class="modo">Modérateur</a> <br />
@@ -59,7 +59,9 @@
 			<ul>
 				<li>Flux RSS : <a href="#" class="syndication"></a></li>
 				<li>Editer : <a href="#" class="edit"></a></li>
+				<li>Supprimer : <a href="#" class="delete" data-confirmation="false"></a></li>
 				<li>Supprimer (contrôle automatique JS avec confirmation) : <a href="#" class="delete"></a></li>
+				<li>Supprimer (contrôle automatique JS avec confirmation personnalisé) : <a href="#" class="delete" data-message="Message personnalisé"></a></li>
 			</ul>
 		</div>
 		
