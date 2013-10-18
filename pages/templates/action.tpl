@@ -31,7 +31,7 @@
 			# END redirections.list #
 			# START redirections.no_redirection #
 			<tr>
-				<td colspan="3" style="text-align:center;">	
+				<td colspan="3">	
 					{redirections.no_redirection.MESSAGE}
 				</td>
 			</tr>
