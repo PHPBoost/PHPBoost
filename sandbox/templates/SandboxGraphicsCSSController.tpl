@@ -61,7 +61,7 @@
 				<li>Editer : <a href="#" class="edit"></a></li>
 				<li>Supprimer : <a href="#" class="delete" data-confirmation="false"></a></li>
 				<li>Supprimer (contrôle automatique JS avec confirmation) : <a href="#" class="delete"></a></li>
-				<li>Supprimer (contrôle automatique JS avec confirmation personnalisé) : <a href="#" class="delete" data-message="Message personnalisé"></a></li>
+				<li>Supprimer (contrôle automatique JS avec confirmation personnalisée) : <a href="#" class="delete" data-message="Message personnalisé"></a></li>
 			</ul>
 		</div>
 		
