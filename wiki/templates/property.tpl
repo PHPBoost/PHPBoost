@@ -224,50 +224,47 @@
 		</form>
 		# END rename #
 
-
+		
 		# START redirect #
-		<table class="module_table">
-			<tr>
-				<th colspan="2">
-					{redirect.L_TITLE}
-				</th>
-			</tr>
-			<tr>
-				<td class="row1" style="text-align:center;">
-					{L_REDIRECTION_NAME}
-				</td>
-				<td class="row2" style="text-align:center; width:100px;">
-					{L_REDIRECTION_ACTIONS}
-				</td>
-			</tr>
-			# START redirect.list #
-			<tr>
-				<td class="row1">
-					{redirect.list.REDIRECTION_NAME}
-				</td>
-				<td class="row2" style="text-align:center;">
-					<a href="{redirect.list.U_REDIRECTION_DELETE}" title="{REDIRECTION_DELETE}" onclick='javascript:return confirm("{L_ALERT_DELETE_REDIRECTION}");'><img src="{PICTURES_DATA_PATH}/images/delete_article.png" alt="{REDIRECTION_DELETE}" /></a>
-				</td>
-			</tr>
-			# END redirect.list #
-			# START redirect.no_redirection #
-			<tr>
-				<td class="row1" colspan="2" style="text-align:center;">
-					{redirect.no_redirection.L_NO_REDIRECTION}
-				</td>
-			</tr>
-			# END redirect.no_redirection #
-		</table>
-		<br />
-		<table class="module_table">
-			<tr>
-				<td class="row1">
-					{L_CREATE_REDIRECTION}
-				</td>
-				<td class="row2" style="text-align:center;">
-					<a href="{U_CREATE_REDIRECTION}" title="{L_CREATE_REDIRECTION}"><img src="{PICTURES_DATA_PATH}/images/create_redirection.png" alt="{L_CREATE_REDIRECTION}" /></a>
-				</td>
-			</tr>
+		{redirect.L_TITLE}
+		<table>
+			<thead>
+				<tr>
+					<th>
+						{L_REDIRECTION_NAME}
+					</th>
+					<th>
+						{L_REDIRECTION_ACTIONS}
+					</th>
+				</tr>
+			</thead>
+			<tfoot>
+				<tr>
+					<th colspan="2">
+						{L_CREATE_REDIRECTION}
+						<a href="{U_CREATE_REDIRECTION}" title="{L_CREATE_REDIRECTION}"><img src="{PICTURES_DATA_PATH}/images/create_redirection.png" alt="{L_CREATE_REDIRECTION}" /></a>
+					</th>
+				</tr>
+			</tfoot>
+			<tbody>
+				# START redirect.list #
+				<tr>
+					<td>
+						{redirect.list.REDIRECTION_NAME}
+					</td>
+					<td>
+						<a href="{redirect.list.U_REDIRECTION_DELETE}" title="{REDIRECTION_DELETE}" onclick='javascript:return confirm("{L_ALERT_DELETE_REDIRECTION}");'><img src="{PICTURES_DATA_PATH}/images/delete_article.png" alt="{REDIRECTION_DELETE}" /></a>
+					</td>
+				</tr>
+				# END redirect.list #
+				# START redirect.no_redirection #
+				<tr>
+					<td>
+						{redirect.no_redirection.L_NO_REDIRECTION}
+					</td>
+				</tr>
+				# END redirect.no_redirection #
+			</tbody>
 		</table>
 		# END redirect #
 
