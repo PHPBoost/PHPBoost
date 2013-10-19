@@ -185,6 +185,8 @@ $LANG['flood_block'] = 'Il vous reste %d essai(s). Après cela il vous faudra att
 $LANG['flood_max'] = 'Vous avez épuisé tous vos essais de connexion, votre compte est verrouillé pendant 5 minutes';
 
 //Rang
+$LANG['upload_rank_format'] = 'JPG, GIF, PNG, BMP autorisés';
+$LANG['rank'] = 'Rang';
 $LANG['guest'] = 'Visiteur';
 $LANG['a_member'] = 'membre';
 $LANG['member'] = 'Membre';
