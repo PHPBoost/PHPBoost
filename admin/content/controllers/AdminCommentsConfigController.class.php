@@ -72,25 +72,6 @@ class AdminCommentsConfigController extends AdminController
 		$fieldset = new FormFieldsetHTML('comments-config', $this->lang['comments.config']);
 		$form->add_fieldset($fieldset);
 		
-		$fieldset->add_field(new FormFieldCheckbox('display_captcha', $this->lang['comments.config.display-captcha'], $this->configuration->get_display_captcha(), 
-		array('events' => array('change' => '
-				if (HTMLForms.getField("display_captcha").getValue()) { 
-					HTMLForms.getField("captcha_difficulty").enable(); 
-				} else { 
-					HTMLForms.getField("captcha_difficulty").disable(); 
-				}'
-		))));
-		
-		$fieldset->add_field(new FormFieldSimpleSelectChoice('captcha_difficulty', $this->lang['comments.config.captcha-difficulty'], $this->configuration->get_captcha_difficulty(),
-			array(
-				new FormFieldSelectChoiceOption('0', '0'),
-				new FormFieldSelectChoiceOption('1', '1'),
-				new FormFieldSelectChoiceOption('2', '2'),
-				new FormFieldSelectChoiceOption('3', '3'),
-				new FormFieldSelectChoiceOption('4', '4'),
-			), array('hidden' => !$this->configuration->get_display_captcha())
-		));
-		
 		$fieldset->add_field(new FormFieldTextEditor('number_comments_display', $this->lang['comments.config.number-comments-display'], $this->configuration->get_number_comments_display(), array(
 			'class' => 'text', 'maxlength' => 4, 'size' => 4, 'required' => true),
 			array(new FormFieldConstraintRegex('`^([0-9]+)$`i', '`^([0-9]+)$`i', $this->lang['number-required']))
@@ -133,14 +114,7 @@ class AdminCommentsConfigController extends AdminController
 
 	private function save()
 	{
-		$this->configuration->set_authorizations($this->form->get_value('authorizations')->build_auth_array());
-		$this->configuration->set_display_captcha($this->form->get_value('display_captcha'));
-		
-		if (!$this->form->field_is_disabled('captcha_difficulty'))
-		{
-			$this->configuration->set_captcha_difficulty($this->form->get_value('captcha_difficulty')->get_raw_value());
-		}
-		
+		$this->configuration->set_authorizations($this->form->get_value('authorizations')->build_auth_array());		
 		$this->configuration->set_number_comments_display($this->form->get_value('number_comments_display'));
 		
 		$forbidden_tags = array();
