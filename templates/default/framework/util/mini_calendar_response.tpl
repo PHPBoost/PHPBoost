@@ -1,4 +1,4 @@
-<table class="module_table date-picker" style="width: 205px;"> 
+<table class="date-picker" style="width: 205px;"> 
 	<tr>
 		<th>
 			<a href="javascript:xmlhttprequest_calendar('{FIELD}', '?{U_PREVIOUS}');"><i class="icon-caret-left icon-large"></i></a>
