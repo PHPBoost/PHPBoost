@@ -185,6 +185,8 @@ $LANG['flood_block'] = 'Rest %d test(s) after that you will have to wait 5 minut
 $LANG['flood_max'] = 'You exhausted all your tests of connection, your account is locked during 5 minutes';
 
 //Rank
+$LANG['upload_rank_format'] = 'JPG, GIF, PNG, BMP authorized';
+$LANG['rank'] = 'Rank';
 $LANG['guest'] = 'Guest';
 $LANG['a_member'] = 'member';
 $LANG['member'] = 'Member';
