@@ -126,10 +126,6 @@ class AdminManageCalendarEventsController extends AdminModuleController
 		{
 			$this->view->put_all(array(
 				'C_PAGINATION' => $events_number > $pagination->get_number_items_per_page(),
-				'L_EDIT' => $main_lang['edit'],
-				'L_DELETE' => $main_lang['delete'],
-				'L_YES' => $main_lang['yes'],
-				'L_NO' => $main_lang['no'],
 				'PAGINATION' => $pagination->display()
 			));
 			
@@ -155,8 +151,7 @@ class AdminManageCalendarEventsController extends AdminModuleController
 		
 		$this->view->put_all(array(
 			'C_EVENTS' => $events_number,
-			'FORM' => $this->form->display(),
-			'U_ADD' => CalendarUrlBuilder::add_event()->rel()
+			'FORM' => $this->form->display()
 		));
 	}
 	
