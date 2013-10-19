@@ -61,10 +61,10 @@
 				<span class="smaller">{articles.PUBLISHED_DATE}</span>
 			</td>
 			<td> 
-				<a href="{articles.U_EDIT_ARTICLE}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="{articles.L_EDIT_ARTICLE}" title="{articles.L_EDIT_ARTICLE}" /></a>
+				<a href="{articles.U_EDIT_ARTICLE}" title="{articles.L_EDIT_ARTICLE}" class="edit"></a>
 			</td>
 			<td>
-				<a href="{articles.U_DELETE_ARTICLE}" onclick="javascript:return Confirm();"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{articles.L_DELETE_ARTICLE}" title="{articles.L_DELETE_ARTICLE}" /></a>
+				<a href="{articles.U_DELETE_ARTICLE}" title="{articles.L_DELETE_ARTICLE}" class="delete"></a>
 			</td>
 		</tr>
 		# END articles #

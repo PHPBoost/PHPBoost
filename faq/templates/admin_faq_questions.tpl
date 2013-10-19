@@ -72,10 +72,10 @@
 								{question.DATE}
 							</td>
 							<td>
-								<a href="{question.U_EDIT}" title="{L_EDIT}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="{L_EDIT}" /></a>
+								<a href="{question.U_EDIT}" title="{L_EDIT}" class="edit"></a>
 							</td>
 							<td>
-								<a href="{question.U_DEL}" onclick="return confirm('{L_CONFIRM_DELETE}');" title="{L_DELETE}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" /></a>
+								<a href="{question.U_DEL}" title="{L_DELETE}" class="delete"></a>
 							</td>
 						</tr>
 					# END question #

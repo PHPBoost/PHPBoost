@@ -17,9 +17,6 @@
 			return true;
 		}
 
-		function Confirm() {
-			return confirm("{L_CONFIRM_DEL_USER_GROUP}");
-		}
 		function img_change(url)
 		{
 			if( document.images && url != '' )
@@ -232,7 +229,7 @@
 							<a href="{member.U_PROFILE}" class="{member.LEVEL_CLASS}" # IF member.C_GROUP_COLOR # style="color:{member.GROUP_COLOR}" # ENDIF #>{member.LOGIN}</a>
 						</td>
 						<td>
-							<a href="admin_groups.php?del_mbr=1&amp;id={GROUP_ID}&amp;user_id={member.USER_ID}&amp;token={TOKEN}" onclick="javascript:return Confirm();"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" /></a>
+							<a href="admin_groups.php?del_mbr=1&amp;id={GROUP_ID}&amp;user_id={member.USER_ID}&amp;token={TOKEN}" class="delete"></a>
 						</td>
 					</tr>
 					# END member #

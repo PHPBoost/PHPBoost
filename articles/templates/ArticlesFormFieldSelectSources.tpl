@@ -14,7 +14,7 @@ var ArticlesFormFieldSelectSources = Class.create({
 			var input = new Element('input', {'type' : 'text', 'id' : 'field_value_' + id, 'name' : 'field_value_' + id, 'class' : 'text', 'size' : '30'});
 			$('input_fields_' + this.id_input).insert(input);
 			
-			var delete_input = new Element('a', {href : 'javascript:ArticlesFormFieldSelectSources.delete_field('+ this.integer +');', 'id' : 'delete_' + id}).update('<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="" class="valign_middle" />');
+			var delete_input = new Element('a', {href : 'javascript:ArticlesFormFieldSelectSources.delete_field('+ this.integer +');', 'id' : 'delete_' + id, 'class' : 'delete'});
 			$('input_fields_' + this.id_input).insert(delete_input);
 			
 			var br = new Element('br', {'id' : 'br_' + id});
@@ -46,7 +46,7 @@ var ArticlesFormFieldSelectSources = new ArticlesFormFieldSelectSources();
 	<div style="float:left;width:84%;display:inline;padding-bottom:5px;color:#334455;font-weight:bold;"><span style="width:50%;margin:0 75px 0 40px;">${i18n('articles.form.source_name')}</span><span style="width:50%;">${i18n('articles.form.source_url')}</span></div>
 	<input type="text" name="field_name_${escape(ID)}_{fieldelements.ID}" id="field_name_${escape(ID)}_{fieldelements.ID}" value="{fieldelements.NAME}" size="30" class="text">
 	<input type="text" name="field_value_${escape(ID)}_{fieldelements.ID}" id="field_value_${escape(ID)}_{fieldelements.ID}" value="{fieldelements.VALUE}" size="30" class="text"/>
-	<a href="javascript:ArticlesFormFieldSelectSources.delete_field({fieldelements.ID});" id="delete_${escape(ID)}_{fieldelements.ID}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="" class="valign_middle" /></a>
+	<a href="javascript:ArticlesFormFieldSelectSources.delete_field({fieldelements.ID});" id="delete_${escape(ID)}_{fieldelements.ID}" class="delete"></a>
 	<br id="br_${escape(ID)}_{fieldelements.ID}">
 # END fieldelements #
 </div>

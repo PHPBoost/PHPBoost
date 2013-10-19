@@ -155,7 +155,7 @@
 							# ELSE #
 							<a href="javascript:change_alert_status('{alerts.ID}', '{alerts.STATUS}');" title="{L_FIX}" id="status_{alerts.ID}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/not_processed_mini.png" alt="{L_FIX}" /></a>
 							# ENDIF #
-							<a href="javascript:delete_alert('{alerts.ID}');" title="{L_DELETE}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" /></a>
+							<a href="javascript:delete_alert('{alerts.ID}');" title="{L_DELETE}" class="delete"></a>
 						</td>			
 					</tr>
 					# END alerts #

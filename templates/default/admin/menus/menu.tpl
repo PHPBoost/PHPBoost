@@ -8,14 +8,10 @@
 		
 		<img src="{PATH_TO_ROOT}/templates/default/images/drag.png" alt="{L_EDIT}" class="valign_middle" />
 		# IF C_EDIT #
-			<a href="{U_EDIT}" title="{L_EDIT}">
-				<img src="{PATH_TO_ROOT}/templates/{THEME}/images/french/edit.png" alt="{L_EDIT}" class="valign_middle" />
-			</a>
+			<a href="{U_EDIT}" title="{L_EDIT}" class="edit"></a>
 		# ENDIF #
 		# IF C_DEL #
-			<a href="{U_DELETE}" title="{L_DEL}" onclick="javascript:return Confirm_menu();">
-				<img src="{PATH_TO_ROOT}/templates/{THEME}/images/french/delete.png" alt="{L_DEL}" class="valign_middle" />
-			</a>
+			<a href="{U_DELETE}" title="{L_DEL}" class="delete"></a>
 		# ENDIF #
 		
 		<a href="menus.php?action={ACTIV}&amp;id={IDMENU}&amp;token={TOKEN}#m{IDMENU}" title="# IF C_MENU_ACTIVATED #{L_UNACTIVATE}# ELSE #{L_ACTIVATE}# ENDIF #">

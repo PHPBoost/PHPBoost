@@ -1,8 +1,8 @@
 <li id="cat_{ID}" class="cat_element">
 	<div class="cat_title"> 
 		<div class="cat_action_admin">
-			<a href="{U_EDIT}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="{L_EDIT}" title="{L_EDIT}" class="valign_middle"></a>
-			<a href="{U_DELETE}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" class="valign_middle"></a>
+			<a href="{U_EDIT}" title="{L_EDIT}" class="edit"></a>
+			<a href="{U_DELETE}" title="{L_DELETE}" class="delete"></a>
 		</div>
 		<img src="{PATH_TO_ROOT}/templates/default/images/drag.png" alt="Drag&Drop" class="valign_middle drag" >
 		<img src="{PATH_TO_ROOT}/templates/{THEME}/images/url.png" alt="Url" class="valign_middle"> 

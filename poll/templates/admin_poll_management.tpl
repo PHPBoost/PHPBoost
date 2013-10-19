@@ -1,11 +1,3 @@
-		<script type="text/javascript">
-		<!--
-		function Confirm() {
-		return confirm("{L_CONFIRM_ERASE_POOL}");
-		}
-		-->
-		</script>
-		
 		<div id="admin_quick_menu">
 			<ul>
 				<li class="title_menu">{L_POLL_MANAGEMENT}</li>
@@ -92,10 +84,10 @@
 							<span class="smaller">{questions.VISIBLE}</span>
 						</td>
 						<td> 
-							<a href="admin_poll.php?id={questions.IDPOLL}"><img src="../templates/{THEME}/images/{LANG}/edit.png" alt="{L_UPDATE}" title="{L_UPDATE}" /></a>
+							<a href="admin_poll.php?id={questions.IDPOLL}" title="{L_UPDATE}" class="edit"></a>
 						</td>
 						<td>
-							<a href="admin_poll.php?delete=true&amp;id={questions.IDPOLL}&amp;token={TOKEN}" onclick="javascript:return Confirm();"><img src="../templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" /></a>
+							<a href="admin_poll.php?delete=true&amp;id={questions.IDPOLL}&amp;token={TOKEN}" title="{L_DELETE}" class="delete"></a>
 						</td>
 					</tr>
 					# END questions #

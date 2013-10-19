@@ -25,9 +25,7 @@
             <td class="row2"><a href="{errors.FROM_URL}" title="{@404_error_from_url}">{errors.FROM_URL}</a></td>
             <td class="row2" style="text-align: center;">{errors.TIMES}</td>
             <td class="row2" style="text-align: center;">
-                <a href="{errors.U_DELETE}" title="{@404_error_delete}" onclick="javascript:return confirmDelete();">
-                    <img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{@404_error_delete}" />
-                </a>
+                <a href="{errors.U_DELETE}" title="{@404_error_delete}" class="delete"></a>
             </td>
 		</tr>
 		# END errors #
@@ -38,9 +36,6 @@
 <!--
 function confirmClear() {
     return confirm(${i18njs('404_errors_clear_confirmation')});
-}
-function confirmDelete() {
-    return confirm(${i18njs('404_error_delete_confirmation')});
 }
 -->
 </script>

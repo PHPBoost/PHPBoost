@@ -14,7 +14,7 @@
 					'<option value="{modules.ID}">{modules.ID}</option>' +
 					# END modules #
 					'</select> / <input type="text" name="f' + new_id + '" id="f' + new_id + '" value="" size="25">' +
-					' &nbsp;<a href="javascript:delete_filter(' + new_id + ');"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="" class="valign_middle" /></a>' +
+					' &nbsp;<a href="javascript:delete_filter(' + new_id + ');" class="delete"></a>' +
 					'</p><span id="add_filter' + new_id + '"></span>';
 			}
 			function delete_filter(id) {
@@ -43,7 +43,7 @@
 							# END filters.modules #
 						</select>
 						/ <input type="text" name="f{filters.ID}" id="f{filters.ID}" value="{filters.FILTER}" size="25">
-						&nbsp;<a href="javascript:delete_filter({filters.ID});"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="" class="valign_middle" /></a>
+						&nbsp;<a href="javascript:delete_filter({filters.ID});" class="delete"></a>
 					</p>
 					# END filters #
 					

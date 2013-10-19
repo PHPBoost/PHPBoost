@@ -14,9 +14,7 @@
 			{GROUP_NAME}
 			# IF C_ADMIN #
 				&nbsp;&nbsp;
-				<a href="{U_ADMIN_GROUPS}" >
-					<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" class="valign_middle" />
-				</a>
+				<a href="{U_ADMIN_GROUPS}" class="edit"></a>
 			# ENDIF #
 		</th>
 	</tr>

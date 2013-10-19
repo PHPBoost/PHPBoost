@@ -30,8 +30,8 @@
 		<tr>
 			# START news #
 				<td> 
-					<a href="{news.EDIT_LINK}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" /></a>
-					<a href="{news.DELETE_LINK}" onclick="javascript:Confirm();"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" /></a>
+					<a href="{news.EDIT_LINK}" title="${LangLoader::get_message('edit', 'main')}" class="edit"></a>
+					<a href="{news.DELETE_LINK}" title="${LangLoader::get_message('delete', 'main')}" class="delete"></a>
 				</td>
 				<td>
 					{news.NAME}
