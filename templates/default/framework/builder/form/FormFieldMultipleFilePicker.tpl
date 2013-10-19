@@ -28,14 +28,8 @@ var MultipleFilePicker = new MultipleFilePicker();
 	<input type="file" name="${escape(ID)}_1" id="${escape(ID)}_1" # IF C_DISABLED # disabled="disabled" # ENDIF #></br>
 	<input name="max_file_size" value="{MAX_FILE_SIZE}" type="hidden">
 </div>
-<i class="pbt-icon-plus" id="add_${escape(ID)}"></i>
+<a href="javascript:MultipleFilePicker.add_file_input();" class="pbt-icon-plus" id="add_${escape(ID)}"></a>
 <script type="text/javascript">
 <!--
 $("${escape(ID)}_1").form.enctype = "multipart/form-data";
-Event.observe(window, 'load', function() {		
-	$('add_${escape(ID)}').observe('click',function(){
-		MultipleFilePicker.add_file_input();
-	});
-});
--->
 </script>
