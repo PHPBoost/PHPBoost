@@ -15,9 +15,7 @@
 			<td class="row2">{menu_configuration.E_MATCH_REGEX}</td>
 			<td class="row2" style="text-align: center;"><a
 				href="{menu_configuration.U_EDIT}"
-				title="{L_MENU_CONFIGURATION_EDIT}"> <img
-				src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png"
-				alt="{L_MENU_CONFIGURATION_EDIT}" /> </a></td>
+				title="{L_MENU_CONFIGURATION_EDIT}" class="edit"></a></td>
 		</tr>
 		# END menu_configuration #
 	</tbody>

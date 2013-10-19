@@ -200,9 +200,6 @@
 				}
 			}
 		}
-		function Confirm() {
-			return confirm("{L_CONFIRM_DEL}");
-		}
 		-->
 		</script>
 
@@ -260,7 +257,7 @@
 										&nbsp;&nbsp;<img src="{PICTURES_DATA_PATH}/images/folder.png" alt="" style="vertical-align:middle" /> &nbsp;<a href="gallery.php" class="gallery_link_cat">{L_ROOT}</a>
 									</span>
 									<span style="float:right;">
-										<a href="admin_gallery_cat.php?root=1"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="" class="valign_middle" /></a>&nbsp;&nbsp;
+										<a href="admin_gallery_cat.php?root=1" class="edit"></a>&nbsp;&nbsp;
 									</span>&nbsp;
 								</div>	
 							</div>
@@ -288,7 +285,7 @@
 											</script>										
 											<noscript><a href="admin_gallery_cat.php?id={list.ID}&amp;move=down&amp;token={TOKEN}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a></noscript>
 											
-											<a href="admin_gallery_cat.php?id={list.ID}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="{L_EDIT_CAT}" title="{L_EDIT_CAT}" class="valign_middle" /></a> <a href="admin_gallery_cat.php?del={list.ID}&amp;token={TOKEN}" onclick="javascript:return Confirm();"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="" class="valign_middle" /></a>&nbsp;&nbsp;
+											<a href="admin_gallery_cat.php?id={list.ID}" title="{L_EDIT_CAT}" class="edit"><a href="admin_gallery_cat.php?del={list.ID}&amp;token={TOKEN}" class="delete"></a>&nbsp;&nbsp;
 										</span>&nbsp;
 									</div>	
 								</div>

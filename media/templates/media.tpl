@@ -1,9 +1,7 @@
 		# IF C_CATEGORIES #
 			<div class="module_actions">
 				# IF C_ADMIN #
-					<a href="{U_ADMIN_CAT}" class="img_link" title="{L_EDIT}">
-						<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="">
-					</a>
+					<a href="{U_ADMIN_CAT}" class="img_link" title="{L_EDIT}" class="edit"></a>
 				# END IF #
 				# IF C_MODO #
 					<a href="{PATH_TO_ROOT}/media/moderation_media.php" class="img_link" title="{L_MODO_PANEL}">

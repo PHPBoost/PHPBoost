@@ -62,13 +62,9 @@
 						# ENDIF #
 					# ENDIF #
 					
-					<a href="{categories.ACTION_EDIT}">
-						<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="" class="valign_middle" />
-					</a>&nbsp;
+					<a href="{categories.ACTION_EDIT}" class="edit"></a>&nbsp;
 					
-					<a href="{categories.ACTION_DELETE}" title="{L_CONFIRM_DELETE}" onclick="return confirm('{L_CONFIRM_DELETE}');">
-						<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="" class="valign_middle" />
-					</a>
+					<a href="{categories.ACTION_DELETE}" title="{L_CONFIRM_DELETE}" class="delete"></a>
 					&nbsp;&nbsp;
 				</span>
 				&nbsp;

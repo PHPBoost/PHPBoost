@@ -167,9 +167,9 @@
 						{pm.msg.U_QUOTE}
 						&nbsp; 						
 						# IF pm.msg.C_MODERATION_TOOLS #
-						<a href="pm.php?edit={pm.msg.ID}" title="{L_EDIT}"><img src="../templates/{THEME}/images/{LANG}/edit.png" alt="" /></a>
+						<a href="pm.php?edit={pm.msg.ID}" title="{L_EDIT}" class="edit">/a>
 						&nbsp;&nbsp;
-						<a href="pm.php?del={pm.msg.ID}&amp;token={TOKEN}" title="{L_DELETE}"  onclick="javascript:return Confirm_pm();"><img src="../templates/{THEME}/images/{LANG}/delete.png" alt="" /></a>
+						<a href="pm.php?del={pm.msg.ID}&amp;token={TOKEN}" title="{L_DELETE}" class="delete"></a>
 						&nbsp;&nbsp;
 						# ENDIF #
 					</div>

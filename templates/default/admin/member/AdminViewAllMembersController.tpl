@@ -1,15 +1,3 @@
-		<script type="text/javascript">
-		<!--
-		function Confirm(level) {
-			ok = confirm("{L_CONFIRM_DEL_USER}");
-			if (ok && (level == 2)) {
-				return confirm("{L_CONFIRM_DEL_ADMIN}");
-			}
-			return ok;
-		}
-		-->
-		</script>
-		
 		# INCLUDE FORM #
 		
 		{L_USERS_MANAGEMENT}
@@ -61,8 +49,8 @@
 				# START member_list #
 				<tr> 
 					<td> 
-						<a href="{member_list.EDIT_LINK}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="{L_UPDATE}" title="{L_UPDATE}" /></a>
-						<a href="{member_list.DELETE_LINK}" onclick="javascript:return Confirm({member_list.LEVEL});"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" /></a>
+						<a href="{member_list.EDIT_LINK}" title="{L_UPDATE}" class="edit"></a>
+						<a href="{member_list.DELETE_LINK}" title="{L_DELETE}" class="delete"></a>
 					</td>
 					<td>
 						<a href="{member_list.U_PROFILE}" class="{member_list.LEVEL_CLASS}" # IF member_list.C_GROUP_COLOR # style="color:{member_list.GROUP_COLOR}" # ENDIF #>{member_list.LOGIN}</a>

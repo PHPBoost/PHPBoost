@@ -202,7 +202,7 @@
 							<a onclick="javascript:return Confirm_truncate_table()" style="color:red;" href="admin_database_tools.php?table={TABLE_NAME}&amp;action=truncate&amp;token={TOKEN}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/upload/trash_mini.png"/> {L_TRUNCATE}</a>
 						</li>
 						<li>
-							<a onclick="javascript:return Confirm_del_table()" style="color:red;" href="admin_database_tools.php?table={TABLE_NAME}&amp;action=drop&amp"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png"/> {L_DELETE}</a>
+							<a onclick="javascript:return Confirm_del_table()" style="color:red;" href="admin_database_tools.php?table={TABLE_NAME}&amp;action=drop&amp" class="delete">{L_DELETE}</a>
 						</li>
 					</ul>
 				</menu>
@@ -346,13 +346,6 @@
 
 			
 			# IF C_DATABASE_FILES #
-				<script type="text/javascript">
-				<!--
-				function Confirm_del() {
-					return confirm("{L_CONFIRM_DEL}");
-				}
-				-->	
-				</script>
 				<table class="module_table">
 					<tr> 
 						<th colspan="4">
@@ -391,7 +384,7 @@
 							{file.FILE_DATE}
 						</td>
 						<td class="row2" style="text-align:center;width:120px;">
-							<a href="admin_database.php?action=restore&amp;del={file.FILE_NAME}&amp;token={TOKEN}" onclick="javascript:return Confirm_del()"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="del" /></a>
+							<a href="admin_database.php?action=restore&amp;del={file.FILE_NAME}&amp;token={TOKEN}" class="delete"></a>
 						</td>
 					</tr>
 					# END file #

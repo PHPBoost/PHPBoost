@@ -70,8 +70,7 @@ class UserViewProfileController extends AbstractController
 				
 		if ($this->user->check_level(User::ADMIN_LEVEL))
 		{
-			$link_edit = '<a href="'. AdminMembersUrlBuilder::edit($user_id)->absolute() .'">
-			<img src="' . TPL_PATH_TO_ROOT . '/templates/'. get_utheme().'/images/'. get_ulang().'/edit.png" alt="'.$this->lang['profile.edit'].'" /></a>';
+			$link_edit = '<a href="'. AdminMembersUrlBuilder::edit($user_id)->absolute() .'" title="'.$this->lang['profile.edit'].'" class="edit"></a>';
 			$fieldset->add_field(new FormFieldFree('profile_edit', $this->lang['profile.edit'], $link_edit));
 		}
 

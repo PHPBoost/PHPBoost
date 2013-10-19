@@ -51,7 +51,7 @@
 							<a onclick="javascript:return Confirm_truncate_table()" style="color:red;" href="admin_database_tools.php?table={TABLE_NAME}&amp;action=truncate&amp;token={TOKEN}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/upload/trash_mini.png"/> {L_TRUNCATE}</a>
 						</li>
 						<li>
-							<a onclick="javascript:return Confirm_del_table()" style="color:red;" href="admin_database_tools.php?table={TABLE_NAME}&amp;action=drop&amp;token={TOKEN}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png"/> {L_DELETE}</a>
+							<a onclick="javascript:return Confirm_del_table()" style="color:red;" href="admin_database_tools.php?table={TABLE_NAME}&amp;action=drop&amp;token={TOKEN}" class="delete">{L_DELETE}</a>
 						</li>
 					</ul>
 				</menu>

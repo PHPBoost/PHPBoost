@@ -34,8 +34,8 @@
 		# START streams_list #
 		<tr style="text-align:center;">
 			<td> 
-				<a href="{streams_list.EDIT_LINK}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" /></a>
-				<a href="{streams_list.DELETE_LINK}" onclick="javascript:Confirm();"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" /></a>
+				<a href="{streams_list.EDIT_LINK}" class="edit"></a>
+				<a href="{streams_list.DELETE_LINK}" class="delete"></a>
 			</td>
 			<td>
 				{streams_list.NAME}

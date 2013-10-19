@@ -199,9 +199,6 @@
 				}
 			}
 		}
-		function Confirm() {
-			return confirm("{L_CONFIRM_DEL}");
-		}
 		-->
 		</script>
 
@@ -276,7 +273,7 @@
 											</script>										
 											<noscript><a href="admin_forum.php?id={list.ID}&amp;move=down&amp;token={TOKEN}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a></noscript>
 											
-											<a href="admin_forum.php?id={list.ID}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="" class="valign_middle" /></a> <a href="admin_forum.php?del={list.ID}&amp;token={TOKEN}" onclick="javascript:return Confirm();"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="" class="valign_middle" /></a>&nbsp;&nbsp;
+											<a href="admin_forum.php?id={list.ID}" class="edit"></a> <a href="admin_forum.php?del={list.ID}&amp;token={TOKEN}" class="delete"></a>&nbsp;&nbsp;
 										</span>&nbsp;
 									</div>	
 								</div>

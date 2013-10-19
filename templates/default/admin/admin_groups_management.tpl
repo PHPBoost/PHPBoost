@@ -1,11 +1,3 @@
-		<script type="text/javascript">
-		<!--
-		function Confirm() {
-		return confirm("{L_CONFIRM_DEL_GROUP}");
-		}
-		-->
-		</script>
-
 		<div id="admin_quick_menu">
 			<ul>
 				<li class="title_menu">{L_GROUPS_MANAGEMENT}</li>
@@ -61,10 +53,10 @@
 								{group.IMAGE}
 							</td>
 							<td> 
-								<a href="admin_groups.php?id={group.ID}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="{L_UPDATE}" title="{L_UPDATE}" /></a>
+								<a href="admin_groups.php?id={group.ID}" title="{L_UPDATE}" class="edit"></a>
 							</td>
 							<td>
-								<a href="admin_groups.php?del=1&amp;id={group.ID}&amp;token={TOKEN}" onclick="javascript:return Confirm();"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" /></a>
+								<a href="admin_groups.php?del=1&amp;id={group.ID}&amp;token={TOKEN}" title="{L_DELETE}" class="delete"></a>
 							</td>
 						</tr>
 						# END group #

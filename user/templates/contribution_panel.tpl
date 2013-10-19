@@ -167,8 +167,8 @@
 			<h1>{ENTITLED}</h1>
 			# IF C_WRITE_AUTH #
 			<span style="float:right;">
-				<a href="{U_UPDATE}" title="{L_UPDATE}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="{L_UPDATE}" /></a>
-				<a href="{U_DELETE}" onclick="return confirm('{L_CONFIRM_DELETE_CONTRIBUTION}');" title="{L_DELETE}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" /></a>
+				<a href="{U_UPDATE}" title="{L_UPDATE}" class="edit"></a>
+				<a href="{U_DELETE}" title="{L_DELETE}" class="delete"></a>
 			</span>
 			# ENDIF #
 		</header>
