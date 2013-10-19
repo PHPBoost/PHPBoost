@@ -169,9 +169,6 @@
 			# IF TABLE_NAME #
 			<script type="text/javascript">
 			<!--
-			function Confirm_del_table() {
-				return confirm("{L_CONFIRM_DELETE_TABLE}");
-			}
 			function Confirm_truncate_table() {
 				return confirm("{L_CONFIRM_TRUNCATE_TABLE}");
 			}
@@ -202,7 +199,7 @@
 							<a onclick="javascript:return Confirm_truncate_table()" style="color:red;" href="admin_database_tools.php?table={TABLE_NAME}&amp;action=truncate&amp;token={TOKEN}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/upload/trash_mini.png"/> {L_TRUNCATE}</a>
 						</li>
 						<li>
-							<a onclick="javascript:return Confirm_del_table()" style="color:red;" href="admin_database_tools.php?table={TABLE_NAME}&amp;action=drop&amp" class="delete">{L_DELETE}</a>
+							<a style="color:red;" href="admin_database_tools.php?table={TABLE_NAME}&amp;action=drop&amp" class="delete">{L_DELETE}</a>
 						</li>
 					</ul>
 				</menu>
