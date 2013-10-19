@@ -61,74 +61,81 @@
 					<div style="float:right;"><img src="../templates/{THEME}/images/read_mini.png" alt="" class="valign_middle" /> {convers.U_MARK_AS_READ}</div>
 					<br /><br />
 					
-					<table class="module_table">	
-						<tr>
-							<th style="text-align:center;width:20px;">
-								<input type="checkbox" id="checkall" onclick="check_convers(this.checked, 'd');">
-							</th>
-							<th colspan="2" style="text-align:center;">
-								{L_TITLE}
-							</th>
-							<th style="text-align:center;width:110px;">
-								{L_PARTICIPANTS}
-							</th>
-							<th style="text-align:center;width:80px;">
-								{L_MESSAGE}
-							</th>
-							<th style="text-align:center;width:120px;">
-								{L_LAST_MESSAGE}
-							</th>
-						</tr>
-						
-						# START convers.list #		
-						<tr class="row2">
-							<td style="width:20px;text-align:center;">
-								<input type="checkbox" id="d{convers.list.INCR}" name="{convers.list.ID}">
-							</td>
-							<td class="smaller" style="width:40px;text-align:center;">
-								<img src="{convers.list.ANNOUNCE}.png" alt="" />
-							</td>
-							<td style="padding:4px;">
-								{convers.list.ANCRE} <a href="pm{convers.list.U_CONVERS}">{convers.list.TITLE}</a> &nbsp;<span class="smaller">[{convers.list.U_AUTHOR}]</span>
-								<br />
-								&nbsp;{convers.list.PAGINATION_PM}
-							</td>
-							<td style="text-align:center;">
-								{convers.list.U_PARTICIPANTS}
-							</td>
-							<td style="text-align:center">
-								{convers.list.MSG}
-							</td>
-							<td class="smaller" style="text-align:center;">
-								{convers.list.U_LAST_MSG}
-							</td>
-						</tr>	
-						# END convers.list #
-								
-						# START convers.no_pm #	
-						<tr>
-							<td style="text-align:center;" colspan="6" class="row2">
-								<strong>{convers.no_pm.L_NO_PM}</strong>
-							</td>
-						</tr>
-						# END convers.no_pm #	
-						<tr>
-							<td colspan="6" class="row3">
-								<div style="float:left;">&nbsp;<input type="checkbox" id="validc" onclick="check_convers(this.checked, 'd');" /> &nbsp;<input type="submit" name="valid" value="{L_DELETE}" class="submit"></div>
-								<div style="float:right;">{convers.PAGINATION}&nbsp;</div>
-							</td>
-						</tr>
+					<table>
+						<thead>
+							<tr>
+								<th style="width:20px;">
+									<input type="checkbox" id="checkall" onclick="check_convers(this.checked, 'd');">
+								</th>
+								<th colspan="2">
+									{L_TITLE}
+								</th>
+								<th>
+									{L_PARTICIPANTS}
+								</th>
+								<th>
+									{L_MESSAGE}
+								</th>
+								<th>
+									{L_LAST_MESSAGE}
+								</th>
+							</tr>
+						</thead>
+						<tfoot>
+							<tr>
+								<th colspan="6">
+									<div style="float:left;">&nbsp;<input type="checkbox" id="validc" onclick="check_convers(this.checked, 'd');" /> &nbsp;<input type="submit" name="valid" value="{L_DELETE}" class="submit"></div>
+									<div style="float:right;">{convers.PAGINATION}&nbsp;</div>
+								</th>
+							</tr>
+						</tfoot>
+						<tbody>
+							# START convers.list #		
+							<tr>
+								<td style="width:20px;">
+									<input type="checkbox" id="d{convers.list.INCR}" name="{convers.list.ID}">
+								</td>
+								<td style="width:40px;">
+									<img src="{convers.list.ANNOUNCE}.png" alt="" />
+								</td>
+								<td class="no-separator">
+									{convers.list.ANCRE} <a href="pm{convers.list.U_CONVERS}">{convers.list.TITLE}</a> &nbsp;<span class="smaller">[{convers.list.U_AUTHOR}]</span>
+									# IF convers.list.PAGINATION_PM #
+										<br/>
+										{convers.list.PAGINATION_PM}
+									# ENDIF #
+								</td>
+								<td>
+									{convers.list.U_PARTICIPANTS}
+								</td>
+								<td>
+									{convers.list.MSG}
+								</td>
+								<td class="smaller">
+									{convers.list.U_LAST_MSG}
+								</td>
+							</tr>	
+							# END convers.list #
+									
+							# START convers.no_pm #	
+							<tr>
+								<td colspan="6">
+									<span class="text_strong">{convers.no_pm.L_NO_PM}</span>
+								</td>
+							</tr>
+							# END convers.no_pm #
+						</tbody>
 					</table>					
 					<br />
-					<table class="module_table">
+					<table>
 						<tr> 		
-							<td style="width:33%;text-align:center" class="row2"> 
+							<td style="width:33%;"> 
 								<img class="valign_middle" src="../templates/{THEME}/images/announce.png" alt="" /> {L_READ} 
 							</td>
-							<td style="width:34%;text-align:center" class="row2">  
+							<td style="width:34%;" class="no-separator">  
 								<img class="valign_middle" src="../templates/{THEME}/images/announce_track.png" alt="" /> {L_TRACK}		
 							</td>
-							<td style="width:33%;text-align:center" class="row2">  
+							<td style="width:33%;" class="no-separator">  
 								<img class="valign_middle" src="../templates/{THEME}/images/new_announce.png" alt="" /> {L_NOT_READ}		
 							</td>
 						</tr>

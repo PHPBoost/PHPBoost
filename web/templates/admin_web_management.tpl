@@ -32,66 +32,70 @@
 			</ul>
 		</div> 
 		
-		<div id="admin_contents">		
-			<table class="module_table">
-				<tr> 
-					<th colspan="8">
-						{L_LISTE}
-					</th>
-				</tr>
-				<tr style="text-align:center;">
-					<td class="row1">
-						{L_NAME}
-					</td>
-					<td class="row1">
-						{L_CATEGORY}
-					</td>
-					<td class="row1">
-						{L_VIEW}
-					</td>
-					<td class="row1">
-						{L_DATE}
-					</td>
-					<td class="row1">
-						{L_APROB}
-					</td>
-					<td class="row1">
-						{L_UPDATE}
-					</td>
-					<td class="row1">
-						{L_DELETE}
-					</td>
-				</tr>
-				
-				# START web #
-				<tr style="text-align:center;"> 
-					<td class="row2"> 
-						<a href="{PATH_TO_ROOT}/web/web.php?cat={web.IDCAT}&amp;id={web.IDWEB}">{web.NAME}</a>
-					</td>
-					<td class="row2"> 
-						{web.CAT}
-					</td>
-					<td class="row2"> 
-						{web.COMPT}
-					</td>
-					<td class="row2">
-						{web.DATE}
-					</td>
-					<td class="row2">
-						{web.APROBATION}
-					</td>
-					<td class="row2"> 
-						<a href="admin_web.php?id={web.IDWEB}" title="{L_UPDATE}" class="pbt-icon-edit"></a>
-					</td>
-					<td class="row2">
-						<a href="admin_web.php?delete=true&amp;id={web.IDWEB}&amp;token={TOKEN}" class="pbt-icon-delete" data-confirmation="delete-element"></a>
-					</td>
-				</tr>
-				# END web #
-
+		<div id="admin_contents">
+			{L_LISTE}
+			<table>
+				<thead>
+					<tr> 
+						<th>
+							{L_NAME}
+						</th>
+						<th>
+							{L_CATEGORY}
+						</th>
+						<th>
+							{L_VIEW}
+						</th>
+						<th>
+							{L_DATE}
+						</th>
+						<th>
+							{L_APROB}
+						</th>
+						<th>
+							{L_UPDATE}
+						</th>
+						<th>
+							{L_DELETE}
+						</th>
+					</tr>
+				</thead>
+				# IF C_PAGINATION #
+				<tfoot>
+					<tr>
+						<th colspan="7">
+							{PAGINATION}
+						</th>
+					</tr>
+				</tfoot>
+				# ENDIF #
+				<tbody>				
+					# START web #
+					<tr>
+						<td>
+							<a href="{PATH_TO_ROOT}/web/web.php?cat={web.IDCAT}&amp;id={web.IDWEB}">{web.NAME}</a>
+						</td>
+						<td>
+							{web.CAT}
+						</td>
+						<td>
+							{web.COMPT}
+						</td>
+						<td>
+							{web.DATE}
+						</td>
+						<td>
+							{web.APROBATION}
+						</td>
+						<td>
+							<a href="admin_web.php?id={web.IDWEB}" title="{L_UPDATE}" class="pbt-icon-edit"></a>
+						</td>
+						<td>
+							<a href="admin_web.php?delete=true&amp;id={web.IDWEB}&amp;token={TOKEN}" class="pbt-icon-delete" data-confirmation="delete-element"></a>
+						</td>
+					</tr>
+					# END web #
+				</tbody>
 			</table>
-
-			<br /><br />
-			<p style="text-align: center;">{PAGINATION}</p>
 		</div>
 		

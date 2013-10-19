@@ -81,37 +81,41 @@
 					</fieldset>
 				</form>
 				
-				<table class="module_table">
-					<tr>			
-						<th style="width:25%;">{L_LOGIN}</th>
-						<th style="width:25%;">{L_INFO}</th>
-						<th style="width:25%;">{L_ACTION_USER}</th>
-						<th style="width:25%;">{L_PM}</th>
-					</tr>	
-					# START member_list #
-					<tr>
-						<td class="row1" style="text-align:center;width:25%;">
-							<a href="{member_list.U_PROFILE}" class="{member_list.USER_LEVEL_CLASS}" # IF member_list.C_USER_GROUP_COLOR # style="color:{member_list.USER_GROUP_COLOR}" # ENDIF #>{member_list.LOGIN}</a>
-						</td>
-						<td class="row1" style="text-align:center;width:25%;">
-							{member_list.INFO}
-						</td>
-						<td class="row1" style="text-align:center;width:25%;">
-							{member_list.U_ACTION_USER}
-						</td>
-						<td class="row1" style="text-align:center;width:25%;">
-							<a href="{member_list.U_PM}" class="small-button">MP</a>
-						</td>
-					</tr>
-					# END member_list #
-					
-					# IF C_EMPTY_LIST #
-					<tr>
-						<td class="row1" style="text-align:center;" colspan="4">
-							{L_NO_USER}
-						</td>
-					</tr>		
-					# ENDIF #
+				<table>
+					<thead>
+						<tr>			
+							<th>{L_LOGIN}</th>
+							<th>{L_INFO}</th>
+							<th>{L_ACTION_USER}</th>
+							<th>{L_PM}</th>
+						</tr>
+					</thead>
+					<tbody>
+						# START member_list #
+						<tr>
+							<td>
+								<a href="{member_list.U_PROFILE}" class="{member_list.USER_LEVEL_CLASS}" # IF member_list.C_USER_GROUP_COLOR # style="color:{member_list.USER_GROUP_COLOR}" # ENDIF #>{member_list.LOGIN}</a>
+							</td>
+							<td>
+								{member_list.INFO}
+							</td>
+							<td>
+								{member_list.U_ACTION_USER}
+							</td>
+							<td>
+								<a href="{member_list.U_PM}" class="small-button">MP</a>
+							</td>
+						</tr>
+						# END member_list #
+						
+						# IF C_EMPTY_LIST #
+						<tr>
+							<td colspan="4">
+								{L_NO_USER}
+							</td>
+						</tr>		
+						# ENDIF #
+					</tbody>
 				</table>
 				# ENDIF #
 

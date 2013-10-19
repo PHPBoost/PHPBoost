@@ -124,7 +124,7 @@ else
 	}
 
 	$Template->put_all(array(
-		'NO_FAVORITE' => ($num_rows == 0) ? true : '',
+		'NO_FAVORITE' => ($num_rows == 0),
 		'L_FAVORITES' => $LANG['wiki_favorites'],
 		'L_TITLE' => $LANG['title'],
 		'L_UNTRACK' => $LANG['wiki_unwatch']
