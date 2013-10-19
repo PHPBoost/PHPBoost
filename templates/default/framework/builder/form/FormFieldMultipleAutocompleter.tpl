@@ -15,8 +15,8 @@ var FormFieldMultipleAutocompleter = Class.create({
 
 			this.load_autocompleter('field_' + id);
 			
-			var delete_input = new Element('a', {href : 'javascript:FormFieldMultipleAutocompleter.delete_field('+ this.integer +');', 'id' : 'delete_' + id, 'class' : 'delete'});
-			$('input_fields_' + this.id_input).insert(' ');
+			var delete_input = new Element('a', {href : 'javascript:FormFieldMultipleAutocompleter.delete_field('+ this.integer +');', 'id' : 'delete_' + id, 'class' : 'pbt-icon-delete'});
+			$('input_fields_' + this.id_input).insert('&nbsp;');
 			$('input_fields_' + this.id_input).insert(delete_input);
 			
 			var br = new Element('br', {'id' : 'br_' + id});
@@ -62,13 +62,4 @@ var FormFieldMultipleAutocompleter = new FormFieldMultipleAutocompleter();
 	<br id="br_${escape(ID)}_{fieldelements.ID}">
 # END fieldelements #
 </div>
-<i class="pbt-icon-plus" id="add_${escape(ID)}"></i>
-<script type="text/javascript">
-<!--
-Event.observe(window, 'load', function() {		
-	$('add_${escape(ID)}').observe('click',function(){
-		FormFieldMultipleAutocompleter.add_field();
-	});
-});
--->
-</script>
+<a href="javascript:FormFieldMultipleAutocompleter.add_field();" class="pbt-icon-plus" id="add_${escape(ID)}"></a>
