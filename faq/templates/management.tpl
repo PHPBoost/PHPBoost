@@ -166,8 +166,8 @@
 										<img src="{PICTURES_DATA_PATH}/images/down.png" alt="{L_DOWN}" />
 									</a>
 								# END category.questions.down #
-								<a href="{category.questions.U_EDIT}" title="${LangLoader::get_message('edit', 'main')}" class="edit"></a>
-								<a href="{category.questions.U_DEL}" title="${LangLoader::get_message('delete', 'main')}" class="delete"></a>
+								<a href="{category.questions.U_EDIT}" title="${LangLoader::get_message('edit', 'main')}" class="pbt-icon-edit"></a>
+								<a href="{category.questions.U_DEL}" title="${LangLoader::get_message('delete', 'main')}" class="pbt-icon-delete" data-confirmation="delete-element"></a>
 							</span>
 							<div style="clear:both"></div>
 						</div>

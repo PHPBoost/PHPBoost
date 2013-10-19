@@ -1,11 +1,3 @@
-<script type="text/javascript">
-<!--
-function Confirm_del_filter() {
-	return confirm("{@bugs.actions.confirm.del_filter}");
-}
--->
-</script>
-
 <menu class="dynamic_menu">
 	<ul>
 		<li>
@@ -87,7 +79,7 @@ function Confirm_del_filter() {
 		# START filters #
 		<tr>
 			<td colspan="{FILTERS_NUMBER}">
-				<a href="{filters.LINK_FILTER_DELETE}" onclick="javascript:return Confirm_del_filter();" title="{L_DELETE}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="" /></a> <a href="{filters.LINK_FILTER}">{filters.FILTER}</a>
+				<a href="{filters.LINK_FILTER_DELETE}" title="{L_DELETE}" class="pbt-icon-delete" data-confirmation="{@bugs.actions.confirm.del_filter}"></a> <a href="{filters.LINK_FILTER}">{filters.FILTER}</a>
 			</td>
 		</tr>
 		# END filters #

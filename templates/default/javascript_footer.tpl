@@ -6,11 +6,14 @@
 		<![endif]-->
 		<script type="text/javascript">
 		<!-- 
-			$$('.delete:not([data-confirmation=false]').each(function(a) {
-				var message = ${escapejs(LangLoader::get_message('confirm.delete', 'errors-common'))};
-				var data_message = a.readAttribute('data-message');
-				if (data_message != null)
-					var message = data_message;
+			$$('[data-confirmation]').each(function(a) {
+				var data_confirmation = a.readAttribute('data-confirmation');
+				
+				if (data_confirmation == 'delete-element')
+					var message = ${escapejs(LangLoader::get_message('confirm.delete', 'errors-common'))};
+				else
+					var message = data_confirmation;
+
 				a.onclick = function () { return confirm(message); }
 			}); 
 		-->

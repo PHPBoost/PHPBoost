@@ -30,8 +30,8 @@
 		<tr>
 			# START news #
 				<td> 
-					<a href="{news.EDIT_LINK}" title="${LangLoader::get_message('edit', 'main')}" class="edit"></a>
-					<a href="{news.DELETE_LINK}" title="${LangLoader::get_message('delete', 'main')}" class="delete"></a>
+					<a href="{news.EDIT_LINK}" title="${LangLoader::get_message('edit', 'main')}" class="pbt-icon-edit"></a>
+					<a href="{news.DELETE_LINK}" title="${LangLoader::get_message('delete', 'main')}" class="pbt-icon-delete" data-confirmation="delete-element"></a>
 				</td>
 				<td>
 					{news.NAME}

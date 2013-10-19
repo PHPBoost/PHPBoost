@@ -147,7 +147,7 @@
 			<div class="module_top_l"></div>
 			<div class="module_top_r"></div>
 			<div class="module_top">
-				<a href="${relative_url(SyndicationUrlBuilder::rss('forum',ID))}" class="syndication" title="${LangLoader::get_message('syndication', 'main')}"></a>
+				<a href="${relative_url(SyndicationUrlBuilder::rss('forum',ID))}" class="pbt-icon-syndication" title="${LangLoader::get_message('syndication', 'main')}"></a>
 				&bull; {U_FORUM_CAT} <a href="{U_TITLE_T}"><span id="display_msg_title">{DISPLAY_MSG}</span>{TITLE_T}</a> <span class="desc_forum"><em>{DESC}</em></span>
 				
 				<span style="float:right;">
@@ -233,7 +233,7 @@
 					<span style="float:left;">&nbsp;&nbsp;<a href="topic{msg.U_VARS_ANCRE}#m{msg.ID}" title=""><img src="{PATH_TO_ROOT}/templates/{THEME}/images/ancre.png" alt="" /></a> {msg.FORUM_MSG_DATE}</span>
 					<span style="float:right;"><a href="topic{msg.U_VARS_QUOTE}#go_bottom" title="{L_QUOTE}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/quote.png" alt="{L_QUOTE}" title="{L_QUOTE}" /></a>
 					# IF msg.C_FORUM_MSG_EDIT # 
-					&nbsp;&nbsp;<a href="post{msg.U_FORUM_MSG_EDIT}" title="{L_EDIT}" class="edit"></a>
+					&nbsp;&nbsp;<a href="post{msg.U_FORUM_MSG_EDIT}" title="{L_EDIT}" class="pbt-icon-edit"></a>
 					# ENDIF #
 					
 					# IF msg.C_FORUM_MSG_DEL #
@@ -310,7 +310,7 @@
 			<div class="module_bottom_l"></div>
 			<div class="module_bottom_r"></div>
 			<div class="module_bottom">
-				<a href="${relative_url(SyndicationUrlBuilder::rss('forum',ID))}" class="syndication" title="${LangLoader::get_message('syndication', 'main')}"></a>
+				<a href="${relative_url(SyndicationUrlBuilder::rss('forum',ID))}" class="pbt-icon-syndication" title="${LangLoader::get_message('syndication', 'main')}"></a>
 				&bull; {U_FORUM_CAT} <a href="{U_TITLE_T}"><span id="display_msg_title2">{DISPLAY_MSG}</span>{TITLE_T}</a> <span class="desc_forum"><em>{DESC}</em></span>
 				
 				<span style="float:right;">

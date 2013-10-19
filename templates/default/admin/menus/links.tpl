@@ -61,9 +61,9 @@ function addSubElement(menu_element_id) {
             Builder.node('input', {type: 'text', value: '', id: 'menu_element_' + id + '_image', name: 'menu_element_' + id + '_image'})
         ]),
         Builder.node('div', {style: 'float:right;'}, [
-            Builder.node('img', {src: '{PATH_TO_ROOT}/templates/{THEME}/images/plus.png', alt: {JL_MORE}, id: 'menu_element_' + id + '_more_image', className: 'valign_middle', onclick: 'toggleProperties(' + id + ');'}),
+            Builder.node('i', {class: 'pbt-icon-plus', title: {JL_MORE}, id: 'menu_element_' + id + '_more_image', style: 'cursor:pointer;', onclick: 'toggleProperties(' + id + ');'}),
             ' ',
-            Builder.node('img', {src: '{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png', alt: {JL_DELETE}, id: 'menu_element_' + id + '_delete_image', className: 'valign_middle', onclick: 'deleteElement(\'menu_element_' + id + '\');'})
+            Builder.node('i', {class: 'pbt-icon-delete', title: {JL_DELETE}, id: 'menu_element_' + id + '_delete_image', style: 'cursor:pointer;', onclick: 'deleteElement(\'menu_element_' + id + '\');'})
         ]),
         Builder.node('div', {className: 'spacer'}),
         Builder.node('fieldset', {id: 'menu_element_' + id + '_properties', style: 'display:none;'}, [
@@ -105,9 +105,9 @@ function addSubMenu(menu_element_id) {
             Builder.node('input', {type: 'text', value: '', id: 'menu_element_' + id + '_image', name: 'menu_element_' + id + '_image'})
         ]),
         Builder.node('div', {style: 'float:right;'}, [
-            Builder.node('img', {src: '{PATH_TO_ROOT}/templates/{THEME}/images/plus.png', alt: {JL_MORE}, id: 'menu_element_' + id + '_more_image', className: 'valign_middle', onclick: 'toggleProperties(' + id + ');'}),
+            Builder.node('i', {class: 'pbt-icon-plus', title: {JL_MORE}, id: 'menu_element_' + id + '_more_image', style: 'cursor:pointer;', onclick: 'toggleProperties(' + id + ');'}),
             ' ',
-            Builder.node('img', {src: '{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png', alt: {JL_DELETE}, id: 'menu_element_' + id + '_delete_image', className: 'valign_middle', onclick: 'deleteElement(\'menu_element_' + id + '\');'})
+            Builder.node('i', {class: 'pbt-icon-delete', title: {JL_DELETE}, id: 'menu_element_' + id + '_delete_image', style: 'cursor:pointer;', onclick: 'deleteElement(\'menu_element_' + id + '\');'})
         ]),
         Builder.node('div', {className: 'spacer'}),
         Builder.node('fieldset', {id: 'menu_element_' + id + '_properties', style: 'display:none;'}, [

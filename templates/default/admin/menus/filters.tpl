@@ -14,7 +14,7 @@
 					'<option value="{modules.ID}">{modules.ID}</option>' +
 					# END modules #
 					'</select> / <input type="text" name="f' + new_id + '" id="f' + new_id + '" value="" size="25">' +
-					' &nbsp;<a href="javascript:delete_filter(' + new_id + ');" class="delete"></a>' +
+					' &nbsp;<a href="javascript:delete_filter(' + new_id + ');" class="pbt-icon-delete"></a>' +
 					'</p><span id="add_filter' + new_id + '"></span>';
 			}
 			function delete_filter(id) {
@@ -43,13 +43,13 @@
 							# END filters.modules #
 						</select>
 						/ <input type="text" name="f{filters.ID}" id="f{filters.ID}" value="{filters.FILTER}" size="25">
-						&nbsp;<a href="javascript:delete_filter({filters.ID});" class="delete"></a>
+						&nbsp;<a href="javascript:delete_filter({filters.ID});" class="pbt-icon-delete"></a>
 					</p>
 					# END filters #
 					
 					<span id="add_filter{NBR_FILTER}"></span>
 					<p style="text-align:center;margin-top:10px;">
-						<a href="javascript:add_filter({NBR_FILTER})" title="{@add_filter}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/plus.png" alt="+" /></a>
+						<a href="javascript:add_filter({NBR_FILTER})" title="{@add_filter}"><i class="pbt-icon-plus"></i></a>
 					</p>
 				</dd>
 			</dl>

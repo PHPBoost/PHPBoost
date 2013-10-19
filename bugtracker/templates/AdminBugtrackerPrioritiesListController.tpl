@@ -27,7 +27,7 @@ function Confirm_del_default_value() {
 				# IF C_DISPLAY_DEFAULT_DELETE_BUTTON #
 			<tr>
 				<th colspan="3">
-					<a href="{LINK_DELETE_DEFAULT}" onclick="javascript:return Confirm_del_default_value();" title="{L_DELETE}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="" /> {@bugs.labels.del_default_value}</a>
+					<a href="{LINK_DELETE_DEFAULT}" title="{L_DELETE}" class="pbt-icon-delete" data-confirmation="{@bugs.actions.confirm.del_default_value}">{@bugs.labels.del_default_value}</a>
 				</th>
 			</tr>
 				# ENDIF #

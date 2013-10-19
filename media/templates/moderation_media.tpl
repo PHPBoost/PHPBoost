@@ -87,7 +87,7 @@
 						<tr>
 							<td style="background:{files.COLOR};">
 								<a href="{files.U_FILE}">{files.NAME}</a>
-								<a href="{files.U_EDIT}" title="${LangLoader::get_message('edit', 'main')}" class="edit"></a>
+								<a href="{files.U_EDIT}" title="${LangLoader::get_message('edit', 'main')}" class="pbt-icon-edit"></a>
 							</td>
 							<td style="background:{files.COLOR};">
 								<a href="{files.U_CAT}">{files.CAT}</a>

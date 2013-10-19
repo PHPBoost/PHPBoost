@@ -46,11 +46,11 @@ var ArticlesFormFieldSelectSources = new ArticlesFormFieldSelectSources();
 	<div style="float:left;width:84%;display:inline;padding-bottom:5px;color:#334455;font-weight:bold;"><span style="width:50%;margin:0 75px 0 40px;">${i18n('articles.form.source_name')}</span><span style="width:50%;">${i18n('articles.form.source_url')}</span></div>
 	<input type="text" name="field_name_${escape(ID)}_{fieldelements.ID}" id="field_name_${escape(ID)}_{fieldelements.ID}" value="{fieldelements.NAME}" size="30" class="text">
 	<input type="text" name="field_value_${escape(ID)}_{fieldelements.ID}" id="field_value_${escape(ID)}_{fieldelements.ID}" value="{fieldelements.VALUE}" size="30" class="text"/>
-	<a href="javascript:ArticlesFormFieldSelectSources.delete_field({fieldelements.ID});" id="delete_${escape(ID)}_{fieldelements.ID}" class="delete"></a>
+	<a href="javascript:ArticlesFormFieldSelectSources.delete_field({fieldelements.ID});" id="delete_${escape(ID)}_{fieldelements.ID}" class="pbt-icon-delete" data-confirmation="delete-element"></a>
 	<br id="br_${escape(ID)}_{fieldelements.ID}">
 # END fieldelements #
 </div>
-<img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/plus.png" id="add_${escape(ID)}" class="valign_middle" style="width:25px;"/>
+<i class="pbt-icon-plus" id="add_${escape(ID)}"></i>
 <script type="text/javascript">
 <!--
 Event.observe(window, 'load', function() {		

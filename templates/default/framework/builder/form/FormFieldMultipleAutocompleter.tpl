@@ -58,11 +58,11 @@ var FormFieldMultipleAutocompleter = new FormFieldMultipleAutocompleter();
 	FormFieldMultipleAutocompleter.load_autocompleter('field_${escape(ID)}_{fieldelements.ID}');	
 	-->
 	</script>
-	<a href="javascript:FormFieldMultipleAutocompleter.delete_field({fieldelements.ID});" id="delete_${escape(ID)}_{fieldelements.ID}" class="delete"></a>
+	<a href="javascript:FormFieldMultipleAutocompleter.delete_field({fieldelements.ID});" id="delete_${escape(ID)}_{fieldelements.ID}" class="pbt-icon-delete" data-confirmation="delete-element"></a>
 	<br id="br_${escape(ID)}_{fieldelements.ID}">
 # END fieldelements #
 </div>
-<img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/plus.png" id="add_${escape(ID)}" class="valign_middle" style="width:25px;"/>
+<i class="pbt-icon-plus" id="add_${escape(ID)}"></i>
 <script type="text/javascript">
 <!--
 Event.observe(window, 'load', function() {		

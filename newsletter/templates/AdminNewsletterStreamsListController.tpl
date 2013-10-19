@@ -5,17 +5,17 @@
 			<th>
 			</th>
 			<th>
-				<a href="{SORT_NAME_TOP}" class="sort-up"></a>
+				<a href="{SORT_NAME_TOP}" class="pbt-icon-table-sort-up"></a>
 				{@streams.name} 
-				<a href="{SORT_NAME_BOTTOM}" class="sort-down"></a>
+				<a href="{SORT_NAME_BOTTOM}" class="pbt-icon-table-sort-down"></a>
 			</th>
 			<th>
 				{@streams.description}
 			</th>
 			<th>
-				<a href="{SORT_STATUS_TOP}" class="sort-up"></a>
+				<a href="{SORT_STATUS_TOP}" class="pbt-icon-table-sort-up"></a>
 				{@streams.visible}
-				<a href="{SORT_STATUS_BOTTOM}" class="sort-down"></a>
+				<a href="{SORT_STATUS_BOTTOM}" class="pbt-icon-table-sort-down"></a>
 			</th>
 		</tr>
 	</thead>
@@ -34,8 +34,8 @@
 		# START streams_list #
 		<tr style="text-align:center;">
 			<td> 
-				<a href="{streams_list.EDIT_LINK}" class="edit"></a>
-				<a href="{streams_list.DELETE_LINK}" class="delete"></a>
+				<a href="{streams_list.EDIT_LINK}" class="pbt-icon-edit"></a>
+				<a href="{streams_list.DELETE_LINK}" class="pbt-icon-delete" data-confirmation="delete-element"></a>
 			</td>
 			<td>
 				{streams_list.NAME}

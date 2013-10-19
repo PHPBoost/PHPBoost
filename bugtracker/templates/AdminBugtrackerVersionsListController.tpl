@@ -1,13 +1,5 @@
 <script type="text/javascript">
 <!--
-function Confirm_del_version() {
-	return confirm("{@bugs.actions.confirm.del_version}");
-}
-
-function Confirm_del_default_value() {
-	return confirm("{@bugs.actions.confirm.del_default_value}");
-}
-
 function display_default_version_radio(version_id)
 {
 	if (document.getElementById('detected_in' + version_id).checked)
@@ -52,7 +44,7 @@ function display_default_version_radio(version_id)
 				# IF C_DISPLAY_DEFAULT_DELETE_BUTTON #
 			<tr>
 				<th colspan="5">
-					<a href="{LINK_DELETE_DEFAULT}" onclick="javascript:return Confirm_del_default_value();" title="{L_DELETE}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="" /> {@bugs.labels.del_default_value}</a>
+					<a href="{LINK_DELETE_DEFAULT}" title="{L_DELETE}" class="pbt-icon-delete" data-confirmation="{@bugs.actions.confirm.del_version}"></a>
 				</th>
 			</tr>
 				# ENDIF #
@@ -80,7 +72,7 @@ function display_default_version_radio(version_id)
 					<input type="checkbox" id="detected_in{versions.ID}" name="detected_in{versions.ID}" onclick="javascript:display_default_version_radio('{versions.ID}');" {versions.DETECTED_IN}>
 				</td> 
 				<td>
-					<a href="{versions.LINK_DELETE}" onclick="javascript:return Confirm_del_version();" title="{L_DELETE}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="" /></a>
+					<a href="{versions.LINK_DELETE}" title="{L_DELETE}" class="pbt-icon-delete" data-confirmation="{@bugs.actions.confirm.del_default_value}"></a>
 				</td>
 			</tr>
 			# END versions #

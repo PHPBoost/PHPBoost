@@ -25,7 +25,7 @@
 <article class="module_position" itemscope="itemscope" itemtype="http://schema.org/Article">					
 	<header class="article_top">
 		<h1 class="article_top_title">
-			<a href="{U_SYNDICATION}" title="${LangLoader::get_message('syndication', 'main')}" class="syndication"></a>
+			<a href="{U_SYNDICATION}" title="${LangLoader::get_message('syndication', 'main')}" class="pbt-icon-syndication"></a>
 			<span id="name" itemprop="name">{TITLE}</span>
 		</h1>
 		<div class="article_info">

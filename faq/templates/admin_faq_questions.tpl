@@ -72,10 +72,10 @@
 								{question.DATE}
 							</td>
 							<td>
-								<a href="{question.U_EDIT}" title="{L_EDIT}" class="edit"></a>
+								<a href="{question.U_EDIT}" title="{L_EDIT}" class="pbt-icon-edit"></a>
 							</td>
 							<td>
-								<a href="{question.U_DEL}" title="{L_DELETE}" class="delete"></a>
+								<a href="{question.U_DEL}" title="{L_DELETE}" class="pbt-icon-delete" data-confirmation="delete-element"></a>
 							</td>
 						</tr>
 					# END question #

@@ -104,7 +104,7 @@
 									{cat.BOTTOM}
 								</td>
 								<td class="row2">
-									<a href="admin_web_cat.php?del=1&amp;id={cat.IDCAT}&amp;token={TOKEN}" class="delete"></a>
+									<a href="admin_web_cat.php?del=1&amp;id={cat.IDCAT}&amp;token={TOKEN}" class="pbt-icon-delete" data-confirmation="delete-element"></a>
 								</td>
 							</tr>
 							# END cat #

@@ -24,8 +24,8 @@
 					<span class="actions">
 						<a href="\#msg{messages.ID_COMMENT}">\#{messages.ID}</a>
 						# IF messages.C_MODERATOR #
-							<a href="{messages.U_EDIT}" title="${LangLoader::get_message('edit', 'main')}" class="edit"></a>
-							<a href="{messages.U_DELETE}" title="${LangLoader::get_message('delete', 'main')}" class="delete"></a>
+							<a href="{messages.U_EDIT}" title="${LangLoader::get_message('edit', 'main')}" class="pbt-icon-edit"></a>
+							<a href="{messages.U_DELETE}" title="${LangLoader::get_message('delete', 'main')}" class="pbt-icon-delete" data-confirmation="delete-element"></a>
 						# ENDIF #
 					</span>
 					<span>{messages.DATE}</span>

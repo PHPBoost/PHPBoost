@@ -119,22 +119,26 @@ a.member {
     font-weight:bold;
 }
 
-/* Images */
-a.syndication:before, a.edit:before, a.delete:before, [class^="pbt-icon-"]:before {
+/* Icônes spécifique PHPBoost
+------------------------------------ */
+[class^="pbt-icon-"]:before {
 	font-family: FontAwesome;
 	font-size: 15px;
 	vertical-align: text-bottom;
 	font-weight:300;
 	vertical-align:-2px;
 	text-decoration:none;
+	font-style: normal;
 	color: #4d4c50;
 }
 
-a.syndication:hover, a.edit:hover, a.delete:hover, [class^="pbt-icon-"]:hover { text-decoration:none;}
+[class^="pbt-icon-"]:hover { text-decoration:none;}
 
-a.syndication:before { color:#f57900; content: "\f09e"; }
-a.edit:before { content: "\f044"; }
-a.delete:before { content: "\f014"; vertical-align:-1px; }
+.pbt-icon-syndication:before { color:#f57900; content: "\f09e"; }
+.pbt-icon-edit:before { content: "\f044"; }
+.pbt-icon-delete:before { content: "\f014"; vertical-align:-1px; }
+.pbt-icon-plus:before { content: "\f067"; font-size: 18px;}
+.pbt-icon-minus:before { content: "\f068"; font-size: 18px;}
 
 /* Mise en forme
 -------------------------------------------*/

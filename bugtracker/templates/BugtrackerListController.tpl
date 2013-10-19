@@ -18,24 +18,24 @@ function Confirm(action) {
 	<thead>
 		<tr>
 			<th class="column_id">
-				<a href="{LINK_BUG_ID_TOP}" class="sort-up"></a>
+				<a href="{LINK_BUG_ID_TOP}" class="pbt-icon-table-sort-up"></a>
 				{@bugs.labels.fields.id}
-				<a href="{LINK_BUG_ID_BOTTOM}" class="sort-down"></a>
+				<a href="{LINK_BUG_ID_BOTTOM}" class="pbt-icon-table-sort-down"></a>
 			</th>
 			<th>
-				<a href="{LINK_BUG_TITLE_TOP}" class="sort-up"></a>
+				<a href="{LINK_BUG_TITLE_TOP}" class="pbt-icon-table-sort-up"></a>
 				{@bugs.labels.fields.title}
-				<a href="{LINK_BUG_TITLE_BOTTOM}" class="sort-down"></a>
+				<a href="{LINK_BUG_TITLE_BOTTOM}" class="pbt-icon-table-sort-down"></a>
 			</th>
 			<th class="column_informations">
-				<a href="{LINK_BUG_STATUS_TOP}" class="sort-up"></a>
+				<a href="{LINK_BUG_STATUS_TOP}" class="pbt-icon-table-sort-up"></a>
 				{@bugs.titles.informations}
-				<a href="{LINK_BUG_STATUS_BOTTOM}" class="sort-down"></a>
+				<a href="{LINK_BUG_STATUS_BOTTOM}" class="pbt-icon-table-sort-down"></a>
 			</th>
 			<th class="column_date">
-				<a href="{LINK_BUG_DATE_TOP}" class="sort-up"></a>
+				<a href="{LINK_BUG_DATE_TOP}" class="pbt-icon-table-sort-up"></a>
 				{L_DATE}
-				<a href="{LINK_BUG_DATE_BOTTOM}" class="sort-down"></a>
+				<a href="{LINK_BUG_DATE_BOTTOM}" class="pbt-icon-table-sort-down"></a>
 			</th>
 			# IF C_IS_ADMIN #
 			<th class="column_admin">
@@ -74,9 +74,9 @@ function Confirm(action) {
 		# IF C_IS_ADMIN #
 		<td # IF bug.C_LINE_COLOR # style="background-color:{bug.LINE_COLOR};"# ENDIF #> 
 			<a href="{bug.LINK_BUG_REOPEN_REJECT}" onclick="javascript:return Confirm(${escapejs(REOPEN_REJECT_CONFIRM)});" # IF bug.C_RESOLVED #class="pbt-icon-bugtracker-rejected" title="{@bugs.actions.reopen}"# ELSE #class="pbt-icon-bugtracker-opened" title="{@bugs.actions.reject}"# ENDIF #></a>
-			<a href="{bug.LINK_BUG_EDIT}" title="${LangLoader::get_message('edit', 'main')}" class="edit"></a>
+			<a href="{bug.LINK_BUG_EDIT}" title="${LangLoader::get_message('edit', 'main')}" class="pbt-icon-edit"></a>
 			<a href="{bug.LINK_BUG_HISTORY}" class="pbt-icon-bugtracker-history" title="{@bugs.actions.history}"></a>
-			<a href="{bug.LINK_BUG_DELETE}" title="${LangLoader::get_message('delete', 'main')}" class="delete"></a>
+			<a href="{bug.LINK_BUG_DELETE}" title="${LangLoader::get_message('delete', 'main')}" class="pbt-icon-delete" data-confirmation="delete-element"></a>
 		</td>
 		# ENDIF #
 	</tr>
