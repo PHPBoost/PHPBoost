@@ -1,9 +1,5 @@
 		<script type="text/javascript">
 		<!--
-			function Confirm() {
-				return confirm("{L_CONFIRM_DEL_RANK}");
-			}
-			
 			function img_change(id, url)
 			{
 				if (document.getElementById(id))

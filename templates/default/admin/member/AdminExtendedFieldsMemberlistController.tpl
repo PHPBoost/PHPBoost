@@ -97,7 +97,7 @@ Event.observe(window, 'load', function() {
 						<img id="loading_{list_extended_fields.ID}" alt="" class="valign_middle" />
 						<a href="{list_extended_fields.EDIT_LINK}" title="{L_UPDATE}" class="edit"></a>
 						# IF NOT list_extended_fields.FREEZE #
-						<a href="#" title="{L_DELETE}" id="delete_{list_extended_fields.ID}" class="delete"></a>
+						<a href="#" title="{L_DELETE}" id="delete_{list_extended_fields.ID}" class="delete" data-confirmation="false"></a>
 						# ENDIF #
 						<a href="#">
 							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/not_processed_mini.png" alt="{L_PROCESSED_OR_NOT}" title="{L_PROCESSED_OR_NOT}" id="change_display_{list_extended_fields.ID}" class="valign_middle" />
