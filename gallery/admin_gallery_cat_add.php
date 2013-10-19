@@ -49,7 +49,7 @@ if (!empty($_POST['add'])) //Nouvelle galerie/catégorie.
 	
 	if (!empty($name))
 	{	
-		if (isset($CAT_GALLERY[$parent_category])) //Insertion sous galerie de niveau x.
+		if (!empty($idcat) && isset($CAT_GALLERY[$parent_category])) //Insertion sous galerie de niveau x.
 		{
 			//Galerie parente de la galerie cible.
 			$list_parent_cats = '';
