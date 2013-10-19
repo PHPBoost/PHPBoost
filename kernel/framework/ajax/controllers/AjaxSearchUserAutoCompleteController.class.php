@@ -35,8 +35,8 @@ class AjaxSearchUserAutoCompleteController extends AbstractController
 			# START results #
 			<li>
 				# IF IS_ADMIN #
-				<a href="{results.U_EDIT}" title="{L_EDIT}" class="edit"></a>&nbsp;
-				<a href="{results.U_DELETE}" title="{L_DELETE}" class="delete"></a>&nbsp;
+				<a href="{results.U_EDIT}" title="{L_EDIT}" class="pbt-icon-edit"></a>&nbsp;
+				<a href="{results.U_DELETE}" title="{L_DELETE}" class="pbt-icon-delete" data-confirmation="delete-element"></a>&nbsp;
 				# ENDIF #
 				<a class="{results.USER_LEVEL_CLASS}" href="{results.U_PROFILE}" # IF results.C_USER_GROUP_COLOR # style="color:{results.USER_GROUP_COLOR}" # ENDIF #>{results.NAME}</a>
 			</li>

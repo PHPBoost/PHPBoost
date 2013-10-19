@@ -5,9 +5,9 @@
 		<tr>
 			<th></th>
 			<th>
-				<a href="{SORT_PSEUDO_TOP}" class="sort-up"></a>
+				<a href="{SORT_PSEUDO_TOP}" class="pbt-icon-table-sort-up"></a>
 				{@subscribers.pseudo} 
-				<a href="{SORT_PSEUDO_BOTTOM}" class="sort-down"></a>
+				<a href="{SORT_PSEUDO_BOTTOM}" class="pbt-icon-table-sort-down"></a>
 			</th>
 			<th>
 				{@subscribers.mail}
@@ -27,9 +27,9 @@
 			<td> 
 				# IF subscribers_list.C_AUTH_MODO #
 					# IF subscribers_list.C_EDIT_LINK #
-					<a href="{subscribers_list.EDIT_LINK}" title="${LangLoader::get_message('edit', 'main')}" class="edit"></a>
+					<a href="{subscribers_list.EDIT_LINK}" title="${LangLoader::get_message('edit', 'main')}" class="pbt-icon-edit"></a>
 					# ENDIF #
-					<a href="{subscribers_list.DELETE_LINK}" title="${LangLoader::get_message('delete', 'main')}" class="delete"></a>
+					<a href="{subscribers_list.DELETE_LINK}" title="${LangLoader::get_message('delete', 'main')}" class="pbt-icon-delete" data-confirmation="delete-element"></a>
 				# ENDIF #
 			</td>
 			<td>

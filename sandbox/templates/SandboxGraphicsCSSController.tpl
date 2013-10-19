@@ -57,11 +57,11 @@
 		<h5>Icônes des principales actions</h5><br />
 		<div class="content">
 			<ul>
-				<li>Flux RSS : <a href="#" class="syndication"></a></li>
-				<li>Editer : <a href="#" class="edit"></a></li>
-				<li>Supprimer : <a href="#" class="delete" data-confirmation="false"></a></li>
-				<li>Supprimer (contrôle automatique JS avec confirmation) : <a href="#" class="delete"></a></li>
-				<li>Supprimer (contrôle automatique JS avec confirmation personnalisée) : <a href="#" class="delete" data-message="Message personnalisé"></a></li>
+				<li>Flux RSS : <a href="#" class="pbt-icon-syndication"></a></li>
+				<li>Editer : <a href="#" class="pbt-icon-edit"></a></li>
+				<li>Supprimer : <a href="#" class="pbt-icon-delete" data-confirmation="delete-element"></a></li>
+				<li>Supprimer (contrôle automatique JS avec confirmation de suppression) : <a href="#" class="pbt-icon-delete" data-confirmation="delete-element"></a></li>
+				<li>Supprimer (contrôle automatique JS avec confirmation personnalisée) : <a href="#" class="pbt-icon-delete" data-confirmation="Message personnalisé"></a></li>
 			</ul>
 		</div>
 		
@@ -207,9 +207,9 @@
 			<thead>
 				<tr> 
 					<th>
-						<a href="#" class="sort-up"></a>
+						<a href="#" class="pbt-icon-table-sort-up"></a>
 						Nom
-						<a href="#" class="sort-down"></a>
+						<a href="#" class="pbt-icon-table-sort-down"></a>
 					</th>
 					<th>
 						Description
@@ -283,8 +283,8 @@
 				<div class="message-date">
 					<span class="actions">
 						<a itemprop="url" href="#com2">#2</a>
-							<a href="#comments_message" class="edit"></a> 
-							<a href="#comments_message" class="delete"></a>
+							<a href="#comments_message" class="pbt-icon-edit"></a> 
+							<a href="#comments_message" class="pbt-icon-delete" data-confirmation="delete-element"></a>
 					</span>
 					<span itemprop="datePublished" content="2013-09-05T15:37:01+00:00">05/09/2013 à 15h37</span>
 				</div>

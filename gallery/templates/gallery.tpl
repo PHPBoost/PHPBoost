@@ -62,7 +62,7 @@
 						html_protected_name = name.replace(/\'/g, "\\\'").replace(/\"/g, "&quot;");
 						html_protected_name2 = xhr_object.responseText.replace(/\'/g, "\\\'").replace(/\"/g, "&quot;");
 						
-						document.getElementById('fihref' + id_file).innerHTML = '<a href="javascript:display_rename_file(\'' + id_file + '\', \'' + html_protected_name + '\', \'' + html_protected_name2 + '\');" class="edit"></a>';
+						document.getElementById('fihref' + id_file).innerHTML = '<a href="javascript:display_rename_file(\'' + id_file + '\', \'' + html_protected_name + '\', \'' + html_protected_name2 + '\');" class="pbt-icon-edit"></a>';
 						document.getElementById('img' + id_file).innerHTML = '';
 					}
 					else if( xhr_object.readyState == 4 && xhr_object.responseText == '0' )
@@ -233,7 +233,7 @@
 		<section>					
 			<header>
 				<h1>
-					<a href="${relative_url(SyndicationUrlBuilder::rss('gallery', CAT_ID))}" class="syndication" title="${LangLoader::get_message('syndication', 'main')}"></a>
+					<a href="${relative_url(SyndicationUrlBuilder::rss('gallery', CAT_ID))}" class="pbt-icon-syndication" title="${LangLoader::get_message('syndication', 'main')}"></a>
 					{L_GALLERY} {U_GALLERY_CAT_LINKS}
 					
 					<span class="actions">
@@ -365,8 +365,8 @@
 								# IF C_GALLERY_PICS_MODO #
 								<tr>										
 									<td colspan="2" class="row2 text_small" style="border:none;padding:4px;">
-										&nbsp;&nbsp;&nbsp;<span id="fihref{ID}"><a href="javascript:display_rename_file('{ID}', '{RENAME}', '{RENAME_CUT}');" class="edit"></a></span>									
-										<a href="{U_DEL}" title="{L_DELETE}" class="delete"></a> 						
+										&nbsp;&nbsp;&nbsp;<span id="fihref{ID}"><a href="javascript:display_rename_file('{ID}', '{RENAME}', '{RENAME_CUT}');" class="pbt-icon-edit"></a></span>									
+										<a href="{U_DEL}" title="{L_DELETE}" class="pbt-icon-delete" data-confirmation="delete-element"></a> 						
 										<div style="position:absolute;z-index:100;margin-top:95px;float:left;display:none;" id="move{ID}">
 											<div class="bbcode_block" style="width:190px;overflow:auto;" onmouseover="pics_hide_block({ID}, 1);" onmouseout="pics_hide_block({ID}, 0);">
 												<div style="margin-bottom:4px;"><strong>{L_MOVETO}</strong>:</div>
@@ -422,8 +422,8 @@
 										
 									<div style="width:180px;margin:auto;">										
 										# IF C_GALLERY_MODO #
-										<span id="fihref{pics_list.ID}"><a href="javascript:display_rename_file('{pics_list.ID}', '{pics_list.RENAME}', '{pics_list.RENAME_CUT}');" title="{L_EDIT}" class="edit"></a></span>
-										<a href="{pics_list.U_DEL}"title="{L_DELETE}" class="delete"></a>									
+										<span id="fihref{pics_list.ID}"><a href="javascript:display_rename_file('{pics_list.ID}', '{pics_list.RENAME}', '{pics_list.RENAME_CUT}');" title="{L_EDIT}" class="pbt-icon-edit"></a></span>
+										<a href="{pics_list.U_DEL}"title="{L_DELETE}" class="pbt-icon-delete" data-confirmation="delete-element"></a>									
 										<div style="position:relative;margin:auto;width:170px;display:none;float:right" onmouseover="pics_hide_block({pics_list.ID}, 1);" onmouseout="pics_hide_block({pics_list.ID}, 0);" id="move{pics_list.ID}">
 											<div style="position:absolute;z-index:100;margin-top:90px;">
 												<div class="bbcode_block" style="width:170px;overflow:auto;">

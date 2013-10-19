@@ -25,13 +25,13 @@
 			<a href="{LINK_BUG_REJECT}" onclick="javascript:return Confirm_reject();" class="pbt-icon-bugtracker-opened" title="{@bugs.actions.reject}"></a>
 		# ENDIF #
 		# IF C_EDIT_BUG #
-			<a href="{LINK_BUG_EDIT}" title="${LangLoader::get_message('edit', 'main')}" class="edit"></a>
+			<a href="{LINK_BUG_EDIT}" title="${LangLoader::get_message('edit', 'main')}" class="pbt-icon-edit"></a>
 		# ENDIF #
 		# IF C_HISTORY_BUG #
 			<a href="{LINK_BUG_HISTORY}" title="{@bugs.actions.history}" class="pbt-icon-bugtracker-history"></a>
 		# ENDIF #
 		# IF C_DELETE_BUG #
-			<a href="{LINK_BUG_DELETE}" title="${LangLoader::get_message('delete', 'main')}" class="delete"></a>
+			<a href="{LINK_BUG_DELETE}" title="${LangLoader::get_message('delete', 'main')}" class="pbt-icon-delete" data-confirmation="delete-element"></a>
 		# ENDIF #
 	</legend>
 	<dl>

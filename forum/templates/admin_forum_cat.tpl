@@ -273,7 +273,7 @@
 											</script>										
 											<noscript><a href="admin_forum.php?id={list.ID}&amp;move=down&amp;token={TOKEN}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a></noscript>
 											
-											<a href="admin_forum.php?id={list.ID}" class="edit"></a> <a href="admin_forum.php?del={list.ID}&amp;token={TOKEN}" class="delete"></a>&nbsp;&nbsp;
+											<a href="admin_forum.php?id={list.ID}" class="pbt-icon-edit"></a> <a href="admin_forum.php?del={list.ID}&amp;token={TOKEN}" class="pbt-icon-delete" data-confirmation="delete-element"></a>&nbsp;&nbsp;
 										</span>&nbsp;
 									</div>	
 								</div>

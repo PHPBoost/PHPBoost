@@ -55,10 +55,10 @@
 						{list.CODE_SMILEY}
 					</td>
 					<td class="row2">
-						<a href="admin_smileys.php?id={list.IDSMILEY}&amp;edit=1" title="{L_EDIT}" class="edit"></a>
+						<a href="admin_smileys.php?id={list.IDSMILEY}&amp;edit=1" title="{L_EDIT}" class="pbt-icon-edit"></a>
 					</td>
 					<td class="row2">
-						<a href="admin_smileys.php?id={list.IDSMILEY}&amp;del=1&amp;token={TOKEN}" title="{L_DELETE}" class="delete"></a>
+						<a href="admin_smileys.php?id={list.IDSMILEY}&amp;del=1&amp;token={TOKEN}" title="{L_DELETE}" class="pbt-icon-delete" data-confirmation="delete-element"></a>
 					</td>
 				</tr>
 				

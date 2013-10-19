@@ -1,9 +1,5 @@
 <script type="text/javascript">
 <!--
-function Confirm_del_default_value() {
-	return confirm("{@bugs.actions.confirm.del_default_value}");
-}
-
 function insert_color(color, field)
 {
 	document.getElementById(field).value = color;
@@ -58,7 +54,7 @@ function bbcode_color_list(field)
 			# IF C_DISPLAY_DEFAULT_DELETE_BUTTON #
 		<tr>
 			<th colspan="4">
-				<a href="{LINK_DELETE_DEFAULT}" onclick="javascript:return Confirm_del_default_value();" title="{L_DELETE}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="" /> {@bugs.labels.del_default_value}</a>
+				<a href="{LINK_DELETE_DEFAULT}" title="{L_DELETE}" class="pbt-icon-delete" data-confirmation="{@bugs.actions.confirm.del_default_value}">{@bugs.labels.del_default_value}</a>
 			</th>
 		</tr>
 			# ENDIF #

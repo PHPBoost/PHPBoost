@@ -61,10 +61,10 @@
 				<span class="smaller">{articles.PUBLISHED_DATE}</span>
 			</td>
 			<td> 
-				<a href="{articles.U_EDIT_ARTICLE}" title="{articles.L_EDIT_ARTICLE}" class="edit"></a>
+				<a href="{articles.U_EDIT_ARTICLE}" title="{articles.L_EDIT_ARTICLE}" class="pbt-icon-edit"></a>
 			</td>
 			<td>
-				<a href="{articles.U_DELETE_ARTICLE}" title="{articles.L_DELETE_ARTICLE}" class="delete"></a>
+				<a href="{articles.U_DELETE_ARTICLE}" title="{articles.L_DELETE_ARTICLE}" class="pbt-icon-delete" data-confirmation="delete-element"></a>
 			</td>
 		</tr>
 		# END articles #

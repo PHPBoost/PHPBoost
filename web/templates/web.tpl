@@ -7,7 +7,7 @@
 			{L_WEB} - {L_CATEGORIES}
 			<span class="actions">
 				# IF C_IS_ADMIN # 
-				<a href="{PATH_TO_ROOT}/web/admin_web_cat.php{SID}" title="{L_EDIT}" class="edit"></a> 
+				<a href="{PATH_TO_ROOT}/web/admin_web_cat.php{SID}" title="{L_EDIT}" class="pbt-icon-edit"></a> 
 				# ENDIF #
 				{PAGINATION}
 			</span>
@@ -42,7 +42,7 @@
 			{L_WEB} - {CAT_NAME}
 			<span class="actions">
 				# IF C_IS_ADMIN # 
-				<a href="{PATH_TO_ROOT}/web/admin_web_cat.php{SID}" title="{L_EDIT}" class="edit"></a> 
+				<a href="{PATH_TO_ROOT}/web/admin_web_cat.php{SID}" title="{L_EDIT}" class="pbt-icon-edit"></a> 
 				# ENDIF #
 			</span>
 		</h1>
@@ -55,29 +55,29 @@
 				<thead>
 					<tr>
 						<th>
-							<a href="web{U_WEB_ALPHA_TOP}" class="sort-up"></a>
+							<a href="web{U_WEB_ALPHA_TOP}" class="pbt-icon-table-sort-up"></a>
 							{L_LINK}
-							<a href="web{U_WEB_ALPHA_BOTTOM}" class="sort-down"></a>
+							<a href="web{U_WEB_ALPHA_BOTTOM}" class="pbt-icon-table-sort-down"></a>
 						</th>
 						<th>
-							<a href="web{U_WEB_DATE_TOP}" class="sort-up"></a>
+							<a href="web{U_WEB_DATE_TOP}" class="pbt-icon-table-sort-up"></a>
 							{L_DATE}					
-							<a href="web{U_WEB_DATE_BOTTOM}" class="sort-down"></a>
+							<a href="web{U_WEB_DATE_BOTTOM}" class="pbt-icon-table-sort-down"></a>
 						</th>
 						<th>
-							<a href="web{U_WEB_VIEW_TOP}" class="sort-up"></a>
+							<a href="web{U_WEB_VIEW_TOP}" class="pbt-icon-table-sort-up"></a>
 							{L_VIEW}					
-							<a href="web{U_WEB_VIEW_BOTTOM}" class="sort-down"></a>
+							<a href="web{U_WEB_VIEW_BOTTOM}" class="pbt-icon-table-sort-down"></a>
 						</th>
 						<th>
-							<a href="web{U_WEB_NOTE_TOP}" class="sort-up"></a>
+							<a href="web{U_WEB_NOTE_TOP}" class="pbt-icon-table-sort-up"></a>
 							{L_NOTE}					
-							<a href="web{U_WEB_NOTE_BOTTOM}" class="sort-down"></a>
+							<a href="web{U_WEB_NOTE_BOTTOM}" class="pbt-icon-table-sort-down"></a>
 						</th>
 						<th>
-							<a href="web{U_WEB_COM_TOP}" class="sort-up"></a>
+							<a href="web{U_WEB_COM_TOP}" class="pbt-icon-table-sort-up"></a>
 							{L_COM}
-							<a href="web{U_WEB_COM_BOTTOM}" class="sort-down"></a>
+							<a href="web{U_WEB_COM_BOTTOM}" class="pbt-icon-table-sort-down"></a>
 						</th>
 					</tr>
 				</thead>

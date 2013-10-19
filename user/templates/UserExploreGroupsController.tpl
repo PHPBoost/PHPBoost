@@ -14,7 +14,7 @@
 			{GROUP_NAME}
 			# IF C_ADMIN #
 				&nbsp;&nbsp;
-				<a href="{U_ADMIN_GROUPS}" class="edit"></a>
+				<a href="{U_ADMIN_GROUPS}" class="pbt-icon-edit"></a>
 			# ENDIF #
 		</th>
 	</tr>

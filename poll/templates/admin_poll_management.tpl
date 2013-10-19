@@ -84,10 +84,10 @@
 							<span class="smaller">{questions.VISIBLE}</span>
 						</td>
 						<td> 
-							<a href="admin_poll.php?id={questions.IDPOLL}" title="{L_UPDATE}" class="edit"></a>
+							<a href="admin_poll.php?id={questions.IDPOLL}" title="{L_UPDATE}" class="pbt-icon-edit"></a>
 						</td>
 						<td>
-							<a href="admin_poll.php?delete=true&amp;id={questions.IDPOLL}&amp;token={TOKEN}" title="{L_DELETE}" class="delete"></a>
+							<a href="admin_poll.php?delete=true&amp;id={questions.IDPOLL}&amp;token={TOKEN}" title="{L_DELETE}" class="pbt-icon-delete" data-confirmation="delete-element"></a>
 						</td>
 					</tr>
 					# END questions #

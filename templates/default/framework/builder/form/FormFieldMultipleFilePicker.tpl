@@ -28,7 +28,7 @@ var MultipleFilePicker = new MultipleFilePicker();
 	<input type="file" name="${escape(ID)}_1" id="${escape(ID)}_1" # IF C_DISABLED # disabled="disabled" # ENDIF #></br>
 	<input name="max_file_size" value="{MAX_FILE_SIZE}" type="hidden">
 </div>
-<img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/plus.png" id="add_${escape(ID)}" class="valign_middle" style="width:25px;"/>
+<i class="pbt-icon-plus" id="add_${escape(ID)}"></i>
 <script type="text/javascript">
 <!--
 $("${escape(ID)}_1").form.enctype = "multipart/form-data";

@@ -119,20 +119,16 @@ table thead th:last-child {
 	border-top-right-radius: 3px;
 }
 
-table .sort-up, table .sort-down {
+table [class^="pbt-icon-"]:before {
 	color:#e5e6e6;
-	font-size:12px;
-	font-weight:normal;
-	font-family: FontAwesome;
 }
 
-table .sort-up:hover, table .sort-down:hover {
+table [class^="pbt-icon-"]:hover {
 	color:#fff;
-	text-decoration:none;
 }
 
-table .sort-up:before { content: "\f062"; }
-table .sort-down:before { content: "\f063"; }
+table .pbt-icon-table-sort-up:before { content: "\f062"; }
+table .pbt-icon-table-sort-down:before { content: "\f063"; }
 
 /* Contenu */
 table td {

@@ -81,10 +81,10 @@
 						{web.APROBATION}
 					</td>
 					<td class="row2"> 
-						<a href="admin_web.php?id={web.IDWEB}" title="{L_UPDATE}" class="edit"></a>
+						<a href="admin_web.php?id={web.IDWEB}" title="{L_UPDATE}" class="pbt-icon-edit"></a>
 					</td>
 					<td class="row2">
-						<a href="admin_web.php?delete=true&amp;id={web.IDWEB}&amp;token={TOKEN}" class="delete"></a>
+						<a href="admin_web.php?delete=true&amp;id={web.IDWEB}&amp;token={TOKEN}" class="pbt-icon-delete" data-confirmation="delete-element"></a>
 					</td>
 				</tr>
 				# END web #

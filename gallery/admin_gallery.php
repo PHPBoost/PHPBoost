@@ -207,7 +207,7 @@ else
 	if ($nbr_pics > 0)
 	{
 		$Template->assign_block_vars('pics', array(
-			'EDIT' => '<a href="admin_gallery_cat.php' . (!empty($idcat) ? '?id=' . $idcat : '') . '" title="' . $LANG['edit'] . '" class="edit"></a>',
+			'EDIT' => '<a href="admin_gallery_cat.php' . (!empty($idcat) ? '?id=' . $idcat : '') . '" title="' . $LANG['edit'] . '" class="pbt-icon-edit"></a>',
 			'PICS_MAX' => !empty($idpics) ? '<img src="show_pics.php?id=' . $idpics . '&amp;cat=' . $idcat . '" alt="" / >' : ''
 		));
 
@@ -401,7 +401,7 @@ else
 					'PATH' => $row['path'],
 					'NAME' => stripslashes($name_cut),
 					'TITLE' => stripslashes($row['name']),
-					'RENAME_FILE' => '<span id="fihref' . $row['id'] . '"><a href="javascript:display_rename_file(\'' . $row['id'] . '\', \'' . addslashes($row['name']) . '\', \'' . addslashes($name_cut) . '\');" title="' . $LANG['edit'] . '" class="edit"></a></span>',
+					'RENAME_FILE' => '<span id="fihref' . $row['id'] . '"><a href="javascript:display_rename_file(\'' . $row['id'] . '\', \'' . addslashes($row['name']) . '\', \'' . addslashes($name_cut) . '\');" title="' . $LANG['edit'] . '" class="pbt-icon-edit"></a></span>',
 					'IMG_APROB' => ($row['aprob'] == 1) ? 'unvisible.png' : 'visible.png',
 					'TR_START' => $tr_start,
 					'TR_END' => $tr_end,

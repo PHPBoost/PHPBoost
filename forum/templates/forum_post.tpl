@@ -195,7 +195,7 @@
 										
 										<p style="text-align:center;width:165px;" id="add_poll_field_link">
 											# IF C_ADD_POLL_FIELD #
-											<a href="javascript:add_poll_field({NBR_POLL_FIELD})"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/plus.png" alt="+" /></a>
+											<a href="javascript:add_poll_field({NBR_POLL_FIELD})"><i class="pbt-icon-plus"></i></a>
 											# ENDIF #
 										</p>
 									</dd>

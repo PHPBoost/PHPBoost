@@ -91,38 +91,38 @@
 					<tr> 
 						<th>
 							# IF NOT C_ORDER_ENTITLED_ASC #
-								<a href="{U_ORDER_ENTITLED_ASC}" class="sort-up"></a>
+								<a href="{U_ORDER_ENTITLED_ASC}" class="pbt-icon-table-sort-up"></a>
 							# ENDIF #
 							{L_TYPE}
 							# IF NOT C_ORDER_ENTITLED_DESC #
-								<a href="{U_ORDER_ENTITLED_DESC}" class="sort-down"></a>
+								<a href="{U_ORDER_ENTITLED_DESC}" class="pbt-icon-table-sort-down"></a>
 							# ENDIF #
 						</th>
 						<th>
 							# IF NOT C_ORDER_CREATION_DATE_ASC #
-								<a href="{U_ORDER_CREATION_DATE_ASC}" class="sort-up"></a>
+								<a href="{U_ORDER_CREATION_DATE_ASC}" class="pbt-icon-table-sort-up"></a>
 							# ENDIF #
 							{L_DATE}
 							# IF NOT C_ORDER_CREATION_DATE_DESC #
-								<a href="{U_ORDER_CREATION_DATE_DESC}" class="sort-down"></a>
+								<a href="{U_ORDER_CREATION_DATE_DESC}" class="pbt-icon-table-sort-down"></a>
 							# ENDIF #
 						</th>
 						<th>
 							# IF NOT C_ORDER_PRIORITY_ASC #
-								<a href="{U_ORDER_PRIORITY_ASC}" class="sort-up"></a>
+								<a href="{U_ORDER_PRIORITY_ASC}" class="pbt-icon-table-sort-up"></a>
 							# ENDIF #
 							{L_PRIORITY}
 							# IF NOT C_ORDER_PRIORITY_DESC #
-								<a href="{U_ORDER_PRIORITY_DESC}" class="sort-down"></a>
+								<a href="{U_ORDER_PRIORITY_DESC}" class="pbt-icon-table-sort-down"></a>
 							# ENDIF #
 						</th>
 						<th>
 							# IF NOT C_ORDER_STATUS_ASC #
-								<a href="{U_ORDER_STATUS_ASC}" class="sort-up"></a>
+								<a href="{U_ORDER_STATUS_ASC}" class="pbt-icon-table-sort-up"></a>
 							# ENDIF #
 							{L_ACTIONS}
 							# IF NOT C_ORDER_STATUS_DESC #
-								<a href="{U_ORDER_STATUS_DESC}" class="sort-down"></a>
+								<a href="{U_ORDER_STATUS_DESC}" class="pbt-icon-table-sort-down"></a>
 							# ENDIF #
 						</th>
 					</tr>
@@ -155,7 +155,7 @@
 							# ELSE #
 							<a href="javascript:change_alert_status('{alerts.ID}', '{alerts.STATUS}');" title="{L_FIX}" id="status_{alerts.ID}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/not_processed_mini.png" alt="{L_FIX}" /></a>
 							# ENDIF #
-							<a href="javascript:delete_alert('{alerts.ID}');" title="{L_DELETE}" class="delete"></a>
+							<a href="javascript:delete_alert('{alerts.ID}');" title="{L_DELETE}" class="pbt-icon-delete" data-confirmation="delete-element"></a>
 						</td>			
 					</tr>
 					# END alerts #

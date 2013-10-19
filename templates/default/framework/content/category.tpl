@@ -62,9 +62,9 @@
 						# ENDIF #
 					# ENDIF #
 					
-					<a href="{categories.ACTION_EDIT}" class="edit"></a>&nbsp;
+					<a href="{categories.ACTION_EDIT}" class="pbt-icon-edit"></a>&nbsp;
 					
-					<a href="{categories.ACTION_DELETE}" title="{L_CONFIRM_DELETE}" class="delete"></a>
+					<a href="{categories.ACTION_DELETE}" title="{L_CONFIRM_DELETE}" class="pbt-icon-delete" data-confirmation="delete-element"></a>
 					&nbsp;&nbsp;
 				</span>
 				&nbsp;
