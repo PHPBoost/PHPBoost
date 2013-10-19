@@ -119,10 +119,10 @@ else //On affiche la liste des modifications
 		'L_TITLE' => $LANG['wiki_article_title'],
 		'L_AUTHOR' => $LANG['wiki_author'],
 		'L_DATE' => LangLoader::get_message('date', 'date-common'),
-		'ARROW_TOP_TITLE' => ($field == 'title' && $order == 'asc') ? '' : '<a href="' . url('history.php?p=' . $Pagination->get_page() . '&amp;field=title&amp;order=asc') . '"><img src="../templates/' . get_utheme() . '/images/top.png" alt="asc" /></a>',
-		'ARROW_BOTTOM_TITLE' => ($field == 'title' && $order == 'desc') ? '' : '<a href="' . url('history.php?p=' . $Pagination->get_page() . '&amp;field=title&amp;order=desc') . '"><img src="../templates/' . get_utheme() . '/images/bottom.png" alt="desc" /></a>',
-		'ARROW_TOP_DATE' => ($field == 'timestamp' && $order == 'asc') ? '' : '<a href="' . url('history.php?p=' . $Pagination->get_page() . '&amp;field=timestamp&amp;order=asc') . '"><img src="../templates/' . get_utheme() . '/images/top.png" alt="asc" /></a>',
-		'ARROW_BOTTOM_DATE' => ($field == 'timestamp' && $order == 'desc') ? '' : '<a href="' . url('history.php?p=' . $Pagination->get_page() . '&amp;field=timestamp&amp;order=desc') . '"><img src="../templates/' . get_utheme() . '/images/bottom.png" alt="desc" /></a>',
+		'TOP_TITLE' => ($field == 'title' && $order == 'asc') ? '' : url('history.php?p=' . $Pagination->get_page() . '&amp;field=title&amp;order=asc'),
+		'BOTTOM_TITLE' => ($field == 'title' && $order == 'desc') ? '' : url('history.php?p=' . $Pagination->get_page() . '&amp;field=title&amp;order=desc'),
+		'TOP_DATE' => ($field == 'timestamp' && $order == 'asc') ? '' : url('history.php?p=' . $Pagination->get_page() . '&amp;field=timestamp&amp;order=asc'),
+		'BOTTOM_DATE' => ($field == 'timestamp' && $order == 'desc') ? '' : url('history.php?p=' . $Pagination->get_page() . '&amp;field=timestamp&amp;order=desc'),
 		'PAGINATION' => ($nbr_articles > $_WIKI_NBR_ARTICLES_A_PAGE_IN_HISTORY  ?  $show_pagin : '') //Affichage de la pagination si il le faut
 	));	
 
