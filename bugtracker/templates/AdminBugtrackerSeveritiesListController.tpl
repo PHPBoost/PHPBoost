@@ -29,62 +29,56 @@ function bbcode_color_list(field)
 }
 -->
 </script>
-# INCLUDE ADD_FIELDSET_JS #
-<fieldset id="${escape(ID)}" # IF C_DISABLED # style="display:none;" # ENDIF # # IF CSS_CLASS # class="{CSS_CLASS}" # ENDIF #>
-	<legend>{L_FORMTITLE}</legend>
-	# START elements #
-		# INCLUDE elements.ELEMENT #
-	# END elements #
-	<table>
-		<thead>
-			<tr>
-				<th class="column_default">
-					{@bugs.labels.default}
-				</th>
-				<th class="column_color">
-					{@bugs.labels.color}
-				</th>
-				<th>
-					{L_NAME}
-				</th>
-			</tr>
-		</thead>
-		<tfoot>
-		# IF C_SEVERITIES #
-			# IF C_DISPLAY_DEFAULT_DELETE_BUTTON #
+<table>
+	<thead>
 		<tr>
-			<th colspan="4">
-				<a href="{LINK_DELETE_DEFAULT}" title="{L_DELETE}" class="pbt-icon-delete" data-confirmation="{@bugs.actions.confirm.del_default_value}">{@bugs.labels.del_default_value}</a>
+			<th class="column_default">
+				{@bugs.labels.default}
+			</th>
+			<th class="column_color">
+				{@bugs.labels.color}
+			</th>
+			<th>
+				${LangLoader::get_message('name', 'main')}
 			</th>
 		</tr>
-			# ENDIF #
-		# ELSE #
-			<tr> 
-				<th colspan="4">
-					{@bugs.notice.no_severity}
-				</th>
-			</tr>
+	</thead>
+	<tfoot>
+	# IF C_SEVERITIES #
+		# IF C_DISPLAY_DEFAULT_DELETE_BUTTON #
+	<tr>
+		<th colspan="4">
+			<a href="{LINK_DELETE_DEFAULT}" title="${LangLoader::get_message('delete', 'main')}" class="pbt-icon-delete" data-confirmation="{@bugs.actions.confirm.del_default_value}">{@bugs.labels.del_default_value}</a>
+		</th>
+	</tr>
 		# ENDIF #
-		</tfoot>
-		<tbody>
-			# START severities #
-			<tr>
-				<td>
-					<input type="radio" name="default_severity" value="{severities.ID}" {severities.IS_DEFAULT}>
-				</td>
-				<td>
-					<input type="text" size="8" maxlength="7" name="s_color{severities.ID}" id="s_color{severities.ID}" value="{severities.COLOR}" style="background-color:{severities.COLOR};" class="text">
-					<a href="javascript:bbcode_color_list('s_color{severities.ID}');bb_display_block('{severities.ID}', '');" onmouseout="bb_hide_block('{severities.ID}', '', 0);" class="bbcode_hover"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/color.png" alt="" class="valign_middle" /></a>
-					<div style="position:relative;z-index:100;display:none;margin-left:85px;" id="bb_block{severities.ID}">
-						<div id="s_color{severities.ID}_list" class="bbcode_block" style="background:white;width:150px;" onmouseover="bb_hide_block('{severities.ID}', '', 1);" onmouseout="bb_hide_block('{severities.ID}', '', 0);">
-						</div>
+	# ENDIF #
+	</tfoot>
+	<tbody>
+		# START severities #
+		<tr>
+			<td>
+				<input type="radio" name="default_severity" value="{severities.ID}"# IF severities.C_IS_DEFAULT # checked="checked"# ENDIF #>
+			</td>
+			<td>
+				<input type="text" size="8" maxlength="7" name="s_color{severities.ID}" id="s_color{severities.ID}" value="{severities.COLOR}" style="background-color:{severities.COLOR};" class="text">
+				<a href="javascript:bbcode_color_list('s_color{severities.ID}');bb_display_block('{severities.ID}', '');" onmouseout="bb_hide_block('{severities.ID}', '', 0);" class="bbcode_hover"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/color.png" alt="" class="valign_middle" /></a>
+				<div style="position:relative;z-index:100;display:none;margin-left:85px;" id="bb_block{severities.ID}">
+					<div id="s_color{severities.ID}_list" class="bbcode_block" style="background:white;width:150px;" onmouseover="bb_hide_block('{severities.ID}', '', 1);" onmouseout="bb_hide_block('{severities.ID}', '', 0);">
 					</div>
-				</td>
-				<td>
-					<input type="text" maxlength="100" size="40" name="severity{severities.ID}" value="{severities.NAME}" class="text">
-				</td>
-			</tr>
-			# END severities #
-		</tbody>
-	</table>
-</fieldset>
+				</div>
+			</td>
+			<td>
+				<input type="text" maxlength="100" size="40" name="severity{severities.ID}" value="{severities.NAME}" class="text">
+			</td>
+		</tr>
+		# END severities #
+		# IF NOT C_SEVERITIES #
+		<tr> 
+			<td colspan="4">
+				{@bugs.notice.no_severity}
+			</td>
+		</tr>
+		# ENDIF #
+	</tbody>
+</table>
