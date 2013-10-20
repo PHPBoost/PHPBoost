@@ -1,42 +1,47 @@
-    # INCLUDE UPLOAD_FORM #
-    
-    # INCLUDE MSG #
-    <form action="{REWRITED_SCRIPT}" method="post">
-        # IF C_UPDATES #
-            <div class="warning" style="width:300px;margin:auto;">{@modules.updates_available}</div>&nbsp;&nbsp;
-            <table class="module_table">
-                <tr><th colspan="5">{@modules.updates_available}</th></tr>
-                <tr>
-					<td class="row2" style="width:160px;text-align:center;">
+# INCLUDE UPLOAD_FORM #
+
+# INCLUDE MSG #
+
+# IF C_UPDATES #
+	<form action="{REWRITED_SCRIPT}" method="post">
+		<div class="warning" style="width:300px;margin:auto;">{@modules.updates_available}</div>
+		{@modules.updates_available}
+		<table>
+			<thead>
+				<tr>
+					<th>
 						{@modules.name}
-					</td>
-					<td class="row2" style="text-align:center;">
+					</th>
+					<th>
 						{@modules.description}
-					</td>
-					<td class="row2" style="width:100px;text-align:center;">
+					</th>
+					<th>
 						{@modules.upgrade_module}
-					</td>
+					</th>
 				</tr>
-                # START modules_upgradable #
-                <tr> 	
-					<td class="row2">					
-						<img class="valign_middle" src="{PATH_TO_ROOT}/{modules_upgradable.ICON}/{modules_upgradable.ICON}.png" alt="" /> <strong>{modules_upgradable.NAME}</strong> <em>({modules_upgradable.VERSION})</em>
+			</thead>
+			<tbody>
+				# START modules_upgradable #
+				<tr> 	
+					<td>					
+						<img src="{PATH_TO_ROOT}/{modules_upgradable.ICON}/{modules_upgradable.ICON}.png" alt="" /> <span class="text_strong">{modules_upgradable.NAME}</span> <span class="text_italic">({modules_upgradable.VERSION})</span>
 					</td>
-					<td class="row2">	
-						<strong>{@modules.author}:</strong> {modules_upgradable.AUTHOR} {modules_upgradable.AUTHOR_WEBSITE}<br />
-						<strong>{@modules.description}:</strong> {modules_upgradable.DESCRIPTION}<br />
-						<strong>{@modules.compatibility}:</strong> PHPBoost {modules_upgradable.COMPATIBILITY}<br />
-						<strong>{@modules.php_version} :</strong> {modules_upgradable.PHP_VERSION}
+					<td>	
+						<span class="text_strong">{@modules.author}:</span> {modules_upgradable.AUTHOR} {modules_upgradable.AUTHOR_WEBSITE}<br />
+						<span class="text_strong">{@modules.description}:</span> {modules_upgradable.DESCRIPTION}<br />
+						<span class="text_strong">{@modules.compatibility}:</span> PHPBoost {modules_upgradable.COMPATIBILITY}<br />
+						<span class="text_strong">{@modules.php_version} :</span> {modules_upgradable.PHP_VERSION}
 					</td>
-					<td class="row2" style="text-align:center;">
+					<td>
 						<input type="hidden" name="token" value="{TOKEN}">
 						<input type="submit" name="upgrade-{modules_upgradable.ID}" value="{@modules.upgrade_module}" class="submit">
 						<input type="hidden" name="module_id" value="{modules_upgradable.ID}">
 					</td>
 				</tr>	
-                # END modules_upgradable #
-            </table>
-    </form>
-	# ELSE #
-          &nbsp;<div class="warning" style="width:300px;margin:auto;margin-top:100px;">{@modules.no_upgradable_module_available}</div>
-	# ENDIF #
+				# END modules_upgradable #
+			</tbody>
+		</table>
+	</form>
+# ELSE #
+	<div class="warning" style="width:300px;margin:auto;margin-top:100px;">{@modules.no_upgradable_module_available}</div>
+# ENDIF #

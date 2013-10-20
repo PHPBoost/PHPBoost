@@ -543,6 +543,10 @@ a.msg_link_pseudo:hover { color:#f2fbff; }
     height:auto !important;
 }
 
+.msg_top_row a {
+	color:#e8eaeb;
+}
+
 .msg_info_mbr { /* Case des informations du membre */
     background:#f0f3ff;
     width:136px;
