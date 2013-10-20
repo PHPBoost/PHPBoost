@@ -27,8 +27,8 @@
 		</tr>
 	</tfoot>
 	<tbody>
-		<tr>
-			# START news #
+		# START news #
+			<tr>
 				<td> 
 					<a href="{news.EDIT_LINK}" title="${LangLoader::get_message('edit', 'main')}" class="pbt-icon-edit"></a>
 					<a href="{news.DELETE_LINK}" title="${LangLoader::get_message('delete', 'main')}" class="pbt-icon-delete" data-confirmation="delete-element"></a>
@@ -48,7 +48,7 @@
 				<td>
 					{news.STATUS}
 				</td>
-			# END news #
-		</tr>
+			</tr>
+		# END news #
 	</tbody>
 </table>
