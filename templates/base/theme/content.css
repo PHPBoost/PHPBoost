@@ -119,11 +119,11 @@ table thead th:last-child {
 	border-top-right-radius: 3px;
 }
 
-table [class^="pbt-icon-"]:before {
+table thead th a {
 	color:#e5e6e6;
 }
 
-table [class^="pbt-icon-"]:hover {
+table thead th a:hover {
 	color:#fff;
 }
 
