@@ -11,13 +11,12 @@
 .display_none{ display: none; }
 .vertical_top{ vertical-align: top; }
 
-.column_id{ width: 61px; }
+.column_id{ width: 62px; }
 .column_admin{ width: 95px; }
 .column_history{ width: 70px; }
 .column_severity{ width: 100px; }
 .column_informations{ width: 125px; }
 .column_date{ width: 138px; }
-.column_date_roadmap{ width: 100px; }
 .column_version{ width: 45px; }
 .column_version_detected{ width: 96px; }
 .column_default{ width: 60px; }

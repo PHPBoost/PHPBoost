@@ -73,10 +73,6 @@ class BugtrackerConfig extends AbstractConfigData
 	
 	const BUGTRACKER_MAX_SEARCH_RESULTS = 50;
 	
-	//Date format
-	const FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE = 'date_format';
-	const FORMAT_DAY_MONTH_YEAR = 'date_format_short';
-	
 	//Admin alerts fix type
 	const FIX = 'fix';
 	const DELETE = 'delete';
@@ -147,6 +143,11 @@ class BugtrackerConfig extends AbstractConfigData
 	public function set_date_form($value) 
 	{
 		$this->set_property(self::DATE_FORM, $value);
+	}
+	
+	public function is_date_form_short()
+	{
+		return self::DATE_FORM == Date::FORMAT_DAY_MONTH_YEAR;
 	}
 	
 	public function enable_comments()
@@ -733,7 +734,7 @@ class BugtrackerConfig extends AbstractConfigData
 			self::ITEMS_PER_PAGE => 20,
 			self::REJECTED_BUG_COLOR => '#f8465e',
 			self::FIXED_BUG_COLOR => '#afffa2',
-			self::DATE_FORM => self::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE,
+			self::DATE_FORM => Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE_TEXT,
 			self::COMMENTS_ENABLED => true,
 			self::CAT_IN_TITLE_ENABLED => false,
 			self::ROADMAP_ENABLED => false,
