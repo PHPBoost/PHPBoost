@@ -1,43 +1,43 @@
 # INCLUDE UPLOAD_FORM #
 <form action="{REWRITED_SCRIPT}" method="post">
 	# INCLUDE MSG #	
-	<table class="module_table">
-		<tr> 
-			<th colspan="4">
-				{@modules.modules_available}
-			</th>
-		</tr>
+	{@modules.modules_available}
+	<table>
 		# IF C_MODULES_AVAILABLE #
-		<tr>
-			<td class="row2" style="width:160px;text-align:center;">
-				{@modules.name}
-			</td>
-			<td class="row2" style="text-align:center;">
-				{@modules.description}
-			</td>
-			<td class="row2" style="width:100px;text-align:center;">
-				{@modules.activate_module}
-			</td>
-		</tr>
+		<thead>
+			<tr> 
+				<th>
+					{@modules.name}
+				</th>
+				<th>
+					{@modules.description}
+				</th>
+				<th>
+					{@modules.activate_module}
+				</th>
+			</tr>
+		</thead>
+		<tbody>
 		# ELSE #
-		<tr>
-			<td class="row2" colspan="4" style="text-align:center;">
-				<strong>{@modules.no_module_to_install}</strong>
-			</td>
-		</tr>
+		<tbody>
+			<tr>
+				<td colspan="4">
+					<span class="text_strong">{@modules.no_module_to_install}</span>
+				</td>
+			</tr>
 		# ENDIF #
 				
 		# START available #
 		<tr> 	
-			<td class="row2">					
-				<img class="valign_middle" src="{PATH_TO_ROOT}/{available.ICON}/{available.ICON}.png" alt="" /> <strong>{available.NAME}</strong> <em>({available.VERSION})</em>
+			<td>					
+				<img src="{PATH_TO_ROOT}/{available.ICON}/{available.ICON}.png" alt="" /> <span class="text_strong">{available.NAME}</span> <em>({available.VERSION})</em>
 			</td>
-			<td class="row2">	
-				<strong>{@modules.author}:</strong> {available.AUTHOR} {available.AUTHOR_WEBSITE}<br />
-				<strong>{@modules.description}:</strong> {available.DESCRIPTION}<br />
-				<strong>{@modules.compatibility}:</strong> PHPBoost {available.COMPATIBILITY}<br />
+			<td>	
+				<span class="text_strong">{@modules.author}:</span> {available.AUTHOR} {available.AUTHOR_WEBSITE}<br />
+				<span class="text_strong">{@modules.description}:</span> {available.DESCRIPTION}<br />
+				<span class="text_strong">{@modules.compatibility}:</span> PHPBoost {available.COMPATIBILITY}<br />
 			</td>
-			<td class="row2" style="text-align:center;">	
+			<td>	
 				<input type="radio" name="activated-{available.ID}" value="1" checked="checked"> {@modules.yes}
 				<input type="radio" name="activated-{available.ID}" value="0"> {@modules.no}
 				<br /><br />
@@ -46,5 +46,6 @@
 			</td>
 		</tr>						
 		# END available #
+		</tbody>
 	</table>			
 </form>

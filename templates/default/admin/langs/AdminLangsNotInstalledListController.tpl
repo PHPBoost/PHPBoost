@@ -1,70 +1,71 @@
 # INCLUDE UPLOAD_FORM #
 <form action="{REWRITED_SCRIPT}" method="post">
-	<table class="module_table" style="width:99%;margin-bottom:30px;">
-		<tr> 
-			<th colspan="4">
-				{@langs.not_installed}
-			</th>
-		</tr>
-		<tr> 
-			<td class="row2" colspan="4" style="text-align:center;">
-				# INCLUDE MSG #	
-			</td>
-		</tr>
+	{@langs.not_installed}
+	<table>
 		# IF C_LANG_INSTALL #
-		<tr>
-			<td class="row2" style="width:100px;text-align:center;">
-				{@langs.name}
-			</td>
-			<td class="row2" style="width:200px;text-align:center;">
-				{@langs.description}
-			</td>
-			<td class="row2" style="width:200px;text-align:center;">
-				{@langs.authorisations}
-			</td>
-			<td class="row2" style="width:80px;text-align:center;">
-				{@langs.activated}
-			</td>
-		</tr>
-		# ELSE #
-		<tr>
-			<td class="row2" colspan="4" style="text-align:center;">
-				<strong>{@themes.add.not_lang}</strong>
-			</td>
-		</tr>
-		# ENDIF #
-		# START langs_not_installed #
-			<tr> 	
-				<td class="row2" style="text-align:center;">					
-					<span id="lang-{langs_not_installed.ID}"></span>
-					<strong>{langs_not_installed.NAME}</strong> <em>({langs_not_installed.VERSION})</em>
+		<thead>
+			<tr> 
+				<th>
+					{@langs.name}
+				</th>
+				<th>
+					{@langs.description}
+				</th>
+				<th>
+					{@langs.authorisations}
+				</th>
+				<th>
+					{@langs.activated}
+				</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr> 
+				<td colspan="4">
+					# INCLUDE MSG #	
 				</td>
-				<td class="row2">
-					<div id="desc_explain{langs_not_installed.ID}">
-						<strong>{@langs.author}:</strong> 
-						<a href="mailto:{langs_not_installed.AUTHOR_EMAIL}">
-							{langs_not_installed.AUTHOR_NAME}
-						</a>
-						# IF langs_not_installed.C_WEBSITE # 
-						<a href="{langs_not_installed.AUTHOR_WEBSITE}" class="small-button">Web</a>
-						# ENDIF #
-						<br />
-						<strong>{@langs.compatibility}:</strong> PHPBoost {langs_not_installed.COMPATIBILITY}<br />
-					</div>
-				</td>
-				<td class="row2">
-					<div id="authorizations_explain-{langs_not_installed.ID}">
-						{langs_not_installed.AUTHORIZATIONS}
-					</div>
-				</td>
-				<td class="row2" style="text-align:center;">
-					<label><input type="radio" name="activated-{langs_not_installed.ID}" value="1" checked="checked"> {@langs.yes}</label>
-					<label><input type="radio" name="activated-{langs_not_installed.ID}" value="0"> {@langs.no}</label>
-					<br /><br />
-					<input type="submit" name="add-{langs_not_installed.ID}" value="{L_ADD}" class="submit"/>
-				</td>
-			</tr>						
-		# END themes_not_installed #
+			</tr>
+			# ELSE #
+			<tbody>
+				<tr>
+					<td colspan="4">
+						<span class="text_strong">{@themes.add.not_lang}</span>
+					</td>
+				</tr>
+			# ENDIF #
+			# START langs_not_installed #
+				<tr> 	
+					<td>					
+						<span id="lang-{langs_not_installed.ID}"></span>
+						<span class="text_strong">{langs_not_installed.NAME}</span> <em>({langs_not_installed.VERSION})</em>
+					</td>
+					<td>
+						<div id="desc_explain{langs_not_installed.ID}">
+							<span class="text_strong">{@langs.author}:</span> 
+							<a href="mailto:{langs_not_installed.AUTHOR_EMAIL}">
+								{langs_not_installed.AUTHOR_NAME}
+							</a>
+							# IF langs_not_installed.C_WEBSITE # 
+							<a href="{langs_not_installed.AUTHOR_WEBSITE}" class="small-button">Web</a>
+							# ENDIF #
+							<br />
+							<span class="text_strong">{@langs.compatibility}:</span> PHPBoost {langs_not_installed.COMPATIBILITY}<br />
+						</div>
+					</td>
+					<td>
+						<div id="authorizations_explain-{langs_not_installed.ID}">
+							{langs_not_installed.AUTHORIZATIONS}
+						</div>
+					</td>
+					<td>
+						<label><input type="radio" name="activated-{langs_not_installed.ID}" value="1" checked="checked"> {@langs.yes}</label>
+						<label><input type="radio" name="activated-{langs_not_installed.ID}" value="0"> {@langs.no}</label>
+						<br /><br />
+						<input type="submit" name="add-{langs_not_installed.ID}" value="{L_ADD}" class="submit"/>
+					</td>
+				</tr>
+			# END themes_not_installed #
+		</tbody>
 	</table>
 	
 	<fieldset class="fieldset_submit">

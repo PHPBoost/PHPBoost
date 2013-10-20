@@ -343,7 +343,7 @@
 										</tr>
 										<tr>										
 											<td colspan="2" class="row2 text_small" style="border:none;padding:4px;">
-												&nbsp;&nbsp;&nbsp;<span id="fihref{pics.pics_max.ID}"><a href="javascript:display_rename_file('{pics.pics_max.ID}', '{pics.pics_max.RENAME}', '{pics.pics_max.RENAME_CUT}');" title="{L_EDIT}" class="pbt-icon-edit"></a><
+												&nbsp;&nbsp;&nbsp;<span id="fihref{pics.pics_max.ID}"><a href="javascript:display_rename_file('{pics.pics_max.ID}', '{pics.pics_max.RENAME}', '{pics.pics_max.RENAME_CUT}');" title="{L_EDIT}" class="pbt-icon-edit"></a>
 												
 												<a href="gallery{pics.pics_max.U_DEL}" title="{L_DELETE}" class="pbt-icon-delete" data-confirmation="delete-element"></a> 
 									

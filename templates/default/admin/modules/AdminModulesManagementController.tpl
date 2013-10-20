@@ -42,64 +42,64 @@
 			-->
 		</script>
 		<form action="{REWRITED_SCRIPT}" method="post">
-			<table class="module_table" style="width:99%;margin-bottom:30px;">
-				<tr> 
-					<th colspan="5">
-						{@modules.installed_not_activated_modules}
-					</th>
-				</tr>
-				# START errors #
-				<tr>
-					# INCLUDE errors.MSG #
-				</tr>
-				# END errors #
+			{@modules.installed_not_activated_modules}
+			<table>
 				# IF C_MODULES_NOT_ACTIVATED #
-				<tr>
-					<td class="row2" style="width:100px;text-align:center;">
-						{@modules.name}
-					</td>
-					<td class="row2" style="text-align:center;">
-						{@modules.description}
-					</td>
-					<td class="row2" style="width:50px;text-align:center;">
-						{@modules.activated_module}
-					</td>
-					<!-- <td class="row2" style="width:200px;text-align:center;">
-						{@modules.authorization}
-					</td> -->
-					<td class="row2" style="width:80px;text-align:center;">
-						{@modules.delete}
-					</td>
-				</tr>
+				<thead>
+					<tr>
+						<th>
+							{@modules.name}
+						</th>
+						<th>
+							{@modules.description}
+						</th>
+						<th>
+							{@modules.activated_module}
+						</th>
+						<!-- <th>
+							{@modules.authorization}
+						</th> -->
+						<th>
+							{@modules.delete}
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+					# START errors #
+					<tr>
+						# INCLUDE errors.MSG #
+					</tr>
+					# END errors #
 				# ELSE #
-				<tr>
-					<td class="row2" colspan="4" style="text-align:center;">
-						<strong>{@modules.no_deactivated_modules_available}</strong>
-					</td>
-				</tr>
+				<tbody>
+					<tr>
+						<td colspan="4">
+							<span class="text_strong">{@modules.no_deactivated_modules_available}</span>
+						</td>
+					</tr>
 				# ENDIF #
 
 				# START modules_not_activated #
 					<tr> 	
-						<td class="row2" style="text-align:center;">					
+						<td>					
 							<span id="m{modules_not_activated.ID}"></span>
-							<img class="valign_middle" src="{PATH_TO_ROOT}/{modules_not_activated.ICON}/{modules_not_activated.ICON}.png" alt="" /><br />
-							<strong>{modules_not_activated.NAME}</strong> <em>({modules_not_activated.VERSION})</em>
+							<img src="{PATH_TO_ROOT}/{modules_not_activated.ICON}/{modules_not_activated.ICON}.png" alt="" /><br />
+							<span class="text_strong">{modules_not_activated.NAME}</span> <em>({modules_not_activated.VERSION})</em>
 						</td>
-						<td class="row2">
+						<td>
 							<div id="desc_explain{modules_not_activated.ID}" style="display: none;">
-								<strong>{@modules.name} :</strong> {modules_not_activated.AUTHOR} {modules_not_activated.AUTHOR_WEBSITE}<br />
-								<strong>{@modules.description} :</strong> {modules_not_activated.DESCRIPTION}<br />
-								<strong>{@modules.compatibility} :</strong> PHPBoost {modules_not_activated.COMPATIBILITY}<br />
-								<strong>{@modules.php_version} :</strong> {modules_not_activated.PHP_VERSION}
+								<span class="text_strong">{@modules.name} :</span> {modules_not_activated.AUTHOR} {modules_not_activated.AUTHOR_WEBSITE}<br />
+								<span class="text_strong">{@modules.description} :</span> {modules_not_activated.DESCRIPTION}<br />
+								<span class="text_strong">{@modules.compatibility} :</span> PHPBoost {modules_not_activated.COMPATIBILITY}<br />
+								<span class="text_strong">{@modules.php_version} :</span> {modules_not_activated.PHP_VERSION}
 							</div>
 							<div id="picture_desc{modules_not_activated.ID}" style="text-align: center;" "><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/plus.png" alt="" class="valign_middle" style="cursor: pointer; width: 25px; height: auto;" /></div>
 						</td>
-						<td class="row2">								
+						<td>								
 							<label><input type="radio" name="activated-{modules_not_activated.ID}" value="1" # IF modules_not_activated.C_MODULE_ACTIVE # checked="checked" # ENDIF #> {@modules.yes}</label>
 							<label><input type="radio" name="activated-{modules_not_activated.ID}" value="0" # IF NOT modules_not_activated.C_MODULE_ACTIVE # checked="checked" # ENDIF #> {@modules.no}</label>
 						</td>
-						<td class="row2">
+						<td>
 							<a href="{modules_not_activated.U_DELETE_LINK}">	
 								<input name="delete-{modules_not_activated.ID}" value="{@modules.delete}" class="submit" style="width:70px;text-align:center;"/>
 							</a>
@@ -122,58 +122,59 @@
 					-->
 					</script>							
 				# END modules_not_activated #
+				</tbody>
 			</table>
 			
-			<table class="module_table" style="width:99%;margin-bottom:30px;">
-				<tr> 
-					<th colspan="5">
-						{@modules.installed_activated_modules}
-					</th>
-				</tr>
+			{@modules.installed_activated_modules}
+			<table>
 				# IF C_MODULES_ACTIVATED #
-				<tr>
-					<td class="row2" style="width:100px;text-align:center;">
-						{@modules.name}
-					</td>
-					<td class="row2" style="text-align:center;">
-						{@modules.description}
-					</td>
-					<td class="row2" style="width:50px;text-align:center;">
-						{@modules.activated_module}
-					</td>
-					<td class="row2" style="width:80px;text-align:center;">
-						{@modules.delete}
-					</td>
-				</tr>
+				<thead>
+					<tr> 
+						<th>
+							{@modules.name}
+						</th>
+						<th>
+							{@modules.description}
+						</th>
+						<th>
+							{@modules.activated_module}
+						</th>
+						<th>
+							{@modules.delete}
+						</th>
+					</tr>
+				</thead>
+				<tbody>
 				# ELSE #
-				<tr>
-					<td class="row2" colspan="4" style="text-align:center;">
-						<strong>{@modules.modules_available}</strong>
-					</td>
-				</tr>
+				<tbody>
+					<tr>
+						<td colspan="4" style="text-align:center;">
+							<span class="text_strong">{@modules.modules_available}</span>
+						</td>
+					</tr>
 				# ENDIF #
 
 				# START modules_activated #
 					<tr> 	
-						<td class="row2" style="text-align:center;">					
+						<td>					
 							<span id="m{modules_activated.ID}"></span>
 							<img class="valign_middle" src="{PATH_TO_ROOT}/{modules_activated.ICON}/{modules_activated.ICON}.png" alt="" /><br />
-							<strong>{modules_activated.NAME}</strong> <em>({modules_activated.VERSION})</em>
+							<span class="text_strong">{modules_activated.NAME}</span> <em>({modules_activated.VERSION})</em>
 						</td>
-						<td class="row2">
+						<td>
 							<div id="desc_explain{modules_activated.ID}" style="display: none;">
-								<strong>{@modules.name} :</strong> {modules_activated.AUTHOR} {modules_activated.AUTHOR_WEBSITE}<br />
-								<strong>{@modules.description} :</strong> {modules_activated.DESCRIPTION}<br />
-								<strong>{@modules.compatibility} :</strong> PHPBoost {modules_activated.COMPATIBILITY}<br />
-								<strong>{@modules.php_version} :</strong> {modules_activated.PHP_VERSION}
+								<span class="text_strong">{@modules.name} :</span> {modules_activated.AUTHOR} {modules_activated.AUTHOR_WEBSITE}<br />
+								<span class="text_strong">{@modules.description} :</span> {modules_activated.DESCRIPTION}<br />
+								<span class="text_strong">{@modules.compatibility} :</span> PHPBoost {modules_activated.COMPATIBILITY}<br />
+								<span class="text_strong">{@modules.php_version} :</span> {modules_activated.PHP_VERSION}
 							</div>
 							<div id="picture_desc{modules_activated.ID}" style="text-align: center;"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/plus.png" alt="" class="valign_middle" style="cursor: pointer; width: 25px; height: auto;" /></div>
 						</td>
-						<td class="row2">								
+						<td>								
 							<label><input type="radio" name="activated-{modules_activated.ID}" value="1" # IF modules_activated.C_MODULE_ACTIVE # checked="checked" # ENDIF #> {@modules.yes}</label>
 							<label><input type="radio" name="activated-{modules_activated.ID}" value="0" # IF NOT modules_activated.C_MODULE_ACTIVE # checked="checked" # ENDIF #> {@modules.no}</label>
 						</td>
-						<td class="row2">
+						<td>
 							<a href="{modules_activated.U_DELETE_LINK}">	
 								<input name="delete-{modules_activated.ID}" value="{@modules.delete}" class="submit" style="width:70px;text-align:center;"/>
 							</a>
@@ -196,6 +197,7 @@
 					-->
 					</script>							
 				# END modules_activated #
+				</tbody>
 			</table>
 			
 			<fieldset class="fieldset_submit">
