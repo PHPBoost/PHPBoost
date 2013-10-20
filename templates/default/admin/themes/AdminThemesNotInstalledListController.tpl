@@ -26,11 +26,12 @@
 				</td>
 			</tr>
 			# ELSE #
-			<tr>
-				<td colspan="4">
-					<span class="text_strong">{@themes.add.not_theme}</span>
-				</td>
-			</tr>
+			<tbody>
+				<tr>
+					<td colspan="4">
+						<span class="text_strong">{@themes.add.not_theme}</span>
+					</td>
+				</tr>
 			# ENDIF #
 			# START themes_not_installed #
 				<tr> 	
