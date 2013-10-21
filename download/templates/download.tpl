@@ -1,4 +1,25 @@
 		# IF C_DOWNLOAD_CAT #
+		<menu class="dynamic_menu right">
+			<ul>
+				<li><a><i class="icon-cog"></i></a>
+					<ul>
+						# IF C_ADD_FILE #
+						<li>
+							<a href="{U_ADD_FILE}" title="{L_ADD_FILE}">
+								{L_ADD_FILE}
+							</a>
+						</li>
+						# ENDIF #
+						# IF IS_ADMIN #
+						<li>
+							<a href="{U_MANAGE_FILES}" title="{L_MANAGE_FILES}">{L_MANAGE_FILES}</a>
+						<li>
+						# ENDIF #
+					</ul>
+				</li>
+			</ul>
+		</menu>
+		
 		<section>		
 			<header>
 				<h1>
@@ -10,14 +31,6 @@
 				</h1>
 			</header>
 			<div class="content">
-				# IF C_ADD_FILE #
-					<div style="text-align:center;">
-						<a href="{U_ADD_FILE}" title="{L_ADD_FILE}">
-							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/french/add.png" alt="{L_ADD_FILE}" />
-						</a>
-					</div>
-					<hr style="margin-top:25px; margin-bottom:25px;" />
-				# ENDIF #
 				# IF C_DESCRIPTION #
 					{DESCRIPTION}
 					<hr style="margin-top:25px;" />

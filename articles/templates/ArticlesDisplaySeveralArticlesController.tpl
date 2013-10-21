@@ -2,14 +2,14 @@
 	<ul>
 		<li><a><i class="icon-cog"></i></a>
 			<ul>
-				# IF IS_ADMIN #
-				<li>
-					<a href="${relative_url(ArticlesUrlBuilder::articles_configuration())}" title="${i18n('articles_configuration')}"><i class="icon-pencil"></i></a>
-				</li>
-				# ENDIF #
 				# IF C_ADD #
 				<li>
-					<a href="{U_ADD_ARTICLES}" title="${i18n('articles.add')}"><i class="icon-plus-sign"></i></a>
+					<a href="{U_ADD_ARTICLES}" title="${i18n('articles.add')}">${i18n('articles.add')}</a>
+				</li>
+				# ENDIF #
+				# IF IS_ADMIN #
+				<li>
+					<a href="${relative_url(ArticlesUrlBuilder::articles_configuration())}" title="${i18n('articles_configuration')}">${i18n('articles_configuration')}</a>
 				</li>
 				# ENDIF #
 				# IF C_PENDING_ARTICLES #
