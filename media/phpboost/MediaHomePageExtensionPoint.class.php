@@ -100,6 +100,7 @@ class MediaHomePageExtensionPoint implements HomePageExtensionPoint
 			'C_ADD_FILE' => $User->check_auth($MEDIA_CATS[$id_cat]['auth'], MEDIA_AUTH_WRITE) || $User->check_auth($MEDIA_CATS[$id_cat]['auth'], MEDIA_AUTH_CONTRIBUTION),
 			'U_ADD_FILE' => PATH_TO_ROOT . '/media/media_action.php?add=' . $id_cat,
 			'L_ADD_FILE' => $MEDIA_LANG['add_media'],
+			'L_CONFIG' => $MEDIA_LANG['configuration'],
 			'C_DESCRIPTION' => !empty($MEDIA_CATS[$id_cat]['desc']),
 			'DESCRIPTION' => FormatingHelper::second_parse($MEDIA_CATS[$id_cat]['desc']),
 			'C_SUB_CATS' => $i > 1,
