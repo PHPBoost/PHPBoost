@@ -70,8 +70,10 @@ class DownloadHomePageExtensionPoint implements HomePageExtensionPoint
 			'TITLE' => sprintf($DOWNLOAD_LANG['title_download'] . ($category_id > 0 ? ' - ' . $DOWNLOAD_CATS[$category_id]['name'] : '')),
 			'DESCRIPTION' => $category_id > 0 ? FormatingHelper::second_parse($DOWNLOAD_CATS[$category_id]['contents']) : FormatingHelper::second_parse($config->get_root_contents()),
 			'L_ADD_FILE' => $DOWNLOAD_LANG['add_file'],
+			'L_MANAGE_FILES' => $DOWNLOAD_LANG['files_management'],
 			'U_ADMIN_CAT' => $category_id > 0 ? url(PATH_TO_ROOT . '/download/admin_download_cat.php?edit=' . $category_id) : url(PATH_TO_ROOT . '/download/admin_download_cat.php'),
-			'U_ADD_FILE' => url(PATH_TO_ROOT . '/download/management.php?new=1&amp;idcat=' . $category_id)
+			'U_ADD_FILE' => url(PATH_TO_ROOT . '/download/management.php?new=1&amp;idcat=' . $category_id),
+			'U_MANAGE_FILES' => url(PATH_TO_ROOT . '/download/admin_download.php')
 		));
 		
 		//let's check if there are some subcategories
