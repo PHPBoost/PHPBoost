@@ -1,19 +1,29 @@
 		# IF C_CATEGORIES #
-			<div class="module_actions">
-				# IF C_ADMIN #
-					<a href="{U_ADMIN_CAT}" class="img_link" title="{L_EDIT}" class="pbt-icon-edit"></a>
-				# END IF #
-				# IF C_MODO #
-					<a href="{PATH_TO_ROOT}/media/moderation_media.php" class="img_link" title="{L_MODO_PANEL}">
-						<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/moderation_panel.png" style="width:16px;height:16px;" alt="">
-					</a>
-				# END IF #
-				# IF C_ADD_FILE #
-						<a href="{U_ADD_FILE}" title="{L_ADD_FILE}">
-							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/french/add.png" alt="{L_ADD_FILE}" class="valign_middle"/>
-						</a>
-				# ENDIF #
-			</div>
+			<menu class="dynamic_menu right">
+			<ul>
+				<li><a><i class="icon-cog"></i></a>
+					<ul>
+						# IF C_ADD_FILE #
+						<li>
+							<a href="{U_ADD_FILE}" title="{L_ADD_FILE}">{L_ADD_FILE}</a>
+						</li>
+						# ENDIF #
+						# IF C_MODO #
+						<li>
+							<a href="{PATH_TO_ROOT}/media/moderation_media.php" title="{L_MODO_PANEL}">
+								{L_MODO_PANEL}
+							</a>
+						</li>
+						# END IF #
+						# IF C_ADMIN #
+						<li>
+							<a href="{U_ADMIN_CAT}" title="{L_CONFIG}">{L_CONFIG}</a>
+						</li>
+						# END IF #
+					</ul>
+				</li>
+			</ul>
+		</menu>
 			
 			<div class="spacer"></div>
 			

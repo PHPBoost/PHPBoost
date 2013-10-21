@@ -14,6 +14,11 @@
 					<a href="${relative_url(CalendarUrlBuilder::display_pending_events())}" title="{@calendar.pending}">{@calendar.pending}</a>
 				</li>
 				# ENDIF #
+				# IF IS_ADMIN #
+				<li>
+					<a href="${relative_url(CalendarUrlBuilder::manage_events())}" title="${i18n('calendar.config.manage_events')}">${i18n('calendar.config.manage_events')}</a>
+				<li>
+				# ENDIF #
 			</ul>
 		</li>
 	</ul>
