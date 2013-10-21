@@ -12,6 +12,11 @@
 					<a href="${relative_url(NewsUrlBuilder::display_pending_news())}" title="${i18n('news.pending')}">${i18n('news.pending')}</a>
 				</li>
 				# ENDIF #
+				# IF IS_ADMIN #
+				<li>
+					<a href="${relative_url(NewsUrlBuilder::manage_news())}" title="${i18n('news.manage')}">${i18n('news.manage')}</a>
+				<li>
+				# ENDIF #
 			</ul>
 		</li>
 	</ul>
