@@ -42,9 +42,9 @@
 			</td>
 			<td> 
 				{history.NEW_VALUE}
-			</td>	
+			</td>
 			<td>
-				{history.DATE}
+				# IF C_IS_DATE_FORM_SHORT #{history.UPDATE_DATE_SHORT}# ELSE #{history.UPDATE_DATE}# ENDIF #
 			</td>
 			<td>
 				{history.COMMENT}
@@ -60,8 +60,6 @@
 		# ENDIF #
 	</tbody>
 </table>
-
-
 
 <div class="spacer">&nbsp;</div>
 

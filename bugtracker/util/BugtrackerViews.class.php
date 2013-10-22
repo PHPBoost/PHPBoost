@@ -207,11 +207,6 @@ class BugtrackerViews
 		return ($legend_colspan ? $legend_view : new StringTemplate(''));
 	}
 	
-	public static function build_progress_bar()
-	{
-		return new FileTemplate('bugtracker/BugtrackerProgressBar.tpl');
-	}
-	
 	private function build_types_form($current_page, $requested_type, $filters, $filters_ids)
 	{
 		if (in_array('type', $filters))

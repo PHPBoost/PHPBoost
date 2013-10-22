@@ -65,7 +65,7 @@ class BugtrackerRejectBugController extends ModuleController
 			
 			$bug->set_status(Bug::REJECTED);
 			$bug->set_progress($status_list[Bug::REJECTED]);
-			$bug->set_fix_date($now->get_timestamp());
+			$bug->set_fix_date($now);
 			$bug->set_fixed_in(0);
 			
 			BugtrackerService::update($bug);

@@ -99,7 +99,7 @@ class Bug
 		return $this->author_user;
 	}
 	
-	public function set_submit_date($submit_date)
+	public function set_submit_date(Date $submit_date)
 	{
 		$this->submit_date = $submit_date;
 	}
@@ -276,8 +276,8 @@ class Bug
 			'title' => $this->get_title(),
 			'contents' => $this->get_contents(),
 			'author_id' => $this->get_author_user()->get_id(),
-			'submit_date' => $this->get_submit_date() !== null ? $this->get_submit_date() : 0,
-			'fix_date' => $this->get_fix_date() !== null ? $this->get_fix_date() : 0,
+			'submit_date' => $this->get_submit_date() ? $this->get_submit_date()->get_timestamp() : '',
+			'fix_date' => $this->get_fix_date() ? $this->get_fix_date()->get_timestamp() : '',
 			'status' => $this->get_status(),
 			'type' => $this->get_type(),
 			'category' => $this->get_category(),
@@ -294,22 +294,22 @@ class Bug
 	
 	public function set_properties(array $properties)
 	{
-		$this->set_id($properties['id']);
-		$this->set_title($properties['title']);
-		$this->set_contents($properties['contents']);
-		$this->set_submit_date(!empty($properties['submit_date']) ? $properties['submit_date'] : 0);
-		$this->set_fix_date(!empty($properties['fix_date']) ? $properties['fix_date'] : 0);
-		$this->set_status($properties['status']);
-		$this->set_type($properties['type']);
-		$this->set_category($properties['category']);
-		$this->set_severity($properties['severity']);
-		$this->set_priority($properties['priority']);
-		$this->set_reproductible($properties['reproductible']);
-		$this->set_reproduction_method($properties['reproduction_method']);
-		$this->set_detected_in($properties['detected_in']);
-		$this->set_fixed_in($properties['fixed_in']);
-		$this->set_progress($properties['progress']);
-		$this->set_assigned_to_id($properties['assigned_to_id']);
+		$this->id = $properties['id'];
+		$this->title = $properties['title'];
+		$this->contents = $properties['contents'];
+		$this->submit_date = !empty($properties['submit_date']) ? new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $properties['submit_date']) : null;
+		$this->fix_date = !empty($properties['fix_date']) ? new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $properties['fix_date']) : null;
+		$this->status = $properties['status'];
+		$this->type = $properties['type'];
+		$this->category = $properties['category'];
+		$this->severity = $properties['severity'];
+		$this->priority = $properties['priority'];
+		$this->reproductible = $properties['reproductible'];
+		$this->reproduction_method = $properties['reproduction_method'];
+		$this->detected_in = $properties['detected_in'];
+		$this->fixed_in = $properties['fixed_in'];
+		$this->progress = $properties['progress'];
+		$this->assigned_to_id = $properties['assigned_to_id'];
 		
 		$user = new User();
 		$user->set_properties($properties);
@@ -318,11 +318,11 @@ class Bug
 	
 	public function init_default_properties()
 	{
-		$now = new Date(DATE_NOW, TIMEZONE_AUTO);
 		$config = BugtrackerConfig::load();
 		$status_list = $config->get_status_list();
 		
-		$this->submit_date = $now->get_timestamp();
+		$this->submit_date = new Date();
+		$this->fix_date = new Date();
 		$this->status = Bug::NEW_BUG;
 		$this->author_user = AppContext::get_current_user();
 		$this->progress = $status_list[Bug::NEW_BUG];
@@ -333,6 +333,47 @@ class Bug
 	public function clean_fix_date()
 	{
 		$this->fix_date = null;
+	}
+	
+	public function get_array_tpl_vars()
+	{
+		$config = BugtrackerConfig::load();
+		$categories = $config->get_categories();
+		$user = $this->get_author_user();
+		$user_group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
+		$number_comments = CommentsService::get_number_comments('bugtracker', $this->id);
+		
+		return array(
+			'C_PROGRESS' => $config->is_progress_bar_displayed() && $this->progress,
+			'C_FIX_DATE' => $this->fix_date != null,
+			'C_FIXED_IN' => $this->detected_in,
+			'C_FIXED' => $this->is_fixed(),
+			'C_REPRODUCTIBLE' => $this->is_reproductible(),
+			'C_REPRODUCTION_METHOD' => $this->reproduction_method,
+			'C_AUTHOR_GROUP_COLOR' => !empty($user_group_color),
+			'C_MORE_THAN_ONE_COMMENT'=> $number_comments > 1,
+			
+			//Bug
+			'ID' => $this->id,
+			'TITLE' => ($config->is_cat_in_title_displayed() && $categories) ? '[' . $categories[$this->category] . '] ' . $this->title : $this->title,
+			'CONTENTS' => FormatingHelper::second_parse($this->contents),
+			'SUBMIT_DATE_SHORT' => $this->submit_date->format(Date::FORMAT_DAY_MONTH_YEAR),
+			'SUBMIT_DATE' => $this->submit_date->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE),
+			'FIX_DATE_SHORT' => $this->fix_date !== null ? $this->fix_date->format(Date::FORMAT_DAY_MONTH_YEAR) : '',
+			'FIX_DATE' => $this->fix_date !== null ? $this->fix_date->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE) : '',
+			'PROGRESS' => $this->progress,
+			'STATUS' => LangLoader::get_message('bugs.status.' . $this->status, 'common', 'bugtracker'),
+			'REPRODUCTION_METHOD' => FormatingHelper::second_parse($this->reproduction_method),
+			'AUTHOR' => $user->get_pseudo(),
+			'AUTHOR_LEVEL_CLASS' => UserService::get_level_class($user->get_level()),
+			'AUTHOR_GROUP_COLOR' => $user_group_color,
+			'NUMBER_COMMENTS' => $number_comments,
+			
+			'U_AUTHOR_PROFILE' => UserUrlBuilder::profile($user->get_id())->rel(),
+			'U_LINK' => BugtrackerUrlBuilder::detail($this->id . '/' . Url::encode_rewrite($this->title))->rel(),
+			'U_HISTORY' => BugtrackerUrlBuilder::history($this->id)->rel(),
+			'U_COMMENTS' => BugtrackerUrlBuilder::detail($this->id . '/#comments_list')->rel()
+		);
 	}
 }
 ?>

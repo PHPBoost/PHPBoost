@@ -143,11 +143,11 @@ class AdminBugtrackerConfigController extends AdminModuleController
 		$fieldset->add_field(new FormFieldCheckbox('admin_alerts_enabled', $this->lang['bugs.config.activ_admin_alerts'], $this->config->are_admin_alerts_enabled(),
 			array('events' => array('click' => '
 				if (HTMLForms.getField("admin_alerts_enabled").getValue()) {
-					HTMLForms.getField("admin_alerts_levels").enable();
 					HTMLForms.getField("admin_alerts_fix_action").enable();
+					HTMLForms.getField("admin_alerts_levels").enable();
 				} else {
-					HTMLForms.getField("admin_alerts_levels").disable();
 					HTMLForms.getField("admin_alerts_fix_action").disable();
+					HTMLForms.getField("admin_alerts_levels").disable();
 				}')
 			)
 		));
@@ -156,7 +156,11 @@ class AdminBugtrackerConfigController extends AdminModuleController
 			array('hidden' => !$this->config->are_admin_alerts_enabled())
 		));
 		
-		$fieldset->add_field(new FormFieldSimpleSelectChoice('admin_alerts_fix_action', $this->lang['bugs.config.admin_alerts_fix_action'], $this->config->get_admin_alerts_fix_action(), $this->build_admin_alerts_fix_actions(),
+		$fieldset->add_field(new FormFieldSimpleSelectChoice('admin_alerts_fix_action', $this->lang['bugs.config.admin_alerts_fix_action'], $this->config->get_admin_alerts_fix_action(),
+			array(
+				new FormFieldSelectChoiceOption($this->lang['bugs.labels.alert_fix'], BugtrackerConfig::FIX),
+				new FormFieldSelectChoiceOption($this->lang['bugs.labels.alert_delete'], BugtrackerConfig::DELETE)
+			),
 			array('hidden' => !$this->config->are_admin_alerts_enabled())
 		));
 		
@@ -376,7 +380,7 @@ class AdminBugtrackerConfigController extends AdminModuleController
 			)
 		));
 		
-		$fieldset->add_field(new FormFieldHTML('severities_table', $severities_table->render()));
+		$fieldset->add_field(new FormFieldHTML('priorities_table', $priorities_table->render()));
 		
 		$versions_table = new FileTemplate('bugtracker/AdminBugtrackerVersionsListController.tpl');
 		$versions_table->add_lang($this->lang);
@@ -435,7 +439,7 @@ class AdminBugtrackerConfigController extends AdminModuleController
 			'hidden' => sizeof($versions) ? true : false
 		)));
 		
-		$fieldset->add_field(new FormFieldHTML('severities_table', $severities_table->render()));
+		$fieldset->add_field(new FormFieldHTML('versions_table', $versions_table->render()));
 		
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_button($this->submit_button);
@@ -454,14 +458,6 @@ class AdminBugtrackerConfigController extends AdminModuleController
 		}
 		
 		return $list;
-	}
-	
-	private function build_admin_alerts_fix_actions()
-	{
-		return array(
-			new FormFieldSelectChoiceOption($this->lang['bugs.labels.alert_fix'], BugtrackerConfig::FIX),
-			new FormFieldSelectChoiceOption($this->lang['bugs.labels.alert_delete'], BugtrackerConfig::DELETE)
-		);
 	}
 	
 	private function save()
