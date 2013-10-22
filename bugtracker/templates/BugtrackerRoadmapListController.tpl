@@ -49,7 +49,11 @@
 				{bug.TITLE}
 			</td>
 			<td class="align_left"# IF bug.C_LINE_COLOR # style="background-color:{bug.LINE_COLOR};"# ENDIF #> 
-				# IF bug.C_PROGRESS #<span class="progressBar progress{bug.PROGRESS}">{bug.PROGRESS}%</span><br/># ENDIF #
+				# IF bug.C_PROGRESS #
+				<div class="progressbar-container">
+					<div class="progressbar" style="width:{bug.PROGRESS}%"></div>
+				</div>
+				# ENDIF #
 				<span>{@bugs.labels.fields.status} : {bug.STATUS}</span>
 				# IF C_COMMENTS #<br /><a href="{bug.U_COMMENTS}">{bug.NUMBER_COMMENTS} # IF bug.C_MORE_THAN_ONE_COMMENT #${LangLoader::get_message('comments', 'comments-common')}# ELSE #${LangLoader::get_message('comment', 'comments-common')}# ENDIF #</a># ENDIF #
 			</td>
