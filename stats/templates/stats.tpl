@@ -265,12 +265,12 @@
 									<table class="module_table" style="width:14px;margin:auto;">
 										# START values.head #
 										<tr>
-											<td style="margin-left:2px;width:10px;height:4px;background-image: url({PATH_TO_ROOT}/templates/{THEME}/images/stats2.png); background-repeat:no-repeat;">
+											<td style="margin-left:2px;width:10px;height:4px;background-image: url({PATH_TO_ROOT}/stats/templates/images/stats2.png); background-repeat:no-repeat;">
 											</td>
 										</tr>
 										# END values.head #
 										<tr>
-											<td style="margin-left:2px;width:10px;height:{values.HEIGHT}px;background-image: url({PATH_TO_ROOT}/templates/{THEME}/images/stats.png);background-repeat:repeat-y;padding:0px">
+											<td style="margin-left:2px;width:10px;height:{values.HEIGHT}px;background-image: url({PATH_TO_ROOT}/stats/templates/images/stats.png);background-repeat:repeat-y;padding:0px">
 											</td>
 										</tr>
 									</table>
