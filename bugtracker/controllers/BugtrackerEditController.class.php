@@ -106,12 +106,12 @@ class BugtrackerEditController extends ModuleController
 		$versions_detected_in = $this->config->get_versions_detected();
 		$versions_detected_in = array_reverse($versions_detected_in, true);
 		
-		$display_types = sizeof($types) > 1 ? true : false;
-		$display_categories = sizeof($categories) > 1 ? true : false;
-		$display_priorities = sizeof($priorities) > 1 ? true : false;
-		$display_severities = sizeof($severities) > 1 ? true : false;
-		$display_versions = sizeof($versions) > 1 ? true : false;
-		$display_versions_detected_in = sizeof($versions_detected_in) > 1 ? true : false;
+		$display_types = sizeof($types) > 1;
+		$display_categories = sizeof($categories) > 1;
+		$display_priorities = sizeof($priorities) > 1;
+		$display_severities = sizeof($severities) > 1;
+		$display_versions = sizeof($versions) > 1;
+		$display_versions_detected_in = sizeof($versions_detected_in) > 1;
 		
 		$default_type = $this->config->get_default_type();
 		$default_category = $this->config->get_default_category();
@@ -498,7 +498,7 @@ class BugtrackerEditController extends ModuleController
 				{
 					//Bug update
 					$bug->set_progress($bug->is_fixed() ? $status_list[Bug::FIXED] : ($bug->is_assigned() || $bug->is_in_progress() ? $status_list[Bug::IN_PROGRESS] : ($bug->is_new() ? $status_list[Bug::NEW_BUG] : $bug->get_progress())));
-					$bug->set_fix_date($bug->is_fixed() ? $now->get_timestamp() : 0);
+					$bug->set_fix_date($bug->is_fixed() ? $now : 0);
 					
 					//Send PM to the assigned user if the option is enabled
 					if ($this->config->are_pm_enabled() && $this->config->are_pm_assign_enabled() && $bug->get_assigned_to_id() && ($old_values->get_assigned_to_id() != $bug->get_assigned_to_id()) && ($this->current_user->get_id() != $bug->get_assigned_to_id()))

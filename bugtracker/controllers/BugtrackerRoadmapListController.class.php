@@ -52,10 +52,10 @@ class BugtrackerRoadmapListController extends ModuleController
 		$categories = $config->get_categories();
 		$severities = $config->get_severities();
 		
-		$display_types = sizeof($types) > 1 ? true : false;
-		$display_categories = sizeof($categories) > 1 ? true : false;
-		$display_versions = sizeof($versions) > 1 ? true : false;
-		$display_severities = sizeof($severities) > 1 ? true : false;
+		$display_types = sizeof($types) > 1;
+		$display_categories = sizeof($categories) > 1;
+		$display_versions = sizeof($versions) > 1;
+		$display_severities = sizeof($severities) > 1;
 		
 		//Reverse versions array to put the newest one at first
 		$versions = array_reverse($versions, true);
@@ -103,9 +103,9 @@ class BugtrackerRoadmapListController extends ModuleController
 		
 		$pagination = $this->get_pagination($bugs_number[$roadmap_status], $current_page, $r_version, $roadmap_status, $field, $sort);
 		
-		$result = PersistenceContext::get_querier()->select("SELECT b.*, com.number_comments
+		$result = PersistenceContext::get_querier()->select("SELECT b.*, member.*
 		FROM " . BugtrackerSetup::$bugtracker_table . " b
-		LEFT JOIN " . DB_TABLE_COMMENTS_TOPIC . " com ON com.id_in_module = b.id AND com.module_id = 'bugtracker'
+		LEFT JOIN " . DB_TABLE_MEMBER . " member ON member.user_id = b.author_id AND member.user_aprob = 1
 		WHERE fixed_in = " . $roadmap_version . "
 		" . ($roadmap_status != 'all' ? ($roadmap_status == 'in_progress' ? "AND (b.status = 'in_progress' OR b.status = 'reopen')" : "AND b.status = 'fixed'") : "") . "
 		ORDER BY " . $field_bdd . " " . $mode . "
@@ -120,24 +120,15 @@ class BugtrackerRoadmapListController extends ModuleController
 		
 		while ($row = $result->fetch())
 		{
-			if (!in_array($row['severity'], $displayed_severities)) $displayed_severities[] = $row['severity'];
+			$bug = new Bug();
+			$bug->set_properties($row);
 			
-			$this->view->assign_block_vars('bug', array(
-				'C_FIXED'			=> $row['status'] == Bug::FIXED,
-				'C_LINE_COLOR'		=> !empty($row['severity']) && isset($severities[$row['severity']]),
-				'C_PROGRESS'		=> $config->is_progress_bar_displayed() && $row['progress'],
-				'ID'				=> $row['id'],
-				'TITLE'				=> ($config->is_cat_in_title_displayed() && $display_categories) ? '[' . $categories[$row['category']] . '] ' . $row['title'] : $row['title'],
-				'LINE_COLOR' 		=> stripslashes($severities[$row['severity']]['color']),
-				'PROGRESS' 			=> $row['progress'],
-				'STATUS'			=> $this->lang['bugs.labels.fields.status'] . ' : ' . $this->lang['bugs.status.' . $row['status']],
-				'NUMBER_COMMENTS'	=> (int) $row['number_comments'],
-				'L_COMMENTS'		=> $row['number_comments'] <= 1 ? LangLoader::get_message('comment', 'comments-common') : LangLoader::get_message('comments', 'comments-common'),
-				'STATUS'			=> $this->lang['bugs.status.' . $row['status']],
-				'DATE' 				=> !empty($row['fix_date']) ? gmdate_format($config->get_date_form(), $row['fix_date']) : $this->lang['bugs.labels.not_yet_fixed'],
-				'LINK_BUG_DETAIL'	=> BugtrackerUrlBuilder::detail($row['id'] . '/' . Url::encode_rewrite($row['title']))->rel(),
-				'LINK_COMMENTS'		=> BugtrackerUrlBuilder::detail($row['id'] . '/#comments_list')->rel()
-			));
+			if (!in_array($bug->get_severity(), $displayed_severities)) $displayed_severities[] = $bug->get_severity();
+			
+			$this->view->assign_block_vars('bug', array_merge($bug->get_array_tpl_vars(), array(
+				'C_LINE_COLOR'	=> !empty($row['severity']) && isset($severities[$row['severity']]),
+				'LINE_COLOR' 	=> stripslashes($severities[$row['severity']]['color'])
+			)));
 		}
 		
 		$bugs_colspan = 5;
@@ -147,12 +138,12 @@ class BugtrackerRoadmapListController extends ModuleController
 		$this->view->put_all(array(
 			'C_BUGS'					=> $bugs_number[$roadmap_status],
 			'C_COMMENTS'				=> $config->are_comments_enabled(),
+			'C_STATUS_IN_PROGRESS'		=> $roadmap_status == 'in_progress',
+			'C_IS_DATE_FORM_SHORT'		=> $config->is_date_form_short(),
 			'C_PAGINATION'				=> $pagination->has_several_pages(),
 			'PAGINATION' 				=> $pagination->display(),
 			'BUGS_COLSPAN'				=> $bugs_colspan,
 			'SELECT_VERSION'			=> $this->build_form($versions[$roadmap_version], $roadmap_status, (int)$bugs_number[$roadmap_status])->display(),
-			'L_NO_BUG'					=> $roadmap_status == 'in_progress' ? $this->lang['bugs.notice.no_bug_in_progress'] : $this->lang['bugs.notice.no_bug_fixed'],
-			'PROGRESS_BAR'				=> BugtrackerViews::build_progress_bar(),
 			'LEGEND'					=> BugtrackerViews::build_legend($displayed_severities, 'roadmap'),
 			'LINK_BUG_ID_TOP' 			=> BugtrackerUrlBuilder::roadmap($r_version . '/' . $roadmap_status . '/id/top/'. $current_page)->rel(),
 			'LINK_BUG_ID_BOTTOM' 		=> BugtrackerUrlBuilder::roadmap($r_version . '/' . $roadmap_status . '/id/bottom/'. $current_page)->rel(),

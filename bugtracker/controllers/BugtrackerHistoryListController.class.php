@@ -59,9 +59,10 @@ class BugtrackerHistoryListController extends ModuleController
 		$main_lang = LangLoader::get('main');
 		
 		$this->view->put_all(array(
-			'C_PAGINATION'	=> $pagination->has_several_pages(),
-			'C_HISTORY'		=> $history_lines_number,
-			'PAGINATION'	=> $pagination->display()
+			'C_PAGINATION'			=> $pagination->has_several_pages(),
+			'C_HISTORY'				=> $history_lines_number,
+			'C_IS_DATE_FORM_SHORT'	=> $config->is_date_form_short(),
+			'PAGINATION'			=> $pagination->display()
 		));
 		
 		$result = PersistenceContext::get_querier()->select("SELECT *
@@ -129,6 +130,8 @@ class BugtrackerHistoryListController extends ModuleController
 					$new_value = $row['new_value'];
 			}
 			
+			$update_date = new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $row['update_date']);
+			
 			$user = new User();
 			$user->set_properties($row);
 			$user_group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
@@ -139,7 +142,8 @@ class BugtrackerHistoryListController extends ModuleController
 				'OLD_VALUE'				=> stripslashes($old_value),
 				'NEW_VALUE'				=> stripslashes($new_value),
 				'COMMENT'				=> $row['change_comment'],
-				'DATE' 					=> gmdate_format($config->get_date_form(), $row['update_date']),
+				'UPDATE_DATE_SHORT'		=> $update_date->format(Date::FORMAT_DAY_MONTH_YEAR),
+				'UPDATE_DATE'			=> $update_date->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE),
 				'UPDATER'				=> $user->get_pseudo(),
 				'UPDATER_LEVEL_CLASS'	=> UserService::get_level_class($user->get_level()),
 				'UPDATER_GROUP_COLOR'	=> $user_group_color,
