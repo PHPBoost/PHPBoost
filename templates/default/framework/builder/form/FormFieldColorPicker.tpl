@@ -24,7 +24,7 @@ function ${escape(NAME)}bbcode_color(field)
 	{
 		br = (i+1) % 8;
 		br = (br == 0 && i != 0 && i < 39) ? '</tr><tr>' : '';
-		contents += '<td style="padding:2px;"><a onclick="javascript:${escape(NAME)}insert_color(\'' + color[i] + '\', \'' + field + '\');" class="bbcode_hover"><span style="background:' + color[i] + ';padding:0px 4px;border:1px solid #ACA899;">&nbsp;</span></a></td>' + br;
+		contents += '<td><a style="background:' + color[i] + ';" onclick="javascript:${escape(NAME)}insert_color(\'' + color[i] + '\', \'' + field + '\');"></a></td>' + br;
 	}
 	document.getElementById(field + '_list').innerHTML = contents + '</tr></table>';
 }
@@ -35,7 +35,7 @@ function ${escape(NAME)}bbcode_color(field)
 <a href="javascript:${escape(NAME)}bbcode_color('${escape(ID)}');bb_display_block('${escape(ID)}', '');" onmouseout="bb_hide_block('${escape(ID)}', '', 0);" class="bbcode_hover">
 	<img src="{PATH_TO_ROOT}/templates/{THEME}/images/color.png" alt="" class="valign_middle" />
 </a>
-<div style="position:relative;z-index:100;display:none;margin-left:75px;" id="bb_block${escape(ID)}">
+<div class="color_picker" style="display:none;" id="bb_block${escape(ID)}">
 	<div id="${escape(ID)}_list" class="bbcode_block" onmouseover="bb_hide_block('${escape(ID)}', '', 1);" onmouseout="bb_hide_block('${escape(ID)}', '', 0);">
 	</div>
 </div>
