@@ -59,7 +59,7 @@ if (!empty($idnews)) // On affiche la news correspondant à l'id envoyé.
 	// Récupération de la news
 	$result = $Sql->query_while("SELECT n.contents, n.extend_contents, n.title, n.id, n.idcat, n.timestamp, n.start, n.visible, n.user_id, n.img, n.alt, m.login, m.level, m.user_groups, n.sources
 	FROM " . DB_TABLE_NEWS . " n LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = n.user_id
-	WHERE n.id = '" . $idnews . "'" . (!$User->check_auth($NEWS_CAT[$idcat]['auth'], AUTH_NEWS_MODERATE) ? " AND ('" . $now->get_timestamp() . "' >= n.start AND n.start > 0 AND ('" . $now->get_timestamp() . "' <= n.end OR n.end = 0))" : ""), __LINE__, __FILE__);
+	WHERE n.id = '" . $idnews . "'" . (!$User->check_auth($NEWS_CAT[$idcat]['auth'], AUTH_NEWS_MODERATE) ? " AND n.visible = 1 OR ('" . $now->get_timestamp() . "' >= n.start AND n.start > 0 AND ('" . $now->get_timestamp() . "' <= n.end OR n.end = 0))" : ""), __LINE__, __FILE__);
 	$news = $Sql->fetch_assoc($result);
 	$Sql->query_close($result);
 
