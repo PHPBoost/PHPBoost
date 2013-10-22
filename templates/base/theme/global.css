@@ -138,8 +138,15 @@ a.member {
 .pbt-icon-syndication:before { color:#f57900; content: "\f09e"; }
 .pbt-icon-edit:before { content: "\f044"; }
 .pbt-icon-delete:before { content: "\f014"; vertical-align:-1px; }
-.pbt-icon-plus:before { content: "\f067"; font-size: 18px;}
-.pbt-icon-minus:before { content: "\f068"; font-size: 18px;}
+.pbt-icon-plus:before { content: "\f067"; font-size: 18px; }
+.pbt-icon-minus:before { content: "\f068"; font-size: 18px; }
+.pbt-icon-check:before{	content: "\f00c"; color:#57A957; }
+.pbt-icon-error:before{ content: "\f00d"; color:#C43C35; }
+.pbt-icon-mail:before{ content: "\f0e0"; }
+.pbt-icon-skype:before{ content: "\f17e"; }
+.pbt-icon-gmail:before{ content: "\f0d5"; }
+.pbt-icon-fb:before{ content: "\f09a"; }
+.pbt-icon-twitter:before{ content: "\f099"; }
 
 /* Mise en forme
 -------------------------------------------*/
@@ -190,14 +197,14 @@ h6.sub_title2 { /* Sous titre dans les menu */
 h3.title1{
 	color:#3E4D5C;
 	border-bottom:2px solid #366393;
-	font-size:15px;
+	font-size:20px;
 	font-weight:bold;
 	padding:0px 5px;
 }
 
 /* Titre 2 */
 h3.title2{
-	font-size:14px;
+	font-size:18px;
 	text-decoration:underline;
 	font-weight:bold;
 	color:#3E4D5C;
@@ -206,19 +213,19 @@ h3.title2{
 
 /* Sous titre 1 */
 h4.stitle1, h4.stitle2{
-	display:inline;
+	display:inline-block;
 	color:#3E4D5C;
-	font-size:12px;
 	font-weight:bold;
-	margin-left:35px;
-	padding:4px 5px;
+	padding:1px 5px;
 	font-weight:bold;
-	background:#ECEFFA;	
 	border-radius:8px;
+	margin-bottom:5px;
 }
 
 /* Sous titre 1 */
 h4.stitle1{
+	margin-left:35px;
+	background:#ECEFFA;	
 	border:1px solid #336397;
 	border-left:4px solid #336397;
 	border-right:4px solid #336397;
@@ -227,12 +234,17 @@ h4.stitle1{
 /* Sous titre 2 */
 h4.stitle2{
 	margin-left:50px;
-	background:none;
 	border-bottom:3px solid #336397;
 }
 
 /* Mise en forme du contenu (généré par éditeurs de texte
 --------------------------------------------------------------------  */
+
+/* Liste */
+ul,ol{
+	margin-left:20px;
+	margin-bottom:10px;
+}
 
 /* Menu caché */
 .bbcode_block{

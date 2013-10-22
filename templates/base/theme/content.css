@@ -233,9 +233,78 @@ table tfoot nav.pagination a span.current_page {
 	text-decoration:none;
 }
 
-/* Bouton
+/* Boutons
 ------------------------------------ */
+/* Normal */
 
+button{
+	height:auto;
+}
+
+.btn{
+	cursor: pointer;
+	vertical-align: middle;
+	padding: 4px 12px;
+	color: #333333;
+	text-align: center;
+	text-shadow: 0 1px 1px rgba(255, 255, 255, 0.1);
+	background-color: #FAFAFA;
+	background: -moz-linear-gradient(top, #FFFFFF 0%, #EEEEEE 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#FFFFFF), color-stop(100%,#EEEEEE));
+	background: -webkit-linear-gradient(top, #FFFFFF 0%,#EEEEEE 100%);
+	background: -o-linear-gradient(top, #FFFFFF 0%,#EEEEEE 100%);
+	background: -ms-linear-gradient(top, #FFFFFF 0%,#EEEEEE 100%);
+	background: linear-gradient(to bottom, #FFFFFF 0%,#EEEEEE 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#FFFFFF', endColorstr='#EEEEEE',GradientType=0 );
+	border: 1px solid #CCCCCC;
+	border-color: #E1E1E1 #E1E1E1 #BFBFBF #CFCFCF;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+	-webkit-box-shadow: inset 0 0 0 rgba(255, 255, 255, 0.2), 0 0px 2px rgba(0, 0, 0, 0.05);
+	-moz-box-shadow: inset 0 0 0 rgba(255, 255, 255, 0.2), 0 0px 2px rgba(0, 0, 0, 0.05);
+	box-shadow: inset 0 0 0 rgba(255, 255, 255, 0.2), 0 0px 2px rgba(0, 0, 0, 0.05);
+}
+	
+.btn:hover{
+	background-color: #FFFFFF;
+	background: -moz-linear-gradient(top, #FFFFFF 0%, #F5F5F5 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#FFFFFF), color-stop(100%,#F5F5F5));
+	background: -webkit-linear-gradient(top, #FFFFFF 0%,#F5F5F5 100%);
+	background: -o-linear-gradient(top, #FFFFFF 0%,#F5F5F5 100%);
+	background: -ms-linear-gradient(top, #FFFFFF 0%,#F5F5F5 100%);
+	background: linear-gradient(to bottom, #FFFFFF 0%,#F5F5F5 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='FFFFFF', endColorstr='F5F5F5',GradientType=0 );
+	-webkit-box-shadow: inset 0 0 0 rgba(255, 255, 255, 0.2), 0 0px 2px rgba(0, 0, 0, 0.1);
+	-moz-box-shadow: inset 0 0 0 rgba(255, 255, 255, 0.2), 0 0px 2px rgba(0, 0, 0, 0.1);
+	box-shadow: inset 0 0 0 rgba(255, 255, 255, 0.2), 0 0px 2px rgba(0, 0, 0, 0.1);
+	-webkit-transition: all 0.1s linear;
+	-moz-transition: all 0.1s linear;
+	-o-transition: all 0.1s linear;
+	transition: all 0.1s linear;
+}
+.btn:active{ 
+	background-color: #EEEEEE;
+	border: 1px solid #CCCCCC;
+	-webkit-box-shadow: inset 0 0 0 rgba(255, 255, 255, 0.2), 0 0px 2px rgba(0, 0, 0, 0.05);
+	-moz-box-shadow: inset 0 0 0 rgba(255, 255, 255, 0.2), 0 0px 2px rgba(0, 0, 0, 0.05);
+	box-shadow: inset 0 0 0 rgba(255, 255, 255, 0.2), 0 0px 2px rgba(0, 0, 0, 0.05);
+}
+
+.btn, .btn:focus, .btn:hover, .btn:active{ outline: none; }
+
+button.submit{
+	
+}
+.textarea-element button.look{
+	font-size:11px;
+	padding: 2px 6px;
+}
+button.reset{
+	font-weight:bold;
+}
+
+/* Small */
 .small-button {
 	display: inline;
 	padding: 1px 6px;
@@ -253,6 +322,11 @@ table tfoot nav.pagination a span.current_page {
 	text-decoration: none;
 }
 
+.small-button [class^="pbt-icon-"]:before{
+	font-size:13px;
+	vertical-align: -1px;
+}
+
 /* Formulaires 
 --------------------------------------*/
 
@@ -265,9 +339,8 @@ table tfoot nav.pagination a span.current_page {
 fieldset {
 	margin:20px 0;
 	padding:6px;
-	border:1px solid #d6dee7;
-	color:#445766;
-	background:#ECEFFA;
+	border:none;
+	background:none;
 	position:relative;
 }
 
@@ -350,7 +423,7 @@ fieldset dl dd label:hover {
     color:#183A4F;
 }
 
-input, textarea, optgroup, select, .xmlhttprequest_preview {
+input, optgroup, select, .xmlhttprequest_preview {
 	font-size:11px;
 	border-left:1px solid #99b1cb;
 	border-top:1px solid #99b1cb;
@@ -363,10 +436,28 @@ input, textarea, optgroup, select, .xmlhttprequest_preview {
 }
 
 textarea {
+	font-family: "Trebuchet MS", Verdana, 'Bitstream Vera Sans', Times, serif;
     display:block;
     width:94%;
     margin:5px auto;
-	border-radius:5px;
+}
+
+.textarea-element span{
+	display:block;	
+}
+
+.textarea-element button{
+	margin:2px auto;
+	display:block;	
+}
+
+fieldset textarea.post {
+	width:90%;
+	display:inline;		
+}
+
+.textarea-element-small{
+	width:49%;	
 }
 
 input:hover, textarea:hover {
@@ -421,46 +512,97 @@ option {
 }
 
 legend {
-	padding:1px 0;
-	font-size:0.85em;
-	font-weight:bold;
-	background:#d7dfe9;
-	border:1px solid #bbcde0;
-	padding:2px 10px;
-	margin-top:-0.4em;
-	margin-left:0.5em;
-	position:relative;
-	top: 0;
+	display:block;
+	padding:10px 10px;
+	width: 100%;
+	margin-bottom:20px;
 	text-transform:none;
-	line-height:1.5em;
 	color:#333333;
+	font-size:1.5em;
+	font-weight:bold;
 	vertical-align:middle;
 	text-transform:uppercase;
+	border-bottom:1px solid #DDDDDD;
 }
 
-input.submit, input.reset, button {
-	background: #cccccc;
-	background: -webkit-gradient(linear, left top, left bottom, from(#ffffff), to(#cccccc));
-	background: -webkit-linear-gradient(top, #ffffff, #cccccc);
-	background: -moz-linear-gradient(top, #ffffff, #cccccc);
-	background: -o-linear-gradient(top, #ffffff, #cccccc);
-	background: linear-gradient(top, #ffffff, #cccccc);
-	height: 20px;
-	padding:0px 5px;
-	font-weight:bold;
-	font-size:10px;
-	border: 1px solid #bac5ca;
-	border-radius:4px;
-	color:#0E2A48;
+input[type=text], input[type=password], textarea{
+	display: inline-block;
+	vertical-align: middle;
+	padding: 4px 6px;
+	color: #555555;
+	background-color: #FFFFFF;
+	border: 1px solid #CCCCCC;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.01);
+	-moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.01);
+	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.01);
+}
+input[type=text]:hover,input[type=password]:hover, textarea:hover {
+	color: #333333;
+	border:1px solid #BBBBBB;
+	background-color:#FFFFFF; 
 }
 
-input.reset, button.reset {
-    color: #cc0000;
+input[type=text]:focus,input[type=password]:focus, textarea:focus {
+	color: #222222;
+	border-color: #BBBBBB;
+	outline: 0;
+	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.01), 0 0 6px rgba(0, 0, 0, 0.2);
+	-moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.01), 0 0 6px rgba(0, 0, 0, 0.2);
+	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.01), 0 0 6px rgba(0, 0, 0, 0.2);
 }
 
-input.submit:hover, input.reset:hover, button:hover {
-	cursor:pointer;
-	background:#e8edf3;
+input[type=checkbox] { 
+	border:none;
+	background:none;
+}
+
+.input-element, .textarea-element{
+	margin-bottom:10px;
+}
+
+.input-element label, .textarea-element label{
+	display:inline-block;
+	vertical-align:middle;
+	white-space: nowrap;
+}
+
+.input-element label{
+	width:30%;
+	text-align:right;
+	margin-right:10px;
+}
+
+.input-element.input-error input{
+	border-color: rgba(196, 60, 43, 0.3);
+	outline: 0;
+	-webkit-box-shadow: inset  0 0 6px rgba(196, 60, 43, 0.1);
+	-moz-box-shadow: inset 0 0 6px rgba(196, 60, 43, 0.1);
+	box-shadow: inset 0 0 6px rgba(196, 60, 43, 0.1);
+	color:#C43C35;
+}
+.input-element.input-error input:hover, .input-element.input-error input:focus{
+	border-color: rgba(196, 60, 43, 0.5);
+	outline: 0;
+	-webkit-box-shadow: inset  0 0 6px rgba(196, 60, 43, 0.3);
+	-moz-box-shadow: inset 0 0 6px rgba(196, 60, 43, 0.3);
+	box-shadow: inset 0 0 6px rgba(196, 60, 43, 0.3);
+	color:#C43C35;
+}
+.input-element.input-error span{
+	display: block;
+	margin: 0 0 0 30%;
+	padding-left: 15px;
+	font-style:italic;
+}
+
+.input-element.input-disabled  input{
+	cursor: not-allowed;
+	background:#F1F1F1;
+	color:#AAAAAA;
+	border: 1px solid #CCCCCC;
 }
 
 /* Messages postés par les membres (messages privés, etc...) 
