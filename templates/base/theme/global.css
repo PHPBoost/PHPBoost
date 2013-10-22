@@ -24,7 +24,8 @@
 	text-align:center;
 	background:#fff;
 	border:1px solid #999;
-	bottom:28px;
+	bottom:0;
+	left:100px;
 	z-index:100;
 	-moz-box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
 	-webkit-box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
@@ -39,42 +40,27 @@
 	border-collapse:collapse;
 	border:none;
 	background:#FFF;
+	margin:0;
 }
 
 .calendar_block .date-picker select {
-	background:#4d4c50;
 	border:none;
-	color:#FFF;
+	color:#888;
+	font-size:10px;
 }
 
-.calendar_block .row3 {
-	border:1px solid #bbbbbb;
-	border-radius:0;
-	background:#f4f4f4;
+.calendar_block .date-picker th {
+	padding:1px 0px;
+	background:#FFF;
+	color:#888;
 }
 
-.calendar_block .row2 a, .calendar_block .row3 a {
-	padding:2px 7px;
-	display:inline-block;
+.calendar_block .date-picker th a{
+	color:#888;
 }
 
-.calendar_block .row3 a, .calendar_block .row3 a:hover {
-	color:#656766;
-}
-
-.calendar_block .row2 {
-	border:1px solid #bbb;
-	border-radius:0;
-	background:#555;
-}
-
-.calendar_block .row2 a, .calendar_block .row2 a:hover {
-	color:#EEE;
-}
-
-.calendar_block .row3.empty {
-	border:none;
-	background:transparent;
+.calendar_block .date-picker td {
+	padding:2px 4px;
 }
 
 /* Déplacement des fichiers */
