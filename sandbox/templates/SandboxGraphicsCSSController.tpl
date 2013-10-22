@@ -27,11 +27,11 @@
 		<h5>Tailles</h5><br />
 		<div class="content">
 			<a href="#">Lien</a> <br />
-			<a href="#" class="smaller">Lien en très petit</a> <br />
+			<a href="#" class="smaller">Lien en trés petit</a> <br />
 			<a href="#" class="small">Lien en petit</a> <br />
 			<a href="#" class="big">Lien en grand</a> <br />
 			<a href="#" class="bigger">Lien en plus grand</a> <br />
-			<a href="#" class="biggest">Lien très grand</a> <br /><br />
+			<a href="#" class="biggest">Lien trés grand</a> <br /><br />
 		</div>
 		
 		<h5>Couleur selon rang de l'utilisateur</h5><br />
@@ -40,6 +40,7 @@
 			<a href="#" class="modo">Modérateur</a> <br />
 			<a href="#" class="member">Membre</a> <br />
 		</div>
+		
 	</div>
 	<footer></footer>
 </section>
@@ -61,7 +62,7 @@
 				<li>Editer : <a href="#" class="pbt-icon-edit"></a></li>
 				<li>Supprimer : <a href="#" class="pbt-icon-delete" data-confirmation="delete-element"></a></li>
 				<li>Supprimer (contrôle automatique JS avec confirmation de suppression) : <a href="#" class="pbt-icon-delete" data-confirmation="delete-element"></a></li>
-				<li>Supprimer (contrôle automatique JS avec confirmation personnalisée) : <a href="#" class="pbt-icon-delete" data-confirmation="Message personnalisé"></a></li>
+				<li>Supprimer (contrôe automatique JS avec confirmation personnalisée) : <a href="#" class="pbt-icon-delete" data-confirmation="Message personnalisÃ©"></a></li>
 			</ul>
 		</div>
 		
@@ -69,15 +70,15 @@
 		<h5>Listes</h5><br />
 		<div class="content">
 			<ul>
-				<li> Élément 1</li>
-				<li> Élément 2</li>
-				<li> Élément 3</li>
+				<li>Elément 1</li>
+				<li>Elément 2</li>
+				<li>Elément 3</li>
 			</ul>
 		
 			<ol>
-				<li> Élément 1</li>
-				<li> Élément 2</li>
-				<li> Élément 3</li>
+				<li>Elément 1</li>
+				<li>Elément 2</li>
+				<li>Elément 3</li>
 			</ol>
 		</div>
 		<br />
