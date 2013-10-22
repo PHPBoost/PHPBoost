@@ -62,6 +62,7 @@ function Confirm(action) {
 			</td>
 			<td class="align_left"# IF bug.C_LINE_COLOR # style="background-color:{bug.LINE_COLOR};"# ENDIF #> 
 				# IF bug.C_PROGRESS #
+				<h6>{bug.PROGRESS}%</h6> 
 				<div class="progressbar-container">
 					<div class="progressbar" style="width:{bug.PROGRESS}%"></div>
 				</div>
