@@ -279,14 +279,14 @@ function bbcode_color(field)
 	'#800000', 'orange', '#808000', 'green', '#008080', 'blue', '#666699', '#808080',
 	'red', '#FF9900', '#99CC00', '#339966', '#33CCCC', '#3366FF', '#800080', '#ACA899',
 	'pink', '#FFCC00', 'yellow', '#00FF00', '#00FFFF', '#00CCFF', '#993366', '#C0C0C0',
-	'#FF99CC', '#FFCC99', '#FFFF99', '#CCFFCC', '#CCFFFF', '#CC99FF', '#CC99FF', 'white');							
+	'#FF99CC', '#FFCC99', '#FFFF99', '#CCFFCC', '#CCFFFF', '#CC99FF', '#E3007B', 'white');							
 	
-	contents = '<table style="border-collapse:collapse;margin:auto;"><tr>';
+	contents = '<table><tr>';
 	for(i = 0; i < 40; i++)
 	{
 		br = (i+1) % 8;
 		br = (br == 0 && i != 0 && i < 39) ? '</tr><tr>' : '';
-		contents += '<td style="padding:2px;"><a onclick="insertbbcode(\'[color=' + color[i] + ']\', \'[/color]\', \'' + field + '\');" class="bbcode_hover"><span style="background:' + color[i] + ';padding:0px 4px;border:1px solid #ACA899;">&nbsp;</span></a></td>' + br;								
+		contents += '<td><a style="background:' + color[i] + ';"onclick="insertbbcode(\'[color=' + color[i] + ']\', \'[/color]\', \'' + field + '\');"></a></td>' + br;								
 	}
 	document.getElementById("bbcolor" + field).innerHTML = contents + '</tr></table>';
 }

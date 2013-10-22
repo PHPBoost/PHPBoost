@@ -151,13 +151,13 @@ function XMLHttpRequest_preview(field)
 			
 			<i class="bbcode-icon-separate"></i>
 			
-			<div style="position:relative;z-index:100;float:right;display:none;" id="bb_block5{FIELD}">
-				<div id="bbcolor{FIELD}" class="bbcode_block" style="margin-left:-170px;background:white;" onmouseover="bb_hide_block('5', '{FIELD}', 1);" onmouseout="bb_hide_block('5', '{FIELD}', 0);">
+			<div class="color_picker" style="display:none;" id="bb_block5{FIELD}">
+				<div id="bbcolor{FIELD}" class="bbcode_block" onmouseover="bb_hide_block('5', '{FIELD}', 1);" onmouseout="bb_hide_block('5', '{FIELD}', 0);">
 				</div>
 			</div>
-			<a href="javascript:{DISABLED_COLOR}bbcode_color('{FIELD}');{DISABLED_COLOR}bb_display_block('5', '{FIELD}');" onmouseout="{DISABLED_COLOR}bb_hide_block('5', '{FIELD}', 0);" class="bbcode_hover" title="{L_BB_COLOR}">
+			<a href="javascript:{DISABLED_COLOR}bbcode_color('{FIELD}');{DISABLED_COLOR}bb_display_block('5', '{FIELD}');" onmouseout="{DISABLED_COLOR}bb_hide_block('5', '{FIELD}', 0);" title="{L_BB_COLOR}">
 				<i class="bbcode-icon-color" {AUTH_COLOR}></i>
-			</a>					
+			</a>				
 			
 			<div style="position:relative;z-index:100;margin-left:-70px;float:right;display:none;" id="bb_block6{FIELD}">
 				<div style="margin-left:-120px;" class="bbcode_block" onmouseover="bb_hide_block('6', '{FIELD}', 1);" onmouseout="bb_hide_block('6', '{FIELD}', 0);">

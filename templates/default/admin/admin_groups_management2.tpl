@@ -87,17 +87,17 @@
 			var contents;
 			var color = new Array(
 			'#000000', '#433026', '#333300', '#003300', '#003366', '#000080', '#333399', '#333333',
-			'#800000', '#ffa500', '#808000', '#008000', '#008080', '#0000ff', '#666699', '#808080',
-			'#ff0000', '#FF9900', '#99CC00', '#339966', '#33CCCC', '#3366FF', '#800080', '#ACA899',
-			'#ffc0cb', '#FFCC00', '#ffff00', '#00FF00', '#00FFFF', '#00CCFF', '#993366', '#C0C0C0',
-			'#FF99CC', '#FFCC99', '#FFFF99', '#CCFFCC', '#CCFFFF', '#CC99FF', '#CC99FF', '#FFFFFF');							
+			'#800000', '#FFA500', '#808000', '#008000', '#008080', '#0000FF', '#666699', '#808080',
+			'#FF0000', '#FF9900', '#99CC00', '#339966', '#33CCCC', '#3366FF', '#800080', '#ACA899',
+			'#FFC0CB', '#FFCC00', '#FFFF00', '#00FF00', '#00FFFF', '#00CCFF', '#993366', '#C0C0C0',
+			'#FF99CC', '#FFCC99', '#FFFF99', '#CCFFCC', '#CCFFFF', '#CC99FF', '#E3007B', '#FFFFFF');							
 			
-			contents = '<table style="border-collapse:collapse;margin:auto;"><tr>';
+			contents = '<table><tr>';
 			for(i = 0; i < 40; i++)
 			{
 				br = (i+1) % 8;
 				br = (br == 0 && i != 0 && i < 39) ? '</tr><tr>' : '';
-				contents += '<td style="padding:2px;"><a onclick="javascript:insert_color(\'' + color[i] + '\');" class="bbcode_hover"><span style="background:' + color[i] + ';padding:0px 4px;border:1px solid #ACA899;">&nbsp;</span></a></td>' + br;								
+				contents += '<td><a style="background:' + color[i] + ';" onclick="javascript:insert_color(\'' + color[i] + '\');"></a></td>' + br;								
 			}
 			document.getElementById("color_group_list").innerHTML = contents + '</tr></table>';
 		}	
@@ -147,8 +147,8 @@
 						<dt><label for="color_group">{L_COLOR_GROUP}</label><br /><span>{L_COLOR_GROUP_EXPLAIN}</span></dt>
 						<dd>#<input type="text" size="7" name="color_group" id="color_group" value="{COLOR_GROUP}" class="text">
 							<a href="javascript:bbcode_color();bb_display_block('1', '');" onmouseout="bb_hide_block('1', '', 0);" class="bbcode_hover" title="{L_BB_COLOR}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/color.png" alt="" class="valign_middle" /></a>	
-							<div style="position:relative;z-index:100;display:none;" id="bb_block1">
-								<div id="color_group_list" class="bbcode_block" style="background:white;width:150px;" onmouseover="bb_hide_block('1', '', 1);" onmouseout="bb_hide_block('1', '', 0);">
+							<div class="color_picker" style="display:none;" id="bb_block1">
+								<div id="color_group_list" class="bbcode_block" onmouseover="bb_hide_block('1', '', 1);" onmouseout="bb_hide_block('1', '', 0);">
 								</div>
 							</div>
 						</dd>
@@ -293,8 +293,8 @@
 						<dt><label for="color_group">{L_COLOR_GROUP}</label><br /><span>{L_COLOR_GROUP_EXPLAIN}</span></dt>
 						<dd>#<input type="text" size="7" name="color_group" id="color_group" value="{COLOR_GROUP}" class="text">
 							<a href="javascript:bbcode_color();bb_display_block('1', '');" onmouseout="bb_hide_block('1', '', 0);" class="bbcode_hover" title="{L_BB_COLOR}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/color.png" alt="" class="valign_middle" /></a>	
-							<div style="position:relative;z-index:100;display:none;" id="bb_block1">
-								<div id="color_group_list" class="bbcode_block" style="background:white;width:150px;" onmouseover="bb_hide_block('1', '', 1);" onmouseout="bb_hide_block('1', '', 0);">
+							<div class="color_picker" style="display:none;" id="bb_block1">
+								<div id="color_group_list" class="bbcode_block" onmouseover="bb_hide_block('1', '', 1);" onmouseout="bb_hide_block('1', '', 0);">
 								</div>
 							</div>
 						</dd>

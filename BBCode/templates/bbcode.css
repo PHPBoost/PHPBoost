@@ -18,8 +18,12 @@
 	float:right;
 }
 
+.bbcode .color_picker .bbcode_block {
+	left:400px;
+}
+
 /* Icones de la barre BBCode */
-i[class^="bbcode-icon-"] { vertical-align:middle; cursor: pointer;}
+i[class^="bbcode-icon-"] { vertical-align:middle; cursor: pointer;display:inline-block;}
 
 i.bbcode-icon-separate:before { content: url('images/separate.png'); }
 i.bbcode-icon-bold:before { content: url('images/bold.png'); }
