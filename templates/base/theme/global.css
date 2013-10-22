@@ -272,12 +272,18 @@ h4.stitle2{
 
 /* Color-Picker */
 .color_picker {
-	position:relative;
+	position:absolute;
 	z-index:100;
 }
 
 .color_picker .bbcode_block {
 	left:80px;
+}
+
+.color_picker .bbcode_block table{
+	border-collapse:collapse;
+	margin:auto;
+	border:none;
 }
 
 .color_picker td {
