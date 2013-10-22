@@ -105,6 +105,78 @@
 				<div class="progressbar" style="width:100%"></div>
 			</div><br />
 			
+		<h5>Menus des modules</h5><br />
+		<div class="content" style="height:200px;">
+			<menu class="dynamic_menu">
+				<ul>
+					<li><a><i class="icon-reorder"></i></a>
+						<ul>
+							<li class="extend"><a><i class="icon-eye-open"></i> Afficher</a>
+								<ul>
+									<li><a href="#"><i class="icon-eye-open"></i> Les plus vues</a></li>
+									<li><a href="#"><i class="icon-star-half-empty"></i> Les mieux notées</a></li>
+								</ul>
+							</li>
+							<li class="extend"><a><i class="icon-sort"></i> Ordonner par</a>
+								<ul>
+									<li><a href="#"><i class="icon-tag"></i> Nom</a></li>
+									<li><a href="#"><i class="icon-time"></i> Date</a></li>
+									<li><a href="#"><i class="icon-eye-open"></i> Vues</a></li>
+								</ul>
+							</li>
+							<li class="separator"></li>
+							<li><a href="#"><i class="icon-plus"></i> Ajout d'images</a></li>
+							<li><a href="#"><i class="icon-pencil"></i> Edition de la catégorie</a></li>
+						</ul>
+					</li>
+				</ul>
+			</menu>
+			<br />
+			<menu class="dynamic_menu right">
+				<ul>
+					<li><a><i class="icon-reorder"></i></a>
+						<ul>
+							<li class="extend"><a><i class="icon-eye-open"></i> Afficher</a>
+								<ul>
+									<li><a href="#"><i class="icon-eye-open"></i> Les plus vues</a></li>
+									<li><a href="#"><i class="icon-star-half-empty"></i> Les mieux notées</a></li>
+								</ul>
+							</li>
+							<li class="extend"><a><i class="icon-sort"></i> Ordonner par</a>
+								<ul>
+									<li><a href="#"><i class="icon-tag"></i> Nom</a></li>
+									<li><a href="#"><i class="icon-time"></i> Date</a></li>
+									<li><a href="#"><i class="icon-eye-open"></i> Vues</a></li>
+								</ul>
+							</li>
+							<li class="separator"></li>
+							<li><a href="#"><i class="icon-plus"></i> Ajout d'images</a></li>
+							<li><a href="#"><i class="icon-pencil"></i> Edition de la catégorie</a></li>
+						</ul>
+					</li>
+				</ul>
+			</menu>
+			<br /><br />
+			<menu class="dynamic_menu group center">
+				<ul>
+					<li>
+						<a href="#">Bugs non-résolus</a> 
+					</li>
+					<li class="current">
+						<a href="#">Bugs résolus</a>
+					</li>
+					<li>
+						<a href="#">Feuille de route</a>
+					</li>
+					<li>
+						<a href="#">Statistiques</a>
+					</li>
+					<li>
+						<a href="#"><i class="icon-plus"></i> Nouveau bug</a>
+					</li>
+				</ul>
+			</menu>
+		</div>
 		</div>
 	</div>
 	<footer></footer>
