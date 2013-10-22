@@ -49,10 +49,90 @@
 	<header>
 		<h1>Divers</h1>
 	</header>
+	
 	<div class="content">
+	
+		<h5>Le fieldset</h5><br />
+		<div class="content">
+	
+			<fieldset>
+				<legend>Le titre du Fieldset </legend>
+				le contenu
+			</fieldset>
+		</div>
+		
+		<h5>Les Inputs</h5><br />
+		<div class="content">
+			<div class="input-element">
+				<label for="IDinput" title="Le complément du label">Le label de l'input</label>
+				<input type="text" class="normal-size" maxlength="25" name="Input" id="IDinput" value="test" >
+			</div>
+			<div class="input-element input-ok">
+				<label for="IDinput" title="Le complément du label">Un Input qui est correcte</label>
+				<input type="text" class="normal-size" maxlength="25" name="Input" id="IDinput" value="test" >
+				<i class="pbt-icon-check"></i>
+			</div>
+			<div class="input-element input-error">
+				<label for="IDinput" title="Le complément du label">Un Input qui est en erreur</label>
+				<input type="text"  class="normal-size "  maxlength="25" name="Input" id="IDinput" value="test" >
+				<i class="pbt-icon-error"></i>
+				<span class="smaller">La valeur saisie doit être un mail valide</span>
+			</div>
+			<div class="input-element input-disabled">
+				<label for="IDinput" title="Le complément du label">Un Input désactivé</label>
+				<input type="text" class="normal-size" disabled="disabled" maxlength="25" name="Input" id="IDinput" value="test" >
+			</div>
+		</div>
+		
+		<h5>Les textareas</h5><br />
+		<div class="content">
+			<div class="textarea-element">
+				<label for="textarea" title="Le complément du label">Ceci est un textarea</label>
+				<i class="pbt-icon-check"></i>
+				<span class="smaller">Description</span>
+				<textarea onblur="" class="" cols="47" rows="6" name="textarea" id="textarea">Voici un textarea</textarea>
+				<button type="button" class="btn look">Prévisualiser</button>
+			</div>
+			
+			<div class="textarea-element textarea-element-small">
+				<label for="textarea" title="Le complément du label">Ceci est un textarea à coté du label</label>
+				<i class="pbt-icon-check"></i>
+				<span class="smaller">Description</span>
+				<textarea onblur="" class="" name="textarea" id="textarea">Voici un textarea</textarea>
+				<button type="button" class="btn look">Prévisualiser</button>
+			</div>	
+		
+			<div class="textarea-element textarea-element-small center">
+				<label for="textarea" title="Le complément du label">Ceci est un textarea à coté du label</label>
+				<i class="pbt-icon-error"></i>
+				<span class="smaller">Description</span>
+				<textarea onblur="" class="" name="textarea" id="textarea">Voici un textarea</textarea>
+				<button type="button" class="btn look">Prévisualiser</button>
+			</div>
+		</div>
+		
+		<h5>Les boutons</h5><br />
+		<div class="content">
+			<button type="button" class="btn submit">Envoyer</button>
+			<button type="button" class="btn look">Prévisualiser</button>
+			<button type="button" class="btn reset">Annuler</button>
+		</div>
+	
+		<div class="content">
+			<button type="button" class="btn submit small">Envoyer (en petit)</button>
+			<button type="button" class="btn look big">Prévisualiser (en gros)</button>
+			<button type="button" class="btn reset biggest">Annuler (bien visible)</button>
+		</div>
+	
 		<h5>Petits boutons</h5><br />
 		<div class="content">
-			<a href="#" class="small-button">Bouton</a> <a href="#" class="small-button">MP</a><br /><br />
+			<a href="#" class="small-button" title="BOuton Classique">Bouton</a> 
+			<a href="#" class="small-button" title="Envoyer un MP">MP</a>
+			<a href="#" class="small-button" title="Mail"><i class="pbt-icon-mail"></i></a>
+			<a href="#" class="small-button" title="Contact Skype"><i class="pbt-icon-skype"></i></a>
+			<a href="#" class="small-button" title="Contact Gmail"><i class="pbt-icon-gmail"></i></a>
+			<a href="#" class="small-button" title="Contact Facebook"><i class="pbt-icon-fb"></i></a>
+			<a href="#" class="small-button" title="Contact Twitter"><i class="pbt-icon-twitter"></i></a>
 		</div>
 	
 		<h5>Icônes des principales actions</h5><br />
