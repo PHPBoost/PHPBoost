@@ -34,6 +34,17 @@
 			<a href="{U_DELETE}" title="${LangLoader::get_message('delete', 'main')}" class="pbt-icon-delete" data-confirmation="delete-element"></a>
 		# ENDIF #
 	</legend>
+	# IF C_PROGRESS #
+	<dl>
+		<dt>{@bugs.labels.fields.progress}</dt>
+		<dd>
+			<h6>{PROGRESS}%</h6> 
+			<div class="progressbar-container" style="width:35%">
+				<div class="progressbar" style="width:{PROGRESS}%"></div>
+			</div>
+			</dd>
+		</dl>
+	# ENDIF #
 	<dl>
 		<dt>{@bugs.labels.fields.status}</dt>
 		<dd>{STATUS}</dd>
