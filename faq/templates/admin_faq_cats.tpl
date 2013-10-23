@@ -145,7 +145,7 @@
 					<input type="hidden" name="idcat" value="{edition_interface.IDCAT}">
 					<button type="submit" name="submit" value="true">{L_SUBMIT}</button>
 					&nbsp;&nbsp;
-					<input type="button" name="preview" value="{L_PREVIEW}" onclick="XMLHttpRequest_preview();" class="submit">
+					<button type="button" name="preview" onclick="XMLHttpRequest_preview();">{L_PREVIEW}</button>
 					&nbsp;&nbsp;
 					<button type="reset" value="true">{L_RESET}</button>				
 				</fieldset>

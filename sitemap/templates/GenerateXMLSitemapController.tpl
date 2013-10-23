@@ -5,5 +5,5 @@
 # ENDIF #
 <br />
 <div style="text-align:center;">
-	<input type="button" class="submit" value="{@try_again}" onclick="window.location = '{GENERATE}'">
+	<button type="button" onclick="window.location = '{GENERATE}'">{@try_again}</button>
 </div>

@@ -91,7 +91,7 @@
 				<i class="pbt-icon-check"></i>
 				<span class="smaller">Description</span>
 				<textarea onblur="" class="" cols="47" rows="6" name="textarea" id="textarea">Voici un textarea</textarea>
-				<button type="button" class="btn look">Prévisualiser</button>
+				<button type="button">Prévisualiser</button>
 			</div>
 			
 			<div class="textarea-element textarea-element-small">
@@ -99,7 +99,7 @@
 				<i class="pbt-icon-check"></i>
 				<span class="smaller">Description</span>
 				<textarea onblur="" class="" name="textarea" id="textarea">Voici un textarea</textarea>
-				<button type="button" class="btn look">Prévisualiser</button>
+				<button type="button">Prévisualiser</button>
 			</div>	
 		
 			<div class="textarea-element textarea-element-small center">
@@ -107,21 +107,21 @@
 				<i class="pbt-icon-error"></i>
 				<span class="smaller">Description</span>
 				<textarea onblur="" class="" name="textarea" id="textarea">Voici un textarea</textarea>
-				<button type="button" class="btn look">Prévisualiser</button>
+				<button type="button">Prévisualiser</button>
 			</div>
 		</div>
 		
 		<h5>Les boutons</h5><br />
 		<div class="content">
-			<button type="button" class="btn submit">Envoyer</button>
-			<button type="button" class="btn look">Prévisualiser</button>
-			<button type="button" class="btn reset">Annuler</button>
+			<button type="submit">Envoyer</button>
+			<button type="button">Prévisualiser</button>
+			<button type="reset">Annuler</button>
 		</div>
 	
 		<div class="content">
-			<button type="button" class="btn submit small">Envoyer (en petit)</button>
-			<button type="button" class="btn look big">Prévisualiser (en gros)</button>
-			<button type="button" class="btn reset biggest">Annuler (bien visible)</button>
+			<button type="submit" class="small">Envoyer (en petit)</button>
+			<button type="button" class="big">Prévisualiser (en gros)</button>
+			<button type="reset" class="biggest">Annuler (bien visible)</button>
 		</div>
 	
 		<h5>Petits boutons</h5><br />
